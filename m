@@ -1,96 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.16
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793704690;
-	b=noxyKXiztmNXpWD1N7ijLhNcqU6r6IvX9hmEw37bl7Dl/uG9WNg1rj3slCv3ikPRzj4Z
-	 QFAZZnD7pR0cl45WXSjZTSg+C4gtPSSgP2KB578rxqrf+rPzpKLI3yHrkfzMZTAE2L2EI
-	 Z0GFPku4I7ZJvR6S71J4JTee15SCf09OVS70VoxzPP5gCx4pu7Z5evRVMY5HDBxsFtJSZ
-	 r3twBrHLFulzSvu+oV3GNhZFsMP484W1CSUqsUwhr3U0IrWez+Nl6QQLYYGRSb8b9wXui
-	 Tf1HHwyDdzaGxZTyANEbV6R+v2oE3vw6EB2rcOhuJIN/A+mWDv19fhsdz8t6I7cwHTw==
+	t=1793705974;
+	b=tbDpmP+DzwaKz88IUXlKuGGjEFuFRw5pEOxgNBcXQE7TAQcFeRP1SiTo1L3Xju+bYWGi
+	 y7Y9dP9etsR5EmhGMmZoI0ZkErOVe9deSoLM60B+mhXdGhC15Nyz6H9feoLXElg0NsS34
+	 VKx0NFWMHdtN5JF8L4gSWdTGQwTf5miVDWI8ArOZiFMeYVoNHaoal5Um9lgErq/7O6oMR
+	 owZuE+giYSlRNgGCSUrxyAVKMCAH0AXN8TIkjg15uiYh8nIQ1sqX/jDX+onBgGY6tZA6X
+	 hXHzml+L4d/5hOxYB1Ems21SdZ6oOdyoBFmCaSIk+fQbtXAv7S8mI5lGpgarNnfK3nQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793704690;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=sqccK+cXFG6lKK55WpCC5HbtYlLtHFIvfczx5REOV4o=;
-	b=cENfIo0pbIOphXjWCiP6+tbAyWmblHIvWpBrNhOpbhUHMRt+QXoaYY6SZgjxLcxaVoN8
-	 bE/a0cO/Kr2WyxCtff9ig22uLlBMr3Uv1tBD9wple7qQmrhj3M4gr3c5aZf+Yk3IRON6B
-	 oouyA9o+TulZpam5zHyjZsYyiSip2cllSDbcXwbZR7xuoNDmk+2MC1v9uiNdUGYScD4+V
-	 bjkAKEm8prmEmb0nNkxaCeFg+8ox61YM8bZvASONZBvxxIF9LN3KPi3MbctdeAnA8ASut
-	 bLuyVBfaQfHoA474XTbyqIGmzSRUCE4aAYQxUdaPST/lwcPUpt5WvIOgBwi1H9ILkoQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793705974;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=X2BaFLA8nX4B61bfMQbiTVXu6xfgGO+KsWU2iBYg3hI=;
+	b=bwsBjgWAUWG/aXzxLP7CA1dtYjbNZAAjIsicV8gDfnN3U23/45/cst1NLc5sOv1B5zeJ
+	 e/BovA/Wxrc1iOcg/ykwim6evDksSbZb8YJoOCtcNwpMzkGY6rJoC8bjdsgvjJmNstUDP
+	 QljSZ13eAz8kV8Xo77R1AzhvO0OOo3qjZ9sA2VDOaHB6agmNb1K/voXXzfc6n/lFH1+vv
+	 kmROg0tSmFSzNlUW8WBPhY882v6SKaALkV456EfPVdQG3VydUdXWO84TK/AzZe2HWxnok
+	 0exJjyCnGXB9G/znJI2pWJtkotvb75UQHCiYRxnoRwSeRyuefOhaAs7UpcovQlQyH6g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=chromium.org;
-	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=alcp+rh2;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.49
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=nxp.com;
+	spf=pass smtp.mailfrom=nxp.com;
+	dkim=pass header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector1 header.b=OIkreEit;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.16
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013016.outbound.protection.outlook.com [52.101.72.16])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF29606FAD5
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 11:18:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDF29606FAD5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C77606A326;
+	Tue,  3 Nov 2026 11:39:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 80C77606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=alcp+rh2
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-679334baa1fso4313919d50.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 03:18:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793704689; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RlECM0U6umQJ/HM0C8vPfsxBLYyEaLx+WCwG8fxsOIaC+Ua0SwpGq0VzM9G0yoeJre
-         k3QRriULfKNw+sorwwkLvbvbnMOujfmv0CUPyiibl/ugVQak2I0oGV13N5FuZoCuxEgj
-         fb+7wCyKU1i337yezfwqjSHI0tnR7Xx5D52dEFPOe2Pji3WZZyli4xfg4YLso+SRPX0S
-         M9VmGfHDje6s9O5MNNYpk9HIz4L8wBGwMhl6PniMeh+7l6sgkDz+8N7QLLusjOpaFBoz
-         /Y2OdxfheKD3R7Uqh2qJt9rS2JBCm71SVPnHyrmIOLTqMmRWdp1bxryCaic7NaDmu14x
-         JlBg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=sqccK+cXFG6lKK55WpCC5HbtYlLtHFIvfczx5REOV4o=;
-        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
-        b=ESvulftE4fXm8z5/S2/gOl8g50ZULKQHKNa+ensCGrmq/vlnDrsChs+LSix7+/MYc0
-         2Vf/D9XcXPdrOHIFJrPeFntNqbJUzEFv57qD45kcm8kkfpHdNTPBbRTKVFPH9vA7jzoG
-         LDRyRcn+vZ1pyjKCEyT43mdRiMJLU3xiXM5DX5um3BxHb6aQW/cTRkJ1RHdJ9BZag9sO
-         1c/5UR8QsokVzOtwEQDJPQpRq5/uBLS5tSFd1WKBqjU2eryw+7kUPLtmJRd5UtPpqFRa
-         6N2TVYbBMVhVaiEyFT2pwDEcBlN+Q0vyBNSfJE4rf5M363YwKM9P72IVscixdOP5ZhZq
-         6uJg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1793704689; x=1794309489; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=sqccK+cXFG6lKK55WpCC5HbtYlLtHFIvfczx5REOV4o=;
-        b=alcp+rh2twN93iQefp6EUcfziU6reji56wW0RtS+21cRilhgQFUpwZdO/YTg8fADnu
-         1kin/uPhUWkAr4dZH05V2g9OokDRjmpIDV3CMx4Wop4XfUNRVa5vBYB66iJ08jucjynb
-         5Ksa/+N5dT17uMZoMBX8+OOs2xX8tgqWm9OmA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793704689; x=1794309489;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=sqccK+cXFG6lKK55WpCC5HbtYlLtHFIvfczx5REOV4o=;
-        b=kb184rP5BdhjH8F47B8ZebX9DN+xAEA0sXbV8mSayJAU03LR8B9fTJUeEMMVtgr/Pt
-         wvFFP4ZhCJMYUYP7qNCw1b/OOJMDeqBuaeedVetgoragsGygwncF62ciOqI8syo+icFM
-         bombLJPS0XWLeQgSkq8xx1eAMlWWceKXqF8cNMcAUch0B7BEme+R2SVOTomAHbtdazz1
-         SUzeqo27cfRXmswCamUObp6K6zgh67k23f5TmxHxNPwuN635GjYw2JL+ajkaIqWHQpWF
-         redo4pTId8g7YAQE4KOosxy4+z6zKT8vYN6hacEsTJI0TN5bwM+qk1KAZttuYWvAzDSw
-         ZGrQ==
-X-Gm-Message-State: APuU4Z95qYv/D1nfn6enlmsdGVsceuZ+bT0fOJz66zL5REVaNIQr4Qb2
-	JUICL9I6wK/7rhvvjr7ot5Uz3V85vGSu13q+GDHH1p3mTUY2jsDmzMHQ2rwd9kKlrwLrPNEQzmZ
-	y1vEP32RY1+kMeKXnVfXhZhrb0r/PBVVET1n11bTWF3JiuTXqwu+z5A==
-X-Gm-Gg: AYBFou0yU4/6wFcSs4WqN/lYsVI6Yx//Fj2gc23cgBdXXejXyTkwKWoi57LFGyWZSUs
-	xGzltNuxe2ovdGkD/4mQ80EE/b/ymPHWsGBlC71zIlduNvVPCBF/l+8HHwOZ/1efqKk+TtAYpsd
-	c3QjJyG2/XMt4lmZ+OeiUMzaXXo9cgkGjwVJGkDzWGF69Iescbiu35DIJltHzJXXwSotF2NRRQ/
-	wv+3HKg69sj80i1DI80LM5rWFRmZVXeK5KTHi/F0SmY9KaV4sHA8zdBrNYq/37CeRdpWC5YepEG
-	6DtMIdoYw+b9qOH+BuGWXMYaEsuliBwcg3TWXebF6BZOlm8nMzLvawnsCNF2mTsY0/p3Lkkubxn
-	QlTnpLOoVMyQieyi6T7P9ZECjY57NieKIH3tZT0JanW2HWW3atSBvdOUPlgDFO6KYJWk=
-X-Received: by 2002:a05:690e:4399:b0:679:a03c:3cef with SMTP id
- 956f58d0204a3-67ba504fe78mr5463048d50.102.1793704688774; Tue, 03 Nov 2026
- 03:18:08 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector1 header.b=OIkreEit
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yKoW00blQV2+4DlGyqNJa/PBYqUUVOM/FJeWtcz19derT1Sg2yB567xjhi+gp6IBJo+n6UaFXIPXAvKZQW/S6sLiA6EphCoCi6kMnug3hJpRPe3BsarYY23oO2bDtKHV2eBcBdoXOuH24a2ulcdjmUPt+hMLHLnv//hmYHH0BVPHbY96sSdN3u5OwQWLlVfTLPrs0EIBgYQCHdr2clfKizBIW3F0AoMC7YSs0949Y2t9jussExF3ljofdV9+lXPI/ani0n2RAsHqgOJx7iSbuzaSMPA/RR7nmfXbTebhUcT6fb0SbGPC+ofuxz4mz+h1HdbAe8R75pbcKgclr8vMmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=X2BaFLA8nX4B61bfMQbiTVXu6xfgGO+KsWU2iBYg3hI=;
+ b=G53B1G57mj1JR8zY8yg/qMXVg+SdO3fSHRJMDLXzsIjuZQlzHZMjitqtYwEJsFVtqdXS6fR5WNe6Iowy235aHVNFLAfH6ApOkEWxLI/Ro2RAzSuiaUCLedBMDXXik5TH8DDcs6geeWemqVvpvvKCG5vnTkyVvQXaSI0SEO5lO7DTaVDRahcpMDqviMHIm+AEv+fpE1NBDCkOxpJyFrUNqnq+wJhu+uQvVN5PBP0XmA6vWyfGWhe2688jKpomIbtFuDzpUNrAdcGbffDcB5twGm9aIGhvVtNWfJ/BjJsA7wtyIiXrtq0DwZLQVvjd0eoJNUsESAF23YFosCs31MHb7g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=X2BaFLA8nX4B61bfMQbiTVXu6xfgGO+KsWU2iBYg3hI=;
+ b=OIkreEitKdYDvNhq+s8x0T6havPBv4g+gvf5fymX0DkzHzcRACxsDhSEMaihOqDs7yQQl0EQucjSDpRSNcPPiP7zc28ORH2dWJoSJAhJX99APvbBQqfLhz3C/fAk8wnGl1VTfXQmRg9Ef3RoRtlXkdNHcSjdM27p8lzkuzeDCO7oMuFuwFPphFabyjuZAWtPzHP8+4M4VwYJVRu5xT+/psj3PASQcI5zY4866FaCJzB7MLz3VtFtPdlfFeqrLi9/+cT7o+nFoFFDJbNWPCnWwk4VIlGcW/6ptzPSb0r09mPG4jH3d2jLwz4DVndgGoXQof+6skYwaMYDN7XxG6ynSg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by PA4PR04MB7583.eurprd04.prod.outlook.com (2603:10a6:102:e2::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Tue, 3 Nov
+ 2026 11:39:30 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%4]) with mapi id 15.21.0569.011; Tue, 3 Nov 2026
+ 11:39:30 +0000
+Date: Tue, 3 Nov 2026 13:39:26 +0200
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: sashiko-reviews@lists.linux.dev, netdev@vger.kernel.org
+Cc: bpf@vger.kernel.org, virtualization@lists.linux.dev, 
+	"Michael S. Tsirkin" <mst@redhat.com>, Eugenio Perez <eperezma@redhat.com>, 
+	Eric Dumazet <edumazet@kernel.org>
+Subject: Re: [PATCH net 2/2] net: validate xmit skbs in generic_xdp_tx()
+Message-ID: <egj2sjr6palh4p7daxvw7t547eghkl5mzprjaaxzijtzg2ghpo@wahu23aivld3>
+References: <20261030114753.185281-1-vladimir.oltean@nxp.com>
+ <20261030114753.185281-2-vladimir.oltean@nxp.com>
+ <20261030114753.185281-1-vladimir.oltean@nxp.com>
+ <20261030114753.185281-2-vladimir.oltean@nxp.com>
+ <sashiko-outbox-191926@kernel.org>
+ <sashiko-outbox-191926@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-191926@kernel.org>
+ <sashiko-outbox-191926@kernel.org>
+X-ClientProxiedBy: FR2P281CA0176.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:9f::14) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,243 +101,313 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261103083335.2944847-1-wenst@chromium.org> <20261103083335.2944847-2-wenst@chromium.org>
- <sashiko-outbox-194895@kernel.org>
-In-Reply-To: <sashiko-outbox-194895@kernel.org>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Tue, 3 Nov 2026 19:17:57 +0800
-X-Gm-Features: AclHuK8VonHN09LTCcS6FUt195JMCTKb0pPmw_Dq8fBSu-WL_nXW9IV_jyyzdms
-Message-ID: <CAGXv+5GPGs=GOyEsdG9xqHTACSboizTBxg+J0q+tdVsW46Aidw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: mediatek: mt8390-genio-common: Fix type C
- port mode and connection
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|PA4PR04MB7583:EE_
+X-MS-Office365-Filtering-Correlation-Id: 66fd639d-9418-4fcf-76c3-08df399f1f5f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|19092799006|23010399003|6133799003|18002099003|22082099003|56012099006|261102123227099003|10067099003|261009223027099003|261022105027099003|261021121427099003|261022075727099003|5023799004|4143699003|11063799006|261028144727099003|261026140227099003|261026121527099003;
+X-Microsoft-Antispam-Message-Info:
+	ntcoydpHuRM/3PqUppaAKdm5TtN5xJNC93FO+0kaKgDJP1qQo1BvBWuIlDUgfL982W6S/yqEW1fBli2Taba+b7ZmK6zmNHYYj+TAuARKI/dmu/qUO7p2X63dYsn/V62Rc7ajwnZSW9pqr4NHLU6ewPWRSZmYkhOpxXTgOOZBSieQpFjLvKF8dEZINqtpexJ9coAADgPfhks9DRJShgl3voBI5bE+XufpfqlkYbD3Z0ff1aED1WC3XINw2WSQRbXyBl0/XX/F2JYxx8HAs6so2th5WqzJYqvQBc3mJX0k1UpSY7IE+YGD4SxBxnprNjKtNBydqAKXW13MAqSWb2qUd2Uarfa9JJXWgh4xD0Lp0jjMsWNTzGtmFtW85Y5WYA1Cra7rgLFizaIr17Nx8nGuSejP/fHIQrFdEJLX4XoNBbbjqWNxhxtWCcxs91CwurODD6oJ0G9O4PJjPvOEiaEZnicQ1Hp3mB/wOJ7ShJ7w4cj821VfYwNZydUKl4SFGTj4e/umYdX00tkzMOIf6sOYTSXR2AxGSvIaZp09iufetLLeFF1jhYe2JnjRnE7yZFjSDZvfSWmotIddr6zs5d4nji7L0AvUrSYAev5CUfq79DXCd9t3W+n2nOSvTWebMl8n
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(19092799006)(23010399003)(6133799003)(18002099003)(22082099003)(56012099006)(261102123227099003)(10067099003)(261009223027099003)(261022105027099003)(261021121427099003)(261022075727099003)(5023799004)(4143699003)(11063799006)(261028144727099003)(261026140227099003)(261026121527099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?QTSYTXun90TkdhLxMqWz4mTVACCxCggdm4fWsQhZVF8zP4y/y3KCg+dRDaGq?=
+ =?us-ascii?Q?OS8JqMHwzW725jt3MsxusC51ANg7shcOFsvAvdNpuUrOWuzqBfVuYnjWndQR?=
+ =?us-ascii?Q?40hUZcM1aFFcbjq7ymTRgjjPDY5I81N4uiIKXpFU9tIMB8Xh+bXCR7fa+cKs?=
+ =?us-ascii?Q?T4Sqzxc39aGhDrHT2Po9vzGKBVFo3dyR3jnXnNbLEn/xjhumF3wNuVoqGOjd?=
+ =?us-ascii?Q?3Bt7NdLZe4qyiU3hao4m5gbCT526ATPtUv4GYuHNdKBSEtf6Hx8p3MLMx37d?=
+ =?us-ascii?Q?3Av7lCy/xQaHK5RX5x3NexKwnZZbe3zGtzdWfn8EiOxQfRf/NxcNOBX2vfH7?=
+ =?us-ascii?Q?Vm+edMNCDRqybC0+bFzMpQja9+PsFFR2/dACJWZQwYo9sXfFkr67AkFxEvdt?=
+ =?us-ascii?Q?+5TwMv/09iNNTURWSiOSfyVU4Yam2hY9zb/G+DvSKGgUkZTlXv+dddIszIgc?=
+ =?us-ascii?Q?9VI3SXk7iLao/RIrWcscSn9HKJRfhEqhD0S9hssSCsdk/0H4flEyA32u4x3O?=
+ =?us-ascii?Q?2ghDurqYY/2OEvamqmCukjEp48VHkW0lqioh0/OymEh2PqoAY8yuV5aPEkwd?=
+ =?us-ascii?Q?noyp586RvTjOvpAeMeGAd0oNRc4xhYoOtwW4Aq8rs/AbLqDJsBe230YMfA1f?=
+ =?us-ascii?Q?N3UMCUZEiOmXNqpmfkV6q4iNQVIrzZPNADjEwH8EHEjBptV3Ekbyx5gJpjhs?=
+ =?us-ascii?Q?57UZXnELEeeigEMQwygRtALQENewa/53vmXpbMehstwT0Fn0KG4rzVANv988?=
+ =?us-ascii?Q?QFWmgoAG+bwh//GPRnh42FifaV6u0EJtd089V+MgYuU1fWh214m6jQG2q3PK?=
+ =?us-ascii?Q?ueA6GB7vqx0E3yo0qsv+nGBk2jYSuPLuc2zDqqlH/SbkDJMzrp10bwqcXx9T?=
+ =?us-ascii?Q?2vXidrmm67hL5Ds3fMHgp82lxQWI8q3bQueRck1aGZlNrasR3Rh0qwaqf9RP?=
+ =?us-ascii?Q?aVZdB42welN0ROrsyoNffolirLapFzRjOhpYpcNSjRy4g+AdR0ft5GW91NI8?=
+ =?us-ascii?Q?LlkFGgMo8mWP6vFOL+h/utjg4YeZ6CddEcsuGMIcG8VBa9dD4LwBF21JTrhc?=
+ =?us-ascii?Q?+l8otksFZ8QWJFd6Pp/SH0uETq+NfJDZy4CgY0AzOSNJzdibtaV2+J+zQbc5?=
+ =?us-ascii?Q?PDDE5/mjbfKrUO47KTTu3oulZfwo2uIZvhQBESmSZ6iCJvChJiIOgI5hAlYG?=
+ =?us-ascii?Q?Twl8cQgnTNk00xslPf1WNDVjYwFw5irFYQqwhbG0cCdnMlEDXdoUYaNrpvN7?=
+ =?us-ascii?Q?qjgA+LOcMFpw7NAz8dKp9X74uVvE802iw/OYZINxw4MUI7sYf6JJ6TIm3LAZ?=
+ =?us-ascii?Q?buL2RjVPX58QIikOsYQ4bZDrtUdNQAS/ObfPQVHqVCOldK33ZPyfWNxigvo4?=
+ =?us-ascii?Q?T4rU5U0z84tTQThZP7puN3NUkcgMIolITArem7Jkkkp0hr4DCJgYBDbldhSn?=
+ =?us-ascii?Q?wMa/3ewdLfn7OlUdhFcnNgUUkGxbYoS2StLR/wZ5vDJKIyyw5Wsl8PVuesnX?=
+ =?us-ascii?Q?F3H6W3Qpmks6KA2idimAgLvHHMYT9eZ8K23VTbVK0moAdzHjcnFWEL7Io5X9?=
+ =?us-ascii?Q?Eopo6G/RZ4YXHcbiXf/msF/Hp1uby0YbrekRixCc53q9jYAjtkIA4w8GWnxX?=
+ =?us-ascii?Q?6biiOpw4cnhbrtjJ6UYFPsogqXYEw99rGzk1P4iWgWcs+JG1CzByjqX6b0vP?=
+ =?us-ascii?Q?i7tufeeUFb598iA3st2NU7RjdSx7zvGIT8pcmUij9UTXEiBsfPur9SpAlVPS?=
+ =?us-ascii?Q?HwELzOdx/w=3D=3D?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66fd639d-9418-4fcf-76c3-08df399f1f5f
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2026 11:39:30.1942
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9Et1aP5mpQIkF6aka58uJzyaP3AG4UZgaN8AS7bpgDqlVKG3Q7gcZR7wxowfYqWwGskMxriywUaIN/G0fzN8yw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7583
 
-On Tue, Nov 3, 2026 at 4:54=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
-> - [Medium] arm64: dts: mediatek: mt8390-genio: swapped HS and SS USB-C hu=
-b endpoints
-> - [Medium] arm64: dts: mediatek: mt8390-genio: host data-role breaks TCPM=
- sink and PDOs
-> - [Medium] arm64: dts: mediatek: mt8390-genio: partial hub ports graph ma=
-rks port 1 unused
-> - [Low] arm64: dts: mediatek: mt8390-genio: hub ports nodes violate ti,us=
-b8020b schema
+On Sat, Oct 31, 2026 at 11:48:09AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] net: out-of-bounds read in qdisc_pkt_len_segs_init() via generic_xdp_tx()
+> - [High] net: shared skb->head corruption on cloned broadcast skbs in generic_xdp_tx()
+> - [Medium] net: WARN_ONCE in skb_checksum_help() from generic_xdp_tx() after XDP resize
 > --
->
-> commit ef02f781783f3c2d23b3aa255937ed902c67f777
-> Author: Chen-Yu Tsai <wenst@chromium.org>
->
-> arm64: dts: mediatek: mt8390-genio-common: Fix type C port mode and conne=
-ction
->
-> This commit changes the ssusb1 controller's operating mode to "host", dro=
-ps
-> its usb-role-switch property, updates the Type-C connector's data-role to
-> "host", and routes the Type-C port data endpoints through the onboard USB
-> hub nodes under xhci1.
->
-> > diff --git a/arch/arm64/boot/dts/mediatek/mt8390-genio-common.dtsi b/ar=
-ch/arm64/boot/dts/mediatek/mt8390-genio-common.dtsi
-> > index 669eaec662f33..821dbf9d3fc5d 100644
-> > --- a/arch/arm64/boot/dts/mediatek/mt8390-genio-common.dtsi
-> > +++ b/arch/arm64/boot/dts/mediatek/mt8390-genio-common.dtsi
-> > @@ -512,7 +512,7 @@ rt1715@4e {
-> >               connector {
-> >                       compatible =3D "usb-c-connector";
-> >                       label =3D "USB-C";
-> > -                     data-role =3D "dual";
-> > +                     data-role =3D "host";
-> >                       op-sink-microwatt =3D <10000000>;
-> >                       power-role =3D "dual";
-> >                       try-power-role  =3D "sink";
->
-> [Severity: Medium]
-> When data-role is changed to "host" (setting port->typec_caps.data to
-> TYPEC_PORT_DFP) while power-role =3D "dual", try-power-role =3D "sink", a=
-nd
-> PDO_FIXED_DATA_SWAP in sink-pdos and source-pdos remain set, won't this
-> cause a data role mismatch and PD capability inconsistency when attaching=
- to
-> a USB PD power source?
-
-Rechecked the public documents [1], and it only shows this port supplying
-power at 5V/1A. This port is marked as "USB 3.1 PD" on the board, and as
-"USB-C 3.1 Host & DisplayPort". The sink / charging type C port is a
-different port altogether, marked as "USB-C (charger)".
-
-So the PD description for this port is completely wrong.
-
-[1] https://genio.mediatek.com/doc/iot-yocto/latest/hw/g700-evk.html
-
-> When the port attaches as a Sink in tcpm_snk_attach(), it initializes the
-> roles using tcpm_data_role_for_sink():
->
-> drivers/usb/typec/tcpm/tcpm.c:
-> #define tcpm_data_role_for_sink(port) \
->         ((port)->typec_caps.data =3D=3D TYPEC_PORT_DFP ? \
->         TYPEC_HOST : TYPEC_DEVICE)
->
-> Because port->typec_caps.data is TYPEC_PORT_DFP, tcpm_snk_attach() ->
-> tcpm_set_roles() sets port->data_role =3D TYPEC_HOST and programs the TCP=
-C
-> message header data role to DFP while attached as a Sink. When the remote=
- PD
-> Source (which also starts as DFP/host per the USB PD specification) sends
-> its initial Source_Capabilities message with PD_HEADER_DATA_ROLE =3D 1,
-> tcpm_pd_rx_handler() sees both sides as DFP:
->
-> drivers/usb/typec/tcpm/tcpm.c:tcpm_pd_rx_handler() {
->         ...
->                 if (!!(le16_to_cpu(msg->header) & PD_HEADER_DATA_ROLE) =
-=3D=3D
->                     (port->data_role =3D=3D TYPEC_HOST) && rx_sop_type =
-=3D=3D TCPC_TX_SOP) {
->                         tcpm_log(port,
->                                  "Data role mismatch, initiating error re=
-covery");
->                         tcpm_set_state(port, ERROR_RECOVERY, 0);
->         ...
+> 
+> commit 47b74c796cb5f05688236335aeb274a972cf3b13
+> Author: Vladimir Oltean <vladimir.oltean@nxp.com>
+> 
+> net: validate xmit skbs in generic_xdp_tx()
+> 
+> This commit validates skbs in generic_xdp_tx() using
+> qdisc_pkt_len_segs_init() and validate_xmit_skb_list() before passing them to
+> netdev_start_xmit(). This ensures SKB_GSO_DODGY packets have gso_segs
+> recomputed and unsupported offloads handled in software.
+> 
+> > diff --git a/net/core/dev.c b/net/core/dev.c
+> > index 88860185f5832..e98d85a539916 100644
+> > --- a/net/core/dev.c
+> > +++ b/net/core/dev.c
+> > @@ -5855,23 +5855,44 @@ void generic_xdp_tx(struct sk_buff *skb, const struct bpf_prog *xdp_prog,
+> >  		    u32 act)
+> >  {
+> >  	struct net_device *dev = skb->dev;
+> > +	enum skb_drop_reason reason;
+> >  	struct netdev_queue *txq;
+> > -	bool free_skb = true;
+> > +	bool again = false;
+> >  	int cpu, rc;
+> >  
+> > +	reason = qdisc_pkt_len_segs_init(skb);
+> > +	if (unlikely(reason)) {
+> > +		trace_xdp_exception(dev, xdp_prog, act);
+> > +		dev_core_stats_tx_dropped_inc(dev);
+> > +		kfree_skb_reason(skb, reason);
+> > +		return;
+> > +	}
+> 
+> [Severity: High]
+> Can calling qdisc_pkt_len_segs_init() here cause an out-of-bounds read when a
+> generic XDP program adjusts the packet head on a GSO packet?
+> 
+> In bpf_prog_run_generic_xdp(), when bpf_xdp_adjust_head() shifts xdp->data by
+> a non-zero offset, skb->data, skb->mac_header, and skb->network_header are
+> updated, but skb->transport_header (and skb->inner_transport_header) is left
+> at its pre-adjustment offset:
+> 
+> net/core/dev.c:bpf_prog_run_generic_xdp() {
+> 	...
+> 	off = xdp->data - orig_data;
+> 	if (off) {
+> 		if (off > 0)
+> 			__skb_pull(skb, off);
+> 		else if (off < 0)
+> 			__skb_push(skb, -off);
+> 
+> 		skb->mac_header += off;
+> 		skb_reset_network_header(skb);
+> 	}
+> 	...
 > }
->
-> In addition, sink-pdos and source-pdos in this connector node still inclu=
-de
-> PDO_FIXED_DATA_SWAP, which advertises DR_Swap support to the partner via
-> tcpm_pd_send_sink_caps() / tcpm_pd_send_source_caps() and exposes
-> dual_role_data =3D 1 in sysfs, even though tcpm_pd_ctrl_request() rejects
-> incoming PD_CTRL_DR_SWAP requests when port->typec_caps.data !=3D
-> TYPEC_PORT_DRD.
->
-> [ ... ]
->
-> > @@ -1555,6 +1548,19 @@ hub_2_0: hub@1 {
-> >               peer-hub =3D <&hub_3_0>;
-> >               reset-gpios =3D <&pio 7 GPIO_ACTIVE_HIGH>;
-> >               vdd-supply =3D <&usb_hub_fixed_3v3>;
-> > +
-> > +             ports {
-> > +                     #address-cells =3D <1>;
-> > +                     #size-cells =3D <0>;
-> > +
-> > +                     port@2 {
-> > +                             reg =3D <2>;
-> > +
-> > +                             usb_2_0_p2: endpoint {
-> > +                                     remote-endpoint =3D <&typec_con_h=
-s>;
-> > +                             };
-> > +                     };
-> > +             };
-> >       };
-> >
-> >       hub_3_0: hub@2 {
-> > @@ -1563,11 +1569,18 @@ hub_3_0: hub@2 {
-> >               peer-hub =3D <&hub_2_0>;
-> >               reset-gpios =3D <&pio 7 GPIO_ACTIVE_HIGH>;
-> >               vdd-supply =3D <&usb_hub_fixed_3v3>;
-> > -     };
-> >
-> > -     port {
-> > -             xhci_ss_ep: endpoint {
-> > -                     remote-endpoint =3D <&typec_con_ss>;
-> > +             ports {
-> > +                     #address-cells =3D <1>;
-> > +                     #size-cells =3D <0>;
-> > +
-> > +                     port@2 {
-> > +                             reg =3D <2>;
-> > +
-> > +                             usb_3_0_p2: endpoint {
-> > +                                     remote-endpoint =3D <&typec_con_s=
-s>;
-> > +                             };
-> > +                     };
-> >               };
-> >       };
-> >  };
->
-> [Severity: Medium]
-> Are the High-Speed and SuperSpeed endpoints connected to the wrong hubs h=
-ere?
->
-> In drivers/usb/misc/onboard_usb_dev.c (onboard_dev_id_table) and
-> Documentation/devicetree/bindings/usb/ti,usb8020b.yaml, TI USB8020B produ=
-ct
-> ID 0x8025 (compatible "usb451,8025") is the USB 3.0 SuperSpeed hub and
-> product ID 0x8027 (compatible "usb451,8027") is the USB 2.0 High-Speed hu=
-b:
->
-> drivers/usb/misc/onboard_usb_dev.c:
->         { USB_DEVICE(VENDOR_ID_TI, 0x8025) }, /* TI USB8020B 3.0 HUB */
->         { USB_DEVICE(VENDOR_ID_TI, 0x8027) }, /* TI USB8020B 2.0 HUB */
->
-> In mt8390-genio-common.dtsi, hub@1 has compatible =3D "usb451,8025" (the =
-3.0
-> hub) and hub@2 has compatible =3D "usb451,8027" (the 2.0 hub), even thoug=
-h
-> their pre-existing DT labels hub_2_0 and hub_3_0 are reversed. Placing
-> usb_2_0_p2 (linked to typec_con_hs, port@0) under hub@1 and usb_3_0_p2
-> (linked to typec_con_ss, port@1) under hub@2 connects the High-Speed Type=
--C
-> endpoint to the SuperSpeed hub and the SuperSpeed Type-C endpoint to the
-> High-Speed hub.
-
-Yeah, they are definitely swapped. 0x8025 is the default PID for USB 3.0
-while the default PID for USB 2.0 is the 3.0 one XOR 0x2.
-
-> [Severity: Medium]
-> Does adding a ports node containing only port@2 to hub@1 and hub@2 cause
-> downstream port 1 of the TI USB8020B hub to be marked as USB_PORT_NOT_USE=
-D
-> and non-removable?
->
-> When a USB hub is enumerated, usb_hub_create_port_device() calls
-> usb_of_get_connect_type() for each downstream port:
->
-> drivers/usb/core/of.c:usb_of_get_connect_type() {
->         ...
->         /* Only set connect_type if binding has ports/hardwired devices. =
-*/
->         if (!usb_of_has_devices_or_graph(hub))
->                 return USB_PORT_CONNECT_TYPE_UNKNOWN;
->
->         /* Assume port is unused if there's a graph or a child node. */
->         connect_type =3D USB_PORT_NOT_USED;
->         ...
+> 
+> When the XDP program returns XDP_TX or XDP_REDIRECT, generic_xdp_tx() calls
+> qdisc_pkt_len_segs_init(skb), which assigns the signed int return value of
+> skb_transport_offset(skb) (or skb_inner_transport_offset(skb)) to unsigned
+> int hdr_len:
+> 
+> net/core/dev.c:qdisc_pkt_len_segs_init() {
+> 	...
+> 	if (!skb->encapsulation) {
+> 		if (unlikely(!skb_transport_header_was_set(skb)))
+> 			return SKB_NOT_DROPPED_YET;
+> 		hdr_len = skb_transport_offset(skb);
+> 	} else {
+> 		hdr_len = skb_inner_transport_offset(skb);
+> 	}
+> 	/* + transport layer */
+> 	if (likely(shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6))) {
+> 		const struct tcphdr *th;
+> 
+> 		if (!pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
+> 			return SKB_DROP_REASON_SKB_BAD_GSO;
+> 
+> 		th = (const struct tcphdr *)(skb->data + hdr_len);
+> 		tlen = __tcp_hdrlen(th);
+> 	...
 > }
->
-> Previously, hub@1 and hub@2 had no child nodes or OF graph, so all
-> downstream ports defaulted to USB_PORT_CONNECT_TYPE_UNKNOWN. Once ports i=
-s
-> added with only port@2 defined, usb_of_has_devices_or_graph(hub) returns
-> true and downstream port 1 (which has neither a port@1 graph node nor a
-> child device node) returns USB_PORT_NOT_USED, causing
-> set_usb_port_removable() in drivers/usb/core/hub.c to mark any device plu=
-gged
-> into downstream port 1 as DEVICE_FIXED.
+> 
+> If bpf_xdp_adjust_head() pulled skb->data 1 to 20 bytes past the original
+> skb_transport_header(skb) on a TCP GSO packet (or 1 to 8 bytes on a
+> SKB_GSO_UDP_L4 packet), skb_transport_offset(skb) is in [-20, -1] and hdr_len
+> becomes 0xffffffecU..0xffffffffU. In pskb_may_pull(skb, hdr_len +
+> sizeof(struct tcphdr)), the 32-bit unsigned addition wraps to 0..19 and
+> succeeds if skb_headlen(skb) is at least that small wrapped length. Then
+> skb->data + hdr_len zero-extends hdr_len to 64 bits on 64-bit platforms and
+> __tcp_hdrlen(th) reads approximately 4 GiB past skb->data.
+> 
+> Even when skb_transport_offset(skb) remains non-negative after
+> bpf_xdp_adjust_head(), qdisc_pkt_len_segs_init() computes hdr_len and
+> shinfo->gso_segs from the stale transport_header offset, whereas
+> validate_xmit_skb_list() -> __skb_gso_segment() -> inet_gso_segment() /
+> ipv6_gso_segment() later resets skb->transport_header and tcp_gso_segment()
+> recomputes skb_shinfo(skb)->gso_segs = DIV_ROUND_UP(skb->len, mss) without
+> re-checking dev->gso_max_segs.
 
-The other port seems to be tied to a M.2 B-key slot on the reverse side
-of the board. Currently, we still lack proper M.2 slot USB integration,
-so this is going to be a slight problem.
+The stale transport headers seems to be all pre-existing issues, based on
+the fact that Sashiko reported it on this other patch as well,
+triggerable from bpf_skb_net_hdr_pop() there:
+https://lore.kernel.org/netdev/179290180493.3134.5235549211177646736@kernel.org/
 
-> [Severity: Low]
-> Also, does adding ports child nodes to hub@1 ("usb451,8025") and hub@2
-> ("usb451,8027") fail dtbs_check against
-> Documentation/devicetree/bindings/usb/ti,usb8020b.yaml?
->
-> Unlike ti,usb8041.yaml (which references usb-hub.yaml# and uses
-> unevaluatedProperties: false), ti,usb8020b.yaml only references
-> usb-device.yaml# and sets additionalProperties: false without defining a
-> ports property.
+As Eric says, the broken skb_transport_header should be fixed at producer side,
+so there is nothing really actionable for this patch, I think.
 
-I sent a separate patch to address this by merging ti,usb8020b into
-ti,usb8041.
+> > +
+> >  	txq = netdev_core_pick_tx(dev, skb, NULL);
+> > +	skb = validate_xmit_skb_list(skb, dev, &again);
+> > +	if (!skb) {
+> > +		trace_xdp_exception(dev, xdp_prog, act);
+> > +		return;
+> > +	}
+> 
+> [Severity: High]
+> Could passing skb to validate_xmit_skb_list() corrupt shared skb->head memory
+> when a generic XDP program redirects with BPF_F_BROADCAST through a DEVMAP or
+> DEVMAP_HASH?
+> 
+> During broadcast redirects, dev_map_redirect_multi() calls
+> dev_map_redirect_clone() for each destination except the last, which clones
+> the packet with skb_clone(skb, GFP_ATOMIC). In dev_map_generic_redirect(),
+> skb_copy() is only called when dst->xdp_prog is attached:
+> 
+> kernel/bpf/devmap.c:dev_map_generic_redirect() {
+> 	...
+> 	if (dst->xdp_prog && skb_cloned(skb)) {
+> 		struct sk_buff *nskb;
+> 
+> 		nskb = skb_copy(skb, GFP_ATOMIC);
+> 	...
+> }
+> 
+> When dst->xdp_prog is NULL, the cloned skb reaches generic_xdp_tx() ->
+> validate_xmit_skb_list() -> validate_xmit_skb() -> __skb_gso_segment(). In
+> __skb_gso_segment(), skb_cow_head(skb, 0) is only called when
+> skb_needs_check(skb, true) is true, so it is skipped whenever ip_summed is
+> CHECKSUM_PARTIAL or CHECKSUM_UNNECESSARY:
+> 
+> net/core/gso.c:__skb_gso_segment() {
+> 	...
+> 	if (unlikely(skb_needs_check(skb, tx_path))) {
+> 		int err;
+> 
+> 		/* We're going to init ->check field in TCP or UDP header */
+> 		err = skb_cow_head(skb, 0);
+> 		if (err < 0)
+> 			return ERR_PTR(err);
+> 	}
+> 	...
+> }
+> 
+> If the packet is an IPv6 UFO skb with ip_summed == CHECKSUM_PARTIAL,
+> udp6_ufo_fragment() skips gso_pskb_expand_head() because generic XDP ensures
+> at least XDP_PACKET_HEADROOM (256 bytes) of headroom, which is larger than
+> tnl_hlen + sizeof(struct frag_hdr). It then modifies uh->check and *prevhdr
+> and shifts the MAC and IPv6 headers 8 bytes left in place via memmove() inside
+> the shared skb->head buffer:
+> 
+> net/ipv6/udp_offload.c:udp6_ufo_fragment() {
+> 		if (skb->mac_header < (tnl_hlen + frag_hdr_sz)) {
+> 			if (gso_pskb_expand_head(skb, tnl_hlen + frag_hdr_sz))
+> 				goto out;
+> 		}
+> 		...
+> 		packet_start = (u8 *) skb->head + SKB_GSO_CB(skb)->mac_offset;
+> 		memmove(packet_start-frag_hdr_sz, packet_start, unfrag_len);
+> }
+> 
+> Similarly, udp4_ufo_fragment(), tcp4_gso_segment(), and tcp6_gso_segment()
+> overwrite the L4 checksum field in place when ip_summed ==
+> CHECKSUM_UNNECESSARY. When dev_map_redirect_multi() continues to the remaining
+> broadcast destinations using the original skb, its mac_header and
+> network_header still reference the pre-shift offsets in the mutated skb->head
+> buffer.
 
+Hmm, the problem seems valid, but AFAIU, the problem that __skb_gso_segment()
+does not unshare the skb every time it should should be fixed in
+__skb_gso_segment() itself, nothing actionable for this change.
 
-The AI review is certainly digging up more problems with the DT.
+If anything, cloned GSO skbs can already come from bridge flooding and
+will reach __skb_gso_segment() from __dev_queue_xmit(), so the problem
+is pre-existing.
 
-ChenYu
+> [Severity: Medium]
+> Can calling validate_xmit_skb_list() here also trigger WARN_ONCE() in
+> skb_checksum_help() when a generic XDP program shrinks or pulls a
+> CHECKSUM_PARTIAL packet?
+> 
+> In bpf_prog_run_generic_xdp(), adjusting the packet via bpf_xdp_adjust_head()
+> or bpf_xdp_adjust_tail() updates skb->data, skb->tail, and skb->len without
+> updating or resetting skb->ip_summed, csum_start, or csum_offset. If a
+> non-GSO packet with ip_summed == CHECKSUM_PARTIAL has its head pulled past
+> csum_start or its tail shrunk below csum_start + csum_offset +
+> sizeof(__sum16), and generic_xdp_tx() transmits it on a device without
+> checksum offload (such as XDP_TX on a tun device without TUN_F_CSUM),
+> validate_xmit_skb() -> skb_csum_hwoffload_help() -> skb_checksum_help() hits:
+> 
+> net/core/dev.c:skb_checksum_help() {
+> 	...
+> 	offset = skb_checksum_start_offset(skb);
+> 	ret = -EINVAL;
+> 	if (unlikely(offset >= skb_headlen(skb))) {
+> 		DO_ONCE_LITE(skb_dump, KERN_ERR, skb, false);
+> 		WARN_ONCE(true, "offset (%d) >= skb_headlen() (%u)\n",
+> 			  offset, skb_headlen(skb));
+> 		goto out;
+> 	}
+> 	csum = skb_checksum(skb, offset, skb->len - offset, 0);
+> 
+> 	offset += skb->csum_offset;
+> 	if (unlikely(offset + sizeof(__sum16) > skb_headlen(skb))) {
+> 		DO_ONCE_LITE(skb_dump, KERN_ERR, skb, false);
+> 		WARN_ONCE(true, "offset+2 (%zu) > skb_headlen() (%u)\n",
+> 			  offset + sizeof(__sum16), skb_headlen(skb));
+> 		goto out;
+> 	}
+> 	...
+> }
+> 
+> Since offset is unsigned int, a negative skb_checksum_start_offset(skb) wraps
+> to a large unsigned value, and either out-of-bounds offset triggers skb_dump()
+> and WARN_ONCE().
+
+Correction: 'offset' is int, not unsigned int (although this doesn't
+change the outcome, since skb_headlen() returns unsigned int, the
+comparison is made on unsigned values regardless).
+
+So skb_checksum_start_offset() returns the offset between skb->csum_start
+and skb->data, and Sashiko says that if bpf_xdp_adjust_head() pulls
+skb->data beyond skb->csum_start for a non-GSO packet, this offset would
+become negative, it would trigger the WARN_ONCE() and the skb would be
+dropped.
+
+I think the expected alternative outcome would be to do something like
+bpf_skb_adjust_room() -> bpf_skb_net_shrink() -> bpf_skb_net_hdr_pop() ->
+bpf_skb_generic_pop() -> skb_postpull_rcsum() -> __skb_postpull_rcsum()
+does, and convert CHECKSUM_PARTIAL to CHECKSUM_NONE.
+
+In any case this is something that needs to be addressed in bpf_xdp_adjust_head()
+and bpf_xdp_adjust_tail(), because I think the exact same thing can
+already happen even without XDP_TX / XDP_REDIRECT, i.e. with XDP_PASS
+plus some sort of forwarding to the same kind of egress device (bridging
+or IP forwarding).
+
+In short, I don't think this patch makes any of the above problems worse
+than they already are.
