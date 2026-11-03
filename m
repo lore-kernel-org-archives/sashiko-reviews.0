@@ -1,129 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.17
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793661559;
-	b=LoKuCDY8Z2TjV2camuH6eDbg1SITm5KpI0MauJZMwFxrgBYW3fGeBzdYGVwk0obhM+5D
-	 8X780R0genqEUBriTAhp+koLARsIrhGuuIYeI/QXgqBAzCd2KzsYlgrd8xXSZpqQDB1Ve
-	 wJn1jjV5T5Heblq+uMl9WksDAhNzreEzxXvTjArDyrDwgyE5zc4zshyNqcGPZ1AJ++m1+
-	 8hoa1DM7H/NMjytQ4OcOrq5IMqUpmuXP1yEigJ83DOPuO40qvDL7d7wm4bQipfnn+psUI
-	 EGDRPzAM+4W7GM/00CjYKsNMlboYuS3ai/tgpaQr3MZgJe/rn8jqREC9XQXyry4V3Pw==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793669023;
+	b=UTfM2xH4oIa34DHUFp3KGd3RNiGR0AjpS9rtKlsep0jxh37QP2DmVO4+Ark6oYeVKvSM
+	 NridZjrAaMYgy/YAGAKvRZIafpZQ4LndIqaFvwglKBth0QtbJJ/HL0lnTLB7y6Ri7QFcr
+	 H8Gw0UD9RTGW4F5HJpWBcLebsC97dZb1N4kySiPtn5qx9IMfZ64ybbPrrFalUg+mJPoYV
+	 WkbuhnZl3qvq5zQWzhbNqixUwUM3VeEqxx3qB8XP5RlafFcKUxXU0+/5uh4Gsn0atnd5j
+	 my5tSHrCPsZkKP619+iKYFw1xV+66Ap6/R6vQ7DqWDMw5fkU419TNnJFsPFz+EtFH1g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793661559;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=smkV+0Vl5D6ra8aSkNnh3PmZWk2TvCOwgCTYezGFZVE=;
-	b=yGqRnOjMqvuA15tCFlYBsWa4Yu79sxpqUdvzj3l+9iH/jD0+nhDBXf7TWUsuYf+KzBJC
-	 p122dufOc9e6E67h7bDFR3Av/Mk1TA6jxz7Gnp9tO91/SupCVJK0st9yH5Fi6U9DE9vDj
-	 HY3IXV07b3mTq/fGTEOgez96c1/HEEjgEK1hodRWPufkRyTFnDI9x7TS76dhQGkcfHaKl
-	 X3J/ekQUYilYGGE4W3JhI5X6m9H5DbXFHJbWTfZUGWECR5dmUAdC7UDyg+5G0fIgltOVy
-	 L91RWoZeBrfh4pkRG6VMat2b8vyeoB0Zm50RGa8raiFhYaxqAxdn7MI4GfBogWHq5PQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793669023;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
+	b=KV63TK4z4kunWrRk97Fl2RkZkDXma8sfXoZz5j9/dGpW0ZHvPQ6femft7HpY1jUauOcy
+	 eDrULhuLpkq9dV+PMg2P9sOXtIX6sPZ94fw3s8w3pHjJVSt4Us7R+1EPR1hJj255V77Y6
+	 BO7RKhGIBRI/fXLYlv4Lv7hnKPCctvsE3h0XKqZEA/kk8C+t50/CS+++OVMoWh477+bks
+	 HV+huz3HRjuXheFszO5Lzpbzcn1fhzxCgiJbyFunbq5qchYPJ4MnMP5zsnw9yCXrO3jk8
+	 RIYouQFwW4hrr3DdIB9er/0nSfZ0nweEOEIJB3NyeyV467RwP0dLQ+XeJRE7Bmu/tEQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kE0wqQNr;
-	arc=fail smtp.remote-ip=192.198.163.17
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fwqopPjx;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.51
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A109606A326
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 23:19:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7A109606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587CF606A327
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 01:23:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 587CF606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kE0wqQNr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793661558; x=1825197558;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=fyOYnTjqln4Hf0MclQsDTnHibhI981LU63dQOf+8+5I=;
-  b=kE0wqQNrppvELOeKx3qkjtaokhqZeNYJu5mDJcMItBaZ0m/yVXK/iLXl
-   sTMJ9jC9uOx6JYClGx6uD8qCILxALVV/7eTo6fO7mk/S8IbOYj7TfL4mX
-   u7H7bIILp4Stg0Xl/P94DrfEeHl5ZNbiFZtqZcFA12AKMwYqXC60UNdZn
-   LYTXXrt8NvR/zcjRnZf0PhBpdlZvY8uxsNSvXwe0BVA4U4L/Qz/JCJnPo
-   tLM1eKom+FsZ7BK6znYQX8KSSogWtcIrqvX+E/vg30hR8kFB4pmvfLA+g
-   z6OtUcsH1J6YD1cTRBnu4E9XkJe1/hVuNOx5eZXW38uAtwgUbrV6c/R9e
-   Q==;
-X-CSE-ConnectionGUID: DAiNuhQZThWAdpfwgazQ6A==
-X-CSE-MsgGUID: EFYWnlMeRqijsfob/tmnXA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2384363"
-X-IronPort-AV: E=Sophos;i="6.27,192,1787036400"; 
-   d="scan'208";a="2384363"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 15:19:17 -0800
-X-CSE-ConnectionGUID: xY1IZdC0R3u/oaIPf1UxhQ==
-X-CSE-MsgGUID: aGYSYXp3SKymEbD2uF7Z3A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,192,1787036400"; 
-   d="scan'208";a="6108772"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 15:19:16 -0800
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Mon, 2 Nov 2026 15:19:13 -0800
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Mon, 2 Nov 2026 15:19:13 -0800
-Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.7) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Mon, 2 Nov 2026 15:19:13 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SCIBlyURRi4m/dMS4BvUU62mDta1DslDPi6ja/yQYo6GfQ8DIUd2+6RAoigqNRkOMua2Xsop7ThtMPWnMzAVwu2Agl8qdowGtuDT1YfRu2iGuqxbVE3TNuQP+rfdwXRJgLuk+0Xezn5nU1faD1/TB7qrbs6qFfrAJ9sTI355VW2VeHjER94p4+tGJ/ox5RF5zgoQkgXOBWIq/eCYxSgDY9PyRFfz9QWwPVqCUrJigeEUpdmGzIIlj4nCDH2KSl/vZ2cwtp3VGUQ9sfYA2+X4UNDqwbwdV842dgB8ZazH97HPMvhgWWO4dYNAMSkNPaSOYR8xzE82gViP3ZItYZF1lw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mR+XroSUQ1iszhLdXY70HU05C0v4uScLaGSDMzB2mXA=;
- b=lbYdlEASylaBttoID/WzbZYsTFbP/MNV3nCgmoqd1x74GEl767zSeMOR2FK6tmHuKm5Lmoj/J780tVDNpVCKhEIfAMxuJPJLLWlD8lNJFWAsPgbeVwgoDs5mo7HwMlDCoKcjn6hB/KN/mtu2Ao2MDaThGnpWNKO+WuKUaTGozU/4kCS/C++a7RBCM2/kYgaxuXUXd1ahs8xDWDIP+ALIehHkKGzwXX90WjVRTnfGkE6UHMam5xzSv6iSOR6CEyLKH6inwvzRnWP6qGo1w+1Eo7uCy4PJDk1zR9EsNokCWDT+TtRqvRX2FNlPD70nQokeF4YS4AXBpp6yivz/IbVisg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by SA1PR11MB6805.namprd11.prod.outlook.com (2603:10b6:806:24c::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
- 2026 23:18:08 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::6fbf:c112:d0a8:f1a8]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::6fbf:c112:d0a8:f1a8%5]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
- 23:18:08 +0000
-Date: Mon, 2 Nov 2026 15:18:04 -0800
-From: Alison Schofield <alison.schofield@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v3 1/2] cxl/region: Reject a repeat write of an endpoint
- decoder to targetN
-Message-ID: <aukaLAMiCHn0xX4S@aschofie-mobl2.lan>
-References: <3e5af9d6d59f8df52b9d21bcf1c7e78f06918f80.1793653629.git.alison.schofield@intel.com>
- <sashiko-outbox-194200@kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-194200@kernel.org>
-X-ClientProxiedBy: MW4PR04CA0366.namprd04.prod.outlook.com
- (2603:10b6:303:81::11) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fwqopPjx
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-9909e82513fso153373241.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 17:23:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793669022; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SxIFkx20axs+uv32xCd24fxNreDZ2W5JypwyH7DdzQ4GOI24/bbdBMyk+a18Xbcr+Y
+         hWM0PW2Aop066m87SF6lVz3StlijtCc0gQh2wQbsXDoRVOQBfEub5tXfvKq7TmnHcqHC
+         4A8huytGdQBpvz8s6qYXUeExwcp5nl+41PyJohWFT3rXD0WbjtxPaxdJg6kkgrk2HfKO
+         xzS9oAJ3kXuZ8NCYswJH2K3BDuhCg/68iITaoCmDe329NEwb07wF0Hs591iWAtT6442L
+         UWaWziyuveOcXv1WSMW2F8Alr+yDil7ObyWAX8JKyd0rw2DMQWFD0++b/3KJwEfNYGql
+         dBJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
+        fh=W8JJw+p7qCtTXxeq73mloOeppwwTRHzId7aPWe02dqk=;
+        b=GTm8ZUOfdyjrhofM1d8J5pCR/CMZDKm02Tp5mG/9T/g2YiFU1cuW7cvYkwy04cCHXQ
+         KhhhfNjz4ASFTO6BwhbYzQXFJ8255rxFQLA+mGwzX+AS334qtqkm4t+lYsGuaz2jEEEA
+         KJ1IxtubfgMSkE4iCmKo4KEvXrTba43rsp/l54Msh03/tsrd4vG6AlnV2xPNeKVQF96l
+         f9R9sKcBdMkcNwYPggj6b/u+CQXifpk1hbsGPnuQzR4/qYyptWFhMR/Xa40oua+gLUCn
+         7EMPDAcqriocXibP+WiQPQ2+VUfwIWgSmpao7SIP3P00a8JewN5O/7ClSk79m4KJ6yad
+         rtow==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793669022; x=1794273822; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
+        b=fwqopPjxjEqBkWFwicGM9vauOlIRO000CH4dFu+3oBQplkJ0mrhM1zUgAuyGut3eIi
+         jORZ7q5w03hkltWPjXcqR8/q3jR8eFBdZasPuBr5UlyilYtCaG21SOwXPNlR5wriMKMv
+         cK9B42sbGFOrdbVMTdE2uP3foJ5jIVOFDjMD1vIVrcTgpuHrQIqZ6vRQ4DYwFaI7ytVz
+         abInEXs78n5SA/JzCjcD237WPTDyVMR0kgJbacQgcOuOdWcy11YCTjGyqXoY52ySZqWv
+         ZokWJIOvsiH6Q0Zw/dbLGXlk6ijhtkK4Ifm06amPLSHnta0TZlrO+Ply6LFuI0UShDUI
+         Bsug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793669022; x=1794273822;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
+        b=j4WYFXzteRBCs3ELGueFb5uzwZTz1SQy2yr12TY9dtUVETmcWZXqN2OAlrFHylZ6I2
+         AaeY2mdTkZv505xbpkhTo+vgf/5U8r+Q2LrpWCO0C+sttacme85WOEVW7lkr7i1+IsPa
+         5CFqr/bkp3DZ4NRPnzkrihmAmn2vUxBnkXS8pxMO9fpo7L1NRL00vaiUDKYNWbhISQK8
+         LjQYPihElXAeg9rZPwGdA8loaChmw2mdLQWfH3PAr4yOndzCxlX5V8kMUdih88R07jxp
+         pGkam/cwgItrnt1UoB3E+P7zYP3rsILR+2T4h2T6CeDbMC0P08xGQcIeGRZU2qQWOTZk
+         j91g==
+X-Gm-Message-State: APuU4Z86Xv+U0v1fpl30iMA3OeelduFSKwNUlI0ZNi6+xBkg6wbV2e7B
+	FnYY9ZT+J10BK5ynqokIPNEBnSpW2gfeeHKqgUis2eLv6wVW5yN7TZM+NBVnMv6SGpDM0KybXOC
+	rY8LQMlWwCbH91AuSAZ/G1zHiSKFZAoTiXQ5UO1c=
+X-Gm-Gg: AYBFou0UCabuxGWXN19vJ93ZOzRJA0QjlR90Ta/PaDyUz02AlHn2p+NxYJYcpxWqXVj
+	+DRc1JVkSSgHeymZsJaY+VsitSpgTIVXUDVs88J/zhubPTXWFEChOlYwz//QOcmgeizlwgHBqvW
+	G9N1MxmILA5+G7GUfj0h1S4BbOhMEzHN/twYmHIbOWF6JXd5SwNkqHbwJvw9+Z2wzv5tgwqYGPJ
+	BDybVSQj3IOVyj6nzU8MnHSkhkt+EyjtV51Pk0h5MTRrX0VTMuK1W5KQANhtgvwkVUJXz25+J68
+	wEbVmPJt15lI1E+eJhOIAwH3An84IS3CoMaG4IUHPG2gE3C0pohQ9N8Q2VkNl+C1WBKCLVcnvqN
+	iHLNd3Zau34V8bndLPpGWoX6tUuhGfm/dMZH8vc3spCRPhBdEry6KJMMQSjZgorAizlS/1/Z4Um
+	gLGQFNBa4JUI/NqnxjkeorFvSF0xsxZGqRYl5ZrM8IpGBFYRXn5d27XGSR0bt0E0esxNp+UbSBG
+	YPpL0rOG2ITDlV3OwqdbN3mXPUUiXr8Mh9II5Hf0QjqNKPhsUk=
+X-Received: by 2002:a05:6102:5cc8:b0:7c3:874d:60bb with SMTP id
+ ada2fe7eead31-7d072bc027emr3228553137.5.1793669022111; Mon, 02 Nov 2026
+ 17:23:42 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -133,156 +105,229 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|SA1PR11MB6805:EE_
-X-MS-Office365-Filtering-Correlation-Id: 18ef70a5-af52-4c59-c382-08df39378dba
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|10067099003|18002099003|22082099003|56012099006|4143699003|11063799006|261022105027099003|261026121527099003|261022075727099003|261026140227099003|261009223027099003|261028144727099003|260925021311599003|260925022911599003|260925021911599003;
-X-Microsoft-Antispam-Message-Info: oiiKJsPg1VCvMK8J6TvEHi6Qcl87lp+bUQ6Q/jlIqNOX4IuxP59boZnadr1jfTQ2d2z+hj05y6aUzhqSSJBrOWHfB9o2TsRLb89LQMZxYFiMmcmmkWiF8OaMvQAG67SBPhmrxXbeuFuaSAnmPY8AbCENL6hikbU4eXmjFEzhbLh+dYHJt+QOxHX6BTUmNcaNIj0uS8hsH5QfLiLPptBqNQ2pAv0qMKHCXFnoUIrw5hZqIa9EWwkWUgGl9dzl53+DpjNQnRcXqPC8pea0bSd6vb/7MlW3yGb1FNIL3b/WL669J7UA/xSpZ+k3moiAGBO4K6HD+vyUBo3lQ+DXSw8Eu+QK0wejV9yGa6sCLZ4bGunGtT1nchHSBbnzom3vaVrrLBIcfmjkebC0bqsTD4CigOhW/Mf/IAy0i8Rp34O4WA4MnqXqgZX04Gr/2U9CEzukUgp5KZr5cv7brlMvYXKSF50a8g6FoA7/mwrYEtS8Yjs4cwb2pOjY/QL6EHTLyIho3oaTvckWtLHtBHUM0bPQQ2uubeCVuK3fMVEPZjP+Y3VGm51mzc11V5bz1IS6vOt8EDWNCoeVEG47cvnPu1oBppSvMu7AV4bnUp8Xeg3aYlw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(10067099003)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006)(261022105027099003)(261026121527099003)(261022075727099003)(261026140227099003)(261009223027099003)(261028144727099003)(260925021311599003)(260925022911599003)(260925021911599003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?zr0lxgxNQ9ivYt5dy7GYzlonxDiR7c41RtZbgXbNQmMttyHFz+ImuO3e6K?=
- =?iso-8859-1?Q?BnLDC3Sh3N1dmnEAUik1/B7VKLCrEwV695Y+hBn+OT+OLnMZyTj6KNbFrY?=
- =?iso-8859-1?Q?WxooFquv6ulhxn6v4ktXLy58PgZY7MifHTz7SNojyOCdr4If10MSy12KJh?=
- =?iso-8859-1?Q?p7bdHJRW8Y0p5en1frWg7uzprqzKW3/pPT3vBFr83CKR+TGgFbs8usZlOB?=
- =?iso-8859-1?Q?zN27rb8xk9nNsj4GLQIfDBYjyoweljUG1VCF/w8GFIhdfYhZ29nrZuTaMz?=
- =?iso-8859-1?Q?nX/zbU3yj00g1QFZjlqsszi76mVbPb4bsq9Avx/NY/votNDveHlSMHYu2P?=
- =?iso-8859-1?Q?pPdQikvPA8t5AMNM9fXIDc3A6Uk+8THjggHFFq0m36X6YPQLbtBHlJ9S/G?=
- =?iso-8859-1?Q?0brjBrHFJlONjD1WnW2DBzZ+y1oxX6RDee/smUrLiC3RedgDfQ8sLDyEAQ?=
- =?iso-8859-1?Q?06qzebRRu8Gd84/kJFOr0Dft9mIqrRWurrAngxBBnVRo92A7CsmT/ssIPA?=
- =?iso-8859-1?Q?LCl+A0fnl7F9sTZ6dI07CXuv69CgSUTsytELx2yxh5sJ22JCxb8XC1AXQG?=
- =?iso-8859-1?Q?gMlzAv+m2J5ItfRdU2A+/Ss93JYciUWoWI8lru4GUFTP14N2lcY1v29fxy?=
- =?iso-8859-1?Q?d44b5NNJdvtdf63O2GQc7BWkDICXNiqVta43/PhAuBhyyCr3d8H0MA8G1Y?=
- =?iso-8859-1?Q?GAJ30Eeeo1kdWGPRY7HQrLGkLl7fh5pjDrsJYbX/oYP5U1MsxibxvFpxlv?=
- =?iso-8859-1?Q?BMjueFSOvIIuVuGjTDLEJYMQeQ16+gkH9lO3TJ3vVzwnO+YUtN1Y+EJLYk?=
- =?iso-8859-1?Q?PhJ7VT60HOsdMyMIScAYalBZ5dJWzwoqUm7tVDQnzdMSRud5dztvsoX5AK?=
- =?iso-8859-1?Q?QwpbUP0Lqj0L5PTg0cDtGXm04HkEgcyvzUUWGYvRMwQMIwVmUla7gZ1xFm?=
- =?iso-8859-1?Q?oNAGgwHmbaeI+VEYq8SfQJOP8tOstcV1rmbEWW+p37oCvjUDRdPQkIpBaH?=
- =?iso-8859-1?Q?wUt4cSbFLzJWKcZUTMX+/Kzem+hlDrd6Yml2b1pSSeZldv6FioMnwzl8IR?=
- =?iso-8859-1?Q?lRb1selZsZ2TxHjP6mJ/nJi6KpkytS7NTnAaufATGkuiyRLiO9Jt9+CxOq?=
- =?iso-8859-1?Q?pZBlNkTyRMgBENxEPbH7KkB5n57iuUaBlzRDO7QLBA4a2mVUHdM9YSVrM0?=
- =?iso-8859-1?Q?ffVoIVjv/ph6l3pRyzGOtX/9lpHpRFU1GpI0o8/QhoK3mN/8bATBhwACaB?=
- =?iso-8859-1?Q?wks7dTJyTSfuN5hqTj/f2Racd6Rgtpd9J6pd4riU8yZ0zw/UGQjVT/4E3K?=
- =?iso-8859-1?Q?SRioCWNtUNWhmAXATBwTAvW+3GygVMZSDjFKyzALMyqmxQDApYALIhOIii?=
- =?iso-8859-1?Q?3eS3lTQjrWgQV8LEUS2fE8cBlZz2fJSUcvDTEl/RnawAkjPc+CBOUXnLY4?=
- =?iso-8859-1?Q?ZGITBaUgQOKyqL43Jmp2GgHU3gbu0py4hL4B0mFGuiU7BvpzS7JcRB/jJb?=
- =?iso-8859-1?Q?Q8LfHgLhIe9Q9cUBwr6DRpJWWz8K+36eXMYq4rF8zh0QJIWtihN8XIrBi0?=
- =?iso-8859-1?Q?EYsODtxyOfrwNP5elGdI1eEMvCPuucDEjo/X3owjodyz2+6p2F9LLbNxG6?=
- =?iso-8859-1?Q?iegQbeDLC7Eg0R6FtshsdVNa0e+e0UyGzHatQfGqQH6fy+scgZMG+oh8ab?=
- =?iso-8859-1?Q?PG4ipC+j1cdbm/qKo/HMVlJh4ei2BxzWWmz9fQsNXXiRhvMPnJZqIJu3rf?=
- =?iso-8859-1?Q?qwb+pkJfA64Bm6igEHJO0r8o/DSS4UszdH+CSYw/ZpFKlciUucQljpk5VZ?=
- =?iso-8859-1?Q?dpW31pjgAcRH2lKVMU4v01+IzZBiUx4=3D?=
-X-Exchange-RoutingPolicyChecked: s/81JjEYTPdNKxqmqRPk1cAWR2an6JwpKaKlMXugy27mGpwVM7HATccR9IVlfM0S3MPmZt7oM0JiNz3ZAJJr1EiLLzF29ohexGY10X808Ghpl5BieLxLVuB/If0ewIOq/S9pL5ZF/BF6GoAaQIqbOh5XnH6sWqtvwfC7XCbYiHwXSU0b8broxVPPWOttZbNXuXrA9iqYUVwQDPRWZ+kA99ixnZwEnKSAPfZGBrAvtem1/46IbqmSBWgbQYt4UDAWczFESAEvpvugIuAY1Xlq/kBsYSuDY0mi2IOc1sVpKRmXeTC2bJlB0tdsLyOhzRDkOzkouBiKuaxx6KvbriKEqw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 18ef70a5-af52-4c59-c382-08df39378dba
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 23:18:07.9105
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: q/AKPBfUKxbim6h+w67sKgiaSbl/TKXECbGVSwXCS0l20AyG+ULmBd0DeyR/eFfy+8SzG2/f4qPDe7RsYCA/Z7x2I98k5RaWpB6eReYu9EE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB6805
-X-OriginatorOrg: intel.com
+References: <20261102-submit-serial-8250-dma-cancel-v1-v9-0-9159caade148@gmail.com>
+ <20261102-submit-serial-8250-dma-cancel-v1-v9-7-9159caade148@gmail.com> <sashiko-outbox-194343@kernel.org>
+In-Reply-To: <sashiko-outbox-194343@kernel.org>
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Mon, 2 Nov 2026 18:23:30 -0700
+X-Gm-Features: AclHuK_gt5lz7AswOV3gb8RGMWLh9TAATw8FhlHVD0RjFRvXQGOlI9L1gN2tR9Y
+Message-ID: <CADvTj4rYqTXsZcSPfe7o1i_-nB1z1ZBkeySKua+f5CWR=7BzwA@mail.gmail.com>
+Subject: Re: [PATCH v9 7/8] serial: 8250: retire canceled RX DMA before
+ reusing the receive buffer
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-serial@vger.kernel.org, imx@lists.linux.dev, Frank.Li@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 02, 2026 at 09:30:31PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] cxl/region: duplicate occupied-position check in cxl_region_attach()
+On Mon, Nov 2, 2026 at 4:49=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] serial: 8250: unbounded pause retry loop in serial8250_rx_dma_fl=
+ush_work()
 > --
-> 
-> commit 8e6a6e0273b1dca525bf14e3930192ed09907f10
-> Author: Alison Schofield <alison.schofield@intel.com>
-> 
-> cxl/region: Reject a repeat write of an endpoint decoder to targetN
-> 
-> This commit rejects repeat writes of an already-assigned endpoint decoder to
-> a CXL region targetN sysfs attribute with -EBUSY before modifying region
-> state.
-> 
-> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> > index a048bd5c06cb6..90226327e03c8 100644
-> > --- a/drivers/cxl/core/region.c
-> > +++ b/drivers/cxl/core/region.c
-> > @@ -1764,9 +1764,6 @@ static int cxl_region_validate_position(struct cxl_region *cxlr,
-> >  		return -ENXIO;
-> >  	}
-> >  
-> > -	if (p->targets[pos] == cxled)
-> > -		return 0;
-> > -
-> >  	if (p->targets[pos]) {
-> >  		struct cxl_endpoint_decoder *cxled_target = p->targets[pos];
-> >  		struct cxl_memdev *cxlmd_target = cxled_to_memdev(cxled_target);
-> > @@ -2130,6 +2127,14 @@ static int cxl_region_attach(struct cxl_region *cxlr,
-> >  		return -EINVAL;
-> >  	}
-> >  
-> > +	/* Already at @pos: fail before changing any region state */
-> > +	if (pos >= 0 && pos < p->interleave_ways && p->targets[pos] == cxled) {
-> > +		dev_dbg(&cxlr->dev, "position %d already assigned to %s:%s\n",
-> > +			pos, dev_name(&cxlmd->dev),
-> > +			dev_name(&cxled->cxld.dev));
-> > +		return -EBUSY;
-> > +	}
-> 
-> [Severity: Low]
-> This isn't a bug, but once the early return for p->targets[pos] == cxled is
-> removed from cxl_region_validate_position() in drivers/cxl/core/region.c,
-> doesn't the immediately following block in cxl_region_validate_position()
-> already handle this case with the same dev_dbg() message and -EBUSY return?
+>
+> commit 7216db0ad0fa3a64d9a52f2eff54fb53c9c43c75
+> Author: James Hilliard <james.hilliard1@gmail.com>
+>
+> serial: 8250: retire canceled RX DMA before reusing the receive buffer
+>
+> This commit reserves the RX DMA receive buffer until a worker has drained
+> canceled callbacks and adds retry and recovery logic for RX DMA pause and
+> termination failures.
+>
+> > diff --git a/drivers/tty/serial/8250/8250_dma.c b/drivers/tty/serial/82=
+50/8250_dma.c
+> > index 344f0dd24b416..fd2a0ed211657 100644
+> > --- a/drivers/tty/serial/8250/8250_dma.c
+> > +++ b/drivers/tty/serial/8250/8250_dma.c
+> [ ... ]
+> > +/* Try to obtain a stable residue before retiring the current descript=
+or. */
+> > +static int serial8250_rx_dma_try_flush(struct uart_8250_port *p)
+> > +{
+> > +     struct uart_8250_dma *dma =3D p->dma;
+> > +     struct dma_tx_state state;
+> > +     enum dma_status status;
+> > +     int ret;
+> > +
+> > +     lockdep_assert_held_once(&p->port.lock);
+> > +
+> > +     ret =3D dmaengine_pause(dma->rxchan);
+> > +     status =3D dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &stat=
+e);
+> > +     if (status =3D=3D DMA_ERROR) {
+> > +             ret =3D -EIO;
+> > +             goto recover;
+> > +     }
+> > +     if (ret && status !=3D DMA_COMPLETE) {
+> > +             /*
+> > +              * Hardware may be idle before the provider publishes com=
+pletion.
+> > +              * Leave the descriptor alive and retry outside interrupt=
+ context;
+> > +              * neither copying its buffer nor canceling it is safe ye=
+t.
+> > +              */
+> > +             dma->rx_pause_pending =3D true;
+> > +             serial8250_out_IER(p, p->ier);
+> > +             return ret;
+> > +     }
+> [ ... ]
+> > +static void serial8250_rx_dma_flush_work(struct work_struct *work)
+> > +{
+> > +     struct uart_8250_dma *dma =3D container_of(work, struct uart_8250=
+_dma, rx_flush_work);
+> > +     struct uart_8250_port *p =3D dma->port;
+> > +     unsigned int delay_us =3D USEC_PER_MSEC;
+> > +     ktime_t start =3D ktime_get();
+> > +     bool recover, retry, restore_rx;
+> > +     bool warned =3D false;
+> > +     int ret;
+> > +
+> > +     guard(serial8250_rpm)(p);
+> > +
+> > +     for (;;) {
+> > +             scoped_guard(uart_port_lock_irqsave, &p->port) {
+> > +                     /* Shutdown cancels this work and drains both DMA=
+ channels. */
+> > +                     if (dma->shutting_down)
+> > +                             return;
+> > +                     /* Serialize reset with completion and shutdown n=
+otifications. */
+> > +                     WRITE_ONCE(dma->rx_pause_wakeup, false);
+> > +                     retry =3D dma->rx_pause_pending && !dma->rx_termi=
+nating;
+> > +                     if (retry) {
+> > +                             ret =3D serial8250_rx_dma_try_flush(p);
+> > +                             retry =3D dma->rx_pause_pending && !dma->=
+rx_terminating;
+> > +                     }
+> > +                     recover =3D dma->rx_err;
+> > +             }
+> > +             if (!retry)
+> > +                     break;
+> > +             if (!warned && ktime_ms_delta(ktime_get(), start) >=3D MS=
+EC_PER_SEC) {
+> > +                     dev_warn_ratelimited(p->port.dev,
+> > +                                          "RX DMA pause stalled: %d; r=
+etaining transfer and retrying\n",
+> > +                                          ret);
+> > +                     warned =3D true;
+> > +             }
+> > +             /* Notifications also cover completion or shutdown before=
+ sleeping. */
+> > +             wait_event_hrtimeout(dma->rx_pause_wait, READ_ONCE(dma->r=
+x_pause_wakeup),
+> > +                                  ns_to_ktime(delay_us * NSEC_PER_USEC=
+));
+> > +             delay_us =3D min(delay_us * 2, USEC_PER_SEC);
+> > +     }
+>
+> [Severity: High]
+> As reported by Raul E Rangel on v8 [1], when dmaengine_pause(dma->rxchan)
+> persistently returns an error during a partial RX DMA transfer (where few=
+er
+> than dma->rx_size bytes have arrived and dmaengine_tx_status() remains
+> DMA_IN_PROGRESS), serial8250_rx_dma_try_flush() sets dma->rx_pause_pendin=
+g =3D
+> true and masks RX interrupts via serial8250_out_IER().
+>
+> In serial8250_rx_dma_flush_work(), this causes the for (;;) loop to retry
+> serial8250_rx_dma_try_flush() indefinitely until port shutdown instead of
+> escalating to serial8250_rx_dma_recover() after a bounded retry budget.
 
-v4 will drop the needless check in cxl_region_attach().
+The reason for retaining the descriptor is that a failed pause is not
+necessarily a failed transfer. Hardware can finish receiving before the
+provider publishes DMA_COMPLETE. At that point pause may fail because
+there is no active transfer left to pause, while the cookie still
+appears incomplete.
 
+Treating that combination as fatal can discard an otherwise valid
+receive buffer and disable RX DMA until reopen. The current approach
+tries to preserve both the received data and the ability to continue
+using DMA when the failure is transient.
 
-> 
-> drivers/cxl/core/region.c:cxl_region_validate_position() {
-> 	if (pos < 0 || pos >= p->interleave_ways) {
-> 		dev_dbg(&cxlr->dev, "position %d out of range %d\n", pos,
-> 			p->interleave_ways);
-> 		return -ENXIO;
-> 	}
-> 
-> 	if (p->targets[pos]) {
-> 		struct cxl_endpoint_decoder *cxled_target = p->targets[pos];
-> 		struct cxl_memdev *cxlmd_target = cxled_to_memdev(cxled_target);
-> 
-> 		dev_dbg(&cxlr->dev, "position %d already assigned to %s:%s\n",
-> 			pos, dev_name(&cxlmd_target->dev),
-> 			dev_name(&cxled_target->cxld.dev));
-> 		return -EBUSY;
-> 	}
+Without a successful pause or reported completion, the consumer does
+not yet have the stable receive snapshot needed for the normal flush.
+The worker therefore retains ownership and retries after releasing
+the port lock and enabling local interrupts, allowing the provider to
+publish completion. Once pause succeeds or completion is reported, it
+delivers the data and drains the old callbacks before buffer reuse.
+
+The backoff limits repeated failed calls, while completion and shutdown
+wake the worker without waiting for the next retry timeout. It does not
+solve persistent pause failure: if the peer is idle and the provider
+never pauses or completes, reception remains stalled. Retaining the
+buffer is an ownership-safety measure, not a recovery guarantee.
+
+> While a brief retry outside p->port.lock allows an already-completed tran=
+sfer
+> whose DMA interrupt was masked by p->port.lock to publish DMA_COMPLETE, o=
+nce
+> p->port.lock and local IRQs have been released across a few sleeps, any
+> pending completion interrupt has already run. If dmaengine_pause() contin=
+ues
+> to fail while the remote peer is idle (for example, if dw-axi-dmac times =
+out
+> waiting for DWAXIDMAC_IRQ_SUSPENDED and leaves the channel hardware-suspe=
+nded
+> while returning -EAGAIN, or if tegra186-gpc-dma returns -ENOSYS when
+> !hw_support_pause), dmaengine_tx_status() will never reach DMA_COMPLETE.
+>
+> While dma->rx_pause_pending remains stuck:
+> - UART reception is permanently wedged until the port is closed because R=
+X
+>   interrupts stay masked in UART_IER and serial8250_rx_dma_recovering()
+>   forces skip_rx =3D true in serial8250_handle_irq_locked(), preventing P=
+IO
+>   fallback.
+> - serial8250_rx_dma_flush_work() holds a runtime PM reference via
+>   guard(serial8250_rpm)(p) for the lifetime of the open port.
+> - serial8250_rx_dma_flush() returns -EAGAIN, which causes dw8250_idle_ent=
+er()
+>   in drivers/tty/serial/8250/8250_dw.c to abort divisor and LCR updates:
+>
+> drivers/tty/serial/8250/8250_dw.c:dw8250_idle_enter() {
+>         ...
+>         if (up->dma) {
+>                 ret =3D serial8250_rx_dma_flush(up);
+>                 if (ret) {
+>                         serial8250_out_IER(up, up->ier);
+>                         d->in_idle =3D 0;
+>                         return ret;
+>                 }
+>         ...
 > }
-> 
-> In cxl_region_attach(), cxl_region_validate_position() is called before
-> cxl_region_attach_position(), so attachment only proceeded previously
-> because cxl_region_validate_position() returned 0 instead of falling through
-> to the p->targets[pos] check.
-> 
-> Also, placing this check in cxl_region_attach() ahead of the
-> CXL_REGION_F_AUTO branch means that if an auto-discovered region is partially
-> assembled (with cxled staged in p->targets[pos] by cxl_region_attach_auto())
-> and userspace writes cxled to targetN via store_targetN() -> attach_target()
-> -> __attach_target() -> cxl_region_attach(), it will now return -EBUSY
-> instead of reaching cxl_region_attach_auto() and returning -EINVAL for
-> pos >= 0.
-> 
-> Could cxl_region_validate_position() simply be called before
-> cxl_region_perf_data_calculate() (or inside the manual attachment branch)
-> instead of duplicating the bounds and p->targets[pos] check in
-> cxl_region_attach()?
+>
+> Since the recover path right after the loop in serial8250_rx_dma_flush_wo=
+rk()
+> already calls dmaengine_terminate_sync(dma->rxchan) and retains the buffe=
+r
+> with RX masked if synchronous termination fails, can this loop bound the
+> number of pause retries and escalate to serial8250_rx_dma_recover(p) so t=
+he
+> port can terminate the transfer and fall back to PIO?
 
-I don't want to move cxl_region_validate_position() call in this
-patchset. That is a separate issue that I mention below the scissors
-line and it will be fixed up in a separate patch. The reason we don't
-just toss it in here is that it is a partial fix for a problem different
-than what we are doing in this set.
+Successful synchronous termination would make subsequent buffer reuse
+and PIO access safe under the DMAengine contract. The concern is not
+that termination cannot establish safety, but that this recovery path
+discards the pending data and sets rx_err until reopen.
 
--- Alison
+A retry budget would make that an explicit, potentially lossy recovery
+policy. It would not distinguish a permanent failure from a transient
+one. However, continuing to retain ownership indefinitely also fails
+to provide useful reception when the provider cannot recover.
 
+The Tegra186 case should also be distinguished from a transient timeout:
+advertising cmd_pause when the hardware cannot implement it allows
+generic 8250 to select a DMA configuration whose requirements are not
+met.
 
-
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/3e5af9d6d59f8df52b9d21bcf1c7e78f06918f80.1793653629.git.alison.schofield@intel.com?part=1
+>
+> [1] https://lore.kernel.org/r/20261029222734.3086943-1-rrangel@chromium.o=
+rg
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102-submit-s=
+erial-8250-dma-cancel-v1-v9-0-9159caade148@gmail.com?part=3D7
