@@ -1,85 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.101.98
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793744403;
-	b=zwHUzZPZY7ezRuJ5qY5QcmojXSMjsFU3CiuHJhRFvvmFXDS0Z5iOVnFZj6Af+s7m63Fi
-	 qqkfsaSVpCW/DZ86YlI9NMbwsK6PFVq2gduEpcIsEg7x/oVh6EbTIcGnk6raDJ8gp13s5
-	 E/uWeZqtvvQ3wG5LyeXO1PQulB4tfmlDpI7x77mGw1PQaD1Kd0HiE6CUNikbdVoYveGaQ
-	 qUEN7FoGpjzcQzNO/E/3dL9PS1KI1hT7T0g3OwAtWw8L4L4CO7d8ceoEFW4gshBiOvrdz
-	 /5sZlnk9yoSgwOQ/Wga9Kt5wtcRwbtTUV0pLxAbcMzb8eaxt50CzPaoz7GCQ4ikKN6A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793744403;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.15
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793745633;
+	b=CQin+G0IT0e7/M7KOWcxoPQQBxhMe3+O+MzCq3DdeJHhqHNfFs4SHbUC1P2x5gNKtWmR
+	 4TYoaCdb+w6GqMSS3mFzckH5lAta1JzMhsJx4S2ghTnDy54ufQECe7z7nKqc5JQau727+
+	 D0kLuTc+/ULaBKyAaieQtEKig9Rmmvc8YVCgQ8sE+PShht6he9oOL8i5AoFDbiKPCAaOe
+	 NhMGIQfBQcrfrtGcFlPd71vhM7hDncmwMELfyKSbQgIiHPaThu6rx2kGdsqXuE7Y6tk86
+	 h+KfyVZlQpZa+jCRU1XTdLkF4JK3Z4yJUVmCKHz3PT4NLWEH0n7cCbv6uzxki3zdgRg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793745633;
 	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:In-Reply-To:
-	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=viFqSXwGZCNY/KAf35usFf+1OwB6SuapVmFMpxm+pYs=;
-	b=0zRB6DgiHoTby8toaiMt6gi1cYhApGzLmNsrk0hhsxUnZ/dDE/dJRV30VibIVtKMfiif
-	 uvYKYF2MnreexjsssvKUDoFJGp+dMvell5ezySt7vCO3OQZ5TUwBAuV8eT7sokaWkj0q4
-	 XhakyqY0jk4WlkyyBMm44NsqN1yclvsKrx9uBJxWWgS8j84qc04jj68rfsUD8AGvMTPSZ
-	 y+F+zQZOnA0CJhsqSqoOIfA3PIgddjDAvu+/AeinWt9C1mbSCN7165iHIo0fci0WFoPP4
-	 DWG97NcG4dAd5exm+gjZluAlZfR1LoYoc5958b37qMO+z9rF+xuSXlpRGOKwfxfc9QA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=atomlin.com;
-	spf=pass smtp.mailfrom=atomlin.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.101.98
-Received: from CWXP265CU010.outbound.protection.outlook.com (mail-ukwestazon11022098.outbound.protection.outlook.com [52.101.101.98])
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Stat-Signature:X-Rspamd-Server:
+	 X-Rspamd-Queue-Id:X-Spam-Status:X-Session-Marker:X-Session-ID:
+	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
+	bh=ewjEYT7at6mMmUqDrpC37r4P1a0BixvrJSu1ivgWlPM=;
+	b=NBP0IAKSYKRqcMLlmg/M86oXanC1WG/JLCbiJCHidvcOkD01oEk8Fu04EtQPaAJ/mIg6
+	 RbCgMD+Ly8HF2WeoPUKG/WXRHrfC47vcotYhavcW2deSCEMYavWE6uBQPC62mqUa2ZjbS
+	 +zot2rAz8lSaPSzYDwL3Nppq2cQhgqj5PB+K2Zd4RgKhsgy+zT35Qnh6wiAEn5l2HBifH
+	 kx4cudKLk2Krt12ocamolT+4q2tP9DrXxzV8k+EXO3VsmVoJlRT6/OEr/veVKH3J5Ce75
+	 4pd02+0fu+nPcmp2AavLuN6VMq1X4wA5Nb6Z0bsKe+WPRNetquOjecvtvAtSDF2C3bg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=goodmis.org;
+	spf=pass smtp.mailfrom=goodmis.org;
+	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=62i4xYp1;
+	arc=none smtp.remote-ip=216.40.44.15
+Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688E5606A324
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 22:20:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 688E5606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=U7i9srMdtNlhSb+gf6u1l8dZWJwsxI9VIUpAGMrjTVLCe2hmWZrl7XAS75kmhciLKzeT1ti6sIdjVIVophevkTBmddHBggs5GbUFssZAgyPfh4Gl8gVqwlLeOfL52YBW2e6DFC73PJpi9s7jAkxeo54h0RpcCo1aYrcESnQDnaBqD06KEr676ICpMjcOZAVK7+L14UPWHxuY4Voz7AeXC8nLtBvvR8wisGz1omf60rRESENcQfU/OGKswmjwcXu8pcp1rWZFJ20qXahb73yITjKBwp/iyQN1KJ94uyNmuuAnyNcqr0TSDmbNacdbQY6FHeiShph6iaoaxJtyTxSWVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=viFqSXwGZCNY/KAf35usFf+1OwB6SuapVmFMpxm+pYs=;
- b=Q+09H6LVu7I4VRFdZrrlK3LKZmxFkTB38O0UpcKHN4kVQDRRwWIZUETEcdNk/3a6jHckXWhVNdQicmk3155ZTHIq11lBNkpY79tKA+oaK/elcrPYHqY3ZtdvoYyTHFvWutJceXaPHHgeOjzssJ6qy4wk+HyOIwcuQtI6ESrKnuYP7qb2+7upIZLAmWy7tKyZ0HLlvfz1FVFJABQmp2zIKciyu32p1AfdwV4JzFtndAO7617fjXU0xLH4FESlJps7IIpsfQ3Q+0omyX63munq2wtS8RII6Ljea6681AA958vjWYMgvC1WfB24Nr7kb4xNss0FdJtPb7RJgBVDVa2JIQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:163::8)
- by CWXP123MB4231.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:b6::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Tue, 3 Nov 2026
- 22:19:59 +0000
-Received: from LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
- ([fe80::f71f:a9f:c4de:687a]) by LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
- ([fe80::f71f:a9f:c4de:687a%5]) with mapi id 15.21.0592.007; Tue, 3 Nov 2026
- 22:19:58 +0000
-Date: Tue, 3 Nov 2026 17:19:55 -0500
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org
-Cc: linux-modules@vger.kernel.org, Petr Pavlu <petr.pavlu@suse.com>, 
-	ojeda@kernel.org, gary@garyguo.net, arnd@arndb.de
-Subject: Re: [PATCH v12 2/3] module: Extend module_blacklist parameter to
- built-in modules
-Message-ID: <7gwjzm2amli3zjrhybhothz2chvpfo5d4i56xt4rt2ogzqbxd3@h2ejeyxx34xf>
-References: <20261103214223.32598-1-atomlin@atomlin.com>
- <20261103214223.32598-3-atomlin@atomlin.com>
- <sashiko-outbox-196090@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-196090@kernel.org>
-X-ClientProxiedBy: BN1PR13CA0012.namprd13.prod.outlook.com
- (2603:10b6:408:e2::17) To LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:163::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D460606A326
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 22:40:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D460606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=62i4xYp1
+Received: from omf13.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay04.hostedemail.com (Postfix) with ESMTP id 7539D1A05B4;
+	Tue,  3 Nov 2026 22:40:30 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf13.hostedemail.com (Postfix) with ESMTPA id A39A720010;
+	Tue,  3 Nov 2026 22:40:28 +0000 (UTC)
+Date: Tue, 3 Nov 2026 17:40:27 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Linux Trace Kernel"
+ <linux-trace-kernel@vger.kernel.org>
+Subject: Re: [PATCH v7] tracefs: Add read-only eventfs filesystem at
+ /sys/kernel/events
+Message-ID: <20261103174027.35c261c4@gandalf.local.home>
+In-Reply-To: <sashiko-outbox-196087@kernel.org>
+References: <20261103163803.77170132@gandalf.local.home>
+	<sashiko-outbox-196087@kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,147 +61,156 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P123MB4190:EE_|CWXP123MB4231:EE_
-X-MS-Office365-Filtering-Correlation-Id: ecc71c69-8e53-4bec-b6f1-08df39f898bd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|22082099003|18002099003|4143699003|56012099006|3023799007|261026140227099003|261009223027099003|261026121527099003|261028144727099003|261102123227099003|261022075727099003|261021121427099003|260925022911599003|260925021911599003|260925021311599003|261022105027099003|10067099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	Xu5io1IfAQxG9LqueLQCJpKskfGZdAh8Jp7zeC/vjhFaYq/cZadtA9O4rjTtLlea6nGOz5DIDitTuXvWKZDa6gbRUFxfJDyO3C0P1/Xj9MpYTyiqxwWU2Eabegac+zfhsiwEsxAAW8hV1ysDCPyrxZv/IYZmjeJn7cnu5Z+S5IMykVHz4el3fKQq5ZcIxkXUkOZb/mFGzsvsLRqqsfX90e/q2ufouJCdV0qBHh8Bxi3PlAIxDxCbiW989eFWF3V3NFxU0K/sUe/zwqy3epLJ/r4PNwtc/10UgUMRyqMKZ6EEBHp9SWVRTdbF0ui7alJNWaaxyYIZ4dWTmHbhVdAQb0tHphw7O4MaaYFt1+v1wjBUz0mCeRPiHs7j8sPnrkrBmMqtkpEUEk7Q+WYC6jdvyiM2CDFAFT4tj7Tki6nVaS9sNIK/rIK2zyyTdnsmNWjtKqh+++cNmN+jms3K7cCl7hkUwF0k1pi9phm6y0+C/nHsHqSHb2ufCF6JPYLXd7ZURjbBd0bJwoPzvw3i0nhBCNyKUOjXu/UIF2PRH6w8dP6BtfQaG59hELxUFFgP1QmKezQs7zP0b1u+lLO3hT3saSAVY5OMG6Y2imA4byBgGtWoVM4b48fanUSVANIFhGH0fSfW47auTzltm9i+wNkdCF5584HTCU65sGXQzmddS/0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(22082099003)(18002099003)(4143699003)(56012099006)(3023799007)(261026140227099003)(261009223027099003)(261026121527099003)(261028144727099003)(261102123227099003)(261022075727099003)(261021121427099003)(260925022911599003)(260925021911599003)(260925021311599003)(261022105027099003)(10067099003)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?LzdtZEdVQ2ZxOC9zaFNCVVNWOWNBTG5BMi9MK0JSOExmV2ptNzJBMTRwemcr?=
- =?utf-8?B?cTIxZURCbmVuMk42SFdqOStYeG40VElhM2J1SDhxU3J0SWNCTCtETlNRa2FC?=
- =?utf-8?B?WjFXSy82Y25td3l2UmU2aUZkYnMwLzFiNnUraUVOYmVSNHpxWXphR08vekht?=
- =?utf-8?B?clJhbFd5dVovVGZ3OC9uclY0RmxOMWIzbHhQTDEveC9YRnJ3c0h1WE1sZitE?=
- =?utf-8?B?ZVNZVjZ4TGY4VWs0YUtLTzVVZVE0WmRIRzY1cnRxZ3NlZVJ0VjFLMUhURUd4?=
- =?utf-8?B?TTNkeHJnemd6R3ZwMC8wRjMrMUtTVUgxL3pSMllzb3BQbkF6OEgvWm9YcXFp?=
- =?utf-8?B?OThJSkxOWVM0V3JKekZJejhCbkdGZTRHbmhGWk5ERXo5YVFxaWlaK2Z5Q20w?=
- =?utf-8?B?ZFo5R2FycytZaGREQWdibmR0K2hvMmJ1dlIvdkRVT1lwS2RTK1Z5QzVSc25k?=
- =?utf-8?B?LzJQMlRib0JYcnpmbVNxK3Z4eGUrL1hvZTYzejExU1lsczVFaDNzUFZkZk4y?=
- =?utf-8?B?eXdCclR6ZzcyaDcwa3F0Yjk5SU5mR3A5NDNUYnMrTzRZa01sZk9FdlZEODR1?=
- =?utf-8?B?LzAwT1JORGt2L2VhcC9aMmt5aDJtYWg4c3ZMZ3NXRnc4dUlCdXpxUm5RN0s4?=
- =?utf-8?B?aVdkNXVLaytBckVxRTkwZkt6dHJGbzdkcDN5SklXaHFSb2cvSEtDekh6clFw?=
- =?utf-8?B?OEx4Vk5HZ0lOWWZyOTJrTzlrS1dTbHpoY3g2QkhPVzhqd1p4ZTFPMlFwQTdu?=
- =?utf-8?B?STZBRWJzWUFTQStzdmVYVWc0K0ZvbFhYYnN6c3Rnc1F6ZGFwQk9iOG4yR0hu?=
- =?utf-8?B?R1ZNM1daRENTVGd1cUR2alNPdmFjZFFLTUxiUlV2d2xvK09TOHlJSnFQMmdx?=
- =?utf-8?B?NllxZTJUN1kzMXVOVFMzTEJTVzg1ZnA3SUFoSDR4VER3WXZILy80Q2x4QkRi?=
- =?utf-8?B?MnZRR0liNHRTNUppVTdiMGNVdmJIWGY1a1FnL1lGanNDenJjOWE1cnNiY3p3?=
- =?utf-8?B?SFN5aDVZbFZVL2VqdjlGYTBidE8rdUplbkk0L2FKTTIvZVhzWEthV3lCM2tP?=
- =?utf-8?B?OWltWXRnaXFXYWxtVCtkTTlzRlBPWVpMZUJqeUZqWHBveFlMaERPS2UrdHBV?=
- =?utf-8?B?L01NRTdLOUtiZXZVMnNwand0QlB4TXZEdUNnT0prZUk4UXRqQ290cThyMFFB?=
- =?utf-8?B?WDVvbjB1QnpRK0hlR3pxMVVvazBvVmt1QktZUCtSRFUwMmo1WERTcnUyV25m?=
- =?utf-8?B?VmpmbWNzS0tLSGJUdjBRWEZ3NlM3dWdhK0s5b0t6aEU0VTMxd090b0V3cUtW?=
- =?utf-8?B?eDNhL1l5NWZOeWxOa3Vpd3ZzV2VmaGdRaWN1NFJBZzR6cEI0NW1uUVNjR0J6?=
- =?utf-8?B?VjRxVG9zL1ZHcDJua3VzK1lESm9iMTlFN01QVXN2WUVVcEJNSkY1ZjNZRUJU?=
- =?utf-8?B?TG9obVg1ZHJkT25ySUdNR2lGODVQQW1qanVDb1V4bVd2ekswT2dMdGN4K1lQ?=
- =?utf-8?B?T1l2ZGd6cUlwVEtaQldDbjZ6V1JXbm5JN0lOSDJBSjlkRHI5WC9mWWRkelFC?=
- =?utf-8?B?WTJBU0JIaHhMeWRUOHg2TEY2MFRiMHBUS3c3ZGFMOWRGYVVaNXBqazA1NW1o?=
- =?utf-8?B?V2dNOGMzclMvYyt4SDNpOStUdjRlU21sWGh5V0gyNFJoOUJtWnk0UkIyYjd4?=
- =?utf-8?B?eUgxYitONktqR3NOZmYvZnovSUx0S0FmdXh5T2dyTUw2bmZiUDFkOTErbjBV?=
- =?utf-8?B?clkvdG4zRGVtUWdqazhGdWN5L05aM2xmK3QvUkMxKzVuRFQ2cG15RHNsNTVV?=
- =?utf-8?B?Tm5qR0M1S0ZhOWVNbWdydEJSSUdqN21Pb3I2eENSNWlnM3Q3ZDU2ZXUvaFow?=
- =?utf-8?B?QmNYWEhESWtJYUhFUEFMSTFGK0cybE9zbS9NeklQcFQ3TnBzS2JTeDlRUUEy?=
- =?utf-8?B?eDNWUFp4MWoxbTFoT2JVNUtwZnp2NFd1ZWtsM3F0Y0daS3FlMjNVa0pOOHlN?=
- =?utf-8?B?bGRaVzdBa2xxd0dxMXI5NllKdGd5bG1PdXpmZytvcHI0SHE0NzE3Z2hmdG1Y?=
- =?utf-8?B?cjBodHludzhlSUlZNDFsdHVnb1dXQTA4Z1kyMWhCbWVLY2h4UE5zcUluVVZl?=
- =?utf-8?B?T2VCOHFreHVpQ1o0ZkVwci90bGxaWnMwZzlJd1Q0dTA2b0p0MlJ5OXE2dmM2?=
- =?utf-8?B?eUZPR09CQzZDZTVnb0ZCZXJhYThxRnhUMm5aNGFmL2FMVWlwYkNrdGZxdlNh?=
- =?utf-8?B?NEkxdFgySi9GN09CRW1XcU5qYXdLeVB4a2NYelh1SUV2bnI0YUVrMmEzWm5v?=
- =?utf-8?B?TDBOSWk4cGVPbzEyelAvaGZpLzcxanJoamhBZEhSVGRHTksrc2tldz09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ecc71c69-8e53-4bec-b6f1-08df39f898bd
-X-MS-Exchange-CrossTenant-AuthSource: LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2026 22:19:58.8912
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lDUXGP6Rc/Dw3TM17J6CWBahy/x/A29HQ7Cqrg2KIgCyO6WZOYJsk+D6LUVWZ10xbDQG+R+DJ0QRAWuUlKsvNA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP123MB4231
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: jzr8yeanuximbpy7pbp661zu46j3z6j3
+X-Rspamd-Server: rspamout01
+X-Rspamd-Queue-Id: A39A720010
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+iyKxRCiUJRLiyYsR/Ws1Kv8YshGXOTFk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=ewjEYT7at6mMmUqDrpC37r4P1a0BixvrJSu1ivgWlPM=; b=62i4xYp1Cbb3qwOtUsP43WOopFehjO40sawwv8m0s339e75/CLDtrs3bo4exSStIuovKNkPanqwssTB5/kqDDBPPa/zf9P/Rq5cwZc0BOZ6bydmk/9hGA7PIx3loVLNHqu2QwSWF4nQcoARFbIzs7qazmT3yKi53bLkXSop+QDY=
+X-HE-Tag: 1793745628-632290
+X-HE-Meta: U2FsdGVkX19j4axnv9hat1pNfi5EXsU1V2oZvDxrLGAiJOughetzbG8wFDBbTTLeRnEr56PNNUaaKVnqlF9AviSko/EjGS4cqz43Wh1OGO3eJRfsN/WYcsUWoMv0caGXL9a5SDI12QlZ9+Xd+GsC52xbY0WQMmPVJ2RY5XrWAVB0j2czZHnuSVpIChKJRj7nrwqxDahR3qqek824RqmiS26vhbnRfJpxV1xMNGa0SMkIiopSYiu2V9iKlKYR1lvNvl5PlDiKuAQHOvpm3ElAhI06ZsQ1dMrtCu8GK05xb7y/OfoPSXo/gTmkylvxXtRaK1KP16zkp7Ojz1RrzEgk2nkSBY8Zp5it
 
-On Tue, Nov 03, 2026 at 10:01:28PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] module: missing kernel-parameters.txt update for module_blacklist=
-> --
-> 
-> commit b07237b9f1588393358dd2a97ba3add75969d76b
-> Author: Aaron Tomlin <atomlin@atomlin.com>
-> 
-> module: Extend module_blacklist parameter to built-in modules
-> 
-> This commit extends the module_blacklist= command-line parameter to built-in
-> modules by recording their initcall functions and module names in a
-> .initcall.modnames section. During early boot, do_one_initcall_builtin()
-> checks this table and skips initcalls for blacklisted built-in modules, with
-> parameter handling moved to init/main.c so it also works when CONFIG_MODULES
-> is disabled.
-> 
-> > diff --git a/init/main.c b/init/main.c
-> > index d7bf1ffc5f503..99df129d3b296 100644
-> > --- a/init/main.c
-> > +++ b/init/main.c
-> > @@ -1406,6 +1406,56 @@ static inline void do_trace_initcall_level(const char *level)
-> >  }
-> >  #endif /* !TRACEPOINTS_ENABLED */
-> >  
-> > +extern struct initcall_modname __start_initcall_modnames[];
-> > +extern struct initcall_modname __stop_initcall_modnames[];
+On Tue, 03 Nov 2026 21:57:51 +0000
+sashiko-bot@kernel.org wrote:
+
+> > +static struct vfsmount *eventfs_ro_mount;
+> > +static int eventfs_ro_mount_count;
 > > +
-> > +/* module_blacklist is a comma-separated list of module names */
-> > +static char *module_blacklist;
-> > +bool __init_or_module module_is_blacklisted(const char *module_name)
+> > +static int eventfs_ro_fill_super(struct super_block *sb, struct fs_context *fc)
 > > +{
-> > +	const char *p;
-> > +	size_t len;
+> > +	struct inode *inode;
+> > +	struct dentry *root;
 > > +
-> > +	if (!module_blacklist)
-> > +		return false;
+> > +	sb->s_blocksize = PAGE_SIZE;
+> > +	sb->s_blocksize_bits = PAGE_SHIFT;
+> > +	sb->s_magic = EVENTFS_SUPER_MAGIC;
+> > +	sb->s_op = &eventfs_ro_super_operations;
+> > +	sb->s_time_gran = 1;
+> > +	sb->s_flags |= SB_RDONLY;
 > > +
-> > +	for (p = module_blacklist; *p; p += len) {
-> > +		len = strcspn(p, ",");
-> > +		if (strlen(module_name) == len && parameqn(module_name, p, len))
-> > +			return true;
-> > +		if (p[len] == ',')
-> > +			len++;
-> > +	}
-> > +	return false;
-> > +}
-> > +core_param(module_blacklist, module_blacklist, charp, 0400);
+> > +	inode = new_inode(sb);
+> > +	if (!inode)
+> > +		return -ENOMEM;  
+> 
+> [Severity: Medium]
+> As reported by Sashiko on v4 [1], in eventfs_ro_fill_super(), new_inode(sb)
+> invokes tracefs_alloc_inode() via eventfs_ro_super_operations and links the
+> root tracefs_inode onto the global tracefs_inodes list without setting
+> TRACEFS_RO_EVENT_INODE.
+> 
+> TRACEFS_RO_EVENT_INODE is only set on the root inode later in
+> eventfs_create_events_ro_copy(). However, if LOCKDOWN_TRACEFS is active at
+> boot, create_event_toplevel_files() returns -EPERM before calling
+> eventfs_create_events_ro_copy():
+> 
+>     e_events = eventfs_create_events_dir("events", parent, events_entries,
+>                                          nr_entries, tr);
+>     ...
+>     /* Lockdown causes e_events to be NULL*/
+>     if (!e_events)
+>         return -EPERM;
+> 
+> If eventfs is mounted by userspace (or in the window during
+> eventfs_ro_get_root() before eventfs_create_events_ro_copy() sets
+> ti->flags), can a tracefs remount with uid= or gid= options walk
+> tracefs_inodes in tracefs_apply_options() and overwrite i_uid and i_gid on
+> the read-only eventfs root inode?
+
+That can't happen because the eventfs_create_events_ro_copy() is done at
+bootup *before* user space starts. So all is fine.
+
+> 
+> Should TRACEFS_RO_EVENT_INODE be set on get_tracefs(inode)->flags directly in
+> eventfs_ro_fill_super() when the root inode is allocated?
+
+Nope, no need.
+
+
+> 
+> [ ... ]
+> 
+> > @@ -327,7 +432,7 @@ static void update_inode_attr(struct inode *inode, umode_t mode,
+> >  }
+> >  
+> >  static struct inode *eventfs_get_inode(struct dentry *dentry, struct eventfs_attr *attr,
+> > -				       umode_t mode,  struct eventfs_inode *ei)
+> > +				       umode_t mode,  struct eventfs_inode *ei, bool ro)
+> >  {
+> >  	struct eventfs_root_inode *rei;
+> >  	struct eventfs_inode *pei;
+> > @@ -342,6 +447,9 @@ static struct inode *eventfs_get_inode(struct dentry *dentry, struct eventfs_att
+> >  	ti->private = ei;
+> >  	ti->flags |= TRACEFS_EVENT_INODE;
+> >  
+> > +	if (ro)
+> > +		ti->flags |= TRACEFS_RO_EVENT_INODE;  
+> 
+> [Severity: Medium]
+> When a read-only eventfs inode is evicted and its struct tracefs_inode slab
+> object is later reused for a normal tracefs inode, does the stale
+> TRACEFS_RO_EVENT_INODE flag remain set in ti->flags?
+> 
+> Because eventfs_ro_super_operations shares tracefs_inode_cachep, an evicted
+> read-only eventfs inode goes through tracefs_drop_inode(), which only clears
+> TRACEFS_EVENT_INODE:
+> 
+>     static int tracefs_drop_inode(struct inode *inode)
+>     {
+>         struct tracefs_inode *ti = get_tracefs(inode);
+>         ...
+>         ti->flags &= ~TRACEFS_EVENT_INODE;
+> 
+>         return 1;
+>     }
+
+Oh, this is a bug. I need to clear the RO_EVENT_INODE flag too.
+
+> 
+> The slab constructor init_once() only runs when a new slab is allocated, not
+> when a freed object is reallocated by tracefs_alloc_inode() via
+> alloc_inode_sb(), and neither tracefs_alloc_inode() nor callers such as
+> tracefs_create_file(), __create_dir(), eventfs_create_events_dir(), or
+> eventfs_get_inode(..., ro=false) reset ti->flags.
+> 
+> If a slab object previously used for a read-only eventfs inode is reused for
+> a tracefs inode (or the tracefs events directory inode), won't
+> tracefs_apply_options() see the stale TRACEFS_RO_EVENT_INODE bit and skip
+> updating its uid/gid and calling eventfs_remount()?
+> 
+> [ ... ]
+> 
+> > @@ -521,14 +647,16 @@ lookup_file_dentry(struct dentry *dentry,
+> >   * @dir: in which a lookup is being done
+> >   * @dentry: file/dir dentry
+> >   * @flags: Just passed to simple_lookup()
+> > + * @ro: Denote if this is from a read-only eventfs
+> >   *
+> >   * Used to create dynamic file/dir with-in @dir, search with-in @ei
+> >   * list, if @dentry found go ahead and create the file/dir
+> >   */
+> >  
+> > -static struct dentry *eventfs_root_lookup(struct inode *dir,
+> > -					  struct dentry *dentry,
+> > -					  unsigned int flags)
+> > +static struct dentry *__eventfs_root_lookup(struct inode *dir,
+> > +					    struct dentry *dentry,
+> > +					    unsigned int flags,
+> > +					    bool ro)  
 > 
 > [Severity: Low]
-> This patch moves core_param(module_blacklist, ...) to init/main.c and extends
-> module_blacklist= via do_one_initcall_builtin() so that it also skips
-> initcalls for built-in modules defined with module_init(), even when
-> CONFIG_MODULES=n.
-> 
-> However, Documentation/admin-guide/kernel-parameters.txt still describes
-> module_blacklist= only in terms of loading modules:
-> 
-> 	module_blacklist=  [KNL] Do not load a comma-separated list of
-> 			modules.  Useful for debugging problem modules.
-> 
-> The follow-up patch in the series (commit 7bf71ba917d2 ("module: Rename
-> module_blacklist to module_denylist")) renames the entry to module_denylist=
-> without updating this description either.
-> 
-> Should Documentation/admin-guide/kernel-parameters.txt be updated here to
-> mention that module_blacklist= also skips initialization of built-in modules?
+> As reported by Sashiko on v5 [2], this isn't a bug, but since
+> eventfs_root_lookup() was renamed to __eventfs_root_lookup(), should the
+> function name in the kernel-doc comment header above it also be updated to
+> __eventfs_root_lookup to avoid a W=1 kernel-doc warning?
 
-Hi Andrew,
+Again, I'll handle this later.
 
-Acknowledged.
+-- Steve
 
-I will update Documentation/admin-guide/kernel-parameters.txt in this patch
-to note that module_blacklist= prevents loading or initialising both
-loadable and built-in modules, and carry that updated description forward
-to module_denylist= in the subsequent patch.
+> 
+> [1] https://lore.kernel.org/r/sashiko-outbox-194145@kernel.org
+> [2] https://lore.kernel.org/r/sashiko-outbox-195864@kernel.org
+> 
 
-Kind regards,
--- 
-Aaron Tomlin
