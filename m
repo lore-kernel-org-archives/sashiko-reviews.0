@@ -1,55 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.87
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793696382;
-	b=GNQeOIQikN7VG2jgKSr+Y3XKeUwKzXSCkTEyq5CUZSQ3AUbbOB6xjovQH1olzHZzTQQA
-	 jN7LWRYag+tyv8vPcwAdj6hNLI1Rgjz76VOZ9JE8UarL0HBVaCnygSCEb6+Z91A2XKiCW
-	 NYt9IK2v+R91xzQf86Hpd2DT0CMVBJxWr13rPYoymlGKN1hCtQlnySTcPrzFlRbjyJBiU
-	 ECkr7RfUiZnxttRJtOhMV8ZK62PbmipJihykTgwvmYmSJplg5LHD9wn/81FPI9IjqStN9
-	 /ScxKIHCz2Y9G6nWUbEsj70QLIuM+ym+IObvlb/776KuclNiKvogc0q5E1Hk8ZT3jZg==
+	t=1793697112;
+	b=PFADgKwFtDOyp+p4d8f+W2vMCd5hatUt95MNdarM98GEbAWlED5Ivpq/dmwH1B3Wlkdb
+	 5vXS8PUXoOpxEgnNsNoc1g8NbHZiIoneNt/rBI7jD3FEejNMxne+fBlo1Ym1VauXn9J1U
+	 UoU6NOpYjrX8mOsQaM31Bi9KwwKrCXl8FDwc0gsUbkfYLwPpzBMoHifXHOdi0ZiYKl4La
+	 AMNsqYZI+ncJ2weq4GIe0AxlJDw5qS0CrC7OtmXbUNXdx4oYLYxk7pS2q4zFIlCpTRMJH
+	 TbWjPLFy30ig6ww66zmdWS689C1oSWgo5XLq+Ceo1XGFQYjAkv7eqlyopqr/zor11iA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793696382;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=bMSZL4dh788kj1Ij3zhdAk/RFep5+LgNTfn0MJBEZW4=;
-	b=3ZWdQJqh1s+QFsmvwa1o5cKd3yMU5qS6S3xRmn4U6nhptuLRGYLwvQSvQ7HLaZwvC+Du
-	 jZVjXTCs9EE6fsFI2Uw2JBPmeusGFmL93HdVmRH6zr0pDxNFYKpmqe0UurGm6BDjMTLGJ
-	 SVizXwrdJBQMMLc4E5JZltnyCrkfrBx5c1Z7wiay+b7R2fU4E7sjuNzrgexe7/6qXszj4
-	 79spvjXtSpTQ9WHbLG+VRBccU/9J+u3HcTuDqRAxyOxBS4SZ7+GsGv139epZuCj/B1PD3
-	 ygM3w8l+bXoZBx0RfOpr2djq//ghrhGT34Ltv//H7CbqX0wuO4JdZW0dCa8Na9Dl/Xg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793697112;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=L/rwbEY90TsE31orsIbmoYEBsIiiZzgORGDGsve2QT0=;
+	b=pMbDuB9Xsnz8pVe8ZJIpzPMJjyF/eKrh3A5gscmHBV0clhtpst5VuQ7H/j4cMZjSvxk6
+	 IVq4P9+DhPWNUz2hxHzglT2hBp/VPQNouTv22nZFa8Oj4PM3clDODNBPEhQICVmPhwzQY
+	 AU324KaAm3Hz8UwLJLIsC/GUN5QfaojBJMhmn1I9K6T9swkKO3m5fem7XQsYZajql0mzj
+	 NDwjM1HSM6n1tKdBQW/uKBZqzKN7gpTvfaZ9lcAmhUm1bNru+LXaHMJijKkQJ7tdFl4qa
+	 rFLp4sO5UCNC50e+gvas+Ev+xyupOWN/X86amDyDkQUiPfAL2eLtTYKRH8VloK2CSzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EKFRULxu;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=hWhGAMYn;
+	arc=none smtp.remote-ip=91.218.175.87
+Received: from mta0.migadu.com (out-87.mta0.migadu.com [91.218.175.87])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8096606A324;
-	Tue,  3 Nov 2026 08:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624AB606A326
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 09:11:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 624AB606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EKFRULxu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560A41F000C1;
-	Tue,  3 Nov 2026 08:59:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793696381;
-	bh=bMSZL4dh788kj1Ij3zhdAk/RFep5+LgNTfn0MJBEZW4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=EKFRULxuEvrfwa5a1B5fBPNy9FTfqCZSjsz6vH2uMOV5fFUD2F9HsKeDSjWQvrGKh
-	 GVSvUbd1fq+mF0DVRo3VkBXRER/QcMFPEpYOeA2sAbDtwkfP4x7wnnhE9duFcrB9Uw
-	 ASYrgMRibIYVxdZc5TV5i3PqjPq5XNq2CT7QH7uZpuG5gCf3plq+rJO3Tv+su4Et5v
-	 wS3Dr+xcFqArD3X2xPEj7ZTAj9F1kmIdvk6JLxyGmO5lD30jd2zdB1GtHi3HGPz1FM
-	 BrUdT5BPDd1ll9wgfnbFZkdzMhzU+nbPZs/z/wnJ0VIQfMY5y7HK35dXw+8XucOo5z
-	 jhhBYM2ajD7PQ==
-Date: Tue, 3 Nov 2026 08:59:37 +0000
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@oss.nxp.com,
-	"open list:MULTIFUNCTION DEVICES (MFD)" <mfd@lists.linux.dev>,
-	imx@lists.linux.dev, Frank.Li@kernel.org
-Subject: Re: [PATCH 1/1] mfd: stm32-timers: use dmaengine_desc_set_callback()
-Message-ID: <20261103085937.GE13023@google.com>
-References: <20261102174656.3939832-1-Frank.Li@oss.nxp.com>
- <sashiko-outbox-193875@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=hWhGAMYn
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=4izyozmbuMGIzwBXwOGfCjpLSN/9aWgvEh8DalxY9c8=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793697108; v=1; x=1794301908;
+ b=hWhGAMYnBWhe3NfVoxNafdUdTJ1qC/oGhHK7lSWu2kfOXs8GDMfIUqyVR+Zar7r+naniL2DB
+ Y3XdksAVun3fVK6BXo5jmmq7slXW+o+6OuNAlthBKQlgPdr1v4kmMszOtXoaLlp1xSfQS0O/XAI
+ Ph57qygITpzKfnDJXgJwcRrw=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 736b6edb0d423b19;
+	Tue, 03 Nov 2026 09:11:48 +0000
+X-Mizu-Trace-ID: 736b6edb0d423b19
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <d9ebae9f-7a3e-412f-bb1c-f753b83ede59@linux.dev>
+Date: Tue, 3 Nov 2026 17:11:39 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,86 +58,218 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-193875@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] mm: hugetlb: skip CMA when direct reclaim is
+ disallowed
+To: sashiko-reviews@lists.linux.dev, muchun.song@linux.dev,
+ osalvador@suse.de, david@kernel.org, akpm@linux-foundation.org,
+ azpijr@gmail.com
+Cc: linux-mm@kvack.org, Qi Zheng <zhengqi.arch@bytedance.com>
+References: <cover.1793692578.git.zhengqi.arch@bytedance.com>
+ <325d33655f29a2799a0859c788c48625feeb85f1.1793692578.git.zhengqi.arch@bytedance.com>
+ <sashiko-outbox-194875@kernel.org>
+From: Qi Zheng <qi.zheng@linux.dev>
+In-Reply-To: <sashiko-outbox-194875@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Note that this is the first I've seen of this patch.
 
-You may need to [RESEND] it.
 
-On Mon, 02 Nov 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] mfd: stm32-timers: call to undeclared dmaengine_desc_set_callback() breaks build
-> - [Low] mfd: stm32-timers: uncapitalized commit subject description after prefix
+On 11/3/26 4:47 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] mm: hugetlb: hugetlb_cma_alloc_frozen_folio() breaks MPOL_PREFERRED_MANY
 > --
 > 
-> commit 90e59ce1010cceb53a7009d41c5cc59f1c853e30
-> Author: Frank Li <Frank.Li@nxp.com>
+> commit c96d52d66d643a77abaa96a17e392b7ab0f36ccd
+> Author: Qi Zheng <qi.zheng@linux.dev>
 > 
-> mfd: stm32-timers: use dmaengine_desc_set_callback()
+> mm: hugetlb: skip CMA when direct reclaim is disallowed
 > 
-> This commit replaces open-coded assignments to the callback and callback_param
-> fields of struct dma_async_tx_descriptor in stm32_timers_dma_burst_read() with
-> a call to dmaengine_desc_set_callback().
+> This commit updates hugetlb_cma_alloc_frozen_folio() to return NULL when
+> gfpflags_allow_blocking(gfp_mask) is false, avoiding direct reclaim inside
+> cma_alloc_frozen_compound() when __GFP_DIRECT_RECLAIM was cleared by the
+> caller.
 > 
-> >     mfd: stm32-timers: use dmaengine_desc_set_callback()
-> >     
-> >     Replace open-coded assignments to callback and callback_param fields
-> >     of struct dma_async_tx_descriptor with a call to the
-> >     dmaengine_desc_set_callback() helper.
-> >     
-> >     No functional change intended. Prepare make to struct
-> >     dma_async_tx_descriptor private to the DMA engine.
-> >     
-> >     Signed-off-by: Frank Li <Frank.Li@nxp.com>
+>> diff --git a/mm/hugetlb_cma.c b/mm/hugetlb_cma.c
+>> index dde1c866406fb..90f8d718a1f16 100644
+>> --- a/mm/hugetlb_cma.c
+>> +++ b/mm/hugetlb_cma.c
+>> @@ -59,7 +59,7 @@ struct folio *hugetlb_cma_alloc_frozen_folio(int order, gfp_t gfp_mask,
+>>   	const nodemask_t *nmask;
+>>   	unsigned int cpuset_mems_cookie;
+>>   
+>> -	if (!hugetlb_cma_size)
+>> +	if (!hugetlb_cma_size || !gfpflags_allow_blocking(gfp_mask))
+>>   		return NULL;
 > 
-> [Severity: Low]
-> This isn't a bug, but MFD subsystem conventions expect the commit subject
-> description after the prefix to be capitalized:
+> [Severity: Medium]
+> Does returning NULL from hugetlb_cma_alloc_frozen_folio() whenever
+> !gfpflags_allow_blocking(gfp_mask) break MPOL_PREFERRED_MANY for gigantic
+> surplus HugeTLB allocations?
 > 
->     mfd: stm32-timers: Use dmaengine_desc_set_callback()
+> In mm/hugetlb.c, alloc_buddy_hugetlb_folio() implements MPOL_PREFERRED_MANY
+> as a two-pass allocation:
 > 
-> > diff --git a/drivers/mfd/stm32-timers.c b/drivers/mfd/stm32-timers.c
-> > index b3dbc02aaf798..4f344f2a5a26c 100644
-> > --- a/drivers/mfd/stm32-timers.c
-> > +++ b/drivers/mfd/stm32-timers.c
-> > @@ -102,8 +102,7 @@ int stm32_timers_dma_burst_read(struct device *dev, u32 *buf,
-> >  		goto unmap;
-> >  	}
-> >  
-> > -	desc->callback = stm32_timers_dma_done;
-> > -	desc->callback_param = dma;
-> > +	dmaengine_desc_set_callback(desc, stm32_timers_dma_done, NULL, dma);
+> mm/hugetlb.c:alloc_buddy_hugetlb_folio() {
+> 	if (mpoli->mode == MPOL_PREFERRED_MANY) {
+> 		gfp_t gfp = gfp_mask & ~(__GFP_DIRECT_RECLAIM | __GFP_NOFAIL);
 > 
-> [Severity: Low]
-> Does this break the build when CONFIG_MFD_STM32_TIMERS is enabled?
+> 		folio = alloc_surplus_hugetlb_folio(h, gfp, mpoli->nid,
+> 						    nodemask);
 > 
-> In drivers/mfd/stm32-timers.c, stm32_timers_dma_burst_read() calls
-> dmaengine_desc_set_callback(), but include/linux/dmaengine.h does not declare
-> or define dmaengine_desc_set_callback() in this tree:
+> 		/* Fallback to all nodes if page==NULL */
+> 		nodemask = NULL;
+> 	}
 > 
-> include/linux/dmaengine.h:
-> struct dma_async_tx_descriptor {
-> 	dma_cookie_t cookie;
-> 	enum dma_ctrl_flags flags; /* not a 'long' to pack with cookie */
-> 	dma_addr_t phys;
-> 	struct dma_chan *chan;
-> 	dma_cookie_t (*tx_submit)(struct dma_async_tx_descriptor *tx);
-> 	int (*desc_free)(struct dma_async_tx_descriptor *tx);
-> 	dma_async_tx_callback callback;
-> 	dma_async_tx_callback_result callback_result;
-> 	void *callback_param;
->     ...
-> };
+> 	if (!folio) {
+> 		folio = alloc_surplus_hugetlb_folio(h, gfp_mask, mpoli->nid,
+> 						    nodemask);
+> 	}
+> }
 > 
-> Is this patch missing a prerequisite commit that introduces the
-> dmaengine_desc_set_callback() helper?
+> This reaches hugetlb_cma_alloc_frozen_folio() via:
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261102174656.3939832-1-Frank.Li@oss.nxp.com?part=1
+>    alloc_buddy_hugetlb_folio()
+>      -> alloc_surplus_hugetlb_folio()
+>        -> alloc_fresh_hugetlb_folio()
+>          -> only_alloc_fresh_hugetlb_folio()
+>            -> alloc_gigantic_frozen_folio()
+>              -> hugetlb_cma_alloc_frozen_folio()
+> 
+> On the first pass, __GFP_DIRECT_RECLAIM is cleared while nodemask points to
+> the preferred nodes (pol->nodes), and on the second pass nodemask is cleared
+> to NULL. Because hugetlb_cma_alloc_frozen_folio() now returns NULL on the
+> first pass, it never sees the MPOL_PREFERRED_MANY nodemask.
+> 
+> In mm/hugetlb.c:alloc_gigantic_frozen_folio():
+> 
+> 	folio = hugetlb_cma_alloc_frozen_folio(order, gfp_mask, nid, nodemask);
+> 	if (folio)
+> 		return folio;
+> 
+> 	if (hugetlb_cma_exclusive_alloc())
+> 		return NULL;
+> 
+> 	folio = (struct folio *)alloc_contig_frozen_pages(1 << order, gfp_mask,
+> 							  nid, nodemask);
+> 
+> When hugetlb_cma_exclusive_alloc() is false, returning NULL from
+> hugetlb_cma_alloc_frozen_folio() on the first pass falls through to
+> alloc_contig_frozen_pages() on the preferred nodes, bypassing the dedicated
+> hugetlb_cma pool on the preferred nodes in favor of non-CMA memory.
+> 
+> When hugetlb_cma_exclusive_alloc() is true (or when non-CMA allocation fails
+> on the preferred nodes), the first pass returns NULL and the second pass
+> invokes hugetlb_cma_alloc_frozen_folio() with nodemask set to NULL. Since
+> mm/mempolicy.c:policy_nodemask() leaves *nid as numa_node_id() when
+> pol->home_node is NUMA_NO_NODE:
+> 
+> mm/mempolicy.c:policy_nodemask() {
+> 	case MPOL_PREFERRED_MANY:
+> 		nodemask = &pol->nodes;
+> 		if (pol->home_node != NUMA_NO_NODE)
+> 			*nid = pol->home_node;
+> 		break;
+> }
+> 
+> hugetlb_cma_alloc_frozen_folio() on the second pass tries
+> hugetlb_cma[numa_node_id()] and then iterates cpuset_current_mems_allowed
+> from node 0, allocating from non-preferred CMA nodes even when preferred
+> nodes in pol->nodes have free CMA pages.
+> 
+> Prior to commit 9bda131c6093 ("mm: cma: add cma_alloc_frozen{_compound}()"),
+> cma_alloc_folio() forwarded gfp_mask down to alloc_contig_frozen_range(),
+> where __alloc_contig_verify_gfp_mask() preserved the cleared
+> __GFP_DIRECT_RECLAIM bit so CMA on the preferred nodemask was tried on the
+> first pass without entering direct reclaim. Would forwarding gfp_mask to
 
--- 
-Lee Jones
+Thanks for catching this. You're right: in CMA-only mode, this check
+skips the preferred-node attempt entirely. The fallback can then
+allocate from a non-preferred node even when the preferred nodes have
+usable CMA memory.
+
+> cma_alloc_frozen_compound() (in mm/cma.c) preserve both the non-reclaiming
+> first pass and the MPOL_PREFERRED_MANY nodemask?
+
+Make sense.
+
+I'll replace the check with GFP-mask propagation through
+cma_alloc_frozen_compound(). This restores the preferred-node CMA
+attempt while preserving the caller's __GFP_DIRECT_RECLAIM setting.
+
+Like the following:
+
+diff --git a/include/linux/cma.h b/include/linux/cma.h
+index 8555d38a97b1..caedd59bde03 100644
+--- a/include/linux/cma.h
++++ b/include/linux/cma.h
+@@ -53,7 +53,8 @@ extern bool cma_release(struct cma *cma, const struct 
+page *pages, unsigned long
+
+  struct page *cma_alloc_frozen(struct cma *cma, unsigned long count,
+  		unsigned int align, bool no_warn);
+-struct page *cma_alloc_frozen_compound(struct cma *cma, unsigned int 
+order);
++struct page *cma_alloc_frozen_compound(struct cma *cma, unsigned int order,
++				       gfp_t gfp);
+  bool cma_release_frozen(struct cma *cma, const struct page *pages,
+  		unsigned long count);
+
+diff --git a/mm/cma.c b/mm/cma.c
+index a10ea37a261d..c2605967d77a 100644
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -929,9 +929,10 @@ struct page *cma_alloc_frozen(struct cma *cma, 
+unsigned long count,
+  	return __cma_alloc_frozen(cma, count, align, gfp);
+  }
+
+-struct page *cma_alloc_frozen_compound(struct cma *cma, unsigned int order)
++struct page *cma_alloc_frozen_compound(struct cma *cma, unsigned int order,
++				       gfp_t gfp)
+  {
+-	gfp_t gfp = GFP_KERNEL | __GFP_COMP | __GFP_NOWARN;
++	gfp |= __GFP_COMP | __GFP_NOWARN;
+
+  	return __cma_alloc_frozen(cma, 1 << order, order, gfp);
+  }
+diff --git a/mm/hugetlb_cma.c b/mm/hugetlb_cma.c
+index 90f8d718a1f1..250b5c10d954 100644
+--- a/mm/hugetlb_cma.c
++++ b/mm/hugetlb_cma.c
+@@ -59,7 +59,7 @@ struct folio *hugetlb_cma_alloc_frozen_folio(int 
+order, gfp_t gfp_mask,
+  	const nodemask_t *nmask;
+  	unsigned int cpuset_mems_cookie;
+
+-	if (!hugetlb_cma_size || !gfpflags_allow_blocking(gfp_mask))
++	if (!hugetlb_cma_size)
+  		return NULL;
+
+  	if (current->flags & PF_MEMALLOC_PIN)
+@@ -74,14 +74,16 @@ struct folio *hugetlb_cma_alloc_frozen_folio(int 
+order, gfp_t gfp_mask,
+  	}
+
+  	if (hugetlb_cma[nid] && node_isset(nid, *nmask))
+-		page = cma_alloc_frozen_compound(hugetlb_cma[nid], order);
++		page = cma_alloc_frozen_compound(hugetlb_cma[nid], order,
++						 gfp_mask);
+
+  	if (!page && !(gfp_mask & __GFP_THISNODE)) {
+  		for_each_node_mask(node, *nmask) {
+  			if (node == nid || !hugetlb_cma[node])
+  				continue;
+
+-			page = cma_alloc_frozen_compound(hugetlb_cma[node], order);
++			page = cma_alloc_frozen_compound(hugetlb_cma[node], order,
++							 gfp_mask);
+  			if (page)
+  				break;
+  		}
+
+Thanks,
+Qi
+
+> 
+
