@@ -1,51 +1,153 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=5.135.140.105
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793717832;
-	b=QK9O17cXDDyfNidKtZNh2MEg+P3DlUGvjmaOLQ80G79Hggma4EbFOICnrdVQi1K8GDSD
-	 nigZ6bH2T/L3YOuVHpIrWSG5+kqG8R7MLNCyWjt+c1566cnLzHan1Di0eSIgTxV1oZa+n
-	 nfbpf1WRspWEkithio7XoajTzgzCy7yw5iFG70vIX+rn636IHZJZ3RnBoX4+dsJqVu5Md
-	 PH95DlHBVi6/BDSGVSfBWhNs8Wv5dfQ42UphDJYJp9Qx/uM5WIEvLZ0ssnSwrcoequHE4
-	 6yfYY7ZAAkcQvFw97630lzoRgR0Ry213f7auLEUEbrfEG4friZA4S/nML7J7VgVbnIQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793717832;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Last-TLS-Session-Version;
-	bh=A4bNmGzPUft+bl2hd8oRtaUGmDxT0eDv2+FKZP+8TJg=;
-	b=TpRlLw5ZmSF8O4qUo4TCxfAieIk1sCbtayitLXSfoFHBowfwUnb3pj7gU1pi6akvFXn6
-	 fD7UN3aLNWsYN0R1SOKN8JNZ4frie+e57fZ48RnhQ/QlSlxZXjo91/TXuUYnPczf1UrHJ
-	 is08ShJkUgvK2Hc9Og0mxFhFd/iKLkFARDCjmuIbMfEnTnDL98tf/j4wqCjob5lDlfWJT
-	 Vkd+0eCeAUTiAHO8UvFzBlh2PpKzjVLc1pdG1fpSZYX0ClMNK1hEntAv9P5RcKD50QirI
-	 0t+kuMIkC4C+CEbxze0d4hS3e+RoUka4u0FDUJHiZrwVduCZDpimeX4soFIJccVwDTQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cjdns.fr;
-	spf=none smtp.mailfrom=cjdns.fr;
-	dkim=pass header.d=cjdns.fr header.i=@cjdns.fr header.a=rsa-sha256 header.s=dkim header.b=TMtWkqkA;
-	arc=none smtp.remote-ip=5.135.140.105
-Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.80
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793718642;
+	b=KwFadHb4DRWoXiSpKPXPhTnCoyS6vdMExYMZ86Aq+/KMMJnF1JzwHuRNWORYNI7xfbs2
+	 NnRxcyQqdd9kYtlb2jAjQR58SdKlKoTr7ONop0x7ev+TBCKBpgDXnzFArDmlflvQKRgmv
+	 ulqpQ4kGpfEA57XSsUEj5SYojVCk9iY5P+xfhuZgniTV2twM/RnPjK0VhzngsEkZKkyE4
+	 5gaI/MD263MP+WLFn6QTmjOvW8H1kVwzU4zASiz3SFVMkjLzW/rNwpyyb2T9cnYIQ5nOR
+	 JYjKpL2WbfRLI65Q3IYsrn3BdS8RAG+uf/dbAUsyaSzT5ZTDIo3vfNtmk7sCzMNgpbw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793718642;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
+	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
+	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:Content-ID:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=sM/cb6Dgl1pwosT39bJnWnk8cR6TYeeu9lV/+ppJ0B4=;
+	b=neqVeRuAwXYfZKVGPiHbJy36iJTkbaqXZZ3CrUhmzZwdcEwMj15zdH0cQjcqsfjAUQow
+	 joGzSdaHx9i3w0CwbOFEbv3xpLLz8/h5c3sk3uqhbPM2o1tMT+pat5FHm74+iDmGcyOI/
+	 aeBjY1CwqeUyDgaGVaqwyQ11YvCivBeOOvjXkSkJaXA1tJ0Y0bZtMYmUfIvzMyUR7Fmkj
+	 FSqLjhTdnPL/JoWPh3fFj9RpDnIW3FRkUDouCMoyifSap2/JDbhsGiv817bOuDSfPiG8v
+	 t332mYgESiet73Izis5hijdqIOLMeFHAMtiSKYhzSAaYITmnhAwuaZ09g4Z+UlYs8RQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=htecgroup.com;
+	spf=pass smtp.mailfrom=htecgroup.com;
+	dkim=pass header.d=htecgroup.com header.i=@htecgroup.com header.a=rsa-sha256 header.s=selector1 header.b=fGcuNVbh;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.80
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11021080.outbound.protection.outlook.com [52.101.65.80])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE61606B259
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 14:57:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DEE61606B259
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CB1606BA39
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 15:10:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 45CB1606BA39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=htecgroup.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=htecgroup.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=cjdns.fr header.i=@cjdns.fr header.a=rsa-sha256 header.s=dkim header.b=TMtWkqkA
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 35C16278CDF;
-	Tue,  3 Nov 2026 15:57:06 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1793717828; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=A4bNmGzPUft+bl2hd8oRtaUGmDxT0eDv2+FKZP+8TJg=;
-	b=TMtWkqkA1MgODNkA+UcgsAvQC4JSAAQU6CKGwEYtgnJGf1lZ68m8qRL1YrHSUu6g3O/+iZ
-	7IkmlsIwNvULwxrfJTjszywsaBQzQTAUkPfHn99bkN9Y1+WUNkpibL4wS3OjcjXohyu2lQ
-	TZe3zURWJs9zHMuUsqm1T01WdTbzx9C5TPqEF8pWJ1+v+rH5h0Nq3q8N1hWh8frhtKEtgS
-	1Oz3HM0zaYirAeJwM7a8rriLq1EIafe9f0frwPkYtg4JqixrZJ7QXni7U5XEcoOOVqBM5l
-	HR4eE2qSPJ3a2A79IEur64ppSV3klK+rBzJrqfs+V+z8l9UpVfoNeMAwmO484A==
-Message-ID: <3624a201-be82-423f-ac96-7ab530e7918e@cjdns.fr>
-Date: Tue, 3 Nov 2026 15:57:06 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=htecgroup.com header.i=@htecgroup.com header.a=rsa-sha256 header.s=selector1 header.b=fGcuNVbh
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HBznSFyBKwcEy4UABIMV0zIybT4apyzFIntSK8t1QAun7RUvJSBShDJwyWYqym1ti5nmnbb9xo2eqDLI8oZSnCI2X2U20VwBBP9qLHxflRa1pnDqEGYT45xEDtlP0siwtMPdFHxM9P/1nX7V5x2osIk2RjSFTYlbCoH1F0TnD6rY5vLKZQFqnjja2/0SUlWz5J2uKwB0xP4bv50IP2G5WMq10icMf2qZRGO00UdByNwLlcOP1yubjHHNksFIqn8LUqtZZItkgNZXxvVaz2BGxU7CB9VeQRwF63kAHfX9oFLGqOzofLrVkMAdxpGFUoo1z8b6G3xWDkJbL+U5K5flgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sM/cb6Dgl1pwosT39bJnWnk8cR6TYeeu9lV/+ppJ0B4=;
+ b=BmTVVntD4u2ai0pxnTlpzyyzQPNaGMHUds6DFPbPIKrXPnldNeCE2mutyZ7LQZQuE1I3gpakMvV5Vq+CYOkovrsufMD6ccQGuAQkMQftKP3xukic4fd5PDTkTDLDGIwdbv8eI8Lm+ycPgqJTESSAt/bu+LmDV9pY2KwlMAlZnRj0NVLsJyJp5kCXqShhhiR1EjiGLgCZd7M7lvRpp/UR/qagXM9eksQZJajYEniCUbJhHd+m7pWUGaU7H6twKfSYaE0NxD8KqPZxCYvhMZWYRszzRgCzWWNx2geASOJNY153NF6gD8Uaa2AVeWHSCl+xjOhBg4V2aoIhNQhrJEPOKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sM/cb6Dgl1pwosT39bJnWnk8cR6TYeeu9lV/+ppJ0B4=;
+ b=fGcuNVbhewj+B9kvC5bOHA6LomF46+rfk68DOGyjtq0LSGLwvmNOyBfbzAlMzlY9ngK29LVdshavLJUL/aPpG0X1ZAVgG3oKYbnpAW1hdhSkt50DnsJXrjRX8ZWT5OVBmqe8taidog+lL2t28XrmZ72JpgcaAM2D6QM37cOkZ7bEw5CEMWQpV2mgCM6cz+e/XIEj5LuNpChbLGebMxBp3AxfDnmjC7mx8nPCAvjFkEhtqQXquJl558xeSxSDRTSYOUsNXps5xc5MXFHuRQrG4pqmtgDJIeP+O+Tb3370T/yrQ6a1uL6j2TOXQLbE8LNC+XZUuMps6DOyM3gIsx2ALw==
+Received: from MMZPR09MB547520.eurprd09.prod.outlook.com
+ (2603:10a6:190:56::10) by AMBPR09MB875092.eurprd09.prod.outlook.com
+ (2603:10a6:20b:7e5::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Tue, 3 Nov 2026
+ 15:10:38 +0000
+Received: from MMZPR09MB547520.eurprd09.prod.outlook.com
+ ([fe80::5b5:f191:1ccc:f9ee]) by MMZPR09MB547520.eurprd09.prod.outlook.com
+ ([fe80::5b5:f191:1ccc:f9ee%4]) with mapi id 15.21.0592.007; Tue, 3 Nov 2026
+ 15:10:38 +0000
+From: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>
+To: "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>
+CC: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "robh@kernel.org" <robh@kernel.org>,
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH 8/9] riscv: dts: gf: Initial support for the P8700 Boston
+ board
+Thread-Topic: [PATCH 8/9] riscv: dts: gf: Initial support for the P8700 Boston
+ board
+Thread-Index: AQHdRFDPnV5517v+GUKapbi5pZHRz7bOLS+AgE6VIIA=
+Date: Tue, 3 Nov 2026 15:10:37 +0000
+Message-ID: <a38f2640-12b8-41ae-9115-c83e4e0b173f@htecgroup.com>
+References: <20260914150833.8AC441F00893@smtp.kernel.org>
+In-Reply-To: <20260914150833.8AC441F00893@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MMZPR09MB547520:EE_|AMBPR09MB875092:EE_
+x-ms-office365-filtering-correlation-id: c7ca4c21-951a-4bc8-fdda-08df39bc9e2a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|38070700021|261022105027099003|260925021311599003|260925021911599003|260925022911599003|11063799006|56012099006|261009223027099003|261009223327099003|261009221727099003|261009220027099003|261009221227099003|261102123227099003|261102124527099003|261022075727099003|261022115727099003|261021121427099003|261026121527099003|261028144727099003|261026140227099003|10067099003|18002099003|22082099003|6133799003|3023799007;
+x-microsoft-antispam-message-info:
+ kN6/qGdFj1jdVMD6lnlqM+nqRKXUc9MLPTYIDxGasRGdW0Zltr0JQAJAG24NYgL4F4QLxPWAnPBY/uprs1M8WGnHXmA9lo7wYWUyGl2ZcFOw9nOd5nanx4hdydL2kOzTjvf6y8i/jbQslocoH5+vKDcCyIGRHLDgZ/CYPWvV6a8NN+RgA95naWVFZAEOqH37NFZLHXnORwLbYwsMR6tmV1Gei2Tq2UCzZHb90T+T4WC78FTFaR0lujwsB5107FCJNedxV03K+9w0VfKRdLMx9qVp/x8DI3b+RL4ZL/upNhBSmdw0gdCIWf/onboYI3pjmpsc0/i3jnlWxcgd8DH1uu7OgYKkbZQd5oydK23qIuUYN34S1SzS32yuelOvLMn969oNKtzRCSMMk1rJALQaJSfVGiAIWjlSCTo1AFZTulRnDdhnjCfxYCExWgijI76FRouEyinFBFzcv2MQI24tpDGwSiH0BYhNbVy9lc/xnCuN9e9oZgUxP7ln6AcmBe0OATD1QxcOU6IkpERR5Zgy5offQTsK5LlpQPqnDqSq7rI1FjFnFoll2bso9pXtNHqqMTRq3jOaZopTcgIXKZCqILx2i62OMG5hdZ6iP+HORSWsQwbxH+qsLzWqKzUKQkiYmVEGogeiYaWHDFiVc7yxJZNTmGXLLGBda1Dk3hSvukg=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MMZPR09MB547520.eurprd09.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(38070700021)(261022105027099003)(260925021311599003)(260925021911599003)(260925022911599003)(11063799006)(56012099006)(261009223027099003)(261009223327099003)(261009221727099003)(261009220027099003)(261009221227099003)(261102123227099003)(261102124527099003)(261022075727099003)(261022115727099003)(261021121427099003)(261026121527099003)(261028144727099003)(261026140227099003)(10067099003)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?TDBKUUt4d0psR2RWMjFEUWpZMWo4UytTclA4M1hRQStab0NkcnFJL091bG9q?=
+ =?utf-8?B?YzcvcHdUMURPWU5EdDlzYjI4alI1Vm9MRWFsakZGSVJFVUxlVEdzT1NEc04r?=
+ =?utf-8?B?TG4wbWV1azFhaVhCRCtTUFZVK2piUFdkTm9wQThQVUJtZFlaL1RxVVNIMElv?=
+ =?utf-8?B?QmdmZmJQNzAwckdybFQrNVJPU3JwTHlYV3crWXRPWHVNM2pWNDFrc0ZCeElz?=
+ =?utf-8?B?TVBGNXRXUHFoa2dpLzE2WGY1NVpSV1BnVTdzSm1NN2pTS3dVeXlnNGlmcU1F?=
+ =?utf-8?B?dkFvTnBzMHdsd0txNE5LMERKS296QkdGcDZUSTZneXpKVEprdkh5K1hMSnd5?=
+ =?utf-8?B?TFN1RWNvYW8vdkREaEk5UDEvR3EwWkJ4NzhrWWhodVNHV1FQbHJDNlkvREhY?=
+ =?utf-8?B?KzVEZGlBZnlPQ05Nd1owK3lrQktPY1BnMGR0M2NuclAxSk1FL0VYUElGWFpq?=
+ =?utf-8?B?a1dMcDRwY0c5ajU1ZUZYaXVOcXRyOXl5cHZzdThTQmlUOGNFeVBuQk51cGo3?=
+ =?utf-8?B?QXk4QkNEVEFTSUpYQ0F0T3VVQXc0aStWaXBMNHE2TnBsTnhaVS9YTDNUcmhl?=
+ =?utf-8?B?MkhvRVUvMGJHeTRpanNuV25IeXdaUEkvVzg3em9FSVpSa21CVVpuRWZtbzJH?=
+ =?utf-8?B?eGlPMktJWmY0d2U0UC9GUjRLMVlwRFNhdWZQR0g2VXN3TElYbEU0S0M5M25l?=
+ =?utf-8?B?c08xNzZBOHIyWUhqTXRMSGkvS092aUN6OXpZTitvUlNVWE1UNzc0SWhWdWg0?=
+ =?utf-8?B?QzVqcFZKelYyS2xLU1NwcllzZURXM3V2VExERWRTNWpPeWRJamFqUjQ4aFRE?=
+ =?utf-8?B?SGJSbkltbitYZTdXajlpMm5HN0l1N1dGcExsVHhqNHNQYjhIY1p0YTJRd0hm?=
+ =?utf-8?B?emlKZDJzU0hVYTlmcmV4RklyUTdXY3p0dEZKaWtnWm15NDdZRjJJVXdmekVM?=
+ =?utf-8?B?YUsvcWJqZFVyQUtNMnpjUFArTDhlTGRjSDluQ1J5bG1nL3BDRWdSdm8wTGQy?=
+ =?utf-8?B?VkgwZ0ZmL2h4T2pHKzdLRTNSaWYyS2llYXRad2g1djZuaFpZeW40dlY2RVR5?=
+ =?utf-8?B?Zm1VVlJNYnNQaXA4OEFPVEMrcTRwZDFhK2hGNWY1MVFZYnNSRFhXaUJTcEJw?=
+ =?utf-8?B?RnBWNTNXdk5YcFZMSGN6cXpiNHBjOEZEOHVRekVUR1Z3ajZvSnpkS04wczhx?=
+ =?utf-8?B?T1IzRXNCYWM3K0pzRU54SHFvSGhDTjczaWZrRUN4V2pEYTdEVzR0MmNuRHN4?=
+ =?utf-8?B?anA0anZxbE1pVVpuUnNuTUNRY0c5KzVFamUxUGR5dTh4VkpTVllrSzh0S2JG?=
+ =?utf-8?B?UGZ3S2JVajBxVlYvaEtPRTJ4Ky9EZUtCS05KV3NkNjRBaHB3UGcyRzJBVG9M?=
+ =?utf-8?B?MXNnWGdwbVdDbkV6UUt2U3pDSTNuYW9rbXliYXhWTklLRVpzZWc4aWVDZXVs?=
+ =?utf-8?B?ME1TQm1sbndwZFhwcXFxUkllcFdHOXdwWkNuUWFxU2JtTWVlNWExd0lyN1k1?=
+ =?utf-8?B?WklCTmM3RGJWV2ZtYnovSUR1MTYrU3k1WnR5bHR3L2wraUhMaDYvQ3EydFdv?=
+ =?utf-8?B?MHltYWRhZ0JDNTh6TisxZ2pVY1dzY3pKQS9taWxMUXkyR1RJeVJ1Rndlc09H?=
+ =?utf-8?B?M2JsZWFrTGhKWS8rVThBY1luNnhXV1Y0TTR3b2Jnbk5ZbXA2d2JvM0ZXaVll?=
+ =?utf-8?B?NmM2Rmg4R1BwWHNsalNzV0RHZmpERW1NYTlITGRyejhWYWUzWHJuSWN2dTN3?=
+ =?utf-8?B?ZVBRK1dYQTJjaFNhQ1RoRlkzWWZZZ3RNa1poTVl5N1hZUmJBN2Rybk9SUVNP?=
+ =?utf-8?B?ekNMU2E3azVKWXlFaHkxYzJpRGRlelRQMlhTQjhxZ0Vvbmc0SXZPUUJxQ05G?=
+ =?utf-8?B?M2NjWHlnQStHQnhIVEFsb3BkVnowN1A3STQ1c1hHYW9PLzA3aFovZTA2MUg3?=
+ =?utf-8?B?a21Ia2tzSlJ1U1BlakY3UzRxNDRyOEd0MmlIait4K29DSlBhNDMxNFhHODVM?=
+ =?utf-8?B?bVFxZCtTOXl4c2FaNmdOSjJSUUdEb01EZG9NM0FIS3ZkV21RQWI4V2RRSnZY?=
+ =?utf-8?B?M0d2U1Y0M2pxZWQzbUdLRDRUSzkxWnZQWmpJWE5yOCthM2h0YTVXd2g5U0lx?=
+ =?utf-8?B?RjdaVFZHWVlpREJCTUV2K3ViQzlkRnl1aG83ZUJxTm8xRG41ZlloeGRGcXox?=
+ =?utf-8?B?bm9aaE43ZkRkZGhRbnl4RVJQNXJ6SkNDMS9vRGJHOGgwY2VZQ1pvL3kyb0F4?=
+ =?utf-8?B?QjM2dmRXRmloQmlvdlRldk9ITW5QYVh4UWM4YzZsMS9oSkFha3hLSUpqN1Fz?=
+ =?utf-8?B?WU5PYmxsQ2N3NlUwVVI1MU50Sm5KOTdpd2N0OExLMHM5YWR0TWVzdmRPRVY4?=
+ =?utf-8?Q?UE22+pXueSD5chS4=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <4FC11EA1969D3D4C99F31FA54790F217@eurprd09.prod.outlook.com>
+Content-Transfer-Encoding: base64
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -55,367 +157,117 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v4 3/7] net: dsa: mediatek: add support for passthrough
- mode
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261029184202.1859843-1-cjd@cjdns.fr>
- <20261029184202.1859843-4-cjd@cjdns.fr> <sashiko-outbox-191438@kernel.org>
-Content-Language: en-US
-From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <sashiko-outbox-191438@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MMZPR09MB547520.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c7ca4c21-951a-4bc8-fdda-08df39bc9e2a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Nov 2026 15:10:37.9838
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: AGoeu8V2B40pkLLEqXDje2qqqqFOOVn67BJYbKfxdKHTSUtPtqDcuvtxa0e01maksVdDUyuWlKfWRwpiWdIZ6EekEUoMqKNfEGLadPL7TYw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR09MB875092
 
-
-On 30/10/2026 20:22, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] net: dsa: mt7530: mt753x_check_passthrough() breaks dual-CPU-port boards
-> - [High] net: dsa: mt7530: mt753x_trap_frames() blocks CPU control frames in passthrough
-> - [High] net: dsa: mt7530: downstream switch callbacks assume local CPU port
-> - [Medium] net: dsa: mt7530: setup overwrites PVC_EG_TAG on passthrough CPU port
-> - [Medium] net: dsa: mt7530: mt7530_port_enable() ignores per-port CPU conduit
-> --
->
-> commit 89ff16dda9d512576bf6153ac6b119283ed62bea
-> Author: Caleb James DeLisle <cjd@cjdns.fr>
->
-> net: dsa: mediatek: add support for passthrough mode
->
-> This commit adds passthrough mode support for MT7530 switches so that an
-> upstream SoC-integrated switch can pass traffic to and from a downstream
-> MT7530 switch without altering the MediaTek DSA tag.
->
->> diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
->> index d10194488bdee..c5b3b00acb956 100644
->> --- a/drivers/net/dsa/mt7530.c
->> +++ b/drivers/net/dsa/mt7530.c
-> [ ... ]
->
->> @@ -1286,13 +1297,81 @@ mt753x_trap_frames(struct mt7530_priv *priv)
->>   				   TO_CPU_FW_CPU_ONLY);
->>   }
-> [ ... ]
->
->> +/* If this switch is downstream of another switch that is in passthrough mode,
->> + * the "CPU" port is actually a DSA port.
->> + */
->>   static void
->>   mt753x_cpu_port_enable(struct dsa_switch *ds, int port)
->>   {
->>   	struct mt7530_priv *priv = ds->priv;
->>   
->> -	/* Enable Mediatek header mode on the cpu port */
->> -	regmap_write(priv->regmap, MT7530_PVC_P(port), PORT_SPEC_TAG);
->> +	if (priv->is_passthrough) {
->> +		/* Disable parsing of the DSA tag, it will be forwarded blindly
->> +		 * to the downstream switch.
->> +		 */
->> +		regmap_write(priv->regmap, MT7530_PVC_P(port),
->> +			     VLAN_ATTR(MT7530_VLAN_TRANSPARENT) |
->> +			     PVC_EG_TAG(MT7530_VLAN_EG_DISABLED));
->> +
->> +		/* The port is not configured to parse DSA tags, so they are
->> +		 * liable to be confused for length fields, so length check is
->> +		 * disabled.
->> +		 */
->> +		regmap_clear_bits(priv->regmap, MT753X_AGC, AGC_L2LEN_CHK);
->> +
->> +		/* In passthrough mode, MTU is only enforced downstream */
->> +		mt7530_port_change_mtu(ds, port, MT7530_MAX_MTU);
->> +
->> +		/* Loop detection has no value in passthrough mode */
->> +		regmap_set_bits(priv->regmap, MT753X_MTRAP,
->> +				MT7530_LOOP_DET_DISABLE);
->> +	} else {
->> +		/* Not passthrough, enable DSA tag handling on CPU port. */
->> +		regmap_write(priv->regmap, MT7530_PVC_P(port), PORT_SPEC_TAG);
->> +	}
->>   
->>   	/* Enable flooding on the CPU port */
->>   	regmap_set_bits(priv->regmap, MT753X_MFC,
->> @@ -1322,6 +1401,7 @@ static int
->>   mt7530_port_enable(struct dsa_switch *ds, int port,
->>   		   struct phy_device *phy)
->>   {
->> +	int upstream_pt = dsa_switch_upstream_port(ds);
->>   	struct dsa_port *dp = dsa_to_port(ds, port);
->>   	struct mt7530_priv *priv = ds->priv;
->>   
->> @@ -1332,13 +1412,38 @@ mt7530_port_enable(struct dsa_switch *ds, int port,
->>   	 * bridge.
->>   	 */
->>   	if (dsa_port_is_user(dp)) {
->> -		struct dsa_port *cpu_dp = dp->cpu_dp;
->> +		priv->ports[port].pm |= PCR_MATRIX(BIT(upstream_pt));
->>   
->> -		priv->ports[port].pm |= PCR_MATRIX(BIT(cpu_dp->index));
-> [Severity: Medium]
-> On switches with multiple CPU ports (such as MT7531 where per-port conduit
-> assignment is supported via mt753x_port_change_conduit()), does replacing
-> dp->cpu_dp->index with dsa_switch_upstream_port(ds) in mt7530_port_enable()
-> connect a user port to the wrong CPU port when its assigned conduit differs
-> from that of the first available port?
->
-> dsa_switch_upstream_port(ds) returns dsa_upstream_port(ds, dp->index) for the
-> first available port on the switch rather than dsa_upstream_port(ds, port)
-> for the port being enabled. When a user port assigned to the secondary CPU
-> conduit is brought up via dsa_user_open() -> mt7530_port_enable(), shouldn't
-> this use dsa_upstream_port(ds, port) instead?
->
-> [ ... ]
-
-
-This looks like a real problem. The CPU port can be changed and this 
-won't track that. However, cpu_dp can point to a port on another switch, 
-so it's unreliable to use it for a port address directly. So I suppose 
-the best solution is to use cpu_dp if it is local, otherwise use the 
-first DSA port. Change conduit is not going to work with a cascaded 
-switch, but it won't anyway because the CPU port is on another switch so 
-it's already setup to error out.
-
-
->
->> @@ -2511,7 +2671,7 @@ mt7530_setup(struct dsa_switch *ds)
->>   		/* Disable learning by default on all ports */
->>   		regmap_set_bits(priv->regmap, MT7530_PSC_P(i), SA_DIS);
->>   
->> -		if (dsa_is_cpu_port(ds, i)) {
->> +		if (dsa_is_upstream_port(ds, i)) {
->>   			mt753x_cpu_port_enable(ds, i);
->>   		} else {
->>   			mt7530_port_disable(ds, i);
-> [Severity: Medium]
-> In both mt7530_setup() and mt7531_setup_common(), mt753x_cpu_port_enable()
-> sets MT7530_PVC_P(port) with PVC_EG_TAG(MT7530_VLAN_EG_DISABLED) when
-> priv->is_passthrough is true, but right after the if/else block in the loop:
->
-> drivers/net/dsa/mt7530.c:mt7530_setup() {
->      ...
-> 		if (dsa_is_upstream_port(ds, i)) {
-> 			mt753x_cpu_port_enable(ds, i);
-> 		} else {
-> 			mt7530_port_disable(ds, i);
->
-> 			/* Set default PVID to 0 on all user ports */
-> 			regmap_update_bits(priv->regmap, MT7530_PPBV1_P(i),
-> 					   G0_PORT_VID_MASK, G0_PORT_VID_DEF);
-> 		}
-> 		/* Enable consistent egress tag */
-> 		regmap_update_bits(priv->regmap, MT7530_PVC_P(i),
-> 				   PVC_EG_TAG_MASK,
-> 				   PVC_EG_TAG(MT7530_VLAN_EG_CONSISTENT));
->      ...
-> }
->
-> Doesn't this unconditionally overwrite PVC_EG_TAG_MASK on the passthrough
-> upstream CPU port with MT7530_VLAN_EG_CONSISTENT, since mt7530_port_enable()
-> only rewrites MT7530_PVC_P(port) for the downstream DSA link port?
-
-
-It does, but PVC_EG_TAG(MT7530_VLAN_EG_DISABLED) is not set because the 
-intent is that it will not be overwritten but rather because it's equal 
-to zero so leaving it or omitting it from the write statement have the 
-same effect.
-
-
->
-> [Severity: High]
-> Also in mt7530_setup() and mt7531_setup_common(), mt753x_trap_frames(priv)
-> is still called unconditionally even when priv->is_passthrough is true:
->
-> drivers/net/dsa/mt7530.c:mt753x_trap_frames() {
-> 	regmap_update_bits(priv->regmap, MT753X_BPC,
-> 			   PAE_BPDU_FR | PAE_EG_TAG_MASK | PAE_PORT_FW_MASK |
-> 				   BPDU_EG_TAG_MASK | BPDU_PORT_FW_MASK,
-> 			   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_DISABLED) |
-> 				   PAE_PORT_FW(TO_CPU_FW_CPU_ONLY) |
-> 				   BPDU_EG_TAG(MT7530_VLAN_EG_DISABLED) |
-> 				   TO_CPU_FW_CPU_ONLY);
->      ...
-> }
->
-> On a normal switch, PORT_SPEC_TAG is enabled on the CPU port so frames sent
-> by the CPU are directed by the MediaTek special tag. On a passthrough switch,
-> mt753x_cpu_port_enable() leaves PORT_SPEC_TAG unset on the CPU port so frames
-> are forwarded via the port matrix.
->
-> When the CPU transmits STP BPDUs, 802.1X PAE, LACP, PAUSE, or LLDP frames
-> (matching 01:80:c2:00:00:00/01/02/03/0e in BPC, RGAC1, and RGAC2) towards a
-> downstream switch port, won't those frames ingressing the passthrough
-> switch's CPU port match the trap rules and be restricted to
-> TO_CPU_FW_CPU_ONLY (the passthrough switch's own CPU port) instead of being
-> forwarded to the downstream DSA link port?
->
-> [ ... ]
-
-
-Makes sense to skip mt753x_trap_frames() if passthrough.
-
-
->
->> @@ -3304,7 +3472,7 @@ mt753x_conduit_state_change(struct dsa_switch *ds,
->>   
->>   	/* Set the CPU port to trap frames to for MT7530. Trapped frames will be
->>   	 * forwarded to the numerically smallest CPU port whose conduit
->> -	 * interface is up.
->> +	 * interface is up. NOTE: "CPU port" can also mean an upstream DSA link.
->>   	 */
->>   	if (priv->id != ID_MT7530 && priv->id != ID_MT7621 &&
->>   	    priv->id != ID_EN7528)
-> [Severity: High]
-> On the downstream switch behind a passthrough switch, the upstream port is a
-> DSA link port (DSA_PORT_TYPE_DSA) rather than a CPU port (DSA_PORT_TYPE_CPU),
-> and dp->cpu_dp / conduit->dsa_ptr point to the CPU port on the upstream
-> switch. How are the following paths handled on the downstream switch?
->
-> First, in mt753x_conduit_state_change(), mt7530_update_port_member(), and
-> mt7530_port_vlan_filtering(), the code uses cpu_dp->index directly:
->
-> drivers/net/dsa/mt7530.c:mt753x_conduit_state_change() {
-> 	struct dsa_port *cpu_dp = conduit->dsa_ptr;
->      ...
-> 	mask = BIT(cpu_dp->index);
-> }
->
-> drivers/net/dsa/mt7530.c:mt7530_update_port_member() {
-> 	struct dsa_port *dp = dsa_to_port(priv->ds, port), *other_dp;
-> 	struct mt7530_port *p = &priv->ports[port], *other_p;
-> 	struct dsa_port *cpu_dp = dp->cpu_dp;
-> 	u32 port_bitmap = BIT(cpu_dp->index);
->      ...
-> }
->
-> drivers/net/dsa/mt7530.c:mt7530_port_vlan_filtering() {
-> 	struct dsa_port *dp = dsa_to_port(ds, port);
-> 	struct dsa_port *cpu_dp = dp->cpu_dp;
->
-> 	if (vlan_filtering) {
-> 		mt7530_port_set_vlan_aware(ds, port);
-> 		mt7530_port_set_vlan_aware(ds, cpu_dp->index);
->      ...
-> }
->
-> If the upstream switch's CPU port index differs from the downstream switch's
-> upstream DSA link port index (for example, port 6 on the upstream switch vs
-> port 5 on the downstream switch), won't these program the wrong port on the
-> downstream switch?
-
-
-Probably best to write an mt753x_get_upstream_port() which uses CPU port 
-if local, otherwise first DSA. This can be used everywhere.
-
-
->
-> Second, when a VLAN is added or deleted on the downstream switch, DSA calls
-> mt7530_port_vlan_add() and mt7530_port_vlan_del() on the downstream switch's
-> upstream DSA link port (passing the user port's untagged and pvid flags). In
-> mt7530_hw_vlan_add():
->
-> drivers/net/dsa/mt7530.c:mt7530_hw_vlan_add() {
->      ...
-> 	if (dsa_port_is_cpu(dp))
-> 		val = MT7530_VLAN_EGRESS_STACK;
-> 	else if (entry->untagged)
-> 		val = MT7530_VLAN_EGRESS_UNTAG;
-> 	else
-> 		val = MT7530_VLAN_EGRESS_TAG;
-> 	regmap_update_bits(priv->regmap, MT7530_VAWD2,
-> 			   ETAG_CTRL_P_MASK(entry->port),
-> 			   ETAG_CTRL_P(entry->port, val));
-> }
->
-> Because dsa_port_is_cpu(dp) is false for the downstream switch's upstream DSA
-> link port, won't mt7530_hw_vlan_add() fail to set MT7530_VLAN_EGRESS_STACK
-> and instead set UNTAG or TAG, while mt7530_port_vlan_add() and
-> mt7530_port_vlan_del() also overwrite PVID and ACC_FRM_MASK on the upstream
-> port?
-
-
-if (dp == mt753x_get_upstream_port(ds)) seems like it would fix this.
-
-
->
-> [ ... ]
->
->> @@ -3399,6 +3574,99 @@ static int mt7988_setup(struct dsa_switch *ds)
->>   	return mt7531_setup_common(ds);
->>   }
->>   
->> +/* 1 if passthrough, negative if error. */
->> +static int mt753x_check_passthrough(struct device *dev)
->> +{
->> +	struct device_node *ports, *port;
->> +	int passthrough_ports = 0;
->> +	int enabled_ports = 0;
->> +
->> +	ports = of_get_child_by_name(dev->of_node, "ports");
->> +	if (!ports)
->> +		ports = of_get_child_by_name(dev->of_node, "ethernet-ports");
->> +
->> +	if (!ports) {
->> +		dev_err(dev, "no ports child node found\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	for_each_available_child_of_node(ports, port) {
->> +		struct device_node *link;
->> +
->> +		enabled_ports++;
->> +
->> +		link = of_parse_phandle(port, "ethernet", 0);
->> +		if (!link)
->> +			link = of_parse_phandle(port, "link", 0);
->> +
->> +		if (!link)
->> +			continue;
->> +
->> +		of_node_put(link);
->> +
->> +		passthrough_ports++;
->> +	}
->> +
->> +	of_node_put(ports);
->> +
->> +	/*
->> +	 * A switch is considered passthrough if exactly two available
->> +	 * ports have an "ethernet" or "link" phandle.
->> +	 */
->> +	if (passthrough_ports > 2 ||
->> +	    (passthrough_ports == 2 && enabled_ports != 2)
->> +	) {
->> +		dev_err(dev, "Only two ports allowed in passthrough mode\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	return passthrough_ports == 2;
->> +}
-> [Severity: High]
-> What happens in mt7530_probe_common() -> mt753x_check_passthrough() on
-> standalone dual-CPU-port boards where two ports (such as port@5 and port@6)
-> both have "ethernet" phandles and no port has a "link" phandle?
->
-> Because mt753x_check_passthrough() counts both "ethernet" and "link" phandles
-> into passthrough_ports without checking whether any "link" phandle is
-> present, passthrough_ports is 2 whenever two CPU ports are enabled. If any
-> user ports are also enabled (enabled_ports > 2, as on mt7621, mt7622,
-> mt7623n, and mt7986 dual-CPU-port boards), doesn't mt753x_check_passthrough()
-> return -EINVAL and abort the switch probe? And if all user ports happen to be
-> disabled (enabled_ports == 2), wouldn't it falsely enable passthrough mode on
-> a switch with two CPU ports and no downstream switch?
-
-
-Indeed, that's a problem. I think passthrough should not be enabled if 
-there are multiple ethernet ports, but it should not be excluded.
-
-
-Keeping these notes to send a v5.
-
-
-Thanks,
-
-Caleb
-
-
+T24gOS8xNC8yNiAxNzowOCwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4gVGhhbmsg
+eW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgNCBwb3Rl
+bnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6DQo+IC0gW0hpZ2hdIFRoZSBgcmlzY3YsaXNhLWV4
+dGVuc2lvbnNgIGFycmF5IG9taXRzIHRoZSByZXF1aXJlZCAnemljYm9tJyBleHRlbnNpb24gYW5k
+IGlzIG5vdCBzb3J0ZWQgYWxwaGFudW1lcmljYWxseS4NCj4gLSBbSGlnaF0gTWlzbWF0Y2ggYmV0
+d2VlbiBQQ0kgJ2J1cy1yYW5nZScgYW5kIG1lbW9yeS1tYXBwZWQgRUNBTSAncmVnJyBzaXplIGFs
+bG93cyBvdXQtb2YtYm91bmRzIG1lbW9yeSBhY2Nlc3MuDQo+IC0gW0xvd10gTWlzc2luZyBgI2lu
+Y2x1ZGUgPGR0LWJpbmRpbmdzL2dwaW8vZ3Bpby5oPmAgYW5kIHVzYWdlIG9mIG1hZ2ljIG51bWJl
+ciBpbnN0ZWFkIG9mIG1hY3JvIGZvciBHUElPIGZsYWdzLg0KPiAtIFtMb3ddIE1pc3NpbmcgbWFu
+ZGF0b3J5IGBkZXZpY2VfdHlwZSA9ICJwY2kiYCBhbmQgYHJhbmdlc2AgcHJvcGVydGllcyBpbiBQ
+Q0ktdG8tUENJIGJyaWRnZSBub2Rlcy4NCj4gLS0NCj4NCj4gY29tbWl0IDc5ZTFkZDQ2ZTdhZGQy
+NTUyOTAxMTQzZWQ2YWM3MTk2Y2IwOTE0ZGYNCj4gQXV0aG9yOiBBbGVrc2EgUGF1bm92aWMgPGFs
+ZWtzYS5wYXVub3ZpY0BodGVjZ3JvdXAuY29tPg0KPg0KPiByaXNjdjogZHRzOiBnZjogSW5pdGlh
+bCBzdXBwb3J0IGZvciB0aGUgUDg3MDAgQm9zdG9uIGJvYXJkDQo+DQo+IFRoaXMgcGF0Y2ggYWRk
+cyB0aGUgaW5pdGlhbCBkZXZpY2UgdHJlZSBmb3IgdGhlIE1JUFMgUDg3MDAgYW5kIHRoZSBCb3N0
+b24NCj4gRlBHQSBkZXZlbG9wbWVudCBib2FyZC4gSXQgaW5jbHVkZXMgdGhlIGNvcnJlc3BvbmRp
+bmcgYml0ZmlsZSBjb25maWd1cmF0aW9ucywNCj4gTWFrZWZpbGUsIGFuZCBLY29uZmlnIHVwZGF0
+ZXMuDQo+DQo+PiBkaWZmIC0tZ2l0IGEvYXJjaC9yaXNjdi9ib290L2R0cy9nZi9wODcwMC1ib3N0
+b24uZHRzIGIvYXJjaC9yaXNjdi9ib290L2R0cy9nZi9wODcwMC1ib3N0b24uZHRzDQo+PiBuZXcg
+ZmlsZSBtb2RlIDEwMDY0NA0KPj4gaW5kZXggMDAwMDAwMDAwMDAwMC4uYjgyOTg5OTU5MmFlZQ0K
+Pj4gLS0tIC9kZXYvbnVsbA0KPj4gKysrIGIvYXJjaC9yaXNjdi9ib290L2R0cy9nZi9wODcwMC1i
+b3N0b24uZHRzDQo+IFsgLi4uIF0NCj4NCj4+ICsgICAgIHBjaTI6IHBjaUAxNDAwMDAwMCB7DQo+
+PiArICAgICAgICAgICAgIGNvbXBhdGlibGUgPSAieGxueCxheGktcGNpZS1ob3N0LTEuMDAuYSI7
+DQo+PiArICAgICAgICAgICAgIGRldmljZV90eXBlID0gInBjaSI7DQo+PiArICAgICAgICAgICAg
+IHJlZyA9IDwweDE0MDAwMDAwIDB4MjAwMDAwMD47DQo+PiArDQo+PiArICAgICAgICAgICAgICNh
+ZGRyZXNzLWNlbGxzID0gPDM+Ow0KPj4gKyAgICAgICAgICAgICAjc2l6ZS1jZWxscyA9IDwyPjsN
+Cj4+ICsgICAgICAgICAgICAgI2ludGVycnVwdC1jZWxscyA9IDwxPjsNCj4+ICsNCj4+ICsgICAg
+ICAgICAgICAgaW50ZXJydXB0LXBhcmVudCA9IDwmYXBsaWNfczA+Ow0KPj4gKyAgICAgICAgICAg
+ICBpbnRlcnJ1cHRzID0gPDcgSVJRX1RZUEVfTEVWRUxfSElHSD47DQo+PiArDQo+PiArICAgICAg
+ICAgICAgIHJhbmdlcyA9IDwweDAyMDAwMDAwIDAgMHgxNjAwMDAwMA0KPj4gKyAgICAgICAgICAg
+ICAgICAgICAgICAgMHgxNjAwMDAwMCAwIDB4MTAwMDAwPjsNCj4+ICsNCj4+ICsgICAgICAgICAg
+ICAgYnVzLXJhbmdlID0gPDB4MDAgMHhmZj47DQo+IFtTZXZlcml0eTogSGlnaF0NCj4gQ2FuIHRo
+aXMgbWlzbWF0Y2ggYmV0d2VlbiBidXMtcmFuZ2UgYW5kIG1lbW9yeS1tYXBwZWQgRUNBTSBzaXpl
+IGFsbG93IGFuDQo+IG91dC1vZi1ib3VuZHMgbWVtb3J5IGFjY2Vzcz8NCj4NCj4gVGhlIGRlZmlu
+ZWQgcmVnIG1hcHMgb25seSAzMk1CIG9mIEVDQU0gY29uZmlndXJhdGlvbiBzcGFjZSwgd2hpY2gg
+c2FmZWx5DQo+IGNvdmVycyBidXNlcyAwIHRvIDMxLiBIb3dldmVyLCBidXMtcmFuZ2UgYWR2ZXJ0
+aXNlcyB1cCB0byAyNTYgYnVzZXMgdG8gdGhlDQo+IFBDSSBjb3JlLiBJZiB0aGUgUENJIGNvcmUg
+YXR0ZW1wdHMgdG8gZW51bWVyYXRlIGJ1c2VzIDMyIG9yIGhpZ2hlciAoZS5nLiwNCj4gZHVyaW5n
+IGhvdHBsdWcgb3IgaWYgYSBicmlkZ2UncyBzdWJvcmRpbmF0ZSBidXMgaXMgY29uZmlndXJlZCA+
+IDMxKSwgaXQgd2lsbA0KPiBnZW5lcmF0ZSBhbiBvZmZzZXQgcGFzdCB0aGUgMzJNQiBtYXBwaW5n
+Lg0KPg0KPiBTaG91bGQgYnVzLXJhbmdlIGJlIHJlc3RyaWN0ZWQgdG8gPDB4MDAgMHgxZj4sIG9y
+IHNob3VsZCB0aGUgcmVnIHNpemUgYmUNCj4gZXhwYW5kZWQgdG8gMjU2TUI/DQpgYnVzLXJhbmdl
+YCBpcyB0aGUgc2FtZSBhcyB0aGUgaW1nLGJvc3RvbiBkdHMsIHNvIEknbSBsZWF2aW5nIGl0IGFz
+IGlzIHJpZ2h0IG5vdy4NCkFsbCBwb2ludHMgYmVsb3cgd2lsbCBiZSBmaXhlZCBpbiB2MiwgdW5s
+ZXNzIG90aGVyd2lzZSBub3RlZC4NCj4NCj4gWyAuLi4gXQ0KPg0KPj4gKyAgICAgICAgICAgICBw
+Y2kyX3Jvb3RAMCwwIHsNCj4+ICsgICAgICAgICAgICAgICAgICAgICBjb21wYXRpYmxlID0gInBj
+aTEwZWUsNzAyMSIsICJwY2ktYnJpZGdlIjsNCj4+ICsgICAgICAgICAgICAgICAgICAgICByZWcg
+PSA8MHgwMDAwMDAwMCAwIDAgMCAwPjsNCj4+ICsNCj4+ICsgICAgICAgICAgICAgICAgICAgICAj
+YWRkcmVzcy1jZWxscyA9IDwzPjsNCj4+ICsgICAgICAgICAgICAgICAgICAgICAjc2l6ZS1jZWxs
+cyA9IDwyPjsNCj4+ICsNCj4+ICsgICAgICAgICAgICAgICAgICAgICBlZzIwdF9icmlkZ2VAMSww
+LDAgew0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29tcGF0aWJsZSA9ICJwY2k4
+MDg2LDg4MDAiLCAicGNpLWJyaWRnZSI7DQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICByZWcgPSA8MHgwMDAxMDAwMCAwIDAgMCAwPjsNCj4+ICsNCj4+ICsgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICNhZGRyZXNzLWNlbGxzID0gPDM+Ow0KPj4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgI3NpemUtY2VsbHMgPSA8Mj47DQo+IFtTZXZlcml0eTogTG93XQ0KPiBEbyB0
+aGVzZSBuZXN0ZWQgUENJIGJyaWRnZSBub2RlcyAocGNpMl9yb290QDAsMCBhbmQgZWcyMHRfYnJp
+ZGdlQDEsMCwwKSBuZWVkDQo+IHRoZSBtYW5kYXRvcnkgZGV2aWNlX3R5cGUgPSAicGNpIiBhbmQg
+cmFuZ2VzIHByb3BlcnRpZXM/DQo+DQo+IFN0YW5kYXJkIGJpbmRpbmdzIGZvciBQQ0kgYnJpZGdl
+cyByZXF1aXJlIHRoZXNlIHByb3BlcnRpZXMgZm9yIGNvcnJlY3QgT0YNCj4gdHJlZSBwYXJzaW5n
+LCBldmVuIGlmIExpbnV4IHR5cGljYWxseSBlbnVtZXJhdGVzIHRoZW0gdmlhIGNvbmZpZyBzcGFj
+ZSByZWFkcy4NCj4NCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVnMjB0X21hY0Ay
+LDAsMSB7DQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbXBhdGli
+bGUgPSAicGNpODA4Niw4ODAyIiwNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICJpbnRlbCxwY2gtZ2JlIjsNCj4+ICsgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgcmVnID0gPDB4MDAwMjAxMDAgMCAwIDAgMD47DQo+PiArICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBoeS1yZXNldC1ncGlvcyA9IDwmZWcy
+MHRfZ3BpbyA2IDE+Ow0KPiBbU2V2ZXJpdHk6IExvd10NCj4gQ2FuIHRoaXMgbWFnaWMgbnVtYmVy
+IDEgYmUgcmVwbGFjZWQgd2l0aCB0aGUgR1BJT19BQ1RJVkVfTE9XIG1hY3JvPw0KPg0KPiBJbmNs
+dWRpbmcgPGR0LWJpbmRpbmdzL2dwaW8vZ3Bpby5oPiBhbmQgdXNpbmcgdGhlIG1hY3JvIHdvdWxk
+IGltcHJvdmUNCj4gcmVhZGFiaWxpdHkgYW5kIGFkaGVyZSB0byBzdGFuZGFyZCBHUElPIGZsYWcg
+Y29udmVudGlvbnMuDQo+DQo+PiBkaWZmIC0tZ2l0IGEvYXJjaC9yaXNjdi9ib290L2R0cy9nZi9w
+ODcwMC5kdHNpIGIvYXJjaC9yaXNjdi9ib290L2R0cy9nZi9wODcwMC5kdHNpDQo+PiBuZXcgZmls
+ZSBtb2RlIDEwMDY0NA0KPj4gaW5kZXggMDAwMDAwMDAwMDAwMC4uYmExODU0ZGY1MjAxYg0KPj4g
+LS0tIC9kZXYvbnVsbA0KPj4gKysrIGIvYXJjaC9yaXNjdi9ib290L2R0cy9nZi9wODcwMC5kdHNp
+DQo+IFsgLi4uIF0NCj4NCj4+ICsgICAgICAgICAgICAgY3B1MDogY3B1QDAgew0KPj4gKyAgICAg
+ICAgICAgICAgICAgICAgIGRldmljZV90eXBlID0gImNwdSI7DQo+PiArICAgICAgICAgICAgICAg
+ICAgICAgY29tcGF0aWJsZSA9ICJnZixtaXBzLXA4NzAwIiwgInJpc2N2IjsNCj4+ICsgICAgICAg
+ICAgICAgICAgICAgICByZWcgPSA8MHgwPjsNCj4+ICsgICAgICAgICAgICAgICAgICAgICBtbXUt
+dHlwZSA9ICJyaXNjdixzdjM5IjsNCj4+ICsgICAgICAgICAgICAgICAgICAgICByaXNjdixjYm9t
+LWJsb2NrLXNpemUgPSA8NjQ+Ow0KPj4gKyAgICAgICAgICAgICAgICAgICAgIHJpc2N2LGlzYS1i
+YXNlID0gInJ2NjRpIjsNCj4+ICsgICAgICAgICAgICAgICAgICAgICByaXNjdixpc2EtZXh0ZW5z
+aW9ucyA9ICJpIiwgIm0iLCAiYSIsICJmIiwgImQiLCAiYyIsDQo+PiArICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiemljbnRyIiwgInppY3NyIiwgInppZmVuY2Vp
+IiwNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ6aWhw
+bSIsICJ6YmEiLCAiemJiIiwNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICJ4bWlwc2V4ZWN0bCI7DQo+IFtTZXZlcml0eTogSGlnaF0NCj4gV2lsbCB0aGUg
+b21pc3Npb24gb2YgdGhlICJ6aWNib20iIHN0cmluZyBpbiByaXNjdixpc2EtZXh0ZW5zaW9ucyBi
+cmVhayBETUENCj4gY2FjaGUgZmx1c2hpbmcgZm9yIG5vbi1jb2hlcmVudCBkZXZpY2VzPw0KPg0K
+PiBUaGUgQ1BVIG5vZGVzIGRlZmluZSByaXNjdixjYm9tLWJsb2NrLXNpemUgPSA8NjQ+LCBpbmRp
+Y2F0aW5nIGhhcmR3YXJlDQo+IHN1cHBvcnQgZm9yIENhY2hlIEJsb2NrIE1hbmFnZW1lbnQuIFdp
+dGhvdXQgInppY2JvbSIgcHJlc2VudCBpbiB0aGUNCj4gZXh0ZW5zaW9ucyBhcnJheSwgdGhlIFJJ
+U0MtViBrZXJuZWwgZmVhdHVyZSBmcmFtZXdvcmsgd2lsbCBub3Qgc2V0DQo+IFJJU0NWX0lTQV9F
+WFRfWklDQk9NLiBUaGlzIGNhdXNlcyB0aGUgQUxUX0NNT19PUCBtYWNybyB0byBjb21waWxlIGFz
+IE5PUHMsDQo+IHdoaWNoIGNvdWxkIHJlc3VsdCBpbiBjb3JydXB0ZWQgdHJhbnNmZXJzIGZvciBk
+ZXZpY2VzIHJlcXVpcmluZyBub24tY29oZXJlbnQNCj4gRE1BLCBsaWtlIHBjaTIuDQo+DQo+IEFs
+c28sIHNob3VsZCB0aGUgbXVsdGktbGV0dGVyIGV4dGVuc2lvbnMgYmUgc29ydGVkIGFscGhhbnVt
+ZXJpY2FsbHkgdG8gY29tcGx5DQo+IHdpdGggRGV2aWNldHJlZSBiaW5kaW5ncyAoZS5nLiwgcGxh
+Y2luZyAiemJhIiBhbmQgInpiYiIgYmVmb3JlICJ6aWNudHIiKT8NClRoaXMgZG9lc24ndCBzZWVt
+IGltcG9ydGFudCBmb3IgcGFyc2luZyB0aGUgZXh0ZW5zaW9ucywgc28gSSdtIGFsc28gbGVhdmlu
+ZyBpdCBhcyBpcy4NCj4NCj4gLS0NCj4gU2FzaGlrbyBBSSByZXZpZXcgwrcgaHR0cHM6Ly9zYXNo
+aWtvLmRldi8jL3BhdGNoc2V0LzIwMjYwOTE0LXA4NzAwLWR0cy12MS0wLTMyNjdmMTRlYmNlMUBo
+dGVjZ3JvdXAuY29tP3BhcnQ9OA0K
