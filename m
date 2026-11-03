@@ -1,99 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793727151;
-	b=QdUuOVGlY5lvZyqS8eicKrS16jro8sW12hbPkPaHtblTTVw6YiXEdNdKxsACcuvpe3pS
-	 2BWmBF2n4CSVXu2JDhHUrNakHw9AO+eW8c1RLXfSPgQ6GxFpVmeFsb6H0z7P6IMYmBUkp
-	 1ljn6Z4rkJXYQ4F3S+5Aux2rRwQbgWrHnQ2SiuILbmt/yHZ3xFQLN2cU4FtxgZVcvcKcp
-	 DpE5BDMTj0upDOBJL7iz4V9pZdFQEbjp1TTJIql8WtHrAiNpbbmtXV8Ohj1WKDWjNvoeY
-	 ZEjIWZnLSnsFpcFno+IejcvC3e769rt98yAVUQQXFna2snOKBWDEpZhgRnbW1ZrHtVA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793727151;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
-	b=simbW+UAz8PYzqkiGRi4kUWQ8Fl8liZgPPJo3j2pC2/6V9653t2/0R0okUhELWSEemQk
-	 8gKUDWzkAcz8UXX/pQEmAa7sCUlwAURJ/ylotFZxrm6kJWmU2Xgv32cKJRZsyT05SCXDV
-	 BQx7YKtpvg/S53XjiKfEv5iUPvpkYWmPNvEA9hsYRgK9ob7B+snNSSaZYaFwRMHxqPtiZ
-	 6/hHZhCJAgDtCu17IaKVDRXWpNydAoDi6dpKo2UvE6jGp5BX59ACNM4sjqFURCfpDSe1K
-	 GgYnmoiZmXLr3CZ+5I5hD2tZscrg062jKN48h9N65X3SMOIrMZYtYxceqWHAU5hpDlQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=u1fP5Ffj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.42
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793729359;
+	b=IFIggcsYyYQyYk2QKYl8RiDJwQoBF2fkGF0RZukq/3e2RwAUmbov27U1pXoOLHZIi0dy
+	 opInlrGpw2+ltsadlVFZQJTI5XXmccD8TZROVidpRHlm8LRFb27RQ76Y2EIHVA9lboNbX
+	 ++gtatx83AYxt7qsqnEp/QI7aZQtAiROoGaS1DO69UXWGT0kdIJeWVT5Be/caxstzPVWA
+	 AucHHZ/YU/l/BJshxkRE7tc/cWuKX+BpV2oSUJep/5w8BaFUbPlsrD3iA7dwizwWta/73
+	 AXGkgQPtxmuvo1iA0BPqBwxxtvAGxVw4YRqbK+Y1l01qcVtc26JvmFxAxkvv30xCx9g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793729359;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:Received:Date:From:To:cc:Subject:
+	 In-Reply-To:Message-ID:References:MIME-Version:X-Scanned-By:
+	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
+	 Content-Type;
+	bh=DW5wZ7cix9WWu3Y1870HF3zplpdEFHT7ED9wVFfnNA4=;
+	b=AY8+qcCCIdetyfU/V6GdsjvIvR/WcxziWzbCICl+aNSW5fcnHKq3YrpdVopq68spXYgP
+	 wiB8XL2ECse43XJqntZNaGgZZGjMqPP0J57DAuzBZbgERIRsZGECRdpeFy9ywbVsLoHtI
+	 oDsrD4xOolNySXEZQVoVisskhLS/kwzRB+awxFhM4egsy+KSYG4Bhq7LgHVkbzxDkwXMX
+	 GSpPgnRpzDuYw4/BGZhdn82j8zHd+TPR9f4UK9dc32BHAgZ7kJWromUT7hyuM2FzVqKv/
+	 aDhFHEsjYo/6+xp06I0hEwwKV8DfE6N0Kql9zNKLgFs60vDTG0RWd3xw08hgDxCcKGA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b="e0Ei5/hn";
+	arc=none smtp.remote-ip=170.10.129.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA47F606A328
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 17:32:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA47F606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4809606A324
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 18:09:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4809606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=u1fP5Ffj
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-48e4831c028so3917371f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 09:32:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793727149; cv=none;
-        d=google.com; s=arc-20260327;
-        b=cNnL+e+sZ6eaifFL4bB1Bcv8S1+hCpWjDt4z80ARi9kNTlpwuWahoy/WbR3Y6Fg0n0
-         hDNMcLyx4Y464rgyaxDSFqk+2Os6HD3UTz6mov+B0AEEFM44ONfjIRSgw8JNR24XvRPQ
-         j9sVnMZ0qf7bHDMTbO/uB51F9RjZWao0Sj6uwt2V3zW6c2lzDeds9IEz9d9tSBJ6GIqS
-         xCJXmzWQvvkCCYZYdFX+VcQlqEnNF4LOhqxN49O5Hxb5hNX/1OG5U6cARQVp2q6/GGdr
-         79/VpI1B9BvAug3WQFO0KOiwTgpxzUiDEX+VOu0gucMVbJlgKgxcn+MZiHYhWLIFTE93
-         +yIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
-        fh=zAiT5IbLduMq4azCN06EMBaLcrEsgnVYJC9scqrr1uU=;
-        b=mUHq+Wb/0v0km5c2xQk5yjm723QmXAaR6ejxcabzMYVcpgOq2N3qsIwv4oLJmtS6qt
-         sl6UmVafWaybEaR8GoKTmC4j+qRZ2lyWj1ViUlVINy7RT53H9S5TyqkA4VGHGjFsEKyP
-         QIYZ02Dsp31GHccoM1y5ed2o555bLvDrNZBgzLDxBiZL+U0GcOpn4qM4bB3M+hnb3Jgg
-         97AHxhgxhJMVo2dj+2tBR41sLnx25hjrjkziASmYWt3tVwGObb8qKXAS4iPy+k0P6Cx9
-         0DQJSPBzWrdpkrKyE96lJFJu5veEAMMX5/GwEBHx8VJT4DyZJJ4eIIyfkKQFU/yT2pMb
-         2quQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793727149; x=1794331949; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
-        b=u1fP5Ffj2mDFGoLRlRl1xy3cypXFS2jLoyi03aMuPirlgghLStQzkSge2FRvEhEv6R
-         M+X+EI7BFiY27oF3kuE+tvf4QRlUKi52hAjRZlT2P/smmz3n8B5yn8DVfYxHGOSlq7V1
-         v4mMFX2GIdSb1MTPCRFDPqIp7tcUZXP8g3PdZfnzKYyvS5dkvIda6xKDzsbxa2pMGUCT
-         vb1++xExXmNCjAt3QmAImP6wIA9m2P5rjVRvLAlxD/yZkomq0/PkjX5xfQP7Hc/GJQUn
-         4BX6O3i/cRh97C3xbUjkKfqFiTdsaYFwtj5VvJ/yOMiewZdHNpNaBRZZQ50zzkHifT8O
-         M5TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793727149; x=1794331949;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
-        b=asmgfs11RV9PSxHBDO5bKGcS+5aTSfT5oSs7waTSD42THxhIIeNW+RslavAYNPtvCk
-         p6ps1+lllnwxuYIIThORZzHR3Q4zBjM2N1RqQ92mmno18KzMhx9QpE026uHKfNPnVwRr
-         merXQvfTFGfeqzHfdG7AKemvxyrRmLrhICNTxI0yiTEj7yFtxbr+vOpiZn0OTvs/Zetn
-         la8mT/lPrGdBij5mZ7/0IUy2Ph9cIRA2EyoAElGz9v9CpMF7sz/288xK6fa0TYZK/pWD
-         UVYy6AudQvRSnxMQUg17aVtIVfnQAb3WCA0h5r2en8hMrdM0ZtQlTSZdzNyM57183x+X
-         eVvw==
-X-Gm-Message-State: APuU4Z+Ee15BFKCFOq/SF61qAnudMc6yvVw8YruOf/eKMTRWcQFVF+jv
-	P9TvnXH4hyNFXS8hRKu1rP1IsRFHUYF2TvkyVsKuVCVGAu90r8g7D3WMthO4KMLlfrTVB5Ht/55
-	hrTq9Jzf+g0XYtB49YvZQvm4oGp2T2dTjxWqp
-X-Gm-Gg: AYBFou32N3zwZ2PGLaxikYHzmhD5RvWhaniEJBMFyMB2u5+7EsqgqilpdO06wgbQT4B
-	tMaz7KvQ5c9WhmN83SUoxcMUUVGm1iLRjs3Nvm0xdBrc2C/KN0MU4QssdJyg8cEmbxRNYc6O9P/
-	tBfmn+tQcZ+Bi9udUb+OG5zi7WyjU58m7WoeJtAsUXd52bPM6RnD1l8uDMnFEbMmdpe4Jq+ywUf
-	Qd3XCCr3zBx2gGGtPuEH1ZnQAYWjRjmHQQrTJ0oSkFpy/n+/7k5irr80QQCm8/HCNuOXACVYBIE
-	lIoba+N/+eplWmPF5hRQ8yoWR01DGF0RDzc+kQEKDcT/xJJlnT0DFcEVpdb4qAuPFd6xYalQg3g
-	+TnBflMhT4AQ5hhTc32EQjxy36/6f7+bgxkIi
-X-Received: by 2002:a05:6000:2c03:b0:48c:6cdd:ba89 with SMTP id
- ffacd0b85a97d-48e6e4ff80emr28595835f8f.36.1793727148868; Tue, 03 Nov 2026
- 09:32:28 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=e0Ei5/hn
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1793729357;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DW5wZ7cix9WWu3Y1870HF3zplpdEFHT7ED9wVFfnNA4=;
+	b=e0Ei5/hn46GPaqfGr5Nf1kgdRnMszl0l76hcNhE01CPptNTY7+Xmj/KJTkeP1EXbNDMhFC
+	VSNdnd8Z7gRNH5kX1a3Mg62bG9T8NarPxl/KU5aEJsmSBJHiQntRtLrbTrNF0dgjt8YXyW
+	zaF+lokh1eUD+qFAHlQxfJfxyZHzoE0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-jYLvm_6RM7eJsHhAJj4VDQ-1; Tue,
+ 03 Nov 2026 13:09:14 -0500
+X-MC-Unique: jYLvm_6RM7eJsHhAJj4VDQ-1
+X-Mimecast-MFC-AGG-ID: jYLvm_6RM7eJsHhAJj4VDQ_1793729353
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 85CBA1955F7C;
+	Tue,  3 Nov 2026 18:09:12 +0000 (UTC)
+Received: from mpatocka-thinkpadx1carbongen12.rmtcz.csb (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 7304F30002CB;
+	Tue,  3 Nov 2026 18:09:09 +0000 (UTC)
+Date: Tue, 3 Nov 2026 19:09:06 +0100 (CET)
+From: Mikulas Patocka <mpatocka@redhat.com>
+To: sashiko-reviews@lists.linux.dev
+cc: Igor Putko <igorpetindev@gmail.com>, Mike Snitzer <snitzer@kernel.org>, 
+    Alasdair Kergon <agk@redhat.com>, Benjamin Marzinski <bmarzins@redhat.com>, 
+    Jens Axboe <axboe@kernel.dk>, dm-devel@lists.linux.dev, 
+    syzbot+8e6fc64255334ccf3ab3@syzkaller.appspotmail.com
+Subject: Re: [PATCH] dm snap: fix use-after-free when origin and COW devices
+ match
+In-Reply-To: <sashiko-outbox-183792@kernel.org>
+Message-ID: <00a426d4-5caf-03eb-8ebb-a6aad0099d5a@redhat.com>
+References: <20261024161459.5539-1-igorpetindev@gmail.com> <sashiko-outbox-183792@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,225 +81,25 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029-work-fs-sb_rdonly-v2-0-2f44f64f0b66@kernel.org>
- <20261029-work-fs-sb_rdonly-v2-6-2f44f64f0b66@kernel.org> <sashiko-outbox-191225@kernel.org>
-In-Reply-To: <sashiko-outbox-191225@kernel.org>
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Date: Wed, 4 Nov 2026 02:32:10 +0900
-X-Gm-Features: AclHuK_xchRwxsZ5xCgnuvGf3QgoTbZDme23pAKWici3-nvdFpdRQtDLUtkXtDM
-Message-ID: <CAKFNMombDWkJ=m+CjMy7qnd_yy-vZ9c-EE7R95HKKkcy-M0+SQ@mail.gmail.com>
-Subject: Re: [PATCH v2 06/34] nilfs2: don't set SB_RDONLY after filesystem errors
-To: sashiko-reviews@lists.linux.dev, Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.com>, Al Viro <viro@zeniv.linux.org.uk>, linux-ext4@vger.kernel.org, 
-	linux-mm@kvack.org, linux-efi@vger.kernel.org, linux-mtd@lists.infradead.org, 
-	Karl Mehltretter <kmehltretter@gmail.com>, dsterba@suse.cz, tytso@mit.edu, 
-	Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>, 
-	Joseph Qi <joseph.qi@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: G6KVQdmd9_Zw1j4eGcClLkiuwq6EbUFsKAQRb-RZxBw_1793729353
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
 
-On Sat, Oct 31, 2026 at 1:09=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] nilfs2: nilfs_reconfigure() and nilfs_get_tree() bypass sb_eme=
-rgency_ro()
-> --
->
-> commit ff163f1297bca8964f03776869c3a8bc9e3c38ba
-> Author: Christian Brauner <brauner@kernel.org>
->
-> nilfs2: don't set SB_RDONLY after filesystem errors
->
-> This commit replaces setting SB_RDONLY in __nilfs_error() with
-> sb_set_emergency_ro() and introduces nilfs_sb_rdonly() to guard write pat=
-hs
-> after filesystem errors without taking s_umount.
->
-> Link: https://lore.kernel.org/r/20260903060855.4610-1-kmehltretter@gmail.=
-com
->
-> > diff --git a/fs/nilfs2/super.c b/fs/nilfs2/super.c
-> > index 2e3b591c117c9..edb7d379ecbdf 100644
-> > --- a/fs/nilfs2/super.c
-> > +++ b/fs/nilfs2/super.c
-> > @@ -137,12 +137,13 @@ void __nilfs_error(struct super_block *sb, const =
-char *function,
-> >
-> >       va_end(args);
-> >
-> > -     if (!sb_rdonly(sb)) {
-> > +     if (!nilfs_sb_rdonly(sb)) {
-> >               nilfs_set_error(sb);
-> >
-> >               if (nilfs_test_opt(nilfs, ERRORS_RO)) {
-> >                       printk(KERN_CRIT "Remounting filesystem read-only=
-\n");
-> > -                     sb->s_flags |=3D SB_RDONLY;
-> > +                     /* SB_RDONLY needs s_umount, see sb_set_emergency=
-_ro(). */
-> > +                     sb_set_emergency_ro(sb);
-> >               }
-> >       }
->
-> [ ... ]
->
-> > @@ -1141,6 +1146,10 @@ static int nilfs_reconfigure(struct fs_context *=
-fc)
-> >       if (fc->sb_flags & SB_RDONLY) {
-> >               sb->s_flags |=3D SB_RDONLY;
-> >
-> > +             /* After an error nothing may be written, just go read-on=
-ly. */
-> > +             if (sb_emergency_ro(sb))
-> > +                     goto out;
-> > +
-> >               /*
-> >                * Remounting a valid RW partition RDONLY, so set
-> >                * the RDONLY flag and then mark the partition as valid a=
-gain.
-> > @@ -1152,6 +1161,12 @@ static int nilfs_reconfigure(struct fs_context *=
-fc)
-> >               __u64 features;
-> >               struct nilfs_root *root;
-> >
-> > +             /* The VFS doesn't refuse this when nilfs_get_tree() call=
-s us. */
-> > +             if (sb_emergency_ro(sb)) {
-> > +                     err =3D -EROFS;
-> > +                     goto ignore_opts;
-> > +             }
-> > +
->
-> [Severity: Medium]
-> Can this sb_emergency_ro(sb) check in the else branch of nilfs_reconfigur=
-e()
-> be bypassed after an error on a read-write mount?
->
-> When __nilfs_error() calls sb_set_emergency_ro(sb) on a read-write mount,
-> SB_RDONLY is not set in sb->s_flags, so sb_rdonly(sb) remains false.
->
-> In nilfs_reconfigure(), right before the if (fc->sb_flags & SB_RDONLY) bl=
-ock:
->
->         if ((bool)(fc->sb_flags & SB_RDONLY) =3D=3D sb_rdonly(sb))
->                 goto out;
->
-> When a read-write mount or remount is requested (!(fc->sb_flags & SB_RDON=
-LY))
-> on a superblock where sb_emergency_ro(sb) is true and sb_rdonly(sb) is st=
-ill
-> false (for example, via nilfs_get_tree() -> nilfs_reconfigure() when the
-> superblock was kept alive by a snapshot after the corrupted read-write mo=
-unt
-> was unmounted, or via reconfigure_super() -> nilfs_reconfigure() on a dir=
-ect
-> remount,rw without an intermediate remount,ro), this comparison evaluates
-> false =3D=3D false and jumps straight to out, overwriting nilfs->ns_mount=
-_opt and
-> returning 0 instead of -EROFS.
 
-I have reviewed the related code paths across all patterns regarding
-Sashiko's concerns.  Regarding this first point, there is no need for
-concern.
 
-Skip check in nilfs_reconfigure():
-   if ((bool)(fc->sb_flags & SB_RDONLY) =3D=3D sb_rdonly(sb))
-           goto out;
+On Sat, 24 Oct 2026, sashiko-bot@kernel.org wrote:
 
-Skipping this block when the requested state matches the current state
-is valid because no RO/RW transition is being requested.  In particular,
-with the workaround patch ("super: keep the read-only state if a
-reconfiguration doesn't change it") queued in the vfs-7.5.super branch,
-reconfigure_super() ensures that fc->sb_flags inherits SB_RDONLY bit
-from sb->s_flags even when "rw" or "ro" option is not specified.
+> [Severity: Critical]
+> Could a race between the two path lookups still trigger the use-after-free on
+> s->origin and leak the device reference?
 
-When called via nilfs_get_tree() -> nilfs_reconfigure():
+I'm wondering why is Sashiko doing such wild claims?
 
-  - If only a read-only snapshot mount exists and a read-only current
-    mount is added, skipping via this check is correct.
-  - If a read-write current mount is requested instead, this skip check
-    is bypassed (since sb_rdonly(s) is true for snapshot mounts while
-    fc->sb_flags does not have SB_RDONLY), and the downstream
-    sb_emergency_ro() check safely rejects it with -EROFS if the
-    superblock has entered the emergency RO state.
+This bug can only be triggered by root and none of the commonly used 
+storage managers trigger it - so it is really not "Severity: Critical". It 
+is not a security bug at all.
 
-> Also, in nilfs_get_tree(), when nilfs_tree_is_busy(s->s_root) is true:
->
->         } else if (!ctx->cno) {
->                 if (nilfs_tree_is_busy(s->s_root)) {
->                         if ((fc->sb_flags ^ s->s_flags) & SB_RDONLY) {
->                                 nilfs_err(s,
->                                           "the device already has a %s mo=
-unt.",
->                                           sb_rdonly(s) ? "read-only" : "r=
-ead/write");
->                                 err =3D -EBUSY;
->                                 goto failed_super;
->                         }
->
-> Because s->s_flags does not have SB_RDONLY set after sb_set_emergency_ro(=
-s),
-> doesn't this treat the emergency read-only superblock as read/write, reje=
-cting
-> a secondary read-only mount with -EBUSY while allowing a secondary read-w=
-rite
-> mount?
+Mikulas
 
-Sashiko's point here has a valid aspect.
-
-This inconsistency can be resolved by inserting the following handling
-logic if sb_emergency_ro(s) is true:
-
-       } else if (!ctx->cno) {
-                if (nilfs_tree_is_busy(s->s_root)) {
-                        if (sb_emergency_ro(s)) {
-                                if (!(fc->sb_flags & SB_RDONLY)) {
-                                        err =3D -EROFS;
-                                        goto failed_super;
-                                } else {
-                                        s->s_flags |=3D SB_RDONLY;
-                                }
-                        } else if ((fc->sb_flags ^ s->s_flags) & SB_RDONLY)=
- {
-                                nilfs_err(s,
-                                          "the device already has a %s moun=
-t.",
-                                          sb_rdonly(s) ? "read-only" :
-"read/write");
-                                err =3D -EBUSY;
-                                goto failed_super;
-                        }
-                } else {
-                     =E2=80=A6
-                }
-     }
-
-This makes all transitions behave consistently under emergency RO:
-
-* RW (degraded) --- RW mount request --> Rejected with -EROFS
-                 |
-                 `- RO mount request --> RO (degraded)
-
-* RO (degraded) --- RW mount request --> Rejected with -EROFS
-                 |
-                 `- RO mount request --> RO (degraded)
-
-* Snapshot-only RO --- RW mount request --> Rejected with -EROFS
-  (degraded)        |                  [Blocked by emergency_ro check
-                    |                   in nilfs_reconfigure()]
-                    `- RO mount request --> RO (degraded)
-                                       [Reused via nilfs_reconfigure()]
-
-The current v2 patch is safe as-is since write paths are fully
-protected by nilfs_sb_rdonly()
-even if a degraded RW-mount is reused, but including this change
-handles secondary
-mounts under emergency RO much more cleanly.
-
-Thanks,
-Ryusuke Konishi
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261029-work-fs-=
-sb_rdonly-v2-0-2f44f64f0b66@kernel.org?part=3D6
