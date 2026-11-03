@@ -1,104 +1,133 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793721337;
-	b=1ysdtqvKe/AHkOZAfund3yJx+Wd/ycM3YXDb/eat+TGhmdgtRG2E/TYqhPRuY4xpvL55
-	 t4yRTDpikSFGg3u/+vhpRskm1dNQSHG206yHMRJSOO4EuXaTP6AxNWbWggC17X8rPRRnq
-	 FHuNmQjWXOW1AWIfNijT0vRqwmYq1CX7ulGKERpKCMQbxmuHk1RAbJayY3fGKwKI4vH4H
-	 RaXIZqc+3mcXICScz48DY+UFfBww4yoWqA45Cck+fkwm5B396EggxSzyJFFt9zol5CTMe
-	 J7cnWII+k/f7mJbrLj04SYopiYD0g0iOhBsZM2ToGmiVVOgvoCacMZzBtNbuNDges7A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793721337;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spamd-Result:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id;
-	bh=51SEO4048CcIGmXyjtUUic875OlVRlby5kKbf9R4uDg=;
-	b=JOPtBsaHG9WMPPQzK8Qp49wCeFH1zroLS4MSdQ/ns5O8XvvyVq7Ue81RRbq7WlYBKyN9
-	 pJ3Br+z4/Gb2VSP8ROsn9WzSAxGzGRY3Lf6yiFm7vInI+owQSlLaemakd1595A2NSbzIU
-	 O9VutwJzvDAsFkZNIz7Nu5c3PF5QasUZ5Tm+Wbb40NRd4uD6X6l+a0ZuHiWwy7olz53oJ
-	 HwISDoGS33RTOk7qHa1rGcZkWT3xEuKgckPw7IG7mKf3IJQeqZ4THD5q6GUDltKf3gItr
-	 3y4ayMmrZbmMoWp6TRwDCyDxQp8VNIjdMU2JmVS0dpgg5MyJppkObmjMwelqqiqZaVQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0dsoaV12;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cdSUDBKk;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0dsoaV12;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cdSUDBKk;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=198.175.65.11
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793721443;
+	b=EFm/kypKrt06EKWGzuB5UZsuFi/tRl5sFUKscdXpkJEGHiN/MaQWSou1N5zbFBa4bJTc
+	 pC3bTcchJJ32bzKgBtRl1g4C1CDHdZv1yXKXXbmPwZ8Tka6LjxYJLMVxqIJMIRLkN2NN0
+	 vhdYNi1hLOPeR7xLD0gqVJ4FtPuFesfAhGLkbKk9MLlZTwRxn+sn57oEitcoLZDC42HbI
+	 Ne2hf2bU8MM0mCtqMm7Z8H8iMt1k9iM1nQqmpgh4odcbIIU2PjdRDxAY3UAvphuLzsoTx
+	 fUHnKPEa4rJv25EgC7FYFK/38hAdNqTuY6EMyTirOjx5/RxfnWGk23V2vJKv0tuBNWw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793721443;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:Organization:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=i0A9KSWoOZsf8OWZd4sqaUZ/PRztEH5iU2/62BfXFyA=;
+	b=huXeh6fqvXsKYRndBBpeMQjnMNAt0FvHY5DS3urrzdoaUuveX9c3p2choYskm3RNAxjM
+	 frSBqoU+LSdg/aN5yMCWrMsdDBemV0EPOedS0G10DIozfZjQGGbrmn5Ux4rXGmZwNp7eI
+	 q2a0yc0M57n2cJNxmWjA43125jkZc7yx7CagIKRiWCFTASXn3LIE1tH3yju/NQLeldksu
+	 05deFLY5+isCEX1DPk+fiIPm3LVscBhHrsEhbXS7j51O6IGS/t1yFJf4K89PUFP01GI3O
+	 N/8xiY07u2K3+peLps1LItgfSi5A9ANPJyFOzbRyKC/2FBj1gfXzWvi3wJgM/HBxzkg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fmL4y027;
+	arc=fail smtp.remote-ip=198.175.65.11
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDFA606A32C
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 15:55:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4BDFA606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69263606A335
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 15:57:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69263606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0dsoaV12;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cdSUDBKk;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0dsoaV12;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cdSUDBKk
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 7AECC1F7B6;
-	Tue,  3 Nov 2026 15:55:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793721335; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=51SEO4048CcIGmXyjtUUic875OlVRlby5kKbf9R4uDg=;
-	b=0dsoaV12OKhjW5AgmWpY1tpVTWJhbBeCPsMWjNtD9Rl2tohlfjLPWHZj1iXZi/BNQSLdnP
-	nNacnvhx7vlbMeE0VKOM/hYbBo72rcpcMi27j6P8phVwDTtO89UJ9cvXCzsW8LsQ1ll9pL
-	K+QKIS03UlWCj2OtRZaPhwM8zeqMxEs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793721335;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=51SEO4048CcIGmXyjtUUic875OlVRlby5kKbf9R4uDg=;
-	b=cdSUDBKkR9tj23vDwxAR7fl/g820rnWzirhdNnrBvhXUb4Ep3dfUP82+TcoEgvSwpGdOHA
-	uf7vig74WADD/rCg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0dsoaV12;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cdSUDBKk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793721335; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=51SEO4048CcIGmXyjtUUic875OlVRlby5kKbf9R4uDg=;
-	b=0dsoaV12OKhjW5AgmWpY1tpVTWJhbBeCPsMWjNtD9Rl2tohlfjLPWHZj1iXZi/BNQSLdnP
-	nNacnvhx7vlbMeE0VKOM/hYbBo72rcpcMi27j6P8phVwDTtO89UJ9cvXCzsW8LsQ1ll9pL
-	K+QKIS03UlWCj2OtRZaPhwM8zeqMxEs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793721335;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=51SEO4048CcIGmXyjtUUic875OlVRlby5kKbf9R4uDg=;
-	b=cdSUDBKkR9tj23vDwxAR7fl/g820rnWzirhdNnrBvhXUb4Ep3dfUP82+TcoEgvSwpGdOHA
-	uf7vig74WADD/rCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 191D2134B8;
-	Tue,  3 Nov 2026 15:55:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id FFCeLPYD6moRXAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 03 Nov 2026 15:55:34 +0000
-Message-ID: <ec9020b5-28bb-45a5-89d7-e64e804769de@suse.de>
-Date: Tue, 3 Nov 2026 16:55:34 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fmL4y027
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793721437; x=1825257437;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=8avGu3lZzC8t9ZdGwKfgpMGBzO3oawNxzIiXhJf2z5g=;
+  b=fmL4y027PfKcDyypEHQYFBsbJyVoLFUZmVN3LQrwFpg35EGjTaPbp6k8
+   SrTQg15N/pB4m5sdyR4Gik5ihwU1a2JTaeAPJhWXOactroN3IEpCicstJ
+   4/caljeoVtqYycs8iTVqjyoPfkpFFmt/8+4ZjvvLYMMsg3NBev8D8Yefg
+   Y0EYvgdzUe3UkpGC/5iwn19kmYWkP1Zk+U5l9PaLbjunDeJgV44aRqOjt
+   AYPrcSARF43mEfXfeCJ1q2iUQuVvvY0Kf+txYTQzFoc3LJPznh6sNXwlr
+   U3sqnz++lg9R5zaUbOLN5Up57AnGZRAAYcIXM1K2WdmYOfiaUqd+i/mIu
+   A==;
+X-CSE-ConnectionGUID: o66adFf4RW2ObWxU5Bsg2A==
+X-CSE-MsgGUID: qGFDxJAsTdWzw+NZhymPig==
+X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2331213"
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="2331213"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 07:57:17 -0800
+X-CSE-ConnectionGUID: HJPnvOCmQGmqoXfalbrZYg==
+X-CSE-MsgGUID: 42ymj0aISfSyy37Fqx9jBQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="6295642"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 07:57:17 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Tue, 3 Nov 2026 07:57:16 -0800
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Tue, 3 Nov 2026 07:57:16 -0800
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.16) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Tue, 3 Nov 2026 07:57:16 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PHD2giKT+hpf2Mqlh5W/npPnISl7tDj7BSF35TixsV+ORf1Qj9uVcmwEz1Jc4mg+dg66MyOBMu/S0XEEQZ4TwmpSgt3TLdv7j7Kdwz1wd9NpLWP9oe8o3iHWGcDaoL7hoeP/+4MgyiMuTAyx7WDqZ945URIv+WH3ByPYtGYNncQBjHMvs576kxjslyNX7LTip1Ibpgmj0znyXlFseswLas0VxTePVyS6Oa7yeaL1gAK3q13QL79u5BJX9qYtN/kx7dgSaK4AolpRt862zKhdTe62x8OtCR8HRx8N24tMHWfh9XB95pYaXTrVFj/XR1kA7Cl+INI5sCa1XPmc1Z4pQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i0A9KSWoOZsf8OWZd4sqaUZ/PRztEH5iU2/62BfXFyA=;
+ b=oAHZdWnCDh1Ln4T/O6iLvIm01atKbWIqgkfy6P167bkFV8zoCz22Rp1ijxoz8jh2P33AM8NViUjss20/g7+0A6n3ITxcJveTq0vTqSuGAI3taJeEBr+Evt6j4u4ddUXYFY7djRwjaSin40LOrVFNpZ45ebTcxuE4Bgv8+ylccffnPV94nN2tJm3ICAaFo5MCxGsRj0DffEkMEbELzn/4Hoy5iDLO4/oHnhPOCpN64PVdC2lUlO/mQQAks5wjnOs0tJaItwk+cQg7BKwJMxFovtQzO2qxM5EaD7VZFJZn9soEBD7ugLTt7dU8jfaOO1Q2BMf0gIayYm0c81yOElOBbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
+ by DS6PR11MB610166.namprd11.prod.outlook.com (2603:10b6:8:469::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Tue, 3 Nov 2026
+ 15:57:15 +0000
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0569.011; Tue, 3 Nov 2026
+ 15:57:15 +0000
+Message-ID: <1cb49f46-9453-4ea2-adb1-e78575837d09@intel.com>
+Date: Tue, 3 Nov 2026 17:57:11 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] perf/x86/intel/pt: Stop tracing across system suspend
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-perf-users@vger.kernel.org>
+References: <20261102074039.26983-1-adrian.hunter@intel.com>
+ <20261102074039.26983-7-adrian.hunter@intel.com>
+ <sashiko-outbox-193146@kernel.org>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
+ 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
+ 4, Domiciled in Helsinki
+In-Reply-To: <sashiko-outbox-193146@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DU7P191CA0025.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:10:54e::9) To IA1PR11MB7198.namprd11.prod.outlook.com
+ (2603:10b6:208:419::15)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,116 +137,91 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/vblank: Restart enabling vblank timer on possible
- deadlock
-To: =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, javierm@redhat.com, louis.chauvet@bootlin.com,
- dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
- stable@vger.kernel.org
-References: <20261102143919.1672293-1-tzimmermann@suse.de>
- <auioL8zR9O5u4TCF@intel.com> <4212140f-fa07-4f0c-bd3a-0ae3d88b250c@suse.de>
- <aujFSzHEv5pAfHPf@intel.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <aujFSzHEv5pAfHPf@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,redhat.com,bootlin.com,lists.freedesktop.org,lists.linux.dev,vger.kernel.org];
-	DKIM_TRACE(0.00)[suse.de:+];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:url,suse.de:dkim]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -13.50
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 7AECC1F7B6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|DS6PR11MB610166:EE_
+X-MS-Office365-Filtering-Correlation-Id: eafeedd2-b698-4d6a-e6f2-08df39c3212f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|4143699003|11063799006|56012099006|261022075727099003|261102123227099003|261021121427099003|261022105027099003|261028144727099003|261026140227099003|10067099003|18002099003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info: w2Xo4pgoEGss8lkDJi9Z2Ea+MTSWKWfvzfzlNBguFyqgVuwt++RtCvKvHo19t02XODTRVnXXRCTSu69F7aXUkJ4P6ONQr9ZPAAEPKzRyEjjV8S3uFY5TLk0cBVByN4HHK6I6SjdE7iSimdnm3Jpzl/B2Zmk+sqsAGhV+fcD4O+NHIlyEZubZ6JGlSedirq5iZup00YjzogrVdsuEt6vg/OD6ZX7HO0DSolHtCC4VR6CVZNFpwC70LOc64LlGMvHZoQNZN1GfmGUMS+kWMQMR9A51pySlnMk5oag3ObA2naS27mwYrRUrLAX+++gR1VaZmYdA7u9tRk+MS+9BKuwAJdp7wrSEWWQbAaXDQjIQMBJt/CQB0k+9l4W9b6hr+cPcLgEfd2AbVYKzKma7FrvkZhBjBmGs2gJJpwUhnwvlklzzkqWIXuweCuVhWbmKyrAH23zF3Qq3Ab6Rf7reg2MtSVl2ucDusspwAo4r+nU7Tr9e583xnlML0nK1+/gkytMREWXuSiCyimm6jbObrohPlqukr9gGy3DDTGjhzocI7ZQjzb47bin6NPb/+3nVRa6ia8VSisKmV/y/qvbfWIClHPKn4wn3rHRUja31JqCCsvMr4+Yp5b8vIcjeZ3ZO7SQSzIZLqh/Cbj4jGX89zCSKSScEntUqm7yHtZrZtqgA10Q=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(4143699003)(11063799006)(56012099006)(261022075727099003)(261102123227099003)(261021121427099003)(261022105027099003)(261028144727099003)(261026140227099003)(10067099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VlRtV2FhNGh4dlVVeXExZFRIM0xBSDRxYjJDUFlYOFR6WklRZmc5Q3Q2dURP?=
+ =?utf-8?B?dCtCRysybTNTOGNSVTdiblE3NHVoTWxVaTVVeGxKTUR6K1pqSEFIdzF2QVNE?=
+ =?utf-8?B?ODF0UW9OY0MyMm9aYmluUVZqZlJVRmZlOVVnV1pyMjAvZjltR2hsVDhkOFVJ?=
+ =?utf-8?B?MEwxZWRaaU1PVSt1eWR0NHZqSW1jQ1JhZ1FOSkMyKzZmbk8vVlpYK2creWtt?=
+ =?utf-8?B?eVlyQzZKaVNheVdGNDR0R0dpaGF0b2h0OXR5b09wY1VBTFNZbzRrazdGSUNa?=
+ =?utf-8?B?SUNIMEVyRWNia3lrQ2gxanFZcmFnSzkraU1FSEhBRDZJNHJKaEZrZUFkeVg2?=
+ =?utf-8?B?djQyMFlyOWNJb1NUZnRHWG40Y200WHo0ZW5XQUdqYVdFLzdiS21Oa05RQmRG?=
+ =?utf-8?B?SmFLK2hzWXNaeVZuRDJzM1VWWW5DWHhyWjhHbU1NYTV5eEdvdTV5ZUVHc2Zr?=
+ =?utf-8?B?SWVSM1ViTnRvVDRWQkJzMC9JV1N6dExLMWJlSk5CZzRTMDFBaVVRYlRZUHRJ?=
+ =?utf-8?B?TnZuTmpqUUFHWjhLbXcyVWJVazc2aHF3N1psUHU5aHVTTkMyNDBXN1ZHSlpC?=
+ =?utf-8?B?OTNkeng2b3B1SmhCYzl0b2h3aU50MWlnL1dseXM2K3N5M3ltN1pmbnZ2MndF?=
+ =?utf-8?B?Kzd1RExSRk1qM1d3N3l5SU9EZmFxWjA2V3RyM2xNTHhwcTJsYnd3UWREV1gy?=
+ =?utf-8?B?cHB2aDhPR0lmamlLNzVlaUhFM2RPajN4VXlhc2NiUEtTb2JleWZUNXd2aE1m?=
+ =?utf-8?B?cVc4VXR0SnhOSHpLVnpWRmJlNnhPTzNoNm1Pam12aVd5NXRYNisvdzdZOTdY?=
+ =?utf-8?B?MWxFWUoyblVwMUJMaDRZK3drQVBVb0ZTUWV6cFVyazkyaDBxMGZkeDh3U3pQ?=
+ =?utf-8?B?S0I2V3FaWHpaeFpoUndNekIrdlEzdE1zTkpUSXNsQm1mWVVKaEZJS0ZIV0Jq?=
+ =?utf-8?B?akZkZkVFd05PZTdscnJnTkNtdGxuRDJoUzdWTnpwZi9YbkJwM21CMUNNVFpZ?=
+ =?utf-8?B?Y3NkZnBQSy9paVJwNGJvMm0wS2NhSElKNlEzdlJsWHg3aEt0ZnZhVVV6eG4x?=
+ =?utf-8?B?S1JPM0Y1Nm5yVTFlM1B6cFVjalJtZEl5L1NNMWdvSzBvWEcvL2N0VUFweGhJ?=
+ =?utf-8?B?eElmRG9GQkdlSTAvM0twVTBFMTVjZC8zUGR1eFVIcHk2YjZna2tudjNKMnZJ?=
+ =?utf-8?B?bElXZW5uekdwQVJSVm9XWG1iYkpzSGFSay9GYm80UlZNTG9lcmpobUo0K2pr?=
+ =?utf-8?B?ZmhiUFdjYkNOQWh3YldwYVVobzU1dUtWRk9wQW95eWM4NGJ4YlBtaEtlQjFP?=
+ =?utf-8?B?TlBNdTRieStRRkhzN0lyZCtaTExvanJEbWNCZng5eUtscXBqdERxbHk2NnRH?=
+ =?utf-8?B?eDNDSCtUS29iYVBZcGtmZmJ6c3RSRFFIdzZ6TTdLbEcyNmNYRXh0TEVWcjVv?=
+ =?utf-8?B?THBvdmtkUG1QTlBOZ3F2dXg1NlZDdUNzNVI4dnU2dTAxNVdmL1VLQkIyb0Ra?=
+ =?utf-8?B?d1pFbmdJYnJuL1VOd3UzTGpjOWJNWlVENUpVQ3dpZ3NXS01nTEx1c3ZzUzVm?=
+ =?utf-8?B?dEtGNkp0dDhZMEtKMnN0VGxOL2FUZVN2VnFUU2FtYXhOL0t3ZDVzUXQyd09O?=
+ =?utf-8?B?Y2dYamZ6VnQ0MXFTVXBQdVhZc0NvalhFTzJsc0NKQUpEL25aYnlsQmlISEE2?=
+ =?utf-8?B?am9ZVGl6WjFYT2tnQk5LdXRaMUU4elZUc0JIS1YvTS9DMFBIdlpzWFpjVGh1?=
+ =?utf-8?B?RUZCR1djUEtUOXN0QzFPNHE3ZUNnVEN5QWV5S2twOEVtRjhtYkZWRVFpRDBu?=
+ =?utf-8?B?NEJmcFZ4M3B3d2tqdFhuSS9QV1lLcVZ4SGpoZTU1TTY5V1E4djlpVEVzd1k4?=
+ =?utf-8?B?Q2FQUjZRZDh4eFFGbU1hNWtLakpNN1AxMnlUTWdrM253S1JPMThlVllCYnZV?=
+ =?utf-8?B?Y2xnSEFQNFh0c3BWbHdWNWlnQVQrbjR0MHlJaWxXVzQrbXBWLyt4WXM0OThQ?=
+ =?utf-8?B?YVk0SE4rWk83eWJuOC9DcTk0SGYrNVZHNjNFM2pkZHU4eVRLV0ZuMGpxVFo4?=
+ =?utf-8?B?c1l6YXpDTW9NaXo0YnQ4VEhDR3hOcjhZMmdSNTI1a2hFOFd2TUNTdFdPd3Mr?=
+ =?utf-8?B?S2p5ZFN0akhqYWpqbWc3djZhZ2VTMnd6VEtDcmRPblVNQjhTb2N3Uk5hdG43?=
+ =?utf-8?B?Y1MzdkorVDU3RC9mbnJRSGlkckVpOFVyeEtqdUgydnk4RG8rM2Z3aEFWLy9T?=
+ =?utf-8?B?WmQ0Z2lNaUV3Q3FQcEhENHJOZXE0OVVXTVFWQUR2UCs1bjZKc1pjaFJNUkpU?=
+ =?utf-8?B?NHBKcCtDOFpwSlMrVkVXTUlKYzZjbW9hemF2c0NmQmZqWVB4T0I5Zz09?=
+X-Exchange-RoutingPolicyChecked: lPpTiqInzsufBIdtspv0F80i178HCou1ltsAyRzirV328AvygSTucADPJBOF/lNZpujBAP55JNyRm/M1RsWJztlDY5oA3mzDDjG07ADkmRWXlqsv+WfJ9FDtK8bhGZ2Lp+TYOniinUkKGZKtModUZNU4d4MUPEPwe2/LzBkpcszpfM/Sx2lDNCEa+4AGGNp6btS1j5OPKC94sNpl9tYhe/XDoV5349LK0kTkaA4AsEouBZ3xHeWJsRgU65E5SAfc8IN6v/WM1nvKvz5y370eUOj+1vSX8PenjHgqXoqLaruAJE8T2EiIoc4kvJgojNIcc9zKc9OZZ7Ie3fkjRzJuNA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: eafeedd2-b698-4d6a-e6f2-08df39c3212f
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2026 15:57:15.0773
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8gYZzkWNnQP+frUibQOd5a4q+G167Rd1PS+HpdW5JUGYPW/oargd7cLpxAcE/zTC3v4gvi7xV/EVw1MZbsgFlQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS6PR11MB610166
+X-OriginatorOrg: intel.com
 
-Hi
+On 02/11/2026 10:59, sashiko-bot@kernel.org wrote:
+> Can pt_syscore_resume() prematurely restart an Intel PT event that has been
+> throttled by perf_event_throttle(), leading to a duplicate pt_event_start()
+> call when the event is unthrottled on the next timer tick?
 
-Am 02.11.26 um 18:15 schrieb Ville Syrjälä:
-[...]
-> But what I'm thinking is:
+ Yes, the duplicate start can happen
 
-I've ran a lengthy session to explore various solutions.
+> Also, if pt_syscore_resume() skips calling pt_event_start() when the event is
+> throttled, wouldn't clearing pt_suspended_event in pt_syscore_resume() before
+> perf_event_unthrottle() later calls pt_event_start() cause a throttled
+> snapshot event to read reset PT MSRs in pt_read_offset() and take the
+> pt_config_enable() path without reprogramming the output MSRs?
 
-> - stop with the explicit cancel entirely and just rely on the
->    timer cancelling itself
-> - try to start the timer in vblank_enable(), and if that can somehow
->    fail because the timer is still running it should be fine because
->    the self cancellation should anyway have been aborted
+Right, so keep the restart and make the redundant start a no-op
+instead.  An event with both PERF_HES_UPTODATE and PERF_HES_STOPPED
+clear is already running.
 
-Having an old vblank timer still running while enable_vblank sets up a 
-new one can mess up the hrtimer's internal ordering. It's full of subtle 
-bugs, according to my LLM.
+ 	if (!(hwc->state & PERF_HES_UPTODATE)) {
++		/* Already running, e.g. restarted by pt_syscore_resume() */
++		if (!(hwc->state & PERF_HES_STOPPED))
++			return;
+	hwc->state &= ~PERF_HES_STOPPED;
 
-
-> - explicitly wait for the timer to have stoppped in drm_vblank_off()
->    to make sure the wrong interval can't leak from one mode to
->    another
-
-I'll soon send out a series implementing this idea.
-
-Best regards
-Thomas
-
->
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
-
+One side effect remains. A throttled PT event restarted on resume
+traces until the next tick while its sibling is still throttled.
+That lasts at most one tick and is harmless.
 
