@@ -1,92 +1,141 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793731091;
-	b=Eo52X9A1SOWTWLhXgNxtO+JBXndhqvvLC4GjxT5mO5zRvdKEPBsu58GN9PA++FocBWLr
-	 LUbvqndyQUmPRiUS07bq/ZrCpgh8S6TvA50OPdy5eUySINBKq/N3GJp8dd+uKmIQ2/vdA
-	 ka7Elg135GVIXQ10AHuo8cyWesEQ/kN1Tyzaq44mBioHN71S9t7EPGtyojKZi93mXXrhk
-	 RFzXk1HypNCnZbSxh+K3ntud8KitpOExBv41K5wBZk8zidU2CWPZnsNGymXg/ra7TwrJ+
-	 P6zDJlWnPUUOyhAi24K33QjCDFD/66dE2NQK61V4pDqa0MpzLTezWntTnMX7rHZnAwA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793731091;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-version:Content-type:Content-Transfer-Encoding;
-	bh=CGbm9EJEB5hNXXRNfY8Hb9YZuJsenYM7BZIV4eVSx/k=;
-	b=1GnKJtd3ir8kGBiY+mm5TF9FPRuhvPp9zNVeibUMRVKGLty3pKqj3kjHIeTcAnwbQYrR
-	 uqix+LSh7Q34sJbBqhyrO3VC5IiaJv86/bITQMqNR0gta535TZ1JQaZr7PEEAbGSlpjv0
-	 LQ2R8J3t6xJNEpmcsAPYol/7zTgpZgzGoDe4Xg6tExt9uj/yLSo/kQBpiyVZ04VrsTyKf
-	 CUmYX8k2RVerc18dyv4NHRl2E6SZQdqyYpbE3gBiqF+zUfAUZyx8dzwb6pEh5EE9tUZdc
-	 uSEswRrI10Uzccto93TM5xcEGxo83CESSESsbZfxenN4+LGNtrKge8kKAziCsr4e3LQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NtJ4tyae;
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.36
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793733162;
+	b=S+2KIiEwdqJWkR0dDA+IR0UQwuYqKmJ6hh4OnEeS4sLnD0H3BmtnF2/VcKfPPwv6cAoO
+	 l8mk4oZZ/wHDBXT1vQggOW4V5em4+M26KbWFCETGChD1nF0NAHf2/rKfms6VudFTIaLhz
+	 1qa9yUXL6qjcm1tUTnEh8WxHVRLUtSMInGcZXdFeaqox1EycZmTKVzifOzimGipn5/DoG
+	 Im+rQRExz66fSeVPbRjf38ug70Trr9qZ9DXY5pxutIPqM8mvQaeSOWK3UJX6YHfvcaGQ6
+	 P84xMMGpVdRdnMpmLtHttlCQZqmC+bHpOyD3bVBCg5C9/VKE/o0ylJV4HRgRU2hDUaw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793733162;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
+	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 msip_labels:x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
+	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=RabdFPipNHi1T2OPxc2u3Di7JRdBraPXfHub/ABOtPs=;
+	b=r2weZhWCD7b7aMB8pJxpRAQ8nBkv3qyzCus0i4ocfwBw3CCUZ39INhQh1VKP/j1+XBK9
+	 VjjsvCVU8mRF3SrTIIup3xEG+JGPCUtpXc56HAJhFGNowcwSBkio/wh1ZEQUhaKNvsoEb
+	 GBMyh8TL40/LiPJ+w9DkXcyGHHSPQedbc0B2T1tkYyP5u7CY1xMLL4TEDqaphDJYjSJ/d
+	 QMo/IByBCWWRN+9GT3uEZ0U0VCSRXSu2Bh3KDBdDFrHSC96rG1bhkYeYSmXC24qabp3cq
+	 gBOGynlLOOkviFWuR3yMUNl2MB5HYN6TY1/5bgQRk77Tmqg9PyPQFw0Kl4R70kRoEKQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=bVfP0kQz;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.36
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012036.outbound.protection.outlook.com [52.101.48.36])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7E7606A330
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 18:38:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA7E7606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81EE606A326
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 19:12:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C81EE606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NtJ4tyae
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-35cd4e8bdbdso5567636eec.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 10:38:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793731090; x=1794335890; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :message-id:date:in-reply-to:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CGbm9EJEB5hNXXRNfY8Hb9YZuJsenYM7BZIV4eVSx/k=;
-        b=NtJ4tyaeenBhCqXJ4eJYb/piSdVaoDbonBSq7BWULnKVIZ6kbEwS6wp/Jlw/DEKD4D
-         jK1GwJZSaVAgpVdsv6xT87l5uIWxzRM571zXeq7bsW/BVhstQsJDVraa3oZehmdGNW+9
-         lScNbU+7D0L9JRKPukNqBZVFaltgr377w0AnB8bw8Iy3vZayLgfDcb/yBwGk2SWg5d5d
-         +u87C/aTw7pw7JRae6ETlEzi/7ZapRxi38lGMEv9kd6qTEINwE+NrYy1dnU7x+ssLCkB
-         HRBfUMvRmNKwrCu9UzzyphftitnHuR3Rvx4FrxAnOF31Mn23G/79zKEQWvIM4LZaodYH
-         wcHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793731090; x=1794335890;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :message-id:date:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CGbm9EJEB5hNXXRNfY8Hb9YZuJsenYM7BZIV4eVSx/k=;
-        b=21YdH12W0niArdJsRIC9PSFRB9jajXMA6Yc8zGxxnNGivKZsg0K3un8IMNEo4ZCeGN
-         lJfz5FgM5872TmXgl0VLgrPODASr+twF8MsFahOxV52OgqFpSlfoGY+uUzi0sJ7ixUEo
-         qaqfID1VLEd333zzL1DdiX935qoDzX20KYR0AP6oHlLer+j0FG7wVlOdRCAlExh3qglV
-         GHShP6GrqPjb0I45rxUvJheZKu+pk5FoNm6uNWo/d/3eO5duZclqU3KoHngxl2odGCUc
-         spC/PNoFOSWB4H6sFX14w4K6BmLCmhPYSTGkDXXdLmCZvQytj/9auxKxMUnF9CaBF8KS
-         3FnQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwOKNZ3CsVHxi9SD9N+dh3CQqmHu3uEFJLCpgHw0PfNk3QkBSix2D0XC/MS1cJV9HD2MctzQ3fzxNmDl7YB8Ug=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9lY4bDEHGgijwfagMG6kFuauJcrzmjXzWOtJCMObIBM1FcUnWU
-	BQGd36kn1Ntxiq2kKaO+cQx59JACwqKoFYlbGC15uhJGrsouZ9O0Ktox
-X-Gm-Gg: AYBFou2kXusvW7WJQtZZxuZLP8WrhIAKB+3SYLGGa6WEp03aU7X66WX5f4xrMdQL2j2
-	54K1WISMqiYG/jBcxAcmYkxr1sJ9PHz/aNfEQzuUpK6TsAl22TGr22xureSFIB4UN1zfY0MQW7t
-	sWdqiDc9Rb5iWll2UHe5uvkBqPhVmLHsCFcCJ08a56HdcP/3fAtKcqOtYRIWP0noG6C0R1OuqVe
-	kfrMUNxq5Q/gwy1xSY6d0HXuNF75+SanmGri5vkzkXjuZB/Isod4Ob1EFjw6Ty0Q2J1Vxjh3Gba
-	h81IWAvdJ04jQLQZ7OZ51Yzv/Ec3Qk8ZAbU1FJ4Tex9V+R3YcSseXbJGL14ilASd9txHjTX4tp9
-	XZN+eSccELe01NpWXWzeYyWCGNJN3Hyko1JPMimnfdosvCo3u96gOmrs/WTnsMcMpQMIIDTIy0i
-	Sw1McPCJU0FNsbiyO9HrCGu0tP6z3Pi36ujDQJxwgMzLRlrDGXMsDnx9HYk24qG6v+h2XHZEKeG
-	A32b0YpCqHzTpHvCe03sN8BJu2U7BqcDLPFkOczrt2HojgYAqpGHB+UPzFAKMy+q7XOTpv/K/vH
-	LgMbrEZR8hrN2XSQYeRSkMq8mXM=
-X-Received: by 2002:a05:693c:4153:20b0:358:8f02:e0ca with SMTP id 5a478bee46e88-36a4236903fmr21434174eec.9.1793731089637;
-        Tue, 03 Nov 2026 10:38:09 -0800 (PST)
-Received: from pve-server ([49.205.216.49])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a42a6f7f9sm58473902eec.25.2026.11.03.10.38.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 10:38:08 -0800 (PST)
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-To: Sean Christopherson <seanjc@google.com>, sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>, Madhavan Srinivasan <maddy@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, linuxppc-dev@lists.ozlabs.org
-Subject: Re: [PATCH v4 12/23] KVM: Destroy memslots immediately after mmu_notifiers are unregistered
-In-Reply-To: <auitWWkOopYYbBH3@google.com>
-Date: Tue, 03 Nov 2026 23:38:34 +0530
-Message-ID: <se1h6b4t.ritesh.list@gmail.com>
-References: <20261030212112.2598640-1-seanjc@google.com> <20261030212112.2598640-13-seanjc@google.com> <sashiko-outbox-191627@kernel.org> <auitWWkOopYYbBH3@google.com>
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=bVfP0kQz
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VY5h0uk14uOXZVcTPCc4/9tQ6X0A9ICwn6O3ndmlwaTEgZM4jhrfU7HgPL5XRdoHo4t7T696fNxbjZKbQR8U7vk7ib8QzxJiKcrg+2p3DqRUQJ7BWrewHYI+LePvqvTsJmWx6bJY4S+ENZSU17lDPiDUY7u8dk4GKin9YHC+pccy2vpGs/i4b6m8Wn24DOuxxPv4FJ6OcEhYp2CcqzSTb3NrmBBZTnSkwtb+AEzGGPiE1lFl8blClrKSCs45qxCf7+6wlRbAEWqUTzFUNomO1KgY5DRaAbWEe18OYKqOT6whXl0NrE4eWWMrVioDqATAoe4Ffkb6Ng+kE19vZU4IoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RabdFPipNHi1T2OPxc2u3Di7JRdBraPXfHub/ABOtPs=;
+ b=sbn3yGW9oZCnl+eoBu9kMZJjrTi4g+AwFwNbfYdT08mwl6LYkj6jD6W7YDrtgFM/K651LLQLlkpKWiKCtUxxKLwBlO0s6P9IlUOjXqUHtXUg7rUY7ZPBjb1JlROLs13LTbRz9plykLYGr7Ft7Qfy0DMfSdx/9dKaxvaAOpYfuVQD5i6fT+0wLrNFEWLOW/vpgTgHE+Vl5KzNVhPUZXk9+hW9SxKL6Y8O518bU0Tm3OzhxiRMzrsmaWa4jeifobEk9wojGGGTs6rqeCaKS6bbbNbdM8EGeiDGIN0oOc5bapOlWr0fv5hD9KZaGpi7Ccs+pnNPG3fMCTbiW1J/NhFg3g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RabdFPipNHi1T2OPxc2u3Di7JRdBraPXfHub/ABOtPs=;
+ b=bVfP0kQzmKsUuK8n0YS0qMcFZpDopkzx6D/034uOsp+RDhTkQpmHrQIIyczSJ4ljU4CRfiiLUMnt72EoPb8RELTvWyH10pBJ3P1TzybyP/R7SDk2ScjT9IzEAfux9AxHDPZbVrrQLuQNouBl8NLWbwREs+O/PpUtzY38Xaofue0=
+Received: from CHAPR12MB999247.namprd12.prod.outlook.com
+ (2603:10b6:610:2ff::7) by DM4PR12MB6472.namprd12.prod.outlook.com
+ (2603:10b6:8:bc::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Tue, 3 Nov
+ 2026 19:12:37 +0000
+Received: from CHAPR12MB999247.namprd12.prod.outlook.com
+ ([fe80::d727:e84d:1883:b74]) by CHAPR12MB999247.namprd12.prod.outlook.com
+ ([fe80::d727:e84d:1883:b74%6]) with mapi id 15.21.0569.011; Tue, 3 Nov 2026
+ 19:12:37 +0000
+From: "Francis, David" <David.Francis@amd.com>
+To: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH v3] drm/gem: Fix and enable CHANGE_HANDLE
+Thread-Topic: [PATCH v3] drm/gem: Fix and enable CHANGE_HANDLE
+Thread-Index: AQHda6ubaDmCLQE7Nk6ic8o597M3OLcchTMAgAAwCs4=
+Date: Tue, 3 Nov 2026 19:12:37 +0000
+Message-ID:
+ <CHAPR12MB999247F1B7F082D4E1A7DD8D2BEF692@CHAPR12MB999247.namprd12.prod.outlook.com>
+References: <20261103155411.3305376-1-David.Francis@amd.com>
+ <sashiko-outbox-195705@kernel.org>
+In-Reply-To: <sashiko-outbox-195705@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Enabled=True;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SetDate=2026-11-03T19:12:37.046Z;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Name=AMD
+ General;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_ContentBits=1;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Method=Standard;
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CHAPR12MB999247:EE_|DM4PR12MB6472:EE_
+x-ms-office365-filtering-correlation-id: ed6132d3-10f5-474f-a163-08df39de6c8d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|6133799003|18002099003|22082099003|261102123227099003|261102130727099003|56012099006|10067099003|261009221227099003|261009223027099003|261022105027099003|261021121427099003|261022075727099003|4143699003|5023799004|11063799006|38070700021|261026121527099003|261028144727099003|261026140227099003;
+x-microsoft-antispam-message-info:
+ 6ouD3ByyHJHOrgLQBd0O8cRfRLC/UpaLPOmArUARMRdcGtl5n9dA8PFnzR6S27vfoDxy4aifLO1Z55Y9n0kzquLbO3pyYyMjVbT2Bu30yZtxVT6vMWjHrTW68FBxqZW30/ME1GqE0oNZEwHafZFE9/zijuO2JNQALb2GT6mvNSjkfS0LG8NUyQ1oIpyv4DVO0FF/OZ/YGey1KbLvpk+Sa1DeLZ1Io3Uku/x3T3dtwqgBIrV+AcSDWsQKnQWqYHTTuRdX9OQ6FUmdaH+LDi4U4TkbBMwDhJX1OMN5R4ELMIYugc3mV3rxE0rTUjK+cGTufXBCXW8lC3SOvFLeQ9Xjl9SrwuR7tgZgZUccUAxwE2uW+ut8wt6nAbnAmr+sbKA8eihD0/nFckdM4BK5REBBTon6A4tm/kvf95XalbNaFI0MgEh2uKOh/uGeEhoXLRYQYg3o733D8RnRtl8XGXSp+9wKVQbw2jT7uwQ5AeLA7RgHSsN/GcyJ0bUrOGYuj6qKJNKzWRTnxHsbwzLB+uDQZ1TdrHI/hNI0/ftplnfHSGnqfEnEuDtu6tGIFslBh8Korc15zV4cfuA+3U52dgXFAI7YpxbLjfJrydm5kPgr/bWiAVznYCDnQyIpyHgga5gl2AZJSadeUo/+mxLR2D1bKy8z3ej+x48LE4BHoOBNzk4=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHAPR12MB999247.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(6133799003)(18002099003)(22082099003)(261102123227099003)(261102130727099003)(56012099006)(10067099003)(261009221227099003)(261009223027099003)(261022105027099003)(261021121427099003)(261022075727099003)(4143699003)(5023799004)(11063799006)(38070700021)(261026121527099003)(261028144727099003)(261026140227099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?ZbHS+tcSKTUwGJaNrMcSnVbYM4Dus5QRC4hiD40dXqgqwV1j5mSaz7hsrP?=
+ =?iso-8859-1?Q?fFMkMNXixPTNR/Acj3MtYFWYagf6GftJ2tLeTPu2g3r9npycLeqxMY0Nqq?=
+ =?iso-8859-1?Q?6h88diuSEJJuSDaVG/COsR9Qu2CT692Dq6o+fECgkVZG2C+R99BmQlzQn5?=
+ =?iso-8859-1?Q?Ff9MQT2KRpCKGydSSZs0c9+CqQJxzY/rcnsWsLdXg82voqjNeCHUH6o+yQ?=
+ =?iso-8859-1?Q?iLmwDoUeK4RfRjrl544CoekzMRwXx3i2I0dV1aFXpHi4PUjtrILxq4LH26?=
+ =?iso-8859-1?Q?8IGsR+XCoYLeqaD1hFInw2SgpMceufd8AmWTGXP9Jw1O8kXN604h/CvYiW?=
+ =?iso-8859-1?Q?V528Z5U+hrfSeQgUPlMkH1QRBJHK45j8WOY7To3/Z/NPp/ZX2jAlD+iOhu?=
+ =?iso-8859-1?Q?Ya/1KO/BNv0wlQUO3LzJ8yLTEcJKWaZfOCUrUJk9dd0ogvxzT1zHjrXZeV?=
+ =?iso-8859-1?Q?/uhzyL010JqT64qOCXMvW0bwm1ZqmU/L6A7Nu6IXGNTHqkYVnjbnjTysL6?=
+ =?iso-8859-1?Q?pNaz2aoPTNCygmE7MbZZ9LjdJpqkKmTP82Evmp8WIwN2MKPCEI6y1m0TxD?=
+ =?iso-8859-1?Q?3IXd6aa5tzViFyVaJ1qbUOrNTvofe96+TVHrifoD1/haxp4lO3+4hPAbQO?=
+ =?iso-8859-1?Q?FGlbQ3VcgOpraM4Oirka5cUt8Wh8zTyRn+sYk8y0LrIl0dTSqE0is2+KUR?=
+ =?iso-8859-1?Q?c1AVzNGcgfnGBi13TZ+VdkiBOgcus/xjFedKS/EGj5rPd1uk7+PY7GR9Tk?=
+ =?iso-8859-1?Q?fAsHGuhNNJApx5H3TBSLHbSPr7bc55E98qy+3UHDkNzg4828WU5NmT9c0F?=
+ =?iso-8859-1?Q?lUaOQOkliPDd+yj9D1uMRfq3DN8g9fg779gY58QAvcUhHcvNmXsNLVQxyt?=
+ =?iso-8859-1?Q?22NRdbelUdZnJvReqf+EzEemvfxRm7pFm1X6Z0ItIDw2kSMec/Pf2ZXGDO?=
+ =?iso-8859-1?Q?D+xpbB5Cl5CSv8IRExB5rPVA2f8B0IuemD+X7YHBzcDf59KSWU9zK8BhAP?=
+ =?iso-8859-1?Q?nBetXxCqOie6Xk+JHyNpIcor8Vt2mipKrjmU5sJP6KD+KUhbAiEOk1m2Xs?=
+ =?iso-8859-1?Q?HQBfbXrLBcsKE/KO6PnsLXBVkp+0TC7LSSoiLzZHCKjtsiN38zEmK9w/Y+?=
+ =?iso-8859-1?Q?ZI7xpXaW/QXdgKhScszf2micUY9JaiAeLdZWDeL0xLK9Nqc5Nwv1xSNVZu?=
+ =?iso-8859-1?Q?dplBUR29M54ttBG1c8pvl6zzeaO6BIfK2Sdm3kS4HSTpJd4VB09350ULRR?=
+ =?iso-8859-1?Q?D7TPxzq4MWel6S6EgKfdse0zYLeCVcuxrcNKVbHpiRvX2tFvx4ewmIMGK8?=
+ =?iso-8859-1?Q?MUGFG+VzBjJmnQo6VG3UfbpJWlaAeCYInqV4ZhS1myMer2bjzVcCm7yyPV?=
+ =?iso-8859-1?Q?jSBWii7pgsMjuuQ7+QXIeLTpHc9eTULO/XGg9tmBctVIDb8ypiEE0APSMB?=
+ =?iso-8859-1?Q?9BdBm/QABclrwvdobYSO1Zjaxd8tnb3B9cg32PEPT5Zn9wF9Qr0FXnPey4?=
+ =?iso-8859-1?Q?AST63F6IUHqX9OXuS72xH0FKDf/dtM4FmF4BFsNzrbJTO+lPXb55d/6J+M?=
+ =?iso-8859-1?Q?91UpG92Gc9tqTB0q7+rHSA3vgyTW/d/An1wqqwtR716DmmjpM4M80Lg7Ew?=
+ =?iso-8859-1?Q?Ugek/GP9PBBXGkZ9K+I/Duo7O7kjX7UyoXtt3bhwFSAmmfyTHeePEOi6xA?=
+ =?iso-8859-1?Q?FjYRO4eDdNUlkq9FxvBQhIaVSSAy0HVX0JsGw1XrVbETSo+31YnfWJqf7z?=
+ =?iso-8859-1?Q?Y2fDY7DufQw6SeQcDy0y1ghV5wiMPPGRnFdNtbI4wquxTu?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,160 +144,191 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-version: 1.0
-Content-type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CHAPR12MB999247.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed6132d3-10f5-474f-a163-08df39de6c8d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Nov 2026 19:12:37.6127
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: K3F99om4OMkq/j9zswuk6o9vxFmHcN8i/poPqmOHscrwMXhTV/GmfdH0ON5jIaVK
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6472
 
-Sean Christopherson <seanjc@google.com> writes:
+> Does moving new_handle =3D args->new_handle ahead of the INT_MAX check al=
+low
+> negative values to bypass validation and trigger a warning in idr_alloc()=
+?
+Whoops, that's why it was two stages before. Changing the local to u32 shou=
+ld fix this
 
-> +Gautam and PPC lists/maintainers
+>Reading obj->dma_buf under only file_priv->prime.lock can race with anothe=
+r
+>drm_file exporting the shared object under dev->object_name_lock.
+Fairly certain this can't happen as the object is not in the idr at this st=
+age, so
+it cannot be exported.
+
+>Second, checking if (obj->dma_buf) tests whether the underlying GEM object=
+ has
+>an associated dma_buf rather than whether args->handle is registered in th=
+is
+>file's PRIME cache (via drm_prime_lookup_buf_by_handle(&file_priv->prime,
+>args->handle)). If a client holds a PRIME handle to obj and a second non-P=
+RIME
+>handle to the same obj (for example via GEM_OPEN or MODE_GETFB2), changing=
+ the
+>non-PRIME handle will insert a duplicate entry for obj->dma_buf into
+>file_priv->prime.dmabufs while drm_prime_remove_buf_handle(&file_priv->pri=
+me,
+>args->handle) will be a no-op.
+
+This is new to me. Can a single obj be in two different files?
+I guess no particular downside to having this do a
+drm_prime_lookup_buf_handle() on the old handle
+and confirm it isn't ENOENT
+
+David Francis
+
+________________________________________
+From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
+Sent: Tuesday, November 3, 2026 11:13 AM
+To: Francis, David; dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v3] drm/gem: Fix and enable CHANGE_HANDLE
+
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] drm/gem: signed int truncation in drm_gem_change_handle_ioctl()
+- [Medium] drm/gem: broken PRIME handling in drm_gem_change_handle_ioctl()
+--
+
+commit 69ca138819f06e34ad7cfcd2fb35830a526fdf7a
+Author: David Francis <David.Francis@amd.com>
+
+drm/gem: Fix and enable CHANGE_HANDLE
+
+This commit updates drm_gem_change_handle_ioctl() to reject a new_handle of=
+ 0
+or equal to the existing handle, adds idr_preload() around idr_alloc(), and
+re-enables DRM_IOCTL_GEM_CHANGE_HANDLE in the core DRM ioctl table.
+
+> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> index 3ce38df7b8b85..6973bf69dd439 100644
+> --- a/drivers/gpu/drm/drm_gem.c
+> +++ b/drivers/gpu/drm/drm_gem.c
+[ ... ]
+> @@ -1040,21 +1027,22 @@ int drm_gem_change_handle_ioctl(struct drm_device=
+ *dev, void *data,
+>       if (!drm_core_check_feature(dev, DRIVER_GEM))
+>               return -EOPNOTSUPP;
 >
-> On Fri, Oct 30, 2026, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Medium] KVM: PPC: Book3S HV: rmap_nested memory leak in kvmhv_release_all_nested()
->> --
->> 
->> commit 9c25a1b4a76e8526eb8a2b11e1b9e63893b0de80
->> Author: Sean Christopherson <seanjc@google.com>
->> 
->> KVM: Destroy memslots immediately after mmu_notifiers are unregistered
->> 
->> This commit replaces active memslots with an empty memslot set and frees all
->> memslots immediately after unregistering the MMU notifier in kvm_destroy_vm(),
->> prior to calling kvm_arch_destroy_vm().
->> 
->> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
->> > index fa548b12228ff..2eda12a52bf4b 100644
->> > --- a/virt/kvm/kvm_main.c
->> > +++ b/virt/kvm/kvm_main.c
->> 
->> [ ... ]
->> 
->> > @@ -1310,12 +1329,10 @@ static void kvm_destroy_vm(struct kvm *kvm)
->> >  		kvm->mn_active_invalidate_count = 0;
->> >  	else
->> >  		WARN_ON(kvm->mmu_invalidate_in_progress);
->> > +	kvm_destroy_memslots(kvm);
->> > +
->> >  	kvm_arch_destroy_vm(kvm);
->> >  	kvm_destroy_devices(kvm);
->> > -	for (i = 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
->> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][0]);
->> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][1]);
->> > -	}
->> 
->> [Severity: Medium]
->> Does hoisting kvm_destroy_memslots() above kvm_arch_destroy_vm() leak
->> struct rmap_nested allocations in slot->arch.rmap on PowerPC Book3S HV when
->> destroying a VM with nested virtualization enabled?
+> -     /* idr_alloc() limitation. */
+> -     if (args->new_handle > INT_MAX)
+> -             return -EINVAL;
+>       new_handle =3D args->new_handle;
 >
-> I don't think so?  Patch 3[*], "KVM: PPC: Flush/zap all memslots on kvm_arch_flush_shadow_all()",
-> should free the rmaps in response to kvm_arch_flush_shadow_all().   From what I
-> can tell, the page tables have to be in radix mode, and so the rmaps are freed via:
+> -     if (args->handle =3D=3D new_handle)
+> -             return 0;
+> +     /* idr_alloc() limitations. */
+> +     if (new_handle =3D=3D 0 || new_handle > INT_MAX ||
+> +         args->handle =3D=3D new_handle)
+> +             return -EINVAL;
 >
->   kvmppc_radix_flush_memslot()
->   |
->   -> kvmppc_unmap_pte()
->      |
->      -> kvmhv_remove_nest_rmap_range()
->         |
->         -> kvmhv_remove_nest_rmap_list()
+>       mutex_lock(&file_priv->prime.lock);
+> +     idr_preload(GFP_KERNEL);
+>       spin_lock(&file_priv->table_lock);
+> -     ret =3D idr_alloc(&file_priv->object_idr, NULL, new_handle, new_han=
+dle + 1,
+> -                     GFP_NOWAIT);
+> +     ret =3D idr_alloc(&file_priv->object_idr, NULL, new_handle,
+> +                     new_handle + 1, GFP_NOWAIT);
+
+[Severity: High]
+Does moving new_handle =3D args->new_handle ahead of the INT_MAX check allo=
+w
+negative values to bypass validation and trigger a warning in idr_alloc()?
+
+In struct drm_gem_change_handle, args->new_handle is __u32, whereas the loc=
+al
+variable new_handle in drm_gem_change_handle_ioctl() is a signed int. Movin=
+g
+the assignment before the bounds check makes new_handle > INT_MAX
+tautologically false.
+
+When userspace passes args->new_handle >=3D 0x80000000 (with args->handle !=
+=3D
+args->new_handle), new_handle wraps to a negative value, passes the check,
+and is passed as start to idr_alloc():
+
+lib/idr.c:idr_alloc() {
+        if (WARN_ON_ONCE(start < 0))
+                return -EINVAL;
+}
+
+This reintroduces the warning fixed by commit 12f15d52d38a, and evaluating
+new_handle + 1 when args->new_handle =3D=3D INT_MAX also overflows signed i=
+nt.
+Should new_handle be declared as u32 (or checked against args->new_handle
+before assignment)?
+
 >
-
-That's correct. Maybe, I think Sashiko didn't consider patch-3 of the series
-during review of this patch-12.
-
-> And if that doesn't work, it means memslot deletion on an active VM is completely
-> broken.
+>       if (ret < 0) {
+>               spin_unlock(&file_priv->table_lock);
+> +             idr_preload_end();
+>               goto out_unlock;
+>       }
 >
-> However, it means the memslot code in kvmhv_release_all_nested() is
-> dead code,
-
-Not really. I do see a caller of this, for when we switch from radix
-to HPT. So we still need it.
-
-INCOMING CALLS
-- f kvmhv_release_all_nested
-  - f kvmppc_switch_mmu_to_hpt    [arch/powerpc/kvm/book3s_hv.c:5591]
-    + f kvmppc_alloc_reset_hpt    [arch/powerpc/kvm/book3s_64_mmu_hv.c:144]
-    + f kvmhv_configure_mmu       [arch/powerpc/kvm/book3s_hv.c:6330]
-  + f kvmppc_core_destroy_vm_hv   [arch/powerpc/kvm/book3s_hv.c:5930]
-
-
-
-So FWIW patch-12 as such looks good to me from PowerPC perspective,
-since those rmap entries will get freed up as part of the
-mmu_notifier_unregister() (after patch-3). Agreed that Sashiko
-comment does not look correct.
-
-Thanks for looking into this.
-
--ritesh
-
-
-> so this as follow-up to patch 3?  Or maybe folded in?
+> @@ -1062,10 +1050,12 @@ int drm_gem_change_handle_ioctl(struct drm_device=
+ *dev, void *data,
+>       if (IS_ERR_OR_NULL(obj)) {
+>               idr_remove(&file_priv->object_idr, new_handle);
+>               spin_unlock(&file_priv->table_lock);
+> +             idr_preload_end();
+>               ret =3D -ENOENT;
+>               goto out_unlock;
+>       }
+>       spin_unlock(&file_priv->table_lock);
+> +     idr_preload_end();
 >
-> diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
-> index a6ff42d7666c..27985210f972 100644
-> --- a/arch/powerpc/kvm/book3s_hv_nested.c
-> +++ b/arch/powerpc/kvm/book3s_hv_nested.c
-> @@ -802,8 +802,6 @@ void kvmhv_release_all_nested(struct kvm *kvm)
->  	int lpid;
->  	struct kvm_nested_guest *gp;
->  	struct kvm_nested_guest *freelist = NULL;
-> -	struct kvm_memory_slot *memslot;
-> -	int srcu_idx, bkt;
->  
->  	spin_lock(&kvm->mmu_lock);
->  	idr_for_each_entry(&kvm->arch.kvm_nested_guest_idr, gp, lpid) {
-> @@ -820,11 +818,6 @@ void kvmhv_release_all_nested(struct kvm *kvm)
->  		freelist = gp->next;
->  		kvmhv_release_nested(gp);
->  	}
-> -
-> -	srcu_idx = srcu_read_lock(&kvm->srcu);
-> -	kvm_for_each_memslot(memslot, bkt, kvm_memslots(kvm))
-> -		kvmhv_free_memslot_nest_rmap(memslot);
-> -	srcu_read_unlock(&kvm->srcu, srcu_idx);
->  }
->  
->  /* caller must hold gp->tlb_lock */
-> 			
->
-> [*] https://lore.kernel.org/all/20261030212112.2598640-4-seanjc@google.com
->
->> In virt/kvm/kvm_main.c, kvm_destroy_memslots() replaces kvm->memslots[i]
->> with kvm_empty_memslots and frees each memslot via
->> kvm_free_memslot() -> kvm_arch_free_memslot() -> kvmppc_core_free_memslot_hv()
->> in arch/powerpc/kvm/book3s_hv.c:
->> 
->>     static void kvmppc_core_free_memslot_hv(struct kvm_memory_slot *slot)
->>     {
->>             vfree(slot->arch.rmap);
->>             slot->arch.rmap = NULL;
->>     }
->> 
->> which frees the slot->arch.rmap array without freeing the linked
->> struct rmap_nested entries.
->> 
->> Previously, those entries were freed before memslot destruction via
->> kvm_arch_destroy_vm() -> kvmppc_core_destroy_vm_hv() ->
->> kvmhv_release_all_nested() in arch/powerpc/kvm/book3s_hv_nested.c:
->> 
->>     srcu_idx = srcu_read_lock(&kvm->srcu);
->>     kvm_for_each_memslot(memslot, bkt, kvm_memslots(kvm))
->>             kvmhv_free_memslot_nest_rmap(memslot);
->>     srcu_read_unlock(&kvm->srcu, srcu_idx);
->> 
->> With kvm_destroy_memslots() running before kvm_arch_destroy_vm(),
->> kvm_memslots(kvm) now returns kvm_empty_memslots and the memslots have
->> already been freed when kvmhv_release_all_nested() runs, so
->> kvmhv_free_memslot_nest_rmap() is never called. Any struct rmap_nested
->> entries remaining in slot->arch.rmap at teardown (for example, when
->> KVMPPC_SECURE_INIT_DONE causes kvmppc_radix_flush_memslot() to return early,
->> or when 4KB PTEs were replaced by a huge page in kvmppc_unmap_free_pte())
->> will be leaked.
->> 
->> -- 
->> Sashiko AI review · https://sashiko.dev/#/patchset/20261030212112.2598640-1-seanjc@google.com?part=12
->> 
+>       if (obj->dma_buf) {
+>               ret =3D drm_prime_add_buf_handle(&file_priv->prime, obj->dm=
+a_buf,
+
+[Severity: Medium]
+With DRM_IOCTL_GEM_CHANGE_HANDLE now enabled in drm_ioctls[], is it safe fo=
+r
+drm_gem_change_handle_ioctl() to read obj->dma_buf and update file_priv->pr=
+ime
+here?
+
+First, struct drm_gem_object documents that obj->dma_buf is protected by
+dev->object_name_lock:
+
+drivers/gpu/drm/drm_prime.c:export_and_register_object() {
+        ...
+        obj->dma_buf =3D dmabuf;
+        get_dma_buf(obj->dma_buf);
+}
+
+Reading obj->dma_buf under only file_priv->prime.lock can race with another
+drm_file exporting the shared object under dev->object_name_lock.
+
+Second, checking if (obj->dma_buf) tests whether the underlying GEM object =
+has
+an associated dma_buf rather than whether args->handle is registered in thi=
+s
+file's PRIME cache (via drm_prime_lookup_buf_by_handle(&file_priv->prime,
+args->handle)). If a client holds a PRIME handle to obj and a second non-PR=
+IME
+handle to the same obj (for example via GEM_OPEN or MODE_GETFB2), changing =
+the
+non-PRIME handle will insert a duplicate entry for obj->dma_buf into
+file_priv->prime.dmabufs while drm_prime_remove_buf_handle(&file_priv->prim=
+e,
+args->handle) will be a no-op.
+
+--
+Sashiko AI review =B7 https://sashiko.dev/#/patchset/20261103155411.3305376=
+-1-David.Francis@amd.com?part=3D1
