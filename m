@@ -1,64 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.27.42.3
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793737239;
-	b=AML+8hqqwl4tCxFtZSTO/to9NIi+3bzrRGMRbTLODEEdjQD9KksCDpJcxVaodAFz9xSK
-	 YfPy8fX1ITSnwLrcoDxxcLaG+VbvNDFm0WpaM2Lo1n5C5e/GtfO4rdEs6SS06tjcxFJkv
-	 BV9Dief0as7BRnu2WcAungM47d0qHva6Bo5DMP7oEhym9rDnDEN/ig9Cg7UPLjGC10RYG
-	 xVH6mC+ygeklxN3bBCD3/lxRIq1TzzEUBo7aHlfYYAeZw44wbJ9ehOO9pi+3PKuUpZ/KL
-	 uiFLaKRnRhKSzFHD0t/3bARTbHvPDsluEG8vgFCagbfb6NT+CWlDFOnhnIugIU1Q9Bw==
+	t=1793737630;
+	b=AS85dqhBsvZ93wbskSXY0apYwqmpZDL4QejM6GW4Y3Mkr+9hVb+muuvJOiCD8LcyN/P1
+	 SQLW6wWCska9CFUa3G1x9bXXWj7Hf7J4t38apHGp7uRmBaGhfQ6fbnFjoRIjM0ultcMV2
+	 yS1I/pCTaNUV+jhm07towojs19qDUjJEvaggmpp+f/K6/yQTaj9SbVNmmGkDhNu5fAjhR
+	 xqzPoKgrg2oZ7iwSxazjOn11m9wBMoXQokJsMWI7wDUJuI85dGn4VCQbzlF/lPi5tY3Db
+	 M6JGZYdFRe9maz0Ltfw8ZtqXtAaFYZel0iI1NS9zI07xsUb4fhyYgy8M2vSJJQ+svzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793737239;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=IUqvrTFx/K9gimEKml2NBPNOGsMG8AhbzuFakDXurYY=;
-	b=LIenYdnT4WqYlvy7uFiU0KCc7Mk4bXqNUm8zi+krFS0Sk3cmdfD6+bsHqEsKtzsHohK3
-	 mE6nWhvy3Qdqh+Uegj776AqaMPnDCoL+7wzdAYb26hZTOXqOQK+wE2oQedfDTKAoYIZ+o
-	 cvthNpY5o0BE4bMfAuymqu3IOg1EgrYCbScuIW7nvpz9nhC6yn2lQ6YuZeSK+sE/kCmWG
-	 ZC8Uf0Lh7JNV6Qc2eNPwPtq7AJEeeI+/l+9yrHvQkIQKX5l0Lab76w5wqNrN8jRLOoBGv
-	 zZm00jmRqeS3sdEz/SY8jb9StZXquDyD+xx8109tn+l3nyXG2HK5iN+woNahtlwsiHw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793737630;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type;
+	bh=Cs/42Kl/t30L3HxFjgoCIiYXaRNlNAdJ3TsWsjzk5PE=;
+	b=GCFsT7o94XKojuTwbfbBsjKZEJekJrKE0Nh8d2YLZ2F2VnTGSg1svBgqMyEsL6ZJsvnn
+	 PBTnCwE6dlSHW+o2f4ozcdS6myNyzEAfUkrZ8h4TR+9CX9O8D4Q2TCdXLDltvGy0He25O
+	 UUynK/rk3YxXhkUgIbZ9kR7qaHhJhHAPMD6/iDEMrUR7r+uMiGtmyb1hn9n6slkdp+DKT
+	 RJPolGpzhfL4WbRz0k7fvJoqjP95Q2gxVm03yByafpthHtWHne02+XM41bYvJ8WGyUv5G
+	 O99QbtoEr3VzK8dnPk4a3c7oGT/B7N1yMZAO/WSM7qwR3dYL47oAMn8AJIAuPHgDATw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=free.fr;
-	spf=pass smtp.mailfrom=free.fr;
-	dkim=pass header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=M1WpxImR;
-	arc=none smtp.remote-ip=212.27.42.3
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IwitLGcF;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2329A606A31B;
-	Tue,  3 Nov 2026 20:20:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2329A606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C5C606A31B;
+	Tue,  3 Nov 2026 20:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=M1WpxImR
-Received: from L30177.local (unknown [82.65.104.223])
-	(Authenticated sender: vjardin@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 2315113F879;
-	Tue,  3 Nov 2026 21:20:22 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1793737230;
-	bh=pWeUyM6RmTRIJwmZpWd83pWgMmzCsnHnooQuFRo17E4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=M1WpxImRjmom39Ius3QyNuflJtzxPVkktY45SdPzp5AfVrM2zR1QFBZ9+kOKroJpN
-	 fQ+FsbipAeSvkPm6++hiV6tDvNRbYbaKyI8rAi8OeKWPQo3bVgb6TePI0wRWC6Wci3
-	 CmBhEKN3neytI33DBcfdw6KEdR0nBjh/aPUKl3vFBPCTuFBVS7OHQrSLfDoz2zA1s5
-	 6qvj16NNh8s95DrL+1sHrXkJX1Z/tN0keyx/H08Mg/3DMllMZ3dQyH96vBh7xxPeUQ
-	 vPb9el4sU0QAtFIyfOuwHLEHsc631CnpLd5iRFJtm7g23SSZzPBuOjWS48Md/7Bghz
-	 /DCBEqK2p5hzg==
-Date: Tue, 3 Nov 2026 21:20:21 +0100
-From: Vincent Jardin <vjardin@free.fr>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IwitLGcF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752131F00919;
+	Tue,  3 Nov 2026 20:27:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793737630;
+	bh=Cs/42Kl/t30L3HxFjgoCIiYXaRNlNAdJ3TsWsjzk5PE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=IwitLGcFtpFhnU0BryNLtD7K3IlR1Z24CzjxC+AKlTcsty5Gjf3KiIU9UKbA6/Pzx
+	 CjZDON9KS9Ad6OHQoo9cTNCtmGuBQ3D4P9ieNXkQNHIBG94WLR0yK9aovGeUQjjzpY
+	 0hUFiw6xZlNh/ijwoI8VIUnRC9J1zkMOlpu6sjwrJ1j4xe3XMSJr+muqk8B6GMzgyr
+	 n03uzcMIEQpPEZwoEDaBML7ooncJm5F3shT5LypJZgDE9dc5iIbbpT3RR5gEmVdv/l
+	 CZVnYL1jg1qexQJESfNx2L5vIR/ALEvoKcxw+M186CjvRnafQMRIwvwQ4zu8eEMlXt
+	 Ho/Mj9BuFxGIA==
+From: Thomas Gleixner <tglx@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
-	Frank.Li@kernel.org
-Subject: Re: [PATCH v2 1/5] dt-bindings: pinctrl: add the NXP LX2160A RCW pad
- mux
-Message-ID: <aupCBbNlYGFWc8Cq@L30177.local>
-References: <20261103-for-upstream-lx2160a-rcw-pinmux-v1-v2-0-3aad0860b984@free.fr>
- <20261103-for-upstream-lx2160a-rcw-pinmux-v1-v2-1-3aad0860b984@free.fr>
- <sashiko-outbox-195824@kernel.org>
+Cc: linux-s390@vger.kernel.org, sparclinux@vger.kernel.org, Heiko Carstens
+ <hca@linux.ibm.com>, Vasily
+ Gorbik <gor@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>,
+ Christian
+ Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH V2] x86/entry: Fix ptrace regression
+In-Reply-To: <sashiko-outbox-192559@kernel.org>
+References: <20260707181957.433213175@kernel.org>
+ <20260707190254.493733289@kernel.org>
+ <20261022142425.3Wx-RrU5@linutronix.de> <87fqxx1r80.ffs@fw13>
+ <87cxt11ktr.ffs@fw13> <1149A39E-BEBA-46EA-94F4-4DFFC4733EF5@zytor.com>
+ <871p9g1s3w.ffs@fw13> <87y0boze95.ffs@fw13>
+ <C6D7BF04-4CF7-48D1-93B5-E80D52C2617D@zytor.com> <87se1wyvs8.ffs@fw13>
+ <87mrrvxaty.ffs@fw13> <87ecd4xwlr.ffs@fw13>
+ <sashiko-outbox-192559@kernel.org>
+Date: Tue, 03 Nov 2026 21:27:07 +0100
+Message-ID: <875wydy82s.ffs@fw13>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -68,35 +67,12 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-195824@kernel.org>
+Content-Type: text/plain
 
-Hi M. Bot,
+On Sun, Nov 01 2026 at 18:07, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> Does the inner if (nr != -1UL) statement in do_syscall_32_irqs_on() have an
+> unmatched opening brace that leaves the function unclosed and breaks the
+> build when CONFIG_X86_32 or CONFIG_IA32_EMULATION is enabled?
 
-> > +          enum: [ iic1, iic2, iic3, iic4, iic5, iic6, xspi1-data74,
-> > +                  xspi1-data30, xspi1-base, sdhc1-base, sdhc1-dir,
-> > +                  sdhc2-data74, sdhc2-base, uart1-soutsin, uart1-rtscts,
-> > +                  uart2-soutsin, uart2-rtscts, irq11-8, irq7-4, irq3-0,
-> > +                  evt4-3, evt2-0, clk-out, asleep, reset-req ]
-> 
-> [Severity: Medium]
-> Should clk-out also be listed in the function enum (with a corresponding
-> if/then rule in allOf allowing the clk-out group)?
-> 
-> The other single-pad groups in RCWSR14 (asleep for ASLEEP_PMUX and
-> reset-req for RESET_REQ_PMUX) expose their encoding 0 primary functions
-> (asleep and reset-req) alongside their alternate functions.
-> 
-> For the clk-out group (CLK_OUT_PMUX in RCWSR14[5:3]), the schema permits
-> the gpio (0b001) and flextimer (0b010) functions in allOf, but omits the
-> primary clk-out (0b000) function, which prevents a board from selecting or
-> restoring the CLK_OUT function via pinctrl states without failing schema
-> validation.
-
-No: the LX2160 doc states that CLK_OUT_PMUX 0b000 is reserved
-and then it seems it dropped its CLK_OUT section (per the revision history).
-
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261103-for-upstream-lx2160a-rcw-pinmux-v1-v2-0-3aad0860b984@free.fr?part=1
+Duh. Yes.
