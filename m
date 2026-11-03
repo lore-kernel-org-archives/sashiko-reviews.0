@@ -1,54 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793725629;
-	b=URdmKwC/lWtdFBILFj1PoJM0tq5gO6fM2eBWYf9/3MKWBr1UMCWXo5oxS1HEsWP1fE1z
-	 xIbwQP78KIPYX72Li4gqGAjYtEsak/lbbtWw1lRF4vJlrJ3xl+8Q269Q0/5ouJWVxIHaE
-	 uRbIYOxajUXizNSiXvvEVu02L2VbtzwzqyFxWR0QrWWfNUGZkO6zszJdtwVtdsEXrUDv6
-	 P/++05Xycjp/nYFPY+GWnp1yVzkOu0mZEai4lvICnbsh8w9IQ6SbTZBYOb86bDz8DXoh1
-	 /9QyxqQGIdIB4aQVqIeY0tW93Xz+U6kPg7q71sY/I+aZnb+4ooK5ExyndRwNMNtYJVg==
+	t=1793725901;
+	b=cPHOt3kVZkJ8smlJjeQ26ytFa52edvth5eWdDmUIZ3/LIm3asSYvdFsYQBceAlBFDwjc
+	 GZrTjPJ1gITLSFjNqfSkdisuCdrTOU9sByE4aYwRjkKJlHDRv8vmM3OdikebhdhnzMl/1
+	 TNn6bv9Y8mTzxjHvgEJ76jR1GzvahSQ3gfaQdEobX9sMCqQAOHyQpiGB7CHD8cNcxBCap
+	 0BW7FoB+KUjH1Cr5JI86uQK5QCNAfgL2v71uYfPuG5hMIhZnREDuAte9CIcmz8ZK8dRot
+	 YaCciL5XIypk02gGFzJsyQuVLew5A2jAotSS2YbFq+LAkDzu6pxvBw2Elz7qPGE5vxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793725629;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Ttj5hGiKjJsfAgbbodOJw/zoBmXktt+aHx1z/2INb94=;
-	b=YrzyX5s+FKzRKnnRWeCVj2jqYN63EZurn1UsNHyAbokCH80vsSCsUEi6dIDg3lFcuNMQ
-	 BV//Uj3w2b7uLkFzIEUhYco6bqSqzDd8bWTZ0YidVGPCci7f1mFJ+ubBELVCbFDDDte8t
-	 nOhbnjqoYqvcjriQO7HTSSDkSaC+jVnulxecac2h6bP1zw0TIioAQffBoaQEjLNYibb/k
-	 UuQiHDTSpYth4d1JOMns8ylPgwaJ4DdfwsiFv169Ipj3tM2a5RIuye+6MWUuYQbGK6bve
-	 INdvcod6vb99Iil+CKgucbcIeACK+zbij6Lg8yIEn88FfeoXKjfEhVfHkS3mTfKDmBw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793725901;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=ZtcdwHMpDGMWv0H3NwsrmbaIS/nGthqYoowZYVaPd7s=;
+	b=xiNA56M7uq+ZTk+yxvd931vktv1naeC1wo7Rg+sDEttbP6vfngUWrKhdkolUSdtvSixR
+	 OjG8j3HmOipRNZbQQPSEv2KyQeDVMFqeoNSgxV25Kspd5tJXqVGvM9RwDhpvzSeqggmHM
+	 p90qarxKPIelAtiZJ/JOUvOoWcpi2EWrdK34TnfJA4y3CsHMNG4OXW3VCs1U3DFQW+Fgo
+	 0y1ogD6ZPfBAeLHqssV33ssxpxJAPSwyVIU2fl+CJNdImxqGXZkWd0x3IMZrFCCnhxS1w
+	 pBwS7Ql0mSB6IcgKhKytRvWw0gflYpZNFy1D5p93iyhHJ0Bt1BNDcDQaaTLuHNZ6V2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fgMUbLE5;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="dGQSL/xr";
+	arc=none smtp.remote-ip=198.175.65.16
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B0A606A324;
-	Tue,  3 Nov 2026 17:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7F9606A329
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 17:11:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C7F9606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fgMUbLE5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D831F000C1;
-	Tue,  3 Nov 2026 17:07:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793725629;
-	bh=Ttj5hGiKjJsfAgbbodOJw/zoBmXktt+aHx1z/2INb94=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fgMUbLE5vbAaTDI/HOr4tMmUFb4Re26b7MNAxPC9axLanzP2MLoUjJ6JL1T1fD4Js
-	 qS7kR3xaOnx9i0ebaziG5o4MdyR4W3iAgzEpPnpmBbeN+hmNn5UVIuwYqr1myRYuD5
-	 u88r6WzKgvP0l5f1s3+gqSA9qPG8aMN2OowyeyRSg0UcfUl2blTKH5LPo0pi2FPWoG
-	 0FKaqNp61MxuImE4MgIHIEWsMDMiN7qKa7Sa2os9YNGWh6QYon0RYku2q5I1Sz2WRs
-	 +D7dEr2NQNz/RqDEF/xe/KnAfLUsBw7F/rIr9eeAA8JUsx7LERhkbXicnFQTtpih1x
-	 bMyREiz0Yzs1g==
-Date: Tue, 3 Nov 2026 09:07:07 -0800
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v1 4/4] libperf evlist: Recompute CPU map when an evsel
- goes system wide
-Message-ID: <auoUuw8LSx659T6_@z2>
-References: <20261027170415.2815859-1-irogers@google.com>
- <20261027170415.2815859-4-irogers@google.com>
- <sashiko-outbox-186978@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dGQSL/xr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793725901; x=1825261901;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=CjpixaBix/pua7fjqohEmpq86pzXz468uk/AW/PT3JI=;
+  b=dGQSL/xryTvcivp5gtAuJRYLcS+uUWlw+mneowMvhhuvbtmbSXUtX7Bm
+   ud6y+DZ/mquBqOjSzCU96FU7BA4I5xCFmDyyerD/2CSsM3fB8LhFJML+H
+   Acuw8c77qUAG2QTb1VfpGsoPjzxBGFubXHp6uMO+qQtCTzpWxSX6qf5b+
+   6m87y8yiwacae3YBng1noleTnKtL7Rh/CRLClNCDn3mbYd2UvNqmxSnYP
+   3aY8HKWRQdlhTY7h07uKL9Hg61+BWrpkhnGgpNMHqV6fwQaNKZlnD2+l0
+   NML7hkDzwg+qABh35W5Lz88ch+FegZKP2LH5qCFneSHI13BMzJ+aoMUro
+   Q==;
+X-CSE-ConnectionGUID: 8pqQ6GWvRFKi8tYF+Oi4AQ==
+X-CSE-MsgGUID: 0htMzkrXRRy0kGI09MueOw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2456404"
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="2456404"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 09:11:40 -0800
+X-CSE-ConnectionGUID: 0CWh79sxQQm1faR4JnCN0Q==
+X-CSE-MsgGUID: tj4reW5GTxyz4lbAe+r+zQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="8256618"
+Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.193])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 09:11:36 -0800
+Date: Tue, 3 Nov 2026 19:11:34 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	airlied@gmail.com, simona@ffwll.ch, javierm@redhat.com,
+	louis.chauvet@bootlin.com, dri-devel@lists.freedesktop.org,
+	sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] drm/vblank: Restart enabling vblank timer on possible
+ deadlock
+Message-ID: <auoVxgQ0D1-6QEDD@intel.com>
+References: <20261102143919.1672293-1-tzimmermann@suse.de>
+ <auioL8zR9O5u4TCF@intel.com>
+ <4212140f-fa07-4f0c-bd3a-0ae3d88b250c@suse.de>
+ <aujFSzHEv5pAfHPf@intel.com>
+ <ec9020b5-28bb-45a5-89d7-e64e804769de@suse.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,94 +86,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-186978@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ec9020b5-28bb-45a5-89d7-e64e804769de@suse.de>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On Tue, Oct 27, 2026 at 05:15:19PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] libperf evlist: stale CPUs left in evlist->all_cpus by perf_evlist__go_system_wide()
+On Tue, Nov 03, 2026 at 04:55:34PM +0100, Thomas Zimmermann wrote:
+> Hi
+> 
+> Am 02.11.26 um 18:15 schrieb Ville Syrjälä:
+> [...]
+> > But what I'm thinking is:
+> 
+> I've ran a lengthy session to explore various solutions.
+> 
+> > - stop with the explicit cancel entirely and just rely on the
+> >    timer cancelling itself
+> > - try to start the timer in vblank_enable(), and if that can somehow
+> >    fail because the timer is still running it should be fine because
+> >    the self cancellation should anyway have been aborted
+> 
+> Having an old vblank timer still running while enable_vblank sets up a 
+> new one can mess up the hrtimer's internal ordering. It's full of subtle 
+> bugs, according to my LLM.
+
+The hrtimer code looks like it's designed to handle this. It
+first removes the old queued timer and then inserts it back
+with the new expire time. And there's also locks in there.
+
+> 
+> 
+> > - explicitly wait for the timer to have stoppped in drm_vblank_off()
+> >    to make sure the wrong interval can't leak from one mode to
+> >    another
+> 
+> I'll soon send out a series implementing this idea.
+> 
+> Best regards
+> Thomas
+> 
+> >
+> 
+> -- 
 > --
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+> GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
 > 
-> commit 03b9925431ed73d3588b37d9c3ef20e7a5b73d9c
-> Author: Ian Rogers <irogers@google.com>
-> 
-> libperf evlist: Recompute CPU map when an evsel goes system wide
-> 
-> This patch drops the existing evsel->cpus map in
-> perf_evlist__go_system_wide() before calling __perf_evlist__propagate_maps()
-> so that an evsel added after map creation gets its PMU's CPUs instead of
-> retaining the user-requested CPUs.
-> 
-> > diff --git a/tools/lib/perf/evlist.c b/tools/lib/perf/evlist.c
-> > index 1f210dadd666f..c48425d4933dc 100644
-> > --- a/tools/lib/perf/evlist.c
-> > +++ b/tools/lib/perf/evlist.c
-> > @@ -834,7 +834,10 @@ void perf_evlist__go_system_wide(struct perf_evlist *evlist, struct perf_evsel *
-> >  {
-> >  	if (!evsel->system_wide) {
-> >  		evsel->system_wide = true;
-> > -		if (evlist->needs_map_propagation)
-> > +		if (evlist->needs_map_propagation) {
-> > +			perf_cpu_map__put(evsel->cpus);
-> > +			evsel->cpus = NULL;
-> >  			__perf_evlist__propagate_maps(evlist, evsel);
-> > +		}
-> 
-> [Severity: Medium]
-> Does calling __perf_evlist__propagate_maps() on only this evsel leave stale
-> CPUs in evlist->all_cpus?
-> 
-> When an evsel is added via perf_evlist__add() after the evlist's maps were
-> created in per-thread or workload mode, __perf_evlist__propagate_maps() sets
-> evsel->cpus to the user-requested {-1} map and merges {-1} into
-> evlist->all_cpus:
-> 
-> tools/lib/perf/evlist.c:__perf_evlist__propagate_maps() {
-> 	...
-> 	perf_cpu_map__merge(&evlist->all_cpus, evsel->cpus);
-> }
-> 
-> When perf_evlist__go_system_wide() subsequently drops evsel->cpus and calls
-> __perf_evlist__propagate_maps(evlist, evsel) again, the PMU CPUs are merged
-> into evlist->all_cpus, but the old -1 entry is never removed. In contrast,
-> perf_evlist__propagate_maps() clears and rebuilds evlist->all_cpus across all
-> evsels:
-> 
-> tools/lib/perf/evlist.c:perf_evlist__propagate_maps() {
-> 	evlist->needs_map_propagation = true;
-> 
-> 	/* Clear the all_cpus set which will be merged into during propagation. */
-> 	perf_cpu_map__put(evlist->all_cpus);
-> 	evlist->all_cpus = NULL;
-> 	...
-> }
-> 
-> If no remaining evsel in the evlist uses CPU -1 (for instance, this evsel is
-> the only event, or all other events are system-wide or have requires_cpu set),
-> evlist->all_cpus retains the stale -1 entry. When perf_evlist__mmap_ops()
-> runs, perf_cpu_map__has_any_cpu_or_is_empty(cpus) then evaluates to true and
-> selects mmap_per_thread() instead of mmap_per_cpu():
-> 
-> tools/lib/perf/evlist.c:perf_evlist__mmap_ops() {
-> 	...
-> 	if (perf_cpu_map__has_any_cpu_or_is_empty(cpus))
-> 		return mmap_per_thread(evlist, ops, mp);
-> 
-> 	return mmap_per_cpu(evlist, ops, mp);
-> }
-> 
-> In mmap_per_thread(), cpu_idx 0 (for CPU -1 in evlist->all_cpus) matches no
-> evsel->cpus, so idx 0 is never mmapped, perf_evlist__set_mmap_first() is
-> skipped, and nr_mmaps is miscounted.
-> 
-> Should perf_evlist__go_system_wide() call perf_evlist__propagate_maps(evlist)
-> to rebuild evlist->all_cpus instead of only re-propagating the single evsel?
 
-Hi Ian, what do you think about this?
-
-I've applied the first 3 patches to perf-tools-next already.
-
-Thanks,
-Namhyung
-
+-- 
+Ville Syrjälä
+Intel
