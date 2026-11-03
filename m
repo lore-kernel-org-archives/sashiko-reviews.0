@@ -1,57 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.17
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.27.42.3
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793737182;
-	b=x5PPdshuoBsDkFYaBrjFCD2Ry/PPrUxAwJhltKXXvIhH87CeavKyiV1AqtbZA6KAYX2+
-	 4+wGEarTHclOlagRRq9BCIP8Mlqusmrlq29Nzo85j5jsPYu4OWgkOF2sk/IsytbY3S5ak
-	 P2lHGlWobGJZeni730PwL6Oo/9aSr8aBaWTVi3itjfxahjgGaNv5QoyYRc3MofjmIHwjr
-	 MnPPaMI65i8mKNPnVvcsUFrOGAMJBJP4oQqdDbVfSLWs76nxqabdBRtoQT328U8TEHGMf
-	 2fkyNgmjs8IjgjnSFRLNcCDxwxYvPdzaUJ1hdmROgoaT46QZJzh4bFOhH6frO06r4CA==
+	t=1793737239;
+	b=AML+8hqqwl4tCxFtZSTO/to9NIi+3bzrRGMRbTLODEEdjQD9KksCDpJcxVaodAFz9xSK
+	 YfPy8fX1ITSnwLrcoDxxcLaG+VbvNDFm0WpaM2Lo1n5C5e/GtfO4rdEs6SS06tjcxFJkv
+	 BV9Dief0as7BRnu2WcAungM47d0qHva6Bo5DMP7oEhym9rDnDEN/ig9Cg7UPLjGC10RYG
+	 xVH6mC+ygeklxN3bBCD3/lxRIq1TzzEUBo7aHlfYYAeZw44wbJ9ehOO9pi+3PKuUpZ/KL
+	 uiFLaKRnRhKSzFHD0t/3bARTbHvPDsluEG8vgFCagbfb6NT+CWlDFOnhnIugIU1Q9Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793737182;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Rspamd-Server:X-Rspamd-Queue-Id:
-	 X-Stat-Signature:X-Spam-Status:X-Session-Marker:X-Session-ID:
-	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
-	bh=O4Fkb/MF3t7h+MTx6P2bTkcLrdVzYJ2bsnvOwo6miVM=;
-	b=5hIU7rmuLI4ImZ34hXbzG4IEc+lcyweRrUOEmWVtpLbZSSYDNpaw0uDc9wGsHJwoiXbo
-	 KmBNCGfgeTAM+q/r7RgOLS3gcy5hchOR3EqlSbMQJpXl2SIcgdnJVkQBIMcHr3Ui+MC6F
-	 K/bPvGnJNY6adU6flCOcyjfQiRRHh7wP9EylXGfnMDfJHRDzWzSYxRgExWQP+bqWvaKE+
-	 QGqPP1DmiPB/WMOkWPbNmJubivO1Udm9cAOV6NyuS9pUlWtTFOE8hK92BcsPwbKAVfdHg
-	 a7x40RLOJW3VkKASqesX5uC5Snp1KpZeEEnTQd/dBn1YU+5QFQ8IOFybWbkRVg3gP9g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793737239;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=IUqvrTFx/K9gimEKml2NBPNOGsMG8AhbzuFakDXurYY=;
+	b=LIenYdnT4WqYlvy7uFiU0KCc7Mk4bXqNUm8zi+krFS0Sk3cmdfD6+bsHqEsKtzsHohK3
+	 mE6nWhvy3Qdqh+Uegj776AqaMPnDCoL+7wzdAYb26hZTOXqOQK+wE2oQedfDTKAoYIZ+o
+	 cvthNpY5o0BE4bMfAuymqu3IOg1EgrYCbScuIW7nvpz9nhC6yn2lQ6YuZeSK+sE/kCmWG
+	 ZC8Uf0Lh7JNV6Qc2eNPwPtq7AJEeeI+/l+9yrHvQkIQKX5l0Lab76w5wqNrN8jRLOoBGv
+	 zZm00jmRqeS3sdEz/SY8jb9StZXquDyD+xx8109tn+l3nyXG2HK5iN+woNahtlwsiHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goodmis.org;
-	spf=pass smtp.mailfrom=goodmis.org;
-	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=u3vFUk00;
-	arc=none smtp.remote-ip=216.40.44.17
-Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
+	dmarc=pass header.from=free.fr;
+	spf=pass smtp.mailfrom=free.fr;
+	dkim=pass header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=M1WpxImR;
+	arc=none smtp.remote-ip=212.27.42.3
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F090B606A31B
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 20:19:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F090B606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2329A606A31B;
+	Tue,  3 Nov 2026 20:20:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2329A606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=u3vFUk00
-Received: from omf12.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay06.hostedemail.com (Postfix) with ESMTP id D960AA8138;
-	Tue,  3 Nov 2026 20:19:33 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf12.hostedemail.com (Postfix) with ESMTPA id 4592D17;
-	Tue,  3 Nov 2026 20:19:32 +0000 (UTC)
-Date: Tue, 3 Nov 2026 15:19:30 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, "Linux Trace Kernel"
- <linux-trace-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5] tracefs: Add read-only eventfs filesystem at
- /sys/kernel/events
-Message-ID: <20261103151930.47198f74@gandalf.local.home>
-In-Reply-To: <sashiko-outbox-195864@kernel.org>
-References: <20261103133517.6e54a8db@gandalf.local.home>
-	<sashiko-outbox-195864@kernel.org>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key, unprotected) header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=M1WpxImR
+Received: from L30177.local (unknown [82.65.104.223])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 2315113F879;
+	Tue,  3 Nov 2026 21:20:22 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1793737230;
+	bh=pWeUyM6RmTRIJwmZpWd83pWgMmzCsnHnooQuFRo17E4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=M1WpxImRjmom39Ius3QyNuflJtzxPVkktY45SdPzp5AfVrM2zR1QFBZ9+kOKroJpN
+	 fQ+FsbipAeSvkPm6++hiV6tDvNRbYbaKyI8rAi8OeKWPQo3bVgb6TePI0wRWC6Wci3
+	 CmBhEKN3neytI33DBcfdw6KEdR0nBjh/aPUKl3vFBPCTuFBVS7OHQrSLfDoz2zA1s5
+	 6qvj16NNh8s95DrL+1sHrXkJX1Z/tN0keyx/H08Mg/3DMllMZ3dQyH96vBh7xxPeUQ
+	 vPb9el4sU0QAtFIyfOuwHLEHsc631CnpLd5iRFJtm7g23SSZzPBuOjWS48Md/7Bghz
+	 /DCBEqK2p5hzg==
+Date: Tue, 3 Nov 2026 21:20:21 +0100
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
+	Frank.Li@kernel.org
+Subject: Re: [PATCH v2 1/5] dt-bindings: pinctrl: add the NXP LX2160A RCW pad
+ mux
+Message-ID: <aupCBbNlYGFWc8Cq@L30177.local>
+References: <20261103-for-upstream-lx2160a-rcw-pinmux-v1-v2-0-3aad0860b984@free.fr>
+ <20261103-for-upstream-lx2160a-rcw-pinmux-v1-v2-1-3aad0860b984@free.fr>
+ <sashiko-outbox-195824@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,213 +68,35 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: rspamout07
-X-Rspamd-Queue-Id: 4592D17
-X-Stat-Signature: scsh8bt4afu9iz4cjq3u6mht4wceuqdz
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+le/yK7szpGL6ARxP0T97SZIN6HBTJI6I=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=O4Fkb/MF3t7h+MTx6P2bTkcLrdVzYJ2bsnvOwo6miVM=; b=u3vFUk00m33eS49P21UzS/v96klWBLl/lLLMnvYgn8iUqOLJG9xMi7UycPHK49Pchzf6O6z6YIDYZgXzD3iDLXib/jsRcVI5SToI6+4BXdaPnFK9uTCJQXDAbtdz6WUnmjzKPh6FBrG8k2oHMvJsaIXAVxGhkDMaJuDmxcbkQPw=
-X-HE-Tag: 1793737172-981644
-X-HE-Meta: U2FsdGVkX182+p3oDgRypao26umnLca03n8NsJzueH6nUhqRRCuHwJnVxBkNcjNlhJUhjdqtYuCJwSPvYZCY0eGYPrXY6ZtOgxnBKtmQF7rVuWPOezyPw/WtxtQuQCRjv2dTmoz1KMA6kFHIoqEPak/+k2jt/FWvfoSSGP+EHvQdEj+IOYHl5F/kiPSgBQwAs4YmEYkcRwhekeQOk+M6d7OL67GfF/2jr9v1oafqoau8MfaqV2l9JnDMjCx3jjlQY6SOZCOlLQz3OK95tKwgobvlZlD5bmaCM3zi0D0vSUObGdsaCm8Xkh4UoP9INrvAuPG/33nvGUj1s4blijk+AXNFF+lx0O1u
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-195824@kernel.org>
 
-On Tue, 03 Nov 2026 18:51:19 +0000
-sashiko-bot@kernel.org wrote:
+Hi M. Bot,
 
-> > +	inode->i_ino = 1;
-> > +	inode->i_mode = S_IFDIR | 0555;
-> > +	simple_inode_init_ts(inode);
-> > +	inode->i_op = &simple_dir_inode_operations;
-> > +	inode->i_fop = &simple_dir_operations;
-> > +	set_nlink(inode, 2);  
+> > +          enum: [ iic1, iic2, iic3, iic4, iic5, iic6, xspi1-data74,
+> > +                  xspi1-data30, xspi1-base, sdhc1-base, sdhc1-dir,
+> > +                  sdhc2-data74, sdhc2-base, uart1-soutsin, uart1-rtscts,
+> > +                  uart2-soutsin, uart2-rtscts, irq11-8, irq7-4, irq3-0,
+> > +                  evt4-3, evt2-0, clk-out, asleep, reset-req ]
 > 
 > [Severity: Medium]
-> Should the root inode keep i_nlink at 1 rather than calling
-> set_nlink(inode, 2) in eventfs_ro_fill_super()?
+> Should clk-out also be listed in the function enum (with a corresponding
+> if/then rule in allOf allowing the clk-out group)?
 > 
-> When eventfs_create_events_ro_copy() later configures this root inode as the
-> top-level eventfs directory with eventfs_ro_dir_inode_operations and
-> eventfs_ro_file_operations, its subsystem subdirectories are created
-> dynamically on demand in lookup_dir_entry() without incrementing the parent
-> directory link count.
+> The other single-pad groups in RCWSR14 (asleep for ASLEEP_PMUX and
+> reset-req for RESET_REQ_PMUX) expose their encoding 0 primary functions
+> (asleep and reset-req) alongside their alternate functions.
 > 
-> As noted in eventfs_create_events_dir(), eventfs directories keep i_nlink == 1
-> so userspace tools do not trust the link count:
-> 
->     /*
->      * Keep all eventfs directories with i_nlink == 1.
->      * Due to the dynamic nature of the dentry creations and not
->      * wanting to add a pointer to the parent eventfs_inode in the
->      * eventfs_inode structure, keeping the i_nlink in sync with the
->      * number of directories would cause too much complexity for
->      * something not worth much. Keeping directory links at 1
->      * tells userspace not to trust the link number.
->      */
-> 
-> With i_nlink set to 2 on /sys/kernel/events, won't userspace directory
-> traversal tools such as find and fts assume the directory has no
-> subdirectories (st_nlink == 2) and skip recursing into the event subsystem
-> directories?
+> For the clk-out group (CLK_OUT_PMUX in RCWSR14[5:3]), the schema permits
+> the gpio (0b001) and flextimer (0b010) functions in allOf, but omits the
+> primary clk-out (0b000) function, which prevents a board from selecting or
+> restoring the CLK_OUT function via pinctrl states without failing schema
+> validation.
 
-Good point. Will update.
+No: the LX2160 doc states that CLK_OUT_PMUX 0b000 is reserved
+and then it seems it dropped its CLK_OUT section (per the revision history).
 
-> 
-> [ ... ]
-> 
-> > @@ -308,12 +404,17 @@ void eventfs_remount(struct tracefs_inode *ti, bool update_uid, bool update_gid)
-> >  }
-> >  
-> >  static void update_inode_attr(struct inode *inode, umode_t mode,
-> > -			      struct eventfs_attr *attr, struct eventfs_root_inode *rei)
-> > +			      struct eventfs_attr *attr, struct eventfs_root_inode *rei,
-> > +			      bool ro)
-> >  {
-> > +	inode->i_mode = mode;
-> > +
-> > +	/* The read-only version does not allow updates to owership or permissions */
-> > +	if (ro)
-> > +		return;
-> > +
-> >  	if (attr && attr->mode & EVENTFS_SAVE_MODE)
-> >  		inode->i_mode = attr->mode & EVENTFS_MODE_MASK;
-> > -	else
-> > -		inode->i_mode = mode;
-> >  
-> >  	if (attr && attr->mode & EVENTFS_SAVE_UID)
-> >  		inode->i_uid = attr->uid;  
-> 
-> [ ... ]
-> 
-> > @@ -407,22 +512,28 @@ static struct dentry *lookup_file(struct eventfs_inode *parent_ei,
-> >   * @dentry: the directory to look up
-> >   * @pei: Pointer to the parent eventfs_inode if available
-> >   * @ei: the eventfs_inode that represents the directory to create
-> > + * @ro: boolean to denote if this lookup is for the read-only version
-> >   *
-> >   * This function will look up a dentry for a directory represented by
-> >   * a eventfs_inode.
-> >   */
-> >  static struct dentry *lookup_dir_entry(struct dentry *dentry,
-> > -	struct eventfs_inode *pei, struct eventfs_inode *ei)
-> > +	struct eventfs_inode *pei, struct eventfs_inode *ei, bool ro)
-> >  {
-> >  	struct inode *inode;
-> >  	umode_t mode = S_IFDIR | S_IRWXU | S_IRUGO | S_IXUGO;
-> >  
-> > -	inode = eventfs_get_inode(dentry, &ei->attr, mode, ei);
-> > +	inode = eventfs_get_inode(dentry, &ei->attr, mode, ei, ro);
-> >  	if (unlikely(!inode))
-> >  		return ERR_PTR(-ENOMEM);
-> >  
-> > -	inode->i_op = &eventfs_dir_inode_operations;
-> > -	inode->i_fop = &eventfs_file_operations;
-> > +	if (ro) {
-> > +		inode->i_op = &eventfs_ro_dir_inode_operations;
-> > +		inode->i_fop = &eventfs_ro_file_operations;
-> > +	} else {
-> > +		inode->i_op = &eventfs_dir_inode_operations;
-> > +		inode->i_fop = &eventfs_file_operations;
-> > +	}  
-> 
-> [ ... ]
-> 
-> > @@ -521,14 +640,16 @@ lookup_file_dentry(struct dentry *dentry,
-> >   * @dir: in which a lookup is being done
-> >   * @dentry: file/dir dentry
-> >   * @flags: Just passed to simple_lookup()
-> > + * @ro: Denote if this is from a read-only eventfs
-> >   *
-> >   * Used to create dynamic file/dir with-in @dir, search with-in @ei
-> >   * list, if @dentry found go ahead and create the file/dir
-> >   */
-> >  
-> > -static struct dentry *eventfs_root_lookup(struct inode *dir,
-> > -					  struct dentry *dentry,
-> > -					  unsigned int flags)
-> > +static struct dentry *__eventfs_root_lookup(struct inode *dir,
-> > +					    struct dentry *dentry,
-> > +					    unsigned int flags,
-> > +					    bool ro)  
-> 
-> [Severity: Low]
-> This isn't a bug, but since eventfs_root_lookup() was renamed to
-> __eventfs_root_lookup(), should the function name in the kernel-doc comment
-> header above it also be updated to __eventfs_root_lookup to avoid a W=1
-> kernel-doc warning?
-
-Hmm, I rather keep it as is. Yeah, W=1 may warn, but it's still the first
-function. Maybe I'll update this later as a cleanup.
-
-
-> 
-> [ ... ]
-> 
-> > diff --git a/fs/tracefs/inode.c b/fs/tracefs/inode.c
-> > index f3d6188a3b7b2..dafa0d587f04c 100644
-> > --- a/fs/tracefs/inode.c
-> > +++ b/fs/tracefs/inode.c
-> > @@ -423,6 +423,14 @@ static const struct super_operations tracefs_super_operations = {
-> >  	.show_options	= tracefs_show_options,
-> >  };
-> >  
-> > +const struct super_operations eventfs_ro_super_operations = {
-> > +	.alloc_inode    = tracefs_alloc_inode,
-> > +	.free_inode     = tracefs_free_inode,
-> > +	.destroy_inode  = tracefs_destroy_inode,
-> > +	.drop_inode     = tracefs_drop_inode,
-> > +	.statfs		= simple_statfs,
-> > +};  
-> 
-> [Severity: Medium]
-> As reported by Sashiko on v4 [1], because eventfs_ro_super_operations uses
-> tracefs_alloc_inode, all inodes allocated on the read-only eventfs
-> superblock (including the pinned root inode configured by
-> eventfs_create_events_ro_copy() and any cached subdirectories or files) are
-> linked into the global tracefs_inodes list.
-> 
-> While update_inode_attr() now returns early when ro is true during lookup,
-> when tracefs is mounted or remounted with uid= or gid= options,
-> tracefs_apply_options() still walks the global tracefs_inodes list without
-> checking if the inode belongs to the tracefs superblock:
-> 
-> fs/tracefs/inode.c:tracefs_apply_options() {
->     ...
-> 	list_for_each_entry_rcu(ti, &tracefs_inodes, list) {
-> 		if (update_uid) {
-> 			ti->flags &= ~TRACEFS_UID_PERM_SET;
-> 			ti->vfs_inode.i_uid = fsi->uid;
-> 		}
-> 
-> 		if (update_gid) {
-> 			ti->flags &= ~TRACEFS_GID_PERM_SET;
-> 			ti->vfs_inode.i_gid = fsi->gid;
-> 		}
-> 
-> 		if (ti->flags & TRACEFS_EVENT_INODE)
-> 			eventfs_remount(ti, update_uid, update_gid);
-> 	}
->     ...
-> }
-> 
-> Won't mounting or remounting tracefs with uid= or gid= overwrite i_uid and
-> i_gid on the pinned /sys/kernel/events root inode and all currently cached
-> eventfs_ro inodes, as well as invoke eventfs_remount() a second time on the
-> shared eventfs_inode via the eventfs_ro root inode?
-
-OK, I'll add a flag to skip read-only event inodes.
-
-> 
-> Also, in lookup_dir_entry(), mode is initialized to:
-> 
-> 	umode_t mode = S_IFDIR | S_IRWXU | S_IRUGO | S_IXUGO;
-> 
-> When ro is true, should lookup_dir_entry() clear S_IWUSR (or use 0555 to
-> match the root inode in eventfs_ro_fill_super()) so subdirectories in the
-> read-only eventfs mount do not report 0755 permissions?
-
-Honestly, all of tracefs directories should be read only except for the
-instances directory. I may update that as a separate patch.
-
--- Steve
-
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261103-for-upstream-lx2160a-rcw-pinmux-v1-v2-0-3aad0860b984@free.fr?part=1
