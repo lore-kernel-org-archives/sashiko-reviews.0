@@ -1,96 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793722586;
-	b=E41TZGHAVbFQfCls7gb1IgEkNrcy9ZjQuCpufWAAtXBeBUshq+tGCCVxQYoVPHCc0Blz
-	 IJqPLCt46m0BBs3F/v62tNG2pfbJ64SNe6eWUNS741Ve26SYpsQUZO82u2Y9/jIXLyFaC
-	 nTYMDmK7KQ5LxX9ed0UFITPh/XQ+CZFTxc63ZPCaBUb24p79PcV/mnRy/zgymNSTBc7Zi
-	 tQJLcoHSsq9Hw6yKq3yeKSfUXm55ttjMyKu+Yy1YidG73v2nf+BRS/NuTLWoDxSQrSpvT
-	 H2GYKmnmGRQh81Rn8e4IWNYz0lHFl3eBSTj3uNfQYJYBS/wuEpCrQeI5OyKe6Ey1g8w==
+	t=1793723981;
+	b=jesyy4S99MNBoptfiHpojXmkI6IiAfIVHkIimZOMA4ngNsakzNCTo4CKFACQhReSNkXv
+	 Bpg7HGLitfwllAT9IrISFXTrsr24EFhBrK7VAARcZ3VNt0zgcgoUDxn+9RZv/pWSxvuv3
+	 cMEg/frB0wwVU66q2Z8n0amZlunyhD9OffdqQtA8NvmtLJ/N/kP0By95Dpm3xg00oy6fk
+	 ECvyhke/eqycoiWWyBt+fAJVJ6LbIaMLX9doF6Pmm8hCpRxOso1QPkQODASyquiFZPWGE
+	 chKrL3+dnfyxeelq7NEbnIlAskpGi6A/Sh4+AeNtnFZlNNnxAzDvF3MRHfNOU8YQpOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793722586;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=a5wryUwdVr5GvbYUG9GqKAxvh5aLU+Gi2pGInFj178M=;
-	b=Y7jh6Fnfw54kdCXl88caOktZh8koASGD9DuCzs6rEO7ncFYp13PbqdUo0QxNKEdXhKa5
-	 ihFg86JG/f3bBeueF6hs4gVXMHhyv6x43FR/duZzZxX/Y8+sIsf1dN3NqloGkNZT1e4Uk
-	 x4iLe74Uz3lstoKEKEwdipq6MZendrL3pJtIyR7V/onwYx1LABmzsW7sueCLNscSTXqjJ
-	 7VzL/X05EGEFHtrSKSvxk+pN/X3bsvBE/tcfXaRJmSBQTI3gcWDu5zp1dBrjG2dbgWgc3
-	 jcVa9lM0VzmKweESf/rB4pJZYAilU4QDNlDXSR2ADiYeNyDQTTmFqwebrjQ4q2m1Vjw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793723981;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=MRMdP7FIxigSeDqcsgSUYB9b6BNpnFg/wAimEqAPxEs=;
+	b=ogJfgO/+Yp3S7Qbvz3IcoFaSClbtrICZSfTBcKuu9/C1YEN8lrIljB7Dh6KLp0zpY+yX
+	 7YFWvVbXS9R1vw71C4gU20B0yMNG7sqy12yHW68gwly2a73eZcXdHOIHOuCcRsbnFWH0i
+	 CV/Y8f79SN8BuFl4Wobxne5Dl4eBIsaNdc3i+ljTboy7U/sirbaZ/UzuLHCEc7YuFcnXy
+	 1nwv0KIV6fQVDLk54uO0GbhYIwc8D0P7tZfosUtctGlGTFtAU9M/H3L8ekVc9ENBe/HUe
+	 ZhYJr7KUQ5ICeiAkhpeyrMvelouyzZa703xbxPO7OYG2FePI6DOxi3P94bL9EDPCOKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="tBsoHn/R";
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="XQ/nNwuo";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C62606A334
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 16:16:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0C62606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87F96082BC2;
+	Tue,  3 Nov 2026 16:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tBsoHn/R
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a2167bd087so37331705e9.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 08:16:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793722584; x=1794327384; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=a5wryUwdVr5GvbYUG9GqKAxvh5aLU+Gi2pGInFj178M=;
-        b=tBsoHn/RKoW/lIatKfPWnQm9bWwWNZiz4iXJf48ef8C6uhWma6BWWSI0qKz9QcK3Nt
-         oxxpxpBNPU0oUb3+tvysK0T5HgKO/JhIRelThyhh9dAyuivLdtYCGGPzFXgEWKJDL/S+
-         9Bn2Agz8Ubu8cFUhUSeAfe3fZHFR5sRruS1mjoI7GEPm//cZnVAetwhbOYedZgPyH7+N
-         3FjYbXXskjbuJYV6iLxVls+0bwYv0XwDS/91GtIhUE+sPclqmgr5LV6ECwnmklhvUdCF
-         saq7cQ3okS7yxv6qpAep4AUlre6BtTz2GFG1k4NHgooGeDdMGdRUZPNud4RmhP6LoHFZ
-         0eZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793722584; x=1794327384;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=a5wryUwdVr5GvbYUG9GqKAxvh5aLU+Gi2pGInFj178M=;
-        b=Wha8P/mfxwCIvDz3kwuocOdSA10tvgHLWvtM1rfZubaPV2gvuIIFuaSCTCQeUmRpMj
-         UxYKl25xzrPmE/icI2mpsRqqBC2XZvGbOvo8ejUOexcZShV3tSHeF4xZkGuVZ+tL/VoR
-         Pd7ZI93dZBMrqpJ5cLGAVAxZxDerRjhvR84MQ5pXGJr0Vn9ur4GmZqi+TwuOHvpZEXrq
-         OmqHnjelaGTTNJWroFOxdua7kY5WPx5J8HfTPaGBCM4OJTQemzv6q/UDlvOcbIo0mIIn
-         evDPP9VpxmkNEE5EZuPNv77WWJS8pdJcDIW4g5XLqmNPnoTbo5chHNynJ0L5wQ1oDEHj
-         Yadg==
-X-Gm-Message-State: APuU4Z9wtSBnkjZc3T73YyO84eqDN5x/ZrKE4yy0JPY787rBf0hZvQZ5
-	C/ttqQ8pGzzCS9Un3gdQmQCqeGqoKUoDFwNk/wteVATsVvTwZT2I4D9Bv7dsWA==
-X-Gm-Gg: AYBFou0KFjqn/QHgfQvA+9hGRxZmwThYuRM8PJTvmzyZ0BwPiT+ZjncRnnf8WZ0GYcO
-	8129A0t9/3Rf6QhbICeJMc3Jalw0qPdZdADUF5mhzlNZznCqwf6jbHE4EoHvuX8fBw8UmMMB+Ek
-	Wqu9TltsAyjwIyE2TnPitxwbEggh/f39neIERgDqNYyJ2hRURYeNTUK9m89D2JsFK7ah6rhP4U4
-	+Wa9JPU+Q/Ni0UHoVbQ1gBoq4o6C7R8ot3qZxMFAZ11AtKjoi19hoq4L9kz+Le8b6CljvkAUN14
-	ZOf4/yWn0f433fx2DW+hLY1oi01YswoIw/R4iiHkQzaeP2weU/vrzwwQxJKRz6CSbtteyr4GJ5P
-	OSdeLmwvUW4xIiJLgbI8PWYMNrQ4fqnHmrp5eIkW2hUWvd+0CHY527/U83GiuC6xZa0JvuGtTwN
-	iKIsg/WL/ja0rPZFvwEqn5P8squvs9D3VhmLEvelXhWmnSOYgyZ1jUTDqF0CG/rHETUDoZfB48V
-	HyRZvox/Zqg3p22troEqJUkf2mENIaL3o0KwnxMS+MQD7zYHnn5yyeQ15Az87qx1SKve1CErNyf
-	jT07dBiUWwCyVvP3uCyWXH4RtjiZBHu4KGmocgbTrZBrFWIxkmJK8VSMIY68wVUJnuJWkY8BBAb
-	VFaTPDc593qJkdebe7pCUg85+cNYV+HGzkmBhmJgVKz0vLxF9I/F6SOhzCYNnxA1oW++/JKUQAa
-	VxPtmy
-X-Received: by 2002:a05:600c:4454:b0:4a5:1cf1:b7bd with SMTP id 5b1f17b1804b1-4ac1794032cmr319005485e9.16.1793722583910;
-        Tue, 03 Nov 2026 08:16:23 -0800 (PST)
-Received: from Lord-Beerus.station ([93.66.71.207])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71bab1a8sm25631726f8f.57.2026.11.03.08.16.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 08:16:23 -0800 (PST)
-Date: Tue, 3 Nov 2026 17:16:20 +0100
-From: Stefano Radaelli <stefano.radaelli21@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XQ/nNwuo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEE01F00919;
+	Tue,  3 Nov 2026 16:39:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793723980;
+	bh=MRMdP7FIxigSeDqcsgSUYB9b6BNpnFg/wAimEqAPxEs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=XQ/nNwuodkCBEaeYlDPGXQ2NBVyaOu+nuL3oimLdbSA+hZnOnCMyBEv8BHrYgwk/m
+	 6VRgMfJqoFXxFR5EnYPGf1ATg09kypE1i/OaABYNEuqdO5agM7Fzz0cf/3n/BjKYZM
+	 khi+2N49jwOr20dXQgySeVZQ9Nuqnaii9228cGUqmaA9nvn0Bo2QFeSR7x+Zj7TPBN
+	 DsnqdVZFYyPlE6EQk0LhOkfKZhj3KG2NrjGmOrcKa6pa4XM1UVKP+71e961E7SnLHB
+	 vkz6atcfZ7p6OvtLIdPK+tn8iO+IrzrFsPPZ5RZWhEpbynuwXHq2NjfH4sIU6OUzUj
+	 zfP/LOwKBMdTQ==
+Date: Tue, 3 Nov 2026 17:39:28 +0100
+From: Christian Brauner <brauner@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-serial@vger.kernel.org,
-	robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v1 3/3] serial: fsl_lpuart: Enable TTY wakeup for
- wakeup-source ports
-Message-ID: <auoI1NJgc3ky89jf@Lord-Beerus.station>
-References: <cover.1793719239.git.stefano.r@variscite.com>
- <58d65b44ca054ea83eb835bf5decebd688cad04d.1793719239.git.stefano.r@variscite.com>
- <sashiko-outbox-195698@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, 
+	Jann Horn <jannh@google.com>, Josef Bacik <josef@toxicpanda.com>, 
+	Chris Mason <mason@kernel.org>, Jeff Layton <jlayton@kernel.org>, NeilBrown <neil@brown.name>, 
+	Eric Dumazet <edumazet@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Al Viro <viro@zeniv.linux.org.uk>, Jonathan Corbet <corbet@lwn.net>, Christoph Hellwig <hch@lst.de>, 
+	Greg Kroah-Hartman <gregkh@suse.de>, Joel Granados <joel.granados@kernel.org>, 
+	Kees Cook <kees@kernel.org>, Jan Kara <jack@suse.cz>, Jan Kara <jack@suse.com>, 
+	linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, coreteam@netfilter.org, 
+	kexec@lists.infradead.org, linux-pci@vger.kernel.org, linux-sound@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, linux-hwmon@vger.kernel.org, linux-mm@kvack.org, 
+	linux-usb@vger.kernel.org, samba-technical@lists.samba.org, sparclinux@vger.kernel.org, 
+	linux-m68k@lists.linux-m68k.org, linux-serial@vger.kernel.org, Takashi Iwai <tiwai@suse.de>, 
+	linux-input@vger.kernel.org, linux-raid@vger.kernel.org, linux-ext4@vger.kernel.org, 
+	linux-modules@vger.kernel.org, Chuck Lever <cel@kernel.org>, tytso@mit.edu, 
+	dmitry.torokhov@gmail.com, Petr Pavlu <petr.pavlu@suse.com>, 
+	Anna Schumaker <anna@kernel.org>, yukuai@fygo.io, Heiko Carstens <hca@linux.ibm.com>, 
+	Vasily Gorbik <gor@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>, 
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH RFC 28/38] scsi: esas2r: bound the lengths of the HBA,
+ SMP and firmware ioctls
+Message-ID: <20261103-aufmischen-achthundert-reitschule-d97de42062c2@brauner>
+References: <20261102-work-procfs-bugfixes-v1-0-59422ed3e465@kernel.org>
+ <20261102-work-procfs-bugfixes-v1-28-59422ed3e465@kernel.org>
+ <sashiko-outbox-195500@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,107 +75,98 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-195698@kernel.org>
+In-Reply-To: <sashiko-outbox-195500@kernel.org>
 
-On Tue, Nov 03, 2026 at 04:07:25PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Nov 03, 2026 at 02:48:22PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] scsi: esas2r: TOCTOU race on data_length in handle_hba_ioctl() via read_hw()
+> --
+> 
+> commit 8af21917bc01e9991b2ab872e7a4c38c91a6e388
+> Author: Christian Brauner <brauner@kernel.org>
+> 
+> scsi: esas2r: bound the lengths of the HBA, SMP and firmware ioctls
+> 
+> This commit adds bounds checks on user-supplied lengths for the HBA, SMP,
+> and firmware ioctls in esas2r to prevent out-of-bounds reads and writes past
+> the end of struct atto_express_ioctl and a->local_atto_ioctl.
+> 
+> > diff --git a/drivers/scsi/esas2r/esas2r_ioctl.c b/drivers/scsi/esas2r/esas2r_ioctl.c
+> > index 3f7c1d131ec34..f99318f61c934 100644
+> > --- a/drivers/scsi/esas2r/esas2r_ioctl.c
+> > +++ b/drivers/scsi/esas2r/esas2r_ioctl.c
+> 
+> [ ... ]
+> 
+> > @@ -1221,11 +1231,16 @@ static void hba_ioctl_done_callback(struct esas2r_adapter *a,
+> >  	}
+> >  }
+> >  
+> > +/* @room is the size of the buffer that starts with @ioctl_hba. */
+> >  u8 handle_hba_ioctl(struct esas2r_adapter *a,
+> > -		    struct atto_ioctl *ioctl_hba)
+> > +		    struct atto_ioctl *ioctl_hba, size_t room)
+> >  {
+> >  	struct esas2r_buffered_ioctl bi;
+> >  
+> > +	/* The data follows @ioctl_hba in the same buffer. */
+> > +	if (ioctl_hba->data_length > room - sizeof(struct atto_ioctl))
+> > +		return IOCTL_INVALID_PARAM;
+> > +
+> >  	memset(&bi, 0, sizeof(bi));
+> >  
+> >  	bi.a = a;
+> 
 > [Severity: High]
-> Does enabling tty_wakeup_default at registration time cause a suspend and
-> resume state mismatch between the serial core and lpuart_uport_is_active()
-> when the TTY device is not open in userspace?
-> 
-> With tty_wakeup_default set, serial_core_add_one_port() enables wakeup on
-> tty_dev during probe before any process opens the port (when port->tty is
-> NULL and tty_port_initialized(port) is false).
-> 
-> If the system suspends while the port is closed, lpuart_suspend() calls
-> uart_suspend_port(), which checks device_may_wakeup(tty_dev) without checking
-> tty_port_initialized(port):
-> 
-> drivers/tty/serial/serial_core.c:uart_suspend_port() {
-> 	...
-> 	tty_dev = tty_port_find_device(port);
-> 	if (tty_dev && device_may_wakeup(tty_dev)) {
-> 		enable_irq_wake(uport->irq);
-> 		put_device(tty_dev);
-> 		return 0;
-> 	}
-> 	put_device(tty_dev);
-> 	...
-> }
-> 
-> Because uart_suspend_port() returns early here, it leaves uport->suspended as
-> 0 and skips console_suspend(uport->cons) as well as uart_change_pm(state,
-> UART_PM_STATE_OFF).
-> 
-> However, lpuart_suspend() then checks lpuart_uport_is_active(sport), which
-> requires both a non-NULL port->tty and tty_port_initialized(port):
-> 
-> drivers/tty/serial/fsl_lpuart.c:lpuart_uport_is_active() {
-> 	...
-> 	tty = tty_port_tty_get(port);
-> 	if (tty) {
-> 		tty_dev = tty->dev;
-> 		may_wake = tty_dev && device_may_wakeup(tty_dev);
-> 		tty_kref_put(tty);
-> 	}
-> 
-> 	if ((tty_port_initialized(port) && may_wake) ||
-> 	    (!console_suspend_enabled && uart_console(&sport->port)))
-> 		return true;
-> 
-> 	return false;
-> }
-> 
-> When the port is not open in userspace and console_suspend_enabled is true,
-> lpuart_uport_is_active(sport) returns false, causing lpuart_suspend() to take
-> the else-if branch and disable ipg_clk and baud_clk while the console is
-> still active and unsuspended:
-> 
-> drivers/tty/serial/fsl_lpuart.c:lpuart_suspend() {
-> 	...
-> 	} else if (pm_runtime_active(sport->port.dev)) {
-> 		lpuart_disable_clks(sport);
-> 		pm_runtime_disable(sport->port.dev);
-> 		pm_runtime_set_suspended(sport->port.dev);
-> 	}
-> }
-> 
-> Wouldn't any printk() during suspend or early resume then call
-> lpuart32_console_write() or lpuart_console_write() while the LPUART clocks
-> are disabled, triggering an unclocked MMIO access (bus hang or synchronous
-> external abort)?
-> 
-> Similarly, on resume, lpuart_resume() skips lpuart32_hw_setup(),
-> lpuart_hw_setup(), and lpuart_console_fixup() because
-> lpuart_uport_is_active(sport) is false, while uart_resume_port() also returns
-> early without restoring console termios or calling console_resume() because
-> !uport->suspended && device_may_wakeup(tty_dev) is true:
-> 
-> drivers/tty/serial/serial_core.c:uart_resume_port() {
-> 	...
-> 	if (!uport->suspended && device_may_wakeup(tty_dev)) {
-> 		if (irqd_is_wakeup_set(irq_get_irq_data((uport->irq))))
-> 			disable_irq_wake(uport->irq);
-> 		put_device(tty_dev);
-> 		return 0;
-> 	}
-> 	...
-> }
-> 
-> If the LPUART loses power during deep sleep while the console TTY is closed,
-> doesn't this leave the console hardware uninitialized after resume?
-> 
+> Can a concurrent write_hw() bypass this bounds check when handle_hba_ioctl()
+> is called from read_hw()?
 
-The suspend/resume mismatch described here predates this series and is
-already reachable by enabling the TTY device's power/wakeup attribute
-from userspace with the port closed.
-This series changes the initial wakeup policy, it does not introduce the
-mismatch.
-The underlying suspend/resume handling should be discussed and
-addressed separately, rather than attributed to this patch.
+This whole codepath as currently implemented is structurally fscked.
+So it's not something fixable in this series apart from the glaringly
+obvious.
 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1793719239.git.stefano.r@variscite.com?part=3
+But for the record:
+
+- The ATTONode entry thing is created as a side effect of reading
+  another file.
+
+  So esas2r_info() registers a character device and creates
+  /proc/scsi/esas2r/ATTONode the first time it runs. That pins a global
+  pointer to whichever host triggered it. So the control node only
+  exists after someone looked at the host info. So it is bound to the
+  first host and not to the adapter it operates on.
+
+
+  The lifeteime is then tied to the module and not to the host.
+  The entry is removed in esas2r_exit() on module exit.
+
+  But the directory it lives in belongs to SCSI. That removes it when
+  the last host of the template goes away.
+
+  So unbind or hotunplug of the last adapter removes a non-empty
+  directory... the dir is unlinked and the ATTONode leaks and stays
+  reachable through a cached dentry.
+
+  And the global host pointer dangles.
+
+  So every ioctl on the node dereferences it.
+
+  It's like non-empty directory removal basically. Fun.
+
+
+- No privilege check anywhere. The node is created with mode 0 so 0444
+  with procfs the the driver never calls capable().
+
+  Hence, any local user can read and write firmware and NVRAM and issue
+  VDA commands.
+
+- The ioctl protocol itself (where to begin):
+  - Plain-number commands
+  - one struct copied in whole
+  - unbounded lengths taken straight from userspace (well, that's fixed here)
+
+Sorry, I'm not going to redesign esas2r.
+And from what I can tell that ATTO stuff is legacy anyway so good
+riddance as far as I'm concerned.
