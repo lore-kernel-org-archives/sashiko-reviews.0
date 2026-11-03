@@ -1,51 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.99.148.243
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793738858;
-	b=WNjmCC9WxemHfeAxDMgX9YJpObhkfR8w5DiKbTRAzUHZi+dlaFgfrdAf9EGmV3HXO6Hz
-	 azIP0Q4Q11vDAbCCFKj1YvqwYjDd/mnq0dLzqlnKz1rnGAiyR3E+Ms45D/V9T4UrG2bJg
-	 630m88rtjGLItW5YKNqsFMMgppM32vZgpY3ZOPDWwZK/6otcFSICS319vyGTVYZQdkxMJ
-	 AL8UkWUvBtoOnY+DkRR5F/KjeTlN+1SQ4Rg2N/pb1yUXQ2w8UJ6QQUU0KX71wmkT3LbyR
-	 75/WA7T7HdM4XFb+SfKbJmVouuMjELMsgLy7MRczcUhXzgM8dGbUz5W/v0xlT2uZDcw==
+	t=1793738950;
+	b=MmNXn3alUWl94PmSedMLAvSJ1NY75KDXckZot3GOzkVgN1XFQdF+1ePR9c6QE3jXRB9q
+	 UZuzdsoWmecH/x2H88571R5ftTdlDvYY8iYAEcK6+6h/9mA869vDUTzAGI+4SKah0dcJM
+	 s3Pmzdlhe/KGWSXz8hpyore7nYdegv70LH+z4pe6+6g5RDMj7kcDcQBsxlbqabnR0KCmj
+	 gxdy5u3uq8X+swJWR8VMIevmAzYFAoUO95C/9PgJUsFMACCSZRtRaH6KX2V/cgQimHRUA
+	 SGCTAtfLET0M4AKm5DJ2FSU29MXuxyBmK6sBNG+9KYPWI4T5MXizsUL7RyO2kOz62Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793738858;
-	h=DMARC-Filter:Received:DKIM-Signature:MIME-Version:Date:From:To:Cc:
-	 Subject:In-Reply-To:References:Message-ID:X-Sender:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=z1YZpLjfbu6fNLdkBVvsc4d/vtdUbC5126/UpuwWjT4=;
-	b=uM7wgq8XAXkwIrZEP1s2FWwUJmKIBFCLIMi1HaOZT0L/F0ZhrTXZPeysA+lNkym5/7C5
-	 GABIerWaVgiAs8j5ETVS3Mucf1Ifl5rrJjbW8NkDzOeElRJor4GSvi7y9764ptK9dHd6f
-	 dOWKh6AuEjxD+S/ZCI8Gk3d3NaHfZ8UfBFkG9VmdQ5QfMDu63z3s779TlKUrmEXhg0aMw
-	 hHevtiyHy8KsBsnJHEvI/2o6wgwwho/JEgKWJhedRXL4tDTilXzPc7nT4je2cQdTL+IYA
-	 uBESrgmfzu9d2eX5hTLjNU4He53ILabKA/6/KqmIHAhxzONpE6GvCIuIU1xLnYW2sEA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793738950;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=5pEXNHxm+1LvvbAJkBUjAraBQ2f8Pvm2T7kYMLzvOTo=;
+	b=HXm8UXAc/jElk8NIyV76lZtVPZPFSE9gIbS5IS3hlij5ZmJp46pWSmAGOV/Zdq8FPg4J
+	 oMD+xV94Fcfaj344JHYmcY+ws35dQrzeFzHyOBw4kq1qYcQw3nk+7vIHXdJ1AsGT3uKQH
+	 zgWD/+/xoWLBIqCENllpNPp9sRpmHhuE9NvcWue4uy6eX3qBQY5pD8iQ1HUu57KfBjJTH
+	 7GPiLcARIdimuyiAgjUXZups8/DPnzSh0miq+lStChJ76G5MkgsuAWbQ0d9kZzEUI+d7T
+	 PKK9aMfNLw5ltb357G66CDxTbTEN4XcUq3d+3fKf6gmKOcuQCwYMmN/GO4jXTw3iNkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=thelittleman.net;
-	spf=pass smtp.mailfrom=thelittleman.net;
-	dkim=pass header.d=thelittleman.net header.i=@thelittleman.net header.a=rsa-sha256 header.s=20140415-thelittleman header.b=OcRk48xl;
-	arc=none smtp.remote-ip=91.99.148.243
-Received: from mail.thelittleman.net (mail.thelittleman.net [91.99.148.243])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yn5XgSPj;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7B3606A32F
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 20:47:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC7B3606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thelittleman.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thelittleman.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25FB606A31B;
+	Tue,  3 Nov 2026 20:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=thelittleman.net header.i=@thelittleman.net header.a=rsa-sha256 header.s=20140415-thelittleman header.b=OcRk48xl
-Received: from mail.thelittleman.net (localhost [127.0.0.1])
-	by mail.thelittleman.net (Postfix) with ESMTPSA id 8ABDD5F92D;
-	Tue, 03 Nov 2026 20:47:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thelittleman.net;
-	s=20140415-thelittleman; t=1793738849;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=z1YZpLjfbu6fNLdkBVvsc4d/vtdUbC5126/UpuwWjT4=;
-	b=OcRk48xluXvjulj0mjLRYuQOra8JaZF3vUToOHWr1Q9S/Zvjj/ZXd8kEkzDZx0QVp8iLbv
-	o84BgZMFykPizLZQsBd2NY83Ht94mG67fCQQy2A/H+8yRj2whLkruF/hpbuI2Y4n2YxRDG
-	27WRS/3wn/l9qQb1sIoUd0YBFODrAxM=
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yn5XgSPj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F641F000C1;
+	Tue,  3 Nov 2026 20:49:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793738949;
+	bh=5pEXNHxm+1LvvbAJkBUjAraBQ2f8Pvm2T7kYMLzvOTo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Yn5XgSPjb6TxnRFledsKv2fyS1EesjugD6FLhpc9yLDZH9hb/3AuGBSwwkx9erixE
+	 XxcZwxRJVF+4BSsT/LBQP1na6TeoHkRY2WD1CuRphbsK+35EAmFjQHwyVJNJNCzxre
+	 35vq0icSl8vbWm2ViJkIKTGhEpO3zBDxH/fbfJRAEJI4L9ebznM6zoCZ8wDgZYJbbE
+	 iT7UoAsr4Zv5906V17SZankD6S61NauJxzm0fsiv3HXeyeUgtuC5Nyzk4SaSwgelSR
+	 cy3jGqaUfucpDy8j//WLhlUSRmw6c3OW62FUbvTk1TEFeemgLrjJ46E2GEEAa32rZs
+	 s7Y7Oxyprnztw==
+Date: Tue, 3 Nov 2026 14:49:07 -0600
+From: Rob Herring <robh@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH net-next] dt-bindings: net: Convert snps,dwc-qos-ethernet
+ to DT schema
+Message-ID: <20261103204907.GA3951195-robh@kernel.org>
+References: <20261102203353.1384705-1-robh@kernel.org>
+ <sashiko-outbox-195992@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -55,39 +57,36 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Tue, 03 Nov 2026 14:47:29 -0600
-From: "David R. Hedges" <linuxdev844@thelittleman.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, nouveau@lists.freedesktop.org, Lyude
- Paul <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>
-Subject: Re: [PATCH 4/5] drm/nouveau/kms/nv50-: don't drive outputs at 0 bpc
-In-Reply-To: <sashiko-outbox-195931@kernel.org>
-References: <20261103-nouveau-dp-fixes-v1-0-892f4bd357cd@thelittleman.net>
- <20261103-nouveau-dp-fixes-v1-4-892f4bd357cd@thelittleman.net>
- <sashiko-outbox-195931@kernel.org>
-Message-ID: <f3a2d8f720d1b619210067ad366fe7e9@thelittleman.net>
-X-Sender: linuxdev844@thelittleman.net
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-195992@kernel.org>
 
-On 2026-11-03 13:41 -0600, sashiko-bot@kernel.org wrote:
-> Could unconditionally defaulting asyh->or.bpc to 8 here break 6 bpc eDP 
-> and
-> 18-bit (6 bpc) LVDS panels?
+On Tue, Nov 03, 2026 at 08:34:17PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dt-bindings: net: snps,dwc-qos-ethernet-4.10: redundant maxItems on clocks
+> --
+> 
+> commit ccf9541bde2e61e4e9ad2f4d7325ff792d7181d2
+> Author: Rob Herring (Arm) <robh@kernel.org>
+> 
+> dt-bindings: net: Convert snps,dwc-qos-ethernet to DT schema
+> 
+> This commit converts the snps,dwc-qos-ethernet-4.10 binding to DT schema
+> format and moves shared properties to snps,dwmac-common.yaml. It also drops
+> unused compatibles and updates the example to use Tegra186.
+> 
+> [Severity: Low]
+> In Documentation/devicetree/bindings/net/snps,dwc-qos-ethernet-4.10.yaml at
+> line 39 under properties:clocks, maxItems: 5 is specified alongside a
+> 5-element items list without additionalItems: true.
+> 
+> In the devicetree meta-schema (meta-schemas/items.yaml), when items is a
+> fixed-order list, maxItems is implicitly set to the length of the items list
+> and explicitly specifying maxItems is disallowed.
+> 
+> Does this cause dt_binding_check / dt-doc-validate to fail on
+> properties:clocks:maxItems, and should maxItems: 5 be removed here?
 
-Yes. ->detect() replaces the EDID on every probe, which resets
-display_info.bpc, and for a panel whose EDID doesn't give a color depth
-it stays 0 until ->get_modes() runs, so this isn't limited to a lost
-EDID. For those panels, nouveau_connector_detect_depth() picks 6 bpc on
-eDP and starts from 6 bpc on LVDS. Forcing 8 would drive eDP panels at
-24 bpp and make nv50_sor_atomic_enable() override the VBIOS straps on
-18-bit LVDS panels.
+Yes, I left this fix in my tree uncommitted before sending this...
 
-v2 will fall back to 6 bpc for eDP and LVDS and 8 bpc for everything
-else, the same defaults nouveau_connector_detect_depth() uses before it
-looks at the straps. On LVDS, that leaves the 18/24-bit choice to the
-straps as 0 did, and eDP gets the depth ->get_modes() would give it
-instead of 0, which trips the same watermark WARN as on DP. Calling
-nouveau_connector_detect_depth() from ->detect() doesn't work for LVDS,
-which needs the native mode that ->get_modes() sets up.
+pw-bot: cr
