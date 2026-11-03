@@ -1,52 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=83.223.95.204
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793726954;
-	b=Xj8Fc2roneti8dmpBbOJvrxs91lkMZ4rjHiN5ryzNRggUZMUlsXQcfpM9ouMgQiLu2TT
-	 22ZFrj4qluDRErqVoyFthOKL1LFrXjboDRY4jjby3jfNVwmnP9qhMlKY7B7U3XP/kIJLI
-	 lPwLwx6sPlSCi+0F9nNV4yvL8Lin07UYAGqLm8Lo135mYuu2a9kcdcsgjrmD8Y5HCe947
-	 mTAok7oa+eFzzHVpQPR6lKpPH9qxQNAqejEBaKqDu60U9G6+0stytpz9btRerUb+wRTi+
-	 f9RpsvV9MA6gga5dwNtyvega/75F09Cwn+KYXQoDM5SgDRQU1rHa4wJAGN+5bk7E8Tw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793726954;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=cC12UYzCu8sy1bCE6Lezkt3f0flNvCrpYHTMzDNInOs=;
-	b=TeHaab9TvqNGD11fqrRhUd8pnwQWU+/aUnoy9AuMEtOrgSAY+9qx7GsI8579XyWEW+7Q
-	 6EiWZ54gynBbBlYc7GKdT8KmyedB9+AZv+vpaA58nJk13zqcaKM9Yd3GLGOqSFTE4zLRj
-	 bU1mOYe2CuDaRTJ1JW3oqFup9OXs/xmRntYeYXCawLuBudqGeQ5g8o0fw3ai6BSHZH0Ob
-	 2iE0ZI+IcsijMogpVNC28CbIKovkEZmOAaenRVCAfN8+jzfnWTb2O7DAJpZuN6nKfTACc
-	 kWVW971FEduj1n0cMAuseCCGxO9Cs3hHGAjLDvYKIMe7YUuoKQLZKqc5dmi1RymC/7g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=wunner.de;
-	spf=pass smtp.mailfrom=wunner.de;
-	arc=none smtp.remote-ip=83.223.95.204
-Received: from mailout1.hostsharing.net (mailout1.hostsharing.net [83.223.95.204])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.42
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793727151;
+	b=QdUuOVGlY5lvZyqS8eicKrS16jro8sW12hbPkPaHtblTTVw6YiXEdNdKxsACcuvpe3pS
+	 2BWmBF2n4CSVXu2JDhHUrNakHw9AO+eW8c1RLXfSPgQ6GxFpVmeFsb6H0z7P6IMYmBUkp
+	 1ljn6Z4rkJXYQ4F3S+5Aux2rRwQbgWrHnQ2SiuILbmt/yHZ3xFQLN2cU4FtxgZVcvcKcp
+	 DpE5BDMTj0upDOBJL7iz4V9pZdFQEbjp1TTJIql8WtHrAiNpbbmtXV8Ohj1WKDWjNvoeY
+	 ZEjIWZnLSnsFpcFno+IejcvC3e769rt98yAVUQQXFna2snOKBWDEpZhgRnbW1ZrHtVA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793727151;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
+	b=simbW+UAz8PYzqkiGRi4kUWQ8Fl8liZgPPJo3j2pC2/6V9653t2/0R0okUhELWSEemQk
+	 8gKUDWzkAcz8UXX/pQEmAa7sCUlwAURJ/ylotFZxrm6kJWmU2Xgv32cKJRZsyT05SCXDV
+	 BQx7YKtpvg/S53XjiKfEv5iUPvpkYWmPNvEA9hsYRgK9ob7B+snNSSaZYaFwRMHxqPtiZ
+	 6/hHZhCJAgDtCu17IaKVDRXWpNydAoDi6dpKo2UvE6jGp5BX59ACNM4sjqFURCfpDSe1K
+	 GgYnmoiZmXLr3CZ+5I5hD2tZscrg062jKN48h9N65X3SMOIrMZYtYxceqWHAU5hpDlQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=u1fP5Ffj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.42
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831D5606D80C
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 17:29:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 831D5606D80C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wunner.de
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (secp384r1) server-digest SHA384
-	 client-signature ECDSA (secp384r1) client-digest SHA384)
-	(Client CN "*.hostsharing.net", Issuer "GlobalSign GCC R6 AlphaSSL CA 2025" (verified OK))
-	by mailout1.hostsharing.net (Postfix) with ESMTPS id 5218963D;
-	Tue, 03 Nov 2026 18:29:09 +0100 (CET)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 3DABC602D90B; Tue,  3 Nov 2026 18:29:09 +0100 (CET)
-Date: Tue, 3 Nov 2026 18:29:09 +0100
-From: Lukas Wunner <lukas@wunner.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI/AER: Check validity of Error Source ID register
-Message-ID: <auoZ5fjqShIeGzje@wunner.de>
-References: <cover.1793697480.git.lukas@wunner.de>
- <27a3876874161204e7a37ab63e7b27ee9783261f.1793697480.git.lukas@wunner.de>
- <sashiko-outbox-195012@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA47F606A328
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 17:32:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA47F606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=u1fP5Ffj
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-48e4831c028so3917371f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 09:32:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793727149; cv=none;
+        d=google.com; s=arc-20260327;
+        b=cNnL+e+sZ6eaifFL4bB1Bcv8S1+hCpWjDt4z80ARi9kNTlpwuWahoy/WbR3Y6Fg0n0
+         hDNMcLyx4Y464rgyaxDSFqk+2Os6HD3UTz6mov+B0AEEFM44ONfjIRSgw8JNR24XvRPQ
+         j9sVnMZ0qf7bHDMTbO/uB51F9RjZWao0Sj6uwt2V3zW6c2lzDeds9IEz9d9tSBJ6GIqS
+         xCJXmzWQvvkCCYZYdFX+VcQlqEnNF4LOhqxN49O5Hxb5hNX/1OG5U6cARQVp2q6/GGdr
+         79/VpI1B9BvAug3WQFO0KOiwTgpxzUiDEX+VOu0gucMVbJlgKgxcn+MZiHYhWLIFTE93
+         +yIw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
+        fh=zAiT5IbLduMq4azCN06EMBaLcrEsgnVYJC9scqrr1uU=;
+        b=mUHq+Wb/0v0km5c2xQk5yjm723QmXAaR6ejxcabzMYVcpgOq2N3qsIwv4oLJmtS6qt
+         sl6UmVafWaybEaR8GoKTmC4j+qRZ2lyWj1ViUlVINy7RT53H9S5TyqkA4VGHGjFsEKyP
+         QIYZ02Dsp31GHccoM1y5ed2o555bLvDrNZBgzLDxBiZL+U0GcOpn4qM4bB3M+hnb3Jgg
+         97AHxhgxhJMVo2dj+2tBR41sLnx25hjrjkziASmYWt3tVwGObb8qKXAS4iPy+k0P6Cx9
+         0DQJSPBzWrdpkrKyE96lJFJu5veEAMMX5/GwEBHx8VJT4DyZJJ4eIIyfkKQFU/yT2pMb
+         2quQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793727149; x=1794331949; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
+        b=u1fP5Ffj2mDFGoLRlRl1xy3cypXFS2jLoyi03aMuPirlgghLStQzkSge2FRvEhEv6R
+         M+X+EI7BFiY27oF3kuE+tvf4QRlUKi52hAjRZlT2P/smmz3n8B5yn8DVfYxHGOSlq7V1
+         v4mMFX2GIdSb1MTPCRFDPqIp7tcUZXP8g3PdZfnzKYyvS5dkvIda6xKDzsbxa2pMGUCT
+         vb1++xExXmNCjAt3QmAImP6wIA9m2P5rjVRvLAlxD/yZkomq0/PkjX5xfQP7Hc/GJQUn
+         4BX6O3i/cRh97C3xbUjkKfqFiTdsaYFwtj5VvJ/yOMiewZdHNpNaBRZZQ50zzkHifT8O
+         M5TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793727149; x=1794331949;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=BjAvXl9t7a/JdDo3zmQDUheOgn/OssmLnxGDAWna7Kc=;
+        b=asmgfs11RV9PSxHBDO5bKGcS+5aTSfT5oSs7waTSD42THxhIIeNW+RslavAYNPtvCk
+         p6ps1+lllnwxuYIIThORZzHR3Q4zBjM2N1RqQ92mmno18KzMhx9QpE026uHKfNPnVwRr
+         merXQvfTFGfeqzHfdG7AKemvxyrRmLrhICNTxI0yiTEj7yFtxbr+vOpiZn0OTvs/Zetn
+         la8mT/lPrGdBij5mZ7/0IUy2Ph9cIRA2EyoAElGz9v9CpMF7sz/288xK6fa0TYZK/pWD
+         UVYy6AudQvRSnxMQUg17aVtIVfnQAb3WCA0h5r2en8hMrdM0ZtQlTSZdzNyM57183x+X
+         eVvw==
+X-Gm-Message-State: APuU4Z+Ee15BFKCFOq/SF61qAnudMc6yvVw8YruOf/eKMTRWcQFVF+jv
+	P9TvnXH4hyNFXS8hRKu1rP1IsRFHUYF2TvkyVsKuVCVGAu90r8g7D3WMthO4KMLlfrTVB5Ht/55
+	hrTq9Jzf+g0XYtB49YvZQvm4oGp2T2dTjxWqp
+X-Gm-Gg: AYBFou32N3zwZ2PGLaxikYHzmhD5RvWhaniEJBMFyMB2u5+7EsqgqilpdO06wgbQT4B
+	tMaz7KvQ5c9WhmN83SUoxcMUUVGm1iLRjs3Nvm0xdBrc2C/KN0MU4QssdJyg8cEmbxRNYc6O9P/
+	tBfmn+tQcZ+Bi9udUb+OG5zi7WyjU58m7WoeJtAsUXd52bPM6RnD1l8uDMnFEbMmdpe4Jq+ywUf
+	Qd3XCCr3zBx2gGGtPuEH1ZnQAYWjRjmHQQrTJ0oSkFpy/n+/7k5irr80QQCm8/HCNuOXACVYBIE
+	lIoba+N/+eplWmPF5hRQ8yoWR01DGF0RDzc+kQEKDcT/xJJlnT0DFcEVpdb4qAuPFd6xYalQg3g
+	+TnBflMhT4AQ5hhTc32EQjxy36/6f7+bgxkIi
+X-Received: by 2002:a05:6000:2c03:b0:48c:6cdd:ba89 with SMTP id
+ ffacd0b85a97d-48e6e4ff80emr28595835f8f.36.1793727148868; Tue, 03 Nov 2026
+ 09:32:28 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -56,46 +103,225 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-195012@kernel.org>
+References: <20261029-work-fs-sb_rdonly-v2-0-2f44f64f0b66@kernel.org>
+ <20261029-work-fs-sb_rdonly-v2-6-2f44f64f0b66@kernel.org> <sashiko-outbox-191225@kernel.org>
+In-Reply-To: <sashiko-outbox-191225@kernel.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Date: Wed, 4 Nov 2026 02:32:10 +0900
+X-Gm-Features: AclHuK_xchRwxsZ5xCgnuvGf3QgoTbZDme23pAKWici3-nvdFpdRQtDLUtkXtDM
+Message-ID: <CAKFNMombDWkJ=m+CjMy7qnd_yy-vZ9c-EE7R95HKKkcy-M0+SQ@mail.gmail.com>
+Subject: Re: [PATCH v2 06/34] nilfs2: don't set SB_RDONLY after filesystem errors
+To: sashiko-reviews@lists.linux.dev, Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.com>, Al Viro <viro@zeniv.linux.org.uk>, linux-ext4@vger.kernel.org, 
+	linux-mm@kvack.org, linux-efi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+	Karl Mehltretter <kmehltretter@gmail.com>, dsterba@suse.cz, tytso@mit.edu, 
+	Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>, 
+	Joseph Qi <joseph.qi@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 03, 2026 at 10:11:52AM +0000, sashiko-bot@kernel.org wrote:
-> > -	/*
-> > -	 * When bus ID is equal to 0, it might be a bad ID
-> > -	 * reported by Root Port.
-> > -	 */
-> > -	if ((PCI_BUS_NUM(e_info->id) != 0) &&
-> > +	/* Some Root Ports report an invalid Error Source ID */
-> > +	if (e_info->id_valid &&
-> >  	    !(dev->bus->bus_flags & PCI_BUS_FLAGS_NO_AERSID)) {
-> >  		/* Device ID match? */
-> >  		if (e_info->id == pci_dev_id(dev))
-> 
-> Can this cause a false positive match on the Root Port itself and skip
-> searching the subordinate hierarchy when a buggy Root Port reports 0x0000
-> (or loses the bus number of a downstream error source)?
-[...]
-> With this change, aer_isr_one_error_type() sets info->id_valid via
-> source_id_valid(), which returns true whenever pci_dev_id(root) == id. On
-> platforms where the Root Port itself is at 00:00.0 (such as many SoC PCIe
-> controllers or VMD domains), pci_dev_id(root) is 0x0000.
+On Sat, Oct 31, 2026 at 1:09=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] nilfs2: nilfs_reconfigure() and nilfs_get_tree() bypass sb_eme=
+rgency_ro()
+> --
+>
+> commit ff163f1297bca8964f03776869c3a8bc9e3c38ba
+> Author: Christian Brauner <brauner@kernel.org>
+>
+> nilfs2: don't set SB_RDONLY after filesystem errors
+>
+> This commit replaces setting SB_RDONLY in __nilfs_error() with
+> sb_set_emergency_ro() and introduces nilfs_sb_rdonly() to guard write pat=
+hs
+> after filesystem errors without taking s_umount.
+>
+> Link: https://lore.kernel.org/r/20260903060855.4610-1-kmehltretter@gmail.=
+com
+>
+> > diff --git a/fs/nilfs2/super.c b/fs/nilfs2/super.c
+> > index 2e3b591c117c9..edb7d379ecbdf 100644
+> > --- a/fs/nilfs2/super.c
+> > +++ b/fs/nilfs2/super.c
+> > @@ -137,12 +137,13 @@ void __nilfs_error(struct super_block *sb, const =
+char *function,
+> >
+> >       va_end(args);
+> >
+> > -     if (!sb_rdonly(sb)) {
+> > +     if (!nilfs_sb_rdonly(sb)) {
+> >               nilfs_set_error(sb);
+> >
+> >               if (nilfs_test_opt(nilfs, ERRORS_RO)) {
+> >                       printk(KERN_CRIT "Remounting filesystem read-only=
+\n");
+> > -                     sb->s_flags |=3D SB_RDONLY;
+> > +                     /* SB_RDONLY needs s_umount, see sb_set_emergency=
+_ro(). */
+> > +                     sb_set_emergency_ro(sb);
+> >               }
+> >       }
+>
+> [ ... ]
+>
+> > @@ -1141,6 +1146,10 @@ static int nilfs_reconfigure(struct fs_context *=
+fc)
+> >       if (fc->sb_flags & SB_RDONLY) {
+> >               sb->s_flags |=3D SB_RDONLY;
+> >
+> > +             /* After an error nothing may be written, just go read-on=
+ly. */
+> > +             if (sb_emergency_ro(sb))
+> > +                     goto out;
+> > +
+> >               /*
+> >                * Remounting a valid RW partition RDONLY, so set
+> >                * the RDONLY flag and then mark the partition as valid a=
+gain.
+> > @@ -1152,6 +1161,12 @@ static int nilfs_reconfigure(struct fs_context *=
+fc)
+> >               __u64 features;
+> >               struct nilfs_root *root;
+> >
+> > +             /* The VFS doesn't refuse this when nilfs_get_tree() call=
+s us. */
+> > +             if (sb_emergency_ro(sb)) {
+> > +                     err =3D -EROFS;
+> > +                     goto ignore_opts;
+> > +             }
+> > +
+>
+> [Severity: Medium]
+> Can this sb_emergency_ro(sb) check in the else branch of nilfs_reconfigur=
+e()
+> be bypassed after an error on a read-write mount?
+>
+> When __nilfs_error() calls sb_set_emergency_ro(sb) on a read-write mount,
+> SB_RDONLY is not set in sb->s_flags, so sb_rdonly(sb) remains false.
+>
+> In nilfs_reconfigure(), right before the if (fc->sb_flags & SB_RDONLY) bl=
+ock:
+>
+>         if ((bool)(fc->sb_flags & SB_RDONLY) =3D=3D sb_rdonly(sb))
+>                 goto out;
+>
+> When a read-write mount or remount is requested (!(fc->sb_flags & SB_RDON=
+LY))
+> on a superblock where sb_emergency_ro(sb) is true and sb_rdonly(sb) is st=
+ill
+> false (for example, via nilfs_get_tree() -> nilfs_reconfigure() when the
+> superblock was kept alive by a snapshot after the corrupted read-write mo=
+unt
+> was unmounted, or via reconfigure_super() -> nilfs_reconfigure() on a dir=
+ect
+> remount,rw without an intermediate remount,ro), this comparison evaluates
+> false =3D=3D false and jumps straight to out, overwriting nilfs->ns_mount=
+_opt and
+> returning 0 instead of -EROFS.
 
-I am only aware of Intel and AMD silicon reporting an invalid Error Source
-ID, not of any ARM or other SoCs misbehaving in this way.  On Intel and
-AMD silicon, bus 0 is generally the root bus and never the subordinate
-bus of a Root Port, so an Error Source ID with bus 0 will continue to be
-considered invalid after this patch, unless it matches the Root Port's ID.
+I have reviewed the related code paths across all patterns regarding
+Sashiko's concerns.  Regarding this first point, there is no need for
+concern.
 
-In the log output I've seen so far, the slot and function number of the
-invalid ID is always 0 and there's generally no Root Port at 0000:00:00.0
-on Intel and AMD platforms, so the Root Port's ID isn't matched.
+Skip check in nilfs_reconfigure():
+   if ((bool)(fc->sb_flags & SB_RDONLY) =3D=3D sb_rdonly(sb))
+           goto out;
 
-It would be possible of course to always search the hierarchy if the Root
-Port's ID is found in the Error Source ID register, but I'm inclined not
-to do that unless there's a need.  If anybody knows that this can actually
-occur or feels strongly that it should be handled, please let me know.
+Skipping this block when the requested state matches the current state
+is valid because no RO/RW transition is being requested.  In particular,
+with the workaround patch ("super: keep the read-only state if a
+reconfiguration doesn't change it") queued in the vfs-7.5.super branch,
+reconfigure_super() ensures that fc->sb_flags inherits SB_RDONLY bit
+from sb->s_flags even when "rw" or "ro" option is not specified.
+
+When called via nilfs_get_tree() -> nilfs_reconfigure():
+
+  - If only a read-only snapshot mount exists and a read-only current
+    mount is added, skipping via this check is correct.
+  - If a read-write current mount is requested instead, this skip check
+    is bypassed (since sb_rdonly(s) is true for snapshot mounts while
+    fc->sb_flags does not have SB_RDONLY), and the downstream
+    sb_emergency_ro() check safely rejects it with -EROFS if the
+    superblock has entered the emergency RO state.
+
+> Also, in nilfs_get_tree(), when nilfs_tree_is_busy(s->s_root) is true:
+>
+>         } else if (!ctx->cno) {
+>                 if (nilfs_tree_is_busy(s->s_root)) {
+>                         if ((fc->sb_flags ^ s->s_flags) & SB_RDONLY) {
+>                                 nilfs_err(s,
+>                                           "the device already has a %s mo=
+unt.",
+>                                           sb_rdonly(s) ? "read-only" : "r=
+ead/write");
+>                                 err =3D -EBUSY;
+>                                 goto failed_super;
+>                         }
+>
+> Because s->s_flags does not have SB_RDONLY set after sb_set_emergency_ro(=
+s),
+> doesn't this treat the emergency read-only superblock as read/write, reje=
+cting
+> a secondary read-only mount with -EBUSY while allowing a secondary read-w=
+rite
+> mount?
+
+Sashiko's point here has a valid aspect.
+
+This inconsistency can be resolved by inserting the following handling
+logic if sb_emergency_ro(s) is true:
+
+       } else if (!ctx->cno) {
+                if (nilfs_tree_is_busy(s->s_root)) {
+                        if (sb_emergency_ro(s)) {
+                                if (!(fc->sb_flags & SB_RDONLY)) {
+                                        err =3D -EROFS;
+                                        goto failed_super;
+                                } else {
+                                        s->s_flags |=3D SB_RDONLY;
+                                }
+                        } else if ((fc->sb_flags ^ s->s_flags) & SB_RDONLY)=
+ {
+                                nilfs_err(s,
+                                          "the device already has a %s moun=
+t.",
+                                          sb_rdonly(s) ? "read-only" :
+"read/write");
+                                err =3D -EBUSY;
+                                goto failed_super;
+                        }
+                } else {
+                     =E2=80=A6
+                }
+     }
+
+This makes all transitions behave consistently under emergency RO:
+
+* RW (degraded) --- RW mount request --> Rejected with -EROFS
+                 |
+                 `- RO mount request --> RO (degraded)
+
+* RO (degraded) --- RW mount request --> Rejected with -EROFS
+                 |
+                 `- RO mount request --> RO (degraded)
+
+* Snapshot-only RO --- RW mount request --> Rejected with -EROFS
+  (degraded)        |                  [Blocked by emergency_ro check
+                    |                   in nilfs_reconfigure()]
+                    `- RO mount request --> RO (degraded)
+                                       [Reused via nilfs_reconfigure()]
+
+The current v2 patch is safe as-is since write paths are fully
+protected by nilfs_sb_rdonly()
+even if a degraded RW-mount is reused, but including this change
+handles secondary
+mounts under emergency RO much more cleanly.
 
 Thanks,
+Ryusuke Konishi
 
-Lukas
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261029-work-fs-=
+sb_rdonly-v2-0-2f44f64f0b66@kernel.org?part=3D6
