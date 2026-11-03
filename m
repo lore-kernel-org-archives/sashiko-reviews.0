@@ -1,51 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.99.148.243
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=78.133.224.34
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793743322;
-	b=UUd3Ga2EJ0rtklF67brbPz51pHFnuPlA25/IRK6JNSUBSxYYr/O+RmOMjyMs+jtrbSrZ
-	 QLf0xw/nIJU/giD8/II+Yn+P1cwJ+dGbOTa3kl33FTXLNb6WD63iOUS69CyuQazaqzRyE
-	 bm86BBKaeLsuXFAMzxADX3sly/PGOp04fk74a3iPsX3+yemffO104vDuyoHWVJlhHt6kk
-	 WgcasLIkPVH3pahidwTbVqorGIqHyNrvnuMuTAhEZHLZw6Gyq5H3DuNkS1pM1Fx0KkeVx
-	 2Si4CmwkLou8Cb0/PxE8OuS1htd7lOMahPC734fGzAnL2V1je6vV2ADNcThfKW3R0Nw==
+	t=1793743738;
+	b=bHgTCxbcAYQ4/iit9nVYTExvf9IARw6VmIO3OgT4Ba9ipHdFiXV7+uDM5W5XmytzPbtm
+	 FdDvaG1n0yND44PHu+gXgQMdI6N+FPVuyrdt3dn2FNNqrxYfr2XsjH6BJfdiydI8MqtcX
+	 kr4oVU3RC34XQWDbmx6ZQ+IPajs/e3Dyo+uWTsryJF0vFJdTAWKBs8asg7QU0WR/LqDSy
+	 DYheEAtSra/gGykofoQLqQ0ya0AbYgXvimPtFgBjugCBIWdXWrj1vstz87EHHa9UN+Zfy
+	 sTsYwXzTKQZwBFiO6M9qU7X61esgAQRqbCBtmmS/3cJ+GFG2tv/4BzrDx0PKuFfOQjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793743322;
-	h=DMARC-Filter:Received:DKIM-Signature:MIME-Version:Date:From:To:Cc:
-	 Subject:In-Reply-To:References:Message-ID:X-Sender:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=1+ljwUcRqPa1I8PKwk28jT3BsaQMof3yBXjCBJacyK0=;
-	b=gFPYFOdauipTaV3XyDIIqG4ZtKLp6VHqJVUVbc8jrLZerPay8+ixBSH/HLN2agTYOcoH
-	 ywnqwuspHbAmGbVBPF8syZjevBQzTKxnIyY/noiwDTsAI4KeGL95Vw2AjkcCURXvaQOxQ
-	 zIz2UrG27CXwmp/H1Lsmt39mHhazIX8GAhTa4OexAE9oJOcgMQjYWZZNSNleCGZqKsPdP
-	 hHwb5Tw0DevilLoLQjHRPGtcExnTz2Et5q0hQLG7HZrojaQakChFYIbggSKW4e69h8jP5
-	 aaM/GG0UyPUJfoHUMPkwEbpnqEA1wyBF/l3pCFS2gl9pqONHpFaBaj+NXPQHJzUrefg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793743738;
+	h=DMARC-Filter:Received:Received:Date:From:To:cc:Subject:In-Reply-To:
+	 Message-ID:References:User-Agent:MIME-Version:Content-Type;
+	bh=CIGQM0n1sPM7KpMmaIGQBURZiqcgzm+MlQvRxbkBPq8=;
+	b=l/VMOaOibPTvMeNS/sXA4npPcPH4lSywIIU7YmKkBz1hcoFCYa7T+saKXhsLWseDanzn
+	 bS0fqL6Ds0Hqp7RIK8xLvmlZeG3nBavGNrO+t+8tmL3pgm7E9hGKLJAwnSHL/xxRq/TUw
+	 h3QrFnBtCGWwHR03pK9iSGOr97oQI4pstWdHEX3oXpLj0hm0Bb9+HFVGAiXZwh1mWgD2t
+	 BZ+6E0QggeATqinGJ9qVlcjeTHjvPFYURmwXUijvtJa+/1/3ktECIPJpM3YqpPsAFo6k1
+	 D7JQLMZoXDtZSZvUiotVF/HvZBx/BjSstxZcyhiWhslzKkNznRA8/t6ojjQsFf4OOlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=thelittleman.net;
-	spf=pass smtp.mailfrom=thelittleman.net;
-	dkim=pass header.d=thelittleman.net header.i=@thelittleman.net header.a=rsa-sha256 header.s=20140415-thelittleman header.b=cABqwdBx;
-	arc=none smtp.remote-ip=91.99.148.243
-Received: from mail.thelittleman.net (mail.thelittleman.net [91.99.148.243])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B5A606A31B
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 22:02:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30B5A606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=thelittleman.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thelittleman.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=thelittleman.net header.i=@thelittleman.net header.a=rsa-sha256 header.s=20140415-thelittleman header.b=cABqwdBx
-Received: from mail.thelittleman.net (localhost [127.0.0.1])
-	by mail.thelittleman.net (Postfix) with ESMTPSA id B7EB75F491;
-	Tue, 03 Nov 2026 22:01:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thelittleman.net;
-	s=20140415-thelittleman; t=1793743318;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1+ljwUcRqPa1I8PKwk28jT3BsaQMof3yBXjCBJacyK0=;
-	b=cABqwdBxjs1lavtCsxwE2XmJSpQSX2LyLMLILD+JTQ3S71NcJYV5h9VHXfPoTlnjHNqOQ+
-	gEL914uu7mTRig4MKDpVEMd4kuZj1a1rrkvH0dSmkw5D+U/eTLsW4JfHHY30DdsWjvC1pg
-	jEscpYzHOTYxJxmXRIuzDMCJ+BuzohQ=
+	dmarc=none header.from=orcam.me.uk;
+	spf=none smtp.mailfrom=orcam.me.uk;
+	arc=none smtp.remote-ip=78.133.224.34
+Received: from angie.orcam.me.uk (angie.orcam.me.uk [78.133.224.34])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 847DF606A324
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 22:08:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 847DF606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=orcam.me.uk
+Received: by angie.orcam.me.uk (Postfix, from userid 500)
+	id DA36C92009E; Tue,  3 Nov 2026 23:08:55 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by angie.orcam.me.uk (Postfix) with ESMTP id D407C92009C;
+	Tue,  3 Nov 2026 22:08:55 +0000 (GMT)
+Date: Tue, 3 Nov 2026 22:08:55 +0000 (GMT)
+From: "Maciej W. Rozycki" <macro@orcam.me.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+cc: sashiko-reviews@lists.linux.dev, Jiri Slaby <jirislaby@kernel.org>, 
+    Hugo Villeneuve <hvilleneuve@dimonoff.com>, Kees Cook <kees@kernel.org>, 
+    Lukas Wunner <lukas@wunner.de>, John Ogness <john.ogness@linutronix.de>, 
+    Jiayuan Chen <jiayuan.chen@shopee.com>, Gerhard Engleder <eg@keba.com>, 
+    linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] serial: core: Don't clobber the baud rate on
+ hangup via B0
+In-Reply-To: <2026101335-broadside-register-8a53@gregkh>
+Message-ID: <alpine.DEB.2.21.2611030039070.15685@angie.orcam.me.uk>
+References: <alpine.DEB.2.21.2610120150230.55767@angie.orcam.me.uk> <alpine.DEB.2.21.2610120231550.55767@angie.orcam.me.uk> <sashiko-outbox-167551@kernel.org> <alpine.DEB.2.21.2610121325280.55767@angie.orcam.me.uk>
+ <2026101335-broadside-register-8a53@gregkh>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -55,32 +55,42 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Tue, 03 Nov 2026 16:01:58 -0600
-From: "David R. Hedges" <linuxdev844@thelittleman.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, nouveau@lists.freedesktop.org, Lyude
- Paul <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>
-Subject: Re: [PATCH 2/5] drm/nouveau/kms/nv50-: don't enable a DP output with
- no trained link
-In-Reply-To: <sashiko-outbox-195991@kernel.org>
-References: <20261103-nouveau-dp-relink-v1-0-7ee88c7f1e8a@thelittleman.net>
- <20261103-nouveau-dp-relink-v1-2-7ee88c7f1e8a@thelittleman.net>
- <sashiko-outbox-195991@kernel.org>
-Message-ID: <9c007e977c249af5064bf34a37694e76@thelittleman.net>
-X-Sender: linuxdev844@thelittleman.net
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
 
-On 2026-11-03 14:27 -0600, sashiko-bot@kernel.org wrote:
-> When nv50_sor_atomic_enable() returns early here on -EINVAL, does this 
-> still
-> end up enabling DP audio on the untrained and detached SOR?
+On Tue, 13 Oct 2026, Greg Kroah-Hartman wrote:
 
-[...]
+> > > This calls into uart_get_baud_rate() without holding port->mutex. A
+> > > concurrent tcsetattr() and atomic console write can trigger an unprotected
+> > > data race on port->hup_speed. A torn read or write on this variable could
+> > > yield a garbage baud rate and lead to hardware misconfiguration.
+> > 
+> >  This seems like the only exception across all the serial drivers in the 
+> > use of uart_get_baud_rate().  Since this is always called to restore the 
+> > most recent baud rate setting only, perhaps the path of least resistance 
+> > would be just to refrain from updating port->hup_speed if called with the 
+> > port lock held?
+> > 
+> >  Otherwise it would require rewriting all the 60+ call sites to use the 
+> > port lock to guard the whole sequence from a call to uart_get_baud_rate() 
+> > through to the write of the settings obtained to the port registers, which 
+> > seems an overkill to me and asking for trouble with some odd hardware.
+> > 
+> >  I'll experiment with the idea outlined or will be happy with any hints 
+> > otherwise.
+> 
+> That idea seems sane, thanks for working on this.
 
-Yeah, nv50_disp_atomic_commit_tail() marks the output enabled whatever
-nv50_sor_atomic_enable() did, and nv50_disp_atomic_commit_core() then
-enables audio on it.  In v2, I'll have nouveau_dp_train() clear dp.lt.nr
-before it starts, so an output left detached has no trained link, and
-nv50_audio_enable() skips a DP output without one.
+ Thanks for the words of appreciation, so scarce these days.
+
+ Relying on the lock state has turned out infeasible, since there is no 
+locking actually done on UP-nondebug, cf. spin_is_locked(), and we need to 
+guarantee UP atomicity WRT NMI contexts.
+
+ So I have made it an explicit extra parameter to uart_get_baud_rate(), 
+renamed the function and added a static inline wrapper to keep existing 
+driver code short and compatible.
+
+ I've posted v3 now, at 
+<https://lore.kernel.org/r/alpine.DEB.2.21.2611030057510.15685@angie.orcam.me.uk/>.
+
+  Maciej
