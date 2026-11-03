@@ -1,56 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.121
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793707806;
-	b=SctQgm/ScMFnpnwkFyhEqQUKcmIf3Mp/AkYAluOfistpE9zKaQUlLEHhXUgXCLNwNKJp
-	 LzBhOiHpUC9GvP/gKyG5ZJBdlk5Oxk3/KN00KnBCw6DifGrwsSxZvhvKGrpc+BUm538GI
-	 FTtJPAciKtFjwh3SxX4e2jrkMYdGDYbAjJZrd9XpiDxF2UNK5Xw8pt4z0tD4HkAyo3EhJ
-	 /LzCjd7rXOwUbgzdrFRS3VPsUAyUTlzICp6wIEzdA+0W3O8RYtZPssapiqinYcOvWbuB9
-	 pmYL05HS/ooEDrO/V0aUPgl2ISX/dQbgGV+C0TdeRhQQ6Pzqhw1hbFEQMW3tRduWamw==
+	t=1793708031;
+	b=neZqvORNJI75LBcdNFLcaQY+yUsNv3nzv4oFGzYYgyxrD1+A5nU1VT6bMqo00OoymXXj
+	 wdxYMwCsu15QwUoe9QLsNv6nztdj0Y3LaIKRQ+NF/80Fj/si79NncDkg55SkZ3KI1Ki1N
+	 6yE9l+p9428OEhFHm3jdrhHG/xdel1/Bt+NVjHNHiJw0os0tbXugyMUtxZXYtVnDMiqxq
+	 6fcvHPsSPJ0KVIZIBa6W8hMtJOdFQxP0O0Qej4VUIQE16Iwm20YN9J8ckpjKOLtb4WDUQ
+	 wayP2QnSD8DWw7KgdzA79t5fpFplyVe5dZYtRkbbARY63LJiq2diaMhqwdcpyAA4U/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793707806;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=JUvqpNIgWGDiQM2l62vb6EYFH2h8Uk82e+1HzRuepO8=;
-	b=CkiFBQO3Ljm0LI7y83D/ZdcDlia1o6HjrpOZ5UdMnhNgKmpPddxd1BWdudc7fGGUhWz/
-	 DsGMpZbs/5DTnaZ8JMFFblVQXIj1ao9YL2u77JMH6QTaegPOD05m15SoLs+M3vr5/FmRz
-	 c8OQHVr2Rwiz8zh3JId+W8aNQb8FbE8cK0QMfrSDebVMJrtdDh6t5hgjEFNtYQGbtF3ES
-	 mnIS8uNZx5DB2GV7NlC4XxwSgpsykqxb6xglP0nkc+K+wVoo1kcdwXwJ26OBv9ZrmKxKI
-	 sunceOQkIS6XMf+S44IcLow7d/qjnCcxGDDNDH5awAhu30XAvYnsFUTSYThnPYQ6v9A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793708031;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=n/UFdXyrAd5gl0Qey0z6/JDNLQSoV4VYRc31LKxfmJI=;
+	b=PiXIwiexPlvXP4AumkSXBz36z/SuhiGaPq0q7zSKlQGep88Ha66abCNrkVGjv/oW0IJA
+	 v5EqDQEdlmIevryPblL8hlGE83iTvJZe/8bl1Wa15MYkCJnqsM6yFbte5PZD8aKkr4byS
+	 fCOLxYnkJlci5/XyNqEiiV7iCfgSljQsG8HH/93zMczsEgT759MHG+xtVi0iGyJbmSnpL
+	 c34Jdkk+hoBHkRmW4TVzLcyypV1IEfizzS57dBWqLT5ENMeaMN2JF0M47GEJVBX4jbHgr
+	 omqtJPguXiyx/GSUJieTObR7TiyEbf5rv0fwKqsU0XFjvhe62vL3H9sQbGghbWI0cUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PREHleiK;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=pm.me;
+	spf=pass smtp.mailfrom=pm.me;
+	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=pzM0ga06;
+	arc=none smtp.remote-ip=109.224.244.121
+Received: from mail-244121.protonmail.ch (mail-244121.protonmail.ch [109.224.244.121])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id 25D0C606A327;
-	Tue,  3 Nov 2026 12:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0E6606A327
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 12:13:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF0E6606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PREHleiK
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 731C21F000C1;
-	Tue,  3 Nov 2026 12:10:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793707805;
-	bh=JUvqpNIgWGDiQM2l62vb6EYFH2h8Uk82e+1HzRuepO8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=PREHleiKIT++7bZkNKVhJ1ZcxJt/cIZIvZUhwh0KHts+TTpRvfDjdATvCvXQFaOhe
-	 FGfkzduaLXsjT1U9IRbL1M1DnXy4lLLb1GrROf7E4DmwgmFAXac1ThzJ15CUg1p0s0
-	 6L1A8tXse5NFmbkgn73hBnxQ0XHOo9S3SYMXcNYi8AsRwO+ylxbYxHgsDHz+6PEWe9
-	 0+Uomuwd7wprW6GOwGPJQWkOGJvsK8iB+3SJ5tr3bSdNudc8pFfwN/zQ5v7q2MlhX7
-	 KH69xvmsKihXiPMXj5l0xMH6G1tAXSW1DrHjDNl+eIq5AToea4o3KblB6SOd5K2fzB
-	 JgQu9rmgJKmCw==
-Date: Tue, 3 Nov 2026 13:10:00 +0100
-From: Bartosz Golaszewski <brgl@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v9 5/5] gpio: shared: convert to using software nodes for
- GPIO shared proxy lookup
-Message-ID: <nrqb4zpe4pnbhodgqgxhukkvzxg3ytk4wwlrwstsbmjupnt4uf@kqyauxbqmwv3>
-References: <20261102-gpio-shared-fwnode-lookup-v9-0-a1d6cc501098@oss.qualcomm.com>
- <20261102-gpio-shared-fwnode-lookup-v9-5-a1d6cc501098@oss.qualcomm.com>
- <sashiko-outbox-193473@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=pzM0ga06
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1793708028; x=1793967228;
+	bh=n/UFdXyrAd5gl0Qey0z6/JDNLQSoV4VYRc31LKxfmJI=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=pzM0ga06AYTCAwJWKDaysdEveVmzUFBxb3BpYxFhCjIRG+ADe+YrIjkxypiOBI67h
+	 q8XP+itWyT7thYOOr+fNusL6sdeXMKzSuOBPfUS/ETMVJtpdD5DWs0qX6ECIdnovat
+	 0SVzO8n8JdwKBCbciLqNIyUYVpIa5tc+Q3KFzM6TsAuCvF4mOVkZrpwxIJSIacHi4L
+	 ta5BPVA90KGECgiXl30SsBbS65VJa3+PQlDZR8P69IvYny3ITVjUdSz6y7LHUw+Pe2
+	 iMkhFkPz7Dgs7fqwx4Ar7euxS0HINkWNU3HdZLwHq6iVrr7ncvgnmszIz7UgSTdZv8
+	 zyxOOx4fVYEmA==
+Date: Tue, 03 Nov 2026 12:13:42 +0000
+To: Sakari Ailus <sakari.ailus@linux.intel.com>, Benjamin Mugnier <benjamin.mugnier@foss.st.com>, Sylvain Petinot <sylvain.petinot@foss.st.com>, Mauro Carvalho Chehab <mchehab@kernel.org>
+From: Sergey Lebedev <lsa.uz@pm.me>
+Cc: Dan Scally <dan.scally@ideasonboard.com>, Hans de Goede <hansg@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Peter Marshall <pm@petermarshall.ca>, George Neacsu <geocausa@gmail.com>, Hao Yao <hao.yao@intel.com>, Fernando Rimoli <fernandorimoli11@gmail.com>, "D. Manresa" <dmanresa@gmail.com>, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] media: i2c: Add ST VD55G0 global shutter sensor driver
+Message-ID: <20261103121333.39898-1-lsa.uz@pm.me>
+In-Reply-To: <20261103103235.94397-3-lsa.uz@pm.me>
+References: <20261103103235.94397-1-lsa.uz@pm.me> <20261103103235.94397-3-lsa.uz@pm.me>
+Feedback-ID: 113843758:user:proton
+X-Pm-Message-ID: 45bb7be137328bb37ef3a7c1f693d445054ed23e
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,177 +64,38 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-193473@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 02, 2026 at 01:12:40PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] gpio: shared: use-after-free in software_node_notify_remove() on proxy removal
-> - [Medium] gpio: shared: software node leak in gpio_shared_make_proxy_dev() on add error
-> --
-> 
-> commit 8540cb961814db62ab8d7cec3ac6bee73e8c8520
-> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> 
-> gpio: shared: convert to using software nodes for GPIO shared proxy lookup
-> 
-> This commit replaces platform lookup tables for shared GPIO proxy devices
-> with managed software nodes attached to the proxy auxiliary devices,
-> allowing shared GPIO lookup to work via firmware nodes even when no
-> consumer struct device is present.
-> 
-> > diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
-> > index 9d73a02e99890..57d8fd0bf2e1b 100644
-> > --- a/drivers/gpio/gpiolib-shared.c
-> > +++ b/drivers/gpio/gpiolib-shared.c
-> [ ... ]
-> > @@ -303,56 +303,70 @@ static int gpio_shared_of_scan(void)
-> >  
-> >  static void gpio_shared_proxy_dev_release(struct device *dev)
-> >  {
-> > -	struct auxiliary_device *adev = to_auxiliary_dev(dev);
-> > +	struct auxiliary_device *proxy = to_auxiliary_dev(dev);
-> >  
-> > -	ida_free(&gpio_shared_ida, adev->id);
-> > -	kfree(adev);
-> > +	ida_free(&gpio_shared_ida, proxy->id);
-> > +	kfree(proxy);
-> >  }
-> >  
-> >  static int gpio_shared_make_proxy_dev(struct gpio_device *gdev,
-> >  				      struct gpio_shared_entry *entry,
-> >  				      struct gpio_shared_ref *ref)
-> >  {
-> > -	struct auxiliary_device *adev;
-> > +	struct property_entry properties = { };
-> > +	struct auxiliary_device *proxy;
-> > +	struct device *dev;
-> >  	int ret, id;
-> >  
-> > -	adev = kzalloc_obj(*adev);
-> > -	if (!adev)
-> > +	proxy = kzalloc_obj(*proxy);
-> > +	if (!proxy)
-> >  		return -ENOMEM;
-> >  
-> >  	id = ida_alloc(&gpio_shared_ida, GFP_KERNEL);
-> >  	if (id < 0) {
-> > -		kfree(adev);
-> > -		return id;
-> > +		ret = id;
-> > +		goto err_free_proxy;
-> >  	}
-> >  
-> > -	adev->id = id;
-> > -	adev->name = "proxy";
-> > -	adev->dev.parent = gdev->dev.parent;
-> > -	adev->dev.platform_data = entry;
-> > -	adev->dev.release = gpio_shared_proxy_dev_release;
-> > +	dev = &proxy->dev;
-> > +	proxy->id = id;
-> > +	proxy->name = "proxy";
-> > +	dev->parent = gdev->dev.parent;
-> > +	dev->platform_data = entry;
-> > +	dev->release = gpio_shared_proxy_dev_release;
-> >  
-> > -	ret = auxiliary_device_init(adev);
-> > +	ret = auxiliary_device_init(proxy);
-> > +	if (ret)
-> > +		goto err_free_ida;
-> > +
-> > +	ret = device_create_managed_software_node(dev, &properties, NULL);
-> >  	if (ret) {
-> > -		ida_free(&gpio_shared_ida, id);
-> > -		kfree(adev);
-> > +		auxiliary_device_uninit(proxy);
-> >  		return ret;
-> >  	}
-> 
-> [Severity: Critical]
-> As reported by Sashiko on v8 [1], can using
-> device_create_managed_software_node() here cause a use-after-free and
-> refcount underflow in software_node_notify_remove() when the proxy device
-> is removed or unbound?
-> 
-> In gpio_shared_make_proxy_dev(), device_create_managed_software_node()
-> creates a struct swnode with refcount 1, sets swnode->managed = true, and
-> attaches it to proxy->dev. When auxiliary_device_add() registers
-> proxy->dev, software_node_notify() increments the swnode refcount to 2.
-> 
-> Later, when gpio_shared_proxy_probe() registers the proxy gpio_chip with
-> gc->parent = &proxy->dev and gc->fwnode = NULL,
-> gpiochip_add_data_with_key() propagates the parent's fwnode to the child
-> gdev->dev:
-> 
-> drivers/gpio/gpiolib.c:gpiochip_add_data_with_key() {
->     ...
->     gdev->dev.parent = gc->parent;
->     device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
->     ...
-> }
-> 
-> When gpiochip_setup_dev() calls device_add(&gdev->dev),
-> software_node_notify(&gdev->dev) increments the same managed swnode's
-> refcount to 3.
-> 
-> However, managed software nodes cannot be shared across devices because
-> software_node_notify_remove() drops two references whenever
-> swnode->managed is true:
-> 
-> drivers/base/swnode.c:software_node_notify_remove() {
->     ...
->     swnode_put(swnode);
-> 
->     if (swnode->managed) {
->         set_secondary_fwnode(dev, NULL);
->         swnode_put(swnode);
->     }
-> }
-> 
-> When gpio_shared_remove_proxy_dev() calls auxiliary_device_delete(proxy),
-> unbinding gpio-shared-proxy first removes gdev->dev, which runs
-> software_node_notify_remove(&gdev->dev) and drops the swnode refcount from
-> 3 to 1. Removing proxy->dev then runs
-> software_node_notify_remove(&proxy->dev), where the first swnode_put()
-> drops the refcount to 0 and frees swnode, and the subsequent
-> swnode->managed check and second swnode_put() access freed memory.
->
+Sashiko's review of this patch [1] went to devicetree, not linux-media.
+All three points are right; v3 will fix them. Tested on the Surface Pro
+11 with v2 and with the fix:
 
-FWIW this would be fixed by the patch I submitted[1] but in thhe
-meantime I can switch to non-managed swnodes.
+1. Auto exposure. Once a stream stops, the exposure and gains read back,
+   and carry into manual mode, the values set before switching to auto,
+   not the last applied ones. No runtime suspend is needed for this:
+   pm_runtime_get_if_in_use() fails as soon as the stream's reference
+   is dropped. Here the stream applied 1796/24/2048; after the stop the
+   controls read 123/7/333, the manual values set before, and a manual
+   stream then applied 123/7/333. v3 returns what the last stream
+   applied, which the driver already keeps for the next cold start; the
+   controls then read 1796/24/2048 and the manual stream applies that.
+   So the v2 cover letter's "carry over to manual mode" held only while
+   streaming.
 
-Bart
+2. Probe. The sensor was runtime suspended 22 ms after bind returned,
+   not after the 1 s autosuspend delay. v3 takes a reference before
+   pm_runtime_enable() and sets up autosuspend before registering, as
+   vd55g1 does, and drops the reference once registered; the sensor
+   then suspends 1.2 s after bind. The error path was not exercised.
 
-> >  
-> > -	ret = auxiliary_device_add(adev);
-> > +	ret = auxiliary_device_add(proxy);
-> >  	if (ret) {
-> > -		auxiliary_device_uninit(adev);
-> > +		auxiliary_device_uninit(proxy);
-> >  		return ret;
-> >  	}
-> 
-> [Severity: Medium]
-> Does this error path leak the software node if auxiliary_device_add()
-> fails before device_platform_notify() is reached in device_add()?
-> 
-> Because device_create_managed_software_node() is called before the device
-> is registered, the struct swnode is allocated and added to swnode_kset
-> with refcount 1, relying on device_platform_notify_remove() ->
-> software_node_notify_remove() to release it once device_platform_notify()
-> has run.
-> 
-> If auxiliary_device_add() fails in dev_set_name() or early in device_add()
-> before device_platform_notify() is called, software_node_notify_remove()
-> is never invoked, and auxiliary_device_uninit() ->
-> gpio_shared_proxy_dev_release() frees proxy without calling
-> device_remove_software_node(dev).
-> 
-> [1] https://lore.kernel.org/r/20261029-gpio-shared-fwnode-lookup-v8-5-d15d75cd560f@oss.qualcomm.com
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261102-gpio-shared-fwnode-lookup-v9-0-a1d6cc501098@oss.qualcomm.com?part=5
+3. RUNTIME_PM_OPS() and pm_ptr(): in v3. With CONFIG_PM=3Dn,
+   vd55g0_pm_ops is then no longer in the object.
 
-[1] https://lore.kernel.org/all/20261102-swnode-only-owner-release-v1-1-ee4c9022a629@oss.qualcomm.com/
+With the fix, v4l2-compliance passes 46 of 46, with no KASAN or lockdep
+report.
+
+[1] https://lore.kernel.org/all/sashiko-outbox-195119@kernel.org/
+
+Sergey
+
