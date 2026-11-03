@@ -1,133 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=198.175.65.11
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793721443;
-	b=EFm/kypKrt06EKWGzuB5UZsuFi/tRl5sFUKscdXpkJEGHiN/MaQWSou1N5zbFBa4bJTc
-	 pC3bTcchJJ32bzKgBtRl1g4C1CDHdZv1yXKXXbmPwZ8Tka6LjxYJLMVxqIJMIRLkN2NN0
-	 vhdYNi1hLOPeR7xLD0gqVJ4FtPuFesfAhGLkbKk9MLlZTwRxn+sn57oEitcoLZDC42HbI
-	 Ne2hf2bU8MM0mCtqMm7Z8H8iMt1k9iM1nQqmpgh4odcbIIU2PjdRDxAY3UAvphuLzsoTx
-	 fUHnKPEa4rJv25EgC7FYFK/38hAdNqTuY6EMyTirOjx5/RxfnWGk23V2vJKv0tuBNWw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793721443;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:Organization:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=i0A9KSWoOZsf8OWZd4sqaUZ/PRztEH5iU2/62BfXFyA=;
-	b=huXeh6fqvXsKYRndBBpeMQjnMNAt0FvHY5DS3urrzdoaUuveX9c3p2choYskm3RNAxjM
-	 frSBqoU+LSdg/aN5yMCWrMsdDBemV0EPOedS0G10DIozfZjQGGbrmn5Ux4rXGmZwNp7eI
-	 q2a0yc0M57n2cJNxmWjA43125jkZc7yx7CagIKRiWCFTASXn3LIE1tH3yju/NQLeldksu
-	 05deFLY5+isCEX1DPk+fiIPm3LVscBhHrsEhbXS7j51O6IGS/t1yFJf4K89PUFP01GI3O
-	 N/8xiY07u2K3+peLps1LItgfSi5A9ANPJyFOzbRyKC/2FBj1gfXzWvi3wJgM/HBxzkg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fmL4y027;
-	arc=fail smtp.remote-ip=198.175.65.11
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793722111;
+	b=qrpy4UOGyD47P6UQnhs+OKLQWgbicXdV9VdEt2ZOaHGNb9HB7Ch4ltQCoXA+qIs7JI8d
+	 nyuPhC2C7bRrJZFsW/XL1MOsI2iJJIn+iQjJXmYQIhT1nqdO5e2Sfzw47ccQ49gOWbyJS
+	 38FmAHkt9sLvillbyFHpluodpFm6738LCOJvscAbuhqdT+EL8KX7x1AtyYtcrGiAkL9a7
+	 7KbHP9V/q/WRLZbkh9dqTEwLFB56ybJFKyLTdGzDl9O+cy+t+ow9pCzMnFTjn+dkwiDDX
+	 65irt/B+J/4PJtYrpJymnBuGd4lxp/wCK5q2hthzho+a23vZvQE/Fyp+EGuaT6YSQzQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793722111;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=SvBxcU0JLNXA5MaTI7MCEmWVgzZuquV24Fb0g4m3Vl4=;
+	b=bNY3fbAzX2EnA+a1W4KqA2fKxNFPJ07jpOGMgoxZIfmTpN9kNa3PwNHDwwt7nulnntRF
+	 S1eEZLvfJS507i/qRjImkuuXzkid3o830CcssRP6w3WJ42xNvmeMxMkZLD4bn89qKunrQ
+	 HBvac1z686EHxK8HKzU1XUMabAeN653QH8bPydrWx2ed54Re5y/EJ44gN0JrMeO9PAbHE
+	 FYWh/0C6gJ4aKtBzzh0Wmpx1Z5DT8m+VHk4OtkEF1o64//8a/oruCS7nS2SVMaWcKOGRv
+	 Whj8K1fzknprGOvC2zIPF2xHz9yksc675UfuOCfMq6i01OFyQDHS4s9oTaKYSIRu6Dw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Tpqnxk4v;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69263606A335
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 15:57:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69263606A335
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27814606A327
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 16:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fmL4y027
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793721437; x=1825257437;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=8avGu3lZzC8t9ZdGwKfgpMGBzO3oawNxzIiXhJf2z5g=;
-  b=fmL4y027PfKcDyypEHQYFBsbJyVoLFUZmVN3LQrwFpg35EGjTaPbp6k8
-   SrTQg15N/pB4m5sdyR4Gik5ihwU1a2JTaeAPJhWXOactroN3IEpCicstJ
-   4/caljeoVtqYycs8iTVqjyoPfkpFFmt/8+4ZjvvLYMMsg3NBev8D8Yefg
-   Y0EYvgdzUe3UkpGC/5iwn19kmYWkP1Zk+U5l9PaLbjunDeJgV44aRqOjt
-   AYPrcSARF43mEfXfeCJ1q2iUQuVvvY0Kf+txYTQzFoc3LJPznh6sNXwlr
-   U3sqnz++lg9R5zaUbOLN5Up57AnGZRAAYcIXM1K2WdmYOfiaUqd+i/mIu
-   A==;
-X-CSE-ConnectionGUID: o66adFf4RW2ObWxU5Bsg2A==
-X-CSE-MsgGUID: qGFDxJAsTdWzw+NZhymPig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2331213"
-X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="2331213"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 07:57:17 -0800
-X-CSE-ConnectionGUID: HJPnvOCmQGmqoXfalbrZYg==
-X-CSE-MsgGUID: 42ymj0aISfSyy37Fqx9jBQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="6295642"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 07:57:17 -0800
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Tue, 3 Nov 2026 07:57:16 -0800
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Tue, 3 Nov 2026 07:57:16 -0800
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.16) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Tue, 3 Nov 2026 07:57:16 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PHD2giKT+hpf2Mqlh5W/npPnISl7tDj7BSF35TixsV+ORf1Qj9uVcmwEz1Jc4mg+dg66MyOBMu/S0XEEQZ4TwmpSgt3TLdv7j7Kdwz1wd9NpLWP9oe8o3iHWGcDaoL7hoeP/+4MgyiMuTAyx7WDqZ945URIv+WH3ByPYtGYNncQBjHMvs576kxjslyNX7LTip1Ibpgmj0znyXlFseswLas0VxTePVyS6Oa7yeaL1gAK3q13QL79u5BJX9qYtN/kx7dgSaK4AolpRt862zKhdTe62x8OtCR8HRx8N24tMHWfh9XB95pYaXTrVFj/XR1kA7Cl+INI5sCa1XPmc1Z4pQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i0A9KSWoOZsf8OWZd4sqaUZ/PRztEH5iU2/62BfXFyA=;
- b=oAHZdWnCDh1Ln4T/O6iLvIm01atKbWIqgkfy6P167bkFV8zoCz22Rp1ijxoz8jh2P33AM8NViUjss20/g7+0A6n3ITxcJveTq0vTqSuGAI3taJeEBr+Evt6j4u4ddUXYFY7djRwjaSin40LOrVFNpZ45ebTcxuE4Bgv8+ylccffnPV94nN2tJm3ICAaFo5MCxGsRj0DffEkMEbELzn/4Hoy5iDLO4/oHnhPOCpN64PVdC2lUlO/mQQAks5wjnOs0tJaItwk+cQg7BKwJMxFovtQzO2qxM5EaD7VZFJZn9soEBD7ugLTt7dU8jfaOO1Q2BMf0gIayYm0c81yOElOBbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
- by DS6PR11MB610166.namprd11.prod.outlook.com (2603:10b6:8:469::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Tue, 3 Nov 2026
- 15:57:15 +0000
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0569.011; Tue, 3 Nov 2026
- 15:57:15 +0000
-Message-ID: <1cb49f46-9453-4ea2-adb1-e78575837d09@intel.com>
-Date: Tue, 3 Nov 2026 17:57:11 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] perf/x86/intel/pt: Stop tracing across system suspend
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-perf-users@vger.kernel.org>
-References: <20261102074039.26983-1-adrian.hunter@intel.com>
- <20261102074039.26983-7-adrian.hunter@intel.com>
- <sashiko-outbox-193146@kernel.org>
-Content-Language: en-US
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
- 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
- 4, Domiciled in Helsinki
-In-Reply-To: <sashiko-outbox-193146@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: DU7P191CA0025.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:10:54e::9) To IA1PR11MB7198.namprd11.prod.outlook.com
- (2603:10b6:208:419::15)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Tpqnxk4v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29991F00A1A
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 16:08:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793722110;
+	bh=SvBxcU0JLNXA5MaTI7MCEmWVgzZuquV24Fb0g4m3Vl4=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=Tpqnxk4v7O7cDlHQSOIdarQW8h114qvCR4rA83k23tIgNGlLvZN5zU0JyBchOVxRJ
+	 7jUSpgD6p/qx//0BZh6qtlfmgxwzggxLfQXlqiTBOcmRYFWltQDNULbMDwZFjndek5
+	 SuFp7ypbGPHSG/qC3QGzdu4fiidAiWBqcozHMpX57iEytcwP7G0JFRMlExqeb7+9lj
+	 cqJdiIA4z+ClLUb4UFLxkIiuAAs4QCr8PvK2u0xUKfzzs3feE9HFJoycPKYbg4Sg/P
+	 tu1xaF73JnnS2WraaOze2v39F2kuFmRaaUHrRc1iwi/n2kkq0MgmGleJScNbOLNb9T
+	 L/ut3Ljl5Pl+w==
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-c40e30c26a4so161082866b.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 08:08:30 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AKwUvBzpisGDx7jWoHWjpzacUlbHtN8i7R2tngwuq4iWY68ud0XRSDbSaUBPQU/4wdOeJLlHzpwTszQpJqcPox2ZJLI=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9wJ2+mUwZ2erI+x5/KMqNo5wDu7k/pfqxXftyT4DTcwIgN3Cvw
+	d4GT9kbZdraiabmH++mKptEboi1rX5KmJkXbNCfe0ev/TOVMP2hlfACmES7eHKokalMpKDFNML4
+	oUKIPnvzQMpWwQLVisQ2rPgeIlphqcLo=
+X-Received: by 2002:a17:907:869f:b0:c41:825d:ed8c with SMTP id
+ a640c23a62f3a-c49d147e127mr1481901066b.26.1793722109538; Tue, 03 Nov 2026
+ 08:08:29 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -137,91 +59,175 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|DS6PR11MB610166:EE_
-X-MS-Office365-Filtering-Correlation-Id: eafeedd2-b698-4d6a-e6f2-08df39c3212f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|4143699003|11063799006|56012099006|261022075727099003|261102123227099003|261021121427099003|261022105027099003|261028144727099003|261026140227099003|10067099003|18002099003|22082099003|3023799007;
-X-Microsoft-Antispam-Message-Info: w2Xo4pgoEGss8lkDJi9Z2Ea+MTSWKWfvzfzlNBguFyqgVuwt++RtCvKvHo19t02XODTRVnXXRCTSu69F7aXUkJ4P6ONQr9ZPAAEPKzRyEjjV8S3uFY5TLk0cBVByN4HHK6I6SjdE7iSimdnm3Jpzl/B2Zmk+sqsAGhV+fcD4O+NHIlyEZubZ6JGlSedirq5iZup00YjzogrVdsuEt6vg/OD6ZX7HO0DSolHtCC4VR6CVZNFpwC70LOc64LlGMvHZoQNZN1GfmGUMS+kWMQMR9A51pySlnMk5oag3ObA2naS27mwYrRUrLAX+++gR1VaZmYdA7u9tRk+MS+9BKuwAJdp7wrSEWWQbAaXDQjIQMBJt/CQB0k+9l4W9b6hr+cPcLgEfd2AbVYKzKma7FrvkZhBjBmGs2gJJpwUhnwvlklzzkqWIXuweCuVhWbmKyrAH23zF3Qq3Ab6Rf7reg2MtSVl2ucDusspwAo4r+nU7Tr9e583xnlML0nK1+/gkytMREWXuSiCyimm6jbObrohPlqukr9gGy3DDTGjhzocI7ZQjzb47bin6NPb/+3nVRa6ia8VSisKmV/y/qvbfWIClHPKn4wn3rHRUja31JqCCsvMr4+Yp5b8vIcjeZ3ZO7SQSzIZLqh/Cbj4jGX89zCSKSScEntUqm7yHtZrZtqgA10Q=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(4143699003)(11063799006)(56012099006)(261022075727099003)(261102123227099003)(261021121427099003)(261022105027099003)(261028144727099003)(261026140227099003)(10067099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VlRtV2FhNGh4dlVVeXExZFRIM0xBSDRxYjJDUFlYOFR6WklRZmc5Q3Q2dURP?=
- =?utf-8?B?dCtCRysybTNTOGNSVTdiblE3NHVoTWxVaTVVeGxKTUR6K1pqSEFIdzF2QVNE?=
- =?utf-8?B?ODF0UW9OY0MyMm9aYmluUVZqZlJVRmZlOVVnV1pyMjAvZjltR2hsVDhkOFVJ?=
- =?utf-8?B?MEwxZWRaaU1PVSt1eWR0NHZqSW1jQ1JhZ1FOSkMyKzZmbk8vVlpYK2creWtt?=
- =?utf-8?B?eVlyQzZKaVNheVdGNDR0R0dpaGF0b2h0OXR5b09wY1VBTFNZbzRrazdGSUNa?=
- =?utf-8?B?SUNIMEVyRWNia3lrQ2gxanFZcmFnSzkraU1FSEhBRDZJNHJKaEZrZUFkeVg2?=
- =?utf-8?B?djQyMFlyOWNJb1NUZnRHWG40Y200WHo0ZW5XQUdqYVdFLzdiS21Oa05RQmRG?=
- =?utf-8?B?SmFLK2hzWXNaeVZuRDJzM1VWWW5DWHhyWjhHbU1NYTV5eEdvdTV5ZUVHc2Zr?=
- =?utf-8?B?SWVSM1ViTnRvVDRWQkJzMC9JV1N6dExLMWJlSk5CZzRTMDFBaVVRYlRZUHRJ?=
- =?utf-8?B?TnZuTmpqUUFHWjhLbXcyVWJVazc2aHF3N1psUHU5aHVTTkMyNDBXN1ZHSlpC?=
- =?utf-8?B?OTNkeng2b3B1SmhCYzl0b2h3aU50MWlnL1dseXM2K3N5M3ltN1pmbnZ2MndF?=
- =?utf-8?B?Kzd1RExSRk1qM1d3N3l5SU9EZmFxWjA2V3RyM2xNTHhwcTJsYnd3UWREV1gy?=
- =?utf-8?B?cHB2aDhPR0lmamlLNzVlaUhFM2RPajN4VXlhc2NiUEtTb2JleWZUNXd2aE1m?=
- =?utf-8?B?cVc4VXR0SnhOSHpLVnpWRmJlNnhPTzNoNm1Pam12aVd5NXRYNisvdzdZOTdY?=
- =?utf-8?B?MWxFWUoyblVwMUJMaDRZK3drQVBVb0ZTUWV6cFVyazkyaDBxMGZkeDh3U3pQ?=
- =?utf-8?B?S0I2V3FaWHpaeFpoUndNekIrdlEzdE1zTkpUSXNsQm1mWVVKaEZJS0ZIV0Jq?=
- =?utf-8?B?akZkZkVFd05PZTdscnJnTkNtdGxuRDJoUzdWTnpwZi9YbkJwM21CMUNNVFpZ?=
- =?utf-8?B?Y3NkZnBQSy9paVJwNGJvMm0wS2NhSElKNlEzdlJsWHg3aEt0ZnZhVVV6eG4x?=
- =?utf-8?B?S1JPM0Y1Nm5yVTFlM1B6cFVjalJtZEl5L1NNMWdvSzBvWEcvL2N0VUFweGhJ?=
- =?utf-8?B?eElmRG9GQkdlSTAvM0twVTBFMTVjZC8zUGR1eFVIcHk2YjZna2tudjNKMnZJ?=
- =?utf-8?B?bElXZW5uekdwQVJSVm9XWG1iYkpzSGFSay9GYm80UlZNTG9lcmpobUo0K2pr?=
- =?utf-8?B?ZmhiUFdjYkNOQWh3YldwYVVobzU1dUtWRk9wQW95eWM4NGJ4YlBtaEtlQjFP?=
- =?utf-8?B?TlBNdTRieStRRkhzN0lyZCtaTExvanJEbWNCZng5eUtscXBqdERxbHk2NnRH?=
- =?utf-8?B?eDNDSCtUS29iYVBZcGtmZmJ6c3RSRFFIdzZ6TTdLbEcyNmNYRXh0TEVWcjVv?=
- =?utf-8?B?THBvdmtkUG1QTlBOZ3F2dXg1NlZDdUNzNVI4dnU2dTAxNVdmL1VLQkIyb0Ra?=
- =?utf-8?B?d1pFbmdJYnJuL1VOd3UzTGpjOWJNWlVENUpVQ3dpZ3NXS01nTEx1c3ZzUzVm?=
- =?utf-8?B?dEtGNkp0dDhZMEtKMnN0VGxOL2FUZVN2VnFUU2FtYXhOL0t3ZDVzUXQyd09O?=
- =?utf-8?B?Y2dYamZ6VnQ0MXFTVXBQdVhZc0NvalhFTzJsc0NKQUpEL25aYnlsQmlISEE2?=
- =?utf-8?B?am9ZVGl6WjFYT2tnQk5LdXRaMUU4elZUc0JIS1YvTS9DMFBIdlpzWFpjVGh1?=
- =?utf-8?B?RUZCR1djUEtUOXN0QzFPNHE3ZUNnVEN5QWV5S2twOEVtRjhtYkZWRVFpRDBu?=
- =?utf-8?B?NEJmcFZ4M3B3d2tqdFhuSS9QV1lLcVZ4SGpoZTU1TTY5V1E4djlpVEVzd1k4?=
- =?utf-8?B?Q2FQUjZRZDh4eFFGbU1hNWtLakpNN1AxMnlUTWdrM253S1JPMThlVllCYnZV?=
- =?utf-8?B?Y2xnSEFQNFh0c3BWbHdWNWlnQVQrbjR0MHlJaWxXVzQrbXBWLyt4WXM0OThQ?=
- =?utf-8?B?YVk0SE4rWk83eWJuOC9DcTk0SGYrNVZHNjNFM2pkZHU4eVRLV0ZuMGpxVFo4?=
- =?utf-8?B?c1l6YXpDTW9NaXo0YnQ4VEhDR3hOcjhZMmdSNTI1a2hFOFd2TUNTdFdPd3Mr?=
- =?utf-8?B?S2p5ZFN0akhqYWpqbWc3djZhZ2VTMnd6VEtDcmRPblVNQjhTb2N3Uk5hdG43?=
- =?utf-8?B?Y1MzdkorVDU3RC9mbnJRSGlkckVpOFVyeEtqdUgydnk4RG8rM2Z3aEFWLy9T?=
- =?utf-8?B?WmQ0Z2lNaUV3Q3FQcEhENHJOZXE0OVVXTVFWQUR2UCs1bjZKc1pjaFJNUkpU?=
- =?utf-8?B?NHBKcCtDOFpwSlMrVkVXTUlKYzZjbW9hemF2c0NmQmZqWVB4T0I5Zz09?=
-X-Exchange-RoutingPolicyChecked: lPpTiqInzsufBIdtspv0F80i178HCou1ltsAyRzirV328AvygSTucADPJBOF/lNZpujBAP55JNyRm/M1RsWJztlDY5oA3mzDDjG07ADkmRWXlqsv+WfJ9FDtK8bhGZ2Lp+TYOniinUkKGZKtModUZNU4d4MUPEPwe2/LzBkpcszpfM/Sx2lDNCEa+4AGGNp6btS1j5OPKC94sNpl9tYhe/XDoV5349LK0kTkaA4AsEouBZ3xHeWJsRgU65E5SAfc8IN6v/WM1nvKvz5y370eUOj+1vSX8PenjHgqXoqLaruAJE8T2EiIoc4kvJgojNIcc9zKc9OZZ7Ie3fkjRzJuNA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: eafeedd2-b698-4d6a-e6f2-08df39c3212f
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2026 15:57:15.0773
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8gYZzkWNnQP+frUibQOd5a4q+G167Rd1PS+HpdW5JUGYPW/oargd7cLpxAcE/zTC3v4gvi7xV/EVw1MZbsgFlQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS6PR11MB610166
-X-OriginatorOrg: intel.com
+References: <20261103000313.13677-1-kanchanapsridhar2026@gmail.com> <sashiko-outbox-194595@kernel.org>
+In-Reply-To: <sashiko-outbox-194595@kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Tue, 3 Nov 2026 08:08:18 -0800
+X-Gmail-Original-Message-ID: <CAO9r8zOdbbn0XGKoU_9ktNJJtn19oP8JxOX1uVs+-BLe0GdCTw@mail.gmail.com>
+X-Gm-Features: AclHuK9wS_mhc5Y-JGS88yPApAQKys0rl04uUxuRn3Xg8ICSN0ztaY2JRlrhkNo
+Message-ID: <CAO9r8zOdbbn0XGKoU_9ktNJJtn19oP8JxOX1uVs+-BLe0GdCTw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] mm: zswap: Move the crypto_acomp to be per pool,
+ instead of per-CPU.
+To: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>, Barry Song <baohua@kernel.org>
+Cc: hannes@cmpxchg.org, nphamcs@gmail.com, chengming.zhou@linux.dev, 
+	akpm@linux-foundation.org, linux-mm@kvack.org, herbert@gondor.apana.org.au, 
+	davem@davemloft.net, linux-crypto@vger.kernel.org, 
+	sashiko-reviews@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 02/11/2026 10:59, sashiko-bot@kernel.org wrote:
-> Can pt_syscore_resume() prematurely restart an Intel PT event that has been
-> throttled by perf_event_throttle(), leading to a duplicate pt_event_start()
-> call when the event is unthrottled on the next timer tick?
+On Mon, Nov 2, 2026 at 9:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] mm: zswap: per-pool crypto_alloc_acomp() breaks NUMA and HW qu=
+eue scaling
+> --
+>
+> commit 0abfb2c1c527ffcd5ca8df2224cd1c4533f5face
+> Author: Kanchana P. Sridhar <kanchanapsridhar2026@gmail.com>
+>
+> mm: zswap: Move the crypto_acomp to be per pool, instead of per-CPU.
+>
+> This commit moves the struct crypto_acomp instance from the per-CPU struc=
+t
+> crypto_acomp_ctx into the global struct zswap_pool, allocating a single
+> transform per pool in zswap_pool_create() instead of allocating one per C=
+PU
+> in zswap_cpu_comp_prepare().
+>
+> > diff --git a/mm/zswap.c b/mm/zswap.c
+> > index 37d217860a6b2..a958b74d4425d 100644
+> > --- a/mm/zswap.c
+> > +++ b/mm/zswap.c
+>
+> [ ... ]
+>
+> > @@ -323,6 +313,17 @@ static struct zswap_pool *zswap_pool_create(char *=
+compressor)
+> >
+> >       strscpy(pool->tfm_name, compressor, sizeof(pool->tfm_name));
+> >
+> > +     /*
+> > +      * In case of an error, crypto_alloc_acomp() returns an
+> > +      * error pointer, never NULL.
+> > +      */
+> > +     pool->acomp =3D crypto_alloc_acomp(pool->tfm_name, 0, 0);
+> > +     if (IS_ERR(pool->acomp)) {
+> > +             pr_err("could not alloc crypto acomp %s : %pe\n",
+> > +                     pool->tfm_name, pool->acomp);
+> > +             goto error;
+> > +     }
+>
+> [ ... ]
+>
+> > @@ -841,34 +857,20 @@ static int zswap_cpu_comp_prepare(unsigned int cp=
+u, struct hlist_node *node)
+> >        * To handle cases where the CPU goes through online-offline-onli=
+ne
+> >        * transitions, we return if the acomp_ctx has already been initi=
+alized.
+> >        */
+> > -     if (acomp_ctx->acomp) {
+> > -             WARN_ON_ONCE(IS_ERR(acomp_ctx->acomp));
+> > +     if (acomp_ctx->comp.areq.req)
+> >               return 0;
+> > -     }
+> >
+> >       acomp_ctx->comp.buffer =3D kmalloc_node(PAGE_SIZE, GFP_KERNEL, cp=
+u_to_node(cpu));
+> >       if (!acomp_ctx->comp.buffer)
+> >               return ret;
+> >
+> > -     /*
+> > -      * In case of an error, crypto_alloc_acomp_node() returns an
+> > -      * error pointer, never NULL.
+> > -      */
+> > -     acomp_ctx->acomp =3D crypto_alloc_acomp_node(pool->tfm_name, 0, 0=
+, cpu_to_node(cpu));
+> > -     if (IS_ERR(acomp_ctx->acomp)) {
+> > -             pr_err("could not alloc crypto acomp %s : %pe\n",
+> > -                             pool->tfm_name, acomp_ctx->acomp);
+> > -             ret =3D PTR_ERR(acomp_ctx->acomp);
+> > -             goto fail;
+> > -     }
+> > -
+> > -     ret =3D zswap_acomp_req_init(&acomp_ctx->comp.areq, acomp_ctx->ac=
+omp);
+> > +     ret =3D zswap_acomp_req_init(&acomp_ctx->comp.areq, pool->acomp);
+>
+> [Severity: Medium]
+> Does replacing the per-CPU crypto_alloc_acomp_node() call in
+> zswap_cpu_comp_prepare() with a single non-NUMA-aware crypto_alloc_acomp(=
+)
+> call in zswap_pool_create() cause a NUMA locality and hardware queue scal=
+ing
+> regression for hardware compression accelerators?
+>
+> Previously, commits 7bc13b5b60e9 and 1ec3b5fe6eec allocated a dedicated
+> struct crypto_acomp per CPU on cpu_to_node(cpu) so that hardware compress=
+ion
+> drivers would allocate per-CPU, NUMA-local hardware queues.
+>
+> While software scomp backends and Intel IAA select per-CPU streams or
+> workqueues at request submission time, other hardware acomp drivers bind
+> hardware queues, rings, and NUMA-local accelerator devices to the struct
+> crypto_acomp transform during initialization based on the transform's nod=
+e.
 
- Yes, the duplicate start can happen
+Adding Barry here, I think this undos the optimization he previously added.
 
-> Also, if pt_syscore_resume() skips calling pt_event_start() when the event is
-> throttled, wouldn't clearing pt_suspended_event in pt_syscore_resume() before
-> perf_event_unthrottle() later calls pt_event_start() cause a throttled
-> snapshot event to read reset PT MSRs in pt_read_offset() and take the
-> pt_config_enable() path without reprogramming the output MSRs?
-
-Right, so keep the restart and make the redundant start a no-op
-instead.  An event with both PERF_HES_UPTODATE and PERF_HES_STOPPED
-clear is already running.
-
- 	if (!(hwc->state & PERF_HES_UPTODATE)) {
-+		/* Already running, e.g. restarted by pt_syscore_resume() */
-+		if (!(hwc->state & PERF_HES_STOPPED))
-+			return;
-	hwc->state &= ~PERF_HES_STOPPED;
-
-One side effect remains. A throttled PT event restarted on resume
-traces until the next tick while its sibling is still throttled.
-That lasts at most one tick and is harmless.
-
+>
+> For example, in drivers/crypto/hisilicon/zip/zip_crypto.c,
+> hisi_zip_acomp_init() allocates one compression queue pair, one
+> decompression queue pair, and a per-transform request queue and spinlock =
+on
+> tfm->base.node:
+>
+> drivers/crypto/hisilicon/zip/zip_crypto.c:hisi_zip_acomp_init() {
+>         ...
+>         ret =3D hisi_zip_ctx_init(ctx, COMP_NAME_TO_TYPE(alg_name), tfm->=
+base.node);
+>         ...
+>         ret =3D hisi_zip_create_req_q(ctx);
+>         ...
+> }
+>
+> Similarly, in drivers/crypto/intel/qat/qat_common/qat_comp_algs.c,
+> qat_comp_alg_init_tfm() binds the transform to a single hardware compress=
+ion
+> ring pair on tfm->node:
+>
+> drivers/crypto/intel/qat/qat_common/qat_comp_algs.c:qat_comp_alg_init_tfm=
+() {
+>         ...
+>         inst =3D qat_compression_get_instance_node(node, alg);
+>         if (!inst)
+>                 return -EINVAL;
+>         ctx->inst =3D inst;
+>         ...
+> }
+>
+> With a single pool->acomp allocated via crypto_alloc_acomp() (passing
+> NUMA_NO_NODE), won't all CPUs across all NUMA nodes share and contend on =
+a
+> single hardware queue or ring pair on one accelerator device while leavin=
+g
+> all other hardware queues and NUMA-local devices unused?
+>
+> Also, if pool->acomp is shared across all CPUs, should the comment in
+> zswap_compress() be updated as well? It currently still states:
+>
+> mm/zswap.c:zswap_compress() {
+>         ...
+>          * but in different threads running on different cpu, we have dif=
+ferent
+>          * acomp instance, and compression and decompression use separate
+>          * requests, so multiple threads can do (de)compression in parall=
+el.
+>          */
+> }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103000313.13=
+677-1-kanchanapsridhar2026@gmail.com?part=3D1
