@@ -1,101 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793669023;
-	b=UTfM2xH4oIa34DHUFp3KGd3RNiGR0AjpS9rtKlsep0jxh37QP2DmVO4+Ark6oYeVKvSM
-	 NridZjrAaMYgy/YAGAKvRZIafpZQ4LndIqaFvwglKBth0QtbJJ/HL0lnTLB7y6Ri7QFcr
-	 H8Gw0UD9RTGW4F5HJpWBcLebsC97dZb1N4kySiPtn5qx9IMfZ64ybbPrrFalUg+mJPoYV
-	 WkbuhnZl3qvq5zQWzhbNqixUwUM3VeEqxx3qB8XP5RlafFcKUxXU0+/5uh4Gsn0atnd5j
-	 my5tSHrCPsZkKP619+iKYFw1xV+66Ap6/R6vQ7DqWDMw5fkU419TNnJFsPFz+EtFH1g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793669023;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
-	b=KV63TK4z4kunWrRk97Fl2RkZkDXma8sfXoZz5j9/dGpW0ZHvPQ6femft7HpY1jUauOcy
-	 eDrULhuLpkq9dV+PMg2P9sOXtIX6sPZ94fw3s8w3pHjJVSt4Us7R+1EPR1hJj255V77Y6
-	 BO7RKhGIBRI/fXLYlv4Lv7hnKPCctvsE3h0XKqZEA/kk8C+t50/CS+++OVMoWh477+bks
-	 HV+huz3HRjuXheFszO5Lzpbzcn1fhzxCgiJbyFunbq5qchYPJ4MnMP5zsnw9yCXrO3jk8
-	 RIYouQFwW4hrr3DdIB9er/0nSfZ0nweEOEIJB3NyeyV467RwP0dLQ+XeJRE7Bmu/tEQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fwqopPjx;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.51
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587CF606A327
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 01:23:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 587CF606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fwqopPjx
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-9909e82513fso153373241.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 17:23:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793669022; cv=none;
-        d=google.com; s=arc-20260327;
-        b=SxIFkx20axs+uv32xCd24fxNreDZ2W5JypwyH7DdzQ4GOI24/bbdBMyk+a18Xbcr+Y
-         hWM0PW2Aop066m87SF6lVz3StlijtCc0gQh2wQbsXDoRVOQBfEub5tXfvKq7TmnHcqHC
-         4A8huytGdQBpvz8s6qYXUeExwcp5nl+41PyJohWFT3rXD0WbjtxPaxdJg6kkgrk2HfKO
-         xzS9oAJ3kXuZ8NCYswJH2K3BDuhCg/68iITaoCmDe329NEwb07wF0Hs591iWAtT6442L
-         UWaWziyuveOcXv1WSMW2F8Alr+yDil7ObyWAX8JKyd0rw2DMQWFD0++b/3KJwEfNYGql
-         dBJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
-        fh=W8JJw+p7qCtTXxeq73mloOeppwwTRHzId7aPWe02dqk=;
-        b=GTm8ZUOfdyjrhofM1d8J5pCR/CMZDKm02Tp5mG/9T/g2YiFU1cuW7cvYkwy04cCHXQ
-         KhhhfNjz4ASFTO6BwhbYzQXFJ8255rxFQLA+mGwzX+AS334qtqkm4t+lYsGuaz2jEEEA
-         KJ1IxtubfgMSkE4iCmKo4KEvXrTba43rsp/l54Msh03/tsrd4vG6AlnV2xPNeKVQF96l
-         f9R9sKcBdMkcNwYPggj6b/u+CQXifpk1hbsGPnuQzR4/qYyptWFhMR/Xa40oua+gLUCn
-         7EMPDAcqriocXibP+WiQPQ2+VUfwIWgSmpao7SIP3P00a8JewN5O/7ClSk79m4KJ6yad
-         rtow==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793669022; x=1794273822; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
-        b=fwqopPjxjEqBkWFwicGM9vauOlIRO000CH4dFu+3oBQplkJ0mrhM1zUgAuyGut3eIi
-         jORZ7q5w03hkltWPjXcqR8/q3jR8eFBdZasPuBr5UlyilYtCaG21SOwXPNlR5wriMKMv
-         cK9B42sbGFOrdbVMTdE2uP3foJ5jIVOFDjMD1vIVrcTgpuHrQIqZ6vRQ4DYwFaI7ytVz
-         abInEXs78n5SA/JzCjcD237WPTDyVMR0kgJbacQgcOuOdWcy11YCTjGyqXoY52ySZqWv
-         ZokWJIOvsiH6Q0Zw/dbLGXlk6ijhtkK4Ifm06amPLSHnta0TZlrO+Ply6LFuI0UShDUI
-         Bsug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793669022; x=1794273822;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=j6X54P/n20M1/zDVnxESincFUnXpjUB5mtxgldEc2PE=;
-        b=j4WYFXzteRBCs3ELGueFb5uzwZTz1SQy2yr12TY9dtUVETmcWZXqN2OAlrFHylZ6I2
-         AaeY2mdTkZv505xbpkhTo+vgf/5U8r+Q2LrpWCO0C+sttacme85WOEVW7lkr7i1+IsPa
-         5CFqr/bkp3DZ4NRPnzkrihmAmn2vUxBnkXS8pxMO9fpo7L1NRL00vaiUDKYNWbhISQK8
-         LjQYPihElXAeg9rZPwGdA8loaChmw2mdLQWfH3PAr4yOndzCxlX5V8kMUdih88R07jxp
-         pGkam/cwgItrnt1UoB3E+P7zYP3rsILR+2T4h2T6CeDbMC0P08xGQcIeGRZU2qQWOTZk
-         j91g==
-X-Gm-Message-State: APuU4Z86Xv+U0v1fpl30iMA3OeelduFSKwNUlI0ZNi6+xBkg6wbV2e7B
-	FnYY9ZT+J10BK5ynqokIPNEBnSpW2gfeeHKqgUis2eLv6wVW5yN7TZM+NBVnMv6SGpDM0KybXOC
-	rY8LQMlWwCbH91AuSAZ/G1zHiSKFZAoTiXQ5UO1c=
-X-Gm-Gg: AYBFou0UCabuxGWXN19vJ93ZOzRJA0QjlR90Ta/PaDyUz02AlHn2p+NxYJYcpxWqXVj
-	+DRc1JVkSSgHeymZsJaY+VsitSpgTIVXUDVs88J/zhubPTXWFEChOlYwz//QOcmgeizlwgHBqvW
-	G9N1MxmILA5+G7GUfj0h1S4BbOhMEzHN/twYmHIbOWF6JXd5SwNkqHbwJvw9+Z2wzv5tgwqYGPJ
-	BDybVSQj3IOVyj6nzU8MnHSkhkt+EyjtV51Pk0h5MTRrX0VTMuK1W5KQANhtgvwkVUJXz25+J68
-	wEbVmPJt15lI1E+eJhOIAwH3An84IS3CoMaG4IUHPG2gE3C0pohQ9N8Q2VkNl+C1WBKCLVcnvqN
-	iHLNd3Zau34V8bndLPpGWoX6tUuhGfm/dMZH8vc3spCRPhBdEry6KJMMQSjZgorAizlS/1/Z4Um
-	gLGQFNBa4JUI/NqnxjkeorFvSF0xsxZGqRYl5ZrM8IpGBFYRXn5d27XGSR0bt0E0esxNp+UbSBG
-	YPpL0rOG2ITDlV3OwqdbN3mXPUUiXr8Mh9II5Hf0QjqNKPhsUk=
-X-Received: by 2002:a05:6102:5cc8:b0:7c3:874d:60bb with SMTP id
- ada2fe7eead31-7d072bc027emr3228553137.5.1793669022111; Mon, 02 Nov 2026
- 17:23:42 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793671307;
+	b=24oWC295UuQ3VYjJXI+9jqilPP8ebAYsBrZplCvwGvClUJn3BwUMOJUvRP3w0x9cK26j
+	 zfT9WNFjbWWwovTea9VFSvzOl8MOIJI9T97yrYLuUhWLhSjB3LL35gXMigqxmGaHyJvUd
+	 aw38NieyBM9HFrs22uQ5i4NWlpgvGS6J6Tv+CH9BoJpGCmoOTpkZR2RXp5z0TPc9VNA6w
+	 Do8gK1rdvqLiU827GD1RiVG23SLd6EM7QTuasHs8EoEGHeeBxCjvx4A7wC4WhwURPxfYu
+	 /WMdNZioA0Q1uqkY48+OLXJqgPnb8Wjjd2TQPnDHXh7p+rCzUk2tvrEjIyHwsT07AmQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793671307;
+	h=DMARC-Filter:Received:Received:Subject:To:Cc:References:From:
+	 Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:Content-Type:
+	 Content-Language:Content-Transfer-Encoding:X-CM-TRANSID:
+	 X-CM-SenderInfo:X-Coremail-Antispam;
+	bh=R+R/zoUatofm4R0LIX34DtFmZRn+sOpXy2WFmyfKi6Q=;
+	b=NXXKor1LqE3Jhj+NJXSiDrQaO8rEe7njXmkTAfYKQl7dIfAj2Mv5VcCJFMgtHO8YblHp
+	 9RrieD6AA71utVElhjWSqlKXivpLD713ZNJDIm08wQ5JmozeGzd7ryeR9HiCh+246LSiB
+	 zz2pQjovalh15JLdacZgs1GPHd+cB/DuE+T7nx/ToSluafK25HRJNqy1dysw07RMiTL+/
+	 6mqHI9R6eAA6kA5sZ0Wj61fA5hG3JUoxWXVAkJEBMd8fmc4NRcrwViuuuYoYG796ATb9r
+	 bIHxHbc0QPzWQQ2rSTBauYbQZVe5VsyO+nuorysKVOTY1biMbeTTQwJ92I9KUAQ/S5Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=loongson.cn;
+	spf=pass smtp.mailfrom=loongson.cn;
+	arc=none smtp.remote-ip=114.242.206.163
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31640606A326
+	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 02:01:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31640606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [123.138.236.242])
+	by gateway (Coremail) with SMTP id _____8CxfdKGQOlq1s0bAA--.14979S3;
+	Tue, 03 Nov 2026 10:01:42 +0800 (CST)
+Received: from [127.0.0.1] (unknown [123.138.236.242])
+	by front1 (Coremail) with SMTP id qMiowJDxBc2FQOlqXwoyAA--.9896S2;
+	Tue, 03 Nov 2026 10:01:42 +0800 (CST)
+Subject: Re: [PATCH bpf-next v1 1/2] selftests/bpf: Handle EOPNOTSUPP
+ gracefully in test_loader
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261102081230.7063-1-yangtiezhu@loongson.cn>
+ <20261102081230.7063-2-yangtiezhu@loongson.cn>
+ <sashiko-outbox-193107@kernel.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
+Message-ID: <eb86e8a0-acae-6240-0c82-98ce1c8a0a4e@loongson.cn>
+Date: Tue, 3 Nov 2026 10:01:41 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,229 +55,74 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102-submit-serial-8250-dma-cancel-v1-v9-0-9159caade148@gmail.com>
- <20261102-submit-serial-8250-dma-cancel-v1-v9-7-9159caade148@gmail.com> <sashiko-outbox-194343@kernel.org>
-In-Reply-To: <sashiko-outbox-194343@kernel.org>
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Mon, 2 Nov 2026 18:23:30 -0700
-X-Gm-Features: AclHuK_gt5lz7AswOV3gb8RGMWLh9TAATw8FhlHVD0RjFRvXQGOlI9L1gN2tR9Y
-Message-ID: <CADvTj4rYqTXsZcSPfe7o1i_-nB1z1ZBkeySKua+f5CWR=7BzwA@mail.gmail.com>
-Subject: Re: [PATCH v9 7/8] serial: 8250: retire canceled RX DMA before
- reusing the receive buffer
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org, imx@lists.linux.dev, Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <sashiko-outbox-193107@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJDxBc2FQOlqXwoyAA--.9896S2
+X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7KFWrCw1DGF1DuF13Zr17CFX_yoW8WF1kpa
+	4kX3s0yFySqF1Sq3srurW7XrWjgF4UuF98Cr1rtw1fZr17Xr4aqr1xKa15trnxWrWxZwn0
+	v34Ikrn3G3y8AFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv67AK
+	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+	14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+	kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAF
+	wI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+	4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07UiVysU
+	UUUU=
 
-On Mon, Nov 2, 2026 at 4:49=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] serial: 8250: unbounded pause retry loop in serial8250_rx_dma_fl=
-ush_work()
-> --
->
-> commit 7216db0ad0fa3a64d9a52f2eff54fb53c9c43c75
-> Author: James Hilliard <james.hilliard1@gmail.com>
->
-> serial: 8250: retire canceled RX DMA before reusing the receive buffer
->
-> This commit reserves the RX DMA receive buffer until a worker has drained
-> canceled callbacks and adds retry and recovery logic for RX DMA pause and
-> termination failures.
->
-> > diff --git a/drivers/tty/serial/8250/8250_dma.c b/drivers/tty/serial/82=
-50/8250_dma.c
-> > index 344f0dd24b416..fd2a0ed211657 100644
-> > --- a/drivers/tty/serial/8250/8250_dma.c
-> > +++ b/drivers/tty/serial/8250/8250_dma.c
-> [ ... ]
-> > +/* Try to obtain a stable residue before retiring the current descript=
-or. */
-> > +static int serial8250_rx_dma_try_flush(struct uart_8250_port *p)
-> > +{
-> > +     struct uart_8250_dma *dma =3D p->dma;
-> > +     struct dma_tx_state state;
-> > +     enum dma_status status;
-> > +     int ret;
-> > +
-> > +     lockdep_assert_held_once(&p->port.lock);
-> > +
-> > +     ret =3D dmaengine_pause(dma->rxchan);
-> > +     status =3D dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &stat=
-e);
-> > +     if (status =3D=3D DMA_ERROR) {
-> > +             ret =3D -EIO;
-> > +             goto recover;
-> > +     }
-> > +     if (ret && status !=3D DMA_COMPLETE) {
-> > +             /*
-> > +              * Hardware may be idle before the provider publishes com=
-pletion.
-> > +              * Leave the descriptor alive and retry outside interrupt=
- context;
-> > +              * neither copying its buffer nor canceling it is safe ye=
-t.
-> > +              */
-> > +             dma->rx_pause_pending =3D true;
-> > +             serial8250_out_IER(p, p->ier);
-> > +             return ret;
-> > +     }
-> [ ... ]
-> > +static void serial8250_rx_dma_flush_work(struct work_struct *work)
-> > +{
-> > +     struct uart_8250_dma *dma =3D container_of(work, struct uart_8250=
-_dma, rx_flush_work);
-> > +     struct uart_8250_port *p =3D dma->port;
-> > +     unsigned int delay_us =3D USEC_PER_MSEC;
-> > +     ktime_t start =3D ktime_get();
-> > +     bool recover, retry, restore_rx;
-> > +     bool warned =3D false;
-> > +     int ret;
-> > +
-> > +     guard(serial8250_rpm)(p);
-> > +
-> > +     for (;;) {
-> > +             scoped_guard(uart_port_lock_irqsave, &p->port) {
-> > +                     /* Shutdown cancels this work and drains both DMA=
- channels. */
-> > +                     if (dma->shutting_down)
-> > +                             return;
-> > +                     /* Serialize reset with completion and shutdown n=
-otifications. */
-> > +                     WRITE_ONCE(dma->rx_pause_wakeup, false);
-> > +                     retry =3D dma->rx_pause_pending && !dma->rx_termi=
-nating;
-> > +                     if (retry) {
-> > +                             ret =3D serial8250_rx_dma_try_flush(p);
-> > +                             retry =3D dma->rx_pause_pending && !dma->=
-rx_terminating;
-> > +                     }
-> > +                     recover =3D dma->rx_err;
-> > +             }
-> > +             if (!retry)
-> > +                     break;
-> > +             if (!warned && ktime_ms_delta(ktime_get(), start) >=3D MS=
-EC_PER_SEC) {
-> > +                     dev_warn_ratelimited(p->port.dev,
-> > +                                          "RX DMA pause stalled: %d; r=
-etaining transfer and retrying\n",
-> > +                                          ret);
-> > +                     warned =3D true;
-> > +             }
-> > +             /* Notifications also cover completion or shutdown before=
- sleeping. */
-> > +             wait_event_hrtimeout(dma->rx_pause_wait, READ_ONCE(dma->r=
-x_pause_wakeup),
-> > +                                  ns_to_ktime(delay_us * NSEC_PER_USEC=
-));
-> > +             delay_us =3D min(delay_us * 2, USEC_PER_SEC);
-> > +     }
->
-> [Severity: High]
-> As reported by Raul E Rangel on v8 [1], when dmaengine_pause(dma->rxchan)
-> persistently returns an error during a partial RX DMA transfer (where few=
-er
-> than dma->rx_size bytes have arrived and dmaengine_tx_status() remains
-> DMA_IN_PROGRESS), serial8250_rx_dma_try_flush() sets dma->rx_pause_pendin=
-g =3D
-> true and masks RX interrupts via serial8250_out_IER().
->
-> In serial8250_rx_dma_flush_work(), this causes the for (;;) loop to retry
-> serial8250_rx_dma_try_flush() indefinitely until port shutdown instead of
-> escalating to serial8250_rx_dma_recover() after a bounded retry budget.
+On 2026/11/2 下午4:28, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] selftests/bpf: indiscriminate EOPNOTSUPP skip in run_subtest()
 
-The reason for retaining the descriptor is that a failed pause is not
-necessarily a failed transfer. Hardware can finish receiving before the
-provider publishes DMA_COMPLETE. At that point pause may fail because
-there is no active transfer left to pause, while the cookie still
-appears incomplete.
+...
 
-Treating that combination as fatal can discard an otherwise valid
-receive buffer and disable RX DMA until reopen. The current approach
-tries to preserve both the received data and the ability to continue
-using DMA when the failure is transient.
+> Would it be better to explicitly probe for BPF_MAP_TYPE_ARENA support
+> (similar to libbpf_probe_bpf_map_type(BPF_MAP_TYPE_ARENA, NULL) in
+> test_verifier_hmul_arena() in
+> tools/testing/selftests/bpf/prog_tests/verifier_hmul_arena.c) or handle
+> unsupported map creation specifically, rather than catching all EOPNOTSUPP
+> errors from bpf_object__load()?
 
-Without a successful pause or reported completion, the consumer does
-not yet have the stable receive snapshot needed for the normal flush.
-The worker therefore retains ownership and retries after releasing
-the port lock and enabling local interrupts, allowing the provider to
-publish completion. Once pause succeeds or completion is reported, it
-delivers the data and drains the old callbacks before buffer reuse.
+Will use libbpf_probe_bpf_map_type() in prog_tests instead of
+handling EOPNOTSUPP globally in test_loader.
 
-The backoff limits repeated failed calls, while completion and shutdown
-wake the worker without waiting for the next retry timeout. It does not
-solve persistent pause failure: if the peer is idle and the provider
-never pauses or completes, reception remains stalled. Retaining the
-buffer is an ownership-safety measure, not a recovery guarantee.
+Something like this:
 
-> While a brief retry outside p->port.lock allows an already-completed tran=
-sfer
-> whose DMA interrupt was masked by p->port.lock to publish DMA_COMPLETE, o=
-nce
-> p->port.lock and local IRQs have been released across a few sleeps, any
-> pending completion interrupt has already run. If dmaengine_pause() contin=
-ues
-> to fail while the remote peer is idle (for example, if dw-axi-dmac times =
-out
-> waiting for DWAXIDMAC_IRQ_SUSPENDED and leaves the channel hardware-suspe=
-nded
-> while returning -EAGAIN, or if tegra186-gpc-dma returns -ENOSYS when
-> !hw_support_pause), dmaengine_tx_status() will never reach DMA_COMPLETE.
->
-> While dma->rx_pause_pending remains stuck:
-> - UART reception is permanently wedged until the port is closed because R=
-X
->   interrupts stay masked in UART_IER and serial8250_rx_dma_recovering()
->   forces skip_rx =3D true in serial8250_handle_irq_locked(), preventing P=
-IO
->   fallback.
-> - serial8250_rx_dma_flush_work() holds a runtime PM reference via
->   guard(serial8250_rpm)(p) for the lifetime of the open port.
-> - serial8250_rx_dma_flush() returns -EAGAIN, which causes dw8250_idle_ent=
-er()
->   in drivers/tty/serial/8250/8250_dw.c to abort divisor and LCR updates:
->
-> drivers/tty/serial/8250/8250_dw.c:dw8250_idle_enter() {
->         ...
->         if (up->dma) {
->                 ret =3D serial8250_rx_dma_flush(up);
->                 if (ret) {
->                         serial8250_out_IER(up, up->ier);
->                         d->in_idle =3D 0;
->                         return ret;
->                 }
->         ...
-> }
->
-> Since the recover path right after the loop in serial8250_rx_dma_flush_wo=
-rk()
-> already calls dmaengine_terminate_sync(dma->rxchan) and retains the buffe=
-r
-> with RX masked if synchronous termination fails, can this loop bound the
-> number of pause retries and escalate to serial8250_rx_dma_recover(p) so t=
-he
-> port can terminate the transfer and fall back to PIO?
+```
+diff --git a/tools/testing/selftests/bpf/prog_tests/jit_insns.c 
+b/tools/testing/selftests/bpf/prog_tests/jit_insns.c
+index 52bffe27199b..9c4cbf6807ae 100644
+--- a/tools/testing/selftests/bpf/prog_tests/jit_insns.c
++++ b/tools/testing/selftests/bpf/prog_tests/jit_insns.c
+@@ -3105,7 +3105,14 @@ static void test_helper_calls(void)
 
-Successful synchronous termination would make subsequent buffer reuse
-and PIO access safe under the DMAengine contract. The concern is not
-that termination cannot establish safety, but that this recovery path
-discards the pending data and sets rx_err until reopen.
+  void test_jit_insns(void)
+  {
+-	RUN_TESTS(jit_insns_arena);
++	if (libbpf_probe_bpf_map_type(BPF_MAP_TYPE_ARENA, NULL)) {
++		RUN_TESTS(jit_insns_arena);
++	} else {
++		if (test__start_subtest("arena_zero_off"))
++			test__skip();
++		if (test__start_subtest("cast_to_user"))
++			test__skip();
++	}
+  	if (test__start_subtest("alu_imm"))
+  		test_alu_imm();
+  	if (test__start_subtest("alu_reg"))
+```
 
-A retry budget would make that an explicit, potentially lossy recovery
-policy. It would not distinguish a permanent failure from a transient
-one. However, continuing to retain ownership indefinitely also fails
-to provide useful reception when the provider cannot recover.
+I will send out v2 next week if no more comments.
 
-The Tegra186 case should also be distinguished from a transient timeout:
-advertising cmd_pause when the hardware cannot implement it allows
-generic 8250 to select a DMA configuration whose requirements are not
-met.
+Thanks,
+Tiezhu
 
->
-> [1] https://lore.kernel.org/r/20261029222734.3086943-1-rrangel@chromium.o=
-rg
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102-submit-s=
-erial-8250-dma-cancel-v1-v9-0-9159caade148@gmail.com?part=3D7
