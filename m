@@ -1,82 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793801722;
-	b=nILPmXU+yaBZFV5SXvV2qhDgwmpn3X7AZVl52AdtUsvs9X+4CHHuXO+2JFbhCb8QaTuq
-	 8GPn13iLpmIOqNUl/Wnh7B+AiY8cki06VIjwEiTTGRn41I5LJU2ATu4i1z3522PPA81OM
-	 0UlmbmaAp6lpKGfAcrblhdeOdTTsIpYurd4DcNgpMEZam1RGlU5kG3RD3NQHYqUhkXUPH
-	 qDNHqzhnaYijahK3dFk83YXg0MiPm4VFaAP3QbmsoXL/xskBfnAd/Mgzolv26B8bfHdR8
-	 UmAfYSBHIeRd779G4izX1h2BRrBnl3dXSvRSarcDaIfU91oy0bgR5YX1kpFf58CZldw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793801722;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
-	 X-Proofpoint-Reinject:X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=P9mDSptb20RgCYQgJTchrS9a945O7hKBF0Rro4rOWTo=;
-	b=mkOGHStASsaCxcj59e1ROmeW6EpZdPss/95G2aTX35p+tYkEEeLEV3npapV25RZACJmr
-	 XTpnv+g4PsvPZdgPh1Wh0NO71hJFZ+sQzIGARrFQOcQ2cSLbC/+8H7J5ee4MKIyn9foES
-	 DEVCojK5vKDGGdXO1hxRH3F4xJhBupNaobZa4UI915B0Ulcjm9zayE9wVKFAQt14bGRaJ
-	 h9yJhbzyuDpEbRxqe4np68+QIKpeXpxLD0Eb6dVvC1M9LftJzZkqAEycJGI3BiTUNLtPP
-	 WTrVcnr0Z6WzrgOPYBqN2PPwzlR4tsbA8ENdCKj5WzmnFptEc/c+/CxFyemwVUFcv5g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qXPP6i3r;
-	arc=none smtp.remote-ip=148.163.156.1
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793801835;
+	b=xls3J3d9afLfZdbv0uJ5zrHRhzKT+871AhSWT5zBj9wItORkhTMNf7cHoIyqGXS31iHG
+	 AMf5AwSz/pIG+D/RzBzkAxbwfyokKOkhlzD4dMiYa80AMttD0LpuW6o6vMyQvFeK/gpNs
+	 A0GY+Kz3X+tFPmK1C9l60fKWF2LXjvFc6PySh/1ybOJ+rbM3wZTfo+x5ZXf+FwcR87mf4
+	 0Ob2kTZ9I9KJyRSBWz64ZI5wu0tKD/vu9U7inhMTeomYXdE6ePn8zwXu71qZ24HuotSdN
+	 UkGtaGIbVvtM1RaPk6Q0HBrvtTuDDYWIU398EI+6ONXnESp9zFRdNbo70akC7/5IZlw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793801835;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 Content-Transfer-Encoding:Content-Type:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=x6eOE5HgDH7HMZUvFew1+c5kaVLU+8xGzayinkHjdB0=;
+	b=WyqUQCCkVed/LK7ssMl0p16LykpInWLHndv3Ax/Ii4ZX1+hgQC33GJLrfSnqcr3qi7ZV
+	 3fyIiXzkCxWd8LNSAMe0nEVmqyV58Vm5wrs5IMWb3vtdkiutHw+nWZ6YvvmK4+tvLPFFi
+	 kul1XpwJUpLYFPxbHyfUBzkLDUl9RnzgY6cex4p/h8DKRGtKKNSsx70K+t03mX7wMGjj4
+	 +RxnljN4HI4AgyzHRkiC938hdnPO9nPUMsIz/SIxjCEbpSDGbFMIkTupkYIf5Ub33dOJ+
+	 29cOD6aHqYl4eDLTprrDwgrPWZwIPab01koN5a9Ja6WNI1u/bDLOr1wD4bHMQNKS5hQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Qzs3qkLi;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.18
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010018.outbound.protection.outlook.com [40.93.198.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D53F606A32C
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 14:15:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D53F606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA26A606A330
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 14:17:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA26A606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qXPP6i3r
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A4BiRNs678715;
-	Wed, 4 Nov 2026 14:15:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=P9mDSp
-	tb20RgCYQgJTchrS9a945O7hKBF0Rro4rOWTo=; b=qXPP6i3ruv2affUoFtrfzq
-	HuEW1b5mLRug73tqD2HLfBcI2e4tL8C2A6K83bmxObDpthiIfT6l9fihmm5N/Lhu
-	RRVh2qsKECHYHyaSdqC/GdRN70u0G0A4jBQqJ4WdjSRwJOzx/vCYRFz0uoQHGba8
-	QM3sFMGThzeX+Lhqu2RCpSABuLRGN+anfs8ZpJwky+YLhbYqi2GKXBdVwjsK5zs/
-	HHZCNr4oFbNNu85i5/KehGpRsN/p9kqGbyoieSBWuiuwpzod0floXhmmvle1Xivc
-	eRCv2pqNxPQ/zly9QzYOujeA+dylA9j6yLJtHp6ToPzjGm+v1oH+6yuDeJw4cw0g
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn7u3ma5k-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 04 Nov 2026 14:15:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6A4BaoKh2895009;
-	Wed, 4 Nov 2026 14:15:02 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hqsf5avda-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Nov 2026 14:15:01 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6A4EEwNR50594096
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 4 Nov 2026 14:14:58 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1AB312004E;
-	Wed,  4 Nov 2026 14:14:58 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 82A382004B;
-	Wed,  4 Nov 2026 14:14:50 +0000 (GMT)
-Received: from [9.43.115.84] (unknown [9.43.115.84])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Wed,  4 Nov 2026 14:14:50 +0000 (GMT)
-Message-ID: <ac2eaf0b-10bf-4f58-8c9a-fd195ff569ea@linux.ibm.com>
-Date: Wed, 4 Nov 2026 19:44:48 +0530
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Qzs3qkLi
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eMCTD5utsmKmewtjiVrqSuDOdFCFfZNBj2ry9BD/7ZnpcsPfAX0lvRTTkl+5dIMg1bIHAl3cU589zi2kiMqBwxaoMWzhuJMKsWJw+O6BJP1Aq/aYIuZWNI0jNI5e2jrSXCL6kdhZKCcRFXydeLhEqIxb+FTiEY2VamFP8vnozMdwWPXRz7TswDIlBN3evH8WLEJz+lcDdkJX0OTFQ7JriqRC07hA6XLMkisdJHx9FrRFGxV5LQiNiWD+uWCvA3hFekhGnep9Wzsz0u2bLy2jJSqNwcJB6XJVfx4cwQF6NUq//06XfE/Est13xnwouhqjYA8gfaAet/gu7W4i6jwL1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=x6eOE5HgDH7HMZUvFew1+c5kaVLU+8xGzayinkHjdB0=;
+ b=QjDRLbCsBvGWKfh1HgOghg5zLUZQVnmDwF7XF1gHnKS3IThe/jijtxpUs4sx4qvZpRY+PI/qyFcnOnLXUAujp7zFzQg1q94dwR8Nwa0Dkx8Al2ep6g7xs6SKJS46BKBTMi/Dz1YSqnRUKHL3fCbMDyz9fbXWtw70LHA4qy2NutBAP5D1YEOUVVvMk5gv1+8lhkDmWwuKH2FrX/eCePhDBeHqUilJGJ9BkT1faQMd7LtNQ4MOZMNV+bfk9+cqGMNyB+QsAJ+FAEcrJmNrEQPYKxRB6sQ02hKrwqLZiwikhHoStTeCA6RivQRJkAWo8fKcKtlVsaKj1w0lK8S5mtCuWA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=x6eOE5HgDH7HMZUvFew1+c5kaVLU+8xGzayinkHjdB0=;
+ b=Qzs3qkLixeHE77rIYxjHhcrUqTJ7vcfaSGS9aR46QK7cHZwanfoG/X49lP5nZB//Cw7km13We+QyD05ITrI5wCk9Pmc5Wl2CxQA/bSq8/zQzSvvSUuBIIqm0wGinoJsYu5frtDtmaOn0TsogpDvrCR9j7GwhET46WPZCSL4THDwjzpQJ9rVW+wFBddtAYBarSezVoJcjZhel7GCxNlSL64AHp7kCRB+4wKt+4mjUoK9RG346kDYiAwdtTClUzTH3croE8o5CFbwEQ0GASA+C0sTzJt3oa6woUeVu2I7rTMuupnfXjoxNwl3dAkEkCPA1TUUwbnv5lX9x+MqLhlvo0Q==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5974.namprd12.prod.outlook.com (2603:10b6:510:1d9::19)
+ by DM4PR12MB5892.namprd12.prod.outlook.com (2603:10b6:8:68::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.569.10; Wed, 4 Nov 2026 14:15:06 +0000
+Received: from PH7PR12MB5974.namprd12.prod.outlook.com
+ ([fe80::f5a5:bbc3:e9da:f8a0]) by PH7PR12MB5974.namprd12.prod.outlook.com
+ ([fe80::f5a5:bbc3:e9da:f8a0%3]) with mapi id 15.21.0569.011; Wed, 4 Nov 2026
+ 14:15:05 +0000
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev,
+	linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v5 7/7] gpiolib: let the character device free its IRQs first on chip removal
+Date: Wed,  4 Nov 2026 16:15:01 +0200
+Message-ID: <20261104141501.15473-2-aambrozewicz@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <qabqccchlj6rz5tki6z3h7py36btm6nepdvlcz6vgbq37enfnl@ez2jmldpo5mz>
+References: <20261103-gpiolib-chip-removal-v5-0-aambrozewicz@nvidia.com> <20261103-gpiolib-chip-removal-v5-7-aambrozewicz@nvidia.com> <sashiko-outbox-195211@kernel.org> <qabqccchlj6rz5tki6z3h7py36btm6nepdvlcz6vgbq37enfnl@ez2jmldpo5mz>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MR1P264CA0204.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:501:57::20) To PH7PR12MB5974.namprd12.prod.outlook.com
+ (2603:10b6:510:1d9::19)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -86,216 +95,65 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] powerpc/crash: Add only the onlined CPU's node to the
- crash FDT
-To: sashiko-reviews@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-        linux-kernel@vger.kernel.org, kexec@lists.infradead.org,
-        x86@kernel.org
-References: <20261104053848.1381005-1-vishalc@linux.ibm.com>
- <sashiko-outbox-196696@kernel.org>
-Content-Language: en-US, en-IN
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-196696@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Zsp4uN7G c=1 sm=1 tr=0 ts=6aeb3de7 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=4K4iQTxZuiMNCueA7y0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 5EBu8d4rtl24D0GkzjZMtIW2Fy7tAs4D
-X-Proofpoint-GUID: BvJ_0unD2b_-CIzkNMMFO6a7aeDscCgA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA0MDA1NiBTYWx0ZWRfXzNAodv1jplm9
- oV2nYfQbx7iLWEWCBTnaPJHdKL81AKGTMHGDYS0MA1MD76w5S2izcJgmSVXYNKFRJBULmm9MAlM
- U3dvXWwi+8m9rmqsQIZeeRHXiud9K4btTrXylyAQionqTNjFl3MJ/6uGAxxLT7Xvyp+TQHqf5tw
- WYTEGM5q4j6hiaVmzIRODVUnX3VPIUKdsFj6MqqVwp6yOyEMR27VnH2rO/QM7Y1NFp2m+uLWD+M
- alLRUEEhoIuNBdaz5IjJeCdeTj4Sc3LvAIifhq8W98MTK7L+X0wJgMFIc5A9RCKRd9aq2gqLpHS
- zDPGmcHXwwUMHYmF2iKvhrHaxennXkKDHrUxRB3UH1z+RLD2iemTL3Ut43dvlzpPWaQNxw4Ud40
- dfffU498p3KyYBGniStnm7UZp38RJrdknINF+QnvkvnRm9Z+zWDSmW0MVjkxlxtdNl6utwyyes1
- 8myPBhw/R0w8gHzEzKg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA0MDA1NiBTYWx0ZWRfX0nocnygZC7Mu
- ljblV3Hwesjt9ErB4TPQCN1om438fN+Cv7jLLPJsVp7s45b98eYCOTVtLOgq8USwvfE78ABsL6r
- 0N5u643nfODZDAf9vf/XV5+G1jA/kF0=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-04_04,2026-11-03_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1011
- impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611040056
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5974:EE_|DM4PR12MB5892:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8956eac6-147e-48fe-6b06-08df3a7e05e1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|22082099003|18002099003|4143699003|56012099006|261026121527099003|261028144727099003|261026140227099003|261022105027099003|10067099003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	kL9D48+cxgJHuKRR0S69vMD0LYoo5Bo3PIy8Tv1LapoavNLco+npNOWrHLy/0dPrKj5vz4ub0ytfZa0qWjB7fX5cno/WE6op8HHuEXlg6Ge7e8/JgBuE7V9a7LAy8Z7QAx12bT5dl4ketSdiPu5xvAps7kP6fvZRsJJ8Z5cMO9njWXn2rbbz/Zm8WDBBhmVLxCPPOl/zPWrCZFFq7v50FIzVsjnPtvKv6vGjyGzNK1DwoatnLhTrNxx7KYt2asQUO9UCOcG6pSBX/FoXCaeiI060Q65An06wsr+pLQo2Va4i5vyUqUGPL03115hypkAp9FY85zLzlTaaojFzu7Pgq+tKS8qc1HaDSP7YBS3oWck1Pj34C+JXVLSxTwBGre2rRScNWNTuic8mYPp7LPRCPEXfQG+rP149eFFomlMXVkp8pZ3MBzQEYYTJcUVKahyb6aTht/hgvemjJC4mq17spJNKBmqUPcb9sLHsZNB9dZNM0f+vnGWgWlH3vzhe4LOW1OgLFHGNRiznse3t5vWJ1PkKzO0XqpdMBNG7v+NlR4Qc78En828W1m+p6wHMZd71Z92HpHQpd0XX5AcN+qDBA5xLSxd8X6UIm7g0mWfOt/J44XTWGsnh+UvfzD3usam7yNAXh5K+LqnJ622cyYGxVhJE5AdEkfaRTFLJfMIyoZ8=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5974.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(22082099003)(18002099003)(4143699003)(56012099006)(261026121527099003)(261028144727099003)(261026140227099003)(261022105027099003)(10067099003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?CUsdkcRU+YBDenAp4DEP3hMLWxheeLk0GkR9W5yoscHjvTv/jPeGcnVAuM56?=
+ =?us-ascii?Q?A/Lsd+vguyJAIbEm1oHBT56OxjvBQUDdEbNg7i+SeQye9RNhfEaYsyIdakNw?=
+ =?us-ascii?Q?+jmjyxMkLzzw8hdvHRSQf/h/2mPzR4NP+ueMgCkinNPvZfOFDOPaLIJJb93L?=
+ =?us-ascii?Q?2z4OjCMX9XVFUAnotSL6jCVdnrthrY7o7E9vTqMofCjyuKW2bc9PuNFMc0UC?=
+ =?us-ascii?Q?yQD51MRNAa2ZftORp6jgjhyirnbAKEP6RTGQ+Pdxmnuwp8HuX3a7Z5m1x+xg?=
+ =?us-ascii?Q?qzSA6QycjMgWRCa85cpeRC/wnuATDPf6GI47aP2owmYQ+W/1bQXe58vv3tF8?=
+ =?us-ascii?Q?6DGkaH2sex36eSfEM9lvzX8h0zuH/+PUxcwtMs4fXqRlYnfXXCNBg9sEvDV1?=
+ =?us-ascii?Q?eY//Tu+IwLrSvrRVo7u7Y8qRICvXoBoTKDLJUH2Y/hJwxMsmJIPdINg4+Jl3?=
+ =?us-ascii?Q?i8RsoZtdAqF9s3TRJVLz1NOxuRj6BdfWruJo5TcaWyt6Sm21UZSZOucRzzbv?=
+ =?us-ascii?Q?ab2055/fNrewpDLV7GgIRVf4XYdzrxsVmi/xkPTA1gqDqsShdc3Vk45yRtOh?=
+ =?us-ascii?Q?npXiKZIG9i2zf8Y+2Ca47Lg1pdbFqmfmpGwpA7S+SBRtsMgVXyMO9k29h6cb?=
+ =?us-ascii?Q?/iHWweDS5rsx2gxZYB51lCj9nqCscGcJJjk8QmlRwfQY+Fwma3KAtl6QghGy?=
+ =?us-ascii?Q?gEQu7o3UwdLRQ51nZj/YREVBrDtDSgj4rH9eDcDjC3ShXZ+38W1XCKud2Akw?=
+ =?us-ascii?Q?TWQgSoChyRpJQcWt1zEWWLVBmkb/0iN7dfpRkHFsrC85GBhAZ6kg/UXdpZ32?=
+ =?us-ascii?Q?VUoRbC738D3Ab1QuX0l9XAHq7qkJOPVFri53BI8tkkAsPcy/cMr5Qzum4cwJ?=
+ =?us-ascii?Q?KiRUhifahc231bIppxSGNoCZUcJ+wuVijOLnr4H15TwBSCY5XvHVATVwoQ8i?=
+ =?us-ascii?Q?R1iKz8qb2jnaeu5lNIE6YE7jaVetHaWpq/qtBwsrHpfM7eYc9fHZwdgeZQZ4?=
+ =?us-ascii?Q?nWX5DTns08XET8z4fbCf5qvTH4FpswZ8tGdrAFYSiJ663SLBeQ2Y40AODv1V?=
+ =?us-ascii?Q?iJVvrIssO5iw1OHoifVXtUvcmGOIA4FrUZLf6zdMU/Oplznku5uDo4AuDPeS?=
+ =?us-ascii?Q?jwUEccWNl1cifMuGPqifQSWt0BaB3Nh+vPchawSY6uW1OOm7JYYxtEJ+R1ly?=
+ =?us-ascii?Q?UPxW1/py4abVhtpVilVJng0Z5SfyFwNalA+bPc3TlglrWosKrsg9J9Yc2w9v?=
+ =?us-ascii?Q?ICeNHqk81yXRxHNzilm5DAp1owWMjr/S0EwDlf8e0XDQZloIx1Zxk+PslrCR?=
+ =?us-ascii?Q?7xamBbp3gz/7FmeHOQtxWimCBwR2oC2tKoOA16vQXDLScCQzoIqQ8nDeqnGl?=
+ =?us-ascii?Q?2H7ZepebHhuR/Lws5xRgat4gkN3bO2xvClGdOI6onoD+OdfIofzMSPrlb+WU?=
+ =?us-ascii?Q?nEjfkDi3L5bVwYngDN6ZHzvVm2FehxkfhrR/fg8WPCt31XVIowViSVtZLIKc?=
+ =?us-ascii?Q?CXLi6KmfIo5zI31Dj47wr2G0+uuSfAXZhJtBqSuYEDIG1c8MT+cO/d8iuSWt?=
+ =?us-ascii?Q?0LTXLGw6p9tHuhJSUZidJNIuYKtZ+8poWn0DTmo4uAlNEOpUI4k1o1qjrU20?=
+ =?us-ascii?Q?EZoHSTRQDfF8nMr+cufAqR6fJ+ZIQEIltwUfbjliX8u/dlSkS3wUolnOHtdM?=
+ =?us-ascii?Q?PKgcII1d7Z2w7IS+vk1pxyqdkNETZAIHs3wXkERNDr0Ig1Vtm33MlkJWAW05?=
+ =?us-ascii?Q?j5Yog0vsxQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8956eac6-147e-48fe-6b06-08df3a7e05e1
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5974.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 14:15:04.9704
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: trSGBgPhYL3dRjg7beW6n35E0Udo4w8KADPj5GCb9jrKPwfQBfp7EDKauHTrTMtULWa075LyYeLdK3/DlhNH9Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5892
 
+On Wed, Nov 04, 2026 at 03:00:31PM +0100, Bartosz Golaszewski wrote:
+> Will you address this in v6? I think it's good to go otherwise.
 
-On 04/11/26 11:22, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] powerpc/crash: detached DLPAR CPU nodes accumulate in crash FDT in update_crash_fdt()
-> - [High] powerpc/crash: incomplete CPU subnode left in FDT on fdt_setprop() failure in update_crash_fdt()
-> --
->
-> commit f91f7035e04400925af984e21ed910579118bae0
-> Author: Vishal Chourasia <vishalc@linux.ibm.com>
->
-> powerpc/crash: Add only the onlined CPU's node to the crash FDT
->
-> This patch updates crash FDT handling on CPU online events to pass the onlined
-> CPU number to arch_crash_handle_hotplug_event() and insert only that CPU's
-> device node into the crash FDT if it is not already present, rather than
-> rebuilding all CPU nodes via update_cpus_node().
->
->> diff --git a/arch/powerpc/kexec/crash.c b/arch/powerpc/kexec/crash.c
->> index 775895f310379..ca37006bddeae 100644
->> --- a/arch/powerpc/kexec/crash.c
->> +++ b/arch/powerpc/kexec/crash.c
-> [ ... ]
->> @@ -584,32 +585,71 @@ static int get_fdt_index(struct kimage *image)
->>   }
->>   
->>   /**
->> - * update_crash_fdt - updates the cpus node of the crash FDT.
->> + * update_crash_fdt - add the node of the onlined CPU to the crash FDT.
->>    *
->>    * @image: a pointer to kexec_crash_image
->> + * @cpu: the CPU that was onlined
->> + *
->> + * The node is added as the first child of /cpus, the same position a node
->> + * attached to the live device tree takes. Nothing is done if the FDT already
->> + * has the node, for example when an offlined CPU comes back.
->>    */
->> -static void update_crash_fdt(struct kimage *image)
->> +static void update_crash_fdt(struct kimage *image, unsigned int cpu)
->>   {
->> +	struct device_node *dn;
->> +	struct property *pp;
->>   	void *fdt;
->> -	int fdt_index;
->> +	int fdt_index, cpus_offset, node_offset;
->> +
->> +	dn = of_get_cpu_node(cpu, NULL);
->> +	if (!dn) {
->> +		pr_err("No device node found for CPU %u\n", cpu);
->> +		return;
->> +	}
->>   
->>   	fdt_index = get_fdt_index(image);
->>   	if (fdt_index < 0) {
->>   		pr_err("Unable to locate FDT segment.\n");
->> -		return;
->> +		goto put;
->>   	}
->>   
->>   	fdt = __va((void *)image->segment[fdt_index].mem);
->>   
->> -	/* Temporarily invalidate the crash image while it is replaced */
->> +	cpus_offset = fdt_path_offset(fdt, "/cpus");
->> +	if (cpus_offset < 0) {
->> +		pr_err("Malformed device tree: error reading /cpus node: %s\n",
->> +		       fdt_strerror(cpus_offset));
->> +		goto put;
->> +	}
->> +
->> +	/* Node already present, e.g. an offlined CPU came back online */
->> +	if (fdt_subnode_offset(fdt, cpus_offset, dn->full_name) >= 0)
->> +		goto put;
->> +
->> +	/* Temporarily invalidate the crash image while it is updated */
->>   	xchg(&kexec_crash_image, NULL);
->>   
->> -	/* update FDT to reflect changes in CPU resources */
->> -	if (update_cpus_node(fdt))
->> -		pr_err("Failed to update crash FDT");
->> +	node_offset = fdt_add_subnode(fdt, cpus_offset, dn->full_name);
-> [Severity: High]
-> What happens across DLPAR CPU removal and addition when update_crash_fdt()
-> only appends missing CPU nodes and never removes detached ones?
->
-> On pSeries, dlpar_cpu_remove() offlines the CPU threads (where
-> KEXEC_CRASH_HP_REMOVE_CPU is a no-op in arch_crash_handle_hotplug_event()),
-> pseries_cpuhp_detach_nodes() detaches the CPU device_node from /cpus in the
-> live device tree, and pseries_remove_processor() clears its bits in
-> cpu_present_mask so those logical CPU IDs can be reused.
->
-> Previously, update_cpus_node() deleted all existing cpu subnodes under /cpus
-> in the crash FDT and rebuilt them from the live /cpus tree, purging any
-> detached DLPAR CPU nodes. With this change, detached CPU subnodes remain in
-> the crash FDT indefinitely:
-
-As mentioned in the previous paragraph, during the CPU offline path,
-crash handler doesn't update the crash image and returns early.
-update_cpus_node() is not invoked.
-
->
-> 1. kdump_extra_fdt_size_ppc64() in arch/powerpc/kexec/file_load_64.c only
->     budgets extra FDT space for possible_cpu_nodes concurrent CPU nodes:
->
-> 	if (image->type == KEXEC_TYPE_CRASH) {
-> 		possible_cpu_nodes = num_possible_cpus() / threads_per_core;
-> 		if (possible_cpu_nodes > cpu_nodes)
-> 			extra_size += (possible_cpu_nodes - cpu_nodes) * cpu_node_size();
-> 	}
->
->     When a CPU is DLPAR-removed and a CPU with a different DRC index is
->     DLPAR-added, retaining the detached node alongside the newly added node
->     exceeds possible_cpu_nodes and causes fdt_add_subnode() or fdt_setprop() to
->     fail with -FDT_ERR_NOSPACE.
-Behaviour is same as before.
->
-> 2. Because detached nodes remain under /cpus in the crash FDT,
->     smp_setup_cpu_maps() in the kdump kernel still iterates over them and
->     assigns logical CPU IDs up to nr_cpu_ids, which can push valid present
->     CPUs past nr_cpu_ids.
->
-> 3. If the same DRC index is later DLPAR-added again via
->     dlpar_configure_connector() with updated properties (such as
->     ibm,associativity), fdt_subnode_offset(fdt, cpus_offset, dn->full_name) >= 0
->     matches the stale node and skips updating its properties.
->
->> +	if (node_offset < 0) {
->> +		pr_err("Unable to add %s subnode: %s\n", dn->full_name,
->> +		       fdt_strerror(node_offset));
->> +		goto out;
->> +	}
->>   
->> +	for_each_property_of_node(dn, pp) {
->> +		int ret = fdt_setprop(fdt, node_offset, pp->name, pp->value, pp->length);
->> +
->> +		if (ret < 0) {
->> +			pr_err("Unable to add %s property: %s\n", pp->name,
->> +			       fdt_strerror(ret));
->> +			break;
->> +		}
->> +	}
-> [Severity: High]
-> If fdt_setprop() fails partway through copying the properties in
-> update_crash_fdt(), should node_offset be removed with fdt_del_node(fdt,
-> node_offset) before breaking out?
->
-> Leaving the partially populated subnode under /cpus has two consequences:
->
-> 1. Any subsequent update_crash_fdt() call for sibling SMT threads of the same
->     core (or a later re-online of the CPU) sees
->     fdt_subnode_offset(fdt, cpus_offset, dn->full_name) >= 0 and returns early
->     without populating the missing properties.
->
-> 2. If the device_type = "cpu" property was written before fdt_setprop() failed
->     on ibm,ppc-interrupt-server#s and reg, early_init_dt_scan_cpus() in
->     arch/powerpc/kernel/prom.c will match the partial CPU node during kdump
->     boot, get NULL for intserv with len left uninitialized, and dereference
->     intserv[i]:
->
-> 	intserv = of_get_flat_dt_prop(node, "ibm,ppc-interrupt-server#s", &len);
-> 	if (!intserv)
-> 		intserv = of_get_flat_dt_prop(node, "reg", &len);
->
-> 	nthreads = len / sizeof(int);
->
-> 	for (i = 0; i < nthreads; i++) {
-> 		if (be32_to_cpu(intserv[i]) ==
-> 			fdt_boot_cpuid_phys(initial_boot_params)) {
-
-Similar errors on update_cpus_node() can live the crash fdt
-inconsistent and result in crash kernel boot hangs.
-
->
+Yes. For v6 I plan to have gpiochip_remove() tear down the shared
+proxies, so their character devices free their IRQs, before it
+force-frees the remaining ones, and to test it with shared GPIOs on a
+device tree guest first.
