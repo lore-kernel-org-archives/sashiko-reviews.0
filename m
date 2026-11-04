@@ -1,104 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.70.43.100
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793787762;
-	b=I4fKQNkPjPXn1u5Gmj9kV7YWPteZNRycKgiSOp0SkN6NgxZvGbrDUVW2HInlFH3qsbBx
-	 3lq8lLbu40KUQhxmoB09wj5Vl4TBGDm3NJp/oX3XQ0kAmFz9Ci/CGkjVwHD9teD8RgW4i
-	 uwHHQyom8GnJP9Tz0D/kpirezYSevHAUKCZPtKTnA7pPz/kAzPJsLKCUlDZc9+2Nt4fKb
-	 dO80+NLC9xSP4gm1FJ6ZZEVuKXcRV9TmNSwvMaftUra6UgJrv6TLAdrdR+LCvvdxO3TUG
-	 0m59qA6dYdWcdu969ZDB4Sv4CgiriscoDIhpSO8dS6UbRBc4VmFcXKYKyyC78nk4lvA==
+	t=1793789552;
+	b=OBW++3OGHusjcth9xlxXju7pbCMfSb1OXWIdFD+EeKKLZ07HX9eUFc9L7cCC94Eo6Gbk
+	 l1jAkJHozkUjyYaROxLuCBXC95bRKHkYZhQ28NfHM34K55Xc9ZZcnp4/A9w8G4SKVDnR3
+	 cP7l/owEhwBkqvXZ0SR71cLjA+lbGfv9/PIro6IAp5RnanZO8sgta3bCGIo/FUq55Nxhj
+	 P5TwA9fehEN+MiGYmEl4/4OQiZGkNs3qHlfiKTSXPWEYKFOVnENWxkazZoHj5O1apFY/m
+	 NOWYL1qUOdypjIlV0I/sO+UnD4S+/QRby0Wbv/FACcrZIHo7Sv/QsQpiQF6w0dXCI4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793787762;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-	 X-Spamd-Result:X-Spam-Score:X-Spam-Level:X-Spam-Flag;
-	bh=zs89ZAnRU7u7fNPI9JMnf/JQdJIJ8e7hYCupNJEz1H0=;
-	b=o6rN+0slDMOHbtkR7JM8tNgT665z10M8sL3+OClRugvJJdroO+AjxUAfNMHs977Op3Gt
-	 Y/71c81KrHkXvU2zeB0WcC/Eg+6zL18oxnMFGBxYW5Lngh3TwwmlLS3LiWwrpu59cNgsD
-	 UYuju6mOcci9d3tGR5Hf2Wr/U7b15Fsrce2qw0WKNGJNw11g1veeeMxQ609rX2yXN0BFN
-	 /xSgLAVjC2hes3MebSo5/LYAFR2DIHsmhFrqjaCPJLL6eyr0OI7Njq/c3R9sq+/1/Z/Sn
-	 UpohkNUlcyZWCHMkvgRsK8kXZoUa/TGOBrsEqwwAZeclS1w1Rl0yYXNRUdoakLlpJ2A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793789552;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=gPOtSnUHV51wT2vUVKP1LPX/njpqcDKUkh4XI/B1K50=;
+	b=Yhwr25Nt8SLeIeqpzgHr/7UqaY9fMfNGSlMTlC3IXmrswLFoCK7KBJMiZ/Kd5l40evkA
+	 /+TxiFhIRUvnUT3/zm36w7JE569FFHEn0HcwOHpguSx5UKPf/1kKLQklvjQJYjDRobyPD
+	 BRlQzjfoDMf7G1FNs7u6iSZp4qO8cC6YpbuN1W6WnZ7vH2OAiT54josKQtdJzn8KHHLPi
+	 /V5fsyBJE79g/UqQwVy9YCV4aY42Do1bmN8/JWSZ975+ad0BgV7T9Pe2gfAeG2W3jo4hg
+	 M5Kq3KhGACtTahauLsMmVmnLS7oHCOboeH83HEYZ8CDtYvkxEA9P4uInzbaIN+c+oKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lIqW8eSG;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=z0YdSJGh;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lIqW8eSG;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=z0YdSJGh;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dmarc=pass header.from=pm.me;
+	spf=pass smtp.mailfrom=pm.me;
+	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=Wx7SRqN3;
+	arc=none smtp.remote-ip=185.70.43.100
+Received: from mail-43100.protonmail.ch (mail-43100.protonmail.ch [185.70.43.100])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0ACF606A31B
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 10:22:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0ACF606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47FD606A31B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 10:52:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C47FD606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lIqW8eSG;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=z0YdSJGh;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lIqW8eSG;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=z0YdSJGh
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 1F34D21FBC;
-	Wed,  4 Nov 2026 10:22:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793787760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zs89ZAnRU7u7fNPI9JMnf/JQdJIJ8e7hYCupNJEz1H0=;
-	b=lIqW8eSGG/RrurF3PqsLcLYd4Y/cWy3HNf8HnX1ftX3deKcgYcx0KrKhQxwetL/2ntI9ul
-	xa5FxpVd2XC1eyel3TRjSDR1a+Gr6s/eOhQUkEW96/rTq8SvTrx47J06IlyDr5yzYcpBga
-	/whwKkFM+FaB38G4wTyDyNPSjMFtsGM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793787760;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zs89ZAnRU7u7fNPI9JMnf/JQdJIJ8e7hYCupNJEz1H0=;
-	b=z0YdSJGhEoQUayOwoADqTrcCgKbD3U6MCsJNIFs7WZPTNzS9OHslckXy5cgThSao7YGbX4
-	33dpTRUc1ewtDZCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793787760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zs89ZAnRU7u7fNPI9JMnf/JQdJIJ8e7hYCupNJEz1H0=;
-	b=lIqW8eSGG/RrurF3PqsLcLYd4Y/cWy3HNf8HnX1ftX3deKcgYcx0KrKhQxwetL/2ntI9ul
-	xa5FxpVd2XC1eyel3TRjSDR1a+Gr6s/eOhQUkEW96/rTq8SvTrx47J06IlyDr5yzYcpBga
-	/whwKkFM+FaB38G4wTyDyNPSjMFtsGM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793787760;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zs89ZAnRU7u7fNPI9JMnf/JQdJIJ8e7hYCupNJEz1H0=;
-	b=z0YdSJGhEoQUayOwoADqTrcCgKbD3U6MCsJNIFs7WZPTNzS9OHslckXy5cgThSao7YGbX4
-	33dpTRUc1ewtDZCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C8503134F0;
-	Wed,  4 Nov 2026 10:22:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id g0GvJ28H62o+bAAAD6G6ig
-	(envelope-from <dwagner@suse.de>); Wed, 04 Nov 2026 10:22:39 +0000
-Date: Wed, 4 Nov 2026 11:22:34 +0100
-From: Daniel Wagner <dwagner@suse.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-Subject: Re: [PATCH v2] blk-mq: use a housekeeping CPU for passthrough
- requests on isolated hctxs
-Message-ID: <623dff5b-f2ff-4ab5-a6c7-196f5b203919@flourine.local>
-References: <20261103-nvme-fabrics-isolcpu-v2-1-95ec70d58254@suse.de>
- <sashiko-outbox-195610@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=Wx7SRqN3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1793789549; x=1794048749;
+	bh=gPOtSnUHV51wT2vUVKP1LPX/njpqcDKUkh4XI/B1K50=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Wx7SRqN3+anNwZ/hh06lt+MzYXXH6s4gs3Qvur0o1xHnpktZCbiLYkAnRo+QMlEb4
+	 pNg9bzQilE0T35bHA/ABEqMHAGBr752Vlna5UBwmKvZGAWWR5Bg3jym70BXQ1C78NZ
+	 b0gO5MM4f3z5EEW1M5efusN7X9NEd5iSl+gqs2Z9i/b4L2jecRhvY9m71eo8fLbIrw
+	 ymcdHJUFwML2KEEKUkgG4oYmfojVDx9WPVNBZz2yAL1awZwuB+fkedpZO9Rh03N60/
+	 VrpO/ogBJOZDcaW9ou89ALiK5XXaZJPZFBtae70eDZkZabIeM7LzUReGCb8tk246Ok
+	 7mwcopSQZcRYA==
+Date: Wed, 04 Nov 2026 10:52:24 +0000
+To: Takashi Iwai <tiwai@suse.com>
+From: Sinan Turunc <enscrpt@pm.me>
+Cc: Jaroslav Kysela <perex@perex.cz>, linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] ALSA: usx2y: Reject buffers smaller than two packets
+Message-ID: <20261104105205.1099-1-enscrpt@pm.me>
+In-Reply-To: <87h5hxuk1w.wl-tiwai@suse.de>
+References: <20261103132247.713-1-enscrpt@pm.me> <87se1hukq1.wl-tiwai@suse.de> <87h5hxuk1w.wl-tiwai@suse.de>
+Feedback-ID: 48393780:user:proton
+X-Pm-Message-ID: 04a17c8e6687e097ebd8ce3c89eadd1c106a7b49
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,45 +64,44 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-195610@kernel.org>
-X-Spamd-Result: default: False [-13.30 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ARC_NA(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_TWO(0.00)[2];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -13.30
-X-Spam-Level: 
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 03, 2026 at 03:22:29PM +0000, sashiko-bot@kernel.org wrote:
-> Should this check !blk_mq_hctx_has_online_cpu(data.hctx, nr_cpu_ids) (or
-> ensure blk_mq_map_swqueue() sets BLK_MQ_S_INACTIVE when an hctx has no
-> online CPUs mapped)?
+On Wed, 04 Nov 2026 08:34:19 +0100,
+Takashi Iwai wrote:
+> ... and I noticed Sashiko warnings now, so dropped again from the
+> queue. Could you verify whether those complaints are valid or not?
 
-Yes, this is correct. I'll extend the patch and add this to the commit message:
+Yes, both are valid.
 
-    When all mapped CPUs are offline at queue setup, BLK_MQ_S_INACTIVE is
-    not set, as only the CPU offline callback sets it. The
-    blk_mq_hctx_has_online_cpu test catches this case. It uses the queue
-    map, so it also finds online isolated CPUs.
+The critical one: usx2y_urb_play_prepare() copies a whole URB of
+nr_of_packs() packets out of the ring buffer with a single wrap, so with
+a buffer smaller than one URB the copy reads past the end of the buffer,
+and on a later URB the length goes negative and memcpy() gets a huge
+size. This is pre-existing. The stock constraints allow a buffer of two
+1 ms periods, below one default URB of up to 200 frames. On 7.3-rc7,
+with 48-frame packets, inside the 43 to 50 frames the driver accepts,
+and a 100-frame playback buffer, KASAN reports:
 
-    When the last mapped CPU goes offline, the CPU offline callback sets
-    BLK_MQ_S_INACTIVE while the CPU is still in cpu_online_mask, so
-    blk_mq_hctx_has_online_cpu still finds it. The BLK_MQ_S_INACTIVE test
-    catches this case.
+  BUG: KASAN: out-of-bounds in i_usx2y_urb_complete+0x79b/0x1ac0
+  Read of size 18446744073709551280 at addr ffff88800e6b02e0 by task vhci_r=
+x/80
+
+v2 did not cause it, but its two-packet bound and its comment did not
+cover it.
+
+The medium one: v2 read usb_maxpacket() in snd_usx2y_pcm_open(), before
+usx2y_format_set() selects the altsetting in prepare, so the bound could
+be stale or 0. The capture copy stayed safe through its per-packet check
+against runtime->buffer_size; only the bound was unreliable.
+
+v3 replaces the byte bound with a frame bound of two URBs,
+2 * nr_of_packs() * 50, which does not depend on the altsetting, and
+adds the playback guards as a separate patch. It follows as a two-patch
+series. Tested on 7.3-rc7 with an emulated US-122: buffers below the
+bound are refused at hw_params, and 400-frame buffers stream in both
+directions for S16_LE and on capture for S24_3LE, with no KASAN report.
+
+Thanks,
+Sinan
+
