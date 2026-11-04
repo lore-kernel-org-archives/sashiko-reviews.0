@@ -1,87 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.54
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827336;
-	b=Oya1OKLpKBE3y8R17gQS3Fbz6UZtrQ6DcDgiK7+POrMx1TOM4eHY30qZmMIH4vWJi88V
-	 m1J1rVuaP183TUmsbzs+b26wQKdf9c/kpioZYzsb0NtpkRXlHLOcm3z5HCPgVZKT9K14u
-	 emz3Yl3bFxhhPMVo87suX65t8c4CNZ1IwLe57u5uDCdkknsx+5kuCj5zbVlOQPDepOd0p
-	 T6AxkcfmrJvLPAhytXUsThcZg2C5TlTCqjUFQnUI+2ZvsSy5t4D8USos8NRElLbA1WAe+
-	 9vMX208delqjZBYBTMl8Sjm3zmis+OP1vBhtJsJcwNhp6BQbriFwmlVduIzQSVH3SYQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827336;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=+5/lrUfYBVKtk8LFUOYPI+i/daG7iBFygT1vkGG8Etw=;
-	b=IGGm5SJYivxv44619mZL4dKrXkY9ypp51TQFJxbsK7h6zlRAdXFmm+bZeVHWhHn1nwPn
-	 srvNueEP2eG8u4oF+UBpMDwSZdQ2snxAVK6Femw4m/Ka3yO96ttBnrv/Hb24hREceJPv/
-	 70/0jf5lpEYv0GjmnbF+yNoK5GdDYzvISjKOgU0uhcGc3+iRQuDQkWmQFGVV/h4hPtcWH
-	 wLelPfCwkQQapviG76EWCjjWNYRp/zxMVb5YCxaRf7fZXcUQNJTRi1mQDvRHdRApXUDlj
-	 iOdqIKVM6fiSzTN4ZP8ZDlNB1mzLbVRBx9gdVz6FoN1eCUK7LyEKrTFCAlnBUqrykaQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=riscstar.com;
-	spf=pass smtp.mailfrom=riscstar.com;
-	dkim=pass header.d=riscstar-com.20260707.gappssmtp.com header.i=@riscstar-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=KghzofU2;
-	arc=none smtp.remote-ip=209.85.160.54
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.96.97
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793827469;
+	b=YoK1mGO1D8FSmYk1rAeekPZb0rGXjwHcQfhVnFtlc0ETJ/KD041trSkDd0ZkYwBT3jUg
+	 FgOp+18Zy5U2RNE3BjeXqnvKcFgNnSdgUyTWejDR2jKeYL8SECgy67otzJmBj8aM8GBkQ
+	 HHHLNxzC7SaTbTIVZnxZAndblYLmStid7hAwj7unNJLZklBdMvapKejGFIDSuMNRvkX6d
+	 VG51lKBCpKMsUTpVKQzOmrdhmyDv6EK2zSGNCoqeIb+Nez2MG/bbluNU7tpgOpob9is2C
+	 HnGuOSrb8LCBHAB0yeJ641dDQHsqCIZ1YrkjldY5wCWu4r67XInAHbQpAp0uylJ8sEw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827469;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=ZvbyKWbvjRXfdCahcmMw/zZ48pSDnL9iKfnxz5mk/hI=;
+	b=o/Cv+eqJHIhZE0PqF04RcMvzlXOT6vyXqJFSDJfVCsRUkgp1VQmqAfedRVmWbd0kKi4p
+	 yRBbd5jbYun8kjX7Ailuuy0BCC1ix6jqtrcudH2VCvW6lQm1NgaibfYGdnxU6NyyM8K6A
+	 iG5q1A29qMkwZBZCJDp0gx7Vzdxs90Enn8djFfqBy8PzD8OxR27oCKjfLPFo+2CjdoylF
+	 EBvGk9rmfZeT017xCJ3jXCvp2Nc8VGR6gl73HrYuMxHsdGQY0Nw73jo719jefaypAGXiO
+	 5wVkZYhUTBjJNsVj+XTkXjGFv3NYyvr14j0CeTD8+nK+pn02WeY5MSYAe83utQo2LJg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=atomlin.com;
+	spf=pass smtp.mailfrom=atomlin.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.96.97
+Received: from LO0P265CU003.outbound.protection.outlook.com (mail-uksouthazon11022097.outbound.protection.outlook.com [52.101.96.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729E1606B2FB
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 21:22:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 729E1606B2FB
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=riscstar-com.20260707.gappssmtp.com header.i=@riscstar-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=KghzofU2
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4a76f0cce5fso582406fac.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 13:22:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20260707.gappssmtp.com; s=20260707; t=1793827335; x=1794432135; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+5/lrUfYBVKtk8LFUOYPI+i/daG7iBFygT1vkGG8Etw=;
-        b=KghzofU2jvQwQJykRoYzltbWP3DQ2KyhcjeVVc6TI0gIJLOjl5Wc6qZ0Zz6oMQ7f+F
-         rROqOROV9HAtGRZKNeIlB6vcQT2KsA8wRrcuOnvpistdJLPq5uBLYqStge3IjhcJCeJJ
-         hUxWyTs5bdzZIrqmuFxjglhjCXA0N1+6R1kp5vH5ciZhr+fnyvK6/g75SGZrcD08VmII
-         6+X3EjprI3TY7bjdHJ523CDFygZ+Gja7gHek9wIWKPGJs6Hh1Jik3L4bnwa5plbkQyUy
-         5uSDg+ZGt8tXR+ONvKXzlt1HA/ykqjn7XVgQjn8ciiPmWvRMzDSkH+ousH1ualmTtMYC
-         rr+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793827335; x=1794432135;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+5/lrUfYBVKtk8LFUOYPI+i/daG7iBFygT1vkGG8Etw=;
-        b=2waQpi0HxCvixrOEr2VQUOz/2gtvZ1NgyB61mugJ5cpJrRtR4ePk3eKwPi9LpEfpP8
-         Tt1GsCh4/v0C+e7e6YDj3pz47KLLBZveHd6ZvZEVLqsaZNHmAZhqIa5I7/1hlXLMl4c1
-         Wh8jwQQZCug9qfqcD2XLTdKXrYOOd5uGPgwJA5RGTwQ1kX7nyL2xQnzOWxwQcJlr1iYU
-         9L8coEToee1yhSjsLGqMupiPCOWMTFy1wyq6pUpcbPYTeg1Y1AtGQUxvJoR2bVB2yomF
-         LjhjjtBrwB9ayMoGHt0ALTH+SrNhpKugOgHeu+Ayu6lmVolYWgkKbP3suErFwRLVQofq
-         UYcg==
-X-Gm-Message-State: APuU4Z8i8kA0+npqqzHJ4T8h6wt2+20UBIMCoAahYJJ3AecaqcEqvQuk
-	HWv0Rj9upBXLd8B49SETBjoe/MsRbPeaksrBifiG/80lCuQE40reHIM9blsDjLGvCj/4hLbkzrH
-	26qS/Pok=
-X-Gm-Gg: AYBFou1VprPz61RwJy8HCrzwRX7iB0v80z2KCjvhLqHyyRGJRB/BdNqUetOOa5kUNBK
-	RNLqsdhdgdPETgagoQ9BFWqAZZi7ROAhZJLbKASNRH4IPoKY4IksA4yPr4aTKobfnFZKcRHT/a0
-	7rDpmzFOJQ1+K8U0Vl4j5LRFhSnvBxsVnZ8RECjp4SUq15OaL9LPZi4KpuiJku4UDM4GIiBQVYb
-	WOwT0Fluw3lsI1EU79KgT6yf+Mzf4rHQPqzV3lkfWnIFHgfdOMyMpUGO/LVmk+Hg/hFfrF4nfRb
-	/HmsTWB5xtD5ORDWbPsqRWk4vBiWmqaieeIJi8UfPFSWI/VB61TvM5RCJ/5UZqP0d/b4/7fZnlj
-	cITxIg7gBH/FC7vy+i3MY8znLOy4FXiTuVmFUPqnDkgoe28nOPsrGlC6JFwvunOXNQ+XgT0UsNB
-	NRWvLj/SVXian/U2PUR3h5OwY6p31fA83SxfeaeHt/maQBfnNzDwrt8trZAmDokC6EdAmP4mO4k
-	gwaCJPVTdlPkexY3s8dfHTv7fwr9eGyOdk2Pxq7ANBmP3JpZjLPiK9Xc9fI0b3tG3QaCXK1G228
-	ulSSD45jOABPLq7707HjODWXdrsu
-X-Received: by 2002:a05:6870:899d:b0:4a7:6dc:af65 with SMTP id 586e51a60fabf-4a90761c954mr10824894fac.10.1793827335301;
-        Wed, 04 Nov 2026 13:22:15 -0800 (PST)
-Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4acea61d382sm2928188fac.13.2026.11.04.13.22.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 13:22:15 -0800 (PST)
-Message-ID: <de25cd14-dc54-41e8-a49d-d3da588bb0d2@riscstar.com>
-Date: Wed, 4 Nov 2026 15:22:14 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFFA606BA36;
+	Wed,  4 Nov 2026 21:24:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4BFFA606BA36
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=G6NsO0r4xCNeZX6jUviRajHvXxBhECwlo8UdIoRtyVsYaAW3/6ZTU1ytjUUjl8dtU+hRZ5ZH1GgriFwwWxAwV41mdc7rh8408segnS4icCc49CVK3q1c8RlaPdIcca8skG7kmauyrr1MbcSHSsblllJVIwhuwkQ1FqSwFLPT4Oq8IqZ54N+hp6lJ5klepcOYA0Mk4xyUqp664wmkqjwYShVd4Kc1dCaCezm4vBmdyL6Tb9EEcRPUR7qSWRG1Ni1nra7VgoO4PiYAUdhgSDOr8MVge3iCZstZ8v+jSeFGs0anZz+dLqk08VG7eOxsWGu2QrBFmLDty5hhFKGGfhfp6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
+ bh=ZvbyKWbvjRXfdCahcmMw/zZ48pSDnL9iKfnxz5mk/hI=;
+ b=Cg6tDfhFZO6GU53VHwZmE6miLHANG+kxVHAjMmq83V0anqcR//IFLdvnmrafibIvu9qdtVPNTXUuEM5K5VDYarc+3ywyHVIpSdRDBTASygm11Z3qy6Zw4CxnihdbFpKmTSGgsnrValB6HQvuYg1IzEoRfA1HCXNHputbIQ802SHVqe7XxolAbR5wF1oS2fzBV9wLyS51H4Z/dMnZeqtKtzUaLVUU8AzFT7wqZbcGHCHmvkX8DR5Jhk4aG+C0wwWneeLeK0rLuzhOMujM0TMW6aig6cbwMDoXqnjOgYn6QD7/shmXdPc0y+kYog7j0mWi8AfFpbFcV1hh/xSWg2oleQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
+ dkim=pass header.d=atomlin.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=atomlin.com;
+Received: from LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:163::8)
+ by LOYP123MB3006.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:f3::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
+ 21:24:24 +0000
+Received: from LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::f71f:a9f:c4de:687a]) by LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::f71f:a9f:c4de:687a%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
+ 21:24:23 +0000
+Date: Wed, 4 Nov 2026 16:24:19 -0500
+From: Aaron Tomlin <atomlin@atomlin.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: pmladek@suse.com, john.ogness@linutronix.de, rostedt@goodmis.org, 
+	senozhatsky@chromium.org, mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
+	vincent.guittot@linaro.org, dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de, 
+	vschneid@redhat.com, kprateek.nayak@amd.com, akpm@linux-foundation.org, 
+	baoquan.he@linux.dev, rppt@kernel.org, pasha.tatashin@soleen.com, pratyush@kernel.org, 
+	ruirui.yang@linux.dev, david@kernel.org, ljs@kernel.org, liam@infradead.org, 
+	vbabka@kernel.org, surenb@google.com, mhocko@suse.com, kees@kernel.org, 
+	anna-maria@linutronix.de, frederic@kernel.org, tglx@kernel.org, mhiramat@kernel.org, 
+	mathieu.desnoyers@efficios.com, brendan.jackman@linux.dev, hannes@cmpxchg.org, ziy@nvidia.com, 
+	bigeasy@linutronix.de, clrkwllms@kernel.org, kexec@lists.infradead.org, 
+	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org, 
+	linux-rt-devel@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2 2/5] mm/show_mem: Avoid blocking on zone->lock
+ during Oops or panic
+Message-ID: <ygc3ylz5hxlkqt7n5xnl6klydhmjtflkctidr4qabf3p4dxxsq@64gqisbenf5k>
+References: <20261103024453.922373-1-atomlin@atomlin.com>
+ <20261103024453.922373-3-atomlin@atomlin.com>
+ <sashiko-outbox-196525@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-196525@kernel.org>
+X-ClientProxiedBy: BL1P223CA0018.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c4::23) To LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:163::8)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,243 +100,146 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] clk: toshiba: introduce a TC9564 SoC clock driver
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20261104004332.2141282-1-elder@riscstar.com>
- <20261104004332.2141282-4-elder@riscstar.com>
- <sashiko-outbox-196325@kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <sashiko-outbox-196325@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LO2P123MB4190:EE_|LOYP123MB3006:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5936cbd9-4fda-4842-de67-08df3ab9ff2d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|7416014|376014|366016|1800799024|56012099006|261021135927099003|261022105027099003|4143699003|261022075727099003|261009223027099003|261026140227099003|261028144727099003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	B4MoVTGX6QLPHc+rDooe8rpV0f7vcatJRj14LiHX5sUs3tpra6pgmap5fY4PgUJPhDztj/sQ4L2bvD+gAtoPXI6N3MG+W3SBbhWP/AFMzdio0ss6A8/FJrrVP8bwYQXDYeNM1Cdqvkvz/bXoztWTrL3NoACdkSq4XIAtGGwOekt9g3VwO5eFtCBaoxMaKQSERahZS+7TVOGJL1arxhzKslqWQStJ09nfJxHmCq8ncehglf+PHoYDX1jbg2/zjcXAHU+R1ZK+10a0sxSKDCYAkZgtMvDg9zfXatynLgEv9JUgqzAk27Rw1/wpTmLDfN0O5wCFol6Yz6JbcSnOpJGqnKnoYVrhgio3gS66upSlQjijf3Ucv57UrMwAr13qmILc+YrWWLJ6otjpp0hDF2GFeXn20PgGlxgBFBRMwFzXTpw/I4PPsQxrMXFS7D0uNRJ1HJhCRN4fRQv/HgYFd0qfkcQeLNlv7Tx0VJSnKAGONRpaZkjiF7tI86nn9ONVr+jvuT9y+PpQKFy/z6XhNr36HUyJ+nwNnVY+LaY7g9ZSUqgT0HtizqxKOntAp4seBKGwslto086V+CNvszriBp547KONbG/iLmvMfv/r7qVMorY=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(56012099006)(261021135927099003)(261022105027099003)(4143699003)(261022075727099003)(261009223027099003)(261026140227099003)(261028144727099003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?U0VPVTJuVklUMTZNdW51SXU1dlFySm81LzlEZWY4WnNHN1pVbFFtV2dMR1NY?=
+ =?utf-8?B?anlEbGFQbFRweGd5Q1hqeFNMVUN3SUV2L0hxVmwyZDZyS25RQnBPemRwbEhM?=
+ =?utf-8?B?aWlqdW8ySDRkcldaS2lrNkxvVW5SUE81b29COEFCSjlGTS9rbTVuYXNjM2x6?=
+ =?utf-8?B?UnZMNHdNN09qZGE5RkE5bnlxM2psN1ZLZS8vT21VWVpZbWgxZHdPWkxBeXZ0?=
+ =?utf-8?B?ZVk3V0ZtSGo0Mk95WDJ6RlFEYUEwUklUckJ0NkVPbGdtMTU5MU15S05FQXlu?=
+ =?utf-8?B?MjlYQmxMVTZsZElxUHFVUlVlaDNnVkxZNzJ3eTl6WGNtWUlBa0JZSTRjTkg5?=
+ =?utf-8?B?Sy9nSGh0MmkxU1N0bmZkK2EzS3pob2FUN3gvNC9oMnhObDNuTEtYN0xQd2Zv?=
+ =?utf-8?B?VWtkdk1JdXBhSEU5bThQNFR3R0RLU3pBRzlFMU1yM0NVQklFWUNnckpXblhG?=
+ =?utf-8?B?OHkxYW4rd1Y2Z2RKd1RXcjNFTHdSTjRTNkpnUmRlWHhkQysrbkM1SExSRlBJ?=
+ =?utf-8?B?Ly9sS3dOTU42N200d1A3d0VyTW8xTEpPcXZ5SkM1aE9zUTN6VkJ5SkhxZ0pP?=
+ =?utf-8?B?eWJ1cVp6eDdVWEUyOWZZbEtRTzVXMnBlU1R5Ulhic1ZJOGljekthd1lXcHBn?=
+ =?utf-8?B?OHB6ZlRZd2NDajRXRXZsWUJ4NnkwanpMM3U3WTZ3QTFrUCtTSHhPTXdBZ09s?=
+ =?utf-8?B?RVZiYWhidGo4dFJaMVRSRWdsWEFyclhucnUxQW02amRlYk5iUDl2NHFONGJH?=
+ =?utf-8?B?Nzc1eTJNS2V6Rm0zc2MwWXlMTjZPS0FTVlhodVIwRzdmS2pxUy96WCtiRkN0?=
+ =?utf-8?B?YStraStmY0VjbzN4cndQcWZTZ3VsRlRhZXNRalp3eldBWFBWZzJSQmhyRks3?=
+ =?utf-8?B?RWhyR1laWWc0a0NwR3NSSDAwR1lvOVIwT1UzakhYNmI0T0wwNlZjcmdyMnpa?=
+ =?utf-8?B?NWE4aGpNWFR2TnN3TlFCemVXSWNaNDcybms0dllPM1hJc0NVcG9XL0tKRFdI?=
+ =?utf-8?B?VU5IRFRIZEZMeG5sWFFxK0xDekxxejNzdU9SeG1EVHowV3ZIWHFZMWtYMGpF?=
+ =?utf-8?B?T1VuSjFQMHVRb09JMHlBcmF5RWJJc2Joa0V4RVluVU1VQ2FrWDZnSjdTczF0?=
+ =?utf-8?B?VHduc0Jaei9sZm1aQVI3MXF1NGp5UVNYVTVLbnJWVjhhWFBzWGlEdzc5cTN4?=
+ =?utf-8?B?YUlMSWp2bmVRK3Y5UnRrajJrVkFpOVRneWdtc3kzYnVsQWpBM0NMcnE3YnEz?=
+ =?utf-8?B?Uk16VzZ0OWwycHVab0k3Ti9BVSt5QWNTbUlmSkh4b2pudU9vMkJqUFZlMzI0?=
+ =?utf-8?B?ZU9Eb0tTeWZLY1RaY2hWWDZqMEhxblhoSzc2VW1kWmtoeGF6YWNBMlQvNGZN?=
+ =?utf-8?B?cjFKUDc1Tm5qNWhSSjlEU0QrSDI0b3hHUVUrVU1sYXlaQVVNVXZIY3k1Qk16?=
+ =?utf-8?B?bXVxY2pPMUtncE00MWNUT0xpcVUwQysrWFREQ011UjhIYnJzMVkxOW45cVdp?=
+ =?utf-8?B?dVpGYU53NllZMkxsNEFMUlY0OHZPb0VLcE9RMEtqNi9GR1FCT29iTVJ0eVc0?=
+ =?utf-8?B?aTlZb3hYRlJkb1FWYjQ1NFAzeTFhUTFpU0Z5OElmMWdrVVdXWUNLYmc1bFdH?=
+ =?utf-8?B?cHl5UFN6dFo2TXpzV1lKRzFIYk9jd1orRVRHTzNNaWZQcldwYWNQT2paR2k0?=
+ =?utf-8?B?VDRiczBsT2dZVS9WaW9oMVpUTGRyb3Uyb085cU93bDVHWU1pQzRPZUxkWEc4?=
+ =?utf-8?B?K2F6dnlIN3VvTnQxV21qdVJtckpoSlQ5NllYM0tvYWtJZ2hDUFcyckxyUm9K?=
+ =?utf-8?B?dU84U3FnVmdKQWZJSmhYTWJLUFhnaWwwMHVWUkw1cWxqYmMzdzIrWUVUbk80?=
+ =?utf-8?B?b1JOOXZLVTA1d1R0ekplNlU1eGxVUWZ3U3hkTVBRV3F2K0lpeDk2a2VnWXdS?=
+ =?utf-8?B?SDRKU2NYaFY5TFZxWkpDU2s4TTZ6ekpkUGo4MS9rYUlvKzVCN2RqYVdnYmd3?=
+ =?utf-8?B?dkpoa2dTcVBsaFdGaHhUZEdRWFR1a1dadlpla2FVdU8zeWNscGxhSmx1LzlO?=
+ =?utf-8?B?aWYzUEs5ZUU4WFNaMGR2S3NzWVJvSytVMGFoTFZDaFpKNnZEcjdjbXBIMHo1?=
+ =?utf-8?B?OS9aZGRlQk9JU2NodmkxbXdFbk5mNUVNY1hGbnJQN1BicjB4T1VkUFB0MlEw?=
+ =?utf-8?B?WTBuZkJnNFhjTlpjbWI5ZVNBRUtwd2xrTWJBb3QyTkExVmlpQ2I0SmRzLzdq?=
+ =?utf-8?B?SWlGMXV5WnZhYUZrTTZKd3lEZHdPc1VDdGdMMHo3YUFtNSsyZDNNTW9rdTFa?=
+ =?utf-8?B?aGlEdnBuUXRtTE44Y2hLdW5zZituSThsczByYTNwcXE5NFZZV1ZrUT09?=
+X-OriginatorOrg: atomlin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5936cbd9-4fda-4842-de67-08df3ab9ff2d
+X-MS-Exchange-CrossTenant-AuthSource: LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 21:24:23.6745
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mX83XXz0UDS6Kd6a3dostHVE/ly4PP7cXSCUxkqCM/OEnhV61pwEeyjX1e94r/wQgKwvWWz40ckXFkOdBC7r2w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOYP123MB3006
 
-On 11/3/26 6:54 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] clk: tc9564: duplicate clock names across chips due to using dev->id
-
-I will address this issue by ensuring the name gets formatted using
-the TC9564 instance number, to ensure the names are unique.
-
-Separately, I'll use PLATFORM_DEVID_NONE rather than PLATFORM_DEVID_AUTO
-when adding MFD devices.  There is only clock and one reset per TC9564
-instance.
-
-> - [High] clk: tc9564: uninitialized clk_data->num in tc9564_clk_probe()
-
-I didn't realize I couldn't count on devm_kzalloc_flex() to assign
-the flex array counter in a structure.  I will fix this.
-
+On Wed, Nov 04, 2026 at 02:49:19AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] mm/show_mem: false lock contention warning in show_free_areas()
 > --
 > 
-> commit d0d52063b982041aca91451199195cd79995784b
-> Author: Alex Elder <elder@riscstar.com>
+> commit e1c6e11316c0b99b2f700b8251c5ed2b76aad84a
+> Author: Aaron Tomlin <atomlin@atomlin.com>
 > 
-> clk: toshiba: introduce a TC9564 SoC clock driver
+> mm/show_mem: Avoid blocking on zone->lock during Oops or panic
 > 
-> This commit adds a platform clock driver for the Toshiba TC9564 SoC,
-> registering its PLL, fixed-factor, and gate clocks via a syscon regmap.
+> This commit updates show_free_areas() in mm/show_mem.c to avoid unconditionally calling spin_lock_irqsave() on zone->lock during Oops, panic, or NMI/atomic contexts, skipping zones when acquiring the lock is unsafe or contended.
 > 
->> diff --git a/drivers/clk/clk-tc9564.c b/drivers/clk/clk-tc9564.c
->> new file mode 100644
->> index 0000000000000..8eeba85919703
->> --- /dev/null
->> +++ b/drivers/clk/clk-tc9564.c
->> @@ -0,0 +1,288 @@
+> > diff --git a/mm/show_mem.c b/mm/show_mem.c
+> > index b938cbcd774a1..77098077523a9 100644
+> > --- a/mm/show_mem.c
+> > +++ b/mm/show_mem.c
+> > @@ -367,10 +367,17 @@ static void show_free_areas(unsigned int filter, const nodemask_t *nodemask,
+> >  			continue;
+> >  		if (show_mem_node_skip(filter, zone_to_nid(zone), nodemask))
+> >  			continue;
+> > -		show_node(zone);
+> > -		printk(KERN_CONT "%s: ", zone->name);
+> >  
+> > -		spin_lock_irqsave(&zone->lock, flags);
+> > +		if (!can_spin_trylock() || in_nmi() ||
+> > +		    oops_in_progress || panic_in_progress()) {
+> > +			if (!can_spin_trylock() ||
+> > +			    !spin_trylock_irqsave(&zone->lock, flags)) {
+> > +				pr_warn("zone %s lock contended\n", zone->name);
+> > +				continue;
+> > +			}
+> > +		} else {
+> > +			spin_lock_irqsave(&zone->lock, flags);
+> > +		}
 > 
-> [ ... ]
+> [Severity: Medium]
+> In show_free_areas(), when can_spin_trylock() returns false (such as in NMI or
+> hardirq context under CONFIG_PREEMPT_RT, or in NMI context under !CONFIG_SMP):
 > 
->> +/*
->> + * The full name of every clock has a prefix "tc9564" followed by a single
->> + * character ('a', 'b', etc.) that differs for each chip/device number.
->> + * Each clock's "name" defines the unique portion of the clock's full name.
->> + */
->> +#define FULL_NAME_SIZE	24	/* Enough for formatted full name */
->> +#define NAME_SIZE	12	/* Unique portion of the clock name */
->> +#define FORMAT_FULL_NAME(_full_name, _id, _name)		\
->> +	snprintf(_full_name, FULL_NAME_SIZE, "tc9564%c_%.*s",	\
->> +		'a' + (_id), NAME_SIZE, _name)
+> mm/internal.h:can_spin_trylock() {
+> 	if (IS_ENABLED(CONFIG_PREEMPT_RT) && (in_nmi() || in_hardirq()))
+> 		return false;
 > 
-> [ ... ]
+> 	/* On UP, spin_trylock() always succeeds even when it is locked */
+> 	if (!IS_ENABLED(CONFIG_SMP) && in_nmi())
+> 		return false;
 > 
->> +/* Parent is the input oscillator running at 25 MHz; PLL runs at 1250 MHz */
->> +static struct clk_hw *pll_register(struct device *dev,
->> +				   const struct clock_init *init)
->> +{
->> +	char full_name[FULL_NAME_SIZE];
->> +
->> +	FORMAT_FULL_NAME(full_name, dev->id, init->name);
->> +
->> +	return devm_clk_hw_register_fixed_factor_index(dev, full_name, 0, 0,
->> +						       init->mult, 1);
->> +}
->> +
->> +/* The PLL is the parent of all fixed clocks */
->> +static struct clk_hw *fixed_register(struct device *dev,
->> +				     const struct clock_init *init)
->> +{
->> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(dev);
->> +	char full_name[FULL_NAME_SIZE];
->> +	struct clk_hw *pll_hw;
->> +
->> +	FORMAT_FULL_NAME(full_name, dev->id, init->name);
-> 
-> [ ... ]
-> 
->> +static struct clk_hw *gate_register(struct device *dev,
->> +				    const struct clock_init *init)
->> +{
->> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(dev);
->> +	struct clk_init_data clk_init = { };
->> +	const struct clk_hw *parent_hw;
->> +	char full_name[FULL_NAME_SIZE];
->> +	struct gate_clock *clock;
->> +	int ret;
->> +
->> +	clock = devm_kzalloc_obj(dev, *clock);
->> +	if (!clock)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	FORMAT_FULL_NAME(full_name, dev->id, init->name);
-> 
-> [Severity: High]
-> Will passing dev->id to FORMAT_FULL_NAME() in pll_register(),
-> fixed_register(), and gate_register() cause clock registration to fail with
-> -EEXIST when more than one TC9564 device is present?
-
-Maybe.  I have no machine (yet) with which to check this.
-
-> The clock MFD cell is registered as a platform device in
-> tc9564_config_syscon_probe():
-> 
-> drivers/soc/toshiba/tc9564-syscon.c:tc9564_config_syscon_probe() {
-> 	...
-> 	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
-> 				    tc9564_config_syscon_cells,
-> 				    ARRAY_SIZE(tc9564_config_syscon_cells),
-> 				    NULL, 0, NULL);
+> 	return true;
 > }
 > 
-> For platform devices, the platform bus stores the instance ID in pdev->id
-> (struct platform_device::id), while dev->id (struct device::id) is never set
-> and remains 0 for every instance. As a result, every TC9564 device formats
-> its clocks with the "tc9564a_" prefix (such as "tc9564a_PLL"), so probing a
-> second TC9564 device collides in __clk_core_init() when registering its
-> clocks in the global clock namespace.
-
-OK this is something I hadn't taken into account.
-
-My intention is clear, but the code seems not to be doing what I want.
-What I really want is for the "a" in "tc9564a_" to correspond to the 
-TC9564 instance number (basically 0 or 1, though some future system
-could have more).
-
-I will investigate this further and will find a solution that
-generates the names in the way I intend.
-
+> the inner !can_spin_trylock() check short-circuits before
+> spin_trylock_irqsave() is ever called, yet still prints "zone %s lock
+> contended" for every populated zone even when zone->lock is completely
+> uncontended.
 > 
-> Note that pdev->id cannot be passed directly to 'a' + (_id) either, because
-> PLATFORM_DEVID_AUTO allocates IDs from the system-wide platform_devid_ida
-> shared across all auto-numbered platform devices rather than a 0-based
-> per-chip index.
-
-This actually highlights a different thing that I plan to change in
-the next version.  I think PLATFORM_DEVID_NONE should be used rather
-than PLATFORM_ID_AUTO when adding the MFD devices, because there is
-exactly one instance of the clock and one instance of the reset for
-each TC9564 chip.
-
-And based on my plan to have the "a" represent TC9564 instance 0
-and "b" represent TC9564 instance 1, the (correct) statement from
-Sashiko about it being wrong to use pdev->id this way will be moot.
->> +
->> +	parent_hw = tc9564_clock->clk_data->hws[init->parent];
->> +
->> +	clk_init.name = full_name;
->> +	clk_init.ops = &gate_clk_ops;
->> +	clk_init.parent_hws = &parent_hw;
->> +	clk_init.num_parents = 1;
->> +
->> +	clock->hw.init = &clk_init;
->> +	clock->init = init;
->> +
->> +	ret = devm_clk_hw_register(dev, &clock->hw);
->> +	if (ret)
->> +		return ERR_PTR(ret);
->> +
->> +	return &clock->hw;
->> +}
->> +
->> +static int tc9564_clk_probe(struct platform_device *pdev)
->> +{
->> +	struct clk_hw_onecell_data *clk_data;
->> +	struct tc9564_clock *tc9564_clock;
->> +	struct device *dev = &pdev->dev;
->> +	struct device_node *parent_np;
->> +	int ret;
->> +
->> +	parent_np = dev_of_node(dev->parent);
->> +	if (!parent_np)
->> +		return dev_err_probe(dev, -EINVAL, "no devicetree node\n");
->> +
->> +	tc9564_clock = devm_kzalloc_obj(dev, *tc9564_clock);
->> +	if (!tc9564_clock)
->> +		return -ENOMEM;
->> +
->> +	/* Note: MMIO regmap (no error checking needed when used) */
->> +	tc9564_clock->regmap = device_node_to_regmap(parent_np);
->> +	if (IS_ERR(tc9564_clock->regmap))
->> +		return dev_err_probe(dev, PTR_ERR(tc9564_clock->regmap),
->> +				     "failed to get config regmap\n");
->> +
->> +	clk_data = devm_kzalloc_flex(dev, *tc9564_clock->clk_data, hws,
->> +				     CLOCK_COUNT);
->> +	if (!clk_data)
->> +		return -ENOMEM;
->> +	tc9564_clock->clk_data = clk_data;
->> +
->> +	dev_set_drvdata(dev, tc9564_clock);
->> +
->> +	/* Initialize all the clocks */
->> +	for (u32 i = 0; i < clk_data->num; i++) {
+> The commit message also states:
 > 
-> [Severity: High]
-> Does clk_data->num remain 0 in tc9564_clk_probe() when building with
-> compilers that do not support __builtin_counted_by_ref?
+>   Check can_spin_trylock() and use spin_trylock_irqsave() when
+>   !can_spin_trylock(), in_nmi(), oops_in_progress, or panic_in_progress()
+>   is active
+> 
+> Additionally, because show_node(zone) is moved after spin_unlock_irqrestore()
+> below, skipping a zone here only logs zone->name (for example, Normal or
+> DMA32) without the NUMA node ID on CONFIG_NUMA systems.
+> 
+> Should the !can_spin_trylock() case avoid claiming that zone->lock is
+> contended (and match the commit message description), and should the skipped
+> zone message include the node ID?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261103024453.922373-1-atomlin@atomlin.com?part=2
 
-I did not expect this particular feature to work differently on
-different compilers.
+I have updated the commit message in the next revision to accurately
+describe this two-stage check, and updated the pr_warn() message to include
+the NUMA node ID via zone_to_nid(zone).
 
-> 
-> devm_kzalloc_flex() populates the __counted_by counter via
-> __set_flex_counter():
-> 
-> include/linux/compiler_types.h:
-> #if __has_builtin(__builtin_counted_by_ref) && \
->      !defined(CONFIG_CC_HAS_BROKEN_COUNTED_BY_REF)
-> #define __flex_counter(FAM)	__builtin_counted_by_ref(FAM)
-> #else
-> #define __flex_counter(FAM)	((void *)NULL)
-> #endif
-> 
-> include/linux/overflow.h:
-> #define __set_flex_counter(FAM, COUNT)				\
-> ({								\
-> 	*_Generic(__flex_counter(FAM),				\
-> 		  void *:  &(size_t){ 0 },			\
-> 		  default: __flex_counter(FAM)) = (COUNT);	\
-> })
-> 
-> On compilers without a working __builtin_counted_by_ref (such as GCC < 15.1
-> or Clang < 22.1), __set_flex_counter() writes COUNT into a temporary compound
-> literal and leaves clk_data->num as 0. Without an explicit
-> clk_data->num = CLOCK_COUNT assignment, the loop in tc9564_clk_probe()
-> registers zero clocks and of_clk_hw_onecell_get() rejects all clock lookups
-> with -EINVAL.
-Given this report, I will assign the counted-by field after
-allocation.
-
-					-Alex
+Kind regards,
+-- 
+Aaron Tomlin
