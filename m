@@ -1,56 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.33
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793814941;
-	b=DgGLeCmEedyUS8gYVfqc41gJHsfGM+rjoMm0g/AA6GtsJ9c+SKc1aQEA51Td4fJKRSpB
-	 wgzC/K01PO+weLCug+CYtq5KamW4wDhczbHMq+WRBlY3+QQatcMOAIeAkmwU+YMDk/SZO
-	 RINRC7nLVYNlVfJt9Av1WJBNvAKZC3wDtF9mFPifXey/GGrDlY729GeXmq10+IDibmSVY
-	 UQNznB1kN7nVBfPd45N40nb1hcnnnjP6I3TF1NA8cDeZJhH3frKi+qS3Ay0GHhbnkBvnA
-	 VLoGtJdzJoahHqQJkUUKFOwEwqhWzVBrv8bW+XsTOOV3FxSzoQHmRhR2Xs6y4wD2ezg==
+	t=1793815127;
+	b=Lm/6qN/1cIPLre3qpEXSQLKkCshoZn0EIyu6xRmHaRRWEUAmKiEzvbiTfLxk4gb/jnWh
+	 U7IHP1DIBIQW/Hvme3TFIbpQrWNhBqZx/vnjcDXTPId6QNFgaKZCo1Jo+vq7HNf8/G6eg
+	 TLSHrYvf2HWADw2efZkoR2UAyubD/ML6P5ERBi89WQXVjdxctuHQ63D+qVt7O+npAPu1+
+	 K/wq+cX3nSkd/hCEjlS2m1IWO0kgtcmezJhdQj7UA2VLV/q4rlt653wl9l+z2Fubgsyzs
+	 2vsZ7Si0uvQuY5Mna+TU54HL6rGETC4N4hNxyszAkOz7/dTZL4SqdgkYIkSDJ7gvgqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793814941;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=Tl26Zi3X/30LAaDKpJUZxDgW2vXPEOAWHzOkBFL5r8Y=;
-	b=h5Ok2o8paHcr//syOiKsQPRqtksaMod2111W4ku6jZ/+glm6gjUeVYFjxvvDEvmDusB6
-	 EelQJqcXRbg3937ZGX5itNYBywEaIfMUHEquB4piK4tbU2QNknYpVnM0yiAahaA4h8g4z
-	 wVUq+XsSsf52NPHS34DgBzk+aawa3ZWyoW0nF8Wwzaal03Mef/6WUr/4lZBBdF2lu40rv
-	 Yn7hMKZlI5ggikDa3rvYenSGBFL8yKUna8Ddc1zDeD9ss352FNvoziItY3IqgzWOqnx9Q
-	 hmrRmrBegWVF+2/4Yyks/wAhFkfsjZTJ7ra3dFacb8dk/+ctuo8yG4WBVAP7DCnA00Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793815127;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:
+	 References:Content-Language:From:Autocrypt:Cc:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:
+	 X-Source-L:X-Exim-ID:X-Source:X-Source-Args:X-Source-Dir:
+	 X-Source-Sender:X-Source-Auth:X-Email-Count:X-Org:X-Source-Cap:
+	 X-Local-Domain:X-CMAE-Envelope;
+	bh=kJBR1X6YrecDdeDdf95LKQMPOXhqdKULeKpOhORv8lk=;
+	b=cJxknNjQ0cLCJR3KnkyUf2tAkxw4oUDBb1bJsZECu88nzbL3d/piBFSDs8tJLS4Bavko
+	 oA4A/jz5SijU2l6/QbaDGt+CZPTuiaQKvzkw8SVDb1EZZEnUycbwfnt3W8bphqXn+TmAS
+	 VBvGX7rPs5Os7aAUzLazJg8qyoJqea46Au1uvixWmf21fF1WY3u6d88yEPR0lcNJeyeck
+	 rYX8VAttGpOy9C14lL4m8/oBdRjYQBeL+1HP862uAW5wP82isEUoTzO8/PEk4JkVGe0Bp
+	 kk34U4n0M/U+Jf5o2K0Ip0XX3Lq+M3e78Ej9i6fxP/Rzm9fZ/FNJokYfd9fjB8klB4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BCpBmCt8;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=Z0PuXnLW;
+	arc=none smtp.remote-ip=35.89.44.33
+Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F4860A263A;
-	Wed,  4 Nov 2026 17:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F00606A7E9
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 17:58:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A5F00606A7E9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BCpBmCt8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72EC11F00A18;
-	Wed,  4 Nov 2026 17:55:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793814940;
-	bh=Tl26Zi3X/30LAaDKpJUZxDgW2vXPEOAWHzOkBFL5r8Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BCpBmCt8yC5kDaQIcLZDjedCre9WEyKLxi5aYAIlAFxwm/pQKm9Fl2Jd7ejUYh9DF
-	 gF1kc1ZyHaxv1NDBRwbL9T6+gWaRz2ymrIlRf7T8bI9+vTKxGoH8N9AHBiQz6j48/T
-	 i97IJQG877OYF92ZfRch5kAF8hfUP/J7Ohve7AWPxeciLk803vH9DhanzzjnBJnB86
-	 ISp+iA4WeTLlTY+XHvn5HolGZjQYysmmuqoW1LaR8xnqZcb6/1xf38bFq4XsZd9dlQ
-	 QYAg5+qiwg/PAm88BqTQZ23OQTezRwzptHLeTSs8NHX8h7ccOfHQT6CragUMRB7lil
-	 77wTmL7EC+mIw==
-Date: Wed, 4 Nov 2026 17:55:37 +0000
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Svyatoslav Ryhel <clamor95@gmail.com>, devicetree@vger.kernel.org,
-	mfd@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v4 4/4] mfd: max8907: Convert to use device managed
- poweroff handler
-Message-ID: <20261104175537.GD1650678@google.com>
-References: <20261027114634.79706-1-clamor95@gmail.com>
- <20261027114634.79706-5-clamor95@gmail.com>
- <sashiko-outbox-186485@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=Z0PuXnLW
+Received: from eig-obgw-5005b.ext.cloudfilter.net ([10.0.29.189])
+	by cmsmtp with ESMTPS
+	id OIFZx0prKAR1iOfG2xv2sw; Wed, 04 Nov 2026 17:58:46 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id OfG1xp5acq5xIOfG1xpcaS; Wed, 04 Nov 2026 17:58:45 +0000
+X-Authority-Analysis: v=2.4 cv=RayQC0tv c=1 sm=1 tr=0 ts=6aeb7255
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=BaI_k71-5Xq0wtSmigoA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:Cc:From:References:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=kJBR1X6YrecDdeDdf95LKQMPOXhqdKULeKpOhORv8lk=; b=Z0PuXnLWJnUc
+	B0MwXP3xABxH3WgVwvRN8s7QvLEaIYB3XpWy8KKoUcYszIPZKF3TB0o6CCsYhu8BCqRvwoZWbJXRC
+	8+xrk8LH9ENGZNRah0Lbm8NtCfoztX9b39E8B2bXEJswGxquEKnC2+IyP1kSR4POH5c0VzyZ9nVAr
+	W7a3DhYVU6Jvgu0a4F5mKnSmvMTEBsKp2A1paj9zX5a7GluWxlsR1opV1ZsX7KXEMPQn8pg1Y1nUs
+	O2MEOktvuljbuEnl28cQOK1yyDg8S/hdUnBHaVR4FphRvJmt3086Xl/AABzbiAKUHGLYRYb5yeFRO
+	CUlrUq166LMeANsYuaY83A==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:53612)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xOfG0-00000003FDQ-41sH;
+	Wed, 04 Nov 2026 23:28:45 +0530
+Message-ID: <1a258aff-8d41-4fdd-9f50-bddaeff7620d@roeck-us.net>
+Date: Wed, 4 Nov 2026 09:58:43 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,89 +77,93 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-186485@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] watchdog: starfive-wdt: Avoid unclocked register
+ access in remove and PM paths
+To: sashiko-reviews@lists.linux.dev, linux-watchdog@vger.kernel.org
+References: <20261104164445.3209560-1-linux@roeck-us.net>
+ <20261104164445.3209560-4-linux@roeck-us.net>
+ <sashiko-outbox-197706@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+Cc: Xingyu Wu <xingyu.wu@starfivetech.com>, Ziv Xu <ziv.xu@starfivetech.com>
+In-Reply-To: <sashiko-outbox-197706@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xOfG0-00000003FDQ-41sH
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:53612
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 6
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfCz5C3Ke7FatKy/4UiTjT9KRaRMJqZ2JF4ueFAw8jzIGjEJAKWtEao97TbYEkkzMWWdy8PNhRstrDFG9hb7JoMn27nzcvLd6yC6iAlD9ZJoBs9KcrbZ/
+ 8zDhvR0kEmpYkE8+i/6IrJ/WLP1/IWidxxSqaxY/x9sHa3QANHU7G9u2ad6ZKPj6+XqJvCC+RITLrjpqw8I9S9L8745Y6xaDgr8IgqxIRtUpUv0jK2QtU8N+
 
-On Tue, 27 Oct 2026, sashiko-bot@kernel.org wrote:
-
+On 11/4/26 09:02, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mfd: max8907: max8907_i2c_probe() drops maxim,system-power-controller check
+> - [Medium] watchdog: starfive-wdt: unbalanced runtime PM put in starfive_wdt_shutdown()
+> --
 
-Did this get an answer?
+I really love/hate Sashiko :-). A manual run did not report any problems.
+On top of the issue reported here, it also found a number of additional
+bugs (reported in its bug database, not here) in the driver, related to
+MMIO access with clocks turned off. I'll get all those addressed, but
+I'll wait a day of two before sending out v2 of the patch series.
 
-> commit 5deb6448298f2829c11e1c8af86067bd08a79d7f
-> Author: Svyatoslav Ryhel <clamor95@gmail.com>
-> 
-> mfd: max8907: Convert to use device managed poweroff handler
-> 
-> This commit replaces the global pm_power_off assignment in the max8907
-> MFD driver with devm_register_power_off_handler().
-> 
-> > diff --git a/drivers/mfd/max8907.c b/drivers/mfd/max8907.c
-> > index 2a38e00a10c3b..e282dd82ece69 100644
-> > --- a/drivers/mfd/max8907.c
-> > +++ b/drivers/mfd/max8907.c
-> 
-> [ ... ]
-> 
-> > @@ -185,8 +192,6 @@ static int max8907_i2c_probe(struct i2c_client *i2c)
-> >  	struct device *dev = &i2c->dev;
-> >  	struct max8907 *max8907;
-> >  	int ret;
-> > -	bool pm_off = of_property_read_bool(dev->of_node,
-> > -					"maxim,system-power-controller");
-> >  
-> >  	max8907 = devm_kzalloc(dev, sizeof(*max8907), GFP_KERNEL);
-> >  	if (!max8907)
-> > @@ -237,9 +242,10 @@ static int max8907_i2c_probe(struct i2c_client *i2c)
-> >  	if (ret)
-> >  		return dev_err_probe(dev, ret, "Failed to add MFD devices\n");
-> >  
-> > -	if (pm_off && !pm_power_off) {
-> > -		max8907_pm_off = max8907;
-> > -		pm_power_off = max8907_power_off;
-> > +	if (of_device_is_system_power_controller(dev->of_node)) {
-> > +		ret = devm_register_power_off_handler(dev, max8907_power_off, max8907);
-> > +		if (ret)
-> > +			return dev_err_probe(dev, ret, "failed to register power-off handler\n");
-> >  	}
-> 
-> [Severity: High]
-> Does replacing the maxim,system-power-controller property check with only
-> of_device_is_system_power_controller() break system power-off on existing
-> DTBs?
-> 
-> In include/linux/of.h, of_device_is_system_power_controller() only checks
-> for the unprefixed property:
-> 
-> static inline bool of_device_is_system_power_controller(const struct device_node *np)
-> {
-> 	return of_property_read_bool(np, "system-power-controller");
-> }
-> 
-> In Documentation/devicetree/bindings/regulator/maxim,max8907.yaml (added in
-> commit c254fcc966ae), maxim,system-power-controller is still documented as a
-> deprecated property for backward compatibility alongside
-> system-power-controller:
-> 
->   maxim,system-power-controller:
->     type: boolean
->     deprecated: true
->     description:
->       Telling whether or not this PMIC is controlling the system power.
-> 
->   system-power-controller: true
-> 
-> Should max8907_i2c_probe() check both
-> of_device_is_system_power_controller(dev->of_node) and
-> of_property_read_bool(dev->of_node, "maxim,system-power-controller") so
-> existing DTBs using the vendor-prefixed property continue to register the
-> power-off handler?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261027114634.79706-1-clamor95@gmail.com?part=4
+Guenter
 
--- 
-Lee Jones
