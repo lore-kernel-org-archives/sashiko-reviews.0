@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793827336;
-	b=f3/aR5Ka8WjIk+cfpOwDs4/kyJ3WQbUxxg1m8oak/5QMosy7NDRetPLFpk9RIILtRIVH
-	 7GkzK/3Yy/sUjsgdkr/5ws3rYJH69fthIp4k/llOXmy5K0Fhnm6MxR1gVb2698/6XKd9D
-	 RL9OJ6qYmMNYAz5qXrhlazObHF3rRsWV1k4FWHr7ZKxC317eMXY/07+pBN7YrvFnmIhOd
-	 s+hLdcJfbqDXN+B5dH1H5Wv6DKQVi10u4CS1cUvX6q7wLx7cqRtsmdgkQvVjxtSuVBHS+
-	 nQIvEi/aPkmVPBuR/PzBXCMcTlQ1rTkW5fqroYuyfqQz7r9/cptsSMPhawYL6rK6XSg==
+	b=Oya1OKLpKBE3y8R17gQS3Fbz6UZtrQ6DcDgiK7+POrMx1TOM4eHY30qZmMIH4vWJi88V
+	 m1J1rVuaP183TUmsbzs+b26wQKdf9c/kpioZYzsb0NtpkRXlHLOcm3z5HCPgVZKT9K14u
+	 emz3Yl3bFxhhPMVo87suX65t8c4CNZ1IwLe57u5uDCdkknsx+5kuCj5zbVlOQPDepOd0p
+	 T6AxkcfmrJvLPAhytXUsThcZg2C5TlTCqjUFQnUI+2ZvsSy5t4D8USos8NRElLbA1WAe+
+	 9vMX208delqjZBYBTMl8Sjm3zmis+OP1vBhtJsJcwNhp6BQbriFwmlVduIzQSVH3SYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793827336;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=xCV27pca+nLYEXCVx4Sr4Tceub1iz4rFNRNzljRO58U=;
-	b=fS8VAJ+g9E3WQn2i8fJG9rrndbV3A3UElrok6frA9U9et2emJVRJCBDtkRVSS8V0hrdC
-	 0dwEnbgdb6wuh8WNy2uwYqLOAa3b8Bp/SLbbNHrRPiO98edLT8kQmaKjPNYGx70S48mIB
-	 Hd3MYmJV7KlCZ4+JedKRlVSUPrAvO+gy2Neso+Gov2TNscGxQtYkr4Fd3EdwDwHLNCczE
-	 qdaTyqnb33FVlZCzAH7/BCo8g/IJPHAtuuEGD8KDL+JMM0L8CcCiiGaUkycNVt6eSBBLK
-	 VaeBJX1jUYmqTvMpto5eKohg523iQL+8ptaCI23Yi6ioMkcgvO8h5l21L/JNbpZXvuw==
+	bh=+5/lrUfYBVKtk8LFUOYPI+i/daG7iBFygT1vkGG8Etw=;
+	b=IGGm5SJYivxv44619mZL4dKrXkY9ypp51TQFJxbsK7h6zlRAdXFmm+bZeVHWhHn1nwPn
+	 srvNueEP2eG8u4oF+UBpMDwSZdQ2snxAVK6Femw4m/Ka3yO96ttBnrv/Hb24hREceJPv/
+	 70/0jf5lpEYv0GjmnbF+yNoK5GdDYzvISjKOgU0uhcGc3+iRQuDQkWmQFGVV/h4hPtcWH
+	 wLelPfCwkQQapviG76EWCjjWNYRp/zxMVb5YCxaRf7fZXcUQNJTRi1mQDvRHdRApXUDlj
+	 iOdqIKVM6fiSzTN4ZP8ZDlNB1mzLbVRBx9gdVz6FoN1eCUK7LyEKrTFCAlnBUqrykaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=riscstar.com;
 	spf=pass smtp.mailfrom=riscstar.com;
-	dkim=pass header.d=riscstar-com.20260707.gappssmtp.com header.i=@riscstar-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=EeTIFkBy;
-	arc=none smtp.remote-ip=209.85.161.49
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	dkim=pass header.d=riscstar-com.20260707.gappssmtp.com header.i=@riscstar-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=KghzofU2;
+	arc=none smtp.remote-ip=209.85.160.54
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A167606B2E3
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 21:22:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1A167606B2E3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729E1606B2FB
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 21:22:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 729E1606B2FB
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=riscstar-com.20260707.gappssmtp.com header.i=@riscstar-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=EeTIFkBy
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6ddef424972so942383eaf.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 13:22:14 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=riscstar-com.20260707.gappssmtp.com header.i=@riscstar-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=KghzofU2
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4a76f0cce5fso582406fac.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 13:22:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20260707.gappssmtp.com; s=20260707; t=1793827334; x=1794432134; darn=lists.linux.dev;
+        d=riscstar-com.20260707.gappssmtp.com; s=20260707; t=1793827335; x=1794432135; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xCV27pca+nLYEXCVx4Sr4Tceub1iz4rFNRNzljRO58U=;
-        b=EeTIFkByOjKGDIqlk+IrIaW+/Sdt7Dh/ePvU/XmZLdqDcUd8pVEIWHuxW9C1wUEtVW
-         5A2RXZPDW92NjZ5ouJo70l8N4SZp7fyS6l2ilknT5y5KuPuc28LBkZKMIc7WFVo3CwTp
-         pxclgIa6orU5gPyZX9e9oJMqsyYTLlvx/DM8OCEOParXgHh+vbKqdwVDiB2rc4KsxaNu
-         0DoXghpY+GPLXwHlQvqtpUR8HNwgNMR7eHteBpxp1cH5HdseWKS90bUB2IIbL7EhTmZo
-         umaAWffcJ5KgGpVM1UiZh3MbUTIaBEhJ1ids+YdU39Ub2yWOxfuD9NH68+zqTB/4oq2S
-         l/OA==
+        bh=+5/lrUfYBVKtk8LFUOYPI+i/daG7iBFygT1vkGG8Etw=;
+        b=KghzofU2jvQwQJykRoYzltbWP3DQ2KyhcjeVVc6TI0gIJLOjl5Wc6qZ0Zz6oMQ7f+F
+         rROqOROV9HAtGRZKNeIlB6vcQT2KsA8wRrcuOnvpistdJLPq5uBLYqStge3IjhcJCeJJ
+         hUxWyTs5bdzZIrqmuFxjglhjCXA0N1+6R1kp5vH5ciZhr+fnyvK6/g75SGZrcD08VmII
+         6+X3EjprI3TY7bjdHJ523CDFygZ+Gja7gHek9wIWKPGJs6Hh1Jik3L4bnwa5plbkQyUy
+         5uSDg+ZGt8tXR+ONvKXzlt1HA/ykqjn7XVgQjn8ciiPmWvRMzDSkH+ousH1ualmTtMYC
+         rr+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793827334; x=1794432134;
+        d=1e100.net; s=20260707; t=1793827335; x=1794432135;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xCV27pca+nLYEXCVx4Sr4Tceub1iz4rFNRNzljRO58U=;
-        b=YUhd/h4nJUpF0iuo49hM2Tvlx0hAA6GH7wpa94J8v7eldpZX2Iu47rgPgJckvf7Dc1
-         R9IWYKle2PifcwoVBVDY2QmpMH1vbQ3sULuoGc+Hcuq72WSzTRGA76UzQNhFamDooe6e
-         lajE2HlH7NZGvab1NKxnoIGSSrv0vB4k3wdXBK1cXs51Mf24aWrZTe5i122Qb2VebPd7
-         5Y2J9jzd1lg0bikzJD2Rmp4eKTo4Rywu9zSJWplyxPvIdrCVrnSLXE/8bYfjdSGGLATY
-         OrT4q/rMs2nQUrYSHk3Iz8MQTN0EQWfTMkNkH/tjrh+B/ngj/0Dh/cLsRisDoK87Nohj
-         H4Wg==
-X-Gm-Message-State: APuU4Z+LnPXWJ8z8w72LLQPhzWgDyylD4BDNJttDAzCGNqjjeRr/MpwH
-	WK6gX67DkRWKtxpXhJ8LR2rmDGXWL6Y9/bfnmYfDSYVI790so0HKZnMDxu2p0bp4yIqMZKgLZdV
-	x5OCglrg=
-X-Gm-Gg: AYBFou0Yp/gnOPmZPz6biFSWw7IyJXgzjMuutyee2PHdXDnmEnwLFscLqqbzUrxs3Vz
-	zIZfzGpt+q9Ps3dUdAx7rRKkWO3LQTCFC5W17kFPPouHPqYzvcT1rthelRzh5FbjdAcrAQMZXh/
-	z0iis7mCZc1p71SeKs4uWroQyNClwIl/98REp9DzeG6h2ehdaj+tlpzykzKUSip8BTvlXnn158y
-	WRqNksolLYeWkrtkJ6fKera6CbCN96nUi6PbDWP29EVY9QgrnUP4LU1OqtKhW1GIfkdL7Y1sThB
-	JqXgr4aezn1Oc+xVVHgJZEGp0Fh1qa+/oW880vWn8YyoAaYaAtoHje8QJ7pBqP4VLYUv4C+Nb84
-	YcUEt1Wx40fckJkkRDQ6B+dJHMwEAAzKuPVpGtPy6aR5vKXQBHVMtkVysf2iphRk8LYmXHf1IhM
-	yreGQ1ULlwuoRpbyxAJcUU8wRujuagLdvQX58iUoTVJsvNqxc9cweuJ0d6ccWt/XVannyHI2+ZO
-	gSHmzduQ1YfePp6udZl3JoMWwW8iWtnieo5CzDjTegnIJSrd0eU3NYFEskHezHbd231dvt1Ia4+
-	LH+bxd6uem5MlfcHkRwsku/vIVRbgw23RAJqmgBIOt9sX+4cqA==
-X-Received: by 2002:a05:6820:740c:b0:716:bbec:d300 with SMTP id 006d021491bc7-716bbecebcamr2303942eaf.47.1793827333868;
-        Wed, 04 Nov 2026 13:22:13 -0800 (PST)
+        bh=+5/lrUfYBVKtk8LFUOYPI+i/daG7iBFygT1vkGG8Etw=;
+        b=2waQpi0HxCvixrOEr2VQUOz/2gtvZ1NgyB61mugJ5cpJrRtR4ePk3eKwPi9LpEfpP8
+         Tt1GsCh4/v0C+e7e6YDj3pz47KLLBZveHd6ZvZEVLqsaZNHmAZhqIa5I7/1hlXLMl4c1
+         Wh8jwQQZCug9qfqcD2XLTdKXrYOOd5uGPgwJA5RGTwQ1kX7nyL2xQnzOWxwQcJlr1iYU
+         9L8coEToee1yhSjsLGqMupiPCOWMTFy1wyq6pUpcbPYTeg1Y1AtGQUxvJoR2bVB2yomF
+         LjhjjtBrwB9ayMoGHt0ALTH+SrNhpKugOgHeu+Ayu6lmVolYWgkKbP3suErFwRLVQofq
+         UYcg==
+X-Gm-Message-State: APuU4Z8i8kA0+npqqzHJ4T8h6wt2+20UBIMCoAahYJJ3AecaqcEqvQuk
+	HWv0Rj9upBXLd8B49SETBjoe/MsRbPeaksrBifiG/80lCuQE40reHIM9blsDjLGvCj/4hLbkzrH
+	26qS/Pok=
+X-Gm-Gg: AYBFou1VprPz61RwJy8HCrzwRX7iB0v80z2KCjvhLqHyyRGJRB/BdNqUetOOa5kUNBK
+	RNLqsdhdgdPETgagoQ9BFWqAZZi7ROAhZJLbKASNRH4IPoKY4IksA4yPr4aTKobfnFZKcRHT/a0
+	7rDpmzFOJQ1+K8U0Vl4j5LRFhSnvBxsVnZ8RECjp4SUq15OaL9LPZi4KpuiJku4UDM4GIiBQVYb
+	WOwT0Fluw3lsI1EU79KgT6yf+Mzf4rHQPqzV3lkfWnIFHgfdOMyMpUGO/LVmk+Hg/hFfrF4nfRb
+	/HmsTWB5xtD5ORDWbPsqRWk4vBiWmqaieeIJi8UfPFSWI/VB61TvM5RCJ/5UZqP0d/b4/7fZnlj
+	cITxIg7gBH/FC7vy+i3MY8znLOy4FXiTuVmFUPqnDkgoe28nOPsrGlC6JFwvunOXNQ+XgT0UsNB
+	NRWvLj/SVXian/U2PUR3h5OwY6p31fA83SxfeaeHt/maQBfnNzDwrt8trZAmDokC6EdAmP4mO4k
+	gwaCJPVTdlPkexY3s8dfHTv7fwr9eGyOdk2Pxq7ANBmP3JpZjLPiK9Xc9fI0b3tG3QaCXK1G228
+	ulSSD45jOABPLq7707HjODWXdrsu
+X-Received: by 2002:a05:6870:899d:b0:4a7:6dc:af65 with SMTP id 586e51a60fabf-4a90761c954mr10824894fac.10.1793827335301;
+        Wed, 04 Nov 2026 13:22:15 -0800 (PST)
 Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4acea61d382sm2928188fac.13.2026.11.04.13.22.13
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4acea61d382sm2928188fac.13.2026.11.04.13.22.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 13:22:13 -0800 (PST)
-Message-ID: <297312cc-8397-4a4f-b8cd-c28c574f8b03@riscstar.com>
-Date: Wed, 4 Nov 2026 15:22:12 -0600
+        Wed, 04 Nov 2026 13:22:15 -0800 (PST)
+Message-ID: <de25cd14-dc54-41e8-a49d-d3da588bb0d2@riscstar.com>
+Date: Wed, 4 Nov 2026 15:22:14 -0600
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -92,166 +92,242 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] soc: toshiba: tc9564: add a new syscon driver
+Subject: Re: [PATCH 3/4] clk: toshiba: introduce a TC9564 SoC clock driver
 To: sashiko-reviews@lists.linux.dev
 Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org,
  conor+dt@kernel.org
 References: <20261104004332.2141282-1-elder@riscstar.com>
- <20261104004332.2141282-3-elder@riscstar.com>
- <sashiko-outbox-196324@kernel.org>
+ <20261104004332.2141282-4-elder@riscstar.com>
+ <sashiko-outbox-196325@kernel.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <sashiko-outbox-196324@kernel.org>
+In-Reply-To: <sashiko-outbox-196325@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/3/26 6:50 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] soc: toshiba: SOC_TOSHIBA_TC9564_SYSCON depends on hidden MFD_CORE
+On 11/3/26 6:54 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] clk: tc9564: duplicate clock names across chips due to using dev->id
 
-I explain more below, but I do not plan to act on the above issue.
+I will address this issue by ensuring the name gets formatted using
+the TC9564 instance number, to ensure the names are unique.
 
-> - [Low] soc: toshiba: MFD driver calling devm_mfd_add_devices() outside drivers/mfd/
+Separately, I'll use PLATFORM_DEVID_NONE rather than PLATFORM_DEVID_AUTO
+when adding MFD devices.  There is only clock and one reset per TC9564
+instance.
 
-And I don't plan to act on this one either.
+> - [High] clk: tc9564: uninitialized clk_data->num in tc9564_clk_probe()
 
-> - [Low] soc: toshiba: Kconfig help and commit message mismatch tc9564-syscon.c
-
-I will do a minor rewording to address this one.
+I didn't realize I couldn't count on devm_kzalloc_flex() to assign
+the flex array counter in a structure.  I will fix this.
 
 > --
 > 
-> commit 0d303444d1af16f91e36247fd63b0cb020f8be95
+> commit d0d52063b982041aca91451199195cd79995784b
 > Author: Alex Elder <elder@riscstar.com>
 > 
-> soc: toshiba: tc9564: add a new syscon driver
+> clk: toshiba: introduce a TC9564 SoC clock driver
 > 
-> This commit introduces a platform driver for the Toshiba TC9564 config
-> system controller, registering MFD child devices for the chip's clock
-> and reset controllers.
+> This commit adds a platform clock driver for the Toshiba TC9564 SoC,
+> registering its PLL, fixed-factor, and gate clocks via a syscon regmap.
 > 
->> diff --git a/drivers/soc/toshiba/Kconfig b/drivers/soc/toshiba/Kconfig
+>> diff --git a/drivers/clk/clk-tc9564.c b/drivers/clk/clk-tc9564.c
 >> new file mode 100644
->> index 0000000000000..91adcbe71905c
+>> index 0000000000000..8eeba85919703
 >> --- /dev/null
->> +++ b/drivers/soc/toshiba/Kconfig
->> @@ -0,0 +1,12 @@
->> +# SPDX-License-Identifier: GPL-2.0-only
->> +
->> +config SOC_TOSHIBA_TC9564_SYSCON
->> +	tristate "Toshiba TC9564 config system controller support"
->> +	depends on TC9564_PCI
->> +	depends on MFD_CORE
->> +	default TC9564_PCI
+>> +++ b/drivers/clk/clk-tc9564.c
+>> @@ -0,0 +1,288 @@
 > 
-> [Severity: Medium]
-> Should SOC_TOSHIBA_TC9564_SYSCON use "select MFD_CORE" instead of
-> "depends on MFD_CORE"?
-
-I would have used "select", however that leads to a recursive Kconfig
-dependency:
-
-error: recursive dependency detected!
-	symbol SOC_TOSHIBA_TC9564_SYSCON depends on TC9564_PCI
-	symbol TC9564_PCI depends on PCI_DYNAMIC_OF_NODES
-	symbol PCI_DYNAMIC_OF_NODES depends on OF_IRQ
-	symbol OF_IRQ depends on IRQ_DOMAIN
-	symbol IRQ_DOMAIN is selected by MFD_CORE
-	symbol MFD_CORE is selected by SOC_TOSHIBA_TC9564_SYSCON
-
-Using "depends on" does not exhibit that circular dependency.
-
-So unless someone suggests a better way to fix this, I will keep
-this as-is.
-
-> In drivers/mfd/Kconfig, MFD_CORE is a promptless helper symbol with
-> "default n":
-> 
->      config MFD_CORE
->          tristate
->          select IRQ_DOMAIN
->          default n
-> 
-> When a kernel configuration enables CONFIG_TC9564_PCI without any
-> unrelated MFD driver that selects MFD_CORE, the dependency on MFD_CORE
-> remains unmet and SOC_TOSHIBA_TC9564_SYSCON cannot be enabled.
-> Similarly, if TC9564_PCI is built-in (y) and only modular drivers select
-> MFD_CORE, SOC_TOSHIBA_TC9564_SYSCON is restricted to modular (m).
-> 
->> +	help
->> +	  This enables support for the config system controller for the
->> +	  TC9564 SoC.  It implements an MMIO regmap to manage access to
->> +	  two pages of I/O memory, and serves as a clock and reset
->> +	  controller for IP blocks within the chip.
-> 
-> [Severity: Low]
-> Does this help text (and the commit message) accurately describe what
-> drivers/soc/toshiba/tc9564-syscon.c implements?
-
-Generally, I think it does.  It talks about clock and reset,
-which are presented as provided by the system controller, even
-though the actual drivers for that functionality is implemented
-separately (and activated with entries in an MFD cell table).
-The regmap gets created automatically.
-
-> In tc9564_config_syscon_probe(), the driver only calls
-> devm_mfd_add_devices() to register the toshiba-tc9564-clock and
-> toshiba-tc9564-reset MFD cells; it does not set up an MMIO regmap (nor
-> does SOC_TOSHIBA_TC9564_SYSCON select MFD_SYSCON) or implement the clock
-> and reset controller providers itself. Could the help text and commit
-> description be updated to reflect that this driver instantiates the
-> clock and reset child devices?
-
-It could.  I'll plan to add a sentence to this effect when I
-post version 2 of the series.
-
 > [ ... ]
 > 
->> diff --git a/drivers/soc/toshiba/tc9564-syscon.c b/drivers/soc/toshiba/tc9564-syscon.c
->> new file mode 100644
->> index 0000000000000..0d0e2422b82d0
->> --- /dev/null
->> +++ b/drivers/soc/toshiba/tc9564-syscon.c
->> @@ -0,0 +1,42 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +
 >> +/*
->> + * Copyright (C) 2026 by RISCstar Solutions Corporation.  All rights reserved.
+>> + * The full name of every clock has a prefix "tc9564" followed by a single
+>> + * character ('a', 'b', etc.) that differs for each chip/device number.
+>> + * Each clock's "name" defines the unique portion of the clock's full name.
 >> + */
->> +
->> +#include <linux/device.h>
->> +#include <linux/device-id/of.h>
->> +#include <linux/mfd/core.h>
->> +#include <linux/module.h>
->> +#include <linux/platform_device.h>
->> +
->> +static const struct mfd_cell tc9564_config_syscon_cells[] = {
->> +	MFD_CELL_NAME("toshiba-tc9564-clock"),
->> +	MFD_CELL_NAME("toshiba-tc9564-reset"),
->> +};
->> +
->> +static int tc9564_config_syscon_probe(struct platform_device *pdev)
->> +{
->> +	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
->> +				    tc9564_config_syscon_cells,
->> +				    ARRAY_SIZE(tc9564_config_syscon_cells),
->> +				    NULL, 0, NULL);
->> +}
+>> +#define FULL_NAME_SIZE	24	/* Enough for formatted full name */
+>> +#define NAME_SIZE	12	/* Unique portion of the clock name */
+>> +#define FORMAT_FULL_NAME(_full_name, _id, _name)		\
+>> +	snprintf(_full_name, FULL_NAME_SIZE, "tc9564%c_%.*s",	\
+>> +		'a' + (_id), NAME_SIZE, _name)
 > 
-> [Severity: Low]
-> Since tc9564_config_syscon_probe() in drivers/soc/toshiba/tc9564-syscon.c
-> is purely an MFD driver calling devm_mfd_add_devices() to register child
-> devices, should this driver be placed under drivers/mfd/ rather than
-> drivers/soc/toshiba/ (with an "mfd: tc9564: ..." commit subject prefix)
-> to follow MFD subsystem placement conventions?
-It could be, and that's where I had it originally.  I moved it
-under drivers/soc/toshiba based on a comment from Conor Dooley.
-Under drivers/soc I find 7 C files that call devm_mfd_add_devices()
-(although it is true that almost half of the C files under drivers/mfd
-call that function).
+> [ ... ]
+> 
+>> +/* Parent is the input oscillator running at 25 MHz; PLL runs at 1250 MHz */
+>> +static struct clk_hw *pll_register(struct device *dev,
+>> +				   const struct clock_init *init)
+>> +{
+>> +	char full_name[FULL_NAME_SIZE];
+>> +
+>> +	FORMAT_FULL_NAME(full_name, dev->id, init->name);
+>> +
+>> +	return devm_clk_hw_register_fixed_factor_index(dev, full_name, 0, 0,
+>> +						       init->mult, 1);
+>> +}
+>> +
+>> +/* The PLL is the parent of all fixed clocks */
+>> +static struct clk_hw *fixed_register(struct device *dev,
+>> +				     const struct clock_init *init)
+>> +{
+>> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(dev);
+>> +	char full_name[FULL_NAME_SIZE];
+>> +	struct clk_hw *pll_hw;
+>> +
+>> +	FORMAT_FULL_NAME(full_name, dev->id, init->name);
+> 
+> [ ... ]
+> 
+>> +static struct clk_hw *gate_register(struct device *dev,
+>> +				    const struct clock_init *init)
+>> +{
+>> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(dev);
+>> +	struct clk_init_data clk_init = { };
+>> +	const struct clk_hw *parent_hw;
+>> +	char full_name[FULL_NAME_SIZE];
+>> +	struct gate_clock *clock;
+>> +	int ret;
+>> +
+>> +	clock = devm_kzalloc_obj(dev, *clock);
+>> +	if (!clock)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>> +	FORMAT_FULL_NAME(full_name, dev->id, init->name);
+> 
+> [Severity: High]
+> Will passing dev->id to FORMAT_FULL_NAME() in pll_register(),
+> fixed_register(), and gate_register() cause clock registration to fail with
+> -EEXIST when more than one TC9564 device is present?
 
-This driver has the same basic--trivial--structure as five other
-drivers under drivers/soc/*/*.c, so I plan to keep the code where
-it is.
+Maybe.  I have no machine (yet) with which to check this.
+
+> The clock MFD cell is registered as a platform device in
+> tc9564_config_syscon_probe():
+> 
+> drivers/soc/toshiba/tc9564-syscon.c:tc9564_config_syscon_probe() {
+> 	...
+> 	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
+> 				    tc9564_config_syscon_cells,
+> 				    ARRAY_SIZE(tc9564_config_syscon_cells),
+> 				    NULL, 0, NULL);
+> }
+> 
+> For platform devices, the platform bus stores the instance ID in pdev->id
+> (struct platform_device::id), while dev->id (struct device::id) is never set
+> and remains 0 for every instance. As a result, every TC9564 device formats
+> its clocks with the "tc9564a_" prefix (such as "tc9564a_PLL"), so probing a
+> second TC9564 device collides in __clk_core_init() when registering its
+> clocks in the global clock namespace.
+
+OK this is something I hadn't taken into account.
+
+My intention is clear, but the code seems not to be doing what I want.
+What I really want is for the "a" in "tc9564a_" to correspond to the 
+TC9564 instance number (basically 0 or 1, though some future system
+could have more).
+
+I will investigate this further and will find a solution that
+generates the names in the way I intend.
+
+> 
+> Note that pdev->id cannot be passed directly to 'a' + (_id) either, because
+> PLATFORM_DEVID_AUTO allocates IDs from the system-wide platform_devid_ida
+> shared across all auto-numbered platform devices rather than a 0-based
+> per-chip index.
+
+This actually highlights a different thing that I plan to change in
+the next version.  I think PLATFORM_DEVID_NONE should be used rather
+than PLATFORM_ID_AUTO when adding the MFD devices, because there is
+exactly one instance of the clock and one instance of the reset for
+each TC9564 chip.
+
+And based on my plan to have the "a" represent TC9564 instance 0
+and "b" represent TC9564 instance 1, the (correct) statement from
+Sashiko about it being wrong to use pdev->id this way will be moot.
+>> +
+>> +	parent_hw = tc9564_clock->clk_data->hws[init->parent];
+>> +
+>> +	clk_init.name = full_name;
+>> +	clk_init.ops = &gate_clk_ops;
+>> +	clk_init.parent_hws = &parent_hw;
+>> +	clk_init.num_parents = 1;
+>> +
+>> +	clock->hw.init = &clk_init;
+>> +	clock->init = init;
+>> +
+>> +	ret = devm_clk_hw_register(dev, &clock->hw);
+>> +	if (ret)
+>> +		return ERR_PTR(ret);
+>> +
+>> +	return &clock->hw;
+>> +}
+>> +
+>> +static int tc9564_clk_probe(struct platform_device *pdev)
+>> +{
+>> +	struct clk_hw_onecell_data *clk_data;
+>> +	struct tc9564_clock *tc9564_clock;
+>> +	struct device *dev = &pdev->dev;
+>> +	struct device_node *parent_np;
+>> +	int ret;
+>> +
+>> +	parent_np = dev_of_node(dev->parent);
+>> +	if (!parent_np)
+>> +		return dev_err_probe(dev, -EINVAL, "no devicetree node\n");
+>> +
+>> +	tc9564_clock = devm_kzalloc_obj(dev, *tc9564_clock);
+>> +	if (!tc9564_clock)
+>> +		return -ENOMEM;
+>> +
+>> +	/* Note: MMIO regmap (no error checking needed when used) */
+>> +	tc9564_clock->regmap = device_node_to_regmap(parent_np);
+>> +	if (IS_ERR(tc9564_clock->regmap))
+>> +		return dev_err_probe(dev, PTR_ERR(tc9564_clock->regmap),
+>> +				     "failed to get config regmap\n");
+>> +
+>> +	clk_data = devm_kzalloc_flex(dev, *tc9564_clock->clk_data, hws,
+>> +				     CLOCK_COUNT);
+>> +	if (!clk_data)
+>> +		return -ENOMEM;
+>> +	tc9564_clock->clk_data = clk_data;
+>> +
+>> +	dev_set_drvdata(dev, tc9564_clock);
+>> +
+>> +	/* Initialize all the clocks */
+>> +	for (u32 i = 0; i < clk_data->num; i++) {
+> 
+> [Severity: High]
+> Does clk_data->num remain 0 in tc9564_clk_probe() when building with
+> compilers that do not support __builtin_counted_by_ref?
+
+I did not expect this particular feature to work differently on
+different compilers.
+
+> 
+> devm_kzalloc_flex() populates the __counted_by counter via
+> __set_flex_counter():
+> 
+> include/linux/compiler_types.h:
+> #if __has_builtin(__builtin_counted_by_ref) && \
+>      !defined(CONFIG_CC_HAS_BROKEN_COUNTED_BY_REF)
+> #define __flex_counter(FAM)	__builtin_counted_by_ref(FAM)
+> #else
+> #define __flex_counter(FAM)	((void *)NULL)
+> #endif
+> 
+> include/linux/overflow.h:
+> #define __set_flex_counter(FAM, COUNT)				\
+> ({								\
+> 	*_Generic(__flex_counter(FAM),				\
+> 		  void *:  &(size_t){ 0 },			\
+> 		  default: __flex_counter(FAM)) = (COUNT);	\
+> })
+> 
+> On compilers without a working __builtin_counted_by_ref (such as GCC < 15.1
+> or Clang < 22.1), __set_flex_counter() writes COUNT into a temporary compound
+> literal and leaves clk_data->num as 0. Without an explicit
+> clk_data->num = CLOCK_COUNT assignment, the loop in tc9564_clk_probe()
+> registers zero clocks and of_clk_hw_onecell_get() rejects all clock lookups
+> with -EINVAL.
+Given this report, I will assign the counted-by field after
+allocation.
 
 					-Alex
