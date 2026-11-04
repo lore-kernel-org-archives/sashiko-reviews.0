@@ -1,57 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793817698;
-	b=UuvYmrPL+9gNmpQZuJYq0IHQXKS/bSeZW0L307JPtj1NAUtqUpxAyW/3SNwFLADs3Kke
-	 T1FKwsRty9l2Y0G+aDLH429xt8V5KoIFAmXhgWCO/jLurXZkDvjes5xFS7sXKIsGotHt0
-	 eiEHh4jDQj6bZbP7/qBQE5Obv3Cj4Qos9p8GnWJeAX6E/zHn3hXJmX3+OV63jtqaeJLS8
-	 BM78Fr6DRt3pqb/IsfJGKORcpSr2dgiE+sU+gapwrFzkQlpGv0g85BaRzyb+u0SeC32n0
-	 IbU2GGKSJr4lZX1up6tlIg8rUU0eHyiRZYhFozcCRIqYjQwtgnEXTdWRfjoykzN6nAQ==
+	t=1793818308;
+	b=Ze+oTLJ8fTefc6wsbR9mFeAt5WzqPu3AS69ICcLpibSicNM+91Y3WmIgOXvaGy24RwNw
+	 2/fS29w/OmFwaypLUya6z3ox6xeeMs40bS7OCt73vD9HxZXNVSfvlBzP88VyD7LyvvD9J
+	 NMTnanVSv7zTLwObFEqgY71ep+tAeH1OLPntKfHFXwwx9m07VhOBOH+Cyx6laaNJPx5DY
+	 hfmq0imYBkqrBfD2mYL55tfKLYSvv2hmoo+U5KKflEMHqRlYaGOgKuRstfO++ylTRz08K
+	 u27sQCUCwi6Txs6qv6nT3XXSdeSGd9XfuCuSxwu+79Yu2l+hmmRiEVWuZuRJVU3DdJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793817698;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-Id:
-	 In-Reply-To:References:X-Mailer:Mime-Version:Content-Type:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793818308;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=ofzQXuXOTQViNJOurFeSCLUNFQXJgGfKrYOJL/pV8Us=;
-	b=i1FQgpmdDcUVhlYFBq48jVMIMEPQq8m3TpEpkhXTtr0tpfXK2ankk+eF/7kAseyRrnJJ
-	 KYkwEFfPyDa70tE18JcsuszSSecqCdWlA1vPSlc5GxoQZl1HXAMGpHgdmoQFHwBoicjXI
-	 PFigWVwlPjJWc4h+KjEWez1z6+s9EATD0+0YbwJepEst9Q+f5BzkW0BwwYjyO0MZ7a2ta
-	 THAzok2F6+D8yt2R9TJlsFLyX6WkTWTRRJiaiPQ+r7OBxndCgIAbrZosWiOf+cn7khtrU
-	 L3rrh/pMGfT/MF6OuHSKm/538V7RH/tXFNK7OLUaUKT2j86lkEbfEWPD3oVLeE/MwCA==
+	bh=FR9ISTDLDcSmV8QN0XnoAmz6g1DwpZqiIgX15CQUaGg=;
+	b=xANv0sLk6vLDjCRaBkgRwmae1vka2Uhh0mYgT/watiCMGhKpynBkSxcP6KECpLCZFxPe
+	 qPf3asicu5tuAH7uxVDWG5fD1nsuI8NBfC2ZHABh0Hc8XqLGXAEpdDj/2smGdiXYJgLIh
+	 J+1ul6XC9svxGJLaoxfmbbL+p00joGkc1x/u2vvGKfiAZ3IJ6P9827QksDQgv5HeyOEnr
+	 yD9y5NjZLTUPXuW5U0gB4b3Iz1XfYBjp05rjvAJ/yTNUNgBKnup/Uwh2XSREVQscHiroW
+	 Khcgw08p+YwM6ad11CmbxVTK4IB6VdTlARHVjs4TooAQHZ8+9XRnTfzvfExdfgXBB1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=nbQjELS8;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=crusoe.ai;
+	spf=pass smtp.mailfrom=crusoe.ai;
+	dkim=pass header.d=crusoe.ai header.i=@crusoe.ai header.a=rsa-sha256 header.s=google header.b="WUlcLQf/";
+	arc=none smtp.remote-ip=74.125.82.180
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EED606A32E
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 18:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1078606EE83
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 18:51:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1078606EE83
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=crusoe.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crusoe.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=nbQjELS8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35931F000C1;
-	Wed,  4 Nov 2026 18:41:37 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=crusoe.ai header.i=@crusoe.ai header.a=rsa-sha256 header.s=google header.b=WUlcLQf/
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-36a0f27c9f4so1912470eec.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 10:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux-foundation.org; s=korg; t=1793817698;
-	bh=ofzQXuXOTQViNJOurFeSCLUNFQXJgGfKrYOJL/pV8Us=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=nbQjELS83W3qKX43J5wf4hpDwuuzTliSbkKHJoQ+eN6FRXXH36pnKjl+1wP16Z1hy
-	 8foClGHpX8xG7k2xr3M4MJyZNkdn/s8EcM7J+ga/NymFpaON/J4cb2dcdJs6UrND9i
-	 oORabaNb9ZlID6t7WDzhI4XnHBizI3x5OzMsRFDM=
-Date: Wed, 4 Nov 2026 10:41:37 -0800
-From: Andrew Morton <akpm@linux-foundation.org>
+        d=crusoe.ai; s=google; t=1793818307; x=1794423107; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FR9ISTDLDcSmV8QN0XnoAmz6g1DwpZqiIgX15CQUaGg=;
+        b=WUlcLQf/ipQD0S9hASRgvNq5qLdWGPc0niw0eSqBvdfpvgPmPfEweKnl0+U2QplxaC
+         hU0W1fSYjRarBA0Iy0DjQtSHDhr9noxYBtQzAVTnMCfdxUFd5h54JFXldkDn4ONBQegE
+         qTYhsnK0aWf23KCwWFCpJhhvh1ihjUtg1HQk1aP/DsDd2VRUCElvjq1nMn064U7Htxw5
+         cZxhIyvso9cAt1BgaPsvSTDKVKDsMBeQdx0zpg/3UP1+WsKsFOlCZlm8cEMk0vDPd/t3
+         JNG+SUcy5mGZppucCM0Qrkw2XHwBf1lpweTcWD4eO8VWh4iZOjwZjQG22uhVZ3ghpv73
+         mERA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793818307; x=1794423107;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=FR9ISTDLDcSmV8QN0XnoAmz6g1DwpZqiIgX15CQUaGg=;
+        b=nmnfCyUVN9lpJ3DWNmmjTIHnWFL/9RJ3dw8qIPYEnEZZ9mN1juS8aKkoz0mp3DjgxL
+         S57U6F0AKLmzltvCRPxyywtpVsta2H1c2rYFIUMS+vmvF573FVwZdvSFei/gNGPRM0Sp
+         yvaA37PXbiuvdiDUqoeGrZPrCaCWa2VVUeVn+fK2zUvzwQWPlD3JYWzbcyQiHiPjoqLG
+         V3HcT2acHm/3jpa+W8RHsIaajiZAmRYnCkMzNcrIDnObvT/Onj05UUprJJFciNJaVuLy
+         3bLTafZpqRzZ6pjfof8ahWC69DbZVHHI2VwikjaALU22rHN/nZR131JDbUtAlPsP1PUb
+         hKmQ==
+X-Gm-Message-State: APuU4Z94YrCVEUgaw3dcZLhn7EBTAf/OrBbX9P/IEl8CPECnyCis+vtJ
+	dA2fKbBzgiBowW2/Q5+WCKkRqf6R67i3UggVrjeFeTe7DSbJoAl/S8bUrfV0+nbjB6ZzV4sY3i5
+	glztrWVM=
+X-Gm-Gg: AYBFou2x2E5fMvTDafPKExSZjoftnbquvSHqDea5T36cGouEV4+cSPMEJbv7KDNuNdl
+	qXCZv0Ix8K17LwNRatoHhtDW5i0A13Woic1g2rMvK2MOQGRzPJSW+VqnOtMuWrcoMd0f77j2MN3
+	GFmDX8KebWzw0t14AjxWcLerw3PspPviFprz1/gX9YvqRlMaO9/Wh6Ig5RzxhEhvOB2HQNsKd8o
+	4RpI9AEjxdpJekrvJSKjYhH6KLm7OeqrUvzuvXtWpOOqOpoqvICmZOq+jUPwvYqNVtt9aRNrrRc
+	e+W85FNjS1jYew8fa0jbbBnb+qydvEq+jruat6VGSjLnwAd6JFPcXbJnxJa+huTxy5zh2+itsa0
+	+5GyNDtzWMEzJ3phpX6uoi67TfqgMV3qhy255FDQlwZSrhzmj9fTLGGQtr8/7mBzbXC620HqW5L
+	RXm4slSIA++KWv9dmPM3f9v+1yjZHbyRI4azC2yXr+neeEewBYV/f9T2rjk4KuyKw2c/tmSmOZC
+	fJnrIgqRe1zCq7QTwfgufVmEjY31hlZdvrDWodhSJDftjTDQPJ+06MG+h9ZqFoLEnX4IEgtLCAr
+	ScpMWirYPl7baTosEmDwzx/WdhPp81IDTcB0P7D7/HvxaX2F1caSq9vIDv+tMFo7UUTRZdvtEbU
+	=
+X-Received: by 2002:a05:7301:6498:b0:36d:bf43:93ee with SMTP id 5a478bee46e88-36dbf52d6cdmr849344eec.28.1793818306527;
+        Wed, 04 Nov 2026 10:51:46 -0800 (PST)
+Received: from MBP-Saravanan-D.civet-hops.ts.net ([67.208.231.220])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36ca3966daasm12193389eec.23.2026.11.04.10.51.43
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 04 Nov 2026 10:51:46 -0800 (PST)
+From: Saravanan D <saravanand@crusoe.ai>
 To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, Liam R. Howlett (Google) <liam@infradead.org>,
- linux-mm@kvack.org, "Lorenzo Stoakes" <ljs@kernel.org>, "Chris Mason"
- <mason@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>, "Andrew Ballance"
- <andrewjballance@gmail.com>
-Subject: Re: [PATCH v2 1/3] maple_tree: Fix rcu reader NULL dereference
- after the tree is emptied
-Message-Id: <20261104104137.2058705ac29734a7ab5666c1@linux-foundation.org>
-In-Reply-To: <sashiko-outbox-194509@kernel.org>
-References: <20261103020724.2614498-1-liam@infradead.org>
-	<20261103020724.2614498-2-liam@infradead.org>
-	<sashiko-outbox-194509@kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+Cc: Saravanan D <saravanand@crusoe.ai>,
+	sashiko-bot@kernel.org,
+	linux-nvme@lists.infradead.org,
+	kbusch@kernel.org,
+	hch@lst.de,
+	sagi@grimberg.me,
+	axboe@kernel.dk,
+	nilay@linux.ibm.com,
+	dwagner@suse.de,
+	sgogte@purestorage.com,
+	hare@kernel.org,
+	hare@suse.de,
+	linux-kernel@vger.kernel.org,
+	iyamahata@crusoe.ai,
+	kiyer@crusoe.ai,
+	ganbalagane@crusoe.ai,
+	sjpark@crusoe.ai,
+	bchen@crusoe.ai
+Subject: Re: [PATCH v7 1/2] nvme: add per-queue sysfs directories
+Date: Wed,  4 Nov 2026 10:51:25 -0800
+Message-ID: <20261104185131.92361-1-saravanand@crusoe.ai>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <sashiko-outbox-197419@kernel.org>
+References: <cover.1793800758.git.saravanand@crusoe.ai> <656dac7329c8452efe786b0c76a3b8c0bbf53159.1793800758.git.saravanand@crusoe.ai> <sashiko-outbox-197419@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,104 +113,37 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Tue, 03 Nov 2026 03:24:58 +0000 sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] maple_tree: race in mas_prev_slot() when root is emptied after mas_rewalk()
-> --
-> 
+On Wed, Nov 04, 2026 at 02:17:33PM +0000, sashiko-bot@kernel.org wrote:
+[...]
 > [Severity: Medium]
-> Can this leave mas in an inconsistent state if the root is concurrently
-> emptied between mas_rewalk() and the mas_root() read in mas_prev_no_node()?
-> 
-> When an RCU reader in mas_prev_slot() hits a dead node with save_point > 0
-> and min == 0, it jumps to dead: and runs:
-> 
->     mas_rewalk(mas, save_point)
->       -> mas_state_walk(mas)
->         -> mas_start(mas)
-> 
-> If the tree holds a single pointer at index 0 at that moment, mas_start()
-> sets mas->status = ma_root and returns NULL because mas->index > 0.
-> 
-> Back in mas_prev_slot(), mas_prev_no_node() sees mas->status == ma_root,
-> sets mas->index = 0 and mas->last = 0, and performs a second RCU read via
-> mas_root(mas).
-> 
-> If a concurrent writer finishes emptying the tree (setting ma_root to NULL)
-> before that second mas_root(mas) read, mas_prev_no_node() returns NULL.
-> Because mas_prev_slot() only checks xa_is_node(entry) to detect a concurrent
-> root change, it returns NULL with mas->status == ma_root, mas->index == 0,
-> and mas->last == 0 instead of mas->status == ma_none and
-> mas->last == ULONG_MAX.
-> 
-> Could this leave callers like mas_prev_range() or mas_find_range_rev() with
-> a bogus [0, 0] range, or cause a subsequent forward walk on the same state
-> to skip index 0?
+> If sysfs_create_groups() fails in nvme_add_queue_info() after
+> kobject_init_and_add() has already published qinfo->kobj in sysfs,
+> should the error path call kobject_del(&qinfo->kobj) before
+> kobject_put(&qinfo->kobj), just like nvme_remove_queue_info() does?
 
-I plan to squash this fix into the base patch ("maple_tree: Fix rcu
-reader NULL dereference after the tree is emptied"):
+I'm surprised this sequence went unnoticed in the previous versions of
+this patch, since the error path has not changed since v5. My fault
+injection runs used DEBUG_KOBJECT_RELEASE, which would have exposed the
+directory left behind, but they set fail-nth on the task writing to
+/dev/nvme-fabrics, and fail-nth only fails allocations made by that
+task. nvme_tcp_setup_io_queues() starts each I/O queue from an async
+worker, so nvme_add_queue_info() runs in a different task and none of
+its allocations failed.
 
+I will send a v8 that calls kobject_del() before kobject_put() once
+kobject_init_and_add() has succeeded, so a failed sysfs_create_groups()
+unlinks the <qid> directory before nvme_add_queue_info() returns, the
+same way nvme_remove_queue_info() does.
 
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: maple_tree: fix reverse iterator state when the root disappears
-Date: Tue, 03 Nov 2026 04:28:56 +0000
+I have also extended my own testing with a run that uses the failslab
+stack filter to fail each allocation under nvme_add_queue_info() in
+turn, including those made from the async workers. It checks that a
+failed add leaves no queues/<qid> directory behind and that a controller
+reset can add the same qid again. It fails on v7 and passes with the
+fix.
 
-A reverse walk restarting from a dead node can observe a direct root entry
-in mas_rewalk() and then an empty root in mas_prev_no_node().  The second
-root read returns NULL, but leaves the iterator in ma_root with index and
-last both zero.
-
-Consequently, mas_prev_range() and mas_find_range_rev() can report an
-empty range of [0, 0] instead of [0, ULONG_MAX].  A subsequent forward
-range walk starts at index 1, omitting index 0 from the empty range.
-
-Set ma_none and extend last to ULONG_MAX when the second root read returns
-NULL.  Keep the existing encoded-node retry in mas_prev_slot() for a root
-that has grown into a node again.
-
-A deterministic userspace Maple test reproduces the stale state through
-both reverse range APIs before this change and checks the full empty range
-afterwards, including a subsequent forward walk.
-
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/sashiko-outbox-194509@kernel.org
-Reviewed-by: Liam R. Howlett (Google) <liam@infradead.org>
----
-
- lib/maple_tree.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
---- a/lib/maple_tree.c~maple_tree-fix-reverse-iterator-state-when-the-root-disappears
-+++ a/lib/maple_tree.c
-@@ -3930,6 +3930,8 @@ static inline void *mas_next_no_node(str
- static inline void *mas_prev_no_node(struct ma_state *mas, unsigned long index,
- 		unsigned long min)
- {
-+	void *entry;
-+
- 	mas->index = 0;
- 	if (mas_is_none(mas)) {
- 		mas->last = ULONG_MAX;
-@@ -3940,7 +3942,13 @@ static inline void *mas_prev_no_node(str
- 	if (!index || min)
- 		return NULL;
- 
--	return mas_root(mas);
-+	entry = mas_root(mas);
-+	if (!entry) {
-+		mas->status = ma_none;
-+		mas->last = ULONG_MAX;
-+	}
-+
-+	return entry;
- }
- 
- /*
-_
-
+Thanks,
+Saravanan D.
