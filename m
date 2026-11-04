@@ -1,54 +1,130 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830159;
-	b=aixFdEK4q3yBc0DAEY3hSVY0vrZtP7lHE0SRJdtRn/4SCykQ9uFqSTfLsD2wa8M7YY3y
-	 5FoRN07Ikv/NKb73epZ8L5yMaR694mboz/GT4biiuHxMnzJxClr62bXE1VlYhL5xeCrVL
-	 BJqHfkI/nBNUGqGEMQ2iOc84IdS8n9EWldFiWJRIKLXK3JW5KG4wDD2nPQSKC+X5f16AK
-	 +DNEN//vgyeB+O4wdvCXuv1Mzc8K3kuu8rCx1sVLg1wHk+kncRkIXUhaleHoCJ2VSiXja
-	 o56LNariKK6jDlk+H6Na6+pRJMj6ZmCeoPJGr1JrXmnoF2XZYANRLzWsnr7CKqNqHlg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830159;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=C25Dh7MRWLftFBeoGzTyfZNFjeA6A0kP3xkpMFR3t54=;
-	b=Da+4aQ6B1VlZj1aNuy5969ZefMYfyDQvkVFKygoAsJQLnLAjn3bUerExqYoXiRZYw34W
-	 Ql/OGI2DrtgXRPZaWI9TWJ+JFD+IzRs1KYDXW8qRJ7UV/mLarpdBeZIYGvMnmQQAvQhRr
-	 LY5QpnSt9vuPJbbBJvhJqHdeQ3NR1TFaQFx5zJMfz+dFt5h6UkvT6HGAq2clLs0uv7DBZ
-	 fTLxqAWPNAkbt3CcfYxxbXNH2Bgmd3rYLvOOcfkQz6g8I2hWrGeBbRJo9El1VRzNZVkar
-	 kZWWcpuExuCQ6ij2mUIa9Mp5aWBxNG9QarTQBY4fTeZuRn65OKd5vIQ9vNRyKK/RyKw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HLeBrogx;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793830861;
+	b=CYYa/ZTq6LpCL8ZJPnFqrW6N/gkaGfP5TOdVzglPd0HEbEFZ70A6VO9f6tlVNKf0/p0g
+	 CV6hIRZvvG2zvKO0Lfe751OExmKhq3MizjnrHOp8Ouw84oxgRNi4ksYXLglol6axGaM9p
+	 rYBQDwbGoh574oqvwaYQ/+GdTWOEjQ219tDyZBxHGpv13OJgzhJpS6OVONYgZA8IIModO
+	 AcDkbIE70Id4BLbYOtxF65aeew0LLXWa1lGlosDmR0t3g1I6hF55V4FwMegXrLi0GtTIB
+	 2EDF6MNnOfPVmdvo9SojEHCffd6x6+OkPLvzhvkL86BMGWf+pqJKJ6bBwjj7sGQSdeg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830861;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
+	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=BZzi6QQrkKgTQF1Pxg1VwatoTUMipYTKGYwqx0KJ05s=;
+	b=QmSpI8GRLDvkjjX/JLpwgrq2MBgDxykW8iaA9o1H5aOvuh1l7BwOd1g34BO7LQ/cwSOh
+	 K2oe+qdqX6salDgHtn6oSa+QoP0nr3nifmCmX4jagq88c6euMMTLqfhARFbFfKvpRHhIR
+	 BQfG5w+wu+R5/JLWK3SFFHiXKNM+4Me8PoeNCBfxdsyweoFfhb/G1cNkJx+vjAZrh6KE+
+	 H57178290RBVH4c4V+rszFWm+mV57UPzqTGrbFbN7l9r+RoADtE82W2kAJ0YfJGc4FSDA
+	 EHQdqfA28VC9+ZMR66TJlfxFvZ7Voi6Fr6F8v7fjm7sIxrKSFmaygbZ9wNHKFoqrzjA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RR54gY9O;
+	arc=fail smtp.remote-ip=192.198.163.12
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC00606EE9F;
-	Wed,  4 Nov 2026 22:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E87606CA3B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 22:20:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 00E87606CA3B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HLeBrogx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEB51F000C1;
-	Wed,  4 Nov 2026 22:09:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793830158;
-	bh=C25Dh7MRWLftFBeoGzTyfZNFjeA6A0kP3xkpMFR3t54=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HLeBrogx7aFTt2qQDFxrUQ9XeC87LA7O7TCT6KBn1Z5rIsJD4iaewsU3zzFQGX7A/
-	 u8wDow2w24DRGzrPfPboPfFX/9gaOpnAV07IDH3aUF/iMyry4Rjp2gUlBOMRvL6PRk
-	 o1ddi4tP75gBCqAeHgxfc1HuV1jFNLhMbB6gUmO/DbOZPQqwDrwv3arK9vonvVUxaY
-	 qv85HLM7FRP0jaEdYBLdaEkAaEk26K+a4Tjqu/65rF4VH2w8hJj2NskrhFAXc6A7n9
-	 jervBzp8WGC9WIiUC+UV4GAxY5Bh0qd51xocstvINkRHmKuoNoNuoGTgeWzbKjZKo7
-	 Heh7lrBbTprQg==
-Date: Wed, 4 Nov 2026 14:09:17 -0800
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v10 2/6] riscv_cbqri: resctrl: Add cache allocation via
- capacity block mask
-Message-ID: <auutDXK15MV4tSyH@x1>
-References: <20261104-dfustini-atl-sc-cbqri-dt-v10-0-1636a003a3c0@kernel.org>
- <20261104-dfustini-atl-sc-cbqri-dt-v10-2-1636a003a3c0@kernel.org>
- <sashiko-outbox-197711@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RR54gY9O
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793830859; x=1825366859;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=3kcpN8MMn/Ar2TcQ7rRAo6fykuYZ986cWE5wyQ/c2eE=;
+  b=RR54gY9OMw36otO1JxAwr4dYt5EmqaX1Uq5XF7TrebhaB1rZkns/XOaJ
+   8EVT/eC0I9pUCtgGyyWOJ01rEmE6yE01aEkUEbvsBFxaKSAMuPqPJRa2i
+   c/u/odWkz2D8N7/zk2QTpYJPSnaQkilm+PQz0Ag0qYNZY8z0+9SfaeHNE
+   eagCoMs9jt3RgMUUBmNqOQQFjDXzIdLenhJ4MzkCoJn9W/+IYtGv8GnQd
+   px4h01BS85ybFOWhf7SvYiHj702JV8v3cDJ9EVlHPex17zNbHW5EZ3sdb
+   hojRhXOuhqEXEnCiJ6zcVRc3Qq8uIILmnAEUn7UnIw7WwLyhf/9DcfpGQ
+   Q==;
+X-CSE-ConnectionGUID: WuB+005OSSCZ1vy5maU8sQ==
+X-CSE-MsgGUID: sfw5Ui/dSwiLwlgtVx5ILg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2504622"
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="2504622"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 14:20:58 -0800
+X-CSE-ConnectionGUID: s+ReKO0PQ0KhZpxl84Fr/w==
+X-CSE-MsgGUID: fH6oUfUiR1qKTHP7ZLeMJg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="6837728"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 14:20:58 -0800
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Wed, 4 Nov 2026 14:20:58 -0800
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Wed, 4 Nov 2026 14:20:58 -0800
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.70) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Wed, 4 Nov 2026 14:20:57 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AWCTde10pOKMOzDYjFOQsh9t9AEmHek5oOvsDwjlRGXA9XZGMpBMzNjQARyJS+NqBxXhpShT8Gdu9VpFBUeucLG9IT3QCetHUN4ZNoiftXVy/GS/+ERkV2GvBx/JvHVMa0MJ/7IqVkW9DNlkC8F2EL03PZdbBUwoA+MXByZkVnVbXaeSfsPlaw892BGvrbGFzYkH0RoSFiJKtiBVYC0xXikc+KpkuEOLw03qIPKxkIG3U6DfiEvC5Ia2FOs2ffcClk13nx/o7kkl5aWcvoPPGfw4O2frrQ6XzWU7RswiGJRC77v1FOc1CmGSKSfvjU0RhXVxpZ62GeXJXln35gRijg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=USZOlqhtlkaiQei0QWuyiIicrU9VGu+FKS4/tmifWoc=;
+ b=G4EqZWnd8RjO6OjKbmKAWmBT1zq+wSNhiYC20WxbOxqPK33j0tP747EVwd8zenVsw+C37NvuYEGbChw/7vV5C8UjxkA1RSzWJ6ykM9ejiGxdNPqvq0CaA1SxhVI8xEzMmFg41iroXWlhZu5zas3QISLTNkP0GnzhJlXlLow0ldo/BAP6s6Mm5b1u3a+pfiZHCtIk+x0otoXCOa49CCiuayJolu95LlA8VkRwz8X6ZgiXhkAEc08DhZnbHXPjFxYDvDeVZQNV/dJK73P2I8ZjScBswh4h/qZi1gosU0RJW76Ov9whWWowuGQ8oFrJh2iRJsEXjGvPnpN9I4zLO212fA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com (2603:10b6:303:95::23)
+ by SN7PR11MB6749.namprd11.prod.outlook.com (2603:10b6:806:267::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Wed, 4 Nov 2026
+ 22:20:46 +0000
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd]) by CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd%4]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
+ 22:20:43 +0000
+Date: Wed, 4 Nov 2026 14:20:41 -0800
+From: Matthew Brost <matthew.brost@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-xe@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH 2/2] drm/xe: Add debugfs stats for DMA-mapped pages per
+ order
+Message-ID: <auuvuRgMmLoP4sWT@gsse-cloud1.jf.intel.com>
+References: <20261104215228.1533692-1-matthew.brost@intel.com>
+ <20261104215228.1533692-2-matthew.brost@intel.com>
+ <sashiko-outbox-198211@kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-198211@kernel.org>
+X-ClientProxiedBy: MW4PR04CA0381.namprd04.prod.outlook.com
+ (2603:10b6:303:81::26) To CO1PR11MB4787.namprd11.prod.outlook.com
+ (2603:10b6:303:95::23)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,111 +134,263 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-197711@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB4787:EE_|SN7PR11MB6749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6ffea263-8269-4ea6-3d6a-08df3ac1dddb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|6133799003|18002099003|22082099003|261009223027099003|261009221227099003|261021123027099003|261021121427099003|261022105027099003|261028144727099003|261022075727099003|261026140227099003|261026121527099003|11063799006|56012099006|10067099003|4143699003|261102123227099003;
+X-Microsoft-Antispam-Message-Info: JiMlGg+1tE0pzLMgDjFTnSb5HBY4W+lu/K9AA0cMNBeN1svZVwnEErO/Kx7RozPBPXWfhUvZ6vCMLUoy5teW2XCqikPYnnxwqEEQasMaJGtsQHkODN9eun8B+dZ8nKAP2Ftxb2jr+HAvEsMS+ZnnLNA/voEvr75Izyh7GfXs/clffJ4utelWbLzTeO/UNlHRzMhA0i/fLAmpdTYe2fyr8XkY1NDFiXTDiQHg9VGBR5NdabxKbgTY7ZWlkymDBaMv6lxGTVls+SYiVV2lGPoEHhqaKjNWfl1RYYalAVZv8U8HnY3fQhCCpv07LvLhpC0doYXDD2Cpeh3Pqok6/zd01Z7Y5aHxeFB5b0XA3LYtgUQjHIMzCrHE+tmJNH8Nlh6lcvg4ViF5CMPxx9ssP+6F3zNlG4cvlylmwqjdfQXCUgb1UcmabsuCLcQkVNqNwekbxXUfvXpo2mdNJid+cRMoGXZdZa9j3teLuxAq7dVjxn9yHaAgcbo8vps0No9ZqOSlPGF1tqBK9Ou9MFEcJxCG6+lDzVsrQ1xamskrtSwOKFj+tpK34CJC4wIIhz/HtEJ/M55vd/7Sy49XNu451nZrggMKRWwmONgmEMe9ikaa1cA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB4787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(6133799003)(18002099003)(22082099003)(261009223027099003)(261009221227099003)(261021123027099003)(261021121427099003)(261022105027099003)(261028144727099003)(261022075727099003)(261026140227099003)(261026121527099003)(11063799006)(56012099006)(10067099003)(4143699003)(261102123227099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?yAAE2E+Eo81LtBDi5KTrPcwuive6Y3rI6v36Mo6TfTh36CmE9CXjiLMi3A?=
+ =?iso-8859-1?Q?K5F6sBTgpOosrHQZSZ+N7np91s2xFQAOiBTFlCMVqMQUNsbHJM/n8ACQUt?=
+ =?iso-8859-1?Q?a+/Tx0vr0Kb17ImJQVyScrFEVQByeJJskeFyrCTlwVPlk6Y9jDfDecuS1c?=
+ =?iso-8859-1?Q?+BaTa21YBlcWNG8n961RAWXBbgZuiZAHw78tZnJJIojPUvTrrCPLFDCyKo?=
+ =?iso-8859-1?Q?CIsYKdhL3D3NH4lA+eW+xWyCrvdjlTxXBSKDXYhPrZaI9vrnxSBSORsWE7?=
+ =?iso-8859-1?Q?qhZx9Dqsr8PGqIB9ARFpsG73CjqV8hMntuk5H65vH4Wzncudji4O6PnAGM?=
+ =?iso-8859-1?Q?rs648S9/TS9FZpEvrBaEDMrycVhX2YliFxXfhCBTC8kBaOZ2rkAa6U6aK4?=
+ =?iso-8859-1?Q?TpAvtrqFEoeOGYm9YVZvCK6VJEV5CmWK1303ouP8lGdEQw0/tdcViqf/vY?=
+ =?iso-8859-1?Q?ME3dsdWmDaZJsuErGyxPJjAhFL4wxhwESF8rFdYmSfUGGqc9j08ZqPxaNO?=
+ =?iso-8859-1?Q?ynV5JRe4nEiMA3yyxj/u7eDGZGx8ASYQrMZ9ixXjy9sb5DJwQY9YGeqyFd?=
+ =?iso-8859-1?Q?XombbW0ZxvstFP4Y6IKff5+uJgNc7TdxJvdCdZX7oLmr0YYy4oX1PgTxrg?=
+ =?iso-8859-1?Q?QHA60Z5Fy4KROvRkdJvoqyWDb1p/XpzDFZLKEohy1yoyU5NTNFigDpK4y0?=
+ =?iso-8859-1?Q?qL6bZb8Q9/dbfmgaeu//2kIQC0WyyeNmSQGftVbvzM22CiABLYWdExmZ8L?=
+ =?iso-8859-1?Q?Ya29zyeJhrC+gYHsMSQj01cAebRIuE1weLP2XTzTHz4RYluasxbawF6nfl?=
+ =?iso-8859-1?Q?EhBEYJ80QCzm8nP8DhbJNF7lkT4GoPzOG8qfZFtb48bgKo8DGHY/bDJteB?=
+ =?iso-8859-1?Q?o8SEG/hgzksKqImrgR7R0gSDw5a8bIe1wCOf7ovyVZjy5tO4hFCvWN1/x6?=
+ =?iso-8859-1?Q?N0cBq/QUsgnmjzrFAJL/4EiAwR7fZZSAgAi/CxVsCe+2lpZ1EP8fAOo2dL?=
+ =?iso-8859-1?Q?FRVZ+4VmeIF2GqMEytQeS7uegmL57ioMwMHI3JVV7oqY4ihIwgZlhwRf2F?=
+ =?iso-8859-1?Q?6hUi+os2+u0LWxDf8wKYfviZM6MNX3oABBvydVIAHMdZjMMWeJT1kq7eUr?=
+ =?iso-8859-1?Q?f/F3yQgDCaFE9ZvytcyCvkINcFOxvAyx1ZNUk+IFoHX78AXCJJr4SorKjN?=
+ =?iso-8859-1?Q?xfEPcNgK7XRidRJtm7HlkISNp2fM8NHG1t3SWnpCIcjHZI5juF3ZVevOcS?=
+ =?iso-8859-1?Q?kuaZr9K3wmzKAU0jg0vu5uWgtdYqp4eQGIFrvmliznocXIkLlXKR+PIanv?=
+ =?iso-8859-1?Q?lW7J/VBFR1dR4rNXLdexuZKxTDW0fCP+t+0NUJ4I/Wn3pr2ModKSI15xQZ?=
+ =?iso-8859-1?Q?rZ/FDKNtfsyZhFZbZxxm3kpmXvVJV9jYEPK5RkX9owK7KTQZ972ny2PPyk?=
+ =?iso-8859-1?Q?85VdhNkyrNuM6Oo50lVIPMcbS6y6OnVw5JMdPhQaNavCGnUgEWY+EqOwP3?=
+ =?iso-8859-1?Q?h/Y+RKtteYpZZI0GLiEyg8Vq54LVcXbruSrDPN2qguWhOgss7JwUVoMupX?=
+ =?iso-8859-1?Q?QVe7N0sHcN0GsTx3ov/FuHAMmBLyFxQP2WaNNHuJTQiJnY3s6OjKe21thH?=
+ =?iso-8859-1?Q?ZsIFgLa9v/U7cNEblYPbzm8nOSrBbkHdb9z/ArkLp0RE71pUzckYJmffpB?=
+ =?iso-8859-1?Q?bk8e7RyOCegszmMuQqXGJEfvAszaPAufx+/cSGHAJYHDYDF/mbvbOnPifn?=
+ =?iso-8859-1?Q?jzFZq3FfNynuDBS9iGRUCeLqSV8yVMh7t9TuH7tE0VQNFM08tYBUloGlKf?=
+ =?iso-8859-1?Q?5bJatpblPQ=3D=3D?=
+X-Exchange-RoutingPolicyChecked: OMtGj2wCU9FgG0BoNf4OmnZASrOtiGYUKiVGA+CLJPH3YZ+LPrPc6VcZ8hoDhxsGEYWnMcHdHNCj1uejHoyllyyvyt2iJgaAVqLstFimBIdH3FZRgrcvzEvTPHAxaA+uTfjgb+6yd5JBoo/7So0uy8CXt/vzeBkcvhpemXz29Ba8F9PiVfuBVqW8vPlmRc7adEWMMZ2NKPtAJ2ywg2IsxxA1EJr2gO5hpUivt8tkEvgxfvtpUulScFYV7Cq9+J1R4EDuxKtx80BEIVwE1ud2ncG0eJ0Eh76Bww9z9sYDDyvcr46m7l3mTD6c4CEhv93PQEH/nY9k1HM1eqS1QuLC0A==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6ffea263-8269-4ea6-3d6a-08df3ac1dddb
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4787.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 22:20:43.6364
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GPoqeTfwYyRAhOtWBBqZIOVePpj6BJMc7T/JLOzn4QR3C0AxHn8+/S6A1jrv5LOYIl9h594N76C4qDvsG7eH7A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6749
+X-OriginatorOrg: intel.com
 
-On Wed, Nov 04, 2026 at 05:06:58PM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Nov 04, 2026 at 10:15:05PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] resctrl: cbqri: ZERO_SIZE_PTR deref on CDP mount when rcid_count is 1
-> - [Medium] resctrl: cbqri: stale cpu_srmcfg_default and CSR_SRMCFG across cpuhp
+> - [Medium] drm/xe: premature xe_device_assert_dma_pages_zero() before ttm_device_fini()
+> - [Low] drm/xe: duplicate dma_map_account callbacks in xe_svm.c and xe_userptr.c
 > --
 > 
-> commit ba22d9f49019cdbd30a554bde797ded425016085
-> Author: Drew Fustini <fustini@kernel.org>
+> commit d97316f4a4863b594d6196037dc27dd4e278bdd0
+> Author: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 > 
-> riscv_cbqri: resctrl: Add cache allocation via capacity block mask
+> drm/xe: Add debugfs stats for DMA-mapped pages per order
 > 
-> This commit wires RISC-V CBQRI capacity controllers into resctrl as L2 and
-> L3 cache resources, managing control domains across CPU hotplug and exposing
-> capacity block mask configuration.
+> This commit adds per-order DMA-mapped system page counters for TTM buffer
+> objects and GPU SVM / userptr ranges, exposes them via debugfs at
+> dma_mapped_pages, and asserts that all counters return to zero during device
+> teardown.
 > 
-> > diff --git a/drivers/resctrl/cbqri_resctrl.c b/drivers/resctrl/cbqri_resctrl.c
-> > new file mode 100644
-> > index 0000000000000..165b0027bbe0f
-> > --- /dev/null
-> > +++ b/drivers/resctrl/cbqri_resctrl.c
-[..]
-> [Severity: High]
-> What happens if a CBQRI capacity controller reports rcid_count == 1 and
-> supports_alloc_at_code == true, and userspace mounts resctrl with CDP
-> enabled (-o cdp, -o cdpl2, or -o cdpl3)?
+> > diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+> > index 273e2c45fea9b..c40bb8f7c697a 100644
+> > --- a/drivers/gpu/drm/xe/xe_device.c
+> > +++ b/drivers/gpu/drm/xe/xe_device.c
+> > @@ -377,12 +377,42 @@ bool xe_device_is_admin_only(const struct xe_device *xe)
+> [ ... ]
+> >  static void xe_device_destroy(struct drm_device *dev, void *dummy)
+> >  {
+> >  	struct xe_device *xe = to_xe_device(dev);
+> >  
+> >  	xe_bo_dev_fini(&xe->bo_device);
+> >  
+> > +	/*
+> > +	 * Assert the DMA-mapped-pages accounting only after xe_bo_dev_fini()
+> > +	 * has flushed the async BO-free worker: BOs pending async free still
+> > +	 * hold their DMA mappings (and counts) until the worker runs, so
+> > +	 * asserting before the flush could trip a false positive.
+> > +	 */
+> > +	xe_device_assert_dma_pages_zero(xe);
+> > +
+> >  	if (xe->preempt_fence_wq)
+> >  		destroy_workqueue(xe->preempt_fence_wq);
+> >  
+> >  	if (xe->ordered_wq)
+> >  		destroy_workqueue(xe->ordered_wq);
+> >  
+> >  	if (xe->unordered_wq)
+> >  		destroy_workqueue(xe->unordered_wq);
+> >  
+> >  	if (xe->destroy_wq)
+> >  		destroy_workqueue(xe->destroy_wq);
+> >  
+> >  	ttm_device_fini(&xe->ttm);
 > 
-> In drivers/resctrl/cbqri_devices.c, riscv_cbqri_register_cc() only rejects
-> rcid_count == 0, so a controller with rcid_count == 1 is accepted. Here,
-> cbqri_resctrl_control_init() sets res->cdp_capable =
-> ctrl->cc.supports_alloc_at_code without requiring ctrl->rcid_count >= 2, and
-> resctrl_arch_set_cdp_enabled() allows enabling CDP whenever res->cdp_capable
-> is true.
-> 
-> When mounting with CDP enabled, rdt_get_tree() -> schemata_list_create() ->
-> schemata_list_add() halves num_closid:
-> 
->     s->num_closid = resctrl_arch_get_num_closid(r);
->     if (resctrl_arch_get_cdp_enabled(r->rid))
->             s->num_closid /= 2;
-> 
-> With rcid_count == 1, s->num_closid becomes 0. Next, closid_init() computes
-> rdt_min_closid == 0:
-> 
->     list_for_each_entry(s, &resctrl_schema_all, list)
->             rdt_min_closid = min(rdt_min_closid, s->num_closid);
-> 
->     closid_free_map = bitmap_alloc(rdt_min_closid, GFP_KERNEL);
->     if (!closid_free_map)
->             return -ENOMEM;
->     bitmap_fill(closid_free_map, rdt_min_closid);
-> 
->     /* RESCTRL_RESERVED_CLOSID is always reserved for the default group */
->     __clear_bit(RESCTRL_RESERVED_CLOSID, closid_free_map);
-> 
-> Because bitmap_alloc(0, GFP_KERNEL) returns ZERO_SIZE_PTR, Could
-> __clear_bit() immediately fault on ZERO_SIZE_PTR? Should
-> cbqri_resctrl_control_init() or resctrl_arch_set_cdp_enabled() require
-> rcid_count >= 2 for CDP?
-
-A controller with a single RCID has nothing to allocate between in the
-first place, so I will reject an alloc-capable controller with fewer
-than two RCIDs in riscv_cbqri_register_cc().
-
 > [Severity: Medium]
-> Can CSR_SRMCFG and per_cpu(cpu_srmcfg, cpu) become out of sync with
-> per_cpu(cpu_srmcfg_default, cpu) across CPU hotplug?
+> Can xe_device_assert_dma_pages_zero() trigger a false-positive assertion here
+> because it runs before ttm_device_fini(&xe->ttm)?
 > 
-> When a CPU assigned to a non-default resctrl group is taken offline,
-> cbqri_resctrl_offline_cpu() calls resctrl_offline_cpu(cpu), which removes the
-> CPU from the group's cpu_mask without resetting cpu_srmcfg_default to (0, 0).
-> Because the CPU is no longer in the group's cpu_mask or cpu_online_mask, a
-> subsequent rmdir of that group or unmount of resctrl will not clear
-> cpu_srmcfg_default on the offline CPU either.
+> When BOs with a populated ttm_tt and DMA-mapped xe_tt->sg are released via
+> ttm_bo_put() -> ttm_bo_release(), TTM defers cleanup to bdev->wq
+> (xe->ttm.wq) whenever want_init_on_free() is active or reservation fences or
+> locks are busy:
 > 
-> In addition, riscv/srmcfg:online (registered at arch_initcall in
-> arch/riscv/kernel/qos.c) and cbqri:online (registered at late_initcall in
-> cbqri_arch_late_init()) both use CPUHP_AP_ONLINE_DYN, so
-> riscv_srmcfg_reset_cache() runs before cbqri_resctrl_online_cpu() on CPU
-> online and sets per_cpu(cpu_srmcfg, cpu) = U32_MAX while cpu_srmcfg_default
-> still holds the stale pre-offline RCID/MCID.
+> drivers/gpu/drm/ttm/ttm_bo.c:ttm_bo_release()
+> 	if (!dma_resv_test_signaled(&bo->base._resv,
+> 				    DMA_RESV_USAGE_BOOKKEEP) ||
+> 	    (want_init_on_free() && (bo->ttm != NULL)) ||
+> 	    bo->type == ttm_bo_type_sg ||
+> 	    !dma_resv_trylock(bo->base.resv)) {
+> 		...
+> 		INIT_WORK(&bo->delayed_delete, ttm_bo_delayed_delete);
+> 		...
+> 		queue_work_node(bdev->pool.nid, bdev->wq, &bo->delayed_delete);
+> 		return;
+> 	}
 > 
-> Inside cbqri_resctrl_online_cpu(), cbqri_attach_cpu_to_all_ctrls(cpu) runs
-> before resctrl_arch_set_cpu_default_closid_rmid(cpu, 0, 0) and performs
-> operations that can sleep (such as mutex_lock(), kzalloc_obj() with
-> GFP_KERNEL, and usleep_range() in cbqri_wait_busy_flag()). If a context
-> switch occurs on the onlining CPU during cbqri_attach_cpu_to_all_ctrls(),
-> __switch_to_srmcfg() sees cpu_srmcfg == U32_MAX, writes the stale
-> cpu_srmcfg_default into CSR_SRMCFG, and caches that stale value in
-> cpu_srmcfg.
+> In that case, the DMA unmap and counter decrement via:
 > 
-> When cbqri_resctrl_online_cpu() then calls
-> resctrl_arch_set_cpu_default_closid_rmid(cpu, 0, 0), it only updates
-> cpu_srmcfg_default in memory and never calls resctrl_arch_sched_in(current)
-> to refresh CSR_SRMCFG and cpu_srmcfg on the running CPU.
+>   ttm_bo_delayed_delete()
+>     -> ttm_bo_cleanup_memtype_use()
+>       -> ttm_bo_tt_destroy()
+>         -> ttm_tt_unpopulate()
+>           -> xe_ttm_tt_unpopulate()
+>             -> xe_tt_unmap_sg()
+>               -> xe_tt_account_dma_pages(xe, xe_tt, -1)
 > 
-> Should cbqri_resctrl_offline_cpu() reset the CPU's default CLOSID/RMID and
-> refresh CSR_SRMCFG, and should cbqri_resctrl_online_cpu() set the default to
-> (0, 0) and call resctrl_arch_sched_in(current) so CSR_SRMCFG and cpu_srmcfg
-> stay synchronized?
+> will not complete until ttm_device_fini() drains bdev->wq. Should
+> xe_device_assert_dma_pages_zero(xe) be called after ttm_device_fini(&xe->ttm)
+> instead?
+> 
 
-I will reset the CPU's default RCID and MCID in
-cbqri_resctrl_offline_cpu() as x86 does in clear_closid_rmid().
+Yes, I can fix this when merging.
 
-Drew
+Matt
+
+> > diff --git a/drivers/gpu/drm/xe/xe_svm.c b/drivers/gpu/drm/xe/xe_svm.c
+> > index 909a602d091ea..7a49882897495 100644
+> > --- a/drivers/gpu/drm/xe/xe_svm.c
+> > +++ b/drivers/gpu/drm/xe/xe_svm.c
+> > @@ -845,10 +845,50 @@ static int xe_svm_get_pagemaps(struct xe_vm *vm)
+> >  }
+> >  #endif
+> >  
+> > +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> > +/*
+> > + * xe_svm_dma_map_account - drm_gpusvm DMA-mapping accounting callback
+> > + * @gpusvm: The GPU SVM the mapping belongs to
+> > + * @addr: The address descriptor of the chunk being (un)mapped
+> > + * @sign: +1 when @addr was DMA-mapped, -1 when it is being unmapped
+> > + *
+> > + * Maintain per-order counts of the system-memory pages that the full SVM
+> > + * instance (SVM ranges, and userptr VMAs in fault mode) has DMA-mapped for GPU
+> > + * access. Only DRM_INTERCONNECT_SYSTEM entries are real DMA maps and counted;
+> > + * device interconnect (VRAM, P2P) entries are skipped. The counts are solely
+> > + * exposed through debugfs, so the callback is only registered when
+> > + * CONFIG_DEBUG_FS is enabled.
+> > + */
+> > +static void xe_svm_dma_map_account(struct drm_gpusvm *gpusvm,
+> > +				   const struct drm_pagemap_addr *addr,
+> > +				   int sign)
+> > +{
+> > +	struct xe_device *xe = gpusvm_to_vm(gpusvm)->xe;
+> > +	unsigned int order = addr->order;
+> > +
+> > +	if (addr->proto != DRM_INTERCONNECT_SYSTEM)
+> > +		return;
+> > +
+> > +	/*
+> > +	 * The CPU-PTE map order reported by hmm can exceed MAX_PAGE_ORDER
+> > +	 * (e.g. an order-18 1GB mapping), so clamp the array index to avoid an
+> > +	 * out-of-bounds access. Clamping is symmetric across the +1/-1 calls,
+> > +	 * so the per-order counters stay balanced.
+> > +	 */
+> > +	order = min(order, (unsigned int)NR_PAGE_ORDERS - 1);
+> > +
+> > +	atomic_long_add((long)(1UL << addr->order) * sign,
+> > +			&xe->mem.dma_mapped_pages_svm[order]);
+> > +}
+> > +#endif
+> > +
+> >  static const struct drm_gpusvm_ops gpusvm_ops = {
+> >  	.range_alloc = xe_svm_range_alloc,
+> >  	.range_free = xe_svm_range_free,
+> >  	.invalidate = xe_svm_invalidate,
+> > +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> > +	.dma_map_account = xe_svm_dma_map_account,
+> > +#endif
+> >  };
+> [ ... ]
+> > diff --git a/drivers/gpu/drm/xe/xe_userptr.c b/drivers/gpu/drm/xe/xe_userptr.c
+> > index 9c1dac0fce6f1..40f97bd4751dd 100644
+> > --- a/drivers/gpu/drm/xe/xe_userptr.c
+> > +++ b/drivers/gpu/drm/xe/xe_userptr.c
+> > @@ -8,9 +8,72 @@
+> >  
+> >  #include <linux/mm.h>
+> >  
+> > +#include <drm/drm_pagemap.h>
+> > +
+> >  #include "xe_tlb_inval.h"
+> >  #include "xe_trace_bo.h"
+> >  
+> > +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> > +/*
+> > + * xe_userptr_dma_map_account - drm_gpusvm DMA-mapping accounting callback
+> > + * @gpusvm: The GPU SVM the mapping belongs to
+> > + * @addr: The address descriptor of the chunk being (un)mapped
+> > + * @sign: +1 when @addr was DMA-mapped, -1 when it is being unmapped
+> > + *
+> > + * Account, per page order, the system-memory pages DMA-mapped for GPU access
+> > + * through the drm_gpusvm_pages instance shared by userptr (and, in fault mode,
+> > + * SVM). Only DRM_INTERCONNECT_SYSTEM entries are real DMA maps and counted;
+> > + * device interconnect (VRAM, P2P) entries are skipped. The counts are solely
+> > + * exposed through debugfs, so the callback is only registered when
+> > + * CONFIG_DEBUG_FS is enabled.
+> > + */
+> > +static void xe_userptr_dma_map_account(struct drm_gpusvm *gpusvm,
+> > +				       const struct drm_pagemap_addr *addr,
+> > +				       int sign)
+> > +{
+> > +	struct xe_vm *vm = container_of(gpusvm, struct xe_vm, svm.gpusvm);
+> > +	unsigned int order = addr->order;
+> > +
+> > +	if (addr->proto != DRM_INTERCONNECT_SYSTEM)
+> > +		return;
+> > +
+> > +	/*
+> > +	 * The CPU-PTE map order reported by hmm can exceed MAX_PAGE_ORDER
+> > +	 * (e.g. an order-18 1GB mapping), so clamp the array index to avoid an
+> > +	 * out-of-bounds access. Clamping is symmetric across the +1/-1 calls,
+> > +	 * so the per-order counters stay balanced.
+> > +	 */
+> > +	order = min(order, (unsigned int)NR_PAGE_ORDERS - 1);
+> > +
+> > +	atomic_long_add((long)(1UL << addr->order) * sign,
+> > +			&vm->xe->mem.dma_mapped_pages_svm[order]);
+> > +}
+> 
+> [Severity: Low]
+> This isn't a bug, but the commit message and comment state that the
+> dma_map_account callback is shared between the fault-mode SVM instance and the
+> simple userptr instance, whereas xe_svm_dma_map_account() in
+> drivers/gpu/drm/xe/xe_svm.c and xe_userptr_dma_map_account() in
+> drivers/gpu/drm/xe/xe_userptr.c duplicate the same implementation.
+> 
+> Since CONFIG_DRM_XE_GPUSVM selects CONFIG_DRM_GPUSVM, could
+> xe_userptr_dma_map_account() be exposed and reused in gpusvm_ops instead of
+> defining two identical callbacks?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261104215228.1533692-1-matthew.brost@intel.com?part=2
