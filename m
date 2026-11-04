@@ -1,99 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.53
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793829405;
-	b=td13j/dkc89BF19AK+T4jVzpIQJNJNSlnnlNP5TNkip1Fh9t1pe8/jjfZmdQvTPtAy8P
-	 yZEeE2d2V9shfFmlDbYqP2xAsr6jWz9zN2h6opfTXephq2ccb8us9QUd4+3znsYW4ak7T
-	 fGPwKIqc/DrgPkvQr8pohEVVDAR/uOEfiIMA8QX9Vdqkty1avR9DkrSuh6ti/40xL2Swh
-	 S1rY/xNrVcOJWDTdetQB3bkJ3K1Q6AtfRVBWLWi6lrKIHS/os2OT8tjEnx5X17bgmZvKX
-	 UF28uw/Sul9n9aaPKJsw4eEUVDE2f2NJ/qg7WC9zbWC11YXwAaLrGWUHNGJs3wWgemQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829405;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=SfUwspt8oKwE6fmkvVkDaSTqfrh6S31qCJ1SV27baGk=;
-	b=SfgP8Q61U+No70vacTaB/AxTqcvbDfWcDxq4yVt4hcRJlGOdyZdND+zHDmoAEORZsF10
-	 hZrW83xyl7GGImYjJY+lvSO6a3eq9J0SJunpsN047zjiSsuloUHFf9SJCb7E1tdQx+ZVO
-	 S8OYfUZZoFkP/KDmCAZ4FVMMzcr5s09IkRdNlk3qoKIYKK2l0pLljxaMYoWB8CvfatkwY
-	 tC2oNvgqxC1FTBDe1GmvF1ul/b9LmEOh036D76oblYU6ROhAsS0gOt+zTWfYlcdNr2gY0
-	 TW/ukp/MTOyczwJ4I5XUJIwsynV0JWI2djHQMIQznXbtO2m87ek3ndLU2oFE2eaEMEQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VJYzx+Ir;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.53
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.14
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793829892;
+	b=OOj+QPcOghMEVXQrMbIFCwMF2y6rwdi6qRH/RRCq6ureXfGKzkjB086IB0EJb8Y+f3+n
+	 StyRMxKO2oMWvHoD4fe3AH8j0u0xKJgzEN41dBvtKI3o7vD2j90wbZzuoifeuqWG1iexs
+	 G5G/xxxOj1efpIe+799cY4OFyZk0PfEZ4fy/mDgvFNvQLXb8bKCaVXNev7AGrpgsnjYW3
+	 IqCFHx15fS0W5JkfeR2XHIj7MMgDTA9dtwjkJb7AMe4ewbimKiH2YjaLYNLJAgdGXH0vB
+	 hFY4ThTFfHixyMMDqwyM9aPGhdcL4Lc58ImOn+Lt3tTUKs9Mnzs2kLY6Kht1CS6VL/Q==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829892;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Subject:
+	 From:To:Cc:Date:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding:User-Agent:MIME-Version;
+	bh=bmgdedAngAFoIFwO3WI5k0FYP50TIySMVLKbAoooDiA=;
+	b=Gp5gZW89/U7yvubTNwQurTb4tJ1amQajVn9G8F+08O/IDvUuXYB5SOrp9jP6YxU6NL2L
+	 WXxP3TwvUEQfuu9hJ/R3kGFInhSZNFYm49IBtnefbm3PikoRJTovn5qoVJEWQN7VP5da/
+	 XkJiwEcNUh4FkgU3ovfUbPTMJ7GKwKKFtE6E4YgCnn+xIcv2ie9eCMcgT1+GFAWHgVhxd
+	 I4g4W7lgObwtkis1WJw3YY/NkbcDjtoEILcWwpMEw/1Rh0tS2RVCoOztfAn7B6W8aXDOO
+	 SRBDE5jb4hWOmtyCrAxEDSrCYSiCv2QvCagYunRue1p4sE6kty97pRJx5SVY39otjkQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Z7TEKmRq;
+	arc=none smtp.remote-ip=198.175.65.14
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEFF60C299F
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 21:56:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5AEFF60C299F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34B8606A328
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 22:04:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B34B8606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VJYzx+Ir
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-6de2f213b7aso585141eaf.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 13:56:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793829399; cv=none;
-        d=google.com; s=arc-20260327;
-        b=eHzu9pGYjDEXP/LOlaIZ/jYUCpj0hL4SMSkdMJso2aT5gpeGBzoBnHrorNB7UYyANI
-         Dw2WwlnMSOW66geJUhRsLq2wKuwg3OmMOYEtEHaRLGMXZkMNCvkhaDu7ub+HMEizofiI
-         z5Pc/xdfOFSmgH+2xJ9MWEdNRm/ojQrBl2ua5tDS25iw0HWRbzWoQBBvYJRg5AWh7eVq
-         hGlAqcU0r+0x1i06kaS757duOtwzawFSy+lTuJhBR6pI96+7y+Waiv+daszPPemk9yIm
-         skFLsTcGY0VpM8FruXxSmSaLGFWkdu6B/aTAoVNEh7HvlxS0XeVy2qxIulQG89sSPdqz
-         NDtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=SfUwspt8oKwE6fmkvVkDaSTqfrh6S31qCJ1SV27baGk=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=U5bJcHAaUSW80hWIn6a52Pi3EygvClLOQ9Ns6HAHIv1s0VzaTPIJqL/CwxX25p9GlW
-         80JqnLI2KxzV3bXYe1YY7d+JYNZ2naO3WBnKrzIRytTo6GR36jz7ObUzjdeqFBfNzeUc
-         KA4Rl9H2ovvlq6VyaAmP1acDg9ZbcnPvc9LkwJPYJg3K5av1ybWQkO2JKZAdsqxbsMx/
-         /m5s3/xj88MosQEy6FmnKHiL6laPWRJ7idvuIFF2azkO2fBy6JaqIvt4mBiMDcVEEjTY
-         j3Rph7SCxEBwQa1eEfCL3rqYjnAGuWF4+20dOP2mdivyhuuDLAMtPO5C4wWSupTXO/EM
-         bCMw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793829399; x=1794434199; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SfUwspt8oKwE6fmkvVkDaSTqfrh6S31qCJ1SV27baGk=;
-        b=VJYzx+IrIH7CZ6tj/A2oYHe5Agaw6DfHxA0ujHlfYjVyXDg2ukVjoz4UqSrxMzMFIw
-         JCMxKyTW668Eh2S1AIQhkVAPikkQbvZ3T0O02GdCF3F3PC3T3Ty6x3q6LDlQJKfAn4hL
-         K/SzdxiosieaeCIV+WDxJKCUmnPVe/z9CV5Fklt4Ahbwy8nGPSTFm9rWmBh6S/+tE3XA
-         +uThZx7EUoYrDKEwg4J6mwG4Nyk4boELfnOFmKNNoMP2hqWnqBVGQuRgERz9scfU+qyh
-         RrTRqgl1kDNCEjAblgFTrtLIdd9xnHI5aE0+eWm469kRCPeRNfzhDuUDn6bql2cjWRbQ
-         6diA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793829399; x=1794434199;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=SfUwspt8oKwE6fmkvVkDaSTqfrh6S31qCJ1SV27baGk=;
-        b=uWOW+HFS3dOHrIfP0C2Rs76a3h4cMYLBLLa5p4Cut98HCfRwJV5DOXFuYjKbaZUeCi
-         Iq4D1eke4Ns7MgtM8pmRsmj/KkY/N+YkFYAopXr2LyCUS56Md/wy3QfgXpD7CexrDaP0
-         KINNcGmg1HQ0bHlqY+W5gBaE66DJ4nZdSvrroW+yJ0oQdpcW9lrZgvtwTW5XtdCHobKT
-         LUoaxFULW9TTOIfkLrLJBCIUhZ3BVsrjpAWLnXwAeXopd6tXphdQD4I/0XLyx3XIxIM7
-         UUCM6RmTjSRX1gIyv+mZKmYpwvAJUeU74fb6XKBS9PfAh3ItJ6nC1Ud7MetPH8TQN9uf
-         msbQ==
-X-Gm-Message-State: APuU4Z8eSr7pRsiapBLfBJqCeF4MXeKgdbcbPtOdGwtIheGvY3nrUeG2
-	VVhOJExun82H2wBSHorf6Ns2FoYFT9OPzLVW6vJAysmsYsEzzW7QTPtLBL4Gpb3IolbNedqNlf+
-	5B2KE1V0z3dYoRKIHbvRWQAb4J2YJqLD7l83c
-X-Gm-Gg: AYBFou0/88o9RmBRzpX+VkvCE9CkIh3rv/COxZsyEVzEXFqcwNE6lwrM9LKYNhaQch2
-	7KvrU7Y2CXqinKxjwSLkYhM0rk0/oevzwioLKi/8FIItb9O872IwJRqeqDiog0ycAnQvdITDax3
-	3kTaJE/Kde0OiveAufgm/cwYsDFu/EwLo6El4thGXUNd9wqGoiJLMrAbYZWMpKmhDTeXXsDLE52
-	yLAV49tgqfwGNFpAMfFO9Z8RPxtmXh6HPiF98/+o5zQCeuJMbnBbrnApFEkA80sOLrCZcqCvfSY
-	HIq5H7q6ArKWODatj30FOZkI4TzLgkdb8yOaEAQTa5rP1cjKtPTp8LyGdf8XIW3QjLDB9kUvHVP
-	pnxyTDyySUD7PfYuhNIrpC2ZqYTtVO6vsxK57jIWIS1zV9+KLlXWbZZhDK++xpAyvTKNJsEQP8a
-	qiLnSXUB9lK/fyrLsqGC7I2qg=
-X-Received: by 2002:a05:6820:603:b0:6de:1071:8b1f with SMTP id
- 006d021491bc7-714f2a0429dmr9962373eaf.55.1793829399087; Wed, 04 Nov 2026
- 13:56:39 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Z7TEKmRq
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793829892; x=1825365892;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=ISKGUOX8IMj4CFP4ZkXUCJAAAaK/obCJ37UwHxQHNIo=;
+  b=Z7TEKmRqgweeBY4w2gKQNkvQtFcWD/0uY+O3Cq41GBSCjuPoPSRIj+OT
+   yG3Z+aXwpSAQHc/BprIWnGDuww+fEoPuNmCOx3kae2PRghD6FomPU19ow
+   /yvkHQ6ndvEXipkAeIKf+sILBknC6p2qFyvSGDs1QRJHAVLnmGXVGtflk
+   9lCWHgJiriio3qj4yn45oc9/L5xqverfLLIgFyLMUJGKMalRMPxcl7cml
+   dPorPfy+NZqYO0Sp6fp+osUXMqTV13uhBoB09SlPyfaJK0RnBnk2lC0NE
+   zQTCr5+mC3P+bABY73pusqIgUX/lz27pNm++IKdGDSEuhwDKCtQUtUANa
+   w==;
+X-CSE-ConnectionGUID: UtQdC+T6SPadks3Y6KjW9g==
+X-CSE-MsgGUID: DI9s4q/2QXWgoF2wB0fUsg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2489540"
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="2489540"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 14:04:51 -0800
+X-CSE-ConnectionGUID: Y9yJlD5XSdqeBRKRZd8fHg==
+X-CSE-MsgGUID: Sq5qcaQ9SOi9mMi68YYwWQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="6665640"
+Received: from vverma7-desk1.amr.corp.intel.com (HELO [10.125.110.69]) ([10.125.110.69])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 14:04:51 -0800
+Message-ID: <dcfc4211abe66f13f23cb546c478acb862a00d4d.camel@linux.intel.com>
+Subject: Re: [PATCH v2 6/7] HID: sensor: custom: Register enable attribute
+ after misc device
+From: srinivas pandruvada <srinivas.pandruvada@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+Date: Wed, 04 Nov 2026 14:04:50 -0800
+In-Reply-To: <sashiko-outbox-198009@kernel.org>
+References: <20261104201403.2039921-1-srinivas.pandruvada@linux.intel.com>
+	 <20261104201403.2039921-7-srinivas.pandruvada@linux.intel.com>
+	 <sashiko-outbox-198009@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,21 +84,99 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261018074528.974953-1-lalitmaganti@gmail.com> <sashiko-outbox-176006@kernel.org>
-In-Reply-To: <sashiko-outbox-176006@kernel.org>
-From: Lalit Maganti <lalitmaganti@gmail.com>
-Date: Wed, 4 Nov 2026 13:56:26 -0800
-X-Gm-Features: AclHuK8NpuRRp80yN1mGeRCYx_90ftTOvJ9RuOxDbLKOCu_Y0da17iLCXb0Bq6c
-Message-ID: <CALuTzHHthGbGDM6+hH9quVrZx4j-hCtHY64HmpbwzVgbutZ=Ww@mail.gmail.com>
-Subject: Re: [PATCH] perf python: Accept events larger than union perf_event
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+On Wed, 2026-11-04 at 20:25 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [Low] HID: sensor: custom: duplicate callback removal in
+> hid_sensor_custom_probe()
+> --
+>=20
+> commit 3c6fa7005fd38bc50c4da9b69a1182ec5457915f
+> Author: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+>=20
+> HID: sensor: custom: Register enable attribute after misc device
+>=20
+> This commit reorders hid_sensor_custom_probe() so
+> enable_sensor_attr_group is
+> registered after hid_sensor_custom_dev_if_add() succeeds, preventing
+> userspace
+> from enabling the sensor hub while probe can still fail.
+>=20
 
-Just wanted to bump this patch in case it was missed. I believe this
-is still an issue in main today.
+Will fix in next rev as this a minor issue to readjust code.
 
-Best,
-Lalit
+Thanks,
+Srinivas
+
+> > diff --git a/drivers/hid/hid-sensor-custom.c b/drivers/hid/hid-
+> > sensor-custom.c
+> > index 4f824cadd370a..990e653995e15 100644
+> > --- a/drivers/hid/hid-sensor-custom.c
+> > +++ b/drivers/hid/hid-sensor-custom.c
+> > @@ -1059,20 +1059,21 @@ static int hid_sensor_custom_probe(struct
+> > platform_device *pdev)
+> > =C2=A0	if (ret)
+> > =C2=A0		goto err_remove_callback;
+> > =C2=A0
+> > -	ret =3D sysfs_create_group(&sensor_inst->pdev->dev.kobj,
+> > -				 &enable_sensor_attr_group);
+> > +	ret =3D hid_sensor_custom_dev_if_add(sensor_inst);
+> > =C2=A0	if (ret)
+> > =C2=A0		goto err_remove_attributes;
+> > =C2=A0
+> > -	ret =3D hid_sensor_custom_dev_if_add(sensor_inst);
+> > +	ret =3D sysfs_create_group(&sensor_inst->pdev->dev.kobj,
+> > +				 &enable_sensor_attr_group);
+> > =C2=A0	if (ret)
+> > -		goto err_remove_group;
+> > +		goto err_remove_dev_if;
+> > =C2=A0
+> > =C2=A0	return 0;
+> > =C2=A0
+> > -err_remove_group:
+> > -	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
+> > -			=C2=A0=C2=A0 &enable_sensor_attr_group);
+> > +err_remove_dev_if:
+> > +	sensor_hub_remove_callback(hsdev, hsdev->usage);
+> > +	hid_sensor_custom_dev_if_remove(sensor_inst);
+> > +	goto err_remove_attributes;
+> > =C2=A0err_remove_attributes:
+> > =C2=A0	hid_sensor_custom_remove_attributes(sensor_inst);
+> > =C2=A0err_remove_callback:
+>=20
+> [Severity: Low]
+> In hid_sensor_custom_probe() in drivers/hid/hid-sensor-custom.c, when
+> sysfs_create_group() for enable_sensor_attr_group fails and jumps to
+> err_remove_dev_if, sensor_hub_remove_callback(hsdev, hsdev->usage) is
+> called
+> before hid_sensor_custom_remove_attributes(sensor_inst), followed by
+> a goto to
+> the immediately following err_remove_attributes label and a
+> fallthrough to
+> err_remove_callback:
+>=20
+> err_remove_dev_if:
+> 	sensor_hub_remove_callback(hsdev, hsdev->usage);
+> 	hid_sensor_custom_dev_if_remove(sensor_inst);
+> 	goto err_remove_attributes;
+> err_remove_attributes:
+> 	hid_sensor_custom_remove_attributes(sensor_inst);
+> err_remove_callback:
+> 	sensor_hub_remove_callback(hsdev, hsdev->usage);
+>=20
+> Because hid_sensor_custom_probe() still holds the initial reference
+> on
+> sensor_inst until err_free (where kref_put() calls
+> hid_sensor_custom_free() to
+> free sensor_inst->data_fifo and sensor_inst), removing the callback
+> at
+> err_remove_dev_if unregisters the callback while the field sysfs
+> attributes are
+> still exposed, and then calls sensor_hub_remove_callback() a second
+> time at
+> err_remove_callback.
+>=20
+> Should err_remove_dev_if just call
+> hid_sensor_custom_dev_if_remove(sensor_inst)
+> and fall through to err_remove_attributes and err_remove_callback?
