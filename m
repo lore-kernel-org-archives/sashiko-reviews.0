@@ -1,110 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793818308;
-	b=Ze+oTLJ8fTefc6wsbR9mFeAt5WzqPu3AS69ICcLpibSicNM+91Y3WmIgOXvaGy24RwNw
-	 2/fS29w/OmFwaypLUya6z3ox6xeeMs40bS7OCt73vD9HxZXNVSfvlBzP88VyD7LyvvD9J
-	 NMTnanVSv7zTLwObFEqgY71ep+tAeH1OLPntKfHFXwwx9m07VhOBOH+Cyx6laaNJPx5DY
-	 hfmq0imYBkqrBfD2mYL55tfKLYSvv2hmoo+U5KKflEMHqRlYaGOgKuRstfO++ylTRz08K
-	 u27sQCUCwi6Txs6qv6nT3XXSdeSGd9XfuCuSxwu+79Yu2l+hmmRiEVWuZuRJVU3DdJQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793818308;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=FR9ISTDLDcSmV8QN0XnoAmz6g1DwpZqiIgX15CQUaGg=;
-	b=xANv0sLk6vLDjCRaBkgRwmae1vka2Uhh0mYgT/watiCMGhKpynBkSxcP6KECpLCZFxPe
-	 qPf3asicu5tuAH7uxVDWG5fD1nsuI8NBfC2ZHABh0Hc8XqLGXAEpdDj/2smGdiXYJgLIh
-	 J+1ul6XC9svxGJLaoxfmbbL+p00joGkc1x/u2vvGKfiAZ3IJ6P9827QksDQgv5HeyOEnr
-	 yD9y5NjZLTUPXuW5U0gB4b3Iz1XfYBjp05rjvAJ/yTNUNgBKnup/Uwh2XSREVQscHiroW
-	 Khcgw08p+YwM6ad11CmbxVTK4IB6VdTlARHVjs4TooAQHZ8+9XRnTfzvfExdfgXBB1g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=crusoe.ai;
-	spf=pass smtp.mailfrom=crusoe.ai;
-	dkim=pass header.d=crusoe.ai header.i=@crusoe.ai header.a=rsa-sha256 header.s=google header.b="WUlcLQf/";
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.130.3
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793820513;
+	b=cRrW77uQ+wcxid55NpM6ztSGvvpSj+rrcW3G5VAM+vSTYXDjzWPvu5utb3uOts9R+Vhq
+	 ydHSVRfS7hIrrQ+TKBHqw/mEHk4B976XHD3Kve89bW8wstL0LnZHfYfaCxvqQ1Gj5qXyb
+	 Xdzl91vWHPmdYGs54pGpKvpIv/jV/uEDqzxSC41J00XKQCoGeYZkiyAX2/GJhD3gZz8Xi
+	 0PLr9C1l+t49uXp0woONO1yEYCDXD+WNJnYpX0M4mIf+kcnO1sTWGZL7a+wWM7FqDT9RH
+	 ktaKpUDqh5ADsz2bQXtVhc3+AfLJ9cWFTsS4IBvFXU9ccXElrVVXjBuc299MaUdmQ1g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793820513;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=NocGzT8QVkNY+soELpAYFx964rL/SzazN+1VDhQTXBk=;
+	b=rV23ROrFV5t/ItWZ9bg6YQEXI3neuYjK7bYs/I5/634ArHTmOkS+rpHXJx4YFOZOOG+U
+	 W4z6nFrmOxGJ3/jGZPgtr4GJVYYgbnStzJDesZoybBSPUi8/GABwKrISQ9I3yt4uhyeu6
+	 SyDHuDNrfTsQeNmtzaV0FVLrjHJxwNCN8vJeuPArnaQnkRTcRofaGMJeCHqeFdCjscSTN
+	 IQjp4ntvyPOKDMjTOyQ1Vk2c/k3T4NBGK3CG/v6VpnlwW+Vp5xuEsSy8yG0o8qbt1WBN7
+	 fDUsK98UGejfeB9UnTX5NdGSMttplqcKbmR+LDnPt0xu9Se69UVxP1j3LNTyjN32gYg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=mCSJSDB1;
+	arc=fail smtp.remote-ip=40.107.130.3
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011003.outbound.protection.outlook.com [40.107.130.3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1078606EE83
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 18:51:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1078606EE83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=crusoe.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crusoe.ai
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7BF606EE88
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 19:28:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EB7BF606EE88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=crusoe.ai header.i=@crusoe.ai header.a=rsa-sha256 header.s=google header.b=WUlcLQf/
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-36a0f27c9f4so1912470eec.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 10:51:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=crusoe.ai; s=google; t=1793818307; x=1794423107; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FR9ISTDLDcSmV8QN0XnoAmz6g1DwpZqiIgX15CQUaGg=;
-        b=WUlcLQf/ipQD0S9hASRgvNq5qLdWGPc0niw0eSqBvdfpvgPmPfEweKnl0+U2QplxaC
-         hU0W1fSYjRarBA0Iy0DjQtSHDhr9noxYBtQzAVTnMCfdxUFd5h54JFXldkDn4ONBQegE
-         qTYhsnK0aWf23KCwWFCpJhhvh1ihjUtg1HQk1aP/DsDd2VRUCElvjq1nMn064U7Htxw5
-         cZxhIyvso9cAt1BgaPsvSTDKVKDsMBeQdx0zpg/3UP1+WsKsFOlCZlm8cEMk0vDPd/t3
-         JNG+SUcy5mGZppucCM0Qrkw2XHwBf1lpweTcWD4eO8VWh4iZOjwZjQG22uhVZ3ghpv73
-         mERA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793818307; x=1794423107;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FR9ISTDLDcSmV8QN0XnoAmz6g1DwpZqiIgX15CQUaGg=;
-        b=nmnfCyUVN9lpJ3DWNmmjTIHnWFL/9RJ3dw8qIPYEnEZZ9mN1juS8aKkoz0mp3DjgxL
-         S57U6F0AKLmzltvCRPxyywtpVsta2H1c2rYFIUMS+vmvF573FVwZdvSFei/gNGPRM0Sp
-         yvaA37PXbiuvdiDUqoeGrZPrCaCWa2VVUeVn+fK2zUvzwQWPlD3JYWzbcyQiHiPjoqLG
-         V3HcT2acHm/3jpa+W8RHsIaajiZAmRYnCkMzNcrIDnObvT/Onj05UUprJJFciNJaVuLy
-         3bLTafZpqRzZ6pjfof8ahWC69DbZVHHI2VwikjaALU22rHN/nZR131JDbUtAlPsP1PUb
-         hKmQ==
-X-Gm-Message-State: APuU4Z94YrCVEUgaw3dcZLhn7EBTAf/OrBbX9P/IEl8CPECnyCis+vtJ
-	dA2fKbBzgiBowW2/Q5+WCKkRqf6R67i3UggVrjeFeTe7DSbJoAl/S8bUrfV0+nbjB6ZzV4sY3i5
-	glztrWVM=
-X-Gm-Gg: AYBFou2x2E5fMvTDafPKExSZjoftnbquvSHqDea5T36cGouEV4+cSPMEJbv7KDNuNdl
-	qXCZv0Ix8K17LwNRatoHhtDW5i0A13Woic1g2rMvK2MOQGRzPJSW+VqnOtMuWrcoMd0f77j2MN3
-	GFmDX8KebWzw0t14AjxWcLerw3PspPviFprz1/gX9YvqRlMaO9/Wh6Ig5RzxhEhvOB2HQNsKd8o
-	4RpI9AEjxdpJekrvJSKjYhH6KLm7OeqrUvzuvXtWpOOqOpoqvICmZOq+jUPwvYqNVtt9aRNrrRc
-	e+W85FNjS1jYew8fa0jbbBnb+qydvEq+jruat6VGSjLnwAd6JFPcXbJnxJa+huTxy5zh2+itsa0
-	+5GyNDtzWMEzJ3phpX6uoi67TfqgMV3qhy255FDQlwZSrhzmj9fTLGGQtr8/7mBzbXC620HqW5L
-	RXm4slSIA++KWv9dmPM3f9v+1yjZHbyRI4azC2yXr+neeEewBYV/f9T2rjk4KuyKw2c/tmSmOZC
-	fJnrIgqRe1zCq7QTwfgufVmEjY31hlZdvrDWodhSJDftjTDQPJ+06MG+h9ZqFoLEnX4IEgtLCAr
-	ScpMWirYPl7baTosEmDwzx/WdhPp81IDTcB0P7D7/HvxaX2F1caSq9vIDv+tMFo7UUTRZdvtEbU
-	=
-X-Received: by 2002:a05:7301:6498:b0:36d:bf43:93ee with SMTP id 5a478bee46e88-36dbf52d6cdmr849344eec.28.1793818306527;
-        Wed, 04 Nov 2026 10:51:46 -0800 (PST)
-Received: from MBP-Saravanan-D.civet-hops.ts.net ([67.208.231.220])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36ca3966daasm12193389eec.23.2026.11.04.10.51.43
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 04 Nov 2026 10:51:46 -0800 (PST)
-From: Saravanan D <saravanand@crusoe.ai>
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=mCSJSDB1
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bq3KvlO8EAMzCBv/djWSLd9MfBkBURwx9J3R9YwiqxEYyCVeQto3T/425piyswzwMJ2U2oF0Ws0/khhATD1n04eXQDeJgqaFZeoquy4E/fxFfcaPvnP2Vn+tq44pQi60BNYFnCCgH6OCbzL9z35deHMM0c4OqeJIJIWJRazYKqolPdS64f/+sv71Jbbgel8xGTPHFHmDyi4vnYeRier+BHLxN/1NrDK6Nvz/oRbSz8U2yJkRPWKe2tma8IQYnDz8EcxWqmIEB7841qIkZlSJXFXCSjWfycZ2e7wCl/smMLcgiH9ht1Eaer+0JzQdXB2G8Dt8IxvLqH/0iPKHpjnNWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HzEmf52UR1TxKo1HCV+rjZ683qrFxzbO0isnHTid1W0=;
+ b=MZwW4vCspYlWd2A3B/tDrJBZZA0TVBKDf/ntyNpndiri9jBldSEqnObEVM2z3U/1AiEJ3zEvnDo7XbwXV/U/H0+RLhYyztad9dnA6bMs6zR3v/X0LebdyqgpA1sLK6DGda2tyTeWVmYCsF57wN4Nm9kxFJlORPymutM7BSaezR2U5fWeTIZROg7SgdJL8ok8sNqnsyBE8NFsF/R+L1eLkmqTIu+XzBoj9BlN6LMp+rNqcr2Qv8/q9Ac/Nri0eo4N9J4GGdLeLyJNe2GsQBD00GEu5JeQt8hp4k5usFSOis+Vy2mqn9PIhT1Bp8OEN8ZPFNyF+kccrJRFlZd394Nx8g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HzEmf52UR1TxKo1HCV+rjZ683qrFxzbO0isnHTid1W0=;
+ b=mCSJSDB1UFyzp9xgQWKlYW8jgsx8Aw4mSihN3o80t/Ta7qfup41mJBIHcjmxK8ZCREOHmExaFGIJJz/oXmYxU0of0cd9jH+79euD6XjL/mpdGLUDSeIR1FdwtQrRflydM5/es9rmLnGje3Vf+DqQ+KcTrnQ8dbpI1l6Fsg/URCvCUhm9bpBuuXhASEzIPYdvZt68LhfuRA2PyqXb+0o6H3E01i1aYPCbAovzCVzmKkL5DRYSZDE6F/8ALydyI7nzHNx27e0rVgzWkHkm9UuijJqB0GhqX5ruhz5oOt5c0ZuegE/3p0xnNS7ryxrZyEvey0SWUH0RYQeOmglqtYVpSA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by GVXPR04MB12014.eurprd04.prod.outlook.com (2603:10a6:150:2be::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Wed, 4 Nov 2026
+ 19:28:27 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0592.007; Wed, 4 Nov 2026
+ 19:28:27 +0000
+Date: Wed, 4 Nov 2026 13:28:18 -0600
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Saravanan D <saravanand@crusoe.ai>,
-	sashiko-bot@kernel.org,
-	linux-nvme@lists.infradead.org,
-	kbusch@kernel.org,
-	hch@lst.de,
-	sagi@grimberg.me,
-	axboe@kernel.dk,
-	nilay@linux.ibm.com,
-	dwagner@suse.de,
-	sgogte@purestorage.com,
-	hare@kernel.org,
-	hare@suse.de,
-	linux-kernel@vger.kernel.org,
-	iyamahata@crusoe.ai,
-	kiyer@crusoe.ai,
-	ganbalagane@crusoe.ai,
-	sjpark@crusoe.ai,
-	bchen@crusoe.ai
-Subject: Re: [PATCH v7 1/2] nvme: add per-queue sysfs directories
-Date: Wed,  4 Nov 2026 10:51:25 -0800
-Message-ID: <20261104185131.92361-1-saravanand@crusoe.ai>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <sashiko-outbox-197419@kernel.org>
-References: <cover.1793800758.git.saravanand@crusoe.ai> <656dac7329c8452efe786b0c76a3b8c0bbf53159.1793800758.git.saravanand@crusoe.ai> <sashiko-outbox-197419@kernel.org>
+Cc: David Yang <mmyangfl@gmail.com>, dmaengine@vger.kernel.org,
+	vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH 1/2] dmaengine: pl08x: Release the reset before reading
+ registers
+Message-ID: <auuHUv-LlUuoP1aF@SMW015318>
+References: <20261104154542.3131916-1-mmyangfl@gmail.com>
+ <20261104154542.3131916-2-mmyangfl@gmail.com>
+ <sashiko-outbox-197555@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-197555@kernel.org>
+X-ClientProxiedBy: PH8PR07CA0040.namprd07.prod.outlook.com
+ (2603:10b6:510:2cf::26) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -114,36 +99,147 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|GVXPR04MB12014:EE_
+X-MS-Office365-Filtering-Correlation-Id: ac7075f2-f947-4530-b7ec-08df3aa9ccc4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|19092799006|1800799024|23010399003|22082099003|18002099003|11063799006|4143699003|56012099006|261022105027099003|261028144727099003|261026140227099003|261026121527099003|261009223027099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	ratm3nFAMMNqnx5XHmZBgXlPFaq8RF1cesSejpmTU1v9leHq2L07GMZm+tvCF/zIVEpw4IvreJKf2fKQCcsGwPEEnSELjTEnHGsFIOu1ZBu716kv2Cl0XgFmDra8PxYyDhSpVU1aA4Q4wt3m1pQ0eqYi7HCNqi3mHmN7jQM3+rLrECzPc24dw8nAW7cdFHmyghyerEqFCMTvoHS/bCmp2LK49BujznUtkft7fiVVB3n6P300t+J9zGo+MUxjG4VXzsdrIIznNsMMXOZZ8CvNYnoVJtjmSNsxV9RafaBjvup3e6C7f63eV5LMnAYYvnmt9Gw8JG8xbExSeVE+knGhcPt+xHnjkArQyTq/dfDgyny/z5dimb+szF8iFTcbaoAjQ+kdbM+qn5+m4yVuZYhmjggPoLcMz1c96JANvVvsILHKYz8lfhxBllKblCKPJt8/sbqUuDCa2Gkl/LOnVpGEpBZFS861z70PiHHSnR4oYkSgivstqgQ41KZWtuQbFyXWhA6d89IDFGBrCmNh9BywgxN2ZfWxY2HdYrPMHSeD0cSVI/QlzGphbFVH37JJBXYCH3dMLyRqbP97iKBgQi0mSMg7XzCSEuisJUeC2M2Ktc4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(19092799006)(1800799024)(23010399003)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006)(261022105027099003)(261028144727099003)(261026140227099003)(261026121527099003)(261009223027099003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?mi80oFlLtODKcHC+tWYo4bjlkxuYrJ6pccKxPnySjcv5Cu6jRRFTv1ILTV?=
+ =?iso-8859-1?Q?3rHrJdo6DtZixmXc62uXmUjnHvjUXJL6+EypbGsAIzZH45tLx86YpkhC+x?=
+ =?iso-8859-1?Q?+2Xt5b0yiFzgnDevxaDfxo24BLBHOXo7KCSZpoGtrXXjJJAZXdfza3/X6x?=
+ =?iso-8859-1?Q?o8RXChAzZJ11if4UIEyqP0CCcc6chiLRWajEQiHyQZJE+JOAVGAaVBJd0c?=
+ =?iso-8859-1?Q?gjGEC5Qiye5M18CEJ+jVxz4Kn6gNenGOaWnVDlb+Xz6xSSG8tCMeJ1PLNE?=
+ =?iso-8859-1?Q?5X8UoZMguVc6drhl+IXRakLjaVvt4dZ2libiOIqyu2aD2SYuebWm1Si5QH?=
+ =?iso-8859-1?Q?2uwveSb9yR0/xmA/uw174qUvbw3I920uFViTUBZcB/ocNBzF3bag+CSU+J?=
+ =?iso-8859-1?Q?gJHHbCeJbyfM2PNve3Qm4tTgoGMVjqowSiwBd2wIpX9VSawTdLuVFU+kcH?=
+ =?iso-8859-1?Q?LEbKX/saXuOls9MoCWGSIjSMys0iMP7MtGHRkxxkhtfgIaZk0m6jKkA6hx?=
+ =?iso-8859-1?Q?HrfdQLMR7A06rDrXK1obXt1tIk2kj/7NYVT4wx0jIqVuFGPNamyuSG52zv?=
+ =?iso-8859-1?Q?BmC7pfufHVTsG7dJqn3EoEwAyt4igDQ/9DONqMIN8F1xREnP2x5E614CF5?=
+ =?iso-8859-1?Q?LxK+IoS9rjORoc4S8bqh2ldyb315qcR2kVH0F7IqDUJnMylQI8onzpXPHD?=
+ =?iso-8859-1?Q?Uo17eaFX2JhRIG/wsfcyAJNFaDB6U8Ls0ucYbcdmhQA4SoMllpVrm9WRZQ?=
+ =?iso-8859-1?Q?0HJOOcw9l0ItryKCRKACPAmyxEOf66KBli69CGvKvXR8W70Ux0aTn788EU?=
+ =?iso-8859-1?Q?g6UEzcGLHJP/33Z9Q6LMPMMwqs63ZHg8XV/4FRhAlNsQ7/2ArmACUF6pB4?=
+ =?iso-8859-1?Q?lJR3bVWtwx7pWEh6wdsI991RkfkT+2U5s1G7/C+EMOfiC5lVbxycYhBQZF?=
+ =?iso-8859-1?Q?60ZHKS8K1d2XZFFFGbE5hMgI/G+RRsRIOzzN+FKoWoqq96cSDm68FNFL49?=
+ =?iso-8859-1?Q?85LPZ1uNy6boPYvbRW0flkGMZJMug4WwHs3rfUSOKRPwvvfR0ApyOJ2LLx?=
+ =?iso-8859-1?Q?VxiIFL09GQvvyy4AciOqSK1AdY/lwOMC+YErnXJ0rwDlVHpUVIRaw5Oej4?=
+ =?iso-8859-1?Q?0pnyVrcKkMIEepk6weT400sE34VZ9eB7wfB5pnIob62gxKIY7lD53zuZBd?=
+ =?iso-8859-1?Q?vMf+aT+qXOTMd+afxXbvenPKyBZlhxPLYNxmmnkc85BEPPi+XVzjVtVZBJ?=
+ =?iso-8859-1?Q?Jrd+VRYdO6n7+RL1WoOXJk/aRSwQIVG5oFmiyBygNcD44a77BUcRwiL/DI?=
+ =?iso-8859-1?Q?UnIEf8oE+bctY3fqsPjkNenMVuHlKL5p39Z+HRqcpS/9pqb+CkKh48yH1I?=
+ =?iso-8859-1?Q?PF0CrdHN6WwcA0IMkFs75q3Iif0zW14dBRZ/gz9dU458HRAlQamWq2NfQx?=
+ =?iso-8859-1?Q?pybxTqn6zNgE/vHlPFoB9neF3J9jzz5MUoAsGrPjWHvpslB+A3akFUO1pH?=
+ =?iso-8859-1?Q?6DasbSV2Y6oa5rsGCS6pvIbDhdGaVHMgh2DmHRcqv073Hx4B+VS9tIfFPt?=
+ =?iso-8859-1?Q?Ps1422GuCcN4RDJtCLwYGJp9+eere0CX+R1v6J8C89ppM3oFJsynSHssqc?=
+ =?iso-8859-1?Q?IbziUqRiUX9DrtZ0D563Bbx+D/XxSo6S1JvsnT97d+fIhJ+H3yXHTRWr2f?=
+ =?iso-8859-1?Q?UdT4KciAQ16K++Ilarcdc5vMZ3kbq8I9HHB50GDIlEZHnmYUmDzml+XKLw?=
+ =?iso-8859-1?Q?p3aQlxPYfj845FKYkm/iPcoGnmJg6IiJ/eU1lnqFaXS0vXj983433vvf7S?=
+ =?iso-8859-1?Q?H5CqsRzSGCYHuDUTrjXU9GD2atjWg5t8AuM3Rp9PI/Ztrlty3OCw?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac7075f2-f947-4530-b7ec-08df3aa9ccc4
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 19:28:27.1690
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yNQaIcdqidPtnFrPI+9OFwXlcCAsZ288+kiYqsHY8DatSIIUP3Mjx1ckyVm62jQry9hL6/6vxeCF7s++Eo45VRchZNinsyxBQSIz2Lg3FGATi0RP9cW+oE6TF+o9jtSK
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR04MB12014
 
-On Wed, Nov 04, 2026 at 02:17:33PM +0000, sashiko-bot@kernel.org wrote:
-[...]
+On Wed, Nov 04, 2026 at 03:55:13PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] dmaengine: pl08x: exclusive reset breaks shared resets in pl08x_probe()
+> - [Medium] dmaengine: pl08x: MMIO mapping leak on reset error in pl08x_probe()
+> --
+>
+> commit 5b724fceef572df4410288b36fa49f5ba64ab7da
+> Author: David Yang <mmyangfl@gmail.com>
+>
+> dmaengine: pl08x: Release the reset before reading registers
+>
+> This commit acquires an optional exclusive reset control and deasserts it
+> in pl08x_probe() before accessing device registers, covering devices whose
+> device tree nodes specify arm,primecell-periphid and therefore bypass
+> amba_read_periphid().
+>
+> > diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
+> > index 543c2eb8cfa81..33ad6c42cd7fb 100644
+> > --- a/drivers/dma/amba-pl08x.c
+> > +++ b/drivers/dma/amba-pl08x.c
+>
+> [ ... ]
+>
+> > @@ -2725,6 +2727,16 @@ static int pl08x_probe(struct amba_device *adev, const struct amba_id *id)
+> >  		goto out_no_ioremap;
+> >  	}
+> >
+> > +	/* Release the reset before reading registers */
+> > +	rst = devm_reset_control_get_optional_exclusive(&adev->dev, NULL);
+>
+> [Severity: High]
+> Could requesting an exclusive reset control here break platforms where the
+> PL08x reset line is shared with other peripherals?
+>
+> In drivers/amba/bus.c, amba_read_periphid() acquires a shared reset control:
+>
+> 	rstc = of_reset_control_array_get_optional_shared(dev->dev.of_node);
+>
+> On StarFive JH7110 (arch/riscv/boot/dts/starfive/jh7110.dtsi), the PL080 node
+> sdma (dma-controller@16008000) carries arm,primecell-periphid and shares the
+> JH7110_STGRST_SEC_AHB reset with crypto@16000000 and rng@1600c000. Both
+> starfive_cryp_probe() in drivers/crypto/starfive/jh7110-cryp.c and
+> starfive_trng_probe() in drivers/char/hw_random/jh7110-trng.c request that
+> reset line via devm_reset_control_get_shared().
+>
+> When pl08x_probe() calls devm_reset_control_get_optional_exclusive(),
+> __reset_control_get_internal() in drivers/reset/core.c rejects mixing shared
+> and exclusive controls on the same reset line:
+>
+> 	if (WARN_ON(!rstc->shared || !shared))
+> 		return ERR_PTR(-EBUSY);
+>
+> Additionally, manually calling reset_control_deassert() without a devm action
+> leaves the reset deasserted if pl08x_probe() fails later or when the driver
+> is unbound. Would devm_reset_control_get_optional_shared_deasserted() avoid
+> both issues?
+
+look like make sense.
+
+Frank
+
+>
+> > +	if (IS_ERR(rst)) {
+> > +		ret = PTR_ERR(rst);
+> > +		goto out_no_ioremap;
+> > +	}
+> > +	ret = reset_control_deassert(rst);
+> > +	if (ret)
+> > +		goto out_no_ioremap;
+>
 > [Severity: Medium]
-> If sysfs_create_groups() fails in nvme_add_queue_info() after
-> kobject_init_and_add() has already published qinfo->kobj in sysfs,
-> should the error path call kobject_del(&qinfo->kobj) before
-> kobject_put(&qinfo->kobj), just like nvme_remove_queue_info() does?
-
-I'm surprised this sequence went unnoticed in the previous versions of
-this patch, since the error path has not changed since v5. My fault
-injection runs used DEBUG_KOBJECT_RELEASE, which would have exposed the
-directory left behind, but they set fail-nth on the task writing to
-/dev/nvme-fabrics, and fail-nth only fails allocations made by that
-task. nvme_tcp_setup_io_queues() starts each I/O queue from an async
-worker, so nvme_add_queue_info() runs in a different task and none of
-its allocations failed.
-
-I will send a v8 that calls kobject_del() before kobject_put() once
-kobject_init_and_add() has succeeded, so a failed sysfs_create_groups()
-unlinks the <qid> directory before nvme_add_queue_info() returns, the
-same way nvme_remove_queue_info() does.
-
-I have also extended my own testing with a run that uses the failslab
-stack filter to fail each allocation under nvme_add_queue_info() in
-turn, including those made from the async workers. It checks that a
-failed add leaves no queues/<qid> directory behind and that a controller
-reset can add the same qid again. It fails on v7 and passes with the
-fix.
-
-Thanks,
-Saravanan D.
+> Does jumping to out_no_ioremap here leak the pl08x->base MMIO mapping when
+> getting or deasserting the reset fails (for example, with -EPROBE_DEFER)?
+>
+> In pl08x_probe(), pl08x->base has already been mapped via ioremap() right
+> before this block, while the error cleanup labels at the bottom of
+> pl08x_probe() are ordered as:
+>
+> out_no_platdata:
+> 	iounmap(pl08x->base);
+> out_no_ioremap:
+> 	kfree(pl08x);
+>
+> Should these error paths jump to out_no_platdata instead of out_no_ioremap so
+> that pl08x->base is unmapped?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261104154542.3131916-1-mmyangfl@gmail.com?part=1
