@@ -1,54 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793778655;
-	b=qchORHAUyTZikWgmFuUatcWE5QYbPoIHUCiMx35/GwPJZRAkPzdQLCYyPDarkv115vtM
-	 AsR/5QqQtUnqZfuleug6r2IzzLU9Tl4tZ8czAmV0wTQWKJfIwkpDANxEdF1qt7BwC9yuv
-	 244KWDOh0eMCpgvyJElLLIYdjk4CIpnTD4nittel2+6M1Y0yvoGjRjcXnB5FqiyFjV5nJ
-	 JSAxY1rZq+k3sfHhW2tUhcyy7FMlEKLEnQjcwPBomFWb4dbFQyQsabuYzyf3A/QC8mBF8
-	 ILTA/bMEMYvpUoAXC4RR8nohq3KpbY55lxgRnKg7h/gHu1nlP5sjkyIKjNX5lUV1vVA==
+	t=1793781700;
+	b=BtqtrrDEaXdWALY00Fisk65qE+rXOf+J49HIGokF1JZompIvtDJdm+foRSU/GyY1uQNq
+	 fiUJhgN3SRBosktQGAUbPjDhvvdbUwj6WjisbS4pUDNqQLc+1uPeAXTgGsdyvqmKSmY6S
+	 zrofcgPpU9CBHB9xI2WDRwHzO2OfOp1kaZlNqWdoyd7pGom8/DHY3vBnNqYEM0pK/caYN
+	 QhnQ0ZZyQbArjCj8CvBNHvmJiPPdbQno8p4FJUsYI0rMj1xBprG5NYqgtderogxidmGbR
+	 jJir9KNNMc/GvDWE+0A/OvA9b3sxOpHRqo7sPqZlruW4kH0hMi1OrWbb3bpq/SQJkXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793778655;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=N5UuCC/Ms2hLZxT1jvIYIL2yeL6N/vJPxW5qz9SFjXQ=;
-	b=JvUXAv4BLQvdUdftd/q6MSGvF65OMB2t7bbYVavGlbjStzKX66l6l6fc1RIC5I/w33Xh
-	 Vr7/KHTvziCGtLwWWEMrnQjgf3UFUS0MqHGW3hzfmFE7LqSHNDG2C2ZJWCBESasfTT79a
-	 YKut/pyh77/Se+/eP8D6CRQ2BlQQyyqTh4HC0GaafZDnGj4lrWZQpGUob90fuKxVGDR+u
-	 4faKQweKrwJSJWRWr0EFpq0XgktDGWdLFLIFrT7EBGy22lVWsWM3h1tukImbWUZnfrmF+
-	 oGoJOgTyDX2euVD2hST2H6rcF+LwtBJ41r9q9Rz30t+WEChvXz+ZqMcxXFGm5dSelqw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793781700;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 X-Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:
+	 To:Cc:References:From:In-Reply-To:X-Mimecast-Spam-Score:
+	 X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:Content-Language:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=tOA6pkU/gNCWHcJNqJZg0NzRYRy3OJtENBm4suvgaWI=;
+	b=DAvBcQu27r3KxbdRv3Vla0vgl2NqtC1RmQLANaFzloPBiSMEIeKDfp2r6/GUY97AmKxz
+	 ZTmIpOHo0sUDycMGa5k1jeJyzK9rWbX67P2OOpwroMXrviBPJSXbolEMQLQylmGeqAL6g
+	 veeDD9+Szg1IUoyNzL5yfbTcPrVaBBinM5OfvpeqZkvEgvWDN3Jm8azbT4ENajHCJ93Z5
+	 8FFiYjB1pUUrptAW9/ClEyN3hEHXw6IQ/xFutWfLV3tvWHafKNVKev/Gp+O4wEKRvQ7I8
+	 /kYzsmNjE+ft77wpAx9zqC3TfbL7P3Qli1ncGhG1k+FCkKPQeXVBzkU6wQdbVNLRftA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ceZAPvn1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YjOMFFH3;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC98D606A31B;
-	Wed,  4 Nov 2026 07:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1CD606A328
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 08:41:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EE1CD606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ceZAPvn1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD9F1F000C1;
-	Wed,  4 Nov 2026 07:50:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793778654;
-	bh=N5UuCC/Ms2hLZxT1jvIYIL2yeL6N/vJPxW5qz9SFjXQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ceZAPvn1eGF2M2UHVzcXgEmfg1foS3VLm/MiMc79yUZNuIzfo7SiwHsIVSVEKLOWo
-	 W1F8UpxHNIfN7rmmrjbTA+UeGnuOH6IBrSDhS/aS5ZlZxla319nDL8pmmn4NFR6S1Z
-	 GW8yFQBNuF+t6ynqhq8HdTCYjejDIk/u2mDxbzENumKB7XFXWQxMASDVoOGs1lU2FZ
-	 PiLOS3mXbs2FKTGYR+Z7YUr55B9ftc0sLpgWxP0+ye6s5f+aBy8KSZeUdJSGPcDl+q
-	 pp9J6BYonK/nC2PiM3OTK0sXki8qCQKKnW9sKwolQaYUOIGjH38GsoU5tOrzX51Bgy
-	 mxHgw5CiCE4jg==
-Date: Tue, 3 Nov 2026 23:50:53 -0800
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yanbo Zhao <yzhao62@ncsu.edu>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] perf dwarf-aux: Add C++ vtable helpers
-Message-ID: <aurj3WMsv2mwM971@z2>
-References: <20261103155650.269973-1-yzhao62@ncsu.edu>
- <20261103155650.269973-3-yzhao62@ncsu.edu>
- <sashiko-outbox-195716@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YjOMFFH3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1793781698;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tOA6pkU/gNCWHcJNqJZg0NzRYRy3OJtENBm4suvgaWI=;
+	b=YjOMFFH3B4gbABFW7fjGUAsevGp1qOhYK4t+oEW42rYDmrTfX0E62gBogAS5/RJcqmxlkv
+	BfutCBRDBbt42KXBnUTkR7eaTtR9oNFSniWhgBQ60Vl6TvZqkl7Zrc3lRxfl4jpALUXJD6
+	+tyms6FTx143skW03MLdFS5gnHblItI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-MWsBhX72NvOQzhsI_ZScKw-1; Wed, 04 Nov 2026 03:41:37 -0500
+X-MC-Unique: MWsBhX72NvOQzhsI_ZScKw-1
+X-Mimecast-MFC-AGG-ID: MWsBhX72NvOQzhsI_ZScKw_1793781696
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4a1d1f26a63so3300275e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 00:41:37 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793781696; x=1794386496;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tOA6pkU/gNCWHcJNqJZg0NzRYRy3OJtENBm4suvgaWI=;
+        b=Jacbld4boyBZjQXizd6yoMLY2y8zMcJDk+i/7fsydS5w0855+fxZ4PTtQVfhJicECh
+         qnbCc7Cy/6gqTI8Y6205aRZlGmlKaEcLCIahBkh0iPosSFwhCMwNsnzZDBB29LREKZm9
+         Ifu9kIOYyzcjH2/iqzXqv0iSYE034ghEcE3UmvdKRghc49GsLocYFn8lJ/Boqbd+aE81
+         yVCjkERzzFyHDuHWAPr++5LxbdjPmAlBaHIgZD4LyCwjwkG2KrzEm3NW8kqg0xH04kXe
+         3XVrmlwmvulq8i1VfvrwPpTmb6MDN2zr3sWp7++qZIJRPDhTpx+TZCeYEFYUTy+hGEON
+         Weng==
+X-Forwarded-Encrypted: i=1; AKwUvBwIyeWXQ6Q7GZGsRik+L99guz7B1j0Z9F4TgxdoWy35XOz1U+F6Qhkki6trPCqKqmqeYsEQva/u+Z/D+1L89Fc=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8j2yRM4BLTjfb6BXHO0qt28YkeT8p/iopnHmTwkjerkKoU+TdB
+	YZCUfhnIt815oBAa2sRy0Ygr7wZjwgY3UOk37D8LIavWr9oIaasdMdflxVGFcYL8XQ9HQ7Ujik2
+	+fQsznVZh2ZVhK7Bxfh1lbtmdjbrA/v2Tsp/lLdCdoL2xUIGpCIEFtboYrKr9jVGP2a4lxg==
+X-Gm-Gg: AYBFou0fgcdpHUJxVBOq5K9yAZ3GRGsq+2SCYIMZfu//BM55u3d8OxO6stsLEpou7mI
+	iDAIE8w6gxheNqyECnUcYR0HAdZg1KtVKhgig2dLkgtkaDjoX6oAmANVYJDEZudmyugfqGkpETs
+	giOskC91CQTuGvpviDcMgXCL58BV1+RkzDXMyljoa+gXoOop2r2CV0cyl7RP5opa3RgGDLAgSGR
+	z2Ntx+KQFiFcFqptJdnY+9h6EmC9GucnvvzSMWCIO4178E3c+qD52JdqFmbze+B5pRxIxJXCIAv
+	TPDn+ZVunhluSRmF15kMFvwPuX4A//Fx6COojQu2nzz5Hvf46RwkmN58PLZFwVQBvkKhGWAlkB9
+	a1SlolOkFSOcM23emZblFPfOZMsF3ZSje090Ji9CXRMwAw/+OsmDcrFRuO+PrrMD0nvGGdxcPDe
+	oZji/BftoR+UzMfP7V0KVJqq+HIqlMJE0fMigF2cT66mw=
+X-Received: by 2002:a05:600c:6099:b0:4a1:811c:8078 with SMTP id 5b1f17b1804b1-4ac185bc1d2mr329183185e9.26.1793781696132;
+        Wed, 04 Nov 2026 00:41:36 -0800 (PST)
+X-Received: by 2002:a05:600c:6099:b0:4a1:811c:8078 with SMTP id 5b1f17b1804b1-4ac185bc1d2mr329182855e9.26.1793781695664;
+        Wed, 04 Nov 2026 00:41:35 -0800 (PST)
+Received: from [192.168.88.30] (ip231-128-192-82.pool-bba.aruba.it. [82.192.128.231])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48fec8d87b5sm2470040f8f.11.2026.11.04.00.41.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Nov 2026 00:41:35 -0800 (PST)
+Message-ID: <f029172d-855b-4e93-8a86-d4aff72c9abb@redhat.com>
+Date: Wed, 4 Nov 2026 09:41:34 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,129 +98,68 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-195716@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net] net: reject a negative TCP header offset in
+ qdisc_pkt_len_segs_init()
+To: Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+ sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, network dev <netdev@vger.kernel.org>
+References: <20261101194433.2637113-1-alexei.starovoitov@gmail.com>
+ <sashiko-outbox-194018@kernel.org> <DML39PMNWP8Q.7K2P5T3AG8LP@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <DML39PMNWP8Q.7K2P5T3AG8LP@gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: ilFVxQZ2bRFzuBehIaNfdOOEhBo4KQmkz8S0BuFrgTk_1793781696
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 03, 2026 at 04:22:30PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf dwarf-aux: unbounded recursion in __die_find_member_offset_cb()
-> --
+On 11/2/26 23:46, Alexei Starovoitov wrote:
+> On Mon, Nov 02, 2026 at 11:44 AM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
+>>> +		/* A header in front of skb->data gives a negative offset. */
+>>> +		if ((int)hdr_len < 0 ||
+>>> +		    !pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
+>>>   			return SKB_DROP_REASON_SKB_BAD_GSO;
+>>
+>> [Severity: High]
+>> Should the (int)hdr_len < 0 check be placed immediately after hdr_len is
+>> computed rather than only inside the SKB_GSO_TCPV4 | SKB_GSO_TCPV6 branch?
 > 
-> commit 3556b432528cd90397fc56862bef26cf9afde995
-> Author: Yanbo Zhao <yzhao62@ncsu.edu>
+> No. It's already explained in the commit log.
 > 
-> perf dwarf-aux: Add C++ vtable helpers
+>> When (int)hdr_len < -8, hdr_len + sizeof(struct udphdr) wraps to an
+>> unsigned int in [0x80000008, 0xffffffff] (> INT_MAX), which triggers
+>> DEBUG_NET_WARN_ON_ONCE(len > INT_MAX) in
+>> include/linux/skbuff.h:pskb_may_pull_reason() before returning
+>> SKB_DROP_REASON_SKB_BAD_GSO.
 > 
-> This commit adds DWARF helper functions (die_get_vtable_index(),
-> die_find_virtual_func(), die_is_vtbl_ptr_type(), die_get_vptr_class(), and
-> die_deref_vptr_class()) to support static resolution of C++ virtual function
-> calls during data type profiling.
+> Not a bug. That's CONFIG_DEBUG_NET only and the warn is right:
+> the header is stale.
 > 
-> > diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-> > index eb4b8f3475df1..10079f47a6c38 100644
-> > --- a/tools/perf/util/dwarf-aux.c
-> > +++ b/tools/perf/util/dwarf-aux.c
-> > @@ -2293,6 +2293,239 @@ Dwarf_Die *die_get_member_type(Dwarf_Die *type_die, int offset,
+>> Can this write uh->len (and uh->check in bnxt_sw_udp_gso_xmit() and
+>> enetc_tso_hdr_csum()) before the start of the header buffer when
+>> skb_transport_offset(skb) < -4?
 > 
-> [ ... ]
+> No. The driver doesn't see this offset.
 > 
-> > +static int __die_find_primary_base_cb(Dwarf_Die *die_mem, void *arg __maybe_unused)
-> > +{
-> > +	Dwarf_Attribute attr;
-> > +	Dwarf_Die base_die, vptr_die;
-> > +	Dwarf_Word loc, virtuality;
-> > +
-> > +	if (dwarf_tag(die_mem) != DW_TAG_inheritance)
-> > +		return DIE_FIND_CB_SIBLING;
-> > +
-> > +	/* The attribute can be present with DW_VIRTUALITY_none */
-> > +	if (dwarf_attr_integrate(die_mem, DW_AT_virtuality, &attr) &&
-> > +	    dwarf_formudata(&attr, &virtuality) == 0 &&
-> > +	    virtuality != DW_VIRTUALITY_none)
-> > +		return DIE_FIND_CB_SIBLING;
-> > +
-> > +	if (die_get_data_member_location(die_mem, &loc) < 0 || loc != 0)
-> > +		return DIE_FIND_CB_SIBLING;
-> > +
-> > +	if (die_get_real_type(die_mem, &base_die) == NULL)
-> > +		return DIE_FIND_CB_SIBLING;
-> > +
-> > +	/* It should have the vtable pointer at offset 0 */
-> > +	if (die_get_vptr_class(&base_die, 0, &vptr_die) == NULL)
-> > +		return DIE_FIND_CB_SIBLING;
-> > +
-> > +	return DIE_FIND_CB_END;
-> > +}
+>> Third, for other GSO types (such as SKB_GSO_FRAGLIST, SKB_GSO_UDP,
+>> SKB_GSO_SCTP, or SKB_GSO_ESP), hdr_len remains 2^32 - |offset| at the end
+>> of qdisc_pkt_len_segs_init():
+>>
+>> When (gso_segs - 1) * |offset| > skb->len, can qdisc_skb_cb(skb)->pkt_len
+>> underflow in 32-bit unsigned arithmetic to ~4.29 GiB (exceeding
+>> QDISC_PKT_LEN_MAX), causing deficit-based schedulers such as drr_dequeue()
+>> and ets_dequeue() to spin in their deficit-refill loops?
 > 
-> [ ... ]
-> 
-> > +Dwarf_Die *die_get_vptr_class(Dwarf_Die *type_die, int offset,
-> > +			      Dwarf_Die *die_mem)
-> > +{
-> > +	Dwarf_Die class_die = *type_die;
-> > +	Dwarf_Die vptr_class = *type_die;
-> > +	Dwarf_Die member_die, mb_type;
-> > +	Dwarf_Word loc;
-> > +	int chase = 0;
-> > +
-> > +	while (die_is_compound_type(&class_die)) {
-> > +		if (++chase > MAX_TYPE_CHASE) {
-> > +			pr_debug("DWARF: base class chase limit reached at DIE 0x%lx\n",
-> > +				 (unsigned long)dwarf_dieoffset(type_die));
-> > +			return NULL;
-> > +		}
-> > +
-> > +		if (die_find_child(&class_die, __die_find_member_offset_cb,
-> > +				   (void *)(long)offset, &member_die) == NULL)
-> > +			return NULL;
-> 
-> [Severity: Medium]
-> As reported by Namhyung Kim on v2 [1], broken DWARF debug info with cyclic
-> inheritance requires recursion depth limits when chasing base classes.
+> No.
 
-Can you please address this?
+FTR the nipa sashiko instance dismissed the above concerns autonomously:
 
-Thanks,
-Namhyung
+https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261101194433.2637113-1-alexei.starovoitov@gmail.com
 
-> 
-> While die_get_vptr_class() and die_find_virtual_func() add a MAX_TYPE_CHASE
-> check on their outer loops, die_get_vptr_class() (which is also invoked by
-> die_find_virtual_func() -> __die_find_primary_base_cb() ->
-> die_get_vptr_class()) calls die_find_child() with
-> __die_find_member_offset_cb() on its first iteration (chase == 1).
-> 
-> Inside __die_find_member_offset_cb(), when encountering a DW_TAG_inheritance
-> child with offset >= loc, it recurses into base_die without a depth limit:
-> 
-> tools/perf/util/dwarf-aux.c:__die_find_member_offset_cb() {
-> 	...
-> 	if (tag == DW_TAG_inheritance) {
-> 		Dwarf_Die base_die, member_die;
-> 		...
-> 		if (offset < loc)
-> 			return DIE_FIND_CB_SIBLING;
-> 
-> 		if (die_get_real_type(die_mem, &base_die) == NULL)
-> 			return DIE_FIND_CB_SIBLING;
-> 
-> 		if (die_find_child(&base_die, __die_find_member_offset_cb,
-> 				   (void *)(long)(offset - loc), &member_die))
-> 			return DIE_FIND_CB_END;
-> 
-> 		return DIE_FIND_CB_SIBLING;
-> 	}
-> 	...
-> }
-> 
-> If a binary has malformed DWARF with cyclic DW_TAG_inheritance (for example,
-> at offset 0), won't __die_find_member_offset_cb() recurse until stack
-> exhaustion on the first iteration before returning to the outer MAX_TYPE_CHASE
-> loop in die_get_vptr_class() or die_find_virtual_func()?
-> 
-> [1] https://lore.kernel.org/r/asA1u7LBRp2gqbWI@google.com
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261103155650.269973-1-yzhao62@ncsu.edu?part=2
+you can reasonably safely refer only to such instance when submitting
+patches to net/net-next.
+
+/P
+
