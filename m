@@ -1,15 +1,15 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.97
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.143
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793807576;
-	b=rlaGXih2OcNTasK4DGBiwl14IYFviA+I77mvpMD1ELdV3vGvKioHzMov1U5qNGlDXZzD
-	 aaumd1WhYbLobWSaEHUws9yh6yK4j6WIoqawi+3hugtr5gpFvm4NGPe5wiCuECBBgx/lH
-	 DrWkzQFTaL/SQLWDFGXLfQX4K68M5oEkle7m4FJFMbIm5PChW5e/+HtIl52UBbl6cxA0g
-	 nTJeRmtd1J58kgrTUIGLHVoczCwHdWVavUaM1ne/JMPK+t/633OYQmD1ZqEmrFVmD+tqC
-	 w70jQP4+NQYcQDdvLONLNpLwbHT4K/T3wvuNrElvdpwg/bbFHTpw2PpWYZQkckqB3/Q==
+	t=1793810330;
+	b=LzB9dN70cvEql1ezHIgQ/VdzIO8CrbkUpCQzD4tfLAg6zxTKPIOfIbZaL1L1GNdAZP7y
+	 NxHdtJml97QJ1U1xFA6YVLmrFEKs7AMnUq7iTlcrR62wjDClfnWT924nMhhQN1KflnZPV
+	 /pyl67WYu85ECWPG4ZUn41LB/cJ0/pH/IFyYd1GA7N5nBWX6DXHnlmW4ZCc4GW1CalMjp
+	 D6qnrAvCrua0Mlt5Yqa+yScGuWMkumSxU0Vb/kwMZqGskg8yb6aM+g90X6SnT5cJQLpJd
+	 QbkzSku9kYU2F5XZZIgEnadOJ+18SIIoSa3i+CgVsGMZuAOIJnUoT+7LwlTn5Ux27xA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793807576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793810330;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
 	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
@@ -24,73 +24,73 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=ijuyXKd32Xx9ycQ6BG6SnY8WquJ2qX6Gh2bEPvbGbA4=;
-	b=bK1Fxfq7JJn4j98HQ9RW9ELqRu0MLuO70VYCVd47bG1XWvLtzdxohg7SGIl9BrpllE40
-	 CyFOvxX+yCguqsWAydm7Zb+D1VQl4hLq10dhwuMDArFbwtrOuG+QE/ABWx9+QKiV6Kr/2
-	 IWG3zSqp7Anp6/gm/E7xwrUrpcQOaLwfOiYWE/je7iMOg94uKYcBNLQjUIq9+rlkg3+Ua
-	 FifTBInqwgSHfNSW1xmt+XfhXM/y+UL9au6yNTF4OsXLHBIxW+OhjhJj0hyizl92VC7TH
-	 IEiVacSlo0N61z1/YhrgIj82U/yY4i18z8rNI2rYNPJlXUK2lJF/WMLpyh5qieQDXdw==
+	bh=M0aoeKpwFlDVUfix0hsz+ARJFtYG/eUi+3bjIRsuZ/M=;
+	b=hDEIWpgNXS63hMoOhPoUL3afIy04+VCXQVYhRP9JVSl1XX7KAVpqDOI5AHjJ7hnOLXim
+	 XEAPc8aeSzQB44pAISWlit4XqfSK4TRO6qqhKTieab6/Czvyz7RX5gNwCnJLxCJ9I5X5s
+	 E8F9h7cmNtop1gDAyZqID4Dp5vHiLcQ+ebBmjIz+d5t0XjXVvfj2zmI0KivxUS3QbnrMX
+	 YWQQBy7LDYO6nSnt8SfubPQlFkC5+7M4JyIgsn9Qfom2BlAYh0n1dHdOQ1s6NmgcyOib/
+	 UKuwiuDYBNdebYS+otXlmLqzq5oORmNTP2d7yKaIbwotmuKDZTYOyflAtcMfdsU4Uuw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=efficios.com;
-	spf=pass smtp.mailfrom=efficios.com;
-	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=TmMIMy4r;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.97
-Received: from YQZPR01CU011.outbound.protection.outlook.com (mail-canadaeastazon11020097.outbound.protection.outlook.com [52.101.191.97])
+	dmarc=pass header.from=phytec.de;
+	spf=pass smtp.mailfrom=phytec.de;
+	dkim=pass header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b=AZw0hUPz;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.143
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11020143.outbound.protection.outlook.com [52.101.69.143])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA46606A32E;
-	Wed,  4 Nov 2026 15:52:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4AA46606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5EB606A31B;
+	Wed,  4 Nov 2026 16:38:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E5EB606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=phytec.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=phytec.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=TmMIMy4r
+	dkim=pass (2048-bit key, unprotected) header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b=AZw0hUPz
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vNUrIeTnoXwcmy5XGwPMze4uTbj67F118Q7SITTTWopEtJcA2lHrKWLGaVmk4lOe5xL9xOllj9a++JQ9DJu6uVJ6oCY1EmRJeV+DXUiwbmAn86nMsklSiSKorfGXk/53QD4wQqYVVi/6ohEZAO0jCwkXQHPfPGp181d+BVfPAo2aor3pUV183Wc8nitYKZ3huvsM+0CBzQXcKN4htSVBY5lklEey/z/0bwn+SZSxcGEk4vY+TcXaGEPnT+PmqJN1vpx+VFOQ4jPKWeUTiD/oCO2DPPdibV+ADolaQiQ4xPixcQlbhTpX7IcEiLKkPb/SGEAFF4MWSQQNoHLINObjwA==
+ b=Pfxh8D8jmUkwPJMla7ar/95GS9/mcYgXyFwRWBc7Ybtp1TYOiBk6e1nf5DY7vRe9zr8Q/wlYN5ebHo5dTRQB7wzwS3pD4lZC20GQ5OvCT8dtMF6fW/sHUV/cA3BGGDp3Psjf8Uj1ZXFqpiZnOHmwe0M7cU4PKwwH+DiP5bddD5qLh7/w8DK0ih9LmBCPVYQekKJjqOqDihaR/wn0rd5AFVNAf5kfF1Ec+QuZGmusQLjCj1PgTZreCzImb/4ZF79jUyFFnbSFtPXhLoxto40aJCRdg/W7F25sYK030YaQkenN3F9OipKBak8ERDvUxUXheoKT2rigwdmRMcQACja10g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ijuyXKd32Xx9ycQ6BG6SnY8WquJ2qX6Gh2bEPvbGbA4=;
- b=mn/YYF0Q32Cf4sSUZaTPMTI60Tq+mgEu8dMtWGvPWgnFa490JzPujS/vd4/k4aFbzS5FpZdCdMoXIFvHQ95DxIckoyJ2tk6Pza3unj2K8scL2H1aYqP6a2STewN9RUNu3DEf+SuFkynAOyNeNAGrvGsi4Jo7RpcgjqldNcL3sL8AjZ0qcuag33OECjMdFKjIqzjdwphLxYomjaX2ulXZK+P6AkSZ4e6M03eE0QXZQWwqZkwByb9sFeLP+v2OKaf7l3rlj0dw1QvY/WilKt9ofnyJLmSLdxN3rT/IE6O+vNWTY2fzstXNugxcgxQaCEJisKevAGlpPr6lm997mxL1ZA==
+ bh=M0aoeKpwFlDVUfix0hsz+ARJFtYG/eUi+3bjIRsuZ/M=;
+ b=AzoMDnPAcuPfryZsdts1lLj+H2+6Gd6RGjG4pdg5lnohXn3nksbejkNdyo7aZD3ntxijRYQB/ZPFjSZcN7wi2pUFeVAnYAPTXjTuY1sSeCXGP6Pm56HTmD5n0XO6CAUNyoq5wRo8Jm5Ux0O9Rb4zBfg1JX7e2aA1dF0BMESxd1atDkX+5pU93VuDAIzck1xZO29Bav9S4rh+1to+mRN5F/NcazOWOKOdhrqIGWIIGLPTEHrMRXmwMguFzLpb1dCEws43SbnyAN25Ci2YomM9okr778EdKZK54MyQFKefNCLzQs4Qo4xLXjO2zFytVkPAV8FeVYp3AlSVLjDUDLhPeQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
- dkim=pass header.d=efficios.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=selector1;
+ smtp.mailfrom=phytec.de; dmarc=pass action=none header.from=phytec.de;
+ dkim=pass header.d=phytec.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phytec.de;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ijuyXKd32Xx9ycQ6BG6SnY8WquJ2qX6Gh2bEPvbGbA4=;
- b=TmMIMy4rB18aEg0hqqp37vhnTs4swGmj3KKU5lvjWVepaZTAJ9Q3PoRflj3DwVPDzgyvvvwA1pE4o0kYJV8EdhpoTcO1JJzyJ9NjdLWk1ZS8xBff4gSS2RwaH4Il25IAR2DZIrBQjsetpDQ5TaGbkiybZ3Y6MfrsQOGjhsBA7FtsCLIdlpndLaK40SmRhSBaEzLGPqVXwgcEOb5TmilOzVKReRju0YMn0muxWhzwbEMoz0YjrJi0U2QU9FMCPrUper+Ww9mkVElSgnwbxG3XGMXQWM70bG3fBdLlXP4Dbh/gMD3PPmd/3xgIZZLNmNTPtBqY6w63SrSv81kLt254JA==
+ bh=M0aoeKpwFlDVUfix0hsz+ARJFtYG/eUi+3bjIRsuZ/M=;
+ b=AZw0hUPzGzD5RURsUe2+rB2XucQaOv7R5+ure7rWkeldN/jNfT06NtQ0SQq8aUIwImznfxXEyozW4VHIay0UwJqzVB983AxM69SAZ5jK+JDva7XXnRwYG7LFeoLPH0+Cv3177ZIXvEzLnR63k4pMQ0CzVba55vUq4BK/8Ka4Ut5q5Nq8uTh8zfQ0lJHWvGx/G/BUKTzNJExIwfZOKxGPSZT4jFIvnQWpe931UMfkukq8IdXG8j9yfD5KJzBqlxz9tTND81M2oNtmao1LdlJ9XA0xkQxgVaUTitXC7b6a3aoFSeJe1LTweoG/1Xt7+ZgkkL2CHNHdSIp/uCEIx5DGoA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=efficios.com;
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10) by YT2PR01MB8181.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:b0::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Wed, 4 Nov
- 2026 15:52:52 +0000
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 15:52:52 +0000
-Message-ID: <22a163dd-32fe-4f68-9282-3fd5d60326ea@efficios.com>
-Date: Wed, 4 Nov 2026 10:52:51 -0500
+ header.d=none;dmarc=none action=none header.from=phytec.de;
+Received: from VI1P195MB0623.EURP195.PROD.OUTLOOK.COM (2603:10a6:800:159::10)
+ by PAWP195MB2227.EURP195.PROD.OUTLOOK.COM (2603:10a6:102:341::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
+ 16:38:45 +0000
+Received: from VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
+ ([fe80::2f8:67bc:a785:6894]) by VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
+ ([fe80::2f8:67bc:a785:6894%7]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
+ 16:38:45 +0000
+Message-ID: <5b546ff3-f887-4de8-b5d7-ea252e8c2d62@phytec.de>
+Date: Wed, 4 Nov 2026 17:38:43 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/12] sched: Reject SCHED_FLAG_KEEP_PARAMS before
- reserving deadline bandwidth
+Subject: Re: [PATCH 1/5] bindings: Add devicetree bindings for new
+ phyFLEX-i.MX 95 Libra RDK
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org,
- mkoutny@suse.com, linux-kernel@vger.kernel.org
-References: <cover.1793804635.git.mathieu.desnoyers@efficios.com>
- <fc36341b93c2e994ccec71a5ab6d5c8e76b3d73c.1793804635.git.mathieu.desnoyers@efficios.com>
- <sashiko-outbox-197505@kernel.org>
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
+ conor+dt@kernel.org, Frank.Li@kernel.org
+References: <20261030-wip-bhahn-imx95_upstreaming-v1-0-1c1cebb5be99@phytec.de>
+ <20261030-wip-bhahn-imx95_upstreaming-v1-1-1c1cebb5be99@phytec.de>
+ <sashiko-outbox-191073@kernel.org>
 Content-Language: en-US
-In-Reply-To: <sashiko-outbox-197505@kernel.org>
+From: Benjamin Hahn <B.Hahn@phytec.de>
+In-Reply-To: <sashiko-outbox-191073@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQZPR01CA0012.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:85::10) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10)
+X-ClientProxiedBy: FR2P281CA0075.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:9a::17) To VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
+ (2603:10a6:800:159::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,130 +101,117 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT2PR01MB8181:EE_
-X-MS-Office365-Filtering-Correlation-Id: 02468078-18c3-41cb-99c1-08df3a8baeff
+X-MS-TrafficTypeDiagnostic: VI1P195MB0623:EE_|PAWP195MB2227:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4314624b-d306-4c2a-62d4-08df3a9217ee
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|4143699003|5023799004|56012099006|261021121427099003|261102123227099003|261026121527099003|261022075727099003|261022105027099003|261028144727099003|261026140227099003|10067099003|22082099003|18002099003|3023799007;
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|10067099003|18002099003|22082099003|261028144727099003|56012099006|4143699003|11063799006|261026121527099003|261009223027099003|261022105027099003|261026140227099003;
 X-Microsoft-Antispam-Message-Info:
-	qxV0mDPMZD+pSYVT7C03icE7syXLov1C0fKttzTgsf5o79CxzwiDlpVmmDYD8yYQ+/ZDKBNzvZvzrOGmVhGYoGOFkHs2r3B805bGW2pysSRBokGwIDw1TzsQGE8gCHIjvbPlteivawI3u2b+PREMEO3Zh/7acK2mHOMLnZesEdVpvO04hZwbb2FwCKDSnVcZ9S0R9UGEnE8VPwg00php/IzFjv8dq0TG2JCP52lrx6qFfZswKAFUIwh0RV03GwggKraym6z6W/HbOVCQiaoGUXaYB40jFv/w4kipXLpYcyokWB36pUmdwc40vOJsZO8CKOMZK+y3WsY0vVC+gKpEhaBHvt9ZS1TdSgGuU6+D5i9IxlNiIDdndtFr0TBceSGYgadoei6ksWaRSDkeZnnydMonz6p/UHyRIaG5vrzD6+Qih8Le8mCdZpy9bwWw9uDrm+2OXbC2OJeZ3kJAxAcNShQa9XbE9VMJV5GT0EOLSb8g9WBK0dEpO+w6aU2BVYTrZ3LbSm8tgz2V2peTJVrqaeYF06HWAwfm88BCKk540hapsxGpZdOzJcwcbu9E7QvYcBBJTXEOqDHhKj+11fkLsAQlWngRTOeiTWTtUWKE8KA=
+	XPjcJobqtPiLkjaUzqbak9ezVYp28I/9ggyXO0fCYnbRv/F9ruKmQQePrAhO1fERdSxGlUPyHmqtWUSJ0ZpuyzOr2F8mz1hRZZ8TCPj/4AfFtZ9gFcG6FjxZxaqN2bx60ba9g69RR5YOQWaUg1jEyW4OGq6iNo0fHMUyEPwRgNewVKyho8IPCn7AQ/wfPDSJx5TrBW7QTmfas5jsI4kpDM3m3ZEb1FAPbXjC+GFPfL+h1S1BMBND/ft5JbCNsABrqAT4jaWGsiH+rGNSbg2tYJ6L1IufGk/O4XXV1vjQwOGSbnFGP7E1PucB+SS0l/69AaYGl6HcosWZ1w7+iMJAtbnwYnL8JfOZq7v8yHpaVuA3n7h+fIbJ3rPfdMdplV594sZfpmuZ8o/1ZpQ6byRnVZH+1nJHvhNSAa2QX6+WOMNo48ebyCicr+TPdPqzsoPBk3a0PZ/6HPNV4M2POIQlRRWPPm+se7pa40kNJCYbm3O1HqGfrTKoDkLza+5QYw1n2JEy62bxVCDOETQt73GXwypjN1RM8BQ/qsl3yqQM9ZsAMiAWc2cisKAZfeWs2JYW25xBGfbDa+7ZiKOd+sbBxf8nM7RrBfT1rBnfRakFQ7hDjYglN7Qt9BILcNdxElRjhZruO6QrLr5upKt3ERLGOOTynwO5b2GQPI+K1GT5VLM=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(4143699003)(5023799004)(56012099006)(261021121427099003)(261102123227099003)(261026121527099003)(261022075727099003)(261022105027099003)(261028144727099003)(261026140227099003)(10067099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1P195MB0623.EURP195.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(10067099003)(18002099003)(22082099003)(261028144727099003)(56012099006)(4143699003)(11063799006)(261026121527099003)(261009223027099003)(261022105027099003)(261026140227099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WXBjcHJTY0o5Vmc5alNiZW5xVko0QlpMUEpUMDh2bTdlby80UTFuSG1XT2lB?=
- =?utf-8?B?K0dVZ1VSeE44eGwzZ3BzajI2L3RpNVV5SUkrblhjc3N4K2pKWFdrdkpiRG1H?=
- =?utf-8?B?Wm5mcU9PaUZ3bUdrK2FzUXhDRGdyT05SNHNtODNpVWtpSDR6VGRCbUo3aTF2?=
- =?utf-8?B?bU1wMGh1cW85MnZQcXpKUmxPblZ6STRONGtvVk9zeE5jc3hLcUhVTGpZRHly?=
- =?utf-8?B?NVVpRWhrK1grbmEwRXVWVGkrcDkxM2RnV0NuUnRqSCsyY0pUYzhYNVJpOTJH?=
- =?utf-8?B?Lyt5SDVmb0FGT29QUGhjWVFIV1pLUytEMFZIQ3E5cDN5UW1sOUxub3k2K0NN?=
- =?utf-8?B?UVJ1QkpuQTZvN1RwRjRXZTlnSXk2d1YzdDYvYTJGR1hiQkMvby84eG1ETFBI?=
- =?utf-8?B?ZUJ0WVdVZmZrMVQvOTYyNTNBeE5uQTBsd2JPQlFJSWRzamdwK0p0RmY0YVk0?=
- =?utf-8?B?bVBudzcvVHByK2ZCMjVlZmgrbzZWWGpFb2hYSXY5SUI5dlBzL0RtRkZwNW9G?=
- =?utf-8?B?ZHllenNGcWl1NGl6SWswTHMyV0Fld21QaWJwRk9Gbm5LMXArWkgvb0lnQlpH?=
- =?utf-8?B?U3pMNlh1cVZHcG1ySzU2dUkvZUpHR0xZRzQ2NktlMTdWODZwMzlDK1RmVzA1?=
- =?utf-8?B?RmhLOVRUNkVjWWwwbGlxUnozYmZEZU1xc3doZ3o2ZU9Na0V0TjN4aWhBeDVC?=
- =?utf-8?B?ODJHMGNidHRINk9JNVU0dWFHNFRic21QSXhEd3BidTkrbUZxMkdNbUxaVTE1?=
- =?utf-8?B?V3N2MXh3U0RiWUJBZHZueXM2MTJEOWtPSVdScGE3emIrWk8wWkFVRVVGR3E0?=
- =?utf-8?B?MXIzQXhSSkRQK2hITUhVSS9BWUwxYUhHZllEUittQkUxVzNkb1h5d1JrRmpJ?=
- =?utf-8?B?T2FsY2F3NEIwTGd0blRpdmRJbi92YldLbHhaVnNqQldVUUFwZ3Nib3g1SVFR?=
- =?utf-8?B?MGYySHBvNjNKUjJTNnYzS0pxVVJNTUxrc2lISWp6N1laczNPaXFrNDNlekRx?=
- =?utf-8?B?WUpydldadGZmMWxtL0xjVG0zWU5pdDFPbXdBcEZDS3pNcEhnRG9zT3hXcUN5?=
- =?utf-8?B?ZXdyaG5nalhWYm42bkxGYUNQRURlVGJydzZCWUZOU1BIaFIwV0VuZXRad3pP?=
- =?utf-8?B?YTQvQ2dTK1ZTZEVZYzF6QTlhZTRZWmgveE5saGR4cG5NYW00NGc2WTdOSFpp?=
- =?utf-8?B?SFJaYjJIM3RYZ2lPeU50WnhHNG5EdmJ6R2daazhaeGFOM3NyZitGajZ2aUV3?=
- =?utf-8?B?bWcrY09zS2dkenNmYWh5THBBNzcvSjlVamZNZ3NNbUdoR1FGWnB2eit2TVpQ?=
- =?utf-8?B?dGs2Y2UvN3hldjZ0LzdxQmR6MFZobXlEbEhkd3lMUFRyVXBxTmp3OHgrT1Fv?=
- =?utf-8?B?aGVZc3doL0NLVFJManFGM05IUU9rWS9FNEcwUGFxUW1RRzF1cmFBMHNPWCtN?=
- =?utf-8?B?WU9TdStwQjhPQ203UTJiSFdBbzFKY2FSUGdoQWxwZUZJRXFQbU85QWlTTStw?=
- =?utf-8?B?d09zKzgzNENBT0V5ZjRaYjdya0ZLNk9kSUJEUU91cC9JQWxDRG1sSCsvOGIy?=
- =?utf-8?B?bDhQT3RiUzdJWnFLeitNYkN6dW9iN21aODVsaHVmRWxTK1NhamI2cE1xRmFp?=
- =?utf-8?B?ZGVLdFlRMitGS015UzBSc3VaaHVXQlkyVW9qYnF0UzJZcjZLRWRnRUY5UVBa?=
- =?utf-8?B?Wno4NDlVbzVVWnJCL2M2MDdLNGdtMGMxOEJjWFhITTBDUmxlSmlEWGgxOE1i?=
- =?utf-8?B?YXp4dUlGT1ZmaXBJSVYzcUJhd0VhakQvUGZaWFdWRnVnNXhzVXlaTnlPbVZ6?=
- =?utf-8?B?ZlRLUGlPOGFVY3FZVStlVjJUcFJvc2piRHBFWktMWHJqajhxQzFNbkNKamVi?=
- =?utf-8?B?UWRzNWhXNjM0emFLbWtoKzdsSGo4SkdjV05HT1hxU0U5azBZcjZPdWE5N2Jh?=
- =?utf-8?B?L0hQRXM3WU5HelZiZTFRT3R3RTZ5OHlNYzFNRTVIZy9aKzJnTi83bG5obWtQ?=
- =?utf-8?B?K3RaT2I2cUJzdWgydWdSdUlTSVJPck9kZGZqcnZLUk95djhjNkIxZjcxUGNF?=
- =?utf-8?B?WjJJcnUyK0w3YTNINUk3VEdDQWZXdHJOOE9IekIzUi9ucFpoMmtHdGUrUmxB?=
- =?utf-8?B?b3YvSFlnZXZ3THZoMDFmWDBkT2szVnd1NzRJaFRmVGFiblNwaXpXNitTenFz?=
- =?utf-8?B?clFYdDk3TExTME1uWGcvT2pLYk95d1NrcEZ2MnhGUTVaa0xXazFodXB1N3J5?=
- =?utf-8?B?RkxiSXBLU1BQWUx5SDV5TVEyTnBWaU4rekhNbkxYUXFKT3VDbm1KZjc1MGxy?=
- =?utf-8?B?ZTBFTmViZDUrSE1oWmpnVlU2T29FVExDV1Y1WGZYbmM4VXo4andvb0hLVmlS?=
- =?utf-8?Q?alDRjKVwj/k6C21U=3D?=
-X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 02468078-18c3-41cb-99c1-08df3a8baeff
-X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+	=?utf-8?B?OFhjR3c1aWxocU5PSzJxTHhhQUFRN3d5L05uUHl5VXFJMTMyb2xmVW82d2xJ?=
+ =?utf-8?B?T2hzNjNFbndEdC9TbGhyenB0T0E5V2hjenZGV3NjZnlSRHlTTi9TNTAyNHFx?=
+ =?utf-8?B?YVpXN0NuZHJ5ZFJMbmlMSTVnQWZDNmVxODdJVVNRWGZUNG5mNUcwS1JmR3Fm?=
+ =?utf-8?B?YWpSUFNCR0JteDF6R1JyaHpZWTFxQUpObWFzR2xTMHkxODJXUHFWSjRORGdG?=
+ =?utf-8?B?OUVNbmRkVnVOaWs5aGsvMGM0TWJoRjd0V3Jwbnp3a1R1K1FIZHhqVThwL1N5?=
+ =?utf-8?B?RzNCN2xRQXVMVmNrRU9sdUJOYktaUVpmdVdmYmF5Uk1YYXIwK2RoOXQwU2d6?=
+ =?utf-8?B?VmxvK0U5RFpxaG51TmdsQ0hnQVZ4WWswOGxoWjlVU0JxbGphRmFiZHhFcDZ3?=
+ =?utf-8?B?NWRFOE9aVCtsSktWdUNKazhmck1iQ3pZT3QwalNMU1V1bjUvYzFqcFRQSU96?=
+ =?utf-8?B?WTFxbjRCY1l2RlRpc3pTL3BPUDlVN3pBTG8rb3UwMVVsM0R4YWZhK3ZlUGQ3?=
+ =?utf-8?B?REViZFgzYkRTVGtlNGM1VlBxNDQxZlo5Mk8zVkwrSVEyWHpmQ08yTUEwQ1NX?=
+ =?utf-8?B?TUltOGJLWEY4VmRjWUE1UXAveSsxRm9qUGY3a2RiNU85YnZjRTZhaGZDR1lO?=
+ =?utf-8?B?d2hnNUFIOEFSY0VFazRaZVlONS9PL2ZLaExqZWJWdTU2K1dpU2tsSDlEd2Z5?=
+ =?utf-8?B?TzFuTnJUZ3dKZjFmckFzbkRQdDkyZ2FPektFOEtPK1cxcXNVMjFEYndDcDN4?=
+ =?utf-8?B?bkNZdmtCMGlYY2R3eHBkVjBLcGxCTzVFelh2YjFiamxGZERXcTdBNHVaRUl1?=
+ =?utf-8?B?bjZrVlVYRVhIR01JOGxKU0h1VG9weDVuWWI0d0F3WDVENTVnY3pwMk5xQVQ2?=
+ =?utf-8?B?eWRMeWk0dGhheWlGa2MvK1BmVzF0ZGhoWXoxNHpna0JYME0vMm9GZmQ1K1l6?=
+ =?utf-8?B?S1l2bHdlWTU2WWwzRUZoY0huV2EzTUc1WHNla25FZkE5QSt6M3daVWxxY0tI?=
+ =?utf-8?B?WTI1blZTZlBtOFlGVFlUNmtnN0owd2swc1JiSTdQb0pycmtxMnlsS0pVemt5?=
+ =?utf-8?B?bXYyZFA4bm5ONS81dytnaXczUjJhVWhEcGx6Y25ORUduSGVkT04wSXgvejNr?=
+ =?utf-8?B?U280NVN2bmU0MUR1Unh4MVh6Nm5oNFc0MTBTS3Q4NWR4ZDRleStYQ2ZpczN5?=
+ =?utf-8?B?SGRBZkxKZ21HbGJPdnRDWmd2enNHb0JsTGV5bWxSQnQraWdDbVkybEt0aytF?=
+ =?utf-8?B?a1VmWjNCQ0R6ajVEUytzTy83VjU4ajBLNk1qb1F5c0xnd1lRNUdMZzV2MXFa?=
+ =?utf-8?B?MnhibGJaQXB4UUZCdWEyc043cmp3bzJKVUFJRGJPQzdZVlBOZEJNaFRWRzBy?=
+ =?utf-8?B?Rm9EMVpCNjRrMlVhZ2FKSXk1Q2FFSXZPb0xnZ0NUZi9RdzE4V0hGampJeis3?=
+ =?utf-8?B?bllsUTAzV3pZY0Z4dm5lOXMzbzlnZ3RxcG5oVmxmUklBR0VRcWdoeldKVmNP?=
+ =?utf-8?B?aTVyaUdCTlBDcElxZ1FmOGErSE5IbmIyUll0MllRelBsb2l1bG1PN2d6aUlw?=
+ =?utf-8?B?WUVKWHRmdElhVnYzZVpNd1A5WVZHOExEVW9vT3JvOVRKd0dIMGhzNVgyOGln?=
+ =?utf-8?B?azZlZCt2TEFSNFpkY0c3aG1Qc0Jib1lveHpYbmN0b00rR0JmU2Q2TEZsb0NP?=
+ =?utf-8?B?RS9rbm8rcFJ5RlRLRUJ2U3ZmM0NEYWZCSWllQUd3VVRHVWlJZkFnbVhvaXJl?=
+ =?utf-8?B?YzIxZU8vUHF3V3ZyS05uL00vb2EzdldTeHUyUlVMbXJ1Z3liaWk0U3gxTXdt?=
+ =?utf-8?B?Vnl2N2JXSnpnV2xyOThwOVVmUldjTVZGYlFTcDBtZ1FJZmMwSHd2RFU4TlRt?=
+ =?utf-8?B?UUg3SjB6azhLOWFremZPNHdnaENHZVFQMDRsL3RRK0RsOTgwRDBLTHpDZWNx?=
+ =?utf-8?B?Rm5VNUlQV0dzSzF1Q0VLemVxMWJKYk9KdVgyaFhkOUhOMUNkTjFIUFlwYjFF?=
+ =?utf-8?B?SjB0WXUvLzVpWlBDMngvcmRsRUJzSXdSTkIvUlBDZVRuNGZsbFlNWnpsTFJO?=
+ =?utf-8?B?akxiZEJNa1Rmdk1VWnA2VVpvUTdHV2ZUaXFob2RDdHl5a3AwWGhOSVkza3ZR?=
+ =?utf-8?B?TGlVSkhnY0pCdTVpRDZ6SXZlWEw2OGRlQ2ZRQ3FvZXlTNXZxWFNRVTh0N2ZI?=
+ =?utf-8?B?UHVkT3ZiQURWeFBIUGFyWlJ6UDlJODd6SklCekgxUG9udDYxck9vcmllUzlX?=
+ =?utf-8?B?ZFZ2aSt0cWNPQzFwN0hwNURvWHZ5QVhKT3BlQTZQajFaNTNlTGlQK0dNczhR?=
+ =?utf-8?Q?7wt3DqAGY9dYIUp9e7?=
+X-OriginatorOrg: phytec.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4314624b-d306-4c2a-62d4-08df3a9217ee
+X-MS-Exchange-CrossTenant-AuthSource: VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:52:52.1659
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 16:38:45.2409
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
+X-MS-Exchange-CrossTenant-Id: e609157c-80e2-446d-9be3-9c99c2399d29
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6u1nUBm+sGoe0/L/UfR99EyetyahfJe0wy38hiwUKDKpgxpmnGfuAqI3a1/CEXiRJJ3FwnZ/Ng/pUU6LtLA+aImsAiSf9FRWYVYSMUfm9Ok=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT2PR01MB8181
+X-MS-Exchange-CrossTenant-UserPrincipalName: umEharj1l0mgfJeOg3ZC/LwRCPWgeNPSy0zjzD/I1E5LD43d4ceY3/ZzIDN4XllDlblE7B102VfJL1jsvRaBhw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWP195MB2227
 
-On 2026-11-04 10:30, sashiko-bot@kernel.org wrote:
-[...]
-> 
-> Should __sched_setscheduler() also reject SCHED_FLAG_KEEP_PARAMS when
-> policy != p->policy, and skip sched_dl_overflow() when
-> SCHED_FLAG_KEEP_PARAMS is set?
-Both, and the first one is reproducible. Thank you, this is a real bug
-and not the one patch 1 fixes.
+Am 30.10.26 um 14:37 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dt-bindings: arm: fsl: wrong enum sequence indentation breaks yamllint
+> --
 
-The boosted case, confirmed: __normal_prio(SCHED_DEADLINE) gives
-MAX_DL_PRIO - 1, so next_class is &dl_sched_class, and a task that
-priority inheritance has boosted is of that class already. prev_class ==
-next_class, so the check of commit 8a70415351ba ("sched: Reject
-SCHED_FLAG_KEEP_PARAMS when it would change scheduling class") does not
-fire, sched_dl_overflow() takes its first branch (p->policy is still
-SCHED_NORMAL, so !task_has_dl_policy(p)) and adds the bandwidth of the
-request, and the skipped __setscheduler_params() never gives it to the
-task. Its dl_bw stays 0, so switched_from_dl() has nothing to release at
-the deboost.
+will update for v2.
 
-A SCHED_OTHER owner of a PTHREAD_PRIO_INHERIT mutex with a slice of
-40ms, boosted by a deadline waiter blocked on it, with one
-sched_setattr(SCHED_DEADLINE | SCHED_FLAG_KEEP_PARAMS) on the owner:
+Benjamin
 
-   total_bw 419424 -> 838854 (+419430, 0.4 of a CPU), and there to stay
-
-in 8-CPU VMs, on v7.4-rc1 with the four deadline fixes of sched/urgent
-as on this series, so it predates both.
-
-The stale parameters: also real, by reading. sys_sched_setattr() fills
-the request in from the task (get_params()) with no lock held, and
-dl_param_changed() then takes the stale copy for a change, so
-sched_dl_overflow() moves total_bw, and this_bw and running_bw through
-dl_change_utilization(), to a bandwidth the task does not have; the
-release at its 0-lag time takes the task's own dl_bw and leaves the
-difference behind. I have not reproduced that one: it needs a parameter
-change of the task to land inside the window.
-
-v2 will carry both fixes as two patches after patch 1:
-
-  - refuse SCHED_FLAG_KEEP_PARAMS that would change the policy, where
-    only a class change was refused before. This also closes the boosted
-    case, and it stops the kernel from answering 0 to a request it
-    carries out by half: SCHED_OTHER to SCHED_BATCH with
-    SCHED_FLAG_KEEP_PARAMS returns 0 today and leaves the policy alone.
-    That is an ABI change, so say if you would rather keep accepting it;
-  - skip sched_dl_overflow() when SCHED_FLAG_KEEP_PARAMS is set, since
-    there is nothing to admit for parameters that are kept. This is what
-    closes the stale-parameter window.
-
-Both carry Fixes: a509a7cd7974 ("sched/uclamp: Extend sched_setattr() to
-support utilization clamping"), which added the flag and the skip of
-__setscheduler_params(), and the selftest of patch 12 gains a case for
-the boosted one (params_keep_boosted).
-
-Thanks,
-
-Mathieu
-
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+>
+> commit 46ee5c7fdee02b781beb27b96a47fddb125b6299
+> Author: Benjamin Hahn <B.Hahn@phytec.de>
+>
+> bindings: Add devicetree bindings for new phyFLEX-i.MX 95 Libra RDK
+>
+> This commit adds devicetree bindings for the phyFLEX-i.MX 95 Libra RDK board
+> and the phyFLEX-i.MX 95 FPSC Gamma SoM to fsl.yaml.
+>
+>> diff --git a/Documentation/devicetree/bindings/arm/fsl.yaml b/Documentation/devicetree/bindings/arm/fsl.yaml
+>> index 656f2596e1d53..f917ae7202e96 100644
+>> --- a/Documentation/devicetree/bindings/arm/fsl.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/fsl.yaml
+>> @@ -1551,6 +1551,13 @@ properties:
+>>             - const: phytec,imx95-phycore-fpsc  # phyCORE-i.MX 95 FPSC
+>>             - const: fsl,imx95
+>>   
+>> +      - description: PHYTEC phyFLEX-i.MX95 FPSC-Gamma SoM based boards
+>> +        items:
+>> +          - enum:
+>> +            - phytec,imx95-phyflex-libra-rdk    # i.MX 95 phyFLEX Libra RDK
+> [Severity: Low]
+> In Documentation/devicetree/bindings/arm/fsl.yaml under
+> properties.compatible, the sequence entry phytec,imx95-phyflex-libra-rdk
+> under enum is indented with 12 spaces instead of 14 spaces.
+>
+> Because Documentation/devicetree/bindings/.yamllint configures the
+> indentation rule with:
+>
+>    indentation:
+>      spaces: 2
+>      indent-sequences: true
+>
+> does this cause yamllint and make dt_binding_check to fail with an
+> indentation error?
+>
+> Should it be indented by two more spaces to match the surrounding compatible
+> entries:
+>
+>            - enum:
+>                - phytec,imx95-phyflex-libra-rdk    # i.MX 95 phyFLEX Libra RDK
+>
