@@ -1,86 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.231.139
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.198
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793748577;
-	b=hB7fpk9UPlifTfke6DfR3ZQk17zfU46f+K/zndCKqtAXN1uSoUaudn0zWMVxQUBQ3CHJ
-	 HBqSIZJ/WLvtaAkqrKxiRZkKq4K5vQamBqRZCyHr8th2/mnaYwA9tOS+XWOPcS5g+sZei
-	 6cfwfeErXpwVFxFsJ3pBXRd342UOK4V9TNJNs81a156Bjsjdjk8UvQOaMtyCVQIRMYYJu
-	 UbVCT43aTHs32Uqp2h5RrBhKApdEAJCeyVBoQEygrVuJEaH/3UI6uV1MpvbEOpfvh0YUJ
-	 1jFGUrENGq7x7rZKzS2Q2EezzRs/G3Vey7ZeF9FBo/H1ABIA0Q6FUa11HWHKsdr+DzA==
+	t=1793751437;
+	b=YLfey+42115A1EvQi5Popdl4Y3fFrNePpmQIkQDqh9wew3TalV50froJ064GA1AZSmOS
+	 4bwjM4Y+R2uogy9x0R1YpFtErJkLcLS4rH9klw/IA1xe/sUUe1cEFEhls0Lt2QvDSvBFl
+	 /mDSRwu9tiDRvymcmhzeBB2nmaPk7rG2mIL06IgHxyhCaEc03Vo/aejSvyAtnDL+usiGr
+	 3nQHkZZ9/MDTh6fh2lR2W9bMk7tYAi9+9fapSP/pajSRvfb9+vQ3rXg9mT5IW6FWeLvu3
+	 +g6r204uov0C49zFzLGRv81zR3fWdvu6obsy3Ycvg0kJ4JxGMP9BGyBhmL8vcGbrs+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793748577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793751437;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=tcwmxSswG0osb2wNIvi7vyPmUBBn7sZKQt8Rdp+1bek=;
-	b=nd8YAon3WCXNJRhACmsaKBDGWliaK2FgP7ZLvZNnr89TTbCorHMHTOYC/7r6PZyDMvEr
-	 1pLmMsH0ia+AasTaxu9AIKqBULTyQG1bH9020ocaUbfAa6aIpxUJ5aCw4TyIi6WrBZAbm
-	 rq73ec2uLeK5VwQSZcjeNyMz6NNkM2Ui2CVP36jAsd8SG5+vNk9VY9CgpblAiIf5eLLhm
-	 uGTL8qoBy8lekdeZB/iSA4IKWmh12vo3KZHuelI4PGPrCY4xQEilJ5+faujI0qB7ceTkt
-	 yeYRK+brOPmOGWZETfdzYbsVZxXGuQn8r/jEr4npB8ygfbynwOAA4iBrUPo3gKJ9POQ==
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=LhyvKds25xNhoCjxUA6XF46cL6FC3po2ea3t+x75DYw=;
+	b=K15r8xejtmSRg4VWDLAWT3vFQHneN8uk3ByyMF66WzeYbK1scBWbO0Keva3Ss4qvfTDR
+	 sEOrqNx1ACI7Cv8gj525RQIIw8BjIYAzYET5qfu38Fq+i1LUsk4hU4epbIRQ8tewDiX88
+	 xOpqAw1mkYkFxEsua++m8cAWFFNZX6WEvIcdT7mP5gwCwlQsUGCDwYjYW7sjK3lqawxuA
+	 MQsyhctun50wvmYkTOcV3ZXQgYeW2ki4hP05Btjl8QIRk6KGkrYaWJZHz1IeiYS40wQnT
+	 nln3GMnu57QaYyEj9z2v3+yKO+rD1Jxw1YN6Wp2V24RZ7VeRT7oZqwCKkVh85vfGQgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0brr07R8;
-	arc=none smtp.remote-ip=74.125.231.139
-Received: from mail-oo2-f11.google.com (mail-oo2-f11.google.com [74.125.231.139])
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=P+tSdCen;
+	arc=none smtp.remote-ip=209.85.210.198
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04A7606A32C
-	for <sashiko-reviews@lists.linux.dev>; Tue,  3 Nov 2026 23:29:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C04A7606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FBD606A331
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 00:17:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21FBD606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0brr07R8
-Received: by mail-oo2-f11.google.com with SMTP id 46e09a7af769-828c0b569f6so56241a34.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 15:29:36 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=P+tSdCen
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8a0619b1fe5so182036b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 16:17:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793748575; x=1794353375; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20260707; t=1793751436; x=1794356236; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tcwmxSswG0osb2wNIvi7vyPmUBBn7sZKQt8Rdp+1bek=;
-        b=0brr07R8Gu6YI3pSwUrEd+NzBWhKjTeNT5SOcm/G7LbohnzYYtyb5eBFgXPHoPGARt
-         tsNUZcQEHcf8m8hyEFUYGEDIdI5E8gVp456FtM+2u6E6rCrjAoOfV44phTw66X8m+dWP
-         JwaQ824Rln4g+ozBXNeeesU1eX5qeKBakdgb8uOq9avrpqW2G0JwKnhOcDf/eCuw72aR
-         vHci9yb3aMPWhXaoAqk8CuADHxKNlV/nHBxbsQNLqdsImAQGQ0fpGe5AJcFIfin4DXq1
-         NmVE5+RAKmlWQ/gfpeIjOryMqYws2Q9IEUOpOjrW23/qCjxb7ocPyAkvIY3PE9AruTQT
-         TsAQ==
+        bh=LhyvKds25xNhoCjxUA6XF46cL6FC3po2ea3t+x75DYw=;
+        b=P+tSdCenQ++UxnkiMWzQICR+Iv26haBqQp6nS8R4Eipfkqttmy4+RrYJREGirNmUjt
+         FogO10TQu/Az0Sn5FEatYXKGAvKUrQ0ejTzZaPuaq6SEuNB+gbN42stSvEeo6CEx37wP
+         PnxPPVKNm4yX6eo6hL/oecCpfV5UFhN/QWjRUWN8uQATGAJOsMwtgsq9Ik++9dkpaMrH
+         Z8+rZZlzp1ZSq3SyDsPc0eToi0jVwfkyNQ9n/Yoagjw9/iP6/AomT9013EkOi9CYU1Do
+         zi2fokt8IsAa6riM+zYTPU3HDbTUHe+eZh4FE5s/yG8rjzWJFrIaLkzYOz8X9CDcIrMR
+         3IUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793748575; x=1794353375;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1793751436; x=1794356236;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=tcwmxSswG0osb2wNIvi7vyPmUBBn7sZKQt8Rdp+1bek=;
-        b=XZg11F4YW7yVQ9S+T9578YrMdpt+fpzO3eDNi/zbBzUi1p684gpe9W5x7L2D5V72Ea
-         01+Gi8Llh0ZEjqex1XNTbEH7cq2CLrrFSiNJPIwJRjAzNEYgWxZRT6Pi+ZmBDGL8YvBK
-         aus6o6AveEdk4cPbQ+mRS+lTUQkWn+4fXXCLH/MPHsEpvY7jFu+OgKJKDlHKFcwP8e7x
-         ff1WCk6itRq140M6wdff5dcxmVRUxNJSpVoBO1R/xAyjR9i2imgZ4N1jAK7p38C7utuG
-         TLlJt9iqQUHR+vB8eEs34iHy6c75LxzDe4wE1Zb3goVYi5xt2IF+oEf3WbCdePqIkDwH
-         3mbg==
-X-Gm-Message-State: APuU4Z8uESBskTnK1a5HxlBMEkDV8CqxOJbGk4hBCjNDrlMa/R10G8ps
-	Cxd/DXWGMG2GWGppmT0o/A9pVIk/AajGrMzinXAA6vEBaBHLYBdZK8ydNrktrd4mt+E=
-X-Gm-Gg: AYBFou1Ts3Q7Ga5S0RP9uQ2lNuvefXr9yQaTRPNcnoiYXon6u4hj6OpfLEtWNmSKo0d
-	saqLaJgATwE6Tkf9hPPWxtUfPZUG4JKcHm96lIBCdzPaEeI60mfbFNVcdiJs6/BCl27b9qVrVcF
-	xc08tyY0V1lq1ZivrA1BSqGvQLrZNfTkdbWK4s20V2Np17c7UUQJj6QHAQnXqiPDpzlWef0E8jv
-	CVwkPR5s+GQfT8GhFBD8ouPZ7FrKRDBqM4bsnEac6/vmeOrHVe0tD/YTXMDr8H9jISLaPgUEvTf
-	4DiQOLdhltN2CqgD9arRJM/lMbhss7bPW1EYHaAqTCmvAbE/g4e6U6zUyJcgfIioVeRI2VTmcSc
-	ugxJUAq/pA4A+73NRy1CyCxhUJId1inUVbrLtunIVbFhuhFVD+jLu9NmsJT/6blgtzmHbknakBX
-	1YsdpANVGjuFOWKgWqL8JyUxoo+qKZREdMBEgKBe+5Nl4lMyyJiacDlvqo8GwiA+YadLLP24cgz
-	f0uag8+BzlfiKWrPeBfpoY9cVgqTKMQ4uIcVlyJwk/72v9SYUe38v65SrmozOpZQOVIcJ9vy9B+
-	/87xtMp4awAIHpYZx5eLQBVIB7TMHbim2xuUtxYs+7Cu
-X-Received: by 2002:a05:6820:806:b0:713:de08:b031 with SMTP id 006d021491bc7-714f24820f6mr8660525eaf.53.1793748575581;
-        Tue, 03 Nov 2026 15:29:35 -0800 (PST)
-Received: from ?IPV6:2600:8804:5716:d800::f01a? ([2600:8804:5716:d800::f01a])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-716c1317c7dsm409153eaf.13.2026.11.03.15.29.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Nov 2026 15:29:34 -0800 (PST)
-Message-ID: <56615102-0fad-4591-bee1-04d1efbd87b5@gmail.com>
-Date: Tue, 3 Nov 2026 17:29:32 -0600
+        bh=LhyvKds25xNhoCjxUA6XF46cL6FC3po2ea3t+x75DYw=;
+        b=h09qpOz6HkwXs6k2gEq+j3cVGIXOtn6Ke3yOJLiipMHmTn8O6If6/oKor89B93eBS8
+         8WIkmXX9IKFmCu2SZ1tu2eX5MU1hIEPfweOBVoW047jE9U02qUbhZvWDXqADzpJn0+DM
+         /EL126+QMXJKKWpYy3Oo07lsp0Vl6XPnQiMOei4MUj1qMn8RLo1hyvPsizBFdrg/xIwm
+         byd387YSdwU4jwIrparVoywxsxZpctCyaN4Yqg+FkleQS0o88X7UJxoARes2QHtFLbhc
+         89X8V39Eap28n2BThs3qlUbXbKGCEwtsINE7a407TJHqVqfHCNk/LihpL5Vqlfe/k9Rk
+         RBBg==
+X-Gm-Message-State: APuU4Z/cWCoB34ZZXUtB43nCU3HspUz8htWUcYKGFNq38ElEEKdLMaqW
+	0acStmmMl5M1u03kd9LyM4Sn7y7Ni2/dnW4gpMf+2UuLMJB6A+sy/bKsw4l56iFJA1eWhLOVEoo
+	acoGuIg==
+X-Received: from pfgg3.prod.google.com ([2002:a05:6a00:bd83:b0:8a0:cc:2b89])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:b4a:b0:89e:cfbb:e8af
+ with SMTP id d2e1a72fcca58-8a9ba8fb9c0mr10230607b3a.6.1793751436089; Tue, 03
+ Nov 2026 16:17:16 -0800 (PST)
+Date: Tue, 3 Nov 2026 16:17:15 -0800
+In-Reply-To: <se1h6b4t.ritesh.list@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,38 +76,80 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND] usb: mtu3: don't run gadget completion callbacks
- with interrupts disabled
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-References: <20261102-usb-mtu3-gadget-completion-callback-fix-v1-1-93c3a6dda31f@gmail.com>
- <sashiko-outbox-193807@kernel.org>
-Content-Language: en-US
-From: Ryan Brue <ryanbrue.dev@gmail.com>
-In-Reply-To: <sashiko-outbox-193807@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20261030212112.2598640-1-seanjc@google.com> <20261030212112.2598640-13-seanjc@google.com>
+ <sashiko-outbox-191627@kernel.org> <auitWWkOopYYbBH3@google.com> <se1h6b4t.ritesh.list@gmail.com>
+Message-ID: <aup5i73T5aOKqcYS@google.com>
+Subject: Re: [PATCH v4 12/23] KVM: Destroy memslots immediately after
+ mmu_notifiers are unregistered
+From: Sean Christopherson <seanjc@google.com>
+To: Ritesh Harjani <ritesh.list@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
+	Gautam Menghani <gautam@linux.ibm.com>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
+	Nicholas Piggin <npiggin@gmail.com>, linuxppc-dev@lists.ozlabs.org
+Content-Type: text/plain; charset="us-ascii"
 
-On 11/2/26 11:10 AM, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Does replacing spin_lock_irqsave() with spin_lock_bh() in mtu3_irq() break
-> the USB gadget completion contract and risk a hardirq deadlock?
->
-> [...]
->
-> Should mtu3_irq() wrap spin_lock_irqsave() and spin_unlock_irqrestore()
-> with local_bh_disable() and local_bh_enable() instead of using
-> spin_lock_bh()?
+On Tue, Nov 03, 2026, Ritesh Harjani wrote:
+> Sean Christopherson <seanjc@google.com> writes:
+> > +Gautam and PPC lists/maintainers
+> > On Fri, Oct 30, 2026, sashiko-bot@kernel.org wrote:
+> >> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> >> - [Medium] KVM: PPC: Book3S HV: rmap_nested memory leak in kvmhv_release_all_nested()
+> >> > @@ -1310,12 +1329,10 @@ static void kvm_destroy_vm(struct kvm *kvm)
+> >> >  		kvm->mn_active_invalidate_count = 0;
+> >> >  	else
+> >> >  		WARN_ON(kvm->mmu_invalidate_in_progress);
+> >> > +	kvm_destroy_memslots(kvm);
+> >> > +
+> >> >  	kvm_arch_destroy_vm(kvm);
+> >> >  	kvm_destroy_devices(kvm);
+> >> > -	for (i = 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
+> >> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][0]);
+> >> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][1]);
+> >> > -	}
+> >> 
+> >> [Severity: Medium]
+> >> Does hoisting kvm_destroy_memslots() above kvm_arch_destroy_vm() leak
+> >> struct rmap_nested allocations in slot->arch.rmap on PowerPC Book3S HV when
+> >> destroying a VM with nested virtualization enabled?
+> >
+> > I don't think so?  Patch 3[*], "KVM: PPC: Flush/zap all memslots on kvm_arch_flush_shadow_all()",
+> > should free the rmaps in response to kvm_arch_flush_shadow_all().   From what I
+> > can tell, the page tables have to be in radix mode, and so the rmaps are freed via:
+> >
+> >   kvmppc_radix_flush_memslot()
+> >   |
+> >   -> kvmppc_unmap_pte()
+> >      |
+> >      -> kvmhv_remove_nest_rmap_range()
+> >         |
+> >         -> kvmhv_remove_nest_rmap_list()
+> >
+> 
+> That's correct. Maybe, I think Sashiko didn't consider patch-3 of the series
+> during review of this patch-12.
+> 
+> > And if that doesn't work, it means memslot deletion on an active VM is completely
+> > broken.
+> >
+> > However, it means the memslot code in kvmhv_release_all_nested() is
+> > dead code,
+> 
+> Not really. I do see a caller of this, for when we switch from radix
+> to HPT. So we still need it.
 
-Yes. With spin_lock_bh() the completion callbacks run with interrupts 
-enabled, which usb_request's @complete doesn't allow.
+Oh, nice, I somehow missed that.  Yay, less work to do!
 
-I'll send a v2 that keeps spin_lock_irqsave() in mtu3_irq() and disables 
-bottom halves around it, like dwc3 does in commit 84918a89d6ef ("usb: 
-dwc3: gadget: Let the
-interrupt handler disable bottom halves.").
-
-Thanks bot :)
-Ryan
+> INCOMING CALLS
+> - f kvmhv_release_all_nested
+>   - f kvmppc_switch_mmu_to_hpt    [arch/powerpc/kvm/book3s_hv.c:5591]
+>     + f kvmppc_alloc_reset_hpt    [arch/powerpc/kvm/book3s_64_mmu_hv.c:144]
+>     + f kvmhv_configure_mmu       [arch/powerpc/kvm/book3s_hv.c:6330]
+>   + f kvmppc_core_destroy_vm_hv   [arch/powerpc/kvm/book3s_hv.c:5930]
+> 
+> 
+> 
+> So FWIW patch-12 as such looks good to me from PowerPC perspective,
+> since those rmap entries will get freed up as part of the
+> mmu_notifier_unregister() (after patch-3). Agreed that Sashiko
+> comment does not look correct.
