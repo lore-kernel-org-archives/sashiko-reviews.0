@@ -1,83 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.230.200
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.230.199
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793835298;
-	b=ChXHzxuR9FPFKhmgzHwnJ4ZwLpV1opAu8idUKENagbNNz/KRuWlz5X+ZnSOnl08G+5ht
-	 SMHVsg3gfOGiwrSmkeCEAVfcRYlAH+V7I22IcZaajbYTCb0NtiroiV8rxKqnuPQo41L0y
-	 Dx9F7yobboIZWYqzVEBMpPHxfqHkmBGj34PCGC/DWOdu6cVG+5hOumSkmO4IPJYpII+mX
-	 PLrTgV68SEyEtoMxHalFsgRA732C0X+kCk9cxFNHHYSBPt/PYf4Tthq4oC8Oc/OpJM1/c
-	 xLppdrOJNPXujDStFSbSUNDBLX4kdsfCUAbm6murrsxvRKkOIQ/xlQfhxrFw4sVFTMg==
+	t=1793835363;
+	b=2BRIv046SWXAgvCTSZsQBz4CVlL5355NHEXsoX0snLCXSIyVueUgQrSkeHvodpLRgpoq
+	 su71Uw2bzE5+X5Mx0Hs2sPodi7BmvRkO9kjiGJ9Vu/Iih+gDF0G4Tb7pTmXt36STOcR+6
+	 R9ACVJjyPquHyI+U+35uVdH4MqQWcC52Ut4kNUqjUI2GbqhYatcrH42rXh83dhzh+zDdW
+	 PD3hbG4PkqrsIv/Df7fK7wDFmYp7l5a46B92pwPra7GO+xjWuSs8Poi1BbqumaB6lN2Dd
+	 lr+MvCt7bI6mpJiYCna9qEpNFC2PNv+pC8MyaCglyJczMyFI3LSsmh9aS5nyVz0/UyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793835298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793835363;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=LfE6XYGuOtutQi6QIVbHin4gqCciGQW2WLAtGNmvG6Q=;
-	b=TUNM+unKC82kwKiq1lWh1eaRfXWHLM1qDYGcT0ZH5Bxlv/P7eHHCIwel/tknjL48yPXG
-	 GRdx1XlWij2eo6wevwQR3OJbP/APFmbCrwkEyHJaM6IwCumxJ7uUpyGV/9RxTKNmXSMME
-	 FNVr29rkTdQcN1B5l66Z3yHGRFmIo8MIGQNgVGLKVifIGO3LC7AwmYgvNUGuAWHmXailV
-	 6s5MGwlS+BaniYX7W8pmbi4PME05sL8Bsyn4TRIvMOdeBzVSO6tn7xoPjaRwg0uIptqWW
-	 PYzrsyN4o7r7uFzOArTB4p/2inehj/N50q0qFgDS0pl7GKxZWx8H7lZxsXHEloMOeUw==
+	bh=dmn1Q3/145xsrJD3bHMxFjskCeqjVe350pnKBSHlWz0=;
+	b=UGfOKVgZTguIuX/ib40qWGOPP+c99k5zxo6fO7bsHTr4LIRUam23gmroV2q8/p/dmmWh
+	 xViyjsGj8gtiE6gcH8Q52YyVeQKqV7uvDFtBQY1D70FfRzM2u2XM81uNm6veA7MbkgNGU
+	 cZ5tbijTMtXIO9AJpaNEqVeoYahP1HPoSIJ2ACvWZmgmNlpjP2B6Ba5FUe0Fo9kerawYA
+	 Q/SuGrmEGeR029QCjATFOV276tpWulPuO1Q6jHzbCvz4yWEo7C17d/RXJfv8+79/UmAiG
+	 FZn5irO98owURKhCVkvla1fo7tGGeWjLoDhxhnE73uT9v6EvshUNwO7O+EwF2JXJFRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=74.125.230.200
-Received: from mail-qk2-f8.google.com (mail-qk2-f8.google.com [74.125.230.200])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QCfFe0qB;
+	arc=none smtp.remote-ip=74.125.230.199
+Received: from mail-qk2-f7.google.com (mail-qk2-f7.google.com [74.125.230.199])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6237F606A32E
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 23:34:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6237F606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D786606A32E
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 23:35:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D786606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk2-f8.google.com with SMTP id af79cd13be357-9369a6afaf8so98009285a.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 15:34:52 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QCfFe0qB
+Received: by mail-qk2-f7.google.com with SMTP id d75a77b69052e-53603c3b973so9603341cf.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 15:35:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793835291; x=1794440091; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1793835356; x=1794440156; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LfE6XYGuOtutQi6QIVbHin4gqCciGQW2WLAtGNmvG6Q=;
-        b=rA2Tkfm4iyQh3RgGUQZxcJ8vMJZBzVJemDzm6SCgUbWqKrOpLzAyzv9XubYAb160Sb
-         LRZKtyhf/LnNMAf0gu9BlUYlSJxrOgTnyYM+lMsAaN+47l485JpzmbEIKA2mrqGNkIWv
-         VJXFFDQYxBKq/YNFFnk0TDuJpPCBb8nLpkQCAk+VKDjjNPliOTJpVPW+QpGv0dHq8VdO
-         749uF+oLoBAD6QVCPH1ER29reuT7K0gKnJL5wdXcyVGfe9OAC4pmxK2H/0bOHPtnHl4G
-         W3eWyjj8XMxKvNp2Q1v/0FNIgtwOsQX50ZiLQPdl95VNTfd/RiYOTKm94bbhhjU26r0g
-         PvgA==
+        bh=dmn1Q3/145xsrJD3bHMxFjskCeqjVe350pnKBSHlWz0=;
+        b=QCfFe0qBmQEWIMxBRmhIJESzEXMTQSoq+aFcDSkZjQlnnySeD+t+HAOB1xIk7m06cn
+         yFPucdbZAtUmUZpSI/AHhewWWBOXmxXLetSyEYwb1bwc0O7doH59dZ2k4T7NJpU6pmWw
+         rWTnVkHDQOASvMcitMVWySFhNUFm+e+JsKJXMDsEOmtKRxAVy6ZPg8jL7FHdvIZwDWG4
+         XKLu5t7fvHSStE6EURE0LGe/t+L7HZ53VpJTuftIwThFDxAqAe4OJfMjVJWRBQzp+Lrh
+         X2QZz/pubB1C6SmuN/WEqhzGVgB0yVyS8G6n+MbXCGO8KWknc3/DK0Pxg0RgU3gTOHYI
+         OvUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793835291; x=1794440091;
+        d=1e100.net; s=20260707; t=1793835356; x=1794440156;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LfE6XYGuOtutQi6QIVbHin4gqCciGQW2WLAtGNmvG6Q=;
-        b=Xlmeuz4RVu07/cbhrpiA3iZkM1O40g5JXOfIi0UXatoOII3HVh+q6/CuYWpymfs9+8
-         bmfqXM043fc+dRLDeLcgv+Fu5HOzMekf4odECKiXho218svrQ5K3b1jPVxaHu/gXC2DE
-         fhKv7l6RIKo6Eg8f3LRa55XRZj0iCO8E3GPAYSIMJdmJzN5byTi/BtatcFspLwsE0yd0
-         6Jhw+E/LfyykNMFu6iK/2MMG7TWJsmen14SoPsmy6ZD1Y2x23NVAJLbMYYql/Mp1TjZR
-         3AdmE3a2DgI9CVdIBn+Z/K7kyk0MYVEXS+pmXM2rsPI3f1v1NFqH3TZ0YWmfytPIodAp
-         s+6w==
-X-Gm-Message-State: APuU4Z9oOff7+sWxZajlh+qXz3BPVarJxo8msH5tne6cCwswQ+9EDRR8
-	OKU5T/IfJ/xiNx3J251y5PhX5pnO2BUw44gjqHxoXiwo1NSxWnWrR8RdYCyDdqzZWWs=
-X-Gm-Gg: AYBFou2Bl9i5pI+kjEiSfwkPFpGZrgfPGgvUwoqtVwvYbwyE/pfCbKJHwxn3usVZEma
-	19RsVunPmqdjmz/j0w0Z1O+nyxK+Mk9iqLJUsTHL1eO12AN5gQcF4Z/JX28zxjEl5CKV5iiJybC
-	I4uoQh8AtphVe0tbHed/g1lsMEgsf9raNi6EdfCL6IPik86kcc6co4kt5cPSh9eYUkOCmXhJT+y
-	RUXs3+RWhyFIi0RJz4ZAleapY02ThnJ9Up1TeDr6WKb3TqGKpys9UlxqIcufxFs18dkVenB4qDX
-	XdU+WfAR65JQMWFXkMHDlj8S5iFdT+8gNOkZvn/m7zGZkufMjhWjH9zW8k2LbpqQzQnvDh1KeUB
-	Qp2gCxojgnCn/FKWvmwtIAklDXc7MSBYtj+nEzBm6z/9Uro+uEHNP8mGJHbGaBhdrKZEKmivQII
-	6TcAjbqXqQVJOXLolO/xmFeHPflRz5hrPYEgvHAuUwdmKT3AMduZ/RUqqu7nhJmTern3fJfcqQy
-	yUapXoNFLIc7O6fZ9OpQermu8liQdQbMQp6fm4C9m9cJFWI8Lav1lPxwVw0QA9PE09zH4wjCqCU
-	r7m9PQgy/pVQOqAr6cgb2oIlgCzod+P4kmM=
-X-Received: by 2002:a05:620a:2994:b0:939:4a44:5f99 with SMTP id af79cd13be357-9442156ab2fmr2992527785a.10.1793835291266;
-        Wed, 04 Nov 2026 15:34:51 -0800 (PST)
+        bh=dmn1Q3/145xsrJD3bHMxFjskCeqjVe350pnKBSHlWz0=;
+        b=pESh9zoma7UzZfdNxvCDHM23gyWZ/MkJfYa5Hoxj8/0zINn0NBw/4ctbVk8CWTRJQE
+         7H/PZe4v3sI35FUeCowCvikV3u241hjvscDZeJJuj2j4LrLUv9A7qYR9HP9XIlaP2fBB
+         zq7JXbDSG95OYG0ASmSZWjkJlKXL7x591m6DgHmS4mDU0/JQ9PygKAcRQ24wij+7R1px
+         j/yrHLu4f+gnelTNqNLmPbZdShoPt7wIuwAjr85d2zIZuHFZWyk538QSWbGwhsXHghK9
+         98hvG9E9FwvfOvcagPLgjlf+gsoJAwu3KOUw7DxwQywxkQu+BhyyUxOt5iLr4QKDj8N0
+         fGFQ==
+X-Gm-Message-State: APuU4Z/4Zb7/bAMeqAO0rgA8fbITDJN6r59Qu8xDD/It6KDk+XB/BGPX
+	OaRYyRUNfuzgoDOh4tyBYPK0KQibu1RaxpcCTaa0571k3gxY2vhHbFpGmAPwZ6BHJPg=
+X-Gm-Gg: AYBFou3C0KqW0JIbmfroOMijFGrYFyYgBK/hZHd8bT5fMpSDw041H0YJoZrrtSUkewH
+	v8CDdLsSp2Xwz4v0HNuP+P3wJlD8rkcF13F5Ww6tpGsjGkgrK10Vs1VR9pX74PPqzi7s03zjmeU
+	N8r/R0VXuliS05Y+igUyu77b4oYBSxyndGtcT2G6Set3F+8q1pDoD++Gz+qoqLTj0tcRCDjDjAA
+	+awouncuYi8BmfOSRFP0Nrc7us/ffr2uQmDHq4bHhmrRIiU8F5GXm8RD6ImGY/jsqGuWgAlNx3W
+	6odBTRFgQp73KIrihsM1nphYRBYNwtjiO9BULlDkLYjQVp1xLOIOslYqUDF9oMePsiLCE/rXpaa
+	w5Na+idXwAp/lm1UEf4BI/5tyQR589zXDriLbaZ7w3B20Uxg1Ru976wUmd+bidtrsHWnAvQzcP1
+	MaKGDpQKG+hjvuSumHcLyvgKRnccpZ1ydGpkPynWMvurr+hZjw3nrOvBmNuxZKS4uVtq/DMfLas
+	FQ6mg+rSnm3B0OmU4byvP4y1OReqcFN2FxA0HOPbO7BRf4NasKlKwrl6eLkrga5yWEUhXnDSi8m
+	Ij6Q+0WpMbp69G/7Pzp6ukRo/eemVETg4Q==
+X-Received: by 2002:a05:622a:1aa9:b0:536:766f:271d with SMTP id d75a77b69052e-542b781f632mr306774901cf.51.1793835356393;
+        Wed, 04 Nov 2026 15:35:56 -0800 (PST)
 Received: from [10.0.0.48] ([71.69.222.122])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-945d488f183sm324141685a.39.2026.11.04.15.34.48
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-54b10a63462sm36858141cf.15.2026.11.04.15.35.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 15:34:50 -0800 (PST)
-Message-ID: <0f61c649-6e27-4f09-a69f-026f91d89848@gmail.com>
-Date: Wed, 4 Nov 2026 18:34:48 -0500
+        Wed, 04 Nov 2026 15:35:56 -0800 (PST)
+Message-ID: <2a1728c5-2856-41bb-9ffd-c80df4ffda6e@gmail.com>
+Date: Wed, 4 Nov 2026 18:35:54 -0500
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -88,8 +91,8 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5 4/6] tls: update the RX key when a KeyUpdate
- is received
+Subject: Re: [PATCH net-next v5 5/6] tls: send a KeyUpdate at the record limit
+ and on request
 To: sashiko-reviews@lists.linux.dev
 Cc: John Fastabend <john.fastabend@gmail.com>,
  Jakub Kicinski <kuba@kernel.org>, Sabrina Dubroca <sd@queasysnail.net>,
@@ -103,35 +106,52 @@ Cc: John Fastabend <john.fastabend@gmail.com>,
  kernel-tls-handshake@lists.linux.dev, linux-nvme@lists.infradead.org,
  Alistair Francis <alistair.francis@wdc.com>
 References: <20261103-keyupdate-rfc-v5-0-de1ab90a88d5@gmail.com>
- <20261103-keyupdate-rfc-v5-4-de1ab90a88d5@gmail.com>
- <sashiko-outbox-198140@kernel.org>
+ <20261103-keyupdate-rfc-v5-5-de1ab90a88d5@gmail.com>
+ <sashiko-outbox-198141@kernel.org>
 Content-Language: en-US
 From: Martin Belanger <martin.nvme.dev@gmail.com>
-In-Reply-To: <sashiko-outbox-198140@kernel.org>
+In-Reply-To: <sashiko-outbox-198141@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
 On 11/4/26 16:43, sashiko-bot@kernel.org wrote:
- > > +   memcpy(crypto_info_salt(info, cipher_desc), iv, cipher_desc->salt);
- > > +   memcpy(crypto_info_iv(info, cipher_desc), iv + cipher_desc->salt,
- > > +          cipher_desc->iv);
+ > > +   ret = tls_encrypt_async_wait(ctx);
+ > > +   if (!ret)
+ > > +           ret = tls_keyupdate_rekey(sk, 1);
  >
+ > [Severity: Medium]
+ > As reported by Sashiko on v4 [1], can tls_tx_key_update() ignore fatal
+ > transmission errors and rotate the TX key anyway when 
+tls_tx_records() fails
+ > with -EPIPE or -ECONNRESET?
+
+Yes, but this is not specific to KeyUpdate. After shutdown(SHUT_WR),
+send() on a kTLS socket with no KeyUpdate also returns the full
+length. I tested this with TLS 1.3 AES-GCM. As I read the code, the
+KeyUpdate record then stays queued and TCP does not send it, so the
+peer never sees a record with the next key.
+
+This corrects my note in the v2 changes, "The next call reports the
+error". In the same test, the next send() also returned success.
+
  > [Severity: High]
- > Won't these memcpy() calls trigger a CONFIG_FORTIFY_SOURCE field-spanning
- > write warning when tls_check_pending_rekey() -> tls_keyupdate_rx() ->
- > tls_keyupdate_rekey() runs on a socket with a registered traffic secret?
+ > As reported by Sashiko on v4 [2], how is the KeyUpdate state in struct
+ > tls_context synchronized when sk_stream_wait_memory() drops lock_sock(sk)
+ > during a send or TLS_TX_KEY_UPDATE?
 
-I could not reproduce this. I built with CONFIG_FORTIFY_SOURCE=y and
-GCC 15.2 and ran the keyupdate selftest with TLS 1.3 AES-GCM. There
-was no warning. In this build, __member_size() and __struct_size() of
-both destinations are unknown (-1), so the field check is not compiled
-in.
+No change, for the reasons in the v4 changes. I checked these points
+by reading the code.
 
-The result depends on the compiler. A small user space copy of this
-pattern gives a member size of 0 with GCC. In the next version I will
-take the info pointer from the union itself, as c43c1c24f3cd does for
-the same reason.
+Points 1 and 2 need a TLS_TX or TLS_RX setsockopt() during a blocked
+sendmsg(), which is an application error.
+
+Point 3: tx_key_update_reply stays set after the update_requested
+KeyUpdate, so the reply still goes out before the next Application
+Data record.
+
+Point 4: a record that was already being written can go out before
+the reply. RFC 9846 section 4.7.3 allows this for records in flight.
 
 Martin
