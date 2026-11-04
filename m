@@ -1,49 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.72
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793790965;
-	b=pXp8zG6SGke17JzOvGokDSdKP1aGd5gZgHtLAnPt/OUffYdmpxWYdk6+UOdQeQST6U5L
-	 W5kd8r0fMeiUAZvMMjQrebnyJsm6KlsjRV99E4EfAUNOewrRrEnfIZ2wDnEYJvVahkHdS
-	 ipLQuBa95l8wFR2AZHfoXu2rdKxPV8UvIflzXEUo+iH+JcwRcepXyQIxqNZkbPpIdo2rq
-	 mLJ1Ylt98BfenPMJMts/BiFdzmKC4FaOpYtP8L9WTrYdZs1LyORFW39vdOx2LJgG++lI9
-	 grrRNt1FU8Wa8LKUOsAtxoiaLvNpw/D2xViKqQb+FITgZBJfdGa/hTC4tPsVwBh6pgA==
+	t=1793791911;
+	b=VaXeIMb8BwWiqyha8vXIfMGgNtPflDgeKylO38DVGKuMQKA4Tlqa7jVgc9aD6nRuHFoc
+	 f2B4TEzIC0ejx7etL2dppepEUWtCJNjkB/7uARMBEEuO0KG/UqPOoHnsEa1v/oqtYVs9f
+	 yQMWLaz8eqgHHxKitJrwZi0W29ZlOMWOyHRtmxvaO1Yagw/lIaJbbxp01LSLKdiyBxHNq
+	 yDbKRlBEIqqZzMyjTH0OaAt2laF9UA7ENBQ9Z23mRMJeG5QIjKqEuCuxzP5/GE0/12Dh2
+	 Q/JU2NMpE+l/0g90Gj/8iLwhbrtcq2z50KzXRxQ1pbWYQf0SUYN2oX/z0pG2bAqBmkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793790965;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=6ToV92GvBOlgKdgoRO8bXxaDRkYAcZdwpfYYnJbo7zg=;
-	b=FSoMQRIDEvd2HtjGJinjfrsWf+bf9fdtku2e8X19WFMzWHAvn6blzghV9ukcQrUEdWmg
-	 BaJB5XWDg4b3yFxwoM1+Oq9TkQxcVNZnBPmWOHt0cluyvb9ORmB51vXIxt555+j+vzsNw
-	 5f4yk9EhSoqAB/GxVjNDrC/oce3VCRxodY1GPNMmxlWB8PkwWI+BkY0mq95Le+hwCUn21
-	 wUlGIvZmP58lGQGxJhXklSXK3EL7jY0+K39q9KgqQbfSQLr321drz2Erp9+t+J+QYq3/Z
-	 ldgNYDCw5EtOwZmuk6yQvoCWsbit6CPcQUZKoVLrr3zogDIDeYm39WnyoS519vtscuw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793791911;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=EDullTK0A0ojCa1/qPo0kHUFNMNAZsYWgwEQhoyO/jY=;
+	b=SXlsHrg5Yj0yKBNNbr6cTral3bvrjNg3kttg1bIdTRXqN+EfJ1mexnb4V0qFR966cDNH
+	 Cqk6mExCQjQn2noBKu4gUioV4nHw4Ax9ZjXHJjZJOwXDPu5KIMaTr85S/cjTDYO+w8tPC
+	 CRitWA8zqJJZp8K3IHc9+oWpm/TZn5oUtsgy1G2uvxpUfxQb53vBGafazOWhhijow8SFT
+	 jEI5+WbyLRNB5PP+DVfCopHf0J+xXTybXRVWqAr6jlMgYhl0hyTdSynL+Aih8hPeUF/z5
+	 qDcEdDG/bjeReXlK+XWNqpsn3bCCGo8xD+C2jWR0MP8jV+ko+bns/VbtB87p4lRUKSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=JOXNaORo;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F451606A32E;
-	Wed,  4 Nov 2026 11:16:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F451606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=bgyoKbqE;
+	arc=none smtp.remote-ip=209.85.221.72
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com [209.85.221.72])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFF8606A328
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 11:31:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7EFF8606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=JOXNaORo
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8504122EA;
-	Wed,  4 Nov 2026 03:16:00 -0800 (PST)
-Received: from [10.57.59.2] (unknown [10.57.59.2])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D1E3D3F632;
-	Wed,  4 Nov 2026 03:16:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793790963; bh=HFSoTRVLs5zOqEs1tC1aIHBjr4AWwVNvwg1AWYNiN1k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JOXNaORoW6QJUbt+MBD7xPgWr1sNrFdYTjV1p+i3ybKM+cXGWG0NvgqyjPZTaPEwM
-	 eNrS1I5lZh/7nqtzo7ISCuZVMXQ80WSedRJD8QTvHWD4/NFOB0cLrQgjfXxVgb1C4f
-	 i5kYVBd4uEHbXiMQmMXb7MvuxZAIkP1wQaCuE3fc=
-Message-ID: <9489ebe7-4c75-4229-811e-3f618028d367@arm.com>
-Date: Wed, 4 Nov 2026 11:15:59 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=bgyoKbqE
+Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-49034831bb3so353019f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 03:31:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1793791910; x=1794396710; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EDullTK0A0ojCa1/qPo0kHUFNMNAZsYWgwEQhoyO/jY=;
+        b=bgyoKbqE70Dk3brjyBlhv6EFU+W80+In4guteLBGX9QVUjLCbjmltKcRFCsa6ZQN6w
+         j0uTpZud8zndDM7QtBkcfjyM/cJ5lASiRjg79d+AKMLbgyzM4UMNrjAo92CGun/vMJJX
+         QYi8ydv1dQ5l4POgH61V3m/rzLazrysLrjSEODCOSUDsXi1Dmk/hv5b6bfDab1Icez4B
+         d4XdgUMaHCFFPhdqrohVwFUhZxkzX9+vrWw7qC+xXIPi5yxZlygtoy8KaM+Bo88N6KZj
+         1l3DeLRFlArIunurbHl78bC+1rQsfpo+XG6rNkXFzqHy3tcdtCR0ISan0X1bslVjND2Y
+         Ee8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793791910; x=1794396710;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EDullTK0A0ojCa1/qPo0kHUFNMNAZsYWgwEQhoyO/jY=;
+        b=GWRU5kLeeEf2ciTvJ86PEDgjrq7DU+pvONjzThmFAYc2ZxHRe/Ajr0KZ6xedoLO0xh
+         XYtaeviADqvw5ZlEtCsTsx75EOSSvLBFSw8CswRzRkHw0bxMbDxt6YT3aT6D/m0VX8JM
+         gIDETtg9U1/Sv6Dz96jY1Vju48VLMVPAE7l+AB+tMGjU2hXl++FDYFEKkWLpxZGWwyLZ
+         f77+dMtQ4vZaJbp7TC35uS2TX/+pRMB1qPSWWbScPEmH+DnLrQ4KWyaXjpA3xsavEVdz
+         hTkC4oQ73EGa7dV4IRlwDPlEkaY9uM8DpCv3sv8XS3+mgXzBAHEU92rOycEBw9K/J/bX
+         m0OA==
+X-Gm-Message-State: APuU4Z/+5amJPJUc7w/7s91v4BEKX7q5pBU7XY1OukjmVBgcjpLLybE1
+	4ROJ5i7lEPUsr9aBgcO1pV+PNguaaoJ6+O6Z7lREjaGo25viHHk27jUAy6WBqEjjlQVwKgTDm7M
+	6pjuDxeDrLIsBjalrH6zHX+L8/MiCUzWLQ7V0IQ0WtPChpZlb4FeFNGPhg9KnJEm1CK6br4dUF1
+	eeHa36nfSha7wEVRuFI+Ezn7NI1r6AouSL/+4pM5vVYWEldwDVs0g3eDiinvg=
+X-Received: from wmjv14.prod.google.com ([2002:a7b:cb4e:0:b0:4a1:e780:89af])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:870f:b0:4a2:1612:6367 with SMTP id 5b1f17b1804b1-4ac185bcf74mr348235945e9.15.1793791909664;
+ Wed, 04 Nov 2026 03:31:49 -0800 (PST)
+Date: Wed, 04 Nov 2026 11:31:49 +0000
+In-Reply-To: <sashiko-outbox-195908@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,126 +77,101 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] KVM: arm64: CCA: Prevent memslot modifications
- after Realm creation
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261102141304.126883-1-steven.price@arm.com>
- <20261102141304.126883-10-steven.price@arm.com>
- <sashiko-outbox-193708@kernel.org>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <sashiko-outbox-193708@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20261103190805.3487350-1-jpiecuch@google.com> <20261103190805.3487350-3-jpiecuch@google.com>
+ <sashiko-outbox-195908@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DMME0YKQQQ4D.PNR5XMBJHUV7@google.com>
+Subject: Re: [PATCH 6.18.y 2/2] sched_ext: Fix scx_flush_disable_work() UAF race
+From: Kuba Piecuch <jpiecuch@google.com>
+To: <sashiko-reviews@lists.linux.dev>, Kuba Piecuch <jpiecuch@google.com>
+Cc: <sched-ext@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
 
-On 02/11/2026 15:50, sashiko-bot@kernel.org wrote:
+On Tue Nov 3, 2026 at 7:15 PM UTC, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] KVM: arm64: CCA: guest_memfd memslot delete rejected after Stage-2 unmap
+> - [Critical] sched_ext: premature return in scx_flush_disable_work() on SCX_EXIT_DONE
 > --
-> 
-> commit 5106402397c36eec1e5fa59a5bb2c5adf4ee2aa8
-> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
-> 
-> KVM: arm64: CCA: Prevent memslot modifications after Realm creation
-> 
-> This commit updates kvm_arch_prepare_memory_region() to disallow creating,
-> modifying, or deleting guest_memfd-backed memslots once a Realm has been
-> created.
-> 
->> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->> index 51fda7b2ff7f3..eb8c5f9e9791d 100644
->> --- a/arch/arm64/kvm/mmu.c
->> +++ b/arch/arm64/kvm/mmu.c
->> @@ -2862,13 +2862,28 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
->>  	    (new->flags & (KVM_MEM_LOG_DIRTY_PAGES | KVM_MEM_READONLY)))
->>  		return -EPERM;
->>  
->> -	if (kvm->arch.vm_flavor == VM_PROTECTED_PKVM) {
->> +	switch (kvm->arch.vm_flavor) {
->> +	case VM_PROTECTED_PKVM:
->>  		/* Cannot modify memslots once a pVM has run. */
->>  		if (pkvm_hyp_vm_is_created(kvm) &&
->> -		    (change == KVM_MR_DELETE || change == KVM_MR_MOVE)) {
->> +		    (change == KVM_MR_DELETE || change == KVM_MR_MOVE))
->>  			return -EPERM;
->> -		}
->> +		break;
->> +	case VM_REALM:
->> +		/*
->> +		 * Once the Realm is created, we cannot modify any slots that
->> +		 * could be providing private memory. i.e., guest_memfd backed
->> +		 * slots.
->> +		 * TODO: Handle trusted device private memory slots
->> +		 */
->> +		if (!kvm_realm_is_created(kvm))
->> +			break;
->>  
->> +		if (kvm_slot_has_gmem(old) || kvm_slot_has_gmem(new))
->> +			return -EPERM;
-> 
-> [Severity: High]
-> Does checking kvm_slot_has_gmem(old) in kvm_arch_prepare_memory_region() run
-> too late to prevent Stage-2 unmapping when deleting a guest_memfd-backed
-> memslot on a created Realm?
-> 
-> In virt/kvm/kvm_main.c:kvm_set_memory_region(), non-delete changes
-> (KVM_MR_MOVE and KVM_MR_FLAGS_ONLY) on KVM_MEM_GUEST_MEMFD memslots are
-> already rejected upfront with -EINVAL, so kvm_slot_has_gmem(old) is reached
-> here when change == KVM_MR_DELETE.
-> 
-> However, in virt/kvm/kvm_main.c:kvm_set_memslot(), KVM invalidates and
-> flushes the old memslot before calling kvm_prepare_memory_region():
-> 
-> virt/kvm/kvm_main.c:kvm_set_memslot() {
-> 	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
-> 		invalid_slot = kzalloc_obj(*invalid_slot, GFP_KERNEL_ACCOUNT);
-> 		if (!invalid_slot) {
-> 			mutex_unlock(&kvm->slots_arch_lock);
-> 			return -ENOMEM;
-> 		}
-> 		kvm_invalidate_memslot(kvm, old, invalid_slot);
+>
+> commit fe0315a0808b95d01cd45741655ca111deb8afc1
+> Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
+>
+> sched_ext: Fix scx_flush_disable_work() UAF race
+>
+> This commit updates scx_flush_disable_work() to loop while syncing
+> sch->error_irq_work and flushing sch->disable_work until sch->exit_kind
+> reaches SCX_EXIT_NONE or SCX_EXIT_DONE. This aims to close a race window
+> where bpf_scx_unreg() frees the scheduler before a concurrent scx_vexit()
+> queues the disable work.
+>
+>> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+>> index d2460a88fba35..78f15ddc0aa5a 100644
+>> --- a/kernel/sched/ext.c
+>> +++ b/kernel/sched/ext.c
+>> @@ -4217,8 +4217,13 @@ static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind)
+>>   */
+>>  static void scx_flush_disable_work(struct scx_sched *sch)
+>>  {
+>> -	irq_work_sync(&sch->error_irq_work);
+>> -	kthread_flush_work(&sch->disable_work);
+>> +	int kind;
+>> +
+>> +	do {
+>> +		irq_work_sync(&sch->error_irq_work);
+>> +		kthread_flush_work(&sch->disable_work);
+>> +		kind = atomic_read(&sch->exit_kind);
+>> +	} while (kind != SCX_EXIT_NONE && kind != SCX_EXIT_DONE);
+>
+> [Severity: Critical]
+> Can scx_flush_disable_work() return while sch->disable_work is still
+> running if sch->exit_kind transitions to SCX_EXIT_DONE between
+> kthread_flush_work() and atomic_read(&sch->exit_kind)?
+>
+> In scx_disable_workfn(), sch->exit_kind is set to SCX_EXIT_DONE at the
+> start of the work function before running scx_root_disable(sch):
+>
+> kernel/sched/ext.c:scx_disable_workfn() {
+> 	...
+> 	while (true) {
+> 		if (kind == SCX_EXIT_DONE)	/* already disabled? */
+> 			return;
+> 		WARN_ON_ONCE(kind == SCX_EXIT_NONE);
+> 		if (atomic_try_cmpxchg(&sch->exit_kind, &kind, SCX_EXIT_DONE))
+> 			break;
 > 	}
-> 
-> 	r = kvm_prepare_memory_region(kvm, old, new, change);
-> 	if (r)
-> 		goto err;
+> 	ei->kind = kind;
+> 	ei->reason = scx_exit_reason(ei->kind);
+>
+> 	scx_root_disable(sch);
 > }
-> 
-> kvm_invalidate_memslot() marks the active slot as KVM_MEMSLOT_INVALID and
-> calls arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot():
-> 
-> arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot() {
-> 	write_lock(&kvm->mmu_lock);
-> 	kvm_stage2_unmap_range(&kvm->arch.mmu, gpa, size, true);
-> 	kvm_nested_unmap_cipa_range(kvm, gpa, size, true);
-> 	write_unlock(&kvm->mmu_lock);
-> }
-> 
-> For a Realm VM, kvm_stage2_unmap_range() invokes
-> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() with
-> KVM_FILTER_PRIVATE | KVM_FILTER_SHARED:
-> 
-> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() {
-> 	if (attr_filter & KVM_FILTER_SHARED)
-> 		realm_unmap_shared_range(kvm, start, end, may_block);
-> 	if (attr_filter & KVM_FILTER_PRIVATE)
-> 		realm_unmap_private_range(kvm, start, end, may_block);
-> }
-> 
-> By the time kvm_arch_prepare_memory_region() returns -EPERM and
-> kvm_set_memslot() restores the old memslot in the error path, hasn't
-> realm_unmap_private_range() already unmapped and undelegated the Realm's
-> private Stage-2 DATA granules across the memslot's GPA range?
-> 
+>
+> If CPU A is in scx_vexit() (or scx_disable()) between scx_claim_exit() and
+> queuing the work while CPU B enters bpf_scx_unreg() ->
+> scx_flush_disable_work():
+>
+> 1. On CPU B's first pass, irq_work_sync(&sch->error_irq_work) and
+>    kthread_flush_work(&sch->disable_work) return as no-ops because neither
+>    work item has been queued yet.
+> 2. CPU A then queues sch->error_irq_work (or sch->disable_work), and
+>    scx_disable_workfn() starts running on sch->helper, sets sch->exit_kind
+>    to SCX_EXIT_DONE, and enters scx_root_disable(sch).
+> 3. CPU B executes kind = atomic_read(&sch->exit_kind), observes
+>    SCX_EXIT_DONE, and breaks out of the loop without ever having flushed
+>    the running sch->disable_work.
+>
+> Could that allow bpf_scx_unreg() to call kobject_put(&sch->kobj) and return
+> to free the BPF struct_ops map while scx_root_disable(sch) and ops.exit()
+> are still executing? Would reading sch->exit_kind before syncing and
+> flushing (or performing a final kthread_flush_work(&sch->disable_work)
+> after the loop) avoid returning before scx_disable_workfn() finishes?
 
-I think this should be fixable by checking in
-kvm_arch_flush_shadow_memslot() and preserving the stage-2 mappings by
-returning early. kvm_arch_prepare_memory_region() will then reject the
-operation but the mappings will still be in place.
+This is an upstream bug, sent a fix for review:
+https://lore.kernel.org/all/20261104111449.3984318-1-jpiecuch@google.com/
 
-Steve
+I will send the fix for 6.18 once it is merged.
+
+I don't think it should block this series. This series reduces the race
+window from potentially multi-ms, very easy to reproduce with the right
+BPF progs, to a few instructions between the flush and the exit_kind read,
+which I failed to reproduce without adding artificial delays in the kernel.
 
