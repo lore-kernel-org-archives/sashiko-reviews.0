@@ -1,86 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.230.136
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793833176;
-	b=TleNvKhHEaklKZoLAaZjJtlWZ28LSAfCweOIG+oLFk3IcvFerUnqngTkbkDDyTvondaj
-	 aiN0n9WCzUIs92Z/KuvzEra8djRO5DpOHFelCj/McbugBdYDm6Xqb3QUD1x0Cr3G6B+3z
-	 yB315DAEkIErpasx7Z9R9+ikoBiyY0iJ/eJ0U9eghscl3nGqmEf22+VUdjsbGgvCfJJbi
-	 DvY410DLd2WQjK17BeP8eznXUgoiZbgw1zGPlyUlCn/cAwZh4gZsjgXy7TgTYS6Tt37bp
-	 J3SxWtWIM1/wheBchi8I857usXxnNGZEiX/Rag/g61Z+fK5JQg+Kz29yD7+YOgcW6Gw==
+	t=1793834457;
+	b=hBNPO7w6biGDHrnYBM8hNxfOszWj7uRvmKPqRkJ1J7ch0insHEorPzjy20g1LxASEpOi
+	 LIpf7SdzN8AuYWdLVBcBm8K33zDSUVO3WM978H4mOfTiztmZwepTMoN6+vhhnaGmAT87E
+	 lVi/+xBOMoBxMlagWkCW9/d57vP9GBwESrDYm+hpwxDwX6sfOzVuDosJWSOt/ojrmBV0M
+	 4jVDm7XIyHQcFm1pCl+xVRoes0Gr142mfl6X45VLxW/qYKz5QTMh4zMKdc6RLl/x5pBkh
+	 giReByFDd3H6VXcC0s9l8h8tZ+ZmZBS8fSjYNZr9E+f2sgxlkpRaWeRJAJ79xL4+IQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793833176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793834457;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=dmn1Q3/145xsrJD3bHMxFjskCeqjVe350pnKBSHlWz0=;
-	b=q9R1L8TyBPbjxb6IKxRVdiYClb5V1smB+AM2E7jS6BTYRLJfWYC7e2q3HW8pLpc6nV5D
-	 fmWIrsmlNs2HkvqwBOUSEhvNDrqU67pydlYxqd61WOfA3Vgl1BIIt7uk+BRgRqwLazTJm
-	 OJyBVoAHwSOSupk+eju+SSX4z0O1Rfa9EVcOXaqi22F64HnEam9esp+jRf+HBp/YgOJ6c
-	 2bnJbK36HE5bWl58fncD5TaD4aogioimarUGafXESE59fWkAXub+6CtfhRx/uJLK1imyR
-	 tjpQxbH6AXN1ZqNZwIlx4zFuZxPcOmkovJQE2fKdcg/THQLffk6vf7YNIqxckq5AX+g==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=6pcpvaSe9ElEJt/G5lEejZAQ2sl+Ux6mleZlCU2LO+0=;
+	b=rb/UXssXncvUH3c85+1tV/BJu3UMEkYK7BpKdJ0cVl1UrPD2XxwBRk52xPnIQNqiPR2x
+	 247+xnQO3TyXMfdFtZxbDWM3nHDyCDBDKaZ8X6yyxY/PhLdH7dYU/yGGOpOozqtlDSvmt
+	 kqZp8PooQ+obyIfkf6bG/kFZNswHB9z3kAHW5T1uLisEQgecSHWPjbxcbxbW/yPf9LBpl
+	 /ohgHyIRFkCa5SCFtLj0o73P77cO8s28ZgE3nGdh5py8Zxmih492mT4j0V4kB3vwrl0c9
+	 Aq6J2K9SK6hPRGz+w/QWXDj5uX6qAJyMDjJBM/BtDctoAWaGv9yRefnJGdWzMqLbetg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ETUXLJbp;
-	arc=none smtp.remote-ip=74.125.230.136
-Received: from mail-qv2-f8.google.com (mail-qv2-f8.google.com [74.125.230.136])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qir5Ntav;
+	arc=none smtp.remote-ip=209.85.214.174
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291E0606A338
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 22:59:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 291E0606A338
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238D9606A31B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 23:20:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 238D9606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ETUXLJbp
-Received: by mail-qv2-f8.google.com with SMTP id 6a1803df08f44-91e883d0654so6928416d6.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 14:59:35 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qir5Ntav
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2e99b1e5b4cso7625525ad.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 15:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793833175; x=1794437975; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dmn1Q3/145xsrJD3bHMxFjskCeqjVe350pnKBSHlWz0=;
-        b=ETUXLJbp6LiPfpfIFwhP6PBmd8lU6T0lr411VNfwWYkCH0TWQ3TAn1iuV/mlF6nDPn
-         ykfG8bve/B5Eg+238vJrzztMbb9MNFqp6tgD17YVgF7jYK84Q2v7hUqYV7QWkOUX6gRl
-         OjpairSlFEn4ov4S4nT2n3W5drgqK4wJayoi6N1Yb6ItLiYQ/oZmQ8f3/J3e8ZTm69IJ
-         YMkjHF2TRd66OlNSUciVt+z+jw+1nFh2CaYCaN265W22+ohxE8rHQlEERxS6bCD91AuQ
-         h2IZ96ZpIZxggMJcYUySxc97GyDOzrouH4cVXpP3STw7fwlCqiAOlxh1ebjUkH+ZOobn
-         Zcqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793833175; x=1794437975;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793834456; x=1794439256; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=dmn1Q3/145xsrJD3bHMxFjskCeqjVe350pnKBSHlWz0=;
-        b=mdmxSu3nRC9ydouNcKGCJIl1rX+gq0i+oaxHV9jQ/rJmwGoMbXT+oDXry8XYzUKS5h
-         HzrNJ7hktxpyqp79t/Ba91QFMmKgpwGO0EDQTsvffO8t3yZ6qLDTz7tEFs6eapHZCwVC
-         DA/07rrpftlokasYBgAqmmYOlt5Tlk8eWzZbtEoHEMb00au7RFLtB8PBR8J1bP469VWG
-         c+xtSRDL/wXFebAL+GznH1TLsa2X19XpQoQKgSng/erEwlhOL0MQsGX6d1OxQqy/3imB
-         c6TN1ijXK4qeC+duKTex8lAfUBFWvfFx9UMCyH/sQGyCPu5u5k40MqxRSHKjPG3T6uMi
-         j3Ag==
-X-Gm-Message-State: APuU4Z8GmHHuvXBt5/kZlZKO66OXMkniiKpSxh/Rd7Fx38xb66x6Xe95
-	9++4wYkKn+61rPgA09KS9OETg7JYWlnVEW3dvcLdBBrFHc8icLBrQL1qCiaHSI3v+rE=
-X-Gm-Gg: AYBFou3OL1MzEXoN/mQPGHx2cym2hP64zuKlxwcs94FNBoXaDeKI/mKmqD4pgMGYKYd
-	VhfZaTLnA6Ul0yBH2pN/5ai0m0iYNyfHWbi3GvQzT9KMeJ1CIAsbxW2uFszVGcif5M+/wTuGcGc
-	LsPuMFxYn5PYEitwGJDKO2rcBdcEJpVms+jIoFbGftlFxKjrqvEnTGxSpZT5NnO4NXeixsR+OVp
-	A/582B6XZlxDIISgWQUNHYSVktdZiLBbcLK2PPJ9e3ITNSfD7gZFPbIGDKT9sryCF94FwmF7Ago
-	kj6c8urpSilV+cVVofQyuD5iAfXeDPTER0KkhPYsxNNpid8CnRs1/jn7Dl9ljoVPKA1V0kYZfNK
-	QiId6ly4KtHI3FNWCELL1ds10Yu9t94Fv/+4WWg84qWPQxjlA8BH0oKbaRSPjaWd+d1/G49CAtu
-	Jn/GTx2LFt9/EqrQR7CzexPNG4T3uZ4YuG3VOeye7n55xe5Lpb2Kq4zABUz+IMpIb4SjovDHXkl
-	ATMpkinVHsEOHUOvKmGAAw3NfixsgyynwYuPvOmpJYpMrGcd9+hT9V2rRsq7+5bDE5J7iyEvlWj
-	P9OsBX656lmyM2SHRCZCYqmu8WTy180M5A==
-X-Received: by 2002:ad4:5945:0:b0:91e:9074:19da with SMTP id 6a1803df08f44-91e90741c7emr31183596d6.22.1793833174911;
-        Wed, 04 Nov 2026 14:59:34 -0800 (PST)
-Received: from [10.0.0.48] ([71.69.222.122])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91e7dfb4201sm31557236d6.10.2026.11.04.14.59.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 14:59:34 -0800 (PST)
-Message-ID: <14067bc2-41fc-40ab-84be-adea737479ab@gmail.com>
-Date: Wed, 4 Nov 2026 17:59:33 -0500
+        bh=6pcpvaSe9ElEJt/G5lEejZAQ2sl+Ux6mleZlCU2LO+0=;
+        b=qir5NtavfxMeIZovIFVFpb1v6FBrC2BiCLbru9P5mKapASXDhh8V8n1qWskrNRdhpW
+         X90QxR/066UsRVmGRXfzSzK88dV5aRZ1sytT/Kw7BlMBqZ/wSBlYKi2sjx5W8CG4oBFb
+         gCJusgE5GuYGdZ1lYewrdPf5P6sc9FhLlh7lLxiIu9TLK0OSS1zC86trcUrSfHEUwY6+
+         HIKGGFVvtCGXnE17K6JNgkGol1Wq7dsKbwr0JZvrBvJILIrTUVvMWv3WOhd1U1+KrVUX
+         /4xx3P8jfo43f9BQ9PhiFM8XwoxuFAThL2BPyPAlYFkd2fjwU8uN6US8YCGPVg8CTr3p
+         S2HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793834456; x=1794439256;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=6pcpvaSe9ElEJt/G5lEejZAQ2sl+Ux6mleZlCU2LO+0=;
+        b=Py0aspHZ16qVDceM/vUnc0+l3C9owJThWqu7KlKvhUya4VMUDQFvGWmCiE4AwvHy0U
+         DOfITgdfvjD59lxsZxNLcsMqke9x3T+bTI84rQNfuQsE1zlbOlw30oTxYRp0cqQSFurR
+         G69UpzfsOO61WGhGOEzkL3D8pOmQ+7n5xc0N5sI50TPp/u7mPHMj4MLRueLwkqHhzxrq
+         cXqBT7SN66K35p0XnR9KkiAvQkIs/K5liPAdsrmzqL1IIgSrXC0iZqDO0n/BOcdEUyN3
+         YfyeWGehkL5OXUh6y50syq1pxi8dXIdeyp5gTO8Iy0dK+TKDa7AVYdPOvjto/q0LzvnV
+         3DcA==
+X-Forwarded-Encrypted: i=1; AKwUvBxK+6Y/4Q0NzMuqYceUWVLZSmMg9JdvFyeTwu2f9S4HfzY3qPw+K20n28S7eN5hFFBZtLaJZI+bJuKZOjyKGUM=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8pGWoet/KqvBe82dlzNKVf65mJA5YQgSvXIayTXgKaoWAmblFX
+	ls/I89B3x6DZ8GawqQSuoa4+HR0gJt7Wyn8/80v/Ph0y3z4MqJmotd9ozUo29Uqb
+X-Gm-Gg: AYBFou2zKLHu06h9mvVQCbnL/s8z4IQVBjuJv52sRfuo44ImL1P7QRDj43b2pJsEKou
+	7huwMXrGcK5VcAozCQeG9fZAX1fSJ4Yq5/X8CR/fX+/4ivUQPytFDSZ24+2UX2pfiP6c27gr5HO
+	Dx234pFWN1tDM9l3nTOmK7QZ+irhDfSfFopDlYnLM+n3Kt/RyG0J0YLv8HIasHn4AOfcxCF6rmF
+	UP+vxhivPbunF3+mbBD+OhUWhUvOeSp/mCoCcbbnqmZzJ0R3+7w/cTi0avKjPLuuBGUV4WYB0UH
+	+E88TAbEUsyESkeELked8K8WCK2WaAoQuvVqqG8CpcT/YazZdujivaBBQqjC8pI5DnwB967mNO0
+	3LczTJRxW34pMYJpPrgvgCkPeIY86sM97FxfsFYIOxVjkkGTDhw4Z3sco1vF/wpCkj/y+RSLiqw
+	MYzMVsFAl4VfhFiS2msmjP/xE+BcOZp7wd+rPSIao6/whH6WXciIp86EjgytferfpkLzBXDpINU
+	m/PZ8fb0QlUBveHBzoPoZYSFjMbPTKD4/Jy2RAfYtwnhnVnd+z1o02fnej5lRIRFaxtLlCuadQw
+	UTe7JRow1O4eYSHSbpXWfnA4sf16
+X-Received: by 2002:a17:90b:3811:b0:3b0:adba:45e9 with SMTP id 98e67ed59e1d1-3b0adc98d2emr1040635a91.58.1793834456448;
+        Wed, 04 Nov 2026 15:20:56 -0800 (PST)
+Received: from localhost ([182.216.53.174])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b094dec0e3sm2551500a91.1.2026.11.04.15.20.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2026 15:20:55 -0800 (PST)
+From: Jaewon Jung <jaewon8868@gmail.com>
+To: Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: [PATCH v3] tracing: Keep copying markers when one instance is stopped
+Date: Thu,  5 Nov 2026 08:19:26 +0900
+Message-ID: <20261104232046.32519-1-jaewon8868@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261104085715.5838b869@gandalf.local.home>
+References: <20261103005219.3236380-1-jaewon8868@gmail.com> <sashiko-outbox-194417@kernel.org> <20261103095019.6a88e783@gandalf.local.home> <20261104063552.28094-1-jaewon8868@gmail.com> <20261104085715.5838b869@gandalf.local.home>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -90,58 +101,63 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5 5/6] tls: send a KeyUpdate at the record limit
- and on request
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-References: <20261103-keyupdate-rfc-v5-0-de1ab90a88d5@gmail.com>
- <20261103-keyupdate-rfc-v5-5-de1ab90a88d5@gmail.com>
- <sashiko-outbox-198141@kernel.org>
-Content-Language: en-US
-From: Martin Belanger <martin.nvme.dev@gmail.com>
-In-Reply-To: <sashiko-outbox-198141@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+When several instances enable copy_trace_marker, stopping one instance
+can prevent the remaining buffers from receiving markers.
 
+Continue copying text and raw markers even if one copy fails. Return the
+largest successful write length, or -ENODEV if no write succeeds.
 
-On 11/4/26 16:43, sashiko-bot@kernel.org wrote:
- > > +   ret = tls_encrypt_async_wait(ctx);
- > > +   if (!ret)
- > > +           ret = tls_keyupdate_rekey(sk, 1);
- >
- > [Severity: Medium]
- > As reported by Sashiko on v4 [1], can tls_tx_key_update() ignore fatal
- > transmission errors and rotate the TX key anyway when 
-tls_tx_records() fails
- > with -EPIPE or -ECONNRESET?
+Fixes: 7b382efd5e8a ("tracing: Allow the top level trace_marker to write into another instances")
+Signed-off-by: Jaewon Jung <jaewon8868@gmail.com>
+---
+Changes in v3:
+- Return the largest successful write length, as suggested by Steven.
 
-Yes, but this is not specific to KeyUpdate. After shutdown(SHUT_WR),
-send() on a kTLS socket with no KeyUpdate also returns the full
-length. I tested this with TLS 1.3 AES-GCM. As I read the code, the
-KeyUpdate record then stays queued and TCP does not send it, so the
-peer never sees a record with the next key.
+Tested on x86_64 QEMU:
+- Before: A failed copy prevents writes to later live buffers.
+- After: All buffers are tried, and the largest successful write length
+  is returned. If no write succeeds, ENODEV is returned.
+- Existing text/raw marker and instance selftests: 6 PASS.
 
-This corrects my note in the v2 changes, "The next call reports the
-error". In the same test, the next send() also returned success.
+ kernel/trace/trace.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
- > [Severity: High]
- > As reported by Sashiko on v4 [2], how is the KeyUpdate state in struct
- > tls_context synchronized when sk_stream_wait_memory() drops lock_sock(sk)
- > during a send or TLS_TX_KEY_UPDATE?
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 08614af8fad1..164da1ea5e73 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6329,9 +6329,10 @@ tracing_mark_write(struct file *filp, const char __user *ubuf,
+ 	if (tr == &global_trace) {
+ 		guard(rcu)();
+ 		list_for_each_entry_rcu(tr, &marker_copies, marker_list) {
+-			written = write_marker_to_buffer(tr, buf, cnt, ip);
+-			if (written < 0)
+-				break;
++			ssize_t w = write_marker_to_buffer(tr, buf, cnt, ip);
++
++			if (w >= 0 && w > written)
++				written = w;
+ 		}
+ 	} else {
+ 		written = write_marker_to_buffer(tr, buf, cnt, ip);
+@@ -6408,9 +6409,10 @@ tracing_mark_raw_write(struct file *filp, const char __user *ubuf,
+ 	if (tr == &global_trace) {
+ 		guard(rcu)();
+ 		list_for_each_entry_rcu(tr, &marker_copies, marker_list) {
+-			written = write_raw_marker_to_buffer(tr, buf, cnt);
+-			if (written < 0)
+-				break;
++			ssize_t w = write_raw_marker_to_buffer(tr, buf, cnt);
++
++			if (w >= 0 && w > written)
++				written = w;
+ 		}
+ 	} else {
+ 		written = write_raw_marker_to_buffer(tr, buf, cnt);
 
-No change, for the reasons in the v4 changes. I checked these points
-by reading the code.
+base-commit: d7ff48d92a0f28bc0612da47c054efbc28c19562
+-- 
+2.43.0
 
-Points 1 and 2 need a TLS_TX or TLS_RX setsockopt() during a blocked
-sendmsg(), which is an application error.
-
-Point 3: tx_key_update_reply stays set after the update_requested
-KeyUpdate, so the reply still goes out before the next Application
-Data record.
-
-Point 4: a record that was already being written can go out before
-the reply. RFC 9846 section 4.7.3 allows this for records in flight.
-
-Martin
