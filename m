@@ -1,96 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.143
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793810330;
-	b=LzB9dN70cvEql1ezHIgQ/VdzIO8CrbkUpCQzD4tfLAg6zxTKPIOfIbZaL1L1GNdAZP7y
-	 NxHdtJml97QJ1U1xFA6YVLmrFEKs7AMnUq7iTlcrR62wjDClfnWT924nMhhQN1KflnZPV
-	 /pyl67WYu85ECWPG4ZUn41LB/cJ0/pH/IFyYd1GA7N5nBWX6DXHnlmW4ZCc4GW1CalMjp
-	 D6qnrAvCrua0Mlt5Yqa+yScGuWMkumSxU0Vb/kwMZqGskg8yb6aM+g90X6SnT5cJQLpJd
-	 QbkzSku9kYU2F5XZZIgEnadOJ+18SIIoSa3i+CgVsGMZuAOIJnUoT+7LwlTn5Ux27xA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793810330;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=M0aoeKpwFlDVUfix0hsz+ARJFtYG/eUi+3bjIRsuZ/M=;
-	b=hDEIWpgNXS63hMoOhPoUL3afIy04+VCXQVYhRP9JVSl1XX7KAVpqDOI5AHjJ7hnOLXim
-	 XEAPc8aeSzQB44pAISWlit4XqfSK4TRO6qqhKTieab6/Czvyz7RX5gNwCnJLxCJ9I5X5s
-	 E8F9h7cmNtop1gDAyZqID4Dp5vHiLcQ+ebBmjIz+d5t0XjXVvfj2zmI0KivxUS3QbnrMX
-	 YWQQBy7LDYO6nSnt8SfubPQlFkC5+7M4JyIgsn9Qfom2BlAYh0n1dHdOQ1s6NmgcyOib/
-	 UKuwiuDYBNdebYS+otXlmLqzq5oORmNTP2d7yKaIbwotmuKDZTYOyflAtcMfdsU4Uuw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=phytec.de;
-	spf=pass smtp.mailfrom=phytec.de;
-	dkim=pass header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b=AZw0hUPz;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.143
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11020143.outbound.protection.outlook.com [52.101.69.143])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.198
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793811016;
+	b=I5Y4pmWMjiLZM9cU+EWmRVsLvyRs2Eanb7FLry1cIjTAvwmBVxmGAeGgbly/An1qP1kE
+	 UZmnVYbRUMhDEmNzJeoWNn/As9q0JWs8y+sQzLkoaAqXX2FjyUa7RVLL2gBhrKoFtdZXD
+	 ASXmgyYb+1foK/lPg3cV8bdE60snrkdW/b1OPGxV6BE9OzAbcgWXi+jF+4y5A1Nc4GaAf
+	 GjIQUr3zitfl56mv35FT2MIltwDMW37OHxdtaHS9o30yDK/0AsHQHuYcTmLnxfZvLG+TE
+	 2poTQKOnLv+lNem3bIFlNa2feT0vnjSM/Slp0PmSqZS/dlGzzctST6TzQBzMHfp5lYA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793811016;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=P5qFYjBpoihP1d3aZdf6ZOVbEHGPd4/o6Ut1jFZ75ZA=;
+	b=XeQqwonWlrBgaseHbY4h9QzdVDLJY3NKYl7AFjvNHSjy0VQVDBkcT+lG7TwYEifGrHiL
+	 HTixmNYvve8mpGj2oIsIliTex6x1pZL0rQ8kn7MUyKwrISm74+2jr/8OL5zb0Eu5wdz1R
+	 mTYu6MY/EcFgKQ7x7+sb/4LEwobQUryUXIXNKSf9Fl74exXBBIzF55/8XMEvxPkggDPCT
+	 bkwqaj4pvMmDobYWdJbADXofNfkYDpjUG8fX9yx5XvG4bCEqbhdsRLaUT7eexMAf3Vh7i
+	 pCYSJRkvFubbgNMxG0hXLB42yEPr9fdVqbi5U+SrMSQgoh4zqa4L/VZQwu9Jd3qFpNw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=YmEW4bmm;
+	arc=none smtp.remote-ip=209.85.215.198
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5EB606A31B;
-	Wed,  4 Nov 2026 16:38:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E5EB606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=phytec.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=phytec.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D98606EE8E
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 16:50:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7D98606EE8E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b=AZw0hUPz
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Pfxh8D8jmUkwPJMla7ar/95GS9/mcYgXyFwRWBc7Ybtp1TYOiBk6e1nf5DY7vRe9zr8Q/wlYN5ebHo5dTRQB7wzwS3pD4lZC20GQ5OvCT8dtMF6fW/sHUV/cA3BGGDp3Psjf8Uj1ZXFqpiZnOHmwe0M7cU4PKwwH+DiP5bddD5qLh7/w8DK0ih9LmBCPVYQekKJjqOqDihaR/wn0rd5AFVNAf5kfF1Ec+QuZGmusQLjCj1PgTZreCzImb/4ZF79jUyFFnbSFtPXhLoxto40aJCRdg/W7F25sYK030YaQkenN3F9OipKBak8ERDvUxUXheoKT2rigwdmRMcQACja10g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M0aoeKpwFlDVUfix0hsz+ARJFtYG/eUi+3bjIRsuZ/M=;
- b=AzoMDnPAcuPfryZsdts1lLj+H2+6Gd6RGjG4pdg5lnohXn3nksbejkNdyo7aZD3ntxijRYQB/ZPFjSZcN7wi2pUFeVAnYAPTXjTuY1sSeCXGP6Pm56HTmD5n0XO6CAUNyoq5wRo8Jm5Ux0O9Rb4zBfg1JX7e2aA1dF0BMESxd1atDkX+5pU93VuDAIzck1xZO29Bav9S4rh+1to+mRN5F/NcazOWOKOdhrqIGWIIGLPTEHrMRXmwMguFzLpb1dCEws43SbnyAN25Ci2YomM9okr778EdKZK54MyQFKefNCLzQs4Qo4xLXjO2zFytVkPAV8FeVYp3AlSVLjDUDLhPeQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=phytec.de; dmarc=pass action=none header.from=phytec.de;
- dkim=pass header.d=phytec.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phytec.de;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M0aoeKpwFlDVUfix0hsz+ARJFtYG/eUi+3bjIRsuZ/M=;
- b=AZw0hUPzGzD5RURsUe2+rB2XucQaOv7R5+ure7rWkeldN/jNfT06NtQ0SQq8aUIwImznfxXEyozW4VHIay0UwJqzVB983AxM69SAZ5jK+JDva7XXnRwYG7LFeoLPH0+Cv3177ZIXvEzLnR63k4pMQ0CzVba55vUq4BK/8Ka4Ut5q5Nq8uTh8zfQ0lJHWvGx/G/BUKTzNJExIwfZOKxGPSZT4jFIvnQWpe931UMfkukq8IdXG8j9yfD5KJzBqlxz9tTND81M2oNtmao1LdlJ9XA0xkQxgVaUTitXC7b6a3aoFSeJe1LTweoG/1Xt7+ZgkkL2CHNHdSIp/uCEIx5DGoA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=phytec.de;
-Received: from VI1P195MB0623.EURP195.PROD.OUTLOOK.COM (2603:10a6:800:159::10)
- by PAWP195MB2227.EURP195.PROD.OUTLOOK.COM (2603:10a6:102:341::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
- 16:38:45 +0000
-Received: from VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
- ([fe80::2f8:67bc:a785:6894]) by VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
- ([fe80::2f8:67bc:a785:6894%7]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 16:38:45 +0000
-Message-ID: <5b546ff3-f887-4de8-b5d7-ea252e8c2d62@phytec.de>
-Date: Wed, 4 Nov 2026 17:38:43 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] bindings: Add devicetree bindings for new
- phyFLEX-i.MX 95 Libra RDK
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
- conor+dt@kernel.org, Frank.Li@kernel.org
-References: <20261030-wip-bhahn-imx95_upstreaming-v1-0-1c1cebb5be99@phytec.de>
- <20261030-wip-bhahn-imx95_upstreaming-v1-1-1c1cebb5be99@phytec.de>
- <sashiko-outbox-191073@kernel.org>
-Content-Language: en-US
-From: Benjamin Hahn <B.Hahn@phytec.de>
-In-Reply-To: <sashiko-outbox-191073@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR2P281CA0075.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:9a::17) To VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
- (2603:10a6:800:159::10)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=YmEW4bmm
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cdae10aebfdso489240a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 08:50:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1793811015; x=1794415815; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=P5qFYjBpoihP1d3aZdf6ZOVbEHGPd4/o6Ut1jFZ75ZA=;
+        b=YmEW4bmm3VcRrK8WULx+QiyxgtXsZNrec6oeHASQROq4VflF0MVpeFJVnkg0ufR4hy
+         NrEDeiLU+omNvGrvtXsY6So+BF0iFrUyZPuLlixadm/faXLOzzUm8tUTN87qs280QVoJ
+         v+rMEVKq9QG+LrLKwnlEa8bOK/BVHBMg4Mr+Og7YrzCZWD0iTXIo4NmKlf2mZq92gPl2
+         8vHVaHUY1pGIyFLSp2WfIf0+sv8u6PDJZRQliqgLb2hR8eKi1tiPMEIf3D7tTTN+drnv
+         bon78eEpF9c6mL3hi7MebXuBNzHhHG+AiC4ki7VlWeikf83laEPLBdcKOOXNx8/QTsML
+         EflQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793811015; x=1794415815;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=P5qFYjBpoihP1d3aZdf6ZOVbEHGPd4/o6Ut1jFZ75ZA=;
+        b=qHQnCMIgM91Q2bmico+gfioEI9JflPeH3F3uJX0Eh29c2CoMIyb/HyCqvFZ15hYc6L
+         WISL4T2R6LsMFYQjG6C6yQUiMVNJn+rG8Zklh+AeaYzS1t4EKngnv9LeodM4wtTk/rmv
+         STlm8GFoMUK+01YY+WPRTYeJcfxLcacWRlwKu/ZcDqtZuoVqiPDHMod51gH9Kzy/niYL
+         Y+fUd/XJnd1Pmkl3cGudaHnI6xegA8Bq+V8MCqh3MsOZmVCtEBFbgohBqbctWwi7qYYs
+         dTxZNWHOFNybGpIM1dCGYIZEqqe6XNFh9DE1nn+c73o9nJh/sBjkJczM9IfX8GdExuth
+         e3hw==
+X-Gm-Message-State: APuU4Z9Se6c/Q/s44h5QLxBZBRBQPwfQ2P0AucJyvV39aqV/ymxK7OpO
+	H32u0nx3aEGnjYMDjOP42FFnIHjJuTEHzdih5ok/IWL5lKNTvkHurLiHmj3ZxqGpafiDBkPnb9z
+	Rh4TR2ypAV485ImJ+c3gcH1B7JSKoPoBiPFNg5yreeLum9oxjVSG26mjBBZcXJ4IFE11mZ2coOo
+	JEb3EwHfSmKnDwwa0cV2Iv7MbRN5NhxdumrTqgiFeDeeBhyDzd
+X-Received: from pgdc9.prod.google.com ([2002:a05:6a02:5109:b0:cd5:f887:3cfe])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:734d:b0:3e1:a402:680c
+ with SMTP id adf61e73a8af0-3eb98517683mr18495637.21.1793811014778; Wed, 04
+ Nov 2026 08:50:14 -0800 (PST)
+Date: Wed, 4 Nov 2026 08:50:14 -0800
+In-Reply-To: <sashiko-outbox-196866@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,119 +77,116 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI1P195MB0623:EE_|PAWP195MB2227:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4314624b-d306-4c2a-62d4-08df3a9217ee
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|10067099003|18002099003|22082099003|261028144727099003|56012099006|4143699003|11063799006|261026121527099003|261009223027099003|261022105027099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info:
-	XPjcJobqtPiLkjaUzqbak9ezVYp28I/9ggyXO0fCYnbRv/F9ruKmQQePrAhO1fERdSxGlUPyHmqtWUSJ0ZpuyzOr2F8mz1hRZZ8TCPj/4AfFtZ9gFcG6FjxZxaqN2bx60ba9g69RR5YOQWaUg1jEyW4OGq6iNo0fHMUyEPwRgNewVKyho8IPCn7AQ/wfPDSJx5TrBW7QTmfas5jsI4kpDM3m3ZEb1FAPbXjC+GFPfL+h1S1BMBND/ft5JbCNsABrqAT4jaWGsiH+rGNSbg2tYJ6L1IufGk/O4XXV1vjQwOGSbnFGP7E1PucB+SS0l/69AaYGl6HcosWZ1w7+iMJAtbnwYnL8JfOZq7v8yHpaVuA3n7h+fIbJ3rPfdMdplV594sZfpmuZ8o/1ZpQ6byRnVZH+1nJHvhNSAa2QX6+WOMNo48ebyCicr+TPdPqzsoPBk3a0PZ/6HPNV4M2POIQlRRWPPm+se7pa40kNJCYbm3O1HqGfrTKoDkLza+5QYw1n2JEy62bxVCDOETQt73GXwypjN1RM8BQ/qsl3yqQM9ZsAMiAWc2cisKAZfeWs2JYW25xBGfbDa+7ZiKOd+sbBxf8nM7RrBfT1rBnfRakFQ7hDjYglN7Qt9BILcNdxElRjhZruO6QrLr5upKt3ERLGOOTynwO5b2GQPI+K1GT5VLM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1P195MB0623.EURP195.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(10067099003)(18002099003)(22082099003)(261028144727099003)(56012099006)(4143699003)(11063799006)(261026121527099003)(261009223027099003)(261022105027099003)(261026140227099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?OFhjR3c1aWxocU5PSzJxTHhhQUFRN3d5L05uUHl5VXFJMTMyb2xmVW82d2xJ?=
- =?utf-8?B?T2hzNjNFbndEdC9TbGhyenB0T0E5V2hjenZGV3NjZnlSRHlTTi9TNTAyNHFx?=
- =?utf-8?B?YVpXN0NuZHJ5ZFJMbmlMSTVnQWZDNmVxODdJVVNRWGZUNG5mNUcwS1JmR3Fm?=
- =?utf-8?B?YWpSUFNCR0JteDF6R1JyaHpZWTFxQUpObWFzR2xTMHkxODJXUHFWSjRORGdG?=
- =?utf-8?B?OUVNbmRkVnVOaWs5aGsvMGM0TWJoRjd0V3Jwbnp3a1R1K1FIZHhqVThwL1N5?=
- =?utf-8?B?RzNCN2xRQXVMVmNrRU9sdUJOYktaUVpmdVdmYmF5Uk1YYXIwK2RoOXQwU2d6?=
- =?utf-8?B?VmxvK0U5RFpxaG51TmdsQ0hnQVZ4WWswOGxoWjlVU0JxbGphRmFiZHhFcDZ3?=
- =?utf-8?B?NWRFOE9aVCtsSktWdUNKazhmck1iQ3pZT3QwalNMU1V1bjUvYzFqcFRQSU96?=
- =?utf-8?B?WTFxbjRCY1l2RlRpc3pTL3BPUDlVN3pBTG8rb3UwMVVsM0R4YWZhK3ZlUGQ3?=
- =?utf-8?B?REViZFgzYkRTVGtlNGM1VlBxNDQxZlo5Mk8zVkwrSVEyWHpmQ08yTUEwQ1NX?=
- =?utf-8?B?TUltOGJLWEY4VmRjWUE1UXAveSsxRm9qUGY3a2RiNU85YnZjRTZhaGZDR1lO?=
- =?utf-8?B?d2hnNUFIOEFSY0VFazRaZVlONS9PL2ZLaExqZWJWdTU2K1dpU2tsSDlEd2Z5?=
- =?utf-8?B?TzFuTnJUZ3dKZjFmckFzbkRQdDkyZ2FPektFOEtPK1cxcXNVMjFEYndDcDN4?=
- =?utf-8?B?bkNZdmtCMGlYY2R3eHBkVjBLcGxCTzVFelh2YjFiamxGZERXcTdBNHVaRUl1?=
- =?utf-8?B?bjZrVlVYRVhIR01JOGxKU0h1VG9weDVuWWI0d0F3WDVENTVnY3pwMk5xQVQ2?=
- =?utf-8?B?eWRMeWk0dGhheWlGa2MvK1BmVzF0ZGhoWXoxNHpna0JYME0vMm9GZmQ1K1l6?=
- =?utf-8?B?S1l2bHdlWTU2WWwzRUZoY0huV2EzTUc1WHNla25FZkE5QSt6M3daVWxxY0tI?=
- =?utf-8?B?WTI1blZTZlBtOFlGVFlUNmtnN0owd2swc1JiSTdQb0pycmtxMnlsS0pVemt5?=
- =?utf-8?B?bXYyZFA4bm5ONS81dytnaXczUjJhVWhEcGx6Y25ORUduSGVkT04wSXgvejNr?=
- =?utf-8?B?U280NVN2bmU0MUR1Unh4MVh6Nm5oNFc0MTBTS3Q4NWR4ZDRleStYQ2ZpczN5?=
- =?utf-8?B?SGRBZkxKZ21HbGJPdnRDWmd2enNHb0JsTGV5bWxSQnQraWdDbVkybEt0aytF?=
- =?utf-8?B?a1VmWjNCQ0R6ajVEUytzTy83VjU4ajBLNk1qb1F5c0xnd1lRNUdMZzV2MXFa?=
- =?utf-8?B?MnhibGJaQXB4UUZCdWEyc043cmp3bzJKVUFJRGJPQzdZVlBOZEJNaFRWRzBy?=
- =?utf-8?B?Rm9EMVpCNjRrMlVhZ2FKSXk1Q2FFSXZPb0xnZ0NUZi9RdzE4V0hGampJeis3?=
- =?utf-8?B?bllsUTAzV3pZY0Z4dm5lOXMzbzlnZ3RxcG5oVmxmUklBR0VRcWdoeldKVmNP?=
- =?utf-8?B?aTVyaUdCTlBDcElxZ1FmOGErSE5IbmIyUll0MllRelBsb2l1bG1PN2d6aUlw?=
- =?utf-8?B?WUVKWHRmdElhVnYzZVpNd1A5WVZHOExEVW9vT3JvOVRKd0dIMGhzNVgyOGln?=
- =?utf-8?B?azZlZCt2TEFSNFpkY0c3aG1Qc0Jib1lveHpYbmN0b00rR0JmU2Q2TEZsb0NP?=
- =?utf-8?B?RS9rbm8rcFJ5RlRLRUJ2U3ZmM0NEYWZCSWllQUd3VVRHVWlJZkFnbVhvaXJl?=
- =?utf-8?B?YzIxZU8vUHF3V3ZyS05uL00vb2EzdldTeHUyUlVMbXJ1Z3liaWk0U3gxTXdt?=
- =?utf-8?B?Vnl2N2JXSnpnV2xyOThwOVVmUldjTVZGYlFTcDBtZ1FJZmMwSHd2RFU4TlRt?=
- =?utf-8?B?UUg3SjB6azhLOWFremZPNHdnaENHZVFQMDRsL3RRK0RsOTgwRDBLTHpDZWNx?=
- =?utf-8?B?Rm5VNUlQV0dzSzF1Q0VLemVxMWJKYk9KdVgyaFhkOUhOMUNkTjFIUFlwYjFF?=
- =?utf-8?B?SjB0WXUvLzVpWlBDMngvcmRsRUJzSXdSTkIvUlBDZVRuNGZsbFlNWnpsTFJO?=
- =?utf-8?B?akxiZEJNa1Rmdk1VWnA2VVpvUTdHV2ZUaXFob2RDdHl5a3AwWGhOSVkza3ZR?=
- =?utf-8?B?TGlVSkhnY0pCdTVpRDZ6SXZlWEw2OGRlQ2ZRQ3FvZXlTNXZxWFNRVTh0N2ZI?=
- =?utf-8?B?UHVkT3ZiQURWeFBIUGFyWlJ6UDlJODd6SklCekgxUG9udDYxck9vcmllUzlX?=
- =?utf-8?B?ZFZ2aSt0cWNPQzFwN0hwNURvWHZ5QVhKT3BlQTZQajFaNTNlTGlQK0dNczhR?=
- =?utf-8?Q?7wt3DqAGY9dYIUp9e7?=
-X-OriginatorOrg: phytec.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4314624b-d306-4c2a-62d4-08df3a9217ee
-X-MS-Exchange-CrossTenant-AuthSource: VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 16:38:45.2409
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e609157c-80e2-446d-9be3-9c99c2399d29
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: umEharj1l0mgfJeOg3ZC/LwRCPWgeNPSy0zjzD/I1E5LD43d4ceY3/ZzIDN4XllDlblE7B102VfJL1jsvRaBhw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWP195MB2227
+Mime-Version: 1.0
+References: <20261104080721.2169-1-zhangchujun@cmss.chinamobile.com> <sashiko-outbox-196866@kernel.org>
+Message-ID: <autiRrLCDz6JTuiB@google.com>
+Subject: Re: [PATCH] selftests/kvm: check fopen() return in get_run_delay()
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: zhangchujun <zhangchujun@cmss.chinamobile.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-Am 30.10.26 um 14:37 schrieb sashiko-bot@kernel.org:
+On Wed, Nov 04, 2026, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dt-bindings: arm: fsl: wrong enum sequence indentation breaks yamllint
+> - [Medium] selftests/kvm: infinite loop when fopen() fails in get_run_delay()
 > --
+> 
+> commit fed2657e5d999eb78e5e508f23ea617f2787e14a
+> Author: zhangchujun <zhangchujun@cmss.chinamobile.com>
+> 
+> selftests/kvm: check fopen() return in get_run_delay()
+> 
+> This commit adds a NULL check on the FILE pointer returned by fopen() in
+> get_run_delay() so that it returns MIN_RUN_DELAY_NS instead of passing NULL to
+> fscanf() and fclose() when /proc/<tid>/schedstat cannot be opened.
+> 
+> > diff --git a/tools/testing/selftests/kvm/lib/test_util.c b/tools/testing/selftests/kvm/lib/test_util.c
+> > index f5f7189f96a84..2827f7d7d905e 100644
+> > --- a/tools/testing/selftests/kvm/lib/test_util.c
+> > +++ b/tools/testing/selftests/kvm/lib/test_util.c
+> > @@ -421,6 +421,8 @@ long get_run_delay(void)
+> >  	sprintf(path, "/proc/%ld/schedstat", (long)kvm_gettid());
+> >  	fp = fopen(path, "r");
+> >  	/* Return MIN_RUN_DELAY_NS upon failure just to be safe */
+> > +	if (!fp)
+> > +		return MIN_RUN_DELAY_NS;
+> 
+> [Severity: Medium]
+> If fopen() fails to open /proc/<tid>/schedstat (for instance, when
+> CONFIG_SCHED_INFO is disabled in the host kernel), will returning the constant
+> MIN_RUN_DELAY_NS here cause the callers of get_run_delay() to hang in an
+> infinite loop?
+> 
+> get_run_delay() reads the calling thread's cumulative scheduler run_delay
+> counter, and both callers in the tree wait for subsequent readings to advance
+> past an initial baseline.
+> 
+> In tools/testing/selftests/kvm/steal_time.c:main():
+> 
+> 		run_delay = get_run_delay();
+> 		kvm_pthread_create(&thread, NULL, do_steal_time, NULL);
+> 		kvm_pthread_getaffinity(thread, &cpuset);
+> 		TEST_ASSERT(CPU_COUNT(&cpuset) == 1 && CPU_ISSET(cpu, &cpuset),
+> 			    "Worker failed to inherit parent's CPU affinity");
+> 
+> 		do
+> 			sched_yield();
+> 		while (get_run_delay() - run_delay < MIN_RUN_DELAY_NS);
+> 
+> When get_run_delay() returns MIN_RUN_DELAY_NS on every call,
+> get_run_delay() - run_delay evaluates to 0, which is always less than
+> MIN_RUN_DELAY_NS, causing this loop to spin forever.
+> 
+> Similarly, in tools/testing/selftests/kvm/x86/xen_shinfo_test.c:main():
+> 
+> 				rundelay = get_run_delay() + MIN_STEAL_TIME;
+> 				do {
+> 					sched_yield();
+> 				} while (get_run_delay() < rundelay);
+> 
+> Here, rundelay becomes MIN_RUN_DELAY_NS + MIN_STEAL_TIME while get_run_delay()
+> continues returning MIN_RUN_DELAY_NS, which also spins forever.
+> 
+> Should get_run_delay() instead fail or skip via TEST_ASSERT() or
+> TEST_REQUIRE() when fopen() fails, similar to other file-opening helpers in
+> tools/testing/selftests/kvm/lib/test_util.c such as get_sysfs_val() and
+> get_def_hugetlb_pagesz()?
 
-will update for v2.
+Ya, I agree with Sashiko.  Not only could returning MIN_RUN_DELAY_NS lead to
+failure, it could result in false passes, which is arguably even worse.  E.g.
+running the steal time test with CONFIG_SCHEDSTATS=n seems pointless.
 
-Benjamin
+I don't think we want to simply do TEST_REQUIRE() if fopen() fails, because that
+would result in weird skips if fopen() initially succeeds but then randomly fails
+partway through the test.
 
->
-> commit 46ee5c7fdee02b781beb27b96a47fddb125b6299
-> Author: Benjamin Hahn <B.Hahn@phytec.de>
->
-> bindings: Add devicetree bindings for new phyFLEX-i.MX 95 Libra RDK
->
-> This commit adds devicetree bindings for the phyFLEX-i.MX 95 Libra RDK board
-> and the phyFLEX-i.MX 95 FPSC Gamma SoM to fsl.yaml.
->
->> diff --git a/Documentation/devicetree/bindings/arm/fsl.yaml b/Documentation/devicetree/bindings/arm/fsl.yaml
->> index 656f2596e1d53..f917ae7202e96 100644
->> --- a/Documentation/devicetree/bindings/arm/fsl.yaml
->> +++ b/Documentation/devicetree/bindings/arm/fsl.yaml
->> @@ -1551,6 +1551,13 @@ properties:
->>             - const: phytec,imx95-phycore-fpsc  # phyCORE-i.MX 95 FPSC
->>             - const: fsl,imx95
->>   
->> +      - description: PHYTEC phyFLEX-i.MX95 FPSC-Gamma SoM based boards
->> +        items:
->> +          - enum:
->> +            - phytec,imx95-phyflex-libra-rdk    # i.MX 95 phyFLEX Libra RDK
-> [Severity: Low]
-> In Documentation/devicetree/bindings/arm/fsl.yaml under
-> properties.compatible, the sequence entry phytec,imx95-phyflex-libra-rdk
-> under enum is indented with 12 spaces instead of 14 spaces.
->
-> Because Documentation/devicetree/bindings/.yamllint configures the
-> indentation rule with:
->
->    indentation:
->      spaces: 2
->      indent-sequences: true
->
-> does this cause yamllint and make dt_binding_check to fail with an
-> indentation error?
->
-> Should it be indented by two more spaces to match the surrounding compatible
-> entries:
->
->            - enum:
->                - phytec,imx95-phyflex-libra-rdk    # i.MX 95 phyFLEX Libra RDK
->
+I think the best way to tackle this would be to provide separate APIs to open and
+read the file, and then have the open API do TEST_REQUIRE() and the read API do
+TEST_ASSERT().
+
+E.g.
+
+FILE *sys_open_schedstat(void)
+{
+	char path[64];
+	FILE *f;
+	int fd;
+
+	sprintf(path, "/proc/%ld/schedstat", (long)kvm_gettid());
+	fd = open_path_or_exit(path, O_RDONLY);
+
+	f = fdopen(fd, "r");
+	TEST_ASSERT(f, __KVM_SYSCALL_ERROR("fdopen()", -1));
+	return f;
+}
+
+long get_run_delay(FILE *f)
+{
+	long val[2];
+	int r;
+
+	r = fscanf(f, "%ld %ld ", &val[0], &val[1]);
+	TEST_ASSERT(r == 2, __KVM_SYSCALL_ERROR("fscanf()", r));
+
+	return val[1];
+}
