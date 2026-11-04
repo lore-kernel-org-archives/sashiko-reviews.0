@@ -1,60 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=79.135.106.31
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.70.43.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793794898;
-	b=NqDRoJ1SLa3JMCzd40yMWJVJnezbtQREz2kNRlzLQ+V4m6rHNSOyKBwgz1J2L0yp5EAF
-	 hd5/XwbxykjoGuPCbNZheQzqagkB8nY7MuaFODyT1U92gLM0lbhdn6hymFb86jvebYm4y
-	 jPNfmH4BULCQHzQ9WMHgzkdvHNqaCnPVHR4uIuoo2AfBqVI5mcLmMbgR7XZ6BOHSkanV4
-	 wvhVSt0nJkK2fJOYaqTuPwWdRoLYVARfaahkKvGB6hqOMBltCGoJh1IeI2TMLUXvvqMcj
-	 IU/8qdj/BajDOo6Z7SvXj3Y5zCVYNxWbJrKd4xY1x1WZpucD5WUccz9npl1rybeCfgQ==
+	t=1793794919;
+	b=zKtpn1QcFWAqmG1T/0bA/6okjHcRpogrlDmA0cmZxH6hC5enayRdyY7GhnpgY6px6nrQ
+	 c6YB3dbTozEwC66CLC/T97lpA676eAwyqW8zWyCtdMi4lsp5MVLcwABnAuaBKDJ6bzo3c
+	 Wp/4iooXkJi7kBayR+muJGLBDZ34Fgy/m47LJvufI2sa/EBvUh6j4AUtY7T2f4uxppX5F
+	 liuGSmExiS6OtnqIfb7YEQPz4YK+FsgG0ClSf7HE18gD9tUmYxQpzaKPysYDUs2clJ/gS
+	 U624ztGInfsb9dOTwrRqsnHhyjmZxMwWuuiJZlvtO84OcnqCzqVQUobHrDTjiAkqH8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793794898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793794919;
 	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
-	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=IPU5n/aemWK5Zk7I9aXIvcUrWcHVqx43/uwXdnAxPsg=;
-	b=uWa8fh8meffw/l+JNfCtrsvd4xJSjfajN1ju3CpDkK5p/L8FpnbKT7BOm+aB6BIHuJyK
-	 14DeihA2SCy6pc8juXCM/wkuNhlFxQAk5mLd1jGy82tgpijUQNVuOql7e5hxKkKr4lTWW
-	 2Nh12iLOAcpKJBbG7cFaF0aqbIcDkWQqKA/abPlZ2QlM32essb47IgpLfP6R3zN7arYhz
-	 KQ5Qt80+wIDpLtlVybWGa7Yy9M9DsgCAFgIrSLJjEPJzmotRYuhc+nxnFe0qhMiHx9jdp
-	 efM4juangytXprcS67WXXhEJyjI5yYGQHh9kW7dg7VtEhrR525W/2EBIUVeqpraCCxQ==
+	 Feedback-ID:X-Pm-Message-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=UnEnkvalLpA9bogWtSVKDojXdVfOEBBi5ZWxJhdb+eY=;
+	b=Ee2jmpkbeqCrXRDEbkGPBvhNx5SzrAH1yKpczaPzYASHH7d+g5BeAm5A1Ubx+frkxdsO
+	 vaz9uhjBo0qTHe1KDxRy3nyIzfI2sDZWUu+T4FBr71OAR3bm+Icdy7Byz7Ih+lgrKs4Tj
+	 YlCdw0FGgFfa45lXey/HgO+Ikwxu+mJunyo5js/t0brTfZmFLRLFe9UKRhu+ThJRtGVIm
+	 XIzQsdN/OLrvy22bFSdRJX5MTvs+zH0z7a0GWsQQM53di31sHYeDj4tgnyhSkG1HCUrEL
+	 HZ3jt1H8GRSyXAZyrkRd65yQE7BMhc2lRNbGJXZ0Pee5hZ/8w5fE1gFnIdESQ0TKY9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pm.me;
 	spf=pass smtp.mailfrom=pm.me;
-	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=Ew9Zslwo;
-	arc=none smtp.remote-ip=79.135.106.31
-Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
+	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=Xf5Y6pVA;
+	arc=none smtp.remote-ip=185.70.43.16
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C98C606A328
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 12:21:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C98C606A328
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0D8606A31B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 12:21:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC0D8606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=Ew9Zslwo
+	dkim=pass (2048-bit key, unprotected) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=Xf5Y6pVA
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1793794895; x=1794054095;
-	bh=IPU5n/aemWK5Zk7I9aXIvcUrWcHVqx43/uwXdnAxPsg=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Ew9ZslwoIeY0PA8jvTySLrCngTMq/FkujYp2l62DsZLvNMtkNcp9ddn+1LckxYJuX
-	 Ur7YDfkS9XFUjYLEK/IdsJaXtOZi88vM4mHSnEhj2GMwBrjavnUjZ4x6PLJmnAhgkl
-	 sA48tBXYClAR/6dBdRCp4EpJa/10obUbLTIBnJtv58Fucwiq3Nkz20WDVdyl4J5GDo
-	 kDGDbZ6JW8/w2xDxy9Gq29xip+rE0DwE0XoDaBBo1yWT08hr1AVR+cyc6OV3uOVRdm
-	 WhMx+yHzySYHt3B1OHthJdmxiqcobelKdoE1mE+ZFz/LdlVFhIvSc8hzs0TRfNJTtb
-	 eJqValDSrt5sw==
-Date: Wed, 04 Nov 2026 12:21:31 +0000
-To: Takashi Iwai <tiwai@suse.com>, Jaroslav Kysela <perex@perex.cz>
+	s=protonmail3; t=1793794916; x=1794054116;
+	bh=UnEnkvalLpA9bogWtSVKDojXdVfOEBBi5ZWxJhdb+eY=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=Xf5Y6pVA6NixcyqFrS/YDRp2gWR9+IepDHfwhMQJpdefaQMNh3wA4PqjWXybS3G3C
+	 x6wBKVmmNbaYZCoYNOby2f7KaEfqrJkaZ9vCU7WMEmJFOUnXKgqZwhUYRtbF0UZPjB
+	 NOxmf5CvsYYUhmL31UCuDLDrDbEGN0Aa7Kfxu0YlNsfnySG4GJlxgNWA7+G9JnE9Hy
+	 Rzi8myeWIPJMGlbHlWE1MFR8y1ClzEuOZ3TncO8o8bDsKkV9fO/WQJJBv3ELtHidQg
+	 y+ClPvXFKSMN3IA6uuBe0atkwvF82Xy71fuEh0KE+Owr6030lErU3/nwY8T1SMyFuD
+	 8YrNVcL8+RN0A==
+Date: Wed, 04 Nov 2026 12:21:52 +0000
+To: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
 From: Sinan Turunc <enscrpt@pm.me>
 Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v3 2/2] ALSA: usx2y: Guard the playback copy
-Message-ID: <20261104122103.1493-1-enscrpt@pm.me>
-In-Reply-To: <sashiko-outbox-197138@kernel.org>
-References: <20261104105228.1124-1-enscrpt@pm.me> <20261104105228.1124-3-enscrpt@pm.me> <sashiko-outbox-197138@kernel.org>
+Subject: [PATCH v4 0/2] ALSA: usx2y: Bound the PCM buffer by the URB size
+Message-ID: <20261104122136.1518-1-enscrpt@pm.me>
 Feedback-ID: 48393780:user:proton
-X-Pm-Message-ID: 3c0c087de62a64768cd35af5b7c00875d40a00b0
+X-Pm-Message-ID: b9e734d70338c72dead360983e9b291a9abbcea7
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -67,36 +64,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-> If actual_length has a non-zero remainder modulo usx2y->stride, can this
-> still read past the end of subs->tmpbuf or runtime->dma_area?
+v4 of the usx2y buffer fix. Patch 1 changes only its comments and the
+nrpacks note in the changelog. Patch 2 now also sizes the playback ISO
+descriptors from whole frames, after the review of v3 found that they
+were filled from the raw capture actual_length while
+transfer_buffer_length used whole frames, and gives the maxpacksize
+check its own message.
 
-Example 1 (a descriptor of 203 bytes on a 200-byte endpoint) does not
-reach the host controller: usb_submit_urb() compares every ISO
-descriptor length with the endpoint maximum and returns -EMSGSIZE
-(drivers/usb/core/urb.c, the number_of_packets loop), and for the
-full-speed devices this driver serves that maximum is maxpacksize. The
-driver then stops the streams on the submit error.
+Patch 1 replaces the two-packet BUFFER_BYTES bound of v2 with a
+two-URB BUFFER_SIZE bound in frames that does not read the endpoint,
+and keeps the capture drop guard. Patch 2 adds guards in the playback
+prepare path for a URB larger than the buffer and a packet larger than
+the playback endpoint's maxpacksize, and sizes each descriptor as
+counts * stride, all pre-existing and unchecked.
 
-Example 2 is valid and pre-existing. The descriptors are filled from the
-raw actual_length while transfer_buffer_length and both copies use
-count * stride, so a capture packet that is not a whole number of frames
-makes the descriptors add up to more than the buffer, by at most
-stride - 1 bytes per packet. The excess is read by the host controller
-and sent to the device; the driver itself copies only whole frames.
+Tested on 7.3-rc7 with a USB/IP device presenting the US-122 interface
+layout. The playback case of patch 2 reproduces on the unpatched driver
+with ordinary 48-frame packets and a 100-frame buffer, which the stock
+constraints allow. With both patches, buffers below the bound are
+refused at hw_params and 400-frame buffers stream in both directions
+with no KASAN report, for S16_LE and, on capture, S24_3LE. With
+195-byte capture packets the descriptor sizing of patch 2 shows through
+USB/IP's completion check, which refused the v3 URBs (descriptors of
+780 bytes for 768 bytes of data) and accepts the v4 ones. The results
+are in the patch messages.
 
-v4 sizes each descriptor as counts * stride, so the descriptors add up
-to transfer_buffer_length and, with the maxpacksize check, each stays
-within the endpoint maximum, which also removes example 1 without
-relying on the core check.
+Sinan Turunc (2):
+  ALSA: usx2y: Require a buffer of two URBs
+  ALSA: usx2y: Guard the playback copy
 
-I went through every value in this file's data paths that the device
-controls (packet status, capture and playback actual_length, start_frame
-and wMaxPacketSize) and where each is bounded. The descriptor length
-was the only one left unchecked after v3. With an emulated device
-sending 195-byte capture packets, the v3 descriptors add up to 780
-bytes for 768 bytes of data and USB/IP's completion check refuses the
-URB; with v4 every descriptor is 192 bytes and the stream runs.
-
-Thanks,
-Sinan
+ sound/usb/usx2y/usbusx2yaudio.c | 43 +++++++++++++++++++++++++++++++++++++=
++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
