@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.140
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.92
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793811362;
-	b=XpZkTpFI02M5gQQGnJ7xouJnca19BdhorpPqj8AKmA9CpCA8ryYV3MXss01oXlNqAwSQ
-	 2AJRaFJjWYzkN39baiDyMWawqSJi3gEFtYZJdyzMuGjd7SkqC4oxfjToa/geMSpzYDGUl
-	 D+NJsi3AKxQelU+B7biDQSkFj4Kfwmfe53IRauUu9rsDk5wsTNu9vqgZtXb/+e+ogi/LX
-	 EGpoMONY9YQznsY4RqoERQtWoOSyRGkLorf1x6NcVXKYUQtbIhM7YRXYiQONlEamkMCQI
-	 TQ1xuUdj6GTrXie5ArvZZ99YtAj1k6qQ3j1PBWueqdM8yT+NEC5m+6pMGAbweEtLAtQ==
+	t=1793811423;
+	b=u8iLN8oVsCTPAfyJ068h56pkAXx2pcfOtXrp/EpKfMLzAefg3kKvpfC+iqV3cnH+B234
+	 Eu/cY9T0McDHISFj757Aqg38AHpf76dlp9sTEJBqUoH1qfGYiYxgRu3gmlP+5idVePic2
+	 l6s8+VrRKgy6SOIEdDel6RajSWO3qMkBuISGQQe/eGAi7gSfOSf5yECKoakcKkxn06oFO
+	 hDhGcmOjC0NFxIlLdOZf/goH6DuMrmIm6Y81xLEAFfqJ+pUpMYrKIVhfGOsTcgKIkwPY0
+	 XOwQis7V1SC0523awRX9lKcSV1FQMr6JGkdeFBfUbeRv/zl2VwtFZQJ/8WjlC/042ug==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793811362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793811423;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
@@ -24,71 +24,72 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=aiPVd5nraXEtQ4S3a1xfiW+Z2T72UsVSn91p6k1uNT0=;
-	b=L6JO2eTG6LVB6TWK5Y0EUtQoG5WNK5nP0LzMjS884t3+7Z4vNjWpKlUUlBztSx102pDX
-	 UNVmjcPboYZKGeDLur5sgvLqjTc2nRpO84tqamebJLp3wzOH0NR9EOgmCLoj/AlJ5vERQ
-	 E591R8IGoqDegT1axyPrJXwUgxwD+06d1L6/Q2nyYGSv07+WjCY6kwA2i5OMDUbH0BJ5s
-	 QxdvfCPE+UdpNDEXdHMcPAkUmDBKfn/eeyhJnn7UIn/45IM8Ea0eA9HgpJ5YhkjFRUhiM
-	 z/iDHqioxn1yAoCsIBoFJwOEUcHxg/UUjpQXM+D/+nWFwBqzuxW0gr2Ao38//x93BtA==
+	bh=zp5NOqgLPhQYOmzP6/lTOtehqFXh1jWUd8b9Dyowwzg=;
+	b=DzRAdgTXPyCPdWTxTupcfYGdnCwOtWuwFifAk1RGxTzqE/WCVi5VPJ+wefLuOY9RLrbY
+	 Qux2Izxqm5HhMtoY3calPe6W54DM+BWFkAcQXsRGI1pD24fUJrn+pgZt5qE7Zb6UWRhes
+	 hr01iF4ZadNXYBKGo5Sma34Byvl/6fzYKYLRyedtBcwq0eMwf+wsCsGvMxRJ/7I+KYSJY
+	 Ilt0yKVRWOn9F2K7d1sKhTgYH1yo2tXyEbAJqphcpK5nsilQvFiRUSnoO0LOzJHLMXBn+
+	 z24nzrYCpvLKQKGPGaA5+YIZgPMD5wkdCrlEqFwx5VyU9D3jg94UP9/Nf9KqnF3a+7Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=phytec.de;
 	spf=pass smtp.mailfrom=phytec.de;
-	dkim=pass header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b="S/TgF/Ye";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.140
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11023140.outbound.protection.outlook.com [40.107.162.140])
+	dkim=pass header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b="E2/G4xW5";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.92
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11021092.outbound.protection.outlook.com [52.101.65.92])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30AB606A331;
-	Wed,  4 Nov 2026 16:56:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C30AB606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FA0606D815;
+	Wed,  4 Nov 2026 16:57:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4FA0606D815
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=phytec.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=phytec.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b=S/TgF/Ye
+	dkim=pass (2048-bit key, unprotected) header.d=phytec.de header.i=@phytec.de header.a=rsa-sha256 header.s=selector2 header.b=E2/G4xW5
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=A33SUZBwhH0yXTc+a/iUrnURdvDiHoXIa7gg9mqdsh7R2HaPSgqSkkOzclwTeTs1VaC7tDYeBSoKcOQIhgo6V3cT0vDcFEyNMzNVOArGGDudTnkqzCLKL3MM9EssQRgfJM+uT8DWxtWflxcj8+91mAGstScAdA6PaXn1b4DTKGWQNCHwEJS47ygpDD8FPwhsM3I8LCap+xbxO6idC9ZI8dtKEiYWnpSJagGd5r235iWuRWxdaA2zP955O8F05oIhfYavGfYtYN7ypOBApWRtrcNWDIYxp1Nc7Xnoqkwq/ijRM5oogSCAouwVE/j23uBxt2mukyRzCp8ayc2MZDlSKg==
+ b=EQzcfmw5MiSZqzcn5cMEhCWzqNQhUoH/+BUDNJGAXVF4jqtr0rImEf0/MlKpp970MI6ug34+IJ4Ned17QL0MT22/teIEXd1JBAc6GYAdyq/OxuIhu1g5mOcgcBBtUY0WoO6EAUV5nd3tUi8FI4cv2RajOG6h6hrBYTLUIzTGEbP68YdFvdJeLCUjWN02JjAWomnb1osNFg1Sdcwbkiyf9VaS0/wwXokERIO3isN2TanbKXNyBbd7pJ0uNHjt/4fOgC66jwaKEWDCfqLdccg6yKyZ+sy1IzihdTEUQV8hSVtzIC34CVV8uYZ62VPEIE1sSPItXxtZNBOxTENvwg3hGg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aiPVd5nraXEtQ4S3a1xfiW+Z2T72UsVSn91p6k1uNT0=;
- b=Helw5bN16tMpNxprtrWzDD1T8StK13/MNloGPx6VVQBvvLqe8NFaFD3XUP6nnFJOtmw05cZNOHmTq37OiJbUG9zxbotirWEjfvjDWiLnXfVrd/LXcn4HpdOwjBhNODdbXZaMrW0blD2tPcWuIXrSyz1+E79AujC525jTjnABCpEj1CgZM/0/k4iUz6lDXAGnwu7cbXd/K8nSeqYCRUVqgMTGdByN0NP2zVlyGiiCJIsfLcO4BdMId3V89RE2DSZzakIUws/HKvEpJsnOVyhQzl7WDhORSqneo+kpDoOxBHTaLFC8pBFTQ/APPMR/CoQFhHl8b9qDBH6gaoRR/CClKg==
+ bh=zp5NOqgLPhQYOmzP6/lTOtehqFXh1jWUd8b9Dyowwzg=;
+ b=IdPC7+HZPqWNUiag2+XpTQm5qhi8UsaRLVkp7PUt7n7drirpPnTNtkQOPPmdXkmzNvH+gWkVywurIwu83EQQ0nECwJNtwCjzhDQaHVAxb2VSVapc8kpjEX+3LL7OfwkGDRJWQWEUC32xQOfdqj561Bil+krBKPG5d7lRHsi/QAUhyvxG/i0Nc352S29mIrSc5rlc9MWD3jmV783PyiV/ynozrBtAmCCefMBW8ZYtmmxioso1M5ja9Y3yHozz30Nbb5EgTPBwSoC6sR0Iuooi6HAiny1yNwliBe+EljnChhUG2rpSgrLnLSlUlUMk/UflgH/kac93rQh2mJzBtVcHiA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=phytec.de; dmarc=pass action=none header.from=phytec.de;
  dkim=pass header.d=phytec.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phytec.de;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aiPVd5nraXEtQ4S3a1xfiW+Z2T72UsVSn91p6k1uNT0=;
- b=S/TgF/YegqOPrf7EcqB3SEBCL/xUSx2jcxJRV2MNrEzELUyWoT6YOivhl1J5WFGSOi59j+yb33ekpsNcgKeu+aW6BRGITi57lL1PUb0QlSBejt7QSEf4vdzfOKC4eva4d8pyVBOprh/3tZJ2p5KMyC5gSI5dqN5vQqbrW5t2Z2gv1ULOSZMCw2BB4U1svlCF5INVSNmNYKI8l4ZsUEYVoV4xB3yxsOJGrIY8JiOaadpYgLqxsFkxI8UQQQ85G/32dZaZKINb/gqMVePiTriozzLc1sHZA2EpppYZ1yOkOBa5agdFs8ZDNKEc14/jntrdN2aqO/YKThdA3grRz93oIw==
+ bh=zp5NOqgLPhQYOmzP6/lTOtehqFXh1jWUd8b9Dyowwzg=;
+ b=E2/G4xW5CL6TYMOpNGN6S1A2/D/lxPL7au9KgZxwcVLuDkCeDLcKxrkdcgtuck/H2NtkdQcyyE7o/7Vm/jYcdf8ownsqsRX/R3ze5uzQ6uZyIiuoMLxlVr2Dh/0ZJHW6nztU+pzipCvb3uQiZ4s0Lgg2DTn0d6g0DqTWalDRYajZ2P9ht+0Bu1Ztsenzie3Aimgi9Vn4lV2Gr5mE/1knyvBZAJUYIg4ISnFk936EbTsvhk0ek1DLIzLcNCyZ8YPenQe4pWQFiC5zlo/cuDImIqbRhv2XIK8m+nLB+LUDExASHKvAekM8G5IUFsRMdRyNTvY8UP0eobifFRSOUXwjHw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=phytec.de;
 Received: from VI1P195MB0623.EURP195.PROD.OUTLOOK.COM (2603:10a6:800:159::10)
- by PA1P195MB2539.EURP195.PROD.OUTLOOK.COM (2603:10a6:102:460::9) with
+ by DB9P195MB1730.EURP195.PROD.OUTLOOK.COM (2603:10a6:10:399::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Wed, 4 Nov 2026
- 16:55:57 +0000
+ 16:56:58 +0000
 Received: from VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
  ([fe80::2f8:67bc:a785:6894]) by VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
  ([fe80::2f8:67bc:a785:6894%7]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 16:55:57 +0000
-Message-ID: <29ede6dd-cf0f-423d-aef6-ceee0303ceff@phytec.de>
-Date: Wed, 4 Nov 2026 17:55:56 +0100
+ 16:56:52 +0000
+Message-ID: <cb8f678b-a173-4831-8d89-abed7b4497f2@phytec.de>
+Date: Wed, 4 Nov 2026 17:56:51 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] dts: imx95-phyflex-libra-rdk: Add overlays
+Subject: Re: [PATCH 5/5] bindings: remove unused binding from old Libra
+ version
 To: sashiko-reviews@lists.linux.dev
 Cc: devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
  conor+dt@kernel.org, Frank.Li@kernel.org
 References: <20261030-wip-bhahn-imx95_upstreaming-v1-0-1c1cebb5be99@phytec.de>
- <20261030-wip-bhahn-imx95_upstreaming-v1-3-1c1cebb5be99@phytec.de>
- <sashiko-outbox-191079@kernel.org>
+ <20261030-wip-bhahn-imx95_upstreaming-v1-5-1c1cebb5be99@phytec.de>
+ <sashiko-outbox-191081@kernel.org>
 Content-Language: en-US
 From: Benjamin Hahn <B.Hahn@phytec.de>
-In-Reply-To: <sashiko-outbox-191079@kernel.org>
+In-Reply-To: <sashiko-outbox-191081@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR2P281CA0042.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:92::15) To VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR2P281CA0046.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:92::20) To VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
  (2603:10a6:800:159::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -100,144 +101,132 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI1P195MB0623:EE_|PA1P195MB2539:EE_
-X-MS-Office365-Filtering-Correlation-Id: 84659cc7-c509-41a0-84a8-08df3a947f58
+X-MS-TrafficTypeDiagnostic: VI1P195MB0623:EE_|DB9P195MB1730:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2a3c6949-2610-4a7d-47ba-08df3a94a037
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|261028144727099003|261022105027099003|11063799006|4143699003|56012099006|261009223027099003|261021121427099003|261026140227099003|261102123227099003|261026121527099003|10067099003|22082099003|18002099003|6133799003;
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|261022105027099003|4143699003|11063799006|56012099006|261021121427099003|261009223027099003|261102123227099003|261028144727099003|261026140227099003|261026121527099003|10067099003|18002099003|22082099003|6133799003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	sIxiHob8mczvr1JTs2DYv8V1fB35zjEqJBrOBGs2vCtlOp8L8gCoxBpte0iH/1EnlskC+LqShN4dZgrYh9FB6+cFNgH+cLmiWnj15n502QW580PlJLCFXa+CgYcX8a9FL5RGMlJ19zf16kcf/BeUqEhZ4umtynidAL+a1r+9+Skk7FRmjyZV0WREIf/u2ybHlraabCcwSs1vd+MTsO3qBWipM1SyxNh9lg/JUWjQGWjdsODNj1qCf7+9sQhsJC2bwWVP23eHgj02iT62H5SqgcayezgdW0law7pd0hoszrSK4ji2PZ17rfEwP6Y5wsQt1O8cR6T62HbURalkrLECEbHS3/8cAgKUcReZkWQ6b4iIODZW6slsHFg+TW9TL34lBLujLtMhfzJGiBIWIPuKQqzRcBzZfgymhHzh86XigAH2RnXkJAzTV+e7udnWs1RX+SWSvdYGs1wQ/N5U8u158XPUvp8Xl43dySZ/Mddrcu5a5e26mNAw0YdW4gdzf3mvPF+Iu+MrjKd0t+SVHQGpN3ji/s13dQ0ejP2av9kNPP7jHeKV8SHcuP4v5eGKJJD7qsvtGkZncu5ufA5+moZ3nPXF7f6MVg0prDrPu/QyNjJR/5EC3h5BwXQz68XJwN4hiH4aYJwg+atkK46qSacxgOj2L1XAr1T+HDQKQVEdOh4=
+	omuslpNiNTSsCkzLQ0W5NyXkqOKQVQgc9ytCGjVEd0hFHgb+QnIwNqXQm84ZLD+ZqLV3HTrymjhVE3WrDFVCaIwMmZMXAf1FMPUPG8Rv5xgDn+pL/abP4JbuKeMa1U7iHG1QecSO04+ajHGE8OUZYBFJKaj9wTH330uGZMjbtVAAw8oqWNNz8JL5t9/ECzkmbK+c5aJmXLX1P/UKXeqnLk2PscVS6R4REKbQoYfE9AiC5GmYQTmetUIKqDVyI1y6+d2zOaXZtCuC7El72bTURJYsAicfY6O0lQ9NWygz7e9BetVrSsWBZOguHtfaEMJl/89MZkENSIRnLLkh2RL8Hnf9U2okWe7zVNcMc9w5dMSiC9Gxs0qYFeYj9MIn5LzPWgNpCKAzqzBM7cOR5/kSPBPjgZVV7yCuUSBw5UZ7d9NRDBldM6fguRv9/jvO4y6nnnl8TAuz4npHyzb3da03ft9SMLS2cn7VzFQG3kdiRpj6jiw2vxJS58o741asEOB34iujqkGKxlg4qAyeCJNGPU4xnE9ORCeohTlcpSkWgsB7p0g4MEhQcrQW+/mrBR9aoZw0HbwpqTkz1pFjuK/jAzknNFZXx1sxFOWtEo/EBvT5KG3yfYnpTkck8Qyaj1D5nP6U/Q1CfudOpbkBw0N4IFGojDESV7k2eW4O/16APUc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1P195MB0623.EURP195.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(261028144727099003)(261022105027099003)(11063799006)(4143699003)(56012099006)(261009223027099003)(261021121427099003)(261026140227099003)(261102123227099003)(261026121527099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1P195MB0623.EURP195.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(261022105027099003)(4143699003)(11063799006)(56012099006)(261021121427099003)(261009223027099003)(261102123227099003)(261028144727099003)(261026140227099003)(261026121527099003)(10067099003)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NThlNnhmS0ZydkxyMDlXMHN6WFBqV0ZXYXpyUEU1RTFYS1NTSGtpRUN2emMy?=
- =?utf-8?B?dXNZTVF1bTFSVGF3cE9BNHRpZS9RTzFBOTlIQzhWclNiUkQ5SDN1MEhIcGQ0?=
- =?utf-8?B?ejdibzRmeVMrRXl0YWcvUkNmWUhhb0ZwU3h1bCt2YU9WSnhRTWRYOEpzd0dF?=
- =?utf-8?B?ZzIwODlKY093azgzT2FDbEV5TVJVNStsRmpzSExsYXZYb2o0bXp5SGhoRmJt?=
- =?utf-8?B?MDhTMDY5SWNzeEZsSTBUMU5Jbkgxb0t2WGVJSnNzM1RRY3B6U1ZVcmhYWjZN?=
- =?utf-8?B?ajMvYlp0T3EyRVo5aVRzalF1TFlzWnNDR1BTU1pKbzdvckMrcjd0TkxjUGlt?=
- =?utf-8?B?ZUY0RzJTRXI5RmFHMXA4T1hJT3hTRGVlK1lSR2FKV1hPU28zT1MwQkw2amd1?=
- =?utf-8?B?MnI3VTByUzBmNW9vR2RESEdadGZCNGw5TlNrL0FpTnRzYS9HcnhnOTRMdnpa?=
- =?utf-8?B?NGNlQ0lPZ2JNSS9oUWR3UDQxSUxYOS9lNGduTGtISDdYandXMWJ6LzY4MzNK?=
- =?utf-8?B?YUw1bmsrMHlOL1BuK2dVYTB5NnBZNVN1dHVQTEQza2hiZkVOTzJnUG9BUGl0?=
- =?utf-8?B?dkJha1ZhekNlTDFGRUsyM2tUbjM0bjJrNTJDM3R4L2dKZDZNOEM1NnFudzE0?=
- =?utf-8?B?R2VhUFRIT3FIM3FXU3hYc2NUTTVUYi9VSDBqelRHeEJBVnQ4aHRraitYZHZm?=
- =?utf-8?B?VFRzY2RLalZ4cWRMM0hROXRzNVh0N1JqenZEYmh0RzRkcG1zL1Vqc0pwYlIy?=
- =?utf-8?B?eW4xWXE3ZnhlU2w1dTRGU3RyNG44M2pwTTlPcU93K1JTWWRTYzNWVnhBTkRl?=
- =?utf-8?B?SU9OU2VZMUZVV2FZK0ttQU9pQWNzNjVvWlNUODRRRFlUQS9PWDY3NGlxcGNu?=
- =?utf-8?B?RlpzbDNYbkpZcm4zUXNzMk55L0F1Sy8zdjc3Z2ljMzlHdmVwSklyTUFzR0dS?=
- =?utf-8?B?SW0vRXpNYWdGbEZ4cjNDSEhZM1NROHZ0V2JUVFd5am5nN25JS3lUYUxzQjhv?=
- =?utf-8?B?ZGhFRFVlNE45UHg2RVI0dE5HMUFQOXdjQ2FYVU9hT01ualUydkduQ2MrQ0RN?=
- =?utf-8?B?S2dncGZabE8vajVBMUYzWkNROFp2d0NCUk9nUWRRSUUzVkhGMHNPcE5jYk1h?=
- =?utf-8?B?OUEybEZjRUw3QnNrZDlDaVFjQTM5YkVqMEtIc3NzNWZPcE82T3NHc0FpTFY0?=
- =?utf-8?B?NDdxU1lnY2RyN0ZJVXAvR0s1YjZuTmxSY2JJNzJCZGxvN3FPN1FGeEVFTHR0?=
- =?utf-8?B?c21GWEN1TE8rZEhBeUUzejB2VHFWWGRlYThacW9BbTk3UTE5cW9MdXdxdVZB?=
- =?utf-8?B?L05nU2Y3NWJTK3VINUp1Qjh2NE41bTd4ZldNMVRxeit6SWMwdEFUckhRMDRq?=
- =?utf-8?B?NFBVbkhKcWhWQnNvdlpNSExaNHpOcnFOV0dIbWJQdDdCQjc1aS9wUk5ZbmNt?=
- =?utf-8?B?L1pwSjZtY2dCZ1laU1lpVlkwT1ppbUdLQjM2TWh6T0RYeUZ2Y05MdHpYVXhC?=
- =?utf-8?B?dHBVTk5KeGc4VGt4R1Y3Q1NwR1pJeGVDTld2V3pva0sxdWkvMit5WU9RTzdu?=
- =?utf-8?B?c3U0bUsxVkZ6cm9yT0NmVk03SE9qeTZ3QWExZkFyY3BoWXNhbUMwaEY3VU9J?=
- =?utf-8?B?QmNTRjAxR2pTSE8wMWlSSkUxcGhhM3o0K3N5WmtLMmcybXp5QkFPVVloZkJL?=
- =?utf-8?B?R1l1KzdHMzBNdFBZc0Q4MHhJaWdtNkduSlpYdTNVTmhYRmVLU0RpME1KbUwx?=
- =?utf-8?B?MHdhSkhQZXBmSkR4WFpRNEZmZ0NDdHBYUWFFUFR2NU5FV0lIZHBpL1ZkQm41?=
- =?utf-8?B?eFJ3NUQrZjA4SXZaam9DR0UwdXlXa1E1OG5hZ0tueEFDYVFGZkdBQ0lwTXF1?=
- =?utf-8?B?bGMrNzVoVkQ3Q3B1UnpSMjhZVUxyR3VoendwVGdPS2RVSFRIN1d2bjVUeTB2?=
- =?utf-8?B?aXpzSFlCRzFBNDJ3QTM2ZkRDVlBIL0lnYmx3TnJNcDV2TG1tZFRPR291NGpQ?=
- =?utf-8?B?N0VRcWFmcEhWZ2lXaGJGMDVUSmlNWkVMSFhUT1RVSmthQVZ1WjR1RDVZZk8z?=
- =?utf-8?B?ZURweCt4NXZBKzRJaStLQzliVkpDSnNWd3VKdnpGL2RXOVIvWTB2U29GUDla?=
- =?utf-8?B?QVhzVDJrK3ZoN3BZNEJ1Wkh2V3MxQWFDSXNBd0ZtT3NHTENNMGQ2N0JCY0Vn?=
- =?utf-8?B?WjFYZk5EYVFoNGplTmVhUFpHNWJPemNPejFnQzc3THNYZFlRSkZUQ0RlRk42?=
- =?utf-8?B?V0dKMXVwZ3lBNU0wREZJK21ycENxazhUQU9VUUE3T0JwUHhpcnpuYndlSVI3?=
- =?utf-8?Q?0O2MZbKO+9iNf0nI8n?=
+	=?utf-8?B?cWNUR2t3UW1kZElTMGg4RU9OVFpHQTVTSjJwVTd3dHp2YmpralVlUmdYcmxT?=
+ =?utf-8?B?MVJXS1JvZFVDb2NyYjBydTcxTXhDQ1dnK1JwYUFneUQvSk5nYzI5YzFhNFBM?=
+ =?utf-8?B?SnRGY1pFOXBUWkJlMUE0K2MrbFA0c3dyS1dXT1N2T0NDQXlYK2t3emZ3Vmd5?=
+ =?utf-8?B?dmhtdkZxSGc5UzhhcWFTemNGTEFXd1NadFNCYm53MXNoNmI2aGdBM0FDT0xv?=
+ =?utf-8?B?ZkVkWjVrdlFHSjVWZy9aVURYRFhnOUlvaitaRUxDdk1iWm16THNEVzFUUTcr?=
+ =?utf-8?B?dkY2cTZyUWJHaXd2aUNWc2tqMkRPQXRZZGlORytFdkNzZHNJUTdTbjVvcDRB?=
+ =?utf-8?B?Ty9PWjRTRk4zcGxzZCtSZHhsdTA1ZkQvY0RNYkxRVklDQndiMW15QngvUEdW?=
+ =?utf-8?B?VGtWak5ZeTdleEJGdlVJbnFmWlRJQXdocmFFZDRpcDhnaDZCblVJZ2hEdzNy?=
+ =?utf-8?B?VG9KTVZOOEZlbDhlL1kvQkVveWxDTFhJaGIzbHoreHpHbEtSY1BnUVJMamg5?=
+ =?utf-8?B?bWxxa0thVVFhWVp5eUlMZEhZWjlxcDBKZ1NRRGQ4NVpoMzkvSnRZb0hJelBH?=
+ =?utf-8?B?dmVJQk1NUVgvZmZOVks4OHZhZlJ4OVI4REFuVFZzNTUzWUh3azM0dkFROEZx?=
+ =?utf-8?B?cDJxaWlwU3p5UjdCam5BQyt5SnUyMTRMOG9zbHdCRVJ4L0I4SkZDdTEzdk95?=
+ =?utf-8?B?Y1RHa0pkVkJSbVJCQ1lQZSsxTXpEandmWU9JNmFhL3lKYTcxWFdKTHRkNXJY?=
+ =?utf-8?B?SU5zSmhET01ONXJoMUtKdHg1c3lkakVXSlRvYkovQjZlSTE3TzgwZVJST1ds?=
+ =?utf-8?B?d3ZpeU5HN29oU0x3eGVrTkFHTU1WMktyeGZ6aUpveHNsTUVTV3R1eTB6MzJV?=
+ =?utf-8?B?NmY3WGdnTHpybkgranlkK1dtTHRnZ1hxRzNRZkdNREorY3RxUys5MFJCcHN1?=
+ =?utf-8?B?MW1JOHFOR0lCVS84djBvdzhxbmd0RzEwQVlvZUJqa3ZKbHc4bnhBeE00ZW5Q?=
+ =?utf-8?B?cFNXUEFzMktacUk0K1JFQ1dtcytIUm1CRGNZYjVkQTFmY290ZTZoVjhJaEk3?=
+ =?utf-8?B?UHpqaE92MTFMcHZ3dEJocmdMcTBsV3NyZlVBSzdnT2tpLzk2MHJyd1pNVms2?=
+ =?utf-8?B?eHdZRUpIWU5mc2xjdklUcElpUG56ckd6SEtraHNBV1JBUStkait4TU9RbnFL?=
+ =?utf-8?B?SFFkdVJiSzhpeVhPQVBxYmlVWnlUT0I1Z05qaDRibC9maUFDZitIUFZpTHVR?=
+ =?utf-8?B?K1A4cWt4RitBRW14Y1FMbTZKQkFINytNdnFreU8rTHdYR1dtRGl4T2Jza2Jm?=
+ =?utf-8?B?R2JEQ0d0MVBQOVl6dnh3YnRXYWxLWVVkNjVlZGhveXVXS3lNSkpLdVcrY0hP?=
+ =?utf-8?B?dmVQWnVVa3J1eE5XeHFoY0RDUXBNeE8rMVlqazBmRVFreXlldzBncG9KcHZ1?=
+ =?utf-8?B?WitTcm5hZ3ZKeUtuWHF0WDZ4ZkhVM084OGI0TS92R3RSaGVobXY3a2RPTFky?=
+ =?utf-8?B?TXJucXdNK1piSVhPWWs1OEFqODl0VElKZFNnU21qeXlVUWlNZUhYOTFRVFN5?=
+ =?utf-8?B?aXI2d0hDSmJPeGo3ZmZuY2pXVXAxa3IxZzJtWEhEbUdPVXJPWEtRUUJRRWxw?=
+ =?utf-8?B?Mms3TjAzK1FMNVUzTE9rSEp5NU5DbkY0aS8rNW5HY2FDMHhuMk9ST0syRDFL?=
+ =?utf-8?B?MjFDdXZHV2lxYk5LSFdvSHRUUHlsbGdPZE5DT2xMR2pLWk9CZWVNVS9VUjFM?=
+ =?utf-8?B?V2prVXRIV3dOUVkrM0ZNTXZid3pOUEsrSGhGMSt0THh1KzJvY2c3cGpBa21I?=
+ =?utf-8?B?aHBTRzg1Qmp1QW5BT1E3WTdXRk5zcmY1ODR0MmxMa0FidFpiVE1HSCtiNkFL?=
+ =?utf-8?B?UXNxVjQwdXJZUTAzZE45d3VpS3AzbVk1TldIWnAxSUlDelYvTTl6K0o2S1FO?=
+ =?utf-8?B?aHRVN2RrOE1xczFWWXk3UnBhaUY2eFFDL1g0OHJ2TXg4SFNpZitobnduRXhE?=
+ =?utf-8?B?WEdmVDl2ejcveFVjMU81Zk9yZzZrNFlPc3Uwd0F2TzFkMzlXeFdzQ3d5Um05?=
+ =?utf-8?B?TkpuUXR4d2h2bFpzeDMveW9GdUV4SWVQZnh6eWNOd2gweFJianhyN2EreHNK?=
+ =?utf-8?B?OGRrK3lCQm5WdE03bDBtak1LRXNIaHdLc2o0S0hsWXE1TXkwa0hMNy9TME9Q?=
+ =?utf-8?B?bEs0eElQSENIQnNucEVWejdKRUcyL1g1bGxqR2dTc3hjYmZEd0d5WXFTaVRt?=
+ =?utf-8?B?b0dMOW5rTmkrOTJxaGFFd1ZDVGswQ2cwZXhTYVk5SStTcEl0U2FUdUlVc2Nz?=
+ =?utf-8?Q?Vr5FWvP/nL9AJu0rFY?=
 X-OriginatorOrg: phytec.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 84659cc7-c509-41a0-84a8-08df3a947f58
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2a3c6949-2610-4a7d-47ba-08df3a94a037
 X-MS-Exchange-CrossTenant-AuthSource: VI1P195MB0623.EURP195.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 16:55:57.6940
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 16:56:52.8504
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e609157c-80e2-446d-9be3-9c99c2399d29
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DN0FT0XTpLEbDv/XWiZiOPhaBDGfaekxFLHqHmfL4+SfQPT3ym7zEQsyvx6KrIJKK4OKVujEyoPDGt0UgBUtMg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1P195MB2539
+X-MS-Exchange-CrossTenant-UserPrincipalName: LVfVOQIY93BYykugsrZJAD6j3N/s9nRUqaGPryGt1A3WtwHlY14ZHvJAU55Yk48qrypgo/T3w3W84gztT62fnw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9P195MB1730
 
-Am 30.10.26 um 14:44 schrieb sashiko-bot@kernel.org:
+Am 30.10.26 um 14:47 schrieb sashiko-bot@kernel.org:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] arm64: dts: imx95-phyflex-libra-rdk: missing OF graph link for M.2 BT pwrseq
+> - [Medium] dt-bindings: arm: fsl: missing ABI removal rationale in commit message
 > --
 
-LPUART8 is also used for RS232/RS485 on  the Libra board and can be 
-switched with UART1_BT_RS_SEL. When the port is specified here, it will 
-not be exposed as /dev/ttyLP1, which will lead to RS232 and RS485 not 
-beeing usable anymore. That is why the ports are not specified.
+Will update commit description with more detailed description for v2.
 
 Benjamin
 
 >
-> commit 214248ffcd9454f4e28fccad2971f5e7db77d114
+> commit 59deabe3729dc9f9716dfd3c6cfdb69f11310abd
 > Author: Benjamin Hahn <B.Hahn@phytec.de>
 >
-> dts: imx95-phyflex-libra-rdk: Add overlays
+> bindings: remove unused binding from old Libra version
 >
-> This commit adds devicetree overlays for the SoM temperature sensors and
-> for M.2 Key-E Wi-Fi/Bluetooth cards using the nxp,88w8987-bt compatible on
-> imx95-phyflex-libra-rdk.
+> This commit removes the PHYTEC i.MX 95 FPSC board and SoM compatible entries
+> from the Freescale/NXP arm devicetree binding schema.
 >
->> diff --git a/arch/arm64/boot/dts/freescale/imx95-phyflex-libra-rdk-bluetooth-88w8987.dtso b/arch/arm64/boot/dts/freescale/imx95-phyflex-libra-rdk-bluetooth-88w8987.dtso
->> new file mode 100644
->> index 0000000000000..1601e04b3940f
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/freescale/imx95-phyflex-libra-rdk-bluetooth-88w8987.dtso
->> @@ -0,0 +1,24 @@
->> +// SPDX-License-Identifier: (GPL-2.0-or-later OR MIT)
->> +/*
->> + * Copyright (C) 2026 PHYTEC Messtechnik GmbH
->> + */
->> +/dts-v1/;
->> +/plugin/;
->> +
->> +#include <dt-bindings/gpio/gpio.h>
->> +
->> +&lpuart8 {
->> +	bluetooth {
->> +		compatible = "nxp,88w8987-bt";
->> +		fw-init-baudrate = <115200>;
->> +	};
->> +};
+>>      bindings: remove unused binding from old Libra version
+>>      
+>>      Remove unused devicetree binding from old Libra board version.
+>>      
+>>      Signed-off-by: Benjamin Hahn <B.Hahn@phytec.de>
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/fsl.yaml b/Documentation/devicetree/bindings/arm/fsl.yaml
+>> index f917ae7202e96..dec6e22719b5d 100644
+>> --- a/Documentation/devicetree/bindings/arm/fsl.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/fsl.yaml
+>> @@ -1544,13 +1544,6 @@ properties:
+>>                 - fsl,imx952-evk            # i.MX952 EVK Board
+>>             - const: fsl,imx952
+>>   
+>> -      - description: PHYTEC i.MX 95 FPSC based Boards
+>> -        items:
+>> -          - enum:
+>> -              - phytec,imx95-libra-rdk-fpsc   # Libra-i.MX 95 FPSC
+>> -          - const: phytec,imx95-phycore-fpsc  # phyCORE-i.MX 95 FPSC
+>> -          - const: fsl,imx95
+>> -
+>>         - description: PHYTEC phyFLEX-i.MX95 FPSC-Gamma SoM based boards
+>>           items:
+>>             - enum:
 > [Severity: Medium]
-> Does lpuart8 also need an OF graph link to the m2-key-e-connector node so
-> that the M.2 Key-E Bluetooth power sequencer can deassert w-disable2-gpios?
+> This isn't a bug in the schema syntax, but since devicetree bindings form an
+> external ABI (Documentation/devicetree/bindings/ABI.rst and
+> Documentation/devicetree/bindings/submitting-patches.rst section I.9), is
+> being unused in the kernel tree sufficient justification on its own for
+> removing phytec,imx95-libra-rdk-fpsc and phytec,imx95-phycore-fpsc from
+> properties.compatible in Documentation/devicetree/bindings/arm/fsl.yaml?
 >
-> In arch/arm64/boot/dts/freescale/imx95-phyflex-libra-rdk.dts, the base
-> board defines the M.2 connector without OF graph ports:
+> The current commit message only restates the subject line without explaining
+> why breaking or removing this binding ABI is acceptable. In the companion DTS
+> commits 4a096b093cf5 ("dts: imx95-libra-rdk-fpsc: remove devicetree for old
+> Libra") and 01cb871eca78, it is explained that the old baseboard (1618.0) and
+> SoM (1620.1) were alpha-only hardware based on i.MX95 silicon revision A1 that
+> are no longer available, built, or supported, and have been superseded by
+> hardware revisions 1618.2 and 1620.3 using phytec,imx95-phyflex-libra-rdk and
+> phytec,imx95-phyflex-fpsc-g.
 >
-> 	m2-key-e-connector {
-> 		compatible = "pcie-m2-e-connector";
-> 		...
-> 		w-disable1-gpios = <&gpio_expander1 9 GPIO_ACTIVE_LOW>;
-> 		w-disable2-gpios = <&gpio_expander1 10 GPIO_ACTIVE_LOW>;
-> 	};
->
-> When CONFIG_POWER_SEQUENCING_PCIE_M2 is enabled, pwrseq_pcie_m2_probe() in
-> drivers/power/sequencing/pwrseq-pcie-m2.c requests w-disable2-gpios with
-> GPIOD_OUT_HIGH, asserting the active-low W_nDISABLE2 signal:
->
-> 	ctx->w_disable2_gpio = devm_gpiod_get_optional(dev, "w-disable2",
-> 						       GPIOD_OUT_HIGH);
->
-> When nxp_serdev_probe() in drivers/bluetooth/btnxpuart.c probes the
-> bluetooth child node under lpuart8, it checks for the M.2 connector via OF
-> graph endpoints before acquiring and enabling the uart power sequencer
-> target:
->
-> 	if (nxp_m2_connector_is_available(&serdev->ctrl->dev)) {
-> 		struct pwrseq_desc *pwrseq;
->
-> 		pwrseq = pwrseq_get(&serdev->ctrl->dev, "uart");
->
-> Without OF graph endpoints connecting lpuart8 and port@3 of
-> m2-key-e-connector, nxp_m2_connector_is_available() returns false, the uart
-> pwrseq target is never enabled, and w-disable2-gpios remains asserted.
+> Because devicetree binding patches and DTS patches are often reviewed and
+> applied through separate trees, could the commit message be expanded to
+> include this hardware rationale, mention both the i.MX95 SoC family context
+> (as fsl.yaml also documents phytec,imx8mp-libra-rdk-fpsc) and the removed
+> phytec,imx95-phycore-fpsc SoM compatible, and use the standard
+> "dt-bindings: arm: fsl:" subject prefix?
 >
