@@ -1,75 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.69
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793823647;
-	b=znA60mH7WJhjDIGH4Rz5mOYaS0itb86M5YxnDNsWFvG+1A1GC/ltRu9aT5HojofnYzzI
-	 DcLOalP+dzZruucH+OWJUUqFdmzGTtvbDBntybJEZDuJZl3RoqrrQsvmxXObYTYB6uOEY
-	 RGeSyGXuiWtlIT9MyVFUxcOO/xCODq8eMuyWMTd6jAE7LDQSramwYdot134tR/AuudPDC
-	 ojbSvWHdi71GxSlbaOHym2KZ90QilPqg/sxjGNWlh611EvDZWRa75k2oPm0EbMZAjzLTt
-	 dwf3rRTh3+dQIc5GYLgcTCcATTr5woaJ6muRRuHCEIdagEhtD1IjuF1AayIzoKFDJBw==
+	t=1793825414;
+	b=5OeuUtfc7FJbdCIb/Dv6rxKTZcdGC1Bsb4GtKlmf+OiVCrKrZv81YdNn4w1xgth3jehu
+	 6Gx6pa9ngEybBJmhtA9wUnirhnFV1OoMmIILBezu0MJTqNTzmn4FLFnxE+SlZqz12Ogyk
+	 Qxu2OfL95iRssGl0WmpPr05gDVP8PMc7RXu7DoWUWNY/767HvV9ThBU8YN7AzChHiAQyK
+	 50UKxT66OH5ToF8xKQdzICqbULZURzeKAq2N0bnRpZh30ObwKuEO2xTMev+8HqehCgTwX
+	 5qR+SDUTjTDwwRPY0O/Z2JjNlCTEDVTrOzgBznTBmkGkY4fBGtPSshgM5kHRte2EAHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793823647;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:Message-ID:Subject:From:To:Cc:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=YBF8x8sJdLXwce+ZD1baPxrZukLcOjCkutFhGRoX8Ps=;
-	b=bSZ05d3jxdcIS6bcjQn9BLd8twmaOBxRblH5NQybedZm1SlnfS+gabs5GStn3yzVP6US
-	 zYF4FCeIGHoPZybEqNsVn/Ocfn3beRUxAxkPz4y83JCpJSKBfuV5zBintZ5ud5/aqa6vo
-	 /roi4wzuXlmMasApQhNP4UyrfZw7yJyDp8jN5730a7sQMqPGMGHdWfEZpw/j87/UmFhhM
-	 xnoWgvm/vSDDexmkQ0E09uhdixSuVkiqR2oM2NYhGJFQ4R+siTSHy+TmklnwechI2gnTi
-	 SqCiHUZ+sMVvMiLL5Z8n9Ro+ZuRTF6nawcG8o7LX+pHvpfO0P0D8o/h+GaoUauIa2ZA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793825414;
+	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Subject:From:To:Date:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
+	 User-Agent:MIME-Version:X-MBO-RS-ID:X-MBO-RS-META;
+	bh=j0tKPRW7itGb4wd98itoSibtROi/TSSvYQx4Adk0Nuc=;
+	b=swyiYTzhREGgIREWR+n44PxlZJLpbbd0Be0PR2x9TO7ILBhyZng76BqyO/drQLzN/TSz
+	 N2OjDY+2bTN8+wpjx+OGCOv6feUDC3UeX8z29EpJ+E6xCzDNTbBcvpiEXbdh6QqywExuK
+	 0wG29C+alYLF+avRjCQc9csj5LDESahCuiHTksYXjTPtrn+5Rp0cFwIRNAZRfTTSIV/C5
+	 vs7feKlVoGCgzzchNfcka8FpQriB+LJp7WiY/k59Hb6p1wwCcniEy5YJr1UFalOTehx3Q
+	 Qw/AYrb1Eb/rPSAOYxqXRUnwMHbdNk/b/iJVxdV0t2exc33bvqv+prG5omLKRCiFgVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=dDeXxGkB;
-	arc=none smtp.remote-ip=209.85.216.69
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=mailbox.org;
+	spf=pass smtp.mailfrom=mailbox.org;
+	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=ImBQav+h;
+	arc=none smtp.remote-ip=80.241.56.151
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC4C6072649
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 20:20:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BC4C6072649
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D36606B2DE
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 20:50:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 26D36606B2DE
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=dDeXxGkB
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3b07b06027eso1380637a91.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 12:20:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793823647; x=1794428447; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=YBF8x8sJdLXwce+ZD1baPxrZukLcOjCkutFhGRoX8Ps=;
-        b=dDeXxGkBtx6OxZWtC6O7LxPZ8x8+TO80Kz2m5cLBDftobrTe3YSxMhxbM8z0Jtz4U4
-         U+onSa3yiE1Gl5kOUse6Sc4PlY1B5Cz88IGU7T8DE2gUmGOuYFFC8Jv1bAJc4O4AYtKi
-         0yi6v1zzi6TMHcPZileIeaZqHrftdux8n5+7XVM03FavcRfnP51KACMhIaOvdLQvapnA
-         7MuQKgRdcxCItsXCdZzPv4LzzIaIKlf6iN8VsJJSjgEbXSb/048Udp8tl5ac2bAxTtSK
-         e6ARLzk4ykSXjc1pKCBXwgtnmHRsl77Xd6iLgPJJg7/2Jsfeb1hQzL7ZbOZrH9LKmRdK
-         iKsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793823647; x=1794428447;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=YBF8x8sJdLXwce+ZD1baPxrZukLcOjCkutFhGRoX8Ps=;
-        b=VqXVbPNG/viKD5TSsMUpabV+Ct5n3xkBY3rYxPGP+sYKtOJpt1clVibcQxMWE5qne4
-         wjyZH9fBZrtMJ3XxjeFJXvy74qda1i4ITOdrSYY/rpPMXJ4kImjc5Mbt5wXZxG97O6rp
-         M/xGRQxh2UyeWq8IuxoP+Br3BymTP+bepiXm2hLbrmZYII+Hk7tUh5Q/fYiTvpn4J4TQ
-         tsIK4A9k6o7bOmXdbBV4jdzrATTNbutUf7NYXPtm5YAFB/xwbJ5ikz0UjANAQezDBfox
-         ZWJSimaquEtKgna6M3SCKi3hTQ3M9lGnETLB+hNKKohX8QjXFsWZvEp3GYZ9+EmziLAN
-         myqg==
-X-Gm-Message-State: APuU4Z+mPy4xcmzG5ZpZxrMBbVdKQjJB7ZbimuuOyCf0JJUhesyKBg3Z
-	Vd4f42hui4bYbJ7ymEuXpE8/NUClHoPhLxQ4jQ1LsjnyTP6+lumXrYHq9xdYguVIZBx9LnQSjOu
-	PMytKDw==
-X-Received: from pjqv12.prod.google.com ([2002:a17:90a:af0c:b0:3ad:ce09:ff3])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:380c:b0:3ad:13fe:41ba
- with SMTP id 98e67ed59e1d1-3ae897c8968mr13887718a91.52.1793823646440; Wed, 04
- Nov 2026 12:20:46 -0800 (PST)
-Date: Wed, 4 Nov 2026 12:20:45 -0800
-In-Reply-To: <auh_-EkrjCjUaiA9@8bytes.org>
+	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=ImBQav+h
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4jKcyT5vnDz8tCW
+	for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 21:50:09 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1793825409;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j0tKPRW7itGb4wd98itoSibtROi/TSSvYQx4Adk0Nuc=;
+	b=ImBQav+h3LF+1GiBl6IfIAcRP1Bodk4vAW+JgvpEQKDklSRiQVZSNadf+WTaiQb4Y6PlNa
+	c6Tkj7gxgkZrr7iULVJzlmiuIbz4IkdXB4A3EVrH7kw4zG1dKlxpDlkaciRlRdMXMosjTe
+	Zc65CFLugcSwvM6Qkny/js+fMrWAk0LdN15rqWXQ1EBmbaTPlFHIoFM4N+6MWdARVnfxue
+	OBuQVkrnI3w8ZtkLALTyMHxcg1Ou4iSlTWH22JTpQg1hzQr/QhNBJr+aZo6gReKN1SQ7vW
+	bhiVVsAHRo2IIphhplBOCvEL0KW3bqut0CR9n7hJc53v1QpwLBh7ySBo0GAKiw==
+Message-ID: <2068473db807e7672e5bfb0eb93d542923144b1d.camel@mailbox.org>
+Subject: Re: [PATCH 8/9] Docs/admin-guide/mm/damon/lru_sort: fix grammar and
+ stlye
+From: Manuel Ebner <manuelebner@mailbox.org>
+To: sashiko-reviews@lists.linux.dev
+Date: Wed, 04 Nov 2026 21:50:08 +0100
+In-Reply-To: <sashiko-outbox-193681@kernel.org>
+References: <20261102150757.93058-1-sj@kernel.org>
+	 <20261102150757.93058-9-sj@kernel.org> <sashiko-outbox-193681@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -78,58 +71,46 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261102114137.1198982-1-joro@8bytes.org> <20261102114137.1198982-3-joro@8bytes.org>
- <sashiko-outbox-193355@kernel.org> <auh_-EkrjCjUaiA9@8bytes.org>
-Message-ID: <auuTnRi2EhuY0HT6@google.com>
-Subject: Re: [PATCH v3 2/8] KVM: SVM: Implement GET_AP_APIC_IDS NAE event
-From: Sean Christopherson <seanjc@google.com>
-To: "=?utf-8?B?SsO2cmcgUsO2ZGVs?=" <joro@8bytes.org>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MBO-RS-ID: c80da2e29637863d9b5
+X-MBO-RS-META: 3te8atbxuc5fdkoaqauk6f7jx59qm7fz
 
-On Mon, Nov 02, 2026, J=C3=B6rg R=C3=B6del wrote:
-> On Mon, Nov 02, 2026 at 11:52:44AM +0000, sashiko-bot@kernel.org wrote:
-> > [Severity: High]
-> > As reported by Sashiko on v2 [1], GHCB_HV_FT_APIC_ID_LIST is added
-> > unconditionally to GHCB_HV_FT_SUPPORTED and sev_handle_vmgexit() dispat=
-ches
-> > SVM_VMGEXIT_GET_APIC_IDS to sev_snp_get_apic_ids() for all SEV-SNP gues=
-ts
-> > without host userspace opting in.
+Hi,
+
+I think sashiko review really help the improve patch-quality, however
+I have some constructive feedback. In this review a couple typos got missed=
+.
+
+On Mon, 2026-11-02 at 15:36 +0000, sashiko-bot@kernel.org wrote
+> > Re: [PATCH 8/9] Docs/admin-guide/mm/damon/lru_sort: fix grammar and stl=
+ye
+
+The missed typo here is 'stlye'.
+
+> > From: Manuel Ebner <manuelebnerli@mailbox.org>
 > >=20
-> > When an SEV-SNP guest queries hypervisor features via GHCB_MSR_HV_FT_RE=
-Q in
-> > sev_handle_vmgexit_msr_protocol() or SVM_VMGEXIT_HV_FEATURES in
-> > sev_handle_vmgexit(), it will unconditionally observe GHCB_HV_FT_APIC_I=
-D_LIST.
-> > If a guest uses this feature and is migrated or restored onto a kernel =
-without
-> > SVM_VMGEXIT_GET_APIC_IDS support, guest execution will fail when invoki=
-ng the
-> > NAE event.
+> > Fix tenses. Split long sentences thereby imporove readability.=C2=A0 Re=
+place
+
+The typo here is 'imporove'.
+
+> > 'set as' with 'set to'. Replace [] with () to make the file uniform.
 > >=20
-> > Should this new guest-visible feature default to off and be gated behin=
-d a
-> > capability via KVM_CHECK_EXTENSION and KVM_ENABLE_CAP so userspace can =
-manage
-> > feature exposure and live migration compatibility?
+> > Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
+> > Reviewed-by: SJ Park <sj@kernel.org>
+> > Signed-off-by: SJ Park <sj@kernel.org>
 >=20
-> No, this feature is for SEV-SNP guests only, which can not be live migrat=
-ed.
-> Live migration for SEV-SNP guests will be built on-top of this feature (a=
-mong
-> others).
+> Sashiko has reviewed this patch and found no issues.
 
-True, but they can be live-updated, and in general changing the guest/host =
-ABI
-without input from userspace makes me more than a bit nervous.  E.g. if the=
- guest
-side is buggy, downstream users will have no recourse other than to rollbac=
-k the
-kernel.
+In the diff
+> > +suitable to be used as a trustworthy access pattern source.  These sit=
+uations
+> > +including reclamation target page selection under sudden memory pressu=
+re.
 
-Is there a need for this without KVM_CAP_SNP_DIRECT_VMSA?  I.e. can we tie =
-it to
-that?
+'including' should be 'include'
+
+Maybe you can improve the automatic review process.
+
+Thanks
+ Manuel
