@@ -1,73 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.198
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793751437;
-	b=YLfey+42115A1EvQi5Popdl4Y3fFrNePpmQIkQDqh9wew3TalV50froJ064GA1AZSmOS
-	 4bwjM4Y+R2uogy9x0R1YpFtErJkLcLS4rH9klw/IA1xe/sUUe1cEFEhls0Lt2QvDSvBFl
-	 /mDSRwu9tiDRvymcmhzeBB2nmaPk7rG2mIL06IgHxyhCaEc03Vo/aejSvyAtnDL+usiGr
-	 3nQHkZZ9/MDTh6fh2lR2W9bMk7tYAi9+9fapSP/pajSRvfb9+vQ3rXg9mT5IW6FWeLvu3
-	 +g6r204uov0C49zFzLGRv81zR3fWdvu6obsy3Ycvg0kJ4JxGMP9BGyBhmL8vcGbrs+w==
+	t=1793754339;
+	b=M+YH4CNd22Ge50UyQEjTbnwE9M8anUi983+/lO7K+jlAmv/WkMX/2TYqqEMesJymHEny
+	 qN0buI4A4b/MYnaRGPzN0l7XzLU64LrsrQFsT80XRAiy4WW7zO7flS8zkS8edSL3AzOsU
+	 MhqbLDiYvd560h7z3OoFokNEkx/pp7YhyFYMFJs8qqTEhEIhOUjBUxFZM2O40bfUaCGqr
+	 +FVAGanuK+Gp507bG9xsM27xL/QWo+kwVIcb25NmPNaYO/qISc2CD2EZ7IdvZkc21DXrg
+	 l9ts4VWO+akuWZyLzTNMgauTr8tiknAxn5iWkGZSpmI99A4rIjJpnv2e97QIGMZv8uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793751437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793754339;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=LhyvKds25xNhoCjxUA6XF46cL6FC3po2ea3t+x75DYw=;
-	b=K15r8xejtmSRg4VWDLAWT3vFQHneN8uk3ByyMF66WzeYbK1scBWbO0Keva3Ss4qvfTDR
-	 sEOrqNx1ACI7Cv8gj525RQIIw8BjIYAzYET5qfu38Fq+i1LUsk4hU4epbIRQ8tewDiX88
-	 xOpqAw1mkYkFxEsua++m8cAWFFNZX6WEvIcdT7mP5gwCwlQsUGCDwYjYW7sjK3lqawxuA
-	 MQsyhctun50wvmYkTOcV3ZXQgYeW2ki4hP05Btjl8QIRk6KGkrYaWJZHz1IeiYS40wQnT
-	 nln3GMnu57QaYyEj9z2v3+yKO+rD1Jxw1YN6Wp2V24RZ7VeRT7oZqwCKkVh85vfGQgA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:Date:
+	 Message-Id:Subject:From:To:In-Reply-To:References:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=OiYsGaoqyzKUnz3XPaxnmXkjL2zBbGhsRecYGJNnKlE=;
+	b=H8RtE3GAW5/+00trJavDv4+pDy9DrLO6H75WuetRFkrKMhGWhDDTqV8BsYHbwIj87/vg
+	 /640Sverg50Dg37si8BNuRjEAoZY1AbsJQUqZNGNXQ/+L6owQpJcaq8/Lu+S0Zc3rC4bk
+	 3l+bjkd/UVJxDc3HH0KCMIlfgHXmHqmiYyxwacacU6U1rHUDogkhTe4QIEjwh6Wr+Bnoi
+	 9cf4XiwCBdCbYyrf8/mlk9IJ2WbtbbIZlRr80sdVFHbYqJiEn9QwoxC2sV+8OXIERPVrO
+	 3a8U/VWEKmFz3Hm06ABNe9q31WqF2/ZGBkS+k7eLdvkRc1N8ecR5cGwdG5zD8D9tv5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=P+tSdCen;
-	arc=none smtp.remote-ip=209.85.210.198
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BJwTee0b;
+	arc=none smtp.remote-ip=209.85.215.181
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FBD606A331
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 00:17:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21FBD606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29A2606A31B
+	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 01:05:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E29A2606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=P+tSdCen
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8a0619b1fe5so182036b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 16:17:16 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BJwTee0b
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-ccca948203aso64373a12.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 03 Nov 2026 17:05:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793751436; x=1794356236; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LhyvKds25xNhoCjxUA6XF46cL6FC3po2ea3t+x75DYw=;
-        b=P+tSdCenQ++UxnkiMWzQICR+Iv26haBqQp6nS8R4Eipfkqttmy4+RrYJREGirNmUjt
-         FogO10TQu/Az0Sn5FEatYXKGAvKUrQ0ejTzZaPuaq6SEuNB+gbN42stSvEeo6CEx37wP
-         PnxPPVKNm4yX6eo6hL/oecCpfV5UFhN/QWjRUWN8uQATGAJOsMwtgsq9Ik++9dkpaMrH
-         Z8+rZZlzp1ZSq3SyDsPc0eToi0jVwfkyNQ9n/Yoagjw9/iP6/AomT9013EkOi9CYU1Do
-         zi2fokt8IsAa6riM+zYTPU3HDbTUHe+eZh4FE5s/yG8rjzWJFrIaLkzYOz8X9CDcIrMR
-         3IUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793751436; x=1794356236;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1793754338; x=1794359138; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:message-id:date:content-type:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LhyvKds25xNhoCjxUA6XF46cL6FC3po2ea3t+x75DYw=;
-        b=h09qpOz6HkwXs6k2gEq+j3cVGIXOtn6Ke3yOJLiipMHmTn8O6If6/oKor89B93eBS8
-         8WIkmXX9IKFmCu2SZ1tu2eX5MU1hIEPfweOBVoW047jE9U02qUbhZvWDXqADzpJn0+DM
-         /EL126+QMXJKKWpYy3Oo07lsp0Vl6XPnQiMOei4MUj1qMn8RLo1hyvPsizBFdrg/xIwm
-         byd387YSdwU4jwIrparVoywxsxZpctCyaN4Yqg+FkleQS0o88X7UJxoARes2QHtFLbhc
-         89X8V39Eap28n2BThs3qlUbXbKGCEwtsINE7a407TJHqVqfHCNk/LihpL5Vqlfe/k9Rk
-         RBBg==
-X-Gm-Message-State: APuU4Z/cWCoB34ZZXUtB43nCU3HspUz8htWUcYKGFNq38ElEEKdLMaqW
-	0acStmmMl5M1u03kd9LyM4Sn7y7Ni2/dnW4gpMf+2UuLMJB6A+sy/bKsw4l56iFJA1eWhLOVEoo
-	acoGuIg==
-X-Received: from pfgg3.prod.google.com ([2002:a05:6a00:bd83:b0:8a0:cc:2b89])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:b4a:b0:89e:cfbb:e8af
- with SMTP id d2e1a72fcca58-8a9ba8fb9c0mr10230607b3a.6.1793751436089; Tue, 03
- Nov 2026 16:17:16 -0800 (PST)
-Date: Tue, 3 Nov 2026 16:17:15 -0800
-In-Reply-To: <se1h6b4t.ritesh.list@gmail.com>
+        bh=OiYsGaoqyzKUnz3XPaxnmXkjL2zBbGhsRecYGJNnKlE=;
+        b=BJwTee0bobzLlgZqln0PZjhvcz+qvr8R5gbnFao8/GJlq4JkAk7awfmyk5VaLahQbY
+         R25IFL9NYxLei62u65dddZMK2jd43QvJSbP/0ZftLSLCLloRue+V/0/HmSABKZSMc6LY
+         sHh7VeneIGhwhD6fY55/PvR8u/5xGklJn7DgmjLuG52Ujq+xWhauvQcJdKdFRL1uHvDy
+         YOwjg2Na2/DlIBd2ZTb3sJFPtsdp5YwsMg/OeNg6ok2qdtyd645v0blsfdAdUP8/xYy3
+         mK7GyOtxUjt5IUAK7nINs4jzKS9aopBf6MmDBMZJMl8Yb9rZeEfhenO3LaxUTuWSzuSn
+         S+/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793754338; x=1794359138;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:message-id:date:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OiYsGaoqyzKUnz3XPaxnmXkjL2zBbGhsRecYGJNnKlE=;
+        b=q6wS/Ahr36GUvOZ9b6Jq3RpJ1v3XmSYBG7EXW1WdwRoD1w1Y7yxwaPtJiVukBjCKlq
+         sC6Y5DrTgZJu9MvpG1x1AM3w/ivxc4zhPWZuFMDk3R59aj5uur4lr6Ivhh/oUXA6BL2/
+         R3QgXtmHBa1ptLtbSfyMScJ3iZ0ogzit5j9ibCDfCYxvt7jbc5G2vdh9UANTzRFMhBD6
+         MpPXn2Cvdoy6YJ0X4/iD5xBIFo0vWXXCoj2rLr3QjI3ADXkyc8ZFaDjOBT8OLgB4d4Lj
+         XRnfosHxhM3xflgBCNsSVM9KGJ9Gj0QG020qUkpYiDBLnj+Tns1r5+AGQbkehAzRFrC5
+         WvLA==
+X-Gm-Message-State: APuU4Z/VPmZDs1oCkXJ4G5qfTzOA4GtFAWFiFoQdu6IvS5bUhZBg46jE
+	b89JYbMNPB2LbWyL6mNpe1vf5MD6KIXXKLpmM3Qw5ZCvzx9HPAVRbiPpfiNPCA==
+X-Gm-Gg: AYBFou3QxxSqa9VOWklvwWK+Ma4JSK2nC2nvLIopgONSVtxkNPY42dG7VhFPrXvonKg
+	QPS5wabutw5xoaGSD6zku0OS1aOJTP3GRsIvZQF0moihVB/mZoQ3i3Z1sSPc4oab8gXLUWaKq0J
+	wJ4nLa9Ru2YaT+ZCV9f48FHKRxHjSeAe+oNtO3WO603lG5mqmtaWYT8TRPzBq4L+wPAMDJj+2Kl
+	a0ZyhnHjCjFiMkuD9QLYVk4MYYRaZuWEj6HDfgss2HdhxFKtqtdF6c3vzfSee8Lku+1xRhrA2en
+	qXDBrKft0FfBAJa1L0xuF7TKqyr9pY5akvw1XNQXMlnjFyfO2NbaEZF/LjbnB/0FU8Hf/VUVAbg
+	cudKAotoMrG0VhudeuT1w28RTf4a+F5xdV8s98UyxU+HywskuDBYxQmhILV7TDujDMBwonCNDME
+	NaBpuy6c5PjXta+ufdp95F2n6Kj0HF2ORBKsyQWpGKLppdLdfx52cczY8y5MjlkWkY15NbCYK81
+	K7MHgXeOQT7xzxuJzKqr05stjR1m/YrLy3Rqj2RQdNZlM2COjndQ9BjX3WSa3RKwWQjTtrVV9FR
+	uxsxjc+zmqfhGD9egehVDiS+WINkZbnafI1jwoGHy6O5cIrANBUaZXcP7Ox1ftWvILnM0EZJpgw
+	jSvYpEFtP1GInGhi+qz1dnAqsif4NyPY/rw==
+X-Received: by 2002:a17:90a:8398:b0:3b0:9984:18c9 with SMTP id 98e67ed59e1d1-3b0998422c1mr181065a91.11.1793754338082;
+        Tue, 03 Nov 2026 17:05:38 -0800 (PST)
+Received: from localhost ([153.61.198.241])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b0944d1a43sm1272825a91.13.2026.11.03.17.05.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Nov 2026 17:05:37 -0800 (PST)
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 04 Nov 2026 01:05:37 +0000
+Message-Id: <DMM0UEKUOMVQ.18RYWJLVRPXUR@gmail.com>
+Subject: Re: [PATCH bpf-next 06/37] bpf: Count stack arguments of a static
+ subprog from its code
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
+In-Reply-To: <sashiko-outbox-196294@kernel.org>
+References: <20261103234104.208239-1-alexei.starovoitov@gmail.com> <20261103234104.208239-7-alexei.starovoitov@gmail.com> <sashiko-outbox-196294@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,80 +97,26 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261030212112.2598640-1-seanjc@google.com> <20261030212112.2598640-13-seanjc@google.com>
- <sashiko-outbox-191627@kernel.org> <auitWWkOopYYbBH3@google.com> <se1h6b4t.ritesh.list@gmail.com>
-Message-ID: <aup5i73T5aOKqcYS@google.com>
-Subject: Re: [PATCH v4 12/23] KVM: Destroy memslots immediately after
- mmu_notifiers are unregistered
-From: Sean Christopherson <seanjc@google.com>
-To: Ritesh Harjani <ritesh.list@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
-	Gautam Menghani <gautam@linux.ibm.com>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
-	Nicholas Piggin <npiggin@gmail.com>, linuxppc-dev@lists.ozlabs.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
 
-On Tue, Nov 03, 2026, Ritesh Harjani wrote:
-> Sean Christopherson <seanjc@google.com> writes:
-> > +Gautam and PPC lists/maintainers
-> > On Fri, Oct 30, 2026, sashiko-bot@kernel.org wrote:
-> >> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> >> - [Medium] KVM: PPC: Book3S HV: rmap_nested memory leak in kvmhv_release_all_nested()
-> >> > @@ -1310,12 +1329,10 @@ static void kvm_destroy_vm(struct kvm *kvm)
-> >> >  		kvm->mn_active_invalidate_count = 0;
-> >> >  	else
-> >> >  		WARN_ON(kvm->mmu_invalidate_in_progress);
-> >> > +	kvm_destroy_memslots(kvm);
-> >> > +
-> >> >  	kvm_arch_destroy_vm(kvm);
-> >> >  	kvm_destroy_devices(kvm);
-> >> > -	for (i = 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
-> >> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][0]);
-> >> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][1]);
-> >> > -	}
-> >> 
-> >> [Severity: Medium]
-> >> Does hoisting kvm_destroy_memslots() above kvm_arch_destroy_vm() leak
-> >> struct rmap_nested allocations in slot->arch.rmap on PowerPC Book3S HV when
-> >> destroying a VM with nested virtualization enabled?
-> >
-> > I don't think so?  Patch 3[*], "KVM: PPC: Flush/zap all memslots on kvm_arch_flush_shadow_all()",
-> > should free the rmaps in response to kvm_arch_flush_shadow_all().   From what I
-> > can tell, the page tables have to be in radix mode, and so the rmaps are freed via:
-> >
-> >   kvmppc_radix_flush_memslot()
-> >   |
-> >   -> kvmppc_unmap_pte()
-> >      |
-> >      -> kvmhv_remove_nest_rmap_range()
-> >         |
-> >         -> kvmhv_remove_nest_rmap_list()
-> >
-> 
-> That's correct. Maybe, I think Sashiko didn't consider patch-3 of the series
-> during review of this patch-12.
-> 
-> > And if that doesn't work, it means memslot deletion on an active VM is completely
-> > broken.
-> >
-> > However, it means the memslot code in kvmhv_release_all_nested() is
-> > dead code,
-> 
-> Not really. I do see a caller of this, for when we switch from radix
-> to HPT. So we still need it.
+On Tue, Nov 03, 2026 at 04:14 PM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
+>> +	stack_arg_cnt = bpf_in_stack_arg_cnt(caller_info) +
+>> +			max_t(int, callee_incoming,
+>> +			      min_t(int, caller_info->max_out_stack_arg_cnt,
+>> +				    callee_info->arg_slot_cnt - MAX_BPF_FUNC_REG_ARGS));
+>
+> [Severity: Medium]
+> Can btf_prepare_func_args() leave sub->arg_slot_cnt undercounted when it
+> returns early on a static subprogram with multi-slot parameters?
 
-Oh, nice, I somehow missed that.  Yay, less work to do!
+[...]
 
-> INCOMING CALLS
-> - f kvmhv_release_all_nested
->   - f kvmppc_switch_mmu_to_hpt    [arch/powerpc/kvm/book3s_hv.c:5591]
->     + f kvmppc_alloc_reset_hpt    [arch/powerpc/kvm/book3s_64_mmu_hv.c:144]
->     + f kvmhv_configure_mmu       [arch/powerpc/kvm/book3s_hv.c:6330]
->   + f kvmppc_core_destroy_vm_hv   [arch/powerpc/kvm/book3s_hv.c:5930]
-> 
-> 
-> 
-> So FWIW patch-12 as such looks good to me from PowerPC perspective,
-> since those rmap entries will get freed up as part of the
-> mmu_notifier_unregister() (after patch-3). Agreed that Sashiko
-> comment does not look correct.
+> using the parameter count rather than the slot count. Because this
+> undercounts the prototype's stack argument slots, wouldn't
+> bpf_fixup_call_args() reject valid caller stores to those trailing stack
+> argument slots?
+
+Not from this patch.
+bpf-next has arg_slot_cnt == nargs after an early return too, and
+bpf_fixup_call_args() rejects the same store with the same message.
+bpf-next also rejects the load of such a slot in the callee.
