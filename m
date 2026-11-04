@@ -1,56 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.15
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793800646;
-	b=kbo9D9/mqGX8Zf9/aq7um37AO/g8/Bi03nLR4HWg+v0sdRoHMK8KOSDyLHDgz/3DFTFS
-	 NheETziH1uykKYhoOZMle/iGoDtuj5ax4c24OaCNWobV/YjUva8CVg3PoiAUrNTGVLAWS
-	 8dhwnJZGgIFGpCxsn5dd3Sm301xcg0yGgkAqKR/hLMW8lu9KDddGNC3cs3UrcNh68ac8J
-	 1Cpx2BPQx2Wa4EOoIWY12ROVosvh3jH6WVWNxaBkZAOwZ9R6nsTYglQgZRgrGNuDZU1TE
-	 wX57Le0IOkYx/iwE5T+xeM+0F3UOLH50X4iMx0C5wU0Lz/TSC1HfCmALvGoI0kzWLCg==
+	t=1793800835;
+	b=A6COuQxSuhsvCsm/U2vu52+X7XKIaefEexFtjast1trGEi9qLXxSwigrUxaEg5d2tib5
+	 MaEwFpu7NMe1Cpvre3ie3HZIi6LncYMtr/CRubnYaJPi5SN0pjjBupncN07Q87j56TA4G
+	 Gmu8NQTMr9n1CjEilZWHfHeEEwgWMizC/YgXuIEz6EhiTPWjy996gjsuYOQugoaXroI1z
+	 IzO/JBINzdx/1cl2ZtERuA2saAq5n6VvBJEyV1coOiJBlNjQ0U7giXYgxm5Otkl/9Sd7N
+	 ydcLejyMw1JA8B1oIyK1X5yM0p+5r88PIwsZ7edUgPerhwRaEgD9gZWYQfdQie8TNKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793800646;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Rspamd-Server:X-Rspamd-Queue-Id:
-	 X-Stat-Signature:X-Spam-Status:X-Session-Marker:X-Session-ID:
-	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
-	bh=cOn8KJkhz5dyAZpDV0qrK/4NJ/64i6ThIIpkPqPhmJg=;
-	b=309ILeUExawpw5lbXNa9YQCNtKIfBlZWxhu7O2YZxr2yM8QqMVCdZ6nY2FQvhSduQZZx
-	 CePriG8kYzhZfG83dDKaaDefP6SpqjSuFgNAJRPchUj89gxp9mN0d6Np+DBqJSN/c+ZPI
-	 teOWsgFX4LUnvknPRR8nKKv33K4vXeBn1SpPNculPoh71805t6QJ8JQPd6yVGViwGhFaR
-	 zQGtDAqCT3AEeqW461w2FNCKmcpEm5Ejv5tn41MnMczrB2AwAiAXvtuFUGcmu/OHkypCk
-	 2M5ce4IFb0CzFCuTo75v9+w/IjGbpNII1Ao51Wk4bRlIJOujKxTLyxAOcVOmi0keQvQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793800835;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=iPigMUabbHSIXFqVjqXH7ROjsbJTDridE8z4I5YTRFo=;
+	b=jyBjSgpsbxELe+T8yv+hJ1jI74klLPU6n8T3MuI/fOfF5tvvxqasJ56I5uK/1U5LS1Tv
+	 UfhywYxF+j0MUegVXWRQoofH4ioO8wd/dA4tr3HDLSEWdF+AQWSl9d+gZsdEWA2d35yRl
+	 LHUL/QKWnCJ+LZLYPlzRNIjEtY5jJ3jRbd2q3ixiJcCY0fqSm2ltybN8U62mRzkaO8ZAA
+	 4oy4bVTyWdlknoM7ba3kSXEgs6pXm5LH3U434BV6vYgGcAhhR+CunNZicKb+WSIbsNrln
+	 p7h4tGh9AlG6i0iSJ0uYmZ2JLzIu1co0T0NsxpK8iyQnw1g7mYWvaD2DDD0nUWOGY5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goodmis.org;
-	spf=pass smtp.mailfrom=goodmis.org;
-	arc=none smtp.remote-ip=216.40.44.15
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a0ITpOoB;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F88606A31B
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 13:57:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 05F88606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf03.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay01.hostedemail.com (Postfix) with ESMTP id A9A451C40D4;
-	Wed,  4 Nov 2026 13:57:18 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf03.hostedemail.com (Postfix) with ESMTPA id 0CD9C6000C;
-	Wed,  4 Nov 2026 13:57:16 +0000 (UTC)
-Date: Wed, 4 Nov 2026 08:57:15 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Jaewon Jung <jaewon8868@gmail.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] tracing: Keep copying markers when one instance is
- stopped
-Message-ID: <20261104085715.5838b869@gandalf.local.home>
-In-Reply-To: <20261104063552.28094-1-jaewon8868@gmail.com>
-References: <20261103005219.3236380-1-jaewon8868@gmail.com>
-	<sashiko-outbox-194417@kernel.org>
-	<20261103095019.6a88e783@gandalf.local.home>
-	<20261104063552.28094-1-jaewon8868@gmail.com>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id D7DB3606A330;
+	Wed,  4 Nov 2026 14:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a0ITpOoB
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id C98FE1F00919;
+	Wed,  4 Nov 2026 14:00:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793800834;
+	bh=iPigMUabbHSIXFqVjqXH7ROjsbJTDridE8z4I5YTRFo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=a0ITpOoBNpVhRfI8Zlb3slBKPPZAU3+taADATt1ctlULNxzFp6yg2CbRkzpG1Sau1
+	 /peJbWuTaKs/lP5Hfcgsq7M79PvauS7X/dcM4+AA4DzxaJOdy84twILJvZSKvCAvZJ
+	 9Cxbxhv0H6ipDZKK4tZ3Oo6QeX9H71f3X/CqVB0ZHLftH7j2GQ7frAQwy1u3pENOJ+
+	 bdNnK0gREuZDP4MSQAK/7KA+/4iRLXkONbjjeu+CPg+P/kVFPp1715h7WZNlksgH1c
+	 1w71Gutit58CLRBi02V3wzdnN0cxVEcpAnG6kC7plHUz20ahhYZV21hz7PC3U2RBTO
+	 Sz2FwlvY9UzuQ==
+Date: Wed, 4 Nov 2026 15:00:31 +0100
+From: Bartosz Golaszewski <brgl@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Adrian Ambrozewicz <aambrozewicz@nvidia.com>, 
+	linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v5 7/7] gpiolib: let the character device free its IRQs
+ first on chip removal
+Message-ID: <qabqccchlj6rz5tki6z3h7py36btm6nepdvlcz6vgbq37enfnl@ez2jmldpo5mz>
+References: <20261103-gpiolib-chip-removal-v5-0-aambrozewicz@nvidia.com>
+ <20261103-gpiolib-chip-removal-v5-7-aambrozewicz@nvidia.com>
+ <sashiko-outbox-195211@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,50 +59,20 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: rspamout02
-X-Rspamd-Queue-Id: 0CD9C6000C
-X-Stat-Signature: 5bprzwbchtwg9jiwamyqnzcwcr6tkffw
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX18Uc4/aVYuu7M6JAsaF4cBDgaQNSLZZmTs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=cOn8KJkhz5dyAZpDV0qrK/4NJ/64i6ThIIpkPqPhmJg=; b=Yat7rs/9cs7tZ/mAniJdbSMlqQkkcJomyiF/epC4CVhc/xl5WHpcm0LvdUhscF0hIbNjyA+DGvXbjoJla/Xx8JXcnDoLD31DA8RH3UeBKV/6BOtmCZcmrG4X3CRAzoIt3/G449babq8zKNe3xYjGDp7riHF8Hwa2RZpUL+yyxv4=
-X-HE-Tag: 1793800636-478680
-X-HE-Meta: U2FsdGVkX19jCxgfIIKSDIIdGplQxkRl5Dlu39dH8ccf2y8BEJD3OFCkX5iFLYUG8dknBhspwiJo3eWACZdxvhJSJIy4ztVUhsl1MmDC+twNlW3nVbohctYWDyXMRVaFiMCoYg7IhvDboJRgifMZx5lyUo8M0nkxPd0tt6zE3jA87+0VmMHMEa+cYZ/fTplYaYz2obJFhUWbXj2De457+nmzp3H8/cHCO2V137K4/AkSBmEFuZi9Jh667k5nxSG8WgLeFqWvys39TuQi1ssPGicaCKd+BcHaxHBvobWizZCAyiorl43KpAfVCZePYJqluGLkYFGcvVKYxmAYpWmvnrJ0Rr0qGScO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-195211@kernel.org>
 
-On Wed,  4 Nov 2026 15:35:38 +0900
-Jaewon Jung <jaewon8868@gmail.com> wrote:
-
-> The copy_trace_marker documentation says:
+On Tue, Nov 03, 2026 at 12:03:28PM +0000, sashiko-bot@kernel.org wrote:
 > 
-> > If no instance has this option set, then a write will error with
-> > the errno of ENODEV.  
-> 
-> With global copying disabled and another instance enabled, both versions
-> record the marker in that instance, but the proposed change returns
-> -ENODEV.
+> Should gpio_device_teardown_shared(gdev) be called before
+> gpiochip_free_remaining_irqs(gc) so that proxy character devices also release
+> their IRQs via their notifier before the remaining IRQs are force-freed?
+>
 
-Hmm, that's a side effect I guess I didn't expect :-p
+Hi Adrian!
 
-> 
-> This seems inconsistent with the documentation. Should we return the
-> last write's result, as in v2?
-
-Perhaps just return the most successful write:
-
-	if (tr == &global_trace) {
-		guard(rcu)();
-		list_for_each_entry_rcu(tr, &marker_copies, marker_list) {
-			ssize_t w = write_marker_to_buffer(tr, buf, cnt, ip);
-			if (w >= 0 && w > written)
-				written = w;
-		}
-
-So it produces the output that wrote the most, and an error if non worked.
-
-In reality, if the write_marker_to_buffer() succeeds then it should always
-have the same return value.
+Will you address this in v6? I think it's good to go otherwise.
 
 Thanks,
-
--- Steve
+Bart
