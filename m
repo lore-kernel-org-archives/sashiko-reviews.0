@@ -1,96 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.126.80
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793783241;
-	b=O8qhqk+JHAk/GWOgyd4gGCqISyQWsqTohOIzFc3NliCYptb+C3hgD4M67BmxXO+V33B9
-	 cx9oa8Yy6kdtn/ZkQbqRWYBmKo2JyRJdosvs1xIZZehMAAxuHqEefxYPItd1Ypf3SHkLi
-	 PjR/VxQCcIESa0rGISRKBy89XyiD0ShsP1bepLjUxRJVeE3RF4MK1oI4nHMPx9SwRN1+S
-	 P3mfLMT7OZhSWL74pdOjbq1fg7R8RR4klXpzWZa4bwwl2aA/SP7pwqls80Rgg5YoMd/5U
-	 SQR/Frzuey/rxWiph1dK5GR4vJZgcnoD2+1AhZH0gtpEupgc7Y/Pcx1rqayvVo2czUQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793783241;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=HICuV7lH3pDXmPd6wqQKVkamtD0Plu+bx3wEdAw08no=;
-	b=BNJJCQmfk/QlxmDLPPjXfSPF7Xfza/s99PKqPL6XmxxjM4DmauGFgjmGb9xuBAAz/Xll
-	 tR0awWznaoSso00acZU//0SCogn7+5EiTMR0tfsptin17z2IiQ5D1gW18M/nnfozy06FZ
-	 48m4S+urWbBNJhE/DTmOQa7qtdwDo88sEkZlW4TpmBqGdLaVfE+McVrwHmlC8T0hw8N3+
-	 7aVJzS3Jb9l8YHciWIJ54qz59odmQHof3OJk0IVHwHgzhvhYQ4zR+owj3o/8wmasCl7EU
-	 kkEhacXLwYkbZrFNISh0rNnIIg5ZcV76LodnB5RVsHcDnvrEWnJpMM4dzhVKEl56aOg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amlogic.com;
-	spf=pass smtp.mailfrom=amlogic.com;
-	dkim=pass header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=Acb0NIjk;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.126.80
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022080.outbound.protection.outlook.com [52.101.126.80])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793784020;
+	b=a0chEMFdAakNV95mH1tEBqLncM1Vn4nXwyWHxO/AbGqWY7Rbc5CI9DZgFVkGenrJlAdT
+	 LlbNFVqJ4D0AAgAV4t3b2+ViBp52XQ8GbUokiQ5XUoUJnVQDZNhmllD2bOnn3M0DpdG4R
+	 xbKhSmhOPjLV5q+1AdfxZDlLhSANmT4ZV/sKCT0or/UmD5m9uNU46+kiPiEwWsJpRa57V
+	 QKJPAiACbFdCHFF5ZtGmORXjc1pu23MV/7YxOAnZZz0SoJdYWSNWTlOm54xeEj7CfuRZY
+	 bbSq1nGeQFEIszc08ruX3TMnufqm687Fq1CVVrcJXR9obhd5QTSuqdF/ohvPE4gUhQg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793784020;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=BqLsI51xXE9XvqQwrewS8kVZYOVybuvhFSYA9nKiQ5w=;
+	b=5Q5gtPiYk8gn3nUjx4Y6+5L4MqZA5km6gawV+F1ZR6k6bdfVzqPVR7K2zIk1OCQCqq+m
+	 WGGDTUHJwpkKAMWYl9cBrcyeNmrg9lBYeprMqEvkjeQghdt9qn4aSEKagEEaM3q7qIpxj
+	 4upHh3gS+iG0HwduWX54gx2lsFW3E6ZaPJHxEPTHLgdgibmmtlDW+OzFAXEdtqn5X6jAN
+	 hJQozqVQ3nkkitaXFoOKDxgQ0zY9Na+yLO5buyRf5nr8WqI9RDiHZvWyBuo75k1mhxDG2
+	 OuT56JZTnli6o71R46YVaaJxXQBnOVsOJUCYpDMTY8Tb/OEL/FcSKgW2WzzlTg3Z0ZA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RI03ExhV;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B375606A326
-	for <sashiko-reviews@lists.linux.dev>; Wed,  4 Nov 2026 09:07:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B375606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7BF606A32C;
+	Wed,  4 Nov 2026 09:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=Acb0NIjk
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=y+B6y9g/nkO2Xk+HLxxhTdgFohFz4RMdN9Q3/ScC1C+LAyek1LuLBh2eKj6dVgEkT5OBu7uNwFQgPLlmX9kpUoX60KPA1NIhqj5n16BeOLTQHN4Pj6bTd07NwUU+IDxPxA2SxCBd76bsMbKkZZf/DAMyoEtFmW0IcJBrzB8WrTHtbZoBACeL+L1Xg2gPPLHy9vkl4D2yQNAFG3noIb+DH63MEimV20OzaH/vmK+RmN0F2qQddFYzBgkLUXoAsFG0NLRviqC2bWhZzTliGW4WJCRSFtdXC6PUhzyVc966VHRFoPpsoEiqU8BX5leqny3AaPrHy5d7hF5F+2ES6IVo3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HICuV7lH3pDXmPd6wqQKVkamtD0Plu+bx3wEdAw08no=;
- b=D4lwVnS6Gnq114u499QtReYwAtiPkepAXlrzkwzWbiVgfwRyflV/4nPOWwE85xDMSyjdY5ZChjv1Xa4FUvHVrrWO0Fhgx/fnlTX4vyxL1aXWpWKkTPiJDErZXw+mtCzuHSu1PHc87+Wfb6+y9Xn0S9IrBQYX+L3lJdHrZLMLrekq09PnOHvEvehAlXGzdkRAffBz+mU0iOmAew09ZyDkZH59k4aolgGlq5VH20JwJZCGptPDXWjT/8yqxXeqa7BqaXHmNCSV8+VCVYhcSfm8Bc/BUIzzWn8ucIfB6l5O9wNVPq4NTxcXi/W1cXFSqkPsGIXza7rFuSraLv5CQWsShQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
- dkim=pass header.d=amlogic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HICuV7lH3pDXmPd6wqQKVkamtD0Plu+bx3wEdAw08no=;
- b=Acb0NIjkxGNU3AYaBsg1ZMgcuJRrpPdDhz7VGGrPj5NXgr+sJqt+epuBpGRCJ+UbnXhSaI7hx1wHH5e5jgB0MWVNxiivZlj6VBTzA+08b3OxALVCiW1kbxhBykDJAAwzaBM+1UO603xuXWdsgwgAM5er2W8dwzRYPZle7usLIxuN1AZVjNMUsqbh6757toOvizA4123ae3lzItOO6kRtqMtoBfOwFUhrgeoyOjgTnAX9e23YqiwWFfgW1fGB/G/UXbJI4+ahQ+7JNUKJmQoyEZBbpbHlKYoEM1N8FMTtIaDTB+xVOk4TEUmlCHq/ZbWbVI0qdnLls32XLQwxJInxgw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amlogic.com;
-Received: from KL1PR03MB7149.apcprd03.prod.outlook.com (2603:1096:820:ca::7)
- by SEYPR03MB7507.apcprd03.prod.outlook.com (2603:1096:101:143::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
- 09:07:14 +0000
-Received: from KL1PR03MB7149.apcprd03.prod.outlook.com
- ([fe80::2f06:12a:fff0:6506]) by KL1PR03MB7149.apcprd03.prod.outlook.com
- ([fe80::2f06:12a:fff0:6506%3]) with mapi id 15.21.0592.007; Wed, 4 Nov 2026
- 09:07:13 +0000
-Message-ID: <02476c54-d8ae-479d-898f-cd89ee2f7c24@amlogic.com>
-Date: Wed, 4 Nov 2026 17:07:10 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC RFT v2 2/3] clk: divider: add CLK_DIVIDER_INVALID_ZERO
- flag
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RI03ExhV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14201F000C1;
+	Wed,  4 Nov 2026 09:20:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793784019;
+	bh=BqLsI51xXE9XvqQwrewS8kVZYOVybuvhFSYA9nKiQ5w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=RI03ExhVHW+vXW50GI/z1t5fOv/JldWAfo3PTbpnjtH9ZHo58Lc2AcPxXJ5PtbXAX
+	 8g4KSTO5fOZQCtpyjjL/bJvrwiezCM9YEtZIA/HFUZUjXdYaQqcpF0TeHFBMUlhQKU
+	 cwV4vnKJXipMsVWc69bizj8nAauOCKTGcIiZij9G7eWxZ3rmj4e0CBFYHzcKtXnQSl
+	 AJB/iwP2dB6oj6qGqoWsBFGeMkJxlpj4mX3YlYJ3ZSSJ9f+IEjQkqzGNq+iWXf8V9P
+	 ITxx8RHhN/lsRkk2i0dJRQVWI5FBwtmizQ/MBQbxSu+48ni+gfhGCNjOwQDZHYMP7B
+	 rmF7LwmTvp1Aw==
+Date: Wed, 4 Nov 2026 10:20:07 +0100
+From: Christian Brauner <brauner@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- neil.armstrong@linaro.org
-References: <20261029-meson_refactor_n-v2-0-ff4ac74e527b@amlogic.com>
- <20261029-meson_refactor_n-v2-2-ff4ac74e527b@amlogic.com>
- <sashiko-outbox-189068@kernel.org>
-From: Jian Hu <jian.hu@amlogic.com>
-In-Reply-To: <sashiko-outbox-189068@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SEWP216CA0131.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:2c0::9) To KL1PR03MB7149.apcprd03.prod.outlook.com
- (2603:1096:820:ca::7)
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, 
+	Jann Horn <jannh@google.com>, Josef Bacik <josef@toxicpanda.com>, 
+	Chris Mason <mason@kernel.org>, Jeff Layton <jlayton@kernel.org>, NeilBrown <neil@brown.name>, 
+	Eric Dumazet <edumazet@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Al Viro <viro@zeniv.linux.org.uk>, Jonathan Corbet <corbet@lwn.net>, Christoph Hellwig <hch@lst.de>, 
+	Greg Kroah-Hartman <gregkh@suse.de>, Joel Granados <joel.granados@kernel.org>, 
+	Kees Cook <kees@kernel.org>, Jan Kara <jack@suse.cz>, Jan Kara <jack@suse.com>, 
+	linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, coreteam@netfilter.org, 
+	kexec@lists.infradead.org, linux-pci@vger.kernel.org, linux-sound@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, linux-hwmon@vger.kernel.org, linux-mm@kvack.org, 
+	linux-usb@vger.kernel.org, samba-technical@lists.samba.org, sparclinux@vger.kernel.org, 
+	linux-m68k@lists.linux-m68k.org, linux-serial@vger.kernel.org, Takashi Iwai <tiwai@suse.de>, 
+	linux-input@vger.kernel.org, linux-raid@vger.kernel.org, linux-ext4@vger.kernel.org, 
+	linux-modules@vger.kernel.org, Chuck Lever <cel@kernel.org>, tytso@mit.edu, 
+	dmitry.torokhov@gmail.com, Petr Pavlu <petr.pavlu@suse.com>, 
+	Anna Schumaker <anna@kernel.org>, yukuai@fygo.io, Heiko Carstens <hca@linux.ibm.com>, 
+	Vasily Gorbik <gor@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>, 
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH RFC 35/38] proc: sysctl: don't hold the tables while
+ readdir copies to userspace
+Message-ID: <20261104-getreide-fallpauschalen-uralt-d366f2bf03b0@brauner>
+References: <20261102-work-procfs-bugfixes-v1-0-59422ed3e465@kernel.org>
+ <20261102-work-procfs-bugfixes-v1-35-59422ed3e465@kernel.org>
+ <sashiko-outbox-195507@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,147 +75,22 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR03MB7149:EE_|SEYPR03MB7507:EE_
-X-MS-Office365-Filtering-Correlation-Id: 67941dd2-c96d-41fc-c893-08df3a530407
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|22082099003|18002099003|4143699003|261022105027099003|5023799004|56012099006|261009223027099003|261026121527099003|261026140227099003|261028144727099003|261102123227099003|261021121427099003|261022075727099003|10067099003|11063799006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	CWSL1/0g73kJjyEEQdKsGaeciR9bHLbs5YVynNmumT6sc674vkYoMYwCHhTwl7ejR6MvgQqpMVLtRexv9sqQtHj4i13rqRnfFl15QNL6XUwN3rvndOHSLixLUD4ijL89EFpRB7vuF8Ve7+DQWPzHttCaMQ2KGsRw6aCEHDFa6B/aZrKA0lJIdhzhhoK83chr+qOq+RAC9MJbuDV5NzM9xSgyjt1J80ZQusFew+CXR5h34lsyX5LwyLQsHT8hBQl1ZR61b3AT7zuYURSg/2n6CwVL/qx0xYbOp44m3LSItuERxycRGo/uZRyZuv6+/ALzH1m33p7Nsh6bIi4/eniuhXpc+VVbTYQrcTeOWPAZC+S2VPw1ZoYHJ+tUDafKNB+MbCdSDu+YEoC5aRO2wTKWFvjpn+/aw65QqoZHgoN7wpPQ2DT52oOoFGOWL9C3Z4AF7dJTWY3wKOt+P3XCtS1KCon+F3BhEldRb01Z6Qg16neCgs14YN4Ls6gwKK5byQBchZI3Znjw+ei6fYU86C1r0Nl3ky0uSgtzhXWdomk+SChvoaZXZEpR+O1DA8L1j+Puzyj9auEPfAFWKR0CKyPhuix/m9o+jSWJcoOaGpfkBns=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR03MB7149.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(22082099003)(18002099003)(4143699003)(261022105027099003)(5023799004)(56012099006)(261009223027099003)(261026121527099003)(261026140227099003)(261028144727099003)(261102123227099003)(261021121427099003)(261022075727099003)(10067099003)(11063799006)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NjZnZ2pVYnNSMnFvaTZweHhsQVFJM3ZqL2pXZ3hLaW80dWx4b1JSV3ZFU3E2?=
- =?utf-8?B?aXd3OUo1QXg4UCtBT3FNRlpUbEpFc1lSaHZpT2l0ajZpaFNaNUlaenYyVlNY?=
- =?utf-8?B?VTNPK3NlM1pmOWkwOXBwNS9wdFhUMzgwWlo2SDZ3THdaekRHMHNkSkIza3R1?=
- =?utf-8?B?NEp1RTdTUlN2UlAycThhV2R2elFHRit4dmtZdmdrYUpMNnc3MzE4eGhlOEZq?=
- =?utf-8?B?bjdud0J3WHRGRmtGTXVacGJUYitoV3RTOWtRKzNzcDhubnhHZW1RdXdyRXds?=
- =?utf-8?B?SWRsUzRvM29EcTlpVXM2ajdldnFIbkZpajQxbkF1eDVuL29EUFhsUG1BMWRF?=
- =?utf-8?B?K0NVREpuK2piSWpNbTNvZDErSHJOQkdMTzVkZHFxOTJWRVRmdmdSa1pRR0NT?=
- =?utf-8?B?TW9EMHRHTXFlamZSMXRBSGNJZ3p1MkIxRkRwUU9kUEdYQ210RGl2dUVnZ3Vs?=
- =?utf-8?B?TG15UW9WMjJzSHB0RnBRL0JXVXJ2azB3d0JHbGpoTXUra0MycUgwRHBIaWhn?=
- =?utf-8?B?ekNKK0pucit0aFBJenBoSGxRTDl2bnZFZUpEbzJiWnpFMktYUCs3M1daeTR1?=
- =?utf-8?B?NHFTWVhQKzJUNWFSQW5YQzk3TGdONFRqa2pYY3hoQk9qYktueXpJbmswcktm?=
- =?utf-8?B?cGlKMCtYMjFVR1o1VDhLSXNsZ285WWs0N1gzc3RqV2dHVXJ0aTA4dmJPRUdL?=
- =?utf-8?B?ejA3K2orTlRwemRaSUtmLzBneWdnd1RKRHpVNDlScW9hNFpSdlVlSkxhUDFr?=
- =?utf-8?B?VDJYODMwUlRHaXRNaFZjejNGS25oRkpKVU9pZmFvRVBYbXo5NVJ4dzRraVVR?=
- =?utf-8?B?b0RSYzV3T2d3WVAwTEhUQmJ1V0Y5ZFFZekluakl5czNLS05xN21DZnVJemYy?=
- =?utf-8?B?RXFTZWdydk1XZG94S2xwZ3luSGlkUWk1U1YzNGZGZUxnUEs2dXNTL2ZFUkE2?=
- =?utf-8?B?TlU1cWhPOUM0SmJhN0VzQWdMb2l6VkJUaXJtcnhOQlNDdmdEZTBUTGJhNmJx?=
- =?utf-8?B?b2lIU0dhOTJNVnFYTExSdi9VVmw3YXhBVnlEdW5Hd3MyZE9DUFo3NlZ5L3V4?=
- =?utf-8?B?ZnNIY3ZJL0tTNTUyd1ZrT0JPWHIzV2taM2F6Y2s3aDhtNXdyZGhDcHRtZm1Z?=
- =?utf-8?B?bHQ2VE5MVjVxbDMvcktscjVtZUhzQm81UnR3NHcvRjlwR1VxbXAxdys4ajFK?=
- =?utf-8?B?blptNUh5SFR3MXNpRDhBaG9IYVY3SnV2S0prY0VVVGMwVyt4V0hNMC8rQ1pu?=
- =?utf-8?B?M2lRN0t0NXMva25QR0NUMG9GWXI1cFZIZ0o4SnBNQnM1eEQyTnE2YjlwZC94?=
- =?utf-8?B?VkZySHZ3bWZGYk9TeDNScFhseDc1aEtDUVROWWhjRytjQXNOSkt6THZvdzB6?=
- =?utf-8?B?dkdVNjgxSGt2U3QzUk01UVU5NW8xRHJNaVA5TXJGRi9IYmVwOWlvTWdJMFo4?=
- =?utf-8?B?SGN1REcwU2laRnNyNEJSY1NtcDNrOGNCTndyTzdDZEl0Ri9rUlk3OFJyMnlY?=
- =?utf-8?B?Qm4xN09tUkMwRGJPSkxaTDFYYUorSVFSdFh3aTdIVEI5U2V6Y0xxOEpSbXdj?=
- =?utf-8?B?S2xWYnJTRVJmUXhJajIxeUEvYTNENWFQeS9GQm9HRFYvL1hJOFhJKzdWekxF?=
- =?utf-8?B?anFJYWRQazJHbnhOOUVrMnBCVGgvV0VxMXEzMDZXaDB6WXNvMURId1lQcnZu?=
- =?utf-8?B?UDdXTGRmWGtKSCt0RXpodlJVVjgxZWJtbnRGR2RoVmhLZnFjRUt6elB0MHZS?=
- =?utf-8?B?SDZrTXJTQnh0TlRnbmJPOXcwWS8vT1NhOXFDWWNoMVJsVG1oZ1lpRytUa2lO?=
- =?utf-8?B?YzBnQktIWlN6Tk90ODRsOU1TTXErSWdMYklJMWdEY0x0OFJXY0VCczZtZ2Fm?=
- =?utf-8?B?NlVoNFd4MGZmSVJkYUwwTWkzbXcyN2Zkem9ySXRZWjlSbFRUWDVudFdaMHA4?=
- =?utf-8?B?endoampUazlZNmRBUzNFd3dEekJSQktuTTR5QUdvTUtMNUVad2RHRWR0VldE?=
- =?utf-8?B?U0NsM21iM1E0ejk1TTN4MUdNMklxNmtiOVl3L2JpbEY3V1VyRzN6cklYZ0VE?=
- =?utf-8?B?ZUVVNi9PL2NsSVlpRnduQXBxL0xsaFUrdmFsL0FQYnpqQWpaUWJVZDlDbW5o?=
- =?utf-8?B?bjg1ME01Z3lyMmNPd3NKMDc5MEIwTkxwM1pNUzBONFVzdWI5U25qOFhiWmZ2?=
- =?utf-8?B?OE9kbnlXUys4TkxnTzR4QTFvb2J5bHROUW5GTU1tWFo1NHFYN1pDOEVieGpk?=
- =?utf-8?B?dTJ2a3hseHVkbHZuR1pQK3dvdVBpZHZ4MkFXRFBUcW9CdGk2SEJnRFN3NTBh?=
- =?utf-8?B?aDlwd2RxQXJnT011NzBiS1pMK1JMeWNPNVI1WG95dHlXWlFpU0NVUT09?=
-X-OriginatorOrg: amlogic.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67941dd2-c96d-41fc-c893-08df3a530407
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR03MB7149.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 09:07:13.5734
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AQK2hsa35b9oKTbKt5tlXiiCqhNZmAMGowXVEIH5GJIOZtAOAhZtbep9252xjkMOebT7x2GNx7g6XHjRdHAZhw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR03MB7507
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-195507@kernel.org>
 
+On Tue, Nov 03, 2026 at 02:48:38PM +0000, sashiko-bot@kernel.org wrote:
+> - [Medium] proc: sysctl: premature EOF and lost errors in proc_sys_readdir()
 
-On 10/29/2026 5:47 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] clk: divider: unhandled zero divisor in divider_ro_determine_rate()
-> --
->
-> commit 5ec3118aee2f03855552c58a4a8533e035b565bc
-> Author: Jian Hu <jian.hu@amlogic.com>
->
-> clk: divider: add CLK_DIVIDER_INVALID_ZERO flag
->
-> This commit introduces the CLK_DIVIDER_INVALID_ZERO flag for dividers where
-> a zero divisor value represents an invalid hardware state rather than a
-> pass-through. When this flag is set and the divisor evaluates to zero,
-> divider_recalc_rate() returns 0 without emitting a warning.
->
->> diff --git a/drivers/clk/clk-divider.c b/drivers/clk/clk-divider.c
->> index f68216c65d3df..6c1523d22477c 100644
->> --- a/drivers/clk/clk-divider.c
->> +++ b/drivers/clk/clk-divider.c
->> @@ -143,6 +143,9 @@ unsigned long divider_recalc_rate(struct clk_hw *hw, unsigned long parent_rate,
->>
->>        div = _get_div(table, val, flags, width);
->>        if (!div) {
->> +             if (flags & CLK_DIVIDER_INVALID_ZERO)
->> +                     return 0;
-> [Severity: High]
-> Should divider_ro_determine_rate() in drivers/clk/clk-divider.c also handle
-> a zero divisor when CLK_DIVIDER_INVALID_ZERO or CLK_DIVIDER_ALLOW_ZERO is
-> set?
->
-> When a read-only divider has a register value val that maps to div == 0 via
-> _get_div() (for example, when CLK_DIVIDER_INVALID_ZERO is combined with
-> CLK_DIVIDER_ONE_BASED or an unmapped table entry alongside
-> CLK_DIVIDER_READ_ONLY), calling clk_round_rate() or clk_set_rate() invokes
-> clk_divider_determine_rate()->divider_ro_determine_rate():
->
-> drivers/clk/clk-divider.c:divider_ro_determine_rate() {
->          int div;
->
->          div = _get_div(table, val, flags, width);
->
->          /* Even a read-only clock can propagate a rate change */
->          if (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) {
->                  if (!req->best_parent_hw)
->                          return -EINVAL;
->
->                  req->best_parent_rate = clk_hw_round_rate(req->best_parent_hw,
->                                                            req->rate * div);
->          }
->
->          req->rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, div);
->
->          return 0;
-> }
->
-> Unlike divider_recalc_rate(), divider_ro_determine_rate() does not check for
-> !div before calling DIV_ROUND_UP_ULL(), which will trigger a division by zero
-> in the kernel when div is 0.
+This is pre-existing. proc_sys_make_inode() refuses a table that is
+being unregistered since ace0c791e6c3 ("proc/sysctl: Don't grab i_lock
+under sysctl_lock."). The old proc_sys_readdir() stops at an entry the
+same way.
 
+We can fix this by skpping the entry.
 
-In this patch, the dividers which set CLK_DIVIDER_INVALID_ZERO use 
-divider_determine_rate(),
+> - [Low] proc: sysctl: unused mode field in struct sysctl_dirent
 
-not divider_ro_determine_rate().
+Dropped.
 
-
-divider_ro_determine_rate() is used for read-only dividers, which do not 
-have CLK_DIVIDER_INVALID_ZERO
-
-set in the current implementation.
-
-
-
-Therefore, a zero divisor caused by CLK_DIVIDER_INVALID_ZERO cannot occur in
-
-divider_ro_determine_rate(), and no additional check is needed here.
-
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261029-meson_refactor_n-v2-0-ff4ac74e527b@amlogic.com?part=2
+-- 
