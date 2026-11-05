@@ -1,51 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=5.135.140.105
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.20
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793908409;
-	b=X+3s3w49G+mSMlDvs9tPOnmnSku0PW1+n4FIhc8if6U2yfLydBA0T8L17uNw9ZpJhauc
-	 7bAY8E+Iud2J/xMEPHQvusyRrKT8C6YpZZP0sswd+A/7o7p3UzJy5/OOi/uznZuIZMm22
-	 z2J/k6gDjNR4dOqc505GEK3kKUw/DmUlfiI6YVGgzY7aPCshmSGvkHCCfdMKxdtKbHYiS
-	 WffykYYePFgMlRuKbNOD1O6DA9oWWOkeEF/siHt7ph8CW8RXhWkqAVuvxUg2ZaeEGUs+i
-	 r9BA2pk0NXhd/NWxNE3BwdYa48a+q7H59sOfIsCG8gTMxhe7T3UQWcAlguptWOqei6Q==
+	t=1793909029;
+	b=libvFiD+2OAs2S7bXyO6v1ORj39qx7skIp3voDV+dcXv5lWfcug5WEeygx+qc3bRmVxJ
+	 tgh+YK2BaEGew5tlbyTj7OmjbRRZljxKTEC3kcvNpVY2Y8tDKMnmBmtC9Tm/8isBnpm+O
+	 Wg6tPEO2faRgXqTkRZ3huD12QeApi6yDx4UWQczVTip+ye/3FBUxg9pq2MMbv3osMFsWW
+	 n9+Jw5xyn4C2LeGLaKtkv8AQOImJQgaOxyXCb3NaWhLiU86XgvpvdVJ+3u8Ahavm9UaJh
+	 J2SHwYAdkDIyeyyg1auAyHy4CiSoFucuHCzDHlhZTglfJEmDn69QKb8NsVZUs5BRdeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793908409;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Last-TLS-Session-Version;
-	bh=++B6g1rkbix+J1oVVYsPSBASK99MRRkm+UybAj51+pk=;
-	b=O7BfMDfAtvbn669j0OrwQNlJ4JDb1uqQXP2HgCva2xdubGwdJjemDAoZPJf5YrZAm1rV
-	 bWkzJd8R7Fx9lfMuhtMN3l1fujqwnAprSJG/qDn0a0j5nlKSIqs/EEXTePI3YEKNLu8X1
-	 Aciko99osSEBt4vyBOltVPpXIa+fp+R6P9cVcD49DpZVdHf/0Et/0mkd68Z7rxNIV8YVw
-	 fcvfhqQApCngPh6kE2NJycP68/YpWKZgtxDQL1n8u2TgQdTwmF0ICQOiZ7VFUpqpRmpMn
-	 Gr0p+FrFoyhK477+Ap7V+eqmZl0/rOmf2vD+XjlBae5Oeb+rY2emPrJNmYaVgjZ0vlA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793909029;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=2tgQXv11n9NlTN7zs0J0+LDgE0ByTAXmTbj8VE4zSKg=;
+	b=pITRSUTWaa8lJEdaW9Tm8teMqCdqxgntRztLDhqfzCiJShv47utJ+z8R6Q8gzMbPJX/x
+	 7GRQCHRdeJpWbR0vIqDQ8TDwrhyTyE3N5rJxd4mk0REMqqg/tGsP8rlkzx5blaVVUTo4v
+	 2n4InIa+1Jd2LLpK3QyEP2jSdc2SJ8G8MuH2c4AqOiPxS/QbRcjung0ik8KERHbnfd4WG
+	 0Kug/nn+DXd4daK/bYWRvUcYSf1DP7yILRyIzVtGIBCnuIiazRnvaytjIhL7GBhS9K6zc
+	 Rz/fnE4TqfYi6VE5SGoHFP2G9TiI2/qrh8oSTPxLmKgz3TfHc0XeCs3N778B5X+yOGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cjdns.fr;
-	spf=pass smtp.mailfrom=cjdns.fr;
-	dkim=pass header.d=cjdns.fr header.i=@cjdns.fr header.a=rsa-sha256 header.s=dkim header.b=wSYtsYAs;
-	arc=none smtp.remote-ip=5.135.140.105
-Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=f+ArmPie;
+	arc=none smtp.remote-ip=198.175.65.20
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DF6606A329
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 19:53:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76DF6606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cjdns.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C99606A331
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 20:03:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63C99606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=cjdns.fr header.i=@cjdns.fr header.a=rsa-sha256 header.s=dkim header.b=wSYtsYAs
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8C18432B8FF;
-	Thu,  5 Nov 2026 20:53:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1793908405; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=++B6g1rkbix+J1oVVYsPSBASK99MRRkm+UybAj51+pk=;
-	b=wSYtsYAsUb960aUgA1GWBofzaiglpxSqSHq1WZ3WmAUxP4E7IoIIGUoSbVy70Dko1Kb3Cj
-	/qaAmF8es6fkxHBb65ZqgqUBt+uw3vpC0MBurUWP+fH2iRFqvlJOCT+EFUtGpjm0V7q461
-	U5XgUk4z5CxDPx6j/oiX8cgokyLqtCnuqqiEU8os9q8DAaUg4cUxDzpk+lEmwIoH3CJXRx
-	9fIbYpdnZ123ZKVrlHzJJ+gWz4TnGykpWtflvKARUQ8e/UwlGnBW8j1H+AJKDsOdYilw5r
-	kkZX/vK9rDWEIExB7OtbhUwVsbufZos5VrRG7Veyqp7AOK1/G7MBuxieMlVBAw==
-Message-ID: <4b77a67c-7dd3-4366-8fa6-802f57cc61de@cjdns.fr>
-Date: Thu, 5 Nov 2026 20:53:23 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=f+ArmPie
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793909027; x=1825445027;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=IkT3wG0ljsHh6GDzk1gcu6H0ddP0MdUwL3TTSMJ8k7A=;
+  b=f+ArmPieeqSYBtlluH42pYsvgP8poV81uuZPuStDKZsmksTBrxxV5186
+   0Smhoe1sUhv9A8vGv4cFyo4GMqJTRFX2JEyPQQe8Gw+u/BqBv0wkuD/ft
+   5GijeHdvTnPCe77jQ3gGKjdvD2Fh5N6SZ8LhvatBnOyuvGLNYZNdtzRX+
+   +Vd9Eee5763Lbkg8Ykd0eGEniH+ULcvFk5XzsuZyGBm94n0bS9/ZMvjEv
+   DyAnAGUTWaEF3Fo23hN2uzTS0hg/zGcpxsAETad9xTzUEvjx8FNmWyixU
+   XkEWTQONcbdkQA0Pqq3BR9Ve1thShYH97c1A3QOfUA+JNdzd72YR5MBZO
+   w==;
+X-CSE-ConnectionGUID: iWT5ansrToWVq0SguNqMUA==
+X-CSE-MsgGUID: FUR5AMCNTe6R7WVuq+vU5w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11957"; a="2748881"
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="2748881"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 12:03:47 -0800
+X-CSE-ConnectionGUID: rTkA6/19T/G9DkFQ0ViKmw==
+X-CSE-MsgGUID: UCzAoFkvR6SjwcpnTi4AHg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="7665006"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.198])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 12:03:46 -0800
+Date: Thu, 5 Nov 2026 22:03:42 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH 1/9] drm/i915/de: Introduce dislay->mmio and
+ intel_de_init()
+Message-ID: <auzhHpgXyxfGWGA3@intel.com>
+References: <20261104221842.18799-1-ville.syrjala@linux.intel.com>
+ <20261104221842.18799-2-ville.syrjala@linux.intel.com>
+ <sashiko-outbox-198229@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -55,377 +81,135 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v4 7/7] net: dsa: mediatek: support EN751221 switch
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261029184202.1859843-1-cjd@cjdns.fr>
- <20261029184202.1859843-8-cjd@cjdns.fr> <sashiko-outbox-191442@kernel.org>
-Content-Language: en-US
-From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <sashiko-outbox-191442@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-198229@kernel.org>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-
-On 30/10/2026 20:22, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] net: dsa: mt7530: missing MT7530_CHG_TRAP setup for ID_EN751221
-> - [High] net: dsa: mt7530: recursive reg_mutex lockdep class in MMIO-MDIO hierarchy
-> - [Medium] net: dsa: mt7530: swapped default_taps in en751221_trgmii_pair_setup()
-> - [Medium] net: dsa: mt7530: missing child_bus mdio_lock in core_write() and core_rmw()
-> - [Medium] net: dsa: mt7530: race with peer phylink in mt7530_cal_interswitch_trgmii()
+On Wed, Nov 04, 2026 at 10:31:47PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] drm/i915/de: NULL display->mmio.uncore when intel_de_init() is skipped
 > --
->
-> commit fcbb4fdaccb60b7ebd8ef125ae65f04744031511
-> Author: Caleb James DeLisle <cjd@cjdns.fr>
->
-> net: dsa: mediatek: support EN751221 switch
->
-> This patch adds support for the EcoNet EN751221 on-die MT7530 switch and the
-> optional external MCM MT7530 switch, along with startup calibration for the
-> TRGMII link connecting them.
->
->> diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
->> index 24e4485624d39..447c80455460e 100644
->> --- a/drivers/net/dsa/mt7530.c
->> +++ b/drivers/net/dsa/mt7530.c
->> @@ -49,6 +49,9 @@ static const struct mt7530_mib_desc mt7530_mib[] = {
->>   static int
->>   mt753x_ctrl_phy_addr(struct mt7530_priv *priv)
->>   {
->> +	if (priv->id == ID_EN751221)
->> +		return 12;
->> +
->>   	if (WARN_ON_ONCE(!priv->mdiodev))
->>   		return 0;
->>   
->> @@ -349,12 +352,19 @@ mt7530_setup_port6(struct dsa_switch *ds, phy_interface_t interface)
->>   	regmap_read(priv->regmap, MT753X_MTRAP, &xtal);
->>   	xtal &= MT7530_XTAL_MASK;
->>   
->> +	/* EN751221 on-die does not report clock speed in MTRAP */
->> +	if (priv->id == ID_EN751221)
->> +		xtal = MT7530_XTAL_25MHZ;
->> +
->>   	if (xtal == MT7530_XTAL_25MHZ)
->>   		ssc_delta = 0x57;
->>   	else
->>   		ssc_delta = 0x87;
->>   
->> -	if (priv->id == ID_MT7621) {
->> +	if (priv->id == ID_EN751221_EXT || priv->id == ID_EN751221) {
->> +		/* PLL frequency: 362.5Mhz */
->> +		ncpo1 = 0x1d00;
->> +	} else if (priv->id == ID_MT7621) {
-> [Severity: Medium]
-> When mt7530_mac_config() calls mt7530_setup_port6() on ID_EN751221, it invokes
-> core_clear(), core_write(), and core_set() on control PHY address 12.
->
-> On the MMIO-based ID_EN751221 switch, priv->bus is NULL and core_write() and
-> core_rmw() fall back to priv->child_bus:
->
-> drivers/net/dsa/mt7530.c:mt7530_mutex_lock() {
-> 	if (priv->bus)
-> 		mutex_lock_nested(&priv->bus->mdio_lock, MDIO_MUTEX_NESTED);
-> }
->
-> drivers/net/dsa/mt7530.c:core_write() {
-> 	...
-> 	if (!bus)
-> 		bus = priv->child_bus;
->
-> 	if (WARN_ON_ONCE(!bus))
-> 		return;
->
-> 	mt7530_mutex_lock(priv);
->
-> 	/* Write the desired MMD Devad */
-> 	ret = bus->write(bus, ctl_phy, MII_MMD_CTRL, MDIO_MMD_VEND2);
-> 	...
-> }
->
-> Because mt7530_mutex_lock() and mt7530_mutex_unlock() only check priv->bus,
-> priv->child_bus->mdio_lock is not acquired when priv->bus is NULL. While
-> mt7531_ind_c22_phy_read() and mt7531_ind_c22_phy_write() acquire
-> priv->reg_mutex for each individual Clause 22 transfer, can the multi-step
-> MII_MMD_CTRL / MII_MMD_DATA sequence and read-modify-write in core_write() and
-> core_rmw() interleave with concurrent MDIO transactions on priv->child_bus
-> (such as phylib polling or regmap accesses to the downstream ID_EN751221_EXT
-> switch)?
-
-
-This issue was noted here: 
-https://lore.kernel.org/sashiko-reviews/492da787-471d-4923-b6ad-6f6cb113b19e@cjdns.fr/
-
-It only affects MMIO chips using core_*() functions (i.e. the EcoNets) 
-and it is not showing trouble in testing. I think the correct fix is to 
-replace the guts of core_write and core_rmw with calls to 
-phy_write_mmd() but that affects everyone and needs to be validated - 
-and I'd be inclined to send such a patch, but I feel that adding it here 
-makes this patchset more difficult to review, not less. So I'm probably 
-going to leave this one alone for the moment.
-
-
->
+> 
+> commit 0c47f694d22974ac99844e39b462f72389dd014b
+> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
+> 
+> drm/i915/de: Introduce dislay->mmio and intel_de_init()
+> 
+> This commit adds a display->mmio struct and intel_de_init() to initialize
+> display->mmio.uncore, and updates __to_uncore() to return display->mmio.uncore
+> instead of calling to_intel_uncore(display->drm).
+> 
 > [ ... ]
->
->> @@ -471,6 +481,251 @@ mt7531_pll_setup(struct mt7530_priv *priv)
->>   	usleep_range(25, 35);
->>   }
->>   
->> +static bool
->> +en751221_trgmii_cal_ok(struct mt7530_priv *rx, u32 reg)
->> +{
->> +	u32 val = 0;
->> +
->> +	regmap_read(rx->regmap, reg, &val);
->> +	regmap_write(rx->regmap, reg, val | EDGE_CHK);
->> +	regmap_write(rx->regmap, reg, val & ~EDGE_CHK);
->> +	regmap_read(rx->regmap, reg, &val);
->> +
->> +	return FIELD_GET(RD_VALUE_MASK, val) == TGMII_TD_PAT &&
->> +	       !FIELD_GET(RD_ERR_MASK, val);
->> +}
->> +
->> +static void
->> +en751221_trgmii_calibrate_direction(struct mt7530_priv *tx,
->> +				    struct mt7530_priv *rx,
->> +				    u8 *default_taps)
->> +{
+> 
+> > diff --git a/drivers/gpu/drm/i915/display/intel_de.h b/drivers/gpu/drm/i915/display/intel_de.h
+> > index d0a239a369807..f1135ee5071b4 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_de.h
+> > +++ b/drivers/gpu/drm/i915/display/intel_de.h
+> > @@ -14,9 +14,11 @@
+> >  
+> >  static inline struct intel_uncore *__to_uncore(struct intel_display *display)
+> >  {
+> > -	return to_intel_uncore(display->drm);
+> > +	return display->mmio.uncore;
+> >  }
+> 
 > [ ... ]
->
->> +		if (best_tap > -1) {
->> +			regmap_update_bits(rx->regmap, rx_reg, RD_TAP_MASK,
->> +					   RD_TAP(best_tap));
->> +
->> +			log[best_tap] = 'X';
->> +
->> +			dev_info(rx->dev,
->> +				 "TRGMII lane %d: %s tap %d old %d\n",
->> +				 channel, log, best_tap, default_taps[channel]);
->> +		} else {
->> +			regmap_update_bits(rx->regmap, rx_reg, RD_TAP_MASK,
->> +					   RD_TAP(default_taps[channel]));
->> +
->> +			dev_warn(rx->dev,
->> +				 "TRGMII lane %d: %s calibration failed, preserving tap %u\n",
->> +				 channel, log, default_taps[channel]);
->> +		}
-> [ ... ]
->
->> +static void
->> +en751221_trgmii_pair_setup(struct mt7530_priv *ext, int ext_port,
->> +			   struct mt7530_priv *ondie, int ondie_port)
->> +{
-> [ ... ]
->
->> +	/* BOTH: Collect and then zero every RX TAP */
->> +	for (channel = 0; channel < NUM_TRGMII_CTRL; channel++) {
->> +		reg_val = 0;
->> +		regmap_read(ext->regmap, MT7530_TRGMII_RD(channel), &reg_val);
->> +		default_taps_ext[channel] = FIELD_GET(RD_TAP_MASK, reg_val);
->> +		regmap_clear_bits(ext->regmap, MT7530_TRGMII_RD(channel),
->> +				  RD_TAP_MASK);
->> +
->> +		reg_val = 0;
->> +		regmap_read(ondie->regmap, MT7530_TRGMII_RD(channel), &reg_val);
->> +		default_taps_ondie[channel] = FIELD_GET(RD_TAP_MASK, reg_val);
->> +		regmap_clear_bits(ondie->regmap, MT7530_TRGMII_RD(channel),
->> +				  RD_TAP_MASK);
->> +	}
->> +
->> +	en751221_trgmii_calibrate_direction(ondie, ext, default_taps_ondie);
->> +	en751221_trgmii_calibrate_direction(ext, ondie, default_taps_ext);
-> [Severity: Medium]
-> Are default_taps_ondie and default_taps_ext swapped in these two calls to
-> en751221_trgmii_calibrate_direction()?
-
-
-Seems so, will fix.
-
-
->
-> In en751221_trgmii_calibrate_direction(tx, rx, default_taps), default_taps is
-> used to log the previous RX tap value on rx->dev and to restore rx->regmap's
-> MT7530_TRGMII_RD(channel) register if calibration fails. Passing
-> default_taps_ondie when rx is ext (and default_taps_ext when rx is ondie) uses
-> the peer switch's saved RX taps instead of rx's own saved taps.
->
->> +
->> +	dev_info(ondie->dev, "TRGMII inter-switch link initialized\n");
->> +}
->> +
->> +static void
->> +mt7530_cal_interswitch_trgmii(struct dsa_port *dp)
->> +{
->> +	struct dsa_switch *ds = dp->ds;
->> +	struct dsa_switch *peer_ds;
->> +	struct dsa_port *peer_dp;
->> +	struct mt7530_priv *peer;
->> +	struct mt7530_priv *priv;
->> +	struct dsa_link *dl;
->> +	u32 pmsr = 0;
->> +
->> +	priv = ds->priv;
->> +
->> +	if (priv->id != ID_EN751221_EXT)
->> +		return;
->> +
->> +	if (dp->type != DSA_PORT_TYPE_DSA)
->> +		return;
->> +
->> +	regmap_read(priv->regmap, MT7530_PMSR_P(dp->index), &pmsr);
->> +
->> +	if (!(pmsr & PMSR_LINK))
->> +		return;
->> +
->> +	list_for_each_entry(dl, &ds->dst->rtable, list) {
->> +		if (dl->dp != dp)
->> +			continue;
->> +
->> +		peer_dp = dl->link_dp;
->> +
->> +		if (peer_dp->type != DSA_PORT_TYPE_DSA)
->> +			continue;
->> +
->> +		peer_ds = dl->link_dp->ds;
->> +
->> +		if (!of_device_is_compatible(peer_ds->dev->of_node,
->> +					     "econet,en751221-switch"))
->> +			continue;
->> +
->> +		peer = peer_ds->priv;
->> +
->> +		if (peer->id != ID_EN751221)
->> +			continue;
->> +
->> +		en751221_trgmii_pair_setup(priv, dp->index, peer,
->> +					   peer_dp->index);
->> +	}
->> +}
-> [Severity: Medium]
-> Can mt7530_cal_interswitch_trgmii() race with the peer port's phylink_resolve()
-> work item?
-
-
-Yes, this is indeed possible. Inter-switch calibration needs to touch 
-registers of both switches, that's unavoidable. Taking out the 
-dp->pl->state_mutex is impossible because it's private. The right 
-solution is probably to make mt7530.c take the reg_mutex *every* time it 
-touches the regmap, but that's another change - and a pretty invasive one.
-
-So while I don't like it, I think the best course of action is to leave 
-this as it is.
-
-
->
-> When dsa_tree_setup_ports() enables the DSA ports on both switches, each port
-> schedules its own phylink_resolve() work item holding only its own
-> dp->pl->state_mutex. In mt753x_phylink_mac_link_up(), priv->regmap's
-> MT753X_PMCR_P(dp->index) has just been written with PMCR_FORCE_LNK right
-> before calling mt7530_cal_interswitch_trgmii(dp), so checking PMSR_LINK on
-> priv->regmap checks the local port rather than peer->regmap's
-> MT7530_PMSR_P(peer_dp->index).
->
-> While en751221_trgmii_pair_setup() forces MT753X_PMCR_P(ondie_port) down and
-> sleeps in usleep_range(5000, 6000) twice during TX/RX reset, could peer_dp's
-> phylink_resolve() run concurrently on another worker and call
-> mt753x_phylink_mac_link_up() on ondie_port mid-reset? Also, when
-> en751221_trgmii_pair_setup() writes mcr_up to MT753X_PMCR_P on both ports,
-> does it overwrite PMCR_FORCE_TX_FC_EN and PMCR_FORCE_RX_FC_EN configured by
-> mt753x_phylink_mac_link_up()?
->
->> @@ -1459,7 +1714,8 @@ mt7530_port_enable(struct dsa_switch *ds, int port,
->>   
->>   	mutex_unlock(&priv->reg_mutex);
->>   
->> -	if (priv->id != ID_MT7530 && priv->id != ID_MT7621)
->> +	if (priv->id != ID_MT7530 && priv->id != ID_MT7621 &&
->> +	    priv->id != ID_EN751221 && priv->id != ID_EN751221_EXT)
->>   		return 0;
->>   
->>   	if (port == 5)
->> @@ -1486,7 +1742,8 @@ mt7530_port_disable(struct dsa_switch *ds, int port)
->>   
->>   	mutex_unlock(&priv->reg_mutex);
->>   
->> -	if (priv->id != ID_MT7530 && priv->id != ID_MT7621)
->> +	if (priv->id != ID_MT7530 && priv->id != ID_MT7621 &&
->> +	    priv->id != ID_EN751221 && priv->id != ID_EN751221_EXT)
->>   		return;
+> 
+> > diff --git a/drivers/gpu/drm/i915/display/intel_display_device.c b/drivers/gpu/drm/i915/display/intel_display_device.c
+> > index c74256359c253..f1bd1252a9602 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_display_device.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_display_device.c
+> > @@ -1798,6 +1798,13 @@ static void __intel_display_device_info_runtime_init(struct intel_display *displ
+> >  	struct intel_display_runtime_info *display_runtime = DISPLAY_RUNTIME_INFO(display);
+> >  	enum pipe pipe;
+> >  
+> > +	/*
+> > +	 * TODO end of intel_display_device_probe() would be a more
+> > +	 * logical place, but at the moment i915 calls that super
+> > +	 * early when things aren't fully set up yet.
+> > +	 */
+> > +	intel_de_init(display);
+> 
 > [Severity: High]
-> Do the updates to MT753X_MTRAP for ID_EN751221 in mt7530_port_enable(),
-> mt7530_port_disable(), mt7530_setup_port5(), and mt7531_setup_common() take
-> effect without MT7530_CHG_TRAP being set?
+> Can this leave display->mmio.uncore NULL and cause a NULL pointer dereference
+> when HAS_DISPLAY(display) is already false before runtime init?
+> 
+> In drivers/gpu/drm/i915/display/intel_display_device.c,
+> intel_display_device_info_runtime_init() only calls
+> __intel_display_device_info_runtime_init() when HAS_DISPLAY(display) is true:
+> 
+> void intel_display_device_info_runtime_init(struct intel_display *display)
+> {
+> 	if (HAS_DISPLAY(display))
+> 		__intel_display_device_info_runtime_init(display);
+> 
+> On devices where intel_display_device_probe() sets DISPLAY_INFO() to
+> no_display—such as Ivybridge Quanta server SKUs (INTEL_IVB_Q_IDS via
+> has_no_display()), PCI IDs without an entry in intel_display_ids like Arctic
+> Sound-M (INTEL_ATS_M_IDS where find_platform_desc() returns NULL), or GMD_ID
+> platforms (INTEL_MTL_IDS / INTEL_ARL_IDS) where probe_gmdid_display() reads 0
+> from GMD_ID_DISPLAY—HAS_DISPLAY(display) is false and
+> __intel_display_device_info_runtime_init() is skipped.
+> 
+> Because __to_uncore(display) in drivers/gpu/drm/i915/display/intel_de.h now
+> returns display->mmio.uncore instead of computing
+> to_intel_uncore(display->drm), any subsequent unconditional intel_de_*() call
+> will pass a NULL struct intel_uncore pointer to intel_uncore_read*() or
+> intel_uncore_write*():
+> 
+> 1. On INTEL_IVB_Q_IDS, ilk_irq_handler() in drivers/gpu/drm/i915/i915_irq.c
+>    unconditionally calls ilk_display_irq_master_disable() and
+>    ilk_display_irq_master_enable() in
+>    drivers/gpu/drm/i915/display/intel_display_irq.c on every interrupt, which
+>    call intel_de_read_fw(display, DEIER) and intel_de_write_fw(display, DEIER,
+>    ...).
 
+This one's a bit funny because it uses the 'no_display' device
+info, and that one doesn't even populate ip.ver. So once all
+the mmio stuff is fully implemented inside the display code
+this will fall through the platform if-ladder all the way to
+the i9xx mmio funcs. But that should be fine since it only uses
+the _fw() stuff anyway and there won't be any difference for
+those. Only LNL will need special _fw() stuff due to the
+nasty read vs. write ordering workaround.
 
-Indeed this bit is not being set, I will add a new setup function for 
-EcoNet (i.e. MMIO mt7530 chips).
+> 
+> 2. On INTEL_ATS_M_IDS and headless GMD_ID platforms, gen11_irq_handler() and
+>    dg1_irq_handler() unconditionally call gen11_gu_misc_irq_ack() in
+>    drivers/gpu/drm/i915/display/intel_display_irq.c when GEN11_GU_MISC_IRQ is
+>    set, which calls intel_de_read_fw(display, GEN11_GU_MISC_IIR) and
+>    intel_de_write_fw(display, GEN11_GU_MISC_IIR, iir).
 
+I think I'll just move the irq_ack() part to i915_irq.c where it belongs,
+and leave the handler part in the display. The handler should be fine
+to call without display since it just calls some opregion thing that
+does nothing if opregion wasn't initialized.
 
->
-> In mt753x_table, ID_EN751221 uses mt7988_setup() -> mt7531_setup_common().
-> Unlike mt7530_setup(), which sets MT7530_CHG_TRAP in MT753X_MTRAP after
-> resetting the switch so that trap bits can be modified by software,
-> mt7988_setup() asserts and deasserts priv->rstc and then calls
-> mt7531_setup_common() without setting MT7530_CHG_TRAP in MT753X_MTRAP.
->
-> [ ... ]
->
->> @@ -3817,6 +4122,28 @@ const struct mt753x_info mt753x_table[] = {
->>   		.phy_write_c45 = mt7531_ind_c45_phy_write,
->>   		.mac_port_get_caps = en7528_mac_port_get_caps,
->>   	},
->> +	[ID_EN751221] = {
->> +		.id = ID_EN751221,
->> +		.pcs_ops = &mt7530_pcs_ops,
->> +		.sw_setup = mt7988_setup,
->> +		.phy_read_c22 = mt7531_ind_c22_phy_read,
->> +		.phy_write_c22 = mt7531_ind_c22_phy_write,
->> +		.phy_read_c45 = mt7531_ind_c45_phy_read,
->> +		.phy_write_c45 = mt7531_ind_c45_phy_write,
->> +		.mac_port_get_caps = en751221_mac_port_get_caps,
->> +		.mac_port_config = mt7530_mac_config,
->> +	},
->> +	[ID_EN751221_EXT] = {
->> +		.id = ID_EN751221_EXT,
->> +		.pcs_ops = &mt7530_pcs_ops,
->> +		.sw_setup = mt7530_setup,
->> +		.phy_read_c22 = mt7530_phy_read_c22,
->> +		.phy_write_c22 = mt7530_phy_write_c22,
->> +		.phy_read_c45 = mt7530_phy_read_c45,
->> +		.phy_write_c45 = mt7530_phy_write_c45,
->> +		.mac_port_get_caps = mt7530_mac_port_get_caps,
->> +		.mac_port_config = mt7530_mac_config,
->> +	},
-> [Severity: High]
-> When ID_EN751221_EXT is registered as an MDIO device on ID_EN751221's internal
-> MDIO bus (ondie->child_bus), both switches initialize priv->reg_mutex in
-> mt7530_probe_common() with the same lockdep class key.
+Although I suppose we shouldn't even unmask the GSE interrupt 
+if the display isn't there. Shouldn't be hard.
 
+> 
+> 3. During system resume, i915_drm_resume() in
+>    drivers/gpu/drm/i915/i915_driver.c unconditionally calls
+>    intel_gmbus_reset(display) in drivers/gpu/drm/i915/display/intel_gmbus.c,
+>    which calls intel_de_write_fw(display, GMBUS0(display), 0) and
+>    intel_de_write_fw(display, GMBUS4(display), 0).
 
-Noted here 
-https://lore.kernel.org/sashiko-reviews/492da787-471d-4923-b6ad-6f6cb113b19e@cjdns.fr/ 
-and will be addressed.
+Yeah, I remember seeing that before and thinking that it's very
+much misplaced. I'll look into moving that into the display code.
 
+> 
+> Should intel_de_init(display) be called unconditionally at the start of
+> intel_display_device_info_runtime_init() before the HAS_DISPLAY(display)
+> check?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261104221842.18799-1-ville.syrjala@linux.intel.com?part=1
 
->
-> When an operation on the downstream ID_EN751221_EXT switch holds
-> ext->reg_mutex and accesses ext->regmap, the regmap MDIO callbacks invoke the
-> parent switch's child_bus operations, which acquire ondie->reg_mutex:
->
-> mt7530_setup() (on ext)
->    mt7530_port_disable()
->      mutex_lock(&ext->reg_mutex)
->      regmap_update_bits(ext->regmap, ...)
->        mt7530_regmap_write()
->          bus->write() (on ondie->child_bus)
->            mt753x_phy_write_c22()
->              mt7531_ind_c22_phy_write()
->                mutex_lock(&ondie->reg_mutex)
->
-> Will this nested acquisition of ondie->reg_mutex while ext->reg_mutex is held
-> trigger a lockdep recursive locking warning?
->
+-- 
+Ville Syrjälä
+Intel
