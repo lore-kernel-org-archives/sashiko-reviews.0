@@ -1,100 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.196.63
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793890256;
-	b=QSfDT321NOE6FmjOHzf4r1NPkuKKgwSeJgixiCA3LOUPzpS3gQ2gK/BBHAgqnn5Rc1l0
-	 XGDfDgJN4byXu0/TRKYAKuPi3C6+4DayFBI1EHKI+FfkAhw+kdjT4X7LYIh5+pSR9BSLY
-	 w5vC51wR8y42M20AOyUuiC7tff3OP5j5UhO0FMek4ZEWab8D1YJrE8f+Iz6PIafTdrAPz
-	 KUrLDkDZ+t6/uKFTbQKOAnSZymAPxMO0CuCxd1CWi42yDBas4WtvF7dSp0w9JEdqykbvY
-	 fQQPRl5B1YnaPWHus6Vn5++jsePTKr+YPnt5W4u8Iwm2oC0v725U7rnjkiipE83I4Dw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793890256;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
-	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=pWNxwC1UYXJ+UDSIqs/+wAgC6MGTGehs82bXgC3QfKw=;
-	b=1tcfqy4wA3+Lvm5JTQnwvnXlFUza3Xe5AzTK+0q/J0sq+N0PgZ2ehcwH8AafII4oWJM/
-	 17nCUFp8aTTVn5lcLgOXCaGobYLWeGF4v/4UGO5If2pg+KWpnrr9P7XMV9eqUurDm4ap/
-	 ghnQelPBVTpODgadmHvyX9eVHa71+fHcRAdjfMtjeBfaCjvGYtKyHutPJRKSUsU4dyVE9
-	 smjHSqzMSwdRbfof/UHCm5vB/SdS8yyPZqguzvi5/WjxZjF9CqmfcQymntSeZWQR8WXgH
-	 MYzZ8utgHVDDWTHPah9rZIjI2CcvAL92vbnyzM2abRJkt1d72+fQLjL7zWqSpduEGUA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=UM4Pzvmo;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.196.63
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013063.outbound.protection.outlook.com [40.93.196.63])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.10
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793890726;
+	b=pt2baHCXQToozbDgg2M//D5K87TWylYZ5tKLbKuHhgd5sDBHFqZnyuiUKXGhXZZq77Hi
+	 V64ha0D0xlcWUENkBOIv0tU0S/DsdHQJ73rOMo0QAKa11hp5LPeR2JYClGN4F9L5mOtTK
+	 /xIwVx8gJVMA8xPkSr73AGsDrUhbXB6FUNnAPDA+ZMmtoKtKzviGiCZZd1d/vjuTLFi0j
+	 VnB5By4Q3rxrNWyCkRZafiUSFjbLRMqBT9B90wvQ7qoEOXNFGDiMISKwjlddz40jfnj5y
+	 BcZvpKgYmN6hWzBiinu93OE4DM0b5iAfQT1IsKYxrXsZPPkltN2CTqJvsS9FucPJAcQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793890726;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=dNovQPdPQeAck9zOt47B1afp4MIKve4PIvo0P4/2dfM=;
+	b=Sk2DJcFfV3KQc74qWb69pxGy4hKsWXqyfA1ngj7zpV23laZVMZgopp4ztw8P52izysYM
+	 dTZZQJr3nGKKqZOdV/gJ8nfczcUhvH2xZFhWWWNUgJbYslqAF+nMTzqRmeDmyYn8O6Ka9
+	 y8wkzCdTdY1fbJFchu2YjFpYfiddhr1R8YF28GfSUOCbj9gR8f3I+YB6YCSLs8IksCTrf
+	 Gz/RuvCnQAte3o3ltkaBJv1WLU4jFKs1Fw8JX1bVXAjTcrs2ah9eFiuagpmD/onEdPSu2
+	 qYTAxzPuVkL3JliYJ/IL30xe2+6897aDgUHA3Rhj/v3YaX2MbmeDyHQQIlMpuZuchKw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="FRs/uYCC";
+	arc=none smtp.remote-ip=192.198.163.10
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B038C606A33D
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 14:50:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B038C606A33D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E3D606A328
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 14:58:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2E3D606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=UM4Pzvmo
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tQ4+XjLevr36a8XevsgjjmMsTBndFYB1iwgTp3aYgp6thAHer7Ag3rC6AnYBfsZPknnYR2F5DmmolYIuDDvPWNuYlT5R6dl9cnfn80Wee52joyyJiyhJRR9LHmAsvYRc0PamxCwr1hLOhA1bFKvlDkDDoSaSTCLB4ln2j98iGLoqe5z0b79bxz4E5hivN4H/dluFDSpyhhLOxZKHCMII50s/jiOzgg4nToapTOlYUxjC2U+dRpkSNeJdZVBOLi0ELD7XAJnobskwOxUWaRidO8+uDwNz1kQdaiozfwJ9K9Mm4dyUVBZHfRyyS3dihagGa1oJCQsIBecvv5gTwa60ZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pWNxwC1UYXJ+UDSIqs/+wAgC6MGTGehs82bXgC3QfKw=;
- b=EmWCqvd/we7v64aQX/KCYJTlKifPYozY/DYSPrwAvb1UuLXpsQIF24jHVpaJ7b+Ta7D20OaLUs01EdC06HHqGI1zmq51582hSFdoc9h1jaBwOA8mRJOGC73Tv/bZRqhWVWhl1zN+jUwqIN8fN+OLL8ifXiBBiDrBAsmtJ42CJVGBH3vXdPzYJoPPRbTN48NAfxk2tU24gsccE+tqiPqPDEnPvN/3qY2qEHVw/qAMdLfv4QbyJYtGJwOuqezXjm1ovGDZJBcrtOn7r4OpXIu3u1XgvI96W8bixPJ3c2Xf21DVgj2idSysMC0zHHuoaQ0XB3hrAPgNFo3K8zThNkLMOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pWNxwC1UYXJ+UDSIqs/+wAgC6MGTGehs82bXgC3QfKw=;
- b=UM4PzvmoUAIskJOBECSzTwJpOIDfdbLfVx/O9lFN4UMrCo12TTDXH0njEm+QJM74SmGRSyHEYXbTDOp6YxzzpPni17Nix3YBGfy4EWp7KFSo1ZIxFQ3fpuS7EhS41FLUEHwfKsR8JAvVSNj3S7MukpC5RFAFVM8Sx+/otnrLQadDWM2d0D4EhrG/JXMt0N3QwQ35ooRsMRptgzwpQISbmHUSqOZ97lT3ukAsTrIGdtagqbTVB6YVz39aoTrtgqJz1wrHhBtNzocNBCcdp4cKg+u+F+JWfGwLlKNqBepqyRjz7F+wGz8OqK1ciXjQ8xddqMXQqXUY1e2A2PFAPw9XuA==
-Received: from PH7P220CA0125.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:327::18)
- by CY5PR12MB6082.namprd12.prod.outlook.com (2603:10b6:930:2a::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Thu, 5 Nov
- 2026 14:50:49 +0000
-Received: from SJ1PEPF000037B4.namprd05.prod.outlook.com
- (2603:10b6:510:327:cafe::a6) by PH7P220CA0125.outlook.office365.com
- (2603:10b6:510:327::18) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.10 via Frontend Transport; Thu, 5
- Nov 2026 14:50:49 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ1PEPF000037B4.mail.protection.outlook.com (10.167.244.196) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.592.5 via Frontend Transport; Thu, 5 Nov 2026 14:50:48 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 06:50:30 -0800
-Received: from [10.125.206.9] (10.126.230.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 06:50:28 -0800
-Message-ID: <506c391b-69bb-40e5-a9ff-d4f51aa3ac0b@nvidia.com>
-Date: Thu, 5 Nov 2026 16:50:25 +0200
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FRs/uYCC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793890725; x=1825426725;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=wbKZFsLDsWJlK/KOM5Fab8+bmKrfik5VlS3uY6KYKRo=;
+  b=FRs/uYCCeL0O3R5I8SDu7zHwkKmCdFeU2rynTmez4lo9T2+fII3x4zGa
+   unO+OQLCZI0G0mNeKOXyEiTNVnbt63gnQx87SIIyvgCgIfi+EOROKhzC7
+   MrP4YHl7HpuMzhemmU9ulj2SxHGYeC6oxfXnPIvz1fkzMeYiSfrRbf9zN
+   VzjneAKvEZ+i/eR2H00xInZcCuv9KGVts9Ypp27iM4GhMnKPTws6kD588
+   a5fYEIx0QkUS4ygmI/FpP6AFoEULH00xaIbqLXBuvpkM3xV/ppYIkJvie
+   8Ej4VEXJCRPZaOPke72Z422z9smYXg9RZXifZnh7VVjbwKARIDe3urtdo
+   A==;
+X-CSE-ConnectionGUID: 1Yz9+kQoS4qhYYHWlw3RRw==
+X-CSE-MsgGUID: ITu90DL9TD++J8wvd5h18Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11957"; a="2580398"
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="2580398"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 06:58:45 -0800
+X-CSE-ConnectionGUID: e4BJZBi3RgmWLDISOTQFjw==
+X-CSE-MsgGUID: tBTyXX1hTF2d9cXZT0ARdQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="7369312"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.198])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 06:58:42 -0800
+Date: Thu, 5 Nov 2026 16:58:39 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Hanson Wang <hanson.wang@ugreen.com>, intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/i915/dsb: Fill all padding before GOSUB
+Message-ID: <auyZnxZNyPcpjeYI@intel.com>
+References: <20261105134658.3724628-1-hanson.wang@ugreen.com>
+ <sashiko-outbox-199210@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,279 +80,108 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rdma-next 03/23] net/mlx5: Add capability filtering in
- adversarial mode
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-rdma@vger.kernel.org>, <dtatulea@nvidia.com>
-References: <20261103163949.1554-1-yishaih@nvidia.com>
- <20261103163949.1554-4-yishaih@nvidia.com> <sashiko-outbox-197656@kernel.org>
-Content-Language: en-US
-From: Yishai Hadas <yishaih@nvidia.com>
-In-Reply-To: <sashiko-outbox-197656@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF000037B4:EE_|CY5PR12MB6082:EE_
-X-MS-Office365-Filtering-Correlation-Id: 83116aee-953a-425e-a988-08df3b4c2e2f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|36860700016|82310400026|10067099003|260925021911599003|261026140227099003|260925022911599003|260925021311599003|261022075727099003|11063799006|4143699003|261022105027099003|261026121527099003|56012099006|261009223027099003|261028144727099003|261021135927099003|261021121427099003|261102123227099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	oq5e8dmpLOA96/akhVEuptFxHTAIJ8h7YshF1mV6QAzJNp37fH6IRHiTQ6UuaNMH+Y8GyEAGYCQpRMv3XJ7yh3SrxmhBhQ/td7qImiFPDWTtcR7oElbPiz+um7ZKmvkpV/SWuTiSXIA5RVDhcQeXo6YPTZw91Bw7k+/JKIVNdGwpy+M/p4ugjdBBDxpG4SPrAd1m8ATxcJDur4e3rTAIyBlgqiXJxz3m2DsswBU08kff42X/qwfESgBAiWnUecW05ZtvDJLiXLqDAqgsFLTUrRFIhTrTrFqb+URnbFOln0M86g22LxB/koJF0K+9n2frG6HyITec4rPbhELipbBz4DDhrRyosvtjFGnqDoPds+1CRw7Ai8u23am3X6b9wCMNxiKnyJg76Ckc4B12T6szWOEEFkPL8fVm9EhOYC0Q+Kz+wDkqB03cxCHqiObxqy8wTCT/0htV2g5NHWYdFP5tD6wCLCSUmKRTsrCA5orF+YhhFJLB8vbAea4vIeR1+GN/zxtUlbUSLkN/sCMWGiuBKr7bcghxfz8V1s79Hqf5sT9PEUA1Vh6G1bwlR7MW6PiYYZwD3a+LHJlfiZM3wFHJSkJiuP78aMpPty7948CinpTa10oqoeyl83yW0XzSpZW4pX5AlfLJJdOsiX+g5XhlcaoddstYTVb5aEMAoKHW5svhcodVqsQB2UfxQKavy4bvQXobRDdcp2cXzROp9osg/g==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(36860700016)(82310400026)(10067099003)(260925021911599003)(261026140227099003)(260925022911599003)(260925021311599003)(261022075727099003)(11063799006)(4143699003)(261022105027099003)(261026121527099003)(56012099006)(261009223027099003)(261028144727099003)(261021135927099003)(261021121427099003)(261102123227099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	fFkf9sCzmZf43NdauH39mbDEIAIMXgBp2wSS5qZR5dDOGw0+9u+NtnjwBZsxiKCayzFvIWAIq9z19Ex56Ymujq3999xhwTku2Jsk+LIdr6L26z8wNsaTs2r1gd5pFr304zs8cX+/9D0swBrdnP0Kz8y7ao3xJnL3nuML7N/tR8NWGhkNZgRWMYPhc3XuizqgLaTdo7REnT40KzhTckMcuHkJrqdxCFJw5etarxN4Gn3knmaUDvDOR3lpHl57IsRgc5qOdVjd6zehB05a2M60sRhUwsQ0zC3mEVtBVJ+BVdb6Ys2QFPojMWxTTH5gCyTeUqyUksCpwMIqXE80FI/CRVfgVAo5s3Ng1n3ItPDZrHfHu4cLBhB1IfEsQzQEm1P+4daVRUVVEiEI7xtA5ad6P5JEKV5ki5ZsyUqrA0e9AVKvNVR3CFhnFVrT+27yo3lo
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 14:50:48.7945
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 83116aee-953a-425e-a988-08df3b4c2e2f
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF000037B4.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6082
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-199210@kernel.org>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On 04/11/2026 18:43, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] net/mlx5: unclamped log_max_flow_counter_bulk causes OOB heap read
-> - [High] net/mlx5: unchecked minimum EQ caps cause divide-by-zero in alloc_cpu_rmap()
-> - [Medium] net/mlx5: incomplete log_min_mkey_entity_size check in caps_filter.c
-> - [Medium] net/mlx5: unclamped log_max_*_list caps overflow signed shift in en_fs.c
+On Thu, Nov 05, 2026 at 02:12:40PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] drm/i915/dsb: intel_dsb_gosub_align() duplicates intel_dsb_align_tail()
 > --
 > 
-> commit 8f36be5a60064c165f291709b6cbba37c28f527e
-> Author: Dragos Tatulea <dtatulea@nvidia.com>
+> commit 9778ee8e90748be72ffe6e979a8d71a200d84540
+> Author: Hanson Wang <hanson.wang@ugreen.com>
 > 
-> net/mlx5: Add capability filtering in adversarial mode
+> drm/i915/dsb: Fill all padding before GOSUB
 > 
-> This commit introduces capability filtering in adversarial mode by clearing
-> firmware capabilities by default and selectively allowing, clamping, or
-> validating fields in current and max HCA capabilities.
+> This commit updates intel_dsb_gosub_align() to zero all bytes skipped when
+> aligning free_pos to a cacheline boundary before emitting a GOSUB
+> instruction, rather than only zeroing the gap when at most two QW slots
+> remain.
 > 
->> diff --git a/drivers/net/ethernet/mellanox/mlx5/core/caps_filter.c b/drivers/net/ethernet/mellanox/mlx5/core/caps_filter.c
->> new file mode 100644
->> index 0000000000000..67b2603397450
->> --- /dev/null
->> +++ b/drivers/net/ethernet/mellanox/mlx5/core/caps_filter.c
->> @@ -0,0 +1,381 @@
+> > diff --git a/drivers/gpu/drm/i915/display/intel_dsb.c b/drivers/gpu/drm/i915/display/intel_dsb.c
+> > index 299d778520a22..83aeb3fc89425 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_dsb.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_dsb.c
+> > @@ -608,8 +608,13 @@ static void intel_dsb_gosub_align(struct intel_dsb *dsb)
+> >  	/*
+> >  	 * Wa_16024917128
+> >  	 * "Ensure GOSUB is not placed in cacheline QW slot 6 or 7 (numbered 0-7)"
+> > +	 *
+> > +	 * free_pos always advances to the next cacheline, so the skipped
+> > +	 * bytes remain inside the programmed command range. Fill the whole
+> > +	 * gap with NOPs; clearing only slots 6 and 7 leaves a larger gap
+> > +	 * uninitialized.
+> >  	 */
+> > -	if (aligned_tail - tail <= 2 * 8)
+> > +	if (aligned_tail > tail)
+> >  		dsb_buffer_fill(dsb, dsb->free_pos, 0, aligned_tail - tail);
+> >  
+> >  	dsb->free_pos = aligned_tail / 4;
 > 
-> [ ... ]
+> [Severity: Low]
+> Wa_16024917128 states that GOSUB must not be placed in cacheline QW slot 6
+> or 7 (where 0 < aligned_tail - tail <= 2 * 8). When tail is in QW slots 0
+> through 5, GOSUB is allowed at that slot, and the trailing
+> intel_dsb_align_tail(dsb) call at the end of intel_dsb_gosub() already pads
+> the instructions following GOSUB within that cacheline with NOPs:
 > 
->> +static int mlx5_adversarial_filter_general(struct mlx5_core_dev *dev, void *dst,
->> +					   void *src)
->> +{
->> +	int err;
->> +
->> +	memset(dst, 0, MLX5_UN_SZ_BYTES(hca_cap_union));
-> 
-> [ ... ]
-> 
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, eq_overrun_count);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, invalid_command_count);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, quota_exceeded_count);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_flow_counter_bulk);
-> 
-> [Severity: High]
-> Should log_max_flow_counter_bulk be clamped or range-checked here?
-> 
-> During initialization, mlx5_init_once() -> mlx5_fs_core_alloc() ->
-> mlx5_init_fc_stats() calls get_init_bulk_query_len():
-> 
-> drivers/net/ethernet/mellanox/mlx5/core/fs_counters.c:get_init_bulk_query_len() {
-> 	return min_t(int, MLX5_INIT_COUNTERS_BULK,
-> 		     (1 << MLX5_CAP_GEN(dev, log_max_flow_counter_bulk)));
-> }
-> 
-> Because log_max_flow_counter_bulk is an 8-bit field, if an untrusted device
-> reports 31, (1 << 31) overflows a signed 32-bit int to INT_MIN (-2147483648),
-> and get_init_bulk_query_len() returns -2147483648.
-> 
-> Then mlx5_fc_stats_bulk_query_buf_realloc() passes that negative bulk_len to
-> mlx5_cmd_fc_get_bulk_query_out_len():
-> 
-> drivers/net/ethernet/mellanox/mlx5/core/fs_cmd.c:mlx5_cmd_fc_get_bulk_query_out_len() {
-> 	return MLX5_ST_SZ_BYTES(query_flow_counter_out) +
-> 		MLX5_ST_SZ_BYTES(traffic_counter) * bulk_len;
-> }
-> 
-> Since MLX5_ST_SZ_BYTES(traffic_counter) is 16UL (size_t), multiplying 16UL by
-> (size_t)(-2147483648) produces 0xfffffff800000000UL, whose lower 32 bits are
-> 0. Truncating the result to int returns out_len = 16.
-> 
-> kvzalloc(16, GFP_KERNEL) then succeeds while fc_stats->bulk_query_len is set
-> to -2147483648. When mlx5_fc_stats_work runs
-> mlx5_fc_stats_query_all_counters() -> update_counter_cache(), could this read
-> flow_statistics[index] out of bounds past the 16-byte fc_stats->bulk_query_out
-> buffer?
-
-This capability is not used by RDMA.
-Currently, netdev doesn't handle adversarial flows.
-
-> 
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_rq);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_sq);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_tir);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, basic_cyclic_rcv_wqe);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_rqt);
->> +	MLX5_HCA_CAP_CLAMP(cmd_hca_cap, log_max_rqt_size, 0, 13);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, vnic_env_cnt_bar_uar_access);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, vnic_env_cnt_odp_page_fault);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, roce_rw_supported);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_wq_sz);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, vhca_state);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_vlan_list);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_current_mc_list);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_current_uc_list);
-> 
-> [Severity: Medium]
-> Can unclamped values in log_max_vlan_list, log_max_current_mc_list, and
-> log_max_current_uc_list overflow the signed shifts in en_fs.c?
-> 
-> In drivers/net/ethernet/mellanox/mlx5/core/en_fs.c,
-> mlx5e_vport_context_update_vlans() computes:
-> 
-> 	max_list_size = 1 << MLX5_CAP_GEN(fs->mdev, log_max_vlan_list);
-> 
-> 	if (list_size > max_list_size) {
-> 		fs_warn(fs, "netdev vlans list size (%d) > (%d) max vport list size, some vlans will be dropped\n",
-> 			list_size, max_list_size);
-> 		list_size = max_list_size;
-> 	}
-> 
-> 	vlans = kvcalloc(list_size, sizeof(*vlans), GFP_KERNEL);
-> 
-> and mlx5e_vport_context_update_addr_list() similarly computes:
-> 
-> 	max_size = is_uc ?
-> 		1 << MLX5_CAP_GEN(fs->mdev, log_max_current_uc_list) :
-> 		1 << MLX5_CAP_GEN(fs->mdev, log_max_current_mc_list);
-> 
-> Since these three capabilities are 5-bit fields (0..31), if an adversarial
-> device reports 31, (1 << 31) overflows a signed 32-bit int to INT_MIN
-> (-2147483648). The comparison list_size > max_list_size (or size > max_size)
-> then evaluates to true, setting the count to -2147483648 and passing
-> (size_t)(-2147483648) to kvcalloc() and kcalloc() without __GFP_NOWARN.
-
-These capabilities are not used by RDMA.
-Currently, netdev doesn't handle adversarial flows.
-
-> 
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, sq_ts_format);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, rq_ts_format);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, steering_format_version);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, create_qp_start_hint);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, ats);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, cross_vhca_rqt);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_uctx);
->> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, max_num_eqs);
-> 
-> [Severity: High]
-> What happens if the EQ capabilities (log_max_eq, max_num_eqs, or
-> max_num_eqs_24b in mlx5_adversarial_filter_general_2()) result in a maximum EQ
-> count less than or equal to MLX5_MAX_ASYNC_EQS?
-> 
-> mlx5_max_eq_cap_get() derives the maximum device EQs from max_num_eqs_24b,
-> max_num_eqs, or (1 << log_max_eq). During mlx5_load() ->
-> mlx5_eq_table_create(), get_num_eqs() calculates:
-> 
-> drivers/net/ethernet/mellanox/mlx5/core/eq.c:get_num_eqs() {
+> drivers/gpu/drm/i915/display/intel_dsb.c:intel_dsb_gosub() {
 > 	...
-> 	num_eqs = min_t(int, mlx5_irq_table_get_num_comp(eq_table->irq_table),
-> 			max_dev_eqs - MLX5_MAX_ASYNC_EQS);
+> 	intel_dsb_gosub_align(dsb);
 > 	...
+> 	intel_dsb_emit(dsb, lower_32_bits(head_tail),
+> 		       (DSB_OPCODE_GOSUB << DSB_OPCODE_SHIFT) |
+> 		       upper_32_bits(head_tail));
+> 
+> 	/*
+> 	 * "NOTE: the instructions within the cacheline
+> 	 *  FOLLOWING the GOSUB instruction must be NOPs."
+> 	 */
+> 	intel_dsb_align_tail(dsb);
 > }
 > 
-> If an untrusted device reports max_dev_eqs == MLX5_MAX_ASYNC_EQS (for example,
-> max_num_eqs = 4 or log_max_eq = 2 when MLX5_MAX_ASYNC_EQS is 4), get_num_eqs()
-> sets eq_table->max_comp_eqs = 0.
+> In commit 2c41d62f6fb1, intel_dsb_gosub_align() checked
+> if (aligned_tail - tail <= 2 * 8) to detect QW slots 6 and 7, but left
+> dsb->free_pos = aligned_tail / 4 outside the conditional block, which caused
+> free_pos to advance to the next cacheline without zeroing the skipped bytes
+> when tail was in QW slots 1 through 5.
 > 
-> mlx5_eq_table_create() then calls alloc_rmap() -> alloc_irq_cpu_rmap(0) ->
-> alloc_cpu_rmap(0, GFP_KERNEL), which divides by size == 0 in cpu % size.
-> Wouldn't this trigger a divide-by-zero fault during driver load unless the
-> effective EQ count is checked to be strictly greater than MLX5_MAX_ASYNC_EQS
-> (and log_max_eq is kept below 31)?
+> With this change to if (aligned_tail > tail), intel_dsb_gosub_align()
+> becomes an exact duplicate of intel_dsb_align_tail() defined immediately
+> above it:
 > 
-
-OK, it will be fixed as part of V1.
-
-> [ ... ]
+> static void intel_dsb_align_tail(struct intel_dsb *dsb)
+> {
+> 	u32 aligned_tail, tail;
 > 
->> +static int mlx5_adversarial_filter_general_2(struct mlx5_core_dev *dev, void *dst,
->> +					     void *src)
->> +{
->> +	int err;
->> +	u32 val;
->> +
->> +	memset(dst, 0, MLX5_UN_SZ_BYTES(hca_cap_union));
+> 	intel_dsb_ins_align(dsb);
 > 
-> [ ... ]
+> 	tail = dsb->free_pos * 4;
+> 	aligned_tail = ALIGN(tail, CACHELINE_BYTES);
 > 
->> +	val = MLX5_GET(cmd_hca_cap_2, dst, max_mkey_log_entity_size_mtt) ?: 31;
->> +	err = MLX5_HCA_CAP_CHECK(cmd_hca_cap_2, log_min_mkey_entity_size, 0,
->> +				 val);
->> +	if (err)
->> +		return err;
->> +
->> +	/* The fixed buffer min is don't-care when its valid bit is clear. */
->> +	if (!MLX5_GET(cmd_hca_cap_2, dst,
->> +		      min_mkey_log_entity_size_fixed_buffer_valid))
->> +		return 0;
+> 	if (aligned_tail > tail)
+> 		dsb_buffer_fill(dsb, dsb->free_pos, 0, aligned_tail - tail);
 > 
-> [Severity: Medium]
-> Are there two cases where the validation of log_min_mkey_entity_size in
-> mlx5_adversarial_filter_general_2() is too permissive?
-> 
-> First, when min_mkey_log_entity_size_fixed_buffer_valid is 0,
-> mlx5_adversarial_filter_general_2() returns 0 without checking
-> log_min_mkey_entity_size against max_mkey_log_entity_size_fixed_buffer.
-> However, in drivers/infiniband/hw/mlx5/mlx5_ib.h, get_min_log_entity_size_cap()
-> falls back to log_min_mkey_entity_size when that valid bit is clear:
-> 
-> 	if (access_mode == MLX5_MKC_ACCESS_MODE_KSM &&
-> 	    MLX5_CAP_GEN_2(dev->mdev,
-> 			   min_mkey_log_entity_size_fixed_buffer_valid))
-> 		min_log_size = MLX5_CAP_GEN_2(
-> 			dev->mdev, min_mkey_log_entity_size_fixed_buffer);
-> 	else
-> 		min_log_size =
-> 			MLX5_CAP_GEN_2(dev->mdev, log_min_mkey_entity_size);
-> 
-> while get_max_log_entity_size_cap() still uses
-> max_mkey_log_entity_size_fixed_buffer for MLX5_MKC_ACCESS_MODE_KSM. If
-> min_mkey_log_entity_size_fixed_buffer_valid is 0 and
-> max_mkey_log_entity_size_fixed_buffer < log_min_mkey_entity_size <=
-> max_mkey_log_entity_size_mtt, min_log_entity_size_cap will exceed
-> max_log_entity_size_cap in mlx5_umem_mkc_find_best_pgsz(), producing an
-> inverted GENMASK_ULL() of 0 and triggering WARN_ON(!page_size) in
-> alloc_cacheable_mr() and can_use_umr_rereg_pas().
-> 
-> Second, during mlx5e probe, mlx5e_build_rq_params() ->
-> mlx5e_mpwrq_validate_regular() -> mlx5e_mpwrq_page_shift(mdev, NULL) checks:
-> 
-> drivers/net/ethernet/mellanox/mlx5/core/en/params.c:mlx5e_mpwrq_page_shift() {
-> 	u8 min_page_shift = MLX5_MPWRQ_MIN_LOG_STRIDE_SZ(mdev);
-> 	u8 req_page_shift = xsk ? xsk->log_hrq_ix_sz : PAGE_SHIFT;
-> 
-> 	/* Regular RQ uses order-0 pages, the NIC must be able to map them. */
-> 	if (WARN_ON_ONCE(!xsk && req_page_shift < min_page_shift))
-> 		min_page_shift = req_page_shift;
-> 	...
+> 	dsb->free_pos = aligned_tail / 4;
 > }
 > 
-> where MLX5_MPWRQ_MIN_LOG_STRIDE_SZ(mdev) is log_min_mkey_entity_size ?: 12.
-> If log_min_mkey_entity_size is allowed to be up to 31 (greater than
-> PAGE_SHIFT), wouldn't this trigger WARN_ON_ONCE() on probe?
-> 
+> Should dsb->free_pos = aligned_tail / 4 instead be moved inside the
+> if (aligned_tail - tail <= 2 * 8) block so that free_pos only advances to
+> the next cacheline when GOSUB would land in QW slot 6 or 7, 
 
-OK, it will be fixed as part of V1.
+This ^. And please also adjust intel_dsb_align() the same way
+so that the two functions will remain nearly identical.
 
-Yishai
+> or if
+> unconditional cacheline alignment before GOSUB is intended, should
+> intel_dsb_gosub() call intel_dsb_align_tail() directly instead of
+> duplicating it?
+
+-- 
+Ville Syrjälä
+Intel
