@@ -1,85 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.132
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=61.135.153.165
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793882044;
-	b=4vMV3TMkpWSRsPEIxG4Xx3r4kS8JWbEAMVpf5AnjibKKaKznwfr9KAVDDo3KNdMl12un
-	 XkLgp59UECFIAuUufCoTV/BflxJDZvOdBF+RWQOFScpaWz/zhlmXUVm/MpjFB6SUGxcnM
-	 zRYP5KrK27RTfQfrHGgY5Fntdu4fboOCMx2dnXHABHbL8hZ4ZeW9FvZqnBFSaMP8kjQep
-	 ojxFxpjYGVdJMidLCCaQW/Ou3Kcw5yr5S9nAXIFa5ErWtdSwdNlQZ8AvTy7Ndq73vB66M
-	 xGV+8qKCJ6PlFsp5CVI85sT/gX7mJtHt9NIVOv2Hxar1B0bq/Ng9fRb5wCTR9s9YBug==
+	t=1793882255;
+	b=H3RAC3z/Kx+Z8xqAUk/nKc9eJB+/6gWgsxbn0P2hGqETT2Q4OXudAdBxWl7Y5evN+DW5
+	 QqPmTXtBt3bCKtY43HvJSrJj/mrOvkNIk9XF+1UI4aCvCP3zhiovR0UgnstC2j/CLqdqm
+	 z4yhVZ8q9VoqDyJK2U43LRm7wDPSF6GMk4vbL1RZpos2dmYu6kqUTDCYvwoSRo6V/KLQ0
+	 pJBCYAaMLYJ6u6x+6Qzkogjh4/FO8rpIgasjkGudKPOnGnein9JEooqAHGrDNWGpqHic2
+	 wjFJ4Zhqagm7l7H3ki7kT4x3tTE/MKX76c8TJdHqe6X+BW+CxQBnaRpApsa+r2I8Vtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793882044;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
-	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
-	bh=xnbdQF+mYCE0wEkhXTSh32IAVnsikEgxzBr/xzLSIyY=;
-	b=tS6Z4J9Brf9+/87UV0nzOSCgExiluNiRsdYxby4jc6GblLIIwVi+9EmGK5jr9SgVCtQJ
-	 M9qzBjXw6qbZV7YvfTCNgloGkXVn9kzRruoQz2bem5OHpm+5M2fug46RBakFEQ95KRA09
-	 RU5mfWUMeljmYQECEzhDJYuulFgr3gYwAIgrZB+cnqTuM9yJxMO4HEq0NsNLMxLWsBTXt
-	 DLioADSyFcboL/rjc+69RONiVKdaG84d9homJ3spj3Hv21hLTL0G9WSGufAp9yn8bqElB
-	 uiu5F9aSh9vyzlBRmU7g6TDrVuiFvBKgf+LmmylqZikNPEihf3fa3oKfCMdVmcAD9Yw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793882255;
+	h=DMARC-Filter:DKIM-Signature:X-SMAIL-HELO:Received:X-Sender:X-Auth-ID:
+	 X-SMAIL-MID:X-SMAIL-UIID:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=K5laUMU2KJoz9qNykR8nk12tulWxuY+wCYFSFpscv3s=;
+	b=349RRclM9v/INSu/Fc5SRsutwawE9Pt+rRyir49t3woXumaLMXu/nqxTSaK1R76+QkFs
+	 C8Tw9KZjImbMPG6SO/2H8y3U87zDEyzNrMmd/VLhN4nCU3nmGVsh2c7PJ78+H0PDJm6hb
+	 YI6XWel4CpVxZkupHAqE2y5v4HSIVDv+OG8NOZpV8VT5KYRwazznQAa4voyJgzbV/SgBN
+	 l/aX5wtA5+4FvGipcWKeA+qUFyz+dfoFvH03j+UDbKuDUTLxDmiP5C1iEO/2bG6T/xjJ1
+	 KSFZDt85gawztJN6oTWWX/9hzv+owlMgJOGRs+n/Fy9etIGGZCvt0iWFRwdXWAHOGTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dE2zMQ8o;
-	arc=none smtp.remote-ip=74.125.227.132
-Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=sina.com;
+	spf=pass smtp.mailfrom=sina.com;
+	dkim=pass header.d=sina.com header.i=@sina.com header.a=rsa-sha256 header.s=201208 header.b=IgEQ3rza;
+	arc=none smtp.remote-ip=61.135.153.165
+Received: from smtp153-165.sina.com.cn (smtp153-165.sina.com.cn [61.135.153.165])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5376C606A329
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 12:34:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5376C606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4880A606A328
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 12:37:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4880A606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dE2zMQ8o
-Received: by mail-pj2-f4.google.com with SMTP id d9443c01a7336-2e96b8bfb43so6622315ad.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 04:34:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793882044; x=1794486844; darn=lists.linux.dev;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=xnbdQF+mYCE0wEkhXTSh32IAVnsikEgxzBr/xzLSIyY=;
-        b=dE2zMQ8oBh2t/AFFL1rbIbyKHxbh3QLorXmWhv3yvB1DaQ2d2/1gZMbJikEqsDOVWO
-         REU9tXeXzwI+pIjSa/haAQ07NuTFhrpqjn/xZ1i4PIcyiLe/V7fsJvIyW/a0UJaVE7OF
-         ZYe6n42X+9ztx2l/Oks1CQkTT04uQDxnSim5P4aVMl3AyWTB7SZExpK8Mw6yTjzRIall
-         RufUSAmAcknXoAuY2Vn63NjdKWwYj3BUQ+FF0YjqDoo+xx+SkXzq1vgeFAa2NZZt/KX2
-         tS4cKaFy+KDeGxf/AXP2aLT1gtwBMr5vLJfoyomWytUqfltCFH5sRcGJ0sHHlExe5BJa
-         uUQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793882044; x=1794486844;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xnbdQF+mYCE0wEkhXTSh32IAVnsikEgxzBr/xzLSIyY=;
-        b=LsqZ2flDcXoafOXOFt7Bl91IydgXfq8O0yM1Uo4rEYyg4rzYHVAqHLPyNPJHKci60k
-         VoznR8ELAAS8Fc62tPMycX9/qfZUnuvumj/2fuZlvu30S+MypbxTi7KuKY71jVVv/vSm
-         PiBd4VJO8idlZr99aYvKn2FCTB5SvdsHe7wfrCFjQ4e1ZWqQx+oNVl1mymS6JujK3TTc
-         JhIvqsUrZ/uClmVDZIP0hd2I5oap+dVchoF5hVw77iLrQ0A5yVdJvcmNwMXVZbpxk1cC
-         JlPIg2MZ+OoJ1zH/Tv8sO8pJ1QEiB60KFZAd2AIFOl/kP7rr5FhrLuWC9ERenjotCRvY
-         wgKA==
-X-Forwarded-Encrypted: i=1; AKwUvBwZ+ZlJ7vN4Tnwji5dA8ifQPW+uWEFA84GZB/k3m1OmwBfgJ3VV4ikJHNfQeIhjf8PbmXjUZTiI9JqjHmWoGwo=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+Y+WwoltHq9N9Z0R6TCCSrqu0+ugvmfuLyxJnKeZOaw9w9WuRp
-	5UhR6BrydLL8oApZvcb3g7/omNY4EC5e1cTBWrGLzM1YVQEDwvir+XWb
-X-Gm-Gg: AYBFou1mQWWjrfOiUAAeAlFEdtK5gLpeukHf9IIuBDaGKzy0atR4Pw/OICXdXnjuu+A
-	OkulbKB9WQQ1oVw2x6kTC9ymFr26jIwXO8/ogK/kva8YyC+gduSyR2Jrafw6vru1YBR4kcMulpn
-	a2GgYHuyoswsX8rZHih3kofJKjdBfS3CdMcK5KaWnwCKGXvFyIE7lan+H7HXcx4fslZSEOiDc9M
-	sxespGbHEpJJLxB1od3nxEHkbIXCTBbKPOSMZQQy6GRu0Jir6a5Aniwjt6oqG5vdeRt6rN8unmp
-	2UNyxtt529zyuHbb/9/UHyL9Xt4FPMcRItPxPUh74V0bBSh9IoVLsTPTLfK66S/dZnxNMBmFz0Z
-	kcahSlduYoWVUInnu6wlqjiv1kZ/x3HYuJFFPT9uSRjMDv0T4hH5ExRUaJ07md+H/dU0VCev0g7
-	OD8t/vLFCzJuIKdd1LKvzpsWnIITQgwag/Aglf10bA1KRmL+NUkJTC8R17QMuvuAUDPkhWGRmfw
-	Nx1l0zzt1pWRSOn+sdMWxuUyFBTkfF25Z+dcE3VlLDYebUi/1Uj3LmT0fYeRxi4A9np0Y4tfQPK
-	O8iouZ/Q37bBkA6ZD3giZVayBBN8uGS5gkVrX3CmAKuvRc9aQiy6vCWe4CkeXRy+B6p2sgkOGaY
-	Vf0NfE7f9DW0e7zGUZz8cGXyNhKk=
-X-Received: by 2002:a17:903:3910:b0:2e9:3dd2:a904 with SMTP id d9443c01a7336-2eb3648b6aemr182844655ad.16.1793882043510;
-        Thu, 05 Nov 2026 04:34:03 -0800 (PST)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ed08fe55bdsm17043995ad.15.2026.11.05.04.33.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 04:34:03 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=sina.com header.i=@sina.com header.a=rsa-sha256 header.s=201208 header.b=IgEQ3rza
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.com; s=201208; t=1793882250;
+	bh=K5laUMU2KJoz9qNykR8nk12tulWxuY+wCYFSFpscv3s=;
+	h=From:Subject:Date:Message-ID;
+	b=IgEQ3rza7NNIlV1Y49IIb4iHG5zNmqwsum61siGKfCiLmleCOhrUjPBCQzRlQm1E4
+	 +g1+TfEOpngSrYte+TMruWkEfnB6CwZM6sv6eDosPO34LgF3AoeU3AAwF+9/g5EvpW
+	 glqvcn5vrx0U/IogsNSt1vd8RSsvK4Vpb99ikq8E=
+X-SMAIL-HELO: lxu-pcd
+Received: from unknown (HELO lxu-pcd)([111.198.231.89])
+	by sina.com (10.54.253.32) with ESMTP
+	id 6AEC787D000079EE; Thu, 5 Nov 2026 20:37:20 +0800 (CST)
+X-Sender: eadavis@sina.com
+X-Auth-ID: eadavis@sina.com
+Authentication-Results: sina.com;
+	 spf=none smtp.mailfrom=eadavis@sina.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=eadavis@sina.com
+X-SMAIL-MID: 8249174456693
+X-SMAIL-UIID: A4384A86C4F04932A99FAA12BF8C2C2B-20261105-203720-1
+From: Edward Adam Davis <eadavis@sina.com>
+To: christian.koenig@amd.com
+Cc: media-ci@linuxtv.org,
+	sashiko-reviews@lists.linux.dev,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	syzkaller-bugs@googlegroups.com,
+	sumit.semwal@linaro.org,
+	phasta@kernel.org,
+	robin.clark@oss.qualcomm.com
+Subject: [PATCH v2] dma-buf/sw_sync: Optimize the retrieval of fence reference counts
+Date: Thu,  5 Nov 2026 20:37:13 +0800
+Message-ID: <20261105123717.66572-1-eadavis@sina.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <ad203438-ddbe-4445-bb3e-9632e738c1a5@amd.com>
+References: <ad203438-ddbe-4445-bb3e-9632e738c1a5@amd.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,35 +77,75 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [RFC PATCH v2 0/4] mm/damon: introduce age_ms damos core
- filter type
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Thu, 05 Nov 2026 23:31:53 +1100
-Message-Id: <179388191315.401969.13923237674993632654.b4-reply@b4>
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
- Jonathan Corbet <corbet@lwn.net>, damon@lists.linux.dev, 
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
- Randy Dunlap <rdunlap@infradead.org>, sashiko-bot@kernel.org, 
- sashiko-reviews@lists.linux.dev, Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20261105044425.87142-1-sj@kernel.org>
-References: <20261105044425.87142-1-sj@kernel.org>
-X-Mailer: b4 0.16.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi SJ,
+On Thu, 5 Nov 2026 11:03:10 +0100, Christian König wrote:
+> > There is a race condition between closing a sync file and the SW_SYNC_IOC_INC
+> > operation on a sync obj. When a fence is created via SW_SYNC_IOC_CREATE_FENCE,
+> > its reference count is initialized to 1. When the sync file is closed, the
+> > fence's reference count drops to 0. A race occurs if SW_SYNC_IOC_INC accesses
+> > the fence whose ref count has already reached 0 before dma_fence_release()
+> > calls timeline_fence_release() to erase the corresponding pt_tree node from
+> > the sync object, potentially hitting:
+> >
+> > refcount_t: addition on 0; use-after-free.
+> > ------------[ cut here ]------------
+> > kernel BUG at lib/refcount.c:34!
+> > Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+> > Call Trace:
+> >  kref_get include/linux/kref.h:45 [inline]
+> >  dma_fence_get include/linux/dma-fence.h:323 [inline]
+> >  sync_timeline_signal+0x6d9/0x8a0 drivers/dma-buf/sw_sync.c:224
+> >  sw_sync_ioctl_inc drivers/dma-buf/sw_sync.c:405 [inline]
+> >  sw_sync_ioctl+0x7b4/0x13f0 drivers/dma-buf/sw_sync.c:470
+> >
+> > Use dma_fence_get_rcu() to replace dma_get_fence(), if fence reference
+> > count is 0 then do like timeline fence release things: remove pt link
+> > and erase pt node.
+> >
+> > Fixes: e531fdb5cd5e ("dma-buf/sw_sync: Avoid recursive lock during fence signal")
+> 
+> Please completely drop that. This is not something which has any justification to be backported.
+OK.
+> 
+> > Reported-by: syzbot+cba1a1f459230395a076@syzkaller.appspotmail.com
+> > Closes: https://syzkaller.appspot.com/bug?extid=cba1a1f459230395a076
+> > Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+> > ---
+> > v1 -> v2: use dma_fence_get_rcu() and remove link & erase pt node
+> >
+> >  drivers/dma-buf/sw_sync.c | 6 +++++-
+> >  1 file changed, 5 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
+> > index 8df20b0218a9..261bc98b1ed6 100644
+> > --- a/drivers/dma-buf/sw_sync.c
+> > +++ b/drivers/dma-buf/sw_sync.c
+> > @@ -221,7 +221,11 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
+> >                 if (!timeline_fence_signaled(&pt->base))
+> >                         break;
+> >
+> > -               dma_fence_get(&pt->base);
+> > +               if (!dma_fence_get_rcu(&pt->base)) {
+> 
+> Well that is at least better than before but still needs a code comment explaining why this is possible without holding the RCU read side lock.
+> 
+> Something like /* It's possible to race with timeline_fence_release() here */.
+> 
+> > +                       list_del_init(&pt->link);
+> > +                       rb_erase(&pt->node, &obj->pt_tree);
+> 
+> What happens is that you race with timeline_fence_release(), so that here is superfluous and potentially even harmful.
+timeline_fence_release() and sync_timeline_signal() are synchronized using
+the same spinlock(timeline obj->lock is same as fence->extern_lock), so
+there is no race condition between them. Instead, a race condition exists
+between sync_timeline_signal() and sync_file_release(), which causes the
+fence reference count to drop to zero prematurely.
 
-On Wed, 04 Nov 2026 20:44:20 -0800 SJ Park wrote:
+By removing the link and re-initializing it here, list_empty(&pt->link) will
+evaluate to true when the spinlock is acquired within timeline_fence_release(),
+preventing the redundant execution of the link-removal and node-erase operation.
 
-> One straightforward solution is extending the DAMOS access pattern for
-> specific deterministic time based age specification.  However, DAMOS
-> core filter is a better option.  It is playing a similar role in a more
-> flexible way.
-
-Makes sense.
-
-Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-
-Thanks,
-Aveline Noir
+BR,
+Edward
