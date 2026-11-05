@@ -1,100 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.200.37
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793897219;
-	b=CI5qfBoe8XmIxk0ZoW8Hu2BMcnpI3sGlNw4nwWPsVph8PqJJNdNqCmQL2q7M7drC1onl
-	 YrvlLkvxX3yVtaM1gaAwZbsRpPogrDewslfIiGCiYzwMCO49xt3RjSFOG5QeVr0pVNrkh
-	 XEph0mpe6/Ao2/nr3Ikum131qm7TlNUosZosni9T/fGU/Pk3p/mTbv1zHhMvtpjocy9GY
-	 4Byv6+2iXumwAia6ifGy2HuME8nRelhtGPH0zx0BSMMGyCGl3BpTVJ6R3CYyBUJOE43xL
-	 g5zAp5LzBJSNOZkKtAKwspybh+eHuvul2uH8GIfFdgrY5Zm4pL55Zu4aT8HG8lungUA==
+	t=1793898602;
+	b=yJC92CzoNWCgpDooRyFUJsnBpSpVAqYzx8nehTiFDywbfAzyMyUWZ7uYFqdDt+Pk/HAf
+	 /9hsgP6XwuroX3wVkyzAo661iTfTljo/2aZjbHZDo4jXAyX0sI2vVeKBr44qgQi9UqWCJ
+	 K3MkTFyQj4GO38ptwL9D2EZy91OqrIWF0iQm6fWSy+64YO/Lh+nohyhgRM2wPGa3j9tDm
+	 PgZY7M7zYv1FYId2OtoQkf760qG+w4wkXQcyeX7YUzZQmAODYrlfjUI2XI3JXxSTvqwFp
+	 G2c7hHAeX25+YyXipeGTeiXkTVm/0xW2cW3PLWVzdwQe7O/qyst0KZaRcl6agpni0jg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793897219;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
-	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=9U2W/l6HONDgEKCYJhjcNm0Q+NpfzA9qbXHQvhq1QaU=;
-	b=RDokFY9jKvSFACJ2Um3IHcQZGL3lVRX7ogzTE5qKlbSh9QiRaVswUGtWgdtwJFliCAIs
-	 iAphBHhDXXZTBmx9W8kEwQKImr2WQkqxW5HEFexaAnXjEeEinPg3ybyJ06WECjDdwQuRV
-	 Msotc8TeJERZra4qnX78ttoKFCPPwnNl9v3ipDmeXecaZGBlMwmHtk1QTme+6oiJsxCJR
-	 fBd9qUgbtIRd3F6KbgZ6gLUackzwid1+jLVFchY0y+D0zk3/xq7IpxWqwnWg6BGKlPqfs
-	 oqON25dP+qi/pbhIYusqr8EYmpbyMbN98kHUTf4+JtYZ5uQBwyPKAb8PUDWmTpHkwfw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793898602;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
+	b=sBDrmnb/tlWWnIAXLmuQSMAYEIO78XZwerpwvYfxEcEfc0UswNqQuaQ1ywHXJ4iodLsQ
+	 TG5CzkvqQ3v9g/g0qE3Rrprkv+12NvZgXWV6Grp6bMq1PHq29nVWsSBz1I/d/Pm3ymlxQ
+	 qHJ4LJlol4/nD3Zmdgkk2xDJlqLurIjxef6TbQYOU9gKsvKpyMHTaG43Kv3ZFUui+3ULo
+	 IItsDvtrE35xcMZKlbRMo9+2eyRMaRBqVz3vE4UTpNupcDrggS9dJVRNfWL7+rDrTQdmI
+	 IhQF1Rkl14it/lBweeLK0l1rW4uBZu3b7TA3rluq7gyZ9vaBnBytL0blj/oPtkJRBLg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=af9MZgXc;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.200.37
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012037.outbound.protection.outlook.com [40.107.200.37])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iVCtRbWE;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CC8606D802
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 16:46:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8CC8606D802
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27707606A328
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 17:10:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27707606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=af9MZgXc
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kSW3/zSvXHXmvxP4j8vPpKrj1ASpHIuBzPx70IFEsOjjeoreKDhKHe2mBOiKnvtV9AeCy8p6SoP9CoZm5jXrFFHdmJdenNDDA476VZ7ECVytfmKy1SdobNz9u+aALB0hUmGT3Fm+Q2mWGdeqxK+rs58tajuxiSJJpQesh3UMbN9/TQCX0W/BYwmbqLPn9R5evtEl6BLh9PTmHstBL3D0SH+M4vzGcYQKFsQLzr8pXopjNQ7vxz9cW1fQ4/7Jq4gHHF82h0kPQeW9VvyDJe97dPI8nFQUyUbEmCtV4sXJKxvRaE0uo+6QN/b4Q1NaYPUY7TIBnPrUtoNWPOlmeurScA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9U2W/l6HONDgEKCYJhjcNm0Q+NpfzA9qbXHQvhq1QaU=;
- b=U7RCgR+T4EAQEJX7gR2I6YkfwVbJ7+Kar5UwZkSpN7tW5RySZvwA3r7fIL+o39Ieb0fqZyPpO6kxQqxfVVEPFrTrpFEeFYbxEG0yLcgEiUQ8sU2OzihdQXvsVljrrOIRZno0fVmvr0uYZGEzqM30AY+h2xNr2zxBpofom3gVqQotbdJgCAgvDobBhhtZLBQJ3XTbZxA9zBMupVfdN4ApmTplhBcjmrF9a7tYUhdTzbM39sLvrlqt15PVVlgV/vWTMeulxNtWTJlWxG8/eQEXdVUVwEe+L13g5MNrY0NUnhlyJBF5ERJ0eMO18MXGnGA3UHapeDXuRtxrOvHUqWeI8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9U2W/l6HONDgEKCYJhjcNm0Q+NpfzA9qbXHQvhq1QaU=;
- b=af9MZgXcbOpGzj810DWStpBuVJQdlZr5ETXee2LnDuW2ev1njB5swZ0ANJkOZkFg3Dh1fGjwEwIxkdn/OOsNxA6XJC+q5VceS4Khqx44c2oKX6F6VzBeNDNNiCEHLwaDFNLSdAdO5QvdNcbm2AlHkCFRF+uu0izyX5oZWfvg99/NOERz3NbZsHffzzbs7E5pPLWDsSxswIVo2MXajscqTOKF9lr1uZWbsu5x7d1dwejTJJhRtvai9ZIxtJFkWDMc7Qep3gVxDZ44ZMtuisgS9nFnOB5l80ZsCyjTl7Nd6zL4aj8nVali9hLJayJbWhH5h89l+NgEYBoNeCDigL7JGw==
-Received: from PH5P220CA0007.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:34a::12)
- by PH7PR12MB6763.namprd12.prod.outlook.com (2603:10b6:510:1ad::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.11; Thu, 5 Nov
- 2026 16:46:53 +0000
-Received: from BY1PEPF0001AE17.namprd04.prod.outlook.com
- (2603:10b6:510:34a:cafe::44) by PH5P220CA0007.outlook.office365.com
- (2603:10b6:510:34a::12) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.10 via Frontend Transport; Thu, 5
- Nov 2026 16:46:53 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BY1PEPF0001AE17.mail.protection.outlook.com (10.167.242.107) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Thu, 5 Nov 2026 16:46:52 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 08:46:29 -0800
-Received: from [10.125.206.9] (10.126.231.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 08:46:28 -0800
-Message-ID: <2b1bc8b7-f81e-4203-9917-397bcfb236a4@nvidia.com>
-Date: Thu, 5 Nov 2026 18:46:25 +0200
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iVCtRbWE
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8b12b1ee403so16018037b3.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 09:10:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793898601; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ACHVQMFicgT8dp6otnfVFZQreJ8uvtVt0ntd0DnracgCJWjWV+zUq19lTNvvPMvSWg
+         aYpFDLCIgS3zFLN6TN6QhIVp1WhOwRWEYn5JrlqeUFGX4TM7PARpcyvZBP0VtD2vkaQZ
+         tzT2h2dVrz8s09d1wbPiUSZjX6JqAP9W8nOI5UrtyV3/LOSd+Tb4vW3XXjC6eHIZnZO0
+         HOrViF2Tn90IvLqDS4XslRsZDhZmVUCLAZ35JwP5042Fijv9BreNkpE8bFWbi8PPcik1
+         XFRNnxOXqfDsTAE7fBmTvqdhHNyRPpiHUcNr4o/Vbo2uzlDv4EMtW8NfROXcpgcG9Gqy
+         diwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
+        fh=8s/m3WFbgYWSrFq8O6qnuwJh8MouRhxqinKYkPkfiw0=;
+        b=X2gwsQRRMJZSn2Sqhd5Cah3l2km7zdLMEj24oOdfIewvnIwUlka2/pLfBAIOsFGNtN
+         RFAftUbo64LQNQ6KDDc79VZ3N5FOVJ7Kz+Sr2u/fXj9ixbnnhlb7k1AaGl9vjB50cnXj
+         kY7g5IthW1CVASjtTBlGZX2XDrFFfbgfKj19f2njKV9lY3t/veaKaeme3LAPoGfBkW7F
+         bD7LiV1gvJmAYciQlboz+fR6mzzSVnsFD0OiwDJJs2CE3bSrGx9nSSXMg5uSRgFNGcjg
+         uFbmMpoSxvJRA0Ddhg3bwPMhByJ9RJr0g47z3OZ9IqNC+DrVLTRnaq4emwSy1Syv1vsC
+         7UwQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793898601; x=1794503401; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
+        b=iVCtRbWEa55xlUXh0XpH9Ds2cyb67duKSyiGZ4X4QjWaamdzqvMz8p3mlOJFhMDoit
+         L5eWOSJNFZRmEaRSZphfgaV7zbw4vQHqhUCIzkBL1uY1JQl2MvfD4/g6cTsUH+AxGk+E
+         7cvwUWOalow1JohqNmHZ06PQbIYr3uhHYruPQYF+drPYanrIkn/umCKACSaphH3ni5PK
+         lHzUtiqbB+kMvNa1+B7r1ORaVUq84RW6O0RTzwIWn7XnBc28DEgCrhBWEqDW4dTFL9uD
+         ODkAnegZUZeT7UT1UQ4BJc/H+bUyf/VNRrx1zLuaAenqMl27R9xBEdFTMrqlq4ZTXzGM
+         GT4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793898601; x=1794503401;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
+        b=X0rAWdiU08FbEw3DVYI63PGc7vy/nsxgywcowr/CfgwA4mApD7BYNes/uRODJWFa9L
+         2Fk9h0d55Yp4CrYwzHy+wnFDcc4rpLzgMZgXg1pfPyXel6pXFejMSE+OyMxmRWXEcdOu
+         L9ZlINvo4wPsw4UB83VKYqnBdEXuBFP2O60V6hZ3pIQn3M6LRemTjn1inCkinv1M5TEz
+         hBPngla3Zy6asNw/REnxYP8lH9B6z+zxNI9AWFKIEKWYaSSDCxxkYTERahs/SCW+tq8n
+         ONQi0YHt5KbdSVRwmYuXU2VqHF4WD1KHmnp7t9bs+OKdBA6Vij2vXh54BQXVnuwqRVRH
+         F8zw==
+X-Gm-Message-State: APuU4Z/4WVgGcSiEyyb2TK3J8DZhX9BZLhWATem/YlFIjuHNmjaKyLZ9
+	K12M82xglu3mVzUc/CyKNwsbrYPKfP5HnldxqZAMFuOpc58wJ9VVxiapjfdKLiIoluR3aHSbcVp
+	cSFhou9U6R9vj4XxmTYYBxY/aARv8l5NxnO0m
+X-Gm-Gg: AYBFou1CMfkuGT+a0BLq7fivFTHSKFKaHwBNAoPA6EX6X+GV9edDeDK4R1Ocbs54hRA
+	8Lvir0Xo0SZ80RSFAO+dWw6xYno2hlrOzNqTYw+aY19MiWTZDW9kAFaLzDtVpRFcBMvINywgcgn
+	bqUDDnnEmT7sN5fKWdDV/W60mjTdcTjzkt2l6dPNUVc1C+ZguftojWsZyIa7U6Y3VfXQ+w7gYaU
+	KbXnYDAalLNI6IJ6GlE/MQ6z5uSLB4vuuN1SQApnkUfuMcWfSRsS4RGZx5k9VivnveobqIOB74v
+	Y8Hd+uWS9desjO4eVTEn9zhmhX8yHcpgtAHr0BYbswGGYIMURJOp8VZ1ulli4Lo6BclGXia45Rn
+	VSMiF+g2mV1FJA7LOkvPNh1LxsfQxi3ag7AuNdDU=
+X-Received: by 2002:a05:690c:113:b0:8b3:2eb4:1429 with SMTP id
+ 00721157ae682-8b32eb41a88mr12568607b3.65.1793898601098; Thu, 05 Nov 2026
+ 09:10:01 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,228 +103,122 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rdma-next 12/23] RDMA/mlx5: Verify UMR CQ polling against
- a hostile NIC
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-rdma@vger.kernel.org>
-References: <20261103163949.1554-1-yishaih@nvidia.com>
- <20261103163949.1554-13-yishaih@nvidia.com>
- <sashiko-outbox-197665@kernel.org>
-Content-Language: en-US
-From: Yishai Hadas <yishaih@nvidia.com>
-In-Reply-To: <sashiko-outbox-197665@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE17:EE_|PH7PR12MB6763:EE_
-X-MS-Office365-Filtering-Correlation-Id: d29327bf-d5ae-434c-e0eb-08df3b5c6521
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|82310400026|376014|36860700016|56012099006|261102123227099003|4143699003|5023799004|261026121527099003|261022075727099003|261021135927099003|261028144727099003|261009223027099003|261021121427099003|261026140227099003|11063799006|261022105027099003|22082099003|18002099003|6133799003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	WAs2LRyA7qzOflxkX9Zu+mqCtFk+P9Z7NpiBAvYEFZeYVs2LjKzVayrV7InZpFRoopzxwFzfXJMqBFtz2sQf27GooXLVmbjznwK9GyvMJ97ckcx52XZiZlpOwYKI2IoKBXF5Lic6uycyxmC3Hxw/TBsFr8QWPf5Wb77DiCmcPIiYClzAPO+jp6CBfeRizZlg9HjDePa5jwsGYGcsQ6qQn6sKC9B/JsCamj7EP0Z8OAqnPj1NOC7UVJkfINduJW2qC9RhacQRsq5HVvf2ZYIDgg05KtxZnX3U8KQF65hE9b8Egf1lxLRKz8Z6Yf3yGUjlMdlf6e4lTtt1joVhQfYR3UWKQU5BFliDk85zJ/HHbucEN1q3aJu+u1zqazqcHeynmVuSptYh0aeTZVmr3MYFz3qJSvRURA1HQvcIVsInqKfa5n5hIwLaY0foN2bg8b2WldurBFX4Pc2cNO71h/e/EkyyTS22rdXLsSgONz8eyVg1eO45nTg7bDLKuaOdtgh6BbKs9ueGAf3iPmifkuk2X+6+wYpUReR3aPoHjAM2TUIuXljD/KZ4mTwu23tKTi0h14clQTNjviZbEtpg4arK4jQuGdt4U7XEUwDkyl4V/KKSNZL+fuywoBBoIv7CQKi23kc3yNuI/1r/GLXxEuleUG+nRTiYzped9fEucHPsQdU3FAffTbyLjdNfctxgFekIjXTUhAsN7VO0SBJVakPWgA==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(82310400026)(376014)(36860700016)(56012099006)(261102123227099003)(4143699003)(5023799004)(261026121527099003)(261022075727099003)(261021135927099003)(261028144727099003)(261009223027099003)(261021121427099003)(261026140227099003)(11063799006)(261022105027099003)(22082099003)(18002099003)(6133799003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	2ZBJy1fZvEdnT2E4uoCgkMBktz0grjAQfUWbgA2KBwoNs2aJpOxbl/O4l+N5ao6sP1bCOgi7eYYnLepMheKBiCkoFUdeqffDpHAY7IOc9cFO50tqjSVA+XjKExKUdODTgKw3JjSmXHL7adgX/qywWYYlNIfTiPD7+yJT9saB0i3v6NHL91UtxJ4cb+QnYqtLwawFfbhggYMGb3g6XSMcOwRxfwg9wucMm9pMHIADQgJHF/u3zLwscMzP5EewHzJAJn8wY4mQTjQsxF0RiPTshOaap/Ezpdlqqu+HaSahPCVNd2xpm4Zo+0G7C2HPqn4CURPHSWJLQUexFisqi6+4m6ixwtHo6e2AKOsrTVQ+dVCyWDrVeenCnUBhD1nUg/TNcIOJfDIilkXiIdDOkRvfbUnIsgljbxIlA8p2QDNji4EWS4X5nGWVaKB5v5Is1QCi
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 16:46:52.8358
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d29327bf-d5ae-434c-e0eb-08df3b5c6521
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BY1PEPF0001AE17.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6763
+References: <20261022024314.48623-1-prasanth.padarthi10@gmail.com>
+ <20261105152348.8567-1-prasanth.padarthi10@gmail.com> <sashiko-outbox-199315@kernel.org>
+In-Reply-To: <sashiko-outbox-199315@kernel.org>
+From: Prasanth <prasanth.padarthi10@gmail.com>
+Date: Thu, 5 Nov 2026 22:39:46 +0530
+X-Gm-Features: AclHuK9EMZYoNclpt7vGM08eNe4WIB8G2Jwgu5F5HXqHJo1re962sdUNfsV_OY0
+Message-ID: <CAMFFDGiM2ExudSegF0X6sQN+AraYnorMHw9R8YvTBXRbKGNCuQ@mail.gmail.com>
+Subject: Re: [PATCH v3] pinctrl: aspeed: Hand over global GPIOP passthrough to
+ local mux controls
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 04/11/2026 18:43, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] RDMA/mlx5: unvalidated error CQE syndromes in mlx5_ib_poll_one_umr()
-> - [High] RDMA/mlx5: hung UMR waiters in mlx5_ib_poll_one_umr() on teardown
+Thanks for the review. I checked the shared probe helper and confirm
+that it uses unmanaged pinctrl_register(), while this patch introduces
+devm-allocated private data. The unbind lifetime needs to be corrected.
+
+I will address controller cleanup and private-data lifetime in the
+next revision.
+
+On Thu, Nov 5, 2026 at 9:03=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] pinctrl: aspeed: use-after-free on unbind in aspeed_g6_pinctrl_p=
+robe()
 > --
-> 
-> commit da9b5d87a1b071b4bd6eacadaf91a72df89f8c23
-> Author: Yishai Hadas <yishaih@nvidia.com>
-> 
-> RDMA/mlx5: Verify UMR CQ polling against a hostile NIC
-> 
-> This commit adds a dedicated UMR CQ polling handler in adversarial mode
-> that validates incoming CQEs against a shadow FIFO of posted UMR requests
-> and triggers forced health recovery if a forged CQE is detected.
-> 
->> diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
->> index 11c1153747c24..1a98263ec3111 100644
->> --- a/drivers/infiniband/hw/mlx5/cq.c
->> +++ b/drivers/infiniband/hw/mlx5/cq.c
-> 
+>
+> commit 7926ad91b4f1741a83b80da360b9a845357a5376
+> Author: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
+>
+> pinctrl: aspeed: Hand over global GPIOP passthrough to local mux controls
+>
+> This commit transfers global GPIOP0-P5 passthrough selections in SCU510 a=
+nd
+> SCU51C to per-pin mux controls in SCU4BC during probe, and blocks GPIO an=
+d
+> mux requests on GPIOP0-P5 if the handover fails.
+>
+> > diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinct=
+rl/aspeed/pinctrl-aspeed-g6.c
+> > index 85d6640ff4c4e..be22a918420df 100644
+> > --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> > +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
 > [ ... ]
-> 
->> @@ -608,6 +609,161 @@ static int poll_soft_wc(struct mlx5_ib_cq *cq, int num_entries,
->>   	return npolled;
->>   }
->>   
->> +static int mlx5_ib_poll_one_stopped(struct mlx5_ib_cq *cq,
->> +				    struct mlx5_ib_qp **cur_qp, struct ib_wc *wc)
->> +{
->> +	return -EAGAIN;
->> +}
-> 
+> > @@ -2778,15 +2827,103 @@ static const struct pinctrl_desc aspeed_g6_pin=
+ctrl_desc =3D {
 > [ ... ]
-> 
->> +int mlx5_ib_poll_one_umr(struct mlx5_ib_cq *cq, struct mlx5_ib_qp **cur_qp,
->> +		      struct ib_wc *wc)
->> +{
-> 
-> [ ... ]
-> 
->> +	/* Pop the shadow FIFO head: validated, dispatch to its waiter */
->> +	WRITE_ONCE(umrc->pending[head & (MLX5_UMR_MAX_WR - 1)], NULL);
->> +	umrc->pending_head = head + 1;
->> +	wc->wr_cqe = &expected->cqe;
->> +
->> +	wc->qp = &qp->ibqp;
->> +	wq->tail = wq->wqe_head[idx] + 1;
->> +	/* Advance wq->last_poll, the internal error flush starts from it */
->> +	handle_atomics(qp, cqe64, wq->last_poll, idx);
->> +
->> +	if (opcode == MLX5_CQE_REQ) {
->> +		wc->status = IB_WC_SUCCESS;
->> +	} else {
->> +		/* Copy the CQE, so its syndrome is read once */
->> +		err_cqe = *(struct mlx5_err_cqe *)cqe64;
->> +		mlx5_handle_error_cqe(dev, &err_cqe, wc);
->> +		/* As in the generic path, a real failure starts the recovery */
->> +		if (wc->status != IB_WC_WR_FLUSH_ERR)
->> +			umrc->state = MLX5_UMR_STATE_RECOVER;
->> +	}
-> 
-> [Severity: Critical]
-> Does mlx5_ib_poll_one_umr() need to validate whether the error syndrome in a
-> MLX5_CQE_REQ_ERR completion is valid for the current umrc->state?
-> 
-> If umrc->state is MLX5_UMR_STATE_ACTIVE and a hostile NIC reports
-> MLX5_CQE_SYNDROME_WR_FLUSH_ERR for the oldest pending UMR WQE,
-> mlx5_ib_poll_one_umr() completes the request with IB_WC_WR_FLUSH_ERR while
-> leaving umrc->state as MLX5_UMR_STATE_ACTIVE. In
-> drivers/infiniband/hw/mlx5/umr.c:mlx5r_umr_post_send_wait(), the waiter sees
-> IB_WC_WR_FLUSH_ERR, continues the loop, sees umrc->state is still
-> MLX5_UMR_STATE_ACTIVE, and reposts the WQE indefinitely.
-> 
-> Conversely, when multiple UMR requests are in flight concurrently and the NIC
-> returns a non-flush error syndrome for more than one of them, each of those
-> waiters wakes up in mlx5r_umr_post_send_wait() with a status other than
-> IB_WC_WR_FLUSH_ERR and calls mlx5r_umr_recover(). Because mlx5r_umr_recover()
-> drops umrc->lock before posting the barrier WR and resetting the QP:
-> 
-> drivers/infiniband/hw/mlx5/umr.c:mlx5r_umr_recover()
->      mutex_unlock(&umrc->lock);
->      err = mlx5r_umr_post_send(umrc->qp, mkey, umr_context, wqe, with_data);
->      ...
->      wait_for_completion(&umr_context->done);
->      attr.qp_state = IB_QPS_RESET;
->      err = ib_modify_qp(umrc->qp, &attr, IB_QP_STATE);
-> 
-> multiple threads can enter recovery concurrently. When the first thread
-> resets the QP via __mlx5_ib_modify_qp(), qp->sq.head, qp->sq.tail,
-> qp->sq.cur_post, and qp->sq.last_poll are zeroed while the second thread's
-> barrier WR remains in umrc->pending with a non-zero wq->wqe_head[idx].
-> Completing that second barrier WR then sets wq->tail = wq->wqe_head[idx] + 1
-> while wq->head is 0. If a subsequent forged CQE triggers internal error
-> flushing, sw_comp() computes cur = wq->head - wq->tail (which wraps around as
-> unsigned int) and completes stale wq->wrid[] entries pointing to
-> stack-allocated mlx5r_umr_context structures of callers that have already
-> returned.
-> 
-> Should a flush error while active, or a second non-flush error after
-> entering recovery, be treated as a forged CQE (or should error CQEs on the
-> UMR QP be disallowed altogether in adversarial mode)?
-
-A second non-flush error during a recovery: OK, V1 will treat it as forged.
-
-A flush while active: No change is expected, a conforming NIC may send 
-one after an async QP error. It is a pre-existing, generic issue and a 
-DoS at most, which is out of scope for this series.
-
-Disallowing error CQEs altogether: No change is expected, a real UMR 
-failure can happen and is handled by the existing recovery.
-
-> 
->> +
->> +	return 0;
->> +
->> +forged_cqe:
->> +	/* mlx5_ib_poll_cq() updates the CI only for a returned completion */
->> +	mlx5_cq_set_ci(&cq->mcq);
->> +	/*
->> +	 * The NIC forged a CQE. Fail the UMR path for good, ignore any later
->> +	 * CQE and force the health recovery, as the fatal sensors still read
->> +	 * clean. The internal error flush then completes the waiters. Return
->> +	 * an error, not -EAGAIN, as a CQE was consumed.
->> +	 */
->> +	umrc->state = MLX5_UMR_STATE_ERR;
->> +	cq->poll_one = mlx5_ib_poll_one_stopped;
->> +	mlx5_trigger_health_work_force(dev->mdev);
->> +	return -EIO;
->> +}
-> 
+> >  static int aspeed_g6_pinctrl_probe(struct platform_device *pdev)
+> >  {
+> > -     int i;
+> > +     struct aspeed_g6_probe_data *g6;
+> > +     struct regmap *scu;
+> > +     int i, ret;
+> > +
+> > +     if (!pdev->dev.parent)
+> > +             return -ENODEV;
+> > +     scu =3D syscon_node_to_regmap(pdev->dev.parent->of_node);
+> > +     if (IS_ERR(scu))
+> > +             return dev_err_probe(&pdev->dev, PTR_ERR(scu),
+> > +                                  "No SCU regmap for THRU handover\n")=
+;
+> > +
+> > +     g6 =3D devm_kzalloc(&pdev->dev, sizeof(*g6), GFP_KERNEL);
+> > +     if (!g6)
+> > +             return -ENOMEM;
+> > +     memcpy(&g6->pdata, &aspeed_g6_pinctrl_data, sizeof(g6->pdata));
+> > +
+> > +     ret =3D aspeed_g6_thru_handover(scu);
+> > +     if (ret =3D=3D -EPROBE_DEFER)
+> > +             return ret;
+> > +     if (ret) {
+> > +             g6->thru_error =3D ret;
+> > +             dev_warn(&pdev->dev,
+> > +                      "THRU handover failed (%d); GPIOP0-P5 mux reques=
+ts blocked\n",
+> > +                      ret);
+> > +     }
+> >
+> >       for (i =3D 0; i < ARRAY_SIZE(aspeed_g6_pins); i++)
+> >               aspeed_g6_pins[i].number =3D i;
+> >
+> >       return aspeed_pinctrl_probe(pdev, &aspeed_g6_pinctrl_desc,
+> > -                     &aspeed_g6_pinctrl_data);
+> > +                     &g6->pdata);
+>
 > [Severity: High]
-> Can relying solely on mlx5_trigger_health_work_force() to flush pending UMR
-> requests leave waiters in mlx5r_umr_post_send_wait() hung during device
-> teardown, reload, or removal?
-> 
-> During teardown or reload, mlx5_unload_one_devl_locked() and
-> mlx5_uninit_one() in drivers/net/ethernet/mellanox/mlx5/core/main.c hold
-> dev->intf_state_mutex while unregistering the IB device, which revokes open
-> MRs through:
-> 
->    mlx5_ib_dereg_mr()
->      -> mlx5r_handle_mkey_cleanup()
->        -> mlx5_umr_revoke_mr_with_lock()
->          -> mlx5r_umr_revoke_mr()
->            -> mlx5r_umr_post_send_wait()
-> 
-> In addition, remove_one(), shutdown(), and
-> mlx5_sync_reset_set_reset_requested() call mlx5_drain_health_wq() or
-> mlx5_stop_health_poll(), setting MLX5_DROP_HEALTH_WORK before mlx5_ib
-> teardown finishes.
-> 
-> If a forged CQE is detected in mlx5_ib_poll_one_umr() during these flows,
-> cq->poll_one is replaced with mlx5_ib_poll_one_stopped without completing
-> the entries in umrc->pending. The queued force_fatal_report_work calls
-> mlx5_fw_fatal_reporter_err() in
-> drivers/net/ethernet/mellanox/mlx5/core/health.c:
-> 
->      mutex_lock(&dev->intf_state_mutex);
->      if (test_bit(MLX5_DROP_HEALTH_WORK, &health->flags)) {
->          mlx5_core_err(dev, "health works are not permitted at this stage\n");
->          mutex_unlock(&dev->intf_state_mutex);
->          return;
->      }
-> 
-> Because dev->intf_state_mutex is held by the thread waiting in
-> wait_for_completion(&umr_context.done), or because MLX5_DROP_HEALTH_WORK is
-> already set, enter_error_state() and the software CQ flush cannot run,
-> leaving the UMR waiters blocked forever. Could forged_cqe drain and complete
-> the remaining contexts in umrc->pending directly?
-> 
-
-The same hang can already happen today, in a rare race: if a UMR WQE is 
-not completed while unbind runs, the health work is already dropped, 
-nothing flushes it and the waiter hangs, as the wait has no timeout.
-
-A forged CQE reaches the same state. It is a pre-existing hang, i.e. a 
-DoS, which is out of scope.
-
-Draining the pending contexts in forged_cqe would also be racy, as the 
-internal error flush may complete the same WQEs again. so forged_cqe 
-does not drain the pending contexts.
-
-Yishai
+> Can this cause a use-after-free of g6 if the device is unbound?
+>
+> In aspeed_g6_pinctrl_probe(), g6 is allocated with devm_kzalloc() and
+> &g6->pdata is passed to aspeed_pinctrl_probe(). However,
+> drivers/pinctrl/aspeed/pinctrl-aspeed.c:aspeed_pinctrl_probe() registers =
+the
+> controller with the unmanaged pinctrl_register() helper:
+>
+> drivers/pinctrl/aspeed/pinctrl-aspeed.c:aspeed_pinctrl_probe() {
+>         ...
+>         pctl =3D pinctrl_register(pdesc, &pdev->dev, pdata);
+>         ...
+> }
+>
+> Previously, aspeed_g6_pinctrl_probe() passed the static
+> aspeed_g6_pinctrl_data structure, which remained valid for the lifetime o=
+f
+> the kernel. Because aspeed_g6_pinctrl_driver does not define a .remove
+> callback to call pinctrl_unregister() and does not set .suppress_bind_att=
+rs,
+> unbinding the platform device via sysfs frees g6 via devres while the
+> pinctrl_dev remains registered with driver_data pointing to &g6->pdata.
+>
+> Subsequent calls to aspeed_g6_set_mux(), aspeed_g6_gpio_request_enable(),
+> other pinctrl callbacks, or pinctrl debugfs entries will then dereference=
+ the
+> freed g6 structure.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261105152348.85=
+67-1-prasanth.padarthi10@gmail.com?part=3D1
