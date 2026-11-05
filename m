@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793850629;
-	b=ANeNRx8gZ7hNzG1pLj4ZK8GiKmxbR0Lmh2UNKM5VOVM0OIqUIqHZw/aZeFgHNkxRbcSP
-	 3lRZxj3DC7E2LA2pNVhsgvrtKR1WUMc0WYP1iG34udwLLUFVOHJ04oVJMXyqG65GW5B5F
-	 +6vwbdqUZwNPrBAPWBCaYQSmbWRwUShFkmQ1/1wrwaVjDzlpWwOCeYVhQgKJynWhs7F4C
-	 qqpu/nOuqbnECxBcZHSqI8OrFSnyt7bSiEZ2wsk8rpabfkO2hVUyAQpHlE9Jp5HX40ViI
-	 Flg/Cpur2yYHcvXEllp+6sTZW47Q0Zt4GJ29L3zQFH2o8Rs60DYiUB2jvVEfMwFvRvA==
+	t=1793851530;
+	b=2pEz6iorWlY0VSIeJ7PT43bJ05v9k9WblwwpbYEDD2437cYAVvWngxNfGnbzjpC27Njq
+	 z4TbA8SpUwcVWI+OhBWXjlSfjTSjvhOpsGG37V9hsHBDAspEaxyp5xJ7A7DqqrU4MWaLz
+	 U12iLYX9MM524DnPl5Tm8A16p9YdSp+BlS9M00uBblhRpWH4jBQ6/QqmLFzAybI7X4zRT
+	 en26nC+FbT51y0lc0qCJkKZI2kL+5OPqZL2PjP/EsRy71QQtYbDjeQbdk4oi5Vj2EDUqr
+	 rwGKATe8A3lzKrNm2JC61tXZ6hkdW2vDs3lqStZftwfju2ep8gH0bQs09Pg4oI6/lTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793850629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793851530;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FTQt/DKzExkg2Hajv9Ngnf1BFMIHptWE7Rva4W1+tQA=;
-	b=da46j9RGvN5HjlV8F0LzbAPNzxpdCrtCVH4Ipov/BvPoxlNj4MC2fKr+QjjQvEX2+3fO
-	 6fotSCQPvAsDkgJVKdC3hrYNZsaAfIHImi9xr//L2b8X8rOajhaS1WIjnbO/T/OmqWaM1
-	 ZuYsI5lydpli+lTVCz6IWu+9b+HP2zG3W5Pnls+G4HW1cZTdC1a+xJw51lTZjiJ229aBh
-	 YMhe6vIyvsQ1S1K5dAN56cQwFnBPMjttcK8xV4M1XqbRo+MCZJBItbyQkLll0WJCTtzZ4
-	 t9Aaz6UJSIuZWdn/fdEEEt7oY9X1LjRm/n9JOvlHVJzVeoDDHAjpvh/JBoNLGejfljw==
+	bh=uhXzNT85syfQsWP0/fY2t6PKYwrrbIrshv8CnCw1QDI=;
+	b=CxowLkXojhfJxzX11FWg5Ll88KGtd6RjlG7/eJzJsY5owN0TrdFuTQuSi5gZUnLTR2cG
+	 0zTlC6w9F7ZH9EwcBUB0CfR501X8LYhbrOY2TvKlHjzbWzMFkCG9/9rOlxapvpuh3DQLz
+	 xZ9CpVJM75jjIKrTpuRjwvcLIT/Mgyo1GsDfK3hmr9rkcArOIjTSbIP0lhNQnEC09V2i+
+	 Rw2CGua5dSwS2h0FIQFGGJormT4cIhmBLzPLt0nKU1KNSTmImKZEX0ajG8bU+qefeMht5
+	 L0B8QTbr1R2Vrgc17LrkCnAGCZeUPGUg6rQsIVRMOY8VB2afL6phM8Iv5qtGkmrwG8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=reznichenko.net;
 	spf=none smtp.mailfrom=dpplabs.com;
-	dkim=pass header.d=reznichenko.net header.i=@reznichenko.net header.a=rsa-sha256 header.s=google header.b="S7pNGCy/";
-	arc=none smtp.remote-ip=209.85.214.181
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	dkim=pass header.d=reznichenko.net header.i=@reznichenko.net header.a=rsa-sha256 header.s=google header.b=Xla7ZbYA;
+	arc=none smtp.remote-ip=209.85.216.44
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62FE606A32D
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 03:50:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D62FE606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B27606A32C
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 04:05:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0B27606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=reznichenko.net
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=dpplabs.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=reznichenko.net header.i=@reznichenko.net header.a=rsa-sha256 header.s=google header.b=S7pNGCy/
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ed0890476fso8022845ad.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 19:50:28 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=reznichenko.net header.i=@reznichenko.net header.a=rsa-sha256 header.s=google header.b=Xla7ZbYA
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3ac6794fe45so1139626a91.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 20:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reznichenko.net; s=google; t=1793850628; x=1794455428; darn=lists.linux.dev;
+        d=reznichenko.net; s=google; t=1793851529; x=1794456329; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=FTQt/DKzExkg2Hajv9Ngnf1BFMIHptWE7Rva4W1+tQA=;
-        b=S7pNGCy/Y7gNW847je3BeJ/owIXBo/V3ZQU+ooPPKOWeLmGGTSENfb56M/8YL+BCWm
-         O83038j3HevxdQlwhuZUyVq+wRhVdhQgj5oFTHOZ23x/rx+bkv0bcGRB5/72Wvd4xZVS
-         DZV4hwKxpuzli8hZgVW+OzgHZZ/VgCiYE3pEoReVhP2ipiDNI74HS3SvcFV+JPPUMb3o
-         CL5IO0vu5T2gA0yrTOTfACo6rur//4fAwUKBttnELFydZVoPnsD58V43RDI+uQH7kHAc
-         Bkkin0yx0OQHemhNs+1QsVkqmS3/qX2Kn1dEIcTV9EX1z5MikwPIm6fEy5SUREWbO7GH
-         G0yw==
+        bh=uhXzNT85syfQsWP0/fY2t6PKYwrrbIrshv8CnCw1QDI=;
+        b=Xla7ZbYAtlTD2QCq0Oeh9HVZA7ZHWbqRWSWIvn0JnChaGwWYDW2e7PAlweh7ugmpvZ
+         J5xBAGyvJQ4AJjCl+QBHt/RiYsBcW5DydeLbd2ELh4NNzZw+YujqmIpkg0qFIMq+0bVt
+         8hUtpE2gb7WIkTpUPcd11WfLKlwV9RNV/BLHKBGSZAfMqlf0nrGXYrUDoQJ8GEXuxGFC
+         DLKeYSaU/HAPrFp6s6W9iGJH7NnFVaIhF3a+f4vuMXi8YPP0URh+kZMfWp5mybMeYdK6
+         +AnLyTqvdKTcwlQl6ChXh8hwrWLDD6rHkwl8Zt3KnmJB588UyIWdJF9ntVVL0VKcbfNB
+         2urw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793850628; x=1794455428;
+        d=1e100.net; s=20260707; t=1793851529; x=1794456329;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FTQt/DKzExkg2Hajv9Ngnf1BFMIHptWE7Rva4W1+tQA=;
-        b=mOAX0xFTM3FtswLuPxEWbuPM2ZydfABAGVBzDJCThFsWHqhcDKJXVSOUj0rvQbqBjP
-         KmliP8iHFioMqS+JtgXZqtF0GYD9ZSjSJu+AoqRZZcNf5UWflO7ozG1czMNFF6iV8HE1
-         I/83b7OPN5NvVEOn3VocT1IA8mT9i+siBCWWaQqt3hUwdfGYCmtTc2ERJvKrZOlhv2pU
-         3XFHHb7oDBZRiCaQ9Q9D5L0hZqOs/xpcQl2l2dvrmzGqyCKdHRze2dbYETcmdz7pyb9k
-         ph0JhPFVO8w2VRIEq19i2UdOWWKek9tqLrZIZ6nj+/bK8eDjD9QGxHQRfzm8lAD4JRiV
-         euZQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzMtnXSvZwfmnbYkkqWuyFzhEEpxbtn22zNkpVOOtABQj6ksFX11cjgESP4sotz7QD8X2ytaL0UswbhkGFJhXM=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/PKxCbrP1SU7zmgL08+tWESUtHE1EOwvvCl8e0ZOBa/viau/QM
-	jYdGOHYRqLn5RDuxk86L5mAXi8iCjVBinlIm/OEZGnLGtnfoA9DW64cMvpMfF3xNKwY=
-X-Gm-Gg: AYBFou2FFSwoyQAQ9J+NTpv31eYK+NEJN1XitmNAcW4vBuorA1ApW1ljevWBInr/WQk
-	Juz2bjFbIr/ioAPWse0PRa+U7JzjkVakcJYDbPd4LNw8B0z0FmUL93lDRLwBBkTHJl+ftu7AKAh
-	xXZmwzlFAS/LVxcUCqeJHkw4DB0w7Xm7mQRZuiVWd/maQUrbRJiUANpW/Sb6aLVtbpCo3vwoljj
-	nsLjdHR0XSHRVlxucxPP3A9tDbllh/q3AF6a0SGAa4lwdLHeJ3P2T2MwGLt7+AYt70Yb2hqWfdl
-	vilC5SLClWeDX/PKA+vGeCGQoEXsyb5Hux4+yk+x3WInxsm4a9WivBLvKEczdSZzXYxavGc9gfn
-	rZtesyk+PsnYIMKRAolkltkXHgX4VP2dXpn9miWluJFgMpm0GyT4B/bFig8lC1gsyMA3Ual8+qJ
-	MsbDSeBN0zBgQ6yy3k4tPVT9WVHRuJHTJu3MivK6JpZJJEhsP9XgB2rZUEYv+ik6SCW1C8e3rUE
-	yPx0aPau/axXgHQdlJHAU+Dyqv31L0+acZkXdPNazI5vHCQHCG4DHUoqkmXmjH+0/ChyH6Mqkej
-	7LGUKbBWKrYw4LLqLWcy+Js=
-X-Received: by 2002:a17:902:ec85:b0:2e9:a23b:643d with SMTP id d9443c01a7336-2eb364d253fmr159592395ad.35.1793850628135;
-        Wed, 04 Nov 2026 19:50:28 -0800 (PST)
+        bh=uhXzNT85syfQsWP0/fY2t6PKYwrrbIrshv8CnCw1QDI=;
+        b=IoLPe5utN9KEj3ZCuUvnP3NKf4yCY1Rt7VxLysvt2dkbu5KadRE3p+ZWlaUoXNPuEM
+         S9wk9ne2fimmF34iLPzomMOGDtmU+GUagSHKGSPX1UXC6cBQZxoGgaUmclb3FHUoWwGu
+         dcjln+wjqUu+axjbrqA0tCSbOtYf3NIYpiOEW5RWEt2ZEiEg4J4ej49iDUOLVoPQl3QV
+         9pnJiRHOzWO+xjy0pANzAQ3oih3N0eVpZch2PfrqBWFOVsUKDBYkQRrN/hXKwsYMxHpe
+         xnJEbG1prV9Dqv6On4I0AMJTofKjGw42f/eqpkadrVhPuDlX5clq9PypLFOy8UcVKsH5
+         LThA==
+X-Forwarded-Encrypted: i=1; AKwUvBzg38My8Qnb0MKVzuP4Kx0GniXTYl3iF1vww0iNzK/2/jQHqibTcyXcnsQ8RZDj+MLxXQnD107S3F42+sgtSho=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8pqKGy9xkKZzaji9o+9IyTUwqflifIUdN3hlqihMqtibBKdFGT
+	PPAes9SBtlyZ7heZBt93jNZeqx8uJIgVI9mzlgJtqy7uD/+QvMURo7i48dczDzFEKd0=
+X-Gm-Gg: AYBFou0B5nwC0m6XnbHujwHiLA+ZpnSexb+T7M5dWOnLT0X9Qy2/2CK18ECugJYCuVi
+	CoF5ItDhfMIDkKdu+gKg2Vx1jaq7C8fviMbofjAs/V7qA5jSxFGl4BHWLBVbQTRz/nNvpVU+6rL
+	Q/XBxPYU01vXqbHW8jcQsSoSgz9aNO7Wd+UtuXfScXXyg5i/VsRyhUUwRH4xoY7zwsbGouBxWeX
+	5p2Fc6fryBhsgtU1IZMfs2mmoOWGtWxQE39ry7Me9LMndM+mtclGXz8LNYTY0TmuSTXBoYofTjj
+	W4z9kOaTBchwlEXPEVM2st3hyNrIu+yenykJzJEMqSjCdscUzN/uAoFqcgDVVSgQQOmUFLoNX/g
+	Y4P8urDYkqcMnKxQvVa7PIWemZoSeMDhjePNd46/LCLu2FoGVMomSFPx5HqdUeET+ZSTN4XrSaO
+	QZXjlwGJ9fEY4LnWG/07fNqQgqW84OOB6/SEKxOU6k5SXnj0MfOWwnEpl5VPeg0jM3vjIBjMtUv
+	ViMBTrGH1sKx1UEyFqaJZQFktBx3a2hy5L9ReaBC1GEKNA3Q/j7PBwaBxm2HK3XjIla7CQ5X1+H
+	DVZfqTwnDhcf0XlVD3fF
+X-Received: by 2002:a17:90b:3142:b0:3ab:4f1:4f7e with SMTP id 98e67ed59e1d1-3ae897f3919mr15959327a91.28.1793851529190;
+        Wed, 04 Nov 2026 20:05:29 -0800 (PST)
 Received: from z440.. ([24.21.231.36])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ed09127d9fsm12557955ad.51.2026.11.04.19.50.26
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b0b90def97sm952109a91.7.2026.11.04.20.05.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 19:50:27 -0800 (PST)
+        Wed, 04 Nov 2026 20:05:28 -0800 (PST)
 From: Igor Reznichenko <igor@reznichenko.net>
 To: romain.tisserand@gmail.com
 Cc: airlied@gmail.com,
@@ -95,12 +95,12 @@ Cc: airlied@gmail.com,
 	sashiko-reviews@lists.linux.dev,
 	simona@ffwll.ch,
 	tzimmermann@suse.de
-Subject: Re: [PATCH 3/4] dt-bindings: display: panel: ilitek, ili9488: add the PocketGo S30 panel
-Date: Wed,  4 Nov 2026 19:50:25 -0800
-Message-ID: <20261105035025.25540-1-igor@reznichenko.net>
+Subject: Re: [PATCH 4/4] drm/panel: ilitek-ili9488: add the PocketGo S30 panel
+Date: Wed,  4 Nov 2026 20:05:26 -0800
+Message-ID: <20261105040526.26323-1-igor@reznichenko.net>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261103110524.2812831-4-romain.tisserand@gmail.com>
-References: <20261103110524.2812831-4-romain.tisserand@gmail.com>
+In-Reply-To: <20261103110524.2812831-5-romain.tisserand@gmail.com>
+References: <20261103110524.2812831-5-romain.tisserand@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -111,5 +111,14 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+
+> As on stock,
+> the panel is set to the 18 bpp interface pixel format while the DSI link
+> carries RGB888, so the panel shows 6 bits per color.
+
+Minor suggestion: please drop the implication that COLMOD 0x66 causes DSI to 
+display at 6bpc; the datasheet doesn't establish that causality. 
+I think COLMOD only applies to DPI and DBI, not DSI. The initialization 
+sequence can remain unchanged. Non-blocking.
 
 Reviewed-by: Igor Reznichenko <igor@reznichenko.net>
