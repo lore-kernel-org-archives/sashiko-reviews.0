@@ -1,54 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793891066;
-	b=IzMO9pReSgXdNUOWXJl7UGLiOSdUpyfqidD1vHc55X6tqz9iV1hYVsgOI0aM1cqdIZ/p
-	 jbMnNLgc/70d6Ucqi8PYRjkGpbFtvF2ONjRyS6HW5w5LrCcXIhPAHEra2E0eKbMLWUcUd
-	 p/QfqCsWHFzPEcJueR64SHR32Cpy2zNTFUkyr0MVozjeOgPwc5z6dj/AX/KKXf3x2XpLZ
-	 Xsq45S84nSsjyiKDnx7t13acIme7vJKbo+W48bRTr4fdiwUgi9sWoWXwYz7QOOMLHkjKR
-	 2IqQezR2Xx/RRqlrQ2LdE62SRv8gVUGQZuXYyvueEz5VupAEvENyBzXj047aa4G1AwA==
+	t=1793891167;
+	b=I1TuiG0DWKkQ/K4hpsc6VcYwemYEg35fCihZ670gr/7Rh3qHWELM7AXwEyVtRVvscrkT
+	 fpp0mjPvHuV6RGoVFUK3TsSieapAZqh8v7zd7kzPrTFJ8Dxs0oLoCTM8LZ67cnyToMuiw
+	 ieTi6UM2CLtpVcDvt+ZltYv9PZPWglXyKFkEAk6ux++JmgapiCUU/mQksVpG4Pbf7dp8X
+	 eZd10y8ZG6vsQSVGWdX6xb1lUCWqpI105Gr/7m/Y7teTHOTaHsHRM3Jsr+Z8qnZVg7D6S
+	 1shemuuf2rWqpLPQ5NBNqMxjF+x7wBLmU9Q1wMwzL/Vlz5b/LhKShc245IY03t3gfXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793891066;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=6JpxKF69zra3KLEFXI7WNQ/Oicqi4O8hGXipJr7KSLw=;
-	b=qCPB54dI4YoeH0FEZpKIopzz9J5ip2aThdQ2LzI3QIcC224p+4Qi4Rh4EdjNyAjnr8mZ
-	 NZy9BKukFJENSIiFS6aJEAX0co9XzWfKsHZ8dJeXGiTHyXmz1/rjclFn0GMr25DP57nOI
-	 7yP0Vg5uyYrzocdK8/sMPLFRzvgbHHnUOzptKE4Bfssmbbv1uV4B2aHQNocCaS37E7up5
-	 rO6kmJfTbEr3nHqjGXmw9893lXW60aL72ShHXSF0WedW9LWxA6SkpXJlStU4UK7UEx/Gm
-	 3pLrb+fuxCNtAZMDSOdxPEdrN8JE70oyelXIueakq1vyrE36mT6UL29FcB2955b8bsA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793891167;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=Yn0QkHatHx/W4aQMXIv5zjBEyzOdn1ftmVP/Kr4JG3I=;
+	b=Mx1AzcefZzTMq/ND15GuazorkHnhiqnNgRpIEBkc953pR+cl1YtL1DU+qCvS6mok0Zou
+	 2dmvWrxpgWg+Yyq/+mVMou3lS2otTKnTzhfpSVfGWHKenmLiZ883Wq1V+R9fvyHxGDHOG
+	 ZWcOiiMYwMpDmSewtOLPsPOeX/cMgp4uWRTVX49Sz8KIhWPsTNn4CnnHCOm3cEGMpObyH
+	 9KPOdN735nfLwLlwrFb/CN/25HBo29GwjDhvvmqB90cwQz9GOla5yrhIvy8WszpbUfDJs
+	 yQj32r5Xh90eRWQyuD9Dgr5i+Qyl7SGbnJcqi+tMPFb0G+PYp+Y2/o7AYD2O49n/wzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RMVUSQ5I;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9E0606A31B
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 15:04:25 +0000 (UTC)
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=kKXfLjoc;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0000606A326;
+	Thu,  5 Nov 2026 15:06:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0000606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RMVUSQ5I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF0F1F000C1
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 15:04:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793891065;
-	bh=6JpxKF69zra3KLEFXI7WNQ/Oicqi4O8hGXipJr7KSLw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=RMVUSQ5IfrgcGJMldSq/TbxxdAUx3pkhJFBKkO7IfBnRL/J42kuDv4suUTCHOyltF
-	 aKPTg16cRtGFo7oNLoyxkSPZQATKQtxbmL6ToKXfJPSRfHoY56rCaxm8/17uLwpXEY
-	 i9MkW3XKnCYz45oE+Dd7fsU+miRrEoB9jUqBfPxBKgqJPv2/Eqxd1zSneu5ijTRk4o
-	 7E2UZaVD3QLtJ9J9ix31q1pp628Fi3f0cG2IKKhEPhiUENwbtpK3pdmJ6NZp4TRMFk
-	 a4ekxirHrBdftTwfqSGW0QiDXsrTUUNn7pc5/Ym12Qtgcx99fe0t2jtmFUvmM2ORPj
-	 QkYdUxiTrigCQ==
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b581b6b0e9so848101a12.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 07:04:25 -0800 (PST)
-X-Gm-Message-State: APuU4Z+zo30GNyOsJvrecJFGSmnXdC7bTyxVm/bQMjqkUeRnr4M5BkG6
-	CXUTI0mtNmw5/VmuvjlpSP1kDr1N8fpU8qT+7RnDZGcuqVNtdPTenWb7SBzJFj7EfHiHZANsK7u
-	XWGfvsq058pwWC9m7pDUKcoKwMbgKDQ==
-X-Received: by 2002:a05:6402:a512:20b0:6ac:b0fb:57b5 with SMTP id
- 4fb4d7f45d1cf-6b4d4c74d91mr10007519a12.26.1793891064026; Thu, 05 Nov 2026
- 07:04:24 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=kKXfLjoc
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E1B1F168F;
+	Thu,  5 Nov 2026 07:06:02 -0800 (PST)
+Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A0EAC3F628;
+	Thu,  5 Nov 2026 07:06:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793891166; bh=vR85onfgpCUJLCUOJVtduoihfsVyEmN6bASRt05GYAE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=kKXfLjoclyMl8CP3Re4DQ96z4xr/dqy8V5kGJ/OP5jC95ZOfzQfIJo9MzX6dqZ6Ki
+	 jCsZ6IIq6tbX9oIWC069Ft0VmSwARjBJ5HFMZeihHBUb2RZohH524i9QGemxuSTrkw
+	 DIFGGCTU58ihEFxRV7Lfr+BTtJ1EN/QkipS8Zneg=
+Message-ID: <a2dfb2ad-7c52-43e1-8b77-cacb2fa00c05@arm.com>
+Date: Thu, 5 Nov 2026 15:06:03 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,116 +53,139 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261105144920.2796623-2-robh@kernel.org> <sashiko-outbox-199279@kernel.org>
-In-Reply-To: <sashiko-outbox-199279@kernel.org>
-From: Rob Herring <robh@kernel.org>
-Date: Thu, 5 Nov 2026 09:04:12 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+U2RUjj1SQ8F5=3R30GBqXDzgBSFgqLbO1KRei=Xiv0w@mail.gmail.com>
-X-Gm-Features: AclHuK-unT37pbZokmeKAjXq4HeyOtONEklLF2wD-ifUxqMj98lciCWNNlqIGF4
-Message-ID: <CAL_Jsq+U2RUjj1SQ8F5=3R30GBqXDzgBSFgqLbO1KRei=Xiv0w@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: nxp/imx6: Drop unused .dtsi
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, imx@lists.linux.dev, conor+dt@kernel.org, 
-	Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/11] KVM: arm64: CCA: Prevent memslot modifications
+ after Realm creation
+To: Steven Price <steven.price@arm.com>, sashiko-reviews@lists.linux.dev,
+ kvm@vger.kernel.org, kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Ackerley Tng <ackerleytng@google.com>,
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20261102141304.126883-1-steven.price@arm.com>
+ <20261102141304.126883-10-steven.price@arm.com>
+ <sashiko-outbox-193708@kernel.org>
+ <9489ebe7-4c75-4229-811e-3f618028d367@arm.com>
+Content-Language: en-US
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <9489ebe7-4c75-4229-811e-3f618028d367@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 5, 2026 at 8:59=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] ARM: dts: imx6: Deleting Dwarf and Nymph .dtsi omitted by copy=
--paste in .dts
-> --
->
-> commit 22f4920daa7995325841819b6b25c37d2efd2b30
-> Author: Rob Herring (Arm) <robh@kernel.org>
->
-> ARM: dts: nxp/imx6: Drop unused .dtsi
->
-> This commit removes four i.MX6 device tree include files that are not
-> currently included by any in-tree device tree sources.
->
-> > diff --git a/arch/arm/boot/dts/nxp/imx/imx6qdl-pico-dwarf.dtsi b/arch/a=
-rm/boot/dts/nxp/imx/imx6qdl-pico-dwarf.dtsi
-> > deleted file mode 100644
-> > index 3a968782e854b..0000000000000
-> > --- a/arch/arm/boot/dts/nxp/imx/imx6qdl-pico-dwarf.dtsi
-> > +++ /dev/null
-> > @@ -1,45 +0,0 @@
-> > -// SPDX-License-Identifier: GPL-2.0+ OR MIT
-> > -//
-> > -// Copyright 2017 NXP
-> > -
-> > -#include "imx6qdl-pico.dtsi"
->
-> [ ... ]
->
-> > diff --git a/arch/arm/boot/dts/nxp/imx/imx6qdl-pico-nymph.dtsi b/arch/a=
-rm/boot/dts/nxp/imx/imx6qdl-pico-nymph.dtsi
-> > deleted file mode 100644
-> > index 3d56a42164482..0000000000000
-> > --- a/arch/arm/boot/dts/nxp/imx/imx6qdl-pico-nymph.dtsi
-> > +++ /dev/null
-> > @@ -1,54 +0,0 @@
-> > -// SPDX-License-Identifier: GPL-2.0+ OR MIT
-> > -
-> > -#include "imx6qdl-pico.dtsi"
->
-> [Severity: Medium]
-> Should imx6qdl-pico-dwarf.dtsi and imx6qdl-pico-nymph.dtsi be wired up to
-> their existing board device trees instead of being deleted?
->
-> Unlike the Kontron files, the corresponding board files for Dwarf and Nym=
-ph
-> already exist in the tree and are built by arch/arm/boot/dts/nxp/imx/Make=
-file
-> (imx6dl-pico-dwarf.dts, imx6q-pico-dwarf.dts, imx6dl-pico-nymph.dts, and
-> imx6q-pico-nymph.dts).
->
-> When commit 98670a0bb0ef ("ARM: dts: imx6qdl: Add imx6qdl-pico support")
-> added support for the Dwarf, Hobbit, Nymph, and Pi baseboards, a copy-pas=
-te
-> error left the Dwarf and Nymph .dts files including imx6qdl-pico-pi.dtsi:
->
-> arch/arm/boot/dts/nxp/imx/imx6dl-pico-dwarf.dts:
->     #include "imx6dl.dtsi"
->     #include "imx6qdl-pico-pi.dtsi"
->
->     / {
->             model =3D "TechNexion PICO-IMX6 DualLite/Solo Board and Dwarf=
- baseboard";
->             compatible =3D "technexion,imx6dl-pico-dwarf", "fsl,imx6dl";
->     };
->
-> arch/arm/boot/dts/nxp/imx/imx6dl-pico-nymph.dts:
->     #include "imx6dl.dtsi"
->     #include "imx6qdl-pico-pi.dtsi"
->
->     / {
->             model =3D "TechNexion PICO-IMX6 DualLite/Solo Board and Nymph=
- baseboard";
->             compatible =3D "technexion,imx6dl-pico-nymph", "fsl,imx6dl";
->     };
->
-> (and similarly in imx6q-pico-dwarf.dts and imx6q-pico-nymph.dts).
->
-> As a result, the Dwarf and Nymph board DTBs are currently built with the =
-Pi
-> baseboard description (which disables HDMI and routes the LED to GPIO5_IO=
-18)
-> rather than their own baseboard descriptions in imx6qdl-pico-dwarf.dtsi
-> (GPIO5_IO31 LED, mpl3115@60 on i2c1, and pca9554 io-expander@25 on i2c2) =
-and
-> imx6qdl-pico-nymph.dtsi (GPIO5_IO31 LED, adc@52 on i2c1, pca9554
-> io-expander@25 on i2c2, ds1337 rtc@68 on i2c3, and PCIe enabled).
->
-> Would it make sense to keep imx6qdl-pico-dwarf.dtsi and
-> imx6qdl-pico-nymph.dtsi and update the four Dwarf and Nymph .dts files to
-> include them?
+On 04/11/2026 11:15, Steven Price wrote:
+> On 02/11/2026 15:50, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [High] KVM: arm64: CCA: guest_memfd memslot delete rejected after Stage-2 unmap
+>> --
+>>
+>> commit 5106402397c36eec1e5fa59a5bb2c5adf4ee2aa8
+>> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
+>>
+>> KVM: arm64: CCA: Prevent memslot modifications after Realm creation
+>>
+>> This commit updates kvm_arch_prepare_memory_region() to disallow creating,
+>> modifying, or deleting guest_memfd-backed memslots once a Realm has been
+>> created.
+>>
+>>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>>> index 51fda7b2ff7f3..eb8c5f9e9791d 100644
+>>> --- a/arch/arm64/kvm/mmu.c
+>>> +++ b/arch/arm64/kvm/mmu.c
+>>> @@ -2862,13 +2862,28 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+>>>   	    (new->flags & (KVM_MEM_LOG_DIRTY_PAGES | KVM_MEM_READONLY)))
+>>>   		return -EPERM;
+>>>   
+>>> -	if (kvm->arch.vm_flavor == VM_PROTECTED_PKVM) {
+>>> +	switch (kvm->arch.vm_flavor) {
+>>> +	case VM_PROTECTED_PKVM:
+>>>   		/* Cannot modify memslots once a pVM has run. */
+>>>   		if (pkvm_hyp_vm_is_created(kvm) &&
+>>> -		    (change == KVM_MR_DELETE || change == KVM_MR_MOVE)) {
+>>> +		    (change == KVM_MR_DELETE || change == KVM_MR_MOVE))
+>>>   			return -EPERM;
+>>> -		}
+>>> +		break;
+>>> +	case VM_REALM:
+>>> +		/*
+>>> +		 * Once the Realm is created, we cannot modify any slots that
+>>> +		 * could be providing private memory. i.e., guest_memfd backed
+>>> +		 * slots.
+>>> +		 * TODO: Handle trusted device private memory slots
+>>> +		 */
+>>> +		if (!kvm_realm_is_created(kvm))
+>>> +			break;
+>>>   
+>>> +		if (kvm_slot_has_gmem(old) || kvm_slot_has_gmem(new))
+>>> +			return -EPERM;
+>>
+>> [Severity: High]
+>> Does checking kvm_slot_has_gmem(old) in kvm_arch_prepare_memory_region() run
+>> too late to prevent Stage-2 unmapping when deleting a guest_memfd-backed
+>> memslot on a created Realm?
+>>
+>> In virt/kvm/kvm_main.c:kvm_set_memory_region(), non-delete changes
+>> (KVM_MR_MOVE and KVM_MR_FLAGS_ONLY) on KVM_MEM_GUEST_MEMFD memslots are
+>> already rejected upfront with -EINVAL, so kvm_slot_has_gmem(old) is reached
+>> here when change == KVM_MR_DELETE.
+>>
+>> However, in virt/kvm/kvm_main.c:kvm_set_memslot(), KVM invalidates and
+>> flushes the old memslot before calling kvm_prepare_memory_region():
+>>
+>> virt/kvm/kvm_main.c:kvm_set_memslot() {
+>> 	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+>> 		invalid_slot = kzalloc_obj(*invalid_slot, GFP_KERNEL_ACCOUNT);
+>> 		if (!invalid_slot) {
+>> 			mutex_unlock(&kvm->slots_arch_lock);
+>> 			return -ENOMEM;
+>> 		}
+>> 		kvm_invalidate_memslot(kvm, old, invalid_slot);
+>> 	}
+>>
+>> 	r = kvm_prepare_memory_region(kvm, old, new, change);
+>> 	if (r)
+>> 		goto err;
+>> }
+>>
+>> kvm_invalidate_memslot() marks the active slot as KVM_MEMSLOT_INVALID and
+>> calls arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot():
+>>
+>> arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot() {
+>> 	write_lock(&kvm->mmu_lock);
+>> 	kvm_stage2_unmap_range(&kvm->arch.mmu, gpa, size, true);
+>> 	kvm_nested_unmap_cipa_range(kvm, gpa, size, true);
+>> 	write_unlock(&kvm->mmu_lock);
+>> }
+>>
+>> For a Realm VM, kvm_stage2_unmap_range() invokes
+>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() with
+>> KVM_FILTER_PRIVATE | KVM_FILTER_SHARED:
+>>
+>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() {
+>> 	if (attr_filter & KVM_FILTER_SHARED)
+>> 		realm_unmap_shared_range(kvm, start, end, may_block);
+>> 	if (attr_filter & KVM_FILTER_PRIVATE)
+>> 		realm_unmap_private_range(kvm, start, end, may_block);
+>> }
+>>
+>> By the time kvm_arch_prepare_memory_region() returns -EPERM and
+>> kvm_set_memslot() restores the old memslot in the error path, hasn't
+>> realm_unmap_private_range() already unmapped and undelegated the Realm's
+>> private Stage-2 DATA granules across the memslot's GPA range?
+>>
+> 
+> I think this should be fixable by checking in
+> kvm_arch_flush_shadow_memslot() and preserving the stage-2 mappings by
+> returning early. kvm_arch_prepare_memory_region() will then reject the
+> operation but the mappings will still be in place.
 
-Seems like the correct analysis. If someone cares about those
-platforms, then they can send a fix. If not, we should delete them
-too.
+Or is the better fix to delay the kvm_invalidate_memslot() after 
+kvm_prepare_memory_region() ? i.e., if we the KVM backend doesn't
+approve the change, why do invalidate the slot ? For most of the CoCo
+VMs, this would be disastrous.
 
-Rob
+Suzuki
+
+
+
+> 
+> Steve
+
