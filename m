@@ -1,102 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793867950;
-	b=D3IdeHGt2Yzs1fUJKS07lI2JQeR4iJTsDu0AbMNwfvmhilIZoPbO0Wvhwk5HJhTrKEMa
-	 a8F4B0kYxmrsxgXLH7b3/AB2eH/cANW72oy1PZkhuYOiIPKv1ZVpBLFHMxfXD+1QcU1GV
-	 +MjCFhqcUfoi0d23IP/rbvHO0x/AOAJ3QQkAxct4UaMb34bNUeDGu4+XT5DIZYJxbIR/k
-	 qMN12iPppjTaVeOZgtb7XtTqYWjK/GDI3gPxDd8r303VNXmvvqwQoH9fjZHuCe2hQAjwh
-	 Zus2BN49idrGjpYu93GHbNxsibC+4/nbhEoM8RSywebw0Vn+z+ehXUq/GOBk9FPoT0w==
+	t=1793868142;
+	b=DXpHvBQHlRW5chf7iS+5XeYzTnjhHNAluEKvBNvOZBT+zAbcrSQiObH4Lho6RfwniEDA
+	 y3MaemOESzVxRfVoThKhrq9zFwsUCAXvETi6pPPkA4M2JKjI3hESKKCvq9f0fljYPK3U7
+	 E+H+ySlcYW+eu/s0PDHSPS9TNTW231XJX7NenHfp5qbQRYGR4s3k9FvPvYV3JiacE2bIl
+	 TlxEpxSFadhNYMRK0s/3iLN8JnqeTc0hfdETZa9jN1hGQ254Q0EvIU7+dT6es5r8X8CHF
+	 oIGAXcIOJJB+FWfmOjXqLtIvgmV7c7n6YcPua7lPcOfpqDOYqpHYKTwrOkXl9FbluJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793867950;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Flag:
-	 X-Spam-Level:X-Spamd-Result:X-Spam-Score;
-	bh=aFTLKKrCBQr7xwtyiLvR9C19fUp15M24LSDxM9aDz5Q=;
-	b=iu65vvvDZ2eWRJeqpZulCH/d9LVIKqb4ACuEdlRr8NRDPzTPshk4epVcRa/TVJbK9aPU
-	 L1+tNM/MHR2yEpiDoTw0lDreCE2Iz1OJp9kwjpY8FWx1ncMX79Hz22bI42ZwosNdsk8I1
-	 bP2tDoGNpbt4+MzEDmpIcP38C6ZNRVTi2j/u1+OCx/WMtX1Jla3IxPXDqPOgsMeZvXRec
-	 ytHnnmjqxKBQrpxKSkpXGFzcl2zXnhNPMxA2p725/C31Ffb8MAv+h2XVuDL+10cbtI68g
-	 JNWtBIPFiNDj97MnRnUKp52wJkWdD8iMdImBj0InYm2why3J1PHaLvHLfAvNYLe+STg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793868142;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=rvsdMBspxxqECpjbAI42lx5NbPMQgGmPQp0lLwZaU7I=;
+	b=wg8kO/XShaVlRAy94BhAegIYCPYbnlUAWI7Q9c2MHeLRMy9jZAUPvJS7uV6OZl7yStCM
+	 b3ShtkflGvtZK2dpX7mSg9UUG1k9TgvLdCcoSumNIvOeRyQetH1E7lfNq8x7ldc/IDfzG
+	 ulUn1gYynnKbEW16Uw0V9B0pv7Ro/kgMhjzbOYd3FIujI1zMR8zX4csTNqNEJSSjSl9E5
+	 Q+fLchvvhoApwf+67JB5llVGYtZrmFu8rFMt5tGAxiSBx2UvcvSSe/VRJaHSZTSdppesq
+	 tmsabR5BJ6fguiexJQ9r5jKkpY+PQOmJyptf5PRQEIa/XHAaNoRqA8wtVMfp8djufOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B715daTC;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=kRKWslKR;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B715daTC;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=kRKWslKR;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="B41/EYZN";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F5B606A31B
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 08:39:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15F5B606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF3E606A32C;
+	Thu,  5 Nov 2026 08:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B715daTC;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=kRKWslKR;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B715daTC;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=kRKWslKR
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 7B7EC21FA0;
-	Thu,  5 Nov 2026 08:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793867943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=aFTLKKrCBQr7xwtyiLvR9C19fUp15M24LSDxM9aDz5Q=;
-	b=B715daTC/9PDTXVRg1IfgslK132QtmSUbVeISO/c9onXPILGqJ5ziVZVW47kt2oTjXdrsv
-	T8e7PB+8VBXd89wOst5WpCSH0BYiZjPg6uyN1VgEOi9z9dPCHn4xxrLpZ/0/Vtoz9pHi7Q
-	2MAbb5trss2xajXFyEeSK/766jGfqPU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793867943;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=aFTLKKrCBQr7xwtyiLvR9C19fUp15M24LSDxM9aDz5Q=;
-	b=kRKWslKRnem7jPVCgX0Al9B20KGnPg291QXKoIYfmhE55SuXDR85nVXtGEOeL4U0iKGU/a
-	0/p+b327xQZiiDAQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793867943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=aFTLKKrCBQr7xwtyiLvR9C19fUp15M24LSDxM9aDz5Q=;
-	b=B715daTC/9PDTXVRg1IfgslK132QtmSUbVeISO/c9onXPILGqJ5ziVZVW47kt2oTjXdrsv
-	T8e7PB+8VBXd89wOst5WpCSH0BYiZjPg6uyN1VgEOi9z9dPCHn4xxrLpZ/0/Vtoz9pHi7Q
-	2MAbb5trss2xajXFyEeSK/766jGfqPU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793867943;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=aFTLKKrCBQr7xwtyiLvR9C19fUp15M24LSDxM9aDz5Q=;
-	b=kRKWslKRnem7jPVCgX0Al9B20KGnPg291QXKoIYfmhE55SuXDR85nVXtGEOeL4U0iKGU/a
-	0/p+b327xQZiiDAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1B377133F6;
-	Thu,  5 Nov 2026 08:39:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id iPbrL6ZA7Gq2OAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 05 Nov 2026 08:39:02 +0000
-Message-ID: <d8e647ec-2637-4c72-a7dc-3f020fd83e05@suse.de>
-Date: Thu, 5 Nov 2026 09:39:02 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B41/EYZN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173321F000C1;
+	Thu,  5 Nov 2026 08:42:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793868141;
+	bh=rvsdMBspxxqECpjbAI42lx5NbPMQgGmPQp0lLwZaU7I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=B41/EYZNq0qVnbGM0+UPdI+TmVYCH8wdptnRHUogjpZEWiWsVErfrqXjQp06oVawG
+	 XkincJ0pHFnuaEM4S79uEMbnoIXOr5JF0GT4VPqgOI9FQzCZoubKwAM24J8TfJAPfH
+	 hUOncuyRHxk4c6EiPBa5rceqbp5ZPMasjapX/5VDsie96uWO/FxPDZcj16EjXolUUy
+	 gzNzmnzhPNYVuHbTTmMDpFtrEpeZ1mSHeB1nbjfc2aZZEp+TAC3MLfd9fVf23UNflV
+	 syv8SL/fn92MXH9/15ucH1ODMGO3+yC0lC2OMmXW22DreMHPBIj3rkjoUEDjPllA+I
+	 6xcO7/dAsiVlA==
+Date: Thu, 5 Nov 2026 10:42:17 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-rdma@vger.kernel.org, kvm@vger.kernel.org,
+	media-ci@linuxtv.org
+Subject: Re: [PATCH v12 15/19] PCI: Add KUnit coverage for ACS isolation
+ checks
+Message-ID: <20261105084217.GJ478286@unreal>
+References: <20261103-fix-p2p-acs-v4-0-v12-0-912101f93517@nvidia.com>
+ <20261103-fix-p2p-acs-v4-0-v12-15-912101f93517@nvidia.com>
+ <sashiko-outbox-195118@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -106,133 +61,96 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/vblank: Restart enabling vblank timer on possible
- deadlock
-To: =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, javierm@redhat.com, louis.chauvet@bootlin.com,
- dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
- stable@vger.kernel.org
-References: <20261102143919.1672293-1-tzimmermann@suse.de>
- <auioL8zR9O5u4TCF@intel.com> <4212140f-fa07-4f0c-bd3a-0ae3d88b250c@suse.de>
- <aujFSzHEv5pAfHPf@intel.com> <ec9020b5-28bb-45a5-89d7-e64e804769de@suse.de>
- <auoVxgQ0D1-6QEDD@intel.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <auoVxgQ0D1-6QEDD@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-13.29 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,redhat.com,bootlin.com,lists.freedesktop.org,lists.linux.dev,vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -13.29
+In-Reply-To: <sashiko-outbox-195118@kernel.org>
 
-Hi
+On Tue, Nov 03, 2026 at 11:11:10AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] PCI: duplicated mock device setup in pci_acs_flags_enabled_test()
+> --
+> 
+> commit cd21c328560f2b4befdb418098279304a429237f
+> Author: Leon Romanovsky <leon@kernel.org>
+> 
+> PCI: Add KUnit coverage for ACS isolation checks
+> 
+> This commit exposes pci_acs_flags_enabled() when KUnit is enabled and adds
+> KUnit tests in drivers/pci/pci_acs_test.c using mock config-space operations
+> to verify ACS isolation checks, missing capabilities, and failed config reads.
+> 
+> > diff --git a/drivers/pci/pci_acs_test.c b/drivers/pci/pci_acs_test.c
+> > index 18c697226762d..369444d2a04a0 100644
+> > --- a/drivers/pci/pci_acs_test.c
+> > +++ b/drivers/pci/pci_acs_test.c
+> > @@ -103,10 +103,145 @@ static void pci_acs_p2pdma_completion_test(struct kunit *test)
+> 
+> [ ... ]
+> 
+> > +static void pci_acs_flags_enabled_test(struct kunit *test)
+> > +{
+> > +	const struct acs_isolation_case *c = test->param_value;
+> > +	struct acs_ctrl_cfg cfg = {
+> > +		.devfn = PCI_DEVFN(0, 0),
+> > +		.cap = ACS_TEST_CAP,
+> > +		.ctrl = c->ctrl,
+> > +	};
+> > +	struct pci_bus *bus = kunit_kzalloc(test, sizeof(*bus), GFP_KERNEL);
+> > +	struct pci_dev *pdev = kunit_kzalloc(test, sizeof(*pdev), GFP_KERNEL);
+> > +
+> > +	KUNIT_ASSERT_NOT_NULL(test, bus);
+> > +	KUNIT_ASSERT_NOT_NULL(test, pdev);
+> > +
+> > +	bus->ops = &acs_ctrl_ops;
+> > +	bus->sysdata = &cfg;
+> > +
+> > +	pdev->bus = bus;
+> > +	pdev->devfn = cfg.devfn;
+> > +	pdev->acs_cap = ACS_TEST_CAP;
+> > +	pdev->acs_capabilities = ACS_ALL_CAPS;
+> > +
+> > +	KUNIT_EXPECT_EQ(test, pci_acs_flags_enabled(pdev, c->req), c->expect);
+> > +}
+> > +
+> > +static bool acs_isolated(struct kunit *test, struct acs_ctrl_cfg *cfg,
+> > +			 u16 acs_cap, u16 acs_flags)
+> > +{
+> > +	struct pci_bus *bus = kunit_kzalloc(test, sizeof(*bus), GFP_KERNEL);
+> > +	struct pci_dev *pdev = kunit_kzalloc(test, sizeof(*pdev), GFP_KERNEL);
+> > +
+> > +	KUNIT_ASSERT_NOT_NULL(test, bus);
+> > +	KUNIT_ASSERT_NOT_NULL(test, pdev);
+> > +
+> > +	bus->ops = &acs_ctrl_ops;
+> > +	bus->sysdata = cfg;
+> > +
+> > +	pdev->bus = bus;
+> > +	pdev->devfn = cfg->devfn;
+> > +	pdev->acs_cap = acs_cap;
+> > +	pdev->acs_capabilities = ACS_ALL_CAPS;
+> > +
+> > +	return pci_acs_flags_enabled(pdev, acs_flags);
+> > +}
+> 
+> [Severity: Low]
+> This isn't a bug, but in drivers/pci/pci_acs_test.c,
+> pci_acs_flags_enabled_test() open-codes the same mock struct pci_bus and
+> struct pci_dev allocation and initialization that acs_isolated() performs
+> immediately below it.
+> 
+> Also, struct acs_ctrl_cfg already carries the cap field, which every caller
+> initializes to the same value passed as the separate acs_cap argument to
+> acs_isolated().
+> 
+> Could acs_isolated() set pdev->acs_cap from cfg->cap directly, and could
+> pci_acs_flags_enabled_test() call acs_isolated() to avoid duplicating the
+> setup?
 
-Am 03.11.26 um 18:11 schrieb Ville Syrj채l채:
-> On Tue, Nov 03, 2026 at 04:55:34PM +0100, Thomas Zimmermann wrote:
->> Hi
->>
->> Am 02.11.26 um 18:15 schrieb Ville Syrj채l채:
->> [...]
->>> But what I'm thinking is:
->> I've ran a lengthy session to explore various solutions.
->>
->>> - stop with the explicit cancel entirely and just rely on the
->>>     timer cancelling itself
->>> - try to start the timer in vblank_enable(), and if that can somehow
->>>     fail because the timer is still running it should be fine because
->>>     the self cancellation should anyway have been aborted
->> Having an old vblank timer still running while enable_vblank sets up a
->> new one can mess up the hrtimer's internal ordering. It's full of subtle
->> bugs, according to my LLM.
-> The hrtimer code looks like it's designed to handle this. It
-> first removes the old queued timer and then inserts it back
-> with the new expire time. And there's also locks in there.
+Yes, I can combine them.
 
-It does, but TBH I'd rather trust the LLM than myself on this matter. 
-IIUC the problem happens if hrtimer_start() inserts with a new interval, 
-but a concurrent timer function calls hrtimer_forward() with the old 
-interval that it has already read from vtimer->interval. And 
-hrtimer_forward() doesn't look overly threadsafe.
+Thanks
 
-But I do have a patch series to address the issues. I just need a bit 
-more time to clean it up.
-
-Best regards
-Thomas
-
->
->>
->>> - explicitly wait for the timer to have stoppped in drm_vblank_off()
->>>     to make sure the wrong interval can't leak from one mode to
->>>     another
->> I'll soon send out a series implementing this idea.
->>
->> Best regards
->> Thomas
->>
->> -- 
->> --
->> Thomas Zimmermann
->> Graphics Driver Developer
->> SUSE Software Solutions Germany GmbH
->> Frankenstr. 146, 90461 N체rnberg, Germany, www.suse.com
->> GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG N체rnberg)
->>
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 N체rnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG N체rnberg)
-
-
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20261103-fix-p2p-acs-v4-0-v12-0-912101f93517@nvidia.com?part=15
