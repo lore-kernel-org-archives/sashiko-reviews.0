@@ -1,57 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.14
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793868808;
-	b=CV00ag2/bfQssGw+jwBE/tAL/EkAGR5FDALpWJjG8M/GmkW8Y5Sllse8ji/69NQ/LjgK
-	 kV2eVuF9+ueVWxoXGAYmsiLdLnGy5CTjO4/EKc2retaomKglBAFqaMDYrpyh14RbettjN
-	 D4w4D2iJA5a+bNDEDmCUpaLiWOwReUYrqLT1BeDz0XVUQ4qRg8LlZdgldfE+RtQB5NZsC
-	 7F9zOnBJ8fR555FYs4KBOoxrIrsUbFP1fjmEWOHQYK/4z/mm7b5abtKA4D8Od9hTHOf/+
-	 t81zeWS1xLvBvZYDohT0Gn190/SKh9cEIhjGpS0GUAXz/yNYNBS3yYeqeOwl/eEyyIA==
+	t=1793869110;
+	b=aK5cbXLjHXrEn9DjYUpNAhDV404Zv9F6M5kE8Nnf6MhCyKsRR3WSP0qje3ZiIzIt9A5b
+	 5phnHTz+C2xnU2OR79vC5VZQXnWWlh+r5aY0GN/cUsXm/GtGPKEz9xU2ysTfLHAxd36db
+	 AhgUJTF6eNpwEDYrjYGdclh79T05UggosJNjhYTJf0Wy7q+BAAVvMPWdUOeGJf+oI9UkM
+	 rAdttWt1kDnHPzUQwwdalJdJx8aLUC0G7iOnh/7/w/phmsIVwTw/G3NaQJ+hwbqZPZPlp
+	 XYphHqV2EafHKXM6Tmo8bnTp1lxQBj6PBMNnQnCSj4if1RJ5Ety1yIY1i7a5PUY7r6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793868808;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=J7vfUkafQT4T5T8qqfuJQdq9zP4CBm2tNhbBc8LF8kE=;
-	b=K1WCdNHiBjv1HgyzDI6uSFTCJqGM7IEF4HG4ZG+paw2JuyJn2MnAOkFkKHldVmXY7X3C
-	 NZlLwWruE3q5Azwk/aVaAoYkEjXOvMHYLwYTpWyAv+2pWNdjcEWzlfAwCv37kMpYAR7vL
-	 3yAQvVgFVqM48YCnUWQaej/2ITWrttyoarhdJj/Tujdc9Sg0jJujc4UvGUAt/OnAo3y5F
-	 tWj6kXkTfdwvGS4C1IEC3TcnY2cKLANq1POBjvSA4yjTuRDyxeIPbjyELpDFbteL0f+mS
-	 PrnOiikx/8zA58JkQjwNk32cGYH6lX/zU7F1R376vKclWRsbr+ZYN4BjBWXZOBaTR8w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793869110;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
+	 In-Reply-To:Organization:References:Date:Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=3zfZtPMhGRCjHVBHsx8WJUYhVrvO0ZrfiVmLn9HL1IQ=;
+	b=ckeri7zT0WZcN/PYJzaiZfKhGdLOPDFHx/ht8iXqaJpnby0HlpViBO25/xt1qRBPldQB
+	 6zCzeb+8rj/18YZdPyV+s3cV1uw2jF0BxkIudx0pm2fFxrmFrTgezHeKWSZ/g5mtN/4ED
+	 65iNmW0g5Dnrmd3KD8ld1XOn25JzJjRnsIfiWB+w6LKXieYfPinRL1lu+Rht5GFJxMk+4
+	 w62omJ0xPSBNQW8/PbUQiqJ+ww06eCsmdTsataiUoQZtkGbgWFaNlU2agoSlsDp7RwlRM
+	 WMpXdqKtYnWbHGe20IYKO5+DO/vROBQDeuOQkvuAxK1JtivjCI8KG+unsxiJXb99QwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cjbnjB7G;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dxilwpMy;
+	arc=none smtp.remote-ip=192.198.163.14
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDF9606A32D;
-	Thu,  5 Nov 2026 08:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB93A606A32D
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 08:58:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB93A606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cjbnjB7G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288BA1F000C1;
-	Thu,  5 Nov 2026 08:53:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793868807;
-	bh=J7vfUkafQT4T5T8qqfuJQdq9zP4CBm2tNhbBc8LF8kE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=cjbnjB7GJibNOC+EeGoO0DpYNfYuH5n6u0/wbnbr6UIGwIg3GndAH3sGQGQzIZMDY
-	 Dqf1oapH/2gfH0/ahH8TYNjXCQ/G02ZmiL+IpqU3h3J/jfM+rv/BNs08bmrGgRim4q
-	 6ACU5R1Zk4RFMPN+m+sVaa+AwMVqU0xnuglOESZ9dmJL8JSz+IGUBgwguFZi6MEKyp
-	 Fb+xbw6UuOWf9KN2s//Y3RJDSrhRTdcmaKRT7iLTFS9ayXyu+tpURY//KN4NoPtipc
-	 Mthcgo8RG5bVVVkwzvi9GS0kAczU6L/l/D+3K7S6jFfndeO7M5b3mdw7K8JSXmbPXZ
-	 LfEgYqbvufKpw==
-Date: Thu, 5 Nov 2026 10:53:23 +0200
-From: Leon Romanovsky <leon@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-rdma@vger.kernel.org, kvm@vger.kernel.org,
-	media-ci@linuxtv.org
-Subject: Re: [PATCH v12 05/19] PCI/P2PDMA: Evaluate ACS controls at the path
- divergence
-Message-ID: <20261105085323.GK478286@unreal>
-References: <20261103-fix-p2p-acs-v4-0-v12-0-912101f93517@nvidia.com>
- <20261103-fix-p2p-acs-v4-0-v12-5-912101f93517@nvidia.com>
- <sashiko-outbox-194956@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dxilwpMy
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793869109; x=1825405109;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=cFf0LaCBQLa8+oCQ/3plVEMp0XBwn/RDC5zToRS+HEs=;
+  b=dxilwpMyjVgIF1nrWDv99ZeQV++ZlCpV0BjPcbbGET04K2tcbOfBO1ae
+   a6P9sHieh/pQgIxPWn09l69mqbGssB8au3LzPcZ0BL9ijvei8ncvpIedR
+   zpbx7iE/AM9brkUcR2hOma7LvT+ssHThIshASHYRIfsCNNBi3orLDyUij
+   vqPa9ogoGLARyQCbtGKzUNFoUbawOcDa24AYX6Mca7qghmeYDYucleZdp
+   aoAGqVNiZHZTewh9DliBIm+rj2FaP6bc4uXNi58qFDmslPgdTJpDBKSmp
+   oTvGPyD+4d8fsJadw/SSwCiGuODWInPsxrZ1mSPwKyrbYFd+//o2AwVYD
+   g==;
+X-CSE-ConnectionGUID: qp4Jq4O7QAeJ3yjfUAsR3g==
+X-CSE-MsgGUID: YCdOdi7oS4KszlGhrCVFIg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2678812"
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="2678812"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 00:58:29 -0800
+X-CSE-ConnectionGUID: l2VN4NaDSY69n6SJDjz+sQ==
+X-CSE-MsgGUID: uIubwZIBQaO9sMjnsH9qmw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="7292850"
+Received: from mkosciow-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.187])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 00:58:26 -0800
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev, Ville Syrjala
+ <ville.syrjala@linux.intel.com>, intel-gfx@lists.freedesktop.org
+Cc: intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH 1/9] drm/i915/de: Introduce dislay->mmio and
+ intel_de_init()
+In-Reply-To: <sashiko-outbox-198229@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
+ 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+References: <20261104221842.18799-1-ville.syrjala@linux.intel.com>
+ <20261104221842.18799-2-ville.syrjala@linux.intel.com>
+ <sashiko-outbox-198229@kernel.org>
+Date: Thu, 05 Nov 2026 10:58:24 +0200
+Message-ID: <27be76640e973479b717bd601330ff7d7bcdfa15@intel.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,193 +84,132 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-194956@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 03, 2026 at 09:31:33AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] PCI/P2PDMA: missing upstream forwarding check in calc_map_type_and_dist()
-> - [Medium] PCI/P2PDMA: masked redirect and read warnings in calc_map_type_and_dist()
+On Wed, 04 Nov 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] drm/i915/de: NULL display->mmio.uncore when intel_de_init() is s=
+kipped
 > --
-> 
-> commit ae19e046716c7bc5dbb292aa22e00859ce94d08e
-> Author: Leon Romanovsky <leon@kernel.org>
-> 
-> PCI/P2PDMA: Evaluate ACS controls at the path divergence
-> 
-> This commit updates calc_map_type_and_dist() to evaluate ACS directional
-> redirect controls at the path divergence rather than below it. It also
-> checks for internal routes between functions sharing a PCIe link, verifies
-> ACS Upstream Forwarding on shared downstream ports, and rejects unreadable
-> ACS Control registers.
-> 
-> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-> > index dbab955dcbdbb..8ca0c9ba87c23 100644
-> > --- a/drivers/pci/p2pdma.c
-> > +++ b/drivers/pci/p2pdma.c
-> > @@ -589,6 +590,65 @@ static bool pci_acs_p2pdma_ctrl(struct pci_dev *pdev, u16 *ctrl)
-> 
+>
+> commit 0c47f694d22974ac99844e39b462f72389dd014b
+> Author: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
+>
+> drm/i915/de: Introduce dislay->mmio and intel_de_init()
+>
+> This commit adds a display->mmio struct and intel_de_init() to initialize
+> display->mmio.uncore, and updates __to_uncore() to return display->mmio.u=
+ncore
+> instead of calling to_intel_uncore(display->drm).
+>
 > [ ... ]
-> 
-> > +static struct pci_dev *
-> > +pci_acs_p2pdma_no_upstream_forwarding(struct pci_dev *common)
-> > +{
-> > +	struct pci_dev *pdev;
-> > +	u16 ctrl;
-> > +
-> > +	for (pdev = common; pdev; pdev = pci_upstream_bridge(pdev)) {
-> > +		if (!pci_acs_p2pdma_downstream_port(pdev))
-> > +			continue;
-> > +
-> > +		if (!pci_acs_p2pdma_ctrl(pdev, &ctrl))
-> > +			return pdev;
-> > +
-> > +		/*
-> > +		 * Include Root Ports here. The PCIe port type check excludes
-> > +		 * the legacy AMD southbridge quirk, which may sleep.
-> > +		 */
-> > +		if (pci_dev_specific_acs_enabled(pdev, PCI_ACS_UF) > 0)
-> > +			continue;
-> > +
-> > +		if (!(pdev->acs_cap && pdev->acs_capabilities & ctrl & PCI_ACS_UF))
-> > +			return pdev;
-> > +	}
-> > +
-> > +	return NULL;
-> > +}
-> 
+>
+>> diff --git a/drivers/gpu/drm/i915/display/intel_de.h b/drivers/gpu/drm/i=
+915/display/intel_de.h
+>> index d0a239a369807..f1135ee5071b4 100644
+>> --- a/drivers/gpu/drm/i915/display/intel_de.h
+>> +++ b/drivers/gpu/drm/i915/display/intel_de.h
+>> @@ -14,9 +14,11 @@
+>>=20=20
+>>  static inline struct intel_uncore *__to_uncore(struct intel_display *di=
+splay)
+>>  {
+>> -	return to_intel_uncore(display->drm);
+>> +	return display->mmio.uncore;
+>>  }
+>
 > [ ... ]
-> 
-> > @@ -865,57 +932,106 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
-> 
-> [ ... ]
-> 
-> > +check_paths_acs:
-> > +	*dist = dist_a + dist_b;
-> >  
-> > +	/*
-> > +	 * ACS P2P routing controls apply where a TLP can route toward the peer
-> > +	 * or upstream. Below that divergence, its only route toward the other
-> > +	 * branch is upstream, so redirect controls do not affect the path.
-> > +	 */
-> > +	if (a_child && b_child) {
-> > +		if (pci_acs_p2pdma_ctrl(a_child, &ctrl))
-> > +			state = pci_acs_p2pdma_completion(ctrl);
-> > +		if (state != PCI_ACS_P2PDMA_DIRECT) {
-> > +			pci_p2pdma_list_redir(&acs_list, &quirk_list, a_child);
-> > +			if (state == PCI_ACS_P2PDMA_REDIRECT)
-> > +				acs_redirect_cnt++;
-> > +			else if (!acs_unreadable)
-> > +				acs_unreadable = a_child;
-> > +		}
-> >  
-> > +		state = PCI_ACS_P2PDMA_NOT_SUPPORTED;
-> > +		if (pci_acs_p2pdma_ctrl(b_child, &ctrl))
-> > +			state = pci_acs_p2pdma_request(ctrl);
-> > +		if (state != PCI_ACS_P2PDMA_DIRECT) {
-> > +			pci_p2pdma_list_redir(&acs_list, &quirk_list, b_child);
-> > +			if (state == PCI_ACS_P2PDMA_REDIRECT)
-> > +				acs_redirect_cnt++;
-> > +			else if (!acs_unreadable)
-> > +				acs_unreadable = b_child;
-> > +		}
-> > +		/*
-> > +		 * Two children of one Downstream or Root Port share a link.
-> > +		 * Use topology rather than slot numbers or the multifunction
-> > +		 * bit, since ARI functions and VFs need not share those.
-> > +		 */
-> > +		if (pci_acs_p2pdma_downstream_port(a)) {
-> > +			req_upstream =
-> > +				pci_acs_p2pdma_no_internal_route(b_child, PCI_ACS_RR);
-> > +			cpl_upstream =
-> > +				pci_acs_p2pdma_no_internal_route(a_child, PCI_ACS_CR);
-> > +			uf_blocked = pci_acs_p2pdma_no_upstream_forwarding(a);
-> > +		}
-> >  	}
-> 
+>
+>> diff --git a/drivers/gpu/drm/i915/display/intel_display_device.c b/drive=
+rs/gpu/drm/i915/display/intel_display_device.c
+>> index c74256359c253..f1bd1252a9602 100644
+>> --- a/drivers/gpu/drm/i915/display/intel_display_device.c
+>> +++ b/drivers/gpu/drm/i915/display/intel_display_device.c
+>> @@ -1798,6 +1798,13 @@ static void __intel_display_device_info_runtime_i=
+nit(struct intel_display *displ
+>>  	struct intel_display_runtime_info *display_runtime =3D DISPLAY_RUNTIME=
+_INFO(display);
+>>  	enum pipe pipe;
+>>=20=20
+>> +	/*
+>> +	 * TODO end of intel_display_device_probe() would be a more
+>> +	 * logical place, but at the moment i915 calls that super
+>> +	 * early when things aren't fully set up yet.
+>> +	 */
+>> +	intel_de_init(display);
+>
 > [Severity: High]
-> When provider and client sit behind different Switch Downstream Ports of a
-> PCIe Switch, their lowest common ancestor a in calc_map_type_and_dist() is
-> the Switch Upstream Port (PCI_EXP_TYPE_UPSTREAM), where
-> pci_acs_p2pdma_downstream_port(a) is false.
-> 
-> If b_child has PCI_ACS_RR or PCI_ACS_EC enabled, or a_child has PCI_ACS_CR
-> enabled, the switch redirects traffic upstream out of the Switch Upstream
-> Port a toward the host bridge. That redirected TLP then arrives on the
-> secondary interface of every shared Switch Downstream Port (in a cascaded
-> switch topology) and Root Port above a with its target also behind that same
-> secondary interface, requiring PCI_ACS_UF on those shared ports to reach the
-> host bridge.
-> 
-> Although pci_acs_p2pdma_no_upstream_forwarding() already walks up
-> pci_upstream_bridge() while skipping Switch Upstream Ports, calling it only
-> inside if (pci_acs_p2pdma_downstream_port(a)) skips checking the shared
-> Downstream and Root Ports above a when a is a Switch Upstream Port. Can this
-> cause calc_map_type_and_dist() to return PCI_P2PDMA_MAP_THRU_HOST_BRIDGE
-> instead of PCI_P2PDMA_MAP_NOT_SUPPORTED when an ancestor port above the
-> switch lacks PCI_ACS_UF or has an unreadable ACS Control register?
+> Can this leave display->mmio.uncore NULL and cause a NULL pointer derefer=
+ence
+> when HAS_DISPLAY(display) is already false before runtime init?
+>
+> In drivers/gpu/drm/i915/display/intel_display_device.c,
+> intel_display_device_info_runtime_init() only calls
+> __intel_display_device_info_runtime_init() when HAS_DISPLAY(display) is t=
+rue:
+>
+> void intel_display_device_info_runtime_init(struct intel_display *display)
+> {
+> 	if (HAS_DISPLAY(display))
+> 		__intel_display_device_info_runtime_init(display);
+>
+> On devices where intel_display_device_probe() sets DISPLAY_INFO() to
+> no_display=E2=80=94such as Ivybridge Quanta server SKUs (INTEL_IVB_Q_IDS =
+via
+> has_no_display()), PCI IDs without an entry in intel_display_ids like Arc=
+tic
+> Sound-M (INTEL_ATS_M_IDS where find_platform_desc() returns NULL), or GMD=
+_ID
+> platforms (INTEL_MTL_IDS / INTEL_ARL_IDS) where probe_gmdid_display() rea=
+ds 0
+> from GMD_ID_DISPLAY=E2=80=94HAS_DISPLAY(display) is false and
+> __intel_display_device_info_runtime_init() is skipped.
+>
+> Because __to_uncore(display) in drivers/gpu/drm/i915/display/intel_de.h n=
+ow
+> returns display->mmio.uncore instead of computing
+> to_intel_uncore(display->drm), any subsequent unconditional intel_de_*() =
+call
+> will pass a NULL struct intel_uncore pointer to intel_uncore_read*() or
+> intel_uncore_write*():
+>
+> 1. On INTEL_IVB_Q_IDS, ilk_irq_handler() in drivers/gpu/drm/i915/i915_irq=
+.c
+>    unconditionally calls ilk_display_irq_master_disable() and
+>    ilk_display_irq_master_enable() in
+>    drivers/gpu/drm/i915/display/intel_display_irq.c on every interrupt, w=
+hich
+>    call intel_de_read_fw(display, DEIER) and intel_de_write_fw(display, D=
+EIER,
+>    ...).
+>
+> 2. On INTEL_ATS_M_IDS and headless GMD_ID platforms, gen11_irq_handler() =
+and
+>    dg1_irq_handler() unconditionally call gen11_gu_misc_irq_ack() in
+>    drivers/gpu/drm/i915/display/intel_display_irq.c when GEN11_GU_MISC_IR=
+Q is
+>    set, which calls intel_de_read_fw(display, GEN11_GU_MISC_IIR) and
+>    intel_de_write_fw(display, GEN11_GU_MISC_IIR, iir).
+>
+> 3. During system resume, i915_drm_resume() in
+>    drivers/gpu/drm/i915/i915_driver.c unconditionally calls
+>    intel_gmbus_reset(display) in drivers/gpu/drm/i915/display/intel_gmbus=
+.c,
+>    which calls intel_de_write_fw(display, GMBUS0(display), 0) and
+>    intel_de_write_fw(display, GMBUS4(display), 0).
+>
+> Should intel_de_init(display) be called unconditionally at the start of
+> intel_display_device_info_runtime_init() before the HAS_DISPLAY(display)
+> check?
 
-The thing is that this behaviour was before my series, but let's change
-it too.
+Seems annoying but valid, at least until we figure something else out.
 
-> 
-> > +	/*
-> > +	 * Below a shared upstream bridge, a path whose divergence ports do not
-> > +	 * redirect routes the request directly.
-> > +	 */
-> > +	if (!acs_unreadable && !acs_redirect_cnt &&
-> > +	    !req_upstream && !cpl_upstream) {
-> >  		map_type = PCI_P2PDMA_MAP_BUS_ADDR;
-> >  		goto done;
-> >  	}
-> >  
-> > +	if (verbose) {
-> > +		if (acs_unreadable)
-> > +			pci_warn(client, "ACS Control is unreadable for provider %s at %s\n",
-> > +				 pci_name(provider), pci_name(acs_unreadable));
-> > +		else if (uf_blocked)
-> > +			pci_warn(client,
-> > +				 "cannot forward peer-to-peer DMA for provider %s upstream at %s\n",
-> > +				 pci_name(provider), pci_name(uf_blocked));
-> > +		else if (req_upstream || cpl_upstream)
-> > +			pci_warn(client,
-> > +				 "peer-to-peer DMA with provider %s requires the host bridge; no internal route between functions\n",
-> > +				 pci_name(provider));
-> > +		else
-> > +			pci_p2pdma_warn_redir(client, provider, &acs_list,
-> > +					      &quirk_list);
-> > +	}
-> 
-> [Severity: Medium]
-> How are diagnostics handled here when sibling functions under a Downstream
-> Port or Root Port a DO support internal peer-to-peer routing (!req_upstream
-> && !cpl_upstream), but have PCI_ACS_RR, PCI_ACS_EC, or PCI_ACS_CR enabled on
-> the functions themselves (acs_redirect_cnt > 0)?
-> 
-> In that case, disabling ACS redirect on the functions via
-> pci=disable_acs_redir= would allow them to use their internal route
-> (PCI_P2PDMA_MAP_BUS_ADDR) without traversing port a. However, because
-> uf_blocked = pci_acs_p2pdma_no_upstream_forwarding(a) is evaluated
-> unconditionally and checked before the final else branch in the verbose
-> block, if port a or an ancestor port does not have PCI_ACS_UF enabled,
-> calc_map_type_and_dist() only warns about upstream forwarding at uf_blocked
-> and suppresses pci_p2pdma_warn_redir().
-> 
-> Additionally, pci_acs_p2pdma_no_upstream_forwarding() is called before the
-> PCI_P2PDMA_MAP_BUS_ADDR check (reading PCI_ACS_CTRL up the hierarchy even
-> when the functions route directly), and when pci_acs_p2pdma_ctrl() fails on
-> an upstream port, it returns that port as uf_blocked rather than
-> acs_unreadable, logging an upstream-forwarding message instead of an
-> unreadable ACS Control warning. Should pci_acs_p2pdma_no_upstream_forwarding()
-> only be evaluated after the direct-route check, distinguish unreadable ACS
-> Control registers from missing PCI_ACS_UF, and still emit
-> pci_p2pdma_warn_redir() when programmable redirect bits blocked a valid
-> direct route?
+BR,
+Jani.
 
-ok, let's change it too.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261103-fix-p2p-acs-v4-0-v12-0-912101f93517@nvidia.com?part=5
+
+--=20
+Jani Nikula, Intel
