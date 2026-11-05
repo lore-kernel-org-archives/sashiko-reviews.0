@@ -1,98 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793851540;
-	b=UCo1giTFbxvTTba5wlUHRsX2G+Knl/xktQFkPNJo401fef00uwhycb3CspnSO0oviemU
-	 FfR6GjtNW7k/u/WNZzXZNe22BiJJ6zuDqWKN60PmplQUeMJnFgR1ChOUIbooG+wNbWtvm
-	 HTcKn46ohXMTB/YiWp7ZGHz+UzNurr2UOTNG2A6LJMnex8r7F2/Qs5aKAeDaOw6ZTV4dx
-	 ikMAGcVMh13m9STEWr8N8POBOcbWF87Apu3ODslEFWFfe1EmikzYilQAXoVmEOOeE9P90
-	 LPYQ4vxnlYmIek6Nw/oIyBv2Ldm5+qComi0VXQdksuJbjARylY52J2Xx9UNUnwHDOlQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793851540;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=fGRZAFWMKVrIznwSD73OSOgAUilAW1lJLlhpS4NkI0o=;
-	b=eMFGP6jhcAhSgKrVKILlNsjv5jLMIHaKcs1ltmfCUE2XLnuHA3gDs+kQRslykqhxWy72
-	 yf/TTe6CZmY0n8urnBs6KBYzitMjV3WFdRG6ySVGpEXXCQwDvaWiqMfdHvaOARiVjgfVx
-	 B+icV7XwZ0yNjE4A6FLBQOt0xSf0XmyxIVu6BPc3UzSDoNvYSfKSBvL/GVr5YgO+skuBg
-	 bhOxpDMXaLlEsGL0RrO8rrZI3+OFEhLojB8uGau7wzkcjRdiMePWGRjf9yGiIGjxuo/wh
-	 ToJp6AgpsA5E10tzoZrsCEAFbDbzElXRm9xSNbM50Dbjgv4UL1zzKS9Nd8oYxSisZKw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FA58CF3t;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.43
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793851647;
+	b=BdmtUcjkU3IIxAkrt7mLi7p6bdPzRUOkCOgt8UNgHVYbC0r2+BK0tfbdwke4U9s5ZKCS
+	 ynnaHWzJLrdx8V64CaJKx4jMU2PTrIvK4l/EmKObVflfacJZYLmiRE3HOF5m0PwbyUhBq
+	 kJqZHRn2klPUg6ofCKMNSiBeO2t0u67Tu9CS8fNKQ0f6NWJ8u7H08dyUIetEPU9RlGUPX
+	 Rc4QgSpXmKCeErp2DMIqSTOa8yXPtD1AOg8Das/mYPLflM9wykoYL2HTMmeSexLffgxRS
+	 D/pI7y1rf+bX6BMSkl990YQHQmg5a+no+f79GqDvYOM6/VqMDSJ3Zu4/WBi3GwkX2uw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793851647;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=MpIp8Zah5MXOx4qyc7jCpEQJEl1kkDfMFRqTzDwX50Y=;
+	b=lFL5m6LQ0f969MPwlqO8Yj8yFKeJRQpHozBfkTQHA6e9/tudzDwmH2Q9DJ5L/XSiVzOn
+	 MGNpktfM9RJb9M9jnH788GuqhoWW2B6A+7JLMG0j4MghRh2ebUnZQJl7dPujdZ3fw4gJo
+	 dSE8Rpj4ddfxw5N79PH//O7U0SvUUltbd8qxv6xB4ZzRh8v5lv0q0Ki36BkxSJNHn9+E5
+	 hHYdkJn4A5Kv2JrAUCSK8vNZa23U20Jt0fVCaWd+MhWX13SKMjkeyWLkJrrLB4d5+vUX4
+	 yTJJKvb/RnrJ7Gvr5G//KUBbsyjrrHIC+h8PjIguR3fCAy7GGyKHaWhpl4jKS0CtMLw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=F1UWj9XD;
+	arc=none smtp.remote-ip=44.202.169.35
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A5A606A328
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 04:05:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8A5A606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991A9606A328
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 04:07:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 991A9606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FA58CF3t
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3ad47c246f8so118023a91.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 20:05:39 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793851539; cv=none;
-        d=google.com; s=arc-20260327;
-        b=SxjZ+REaRKLxdn41TJRmLPGCVvYH6gHUmsyIQZrboHVOCMYOoNIU5wFtTvNBJsRJUx
-         ADF4HInM6sx2hkxifvdjUTC9sZsJUOFOdytL7/0hNwvAztptQZaNaPfNZgI+I1wnBTWb
-         vOT0J5Y98pJcaoK01CeCzFBWrtbGGYsy0R4BPwqA5TI+vukR13WZJc2Z6+XSuN0CSJrA
-         /mo7s5DTyOyJbXL1YUy9XU9OWRILHlDMRu2iypT83pFZcXI/JlCXImvAJ4OGaOOomeeK
-         jD9f6fnrOafpFfjOsAULuzsxSGtmWwnFVEVcoagHqXwjkTJDLhuPp025EsDJ0mOKZMV8
-         v2AQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=fGRZAFWMKVrIznwSD73OSOgAUilAW1lJLlhpS4NkI0o=;
-        fh=Je+XfjZZELYMeUFG782y9M4oZFPTVtwBgMoamcbwTg0=;
-        b=Dm20JjJjmLnR5UkSclTLnKm6XMVy77hXXS/ufLJSMR65Erk/Wsmqtj2dg0cu/Z2fEi
-         kkXnugLBC86/Axn6V0EAGHlv+aJ9nmxLduZR15y3FmY157M/TE3U90nG1mgsSLZPLtmH
-         jKhX0uxxSA/vJl09K10dLi5O48/oaJ6pGz85PwBY4X3KwwkqjKiytXpwa9p+W1Ex4hkG
-         GBsM/I5uLnTZW5iTpWiZMqe5eagzyuLSnvlawJZT09DtVHK7bb5cuM2fqtvFMnYEKNO+
-         VfB/VpV0ndu85dOg5XD44oiPglJluQDgQ5oKY4FRzUqoAC7RvbPQ1TbdHW69Pc6uM5U1
-         /nRQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793851539; x=1794456339; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fGRZAFWMKVrIznwSD73OSOgAUilAW1lJLlhpS4NkI0o=;
-        b=FA58CF3tCLEcto3mrovboB/eGFnRHJKVdOFU0wbRGOrpeIqIaPw3tw7krUyepBBlZJ
-         Yngza0WXYw6VxOhEdiSC/n1kdror9BSK0uYAatNUACygBEFTcVxA0ijUGCavcBspemT7
-         w9R7zqw2YW9u+jmRTbE3I+JTCFjxyos1NPYc8/IJWNfNjvDEvxnhIxY6UTNjKf80XWGp
-         R5YXI0LJyHoBJTD4I22nm3/hZJBOGqjx5n5hMVgMjHjZc4BiLkKY66y2xtqCegplUcI4
-         2Fdrhs9pMMcsnvvkTYUmwB1JX80E1GlXmOspdHicDhIyJdHO69I+vezAPhvXKduUopSA
-         5R6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793851539; x=1794456339;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=fGRZAFWMKVrIznwSD73OSOgAUilAW1lJLlhpS4NkI0o=;
-        b=kZZZxq208jnmv9ND+Tkmr0UfBGq398Zix30GMpinXQCy+y/3ExaggA0jsIlDPuMNE1
-         DwUXPY+LmPrmjabEUkBqEp2EHPdKjNvd29aKLsHFMUO48CEOzW4u9kOwiaiSYZsQbmXL
-         48OMj3WaQhDV3+nYzNHoXbiw+FwNefQjxf/kktzD6fz65jVugRP1KA/Ptte0X1bnKr3A
-         d7+kij9lY3PZb79roPQX+ND9mk46qww55ocNE+QMjXQHQjsjGCiVm7O4vHqnPCUth4Q5
-         t6moKgdXryp7sbMzpod0ySWoeeB8Zh/72LYO0TvSKSVy4u8c4/LVoVEJEnGD3wmnNZaZ
-         6z+A==
-X-Gm-Message-State: APuU4Z+/4RKr5RmAxnZdUpx21wOyKcdbsfWh7XwGfk480U9KYDE57NoX
-	yVVotiVOE/mSw4Xh3o/JnpvajirFseB7IVWZLMrjs/Zt2JI+WNy791WHfdABwyoLYmNPoCnB+4C
-	Y0Ob2g9jq+XNJF2LY9UvNcZawu9KDOICRHyJWgCk=
-X-Gm-Gg: AYBFou21jyiNlH6JV0WF9OKe6pK/mKRWze37dsw50YdXjXJy98zx87AL2OTP1bzc5BX
-	kqO2h7RM1ua2QDox//4sHTBo6z4CzhlltOZfIFHjFF+8py3AltoBf08F1U6tZIfhjBr5+RVpnM5
-	LDMgVUjS/gnMdPf2DI8VDs9011DWo9pcR2XbSZE2Z8eZ4ZCESard6iC7+h9azKJQDAUGZ85HKLX
-	FYVFX+0wwLigvEpDLQzRsE+GHLpV5GIe4W7ATMFWhGhlJdIFuK+H7+7BtHo7k9jYLq9m4bRvjVk
-	qQ82oO2X6keI56hoxW42SI+3btDVg8PhFfjAOuuIHwZJiHGTyUYaZiDeHwmxLaIMRTDM9gI4CIE
-	KoiqsiacWlWX6/8yl/hhrixy+dCcoFSByfl1aQnKPkzFAvCTLNJrwtwU9Ygc=
-X-Received: by 2002:a17:90b:1dc9:b0:3ac:9e76:aa96 with SMTP id
- 98e67ed59e1d1-3ae897c3585mr25695647a91.3.1793851539122; Wed, 04 Nov 2026
- 20:05:39 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=F1UWj9XD
+Received: from eig-obgw-5004b.ext.cloudfilter.net ([10.0.29.208])
+	by cmsmtp with ESMTPS
+	id OlpjxYSrv4vCDOol3xbDXk; Thu, 05 Nov 2026 04:07:25 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id Ool2xswSSuJrPOol2xT7AH; Thu, 05 Nov 2026 04:07:25 +0000
+X-Authority-Analysis: v=2.4 cv=WLZ/XmsR c=1 sm=1 tr=0 ts=6aec00fd
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=gAnH3GRIAAAA:8
+ a=AALQnO7P1EdZy74KjyYA:9 a=QEXdDO2ut3YA:10 a=l0tvQkQj361Lz_hSoyVA:22
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=MpIp8Zah5MXOx4qyc7jCpEQJEl1kkDfMFRqTzDwX50Y=; b=F1UWj9XD8eug
+	xwOentwnKxX+e2IDfRphbN886I5f5SnX1SSPCUMewVjVKh9VVoP2/CEPhfWtpTHkbcKYvWlQ1sox9
+	V+EhcF/y7jhjrwm1FF3wUc4TxFLmZntTzfMrI1vDYFrooEQZALv/uS90R/Zsdr9aliZfQfwkJlOFV
+	OopDuUAOmSL/KFeMxrvvbAnFV68Ics7Wr+/iV9ZpTcz6h+no3AbxjLCPLNz9mBm8d5Jsv16DZDJMY
+	qRfsnKfO9E8ENPXwpvEISoahezApmwH597xHbE7+t044iHeBu+nUrQUja7CesU28mj+ihJBNL+cc9
+	h6TipPdp/zBd3hdbKfYMJw==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:54720)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xOol2-000000049JK-1dTq;
+	Thu, 05 Nov 2026 09:37:24 +0530
+Message-ID: <33b55f47-c679-4592-b4e9-a14fb77b7236@roeck-us.net>
+Date: Wed, 4 Nov 2026 20:06:59 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,32 +76,198 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261104181753.1245369-1-lui2012qwq@gmail.com> <sashiko-outbox-197839@kernel.org>
-In-Reply-To: <sashiko-outbox-197839@kernel.org>
-From: Chengyu Liu <lui2012qwq@gmail.com>
-Date: Thu, 5 Nov 2026 12:05:23 +0800
-X-Gm-Features: AclHuK9jTbGmY6RMla1XLvLZjatA55u_1AU1gi1NP4ZRIt_yZ2BwifYBqZ6Oswk
-Message-ID: <CAE=Q7=4WboBbXH_GAHTm29sUo9zSNs=caSZ4semRfrBRHucamw@mail.gmail.com>
-Subject: Re: [PATCH v2] RDMA/ipoib: disable the AH reaper work for good on teardown
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rdma@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: hwmon: ltc4283: add ltc4284
+To: "Torreno, Alexis Czezar" <alexisczezar.torreno@analog.com>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Cc: "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+ "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "robh@kernel.org" <robh@kernel.org>,
+ "conor+dt@kernel.org" <conor+dt@kernel.org>
+References: <20261104-staging-ltc4284-v1-0-49fce67ebc48@analog.com>
+ <20261104-staging-ltc4284-v1-1-49fce67ebc48@analog.com>
+ <sashiko-outbox-196618@kernel.org>
+ <PH0PR03MB63510EDCF229B247474764C8F1682@PH0PR03MB6351.namprd03.prod.outlook.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <PH0PR03MB63510EDCF229B247474764C8F1682@PH0PR03MB6351.namprd03.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xOol2-000000049JK-1dTq
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:54720
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 6
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfK7Lq1gmqBoOgHBorUUFMKwfAGKHzB9wbDn2FT3qT2a50c3c4K6HY1PKoGUJkkbahP93SdKePIHcUfz+9smhH1X1fDEsXcvNI3ZlBwHHLUcKhSe4fgtY
+ vc2m4ZYMSbbq8Sra54EJU29sA8sIrYKzd4O0u2/5mxhdvzMCLrjkbh17Q5ViQnavscO2ynHicuVcuLbURrAHFAXFBDIEUZMzupjKJA6lT5b+U0yqXrEIRE3y
 
-On Wed, Nov 05, 2026, sashiko-bot@kernel.org wrote:
-> [High] RDMA/ipoib: disable_delayed_work_sync() permanently kills
-> ah_reap_task on stop
+On 11/3/26 20:06, Torreno, Alexis Czezar wrote:
+>> [External]
+>>
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to
+>> consider:
+>> - [Medium] dt-bindings: hwmon: ltc4283: requiring rsense2 breaks single-driver
+>> mode
+>> - [Low] dt-bindings: hwmon: ltc4283: ltc4284 example sense resistors below min
+>> 50000
+>> --
+>>
+>> commit 9676b294cf2ad1168e5ce0d8de5c0cd58e68d9ed
+>> Author: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
+>>
+>> dt-bindings: hwmon: ltc4283: add ltc4284
+>>
+>> This commit adds device tree binding support for the Analog Devices LTC4284
+>> negative voltage hot swap controller to the adi,ltc4283 schema, including new
+>> properties for its second sense resistor and ADC resistance.
+>>
+> 
+> ...
+> 
+>>> +
+>>> +  adi,rsense2-nano-ohms:
+>>> +    description:
+>>> +      Value of the SENSE2 current sense resistor. This resistor is connected
+>>> +      between SENSE2+ and SENSE2- pins.
+>>> +
+> 
+> ...
+> 
+>>>   allOf:
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            const: adi,ltc4284
+>>> +    then:
+>>> +      required:
+>>> +        - adi,rsense2-nano-ohms
+>>> +        - adi,radc-nano-ohms
+>>> +    else:
+>>> +      properties:
+>>> +        adi,rsense2-nano-ohms: false
+>>> +        adi,radc-nano-ohms: false
+>>
+>> [Severity: Medium]
+>> As noted in the binding description above, the LTC4284 supports four hardware
+>> operating modes configured via the MODE pin, including single driver mode.
+>>
+>> In single driver mode, only the first MOSFET path (GATE1 and SENSE1+/SENSE1-
+>> ) is used, and no second sense resistor is populated between SENSE2+ and
+>> SENSE2-.
+>>
+>> If adi,rsense2-nano-ohms is unconditionally required in the allOf block for
+>> adi,ltc4284, wouldn't boards wired in single driver mode fail schema validation
+>> unless they specify a nonexistent adi,rsense2-nano-ohms property?
+>>
+> 
+> I suppose I can make rsense2 optional (+ corresponding driver code change)?
+> Or can it be kept as is?
+> 
 
-Correct, and I verified it in the source before respinning:
-ipoib_stop_ah_reaper() also runs on ndo_stop and on the stop/open cycle
-of a heavy flush (__ipoib_ib_dev_flush), so a disabled ah_reap_task
-makes ipoib_start_ah_reaper()'s queue_delayed_work() silently fail on
-reopen and dead_ahs is never reaped again.
+I'd suggest to change it. I do not see the point of making it mandatory
+if it isn't.
 
-v3 goes back to cancel_delayed_work_sync(): it swallows a racing re-arm
-while the stop is in flight (the disable window inside
-__cancel_work_sync()), then re-enables the work on the way out.  The
-original race stays fixed, and restarts keep working.
+>>> @@ -269,4 +303,19 @@ examples:
+>>>               #gpio-cells = <2>;
+>>>           };
+>>>       };
+>>> +
+>>> +  - |
+>>> +    i2c {
+>>> +        #address-cells = <1>;
+>>> +        #size-cells = <0>;
+>>> +
+>>> +        swap-controller@20 {
+>>> +            compatible = "adi,ltc4284";
+>>> +            reg = <0x20>;
+>>> +
+>>> +            adi,rsense-nano-ohms = <1000>;
+>>> +            adi,rsense2-nano-ohms = <1000>;
+>>> +            adi,radc-nano-ohms = <500>;
+>>> +        };
+>>
+>> [Severity: Low]
+>> In drivers/hwmon/ltc4283.c, ltc4283_setup() validates the sense resistor
+>> properties against [LTC4283_MIN_RSENSE, LTC4283_MAX_RSENSE], where
+>> LTC4283_MIN_RSENSE is 50000 nano-ohms (50 micro-ohms) and
+>> LTC4283_MAX_RSENSE is 1677721599 nano-ohms:
+>>
+>>      if (st->rsense < LTC4283_MIN_RSENSE || st->rsense > LTC4283_MAX_RSENSE)
+>>          return dev_err_probe(dev, -EINVAL,
+>>                               "adi,rsense-nano-ohms(%u) too small or too large [%u %u]\n",
+>>                               st->rsense, LTC4283_MIN_RSENSE, LTC4283_MAX_RSENSE);
+>>
+>> The example above sets adi,rsense-nano-ohms = <1000>, adi,rsense2-nano-
+>> ohms = <1000>, and adi,radc-nano-ohms = <500> (1 micro-ohm and 0.5 micro-
+>> ohm), which will cause ltc4283_setup() to fail probe with -EINVAL.
+>>
+> 
+> This was just random numbers to show the example. I can change the values
+> to a more realistic sample if preferred.
 
-pw-bot: cr
+Random number or not, they should at least be valid.
 
-Chengyu
+Note that the existing example for ltc4283 also lists 500 nano-ohm and
+is just as bad.
+
+Thanks,
+Guenter
+
