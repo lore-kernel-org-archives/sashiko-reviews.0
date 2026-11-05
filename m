@@ -1,130 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.19
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793915919;
-	b=4chx+Gw1L6Jv7MH6vAcG9/nPbgqM3J8/eNCae8Z69QGZaSZ8p21dG+sg3W7ibmEt0UTc
-	 Inv4yevs64BY4rxFs3eSxyUu4ZdpwF6zt1nF5v4+jSf68/HWl8o+Fpy+hupbNltiZ3RSy
-	 IyxqioA33c/SuHpcnmr+mMHg8u8VFTTxHsKw81YRS/3JsxkakIfWGEwGO3U6sr9BJkohY
-	 564abzBX3997ploVXihl44q/iEfFT3ThLJczGzxuemYi2vzR8uEidBaZT/Rc66DcHO4SV
-	 /ow/iyVV72jBXNTSK8cbOSGLXM/Fi3l6eP/codLJOq4NclxjRJXhzSuwytV228pHRiA==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.17
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793916097;
+	b=X2LI08p70N6VFcsNXxG1KcbAedVgRfNoJHQkP5nwtblvUY2r18kxMMAd5+23fEjGFzhV
+	 UR9v3VuZsia/3EsTIq8KcXe5bnmodQ3bQSyl0NWZW6JCMy7yFri9en+iqLpP2iFWj+UPL
+	 OjINjmtoWUmDSsFFxNM1HRZ9ZBmHDDJvdfIgqQOeNAbPhQygsc8TVmjXJd4oq5xb3IexF
+	 I1GJxGoj5HJohxNiKgmX7Pjufq2WSOwJofz5ekpQSXp+K8XxAVziG32z0SiECeQY9tyW7
+	 jfHNxCZSeaCsRSU5na6K5bKGCSHnMldQpIg4ga/0oL81PuLfTwswu5OVF09Xhw0AbXw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793915919;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793916097;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
 	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
 	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
 	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=La1CO87wUAL/yxP4YgUuO37P8e/0F6z/5qH+LzeT6+M=;
-	b=RcXZzQqH600GydpTaIuPLzfw7UIK0vsf0kCbDwHTN5bRTI0RlvmSrICC0eikxC+o0f16
-	 DokbbRIrHSCzRXqsW+vbuEiDCmbWDLduu3MttGO4JpXZtH9yldjDJzJON5LwPhLFpJLPr
-	 SKHmwHawufNrKPGelFHm8PFAD9EkRTXCUJtIi3iq5NEvu9axP7VC2axm8c1lEKrvrc/Ac
-	 b4ym1nwTv73RE9pGEmr1tOQQohbUWo5VCee63+9JbTZYPw6ZPVRHGneCv0mWT2UUuOBaR
-	 cYT6yL9Rrix/8BB9tdKULs5SoPJwKgqzCdbrSxZW55Faf/aFO5CnJPhiXIGswNHLWRg==
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=BjSJj+zJDnnRI8+lGdW2YiDc0SmxvvggWXYIgTmnztY=;
+	b=DCbhdpDg+WlYqr/J2GIDTXOqWRV7P89KInRhfbpx9MlZBUe7Y/mrJxteMglWx20S87iM
+	 5a71yjsKlruZO+GO+KcpZeFwBXjN/8xeSnV1OzHEbJjaMoP3HTD6xST7uSJZYB2hFQBWS
+	 uaG9z68B4iRJlwk2q9FFDy6s9R8J99CZB5GbpdWxpWU3xKeD8JWhdxXGlqJ30modLcv4D
+	 SncYtWhavHWW+p2GZhbexMkDJQ+EDihvJsKxmLz5chNaczw4dM2OcxVHXiys/0VMHhqsK
+	 VlIipATM6BWYPnqzWPNSjHvPZTz1ZuneKnDdzllEuf9eOA/uwRYNKMxYBKiIA2OzzXg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="D/jDphIj";
-	arc=fail smtp.remote-ip=192.198.163.19
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=LCeIAbhu;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.17
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010017.outbound.protection.outlook.com [52.101.46.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AA6606A326
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 21:58:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63AA6606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90932606A331
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 22:01:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 90932606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D/jDphIj
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793915918; x=1825451918;
-  h=message-id:date:subject:to:references:from:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=qgGWlq2qxYWlqCpnQyp1hI5ehbOYk1+ldQ0pchAeW8M=;
-  b=D/jDphIjTQqh0al4ThaXoMWzpyEIJ2XbWw07QC5pWwVrric/lIU5LMND
-   BCU6EM3fc75NX3Sym0ZMi1L5gjXILtQzJAJXS9eS011rRu1Z657Izkqmm
-   qS8t/38IRee5JEXDG6jfnar7t8l0oVAfeo28QtViwy8JLicmiUrmeB29I
-   1irNUzsJFbA7rLP17gxI9RecDA4OXFc+gDgU07+OGTLqt5FeVHmNfDJ0r
-   7JzRAGdlmketCCK5NrGfungOHZ/GlcDOYTPpwUgs6t9zgKlAgk9lcJep+
-   5Hl3Ffvfdn1VyzwqyC2f1U500+6W/ZEr468Mr2oA4PhvHzmJNaTOWvJCl
-   w==;
-X-CSE-ConnectionGUID: ZZWvbvl4T1+2YVTlfyOjjg==
-X-CSE-MsgGUID: XeCEkQLHQUeFYh0E6w+FhQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11957"; a="2824546"
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="2824546"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 13:58:37 -0800
-X-CSE-ConnectionGUID: oWvYC+VcQFmBC6dbhr6qGA==
-X-CSE-MsgGUID: 0a/QY51DRpeVXoJkzgSpDQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="7152215"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 13:58:38 -0800
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 5 Nov 2026 13:58:37 -0800
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Thu, 5 Nov 2026 13:58:37 -0800
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.41)
- by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 5 Nov 2026 13:58:37 -0800
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=LCeIAbhu
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kCLHKrZekiq3VWfLYPe5yArm4ebrJbKqny+li03yxUJGm4AlqkqO3pSaUb8oDeHIhiB+R4Y9gkUsJ9ZndYbRiH7PXjC9UDQZwwzt5AiS7yoxUR36NQoVqw7Np+4qAIQncxRC1NYr4OS5UT7+Gk+/oVEevXyqGRPeg9PEwuhd4YPhxoXh17XYIWanmZU5fIvkwQ1Pm+0pkh7UM4bN/S+anrs6UPen14UII0ph7hfXbHa4/6D8cK4Blfq5Kv6HQxQG2VHdVz1hAJkluI5A+9UwN9eLiD8xED5uP6SohiOAMIDcYSfsIDHjguSGf+VKnXCkBcluS4j9j0ocVNO8+K1EJg==
+ b=d73xcUdG157+yuPXayUbqK8xxo99vdJSV7htYT7jg0dhEGqeyjpvwhJHYHsIACB+kcJJ4t8BPg7Eu//16OUc/VddCu0XBzsIARH5qMSeLsqTCwIjDWiEMLUVfEXtm8AQFEYLGz9T35wDJb/xm6Gllr9Ti664p/zYv/tASSuA0feIl16KtqO+qNDQLps8Y8k7p865ItBghf0u1pGHpODlr4Ix1vB1dFv99ZuFTkWN6zReqb4A82JN2BM6MZUPvFc7taLRM3sxZKtGDXZMZEQG1JmnutH9RpTufQXEixupMuu35ypMztKDvTb3UBJY2Zf/YfnxOzkfXmLh9qL4rZDt+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=La1CO87wUAL/yxP4YgUuO37P8e/0F6z/5qH+LzeT6+M=;
- b=yAhShs/r0IrE274lzLQj9s6iPLynjKTxqlL3BkQ84+7Yyqse5Mm5oIAll1A9rjgWSlNVnnzkn6TCDFyNVU2x8ybcA4pQhuVxGat0cblY5q+GwKQdK2PMmmw0x98P0ul76JS7wSOYcn/SDhXXgOsmIAzqmzBA1IfGFEd7VQU1w0Ar4sLPLu6hI2wdieWq9p4SsgiNR5A7RbWz6/sdjnF+xJiU+tnGfZQonKH8b4hifPW45FSk7EwzhGdh9jQzyOimwJht8ru+Bk8rqrgHuIydqz0A0oZugpXdgB56ZfN+P/dbYDysb9a4ubDol1mwWDIeJ3Y+59EhoohzgdHiigdR7A==
+ bh=BjSJj+zJDnnRI8+lGdW2YiDc0SmxvvggWXYIgTmnztY=;
+ b=qWqoiVJkO7kJxoBLd2D4tvmswaibhHbTspUF/jHZcEcrWtZiELyfUaFlwHxPBhc521zOn2nAA077rtX7ic4uzFcbTLajHvG2wQC76zW0DEEhnDJGvLdeShMUcxkp+qNGuHih11dW2IFq85ezsE1MBZaoz/JQ8sjwEJuEae47pGX8dNZejF9OKzrsMeEUOomEmfYe2oi+GHfduYw5J0/J0RiklqoVb729tPupUZB29dWB6KZtlKzK6q/9fRugu4nm9A+16f8TfW4i2o1MIrtDrSQdxGUSxr9oxCPOSlww3Oue9dVV2AlsYXGFr+9bpnr2chcVR7pJMZ7fzpCfsg5QPQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BjSJj+zJDnnRI8+lGdW2YiDc0SmxvvggWXYIgTmnztY=;
+ b=LCeIAbhuBN2GfFwpYiLR1bKgAs1aDp7OXAZKo5SspoHG/UmzT2CiBdatCczDSYBwdwJIrTTIPV7aA2BxHpXbYpTdqDFAmozxvT6lge2hKIOtE4g/Z0+Dt5d74ZZNQTZaC9aBzU/gokTIrvpOifdJ4XsG+/IWmgwA6wViPBz2UUE=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV2PR11MB183078.namprd11.prod.outlook.com
- (2603:10b6:408:417::8) by SN7PR11MB8025.namprd11.prod.outlook.com
- (2603:10b6:806:2dc::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Thu, 5 Nov 2026
- 21:58:31 +0000
-Received: from LV2PR11MB183078.namprd11.prod.outlook.com
- ([fe80::74b6:e45c:3f37:ff0f]) by LV2PR11MB183078.namprd11.prod.outlook.com
- ([fe80::74b6:e45c:3f37:ff0f%4]) with mapi id 15.21.0592.009; Thu, 5 Nov 2026
- 21:58:29 +0000
-Message-ID: <87e29c03-6930-430e-bb0d-73ba4b92fff2@intel.com>
-Date: Thu, 5 Nov 2026 13:58:26 -0800
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MN2PR12MB3485.namprd12.prod.outlook.com (2603:10b6:208:c9::22)
+ by BN7PPF62A0C9A68.namprd12.prod.outlook.com (2603:10b6:40f:fc02::6d2) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Thu, 5 Nov
+ 2026 22:01:31 +0000
+Received: from MN2PR12MB3485.namprd12.prod.outlook.com
+ ([fe80::7ac:5acc:f8b7:65c9]) by MN2PR12MB3485.namprd12.prod.outlook.com
+ ([fe80::7ac:5acc:f8b7:65c9%7]) with mapi id 15.21.0569.011; Thu, 5 Nov 2026
+ 22:01:31 +0000
+Message-ID: <396e7329-587f-4610-b492-a6bd28049ae3@amd.com>
+Date: Thu, 5 Nov 2026 14:01:29 -0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] drm/xe/wedge: request inspection for additional fault
- paths
-To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
-References: <20261102210242.635207-1-daniel.charles@intel.com>
- <20261102210242.635207-4-daniel.charles@intel.com>
- <sashiko-outbox-194198@kernel.org>
+Subject: Re: [PATCH net-next 3/3] ionic: add devlink param for command timeout
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rdma@vger.kernel.org, "Nikhil P. Rao" <nikhil.rao@amd.com>
+References: <20261102-b4-ionic-cmd-timeout-v1-0-2f75c2d0a0c7@amd.com>
+ <20261102-b4-ionic-cmd-timeout-v1-3-2f75c2d0a0c7@amd.com>
+ <sashiko-outbox-196113@kernel.org>
 Content-Language: en-US
-From: Daniel Charles <daniel.charles@intel.com>
-In-Reply-To: <sashiko-outbox-194198@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MW4PR04CA0212.namprd04.prod.outlook.com
- (2603:10b6:303:87::7) To LV2PR11MB183078.namprd11.prod.outlook.com
- (2603:10b6:408:417::8)
+From: "Rao, Nikhil" <nikhirao@amd.com>
+In-Reply-To: <sashiko-outbox-196113@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR05CA0133.namprd05.prod.outlook.com
+ (2603:10b6:a03:33d::18) To MN2PR12MB3485.namprd12.prod.outlook.com
+ (2603:10b6:208:c9::22)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -135,324 +98,189 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR11MB183078:EE_|SN7PR11MB8025:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5bbf1808-abd3-4583-9dc7-08df3b87ecde
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3485:EE_|BN7PPF62A0C9A68:EE_
+X-MS-Office365-Filtering-Correlation-Id: b0f8859c-d2a9-447d-b23e-08df3b88594f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|6133799003|10067099003|22082099003|18002099003|261028144727099003|11063799006|5023799004|56012099006|4143699003|261021121427099003|261026121527099003|261102123227099003|261026140227099003|261022105027099003|261009223027099003|261022075727099003;
-X-Microsoft-Antispam-Message-Info: 31GLFDky81v9SQlDYOxWpnm57ftqsve9HuN7OIXOWvvdLL/AZXqVkTLTdpCXhDldvFq2RCY5TInq2r5zig3t5UQl7n8cfwkYBNhCu6JrW+dkK8NPZYtrDvjyog7bwUfRWeNQWxamm4gR+SqwC+wI0xZL/90JHOLNBkH5AX4Y3I0+85e15/2OjtdemhplnQQl79HwRp+dB0uBQmfZuSGzO3MgmiFb32wiktwN4EG5bPzbRdHLegHSiI3HwtDFmGq9jWeUNF1j+twsDnFViH9ySZP4h2b9+ryiWcWQ6by31I0PbicbHPuzpffvskV4jduHs5kUqSkPvFGDmGvBM12N0NHMR+HjpqSiIWh2yY4n3K+FxRXKSujo/YqAm4o+Go/3swfHL/HxJsHPda3CiER00ZcWy16oowFUB/yey7sW7yChaM76x9PmFl5AiBpK146OCepGQC5uWSbYMRxI/+9q9KZDOByj78MZ3YXRrBH6YrrFsvImPhibYZsb2w/ltAoszg4FN83bZTuCkv4eLwPJxYy6cPITqhspwXtHF0kuz/V4IpWRXa3+OKW54NzFQCIPNk+OOuo7DxTIgpt4bjx43BquwYBp92SdYHyhQH8AdNx2mF4k9bVz9LX09GEtQFKR+s0u7Ir76vXUiMslu0U2BXfxQwjLFvcKeY54KLcZZKU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR11MB183078.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(6133799003)(10067099003)(22082099003)(18002099003)(261028144727099003)(11063799006)(5023799004)(56012099006)(4143699003)(261021121427099003)(261026121527099003)(261102123227099003)(261026140227099003)(261022105027099003)(261009223027099003)(261022075727099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|261021135927099003|261021123027099003|11063799006|4143699003|261022075727099003|261026140227099003|261028144727099003|261009223027099003|261021121427099003|56012099006|5023799004|261022105027099003|261026121527099003|10067099003|18002099003|261102123227099003|22082099003|6133799003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	H0+7aknPShRqR9Uf2BwLOOrgbAkoHiztWaJzKksUncDxAOitsg1mHBTeWDCG51hyW2EUCOUwyOELEFKvDnQTrTuSsmUr0JdIJxM5Jj0yNgC/m9tfm0A0egHZbmssyZEcchKw6qEyEK3skwrnG5t+QXwh9CXZvXTsyMka3aYuWfIqXz+3R9osHghANxUcSni0rslNzKlqBnzfUqT/GwQJNzlX99d0+rTxGaRxXd8Dn99lfnMbJU1O21np/F7pAw35l8P8CNE1S5f4Jh5GZ2iin/ZdGyPv/Sh+h2YFaiAD0IsxSM36Fj/B9OXwprdQHY+upD8hwbbFpoT4WALQ+ceaS7egTyths3jQHeWN5WBt4emMldeyBb0zt2i/JLxcBxK/DodF8H/2tlGuvXdUpz98YW6wRZxNeqz0nalYmCf6sWtIM7MSkIgI2CUOXW57+Vy5PcxIJv8OHCNEOxQwVZKhiFInIl3GAIcm5Weehv7izbnofNpWIvhz5cCvQIuy2hraZqryRmCnfyBUitWQ0XPdU0tgm1dOIVTUV6C5Nq1UNDSlIM1Vpv4pdjIoT2ibD+0OFEjxGiXpVGi4+Z9OdY6cEqGCokWMcbZ0Dt5pX/HZxSNDkSNykE0hKgFbUOygnXDm5cRnFjtDyUKMoU3h/uKWkSTjXxLDZECm1W/MkTQfAFA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3485.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(261021135927099003)(261021123027099003)(11063799006)(4143699003)(261022075727099003)(261026140227099003)(261028144727099003)(261009223027099003)(261021121427099003)(56012099006)(5023799004)(261022105027099003)(261026121527099003)(10067099003)(18002099003)(261102123227099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YzlPWUtaOTZTS1RlRVNtejBCWWQ3RGc3ZUZ1Qm16TVpPZ0s1NDlyUDNsblZn?=
- =?utf-8?B?VU9TbktkT2F1ajA3UDdjeDFDMkh6eURrSXpNYUF1NHRrNlBkOG5QOUNDbkEr?=
- =?utf-8?B?OFg1TUNOUitMY3pPUnRTbTh1UFFOVU5lUzd6U1JDYXMvZ0FWNGFwUDNUdUIw?=
- =?utf-8?B?WkNnTUlQdU5jZ2Y0YldtR1BUMGNEK29sU1I4amlUT2RaMDBxNTBXMFdBb2xi?=
- =?utf-8?B?QlV2TjhseGp3b0ZuME9mV2E0bGhlYjJOY0tDYWZ6RnQ2ZFBUWnJpLzAxNm5O?=
- =?utf-8?B?WXc5NitQMTh3ajk0RXFBUzk3NUlMb1hKaUtRZitUSUxSNEF1TjJtSHM4aTYy?=
- =?utf-8?B?V3Vpd01ITFJtTlVYSUdsS1NLbVFJcHplVzdJVy9pbWNlMlM4OXR4VCs4dlg5?=
- =?utf-8?B?TXJrejI1dkRKcWdnN0d4ZWt4WnFxY1dhRzAyalM0ZS9PQkJMSm9MVzllUEpl?=
- =?utf-8?B?Vk9tbGhFNklBclFBSi9kc1drRHI2cFdoYnNiUHp4djhUTjlsYUw4WWJBcG1u?=
- =?utf-8?B?NStuUUxDM2x6WnBzdzdwdk9vYm93VlZZVzVFQ3QwT2JhWGk2RGNXVGJVK1l2?=
- =?utf-8?B?bldoWEI4WWswSmwvbHdxcVRlSVpKQWlXdFZQbDVZZks1L1RaUUdMdkoydkph?=
- =?utf-8?B?YVdyQUtjWDREbWtnTEpmYkVCdEZVNTFUa0FaMjRkQTZad2hMWXVYcjZ0RXY1?=
- =?utf-8?B?VnBDNG4rSWhCVGw0NE9LS1pOTURDSWQ5SVAxQkV6ZUVld3JORUZXdmVHNGRp?=
- =?utf-8?B?YVd0alpwcjQvalM2QkVldmRTYklYNmRmREJvVWpMaWthUmd1eTVJMEpER01a?=
- =?utf-8?B?QStEd0I1OEhScHY2dnpUcmtRRHBQa0F4YTlhZVh1aG1kalVWWHZHeXlVTXRG?=
- =?utf-8?B?ei94QkV4TlVLZ2lqS25SNVFPTVdTR3I5dFF4Z2F3VVVicjE3Wi8yK2FtVVlR?=
- =?utf-8?B?a1hoQTI5Ui9kYmdEQkNsdGh2OUlMdzlHd2tqQXdDZVZJK0s2U1BYRFVaMDJx?=
- =?utf-8?B?M1lhNnZMbVdZMFhWM2JnQkd6UUZ2RU1WeCtrc0xGNVJEcndhNlpUc3pXVXUz?=
- =?utf-8?B?Q0s1SkUyYXZaUUNQckkxcU9VWFV6Y2ZBbzg5ZnAvZ2x0bXJYbFZpakxCNlNm?=
- =?utf-8?B?S3RNekUvTzVKNXh3TXRTRFRXR284bW1DdGN2NDZzUFFOdXM3TGRFTngyZE9u?=
- =?utf-8?B?V3dsMnQyVDZ5QkF3eXFzNE5tZ2Iwd3FHOEJRL2FEbnB2bUU5UW1ybG43LzlG?=
- =?utf-8?B?NmZSangwZjlScUR5RE5Nd1FjT3U0NHA3aVdVOGlCT2Y4eDBqZmpycUdUUGwy?=
- =?utf-8?B?ZExUU21rWm11QXpxTmFqeW1kMllNUFp3bFZGdDBtcTBYMFBVT2lLaHMzNGRE?=
- =?utf-8?B?U0RVQ1hObkw3TEhxVGVqcWhZU0FicTlldnpGNGtFa1hQSUd1QXNDTkNiRzZ2?=
- =?utf-8?B?blluRmdqYkhDVmFrVU9rNDlWSDY3RlFSVUZkWkgxbnR1OGN2S0Q0dTN4UlN5?=
- =?utf-8?B?Ym9QMDROUzlaa0VQcWhsNEVvZitla3QySUhseUhrOFNINjFpKzBaUFhwRCtR?=
- =?utf-8?B?bGpDMXd1U3NaREY5ZzJUZnNnbGtCMVpPZ1FiOGVueG1NYVU1UmdveW9wbGF2?=
- =?utf-8?B?RFlsZ2lFTTYzMEU5MTF5dW9qRDROdjlDMkw1NkkwSEJwWlpGTHM4S1Z2V3Fr?=
- =?utf-8?B?bm5YTTN5WGdIZ0JZdjlCYXlKSTRqSnROUWhtaWRPb01YM3FvZGtPb1B2emdP?=
- =?utf-8?B?cTIwWEc5Z25mZUxUZUlnTTVSVWszVHpUVkpYR2tHQVpRL3pYTVFCazVDYTVs?=
- =?utf-8?B?ZmNsYndNNzBaWXlnNDhsZCs4TjVRcEZNK2pXTityQk51WmI0aC9DTmdxNUdi?=
- =?utf-8?B?K3ZaRDdlQk1Sc0t2YmdtOVlBc0N6NnpqV09MK2xPSElPRXBLb2VoUURZYTdq?=
- =?utf-8?B?SFNnc0RpZDNoU2dId1VmWk9jZmZFUHltaUU0VnExU3Frb0JJOUphZ3NpdWdw?=
- =?utf-8?B?N3FRa2ZPWTRrQmhBbm9CbEFUMzU2c1BNc0h3cmVmSGNkdXhmaG92ZE4xbHhr?=
- =?utf-8?B?L3U1TnZNd0NraTc4OUNVbHRZKzZtR0hhYkY5bjdpQmdCVjgxM3N0NHdjOGhn?=
- =?utf-8?B?dkxUZExXSFdPeVBqRkdQd1VMMFRscEVQUGRTK3ZwdEdVYVFFSmRCS1d6dlow?=
- =?utf-8?B?Y0pLeGl3OGRlcmNzT21JWGgzWUVBNnFYbUE5Y2JwT2U0alhybkdlZy84WUdU?=
- =?utf-8?B?TStybmVoTmQ2QTcrU3VKbHEvSzNBbEJkS2RpaFEySzdrY0xPY25wMlVHS3Zp?=
- =?utf-8?B?OGlHcjUvWWFTTHpFQzZDdW1xeU9tWXN2dEU5OFlFbFRld1dQc3BGUnhrZEZ2?=
- =?utf-8?Q?qtkPlnHRNF5ero0Y=3D?=
-X-Exchange-RoutingPolicyChecked: O7zq+f81+3oCVREfejUau0UJg93+z2liDWxiWhUHca86h2bUgfqczJjBxkDgaoQ9gf0kDcKzIdTXJf2lqR0zDpQszcQpHQ3UtdWIVLe82rWJV0iNFNWljloN+nx18yMt4Oah5L5zUj2zmZoizZjDt4P4sVMAtDun0Z8v3X98PCU+t//P9RC2RG+NN/p7J4g4UDA3ObFp+bR26rWVSPSvhZr1CgY30FwXyDhDW2YbccU1VSBMtPrzpcZGKo7KPFQs59Ptpg8KkdOoJoUXBsJtEzYsIHeCUw/0SarZ6eIK2lGq0p2llxzJLdoFOpnVaVYJvl4r9VZseogHnsc502ZSPw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5bbf1808-abd3-4583-9dc7-08df3b87ecde
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR11MB183078.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?RkRlZldtZjhHY21zZjR1R0NBMVUyMEJ6eXpabVBHUXg2TU5pT2YwdGlscnhZ?=
+ =?utf-8?B?bUhTbnRmdDAzNTYvWnk3dThDNmczR1BwTUdBR1F4eTF4b1d4RU5iYVA3amIx?=
+ =?utf-8?B?dndscHhNQlVhUHZqenF2bDVjRlUvVDlNSm1NR2xGQjlsNVF3SlFUOGJUNlNq?=
+ =?utf-8?B?L3Q5WVJISzdZS1F4alM1OVlHOGFNQ1lVelIvRUpiNjFQRXN5dDVDTGZ3L3lt?=
+ =?utf-8?B?S2EzQ3YzdVNpMHROcWxwK0xiSVVBWVhMMHBPTFQzOG1jNHlDVzZGRTZPM3Nq?=
+ =?utf-8?B?STE2TjJRUXFub3RGaUEwZ09XL253cEZDZHZrT21CTmFhenBsUWgweDFQdDE1?=
+ =?utf-8?B?RU1UUXJ4d2ZmQmhrZGpJZzRNNjVDeG5tbE92azZ2Yk0xcHI0TS9ScCtSUjFk?=
+ =?utf-8?B?MHY2Z0xYd2ZvNCsvVjYxRXJ3NmRBclJOeTVISC9CRS92ZExUU1h1WThpbkNI?=
+ =?utf-8?B?QklsSHA3ekNoQkJ0a2o5SWRPU21qd3lvcXA2ZC9pQmR6bVh1WGowNWZXdWNG?=
+ =?utf-8?B?ODYwc3lzNWFZTXdoTzNXOXh5b1dZNzJiSmxmR09HcGdzWTIwWTA4cUZ5dmdC?=
+ =?utf-8?B?QVdjeUkrcHhuN1FGaVVXaTREUFpyakRnckZKM3lleVpYazFCQ1VoY3o1SjNm?=
+ =?utf-8?B?cDlTYTl4ZGNhRWJPQ2p6NnVTUnpGenJ2L1lCdzBNQ2hPaGhYc3NzZG5HM2Vu?=
+ =?utf-8?B?SVdzN3RWQVRiNUFRU1lVc01laWhyUGs2YWR2SEtMQi8vb2dRRmwzOEdycEQv?=
+ =?utf-8?B?ajc3SzFGTjR5K3FHdWRBOERlaEhkOU9JVllWckplTmhiYm4wSVRLNVYxbFla?=
+ =?utf-8?B?VGdzZGtxaEhTOXdKdGJsNVN0ZThTOFB0MmxzMkpaUTIwSFhXc1IvelZ2cUpw?=
+ =?utf-8?B?ODk0ZENwOE9VUWk2cjZYQjhLelZ3T3VYSnVCVGZnUzkzY2lOU2tiV21JaGFl?=
+ =?utf-8?B?RW1mM3FDZ1VRZzVhU3JMMjJJVXJnVTVMdk1nQnpNTWdVS3hqVGRyUEthbnh2?=
+ =?utf-8?B?cUhlRVhQdlR3eThRUGxOVjlVZVMydWFKRkN2UzRrTlpzaXRzelhqS2QwaWM5?=
+ =?utf-8?B?YnUzcW5jVFVnVTRQL0xITTFUWVdqUjR6c0lTKzExYWNvR0FwcHRkUEFnWUVq?=
+ =?utf-8?B?SklqZlJ1TzVROFR0d2pNZjJTQ3RwUnVBMmgvT29CMG56OUhjRmp4eUsrQ001?=
+ =?utf-8?B?WTlvbmhYeUsyeEV4SGN6SFRNVmp1cVNvQ2tUQ0Y1eEx2YmIyQlZPa2dieGFx?=
+ =?utf-8?B?MVlxSDZFMVY3eHdWcFBNaEVGK1RLdGJCeUUxTUNtNFMvUG9IZ1ZaVkFXU0tl?=
+ =?utf-8?B?d3BVeE40N0RXYlFaUzJRTUtjSS9TM1hQRWN6UDJBcmN3V0ZCKytYZ2FDNFZm?=
+ =?utf-8?B?K2dXeDRqQ3ZUdEk1cm5ISUIrcS9MNG8xNVN1T2d1M2ZmQkNwYjZxMWtTejhs?=
+ =?utf-8?B?NXJMQ1NROGF1MG11Wm43ZExmbHcvRTluQ3JFS1JVSUNROHI3YlRzWFgra2RV?=
+ =?utf-8?B?bTZtOVduaUZkY1pQRkFmYXlVRUlHOE9nU2xrZlkyOUtZdVJQNXZUR1B6RFVL?=
+ =?utf-8?B?K3FKRzJlUG83a01RM0J0K0JxeUVtU0ZpQVpsNW5QUE9QQnFZd3UvMTB2NVlN?=
+ =?utf-8?B?clFiT3UyM3IxL2U2NFVKUEdJSmcrVEpESGNXb1F5MHRTaUY4cGxWaGk3ODR0?=
+ =?utf-8?B?NGs0KzRsV09FdXZxcU90VjlOSlFFYWRnSDhORTZvWi9CdlhlaVZLa3NVNkxU?=
+ =?utf-8?B?ZHliU1FsK2laSnp0Y1VYU3FLMEZZVEhGN2g3d0tzL010NGJObU42ZWRnSnVB?=
+ =?utf-8?B?ZUdDVUtlRGNKeEd3Z1M4Y0xKQUVzMmlIZzM2YWZRZVBTTGlWNW9JU3Y5bnhC?=
+ =?utf-8?B?Uml6MjQ3SVpGN1g2UitQTnd2VC9YeURZMmNQUDJYRmZlRHlWdnBGNndKcFlT?=
+ =?utf-8?B?WGRoeW5iZ2U2dlFOR0toWVJ2clVRUDJBNzAvdHlYaEVRaktYMkkzczVEZTNn?=
+ =?utf-8?B?S3VHRVZuQlMxUmkvNWhncWFiNmNsODJiL0JBSjlSdWNCcGFBUnJ1V0syQWNO?=
+ =?utf-8?B?STlLT0NzS2pLL244YTRwTjhRbkxLNFBzRm90bVVEVEpGTzNRZzQ5WlZRTzFr?=
+ =?utf-8?B?S01uV29ITmllQnJpcjZiM1U1Y1Nicm9LQy9OZzlkKzRDaitjL0xlTlQ0dmdq?=
+ =?utf-8?B?RUFsU3E2R05vWVpCbDZhRnBvelpsbHBZaHhEZk9zSlJmUS9aODFFUWFqZnBB?=
+ =?utf-8?B?MjdOZU1adlhTZWM4NzZQZDRUMlhPUVRtdFFzMWkxanBQNkZDdWsvVFhjUTBK?=
+ =?utf-8?B?TjRiWUtwRm9LM25jb0x2ak83VkxvYmQ0bVNJb1RWSTFucTFGSzJEZz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0f8859c-d2a9-447d-b23e-08df3b88594f
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3485.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 21:58:29.1631
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 22:01:31.1855
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DQh+74SjNNO0NW4IX7oqsAe2D+wl1uROSvyl703YDwIk1uD7xAfCMtLdNmf5sq2BkVEMvabONHTk3Z7CcIqju7WCUrtoiNG+PY3Uf/RAL7c=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB8025
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: HZGRNlBtqTpLZjTXC1tMvlP2YbdHhRvLzxA7Tc6DpSoBK9210Vh91mJdTtZq3hPYxkYigkkI0yjlbuSaxoMwoQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF62A0C9A68
 
-
-On 11/2/2026 1:27 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] drm/xe: infinite TDR loop in xe_tlb_inval_fence_timeout() on aborted pause
-> - [High] drm/xe: wedge_request() re-runs mode-3 pause after CONTINUE or SKIP
-> - [Medium] drm/xe: stale pause_failed in wedge_pause_work() blocks TLB inspection
-> --
->
-> commit dd97fca485155b946444998386ef977057638b19
-> Author: Daniel Charles <daniel.charles@intel.com>
->
-> drm/xe/wedge: request inspection for additional fault paths
->
-> This commit extends mode-3 wedge inspection to cover unsuccessful pagefault
-> service, GuC memory CAT errors, TLB invalidation fence timeouts, and
-> MMIO-enabled RAS reset requests. It also adds fallback handling for TLB
-> timeout inspection when runtime PM resume fails.
->
->> diff --git a/drivers/gpu/drm/xe/xe_tlb_inval.c b/drivers/gpu/drm/xe/xe_tlb_inval.c
->> index 293929f92eb0f..ffb839c3b7524 100644
->> --- a/drivers/gpu/drm/xe/xe_tlb_inval.c
->> +++ b/drivers/gpu/drm/xe/xe_tlb_inval.c
->> @@ -17,6 +17,7 @@
->>   #include "xe_printk.h"
->>   #include "xe_tlb_inval.h"
->>   #include "xe_trace.h"
->> +#include "xe_wedge.h"
->>   
->>   /**
->>    * DOC: Xe TLB invalidation
->> @@ -84,15 +85,27 @@ static void xe_tlb_inval_fence_timeout(struct work_struct *work)
->>   	int timedout_seqno = 0, seqno_recv = 0;
->>   
->>   	spin_lock_irq(&tlb_inval->pending_lock);
->> -	if (tlb_inval->debug_paused)
->> -		goto out_unlock;
->> +	if (tlb_inval->debug_paused) {
->> +		if (!tlb_inval->debug_pause_pending)
->> +			goto out_unlock;
->> +		if (!READ_ONCE(xe->wedged.pause_failed))
->> +			goto out_rearm;
->> +		tlb_inval->debug_paused = false;
->> +		tlb_inval->debug_pause_pending = false;
->> +	}
->>   	spin_unlock_irq(&tlb_inval->pending_lock);
->>   
->>   	tlb_inval->ops->flush(tlb_inval);
->>   
->>   	spin_lock_irq(&tlb_inval->pending_lock);
->> -	if (tlb_inval->debug_paused)
->> -		goto out_unlock;
->> +	if (tlb_inval->debug_paused) {
->> +		if (!tlb_inval->debug_pause_pending)
->> +			goto out_unlock;
->> +		if (!READ_ONCE(xe->wedged.pause_failed))
->> +			goto out_rearm;
->> +		tlb_inval->debug_paused = false;
->> +		tlb_inval->debug_pause_pending = false;
->> +	}
->>   
->>   	list_for_each_entry_safe(fence, next,
->>   				 &tlb_inval->pending_fences, link) {
->> @@ -106,6 +119,17 @@ static void xe_tlb_inval_fence_timeout(struct work_struct *work)
->>   		drm_err(&xe->drm,
->>   			"TLB invalidation fence timeout, seqno=%d recv=%d",
->>   			fence->seqno, tlb_inval->seqno_recv);
->> +		if (!READ_ONCE(xe->wedged.pause_failed))
->> +			xe_wedge_declare_mode3(xe);
->> +		if (!READ_ONCE(xe->wedged.pause_failed) &&
->> +		    READ_ONCE(xe->wedged.mode) ==
->> +		    XE_WEDGED_MODE_UPON_ANY_HANG_NO_RESET_WAIT_FOR_RELEASE &&
->> +		    atomic_read(&xe->wedged.declare_pending)) {
->> +			tlb_inval->debug_paused = true;
->> +			tlb_inval->debug_pause_pending = true;
->> +			/* Keep timeout processing until inspection owns the pause. */
->> +			goto out_rearm;
->> +		}
-> [Severity: High]
-> Can xe_tlb_inval_fence_timeout() get stuck in an infinite out_rearm loop if
-> wedge_pause_work() exits without calling xe_tlb_inval_debug_pause() and
-> without setting xe->wedged.pause_failed?
->
-> When both tlb_inval->debug_paused and tlb_inval->debug_pause_pending are set,
-> subsequent runs of xe_tlb_inval_fence_timeout() only exit the re-arm loop if
-> debug_pause_pending is cleared by xe_tlb_inval_debug_pause() or if
-> xe->wedged.pause_failed becomes true.
->
-> However, wedge_pause_work() can finish and reset xe->wedged.declare_pending
-> to 0 with pause_failed still false in two ways:
->
-> 1. If xe_wedge_prepare_fini() sets xe->wedged.shutting_down = true during
-> teardown before wedge_pause_work() reaches the for_each_initialized_gt()
-> loop:
->
-> drivers/gpu/drm/xe/xe_wedge.c:wedge_pause_work() {
-> 	if (READ_ONCE(xe->wedged.shutting_down)) {
-> 		if (pm_ref)
-> 			goto put_runtime_ref;
-> 		goto clear_pending;
-> 	}
-> 	...
-> 	if (READ_ONCE(xe->wedged.shutting_down))
-> 		goto put_runtime_ref;
-> }
->
-> 2. If wedge_pause_work() has already executed its xe_gt_wedge_pause() loop
-> and declare_pending is still 1 (for example, after wedge_declare_now() runs
-> xe_tlb_inval_reset() on XE_WEDGE_REPLY_CONTINUE, or after a concurrent GT
-> reset clears debug_paused while waiting in wait_event_idle()) when another
-> TLB fence times out and sets debug_paused = true and
-> debug_pause_pending = true.
->
-> In both cases, once declare_pending is cleared to 0, debug_paused and
-> debug_pause_pending remain true while pause_failed is false. Because
-> debug_paused is true, xe_tlb_inval_done_handler() ignores incoming TLB
-> completions, and xe_tlb_inval_fence_timeout() re-arms fence_tdr forever
-> without signaling the expired fences with -ETIME, hanging callers waiting on
-> pending TLB fences during xe_pci_remove().
-
-The timeout worker could keep rearming after the inspection worker
-exited if debug_pause_pending remained set. I have to change it to defer 
-only
-while declare_pending still indicates an active inspection request. When 
-the worker is finished, timeout clears stale pause state and resumes 
-normal operation.
-
-
->> diff --git a/drivers/gpu/drm/xe/xe_wedge.c b/drivers/gpu/drm/xe/xe_wedge.c
->> index f7b2ec9d68863..4ed215991cfe1 100644
->> --- a/drivers/gpu/drm/xe/xe_wedge.c
->> +++ b/drivers/gpu/drm/xe/xe_wedge.c
->> @@ -189,7 +189,8 @@ static void wedge_pause_work(struct work_struct *work)
->>   	if (!pm_ref) {
->>   		xe_warn(xe, "Mode-3 wedge could not retain active runtime PM; resuming for inspection, hardware state may have changed\n");
->>   		if (!xe_pm_runtime_resume_and_get(xe)) {
->> -			xe_err(xe, "Failed to resume device for mode-3 inspection; aborting pause\n");
->> +			xe_err(xe, "Failed to resume device for mode-3 inspection; restoring TLB timeout handling\n");
->> +			WRITE_ONCE(xe->wedged.pause_failed, true);
->>   			goto clear_pending;
->>   		}
->>   	}
->> @@ -197,8 +198,10 @@ static void wedge_pause_work(struct work_struct *work)
->>   	if (READ_ONCE(xe->wedged.shutting_down))
->>   		goto put_runtime_ref;
->>   
->> +	WRITE_ONCE(xe->wedged.pause_failed, false);
-> [Severity: Medium]
-> Once wedge_pause_work() sets xe->wedged.pause_failed = true on a runtime PM
-> resume failure, how is pause_failed cleared for subsequent TLB invalidation
-> timeouts?
->
-> In xe_tlb_inval_fence_timeout(), xe_wedge_declare_mode3(xe) is guarded by
-> !READ_ONCE(xe->wedged.pause_failed):
->
-> 	if (!READ_ONCE(xe->wedged.pause_failed))
-> 		xe_wedge_declare_mode3(xe);
->
-> After xe_tlb_inval_fence_timeout() observes pause_failed == true, clears
-> debug_paused and debug_pause_pending, and signals the expired fences with
-> -ETIME, nothing resets pause_failed to false except a future execution of
-> wedge_pause_work(). Because future TLB invalidation timeouts skip calling
-> xe_wedge_declare_mode3(xe) while pause_failed is true, TLB-triggered mode-3
-> inspection remains disabled indefinitely after a single failed resume.
->
-> In addition, if a later non-TLB fault (such as a pagefault or GuC CAT error)
-> calls xe_wedge_declare_mode3(xe) -> wedge_request(), pause_failed is still
-> true until wedge_pause_work() is scheduled and reaches WRITE_ONCE(...,
-> false), so any concurrent xe_tlb_inval_fence_timeout() will fail pending TLB
-> fences with -ETIME instead of pausing them for the new inspection.
-
-The previous behavior allowed a later non-TLB trigger to retry mode-3
-inspection after runtime resume failed, even though TLB-triggered 
-retries were
-suppressed. I have to make this failure terminal for mode 3: the failed 
-attempt
-retains the existing TLB timeout fallback, and subsequent mode-3 
-requests are
-rejected.
-
->>   	for_each_initialized_gt(gt, xe, id)
->>   		xe_gt_wedge_pause(gt);
->> +	WRITE_ONCE(xe->wedged.pause_stopped, true);
->>   
->>   	spin_lock_irqsave(&xe->wedged.mode_lock, flags);
->>   	WRITE_ONCE(xe->wedged.reply, 0);
->> @@ -294,6 +297,39 @@ void xe_wedge_declare_mode3(struct xe_device *xe)
->>   	wedge_request(xe, DRM_WEDGE_RECOVERY_NONE, true);
->>   }
->>   
->> +/**
->> + * xe_wedge_mode3_wait() - Inspect a recoverable PCI error before reset
->> + * @xe: Device with accessible MMIO, kept alive by the caller
->> + *
->> + * Request or join mode-3 inspection and wait for its worker to finish.
->> + * Do not hold mode_mutex while waiting; teardown needs it to abort inspection.
->> + * Waiting has no timeout and can stall recovery and removal of devices in the
->> + * same PCI hierarchy. Other devices can request reset after this callback
->> + * returns; frozen-channel recovery can force reset regardless of our vote.
->> + *
->> + * Return: true if reset must be declined because inspection stopped the GTs,
->> + * the device is wedged, or teardown started. Otherwise, normal recovery may
->> + * proceed.
->> + */
->> +bool xe_wedge_mode3_wait(struct xe_device *xe)
+On 11/3/2026 2:28 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> +static int ionic_dl_cmd_timeout_get(struct devlink *dl, u32 id,
+>> +                                 struct devlink_param_gset_ctx *ctx,
+>> +                                 struct netlink_ext_ack *extack)
 >> +{
->> +	mutex_lock(&xe->wedged.mode_mutex);
->> +	if (READ_ONCE(xe->wedged.mode) !=
->> +	    XE_WEDGED_MODE_UPON_ANY_HANG_NO_RESET_WAIT_FOR_RELEASE) {
->> +		mutex_unlock(&xe->wedged.mode_mutex);
->> +		return false;
->> +	}
+>> +     struct ionic *ionic = devlink_priv(dl);
 >> +
->> +	if (!READ_ONCE(xe->wedged.pause_stopped) && !xe_wedged(xe))
->> +		xe_wedge_declare_mode3(xe);
-> [Severity: High]
-> Should wedge_request() also check xe->wedged.pause_stopped and xe_wedged(xe)
-> before setting declare_pending and queuing pause_work?
->
-> Here in xe_wedge_mode3_wait(), xe_wedge_declare_mode3(xe) is skipped if
-> pause_stopped or xe_wedged(xe) is true. However, direct callers of
-> xe_wedge_declare_mode3() and xe_wedge_declare() (such as
-> xe_pagefault_queue_work() draining additional failed faults in pf_queue,
-> xe_guc_exec_queue_memory_cat_error_handler(), or xe_tlb_inval_fence_timeout())
-> go straight to wedge_request(), which only checks shutting_down and
-> declare_pending.
->
-> When wedge_pause_work() finishes after XE_WEDGE_REPLY_CONTINUE or
-> XE_WEDGE_REPLY_SKIP and resets declare_pending to 0, any subsequent fault
-> calls wedge_request() and queues wedge_pause_work() again:
->
-> 1. After XE_WEDGE_REPLY_CONTINUE has already wedged the device and called
-> xe_tlb_inval_reset(), a second run of wedge_pause_work() calls
-> xe_gt_wedge_pause() -> xe_tlb_inval_debug_pause(), setting
-> tlb_inval->debug_paused = true again. Even if the user writes
-> XE_WEDGE_REPLY_CONTINUE a second time, wedge_declare_now() returns early at:
->
-> 	if (atomic_xchg(&xe->wedged.flag, 1))
-> 		return;
->
-> without calling xe_tlb_inval_reset(), leaving TLB invalidations permanently
-> paused.
->
-> 2. Each repeated execution of xe_gt_wedge_pause() -> xe_uc_wedge_declare() ->
-> xe_guc_submit_wedge() walks guc->submission_state.exec_queue_lookup and takes
-> another reference on every queue via xe_exec_queue_get_unless_zero(q) before
-> calling set_exec_queue_wedged(q), whereas guc_submit_fini() only drops one
-> reference per wedged queue, leaking xe_exec_queue references.
-  Another mode-3 pass after GTs have already been stopped could
-repeat queue-wedging work and acquire additional queue references. The 
-central
-mode-3 request path will reject requests while one is pending, after GT 
-stopping,or after a permanent wedge
+>> +     return ionic_dev_getattr_cmd_timeout(ionic, &ctx->val.vu8);
+>> +}
+>> +
+>> +static int ionic_dl_cmd_timeout_set(struct devlink *dl, u32 id,
+>> +                                 struct devlink_param_gset_ctx *ctx,
+>> +                                 struct netlink_ext_ack *extack)
+>> +{
+>> +     struct ionic *ionic = devlink_priv(dl);
+>> +
+>> +     if (test_bit(IONIC_LIF_F_FW_RESET, ionic->lif->state))
+>> +             return -EBUSY;
+>> +
+>> +     return ionic_dev_setattr_cmd_timeout(ionic, ctx->val.vu8);
+>> +}
+> 
+> [Severity: Medium]
+> Unlike ionic_dl_cmd_timeout_set(), ionic_dl_cmd_timeout_get() does not check
+> IONIC_LIF_F_FW_RESET (or IONIC_LIF_F_FW_STOPPING) before calling
+> ionic_dev_getattr_cmd_timeout().
+> 
+> During firmware down or PCI reset preparation in ionic_lif_handle_fw_down()
+> and ionic_reset_prepare() (including when ionic_pci_error_detected() is
+> called with pci_channel_io_frozen), IONIC_LIF_F_FW_RESET is set and then
+> ionic_devlink_params_unregister() is called while the devlink instance is
+> still registered:
+> 
+> ionic_lif_handle_fw_down() / ionic_reset_prepare()
+>    ionic_devlink_params_unregister()
+>      devl_params_unregister()
+>        devlink_param_unregister()
+>          devlink_param_notify(..., DEVLINK_CMD_PARAM_DEL)
+>            devlink_nl_param_fill()
+>              ionic_dl_cmd_timeout_get()
+>                ionic_dev_getattr_cmd_timeout()
+> 
+> Similarly, ionic_devlink_unregister() calls devlink_unregister() before
+> ionic_devlink_params_unregister(), which also invokes devlink_nl_param_fill()
+> via devlink_params_notify_unregister().
 
-Preparing version 2
+On remove, get runs from devlink_unregister() with the firmware running
+and completes, or fails immediately if the firmware is already down.
 
--- 
+> 
+> If a userspace netlink listener is monitoring devlink events, or if a user
+> queries devlink parameters during the window before the parameter is
+> unregistered, won't ionic_dl_cmd_timeout_get() issue a synchronous MMIO
+> IONIC_CMD_GETATTR command while the firmware is down, the device is in
+> reset, or the PCI channel is frozen, potentially stalling reset recovery for
+> up to cmd_timeout (255) seconds under devl_lock and dev_cmd_lock?
+> 
 
-Daniel.
+__ionic_dev_cmd_wait() returns -ENXIO as soon as fw_status shows the
+firmware is not running, which is the case after firmware down (running
+bit clear) and with a frozen channel (reads return all-ones). For a PCI
+reset, get is only called from reset_prepare, before the reset starts
+and while the firmware is running, and the parameter stays unregistered
+until reset_done.
 
+get has no FW_RESET check on purpose: devlink calls it from
+reset_prepare, while the firmware is still running, to fill the
+PARAM_DEL notification, and the check would make it fail there and drop
+that notification.
 
+I'll send a v2 with a comment in get explaining why it has no FW_RESET
+check.
+
+>> @@ -3495,6 +3497,7 @@ static void ionic_lif_handle_fw_up(struct ionic_lif *lif)
+>>        err = ionic_identify(ionic);
+>>        if (err)
+>>                goto err_out;
+>> +     ionic_update_cmd_timeout(ionic);
+>>        err = ionic_port_identify(ionic);
+>>        if (err)
+>>                goto err_out;
+> 
+> [Severity: Medium]
+> The commit message notes that idev->last_hb_time is back-dated by the
+> largest possible interval so that a larger cmd_timeout value does not delay
+> the first heartbeat sample after probe or reset.
+> 
+> However, ionic_watchdog_init() is only called from ionic_dev_setup() during
+> initial probe and PCI function reset, and is not called when recovering from
+> a firmware reset in ionic_lif_handle_fw_up().
+> 
+> When firmware comes back up in ionic_lif_handle_fw_up() and
+> ionic_update_cmd_timeout() applies a large timeout, idev->last_hb_time still
+> holds the timestamp from before the firmware reset. In
+> ionic_heartbeat_check():
+> 
+>          last_check_time = idev->last_hb_time;
+>          if (time_before(check_time,
+>                          last_check_time +
+>                          READ_ONCE(ionic->cmd_timeout) * 2 * HZ))
+>                  return 0;
+> 
+> Could this cause ionic_heartbeat_check() to skip sampling fw_heartbeat for
+> up to 2 * cmd_timeout (510 seconds) after a firmware reset unless
+> idev->last_hb_time is also back-dated in ionic_lif_handle_fw_up()?
+> 
+
+The next sample can be up to 2 * cmd_timeout away after firmware up, but
+that is the normal sampling interval.
+
+The back-dating at probe and PCI reset exists because the first sample
+there only records a baseline (last_fw_hb is 0), so without it a stall
+would take 4 * cmd_timeout to detect.
+
+After firmware up, last_fw_hb already holds a real reading, so the first
+sample can detect a stall and detection takes 2 * cmd_timeout, as in
+steady state.
+
+v2 also changes the changelog's "after probe or reset" to "after probe
+or PCI reset".
+
+Nikhil
