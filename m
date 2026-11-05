@@ -1,111 +1,129 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793865225;
-	b=cH1MHz2ryoqtLCQCBhVH7wZuDPFaI3W9msnRUQMRftOK62QgjCuMPa9AnWsF5GjVCu/w
-	 KOulQSUvWrmb2suzGBp5WWPa+dUFCybehyFALp2GE03uCNi8y5r/02WJEv/VWyzrgaYVJ
-	 GuERxjVOvhVW2+tjzIUjvyD4dKjuK9hv5NAf3o1c2ItrQNSikvjCf9omEhNpV72jEQe+n
-	 ovSWxCUAQ/rsZBHO3/eBpDGA+JNsx2Bgl+wa/c7NTiQM4DAKbqZAXnAJ7DH44dIgfSKGL
-	 r1Xt7vM+wzyBYQDmVt8fYatFwcxz58Y1cowAOP7T1Ie+8mtfH7IflK1Yu0rTgFmcnIA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793865225;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
-	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=0JvW8IF6COnoHXfD/gXX4jw2XsooyjMWzCMm0HDO8VQ=;
-	b=axUGyLIOmHDTaPtQH3t/kvJ9gE4l/l0l1+8N22jYBTLvOrFpB3UXxMVNQpP/uZ0gyeiN
-	 hN5RFpSS7Zj/E3q9o8qpuEdDAYp78ss4mQfbm/9aac8dmOeLOu/CVCqm/QOK3y9PeFHqn
-	 tPVMq4tfcS3JORQjfyfxvI4iZMku05MR53eY+KTTvb7H5xocb08xGp3s6lToyy8qslK2i
-	 2/gxctp4iHgSA0ogtXCFaxHLJ+jNyKkAtRn+UgILgAf8CyTtVXiX1XmWgMX6lO4AIPDj8
-	 6C8p+aMB6K3jQ+9lfDKPs0Gxq/iJLtE8sUFtN0gLZxF5ZtYZJS6J3fmi6GGkuCnrvOg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HAU8m6aX;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=B0r0frGE;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.17
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793866773;
+	b=uMtQBQBMBkhTC9xQH2dbNk/ij+JtjR+N41aqZIl7o97DTbwJNDq2M2vTdcWuGtpmT7rJ
+	 vIWXebiytsYufpg5kb4EGDgaNn+snDKaDoIOogsI2UYHBOPYk037jAfb5tXMvXKL6av3w
+	 zwzzz0ScfO64+tSZK8vAA3TVxM7ULGR5+BL1ITY6Eu7M9jJ/Su052gk3Wz8ieseX6hAXU
+	 3O69moh0MRmX7i4IcMVs8tfkIypIAR5ur1+56IIRsyJIVBHJyvJ0Fi7xHRyng6UsDCKhy
+	 m1WaOn1FwuT5LqusQ+o4W8bkjsaGKQxobFE7yR5DB1HCgOWImGvRggVVmxu7E0BeGTw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793866773;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=1ciCV+5l0i9zrEoZ6NLRIUsvaRDxV3/LTluwEuP5vMw=;
+	b=l8/c93T7T0tTFWDQ+btE7GpalQrJlEzmIMgwcl/xgbuCPGB3IF+mMb4g4QperxVPdqRk
+	 E5/KQf0frW3EF5roEGmr2lcpS7WDXvj8n33AFbDdEuKCCV8F0HYwX0F8ILBxq1GkvNhCn
+	 mPrXcldd3LmTSRbiYOUwjZNhaGkfSW2ySuMcneI4NSld2Ui4Rs0teVahHbQsA0e+4IKdr
+	 S/3mo8HPiIzoEy1cK0TUwrEu0s8Cw7QLnmNMiLRjot6tnOOB2wPyetd0UEL3gDlynchbp
+	 Ee+T4Q02dxVJpx4YtIKyqtN7/F9mwNmeBAPMfQ8/2/oDhSGNuCO1+ebb2eK84oGDW5A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=I36hk0yz;
+	arc=fail smtp.remote-ip=192.198.163.17
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E05606A326
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 07:53:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 82E05606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1049B606A326
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 08:19:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1049B606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HAU8m6aX;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=B0r0frGE
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A56TxfE4138306
-	for <sashiko-reviews@lists.linux.dev>; Thu, 5 Nov 2026 07:53:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0JvW8IF6COnoHXfD/gXX4jw2XsooyjMWzCMm0HDO8VQ=; b=HAU8m6aXJPpAcPtZ
-	qKIDkHCtzE+nEw+FZk1rvPH0jxb09vavO0jeqgmuxTRc4EKzrBcfSf7XkQs04VMu
-	QLanCBXJYWCB6zxt8d2PV5N7JLQrBelK+2vCFdC3jUzUcM07ozPnQQpOEDnY2i7c
-	yNT1J7j8ODB97GNlFvM5ZQOFX2QiHzFIHy0RJsg4yd9QPwBDGyIvQe9QUljvG2xN
-	Nj+sg2yIZNXjWJ3kefC7lSsGUSrOb9houpYh03xREhAhXb0V4/OhxPxPTzDwEiOJ
-	4V+XavhuCAS4pwKz3XPoxtsY255TzFePRk3LKHHGD26xnB0UQp2LkHSBEL0reawe
-	3BWX0g==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hrm9v0cek-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 07:53:43 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3b0a519048eso1165504a91.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 04 Nov 2026 23:53:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1793865223; x=1794470023; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0JvW8IF6COnoHXfD/gXX4jw2XsooyjMWzCMm0HDO8VQ=;
-        b=B0r0frGE5+tLKTrtHxZ4EMX6viC1OCbrTyp8XQAMOqqy0zilcUJPzSJC8ZATX+TTQF
-         n/rYtcuzXym0/2l6CCTsIh9nO17OxjWMgj86HmPCTd3wP2jfTEWr7tQIS7cFaKy324G5
-         WcoDu3LgHhkO/Bk50kzVC30aiTSgupR0C2eq62bsR6EwbO5EGwdObRmjHIN2+h7+c5oN
-         fxhyaDcRMatpT2p9D9aCbZjkZbkZWs961ireKjvP6lp8hFKbEBwLwifxWCq1L6dga1lb
-         DgO1jvgdeeH9LVrycTdXHQuAnb8ZVFkO6o1lj8JB4sZArPqQ2BNy/NWyVcu+LyIe1Iae
-         /GrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793865223; x=1794470023;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=0JvW8IF6COnoHXfD/gXX4jw2XsooyjMWzCMm0HDO8VQ=;
-        b=eza0LGOkOONI+J/Et1jReIGfVzB3vz/GlHswZszEJabNqkBl/i4xZEN/SFoxzdIqsb
-         rJea4/bnexGZGx5kCMUoR9LqAdbHDY47kUlj/1lK40fxvA7uUj/4Ocp6MJT9zHOs5Gp3
-         lKeotOwLt1KXVHK7cBMg8FLkoGdQGDb0YHOcjPjn39Yz4gjJaTfwrqyL4zJduvKn1HEG
-         sTboyY8qJBrQd+l6xIZtzNF6N4Ki0chgmwJ8AxbHiv2/nymmmVzUTTnojhg1u3hcwtJy
-         4JCKtNJArRY1LXLxS8NlZZnCS5tYVU4qFf0x9PZ83oky1i7jSuTxEq66sXxsTVa3EaPt
-         IzPA==
-X-Gm-Message-State: APuU4Z8rH7kDf11urGqrwlDpqJgCGAsyKqQr+Vv6DorxidoD78auHMtF
-	PmGPiFM4hJDQpbxx98XkH7OqyEiuwQ0xGNG8A16EhZmvLDDFrXEsRB1adxQPxIsJmyQYRgNqKlh
-	7Emmc7dyRjMNZOkCnMXluXDcX5lUqsfVRdEr/bCngSHWs5/i92avv3kGEFk16TnccdoobBxHXr5
-	wB01w=
-X-Gm-Gg: AYBFou2T54WNKoYpq1zBmA8isi9bmlc+WDTshocFVblC5CwWLpab1aM2jX/TJyQV5/y
-	xOmDLEcnVU/whJz8FNSqC9ue4TgzkIuPoDI9AOKuBVAna82uvfn9nfKEBbvRYedcpNInwiXIQY0
-	gSs2NiKp76HC+8I0t9AlTToUB47TCGf8GKne6+thuV7oP3Yf+OVj+9hZVAFxX0ppscntCmAPHsn
-	I4Xj4QspkoTtVZuVBsmIDXIdxJu0PMD5ghYoAcPjpLDKKeNMrbau5hZ9YbDy3NVjupCnW0IgNPh
-	5cbQvzA4QFm3PQEmjQtJxCrGkX/VwtS3hLvCiTt4fwPj7fv8FfMf8mqQNan6lpCrFxaI2OsJrmm
-	lbDiRdb0Rp77xDs+45IQbsj/H1tq7iQEWdqZlTKZQLGxG2yeLvkJ3MTSJWvlOTTMzlFblfpnMc9
-	EnFg==
-X-Received: by 2002:a17:90b:380c:b0:3ab:3437:554f with SMTP id 98e67ed59e1d1-3ae89749415mr15111290a91.29.1793865222672;
-        Wed, 04 Nov 2026 23:53:42 -0800 (PST)
-X-Received: by 2002:a17:90b:380c:b0:3ab:3437:554f with SMTP id 98e67ed59e1d1-3ae89749415mr15111272a91.29.1793865222024;
-        Wed, 04 Nov 2026 23:53:42 -0800 (PST)
-Received: from [10.217.199.117] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cdb46443d6esm1892088a12.2.2026.11.04.23.53.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 23:53:41 -0800 (PST)
-Message-ID: <343e9ddb-3233-432c-998e-c60310403de9@oss.qualcomm.com>
-Date: Thu, 5 Nov 2026 13:23:37 +0530
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=I36hk0yz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793866773; x=1825402773;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=dvQ+0JdSVT8fqMCSXYtYPQ6UFNgysrTcm4Og3+Dne5k=;
+  b=I36hk0yzsLTH1MYxEVCGRVOf2sEcLBwm8dpMNKpKaYV4iz6wGZbQR+/g
+   tLKRxGV6M6a1Ru1tWVgNp/TEfPClmTPfcpUFGD9DcidUfJQcT+sbsVvCE
+   9DQoJysNCito4dBhQJR6Z2s4/4DaGlXuZquHrSX623rpYfUji8jyKV04C
+   T15orlSHHbR9Hs9tZJcBfQcJyOSzDg+n7zQiuYjlHtxi5dGBQz0ucjiLv
+   i7gfnzYsMUSF7ztQ+jUxZedGhtQmEbuj0OX/4RAc5ZemBhDYvUF9xFL8N
+   TpNzo4P5Rsa+AcH3pM7w27FEC2GuCTjv7lXImoYPh2X7XqSNUsISZrhhv
+   A==;
+X-CSE-ConnectionGUID: Zxhr47CWRDK8u7VEDa7YAw==
+X-CSE-MsgGUID: 2hvrSJ1/TDWGikBIaHe8MA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2649926"
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="2649926"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 00:18:57 -0800
+X-CSE-ConnectionGUID: K0yzoWqZR6yGiTG2hGVqtA==
+X-CSE-MsgGUID: GUUjI8lCRvq4FdfWg8uU6w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
+   d="scan'208";a="7060518"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 00:18:56 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Thu, 5 Nov 2026 00:18:55 -0800
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Thu, 5 Nov 2026 00:18:55 -0800
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.68)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Thu, 5 Nov 2026 00:18:55 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Hu6kQGbI3pVnF8WvWAveMOWmRIXc/h0JynGQkFypwYDIrHdcxtiW+JPdZxfj2rh4i1Xrv0EIil5FWjMmwIWLYUwwvVFD19MBM95noF0YMd9icLTvAB7Mgk1bpD/hZxMu+RsvmHg6GveGOSLfqAdUT3GJvlcQ7JnEaK+QjpOdGSrOKw/LfDlfMgcJlV3kzv/hp/v44RLxDuVRGFTIUuTJEnNJJkB6vcnuIJcWCgX4KYzI4kJbBiguPvG1ouP0jYr8s4rEMAS+cgaVGqKy6hEmyhQYD8mtTnM7WFOTy67d4a23DUXlcNM9NuUHNAoPUXoaeAwBwgcerlxlPPtYBurEbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1ciCV+5l0i9zrEoZ6NLRIUsvaRDxV3/LTluwEuP5vMw=;
+ b=P6DrnA7EISUm7xwzClWaTCQ0CDfo+QpFT+0eKv9GAYL1XjzFV7OMpRWosa3kJuXSqAGGK1/3u/ohqkgtN2o9UwzcZIeUWjoE+t0CCoJ0nelpwOnCIINwbH8884F6xkIcmXUUVV6VfURcMHmv+OLDBWHKHqrGMNn4dJLg85el9yBXIjwM3ERGTvBQpytEtoW/xFwbzKvNLqekgioaYszjkTeZbras+jAMcS3iYpH084t/uVY3XZuMfZyf6Ks84nQB/o66l2s3zK3k/2DX+OOfOzIA3W4bzilRdgpwcGQtX/mC23F3wKgu3n04k51kDy6aNzoB+fZl3UFmKJr7snD9/A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA0PR11MB7862.namprd11.prod.outlook.com (2603:10b6:208:3dc::8)
+ by DS7PR11MB7805.namprd11.prod.outlook.com (2603:10b6:8:ea::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Thu, 5 Nov 2026
+ 08:18:48 +0000
+Received: from IA0PR11MB7862.namprd11.prod.outlook.com
+ ([fe80::3b4e:43a6:6e22:22f]) by IA0PR11MB7862.namprd11.prod.outlook.com
+ ([fe80::3b4e:43a6:6e22:22f%5]) with mapi id 15.21.0592.009; Thu, 5 Nov 2026
+ 08:18:48 +0000
+Message-ID: <b312b52c-d7a9-4abd-b326-a6f83a94c2f1@intel.com>
+Date: Thu, 5 Nov 2026 13:48:40 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] drm/xe/cper: Support software CPER records
+To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
+References: <20261029132609.907017-8-mallesh.koujalagi@intel.com>
+ <20261029132609.907017-12-mallesh.koujalagi@intel.com>
+ <sashiko-outbox-189398@kernel.org>
+Content-Language: en-US
+From: "Mallesh, Koujalagi" <mallesh.koujalagi@intel.com>
+In-Reply-To: <sashiko-outbox-189398@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5P287CA0284.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:221::13) To IA0PR11MB7862.namprd11.prod.outlook.com
+ (2603:10b6:208:3dc::8)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,418 +133,245 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] thermal: add hardware-binning trip-point filtering
- support
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261031-thermal_bin-v2-0-d76fd073ae98@oss.qualcomm.com>
- <20261031-thermal_bin-v2-2-d76fd073ae98@oss.qualcomm.com>
- <sashiko-outbox-191983@kernel.org>
-Content-Language: en-US
-From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-191983@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDAzMSBTYWx0ZWRfX39KUyPmi1EfO
- TOmr943NAMObt2W23lwAsSKI+fPw56F7dyA+Dya1pu1l5RCZstEQm6aqBmoe8bUrhtk1kfvPItQ
- rz8LwIVCW0h0L+D8YPABelCBOLvZsu8=
-X-Authority-Analysis: v=2.4 cv=KrHYSmWN c=1 sm=1 tr=0 ts=6aec3607 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=vQfh6QIPCeOzBlGDQxcA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDAzMSBTYWx0ZWRfXyHFAfRGUDy1p
- VNfr3H8JhG9FrKYTCHL7T5SXXcXYiUS2QLmQQNv4hrpbv1rKXRcG9KQrLau2apPDkxa+YqeSpmZ
- ozFUW2vPD37S2T9drYN9EDXrOcsJQViemQPV03FGmYuBpgm6BT2oYKxLafxlkOYR4rXHpVRLRMZ
- Olitgec/0fkc6yebV6/2+oQsemGK82ly2xx8x/qdRtclvG4bC0LPHhFDN77AtdYqX9tOkJe7DDJ
- q0DcDKLahnm04I22p8yKqNL8hI2jGomF9PpTabzQ9hjsnUXBCa/7JhpcTNs/UH2W/e+S1tqPDjY
- jg55IAvCZe8u7nWVv2VSydQ6S4TaRYv5D2dulTFSBivENI2/edsYi6AlUoo90/9ssnrp+t2g4v8
- 71Rdno+275GN72Voa8U5E2v51uyCQ8MU/SLV+m99HUTYUiZl5NEX/7VbuFeQfEBMW85J+G2RhJJ
- IiAMnaTc0P4/Phq01fA==
-X-Proofpoint-GUID: 9QWFysq9jJdglhHwrcEmLHR4mqnlW1AQ
-X-Proofpoint-ORIG-GUID: 9QWFysq9jJdglhHwrcEmLHR4mqnlW1AQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-05_02,2026-11-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0 suspectscore=0
- spamscore=0 phishscore=0 impostorscore=0 clxscore=1011 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611050031
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR11MB7862:EE_|DS7PR11MB7805:EE_
+X-MS-Office365-Filtering-Correlation-Id: ecc3e036-e04a-4004-142c-08df3b156aad
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|11063799006|261022105027099003|261021121427099003|5023799004|261022075727099003|4143699003|56012099006|261009223027099003|261028144727099003|261102123227099003|261026140227099003|261026121527099003|10067099003|22082099003|6133799003|18002099003;
+X-Microsoft-Antispam-Message-Info: BTKHaLbnvqjWqXDfMXQlZA/H9V4vGxb2sDio0KZB8PD440zmErDibhSJaFBNmVl6iA22eq8Synve+FlhTg2VuztX9wq/2kYdrjD1DxHrmGmbgy4BJp2BkPBUPzDjYq/+vy47sXo4TZlrKT2QkoOp96b1U2QhAPRQxFkm3xbf1EbQX5vTVKpKxAVDP8Sta0Uuli3A1U6tGZk88mjbCKJNabDKDG7JlBgF35iwLIf2wKTntMZFvuDdy4N9IATBN1DbwJ2ypEvd/rXZaNEkt5mcS5ErX3Up3bJhcf+fJsftox7mbVKqrHgTWFqXqzlx8hJREX7LjzS4838vyky7DsEifnJwFjVDEVD50ZfEK+OsvSTOi0YeVlRGaB2JB68sMde2dciMLEnMjH19r0YcSnse62GtOG4KvwC2P/PXSUvCw5LBpd+WNWnRiDmENIDNcyOMQjLPDIVVPGBbpuz0HDZzLQMMi4AnZ/G2Hkj78XxvrfXP8sQmwoSyPkXMQiDt4BAoLhKUrRkwr5x/tTvnt+6/E19H4ZnM5ie4E4rgwLoHJwlqKIRi8yrOyhfrnvSVtIF9UmywODhuZnqH8ZAdVNkiBtaXvx24E8ZPbPWI6BJsDmMmDaBstWl7U0tux3dSmo+tN9YvQoOnVJldRonL03VV9PIsTCVObjPGER4f0dObQDs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR11MB7862.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(11063799006)(261022105027099003)(261021121427099003)(5023799004)(261022075727099003)(4143699003)(56012099006)(261009223027099003)(261028144727099003)(261102123227099003)(261026140227099003)(261026121527099003)(10067099003)(22082099003)(6133799003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eXNScHY4TStqamtyNGhvMzVjN1ZJc0NtclBQUzBDWjh2ajd4SmFoQ1lJbXdw?=
+ =?utf-8?B?ZWcyLzBJdXROcFRGM0tuVFl1MFIwMktWZXpWOGFGWGZ1d2VOQUV1QVBndEp6?=
+ =?utf-8?B?dCszTzhsMjFGcEloQ3NqZnh4UFNUT3RENDBOcDZ3aTRmNFNLRVUvNXU0STFx?=
+ =?utf-8?B?TjF1ZTM0TkVrMU5KSEhlSlhBTENQQXg2NG9xRzZnVmlMOS9OZEZPYzFKenNL?=
+ =?utf-8?B?b01nY0JlRFBjYmluYy9YcWhZb3pOcVZodnRsNllUa256eXNpM2h4VVZXR2I1?=
+ =?utf-8?B?R3lsRXZBUkhZUDZMT0dKeGR3RVIvNzJic3RPdGNQSk84eGk4TnZOZnRmMC9P?=
+ =?utf-8?B?LzkvTHBkQndEYTlHL1RLblc0aWJJbW94aUtxVHc1NTNkUkl4OSthaHFNS2JX?=
+ =?utf-8?B?S1prVWFoL3hMTXBhT1lBM1VBY1lWWkt6ZXhLdHcyNFhZV3FrZXdnMC94K0Ji?=
+ =?utf-8?B?U1ZtU1I3U1E0VmxZOWZVMnhjazViS3J4RHBsVGxFdEN0b0ZUaXdycDVMTTRE?=
+ =?utf-8?B?eEg0WnliZ0lyWE5yYTMzeWZFOThZK1FHTWljdkFxblRvM2hZaUQwc3BBbGFV?=
+ =?utf-8?B?S2cxNXVTbitBRGFmRVRNSzZmSURKR2dHeVc3Mk56VkhtK3hjQ0gyK0RueGhu?=
+ =?utf-8?B?L3hSR2c5czBKL1gvUG02YU5VNmN4NFVJcU9WWmhiQnpuYTJ6QzNtZWtobEpC?=
+ =?utf-8?B?SHVhOEV1dDQ0QW90d2h6OWUxV0JoakdqYkxBWm0xdE1JQkJiK3psNlFERDly?=
+ =?utf-8?B?NVpUamJxa3ZtMkVwTTNBMHJHdVdIWGlNV2M4cm55NWZHUUNBRWhqZ0k3UTVK?=
+ =?utf-8?B?YVJabEUrVDJLR2pIbmMyYUNpWHhqdHpEa1NSZDU5WVR6WTFVNnpOVm1Cc0J1?=
+ =?utf-8?B?eWo4SWJyK3FCTSt1R1pqaWlnM0oyVW81ZjhZVHdsRURvOGhoWnQ1Nlo3UXdi?=
+ =?utf-8?B?SkU2Q2g1Z1dkeWVYdEw3TEZ4Sk13amJMU2NpcWRSd3gzWS9iamtPWVBET2pu?=
+ =?utf-8?B?UmNyMVI4Sk1yUGVzM0tWeHRhZHVQQ0kxOStLUUN5RFlIb2xnb1FQcjRUOW9J?=
+ =?utf-8?B?V0M0UmR1N3VBUEJDZUxLNlVTOThwZVZmci9INGl4eHFnNm8wbmtsNm5CaWc4?=
+ =?utf-8?B?b3VaQkV3MDVWSnAvRit4SWg5RXUxSnIrNkRoUUdDYmgybUwrRGZyaHJlWXU3?=
+ =?utf-8?B?UTdkZ3BJY1c5T2lQWnZQWXVBMzl1RkZRMnlpbG03eE90M09PT1dxcnlGV3Jx?=
+ =?utf-8?B?V0RaTmhxYS9Pd28xaGcxdG00d0FYbHJBaFJFMlY1MGphMWhPbzJnNklnaXFB?=
+ =?utf-8?B?VzJFQVJpSkxEREpJeEFzWjFkWEN0UTRkb09Yb01OQWFFejFZdkJHVXU1Z1Ex?=
+ =?utf-8?B?Qkh1enRPYTVaQ1d0RGVPYUlqWFZzR2tKM2VGclY3eE9hVGJoVTIySkRXK0Rx?=
+ =?utf-8?B?TW51ZmcvQ0lBMHZtWmZpYm5QN085cFEwVjM3M2E0dFg1WnpWakpONEh3UWVa?=
+ =?utf-8?B?Tm1mNHp4ZlNOZVF2YlM0Y20wSXIzU3VTTjA5am1iR3FSNlZvZTd5aCt2d05U?=
+ =?utf-8?B?U0JtVlVWZUNuS2kvRnBxMDk3ZVlHSGxkS1Y3MW10NDhVU3FlMDM0ZHFwcWhU?=
+ =?utf-8?B?ZC9HYzdzSzNMV0lFWlc0anNZVW9ZeTJFeVJjNDI0Z3p6b3ZnWEdKaHdySzNV?=
+ =?utf-8?B?T3dEVEsyS21sZkdQL2w2dllQL2E4Ui9TNGV2d0RlV3I1U3VHdk1LSnQzQmlm?=
+ =?utf-8?B?UFdDMk1PYkluTTlsNi9PRG5NS0x1MzZOV1dwUGVaYjZQVEtacnNXRW1Ed0ZZ?=
+ =?utf-8?B?ekFCR2xRaTdJYklLT3lzSTRFSjcwOGJreTI1UmFvTjM2OCtmYmt5dEhOVmhF?=
+ =?utf-8?B?UWpOby9BNEIzVk84SG1BVlVoa09tMFVWVzFESDc1anVzTWVBMU92RlREcHRL?=
+ =?utf-8?B?TmtSOGUzSHVmUFFKWGJjZVJMU1JQb0FlTUUzRnZLcE5qdkxDWmxSWjVkZlNy?=
+ =?utf-8?B?YXBpSExkM1JobGRXVW5BOXVaM2tzWjRzWnlKUFMyeWlQR2IyQVhEbTBpUFZY?=
+ =?utf-8?B?bTBlTWxrdjhnM1ViQ0VPQ2xScmV5bDBHbzBFM0VLbUJiNm1OVzJvcWJxTmhz?=
+ =?utf-8?B?YS8wRlVpZHkvZ1lZaTh5QTBBdnVoQ2NwRHA5cU1oUGRFR3pVK2hoWXQwRCty?=
+ =?utf-8?B?a1dTdm1RUnJmTHBvZUlnSzFKdUtHOXdvWmhFWTFqQjFXNERNZ00wcnNoM0FO?=
+ =?utf-8?B?cjBRdndpbVFyUTJHVHduWkR3Y09YK2QwdEhyYWlzUytTR0sxakN1NlUwWnJ1?=
+ =?utf-8?B?ank1RG5hd0IxUlJ4ejhJcFhpdGxMaUgyam1GUXFJakxCL3pVUVBOaG9JdUJh?=
+ =?utf-8?Q?QbKHwD1E0SAkyU/g=3D?=
+X-Exchange-RoutingPolicyChecked: zFLook2fAxf8T60Uaj9AqyRbVf0fD2JwH7QK6CHGjSdMfv2ctejHNwpNG2MNXIEmOv5I0ACnrfuD1FP4KzItMgxVGq8emfKN2QwEMsv1Imp7WjUbCw1z+8o2WkyhbE/aLCoLmLFO2eXh/qQTRIE0VaWjHM/yMs8dezxLunSRoXaw3I7pNjR8ay0nE+ly2wLfFr3/Rhk8egd+Eu8Gg9rwAgaItaI38dxoLCcGXccrip8G4fFTwn0S4dC/ukZoP3TOCeykNwEA0xQvNNjzE9sZCbkmFURVcPjy6ywXzsImXAlygpWBxyCJgG+MOQYNhOBvFHHwTgcnAwvjjpVO2XkO3A==
+X-MS-Exchange-CrossTenant-Network-Message-Id: ecc3e036-e04a-4004-142c-08df3b156aad
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7862.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 08:18:48.1449
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: buBOmQ5tPXYc38W89q814iCYW8tKy9tQoMMLaR2Im9rY3ieptd1tEz8cd56DnE5J947yrlNsDzERwqeh8wLOHFoyqP7+OcgYpJpTXxYKMnU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB7805
+X-OriginatorOrg: intel.com
 
 
-
-On 10/31/2026 7:10 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] thermal: -ENODEV collision in thermal_of_trips_init() masks bad trip types
-> - [Low] thermal: redundant hw-bin matching and dead code in trip temperature parser
-> - [Low] thermal: duplicated devres logic in devm_thermal_of_zone_register_with_bin()
+On 29-10-2026 07:07 pm, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] drm/xe/cper: sleeping in atomic context in cper_emit_sw_err()
+> - [High] drm/xe/cper: NULL pointer dereference in cper_emit_sw_err() when xe is NULL
 > --
-
-I will fix the -ENODEV collision by returning -EINVAL for invalid trip
-types, so -ENODEV is only used for intentionally skipped hw-bin trips.
-The duplicate hw-bin matching is intentional, the first check filters
-unsupported trips, while the second selects the matching temperature-bin
-entry. The devres comment looks like a cleanup/refactoring suggestion
-rather than fix.
-
-> 
-> commit 88b6a2a4f7fe7c6179c38cf14f96ebaa3d58c33a
-> Author: Amit Kucheria <amit.kucheria@oss.qualcomm.com>
-> 
-> thermal: add hardware-binning trip-point filtering support
-> 
-> This commit adds Device Tree parsing support for the thermal-hw-bin and
-> temperature-bin properties to filter trip points and select per-bin trip
-> temperatures based on SoC hardware version information. It also introduces
-> devm_thermal_of_zone_register_with_bin() so platform sensor drivers can pass
-> decoded fuse bitmasks during thermal zone registration.
-> 
->> diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
->> index fe47d74b7219e..c5ec7d2a38caf 100644
->> --- a/drivers/thermal/thermal_of.c
->> +++ b/drivers/thermal/thermal_of.c
->> @@ -60,18 +60,165 @@ static int thermal_of_get_trip_type(struct device_node *np,
->>   	return -ENODEV;
->>   }
->>   
->> +/*
->> + * thermal_of_match_hw_bin_group - test one thermal-hw-bin sub-group
->> + * @np:     device node containing the property
->> + * @hw:     hardware binning info (must be non-NULL)
->> + * @levels: number of words per sub-group, equal to hw->supported_hw_bin_count
->> + * @group:  sub-group index to test
->> + *
->> + * Returns true if every word in sub-group @group has a non-zero bitwise
->> + * AND with the corresponding hw->supported_hw_bin[] entry.  The caller is
->> + * responsible for ensuring @group < total-cells / @levels.
->> + */
->> +static bool thermal_of_match_hw_bin_group(struct device_node *np,
->> +					  const struct thermal_hw_bin_info *hw,
->> +					  unsigned int levels, unsigned int group)
->> +{
->> +	unsigned int j;
->> +	u32 val;
->> +
->> +	for (j = 0; j < levels; j++) {
->> +		if (of_property_read_u32_index(np, "thermal-hw-bin",
->> +					       group * levels + j, &val))
->> +			return false;
->> +		if (!(val & hw->supported_hw_bin[j]))
->> +			return false;
->> +	}
->> +
->> +	return true;
->> +}
->> +
->> +/**
->> + * thermal_of_trip_is_supported - check if a trip node is valid for this hardware
->> + * @np:  device node for the trip point
->> + * @hw:  hardware binning info (may be NULL)
->> + *
->> + * If @hw is NULL or the trip node has no thermal-hw-bin property, the trip is
->> + * considered valid for all hardware.  Otherwise, the property is read as groups
->> + * of hw->supported_hw_bin_count 32-bit masks; the trip is valid if any group
->> + * matches (bitwise AND non-zero for every word in the group).
->> + *
->> + * Return: true if the trip is valid for the running hardware, false otherwise.
->> + */
->> +static bool thermal_of_trip_is_supported(struct device_node *np,
->> +					 const struct thermal_hw_bin_info *hw)
->> +{
->> +	unsigned int levels, ngroups, i;
->> +	int count;
->> +
->> +	if (!hw)
->> +		return true;
->> +
->> +	levels = hw->supported_hw_bin_count;
->> +
->> +	count = of_property_count_u32_elems(np, "thermal-hw-bin");
->> +	if (count == -EINVAL)
->> +		return true;
->> +	if (count < 0) {
->> +		pr_warn_once("%pOF: error reading thermal-hw-bin: %d\n", np, count);
->> +		return false;
->> +	}
->> +	if (count == 0)
->> +		return true;
->> +
->> +	if (count % levels) {
->> +		pr_warn("%pOF: thermal-hw-bin length %d not a multiple of supported_hw_bin_count %u; disabling trip\n",
->> +			np, count, levels);
->> +		return false;
->> +	}
->> +
->> +	ngroups = count / levels;
->> +	for (i = 0; i < ngroups; i++)
->> +		if (thermal_of_match_hw_bin_group(np, hw, levels, i))
->> +			return true;
->> +
->> +	return false;
->> +}
->> +
->> +/**
->> + * thermal_of_trip_read_temperature - read trip temperature, with bin support
->> + * @np:   device node for the trip point
->> + * @hw:   hardware binning info (may be NULL)
->> + * @temp: output temperature in millicelsius
->> + *
->> + * Tries the scalar 'temperature' property first.  If absent, falls back to
->> + * 'temperature-bin', selecting the entry whose corresponding thermal-hw-bin
->> + * sub-group matches the running hardware.  Returns -ENODEV if temperature-bin
->> + * is present but no sub-group matches (caller should skip this trip).
->> + *
->> + * Return: 0 on success, negative errno on failure.
->> + */
->> +static int thermal_of_trip_read_temperature(struct device_node *np,
->> +					    const struct thermal_hw_bin_info *hw,
->> +					    s32 *temp)
->> +{
->> +	unsigned int levels, ngroups, i;
->> +	int count_hw, count_temp;
->> +	s32 t;
->> +
->> +	if (!of_property_read_s32(np, "temperature", &t)) {
->> +		*temp = t;
->> +		return 0;
->> +	}
->> +
->> +	count_temp = of_property_count_elems_of_size(np, "temperature-bin",
->> +						     sizeof(u32));
->> +	if (count_temp < 0)
->> +		return -EINVAL;
->> +
->> +	if (!hw) {
->> +		u32 utmp;
->> +
->> +		pr_warn("%pOF: temperature-bin requires platform hw binning info; using first entry\n",
->> +			np);
->> +		if (of_property_read_u32_index(np, "temperature-bin", 0, &utmp))
->> +			return -EINVAL;
->> +		*temp = (s32)utmp;
->> +		return 0;
->> +	}
->> +
->> +	levels = hw->supported_hw_bin_count;
->> +	count_hw = of_property_count_u32_elems(np, "thermal-hw-bin");
->> +	if (count_hw <= 0 || count_hw % levels)
->> +		return -EINVAL;
->> +
->> +	ngroups = count_hw / levels;
->> +	if (count_temp != (int)ngroups)
->> +		return -EINVAL;
->> +
->> +	for (i = 0; i < ngroups; i++) {
->> +		if (thermal_of_match_hw_bin_group(np, hw, levels, i)) {
->> +			u32 utmp;
->> +
->> +			if (of_property_read_u32_index(np, "temperature-bin",
->> +						       i, &utmp))
->> +				return -EINVAL;
->> +			*temp = (s32)utmp;
->> +			return 0;
->> +		}
->> +	}
->> +
->> +	pr_warn("%pOF: no thermal-hw-bin sub-group matched for temperature-bin\n", np);
->> +	return -ENODEV;
->> +}
->> +
->>   static int thermal_of_populate_trip(struct device_node *np,
->> -				    struct thermal_trip *trip)
->> +				    struct thermal_trip *trip,
->> +				    const struct thermal_hw_bin_info *hw)
->>   {
->>   	u32 hysteresis;
->>   	s32 temperature;
->>   	int ret;
->>   
->> -	ret = of_property_read_s32(np, "temperature", &temperature);
->> -	if (ret < 0) {
->> -		pr_err("missing temperature property\n");
->> -		return ret;
->> +	if (!thermal_of_trip_is_supported(np, hw)) {
->> +		pr_debug("%pOF: trip skipped: no thermal-hw-bin match\n", np);
->> +		return -ENODEV;
->>   	}
->> +
->> +	ret = thermal_of_trip_read_temperature(np, hw, &temperature);
-> 
-> [Severity: Low]
-> As reported by Sashiko on v1 [1], thermal_of_populate_trip() calls
-> thermal_of_trip_is_supported(np, hw) before
-> thermal_of_trip_read_temperature(np, hw, &temperature) and returns -ENODEV
-> immediately when thermal_of_trip_is_supported() returns false.
-> 
-> When hw is non-NULL and thermal-hw-bin is valid,
-> thermal_of_trip_is_supported() already iterates through all ngroups
-> sub-groups via thermal_of_match_hw_bin_group() and only returns true if at
-> least one sub-group matches. When thermal_of_trip_read_temperature() then
-> runs for a temperature-bin trip, it re-reads thermal-hw-bin and executes the
-> same thermal_of_match_hw_bin_group() loop a second time, leaving the trailing
-> pr_warn() and -ENODEV return in thermal_of_trip_read_temperature()
-> unreachable.
-> 
-> In addition, having thermal_of_trip_is_supported() run first causes malformed
-> DT properties to be masked:
-> 
-> 1. If a trip using temperature-bin has a thermal-hw-bin property whose length
->     is not a multiple of supported_hw_bin_count (count % levels != 0) or fails
->     with count < 0 (such as -ENODATA), thermal_of_trip_is_supported() returns
->     false. That causes thermal_of_populate_trip() to return -ENODEV and
->     thermal_of_trips_init() to silently skip the trip instead of reaching the
->     -EINVAL return in thermal_of_trip_read_temperature().
-> 
-> 2. In thermal_of_trip_is_supported(), of_property_count_u32_elems(np,
->     "thermal-hw-bin") returns -EINVAL both when the property is absent and
->     when its byte length is not a multiple of sizeof(u32). Checking for
->     count == -EINVAL (as well as count == 0) and returning true treats a
->     non-u32-aligned or empty thermal-hw-bin property as matching all hardware.
-> 
-> Could the thermal-hw-bin lookup and sub-group matching be consolidated into a
-> single helper so each trip node is validated and matched once, and malformed
-> properties return -EINVAL?
-> 
->> +	if (ret)
->> +		return ret;
->>   	trip->temperature = temperature;
->>   
->>   	ret = of_property_read_u32(np, "hysteresis", &hysteresis);
->> @@ -94,7 +241,9 @@ static int thermal_of_populate_trip(struct device_node *np,
->>   	return 0;
->>   }
->>   
->> -static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *ntrips)
->> +static struct thermal_trip *thermal_of_trips_init(struct device_node *np,
->> +						  int *ntrips,
->> +						  const struct thermal_hw_bin_info *hw)
->>   {
->>   	int ret, count;
->>   
->> @@ -114,9 +263,12 @@ static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *n
->>   
->>   	count = 0;
->>   	for_each_child_of_node_scoped(trips, trip) {
->> -		ret = thermal_of_populate_trip(trip, &tt[count++]);
->> +		ret = thermal_of_populate_trip(trip, &tt[count], hw);
->> +		if (ret == -ENODEV)
->> +			continue;
->>   		if (ret)
->>   			return ERR_PTR(ret);
->> +		count++;
->>   	}
-> 
-> [Severity: Medium]
-> Does treating -ENODEV as a skipped trip here mask invalid trip types in the
-> device tree?
-> 
-> Later in thermal_of_populate_trip(), thermal_of_get_trip_type() is called:
-> 
-> drivers/thermal/thermal_of.c:thermal_of_populate_trip() {
-> 	...
-> 	ret = thermal_of_get_trip_type(np, &trip->type);
-> 	if (ret < 0) {
-> 		pr_err("wrong trip type property\n");
-> 		return ret;
-> 	}
-> }
-> 
-> When a trip node's type string does not match any entry in trip_types[],
-> thermal_of_get_trip_type() returns -ENODEV. Previously,
-> thermal_of_trips_init() treated that -ENODEV return as a fatal error and
-> aborted thermal zone registration with ERR_PTR(-ENODEV).
-> 
-> Because thermal_of_trips_init() now continues on -ENODEV to skip unmatched
-> hardware-bin trips, an unrecognized trip type property will also be ignored
-> after partially writing tt[count].temperature and tt[count].hysteresis,
-> registering the thermal zone without that trip point instead of failing
-> registration. Should thermal_of_get_trip_type() return -EINVAL on an
-> unrecognized type, or should hardware-bin filtering use a distinct return
-> value?
-> 
+>
+> commit c16a87d05ae708e1a17ac24623a75a82d558972b
+> Author: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+>
+> drm/xe/cper: Support software CPER records
+>
+> This commit adds support for handling software SIGIDs in xe_cper_emit() by
+> formatting the log message and emitting driver-notification CPER records via
+> cper_emit_sw_err().
+>
+>> diff --git a/drivers/gpu/drm/xe/xe_cper.c b/drivers/gpu/drm/xe/xe_cper.c
+>> index e802f534eb45a..ec61605d0a314 100644
+>> --- a/drivers/gpu/drm/xe/xe_cper.c
+>> +++ b/drivers/gpu/drm/xe/xe_cper.c
 > [ ... ]
-> 
->> @@ -510,6 +679,46 @@ struct thermal_zone_device *devm_thermal_of_zone_register(struct device *dev, in
+>
+>> @@ -239,6 +246,37 @@ static void cper_emit_hw_err(struct xe_device *xe, int cper_sev, enum xe_sigid s
+>>   	xe_cper_emit_counter(xe, cper_sev, sigid, counter, &response);
 >>   }
->>   EXPORT_SYMBOL_GPL(devm_thermal_of_zone_register);
 >>   
->> +/**
->> + * devm_thermal_of_zone_register_with_bin - register a thermal zone with hardware binning info
->> + *
->> + * Like devm_thermal_of_zone_register(), but passes @hw_bin_info to the trip-point
->> + * parser so that trips can be filtered and per-bin temperatures selected at
->> + * zone registration time.  Use this when fuse values are read before zone
->> + * registration (e.g. in a platform driver's probe function).
->> + *
->> + * @dev:         device structure pointer to sensor
->> + * @id:          the sensor identifier
->> + * @data:        private data stored in the thermal zone 'devdata' field
->> + * @ops:         ops structure associated with the sensor
->> + * @hw_bin_info: hardware binning info for trip filtering (may be NULL)
->> + */
->> +struct thermal_zone_device *
->> +devm_thermal_of_zone_register_with_bin(struct device *dev, int id, void *data,
->> +				       const struct thermal_zone_device_ops *ops,
->> +				       const struct thermal_hw_bin_info *hw_bin_info)
+>> +#define XE_CPER_SW_MSG_MAX	256
+>> +
+>> +static size_t cper_format_sw_msg(struct va_format *vaf, char *buf, size_t size)
 >> +{
->> +	struct thermal_zone_device **ptr, *tzd;
->> +
->> +	ptr = devres_alloc(devm_thermal_of_zone_release, sizeof(*ptr),
->> +			   GFP_KERNEL);
->> +	if (!ptr)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	tzd = thermal_of_zone_register_with_bin(dev->of_node, id, data,
->> +						ops, hw_bin_info);
->> +	if (IS_ERR(tzd)) {
->> +		devres_free(ptr);
->> +		return tzd;
->> +	}
->> +
->> +	*ptr = tzd;
->> +	devres_add(dev, ptr);
->> +
->> +	return tzd;
+>> +	return scnprintf(buf, size, "%pV", vaf) + 1;
 >> +}
->> +EXPORT_SYMBOL_GPL(devm_thermal_of_zone_register_with_bin);
-> 
-> [Severity: Low]
-> This isn't a bug, but there are a few small duplication and documentation
-> items worth cleaning up:
-> 
-> 1. devm_thermal_of_zone_register_with_bin() duplicates the devres_alloc(),
->     error handling, and devres_add() body of devm_thermal_of_zone_register().
->     Could devm_thermal_of_zone_register() simply call
->     devm_thermal_of_zone_register_with_bin(dev, sensor_id, data, ops, NULL),
->     which would also remove the need for the static thermal_of_zone_register()
->     wrapper?
-> 
-> 2. In the kernel-doc comment for devm_thermal_of_zone_register_with_bin(),
->     the function description is placed before the @argument list instead of
->     after it, and a Return: section is missing (which triggers a kernel-doc
->     warning under W=2 builds).
-> 
-> 3. Documentation/driver-api/thermal/hardware-binning.rst states that when a
->     trip uses temperature-bin without bin info:
-> 
->       If a trip uses ``temperature-bin`` but no bin info has been provided for the
->       zone, the core cannot select an entry; it warns once and falls back to the
->       first ``temperature-bin`` value.
-> 
->     However, thermal_of_trip_read_temperature() uses pr_warn() rather than
->     pr_warn_once(), so it warns for every trip node.
-> 
-> 4. In MAINTAINERS:
-> 
->       F:	Documentation/driver-api/thermal/
->       +F:	Documentation/driver-api/thermal/hardware-binning.rst
-> 
->     Is the new file entry needed when the directory entry right above it
->     already covers Documentation/driver-api/thermal/?
-> 
-> [1] https://lore.kernel.org/r/20261002-thermal_bin-v1-2-5a29be7e8ec5@oss.qualcomm.com
-> 
+>> +
+>> +static void cper_emit_sw_err(struct xe_device *xe, int cper_sev, enum xe_sigid sigid,
+>> +			     u32 component, u32 location, const void *data,
+>> +			     struct va_format *vaf)
+>> +{
+>> +	struct xe_cper_intel_hdr ihdr = {};
+>> +	struct xe_cper_driver_error_class *driver = &ihdr.driver;
+>> +	u64 timestamp = ktime_get_boottime_ns();
+>> +	char msg[XE_CPER_SW_MSG_MAX];
+>> +	size_t msg_len;
+>> +
+>> +	might_sleep();
+>> +
+>> +	driver->error_type = cper_sev;
+>> +	driver->error_component = component;
+>> +	driver->tile = location;
+>> +	if (IS_ERR(data))
+>> +		driver->cause = -PTR_ERR(data);
+>> +
+>> +	msg_len = cper_format_sw_msg(vaf, msg, sizeof(msg));
+>> +
+>> +	cper_init_intel_hdr(xe, timestamp, sigid, 1, &ihdr);
+>> +	cper_record_emit(xe, cper_sev, &INTEL_CPER_NOTIFY_DRV_ERROR, &ihdr, msg, msg_len);
+>> +}
+> [Severity: High]
+> Can cper_emit_sw_err() sleep in atomic context when software SIGIDs are
+> logged?
+>
+> In drivers/gpu/drm/xe/xe_log.c, __xe_log_emit() unconditionally calls
+> log_emit_cper() -> xe_cper_emit(). With this change, software SIGIDs are
+> routed to cper_emit_sw_err(), which calls might_sleep() and then calls
+> cper_record_emit() in drivers/gpu/drm/xe/xe_cper.c:
+>
+>      total_len = sizeof(struct xe_cper_nonstd_record) + einfo_len;
+>      rec = kzalloc(total_len, GFP_KERNEL);
+>
+> However, several paths in the driver emit software SIGID logs from hardirq
+> context, while holding spinlocks, or with preemption disabled:
+>
+> 1. In drivers/gpu/drm/xe/xe_guc_ct.c, xe_guc_ct_fast_path() runs from the
+> interrupt handler under xe->irq.lock and ct->fast_lock:
+>
+>      spin_lock(&ct->fast_lock);
+>      do {
+>          len = g2h_read(ct, ct->fast_msg, true);
+>          if (len > 0)
+>              g2h_fast_path(ct, ct->fast_msg, len);
+>      } while (len > 0);
+>      spin_unlock(&ct->fast_lock);
+>
+> Within this critical section (as well as in g2h_release_space(),
+> dequeue_one_g2h(), and __guc_ct_send_locked() while holding ct->fast_lock),
+> g2h_read() -> ct_corrupted() and g2h_fast_path() -> __g2h_release_space()
+> call xe_log_err() for the GuC component:
+>
+>      xe_log_err(ct_to_gt(ct), GUC, err, "CT: %pV", &vaf);
+>
+> 2. In drivers/gpu/drm/xe/xe_pagefault.c, xe_pagefault_handler() (called from
+> hardirq context via xe_guc_ct_fast_path()) and xe_pagefault_queue_pop() hold
+> pf_queue->lock and call xe_pagefault_queue_add():
+>
+>      guard(spinlock_irqsave)(&pf_queue->lock);
+>
+>      empty = xe_pagefault_queue_empty(pf_queue);
+>      lpf = xe_pagefault_queue_add(pf_queue, pf);
+>
+> When the queue is full, xe_pagefault_queue_add() calls:
+>
+>      if (WARN_ON_ONCE(xe_pagefault_queue_full(pf_queue))) {
+>          xe_log_err(xe, PAGEFAULT, -ENOSPC, "Queue full!\n");
+>          return NULL;
+>      }
+>
+> 3. In drivers/gpu/drm/xe/xe_wedge.c, xe_wedge_declare() is documented as safe
+> for atomic callers and is invoked from hardirq context via
+> dg1_irq_handler() -> xe_mert_irq_handler() -> mert_handle_cat_error():
+>
+>      xe_log_err_fatal(xe, WEDGED, -EIO, "Device declared wedged!\n");
+>
+> 4. In drivers/gpu/drm/xe/xe_pcode.c, xe_pcode_request() disables preemption
+> around pcode_try_request() -> pcode_mailbox_rw() -> __pcode_mailbox_rw() ->
+> pcode_mailbox_status(), which logs PCODE errors via xe_log_err():
+>
+>      preempt_disable();
+>      ret = pcode_try_request(tile, mbox, request, reply_mask, reply, &status,
+>                              true, 50 * 1000, true);
+>      preempt_enable();
+I'll handle in next revision.
+>> +
+>>   /**
+>>    * xe_cper_emit() - Emit a CPER record for a SIGID log entry
+>>    * @xe: The &xe_device
+>> @@ -272,7 +310,8 @@ void xe_cper_emit(struct xe_device *xe, int cper_sev, enum xe_sigid sigid,
+>>   		return;
+>>   	}
+>>   
+>> -	/* TODO software CPER */
+>> +	if (is_sw_sigid(sigid))
+>> +		cper_emit_sw_err(xe, cper_sev, sigid, component, location, data, vaf);
+>>   }
+> [Severity: High]
+> Could this dereference a null xe pointer when xe_cper_emit() is called during
+> early PCI probe?
+>
+> In drivers/gpu/drm/xe/xe_log.c, log_emit_cper() resolves the device pointer
+> via xe_any_to_xe():
+>
+>      xe_cper_emit(xe_any_to_xe(pdev), cper_sev, sigid,
+>                   component, location, data, len, vaf);
+>
+> When a struct pci_dev pointer is passed to the logging macros before
+> pci_set_drvdata() has been called in __xe_pci_probe(), pdev_to_xe_device(pdev)
+> returns NULL. This happens in drivers/gpu/drm/xe/xe_pci.c in xe_pci_probe()
+> when a device ID is blocked or if __xe_pci_probe() fails during early setup
+> (such as in devres_open_group(), pcim_enable_device(), or
+> xe_device_create()):
+>
+>      if (id_blocked(pdev->device)) {
+>          xe_log_info(pdev, PROBE, "driver loading blocked for device '%04x'\n",
+>                      pdev->device);
+>          return -ENODEV;
+>      }
+>
+>      if (xe_display_driver_probe_defer(pdev))
+>          return -EPROBE_DEFER;
+>
+>      err = __xe_pci_probe(pdev, desc);
+>      if (err) {
+>          xe_log_err_fatal(pdev, PROBE, err, "driver loading failed for device '%04x'\n",
+>                           pdev->device);
+>          return err;
+>      }
+>
+> Because those probe logs use a software SIGID, xe_cper_emit() now calls
+> cper_emit_sw_err() -> cper_init_intel_hdr() with xe set to NULL, which
+> dereferences xe->drm.dev in drivers/gpu/drm/xe/xe_cper.c:
+>
+>      strscpy(ihdr->pci_bdf, pci_name(to_pci_dev(xe->drm.dev)), sizeof(ihdr->pci_bdf));
+>
+> Should xe_cper_emit() check for a null xe pointer before proceeding?
+
+Addressed in next revision.
+
+
+Thanks,
+
+-/Mallesh
 
