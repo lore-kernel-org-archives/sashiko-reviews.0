@@ -1,51 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=5.135.140.105
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.95
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793877693;
-	b=gHSPPmlYMcZWt7viyl8zR1utuA0OjkmlI8WQeeWGUv4JfguSaQSYeCdGNFc0luN9Sahn
-	 F/hrY9Shw0AW4xjAz45NnMO/CqLy97d6+WmHxa+rObarnNe3Y6bWoH9Sa7oIBSAAhWTsD
-	 U5clDvxoolDuQpAWnj63dWj5aomyM+qDtqei7zy30t4I6GOlfL4vwD3Ya7dwIvXq3+eE3
-	 9wwfmpSeoCRQ5Lwi3CCAYmQWXq62A/6IneJ/BEQnUleR13Lcrntug7CfRjxB1x71r8WT1
-	 v8VVh+NsMMBQSMYTOgwhL4ED+dwvCvD/5LVY8ZSuDZtdNosTx+quezle/46bMNQ4ibA==
+	t=1793881021;
+	b=RmqfIXMCeoraxk2w64nWZaoiKttchpy2Dn4jBLpoM88chW0kLIdsnQFucbKCA8UAhzTg
+	 F/n5eHsDbPmeeclcpM0olvhB/Rro2esnn9jvSFwrPCRvOevBpOGTccLBXhBARAwpDeKZn
+	 nVl30HDJJNYNZz0YN2PPOBe9JwSarxGB++dFEuHFmnWkbr0VtZAxVeFGgPCtNkeRzmbvA
+	 SmiKGS9isMzT9Rso7B6FCNYgnGXQcUjMo/x5l8DaAO9rEeUHeMEnAsP9NPxzZH//DiG2x
+	 U8MVm5PFaVwvq8Dgz08slDuP+QfKpIxxltiX7ks4f7Uchv7H4SFswrtqU+NHXo3dwXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793877693;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Last-TLS-Session-Version;
-	bh=2xUTtxgUZ6SEuDDCF3JUpUTBjaKWKA1OBritWDe7fg0=;
-	b=kHv0qTJkclNr10s0x7j69wVJn5pnSsbFsyE0mTyqd7VdoFoSFnM9u0y/uGdAUlJEGi/1
-	 hESOv43doieUiVYgybwpLradPpCKS9NoI8CoKiGWSIkxlXvnZEdiSyaHfyGsnOpUcYy9i
-	 /U7VIxnEutBn1yY2caCfgH1uY56QDoMvpBPNzS7o8Eqnu6RmNzilHY4KKynsjFI5IdQH+
-	 BAKS632yB3vh8PeXei2s2ZhDUefoqvD/kU9ihyt2CmTnoEZJ+9pfUTkE1b/pJqLDWJfE+
-	 ajjER62jIRS3QBR0gfMJNydE6eNxnZqEMt1Gj5W1PTWExdtGshsMFNTbsqfQUHuFeQw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793881021;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=IA2WY3yNmb+K5Fpsg52O2Iq7E8rleDjZAuLC45egiIs=;
+	b=j1Y0cddhwKMJB/FtGJSafPCS1WUH/aZSBKpn94KSCa0zOrvP0pntRNLB3C42CZS+CnHY
+	 oQ6lDdxqvmY/+u325IxMh2mwE4mGlNqCLGNbwtPNkjx/Zn1F+Q9LfZl5qDtfUwWSYHCRe
+	 W4Rsdejog4CU66CsURqYao4N9+wglKWQr/r3ru3nQaI06u2XVCo4yPk4mOkkRdoD524WV
+	 eVqT/M565CBeczAAF8Gf/BmCj7u/Ncj+bJFPg5L3ZwkoH0D1+fNWlRvNPhqhuWFZmjwEe
+	 hVqwvxlibtNfqLw70DWTMOqfEG3dOoB+rTrobjF9Xn3e7rbRC6zNdZ2AuPScZ9VOuFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cjdns.fr;
-	spf=pass smtp.mailfrom=cjdns.fr;
-	dkim=pass header.d=cjdns.fr header.i=@cjdns.fr header.a=rsa-sha256 header.s=dkim header.b=m9IF7MEr;
-	arc=none smtp.remote-ip=5.135.140.105
-Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=dsXY7XDX;
+	arc=none smtp.remote-ip=91.218.175.95
+Received: from mta0.migadu.com (out-95.mta0.migadu.com [91.218.175.95])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB1D606A339
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 11:21:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AFB1D606A339
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cjdns.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C445606EE84
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 12:16:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4C445606EE84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=cjdns.fr header.i=@cjdns.fr header.a=rsa-sha256 header.s=dkim header.b=m9IF7MEr
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5C09430D712;
-	Thu,  5 Nov 2026 12:21:22 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1793877683; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=2xUTtxgUZ6SEuDDCF3JUpUTBjaKWKA1OBritWDe7fg0=;
-	b=m9IF7MEraxgNTLtMkadwh70DlqtSAr57f6aDJq4H5kzMHeN351+m8OwbROtueGyYr0++5J
-	5wbawi3OCraz2JIPjpdXUIyuJcEwx3mc1xValDT8rI9vxU8GNVZmpHkSl5ri7aPrQgkggC
-	kWG7DmwBLrl2bMXd7/II+ohiQPDR/bGVUoTTdbGicfBXQyLiMbxUCZfX0uBTako3fj9SVL
-	nP5s5lAAOWRn3DVjA3MuykvP/WNpfduucohLI2vJ+OvlaRGF8bCKk/x6FUweRDiyJKp6xB
-	haiAmkVfSd/lm4ku87wc9r1n1yoJKylzNWofHwJ565zoW7B+AgL9kFz0wBgKtg==
-Message-ID: <6b8a44ad-2795-45f4-9248-bdd5ead0e66f@cjdns.fr>
-Date: Thu, 5 Nov 2026 12:21:20 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=dsXY7XDX
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=exIR8W8oCZROFJI2uk7aiMwrPmf06QUD4IziM5WiRos=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793881018; v=1; x=1794485818;
+ b=dsXY7XDXidksExMMGQkbhbNnDuVNSS6N91/EMbX1+1N5Xbv0rneEPY/neit1N1nZz680ixBM
+ ohJhbAJvoRq/YCUxkWhHpAXBdsF3HbYuYC0v+wA+BqX7O8dg6zVS/JO/ibkDLJxDFyTZ5IPQaU7
+ Opj/MU5i7Pq+W+GMatoefLGU=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id d4e3f83733bf5743;
+	Thu, 05 Nov 2026 12:16:58 +0000
+X-Mizu-Trace-ID: d4e3f83733bf5743
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5bff701efa5so5937e87.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 04:16:52 -0800 (PST)
+X-Gm-Message-State: APuU4Z8w3b92NUjZuFp5bKlkwWMbQmPH+fX+7ygThPkrPSI10g9PmNjM
+	jNkELanYFeWsVRUuGzHfXo9EnwwHYpUU5vFob4OUpZpm7QiGxgYbYCCqsd2SV469qJrPai+KFUJ
+	13ftNOrHfgrGZEx9s9Hyfaop/JOnmSZharHTpbokO
+X-Received: by 2002:a05:6512:2387:b0:5bf:d1d4:d678 with SMTP id
+ 2adb3069b0e04-5bffa4669efmr169831e87.1.1793881012035; Thu, 05 Nov 2026
+ 04:16:52 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -55,357 +65,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v4 5/7] net: dsa: mediatek: support MDIO switch downstream
- of MMIO switch
+References: <20261105110050.1244525-1-fuad.tabba@linux.dev>
+ <20261105110050.1244525-4-fuad.tabba@linux.dev> <sashiko-outbox-198943@kernel.org>
+In-Reply-To: <sashiko-outbox-198943@kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Thu, 5 Nov 2026 12:16:15 +0000
+X-Gmail-Original-Message-ID: <CA+EHjTy6+eybqqOoOPr0TxKfexD+gjcvpGQ-kCMmaKz2yQGiKQ@mail.gmail.com>
+X-Gm-Features: AclHuK-wbPaGOFcnKWXZun6kQfFeB-tajjKRV0aOkS7s2VVDPjtOHTnCjBx72tA
+Message-ID: <CA+EHjTy6+eybqqOoOPr0TxKfexD+gjcvpGQ-kCMmaKz2yQGiKQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] KVM: arm64: vgic-its: Don't read the pending table
+ when mapping an LPI
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261029184202.1859843-1-cjd@cjdns.fr>
- <20261029184202.1859843-6-cjd@cjdns.fr> <sashiko-outbox-191440@kernel.org>
-Content-Language: en-US
-From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <sashiko-outbox-191440@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Cc: kvmarm@lists.linux.dev, kvm@vger.kernel.org, 
+	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-
-On 30/10/2026 20:22, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] net: dsa: mt7530: broken PHY IRQs due to late mt7530_setup_mdio_irq()
-> - [High] net: dsa: mt7530: premature and re-entrant mt7530_setup_mdio() in probe
-> - [High] net: dsa: mt7530: unchecked mt7530_setup_mdio() error in mt7988_probe()
-> - [High] net: dsa: mt7530: reg_mutex lockdep recursion with downstream switch
-> --
+On Thu, 05 Nov 2026 11:23:34 +0000, sashiko-bot@kernel.org wrote:
+[...]
+> > diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
+[...]
+> > @@ -2717,9 +2714,25 @@ static int vgic_its_restore_tables_v0(struct vgic_its *its)
+[...]
+> > +        /* Enabling LPIs read the pending tables before these LPIs existed. */
+> > +        kvm_for_each_vcpu(i, vcpu, kvm) {
+> > +                if (!vgic_lpis_enabled(vcpu))
+> > +                        continue;
+> > +
+> > +                ret = its_sync_lpi_pending_table(vcpu);
 >
-> commit 51caf2efd42e68935e207fbaf1614c12f27f5efa
-> Author: Caleb James DeLisle <cjd@cjdns.fr>
+> [Severity: Medium]
+> Can calling its_sync_lpi_pending_table() here cause KVM_DEV_ARM_ITS_RESTORE_TABLES
+> to fail with -EFAULT when a vCPU with LPIs enabled has a pending table that
+> does not cover LPI INTIDs targeting other vCPUs or unmapped collections?
+
+Yes. Unlike the map-time read, this reads each LPI-enabled
+redistributor's table at the bits of LPIs targeting others. Will fix
+in v2 by skipping those LPIs.
+
+[...]
+> > +                if (ret) {
+> > +                        vgic_its_free_device_list(kvm, its);
+> > +                        vgic_its_free_collection_list(kvm, its);
+> > +                        return ret;
+> > +                }
 >
-> net: dsa: mediatek: support MDIO switch downstream of MMIO switch
->
-> This commit exports mt7530_setup_mdio(), makes it idempotent via a check on
-> priv->child_bus, moves mt7530_setup_mdio_irq() to mt753x_setup(), and calls
-> mt7530_setup_mdio() from mt7988_probe() after dsa_register_switch() to allow a
-> downstream MDIO switch to probe and complete the DSA switch tree.
->
->> diff --git a/drivers/net/dsa/mt7530-mmio.c b/drivers/net/dsa/mt7530-mmio.c
->> index cf3bdb23a2d54..746a0a4622497 100644
->> --- a/drivers/net/dsa/mt7530-mmio.c
->> +++ b/drivers/net/dsa/mt7530-mmio.c
->> @@ -61,7 +61,21 @@ mt7988_probe(struct platform_device *pdev)
->>   	if (IS_ERR(priv->regmap))
->>   		return PTR_ERR(priv->regmap);
->>   
->> -	return dsa_register_switch(priv->ds);
->> +	ret = dsa_register_switch(priv->ds);
->> +
->> +	if (ret)
->> +		return ret;
->> +
->> +	/*
->> +	 * If not all switches in the hierarchy have been probed,
->> +	 * dsa_register_switch() returns 0 without calling mt753x_setup().
->> +	 * Call mt7530_setup_mdio() because there's a chance that the missing
->> +	 * switch is on the MDIO bus. Do not call this before
->> +	 * dsa_register_switch() as it  may exit with an error.
->> +	 */
->> +	mt7530_setup_mdio(priv);
->> +
->> +	return 0;
-> [Severity: High]
-> What happens if mt7530_setup_mdio(priv) fails here in mt7988_probe(), for
-> example with -ENOMEM from devm_mdiobus_alloc() or -EPROBE_DEFER from
-> devm_of_mdiobus_register()?
->
-> Because the return value of mt7530_setup_mdio(priv) is ignored and
-> mt7988_probe() returns 0, the driver core will treat probe as successful and
-> never retry deferred probing, leaving the downstream switch unprobed, the DSA
-> tree permanently incomplete, and priv->ds registered in the switch tree
-> holding allocated dsa_port instances and conduit net_device references without
-> unwinding via mt7530_remove_common(priv) / dsa_unregister_switch(priv->ds).
-> Should mt7988_probe() check the return value of mt7530_setup_mdio(priv) and
-> unregister the switch on error?
+> [Severity: Medium]
+> If its_sync_lpi_pending_table() fails partway through syncing the vCPUs'
+> pending tables, does this error path leave already-queued LPIs referenced in
+> dist->lpi_xa and on vcpu->arch.vgic_cpu.ap_list_head?
 
+Pre-existing. On kvmarm/fixes, vgic_add_lpi() already queues a pending
+LPI as the restore maps it, so a later device-table failure leaves the
+same state. The early return in vgic_add_lpi() on a retried restore is
+a separate bug.
 
-Makes sense to change this.
-
-
->
-> [Severity: High]
-> Also, when a downstream MDIO switch is registered on the MMIO switch's MDIO
-> bus (upstream_priv->child_bus), won't register accesses on the downstream
-> switch trigger a lockdep recursive locking warning on priv->reg_mutex?
->
-> Both the upstream MMIO switch and the downstream MDIO switch initialize
-> priv->reg_mutex at the same callsite in mt7530_probe_common():
->
-> drivers/net/dsa/mt7530.c:mt7530_probe_common() {
-> 	...
-> 	mutex_init(&priv->reg_mutex);
-> 	...
-> }
->
-> This assigns both mutexes to the same static lockdep class. When any operation
-> on the downstream switch holds mutex_lock(&downstream_priv->reg_mutex) at
-> subclass 0 and performs a regmap access, such as in mt7530_port_disable():
->
-> drivers/net/dsa/mt7530.c:mt7530_port_disable() {
-> 	mutex_lock(&priv->reg_mutex);
-> 	priv->ports[port].enable = false;
-> 	regmap_update_bits(priv->regmap, MT7530_PCR_P(port), PCR_MATRIX_MASK,
-> 			   PCR_MATRIX_CLR);
-> 	mutex_unlock(&priv->reg_mutex);
-> }
->
-> the underlying MDIO transfer goes through mt7530_regmap_read() /
-> mt7530_regmap_write() on downstream_priv->bus (which is
-> upstream_priv->child_bus) and calls mt7531_ind_c22_phy_read() /
-> mt7531_ind_c22_phy_write(), which acquires mutex_lock(&upstream_priv->reg_mutex)
-> at subclass 0 of the same lockdep class:
->
-> drivers/net/dsa/mt7530.c:mt7531_ind_c22_phy_write() {
-> 	mutex_lock(&priv->reg_mutex);
-> 	...
-> }
->
-> Does priv->reg_mutex need a separate lockdep key or nesting annotation when
-> switches are stacked this way?
-
-
-I guess we can set a lockdep key for all MDIO and another one for all 
-MMIO switch instances because the only bus-level hierarchy we should 
-ever expect to see is MMIO->MDIO, if there are ever 2 MDIO switches, 
-they should be represented as siblings.
-
-
->
->> diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
->> index d45388e2efc83..24e4485624d39 100644
->> --- a/drivers/net/dsa/mt7530.c
->> +++ b/drivers/net/dsa/mt7530.c
->> @@ -2509,7 +2509,7 @@ mt7530_free_mdio_irq(struct mt7530_priv *priv)
->>   	}
->>   }
->>   
->> -static int
->> +int
->>   mt7530_setup_mdio(struct mt7530_priv *priv)
->>   {
->>   	struct device_node *mnp, *np = priv->dev->of_node;
->> @@ -2519,6 +2519,10 @@ mt7530_setup_mdio(struct mt7530_priv *priv)
->>   	static int idx;
->>   	int ret = 0;
->>   
->> +	/* Already done */
->> +	if (priv->child_bus)
->> +		return 0;
->> +
->>   	mnp = of_get_child_by_name(np, "mdio");
->>   
->>   	if (mnp && !of_device_is_available(mnp))
->> @@ -2543,9 +2547,6 @@ mt7530_setup_mdio(struct mt7530_priv *priv)
->>   	bus->parent = dev;
->>   	bus->phy_mask = ~ds->phys_mii_mask;
->>   
->> -	if (priv->irq_domain && !mnp)
->> -		mt7530_setup_mdio_irq(priv);
->> -
->>   	priv->child_bus = bus;
-> [Severity: High]
-> When mt7988_probe() calls mt7530_setup_mdio(priv) after dsa_register_switch()
-> returns 0 on an incomplete DSA tree, neither dsa_switch_setup() nor
-> mt753x_setup() has executed yet. Can calling mt7530_setup_mdio() at that point
-> cause four ordering and re-entrancy regressions?
->
-> 1. Hardware reset and PHY clock setup in mt7988_setup() have not run yet when
-> mt7988_probe() calls mt7530_setup_mdio(priv). In mt7988_setup():
->
-> drivers/net/dsa/mt7530.c:mt7988_setup() {
-> 	/* Reset the switch */
-> 	reset_control_assert(priv->rstc);
-> 	usleep_range(20, 50);
-> 	reset_control_deassert(priv->rstc);
-> 	usleep_range(20, 50);
->
-> 	/* AN7583 require additional tweak to CONN_CFG */
-> 	if (priv->id == ID_AN7583)
-> 		regmap_update_bits(priv->regmap, AN7583_GEPHY_CONN_CFG, ...);
->
-> 	/* Reset the switch PHYs */
-> 	regmap_write(priv->regmap, MT7530_SYS_CTRL, SYS_CTRL_PHY_RST);
-> }
->
-> MDIO accesses in mt7530_setup_mdio() happen before priv->rstc is deasserted
-> and before AN7583_GEPHY_CONN_CFG is configured. Then, when the downstream
-> switch registers and completes the DSA tree, dsa_tree_setup() invokes
-> mt753x_setup() -> mt7988_setup() on the upstream switch, asserting priv->rstc
-> and writing SYS_CTRL_PHY_RST after MDIO devices and PHYs on the bus have
-> already been probed.
-
-
-This is true, and while it hasn't caused any problems in testing, I 
-don't like the idea of hitting a reset line while a downstream bus is 
-supposed to be operational. I think the correct approach is to move the 
-content of mt7988_setup to mt7988_probe. The reset operation should 
-probably be moved to mt7530_probe_common because it's getting called 
-from every code path one way or another.
-
-
->
-> 2. mt7530_setup_irq(priv) is only called from mt753x_setup(), so
-> priv->irq_domain is still NULL when mt7988_probe() calls
-> mt7530_setup_mdio(priv). Any child PHY or switch node under the mdio DT node
-> whose interrupt-parent is the upstream switch will fail fwnode_irq_get() with
-> -EPROBE_DEFER during devm_of_mdiobus_register().
-
-
-The EN751221 downstream does not (to my knowledge) have its interrupt 
-line wired to the SoC, and the upstream switch does not have any active 
-PHYs, so practically speaking these PHYs need to use polling mode. 
-However, this is a rock in my shoe from a correctness perspective and I 
-think its addressable by calling mt7530_setup_irq() from 
-mt7530_setup_mdio() so that it is called early. The only interaction 
-with the hardware is setting bits on MT7530_TOP_SIG_CTRL, and that can 
-be moved to mt7530_setup so that it will run post-reset.
-
-
->
-> 3. ds->phys_mii_mask is only populated by dsa_switch_setup():
->
-> net/dsa/dsa.c:dsa_switch_setup() {
-> 	...
-> 	ds->phys_mii_mask |= dsa_user_ports(ds);
-> 	...
-> }
->
-> When mt7988_probe() calls mt7530_setup_mdio(priv) on an incomplete tree,
-> ds->phys_mii_mask is still 0, so bus->phy_mask = ~ds->phys_mii_mask is
-> 0xffffffff. If there is no mdio child DT node (mnp == NULL),
-> devm_of_mdiobus_register(dev, bus, NULL) scans no PHYs and sets
-> priv->child_bus = bus. When the tree later completes and mt753x_setup() calls
-> mt7530_setup_mdio(priv), it returns 0 immediately because priv->child_bus is
-> already set, leaving ds->user_mii_bus with no PHYs.
-
-
-This can be resolved by omitting the early call to mt7530_setup_mdio() 
-if of_get_child_by_name(np, "mdio") == NULL, which is okay because if 
-there's no mdio block then there's no child switch.
-
-
->
-> 4. Because priv->child_bus = bus is set before devm_of_mdiobus_register(dev,
-> bus, mnp) finishes iterating all child nodes of mnp in
-> __of_mdiobus_parse_phys(), probing the downstream switch child node
-> synchronously calls:
->
-> mt7530_probe()
->    -> dsa_register_switch()
->      -> dsa_tree_setup()
->        -> dsa_tree_setup_switches()
->          -> mt753x_setup()
->            -> mt7530_setup_mdio()
->
-> That re-entrant mt7530_setup_mdio() call sees priv->child_bus != NULL and
-> returns 0 while the outer __of_mdiobus_parse_phys() loop is still mid-iteration
-> and has not yet registered any PHY child nodes listed after the downstream
-> switch node in mnp. dsa_tree_setup_ports() then runs immediately and fails
-> phylink_of_phy_connect() with -ENODEV for those upstream user ports.
-
-
-I believe this is actually a false positive from the AI, because 
-downstream `priv->child_bus != NULL` should not be true because the 
-downstream switch has a different instance of priv.
-
-
->
-> [ ... ]
->
->> @@ -3386,10 +3388,17 @@ mt753x_setup(struct dsa_switch *ds)
->>   	if (ret)
->>   		return ret;
->>   
->> +	/*
->> +	 * This must be called before mt753x_setup() returns because the DSA
->> +	 * core synchronously sets up ports and expects PHYs to be operational.
->> +	 */
->>   	ret = mt7530_setup_mdio(priv);
->>   	if (ret)
->>   		return ret;
->>   
->> +	if (priv->irq_domain && ds->user_mii_bus)
->> +		mt7530_setup_mdio_irq(priv);
-> [Severity: High]
-> Doesn't moving mt7530_setup_mdio_irq(priv) after mt7530_setup_mdio(priv) break
-> PHY interrupts for all switches using ds->user_mii_bus?
-
-
-This can also be resolved by omitting the early call to 
-mt7530_setup_mdio() if of_get_child_by_name(np, "mdio") == NULL.
-
-
-I really dislike where this is going because I have to choose between 
-three evils:
-
-1. Major refactoring
-
-2. Increasing deviation between the MMIO and MDIO setup flows
-
-3. Added technical debt
-
-
-Of course there's a 4th option which is to declare that cascaded 
-switches just cannot be supported, even though working code has already 
-been demonstrated. I'm going to try to come back with something that 
-walks a reasonable path between these three extremes.
-
-
-Thanks,
-
-Caleb
-
-
->
-> In mt7530_setup_mdio(), devm_mdiobus_alloc() initializes all bus->irq[i]
-> entries to PHY_POLL. When mnp is NULL, devm_of_mdiobus_register(dev, bus, NULL)
-> synchronously scans the bus and creates the phy_device instances via:
->
-> devm_of_mdiobus_register()
->    -> __of_mdiobus_register()
->      -> __mdiobus_register()
->        -> mdiobus_scan_bus_c22()
->          -> mdiobus_scan_c22()
->            -> get_phy_device()
->              -> phy_device_create()
->
-> During phy_device_create(), phylib copies bus->irq[addr] into each struct
-> phy_device:
->
-> drivers/net/phy/phy_device.c:phy_device_create() {
-> 	...
-> 	dev->irq = bus->irq[addr];
-> 	...
-> }
->
-> Because mt7530_setup_mdio_irq(priv) now runs after mt7530_setup_mdio(priv) has
-> already registered the bus and created the PHY devices, bus->irq[addr] is still
-> PHY_POLL at creation time, so every PHY is created with phydev->irq == PHY_POLL
-> and populating ds->user_mii_bus->irq[p] afterwards has no effect on the
-> already-created PHY devices (while leaking the mapped IRQ descriptors).
->
-> In addition, the error path in mt7530_setup_mdio() still calls
-> mt7530_free_mdio_irq(priv) when devm_of_mdiobus_register() fails:
->
-> drivers/net/dsa/mt7530.c:mt7530_setup_mdio() {
-> 	...
-> 	ret = devm_of_mdiobus_register(dev, bus, mnp);
-> 	if (ret) {
-> 		priv->child_bus = NULL;
-> 		dev_err(dev, "failed to register MDIO bus: %d\n", ret);
-> 		if (priv->irq_domain && !mnp)
-> 			mt7530_free_mdio_irq(priv);
-> 	}
-> }
->
-> even though mt7530_setup_mdio_irq(priv) was not called before
-> devm_of_mdiobus_register().
->
+Cheers,
+/fuad
