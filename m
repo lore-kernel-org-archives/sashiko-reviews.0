@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793882267;
-	b=pswfgvJxzlcGZhwxIIKjcgv4ACTlQLW1EuDDSBxftNHjZzfFRztuyrJthSVkinIsuPbi
-	 YKUMvnuz+eOOf9/iIS+x93PQ0aY7RYdY88/bbFJM4PXNau3dGJuu6Aobs5MLAyhebzVhP
-	 WYnrSm6aapEmcrkhpeAYdpyYLttQ0hkv2KEuo2nQbBRLvdabnUO8IKPJt8Z4hPX90oTu7
-	 BvK0Y1Z0flLnIAlzbN5TmEcSqjRloQDNUpRwf+WqKDcV94S4QSSgzIm2sDnYtMnvAA1eY
-	 BakoOueGlX0ya401iffZC9g0JchzsL+ROVE1Lg7BWG7H+lMSbwBPva4+lOk6I8b1R8A==
+	t=1793885018;
+	b=czSWJUEkILTLARE/Hac6zy033FZFky70C6DehBafcMIW4FzUaaI3jeoeiHSk4nnjl13i
+	 To4I7RuQTQleZC+663+Xe9a3SwyMEZper7gyBLpSZHpT9Ggi1KC9yuk4pwDUWiGBeJwjA
+	 NXXvnA1aQPcSBopq2cBewUubyNe3RvhbIuZDmuqsIPNU3rsumr0dvlp56KUlZpAGbDUP5
+	 7Eu9+J5xCEfRdMwSCuyG55TlZqLK3CZgriGLuAPc7sluPlYy0H9K2e3PpIu3ksHbNVCbk
+	 2TYPu6d9JxxQoUvHns3eaLjLFM3cvInXuUubOfc0exbwPMhIdHyyALVRZq+kzrR3Oww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793882267;
-	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:X-ME-Received:
-	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=6NWrhtkA+nf836kZhtN+FQ8fIUYc2L2nWz3fs/cJ8/M=;
-	b=nxd7JfAnIw9L3JVx9JUMIzusG1Dk9MB8SVRRzj0J369IXsM0NpFLrdGVk66wKCBEQjcb
-	 KM7OGQjJc5nkHiyPgub651QoKBzSV+oVG2T/ZIWmPxzZMTFPgHgIZKfDJxJ+Uz/W6SoR2
-	 ZmLrfVkXKEpOLJMRudLEIwQ0F5AeAPnzgHlGUoJtW0J4I6AC24p8SBAgg2Izy2hb71FKY
-	 IHJFNIOqguJ0n/XkWOxhJ3X4G9bwJitX9h+Ce50OsKw2y4obv+OQB60WpLUWmt7SzwFl/
-	 nCy/joQ6h0JeMOCyzOtR+eIIywjyOsTb536UxZxo/0L4c5GFG/pcFISZLvRUgaPUsUQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793885018;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=tcSgyoXpYpv3jYcleunp4p8dBmT0szPkIR1F6BJiK18=;
+	b=MkfIoWLMIu3RBEDTR08702zokyeU5YJedw7qPX+1Iv9rudEwaRDBAUMtAC5aXojKu7T6
+	 tR+cvJ3hvVgJk34UVaeKNWN59vh8mM/EWcsa8FfxQSwmG5Yjl5H9/sKvkpkeirvtdnABN
+	 oBCL9z16SGgHsAKk928Ast3+ohtFeOv8y40fTMAgjCag9EGeByc6n7yYFZkiCgrn0OVdM
+	 TnUdVaGB9kB0HUa90rAQzjkTtD8oa6a5gVAZD3AnV+8gSrX9H9AMYnIWCOJy74Kwzb4Pq
+	 qIri4tCoHOHx+YHNAutFK+u6kLZsxNxoh2/FcaK4LwK/6oQ+iMJOUHDTrpUXD7JlJjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HWfFJWN9;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OnOuQHee;
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C91A606A326
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 12:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F916606D812
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 13:23:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F916606D812
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HWfFJWN9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10B71F000C1;
-	Thu,  5 Nov 2026 12:37:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793882267;
-	bh=6NWrhtkA+nf836kZhtN+FQ8fIUYc2L2nWz3fs/cJ8/M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HWfFJWN9i229bMd4UY7/BUsWWnpEJ75fa+tM0gHJmgK7tmL5sfGwkNSS3Sl17g8yS
-	 dTVVl51P1o6sHZSeb4JPG8BqcuTysly3E2WQrxN61GyXo1lcIDNYxn0ZTgBZ/3Etdh
-	 BotXqRe7M1CWKpul3g4h7BZUauGqvALcOxFyia3Gg5JagYed5SaGQSDQjw6Lj+BuUd
-	 nTr0Nw683p41I/Nhim3bspIK5MOLUKf/3BR4hMcuNg0IFXux9S4tk/wxYNkF2DGDU9
-	 oF53seRsSoQ04qgO/9/hsqknTN39pWqShlI1/h0u18NQb+NXX0Gmcv2vjzQSvSjfTl
-	 ROOEdCYWv9a7g==
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfauth.ams.internal (Postfix) with ESMTP id F1A4D1980052;
-	Thu,  5 Nov 2026 07:37:40 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 05 Nov 2026 07:37:44 -0500
-X-ME-Sender: <xms:lHjsalvO8ZP8wgZjNh60XmuJQ40IAtZ5GOhqVObxvRMA7SXmJQajNQ>
-    <xme:lHjsaqpK40X7pDFhoe9WbgRcG6oXPuYyd_DgH__-og5aV0izpIPYL1zK3fPeePPVh
-    8L_1SnpgZduxsxqP50RXBf2o5CcwPJrYuI9QWEymIapR9taJEVuUABf>
-X-ME-Received: <xmr:lHjsav7sYzyg-LfEFvsvgqHgC6gLFqDHslEsMC9jMpbvS5ylyb5KT6wYHr0>
-X-ME-Proxy-Cause: dmFkZTFm9V5eJ+Rbf9jRmTYNKjzKU9cJBRCqvz8P1pvqtvpzSkaNDECvFL/BmhNntuB1Pq
-    TcyC5G1gfJbucZjwqubwBtX4ao1ysLN7tdGdl8KXwAcNl0scpNLDBr2Xz3iZ5CS5TfZ7Fm
-    P/scGp+wgBs4GjuuT10pms65wdnrFh7YIOrbwvuVOUU7+RS9TkFlrEuS217klAtEqRNoDf
-    nCaxZv9yO0/oNxLEc7sd077SPYzdPIS1XVontV71Aw8tGJjDGwstaTLB22HKKusyI32zI5
-    4Oe+7JzlkOZGGdi0aoM9dEG+8w5KSsumiOXRvnNc/9Dv+9cGH+jmA64vXXSn+73daPMkN+
-    ZacUAEab5/jMk62gih6GTtTUR0qq35c4MeelDQhemrbuw1wqS1QpiBvr4CvW3szIMVwLnd
-    9qZi5ZabFMkfk/O9BcJLjiiMAZ+bniYmErekVG9YBzdXwCz9bP3W64OugMiXh/yG7bHAL1
-    gx1vf7Dn8hnyXFtsDfg6Op3csDWfS1fmn0HuOVaywdPzFRsrfBJ9u8kCV/3S5jDhGDvBaJ
-    OSVTbwJxLPXwVpliz+/+rFmcoPTKmShlonuTx9stHEztJAFa9FU67CjRx0mwlg4j13SUiF
-    KohkZr79wkgYOBXeX9e3ZbMGG9wrlPcRCySHQSqYsj6uXwbtA9M4nt9Yi3mg
-X-ME-Proxy: <xmx:lHjsanx-Kyr3x-d0v022zvdwnIAWLMJAQa48j-Kr4StgVj5GrKc7VQ>
-    <xmx:lHjsanTi6wvZxUcRkGXcXL8vAXu2-2A8lEMHN7TzjuGiHL_ObvsQCw>
-    <xmx:lHjsah95kI1TGJC2L4Da3s3KnWibK5Uprn-mpquLghT8g6Yik31u5Q>
-    <xmx:lHjsahGf1jpmzFexAN9kVECV0IHa7nHZ1rUSsPa8JwBq8U4m8jnZIQ>
-    <xmx:lHjsaswCX1HeVow4OW3tB3HqaCi003akD_TxPxOyBEkHo9lBXO3kCjZ2>
-Feedback-ID: i10464835:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Nov 2026 07:37:39 -0500 (EST)
-Date: Thu, 5 Nov 2026 12:37:39 +0000
-From: Kiryl Shutsemau <kas@kernel.org>
-To: Joanne Koong <joannelkoong@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
-	david@kernel.org, ljs@kernel.org, baohua@kernel.org, usama.arif@linux.dev, 
-	hannes@cmpxchg.org, alex@ghiti.fr, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
-	liam@infradead.org, npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, 
-	lance.yang@linux.dev, vbabka@kernel.org, rppt@kernel.org, surenb@google.com, 
-	mhocko@suse.com, willy@infradead.org, linux-mm@kvack.org
-Subject: Re: [PATCH v4 4/4] mm: add anonymous mTHP folios to the deferred
- split list
-Message-ID: <aux4FcaEdTrJ60NR@thinkstation>
-References: <20261103212004.1356327-1-joannelkoong@gmail.com>
- <20261103212004.1356327-5-joannelkoong@gmail.com>
- <sashiko-outbox-198104@kernel.org>
- <CAJnrk1auD1u1J0yQrXOeJrxvVsQfbxYf+nsMS-9qFQ0hfchG-w@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OnOuQHee
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so14747665e9.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 05:23:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1793885016; x=1794489816; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tcSgyoXpYpv3jYcleunp4p8dBmT0szPkIR1F6BJiK18=;
+        b=OnOuQHeeNZW3QF1Yz57FTG+QB7SKvDMox5e+ydLyK5RHAgZpYfg4LKx/SzYmhz9MB3
+         taMOTqLx2v9n3oTAit3qLuyCMsppbdoPJSLfCd0YucIeE6FG22Xj+iOEGRVNylsDG+an
+         PfrujOtuEHy3nY7U/lyGnqEqacpkYLs9NZySKR063tcETqREEF88ENrJQKFcL4tpnvEZ
+         ste5St3LhupZzGlTiFW0hdqEzQl0nY+sFDYzxJuKzaYkZxIy/gM47BsbziOUvcPqF9ee
+         l5raMBsJzx2Huy/vji48BKjsXLnfqDRc6noFngp7gFt6dPsvuhUVaFhUM+RxvRoYRkp6
+         ukuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793885016; x=1794489816;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=tcSgyoXpYpv3jYcleunp4p8dBmT0szPkIR1F6BJiK18=;
+        b=CU9ZIYpw13ubzfsZrOw8TGUKaJm1gMKzVcF/giNodp2BZ/Lv3KLi0+dgW1WByaeikx
+         UDEiafBh6wF7r3fHRRTfPSpzKKg4HVhjcuGfvV+U/LXyluToUqDOI3laEkH01FVG5NSA
+         Hp164N/vsWqVQLhX0+nr1EWMVHnEmtVkhg96RtruzW8fyHzQP6f44W0MxFIoBcN+/NVb
+         XwjBu05B5LhgHb3INwRxlSCuIfoKPDo1Ug0KwH7DP6xm8xDtJkB1euT4ohDpHYCTIEvW
+         gekdOA0vuZlsciWxUG+KXkEoGnA5kA2T1qUGMn0I35BHjXkwUWQkClasXYT4tsuHQ8eB
+         WD6A==
+X-Gm-Message-State: APuU4Z9utDc+uvxEjElBEFbxLvqyGeo5wZBzktKBIYPeqZGkm0g43LJM
+	eT1IHFaj6MM0ttHSUdzwrkm93cUwVareg1d0eZAWh6NlO2MfLqyqO32ANnqN0yj5NLtur8UQwOj
+	MKljv
+X-Gm-Gg: AYBFou0vkTWQipoJwL7yRG6o75NQ/CbAH1a6ICwD+JTOtTEqhNSYkkMF3Cc7JC1umz3
+	jBx4HeG4dnvZYoZ7rMqSlKWMFwlIyzvdrBzyZxErLsAmjBQ+ruWaD2JwhUarcVfc4lMqJV9edEU
+	s4MTx0ZlSTL2WqAgASXpRJuVh+j8K/5vHtdzQyuF6eC0z/eQZCOE5jcM7/rbPyppbtq5I5ctI98
+	Z6D2tDhX4snXdLJTW+mTX48bQ7WLfRTVO83irdJoS9f1IXoBau5zmDvzrvWoyQBr2C6kvXG/7zL
+	I8+t97hVt3wot285z9g1RUhFZIEyxPYIYsGwxusJMrnxzLTSt6gNTWSaUfflg/LRiYh1wfjfJk3
+	HL+UTuHwA59o9xg6BTs9m29TUKrxMSFgHobaxQ/DCcEzAqVNTSxS0nIi5LDDPy0S8VQFm9OwuVw
+	AchXJ6bE/8xDSh/Tc6RS0JWTt9hB2VnKJXa1sRE/O85J4c1Hg0FVp9FN1/9kDatK8GVuGLkCKDH
+	xeiHcz9KjoTGeDznFggUrq1oriMjma9qmlivU4FUFSUCi0luUc/0EbRKjzmisGCXNI8dzD5xu/1
+	dZKfkRSh2x+jB8FPoDAdPukT5Zc51R4bbABAwN3RqTWUFOu6DEKnw7AJk6A14Le8Hieqn50MQHn
+	wmwiR4yg=
+X-Received: by 2002:a05:600c:3ba0:b0:4a1:e0db:8cf8 with SMTP id 5b1f17b1804b1-4ac151a84f0mr429524235e9.3.1793885015401;
+        Thu, 05 Nov 2026 05:23:35 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:106d:1080:9899:e54b:a2f2:3695? ([2a01:e0a:106d:1080:9899:e54b:a2f2:3695])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b56e2ae73csm68119975e9.1.2026.11.05.05.23.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Nov 2026 05:23:34 -0800 (PST)
+Message-ID: <ae1fd659-7d29-4772-b4ee-0e4c821389b9@linaro.org>
+Date: Thu, 5 Nov 2026 14:23:33 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,69 +93,374 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJnrk1auD1u1J0yQrXOeJrxvVsQfbxYf+nsMS-9qFQ0hfchG-w@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v6 3/3] iio: adc: add driver for the MAX34417 Four-Channel
+ High Dynamic Range Power Accumulator
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20261105-topic-sm8x50-iio-max34417-adc-v6-0-63b4e8279633@linaro.org>
+ <20261105-topic-sm8x50-iio-max34417-adc-v6-3-63b4e8279633@linaro.org>
+ <sashiko-outbox-199091@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <sashiko-outbox-199091@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 04, 2026 at 03:50:58PM -0800, Joanne Koong wrote:
-> On Wed, Nov 4, 2026 at 1:21 PM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [High] mm: try_to_migrate_one() triggers deferred_split_folio() on underused mTHP
-> > --
+On 11/5/26 14:00, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] iio: adc: max34417: energy scale underflows to zero in max34417_read_raw()
+> - [Medium] iio: adc: max34417: shared accumulators clobbered on CAM power/energy read
+> - [Medium] iio: adc: max34417: missing 1 ms delay and premature UPDATE on read/setup
+> --
 > 
-> Hi Sashiko,
+> commit b2b3b8bbfcafc2973680f358dc7e0d74750a2a05
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> I'll try to address these points below.
+> iio: adc: add driver for the MAX34417 Four-Channel High Dynamic Range Power Accumulator
 > 
-> >
-> > commit 82b7b7063b986d802fe52e75e17211e58f3f420c
-> > Author: Joanne Koong <joannelkoong@gmail.com>
-> >
-> > mm: add anonymous mTHP folios to the deferred split list
-> >
-> > This commit queues newly mapped anonymous mTHP folios of at least 2M onto the
-> > deferred split list in map_anon_folio_pte_nopf() so that underused mTHP folios
-> > can be split by the deferred split shrinker under memory pressure.
-> >
-> > > diff --git a/mm/memory.c b/mm/memory.c
-> > > index 0c9ed04528d88..44376321180b5 100644
-> > > --- a/mm/memory.c
-> > > +++ b/mm/memory.c
-> > > @@ -5477,6 +5477,8 @@ void map_anon_folio_pte_nopf(struct folio *folio, pte_t *pte,
-> > >       folio_add_lru_vma(folio, vma);
-> > >       set_ptes(vma->vm_mm, addr, pte, entry, nr_pages);
-> > >       update_mmu_cache_range(NULL, vma, addr, pte, nr_pages);
-> > > +     if (folio_test_large(folio))
-> > > +             deferred_split_folio(folio, false);
-> > >  }
-> >
-> > [Severity: High]
-> > When deferred_split_scan() splits an underused PTE-mapped mTHP folio queued
-> > here with PG_partially_mapped left clear, doesn't unmap_folio() trigger a
-> > false-positive deferred_split_folio(folio, true) transition during the split?
+> This commit adds an IIO ADC driver for the Analog Devices MAX34417
+> four-channel power accumulator, supporting single-shot voltage and power
+> readings as well as continuous accumulation mode for average power and
+> energy measurements over I2C/SMBus.
 > 
-> Yes, but I don't think this is specific to this series. Splitting any
-> PTE-mapped anon large folio that isn't already marked partially mapped
-> goes through the try_to_migrate_one() -> folio_remove_rmap_pte() path
-> you describe below, where __folio_remove_rmap() requeues it as
-> partially mapped mid-split. That already happens today (eg underused
-> splits of PMD THPs whose PMD has been split). This series makes it
-> more frequent since underused mTHP splits now take that path too, but
-> this issue is pre-existing.
+>> diff --git a/drivers/iio/adc/max34417.c b/drivers/iio/adc/max34417.c
+>> new file mode 100644
+>> index 0000000000000..f12d0e8ef1a68
+>> --- /dev/null
+>> +++ b/drivers/iio/adc/max34417.c
+> 
+> [ ... ]
+> 
+>> +static int max34417_check_ovf(struct max34417_data *max34417)
+>> +{
+>> +	struct regmap *map = max34417->regmap;
+>> +	u32 control;
+>> +	int rc;
+>> +
+>> +	rc = regmap_read(map, MAX34417_CONTROL_REG, &control);
+>> +	if (rc)
+>> +		return rc;
+>> +
+>> +	if (!(control & MAX34417_CONTROL_OVF))
+>> +		return 0;
+>> +
+>> +	rc = regmap_clear_bits(map, MAX34417_CONTROL_REG,
+>> +			       MAX34417_CONTROL_OVF);
+>> +	if (rc)
+>> +		return rc;
+>> +
+>> +	rc = regmap_write(map, MAX34417_UPDATE_REG, 1);
+>> +	if (rc)
+>> +		return rc;
+>> +
+>> +	/* Save the timestamp for the next read */
+>> +	max34417->last_update = ktime_get();
+>> +
+>> +	return 0;
+>> +}
+> 
+> [ ... ]
+> 
+>> +static int max34417_read_voltage(struct max34417_data *max34417,
+>> +				 const struct iio_chan_spec *chan, int *val)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	/*
+>> +	 * Move the new UPDATE data into the SMBus read registers.
+>> +	 * This will also reset the accumulators, returning the
+>> +	 * power accumulated since the last UPDATE.
+>> +	 */
+>> +	rc = regmap_write(map, MAX34417_UPDATE_REG, 1);
+>> +	if (rc)
+>> +		return rc;
+>> +
+>> +	/* Save the timestamp for the next read */
+>> +	max34417->last_update = ktime_get();
+>> +
+>> +	if (max34417->cam_mode) {
+>> +
+>> +		/* Retrieve all channels to avoid missing data for other channels */
+>> +		rc = max34417_save_accumulators(max34417);
+>> +		if (rc)
+>> +			return rc;
+>> +	}
+>> +
+>> +	rc = regmap_noinc_read(map, chan->address, &buf, sizeof(buf));
+>> +	if (rc)
+>> +		return rc;
+>> +
+>> +	/* Ignore first byte which contains the Byte Count & data starts at Bit 2 */
+>> +	*val = get_unaligned_be16(&buf[MAX34417_VOLTAGE_READ_OFFSET]) >> 2;
+>> +
+>> +	return IIO_VAL_INT;
+>> +}
+> 
+> [Severity: Medium]
+> As reported by Sashiko on v5 [1], in drivers/iio/adc/max34417.c, can the
+> MAX34417_UPDATE_REG sequencing in max34417_check_ovf(),
+> max34417_read_voltage(), and max34417_setup_cam_mode() violate the 1 ms
+> minimum interval between UPDATE commands or overwrite latched voltage data?
+> 
+> In max34417_read_voltage(), max34417_read_power(), and
+> max34417_read_energy(), the caller writes MAX34417_UPDATE_REG and then
+> immediately calls max34417_save_accumulators() -> max34417_check_ovf(). If
+> MAX34417_CONTROL_OVF is set, max34417_check_ovf() clears OVF and writes
+> MAX34417_UPDATE_REG a second time without waiting 1 ms after the caller's
+> UPDATE command.
 
-I think it is a bit of understatement.
+Yes because the measurement has stalled, so it's ok here.
 
-For mTHP it is every underused split: the folio is always PTE-mapped and
-try_to_migrate_one() drops one PTE at a time. Each underused split bumps
-split_deferred for that size next to the new split_underused, and a split
-that fails at folio_ref_freeze() leaves a fully mapped folio flagged
-partially mapped on the queue, which the next scan splits without
-calling thp_underused().
+> 
+> Furthermore, in max34417_read_voltage(), max34417_save_accumulators() is
+> called before regmap_noinc_read(map, chan->address, &buf, sizeof(buf)). If
+> MAX34417_CONTROL_OVF was set because an accumulator saturated and stopped
+> measuring, won't the second UPDATE write inside max34417_check_ovf()
+> overwrite the latched SMBus registers before the voltage register is read?
 
-Can the fix go in before this series? I think it is hard requirement.
-Let's not brush if off as pre-existing.
+No
 
--- 
-  Kiryl Shutsemau / Kirill A. Shutemov
+> 
+> Similarly, in max34417_setup_cam_mode():
+> 
+> 	} else if (!max34417->cam_mode && val) {
+> 		rc = regmap_clear_bits(map, MAX34417_CONTROL_REG,
+> 				       MAX34417_CONTROL_CAM);
+> 		if (rc)
+> 			return rc;
+> 
+> 		rc = regmap_write(map, MAX34417_UPDATE_REG, 1);
+> 		if (rc)
+> 			return rc;
+> 
+> 		rc = regmap_set_bits(map, MAX34417_CONTROL_REG, MAX34417_CONTROL_CAM);
+> 		if (rc)
+> 			return rc;
+> 
+> 		rc = regmap_write(map, MAX34417_UPDATE_REG, 1);
+> 
+> the function does not check max34417->last_update before its first write to
+> MAX34417_UPDATE_REG, and when enabling CAM mode it writes
+> MAX34417_UPDATE_REG twice back-to-back without a 1 ms delay.
+
+No because changing the mode will reset the counters, the 1ms is only
+to get valid data between UPDATE commands, not configuration changes.
+
+> 
+>> +static int max34417_read_power(struct max34417_data *max34417,
+>> +			       const struct iio_chan_spec *chan,
+>> +			       int *val, int *val2)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	if (max34417->cam_mode) {
+>> +		s64 acc_count;
+>> +		s64 acc_power;
+>> +
+>> +		/* Retrieve all channels to avoid missing data for other channels */
+>> +		rc = max34417_save_accumulators(max34417);
+>> +		if (rc)
+>> +			return rc;
+>> +
+>> +		if (max34417->overflow[chan->channel]) {
+>> +			max34417->overflow[chan->channel] = false;
+>> +			max34417->acc_power[chan->channel] = 0;
+>> +			max34417->acc_count[chan->channel] = 0;
+>> +			return -EOVERFLOW;
+>> +		}
+>> +
+>> +		/* Get current channel power, counter and reset them */
+>> +		acc_power = max34417->acc_power[chan->channel];
+>> +		acc_count = max34417->acc_count[chan->channel];
+>> +		max34417->acc_power[chan->channel] = 0;
+>> +		max34417->acc_count[chan->channel] = 0;
+>> +
+>> +		if (acc_count == 0) {
+>> +			dev_warn_ratelimited(&max34417->indio_dev->dev,
+>> +					     "unexpected zero accumulator count\n");
+>> +			power = 0;
+>> +		} else {
+>> +			power = div64_s64(acc_power, acc_count);
+>> +		}
+>> +	} else {
+>> +		rc = max34417_read_acc_power(max34417, chan->address, &power);
+>> +		if (rc)
+>> +			return rc;
+>> +	}
+>> +
+>> +	iio_val_s64_decompose(power, val, val2);
+>> +
+>> +	return IIO_VAL_INT_64;
+>> +}
+>> +
+>> +static int max34417_read_energy(struct max34417_data *max34417,
+>> +			       const struct iio_chan_spec *chan,
+>> +			       int *val, int *val2)
+>> +{
+>> +	struct regmap *map = max34417->regmap;
+>> +	s64 delta_us = ktime_us_delta(ktime_get(), max34417->last_update);
+>> +	s64 acc_power;
+>> +	int rc;
+>> +
+>> +	/* Sleep up to 1msec to make sure we have a measurement cycle done */
+>> +	if (delta_us >= 0 && delta_us < (1 * USEC_PER_MSEC))
+>> +		fsleep((1 * USEC_PER_MSEC) - delta_us);
+>> +
+>> +	/* Move the data to the SMBus registers */
+>> +	rc = regmap_write(map, MAX34417_UPDATE_REG, 1);
+>> +	if (rc)
+>> +		return rc;
+>> +
+>> +	/* Save the timestamp for the next read */
+>> +	max34417->last_update = ktime_get();
+>> +
+>> +	/* Retrieve all channels to avoid missing data for other channels */
+>> +	rc = max34417_save_accumulators(max34417);
+>> +	if (rc)
+>> +		return rc;
+>> +
+>> +	if (max34417->overflow[chan->channel]) {
+>> +		max34417->overflow[chan->channel] = false;
+>> +		max34417->acc_power[chan->channel] = 0;
+>> +		max34417->acc_count[chan->channel] = 0;
+>> +		return -EOVERFLOW;
+>> +	}
+>> +
+>> +	/* Get current channel power and reset them */
+>> +	acc_power = max34417->acc_power[chan->channel];
+>> +	max34417->acc_power[chan->channel] = 0;
+>> +	max34417->acc_count[chan->channel] = 0;
+>> +
+>> +	iio_val_s64_decompose(acc_power, val, val2);
+>> +
+>> +	return IIO_VAL_INT_64;
+>> +}
+> 
+> [Severity: Medium]
+> As reported by Sashiko on v5 [2], when cam_mode is enabled in
+> drivers/iio/adc/max34417.c, won't reading average power in
+> max34417_read_power() and reading energy in max34417_read_energy() clobber
+> each other's state for the same channel?
+> 
+> Both functions consume and zero the shared per-channel fields
+> max34417->acc_power[chan->channel], max34417->acc_count[chan->channel], and
+> max34417->overflow[chan->channel]. As a result, reading in_powerX_mean_raw
+> discards the energy accumulated in software for channel X since the last
+> energy read, and reading in_energyX_raw resets the accumulated power and
+> sample counter needed for the next average power calculation (as well as
+> resetting the energy reading itself on every read instead of accumulating
+> monotonically while CAM mode is enabled).
+
+No, the hardware works like that, when calling UPDATE it resets the accumulators,
+so this simply emulates the hardware by accumulating in software for the other
+channels to avoid data loss.
+
+> 
+> [ ... ]
+> 
+>> +static int max34417_read_raw(struct iio_dev *indio_dev,
+>> +			     struct iio_chan_spec const *chan,
+>> +			     int *val, int *val2, long mask)
+>> +{
+> 
+> [ ... ]
+> 
+>> +		case IIO_ENERGY:
+>> +			/*
+>> +			 * Scale to Joules
+>> +			 * P=((Power Accumulation / Counter) * Correction) / 2^30
+>> +			 * t=(Counter / Samples per Second)
+>> +			 * E=(P * t)
+>> +			 * Can be simplified to:
+>> +			 * (Power Accumulation * Correction) / (2^30 * SPS)
+>> +			 * But the denominator won't fit in 32bit and is not power of 2.
+>> +			 * But we can divide the numerator by SPS and shift both terms
+>> +			 * by a large power of two number and still use IIO_VAL_FRACTIONAL_LOG2
+>> +			 */
+>> +			*val = div_u64(max34417->input_correction[chan->channel] << 19,
+>> +				       MAX34417_FAST_SPS_CAM);
+>> +			*val2 = MAX34417_PWR_AVG_FULL_SCALE_BITS + 19;
+>> +
+>> +			return IIO_VAL_FRACTIONAL_LOG2;
+>> +		default:
+>> +			return -EINVAL;
+>> +		}
+> 
+> [ ... ]
+> 
+>> +static u32 max34417_calc_input_correction(u32 rsense_uOhm)
+>> +{
+>> +	/* Derived from Table 14. Correction Factors for Various Current-Sense Resistor Values */
+>> +	return (MAX34417_MAX_RSENSE * MAX34417_PWR_CORRECTION_SCALE) / rsense_uOhm;
+>> +}
+> 
+> [Severity: Medium]
+> As reported by Sashiko on v5 [3], doesn't the IIO_ENERGY scale calculation in
+> max34417_read_raw() underflow to zero in sysfs for almost all supported
+> shunt resistor values?
+> 
+> In max34417_probe_channel_node(), shunt-resistor-micro-ohms is accepted in
+> the range 1000 to 100000 micro-Ohms. max34417_calc_input_correction()
+> computes 2400000 / rsense_uOhm with integer division (which also truncates
+> non-integer correction factors such as 2400000 / 90000 = 26 instead of
+> 26.667), yielding input_correction in the range [24, 2400].
+> 
+> In max34417_read_raw() for IIO_CHAN_INFO_SCALE on IIO_ENERGY, *val is in the
+> range [8192, 819200] and *val2 is 49 with IIO_VAL_FRACTIONAL_LOG2. When
+> __iio_format_value() in drivers/iio/industrialio-core.c formats
+> IIO_VAL_FRACTIONAL_LOG2:
+> 
+> 	case IIO_VAL_FRACTIONAL_LOG2:
+> 		tmp2 = shift_right((s64)vals[0] * 1000000000LL, vals[1]);
+> 		tmp0 = (int)div_s64_rem(tmp2, 1000000000LL, &tmp1);
+> 
+> because 2^49 is 562,949,953,421,312, any rsense_uOhm >= 1456 micro-Ohms
+> produces vals[0] <= 562517, so (s64)vals[0] * 1000000000LL < 2^49 and tmp2
+> becomes 0, causing in_energyX_scale to read as 0.000000000. Even at 1000
+> micro-Ohms, tmp2 truncates to 1 (0.000000001 instead of 0.0000000014551915,
+> losing 31.3% precision), and in-kernel consumers such as
+> rescale_process_scale() in drivers/iio/afe/iio-rescale.c cast ULL(1) << *val2
+> to int, truncating 1ULL << 49 to 0. Would returning a 64-bit decimal scale
+> type such as IIO_VAL_DECIMAL64_FEMTO via iio_val_s64_decompose() avoid this
+> underflow?
+
+Good point, will return FEMTO based value.
+
+Neil
+
+> 
+> [1] https://lore.kernel.org/r/20261102-topic-sm8x50-iio-max34417-adc-v5-3-0ffa5e5f2d5c@linaro.org
+> [2] https://lore.kernel.org/r/20261102-topic-sm8x50-iio-max34417-adc-v5-3-0ffa5e5f2d5c@linaro.org
+> [3] https://lore.kernel.org/r/20261102-topic-sm8x50-iio-max34417-adc-v5-3-0ffa5e5f2d5c@linaro.org
+> 
+
