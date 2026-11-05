@@ -1,102 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.178
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793910721;
-	b=IwiVvJa4OILUgrXLJ+quNqFLmYHFXJz4lehi0lKZxx+vzB6QJYJtPCwoMNgrKdr+bzpY
-	 3stAZ18RW1cPotnNjc5DYyaC738QynkZES9JelNDcZ1azwEUJf12nhYWCMTBSFl38t2+R
-	 C2t3MGzRlBVz1dTKZCBsQjl57Ldmon4A+hZZOmojgSKqbU3filqMsXR+H2otFCJW+rEiq
-	 7Ivxoar9/DqHLsn6/2DD3znVlQwYLIqMnocmFI2eQZcJ9v1sbmKasp8fN43yREriPD5Lz
-	 bqqiD5nYSUivK4i8Q0T0yI1MjD9L2shBGxY5OAxEPaA1JhnSnjHK1GVv8S4JyRX7RCw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793910721;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=naL9ZYlGHpjK154MUN/eO3m7g6+A6qo1lAhYSkBJyWI=;
-	b=guR88IdmWJuMR5cohy8HRAfkW4molELxZLrpGdYkNlk1ETTG7IM6cFHApMu/Oz90ReBr
-	 hwNqQdz75PfL9g/ZpNDWBpEtK6P8plCaFmM8+RMpO91UVQFwTNAV1+l11PyST1jsHduwg
-	 FPfGkRYNnY82wXa9Owom3gUdxzQicG6bb0YI3CEipHwKm/sG1y5xsRPuOQyMxxCjy+eJ4
-	 y5cRRP9xdGHW/xdnHWa4I3vVASlshyYTiYLDJoPnGEvWUJFZGvt/jVjo0Vu3UxF7sWS4P
-	 0CmhzPB8w6APzoN7Zlj22/uSJGamDXybGL6o1OyfzGt/JVvBDeYcQLfzE+L+YVaTvEw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=rowland.harvard.edu;
-	spf=fail smtp.mailfrom=g.harvard.edu;
-	dkim=pass header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.a=rsa-sha256 header.s=google header.b=ddgdhJSf;
-	arc=none smtp.remote-ip=209.85.160.178
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.35
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793911424;
+	b=5fCE8W2EPVFjI9aZjhCQ1IQFyO8XWLON7fO14rILUpBT90AUnN3vdafkgAX09/wV/1n7
+	 e2OUO1ZDtdQfBhQmG3YI31AAufr42uHKYQngAjcMWHJH6Wfdp3pgE7US80w7/YPrReSE6
+	 7uv4w787yfnCJR+8dKn2APGgC9NvrL8Yj/UYZ1QI942znVjI9Hk8C2iT7n08d/CDDIRKx
+	 Ygx7CSDWTs7nfVByWLJCWs5JM9r2c46+UQsINBt4zfaPs/nhzs7oaLwA8d0df49M58Vin
+	 JpTTldtoxrYJU6zh3H0ca+1OXxg5aWZxO8VuLH7rQU3dFW6ckOBaJ10ACArCxUjpJtg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793911424;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=83WeM8zSsXaPw1F6iAKCvzVWlhuhnJL711+pJJxk+SM=;
+	b=U6HgVaNY99Vs8P2MnattGCG92tn8oPmJbCsX3o0s6mwXVUAbvkv3V2GMpz/ap1gDnLSb
+	 HHZgLSy1TluuUI1jNfhdTMgndnxiCHS+bcFSZ8azUrT200vbSiaJhlPNdwhrmUPIoZr39
+	 NEc+M7mt0qqcJdHRyYV8VS7Q1AZFdiEmaSVBPGYK1giY4nROrV9MG256kQcsjG7ky7vlU
+	 CWlsrThC4mT4KRJfjweQalmCYz2f/Z6+8U+Wg0SwYIdoPcTKXR+8QjxcWrGNJKABy08/3
+	 q6tQbPOQe1uesK6ntlzbVijHBfS40CmqC5c4NRy5Xgo4QyYAsvSX0Tub4pxxEPJxFIw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=wb3FK5G3;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.35
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011035.outbound.protection.outlook.com [40.93.194.35])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6438606A32D
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 20:32:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C6438606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D186C606A328
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 20:43:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D186C606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.a=rsa-sha256 header.s=google header.b=ddgdhJSf
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-53fdd2fb171so24601331cf.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 12:32:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowland.harvard.edu; s=google; t=1793910720; x=1794515520; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=naL9ZYlGHpjK154MUN/eO3m7g6+A6qo1lAhYSkBJyWI=;
-        b=ddgdhJSfMJ3k6FN+WajeMxUgJEqq9iCq25ctKuLeZ9dn91x4SeI7rRgQAME/jDy/ja
-         OnX2Iu/3fNCSEHrIHE8YfZMgmxuQk/SIrYTdLIFPs+eMFBZHGIhGs9+6syvzPlqNa+Xm
-         reUPyuTICDU8yfcV5MtB5YyMRicsK5n/3slsj0yL40bL/LAFgpUI4KaPV7Lo1fAxdpAS
-         LwTqvAr36iBm7UOvyhUmySYY4SLZoQ6w828n4tm0pNbfEd4BuANaxrSn9zqLoTuuS4in
-         AYnyBmsmwjV/GhGrppnQvAWelW3bQ6t7UivZbirTrdOPYfaau552llqUx4A2vnZDxcuW
-         t7fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793910720; x=1794515520;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=naL9ZYlGHpjK154MUN/eO3m7g6+A6qo1lAhYSkBJyWI=;
-        b=Vb2crxgRvvJ9OdCrr3NTQK7X6IErJ6igZKDVTH606hzIbXTXyC5/OTahXH4QvyeMpf
-         lphXmTcJIxv4Y54j7sAKGrwpEUz1KuZ3R3pj5Zr/2mQ0sRiHSzQ63cuUKVWW0TcwkXNd
-         Tz/aDuaRqV3sitBZAE1As7FWFslzKzhbt/A0VSi19L1TE4azKMVy6XuFoV6rP29LTok1
-         DddeB/JjynKSuqIwssbtZAcutY+U7lPf+GVDMMClPYogpQz/F+HP3F20/Sfqe5OVv/D6
-         a28b5VnxF4+OQSHRaUtrUHAU25snY5rnc7oevq5/Qo7dUVMwoJirxIIfLF82tgdXj0c+
-         LT0w==
-X-Gm-Message-State: APuU4Z+a9CIof5cY+wjwejxoQb3s2sOSTUMPrkBp6PFP0v40H3VWtTKt
-	eHQdPn3Y6uPv+37mmeRzkzLlz/C3Sw9tKGMjjrX0edIR9tQKlJ4MiYwu7M6BzA/r2g==
-X-Gm-Gg: AYBFou25vJILY3XDmeC1Tlcjz5cNitQEgl3tNEmlHe69Nrr2CeTKHPG2Rp1NymFu5v8
-	iXaeZkvoym441hVI6w5cdfOpDISsFayilXRVuM8vJiyBQ/Wgj1v1Btp/e67ptgKfWsE/+pnJO/u
-	IjE0fzkGOWWIVFmbyYkR35zooA5ozr+LK6JF2hSULgWk0zFbsblg40rrWyncxFC4YPQYzRsCK8Y
-	is4SDo2QH/vxXpxobfVEZgMq8ZGWDWwtmawdEipgenj9Re8JdmC8K+iwZTG5fEv4+Zx2QoWsDQH
-	gd+6G9Da8rmQtD7OWZ7BbcDnnKIxEKHIbkSN6hIkrq1tMSymN7G1DRPQYXANA5zdocdPur0ZIYS
-	Oz/42MpHeEHuP0IZeVNTEn4x21ii8sw8Gp9EqV5ALAxkBFFZSmdUJdcfYh/LKQaC9+jul5NXGhd
-	61PBOlDUG6KR5BLQj8SawDjrBh2vqDIYny0s5zFlxtBUXss4SSvcwtV8OyREh1pacA2Sk41pJcE
-	ALZGHoTYn3AfLer6zVoi8tPnEm/FR2ZehgvE9il1K1SaeVjWYPdk5dtslNXgz91nT9qpGIxc9Yv
-	cYFA9BoGlfjEo6tFgYr3safn106E
-X-Received: by 2002:a05:622a:5a18:b0:535:85c0:fda2 with SMTP id d75a77b69052e-54e100e5826mr8821511cf.11.1793910719615;
-        Thu, 05 Nov 2026 12:31:59 -0800 (PST)
-Received: from rowland.harvard.edu ([2601:19b:d01:d210::66b0])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ea6a870dcsm3921886d6.30.2026.11.05.12.31.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 12:31:58 -0800 (PST)
-Date: Thu, 5 Nov 2026 15:31:56 -0500
-From: Alan Stern <stern@rowland.harvard.edu>
-To: James Clark <jjc@jclark.com>
-Cc: sashiko-reviews@lists.linux.dev,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Johan Hovold <johan@kernel.org>, Bastien Nocera <hadess@hadess.net>,
-	Matthias Kaehlcke <mka@chromium.org>, Arnd Bergmann <arnd@arndb.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Robert Nelson <robertcnelson@gmail.com>, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	regressions@lists.linux.dev
-Subject: Re: [PATCH v3 2/2] usb: core: add a pre_probe callback for device
- drivers that may defer
-Message-ID: <a0918852-57e6-42b3-9321-38d766a20025@rowland.harvard.edu>
-References: <cover.1793669297.git.jjc@jclark.com>
- <e96b91c85945237ca455869bf4d5a1e177358b54.1793669297.git.jjc@jclark.com>
- <sashiko-outbox-194542@kernel.org>
- <20261103053952.1138398-1-jjc@jclark.com>
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=wb3FK5G3
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xJYJ4UsD8cywPq4CgmMxs3Rrqn4nTd1xBA4HI4aGJKdAT0Ep7VfblVDVEJ3Awvl5Chk2YkiIr8bJMDV3gZzUAaeA29LtKNveO55P/U9rJKVQYeh4O0vHvt38VgpMKI7RAd1Xqpsy/UFUJil0il66rzNkeOLKnI8NQrdEwr0Rm0GEUHe9cb4gO+JhH3SIwUFUguB0xQ1LvoWqmOVnoAfFjj0s5r9TCWfazKJl+XJH85Y356lK5ZJvVleuXV8BuafkP93upHWgRFOzoByg/IoctkV+TkaobfD8jbP4XL28ocNuq6ynna23jrIfU/R2ICOwsLcQBNDSpNZJ5GNko7l+vA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=83WeM8zSsXaPw1F6iAKCvzVWlhuhnJL711+pJJxk+SM=;
+ b=oqftj9irgCLWJhvFTfrjAZvvsMInVYoGPxIN0lkcAauZe6SYpjwDIApiP5z89PKupD2ldNXgE9wWrnXJUeLHQ/zJnu+tT9+a0bn1A4jEE1M8+6pmLa2a5W0B28chU170aJKu2Aics0v9CXzKsvPe4R/jgyXG3WPdRpXwT3Ue+TlNCXR6YQqxTpzqftFI41iwUFvVujJpTp0hrlz4GR33YddvK+v1T6ZyeV18LhsKPWZk1Y+jZ6zB0Fug/xqViLR3XDgsiSKzNvgnd8NXrL2OINDN5f6uZPc4YW9BmDg0y/fEnV3wuP4UgCmQe31lgmDnb+QOTQ+4iYE4LhGoDzfFPQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=83WeM8zSsXaPw1F6iAKCvzVWlhuhnJL711+pJJxk+SM=;
+ b=wb3FK5G3gCCuUM3bDHZHNIEJN2haYf+HU05mq873hdvIz7//l/G4nvV2Aet0dgbyVTCaqAuXmN4vWisPoVcjVKTHllFwl9ur2JD4wEg1LcV04yJYouzDhXVc35V3fq6YHPM0AmckpXvWsk6ZFdUdVyyWUExC6WK0Yhvx5iJXPPI=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN7PPF5F16C5C9C.namprd12.prod.outlook.com
+ (2603:10b6:40f:fc02::607) by DS4PR12MB634945.namprd12.prod.outlook.com
+ (2603:10b6:8:514::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Thu, 5 Nov
+ 2026 20:43:39 +0000
+Received: from BN7PPF5F16C5C9C.namprd12.prod.outlook.com
+ ([fe80::67a7:9feb:71ef:964a]) by BN7PPF5F16C5C9C.namprd12.prod.outlook.com
+ ([fe80::67a7:9feb:71ef:964a%8]) with mapi id 15.21.0592.009; Thu, 5 Nov 2026
+ 20:43:39 +0000
+Message-ID: <9f0a8e13-4502-442b-83c7-1a02c72c36cd@amd.com>
+Date: Thu, 5 Nov 2026 15:43:38 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/amdkfd: Check ownership of device pages for DMA
+ mapping
+To: sashiko-reviews@lists.linux.dev, matthewkrebs8@gmail.com
+Cc: dri-devel@lists.freedesktop.org,
+ "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>
+References: <20261105185828.85367-1-felix.kuehling@amd.com>
+ <sashiko-outbox-199820@kernel.org>
+Content-Language: en-US
+From: "Kuehling, Felix" <felix.kuehling@amd.com>
+In-Reply-To: <sashiko-outbox-199820@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: YT3PR01CA0063.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:84::28) To BN7PPF5F16C5C9C.namprd12.prod.outlook.com
+ (2603:10b6:40f:fc02::607)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -106,70 +98,260 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261103053952.1138398-1-jjc@jclark.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN7PPF5F16C5C9C:EE_|DS4PR12MB634945:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6e652fd0-f2e9-4917-8419-08df3b7d78c2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|6133799003|10067099003|22082099003|18002099003|56012099006|4143699003|11063799006|261022105027099003|261026121527099003|261026140227099003|261022075727099003|261021121427099003|261009223027099003|261028144727099003|261102123227099003|261022113327099003;
+X-Microsoft-Antispam-Message-Info:
+	bF+SHrrMSkt1ielj+opEqnA3KRG1zgUfoyy2JHuB3PfXR6IelCrL5ZgBkm6Zy+Ur3Pbao8IY2yVpI1y6+H303O9rziZ8SYVo9u2ig2zSnkJ6MXt0bbnujzRBxg7Q5tg1IiEId6d3ruhFOoiqEBkSsNYTdU3NBe32Xl+I+HQBwM2QuzFN+iAYNPQRXrc55ifZGgiA/P1xjkshNEPxF3sam0/TSiT6YLtm511LU7IyDAXjr1KwErgRoP59+dj+GwQGTMC1N9ngqeZKYezDupNjpgDEHROJ306zOl1KWPAsWkJY/XBuuYoHvDphX9pxRSoXlcLziZenZr3FPKbmBTFHxOkRFDqpzfMrBk4cvcUjHmtIf4jVSgomKdkwp2PIDux+qYqkOIHBBT1iRSBMoTdlTm1y40Yg0+vn/++k5SuY85str6I4Hr54ipZc/+1xVfk0hTTHio5XywRt3LqOwJu9SfjhVO1kBS5UjuALz9KsisIaOpRfhfpGdJUFSHEkfR3CcVz2wzsRRE/dYtWZJZe7v7D2dFOboXxiwhIHNVSUDn8Y6Be/WLfpRvs7LhMX89/5XLb+h6gA3WAhAzVPHl0Mv1tLWp8zFGWgQ8gQsbRvotlgUkIPSN3jKnTHLWNWuUSaw5FYPj0wuoBGFCd94Sh7+cCkFr+zhzb975RLK0T1WLE=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN7PPF5F16C5C9C.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(6133799003)(10067099003)(22082099003)(18002099003)(56012099006)(4143699003)(11063799006)(261022105027099003)(261026121527099003)(261026140227099003)(261022075727099003)(261021121427099003)(261009223027099003)(261028144727099003)(261102123227099003)(261022113327099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QnhTSHoxS2NHMGM5VUtKZXp5a2VQY2ExOTFsV0N0a2VyWWJMU2JxbHMrWndo?=
+ =?utf-8?B?YzhMckxBdElkMlRNSndrZ0t0SlQxWXJqak5RMHc4RXBFZXR4bzRIaHAvNWpJ?=
+ =?utf-8?B?WG9ER0dMTVp5N2NtVXlFV0hDNlhtYlhDQWt2VE5JOHhIcC9zVC9VVzZzMkhq?=
+ =?utf-8?B?ZmV1TU9JUmROcmZEUGovS0FqdGxhaGFqYi9pd29ETzFsUHFFcjFPbGh3UlBU?=
+ =?utf-8?B?dG9nY1pQbVV6S3RDcFd4ZWdHaVVvK1U5aC9yem5sNjFEb0dDcGR5Y2N2WWJU?=
+ =?utf-8?B?aVY1bk5zZVVNMm9lZXpyQk9MMzFtd3NkbzN6VDZ0Qyt2R0J5N0JnVU9tSjRR?=
+ =?utf-8?B?VzNGZjd1dmlNdzRKam9GTzJuWkttKzhBc0E5Y21WclBER0dacXREYzNBKy9t?=
+ =?utf-8?B?enI2Ky8zTzdRL3RxMjYvdUpOYUE5bEFDazBBT1A5WGdBSHJLa0J1OWlUMEhl?=
+ =?utf-8?B?YWV1Y3V3R1JDZUdnaUpqREczc0pSV2J3UEVwMHZuK3BpcHhQaFpxTXZSSVVk?=
+ =?utf-8?B?NXJaUHFmSXdhejRld2VncXRoNDVQcitLQkx2Y3hSNFI1bmZzMHhvTE4xRUw1?=
+ =?utf-8?B?aXVscjBOT1orSzhqRjlzaEl1em1WZFpIbTBlc05TQTR0MkN2SXVZMFBxeFdI?=
+ =?utf-8?B?ZldOS2FjSVZjSEZHS3lJaXNFWXNmSHNQakhkNjU1YXdVdU81dXJTYkpja3By?=
+ =?utf-8?B?T1dMRW4veitZZHI1MkFhT2JPQ1g4NEp5QzViSnM1cVpDbm5mcWFmSlNMMzV1?=
+ =?utf-8?B?L2xxSFFVZnhPSkNPaFJFKzFaYklkc0VaWjRmRmlsMTlvVjg0U0tYUGFob25o?=
+ =?utf-8?B?QnBVTUlvZkxxKzhqM3FlK05nSE1EMVhCcmR1ZWNNZDZ4OE9VZVdTbGRpNDhY?=
+ =?utf-8?B?S1UxVzh2RVFhMDFhZjdkZ3BjZ0p0TUFkZWY0UTdCWkFGSlJOUzFoUHRqaHpl?=
+ =?utf-8?B?dHBQMUlyTkRQb0xIbTF6UzRZRlplNmR6aW1ET2hJTzN6VkFKMUJiMytJMGdL?=
+ =?utf-8?B?aHBsTDlWSG1tbjhsME9qQkoySFV0R1grVi81TXB2LzFzZ2RaNDNIeEZYa0Va?=
+ =?utf-8?B?V2Y2dzdjZDN4Y3JkNGhaZDlBZU1BK3pVOU56QUhOZytqRTVaQ0pidmtlaDVo?=
+ =?utf-8?B?MUV0Sk9xVHBsdk9hMlVnN3ZvMncxZVJncWh3d0RYQVQrYTk4NzQxeGJ2SGpH?=
+ =?utf-8?B?aXBpYmROYkZpZE1zb0lUenZibGg1a3pFRkljRE0yd0JwZE05blVjL3g4U253?=
+ =?utf-8?B?N0l6RGE4cXRoSmplY2Y0cHE3RTlJaStuamxFck92MUxqNW5URFNSRkVjYkZ5?=
+ =?utf-8?B?OGwxVHRlYm42VTBneTNyR25taW1YSndidVdJUHN3Y2hzK0t2U0pBS2RqdWhY?=
+ =?utf-8?B?a3c2NVZjRFlRbjlRVHJQMFRNam9HL1E1eGhaUlJYOHEzOE1wbFBTWVhPNkt0?=
+ =?utf-8?B?Z2N3dit0MHU5M2JLSCtrYWh4cUpLdEw2TDJvTWdmVys5NjIwVWFNdVBvajNS?=
+ =?utf-8?B?QStvTnQwK0prYUJOL1lodzE1R2s4Zzc4WWJ0cmlzL2V3UTJUaS94L3VKM01j?=
+ =?utf-8?B?bEhJelBHK2J4M3dIRTlpbmZNYXp6Y1MvWWxoMFk5dUZHVjF2Uzg1WTZjYU5Q?=
+ =?utf-8?B?UVFjSm9FNllnb0lMNWx6SlJMU0YyNnF4KytoWkFOMU5LT3pQU0lyd2NQS0Ey?=
+ =?utf-8?B?V3VydERxK2o1cnBodmxZN2hNYTNQdmdZenM3NnY3UHNWR1dpRDBtUlY0V05n?=
+ =?utf-8?B?RWFZWXlUcC9nWnVhK0gxb3VUUHg4R1dJUUxGd1l4a3R0U1BBdndXNWZhZlp3?=
+ =?utf-8?B?RVh6VnI2YU1makxCVTJ3cWJudE56b21wK2NMYlJQNng5NHp5T2F5ck42dVNJ?=
+ =?utf-8?B?c0VlN3BDWmt6eE13R1hKZzFCalp1WDJHa3NkQ21lU2JqYzA4VU1oOXI5alg3?=
+ =?utf-8?B?OGk3N2JZU1QxRlFBNWUxYVAxc2piWGcrc2RYWHdpb2VQVFVXU05LL3QrZzNI?=
+ =?utf-8?B?TUlsN0FjQ1hRMDFjWjVaN1ZJL3Uya0FnRGQ0VnlxQTFTNjN3Nm5rVHNqdXJN?=
+ =?utf-8?B?azVETGFQN3hIOHFNakk0emlOYlk5WUdRQU11VG5zNkxwOTNoVUdROXBQUXFo?=
+ =?utf-8?B?dThMS2FDaDNXenNuUmVoQ2VlZlpCa0FmcnBFRTR6MEZKeU4rKy9xeXFqSU5u?=
+ =?utf-8?B?ay9veW15MUgxN0NnMDFYektsMFlaTDlEY042Q3FiRndWcFJLUFRHSE80cFAr?=
+ =?utf-8?B?eDk1MnowMXZLWHJjWlpFaGlMYmh4MCtKMnorZk1YaWh6Rko5WDcyREVTeGFy?=
+ =?utf-8?B?RE1YZWxsc25KZUxpNFlIbk9IYzhPRlVFZDF4K2EwU2E4dWE3aUg5Zz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6e652fd0-f2e9-4917-8419-08df3b7d78c2
+X-MS-Exchange-CrossTenant-AuthSource: BN7PPF5F16C5C9C.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 20:43:39.4265
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GRzXM+mVWT7//+sOKoj6L0a+nNpyCi+DGOsClhsY+W48v4PxOAh9hv4YorHmBPIkcP7+6eTE2QZVB9IxX3UrLg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB634945
 
-On Tue, Nov 03, 2026 at 12:39:52PM +0700, James Clark wrote:
-> On Tue, 03 Nov 2026 03:51:41 +0000, sashiko-bot@kernel.org wrote:
-> > First, when udriver->pre_probe(udev) returns -ENODEV (for example from
-> > onboard_dev_usbdev_pre_probe() -> _find_onboard_dev()), usb_probe_device()
-> > still calls usb_autoresume_device(udev) and usb_generic_driver_probe(udev)
-> > to configure the device, bind all child interface drivers (triggering
-> > deferred probing), and emit USB_DEVICE_ADD, only to immediately tear them
-> > all down a few lines later in the error == -ENODEV block via
-> > usb_generic_driver_disconnect(udev) and usb_autosuspend_device(udev).
-> 
-> This is deliberate, and documented in the @pre_probe kerneldoc. An
-> error from pre_probe() other than -EPROBE_DEFER is handled as if
-> probe() had returned it, after the generic probe has run. This keeps
-> the -ENODEV fallback to the generic driver working as it does for
-> probe(). For onboard_usb_dev nothing changes: its -ENODEV used to come
-> from probe().
-> 
-> > Second, if udriver->pre_probe(udev) or udriver->probe(udev) fails with any
-> > other error (such as -EINVAL or -ENOMEM), usb_probe_device() jumps to
-> > err_pre_probe, which only calls udriver->disconnect(udev) and does not call
-> > usb_generic_driver_disconnect(udev) or usb_autosuspend_device(udev) to
-> > unwind the generic probe and runtime PM state. Because really_probe()
-> > clears udev->dev.driver to NULL when usb_probe_device() fails:
-> >
-> > - When udev is later unplugged, usb_disconnect() -> device_del() skips
-> >   usb_unbind_device() because udev->dev.driver is NULL, so
-> >   usb_notify_remove_device() (USB_DEVICE_REMOVE) is never sent. Subscribers
-> >   such as usbport_trig_notify() in drivers/usb/core/ledtrig-usbport.c never
-> >   remove the port entries added on USB_DEVICE_ADD, leaking struct
-> >   usbport_trig_port objects and sysfs attributes with a dangling port->hub
-> >   pointer to the freed struct usb_device, and usbdev_notify() in
-> >   drivers/usb/core/devio.c never runs usbdev_remove().
-> 
-> This was raised in Sashiko's review of v2. I missed that it can be fixed
-> when the device is unplugged. I will attempt to fix this in v4. I think
-> it can be fixed by recording in struct usb_device that USB_DEVICE_ADD
-> has been sent, and having usb_disconnect() send USB_DEVICE_REMOVE for a
-> device that has no driver.
-> 
-> > - For drivers with supports_autosuspend = 1 (such as
-> >   onboard_dev_usbdev_driver), usb_probe_device() does not take a runtime PM
-> >   reference, and hub_configure() enables autosuspend on hub devices; once
-> >   the device suspends, usb_resume_device() fails with -ENOTCONN because
-> >   udev->dev.driver is NULL.
-> 
-> This is a pre-existing bug that is new in this review.
-> usb_suspend_device() does a generic suspend for a device without a
-> driver, but usb_resume_device() refuses to resume one. I don't know
-> why resume is refused. If a generic resume is safe there, that would
-> fix it.
-> 
-> > Third, if udriver->pre_probe(udev) succeeds and udriver->probe(udev) then
-> > returns -ENODEV, the error == -ENODEV block runs
-> > usb_generic_driver_disconnect(udev) and usb_autosuspend_device(udev) before
-> > err_pre_probe calls udriver->disconnect(udev), reversing the teardown order
-> > used in usb_unbind_device():
-> 
-> I will fix this in v4.
 
-This is all starting to sound very complicated and fragile.  Isn't there 
-any way to simplify it?
+On 2026-11-05 14:11, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] drm/amdkfd: foreign same-hive device-private pages fail in svm_range_dma_map_dev()
+> - [High] drm/amdkfd: double dma_unmap_page() on error return in svm_range_dma_map_dev()
 
-Alan Stern
+I'll address these in the next revision.
+
+
+> - [Medium] drm/amdkfd: calling dma_map_page() on zone_device pages in svm_range_dma_map_dev()
+
+Matthew, I believe this would have applied to your patch "drm/amdkfd: 
+Only take the VRAM path for KFD device pages in svm_range_dma_map_dev" 
+as well. See details below. So this is probably not a complete solution 
+for your problem.
+
+Regards,
+   Felix
+
+
+> --
+>
+> commit 591a056ad47c1c9d032b2eceed7f51b0bb221d8d
+> Author: Felix Kuehling <felix.kuehling@amd.com>
+>
+> drm/amdkfd: Check ownership of device pages for DMA mapping
+>
+> This commit checks whether a zone device page belongs to the target SVM
+> range via svm_page_is_range_owned() before computing a VRAM domain
+> address in svm_range_dma_map_dev(). Device-private pages not owned by
+> the range trigger a warning and return -EINVAL, while other non-owned
+> pages fall through to dma_map_page().
+>
+>> diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+>> index ed5e3318877be..5807a26d7debf 100644
+>> --- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+>> +++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+>> @@ -156,6 +156,18 @@ svm_is_valid_dma_mapping_addr(struct device *dev, dma_addr_t dma_addr)
+>>   	       !(dma_addr & SVM_RANGE_VRAM_DOMAIN);
+>>   }
+>>   
+>> +static bool svm_page_is_range_owned(struct page *page, struct svm_range *prange)
+>> +{
+>> +	bool is_owned;
+>> +
+>> +	mutex_lock(&prange->lock);
+>> +	is_owned = is_zone_device_page(page) && prange->ttm_res &&
+>> +		page->zone_device_data == prange->svm_bo;
+>> +	mutex_unlock(&prange->lock);
+>> +
+>> +	return is_owned;
+>> +}
+>> +
+>>   static int
+>>   svm_range_dma_map_dev(struct amdgpu_device *adev, struct svm_range *prange,
+>>   		      unsigned long offset, unsigned long npages,
+>> @@ -180,7 +192,7 @@ svm_range_dma_map_dev(struct amdgpu_device *adev, struct svm_range *prange,
+>>   			dma_unmap_page(dev, addr[i], PAGE_SIZE, dir);
+>>   
+>>   		page = hmm_pfn_to_page(hmm_pfns[i]);
+>> -		if (is_zone_device_page(page)) {
+>> +		if (svm_page_is_range_owned(page, prange)) {
+>>   			struct amdgpu_device *bo_adev = prange->svm_bo->node->adev;
+>>   
+>>   			addr[i] = (hmm_pfns[i] << PAGE_SHIFT) +
+>> @@ -189,6 +201,11 @@ svm_range_dma_map_dev(struct amdgpu_device *adev, struct svm_range *prange,
+>>   			addr[i] |= SVM_RANGE_VRAM_DOMAIN;
+>>   			pr_debug_ratelimited("vram address: 0x%llx\n", addr[i]);
+>>   			continue;
+>> +		} else if (WARN_ON_ONCE(is_device_private_page(page))) {
+>> +			/* Device private memory from another driver or range.
+>> +			 * This should never happen.
+>> +			 */
+>> +			return -EINVAL;
+>>   		}
+> [Severity: High]
+> Can device-private pages from another SVM range or a parent process on
+> the same GPU or XGMI hive reach this branch and trigger WARN_ON_ONCE()
+> and -EINVAL?
+>
+> On GPUs using MEMORY_DEVICE_PRIVATE, kgd2kfd_init_zone_device() sets
+> pgmap->owner to SVM_ADEV_PGMAP_OWNER(adev), which is a device-wide or
+> hive-wide pointer shared across all processes and all svm_range structs
+> on that GPU or hive.
+>
+> In svm_range_validate_and_map(), owner is computed via
+> kfd_svm_page_owner(), which unconditionally returns
+> SVM_ADEV_PGMAP_OWNER(pdd->dev->adev) even when prange->ttm_res is NULL
+> or prange->svm_bo is a different BO:
+>
+> drivers/gpu/drm/amd/amdkfd/kfd_svm.c:kfd_svm_page_owner() {
+> 	...
+> 	return SVM_ADEV_PGMAP_OWNER(pdd->dev->adev);
+> }
+>
+> drivers/gpu/drm/amd/amdkfd/kfd_svm.c:svm_range_validate_and_map() {
+> 	...
+> 	owner = kfd_svm_page_owner(p, find_first_bit(ctx->bitmap,
+> 						MAX_GPU_INSTANCE));
+> 	for_each_set_bit(idx, ctx->bitmap, MAX_GPU_INSTANCE) {
+> 		if (kfd_svm_page_owner(p, idx) != owner) {
+> 			owner = NULL;
+> 			break;
+> 		}
+> 	}
+> 	...
+> 	r = amdgpu_hmm_range_get_pages(&prange->notifier, addr, npages,
+> 				       readonly, owner,
+> 				       ctx->hmm_range[bitmap_unchanged]);
+> }
+>
+> When amdgpu_hmm_range_get_pages() calls hmm_range_fault(),
+> hmm_vma_handle_pte() skips faulting any device-private swap entry whose
+> pgmap->owner matches range->dev_private_owner:
+>
+> mm/hmm.c:hmm_vma_handle_pte() {
+> 	...
+> 		if (softleaf_is_device_private(entry) &&
+> 		    page_pgmap(softleaf_to_page(entry))->owner ==
+> 		    range->dev_private_owner) {
+> 			cpu_flags = HMM_PFN_VALID;
+> 			if (softleaf_is_device_private_write(entry))
+> 				cpu_flags |= HMM_PFN_WRITE;
+> 			new_pfn_flags = softleaf_to_pfn(entry) | cpu_flags;
+> 			goto out;
+> 		}
+> }
+>
+> If a process validates an SVM range containing MEMORY_DEVICE_PRIVATE
+> pages inherited via fork() or moved via mremap() from another range on
+> the same GPU or hive, hmm_range_fault() will not fault those pages back
+> to system RAM and will return them in hmm_pfns. When
+> svm_range_dma_map_dev() then checks svm_page_is_range_owned(page,
+> prange), it returns false because prange->ttm_res is NULL or
+> page->zone_device_data != prange->svm_bo, hitting the WARN_ON_ONCE() and
+> failing range validation with -EINVAL.
+>
+> [Severity: High]
+> Also, if this -EINVAL path is taken when addr[i] previously held a valid
+> system-memory DMA mapping, does it leave a stale DMA address in addr[i]
+> that causes a double dma_unmap_page()?
+>
+> At the start of the loop in svm_range_dma_map_dev(), an existing valid
+> mapping is unmapped without clearing addr[i]:
+>
+> drivers/gpu/drm/amd/amdkfd/kfd_svm.c:svm_range_dma_map_dev() {
+> 	...
+> 	for (i = 0; i < npages; i++) {
+> 		if (svm_is_valid_dma_mapping_addr(dev, addr[i]))
+> 			dma_unmap_page(dev, addr[i], PAGE_SIZE, dir);
+> }
+>
+> Prior to this change, every path after dma_unmap_page() overwrote
+> addr[i]. Returning -EINVAL before updating or zeroing addr[i] leaves the
+> unmapped DMA address in prange->dma_addr[gpuidx], so a later call to
+> svm_range_dma_unmap_dev() (or a subsequent svm_range_dma_map_dev() call)
+> will see svm_is_valid_dma_mapping_addr(dev, addr[i]) as true and call
+> dma_unmap_page() a second time on the same address:
+>
+> drivers/gpu/drm/amd/amdkfd/kfd_svm.c:svm_range_dma_unmap_dev() {
+> 	...
+> 	for (i = offset; i < offset + npages; i++) {
+> 		if (!svm_is_valid_dma_mapping_addr(dev, dma_addr[i]))
+> 			continue;
+> 		pr_debug_ratelimited("unmap 0x%llx\n", dma_addr[i] >> PAGE_SHIFT);
+> 		dma_unmap_page(dev, dma_addr[i], PAGE_SIZE, dir);
+> 		dma_addr[i] = 0;
+> 	}
+> }
+>
+>>   		addr[i] = dma_map_page(dev, page, 0, PAGE_SIZE, dir);
+>>   		r = dma_mapping_error(dev, addr[i]);
+> [Severity: Medium]
+> Is it valid to pass non-private ZONE_DEVICE pages (such as DAX pages or
+> foreign MEMORY_DEVICE_COHERENT pages) to dma_map_page() here?
+>
+> When svm_page_is_range_owned(page, prange) and
+> is_device_private_page(page) both return false for a ZONE_DEVICE page,
+> execution falls through to dma_map_page(), which expands to
+> dma_map_page_attrs(). In kernel/dma/mapping.c, dma_map_page_attrs()
+> rejects all ZONE_DEVICE pages when CONFIG_DMA_API_DEBUG is enabled:
+>
+> kernel/dma/mapping.c:dma_map_page_attrs() {
+> 	...
+> 	if (IS_ENABLED(CONFIG_DMA_API_DEBUG) &&
+> 	    WARN_ON_ONCE(is_zone_device_page(page)))
+> 		return DMA_MAPPING_ERROR;
+> }
+>
+> Wouldn't mapping DAX memory or coherent device pages from another GPU
+> hive trigger this warning and fail with -ENOMEM on kernels with
+> CONFIG_DMA_API_DEBUG enabled?
+>
