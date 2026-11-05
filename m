@@ -1,55 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793872452;
-	b=VyhD7UubOT8ch+QKLzi88R2QtiN0JIYIXYg3BEPBBq0qs8+niZ/hV1aKapg/VJhqOrZs
-	 lSxCWXLPG2RYxnxtbB8+o2IxE2xhYxH6RK+K1CZRJZcxbjDdBOsn3I8v3g6eAVB7hBsHh
-	 q/MQY5I37uPJxRi0tjYnl7T+vDAIaPELToaOTE5dYYEJNegDBsjjNHNZMJD/UzxPBXThh
-	 S5ga1+jl0SVNyo7obxLnWvJxncblurBDBZknZyJ06o0lSddk84XAEmJ+S3INylrGsvu/L
-	 CVNPQ0xRHreecG/OjCncjKlZNRpsSTbdcoCpkkrm6kvwUYm0guum5fDZtSWfmYdxGNQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793872452;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=oUEbx2+4U+LDsl5nvzYDoBWKA0thTBPr5ylR+eD5Gu4=;
-	b=vL+v3tLPGxTW6QySE1dFOVNoa4bcKy88DyZW/8bYO4bktgHktGRBz5//rNDj0rRNK6+f
-	 uQXDlzcVIXpTifuoR7bAdrOY3tdbeAzKlxo4vSm7q10DHcoEqDPMgv0Fq/ZKBIJ7EFJz6
-	 XC1wSDGxWcLNpqoYAjMYMEH0h/l7l+PdJPeuCKUeYGlKIMd0PrpO1PpN8HW0j7qSsT3ZR
-	 7ePsaRlxkTq6DC9EO79FiEJrIda3fg77gdHda5e6h7OLldP4KqouSeELKSr3sjUpGKdob
-	 LMeciLXixdu1oJgLqwsitnWrQnrkNHLscXBLbwVJgdrgKYAZ5z1FkPCMfTkxTEv2tlA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eQypUc4l;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.31
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793873002;
+	b=yDRvK79Dkw0JUPPNfWtYGcxMIf6MuS9Mj4X+JT6pHm26+xrjiCI1n/872dNGYDu1M1LJ
+	 GLNi1Z8XZ5OxAXjdtI62Oa92gNK6C/TErc0fT+APXQva96b9s/4TXP8MnmRQhPSRyrr4b
+	 vp0tkmt7ZU8Jy8d6hZEInjSNrmDvCCCgTlVIA/ITTs/WK55eCffOeLUarRpzoE5OkUz8s
+	 uZCPmBflQgSPW5nj4Buus90Ga93yFS/2NGDmD7wzR/Hl1wIVAHPDh+/z/hn9/l2vUVwhB
+	 dO0MMY0LFDRtYmThjPbMPfRLWPeZSSvi7q7krskwV0PIApM9DDJjlTboLp2f62RYLfw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793873002;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=lm57Gqgiv85Pefqh/D2kJBUE8d4L8laOJpvnqOY4kuU=;
+	b=loxi5FUwSA/qvyH85xKkB8ia+R6zcmynQK6OPyzjwppoRkYbKyQv7S/BKdvdqe1bVBco
+	 DPa8sHCxYC+dEOSnRhF5EHZyW9vEdoXK3ldAqauFQ8KirbK7MFh1CQ3Htt7YMTQJ1+K+R
+	 /FGjquVDVkMlfxAYBY617EW9iGrxYPneNB9HvbsQ5CZeMN284TPneZXeyviSQf4gGSFve
+	 ZYLElW0sZzQAFDBMghEvl+jsZSeTNf8MUb9sdfQRda7WVKtNxRPEHpXXhC+waOoWMEGZu
+	 vel3cIvKMdLg7574VekC7NVK7J/BzjJyPGon4mkP5qT8l0+nyMLzKJYQN/eH6ArsIEQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=4k37sL2B;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.31
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013031.outbound.protection.outlook.com [40.93.201.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14C2606CC78;
-	Thu,  5 Nov 2026 09:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA1E606A33A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 10:03:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AFA1E606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eQypUc4l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922DD1F00919;
-	Thu,  5 Nov 2026 09:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793872451;
-	bh=oUEbx2+4U+LDsl5nvzYDoBWKA0thTBPr5ylR+eD5Gu4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eQypUc4lCHxICRDLP4a9G4Nu2/0z2Z9/01KsMkx8eCxGz6XRXX0OEVLFZmlh0bzHA
-	 gI/Yv4d8KsrtKgzlTcGAX+ISNJ66A89z61yExYwbgtoGuFQX1V4k+5lTOceVN7lxam
-	 F8ZUtdxUNeC9aHAHljfHcrYnWmFaomivoGtmSIzVjqbTpQ0SbpDFKYDW/aqox+JFxa
-	 7wM/xLfvFYX3O261+AmaMihVbYEwIo2cCMnyHxf7ffZkvDJ7nKWMvgo1KOQu6FJD/2
-	 ibffHucgQEjVbLIZyjqLCYkxF1kpN4dPECq/htdqAYlGNFKPiZvQfiXF5Nw3lgoio9
-	 kv962nL5wG0AQ==
-Date: Thu, 5 Nov 2026 10:54:06 +0100
-From: Andrey Albershteyn <aalbersh@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: ebiggers@kernel.org, hch@lst.de, fsverity@lists.linux.dev, 
-	linux-ext4@vger.kernel.org, dsterba@suse.cz, tytso@mit.edu
-Subject: Re: [PATCH 5/5] f2fs: use I_VERITY_BUILDING instead of private flags
-Message-ID: <auxSBY54CHYGixpz@aalbersh-thinkpadx1carbongen13.rmtcz.csb>
-References: <20261104194618.103332-1-aalbersh@kernel.org>
- <20261104194618.103332-6-aalbersh@kernel.org>
- <sashiko-outbox-197991@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=4k37sL2B
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ilWJmmqP+r/aLpLt/YxRcG0cY7e7mfvOV9XXoygd4X9hsemf6fqj0AIdHd4UljzJmlYuVppizIAnqirApMfI9LOTzJ2ws/LpoxZKkLqcjSxWwFYyYckkX5hIfWNkwDR8K46F0w6mcEQifX41IXQpbmFSNTMg0WvfK/OonwtBG//7774mgdJ/lNaV4wzvXHGHspBTUaTgZcde1GGnNa6mLIyTAEQlhz8MMoGEkZVNzNicHg8g/z4l/MiDZQkHMRF4i6R44T73pLesAAUqsvxBGkxYKAF/bRmqPRQU+g4Q7ZYDmhK1/3sl7T9cxEgLJdghvxCq2xLPUUceXvrLjdT+1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lm57Gqgiv85Pefqh/D2kJBUE8d4L8laOJpvnqOY4kuU=;
+ b=xyMVM8HMkQN+iTutA9qWsNKGGnTVtfP9wy7X/mwJB8IOO+wIM9dp7m25cfLFJyOz+15z/kVajVx67x9BLCPJ4aeGHa5rO230yl0wWZQu5xSYfxxGpaNZOJzW28qqJyK8YUEtKSO/vEL1xlHMquK6fymbAEd5P/+LCat71dfRPIr7MM1m5E0KUSu/M1iIWvzDDt9ldtzJVTUdX9BCD+BJ5+o2Sa2iwNVmpe7KUFMlH/r2g9xzSNF5iBcktYw4faNhidh7W2M8OhLiJkh3W9Z/6KBBK1FyW3mxqTL1bVpZgGP4+MfK7D1tEDY2WcZ1o13Jz7vwOgrksM+cwqGVvYU6fQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lm57Gqgiv85Pefqh/D2kJBUE8d4L8laOJpvnqOY4kuU=;
+ b=4k37sL2BGuaFi2B/GPekBWSSYIO1k4/4L+mGu4oHqxjpxK4LsFygLVUFWy7syh21w0DVl75iS3pJ7K+YpBX4CsJn2fw6R7AG/VMMP985t/yXSE3OyyoyQ4JNoaxDitJ3JXN/+NYwCZnoaXthQmMzYoVBDfo04O5F1OS6GgXcH2w=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
+ by PH8PR12MB7351.namprd12.prod.outlook.com (2603:10b6:510:215::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Thu, 5 Nov
+ 2026 10:03:16 +0000
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::ce69:cfae:774d:a65c]) by PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::ce69:cfae:774d:a65c%3]) with mapi id 15.21.0592.009; Thu, 5 Nov 2026
+ 10:03:16 +0000
+Message-ID: <ad203438-ddbe-4445-bb3e-9632e738c1a5@amd.com>
+Date: Thu, 5 Nov 2026 11:03:10 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dma-buf/sw_sync: Optimize the retrieval of fence
+ reference counts
+To: Edward Adam Davis <eadavis@sina.com>, sashiko-bot@kernel.org
+Cc: media-ci@linuxtv.org, sashiko-reviews@lists.linux.dev,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, syzkaller-bugs@googlegroups.com,
+ sumit.semwal@linaro.org, phasta@kernel.org, robin.clark@oss.qualcomm.com
+References: <sashiko-outbox-198550@kernel.org>
+ <20261105052707.55911-1-eadavis@sina.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20261105052707.55911-1-eadavis@sina.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR0P281CA0250.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:af::20) To PH7PR12MB5685.namprd12.prod.outlook.com
+ (2603:10b6:510:13c::22)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,85 +100,136 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-197991@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|PH8PR12MB7351:EE_
+X-MS-Office365-Filtering-Correlation-Id: febb2e17-70e8-4f95-4d53-08df3b2402e7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|23010399003|1800799024|366016|261026121527099003|11063799006|4143699003|56012099006|261022105027099003|261021121427099003|261021123027099003|261022075727099003|261009223027099003|261102123227099003|261026140227099003|261028144727099003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	NTAMNDSJ1MLTVZ9uKPCjF7JRxEMBk583goWW1C+BLKFcRFn8EGAksPro9W48J//cWPVS1apsflpJW9t1ve3XX9oaVMwCYfvM7giJji/DgReRPjrbwMfQnSaL1EVgbZuEBZ+dWIUx38hqmF6Y7ILHQKxq+WW0JX0S9GYfrNL2sj5gPheKDYyGiS45BVuwz0PdlcHf60oucOSR8AMTWERgXg0GD4kBKVS+jFGrztu/AOQ7yhY55mRh/g/le5xFTIxbr2a4cOU7HsK7OE+WCzo7XkXRsEnwjVVP90aSYhHKvQ6g4lUGFZBfjwX/y2wowVnT8R4hrViW83G2+t2ywrBhENJZBiNy/CTuB6v75tRel7V0jvmHvdzLzZK18JxE3dhkvK3ZZehkLD8yt4tVxp0GDpztQRTJkmkLKAeDEQhPRdww0yfObQv3ODSqA9FItkA8nBQ2o47bdhFWsRaeb0hzBvOk6q7lzVA2vN51ss9PBg94SI7xPzveA6NSFB/mVCYfXktE0VeM3bptfXRVjX/u5Yolvyrs0F9XZ9r8Z/OTRiIBqmW1tmNYHXie5phR4Va/maRAUTeXyEQxm06evAmOAzlJ3Ds35Ta6ztc60xqxZeOZzA/QWKNfQuulfwxiTlWS
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(1800799024)(366016)(261026121527099003)(11063799006)(4143699003)(56012099006)(261022105027099003)(261021121427099003)(261021123027099003)(261022075727099003)(261009223027099003)(261102123227099003)(261026140227099003)(261028144727099003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VC9HczNCcTB3VDg2SzRqTElFWUFiK3Bib001Z1RTTEpIWFdDeDBqK0kyNlBQ?=
+ =?utf-8?B?L0xHNSswenl2UU82am1EeHBhczdudGFiQ1JoQUxmTXBoZGhjcmhZN1FDdjRU?=
+ =?utf-8?B?aXdVbVAxZDlJVjlaY3FReDFvako1U0YrTjZMTHByWGowR3o2UWppakpLSzhP?=
+ =?utf-8?B?dE9PNlgrME5HQytFY1p1K3UxTUFkUjRNREt5QVZ5RlZMb3RVeUM4a3M5eW9t?=
+ =?utf-8?B?cGh6ZHNPMmwzUVloc1RWaXdXb1RRRkN5SElCYUVKRWFXRDEreFdxbzNsK0xa?=
+ =?utf-8?B?c09ZRmxZTCthOGJIRWF0YWxkUldQcmtHOVpwYkRGWU10MkhHV2RQTjVhTzYr?=
+ =?utf-8?B?c0I0NWhHSlEwTS9PUEd3K0hubHNRR01zbmZ6Ky9iVWxlK1Q3SVh2ZjAwZWtO?=
+ =?utf-8?B?ZkFuZThyNnR6NWNIWDN0ZW0yaWFEZTYrUG1kZUZpSzVTYlEvTGdySVNxQUhK?=
+ =?utf-8?B?dkhLWFkrSitDbTFZQlFTZks2d2JBelVSR2c3K2loaCs4bHRBMzVWeWF4RlEv?=
+ =?utf-8?B?aTc0M1pLM2JBTFdGOG9qZlhQTS83NURYa0ptNlE4WkwvUmJzREhDUjJPNzk5?=
+ =?utf-8?B?L3NHc3BoMjVxN0w5VkdjQVgzYlFOckJHZFZVK0xkQVFHVmZ1RDlxZUJlbzBw?=
+ =?utf-8?B?ZUxCbGkvcHFyVDRVQ3A3ekdSdjZ6bXVzbFhVVVI3MmppSFB3c0ZQcVVHRnNz?=
+ =?utf-8?B?Wlg0RXorS01lanBYWEVMQ1N3Wks5OXNJaWV4WFJub2FvRHQvNkJ3ckRtQVM2?=
+ =?utf-8?B?VHBpRU1mQTBJenpFMTIzc2VwUkNqUGZhUFVzbmtEMTJxTGJ1UnN3TGJIbjEz?=
+ =?utf-8?B?YlZpeU0xWTRZb2JudG9qQWF3S3RsTDJJdzR4dXdjZm9maW9Vejh6Tld4Q3pX?=
+ =?utf-8?B?ZlBUdnoxTlUrSzZGSC9uZjJnVlVGeUR0WnBhM2hkQ3RHQkR5a1M0bzgzcHBS?=
+ =?utf-8?B?b1VWcEtucFhMeTBZdGJaa2dWTUlJQWxPUXRjeDJsVXp0SVRKNkRtajh3ZStm?=
+ =?utf-8?B?VTZ2SU5WMjV1WlNpV2pLSDNHWmZpNkZPUlBZYTdFanlEMmdrUnhOTkpDMzRp?=
+ =?utf-8?B?THFtU3dqTEUrRzVuVVJVcWR2Z1BabzdyRjRIa2twejUyeDk4QzZhdzB0eHpL?=
+ =?utf-8?B?OVFWN3djcTlTNFFMN3FkeGVHZDlDVk9pdjBnempKNUxicFZWNSt4V3pHVGdt?=
+ =?utf-8?B?dHNyS1hYa2dhcVR3SXdhN1hZeERvaHFwcmhITGlGSENNREVjbitaQjJYcjBG?=
+ =?utf-8?B?cUZWMmlyVWM1eFJTSW1hbnNvR0NlVmttbmlsOEJpVkMxSlh0YmloQkpqSS9p?=
+ =?utf-8?B?MUFtY0pLQ1VRWTFLa1JrUmhuc21KLzF4SjhJM2tCMjFVZ0RvTjZrQnZobzFJ?=
+ =?utf-8?B?M1Fmams1cW1XcmRkMUExRUlIK3JJR1U2RXd6NHpzeFZTc3VzdkdRbGxvQ05s?=
+ =?utf-8?B?OWhNWDFEeGEvcjNhSjBhSW5mQUlwK2d4U0VBa2VEZ3lOTi8yYURxTitsWWxM?=
+ =?utf-8?B?aENvZjZLMlhkdmFJeEM1Y2liOUl6dXNaZDB2V1U3Uk8vUnJUcDFQNzM3clNT?=
+ =?utf-8?B?czZTMlBJZXZ4VU4yK3IySnZ6L1JjajdpRW8rVHNYSkpFcjdETjFOOG9qUEdL?=
+ =?utf-8?B?ZWpzYWJLVmsrYldlYmRZd3ZESGhsaXZGaUJibytmdFFuWHVjRmllUmU2WFMx?=
+ =?utf-8?B?bENpOWEvR0tBcDYxc0luTmFrY2R5c3dVT1RJR1JVMFJ0aU1ybWkwZWt0MHVS?=
+ =?utf-8?B?bStPeFcwb1BDbko3a1ByOTJRRUdQVnYxaCtBNUVpTXJCbkl3TVBxdUpIZlVQ?=
+ =?utf-8?B?VW5hcTJvRXlJQnUzS1dEK1g0bHYxbVVCMUdNRjdqTVBCc3ZCV09jeWFXWmtE?=
+ =?utf-8?B?TDZKUGM3SmRpV0kvMGI1cmVZa0Vya1ZNdE10UWpKd2gyYTkvUUE3MWI5TXVs?=
+ =?utf-8?B?R2NzOWhoVnlCZkRYSVEvUDJUWFhMMnNwbmozZUdhNzJSUlhMcXNES1pCRVpR?=
+ =?utf-8?B?WFNjeHpjc0djd1RVRGMzMnNtOGNTZlliNzFvSmI3MWkvN1NVL1EybXJBN3VZ?=
+ =?utf-8?B?d1k3eUdVR2FKdTkrN2JLODE4dVFUYlhYNGRHMWtEQllVZkFjcklOZjJKZkhR?=
+ =?utf-8?B?OGQvdXNWczZId2UrQU11Z1E4aXlMS2wrMjh1RUg5M3AweEdsU2FqcVBseHc3?=
+ =?utf-8?B?QmVRSUpBaTFyYUVlSzY0bmJibDBGdnI4Z0dza3Fva3VEYnBNYXNLb1RmM3kv?=
+ =?utf-8?B?ek9oYzNwVkVjZVkzMUlzVDdHb0ROY3ZRZUVIMHo2NTlQLzdTSHJEc2dZUXpu?=
+ =?utf-8?Q?JqlrbgDeanBjgy2jUU?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: febb2e17-70e8-4f95-4d53-08df3b2402e7
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 10:03:16.4711
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: oU1cmOYCTZv5QEZx3mekmIFblCL3qlNvLwEOkQLtKEDpfkS8OMhLDmdCM/91+0Fc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7351
 
-On 2026-11-04 20:04:17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] f2fs: unconverted f2fs_verity_in_progress() calls break build in data.c
+On 11/5/26 06:27, Edward Adam Davis wrote:
+> There is a race condition between closing a sync file and the SW_SYNC_IOC_INC
+> operation on a sync obj. When a fence is created via SW_SYNC_IOC_CREATE_FENCE,
+> its reference count is initialized to 1. When the sync file is closed, the
+> fence's reference count drops to 0. A race occurs if SW_SYNC_IOC_INC accesses
+> the fence whose ref count has already reached 0 before dma_fence_release()
+> calls timeline_fence_release() to erase the corresponding pt_tree node from
+> the sync object, potentially hitting:
+> 
+> refcount_t: addition on 0; use-after-free.
+> ------------[ cut here ]------------
+> kernel BUG at lib/refcount.c:34!
+> Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+> Call Trace:
+>  kref_get include/linux/kref.h:45 [inline]
+>  dma_fence_get include/linux/dma-fence.h:323 [inline]
+>  sync_timeline_signal+0x6d9/0x8a0 drivers/dma-buf/sw_sync.c:224
+>  sw_sync_ioctl_inc drivers/dma-buf/sw_sync.c:405 [inline]
+>  sw_sync_ioctl+0x7b4/0x13f0 drivers/dma-buf/sw_sync.c:470
+> 
+> Use dma_fence_get_rcu() to replace dma_get_fence(), if fence reference
+> count is 0 then do like timeline fence release things: remove pt link
+> and erase pt node.
+> 
+> Fixes: e531fdb5cd5e ("dma-buf/sw_sync: Avoid recursive lock during fence signal")
+
+Please completely drop that. This is not something which has any justification to be backported.
+
+> Reported-by: syzbot+cba1a1f459230395a076@syzkaller.appspotmail.com
+> Closes: https://syzkaller.appspot.com/bug?extid=cba1a1f459230395a076
+> Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+> ---
+> v1 -> v2: use dma_fence_get_rcu() and remove link & erase pt node
+> 
+>  drivers/dma-buf/sw_sync.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
+> index 8df20b0218a9..261bc98b1ed6 100644
+> --- a/drivers/dma-buf/sw_sync.c
+> +++ b/drivers/dma-buf/sw_sync.c
+> @@ -221,7 +221,11 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
+>                 if (!timeline_fence_signaled(&pt->base))
+>                         break;
+> 
+> -               dma_fence_get(&pt->base);
+> +               if (!dma_fence_get_rcu(&pt->base)) {
+
+Well that is at least better than before but still needs a code comment explaining why this is possible without holding the RCU read side lock.
+
+Something like /* It's possible to race with timeline_fence_release() here */.
+
+> +                       list_del_init(&pt->link);
+> +                       rb_erase(&pt->node, &obj->pt_tree);
+
+What happens is that you race with timeline_fence_release(), so that here is superfluous and potentially even harmful.
+
+Regards,
+Christian.
+
+> +                       continue;
+> +               }
+> 
+>                 list_move_tail(&pt->link, &signalled);
+>                 rb_erase(&pt->node, &obj->pt_tree);
 > --
-> 
-> commit 915530af8afaaef004825dfc719049bb96b8cda2
-> Author: Andrey Albershteyn via Linux-f2fs-devel <linux-f2fs-devel@lists.sourceforge.net>
-> 
-> f2fs: use I_VERITY_BUILDING instead of private flags
-> 
-> This commit replaces the f2fs-specific FI_VERITY_IN_PROGRESS flag and
-> f2fs_verity_in_progress() helper with the generic fsverity_is_building()
-> helper.
-> 
-> > diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-> > index 4fa4d8042f702..11d1cade11510 100644
-> > --- a/fs/f2fs/f2fs.h
-> > +++ b/fs/f2fs/f2fs.h
-> > @@ -925,7 +925,6 @@ enum {
-> >  	FI_EXTRA_ATTR,		/* indicate file has extra attribute */
-> >  	FI_PROJ_INHERIT,	/* indicate file inherits projectid */
-> >  	FI_PIN_FILE,		/* indicate file should not be gced */
-> > -	FI_VERITY_IN_PROGRESS,	/* building fs-verity Merkle tree */
-> >  	FI_COMPRESSED_FILE,	/* indicate file's data can be compressed */
-> >  	FI_COMPRESS_CORRUPT,	/* indicate compressed cluster is corrupted */
-> >  	FI_MMAP_FILE,		/* indicate file was mmapped */
-> > @@ -3627,12 +3626,6 @@ static inline void clear_inode_flag(struct inode *inode, int flag)
-> >  	__mark_inode_dirty_flag(inode, flag, false);
-> >  }
-> >  
-> > -static inline bool f2fs_verity_in_progress(struct inode *inode)
-> > -{
-> > -	return IS_ENABLED(CONFIG_FS_VERITY) &&
-> > -	       is_inode_flag_set(inode, FI_VERITY_IN_PROGRESS);
-> > -}
-> > -
-> >  static inline void set_acl_inode(struct inode *inode, umode_t mode)
-> >  {
-> >  	F2FS_I(inode)->i_acl_mode = mode;
-> 
-> [Severity: Low]
-> Does removing f2fs_verity_in_progress() break the build in fs/f2fs/data.c?
-> 
-> Two callers in fs/f2fs/data.c still reference f2fs_verity_in_progress()
-> after this patch:
-> 
-> fs/f2fs/data.c:f2fs_write_cache_folios() {
-> ...
-> retry:
-> 		pos = folio_pos(folio);
-> 		end_pos = pos + folio_size(folio);
-> 		isize = i_size_read(inode);
-> 		verity_in_progress = f2fs_verity_in_progress(inode);
-> ...
-> }
-> 
-> and:
-> 
-> fs/f2fs/data.c:prepare_large_folio_write_begin() {
-> ...
-> 	if (!f2fs_verity_in_progress(inode) &&
-> 	    !(pos & (PAGE_SIZE - 1)) && (pos + len) >= i_size_read(inode)) {
-> 		size_t zoff = ori_off + len;
-> ...
-> }
-> 
-> Should these two call sites also be converted to fsverity_is_building(inode)?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261104194618.103332-1-aalbersh@kernel.org?part=5
+> 2.43.0
 > 
 
-Ah, this refactored code is from f2fs/dev which is not yet in
-v7.4-rc1. Sashiko applied this patchset to f2fs/dev.
-
--- 
-- Andrey
