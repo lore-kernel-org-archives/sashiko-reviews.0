@@ -1,49 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.197
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793899914;
-	b=CpBdyXir8oKXrWtEACZaVJqqS4jyxv8oOa+8COpzWz5WD4GwPcfqnPzxFGAnbpknU6KG
-	 GL/LR4Prx5sHeJ6xQOrt1z2iOo79Jg7Dmx97TCt0g4e7JvVNiJrv9VBsTh6/VJPTzC7UA
-	 CAlsgOOpN3jvzrc2z1cbQoXx1kl2Ifr2rTSJyweiSOtAvVnmsGE1xKQeWQMUhr16A/eXY
-	 wy/gOdcDRfC6mr8E1+PsOPIH1l56KgV9LgfrgbtdNRacMlaN+0B83aal7XrKzxGGfTSkk
-	 kd+kNjeXubPXU3xen3aML1hfFgFJWnZxqOrelQyIR6I02NoawuOwKzTwTzaTCooeQGg==
+	t=1793903965;
+	b=pkaUHvbfRipJ288usvLcEIBiYYiDZIb0kjwgghIozDYYE/y5ctb5FmrIOGhnYzqYPVbe
+	 P9chgo++AL3FmGZIzb4UV33f4Idyi7+HL7BQl5FYk7+8hLKvnCDAUScyvDvfQRtG23mHl
+	 +VZE0//9BaC0eIsRBE32fk5aFhyd50eXcFYE+N1FlqT5lMKrEuSgl5fL6EPvwLPgvXm4V
+	 pjThi1Z5x4tct2SQHAa7jTUKnzereYhYZZhd5Pg7E8gavw6BhzZV7TylUpxEY1+CA8d07
+	 osVJ41VROxe5Vz8v6wafsgUkyXTNl1cVQOuPi8xZ21U0wZWiwWJ06EphF0RhHoql2vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793899914;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:From:To:Cc:References:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=YKulzZM0URwerrPabJBi4D2xYbrKiSJ1N2beCoy9biU=;
-	b=UQzlRnO9kQE1gctIzRZAgN4Ku7wJJ2OupGeEum4g1IOqUqgSR8ETs7d4jVbePyTPYvZG
-	 Mue8RT3djgy4Mdl7GRR+sKxa5SPPnHFHildfsq4MeFd7gIyHum5MIvqUz/2WERxLwq1SJ
-	 lylUKgJiGS+s3pjUBOe6Kh66iLoKQnGGMmH+JJKWVUmFxyxUPiqUDthRC/95sTkQ1KNUU
-	 A2zjuWk5Ai4e1LQjtNv3hfFxO7vbcNTFPhPIBoXY+2EQ4ch4leHgvgnNHL/NmasXnU720
-	 cxy50E+I+PCJrvBa2wUm6+DznrURPhXTZRHftbh1XtTqyHIh6QHN4j20cS+4qQ2K2kw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793903965;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=EdX+hrQFFp3Ef43cGYEEIMpLtyOAGxMQqiQQxVrhHxE=;
+	b=Lu6u7zRFSnfR32v3IkqicuFEbZQQTRnKNk09RfMJyWzuax8QYhH9qbmuF1ESwpj0JeTl
+	 VdzU5UWB9qsnaEWh5BdEnAdKut4OQPl2a8muJCoYKTJsrZOW+a0Yd/Y/knRQfT+MjO3bq
+	 dP/VafzsC0z4PopcxiUgBwc4KUEtuP9RHm5RWvgHofr2TBtpZEXqAlGTXAaN+an3+zsGG
+	 dG+EDckC6evkCIwOH5KJEWbqzw8C/WN2RxOlfVCGMTdq4efas7moWkS5lnJRQg7N7kTaR
+	 6aCJ5b2NxpRPBqxgyJZ1WOQBH+fFSdveQSFK5g9xqSLdhcF/xK+vwTJLzL63v2r7uWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=i7RS6puz;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 641FE606A326;
-	Thu,  5 Nov 2026 17:31:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 641FE606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=R4taE8yX;
+	arc=none smtp.remote-ip=209.85.215.197
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F97606A32C
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 18:39:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2F97606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=i7RS6puz
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A96541596;
-	Thu,  5 Nov 2026 09:31:49 -0800 (PST)
-Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A1C0D3F628;
-	Thu,  5 Nov 2026 09:31:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793899912; bh=XXpaSz8VDhnp2Ua2FudpG2j4Ty9LSQB5GikQ0O0/Xag=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=i7RS6puz/MVKzQ5X29iNuL78bzNVknNnJjndXSlO1sQTMsU8SNXVGXQVzi3eDMMwu
-	 17m3I0U+ra/NW5Cy8hJjp3g/Mnqzor7WloMuegvmPpr/zNYSLPLSFg1JJQd6wcb45V
-	 QoeMT8yjWQRRVczYl1Srd0/rUQCwN8WwLK858djU=
-Message-ID: <0d5a4b59-f38c-4c1d-a59e-202e7efb4b54@arm.com>
-Date: Thu, 5 Nov 2026 17:31:50 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=R4taE8yX
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-cdb4c49e52fso1969600a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 10:39:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1793903964; x=1794508764; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EdX+hrQFFp3Ef43cGYEEIMpLtyOAGxMQqiQQxVrhHxE=;
+        b=R4taE8yX1CnDEpWDZHmtuyAFNpImJI5ojVyfg4q3IcEoHgBlxXeH9EXtl4XyjI7jtZ
+         5/5MTJLqYkEmij9As7mSFn8YDkoIMIi8RotdqNkqK/vJvChgWs+77BuTL6RgjRzphJUU
+         PSmI0gks5XSYiL3IyDzxfNp+3v3c+JP1MvfUvSMHf5scRekYcLKeXC3WpGxYJobq/XK/
+         tALyQgM2hXqcLPieD4sieUDvvrNwqXXIneGHTqmYcyBlSDHyanoJUglg1XbYmZNWMadg
+         4dkNSikKdfWLTJ5R1/WWIZ0WjVsQysRcjvGsIxVdHY9h9QZUWyEvMuJejAel3TVbqMyB
+         esMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793903964; x=1794508764;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EdX+hrQFFp3Ef43cGYEEIMpLtyOAGxMQqiQQxVrhHxE=;
+        b=GF1lhrzFnaU18UTDHgO1W840dte87y91zxJf41uJNuM9QLszUGqQJh6UZnrQn8aRQU
+         WHrVFmumQzgyKct0Gjl3Cxfu3xqgKhz7uSaz36bKW5XlnFIrkRjXI0foL2DUPv2ZVu8S
+         1xvRZsEOBfDAePvr/XaocRSvMkfySP/2UkulZx7jvpqoB0uT7At6GENfZWgLhLZBzA7j
+         I0RmssAmc9VTB9zU61ynS1CpTTkVGM8H6Kj8Sg0sbcJEhM5YBt5/7TESKClGIoN8pVZQ
+         B4rBknvgGtNkGqIZuux81M/LgNtUMBVoJM5IjLhxGoG6RjFFPTUDV5RH9rrDY2teP2OF
+         Njfw==
+X-Gm-Message-State: APuU4Z9ibeu+l1ksgXA1uWGnQxMSXToOxCfEJ+9d105IT8e6/jTnyNQB
+	P4ptf2uHE9amMa/1JVWst6url+NsbiRlnr4NpjlkYhF7/2PrgrCc4mCj+3egiWeFd3zNYkU0hU5
+	J3dlfMasev3/vmQHR6fILIE8lBJRtpvc+/qOY7o/OM4qKYHvJgMRWBFvzeivQZFXyTpFbvBW2/h
+	oITY7AwWXvcoUgnomkVyGhxYkiIX9tyXlUFT83b+fs078yZqu5
+X-Received: from pghl2.prod.google.com ([2002:a63:f302:0:b0:cc7:8e37:71bc])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:9e95:b0:3e9:290d:9774
+ with SMTP id adf61e73a8af0-3ebb2a7e5dfmr373500637.44.1793903963836; Thu, 05
+ Nov 2026 10:39:23 -0800 (PST)
+Date: Thu, 5 Nov 2026 10:39:23 -0800
+In-Reply-To: <sashiko-outbox-199772@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,159 +77,82 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] KVM: arm64: CCA: Prevent memslot modifications
- after Realm creation
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-To: Steven Price <steven.price@arm.com>, sashiko-reviews@lists.linux.dev,
- kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Ackerley Tng <ackerleytng@google.com>,
- Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20261102141304.126883-1-steven.price@arm.com>
- <20261102141304.126883-10-steven.price@arm.com>
- <sashiko-outbox-193708@kernel.org>
- <9489ebe7-4c75-4229-811e-3f618028d367@arm.com>
- <a2dfb2ad-7c52-43e1-8b77-cacb2fa00c05@arm.com>
-Content-Language: en-US
-In-Reply-To: <a2dfb2ad-7c52-43e1-8b77-cacb2fa00c05@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20261105181742.3718448-1-seanjc@google.com> <sashiko-outbox-199772@kernel.org>
+Message-ID: <auzNWz75JLF3VmV1@google.com>
+Subject: Re: [PATCH] KVM: VMX: Re-pend KVM_REQ_APIC_PAGE_RELOAD if getting
+ backing pfn fails
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-
-
-On 05/11/2026 15:06, Suzuki K Poulose wrote:
-> On 04/11/2026 11:15, Steven Price wrote:
->> On 02/11/2026 15:50, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 1 potential 
->>> issue(s) to consider:
->>> - [High] KVM: arm64: CCA: guest_memfd memslot delete rejected after 
->>> Stage-2 unmap
->>> -- 
->>>
->>> commit 5106402397c36eec1e5fa59a5bb2c5adf4ee2aa8
->>> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
->>>
->>> KVM: arm64: CCA: Prevent memslot modifications after Realm creation
->>>
->>> This commit updates kvm_arch_prepare_memory_region() to disallow 
->>> creating,
->>> modifying, or deleting guest_memfd-backed memslots once a Realm has been
->>> created.
->>>
->>>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->>>> index 51fda7b2ff7f3..eb8c5f9e9791d 100644
->>>> --- a/arch/arm64/kvm/mmu.c
->>>> +++ b/arch/arm64/kvm/mmu.c
->>>> @@ -2862,13 +2862,28 @@ int kvm_arch_prepare_memory_region(struct 
->>>> kvm *kvm,
->>>>           (new->flags & (KVM_MEM_LOG_DIRTY_PAGES | KVM_MEM_READONLY)))
->>>>           return -EPERM;
->>>> -    if (kvm->arch.vm_flavor == VM_PROTECTED_PKVM) {
->>>> +    switch (kvm->arch.vm_flavor) {
->>>> +    case VM_PROTECTED_PKVM:
->>>>           /* Cannot modify memslots once a pVM has run. */
->>>>           if (pkvm_hyp_vm_is_created(kvm) &&
->>>> -            (change == KVM_MR_DELETE || change == KVM_MR_MOVE)) {
->>>> +            (change == KVM_MR_DELETE || change == KVM_MR_MOVE))
->>>>               return -EPERM;
->>>> -        }
->>>> +        break;
->>>> +    case VM_REALM:
->>>> +        /*
->>>> +         * Once the Realm is created, we cannot modify any slots that
->>>> +         * could be providing private memory. i.e., guest_memfd backed
->>>> +         * slots.
->>>> +         * TODO: Handle trusted device private memory slots
->>>> +         */
->>>> +        if (!kvm_realm_is_created(kvm))
->>>> +            break;
->>>> +        if (kvm_slot_has_gmem(old) || kvm_slot_has_gmem(new))
->>>> +            return -EPERM;
->>>
->>> [Severity: High]
->>> Does checking kvm_slot_has_gmem(old) in 
->>> kvm_arch_prepare_memory_region() run
->>> too late to prevent Stage-2 unmapping when deleting a guest_memfd-backed
->>> memslot on a created Realm?
->>>
->>> In virt/kvm/kvm_main.c:kvm_set_memory_region(), non-delete changes
->>> (KVM_MR_MOVE and KVM_MR_FLAGS_ONLY) on KVM_MEM_GUEST_MEMFD memslots are
->>> already rejected upfront with -EINVAL, so kvm_slot_has_gmem(old) is 
->>> reached
->>> here when change == KVM_MR_DELETE.
->>>
->>> However, in virt/kvm/kvm_main.c:kvm_set_memslot(), KVM invalidates and
->>> flushes the old memslot before calling kvm_prepare_memory_region():
->>>
->>> virt/kvm/kvm_main.c:kvm_set_memslot() {
->>>     if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
->>>         invalid_slot = kzalloc_obj(*invalid_slot, GFP_KERNEL_ACCOUNT);
->>>         if (!invalid_slot) {
->>>             mutex_unlock(&kvm->slots_arch_lock);
->>>             return -ENOMEM;
->>>         }
->>>         kvm_invalidate_memslot(kvm, old, invalid_slot);
->>>     }
->>>
->>>     r = kvm_prepare_memory_region(kvm, old, new, change);
->>>     if (r)
->>>         goto err;
->>> }
->>>
->>> kvm_invalidate_memslot() marks the active slot as KVM_MEMSLOT_INVALID 
->>> and
->>> calls arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot():
->>>
->>> arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot() {
->>>     write_lock(&kvm->mmu_lock);
->>>     kvm_stage2_unmap_range(&kvm->arch.mmu, gpa, size, true);
->>>     kvm_nested_unmap_cipa_range(kvm, gpa, size, true);
->>>     write_unlock(&kvm->mmu_lock);
->>> }
->>>
->>> For a Realm VM, kvm_stage2_unmap_range() invokes
->>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() with
->>> KVM_FILTER_PRIVATE | KVM_FILTER_SHARED:
->>>
->>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() {
->>>     if (attr_filter & KVM_FILTER_SHARED)
->>>         realm_unmap_shared_range(kvm, start, end, may_block);
->>>     if (attr_filter & KVM_FILTER_PRIVATE)
->>>         realm_unmap_private_range(kvm, start, end, may_block);
->>> }
->>>
->>> By the time kvm_arch_prepare_memory_region() returns -EPERM and
->>> kvm_set_memslot() restores the old memslot in the error path, hasn't
->>> realm_unmap_private_range() already unmapped and undelegated the Realm's
->>> private Stage-2 DATA granules across the memslot's GPA range?
->>>
->>
->> I think this should be fixable by checking in
->> kvm_arch_flush_shadow_memslot() and preserving the stage-2 mappings by
->> returning early. kvm_arch_prepare_memory_region() will then reject the
->> operation but the mappings will still be in place.
+On Thu, Nov 05, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] KVM: VMX: stale no-retry comment in vmx_set_apic_access_page_addr()
+> --
 > 
-> Or is the better fix to delay the kvm_invalidate_memslot() after 
-> kvm_prepare_memory_region() ? i.e., if we the KVM backend doesn't
-> approve the change, why do invalidate the slot ? For most of the CoCo
-> VMs, this would be disastrous.
-
-
-Ignore this, driver for CCA is doing the wrong thing. Instead of
-flushing (which is a NOP for CCA), we were removing the mapping.
-
-
-Cheers
-Suzuki
-
+> commit 635b83243ce9cf39c9f2bbd0198d7730dbb21505
+> Author: Sean Christopherson <seanjc@google.com>
 > 
-> Suzuki
+> KVM: VMX: Re-pend KVM_REQ_APIC_PAGE_RELOAD if getting backing pfn fails
 > 
+> This commit re-pends KVM_REQ_APIC_PAGE_RELOAD in
+> vmx_set_apic_access_page_addr() when looking up the APIC-access page memslot
+> or faulting in its backing pfn fails, preventing the vCPU from running with a
+> stale vmcs.APIC_ACCESS_ADDR. It also adds a WARN_ON_ONCE() if the private
+> memslot is missing or invalid.
 > 
+> > diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+> > index b341af4c6057a..13dcf9c12c83a 100644
+> > --- a/arch/x86/kvm/vmx/vmx.c
+> > +++ b/arch/x86/kvm/vmx/vmx.c
+> > @@ -6923,8 +6923,10 @@ void vmx_set_apic_access_page_addr(struct kvm_vcpu *vcpu)
+> >  	 * APICv is enabled, but paranoia won't hurt in this case.
+> >  	 */
+> >  	slot = id_to_memslot(slots, APIC_ACCESS_PAGE_PRIVATE_MEMSLOT);
+> > -	if (!slot || slot->flags & KVM_MEMSLOT_INVALID)
+> > +	if (WARN_ON_ONCE(!slot || slot->flags & KVM_MEMSLOT_INVALID)) {
+> > +		kvm_make_request(KVM_REQ_APIC_PAGE_RELOAD, vcpu);
+> >  		return;
+> > +	}
+> >  
+> >  	/*
+> >  	 * Ensure that the mmu_notifier sequence count is read before KVM
+> > @@ -6941,8 +6943,10 @@ void vmx_set_apic_access_page_addr(struct kvm_vcpu *vcpu)
+> >  	 * if APICv is permanently inhibited, i.e. the memslot won't reappear.
+> >  	 */
+> >  	pfn = __kvm_faultin_pfn(slot, gfn, FOLL_WRITE, &writable, &refcounted_page);
+> > -	if (is_error_noslot_pfn(pfn))
+> > +	if (is_error_noslot_pfn(pfn)) {
+> > +		kvm_make_request(KVM_REQ_APIC_PAGE_RELOAD, vcpu);
+> >  		return;
+> > +	}
 > 
->>
->> Steve
+> [Severity: Low]
+> This isn't a bug, but in vmx_set_apic_access_page_addr() in
+> arch/x86/kvm/vmx/vmx.c, the full comment immediately above
+> __kvm_faultin_pfn() still states:
 > 
+> 	/*
+> 	 * No need to retry if the memslot does not exist or is invalid.  KVM
+> 	 * controls the APIC-access page memslot, and only deletes the memslot
+> 	 * if APICv is permanently inhibited, i.e. the memslot won't reappear.
+> 	 */
+> 
+> Since both the invalid-memslot check and the is_error_noslot_pfn(pfn) check
+> now retry by calling kvm_make_request(KVM_REQ_APIC_PAGE_RELOAD, vcpu), and
+> VMX does not delete or inhibit the APIC-access page memslot while the VM is
+> alive, should this comment be updated or removed?
 
+Gah, yeah, I'll fixup to this when applying:
+
+
+	/*
+	 * Retry if faulting in the page fails (or the memslot is unexpectedly
+	 * invalid) even though KVM controls the APIC-access page memslot, and
+	 * never deletes memslot for a live VM when running on VMX.  Userspace
+	 * can modify the underlying VMA, and while doing so is beyond crazy,
+	 * the cost of supporting that behavior is to simply retry the reload,
+	 * which KVM should do anyways to avoid carrying a stale pfn pointer.
+	 */
