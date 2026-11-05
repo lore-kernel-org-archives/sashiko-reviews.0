@@ -1,92 +1,45 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793886927;
-	b=fAurVvq8238MQRhAcopVS/XyiKXypwj/xXAlDURBj+9+vbMuV8CiUUq6D8v186GPO0qy
-	 WhDZdK+Nj42xU16XW16dI8syIb1B3jsnsTCmTO8iw1/VT3O3OyM3pJqdtJh2SE8uv/Z4t
-	 v32U+zXESlg9zyVBeDUiqQk6D1dWsOU+HQm284foeuqCyCvbIYAzxCMmjjoRLmhmK0bf0
-	 00To+khubODO8ziGh40TpWzPvK+KS54dJ1Bum18w/2d1ElC9UniOP5b0lp5ytT/qTLWqx
-	 AzhHAFJ2GNwYIwN3D2y9gsjguwDeynltGvZRLr3+DmAOq9vjFPyscwBgRYEbW0KDTxw==
+	t=1793886945;
+	b=ytoQqDt221QCNZ1Mn8PoqlWKgYeForisACwTGtferEaCGIKvwwu/f5if4QWkVOdhfOwx
+	 BZ7ZOOJd54aOFmO5emaJyZPLLnt86p7x77lpZUwzNba8XRe5KBlQ6dQYzMSEqNtV26pD8
+	 kTy3J9VcfFHiuUvlwaApa1uHyjIDvCM5CCyGa5uenPV40DJ8N35032NR4yWWHYe9xl323
+	 xBK4l02h9/NbKzPi6of2E+faAEeeCAWZLfYGvgwuu9O1lyjHbk00nCvmRMpFWv6zOqeAY
+	 TbYfMCStzdaq69AheF9TjjciJqZ1etGrZ+C2EIzcCylmvUswYB5s5TBggfm05hrEzoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793886927;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=ZOan7uVPwS+Sq0zaneJfTrgsA8Jqv1vwKBJC+yJr4FA=;
-	b=HqPaDdP0Zl3BUxESHp9b9KIeGciOMqUT5CrNzMS5fed42ERnBpJHiRA1HWMomoq/TONI
-	 SsCD+x9aqTl3xMKazkt2pKIhQmysAMLiohT0P61+9RcGeM1jsx1JLXMWdNqQTNGFxwuMM
-	 cQglJTYUKVoBqjuMgNpf4R3HUdWRHT4t2bH8jj+gl/TGLjV5skSpbISdw0z1r83YIo/SI
-	 j4LH2Ab0hG+eyC0+3h56kNOaS9Njw7yDzklaTRFLcDgc4FMlDdYymSH6uZTcP/t8baQPg
-	 evOO3/pZcQ/u/xskhdAflj/jGVF2J8iB06LOt5iAxIaVHBOLI0RI7yhxlgzLtOk4USA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793886945;
+	h=Received:DKIM-Signature:Mime-Version:Content-Transfer-Encoding:
+	 Content-Type:Date:Message-Id:Subject:Cc:To:From:References:
+	 In-Reply-To;
+	bh=FRvCb0qdn0UFgCq8z99GAbGRLgJXO4j4sZWydl6Xwds=;
+	b=et/IS7fh6Nz9eQUvjljX0xUedY7AVDW0L4QdHu6o4/25GhqBxWMqGtyZMYL/viBRWstI
+	 OICCpO9bi4amx3EbkzN12auqCzdjoEs4mWYPzAgQxNgr5OrEvfIzaiYhmWlAU4Vwa851o
+	 n3ph3+xzWPx3KFhgyVUT5FucDcUbPvqvQUfnWW2lUxAhGFk08EcuQkCKUEZxb35Ov0MJj
+	 wgyRFuMFLkLc7TpdjJhaQZFOMF1R9BdE8gE1WPgWSdIwfjE0Sr8HNQeiPsoClNpbyyECi
+	 SiXLREUFLRjO0gslF75DRdtdCIULj5Uj91YARic6RoCuu/EYJPSyuvXtr5xosvgNs/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JqlQ6zLC;
-	arc=none smtp.remote-ip=209.85.128.53
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=L8B5TUmk;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D5E606A31B
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 13:55:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E9D5E606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788DA606A326;
+	Thu,  5 Nov 2026 13:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JqlQ6zLC
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a35a60499eso15098325e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 05:55:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793886925; x=1794491725; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ZOan7uVPwS+Sq0zaneJfTrgsA8Jqv1vwKBJC+yJr4FA=;
-        b=JqlQ6zLCLVg8WZ2LW8XUs0coMRj5j2GgE0TER3cyiypPaCfjV9XHFTimX7y8p+Z7ha
-         HjfJYjCISJyWOxfpRA9VuvQsOYzl2/yFRu+4UqGrEMHk3dsfYMXQ1EKLdyVYMT5Gh9dC
-         95OC/GvttudBVZax/EKGl9Jy+huMCPkhTkcBe87fEXTsTMjCza4WnmCAjY2CgK9uqvDD
-         l12tmfFbPAUiot/thwycxZbIhJsQ972D550hijcGItLEkFfGnYqWSXiR5mIXblrrnvcR
-         9ngaifTY0ixCQYHhk0DhaxMOhboPSgeCxp3u0kVncy6aAkdSDRC1U7VeAqgMJd92+umv
-         bZ6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793886925; x=1794491725;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZOan7uVPwS+Sq0zaneJfTrgsA8Jqv1vwKBJC+yJr4FA=;
-        b=tARh5w8zHu/Bg0LD3m8s8P24Cjr6ZHvbg1GB3Qjh0B8vMn4Hw9TcZK1rzGDpk2tRFu
-         /eh2UaPQgcVLJkVKYEejZEn2ve6kfrkjAos4uz6EN+18EoqOEyh3GYmb4npUhIhovYO0
-         T9CC+4qa/vH1tWVRQfwImcB2tgmqT6MIxuO9m8+GmbgH8iLqqCINTEea0OWBr1e+MVE7
-         +HFzvKB7oxwOXoup9DoSdo5xjF7FkU7ADcNTnNaHv6Skfvb1J4ye36wrijFcL1pb37Dk
-         Yk3c6haL4nKXZRHvXz+2EAnNV4W1IGpQLYciEb6cRnc1K2CFAQKzahszlp1TMkSgyP68
-         kBOg==
-X-Gm-Message-State: APuU4Z8cogKJ9DGRV8QvLbAaAbxcVFelG0oryDfdkWt2tKsoW114sBAG
-	8MtjajleOC0WR2YZlMqudoWcbNiw7Hy8MAY+U8R8ur5ect8aVoZ67rsjy37bg/Ab
-X-Gm-Gg: AYBFou1vK8uVgnmeT/wBI8ctQZNQv1OkkSOxgHFZVDjVRGKS5M0K2TZ/FKXeyaFkXlB
-	8gPlS8WTQCU89u3f4f8L8IZM6OgU9VZxRX1KRJZS2dszMNfnPT8u1LHfqAsasgD/L3K/QRq4L2Q
-	VfLeivFqIgV+IBsx9JFq6J9qhY/SvPS/1O5NvokeGOUqKu3J8GopHWaCczUDKeCSRAR0mY1T0O7
-	OSHnL9/Q1C2BjdboFiyQ8FlOTQZlQ869uSTQbeWJRJVBw/LkNBIZjbkJglIGYCrZCZmLFg3CTy6
-	962mKQ6ndgug8wqVOVFbH1b4CE4Ew5gito0PSUy3mO7cP1hSID1JtQN5NoN3T8ZZLIkvQt77XGK
-	UWmqLsxTOnS+Y3YZ1lbr8YknhmeDD7c05Bf+hSNw9K0HPjpTZXRC+Mn1E1lEfesV53slEYeMSEl
-	08IaugIG2ESlMFETSAM5hgTmIi/gzhvFsWH87QM4NBp1TspJkfRsfONre9JbczjA+bbSYRQWEA5
-	18yUY74+CSDL3EGcRulrZkkn5Zzzu4YCZaTZoOjBmVnOR1nVlzv6l+jT62hVDDsiqvV1Q5VLio1
-	r/rtez3n79cuEdlj2tXYWExkZtTiZR+nfg==
-X-Received: by 2002:a05:600c:811a:b0:4a2:1e1:d55 with SMTP id 5b1f17b1804b1-4ac187a6b30mr413265455e9.28.1793886925187;
-        Thu, 05 Nov 2026 05:55:25 -0800 (PST)
-Received: from killingmachine ([46.188.59.33])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b56f5e65b0sm76604845e9.11.2026.11.05.05.55.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 05:55:24 -0800 (PST)
-Date: Thu, 5 Nov 2026 16:55:23 +0300
-From: Sergey Matsievskiy <matsievskiysv@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH] dmaengine: axi-dmac: fix incorrect segment size
- calculation
-Message-ID: <auyKylfYyK9-pHKJ@killingmachine>
-References: <20261105131547.305510-1-matsievskiysv@gmail.com>
- <sashiko-outbox-199139@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=L8B5TUmk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9775A1F000C1;
+	Thu,  5 Nov 2026 13:55:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793886945;
+	bh=FRvCb0qdn0UFgCq8z99GAbGRLgJXO4j4sZWydl6Xwds=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To;
+	b=L8B5TUmkCR4s1r1wiNQSpXG2koNdEAW6KB+TqzDVo/Zb1Ew5F67tq4MoHL60J/a4d
+	 P1mzGlTZk78Ohq//u2YU359ZiciYbDIFCxJ8APqY6j4X1+ELfJvYEA0XAKiUZh9XIN
+	 KsOzC8VOUJuG92TnnENuZUUXAUS6zBXXtAzNxiZ6PzikDx0LxqXdWTatL7KdP+ob+z
+	 jwXhyQFGPr+lQSLfTzjTWdVPP+GPL1OuroIsxZuLLqAMK7zVbEB90pbErGwU1KU4UB
+	 /pfJvG7/H02SEG2FNqh5TF89cc9MyEvmGIay4WpWqDKsIgWkPckHt8aYC07f7x0D6N
+	 0DIcGyuEInHpw==
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,16 +48,47 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-199139@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 05 Nov 2026 14:55:41 +0100
+Message-Id: <DMNBUJVZHT7N.232EWW7QZINWD@kernel.org>
+Subject: Re: [PATCH v2] dma-buf/sw_sync: Optimize the retrieval of fence
+ reference counts
+Cc: "Edward Adam Davis" <eadavis@sina.com>, <sashiko-bot@kernel.org>,
+ <media-ci@linuxtv.org>, <sashiko-reviews@lists.linux.dev>,
+ <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+ <linux-media@vger.kernel.org>, <syzkaller-bugs@googlegroups.com>,
+ <sumit.semwal@linaro.org>, <phasta@kernel.org>,
+ <robin.clark@oss.qualcomm.com>, "dri-devel"
+ <dri-devel-bounces@lists.freedesktop.org>
+To: =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+From: "Danilo Krummrich" <dakr@kernel.org>
+References: <sashiko-outbox-198550@kernel.org>
+ <20261105052707.55911-1-eadavis@sina.com>
+ <ad203438-ddbe-4445-bb3e-9632e738c1a5@amd.com>
+In-Reply-To: <ad203438-ddbe-4445-bb3e-9632e738c1a5@amd.com>
 
-On Thu, Nov 05, 2026 at 01:26:06PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] dmaengine: axi-dmac: 32-bit overflow in axi_dmac_prep_slave_sg()
+On Thu Nov 5, 2026 at 11:03 AM CET, Christian K=C3=B6nig wrote:
+> On 11/5/26 06:27, Edward Adam Davis wrote:
+>> Fixes: e531fdb5cd5e ("dma-buf/sw_sync: Avoid recursive lock during fence=
+ signal")
+>
+> Please completely drop that. This is not something which has any justific=
+ation to be backported.
 
-I don't think that this warning is applicable. Both arguments are 32 bit
-integers and the result of the division should also fit into 32
-bits. Intermediate promotion to 64 bit integers should not have negative side
-effects.
+Fixes: identifies the commit that introduced a bug for better reference,
+independently of whether the fix should be backported.
+
+If something shouldn't be selected by autosel one can add
+
+	Cc: <stable+noautosel@kernel.org> # reason to exclude from stable
+
+In this case I assume you said that because SW_SYNC is test infrastructure?=
+ If
+so, AFAIK the stable team explicitly does backport test infrastructure as p=
+eople
+also run selftests on stable kernels.
+
+Thanks,
+Danilo
