@@ -1,76 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793890726;
-	b=pt2baHCXQToozbDgg2M//D5K87TWylYZ5tKLbKuHhgd5sDBHFqZnyuiUKXGhXZZq77Hi
-	 V64ha0D0xlcWUENkBOIv0tU0S/DsdHQJ73rOMo0QAKa11hp5LPeR2JYClGN4F9L5mOtTK
-	 /xIwVx8gJVMA8xPkSr73AGsDrUhbXB6FUNnAPDA+ZMmtoKtKzviGiCZZd1d/vjuTLFi0j
-	 VnB5By4Q3rxrNWyCkRZafiUSFjbLRMqBT9B90wvQ7qoEOXNFGDiMISKwjlddz40jfnj5y
-	 BcZvpKgYmN6hWzBiinu93OE4DM0b5iAfQT1IsKYxrXsZPPkltN2CTqJvsS9FucPJAcQ==
+	t=1793890794;
+	b=FRDRueAehQIWYJ/3LyEg4xjJ0oF2RbsyhtAbeEfwOpCf7B3rXu/zP4coi9t/XqGRR+4q
+	 NjagC19l+UxqiTU1GPvYI+nY8CTpQv4cqWuNHcxOxke7tOB9h+ArhnJ1QITPlr2F/lOQp
+	 Yk/8aQunV2GJVQKjJeFvi3GrUx0G+pQXlYf6VQ9JvTDI0EAp8U1MH8GXNsGI2Wm71xSSX
+	 EltSGlUQp5FvBVH5mzEmPLnOg/za5KgSgHFD4TvtdTupCUJb3uBHwvMoX2tWyC2CoEpI9
+	 y04HYFSjNoyGa/JuGXUjh8e0qzHK3tMx0viOSombfXqcYjSUxE3mFLRq/XOzwycMlMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793890726;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=dNovQPdPQeAck9zOt47B1afp4MIKve4PIvo0P4/2dfM=;
-	b=Sk2DJcFfV3KQc74qWb69pxGy4hKsWXqyfA1ngj7zpV23laZVMZgopp4ztw8P52izysYM
-	 dTZZQJr3nGKKqZOdV/gJ8nfczcUhvH2xZFhWWWNUgJbYslqAF+nMTzqRmeDmyYn8O6Ka9
-	 y8wkzCdTdY1fbJFchu2YjFpYfiddhr1R8YF28GfSUOCbj9gR8f3I+YB6YCSLs8IksCTrf
-	 Gz/RuvCnQAte3o3ltkaBJv1WLU4jFKs1Fw8JX1bVXAjTcrs2ah9eFiuagpmD/onEdPSu2
-	 qYTAxzPuVkL3JliYJ/IL30xe2+6897aDgUHA3Rhj/v3YaX2MbmeDyHQQIlMpuZuchKw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793890794;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-Spamd-Result:X-Spam-Score:X-Spam-Level:X-Spam-Flag;
+	bh=ITjHy6xFpnbiGfZKZcFBIec2PqNnLBr6zVLuSmhnI3k=;
+	b=d/Ob0cLudiT5Y0aj4pbn/FbE+N/uA1lQ/oMY+Qn/Ry58GyacXQmJHzl14ZAoTFR4dxbP
+	 wQQV0XMSlieyNn8MPAHYRpxd/xT2qI36zD7yHbkgXnt8PfbdTBa4aAlJ570vbWLYsn23t
+	 lMNXucnqT0gSx3I5TlOHq4cdAdXBx7pisrTZk4Tv4dIkY0LM4JlAX6apVl461JiKEjzPH
+	 M7E4aQweG4Y1BVyyxMPtaoQRCv3mm3FK5ocK+k0BpojffU8x5+8FCzk7F9R7hp1zcJyRa
+	 quuvjzkunxQuMk/JehVBKCk/K1+6qV2XZjMYAum+46s+OAQPY/cEtyC2DipPxJuz4aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="FRs/uYCC";
-	arc=none smtp.remote-ip=192.198.163.10
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=XEr4wbuH;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="g/HDIomS";
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=XEr4wbuH;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="g/HDIomS";
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E3D606A328
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 14:58:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2E3D606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE95606A326
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 14:59:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2CE95606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FRs/uYCC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793890725; x=1825426725;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=wbKZFsLDsWJlK/KOM5Fab8+bmKrfik5VlS3uY6KYKRo=;
-  b=FRs/uYCCeL0O3R5I8SDu7zHwkKmCdFeU2rynTmez4lo9T2+fII3x4zGa
-   unO+OQLCZI0G0mNeKOXyEiTNVnbt63gnQx87SIIyvgCgIfi+EOROKhzC7
-   MrP4YHl7HpuMzhemmU9ulj2SxHGYeC6oxfXnPIvz1fkzMeYiSfrRbf9zN
-   VzjneAKvEZ+i/eR2H00xInZcCuv9KGVts9Ypp27iM4GhMnKPTws6kD588
-   a5fYEIx0QkUS4ygmI/FpP6AFoEULH00xaIbqLXBuvpkM3xV/ppYIkJvie
-   8Ej4VEXJCRPZaOPke72Z422z9smYXg9RZXifZnh7VVjbwKARIDe3urtdo
-   A==;
-X-CSE-ConnectionGUID: 1Yz9+kQoS4qhYYHWlw3RRw==
-X-CSE-MsgGUID: ITu90DL9TD++J8wvd5h18Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11957"; a="2580398"
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="2580398"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 06:58:45 -0800
-X-CSE-ConnectionGUID: e4BJZBi3RgmWLDISOTQFjw==
-X-CSE-MsgGUID: tBTyXX1hTF2d9cXZT0ARdQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="7369312"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.198])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 06:58:42 -0800
-Date: Thu, 5 Nov 2026 16:58:39 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Hanson Wang <hanson.wang@ugreen.com>, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/i915/dsb: Fill all padding before GOSUB
-Message-ID: <auyZnxZNyPcpjeYI@intel.com>
-References: <20261105134658.3724628-1-hanson.wang@ugreen.com>
- <sashiko-outbox-199210@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=XEr4wbuH;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=g/HDIomS;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=XEr4wbuH;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=g/HDIomS
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 3E5B221EB4;
+	Thu,  5 Nov 2026 14:59:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1793890792; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ITjHy6xFpnbiGfZKZcFBIec2PqNnLBr6zVLuSmhnI3k=;
+	b=XEr4wbuHnCkDCUn9X/MvQ/yPZjyKospsicR1KrZx0MWzSo83ReAWOuzGt8oopo4CpL6aJT
+	8K310YV2TSF6jdDcQQxLoghXqXDQNXzo88KFygJy+dN76PJtCgokcWIxFYUX1Ek6XxJdKJ
+	pzR1/UI4vWfhgOP4+GGfbs8pVSiz7Is=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1793890792;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ITjHy6xFpnbiGfZKZcFBIec2PqNnLBr6zVLuSmhnI3k=;
+	b=g/HDIomSFuFBvSn4kxWjLSElouqtzASL82c3TUu1MjS07sUx9zhl2/71tuxJBB3PYZvwdC
+	Zbbvo8XUov/lOiBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1793890792; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ITjHy6xFpnbiGfZKZcFBIec2PqNnLBr6zVLuSmhnI3k=;
+	b=XEr4wbuHnCkDCUn9X/MvQ/yPZjyKospsicR1KrZx0MWzSo83ReAWOuzGt8oopo4CpL6aJT
+	8K310YV2TSF6jdDcQQxLoghXqXDQNXzo88KFygJy+dN76PJtCgokcWIxFYUX1Ek6XxJdKJ
+	pzR1/UI4vWfhgOP4+GGfbs8pVSiz7Is=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1793890792;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ITjHy6xFpnbiGfZKZcFBIec2PqNnLBr6zVLuSmhnI3k=;
+	b=g/HDIomSFuFBvSn4kxWjLSElouqtzASL82c3TUu1MjS07sUx9zhl2/71tuxJBB3PYZvwdC
+	Zbbvo8XUov/lOiBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C7B82133F6;
+	Thu,  5 Nov 2026 14:59:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id x+n9G+eZ7GrlSAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 05 Nov 2026 14:59:51 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	ville.syrjala@linux.intel.com,
+	javierm@redhat.com,
+	zack.rusin@broadcom.com,
+	louis.chauvet@bootlin.com
+Cc: dri-devel@lists.freedesktop.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 0/2] drm/vblank: timer: Fix race condition in enable_vblank
+Date: Thu,  5 Nov 2026 15:41:31 +0100
+Message-ID: <20261105145946.896674-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -80,108 +115,78 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-199210@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+X-Spamd-Result: default: False [-12.30 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,redhat.com,broadcom.com,bootlin.com];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -12.30
+X-Spam-Level: 
+X-Spam-Flag: NO
 
-On Thu, Nov 05, 2026 at 02:12:40PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] drm/i915/dsb: intel_dsb_gosub_align() duplicates intel_dsb_align_tail()
-> --
-> 
-> commit 9778ee8e90748be72ffe6e979a8d71a200d84540
-> Author: Hanson Wang <hanson.wang@ugreen.com>
-> 
-> drm/i915/dsb: Fill all padding before GOSUB
-> 
-> This commit updates intel_dsb_gosub_align() to zero all bytes skipped when
-> aligning free_pos to a cacheline boundary before emitting a GOSUB
-> instruction, rather than only zeroing the gap when at most two QW slots
-> remain.
-> 
-> > diff --git a/drivers/gpu/drm/i915/display/intel_dsb.c b/drivers/gpu/drm/i915/display/intel_dsb.c
-> > index 299d778520a22..83aeb3fc89425 100644
-> > --- a/drivers/gpu/drm/i915/display/intel_dsb.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_dsb.c
-> > @@ -608,8 +608,13 @@ static void intel_dsb_gosub_align(struct intel_dsb *dsb)
-> >  	/*
-> >  	 * Wa_16024917128
-> >  	 * "Ensure GOSUB is not placed in cacheline QW slot 6 or 7 (numbered 0-7)"
-> > +	 *
-> > +	 * free_pos always advances to the next cacheline, so the skipped
-> > +	 * bytes remain inside the programmed command range. Fill the whole
-> > +	 * gap with NOPs; clearing only slots 6 and 7 leaves a larger gap
-> > +	 * uninitialized.
-> >  	 */
-> > -	if (aligned_tail - tail <= 2 * 8)
-> > +	if (aligned_tail > tail)
-> >  		dsb_buffer_fill(dsb, dsb->free_pos, 0, aligned_tail - tail);
-> >  
-> >  	dsb->free_pos = aligned_tail / 4;
-> 
-> [Severity: Low]
-> Wa_16024917128 states that GOSUB must not be placed in cacheline QW slot 6
-> or 7 (where 0 < aligned_tail - tail <= 2 * 8). When tail is in QW slots 0
-> through 5, GOSUB is allowed at that slot, and the trailing
-> intel_dsb_align_tail(dsb) call at the end of intel_dsb_gosub() already pads
-> the instructions following GOSUB within that cacheline with NOPs:
-> 
-> drivers/gpu/drm/i915/display/intel_dsb.c:intel_dsb_gosub() {
-> 	...
-> 	intel_dsb_gosub_align(dsb);
-> 	...
-> 	intel_dsb_emit(dsb, lower_32_bits(head_tail),
-> 		       (DSB_OPCODE_GOSUB << DSB_OPCODE_SHIFT) |
-> 		       upper_32_bits(head_tail));
-> 
-> 	/*
-> 	 * "NOTE: the instructions within the cacheline
-> 	 *  FOLLOWING the GOSUB instruction must be NOPs."
-> 	 */
-> 	intel_dsb_align_tail(dsb);
-> }
-> 
-> In commit 2c41d62f6fb1, intel_dsb_gosub_align() checked
-> if (aligned_tail - tail <= 2 * 8) to detect QW slots 6 and 7, but left
-> dsb->free_pos = aligned_tail / 4 outside the conditional block, which caused
-> free_pos to advance to the next cacheline without zeroing the skipped bytes
-> when tail was in QW slots 1 through 5.
-> 
-> With this change to if (aligned_tail > tail), intel_dsb_gosub_align()
-> becomes an exact duplicate of intel_dsb_align_tail() defined immediately
-> above it:
-> 
-> static void intel_dsb_align_tail(struct intel_dsb *dsb)
-> {
-> 	u32 aligned_tail, tail;
-> 
-> 	intel_dsb_ins_align(dsb);
-> 
-> 	tail = dsb->free_pos * 4;
-> 	aligned_tail = ALIGN(tail, CACHELINE_BYTES);
-> 
-> 	if (aligned_tail > tail)
-> 		dsb_buffer_fill(dsb, dsb->free_pos, 0, aligned_tail - tail);
-> 
-> 	dsb->free_pos = aligned_tail / 4;
-> }
-> 
-> Should dsb->free_pos = aligned_tail / 4 instead be moved inside the
-> if (aligned_tail - tail <= 2 * 8) block so that free_pos only advances to
-> the next cacheline when GOSUB would land in QW slot 6 or 7, 
+(was: drm/vblank: Restart enabling vblank timer on possible deadlock)
 
-This ^. And please also adjust intel_dsb_align() the same way
-so that the two functions will remain nearly identical.
+Busy-waiting in drm_crtc_vblank_start_timer() until a previous vblank
+timer has completed can deadlock. Rework how the vblank timer's start
+and cancel helpers interact with the timer function.
 
-> or if
-> unconditional cacheline alignment before GOSUB is intended, should
-> intel_dsb_gosub() call intel_dsb_align_tail() directly instead of
-> duplicating it?
+Patch 1 fixes the possible deadlock by removing the busy-wait loop from
+drm_crtc_vblank_start_timer(). To avoid possible interference between
+_start_timer()'s hrtimer_start() and hrtimer_forward_now() in the timer
+function, extend the interval_lock around both. Both, _start_timer() and
+the timer function, can still overlap, but hrtimer initialization should
+work reliably. At most, the first vblank event after changing the interval
+might be off.
 
+Fix the possible overlap by canceling the vblank timer's internal hrtimer.
+Do this outside of the vblank code's critical section after switching
+the vblank timer off. With the hrtimer being canceled, the next vblank
+event will be sent at the correct time.
+
+Tested with bochs on qemu.
+
+Additional notes: there have been reports about vblank timers not happening
+in time, such as [1]. We suspected that might happen due to guest systems
+running under high CPU load. But the problem could also be caused by the
+deadlock fixed in patch 1.
+
+[1] https://lore.kernel.org/dri-devel/6a176ae6.d07c18fe.1069e4.0016.GAE@google.com/
+
+Thomas Zimmermann (2):
+  drm/vblank: timer: Do not block within critical section
+  drm/vblank: Cancel vblank timer outside of critical section
+
+ drivers/gpu/drm/drm_vblank.c         | 87 ++++++++++++++++++----------
+ drivers/gpu/drm/drm_vblank_helper.c  | 16 +++++
+ drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c  |  3 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c |  2 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c |  2 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c |  2 +-
+ include/drm/drm_crtc.h               |  9 +++
+ include/drm/drm_vblank.h             | 16 +++++
+ include/drm/drm_vblank_helper.h      |  2 +
+ 9 files changed, 105 insertions(+), 34 deletions(-)
+
+
+base-commit: a3c3ff69be4e55d4f8f3d93789381ebb23684b17
 -- 
-Ville Syrjälä
-Intel
+2.56.0
+
