@@ -1,96 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.91
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793868186;
-	b=1t1/141h4Xzo/IHQS/n9pY2UkEpmoc31R744ZuzYm8DfxgUIMi6JfR/c6mNK2vef/uCo
-	 CSML3vZ54k80w5uvWF76SfaBRIfNXeOTkfeGRztm6CIDnlfln+WShgBsH2KvdT3QmjgJ5
-	 ++0KRBWtO6fuxh5SCfWtodz7BdOegYcYnD2GuRsAy/uOeHJ6p7n/1Yx60ASO6Xa34Fk68
-	 EzPKAr1MGOD4q2/AVHyCFZjc3KfiFdFhAkKhRbhnr16Iyenul2zDwQLKGb1/q9VRDa9xT
-	 vHOh3oGNsOEps6818NDemz8Xsz5Zdc+JVS68pmUTDs/dqYkEv43G/4jOaWEJuLGiz8w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793868186;
-	h=DMARC-Filter:Received:Received:X-MS-Exchange-Authentication-Results:
-	 Received-SPF:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=LTHKc7CPsmeSo4hSyJ5BPc4ouE6BkyRB//RTP1/HuOQ=;
-	b=S3JpZHWFATSuV8ISHQ6dH0P24o7c+wcmBXv5X6KNTOTWw29PdxCTQIs4oS1QSkMg6K4X
-	 jrGCTXpkPKdeEsluUqm0tfoubOXJRYaR7Np0KEkXvFL6vYabfX58va2RFSqUf1TbN8L3e
-	 tcyMINsZYfyo7SKx9VylkA2XSc6A3cmWHhAidsCQKmF6a1yM3X51qtnqrMQBEJkqPS+ng
-	 8A8/cJrTB1FIf4dMZnSh8Z/AA8zqII1kha/R9QbdmJnKq/pf92jAwMwu1xxrVWYC7YHHr
-	 oJcxAeY127TgBYMwPCNDJyCdztJTX256mloZL3JXlV+r8gkP0tfAPTQJnnL9z+NuHhg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=cixtech.com;
-	spf=pass smtp.mailfrom=cixtech.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.91
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11022091.outbound.protection.outlook.com [40.107.75.91])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793868808;
+	b=CV00ag2/bfQssGw+jwBE/tAL/EkAGR5FDALpWJjG8M/GmkW8Y5Sllse8ji/69NQ/LjgK
+	 kV2eVuF9+ueVWxoXGAYmsiLdLnGy5CTjO4/EKc2retaomKglBAFqaMDYrpyh14RbettjN
+	 D4w4D2iJA5a+bNDEDmCUpaLiWOwReUYrqLT1BeDz0XVUQ4qRg8LlZdgldfE+RtQB5NZsC
+	 7F9zOnBJ8fR555FYs4KBOoxrIrsUbFP1fjmEWOHQYK/4z/mm7b5abtKA4D8Od9hTHOf/+
+	 t81zeWS1xLvBvZYDohT0Gn190/SKh9cEIhjGpS0GUAXz/yNYNBS3yYeqeOwl/eEyyIA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793868808;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=J7vfUkafQT4T5T8qqfuJQdq9zP4CBm2tNhbBc8LF8kE=;
+	b=K1WCdNHiBjv1HgyzDI6uSFTCJqGM7IEF4HG4ZG+paw2JuyJn2MnAOkFkKHldVmXY7X3C
+	 NZlLwWruE3q5Azwk/aVaAoYkEjXOvMHYLwYTpWyAv+2pWNdjcEWzlfAwCv37kMpYAR7vL
+	 3yAQvVgFVqM48YCnUWQaej/2ITWrttyoarhdJj/Tujdc9Sg0jJujc4UvGUAt/OnAo3y5F
+	 tWj6kXkTfdwvGS4C1IEC3TcnY2cKLANq1POBjvSA4yjTuRDyxeIPbjyELpDFbteL0f+mS
+	 PrnOiikx/8zA58JkQjwNk32cGYH6lX/zU7F1R376vKclWRsbr+ZYN4BjBWXZOBaTR8w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cjbnjB7G;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED5B606A326
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 08:43:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EED5B606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RVtY8WB0k3Q2GBXEWEnZfaGS+73dX985q+mdvham4nPmhHtlhkbPh48+5Jw/HdJI1JtjnvYlApiocNGyNWShENDHIMCl1Ny9fKtplf7Qftb2vMeifx7ZRJp5nwcdAZ7ldfZgcwQ7bFgjzuSlUnHUEs0S4B6tzrd/zINPDWk4D1LG6f4MoEdbXihYqiLOTyE/M4fvsaTxtaq/A6jfn2dEIxpOK9JIeqm/M6k3O/0zDn8r7a4yChZya5gM/0+X88K9QvTiGK2aVSCmW4Cll2/dq3fakfCM8F7VTn62rbI143wRzo74pI4vrxD8vxHGDNiurXWO0z7Rh8DjLiszGz5Csw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LTHKc7CPsmeSo4hSyJ5BPc4ouE6BkyRB//RTP1/HuOQ=;
- b=TUfbl0iisjr2Ol9E2yMI4z8w4JAN5Jdi6/IYm2QyUHi2i/Q+A2gQE0K4c9h2yzofI9pvLxfCoomhpnVCs9Qw2hbkIuQNjxgBlh6JMg35eukcbGLSLZv1YNQVDDPH6daw5nSpGz26CID12gtnxKi3I3S7KOOh/vjptqApA1BzVEfwONNnB07aBfVY1HVoDt+N3wlum/QiXa7eMRS/8dog1+WZ0nGLlTvninmIUH5G3K/JJne/6DPahh3Gk7AyrEYjtByd5jk2NGo9EgILPPEpxg7TtDVXf2STfrXq8bQ9mdynj113fLS5HIwZT8wzdR1cU9ZrXMuw5/QM/rPgOI0FHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 222.71.101.198) smtp.rcpttodomain=kernel.org smtp.mailfrom=cixtech.com;
- dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
- not signed); arc=none (0)
-Received: from SI2PR02CA0033.apcprd02.prod.outlook.com (2603:1096:4:195::20)
- by KUXPR06MB9177.apcprd06.prod.outlook.com (2603:1096:d10:a2::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Thu, 5 Nov 2026
- 08:43:00 +0000
-Received: from OSA0EPF000000C7.apcprd02.prod.outlook.com
- (2603:1096:4:195:cafe::99) by SI2PR02CA0033.outlook.office365.com
- (2603:1096:4:195::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.10 via Frontend Transport; Thu, 5
- Nov 2026 08:43:00 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 222.71.101.198) smtp.mailfrom=cixtech.com; dkim=none (message not signed)
- header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
-Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
- 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
- client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
-Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- OSA0EPF000000C7.mail.protection.outlook.com (10.167.240.53) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.592.5 via Frontend Transport; Thu, 5 Nov 2026 08:42:59 +0000
-Received: from ubuntu (unknown [172.20.64.99])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 55FB84102E60;
-	Thu,  5 Nov 2026 16:42:58 +0800 (CST)
-Date: Thu, 5 Nov 2026 16:42:57 +0800
-From: Jelly Jia <Jelly.Jia@cixtech.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	dmaengine@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v5 2/5] dmaengine: arm-dma350: Add slave and cyclic
- transfer support
-Message-ID: <auxBkRRHMaeN4wJq@ubuntu>
-References: <20261104124411.296640-1-Jelly.Jia@cixtech.com>
- <20261104124411.296640-3-Jelly.Jia@cixtech.com>
- <sashiko-outbox-197326@kernel.org>
- <auuJKyC91CrYUAY1@SMW015318>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDF9606A32D;
+	Thu,  5 Nov 2026 08:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cjbnjB7G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288BA1F000C1;
+	Thu,  5 Nov 2026 08:53:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793868807;
+	bh=J7vfUkafQT4T5T8qqfuJQdq9zP4CBm2tNhbBc8LF8kE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=cjbnjB7GJibNOC+EeGoO0DpYNfYuH5n6u0/wbnbr6UIGwIg3GndAH3sGQGQzIZMDY
+	 Dqf1oapH/2gfH0/ahH8TYNjXCQ/G02ZmiL+IpqU3h3J/jfM+rv/BNs08bmrGgRim4q
+	 6ACU5R1Zk4RFMPN+m+sVaa+AwMVqU0xnuglOESZ9dmJL8JSz+IGUBgwguFZi6MEKyp
+	 Fb+xbw6UuOWf9KN2s//Y3RJDSrhRTdcmaKRT7iLTFS9ayXyu+tpURY//KN4NoPtipc
+	 Mthcgo8RG5bVVVkwzvi9GS0kAczU6L/l/D+3K7S6jFfndeO7M5b3mdw7K8JSXmbPXZ
+	 LfEgYqbvufKpw==
+Date: Thu, 5 Nov 2026 10:53:23 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-rdma@vger.kernel.org, kvm@vger.kernel.org,
+	media-ci@linuxtv.org
+Subject: Re: [PATCH v12 05/19] PCI/P2PDMA: Evaluate ACS controls at the path
+ divergence
+Message-ID: <20261105085323.GK478286@unreal>
+References: <20261103-fix-p2p-acs-v4-0-v12-0-912101f93517@nvidia.com>
+ <20261103-fix-p2p-acs-v4-0-v12-5-912101f93517@nvidia.com>
+ <sashiko-outbox-194956@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,58 +61,193 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <auuJKyC91CrYUAY1@SMW015318>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: OSA0EPF000000C7:EE_|KUXPR06MB9177:EE_
-X-MS-Office365-Filtering-Correlation-Id: bea5a1ec-42ca-42e8-59a1-08df3b18cc02
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|82310400026|36860700016|23010399003|1800799024|6133799003|10067099003|22082099003|18002099003|56012099006|4143699003|261026130827099003|261021135927099003|261022113327099003|261026135527099003|261022075727099003|261022115727099003|261022105027099003|261028144727099003|261021123027099003|261021121427099003|261021130227099003|261026140227099003|261021133027099003|261102123227099003|261026121527099003;
-X-Microsoft-Antispam-Message-Info:
-	BeyFqyeN+IOV2ORwcQtz2FOWhARFAGkvUGEmu6a24o1HWKFyuLcO13iQISc84pa1IpGHw8PoJ4HNehauwCqL6J9OUIWtq1+C+QOmp0JH8dJGUkNYSYm+VPDf5yMFvBC700qQetC2q+4pT+ArLx4hRIzpfHgbPkpfq3rNmPGLh/8d2/G3cKjETYzWRxNGXq048hQGCasmGh1jwWN8XkGkMlZZWvi0g95WPGnHB+e/6wS5GfvTh2mgZ45GZr946lZasBXM5yTjCesmYt0YOuMdOR26knNrPq0j6swHYFl9EFi3NOa2jZ7gpsvum6qE7Qdd3n3zsgiavDuRZvZk8w3LfKPLfI1qbwlVMj1foDZJWw/b1Xvqzu7kSyY0Lo/7m64q1mvIjna8yWbWdpZEPqkssEFlPsDM2XRRYn09akX/rZRcmWoZOwtuMs0pE8YG7od6uJXJ7AXkBd4Pb83PM4T5LpvCS6CHnDXFxNvigEbeIKsRf5Z9HeKocFQnVtZFp23K7361XRvoZPjyfSw8oBCF13FwXWEAph2/E6RGtcH87QeEXs0EETthmicgqDZ1CIi1jUsVluqBiutNSnOBug+yl2kB7aEibCpjfvRRXcyoAJouaXCAVPv7Kc1wrzryZQ1x2CaW3r6UTjE7f+9qV8Z18OjZj2aocuonEzn0mMncb0PhRh78hw75bhi0baJpIAGv
-X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(82310400026)(36860700016)(23010399003)(1800799024)(6133799003)(10067099003)(22082099003)(18002099003)(56012099006)(4143699003)(261026130827099003)(261021135927099003)(261022113327099003)(261026135527099003)(261022075727099003)(261022115727099003)(261022105027099003)(261028144727099003)(261021123027099003)(261021121427099003)(261021130227099003)(261026140227099003)(261021133027099003)(261102123227099003)(261026121527099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	GmhqVS+1hN0RmV1Ku7tcB8GXLVKpCTj28BQpWwz/ae3a9ViNIyB+PkbaG146+u4pVCRehufAyheSiM2EmMi53+5T+kzrgi3qZLqGbEb0FLCMqiGP35SKqBrLuPaqnV2mHk+uIW+dYKaPuLkqHeqT/9lLCF3iKTiyhm5XrsQmoeytkfPeLLyDsXHfgxTSsEjN8Xs1QdbqQBtWtJzuYhT8hZQ8mno93bR1HQrCiOZ+4PUkd2dZ9SxACbUTIH2RDoIUrSClRDMuM9PgrkOa/g8dkgWOuUi+1MP6OHhD9ivrlllWMIfWdPfhJioLCbCVioMyRwkU+OgbkrSPO6xPvmsfv/yAodGjq6u27ssjxya87SmaIXixmdn5gdK98FlLt4Mj4BYRVzKhR2ZQGuj7ORT6+C1Ypdc3vJvnnSiIs8Ls2qacKcZcMata45/6kXPfSb0U
-X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 08:42:59.5799
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bea5a1ec-42ca-42e8-59a1-08df3b18cc02
-X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	OSA0EPF000000C7.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR06MB9177
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-194956@kernel.org>
 
-Hi Frank,
+On Tue, Nov 03, 2026 at 09:31:33AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] PCI/P2PDMA: missing upstream forwarding check in calc_map_type_and_dist()
+> - [Medium] PCI/P2PDMA: masked redirect and read warnings in calc_map_type_and_dist()
+> --
+> 
+> commit ae19e046716c7bc5dbb292aa22e00859ce94d08e
+> Author: Leon Romanovsky <leon@kernel.org>
+> 
+> PCI/P2PDMA: Evaluate ACS controls at the path divergence
+> 
+> This commit updates calc_map_type_and_dist() to evaluate ACS directional
+> redirect controls at the path divergence rather than below it. It also
+> checks for internal routes between functions sharing a PCIe link, verifies
+> ACS Upstream Forwarding on shared downstream ports, and rejects unreadable
+> ACS Control registers.
+> 
+> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+> > index dbab955dcbdbb..8ca0c9ba87c23 100644
+> > --- a/drivers/pci/p2pdma.c
+> > +++ b/drivers/pci/p2pdma.c
+> > @@ -589,6 +590,65 @@ static bool pci_acs_p2pdma_ctrl(struct pci_dev *pdev, u16 *ctrl)
+> 
+> [ ... ]
+> 
+> > +static struct pci_dev *
+> > +pci_acs_p2pdma_no_upstream_forwarding(struct pci_dev *common)
+> > +{
+> > +	struct pci_dev *pdev;
+> > +	u16 ctrl;
+> > +
+> > +	for (pdev = common; pdev; pdev = pci_upstream_bridge(pdev)) {
+> > +		if (!pci_acs_p2pdma_downstream_port(pdev))
+> > +			continue;
+> > +
+> > +		if (!pci_acs_p2pdma_ctrl(pdev, &ctrl))
+> > +			return pdev;
+> > +
+> > +		/*
+> > +		 * Include Root Ports here. The PCIe port type check excludes
+> > +		 * the legacy AMD southbridge quirk, which may sleep.
+> > +		 */
+> > +		if (pci_dev_specific_acs_enabled(pdev, PCI_ACS_UF) > 0)
+> > +			continue;
+> > +
+> > +		if (!(pdev->acs_cap && pdev->acs_capabilities & ctrl & PCI_ACS_UF))
+> > +			return pdev;
+> > +	}
+> > +
+> > +	return NULL;
+> > +}
+> 
+> [ ... ]
+> 
+> > @@ -865,57 +932,106 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
+> 
+> [ ... ]
+> 
+> > +check_paths_acs:
+> > +	*dist = dist_a + dist_b;
+> >  
+> > +	/*
+> > +	 * ACS P2P routing controls apply where a TLP can route toward the peer
+> > +	 * or upstream. Below that divergence, its only route toward the other
+> > +	 * branch is upstream, so redirect controls do not affect the path.
+> > +	 */
+> > +	if (a_child && b_child) {
+> > +		if (pci_acs_p2pdma_ctrl(a_child, &ctrl))
+> > +			state = pci_acs_p2pdma_completion(ctrl);
+> > +		if (state != PCI_ACS_P2PDMA_DIRECT) {
+> > +			pci_p2pdma_list_redir(&acs_list, &quirk_list, a_child);
+> > +			if (state == PCI_ACS_P2PDMA_REDIRECT)
+> > +				acs_redirect_cnt++;
+> > +			else if (!acs_unreadable)
+> > +				acs_unreadable = a_child;
+> > +		}
+> >  
+> > +		state = PCI_ACS_P2PDMA_NOT_SUPPORTED;
+> > +		if (pci_acs_p2pdma_ctrl(b_child, &ctrl))
+> > +			state = pci_acs_p2pdma_request(ctrl);
+> > +		if (state != PCI_ACS_P2PDMA_DIRECT) {
+> > +			pci_p2pdma_list_redir(&acs_list, &quirk_list, b_child);
+> > +			if (state == PCI_ACS_P2PDMA_REDIRECT)
+> > +				acs_redirect_cnt++;
+> > +			else if (!acs_unreadable)
+> > +				acs_unreadable = b_child;
+> > +		}
+> > +		/*
+> > +		 * Two children of one Downstream or Root Port share a link.
+> > +		 * Use topology rather than slot numbers or the multifunction
+> > +		 * bit, since ARI functions and VFs need not share those.
+> > +		 */
+> > +		if (pci_acs_p2pdma_downstream_port(a)) {
+> > +			req_upstream =
+> > +				pci_acs_p2pdma_no_internal_route(b_child, PCI_ACS_RR);
+> > +			cpl_upstream =
+> > +				pci_acs_p2pdma_no_internal_route(a_child, PCI_ACS_CR);
+> > +			uf_blocked = pci_acs_p2pdma_no_upstream_forwarding(a);
+> > +		}
+> >  	}
+> 
+> [Severity: High]
+> When provider and client sit behind different Switch Downstream Ports of a
+> PCIe Switch, their lowest common ancestor a in calc_map_type_and_dist() is
+> the Switch Upstream Port (PCI_EXP_TYPE_UPSTREAM), where
+> pci_acs_p2pdma_downstream_port(a) is false.
+> 
+> If b_child has PCI_ACS_RR or PCI_ACS_EC enabled, or a_child has PCI_ACS_CR
+> enabled, the switch redirects traffic upstream out of the Switch Upstream
+> Port a toward the host bridge. That redirected TLP then arrives on the
+> secondary interface of every shared Switch Downstream Port (in a cascaded
+> switch topology) and Root Port above a with its target also behind that same
+> secondary interface, requiring PCI_ACS_UF on those shared ports to reach the
+> host bridge.
+> 
+> Although pci_acs_p2pdma_no_upstream_forwarding() already walks up
+> pci_upstream_bridge() while skipping Switch Upstream Ports, calling it only
+> inside if (pci_acs_p2pdma_downstream_port(a)) skips checking the shared
+> Downstream and Root Ports above a when a is a Switch Upstream Port. Can this
+> cause calc_map_type_and_dist() to return PCI_P2PDMA_MAP_THRU_HOST_BRIDGE
+> instead of PCI_P2PDMA_MAP_NOT_SUPPORTED when an ancestor port above the
+> switch lacks PCI_ACS_UF or has an unreadable ACS Control register?
 
-> Please check both issues.
+The thing is that this behaviour was before my series, but let's change
+it too.
 
-I've checked both and made the following changes locally:
+> 
+> > +	/*
+> > +	 * Below a shared upstream bridge, a path whose divergence ports do not
+> > +	 * redirect routes the request directly.
+> > +	 */
+> > +	if (!acs_unreadable && !acs_redirect_cnt &&
+> > +	    !req_upstream && !cpl_upstream) {
+> >  		map_type = PCI_P2PDMA_MAP_BUS_ADDR;
+> >  		goto done;
+> >  	}
+> >  
+> > +	if (verbose) {
+> > +		if (acs_unreadable)
+> > +			pci_warn(client, "ACS Control is unreadable for provider %s at %s\n",
+> > +				 pci_name(provider), pci_name(acs_unreadable));
+> > +		else if (uf_blocked)
+> > +			pci_warn(client,
+> > +				 "cannot forward peer-to-peer DMA for provider %s upstream at %s\n",
+> > +				 pci_name(provider), pci_name(uf_blocked));
+> > +		else if (req_upstream || cpl_upstream)
+> > +			pci_warn(client,
+> > +				 "peer-to-peer DMA with provider %s requires the host bridge; no internal route between functions\n",
+> > +				 pci_name(provider));
+> > +		else
+> > +			pci_p2pdma_warn_redir(client, provider, &acs_list,
+> > +					      &quirk_list);
+> > +	}
+> 
+> [Severity: Medium]
+> How are diagnostics handled here when sibling functions under a Downstream
+> Port or Root Port a DO support internal peer-to-peer routing (!req_upstream
+> && !cpl_upstream), but have PCI_ACS_RR, PCI_ACS_EC, or PCI_ACS_CR enabled on
+> the functions themselves (acs_redirect_cnt > 0)?
+> 
+> In that case, disabling ACS redirect on the functions via
+> pci=disable_acs_redir= would allow them to use their internal route
+> (PCI_P2PDMA_MAP_BUS_ADDR) without traversing port a. However, because
+> uf_blocked = pci_acs_p2pdma_no_upstream_forwarding(a) is evaluated
+> unconditionally and checked before the final else branch in the verbose
+> block, if port a or an ancestor port does not have PCI_ACS_UF enabled,
+> calc_map_type_and_dist() only warns about upstream forwarding at uf_blocked
+> and suppresses pci_p2pdma_warn_redir().
+> 
+> Additionally, pci_acs_p2pdma_no_upstream_forwarding() is called before the
+> PCI_P2PDMA_MAP_BUS_ADDR check (reading PCI_ACS_CTRL up the hierarchy even
+> when the functions route directly), and when pci_acs_p2pdma_ctrl() fails on
+> an upstream port, it returns that port as uf_blocked rather than
+> acs_unreadable, logging an upstream-forwarding message instead of an
+> unreadable ACS Control warning. Should pci_acs_p2pdma_no_upstream_forwarding()
+> only be evaluated after the direct-route check, distinguish unreadable ACS
+> Control registers from missing PCI_ACS_UF, and still emit
+> pci_p2pdma_warn_redir() when programmable redirect bits blocked a valid
+> direct route?
 
-1. Initialize dch->req to U32_MAX, and reset it and clear dch->sconfig
-   when channel resources are freed. This lets the existing request
-   range check reject slave/cyclic preparation without a request
-   assignment. Valid request line 0 and memcpy/memset remain unaffected.
-   Request/configuration state is retained across terminate_all().
+ok, let's change it too.
 
-2. Keep clearing dch->desc on error, since the descriptor is handed to
-   virt-dma for completion or termination. Instead, prevent
-   d350_start_next() from starting another transfer while the channel
-   is in DMA_ERROR. This preserves the failed cookie's status and
-   residue until termination. Also reset the channel status in
-   terminate_all() even when dch->desc is NULL, so the channel can be
-   used again after termination and synchronization.
-
-I've tested the updated tree on Sky1 and will include both fixes
-in the next revision.
-
-Best regards,
-Jelly
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261103-fix-p2p-acs-v4-0-v12-0-912101f93517@nvidia.com?part=5
