@@ -1,99 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793898602;
-	b=yJC92CzoNWCgpDooRyFUJsnBpSpVAqYzx8nehTiFDywbfAzyMyUWZ7uYFqdDt+Pk/HAf
-	 /9hsgP6XwuroX3wVkyzAo661iTfTljo/2aZjbHZDo4jXAyX0sI2vVeKBr44qgQi9UqWCJ
-	 K3MkTFyQj4GO38ptwL9D2EZy91OqrIWF0iQm6fWSy+64YO/Lh+nohyhgRM2wPGa3j9tDm
-	 PgZY7M7zYv1FYId2OtoQkf760qG+w4wkXQcyeX7YUzZQmAODYrlfjUI2XI3JXxSTvqwFp
-	 G2c7hHAeX25+YyXipeGTeiXkTVm/0xW2cW3PLWVzdwQe7O/qyst0KZaRcl6agpni0jg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793898602;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
-	b=sBDrmnb/tlWWnIAXLmuQSMAYEIO78XZwerpwvYfxEcEfc0UswNqQuaQ1ywHXJ4iodLsQ
-	 TG5CzkvqQ3v9g/g0qE3Rrprkv+12NvZgXWV6Grp6bMq1PHq29nVWsSBz1I/d/Pm3ymlxQ
-	 qHJ4LJlol4/nD3Zmdgkk2xDJlqLurIjxef6TbQYOU9gKsvKpyMHTaG43Kv3ZFUui+3ULo
-	 IItsDvtrE35xcMZKlbRMo9+2eyRMaRBqVz3vE4UTpNupcDrggS9dJVRNfWL7+rDrTQdmI
-	 IhQF1Rkl14it/lBweeLK0l1rW4uBZu3b7TA3rluq7gyZ9vaBnBytL0blj/oPtkJRBLg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iVCtRbWE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27707606A328
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 17:10:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27707606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793899914;
+	b=CpBdyXir8oKXrWtEACZaVJqqS4jyxv8oOa+8COpzWz5WD4GwPcfqnPzxFGAnbpknU6KG
+	 GL/LR4Prx5sHeJ6xQOrt1z2iOo79Jg7Dmx97TCt0g4e7JvVNiJrv9VBsTh6/VJPTzC7UA
+	 CAlsgOOpN3jvzrc2z1cbQoXx1kl2Ifr2rTSJyweiSOtAvVnmsGE1xKQeWQMUhr16A/eXY
+	 wy/gOdcDRfC6mr8E1+PsOPIH1l56KgV9LgfrgbtdNRacMlaN+0B83aal7XrKzxGGfTSkk
+	 kd+kNjeXubPXU3xen3aML1hfFgFJWnZxqOrelQyIR6I02NoawuOwKzTwTzaTCooeQGg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793899914;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:From:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=YKulzZM0URwerrPabJBi4D2xYbrKiSJ1N2beCoy9biU=;
+	b=UQzlRnO9kQE1gctIzRZAgN4Ku7wJJ2OupGeEum4g1IOqUqgSR8ETs7d4jVbePyTPYvZG
+	 Mue8RT3djgy4Mdl7GRR+sKxa5SPPnHFHildfsq4MeFd7gIyHum5MIvqUz/2WERxLwq1SJ
+	 lylUKgJiGS+s3pjUBOe6Kh66iLoKQnGGMmH+JJKWVUmFxyxUPiqUDthRC/95sTkQ1KNUU
+	 A2zjuWk5Ai4e1LQjtNv3hfFxO7vbcNTFPhPIBoXY+2EQ4ch4leHgvgnNHL/NmasXnU720
+	 cxy50E+I+PCJrvBa2wUm6+DznrURPhXTZRHftbh1XtTqyHIh6QHN4j20cS+4qQ2K2kw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=i7RS6puz;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 641FE606A326;
+	Thu,  5 Nov 2026 17:31:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 641FE606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iVCtRbWE
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8b12b1ee403so16018037b3.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 09:10:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793898601; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ACHVQMFicgT8dp6otnfVFZQreJ8uvtVt0ntd0DnracgCJWjWV+zUq19lTNvvPMvSWg
-         aYpFDLCIgS3zFLN6TN6QhIVp1WhOwRWEYn5JrlqeUFGX4TM7PARpcyvZBP0VtD2vkaQZ
-         tzT2h2dVrz8s09d1wbPiUSZjX6JqAP9W8nOI5UrtyV3/LOSd+Tb4vW3XXjC6eHIZnZO0
-         HOrViF2Tn90IvLqDS4XslRsZDhZmVUCLAZ35JwP5042Fijv9BreNkpE8bFWbi8PPcik1
-         XFRNnxOXqfDsTAE7fBmTvqdhHNyRPpiHUcNr4o/Vbo2uzlDv4EMtW8NfROXcpgcG9Gqy
-         diwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
-        fh=8s/m3WFbgYWSrFq8O6qnuwJh8MouRhxqinKYkPkfiw0=;
-        b=X2gwsQRRMJZSn2Sqhd5Cah3l2km7zdLMEj24oOdfIewvnIwUlka2/pLfBAIOsFGNtN
-         RFAftUbo64LQNQ6KDDc79VZ3N5FOVJ7Kz+Sr2u/fXj9ixbnnhlb7k1AaGl9vjB50cnXj
-         kY7g5IthW1CVASjtTBlGZX2XDrFFfbgfKj19f2njKV9lY3t/veaKaeme3LAPoGfBkW7F
-         bD7LiV1gvJmAYciQlboz+fR6mzzSVnsFD0OiwDJJs2CE3bSrGx9nSSXMg5uSRgFNGcjg
-         uFbmMpoSxvJRA0Ddhg3bwPMhByJ9RJr0g47z3OZ9IqNC+DrVLTRnaq4emwSy1Syv1vsC
-         7UwQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793898601; x=1794503401; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
-        b=iVCtRbWEa55xlUXh0XpH9Ds2cyb67duKSyiGZ4X4QjWaamdzqvMz8p3mlOJFhMDoit
-         L5eWOSJNFZRmEaRSZphfgaV7zbw4vQHqhUCIzkBL1uY1JQl2MvfD4/g6cTsUH+AxGk+E
-         7cvwUWOalow1JohqNmHZ06PQbIYr3uhHYruPQYF+drPYanrIkn/umCKACSaphH3ni5PK
-         lHzUtiqbB+kMvNa1+B7r1ORaVUq84RW6O0RTzwIWn7XnBc28DEgCrhBWEqDW4dTFL9uD
-         ODkAnegZUZeT7UT1UQ4BJc/H+bUyf/VNRrx1zLuaAenqMl27R9xBEdFTMrqlq4ZTXzGM
-         GT4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793898601; x=1794503401;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ifFEYR9TPUFV/LjRD8ZLryB8zv3m5cq4xfOUyH46ME4=;
-        b=X0rAWdiU08FbEw3DVYI63PGc7vy/nsxgywcowr/CfgwA4mApD7BYNes/uRODJWFa9L
-         2Fk9h0d55Yp4CrYwzHy+wnFDcc4rpLzgMZgXg1pfPyXel6pXFejMSE+OyMxmRWXEcdOu
-         L9ZlINvo4wPsw4UB83VKYqnBdEXuBFP2O60V6hZ3pIQn3M6LRemTjn1inCkinv1M5TEz
-         hBPngla3Zy6asNw/REnxYP8lH9B6z+zxNI9AWFKIEKWYaSSDCxxkYTERahs/SCW+tq8n
-         ONQi0YHt5KbdSVRwmYuXU2VqHF4WD1KHmnp7t9bs+OKdBA6Vij2vXh54BQXVnuwqRVRH
-         F8zw==
-X-Gm-Message-State: APuU4Z/4WVgGcSiEyyb2TK3J8DZhX9BZLhWATem/YlFIjuHNmjaKyLZ9
-	K12M82xglu3mVzUc/CyKNwsbrYPKfP5HnldxqZAMFuOpc58wJ9VVxiapjfdKLiIoluR3aHSbcVp
-	cSFhou9U6R9vj4XxmTYYBxY/aARv8l5NxnO0m
-X-Gm-Gg: AYBFou1CMfkuGT+a0BLq7fivFTHSKFKaHwBNAoPA6EX6X+GV9edDeDK4R1Ocbs54hRA
-	8Lvir0Xo0SZ80RSFAO+dWw6xYno2hlrOzNqTYw+aY19MiWTZDW9kAFaLzDtVpRFcBMvINywgcgn
-	bqUDDnnEmT7sN5fKWdDV/W60mjTdcTjzkt2l6dPNUVc1C+ZguftojWsZyIa7U6Y3VfXQ+w7gYaU
-	KbXnYDAalLNI6IJ6GlE/MQ6z5uSLB4vuuN1SQApnkUfuMcWfSRsS4RGZx5k9VivnveobqIOB74v
-	Y8Hd+uWS9desjO4eVTEn9zhmhX8yHcpgtAHr0BYbswGGYIMURJOp8VZ1ulli4Lo6BclGXia45Rn
-	VSMiF+g2mV1FJA7LOkvPNh1LxsfQxi3ag7AuNdDU=
-X-Received: by 2002:a05:690c:113:b0:8b3:2eb4:1429 with SMTP id
- 00721157ae682-8b32eb41a88mr12568607b3.65.1793898601098; Thu, 05 Nov 2026
- 09:10:01 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=i7RS6puz
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A96541596;
+	Thu,  5 Nov 2026 09:31:49 -0800 (PST)
+Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A1C0D3F628;
+	Thu,  5 Nov 2026 09:31:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793899912; bh=XXpaSz8VDhnp2Ua2FudpG2j4Ty9LSQB5GikQ0O0/Xag=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=i7RS6puz/MVKzQ5X29iNuL78bzNVknNnJjndXSlO1sQTMsU8SNXVGXQVzi3eDMMwu
+	 17m3I0U+ra/NW5Cy8hJjp3g/Mnqzor7WloMuegvmPpr/zNYSLPLSFg1JJQd6wcb45V
+	 QoeMT8yjWQRRVczYl1Srd0/rUQCwN8WwLK858djU=
+Message-ID: <0d5a4b59-f38c-4c1d-a59e-202e7efb4b54@arm.com>
+Date: Thu, 5 Nov 2026 17:31:50 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,122 +53,158 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022024314.48623-1-prasanth.padarthi10@gmail.com>
- <20261105152348.8567-1-prasanth.padarthi10@gmail.com> <sashiko-outbox-199315@kernel.org>
-In-Reply-To: <sashiko-outbox-199315@kernel.org>
-From: Prasanth <prasanth.padarthi10@gmail.com>
-Date: Thu, 5 Nov 2026 22:39:46 +0530
-X-Gm-Features: AclHuK9EMZYoNclpt7vGM08eNe4WIB8G2Jwgu5F5HXqHJo1re962sdUNfsV_OY0
-Message-ID: <CAMFFDGiM2ExudSegF0X6sQN+AraYnorMHw9R8YvTBXRbKGNCuQ@mail.gmail.com>
-Subject: Re: [PATCH v3] pinctrl: aspeed: Hand over global GPIOP passthrough to
- local mux controls
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/11] KVM: arm64: CCA: Prevent memslot modifications
+ after Realm creation
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Steven Price <steven.price@arm.com>, sashiko-reviews@lists.linux.dev,
+ kvm@vger.kernel.org, kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Ackerley Tng <ackerleytng@google.com>,
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20261102141304.126883-1-steven.price@arm.com>
+ <20261102141304.126883-10-steven.price@arm.com>
+ <sashiko-outbox-193708@kernel.org>
+ <9489ebe7-4c75-4229-811e-3f618028d367@arm.com>
+ <a2dfb2ad-7c52-43e1-8b77-cacb2fa00c05@arm.com>
+Content-Language: en-US
+In-Reply-To: <a2dfb2ad-7c52-43e1-8b77-cacb2fa00c05@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Thanks for the review. I checked the shared probe helper and confirm
-that it uses unmanaged pinctrl_register(), while this patch introduces
-devm-allocated private data. The unbind lifetime needs to be corrected.
 
-I will address controller cleanup and private-data lifetime in the
-next revision.
 
-On Thu, Nov 5, 2026 at 9:03=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] pinctrl: aspeed: use-after-free on unbind in aspeed_g6_pinctrl_p=
-robe()
-> --
->
-> commit 7926ad91b4f1741a83b80da360b9a845357a5376
-> Author: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
->
-> pinctrl: aspeed: Hand over global GPIOP passthrough to local mux controls
->
-> This commit transfers global GPIOP0-P5 passthrough selections in SCU510 a=
-nd
-> SCU51C to per-pin mux controls in SCU4BC during probe, and blocks GPIO an=
-d
-> mux requests on GPIOP0-P5 if the handover fails.
->
-> > diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinct=
-rl/aspeed/pinctrl-aspeed-g6.c
-> > index 85d6640ff4c4e..be22a918420df 100644
-> > --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> > +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> [ ... ]
-> > @@ -2778,15 +2827,103 @@ static const struct pinctrl_desc aspeed_g6_pin=
-ctrl_desc =3D {
-> [ ... ]
-> >  static int aspeed_g6_pinctrl_probe(struct platform_device *pdev)
-> >  {
-> > -     int i;
-> > +     struct aspeed_g6_probe_data *g6;
-> > +     struct regmap *scu;
-> > +     int i, ret;
-> > +
-> > +     if (!pdev->dev.parent)
-> > +             return -ENODEV;
-> > +     scu =3D syscon_node_to_regmap(pdev->dev.parent->of_node);
-> > +     if (IS_ERR(scu))
-> > +             return dev_err_probe(&pdev->dev, PTR_ERR(scu),
-> > +                                  "No SCU regmap for THRU handover\n")=
-;
-> > +
-> > +     g6 =3D devm_kzalloc(&pdev->dev, sizeof(*g6), GFP_KERNEL);
-> > +     if (!g6)
-> > +             return -ENOMEM;
-> > +     memcpy(&g6->pdata, &aspeed_g6_pinctrl_data, sizeof(g6->pdata));
-> > +
-> > +     ret =3D aspeed_g6_thru_handover(scu);
-> > +     if (ret =3D=3D -EPROBE_DEFER)
-> > +             return ret;
-> > +     if (ret) {
-> > +             g6->thru_error =3D ret;
-> > +             dev_warn(&pdev->dev,
-> > +                      "THRU handover failed (%d); GPIOP0-P5 mux reques=
-ts blocked\n",
-> > +                      ret);
-> > +     }
-> >
-> >       for (i =3D 0; i < ARRAY_SIZE(aspeed_g6_pins); i++)
-> >               aspeed_g6_pins[i].number =3D i;
-> >
-> >       return aspeed_pinctrl_probe(pdev, &aspeed_g6_pinctrl_desc,
-> > -                     &aspeed_g6_pinctrl_data);
-> > +                     &g6->pdata);
->
-> [Severity: High]
-> Can this cause a use-after-free of g6 if the device is unbound?
->
-> In aspeed_g6_pinctrl_probe(), g6 is allocated with devm_kzalloc() and
-> &g6->pdata is passed to aspeed_pinctrl_probe(). However,
-> drivers/pinctrl/aspeed/pinctrl-aspeed.c:aspeed_pinctrl_probe() registers =
-the
-> controller with the unmanaged pinctrl_register() helper:
->
-> drivers/pinctrl/aspeed/pinctrl-aspeed.c:aspeed_pinctrl_probe() {
->         ...
->         pctl =3D pinctrl_register(pdesc, &pdev->dev, pdata);
->         ...
-> }
->
-> Previously, aspeed_g6_pinctrl_probe() passed the static
-> aspeed_g6_pinctrl_data structure, which remained valid for the lifetime o=
-f
-> the kernel. Because aspeed_g6_pinctrl_driver does not define a .remove
-> callback to call pinctrl_unregister() and does not set .suppress_bind_att=
-rs,
-> unbinding the platform device via sysfs frees g6 via devres while the
-> pinctrl_dev remains registered with driver_data pointing to &g6->pdata.
->
-> Subsequent calls to aspeed_g6_set_mux(), aspeed_g6_gpio_request_enable(),
-> other pinctrl callbacks, or pinctrl debugfs entries will then dereference=
- the
-> freed g6 structure.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261105152348.85=
-67-1-prasanth.padarthi10@gmail.com?part=3D1
+On 05/11/2026 15:06, Suzuki K Poulose wrote:
+> On 04/11/2026 11:15, Steven Price wrote:
+>> On 02/11/2026 15:50, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>>> issue(s) to consider:
+>>> - [High] KVM: arm64: CCA: guest_memfd memslot delete rejected after 
+>>> Stage-2 unmap
+>>> -- 
+>>>
+>>> commit 5106402397c36eec1e5fa59a5bb2c5adf4ee2aa8
+>>> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
+>>>
+>>> KVM: arm64: CCA: Prevent memslot modifications after Realm creation
+>>>
+>>> This commit updates kvm_arch_prepare_memory_region() to disallow 
+>>> creating,
+>>> modifying, or deleting guest_memfd-backed memslots once a Realm has been
+>>> created.
+>>>
+>>>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>>>> index 51fda7b2ff7f3..eb8c5f9e9791d 100644
+>>>> --- a/arch/arm64/kvm/mmu.c
+>>>> +++ b/arch/arm64/kvm/mmu.c
+>>>> @@ -2862,13 +2862,28 @@ int kvm_arch_prepare_memory_region(struct 
+>>>> kvm *kvm,
+>>>>           (new->flags & (KVM_MEM_LOG_DIRTY_PAGES | KVM_MEM_READONLY)))
+>>>>           return -EPERM;
+>>>> -    if (kvm->arch.vm_flavor == VM_PROTECTED_PKVM) {
+>>>> +    switch (kvm->arch.vm_flavor) {
+>>>> +    case VM_PROTECTED_PKVM:
+>>>>           /* Cannot modify memslots once a pVM has run. */
+>>>>           if (pkvm_hyp_vm_is_created(kvm) &&
+>>>> -            (change == KVM_MR_DELETE || change == KVM_MR_MOVE)) {
+>>>> +            (change == KVM_MR_DELETE || change == KVM_MR_MOVE))
+>>>>               return -EPERM;
+>>>> -        }
+>>>> +        break;
+>>>> +    case VM_REALM:
+>>>> +        /*
+>>>> +         * Once the Realm is created, we cannot modify any slots that
+>>>> +         * could be providing private memory. i.e., guest_memfd backed
+>>>> +         * slots.
+>>>> +         * TODO: Handle trusted device private memory slots
+>>>> +         */
+>>>> +        if (!kvm_realm_is_created(kvm))
+>>>> +            break;
+>>>> +        if (kvm_slot_has_gmem(old) || kvm_slot_has_gmem(new))
+>>>> +            return -EPERM;
+>>>
+>>> [Severity: High]
+>>> Does checking kvm_slot_has_gmem(old) in 
+>>> kvm_arch_prepare_memory_region() run
+>>> too late to prevent Stage-2 unmapping when deleting a guest_memfd-backed
+>>> memslot on a created Realm?
+>>>
+>>> In virt/kvm/kvm_main.c:kvm_set_memory_region(), non-delete changes
+>>> (KVM_MR_MOVE and KVM_MR_FLAGS_ONLY) on KVM_MEM_GUEST_MEMFD memslots are
+>>> already rejected upfront with -EINVAL, so kvm_slot_has_gmem(old) is 
+>>> reached
+>>> here when change == KVM_MR_DELETE.
+>>>
+>>> However, in virt/kvm/kvm_main.c:kvm_set_memslot(), KVM invalidates and
+>>> flushes the old memslot before calling kvm_prepare_memory_region():
+>>>
+>>> virt/kvm/kvm_main.c:kvm_set_memslot() {
+>>>     if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+>>>         invalid_slot = kzalloc_obj(*invalid_slot, GFP_KERNEL_ACCOUNT);
+>>>         if (!invalid_slot) {
+>>>             mutex_unlock(&kvm->slots_arch_lock);
+>>>             return -ENOMEM;
+>>>         }
+>>>         kvm_invalidate_memslot(kvm, old, invalid_slot);
+>>>     }
+>>>
+>>>     r = kvm_prepare_memory_region(kvm, old, new, change);
+>>>     if (r)
+>>>         goto err;
+>>> }
+>>>
+>>> kvm_invalidate_memslot() marks the active slot as KVM_MEMSLOT_INVALID 
+>>> and
+>>> calls arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot():
+>>>
+>>> arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot() {
+>>>     write_lock(&kvm->mmu_lock);
+>>>     kvm_stage2_unmap_range(&kvm->arch.mmu, gpa, size, true);
+>>>     kvm_nested_unmap_cipa_range(kvm, gpa, size, true);
+>>>     write_unlock(&kvm->mmu_lock);
+>>> }
+>>>
+>>> For a Realm VM, kvm_stage2_unmap_range() invokes
+>>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() with
+>>> KVM_FILTER_PRIVATE | KVM_FILTER_SHARED:
+>>>
+>>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() {
+>>>     if (attr_filter & KVM_FILTER_SHARED)
+>>>         realm_unmap_shared_range(kvm, start, end, may_block);
+>>>     if (attr_filter & KVM_FILTER_PRIVATE)
+>>>         realm_unmap_private_range(kvm, start, end, may_block);
+>>> }
+>>>
+>>> By the time kvm_arch_prepare_memory_region() returns -EPERM and
+>>> kvm_set_memslot() restores the old memslot in the error path, hasn't
+>>> realm_unmap_private_range() already unmapped and undelegated the Realm's
+>>> private Stage-2 DATA granules across the memslot's GPA range?
+>>>
+>>
+>> I think this should be fixable by checking in
+>> kvm_arch_flush_shadow_memslot() and preserving the stage-2 mappings by
+>> returning early. kvm_arch_prepare_memory_region() will then reject the
+>> operation but the mappings will still be in place.
+> 
+> Or is the better fix to delay the kvm_invalidate_memslot() after 
+> kvm_prepare_memory_region() ? i.e., if we the KVM backend doesn't
+> approve the change, why do invalidate the slot ? For most of the CoCo
+> VMs, this would be disastrous.
+
+
+Ignore this, driver for CCA is doing the wrong thing. Instead of
+flushing (which is a NOP for CCA), we were removing the mapping.
+
+
+Cheers
+Suzuki
+
+> 
+> Suzuki
+> 
+> 
+> 
+>>
+>> Steve
+> 
+
