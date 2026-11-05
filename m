@@ -1,16 +1,16 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.17
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793916097;
-	b=X2LI08p70N6VFcsNXxG1KcbAedVgRfNoJHQkP5nwtblvUY2r18kxMMAd5+23fEjGFzhV
-	 UR9v3VuZsia/3EsTIq8KcXe5bnmodQ3bQSyl0NWZW6JCMy7yFri9en+iqLpP2iFWj+UPL
-	 OjINjmtoWUmDSsFFxNM1HRZ9ZBmHDDJvdfIgqQOeNAbPhQygsc8TVmjXJd4oq5xb3IexF
-	 I1GJxGoj5HJohxNiKgmX7Pjufq2WSOwJofz5ekpQSXp+K8XxAVziG32z0SiECeQY9tyW7
-	 jfHNxCZSeaCsRSU5na6K5bKGCSHnMldQpIg4ga/0oL81PuLfTwswu5OVF09Xhw0AbXw==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.130.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793916589;
+	b=GJp/TkncIftQEbtPcjd+fKbdo1WEWEL5vL3YwBu3b5IHyNM6QbMDtKDhyxW9Dq7pAK25
+	 EY7G6COU6dCI/S8wQzwEiXXLFh+Ps+gZPYpJhQh9VmdwFdUVglbLXbtpEKkKQoUtqj71N
+	 gFFUHpsqbCPbFYj7IEUtiPyZUhc2N7fnw8ZqRxCCbkeMGccSrySAzlwcvTUsMdu1xCbCf
+	 /nM9tr3GEDRO5ikXvyXk4SKFbU76GrLUV3SngOLa1oXvuHi6lOJDZQ+omX9S26Vi8qe1O
+	 XDuqouOwOKpQAiHnwUThaUpZO7BhEZBUH8mTbnY8mGRpytN7ONJtIhD2jYAjlwWNoNg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793916097;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793916589;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
 	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
 	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
@@ -24,70 +24,74 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=BjSJj+zJDnnRI8+lGdW2YiDc0SmxvvggWXYIgTmnztY=;
-	b=DCbhdpDg+WlYqr/J2GIDTXOqWRV7P89KInRhfbpx9MlZBUe7Y/mrJxteMglWx20S87iM
-	 5a71yjsKlruZO+GO+KcpZeFwBXjN/8xeSnV1OzHEbJjaMoP3HTD6xST7uSJZYB2hFQBWS
-	 uaG9z68B4iRJlwk2q9FFDy6s9R8J99CZB5GbpdWxpWU3xKeD8JWhdxXGlqJ30modLcv4D
-	 SncYtWhavHWW+p2GZhbexMkDJQ+EDihvJsKxmLz5chNaczw4dM2OcxVHXiys/0VMHhqsK
-	 VlIipATM6BWYPnqzWPNSjHvPZTz1ZuneKnDdzllEuf9eOA/uwRYNKMxYBKiIA2OzzXg==
+	bh=S1sCkyNDBtgJY0eMiKTL0FKARPNvn6eOrV96p7Sti/s=;
+	b=t8NZMmqey7N15lYebzdUQQYasZFp5YhVGm/14j2+U5TyjDWH5yo6l4WapBbJAEKNlvqS
+	 Lz8GLMhzzb1jnNpXHYEfwBKnejbKa6J08g+6OerGvV+txXKYRNBOxjd8A7aNuDihRWQbz
+	 Dp1HnmtMsXwTe7P2FWcC/WXhjWLSt9Zdk9Wi6bn81bZgug+QVr1WRD27RQ+ChgNIqbCYS
+	 QCHVAya62fLwhFBkj0eFRz1I+p+B335wPe6htfSg7K6JOVCaVnftl2HBBv2SivfVyCnGk
+	 WvkZTtNZgvdKkIKexKJqdR2mvBbq6FjTmZRhSHoXP/2UMFef4hbS1b6p9lqiu7QUCOA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=LCeIAbhu;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.17
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010017.outbound.protection.outlook.com [52.101.46.17])
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=wtPByOwc;
+	arc=fail smtp.remote-ip=40.107.130.51
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011051.outbound.protection.outlook.com [40.107.130.51])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90932606A331
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 22:01:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 90932606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73210606A326
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 22:09:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73210606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=LCeIAbhu
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=wtPByOwc
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=d73xcUdG157+yuPXayUbqK8xxo99vdJSV7htYT7jg0dhEGqeyjpvwhJHYHsIACB+kcJJ4t8BPg7Eu//16OUc/VddCu0XBzsIARH5qMSeLsqTCwIjDWiEMLUVfEXtm8AQFEYLGz9T35wDJb/xm6Gllr9Ti664p/zYv/tASSuA0feIl16KtqO+qNDQLps8Y8k7p865ItBghf0u1pGHpODlr4Ix1vB1dFv99ZuFTkWN6zReqb4A82JN2BM6MZUPvFc7taLRM3sxZKtGDXZMZEQG1JmnutH9RpTufQXEixupMuu35ypMztKDvTb3UBJY2Zf/YfnxOzkfXmLh9qL4rZDt+A==
+ b=unSgFUwwYWfRRHr+rjTn3NwzDBJZXcl365ASxPY1Sijur7mNYl8k2E3ob3Cyy1Zev/nt8cG4Hz7CoYbppbmwd5JRIJGn1Nc/BbO1kb7pkH87Rqve8XokeWjnAAQ29yrpWffLNBxVVZzgTvCCGgnNink8ePV3BGrBBBifA4uvSk3uTYVc9yQIEWme6mcbKZTIzDVlpX/P3oXa+lc4Nmi9tkvUT7cLu3nPj7yENkjmIhMUuedKgQyZfMxPQtfnDflJZqzS8Ef2WdFqOsuE7rvepgkXi7IhNBm/JUeYRS4HQUtQUQjAiX6PJX2TwGoEmApHs9Mx6QY1fKFm+0/4VknAAA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BjSJj+zJDnnRI8+lGdW2YiDc0SmxvvggWXYIgTmnztY=;
- b=qWqoiVJkO7kJxoBLd2D4tvmswaibhHbTspUF/jHZcEcrWtZiELyfUaFlwHxPBhc521zOn2nAA077rtX7ic4uzFcbTLajHvG2wQC76zW0DEEhnDJGvLdeShMUcxkp+qNGuHih11dW2IFq85ezsE1MBZaoz/JQ8sjwEJuEae47pGX8dNZejF9OKzrsMeEUOomEmfYe2oi+GHfduYw5J0/J0RiklqoVb729tPupUZB29dWB6KZtlKzK6q/9fRugu4nm9A+16f8TfW4i2o1MIrtDrSQdxGUSxr9oxCPOSlww3Oue9dVV2AlsYXGFr+9bpnr2chcVR7pJMZ7fzpCfsg5QPQ==
+ bh=YpPn3dlP03U9qZLs3oavWGepVCo5I9P0h7xZhsfwANw=;
+ b=CukuYfrBMtTsehhWaN5C2718FzNBVDaWPKHohj1uKmfs6SRDnLtgvIDMyE/RDWT7RdIgTrrzOMaD3HoyPyojGtIUSnDRg1HYihmmjxjF0MTYfmmH/jcu8foaNzIFmdJKjP6rjm/sv9WZar9onrhioYJs0nebrLjK9ukC3+UAJerAkUGpZP92EYUwVkUWKeUgM4fVqD8HY/p7SbWsgn/BTFnw9mqfTp9E+E4MLFOetLvtowtHtGzMQtKgIsaXujh13XE5VfYlQHYMvyR8S63W+z7VBJC5b3DxK+ji05wkT5CT25QkCLTqGzk3tpN4Ce8GA76eoU6Uhgy+32/0j4YYfQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BjSJj+zJDnnRI8+lGdW2YiDc0SmxvvggWXYIgTmnztY=;
- b=LCeIAbhuBN2GfFwpYiLR1bKgAs1aDp7OXAZKo5SspoHG/UmzT2CiBdatCczDSYBwdwJIrTTIPV7aA2BxHpXbYpTdqDFAmozxvT6lge2hKIOtE4g/Z0+Dt5d74ZZNQTZaC9aBzU/gokTIrvpOifdJ4XsG+/IWmgwA6wViPBz2UUE=
+ bh=YpPn3dlP03U9qZLs3oavWGepVCo5I9P0h7xZhsfwANw=;
+ b=wtPByOwcXbJVQW4c4FKHmXv0UMIiP+gf9Xibr8XULtN9k5sFtN5s28KPeqN1jtfgxco+On2mngyygmO9D6qcwXQoCbyRATjBlXJkiMU6bn/t3zLH6nyxyp238l3KCs8NAPQetAIe3G1OFjMmR9NiImFHTfdpd8B4xKBCLP8TbBUqg2NYwwQOW1EK+CPu5Ij0gn9wreyBkQVF4F8qFBsOQFJ7FmwC+6AXyvadcI1BVKE2FKCdPft2idsJxgZWIunjhN0GIaLt8/cd3A8QAR4a4+yC4gPZzQst3OdUujEFMVRIL12IfryRxdj4afllrZKxRPLAaz5mEdD39c4zw0iOeg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MN2PR12MB3485.namprd12.prod.outlook.com (2603:10b6:208:c9::22)
- by BN7PPF62A0C9A68.namprd12.prod.outlook.com (2603:10b6:40f:fc02::6d2) with
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by PAXPR04MB8541.eurprd04.prod.outlook.com (2603:10a6:102:214::23) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Thu, 5 Nov
- 2026 22:01:31 +0000
-Received: from MN2PR12MB3485.namprd12.prod.outlook.com
- ([fe80::7ac:5acc:f8b7:65c9]) by MN2PR12MB3485.namprd12.prod.outlook.com
- ([fe80::7ac:5acc:f8b7:65c9%7]) with mapi id 15.21.0569.011; Thu, 5 Nov 2026
- 22:01:31 +0000
-Message-ID: <396e7329-587f-4610-b492-a6bd28049ae3@amd.com>
-Date: Thu, 5 Nov 2026 14:01:29 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 3/3] ionic: add devlink param for command timeout
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Thu, 5 Nov
+ 2026 22:09:45 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0592.009; Thu, 5 Nov 2026
+ 22:09:45 +0000
+Date: Thu, 5 Nov 2026 17:09:37 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-rdma@vger.kernel.org, "Nikhil P. Rao" <nikhil.rao@amd.com>
-References: <20261102-b4-ionic-cmd-timeout-v1-0-2f75c2d0a0c7@amd.com>
- <20261102-b4-ionic-cmd-timeout-v1-3-2f75c2d0a0c7@amd.com>
- <sashiko-outbox-196113@kernel.org>
-Content-Language: en-US
-From: "Rao, Nikhil" <nikhirao@amd.com>
-In-Reply-To: <sashiko-outbox-196113@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR05CA0133.namprd05.prod.outlook.com
- (2603:10b6:a03:33d::18) To MN2PR12MB3485.namprd12.prod.outlook.com
- (2603:10b6:208:c9::22)
+Cc: Shubham Patil <shubhamsanjay.patil@amd.com>,
+	linux-i3c@lists.infradead.org, devicetree@vger.kernel.org,
+	robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: Re: [PATCH v2 2/3] i3c: dw: Track the transmit and receive buffer
+ depths separately
+Message-ID: <auz-oTwusjUDhgh3@lizhi-Precision-Tower-5810>
+References: <20261105085425.3418230-1-shubhamsanjay.patil@amd.com>
+ <20261105085425.3418230-3-shubhamsanjay.patil@amd.com>
+ <sashiko-outbox-198746@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-198746@kernel.org>
+X-ClientProxiedBy: PH3PEPF0000409A.namprd05.prod.outlook.com
+ (2603:10b6:518:1::46) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,189 +102,164 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3485:EE_|BN7PPF62A0C9A68:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0f8859c-d2a9-447d-b23e-08df3b88594f
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PAXPR04MB8541:EE_
+X-MS-Office365-Filtering-Correlation-Id: f28d61fd-1463-4e0e-c64a-08df3b897fce
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|261021135927099003|261021123027099003|11063799006|4143699003|261022075727099003|261026140227099003|261028144727099003|261009223027099003|261021121427099003|56012099006|5023799004|261022105027099003|261026121527099003|10067099003|18002099003|261102123227099003|22082099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|19092799006|261022105027099003|11063799006|56012099006|4143699003|261028144727099003|261009223027099003|261021121427099003|261026121527099003|261026140227099003|261102123227099003|10067099003|22082099003|6133799003|18002099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	H0+7aknPShRqR9Uf2BwLOOrgbAkoHiztWaJzKksUncDxAOitsg1mHBTeWDCG51hyW2EUCOUwyOELEFKvDnQTrTuSsmUr0JdIJxM5Jj0yNgC/m9tfm0A0egHZbmssyZEcchKw6qEyEK3skwrnG5t+QXwh9CXZvXTsyMka3aYuWfIqXz+3R9osHghANxUcSni0rslNzKlqBnzfUqT/GwQJNzlX99d0+rTxGaRxXd8Dn99lfnMbJU1O21np/F7pAw35l8P8CNE1S5f4Jh5GZ2iin/ZdGyPv/Sh+h2YFaiAD0IsxSM36Fj/B9OXwprdQHY+upD8hwbbFpoT4WALQ+ceaS7egTyths3jQHeWN5WBt4emMldeyBb0zt2i/JLxcBxK/DodF8H/2tlGuvXdUpz98YW6wRZxNeqz0nalYmCf6sWtIM7MSkIgI2CUOXW57+Vy5PcxIJv8OHCNEOxQwVZKhiFInIl3GAIcm5Weehv7izbnofNpWIvhz5cCvQIuy2hraZqryRmCnfyBUitWQ0XPdU0tgm1dOIVTUV6C5Nq1UNDSlIM1Vpv4pdjIoT2ibD+0OFEjxGiXpVGi4+Z9OdY6cEqGCokWMcbZ0Dt5pX/HZxSNDkSNykE0hKgFbUOygnXDm5cRnFjtDyUKMoU3h/uKWkSTjXxLDZECm1W/MkTQfAFA=
+	7EyulDLTPSvvXTftVGYoFV6Uf/HkX2GqzJpb3mv4XsbAIcp1prLEUj0xfTDJJy4wv5M60YYdajbYvhBQ/w4iKaTCPTEuGkOzJFO5OPPtv77O05BVIkRk32DrCJRAeco+ITnXc88oh7AADMRyoyLBXzn+lOj70PUNdKi22eOAvtnifdcdUSSEjn7PAYVJafqhNDM3qKMbSgG5PWBw1ZQlBFPbB7h1KxuEg8iJGojCb+rZddtjQ07cpenxjMJBNjh5l6nC/9wTKNANsTx2Tg/WFTOFLnub07j4ndOly5UQMQFnv+qRjTW/H5pJNo9ACan4fVy/R4EhDQFv6zlSm48lp0GiBkUxrsGY4q+3um768vXU3ERPHSVyK3BeRU84ubZfHIgk4AzlxyT9S1lbakQKrno0EIoTpeeiNDFlcH29CDGlzoXGCXNbCJ+JkcesEfHoVn15rBf2ydWiDVbYBrN6WUESSiFcXe1SDFtpmZYNkIDnuUjGF5DpJi9Hi/cK5lEDXTGj8DEAQobqGL6GP8ctcN8H7PaLRnCoTviAoaOzfSwsuMRW+U5E5UW7WzFLWhUpKasSD/kVA0o8gCLZbsMR/Gvw4hnyynZInWMV4nmIQBE=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3485.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(261021135927099003)(261021123027099003)(11063799006)(4143699003)(261022075727099003)(261026140227099003)(261028144727099003)(261009223027099003)(261021121427099003)(56012099006)(5023799004)(261022105027099003)(261026121527099003)(10067099003)(18002099003)(261102123227099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(19092799006)(261022105027099003)(11063799006)(56012099006)(4143699003)(261028144727099003)(261009223027099003)(261021121427099003)(261026121527099003)(261026140227099003)(261102123227099003)(10067099003)(22082099003)(6133799003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RkRlZldtZjhHY21zZjR1R0NBMVUyMEJ6eXpabVBHUXg2TU5pT2YwdGlscnhZ?=
- =?utf-8?B?bUhTbnRmdDAzNTYvWnk3dThDNmczR1BwTUdBR1F4eTF4b1d4RU5iYVA3amIx?=
- =?utf-8?B?dndscHhNQlVhUHZqenF2bDVjRlUvVDlNSm1NR2xGQjlsNVF3SlFUOGJUNlNq?=
- =?utf-8?B?L3Q5WVJISzdZS1F4alM1OVlHOGFNQ1lVelIvRUpiNjFQRXN5dDVDTGZ3L3lt?=
- =?utf-8?B?S2EzQ3YzdVNpMHROcWxwK0xiSVVBWVhMMHBPTFQzOG1jNHlDVzZGRTZPM3Nq?=
- =?utf-8?B?STE2TjJRUXFub3RGaUEwZ09XL253cEZDZHZrT21CTmFhenBsUWgweDFQdDE1?=
- =?utf-8?B?RU1UUXJ4d2ZmQmhrZGpJZzRNNjVDeG5tbE92azZ2Yk0xcHI0TS9ScCtSUjFk?=
- =?utf-8?B?MHY2Z0xYd2ZvNCsvVjYxRXJ3NmRBclJOeTVISC9CRS92ZExUU1h1WThpbkNI?=
- =?utf-8?B?QklsSHA3ekNoQkJ0a2o5SWRPU21qd3lvcXA2ZC9pQmR6bVh1WGowNWZXdWNG?=
- =?utf-8?B?ODYwc3lzNWFZTXdoTzNXOXh5b1dZNzJiSmxmR09HcGdzWTIwWTA4cUZ5dmdC?=
- =?utf-8?B?QVdjeUkrcHhuN1FGaVVXaTREUFpyakRnckZKM3lleVpYazFCQ1VoY3o1SjNm?=
- =?utf-8?B?cDlTYTl4ZGNhRWJPQ2p6NnVTUnpGenJ2L1lCdzBNQ2hPaGhYc3NzZG5HM2Vu?=
- =?utf-8?B?SVdzN3RWQVRiNUFRU1lVc01laWhyUGs2YWR2SEtMQi8vb2dRRmwzOEdycEQv?=
- =?utf-8?B?ajc3SzFGTjR5K3FHdWRBOERlaEhkOU9JVllWckplTmhiYm4wSVRLNVYxbFla?=
- =?utf-8?B?VGdzZGtxaEhTOXdKdGJsNVN0ZThTOFB0MmxzMkpaUTIwSFhXc1IvelZ2cUpw?=
- =?utf-8?B?ODk0ZENwOE9VUWk2cjZYQjhLelZ3T3VYSnVCVGZnUzkzY2lOU2tiV21JaGFl?=
- =?utf-8?B?RW1mM3FDZ1VRZzVhU3JMMjJJVXJnVTVMdk1nQnpNTWdVS3hqVGRyUEthbnh2?=
- =?utf-8?B?cUhlRVhQdlR3eThRUGxOVjlVZVMydWFKRkN2UzRrTlpzaXRzelhqS2QwaWM5?=
- =?utf-8?B?YnUzcW5jVFVnVTRQL0xITTFUWVdqUjR6c0lTKzExYWNvR0FwcHRkUEFnWUVq?=
- =?utf-8?B?SklqZlJ1TzVROFR0d2pNZjJTQ3RwUnVBMmgvT29CMG56OUhjRmp4eUsrQ001?=
- =?utf-8?B?WTlvbmhYeUsyeEV4SGN6SFRNVmp1cVNvQ2tUQ0Y1eEx2YmIyQlZPa2dieGFx?=
- =?utf-8?B?MVlxSDZFMVY3eHdWcFBNaEVGK1RLdGJCeUUxTUNtNFMvUG9IZ1ZaVkFXU0tl?=
- =?utf-8?B?d3BVeE40N0RXYlFaUzJRTUtjSS9TM1hQRWN6UDJBcmN3V0ZCKytYZ2FDNFZm?=
- =?utf-8?B?K2dXeDRqQ3ZUdEk1cm5ISUIrcS9MNG8xNVN1T2d1M2ZmQkNwYjZxMWtTejhs?=
- =?utf-8?B?NXJMQ1NROGF1MG11Wm43ZExmbHcvRTluQ3JFS1JVSUNROHI3YlRzWFgra2RV?=
- =?utf-8?B?bTZtOVduaUZkY1pQRkFmYXlVRUlHOE9nU2xrZlkyOUtZdVJQNXZUR1B6RFVL?=
- =?utf-8?B?K3FKRzJlUG83a01RM0J0K0JxeUVtU0ZpQVpsNW5QUE9QQnFZd3UvMTB2NVlN?=
- =?utf-8?B?clFiT3UyM3IxL2U2NFVKUEdJSmcrVEpESGNXb1F5MHRTaUY4cGxWaGk3ODR0?=
- =?utf-8?B?NGs0KzRsV09FdXZxcU90VjlOSlFFYWRnSDhORTZvWi9CdlhlaVZLa3NVNkxU?=
- =?utf-8?B?ZHliU1FsK2laSnp0Y1VYU3FLMEZZVEhGN2g3d0tzL010NGJObU42ZWRnSnVB?=
- =?utf-8?B?ZUdDVUtlRGNKeEd3Z1M4Y0xKQUVzMmlIZzM2YWZRZVBTTGlWNW9JU3Y5bnhC?=
- =?utf-8?B?Uml6MjQ3SVpGN1g2UitQTnd2VC9YeURZMmNQUDJYRmZlRHlWdnBGNndKcFlT?=
- =?utf-8?B?WGRoeW5iZ2U2dlFOR0toWVJ2clVRUDJBNzAvdHlYaEVRaktYMkkzczVEZTNn?=
- =?utf-8?B?S3VHRVZuQlMxUmkvNWhncWFiNmNsODJiL0JBSjlSdWNCcGFBUnJ1V0syQWNO?=
- =?utf-8?B?STlLT0NzS2pLL244YTRwTjhRbkxLNFBzRm90bVVEVEpGTzNRZzQ5WlZRTzFr?=
- =?utf-8?B?S01uV29ITmllQnJpcjZiM1U1Y1Nicm9LQy9OZzlkKzRDaitjL0xlTlQ0dmdq?=
- =?utf-8?B?RUFsU3E2R05vWVpCbDZhRnBvelpsbHBZaHhEZk9zSlJmUS9aODFFUWFqZnBB?=
- =?utf-8?B?MjdOZU1adlhTZWM4NzZQZDRUMlhPUVRtdFFzMWkxanBQNkZDdWsvVFhjUTBK?=
- =?utf-8?B?TjRiWUtwRm9LM25jb0x2ak83VkxvYmQ0bVNJb1RWSTFucTFGSzJEZz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0f8859c-d2a9-447d-b23e-08df3b88594f
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3485.namprd12.prod.outlook.com
+	=?iso-8859-1?Q?ip4brVsZ9Yx7M4THJoLa5Dc2EisKwWzdwOV5OmiWjamvadwAI13TLkOX+8?=
+ =?iso-8859-1?Q?nWZsnO74TNGMHimeKgGjAKYN01RarhPO7abcpXk0JGk/1m/cNBhKnHZdph?=
+ =?iso-8859-1?Q?SinOvtqam2Gc3u7gz35QpNVCdAKUTB50ewKot1A64t2ynTHcqZIuYBF08i?=
+ =?iso-8859-1?Q?s+NJKSpMA9zsfuvHDrdwh0pkOa1X1F+ebUz/nWBeXxoYJnl5rK+TPmOGwX?=
+ =?iso-8859-1?Q?j4/KviSXD+wInIaMnAng2swjQ7mV9mMRRT4j611rU+OIY+cBvYvB54e1gc?=
+ =?iso-8859-1?Q?5yEp3rcDBKI9Y64k/O/E9IPkoVFMaoLUWSMaw/BVyVPgFsNFLC/mb0H6m3?=
+ =?iso-8859-1?Q?oacUQbB/c1VtPcIsptMamx0BHiOKz26SGH53Lfxb4z5H5a6LyiUlA9f6UB?=
+ =?iso-8859-1?Q?CDP+/RC5JtuCg8sDRpG0DMNTK37hcAmuJr6Pi+IjmYtrYHNpTAg39veWMc?=
+ =?iso-8859-1?Q?rcCIj+zbE59BDLV0WhQ96uxA3mtejgAjlZ5xYhazG2kP2ycP5v4EKUVZXn?=
+ =?iso-8859-1?Q?CDjOvLjBhngYAnE6CnPV2jeuQHteiuLGw9qex8YNiewSrfnqCfU4b9CVD/?=
+ =?iso-8859-1?Q?5cOLpgsQcHTrN9b3iqj13GxVqsz+BwT/XRoCOlbCcKuiC0QIs18vJqqr8y?=
+ =?iso-8859-1?Q?07JS6kyOvHZ4BYw/RHMdq2J+nnwUBYFDRcaAM29gylh2wRhviz+tqHeIFX?=
+ =?iso-8859-1?Q?AI9AT59rpbhrupIUjAOZ1NS/KUfGS1NiSipDo0xqLQxpbncUu4yplzyqYq?=
+ =?iso-8859-1?Q?HeXaLeGRKfvOCiXkpnTUatw/y+CKt7y1eByhgx3vS0r+A/j7D6+KX1xMt0?=
+ =?iso-8859-1?Q?fahZ7TZxfoyDJvIGgL6B/lc4fWA3HXNo36MKfk8nT3Bm74cLuq9ErVMc7c?=
+ =?iso-8859-1?Q?awAbHY9rE4sgE87ZL5MWKmKP6ZpEkIjXpkeA4HXwZ7ySJwrDqPc8dDnhj7?=
+ =?iso-8859-1?Q?RMOrJJOAy/ocob+pwtaqGFfEWdo8D3pb2YOwVeM/M2HILucsYvqm3zAFEQ?=
+ =?iso-8859-1?Q?XmiqMP32EAWjJy6OahmgZ5sKqPX35x+xFuJC5BUXYy6eI2aP0Jk1Nmf0hi?=
+ =?iso-8859-1?Q?OABHllJtpbNnoMw39tGK/gYOnlShqy0KwewfxvIJWR2Ecyk7H04xO76qZE?=
+ =?iso-8859-1?Q?7ZgEinSfagvpfddvzVEM4BvIwgKCegCM52YtR5OFj5o5sFLfcgTMyRQVV4?=
+ =?iso-8859-1?Q?0+AZRXMISPq+/kHsqyBSRyiweUAwLSz6srldijKPOcyqktgIgrK8u50z4o?=
+ =?iso-8859-1?Q?xN2Uqqzg2L8lZJ4NxrraXS5XPEgExl3gI1Bzw5fNpuR0pMNt+30vC4VsPI?=
+ =?iso-8859-1?Q?cEPFlj4WpoBZpoWjnZO4rZhEmMu+HKotabCHSOb5RX01uxTFQAj76gWp6N?=
+ =?iso-8859-1?Q?tQgFNae4pnzBqc+iSdDu5Q20Ul5MhpRdbcTCruH438XP+hklATTXA7eELr?=
+ =?iso-8859-1?Q?B4Bilo09MWU74OWoiMu78C3Xn2ssC+HcgC2amHFa8kfUjOe+Al9bVxw+tc?=
+ =?iso-8859-1?Q?P0xIt2b2SNUugcr3BlJ3RrzQ2ZEZGYuxCVW+R3H6Q6fQMbi6BREejl60yI?=
+ =?iso-8859-1?Q?QSzgqYzTUelux0lCUq2D8GtZyjR4jJ+u4DUbpdC/QE0iINPcKnpO+gbw34?=
+ =?iso-8859-1?Q?WpThi/sCA+mL8GhtYFVtANDWaZtHqXVKXo0E20G6G+Wk2fkDUO/E+3DlA+?=
+ =?iso-8859-1?Q?OUqFBqSmSqniE+P4aOgyKbuLsJS3Z8HB7UrT+5OXb6YJUYgIDi7S7ftQMU?=
+ =?iso-8859-1?Q?+5t5W+GPYFcjNyTzO2LPCrsEk6KHAAALFB6X7Y7jKpuzuEql1EsPca+/it?=
+ =?iso-8859-1?Q?8GwklIz6CRZUBInPMqtulz1Vb96euCKzLfEkWTjpTCrApaIWCGkq?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f28d61fd-1463-4e0e-c64a-08df3b897fce
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 22:01:31.1855
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 22:09:45.1376
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HZGRNlBtqTpLZjTXC1tMvlP2YbdHhRvLzxA7Tc6DpSoBK9210Vh91mJdTtZq3hPYxkYigkkI0yjlbuSaxoMwoQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF62A0C9A68
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1fPbfDm4bwBLQKSvL6rRxhijdDyPBirWH8yDE1o6DVfnW8Q2K9IyXZlYzBNg7FH3lbR3tCFhm/lYoRbvB+odsG6UPxKQVv4nj6xbX/4jWzlM3st+bENFCR3BRoi8xo03
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8541
 
-On 11/3/2026 2:28 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->> +static int ionic_dl_cmd_timeout_get(struct devlink *dl, u32 id,
->> +                                 struct devlink_param_gset_ctx *ctx,
->> +                                 struct netlink_ext_ack *extack)
->> +{
->> +     struct ionic *ionic = devlink_priv(dl);
->> +
->> +     return ionic_dev_getattr_cmd_timeout(ionic, &ctx->val.vu8);
->> +}
->> +
->> +static int ionic_dl_cmd_timeout_set(struct devlink *dl, u32 id,
->> +                                 struct devlink_param_gset_ctx *ctx,
->> +                                 struct netlink_ext_ack *extack)
->> +{
->> +     struct ionic *ionic = devlink_priv(dl);
->> +
->> +     if (test_bit(IONIC_LIF_F_FW_RESET, ionic->lif->state))
->> +             return -EBUSY;
->> +
->> +     return ionic_dev_setattr_cmd_timeout(ionic, ctx->val.vu8);
->> +}
-> 
-> [Severity: Medium]
-> Unlike ionic_dl_cmd_timeout_set(), ionic_dl_cmd_timeout_get() does not check
-> IONIC_LIF_F_FW_RESET (or IONIC_LIF_F_FW_STOPPING) before calling
-> ionic_dev_getattr_cmd_timeout().
-> 
-> During firmware down or PCI reset preparation in ionic_lif_handle_fw_down()
-> and ionic_reset_prepare() (including when ionic_pci_error_detected() is
-> called with pci_channel_io_frozen), IONIC_LIF_F_FW_RESET is set and then
-> ionic_devlink_params_unregister() is called while the devlink instance is
-> still registered:
-> 
-> ionic_lif_handle_fw_down() / ionic_reset_prepare()
->    ionic_devlink_params_unregister()
->      devl_params_unregister()
->        devlink_param_unregister()
->          devlink_param_notify(..., DEVLINK_CMD_PARAM_DEL)
->            devlink_nl_param_fill()
->              ionic_dl_cmd_timeout_get()
->                ionic_dev_getattr_cmd_timeout()
-> 
-> Similarly, ionic_devlink_unregister() calls devlink_unregister() before
-> ionic_devlink_params_unregister(), which also invokes devlink_nl_param_fill()
-> via devlink_params_notify_unregister().
+On Thu, Nov 05, 2026 at 09:01:14AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] i3c: dw: u8 truncation of rxfifodepth in dw_i3c_common_probe()
+> --
+>
+> commit c93cc6843b57993d053db03cc3f7cee25dbd4371
+> Author: Shubham Patil <shubhamsanjay.patil@amd.com>
+>
+> i3c: dw: Track the transmit and receive buffer depths separately
+>
+> This commit splits caps.datafifodepth into caps.txfifodepth and
+> caps.rxfifodepth, populates caps.rxfifodepth from the QUEUE_SIZE_CAPABILITY
+> register, and exposes the FIFO capacities via base.tx_fifo_bytes and
+> base.rx_fifo_bytes.
+>
+> > diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+> > index d1119f203d1b6..dd5462b129514 100644
+> > --- a/drivers/i3c/master/dw-i3c-master.c
+> > +++ b/drivers/i3c/master/dw-i3c-master.c
+> > @@ -203,7 +203,10 @@
+> >  #define BUS_IDLE_TIMING			0xd8
+> >  #define I3C_VER_ID			0xe0
+> >  #define I3C_VER_TYPE			0xe4
+> > -#define EXTENDED_CAPABILITY		0xe8
+> > +#define QUEUE_SIZE_CAPABILITY		0xe8
+> > +#define QUEUE_SIZE_CAPABILITY_RX_BUF(x)	(((x) & GENMASK(7, 4)) >> 4)
+> > +/* Sizes are encoded, 0 meaning 2 DWORDs and every further step doubling it. */
+> > +#define QUEUE_SIZE_TO_DWORDS(x)		(2U << (x))
+> >  #define SLAVE_CONFIG			0xec
+> >
+> >  #define DYN_ADDR_LO_MASK GENMASK(4, 0)
+> > @@ -978,8 +981,8 @@ static int dw_i3c_master_i3c_xfers(struct i3c_dev_desc *dev,
+> >  			ntxwords += DIV_ROUND_UP(i3c_xfers[i].len, 4);
+> >  	}
+> >
+> > -	if (ntxwords > master->caps.datafifodepth ||
+> > -	    nrxwords > master->caps.datafifodepth)
+> > +	if (ntxwords > master->caps.txfifodepth ||
+> > +	    nrxwords > master->caps.rxfifodepth)
+> >  		return -EOPNOTSUPP;
+> >
+> >  	struct dw_i3c_xfer *xfer __free(kfree) = dw_i3c_master_alloc_xfer(master, i3c_nxfers);
+> > @@ -1136,8 +1139,8 @@ static int dw_i3c_master_i2c_xfers(struct i2c_dev_desc *dev,
+> >  			ntxwords += DIV_ROUND_UP(i2c_xfers[i].len, 4);
+> >  	}
+> >
+> > -	if (ntxwords > master->caps.datafifodepth ||
+> > -	    nrxwords > master->caps.datafifodepth)
+> > +	if (ntxwords > master->caps.txfifodepth ||
+> > +	    nrxwords > master->caps.rxfifodepth)
+> >  		return -EOPNOTSUPP;
+> >
+> >  	struct dw_i3c_xfer *xfer __free(kfree) = dw_i3c_master_alloc_xfer(master, i2c_nxfers);
+> > @@ -1738,7 +1741,14 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+> >  	master->caps.cmdfifodepth = QUEUE_STATUS_LEVEL_CMD(ret);
+> >
+> >  	ret = readl(master->regs + DATA_BUFFER_STATUS_LEVEL);
+> > -	master->caps.datafifodepth = DATA_BUFFER_STATUS_LEVEL_TX(ret);
+> > +	master->caps.txfifodepth = DATA_BUFFER_STATUS_LEVEL_TX(ret);
+> > +
+> > +	ret = readl(master->regs + QUEUE_SIZE_CAPABILITY);
+> > +	master->caps.rxfifodepth =
+> > +		QUEUE_SIZE_TO_DWORDS(QUEUE_SIZE_CAPABILITY_RX_BUF(ret));
+> > +
+> > +	master->base.tx_fifo_bytes = master->caps.txfifodepth * 4;
+> > +	master->base.rx_fifo_bytes = master->caps.rxfifodepth * 4;
+> >
+> >  	ret = readl(master->regs + DEVICE_ADDR_TABLE_POINTER);
+> >  	master->datstartaddr = ret;
+> > diff --git a/drivers/i3c/master/dw-i3c-master.h b/drivers/i3c/master/dw-i3c-master.h
+> > index f5b4491b247a0..e23554bfc5e49 100644
+> > --- a/drivers/i3c/master/dw-i3c-master.h
+> > +++ b/drivers/i3c/master/dw-i3c-master.h
+> > @@ -14,7 +14,8 @@
+> >
+> >  struct dw_i3c_master_caps {
+> >  	u8 cmdfifodepth;
+> > -	u8 datafifodepth;
+> > +	u8 txfifodepth;
+> > +	u8 rxfifodepth;
+>
+> [Severity: High]
+> Can master->caps.rxfifodepth overflow u8 and truncate to 0 in
+> dw_i3c_common_probe()?
+>
+> In the DesignWare I3C controller, QUEUE_SIZE_CAPABILITY_RX_BUF(ret) can
+> return up to 0x7 (256 32-bit words, or 1024 bytes). When that happens,
+> QUEUE_SIZE_TO_DWORDS(7) evaluates to 256 (0x100), which truncates to 0 when
+> stored into the u8 rxfifodepth field in struct dw_i3c_master_caps.
+>
+> With master->caps.rxfifodepth set to 0, master->base.rx_fifo_bytes also
+> becomes 0 in dw_i3c_common_probe(), and the nrxwords >
+> master->caps.rxfifodepth check in both dw_i3c_master_i3c_xfers() and
+> dw_i3c_master_i2c_xfers() will reject every non-empty read transfer with
+> -EOPNOTSUPP.
+>
+> Should rxfifodepth (and txfifodepth) in struct dw_i3c_master_caps be u16
+> instead of u8?
 
-On remove, get runs from devlink_unregister() with the firmware running
-and completes, or fails immediately if the firmware is already down.
+Make sense, please fix it.
 
-> 
-> If a userspace netlink listener is monitoring devlink events, or if a user
-> queries devlink parameters during the window before the parameter is
-> unregistered, won't ionic_dl_cmd_timeout_get() issue a synchronous MMIO
-> IONIC_CMD_GETATTR command while the firmware is down, the device is in
-> reset, or the PCI channel is frozen, potentially stalling reset recovery for
-> up to cmd_timeout (255) seconds under devl_lock and dev_cmd_lock?
-> 
+Frank
 
-__ionic_dev_cmd_wait() returns -ENXIO as soon as fw_status shows the
-firmware is not running, which is the case after firmware down (running
-bit clear) and with a frozen channel (reads return all-ones). For a PCI
-reset, get is only called from reset_prepare, before the reset starts
-and while the firmware is running, and the parameter stays unregistered
-until reset_done.
-
-get has no FW_RESET check on purpose: devlink calls it from
-reset_prepare, while the firmware is still running, to fill the
-PARAM_DEL notification, and the check would make it fail there and drop
-that notification.
-
-I'll send a v2 with a comment in get explaining why it has no FW_RESET
-check.
-
->> @@ -3495,6 +3497,7 @@ static void ionic_lif_handle_fw_up(struct ionic_lif *lif)
->>        err = ionic_identify(ionic);
->>        if (err)
->>                goto err_out;
->> +     ionic_update_cmd_timeout(ionic);
->>        err = ionic_port_identify(ionic);
->>        if (err)
->>                goto err_out;
-> 
-> [Severity: Medium]
-> The commit message notes that idev->last_hb_time is back-dated by the
-> largest possible interval so that a larger cmd_timeout value does not delay
-> the first heartbeat sample after probe or reset.
-> 
-> However, ionic_watchdog_init() is only called from ionic_dev_setup() during
-> initial probe and PCI function reset, and is not called when recovering from
-> a firmware reset in ionic_lif_handle_fw_up().
-> 
-> When firmware comes back up in ionic_lif_handle_fw_up() and
-> ionic_update_cmd_timeout() applies a large timeout, idev->last_hb_time still
-> holds the timestamp from before the firmware reset. In
-> ionic_heartbeat_check():
-> 
->          last_check_time = idev->last_hb_time;
->          if (time_before(check_time,
->                          last_check_time +
->                          READ_ONCE(ionic->cmd_timeout) * 2 * HZ))
->                  return 0;
-> 
-> Could this cause ionic_heartbeat_check() to skip sampling fw_heartbeat for
-> up to 2 * cmd_timeout (510 seconds) after a firmware reset unless
-> idev->last_hb_time is also back-dated in ionic_lif_handle_fw_up()?
-> 
-
-The next sample can be up to 2 * cmd_timeout away after firmware up, but
-that is the normal sampling interval.
-
-The back-dating at probe and PCI reset exists because the first sample
-there only records a baseline (last_fw_hb is 0), so without it a stall
-would take 4 * cmd_timeout to detect.
-
-After firmware up, last_fw_hb already holds a real reading, so the first
-sample can detect a stall and detection takes 2 * cmd_timeout, as in
-steady state.
-
-v2 also changes the changelog's "after probe or reset" to "after probe
-or PCI reset".
-
-Nikhil
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261105085425.3418230-1-shubhamsanjay.patil@amd.com?part=2
