@@ -1,61 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.95
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.132
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793881021;
-	b=RmqfIXMCeoraxk2w64nWZaoiKttchpy2Dn4jBLpoM88chW0kLIdsnQFucbKCA8UAhzTg
-	 F/n5eHsDbPmeeclcpM0olvhB/Rro2esnn9jvSFwrPCRvOevBpOGTccLBXhBARAwpDeKZn
-	 nVl30HDJJNYNZz0YN2PPOBe9JwSarxGB++dFEuHFmnWkbr0VtZAxVeFGgPCtNkeRzmbvA
-	 SmiKGS9isMzT9Rso7B6FCNYgnGXQcUjMo/x5l8DaAO9rEeUHeMEnAsP9NPxzZH//DiG2x
-	 U8MVm5PFaVwvq8Dgz08slDuP+QfKpIxxltiX7ks4f7Uchv7H4SFswrtqU+NHXo3dwXg==
+	t=1793882044;
+	b=4vMV3TMkpWSRsPEIxG4Xx3r4kS8JWbEAMVpf5AnjibKKaKznwfr9KAVDDo3KNdMl12un
+	 XkLgp59UECFIAuUufCoTV/BflxJDZvOdBF+RWQOFScpaWz/zhlmXUVm/MpjFB6SUGxcnM
+	 zRYP5KrK27RTfQfrHGgY5Fntdu4fboOCMx2dnXHABHbL8hZ4ZeW9FvZqnBFSaMP8kjQep
+	 ojxFxpjYGVdJMidLCCaQW/Ou3Kcw5yr5S9nAXIFa5ErWtdSwdNlQZ8AvTy7Ndq73vB66M
+	 xGV+8qKCJ6PlFsp5CVI85sT/gX7mJtHt9NIVOv2Hxar1B0bq/Ng9fRb5wCTR9s9YBug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793881021;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=IA2WY3yNmb+K5Fpsg52O2Iq7E8rleDjZAuLC45egiIs=;
-	b=j1Y0cddhwKMJB/FtGJSafPCS1WUH/aZSBKpn94KSCa0zOrvP0pntRNLB3C42CZS+CnHY
-	 oQ6lDdxqvmY/+u325IxMh2mwE4mGlNqCLGNbwtPNkjx/Zn1F+Q9LfZl5qDtfUwWSYHCRe
-	 W4Rsdejog4CU66CsURqYao4N9+wglKWQr/r3ru3nQaI06u2XVCo4yPk4mOkkRdoD524WV
-	 eVqT/M565CBeczAAF8Gf/BmCj7u/Ncj+bJFPg5L3ZwkoH0D1+fNWlRvNPhqhuWFZmjwEe
-	 hVqwvxlibtNfqLw70DWTMOqfEG3dOoB+rTrobjF9Xn3e7rbRC6zNdZ2AuPScZ9VOuFQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793882044;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
+	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
+	bh=xnbdQF+mYCE0wEkhXTSh32IAVnsikEgxzBr/xzLSIyY=;
+	b=tS6Z4J9Brf9+/87UV0nzOSCgExiluNiRsdYxby4jc6GblLIIwVi+9EmGK5jr9SgVCtQJ
+	 M9qzBjXw6qbZV7YvfTCNgloGkXVn9kzRruoQz2bem5OHpm+5M2fug46RBakFEQ95KRA09
+	 RU5mfWUMeljmYQECEzhDJYuulFgr3gYwAIgrZB+cnqTuM9yJxMO4HEq0NsNLMxLWsBTXt
+	 DLioADSyFcboL/rjc+69RONiVKdaG84d9homJ3spj3Hv21hLTL0G9WSGufAp9yn8bqElB
+	 uiu5F9aSh9vyzlBRmU7g6TDrVuiFvBKgf+LmmylqZikNPEihf3fa3oKfCMdVmcAD9Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=dsXY7XDX;
-	arc=none smtp.remote-ip=91.218.175.95
-Received: from mta0.migadu.com (out-95.mta0.migadu.com [91.218.175.95])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dE2zMQ8o;
+	arc=none smtp.remote-ip=74.125.227.132
+Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C445606EE84
-	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 12:16:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4C445606EE84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5376C606A329
+	for <sashiko-reviews@lists.linux.dev>; Thu,  5 Nov 2026 12:34:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5376C606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=dsXY7XDX
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=exIR8W8oCZROFJI2uk7aiMwrPmf06QUD4IziM5WiRos=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793881018; v=1; x=1794485818;
- b=dsXY7XDXidksExMMGQkbhbNnDuVNSS6N91/EMbX1+1N5Xbv0rneEPY/neit1N1nZz680ixBM
- ohJhbAJvoRq/YCUxkWhHpAXBdsF3HbYuYC0v+wA+BqX7O8dg6zVS/JO/ibkDLJxDFyTZ5IPQaU7
- Opj/MU5i7Pq+W+GMatoefLGU=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id d4e3f83733bf5743;
-	Thu, 05 Nov 2026 12:16:58 +0000
-X-Mizu-Trace-ID: d4e3f83733bf5743
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5bff701efa5so5937e87.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 04:16:52 -0800 (PST)
-X-Gm-Message-State: APuU4Z8w3b92NUjZuFp5bKlkwWMbQmPH+fX+7ygThPkrPSI10g9PmNjM
-	jNkELanYFeWsVRUuGzHfXo9EnwwHYpUU5vFob4OUpZpm7QiGxgYbYCCqsd2SV469qJrPai+KFUJ
-	13ftNOrHfgrGZEx9s9Hyfaop/JOnmSZharHTpbokO
-X-Received: by 2002:a05:6512:2387:b0:5bf:d1d4:d678 with SMTP id
- 2adb3069b0e04-5bffa4669efmr169831e87.1.1793881012035; Thu, 05 Nov 2026
- 04:16:52 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dE2zMQ8o
+Received: by mail-pj2-f4.google.com with SMTP id d9443c01a7336-2e96b8bfb43so6622315ad.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 04:34:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793882044; x=1794486844; darn=lists.linux.dev;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=xnbdQF+mYCE0wEkhXTSh32IAVnsikEgxzBr/xzLSIyY=;
+        b=dE2zMQ8oBh2t/AFFL1rbIbyKHxbh3QLorXmWhv3yvB1DaQ2d2/1gZMbJikEqsDOVWO
+         REU9tXeXzwI+pIjSa/haAQ07NuTFhrpqjn/xZ1i4PIcyiLe/V7fsJvIyW/a0UJaVE7OF
+         ZYe6n42X+9ztx2l/Oks1CQkTT04uQDxnSim5P4aVMl3AyWTB7SZExpK8Mw6yTjzRIall
+         RufUSAmAcknXoAuY2Vn63NjdKWwYj3BUQ+FF0YjqDoo+xx+SkXzq1vgeFAa2NZZt/KX2
+         tS4cKaFy+KDeGxf/AXP2aLT1gtwBMr5vLJfoyomWytUqfltCFH5sRcGJ0sHHlExe5BJa
+         uUQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793882044; x=1794486844;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=xnbdQF+mYCE0wEkhXTSh32IAVnsikEgxzBr/xzLSIyY=;
+        b=LsqZ2flDcXoafOXOFt7Bl91IydgXfq8O0yM1Uo4rEYyg4rzYHVAqHLPyNPJHKci60k
+         VoznR8ELAAS8Fc62tPMycX9/qfZUnuvumj/2fuZlvu30S+MypbxTi7KuKY71jVVv/vSm
+         PiBd4VJO8idlZr99aYvKn2FCTB5SvdsHe7wfrCFjQ4e1ZWqQx+oNVl1mymS6JujK3TTc
+         JhIvqsUrZ/uClmVDZIP0hd2I5oap+dVchoF5hVw77iLrQ0A5yVdJvcmNwMXVZbpxk1cC
+         JlPIg2MZ+OoJ1zH/Tv8sO8pJ1QEiB60KFZAd2AIFOl/kP7rr5FhrLuWC9ERenjotCRvY
+         wgKA==
+X-Forwarded-Encrypted: i=1; AKwUvBwZ+ZlJ7vN4Tnwji5dA8ifQPW+uWEFA84GZB/k3m1OmwBfgJ3VV4ikJHNfQeIhjf8PbmXjUZTiI9JqjHmWoGwo=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+Y+WwoltHq9N9Z0R6TCCSrqu0+ugvmfuLyxJnKeZOaw9w9WuRp
+	5UhR6BrydLL8oApZvcb3g7/omNY4EC5e1cTBWrGLzM1YVQEDwvir+XWb
+X-Gm-Gg: AYBFou1mQWWjrfOiUAAeAlFEdtK5gLpeukHf9IIuBDaGKzy0atR4Pw/OICXdXnjuu+A
+	OkulbKB9WQQ1oVw2x6kTC9ymFr26jIwXO8/ogK/kva8YyC+gduSyR2Jrafw6vru1YBR4kcMulpn
+	a2GgYHuyoswsX8rZHih3kofJKjdBfS3CdMcK5KaWnwCKGXvFyIE7lan+H7HXcx4fslZSEOiDc9M
+	sxespGbHEpJJLxB1od3nxEHkbIXCTBbKPOSMZQQy6GRu0Jir6a5Aniwjt6oqG5vdeRt6rN8unmp
+	2UNyxtt529zyuHbb/9/UHyL9Xt4FPMcRItPxPUh74V0bBSh9IoVLsTPTLfK66S/dZnxNMBmFz0Z
+	kcahSlduYoWVUInnu6wlqjiv1kZ/x3HYuJFFPT9uSRjMDv0T4hH5ExRUaJ07md+H/dU0VCev0g7
+	OD8t/vLFCzJuIKdd1LKvzpsWnIITQgwag/Aglf10bA1KRmL+NUkJTC8R17QMuvuAUDPkhWGRmfw
+	Nx1l0zzt1pWRSOn+sdMWxuUyFBTkfF25Z+dcE3VlLDYebUi/1Uj3LmT0fYeRxi4A9np0Y4tfQPK
+	O8iouZ/Q37bBkA6ZD3giZVayBBN8uGS5gkVrX3CmAKuvRc9aQiy6vCWe4CkeXRy+B6p2sgkOGaY
+	Vf0NfE7f9DW0e7zGUZz8cGXyNhKk=
+X-Received: by 2002:a17:903:3910:b0:2e9:3dd2:a904 with SMTP id d9443c01a7336-2eb3648b6aemr182844655ad.16.1793882043510;
+        Thu, 05 Nov 2026 04:34:03 -0800 (PST)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ed08fe55bdsm17043995ad.15.2026.11.05.04.33.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2026 04:34:03 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,59 +89,35 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261105110050.1244525-1-fuad.tabba@linux.dev>
- <20261105110050.1244525-4-fuad.tabba@linux.dev> <sashiko-outbox-198943@kernel.org>
-In-Reply-To: <sashiko-outbox-198943@kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Thu, 5 Nov 2026 12:16:15 +0000
-X-Gmail-Original-Message-ID: <CA+EHjTy6+eybqqOoOPr0TxKfexD+gjcvpGQ-kCMmaKz2yQGiKQ@mail.gmail.com>
-X-Gm-Features: AclHuK-wbPaGOFcnKWXZun6kQfFeB-tajjKRV0aOkS7s2VVDPjtOHTnCjBx72tA
-Message-ID: <CA+EHjTy6+eybqqOoOPr0TxKfexD+gjcvpGQ-kCMmaKz2yQGiKQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] KVM: arm64: vgic-its: Don't read the pending table
- when mapping an LPI
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, kvm@vger.kernel.org, 
-	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [RFC PATCH v2 0/4] mm/damon: introduce age_ms damos core
+ filter type
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Thu, 05 Nov 2026 23:31:53 +1100
+Message-Id: <179388191315.401969.13923237674993632654.b4-reply@b4>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+ Jonathan Corbet <corbet@lwn.net>, damon@lists.linux.dev, 
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ Randy Dunlap <rdunlap@infradead.org>, sashiko-bot@kernel.org, 
+ sashiko-reviews@lists.linux.dev, Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20261105044425.87142-1-sj@kernel.org>
+References: <20261105044425.87142-1-sj@kernel.org>
+X-Mailer: b4 0.16.0
 
-On Thu, 05 Nov 2026 11:23:34 +0000, sashiko-bot@kernel.org wrote:
-[...]
-> > diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-[...]
-> > @@ -2717,9 +2714,25 @@ static int vgic_its_restore_tables_v0(struct vgic_its *its)
-[...]
-> > +        /* Enabling LPIs read the pending tables before these LPIs existed. */
-> > +        kvm_for_each_vcpu(i, vcpu, kvm) {
-> > +                if (!vgic_lpis_enabled(vcpu))
-> > +                        continue;
-> > +
-> > +                ret = its_sync_lpi_pending_table(vcpu);
->
-> [Severity: Medium]
-> Can calling its_sync_lpi_pending_table() here cause KVM_DEV_ARM_ITS_RESTORE_TABLES
-> to fail with -EFAULT when a vCPU with LPIs enabled has a pending table that
-> does not cover LPI INTIDs targeting other vCPUs or unmapped collections?
+Hi SJ,
 
-Yes. Unlike the map-time read, this reads each LPI-enabled
-redistributor's table at the bits of LPIs targeting others. Will fix
-in v2 by skipping those LPIs.
+On Wed, 04 Nov 2026 20:44:20 -0800 SJ Park wrote:
 
-[...]
-> > +                if (ret) {
-> > +                        vgic_its_free_device_list(kvm, its);
-> > +                        vgic_its_free_collection_list(kvm, its);
-> > +                        return ret;
-> > +                }
->
-> [Severity: Medium]
-> If its_sync_lpi_pending_table() fails partway through syncing the vCPUs'
-> pending tables, does this error path leave already-queued LPIs referenced in
-> dist->lpi_xa and on vcpu->arch.vgic_cpu.ap_list_head?
+> One straightforward solution is extending the DAMOS access pattern for
+> specific deterministic time based age specification.  However, DAMOS
+> core filter is a better option.  It is playing a similar role in a more
+> flexible way.
 
-Pre-existing. On kvmarm/fixes, vgic_add_lpi() already queues a pending
-LPI as the restore maps it, so a later device-table failure leaves the
-same state. The early return in vgic_add_lpi() on a retried restore is
-a separate bug.
+Makes sense.
 
-Cheers,
-/fuad
+Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+
+Thanks,
+Aveline Noir
