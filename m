@@ -1,72 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.33
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794003533;
-	b=sqgVo34oBAELUFEBaEHGuVmqVEGE57vtZdO1qQ81E7WzfINe96/SaoCjwPy0zX7Oz1Kh
-	 JRDhcEaNyT1fy7qdEP7pVL0aSrGDjqk2TvHCznJWYtBPivkVMZKU8Q89QX8VhUMgw7rvU
-	 +DTJdWgimGX00rHcxPYttAnnhYuOB0uh6EKavjJSziIsf+jWl3dFR0zCS5i+rO5vu80Da
-	 rkcsVXEl5z5pyGW88ytQr6vP46PcF1BD6K61G6MoL946Zc4Tls8NeJMtXf80Ru0uJxFbK
-	 g4u4kI3QPHfXpvlE8MU3nmb9HFR20t5M/E0aFhRbeYTOIZb6j2IYzMjcBpkVBUU0/Fg==
+	t=1794007357;
+	b=IHIckKsBIft7ts9knoEIY8Im1P/cpQouKXHwoWPlJaWRDh4May8WvP2V3v6esyaeOKQz
+	 QyFgQ1XiyG3n8qWLR1L2PemAVz+R0oULVglxIzZFPiCbzxCP0jFDI0Iu13ay5x1sK/zH6
+	 DRRotIFUpSvqALun6mC6osiXQ2i8hNfdUpSOvzKBtSRSG5TTw4OZt8oI62EU/VXuUkxg2
+	 NJdRkwFdgRidDg/yCROO2U7gVTvs3TUbA7rr0BjwnBtiwzXAVDQYXQ7tTxiihF+tuVnP8
+	 rTu76puWR5P0cBbWkCNpRCrZcNPkZsyve0icobb0++n6uko2WOFtImt3brpM/xGSO3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794003533;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=tURUu78Mfm5tXaSKC+0omXpop8yxpZNIgR2c4OXKv84=;
-	b=d80j/5ipd6FWq8Pa1cCB9TdHZw3QlrkHs3BNnjVr68Qu60AXij9Q4OrV7DV3lv/pbCPI
-	 NFOp4WBzJV8xTCF1mnt9QytP5zsWpEBdO3A0l8dzoC1Sc2Gd2fSYtf6JmS7bm6l6b2Wed
-	 GOfDpOyfLbAyGJ2VeJX3uFhvouaFaD4rMTIk/XXiTdePygkEtmEXNJqAtrTwYnoeI4zBB
-	 tUaOvazTk0UUOQwFvkH33BgpvZ8BTFjYZglyH7zOAAgx5wZef74IaM8gPjkiHFcYnUwXd
-	 TWbhWWugEz64sRkOtjFHgV1PSBg1qmFOu3u5Z9KBazCmVksQvCaBGyWZik5eW5lEo8w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794007357;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=zOrS2oEsMLKAlSzqsplSP4kVfn432L2W3OnnE5qefj8=;
+	b=coO3AC9/WdkOEmCydaH9ngIoRZE0/eVWYZJ3Kgp8Ci4gZRvE057nTEvmIz0hqX0vKZzZ
+	 7g7GKY2EzFGCb9MvPOS7kiUtQ7NcGqUXCo4M6uiWSINGAqHX6KSaDhwCcJxunk1e8NfdG
+	 jITFP0gvRoepqALWZszinF8/Xc7wpnudETyYfTNNZycXLqeV8rrvlSFc6wQT72X+r//Vw
+	 0KLBl6zN7pLo7mAoPG4/mSDVtg33N3fgTe5UuyA0VFyDUa34Bkx31OiYXDzbEcqVvWxUs
+	 DlOH2yKrHNegpDFwNuIL21NVnLTONx8jmRwV9dBkdw5w8i42Gr9CcBtack3cZOeAdzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=roeck-us.net;
-	spf=fail smtp.mailfrom=roeck-us.net;
-	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=aIVgxCDT;
-	arc=none smtp.remote-ip=35.89.44.33
-Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TH7OyQdi;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079E2606A326
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 22:18:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 079E2606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F5A606A333
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 23:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=aIVgxCDT
-Received: from eig-obgw-5003b.ext.cloudfilter.net ([10.0.29.155])
-	by cmsmtp with ESMTPS
-	id PO63xF5CaAR1iPSGjxGsxG; Fri, 06 Nov 2026 22:18:46 +0000
-Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
-	by cmsmtp with ESMTPS
-	id PSGix7u6uSgq1PSGjxAd3v; Fri, 06 Nov 2026 22:18:45 +0000
-X-Authority-Analysis: v=2.4 cv=c8KrQQ9l c=1 sm=1 tr=0 ts=6aee5245
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
- a=8b9GpE9nAAAA:8 a=GMUnNgnwFuJ-T506CLsA:9 a=QEXdDO2ut3YA:10
- a=T3LWEMljR5ZiDmsYVIUa:22 a=KPbNTLLc3YvdawN95zVk:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=tURUu78Mfm5tXaSKC+0omXpop8yxpZNIgR2c4OXKv84=; b=aIVgxCDTOgBT
-	ZuRVJechWxxhECFc8mlmWQ5lJuxx4iodvszw03hVJvSZ4iTh626FT8rT6lvCBq66eO1Gbcginx5W/
-	HpPRxQy3y+xQVKJNZKQgcEnmpHXUhSdVMZNw8ZD8hJ7qFS64jkdg4gX4szdYARF9+mIKbcGIW42QD
-	dWkYfYA1mvL001BxzckioODzLxdCffshUsTMWQAkQFEjV5xrVP2Si2AlLGxgJL5dsVbskevd/7/vA
-	4GZr3rmYDXKs8rlIdPm+IjLchIt1MCm1bd1YfKPCQnAy1/cDO/VJ5mDGXbK48cqqrKgBZdvGWXPjP
-	xRRc2jv3wByqweiNXHYKrw==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:50820)
-	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.100.1)
-	(envelope-from <linux@roeck-us.net>)
-	id 1xPSGi-00000003WZp-311T;
-	Sat, 07 Nov 2026 03:48:44 +0530
-Message-ID: <bf99b912-7a98-4d97-852b-45cb3c3c58be@roeck-us.net>
-Date: Fri, 6 Nov 2026 14:18:43 -0800
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TH7OyQdi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CC71F008A1;
+	Fri,  6 Nov 2026 23:22:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794007356;
+	bh=zOrS2oEsMLKAlSzqsplSP4kVfn432L2W3OnnE5qefj8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=TH7OyQdiZ6kX4QUC4x1DKV7dNA3ms0ENMHCujHn6I/lEujseI/4nJj6Y04M8XaSZb
+	 PS2TwrZ1rtWzWJNakc76P4u33V0dUG5QLK2jvG4FQ0NZpa9uNHxYNkBI0O5M1I6Hkf
+	 kWNs/3+a31Oue8HLxwNem4ZvEUcXsiG9YO8gUSOiYPd4WCsBr6YJ+dW1UmTj9KWqHN
+	 jfREmzPSQqWtQK+GS0hEkTKOVzJLAtT/K3Zlyq78hb694Vl0md78Zfxewf25g/3Q0g
+	 p7NZ1wggioFiSZBMYZKW61Q5TZ3hgpAS1M6Ctsj/RxI93UNOl8JjqZQJeO3RfEhjzZ
+	 OCrHnmzQANBDA==
+Message-ID: <d4559f3c-dc6b-41c3-92ac-8ae0d07ccfcb@kernel.org>
+Date: Fri, 6 Nov 2026 23:50:55 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,129 +52,225 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/13] ARM: stm32: enable arm smc watchdog on
- stm32mp1xx
-To: sashiko-reviews@lists.linux.dev,
- Antonio Borneo <antonio.borneo@foss.st.com>, devicetree@vger.kernel.org
-Cc: linux-watchdog@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261106163429.618392-1-antonio.borneo@foss.st.com>
- <20261106163429.618392-5-antonio.borneo@foss.st.com>
- <sashiko-outbox-201910@kernel.org>
+Subject: Re: [PATCH 5/5] mm/gup: limit pagecache folio refcount when grabbing
+ references
+To: sashiko-reviews@lists.linux.dev, Andrew Morton
+ <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>, "Matthew Wilcox (Oracle)"
+ <willy@infradead.org>, Jan Kara <jack@suse.cz>, Zi Yan <ziy@nvidia.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>,
+ Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>,
+ Lance Yang <lance.yang@linux.dev>, Usama Arif <usama.arif@linux.dev>,
+ Kiryl Shutsemau <kas@kernel.org>, Matthew Brost <matthew.brost@intel.com>,
+ Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>,
+ Gregory Price <gourry@gourry.net>, Ying Huang
+ <ying.huang@linux.alibaba.com>, Alistair Popple <apopple@nvidia.com>,
+ Peter Xu <peterx@redhat.com>, Johannes Weiner <hannes@cmpxchg.org>,
+ Song Liu <songliubraving@fb.com>, Rik van Riel <riel@surriel.com>,
+ Hugh Dickins <hughd@google.com>, Will Deacon <will@kernel.org>,
+ "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Nick Piggin
+ <npiggin@gmail.com>, Peter Zijlstra <peterz@infradead.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Kevin Tian <kevin.tian@intel.com>,
+ "Joerg Roedel (AMD)" <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+ Steve Sistare <steven.sistare@oracle.com>, John Hubbard <jhubbard@nvidia.com>
+Cc: linux-mm@kvack.org
+References: <20261105-refcount_overflow_stable-v1-0-70b9c655da3e@kernel.org>
+ <20261105-refcount_overflow_stable-v1-5-70b9c655da3e@kernel.org>
+ <sashiko-outbox-201446@kernel.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <sashiko-outbox-201910@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <sashiko-outbox-201446@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1xPSGi-00000003WZp-311T
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:50820
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 6
-X-Org: HG=direseller_whb_net_legacy;ORG=directi;
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfOGTrcl1kMyHxlGEUttFOjod7rv4sgqPWkdK29XO8fcEvIRZHAjQb/AXesn5AdMglthtUnyukvd9H/+XUi5jyZlwUHazEoCEsgvXk+Tle3RDfFRv98LY
- vJkA9cyyYqN2Fwpz7mJCRstMxRK9g82pU7qSqKk60CLEnFoJmclDlsOt757yMDD42W8iLnq3ZY4gL5l7qLLAruzgCQpvY13TvrfqiMTzdNCMrz39Ic0TaJFU
 
-On 11/6/26 09:19, sashiko-bot@kernel.org wrote:
+On 11/6/26 14:11, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] ARM: stm32: selecting WATCHDOG and ARM_SMC_WATCHDOG forces
->    built-in config
+> - [High] mm/gup: try_get_folio() calls capable() with IRQs disabled in
+>   GUP-fast
 > --
 > 
-> commit 4450302b23f46b760d6b23f33c853eaddb3d821b
-> Author: Antonio Borneo <antonio.borneo@foss.st.com>
+> commit 9290efad216cdf3b5ee1cdfafab0a5d9928a1976
+> Author: David Hildenbrand (Arm) <david@kernel.org>
 > 
-> ARM: stm32: enable arm smc watchdog on stm32mp1xx
+> mm/gup: limit pagecache folio refcount when grabbing references
 > 
-> This commit selects WATCHDOG and ARM_SMC_WATCHDOG from ARCH_STM32 when
-> ARCH_MULTI_V7 is enabled.
+> This commit replaces the negative refcount safety checks in try_get_folio()
+> and try_grab_folio() with folio_ref_count_over_limit() to enforce folio
+> refcount limits in fast and slow GUP before acquiring references or pins.
 > 
->> diff --git a/arch/arm/mach-stm32/Kconfig b/arch/arm/mach-stm32/Kconfig
->> index 4ac3384e397aa..de09b2afa0f2e 100644
->> --- a/arch/arm/mach-stm32/Kconfig
->> +++ b/arch/arm/mach-stm32/Kconfig
->> @@ -13,6 +13,8 @@ menuconfig ARCH_STM32
->>   	select RESET_CONTROLLER
->>   	select STM32_EXTI if ARM_SINGLE_ARMV7M
->>   	select STM32_FIREWALL
->> +	select WATCHDOG if ARCH_MULTI_V7
->> +	select ARM_SMC_WATCHDOG if ARCH_MULTI_V7
->>   	help
->>   	  Support for STMicroelectronics STM32MP1 processors using Cortex-A7
->>   	  cores. Note that support for the earlier Cortex-M based variants
+>> diff --git a/mm/gup.c b/mm/gup.c
+>> index 2ab42fc6834e5..db9db6b2a4662 100644
+>> --- a/mm/gup.c
+>> +++ b/mm/gup.c
+>> @@ -77,7 +77,7 @@ static inline struct folio *try_get_folio(struct page *page, int refs)
+>>  
+>>  retry:
+>>  	folio = page_folio(page);
+>> -	if (WARN_ON_ONCE(folio_ref_count(folio) < 0))
+>> +	if (unlikely(folio_ref_count_over_limit(folio)))
+>>  		return NULL;
 > 
-> [Severity: Low]
-> Does selecting WATCHDOG and the tristate ARM_SMC_WATCHDOG from the boolean
-> ARCH_STM32 force both symbols to y whenever ARCH_MULTI_V7 is enabled?  That
-> prevents building arm_smc_wdt as a loadable module or disabling the driver
-> and watchdog subsystem on multi-platform ARMv7 kernels with ARCH_STM32
-> enabled.
+> [Severity: High]
+> Is it safe for try_get_folio() to call folio_ref_count_over_limit() in the
+> fast GUP path?
 > 
-> Could ARM_SMC_WATCHDOG instead use a default in drivers/watchdog/Kconfig
-> (the way STM32_WATCHDOG uses default ARCH_STM32) or be enabled in the
-> relevant defconfig?
+> In mm/gup.c, gup_fast() disables hardware interrupts across the page table
+> walk:
 > 
+> mm/gup.c:gup_fast() {
+> 	...
+> 	local_irq_save(flags);
+> 	nr_pinned = gup_fast_pgd_range(start, end, gup_flags, pages);
+> 	local_irq_restore(flags);
+> 	...
+> }
+> 
+> which calls into try_grab_folio_fast() -> try_get_folio() with IRQs
+> disabled:
+> 
+> mm/gup.c:try_grab_folio_fast() {
+> 	...
+> 	/* Raise warn if it is not called in fast GUP */
+> 	VM_WARN_ON_ONCE(!irqs_disabled());
+> 	...
+> }
+> 
+> Furthermore, get_user_page_fast_only() -> gup_fast() -> try_get_folio() is
+> invoked from hardirq and NMI contexts, such as perf_prepare_sample() ->
+> perf_virt_to_phys() in kernel/events/core.c.
+> 
+> When folio_ref_count(folio) is between FOLIO_REF_COUNT_LIMIT and
+> FOLIO_REF_COUNT_ADMIN_LIMIT and current is not a kernel thread,
+> folio_ref_count_over_limit() in include/linux/mm.h calls
+> capable(CAP_SYS_RESOURCE):
+> 
+> include/linux/mm.h:folio_ref_count_over_limit() {
+> 	const unsigned int ref_count = folio_ref_count(folio);
+> 
+> 	if (likely(ref_count < FOLIO_REF_COUNT_LIMIT))
+> 		return false;
+> 	if (ref_count >= FOLIO_REF_COUNT_ADMIN_LIMIT)
+> 		return true;
+> 	/* Background threads must not consume admin reserves. */
+> 	return (current->flags & PF_KTHREAD) || !capable(CAP_SYS_RESOURCE);
+> }
+> 
+> Calling capable(CAP_SYS_RESOURCE) -> ns_capable_common() ->
+> security_capable() in these contexts appears to cause several issues:
+> 
+> 1. LSM capability hooks (such as selinux_capable() and apparmor_capable())
+>    perform audit logging via common_lsm_audit(), which allocates memory and
+>    acquires spinlock_t, rwlock_t, and SLUB local_lock_t locks. On
+>    CONFIG_PREEMPT_RT, these are sleeping rt_mutex locks, so acquiring them
+>    with hardware interrupts disabled in gup_fast() will sleep in an invalid
+>    atomic context.
+> 
+> 2. When get_user_page_fast_only() is called from hardirq or NMI context,
+>    acquiring non-IRQ/NMI-safe locks in the LSM, audit, or SLUB paths can
+>    self-deadlock if the interrupted context on the same CPU already holds
+>    one of those locks.
+> 
+> 3. In security/apparmor/capability.c, audit_caps() accesses the per-CPU
+>    audit_cache using get_cpu_var(), which only disables preemption:
+> 
+>    security/apparmor/capability.c:audit_caps() {
+> 	...
+> 	ent = &get_cpu_var(audit_cache);
+> 	if (ad->subj_cred == ent->ad_subj_cred &&
+> 	    ktime_get_ns() <= ent->ktime_ns_expiration[cap]) {
+> 		...
+> 	} else {
+> 		put_cred(ent->ad_subj_cred);
+> 		ent->ad_subj_cred = get_cred(ad->subj_cred);
+> 		ent->ktime_ns_expiration[cap] = ...;
+> 	}
+> 	put_cpu_var(audit_cache);
+> 	...
+>    }
+> 
+>    If an IRQ or NMI invokes get_user_page_fast_only() while the interrupted
+>    context is inside audit_caps() on the same CPU, both contexts can race on
+>    ent->ad_subj_cred and cause a double put_cred().
+> 
+> 4. In kernel/capability.c, ns_capable_common() updates current->flags
+>    non-atomically:
+> 
+>    kernel/capability.c:ns_capable_common() {
+> 	...
+> 	capable = security_capable(current_cred(), ns, cap, opts);
+> 	if (capable == 0) {
+> 		current->flags |= PF_SUPERPRIV;
+> 		return true;
+> 	}
+> 	...
+>    }
+> 
+>    When called from hardirq or NMI context, this mutates the interrupted
+>    task's flags and can race with process-context updates to current->flags.
+> 
+> Should try_get_folio() avoid calling capable() in fast GUP (for example, by
+> falling back to slow GUP once the folio refcount reaches
+> FOLIO_REF_COUNT_LIMIT)?
 
-ARCH_ASPEED and ARCH_S3C64XX also use select, but those architectures depend
-on the watchdog driver's board reset capabilities. The smc watchdog does not
-support board resets, and select should not be used here. As far as I can
-see this patch is simply unnecessary: Both WATCHDOG and ARM_SMC_WATCHDOG
-can be enabled in the configuration file if needed/desired.
+What a minefiled :)
 
-Guenter
+Best to throw in something like
 
+	if (!in_task() || irqs_disabled())
+		true;
+
+In the (new) slow helper to just reject admin reserves in such
+context.
+
+-- 
+Cheers,
+
+David
