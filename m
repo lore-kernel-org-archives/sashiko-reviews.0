@@ -1,68 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793952977;
-	b=2G+1FboI5PSBpb/2JZZmy7ri8ABuUu/7h4Yq/zGX6kgKaQLqlUEzzWDPrWhdWbO7o5Nw
-	 2Vm/zFflNpO1cs0kvUvMhdKx2JaDvI1CKSKco4Sf0YXUIIgC+xseBBefScikoc5I5Evsx
-	 HzU7PRlqShEAezO/hB4DuII/6cKKxDPMoxYvwVZs3YWGx4Al6cAIx6fh0aHTd1pCA/vg+
-	 WuSMJJZ+Q0wCji93n1C30HGDXJu2XNvUaMogKZj07SodEMXRT0745MBvgPBKWxTUrMFqT
-	 +Rubt1uy2UEitCJxGFmniYeWVDbPOSXbIPJcqHRvkr8thhO9wK4SlWa2n09NvJuLDWA==
+	t=1793955052;
+	b=jFM/u18IWCpkXvxWJIMt4n7bcGJTWnIZG2qoe7Bz6nw3x+h4q1njuLrMSyTj3KYZfyyM
+	 Eendx2xEq2heEGesirxYxfunEwn+yt/CawLzC4JztCtC1FA9GySFVxsffkrkNIeg3a2s/
+	 zJjaLQYG3e1/BWlamYarkFfPpwXYQjBdxK6gcmLDyFqO3cEhSIlIDxC0QAOJ7gvNXg+XS
+	 5C+m9JSol7Ql6MyoFtGL5ahAjctdqxurieGsv7iVrsEaUFFhORIAr4192D2+JTNUjZlnJ
+	 QhI2KjVqyKdvwUqPUi4E/i1uxTr2ZY4ph2ikFvGMY/NYZdhqLgXl/+wLSOpty1dDqbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793952977;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=Fife5h1fL6oUkQGRJW2++sJsqU7kv0D5bhmz15iXvoM=;
-	b=wX+ldoe2ymAgnUH/ZtelTTpqX2JqvvibjKjDpgXrkqrBptLBeoONiE4PtewxKJwOfgTv
-	 VxbAHkpaB3vGg23sGZgwLpqJ4+9sWHbB4pQalFbKn99OHFsdnXl9RRumgYN45YCJmsDSd
-	 APTYUNh816Gqgr8mmPRPXhAUPaE83RukYak8XojyL/FBJsaRgfyQKsPXG+ZHMVmFn3E7N
-	 8oTsPE3n8qC9Gv1bzb+uSmLGoMuNi5mICuVGT935uZdChufG2RFnbO503hSkJc0qY8aez
-	 dqX2Hd/J2v4i52BNV6i8WemAPhqEe5EHoBM0Rvx+nDQ9XpAh0t9awo72hBKDi5nZFpg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793955052;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=KF7tN6bGNSx68WV46A4jEtwjapr8WcL1zpKrGOQrGqs=;
+	b=JGpeRisBrEV5o2SRdPVXclBwto5Qvu3KGS7mL4MauW68FzBBdfYkS/JCz0owzJVnsFxx
+	 LZyNh15jgSE8EDeGJ1F36zXQL9SnV+P//Eau/A4erQCHxe+ohe6s2rbBeYEBim/MJt14P
+	 rx/4/WpiYkYRVYkbJAQz+lJqbx09hegpEExly6BqKnDEDmRlwQ6JVTXqFVAhpfUSwET72
+	 w7Z3W9YbTr0wezeIHF1pdahf/C3Z/9hnp+YlfOOzaCkS87h/h/47WQ1Ti4oF5eCm1PvEy
+	 oxXz6n+PM3WmddT1kVWtl832IIncKLLp7zpYYyEaUqLuxK/IPBgpGnDGAkRCDm3xFoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bxPcElVL;
-	arc=none smtp.remote-ip=192.198.163.18
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BaraFvp3;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0327D606A32D
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 08:16:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0327D606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F27606A32D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 08:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bxPcElVL
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793952976; x=1825488976;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=J1ErWWiEd3msnk+uf+s2rNHmWwC06tEP64lSbWahi4M=;
-  b=bxPcElVLjkNIaTp4ZO74/4t0XoR+5N/j8oXdUmAsZb68aWxVXKm1b5U4
-   SqLKaZHm5Gidcl8TbukZrRtcqwJ0mZlAdH8jm9S+7iPKefFQDapnIcja6
-   Gt/So7LFhigGUjqO5fMePzzGZ+P1k6CTepEoi40NWFuavo5lNjwyROdgp
-   Oy3OiWqdLKotOMNGO86jLC8TuVTEB/f/ejWDHkOERpm5REnWblYI8jz3W
-   7o4Il7f+WHpQCEhOEHWXy/YhwAwvZGKYfdwD//T7RsmH3Y6u4bEOvvT37
-   GrFDLCHKq3As6Wyj+1rr6MpbZI5eFRTnD/CESxPvhpKpGbMsaN8kGz6bS
-   w==;
-X-CSE-ConnectionGUID: V87ak8bbQ0uQkvjh1aZvnA==
-X-CSE-MsgGUID: QyadEZEyS92L8vQCIY+FqA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11957"; a="2800964"
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="2800964"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 00:16:15 -0800
-X-CSE-ConnectionGUID: ekFrYTR9T9ejUcrEU3dzKA==
-X-CSE-MsgGUID: eBE5q/kJQs6p0IGwbzDWlg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="7648587"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 00:16:14 -0800
-Message-ID: <4272dd3f-fe79-48db-bac3-f22a6b352e41@linux.intel.com>
-Date: Fri, 6 Nov 2026 16:16:12 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BaraFvp3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B7C1F008A1
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 08:50:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793955051;
+	bh=KF7tN6bGNSx68WV46A4jEtwjapr8WcL1zpKrGOQrGqs=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=BaraFvp3UhGlbZQ6kYB/Kvc7ul5jccSTGbfxvXH7G/9eixtpX01cmd1PDM4aBXcod
+	 oYtPCCK0Gh9Mgxvm3JK++HGzmk/gmNWpTFqI2TxHl+SLuyqIbhGr4uME1MFsRcUxth
+	 Y4U3heQEEU8vbqY71Ee+NJESP8s3zkJ/2LFkoQHMQz8lInHsa3SIeDnJDM2pYjPBHM
+	 Bs898x52MWB+2y5PMYEqWMuBcedf8KgLTo+uWxWK/9grceW6eYvCJsjsu67uOD48bi
+	 jkHshg53xXFAFDrUbP+5bYrkBeA4ORPP2InLCDKcQSX5MPuTqbLYjCeIjNEeMSwuUJ
+	 aly+t98Mj6bAg==
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-714d57774d8so257687eaf.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 06 Nov 2026 00:50:51 -0800 (PST)
+X-Gm-Message-State: APuU4Z9ydIOd8qXZIkwdgj/pC0MFJEfo72tXpi/jkR3K1e97uhck0fA0
+	cx1jtK9Hs3zKrfxRyCqQ5xcYRVA0mAOt3C1npf4vZCYgOfxcbWZHofe+FCZ6c+CHsDE9osgOrCd
+	zDligHSlErkcraXNbFfIYr+D3RzxMm9U=
+X-Received: by 2002:a05:6820:4404:b0:716:ab5f:f298 with SMTP id
+ 006d021491bc7-716e79454bcmr1109475eaf.61.1793955045918; Fri, 06 Nov 2026
+ 00:50:45 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,127 +58,104 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] perf c2c: Show all memory regions in the region
- column
+References: <20261105115715.1466924-1-edumazet@kernel.org> <20261105115715.1466924-3-edumazet@kernel.org>
+ <sashiko-outbox-201039@kernel.org>
+In-Reply-To: <sashiko-outbox-201039@kernel.org>
+From: Eric Dumazet <edumazet@kernel.org>
+Date: Fri, 6 Nov 2026 09:50:33 +0100
+X-Gmail-Original-Message-ID: <CAL4WiipcbLN5_Zb8qXsnTyZfhGy0q1PsQ_Bwuxt3WMzzh4XK+w@mail.gmail.com>
+X-Gm-Features: AclHuK9Ryygevumzz_dij8K9yE2RDrJc4GxFgKqXtujhvUjc_MGUdhYmJG3opRw
+Message-ID: <CAL4WiipcbLN5_Zb8qXsnTyZfhGy0q1PsQ_Bwuxt3WMzzh4XK+w@mail.gmail.com>
+Subject: Re: [PATCH net v3 2/8] net: virtio: do not use dev->type to find the
+ outer L3 header
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20261106073018.903126-1-dapeng1.mi@linux.intel.com>
- <20261106073018.903126-2-dapeng1.mi@linux.intel.com>
- <sashiko-outbox-201007@kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <sashiko-outbox-201007@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: virtualization@lists.linux.dev, "Michael S. Tsirkin" <mst@redhat.com>, 
+	Eugenio Perez <eperezma@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 11/6/2026 3:51 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Low] perf c2c: memory leak of c2c_he->regionstr in c2c_he_free()
-> - [Low] perf c2c: calc_width() populates regionstr and width on child
->   entries
+Le ven. 6 nov. 2026 =C3=A0 09:16, <sashiko-bot@kernel.org> a =C3=A9crit :
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] net: virtio: outer_l3min includes ETH_HLEN in
+>   virtio_net_hdr_tnl_to_skb()
 > --
 >
-> commit bee454704ac015d02d879348350c49da07d10fb5
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> commit b246747b62fc4e9502b5e1a6192ecf203f97d1f4
+> Author: Eric Dumazet <edumazet@kernel.org>
 >
-> perf c2c: Show all memory regions in the region column
+> net: virtio: do not use dev->type to find the outer L3 header
 >
-> This commit updates perf c2c to record a bitmap of all sampled memory
-> regions per histogram entry and format them into a heap-allocated string
-> displayed in the memory region column.
+> This commit adds a has_eth parameter to virtio_net_hdr_tnl_to_skb() and
+> virtio_net_l3_start() so callers specify whether the frame begins with an
+> Ethernet header instead of relying on skb->dev->type.
 >
->> diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
->> index f51fa23f3bf18..9c638fbfc2eaa 100644
->> --- a/tools/perf/builtin-c2c.c
->> +++ b/tools/perf/builtin-c2c.c
+> Link: https://lore.kernel.org/netdev/179387332014.488856.9111956413610107=
+951@kernel.org/
+>
+> > diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+> > index 357116c2a1489..b7b6b542f4763 100644
+> > --- a/include/linux/virtio_net.h
+> > +++ b/include/linux/virtio_net.h
+>
 > [ ... ]
 >
->> @@ -2264,6 +2239,52 @@ static int set_nodestr(struct c2c_hist_entry *c2c_he)
->>  	return c2c_he->nodestr ? 0 : -ENOMEM;
->>  }
->>  
->> +#define PERF_MEM_REGION_MASK	\
->> +	GENMASK(PERF_MEM_REGION_MEM7, PERF_MEM_REGION_MEM0)
->> +#define PERF_MEM_REGION_NUM	\
->> +	(PERF_MEM_REGION_MEM7 - PERF_MEM_REGION_MEM0 + 1)
->> +
->> +static int set_mem_region_str(struct c2c_hist_entry *c2c_he)
->> +{
->> +	char buf[32];
->> +	int len = 0;
->> +
->> +	if (c2c_he->regionstr)
->> +		return 0;
->> +
->> +	if (!c2c_he->regionset) {
->> +		len = scnprintf(buf, sizeof(buf), "N/A");
->> +		goto out;
->> +	}
->> +
->> +	if (c2c_he->regionset & BIT(PERF_MEM_REGION_MMIO)) {
->> +		len = scnprintf(buf, sizeof(buf), "MMIO");
->> +		if (c2c_he->regionset & PERF_MEM_REGION_MASK)
->> +			len += scnprintf(buf + len, sizeof(buf) - len, ",");
->> +	}
->> +
->> +	if (c2c_he->regionset & PERF_MEM_REGION_MASK) {
->> +		unsigned long regionset =
->> +			c2c_he->regionset >> PERF_MEM_REGION_MEM0;
->> +		int num = hweight_long(regionset);
->> +
->> +		len += scnprintf(buf + len, sizeof(buf) - len, "Mem-");
->> +		if (num > 1)
->> +			len += scnprintf(buf + len, sizeof(buf) - len, "{");
->> +		len += bitmap_scnprintf(&regionset, PERF_MEM_REGION_NUM,
->> +					buf + len, sizeof(buf) - len);
->> +		if (num > 1)
->> +			len += scnprintf(buf + len, sizeof(buf) - len, "}");
->> +	}
->> +
->> +out:
->> +	if (len > dim_dcacheline_mem_region.width)
->> +		dim_dcacheline_mem_region.width = len;\
->> +	c2c_he->regionstr = strdup(buf);
-> [Severity: Low]
-> Does c2c_he_free() leak c2c_he->regionstr?  c2c_he_free() frees
-> c2c_he->nodestr and the other heap fields with zfree(), but does not free
-> c2c_he->regionstr.
-
-Yes, it's missed, would be added in the next version.
-
-
+> > @@ -452,6 +450,7 @@ virtio_net_tnl_offsets_ok(struct sk_buff *skb, bool=
+ outer_isv6,
+> >  static inline int
+> >  virtio_net_hdr_tnl_to_skb(struct sk_buff *skb,
+> >                         const struct virtio_net_hdr_v1_hash_tunnel *vhd=
+r,
+> > +                       bool has_eth,
+> >                         bool tnl_hdr_negotiated,
+> >                         bool tnl_csum_negotiated,
+> >                         bool little_endian)
+> > @@ -505,7 +504,7 @@ virtio_net_hdr_tnl_to_skb(struct sk_buff *skb,
+> >       if (ret)
+> >               return ret;
+> >
+> > -     if (!virtio_net_tnl_offsets_ok(skb, outer_isv6, outer_th))
+> > +     if (!virtio_net_tnl_offsets_ok(skb, has_eth, outer_isv6, outer_th=
+))
+> >               return -EINVAL;
 >
->> +
->> +	return c2c_he->regionstr ? 0 : -ENOMEM;
->> +}
->> +
->>  static void calc_width(struct c2c_hist_entry *c2c_he)
->>  {
->>  	struct c2c_hists *c2c_hists;
->> @@ -2271,6 +2292,7 @@ static void calc_width(struct c2c_hist_entry *c2c_he)
->>  	c2c_hists = container_of(c2c_he->he.hists, struct c2c_hists, hists);
->>  	hists__calc_col_len(&c2c_hists->hists, &c2c_he->he);
->>  	set_nodestr(c2c_he);
->> +	set_mem_region_str(c2c_he);
->>  }
-> [Severity: Low]
-> Should set_mem_region_str() only run for top-level cacheline entries (or
-> when c2c_he->hists is non-NULL)?
+> [Severity: Medium]
+> When tun_get_user() processes an IFF_TUN device, it resets the network he=
+ader
+> offset to 0 and calls tun_vnet_hdr_tnl_to_skb() -> virtio_net_hdr_tnl_to_=
+skb()
+> with has_eth set to false.
 >
-> calc_width() is also called from filter_cb() for per-cacheline child
-> entries, which do not display the dcacheline_mem_region column.  Running
-> set_mem_region_str() on child entries allocates an unused regionstr for
-> every child entry (including filtered ones) and can inflate
-> dim_dcacheline_mem_region.width when a child's non-contiguous subset of
-> regions (such as "Mem-{0,2,4}") formats wider than the parent cacheline's
-> contiguous range (such as "Mem-{0-4}").
-
-although currently the region column is only supported on the top-level
-cacheline entries, but it would be extended the per-cacheline child view.
-So let's keep what it is now.
-
-
+> However, earlier in virtio_net_hdr_tnl_to_skb(), outer_l3min still
+> unconditionally includes ETH_HLEN:
 >
+>         outer_l3min =3D ETH_HLEN + virtio_l3min(outer_isv6);
+>
+>         inner_th =3D __virtio16_to_cpu(little_endian, hdr->csum_start);
+>         inner_nh =3D le16_to_cpu(vhdr->inner_nh_offset);
+>         outer_th =3D le16_to_cpu(vhdr->outer_th_offset);
+>         if (outer_th < outer_l3min ||
+>             inner_nh < outer_th + sizeof(struct udphdr) ||
+>             inner_th < inner_nh + inner_l3min)
+>                 return -EINVAL;
+>
+> For an IFF_TUN packet without outer IPv4 options or IPv6 extension header=
+s,
+> virtio_net_tnl_offsets_ok() -> virtio_net_l3_start() sets nhoff to 0, and
+> virtio_net_l4_start() computes thoff as 20 (IPv4) or 40 (IPv6), requiring
+> outer_th =3D=3D thoff. Because outer_th < outer_l3min rejects outer_th < =
+34 for
+> IPv4 or outer_th < 54 for IPv6, won't valid UDP-tunneled GSO packets on
+> IFF_TUN devices be rejected with -EINVAL unless outer_l3min only adds
+> ETH_HLEN when has_eth is true?
+>
+
+Yes, but this predates the series: since UDP tunnel GSO support was
+added to tun, IFF_TUN frames are only accepted when the outer IP
+header is long enough to cover the missing Ethernet header. Willem
+pointed this out on v2.
+
+This only rejects packets, it does not crash anything, and changing
+it would enable a feature that never worked on IFF_TUN. I will send
+that separately to net-next, now that has_eth makes it simple.
