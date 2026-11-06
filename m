@@ -1,68 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.19
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793948840;
-	b=4qjg6rsYZ6NR+JybkbW2kjhvwgiZrsBvWYaCxmHCoZGwtzAHY5nqDuD5wvmrfl9DPfnu
-	 nOQGwupAaL2cFtq+PheoiL0x5nRiIUEbcK02PeDqeuO2ECYarGyewgXXWIlnewmLF3qDA
-	 uOp5Bo/Q/3ah7Jc/lNNncw2G0uEyc9rfebYJSgd/9VSgQjslDx3zxm/t0Y+s6ALY/Asgt
-	 NoarDqN18xvV+GBRPjX0B5bcxijWKzcr5cb2v+UXh+36tpfLr5fGbSTTpkypolYijY1a8
-	 OlETvNbPogytP2BM6mJrF8eoO5lbZu96Hflf2K8wvQgYLIVT6AlP2ZySleinQ6nR4dQ==
+	t=1793948953;
+	b=FwhcRw4Gt3cBMmgxdKS0mgqZQyty4h9mF8dq9AGeywiZBLZ1kSiPeu7xRP5XXf4rFNZY
+	 TGktddfkzbbclQx84rrEdimeODIhoPzdYFvJALz7KOR9MbiThyFgAtYi77IdVHUSsfpj/
+	 brqVTTZhXYhoq8v0JhXA6k2HJiKNNYFixBuhtLoohf3NeVZTWpjizvYgeXdBc1u/+calx
+	 KzcBs0PxusausQRkU1SuH4TCIzCbbLWK34rII3MfDSqpnUWHXwKC2IAYI202jMay2SN7G
+	 IZw653XFA1d0r7rp1LS89YZg327Ezn9DnEZNd2BUGA+R6UBq0hwKsA/lWEnOxZ+9l0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793948840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793948953;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=Zc+3YvyVljRF2wCC5ReTQTHDEIZMfGYDGiyjt0kQoBc=;
-	b=mYJTOs0uXIzY/Dfglq4W/e0wWFuf1YbHV4wlUJeB1/mjgMnlX/JKU/QPNN2IixU+q133
-	 zwWgqCXOQR9vRbwwftHQ5znxOPb1zq0XXf87CPRSyvKO1zZc0Xq1erjoDW6JYr6J45ohU
-	 delmraMdsKDnaaQRzrRAMbdVtsbXxUHD2fc70WE+7lxEm+SyMJBAHU4W12NIbgX3QTDs3
-	 9vvpjT3EVGaVMAr0lQS8F9oeU9nIFHO0jzYzDpsmvhTSxqtf4z1ubU+KT7xa7f4EmA6nH
-	 UwkeyG/kst1mPgoCmZqxfpIX2DkQBoOP2QvXuZw2fu9vV/UtJcxsGhiPiHPhEgbxuJw==
+	bh=/9XPprvHUD9hqbMWjP3gxOUQp3kcvVz3rGEGCvJMU2M=;
+	b=bXUD1vKyJ/Uua0t1ZcLRJFpMId/DvqwroMxYozgwaY3tuLW9VGGtn7gF0/CGxCKl8/Us
+	 acYB04v40QSl9whbaLGfTtjjsLXXuBscL9ddO+xovfYhvQc4UhGznlGwVI2CLaNBkOvIh
+	 qaAT4VDj+hquVJrEzzDeLgI8ybOzn6Y0TP/lQVifWeM0uv0f+fqr5WIkEGgja4xrOMueg
+	 l2emfsFp6tXdTZo38Yq35NAGOP3oRUEZJtPtZsaXFwUvhFYPd0+DbzC8tseqB04typlQN
+	 HNOoU8GNWgBDMvh7IUjo3gbRCuUbeW906UsKMCQzfJAz/x7fFdZZGBC1pSZ8BEOxFFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.intel.com;
 	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="kxYTn/d2";
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=c8Kp1Lt8;
 	arc=none smtp.remote-ip=192.198.163.19
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E53B606A32C
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 07:07:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4E53B606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89724606A32D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 07:09:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 89724606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kxYTn/d2
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=c8Kp1Lt8
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793948839; x=1825484839;
+  t=1793948953; x=1825484953;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=1Ogc44+PrMm9JaehxvQFyal3jUrT3uzIlfVMGfE+oOI=;
-  b=kxYTn/d2IwXLBhPyz8sSreP37ao/5cuPTLi1pBorQgqtCVbwBmzaNzxo
-   Xm3ZiAd0v05JKEVP8IzycdA5b1Hvw+siM59tTCt/PunHozsWggUXSnIhG
-   dOM5++3z175WI+ZHDcPzC1boLVzfVYoHcrextaQyvSJgCaSMmTAsn4vc2
-   9lIJCKRvuChDDnIe0PEsBPhIIgsHwp0yZ0W+ROnudSulkC409Db82Y2aq
-   Fe04prdgzO29ZEIeMpRpgx43bWmsXELNkmQff8e3vwSgYeVddZNKU0JCs
-   Uv8hclFEAolw2q/QFAxHIdgUETtk+rQbvquo6IwHU5kSeMiuN9Yxd9y9g
-   Q==;
-X-CSE-ConnectionGUID: 6jw+oNXbSZiBxPjZ9ZAC0g==
-X-CSE-MsgGUID: /4b67Kj2TdyFS4M1gfNzEA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11957"; a="2857080"
+  bh=OUGuNyqryQOFxGNp6nFo4jOyHCw/u/ojLjv23UVGCJs=;
+  b=c8Kp1Lt8gMgzUQ2GPZozIt39stwLyYFW0szapPtAN9Ep3CLhM0miZhTB
+   E1Di0H2wLy4m+gDrzIGPjbawa9OUyix06cq5jAf9cao/1MnkiKVL1e9b/
+   lkgcm9IUWiPce3VbKvMRaYYCYTnQInYDEoMuJncYmFIOZpj0fs63E9OSO
+   Bj9YqOmLChNHxCQHpAQTef2AV15pfEPe/hPdP+87eDwnElw2hwgc5whgb
+   9Z/wBuMreKWzDlFmh+U7BiAIx4Ly5UPUevbpOO+pRC4S/CXVxuYrZsq4Q
+   WUOx1M7WR0T63jh3PNuTZJFRB8hwnLkN5/QMCJNv1T49ypsMj+3zr+I74
+   g==;
+X-CSE-ConnectionGUID: x/YutQzoS86hJCE19I5I9A==
+X-CSE-MsgGUID: sJAQPyOIRhKvy74pAx/VqQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11957"; a="2857237"
 X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="2857080"
+   d="scan'208";a="2857237"
 Received: from fmviesa012.fm.intel.com ([10.60.135.152])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 23:07:19 -0800
-X-CSE-ConnectionGUID: kKG2rLztRbyQcweQi7IEDw==
-X-CSE-MsgGUID: 3rdCzIQTTzu+1HG2KAbl+A==
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 23:09:11 -0800
+X-CSE-ConnectionGUID: 74tMFnRySIy1WUprcNcG8A==
+X-CSE-MsgGUID: Hu2US4D2RnKw+lv8RLLzIQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="8965633"
+   d="scan'208";a="8965863"
 Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 23:07:17 -0800
-Message-ID: <4857ec01-42bf-4ba3-bb27-eedbfd94f61b@linux.intel.com>
-Date: Fri, 6 Nov 2026 15:07:15 +0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 23:09:09 -0800
+Message-ID: <254f0864-6576-4054-956a-5eb82bfd298a@linux.intel.com>
+Date: Fri, 6 Nov 2026 15:09:07 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,108 +73,156 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v6 06/20] perf/x86/amd: Avoid re-enabling PMU and LBR for
- BPF when disabled
+Subject: Re: [Patch v6 08/20] perf/x86/intel: Avoid re-enabling PMU and LBR
+ for BPF when disabled
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org, bpf@vger.kernel.org
 References: <20261106043257.842864-1-dapeng1.mi@linux.intel.com>
- <20261106043257.842864-7-dapeng1.mi@linux.intel.com>
- <sashiko-outbox-200787@kernel.org>
+ <20261106043257.842864-9-dapeng1.mi@linux.intel.com>
+ <sashiko-outbox-200793@kernel.org>
 Content-Language: en-US
 From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <sashiko-outbox-200787@kernel.org>
+In-Reply-To: <sashiko-outbox-200793@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
-On 11/6/2026 1:01 PM, sashiko-bot@kernel.org wrote:
+On 11/6/2026 1:06 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf/x86/amd: amd_pmu_v2_snapshot_branch_stack() leaves cpuc->enabled set
+> - [Medium] perf/x86/intel: cpuc->enabled not cleared in intel_pmu_snapshot_branch_stack()
 > --
 >
-> commit dbf85e8b6a5abeff651d80166ad0c339896c5b42
+> commit f8f32e2d56da9a93e561d91b6c3fb89e787c5d9e
 > Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> perf/x86/amd: Avoid re-enabling PMU and LBR for BPF when disabled
+> perf/x86/intel: Avoid re-enabling PMU and LBR for BPF when disabled
 >
-> This commit updates amd_pmu_v2_snapshot_branch_stack() to save cpuc->enabled
-> and cpuc->lbr_enabled before disabling the PMU and LBR, and only re-enable
-> them if they were previously enabled.
+> This commit updates __intel_pmu_snapshot_branch_stack() and its callers
+> to save the PMU and LBR enabled state and only re-enable them after
+> taking a branch snapshot if they were originally enabled.
 >
->> diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
->> index bf631f60757cc..851d8a938f522 100644
->> --- a/arch/x86/events/amd/core.c
->> +++ b/arch/x86/events/amd/core.c
->> @@ -932,22 +932,28 @@ static int amd_pmu_v2_snapshot_branch_stack(struct perf_branch_entry *entries, u
+>> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+>> index 9d8398da1989f..739c454827ac5 100644
+>> --- a/arch/x86/events/intel/core.c
+>> +++ b/arch/x86/events/intel/core.c
+>> @@ -2821,7 +2821,8 @@ static void intel_pmu_enable_all(int added)
+>>  
+>>  static noinline int
+>>  __intel_pmu_snapshot_branch_stack(struct perf_branch_entry *entries,
+>> -				  unsigned int cnt, unsigned long flags)
+>> +				  unsigned int cnt, unsigned long flags,
+>> +				  int pmu_enabled, int lbr_enabled)
 >>  {
->>  	struct cpu_hw_events *cpuc;
+>>  	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+>>  
+>> @@ -2829,7 +2830,22 @@ __intel_pmu_snapshot_branch_stack(struct perf_branch_entry *entries,
+>>  	cnt = min_t(unsigned int, cnt, cpuc->lbr_stack.nr);
+>>  
+>>  	memcpy(entries, cpuc->lbr_entries, sizeof(struct perf_branch_entry) * cnt);
+>> -	intel_pmu_enable_all(0);
+>> +
+>> +	/*
+>> +	 * Do not blindly call intel_pmu_enable_all() to re-enable LBR.
+>> +	 * This path may be entered from the PMI handler through
+>> +	 * bpf_overflow_handler().
+>> +	 *
+>> +	 * If PMU version < 4, LBR is disabled by the LBR freeze mechanism,
+>> +	 * LBR can't be re-enabled here.
+>> +	 * If PMU version >= 4, LBR is only frozen instead of disabled,
+>> +	 * LBR should be re-enabled here.
+>> +	 */
+>> +	if (lbr_enabled)
+>> +		intel_pmu_lbr_enable_all(false);
+>> +	if (pmu_enabled)
+>> +		___intel_pmu_enable_all();
+>> +
+>>  	local_irq_restore(flags);
+>>  	return cnt;
+>>  }
+>> @@ -2837,27 +2853,41 @@ __intel_pmu_snapshot_branch_stack(struct perf_branch_entry *entries,
+>>  static int
+>>  intel_pmu_snapshot_branch_stack(struct perf_branch_entry *entries, unsigned int cnt)
+>>  {
+>> +	struct cpu_hw_events *cpuc;
 >>  	unsigned long flags;
 >> +	int pmu_enabled;
 >> +	int lbr_enabled;
 >>  
->>  	/*
->>  	 * The sequence of steps to freeze LBR should be completely inlined
->>  	 * and contain no branches to minimize contamination of LBR snapshot
->>  	 */
+>>  	/* must not have branches... */
 >>  	local_irq_save(flags);
 >> +	cpuc = this_cpu_ptr(&cpu_hw_events);
 >> +	pmu_enabled = cpuc->enabled;
 >> +	lbr_enabled = cpuc->lbr_enabled;
->>  	amd_pmu_core_disable_all();
->>  	__amd_pmu_lbr_disable();
+>>  	__intel_pmu_disable_all(false); /* we don't care about BTS */
+>>  	__intel_pmu_lbr_disable();
+>>  	/*            ... until here */
+>> -	return __intel_pmu_snapshot_branch_stack(entries, cnt, flags);
+>> +	return __intel_pmu_snapshot_branch_stack(entries, cnt, flags,
+>> +						 pmu_enabled, lbr_enabled);
+>>  }
 >>  
->> -	cpuc = this_cpu_ptr(&cpu_hw_events);
->> -
->>  	amd_pmu_lbr_read();
->>  	cnt = min(cnt, cpuc->lbr_stack.nr);
->>  	memcpy(entries, cpuc->lbr_entries, sizeof(struct perf_branch_entry) * cnt);
+>>  static int
+>>  intel_pmu_snapshot_arch_branch_stack(struct perf_branch_entry *entries, unsigned int cnt)
+>>  {
+>> +	struct cpu_hw_events *cpuc;
+>>  	unsigned long flags;
+>> +	int pmu_enabled;
+>> +	int lbr_enabled;
 >>  
->> -	amd_pmu_v2_enable_all(0);
->> +	if (lbr_enabled)
->> +		amd_pmu_lbr_enable_all();
->> +	if (pmu_enabled)
->> +		amd_pmu_core_enable_all();
+>>  	/* must not have branches... */
+>>  	local_irq_save(flags);
+>> +	cpuc = this_cpu_ptr(&cpu_hw_events);
+>> +	pmu_enabled = cpuc->enabled;
+>> +	lbr_enabled = cpuc->lbr_enabled;
+>>  	__intel_pmu_disable_all(false); /* we don't care about BTS */
+>>  	__intel_pmu_arch_lbr_disable();
+>>  	/*            ... until here */
+>> -	return __intel_pmu_snapshot_branch_stack(entries, cnt, flags);
+>> +	return __intel_pmu_snapshot_branch_stack(entries, cnt, flags,
+>> +						 pmu_enabled, lbr_enabled);
+>>  }
 > [Severity: Medium]
-> As reported by Sashiko on v5 [1], while __amd_pmu_lbr_disable() clears
-> cpuc->lbr_enabled = 0, amd_pmu_core_disable_all() only clears the hardware
-> global control MSR and leaves cpuc->enabled set to 1.
+> Should intel_pmu_snapshot_branch_stack() and
+> intel_pmu_snapshot_arch_branch_stack() also clear cpuc->enabled = 0
+> before calling __intel_pmu_disable_all(false), and restore
+> cpuc->enabled = pmu_enabled in __intel_pmu_snapshot_branch_stack()?
 >
-> If a BPF program in non-NMI context calls bpf_get_branch_snapshot() ->
-> amd_pmu_v2_snapshot_branch_stack() while cpuc->enabled is 1, local_irq_save()
-> does not mask NMIs. If an NMI arrives while amd_pmu_v2_snapshot_branch_stack()
-> is reading LBR MSRs or copying entries, perf_event_nmi_handler() ->
-> amd_pmu_v2_handle_irq() will see cpuc->enabled == 1 and re-enable the core PMU
-> counters on exit:
+> While __intel_pmu_lbr_disable() and __intel_pmu_arch_lbr_disable() clear
+> cpuc->lbr_enabled = 0, __intel_pmu_disable_all(false) only writes 0 to
+> MSR_CORE_PERF_GLOBAL_CTRL without updating cpuc->enabled.
+>
+> When bpf_get_branch_snapshot() is invoked outside PMI context (where
+> cpuc->enabled is 1), local_irq_save() does not mask NMIs. If an in-flight
+> PMI or another NMI arrives while __intel_pmu_snapshot_branch_stack() is
+> reading the LBRs, perf_event_nmi_handler() -> intel_pmu_handle_irq()
+> observes cpuc->enabled == 1 and re-enables the PMU (and LBR on PMU
+> version < 4) before returning:
 
-This issue should never happen in reality since amd_pmu_core_disable_all()
-would disable PMU, so no PMI can be interrupt the BPF LBR snapshot.
-
+Same with AMD. This issue should never happen in reality since
+__intel_pmu_disable_all() would disable PMU, so no PMI can be interrupt the
+BPF LBR snapshot.
 
 
 >
-> arch/x86/events/amd/core.c:amd_pmu_v2_handle_irq() {
+> arch/x86/events/intel/core.c:intel_pmu_handle_irq() {
 > 	pmu_enabled = cpuc->enabled;
-> 	cpuc->enabled = 0;
->
-> 	/* Stop counting but do not disable LBR */
-> 	amd_pmu_core_disable_all();
 > 	...
 > done:
+> 	if (mid_ack)
+> 		apic_write(APIC_LVTPC, APIC_DM_NMI);
+> 	/* Only restore PMU state when it's active. See x86_pmu_disable(). */
 > 	cpuc->enabled = pmu_enabled;
->
-> 	/* Resume counting only if PMU is active */
 > 	if (pmu_enabled)
-> 		amd_pmu_core_enable_all();
+> 		__intel_pmu_enable_all(true);
 > }
 >
-> Similarly, if an NMI triggers a nested BPF call to
-> amd_pmu_v2_snapshot_branch_stack(), the nested call will also observe
-> cpuc->enabled == 1 and call amd_pmu_core_enable_all() before returning to the
-> outer snapshot.
+> Similarly, a nested snapshot from an NMI or fentry/kprobe BPF program
+> during __intel_pmu_snapshot_branch_stack() would see cpuc->enabled == 1
+> and prematurely call ___intel_pmu_enable_all() before the outer snapshot
+> finishes.
 >
-> Should amd_pmu_v2_snapshot_branch_stack() clear cpuc->enabled = 0 after saving
-> pmu_enabled and restore cpuc->enabled = pmu_enabled before re-enabling the
-> core PMU, matching amd_pmu_v2_handle_irq()?
->
-> [1] https://lore.kernel.org/r/20261029043914.1395147-7-dapeng1.mi@linux.intel.com
+> Setting cpuc->enabled = 0 is a plain store with no branches, so could it
+> be cleared alongside saving pmu_enabled and restored in
+> __intel_pmu_snapshot_branch_stack() to match x86_pmu_disable(),
+> __intel_pmu_quiesce(), and intel_pmu_handle_irq()?
 >
