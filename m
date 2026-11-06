@@ -1,88 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.96.97
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793981506;
-	b=SJX20fs2vG5So8LRmxvFecjG67IooUC8XeFn6EBVPMhUNtLGtwzHtlFyH7rE9v8OnTan
-	 y8QtLoa0ca50/b06OcFR1dKx/nN73+UoQqSbgVgA7cl+k2MLb7ogC6X/7pYgC9UxyCrnS
-	 2HMtHmZuqIZE8ExgWYas2rfg8d0P72CqoW+TA71qIWsEYrTerYCFtWEGL7CmWAwD4B7ug
-	 xkLZD6k0KcxbJCivzo8wAwzAcC2tAiukrtOHkAmTeQoqYqUQ0i2itPg8rcjLTa4jiyMCQ
-	 ywPOz7bumwt8nRmr2rX4ur5PArqhTkcPtcfHi00Z7k6eoZgw5lZuZ7OtZUXEOA1tH9A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793981506;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=/9sCaTbuBAZqxHlwnUmY6HjOC1fugGsa3qeYEnDj5jE=;
-	b=BUJ03VQ+TcjAkDqqcyEbZimgwk1ZLP7MvWVIjgef4l56+mhwhMzvP56goouYLE8Gm1Lo
-	 Z7zn9kr2GUDN4VyZ6UXQPrbBzdlx9xRVHIs0ApboUrCF/B65eROwxrh2mWLTUr97Yj348
-	 qbFq2w61wdcr6NHLY5iWlVVOh+EBuu85UdYrOH0u0C0PCrU3KdBnpeWJP7S26PvoY0AyL
-	 FFyqYhCXhdSA//m96MCBBGrkjAziQhwX0FPgd36+GHxmzop7d3e7QcWnBHYzXewP7M+Bj
-	 0Lzz99GdP7V/2kWL4s7Y0gYiq6nQb6lpkqy8qGVi3B7pajoL4KX5jJMKb6ab+l4ichQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=atomlin.com;
-	spf=pass smtp.mailfrom=atomlin.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.96.97
-Received: from LO0P265CU003.outbound.protection.outlook.com (mail-uksouthazon11022097.outbound.protection.outlook.com [52.101.96.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.13
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793981955;
+	b=21qRcjfJOQAetzuWbNDlCvbhmvqtbxSGnF374v+c8j6whl4GFmnYHNYQwPeNas1WlJkw
+	 E21CLYfzqh85ICS7l7ZeGRBGQFNRgOSLHUwhdsOIozZvXsCiKQJykx0f136VuSPVRyrLO
+	 OjTfiPRU+yvtq6dxyYzO8hxSS9Vkudr91fh4ywvTe2EpkvNQ+70wgJwYmUmsopInsJNPQ
+	 flT2mujO+et86zY+pudejKzf0Wx2QcF81M12IWEdatvlyLvxS+tnKuRpN/7aKu3IDTs2p
+	 EWcOQodoLg3D+k2/B3jNq1zjm8AnkDoUQ/DUN4xNfI+N7fYS1bLhR8H7mgj0nMy/p+w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793981955;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=k3iSN64kbXRhUpJ2EwawfjhUm1pdc/2B5376L6iFxdY=;
+	b=nN3YbzYFwmZrNEgpJiq63dg8jjB6laWqK0bEtk0Ta9S7QsvJ1M4cmoQ1V47xe5nEwsmq
+	 z5G5MYa43QZ2zAiJrfPuwA0WOoQWFnBsR3HbHl/+qpMHmJ8V0KL9IodESbFsJ7QSYn5Hn
+	 zsaDMI2DfNUgf8DFRyXnKLBqUBkuNsZ/jPbFcDGTu2TM354rX0Le2/S558MhY1i434W4v
+	 5u0pN+AXVTob27QKZCnzRGULyEGgbuxgZQUeJ3MwzEpa+2lq7+Ynannj5DYyeYiIwy8lc
+	 mfYhL/fkEX4ZnBVHeOL3PFI3ELA2ZDuRfXXFBt623N2eA0yOnidD460J3DRtHxMi+mw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nr1wUeYy;
+	arc=none smtp.remote-ip=198.175.65.13
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CCD606A9A1
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 16:11:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5CCD606A9A1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MnlXT7wJ7gOYKSOa8g1MxqHxMmKSzWAkTMWnhBBNd2RnlydrUIYSNNbODm+1wVcjFA6rf9xlVkcmHjkC2O+K4gWfmocYSKICpMtUeUc6WEJbk5P4NH9hTBmdqjxm2MJA7kqhvBs217mPJ3bX2Y1q/UuP6Bx0niOFZfbSDYSSoDbmF0nS3lghrSm0t+GOfmGDbRws4KQ0QYHICcq3ka8UesppFppPUyiy4cv62eAht/7ttpc4cIP1doWnE/Bo/Zp+TZS5hoHxLJW+eQa7j38lxnAOmta7xqNLQKKATYQXXN7J6AkK5a0sK/8QYOcRFuBYGQvp9FZe7hjrlcdYmrwMyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=/9sCaTbuBAZqxHlwnUmY6HjOC1fugGsa3qeYEnDj5jE=;
- b=ZqCNGRihQflFjgvGBU613ipVnpwmjsRDLoQeUVjUVmcpLAvOYV0668ATBZVrzzkAb4YeXYLL215TYoX5D5t/hTUObeQNXTy4B5yzQpvQ8uffc3XIvfxR9rid71VMrwMDdwYlhlWWYg62ZlSSOIUSi+V1dmLBVNaYVhkGPYkiTYTHIV2KXX4+X2y3u2ThTY3wMy4IdjCQpa8KS4QNS70VSWZtSenvQ648s13/QyDk39OSVxKqLnysOe9rAE2mkizkn+2xgmi0nksIqFa5iFgQDE6Y3BFTNAl/Mrg3O9qBKAU1hgakU2MZngseu40b4vun9EmazfMn62LPszoLQuAd0A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:163::8)
- by LODP123MB499470.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:4df::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Fri, 6 Nov
- 2026 16:11:41 +0000
-Received: from LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
- ([fe80::f71f:a9f:c4de:687a]) by LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
- ([fe80::f71f:a9f:c4de:687a%5]) with mapi id 15.21.0592.010; Fri, 6 Nov 2026
- 16:11:40 +0000
-Date: Fri, 6 Nov 2026 11:11:35 -0500
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
-	mcgrof@kernel.org, petr.pavlu@suse.com, da.gomez@kernel.org, 
-	samitolvanen@google.com
-Cc: linux-modules@vger.kernel.org, Petr Pavlu <petr.pavlu@suse.com>, 
-	ojeda@kernel.org, gary@garyguo.net
-Subject: Re: [PATCH v13 2/3] module: Extend module_blacklist parameter to
- built-in modules
-Message-ID: <fg4m7owa7g2dtegwemsmbmsxh5dho2bm4ynrxuyzvfsd43cx46@hpd35p2ulxfu>
-References: <20261104154003.43313-1-atomlin@atomlin.com>
- <20261104154003.43313-3-atomlin@atomlin.com>
- <sashiko-outbox-197697@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-197697@kernel.org>
-X-ClientProxiedBy: CH0PR03CA0321.namprd03.prod.outlook.com
- (2603:10b6:610:118::17) To LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:163::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694DF6083610
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 16:19:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 694DF6083610
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nr1wUeYy
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793981954; x=1825517954;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=ahpIHkaGHap1ktgb37MLw5ENuR+JAgSJAF5Pv55xOIM=;
+  b=nr1wUeYy9OsVAEhszK4yXz/j8M4xjLXIP+hSKP3qBVZAz2NnN2Wcoeaa
+   i37f0hoRfVU1bgk8O3+DxoFenf6d+rCmlaaw/Pt/bPU83ZCPzzlQuEfPW
+   sFhlEsfNyScT+YVdOUTbLI253myBWsi3X2pxP1MwnuA7CJKavW0wQpMRP
+   +pvUAU6m4MfMgLd+htuI05vOikOQ9lrMmUjj2UqYhS4UncP68YABWvOBt
+   n19R1YIbbQF2bPGYD1F9B6EwwQ3thgglFgq45kDZo27z5zUW6r0h7XKA1
+   rYEFQCMHkEXc7mYGYBi1SQ6Eob24tDv7pD1l5JEhdE635P/W2EU1bhqeh
+   g==;
+X-CSE-ConnectionGUID: lhe2Qh6XS5GVyH3A4DRMSw==
+X-CSE-MsgGUID: S1Jxal+EQkmXzQj0iATKWw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11958"; a="2675755"
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="2675755"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 08:19:14 -0800
+X-CSE-ConnectionGUID: XaMot93tRveXiMh3+zBecA==
+X-CSE-MsgGUID: PdkvnVoxS9+A0btjZXhp/g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="7366387"
+Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.181])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 08:19:13 -0800
+Date: Fri, 6 Nov 2026 18:19:09 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH 7/9] drm/i915/de: Move unclaimed mmio detection into
+ display code
+Message-ID: <au39_Rv2aA4oXIUu@intel.com>
+References: <20261104221842.18799-1-ville.syrjala@linux.intel.com>
+ <20261104221842.18799-8-ville.syrjala@linux.intel.com>
+ <sashiko-outbox-198239@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -92,203 +81,131 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P123MB4190:EE_|LODP123MB499470:EE_
-X-MS-Office365-Filtering-Correlation-Id: 00a07f0e-888e-4ed9-9912-08df3c20a43f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|22082099003|18002099003|6133799003|10067099003|4143699003|261102123227099003|261026140227099003|261028144727099003|261026121527099003|261022115727099003|261021130227099003|261021123027099003|261022113327099003|261022105027099003|261022075727099003|261021121427099003|56012099006|261009223027099003;
-X-Microsoft-Antispam-Message-Info:
-	5UtAEhAnBW/MdDlQ9mQiI82R2NgjKj3TomKenfQyoBSXBRaMu/muAoJPZwfZwdsPTSNOiyUOZohqIE0lKm4OZO2AahaF9eKp3DfOQyH2X2IqyKzhUKI9PKePW/1+nGF7BcWllB/m9sJPhohCN95ZtHGb82pPdGjXtAKL7nuwqJVoPSVRY5wzCD30d+3kYEdFpOfnCwQRGVu0i6YvwuFxEFedDkpRs8B2f6jtkXNwzX2puERm/Kk6B20sTsMF5JGjN8k0vynZSwVCfmUa84NDxqijnzyLofRz/tVPkWB9RnbDNT0aNGg3PmTMBwngVpncZfzmAPYPA0z5cRVOAkxFFEgye3mjjg9CoJZ6eXppxmZfUcqXBXprZVyhB0711c9lKr9x3VM8WWXlZ5uZ044319ojUVHHtLP9yFOjycLi7xj18B9Q68YdUJQMQAOyifyjqt/B67raitY/5ApSB9Abgkn7KvDX5nC05KHTx+aBerhHO6z9RY0jM+rnCGywd1bqtXs0baM8HJNMPheeopM4xzwxVPmEE0nvGnfiIExu9tqS94vWNH9YXDn49lAh0TGPX+FvddBt67b/W7ibG276CHfg9EFpWlh/SZKE5wUAShM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(22082099003)(18002099003)(6133799003)(10067099003)(4143699003)(261102123227099003)(261026140227099003)(261028144727099003)(261026121527099003)(261022115727099003)(261021130227099003)(261021123027099003)(261022113327099003)(261022105027099003)(261022075727099003)(261021121427099003)(56012099006)(261009223027099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZHVzWDVhNXVRdVdiaFNoUXBEdko2U05HM2JUMmFnbVNJNUZxNmVlaDJTOFVV?=
- =?utf-8?B?NlpTVWNnYkNvZ3h1V3hCMU1lV3Z3YUtyT0Fwd0hxL01GSjh2ak5HQWxmU25z?=
- =?utf-8?B?TXlCenFIWW1CZFA4RWw5OStoTXJXYnV6ZTFOZDdnVUpNcWZBZy80T3dJVG1k?=
- =?utf-8?B?YXE3bGZmZjlTM1dqUlBNTG1LNGh6MnJHL3RZdWxsdksrOTdxdlk0ZlVzTndR?=
- =?utf-8?B?ZHY4Q21oZVZmVHNoK0RGUEpvcHZUSTNlVmF5bDI0RllneUJYZ3MzQnBUT2Fw?=
- =?utf-8?B?SWl5TmxIN3JHQklGQjFDalIzNmp5MnpVeXpFa2YwWnZtS3NTSnBuUjM0enRv?=
- =?utf-8?B?SnE5a2YvVmpmOU5DRUs5bEpYc2JmMmFDRlJ0Q2NsL0xsMVRjYTVKRjhrcHVp?=
- =?utf-8?B?WStweXJaNHlVU0pybTV0WEhkaUE4cVRZSUt0YmpZZDZtQWsyY0I5dWNNaXgz?=
- =?utf-8?B?a3ZQVDR6WC9BOTN6Y1ZLWmNYcmxzNTROTWFOS2R0MGxMaHlxekF3WWJtQWNt?=
- =?utf-8?B?N1M2YnliNHFTM0JCckVwblErcllRbkdaQUwrZGZBeHg1RTE2d3NQWHIrU2tZ?=
- =?utf-8?B?T2MwS1BFOSs1V3lPclJGSk1KRjNPZ3gycGhBMnNLYnNORTJiYkFVeDh0VlE0?=
- =?utf-8?B?bTFBR2pGSGVYWm1ycHFobXFFbzl5VEZza2d4ZmswUVhqQWhCTmpNcGlHUkE4?=
- =?utf-8?B?OVU2amtIK3Y4dVRUSVRWR3V6N25WTGxTWHRmb2FIa3J3L0FPTWtvcHBlSENG?=
- =?utf-8?B?MGRWUlFVTnFqL041UnhMSHhGazg0WGszNWNOOTZYMVkxNkI2cWsvN09FdXVB?=
- =?utf-8?B?eVVvNlhQUHlSWTZHRTZkVWpRVDUwRVBLRDBBZFcrTmZVUkZ4TEl6TTNrRlJ3?=
- =?utf-8?B?UTU5MWFLUWdFbVEwaUR1VTA3TEJKc3VRZnJOdlJ0UG5nY0dac3BVZWt4ajQ2?=
- =?utf-8?B?VHZEQVdrcjQ3OWdPSjJCR2gydXNkbkVmeVlIUjZNSkZ6eG05WTZmMFdLaHk0?=
- =?utf-8?B?eTFBQUJwcTNQb3NUNTFWNDVRUGYzM1Vtd1NOMW82ME1TUCtndTBQdGs2eEht?=
- =?utf-8?B?cnJaTFgrUmt3M0kzRE5NVFVlSVdyWmhmU0ZERE9rOXBPbWtVeU5xelpFRzdQ?=
- =?utf-8?B?Y2cwVGdjdWNwQnFGQ1ZuSTlKaFRGN2xqYndEWWpKME5SRWg4andMcUdsNHA5?=
- =?utf-8?B?cFBlcXZCcVBHZFVKS1JsMVVmd1dxVjlSL1QrNHBIU3NHTFlYb04rNU51NDdh?=
- =?utf-8?B?UGE3N0ZZQy9zQmU0U1FESjZZVUR0dTljQ2JycDcweklpcVA2Zk5oUHVTc3cv?=
- =?utf-8?B?dG1FMXpQanVTdUNNLzJZQ09UUEhlUGJoT1lJZXlTTU83dStpNnNLVkRWSlNs?=
- =?utf-8?B?RGV5QzI2azVkdllvREI3eXEyR2NlbjBQcUR3SnZrMk5sWGFBOXJTdUo4K2Vm?=
- =?utf-8?B?QUZydXJvZDFWRlRpOXp5R3UzRE15aVpSZk41SGR4a1ROUGd6bGFvbTc4VUcy?=
- =?utf-8?B?emdGMTFPNktsZEpHZGo2ODhMN1BMWnVuZ3hLajhkTWpIa01LdGtkNGMwVGpN?=
- =?utf-8?B?Yng2YmV4aUNoYmJ5bWt6NmQrSEhyQkVZb01XMFcwNGsxRHpnMFIwbzFEbXVF?=
- =?utf-8?B?RmlLVkxIU0poZXE5K2orbjR2THBqRTV0VXVKSjlidTFGa0NzdlExdVdjcWF6?=
- =?utf-8?B?ZTFBUzJIdWdMVlhIdmt5ZmI3TFgyb1VLNktNanlicEV4QnpTNFU4dHlnREtP?=
- =?utf-8?B?V0tvTnh6WnkrbGN0bUJoaWd3azJZZm02ZXJqYzV2alV0WnU5MmNJM3FUM2to?=
- =?utf-8?B?cjZhd3o0UklyRXpVbWVTbncwcXhnbGZvdG5XcGJQUTRnN3dZQTEwUUN2ZDF1?=
- =?utf-8?B?bmZuT3dRV2pnTWhpYmdMM2JsRTdoOHI0S2JrWVZYODJvQVhkL21PdFhrdEVQ?=
- =?utf-8?B?a1FlVDVFQ0lqdWRpV1VoMEpSYUVJZW0vbDNnb21GVDkxOSthblJrYXBYckhu?=
- =?utf-8?B?QVF4aXZndDErekpRY0FiTWx5VC9qMHJEdThjRXgrbm1RN2xiMUxIWURMUWpY?=
- =?utf-8?B?U3JxdXRmbm1qOHJKR0tXOC9CbTJJYkRDenBuRllacXRJU2JoTU56ay9zMzI0?=
- =?utf-8?B?QW5jamZscXlVWVYweXVSeW9HSUVCbXN5Z2t0bW1FVE5taEkzODY0cEIzUW1w?=
- =?utf-8?B?ajlFcytkY2VWdENiUUpLc2lsVkw0b0h0SXcvdjRlcytieTYwTUtiamR1eE4v?=
- =?utf-8?B?U0U0bkVFWjFQNjVUNFRsOUk5MVF4RUY1V2VFQ1FzZWJMMWh6Q2pkVncwV2tF?=
- =?utf-8?B?Z245cTJVZk5wZkk4YU54bVVrREp3dzQxb0dWOGpmZkdONm1lQVhEZz09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 00a07f0e-888e-4ed9-9912-08df3c20a43f
-X-MS-Exchange-CrossTenant-AuthSource: LO2P123MB4190.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 16:11:40.5856
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9tn3oi131ZkzlCQQKwH2SSiBgjcJdNvyDAlmdyjsC82hAFIAadfxtNFEIgSUIFs2ivPLJtFD9bnam0Acqpfmug==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LODP123MB499470
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-198239@kernel.org>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On Wed, Nov 04, 2026 at 04:54:14PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] init: klp-diff failure on __modname_<fn> with LTO and PREL32 relocations
+On Wed, Nov 04, 2026 at 10:36:37PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] drm/i915/de: NULL deref on displayless devices in unclaimed MMIO checks
+> - [Medium] drm/i915/de: intel_de_init() enables FPGA_DBG check on Ivy Bridge
+> - [Medium] drm/i915/de: unclaimed MMIO status is not cleared on initialization
+> - [Low] drm/i915/display: unused mmio.mmio_debug field in struct intel_display
 > --
 > 
-> commit 4ae71df0c31c4118e7804e6488565c6666998f3a
-> Author: Aaron Tomlin <atomlin@atomlin.com>
+> commit 74c572411ef669251a5e2e347d14a7771407e433
+> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
 > 
-> module: Extend module_blacklist parameter to built-in modules
+> drm/i915/de: Move unclaimed mmio detection into display code
 > 
-> This patch extends the module_blacklist= command-line parameter to built-in
-> modules by recording each module_init() function pointer and its
-> KBUILD_MODNAME in a new .initcall.modnames section. During boot,
-> do_one_initcall_builtin() checks this table and skips initcalls for
-> blacklisted built-in modules.
+> This commit moves the FPGA_DBG and CLAIM_ER unclaimed MMIO access detection
+> from intel_uncore into the display code, protecting the tracking state with
+> display->mmio.lock.
 > 
-> > diff --git a/include/linux/init.h b/include/linux/init.h
-> > index 6326c61e2332d..08cb8a2943758 100644
-> > --- a/include/linux/init.h
-> > +++ b/include/linux/init.h
+> > diff --git a/drivers/gpu/drm/i915/display/intel_de.c b/drivers/gpu/drm/i915/display/intel_de.c
+> > index 8b7a4e696ff96..0a51105e0fbad 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_de.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_de.c
+> 
 > [ ... ]
-> > @@ -252,6 +257,7 @@ extern struct module __this_module;
-> >  #endif
+<snip>
+> > @@ -304,7 +470,11 @@ void intel_de_init(struct intel_display *display)
+> >  	spin_lock_init(&display->mmio.lock);
 > >  
-> >  #ifdef CONFIG_HAVE_ARCH_PREL32_RELOCATIONS
-> > +#define __initcall_fn_ptr(fn, __iid, id)	__initcall_stub(fn, __iid, id)
-> >  #define ____define_initcall(fn, __stub, __name, __sec)		\
-> >  	__define_initcall_stub(__stub, fn)			\
-> >  	asm(".section	\"" __sec "\", \"a\"		\n"	\
-> > @@ -260,6 +266,7 @@ extern struct module __this_module;
-> >  	    ".previous					\n");	\
-> >  	static_assert(__same_type(initcall_t, &fn));
-> >  #else
-> > +#define __initcall_fn_ptr(fn, __iid, id)	fn
-> >  #define ____define_initcall(fn, __unused, __name, __sec)	\
-> >  	static initcall_t __name __used 			\
-> >  		__attribute__((__section__(__sec))) = fn;
-> > @@ -271,7 +278,23 @@ extern struct module __this_module;
-> >  		__initcall_name(initcall, __iid, id),		\
-> >  		__initcall_section(__sec, __iid))
-> >  
-> > -#define ___define_initcall(fn, id, __sec)			\
-> > +#define ____define_initcall_modname(fn, id, __sec, __iid)		\
-> > +	__unique_initcall(fn, id, __sec, __iid)				\
-> > +	static const char __initstr_##fn[] __used __aligned(1)		\
-> > +		__section(".init.rodata") = KBUILD_MODNAME;		\
-> > +	static const struct initcall_modname __modname_##fn __used	\
-> > +		__section(".initcall.modnames")				\
-> > +		__aligned(__alignof__(struct initcall_modname)) = {	\
-> > +			.initcall_fn = __initcall_fn_ptr(fn, __iid, id),\
-> > +			.modname = __initstr_##fn			\
-> > +		};
+> >  	if (driver_is_i915()) {
+> > -		if (display->platform.valleyview || display->platform.cherryview)
+> > +		if (display->platform.valleyview || display->platform.cherryview)
+> > +			display->mmio.funcs = &vlv_mmio_funcs;
+> > +		else if (DISPLAY_VER(display) >= 7)
+> > +			display->mmio.funcs = &ivb_mmio_funcs;
+> > +		else if (DISPLAY_VER(display) >= 6)
+> >  			display->mmio.funcs = &snb_mmio_funcs;
+> >  		else
+> >  			display->mmio.funcs = &i9xx_mmio_funcs;
 > 
 > [Severity: Medium]
-> Can this break livepatch builds with objtool klp diff when
-> CONFIG_HAVE_ARCH_PREL32_RELOCATIONS=y, CONFIG_LTO_CLANG=y, and
-> CONFIG_KLP_BUILD=y are enabled?
-> 
-> Under those options, ____define_initcall_modname() initializes
-> __modname_<fn>.initcall_fn to __initcall_fn_ptr(fn, __iid, id), which expands
-> to __initcall_stub(fn, __iid, id). Because __iid is generated by
-> __initcall_id(fn), the stub symbol name embeds both __COUNTER__ and __LINE__:
-> 
-> include/linux/init.h:
->     #define __initcall_id(fn)                                   \
->             __PASTE(kmod_,                                      \
->             __PASTE(__KBUILD_MODNAME,                           \
->             __PASTE(__,                                         \
->             __PASTE(__COUNTER__,                                \
->             __PASTE(_,                                          \
->             __PASTE(__LINE__,                                   \
->             __PASTE(_, fn)))))))
-> 
-> During objtool klp checksum, calculate_checksums() -> checksum_update_object()
-> hashes target->demangled_name for each relocation on the __modname_<fn>
-> object:
-> 
-> tools/objtool/klp-checksum.c:checksum_update_object() {
->     ...
->                 __checksum_update_object(sym, sym_offset, "reloc name",
->                                          target->demangled_name,
->                                          strlen(target->demangled_name));
->     ...
-> }
-> 
-> Because demangle_name() in tools/objtool/elf.c does not strip the embedded
-> __COUNTER__ and __LINE__ tokens from __initstub__kmod_*, any patch to a
-> translation unit containing a built-in module_init() that shifts __COUNTER__
-> (for example by adding or removing min(), max(), guard(), WARN_ON(), or
-> __UNIQUE_ID()) or __LINE__ before module_init() changes the stub name and
-> alters the checksum of __modname_<fn>.
-> 
-> In tools/objtool/klp-diff.c, dont_correlate() -> is_initcall_sym() skips
-> __initcall__ and __initstub__ symbols, but does not skip __modname_:
-> 
-> tools/objtool/klp-diff.c:is_initcall_sym() {
->         return strstarts(sym->name, "__initcall__") ||
->                strstarts(sym->name, "__initstub__");
-> }
-> 
-> When correlate_symbols() pairs __modname_<fn> between the original and
-> patched objects, mark_changed_functions() sees the differing checksum on the
-> non-function symbol and aborts the build:
-> 
-> tools/objtool/klp-diff.c:mark_changed_functions() {
->     ...
->                 if (orig_sym->csum.checksum != patched_sym->csum.checksum) {
->                         if (!is_func_sym(orig_sym)) {
->                                 ERROR("changed data: %s", orig_sym->name);
->                                 return -1;
->                         }
->     ...
-> }
-> 
-> Should is_initcall_sym() in tools/objtool/klp-diff.c also exclude
-> __modname_ symbols (or should __modname_<fn> avoid referencing the
-> __COUNTER__- and __LINE__-dependent stub name)?
-> 
-> -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/20261104154003.43313-1-atomlin@atomlin.com?part=2
+> Does checking DISPLAY_VER(display) >= 7 in intel_de_init() unintentionally
+> enable FPGA_DBG unclaimed MMIO checks on Ivy Bridge?
 
-Acknowledged!
+Yes, but only because I misremembered that IVB has the feature already.
+IVB does have the FPGA_DBG register already (which is the part I
+remembered correctly), but the unclaimed register access bit is not
+there until HSW. I guess that makes perfect since since HSW is the
+one that also introduced us to power wells. So I'll need to
+s/ivb/hsw/ here.
 
-Since __modname_* lives in .initcall.modnames (within INIT_DATA, which is
-freed after boot) and is only traversed via the linker bounds
-__start_initcall_modnames and __stop_initcall_modnames during early boot,
-it should be excluded from livepatch correlation just like __initcall__ and
-__initstub__.
+> 
+> Previously, intel_uncore_init_mmio() gated FPGA_DBG unclaimed MMIO detection
+> on HAS_FPGA_DBG_UNCLAIMED(display). In
+> drivers/gpu/drm/i915/display/intel_display_device.c, has_fpga_dbg is set on
+> hsw_desc and bdw_desc onwards, whereas ivb_display has ip.ver = 7 and
+> has_fpga_dbg = 0. Checking DISPLAY_VER(display) >= 7 assigns ivb_mmio_funcs to
+> Ivy Bridge as well, and leaves HAS_FPGA_DBG_UNCLAIMED(display) unused.
+> 
+> Should this check HAS_FPGA_DBG_UNCLAIMED(display) instead?
+> 
+> > @@ -314,4 +484,7 @@ void intel_de_init(struct intel_display *display)
+> >  		else
+> >  			display->mmio.funcs = &i9xx_mmio_funcs;
+> >  	}
+> > +
+> > +	if (display->mmio.funcs->check_for_unclaimed_mmio)
+> > +		display->mmio.unclaimed_mmio_check = 1;
+> >  }
+> 
+> [Severity: Medium]
+> Previously, intel_uncore_init_mmio() cleared any stale unclaimed MMIO bit left
+> set by BIOS or pre-boot firmware during initialization:
+> 
+> 	/* clear out unclaimed reg detection bit */
+> 	if (intel_uncore_unclaimed_mmio(uncore))
+> 		drm_dbg(&i915->drm, "unclaimed mmio detected on uncore init, clearing\n");
+> 
+> With that removed and not replaced in intel_de_init(), if mmio_debug is
 
-I have updated is_initcall_sym() in tools/objtool/klp-diff.c to also
-exclude "__modname_" symbols for the next revision.
+Hmm. I thought I took care of that, but looks like I only adjusted the
+resume path, not the init path.
 
+> disabled by default, won't a stale FPGA_DBG_RM_NOCLAIM or CLAIM_ER bit from
+> boot firmware remain latched until intel_de_arm_unclaimed_mmio_detection()
+> runs at the end of the first modeset or in
+> intel_display_driver_mmio_suspend_late(), triggering a false-positive error or
+> falsely arming oneshot mmio_debug reporting?
+> 
+> > diff --git a/drivers/gpu/drm/i915/display/intel_display_core.h b/drivers/gpu/drm/i915/display/intel_display_core.h
+> > index aded2af8c92a6..cb18ee040b5d6 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_display_core.h
+> > +++ b/drivers/gpu/drm/i915/display/intel_display_core.h
+> > @@ -539,11 +539,18 @@ struct intel_display {
+> >  		 * serializes all display register accesses done
+> >  		 * using intel_de_{read,write}(), but not those
+> >  		 * done using intel_de_{read,write}_fw().
+> > +		 *
+> > +		 * The lock also protects mmio.mmio_debug and
+> > +		 * mmio.unclaimed_mmio_check.
+> >  		 */
+> >  		spinlock_t lock;
+> >  
+> >  		struct intel_uncore *uncore;
+> >  		const struct intel_mmio_funcs *funcs;
+> > +
+> > +		/* protected by mmio.lock */
+> > +		int mmio_debug;
+> > +		int unclaimed_mmio_check;
+> >  	} mmio;
+> 
+> [Severity: Low]
+> This isn't a bug, but display->mmio.mmio_debug is never used since
+> check_unclaimed_mmio_pre(), check_unclaimed_mmio_post(), and
+> intel_de_arm_unclaimed_mmio_detection() all use display->params.mmio_debug.
+> Should mmio.mmio_debug be dropped from struct intel_display?
 
-Kind regards,
+Aye. Looks like some crap I accidentally left in.
+
 -- 
-Aaron Tomlin
+Ville Syrjälä
+Intel
