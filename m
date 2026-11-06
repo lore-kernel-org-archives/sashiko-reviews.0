@@ -1,56 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793990912;
-	b=qq28ZjHqAX+4pslrLHFh3AssEjj/sNbnq4jjlhP0GU6/qWN9WRuWlkF4CD8EzO1eIh73
-	 s5AYzKR1TFwCGi2WtaYb3TeHEHe8zMxxQs+/nz0JoS1rg0cD6qaXbgKoYy/rukHZA5+qz
-	 XcjnD+kgux/IMRqUvtIzpAtJB/KBH6YZcDQ11uQ9L00a+WRg7Gj0JZrGTrxP5p+F51i/1
-	 OA49CTmCpuahl5FO/adAcSpRqT8uV97iY/1REaZCLO5xE3sSNf1mhlk51HZKjBpE2QFLY
-	 K9p/PO35BZ/yqZHdwzxBE9O5ZPR13YNolDQVHARCLPGC1jLrbizxGUtzPi9/lc9eUPw==
+	t=1793991639;
+	b=mAD8RuVW3EzygSbTdhaJrUD4nWEuTi01w0H9hcOsKYoaX593+jFME4xXesbVciALeTdo
+	 f88tEvqy/7POKG3WUpkx5hOn64RXBogvYBpGHGycvsCFvCntI0Kd+BTRwej0ZebdlpGyO
+	 BP7mGrJsQrg9P8jr8BqGDLamZzRxlSE5OpcxCjCyd+pIRfR5YvpGtCVOZN0D1LHp1BVwc
+	 k50A5aVqQ9wPYEa8EimrhDzKc+AY7DPiuzomeZj6rVKxsqJfdJx1c4GtU/g8oIheuSvrd
+	 b5vD8G4kTZYQFsOliBtGtd9FbygwJRdjRLT/baXCJSlItIgqsWJFOcrSNwktXvT46ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793990912;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=g8oRdUIPNrM19I+aRr6Xrjnpls3CINQLfjEu+H+Ojoc=;
-	b=iXhEYRqYK/YEFnKv1HLADLJdWtpONsmJM3eFjtm6o8yTqJfE4jAw7P5s8qBgHu1MkDDJ
-	 +rvk6jmsKaV4m83oYFfHYdyJ0ZFXTA5cOxK2g9OuQ2Na9ZBmYN3cMJLH0h15j/91YJx02
-	 TI7w1DaQ/2Xg8wmdASjz/Osm/kSgLIOFYuAOKXDUb8tf+0C+BSDE0FKuQu7tMtqMNpz55
-	 lt0DLIWOoe3YVq4tZdW4+ag8P9v7yKFF8sr6uImYRVufeb5Ow67CsCDp3sM9D3rKbctmZ
-	 59uABZG+FteMOeBBKB1CaAcmcJhNolEF61RnYRzIkl/w7ATyqkhAdnpcva7m3AwOSzA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793991639;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=GdNer88pGmusqvGHPd0KumXo7JJ6TTkP7yBHRbdWp1U=;
+	b=qKkqzNaCCnJmQ7vrf10dgBDbmbhZXfBmy44w+lKxk55lrVuRKLohAaBfPxrY5Kre+Tlf
+	 U08QhhLI1Uof2rWx1iKzxksmf97GZRmHeZwkuJ03rDoeJsDFiCy1RjmpXCOHI+fXcGJuK
+	 TILFQRssi/T1YJ1QETHZFuNKWvgnb1M5MLhtR59YR1s9OEKNreiqvdu+QTHItbuo5akUK
+	 8Kg2b1a0i6PS4tbDiXLdb4Bg1I3b2MYKZdaIkoOtECZxtc92wFdNpbMUoT5FB8Keu5m/w
+	 cC+ulDTViznnpLRmIFGlLk6f0x8GH8QSYqL/inp/HyS7Ra52IcqFYxq6unFLvefHJmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SyZb44dD;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B22606A33C;
-	Fri,  6 Nov 2026 18:48:31 +0000 (UTC)
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=gAhndznP;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFCBD606A326
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 19:00:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFCBD606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SyZb44dD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A071F0089F;
-	Fri,  6 Nov 2026 18:48:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793990911;
-	bh=g8oRdUIPNrM19I+aRr6Xrjnpls3CINQLfjEu+H+Ojoc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=SyZb44dD7utSkOsJS/IOXorgrZ4kMReKn9B1uMpwESxplMpOD52i3e+ONBMjxVl9V
-	 L7qd9UFNr71Q68WWTjcE6e8PcBXUOXC0iKBIrbN0kKFrFaYW+WUHXmlJacNH/7NWG5
-	 bAwaMsN2XG21jb/ul45N9FAh36CMCWAT6+01nEBM0rtCyDee3Jm72Z+wCzjU3S/RCF
-	 FGgZw4jZSIxabncA4RSWhagv5G6fzj38dKVPhGJnARFaDK13Hium8YPZYirBIMvVGb
-	 GvVGCpitDfczv3jDBSIn34wX6jQO44u7g3aG+xFN7ah6U3u9cLZnjeYVFw8UvK7G/2
-	 iiwPIfVaVTmKw==
-Date: Fri, 06 Nov 2026 08:48:30 -1000
-Message-ID: <d71ce22da31bceab849e0ca8dc39fe2b@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Rahad Bhuiya <rahadbhuiya2021@gmail.com>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
- bpf@vger.kernel.org, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] sched_ext: Reset task fields on exit of an SCX_TASK_READY task
-In-Reply-To: <20261106180353.457-1-rahadbhuiya2021@gmail.com>
-References: <20261106142818.1475-1-rahadbhuiya2021@gmail.com> <20261106180353.457-1-rahadbhuiya2021@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=gAhndznP
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 19EFE1650;
+	Fri,  6 Nov 2026 11:00:35 -0800 (PST)
+Received: from [10.57.91.130] (unknown [10.57.91.130])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A9DA93F8C6;
+	Fri,  6 Nov 2026 11:00:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793991638; bh=vAhKlaxtIJtUaUUFkf4m71CpxjcFvsJUxlFtiJBAkMM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gAhndznPmhH84Ce1OzEMS6hPVXDz/i8OyQ2Wr0uWeGDi7iajMqNXJEBg0HTBmvgJW
+	 ETby+lSTbVr0KDsmJFDTwqYz+PShSTlTeUCHUMRiIUPVwtCz3xiApaLRC5RnLDiOip
+	 TWSPjbT87taelDQUbsmXZDmDh1+4i8yDfQUVNdnk=
+Message-ID: <4111d978-5277-46e5-82a4-dd92bc7099da@arm.com>
+Date: Fri, 6 Nov 2026 19:00:35 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,12 +53,86 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] perf: Add Arm Bus Monitor Unit driver
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1793986672.git.robin.murphy@arm.com>
+ <7bf3b15677548c7e0c88aa03fa18a2b5673ab363.1793986672.git.robin.murphy@arm.com>
+ <sashiko-outbox-202020@kernel.org>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-202020@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Applied to sched_ext/for-7.4-fixes.
+On 2026-11-06 6:23 pm, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] perf: arm-bmu: driver omitted when
+>    ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU is n or m
+> --
+> 
+> commit 0be62f2184bd603abec9ec13cdc4790db8588fea
+> Author: Robin Murphy <robin.murphy@arm.com>
+> 
+> perf: Add Arm Bus Monitor Unit driver
+> 
+> This commit adds a perf driver for Arm's Bus Monitor Unit in
+> drivers/perf/arm_cspmu/ to support transaction matching and counting across
+> interface monitoring units.
+> 
+>> diff --git a/drivers/perf/arm_cspmu/Kconfig b/drivers/perf/arm_cspmu/Kconfig
+>> index 25bd55f036a4f..48c2a3ac7fab5 100644
+>> --- a/drivers/perf/arm_cspmu/Kconfig
+>> +++ b/drivers/perf/arm_cspmu/Kconfig
+>> @@ -34,3 +34,9 @@ config ARM_SYSTEM_PMU
+>>   	help
+>>   	  Support additional event filtering attributes for the CoreSight-based
+>>   	  PMU blocks found in various parts of Arm Compute Subsystems and SoCs.
+>> +
+>> +config ARM_BMU
+>> +	tristate "ARM Bus Monitor Unit"
+>> +	depends on (ARM64 && ACPI) || COMPILE_TEST
+>> +	help
+>> +	  Support perf event counting on Arm Bus Monitor Unit devices.
+>> diff --git a/drivers/perf/arm_cspmu/Makefile b/drivers/perf/arm_cspmu/Makefile
+>> index 90c3cd7101577..4e0b420a2b55f 100644
+>> --- a/drivers/perf/arm_cspmu/Makefile
+>> +++ b/drivers/perf/arm_cspmu/Makefile
+>> @@ -9,3 +9,5 @@ arm_cspmu_module-y := arm_cspmu.o
+>>   obj-$(CONFIG_NVIDIA_CORESIGHT_PMU_ARCH_SYSTEM_PMU) += nvidia_cspmu.o
+>>   obj-$(CONFIG_AMPERE_CORESIGHT_PMU_ARCH_SYSTEM_PMU) += ampere_cspmu.o
+>>   obj-$(CONFIG_ARM_SYSTEM_PMU) += arm_syspmu.o
+>> +
+>> +obj-$(CONFIG_ARM_BMU) += arm-bmu.o
+> 
+> [Severity: Medium]
+> Will arm-bmu.o be skipped during the build when
+> CONFIG_ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU is disabled or modular?
+> 
+> Unlike the other drivers in this directory, CONFIG_ARM_BMU does not depend on
+> CONFIG_ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU, but drivers/perf/Makefile only
+> descends into arm_cspmu/ via:
+> 
+> drivers/perf/Makefile:
+> 	obj-$(CONFIG_ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU) += arm_cspmu/
+> 
+> When CONFIG_ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU=n, Kbuild never enters
+> drivers/perf/arm_cspmu/ and arm-bmu.o is not built at all; when
+> CONFIG_ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU=m and CONFIG_ARM_BMU=y, arm_cspmu/
+> is only visited for modules and the built-in arm-bmu driver is omitted from
+> vmlinux.
+> 
+> drivers/perf/Makefile should also add arm_cspmu/ for CONFIG_ARM_BMU (or use
+> obj-y += arm_cspmu/).
+> 
 
-Thanks.
+Unlikely to be an issue in practice for the moment, as the users who 
+want arm-bmu also want arm_syspmu anyway (did you notice I sent them 
+together as a series?). However the existing double-conditional 
+compilation does seem a bit silly in general, so I've sent a quick patch 
+to clean that up separately.
 
---
-tejun
+Thanks,
+Robin.
