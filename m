@@ -1,77 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793981955;
-	b=21qRcjfJOQAetzuWbNDlCvbhmvqtbxSGnF374v+c8j6whl4GFmnYHNYQwPeNas1WlJkw
-	 E21CLYfzqh85ICS7l7ZeGRBGQFNRgOSLHUwhdsOIozZvXsCiKQJykx0f136VuSPVRyrLO
-	 OjTfiPRU+yvtq6dxyYzO8hxSS9Vkudr91fh4ywvTe2EpkvNQ+70wgJwYmUmsopInsJNPQ
-	 flT2mujO+et86zY+pudejKzf0Wx2QcF81M12IWEdatvlyLvxS+tnKuRpN/7aKu3IDTs2p
-	 EWcOQodoLg3D+k2/B3jNq1zjm8AnkDoUQ/DUN4xNfI+N7fYS1bLhR8H7mgj0nMy/p+w==
+	t=1793983250;
+	b=jpRz9IJxF9Ch2qo33pRrcHOFccEqLjACWsJgwHAZTh4vWPueSkJohPxj3WfdwHPmXVBF
+	 5otku1+D2XT+mSXLKUOh4oa24LAdFU9P1Yu0h+VMOykxgUpeXa9uZfX8EMAqLhzFc5e1k
+	 EEXb3KYRA5/v86Rrvi0Q4WUDbiUHVv0hr0X0FX1NmvUh6VtyJBvv2DSnXKSlLX2UtPFeF
+	 aNVCc0PrxoDf1eJB2HBy6A+Y5okpTIX0gXAmKZOAM1fOerVe0gCEXDzyfBezQoR00OiQZ
+	 +UGx+EIda6PdbfhHLHTwHcToi1Cm+yotxOG0IgZxYryHuR0jeYQnrX5mri01XRfhpUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793981955;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=k3iSN64kbXRhUpJ2EwawfjhUm1pdc/2B5376L6iFxdY=;
-	b=nN3YbzYFwmZrNEgpJiq63dg8jjB6laWqK0bEtk0Ta9S7QsvJ1M4cmoQ1V47xe5nEwsmq
-	 z5G5MYa43QZ2zAiJrfPuwA0WOoQWFnBsR3HbHl/+qpMHmJ8V0KL9IodESbFsJ7QSYn5Hn
-	 zsaDMI2DfNUgf8DFRyXnKLBqUBkuNsZ/jPbFcDGTu2TM354rX0Le2/S558MhY1i434W4v
-	 5u0pN+AXVTob27QKZCnzRGULyEGgbuxgZQUeJ3MwzEpa+2lq7+Ynannj5DYyeYiIwy8lc
-	 mfYhL/fkEX4ZnBVHeOL3PFI3ELA2ZDuRfXXFBt623N2eA0yOnidD460J3DRtHxMi+mw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793983250;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:From:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=9IIEYk7YBZeshSLM0PoZroS+Zb4rz7EQkxpB2vSxCzc=;
+	b=WdcQFboZdd90huc6MAsqmr3gdWqKyQtOiwyHDVat/sa7ZFuhQDHsDYTKi+yp0K6i7aXT
+	 suCNq+ixYiGoH7L28JBpP/cs2ZkskLl+xWiajgsfj/mypN3hz9tlLi6N1fPv72MLxUsWE
+	 bTylsapKFY6Q9DAXIPnHBci6Domu5DLoKl2daQ1Y9gUNNfyeNeNl3MufQNymji8WvTP7i
+	 i2kq7XluvBK/KJwGARaATzKk0LygP+FhUNwVccEVvwJr29mVjy/9zQ30BGBAfgUiOgG/p
+	 PC2n1hg8o/vcC++zGU1/W+sMT/2vk8jyd6qgpL0ulVRWWA4x8mKjuZ3HU8PDE3fgEXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nr1wUeYy;
-	arc=none smtp.remote-ip=198.175.65.13
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694DF6083610
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 16:19:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 694DF6083610
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=izE986vy;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51F2D606A329;
+	Fri,  6 Nov 2026 16:40:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51F2D606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nr1wUeYy
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793981954; x=1825517954;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=ahpIHkaGHap1ktgb37MLw5ENuR+JAgSJAF5Pv55xOIM=;
-  b=nr1wUeYy9OsVAEhszK4yXz/j8M4xjLXIP+hSKP3qBVZAz2NnN2Wcoeaa
-   i37f0hoRfVU1bgk8O3+DxoFenf6d+rCmlaaw/Pt/bPU83ZCPzzlQuEfPW
-   sFhlEsfNyScT+YVdOUTbLI253myBWsi3X2pxP1MwnuA7CJKavW0wQpMRP
-   +pvUAU6m4MfMgLd+htuI05vOikOQ9lrMmUjj2UqYhS4UncP68YABWvOBt
-   n19R1YIbbQF2bPGYD1F9B6EwwQ3thgglFgq45kDZo27z5zUW6r0h7XKA1
-   rYEFQCMHkEXc7mYGYBi1SQ6Eob24tDv7pD1l5JEhdE635P/W2EU1bhqeh
-   g==;
-X-CSE-ConnectionGUID: lhe2Qh6XS5GVyH3A4DRMSw==
-X-CSE-MsgGUID: S1Jxal+EQkmXzQj0iATKWw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11958"; a="2675755"
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="2675755"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 08:19:14 -0800
-X-CSE-ConnectionGUID: XaMot93tRveXiMh3+zBecA==
-X-CSE-MsgGUID: PdkvnVoxS9+A0btjZXhp/g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="7366387"
-Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.181])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 08:19:13 -0800
-Date: Fri, 6 Nov 2026 18:19:09 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH 7/9] drm/i915/de: Move unclaimed mmio detection into
- display code
-Message-ID: <au39_Rv2aA4oXIUu@intel.com>
-References: <20261104221842.18799-1-ville.syrjala@linux.intel.com>
- <20261104221842.18799-8-ville.syrjala@linux.intel.com>
- <sashiko-outbox-198239@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=izE986vy
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 766E01595;
+	Fri,  6 Nov 2026 08:40:45 -0800 (PST)
+Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 13D863F673;
+	Fri,  6 Nov 2026 08:40:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793983248; bh=ADNoIliO7uObwSND37J76qZqTaSAog/LObwgBbJ0hrE=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=izE986vyY0q3Pt8OzbVRSsX+gj1YMLu1KTdyxaBfirRrJdU/zpJYFe7HbUC+GKIAa
+	 PnRjK0I2uAaRUtfjnoncQW3+3Tk8RT6ft1ZSlUX+IYQYiE1Wi49dk+5Ei/EpX2Xt74
+	 I6Dh6W48YANBmzAaKmgyN7nkpTD/adhBrHrDiFGY=
+Message-ID: <80a956c7-b2b2-411e-99c7-d703c92f3c34@arm.com>
+Date: Fri, 6 Nov 2026 16:40:45 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -81,131 +53,384 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/11] KVM: arm64: CCA: Prevent memslot modifications
+ after Realm creation
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Steven Price <steven.price@arm.com>, sashiko-reviews@lists.linux.dev,
+ kvm@vger.kernel.org, kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Ackerley Tng <ackerleytng@google.com>,
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20261102141304.126883-1-steven.price@arm.com>
+ <20261102141304.126883-10-steven.price@arm.com>
+ <sashiko-outbox-193708@kernel.org>
+ <9489ebe7-4c75-4229-811e-3f618028d367@arm.com>
+ <a2dfb2ad-7c52-43e1-8b77-cacb2fa00c05@arm.com>
+ <0d5a4b59-f38c-4c1d-a59e-202e7efb4b54@arm.com>
+Content-Language: en-US
+In-Reply-To: <0d5a4b59-f38c-4c1d-a59e-202e7efb4b54@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-198239@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On Wed, Nov 04, 2026 at 10:36:37PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] drm/i915/de: NULL deref on displayless devices in unclaimed MMIO checks
-> - [Medium] drm/i915/de: intel_de_init() enables FPGA_DBG check on Ivy Bridge
-> - [Medium] drm/i915/de: unclaimed MMIO status is not cleared on initialization
-> - [Low] drm/i915/display: unused mmio.mmio_debug field in struct intel_display
-> --
-> 
-> commit 74c572411ef669251a5e2e347d14a7771407e433
-> Author: Ville Syrj�l� <ville.syrjala@linux.intel.com>
-> 
-> drm/i915/de: Move unclaimed mmio detection into display code
-> 
-> This commit moves the FPGA_DBG and CLAIM_ER unclaimed MMIO access detection
-> from intel_uncore into the display code, protecting the tracking state with
-> display->mmio.lock.
-> 
-> > diff --git a/drivers/gpu/drm/i915/display/intel_de.c b/drivers/gpu/drm/i915/display/intel_de.c
-> > index 8b7a4e696ff96..0a51105e0fbad 100644
-> > --- a/drivers/gpu/drm/i915/display/intel_de.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_de.c
-> 
-> [ ... ]
-<snip>
-> > @@ -304,7 +470,11 @@ void intel_de_init(struct intel_display *display)
-> >  	spin_lock_init(&display->mmio.lock);
-> >  
-> >  	if (driver_is_i915()) {
-> > -		if (display->platform.valleyview || display->platform.cherryview)
-> > +		if (display->platform.valleyview || display->platform.cherryview)
-> > +			display->mmio.funcs = &vlv_mmio_funcs;
-> > +		else if (DISPLAY_VER(display) >= 7)
-> > +			display->mmio.funcs = &ivb_mmio_funcs;
-> > +		else if (DISPLAY_VER(display) >= 6)
-> >  			display->mmio.funcs = &snb_mmio_funcs;
-> >  		else
-> >  			display->mmio.funcs = &i9xx_mmio_funcs;
-> 
-> [Severity: Medium]
-> Does checking DISPLAY_VER(display) >= 7 in intel_de_init() unintentionally
-> enable FPGA_DBG unclaimed MMIO checks on Ivy Bridge?
 
-Yes, but only because I misremembered that IVB has the feature already.
-IVB does have the FPGA_DBG register already (which is the part I
-remembered correctly), but the unclaimed register access bit is not
-there until HSW. I guess that makes perfect since since HSW is the
-one that also introduced us to power wells. So I'll need to
-s/ivb/hsw/ here.
 
+On 05/11/2026 17:31, Suzuki K Poulose wrote:
 > 
-> Previously, intel_uncore_init_mmio() gated FPGA_DBG unclaimed MMIO detection
-> on HAS_FPGA_DBG_UNCLAIMED(display). In
-> drivers/gpu/drm/i915/display/intel_display_device.c, has_fpga_dbg is set on
-> hsw_desc and bdw_desc onwards, whereas ivb_display has ip.ver = 7 and
-> has_fpga_dbg = 0. Checking DISPLAY_VER(display) >= 7 assigns ivb_mmio_funcs to
-> Ivy Bridge as well, and leaves HAS_FPGA_DBG_UNCLAIMED(display) unused.
 > 
-> Should this check HAS_FPGA_DBG_UNCLAIMED(display) instead?
+> On 05/11/2026 15:06, Suzuki K Poulose wrote:
+>> On 04/11/2026 11:15, Steven Price wrote:
+>>> On 02/11/2026 15:50, sashiko-bot@kernel.org wrote:
+>>>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>>>> issue(s) to consider:
+>>>> - [High] KVM: arm64: CCA: guest_memfd memslot delete rejected after 
+>>>> Stage-2 unmap
+>>>> -- 
+>>>>
+>>>> commit 5106402397c36eec1e5fa59a5bb2c5adf4ee2aa8
+>>>> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
+>>>>
+>>>> KVM: arm64: CCA: Prevent memslot modifications after Realm creation
+>>>>
+>>>> This commit updates kvm_arch_prepare_memory_region() to disallow 
+>>>> creating,
+>>>> modifying, or deleting guest_memfd-backed memslots once a Realm has 
+>>>> been
+>>>> created.
+>>>>
+>>>>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>>>>> index 51fda7b2ff7f3..eb8c5f9e9791d 100644
+>>>>> --- a/arch/arm64/kvm/mmu.c
+>>>>> +++ b/arch/arm64/kvm/mmu.c
+>>>>> @@ -2862,13 +2862,28 @@ int kvm_arch_prepare_memory_region(struct 
+>>>>> kvm *kvm,
+>>>>>           (new->flags & (KVM_MEM_LOG_DIRTY_PAGES | KVM_MEM_READONLY)))
+>>>>>           return -EPERM;
+>>>>> -    if (kvm->arch.vm_flavor == VM_PROTECTED_PKVM) {
+>>>>> +    switch (kvm->arch.vm_flavor) {
+>>>>> +    case VM_PROTECTED_PKVM:
+>>>>>           /* Cannot modify memslots once a pVM has run. */
+>>>>>           if (pkvm_hyp_vm_is_created(kvm) &&
+>>>>> -            (change == KVM_MR_DELETE || change == KVM_MR_MOVE)) {
+>>>>> +            (change == KVM_MR_DELETE || change == KVM_MR_MOVE))
+>>>>>               return -EPERM;
+>>>>> -        }
+>>>>> +        break;
+>>>>> +    case VM_REALM:
+>>>>> +        /*
+>>>>> +         * Once the Realm is created, we cannot modify any slots that
+>>>>> +         * could be providing private memory. i.e., guest_memfd 
+>>>>> backed
+>>>>> +         * slots.
+>>>>> +         * TODO: Handle trusted device private memory slots
+>>>>> +         */
+>>>>> +        if (!kvm_realm_is_created(kvm))
+>>>>> +            break;
+>>>>> +        if (kvm_slot_has_gmem(old) || kvm_slot_has_gmem(new))
+>>>>> +            return -EPERM;
+>>>>
+>>>> [Severity: High]
+>>>> Does checking kvm_slot_has_gmem(old) in 
+>>>> kvm_arch_prepare_memory_region() run
+>>>> too late to prevent Stage-2 unmapping when deleting a guest_memfd- 
+>>>> backed
+>>>> memslot on a created Realm?
+>>>>
+>>>> In virt/kvm/kvm_main.c:kvm_set_memory_region(), non-delete changes
+>>>> (KVM_MR_MOVE and KVM_MR_FLAGS_ONLY) on KVM_MEM_GUEST_MEMFD memslots are
+>>>> already rejected upfront with -EINVAL, so kvm_slot_has_gmem(old) is 
+>>>> reached
+>>>> here when change == KVM_MR_DELETE.
+>>>>
+>>>> However, in virt/kvm/kvm_main.c:kvm_set_memslot(), KVM invalidates and
+>>>> flushes the old memslot before calling kvm_prepare_memory_region():
+>>>>
+>>>> virt/kvm/kvm_main.c:kvm_set_memslot() {
+>>>>     if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+>>>>         invalid_slot = kzalloc_obj(*invalid_slot, GFP_KERNEL_ACCOUNT);
+>>>>         if (!invalid_slot) {
+>>>>             mutex_unlock(&kvm->slots_arch_lock);
+>>>>             return -ENOMEM;
+>>>>         }
+>>>>         kvm_invalidate_memslot(kvm, old, invalid_slot);
+>>>>     }
+>>>>
+>>>>     r = kvm_prepare_memory_region(kvm, old, new, change);
+>>>>     if (r)
+>>>>         goto err;
+>>>> }
+>>>>
+>>>> kvm_invalidate_memslot() marks the active slot as 
+>>>> KVM_MEMSLOT_INVALID and
+>>>> calls arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot():
+>>>>
+>>>> arch/arm64/kvm/mmu.c:kvm_arch_flush_shadow_memslot() {
+>>>>     write_lock(&kvm->mmu_lock);
+>>>>     kvm_stage2_unmap_range(&kvm->arch.mmu, gpa, size, true);
+>>>>     kvm_nested_unmap_cipa_range(kvm, gpa, size, true);
+>>>>     write_unlock(&kvm->mmu_lock);
+>>>> }
+>>>>
+>>>> For a Realm VM, kvm_stage2_unmap_range() invokes
+>>>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() with
+>>>> KVM_FILTER_PRIVATE | KVM_FILTER_SHARED:
+>>>>
+>>>> arch/arm64/kvm/rmi.c:kvm_realm_unmap_range_filter() {
+>>>>     if (attr_filter & KVM_FILTER_SHARED)
+>>>>         realm_unmap_shared_range(kvm, start, end, may_block);
+>>>>     if (attr_filter & KVM_FILTER_PRIVATE)
+>>>>         realm_unmap_private_range(kvm, start, end, may_block);
+>>>> }
+>>>>
+>>>> By the time kvm_arch_prepare_memory_region() returns -EPERM and
+>>>> kvm_set_memslot() restores the old memslot in the error path, hasn't
+>>>> realm_unmap_private_range() already unmapped and undelegated the 
+>>>> Realm's
+>>>> private Stage-2 DATA granules across the memslot's GPA range?
+>>>>
+>>>
+>>> I think this should be fixable by checking in
+>>> kvm_arch_flush_shadow_memslot() and preserving the stage-2 mappings by
+>>> returning early. kvm_arch_prepare_memory_region() will then reject the
+>>> operation but the mappings will still be in place.
+>>
+>> Or is the better fix to delay the kvm_invalidate_memslot() after 
+>> kvm_prepare_memory_region() ? i.e., if we the KVM backend doesn't
+>> approve the change, why do invalidate the slot ? For most of the CoCo
+>> VMs, this would be disastrous.
 > 
-> > @@ -314,4 +484,7 @@ void intel_de_init(struct intel_display *display)
-> >  		else
-> >  			display->mmio.funcs = &i9xx_mmio_funcs;
-> >  	}
-> > +
-> > +	if (display->mmio.funcs->check_for_unclaimed_mmio)
-> > +		display->mmio.unclaimed_mmio_check = 1;
-> >  }
 > 
-> [Severity: Medium]
-> Previously, intel_uncore_init_mmio() cleared any stale unclaimed MMIO bit left
-> set by BIOS or pre-boot firmware during initialization:
-> 
-> 	/* clear out unclaimed reg detection bit */
-> 	if (intel_uncore_unclaimed_mmio(uncore))
-> 		drm_dbg(&i915->drm, "unclaimed mmio detected on uncore init, clearing\n");
-> 
-> With that removed and not replaced in intel_de_init(), if mmio_debug is
+> Ignore this, driver for CCA is doing the wrong thing. Instead of
+> flushing (which is a NOP for CCA), we were removing the mapping.
 
-Hmm. I thought I took care of that, but looks like I only adjusted the
-resume path, not the init path.
+Well, I got it confused with arm64 calling stage2_flush_memslot()
+(called for flushing the dcache for a memory slot) with
+kvm_arch_flush_shadow_memslot() (unmapping a memslot from the guest).
 
-> disabled by default, won't a stale FPGA_DBG_RM_NOCLAIM or CLAIM_ER bit from
-> boot firmware remain latched until intel_de_arm_unclaimed_mmio_detection()
-> runs at the end of the first modeset or in
-> intel_display_driver_mmio_suspend_late(), triggering a false-positive error or
-> falsely arming oneshot mmio_debug reporting?
-> 
-> > diff --git a/drivers/gpu/drm/i915/display/intel_display_core.h b/drivers/gpu/drm/i915/display/intel_display_core.h
-> > index aded2af8c92a6..cb18ee040b5d6 100644
-> > --- a/drivers/gpu/drm/i915/display/intel_display_core.h
-> > +++ b/drivers/gpu/drm/i915/display/intel_display_core.h
-> > @@ -539,11 +539,18 @@ struct intel_display {
-> >  		 * serializes all display register accesses done
-> >  		 * using intel_de_{read,write}(), but not those
-> >  		 * done using intel_de_{read,write}_fw().
-> > +		 *
-> > +		 * The lock also protects mmio.mmio_debug and
-> > +		 * mmio.unclaimed_mmio_check.
-> >  		 */
-> >  		spinlock_t lock;
-> >  
-> >  		struct intel_uncore *uncore;
-> >  		const struct intel_mmio_funcs *funcs;
-> > +
-> > +		/* protected by mmio.lock */
-> > +		int mmio_debug;
-> > +		int unclaimed_mmio_check;
-> >  	} mmio;
-> 
-> [Severity: Low]
-> This isn't a bug, but display->mmio.mmio_debug is never used since
-> check_unclaimed_mmio_pre(), check_unclaimed_mmio_post(), and
-> intel_de_arm_unclaimed_mmio_detection() all use display->params.mmio_debug.
-> Should mmio.mmio_debug be dropped from struct intel_display?
+We do have a problem with the memslot code ordering. For all VMs, on a
+memslot deletion, we first invalidate the memslot and then run the
+"prepare" hook for the architecture, which could reject a DELETE. This
+is particularly an issue for the Coco VMs, if they want to reject
+deletion of memslots while the VM is active ( e.g., Realm and pKVM),
+unless the VM prevents the stage2 modification (e.g., pKVM ignores
+stage2 unmap requests). Even there, the pKVM may keep the memory mapped
+when the memslot is deleted. But the page pinning keeps the pages in
+tact.
 
-Aye. Looks like some crap I accidentally left in.
+Something like the following could work:
+
+---8>---
+
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+Date: Fri, 6 Nov 2026 16:31:15 +0000
+Subject: [PATCH] KVM: Allow architectures to reject memslot changes before
+  invalidation
+
+Architectures may need to reject deletion of a memory slot without
+changing the guest's memory mappings. Currently, KVM invalidates the slot
+and calls kvm_arch_flush_shadow_memslot() before
+kvm_arch_prepare_memory_region() can reject the request. On arm64, this
+unmaps the slot from stage-2. Restoring the old memslot on failure does not
+restore those mappings, so even a rejected deletion has side effects.
+
+Add kvm_arch_validate_memory_region() and invoke it before invalidating
+the slot, with slots_lock and slots_arch_lock held. The hook performs
+validation only, allowing architectures to reject a request without
+changing the memslot or its mappings. Provide a weak no-op implementation
+for architectures that do not need early validation.
+
+Move arm64's protected VM checks into the new hook so that unsupported
+deletions and moves are rejected before stage-2 unmapping. Keep resource
+preparation after invalidation, since invalidation drops slots_arch_lock
+and allows concurrent updates to architecture-specific memslot metadata.
+
+Assisted-by: LLM
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+---
+  arch/arm64/kvm/mmu.c     | 22 ++++++++++++++++------
+  arch/arm64/kvm/pkvm.c    |  2 +-
+  include/linux/kvm_host.h |  4 ++++
+  virt/kvm/kvm_main.c      | 33 ++++++++++++++++++++++++++-------
+  4 files changed, 47 insertions(+), 14 deletions(-)
+
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 1db10d8d6db7..c3469551fe3c 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -2806,13 +2806,12 @@ void kvm_arch_commit_memory_region(struct kvm *kvm,
+  	}
+  }
+
+-int kvm_arch_prepare_memory_region(struct kvm *kvm,
+-				   const struct kvm_memory_slot *old,
+-				   struct kvm_memory_slot *new,
+-				   enum kvm_mr_change change)
++int kvm_arch_validate_memory_region(struct kvm *kvm,
++				    const struct kvm_memory_slot *old,
++				    const struct kvm_memory_slot *new,
++				    enum kvm_mr_change change)
+  {
+-	hva_t hva, reg_end;
+-	int ret = 0;
++	lockdep_assert_held(&kvm->slots_lock);
+
+  	if (kvm_vm_is_protected(kvm)) {
+  		/* Cannot modify memslots once a pVM has run. */
+@@ -2827,6 +2826,17 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+  		}
+  	}
+
++	return 0;
++}
++
++int kvm_arch_prepare_memory_region(struct kvm *kvm,
++				   const struct kvm_memory_slot *old,
++				   struct kvm_memory_slot *new,
++				   enum kvm_mr_change change)
++{
++	hva_t hva, reg_end;
++	int ret = 0;
++
+  	if (change != KVM_MR_CREATE && change != KVM_MR_MOVE &&
+  			change != KVM_MR_FLAGS_ONLY)
+  		return 0;
+diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
+index 016997288fd2..552a40871ab1 100644
+--- a/arch/arm64/kvm/pkvm.c
++++ b/arch/arm64/kvm/pkvm.c
+@@ -262,7 +262,7 @@ int pkvm_create_hyp_vm(struct kvm *kvm)
+  	int ret = 0;
+
+  	/*
+-	 * Synchronise with kvm_arch_prepare_memory_region(), as we
++	 * Synchronise with kvm_arch_validate_memory_region(), as we
+  	 * prevent memslot modifications on a pVM that has been run.
+  	 */
+  	mutex_lock(&kvm->slots_lock);
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index e7fc94e2910a..310afcaf7021 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -1255,6 +1255,10 @@ int kvm_set_internal_memslot(struct kvm *kvm,
+  			     const struct kvm_userspace_memory_region2 *mem);
+  void kvm_arch_free_memslot(struct kvm *kvm, struct kvm_memory_slot *slot);
+  void kvm_arch_memslots_updated(struct kvm *kvm, u64 gen);
++int kvm_arch_validate_memory_region(struct kvm *kvm,
++				    const struct kvm_memory_slot *old,
++				    const struct kvm_memory_slot *new,
++				    enum kvm_mr_change change);
+  int kvm_arch_prepare_memory_region(struct kvm *kvm,
+  				const struct kvm_memory_slot *old,
+  				struct kvm_memory_slot *new,
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index cf4cb586f140..3ef370d71818 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -1682,6 +1682,20 @@ static void kvm_swap_active_memslots(struct kvm 
+*kvm, int as_id)
+  	slots->generation = gen;
+  }
+
++/*
++ * Validate a memslot change before invalidation, which may 
+irreversibly reclaim
++ * private guest memory. Called with slots_lock and slots_arch_lock held.
++ * Implementations must not modify memslot state or allocate resources; 
+leave
++ * those operations to kvm_arch_prepare_memory_region().
++ */
++__weak int kvm_arch_validate_memory_region(struct kvm *kvm,
++					   const struct kvm_memory_slot *old,
++					   const struct kvm_memory_slot *new,
++					   enum kvm_mr_change change)
++{
++	return 0;
++}
++
+  static int kvm_prepare_memory_region(struct kvm *kvm,
+  				     const struct kvm_memory_slot *old,
+  				     struct kvm_memory_slot *new,
+@@ -1934,6 +1948,10 @@ static int kvm_set_memslot(struct kvm *kvm,
+  	 */
+  	mutex_lock(&kvm->slots_arch_lock);
+
++	r = kvm_arch_validate_memory_region(kvm, old, new, change);
++	if (r)
++		goto unlock_err;
++
+  	/*
+  	 * Invalidate the old slot if it's being deleted or moved.  This is
+  	 * done prior to actually deleting/moving the memslot to allow vCPUs to
+@@ -1950,22 +1968,22 @@ static int kvm_set_memslot(struct kvm *kvm,
+  	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+  		invalid_slot = kzalloc_obj(*invalid_slot, GFP_KERNEL_ACCOUNT);
+  		if (!invalid_slot) {
+-			mutex_unlock(&kvm->slots_arch_lock);
+-			return -ENOMEM;
++			r = -ENOMEM;
++			goto unlock_err;
+  		}
+  		kvm_invalidate_memslot(kvm, old, invalid_slot);
+  	}
+
+  	r = kvm_prepare_memory_region(kvm, old, new, change);
+  	if (r)
+-		goto err;
++		goto revert_slot;
+
+  	if (change == KVM_MR_CREATE && (new->flags & KVM_MEM_GUEST_MEMFD)) {
+  		r = kvm_gmem_commit_memory_region(kvm, new);
+  		if (r) {
+  			kvm_arch_free_memslot(kvm, new);
+  			kvm_destroy_dirty_bitmap(new);
+-			goto err;
++			goto unlock_err;
+  		}
+  	}
+
+@@ -2000,7 +2018,7 @@ static int kvm_set_memslot(struct kvm *kvm,
+
+  	return 0;
+
+-err:
++revert_slot:
+  	/*
+  	 * For DELETE/MOVE, revert the above INVALID change.  No modifications
+  	 * required since the original slot was preserved in the inactive slots.
+@@ -2009,9 +2027,10 @@ static int kvm_set_memslot(struct kvm *kvm,
+  	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+  		kvm_activate_memslot(kvm, invalid_slot, old);
+  		kfree(invalid_slot);
+-	} else {
+-		mutex_unlock(&kvm->slots_arch_lock);
++		return r;
+  	}
++unlock_err:
++	mutex_unlock(&kvm->slots_arch_lock);
+  	return r;
+  }
 
 -- 
-Ville Syrj�l�
-Intel
+2.43.0
+
+
+
+
+
+
+
+> 
+> 
+> Cheers
+> Suzuki
+> 
+>>
+>> Suzuki
+>>
+>>
+>>
+>>>
+>>> Steve
+>>
+> 
+
