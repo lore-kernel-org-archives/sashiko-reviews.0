@@ -1,54 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=144.76.133.104
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.14
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793985932;
-	b=HRRduB49A/wmuMrR3+R/kpP5d9dPJmMYpDF0sHOypyaQ7Y77TnCxTApIVmJyBvci45Mm
-	 iFpl7LRYdG0xOXvpp7oQ5CaagzV/z/JJdUhGUVdM7454xKX3Q1Cd+m/5ntGV0mLb59K0O
-	 fv9jxRrLFVvgWDoodE3v3MfEApGEsza3wqZR21YzrASKiTkwLP4eQWwTT60MPdx1m1bNS
-	 WHRk7m+JaopUR8UYPznzV3ovqVc40eExQxf3dgdMA3/3vT/mPA8R6aI3wDxwkXNGX+0of
-	 n6DIMTg/LX+uMtBlntyWwyZCPPoogWKhdL9RVdW5OvCKC6Rx1UB0k+nEmYyWEv741Gg==
+	t=1793986639;
+	b=lbLiww8SU+q9EMzkBIV0aYwJbCp8fygAQP3acpRVX9WuqUuNJWU0UnzrjygUYAiwp3L2
+	 yYr83ugLvL9s0NOEYIGzB7W2dOHZUSqni0ZbLzYfeej+8tRbrf0qMN2AfHSlrYqDHNyRW
+	 GV9Q0kLHf34stVE+1FpAIkrOaKNiLNP4hRZ97rMzlxLIYBgWUZo51eDls1BSL40FBMvbm
+	 g9i6M3Bs8qyfBFN+eN794Qt8Dp0enDyw+5Jrs/TbwZtRY6rus2SlrDVMUOCNOS2xv25lP
+	 ROWMMkuq127PSG7+gq/9kRMPVg2OcI+8TWwVHjklMZibxEXP509PJ9IkYlNuVC4IgVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793985932;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=ru2oCJ/d6ebjZsZ30nMQl1i6eairnkPjpZ6freW069o=;
-	b=xT0nX/rkVLPJAF07qngJBmmJyv93EhR4QMLfIsWMvODw3P80BPSOtRkyR3p1dZCIrtPt
-	 dIYKylqxYrOgNg2C35/6sorhOe8H6brVkZOPqyMZXm3kdkFMVGyUcs/XsDdNAQjYpvj6T
-	 reSZdYoxUstckRtQf8eueEzryY1zdVRULR/1+dxwGC96b6v7dnbZpKHa0b2fruTQpRA6E
-	 Hq1KLVwPeNtv4Ryf8+D0MWOxn4ZU6fBGvypH3D/CW0EWpZUEpxVRHW99DxDjo0oMg+rY3
-	 o3j8t8nhjp/5SZE510roaqrx4u5Zm3/UUZfQHcuekJtsKl2W3cWpqaCfuFd9AqDBb7w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793986639;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:Date:To:cc:
+	 Subject:In-Reply-To:Message-ID:References:MIME-Version:Content-Type;
+	bh=g7Oc6t0HtOz9X6Eiow3ZElCtdl5ie3dXLyf+O1EAwlE=;
+	b=PiTV5Jv4cu02UMfXg1ckno90473/4yMtP6XjYiI1QorWebAWB20aOP4Sy9N+wceiBmRU
+	 P15L0mRtRgl0CLJwb01sUhubJ6QEVbzcTReaP/8fylI00kHHf6pVUplgWhAWFNClEUD6m
+	 XNiwg8+IW1Meg7tj0x3H8PDesvRIOC4V88FsYTyPxjrAgtT9oPeUlHnf7hd+FnG1kpukK
+	 4Iqo6UG/VNTfhXy32BlRUd9dTMK2VYIedLxICRBfNzIQ/8+2d0LZIPhH04b4L9D8/CWRh
+	 iiEOAnAOnry+mQU+nMvNyIaFj6Ymv6n1PLvMl0ogdQgnsecEytk4gdBdo8h6POMqVmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=wunner.de;
-	spf=pass smtp.mailfrom=wunner.de;
-	arc=none smtp.remote-ip=144.76.133.104
-Received: from mailout3.hostsharing.net (mailout3.hostsharing.net [144.76.133.104])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Gh+M0kZL;
+	arc=none smtp.remote-ip=198.175.65.14
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA56606A33B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 17:25:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5DA56606A33B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wunner.de
-Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (secp384r1) server-digest SHA384
-	 client-signature ECDSA (secp384r1) client-digest SHA384)
-	(Client CN "*.hostsharing.net", Issuer "GlobalSign GCC R6 AlphaSSL CA 2025" (verified OK))
-	by mailout3.hostsharing.net (Postfix) with ESMTPS id 3715C49C5;
-	Fri, 06 Nov 2026 18:25:29 +0100 (CET)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id E16E560290FC; Fri,  6 Nov 2026 18:25:28 +0100 (CET)
-Date: Fri, 6 Nov 2026 18:25:28 +0100
-From: Lukas Wunner <lukas@wunner.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C553F606A337
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 17:37:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C553F606A337
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Gh+M0kZL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793986638; x=1825522638;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=ALLV+zDwOuXdfesWRA5Se2m7/T8+dtzxg4wxXwQjkJo=;
+  b=Gh+M0kZLzdS0ExPYWxPRyeDx1TWWUC/1MfA12YWWGz/MldxwUCnOAVA8
+   OZcpso/Qz1ZjwZg4ZvAyQAMvX1fMssLusKqvPJbbnnyn+BEcdoyj8OxHj
+   FDBOumVJpkXYjobadZddYoB5Oas4Q7vNyo9plPZRypMaq6uY0+U2mmf/7
+   q7ocUqn+cWDBlrOhkYFOyhHxnhOABw5fStrttXx5LNVAeDf0HzcnSNr19
+   oAERjzt/a2ckpFVbp8ykM7kqLLpBU8DG1/CBK1hoxHBK0AE39PKKqUsI2
+   S/duW2fpJGLtzGg927Pa7mO9iW0qYJOk14TotRggWvE216lIfl8QM5+bG
+   w==;
+X-CSE-ConnectionGUID: kPA/GZtvRFqUZ9siU6nL/A==
+X-CSE-MsgGUID: WmjPHLZ9QLaM1Q6gMCbTfA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11958"; a="2697679"
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="2697679"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 09:37:18 -0800
+X-CSE-ConnectionGUID: 8ZcE/OWLQN+eAokLnIMkvg==
+X-CSE-MsgGUID: laJ+7Ot1SZ6qlmnjCwDIoA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
+   d="scan'208";a="7659594"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.104])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2026 09:37:17 -0800
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Fri, 6 Nov 2026 19:37:13 +0200 (EET)
+To: Lukas Wunner <lukas@wunner.de>
+cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
 Subject: Re: [PATCH v2 2/2] PCI/AER: Check validity of Error Source ID
  register
-Message-ID: <au4NiO-rglobvYxo@wunner.de>
-References: <cover.1793982724.git.lukas@wunner.de>
- <357275f9c2554a61bfa6fcbe9a25416cafe9ce00.1793982724.git.lukas@wunner.de>
- <sashiko-outbox-201907@kernel.org>
+In-Reply-To: <au4NiO-rglobvYxo@wunner.de>
+Message-ID: <36c2c56c-59c4-4183-70ec-5d05e88569b5@linux.intel.com>
+References: <cover.1793982724.git.lukas@wunner.de> <357275f9c2554a61bfa6fcbe9a25416cafe9ce00.1793982724.git.lukas@wunner.de> <sashiko-outbox-201907@kernel.org> <au4NiO-rglobvYxo@wunner.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,40 +78,57 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-518017135-1793986633=:2032"
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-518017135-1793986633=:2032
 Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-201907@kernel.org>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On Fri, Nov 06, 2026 at 05:15:07PM +0000, sashiko-bot@kernel.org wrote:
-> > +++ b/drivers/pci/pcie/aer.c
-> > -	/*
-> > -	 * When bus ID is equal to 0, it might be a bad ID
-> > -	 * reported by Root Port.
-> > -	 */
-> > -	if ((PCI_BUS_NUM(e_info->id) != 0) &&
-> > +	/* Some Root Ports report an invalid Error Source ID */
-> > +	if (e_info->id_valid &&
-> >  	    !(dev->bus->bus_flags & PCI_BUS_FLAGS_NO_AERSID)) {
-> >  		/* Device ID match? */
-> >  		if (e_info->id == pci_dev_id(dev))
-> 
-> [Severity: Medium]
-> As reported by Ilpo Järvinen on v1 [1]
+On Fri, 6 Nov 2026, Lukas Wunner wrote:
 
-Hallucination, this was reported by sashiko itself and Ilpo merely confirmed
-sashiko's finding.
+> On Fri, Nov 06, 2026 at 05:15:07PM +0000, sashiko-bot@kernel.org wrote:
+> > > +++ b/drivers/pci/pcie/aer.c
+> > > -=09/*
+> > > -=09 * When bus ID is equal to 0, it might be a bad ID
+> > > -=09 * reported by Root Port.
+> > > -=09 */
+> > > -=09if ((PCI_BUS_NUM(e_info->id) !=3D 0) &&
+> > > +=09/* Some Root Ports report an invalid Error Source ID */
+> > > +=09if (e_info->id_valid &&
+> > >  =09    !(dev->bus->bus_flags & PCI_BUS_FLAGS_NO_AERSID)) {
+> > >  =09=09/* Device ID match? */
+> > >  =09=09if (e_info->id =3D=3D pci_dev_id(dev))
+> >=20
+> > [Severity: Medium]
+> > As reported by Ilpo J=E4rvinen on v1 [1]
+>=20
+> Hallucination, this was reported by sashiko itself and Ilpo merely confir=
+med
+> sashiko's finding.
 
-> can treating pci_dev_id(root) == id
-> as unconditionally valid cause a false-positive match on the Root Port and
-> skip searching the subordinate hierarchy when a Root Port at 00:00.0 (such
-> as on DesignWare, Cadence, or Aardvark SoC host bridges) reports 0x0000 for
-> a downstream device error, or when a Root Port at 00:xx.y loses the bus
-> number of a downstream error source at bus:xx.y?
+I agree. I've no problem with this change after the cases we expect this=20
+impact are not among the cases sashiko came up so the comment in the=20
+changelog is enough for me.
 
-The commit message addresses this concern, it seems sashiko overlooked that
-paragraph.
+> > can treating pci_dev_id(root) =3D=3D id
+> > as unconditionally valid cause a false-positive match on the Root Port =
+and
+> > skip searching the subordinate hierarchy when a Root Port at 00:00.0 (s=
+uch
+> > as on DesignWare, Cadence, or Aardvark SoC host bridges) reports 0x0000=
+ for
+> > a downstream device error, or when a Root Port at 00:xx.y loses the bus
+> > number of a downstream error source at bus:xx.y?
+>=20
+> The commit message addresses this concern, it seems sashiko overlooked th=
+at
+> paragraph.
 
-Thanks,
 
-Lukas
+--=20
+ i.
+
+--8323328-518017135-1793986633=:2032--
