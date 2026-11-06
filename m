@@ -1,60 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.17.24
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793989816;
-	b=5LjFwfIqJ+VMerOJuxYXf965wnRoWuqrDuq5wp2gWgW+pD80lMv/o42+CAMH54QxD2vF
-	 EODP7R5QFVDVnIkyB+BViJaRii3a/zU+WylJ8MM4cGz+lVdftJk2dBucIn0KeTERN9OB8
-	 6IkXODhVyWu8UyNnKiLVltHQtuI/pOJhh4x3TCFasR3tWLpTIdnPrvZih4DOrPXM8bmc3
-	 sjHPYiy0iTHsYPbeQFkgQK7d+1PbKVrfJOk9x2AyZuf4JHXg8ZeT3oAuFc/llQN4YOpB+
-	 l11rXnHCwzIJDCzE3JQpXAfMgfuUmwWVKjecDIyoZ/kQHhjmBUcgA/JP3eiNqVYnj0g==
+	t=1793989913;
+	b=smZ8iHldscY2TT6c6xEYZ+CuU4+8mCvhMoSLdVHMiY3iXWCFCBQfK83rYzE1v8jc0bPv
+	 wfL2o1nRAxAcrDO+B65RPaqu3NF0LaaS5gwT4QpmiGoXsB3y4YNAM6SM5Ha6OAzm0qBOV
+	 79wJzyJ7em1W6rZsIm6Hj4mTAZ/xGOHGaJMxiCT0SUwv5c0vOg5fGP6za/D5J3n+fVKy4
+	 n8vahXvhW+88Z/lArdb2MIoQAgAdel/ZUohcEzPg+8TtFkveZJ3n3WN/pWhZxsQXRYR+e
+	 pvAZ91Cm+eh9V1kksv5Y88/H35Gml87Bvxo+8fS0XJHj2zQbUF71e9xfVMxwbQGmP8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793989816;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
-	bh=XeCWC0we14RDO6PsuYQS3ZgZBwQlD8qMOkqFFl7IHZY=;
-	b=PzqAPxXwpIzK/6lVn+A/iC+EzBtgCmXp4PZ+w7YnufQ5XdF4v8NrJ6SnaSDr0WHF5CpZ
-	 eL90FhwRVxnz9S8CczIAI2DHVqBylWTsvdqrhDgORe5tRti5KUUVlDB+OkiB1bYuqFwPV
-	 vO9DVsNDXyTq5q2sHuqBu/3Br1IUEiDC3OVy/zXLMUEDVno8Skn32/hFhBcsOSup/x0gF
-	 ZrDX0xyR9/QpEKyR6ihx1y5ePs/8F9nxwVQiyGXlY2uzC7QDFfXJLxf9XhqIq+Z26COZ9
-	 mue0IpiL65pM7UFVUE2dhRsNjrTSiRWqV/QOSvYSoEcp8AE4YfmeT+WBe7W0vnm+/KA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793989913;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=Y5WQ/M1+RHkh0LOByno43m5sDI3jNIMmkTA0JIJi3zQ=;
+	b=tE3OPJJ/G69BwvDkCQSqshHY4CrjLyfaXK41proRXgbHRApHnjlWZJ+UABEk1lowwfZF
+	 60i9HOfYPmJ5nqYkJAklOF6DZkl5aePYPUgm5HNSrgGFNhyKbSro4IQN9kgD8Y/OyB+79
+	 lQcGOnSKuieWeJFdNbacOBW5cvwkOFZVK6cyoA5wxEPxfQY1EKgvw1aLJY2Mx7F89JnXv
+	 GG2NB5R7wzjWy7Z8b5/coDeAfAp4bXKTvETyXQrzBlrlaITyOR28mT65Mwa7VhgA0WxvL
+	 7Dy6Wha8d5T2f7O6Q+fDf8WTYihu5DVg30HE6PVYG51262Mugn9FGi3U5zFof41uuHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oldschoolsolutions.biz;
-	spf=pass smtp.mailfrom=oldschoolsolutions.biz;
-	dkim=pass header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.a=rsa-sha256 header.s=s1-ionos header.b=LK1bBsOY;
-	arc=none smtp.remote-ip=212.227.17.24
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3319B606A32E
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 18:30:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3319B606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=VzEAUNRD;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE2C606A329
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 18:31:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5DE2C606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.a=rsa-sha256 header.s=s1-ionos header.b=LK1bBsOY
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1793989806; x=1794594606;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=XeCWC0we14RDO6PsuYQS3ZgZBwQlD8qMOkqFFl7IHZY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=LK1bBsOYu4BGhHHExf6Yb7mxO64hLTLN1qQSuTwB4Alx5MS3hL2QA+lyjuY3DQvY
-	 yGTTH4icF4ObAOjt74OtjmrfabyRDh2hjS9IhoLbCyw0eErvJKGVwZ9FWi2beD6I3
-	 ECUqqVhkeDz0nxu8X5tIKUQBOmQ4w80M7ionKqX6fUfykIuHFovi5EQvkm1AUzZ6E
-	 QTCcz9VtyYG0R51uCyL8jACaqE4/3PyBkQE76ixpHHNWJCpJAjLL6bKtRjTdKt8zg
-	 oYA/4Yh4cxH929glho3wOSOrvJd8OMYqpNaENTQnRBk/7Bdon7yDfubY9//6E/RAS
-	 OmmYam+IZv+FxMRH+Q==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue108
- [212.227.15.183]) with ESMTPSA (Nemesis) id 1MDQmW-1xEypU2o1m-00Fcgd; Fri, 06
- Nov 2026 19:30:06 +0100
-Message-ID: <1c9b4722-0466-4c74-ac86-4d0f61c350a9@oldschoolsolutions.biz>
-Date: Fri, 6 Nov 2026 19:30:06 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=VzEAUNRD
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 78C001650;
+	Fri,  6 Nov 2026 10:31:48 -0800 (PST)
+Received: from [10.57.91.130] (unknown [10.57.91.130])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 069A33F673;
+	Fri,  6 Nov 2026 10:31:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793989911; bh=3Dn9EDzzMxdd+CgUKLKWiOQ+dJK8ULASfykEi2qFJVE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VzEAUNRDKEfyhDli+MoEgjFcbKO48IOqGNw+ErE6LqW+IghrqezO6h5A9xbKfPYqA
+	 4AsFsk9b1Hf2yY6GpsYhQ6tK+j99nQVxInfqWQlfSZ1tAPyYJbYZ2vz9Ra/tekBBNF
+	 HPhHvG6oSQaKmM6DefzOfbDuAg2Z694BGw4Xqdq0=
+Message-ID: <20ab965b-bbe0-4550-be16-24e104e2dac4@arm.com>
+Date: Fri, 6 Nov 2026 18:31:31 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,195 +54,89 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] power: sequencing: pcie-m2: stop requiring subsystem
- IDs for WCN6855/WCN7850
+Subject: Re: [PATCH v4 1/4] perf/arm_cspmu: Add Arm system PMU
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-References: <20261106-pwrseq-bt-subsystem-v1-1-11fb09f63c93@oldschoolsolutions.biz>
- <sashiko-outbox-201312@kernel.org>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <sashiko-outbox-201312@kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1793986672.git.robin.murphy@arm.com>
+ <2cf79599d522539440a53adb4221dfc5a4d7b9e6.1793986672.git.robin.murphy@arm.com>
+ <sashiko-outbox-202006@kernel.org>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-202006@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lSJgv4tmDjZoe6kN573hLoabpWwG4Q52LPY+pON8+mtV0OZBQWi
- 53fS+oIc6t3KMqxstnrxtw1V1V8SkjFUotXWNhrB0xY+A2suc1eJXSGl3YT8NT7FQ78NI9x
- LlvNq8J4S5KO30PPt/WKzQAmagyURguD1y/GU4AS0ZbinXiTMaKqR/APDZGLAkIVwussYgN
- WCkJRzSZTe4hO0pnVnaug==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:CvfCFQMXMbI=;Ynf9fkQgEG/QDEC9oTRKvuN2mbB
- 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
+Content-Transfer-Encoding: 7bit
 
-Hi sashiko-bot,
-
-On 11/6/26 12:26, sashiko-bot@kernel.org wrote:
+On 2026-11-06 6:17 pm, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [High] pwrseq: pcie-m2: bare PCI_DEVICE() creates bogus serdev on
->    USB-BT cards
+> - [Medium] perf/arm_cspmu: arm_cspmu_init_impl_ops() defers probe when
+>    ARM_SYSTEM_PMU=n
 > --
->
-> commit 651d16502b81077112cba212f5fb84dc03306321
-> Author: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->
-> power: sequencing: pcie-m2: stop requiring subsystem IDs for WCN6855/WCN=
-7850
->
-> This commit replaces the subsystem-specific PCI_DEVICE_SUB() entries for
-> Qualcomm WCN6855 (0x1103) and WCN7850 (0x1107) in pwrseq_m2_pci_ids[] wi=
-th
-> bare PCI_DEVICE() entries.
->
->> diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/=
-sequencing/pwrseq-pcie-m2.c
->> index 56c5d51293c10..72c721149dfae 100644
->> --- a/drivers/power/sequencing/pwrseq-pcie-m2.c
->> +++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
->> @@ -217,15 +217,9 @@ static const struct pci_device_id pwrseq_m2_pci_id=
-s[] =3D {
->>   	  .driver_data =3D (kernel_ulong_t)"nxp,88w8987-bt" },
->>   	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1103, PCI_VENDOR_ID_QCOM, 0x0=
-108),
->>   	  .driver_data =3D (kernel_ulong_t)"qcom,qca2066-bt" },
->> -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1103, PCI_VENDOR_ID_FOXCONN, 0=
-xe105),
->> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x1103),
->>   	  .driver_data =3D (kernel_ulong_t)"qcom,wcn6855-bt" },
->> -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1103, PCI_VENDOR_ID_QCOM, 0x33=
-7e),
->> -	  .driver_data =3D (kernel_ulong_t)"qcom,wcn6855-bt" },
->> -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_QCOM, 0x33=
-7c),
->> -	  .driver_data =3D (kernel_ulong_t)"qcom,wcn7850-bt" },
->> -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_LENOVO, 0x=
-e0e9),
->> -	  .driver_data =3D (kernel_ulong_t)"qcom,wcn7850-bt" },
->> -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_FOXCONN, 0=
-xe0ee),
->> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x1107),
->>   	  .driver_data =3D (kernel_ulong_t)"qcom,wcn7850-bt" },
->>   	{ } /* Sentinel */
->>   };
-> [Severity: High]
-> Won't matching bare 0x1103 and 0x1107 device IDs reintroduce the regress=
-ion
-> fixed by a39ac4651e3b ("power: sequencing: pcie-m2: Match WCN6855 and
-> WCN7851 UART BT variants by subdevice ID") whenever a USB-BT M.2 card is
-> plugged into a socketed M.2 Key E slot?
->
-> The pcie-m2-e-connector node describes the physical M.2 slot wiring on t=
-he
-> host board, not the card installed in it.  Boards with a general-purpose=
- M.2
-> Key E socket (such as arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts) wire t=
-he
-> SoC UART to the slot and define port@3 unconditionally in their static D=
-T.
->
-> When a USB-BT WCN6855 or WCN7850/WCN7851 card is inserted into such a sl=
-ot,
-> pwrseq_pcie_m2_create_serdev() -> pwrseq_pcie_m2_create_serdev_one() see=
-s
-> port@3 on ctx->dev and matches 0x1103 or 0x1107 in pwrseq_m2_pci_ids[]. =
- It
-> then creates a bogus bluetooth OF node and UART serdev device, causing
-> hci_qca to bind alongside btusb and fail with -ETIMEDOUT in qca_setup() =
-on
-> the unconnected UART lines.
->
-> Also, the commit message notes that Lenovo T14s Gen 6 (17aa:e0e9) is mis=
-sing
-> from the table, but 58a003302481 ("power: sequencing: pcie-m2: Add Lenov=
-o
-> ThinkPad T14s gen6 WCN7850 subsystem PCI ids") already added that entry
-> above.
-Well. It was missing upstream when I made the experience on my T14s G6.=20
-Having a whitelist for every subsystem that is allowed in such a generic=
-=20
-driver is not the best design decision, IMO.
-I took another look, this driver is loaded when it is a compatible in a=20
-device tree. Usually this means the hardware got described, and you can=20
-draw conclusions from the device tree on what is supported. For the=20
-conflicting case, the device tree would need to describe the USB and the=
-=20
-serial port on the e-key connector. When you have a connector wired up=20
-this way, the driver would need directions on what to choose, for=20
-instance by providing the subsystem IDs as base for a decision. These=20
-are the special cases, though. For most boards describing the uart on=20
-the connector would suffice to choose the right, mostly generic driver=20
-for WCN6855 and WCN7850. So it would be better to have the driver detect=
-=20
-the "both ports are defined in the dt" case and=C2=A0 not create a serdev:
+> 
+> commit ae4570e49b496427e88dd55c46f9506b33a8b68e
+> Author: Robin Murphy <robin.murphy@arm.com>
+> 
+> perf/arm_cspmu: Add Arm system PMU
+> 
+> This commit adds the arm_syspmu backend module to support an additional
+> 64-bit event filter register (PMEVFILT3R) on Arm system PMUs with product
+> ID 0x9c3.
+> 
+>> diff --git a/drivers/perf/arm_cspmu/arm_cspmu.c b/drivers/perf/arm_cspmu/arm_cspmu.c
+>> index 912f03ce3ef5f..9f298ea1a9745 100644
+>> --- a/drivers/perf/arm_cspmu/arm_cspmu.c
+>> +++ b/drivers/perf/arm_cspmu/arm_cspmu.c
+>> @@ -358,6 +358,13 @@ static struct arm_cspmu_impl_match impl_match[] = {
+>>   		.module		= NULL,
+>>   		.impl_init_ops	= NULL,
+>>   	},
+>> +	{
+>> +		.module_name	= "arm_syspmu",
+>> +		.pmiidr_val	= ARM_CSPMU_IMPL_ID_ARM,
+>> +		.pmiidr_mask	= PMIIDR_IMPLEMENTER,
+>> +		.module		= NULL,
+>> +		.impl_init_ops	= NULL,
+>> +	},
+>>   	{
+>>   		.module_name	= "ampere_cspmu",
+>>   		.pmiidr_val	= ARM_CSPMU_IMPL_ID_AMPERE,
+> 
+> [Severity: Medium]
+> Does adding an unconditional impl_match[] entry for ARM_CSPMU_IMPL_ID_ARM
+> cause arm_cspmu_init_impl_ops() to defer probing indefinitely when
+> CONFIG_ARM_SYSTEM_PMU is disabled?
+> 
+> Previously, CoreSight PMUs with Arm's implementer ID did not match any
+> entry in impl_match[] and probed using the generic ops.  With this entry
+> present, arm_cspmu_init_impl_ops() requires the arm_syspmu module to
+> register match->impl_init_ops:
+> 
+> drivers/perf/arm_cspmu/arm_cspmu.c:arm_cspmu_init_impl_ops() {
+>      ...
+> 		if (match->impl_init_ops) {
+>      ...
+> 		} else {
+> 			request_module_nowait(match->module_name);
+> 			ret = dev_err_probe(cspmu->dev, -EPROBE_DEFER,
+> 					    "Waiting for module %s to load\n",
+> 					    match->module_name);
+> 		}
+>      ...
+> }
+> 
+> Because CONFIG_ARM_SYSTEM_PMU has no default in Kconfig, existing configs
+> with CONFIG_ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU enabled will have
+> CONFIG_ARM_SYSTEM_PMU=n, leaving every Arm-implemented CoreSight PMU
+> (including non-0x9c3 devices where arm_syspmu_init_ops() is a no-op)
+> permanently stuck in -EPROBE_DEFER.
 
-static bool pwrseq_pcie_m2_bt_ambiguous(struct device *dev)
-{
- =C2=A0 =C2=A0 bool has_usb=C2=A0 =3D pwrseq_pcie_m2_check_remote_node(dev=
-, 2, 0, "usb");
- =C2=A0 =C2=A0 bool has_uart =3D pwrseq_pcie_m2_check_remote_node(dev, 3, =
-0, "serial");
+Sure, let me know what other Arm Ltd. PMU implementations those are, and 
+I'll get back to you with how much I care...
 
- =C2=A0 =C2=A0 return has_usb && has_uart;
-}
+Plus there's nothing here that's any different from the existing Ampere 
+and NVIDIA cases. Perhaps we could #ifdef the impl_match entries if 
+anyone really thought it mattered, but that would be a general matter 
+for the arm_cspmu framework itself, not this patch.
 
-Then in the create path (and before registering the notifier):
-
-if (pwrseq_pcie_m2_bt_ambiguous(ctx->dev)) { dev_info(ctx->dev,=20
-"connector describes both USB and UART BT; refusing automatic serdev=20
-creation\n"); return 0; }
-
-For the rare board that is wired for both and still wants automatic=20
-selection, an explicit bt-interface property (or a fall-back to the=20
-subsystem-ID table) can be added later. That keeps the subsystem catalog=
-=20
-out of the common path.
-
-Using subsystem IDs for the ambiguous case is possible, but it does=20
-require separate driver data (or at least separate table entries) for=20
-each known UART-BT SKU, which is exactly the growing whitelist I am=20
-trying to avoid for the normal case. The port check handles the common=20
-case without it; the whitelist only becomes necessary again if we want=20
-zero-DT-change behaviour on dual-wired sockets.
-
-with best regards
-
-Jens
-
+Thanks,
+Robin.
