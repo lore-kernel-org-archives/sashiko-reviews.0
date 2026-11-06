@@ -1,95 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793966632;
-	b=uZdoceFBO1hbuSvSLR6Vstv1Y+3+hZtwUfRPQzCdO8pUhqVgNX2NT0XhlgooCMD3tQSm
-	 bd6a5kPHgLdU5+Of7haq0fExvI+dF5KZiiv+yP+PS9CIlaJ5oJi56zMmImrENUtDVaCj3
-	 mkQC3MLUV6TuDf0pfxYalxo9EAB/aJOWHDKizbKX+Jq8+2zuqmXx4BIP7ANg7ZfdVTT33
-	 ELWHg2oE/SUENoGbI2qTg6ED0plJ4tEs2s05u1s3ZW2IGfnzfZlfoS2v7vpaf1k4OaIta
-	 fq8DKvRdNbPMDxfv0poRRLsKUPpdSXGKmsLUuLa5o8C/qowiIy1Nl6hdCShOnUkWODg==
+	t=1793967399;
+	b=BfIxxSylxVeHF5shyvuBD7KzInOqCZ9aCAa5aLXP821uJ8orelFmSwkv3TrFnRUb4IYS
+	 LTgOv05ZMcz+y3qnUESO9dX+2p1jMuPgPYCXaywON+GaNNEulIAZhsTxXVtUNGt+ZPs7M
+	 crQp7wn3+J3By0jB/idI6d+6q6hKQ0lDVG2WKObqAnDNV0fSQ9/fnrQnmO3JUqGFVbm82
+	 m9A58fKpLsJCprvQZY3TLp+Phj2kGY/7qB7ZMUWoc5SjTPIM3ExEGi95EdQr2u7L5dz7T
+	 UYy3XPN8ke6fNskU1NcBryBaOR0M9daNyczIYAFTIB7Xc0NdumJL+CAs48qhTUS4iGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793966632;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:
-	 X-Google-Original-Message-ID:Date:From:To:Cc:Subject:References:
-	 MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=+3ys0FdSf1xCr+CCWg4Cx51eRM3hYz8a1czENaT0wUU=;
-	b=NBzcze7nGvUGj4Ru1rwgn22f0R9w+bbTY100F8L3S/j8t6voDstkjDWpf4gKMOAw4z2N
-	 IUN++N3HFX4aFgT1HnjO8xLwySvv6BsIwOUXK/JnYA57DxPDRSdoo6LLUZ8gVvxi0I1LF
-	 Hn/U/kAOGYHvrQRn59elh1vuCnZWDBX0PQ0P9ffbuprKrr+uTO7uBj+iPD9cueoHzBZ12
-	 03CG06oDCHM6JVXXTledi1rStU+El21mC9+YAwiwSBgxS3Og+nxXKN8cBHRcsUQ4kDb17
-	 8rG4de+p1OqVw4c94ibXlWasaVeTu9KbnScqAe+X1MgyL7uI3WHDb5+8unbvyn4O2kA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793967399;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
+	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=ko2SHT9WKvfumTuARCO9td57uzBOV1aZhASS9MQ0K20=;
+	b=UIeAZbetFi8i6IvyP0/6M6XPRJvhysiC5hSBILtw+XPhGCj5UQIB7VvweNiXv8EUJ8H+
+	 dyGD4ACooV/sgn6uyYYTk99/TcvLRmPObA7UheTXKGBUr5VyST16GDXZAjbywhM9Iby6m
+	 xUMT/KrZpei6VX1zSqh/gmeQcNhQdH/v50LRSceQrTH/vkKFjsKJaHbRAvxV/im8+NRg5
+	 aNku5i3N120ycIhNwMZhbeSO3K3vQMg9AzaiUCUg5y7HXic12XnrJnoUAU1aJijHyvZo1
+	 I6bgPqj1bUWIzLaVgl3GfG7InGgz25B4KUXGVo2HnyzGnbJI4GnI1GCDP/HNVJnw99Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="cp/8kYUN";
-	arc=none smtp.remote-ip=209.85.221.46
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Z7X2ydW5;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776EA606D83E
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 12:03:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 776EA606D83E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E2E606D804;
+	Fri,  6 Nov 2026 12:16:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99E2E606D804
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cp/8kYUN
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48e46e449e8so362192f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 06 Nov 2026 04:03:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793966630; x=1794571430; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:subject:cc:to:from:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+3ys0FdSf1xCr+CCWg4Cx51eRM3hYz8a1czENaT0wUU=;
-        b=cp/8kYUNzxML5Lm8zQlJcaQjSjFHc3pjS3STozP31mCuJaRuMQq2zQUPA2pxBk7Mkb
-         IcLHFx4sWUNyTV1oOpWe7RArNFNeJED/PiJg/arkVfL1ideQ2ArMlqB/ISq/FAFCpr1G
-         1F8pR15aFnW15Py83+fbFdAKNnO1lADq3GCvAY11QQiHP4hTIW57TEHWTsgQ2fuwGWME
-         Zu8Syf+dByLEFUY1W6ARx4+eOInhKYTJ+C8aZgpzZzAyysyeBp+MYclF4+Bn9DfrEp5d
-         LIiVOww0KlcnICiu2XVqjNrMIkXS+cum/OpONdj+NY6BsGeJOWUjW1/7CzXGbwmuj/OC
-         RGFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793966630; x=1794571430;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:subject:cc:to:from:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+3ys0FdSf1xCr+CCWg4Cx51eRM3hYz8a1czENaT0wUU=;
-        b=V1IKmp/8GtKyx+GUWsUF6g8KfPOcUgpl8vdmL/WUzkLsz0/dTzRVxLUWMiNSCIV1hB
-         5msNwSRuzMmMzY4siCMW2p+Ubh5JJm1Z8pgaURVNsclZOMc/yt36g0i/EcEpBRXr2xpi
-         NZ9wnLqrlLXINcR3FDzkqO69hkJpwBMAf3fSZI/SyQmMkulIcphg6w9FPLTJCKtW5GBn
-         xF5GNZtS1qE4S5WFYU8dk6ak8JMy6iD0c6P284XUVwqRA7g6AMaoe8kOUqe3aHDZ9r4x
-         LYzxLklB1OIfaKSBvtswT2NLupXJHkOsOh+HMoY3AVRSbeDe2N4NNYNcQ9Vgqv9z0PBz
-         9kmQ==
-X-Gm-Message-State: APuU4Z/84dR4iftX5I2P/3h8ee6BWYVWK4HE6iOVLZcgdSgY/LjD4WBr
-	FCPDWK9a5BCHCn+vNBUSEHbGfdLQiVTX9xShEHJOagluu1bNtJZvC4nkRYv3gg==
-X-Gm-Gg: AYBFou0ZIHMxRpnlGtuzRboObus+QwxvjRQrZ2YF/cVGdbLJw5kaHHk0qZPvH8yWxo+
-	qujJJxtYz1vR16fOhTlSz5mZZjI2YWy2QhLjLV3tw6UWj8BiXNHgkBPTSE2suSCFjHfToto44Na
-	EIm8yW36zHrN13fNNFcCTqt4Gjc+HAyv2ZSssAi7/V1ttY3JXhwZdkeZmQRJEZlUFFBHfo5naHc
-	dYzWBhrlblWk1OYpltgREPVGiAglKPeTVvc18aetu6fvWqp5uwZkqWMFtnhU5SbGBglVTTboxcU
-	p0ft0+FD29JUpIB8R1HpQw8fnqXFU3/t6dpWURbahZVArxKp+pUeypBR7oAHPrD/XIAUABfim8n
-	wSBaMBjFPvXZmGnJKmiM85gv7VWBtTozji23nkdLS1Jy/agyKTSDjazdxjbCwOuXbj3QqGBo43G
-	1m13S/mvMwAcBSWNhJH2vVnY/siv9+I63y42SItB4hcmZIm0qlVneO+CiE+XqQzr7+Ko6aXrfnW
-	nIKyqpUb5fR/FvYmG4R5tS7KncckWFEiUblq++D9FYusiFOv7XROPrNf9FK6oxK5DvDWQ0XmioC
-	yQfNtfF8kknOzJpsLG5Q+CVz61nRAu/EzaByksy8y+zkFBu7+sNqutMml5XjtMbiPVghdURpqAX
-	MjU4afn9C75qPhyA=
-X-Received: by 2002:a05:6000:26c5:b0:48b:e50:714e with SMTP id ffacd0b85a97d-4927730ed37mr4922729f8f.36.1793966629679;
-        Fri, 06 Nov 2026 04:03:49 -0800 (PST)
-Received: from Ansuel-XPS. (93-34-90-148.ip49.fastwebnet.it. [93.34.90.148])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d3d609c8sm3590824f8f.6.2026.11.06.04.03.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 04:03:49 -0800 (PST)
-Message-ID: <6aedc225.21bfadee.6a467.f4d5@mx.google.com>
-X-Google-Original-Message-ID: <au3CIhBF7z593ZpE@Ansuel-XPS.>
-Date: Fri, 6 Nov 2026 13:03:46 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-clk@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] clk: en7523: add support for .set_rate for en7581
-References: <20261106113227.182324-1-ansuelsmth@gmail.com>
- <20261106113227.182324-3-ansuelsmth@gmail.com>
- <sashiko-outbox-201354@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Z7X2ydW5
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A6Ai2rB2142948;
+	Fri, 6 Nov 2026 12:16:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=ko2SHT
+	9WKvfumTuARCO9td57uzBOV1aZhASS9MQ0K20=; b=Z7X2ydW55KAdZXxKIr+R7z
+	YBj25hFq42zQOfZCKJSPBQbduJYexjgpTM5+dn67XH9ymr3O5dgDd+4Z0hRnrclV
+	d4w5K6laOQ+GtibKwsVxFKUO+2P5VOIIIeQjsiDomqLQsMBxBnHhQMVrwznam2m2
+	i7SRkU48hxPVbkRvESlERR1uYjxidFmW0uvj7eAqo6vGjwBjVCDNzqXDPc/+Kt3a
+	dQj/CbsGgqWMmGxDZc9cFFlxWY2B2/i1v/ddIkLJOqlVW8oQNMHS73Ds4Ydm0bFk
+	9IoutLJ9zW8tnt5Ed/RT2vXvxHEuP3KZ9HJcBA4LY/zdpAWafhcpItg1xh0RcpIA
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hs3r9439u-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 06 Nov 2026 12:16:37 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6A6AnsDE3260598;
+	Fri, 6 Nov 2026 12:16:35 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hqv1v70cw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Nov 2026 12:16:35 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6A6CGYUI23069330
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 6 Nov 2026 12:16:34 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2CAF858063;
+	Fri,  6 Nov 2026 12:16:34 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7B4CB5805A;
+	Fri,  6 Nov 2026 12:16:33 +0000 (GMT)
+Received: from [9.61.114.69] (unknown [9.61.114.69])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  6 Nov 2026 12:16:33 +0000 (GMT)
+Message-ID: <1748fc92-1915-43ae-b061-b4bbcb9dffd6@linux.ibm.com>
+Date: Fri, 6 Nov 2026 07:16:33 -0500
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,162 +86,223 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-201354@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 06/14] s390/vfio-ap: Transition guest migration state
+ from STOP to STOP_COPY
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        kvm@vger.kernel.org
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20261102151604.2150055-1-akrowiak@linux.ibm.com>
+ <20261102151604.2150055-7-akrowiak@linux.ibm.com>
+ <sashiko-outbox-193746@kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <sashiko-outbox-193746@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=O86sLx9W c=1 sm=1 tr=0 ts=6aedc525 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=VYjU2es3atCwa4kvyGUA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: Jwszwc9_0OcRDmsJwAWAPWqSJRr-0ACH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA0OCBTYWx0ZWRfX1XxODKdn9Eeo
+ TI3Nk69SSSz+BVw295VaW2u8XpgdRXpbIwEbm5vcRjru/hutlLr+/zoE8IV7X1jnB5LXtgSqo6j
+ WH4DS/dfAmoTFr9ZdblZNbTTsS47gFolZHqyIM69HuYKsR8MMx4phyU/KyRjL1wWI2CSqPSaWhL
+ UA9hedhB8GOMVcXVbZcUAGn2yLw0mVKQPYUb3D/yrbUVTQ/95A8wzj9QRK3LYfvlnaMo7YlyW8f
+ YZi3yT9nj9h4ojRbkSteHqJ0whZd25pZMIOCJgvlkOUGMsYtHj9cWhfZGW6/EHkyKE3VAnYfaHJ
+ bhgnXGFU7Lo9+xPaAzhaXRZTsyudNkebmstRE/2BAzv+/Kteaka8qaLe4vYhQYA6d/ScCniWYsx
+ ApOYu1r2VoBUmIvGchobnnhNevsurOPYXasiQSWXJB7R398hPHyC7ql1qEYdNaSKXSWcjfOwuXC
+ UzmBNcRogv7j111536A==
+X-Proofpoint-GUID: Jwszwc9_0OcRDmsJwAWAPWqSJRr-0ACH
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA0OCBTYWx0ZWRfXwtULQKu5tsvp
+ 0WgDTFmcdzR+JUuomPGLBTrCRtEj20gE4p9mZA7lIL6Jw2ZT5l7lZY9w6bwC2+fqdCU3mWyuwvu
+ Kht6KtQ2ZGDNksUrTBcZeco2e1/SP8s=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-06_03,2026-11-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611060048
 
-On Fri, Nov 06, 2026 at 11:45:13AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] clk: en7523: division by zero in divider_get_val() when rate
->   is 0
-> - [Low] clk: en7523: misuse of dev_err_probe() in runtime
->   en7581_set_rate()
+
+
+On 11/2/26 11:18 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] s390/vfio-ap: use-after-free in vfio_ap_release_mig_file() after device close
+> - [Critical] s390/vfio-ap: use-after-free of mig_file in vfio_ap_release_mig_file()
 > --
-> 
-> commit 21c9a3ba438d14108d5599a5785e71997f1e9fbe
-> Author: Christian Marangi <ansuelsmth@gmail.com>
-> 
-> clk: en7523: add support for .set_rate for en7581
-> 
-> This commit adds clock divisor tables and implements .determine_rate and
-> .set_rate callbacks for the Airoha EN7581 SoC clocks.
-> 
-> > diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
-> > index 6640e814d36a4..db7447be31c33 100644
-> > --- a/drivers/clk/clk-en7523.c
-> > +++ b/drivers/clk/clk-en7523.c
-> 
+>
+> commit d4f19cfbfd83130bd2529cc5a305e86f834b23bb
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: Transition guest migration state from STOP to STOP_COPY
+>
+> This commit implements the migration state transition from
+> VFIO_DEVICE_STATE_STOP to VFIO_DEVICE_STATE_STOP_COPY by opening an
+> anonymous file stream for reading the guest's AP configuration.
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
+>> index 8e4e04e039658..48028b12b26f9 100644
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
 > [ ... ]
-> 
-> > @@ -775,11 +864,148 @@ static unsigned long en7581_recalc_rate(struct clk_hw *hw,
-> >  		return 0;
-> >  	}
-> >  
-> > -	return rate / en7523_get_div(desc, val);
-> > +	if (desc->div_bits) {
-> > +		val >>= desc->div_shift;
-> > +		val &= (1 << desc->div_bits) - 1;
-> > +
-> > +		rate = divider_recalc_rate(hw, rate, val,
-> > +					   desc->div_table,
-> > +					   desc->div_flags,
-> > +					   desc->div_bits);
-> > +	}
-> > +
-> > +	return rate;
-> > +}
-> > +
-> > +/*
-> > + * Simulate rate with every divisor supported
-> > + * 1. Search the divisor for the requested rate
-> > + * 2. Simulate the final rate with the new divisor
-> > + */
-> > +static unsigned long en7581_get_div_for_rate(struct clk_hw *hw,
-> > +					     unsigned long rate,
-> > +					     unsigned long parent_rate,
-> > +					     const struct en_clk_desc *desc,
-> > +					     int *div_val)
-> > +{
-> > +	*div_val = divider_get_val(rate, parent_rate, desc->div_table,
-> > +				   desc->div_bits, desc->div_flags);
-> > +	if (*div_val < 0)
-> > +		return 0;
-> > +
-> > +	return divider_recalc_rate(hw, parent_rate, *div_val,
-> > +				   desc->div_table, desc->div_flags,
-> > +				   desc->div_bits);
-> > +}
-> > +
-> > +static int en7581_get_vals_for_rate(struct clk_hw *hw,
-> > +				    const struct en_clk_desc *desc,
-> > +				    unsigned long rate,
-> > +				    u32 *base_val, u32 *div_val)
-> > +{
-> > +	struct device *dev = clk_hw_get_dev(hw);
-> > +	unsigned long parent_rate, tmp_rate;
-> > +	int tmp_base_val = 0;
-> > +	int tmp_div_val = 0;
-> > +
-> > +	if (!desc->base_bits && !desc->div_bits)
-> > +		return -EINVAL;
-> 
-> [Severity: Medium]
-> Can en7581_get_vals_for_rate() pass rate == 0 into
-> en7581_get_div_for_rate() -> divider_get_val()?
-> 
-> Calling clk_round_rate(clk, 0) or clk_set_rate(clk, 0) forwards
-> req->rate == 0 to en7581_determine_rate(), and divider_get_val() divides
-> by rate without checking for zero:
-> 
-> drivers/clk/clk-divider.c:divider_get_val() {
-> 	unsigned int div, value;
-> 
-> 	div = DIV_ROUND_UP_ULL((u64)parent_rate, rate);
->     ...
+>> @@ -143,6 +144,62 @@ static void vfio_ap_release_resuming_file(struct vfio_ap_migration_data *mig_dat
+>>   	mig_data->resuming_mig_data_complete = false;
+>>   }
+>>   
+>> +static ssize_t
+>> +vfio_ap_stop_copy_read(struct file *filp, char __user *buf, size_t len,
+>> +		       loff_t *pos)
+>> +{
+>> +	/* TODO */
+>> +	return -EOPNOTSUPP;
+>> +}
+>> +
+>> +static int vfio_ap_release_mig_file(struct inode *file_inode, struct file *filp)
+>> +{
+>> +	struct vfio_ap_migration_file *mig_file = filp->private_data;
+>> +
+>> +	/*
+>> +	 * The mig_file (and by extension mig_file->matrix_mdev) is tied to
+>> +	 * migration FD lifetime (see vfio_ap_open_file_stream() function) to
+>> +	 * guarantee that the matrix_mdev remains valid for every read/write
+>> +	 * operation. Let's drop it here since the migration FD is being
+>> +	 * released.
+>> +	 */
+>> +	vfio_device_put_registration(&mig_file->matrix_mdev->vdev);
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct file_operations vfio_ap_stop_copy_fops = {
+>> +	.owner = THIS_MODULE,
+>> +	.read = vfio_ap_stop_copy_read,
+>> +	.release = vfio_ap_release_mig_file,
+>> +};
+>> +
+>> +static struct file *vfio_ap_open_file_stream(struct vfio_ap_migration_file *mig_file,
+>> +					     const struct file_operations *fops,
+>> +					     int flags)
+>> +{
+>> +	struct file *filp;
+>> +
+>> +	lockdep_assert_held(&matrix_dev->mdevs_lock);
+>> +
+>> +	/*
+>> +	 * Pin the vfio_device registration so that matrix_mdev cannot be freed
+>> +	 * while the migration FD is still open. The matching put is in
+>> +	 * vfio_ap_release_mig_file().
+>> +	 */
+>> +	if (!vfio_device_try_get_registration(&mig_file->matrix_mdev->vdev))
+>> +		return ERR_PTR(-ENODEV);
+>> +
+>> +	filp = anon_inode_getfile("vfio_ap_mig_file", fops, mig_file, flags);
+>> +	if (IS_ERR(filp)) {
+>> +		vfio_device_put_registration(&mig_file->matrix_mdev->vdev);
+>> +		return filp;
+>> +	}
+>> +
+>> +	stream_open(filp->f_inode, filp);
+>> +
+>> +	return filp;
+>> +}
+>> +
+>>   static struct file *
+>>   vfio_ap_transition_to_state(struct ap_matrix_mdev *matrix_mdev,
+>>   			    enum vfio_device_mig_state new_state)
+>> @@ -156,10 +213,23 @@ vfio_ap_transition_to_state(struct ap_matrix_mdev *matrix_mdev,
+>>   	dev_dbg(matrix_mdev->vdev.dev, "%s: %d -> %d\n", __func__, cur_state,
+>>   		new_state);
+>>   
+>> +	/*
+>> +	 * Begins the process of saving the vfio device state by creating and
+>> +	 * returning a streaming data_fd to be used to read out the internal
+>> +	 * state of the vfio-ap device on the source host.
+>> +	 */
+>>   	if (cur_state == VFIO_DEVICE_STATE_STOP &&
+>>   	    new_state == VFIO_DEVICE_STATE_STOP_COPY) {
+>> -		/* TODO */
+>> -		return ERR_PTR(-EOPNOTSUPP);
+>> +		struct vfio_ap_migration_file *mig_file = &mig_data->stop_copy_mig_file;
+>> +		struct file *filp = vfio_ap_open_file_stream(mig_file,
+>> +							     &vfio_ap_stop_copy_fops,
+>> +							     O_RDONLY);
+>> +		if (IS_ERR(filp))
+>> +			return ERR_CAST(filp);
+>> +
+>> +		mig_file->filp = filp;
+>> +
+>> +		return filp;
+>>   	}
+> [Severity: Critical]
+> Can this trigger a use-after-free of mig_file in vfio_ap_release_mig_file()
+> (and in vfio_ap_stop_copy_read() in the subsequent patch) if the VFIO device
+> file descriptor is closed while the migration stream file descriptor remains
+> open?
+>
+> In vfio_ap_transition_to_state(), mig_file points to
+> &mig_data->stop_copy_mig_file, which is embedded inside struct
+> vfio_ap_migration_data:
+>
+> struct vfio_ap_migration_data {
+> 	enum vfio_device_mig_state	mig_state;
+> 	bool				resuming_mig_data_complete;
+> 	struct vfio_ap_migration_file	resuming_mig_file;
+> 	struct vfio_ap_migration_file	stop_copy_mig_file;
+> };
+>
+> vfio_ap_open_file_stream() stores mig_file in filp->private_data and calls
+> vfio_device_try_get_registration(&mig_file->matrix_mdev->vdev). However,
+> vfio_device_try_get_registration() only pins struct vfio_device (and thus
+> matrix_mdev) against unregistration; it does not prevent vfio_df_close()
+> from invoking vfio_ap_mdev_close_device() when the VFIO device FD is closed
+> (which also happens during normal process exit when close_files() closes the
+> lower-numbered VFIO device FD before the higher-numbered migration data FD).
+>
+> When the VFIO device FD is closed, vfio_ap_mdev_close_device() calls
+> vfio_ap_release_migration_data(), which destroys stop_copy_mig_file.lock and
+> frees matrix_mdev->mig_data:
+>
+> void vfio_ap_release_migration_data(struct ap_matrix_mdev *matrix_mdev)
+> {
+> 	...
+> 	vfio_ap_release_mig_files(matrix_mdev);
+> 	mutex_destroy(&matrix_mdev->mig_data->stop_copy_mig_file.lock);
+> 	mutex_destroy(&matrix_mdev->mig_data->resuming_mig_file.lock);
+> 	kfree(matrix_mdev->mig_data);
+> 	matrix_mdev->mig_data = NULL;
 > }
-> 
-> Rejecting !rate at the start of en7581_get_vals_for_rate() would avoid a
-> division by zero.
+>
+> When the migration stream FD is subsequently closed (or read),
+> vfio_ap_release_mig_file() retrieves mig_file from filp->private_data and
+> dereferences mig_file->matrix_mdev from the freed mig_data allocation (and
+> if the VFIO device was reopened in the meantime, a new mig_data is allocated
+> while the old migration FD still points to the freed mig_data instance).
+>
+> Should filp->private_data point to matrix_mdev (or should mig_file/mig_data
+> lifetime be tied to the open migration FDs) so that releasing or reading the
+> migration FD does not dereference freed memory?
+
+Confirmed. This is the same mig_data lifetime bug described in the 
+review for
+03/14.
+
+As you noted, vfio_device_try_get_registration() protects the struct 
+vfio_device
+and matrix_mdev against unregistration, but did not protect mig_data 
+from being
+freed when vfio_ap_mdev_close_device() was invoked on device FD close.
+
+In v12, this will be resolved this by tying the lifetime of mig_data
+directly to the vfio_device lifetime
+
 >
 
-Protective coding and I'm surprised divider_get_val doesn't handle such
-case... Anyway I will add this extra check whatever...
- 
-> [ ... ]
-> 
-> > +static int en7581_set_rate(struct clk_hw *hw, unsigned long rate,
-> > +			   unsigned long parent_rate)
-> > +{
-> > +	struct en_clk *en_clk = container_of(hw, struct en_clk, hw);
-> > +	const struct en_clk_desc *desc = en_clk->desc;
-> > +	struct device *dev = clk_hw_get_dev(hw);
-> > +	struct regmap *map = en_clk->map;
-> > +	u32 base_val, div_val;
-> > +	u32 reg, val, mask;
-> > +	int err;
-> > +
-> > +	err = en7581_get_vals_for_rate(hw, en_clk->desc, rate,
-> > +				       &base_val, &div_val);
-> > +	if (err)
-> > +		return err;
-> > +
-> > +	if (desc->div_bits) {
-> > +		reg = desc->div_reg ? desc->div_reg : desc->base_reg;
-> > +
-> > +		mask = (BIT(desc->div_bits) - 1) << desc->div_shift;
-> > +		val = div_val << desc->div_shift;
-> > +
-> > +		err = regmap_update_bits(map, reg, mask, val);
-> > +		if (err)
-> > +			return dev_err_probe(dev, err, "Failed to update div reg for clock %s\n",
-> > +					     desc->name);
-> > +	}
-> > +
-> > +	if (desc->base_bits) {
-> > +		mask = (BIT(desc->base_bits) - 1) << desc->base_shift;
-> > +		val = base_val << desc->base_shift;
-> > +
-> > +		err = regmap_update_bits(map, desc->base_reg, mask, val);
-> > +		if (err)
-> > +			return dev_err_probe(dev, err, "Failed to update reg for clock %s\n",
-> > +					     desc->name);
-> > +	}
-> 
-> [Severity: Low]
-> Should en7581_set_rate() use dev_err() instead of dev_err_probe() here?
-> en7581_set_rate() is a runtime clk_ops callback rather than a probe
-> function, and the sibling helpers en7581_recalc_rate() and
-> en7581_get_vals_for_rate() already use dev_err().
-> 
-
-This is funny... dev_err_probe is not only to handle PROBE_DEFER or probe
-context... it does also gives more formatted error code and convert the
-error code to the plain text error giving more info. I'm keeping this.
-
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261106113227.182324-1-ansuelsmth@gmail.com?part=2
-
--- 
-	Ansuel
