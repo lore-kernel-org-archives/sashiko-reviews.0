@@ -1,49 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793974956;
-	b=z2CppHEPpR+nvAAUsgEhFm4bOzOXzOFH/7BeSW3ZKpR2AMTheShN1rBMov+63FNV97IV
-	 wqwBaAdX2+M3LjPmQfgcDayYyR5AoSwNaUGJEXOzAV9n/JbGPnWAn6EduyiaqTpLLzxa1
-	 sHpgYJlYgqvQuA6DPRvkJJzwOGqgv/5bFJtgRF7CR8Y1LNt5l8r3GVNUnyKFhZDIuHiV+
-	 if9Gud1G/O5uM2L73BxauruSIQvLXsCt3/AG+bVsefYxXZTcKgVR0tTUN6gZCy5h9kbYe
-	 /KI/rxTen34MbkQSztqFXT0r5zpKl8B0XhfyGnY6xXLxNQqLTM+hafEr15bAegttMqA==
+	t=1793975124;
+	b=B0Bavm/gb+yDV0s2Yv5uNesNgQQo8TUnsD5WNBrXIXWXZzVe4aZ4TvDN+84n3qCWx0Wi
+	 jJ2PWr+O0WEJIXrniBawY9k4uuS2FMI8eaeI+7xDRigtKDwuGXk9wiYwCgY9nfr3UZ0LZ
+	 MLAgOnZU1LHCSn4WL8D4Jtd3zJ0GQjmztD7cpEXIc9+TwLpM1dj23dSlmgedpzCsfDq7Z
+	 INzl4898qbOCRIb5uRepCvRtaYLz4HU7SdQnoDxT/kUHhPmKb0HXTTvH5iTyeuzcUHhcQ
+	 zksnWO6UW5+45jUlrY0p0I/9ezbciZ3vpRhmsYG/XT/dlp0AQpmtqJ3voBDpdAHZXnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793974956;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=fTcrCWxsZHIriDZWkvIqlif7JUYF9Ion4vAVQflrPbU=;
-	b=dZrj8ZL/4I5AC7C7E76PekN5E1ZU3/fhn422bxjThhX9SB4JPTDUTbf2GyCWzZoai1sL
-	 wV9ZdrM+PeA1pszbLi/WK5xoc4DIRHmN0cmsLXc3icDnfgWglmwJ9r/e0MAQG4sT7VbOb
-	 VziV6MGBafCD4W3br5nJH9Fr/1A70AJLTQmOgroYr2KUmK0L9C1uYmcEMy2IhX0SmayCX
-	 tddMRwcd6GKHpl19jXNK+druDmcSj5AozpBJ7spCpCZaPhx797B/Qqo/zSLcjwMVV33FC
-	 bd0k/5SPDG+v+7bxo1RgofOg2xvmhPpDogSCPaPV4xqytrZplSkDQzX+tNsW+7GAeUA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793975124;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
+	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=CnzZ9tu/PJ0Xc56iPjJhoZcChGnPBcjUy3GAK0JvUCU=;
+	b=lxMw1K2WwgcZ4HFMjozRB8QoQFL/6bShq0FwuWdp8ZVKFxQkgsOTtq/egAzeVySxG/Mi
+	 KQJ6E6z2qakjs1TfwlefWhY2DdfIXjnDD5sJmKJSg5iTjUwGSlOo3OWlxAHJ/LfW1DgSS
+	 J3MTM9K3ON4O/+xel2J8NoZEPW7b0GRwGu5oSoo65OAYjminb5uGAJDPPIoSFVCJf3eUp
+	 m+6qoTWsSpUlKC8fwUg4CHR21/A/Amhpytirv62mOopXZCMrvwtllyRnQ6a+1pH8nf3QD
+	 7h7cTwhTsR9UGYyQbHgzqucfDJiVUJ5i5mQ6nhRBxvcbq2ZlRru5r7IDdMkpf0ux58w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=AzhrJoGR;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC042606A32E;
-	Fri,  6 Nov 2026 14:22:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC042606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=DRb+1yN1;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6423C606A33D;
+	Fri,  6 Nov 2026 14:25:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6423C606A33D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=AzhrJoGR
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A4C481650;
-	Fri,  6 Nov 2026 06:22:30 -0800 (PST)
-Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CB6D93F673;
-	Fri,  6 Nov 2026 06:22:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793974953; bh=22RVcKJoZ5NKv3XgoNQ8sUIaq6jPGe49X9aSwuY2zBc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AzhrJoGR50jH4UI7p6E6V6JBsJGQJm7me4fObInq/JDMEgpaHqZNQporI5hUGwHp6
-	 b0+Io29IXVu1Flqep4AA+q0a0PcTOEg1uQ9KPfHrPIO/OFTKcSnEawMDagq1wqXJC0
-	 mP8tjhvkpxKtGKpK4MAHr2wmrZUPTpPRS2+NI1Uc=
-Message-ID: <ae4f4bb4-4e72-47ac-8b91-d275484c22a8@arm.com>
-Date: Fri, 6 Nov 2026 14:22:31 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=DRb+1yN1
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A6EENGk2577588;
+	Fri, 6 Nov 2026 14:25:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=CnzZ9t
+	u/PJ0Xc56iPjJhoZcChGnPBcjUy3GAK0JvUCU=; b=DRb+1yN1b58UA3vJgQlIsQ
+	LRLFKOt5bzU7Dm/sT3rdlOPfLA42Fbm5SmGiH7Q0P3w80Lh1INz2gVxBDf+fJWJ5
+	wiOx1LwY8Y1VZWDSJemZEpoau4Cvo2+rGn1CZFRVS+Qk+PyIVimzrvzBnFxMGS0a
+	lFtKAAlvHRyNo9FZlmWY+gNKETnGlxUWdxZcJ0I7Fa0He89NJq8BBSv2zqY9N/KY
+	oIbahz6hXm803/Izviwfv/tuaPrLaB9W6oIqKV7099EvNhbWQv4wFZPVBX17CB8U
+	BgJClIC5G0JsjygQGpLAgGGlg7u5Sa9x/+e7vfpIfxv1Hz/mu1mLsE6fdoqUF/ng
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hs3r94s6v-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 06 Nov 2026 14:25:23 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6A6Do4Mt3519503;
+	Fri, 6 Nov 2026 14:25:22 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hrdd7txkx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Nov 2026 14:25:22 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6A6EPLlU30671506
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 6 Nov 2026 14:25:21 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 541665805A;
+	Fri,  6 Nov 2026 14:25:21 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A354058062;
+	Fri,  6 Nov 2026 14:25:20 +0000 (GMT)
+Received: from [9.61.114.69] (unknown [9.61.114.69])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  6 Nov 2026 14:25:20 +0000 (GMT)
+Message-ID: <0cc314a9-2fe1-41c5-bacc-bbf5552d1aeb@linux.ibm.com>
+Date: Fri, 6 Nov 2026 09:25:20 -0500
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,303 +87,237 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] KVM: arm64: CCA: Add Realm stage-2 MMU operations
-To: sashiko-reviews@lists.linux.dev, Steven Price <steven.price@arm.com>,
- kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261102141304.126883-1-steven.price@arm.com>
- <20261102141304.126883-12-steven.price@arm.com>
- <sashiko-outbox-193812@kernel.org>
+Subject: Re: [PATCH v11 09/14] s390/vfio-ap: File ops called to resume the
+ vfio device migration
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        kvm@vger.kernel.org
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Jason Herne <jjherne@linux.ibm.com>
+References: <20261102151604.2150055-1-akrowiak@linux.ibm.com>
+ <20261102151604.2150055-10-akrowiak@linux.ibm.com>
+ <sashiko-outbox-193805@kernel.org>
 Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <sashiko-outbox-193812@kernel.org>
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <sashiko-outbox-193805@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=O86sLx9W c=1 sm=1 tr=0 ts=6aede353 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=CTQ77ZSDLaTwiO4wZoYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: hOb1hci8Vvvixm5yIoOJhp9F6q6yRYh3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA1NiBTYWx0ZWRfXyw9cZJ36XzOF
+ ZGpWjXi95+Ga0Xjrf0xE/Xr3CLXzcKXwk6+Js/MPnrxSfN7HyVpiz1a4qfDUBJ8TOCOEbX8RXyw
+ pMHEjsbN0mc61E6xisiiZtTyU1GcmfPWU7pp2ENcmxMAqaF8SACjD9paOjZi4Kk1jQjD1krBNM8
+ sK8BjqJryq7MidGTM0qOYX3SYLWnHJfO1XyPzCjUgF+V64JKtu8ICqrmXiRJl7y0JZZpgWEkV3Z
+ 6BkiIJZ/47CSbxRXMl52Jod2ppoU93TNXZishJJCU1SLU9ZZg5SnFsMC4i49BX1HMykG99PBgOB
+ WMNfHnX2V/S0J5dL/fB7Tjp3Hx2IA8Mc3yo/5l2IVHHakw3ulzeeijmOCPSROY6Mjx9swyro9L3
+ QXZXJQnZx9ESYQX7zqpyYpmfts4iq5j8RsNKeajFHYKfKm3Guwu+mPBixfMBc0RPKmgGeguaWqx
+ WXa7Xes7syP4qmyGuMA==
+X-Proofpoint-GUID: hOb1hci8Vvvixm5yIoOJhp9F6q6yRYh3
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA1NiBTYWx0ZWRfX2LXfP12l1Dh1
+ 81bNBar8qpco0d0Xd5vXZP7XMUU4xDPfsSh7tLg1cv6wK+ESHu6C+SLBLY396+REkrdyRWAeKo7
+ Q/rLZ1OxyEFctGUO+t5Ez2xzqyfnZTc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-06_03,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611060056
 
-On 02/11/2026 17:12, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
-> - [Critical] KVM: arm64: read_lock() used instead of write_lock() in kvm_fault_lock()
-> - [Critical] KVM: arm64: unaligned PFN and empty memcache on Realm permission faults
-> - [High] KVM: arm64: uninitialized next_addr in realm_unmap_private_range()
-> - [High] KVM: arm64: page accounting after page free in free_rtt()
-> - [High] KVM: arm64: stage-2 PGD leak in kvm_uninit_stage2_mmu() for Realms
-> - [High] KVM: arm64: leaked delegated pages on error in realm_map_protected()
-> - [High] KVM: arm64: uninitialized out_top and positive error in realm_map_non_secure()
+
+
+On 11/2/26 12:09 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] s390/vfio-ap: use-after-free of mig_file in vfio_ap_resuming_write()
+> - [High] s390/vfio-ap: fortify panic in vfio_ap_resuming_write() on chunked writes
 > --
-> 
-> commit c7041c45fed830c50c8f37ff21d6036da29c1302
-> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
-> 
-> KVM: arm64: CCA: Add Realm stage-2 MMU operations
-> 
-> This commit defines and registers realm_vm_s2_ops for VM_REALM, routing
-> stage-2 unmapping through kvm_realm_unmap_range_filter() and stage-2 memory
-> aborts through kvm_vm_mem_abort(). It also provides no-op TLB flush and GFN
-> aging callbacks since the RMM manages stage-2 TLB invalidation and does not
-> support stage-2 access flags.
-> 
->> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->> index 20aedbe6ec072..bb33c07569e3b 100644
->> --- a/arch/arm64/kvm/mmu.c
->> +++ b/arch/arm64/kvm/mmu.c
-> 
+>
+> commit 05b49746b964ad1916518e2c783de5c6220f1f14
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: File ops called to resume the vfio device migration
+>
+> This commit implements the write callback for the migration file stream used
+> during the RESUMING phase to receive and validate the source guest's AP
+> configuration on the destination host.
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
+>> index 526d83e8590d9..47f05e43b9e0e 100644
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
 > [ ... ]
-
-...
-
-> 
-> [Severity: High]
-> In the same unmap path, when realm_unmap_shared_range() or
-> realm_unmap_private_range() folds RTT levels via
-> realm_fold_rtt_level()->free_rtt(), does free_rtt() access the page after it
-> has already been freed?
-> 
-> In arch/arm64/kvm/rmi.c:
-> 
-> static void free_rtt(phys_addr_t phys)
-> {
-> 	if (rmi_free_delegated_page(phys))
-> 		return;
-> 
-> 	kvm_account_pgtable_pages(phys_to_virt(phys), -1);
-> }
-> 
-> And in drivers/firmware/arm_rmm/rmi.c:
-> 
-> int rmi_free_delegated_page(phys_addr_t phys)
-> {
-> 	if (WARN_ON_ONCE(rmi_undelegate_page(phys))) {
-> 		/* Undelegate failed: leak the page */
-> 		return -EBUSY;
-> 	}
-> 
-> 	free_page((unsigned long)phys_to_virt(phys));
-> 
-> 	return 0;
-> }
-> 
-> Because rmi_free_delegated_page() calls free_page() first (which uncharges the
-> folio and clears its memcg association before returning the page to the
-> allocator), calling kvm_account_pgtable_pages() afterwards touches a freed
-> page and fails to decrement NR_SECONDARY_PAGETABLE on the original memcg.
-> Should kvm_account_pgtable_pages(phys_to_virt(phys), -1) be called before
-> free_page() (or before rmi_free_delegated_page())?
-> 
-> [ ... ]
-> 
->> @@ -3291,6 +3313,15 @@ static const struct kvm_vm_s2_ops kvm_default_vm_s2_ops = {
->>   	.vm_mem_abort			= kvm_vm_mem_abort,
->>   };
+>
+>> @@ -466,11 +511,562 @@ static struct file *vfio_ap_open_file_stream(struct vfio_ap_migration_file *mig_
+>>   	return filp;
+>>   }
 >>   
->> +static const struct kvm_vm_s2_ops realm_vm_s2_ops = {
->> +	.vm_flush_remote_tlbs		= realm_flush_remote_tlbs,
->> +	.vm_flush_remote_tlbs_range	= realm_flush_remote_tlbs_range,
->> +	.vm_age_gfn			= no_age_gfn,
->> +	.vm_test_age_gfn		= no_age_gfn,
->> +	.vm_stage2_unmap_range		= realm_stage2_unmap_range,
->> +	.vm_mem_abort			= kvm_vm_mem_abort,
-> 
-> [Severity: Critical]
-> When kvm_vm_mem_abort() handles stage-2 faults for a Realm VM via
-> gmem_abort() or user_mem_abort()->kvm_s2_fault_map(), it acquires
-> kvm->mmu_lock using kvm_fault_lock(kvm). Does kvm_fault_lock() take a read
-> lock instead of a write lock for Realm VMs?
-> 
-> In arch/arm64/include/asm/kvm_mmu.h:
-> 
-> static inline void kvm_fault_lock(struct kvm *kvm)
-> {
-> 	if (is_protected_kvm_enabled())
-> 		write_lock(&kvm->mmu_lock);
-> 	else
-> 		read_lock(&kvm->mmu_lock);
-> }
-
-We could change that to
-
-	if (kvm_vm_hyp_is_distrusting(kvm))
-		write_lock()
-	else
-		read_lock();
-
-
-> [Severity: Critical]
-> In kvm_vm_mem_abort()->user_mem_abort()->kvm_s2_fault_map(), how are stage-2
-> permission faults on shared IPAs handled for Realm VMs?
-> 
-> First, in user_mem_abort():
-> 
-> 	memcache = get_mmu_memcache(s2fd->vcpu);
-> 	if (!perm_fault || memslot_is_logging(s2fd->memslot) ||
-> 	    is_protected_kvm_enabled()) {
-> 		ret = topup_mmu_memcache(s2fd->mmu, memcache);
-> 		if (ret)
-> 			return ret;
-> 	}
-> 
-> Because is_protected_kvm_enabled() is false for Realm VMs, memcache is not
-> topped up on permission faults, even though realm_map_non_secure() unmaps and
-> folds the existing RTT entry via realm_unmap_shared_range() and then allocates
-> RTTs from memcache via realm_create_rtt_levels().
-> 
-> Second, in kvm_s2_fault_map():
-> 
-> 	if (mapping_size == PAGE_SIZE && s2vi->max_map_size != PAGE_SIZE) {
-> 		if (perm_fault_granule > PAGE_SIZE) {
-> 			mapping_size = perm_fault_granule;
-> 		} else {
-> 			mapping_size = transparent_hugepage_adjust(s2fd, &pfn, &gfn);
-> 			if (mapping_size < 0) {
-> 				ret = mapping_size;
-> 				goto out_unlock;
-> 			}
-> 		}
-> 		canonical_ipa = ALIGN_DOWN(canonical_ipa, mapping_size);
-> 	}
-> 
-> 	if (!perm_fault_granule && !s2vi->map_non_cacheable && kvm_has_mte(kvm))
-> 		sanitise_mte_tags(kvm, pfn, mapping_size);
-> 
-> 	if (kvm_vm_is_realm(kvm)) {
-> 		ret = realm_map_ipa(kvm, s2fd->fault_ipa, pfn, mapping_size,
-> 				    prot, memcache);
-> 
-> When perm_fault_granule > PAGE_SIZE on a THP VMA (where s2vi->vma_pagesize is
-> PAGE_SIZE), kvm_s2_fault_map() sets mapping_size = perm_fault_granule without
-> calling transparent_hugepage_adjust() to verify that the host VMA is still
-> backed by a huge page (for example, if a write fault split the THP via CoW) or
-> to align pfn down to mapping_size. For normal VMs this is safe because
-> kvm_pgtable_stage2_relax_perms() does not use pfn, but for a Realm VM
-
-I see, the cheaper option for us is to figure out the real granularity
-at the host (rather than fixing up permissions at the *current* mapped
-level). So I think it is better to adjust the pfn here locally.
-
-
-> realm_map_ipa() aligns fault_ipa down to mapping_size while mapping from the
-> unaligned 4KB pfn for mapping_size bytes. Can this map adjacent host physical
-> pages beyond the end of the folio (or from a split THP) into the Realm guest?
-> 
-> [Severity: High]
-> When kvm_vm_mem_abort() calls realm_map_ipa()->realm_map_protected(), can the
-> err_undelegate path fail to undelegate the remaining unmapped pages if an
-> error occurs after part of the range was already mapped?
-> 
-> In arch/arm64/kvm/rmi.c:
-> 
-> err_undelegate:
-> 	realm_unmap_private_range(kvm, base_ipa, ipa, true);
-> 	/* A range which cannot be undelegated remains owned by the RMM. */
-> 	WARN_ON(rmi_undelegate_range(base_phys, map_size));
-> 	return ret < 0 ? ret : -ENXIO;
-> 
-> If the loop mapped [base_ipa, ipa) before failing, realm_unmap_private_range()
-> unmaps [base_ipa, ipa) and undelegates [base_phys, phys). Calling
-> rmi_undelegate_range(base_phys, map_size) then starts at base_phys, which is
-> already undelegated, so rmi_granule_range_undelegate() fails on the first page
-> and aborts the loop, triggering the WARN_ON and leaving [phys,
-> base_phys + map_size) permanently delegated. Should this call
-> rmi_undelegate_range(phys, ipa_top - ipa) instead?
-
-This is not true. RMI_GRANULE_UNDELEGATE() skips the granules that are
-alreay UNDELEGATED. See "state" condition.
-
-
-> 
-> [Severity: High]
-> In kvm_vm_mem_abort()->...->realm_map_ipa()->realm_map_non_secure(), what
-> happens if rmi_rtt_unprot_map() returns a positive RMI error code?
-> 
-> In arch/arm64/kvm/rmi.c:
-> 
-> 		if (RMI_RESULT_STATUS(ret) == RMI_ERROR_RTT) {
-> 			...
-> 			ret = realm_create_rtt_levels(realm, ipa, level,
-> 						      req_level,
-> 						      memcache);
-> 			if (ret)
-> 				return ret;
-> 
-> 			ret = rmi_rtt_unprot_map(rd, ipa, ipa_top, flags,
-> 						 range_desc, &out_top);
-> 			if (ret < 0)
-> 				return ret;
-> 		}
-> 
-> 		if (ret && RMI_RESULT_STATUS(ret) != RMI_ERROR_RTT)
-> 			return ret;
-> 
-> 		phys += out_top - ipa;
-> 		ipa = out_top;
-> 
-> If the retry of rmi_rtt_unprot_map() after realm_create_rtt_levels() returns
-> RMI_ERROR_RTT, out_top is never written by rmi_rtt_unprot_map(), and execution
-> falls through to phys += out_top - ipa; ipa = out_top; using an uninitialized
-> out_top. And if rmi_rtt_unprot_map() returns any other positive RMI status
-> code, realm_map_non_secure() returns that positive value up through
-> kvm_vm_mem_abort() to kvm_handle_guest_abort(), which treats positive return
-> values as a successfully handled fault and re-enters the guest.
-
-Yep, that is correct, we need to fix this.
-
-> 
->> +};
+>> +static int validate_resuming_write_parms(struct vfio_ap_migration_file *mig_file,
+>> +					 struct file *filp, size_t len)
+>> +{
+>> +	loff_t total_len;
 >> +
->>   #define KVM_VM_S2_OPS(flavor, ops)		\
->>   		[flavor] = &(ops)
->>   
->> @@ -3299,7 +3330,7 @@ static const struct kvm_vm_s2_ops *arm64_vm_s2_ops[] = {
->>   	KVM_VM_S2_OPS(VM_NVHE, kvm_default_vm_s2_ops),
->>   	KVM_VM_S2_OPS(VM_PKVM, pkvm_vm_s2_ops),
->>   	KVM_VM_S2_OPS(VM_PROTECTED_PKVM, protected_pkvm_vm_s2_ops),
->> -	[VM_REALM] = NULL,
->> +	KVM_VM_S2_OPS(VM_REALM, realm_vm_s2_ops),
-> 
+>> +	lockdep_assert_held(&mig_file->lock);
+>> +	lockdep_assert_held(&matrix_dev->mdevs_lock);
+>> +
+>> +	if (!len || filp->f_pos < 0)
+>> +		return -EINVAL;
+>> +
+>> +	if (!mig_file->matrix_mdev->mig_data)
+>> +		return -ENODEV;
+> [ ... ]
+>
+>>   static ssize_t vfio_ap_resuming_write(struct file *filp, const char __user *buf,
+>>   				      size_t len, loff_t *pos)
+>>   {
+>> -	/* TODO */
+>> -	return -EOPNOTSUPP;
+>> +	struct vfio_ap_migration_file *mig_file;
+>> +	struct vfio_ap_config *ap_config;
+>> +	ssize_t ret;
+>> +	void *kbuf;
+> [ ... ]
+>
+>> +	mig_file = filp->private_data;
+>> +	mutex_lock(&mig_file->lock);
+>> +	mutex_lock(&ap_attr_mutex);
+>> +	mutex_lock(&matrix_dev->mdevs_lock);
+>> +	pos = &filp->f_pos;
+>> +
+>> +	ret = validate_resuming_write_parms(mig_file, filp, len);
+>> +	if (ret)
+>> +		goto out_unlock;
 > [Severity: High]
-> Now that arm64_vm_s2_ops[VM_REALM] is populated, kvm_init_stage2_mmu()
-> succeeds for Realm VMs and allocates mmu->pgt, its PGD pages, and
-> mmu->last_vcpu_ran. Does kvm_uninit_stage2_mmu() leak those allocations if
-> kvm_arch_init_vm() fails at err_uninit_mmu or if the VM is destroyed before
-> the Realm is created?
-> 
-> In arch/arm64/kvm/mmu.c:
-> 
-> void kvm_uninit_stage2_mmu(struct kvm *kvm)
-> {
-> 	if (kvm_vm_is_realm(kvm))
-> 		kvm_realm_uninit_stage2(&kvm->arch.mmu);
-> 	else
-> 		kvm_free_stage2_pgd(&kvm->arch.mmu);
-> 	kvm_mmu_free_memory_cache(&kvm->arch.mmu.split_page_cache);
-> }
-> 
-> And in arch/arm64/kvm/rmi.c:
-> 
-> void kvm_destroy_realm(struct kvm *kvm)
-> {
-> 	struct realm *realm = &kvm->arch.realm;
-> 	int i;
-> 
-> 	if (!kvm_realm_is_created(kvm)) {
-> 		kfree(realm->sro);
-> 		realm->sro = NULL;
-> 		return;
-> 	}
+> Can this trigger a use-after-free on mig_file if the VFIO device file
+> descriptor is closed while the migration file descriptor remains open?
+>
+> In vfio_ap_resuming_init() -> vfio_ap_open_file_stream(), filp->private_data
+> is set to &mig_data->resuming_mig_file, which is embedded inside
+> matrix_mdev->mig_data:
+>
+> drivers/s390/crypto/vfio_ap_migration.c:
+> struct vfio_ap_migration_data {
+> 	enum vfio_device_mig_state	mig_state;
+> 	bool				resuming_mig_data_complete;
+> 	struct vfio_ap_migration_file	resuming_mig_file;
+> 	struct vfio_ap_migration_file	stop_copy_mig_file;
+> };
+>
+> While vfio_ap_open_file_stream() calls vfio_device_try_get_registration() to
+> keep matrix_mdev alive until vfio_ap_release_mig_file() runs, closing the
+> VFIO device file descriptor invokes:
+>
+> vfio_ap_mdev_close_device()
+>    vfio_ap_release_migration_data() {
 > 	...
-> 	kvm_free_stage2_pgd(&kvm->arch.mmu);
-> }
-> 
-> When realm->state is REALM_STATE_NONE, kvm_realm_uninit_stage2() is a no-op
-> and kvm_destroy_realm() returns early before calling
-> kvm_free_stage2_pgd(&kvm->arch.mmu) (or is not called at all on the
-> err_uninit_mmu failure path of kvm_arch_init_vm()), leaving mmu->pgt, the
-> stage-2 PGD pages, and mmu->last_vcpu_ran allocated.
+> 	vfio_ap_release_mig_files(matrix_mdev);
+> 	mutex_destroy(&matrix_mdev->mig_data->stop_copy_mig_file.lock);
+> 	mutex_destroy(&matrix_mdev->mig_data->resuming_mig_file.lock);
+> 	kfree(matrix_mdev->mig_data);
+> 	matrix_mdev->mig_data = NULL;
+>    }
+>
+> Although validate_resuming_write_parms() checks
+> !mig_file->matrix_mdev->mig_data under matrix_dev->mdevs_lock, mig_file
+> itself lives inside the freed matrix_mdev->mig_data object. Calling
+> vfio_ap_resuming_write() after or concurrently with
+> vfio_ap_mdev_close_device() will lock and unlock the destroyed
+> mig_file->lock and dereference mig_file->matrix_mdev in freed memory.
 
-I think we have already discussed in a previous patch and will be addressed.
+Confirmed:
+This is the RESUMING write path of the same mig_data lifetime
+issue reported on patches 03/14, 06/14, and 08/14, and will be resolved 
+in v12
+by moving mig_data deallocation to vfio_ap_mdev_release_dev() and resetting
+migration state on device close.
 
+>
+>> +
+>> +	ap_config = mig_file->ap_config;
+>> +	memcpy((char *)ap_config + *pos, kbuf, len);
+>> +	*pos += len;
+>> +
+>> +	/*
+>> +	 * Check whether we have received all the data.  We know the total
+>> +	 * expected size once num_queues has arrived, i.e. once *pos is past
+>> +	 * the fixed header.  Until then keep accumulating.
+>> +	 */
+>> +	if (*pos >= offsetofend(struct vfio_ap_config, num_queues)) {
+>> +		size_t expected_sz;
+>> +
+>> +		if (ap_config->num_queues > MAX_AP_QUEUES) {
+>> +			ret = -EINVAL;
+>> +			goto out_unlock;
+>> +		}
+>> +
+>> +		expected_sz = sizeof(struct vfio_ap_config) +
+>> +			      ap_config->num_queues *
+>> +			      sizeof(struct vfio_ap_queue_info);
+>> +
+>> +		if (*pos > (loff_t)expected_sz) {
+>> +			ret = -EINVAL;
+>> +			goto out_unlock;
+>> +		}
+> [Severity: High]
+> As reported by Sashiko on v9 [1], can the memcpy() in
+> vfio_ap_resuming_write() trigger a fortify_panic() on chunked writes when
+> CONFIG_FORTIFY_SOURCE and CONFIG_CC_HAS_COUNTED_BY are enabled?
+>
+> In struct vfio_ap_config, qinfo[] is annotated with
+> __counted_by(num_queues):
+>
+> struct vfio_ap_config {
+> 	u32				magic;
+> 	u32				version;
+> 	u32				num_queues;
+> 	u8				reserved[4];
+> 	u64				adm[DIV_ROUND_UP(AP_DOMAINS, 64)];
+> 	struct vfio_ap_queue_info	qinfo[] __counted_by(num_queues);
+> };
+>
+> Although vfio_ap_resuming_init() initializes ap_config->num_queues to
+> MAX_AP_QUEUES, fortified memcpy((char *)ap_config + *pos, kbuf, len)
+> evaluates __struct_size((char *)ap_config + *pos) using the current value of
+> ap_config->num_queues in memory before the expected_sz check runs:
+>
+> 1. Once an earlier chunk writes the header with num_queues < MAX_AP_QUEUES,
+>     the dynamic object size of *ap_config shrinks to expected_sz. If a
+>     subsequent write() supplies more bytes than expected_sz - *pos (while
+>     staying within VFIO_AP_CONFIG_MAX_SIZE), memcpy() executes before the
+>     *pos > (loff_t)expected_sz check and calls fortify_panic() instead of
+>     returning -EINVAL.
+>
+> 2. On big-endian s390, MAX_AP_QUEUES (0x00010000) has bytes 0x00, 0x01,
+>     0x00, 0x00 at offsets 8..11. If an initial chunk of 10 or 11 bytes writes
+>     the upper two bytes of a valid num_queues < 65536 (0x00, 0x00),
+>     ap_config->num_queues in memory becomes 0. If the next chunk writes past
+>     the header into qinfo[], fortified memcpy() evaluates __struct_size()
+>     with ap_config->num_queues == 0 before copying the remaining bytes of
+>     num_queues, triggering fortify_panic() on valid migration data.
 
-Cheers
-Suzuki
+Confirmed:
+In v12, will be resolved :
+    - Changing ap_config in struct vfio_ap_migration_file to a void * 
+buffer
+      representing the raw VFIO_AP_CONFIG_MAX_SIZE allocation.
+    - Performing memcpy((char *)mig_file->ap_config + *pos, kbuf, len) into
+      the raw buffer so fortified memcpy checks against 
+VFIO_AP_CONFIG_MAX_SIZE.
+    - Casting to struct vfio_ap_config * and evaluating num_queues, 
+expected_sz,
+      and do_post_copy_validation() only after the full fixed header has 
+arrived
+      (*pos >= offsetofend(struct vfio_ap_config, num_queues)).
 
-> 
+>
+> [1] https://lore.kernel.org/r/sashiko-outbox-170099@kernel.org
+>
 
