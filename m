@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793923534;
-	b=NuiMPKsRWq0HPZKchwS0IHFjYupUSnDolBxRKeLDk0+CE8lU+oVo0YCQNh+iI52Wanst
-	 +pBBUheC4ycCB6nJ/HrvElJnVLbpptTJ6PS+8VibB9+QYLcnUdOm1tOwktb+oLPNktEao
-	 7XPhTl8+24Nc4iK2t5R/Gj6B5gjY0xW0HGS4q+C0L68UkrRcyM8XgIHYSm2TPuSKgFmjj
-	 YyRTgvl+zV+9K5B6sSfgAtL8G6RyohqZDYPfdgfFuMX97jhouwbFsORcqYMgygoPR5ABj
-	 3dleMUX8B551Q2BQKEStF+57PfjTTjXY5f/2YautRH9fUG0DpgREeyt+Ne1UZyjTKeg==
+	t=1793941944;
+	b=OtdUyr5iEhAu6qtZ22ztVKO/i0vJEEs3QcFcMxABYl23gGTng/nlac917zlKcWY+9IC/
+	 LMdqrVehd2lMTMZ/vhaRmJxQ1FNzb0cwoaOOnT7xGM+ALVbrCmJTtO9Unlfajh9I7cg1K
+	 UOxbAy3gBiG6LJOwbw/fKLb8XcEowBlmPtBWTLUFGEctNSkTyVgO2MyCvIALZiTBkdueI
+	 gCI4FGNHGd2jr/hNMilzGvk2MSo7eoH2iEO9/8yNDVRgu1iIf9UhPWDjC9Wx2/gBcmShk
+	 3XuTTY2LheAXWs4TnVMpcc4Oz9VYyWUv76aV3k+jTMqpsKFLkL1YOpAeP33DWp1dqZg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793923534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793941944;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=zGe6RH8jO1PkEqlKrUq+hUFFk2bxgmP97XnZ5LF8Xyk=;
-	b=nF8I9bTcx8E5Lev314nJJhofg4ik1+4Ye7lKZRsQj+AgnLKbEaFLYcHr4VWX7hhQectj
-	 Wiqcz3OxWDPlJhx/LacYV2Dz5yUEZs/d6bYUqMfwxv3UMGRcSSgR80s6yuXYL5FlG0qmc
-	 Er6hjl4uiLyKjGMWRHj1VgCLSCmRxRW2AYKQnTwQX2YlirCDa1pNw2U603tXugb3aR3aU
-	 PhiM+5BfXiArXI/SSOaxm/WjIFIFAfVdK2CatKVu2RScp9+LndHwsycPeH8gCYEvJDJiG
-	 dujAGj1f0ovcPn785yvIyMw6xgUoaV1y1aetaRD3KgoKfGrXnCrx6ewyzOrEN/RHcgQ==
+	bh=L0E8qwKq9tI0TeHTVwDsi/hq8uyC0B0sTmXnOqBK0ms=;
+	b=wd6hBCL1dmasl7etIhy7PzzaZPfQRWts/P9QJHDNFa9mD0v2WiAF0NpthtxP2EiYh5KZ
+	 +7IyirzGA5FRsZVK/YQRcUPhSzVubqM8Wk3fc1xIQbuPu1/fS+bqr7QyL/lxEOcUWCH40
+	 khXpGk0B+bzVWCw0QLWOQl0mL2eQbYmhdUjMCBpf/3xzYh/kmydahYKnrYqD1LHxbaW6L
+	 oFY36c14WfN6OBgcVOitUNFe/whaDNbtMD5CQ8QtOIeBBVsIpSlwh64BZ4hVbvvA9c1SY
+	 /sA0PmHP46cVqfdLOSMq/2n0gK7EqAMnbVq2lih4KzTjFDAKFMsgtCqLvUbSc22qLsg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0NrRtpke;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.50
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G3rwlP4E;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D246606A31B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 00:05:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D246606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE60606A326
+	for <sashiko-reviews@lists.linux.dev>; Fri,  6 Nov 2026 05:12:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BE60606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0NrRtpke
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-490d59c3f0aso41489f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 16:05:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793923533; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G3rwlP4E
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6b579ed8da6so929a12.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 05 Nov 2026 21:12:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793941943; cv=none;
         d=google.com; s=arc-20260327;
-        b=s5/zGF9hSdA+4uYqZZfS4KHJSeQ74Lsz/9HAgdRjpGuDo1HD1CeWepfGuP0P6VgiXZ
-         YLgPJBRiEr8j/0AkS9saQR315N7uh84Z84Pin+26KXkozqHUGkujRNgTeRkHVrHY8Zws
-         d6oynH+qkhnI1Tg/kqCrL3cfNswy0sU5hygzTfkq2H+Z0rq6Af9jiiDDNw+G4ydROVWp
-         4oGkgDQB0V5JzoamO68Eq1u7yr+E+FiM3lStlu+ySz6yiWOcsX298mdjJAWNDBSeGrnN
-         UQqNmdlgzAMPIO3IJDahVGUXFJPOvMwlEIX5/Fw9/FE8MzyY31lGB1Hgp2y6D8H0Pqfl
-         F63A==
+        b=cv74FocXi8UlwOKzO1yYL1oA42RBYRmdGlMh5Sy43PKMFYzuzqgOGvIczigLOAlql7
+         FyiAJsYOcHixUo1GTBpacnj1MBTBy8oUoLkuu8CkJ5GjYD2PBxjYdnaSjW4yKTBaGVV1
+         lugmqZ4YkMqSHrxPNj0E//uUr1wRWLahLXKWBuWmrbRJNxt2ZV4ttAras5BADYWU+rgu
+         r/5RnCXJjzwNskaS2+IN+j1ikLnb+WpfMGrDV0iBrvQ4iZlVzEya6kfLjhKTkZ2LGCrh
+         d0+wLkejPHQFa2xrORcX/h9lTzK/fCBHXCjjVHQaX8BHyi/JGv1Nof817kVDPcUPtKUK
+         sw/A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=zGe6RH8jO1PkEqlKrUq+hUFFk2bxgmP97XnZ5LF8Xyk=;
-        fh=57ntETqkzVNGTYOofHBcbIIolOLV28T5rW6LiQPOum8=;
-        b=IN8KCiFwZlOjbrx/Oo8QbNgW1UM8MZJA5rEFG+gAUd0e2jT7ueIFLpM6iPtOeJmz6s
-         dw3Wow5fqZSs6fhNMr3zBZhbqiFt5XhDDqrv2P2EahyeRPSQbiBxK+MjlRX2R3olBZm8
-         ZAisYTKBg70/0xpHcOHC8j1CWL/XIhjohsxMXw3G8axP2l5CIRVyQg85m6Ney2OZIAcM
-         KPC1jiRqQBWwStPr6GypPA01Ihp03V0FWpbfmVT+bTEODwjLqkFC3/Cfwfdn1n6eibke
-         PQ7/Fy+Z0RsGk3D5D8wxV9TwOQ8enpwhHd5Ata9iVVkfyW8oc4reouvatTHDS541zsPi
-         bRBQ==;
+        bh=L0E8qwKq9tI0TeHTVwDsi/hq8uyC0B0sTmXnOqBK0ms=;
+        fh=nlkyPUp2r2LWvw5k35dW+ysIlz9psoez4cokmdqutLw=;
+        b=nGk+8mqdHNnBw21ZScUSvXZCmvUfI1/a7gM6KouX90GRqInUYojlCiRmiTdwBwaMKy
+         HlzvGCmoQkj155jcAVexjEefkvzVnGkTSN7wrFjch8TlQ0Z0891NrGPPVG0UqeHzd9w2
+         dl6t3mgEe36oTy1CWv0kKIzJjArC0KOXLsPsI5ZeT3GNCHYdBdVnsiWOJVNNCiZ51VEc
+         vEsUFKGPjIHsRfT7h/Jmlh9fRjQPfJ3wph4VzgJ42J5f/wxcINDAW7Ruc+8N+JtFMDX1
+         00QWy9dO82vyRuyXCv/FQu1BEjBB0nCKCBFkfCyEG7/mButMkUF2QjdHDY9/gPe38YuR
+         F7iA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793923533; x=1794528333; darn=lists.linux.dev;
+        d=google.com; s=20260707; t=1793941943; x=1794546743; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=zGe6RH8jO1PkEqlKrUq+hUFFk2bxgmP97XnZ5LF8Xyk=;
-        b=0NrRtpkeumpKjqFuyQt40aza3WWwlifQL44iI0ieHyqyU3Md4twicFndUrSdnIKM8G
-         aUUMJ/8gsHdbLafzd0OyMVbyi7qJ14yXK8n0K53yXi5DUC/z8pkzXcx1fQzTxDweHsuX
-         ZqjOcdh/feqMQ68dhp0d3sGf4lySVkxK32s7xtkwsZZUtlZThFJVj54ywaBnu5CqAztt
-         hYzB1KK0524QGYlzHIbibtkbIBslUFt51Mq0mpgoIYZtAbgN4q8VFDEqyNBdD2D8EzIY
-         x/mFwNi1UL2BwOusnB6NDCNCqjXUEMzdruKZVg5B+fuUUKRSHtZzt2rX0h07eQ7lRdR8
-         deDw==
+        bh=L0E8qwKq9tI0TeHTVwDsi/hq8uyC0B0sTmXnOqBK0ms=;
+        b=G3rwlP4ECs2m6qsUzhJ4eT+tNIbUevSt/EcBeGaoSAsM4LS4HmbyGuaNDbZZ1O7Y1+
+         4814cuUJitcoJ0JB921XSWlyayfpYuwyRLneI91M+UHc+ZREQNWPVtU1qx/xQAhfKgLp
+         nFgevhiI8d+JW1xVM2Us4XzE2o6CE+Y0afiFtik7g6EkMHhPUjalWEjdK09b5TSRLLyG
+         vlWorGmKTUqdaJ/fX+Nbaxc38f0s73X/mP4kTMIsbCxEGR35gOvSc9uk/Id+/rPe0ni/
+         d4Vo0h05KoxLhqOsAvQYNUvCeQPA6FgVKzpNJqPB8AvJEn1NBHFimb3Jcbp33BRUkgh+
+         buDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793923533; x=1794528333;
+        d=1e100.net; s=20260707; t=1793941943; x=1794546743;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zGe6RH8jO1PkEqlKrUq+hUFFk2bxgmP97XnZ5LF8Xyk=;
-        b=kxOuSMfi/uC2oAGI4IJ5pPBWswM37VqDGyboomLow2SDroQcvjbTGxiv+iOJS20Ec/
-         OHwKu75UoTPnv8FrheMJ1OCiZ1iSkXy881zd/MrEHG9kfZyEr//epm3myZoLxkmAroc5
-         e8hAIUUnqtUp31cjCe11RkrmmyOBBPj3VGeJ0m8EyTf0ZO0QU6THfV2Oj8LGZtlhXBeN
-         PHK5yfwImv86yxcXipR+VWyyl3RFHALFro9MLoyUv78W9omWFYMqBNyMFOwiihBS2Gzv
-         FXsKUOVBQEUU9mXEjNWNAqBPr6VqIrjV4+3FKHmNZaG7qun1xZapgQ2RZ1dnd7CavASX
-         QR0Q==
-X-Gm-Message-State: APuU4Z/hyBSEmJdn73d29lmhU0RqPlvfFf8JUOrAFIsfM5rg/S0wm3yu
-	P9/DouG4j9eiW/8E44DZEpofIYlJjcK80eYBdApJ3BZDLbaFaysdJZsMmOG8NvmfnBVZxg5GkkD
-	EZzVWAWjM+voWpey6wBYc6HSDNh5RE2w=
-X-Gm-Gg: AYBFou1nW64OnQv9AVlNzCZUkDzV/s7s5A8NaOG0Swfv3RZjiMYVkDbwPYX5jakkMAK
-	vhdNFCEaU7HOswwDGAtFZ3GRbGNhhHXCW2XeLkCDtfarjwxCHavbanfo/2kj1V2sDeFtkPaxWcG
-	tG49vDcNwKr3z41gvgKohXopQZGhOXABDOLlyrygIUi3uZgWCBvjFS7Qrp4fpx2iBth9clob28x
-	evEjVrWLnLURh1zDlwvf29m9TttoD3yRZQZsRPQd73YG9e9ceo3WEeBdzKPxCzuAoVbh7rmdXjW
-	o7VlSoDUDNVRqx7TBoY158Qe/YCdJZavvsU9HRJ4J8siz1dPzl4FejPq4e468a/sS2oSw5H+hRC
-	9BDCps9tRIF0LK9+2fwgnEmW+DUmWJjsDNYS3lhJiS+sBME5jZK6G7l9uA5JHTcNd8UK8EMN27d
-	t6iLXYbcmyXiqOoSfZoA==
-X-Received: by 2002:a05:6000:4819:b0:48e:75a1:1e38 with SMTP id
- ffacd0b85a97d-492784555f4mr2086202f8f.56.1793923532544; Thu, 05 Nov 2026
- 16:05:32 -0800 (PST)
+        bh=L0E8qwKq9tI0TeHTVwDsi/hq8uyC0B0sTmXnOqBK0ms=;
+        b=Xm1gArW47J4hPyvenXv5CGLGgnOHjRPKEypg3hWJV66qdvrCS+TxMFd82h8sgUWAJo
+         noJ2r9wzS+qz8oHAJ4tY4c6rnLPczAH44Xj9OIwuMHRjiFK3TBeAn43/phoFZnfJXx0s
+         HBPoXDF4QUC+lJ+J5jnIjoo211Zl0nmcc2q7/Z6DhyQABgWK4owX376Qe0Wn5JBqbB5u
+         FiTuHdBQqDZlcqIbqvYiDd+tEUnQKuzGwpV3Rq8MwuTKpHxKR6iKCkhWEYhErYKdFrJz
+         oh55KPNp5QHUDdjbCdR9SgPcUxOyhQlRzxqyhhtkZMFF20xn9BZbJ8yjVpFjm/2gzc0K
+         9MUw==
+X-Gm-Message-State: APuU4Z+yqIeUTc0J9vMJZC+UPdjsXaEp6VsNPvVo8dtr5/fZafGByJTT
+	CGk1+ZUbFOkIbwBMH9rE0SoVAUwp9jKI6gClA9/yf0zbdaC2cwTr885BjDs2PBBbZV6HKAfUnyr
+	nZM2T9Yeh3CL8YuUYYRfF8ZbpTJwJBk4UZAmgKltG
+X-Gm-Gg: AYBFou0oPe0HkaFLYJNyVZbaxK/7J5EEj3NssNCmisTadJlhXyKeRrW2s8uWJYWjqOp
+	C4q/84uD42XCIYZy3PmcDdghjc3AQO/Q3eCBLLzIgpQ567Hw07bhjS34Gr/vrs205ammUTAc1LA
+	nvF+tRucp6JYKATmlK61unCouIoHripj/yJNR4chUG8qD9SZnPbnhJDlurXC9C8n3IlidGjFl2q
+	wlfsGbQOLCI4cKwiH50Obycmu8WVcodMc9LLB0OBQTPVnNmz7I/9TwXX74ctCsa9tpGEpekr8Cf
+	MskgoGLvzpitqJPLSFqvvONxPUvmny3OBMgAhSNJfnaLoZ7UoJPObLJs4KMzvTE4h7uT7hWR+E9
+	q4M+pxOV2Q3lLP1UFhjN4v8/hMCtcyY3OjuViXqh+BLhNGc4ziGjzA8K10wqj280e64xD+Fsdle
+	dKJgKovaLAMhzTpJzClqBsFvMr
+X-Received: by 2002:aa7:c2d5:0:b0:6b4:9221:8932 with SMTP id
+ 4fb4d7f45d1cf-6b6e7867b67mr4141a12.10.1793941942269; Thu, 05 Nov 2026
+ 21:12:22 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,99 +104,65 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261103212004.1356327-1-joannelkoong@gmail.com>
- <20261103212004.1356327-5-joannelkoong@gmail.com> <sashiko-outbox-198104@kernel.org>
- <CAJnrk1auD1u1J0yQrXOeJrxvVsQfbxYf+nsMS-9qFQ0hfchG-w@mail.gmail.com> <aux4FcaEdTrJ60NR@thinkstation>
-In-Reply-To: <aux4FcaEdTrJ60NR@thinkstation>
-From: Joanne Koong <joannelkoong@gmail.com>
-Date: Thu, 5 Nov 2026 16:05:19 -0800
-X-Gm-Features: AclHuK_favFgX046LpM4Y2ghwoXnBoevU1JO2s_bhvQczk_tdcYOmudpHFcbITU
-Message-ID: <CAJnrk1Za6=B=Y3HOaJjhU7orq_P27QFe92_n9F2y2+108xDSOA@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] mm: add anonymous mTHP folios to the deferred
- split list
-To: Kiryl Shutsemau <kas@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
-	david@kernel.org, ljs@kernel.org, baohua@kernel.org, usama.arif@linux.dev, 
-	hannes@cmpxchg.org, alex@ghiti.fr, ziy@nvidia.com, 
-	baolin.wang@linux.alibaba.com, liam@infradead.org, npache@redhat.com, 
-	ryan.roberts@arm.com, dev.jain@arm.com, lance.yang@linux.dev, 
-	vbabka@kernel.org, rppt@kernel.org, surenb@google.com, mhocko@suse.com, 
-	willy@infradead.org, linux-mm@kvack.org
+References: <20260930210750.1487547-1-chang.seok.bae@intel.com>
+ <20260930210750.1487547-19-chang.seok.bae@intel.com> <20260930214337.90CD51F0089A@smtp.kernel.org>
+ <2b4779f4-c3d9-4b58-bc97-f31dba58fc7f@intel.com>
+In-Reply-To: <2b4779f4-c3d9-4b58-bc97-f31dba58fc7f@intel.com>
+From: Jim Mattson <jmattson@google.com>
+Date: Thu, 5 Nov 2026 21:12:09 -0800
+X-Gm-Features: AclHuK_opVd9yhWh8shRW90UNd702LBlE68EsvOSF_68yFBs47J1mEWVZ_Maozw
+Message-ID: <CALMp9eRJVdROXGE55qa3VGZBxaMPLoyMhZTwpkHPjA0nu9Xnvw@mail.gmail.com>
+Subject: Re: [PATCH v8 18/20] KVM: x86: Expose APX sub-features to userspace
+To: "Chang S. Bae" <chang.seok.bae@intel.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 5, 2026 at 4:37=E2=80=AFAM Kiryl Shutsemau <kas@kernel.org> wro=
-te:
+On Thu, Oct 1, 2026 at 1:35=E2=80=AFPM Chang S. Bae <chang.seok.bae@intel.c=
+om> wrote:
 >
-> On Wed, Nov 04, 2026 at 03:50:58PM -0800, Joanne Koong wrote:
-> > On Wed, Nov 4, 2026 at 1:21=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> > >
-> > > Thank you for your contribution! Sashiko AI review found 1 potential =
-issue(s) to consider:
-> > > - [High] mm: try_to_migrate_one() triggers deferred_split_folio() on =
-underused mTHP
-> > > --
+> On 9/30/2026 2:43 PM, sashiko-bot@kernel.org wrote:
 > >
-> > Hi Sashiko,
+> >> @@ -1733,7 +1737,8 @@ static inline int __do_cpuid_func(struct kvm_cpu=
+id_array *array, u32 function)
+> >>      }
+> >>      /* APX sub-features */
+> >>      case 0x29:
+> >> -            entry->eax =3D entry->ebx =3D entry->ecx =3D entry->edx =
+=3D 0;
+> >> +            if (!kvm_cpu_cap_has(X86_FEATURE_APX))
+> >> +                    entry->eax =3D entry->ebx =3D entry->ecx =3D entr=
+y->edx =3D 0;
+> >>              break;
 > >
-> > I'll try to address these points below.
+> > [Severity: Medium]
+> > Does this code leak unfiltered host CPUID capabilities for leaf 0x29 to=
+ the
+> > guest?
 > >
-> > >
-> > > commit 82b7b7063b986d802fe52e75e17211e58f3f420c
-> > > Author: Joanne Koong <joannelkoong@gmail.com>
-> > >
-> > > mm: add anonymous mTHP folios to the deferred split list
-> > >
-> > > This commit queues newly mapped anonymous mTHP folios of at least 2M =
-onto the
-> > > deferred split list in map_anon_folio_pte_nopf() so that underused mT=
-HP folios
-> > > can be split by the deferred split shrinker under memory pressure.
-> > >
-> > > > diff --git a/mm/memory.c b/mm/memory.c
-> > > > index 0c9ed04528d88..44376321180b5 100644
-> > > > --- a/mm/memory.c
-> > > > +++ b/mm/memory.c
-> > > > @@ -5477,6 +5477,8 @@ void map_anon_folio_pte_nopf(struct folio *fo=
-lio, pte_t *pte,
-> > > >       folio_add_lru_vma(folio, vma);
-> > > >       set_ptes(vma->vm_mm, addr, pte, entry, nr_pages);
-> > > >       update_mmu_cache_range(NULL, vma, addr, pte, nr_pages);
-> > > > +     if (folio_test_large(folio))
-> > > > +             deferred_split_folio(folio, false);
-> > > >  }
-> > >
-> > > [Severity: High]
-> > > When deferred_split_scan() splits an underused PTE-mapped mTHP folio =
-queued
-> > > here with PG_partially_mapped left clear, doesn't unmap_folio() trigg=
-er a
-> > > false-positive deferred_split_folio(folio, true) transition during th=
-e split?
+> > If the host supports X86_FEATURE_APX, KVM fails to apply
+> > cpuid_entry_override(entry, CPUID_29_0_EBX) or explicitly clear the
+> > unvirtualized registers (eax, ecx, edx) for leaf 0x29 in __do_cpuid_fun=
+c().
 > >
-> > Yes, but I don't think this is specific to this series. Splitting any
-> > PTE-mapped anon large folio that isn't already marked partially mapped
-> > goes through the try_to_migrate_one() -> folio_remove_rmap_pte() path
-> > you describe below, where __folio_remove_rmap() requeues it as
-> > partially mapped mid-split. That already happens today (eg underused
-> > splits of PMD THPs whose PMD has been split). This series makes it
-> > more frequent since underused mTHP splits now take that path too, but
-> > this issue is pre-existing.
+> > This could bypass the capability mask initialized in
+> > kvm_initialize_cpu_caps(), violating the KVM invariant that new
+> > guest-visible features must default off and be explicitly enumerated.
+> > This might break capability negotiation and live migration between host=
+s
+> > with varying hardware support.
+> >
 >
-> I think it is a bit of understatement.
->
-> For mTHP it is every underused split: the folio is always PTE-mapped and
-> try_to_migrate_one() drops one PTE at a time. Each underused split bumps
-> split_deferred for that size next to the new split_underused, and a split
-> that fails at folio_ref_freeze() leaves a fully mapped folio flagged
-> partially mapped on the queue, which the next scan splits without
-> calling thp_underused().
->
-> Can the fix go in before this series? I think it is hard requirement.
-> Let's not brush if off as pre-existing.
->
+> Leaf 0x29 currently defines only one sub-feature bit, which comes when
+> APXF presents. Additional filtering may be necessary when more feature
+> bits are introduced and then filtering becomes more necessary in
+> practice.
 
-Sounds good, I am looking into this and will submit a fix separately.
+Sashiko is right. The whole point of masking CPUID leaves in KVM *now* is
+so that an older kernel running on future hardware does not blindly
+advertise new sub-leaves or new APX sub-features in EAX/EBX/ECX/EDX that
+KVM does not yet know how to virtualize. Adding the filtering only after
+future hardware defines more bits is too late for legacy kernels.
 
-Thanks,
-Joanne
+Why did you define CPUID_29_0_EBX and initialize it in
+kvm_initialize_cpu_caps() if you didn't intend to use it?
