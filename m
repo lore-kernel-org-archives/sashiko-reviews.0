@@ -1,32 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793994022;
-	b=iqdb8zk7Ntq8lLmkbplqYfhll1t8Ri4yC9p9ApWDU79E7hdMJqMsN1+eaLO9LAE4BxUg
-	 FEU92snpKpz2M+2pSTHCAmLP7HMeG8P4TOgv2EYjbdOcgRHyKIMmuXt+qGaEq3HG7W+ej
-	 aDNp9RD2RvPh66kTipYEFWaaxF6Kxf74ZpK3IMbLahEsV6vJPWFtmGyMtkqA83oIHh6vz
-	 PNfyqJX9OwI6HcEAWOLeAlQnGI0n/VKovA0NOd/Naha5FrY7oekIxMLeqPBh4lGsuQOLG
-	 Px5RBjyk8N7vtz94qA/jmE16DBsx61BDgJlXnXkWVi1d+40gQSfavY6VOTcP0DpSTUw==
+	t=1794000651;
+	b=gRKPiHVW+RRSr3WKDmKWkGJLCCwEqDuNsMvCf4i9G14jsVrmnL8JyQJp5ki5HK7Bzs9l
+	 3+7I0Hgqn1g18YGv5HGEdqMiGBFFAygbVaEfuIP/ptEeVNEsRaq/YGh/bD2BqmDpB1qJp
+	 Xj+OB8bfh2Yj8tGbaI4Qwcdm+gOMmlT005nkciggOU6O103D6mJdUGEQmnxjvkMHCaL2p
+	 5mCCy0DW7rEeKtVFB5RAT5Vk+T1ySLq1+BCN16HDgj5ZvcZGNMtGul0P1RzC5spDADMdH
+	 BkN8sABnjn4h69a+TLlsfotEtLdi38MNXsqn7F8PMtX9MKZcW6CVuQwxPiq5g37NOWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793994022;
-	h=Received:MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:
-	 From:To:Cc:In-Reply-To:References:Date:Message-Id:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=MOpDpeNgb/GGPkym8lq255jwdO03Yv3VcEF5RByy9tE=;
-	b=UQVls6hY7PDXdsJQO8A7eb4DxLuvIPyoJJ+YYpo7aicThMzcW7Gd80bpM3tg+pBC4FyL
-	 hFQ2Is0GenaK0ayT/qmE+YBRfI/27SvhMrv+9EO+DTJPAPLfWIBYNxJ5D6hYEyyKRtTMq
-	 6gI5JeXxLH+zctPg3SqyItNpg9lxgRbj62WrkANPen7OrOqxJKOPyB4CUMpwbuSJwG87H
-	 5NVKa5oSXlrPIfS1cLQNghxe3vxA1u8AfYSLaGDhNiiGgXWoerKV6smzx5MBVXgKtjYGZ
-	 1RmelSdbx0HAL7aDiDQ+Sjv3N1awmI1eKe5bEgep7AUB4EMGOApJeI+O+UJYClcbmdw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794000651;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=78M0zrQN/RKEdSRK6OCH+d/aWaVmSInC9noJ9fmrXic=;
+	b=uqwK7GOR7aYpFu2ZAbIRmyQMmF+nZBikhZaPTD7P9BRe2nZQgnQmAsSgye6bOdkpXo9t
+	 jbslPGt5fJd7ByW0wt+uZXyXzwEltQzjwdsGiZD5s6AGODS4CQy+XlXHJLtTvxryk6q+A
+	 P6svhi2nAqxLlY2EC2BttRyUAkY/I0Qi050gzEZB8qM76y1pLMXXfe/IJJldGummsAPRK
+	 wU5COYeEInzxU8FcNxTwDZLbDpYwdMQH5TMfyUmECAGn8/+bcgMgbZ59nl5wvp8iT8ceo
+	 oLCSDHOOggxY7kfGhrr0rQdf5jF6B8s7NG0FaOy0FU27YOCsM7LNj9ixuYKBV48RYFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PcT7Yd6C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773B2606A326;
-	Fri,  6 Nov 2026 19:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B8D1F0089F;
-	Fri,  6 Nov 2026 19:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3FF606A326;
+	Fri,  6 Nov 2026 21:30:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PcT7Yd6C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C341F0089F;
+	Fri,  6 Nov 2026 21:30:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794000651;
+	bh=78M0zrQN/RKEdSRK6OCH+d/aWaVmSInC9noJ9fmrXic=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=PcT7Yd6C7pVaiTAbNk1xDLmne8b05Xa/cipXiW5cKizpmjkF8uk36vMmF5HpW0CdL
+	 dLC7hjPx7aIloMlLA76aKVG2HmBTP+1Wdag84B3HLYcK58NiBjgkkOLElVj5Q8/LiH
+	 lSj8ua5j+cZ7vJPxwVofcbhsS5yFzB07MDV8SvrVM/22ses78wF+WKKE2OPiC7GYOP
+	 xAN3hLiiF6J68PJCuwXfxU/vdqjpoetaT6cmHUGeZHEsITB/ToOftpj0bVSFEABvyD
+	 g2VNx1ouCSWm0LZR4Ulh6bpSKFSIntO02xcIi9Fwa2AAGqx+KvRjwVlxudMHLvT1OR
+	 9Wv2w/GMrRLfA==
+Date: Fri, 6 Nov 2026 13:30:49 -0800
+From: Oliver Upton <oupton@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v2 6/8] KVM: arm64: Add sys_reg_descs for remaining MTE
+ CMO instructions
+Message-ID: <au5HCZ4Ygasx-qKi@kernel.org>
+References: <20261106183154.3590825-1-oupton@kernel.org>
+ <20261106183154.3590825-7-oupton@kernel.org>
+ <sashiko-outbox-202094@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -36,112 +58,63 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v5 01/16] PCI: dwc: Add pcie_cap field and caching
- helper
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: Hans Zhang <18255117159@163.com>
-Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev, 
- linux-amlogic@lists.infradead.org, linux-pci@vger.kernel.org, 
- Frank.Li@kernel.org, neil.armstrong@linaro.org
-In-Reply-To: <3773fc58-a6ab-4f8d-a9a1-c865217afe84@163.com>
-References: <20261028030652.2917756-1-18255117159@163.com>
- <20261028030652.2917756-2-18255117159@163.com>
- <sashiko-outbox-187403@kernel.org>
- <3773fc58-a6ab-4f8d-a9a1-c865217afe84@163.com>
-Date: Sat, 07 Nov 2026 01:10:16 +0530
-Message-Id: <179399401605.55876.3520713514569261990.b4-reply@b4>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3038;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=1tMG3qbjDNeqUpxfEBEvQAkk2kZSTgYVoHa4KZ6UwNk=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBq7i0gBLa0hX8gTIugn2MLgSu3YqcqnGaKfSliE
- khZL5oFTgSJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCau4tIAAKCRBVnxHm/pHO
- 9QLzB/98XUV9FjvnZTWHvlQLojLVfWOzHoACcUgVHDiCq/7ZVYkJoCtPGTWAeY87dvCUBo8RYxk
- GUtJUQAxM6Kdbfc6bvVhkdbMJYgzw1ARlnHSM6rFe5ZNxhO2wJRzRu1dylIg15lRDsjgsHOUdyE
- n2GGcV/wmgckVB9+3Hlyhd8KlTcrWPkrsSAJzS7C6H5CM1gDz3iKCkE8iCv1BjaUaTWDnbZwxYe
- Da2RS37T9+o5tqMzFNLfUDIl9bPiJUQiv5rzK0BkpGvdZ4r7mzK50bFeFJXVeDVl27SvwL2gsj8
- WHO1wGfB+Zd5qVajvJelHygoWeU2HgRGKSpzR93/kohcOiXL
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-202094@kernel.org>
 
-On 2026-10-28 11:18 +0800, Hans Zhang wrote:
+On Fri, Nov 06, 2026 at 06:45:39PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] KVM: arm64: possible missing MTE_CMO_INSN entries for DC GVA and
+>   DC GZVA
+> --
 > 
+> commit c80fdbddf913183cac8f63dfc60ce6f48445eafa
+> Author: Oliver Upton <oupton@kernel.org>
 > 
-> On 10/28/26 11:15, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] PCI: dwc: unconfirmed offset returned in dw_pcie_get_pcie_cap()
-> > --
-> > 
-> > commit c6fcd840cdb57dd351ea1787cae915ad3164fb13
-> > Author: Hans Zhang <18255117159@163.com>
-> > 
-> > PCI: dwc: Add pcie_cap field and caching helper
-> > 
-> > This commit adds a pcie_cap field to struct dw_pcie and introduces a
-> > dw_pcie_get_pcie_cap() helper that lazily looks up and caches the PCI
-> > Express Capability offset on first use once confirmed via a DBI read-back.
-> > 
-> >> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> >> index 6d788aa000117..dede6b3966585 100644
-> >> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> >> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> > [ ... ]
-> >> @@ -832,6 +834,42 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
-> >>   	dw_pcie_writel_dbi(pci, reg, val);
-> >>   }
-> >>   
-> >> +/**
-> >> + * dw_pcie_get_pcie_cap() - Return the PCIe Capability offset
-> >> + * @pci: DWC instance
-> >> + *
-> > [ ... ]
-> >> + * Return: the offset of the PCIe Capability, or 0 if it could not be
-> >> + * found or has not been confirmed yet.
-> >> + */
-> >> +static inline u8 dw_pcie_get_pcie_cap(struct dw_pcie *pci)
-> >> +{
-> >> +	u8 cap = READ_ONCE(pci->pcie_cap);
-> >> +
-> >> +	if (!cap) {
-> >> +		cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> >> +		if (cap && dw_pcie_readb_dbi(pci, cap) == PCI_CAP_ID_EXP)
-> >> +			WRITE_ONCE(pci->pcie_cap, cap);
-> >> +	}
-> >> +
-> >> +	return cap;
-> >> +}
-> > 
-> > [Severity: Medium]
-> > In drivers/pci/controller/dwc/pcie-designware.h, the kernel-doc for
-> > dw_pcie_get_pcie_cap() states that it returns 0 if the capability could not
-> > be found or has not been confirmed yet.
-> > 
-> > However, when pci->pcie_cap is 0 and transient DBI data causes
-> > dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to return a non-zero offset cap
-> > while the confirmation check dw_pcie_readb_dbi(pci, cap) == PCI_CAP_ID_EXP
-> > evaluates to false, pci->pcie_cap is left as 0, but the unconfirmed non-zero
-> > cap is still returned to the caller.
-> > 
-> > Callers that guard DBI writes on a non-zero return (such as
-> > rockchip_pcie_enable_l0s()) or cache a non-zero return in driver state (such
-> > as tegra_pcie_dw_host_init() setting pcie->pcie_cap_base when
-> > !pcie->pcie_cap_base) will then consume or permanently store the unconfirmed
-> > offset.
-> > 
-> > Should dw_pcie_get_pcie_cap() return 0 when the confirmation read-back fails,
-> > or should the kernel-doc comment be updated to match the implementation?
-> > 
+> KVM: arm64: Add sys_reg_descs for remaining MTE CMO instructions
 > 
-> Hi,
+> This commit adds MTE_CMO_INSN descriptors with mte_visibility to
+> sys_insn_descs[] for MTE cache maintenance instructions trapped by
+> HCR_EL2.TPCP so that they inject an UNDEFINED exception when MTE is not
+> enabled for the VM.
 > 
-> We have already replied to Bjorn before. According to the specification, 
-> the value of pcie_cap is not equal to 0.
+> > diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> > index b456354713443..7f7a197a9ad6b 100644
+> > --- a/arch/arm64/kvm/sys_regs.c
+> > +++ b/arch/arm64/kvm/sys_regs.c
+> [ ... ]
+> > @@ -4394,6 +4403,15 @@ static struct sys_reg_desc sys_insn_descs[] = {
+> >  	SYS_INSN(TLBI_VALE1NXS, handle_tlbi_el1),
+> >  	SYS_INSN(TLBI_VAALE1NXS, handle_tlbi_el1),
+> >  
+> > +	MTE_CMO_INSN(DC_CGVAC, bad_cmo_trap),
+> > +	MTE_CMO_INSN(DC_CGDVAC, bad_cmo_trap),
+> > +	MTE_CMO_INSN(DC_CGVAP, bad_cmo_trap),
+> > +	MTE_CMO_INSN(DC_CGDVAP, bad_cmo_trap),
+> > +	MTE_CMO_INSN(DC_CGVADP, bad_cmo_trap),
+> > +	MTE_CMO_INSN(DC_CGDVADP, bad_cmo_trap),
+> > +	MTE_CMO_INSN(DC_CIGVAC, bad_cmo_trap),
+> > +	MTE_CMO_INSN(DC_CIGDVAC, bad_cmo_trap),
 > 
+> [Severity: Low]
+> This question rests on an architecture detail that could not be confirmed
+> from the kernel source: can SYS_DC_GVA and SYS_DC_GZVA trap to EL2 via
+> HCR_EL2.TDZ or HFGITR_EL2.DCZVA when MTE is not enabled for the VM?
+> 
+> If so, encoding_to_cgt[] maps both instructions to CGT_HCR_TDZ and
+> encoding_to_fgt[] maps them to HFGITR_EL2.DCZVA, which is marked NEVER_FGU
+> in config.c because the trap bit is shared with SYS_DC_ZVA.  Without
+> MTE_CMO_INSN entries for SYS_DC_GVA and SYS_DC_GZVA in sys_insn_descs[],
+> triage_sysreg_trap() has neither an FGU bit nor a visibility() callback to
+> filter them, and will forward traps from a nested guest to L1 when L1 sets
+> HCR_EL2.TDZ or HFGITR_EL2.DCZVA instead of injecting an UNDEFINED
+> exception.
 
-Then please update the stale the kernel doc.
+Urgh, I'm starting to get the sense that we should pursue a generalized
+solution. This relies on adding a subtle detail to KVM's trap behavior
+when what we're trying to do already has a direct description in the
+architecture...
 
-- Mani
-
-
+Thanks,
+Oliver
