@@ -1,50 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=220.197.31.3
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794073332;
-	b=ZgWx1M6M1Zr/fFXiC+TllC/5WHrj0N9HOnzVhW+TcP40kF8uV8n54KTrf4x4kCRDUnyt
-	 C6Gq/ked0/93ztkj66UZ1Fia5EpeuD7X+QIf4973ae4wxGHp5S63BfWWVN9JWaUQ8XLHS
-	 /BwhXMFjEMOpOaLkBgMT+kMXVv9sTAHNNtzjWOib5KdihJVNEGYa0B7AF8BDwr4qfsvpQ
-	 1yn5sdK1RDTso4lb09pFwjLwVAsUWufgotGz7w5BCD6pwMMhBtvL9UjRwMGdqxiV3XBl/
-	 TBmGfUl8WJgDHr7kmz1tFbuQZRoHwJI8Y95mW5FsrcD5EyQpXL34iZdpt76WfZzRthQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794073332;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
-	 X-Coremail-Antispam:X-Originating-IP:X-CM-SenderInfo;
-	bh=T0TcPMhnJboefGjG0dX42ucxF+Z41m2N3+6Nxl59W/o=;
-	b=Ko7ojFOFFpeQEcGCbm8imvT29qrM4wOgksADi2e9zSF8OkJUb7oCZaGKurSEivXoq+DC
-	 US1niAnRidlmIw/AkCZmgd9bbM3Mrm5N6pTgjUEe8s8Mcj5oDWLs6aCj5zBYEnbbfpox4
-	 Nwdtd9229gvoa4UchPNFlOYdp6t8w6MS3xRY27fzUHPOIJ317dNty5EDHk5o8nAnr3crt
-	 k7UnoRC7bbrbcaOZvbcFn2KH5A0m447yMbemoBmPazURpqlKwdNK9bfz1uyQofbndjUNF
-	 If0tXEwDUC2Zr8P5GzL/k61gtSS/oDzv4/DHIG2wa6lizfJw4paIzwihHdz+hRpKW5w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=163.com;
-	spf=pass smtp.mailfrom=163.com;
-	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Fi221Vvl;
-	arc=none smtp.remote-ip=220.197.31.3
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794074178;
+	b=jbQO5wPDMCbdq0gOFx2mcxuUeAzE0yC9XF/CjX4Q6qLTbtbVfE+6k4yPWG4oyppaxgbp
+	 DrWBQWF47twDYIqHQhIADLdPn69+DZSNc4H4nJ2CKlol25wlmUwT52sli/yF5tV7dHaL+
+	 zC8EAxgmtxlVIv5eJODblPGJYMfGlftzUKkOMQhB1ff2fIL0/ZDw+CpBBbXmmD4sjdg+R
+	 7dhQF3yZgTW0/SUjqfL8rrF4vgn2Ctxm/LmnhmYQ15wbUuiAo5qnKkECFuh6fUVhYVk0b
+	 PTDThe1l9iB9IkNTBGADsD5AWSE0tPZ0BDdKt+x6YcsormH59qs0/Gd0remVvjALLVA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794074178;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
+	b=jBvBPPSTNp6E9chjrvYdSdaeeikgInVw1Q4l0NQgcVzlPAYUZ8WyEsDMahSRkr6RIVIk
+	 KSEqGnnQabrj6XxV5eVpllTuaoShcqVb9t1OIbkEFzgfi74LHKCUbATpBKJ8Vub8ALyht
+	 PZFE2pl6NxeMBVYB2jlBnw7jACrX5LqWlD9ouX/phkum9XKWLgKzDOVt8RHYFDiL4mgyk
+	 TPLayb94g4fmgds+abfqsZ7YO3gJkdHN2UcxIZU7Zn6A1LIKX8v2KLs+MGExUfb7Q6u2c
+	 Z804OPSHDz0b1bI28sJvWejUfOfdUoc+nqvRdaN6cYIWXPQ/xIieeNzzR8tdjd7WlIA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=At1kT0Lw;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.44
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5BE606A33C;
-	Sat,  7 Nov 2026 17:42:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E5BE606A33C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C2B606A326
+	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 17:56:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 85C2B606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Fi221Vvl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=T0TcPMhnJboefGjG0dX42ucxF+Z41m2N3+6Nxl59W/o=;
-	b=Fi221VvloIkNvZbdj3lKq+HdEGQPtgHh2/PWzntI6Mo1izjyXJ/McQnd04eCYp
-	o2csqEQI2t/NQWx37zq1bOGSzaay7/KWf4DsGH/z0mxkNGlwWn1R7g0tBzh6JUl+
-	jjOWCsqtGE3wci9D6Uv8uEGJn/w+SLk1nn1NzgnoJLxzo=
-Received: from [IPV6:240e:b8f:91b3:d000:dbd3:438:3de0:f148] (unknown [])
-	by gzsmtp3 (Coremail) with SMTP id PigvCgDHYznHYu9qSfN5Eg--.55065S2;
-	Sun, 08 Nov 2026 01:41:27 +0800 (CST)
-Message-ID: <5512a99d-9c72-4988-aa94-0826d098a09d@163.com>
-Date: Sun, 8 Nov 2026 01:41:27 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=At1kT0Lw
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3ad47c246f8so190756a91.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 09:56:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794074178; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Jgrp9Gtqf3H3lMLMTH7jjJjiemU7lTAlsEIIoxa9tuXti6VyjX3Ug57pksJz87BFhq
+         MkWXo05zKHJ8f4lYO5dpjjvnk+A52dUFAzVJde4klaayZQGkKaYWizhbOG3W1eSk2FAc
+         c1IZX3CxzxQoXuZT1LY9oFfCQK9Ut5D78+sAoOtU36HILK2Hu+vgxR/MO4lwDUBjMRkj
+         pStSj4VMMyUHAhxgwC9w36dw/KH8ssy1BQQq8rKR6jY2SSMIVVw1Jk7LeOFVtCi4ELfw
+         j/wCcxB7wqAfcVHemU8DtgrNyNnId6AsCuWMdsnwIakhJnFYw9PUpX682BUNiaPuQwg6
+         rXPg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
+        fh=mTP6TkWV1IhQRgyhsEpYqIpiXvhDlZKdHAfNRdOTDjk=;
+        b=T0rGF7aawHnRfl8RwdBOfffKCkTY4cutpSUdOg0YBjiJPaNxERwqkjyH76W52lT1i/
+         s5wOD4DS+MdOOK2C4pcl4S4SkHwQS7CSAYPBwVmDXIQNFO+HuLvaGGGz1NZw6Bg3CB/C
+         gqQT1izjU51gaQNKo6ZN3vQBCiBQ/6gpsWsEAmRu6G9IL6J7At02aNpBN2g8e3GlfkJy
+         WeM4t20TXPVTbL3wa43b3sl8ix/tK/alBLoMzEs/1kjFXVkL4ZcGIal4FaF4+9Fwft2C
+         Rze7GjnVwuyOLE/jjm1JPacSdFbs86XiZIRBP+e5Krr17pOUq2lOF6qVCsiued05cMc9
+         +Uow==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794074178; x=1794678978; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
+        b=At1kT0LwI/iBDtSEyVC2AYC64RgdK8nvSVdy8M/P2oz0jyzvKeNZmkOApAUu4pjs51
+         xS/I5fdZLoEdjlu69olFvUtwL9KbPm6Uw/uXDzLPKISpF1LfzQH9Xtuluyxv4i+xsdTt
+         5whQ7rEaSU+6+8bEvwCDVjTkKCHkaPHG80G90OVU6WG0Dozik5Vv4+d081b3oj/R6k2S
+         wu+Hu32Eh5D+L9U1T3df9GZ4ox/Iu8Ta35JvWFP9f147uH4CN7E5pBmecsRT0JCiAy0J
+         1yEFV1J/bjFMWZ2oM7bXtTlltgWgACo+hz6RemaMHH8w0ONrCD1pPx0Uab0SLL1XGsTR
+         10Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794074178; x=1794678978;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
+        b=Ayqa7HdbLyqiAC3MOx9VIziQSsb0Sbkcs+emAxNUUQUFbFnREa6cpyBvruJlLEjY4f
+         mqsrmDBDt6P6tDtyTF1/mlGyA6ptwSDxAR2/JO2mmS87h/qLsCe9GZnDEt/i0xAW7E2Q
+         4aaKRToLFvBy0OXs8513y1pjNzaMTiqyUyFZeszXHyV/9X9XXKp7FDk7z7vNWDnBAL19
+         lvoVqi38uaG2atALeN0ok8ppMUpoYbT3lZZJILsPoHr6OX/6YUf9uATZWamcya+KwqIR
+         b+44xJi0y7o9X7CL0/o87KIhD2wnaTc+ygxkPgFZCeb5vSq/KhyqTko3Yghx/rkwJ1HM
+         Zf0g==
+X-Gm-Message-State: APuU4Z/njfJkEZno7qTEjyY0LrXngSLgf/rjTs7donK8fyqfFFxna/uL
+	H8JqAqreNzEoSROxyl2hQBBUpdOVNawaLQ2Uf0aJRJzFe0l9NcB8ynexEDawbtVvQ+tK1HHjNi2
+	UkGCet6LJ+ugUGLLfdTpxoTqjgODGcqNJtdXM/SvGeA==
+X-Gm-Gg: AYBFou0zSdTUgzqZHUegReP7YT9w5V28zLx418dTPsKPOswDVQrUD5Xes9VjGAIhUdJ
+	ZG1wSaIXeQmhfyoe1JHySQ3E8MThcXL4MXZWtDa0EiTnk35vXnR+Q0cDFZGwe/S2tZPtvbIWh+q
+	gH1iDTunAi5ivY3l9QtwQXoxu+zpqxINzIPxTOuMtSuvmZchQZrLIECCUwQ60KUk87e/mgEhu3X
+	WKH44lLHPgZSJrnhJri73Td/RzFO8+S0JAnwZIhMbWaC/lH4LM23KpBQWRqzhjY1bnRm2nQWnRH
+	cuNrZ6WLtvzb1mc/sIQAJqOhpLqVxWbuG4RUs/tAhYdhg91KM0O0wf//JfFMOb0m5HhTQaGipvH
+	LE4r2qT5dhWi7gcF6si6adEvMy/7wU4rGyi2HHQ==
+X-Received: by 2002:a17:90b:4a89:b0:3b0:975b:2256 with SMTP id
+ 98e67ed59e1d1-3b0db6f8e05mr9097288a91.4.1794074177596; Sat, 07 Nov 2026
+ 09:56:17 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,125 +103,19 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/16] PCI: dwc: Add pcie_cap field and caching helper
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev,
- linux-amlogic@lists.infradead.org, linux-pci@vger.kernel.org,
- Frank.Li@kernel.org, neil.armstrong@linaro.org
-References: <20261028030652.2917756-1-18255117159@163.com>
- <20261028030652.2917756-2-18255117159@163.com>
- <sashiko-outbox-187403@kernel.org>
- <3773fc58-a6ab-4f8d-a9a1-c865217afe84@163.com>
- <179399401605.55876.3520713514569261990.b4-reply@b4>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <179399401605.55876.3520713514569261990.b4-reply@b4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:PigvCgDHYznHYu9qSfN5Eg--.55065S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxuF43Cw48AFWfArWUCFy3Arb_yoWrGr18p3
-	9rJayYyF4DJr42vFnFv3WrXrnIyasxAFW7WwnrGrnIvr9Fyr17KF4ayFWjg3Z7GrWIkr1j
-	9rWaqr9ruFn8JFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jUzVbUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6wdgBGrvYsdbgQAA3y
+References: <20261107164305.11476-1-lui2012qwq@gmail.com> <sashiko-outbox-203076@kernel.org>
+In-Reply-To: <sashiko-outbox-203076@kernel.org>
+From: Chengyu Liu <lui2012qwq@gmail.com>
+Date: Sun, 8 Nov 2026 01:56:06 +0800
+X-Gm-Features: AclHuK9CALZ_fnVs06UuMczhS_NxicTk_7Y07aK9CoCt30E_RB7xhrK7ulJoreQ
+Message-ID: <CAE=Q7=6S1mGX9no7r-Cu2x90gqSBB4TPk=OYWe-npUwLabCPmQ@mail.gmail.com>
+Subject: Re: [PATCH] md/bitmap: fix missing_pages restore in resize rollback
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sun, Nov 8, 2026 at 12:53=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+> - [Low] md/bitmap: missing Fixes trailer for commit c9d650322829
 
-
-On 11/7/26 03:40, Manivannan Sadhasivam wrote:
-> On 2026-10-28 11:18 +0800, Hans Zhang wrote:
->>
->>
->> On 10/28/26 11:15, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>> - [Medium] PCI: dwc: unconfirmed offset returned in dw_pcie_get_pcie_cap()
->>> --
->>>
->>> commit c6fcd840cdb57dd351ea1787cae915ad3164fb13
->>> Author: Hans Zhang <18255117159@163.com>
->>>
->>> PCI: dwc: Add pcie_cap field and caching helper
->>>
->>> This commit adds a pcie_cap field to struct dw_pcie and introduces a
->>> dw_pcie_get_pcie_cap() helper that lazily looks up and caches the PCI
->>> Express Capability offset on first use once confirmed via a DBI read-back.
->>>
->>>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->>>> index 6d788aa000117..dede6b3966585 100644
->>>> --- a/drivers/pci/controller/dwc/pcie-designware.h
->>>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->>> [ ... ]
->>>> @@ -832,6 +834,42 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
->>>>    	dw_pcie_writel_dbi(pci, reg, val);
->>>>    }
->>>>    
->>>> +/**
->>>> + * dw_pcie_get_pcie_cap() - Return the PCIe Capability offset
->>>> + * @pci: DWC instance
->>>> + *
->>> [ ... ]
->>>> + * Return: the offset of the PCIe Capability, or 0 if it could not be
->>>> + * found or has not been confirmed yet.
->>>> + */
->>>> +static inline u8 dw_pcie_get_pcie_cap(struct dw_pcie *pci)
->>>> +{
->>>> +	u8 cap = READ_ONCE(pci->pcie_cap);
->>>> +
->>>> +	if (!cap) {
->>>> +		cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->>>> +		if (cap && dw_pcie_readb_dbi(pci, cap) == PCI_CAP_ID_EXP)
->>>> +			WRITE_ONCE(pci->pcie_cap, cap);
->>>> +	}
->>>> +
->>>> +	return cap;
->>>> +}
->>>
->>> [Severity: Medium]
->>> In drivers/pci/controller/dwc/pcie-designware.h, the kernel-doc for
->>> dw_pcie_get_pcie_cap() states that it returns 0 if the capability could not
->>> be found or has not been confirmed yet.
->>>
->>> However, when pci->pcie_cap is 0 and transient DBI data causes
->>> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to return a non-zero offset cap
->>> while the confirmation check dw_pcie_readb_dbi(pci, cap) == PCI_CAP_ID_EXP
->>> evaluates to false, pci->pcie_cap is left as 0, but the unconfirmed non-zero
->>> cap is still returned to the caller.
->>>
->>> Callers that guard DBI writes on a non-zero return (such as
->>> rockchip_pcie_enable_l0s()) or cache a non-zero return in driver state (such
->>> as tegra_pcie_dw_host_init() setting pcie->pcie_cap_base when
->>> !pcie->pcie_cap_base) will then consume or permanently store the unconfirmed
->>> offset.
->>>
->>> Should dw_pcie_get_pcie_cap() return 0 when the confirmation read-back fails,
->>> or should the kernel-doc comment be updated to match the implementation?
->>>
->>
->> Hi,
->>
->> We have already replied to Bjorn before. According to the specification,
->> the value of pcie_cap is not equal to 0.
->>
-> 
-> Then please update the stale the kernel doc.
-
-Hello Mani,
-
-How about modifying it to "stale the kernel documentation"? If the 
-description below is valid, do I still need to send the v6 series patch?
-
-
-+ * A DBI read issued while the controller is not accessible returns
-+ * platform specific data, and a transient bogus value must not stick in
-+ * the cache.  The offset is therefore only cached once the capability
-+ * ID has been read back at that offset.  If the read-back does not
-+ * confirm the capability, the offset is still returned for the current
-+ * access but not cached, so the next call performs the lookup again.
-+ *
-+ * Return: the offset of the PCIe Capability, or 0 if it could not be
-+ * found.
-
-
-Best regards,
-Hans
-
+Thanks, v2 sent with the Fixes tag.
