@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.15
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.28
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794076456;
-	b=mm1YcEw/Cr6iqcWcWFDYA31XcdAnVks/IYqP5bRjQGZRb2alHibKDei49/d0/dTqi68n
-	 1ToiXUvyEIy/Z8nvhI+mTCQ4MJEn0KfeuLK8ttxBe0e253FZdTBxdpsdkQXkXnHnE2h0B
-	 yX+x4g9MSn0/Db+Vgk+nY3nwJPRQqkTon/vevEizjDF0sbhAGl4sy/JCshnxy0pMMySIM
-	 i20MbQE6jvqdq49G8gPcylSPtdk0Iub9/L1gXymdFwez5JPv51vPXX9YSoopr4czBl2oW
-	 EPmIldalvQ81g+/9dWFztBsTQyPgYImY9pwwmMYdKUZLplmKHNdIESs0D/rc5qaDDlg==
+	t=1794077594;
+	b=QRqNiet7oqbR+Y3kenLh088FvF5qR0knoF+ONAuOzUE27euhafvVru/2OWcFyJRiGNf2
+	 t1Mm29rX/ZYeBtf8ulCNclbCgSYqdYHFNOaDw6pW54JeTIG/TmdEF+RWMDmqrxDxustXH
+	 s2/QCz1JDcRHFUua51djfFomis7nV2vsNLvZeisEFpggUgcy161D2n9kAJxaOzXHiqj16
+	 ki2UFXKNQJyFOFPufnVwSMTWql+/TEDVKXZ1rHZZrwpZe6Pi1yoitjpZzDvDG1TDzRavm
+	 GFkPvgqbzobbzoNotc+sXjkEf45Nf0ZJvMW5lN6MpXhcE54JqW31O45EUVPq1SnpD7g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794076456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794077594;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
@@ -24,73 +24,73 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=f6xTyKT9g5Blv07lMVe/UZy/iJ82ZahA+35e/T+Pk7I=;
-	b=ye9/Oq5slAXEgzZrBX+CEQ6D3WmZ1WffR1GZQnyPXhBKsz09APAZ/b30q8vAaO7Y/iId
-	 tIbK+7d7efuebi15n22zWLYTkiEwgbXMzeF3j87t9rpghb2ut5nDY0UGS3HXgDFzlMBF+
-	 aC9e0JPzL0/Ajyl6lvIj8U8SJUd3oSDj3EhguJy3mXYJpZkBBqevD8gyiCiHGnc9PctqB
-	 1s8XAGjysUKDOofO/uQ4J8SvTF6/3B8MCjUjo08u25VCYmMnFWcvcH7Ni9Y+tXnylkagJ
-	 tcCSRNDid89tT8EIR3zvRRYNaoEkZWlkRH8um+zouo9X3Mzukna82cqpipqCIemT2jw==
+	bh=c31snz0DQ3pC98th/8PWbhb1F+JGvI2dJgLWv8OlpHQ=;
+	b=w4Ia43jCQalWy9DRRFNk5jrAY3T3JoeJ4xzqc01juOJIByZoe53YjnGGdM6+L53Ja2mU
+	 QAZt7gkDDyn2Uz/FnW2u5PzuKZDsXc8RxteGT8mQ1guVyvk8SYrcrciVnE5/oG5IJ1IWo
+	 QUjJg7ikWT/O9fdYI3xAvoQAb8QjfvZgHxxhX4SDNrvduGAHsm0LSx78cwYin3TccyRFa
+	 S5vGvdP4fG8SJRypAv3cOyh8fcqVuXBkT3gi1zvK3Z9hmhmFzfgRoa4RMjSyFIWIsT5AD
+	 m2Lot6sd3jxHRtV04F6WFxXfAXzxc7IXNos6xDbZya5mRtX+wCMVrcCmJDA0V1a4FXQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=amd.com;
 	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=0p1jJZ93;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.15
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012015.outbound.protection.outlook.com [52.101.53.15])
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ulii8gPO;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.28
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012028.outbound.protection.outlook.com [40.107.209.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAFA606A326
-	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 18:34:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CAFA606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1C3606A326
+	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 18:53:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF1C3606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=0p1jJZ93
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ulii8gPO
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HVp3SH2NdVniEvJSF6hduWGRzTmsydNDt55PWx2mYcXiQjS9kRGuomZ6DzXaCMzesdDNlI1ulziR4sPIG3lTLIpZ1UlBK41wZPoZ5drAbnDbVOOvNskq7HeGiw9/QtYY7LpGmxcl0Ilf8jGM+JCxpxURKb5qhat61+V2HiekrAEc82DxwUHhCE+gFj3lUMKug9T71ck7mIdy6rHbxt9mx03zALkABgLyfqifzJNcvX65OZmn3LS8M+Mr23IftZME0R/QvwU/KwDop/qSQGQiIfoJNdXq3B5q+yubJni1x1IP4JJVipsRl75h8wOhqWPg7AXj5iAFz8T5ncWjkXga+w==
+ b=Ed0SeKDByl6LszL8BNukYgCeP7xHcjOEw8dxiqXA+psMrzFaeTtWANQDwTvnFogcAajnxVcQ9WdGL0Mk21kShCNR5UX4HWEx64/npgT2/TLYthtgLa0qj8FNe2Ibni+zq2bqNoxgTLvGRZ+yd8zUy1RLJLJpWrM4LGtoPiZckzPFXu75LGBK16rsDPWg0KqWJ9acmv7dY/T6ILAcdjkWaVHL9Nm1D/BTADhayqiTAPMoObKsgNOipcDC4zk1ANDu5bEMuAfYzHkOWISNkmojzOdTpWoaHE+G6ns9137MysqHCjqNQ0plXp03rKyvkgxdBI76f+lNOBFn0/rPUWX/hg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=f6xTyKT9g5Blv07lMVe/UZy/iJ82ZahA+35e/T+Pk7I=;
- b=mceTigYi4JX+2Z4Pjbswx1HAJmxNTfdbNLpKzDrLnhx1ZkgxPhbvxZqPdWA0F4/4WP7bbjR5MnU4nQp19pFjJI+0aSDuiNjFuF1fYesVf9XW5uvqJhjeMXhvBfEsZZQZXJqED2eVnD0Pp6rEe+d8BxZjDKfFN7UlN3N1Gs1LPclb7DTsWOJEtdhslJUREmdgkh8/D18tnxMTdAG+Sd9AzfnRPyhzvR3+s7IPsShmPwYIYcrObKcBJC7eaayupzs8kUCHEJAAKEPbz0ruJV4cHGXNVRwEC0cXUAA+q58kXk8TgtzMgDlZYTLnRL7oR6Kdg03tuemXhhGNXaFxuI+sLQ==
+ bh=c31snz0DQ3pC98th/8PWbhb1F+JGvI2dJgLWv8OlpHQ=;
+ b=gJAWslHvvRSGxfg+27eUBacs/3DJkGLjpvXZp/TP/YEWsBnRHhc5pGX/LpSg9vm1rlO4Bzf6MM7MGtcWBDAiY5cwWcrQwaSr/g5UD6WzrTkeJA8j9k6/K6tsPQIeYByN3V4rtQMqCrPDi2VLVAGSMRioCnFDQty8aOqAAEZ0fpBbGvtYdG+CpqYqXsx2XlzeQ0Ppd/l8Wt1K/DvvNl6ZMZQKX4r9Vh0SoslR6x/wVXH7cVEinGh5/J9rj9tjSuYdkMKhnNWJDTO0zrTRypu8yE+QrLIan+tlFcrL369yjzvGixrTIUiY3EepQI/QzD9GZBI2ETzvQow90ZAIQuOeQg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f6xTyKT9g5Blv07lMVe/UZy/iJ82ZahA+35e/T+Pk7I=;
- b=0p1jJZ93cb5i/SMfud0shkWHKycAvkrTZGOHTjc8JA4K3TLb+K9/+9aCa0sFvVR5hBXz3OSXeLFe6z4RrHRRzhgtmcmatPFvuA8Cm9r4cFiSXJ4xcX5YmMOgrla/FjSR9Jhz1c4MrtyRQ/RAHEXnM2JvUM8jImLa2vXLT6YtavU=
+ bh=c31snz0DQ3pC98th/8PWbhb1F+JGvI2dJgLWv8OlpHQ=;
+ b=ulii8gPOz1L6GHSWsn0c7UStnOzuep7MRMhBlBpBzeyG8tjcSRjI8MEVX6h1x9b1s4NiDY+PktdAF8WZelp3F7xXjY88DvEfOmJha+5dgcOKsBPZhtjWcS5IiCCjJQaX7ebca76F1YuTO3hTv/VPb0rOe8bhTej9PefFfsW2fxE=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
- by PH7PR12MB6562.namprd12.prod.outlook.com (2603:10b6:510:212::19) with
+ by MN6PR12MB8544.namprd12.prod.outlook.com (2603:10b6:208:47f::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Sat, 7 Nov
- 2026 18:34:06 +0000
+ 2026 18:53:08 +0000
 Received: from CY5PR12MB6252.namprd12.prod.outlook.com
  ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
  ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0592.009; Sat, 7 Nov 2026
- 18:34:06 +0000
-Message-ID: <b7431514-8999-4f22-8b89-38ac1b960e68@amd.com>
-Date: Sun, 8 Nov 2026 00:03:00 +0530
+ 18:53:07 +0000
+Message-ID: <cfab68e8-f6bb-4a60-b887-72edfff832b0@amd.com>
+Date: Sun, 8 Nov 2026 00:22:02 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] ASoC: amd: ps: guard adata->sdw dereferences with
- NULL check in IRQ handler
+Subject: Re: [PATCH 4/4] ASoC: amd: ps: guard SDW IRQ work scheduling with
+ interrupt_enabled flag
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-sound@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
  Mario Limonciello <Mario.Limonciello@amd.com>,
  Mark Brown <broonie@kernel.org>,
  "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>
 References: <20261107175339.3547918-1-Vijendar.Mukunda@amd.com>
- <20261107175339.3547918-2-Vijendar.Mukunda@amd.com>
- <sashiko-outbox-203159@kernel.org>
+ <20261107175339.3547918-5-Vijendar.Mukunda@amd.com>
+ <sashiko-outbox-203157@kernel.org>
 Content-Language: en-US
 From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
-In-Reply-To: <sashiko-outbox-203159@kernel.org>
+In-Reply-To: <sashiko-outbox-203157@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN3PR01CA0073.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:9a::6) To CY5PR12MB6252.namprd12.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN5P287CA0043.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:25f::15) To CY5PR12MB6252.namprd12.prod.outlook.com
  (2603:10b6:930:20::17)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -102,247 +102,164 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|PH7PR12MB6562:EE_
-X-MS-Office365-Filtering-Correlation-Id: 41d51cc0-54c8-46c2-1899-08df3cfdb49a
+X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|MN6PR12MB8544:EE_
+X-MS-Office365-Filtering-Correlation-Id: b5a9198a-e5b8-4c52-b435-08df3d005c8f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|11063799006|5023799004|4143699003|56012099006|261021121427099003|261022075727099003|261022105027099003|261009223027099003|261026121527099003|261026140227099003|261028144727099003|261102123227099003|10067099003|18002099003|22082099003|6133799003;
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|18002099003|22082099003|4143699003|11063799006|56012099006|261009223027099003|261028144727099003|261021123027099003|261022105027099003|261022075727099003|261026121527099003|261026140227099003|10067099003|7136999003;
 X-Microsoft-Antispam-Message-Info:
-	GkatCbCuBRRNwYgXdGHbS7jzr+4sye9CXsJy1UNCKr0iFo/hhbmbsSIXZDcMVdSCXxxQpZQIB9XRemXCH0DpRgJ56FDfsGKNxLdGIuL3ByWk5cRE3JGKrk+NStzQRR0a8Y8zxSMGXnyhdbNbHAd1icNdZDAapoRs4r1fX+X5cts9FIS0FNVtW7polDBYrwPSH76WGhdI9qhplTzdWP3oYL1/Hl3KCA7QJMXrwU+7EU8yyS51qDPGKBOMWE6GAV6mNV1Hyi8Fk/jFUiT9vOOaw5+Gr9AT1X5zoXamiC1S+x94ct9kYXZA7mGhqf92bLnnQMPejqnPacSV1T1tI1+DBmulJWCBFZj+uHc6JIMceCwc2eOcz+pV0R2j1GZAXc80lJgSMkcxNcBB/rc4WpPGmfCOW7MQQxmN4ySr1at3hxjLgDePOapWtiyvZ4Osdm4ngJzn6mLXDzaTMQ1F/lqjM5s+eSEXoErWJVScfolsmtMh5toskxMCL0/aHDVpoB9xcg9Ouqzdw9aH1XF2mYKcah58xUiJ690ig3f7M2B6TvKr91lw7yn/j7wlF5mDaZrwgXnUgF7TJEgR8iRQ+Bb0IapRb9Slg7MmE4hCZvFeeXs=
+	CZguFCOoZw8mx75n7Ssup562EYIyAYqik1E5UAPpLrdb8gF6JqhYnq1Q/fB2VNZEUGZdqG38WUE3RaYEkU4SjMw1iFNEXtMruevegt7EEkzPPZnL14Wzp1HxXcIz0oso0RUvRW1jL2s5j8O4MN7XUvbLxjhjQ5SdO1a9Q000rm0s1qfxz8xRPbF7W9PN8UMI5UY6lJqPJE3dultihO0UJ+97u6IOS/3SdIC74ZS2eF/xD9Fg/20iaWetO+jeyodBcDIwn5F3SFKqT+Xeshl1XafypmANIjWTHzirvflRxhXI/TI10UdMoXjBwS9vPDHfvzytJ8BwF/2a1nCxUI9TOBYuv6VZIED/3B+D47MGtoe+a1z1/4fJjMdgzusV7XkdWRjEdoO+XfG6tL+GY5Y6FtT3ItG6zp2fSgCer1BX5/G2CHr3uKk3QTkEt9LSj/UoMgAiZMg+d2Ri9bhOOp02iu9JEayqlrGzA/AMqEJC+Y21ru28oXlwHB+5DgSzWJN1To+od43fURL0bJulLVv+Ejft9pq/sFlzpMNrP/4Yq1TcIfOh5/2f9KXIcou5qVDVkcbBuxc89W6mvj4oyU0uCROejnJe0IrLLeZ4n3KSPT5mKbCWwU5uaIaUtbMx/p3s
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(11063799006)(5023799004)(4143699003)(56012099006)(261021121427099003)(261022075727099003)(261022105027099003)(261009223027099003)(261026121527099003)(261026140227099003)(261028144727099003)(261102123227099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(18002099003)(22082099003)(4143699003)(11063799006)(56012099006)(261009223027099003)(261028144727099003)(261021123027099003)(261022105027099003)(261022075727099003)(261026121527099003)(261026140227099003)(10067099003)(7136999003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RGtldjRDSk1yMHlnTkp4OXE0UUQwRzA0MjFvbnN1c01OQllJOG91Sjd2b1Nu?=
- =?utf-8?B?Y0E5eGFRTGpNeXNlRHNQZVh2UVhWRFpGaUtrbC9LKzJRRnk4NDZSbkYxa1p0?=
- =?utf-8?B?ZjdmN3ZaL3RYV04rbE4vYjBpTjdOSjFRbi80M2YxSDJtQ1pGTHptVjdCT2xt?=
- =?utf-8?B?dFp4ZjYxZ2hoUzIrTEViWVhxWkEwZmkyY09NSWM5TnBReWxLdlg0VEJVVWh4?=
- =?utf-8?B?VHErZXdhalpaby9xYWxsL25mVU10S01PdCs0bStzWDVFbHdIOHBXR3Q4bzY5?=
- =?utf-8?B?dTlLaExFTVROdEsrbnZOdEtSZGJpOUpTeTVBZzdQSExFSzZUbzlqRFhyRlpC?=
- =?utf-8?B?QmFacGFVRmt5M3hUb3VhblZCRVorcWFVa0ZiT0JBaWp6YmxoeTRNU2tNNitV?=
- =?utf-8?B?SCtuSWNYNWpjMGVodXJYdXNwVHdDc2QvSjAwWURMSmM1U1UrZDErWFlVOEhP?=
- =?utf-8?B?eWxDVjZVTFpTSmhkT2pvSnBTU01HdTVqN2pmTUpwbWZ5V0kwcFgrc29RaXBQ?=
- =?utf-8?B?SjJiS3k5bmd4UXVlWnNWTERnWldsMzdpQTF6ekFFN3B2Ylp3NFhMWXE0U000?=
- =?utf-8?B?QkduNktoTHBxUUpRb040SlBpWExubXZxMzUwN2JCSHNJWkZnSCtheURLNWtT?=
- =?utf-8?B?MHlOL3BvMU5nWm12MURDODh3bE9jNmxDeFdzcTZFU1ZDbnYya2dGQ2JIRDZD?=
- =?utf-8?B?NkZxTUJtcm9jUmVyTlBnVjBvQm9VeDNCMGgzc0JHTVpPOVBVbzQ5Uys0SVl2?=
- =?utf-8?B?eWRyRUs5a0V3R0duSFNuM2I2SUVKNkVTN25DTVVGdGFRYS83QjVOK3BRb1Z0?=
- =?utf-8?B?ZXBpTXVCeENFRWx5TjJRTml1bE1NUGk1Ymk1UytJTlVvb0VGMXVUdXVCVkxD?=
- =?utf-8?B?eTJMQTJ2aU43NmdJc1c2TGNrdFhZdlJvaC9kT1R6MUNrY0ZPaXkzR1NjdTRj?=
- =?utf-8?B?OWZvYlZOU09lRThJajNKaWZFOHdya3FUZ09nTkxYWHlHVll2Y0dqNnNDTW0v?=
- =?utf-8?B?OVlINFhJOHczM0d6Yk8vajVsM0xnSWNXS1lHTUEyamhBUXAzRWdoZktZRUVM?=
- =?utf-8?B?SjQ2dzR3SzU4UEpxRzd4cm9DNGcvTmdKYWVkTGYveGtSSFUrRU5LVnBDUStG?=
- =?utf-8?B?cm1VRDBMVExkVjFWRUtSVEFlVGNBMERlYmNtOXlLTGR5YlZDbk5SWnlqUHh4?=
- =?utf-8?B?QTBkQ1UrUndWbFFITWh0WEdWVjdmZzVZd20zVGRKZUFzNit3aEcwOVFKYStx?=
- =?utf-8?B?T1Y0cWh0UTBIWlpxSEhDZStzZ2JNd25LaXdqREc0Tko4RXVFeHhmbXI0eXV5?=
- =?utf-8?B?N1hmWkd4UnlBSnkycWtsMHgrMjdsU0MxTUxZeWlmQkFLcFhtYlRpYTNNQ0ZW?=
- =?utf-8?B?dzhVNEl3V0x3UGtpNzZadnQ1Z21hQkRPcHFJTmtDdW5BVHB0SGRUWEdzMHpu?=
- =?utf-8?B?alNheWlwUzFOVUlOVDVWWExxV1lreWZWanY3U2lUL0NKckxQRWpJRkVGSWM1?=
- =?utf-8?B?blQ0M3FUM2VmRGVnaHB1aDVwSTNzaUlDc1RyR0J3cGhVVlBWNUtYY1ZCRlBP?=
- =?utf-8?B?dGkveWZaL0xmazVjUWlHdFZwUzBVMk5kMjdaWG5ZaHBxRGZ4T0s2N2hzY0d5?=
- =?utf-8?B?ZGNueVNRdExMM1c4Q3JBWDdMK3JGU1A5dEtZRUdTUjR6NFg4amQ0S1g0dEkz?=
- =?utf-8?B?WUQxTFlBUi9QTldRYVBjQ3JUaGh4dUVZK1MwanpTTTVsTkZ4dUQ0dVgzWXRw?=
- =?utf-8?B?dERabEpuSUloNTRqMURDSElTME5HQWhvKzJldlkzZnhDY0xtUFl3c3kyUEc1?=
- =?utf-8?B?S0hoYUxkYlppNEttSEwxUkJvb0ZqMUMrbjdNVEhyVUJCRnlyT2NIMHN0SE5J?=
- =?utf-8?B?U2ZPQ1cvNHBtRCtTLzQ1OExIeDcvM2dtU2ZCZkVvTlJ5aFAwb0tyNEdVNXox?=
- =?utf-8?B?ekswVmFacjhNRHRJMVA4TWc0dDk2bVR1bEZPZk9hanJiQXVtKzRlM1RYa3pn?=
- =?utf-8?B?WElHK2RhZExmK3VoRnl5RXgycnhqdjRBT2xQZzJ1QmxjQis1bjVmVHBQNUp0?=
- =?utf-8?B?ZDl5TnZsMVMxbmdld0FrdDR4Y3l5RFN4NFJ2SXhQWm1XeHk2Y3p5dFRxMGhz?=
- =?utf-8?B?QTE0dUVXV2hIVE0zc0pOcjd4akR2bWxORXh0Qm9oVmh3bWxjczlGME1zeXYv?=
- =?utf-8?B?bWRTT2t1QXQ4U0kwdkJZZ1RmU3VVdzQwNXl4OHVFQXMyeWxta01TVDIwemxo?=
- =?utf-8?B?QldqanB3c09UN21VcEh2Nm5ITm5Vck1jNllHT092QnUzbncwRjdCRkx4UVBJ?=
- =?utf-8?B?RmNPdDIrbGMxbWFsRDFGWjBqME5OMTBkSXF6OEpjYlJkbXdoYUYrUT09?=
+	=?utf-8?B?d21kUkFVOUc1R3YzeTNKdEF2SHFvOHNORnNhWkxvdHdJNmdBTFBabDdtR2Vt?=
+ =?utf-8?B?VUNOM3djUkpXMDlINlZYZHZUU0lXamlKY0dsOTVybWRiaWIrWVR2dlRjdGx1?=
+ =?utf-8?B?aHNmTTdOeWhQYk1VRWtBaEVpV0NlWWl2RUQ2a3BlemxJNnk2RVU0Vy8zK1Q4?=
+ =?utf-8?B?K2FlYS83TUxvU2FXRHRSL0VsVjRFRE50ektDZVFaNXJ5T29wSHBOYjhqcG5m?=
+ =?utf-8?B?dVNmOEZjalpPQ2tZMk1QL0xyNW5RdkhIOWlWa3NPbVZCQVRCZ0lTRmU4azA4?=
+ =?utf-8?B?OC9hZ0ZSWWpVWWRPTVpobmp3ZmlQMUlLVkc0Zzd0dk9GZURTejErcE9zNVRN?=
+ =?utf-8?B?c3JxV1NGNDYwbnZrdUV2UWxhVElIa1laQ1RWWHZCYjRXdUxubUEwN0krRXo0?=
+ =?utf-8?B?b21vMm56eUVlVC9XWTFSYnloemtyOGF4aEtneTdNdkpwUmlBVE0rRDNzRjZ4?=
+ =?utf-8?B?SUV0SzVQVzVVbTVQRGdPblN3eDRxWmpmVlJHZGJKMC9Ya3lvOXFwY0VGZG1H?=
+ =?utf-8?B?d0l2bG14SWRjQnd2MmtJQ3dUOTg4Qkl3RC96K2hMRmYxRS9HSjZpVDFVa29q?=
+ =?utf-8?B?TFhmUVJtODBUVXhma29YeVFQdVVoK0U2RG9FK1JUOWtRMzJkL0lTRXBvdVVi?=
+ =?utf-8?B?QWhodmFGV3RzY2tMOXJLdUQwcDZtRURzRWVMMEJrSG9yUEJYUnphcmVoa0Yw?=
+ =?utf-8?B?STVpdFpoKzRkSEIwQ1oyS0JVU24rQVd0NGVhai9vZ2lRQVBnSTVRWFduY1ZR?=
+ =?utf-8?B?OEV6cCsxT0NwZHRmdHNYNzZGNFBKUXJRYjQ3UCt4ajN5MWlXRW03T09zandx?=
+ =?utf-8?B?RHlTcTZuZkVPdWpSZmQ1UzA3UlB3K3Y0YUhBL0o3U0FWYWRXa29uejVtaTdh?=
+ =?utf-8?B?ZlZ4em0xTFhjdjEwM1pwa1B0d2ZNY0xpQXBJcExVLy8vNFJQVmxrVzRzNjVF?=
+ =?utf-8?B?amc3VWdjVXZ1NTE1UmwvMk44Y0dEWEc3a2JxTjY0bEpQMjkzdEpCQ0cva0Zw?=
+ =?utf-8?B?Q2xpZ0NhMnRTU05KL1FMbVdZVTRHYWpyWnQ2Y3NSUW4wZllPQ3BQOWluRFhs?=
+ =?utf-8?B?UjlZREhYSmV4bHU1NlEwQytlcTN2ZFZKdWc0bXh0YTkrUTl2Z0xZRkNzbkxj?=
+ =?utf-8?B?b2pjN2FpaldYWDBvUEJFbXVUZzZOWm9TMVA2bmFvNVN3QU1aeGdWZjdmd1d5?=
+ =?utf-8?B?aWU1QWUwVTBGREx3bThmS1Z4VkhIQU9FblZYa0tSdnM3Mk1kSlVGOFJsc2xl?=
+ =?utf-8?B?djdqYkdGWHFzY0NCVzJ1b29GdTRJdXBLN0JGWkhwSjlDR3VrVnJFQmY1SjFv?=
+ =?utf-8?B?Snc1SGdKU3pOam1GUHd4TDJWRUhJTllmRHduc0NoaDJYNVFLeUhFNnUrdzla?=
+ =?utf-8?B?V1g4Ym5Lejh6U0cvYTJ1S2JFTHJ1WUViTlkwaVhCOXhRWVB4c0VKZ0d4OVNh?=
+ =?utf-8?B?Mi9kczRCWWFERzh6R3h0T2VWWGorMS9hcEk1cit5TXM5VEhTTXVYendGUWph?=
+ =?utf-8?B?WDFUMG9RczJrUU1aeHNiQndXTEViRGFjVkN4ZG1DbmhKRW05WmVIN1hzcndT?=
+ =?utf-8?B?SER0TXJjRitsN1RYalJpOXlaU3MxdTdrSHZ2eHVxZW9HS0VuOWQyMTZRYnUx?=
+ =?utf-8?B?Q1JMajl2ZFB5SStQdHJ0aDVicG91dGczSU52ODV1MGJ6U0pBNk5QT2grNHFr?=
+ =?utf-8?B?QXVFaTJ0MGFKU3o2WlFHbUtBMHF2SVNqaWZES0EvZVJoT3kxd1grVnpLeWVM?=
+ =?utf-8?B?c2VCY2UzVHZ3MStxcU1yR05zVEIzZy9CdWdaMDdxVE83V1Z0aVVocStPTGdP?=
+ =?utf-8?B?NHF0Y2NtSnJ2d0phR0dBd25VTkppYnd5R1pMTmdsSzQ2dklLRTZhSE42Zkd3?=
+ =?utf-8?B?aHc1L0VOVVJsYjh3Z2VIZDAyYTJjVW5kNUhLWkdUbCtVbzJHZ01IN0JxUG94?=
+ =?utf-8?B?WHpXRVczSzlRV0xjMWgzbGg3c0Z4NUMrSGlCcCtVTlZMOXdVMjFab1NzaFJ6?=
+ =?utf-8?B?clV4Y29ycVVmVWVPTUpGajU3OStGZ0E4V0JFY09yK2hqbjljK2JJYWJBWk1a?=
+ =?utf-8?B?ckR0U3d6M0JlYVpaSEJmMFJSVmdmVlpWR2kvZ1laeFlSVnVvdU5LQUJPaDF4?=
+ =?utf-8?B?eE9DbmxzOXQ5WGV4MlJ0M3pQN1FMa0lGc1BSVEdJeWxWdWRMWFl2eWZqN2F2?=
+ =?utf-8?B?Z1hyaGk0aldDTGRjTkREWmNPc0pOTDBoT1A3dlp6V2tES2NhLzkxZ2QySEdY?=
+ =?utf-8?B?SWpQa3ZpVWYzQ3ZZNEtEM1UwMmpaTTFZTTZRcUlMYnRtUE80M0Y1OG5mQ0d2?=
+ =?utf-8?B?UXl6clhYY2JhTTlJOWVsUDU3VVk2blZWaEloK0tNV3k5UEM0ekJ0Zz09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41d51cc0-54c8-46c2-1899-08df3cfdb49a
+X-MS-Exchange-CrossTenant-Network-Message-Id: b5a9198a-e5b8-4c52-b435-08df3d005c8f
 X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 18:34:06.5552
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 18:53:07.5496
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: drI6E83z4ndumCz4OYeAEn87HMxsMpU/XXbBZA1AEAgDqEjZOh1gazjeXv+Urp1NnROSk3yfJUrRWiJzMDJwZA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6562
+X-MS-Exchange-CrossTenant-UserPrincipalName: cHboCBxT/4uVS6+0Rom4MBpHNVHldI2Md62fqqKKQ4p4h4jP0SNklCpjO7+emcLa5hf2EstQngsO2rtA4hFhPg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8544
 
 
 
 On 11/7/26 23:42, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [Medium] ASoC: amd: ps: NULL deref of adata->sdw->pdev[i] on
->    single-link SDW configs
-> - [Low] ASoC: amd: ps: inaccurate commit message teardown claim and
->    Fixes tag
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [Critical] soundwire: amd: use-after-free in amd_sdw_manager_remove()
->    [1]
+> - [High] ASoC: amd: ps: build failure in acp63_irq_handler() due to
+>    missing struct member
+> - [Medium] ASoC: amd: ps: TOCTOU race on interrupt_enabled in
+>    acp63_irq_handler()
 > --
 >
-> commit 929ea19624010c51ae72f2eb65f2e1a41edc5971
+> commit 371c40e74acce37765aa0469d9b4a4ac8ef4b3eb
 > Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 >
->> ASoC: amd: ps: guard adata->sdw dereferences with NULL check in IRQ handler
->>
->> The ACP external IRQ handler is registered before sdw_amd_probe() assigns
->> adata->sdw, so a stray interrupt in the probe window could reach the
->> adata->sdw->pdev[i] dereference with adata->sdw still NULL.
->>
->> The same window exists on the teardown side: after sdw_amd_exit() frees
->> the context but before adata->sdw is cleared by the caller.
->>
->> Add NULL checks for adata->sdw in acp63_irq_handler() before dereferencing
->> ->pdev[0] and ->pdev[1], and in handle_acp70_sdw_wake_event() for the same
->> reason.  The interrupt-status register write that acknowledges the IRQ is
->> kept outside the guard so the hardware bit is always cleared regardless of
->> whether the SoundWire context is live.
->>
->> Fixes: e1cb350610ce ("ASoC: amd: ps: handle SoundWire interrupts in acp pci driver")
->> Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-> [Severity: Low]
-> Is the teardown description and Fixes tag accurate here?
-you are correct. During teardown adata->sdw
-is non-NULL while sdw_amd_exit() runs and is set to NULL only
-afterwards, so the if (adata->sdw) guard sees a dangling pointer
-rather than NULL in that window. snd_acp63_remove() avoids the
-race by calling acp_hw_disable_interrupts() and devm_free_irq()
-before amd_sdw_exit(). The teardown sentence will be removed from
-the commit message in v2.
+> ASoC: amd: ps: guard SDW IRQ work scheduling with interrupt_enabled flag
 >
-> In amd_sdw_exit(), sdw_amd_exit(acp_data->sdw) frees the context while
-> acp_data->sdw is still non-NULL, and acp_data->sdw = NULL only runs after
-> sdw_amd_exit() returns, so an if (adata->sdw) check in that window would
-> see a dangling non-NULL pointer rather than NULL (snd_acp63_remove()
-> instead avoids this by calling acp_hw_disable_interrupts() and
-> devm_free_irq() before amd_sdw_exit()).
->
-> Also, e1cb350610ce ("ASoC: amd: ps: handle SoundWire interrupts in acp pci
-> driver") predates adata->sdw.  The adata->sdw dereferences in
-> acp63_irq_handler() were introduced by eaf825037d6d ("ASoC: amd: ps:
-> refactor acp child platform device creation code"), and
-> handle_acp70_sdw_wake_event() was added by 3898b189079c ("ASoC: amd: ps:
-> add soundwire wake interrupt handling").
-Will use correct Fixes tag
+> This commit guards SoundWire manager work scheduling in acp63_irq_handler()
+> with an amd_manager->interrupt_enabled check for both SoundWire instances.
 >
 >> diff --git a/sound/soc/amd/ps/pci-ps.c b/sound/soc/amd/ps/pci-ps.c
->> index b604db4942dd6..d0b66df101579 100644
+>> index d0b66df101579..0442010e969c0 100644
 >> --- a/sound/soc/amd/ps/pci-ps.c
 >> +++ b/sound/soc/amd/ps/pci-ps.c
->> @@ -26,16 +26,20 @@ static void handle_acp70_sdw_wake_event(struct acp63_dev_data *adata)
->>   	struct amd_sdw_manager *amd_manager;
->>   
->>   	if (adata->acp70_sdw0_wake_event) {
->> -		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
->> -		if (amd_manager)
->> -			pm_request_resume(amd_manager->dev);
->> +		if (adata->sdw) {
->> +			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
->> +			if (amd_manager)
->> +				pm_request_resume(amd_manager->dev);
->> +		}
->>   		adata->acp70_sdw0_wake_event = 0;
->>   	}
->>   
->>   	if (adata->acp70_sdw1_wake_event) {
->> -		amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
->> -		if (amd_manager)
->> -			pm_request_resume(amd_manager->dev);
->> +		if (adata->sdw) {
->> +			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
->> +			if (amd_manager)
->> +				pm_request_resume(amd_manager->dev);
->> +		}
->>   		adata->acp70_sdw1_wake_event = 0;
->>   	}
->>   }
->> @@ -209,18 +213,22 @@ static irqreturn_t acp63_irq_handler(int irq, void *dev_id)
->>   	ext_intr_stat = readl(adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
->>   	if (ext_intr_stat & ACP_SDW0_STAT) {
+>> @@ -215,7 +215,7 @@ static irqreturn_t acp63_irq_handler(int irq, void *dev_id)
 >>   		writel(ACP_SDW0_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
->> -		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
->> -		if (amd_manager)
->> -			schedule_work(&amd_manager->amd_sdw_irq_thread);
->> +		if (adata->sdw) {
->> +			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
->> +			if (amd_manager)
->> +				schedule_work(&amd_manager->amd_sdw_irq_thread);
->> +		}
+>>   		if (adata->sdw) {
+>>   			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
+>> -			if (amd_manager)
+>> +			if (amd_manager && amd_manager->interrupt_enabled)
+>>   				schedule_work(&amd_manager->amd_sdw_irq_thread);
+>>   		}
 >>   		irq_flag = 1;
->>   	}
->>   
->>   	ext_intr_stat1 = readl(adata->acp63_base + ACP_EXTERNAL_INTR_STAT1);
->>   	if (ext_intr_stat1 & ACP_SDW1_STAT) {
+>> @@ -226,7 +226,7 @@ static irqreturn_t acp63_irq_handler(int irq, void *dev_id)
 >>   		writel(ACP_SDW1_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT1);
->> -		amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
->> -		if (amd_manager)
->> -			schedule_work(&amd_manager->amd_sdw_irq_thread);
->> +		if (adata->sdw) {
->> +			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
->> +			if (amd_manager)
->> +				schedule_work(&amd_manager->amd_sdw_irq_thread);
->> +		}
+>>   		if (adata->sdw) {
+>>   			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
+>> -			if (amd_manager)
+>> +			if (amd_manager && amd_manager->interrupt_enabled)
+>>   				schedule_work(&amd_manager->amd_sdw_irq_thread);
+>>   		}
 >>   		irq_flag = 1;
->>   	}
-> [Severity: Medium]
-> Can adata->sdw->pdev[0] or adata->sdw->pdev[1] still be NULL when
-> adata->sdw is non-NULL?
-for ACP6.3/7.0/7.1/7.2, all link platform
-devices are probed and registered during sdw_amd_probe_controller().
-The AMD-specific enable mask only controls whether the start
-sequence is invoked for a given link, not whether its pdev is
-registered. So pdev[0] and pdev[1] are always non-NULL when
-adata->sdw is non-NULL. No additional pdev[i] NULL checks are
-needed.
-> In sdw_amd_probe_controller(), ctx->pdev[index] is only registered for
-> links set in link_mask:
->
-> drivers/soundwire/amd_init.c:sdw_amd_probe_controller() {
->      ...
-> 	for (index = 0; index < count; index++) {
-> 		if (!(link_mask & BIT(index)))
-> 			continue;
->      ...
-> 		ctx->pdev[index] = platform_device_register_full(&pdevinfo[index]);
-> }
->
-> On single-link configurations (where link_mask is BIT(0) or BIT(1)),
-> adata->sdw is non-NULL while the unused link's pdev[i] remains NULL.  A
-> stray interrupt or wake event for that link in acp63_irq_handler() or
-> handle_acp70_sdw_wake_event() will then pass &adata->sdw->pdev[i]->dev to
-> dev_get_drvdata() and cause a NULL pointer dereference, as
-> acp70_enable_sdw_host_wake_interrupts() unmasks ACP70_SDW_HOST_WAKE_MASK
-> for both links whenever either link enables host wake.
->
-> Should these checks also verify adata->sdw->pdev[0] and
-> adata->sdw->pdev[1] (like handle_acp63_sdw_pme_event() does)?
->
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but can unbinding the child
-> SoundWire manager device race with acp63_irq_handler() and cause a
-> use-after-free of amd_manager [1]?
-The IRQ related fixes including this gap are addressed in the following
-series:
+> [Severity: High]
+> Does this break the build when CONFIG_SND_SOC_AMD_PS is enabled?  struct
+> amd_sdw_manager in include/linux/soundwire/sdw_amd.h has no
+> interrupt_enabled member, and neither amd_enable_sdw_interrupts() nor
+> amd_disable_sdw_interrupts() in drivers/soundwire/amd_manager.c sets or
+> clears such a flag.
+The interrupt_enabled member is added by patch 17/25 of the AMD
+SoundWire fix series which this ASoC series depends on. The
+dependency is stated in the cover letter of this series. When both
+series are applied together the build is clean.
 
+Dependency:
 https://lore.kernel.org/linux-sound/20261107154659.3358223-1-Vijendar.Mukunda@amd.com/ 
 
+> [Severity: Medium]
+> Even with interrupt_enabled added and cleared in
+> amd_disable_sdw_interrupts(), can acp63_irq_handler() still race with
+> SoundWire manager teardown and cause a use-after-free of amd_manager?
 >
-> CPU0                                CPU1
-> acp63_irq_handler()
->    amd_manager = dev_get_drvdata()
->                                      amd_sdw_manager_remove()
->                                        cancel_work_sync(...)
->                                        amd_disable_sdw_interrupts()
->                                      <driver core frees amd_manager>
->    if (amd_manager)
->      schedule_work(&amd_manager->amd_sdw_irq_thread);  <-- use-after-free
+> CPU0                                    CPU1 (<hardirq>)
+> amd_sdw_manager_remove()
+>    cancel_work_sync(&amd_sdw_work)
+>                                          acp63_irq_handler()
+>                                            amd_manager = dev_get_drvdata(...)
+>                                            if (amd_manager->interrupt_enabled)
+>    amd_disable_sdw_interrupts()
+>      interrupt_enabled = false
+>                                              schedule_work(&amd_sdw_irq_thread)
+> device_unbind_cleanup()
+>    devres_release_all()  /* frees amd_manager */
+>    dev_set_drvdata(dev, NULL)
+>                                          amd_sdw_irq_thread()
+>                                            /* dereferences freed amd_manager */
+>                                              <-- use-after-free
 >
-> amd_sdw_manager_remove() masks SoundWire interrupts and cancels
-> amd_sdw_work, but does not synchronize with the parent ACP IRQ handler or
-> cancel amd_sdw_irq_thread before devres frees amd_manager.  If
-> acp63_irq_handler() reads amd_manager before removal finishes and calls
-> schedule_work() afterwards, it queues work on the freed amd_manager.
->
-> [1] https://sashiko.dev/#/bug/linux-ab458b2e-f505-4a41-8238-a93ceb5d9c77
+> acp63_irq_handler() checks dev_get_drvdata() and interrupt_enabled locklessly
+> in hardirq context on the parent PCI device, while amd_sdw_manager_remove()
+> never cancels amd_sdw_irq_thread or synchronizes with the parent IRQ before
+> devres frees amd_manager.
+The remove ordering shown above is the state before the fix series.
+Patch 14/25 of the AMD SoundWire fix series corrects the remove
+sequence to:
+
+   amd_disable_sdw_interrupts()       /* clears interrupt_enabled,
+                                         masks hardware IRQ source */
+   cancel_work_sync(&amd_sdw_irq_thread)
+   cancel_work_sync(&amd_sdw_work)
+
+Once SoundWire interrupts are masked at the hardware level, no new
+IRQ deliveries can occur. An IRQ handler already in flight before
+the mask took effect may still queue amd_sdw_irq_thread, and
+cancel_work_sync() drains both amd_sdw_irq_thread and any
+amd_sdw_work items it may have re-queued. synchronize_irq() is
+therefore not required: the hardware mask bounds the window, and
+cancel_work_sync() covers any work queued by the in-flight handler.
 >
 
