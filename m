@@ -1,91 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.132
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794057886;
-	b=hlJS4k22puOsDSigQiqbiIqFnfW1tronVvRkMW3oXCSP7v9KQS2dACKBYvhr/EiZmIpg
-	 Eu8HB/X12H5jK9v5AmFWAs8RdFFFBBrlEdgvHtlDtlVj9kR3WJYVKXq9F6vb8zcS9mcYh
-	 S1QrBTUPRyxFUBlcWxVmHHQYKo85ZnsGMaQ7oou3HnOCmQhMsZJH9B/qJbMQZ9HvsoqoE
-	 UpEZRcFWNy9HWq9xmjDlJuDBcIhM0JUkPu6Bd4WuNWUmVxq5GNW+JuSY/8e6dcoAVseVp
-	 75KOF+8WbU4UdB2Xk+VnFgI9TqRrTiI5YAs/B1gBRnC9Ny2lsbNtM/1L4fq2TnY52pQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794057886;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=VH7ady2HZ4+2o2AB4BRmr/CzSYqljeaOTtIyqJxzjb8=;
-	b=nkMQpJ2lY55bEhtOSXjB+FScu5GjdW1FmEDFkv7ksswCfRzZY/kjdllzYpUzNlTF0LpP
-	 VpCtY/fQhzdxvJApfRPFWrphzJ1ZPuOThJ+DMDuIBV+1pHGzsBJoQqa4vAXo3bgxpTgpY
-	 rouEVBMOtWzJ1vps4ofjS5AVb39OFalxdWmzydHby+MwoE77YposkUMUmgi30g35qQzq3
-	 azm6bofy0IqgcQZb2MW9sn+/IDoxjBSf9ckBHi2v7shuwRjUiAOmnnSHCAgrmDvjNBB88
-	 d0Pmaav8s3zV3JeNNDVYLKVPGj2RLRDZzdQa3wHwlJTUWJIPnBvBvtQAi5+6dXVmUyA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hp0KIPAA;
-	arc=none smtp.remote-ip=74.125.227.132
-Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=85.215.255.81
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794058196;
+	b=0vW3qdIXtQUYJ3mfeJB5El6s4dgP6rkKMkRiA2cEEm/8qgPhZuEqc7rgcnJFyi4gEgqB
+	 UFOkIVESfBb9xbdxYFrgBC5omaDxanGXTUoF86rkhKuKxQWFCf6gEkia68Yvxkgy9XxsV
+	 2Zawnm/rXp827mb+ZvP9FYUyjwwj75PqakhBHBtWXTSLZNT2pVHoW0944eFyiZzS9TmgT
+	 8cp34QomP2L1LKrs8c82lkCJgSIW9PMkXpEVl+OXMGzyYOPbCR445YQ9uA+6/RlWV9JiT
+	 oNZp852ONXXrkJ/obSmsXLlL1AiK0kOFmGP8OE6lni/RnKerTvssfn+sxphvl0ZDWZw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794058196;
+	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=Ou7V3YVgbiThd8omXKtFtFH/VUYarWOFDxFfgSseEQw=;
+	b=tywmpvnqq5nk6LsGRn2+YSoDKmS1p5WFWKM+lIyCZc4wcaQ9M2W3kKicjbWTTmuFdQWC
+	 3iUdIQcLjOXAHCBPvI6RE2s2mv7xExaD/QuyJDgXeSGCZl2RxsyhJe7exHeoCPWa1PUPI
+	 psuOSTSCnQZsnX1eP3HGja8kZVbvmSLW+eiJZoxuLCXTc5xgrkOh6E3rDImfAo5n0f5jt
+	 5yb0yC5FF6/0bZ9PopAK2TQxKibm1Ujttxa9nAQmZyxRqd0wzsD4Wj+ZtKXI3UEAgw701
+	 K+TrLxaSFE4TR6oI7MDRdOogoeSoJW6AbOAhUeYSgWUz6fT1fWldSyRqjDVrSLTrbjA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=hartkopp.net;
+	spf=fail smtp.mailfrom=hartkopp.net;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=Edaj90fN;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=RtY3Yq0a;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=85.215.255.81
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674D8606A326
-	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 13:24:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 674D8606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97DA606A326
+	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 13:29:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E97DA606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hp0KIPAA
-Received: by mail-pj2-f4.google.com with SMTP id 98e67ed59e1d1-3ac96ba6a4eso219401a91.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 05:24:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794057886; x=1794662686; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=VH7ady2HZ4+2o2AB4BRmr/CzSYqljeaOTtIyqJxzjb8=;
-        b=hp0KIPAA1uGk+g3g40VKEStdlRKXzWxkLGcWgVE0qfyZN8yPIYOc8F+Pxp0ViNIs1W
-         DEnpC1iGHCuZSmLVKNGBSWnQlVVomsDmjml+v7a+zhFj76ZeEadsZQTn+Bt/VZ1HVYCK
-         jA8Xz5pjGvEdZImqSVHxTwl5yAFisO8jVP+sLk2O/CHCNhqXG6nvt5MF/5XTlUHbshEz
-         bv02K9/ytjSu5dILBrXnCHsxiJ6In578BKDNbw9sTdwLX/PEVkeJmpdoQGFJHLl/CftI
-         w/14ftLrScRxggPwVNc8z6rvRKzVrztCQh1nz5Qf7Ewwejf9EYzOy5LDB5WcfJR2+ufv
-         tm2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794057886; x=1794662686;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=VH7ady2HZ4+2o2AB4BRmr/CzSYqljeaOTtIyqJxzjb8=;
-        b=mxOYJ3B6mfy8zSuK2xUz8RMbvNj5i2zgsoe/j1w1ewTu4b86oCzdxYAtf7xP1l2GOa
-         ZYV/G0f9TwMbo5z/a7aWk2BfpaXdyluoFhX5YxG4uBWS8JKTYPoXkhJKvI4sAlm768Gc
-         xuX5xLsLUi3VsUnxDEt803Ap8n3xxJtr+ZEDxOuY8jOrwsUcV/AJkn3j1raci0tFNxKC
-         Sr+ABGqlmXVclnT6YGdcxsqPiUjYrnwB+P1JIE0Ubds/2LL/8CVrTOiq/QHBFKCOjixd
-         cd6vra1teZj03BXCs4hKFzzbP0c9ay9zVfNr/4CsbSM3UmCEV8/57ZnvhjZB96zoUmvD
-         Nosw==
-X-Gm-Message-State: APuU4Z80wCTSj0ioiKIE3HY1parAStvSChZq63Wh41Pt0GgyCu0hvo8Q
-	ZRXM+uNxbSIT7yaVUMlx/fh+pFSp6VkoN00jlOjiZyIDasicoHlol/xfYhsgg4BNS+Drrg==
-X-Gm-Gg: AYBFou21wczEUrC6M1LIMM05s7738I8upPMow0lYIi+VgVmO4pKL7aer5PT93/YyGR5
-	oOD9Xiaez5bYdaHxq2Akxj/4n0ZL5qahsT75WS6H4eSaoayhwyjQ66pwABSg758rKA2DI7pUPL8
-	7v4b/B5iGy8TXZy6pQ7UKmdBilbxkbl2ipM8TOHhH+eDTrPFpGn0oBK303BTeg+gF6KryO3kyUn
-	7ej1aVn7dFh4UDMCIL1x3zgQiL7Wfa1Mz4owr7NkXwrbB/D+tBwCyBuRLFi/De1joVk02zoxv4l
-	r+dXcbr7ku1vZ9vhcyaxsVnNow4SEUqyk7OJ7IM3ADdpMBvXzf3aqCq/lgQXoP365SXDEvq4sI9
-	NIFxW3iO6cbq3nLpofR7ER4p+TBZkVHgORXrwfNr3xC1zGAzsYTEvVv2cu1baen0dYfl/JQlK1Q
-	Et2J0I3Dazap+cr6qB7cupr7ZtyYJYx34wAGkPiI3vt9fuD8yjQKww5D2QX6mQ501MIoKcha5Hx
-	A9a9pjhBl4mlcJVacfmHgvOvE7XK/lJaj0OcpvzYE5YpqZTr6vfKuTxjOBrQTtzxkxeThRmMKCA
-	clMMYnxcAbkJGKys4Fn8kO3XnewG8/iaYMIw08crgnxRiJ5wnRz/GxU=
-X-Received: by 2002:a17:90b:4a06:b0:3ab:8288:b8ce with SMTP id 98e67ed59e1d1-3b106314922mr1376177a91.24.1794057885649;
-        Sat, 07 Nov 2026 05:24:45 -0800 (PST)
-Received: from J4f-Laptop.localdomain ([183.36.237.113])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1054a0475sm3386135a91.0.2026.11.07.05.24.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Nov 2026 05:24:45 -0800 (PST)
-Date: Sat, 7 Nov 2026 21:24:40 +0800
-From: Shihuang Liu <shlomojune6@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf v3 1/2] bpf: reject incompatible socket assignments
-Message-ID: <h6fnquoculybbdb4ygf7bznp4ou2jhtctiw6dkezvngozrbcps@zivgduwdvwr5>
-References: <20260930164020.41006-1-shlomojune6@gmail.com>
- <20260930165415.85C361F00898@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=Edaj90fN;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=RtY3Yq0a
+ARC-Seal: i=1; a=rsa-sha256; t=1794058167; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=aFfXLhOgdVdwiGKamCnkmuZmDvc405EB/H5WvV8JOf8kysWZu15TzZsVCHULswpQ20
+    o9LH08Ln/ZDQvvP6rFxsRhImU+b84eDqvX2Fc4U2EHSAnB/p7KJUG6ajTYbozECPWZjz
+    AV8f3Nc9IkUZXHVbOsttgngdlgR3iqf+ZUlWySDTox8kP1DK4yY8LlRZJ0Bl837hfsMw
+    z4iHfosiaDTt0F9iTgS1kh+gOLGB3OwkD66LiPBT3GU0/CzsyL7dPtgyMJOOjruTgs92
+    ujD2xtHVd/I9QYkgIHpLqJd2syzwXH5qvl5Eg2FFRLIDh20XgapX/CvmbFGPjwOrX9wf
+    drnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794058167;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=Ou7V3YVgbiThd8omXKtFtFH/VUYarWOFDxFfgSseEQw=;
+    b=tnk/4UvvG0lrQVuUHqTzAZsc9CPcK6jeE0dhK48pChiXSx0VNYA1fOoVJxk7HSa1k8
+    IAAhcmHYufY6WUgRsAYxpWqdMTxoHN2RjacfgfzgZDBP/aitNOGDy81HfluxputctjPC
+    4QykJZLkTVls1uMFCTiGn0DRWRVqBVPgoHS22pOsU1SsLjBmuEdBrhzm4azuKTyYgKi7
+    A3Dph/zh0+0Gvd7iftBYgXIFsh9peI88wvi+As9XdqWRqC6sfRtj06h+Sv3rc4xfu73T
+    t9sTnAmgzgZppSxYcrZyVzlR7BHKB4SU9mDJmGSXxo8+dbQmX4E8UcDfP/4f/GJgR8/z
+    64Ng==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794058167;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=Ou7V3YVgbiThd8omXKtFtFH/VUYarWOFDxFfgSseEQw=;
+    b=Edaj90fN/0tmKp9djotKKUP1i9IAUJ2pJupNswq6Zfvjw8cAqpYkH2z3XtXsh7HCnY
+    fCHDTUcG6BiqcO7uCKDyBmslak1wz65Q1I9jUxdjWaUzy7rKuvJYco3jK2Mk7KFsJrQ6
+    Jrx8IP12vIyJbjfK12CTpTQdAoa1g7azu4GPyMq7Jx5NnwexcOV51hEGU7MhKroMe9m+
+    qcEgub0SVMk6EDMBhq56jPnoz3BorsD165jSEZq9oX4r23X0DwRHEOKjeQ7fe2EBMBzu
+    E6x7VVelroO6KtGWySoK5ixcD1hfABajGcMVHrIdSUiq5kEKy3U1D4lorhTa34/1AelL
+    eO/w==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794058167;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=Ou7V3YVgbiThd8omXKtFtFH/VUYarWOFDxFfgSseEQw=;
+    b=RtY3Yq0aeRO1TXeOOtz1l4R9Cb3lxJqbOEF2JuKKFN+M4SP4bY3RNR0GcHXxtTGSMO
+    aj/ylyspe7MVOFda+yDA==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.3 AUTH)
+    with ESMTPSA id Kfdf2a2A7DTRlRO
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Sat, 7 Nov 2026 14:29:27 +0100 (CET)
+Message-ID: <8ff77616-1c44-474d-8f3f-aa23d2aaa12c@hartkopp.net>
+Date: Sat, 7 Nov 2026 14:29:21 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,73 +95,88 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260930165415.85C361F00898@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] can: bcm: copy the CAN frames outside of lock_sock()
+To: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
+References: <20261107-can-bcmlock-memcg-v1-0-482d9f5be1fd@hartkopp.net>
+ <20261107-can-bcmlock-memcg-v1-1-482d9f5be1fd@hartkopp.net>
+ <sashiko-outbox-202903@kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <sashiko-outbox-202903@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 30, 2026 at 04:54:15PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: bpf_sk_assign bypasses family check for encapsulated packets
+
+
+On 07.11.26 14:15, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [High] can: bcm: indefinite rtnl_lock stall in bcm_notify() [1]
 > --
 > 
-> commit bd75dbe60b27d785e5799901fce33eb038028e20
-> Author: Shihuang Liu <shlomojune6@gmail.com>
+> commit 21cad73125ec2cd172e1d3266d5282c5a3ca76be
+> Author: Oliver Hartkopp <socketcan@hartkopp.net>
 > 
-> bpf: reject incompatible socket assignments
+> can: bcm: copy the CAN frames outside of lock_sock()
 > 
-> This commit fixes an out-of-bounds stack buffer copy by validating socket
-> and packet family compatibility in bpf_sk_assign(). It ensures IPv4/IPv6
-> socket mappings match the packet protocol, maintaining compatibility for
-> dual-stack and mapped sockets.
+> This commit copies CAN frames from user space into a kernel buffer before
+> acquiring lock_sock() in bcm_sendmsg(), preventing a stalled user-space copy
+> from blocking bcm_notify() under RTNL.
 > 
-> > diff --git a/net/core/filter.c b/net/core/filter.c
-> > index 70dc621672f2e..173349bd2a3f9 100644
-> > --- a/net/core/filter.c
-> > +++ b/net/core/filter.c
+>> diff --git a/net/can/bcm.c b/net/can/bcm.c
+>> index 7bd2aa39777af..9c39f7363ca59 100644
+>> --- a/net/can/bcm.c
+>> +++ b/net/can/bcm.c
 > 
 > [ ... ]
 > 
-> > @@ -3491,6 +3491,64 @@ static int bpf_skb_proto_xlat(struct sk_buff *skb, __be16 to_proto)
-> >  	return -ENOTSUPP;
-> >  }
-> >  
-> > +static bool bpf_sk_assign_family_ok_proto(const struct sock *sk, __be16 proto)
-> > +{
-> > +	const struct inet_connection_sock_af_ops *af_ops;
-> > +	unsigned short family;
-> > +
-> > +	switch (proto) {
-> > +	case htons(ETH_P_IP):
-> > +		family = AF_INET;
-> > +		break;
-> > +	case htons(ETH_P_IPV6):
-> > +		family = AF_INET6;
-> > +		break;
-> > +	default:
-> > +		return true;
+>> @@ -1663,6 +1668,47 @@ static int bcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+>>   	if ((size - MHSIZ) % cfsiz)
+>>   		return -EINVAL;
+>>   
+>> +	/* Copy the CAN frames from user space before lock_sock(), so a
+>> +	 * stalled copy can not block bcm_notify() waiting for lock_sock()
+>> +	 * under RTNL. Only the frames the opcode handler reads are copied.
+>> +	 * The handlers keep their checks and read the frames from fmsg.
+>> +	 */
 > 
 > [Severity: High]
-> Does this default case bypass the family check for encapsulated packets?
-> 
-The default is intentional. 
+> This problem wasn't introduced by this patch, but can bcm_notify() still
+> block RTNL indefinitely in remove_proc_entry() [1]?
 
-Rejecting unknown ethertypes would just break existing programs without actually fixing anything.
-> If a TC ingress BPF program uses bpf_sk_assign() on an encapsulated packet
-> (such as MPLS), the switch statement falls through to the default case
-> and unconditionally returns true because protocols like ETH_P_MPLS_UC are
-> unrecognized.
+This bot is really not that intelligent when it isn't even able to look 
+into the following patch [2/3] of this series, which fixes exactly this.
+m(
+
 > 
-> If this packet is later decapsulated (e.g., via the TC act_mpls module), its
-> protocol could change to IPv6 while retaining an assigned AF_INET socket. When
-> the networking stack processes this decapsulated IPv6 packet with the AF_INET
-> socket, it may interpret the IPv6 control block data as IPv4 metadata,
-> leading to an out-of-bounds stack access.
+> When a bound CAN device is unregistered, bcm_notify() is called under
+> rtnl_lock and tears down the socket's /proc/net/can-bcm/<inode> entry:
 > 
-> Can this be triggered remotely by sending encapsulated packets, defeating the
-> vulnerability fix for setups performing decapsulation?
+> net/can/bcm.c:bcm_notify() {
+> 	...
+> 	case NETDEV_UNREGISTER:
+> 		lock_sock(sk);
+> 		...
+> 		if (bo->bound && bo->ifindex == dev->ifindex) {
+> #if IS_ENABLED(CONFIG_PROC_FS)
+> 			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read) {
+> 				remove_proc_entry(bo->procname, sock_net(sk)->can.bcmproc_dir);
+> 				bo->bcm_proc_read = NULL;
+> 			}
+> #endif
+> 	...
+> }
 > 
-> > +	}
+> Because that procfs entry is world-readable and remove_proc_entry() waits
+> for active readers (pde_users) to finish, a local user who stalls a read()
+> on /proc/net/can-bcm/<inode> (for example via userfaultfd or FUSE) causes
+> remove_proc_entry() to block forever while holding rtnl_lock and lock_sock().
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260930164020.41006-1-shlomojune6@gmail.com?part=1
+> [1] https://sashiko.dev/#/bug/linux-23a32da5-4d8e-457b-9e84-376ce500a113
+> 
+
