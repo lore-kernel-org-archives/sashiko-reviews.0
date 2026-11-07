@@ -1,91 +1,45 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=85.215.255.80
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794058548;
-	b=P66Pm7bEB/24W0Nwk/yYFD4lu/S7IRxX5Fa1zB/4o91BZDIKIjBXknysyM+ipUmvwoJr
-	 jZy8ocHwng1V/fxSeWUXK7fiQZ3WehSPSLdhCfCkkFnEdO7/N1xeF/YX4VGS2TiBIhRGl
-	 jBiDrQKhB2kW0EPFKteLe936IcqxZbVI8w7Cva2aCZbkRIs4ympzwYrilcu24b8E1zQ3R
-	 F14x0OoWKHJT0mvHMAj1uN7u9Nt/45xwb7pPdTFdIo+RR04Uy/u/xMbPNB/zk34TGr+Rh
-	 XdXNEBg56hFjZ5N9WaSOcdMHivv9bJwY/uf0icY4mLG9of4QqbqPSqJmaT0gffeXaIQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794058548;
-	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=Nd2V970ES+tX4+b+oJGHEQJJnaPwOoAYE9iq10xN4Yk=;
-	b=ggfox5/ThEtB+VuyQTPJMytF+047xe5JrCwuKwMisNM3VOES9YqPZgLTEExm+VzIbKKF
-	 IKWh5ZTvMCpAdYAp5W022j1HuznRC4Yp7zoe1d7nH6oeSvb2JnqnYMQ0uIt9SKOZ/+YG1
-	 Xvb9P19LoS19tGOXSgDVW0K2yPXfaW5dTTgKR3ht+k8kCdWSH74+4GjenQt1VtmznTxYn
-	 CHXMN4+OwTAcZoueX9f6T5WauWDOJiBzcpf3WsteEQ2qw2kMlp1L6fLNa3Uz9uQ/o9i32
-	 7yCaBwYQIlhtL0woUupCssm5NsTUym4zoLBg4iWJfCioPPEFg95sUBqRGF0+vNJEQDQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=hartkopp.net;
-	spf=fail smtp.mailfrom=hartkopp.net;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=gT767F8w;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=nFmdnXyI;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=85.215.255.80
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.80])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794060401;
+	b=3c2kAe+Kz6w71zvBiETFP2AkZzoVrnBAm3R8iFe/7EwFNso7tiB6bh0TiAobKmvPNbe9
+	 yU5ySYkJ3DBwQzgln+oVK9InFV2FmpqDy769cplZ6q23zHet0FMpfOwcc94BKvasnGCIf
+	 ppj4WKFNuglbvZD+RkTOY/a1LyJ2nZbuNr94g5czvsVftfaFlVWYJMwttCwgebZSD+ANO
+	 yQNTURJIwCrvWkLn/5gOKhVlbVfKszf23WEaXwBEAGSRWPI8AcUvPpotRMUtwPZFUEqaV
+	 zyip8NtkxKEsdUbc38K1s8KjMsvOR0FOyfV6k2wsVxDrQnXJPrSAYVZb+Iw6Ngb05rg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060401;
+	h=Received:DKIM-Signature:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
+	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=dRnWoULI3173Yqo58sHLTgXHS+AEuN9ho2xS9PVuhns=;
+	b=jYUUUnTSQNCAqcIUt55J8cTfwNmtKGi9pFh/ZusyO5IRBN8HIWFmXpq3as5JOy7Hd9K5
+	 mjIJE9bpRryEWnLyU63pASKHWNIXXEPgGnqJ+563ozoP0QdypTdO9Nj5yK7Intce9+sBw
+	 bQAXytZ7ZQr+wbeYTx6k6JV+LMTxHOFjkIaN8yvi1Gl3ObcKzk3PHnDtgRnq/HJhsMTm4
+	 VpWA4UOPTgHWCckS4ONNEE/6XQZH/4uWqfZxkJdmU2rbP9AEvKb+Yfmb/3Tc8natpyY27
+	 7EHK4pcvLwwNUDu5CKIoHTPFqn0c+t67X1BTXRS8d6HtAX163nzqI8n///3O2t7pgUg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0khYycu;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20625606A326
-	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 13:35:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20625606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3EC606D81A;
+	Sat,  7 Nov 2026 14:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=gT767F8w;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=nFmdnXyI
-ARC-Seal: i=1; a=rsa-sha256; t=1794058521; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=l4h/MMOP+r9SnTI1zEXplpwyb/c5sxuC44YAjj6330y4hrF2VQVXQIaIXgNQDePBxp
-    rIrSh20dO/USHe6j+B0peovjQIvDfwtHr2t4KZKSqTNSSSH6AeBUmQF3RTvOQhKscBHy
-    DphhdvRWnSrV3VlCWglJ79PivTbq+1e4nOy3yzuUHnle+jLKrr0c+tEP9EM9I7rRLdId
-    woCwjujTKH6Bh6tdpGUAi3fy4A43lHrMg1Q1fwyyc/YPHAlEBobFvSbBtTTYqHO6/gko
-    aAUszsK5qnpdVNYpfhz+TYU+JYMo5HkP/FmH1HETg4kvYyaECEZhhsfj6Rnxm9gUXRSi
-    SYbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794058521;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Nd2V970ES+tX4+b+oJGHEQJJnaPwOoAYE9iq10xN4Yk=;
-    b=U42qV0CFltJd/GC7kqesH9TIfQIVJsJ4z/OobGWUtn7d/k+AC+IOTQ9w3HRv5+6WEU
-    2GA8u/62xJf0MuBXKtQskNNA+CjmzncKIDWM2LOg1cUUxfpvYdjEqoxHVpEu8P8hBxhl
-    8nvbWXlGo7xHqkvbzhAP5tzFBFGBE7agfE9Ex+eTb4d3tnFkC7XyxDhsSHTLYaDtXZ01
-    8rUgORUV+GCwLAWGl1/f4UN83MrtjMl5aCKgPnLnszItMKiL1U+/BdSDzK2kXWGKYH4r
-    YJ7fg1d0npjXUpkVL4YOwzDlume3XKy6bBPr279rQEyt1J78MCwIh8rpBGm0UYuP6AlF
-    l31w==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794058521;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Nd2V970ES+tX4+b+oJGHEQJJnaPwOoAYE9iq10xN4Yk=;
-    b=gT767F8w9iWxHZKX/ytXR+g2Tu2GH83WWHlfUbqh0q4MegIBLzIJ3NreUhoa6xCoVk
-    A+aD1TZad2cERA+fWG3lX8dlIM/UvMbb/qMVZ6IVlst7oKwNetChYtlq7GxR4nONR6s0
-    LvcB4iXUGEc/jbJue9K9fInVEeooZYg52k3qZIzmB1TTTESQEjANFNl5wjb4+Lr6vbhO
-    NAXZsalDXMev7947xQWA6Sr7SxZuQCjUGmF4AUgbTZZgAPrXV4FWW9DO2vq5aCHspy6C
-    C9kJKvDbAwn16c3Rj560d7G5j6ZI5oBUHm/r6OrB3OOtp8Q2JJ5KWHy+zkIRurLAupGx
-    JcTw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794058521;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Nd2V970ES+tX4+b+oJGHEQJJnaPwOoAYE9iq10xN4Yk=;
-    b=nFmdnXyIpY6OW0WbHQyGjOjOIa01+ftvCr3Z7eR1dlITcNIpSiYUxC5IVJJYevEH9p
-    6Y2xju8V4aQylnKq7dDQ==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.6.3 AUTH)
-    with ESMTPSA id Kfdf2a2A7DZLlRs
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Sat, 7 Nov 2026 14:35:21 +0100 (CET)
-Message-ID: <86c9e6d5-911b-4329-81b7-bb611a9f333a@hartkopp.net>
-Date: Sat, 7 Nov 2026 14:35:20 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0khYycu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D691F008A2;
+	Sat,  7 Nov 2026 14:06:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794060401;
+	bh=dRnWoULI3173Yqo58sHLTgXHS+AEuN9ho2xS9PVuhns=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=P0khYycugzxtI0Lt9BtiBnM8SaNf4JAMZ8ziljyH2ARuzvwx/eHbaNVoo3zDV59mB
+	 1q7IIfXEk1V0UyzsicknUI5WrHjZQhZRef8hGC23238SwLLggWcOdxWzY3ftgX4h7i
+	 xPRR1mS4t32Fa+v3w1zsJdXbefofFeMWTwzfJaMNYQ2iQhWILgA/wBwGkNZoStpmqB
+	 RPxZB7fUnIVPsM6UvG7WPAfyjTWy7jsZVq3nly9BYlS24yW2/chfnCyLC1GNXppMxs
+	 Lk/8GFjnxqBmrWuvb1AGiMBVU+9uMmLMxsmcwcSbFjy0newQejWaK7VnYDaz2qjh9b
+	 SF3NvEZcnlXtw==
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,93 +49,285 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] can: enable memcg accounting for user triggered
- allocations
-To: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org,
- Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
- Vincent Mailhol <mailhol@kernel.org>
-References: <20261107-can-bcmlock-memcg-v1-0-482d9f5be1fd@hartkopp.net>
- <20261107-can-bcmlock-memcg-v1-3-482d9f5be1fd@hartkopp.net>
- <sashiko-outbox-202902@kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <sashiko-outbox-202902@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v24 09/15] media: qcom: camss: csid: Add support for
+ CSID 1080
+From: bod@kernel.org
+To: sashiko-reviews@lists.linux.dev
+Cc: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, robh@kernel.org, 
+ conor+dt@kernel.org, media-ci@linuxtv.org, vkoul@kernel.org, 
+ neil.armstrong@linaro.org, olteanv@gmail.com
+In-Reply-To: <sashiko-outbox-193308@kernel.org>
+References: <20261102-kaanapali-camss-v24-0-d6b8f3f6f66f@oss.qualcomm.com>
+ <20261102-kaanapali-camss-v24-9-d6b8f3f6f66f@oss.qualcomm.com>
+ <sashiko-outbox-193308@kernel.org>
+Date: Sat, 07 Nov 2026 14:06:36 +0000
+Message-Id: <179406039659.650304.183461297349639175.b4-reply@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9352; i=bod@kernel.org;
+ h=from:subject:message-id; bh=fWXNSKxBlQ8AhlCFWFSjAP9CzDVqSO9hadN9LWOv0v4=;
+ b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBq7zBu8ihuhOEt+7vTL8KFSjeCNLDqxtTQFtbEE
+ 4O0G6XApW6JAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCau8wbgAKCRAicTuzoY3I
+ Ou5fEACQUWQe9sN6OIK6/ZEBFckX7hxFDwmI6hS9rOZK9WGHVgVnvmhLkKjuZySLSVf1ItUg0qf
+ ul7Jhs3c8iwzRj0E0fLBRamsAUFGzCe0QXfyamfUydd6MN0u/p2sdhgAqQLZwXaz50dWVKWaCj5
+ GeKHTWAthT8+qj8dXZwQdbFo4suK4xpp4knYZRpXeGm7tTDO1vanmbtWhjl7tis1Wclw+9eT68E
+ byBBVflPBY/Z77vPuOp09yQT40EyW2SRpaxDvZoJpz+L1vkyWQBdLaU54L0SjzEA/Zsxdvj+bfI
+ jAqeEuQd8uiTdxRmtVKyoi7Qgnfs7KWc/Y5FjCefb1lQgY3a+kmZdapXibHGAwd/bzSt6WbYe/4
+ 6a2DrgXwI4jsNoPTIWjW8CmeyvKPyuTFOtv4tdrQ4KH+NKeAQ4TnqRKXAZG7NKPBOVopcF7NAPu
+ w9A6Mw/weDtsugjyEmvT0MroX3xM6LCdsZW8t4c4eyv5uFAgX/7Csvckj+WT2XDSdtfI4Z+U0HM
+ DUgyysosBINauTtKNPadI+7FwAyzfgN0ODYOO2kOTEoS9ErlhjHHwYkSe4YzTKHF4ctck+xP2Gd
+ K23jFNpUK2zE1QjH2FyUaMklEg32Gj44QHqJBKsPKPddleqATgBzYhGWMpPjDhsbA9g/Pj+mqEO
+ sZ9hV25Rc8MFXDQ==
+X-Developer-Key: i=bod@kernel.org; a=openpgp;
+ fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
 
-
-
-On 07.11.26 14:14, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [Medium] can: j1939: non-zero setsockopt return value in
->    j1939_sk_setsockopt_flag() [1]
+On 2026-11-02 11:02 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] media: qcom: camss: unconditional AUP triggers in csid_configure_stream()
+> - [Medium] media: qcom: camss: out-of-bounds csid->fmt access in __csid_configure_rdi_stream()
+> - [Medium] media: qcom: camss: race on addr_update and reg_update in csid_isr()
+> - [Low] media: qcom: camss: unused variable lane_cnt in __csid_configure_rdi_stream()
+> - [Low] media: qcom: camss: malformed kernel-doc Return sections in camss-csid-1080.c
 > --
 > 
-> commit b3ee6688711331e68a7e275f9b72d5b3fa8b7ee5
-> Author: Oliver Hartkopp <socketcan@hartkopp.net>
+> commit b46b9d6d26210a3faaa024307adfd55c2501ce00
+> Author: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 > 
-> can: enable memcg accounting for user triggered allocations
+> media: qcom: camss: csid: Add support for CSID 1080
 > 
-> This commit enables memcg accounting via GFP_KERNEL_ACCOUNT and
-> SLAB_ACCOUNT for user-triggered allocations in the CAN core, BCM, ISOTP,
-> J1939, and RAW socket protocols.
+> This commit adds hardware resource descriptions, register programming,
+> reset handling, and interrupt support for the CSID 1080 module found on
+> the Kaanapali SoC.
 > 
-> Link: https://lore.kernel.org/linux-can/350df96b-5f69-490e-b39e-ed6e9bca4754@hartkopp.net/
+> > diff --git a/drivers/media/platform/qcom/camss/camss-csid-1080.c b/drivers/media/platform/qcom/camss/camss-csid-1080.c
+> > new file mode 100644
+> > index 0000000000000..3d90d31201fa5
+> > --- /dev/null
+> > +++ b/drivers/media/platform/qcom/camss/camss-csid-1080.c
+> > @@ -0,0 +1,402 @@
 > 
->> diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
->> index 50a598ef5fd4a..c832465876049 100644
->> --- a/net/can/j1939/socket.c
->> +++ b/net/can/j1939/socket.c
->> @@ -716,9 +716,14 @@ static int j1939_sk_setsockopt(struct socket *sock, int level, int optname,
->>   				return -EINVAL;
->>   
->>   			count = optlen / sizeof(*filters);
->> -			filters = memdup_sockptr(optval, optlen);
->> -			if (IS_ERR(filters))
->> -				return PTR_ERR(filters);
->> +			filters = kmalloc(optlen, GFP_KERNEL_ACCOUNT);
->> +			if (!filters)
->> +				return -ENOMEM;
->> +
->> +			if (copy_from_sockptr(filters, optval, optlen)) {
->> +				kfree(filters);
->> +				return -EFAULT;
->> +			}
->>   
->>   			for (f = filters, c = count; c; f++, c--) {
->>   				f->name &= f->name_mask;
+> [ ... ]
+> 
+> > +#define MSM_CSID_MAX_SRC_STREAMS_1080		(csid_is_lite(csid) ? 4 : 5)
+> 
+> [ ... ]
+> 
+> > +static void __csid_aup_rup_trigger(struct csid_device *csid)
+> > +{
+> > +	/* trigger SET in combined register */
+> > +	writel(RUP_SET, csid->base + CSID_RUP_AUP_CMD);
+> > +}
+> > +
+> > +static void __csid_addr_update(struct csid_device *csid, int port_id)
+> > +{
+> > +	csid->addr_update |= CSID_RUP_AUP_RDI(port_id);
+> > +	writel(csid->addr_update, csid->base + CSID_AUP_CMD);
+> > +
+> > +	__csid_aup_rup_trigger(csid);
+> > +}
+> > +
+> > +static void __csid_addr_update_clear(struct csid_device *csid, int port_id)
+> > +{
+> > +	csid->addr_update &= ~CSID_RUP_AUP_RDI(port_id);
+> > +}
+> > +
+> > +static void __csid_reg_update(struct csid_device *csid, int port_id)
+> > +{
+> > +	csid->reg_update |= CSID_RUP_AUP_RDI(port_id);
+> > +	writel(csid->reg_update, csid->base + CSID_RUP_CMD);
+> > +
+> > +	__csid_aup_rup_trigger(csid);
+> > +}
+> > +
+> > +static void __csid_reg_update_clear(struct csid_device *csid, int port_id)
+> > +{
+> > +	csid->reg_update &= ~CSID_RUP_AUP_RDI(port_id);
+> > +}
 > 
 > [Severity: Medium]
-> This problem wasn't introduced by this patch, but should
-> j1939_sk_setsockopt_flag() return 0 instead of tmp [1]?
+> As reported by Sashiko on v14 [1], can concurrent updates to
+> csid->addr_update and csid->reg_update race between process context and
+> interrupt context?
 
-This might be a can-next topic and has nothing to do with this patch.
+I agree here. I think the spinlock for reg-update, needs to be held.
 
-@Oleksij: Would you like to take this suggestion?
+Since the reg-update spinlock guards the entire slew of shadow bank
+registers - or rather it should it looks like this lock is warranted and
+missing.
+ 
+> In __csid_addr_update(), __csid_addr_update_clear(), __csid_reg_update(),
+> and __csid_reg_update_clear(), the bitmasks in csid->addr_update and
+> csid->reg_update are modified with non-atomic |= and &= ~ operations, and
+> the full multi-port mask is written to CSID_AUP_CMD and CSID_RUP_CMD.
+> 
+> While vfe_queue_buffer_v2() and vfe_enable_output_v2() invoke
+> csid_subdev_addr_update() and csid_subdev_reg_update() under
+> vfe->output_lock, csid_configure_stream() calls __csid_addr_update() and
+> __csid_reg_update() without a lock, and csid_isr() clears those fields via
+> __csid_addr_update_clear() and __csid_reg_update_clear() before
+> camss_buf_done() acquires vfe->output_lock.
+> 
+> In addition, within csid_isr(), camss_buf_done() is called for port i
+> before higher-numbered RDI ports have had their INFO_RUP_DONE status
+> checked and cleared in the loop, so a buffer update triggered from
+> camss_buf_done() on port i can re-write CSID_AUP_CMD and CSID_RUP_CMD
+> with stale bits still set for those higher-numbered ports.
+> 
+> [ ... ]
+> 
+> > +static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 port, u8 vc)
+> > +{
+> > +	u8 lane_cnt = csid->phy.lane_cnt;
+> > +	u32 val;
+> > +
+> > +	/* Source pads matching RDI channels on hardware.
+> > +	 * E.g. Pad 1 -> RDI0, Pad 2 -> RDI1, etc.
+> > +	 */
+> > +	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
+> > +	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
+> > +								   csid->res->formats->nformats,
+> > +								   input_format->code);
+> > +
+> > +	if (!lane_cnt)
+> > +		lane_cnt = 4;
+> 
+> [Severity: Low]
+> As reported by Sashiko on v23 [2], lane_cnt is initialized and updated in
+> __csid_configure_rdi_stream(), but it is never read anywhere in the
+> function. Will this trigger an unused-but-set-variable compiler warning?
+> 
+> > +
+> > +	val = RDI_CFG0_TIMESTAMP_EN;
+> > +	val |= RDI_CFG0_TIMESTAMP_STB_SEL;
+> > +	val |= RDI_CFG0_RETIME_BS;
+> > +
+> > +	/* note: for non-RDI path, this should be format->decode_format */
+> > +	val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
+> > +	val |= vc << RDI_CFG0_VC;
+> > +	val |= format->data_type << RDI_CFG0_DT;
+> > +	writel(val, csid->base + CSID_RDI_CFG0(port));
+> > +
+> > +	val = RDI_CFG1_PACKING_FORMAT_MIPI;
+> > +	writel(val, csid->base + CSID_RDI_CFG1(port));
+> > +
+> > +	/* Configure pixel store using dedicated register in 1080 */
+> > +	if (!csid_is_lite(csid))
+> > +		__csid_configure_rdi_pix_store(csid, port);
+> > +
+> > +	val = 0;
+> > +	writel(val, csid->base + CSID_RDI_CTRL(port));
+> > +
+> > +	val = readl(csid->base + CSID_RDI_CFG0(port));
+> > +
+> > +	if (enable)
+> > +		val |= RDI_CFG0_EN;
+> > +
+> > +	writel(val, csid->base + CSID_RDI_CFG0(port));
+> > +}
+> > +
+> > +static void csid_configure_stream(struct csid_device *csid, u8 enable)
+> > +{
+> > +	u8 i, k;
+> > +
+> > +	__csid_configure_rx(csid, &csid->phy);
+> > +
+> > +	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS_1080; i++) {
+> > +		if (csid->phy.en_vc & BIT(i)) {
+> > +			__csid_configure_rdi_stream(csid, enable, i, 0);
+> > +			__csid_configure_rx_vc(csid, 0);
+> 
+> [Severity: Medium]
+> As reported by Sashiko on v14 [1], can __csid_configure_rdi_stream() index
+> past the end of csid->fmt[] when i reaches 4?
+> 
+> For non-lite CSID 1080 instances, MSM_CSID_MAX_SRC_STREAMS_1080 evaluates
+> to 5, so csid_configure_stream() iterates i from 0 to 4 and passes i as
+> port to __csid_configure_rdi_stream():
+> 
+>     struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
+> 
+> However, in drivers/media/platform/qcom/camss/camss-csid.h,
+> MSM_CSID_PAD_FIRST_SRC is 1 and MSM_CSID_PADS_NUM is 5 (1 sink pad and 4
+> source pads), sizing both csid->pads[MSM_CSID_PADS_NUM] and
+> csid->fmt[MSM_CSID_PADS_NUM] to 5 elements (indices 0..4). When port is 4,
+> MSM_CSID_PAD_FIRST_SRC + port evaluates to 5, which is one element past
+> the end of csid->fmt[].
+> 
+> > +
+> > +			for (k = 0; k < CAMSS_INIT_BUF_COUNT; k++)
+> > +				__csid_addr_update(csid, i);
+> > +
+> > +			__csid_reg_update(csid, i);
+> 
+> [Severity: High]
+> Does unconditionally calling __csid_addr_update() CAMSS_INIT_BUF_COUNT (2)
+> times here match the buffers actually programmed in vfe_enable_output_v2()?
+> 
+> During stream startup, vfe_enable_output_v2() in
+> drivers/media/platform/qcom/camss/camss-vfe.c only calls
+> ops->vfe_wm_update() for buffers actually present in the pending queue:
+> 
+>     for (i = 0; i < CAMSS_INIT_BUF_COUNT; i++) {
+>         output->buf[i] = vfe_buf_get_pending(output);
+>         if (!output->buf[i])
+>             break;
+>         output->gen2.active_num++;
+>         ops->vfe_wm_update(vfe, output->wm_idx[0],
+>                    output->buf[i]->addr[0], line);
+>         if (!ops->addr_update)
+>             ops->reg_update(vfe, line->id);
+>     }
+> 
+> If userspace starts streaming with 0 or 1 buffer queued (or when
+> csid_configure_stream() is called with enable == 0),
+> csid_configure_stream() still triggers two AUPs and one RUP, which can
+> latch uninitialized or duplicate WM buffer addresses into the hardware
+> FIFO. Even when 2 buffers are queued prior to stream-on,
+> vfe_enable_output_v2() writes both buffer addresses to the WM register
+> before any AUP is issued.
+> 
+> > +
+> > +			__csid_ctrl_rdi(csid, enable, i);
+> > +		}
+> > +	}
+> > +}
+> 
+> [ ... ]
+> 
+> > +/**
+> > + * csid_isr - CSID module interrupt service routine
+> > + * @irq: Interrupt line
+> > + * @dev: CSID device
+> > + *
+> > + * Return IRQ_HANDLED on success
+> > + */
+> > +static irqreturn_t csid_isr(int irq, void *dev)
+> > +{
+> 
+> [ ... ]
+> 
+> > +}
+> > +
+> > +/**
+> > + * csid_reset - Trigger reset on CSID module and wait to complete
+> > + * @csid: CSID device
+> > + *
+> > + * Return 0 on success or a negative error code otherwise
+> > + */
+> 
+> [Severity: Low]
+> This isn't a bug, but the kernel-doc comments for csid_isr() and
+> csid_reset() use "Return" instead of "Return:", which causes
+> scripts/kernel-doc to warn about a missing return value description under
+> W=1 builds.
+> 
+> [1] https://lore.kernel.org/r/20260601162737.8D2531F00893@smtp.kernel.org
+> [2] https://lore.kernel.org/r/20261028-kaanapali-camss-v23-9-95f250b18612@oss.qualcomm.com
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261102-kaanapali-camss-v24-0-d6b8f3f6f66f@oss.qualcomm.com?part=9
+> 
 
-Best regards,
-Oliver
-> 
-> net/can/j1939/socket.c:j1939_sk_setsockopt_flag() {
->      ...
-> 	lock_sock(&jsk->sk);
-> 	if (tmp)
-> 		jsk->state |= flag;
-> 	else
-> 		jsk->state &= ~flag;
-> 	release_sock(&jsk->sk);
-> 	return tmp;
-> }
-> 
-> When userspace enables SO_J1939_PROMISC or SO_J1939_ERRQUEUE with a
-> non-zero value in j1939_sk_setsockopt(), that value is returned to
-> userspace from setsockopt(), breaking callers that check for a 0 return on
-> success.
-> 
-> [1] https://sashiko.dev/#/bug/linux-35e22274-4165-4b2b-985e-c5f5773b9ef9
-> 
 
