@@ -1,98 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.52
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794039602;
-	b=3Y9X7aZTT0yUkgj3oul25l/eOQGEGJm4r1y6KMgLUoAISn6mEyNJ4iyJh1SYrRq88PEA
-	 08gyOh5EI6EaYBuL36lHLy/kBU20U+AkhT0BDTZ6dz9KUdacaz3oH9Py81LmA/S1m1hnz
-	 OPvQ4eteCdTEUK9v0mhZskhLo3JfMjovmLm47hj3tgK6hvuiUH0QR+jqMHpJUdvXsY0+D
-	 K4FkWBc9fKCQt/bC6py/sCblrZR3uZ2LhPIi3sF9LQBf5dxAikVPvySE0PzPBlS6SjqDa
-	 oT6InNfAKxWrfGpk9y2K77pV4UO27f97QtVIBjslY+M9LFMyyURXQryAevn2MHT3RDA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794039602;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.177
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794044378;
+	b=skXuqaQI9R7fhJqYFMWYza+99YYB6hzLwaEK8isRLecbHtOnLdZrKZDLvdOW1MyEaWUh
+	 DRIILSzOPsEpoSIT1NDRKnRS4rE8qlAnW/2sQ/nvO7S85vN0WV48Kw9ZQrlbU7LNvkCqJ
+	 xPkuqi7fjZEcOJpnmSR3t3vZCUVUN/cqhbN8IpR4MOFYImpOEyzsPv3J0iYaPQqNY5orB
+	 6Zc7aVTDuSMK6NvAweD3WoNjnoXs9Kvv3VtNdx4ytpXvlgM2OblgDX9hYbWZrzd7tZ6rk
+	 XxJrtT/KQsqQ3E+hCMNyfOElCo6bPpS4voehfqjSpFxFihoX9oJh3kIs6hTrag4A+sg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794044378;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=BWwZfF80258/+F+GHEmqApJo8cN5FKx3RYuWlNDDhXY=;
-	b=K55/Gbh0ASDcpuWgC5+NaQ7PI9gaIkCLQ5brBYXpxML0Y5R5R6pjR2av269qhEiXVSkc
-	 l1v8Nqw6EHVN/6MHEhHiV4dQyshZ7YRiIO45JDfCuSuE4v2lwb6BbmD2xDm1/zUs/Ip4A
-	 Lgty4ZwY/3PXs0DI52obLNxdOa5TFs2hW5HJxDxFMjQxAAqLxgLUC42WjwWwG59WMKceu
-	 NdJPpKq8eU3SgEovsACQoVZRfpPhZwfouDR0Iy+iNl+dXFowTQf06zkWkUFPuToCcdc9j
-	 W0Ib1UDky8nCmCyQzOjosPSBC+y29ILdgOkW4XUj3/CDEjCL2NjNh1YI8xDjQ0yysNw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=BhP7zGWAKdDhvoK/dqiwsbUC8TFOQvEskzC0SJWqEq8=;
+	b=N25dPzv3Y2LsA455AAGeuUqvvMBL3gYePvFJl0r1UGaf/ZpDxiZQ3qHbp/8zEYjA4sV3
+	 NLTF+tQyDgDwzk66I7ZZI9fWpZLxKU+05ixGuLkGdFP7HVFzed9eDf+rGlLrS/Z9L5Xzd
+	 25zf5MeNqP7M9Vup6FCcu2Z1eVEzf9l+k0W4VqbfYZ0EoyQPgl7/i25I2EDUXcKYq3ZWo
+	 Alod9+FdrKgOz9MYDQx8HdbIp+lbvI7ObLolj/WE4zRUg0cvuGORPM9enHGeE97a2ZY25
+	 mKUOa1nM9sYq0ojuB9j2Egiso5jtZYF4h11q8FKScnH8uv99I4xcM/WxzFaXm4vmTow==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qCjVsbY3;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.52
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qXnhQThX;
+	arc=none smtp.remote-ip=209.85.215.177
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D2F606A326
-	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 08:20:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C9D2F606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC894606A326
+	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 09:39:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC894606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qCjVsbY3
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-48e47347279so776625f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 00:20:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794039600; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Th3RbXwoUgj+NIm3kN+9F3WfYFtdPQ2rt+i/h5IZOJNstKf/60bcxbuU4y74klh8f5
-         qTSb4pqOW+xgj5+14nrWAuuI0SR5M/PdaxsA61Fscua3Qi1J/WbUvhhRtsJTFvh2Th/6
-         NOa0jZUb0Was4nQAE59S2ebJ/MMTH48Lqe5ENfLu4IeZmn8wPqlHYx/OqmpDeHUXqLXg
-         EURLM7hDMXxBvEE/JV0Y0IeFb5QggUhyCR8xfde7IPPtQNtyD9XXRYUCnbeo5rVEGfHf
-         V8aXp4/GBdaPwhuxRzOWjKYDKLYEOLxWVMKbsAqXnraroHY3asrJCEWhoglUxMmJSnzH
-         iudg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=BWwZfF80258/+F+GHEmqApJo8cN5FKx3RYuWlNDDhXY=;
-        fh=rqHhackACu+shRfvmHC74oWZ5M5C/pKvq2iZ66Lq2VA=;
-        b=WTR3iLXJg+qwBoheLt2QLtMqpjNtAZ9NIIj5yRP0fxnEQ1UpQXlAaIhUPBEnlQqWHS
-         9Q0fw/rWw+MLDPXhcpjXkEMuqoPdrivIU12dXVYrG6CwAD81PLMBRORa33wCdZYPrhiw
-         IThuH6Q3zqRBBCz4OTwc4ZvcUxIitisqBF8xXUiQWquMi6swoqDIFBkjJQwEtkxslBU8
-         v9XFm+76Fk28+RULIvRMsuQ2+mHvoWwwt4yVT4xw0c+D4QA7jzNVPZIdew43+ilRaOD+
-         3xVfOZo4iEeiaJCz58P0xVod28Y2zNiYqkz6L9sc+LRAgjWAkwKZVsq5r0FpPQ0RKyQQ
-         F3Xg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qXnhQThX
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-cdb2dfcca94so579775a12.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 01:39:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794039600; x=1794644400; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BWwZfF80258/+F+GHEmqApJo8cN5FKx3RYuWlNDDhXY=;
-        b=qCjVsbY3l8dLNVmymFUDr5PB5tOQ+stq97iOL2I4qRBujjCt6WtgGqNxCpJ7EOkWVx
-         HSGBA8G83RAm5qkU0W4JdQKwichWXcbnS3JjX2p1jcs+x2fl4f+jMobVRvp6WoAPLxbw
-         w7yZ6k6QTLTaWpQYc26HUknlp2phfzMsmAtFC2ynonhYM1cVLxobWRqVXEMW375Svpnq
-         EgnqknOYIpmB5MVC3JhKJujarNLN33KPhwILbk7dpKvBpdZOJbITYlVmXQt68z6XVfEi
-         2suZEZXRgkzCPrDg8VFR5NaFsdYtvLeL81IF09fPG1kbW+eA1xZWCcdHGNIeptZJg/Uo
-         iDEQ==
+        d=gmail.com; s=20260707; t=1794044377; x=1794649177; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=BhP7zGWAKdDhvoK/dqiwsbUC8TFOQvEskzC0SJWqEq8=;
+        b=qXnhQThXDxEbMOkBjn8wOzcK2ShFwL3dwLM4OTR7bR8vDYG3polDAykeU4Tm/p6tu+
+         qWbA/SfPO0JoIj9j8ZXs8WeHDd6eBUxOF8bONi9H6+p65BNOYNyhftWnCT1ASoN1xDWc
+         ucBZrG5pXI3qIPDxvYJY1qYpZT94uoBEziqbQeeI0CSZQ5X7cHvtvfCANJLeADEzs9Ms
+         HK7tIfuyLb7Bg9zikhHA8kUHkJBu1b0+XP2alocajjopKE/LsE5Rt+WSm9z2jT/iRkDz
+         oDs7j7lLzV4qY3dKMrIYAjPAC4c+r9PEDU/UfBvLqMuaomY+8m6tYT7L7jjnNnfAA7G7
+         EOCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794039600; x=1794644400;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=BWwZfF80258/+F+GHEmqApJo8cN5FKx3RYuWlNDDhXY=;
-        b=F20MqgRiB0WccWOmLiyXvIVtQ8azwP/R9UaRE/rpYLYpYoR3PIISp8h3/nrrE1ZqO0
-         smvIIqGGSXJsxC8/6cAdZgMyZSAJ/bT9BnUMmxeDs1+nDOuylE9DtnBrju4FEUac+GVg
-         XOdyCYnaCDZz+i3Sv4R2yjo4Vnc3NfuvEQmI/EtDnwqTaXU+mQHFwEvpfMne0aRpwkeQ
-         6QhhSnSuDBVrGBKDBxoaNQahpKux1nvhTAB5iYl9O6JVzJ6gHqDV174EaCZoPcWtXqcl
-         g3kiOD/gxQxuQEXZg8PsQhhFnPB8GEtVP/WRGtrnJfTgs0eEti1kus8VaVNxhw29xrKR
-         DvyA==
-X-Gm-Message-State: APuU4Z/JkQqIejsPeNP9MgntWJxFx79E3Ro92KaSnFrvBTHL8pThA7xr
-	M0hP8bGuunsLj8MUaQtvJa0Ow9ONz8ghy7NRa+m+eQzOL4np3BsnBr6ZuDaSMZPPd3hf4Y+aGvF
-	zjJVf25Ytw3Pl8Bvh66U+0Rhb8zO6YhxbEPkrD88=
-X-Gm-Gg: AYBFou3jnTx49y2QvgIrUIXCBFxzknoFFPjtPmSrrupKWGdulPjPjB/RKgxbEp2/Zlk
-	1wYjGYi2+nmiWMBTUh/r6LYr14iSwvm0XbDhblXe/SIp+vXIBpG6+V3L+8HX9ukOCDno1W8A7Ck
-	XIVM5a4uIsm6AxnqEmEXk+yamBzjjg0HnEgpNg3+NbWLcGiisCIHCd5BGCl5r2pgIOMI+cvJAno
-	Ap6BLEkPJzAn/4cnQJpJREXbc8DC3vz0y76PQ+DeV6m1iFvKQjaWYL/FmTpGkL33+UvhEwefl7U
-	NNQfc6bS2tR+7pHYukxiAzlc0WlkaoV8dAoeIgVDsA1wDzFc8n0TnSRnoSALoBOHqrPieamqlEm
-	7Q+QTG8k7ZXHP2I/yTBrma81Ag5uqii2Wiy6F6Q==
-X-Received: by 2002:a05:6000:400a:b0:48d:cda6:4dd7 with SMTP id
- ffacd0b85a97d-4927f78fe8cmr9200523f8f.44.1794039599942; Sat, 07 Nov 2026
- 00:19:59 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794044377; x=1794649177;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=BhP7zGWAKdDhvoK/dqiwsbUC8TFOQvEskzC0SJWqEq8=;
+        b=ya3g8JkrD1Ey7GQTdQd93AXdPDV7AEnK5xkfbehgXQ/30vlCT8mEby4OCLt9/2OEX1
+         t4TDLDwtItbd2kJuUqY1D62AY4I0PwFvx0cZhbLFza6TKAob19stHos8tNK4jVWK2Ncc
+         i25iWUiidlyGjsp7UScCbNCbfA9EL7/izigv0d9sCfwsBE5hqgOggqW/VyXrLsuqjuIo
+         xP0Hn1M2QU4SNd4xV8ZxLRqHW9O7c5taT17VKt+yeCC/za8bZJUgDVE/cZj+W3U05cZB
+         LK1FK12TYy3h7wFTxkjVY4y3Ybdeish96vctsFcIS9b8Y/CtXWnWrHZ+MmCp4vW2JMl/
+         0+Zw==
+X-Gm-Message-State: APuU4Z+ONS3ChPMCHrgM/Wmje73DaCbFnQYrY4QmG4jPN/kMWRSWGYsp
+	6tRnVDhl5bqGfppoDEsz6rzExfZOTW4NnolEbo3J0sFeTvR0t8EgMvGHKnQg6g==
+X-Gm-Gg: AYBFou2UHjVWcbRKTTHgtMHBMBrLWJ6hrxH/aQ9YRlMp5A2/a5ykJfGNzhNGXV1QRZy
+	zxjY9gqVriaSg1mlY26aCtrQdcvg/yy9YrJF4C1WkJFHYSusVrV6xWkQ6KNhJnmlkx/a39JMSQe
+	FxEo0JDRfp1LvYTLBjYwD4PSGLrvVw5nR5PHbcYcbMlVwrbpg8diXciF6LNqERlcaxxGf425iV5
+	tIb9VPsSPugigCRDMr/S+q3Z1JDRBAmRls+GlhLfoVRr6fSPtZF8gcmZqK7YMtY+6zZ6jhdlu1Z
+	h7OL1sI6enpMBfeHG544n6FiL6bPfV5aNqK8LqBt3+0jzCJMhOBrjyoz0WnouvdXZSl4pFuQYQA
+	4gU0aTEhhxubwx5ew6J3hggh7QyLV783LMdAu25mMCE2+hXcHFeuSzV8fP2Pry1YkKvsbrPArgV
+	zVOo+e9GOqlY/kb1aAsd5Y7QUVx8U4kzMLHeqgZMPLFN1QAza7cqbyJBwheWHv9MGXP4YT4pZGE
+	CZd44qu2I6L/9/tal7NBmO97xDorIdWppuU8Ybw3T1jTuaqsC65wbnmlbyTN51Safm+K6FvxKxI
+	rPcalo/xCqKRMKLB5ZWh3lXQXR7YhtMKhV2k4f71XoB4D37a3LPl7gkszEPpsIfHLhd3
+X-Received: by 2002:a17:90b:3950:b0:3b0:92b2:2e74 with SMTP id 98e67ed59e1d1-3b0db6f6c35mr5119998a91.62.1794044376916;
+        Sat, 07 Nov 2026 01:39:36 -0800 (PST)
+Received: from localhost.localdomain (vmi2317719.contaboserver.net. [84.247.152.64])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1057b17f8sm2792987a91.1.2026.11.07.01.39.30
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 07 Nov 2026 01:39:36 -0800 (PST)
+From: Lian Wang <lianux.mm@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	chrisl@kernel.org,
+	nphamcs@gmail.com,
+	baoquan.he@linux.dev,
+	baohua@kernel.org,
+	youngjun.park@lge.com,
+	shikemeng@huaweicloud.com,
+	kasong@tencent.com,
+	linjh22s@gmail.com,
+	kunwu.chan@linux.dev,
+	kees@kernel.org,
+	gustavoars@kernel.org,
+	tglx@kernel.org
+Subject: Re: [RFC PATCH v3 03/18] mm/swap: cleanup and document swap device availability flag usage
+Date: Sat,  7 Nov 2026 17:38:35 +0800
+Message-ID: <20261107093906.36492-1-lianux.mm@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <sashiko-outbox-188132@kernel.org>
+References: <cover.1793106426.git.lianux.mm@gmail.com>	<c3a660c13ec9a98af8a496b5f9139e73eab5aa3a.1793106426.git.lianux.mm@gmail.com>	<sashiko-outbox-188132@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,66 +108,46 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261103101658.766905-1-jiangwenxiaomi@gmail.com>
- <20261103101658.766905-10-jiangwenxiaomi@gmail.com> <sashiko-outbox-197081@kernel.org>
-In-Reply-To: <sashiko-outbox-197081@kernel.org>
-From: Wen Jiang <jiangwenxiaomi@gmail.com>
-Date: Sat, 7 Nov 2026 16:19:48 +0800
-X-Gm-Features: AclHuK8xVs7cZe9aVBZpOoOS5AW56CL1lPNfImzX0W7yFxv2KA4L34W4gYXh93Q
-Message-ID: <CAHKocdED6i52rn38qsWOFwEF=kYZ54iqoqg4fHCk_n5Cso8Ahw@mail.gmail.com>
-Subject: Re: [PATCH v11 09/10] mm/vmalloc: map contiguous pages in batches for
- vmap() if possible
-To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, catalin.marinas@arm.com, linux-mm@kvack.org, 
-	urezki@gmail.com, will@kernel.org, Xueyuan Chen <xueyuan.chen21@gmail.com>, 
-	ajd@linux.ibm.com, anshuman.khandual@arm.com, baohua@kernel.org, 
-	chleroy@kernel.org, david@kernel.org, dev.jain@arm.com, jiangwen6@xiaomi.com, 
-	leo.yan@arm.com, maddy@linux.ibm.com, mpe@ellerman.id.au, npiggin@gmail.com, 
-	rppt@kernel.org, ryan.roberts@arm.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, 4 Nov 2026 at 18:19, <sashiko-bot@kernel.org> wrote:
+On Wed, 28 Oct 2026 16:14:54 +0000 sashiko-bot@kernel.org wrote:
 
-> [Severity: Critical]
-> Can vmap_pages_range_batched() overrun a physical chunk and map unowned
-> physical memory when a coalesced batch of same-order chunks straddles a PMD
-> boundary?
->
-> [...]
->
-> Should get_vmap_mapping_order() also bound the mapping order by the virtual
-> address alignment of the current page or by the supported architectural map
-> size?
->
+> Can splitting the clearing of SWP_WRITEOK from del_from_avail_list(si, true)
+> cause an infinite loop in alloc_swap_scan_list() and corrupt the cluster
+> lists?
 
-Confirmed, this is a real overrun, and the same root cause applies to the
-Critical findings on patches 05 and 10 as well. The batched walk coalesces
-physically discontiguous chunks, and when a PMD boundary splits such a batch
-in the middle of a chunk, the resumed PFN is still CONT_PTE_SIZE-aligned, so
-arch_vmap_pte_range_map_size() maps past the end of the contiguous run.
-I'll clamp each mapping in vmap_pages_pte_range() to the remainder of the
-current chunk, so it never crosses a chunk boundary. Bounding the order by
-VA alignment instead would split large chunks into smaller orders and
-defeat the batching.
+Separating these state transitions does open a selection window. I have
+not found evidence of list-pointer corruption.
 
-> [Severity: High]
-> Could switching vmap() to vmap_pages_range_batched() without setting
-> VM_UNINITIALIZED on area expose a race with vread_iter() when a PMD is
-> promoted to a huge page?
->
-> [...]
->
-> Should vmap() set VM_UNINITIALIZED when allocating the vm_struct and clear it
-> via clear_vm_uninitialized_flag() after vmap_pages_range_batched() finishes?
->
+In the next revision, clearing SWP_WRITEOK, setting the off-list bit and
+removing the device from the available list will again happen in one
+swap_avail_lock critical section, before dropping swap_lock.
 
-Confirmed. vmap() can now promote a PMD to huge via
-pmd_free_pte_page() while vread_iter() walks the page tables without the
-mmap lock. I'll set VM_UNINITIALIZED when allocating the area in vmap()
-and clear it with clear_vm_uninitialized_flag(), as
-__vmalloc_node_range_noprof() already does.
+At this point in the series, allocators do not take the topology lock.
+Moving two separately locked operations under that lock would therefore
+not be sufficient.
 
-Both will be fixed in v12.
+When SWP_WRITEOK is clear, an order-0 allocation scanning a partially
+occupied higher-order fragment cluster with scan_all=true can make no
+progress. The cluster lock is released on each iteration, but the cluster
+can keep returning to the same list.
 
-Thanks,
-Wen
+An allocator that selected the device before disable can encounter the
+same underlying scan problem on the base tree. I have prepared a separate
+fix: stop before isolating the next cluster when SWP_WRITEOK is clear,
+leaving the current iteration's normal cleanup intact.
+
+I checked the scan helper in an isolated x86-64 KUnit guest. On v3, the
+disabled higher-order-fragment case did not complete; the stall stack
+included alloc_swap_scan_cluster(), and the host stopped the guest after
+45 seconds. On the revised tree, that case and both enabled-scan controls
+completed successfully.
+
+This tests the scan path directly, not the concurrent swapoff selection
+window through syscalls. The publication boundary is checked separately
+in the code and through the intermediate commits.
+
+Thanks for the report. I will include the availability-boundary correction
+in the next revision and keep the base scan fix separate.
+
+Lian
