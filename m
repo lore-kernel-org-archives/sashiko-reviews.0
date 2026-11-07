@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794079558;
-	b=ZsziNcYlhenHFNEWhs4PdSHqPKbgF2lXqNha6iHDtTAZUBq1Q2J0ZgpZqpOrt16MnirO
-	 cDSAurxgeopJfB5hgpvYAA6+A0g/YKUp/g51MAJWWq2jpM0YjozTjaXyi0cfEfWWLxBkK
-	 bTl/bvgUMSUM720evtnxC+c0b9XIarm+pK3e0NziRQPxAsB5vUWif/n5u3HANj4wuE4wy
-	 IJjGxYRdOuQKhrH1Xhi3rMmo392yK/gOG6jA8pvXQlfxDFcpx74DJoly1hIqyQ0iN+2hy
-	 5zD2G4i1omesZ4xuBPPSGYtw/mfpzqyWKigsTVKP9WSSxVDNFuu23X6cP7omeDH3duA==
+	t=1794080254;
+	b=aCTZSPMPIVKIqIM4lX6H6lf8ExjoV5eHWik0cZgOaIuMmd2NgeFZpYIbQEr0eJRFjJ7B
+	 tpRysIfPXxx9nh7sKSPJXLhzZfFFEEyV7pD7S1pFlWq/MgDL69J9Z7/H1cyVsPtlzHdDr
+	 Cj7ZU1OKq5JkQC8DrRdCjbIP/OneITvk8ATq9KyYtamgjjuXWB5yXHrfUmjxGWaBjXR6W
+	 cWyGlwLzQsSrHvdDHA176NOPJhkrc21bKCHzP/0tI7a8U0p9byek8oimHh0Lctsd/O9QS
+	 DqgWiDgfA755H3UzocJgIxQoj47TrQEuYasT0H9ZunJFcfkEINWjubosmPps74GIKfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794079558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794080254;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=BCmeYqz8ISq3xLhbD9eBRJCwVcGkoCgusO2QRT6Vnfw=;
-	b=J69rmOtO6rCJXKjhC8QUVqb1EsXYHmQvU1Rtp6t9t2fRzrgWpK4OrFVSy2If0bu3DcFB
-	 7XXL4kCEzi0dGVNDns8dDbeRWN9s58BCHzJ5jSyLTtxx3aj6Q7mXvjvL0Y/r1LocIKmP0
-	 +TgEDqs6FO3qr7z7bohULU/gaCeR1N+xgxtOnnz9fjzQY+8h0ZgBcxoWNu8YJpwoCZoj4
-	 ZZv5XYh2yNvrAPC5GIdn98OJyiTn5I8lbWnFb4XmS0P7zVB2sWTcTkITRMUMEgYPQtcv6
-	 G/UKQIM4W5EZR/lkBCu/Oen3oHu42Jx3G0XnwnBs0jkB9n4EAlUrXFA+mADhZcuEfTg==
+	bh=J28D76vigY1x0q3PndZXdhZsdxLHUeQhHl/TW06na0k=;
+	b=fSfW1oMxyUWma+wte8sNxcfwdyaNuFK2e16nD16M+mpZKJxQ0fdUaGaFRSL6fy1Ku2Js
+	 D0aIFezUvkH18JiZ8uXgCgnHLqK0p72Hcm4cSpzk4LfCuRXzgsDU9x/3u5X2kURe+2zJ6
+	 0TaCO8Q8BnLQditI+aQjYJ14IdVCHUi/z3KfQPcF5rIx35jjM3v2emkMHTiNqQxk6D/p/
+	 T63IFGxwpzYz6pv+ENtCn4yadLVKVcryiyQaiaS4sf0IIMrqI/EYcZdhJ2RkCm1XKYK6O
+	 l23UKQJnuXR0anx580Jmmr0nQQ56y12rlSNW1w3LTQWZq0N8mOZCvYq4Z7nyGyR7BlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W3wKpdEH;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CwsG3UsV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163E0606A326;
-	Sat,  7 Nov 2026 19:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A09E606A326;
+	Sat,  7 Nov 2026 19:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W3wKpdEH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5311F0089F;
-	Sat,  7 Nov 2026 19:25:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CwsG3UsV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B8F1F0089F;
+	Sat,  7 Nov 2026 19:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794079557;
-	bh=BCmeYqz8ISq3xLhbD9eBRJCwVcGkoCgusO2QRT6Vnfw=;
+	s=k20260515; t=1794080253;
+	bh=J28D76vigY1x0q3PndZXdhZsdxLHUeQhHl/TW06na0k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=W3wKpdEHsaJiZzmrXxCz6TPjkj5Npg7mGHogFhxionubMUwLImUDz7g/YGRBKEqbp
-	 8NgfFmnsYDVuhQyu63LpZQy80i5nSwhGWi3jAoWGLBh/Rw8zJQVPy6mOGzyVTbdvuU
-	 nZKUdjSi3wuQolpOEEaoBuwapCtG4L/Aa189mfHR3CdB5eh9Sm0TlE/tiNwNNn5tpx
-	 r5UV1uSwGhzD8/kebcw72/p976EuHxTxGKTh8Zx9pmcG9o6e1/hnbvXH38uVnVhJmp
-	 qd62zzeaux9akdk3bbDuEdfp1fVEOJI7ZaOSzPOmfGaFLqNz3wzT5bITss4jZ2SHQB
-	 HUZ8f9zcJvY6w==
-Date: Sat, 7 Nov 2026 11:25:56 -0800
+	b=CwsG3UsVdufq6iv7NioeMVsalbu8uf8VUvmfGUBXnWfEEPbY3ExsnVN8Pb18+iqMV
+	 7gBH4E/mk+X3Y8iZe7m1as0lE01oK9d49Z9kHt3N3v6HQAILprPNwUCA/ngWhnFqii
+	 Hwj6Tgyi2mn9+ESkUn6KOss/vaqh6ak93pFtjVVF+H270dG4EMd/+GvdhPNhhtFQN8
+	 SJq258UEGPFglGng2oCF5zj8MOUAFXN8mqX7QnRByDpYAH1V5N9yCDt0hle23M8XQC
+	 ZlpeSoshHLnm991mfqvemMJtpMLGusjl0lvVIRMbq2hAxsbJTgCWRoKrmqudGcI1p5
+	 CBfk/+/X6ZimQ==
+Date: Sat, 7 Nov 2026 11:37:32 -0800
 From: Eric Biggers <ebiggers@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: fsverity@lists.linux.dev, Andrey Albershteyn <aalbersh@kernel.org>
-Subject: Re: [PATCH 6.1] fsverity: Explicitly require FMODE_READ to retrieve
- hashes
-Message-ID: <20261107192556.GC6049@quark>
-References: <20261107191050.25921-1-ebiggers@kernel.org>
- <sashiko-outbox-203203@kernel.org>
+Cc: linux-crypto@vger.kernel.org, Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH 6.18] crypto: sa2ul - Fix HMAC key preparation
+Message-ID: <20261107193732.GD6049@quark>
+References: <20261107192358.47287-1-ebiggers@kernel.org>
+ <sashiko-outbox-203214@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,22 +58,15 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-203203@kernel.org>
+In-Reply-To: <sashiko-outbox-203214@kernel.org>
 
-On Sat, Nov 07, 2026 at 07:21:27PM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Medium]
-> Does fsverity_ioctl_enable() also need an explicit FMODE_READ check in this
-> branch?
-> 
-> In mainline, fsverity_ioctl_enable() gained a check for FMODE_READ when
-> Merkle tree construction was converted to use __kernel_read().  That
-> change is not in this tree, where fsverity_ioctl_enable() only checks
-> file_permission(filp, MAY_WRITE) and deny_write_access(filp), and
-> build_merkle_tree_level() reads directly from the page cache via
-> read_file_data_page().
+On Sat, Nov 07, 2026 at 07:34:55PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [Critical] crypto: sa2ul: negative index out-of-bounds read in
+>   sa_aead_setkey() [1]
 
-I'll consider backporting 04839139213c ("fsverity: reject
-FS_IOC_ENABLE_VERITY on mode 3 fds") separately.  It is independent of
-this patch.
+drivers/crypto/ is buggy.  No surprise there.
 
 - Eric
