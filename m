@@ -1,99 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794074178;
-	b=jbQO5wPDMCbdq0gOFx2mcxuUeAzE0yC9XF/CjX4Q6qLTbtbVfE+6k4yPWG4oyppaxgbp
-	 DrWBQWF47twDYIqHQhIADLdPn69+DZSNc4H4nJ2CKlol25wlmUwT52sli/yF5tV7dHaL+
-	 zC8EAxgmtxlVIv5eJODblPGJYMfGlftzUKkOMQhB1ff2fIL0/ZDw+CpBBbXmmD4sjdg+R
-	 7dhQF3yZgTW0/SUjqfL8rrF4vgn2Ctxm/LmnhmYQ15wbUuiAo5qnKkECFuh6fUVhYVk0b
-	 PTDThe1l9iB9IkNTBGADsD5AWSE0tPZ0BDdKt+x6YcsormH59qs0/Gd0remVvjALLVA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794074178;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794075485;
+	b=Z1g+JMf1VST1uepkZZ11Od/L5FukjMwMrw2e1DwgplFvu0S32egtfFuUfAO/JUH4VFdW
+	 qENCCDLCJYvYkIsgAXnVCASDK9bYSLyO29x6evQLiP+413gmThgfdB9d4Tjgq9WRXMUQI
+	 CfT0QvWjRqZLQ639TTxL/KV6EfIn0Et2BLVVe3xtRtFXc/QDtpzVB49uQtmXXc5vzGKef
+	 8c8y4i+9FgiWjmmItnKysbcJES/tIpsCg3zeFpiGYV0dOkXdVCQbzESOndgBRdCle6xpo
+	 wDYh5f6Khj1dgUAuxQ8zagqn2doWXTeC+5xSRVxFFWRYUUXEOowy0g5JW82tMQoM3VA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794075485;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
-	b=jBvBPPSTNp6E9chjrvYdSdaeeikgInVw1Q4l0NQgcVzlPAYUZ8WyEsDMahSRkr6RIVIk
-	 KSEqGnnQabrj6XxV5eVpllTuaoShcqVb9t1OIbkEFzgfi74LHKCUbATpBKJ8Vub8ALyht
-	 PZFE2pl6NxeMBVYB2jlBnw7jACrX5LqWlD9ouX/phkum9XKWLgKzDOVt8RHYFDiL4mgyk
-	 TPLayb94g4fmgds+abfqsZ7YO3gJkdHN2UcxIZU7Zn6A1LIKX8v2KLs+MGExUfb7Q6u2c
-	 Z804OPSHDz0b1bI28sJvWejUfOfdUoc+nqvRdaN6cYIWXPQ/xIieeNzzR8tdjd7WlIA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=At1kT0Lw;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.44
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	bh=B5u0enV7WoY07iAM02G7yLnfFPYOwhEAg3fls+YTM3Q=;
+	b=sIG49o1Yw3Ic2UjVj2zMK8ezegC5o2Xd5tmMFfEONVC9RIn4SNCQDPeiqCVs2rXBlVOW
+	 ulhA2BEhNU8nuxI6TrTUTw1uf3xsTmRD+HW7Mj2jqeH6jM7iMPX2/GK/BWovJhU4oVs9/
+	 8dOYUQu2GuRBWTYHnT95RNnI3+URDU/O5jqwXoJHkPCCQne3j3bRrk/Dm8hcWz8U2HUYe
+	 5vR4NGnbgTGySzE2yVuAOey6hRQGVOs0hnLHfVj4pwMAu4Ug4HOL+H7GO48qiBR5S78B+
+	 heFhF3QfBMnAdLySMYNg9nVgpIYI2/ou5G4LRqtw/DJIKEvwCMtl912eH60Qb/OXpJQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Ia/97teJ";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C2B606A326
-	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 17:56:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 85C2B606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D3C606A326
+	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 18:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=At1kT0Lw
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3ad47c246f8so190756a91.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 09:56:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794074178; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Jgrp9Gtqf3H3lMLMTH7jjJjiemU7lTAlsEIIoxa9tuXti6VyjX3Ug57pksJz87BFhq
-         MkWXo05zKHJ8f4lYO5dpjjvnk+A52dUFAzVJde4klaayZQGkKaYWizhbOG3W1eSk2FAc
-         c1IZX3CxzxQoXuZT1LY9oFfCQK9Ut5D78+sAoOtU36HILK2Hu+vgxR/MO4lwDUBjMRkj
-         pStSj4VMMyUHAhxgwC9w36dw/KH8ssy1BQQq8rKR6jY2SSMIVVw1Jk7LeOFVtCi4ELfw
-         j/wCcxB7wqAfcVHemU8DtgrNyNnId6AsCuWMdsnwIakhJnFYw9PUpX682BUNiaPuQwg6
-         rXPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
-        fh=mTP6TkWV1IhQRgyhsEpYqIpiXvhDlZKdHAfNRdOTDjk=;
-        b=T0rGF7aawHnRfl8RwdBOfffKCkTY4cutpSUdOg0YBjiJPaNxERwqkjyH76W52lT1i/
-         s5wOD4DS+MdOOK2C4pcl4S4SkHwQS7CSAYPBwVmDXIQNFO+HuLvaGGGz1NZw6Bg3CB/C
-         gqQT1izjU51gaQNKo6ZN3vQBCiBQ/6gpsWsEAmRu6G9IL6J7At02aNpBN2g8e3GlfkJy
-         WeM4t20TXPVTbL3wa43b3sl8ix/tK/alBLoMzEs/1kjFXVkL4ZcGIal4FaF4+9Fwft2C
-         Rze7GjnVwuyOLE/jjm1JPacSdFbs86XiZIRBP+e5Krr17pOUq2lOF6qVCsiued05cMc9
-         +Uow==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794074178; x=1794678978; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
-        b=At1kT0LwI/iBDtSEyVC2AYC64RgdK8nvSVdy8M/P2oz0jyzvKeNZmkOApAUu4pjs51
-         xS/I5fdZLoEdjlu69olFvUtwL9KbPm6Uw/uXDzLPKISpF1LfzQH9Xtuluyxv4i+xsdTt
-         5whQ7rEaSU+6+8bEvwCDVjTkKCHkaPHG80G90OVU6WG0Dozik5Vv4+d081b3oj/R6k2S
-         wu+Hu32Eh5D+L9U1T3df9GZ4ox/Iu8Ta35JvWFP9f147uH4CN7E5pBmecsRT0JCiAy0J
-         1yEFV1J/bjFMWZ2oM7bXtTlltgWgACo+hz6RemaMHH8w0ONrCD1pPx0Uab0SLL1XGsTR
-         10Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794074178; x=1794678978;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=AH9LGqWfLPGgaRsP8Zicyr9XO62jY8A3Vt+hci1ouxw=;
-        b=Ayqa7HdbLyqiAC3MOx9VIziQSsb0Sbkcs+emAxNUUQUFbFnREa6cpyBvruJlLEjY4f
-         mqsrmDBDt6P6tDtyTF1/mlGyA6ptwSDxAR2/JO2mmS87h/qLsCe9GZnDEt/i0xAW7E2Q
-         4aaKRToLFvBy0OXs8513y1pjNzaMTiqyUyFZeszXHyV/9X9XXKp7FDk7z7vNWDnBAL19
-         lvoVqi38uaG2atALeN0ok8ppMUpoYbT3lZZJILsPoHr6OX/6YUf9uATZWamcya+KwqIR
-         b+44xJi0y7o9X7CL0/o87KIhD2wnaTc+ygxkPgFZCeb5vSq/KhyqTko3Yghx/rkwJ1HM
-         Zf0g==
-X-Gm-Message-State: APuU4Z/njfJkEZno7qTEjyY0LrXngSLgf/rjTs7donK8fyqfFFxna/uL
-	H8JqAqreNzEoSROxyl2hQBBUpdOVNawaLQ2Uf0aJRJzFe0l9NcB8ynexEDawbtVvQ+tK1HHjNi2
-	UkGCet6LJ+ugUGLLfdTpxoTqjgODGcqNJtdXM/SvGeA==
-X-Gm-Gg: AYBFou0zSdTUgzqZHUegReP7YT9w5V28zLx418dTPsKPOswDVQrUD5Xes9VjGAIhUdJ
-	ZG1wSaIXeQmhfyoe1JHySQ3E8MThcXL4MXZWtDa0EiTnk35vXnR+Q0cDFZGwe/S2tZPtvbIWh+q
-	gH1iDTunAi5ivY3l9QtwQXoxu+zpqxINzIPxTOuMtSuvmZchQZrLIECCUwQ60KUk87e/mgEhu3X
-	WKH44lLHPgZSJrnhJri73Td/RzFO8+S0JAnwZIhMbWaC/lH4LM23KpBQWRqzhjY1bnRm2nQWnRH
-	cuNrZ6WLtvzb1mc/sIQAJqOhpLqVxWbuG4RUs/tAhYdhg91KM0O0wf//JfFMOb0m5HhTQaGipvH
-	LE4r2qT5dhWi7gcF6si6adEvMy/7wU4rGyi2HHQ==
-X-Received: by 2002:a17:90b:4a89:b0:3b0:975b:2256 with SMTP id
- 98e67ed59e1d1-3b0db6f8e05mr9097288a91.4.1794074177596; Sat, 07 Nov 2026
- 09:56:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ia/97teJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E86B1F0089F;
+	Sat,  7 Nov 2026 18:17:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794075484;
+	bh=B5u0enV7WoY07iAM02G7yLnfFPYOwhEAg3fls+YTM3Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Ia/97teJ0XCMUaRoAAy30IBpByoJl4qBHWJ3UqCdkytmgjdZqbBOCdL0qHFAnCBQB
+	 UBr98J1NAwENhxg0gCf/5ltFls2WkCzYA1rjZ2NyNCdZVh/+93pM1eiKdO+kgWEG43
+	 QI1OevbPXT0AyxCVi/xnpkQGDX7gaYdjfcYi8xNRKGsE7NZgHRGlGP3dJBpZdK5MNg
+	 kW8ZIjtY5nCi65dLWDu+CnNSiCHevJ+3/zkrR81Z8huD4LtS8IKMI0WL9H4F1n+nlg
+	 08U8i0J0COg0GRabwDlnsWvg/R/n+EUEAbdw4OXZk3j5yVSPGpwtOBGO0ufy/v/x7I
+	 W7MRFj7Z1Mbqw==
+Message-ID: <8cd50b75-0845-4e82-a8ed-acfd3a261a3e@kernel.org>
+Date: Sat, 7 Nov 2026 19:17:52 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,19 +51,90 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261107164305.11476-1-lui2012qwq@gmail.com> <sashiko-outbox-203076@kernel.org>
-In-Reply-To: <sashiko-outbox-203076@kernel.org>
-From: Chengyu Liu <lui2012qwq@gmail.com>
-Date: Sun, 8 Nov 2026 01:56:06 +0800
-X-Gm-Features: AclHuK9CALZ_fnVs06UuMczhS_NxicTk_7Y07aK9CoCt30E_RB7xhrK7ulJoreQ
-Message-ID: <CAE=Q7=6S1mGX9no7r-Cu2x90gqSBB4TPk=OYWe-npUwLabCPmQ@mail.gmail.com>
-Subject: Re: [PATCH] md/bitmap: fix missing_pages restore in resize rollback
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/memory: refuse to map page cache folios that are not
+ uptodate
+To: sashiko-reviews@lists.linux.dev, Kiryl Shutsemau <kirill@shutemov.name>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: "Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+ Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
+ Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport <rppt@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ Hugh Dickins <hughd@google.com>, Chris Mason <mason@kernel.org>,
+ Pedro Falcato <pfalcato@suse.de>, linux-mm@kvack.org, kernel-team@meta.com
+References: <20261106144323.3634477-1-kirill@shutemov.name>
+ <sashiko-outbox-202966@kernel.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <sashiko-outbox-202966@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Nov 8, 2026 at 12:53=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-> - [Low] md/bitmap: missing Fixes trailer for commit c9d650322829
+On 11/7/26 15:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] mm: user-triggerable WARN_ONCE in do_set_pmd() via
+>   MADV_COLLAPSE on fallocated shmem THP
 
-Thanks, v2 sent with the Fixes tag.
+... which we are fixing already.
+
+> - [Medium] mm: missing folio_test_uptodate() recheck in
+>   do_shared_fault() mkwrite path
+
+Kiryl, can you look into that?
+
+> It also noticed 1 related pre-existing issue this patch does not
+> introduce:
+> - [High] mm/khugepaged: leak of vmf.prealloc_pte in set_huge_pmd() on
+>   fallback [1]
+... which we are fixing already.
+
+-- 
+Cheers,
+
+David
