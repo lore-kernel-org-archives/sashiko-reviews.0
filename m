@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.28
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.68
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794077594;
-	b=QRqNiet7oqbR+Y3kenLh088FvF5qR0knoF+ONAuOzUE27euhafvVru/2OWcFyJRiGNf2
-	 t1Mm29rX/ZYeBtf8ulCNclbCgSYqdYHFNOaDw6pW54JeTIG/TmdEF+RWMDmqrxDxustXH
-	 s2/QCz1JDcRHFUua51djfFomis7nV2vsNLvZeisEFpggUgcy161D2n9kAJxaOzXHiqj16
-	 ki2UFXKNQJyFOFPufnVwSMTWql+/TEDVKXZ1rHZZrwpZe6Pi1yoitjpZzDvDG1TDzRavm
-	 GFkPvgqbzobbzoNotc+sXjkEf45Nf0ZJvMW5lN6MpXhcE54JqW31O45EUVPq1SnpD7g==
+	t=1794078233;
+	b=e8ein6DDVTR6VcctiBOsrGErKggGP6U0iwZ0E/yV52X+07OUJrUy7gJ19uOKXlcPAYs4
+	 2cm9neIcQ5QzqQFatCMqgwiWqTHmMdRbqkKDX2gjpYw7mEglCt+ZFBvEmx8/ygQ+SLyzp
+	 Ph6T6DMZOhurCin1COqccB+XRJVxX8dOiEzxjbmdy5O3qvf8ZwBggEPe8+xd+uwhUzbd8
+	 IdcGhIOlRPE6bY8V+UthtAG0xLWRN5D8CXQocN6lKbGg6dNy0XiwGwAsP8sET5PJx+aLE
+	 +I+ME0rL6BSXk6cXnlbtu6t16+ai5ZNAkbdCNj4wEiZP43ivGVSiWjxn7Hslq45GNVw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794077594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794078233;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
@@ -24,73 +24,72 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=c31snz0DQ3pC98th/8PWbhb1F+JGvI2dJgLWv8OlpHQ=;
-	b=w4Ia43jCQalWy9DRRFNk5jrAY3T3JoeJ4xzqc01juOJIByZoe53YjnGGdM6+L53Ja2mU
-	 QAZt7gkDDyn2Uz/FnW2u5PzuKZDsXc8RxteGT8mQ1guVyvk8SYrcrciVnE5/oG5IJ1IWo
-	 QUjJg7ikWT/O9fdYI3xAvoQAb8QjfvZgHxxhX4SDNrvduGAHsm0LSx78cwYin3TccyRFa
-	 S5vGvdP4fG8SJRypAv3cOyh8fcqVuXBkT3gi1zvK3Z9hmhmFzfgRoa4RMjSyFIWIsT5AD
-	 m2Lot6sd3jxHRtV04F6WFxXfAXzxc7IXNos6xDbZya5mRtX+wCMVrcCmJDA0V1a4FXQ==
+	bh=zEUfZlb99ZpqQcZ8sJyZdUycQX9iHWDpka0RjhWHlxs=;
+	b=l2oJFnsNeJPesC2j+easyOUWEP+/1yrRlb/jnIUoyn4dEA1tL2jHB1WgyvpIrNq0+Ftj
+	 iyere2zWmZ9O7D6MgWOOKm/wE7HUbZbNldFc1tbXME4UJKAe8FFFF7OyRIeKK+fnrrVzV
+	 e9uIiujT3qmvJz+Cymek950GCmyheZFbYZcYQOagNUv9vDf2NLmVDMZR1CPfceF1f6YTa
+	 ThJcwd0qN2vGEQr4vuF0xxGvSyk1IFl5ixYGYww+PYFdBBA/TusQadq+s6fga2fAUOlij
+	 yzg6RUCaYne9t5Dh5HnYQZPhVpAPlctpnSg4bD+TeLb7dF6FpsRFpzjxca23y53fB3Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=amd.com;
 	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ulii8gPO;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.28
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012028.outbound.protection.outlook.com [40.107.209.28])
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=BlUWk+TZ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.68
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011068.outbound.protection.outlook.com [52.101.57.68])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1C3606A326
-	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 18:53:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF1C3606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE00606A326
+	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 19:03:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8FE00606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ulii8gPO
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=BlUWk+TZ
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ed0SeKDByl6LszL8BNukYgCeP7xHcjOEw8dxiqXA+psMrzFaeTtWANQDwTvnFogcAajnxVcQ9WdGL0Mk21kShCNR5UX4HWEx64/npgT2/TLYthtgLa0qj8FNe2Ibni+zq2bqNoxgTLvGRZ+yd8zUy1RLJLJpWrM4LGtoPiZckzPFXu75LGBK16rsDPWg0KqWJ9acmv7dY/T6ILAcdjkWaVHL9Nm1D/BTADhayqiTAPMoObKsgNOipcDC4zk1ANDu5bEMuAfYzHkOWISNkmojzOdTpWoaHE+G6ns9137MysqHCjqNQ0plXp03rKyvkgxdBI76f+lNOBFn0/rPUWX/hg==
+ b=ATLptIsP6dFGzEYXwjNsi45GjJSTv5BlDw4CqgLMxiYdb8mwGmmf0lEfxW+x0ndJZGb+8bmJxt1VG16uov9IzSpeINJzWH+/aF8bCUxBdt5zeQoL9//OM4htTZZotntAtxKRojJM92ydDZaNCZM162yR/l5gwcgSjEsrtwhVFKrlMqL+hS1oBUD116RlGRvjybbXnsykD8gmrT43kat6pMiWUYOoENWt6iARfOAVFI3LkFuLkYy/9Y7FXWRsk0uNhgdYa4yC9XB4cbMa33G8uNCh7edfnx0kkzf0AuxJs/OuwYmvxYeY+gqQ3dGlvXdIYBu11d+zD4uAy5yMcMeIqA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c31snz0DQ3pC98th/8PWbhb1F+JGvI2dJgLWv8OlpHQ=;
- b=gJAWslHvvRSGxfg+27eUBacs/3DJkGLjpvXZp/TP/YEWsBnRHhc5pGX/LpSg9vm1rlO4Bzf6MM7MGtcWBDAiY5cwWcrQwaSr/g5UD6WzrTkeJA8j9k6/K6tsPQIeYByN3V4rtQMqCrPDi2VLVAGSMRioCnFDQty8aOqAAEZ0fpBbGvtYdG+CpqYqXsx2XlzeQ0Ppd/l8Wt1K/DvvNl6ZMZQKX4r9Vh0SoslR6x/wVXH7cVEinGh5/J9rj9tjSuYdkMKhnNWJDTO0zrTRypu8yE+QrLIan+tlFcrL369yjzvGixrTIUiY3EepQI/QzD9GZBI2ETzvQow90ZAIQuOeQg==
+ bh=zEUfZlb99ZpqQcZ8sJyZdUycQX9iHWDpka0RjhWHlxs=;
+ b=F6ik2DBY481eJwzBib8LNwxByXFI93ZLt1lsZfp7WWoiig1VG+i/oKf7XrduEwoMmEdDrt7KK2Ob7HXxqIF4lXkIvaw9KbZkEXKAWjyAPqs+fTSNOeaWbhYxF59MmVTHCfK2it0E2HtVvMTXufEE+cNP5s330ygNhyip3PGx9c5kXETY5C81L9aBYyJQDhDFeYTuiymVSNdm4WTKn0Kl5mEK6R0WKPmGIeKC7TaxBJnuJYnCABni4an6duEoAAibk96u16Fo+XIxTtsJDbBmyIz6HRwRQB3RwGyc+u5yhmlFNRyqk9B6bMlLvraRoErqthoQbivzPb5RJUGfjLMuww==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c31snz0DQ3pC98th/8PWbhb1F+JGvI2dJgLWv8OlpHQ=;
- b=ulii8gPOz1L6GHSWsn0c7UStnOzuep7MRMhBlBpBzeyG8tjcSRjI8MEVX6h1x9b1s4NiDY+PktdAF8WZelp3F7xXjY88DvEfOmJha+5dgcOKsBPZhtjWcS5IiCCjJQaX7ebca76F1YuTO3hTv/VPb0rOe8bhTej9PefFfsW2fxE=
+ bh=zEUfZlb99ZpqQcZ8sJyZdUycQX9iHWDpka0RjhWHlxs=;
+ b=BlUWk+TZmwMwo7la8x09OYuDrG4dF7ZmjsLTjcYmotNZ4BpO4SXNpk4ILoUm44wXWSK2HwiXzQhpeaYqZEfEPBhnG3tc/lbUTCJqCE0Fwmw+QxbaOjADND77SlZWpYTHzkC9Yal8DA3Gi0ZVdBd5iyQKNKwFJ0qy197pccJoLqw=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
  by MN6PR12MB8544.namprd12.prod.outlook.com (2603:10b6:208:47f::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Sat, 7 Nov
- 2026 18:53:08 +0000
+ 2026 19:01:42 +0000
 Received: from CY5PR12MB6252.namprd12.prod.outlook.com
  ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
  ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0592.009; Sat, 7 Nov 2026
- 18:53:07 +0000
-Message-ID: <cfab68e8-f6bb-4a60-b887-72edfff832b0@amd.com>
-Date: Sun, 8 Nov 2026 00:22:02 +0530
+ 19:01:42 +0000
+Message-ID: <86468760-96ec-4962-bce6-0c232acb82d9@amd.com>
+Date: Sun, 8 Nov 2026 00:30:37 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] ASoC: amd: ps: guard SDW IRQ work scheduling with
- interrupt_enabled flag
+Subject: Re: [PATCH v5 02/25] soundwire: amd: program pad SCHMEN and OE
+ control for ACP 7.0/7.1/7.2
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-sound@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
  Mario Limonciello <Mario.Limonciello@amd.com>,
- Mark Brown <broonie@kernel.org>,
  "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>
-References: <20261107175339.3547918-1-Vijendar.Mukunda@amd.com>
- <20261107175339.3547918-5-Vijendar.Mukunda@amd.com>
- <sashiko-outbox-203157@kernel.org>
+References: <20261107154659.3358223-1-Vijendar.Mukunda@amd.com>
+ <20261107154659.3358223-3-Vijendar.Mukunda@amd.com>
+ <sashiko-outbox-203029@kernel.org>
 Content-Language: en-US
 From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
-In-Reply-To: <sashiko-outbox-203157@kernel.org>
+In-Reply-To: <sashiko-outbox-203029@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PN5P287CA0043.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:25f::15) To CY5PR12MB6252.namprd12.prod.outlook.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN5P287CA0042.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:25f::9) To CY5PR12MB6252.namprd12.prod.outlook.com
  (2603:10b6:930:20::17)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -103,163 +102,186 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|MN6PR12MB8544:EE_
-X-MS-Office365-Filtering-Correlation-Id: b5a9198a-e5b8-4c52-b435-08df3d005c8f
+X-MS-Office365-Filtering-Correlation-Id: 3ac72d96-6764-4796-39eb-08df3d018f96
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|18002099003|22082099003|4143699003|11063799006|56012099006|261009223027099003|261028144727099003|261021123027099003|261022105027099003|261022075727099003|261026121527099003|261026140227099003|10067099003|7136999003;
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|18002099003|22082099003|4143699003|11063799006|56012099006|3023799007|261009223027099003|261102123227099003|261028144727099003|261021121427099003|261022105027099003|261022075727099003|261026121527099003|261026140227099003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	CZguFCOoZw8mx75n7Ssup562EYIyAYqik1E5UAPpLrdb8gF6JqhYnq1Q/fB2VNZEUGZdqG38WUE3RaYEkU4SjMw1iFNEXtMruevegt7EEkzPPZnL14Wzp1HxXcIz0oso0RUvRW1jL2s5j8O4MN7XUvbLxjhjQ5SdO1a9Q000rm0s1qfxz8xRPbF7W9PN8UMI5UY6lJqPJE3dultihO0UJ+97u6IOS/3SdIC74ZS2eF/xD9Fg/20iaWetO+jeyodBcDIwn5F3SFKqT+Xeshl1XafypmANIjWTHzirvflRxhXI/TI10UdMoXjBwS9vPDHfvzytJ8BwF/2a1nCxUI9TOBYuv6VZIED/3B+D47MGtoe+a1z1/4fJjMdgzusV7XkdWRjEdoO+XfG6tL+GY5Y6FtT3ItG6zp2fSgCer1BX5/G2CHr3uKk3QTkEt9LSj/UoMgAiZMg+d2Ri9bhOOp02iu9JEayqlrGzA/AMqEJC+Y21ru28oXlwHB+5DgSzWJN1To+od43fURL0bJulLVv+Ejft9pq/sFlzpMNrP/4Yq1TcIfOh5/2f9KXIcou5qVDVkcbBuxc89W6mvj4oyU0uCROejnJe0IrLLeZ4n3KSPT5mKbCWwU5uaIaUtbMx/p3s
+	hH58R63791evX32PpcxsJfLCx7DVLVgP6j1qByw4lKVjjDne0p/DAewbU1Gi2j2T1+wWf5F/PxxGXp1davyIsUKf1RpxQ+iCs9nePRKQztNaUklbL2wEcPTR/kqlMbzvq6MkZWHhu4P9ijGDD1CLNWiTNVUuCCuugL0e4uDRGZSO5gVdNaUnoq/66Ir6UaRORzq9vmuChM6QbkKtG4RlnQFh7d6GGbwQo+XISdzqQO1SubXctFgwX+9+sBjrPfnqKhmrdDGuWC2mUN7AQxzcINxI7D2fWGza+cawnwOgQTvG7/+sLnInzc3ys2mxQ5M7bjk7mK+CO5fRL3QjCIr7eCqwK/02iExtjFOEKzl/9v5pSB9XPrp5qopLroUDUFrckAKmhfGqog0pfhYebux51SmMyONL7jy7/0JokJcp3Wyhab5Vxe/Jm8GqFMJzSB5CHm2cENe+mXGlboxDVdkmqX2Z3Kbdt9ruqJf1Bacm1+aHOKwA+wti7bs/rs6FgI9rPAcDe0SJSyESZ8x6iiU5POsShRSPF3A6afXNuciFHRXeToe1p8F9PWLeDYVziHFsPA0/sbkWdttYS2p/gyCvYxV1sOs3+7Ly416oOjZRzluT2Zlm9v4/8pBAIwAWVz+PFvMH7OQ1DkrAYCJt0Rv6H5WEu1ZA+2qGz1UZtltaDtc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(18002099003)(22082099003)(4143699003)(11063799006)(56012099006)(261009223027099003)(261028144727099003)(261021123027099003)(261022105027099003)(261022075727099003)(261026121527099003)(261026140227099003)(10067099003)(7136999003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(18002099003)(22082099003)(4143699003)(11063799006)(56012099006)(3023799007)(261009223027099003)(261102123227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261022075727099003)(261026121527099003)(261026140227099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?d21kUkFVOUc1R3YzeTNKdEF2SHFvOHNORnNhWkxvdHdJNmdBTFBabDdtR2Vt?=
- =?utf-8?B?VUNOM3djUkpXMDlINlZYZHZUU0lXamlKY0dsOTVybWRiaWIrWVR2dlRjdGx1?=
- =?utf-8?B?aHNmTTdOeWhQYk1VRWtBaEVpV0NlWWl2RUQ2a3BlemxJNnk2RVU0Vy8zK1Q4?=
- =?utf-8?B?K2FlYS83TUxvU2FXRHRSL0VsVjRFRE50ektDZVFaNXJ5T29wSHBOYjhqcG5m?=
- =?utf-8?B?dVNmOEZjalpPQ2tZMk1QL0xyNW5RdkhIOWlWa3NPbVZCQVRCZ0lTRmU4azA4?=
- =?utf-8?B?OC9hZ0ZSWWpVWWRPTVpobmp3ZmlQMUlLVkc0Zzd0dk9GZURTejErcE9zNVRN?=
- =?utf-8?B?c3JxV1NGNDYwbnZrdUV2UWxhVElIa1laQ1RWWHZCYjRXdUxubUEwN0krRXo0?=
- =?utf-8?B?b21vMm56eUVlVC9XWTFSYnloemtyOGF4aEtneTdNdkpwUmlBVE0rRDNzRjZ4?=
- =?utf-8?B?SUV0SzVQVzVVbTVQRGdPblN3eDRxWmpmVlJHZGJKMC9Ya3lvOXFwY0VGZG1H?=
- =?utf-8?B?d0l2bG14SWRjQnd2MmtJQ3dUOTg4Qkl3RC96K2hMRmYxRS9HSjZpVDFVa29q?=
- =?utf-8?B?TFhmUVJtODBUVXhma29YeVFQdVVoK0U2RG9FK1JUOWtRMzJkL0lTRXBvdVVi?=
- =?utf-8?B?QWhodmFGV3RzY2tMOXJLdUQwcDZtRURzRWVMMEJrSG9yUEJYUnphcmVoa0Yw?=
- =?utf-8?B?STVpdFpoKzRkSEIwQ1oyS0JVU24rQVd0NGVhai9vZ2lRQVBnSTVRWFduY1ZR?=
- =?utf-8?B?OEV6cCsxT0NwZHRmdHNYNzZGNFBKUXJRYjQ3UCt4ajN5MWlXRW03T09zandx?=
- =?utf-8?B?RHlTcTZuZkVPdWpSZmQ1UzA3UlB3K3Y0YUhBL0o3U0FWYWRXa29uejVtaTdh?=
- =?utf-8?B?ZlZ4em0xTFhjdjEwM1pwa1B0d2ZNY0xpQXBJcExVLy8vNFJQVmxrVzRzNjVF?=
- =?utf-8?B?amc3VWdjVXZ1NTE1UmwvMk44Y0dEWEc3a2JxTjY0bEpQMjkzdEpCQ0cva0Zw?=
- =?utf-8?B?Q2xpZ0NhMnRTU05KL1FMbVdZVTRHYWpyWnQ2Y3NSUW4wZllPQ3BQOWluRFhs?=
- =?utf-8?B?UjlZREhYSmV4bHU1NlEwQytlcTN2ZFZKdWc0bXh0YTkrUTl2Z0xZRkNzbkxj?=
- =?utf-8?B?b2pjN2FpaldYWDBvUEJFbXVUZzZOWm9TMVA2bmFvNVN3QU1aeGdWZjdmd1d5?=
- =?utf-8?B?aWU1QWUwVTBGREx3bThmS1Z4VkhIQU9FblZYa0tSdnM3Mk1kSlVGOFJsc2xl?=
- =?utf-8?B?djdqYkdGWHFzY0NCVzJ1b29GdTRJdXBLN0JGWkhwSjlDR3VrVnJFQmY1SjFv?=
- =?utf-8?B?Snc1SGdKU3pOam1GUHd4TDJWRUhJTllmRHduc0NoaDJYNVFLeUhFNnUrdzla?=
- =?utf-8?B?V1g4Ym5Lejh6U0cvYTJ1S2JFTHJ1WUViTlkwaVhCOXhRWVB4c0VKZ0d4OVNh?=
- =?utf-8?B?Mi9kczRCWWFERzh6R3h0T2VWWGorMS9hcEk1cit5TXM5VEhTTXVYendGUWph?=
- =?utf-8?B?WDFUMG9RczJrUU1aeHNiQndXTEViRGFjVkN4ZG1DbmhKRW05WmVIN1hzcndT?=
- =?utf-8?B?SER0TXJjRitsN1RYalJpOXlaU3MxdTdrSHZ2eHVxZW9HS0VuOWQyMTZRYnUx?=
- =?utf-8?B?Q1JMajl2ZFB5SStQdHJ0aDVicG91dGczSU52ODV1MGJ6U0pBNk5QT2grNHFr?=
- =?utf-8?B?QXVFaTJ0MGFKU3o2WlFHbUtBMHF2SVNqaWZES0EvZVJoT3kxd1grVnpLeWVM?=
- =?utf-8?B?c2VCY2UzVHZ3MStxcU1yR05zVEIzZy9CdWdaMDdxVE83V1Z0aVVocStPTGdP?=
- =?utf-8?B?NHF0Y2NtSnJ2d0phR0dBd25VTkppYnd5R1pMTmdsSzQ2dklLRTZhSE42Zkd3?=
- =?utf-8?B?aHc1L0VOVVJsYjh3Z2VIZDAyYTJjVW5kNUhLWkdUbCtVbzJHZ01IN0JxUG94?=
- =?utf-8?B?WHpXRVczSzlRV0xjMWgzbGg3c0Z4NUMrSGlCcCtVTlZMOXdVMjFab1NzaFJ6?=
- =?utf-8?B?clV4Y29ycVVmVWVPTUpGajU3OStGZ0E4V0JFY09yK2hqbjljK2JJYWJBWk1a?=
- =?utf-8?B?ckR0U3d6M0JlYVpaSEJmMFJSVmdmVlpWR2kvZ1laeFlSVnVvdU5LQUJPaDF4?=
- =?utf-8?B?eE9DbmxzOXQ5WGV4MlJ0M3pQN1FMa0lGc1BSVEdJeWxWdWRMWFl2eWZqN2F2?=
- =?utf-8?B?Z1hyaGk0aldDTGRjTkREWmNPc0pOTDBoT1A3dlp6V2tES2NhLzkxZ2QySEdY?=
- =?utf-8?B?SWpQa3ZpVWYzQ3ZZNEtEM1UwMmpaTTFZTTZRcUlMYnRtUE80M0Y1OG5mQ0d2?=
- =?utf-8?B?UXl6clhYY2JhTTlJOWVsUDU3VVk2blZWaEloK0tNV3k5UEM0ekJ0Zz09?=
+	=?utf-8?B?VTVneWpVeG1CZGRBb3lUeG1CWlBTU1BMUmVkOTFrQVRrT0l5ZWlVbmxHOWxB?=
+ =?utf-8?B?Nm45SEx1UjNYV1BVeTBVUTdEdEgwQW9ld0hLdExmQjVPL3gxN09DR2RPcGNY?=
+ =?utf-8?B?ZkJnOHhKYlBWaFNlK0pIcmYyRzVJMnJUV3lXSUsvc2FTWEpuQ3kySStDMzdZ?=
+ =?utf-8?B?ZU9uUVIrVWMvczQ5Ukt5M3lQV3huN0l3Wkhobkg4SVhBZkdUbXJ2dUpuKytn?=
+ =?utf-8?B?UEx3aCtOTjdyUkZJTXBUNWFvOXZTVU9kRWVBMUNLeDB6UURRVmN0TFlwWlBi?=
+ =?utf-8?B?ZW1xRXBuZWtUSG9IQm41dHdUNFdQempoUUU3N3ZmYktpWTZBRlB6UlN6dFlo?=
+ =?utf-8?B?VUF3cE40RkdOSHRNNEk5ZzZsc1FOQnN3WGRpaXV5eGZlZzc5Rll3dml1bWoy?=
+ =?utf-8?B?YmlaK0tUYU9ySWVVS2tOVUJ6dmQ5c2dJdFcrSHJnS012SkMrd3puY0FJNUxD?=
+ =?utf-8?B?Y2ZOZnJMWFVmY1ByU240NFU2TDVNcStLUUpLUmF3WVp4RDFKMk5TRGVFYVdU?=
+ =?utf-8?B?VWpkKzRKWUFEckxSYWhWaUtYNk9Ja29vZ0hKS0NQV0FvTzJKd3d0cGgwRWRq?=
+ =?utf-8?B?U3NoUWk1OXlselNIRTgrcGVCY2MybDVNak9PNE1zM3o4MjR5YUxZS0xZYW9q?=
+ =?utf-8?B?OEtIMzd2dUs4UXhYKys1cUVzR3B0a0Y4ZHRSeG0zVHNXQnFaYXpRWEdTa2cy?=
+ =?utf-8?B?OWYwT1JvbnlGdTU1elJtSXA5YWJzOTdBTnJPZVdPb0ZqUEluTG9uL3lDYXU2?=
+ =?utf-8?B?SGIrYytMQWJnYVVZNU5YSXZnb1Z1TmxoK2wzTE03VUFTVGFMOHBGMXlZem94?=
+ =?utf-8?B?dFJVbnp5Ukd4TUJvK3JYSXVIM292MkVSSXo1NDlsU2VZRXM3akl1V05rN1kr?=
+ =?utf-8?B?bi9ZT1hNTndFZUEwVWRXVEcwK1VaL3R5ZWNqTjF2MlZKclFhMm9RZ2pSWWZm?=
+ =?utf-8?B?RjU4cHlFU1dYVFRVMlZLRVJGendFOEJiMmEyTm5JM2h2Mzd2RVVSV3RHU3dG?=
+ =?utf-8?B?QzVSQktGQU51UzRkay9ablRLYi9ncXViY0o3eHJGa0dOWUhPZmU5RkdUY29a?=
+ =?utf-8?B?bUdLUCtsOE1zUjdGc3FoNzErVXNXdXlLVmxoVGhKbStybUUrU2dNeVhUUXI0?=
+ =?utf-8?B?Y0N0Tjkxc0ZZd2xsdThPV1RiaE1PcDdvU3kvSFNES1BvMCszWUg4UXVBK2ZB?=
+ =?utf-8?B?Y1N5NU0vVll4YnRJVFg2S1F4NHZWaHVlRThhMi9RazNJS0xvcHNRRWdTUjdI?=
+ =?utf-8?B?V3VORlRkTVRxdWVrVS9EMDFQNWNnZjVES1k0N0hUcXhuWEdTMEc5dUFQcEtv?=
+ =?utf-8?B?U2hPZFhlR2VVZ1Qvd3p3Y1FHMDJocUxUcEN3aWY0aENWblg1Wk1LUFZBekdU?=
+ =?utf-8?B?R1YzMDYrNVhndVBVOElnbVppNG04aTVraEphc1M1TVZXN09nRlJtbVR0bk1k?=
+ =?utf-8?B?cEJteWJsZmZ0Rnd0ME51ZnRZQzArcHd1bFpTdHVvcHlpNzc3SkxNZTE3RUVi?=
+ =?utf-8?B?NFRMWElQRStNZUNMb0JjdUwzcFdleGVGbTNPTUNudlNDL0JJNjcrV2MrUXNV?=
+ =?utf-8?B?dTdza3RTbjg1b1ZwUUdsS2lxZkhjSk9IU2JUL1VtSFFTZU96Z3UzL0FxdUhx?=
+ =?utf-8?B?OXFaMVBGZnR0OW14bERRNHBFOU9vbXhVR0ZYZDdjR2l2V0J5YVdTWVRWMzhR?=
+ =?utf-8?B?ZFIvUXBWYzh0Z25wZ3U1UmNMd1ErQll1QVFZdm1NU2xZNCtIZ3R1c2t6bG5a?=
+ =?utf-8?B?aFVUTzZsd0hXNU1rbHU5ekM3RFpqSTY5OW5iemxDa1BoZGh4UlprQTM1emlU?=
+ =?utf-8?B?UW9OY2ZyamJ1R3p4cExqL25NTTB1QitZcDl0MjJoWC9tVGpqZ0RlTWlPcmJl?=
+ =?utf-8?B?MjRWSzk0UGJ6OE9UMDluOG1leEkxNUxCVGdSamg4VGdUalBsZkU2RjdFYzJv?=
+ =?utf-8?B?all3M1R2dTNPNWpLZ3VHdWdyd0FpbWJiNGtWRmtPNXpXYWZBZmFWejliaDNG?=
+ =?utf-8?B?cWg4V0xRMW5WY2U5L3k5UTNHWlhuL29Ta3Mzc0swWDRKVEpQbzFBbk0vR0VS?=
+ =?utf-8?B?VkpkazNIdnVxUDZ1K0dNQTNEUzRGK25rcjR2S3EzWkU0dCtBSHNBbC9YcWF3?=
+ =?utf-8?B?a3BTVkNRYVpMeEw3RmU4Ui9VcytLaGRYb29kOTlrc3dFdCtUeGxHNEJSOExL?=
+ =?utf-8?B?NnlFcGZxVHlSYkk0MHZrYkZXanpVWFBTQlpJSzV2SkJ5b3J2d3NIbzhES0t3?=
+ =?utf-8?B?YXJrTEcrYjUyakJuNDdXdzF4U1NhRFNjV3lXNHRtNUNjYkg3dVl2UTBkTlFV?=
+ =?utf-8?B?Z1gwRHpqT1dzWFZKM1NueksyMTFRdXJ4Y2lIQTFrREJTR00zMmtrdz09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5a9198a-e5b8-4c52-b435-08df3d005c8f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3ac72d96-6764-4796-39eb-08df3d018f96
 X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 18:53:07.5496
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 19:01:42.4119
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cHboCBxT/4uVS6+0Rom4MBpHNVHldI2Md62fqqKKQ4p4h4jP0SNklCpjO7+emcLa5hf2EstQngsO2rtA4hFhPg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1ShMrQdvrfeOGK9uJ77EnmTwcirmqxtieQolxBrUi3/CQ800BYq9E3gGl1qv+uBfek2bJBfVJxlK+rWehzj4qw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8544
 
 
 
-On 11/7/26 23:42, sashiko-bot@kernel.org wrote:
+On 11/7/26 21:43, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [High] ASoC: amd: ps: build failure in acp63_irq_handler() due to
->    missing struct member
-> - [Medium] ASoC: amd: ps: TOCTOU race on interrupt_enabled in
->    acp63_irq_handler()
+> - [Low] soundwire: amd: Fixes tag cites ACP 6.3 refactor instead of ACP
+>    7.x commits
+> - [Low] soundwire: amd: amd_enable_sdw_pads() writes pad registers
+>    before acp_rev check
 > --
 >
-> commit 371c40e74acce37765aa0469d9b4a4ac8ef4b3eb
+> commit feea96d1feca02ca2e3cb0b4f0b3f33fab424dca
 > Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 >
-> ASoC: amd: ps: guard SDW IRQ work scheduling with interrupt_enabled flag
+>> soundwire: amd: program pad SCHMEN and OE control for ACP 7.0/7.1/7.2
+>>
+>> ACP 7.0/7.1/7.2 hardware requires SCHMEN control and
+>> output-enable (OE) registers to be programmed as part of the pad enable
+>> sequence, in addition to the existing keeper and pulldown writes.
+>>
+>> Update amd_enable_sdw_pads() to program ACP_PAD_SCHMEN_CTRL and
+>> ACP_PAD_DISABLE_OE_CTRL for active pads. Pass acp_rev to
+>> amd_enable_sdw_pads() and restrict these writes to ACP 7.0/7.1/7.2;
+>> ACP 6.3 is unaffected.
+>>
+>> Define per-register masks in amd_init.h replacing generic local defines
+>> in amd_init.c.
+>>
+>> Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+>> Fixes: cf0ddbc29dfa ("soundwire: amd: refactor soundwire pads enable")
+> [Severity: Low]
+> cf0ddbc29dfa ("soundwire: amd: refactor soundwire pads enable") only
+> supported ACP 6.3, which is unaffected by this change, and predates both
+> struct sdw_amd_res.acp_rev and the ACP 7.x definitions.  Should this cite
+> 2c0ae8ef1e5e ("soundwire: amd: add support for ACP7.0 & ACP7.1 platforms")
+> and 34b1cb4ec286 ("soundwire: amd: Add support for acp7.2 platform")
+> instead so stable tooling does not attempt backports to ACP 6.3-only trees?
+Agreed. The missing SCHMEN and OE register programming was a gap
+from when ACP 7.0/7.1/7.2 support was first introduced. The Fixes tags
+will be updated in next respin.
 >
-> This commit guards SoundWire manager work scheduling in acp63_irq_handler()
-> with an amd_manager->interrupt_enabled check for both SoundWire instances.
->
->> diff --git a/sound/soc/amd/ps/pci-ps.c b/sound/soc/amd/ps/pci-ps.c
->> index d0b66df101579..0442010e969c0 100644
->> --- a/sound/soc/amd/ps/pci-ps.c
->> +++ b/sound/soc/amd/ps/pci-ps.c
->> @@ -215,7 +215,7 @@ static irqreturn_t acp63_irq_handler(int irq, void *dev_id)
->>   		writel(ACP_SDW0_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
->>   		if (adata->sdw) {
->>   			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
->> -			if (amd_manager)
->> +			if (amd_manager && amd_manager->interrupt_enabled)
->>   				schedule_work(&amd_manager->amd_sdw_irq_thread);
->>   		}
->>   		irq_flag = 1;
->> @@ -226,7 +226,7 @@ static irqreturn_t acp63_irq_handler(int irq, void *dev_id)
->>   		writel(ACP_SDW1_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT1);
->>   		if (adata->sdw) {
->>   			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
->> -			if (amd_manager)
->> +			if (amd_manager && amd_manager->interrupt_enabled)
->>   				schedule_work(&amd_manager->amd_sdw_irq_thread);
->>   		}
->>   		irq_flag = 1;
-> [Severity: High]
-> Does this break the build when CONFIG_SND_SOC_AMD_PS is enabled?  struct
-> amd_sdw_manager in include/linux/soundwire/sdw_amd.h has no
-> interrupt_enabled member, and neither amd_enable_sdw_interrupts() nor
-> amd_disable_sdw_interrupts() in drivers/soundwire/amd_manager.c sets or
-> clears such a flag.
-The interrupt_enabled member is added by patch 17/25 of the AMD
-SoundWire fix series which this ASoC series depends on. The
-dependency is stated in the cover letter of this series. When both
-series are applied together the build is clean.
-
-Dependency:
-https://lore.kernel.org/linux-sound/20261107154659.3358223-1-Vijendar.Mukunda@amd.com/ 
-
-> [Severity: Medium]
-> Even with interrupt_enabled added and cleared in
-> amd_disable_sdw_interrupts(), can acp63_irq_handler() still race with
-> SoundWire manager teardown and cause a use-after-free of amd_manager?
->
-> CPU0                                    CPU1 (<hardirq>)
-> amd_sdw_manager_remove()
->    cancel_work_sync(&amd_sdw_work)
->                                          acp63_irq_handler()
->                                            amd_manager = dev_get_drvdata(...)
->                                            if (amd_manager->interrupt_enabled)
->    amd_disable_sdw_interrupts()
->      interrupt_enabled = false
->                                              schedule_work(&amd_sdw_irq_thread)
-> device_unbind_cleanup()
->    devres_release_all()  /* frees amd_manager */
->    dev_set_drvdata(dev, NULL)
->                                          amd_sdw_irq_thread()
->                                            /* dereferences freed amd_manager */
->                                              <-- use-after-free
->
-> acp63_irq_handler() checks dev_get_drvdata() and interrupt_enabled locklessly
-> in hardirq context on the parent PCI device, while amd_sdw_manager_remove()
-> never cancels amd_sdw_irq_thread or synchronizes with the parent IRQ before
-> devres frees amd_manager.
-The remove ordering shown above is the state before the fix series.
-Patch 14/25 of the AMD SoundWire fix series corrects the remove
-sequence to:
-
-   amd_disable_sdw_interrupts()       /* clears interrupt_enabled,
-                                         masks hardware IRQ source */
-   cancel_work_sync(&amd_sdw_irq_thread)
-   cancel_work_sync(&amd_sdw_work)
-
-Once SoundWire interrupts are masked at the hardware level, no new
-IRQ deliveries can occur. An IRQ handler already in flight before
-the mask took effect may still queue amd_sdw_irq_thread, and
-cancel_work_sync() drains both amd_sdw_irq_thread and any
-amd_sdw_work items it may have re-queued. synchronize_irq() is
-therefore not required: the hardware mask bounds the window, and
-cancel_work_sync() covers any work queued by the in-flight handler.
+>> diff --git a/drivers/soundwire/amd_init.c b/drivers/soundwire/amd_init.c
+>> index b4f45bdf3c171..032697ea35906 100644
+>> --- a/drivers/soundwire/amd_init.c
+>> +++ b/drivers/soundwire/amd_init.c
+>> @@ -16,37 +16,49 @@
+>>   
+>>   #include "amd_init.h"
+>>   
+>> -#define AMD_SDW0_PAD_CTRL_MASK				0x60
+>> -#define AMD_SDW1_PAD_CTRL_MASK				5
+>> -#define AMD_SDW_PAD_CTRL_MASK		(AMD_SDW0_PAD_CTRL_MASK | AMD_SDW1_PAD_CTRL_MASK)
+>> -#define AMD_SDW0_PAD_EN					1
+>> -#define AMD_SDW1_PAD_EN					0x10
+>> -#define AMD_SDW_PAD_EN			(AMD_SDW0_PAD_EN | AMD_SDW1_PAD_EN)
+>> -
+>> -static int amd_enable_sdw_pads(void __iomem *mmio, u32 link_mask, struct device *dev)
+>> +static int amd_enable_sdw_pads(void __iomem *mmio, u32 link_mask, u32 acp_rev, struct device *dev)
+>>   {
+>> -	u32 pad_keeper_en, pad_pulldown_ctrl_mask;
+>> +	u32 pad_keeper_mask, pad_pulldown_mask, pad_schmen_mask, pad_oe_mask;
+>>   
+>>   	switch (link_mask) {
+>>   	case 1:
+>> -		pad_keeper_en = AMD_SDW0_PAD_EN;
+>> -		pad_pulldown_ctrl_mask = AMD_SDW0_PAD_CTRL_MASK;
+>> +		pad_keeper_mask = AMD_SDW0_PAD_KEEPER_EN_MASK;
+>> +		pad_pulldown_mask = AMD_SDW0_PAD_PULLDOWN_MASK;
+>> +		pad_schmen_mask = AMD_SDW0_PAD_SCHMEN_MASK;
+>> +		pad_oe_mask = AMD_SDW0_PAD_OE_CTRL_MASK;
+>>   		break;
+>>   	case 2:
+>> -		pad_keeper_en = AMD_SDW1_PAD_EN;
+>> -		pad_pulldown_ctrl_mask = AMD_SDW1_PAD_CTRL_MASK;
+>> +		pad_keeper_mask = AMD_SDW1_PAD_KEEPER_EN_MASK;
+>> +		pad_pulldown_mask = AMD_SDW1_PAD_PULLDOWN_MASK;
+>> +		pad_schmen_mask = AMD_SDW1_PAD_SCHMEN_MASK;
+>> +		pad_oe_mask = AMD_SDW1_PAD_OE_CTRL_MASK;
+>>   		break;
+>>   	case 3:
+>> -		pad_keeper_en = AMD_SDW_PAD_EN;
+>> -		pad_pulldown_ctrl_mask = AMD_SDW_PAD_CTRL_MASK;
+>> +		pad_keeper_mask = AMD_SDW_PAD_KEEPER_EN_MASK;
+>> +		pad_pulldown_mask = AMD_SDW_PAD_PULLDOWN_MASK;
+>> +		pad_schmen_mask = AMD_SDW_PAD_SCHMEN_MASK;
+>> +		pad_oe_mask = AMD_SDW_PAD_OE_CTRL_MASK;
+>>   		break;
+>>   	default:
+>>   		dev_err(dev, "No SDW Links are enabled\n");
+>>   		return -ENODEV;
+>>   	}
+>>   
+>> -	amd_updatel(mmio, ACP_SW_PAD_KEEPER_EN, pad_keeper_mask, pad_keeper_mask);
+>> -	amd_updatel(mmio, ACP_PAD_PULLDOWN_CTRL, pad_pulldown_ctrl_mask, 0);
+>> +	amd_updatel(mmio, ACP_SW_PAD_KEEPER_EN, pad_keeper_mask, pad_keeper_mask);
+>> +	amd_updatel(mmio, ACP_PAD_PULLDOWN_CTRL, pad_pulldown_mask, 0);
+>> +	switch (acp_rev) {
+>> +	case ACP70_PCI_REV_ID:
+>> +	case ACP71_PCI_REV_ID:
+>> +	case ACP72_PCI_REV_ID:
+>> +		amd_updatel(mmio, ACP_PAD_SCHMEN_CTRL, pad_schmen_mask, pad_schmen_mask);
+>> +		amd_updatel(mmio, ACP_PAD_DISABLE_OE_CTRL, pad_oe_mask, 0);
+>> +		break;
+>> +	case ACP63_PCI_REV_ID:
+>> +		break;
+>> +	default:
+>> +		dev_err(dev, "unsupported ACP revision 0x%x\n", acp_rev);
+>> +		return -EINVAL;
+>> +	}
+> [Severity: Low]
+> Should acp_rev be checked before programming ACP_SW_PAD_KEEPER_EN and
+> ACP_PAD_PULLDOWN_CTRL so that an unsupported acp_rev (such as 0x7b or 0x7f
+> from amd_sof_acp7x_probe()) does not modify pad registers before returning
+> -EINVAL?
+Agreed. The current ordering writes pad registers before validating
+acp_rev, leaving the hardware in a partially modified state on the
+-EINVAL return path. Next respin will move the acp_rev validation
+to the top of amd_enable_sdw_pads() before any register write, so an
+unsupported revision returns -EINVAL without touching pad registers.
 >
 
