@@ -1,83 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794092904;
-	b=Qz4twVEo3Pah8EZmRkRkQS7SSJrxPYjTjaNUKoLdXXnw8FiWNT6wq2movt3deNUdTzL9
-	 SxFEbx9ivLRQ+jm53CXNs9VPvVY4jWbg2GmzmbjcQD5SXD/nhihxQfciopVioT6VGJZux
-	 q+SNr7b2WpktwBPWeAUPYoA/jP/qVOjNzoyrKqGaYWZ3pr4dsbN5d3QbskXx2StklOzci
-	 pHRns2A5Csxyksvk1NFsaj+YfhrkMdmJQq8fc++v1hiYeaz3iCywKLOBZcVY5ei9/XzRK
-	 K4OwxmH/ljcBq2EKVlaohhLqmAe1bXq/zEf321iyg27BDMCl/YO3Ixth0AaBOyVqpbA==
+	t=1794100046;
+	b=n4m71g4qxV5u8YROQSQkFdo3HB5ZbHvJYIOHhE5Nyb8XvuO/AIZ6Ke5MfmGPabbkC8as
+	 OQ7kpstFo13f9hmWAYJVpAxSILRpxUoULf/8+8f5y9Y9BX51AgpuatdrZEvcfUiLDf+LW
+	 nwq4OMR4RZfrdxAa21oGYgAxVxthBktqpSKxK8eEg0lj7kvyxQBaYYtwsSsWbZ1yBEga+
+	 IARb1pSedvWSttvDrOQNWEXiFAtWNmPW8wTaIcJrpV1YTcUGIE+ZcxEjuF1w3Tiw/pxCw
+	 u+N19qcw9WbS6OmZiLj2o3DDP68i756E/MPQT9Hl2SjpBZ50DaElXLNPc89BjQRJ+yA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794092904;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794100046;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:From:To:Cc:
-	 Subject:X-Mailer:References:In-Reply-To;
-	bh=RiWWFK5Yf30SlopCjvVOtFqcpYgrQCHqfBBIPIoZ+9w=;
-	b=LNsNomys5Jo+QhDG1XlUT051Qza1cm3T85N3hMmvVPofGKQstRfF4IfZhC3GcoxuVPLW
-	 6xmeV+DeUiXUbaju4tOQ3Q4aRZCa7GZL8EUTCWOXbgOREkD86bTfMdjEHw9sil6QyM6WD
-	 EQj/ozhbmplDXj1BsUHgjU0/0lQBrtMc/5t0WabgLhFJZTKCU4kVsDE2cboSyL4Z7CttS
-	 m2u5npfxiS7DPx4du4wNb9VrrcE0p9cSKs/Ui8MdY5hyYdOn+P3gTHp3TrVJ6sAkwtfFu
-	 8vbqwtunnjNa2aqt9YsM9+8GNCqCIDXGbx26mPtB+yFVYBO8vQ49Qu4FwQcFCSl9iyQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=B6NBC44oLa95X1aY0aLFRnK9SzAu0klmdILnt2Ypptw=;
+	b=XylK5MgCaqGZREY4mjROpzhayOUdLsa4h5/nxdcnaBqJfrmXbaSbEOBBNeQrwYibHBWA
+	 W+ejrLWM7nbvOa8m5oPEbKlli/uqiFgt13EwPB23RUmmnG6U84V8fxL827by9BVGBmfP8
+	 jWPVbT+xesaNeIFuNO8Q1fmlzwHrcge7eWyf3iwKMcVc612SDjT0KYWUDxbEJ2Wj7SDbp
+	 Mz4cbzM6jXDQ5A4ozwIkOsNHXpYf1Y03w4G6DSPO4i5ZBx5rKLKQdh1yINQvhMgx2dA14
+	 A58sEv3sebcR/X5eoCbYQ4g6HsOXn3qXXKrdgIRLza52Ud0yr5h4k57pCgvXNGiIo5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qiDVIL5E;
-	arc=none smtp.remote-ip=209.85.218.43
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="wkme/hoU";
+	arc=none smtp.remote-ip=74.125.82.181
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FC6606A32C
-	for <sashiko-reviews@lists.linux.dev>; Sat,  7 Nov 2026 23:08:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12FC6606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE34606A331
+	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 01:07:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ABE34606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qiDVIL5E
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c445c95d553so6723766b.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 15:08:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wkme/hoU
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-36f8cdd30beso347833eec.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 17:07:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794092902; x=1794697702; darn=lists.linux.dev;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=RiWWFK5Yf30SlopCjvVOtFqcpYgrQCHqfBBIPIoZ+9w=;
-        b=qiDVIL5E0BTg10uYZpwzpPXmkBaIrQvm1KRxdh9h4g0X6fWhfQB41SFbjVaLqaaxW7
-         znh1mxGbO4Ivdp5xNDPykdbxZDgaXLUbtkfcbt5+t4s66fjgxqdMow+MnT84ebnfjxzW
-         /CyAbDg06ED5aQeaa0HBcQoXWJofOpW2BR8C5PtQ2gbAa+OVgtjLcHSR1hWBI0aF9vZV
-         bgPbqYlPd0LcfU5PuNXUqmtQV8gbM+7GhAabVKdxQLR91pN22/fbuxtzX71NuQFUDyUl
-         y5AJzvswi4oTsKT3qol3cDOydTGW4ZZ3gxAJF+sB/Q5SAv32KqH+NY/ORV6DHc7gN9mx
-         7s4g==
+        d=gmail.com; s=20260707; t=1794100045; x=1794704845; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=B6NBC44oLa95X1aY0aLFRnK9SzAu0klmdILnt2Ypptw=;
+        b=wkme/hoU2GZIILXIJebxygOznpQ3HnWkUoZAS4EDjqmKH8zgFz+WolNvxMhmvlGW0S
+         dkm7aoydoo9Tvrnb2COza8i2qMBsRZijPouGcbmh9uU/f5wkHo/OKG1TIq4ceb/kERbi
+         FDhXhrTKFkMm1FcVVUA7LQn2+aHl+XXfK7d9SnN6k7BDdzIvJp+sOBlyWtTjOPK+EhS7
+         /nO4UHiqnKTmbq0z43kvd9IAJmNCtE5cpozxcZ9uB6IrpCXW+P+CBmAb9oFeFvoPorvt
+         XoJCcmNo1Wr3Xf1nFcJTYQqvIqcPq2Jn3O1YX04mk3dLHKKc9n9vPFC7VhOrA8aRRWWk
+         Iqyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794092902; x=1794697702;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1794100045; x=1794704845;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=RiWWFK5Yf30SlopCjvVOtFqcpYgrQCHqfBBIPIoZ+9w=;
-        b=OfDqozSaWzyZDmqvjBis8Y6S3LbSmSgE/LOzsDxLogJ4EtMhjQF5KVuU5X9+Wski75
-         +QBHk768TSgVjhOncOflFmkzaTMAfLtMmAxHRKK5XMgFw7Q7lG1tJ0Hq+M3U6WQ8JCf0
-         lH7E2udr0qGCF7ZlpbF/nFDbWfLkBd8KG74bQeBFfH1ay0nZrWtZupfcF/gIM7QgCrUq
-         GngzgsRnQCh93cM0BcuGFQiplyG7vnLgo29dR1r9vlxz1Exa9d5oYKD/sVCZwzrzGgf6
-         ErBR9WT3QHv0Nd9ZvPhAfRtF6gGnFA24gW9qOFC7xRFEQr5UQnwiQ41R8ARpfHosHnOj
-         Z6zQ==
-X-Gm-Message-State: APuU4Z/nR7DRagGue+q0Tbe1yJ61oXMFC9gZjT4zoGHgs18MTufI6Wkb
-	FhVffPEuKBLleWSUk7hTND43N3Z7ccJEvocRgcXqk2RzyDxz/NCA9UJX5I2hBytK
-X-Gm-Gg: AYBFou0NcvfH98QNP2NMfGc0lrlDBjJ8WDA8dTXbP230vtjEXazoNNnjb9gv3uYU1mU
-	3tHx/MBDsvxbKneysQamkijKhuE/8+kuk3HUi+wEDNpq7N8NVbltDbM5ehm8j4wUn9jQaHtXB1f
-	MpiDSZYma43wD1IkPEWg4/nZYdQBA6KHUVyXYkslEODzcJkNOXmN6foYoFJgFzCkw1LkCsTntX/
-	v8UeRvx45Oili35jvtHXQypq/1KSPFJ0XdY7Gx4CFYH98DlEbBZCw2nUOoVsy7JFg/QAk40Z6NC
-	kHtW7ZsOIpODOmLNEoiABTyj3MiSia/xRZK6rjFfUZCrAcXYvlkVADj5ot0ndFlPSLXfRCs2T5z
-	ivCD3SipAr3Eh7ZGlIK1vDECfYe1oKl70llgtJ/qYz66Br41oQI6K3qHKTK9p4L49aJdPw1nJUX
-	hzfoo+3a2LyYNjRx6Vt1rZ8rSgkKBb2+vyhl7a7ndGZKOcvg/vnz82xR64vX27XG3/sI2A/MGgO
-	kORhWmAqQb32pLbvsLr+X2urlQ+sJldMTrbQkRbYL03aJAfA3ySTckKHAWhZ9hDGVZy0rwgnmwM
-	OXHqbHuB+XSzDaPidXOTog8ISHGgneHiqUvTFp4r991B+rNRF5bG6UTdkkbn0RXp
-X-Received: by 2002:a17:907:1b18:b0:c49:8f1e:af0a with SMTP id a640c23a62f3a-c4d6d160d03mr24113766b.7.1794092902179;
-        Sat, 07 Nov 2026 15:08:22 -0800 (PST)
-Received: from localhost (h-155-4-132-44.NA.cust.bahnhof.se. [155.4.132.44])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d6a474b2bsm16348966b.35.2026.11.07.15.08.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Nov 2026 15:08:21 -0800 (PST)
+        bh=B6NBC44oLa95X1aY0aLFRnK9SzAu0klmdILnt2Ypptw=;
+        b=tBUR3velRa1cIy2zf8YhPdSc4bUV9hi2Px9oQkhAh1JTm3D1irohZNYQmeEdObDUEl
+         NDPiL6xGhGzEF6ftAwOx2HWmzf9U4q/DbH3FKJYpFjJ3gr7jqCbtbN96aIxMZEsA+REN
+         YDpmbkIzqP7G5Ra+FjM+Qtyl2u9XzOtydC0rITYeSwlcDfywN2g0hNl5kHA8FdIQ7jy3
+         0LWXFLBmvsYUqvHB2hpHdGjEeFft8SWlUdp2x/J3JzjAW88ZfKOXAEVioFCgUlXH2tBy
+         SL5WrZN2RcEBDlAyjCdhU3GfKook1aRBISCsokZoU6rt62PBRaeAO8vnqzVWeuGcK5f8
+         GqEQ==
+X-Gm-Message-State: APuU4Z/jt7rWJwYPPlYwRxxkikpSA/xYdLbq1LHJuD1pE6jHf7O8QmhZ
+	i9HlrcT2l3uTAhxuudFQzNTP/59e5AtP7MPiY/czpuWeKKvR9+UIGJia
+X-Gm-Gg: AYBFou37S+O1QEf7IEHyTKLt4XWMdY/BLT6ewSvMvhD/ftOTxwRIsL4E1nkKNX4dIiU
+	ODxXo++65fkeS8zCVRGOt2sQhIzyzU7ZMZecrFjyKn3R1SMr5odWAHtPTkVZ98RJJgMZpYqvvMZ
+	trunX9bTIdBxiH+gdcS+aeDZd6HWyXtS5aE1ImVA+m5804STTcfWIL9UN1bYOgl9gqCdA5NU9b9
+	M9vSo++xjys+PH64PpkcoLkY+42Nk91HUhrE/Ipb08Hvg5PBp4XNwDc8xjCG5BFKjv8c5eu6vZS
+	RuWj2j0bdaKF84EXHhxwHDaA5BbOqwDfCtUwaYiQBUkb93LLwGJs8Dg1h2e6FLMFQfvqxMO6GtN
+	zGqayAjQjdEt2E2nRwGZWtPPKHsmaFfpE5wzqLlhYdmwBDrQXDPyE2/mVHasz26v0XZh9y+hakh
+	3+w503d21UBRn05Pjku/qmmBYrCzTat08oLOr7USFRIEaYHIarjq3pC7mHyNJLCkjmDh1Si78e/
+	Ae/cB1g8+EuTLqHr8ztNjsPnXp3YrJaqZ39hlwCY4oR3si/xpheL9stLqhiJd9ePCmVvb3jiMao
+	34DiS0veS3blqYMq9zN0uGaAr8isiY4nHurU/v2pCu/U
+X-Received: by 2002:a05:7300:e920:b0:36d:25e:1961 with SMTP id 5a478bee46e88-3725e240abfmr839498eec.22.1794100044508;
+        Sat, 07 Nov 2026 17:07:24 -0800 (PST)
+Received: from DESKTOP-NM9EKIA ([125.134.240.130])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37265c06c61sm1344623eec.14.2026.11.07.17.07.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Nov 2026 17:07:24 -0800 (PST)
+From: Joonhoe Kim <26rote@gmail.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 32/35] drm/msm/dp: mark the SST connector disconnected when MST is enabled
+Date: Sun,  8 Nov 2026 10:07:24 +0900
+Message-ID: <20261108010724.4061-1-26rote@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.5
+In-Reply-To: <20260929045429.A51801F00893@smtp.kernel.org>
+References: <20260929-msm-dp-mst-v7-0-4b81473185e7@oss.qualcomm.com> <20260929-msm-dp-mst-v7-32-4b81473185e7@oss.qualcomm.com> <20260929045429.A51801F00893@smtp.kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -86,172 +108,58 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Sun, 08 Nov 2026 00:08:19 +0100
-Message-Id: <DMPCURRCFE4Q.1OLZYCFH1GY27@gmail.com>
-From: "Elvira Khabirova" <lineprinter0@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Elvira Khabirova"
- <lineprinter0@gmail.com>
-Cc: <linux-usb@vger.kernel.org>
-Subject: Re: [PATCH v4 1/2] usb: musb: gadget: count givebacks in busy
-X-Mailer: aerc 0.22.0
-References: <20261107221904.82487-1-lineprinter0@gmail.com>
- <20261107221904.82487-2-lineprinter0@gmail.com>
- <sashiko-outbox-203368@kernel.org>
-In-Reply-To: <sashiko-outbox-203368@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Sat Nov 7, 2026 at 11:35 PM CET, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] usb: musb: gadget: no TX restart when busy drops to 0 in
->   musb_g_giveback()
-> - [Low] usb: musb: gadget: missing Fixes trailer for ep->busy race fix
-> --
->
-> commit 38e2611af12585f304377ba06a8095186ff11968
-> Author: Elvira Khabirova <lineprinter0@gmail.com>
->
->> usb: musb: gadget: count givebacks in busy
->>
->> The ep->busy flag is used by musb_g_giveback() to signal that
->> req->complete() is running on an endpoint, the ep is busy and
->> starting a new request is not appropriate right now.
->>
->> It is only a flag and not a counter currently;
->> musb_g_giveback() saves the old ep->busy value, sets busy to 1,
->> releases musb->lock, runs req->complete(), restores the old ep->busy.
->> This works when there is no possibility of two musb_g_giveback()s
->> running in parallel.
->>
->> This does not work when musb_gadget_dequeue()->...->musb_g_giveback()
->> happens at the same time as musb_interrupt()->...->musb_g_giveback().
->> The above save-then-restore can get the busy flag stuck at 1.
->>
->>   CPU0 (interrupt)                CPU1 (usb_ep_dequeue())
->>   giveback: saved 0, busy =3D 1
->>   unlock, ->complete()
->>                                   giveback: saved 1, busy =3D 1
->>                                   unlock, ->complete()
->>   lock, busy =3D 0
->>                                   lock, busy =3D 1
->>
->> ...and this gets the entire endpoint stuck.
->>
->> This was reproduced and the patch was tested on a Pine A64+
->> (Allwinner A64, four cores, no DMA) with PREEMPT_DYNAMIC and lockdep,
->> using a specially constructed f_fs function that keeps two AIO requests
->> queued on a bulk endpoint and cancels the newer one with io_cancel(),
->> in a loop. Tested with both a bulk IN and a bulk OUT endpoint.
->>
->> If musb_g_giveback() were to be started from some other context,
->> the same issue would come up.
->>
->> "Promote" ep->busy from a flag to a counter.
->>
->> musb_gadget_enable() should not reset `busy` to 0 anymore because
->> musb_g_giveback() decrements busy, and if these two run in parallel,
->> it would be problematic (cause an underflow).
->>
->> Signed-off-by: Elvira Khabirova <lineprinter0@gmail.com>
->
-> [Severity: Low]
-> Should this concurrency fix include a Fixes tag?
->
->   Fixes: 550a7375fe72 ("USB: Add MUSB and TUSB support")
+On Tue, 29 Sep 2026 04:54:29 +0000, sashiko-bot@kernel.org wrote:
+> Does this introduce an AB-BA deadlock between mode_config.mutex and
+> plugged_lock?
 
-Feels useless to mark this as "Fixes" for a commit from 2008
-that brings MUSB support.
+Yes, I hit it on the Lenovo Y700 Gen 5 (TB323FU, Kaanapali) when
+booting with an MST monitor on the USB-C port (Linux v7.3 with Dmitry's
+"drm: handle IRQ_HPD events correctly" v8 [1] and this series). The
+lock order is the same in v7 as posted; nothing in my tree changes it.
+The HPD worker holds plugged_lock and waits for mode_config.mutex
+(msm_dp_display_mst_enable() is inlined into
+msm_dp_display_process_hpd_high()), and the compositor's GETCONNECTOR
+holds mode_config.mutex and waits for plugged_lock:
 
->> diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadg=
-et.c
->> index 016d3f3fc1e05..b500e0d8b0bd3 100644
->> --- a/drivers/usb/musb/musb_gadget.c
->> +++ b/drivers/usb/musb/musb_gadget.c
->> @@ -129,7 +129,6 @@ __acquires(ep->musb->lock)
->>  {
->>  	struct musb_request	*req;
->>  	struct musb		*musb;
->> -	int			busy =3D ep->busy;
->> =20
->>  	req =3D to_musb_request(request);
->> =20
->> @@ -138,7 +137,7 @@ __acquires(ep->musb->lock)
->>  		req->request.status =3D status;
->>  	musb =3D req->musb;
->> =20
->> -	ep->busy =3D 1;
->> +	ep->busy++;
->>  	spin_unlock(&musb->lock);
->> =20
->>  	if (!dma_mapping_error(&musb->g.dev, request->dma))
->> @@ -147,7 +146,7 @@ __acquires(ep->musb->lock)
->>  	trace_musb_req_gb(req);
->>  	usb_gadget_giveback_request(&req->ep->end_point, &req->request);
->>  	spin_lock(&musb->lock);
->> -	ep->busy =3D busy;
->> +	ep->busy--;
->>  }
->
-> [Severity: Medium]
-> Can an IN endpoint still stall when a new TX request is queued while a
-> concurrent dequeue giveback holds ep->busy non-zero after musb_g_tx() has
-> returned?
->
-> With two TX requests req1 and req2 queued on an IN endpoint:
->
-> CPU0                              CPU1
-> musb_g_tx()
->   musb_g_giveback(..., req1, 0)
->     list_del(&req1->list)
->     ep->busy++ (0 -> 1)
->     spin_unlock(&musb->lock)
->     req1->complete()
->                                   musb_gadget_dequeue(..., req2)
->                                     musb_g_giveback(..., req2, -ECONNRESE=
-T)
->                                       list_del(&req2->list)
->                                       ep->busy++ (1 -> 2)
->                                       spin_unlock(&musb->lock)
->                                       req2->complete()
->     spin_lock(&musb->lock)
->     ep->busy-- (2 -> 1)
->   next_request(musb_ep) =3D=3D NULL
->   return
->                                       musb_gadget_queue(..., req3)
->                                         list_add_tail(&req3->list, ...)
->                                         !musb_ep->busy is false (busy =3D=
-=3D 1)
->                                       spin_lock(&musb->lock)
->                                       ep->busy-- (1 -> 0)
->                                     return  <-- req3 is never started
->
-> When musb_g_tx() finishes its giveback first, req_list is empty because
-> musb_gadget_dequeue() already unlinked req2, so musb_g_tx() exits while
-> ep->busy is still 1.  If req3 is queued before CPU1 finishes
-> req2->complete(), musb_gadget_queue() skips starting I/O because
-> musb_ep->busy is non-zero:
->
-> drivers/usb/musb/musb_gadget.c:musb_gadget_queue() {
-> 	...
-> 	/* it this is the head of the queue, start i/o ... */
-> 	if (!musb_ep->busy && &request->list =3D=3D musb_ep->req_list.next) {
-> 		status =3D musb_queue_resume_work(musb,
-> 						musb_ep_restart_resume_work,
-> 						request);
-> 	...
-> }
->
-> When CPU1 then decrements ep->busy to 0 and returns from
-> musb_gadget_dequeue(), nothing calls txstate() for req3, so no further TX
-> interrupt fires and the IN endpoint stays wedged with req3 at the head of
-> req_list.  Commit "usb: musb: gadget: don't flush a waiting RX packet whe=
-n
-> queueing a request" later in this series defers and kicks RX when ep->bus=
-y
-> drops to 0, but TX requests (!request->tx is false) are not restarted
-> there either.
+ INFO: task kworker/0:0:9 is blocked on a mutex likely owned by task <compositor>:2439.
+ INFO: task <compositor>:2439 is blocked on a mutex likely owned by task kworker/0:0:9.
 
-Yes, it can. This is pre-existing and not made worse by this patch.
-This needs a separate fix.
+ Workqueue: events_freezable pmic_glink_altmode_worker
+  mutex_lock+0x30/0x70
+  msm_dp_display_process_hpd_high+0x23c/0x2c8
+  msm_dp_hpd_plug_handle+0xf4/0x208
+  msm_dp_bridge_hpd_notify+0x118/0x290
+  drm_bridge_connector_hpd_notify+0x7c/0xf0
+  drm_bridge_connector_handle_hpd+0x5c/0xc0
+  drm_bridge_connector_hpd_cb+0x1c/0x30
+  drm_bridge_hpd_notify_extra+0x4c/0x70
+  drm_aux_hpd_bridge_notify_extra+0x4c/0x70
+  pmic_glink_altmode_worker+0x274/0x520
+
+ <compositor>:
+  mutex_lock+0x30/0x70
+  msm_dp_bridge_detect+0x54/0x338
+  drm_bridge_connector_detect+0x40/0xc8
+  drm_helper_probe_single_connector_modes+0x158/0x608
+  drm_mode_getconnector+0x19c/0x448
+
+32/35 is there to avoid a transient connected -> disconnected change
+seen by polling. With 25/35, drm_bridge_connector_handle_hpd() stores
+the result of detect() in connector->status right after hpd_notify()
+returns, and detect() returns disconnected once mst_active is set
+(29/35), so I wonder whether the write is still needed. If it is, it
+could be done without holding plugged_lock.
+
+To get past the deadlock I dropped 32/35 locally. Since then, booting
+with the monitor attached has not hung (4 boots), and over 3 plugs of
+the monitor with drm.debug=0x4 the SST connector never showed a status
+change in the probe helper; it stays disconnected while MST is active.
+
+[1] https://lore.kernel.org/all/20261024-hpd-irq-events-v8-0-6ee949e7a384@oss.qualcomm.com/
+
+Thanks,
+Joonhoe Kim
