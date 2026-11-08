@@ -1,96 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.128
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.208.52
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794150708;
-	b=qdWRmOurjB1Q3BS+T2pDv1YS+KyWeH3DCsT1s/t0Os22D/lLbjt1F7sJoYOEyTVL50My
-	 dv3Fa+zINJeOhaT22GidStyXhoLUsEZENpvgSZBTUYnqxW57AiEVfi2jD2geCX29ddebm
-	 f9COzllQTJ/5PDhYzfovzTRKKWrgc4k9RsqjhEi18kyCtWrzpdlQIRZqnrXQ9LRRcbdsl
-	 Mvy3T7kIY/iseQTM8cLlMUTdCYApzm4f/71Tw1i7i/6p6PNcYPBSk726PumHeOLQBWr27
-	 mI9ZYn6IYYe1WoPsAy66Wrsfp5d5SUXqmpK/TrNNDq/uMrmJsnLt0jHfDYP7+3Xj02w==
+	t=1794151480;
+	b=5HFfwq8hAPbqyAY2KD4CxV6sJZd35kpx3GMsp3zhPB2Akn2tNcKWgL0/HmYaqRRjucBw
+	 5KxjzkL3KJvbk8gIJsleKjwEhMZpIWtmc3+/SbRyYK3TiMOBWcV43d/Ohqn2xhabgVWwD
+	 AXc183Fx2eFSuAdl2PbLOk8Wsmm1UWw3DF9UcgKGAv5dMPBDj/yurCiK0wHu1N3zcIyCv
+	 oFFG5t+0CxFq0kuyFBYoHd09xbu9NtvRgoMkCDOb/3+76b7XkE1AMfnl2Ne+Uigiyu6Hq
+	 pj38acIG95nc89ICl0YtkWrxmtTlbG+TVXOO89nCtev/SG0jtbXwd9D5olRiegyIRSQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794150708;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794151480;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=S3378glPIUpb/Np4ls/UMSQim6gLRzP7jb20yzp7mKo=;
-	b=g2QEu2SY/KkvZkNwSJPHTILgX4xTWYhagduAwKi0ciiaX2+t6duceKix5y3hsKEByTRx
-	 xJD9aPKS4mlWGKrllV8QHNMPYy+oH1rYbRQBBAFmAMzqnmKg+lQm6mpkdXbLwXgcu4aNY
-	 L+/5OzJJxR9UAVGRnLljBnuTE7mFhM8pkOUlsvobPfSdCAWta7GD5IbrZjeiwPA+UkaaQ
-	 VDyuVfND75z4EtWCAG8H+WNhnXKl7t4K5Qg6Dphg0H+24/q4fzAR2pjX8qsC+JfG+1kQW
-	 LTWstzrDRPr1zs3GDJtH+j+a5CvLiWo0OM9hK2MBZIlV3LOOqL9IQscXZfqNkovW3zQ==
+	bh=eOdiydIvOgccWMDzeIq8H8p2djzQZYfpLV3wc0+6i5M=;
+	b=4mFoDgwJtY59MaCfTRjmCqASCRvbRhq7q7WfKsMVB7CE/r1xC9C9wpKNebNf7rBmUrow
+	 QXUSV6smRmJrsYxhEYc+KeGneZ4GTd3oMVLGf9Z3L7MU5CqIup356rB2SS82TG7ROwcWg
+	 FUi610vue162R2Bw/6rkN6kXO8JzOpuX0exFfGz943yQghkjylV6B4glwdS6gaqHBRgEG
+	 GabMtVIYaS1ll4enIZdZqVijciu4tQLXeEsGeSbbFXmIyBZ4b9d5IT1WyWPoRA7xVysAn
+	 Y8aNqUyCPMe2cRMZIsbBWBM5LKepW/M16ko4CSmA2Q+Fl3PDCT7wcmAdqwTNl034wWg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=efficios.com;
-	spf=pass smtp.mailfrom=efficios.com;
-	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=G6DZTXSm;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.128
-Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022128.outbound.protection.outlook.com [40.107.193.128])
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Fwi2r5vk;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.208.52
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011052.outbound.protection.outlook.com [40.107.208.52])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCA4606A320;
-	Sun,  8 Nov 2026 15:11:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0BCA4606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B160606A31C
+	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 15:24:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B160606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=G6DZTXSm
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Fwi2r5vk
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cR0kqlKldBmd2BYffpPGGc3hhfyrXNpPzxgCqo82skc2oH5QFaOsCIZHgBU/11XYEwRVFyQwrXiPSIfZMjw1jj/WySZifreCRd9Xc/hJUngOPC2PSwzeKWN0Ag6jJMepxiG4F1M/wPJZkyRbef8VGjqkjAVZ/36fMp+n60MUW3WORd7afmg/0Z9Bavhcng/qtfLM8EsQPrsZMR09tbSukx0UjXlscPfqh4MCZ04VFfWgMmn+60c6gu/xIha53wq95EPC0CHKW3tYIrNJtZxuLDGsNzizup8onQsR0+BEXvaNRSL2kr44+dywqsWbdImAgaX51ZBamjMXO5Vn+7QZFw==
+ b=tk+cdAyZaxyiyHRwzL484MkWRpflt3+8YhU+tEqac8J97gfSv2RNCYhXAfr5UiseFhEyAqECz5LMyF2T7EUoTDvnvkmBuTNpbYcPPLodOmcWkM/kljEcQvk7pkfBhMnW8kU2A9pJwBwXfCmYQ7+kI29nJs/KP8R4Gm/CLV8sFEqB9iIfPurfBN+tPIdNKbYxLoVvKhnKzOr91c8VNZ/Rnt2AnJnYzhdcYO7+/IvGMGpW+jsyORHef1+PORZ4aDpXvXd6u4yN2Dmn9ytWAx0N015aCQpfYyqimvP5S9LncX6yCLkvGtSIvUXbBQiRqkJjnxo04J7QsY8g6HCf5CAB4Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S3378glPIUpb/Np4ls/UMSQim6gLRzP7jb20yzp7mKo=;
- b=fZxXy1+fg4mBi29YjWVdyHgoomtQDWuBkD29/X31PwURGhCVkQEGkmJK/63s5yN+Fi0sx7GKJSQ5EnMT3OfvhC6eJHlXqrNdXAGPnV9b2sL/9R7xcPFhGnT3IHp2J1zgGEr7uKMzY+H0ya7aYnuf9EDPDYay+UpXbiMbZm/TJf82i6Ez/dlBp0/gtnyHh9uBg1jlyb+unYXkMpASXgSUSkICAtP7wTnhMfpuPvR0eI2c3j4FxNAj7jHlqdU+bHab/vggXg5KstkRSfhzoud4AONWH/0Ic95GjJlOsUnbAGAxbdJGN192+NmnO/SXWDyQSx/uNs4bt8MKCpS25r8xug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
- dkim=pass header.d=efficios.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=selector1;
+ bh=eOdiydIvOgccWMDzeIq8H8p2djzQZYfpLV3wc0+6i5M=;
+ b=Jux9hf1L0ZHHJzcQUkTxPgl9Mmamkiv82zLDFzYR24qFYeSy0Bxua/g9dre0ACYzkpWTNW9yP2TWvBm8r1Js4X0tL/GyDyJMji670qCN4AHw7j+yL3ORs2EejU9hRRgSCO/Px9i60FPJZvswt2DA93BUlf8VR0lB3ppOVSXd9ZZAsCITuvtFnGmKAjx2DLYVA82Usj0JCd6SkRn5OxQeBk0qcTewFMYws6tEqoFIi5hy9xOwOL0xIQC+an0ATx/hRbUrI8d5AkP/H7nyEtUj68znGdtwNXia0+SacP0tBEI2AeoFlROuT25FSf28T5A5h+rlZkDLRLuEnMUAJe3njA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=S3378glPIUpb/Np4ls/UMSQim6gLRzP7jb20yzp7mKo=;
- b=G6DZTXSmIYunFME7kUYCYEconqHkBU8tarsuzBzWahdglorhP/ECGurY11qytvaFM/Sib/yvmPHhXmIe9XUTE1FEB4+lhTp++HonIWzKewM1tBShGV5uah4PeYFDEJWXoIcItemmF7NDO5GHXgkupGNZ2QeqFXhiqkwluxLW7OrWDMAGJ4NSkLOptwiTFf0eUBZTgwy4QgqJ/C7oZ3ASDYyfYj0FFWdmy2OoitAZmIk29Gj5IDmgIr4QkQ7DRZw2GMj/VYT0FEaknTvOnNOP+YZ4iy8O7V9QpRimVBJwZxdVxfZDQ+eczsP6f3Y3FVe1BnAqGNX+/RtSPR2Pb4NWOw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=efficios.com;
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10) by YQ1PR01MB373984.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:cb::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.12; Sun, 8 Nov
- 2026 15:11:46 +0000
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0592.010; Sun, 8 Nov 2026
- 15:11:46 +0000
-Message-ID: <0f916c89-c184-429f-93a1-0f5b28e516b8@efficios.com>
-Date: Sun, 8 Nov 2026 10:11:45 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 26/26] selftests/sched: Add a test of SCHED_DEADLINE
- bandwidth accounting
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org,
- mkoutny@suse.com, linux-kernel@vger.kernel.org
-References: <20261107014451.1487825-1-mathieu.desnoyers@efficios.com>
- <20261107014451.1487825-27-mathieu.desnoyers@efficios.com>
- <sashiko-outbox-202508@kernel.org>
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-202508@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQZPR01CA0158.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:8c::21) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10)
+ bh=eOdiydIvOgccWMDzeIq8H8p2djzQZYfpLV3wc0+6i5M=;
+ b=Fwi2r5vktxaWJiDgBcpwsHTbVG+80YHCwsV9YMlmwWhdPG8NYqVpxY7MvgTljYMzbWQrcD11tSTP2VTiz0cCrSUN0JEqjKSEY5kafJdjqC/ZQV14u21pnkf8miBxPSng5o+jCTuC2OPELoEkGuxIn6axv7W7wOUoYFRjCPsx4JcGSaOHQlLRQYfr/JdJiOs345adU77GBipkRszJ3KPPSMqUUu//G1I63O7bNfaozAVC9cRPW7y9NbsavifKyJtEl0mRPbDHo8IOUUmytkYGs+LqpjRhLxZ2YWhkGru6HBPhZkpbXaO4JU4GXWOBWb3tRuAGU8df1t1K8vaJjHVDJw==
+Received: from BN9PR03CA0623.namprd03.prod.outlook.com (2603:10b6:408:106::28)
+ by SA3PR12MB7783.namprd12.prod.outlook.com (2603:10b6:806:314::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Sun, 8 Nov
+ 2026 15:24:34 +0000
+Received: from BN3PEPF00022BD9.namprd03.prod.outlook.com
+ (2603:10b6:408:106:cafe::62) by BN9PR03CA0623.outlook.office365.com
+ (2603:10b6:408:106::28) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.12 via Frontend Transport; Sun, 8
+ Nov 2026 15:24:34 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN3PEPF00022BD9.mail.protection.outlook.com (10.167.248.107) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.615.4 via Frontend Transport; Sun, 8 Nov 2026 15:24:33 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
+ 2026 07:24:17 -0800
+Received: from [10.125.206.9] (10.126.231.37) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
+ 2026 07:24:16 -0800
+Message-ID: <2301f2ff-1fe3-4991-989b-2c7d7c5de6c8@nvidia.com>
+Date: Sun, 8 Nov 2026 17:24:08 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,82 +104,151 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rdma-next 01/23] net/mlx5: Add
+ mlx5_trigger_health_work_force()
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-rdma@vger.kernel.org>
+References: <20261103163949.1554-1-yishaih@nvidia.com>
+ <20261103163949.1554-2-yishaih@nvidia.com> <sashiko-outbox-197654@kernel.org>
+Content-Language: en-US
+From: Yishai Hadas <yishaih@nvidia.com>
+In-Reply-To: <sashiko-outbox-197654@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YQ1PR01MB373984:EE_
-X-MS-Office365-Filtering-Correlation-Id: 96a8e97a-3308-4189-3065-08df3daa9ac9
+X-MS-TrafficTypeDiagnostic: BN3PEPF00022BD9:EE_|SA3PR12MB7783:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0b6b0c53-1248-4c97-da63-08df3dac645c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|4143699003|56012099006|261022105027099003|261026140227099003|261028144727099003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|82310400026|23010399003|36860700016|1800799024|376014|18002099003|22082099003|6133799003|10067099003|11063799006|5023799004|261026140227099003|261028144727099003|261102123227099003|261026121527099003|261022075727099003|56012099006|261021121427099003|261022105027099003|261009223027099003|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	63e1zoUl8lmlmXdHXkcRLpeBb99Aat1oVJvUysmPQSOC587Rw4Xgr4Qu+dsV9L9xVDlPCSdiQxnuGvF3wgq1RVX+6Upovd3TlRLTxLr6Ony9HFHXoWbVYwr79WbUxDn9cPKcTFqP+88CzsCd4qsk1enq9XgR7bJkQOzfU+5UC7o4h64nYqPSSPNrFH4cd/P4i/RvIAC5oJz4bHEfteLYEMz412VyaV8/ZCUQFt3uVpmyWwNpICYaekj/cUUmOOCS2p9mSL0doaGkdal1l9Ex3EcLz3+ZTcYqVDRVSzjsSUEw829vsTesYQYmSi81FGjDryLlqpjSBRGp5WT20owG7dvqNsA4NSkDTkqK2uGBzviIf57dyh1VCeUK0caGj0YNJAv2gLN6+XzqTweB66X/Z6xQMNDUZDplgfhZmBRlt1fFrq6+xcHu89+OBLpYLp1gNeJsdhTisAOpYFzU0JqvzzpLZVFQ5ZrnA4JVlEvnoBgNpaA0Pj6eP6dSje66Zq9AxjOSj6E3SdjDhPSZv8LR+V6tgSxfFFXJemBIKXzD1ABYa7HU7xZZLDv9LF++PrDj3HHbQ2oJ+ykaS8Oe+ym+aZFip66Wn4Nxh8Z7rOVob/g=
+	uRszZVjFW/Nxfg1xTMjJ4ToPO8iiFcTranDxH1NJtE6AYoeg4vaH/ZAqSZnzC1KtFhMb8P0A8NX+OBNaL+gcUT53ywlJf5XguU1YjxAIsgkuUia/j5etk/1iHzPjEPDMQT1DT7UGlYe7SoOK97hEjuohEu4OwcQLVCvP81RWcPdyqF6PDeXGePliG+CxbogmjIc3Z76pYU8gtwzdHskcE5JFySUHVwWMGYwe0Ee2Tx6lsScc8d/U/vM/QIY1jPnir6j1hMLIM3leTR4pNDaGr/lMxByBXMkdxSbkQMGkZRJb74oY+mwmk+biEwS8PRE/xLSVqXflfoSr/CCkpV58ehLl4H0cSh3TR6DLYis2dP3ZAbToNWksRW6n5Ciuql9x1R6bydgKUeBGh1TMGD49SlaKUPSrUeGNabjPi05+L/FqEfPdi3UwyWnqKZrRGNmKdeuHGXonlt67ty+8lRfI76hOjlS7WaIWXI52LaCF8pYNXyUNg+H0XqZcfMdjSzV6T5q4RSm8Yc6SY3jJJuksbEkctzm9AEx99kZWHtKRfO399Hga7RE282JcnYQlIpM87DsS1SjohrCGRTkhYcextMBG7V+Gapf+X8BUsMHF7flC6S1CglLWWmEHH0aXqBJNZbKCqEnNWjpbjVxfXS5VmGNvgp6ocuY4pi2/ThXCAODmrj5/CPLmkvoxFfvUcdjyvq/m6NH19Hx7t/s0AU7/GA==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(4143699003)(56012099006)(261022105027099003)(261026140227099003)(261028144727099003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(23010399003)(36860700016)(1800799024)(376014)(18002099003)(22082099003)(6133799003)(10067099003)(11063799006)(5023799004)(261026140227099003)(261028144727099003)(261102123227099003)(261026121527099003)(261022075727099003)(56012099006)(261021121427099003)(261022105027099003)(261009223027099003)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?QUpTVzFPYUFWekVrOHFlYkd0UHZhbmFsL3NHajd3TGxOTnZ3UU9DYnVhVzNF?=
- =?utf-8?B?eUt2REI5RTZsNW9HbFZEeTBZRzJpWVpHL2xyVDdoaTNzeSs2alZ6WVBsTlpR?=
- =?utf-8?B?Wmk2NUg4cTQrMXJYVHM1SWZtVVFvZkxaRlZuSldJQnFDYm1mc3EzbkFlUkhV?=
- =?utf-8?B?UDVqS2M2a3ZMdmtWTU9hcWhuNWd3T3I0dTRJN2VoQTQwV2JmelRmTDFxNEdR?=
- =?utf-8?B?ZzVENnJEWWZmUkxtMnR6WVoxRk5SRUFxMDU2ZGlIeTYvdncyc2JQSlhYZVpx?=
- =?utf-8?B?STNBYTdKT21UWlhJeXBNN083eEdzQTBZOXdGQnhjUTQxVXY4RHV0bW1vdm44?=
- =?utf-8?B?M0NhdnJWeElacDJhbk9EY29PMTFMd3dVVlMxY2hqUnAyaGh0MlpUa0R0c3p6?=
- =?utf-8?B?WDhyUnZBek83WWdldGpESHR5aGZWVWcxampxMGFIMEJtY0F3bGpqMlJZSHBl?=
- =?utf-8?B?US9aUlo0WGQ5K1pDUSt1c3Z4Yzh3QUU4MnlMTC9ORWFyNFl2azBITm5wVXFv?=
- =?utf-8?B?dHlWeU9ESFNvZ1Z0QnE4WWlVTWpaSFJ4SlBzSXN4ZXJKVUhyYkdNMVdhSmhO?=
- =?utf-8?B?M0xpOWF4aGNYNHJHOTIwT1QyV05GQnJnNGpjbnB0N2tBY1U3a3pPYnZsZnRZ?=
- =?utf-8?B?UkVlWnBqRUhXbTcwU3RWRE9uVGl2ZnRRczgwTDZFQXYxa3ExQ09hTU9URldU?=
- =?utf-8?B?cjY5ajYrVFRPUGgyMFlld3hoREhuYU5sYU1Ud2thMHBXRUJsQnFqeWJiSlp6?=
- =?utf-8?B?Y1BpWVovenJwbVh5MjNoM1ZOamRXMkorVlFTaVdNc2NNMWhIZ3RzQ0cyU1VH?=
- =?utf-8?B?TzBVRno3Vm4xeFNDTVV4YlFCbzJtMTR0QXFuSE1tWnZ0K0d1UFh5MW9hUEhL?=
- =?utf-8?B?SFI4Yzh3a01sY0M1UFc1ZWFISWpKblFlRlBsdUNhNXNSRWU5dS9rL0F1QUlS?=
- =?utf-8?B?L21nM0x4M29ZcUw0VE9KTThTVVYyMTRNZGFDK3ZQY2pyMEo0dFU4SkVXUy8z?=
- =?utf-8?B?U1UvOUtyUktQVGM4cUNMbE9LRVdBOFFNeWFGdDZJOWpXWFNyYllVZFRIdmdo?=
- =?utf-8?B?a1A0ejdEcVVIRXZ4MlNsM0d6b0xyZ0sxNlA0Y0kxeEZQcmhvT1g4MGhnM2h3?=
- =?utf-8?B?R0Rhd0NqZWhGSUREWXdrZVFid0ZUMWd4VHRKNXl5MzhwdHF2elBDVUN5Nm4v?=
- =?utf-8?B?K2ZjMGtIb1dLbnhra3c0eDRTeWNBVUJjZWJna2JBNzdyLzFzZFd3SHhHbU5a?=
- =?utf-8?B?bmgwTjduWlVXSHRqdEpMaHFOaFpwRWVyTEFFa1hPKzZBZGtpRzNEeDVCb3Vu?=
- =?utf-8?B?N2Q2VWVNcHZtaGRmTjVIVjBZSTQ4REpjeWQyYkpRU3FKWDF0LzNyc0JvTnVm?=
- =?utf-8?B?TzBFTy8zWVlMeFozbHF2ZXB2SEE2MC9TbmVzZVJvcUQvQzBNOURWOVNWdnE3?=
- =?utf-8?B?Mk1FV1I5dzRnb0ZqZVpnU0d4WmMrR0plTUpJellJaTM2MG1GaXpQQlN6SmlY?=
- =?utf-8?B?QUQrSjY0TWE4Z1h0WFdMV3I3TlVLcHhpNGNONFVVbWRKam1LUEdOZnFBUWVS?=
- =?utf-8?B?eUNGWmc5aXY4NExKM1dGUTA0NW1wYXUwelhweE53c04vZVlrS1loK0lTVXlC?=
- =?utf-8?B?YzFNWXRVR2tNSDVmOEdWeTZ1UlR1K1V0VU9aZ0kxNWdzNU5JR0Q4NXZ2a3Iy?=
- =?utf-8?B?TW1YdDBZWHN6SGJ5MUpyV2JYZlRJNkJQZUlDbmNML1hRMzNkL1ltdkJDTE84?=
- =?utf-8?B?NndwdDZrdTh2OW13Z1k5U3h2N1VIeEh1SWFYbklqL2dkTlFPMDQ1MURwSFI3?=
- =?utf-8?B?bnFiZGZpNTFuWE1kRExRbVVVbkVHS25iZUxXZ3Y4UlNML2hMVXVUcWRkRkhR?=
- =?utf-8?B?dEM2aEV2QmRPUDNING5uWFgzSVFud2Y4OGxJTFNDS1U3UTBZMHFNelBKUGNE?=
- =?utf-8?B?WTdoTXc3RjJrdWV6Y3BuZzNaMXFSTkgxam1kOXhHQVByQnNBMWNYR2lvbWQ1?=
- =?utf-8?B?cWNiK1VQTVJWWjVSSGpFUDJraThxWHg3OUgwcHVhVDl4R0NhSXlqM1BvM3B6?=
- =?utf-8?B?ZFJpV29SYVNxNk9SdmdiZlFFcC8wUHlNeW5pVXpsQStJc0VBTXRpWnMxY0VY?=
- =?utf-8?B?NERkQzJSdklsMldYMmJSZXN1UTdrQ2taT09RMk1WRnQ5VWQvd0I0WnA3eUhE?=
- =?utf-8?B?c012Vm1DdVFwd0xMOEtJNTkzNGppcFdTVXUxN29wRldPZisvcnlieXRkTWtG?=
- =?utf-8?B?Z2dKNFYrcTlWYTlNanJrU0YvRTFJdkg5Y2JoMDBKRjhhL2lrck1xd0djSE8y?=
- =?utf-8?B?QUs3SzhKVlB1RjN1aDFTN2RKamlrWmJXajVGelBMUlJkeGRCdG1NcWJ2d0hJ?=
- =?utf-8?Q?buSeLvRMDDpvHME4=3D?=
-X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 96a8e97a-3308-4189-3065-08df3daa9ac9
-X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 15:11:46.1657
+	KW8cyg4OXd3XvRjw7GqSnFRioDi2RYQrFuj3L3lullBzVM70HbIhrjay1DkGT7UlVwZpPcfcFnAgoXooS93/ZFngZv+VanIN2qU1i84VAgPxfPVAuLHzAoonFImjlTDRPj5FSVI1LqVv5snwguKRDDk2DC1CrVLlL6aoI2PHPX8V/X0isleHMTf9Xo+6TH2wyUc0AEtLgelfv+bvd5W8W2HPvgXwdE0TzqI3cClXXb3Qc2JsHNXB3W71FWOtUaGFMKYKPxFWZ1/iLBlWeCQhN90m30ZkzXYsoFcdUG//AO9l6mZkCtBlsoOQDR/9DwX0IimEdN0Vv7R0Sujejb6rU8OXdknQrCtgpqlJXl8EV7G8Dk4NE0TyoKsuDUn1Gw31xoF/QWEM1v8JRFWx7b6IT2D2Jt3DfQRqMbb3KisMwsEAMvdRjqyFh+Jmk54bgfu9
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 15:24:33.5655
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HTgpnFO+kFmcej6PzblYZwEb0hQEAjn8XhAM6bJ8p+mMGg37+Jgm8Hr93hOmzM0pufKE34FtPfrejTNMWa1hjCcEHH9hg5si4Hj9kp9yqw8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQ1PR01MB373984
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0b6b0c53-1248-4c97-da63-08df3dac645c
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF00022BD9.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7783
 
-On 2026-11-06 21:25, sashiko-bot@kernel.org wrote:
- > unchecked boosting_waiter() return and boost state
+On 04/11/2026 18:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] net/mlx5: missing internal error check before mlx5_cmd_fast_teardown_hca()
+> - [High] net/mlx5: forced health work recovers device when interface is already down
+> --
+> 
+> commit 2777ddd787832a64204ac170752c47964f6bf998
+> Author: Yishai Hadas <yishaih@nvidia.com>
+> 
+> net/mlx5: Add mlx5_trigger_health_work_force()
+> 
+> This commit adds mlx5_trigger_health_work_force() to queue a dedicated work
+> item that stops the health poller, runs fast HCA teardown, and forces the
+> device into MLX5_DEVICE_STATE_INTERNAL_ERROR before running health recovery,
+> even when the fatal health sensors report no error.
+> 
+>> diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+>> index aeeb136f5ebc7..d000ac335fa7a 100644
+>> --- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
+>> +++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+>> @@ -627,18 +627,11 @@ mlx5_fw_fatal_reporter_dump(struct devlink_health_reporter *reporter,
+>>   	return err;
+>>   }
+>>   
+>> -static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
+>> +static void mlx5_fw_fatal_reporter_err(struct mlx5_core_dev *dev, bool forced)
+>>   {
+>>   	struct mlx5_fw_reporter_ctx fw_reporter_ctx;
+>> -	struct mlx5_core_health *health;
+>> -	struct mlx5_core_dev *dev;
+>> -	struct devlink *devlink;
+>> -	struct mlx5_priv *priv;
+>> -
+>> -	health = container_of(work, struct mlx5_core_health, fatal_report_work);
+>> -	priv = container_of(health, struct mlx5_priv, health);
+>> -	dev = container_of(priv, struct mlx5_core_dev, priv);
+>> -	devlink = priv_to_devlink(dev);
+>> +	struct mlx5_core_health *health = &dev->priv.health;
+>> +	struct devlink *devlink = priv_to_devlink(dev);
+>>   
+>>   	mutex_lock(&dev->intf_state_mutex);
+>>   	if (test_bit(MLX5_DROP_HEALTH_WORK, &health->flags)) {
+>> @@ -646,8 +639,26 @@ static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
+>>   		mutex_unlock(&dev->intf_state_mutex);
+>>   		return;
+>>   	}
+>> +	/*
+>> +	 * The firmware might still be running, so stop it first. Do it under
+>> +	 * intf_state_mutex and only while UP, so the cmd interface is valid.
+>> +	 */
+>> +	if (forced && test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state)) {
+>> +		int err;
+>> +
+>> +		mlx5_stop_health_poll(dev, false);
+>> +		err = mlx5_cmd_fast_teardown_hca(dev);
+>> +		if (err)
+>> +			mlx5_core_err(dev, "Failed to stop the device before forcing the error state, err %d\n",
+>> +				      err);
+>> +	}
+> 
+> [Severity: High]
+> Should mlx5_fw_fatal_reporter_err() also verify that dev->state is not
+> already MLX5_DEVICE_STATE_INTERNAL_ERROR before calling
+> mlx5_cmd_fast_teardown_hca(dev), similar to mlx5_try_fast_unload()?
 
-Right. In v5 both cases wait until the owner runs at the waiter's
-priority, and fail if the waiter's wait did not time out.
+Yes, thanks. In v1 the forced work will do nothing once 
+mlx5_cmd_is_down() is true, which covers internal error, as the path
+that brought the cmd interface down owns the flush and the recovery.
 
-Thanks,
+> 
+> [Severity: High]
+> What happens in mlx5_fw_fatal_reporter_err() when forced is true, but
+> MLX5_INTERFACE_STATE_UP is already cleared?
+> 
+> During a non-remove unload such as mlx5_suspend(), mlx5_devlink_reload_down(),
+> or mlx5_pci_err_detected(), mlx5_unload_one_devl_locked() clears
+> MLX5_INTERFACE_STATE_UP and calls mlx5_function_teardown(dev, false) ->
+> mlx5_function_disable(dev, false) -> mlx5_stop_health_poll(dev, false),
+> which stops the timer without setting MLX5_DROP_HEALTH_WORK:
+> 
+> drivers/net/ethernet/mellanox/mlx5/core/main.c:mlx5_unload_one_devl_locked() {
+>      ...
+> 	clear_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state);
+> 	mlx5_unload(dev);
+> 	mlx5_function_teardown(dev, false);
+> out:
+> 	mutex_unlock(&dev->intf_state_mutex);
+> }
+> 
+> If mlx5_trigger_health_work_force() was queued just before the unload completed,
+> mlx5_fw_fatal_reporter_err(dev, true) sees MLX5_DROP_HEALTH_WORK == 0 and
+> MLX5_INTERFACE_STATE_UP == 0. It skips mlx5_cmd_fast_teardown_hca(), but still
+> calls enter_error_state(dev, true) and proceeds to devlink_health_report() /
+> mlx5_health_try_recover(), which will reset and reload a device that was
+> just suspended or unloaded (or tear down a device that just finished
+> devlink reload).
+> 
+> Should mlx5_fw_fatal_reporter_err() unlock dev->intf_state_mutex and return
+> early if !test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state) when forced
+> is true?
+>
 
-Mathieu
+Yes, v1 will do that. An unload clears UP only after it detached the 
+consumers, under intf_state_mutex, so once the forced work sees the 
+interface down there is nothing left to force.
 
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+Yishai
