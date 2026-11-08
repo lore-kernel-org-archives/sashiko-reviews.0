@@ -1,100 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794124136;
-	b=alcD9+DyGpTk1xNtZKJpbqA5AyEahy001rSFdeY/wHIrxGBvHGwp+rVWfhX5lzl16+b5
-	 HR4VPvi/Db7o0ueJ74tl2jwdPEKRIffUHA4Dw8jj4135CuuSAEkowl1phdGiiPqp8/dKc
-	 P0jltx9h7bkPid8Qkf+HSFnFWu0Nw1tIRr60FkFi+d1eRrcQLD2dbAs5IHAujJGJSrwmE
-	 UacWSHgoX0dU4yF95PXCeCcHPTKx0gvsBSqbaTxWLtCzXcTknNpILtPcYquEB0KtW8ZmH
-	 DH+XCsDAjB/s2BI1C2fvPAEUc6zZPtuFZiysHLBESw72HDEID6wmfxrdF+7EQTfH9eQ==
+	t=1794126089;
+	b=pMZ6xX/lioCSYO9jvts5uWSHbIp1AEYyAbcTrUGRBXpRDGEK7cbZFnxAMy8uomfJKlGQ
+	 wXEiaKcNDN1O6snwNq0jcfaCS0stIz42z6VYAIyZO9qKuQbdclRm7qzYfHDVtRJ4CxEtH
+	 DHuC+u0evou1NMh7RP7MRKG7IDFGDA7lM/ymt5tlvT6PDBvLodHu3MiAVwiLOtvixNLTw
+	 3+H3BJ39LsmlaKlkoDSN5QRDDbic9LtYwXELOFpyJz9oaQemei7WRRboBYamD2VDG3KKA
+	 4VXHpIhRlcsUvNLmZQ1kgmFv+ja7BOI9Z8K1VDBchHmKO/N6ymWxQtj/TPjq6Xn6MDA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794124136;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=q1Zvus5rC8hShMH7t8nxjox6t7ensKu+IzIvUVh4Gsw=;
-	b=inLmfrLifLqXPsJyw385QxCRWh9X08xzE9IyDaz6isZMPhXAuG6k7/CVMzIfcALhKyXt
-	 jhOdVwH49tA8ok8fmqlfQqkj9IVCs4Pbi1ul7QJ1GROQGDXDPiTLfY3YgOliVRumPshh0
-	 dxpqOwUAY9hwrQm00qB3tuC3ZaZdCYps2AvWfwvaaezT0ZkFXa3Mw6fs6tFskJmOJKwe4
-	 P0mlLN+v6m3iK8YOG+mKKic9fgHzKnodqbOAvuxbFlQjkggJKxqWEoJRcUJPtfg3LN4Mn
-	 QCdKJNHjqy7ydwX2MkGG6noPNkwmwleuJ4et6b/gLnWMEQxYLh5JSoN3W1xABGoIQKA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794126089;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Date:From:To:
+	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:X-Sent-From:X-URL:X-Accept-Language:
+	 X-Accept-Content-Type;
+	bh=Sh+EvXa7InZYFHvxyvqCT83wd1+QiDmmAkbvSna04x4=;
+	b=yNfON4Gls0RzxHhbQxMvz6AmHid2k6GOnOcISFDb4voFFTyLfIaPWgv6sWPjOuT3LYzk
+	 F6lVpD2Y13WAfgrtYa9nzHx6nKJQ7inOVkoi+UmjA/vFT/wsPq8Rk04wFDTfyf3Yqw4PI
+	 EN6sOjJortao2KiP+uPnZWGGbxEfaD/3ZrnsgB4e0lIbm4DfU4707Y4BPWoMp9o/xPm6r
+	 PnL263RsPiGfuYLzf9Nqmpyz0UBT4v4JjcxrvmQSh/MusfsWcgf8n+G5i0U2prcgzotEk
+	 LkIpEOsWZjJ/9LNlxmSEgR0yGytTsx/Bj93ClcgH1Ekr2jd5t28WYhddukqqeM/HZMA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sjv+GrbU;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.172
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=pengutronix.de;
+	spf=pass smtp.mailfrom=pengutronix.de;
+	dkim=pass header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=NulXcHZ9;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D6B606A320
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 07:48:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1D6B606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08251606A330
+	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 08:21:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08251606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sjv+GrbU
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-8871ada1a26so1187917b3.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 07 Nov 2026 23:48:55 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794124135; cv=none;
-        d=google.com; s=arc-20260327;
-        b=m5L05odqGqM9NJ2i/O0lx7xteJvxJAwoi0Vi3BXjOV08w0P/9XXSMowmfWjE0Loe3G
-         7cUVXDVErudMQavkg3KcgQ5oQPXkJi5oubHJZUxLbCNghIpnN1bK5CdWVs9suD1JP2Yx
-         z7hhDHYg6Dck9EXLEBbFOq0cGz5TTLYchwZ5hm/agWuyG+0pY2L2SfeYur0X/9ipp8ZP
-         ujkypZMUd6LLvY4okAKkmWj/tnaIulRA/CzLPCpvK5jFx+kdFZzaV3zfPa8kHLAUW+tH
-         xwbk+NJflhxNTQN4XhCTOVb4m+cdN2MRqRULNVTh8zoj6DTcEZzmPg+paisJQQJJr0UA
-         udXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=q1Zvus5rC8hShMH7t8nxjox6t7ensKu+IzIvUVh4Gsw=;
-        fh=1+k/ettMv+rtx+la5kjlBwDmBP5y++S6s+DDc67P+Ow=;
-        b=XxbIKg36QSl5QDPNwR1o2WHa+w9S+WonrqT4pIXcMXR7sWRVgVShdwg6WsS08o/Vq1
-         QgUp96PuhBNIdL67MyxdcMBsTanZdi+uXxgJM22LBXqF/9WTLQKYelLV9IaSRo+ogvHB
-         Fk1daGjeAPwH8ZRGcND0gSfC3EbTmOV6FYz5F7wMuqfGWLlPfvceNA7DTz4eWN19LgyP
-         emWhMychAQ/Un7HcL52ofx0D19tixbjEFsMsdAoFov3ezFCSHXEMd/hFI5jtoNGjNTe/
-         jLkhWa4Nvl7tkdeo4AtPVzkufnTemXxvjVxRuGp2xNMx17lXmjMoXq7OAkrO3vwJMP7v
-         mXOg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794124135; x=1794728935; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=q1Zvus5rC8hShMH7t8nxjox6t7ensKu+IzIvUVh4Gsw=;
-        b=sjv+GrbUTutx2xz3siTAZwjhzU71rvoViTJN68y2/plX1gI8By8v1CYWHEwYk74ccI
-         uWsv317vJluSjn9IyzbXlCJvKFdnor8U/hy8ZpM4xvoejTd4loUevIySOdtkz/EU72Jz
-         j7DjpVgfJAwFV+j8nYICBRs/v86lwCA48QtSwGBM0ZeYdAdEaOmuNP2yG/9gYDMD9ikk
-         reJje1jz9t7x1sLrw1u4I12miGdr2CbtIzObbf4a3TkB21aGIFkyrCOhj5ZEffPF54Gi
-         WzzqHLVoCYMnKKAMkmMmGY/76Bbpka0/T9NtnS/+TCw5UqzcIockqtIFffidm03J1N9F
-         rhpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794124135; x=1794728935;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=q1Zvus5rC8hShMH7t8nxjox6t7ensKu+IzIvUVh4Gsw=;
-        b=E5aVzOlwY8Z+SytaI4e4Zj2iWnJhTsSvEfWz1J1ZAQ5v+UBRbx3cRfvpbgQ2AO7Cuz
-         KSS4KSYSjS/ySwyvGn6ReqR2dnoQ9+HBgQ68UJfjHAMhdvk6/VqwHBxg0j4hdyIDoLsi
-         2FnoYkHQjbFHw+g6QOg2qLprCFth9QnVGMikniNnKlA9yrzh1VCvYjrJlSh/iPn5Mw33
-         FkVXvtpQQFDgkSnm0SB8IWSy5wtgM4rzqZ/Jl6LyqC7Hjf5DYo0F53tWS0Yx3IMJcOm/
-         XDK5EObzkbGdM3C0Mtb0v74DJD4Q6NOtcwmtaaD6P74RUhwVo8Me8f0yHgQzz9yuzMVG
-         hI1g==
-X-Gm-Message-State: APuU4Z8Fbirtg4NiRSUOyx7qbLydF30mxVIUeg01hN8RnSFKQaJJ7HAe
-	uck/VhRvWUbcB5+8LH8BZ5oU7U9nS0pKlRRwqK5CzzFnWh8w9SmrX6j2DAFEu5xB4S0sPdMIXHK
-	0QZrBrp4cXEtVJvh8r2ea869V+/mJ/5yGWJMa
-X-Gm-Gg: AYBFou36FoyWH/k7qBAORUFKjAB+jYYaOEVB95ECH1bo75ydvB1Q8uiJy6CJ/9PLH08
-	byexUoAvJcStdv34vzv3IwdWzS4shWSxHY+2aqbLiN33YEfnXmd6X7B6n+mupBoANNfxVBcF61V
-	1njSvKzT8hdKdvzklPmDD6Vn3bq2TG31R8mKlLfFD7W+cYQOuNdP5fkZic4oEWCpn3l47KS1fIV
-	p6D+dV3J7aaY8HQQaY3jSaWan+NHMsqNRKu296xgl6QbCPxWYCWIYzqJfpPZhmDmJZ6SuneaqX0
-	WB/QiUzRO0auNdEsbS52Dkso7urWAM7032Z+pdYEuw3OzmWX2VMSbTtspjAr845pELMX82hA9FX
-	jMQRcRaJm6LK6fGFIGX6vCJ2g9uR1VL4QuPltEm//i1iH4tZwOfX8/PuieEIUxqCwR0vstOwFR0
-	JE4sQZ3iipMSv1qj7AagYN+w8n
-X-Received: by 2002:a05:690c:388:b0:8b3:2b8:854 with SMTP id
- 00721157ae682-8b36caf6665mr5647857b3.89.1794124134911; Sat, 07 Nov 2026
- 23:48:54 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=NulXcHZ9
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id B8495200243;
+	Sun, 08 Nov 2026 09:21:18 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1794126078;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Sh+EvXa7InZYFHvxyvqCT83wd1+QiDmmAkbvSna04x4=;
+	b=NulXcHZ9vS8n9VZHOPLi+flPp7xe5E/Ztd3HVb/kFMfgsXDvzmSpayYsxrvEJxmqFzg5on
+	juwkNIGb/TjDxSR4cWkwpyCKFmk0W1cH9ENGuHRtsKN8BUxDStC/gpghaGU434fF27yybE
+	phMbpYV7SAhtSTJfT79MggvIylC0ArlPNlZ78PyvU3vhH+2k1iA1Kd05NZiiBf6ozC8IbP
+	I8EHhAZmVRk72+w8N4Xh4vZ3t/6EH7qSsFPh1fTfPM2UmZ2nUw+RpHpMGKOG7iJmuy3wLR
+	MXbSPhfivZiBijZrCFGuhEHBSvLhniZQfZao2IoDYmityVFpeCQJy+u9iE22PA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1794126078;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Sh+EvXa7InZYFHvxyvqCT83wd1+QiDmmAkbvSna04x4=;
+	b=BfvGNxC+kRt7TsFKfqNMRQYOpaUHmGYNQNWDOXdafQNwFdSotHLclmwKx/dtCB3/F2naqY
+	yVGKcn3pIxJdokC+VwZmLdvSShEwRe3WVFx5rQuIFZECIofsLoVj/Q3Nu423cS2SQvOy3f
+	QH3zuni7Or1aINSBULul77NKUkYzcoIJ3uj1Zn//0K7sonQfT7Rzr2+DKmS6h+9ik6HT5d
+	ipgOjckAGJoPtyeYCzmGaxeShh2lyfJz/Kn2fQsq6p4LhJQmCXJkbuOy1drbjmjGx1arsM
+	xZqt9wzjjwGY25MNmgqzSYvkzrmgmwDH3jv81hlSGLUXfRGVdx0whmCK5Ldrww==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=relay-from-drehscheibe.grey.stw.pengutronix.de smtp.mailfrom=ore@pengutronix.de
+ARC-Seal: i=1; s=20260414; d=pengutronix.de; t=1794126078; a=rsa-sha256;
+	cv=none;
+	b=W8UtQRkCywwhXPRFbNQI4tXy9nRM/cSpLyTUi0J+ukBBtHEvxIPmldxnlhY5ezj5iQXFzv
+	VLCPNXynYKL2ZmGH1qhTLSMViArW0NYPUUZ70UT/M5mRtB5Vsy1s3WQsH48mnslndwvBhS
+	F8zW+1PvG3b70bnOWDj7n0jVGlxLTX6dWbpUQH5g364ogCm/s9cqI8XPmSGNwm/dwVummU
+	8pP9y1b41FUYkkrWaqXGizanMU8ffRkWHoZ7JDMK2vKaBrt2E+5aFykhNDdMrnwpBjMGjO
+	fQmkdHX/sfTh75zeoMQ/D32H9cq5Dp2eMwo0Mdd8cZ3uGieNLToMjyzUhU0OOw==
+Received: from pty.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::c5])
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ore@pengutronix.de>)
+	id 1xPy9O-003AIo-2B;
+	Sun, 08 Nov 2026 09:21:18 +0100
+Received: from ore by pty.whiteo.stw.pengutronix.de with local (Exim 4.98.2)
+	(envelope-from <ore@pengutronix.de>)
+	id 1xPy9O-00000006JV6-2Pps;
+	Sun, 08 Nov 2026 09:21:18 +0100
+Date: Sun, 8 Nov 2026 09:21:18 +0100
+From: Oleksij Rempel <o.rempel@pengutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Oliver Hartkopp <socketcan@hartkopp.net>, linux-can@vger.kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vincent Mailhol <mailhol@kernel.org>
+Subject: Re: [PATCH 3/3] can: enable memcg accounting for user triggered
+ allocations
+Message-ID: <avAw_riXXY6rKC5i@pengutronix.de>
+References: <20261107-can-bcmlock-memcg-v1-0-482d9f5be1fd@hartkopp.net>
+ <20261107-can-bcmlock-memcg-v1-3-482d9f5be1fd@hartkopp.net>
+ <sashiko-outbox-202902@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,37 +101,29 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261108-b4-apple-mtp-keyboard-v5-0-e2c97b82669a@gmail.com>
- <20261108-b4-apple-mtp-keyboard-v5-7-e2c97b82669a@gmail.com> <sashiko-outbox-203632@kernel.org>
-In-Reply-To: <sashiko-outbox-203632@kernel.org>
-From: Michael Reeves <michael.reeves077@gmail.com>
-Date: Sun, 8 Nov 2026 18:48:44 +1100
-X-Gm-Features: AclHuK80jFNSV0poXYzL--QRjzmnK-TW4SRDsdRWfR9wTFf83IZv331kn811FJs
-Message-ID: <CANpmGNv2WHN_C+83FiNZHjKrdrPECCapDRuXL4Bn+0d=00pfLQ@mail.gmail.com>
-Subject: Re: [PATCH v5 7/8] arm64: dts: apple: Add MTP DockChannel HID nodes
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-input@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org, dmitry.torokhov@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-202902@kernel.org>
+X-Sent-From: Pengutronix Hildesheim
+X-URL: http://www.pengutronix.de/
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
 
-On Sun, Nov 8, 2026 at 6:40=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> Are the M3-family compatible strings in mtp_mbox and mtp_dart documented
-> in the binding schemas?
->
-> Running make dtbs_check fails because apple,t6030-asc-mailbox,
-> apple,t6031-asc-mailbox, and apple,t8122-asc-mailbox are not listed in
-> Documentation/devicetree/bindings/mailbox/apple,mailbox.yaml, and
-> apple,t6030-dart, apple,t6031-dart, and apple,t8122-dart are not listed i=
-n
-> Documentation/devicetree/bindings/iommu/apple,dart.yaml (the same applies
-> to t6031-die0.dtsi and t8122.dtsi below).
-As stated in cover, documentation for these was intentionally dropped from =
-v5,
-because it was picked up into apple-soc/dt-7.5, so will be included
-when this lands.
+On Sat, Nov 07, 2026 at 01:14:06PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [Medium] can: j1939: non-zero setsockopt return value in
+>   j1939_sk_setsockopt_flag() [1]
 
-Sorry, I should have made that more clear.
+Thx!
 
-Thanks,
-Michael
+Adding to my endless TODO, except some one will address it.
+
+Best Regards,
+Oleksij
+-- 
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
