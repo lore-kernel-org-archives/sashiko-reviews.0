@@ -1,100 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794146004;
-	b=N6ppBu2bAFcb1ouP3gcIDPAAbBvIQurYxUjd21rTiJSqVWZ+bD6G8x2NW6EvbZTiEawD
-	 vSUP08A+Z3GtiNOnb+iwKa0OiXqtnl7Vr3R326JdFUFmnY3ynba7/G8bdw1UJE6wqaQm/
-	 39+WbRzb1oDGPEYpVcmGjcjah64Xdbt3x0aUHr5V3H8JwSoXECe9gOvlpZqTCtX0Fur2R
-	 svXYmLBXF07TQ9Mnr1Anek0rXZk28uIhDov8+R/nn3O8mOcgmeqbuhY/HlXmzpxZ6r690
-	 q9NX0PJMquzl/oNhj3sQ5J0KxS1hRXEcSvBUrPySixjm7GlUvZYtKQlW+eT528HiFZw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794146004;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
-	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=IT0LsEBGJsz7Max2udcCJ0n3pnpA0TPZ0NmC91iMZ00=;
-	b=YU6rZ5ot7Tg1YGG/k/2fEzzCNn3WQML5nSA0RSWmagQivIEsXIb4O0IKXy+rxqHQSj4r
-	 cTPdiERh4yW4C3WDJ8PdhOC14zsLDzWEKwLk3i1UJkxq7+sJB/5qvtQ1bGLf7XCpBHl28
-	 +OmupVsTHsHiUqBtnfjSFoycF3VycSfce30RMYyGLrwn7BactPS9Cky+Kr+S7CobkItGx
-	 BPqVwtcdJfLVm842x3oz44vgBdWKc9YpWWmEKWNtGRK7AtHOCZoPnBPKV4TkS3M+LkPyP
-	 OevH0g7ggjg+LPrAS1W4Z8TH/f+bsYz/Qi1ImgU6BLqQ7YAQeNhDD7iiVSfHLriFbSw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=GR0RnZqu;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.44
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011044.outbound.protection.outlook.com [52.101.57.44])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.180
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794146962;
+	b=IiT/VShQ3o8fDkdRGgdgOh5+Pgex9zdFrHKc1DJMxhf0aMuOPDGqYT+KdoIaQ0O7L7su
+	 NPHxEcV19IIxQO2CtDfNCJwhZqC5WZOrqQonLUZWJvdPmpTx5D9kHYduh6UmI5WuzImbT
+	 qX7gNEYXtFGJ6vZoGmoaLT6K0uQnbQfjtc/uxYDQFunK4v9IaH2kauAG6OsxmTHiocSap
+	 BaOX46qmkzDfD9EfseEtWA+zJMUqZlSLuefK+S73UXJ0f4CJxrzIZSWsqg8jny6zQzgV8
+	 lT7H5tbbdDlG+12OnA+GwxEQtJtpppUo54SVs4VyC25jdu06RmyzCE/qjSSVWj3YIIg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794146962;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 In-Reply-To:References:Date:Message-ID:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=RC3g93Ua+9GSZsKYs8/u9wdNLwZ2Tw8mjMfWg5dLdcM=;
+	b=xDJMl0eRx5/9IOHA4OzR0eGzu2xMkWPHQ4t8EE0C9GUfVff1Hb4mPBHT1V7VSMbnUndl
+	 6p7StXNAduwq7Tten72aTOosryqe9o4mu8PK+Tru0CZVVAf2np8ZxIi1rs+V2lWunm2D9
+	 ID/4bUaMsuc7EGtfOwPQF0ZQWeKJxKPRsHSDLRtQymCMQCC2HqgThAP0Rn0nve1Kzqxs9
+	 ENQNlt6gjZXbLXEbD4xzJlmFGLGYBB0RI7T4BzY9iN8moTDeivCaRh7VhSxouNFg6lKcA
+	 po4oJiWMhMGprQ8LU8RqIn1SMJExf1UgabMDekpzULkkXRynPOXlwZezg4ImehFUaUQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="xx/rCGYc";
+	arc=none smtp.remote-ip=209.85.210.180
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFB3606A320
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 13:53:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5CFB3606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489CA606A32A
+	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 14:09:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 489CA606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=GR0RnZqu
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CNhE8BIV/NnGWlGfLuMOJ0OK+utVXUPBmRI1q19uMi/N6SQpv/xmSrEK89jJQ3PjAwpCTTDDo+HcQP5pAQsNvq3ogcgHdCoWH596F+kG/YL4T3sBItmA3GDGy4Fl57zhSoFn+6jQ6EI1Qp869FtZAexZZ/tnSNE6wl9pJmj4K4kesE/a/7i2DK7ofBNKMgiLKbkcWMTDVlZcqzTXg7k3Eig9zCTNkp5i4A3P7x0YWoYPUeVyQD4k64w2WTCgolSiwhkKcmilO7X5vYeS2bekSNSLQh1qJu4LR1vP5LGhNC7jAl4HP3VppaGnUuh7cfaa2JSKNzmCmzf7v7nSp8jlYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IT0LsEBGJsz7Max2udcCJ0n3pnpA0TPZ0NmC91iMZ00=;
- b=WVBx4lB5k/zJ1MTSAFgoInHNFvWXfM9sJBgSzpLbOEIRcfrRMVpUrPk2/oaxiRz9zgwqbEWkrZwJ9vHcrVnNUCdWsS/GOlgKuLXagR6/tCbRSMz0LBC/jVSl8XfraHAkGZlEjWlEfsywRfB2wJUVIGyaCIBzq8gXZuEjJWaC1oG+hVZttTyCesAVF8KEh42VFV7gnJmEiTE7+tMyC6K57e3xfLeTDO1wXBeBzip2xbGbBOWmuqWm9CN9hxeeNF10WAj8hCTu3tvQLFvVUjSXk1mBXoDFEj0nJAG/jVeo1feJgTu3kKv/y2UXpnl5Ht0yABnM7IGxOFrM6aCRBhv8Rw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IT0LsEBGJsz7Max2udcCJ0n3pnpA0TPZ0NmC91iMZ00=;
- b=GR0RnZquVAV+mvAfx/Ou7KaDh80jRHNEzNkTtj0H8k+KtGGf2kXCqHyKwCPuecqkIU/XVJ8lGkqwX/fx8ozRF6zSzS5161DzrrwO6+ZkmVatdgV8oL8T1gUdC6dPq0hms3p5glwSUV+KGbWuiQSH9xdg4ouhvgA4dhjsk1mab/dp0V98SmdWWqMEWQIlpaYmJQEfYtKfYULN4hW+do+tOxPx6H6N/Ui1sWrXbpBFHJ8XWi6E/wuKn/D7Nno++FfBKvV+pWKOCUioSUPj+nX731Uh3lmE8WdyfD8FK5eL5Sc20f+ddxusw+7DMT+ZhbtEFvD5gRcChauCfdMknVIaaw==
-Received: from DS1P220CA0018.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:44c::8) by
- CH3PR12MB7715.namprd12.prod.outlook.com (2603:10b6:610:151::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.12; Sun, 8 Nov
- 2026 13:53:18 +0000
-Received: from DM3PEPF000265C3.namprd03.prod.outlook.com
- (2603:10b6:8:44c:cafe::21) by DS1P220CA0018.outlook.office365.com
- (2603:10b6:8:44c::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.12 via Frontend Transport; Sun, 8
- Nov 2026 13:53:18 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.161) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DM3PEPF000265C3.mail.protection.outlook.com (10.167.23.184) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Sun, 8 Nov 2026 13:53:18 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
- 2026 05:53:04 -0800
-Received: from [10.125.206.9] (10.126.231.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
- 2026 05:53:03 -0800
-Message-ID: <201fed6a-e042-4a3a-a4b0-8d8b87183d4d@nvidia.com>
-Date: Sun, 8 Nov 2026 15:52:50 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xx/rCGYc
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8b77e464208so8884b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 06:09:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794146961; x=1794751761; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=RC3g93Ua+9GSZsKYs8/u9wdNLwZ2Tw8mjMfWg5dLdcM=;
+        b=xx/rCGYcu62nF584QzWFV+XBUdN5nUWKj8x6dz4io6mghm27EUjSCKaI+b094nvQa7
+         DHuVzeNkg33e3p3IxCTCoSeiEGoOdH+TNl/uC8tOtz2WhRihpaSODJt+gizp3lvNEnPo
+         63j07P1cgM+6S/kRSW09NQoxBvJyQXQ5gPRQmmLEU1N2X4LO3uTxLsD66XL6gSf+eg2w
+         iLFPY2O03hOdFtErMae8Q+O2OVAgZYd88nTXhT9+gRZrO/+K4Rwnwn5ZgQcZoeUjslm9
+         nfKo9mIl+uDNsUUsP2LCj+lLXaLzmvCe8qcjc5UUBOR8WwWAbrsvPGC/rJWyuPgULq+g
+         uI+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794146961; x=1794751761;
+        h=mime-version:content-transfer-encoding:content-type:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=RC3g93Ua+9GSZsKYs8/u9wdNLwZ2Tw8mjMfWg5dLdcM=;
+        b=EIcmnFF9c47gC7+GqMYKNQ5p2mN5mNwtn0+ntCxo9fXgTVQGMUli4KSz7E8T/qeKvS
+         GlwylLLk4beXpEoFc9uXNSbEOspPQlbEGzd2ir7IhgvLhVNSBEp5mxmiLFCg8yGGgvlx
+         OEIViqNLg4VLz3NqZXvUr39v4Fp37ee/bl7jhZS+srjyrK3hytSLy0PIJx7grqn9FEJF
+         acBKGYoWilyIK5q/xxTHfBJ75i9+fa6rYdpv11eyB6gS3aI++nnvb7uu7rByDRq4xKzg
+         uwjUkK/2ICBwf9nLkyXsm1SHOg9rwzI/Gy4Q0tUNxfe3pCvUUYmFirtd5nWQW/g/sMGt
+         JBSA==
+X-Gm-Message-State: APuU4Z8RvPE88DNTkGdcIaYVPP1LHvnH3l7vJNwxyu5IuSjGWi7sZYD/
+	dzomkI2iIczrCBmd5yFTw64WM3LjCHdslLuhubrljdC7M73Fl5Gu2cMtS/OOR2REuzJRqw==
+X-Gm-Gg: AYBFou2lxQQzxninlsJa5Y4u7HEGbb7zWYXeKq7pkmxK1p3Xz3UzPu7gTHdNGsaGMUV
+	MmvCwPK9CHEbefOZ5O9fU/OeE1hNUEAxmPubIaQ0F18jN5c+CoW/VV/VUCyqBxBhzxV3kKlORHZ
+	ySYOEnX0RyK6b67unO48HU+oUKlBf3N4KiRJdJ+ScVY+NSteTk3wJeEgMhmL8w5IXU8EPoW4uZy
+	cM+TVKDb8LJbB0gV9Q8/LMcXIFRTUSFFoGur6ivij3eSgipFY3j3GntUZt008Zw4Pz+Td9VTv4i
+	qCjd5PL72FY6t8ZPWc1qVURtq7ibDZr9KErn/e45564a7C7+N+wc9Ut2yjde7W2b2e6Ko2lRVQ9
+	TrnlOsQfhMTdxiNi195bqkHYqUSVhps+TEJoPQxyeBFalq6P8rSETucHipBW07sW5bXWPdBFQOK
+	nOFYbWfu7go1MxORy7NE5Sa7VUHZPVu9mM7kWRYWHm7Ouzcs/j9ZGpms1/z44RNEgRDWwD8BrCa
+	LJzh8n/mVjmO599qDhzbXWAoTLfaHtNciYAFtDTcv2S1+toEgp0x94lYnfCA6Fhr0Don+lRDZBl
+	2IAhCYQ2xQAluiGFsFCHO4ap2xodcfLe71VJjODRD1vjfHwe2njYP+eiis7y+f1MV7O1THdj9UA
+	NKfzEu6poCu9MCTkHGKrqQqRB
+X-Received: by 2002:a17:90b:1c8f:b0:3ab:be66:ddc5 with SMTP id 98e67ed59e1d1-3b12d4cfcdamr2132665a91.6.1794146961392;
+        Sun, 08 Nov 2026 06:09:21 -0800 (PST)
+Received: from fayedeMacBook-Air.local ([14.150.132.131])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1054a53e4sm6954683a91.0.2026.11.08.06.09.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Nov 2026 06:09:21 -0800 (PST)
+From: Qihang <q.h.hack.winter@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: virtualization@lists.linux.dev, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Eugenio Perez" <eperezma@redhat.com>
+Subject:
+ Re: [PATCH] fuse: virtio-fs: don't process completions of aborted requests
+In-Reply-To: <20261020135350.7751-1-q.h.hack.winter@gmail.com>
+References: <20261020135350.7751-1-q.h.hack.winter@gmail.com>
+Date: Sun, 08 Nov 2026 22:08:45 +0800
+Message-ID: <179414692575.30170.3327784588587339913@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,221 +100,126 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rdma-next 19/23] RDMA/mlx5: Clamp log_max_cq_sz shift in
- CQ size checks
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-rdma@vger.kernel.org>
-References: <20261103163949.1554-1-yishaih@nvidia.com>
- <20261103163949.1554-20-yishaih@nvidia.com>
- <sashiko-outbox-197672@kernel.org>
-Content-Language: en-US
-From: Yishai Hadas <yishaih@nvidia.com>
-In-Reply-To: <sashiko-outbox-197672@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PEPF000265C3:EE_|CH3PR12MB7715:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3b322c9b-cb8f-42a1-5d95-08df3d9fa4b8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|36860700016|23010399003|376014|22082099003|18002099003|10067099003|4143699003|11063799006|261028144727099003|261026121527099003|261022075727099003|261022105027099003|56012099006|261021135927099003|261026140227099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info:
-	6VPG5z+cWYoOtNFTNuRCIWi3rGuNnSf/Kbz3hf1S6x6M3AYZk8ffXBuM7R3C85tFvjLtKlYKFb17II0NVHrasprOWDPLF4XSs2lnBE8m4oz8Sy3mlCdxWDLLlHKm5PZ2o2wGffU3oai2/WP8ZQOw/POWDOZHw+pFf3lcb7Q+n/X80WRhq6FYnGO//gdSqPtJ5X4nAfoj/gEIDx4j3VIW4hrrTqPesl/ZEmHnVWDaJBWhV7KGU7tuW9VJ/6sT9IVXi2CZPfa0VXt4qIlxHrGDibRipjm5o0j0I4kUdIDC8C/64aTdWJGwnb4fTPtD2XEDYWA0RspQ6jb3ZJj+maIErZ2mBo28GDhkUHzcikl6GA9p09G2Eiz9QZ52Q2CQn2lz2cckTGZBQQwlKUZBpHoH7yA1ZjC0EbXquz2LmE/9R/YYJM8wpxOZ06YJ8f/gKg7ijvfPpkng8K5q4Fapnek+L9YpQEWEc288mVXi3WbL9aLFVGTV030xctXnHF9/YR6WxCZv2P+MXk4jLFOmqFZHpoMS5t4pHygsebRxJSUf15NCRdBfbl+IqpXSzkVEx+uuCRDMvmMMavKhPfwTmQxpWhw0ezva6/zAF8OJKTfXQ19LQF8wGi8ED8vVclQzxMDf1WMplaQQs3KfELMEcZdeEsZ45Vwz7Ggnf5i8YRauOWA9Z48saJ9SJoizTbVLTFDb5v8PjR2I+H5BOlHd1ZcnHw==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(36860700016)(23010399003)(376014)(22082099003)(18002099003)(10067099003)(4143699003)(11063799006)(261028144727099003)(261026121527099003)(261022075727099003)(261022105027099003)(56012099006)(261021135927099003)(261026140227099003)(261009223027099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	Mjg09pACecHl1P5xs99F2FlVb33cB5jstRRFQY4NfNYD8OvQKrCkePWk8PdpWgPAuHBTktEEKCLHbKg9ijmz6T9dWZe/RNqwP2crkUPlYw30ymhxO5U6IKNclhuaXCNFijL/RLVNte+jIOs5/yeOxuauI0Py5lm13A1AxmmaYF1jUJmhHsKmmnf3Q80fUvjQ8vBgkapSs9JKWIdLNM+wSvLySxuQOmHdjbN8/C9Ia12mgSR1AiPPPo+dOHplxh/VV5KxvTGUHDEESRFeHSa20cL7DJua4InIfN1sqz7onHd8jPef+a6YNcthmkVFmmQX+bpG+wNyZNWEhwmBvHlHJAXGyR98yBsSdi2dwZOKsQsUQBUt2Q6rWaXenDGd9d3v1jzNP1PgMvNl2WJ3t74kpulfFuODzBTW1oXY+vzPX8mD8ppwAiAQqMFgRMfvJ5BC
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 13:53:18.1132
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3b322c9b-cb8f-42a1-5d95-08df3d9fa4b8
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DM3PEPF000265C3.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7715
 
-On 04/11/2026 18:43, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] RDMA/mlx5: 32-bit entries * cqe_size overflow in CQ create and resize
-> --
-> 
-> commit 23d4d478ec288a1c091e2edf580c64eccf4e7c49
-> Author: Yishai Hadas <yishaih@nvidia.com>
-> 
-> RDMA/mlx5: Clamp log_max_cq_sz shift in CQ size checks
-> 
-> This commit replaces the 32-bit shift of log_max_cq_sz with
-> MLX5_CAP_GEN_LOGSZ_U64(), rounds up the requested CQ entry count using 64-bit
-> arithmetic, and rejects rounded-up entry counts above INT_MAX in the CQ create
-> and resize paths.
-> 
->> diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
->> index f955eb762051d..25344dfba1c12 100644
->> --- a/drivers/infiniband/hw/mlx5/cq.c
->> +++ b/drivers/infiniband/hw/mlx5/cq.c
->> @@ -1117,6 +1117,15 @@ static void notify_soft_wc_handler(struct work_struct *work)
->>   	cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
->>   }
->>   
->> +/*
->> + * Next power of 2 above entries. It can be 2^32, which doesn't fit the
->> + * unsigned long of roundup_pow_of_two() on 32-bit archs.
->> + */
->> +static u64 cq_roundup_entries(u64 entries)
->> +{
->> +	return 1ULL << fls64(entries);
->> +}
->> +
->>   int mlx5_ib_create_user_cq(struct ib_cq *ibcq,
->>   			   const struct ib_cq_init_attr *attr,
->>   			   struct uverbs_attr_bundle *attrs)
->> @@ -1124,7 +1133,7 @@ int mlx5_ib_create_user_cq(struct ib_cq *ibcq,
->>   	struct ib_udata *udata = &attrs->driver_udata;
->>   	struct ib_device *ibdev = ibcq->device;
->>   	struct mlx5_ib_create_cq_resp uresp = {};
->> -	int entries = attr->cqe;
->> +	u64 entries = attr->cqe;
->>   	int vector = attr->comp_vector;
->>   	struct mlx5_ib_dev *dev = to_mdev(ibdev);
->>   	struct mlx5_ib_cq *cq = to_mcq(ibcq);
->> @@ -1136,15 +1145,17 @@ int mlx5_ib_create_user_cq(struct ib_cq *ibcq,
->>   	int cqe_size;
->>   	int eqn;
->>   	int err;
->> +	u64 max_cq_entries = MLX5_CAP_GEN_LOGSZ_U64(dev->mdev, log_max_cq_sz);
->>   
->> -	if (attr->cqe > (1 << MLX5_CAP_GEN(dev->mdev, log_max_cq_sz)))
->> +	if (attr->cqe > max_cq_entries)
->>   		return -EINVAL;
->>   
->>   	if (check_cq_create_flags(attr->flags))
->>   		return -EOPNOTSUPP;
->>   
->> -	entries = roundup_pow_of_two(entries + 1);
->> -	if (entries > (1 << MLX5_CAP_GEN(dev->mdev, log_max_cq_sz)))
->> +	entries = cq_roundup_entries(entries);
->> +	/* cq->ibcq.cqe and create_cq_user() take an int */
->> +	if (entries > max_cq_entries || entries > INT_MAX)
->>   		return -EINVAL;
->>   
->>   	cq->ibcq.cqe = entries - 1;
->> @@ -1214,7 +1225,7 @@ int mlx5_ib_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
->>   		      struct uverbs_attr_bundle *attrs)
->>   {
->>   	struct ib_device *ibdev = ibcq->device;
->> -	int entries = attr->cqe;
->> +	u64 entries = attr->cqe;
->>   	int vector = attr->comp_vector;
->>   	struct mlx5_ib_dev *dev = to_mdev(ibdev);
->>   	struct mlx5_ib_cq *cq = to_mcq(ibcq);
->> @@ -1226,12 +1237,14 @@ int mlx5_ib_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
->>   	int cqe_size;
->>   	int eqn;
->>   	int err;
->> +	u64 max_cq_entries = MLX5_CAP_GEN_LOGSZ_U64(dev->mdev, log_max_cq_sz);
->>   
->> -	if (attr->cqe > (1 << MLX5_CAP_GEN(dev->mdev, log_max_cq_sz)))
->> +	if (attr->cqe > max_cq_entries)
->>   		return -EINVAL;
->>   
->> -	entries = roundup_pow_of_two(entries + 1);
->> -	if (entries > (1 << MLX5_CAP_GEN(dev->mdev, log_max_cq_sz)))
->> +	entries = cq_roundup_entries(entries);
->> +	/* cq->ibcq.cqe and create_cq_kernel() take an int */
->> +	if (entries > max_cq_entries || entries > INT_MAX)
->>   		return -EINVAL;
->>   
->>   	cq->ibcq.cqe = entries - 1;
->> @@ -1532,18 +1545,22 @@ int mlx5_ib_resize_cq(struct ib_cq *ibcq, unsigned int entries,
->>   	int inlen;
->>   	int cqe_size;
->>   	unsigned long flags;
->> +	u64 entries64 = entries;
->> +	u64 max_cq_entries = MLX5_CAP_GEN_LOGSZ_U64(dev->mdev, log_max_cq_sz);
->>   
->>   	if (!MLX5_CAP_GEN(dev->mdev, cq_resize)) {
->>   		pr_info("Firmware does not support resize CQ\n");
->>   		return -ENOSYS;
->>   	}
->>   
->> -	if (entries > (1 << MLX5_CAP_GEN(dev->mdev, log_max_cq_sz)))
->> +	if (entries64 > max_cq_entries)
->>   		return -EINVAL;
->>   
->> -	entries = roundup_pow_of_two(entries + 1);
->> -	if (entries > (1 << MLX5_CAP_GEN(dev->mdev, log_max_cq_sz)) + 1)
->> +	entries64 = cq_roundup_entries(entries64);
->> +	/* resize_user() and resize_kernel() take an int */
->> +	if (entries64 > max_cq_entries + 1 || entries64 > INT_MAX)
->>   		return -EINVAL;
->> +	entries = entries64;
-> 
-> [Severity: High]
-> When an untrusted NIC reports log_max_cq_sz >= 24, bounding the rounded-up
-> entry count only by INT_MAX allows power-of-two values of entries from 2^24
-> up to 2^30 to reach the downstream buffer size calculations. Can those 32-bit
-> multiplications by cqe_size still overflow?
-> 
-> In mlx5_ib_create_user_cq() -> create_cq_user(), entries (int) is multiplied
-> by ucmd.cqe_size (__u32, validated as 64 or 128) in 32-bit unsigned
-> arithmetic before widening to size_t:
-> 
-> drivers/infiniband/hw/mlx5/cq.c:create_cq_user() {
-> 	...
-> 	cq->buf.umem = ib_umem_get_cq_buf_or_va(&dev->ib_dev, attrs,
-> 						ucmd.buf_addr,
-> 						entries * ucmd.cqe_size,
-> 						IB_ACCESS_LOCAL_WRITE);
-> 	...
-> }
-> 
-> For entries in 2^25..2^30 with ucmd.cqe_size == 128 (or 2^26..2^30 with
-> ucmd.cqe_size == 64), entries * ucmd.cqe_size wraps to 0, which lets a
-> 1-page user buffer pass the min_size check in ib_umem_get_desc_check() while
-> programming log_cq_size = 25..30 in the CQ context.
-> 
-> Similarly, in mlx5_ib_create_cq() -> create_cq_kernel() ->
-> alloc_cq_frag_buf() and mlx5_ib_resize_cq() -> resize_kernel() ->
-> alloc_cq_frag_buf(), nent * cqe_size is evaluated as a signed 32-bit int and
-> passed as int size to mlx5_frag_buf_alloc_node():
-> 
-> drivers/infiniband/hw/mlx5/cq.c:alloc_cq_frag_buf() {
-> 	...
-> 	err = mlx5_frag_buf_alloc_node(dev->mdev,
-> 				       nent * cqe_size,
-> 				       frag_buf,
-> 				       dev->mdev->priv.numa_node);
-> 	...
-> }
-> 
-> For nent == 2^24 (with cqe_size == 128) or nent == 2^25 (with cqe_size == 64),
-> nent * cqe_size overflows to INT_MIN, and for nent >= 2^25 (cqe_size == 128)
-> or nent >= 2^26 (cqe_size == 64), it wraps to 0. When size is 0,
-> mlx5_frag_buf_alloc_node() sets frag_buf->frags = ZERO_SIZE_PTR and returns 0,
-> and init_cq_frag_buf() then dereferences ZERO_SIZE_PTR when iterating over
-> buf->nent:
-> 
-> drivers/infiniband/hw/mlx5/cq.c:init_cq_frag_buf() {
-> 	for (i = 0; i < buf->nent; i++) {
-> 		cqe = mlx5_frag_buf_get_wqe(&buf->fbc, i);
-> 		cqe64 = buf->cqe_size == 64 ? cqe : cqe + 64;
-> 		cqe64->op_own = MLX5_CQE_INVALID << 4;
-> 	}
-> }
-> 
-> Would it make sense to cap entries so that entries * cqe_size cannot overflow
-> int (or use check_mul_overflow() in create_cq_user() and alloc_cq_frag_buf())?
-> 
+Hi Sashiko,
 
-Yes, v1 will use check_mul_overflow() in both, with the real CQE size.
+Thanks for the review.  I did not extend that patch: tagging
+completions was the wrong layer, and it introduced the sticky-state
+problem you found in #2.  I replaced it with a v2 patch, which
+prevents the request from becoming device-visible in the first place:
 
-Yishai
+  [PATCH v2] fuse: virtio-fs: stop new requests before draining queues
+
+One new per-vq flag, fsvq->aborting, is set by
+virtio_fs_stop_new_requests() before the first drain in
+virtio_fs_conn_destroy().  It is set per queue, not with a global
+barrier, and that is enough: each queue is drained after its own flag
+is set, and for a request that reaches the device, admission,
+virtqueue_add_sgs() and the in_flight increment happen under the same
+fsvq->lock.  During teardown a request therefore has only two
+possible states:
+
+  1. it observes aborting under fsvq->lock and is rejected with
+     -ENOTCONN before virtqueue_add_sgs(); or
+  2. it passes admission, is added to the virtqueue and is covered by
+     in_flight - either incremented under the same lock on first
+     submission, or already counted when it was queued - so the
+     drain waits for it.
+
+There is no state observable by the drain in which the request is
+device-visible but not accounted for by in_flight.
+
+FUSE_DESTROY is the one request intentionally submitted after the
+first drain: it is the teardown request itself, issued with
+args.force, and fuse_simple_request() waits for its completion before
+fuse_chan_abort() is called, so its lifetime cannot overlap the
+abort.
+
+#1 (post-drain request -> DMA UAF; Sashiko's "in-flight at abort")
+
+I agree the normal entry points cannot reach fuse_chan_abort() with an
+in-flight request: virtio-fs has no userspace /dev/fuse fd, disables
+fusectl (no_control), and sets no_force_umount.  The only path is
+fuse_conn_destroy(), preceded by a drain.
+
+That drain only covers requests counted when it starts.  A request
+submitted after it returns is added to the virtqueue and counted, and
+is then freed by fuse_chan_abort() while the device still owns the
+descriptors:
+
+  CPU0 (umount)                    CPU1
+  drain returns (in_flight == 0)
+                                   enqueue_req()
+                                     virtqueue_add_sgs()
+                                     inc_in_flight_req() -> 1
+  fuse_conn_destroy()
+    fuse_send_destroy()
+    fuse_chan_abort()
+      ends and frees the request
+                                   device still DMA-writes into the
+                                   freed request and argbuf
+
+This is the reachable variant of #1, and what the patch closes.
+Unpatched, I could land the post-drain submission in the virtqueue
+and get a KASAN slab-use-after-free in
+virtio_fs_requests_done_work(), with umount hanging afterwards;
+patched, the same submission returns -ENOTCONN and umount completes.
+(Full dmesg is in the reproducer.)
+
+#2 (aborted never cleared, second mount's FUSE_INIT dropped)
+
+The v2 patch has no aborted/completion-suppression state.  aborting is
+reinitialized by virtio_fs_start_all_queues() on every mount, so it
+cannot leak into a subsequent mount.  I verified mount/read/umount
+across repeated remounts; FUSE_INIT completed normally.
+
+#3 (queued_reqs not handled by abort/drain)
+
+Requests on the dispatch queue are already accounted for by
+in_flight, so the drain covers them even though they have not reached
+the virtqueue.  If the dispatch worker retries after teardown starts,
+aborting makes virtio_fs_enqueue_req() return -ENOTCONN before
+virtqueue_add_sgs(); the retry passes in_flight=true, so it is not
+counted twice, and flush_work(dispatch_work) then waits for the
+worker to finish.
+
+Measured with a forced -ENOSPC so the request really takes the queued
+path:
+
+  in_flight seen=1 after 2 ms
+  VF_INV: q=requests.0 in_flight=0 queued=0 connected=1 aborting=1
+  injected STATFS returned -107
+  VF_INV: q=requests.0 in_flight=0 queued=0 connected=0 aborting=1
+
+#4 (argbuf leak on aborted requests)
+
+There is no skipped completion, so there is no new argbuf owner.
+Rejected requests free argbuf in the existing error path of
+virtio_fs_enqueue_req(), the same way the !connected path does, and
+the stock abort path is untouched.
+
+I also checked the two teardown interactions.  remove() only narrows
+admission: connected=false is set under fsvq->lock before the
+virtqueues are torn down, and enqueue_req() checks connected before
+dereferencing fsvq->vq, so it cannot race into a cleaned-up
+virtqueue.  For a new mount, sget_fc() keeps finding the extant
+superblock until SB_DEAD is set, and SB_DEAD is set after kill_sb()
+returns; conn_destroy() runs inside kill_sb(), so start_all_queues()
+cannot clear aborting during teardown.  Both were confirmed by
+running umount against unbind and against a concurrent mount.
+
+Tested with KASAN, prove-locking, DEBUG_LIST, DEBUG_SPINLOCK and
+DEBUG_MUTEXES: 23 mount/umount cycles with read/write load, the A/B
+above, and the queued/remove/mount window tests; no WARN or KASAN
+reports.  The tests used one normal request queue plus the
+high-priority queue (nvqs=2); the multi-queue loop is the same
+per-queue code but was not exercised.  The test kernels are
+instrumented (injected STATFS, widened teardown window), so their
+timings only show ordering.  A FUSE_DESTROY that is never answered
+still blocks umount; that is pre-existing.
+
+v2 also words the /dev/fuse point precisely: virtio-fs exposes no
+userspace fd at all, and no_control disables fusectl.
+
+Thanks,
+Qihang
