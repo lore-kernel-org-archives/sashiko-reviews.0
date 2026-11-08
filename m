@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.23
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.31
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794131261;
-	b=ftcBxR1xt6ig5FZuRldz7ELk4dvYxY/zGLjN6wkMTy/r/8uWksAXNItPfASD1jp7zNzq
-	 dlWWoldMH+Jkg7CiE+iT1zg1tXenLtTpZNvkP3e0fc7eZ4ATDvXd6c0zJsEg0Xj+kpg/T
-	 DFROuDhJR4CxdJ0kXpYCq7o7Gw6IRui88EFt0akMIOKkTsoUAIAniwsO/WNR8Q0Bp0SZX
-	 Q15OO2kRF0QIVwgHuSOCCldpSaTo97Kj0OSw7Rrcc8YL3thxV9H592T4CMeXefOSiVEai
-	 qiz0E0Hz1H7KUu5+WiaR0o10ywf0/rWlht+kwGa68/Za9U4U/a3/gSIuzN4aiVTwnCA==
+	t=1794135057;
+	b=rV+RZN4kBAF+P0a/TMAAO2i5Sosl3C1uryOz4hdKStMknRJsw44JIp3jwt/mYCHnXc76
+	 pQexw0HlGfv6SL4ES+JOywyZE5tJxfasNKkXlMiTUkcyiUQFJLCqDtQtnBAUnYxcGdwfB
+	 SDjca4AyIT11Csjqmx41HhrNbkPjzfiDxjO1HovO2VRI6IVeZY53FkZBmaGtLwsgtZfvW
+	 gOnBHG25BI99xOp9bxmvRONix81ZQAtNbkTxTbjJ9q10Cq36fcloECsTMvV9GC8PxTLpd
+	 fVyl6MhDzs141KId2dJMLJksK85pdu6/nR+2F3l4AW2pFfAglm4Zb70uGOvrBgzpjhw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794131261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794135057;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:
 	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
 	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
@@ -27,35 +27,35 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=B+IiL1a2uTzMLvWe2SOqpGm4N4uUNtzj27Hp/94S3AM=;
-	b=IJGzfvpwNRztnNLzU79FvaXQLqf6wethXSANIHIVyNk23xKz6O8+JqaU8u0/h5TJhwsH
-	 sbqf9naZ3D0gOXgleYSJFoQg8h8KumWQaNm52BmOeEdTU7d3BrWR73MiQFJdXgdwkySkK
-	 i5/HZ+e++/GsLirJieD5bc1hLvIjcEFYnW1DCuXIpTmAXiWEeKOAuHqgEDZYAHTGqtPpA
-	 E1H+O/0SaQs5kpAxhxj2PoVp8xu8sSNa34xROf0mk0e0rApqg+gu93sabGNYYi2M+Y416
-	 D63fnaQ8c8teRweKL/0bX2MuGLERH/jyIfSPxoWL0VtacUnXTFEe+vLAnqdA6d+7oiQ==
+	bh=578g5knDjIfkkutB2OCEVnPMxywy0GguUr698uS06xI=;
+	b=y2xRqNrmKzHC7d/rhAGSHtKwRjabEE4vLLwQfogHyw9sFiuBKjdrQ7bshq4lRGBzCk6v
+	 yWv6ucR1EycO8OJ/nFZf3UJIERR5k59vXZCoyFMakDNI1BywGUuqpDQUY3/l7dzU7yEP4
+	 PXcQDov0RjjYEEHFXYmjQ0XCWezhfEVyboxUaZuUruxioIcG2wy2Yt5PoSJSFndQ1Ihhk
+	 j/t0UJAQjmNDTTzOCjgXQvjHMCNZvJemBQn24qewoE2XsctV7EraK9IuvhIcQSouNTFFB
+	 Csz6Mn10LmBH5Amvfl7DFVpJqcEKmiVhE14nN947BHO3pYY4PAao1HZWDDFphbr223A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=uEZD3FW+;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.23
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013023.outbound.protection.outlook.com [40.93.201.23])
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=N3sZFZqs;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.31
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010031.outbound.protection.outlook.com [52.101.46.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B490606A31C
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 09:47:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B490606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709E3606A31C
+	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 10:50:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 709E3606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=uEZD3FW+
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=N3sZFZqs
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=buHik7Pds2RQ/zvPmnDKbpKcJe8TJWqqvLlm6zzEJ2KT9EIkQxiCpPITfdzX9GuDOBrPNPhEOoAuOgUOc64maKcC7cwz3uMs6qW4TLWN2mVb3a7JBsiX0zRdm2ejlkHRXzj1VOOlah5aTn7Yux5nMTOusHkIihMg9TkU9muQhrdPkFi5CPi1STQcGJhflWyPPPW0gKL6KlDt5jHsdJ30++optGlP2OeSIefouc13lbNppCoIf1kJGI0Vb6mNko8d20qcl501lCwsrJNwR2pY8FHPnJQJXXOpjPbap7GYMvktArUkOa4MXLe0bLUsNYBKVxPWqMVWfDrmRDwQEzEIUg==
+ b=xe9AfAXGdOPAii2fvHxIBfbl/SvOdTvOnhCGLN3Ugr9hr7u2haxEiTBIt2ZDBPb1icqIDL/LQ8HSXmBcbS8vGqWVVUcfdSrpzrAum6y+ti66K1NCP6vJ1ifY0UjRMF7xi15mtnSrVfXOadXBtETygalqoFaYwmSBX2rvrs6R5vxhERAKIYRWy1JCaWUQYhDjk4g9eeTLZb0Az1XY0D1CQt76zUryWPGNtgBN0zXdOIAnwt1Ht4xfc60Xp5nT8LNtwuQ0cspULIGgnVUr+JxkDJa0dMyEsAyqRjw5+QQ+8l7mx1TA36CMwh1r3Is03nf+huUtqzcs5eQEb6dyN1hvKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=B+IiL1a2uTzMLvWe2SOqpGm4N4uUNtzj27Hp/94S3AM=;
- b=t3Z++oK1V/Rk1zXRjMsOpUtDKHysPT5OQGpXbi+0P7Ej4/PFVVQA8rkaSwbBlLpph2GcE7CE8oqIy1dUZAXmaiUxuD7HJf6cKMoLArwPCbmP1h5m/zr76caCJL4gLS8HCaD0XuXHYhYn0JPDUdpQWXCko4OW7rIm2Z/P+/WPol+kE1I17zWEhUIwSlR3pYVUNLeHmD0ZhjoNw+JZWlNBvyJ3QNN4S7U92kCu6fNvzGUVLR+LDZiPlF+r7W9d3g88477vb/5wr9ZS2rJzsVB7zhAE/fujY1J7bOc5dnnQlWKuH2LOxRADLrvlCpknLblOrVjo46Y5I61nSGXjRzD/UQ==
+ bh=578g5knDjIfkkutB2OCEVnPMxywy0GguUr698uS06xI=;
+ b=Ltdk78azYmmEnqg/kR7XjfufwnJgjIWOiSAVNJOyBQQfNX0GYPf3QgzH093jwLz0rD9r/XVCBF+CtUsZV57LFmqen2309Z2w/4A7OezOILU4hMmTh20/SxDKpeqyztejC6PKwZxguEOj9FBweTanuCjo+08DQQU5b6VVaXRZxzqb/J8tmbl8MTN+SiZ7iMQ6zz0C0m/BISRP94gfmOJHwqqdyG+8Jr8lO8fKyrUaD/teNGvyKUema4MbbmZ0xzhbzUonPtlYdorZnyVr5Y+291MBtWXdPEyie+2IOjoyHgBwTxP1NejrVHTYlw3bL3Uob+IUJy2DrZUsVTfBjZ94bQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -63,18 +63,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B+IiL1a2uTzMLvWe2SOqpGm4N4uUNtzj27Hp/94S3AM=;
- b=uEZD3FW+Wh/wpqMDmjGVKb/qcdP5ZijVLgvFOMmMD9rqv0OSrh/LgOXt94aBz5pu3444BaJlNPFm/4z+zLUCLund1wAoQjvETSYa8tAWkZU87IVkijCXXdhdiHUNeUBVXuwJCZks3J8Wx9fSB3w0pv1UhF09WIVSSKOr80xXiogJE3y4fltPmi+YwtMtLEIEVCpamTqokTGJLwaUJRCzvxrFKHCVwdolA+JbJR2Gq4dpiialHPaHgN/MmiQcEuQG3ntBk1Jkuxe5SGxc1tkDyOqypl0CPIyKdh1ozEnvxJvEwqpNeacHvBnYK6dHQeXyOoQaK9GGlQlQjceQGqvx+A==
-Received: from BN9PR03CA0149.namprd03.prod.outlook.com (2603:10b6:408:fe::34)
- by SJ0PR12MB6941.namprd12.prod.outlook.com (2603:10b6:a03:448::10) with
+ bh=578g5knDjIfkkutB2OCEVnPMxywy0GguUr698uS06xI=;
+ b=N3sZFZqsoUJuNCWD8FVsti9pJcXKIVC3kCn4+4LSzqjUozaEQG2XrARpRDTWKiIbD4WbBTiqwlCgfEuce35yb/hlOokX1C33f5nnnAULZToS7mFbBAEJTqt1p6PU7OjuKmBoPPG2Wb6B5XGGAYZKMkCMFBV3rzVYPiKbmqOnjDm2YE7BSZRgGwOYJyCY/Y538fzBsAjQcVt5d0joXQXMqUVddIt7etPXeVBY1d/bulMl7qOkYCRTUBr+Te7m4Hf/7ImzO3uE2cxr6rwQk4FrQov7Z34BwgbL8cU/llfr15fTqcVTBm3rTHA9J00os0nc6v2TaGU8LdlxhlFizLhzCg==
+Received: from CH0P223CA0028.NAMP223.PROD.OUTLOOK.COM (2603:10b6:610:116::25)
+ by DM6PR12MB4138.namprd12.prod.outlook.com (2603:10b6:5:220::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.12; Sun, 8 Nov
- 2026 09:47:32 +0000
-Received: from BN1PEPF00018071.namprd04.prod.outlook.com
- (2603:10b6:408:fe:cafe::35) by BN9PR03CA0149.outlook.office365.com
- (2603:10b6:408:fe::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.9; Sun, 8 Nov 2026
+ 10:50:49 +0000
+Received: from CH1PEPF0005BD5D.namprd02.prod.outlook.com
+ (2603:10b6:610:116:cafe::c) by CH0P223CA0028.outlook.office365.com
+ (2603:10b6:610:116::25) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.11 via Frontend Transport; Sun, 8
- Nov 2026 09:47:32 +0000
+ Nov 2026 10:50:49 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 216.228.117.161) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
@@ -82,19 +82,19 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.161 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.161) by
- BN1PEPF00018071.mail.protection.outlook.com (10.167.245.199) with Microsoft
+ CH1PEPF0005BD5D.mail.protection.outlook.com (10.167.244.246) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Sun, 8 Nov 2026 09:47:32 +0000
+ 15.21.615.4 via Frontend Transport; Sun, 8 Nov 2026 10:50:49 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
  (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
- 2026 01:47:18 -0800
-Received: from [10.125.206.9] (10.126.231.37) by rnnvmail201.nvidia.com
+ 2026 02:50:37 -0800
+Received: from [10.125.206.9] (10.126.230.37) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
- 2026 01:47:17 -0800
-Message-ID: <14170676-7e59-4e21-ac45-0198251f6132@nvidia.com>
-Date: Sun, 8 Nov 2026 11:47:09 +0200
+ 2026 02:50:36 -0800
+Message-ID: <08f88e2d-0d88-42f5-8f82-8c76ee1f3597@nvidia.com>
+Date: Sun, 8 Nov 2026 12:50:28 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,174 +105,188 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rdma-next 13/23] RDMA/mlx5: Keep the UMR QP failed once a
- forged CQE is detected
+Subject: Re: [PATCH rdma-next 15/23] RDMA/core: Set the CQ comp_handler after
+ its poll context is set up
 To: <sashiko-reviews@lists.linux.dev>
 CC: <linux-rdma@vger.kernel.org>
 References: <20261103163949.1554-1-yishaih@nvidia.com>
- <20261103163949.1554-14-yishaih@nvidia.com>
- <sashiko-outbox-197666@kernel.org>
+ <20261103163949.1554-16-yishaih@nvidia.com>
+ <sashiko-outbox-197668@kernel.org>
 Content-Language: en-US
 From: Yishai Hadas <yishaih@nvidia.com>
-In-Reply-To: <sashiko-outbox-197666@kernel.org>
+In-Reply-To: <sashiko-outbox-197668@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00018071:EE_|SJ0PR12MB6941:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5dd5a940-6181-4952-45f7-08df3d7d4f87
+X-MS-TrafficTypeDiagnostic: CH1PEPF0005BD5D:EE_|DM6PR12MB4138:EE_
+X-MS-Office365-Filtering-Correlation-Id: dccc8390-eb6a-40bb-43a2-08df3d8626be
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|82310400026|36860700016|11063799006|4143699003|56012099006|261021135927099003|261022105027099003|261009223027099003|261026140227099003|261026121527099003|261028144727099003|10067099003|18002099003|22082099003|3023799007;
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|36860700016|82310400026|261021121427099003|261102123227099003|56012099006|261009221227099003|261026140227099003|261009223027099003|11063799006|4143699003|261022105027099003|261026121527099003|5023799004|261022075727099003|261028144727099003|22082099003|6133799003|18002099003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	JVIXb0JTPkDSrJmzZ02SqWWNQ+zLXNZm7Xkn4og7L2TLPek/5GZVLOA8XdpJD/EiYSeIB4QZRge3s3wL4hWnOxPr5r2BxftQbeT4CHYbAKidCcEhqtyQ8uQeULWmJpVdVFnby/XlFivY4bYTxxntAy1mrvycet0U+paBdJoOMj1AjKBKOSDgQFhC0r/4foi4YocYKI4Hs8BDFe29i+MSIwhYnh2wbWjSqyz+nD1RpzJ074UMU9egCFO3/5wGi2wFvQzOJqYmxsxTMIrH5Zfu1/uyZORGEJGoHU79jTllzjHGZOzxF8mSl7ECFrsWC2xdki9iJIyDOLi6Sg6K5nahEKQmrXJHmtsLfXKViqheLee91yMAeUdzJ67joBtrymmMfx1W4Ryg0IbnujE6DU6FBQbCX2SUzEry8C64W40thjzzYxSQCE4vTOch0GLSRNQM7nz3buS34DSvVU2upJaCQF+l6IXezfOoBTALG5AsFiFOkPxahoaF6oIy8LcBMGVNRlRi5UG7OIjcp5JvN6ZTLJz4p25xCahHS0FmKRDWdZcWttf24OSHe/2fuXHQ7Dy9JBWefu2dp0RVVn5s31a94GlrVYpn7kVR8QBnlx/DE2ksW+JFtb3X0eHrmEnudEaO4VCKSf/Okt5eDWer6yuPZ+1WmW4dlfLFHb4sNNKUEWUuZTOiFPfgjANDF3OlSADVtyyuz86RGqihEbD+gDd+8g==
+	764YzBuM4fDb8SgJRlfp+tfcKek3DNqZwG48NKp1/0R39GSte8HjzLAyp9wBrNA+rMwDO+l7IGui6pKbD2kMJPkNGCoiYCjecHriIputoEDl+YAn/cfv95vVjUDflnkR73BDcQpbPlH4b6+8AFzsW2qJuPbEhDxQ3WPsZcPyNsgrbEeWdGQPLVRobTWa5PM4RKflVFnOPxvY6bjLNeamFyvY5CmTU4SoxP9vaEk0FxN1ReJVPVdyrmesvXaSAjdBgH8BBLZycuO5uibTWKTWz90ScLo4NuDY1wAvZ7pTBY7yzcCjhzJKiTHh1xJDAaAoOZ64G8rSt/G3TWBZcsRNrxMITrgEvMSchbNpyzQF27VYsNsMJN5UiMOZ1LGKjSGnflEaYwF+hdMpWnsPn6wJYfHOUl1viRm0367O+KICYFUke6maKN6kPilAw5s/ibJzrV2kUn5LN0c+0IPp7fyAlICV6836W0XtXdn6SW5JPpg/uXjatZP8p+wqEHHgR3uB4I+CVAYsPHn7rVu169Z97pQsMYZzn25diM9yf8asv/5xWg6RqXdu6gv8jau3m22izSJD4dRfbGwukPJxvC4lvR1g1omGNrZI0xYbUHuG8diGqML3LXl74uzctGgCpQ2B6+tvtz4/gC0dKFGdpPZ6uDwcjCKJt8m5agC1ySnT6JsAx1v1u/g9Fkike3nknUh84eFxn+gOi8EnzRXizwfBkQ==
 X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(82310400026)(36860700016)(11063799006)(4143699003)(56012099006)(261021135927099003)(261022105027099003)(261009223027099003)(261026140227099003)(261026121527099003)(261028144727099003)(10067099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(36860700016)(82310400026)(261021121427099003)(261102123227099003)(56012099006)(261009221227099003)(261026140227099003)(261009223027099003)(11063799006)(4143699003)(261022105027099003)(261026121527099003)(5023799004)(261022075727099003)(261028144727099003)(22082099003)(6133799003)(18002099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	GJTxbGVpZAbeAQFN0Vfbp/AY9iJFeHzC/lBwwPlD8Vv6dV69gs0UNHbbDP4GVDqUv8IwAWKQ8OGXs0NohkUMdTL4gE/5plwydnLpyPSGrLhJ45QdyBRPDA6hyE8w57h1YK0MFjU849/cv+xPBH6DciMe1xT2L0npcvi5/v7aVmUoAHBtW+3lfe9EfWU4F3EkkE9RwyOPKZMykaIPcsHD3C6Smycq/eqUIWqtwj4uhzC0YYhjhT6Hcv79T77moICSLAmWFaUSee3Q5c5eyrnNSO3oMUgaeMLMjYFqQf69mlLKa5oSXLPAQCKMzi6uDjDLuXN+/xqf2rI+BwfDJgUhpwm0T68+NLvaHdGd30jIpARIbZtYyaJ6ZMepioWQ7DfdL67CSJKDsRMLEZN80ByjvXLh5Gq+jp4cYUphe/OHZ0KsXVLbXsCmkG+2/sgS9Tf5
+	uTutKafQCAHeQiJ0BKQDRAx/hSXmf51BRY6ptvDOT2+z+TTpkUp8GHrE68CIKhKDvBIHYh28yB17PP1i711DLCYIha/NiyEAG75/8Im6Ro44wGKJV7xuxiJT5vxxi9NZjB0G6d53KTQ6DQSKOotNa50mcTd5axitNehJ/8veXdY4jGd/a4URGWOkO/oV4nj3lA28X/oPM43ETzA++Hj7bmwemXgdamoWVBFkvjoZYLbDeB8Y9QVO8tJJ3aTmS7FJbTVnpMzuMjmK75C4qeqO07yilyNvXFTSDLIu9EYXinfAY/OD9gh872qDUHCWL85MbP1aym3bueG9oM+zsiP3tCve8GgHldE3xGgQ9aKOys20fcQhUMEA8FdkK8uG7FiwoqmIeuyqzyri/2OAR6vXnQVaB9Aw0RdoVNHQqAAHBxrf/tu/9zAFYfZp/9sNWJe7
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 09:47:32.2582
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 10:50:49.3423
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5dd5a940-6181-4952-45f7-08df3d7d4f87
+X-MS-Exchange-CrossTenant-Network-Message-Id: dccc8390-eb6a-40bb-43a2-08df3d8626be
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	BN1PEPF00018071.namprd04.prod.outlook.com
+	CH1PEPF0005BD5D.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6941
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4138
 
 On 04/11/2026 18:43, sashiko-bot@kernel.org wrote:
-> RDMA/mlx5: Keep the UMR QP failed once a forged CQE is detected
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] RDMA/core: comp_handler initialized after create_cq() in __ib_alloc_cq()
+> --
 > 
-> This commit updates mlx5r_umr_recover() to transition umrc->state using
-> cmpxchg() when mlx5_ib_adversarial_mode is enabled so that a concurrent
-> transition to MLX5_UMR_STATE_ERR by the CQ poller is not overwritten back to
-> MLX5_UMR_STATE_RECOVER or MLX5_UMR_STATE_ACTIVE.
+> commit 08ca16c59be95a85d42f773522716fafbd346f19
+> Author: Yishai Hadas <yishaih@nvidia.com>
 > 
->> diff --git a/drivers/infiniband/hw/mlx5/umr.c b/drivers/infiniband/hw/mlx5/umr.c
->> index b0f00d4bc93ca..086b397b830c6 100644
->> --- a/drivers/infiniband/hw/mlx5/umr.c
->> +++ b/drivers/infiniband/hw/mlx5/umr.c
->> @@ -335,6 +335,23 @@ static int mlx5r_umr_post_send(struct ib_qp *ibqp, u32 mkey,
->>   	return err;
->>   }
+> RDMA/core: Set the CQ comp_handler after its poll context is set up
+> 
+> This commit updates __ib_alloc_cq() to initialize the CQ poll context
+> (irq_poll, work_struct, and comp_wq) before setting cq->comp_handler and
+> arming the CQ via ib_req_notify_cq().
+> 
+>> diff --git a/drivers/infiniband/core/cq.c b/drivers/infiniband/core/cq.c
+>> index 12304c9a9403e..42e4d272f5ade 100644
+>> --- a/drivers/infiniband/core/cq.c
+>> +++ b/drivers/infiniband/core/cq.c
+>> @@ -217,6 +217,7 @@ struct ib_cq *__ib_alloc_cq(struct ib_device *dev, void *private, int nr_cqe,
+>>   		.cqe		= nr_cqe,
+>>   		.comp_vector	= comp_vector,
+>>   	};
+>> +	ib_comp_handler comp_handler;
+>>   	struct ib_cq *cq;
+>>   	int ret = -ENOMEM;
 >>   
->> +/*
->> + * Move the UMR state from @from to @to. In adversarial_mode ERR is a final
->> + * state: it can be set concurrently by the CQ poller, so the move is atomic
->> + * and does not replace it. Returns false if ERR was found, and true
->> + * otherwise. Outside adversarial_mode this is the plain store it always was.
->> + */
->> +static bool mlx5r_umr_move_state(struct umr_common *umrc, unsigned int from,
->> +				 unsigned int to)
->> +{
->> +	if (!mlx5_ib_adversarial_mode) {
->> +		umrc->state = to;
->> +		return true;
->> +	}
->> +
->> +	return cmpxchg(&umrc->state, from, to) != MLX5_UMR_STATE_ERR;
->> +}
->> +
->>   static int mlx5r_umr_recover(struct mlx5_ib_dev *dev, u32 mkey,
->>   			     struct mlx5r_umr_context *umr_context,
->>   			     struct mlx5r_umr_wqe *wqe, bool with_data)
->> @@ -353,7 +370,11 @@ static int mlx5r_umr_recover(struct mlx5_ib_dev *dev, u32 mkey,
->>   	if (umrc->state != MLX5_UMR_STATE_RECOVER) {
->>   		mlx5_ib_warn(dev, "UMR recovery encountered an unexpected state=%d\n",
->>   			     umrc->state);
->> -		umrc->state = MLX5_UMR_STATE_RECOVER;
->> +		if (!mlx5r_umr_move_state(umrc, MLX5_UMR_STATE_ACTIVE,
->> +					  MLX5_UMR_STATE_RECOVER)) {
->> +			mutex_unlock(&umrc->lock);
->> +			return -EFAULT;
->> +		}
+>> @@ -248,19 +249,16 @@ struct ib_cq *__ib_alloc_cq(struct ib_device *dev, void *private, int nr_cqe,
+>>   
+>>   	switch (cq->poll_ctx) {
+>>   	case IB_POLL_DIRECT:
+>> -		cq->comp_handler = ib_cq_completion_direct;
+>> +		comp_handler = ib_cq_completion_direct;
+>>   		break;
+>>   	case IB_POLL_SOFTIRQ:
+>> -		cq->comp_handler = ib_cq_completion_softirq;
+>> -
+>> +		comp_handler = ib_cq_completion_softirq;
+>>   		irq_poll_init(&cq->iop, IB_POLL_BUDGET_IRQ, ib_poll_handler);
+>> -		ib_req_notify_cq(cq, IB_CQ_NEXT_COMP);
+>>   		break;
+>>   	case IB_POLL_WORKQUEUE:
+>>   	case IB_POLL_UNBOUND_WORKQUEUE:
+>> -		cq->comp_handler = ib_cq_completion_workqueue;
+>> +		comp_handler = ib_cq_completion_workqueue;
+>>   		INIT_WORK(&cq->work, ib_cq_poll_work);
+>> -		ib_req_notify_cq(cq, IB_CQ_NEXT_COMP);
+>>   		cq->comp_wq = (cq->poll_ctx == IB_POLL_WORKQUEUE) ?
+>>   				ib_comp_wq : ib_comp_unbound_wq;
+>>   		break;
+>> @@ -269,6 +267,15 @@ struct ib_cq *__ib_alloc_cq(struct ib_device *dev, void *private, int nr_cqe,
+>>   		goto out_destroy_cq;
 >>   	}
->>   	mutex_unlock(&umrc->lock);
 >>   
->> @@ -387,7 +408,9 @@ static int mlx5r_umr_recover(struct mlx5_ib_dev *dev, u32 mkey,
->>   		goto err;
->>   	}
->>   
->> -	umrc->state = MLX5_UMR_STATE_ACTIVE;
->> +	if (!mlx5r_umr_move_state(umrc, MLX5_UMR_STATE_RECOVER,
->> +				  MLX5_UMR_STATE_ACTIVE))
->> +		return -EFAULT;
+>> +	/*
+>> +	 * The CQ is reachable from the completion interrupt once created. Set
+>> +	 * the handler only after the poll context it schedules is set up, and
+>> +	 * arm the CQ only after that.
+>> +	 */
+>> +	cq->comp_handler = comp_handler;
+> 
 > [Severity: High]
-> Can a hostile NIC still cause concurrent mlx5r_umr_recover() executions and
-> overwrite MLX5_UMR_STATE_ERR back to MLX5_UMR_STATE_ACTIVE?
+> Since __ib_alloc_cq() calls dev->ops.create_cq(cq, &cq_attr, NULL) before
+> initializing the poll context and setting cq->comp_handler, can a completion
+> interrupt arriving right after dev->ops.create_cq() registers the CQ in the
+> device EQ table race with this initialization?
 
-This is the same root cause as the patch 12 finding, and the coming v1 
-fix there closes it. The poller now accepts a non-flush error CQE only 
-in ACTIVE, moving to RECOVER with cmpxchg, and treats one in any other 
-state as forged: it sets ERR, stops the CQ and forces the health recovery.
+Not for a conforming device: an event is raised only for an armed CQ, 
+and the CQ is armed only after the poll context and the handler are set.
 
 > 
-> In mlx5_ib_adversarial_mode, up to 64 threads can concurrently post UMR WRs
-> in mlx5r_umr_post_send_wait() under umrc->sem, placing their contexts into
-> umrc->pending[]. If a hostile NIC returns valid-header MLX5_CQE_REQ_ERR
-> completions (matching qpn, sop == MLX5_OPCODE_UMR, and sequential wqe_ctr)
-> with a non-flush syndrome (such as MLX5_CQE_SYNDROME_LOCAL_QP_OP_ERR, where
-> wc->status != IB_WC_WR_FLUSH_ERR) for multiple in-flight WRs,
-> mlx5_ib_poll_one_umr() accepts each CQE and unconditionally writes
-> MLX5_UMR_STATE_RECOVER:
+> Unlike __ib_create_cq(), ib_uverbs_create_cq(), and
+> UVERBS_HANDLER(UVERBS_METHOD_CQ_CREATE), which set cq->comp_handler before
+> calling dev->ops.create_cq(), __ib_alloc_cq() calls dev->ops.create_cq() while
+> cq->comp_handler is still NULL:
 > 
-> drivers/infiniband/hw/mlx5/cq.c:mlx5_ib_poll_one_umr() {
+> drivers/infiniband/core/cq.c:__ib_alloc_cq() {
 > 	...
-> 	} else {
-> 		/* Copy the CQE, so its syndrome is read once */
-> 		err_cqe = *(struct mlx5_err_cqe *)cqe64;
-> 		mlx5_handle_error_cqe(dev, &err_cqe, wc);
-> 		/* As in the generic path, a real failure starts the recovery */
-> 		if (wc->status != IB_WC_WR_FLUSH_ERR)
-> 			umrc->state = MLX5_UMR_STATE_RECOVER;
-> 	}
+> 	ret = dev->ops.create_cq(cq, &cq_attr, NULL);
+> 	if (ret)
+> 		goto out_free_wc;
+> 
+> 	rdma_dim_init(cq);
+> 
+> 	switch (cq->poll_ctx) {
+> 	...
 > }
 > 
-> Multiple waiters in mlx5r_umr_post_send_wait() then wake up with
-> umr_context.status != IB_WC_WR_FLUSH_ERR and call mlx5r_umr_recover().
-> Because mlx5r_umr_recover() only holds umrc->lock across the initial state
-> check and treats umrc->state == MLX5_UMR_STATE_RECOVER as the normal entry
-> state without serializing recovery callers, multiple threads can run
-> mlx5r_umr_recover() at the same time.
+> At this commit, mlx5_ib_cq_comp() calls ibcq->comp_handler() without a NULL
+> check (until the subsequent commit "RDMA/mlx5: Ignore completion events for a
+> CQ without a handler" adds an if (ibcq->comp_handler) check in mlx5):
 > 
-> This appears to allow two problems:
+> drivers/infiniband/hw/mlx5/cq.c:mlx5_ib_cq_comp() {
+> 	struct ib_cq *ibcq = &to_mibcq(cq)->ibcq;
 > 
-> 1. If one recovery thread fails at the err label in mlx5r_umr_recover(), it
-> sets umrc->state = MLX5_UMR_STATE_ERR without stopping cq->poll_one:
-> 
-> drivers/infiniband/hw/mlx5/umr.c:mlx5r_umr_recover() {
-> 	...
-> err:
-> 	umrc->state = MLX5_UMR_STATE_ERR;
-> 	return err;
+> 	ibcq->comp_handler(ibcq, ibcq->cq_context);
 > }
 > 
-> When mlx5_ib_poll_one_umr() subsequently processes another non-flush error
-> CQE for an in-flight WR or barrier WR, its plain store overwrites
-> MLX5_UMR_STATE_ERR back to MLX5_UMR_STATE_RECOVER, allowing a concurrent
-> recovery thread's mlx5r_umr_move_state(umrc, MLX5_UMR_STATE_RECOVER,
-> MLX5_UMR_STATE_ACTIVE) call to succeed and reopen the UMR path to
-> MLX5_UMR_STATE_ACTIVE.
+> Other RDMA drivers (such as efa_process_comp_eqe() in
+> drivers/infiniband/hw/efa/efa_main.c, mlx4_ib_cq_comp(),
+> mthca_cq_completion(), and cxgb4) also unconditionally invoke
+> cq->ibcq.comp_handler() without a NULL check once the CQ is inserted into the
+> device CQ table during create_cq(), and cq->comp_handler is never set if the
+> default branch in switch (cq->poll_ctx) jumps to out_destroy_cq.
 
-The plain store is gone in v1, so the poller never writes over ERR and a 
-failed recovery stays failed.
+For a conforming device these drivers are fine: the first event comes 
+only after the arm, and the handler is set before it. A NULL handler can 
+be hit only by a device that raises events for an unarmed CQ. That
+matters only in adversarial mode, which only mlx5 supports, so the next 
+patch handles it in mlx5.
 
-> 2. When the first recovery thread's barrier WR completes and it calls
-> ib_modify_qp(umrc->qp, IB_QPS_RESET), __mlx5_ib_modify_qp() resets the QP
-> and zeroes qp->sq.head, qp->sq.tail, qp->sq.cur_post, and qp->sq.last_poll
-> while the second recovery thread's barrier WR is still queued in
-> umrc->pending and sleeping in wait_for_completion(&umr_context->done). Does
-> that desynchronize umrc->pending from qp->sq and leave the second thread
-> hung in wait_for_completion() while holding umrc->sem, since even the
-> internal-error software flush in sw_comp() walks from last_poll to head?
+> 
+> In addition, even in drivers that check if (ibcq->comp_handler) in their
+> completion interrupt handler (such as mlx5_ib_cq_comp() after the follow-up
+> commit and hns_roce_cq_completion()), the CQ is already reachable on other
+> CPUs while irq_poll_init(&cq->iop, ...), INIT_WORK(&cq->work, ...), and
+> cq->comp_wq are being initialized. Because cq->comp_handler = comp_handler is
+> a plain store without release ordering (and the interrupt handler reads
+> ibcq->comp_handler without acquire ordering), can compiler or CPU store
+> reordering on weakly ordered architectures allow an interrupt handler on
+> another CPU to observe a non-NULL cq->comp_handler before the stores to
+> cq->iop, cq->work, or cq->comp_wq are visible?
 
-Only the first non-flush error reaches a waiter, so a single recovery 
-runs at a time, and no other barrier WR can be pending when it resets the QP
+The arm orders them: ib_req_notify_cq() rings the doorbell with a wmb() 
+before the MMIO write (e.g. mlx5_cq_arm()), so a conforming device can't 
+raise the event before those stores are visible.
+
+> 
+> Now that ib_req_notify_cq() is called after the switch (cq->poll_ctx) block,
+> would it be safer to initialize the poll context (cq->iop, cq->work, and
+> cq->comp_wq) and set cq->comp_handler before calling dev->ops.create_cq(),
+> leaving only rdma_dim_init() and ib_req_notify_cq() after create_cq()
+> succeeds?
+> 
+
+For a conforming device both orders are the same, as no event comes 
+before the arm. For a device that raises an early event, a handler set
+before create_cq() would run during it: it would poll a CQ the driver
+has not finished setting up (e.g. mlx5 initializes cq->wc_list after
+the CQ is added to the EQ table), and if create_cq() then fails, the
+scheduled poll could run on a freed CQ. Keeping the handler NULL until 
+create_cq() returns lets the driver ignore such an event, as the next
+patch does for mlx5.
 
 Yishai
