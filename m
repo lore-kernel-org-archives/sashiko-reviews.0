@@ -1,72 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.39
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.27.42.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794160587;
-	b=uE4qQ+hyyX4Q/Wnp41XittSoWsDST79d3wKHrDq+ZGFtClq/U40Z1MRIU1SGkpEc8Ha3
-	 5brfLrnXv18sXlwql6el5a0Rr4dcTCW9Zmtbm7eiMpzhZMgf1gGyJjFjge7JoE7gvNoYg
-	 KYhD8zzGKFn10YmC015WiajBeKpgIhJGAVIQUnmSDWJqiWdaKD9YL7uHDLiiazWQ+Cogh
-	 PqMjCaQIfPpB5KVZ0yvUvVUxUA2HXSQ/9DRayhVU+NsSwSiTa5TuE+fx7vGx5mpObeNzt
-	 miF0k0BdIm+1EQs1PGCPf29C89gjb1wuyHxsQHqVNP25k5un8isrNY0QobpPTVMfWbg==
+	t=1794161451;
+	b=uK/+8fcWKMwX9DcN1JTlcdOQbjqP4LwLYH792zYApW0r0Fs5rxOSU4FCbxmyWZciIaeQ
+	 NPeuXNcDDQi+tEW+Gwo16CiX/vKtYE2+s2uVQRoXWg2SoR5/Lcpnq+H3bhJFyU6tt09Vp
+	 8BGCSclhPUnoD385jiEkgc0ZkWENKMhXelSR1msoYhkFyDXofGLydXwsAB6KjKEg1mZzw
+	 t4WJHdrYDGCkNgSfQxZDDas/lxRnE1DxM8upQkmGBHyDu9lp1NDRGLndduOP9Bck2GSYP
+	 3toO2XEXgYJ907yJgRTEP2wQEbrcoHVQU2KJqoa/6ZxcUqajdIMixni6eseghppjaag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794160587;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=E4ws0ipHUP39KmaqfV+8bszyUiNRG8BNvzIQTxXOAwA=;
-	b=t4lYa/v9oxMGG9PLAdcgPsSxJSPB1nUJBiOk7mBl0fb+u7ONxCdlHUTnMBjxp8K9dWkg
-	 Shn5Unsa+jlk50NmYUDk9vlNXH93vke91etyTVrL+b+vSuN5wflS04sRHbf5C49iaOW/Y
-	 bUlVapmxex59+msEu+6tK4jUE1h6feha0XhpjqNIX7tfEMeqKlQ2MKg8ZMEA0XFXG78Db
-	 D2s6NkBGoTMAro04hOTxCBxLD/XaRHegvu3ajoIAaf1FJ6pEMoYwolADV8XeoLodJBdYP
-	 p/8k8SjWxa1Ejrpg/CAGh0O6W2rkvqFUAMJ78KkRxhv5RV4ZrCDQUcc/ScBf1nxvJ6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794161451;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To;
+	bh=9kpeqjW6Rq5T6EuMnyBvBxaIaXXg4raX5/17KI7MqmE=;
+	b=CIkRZx4icMuiU+3v8DSwISjHEoQXqbyMnu+lvxxhDKRUbxGFtQoLWDp3ZSHftNiFub1M
+	 6PmTwfICzsH6SEykTcvJXEUGKhBNHQw78I9ovHFCWJuj1q0QHIaV0oDUOj648QDBkEX2p
+	 Svzhc11i80EmUGQUydZHDpuXg4UnEfqmRXx7SvnH0W4y2V0NnOLZogu4SfrPvDk5C/Zvs
+	 QODgfblQ1uRlCMkO2yGbJNTQc38b6putezZM/t5HQosTYPtXOsT3zTgeYqeHiceXNKYkz
+	 pc8xo4JL7WoD90O6TnO6Bx8SBZx/KJl23d0fDIAYVGkm2O0SP3ZNeLvKgIf63PfYJ7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=roeck-us.net;
-	spf=fail smtp.mailfrom=roeck-us.net;
-	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=kyG8tr04;
-	arc=none smtp.remote-ip=44.202.169.39
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=free.fr;
+	spf=pass smtp.mailfrom=free.fr;
+	dkim=pass header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=VUrGsfpx;
+	arc=none smtp.remote-ip=212.27.42.1
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39627606A321
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 17:56:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39627606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81677606A320;
+	Sun,  8 Nov 2026 18:10:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81677606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=kyG8tr04
-Received: from eig-obgw-5001b.ext.cloudfilter.net ([10.0.29.181])
-	by cmsmtp with ESMTPS
-	id Q5QCx1hQUOOJnQ77yxwiuq; Sun, 08 Nov 2026 17:56:26 +0000
-Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
-	by cmsmtp with ESMTPS
-	id Q77xx0xFrxmi7Q77xxexgf; Sun, 08 Nov 2026 17:56:26 +0000
-X-Authority-Analysis: v=2.4 cv=KuFN2XWN c=1 sm=1 tr=0 ts=6af0b7ca
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
- a=8b9GpE9nAAAA:8 a=ZdWTtX0RdJLCUevRbrYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=T3LWEMljR5ZiDmsYVIUa:22 a=KPbNTLLc3YvdawN95zVk:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=E4ws0ipHUP39KmaqfV+8bszyUiNRG8BNvzIQTxXOAwA=; b=kyG8tr04BsGk
-	9hIkCP5sZ5ifCDsJQeTdkRoVhaOyiQFY3GYePKlgAOWBDYVlqTtIqFydpU8e0xglfQLaCuUSxyCau
-	EVpFtU4hvji4ygWVximV7fEw1zorkO0rrmVui49F9BzbfemD86cjVVW5v7CDwwL1ZOxZZzgSihaw8
-	g1IR/ZbIRxrlXNyBVvwET9rS2VJw1XPMkUktsKY6Q0Jrj+9bd3R+N3NiZ7kcoPXeLp43ReV5xJMKW
-	SwB9vArOspLR5rPs1DW9QPpReeZqpxN7RivdldeJcBFKuN9jZhmiahCC6oBdHHdcwHNn78FLKbFD7
-	P6FlyJpzvP78wRKoyBT7Uw==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:52810)
-	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.100.1)
-	(envelope-from <linux@roeck-us.net>)
-	id 1xQ77x-00000002C9A-1fbi;
-	Sun, 08 Nov 2026 23:26:25 +0530
-Message-ID: <a6460db0-8df6-4427-9ecc-277f2f575d39@roeck-us.net>
-Date: Sun, 8 Nov 2026 09:56:24 -0800
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=VUrGsfpx
+Received: from L30177.local (unknown [IPv6:2a01:e0a:ac2:22b0:41ba:50da:6236:7eea])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 64BFDB0053D;
+	Sun,  8 Nov 2026 19:10:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1794161441;
+	bh=K2BtXWkziekFSvI6P/+ngyBc85GfadAb6SoVxmYMKR0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VUrGsfpxubS68UUI94ZjHtq6oxoURSYR2WEbuBDjXXS8selYUAOAAnFDreFv//djV
+	 TexaJ9Af2Bx+w6732lgKV0Vk7rfs4HLXdsEe9J3NN0a8BxuPgYrmuSbx4ocFtJKxW1
+	 sEH7xboATxifc6o4010ZHj6Xqrt0+ZcHpqY7gCx+uFk+8qecBEXuwGJqpy9rqiRbAx
+	 3g9XCltJrgSBCPhth1Dtt4iYV9w1SRAoAvPbTJeeYlgGvS5cRVCgW93zPpDR4ej9QQ
+	 /arTIReb2WgSzKrcEFg/Z8dLsvFOBOiEZe+tj0U2+l96IkfpANyX6gA13vCR6UgNoW
+	 QpeRRKAkAeGlw==
+Date: Sun, 8 Nov 2026 19:10:31 +0100
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
+	Frank.Li@kernel.org
+Subject: Re: [PATCH v3 5/5] arm64: dts: lx2160a: describe the pad muxes as
+ the DCFG RCW override
+Message-ID: <avC7Fz2UstYb5r24@L30177.local>
+References: <20261108-for-upstream-lx2160a-rcw-pinmux-v1-v3-5-5a0063f1da9e@free.fr>
+ <sashiko-outbox-203680@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,146 +67,22 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/13] watchdog: stm32_iwdg: detect whether the
- watchdog is running
-To: sashiko-reviews@lists.linux.dev,
- Antonio Borneo <antonio.borneo@foss.st.com>, devicetree@vger.kernel.org
-Cc: linux-watchdog@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261106163429.618392-1-antonio.borneo@foss.st.com>
- <20261106163429.618392-3-antonio.borneo@foss.st.com>
- <sashiko-outbox-201895@kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
- RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
- nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
- 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
- gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
- IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
- kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
- VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
- jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
- BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
- ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
- oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
- VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
- 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
- onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
- DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
- rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
- WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
- qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
- 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
- qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
- 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
- pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
- J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
- pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
- 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
- ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
- I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
- nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
- HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
- JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
- H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
- njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
- dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
- j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
- scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
- zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
- RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
- F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
- FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <sashiko-outbox-201895@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1xQ77x-00000002C9A-1fbi
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:52810
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 11
-X-Org: HG=direseller_whb_net_legacy;ORG=directi;
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfMHQnWDRXyoT+Q/aIR9nLFqleCaMHNXe+9LzzrTIPAfxa1Mv7koYIXX4XADHEZkKwtvCmTs/0gJD9JaBusO6LOf51xCZeADrMIfS53Xxx5hZryt+6oSC
- APiAY3jQSnACyCTPUT0LAQT3YPkkEdbWzcPWmBTR4rdTDBg0WbcBxiR364g79en1FGbfiuvob9gA3E6OgA+PmbYAdF42omGMnQ8AWgZMOH7dhXq104Px5L/7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-203680@kernel.org>
 
-On 11/6/26 09:05, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] watchdog: stm32_iwdg: unconfigured timeout in
->    stm32_iwdg_probe()
-> - [Medium] watchdog: stm32_iwdg: WDOG_HW_RUNNING gated on Kconfig in
->    stm32_iwdg_probe()
-> --
-> 
-> commit 7c2acc17f93336becc29a7a139de848c3db25624
-> Author: Clément Le Goffic <clement.legoffic@foss.st.com>
-> 
-> watchdog: stm32_iwdg: detect whether the watchdog is running
-> 
-> This commit adds stm32_iwdg_is_running() to detect whether the watchdog
-> was already started by an earlier boot stage and sets WDOG_HW_RUNNING in
-> stm32_iwdg_probe() only when it is running.
-> 
-> [Severity: High]
-> In drivers/watchdog/stm32_iwdg.c at line 394 in stm32_iwdg_probe(), does
-> removing the call to stm32_iwdg_start(wdd) leave the hardware prescaler
-> (IWDG_PR), reload value (IWDG_RLR), and early-wakeup interrupt
-> (IWDG_EWCR) registers out of sync with wdd->timeout and wdd->pretimeout?
-> 
-> When stm32_iwdg_is_running(wdt) returns true, stm32_iwdg_probe() now sets
-> WDOG_HW_RUNNING without programming wdd->timeout into the hardware or
-> reading the bootloader's configured timeout back into wdd->timeout.
-> Because stm32_iwdg_ops provides stm32_iwdg_ping() (line 162), which only
-> writes KR_KEY_RELOAD to IWDG_KR, the watchdog core's keepalive worker
-> schedules pings at half of wdd->timeout while reloading the bootloader's
-> counter value. If the bootloader configured a hardware timeout shorter
-> than wdd->timeout / 2, the watchdog expires and resets the system before
-> the next keepalive ping. Even after userspace opens /dev/watchdog,
-> watchdog_start() in drivers/watchdog/watchdog_dev.c (line 261) sees both
-> WDOG_HW_RUNNING and wdd->ops->ping set and calls __watchdog_ping(wdd)
-> instead of wdd->ops->start(wdd), leaving IWDG_PR, IWDG_RLR, and IWDG_EWCR
-> unconfigured.
-> 
-> [Severity: Medium]
-> In drivers/watchdog/stm32_iwdg.c at line 394 in stm32_iwdg_probe(),
-> should setting WDOG_HW_RUNNING be unconditional when
-> stm32_iwdg_is_running(wdt) is true, rather than gated on
-> IS_ENABLED(CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED)?
-> 
-> In drivers/watchdog/watchdog_dev.c at line 1099 in
-> watchdog_cdev_register(), the watchdog core checks watchdog_hw_running()
-> to pin the module and device references and to evaluate the runtime
-> watchdog.handle_boot_enabled parameter. Gating the check on
-> IS_ENABLED(CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED) in the driver prevents
-> the core from knowing the hardware is active when
-> CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED=n, breaking the
-> watchdog.handle_boot_enabled=1 kernel command-line override and skipping
-> the module/device reference pinning.
-> 
+Hi M. Bot,
 
-Sashiko has a point. CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED is supposed to be
-handled in the watchdog core, not in watchdog drivers, and it is supposed
-to be a default value that can be overwritten with a boot parameter.
+> [Severity: Low]
+> Since this fixes the pad mux clearing issue introduced by the
+> pinctrl-single description, should this include a Fixes: trailer?
+>
+>   Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
 
-Having said that, please let me know if this is intentional. If so,
-I'll apply the patch anyway.
+No, it is on purpose.
+
+This patch is not standalone: it needs the binding, the fsl-guts
+override and the pad-mux driver of 1 to 4. 
 
 Thanks,
-Guenter
-
+  Vincent
