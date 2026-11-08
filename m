@@ -1,84 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.5
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.132
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794130133;
-	b=v9jRF8uuU4ztGPMYAmOmLCUPb9zmym7b0OVMDE5GULMbrWVybUxFaYs3x4V6HcBYb/E7
-	 iMjt2GHPXsE7IWzpXeEbE2gYIjFNCfMGYhQ9J8ECmHGWAgaI5UlaZr+wbY65ADaKdyNRv
-	 Gu/63sBdv2RwFV7WQ5DDPPWydEroEQJIfE38K0NmeF/bVWmNdoIof2RmO7AV4owm0uDpZ
-	 8r+aMtwIhYjzVu8AvDy7vG7w/ozRnFWMnBdhwymijkgKC7jV8r44jtmNHkRtFwx7z0+n0
-	 OUMCIGqpadHj9o5p/z1GRXB1S5x6RnXJVD83xSrsdv8MBsm/p/9GHTzCjGDFqPDrQYg==
+	t=1794130428;
+	b=zr9jFbcRHzj1xD3Wy+We/rzIx8/XKRC3cEMNO/+uuMohhVh0MVRNDo7WZhb/g7xmOt6E
+	 yKx/zuJoWuxwj5xAH+z2Kj7hzsGcSvaX6kyHAGCzvGt8oTGyDFYR/8Oqe7SP4zr40rWo5
+	 w/LOZDFOQ6aEglWyGMOxhBQ7IBfnmkObgwkHJIWnHd1ILJdmxsKrtt0iV9r7h1oh/zgAi
+	 +Fuiogtz1LcuCuLTVj8+Z45qBmOBmBgb0FiQHzndKvg2/WcZP8b85my1a43DeAaBHPfha
+	 y6uZIVVlpGptj+985KO7dW6GaUUXngO2XE7B4nxKFSD1Yh8wQFDBwCd2uKaQLydQuWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794130133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794130428;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Subject:From:Date:Message-Id:
-	 To:Cc:In-Reply-To:References:X-Mailer;
-	bh=SHRuDocsQ82mahFLnJgxxsiffMzQsz1Feg2GezQdVrA=;
-	b=2UR61eRD3E8TjJcGDOzHGdYkVtV82hIFudrwQQkgv04FgjLpAUA6OabbQUBwfw55dKx9
-	 jDelCwjQKnVYWcOsHSShbRzKY03Z4j7dfXlyieG7PYwA2i7dimfAjbFtoyD9H/u8wYSj8
-	 HkoQbAc+nD4xRDgSoVg1NHUvkYpwVBOP4vcauKA3V8qV3NNgFeUdaD9YK0JBCgouQ8tKz
-	 PWzAOnqhHNzGCJgSAKsWlyk9CadYJTrjwAkXyJrDYtX9NOCb9+9OkOF8s+j/iYM27SZOJ
-	 uGAQAFUDc+fCPkUSqTesa044PODydBVhg2SIKjn5zM/J9rTTkMJOlVrnhr1NSNHjeRA==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=L1j8Lq8aH3eQS1NmaOYlRxmMWR7OBcOWfEbp3qYjkPs=;
+	b=e7hwkPl6QsNnr9whLJeKgfOq5+zOLguDVTfITb/7/QqPSr9vTwpd9tCMqpH9G5fmx3ti
+	 DP8Hrlyh90H6aQOMJeU/3zB7r9ETf/tc+ztrCSFWjlwFrZ9UM9+A0itM4f/KtWrHdPmBi
+	 8zY+8qjQNNCIaA0vezfgOAqu2jn+I550pMCEVCwr9YPXinZIO1j2bnEfjYbcqehr5FB11
+	 dsLEG84E6lenQISxwrn4cYOuk8Qt7a+OqrP2xJ6StiHPrBosdHx1cKk78G0XwvvAcLEIA
+	 joz/V0s4YXMvGflX2RU+LhSJSDU15MIsnn/gx5/ZvrHPCB24Pk+/42UHKDEjKir8bmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cfS64Y6e;
-	arc=none smtp.remote-ip=74.125.229.5
-Received: from mail-dy2-f5.google.com (mail-dy2-f5.google.com [74.125.229.5])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eQTpbQok;
+	arc=none smtp.remote-ip=74.125.227.132
+Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8412D606A31C
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 09:28:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8412D606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A257606A31C
+	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 09:33:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A257606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cfS64Y6e
-Received: by mail-dy2-f5.google.com with SMTP id 5a478bee46e88-36d73027aedso9320eec.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 01:28:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eQTpbQok
+Received: by mail-pj2-f4.google.com with SMTP id d9443c01a7336-2e96b8bfb43so1495955ad.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 01:33:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794130133; x=1794734933; darn=lists.linux.dev;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=SHRuDocsQ82mahFLnJgxxsiffMzQsz1Feg2GezQdVrA=;
-        b=cfS64Y6eQnzyB9073PfIlxIleoy8BlF8XEx6Sfu3aJLZuaZVEx8vCYv1Nz5RsFXFzb
-         BDnWcQvY11TVLVovniCzZOWUe9URnC34HhBfnTbegyDFtZGbe47TMJyi4A/nJSp4h6CE
-         ILWixj4HnZx+dW2DY0ynty2muwZ4SXTYKnD4RBVTTnPj9kbu8tVc2YbcmpQ6wTZIomLW
-         YOLteeElanwnLwwdCs4yDYG8WENqKYRTTBKDgQizC6c4pgGxofd5dsifHB/tf+aHXhNI
-         6zg+T8pZEV3bhQAxz4ZEEnAHxGjLN6OaGqR+N4L2UToKCRGXrGsSI3t5z6CdpRKK0osB
-         6gMg==
+        d=gmail.com; s=20260707; t=1794130427; x=1794735227; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=L1j8Lq8aH3eQS1NmaOYlRxmMWR7OBcOWfEbp3qYjkPs=;
+        b=eQTpbQokGJlwrsF+iyavvE7FRP7sA9ZiBaRrzGL4H6Rxp704BvCWnmAFQR91p/f4W8
+         hJv8I+7WEqrckQg10N4HwR9DZZcD4/3UkLROws7zHYIJEXjUnxoZpgaR9nuKQx0V35sq
+         OGf/xNxk3mcT/vAfjRtJ2y5WpluZY1zXeA1ZR2Frxfdj7SD5FzwQfxVEcfhq6BZgiSFE
+         r+apu3WYRNgEcNBa0NDT0z8i06u89UncJPPHwgfYdlm9++Zd/om/pguwilNjt5Lh50ca
+         GIBBhkxWmXbTb0iJeFi2zk8hh4Uu7C/8DYwhaFLuy1x6z6AI7gWES4k1hl1ZGUa0gmf/
+         fANA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794130133; x=1794734933;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SHRuDocsQ82mahFLnJgxxsiffMzQsz1Feg2GezQdVrA=;
-        b=lgSyP+TaU0Lb3BabcPURPlM1JAUyuHLh4NcD4tuH5J1h3y0ypV/+MLCDApC406d/9f
-         ux+RkaRd85I77VZmF6fCMhFJOGqjAHPRxKnLTlVs6dz+y5Zc4PPO8YsvimZLt3Tz9E85
-         21NdS16G23RmOMfUK6jCb+RlyKsEO5XPzjsoA1gjUPAjVdgPjUK6nYCn3Z9B3ZCGbyHU
-         w7Af7mV3Kr1oliEoj/ehbldNtw9LnJkTK8H3MXh3Fr3s0pUMcbT2YQ88mrG0uYnqSvEx
-         CyFl3S+N3N7U93NrneA7f1nDBlCwSRCGkNL23DJCUPWMO2FJyivAhMvOeeLMIUK/I9LK
-         y5Pg==
-X-Gm-Message-State: APuU4Z9xm9NWY/fFcSiPIBaxGSPKWzplNfHDZK9+A/7CtUy2CgeM+zZh
-	RwM80QO+kRO7tQcRLinNYBwkwbHD6iYtPEsyzV7FlpC0jNmWHdghoI8DHjrnWU0IPZl5WdVZ
-X-Gm-Gg: AYBFou0FzBjnSdnPECGPoiOjuIm82FxeBdvPHFUgKJYOSoyexpjjZj0NlqE9a3/MvaP
-	k5uf/MXuScOZm+/1QwH029fKvFCOgZ529TNhYz7KcLjL0vhUR3fR4LGEbYPQroubWPqOAGvhcQ4
-	eTK70NaXZJWMkh2XvUK0ZP2VlYszfnYepVRjUE+QrFQZBb7FkK9vaAxHCk6M7r8OiL20dHdNlK7
-	sdGaoQYH/Di6mHBOBKwvaSQs8jx2bNdbNUojrL+spzPiQjNxrnajPyxVhiIZ3YKAticS0iSfRu2
-	b7z9opZyvXG8JHxWkdN5Ogl7Flw/x6Mv+JYAPYrBgoJ5TtXtXR7Kg8oQOnMcv2w1jCy2CBOcN9e
-	Sj7zF0fd7ltdd1IG4IvEDGkzwsO1kZ23usK80B8C2N0MSPiTn6azmzNzIWC2XKw/4vPGeigkg5v
-	ZPICQ61ZK05NLK6KGIeLxTnDxjAum0dDzgQyzhOZztshwvfMmTs0W1SL9/jmtdrd5iuiNFzTO2V
-	y4grRgMBirXtUezNBhCl4Oe6mNNOGA1EKJmEfJffqVcI7JCwcquYCEfS+lU9ewtyj2QRe/arsat
-	hRJfujqqE+SYr1lWljzlrHo2QFI3zPXOm/GBHzRso7C51q6MNdEVR3YCBItGguxjJqAFUwpNZz7
-	R0tEK5Q==
-X-Received: by 2002:a05:7301:7004:b0:36c:9b35:5d46 with SMTP id 5a478bee46e88-372571d9ac9mr2446013eec.26.1794130132533;
-        Sun, 08 Nov 2026 01:28:52 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794130427; x=1794735227;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=L1j8Lq8aH3eQS1NmaOYlRxmMWR7OBcOWfEbp3qYjkPs=;
+        b=Ch8TKZ2gCmEp+kPv0srojI/8xQwZPxA/dYbOXSPSQZpSp8K11cQh+U8cVf05uh2iuC
+         DrZfnwlgcrBeQ1yu+FFEhqW2ntYb0Yvcn0/aP9c8m9hYp+EiCL7Oeiikwgkl3Bt7eIqE
+         7wZKBJzu2TdllSeeH5ICMVUdY6UV6pgqKGdgBgyxPshXGUkYqSenmFs/kRnmN31/BtqK
+         E/vEfLdv66YVV9bYgkUey6ZgUx1oqKsin3baW/h4/7Mmuwa7/nK7YoTaGzY313ggm93e
+         4BI12Mj2aXiib58Je7O16gUPVAylh7syIP1U45BxcmqzB1B1RQdd2PksnOU9foNzWhCk
+         wF/A==
+X-Forwarded-Encrypted: i=1; AL+hErEcApc/85fM62oOqKEUfPh83ofkVu7XgLHZx+1n3fHI3r2hixLS6OZSdb/+1HR4VMghv7qes8sDE+OH0UeVFxM=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8s1ZZ6tpFEe2moSRcc8v+x6+4iJHDcnjAKxgPBV2GGa/89qnZU
+	V2zxRkdcqKiFjz062f6Pqm1HvVvEPKgU00Jd8GzWlw34RHSwwAMXD+5e
+X-Gm-Gg: AYBFou0RMCoqvy8ql19J36fJZcNMH6uFHHXRMz/Hw8WapYX2qKMhw2UmBNRQ7XI1ByU
+	9BXWX8pEs+/JLu38Q5Vmoqc4aOJBBJ+oVNIqVMXLvMOIv8VCyPDTA16wCq0ZSBSg4ZoOdq0ETll
+	NKRAB2sXqEdJG5csBH9YeBZyy4fo+E526wFlQrzkuxW8IEJRdu2z9gmjH/jat6kCH/Ma5EbroZd
+	N1721M5I++NwBqqzn7YH3aqaHXxedY9lvY4P4Umq+qnJ5IJqrC5Qb+0te48wr5TDHpJ/lGtHJdX
+	1SdBamFO9yALJChI2PXAwpLER+ug7SE5QXclsmrSs0m4ua79AcO46Y/FmYfp1Dvt4sujU9X+Mwm
+	XIPJkHD0Rk7Yf02CvMGVCW4ZkJwQb4c1KwfhY22nJkl1Fo0K1wzEmPM/EuhNOk3q0bjrK+2Rn1i
+	QLduAahaZG85yzlllJmrCJFXQ6bZ/m4G4/PRtbyHILlz0HqvJEz+x/FS9TjuyE3lDy9lCQPXTF1
+	ofgHUis0zmc3NFW6NjE5ATTswoHzhw1+N7qcxkhiPw7uF5xLO3SowL7Qw/N5qSGux+mk8PMq80/
+	jN3knFnXKPO6owaWVZ23EwQgOfV/x96ljEyahPYFT68mExpaXIbEu0Yv8NuM
+X-Received: by 2002:a05:6a21:485:b0:3de:71c4:a228 with SMTP id adf61e73a8af0-3eed232050bmr1065043637.15.1794130426673;
+        Sun, 08 Nov 2026 01:33:46 -0800 (PST)
 Received: from [192.168.50.20] ([50.7.253.42])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-372667d78ebsm4250150eec.27.2026.11.08.01.28.45
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cdb969314a5sm558346a12.17.2026.11.08.01.33.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2026 01:28:52 -0800 (PST)
+        Sun, 08 Nov 2026 01:33:46 -0800 (PST)
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Sun, 08 Nov 2026 20:15:39 +1100
+Subject: [PATCH] drm/amdkfd: preserve the byte address when removing retry
+ faults
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -90,34 +93,125 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 1/2] drm/amdkfd: handle SVM interval notifier
- registration failures
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Sun, 08 Nov 2026 20:25:29 +1100
-Message-Id: <179412992976.2.9438818840890765075.b4-reply@b4>
-To: sashiko-reviews@lists.linux.dev
-Cc: David Airlie <airlied@gmail.com>, 
- Alex Deucher <alexander.deucher@amd.com>, amd-gfx@lists.freedesktop.org, 
- =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- dri-devel@lists.freedesktop.org, Felix Kuehling <Felix.Kuehling@amd.com>, 
- honghuan@amd.com, honglei1.huang@amd.com, linux-kernel@vger.kernel.org, 
- Philip Yang <Philip.Yang@amd.com>, psirt@amd.com, sashiko-bot@kernel.org, 
- Simona Vetter <simona@ffwll.ch>, Sunil Khatri <sunil.khatri@amd.com>
-In-Reply-To: <sashiko-outbox-203586@kernel.org>
-References: <20261108-kfd-svm-baseline-errors-20261107-v1-0-9ef4008019ab@gmail.com>
- <20261108-kfd-svm-baseline-errors-20261107-v1-1-9ef4008019ab@gmail.com>
- <sashiko-outbox-203586@kernel.org>
+Message-Id: <20261108-kfd-fault-filter-address-20261108-v1-1-ef13f9dd24e4@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/z2N3QrCMAxGX0VybWAtMn9eRbxI19RFZyfJNoSxd
+ 3dV2OX5+DhnBmMVNrjsZlCexKTPK7j9DpqW8p1R4srgK187V53wmSImGrsBk3QDK1KMyma4PQ6
+ pOtfJB0+OYPW8lZN8fo3r7c82hgc3QxGXRyBjDEq5actUEja9sMydZEZW7XUrHGFZvmGsM4y4A
+ AAA
+X-Change-ID: 20261108-kfd-fault-filter-address-20261108-4f096f2b2a1a
+To: Felix Kuehling <Felix.Kuehling@amd.com>, 
+ Alex Deucher <alexander.deucher@amd.com>, 
+ =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc: David Airlie <airlied@gmail.com>, amd-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, honghuan@amd.com, honglei1.huang@amd.com, 
+ linux-kernel@vger.kernel.org, 
+ Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>, 
+ Natalie Vock <nat@pixelcluster.dev>, Philip Yang <Philip.Yang@amd.com>, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>, 
+ Prike Liang <Prike.Liang@amd.com>, psirt@amd.com, sashiko-bot@kernel.org, 
+ sashiko-reviews@lists.linux.dev, Simona Vetter <simona@ffwll.ch>, 
+ Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>, 
+ Sunil Khatri <sunil.khatri@amd.com>, 
+ =?utf-8?q?Timur_Krist=C3=B3f?= <timur.kristof@gmail.com>
 X-Mailer: b4 0.16.0
 
-Hi Sashiko,
+svm_range_restore_pages() receives a CPU page number, but passes it
+unchanged to amdgpu_gmc_filter_faults_remove() when recovery is deferred
+or returns -EAGAIN. The software fault filter uses a byte address and
+PASID as its key, so this can leave the fault filtered until the entry
+ages out.
 
-On Sun, 08 Nov 2026 05:35:46 +0000 sashiko-bot@kernel.org wrote:
+Pass the original byte address to svm_range_restore_pages() and derive
+the CPU page number locally for range operations. Use the original
+address for both filter removals. This also preserves the GPU subpage
+offset when CPU pages are larger than the 4 KiB GPU page size.
 
-> This problem wasn't introduced by this patch, but does
-> svm_range_restore_pages() pass a page number instead of a byte address to
-> amdgpu_gmc_filter_faults_remove() [1]?
+Fixes: b3dc91f97317 ("drm/amdkfd: enable subsequent retry fault")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/sashiko-outbox-203586@kernel.org
+Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+---
+No testing on AMD hardware. Any test will be appreciated.
+---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c   | 7 ++++---
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.h   | 4 ++--
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-Yes, I'll fix this in a separate patch.
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index c41e9c0916b7..86ef849097fa 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -3092,7 +3092,7 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
+ 		drm_exec_fini(&exec);
+ 
+ 		if (!svm_range_restore_pages(adev, pasid, vmid,
+-					     node_id, addr >> PAGE_SHIFT, ts, write_fault))
++					     node_id, addr, ts, write_fault))
+ 			return true;
+ 
+ 		/* Re-acquire the VM lock, could be that the VM was freed in between. */
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 79455e23a030..c85d6bb73629 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -3130,8 +3130,9 @@ svm_fault_allowed(struct vm_area_struct *vma, bool write_fault)
+ int
+ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
+ 			uint32_t vmid, uint32_t node_id,
+-			uint64_t addr, uint64_t ts, bool write_fault)
++			uint64_t fault_addr, uint64_t ts, bool write_fault)
+ {
++	uint64_t addr = fault_addr >> PAGE_SHIFT;
+ 	unsigned long start, last, size;
+ 	struct mm_struct *mm = NULL;
+ 	struct svm_range_list *svms;
+@@ -3249,7 +3250,7 @@ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
+ 	mutex_lock(&prange->migrate_mutex);
+ 
+ 	if (svm_range_skip_recover(prange)) {
+-		amdgpu_gmc_filter_faults_remove(node->adev, addr, pasid);
++		amdgpu_gmc_filter_faults_remove(node->adev, fault_addr, pasid);
+ 		r = 0;
+ 		goto out_unlock_range;
+ 	}
+@@ -3353,7 +3354,7 @@ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
+ 
+ 	if (r == -EAGAIN) {
+ 		pr_debug("recover vm fault later\n");
+-		amdgpu_gmc_filter_faults_remove(node->adev, addr, pasid);
++		amdgpu_gmc_filter_faults_remove(node->adev, fault_addr, pasid);
+ 		r = 0;
+ 	}
+ 	return r;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.h b/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
+index c7d7adae4476..38744e716f74 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
+@@ -178,7 +178,7 @@ int svm_range_vram_node_new(struct kfd_node *node, struct svm_range *prange,
+ 			    bool clear);
+ void svm_range_vram_node_free(struct svm_range *prange);
+ int svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
+-			    uint32_t vmid, uint32_t node_id, uint64_t addr, uint64_t ts,
++			    uint32_t vmid, uint32_t node_id, uint64_t fault_addr, uint64_t ts,
+ 			    bool write_fault);
+ int svm_range_evict_svm_bo(struct amdgpu_bo *bo);
+ 
+@@ -230,7 +230,7 @@ static inline void svm_range_list_fini(struct kfd_process *p)
+ static inline int svm_range_restore_pages(struct amdgpu_device *adev,
+ 					  unsigned int pasid,
+ 					  uint32_t client_id, uint32_t node_id,
+-					  uint64_t addr, uint64_t ts, bool write_fault)
++					  uint64_t fault_addr, uint64_t ts, bool write_fault)
+ {
+ 	return -EFAULT;
+ }
 
-Thanks,
-Aveline Noir
+---
+base-commit: 403b3d68346d7ba25f474f0686ad1d05feb65b7c
+change-id: 20261108-kfd-fault-filter-address-20261108-4f096f2b2a1a
+
+Best regards,
+--  
+Aveline Noir <jm5905938@gmail.com>
+
