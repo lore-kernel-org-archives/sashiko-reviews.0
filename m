@@ -1,99 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.53
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794140812;
-	b=H0/0BC94WbSxFtOazD/adEZHXv+r3svdBVzJjENxQyjDaMexWPpbo2vXHW1FzzcxguXA
-	 qWwm1oV6pnRggK0c/8KoQoxT6sp0kWMU9/MsyzootMz6wyF/XBSuMItBM2wd+LkEZxT6Z
-	 vxDUPVHmgMnvHEXgyGjWTjD7sBus+pUHfw4/YSVQIJ+OjFZgdvHi1iiGm+J7pJbtxpx2m
-	 /YbxWoGPBSpYAZJAPkGVKog1tc1ewIz/IRuEITFZsxQo2bhZyfCKayUPHFB4wNnkp+KCZ
-	 a7zBMoR9lbg4z/29M/Xp9zNa4CS+6zlF4+gIJFaChO4ZnusvI2CLCCYcji+LNcKp1HQ==
+	t=1794142973;
+	b=OnSaaomXtfq1Q7nBN5bsrZTcb6wu9SvtsivIWCWqyzCp4v/wtiFLuRcAbrFfHMbGU5C6
+	 0mej8c5olx15dfAZIG4NA07Tl2PTW25ljxRFB4sFoAXY6GKgnilxm539htaQlsEVQTp8/
+	 lgGrKtl+OYTsYJbO6QGu0P/rHeRmaIoKKZQ72jvRPGkPfv9PzD9eBUfmkZRibraASFjF0
+	 s+ZAKX8yT2zPHM6FN6IyuCeGzi7VbGI0gW3MBjCAtvXl2XDq9gUU/XmVFVvsmc8KimWZT
+	 GPfly94fmytCCpgH+QeO9rojWhK47eifQZniNZJU0sl4viglgAGIFuPShvC31EVtYog==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794140812;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=QqwRM/SBzStrLxfx3VuXAqI5XajuTtTqpXOFdyv1pFg=;
-	b=3tX853emSbtbJEOczFHEwbw7Ke5zAMLuZU5iSBksSC4ol+tgn0ByCEK902AkTCWe1Rkr
-	 Jjt1NmUPycrvumAG36Fo5lT0eQOwk7EgvvcB5MpYOJCMnx0FsRAL0vcX/QKoL8T8OOmS8
-	 bFxam2e6Cu+/rU6KWJr2tangFZIa94+UU1fT72XNGLTDVWiZuYOV2MMUK8cMmkprUDF2M
-	 +thK4KZX8UGs9ispUo9EfeDiMNAkk5IDwKbcrLE+i8WlAEhg0XcDhBDZo2f/f2q8c2Uxt
-	 8PNgqpNWuhQHqFwIyrIO+sdvUncHRPhRO1638WJ186xI/zI+CWCHwUYs6p3gibmzUyQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794142973;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=cYVfRN5o4LHJ1cisQsX6Bkzlhbi8rAvSXb5KG4k82IA=;
+	b=csJFBr33jcqt+gTXnM/6u0JUMtUj4Cvp9LEgoRF/3UoJIsktv6FUdW9HBCZ14dISUizI
+	 4dS37VjJdz4b1SvPjmeuVLd6AXDbdYHwi/yS2IJMWsG9KFgb0fxgm7jTsuZtXsRt+aHLK
+	 YQbR7oQCoTbRo5loR7gU0vXD3KvPkFnbZJDzsL+UIHdz63yBd7qYOujW7rLH59d64Y6lw
+	 j/eyysUWFdpDPwd5F6K9OQhJPtXcrr9ULkNlrJmpN+ZnLBjL8zhlgkAOd9RpHgo8eu9dj
+	 jOzsqTbaxMI3ImwbtxH7s1WPff3dmfH8icPDdb74wPXg8v5xzDNMA3yQbIyHwDifNUg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lFqA7XjF;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.175
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b="S/EEdgf1";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.53
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012053.outbound.protection.outlook.com [52.101.43.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4E8606A31C
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 12:26:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A4E8606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D06606A321
+	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 13:02:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 46D06606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lFqA7XjF
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-3700ed8dbe3so196457eec.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 04:26:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794140811; cv=none;
-        d=google.com; s=arc-20260327;
-        b=EDmHqRHxQPER0c3u7JbyBb8cAIbM7cdVDEmn7I+d9kSvnrFv9orGrN2GP30qfONsEb
-         a6DfMxWRU4Bs+Onr7Yb7eIhuqPCnytyrz9JwLKe9vOVFbU28q4X/33WfyRaNvIPIhR8+
-         2kIiOJg+f8GcM4KnI21t/yKtLvAsnFmnpZrOiRuh0+oMvQwUur5Xmwmnx2OO4lCS08te
-         iAQqFd73oq8hi14JfkojfThl9CO+W/U6L19ioaS5a+jHPCXALTjj+Bq58ZVoxxG4DVjT
-         M+xME5+NBjb5V7GPYrw50RHnVEulzp5EmchsNBlVChl8aecmHXcV/Whys0imHChq5Ai/
-         rv8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=QqwRM/SBzStrLxfx3VuXAqI5XajuTtTqpXOFdyv1pFg=;
-        fh=/XafWwXInU6xSAMitUKTVJtcnn7zkW/jx5Qszu7SSug=;
-        b=nxLdE8jWGe1+FkV2My9SjdO1OdtVmuDyyilZlZnpraP8V+tLhCZqQaORcMDcEIg6fR
-         o5TUPcMkm8CXTsjD6ZRb02tCsp+O6RS94jU8pgEME0eWZis8sBjZ8YgYEkStGJfBLHxm
-         hnWr9JK/PzvgQwlFZftmBwTdrX4l9LihvNvpPzuqBVS6Ov35JJV3U1TtTt2CF87+1eXq
-         ID/yFtIvWfQJMKGZl/mPvHshTZOH5fqh/Z1gufaVCESPFuEYa4YNMdOH/P42hJ6or+Wd
-         VeG8JVitBLDTvfd4YvsovTjjUTPWOzW53oeqdWnRG4IoghXuo8YSWOBAaLcMpyLppABS
-         3PNg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794140811; x=1794745611; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=QqwRM/SBzStrLxfx3VuXAqI5XajuTtTqpXOFdyv1pFg=;
-        b=lFqA7XjFi1kKMHymKlzo8kahnbM90SkEmQ6unKpq4clqzAbZ7nJxaJv8JJ1poPKtIl
-         JCNQ/J6T9gKENjyr3fMYrluV8m1lBIWk7WdiIh39gnDhdX9rSNpiRG5TO8ptxuwZtvWE
-         a8jyUhjNEvt/TJ+zPYSLRftVKO2/5bC94MXaFlamZogZvuWQxRiR9/uVL3YCpo8JLeDs
-         Jo1KLryRiKeTK0nNXXPmclkqfeQWBwNHOqbMxQQOCpp0PypW5BWk+l2PmLPGAtLviPIQ
-         hzjnP0I5fuWaTvaGufN9xfGY73uMSw6CYCA4en7xN5Lv1AHUoZE1O6NNOWyP0WAKFo3m
-         VNtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794140811; x=1794745611;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QqwRM/SBzStrLxfx3VuXAqI5XajuTtTqpXOFdyv1pFg=;
-        b=KnV2/UYns5GEtMmUgWYjbmdVXbw9g0a1wzM9nHrtOLXS2e2v8sFvcSb1GgPz/kJIG8
-         aXTeMVWr+EepDbocJ+yYLMeDaLUirPEH87yzOWuaRLlxML/wM8RHhyf43kCj6cx/XOvh
-         iEfPk82t0VMCqCqLSf1ZNfVAOO/KUFdHG2OuzQSt25w7eGDHVUNLLpYClEQxeLXTl/He
-         9msZbl/NIacnwk/Ri9ny6fj/4xpA1dDYQ/6To/bFHw5uDSJV/DN3qmYi/qeAT6Kf2twQ
-         KUYFdkyV8f9UNIrismrIpv2d53qc0J2bkcAHKrmiJ1sNcYFDnWOKz/QZFE06GaRNMaDE
-         6RHA==
-X-Gm-Message-State: APuU4Z/uAQqoaImWF8WK9FN2+uSzKJQ0yeXtSkJqr2hzCA2ncPCUU/Gl
-	Bfvfnu/UV+pkXnhwH96kLG2YTjzyM56urSn+UaptDAN1pyqHpW1a7/RLEmVNXs0iwPysTdtOWhH
-	PYucN76nIaVvU4qN5eKq9/jl4yjZMIyqzwnZ9DAg=
-X-Gm-Gg: AYBFou13RRJJKFVAbCxedtc8DtfNDNw79lrBjMTJslC4PA2QfU7fTgzWFHBlIUz+DTU
-	h3UMxwkzAdphkHNSNrvXDQDmnFLQOBJHeEbS5buIlUvS4gITkOS+eegb/wcRTYbEfweSja2w6+1
-	UFvQJg2ptksfTIf7GLz2ACKcNE5GGT6CuGnHtqqeFgUDU0hOjsFW9TpMifAO1BUX5uRYrB8t0yf
-	tqMgsUQZ+WqMP1soaA/kO3Q03hhRdaap+YsIpi3ovTdzspS7yFW3CR8fxWzqHCspdKxTwALveTv
-	wjoLVR0JrHEQDRiW/oU5g3+RZ4MEmqcp1thKJT/yMc9c54folW3KyANiZe5GBKnigPLnRZv9+Tx
-	12Tn0rKCTojpjMpvMLxkR/Hr7VGUXwfbIIQ73OkdXlCAISN2o0oULWCu5xWpvHEldvWvf
-X-Received: by 2002:a05:7300:1c0b:b0:366:2893:7421 with SMTP id
- 5a478bee46e88-3725d77d5a3mr2667000eec.10.1794140811086; Sun, 08 Nov 2026
- 04:26:51 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=S/EEdgf1
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=An3OqkcR+uAgr15LzUeRduLsAfpNmwFJO4OmpHBrG2RNt9udPni2vXXjB/1msPr3CuH1+W8TjXRbBgQU9Sez4Yg5KDSok99Ub3hvdk23aj3NIutlFJhlOKO7/A4UtpFRDfB8yVO1NxAH/x2T88R4/m94bJy1iycPKCc+3cpCBHbFBzxoKaOuRmm4fvedeXIEHGzP+3V3xSe3+8rloS2rDLdzwUVFYUsNoaoSWTCxKZODNxFM5nDqHgk2oWXT1Dq98OBacFgq1BJeEIy0TDv1cZEOObHMsJEbRKgdx0EXAW1T2H4C2iieSUh36HC4seBcWlYQzGEbVHfdZQqMPBamXg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cYVfRN5o4LHJ1cisQsX6Bkzlhbi8rAvSXb5KG4k82IA=;
+ b=vfOHGGtsLRM1Y1mYEc5daNF4cu4vYL29vburAM7QMSRJh0jILqEsBHWX4rLkjsLNOUnSa8rypl8X1suft2I3AtJ+G47xGSzdLHl+hcT02fvdV4P/BuZAsCZvLmFfIshspyvaMRMwh6CgLn20tG5iHhtssAE4ZFZ9T59Ymu5vpZSoNUkj5SPP/A3B4sk/Z9Q6SqJbnfZZEcQmHh0cuE5+aaQkZSMY8o2RALhQJk42ok8LMqZ4nBcd43UaByKlkAynOhuVnpfQrmkHUYhsnS/xSI42LPWz7Zdvtdk2dzFPpiG99eFH3O9nkjfSnLLSup1lVbBowoCsR5e3wv9RmY8GEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cYVfRN5o4LHJ1cisQsX6Bkzlhbi8rAvSXb5KG4k82IA=;
+ b=S/EEdgf1+pFT8SXB/u0uCG1MCnc0c3wpKbhG0Qh4TvkWXKD9GtO7P3g4ZcnPE3eWAPDyC9WdIiNFpfPOPt8/j8BBQvPdeSuyrK1tNR/1nWAIoY8roFiWSNFlNzzvEgYLks58GtjZR0KKwhjmDW8nkydTD/1hX/LhuzZxGhOOjGs8X3H5QwOMcksSE21zHaS1FVgC7DMF46zbNdQm+VUGQ0FXd5I9c+p7h4fOlpqnPr45+e0C/HJ+k5amwk6rfljEkEI5fOvfFydlByyHz7eIBp/Qvuv6qfiSDCyxYI7rWYvqexLuPr9ejIoHmVqxTvxCzAFbyddtqokLJ0JpVVkizg==
+Received: from CYZPR17CA0003.namprd17.prod.outlook.com (2603:10b6:930:8c::23)
+ by CH1PPF0B4A257F6.namprd12.prod.outlook.com (2603:10b6:61f:fc00::605) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Sun, 8 Nov
+ 2026 13:02:48 +0000
+Received: from CY4PEPF000392DD.namprd03.prod.outlook.com
+ (2603:10b6:930:8c:cafe::1e) by CYZPR17CA0003.outlook.office365.com
+ (2603:10b6:930:8c::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.12 via Frontend Transport; Sun, 8
+ Nov 2026 13:02:48 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CY4PEPF000392DD.mail.protection.outlook.com (10.167.247.123) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.615.4 via Frontend Transport; Sun, 8 Nov 2026 13:02:48 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
+ 2026 05:02:34 -0800
+Received: from [10.125.206.9] (10.126.231.37) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Sun, 8 Nov
+ 2026 05:02:33 -0800
+Message-ID: <b701fd44-5fdd-45e8-a8db-75b7d25a6e2a@nvidia.com>
+Date: Sun, 8 Nov 2026 15:02:25 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,176 +104,141 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261108075116.251501-1-hj351016@gmail.com> <sashiko-outbox-203644@kernel.org>
-In-Reply-To: <sashiko-outbox-203644@kernel.org>
-From: khj <hj351016@gmail.com>
-Date: Sun, 8 Nov 2026 21:26:39 +0900
-X-Gm-Features: AclHuK8osNMBBduPbbtZlOwueo3fS_08uTUPSOwGZBoE2xOvgWzT7m2_givR3xg
-Message-ID: <CAGr5VtMcrnHRZWjoL92uQJFgPcigv+Py=-R_S-a3rNRE0XtOAQ@mail.gmail.com>
-Subject: Re: [PATCH] usb: gadget: f_uac1_legacy: cancel playback_work before
- freeing f_audio
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rdma-next 16/23] RDMA/mlx5: Ignore completion events for a
+ CQ without a handler
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-rdma@vger.kernel.org>
+References: <20261103163949.1554-1-yishaih@nvidia.com>
+ <20261103163949.1554-17-yishaih@nvidia.com>
+ <sashiko-outbox-197669@kernel.org>
+Content-Language: en-US
+From: Yishai Hadas <yishaih@nvidia.com>
+In-Reply-To: <sashiko-outbox-197669@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF000392DD:EE_|CH1PPF0B4A257F6:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01dab4a8-9f2d-4b70-cddc-08df3d9896d0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700016|23010399003|376014|22082099003|18002099003|6133799003|10067099003|4143699003|11063799006|5023799004|261026140227099003|261028144727099003|261102123227099003|261021135927099003|261022105027099003|261021121427099003|56012099006|261009221227099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info:
+	QW0PPp+q9AVwBREuO2amwchdLiIwvZSMgabjMB2A9lTqo+95SWK4f6xtTYf5wOgTWREO7hurZtpmcNvvAhQ7bfdMqrIjSSdx3fosqaQUSLwP3NkSWyxfWvktOpwa/DmeLavhKEi0AwJCcgF92ACRFtf2CpLwOCk7a0CrDZ3TBG6UWr819kexg3MGhhdsFIX8JsKQgV3ZjF/S1iYF8IpZz4kbB3jrrdfSoJhPGOwFUP/hgJO8LG9llxxfr56W3F1Jjgy+eXd+O9dajZorweZx2bk5+lbvKVFzXT56D40Zxk2EyFtn9yr5xbFtFlg7tM47EkvMrKdq9engUWRUHVx9d9TQxxMwAdkS4pcmL7Pxg64iQUjxkFxbWg/lXS8rnWGNihDkMBw5rYo1/3KSWr27G3AflRReTE3Ro0n33GX6bgXBy+PWJS5B7eFQ81l/gUMq+YmEaykTS9MTeP5F+L9ZfJygHgMVO5f7ZDEdmVIkZWcyJAV2jhk7t78UF83HNK1r0i2c4BciWBeITVAUxF+T3S5qgqXK/4eYdtfM+GrShOczdjEEY8/ld7BlkNHdWAUd2mLoOMchjfS0DgUXi8Ca8C//ebrrX0V7s8PvXX+4I9V2V2TslvxAayelZJU5HCE/3KxR1SBc+aXzWe0X3ku/z6PeitCDmIBgimlBs3autZ8O1in+r8Ag0SM8+2TfpyiSdCQP4q2V6rEYbvPun7qkFA==
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700016)(23010399003)(376014)(22082099003)(18002099003)(6133799003)(10067099003)(4143699003)(11063799006)(5023799004)(261026140227099003)(261028144727099003)(261102123227099003)(261021135927099003)(261022105027099003)(261021121427099003)(56012099006)(261009221227099003)(261009223027099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	+qCr8tJmMZSj6CFqh3qKKsKdtgdJFnpkNwy0lvC9HUkbencYF3k6Itc5Sl9VApcO/WvYUwzcJ+qx07WV7ThMqf0yJusqPpeEDESaWT+y4vCf3+Orzxeq7cne9cmkQRcTlKKj3wH+JiE+XHwM85zWiF7L1ROMDzO8Z70U8rErPRXegZv3M9wnixmzf+/WY0cOOAS/1D0DreQe+ARnnlEQ/QiQ+jJ/JiaqscPSm4FuKSLfV6DPvhkOZ+XUE9KTLBGznngipKjEnEKSYNUn1l6QqArkfFxI5w9OMl72hA676wsuMeUgoEfkc6cDDF1FaNdcqNn1A4+aeCzkhdz8tVGqknIPxdXnkZqs0UfF0FG9vdutJlKYpGoGw+P46zzIVJQEFSWnyPyHc77RYWf3g5C7CwdO91ry0wn8F0owXjrmQCVMFM8EaXaygvMga6D9zv11
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 13:02:48.3539
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01dab4a8-9f2d-4b70-cddc-08df3d9896d0
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF000392DD.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPF0B4A257F6
 
-Thanks -- all four are valid, and the Critical is the real root cause.
-
-v1 only cancelled playback_work, which is necessary but not sufficient:
-as you note, f_audio_disable() is empty, so out_ep stays enabled and
-f_audio_complete() can run against freed memory during unbind regardless
-of the work. v1 also cancelled after gaudio_cleanup() and leaked the
-play_queue buffers.
-
-v2 implements f_audio_disable() to quiesce the function properly: disable
-the OUT endpoint (which gives back the outstanding requests, so
-f_audio_complete() stops touching the freed f_audio and no new work is
-queued), then cancel_work_sync() the playback work, then free the buffers
-left on play_queue/copy_buf. That addresses the Critical, the ordering,
-and the leak in one place. I've also corrected the Fixes: tag to
-f3a3406b3f56 per your note.
-
-2026=EB=85=84 11=EC=9B=94 8=EC=9D=BC (=EC=9D=BC) =EC=98=A4=ED=9B=84 5:13, <=
-sashiko-bot@kernel.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [Medium] usb: gadget: f_uac1_legacy: cancel_work_sync() after
->   gaudio_cleanup()
-> - [Medium] usb: gadget: f_uac1_legacy: play_queue buffer leak in
->   f_audio_free()
-> - [Low] usb: gadget: f_uac1_legacy: Fixes tag cites file rename commit
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [Critical] usb: gadget: f_uac1_legacy: use-after-free in
->   f_audio_complete() due to undisabled out_ep [1]
+On 04/11/2026 18:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] RDMA/mlx5: missing acquire/release on comp_handler in mlx5_ib_cq_comp()
 > --
->
-> commit 12cbf9965abf5188436aa00e354e601adc2d615b
-> Author: Hyunjung Ko <hj351016@gmail.com>
->
-> > usb: gadget: f_uac1_legacy: cancel playback_work before freeing f_audio
-> >
-> > The OUT endpoint completion (f_audio_out_ep_complete) and the set_alt p=
-ath
-> > schedule audio->playback_work, whose handler (f_audio_playback_work)
-> > dereferences the f_audio (audio->lock, audio->play_queue, audio->card).
-> > On teardown f_audio_free() frees the f_audio with kfree(audio) but neve=
-r
-> > cancels playback_work -- f_audio_disable() is empty and nothing else
-> > drains it. A playback_work still pending when the function is freed run=
-s
-> > against freed memory, a use-after-free.
-> >
-> > Cancel playback_work in f_audio_free() before kfree(audio). By then the
-> > function is unbound and the OUT endpoint is disabled, so the work canno=
-t
-> > be re-queued and cancel_work_sync() is sufficient.
-> >
-> > This was reproduced with KASAN as a slab-use-after-free in
-> > u_audio_playback(), reached from f_audio_playback_work(), under dummy_h=
-cd:
-> > with a UAC1 playback stream active, unlinking the configfs function fre=
-es
-> > the f_audio in f_audio_free() while the work is still in flight. A dela=
-y
-> > was added to the gadget streaming path to make the schedule-vs-free rac=
-e
-> > land deterministically; the missing cancel is present regardless. With
-> > this patch applied the splat no longer occurs.
-> >
-> > Fixes: d355339eecd9 ("usb: gadget: function: make current f_uac1 implem=
-entation legacy")
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
->
-> [Severity: Low]
-> Commit d355339eecd9 ("usb: gadget: function: make current f_uac1
-> implementation legacy") only renamed f_uac1.c to f_uac1_legacy.c.  Should
-> the Fixes: tag point to f3a3406b3f56 ("usb: gadget: f_uac1: convert to ne=
-w
-> function interface with backward compatibility"), which introduced
-> f_audio_free() without cancelling playback_work?
->
-> > diff --git a/drivers/usb/gadget/function/f_uac1_legacy.c b/drivers/usb/=
-gadget/function/f_uac1_legacy.c
-> > index 7c8d60c7e87d1..2dca5cda8cfd7 100644
-> > --- a/drivers/usb/gadget/function/f_uac1_legacy.c
-> > +++ b/drivers/usb/gadget/function/f_uac1_legacy.c
-> > @@ -945,6 +945,12 @@ static void f_audio_free(struct usb_function *f)
-> >
-> >       gaudio_cleanup(&audio->card);
-> >       opts =3D container_of(f->fi, struct f_uac1_legacy_opts, func_inst=
-);
-> > +     /*
-> > +      * The function is already unbound, so the OUT endpoint can no lo=
-nger
-> > +      * queue playback_work. Drain any work still pending before the
-> > +      * containing f_audio is freed, otherwise it runs against freed m=
-emory.
-> > +      */
-> > +     cancel_work_sync(&audio->playback_work);
-> >       kfree(audio);
->
-> [Severity: Medium]
-> Should cancel_work_sync(&audio->playback_work) be called before
-> gaudio_cleanup(&audio->card)?
->
-> f_audio_playback_work() calls u_audio_playback(&audio->card, ...), which
-> reads substream->runtime from card->playback.substream and loops back to
-> try_again when snd_pcm_kernel_write() fails.  Calling gaudio_cleanup()
-> first closes card->playback.filp while playback_work may still be running=
-,
-> which can free substream->runtime underneath u_audio_playback() or leave =
-it
-> retrying in try_again while cancel_work_sync() waits.
->
-> [Severity: Medium]
-> Does cancelling audio->playback_work here leak buffers left on
-> audio->play_queue (as well as audio->copy_buf)?
->
-> f_audio_out_ep_complete() and f_audio_set_alt() append each allocated
-> struct f_audio_buf to audio->play_queue and schedule audio->playback_work=
-,
-> and f_audio_playback_work() is the only place that dequeues and frees the=
-m
-> with f_audio_buffer_free().  When cancel_work_sync() cancels a pending wo=
-rk
-> item, or when more than one buffer is queued, the remaining buffers on
-> audio->play_queue are never freed before kfree(audio).
->
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but nothing disables
-> audio->out_ep before f_audio_free() runs [1], so can
-> f_audio_complete() still race with teardown and use audio after free?
->
-> When the host selects alternate setting 1, f_audio_set_alt() enables
-> audio->out_ep and queues usb_request objects with req->context =3D audio =
-and
-> req->complete =3D f_audio_complete, while f_audio_disable() is a no-op an=
-d
-> neither f_audio_set_alt(), f_audio_unbind(), nor f_audio_free() calls
-> usb_ep_disable(audio->out_ep):
->
-> CPU0                                  CPU1
-> f_audio_free()
->   cancel_work_sync(&audio->playback_work)
->   kfree(audio)
->                                       f_audio_complete()
->                                         audio =3D req->context
->                                         out_ep =3D audio->out_ep <-- use-=
-after-free
->                                         f_audio_out_ep_complete()
->                                           schedule_work(&audio->playback_=
-work)
->
-> During gadget_unbind_driver(), udc->driver->unbind() runs before
-> usb_gadget_udc_stop_locked() gives back pending requests on the enabled
-> endpoint with -ESHUTDOWN, so f_audio_complete() can also be invoked after
-> f_audio is freed.
->
-> [1] https://sashiko.dev/#/bug/linux-7598f007-24ed-4b73-bc9a-a11e4ec9838e
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108075116.25=
-1501-1-hj351016@gmail.com?part=3D1
+> 
+> commit 74de7436d2c18504b739bcbd6ccce8e1cfa93dc1
+> Author: Yishai Hadas <yishaih@nvidia.com>
+> 
+> RDMA/mlx5: Ignore completion events for a CQ without a handler
+> 
+> This commit skips calling ibcq->comp_handler in mlx5_ib_cq_comp() when no
+> completion handler is set, preventing a NULL function pointer call if a
+> hostile NIC raises an unsolicited completion event on a CQ without a
+> handler.
+> 
+>> diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+>> index 5cc86c3f93f3e..f955eb762051d 100644
+>> --- a/drivers/infiniband/hw/mlx5/cq.c
+>> +++ b/drivers/infiniband/hw/mlx5/cq.c
+>> @@ -46,7 +46,12 @@ static void mlx5_ib_cq_comp(struct mlx5_core_cq *cq, struct mlx5_eqe *eqe)
+>>   {
+>>   	struct ib_cq *ibcq = &to_mibcq(cq)->ibcq;
+>>   
+>> -	ibcq->comp_handler(ibcq, ibcq->cq_context);
+>> +	/*
+>> +	 * A CQ created without a handler (devr->c0) is never armed, but a
+>> +	 * hostile NIC can still raise a completion event for it.
+>> +	 */
+>> +	if (ibcq->comp_handler)
+>> +		ibcq->comp_handler(ibcq, ibcq->cq_context);
+> 
+> [Severity: High]
+> When a kernel CQ is allocated via __ib_alloc_cq() (such as dev->umrc.cq in
+> mlx5r_umr_resource_init()), dev->ops.create_cq() publishes the CQ into the
+> completion EQ radix tree via mlx5_ib_create_cq() -> mlx5_core_create_cq() ->
+> mlx5_eq_add_cq() while cq->comp_handler is still NULL.
+> 
+> After create_cq() returns, __ib_alloc_cq() initializes cq->dim and the poll
+> context before setting cq->comp_handler:
+> 
+> drivers/infiniband/core/cq.c:__ib_alloc_cq() {
+> 	...
+> 	ret = dev->ops.create_cq(cq, &cq_attr, NULL);
+> 	if (ret)
+> 		goto out_free_wc;
+> 
+> 	rdma_dim_init(cq);
+> 
+> 	switch (cq->poll_ctx) {
+> 	case IB_POLL_DIRECT:
+> 		comp_handler = ib_cq_completion_direct;
+> 		break;
+> 	case IB_POLL_SOFTIRQ:
+> 		comp_handler = ib_cq_completion_softirq;
+> 		irq_poll_init(&cq->iop, IB_POLL_BUDGET_IRQ, ib_poll_handler);
+> 		break;
+> 	case IB_POLL_WORKQUEUE:
+> 	case IB_POLL_UNBOUND_WORKQUEUE:
+> 		comp_handler = ib_cq_completion_workqueue;
+> 		INIT_WORK(&cq->work, ib_cq_poll_work);
+> 		cq->comp_wq = (cq->poll_ctx == IB_POLL_WORKQUEUE) ?
+> 				ib_comp_wq : ib_comp_unbound_wq;
+> 		break;
+> 	...
+> 	}
+> 
+> 	cq->comp_handler = comp_handler;
+> }
+> 
+> If a hostile NIC raises an unsolicited completion event for the newly
+> created CQN on another CPU while __ib_alloc_cq() is setting up the poll
+> context, mlx5_eq_comp_int() -> mlx5_ib_cq_comp() reads and invokes
+> ibcq->comp_handler with plain loads.
+> 
+> Because ibcq in mlx5_ib_cq_comp() is derived from cq (&to_mibcq(cq)->ibcq)
+> rather than from the loaded ibcq->comp_handler pointer, there is no address
+> dependency between reading ibcq->comp_handler and accessing fields of ibcq
+> inside the completion handler, and neither irq_poll_init() nor INIT_WORK()
+> provides a release barrier before cq->comp_handler = comp_handler.
+> 
+> Could a weakly ordered CPU or the compiler reorder the stores to cq->iop,
+> cq->work, cq->comp_wq, or cq->dim with the store and load of comp_handler,
+> causing ib_cq_completion_softirq() or ib_cq_completion_workqueue() to see
+> uninitialized poll context fields (such as a NULL iop->poll or cq->comp_wq)?
+> Should __ib_alloc_cq() use smp_store_release(&cq->comp_handler,
+> comp_handler) paired with smp_load_acquire(&ibcq->comp_handler) in
+> mlx5_ib_cq_comp()?
+> 
+
+Right, a hostile NIC can hit this on a weakly ordered CPU. For a 
+conforming device the arm already orders these stores, so the core is
+fine as is. v1 will fix it in mlx5, the only driver with adversarial 
+mode: a kernel CQ will ignore events until its first arm, using a 
+release/acquire pair.
+
+Yishai
