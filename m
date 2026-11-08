@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=185.56.87.5
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794156474;
-	b=MLpTGYH68KvR/DyoT65Y+u6oMPEw13P6s87VZHbos1CM1CL1o58VGC/R0MrcxQcDKuXp
-	 lgK6BELz7BJfccbR92E1/xBINE5HKbsDqfN4+D+kQirRUim5aZPsXlbvzsCAJzsr8bUpw
-	 7igvAsBQUbtZFpuxH4lj/CtSLOA2e13mR9OOZ9Z1lQ+WZhjaQVtXulLKu10yRvR2PJ+XS
-	 GFQQACVnw97TfMzQA4q5n7p3PobT1CnJjy3NzPXUut2az1RVGs7vB2Uapp0jHBuIILIty
-	 EqSaGLNYUgKa1J8O+3lZnfVwtQA6qiDM93nDJCkXDp2k76Z5IzIIwFtTr2fwu/maSYQ==
+	t=1794159329;
+	b=qd7xXLTLMrdsVKDat8QIRqLuzFHIj0ervAp9YWRvgJkJeIhZwR23TNTDFWdj6b8OpRIu
+	 2lwi8hlO8zcXbi1GJayfJfIPqpAzrROJyy2lD1jk7dCJ4kMfSB2hHT6eSjC5WtoCxqbhs
+	 ND1hyIv3fDf8SpD03lmU0pj7bZ6nK8Zyzg8XJ4x2Zb3gF7FvQc8ijuajGqNZ5uxvjkCem
+	 spT/EnQsbWTYYnKCqfhAZjW+svgvXIVmzraGh5tXvVxo3sLHbGtzX0aveXSUC1XOYOQvy
+	 lGn+ClnSNpqCdNxnvxW/JrDAPSSQxGVCiV7UkuZz/siqpxkHfWhuOWwGwBg0akEJ0Mg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794156474;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=evSxEGT7EP5yWt4VQjY1odATlVADyf2LwindW+8Vgkk=;
-	b=wQ8ZgFo67BapMbxwFOsZJ+aKlQxbo3sBWr9qUdu/JAqMpxj06+zbPoCVKDbTZ+nPnZzg
-	 QXWmsVjPyeczIrSdXNDe/cwXSRXnvCPK80fmea1GqN8LWGwdTOPy+bR8F5xpD3bMCJtiX
-	 mdeBp0twMIGXUrhSZUJc/5vSLGoI8hjQG690KJfAmo7FeT7jiUJL1GMywiONGKBaId9dx
-	 w4AeZfCnnm9YIrou+zp+s/CMaHpquYkgUfMJe0ZDpChkJBK8uBqJsipB1aMWk60Bjch0W
-	 W1sZ4XEH84nveqrHw0TNCYAuMvomExxkUcMMqAM4jSonrEhPMDrDHd9aFIX+KpDqB7A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794159329;
+	h=DMARC-Filter:DKIM-Signature:Received:DKIM-Signature:Received:Date:
+	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-Source:
+	 X-Source-Args:X-Source-Dir:X-SGantispam-id:X-AntiAbuse:AntiSpam-DLS:
+	 AntiSpam-DLSP:AntiSpam-DLSRS:AntiSpam-TS:CFBL-Address:
+	 CFBL-Feedback-ID;
+	bh=RiPnZObIZwfdVYQ2RKHH5XMoQAlSCLMECl3j9aPVuhs=;
+	b=aXF4rYm7nGwpKLb7oLX/7PMfd4ma0PmNQpIrSo+v/2rOTGgOvqkLzdcgAW2zZQv7a1tM
+	 RnrFGwCs8Cof5Df6YEfAIm9TVekGVxL0ej9gb1x+N7xAIAm31ZMRuSMP7QadqHUa8oHzd
+	 c3ReuXXtw8SzayNW809UFlbojFs9IMqiuuUK6OKb1R6bJANMoeAG7fVFW8VT731Thbb2E
+	 cV4L4/9pci1wiI1e3WVjcUUwG5x+Ft3rSXSEo17hstpVX63+QnvGkB92+w9IGdkPhrHYZ
+	 M1ciK+9unJRNobLAKme290SLA+ob2HLLfTKqSGcGHy3v3IQjo5ku+Y5UIilxRotNf8Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0GzASbr+;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.182
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=valla.it;
+	spf=pass smtp.mailfrom=valla.it;
+	dkim=pass header.d=antispam.mailspamprotection.com header.i=@antispam.mailspamprotection.com header.a=rsa-sha256 header.s=default header.b=gSQyqi8D;
+	dkim=pass header.d=valla.it header.i=@valla.it header.a=rsa-sha256 header.s=default header.b=eRUXDQ4Z;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=185.56.87.5
+Received: from delivery.antispam.mailspamprotection.com (delivery.antispam.mailspamprotection.com [185.56.87.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F492606A320
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 16:47:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F492606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B95606A320;
+	Sun,  8 Nov 2026 17:35:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 91B95606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valla.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valla.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0GzASbr+
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8b6b22be970so26565b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 08:47:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794156474; cv=none;
-        d=google.com; s=arc-20260327;
-        b=e5A07tqrUr2ukhFSbxn7piI32c4TU7Mq9ogd8vhGOuoL7rDWvKoBBC9T+ExBrdFt55
-         2lrlEir55l4jfomyIg5UbPK7fZ0uXyD73UBfQ06sUKKI1yPJuEO47LF10boo2HokhRA4
-         UGXQM4M5QXWhuFQ4RZBVgOrjk0m/iIk+2XOUqe3MDV+/gF6uD2kvW/kEqUG2K/NXxDk+
-         c2EjRVqlBC620tbjuopRI71dVwkLDq5saxMPzDIQCUpb9ATHkwtPhww+AdCMGUPAX3+h
-         RE+He+g9nP/GNe3YHFzvmTXyE3ByBo96C9/uHrluctrtNWdfFHHLBzYMfKpbjWyq0eej
-         ViBg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=evSxEGT7EP5yWt4VQjY1odATlVADyf2LwindW+8Vgkk=;
-        fh=2hfhS/TDdw+vB47+SyuDzTOw4Y7UogjPq+LMZLKB1/M=;
-        b=hv7ESZTMyZPC3U/AiqeRy/ueM0GlGHRew2VOJH+iExoCebTzXJ6qY359z53ROECO+k
-         xJK9Cqb4R6tD3Cz8EeTVMMqkWrQGztsaolWn4LensjXIZ7vEkMmBn1dZ1l6oSf4FTB96
-         iPJ+4zWajoNbUMaJfRA39Cm1UrgtVpgR9CeNbpVednrm8F6Xikpqt/4vapiT8fYALtg0
-         IH3p1L5GwPka2VR+yNGjqlXI81OXHXcqNlVap5OcTts5tMS6gw8Yq2pMwDh38uc5NY1C
-         BR+dOSZ9Tdi18wsqM2KyCxeYmjOjKqU7zllmMbqdhWbqOtSE+gaObygiTJLCb9/uA9KR
-         3bUg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794156474; x=1794761274; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=evSxEGT7EP5yWt4VQjY1odATlVADyf2LwindW+8Vgkk=;
-        b=0GzASbr+VcbhkpNt32h2JX4jdNkfH+VIOzK2PfLaw56Ty5CDp4gSdOrlFT9EEpJxyF
-         bx3poHFyhnmMhHp/zRcjUbdupw3c+MRSv0EQRdc+JMfQ4EqQkQXITH+LTN9Ds9B/OnX6
-         BZyDcRjgu79bjqEkyQCv5+ou4ceJ3f22+h2Lmj3VQlHscUh/eA9V9tKgAwqE/EOvwOak
-         iT1a0RhFeIs78pm2tKLmpWpsr3eW/cZHHjvicotZ2WlBz41sb/64BCL887x41Ip+PmOU
-         HcDerUoDvekHSXPHLdhPWC6iLOIRqsA2zbc3/8RzYzYhLXZ+1I9TrpsCdm6WQrSLyMKD
-         kTfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794156474; x=1794761274;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=evSxEGT7EP5yWt4VQjY1odATlVADyf2LwindW+8Vgkk=;
-        b=dgh9wEo/RgiDjpIKwUCVVDuurqPXG55LbGce0PJ4jxXiCBZncOaC2WKmlB48UABH9c
-         +CcnjL4ISE3LZo0/WsSBV44u3Yo6luzmJB6aTpwgYosq+wPCn8UqzSNuH5jOOQfSFm3d
-         f31mCUAaJMauqgwdDo6MORCO+dsKojTCbMXBpAo0UGj+s1uxwfiQvmvNixEwKaVlnhou
-         s08d2k9teLgc8bXI0yMroHoMe6gxyocZlO89F/EvNCM0ctQqJzqk4D0Y+GHXHrZAwYVu
-         2nFE5ZFB4FwRZRtHbkXWVqYlVU1bgepq75kT6U7iirEwBitjKiJp/v+XsTBnseWa6V3s
-         cfJg==
-X-Gm-Message-State: APuU4Z+X/haGSgtPjgoAJ++VpUyhwo4opMDfdmRoqOWzqz6V6wwXEV2+
-	1ErtJMNtThd6bzme026aBf3nyBIu5wqrgCAgomJx+srVFOs9H2u69++4TknrcpfgaZNAkwHlLlB
-	2B/NlPVCTyXRFS6B45nP/yrRv30Oz0u2k2M8IYVcPoKn/
-X-Gm-Gg: AYBFou28v3YUuhGAohzfWlwJjwvDYZiEXG8NOw3bsqj1h6G2TkTf7O+X44auNq8vrhE
-	boWQz1wjyEydbldvjUkZNxFP89sa5JdACdLMEGdacO4QDC6m9nIGFUlJ1keCRH+6f9ZxWQlBLGb
-	bD/+CDKwHG9TNR1/JU+QXeUXktUo3ZhoesULYCCET+QQRFXddjf+nsplmpxwm5gdW8mwCq7Sk/6
-	cTI79gbHsqLeTzWP6rEz8GxAOYL83Ifp7+JF6p3rctKv1GSp0yaEc1igcUXuesynqsnIzUKx//J
-	E9kZTXZPzcigw+ogsgKJgu2JGJLzk5rvB3enI14ZewF0aRRZ/APWfPvBIi1ZmumWOSSvQX03Gd8
-	sWFhBJdY5b4g2hi3oXxh8nw58XGPsSePNWJOsxxly76fa5iE3ujIn
-X-Received: by 2002:a05:6a00:4107:b0:8ac:3a71:38a6 with SMTP id
- d2e1a72fcca58-8b66fc970afmr1523563b3a.52.1794156473421; Sun, 08 Nov 2026
- 08:47:53 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=antispam.mailspamprotection.com header.i=@antispam.mailspamprotection.com header.a=rsa-sha256 header.s=default header.b=gSQyqi8D;
+	dkim=pass (1024-bit key, unprotected) header.d=valla.it header.i=@valla.it header.a=rsa-sha256 header.s=default header.b=eRUXDQ4Z
+ARC-Seal: i=1; cv=none; a=rsa-sha256; d=outgoing.instance-europe-west4-qv6g.prod.antispam.mailspamprotection.com; s=arckey; t=1794159328;
+	 b=JuUJ8r1LwCqVeB9tZ+KzR/L1W33/PNjxPS3jbnfbnfm3I3IC4xSuqV7Cw2HFxVS+ekMNP5Erz3
+	  T9E3+rrPGilPuodW6WGAGC3NLg75hKOxQ59PMZVgeZw/EFyEFKJzxWB5pA91nwM9yh1vt6vK9X
+	  zEHgcAd7IiZO3Q3HuZFnFBHqxrw4ff7sK0yXPSqW31u4KH4GzJJ4uJuvnz0RZ06tRVo3iKWN+o
+	  WfhMvRObeTSLtiTkLzZsVt27+ktF9G/x1n4B2Mo12S2D5hmKujgjXA1rHhY2tGiIZcYdE2VQgc
+	  9hXZNHDSDDLrcdDtRf7IJwJ2kvu/OTRFs5GMMZkyi+BGrA==;
+ARC-Authentication-Results: i=1; outgoing.instance-europe-west4-qv6g.prod.antispam.mailspamprotection.com; smtp.remote-ip=35.214.173.214;
+	iprev=pass (214.173.214.35.bc.googleusercontent.com) smtp.remote-ip=35.214.173.214;
+	auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
+	dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
+	arc=none
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed; d=outgoing.instance-europe-west4-qv6g.prod.antispam.mailspamprotection.com; s=arckey; t=1794159328;
+	bh=rGhndhjN4FfmHUumbNK8ICQPn2Yp54qCx33ElHMZ+bE=;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:
+	  Message-ID:Subject:Cc:To:From:Date:DKIM-Signature:DKIM-Signature;
+	b=Lsmr94zIRn42UjWV76V6RFYrbRjb7NOU9hKtb13HdsYAO+WgEq16GlqAdXULq3PA/p6WQ0ZQ4T
+	  Akz6oBvo4bwMWU9bosetQF+Sm8DJhvcrIOt+iaQZyClJM2sYE3fs0lFqF3PcU6GJHAZKp4QeAh
+	  khcRveKnYQoG4FDB8gimg+nM7XbmF+cacKYLIf/OGTDic5k7rwtfQMGt16MXmy/4/sNjeEU6nC
+	  hdPNnGiOGNDq0dqhe0A+pkeBENhGBrjFBkki33IyjOUc8nbv76od4G7rJGpajsS5lVdf3j8lhS
+	  v0OKKfxJYOXyx3IXrhEUxPj+I8NogsN4y0D57/HvVjuMOg==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=antispam.mailspamprotection.com; s=default; h=CFBL-Feedback-ID:CFBL-Address
+	:Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Subject:Cc:To
+	:From:Date:Reply-To:List-Unsubscribe;
+	bh=RiPnZObIZwfdVYQ2RKHH5XMoQAlSCLMECl3j9aPVuhs=; b=gSQyqi8Db+C4wv3G5aiblQwNGN
+	u//cSd0Mkvljb6HRfZ3dbS8EBUabjVuLFvEWtmm8ChCqcTlgX5Nw/NT/YWiif1HLBo/GnJTANr3kw
+	PPBo2x2coI2SgbS+8QsQ6C4t/Hd3szbZthyensP2a5+NQ93L3XWVvcByG+M6XFYzB6ZA=;
+Received: from 214.173.214.35.bc.googleusercontent.com ([35.214.173.214] helo=esm19.siteground.biz)
+	by instance-europe-west4-qv6g.prod.antispam.mailspamprotection.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <francesco@valla.it>)
+	id 1xQ6nX-00000005B6Q-3Gpr;
+	Sun, 08 Nov 2026 17:35:20 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=valla.it;
+	s=default; h=Subject:Cc:To:From:Date:list-help:list-unsubscribe:
+	list-subscribe:list-post:list-owner:list-archive;
+	bh=RiPnZObIZwfdVYQ2RKHH5XMoQAlSCLMECl3j9aPVuhs=; b=eRUXDQ4Z96F4bvS3QmOBbh0dqH
+	iDVGWqqAGR66zBgfqfnQCBEHQC5ZF2jEmo5Q8X9E5BzTLFAzusmL4x9vkRlxfqgWRs8qR11Oq+tfc
+	vITefb//xtpwWgzi5Tq+c/2UElWOmhrjiCrVPK4mgSIxXNvJ3UGQLzD59S/NbaoglJvI=;
+Received: from [79.17.15.196] (port=61146 helo=bywater)
+	by esm19.siteground.biz with essmtpa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <francesco@valla.it>)
+	id 1xQ6nT-00000000Acm-1iIP;
+	Sun, 08 Nov 2026 17:35:15 +0000
+Date: Sun, 8 Nov 2026 18:35:14 +0100
+From: Francesco Valla <francesco@valla.it>
+To: sashiko-reviews@lists.linux.dev
+Cc: virtualization@lists.linux.dev, "Michael S. Tsirkin" <mst@redhat.com>, 
+	Eugenio Perez <eperezma@redhat.com>
+Subject: Re: [PATCH] virtio: check for driver remove callback before calling
+ it
+Message-ID: <avCx4TSx-Zk4hfoO@bywater>
+References: <20261108-virtio_drv_remove_fix-v1-1-23da1a7c3900@valla.it>
+ <sashiko-outbox-203883@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,105 +103,104 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261108155702.361022-1-pmazzini@gmail.com> <20261108155702.361022-4-pmazzini@gmail.com>
- <sashiko-outbox-203874@kernel.org>
-In-Reply-To: <sashiko-outbox-203874@kernel.org>
-From: Pablo Mazzini <pmazzini@gmail.com>
-Date: Sun, 8 Nov 2026 16:47:28 +0000
-X-Gm-Features: AclHuK_4qeDidbx21BSiyl5hMY3CGY3Px979lH25Bd33ehuOp-xo-GZuM04gYbg
-Message-ID: <CAAxh=jtSHByK2H1fM=1bBiFJPkunKctR1oKU_anf2zYidXtUBw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] clk: sunxi-ng: add Allwinner B288 CCU driver
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-clk@vger.kernel.org, linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-203883@kernel.org>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - esm19.siteground.biz
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - valla.it
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-SGantispam-id: 849019556c64230bf6d25ffd39747dee
+X-AntiAbuse: ID - 849019556c64230bf6d25ffd39747dee
+AntiSpam-DLS: false
+AntiSpam-DLSP: 
+AntiSpam-DLSRS: 
+AntiSpam-TS: 1.0
+CFBL-Address: feedback@antispam.mailspamprotection.com; report=arf
+CFBL-Feedback-ID: 1xQ6nX-00000005B6Q-3Gpr-feedback@antispam.mailspamprotection.com
+Authentication-Results: outgoing.instance-europe-west4-qv6g.prod.antispam.mailspamprotection.com;
+	iprev=pass (214.173.214.35.bc.googleusercontent.com) smtp.remote-ip=35.214.173.214;
+	auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
+	dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
+	arc=none
 
-On Sun, Nov 8, 2026 at 4:14 PM <sashiko-bot@kernel.org> wrote:
-> Should this build sun8i-b288-ccu.o (with sun8i-b288-ccu-y +=3D ccu-sun8i-=
-b288.o
-> below) like the other drivers in this Makefile?
-
-Yes, I'll fix it in v2.
-
-On Sun, Nov 8, 2026 at 4:14=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] clk: sunxi-ng: missing CPUX mux and PLL notifiers in
->   sun8i-b288-ccu
-> - [Low] clk: sunxi-ng: inconsistent module object name for
->   sun8i-b288-ccu
+On Sun, Nov 08, 2026 at 04:50:38PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] virtio: unreset device in virtio_dev_remove() when
+>   drv->remove is NULL
+> It also noticed 1 related pre-existing issue this patch does not
+> introduce:
+> - [Critical] virtio: use-after-free in virtio_dev_remove() [1]
 > --
+> 
+> commit ccd4078efa3bba738fda1cc44e8e8955495a84fa
+> Author: Francesco Valla <francesco@valla.it>
+> 
+> virtio: check for driver remove callback before calling it
+> 
+> This commit checks whether drv->remove is non-NULL before calling it in
+> virtio_dev_remove().
+> 
+> > diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
+> > index a8588d7ad109f..067d32c67b44f 100644
+> > --- a/drivers/virtio/virtio.c
+> > +++ b/drivers/virtio/virtio.c
+> > @@ -374,7 +374,8 @@ static void virtio_dev_remove(struct device *_d)
+> >  
+> >  	virtio_config_core_disable(dev);
+> >  
+> > -	drv->remove(dev);
+> > +	if (drv->remove)
+> > +		drv->remove(dev);
+> >  
+> >  	/* Driver should have reset device. */
+> >  	WARN_ON_ONCE(dev->config->get_status(dev));
+> 
+> [Severity: Medium]
+> When drv->remove is NULL, will WARN_ON_ONCE(dev->config->get_status(dev))
+> always fire on unbind or module unload?
+> 
+> __device_release_driver() calls device_remove() (which runs
+> virtio_dev_remove()) before device_unbind_cleanup() runs
+> devres_release_all().  Even when a driver such as spi-virtio registers a
+> devm callback to reset the device and delete its virtqueues, that cleanup
+> has not run yet when virtio_dev_remove() checks get_status() and sets
+> VIRTIO_CONFIG_S_ACKNOWLEDGE.  The subsequent devm reset then wipes out
+> VIRTIO_CONFIG_S_ACKNOWLEDGE, or if a driver has no devm reset action at
+> all, the device is never reset and remains active with live virtqueues and
+> DMA after its devm resources are freed.
 >
-> commit 2d968133b3c297b695cc7e5349c65174d952448b
-> Author: Pablo Mazzini <pmazzini@gmail.com>
->
-> clk: sunxi-ng: add Allwinner B288 CCU driver
->
-> This commit adds a table-based sunxi-ng Clock Control Unit driver for the
-> Allwinner B288 (sun8iw10p1) SoC.
->
-> > diff --git a/drivers/clk/sunxi-ng/Makefile b/drivers/clk/sunxi-ng/Makef=
-ile
-> > index 796f443f4d765..debae396555f6 100644
-> > --- a/drivers/clk/sunxi-ng/Makefile
-> > +++ b/drivers/clk/sunxi-ng/Makefile
-> > @@ -41,6 +41,7 @@ obj-$(CONFIG_SUN4I_A10_CCU) +=3D sun4i-a10-ccu.o
-> >  obj-$(CONFIG_SUN5I_CCU)              +=3D sun5i-ccu.o
-> >  obj-$(CONFIG_SUN6I_A31_CCU)  +=3D sun6i-a31-ccu.o
-> >  obj-$(CONFIG_SUN6I_RTC_CCU)  +=3D sun6i-rtc-ccu.o
-> > +obj-$(CONFIG_SUN8I_B288_CCU) +=3D ccu-sun8i-b288.o
-> >  obj-$(CONFIG_SUN8I_A23_CCU)  +=3D sun8i-a23-ccu.o
-> >  obj-$(CONFIG_SUN8I_A33_CCU)  +=3D sun8i-a33-ccu.o
-> >  obj-$(CONFIG_SUN8I_A83T_CCU) +=3D sun8i-a83t-ccu.o
->
-> [Severity: Low]
-> Should this build sun8i-b288-ccu.o (with sun8i-b288-ccu-y +=3D
-> ccu-sun8i-b288.o below) like the other drivers in this Makefile?  Adding
-> ccu-sun8i-b288.o directly names the module ccu-sun8i-b288.ko instead of
-> sun8i-b288-ccu.ko.
->
-> > diff --git a/drivers/clk/sunxi-ng/ccu-sun8i-b288.c b/drivers/clk/sunxi-=
-ng/ccu-sun8i-b288.c
-> > new file mode 100644
-> > index 0000000000000..6e12ed8248f20
-> > --- /dev/null
-> > +++ b/drivers/clk/sunxi-ng/ccu-sun8i-b288.c
->
-> [ ... ]
->
-> > +static const struct ccu_tbl_clk sun8i_b288_clks[CLK_NUMBER] =3D {
-> > +     /*
-> > +      * PLL_24M @ 0x034 -- B288 only. It feeds the PLLs 24 MHz whateve=
-r
-> > +      * the crystal: it converts a 26 MHz one and is bypassed with a
-> > +      * 24 MHz one.
-> > +      */
-> > +     CCU_TBL_FIXED_RATE(CLK_PLL_24M, "pll-24m", CCU_TBL_HOSC, 24000000=
-),
-> > +
-> > +     CCU_TBL_STD1(CLK_PLL_CPUX, "pll-cpux", PLL_CPU, CLK_PLL_24M, UNGA=
-TE),
->
-> [ ... ]
->
-> > +     CCU_TBL_STD(CLK_CPUX, "cpux", CPUX, cpux_parents, CRIT | RATE_PAR=
-ENT),
->
-> [Severity: High]
-> Can changing the rate of CLK_CPUX hang the system because no CPU mux or
-> PLL rate-change notifiers are registered?
->
-> CLK_CPUX sets CLK_SET_RATE_PARENT, so clk_set_rate() propagates to
-> pll-cpux and updates its A31-style NKMP factors in place while the CPU is
-> running from it.  Other A31-family CCU drivers that allow rate propagatio=
-n
-> from cpux to pll-cpux (such as ccu-sun50i-a64.c, ccu-sun8i-a33.c and
-> ccu-sun8i-h3.c) register ccu_mux_notifier_register() to temporarily
-> reparent cpux to the 24 MHz oscillator during the rate change and
-> ccu_pll_notifier_register() to gate and ungate the PLL after updating its
-> factors, whereas sunxi_ccu_table_platform_probe() registers neither.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108155702.36=
-1022-1-pmazzini@gmail.com?part=3D3
+
+Yes, but that's (IMO) better than a NULL dereference. The spi-virtio
+driver will be fixed in a different series, as stated.
+
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but calling
+> of_node_put(dev->dev.of_node) at the end of virtio_dev_remove() causes a
+> refcount underflow and use-after-free [1].
+> 
+> virtio_device_of_init() acquires the dev->dev.of_node reference during
+> register_virtio_device(), not during driver probe, and virtio_dev_remove()
+> drops that reference on driver unbind without clearing dev->dev.of_node.
+> Unbinding and rebinding a driver drops the reference multiple times on the
+> same pointer, while unregistering a device that never bound to a driver
+> leaks the reference.
+> 
+> [1] https://sashiko.dev/#/bug/linux-cf8a6c4a-49fb-4827-8f82-d189cf36ccdd
+> 
+
+That's... interesting. I'll add it to my backlog if no one is already
+working on it.
+
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261108-virtio_drv_remove_fix-v1-1-23da1a7c3900@valla.it?part=1
+
+Regards,
+Francesco
+
