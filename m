@@ -1,56 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.102
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794175594;
-	b=j+NdBOvYVJKS7P4qrj9Q15ZrY75Iz0ysHyUqErIZpvuSAGzivRx5AWN2aC+EGDu3zFoA
-	 gcUuwpvhw2bpG/VGjY6US2RfoyHem8dgw2BFUDiJCnvimdkon2roV01fDvrSGT1ldRV3/
-	 ebKP/0iUxDKrNlhr0ucjVTla49DfbeN8sx3G8HR3WUeB6VjShvj/mBlImS7VxBKaZgFxT
-	 VEXSvQOTggorTE/7B9fYd2FFcj1RIgNAULI+jl3ye+EhfcIiiE0FNK98HgMt+ToLxlBtz
-	 3SSsHUDwbySijkkTJWPKGiebiF9rrvexNASh0MM7zp1aKBIey9ZsLLrLPSPS0/8xQDw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794175594;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:Autocrypt:In-Reply-To:
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794186644;
+	b=TD91TtM4Y60vHFgM0CJ8wBVhGa+iVPXmqqWdhEIlknhDIQxGMJ8RHjC+GYzO+mPmPEHN
+	 h3c4s41g5fBW5HSEIR0W5RWEuaAfvRoW6bSlq7ngv4yfJdeTp7GxQWyzzo5lOGMafTa3E
+	 5lq/A7yWqLviI/JBlDmRxbn4IFtHVYRrOcSzAZxiWxgmsshEBtS1i0np8JGRtTo8v5AEp
+	 7uQeOZ88n2mVY6n/Z4LHNJd0E2iQ4EM16v34vJdL5bwzQ+mwVMt8Pc85X8Sgp6QefjZ2V
+	 ZcFdWu/ki+9Id7ydKhiNvJC0hqwuXjc155aq7tGOvFhYgDMpMxOcWlSaAjBMc9NYJeQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794186644;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=v+T181MDNN1iBq6H0VhIHrJPTEvbTgHtlnvga6WuJCQ=;
-	b=VVTenPh+mqrS3X+kTxa6ut3Be4X21RQwaGnMDdORt27kcTzeEPpHeOsKFa9pIC7CDDRd
-	 ie88RKwPDOHiaeYPLGw2sZH+FUpV+b2yza58sil59mm6nYGRUx10xU2EDmUQFCVkuQ91Y
-	 z3HrqFtH1Y0AfLp3rl7eX1AsPx4TBZN0Emxw7/9ya/ffd025s/xaKbBz39MCdBVgcVkFD
-	 bywZnSce9hs1ZHowpz3q7dtg0nVgVouXL418Kcr4bycwiIf+SMhSaMjvKD7NUp2b0VKyF
-	 5euJFJRBAiDIJPjTUBzhn4rSgr0fdLDmq3SHnrYcdO4h5gLXjaO5lc5vgpfRsuRnyPg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=postmarketos.org;
-	spf=pass smtp.mailfrom=postmarketos.org;
-	dkim=pass header.d=postmarketos.org header.i=@postmarketos.org header.a=rsa-sha256 header.s=key1 header.b=ozDL2LBz;
-	arc=none smtp.remote-ip=95.215.58.102
-Received: from mta1.migadu.com (out-102.mta1.migadu.com [95.215.58.102])
+	bh=ViE6dOq83VJv0E7qr5/6vevJTI5xlIvEnicou8ustdo=;
+	b=f1WbVrkqubNiEusVLw2Lk+tpoOtpxwQHzcau4EQbOv6fmDX+3tW7YGDOYViKjUqKhf/u
+	 s1CxGDb8shMkNHy4aCiLdUN1h5nRU32TzJ640Ant7yytA/9z/Qd5jM7wczQbJSy3vcatL
+	 sdg7dxZAMdZ9pBVT9/oMnaUJWdOkYTdemybO6ek67n9pDWRaDad1sT9KYAoJ+ciF7Akh9
+	 a6wB/2v5Kasy54XyigYSSJOEzeXMgrrISf+R8nB+ggMHQbcJNNrg41emxVg6zjUi0mF5Z
+	 jrWjKGP32sbLCzePt4sKzY5xyQ7uIWvao7Rfxfm1VpJJ23okk8JHZdMta0W6UD55XSA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=B4HI7fLg;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.45
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C6606A320
-	for <sashiko-reviews@lists.linux.dev>; Sun,  8 Nov 2026 22:06:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C93C6606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F157606A336
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 01:10:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F157606A336
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=postmarketos.org header.i=@postmarketos.org header.a=rsa-sha256 header.s=key1 header.b=ozDL2LBz
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=TPWjkjB/iqSgnkr/uZ6p6HisufPl8VRbziOoj8jL4Gs=;
- c=simple/simple; d=postmarketos.org;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794175584; v=1; x=1794780384;
- b=ozDL2LBzOriRh6D6RtfqId41lW/ekQy8JFVHizOS89KTFMDc6jhfXLqgGqSzz8WZxx52ea3V
- s9eb6ocXlo0S5WBXpkDt7ew9qKxRqPH0OXyeAZvKMhguRmd8Vckcc3fVwCXZBF1oKmKJrVQHZ7j
- uH/UAADSJp8TmwgTb8CVi3rFpX4crL/pKwtaDXNUWIhJn2zpuBYHj/cpPSJDWpPnzCnHXmGdWno
- d/OjhkCU9orFrBdYu1d1cJqcbwECE/k/cMuibSCQf7llRYK5kUN6/bZ6aiLgSNxRnt+BZaXnxZ7
- hpGFtfw5JeRcrPB8J84DyPDO5Qr30q0InJlZe5hE7/Ssw==
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id cb3952d11ac63f6b;
-	Sun, 08 Nov 2026 22:06:24 +0000
-X-Mizu-Trace-ID: cb3952d11ac63f6b
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <df867081-9681-4b68-bcfd-9f7657942942@postmarketos.org>
-Date: Sun, 8 Nov 2026 15:06:22 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=B4HI7fLg
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3b09a83d12aso235646a91.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 17:10:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794186643; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WWYikFxZeHpVSbj8O2LmXATpP43ovtA9osPxPdG6Sz7ifts7x3P6uIIdbl3uS7OnmS
+         2wXxW0N6R7gga814J8EdvGecFQPL6ncc0ILcTKPoaEJZ6KXszY7p9rDrlRw34ZIbB5pv
+         ME58qUdFd9VYAK6/c2DD544FuNZCEYz/hjnvBrWSYCR5b2nacWDm1KWzRwB524FIjnwt
+         QMM9TyHdP6erwCn9naq7MXCEILpezoaxEmw65TEj0rDKqUBHbTUM7ERfRLoy2L9RTjYe
+         mk8rL1fjI4aY6kC95ptwxqSZrQIw8gENMod3WcKLn+FKohAQx58d9rsOOLlFtaw3p4Ni
+         JiPg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ViE6dOq83VJv0E7qr5/6vevJTI5xlIvEnicou8ustdo=;
+        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
+        b=siksgFCDSLbRQADdbiOjkSYYo1wpGWUKxfAusGJAJl97/t1XCptpfpzfpqxyrqaa4j
+         6jexdKztHK+wtvje6r4fkA0mMEx8oFFHmtm7l8r2Pqccf3rFtAI0nmVoLTS0uV4V7Alh
+         ArSarTrfpZbZs0PZfmClDa61PzoAtz8nNUW2V56oN10/OP2Dnb8+Ex7d3NmsW7p+QyAf
+         VuJ14xg56ojVQN9GyzTCGF+vb010SYm9j/IGT1RO40mMsx+WeLVRUmDBzUGGeb4Q620U
+         EHJrvh8Bh/OnLC6tnqa02T3m/xmlx7n7Szq9zZkUPQ4dh6JFHUy3C8eQT+eNH43kLE5a
+         NKKg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794186643; x=1794791443; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ViE6dOq83VJv0E7qr5/6vevJTI5xlIvEnicou8ustdo=;
+        b=B4HI7fLgvfx1tRf4UvFZ0DoQG8J8AW2qhxBGVZXYe2gtMIodCutlampoEKbCttD4Wv
+         qiI7Wh3jlBSI8fLKu+k8a3eNG+sieq/eb2pGwOJXTNFPCkMVEdeHrPnIndT364sWiBuh
+         sgtpE6P6ejs5k9rR8ucobQ6SbIItW/GZ/Rcp6sH5GPRQMLrGJPFgwxbMpp4RY7OT1i5A
+         rhjrbFUvSs7/YL49KM0nKdoEwU2ak7sqNYrSIJ5Ba0ZuQuOMA6X4f6neg8D6OF2AE5/E
+         +arhQtBjQ+Jy6qma/JcJc2KXMHPbIfZ9NOH9qZE0Uj3CtySxXEX1Ly8TN7fk5Jp13A+m
+         YSyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794186643; x=1794791443;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ViE6dOq83VJv0E7qr5/6vevJTI5xlIvEnicou8ustdo=;
+        b=XiGo4MhsaoCOtnbT8LKYgGpHZ1YvluoBMYnyr5LxyQdPxkCjIVXYkhvUEOq67/NXj0
+         62F9Lrs/T0DYNTr4U3x2fLps+cWvR4i72lxWw2H/yleGFicJiGRI2gZf8yiTbB4mQqaB
+         otICfGU/osO1U9S7rH/2jr2JSAQRpa7+GggOmJL5RoIYk1WP6IfzyA+UTsvMUQREznd0
+         nyrI92pTlMfNxCJlYtfnogDXK/cWVVD7KpNpXlWlsOXuMW0lSn82cO4qwYtgrYd2xi7G
+         iZ14UlJwhw5Pg/m4eDZmwaE8voEoPKsGDvcZFmFJlScO319nDWRXbZFm/eJ9cRdIWs4k
+         2k8A==
+X-Gm-Message-State: APuU4Z9KuV8z3h55Oi3fBx43x2jfSog5RNZs1rDG9NBye+gMoBwsxZwg
+	OgeygpTCzDdPeA+09b/MOqHnIsz97Oa4f3pFZPmbSyww4UTjsJgiO5c22/+1ekf/P+iylVcpwf8
+	D+MsA2OXjegjInanr7HU0ovcCVciDCtLePXOM2PKwBQ==
+X-Gm-Gg: AYBFou3R5Q7f0bmfCKg1uXiJy8kyynpY3j+hVNNEDMvm35cBD69QQHWDyHzI6KoJR6J
+	I1PwezGSo4Rx/FFG/EN/rdxnUG0/+Ub2OWfNOmgRznYw++CCfxDLbO43W/FNTFOpKGYBa3D6WMR
+	uKMbJdxHWxdYaogwsHCggJ9fetSv0zHYH/SQIoU9pP53dFskaAyZ8i2BFfJD5kArPNwdgcqj9Ty
+	4wzQKb1pjZl/Ff3jiDgTVKGtcdojQbRwnJhYLl5ZQXJ4fopQPmnemlBETX9OdYFcxkIIMDOi+5o
+	vKdRW1gKrFdovesz0taA98OY/y5J8luzEYHE04cAJOF12pxAIUFy7Q+R23ptzeR2bSgwIIbAzCp
+	f+gLu2h2pLWend2+LfGMnqvXULgFzapZyAB2Q
+X-Received: by 2002:a17:90b:4c4d:b0:3ab:884b:65b4 with SMTP id
+ 98e67ed59e1d1-3b12d5bdbf4mr2475698a91.59.1794186643430; Sun, 08 Nov 2026
+ 17:10:43 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,99 +102,60 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] leds: aw2013: Move assignment of chip->num_leds
+References: <20261109-halliday-dts-v1-0-289114ab8197@gmail.com>
+ <20261109-halliday-dts-v1-17-289114ab8197@gmail.com> <sashiko-outbox-204265@kernel.org>
+In-Reply-To: <sashiko-outbox-204265@kernel.org>
+From: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+Date: Mon, 9 Nov 2026 01:10:31 +0000
+X-Gm-Features: AclHuK8f0tpwg1s6XLr9Y1Crfhrm0g7RIgUXtQn_BcDJ9hkDinOa0TB5VxI1eLo
+Message-ID: <CAEo19Oh8jtyBZXWRs5a0g2N6tBvSY+=SoF_507Wu1SdmbBNpiQ@mail.gmail.com>
+Subject: Re: [PATCH 17/17] arm64: dts: qcom: Add Samsung Galaxy XR
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org, lee@kernel.org
-References: <20261108-aw2013-aw20xx-rename-v4-0-826529beeb52@postmarketos.org>
- <20261108-aw2013-aw20xx-rename-v4-4-826529beeb52@postmarketos.org>
- <sashiko-outbox-204102@kernel.org>
-Content-Language: en-US
-From: Paul Sajna <sajattack@postmarketos.org>
-Autocrypt: addr=sajattack@postmarketos.org; keydata=
- xjMEaVNevhYJKwYBBAHaRw8BAQdAjvGGprvrSn/CmlA1Bpjc4S5zJBNSz/6q0AESlS2JbdjN
- J1BhdWwgU2FqbmEgPHNhamF0dGFja0Bwb3N0bWFya2V0b3Mub3JnPsKZBBMWCgBBFiEEv1E8
- AP7J5F2dJQd4hycszAKyDbsFAmmt6twCGwMFCQlmAYAFCwkIBwICIgIGFQoJCAsCBBYCAwEC
- HgcCF4AACgkQhycszAKyDbv25QD9EdvXYqdH6vGQvB5HrUnMOsd37AZkKKgK87kMOXL/5tcA
- /jM3VLcq9mol+GstmBm1itIVAblXcm+H8g/wKoPXq/4LzjgEaVNevhIKKwYBBAGXVQEFAQEH
- QEgCn8S+S7t/3QvXt4dK4572qd+iTl7h4JX1FEV5XUs6AwEIB8J+BBgWCgAmFiEEv1E8AP7J
- 5F2dJQd4hycszAKyDbsFAmlTXr4CGwwFCQlmAYAACgkQhycszAKyDbueJAD+IMjk8ztbONXz
- H7fieZc5LoR+6mHnddccacmQyPcGAvsA/0+5SkHEgIBuKwkzwrmKgDqcLhVuEs2f1H2GxKUX jqQI
-In-Reply-To: <sashiko-outbox-204102@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026-11-08 3:00 p.m., sashiko-bot@kernel.org wrote:
+"headset" was added to dt-schema recently:
+https://github.com/devicetree-org/dt-schema/commit/bcb597bbb0c988b490fdd6ed=
+08d023d6ddc538b9
+
+=D0=BF=D0=BD, 9 =D0=BD=D0=BE=D1=8F=D0=B1. 2026=E2=80=AF=D0=B3. =D0=B2 00:57=
+, <sashiko-bot@kernel.org>:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] leds: aw2013: commit message rationale does not match driver
->    locking or code
+> - [Low] arm64: dts: qcom: invalid chassis-type value in
+>   halliday-samsung-xrvst2.dts
 > --
-> 
-> commit 1ce6b90ecf6b0a7b5d8097b414e8e137a3fe0609
-> Author: Paul Sajna <sajattack@postmarketos.org>
-> 
->> leds: aw2013: Move assignment of chip->num_leds
->>
->> devm_led_classdev_register_ext() executes default triggers
->> synchronously, which call aw20xx_brightness_set().
->> aw20xx_chip_in_use() silently returns false, skipping chip enablement and
->> causing unbalanced regulator disables while probe is still running.
->>
->> Increment chip->num_leds inside the loop, so that each call gets the
->> correct value for it's default trigger.
->>
->> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
-> 
-> [Severity: Medium]
-> Does this commit message match the locking and execution flow in
-> leds-aw2013?
-> 
-> aw2013_probe_dt() sets brightness_set_blocking to aw2013_brightness_set()
-> and leaves brightness_set NULL, so default triggers activated during
-> devm_led_classdev_register_ext() queue set_brightness_work instead of
-> calling aw2013_brightness_set() synchronously.
-> 
-> Furthermore, aw2013_probe() holds chip->mutex across aw2013_probe_dt(), and
-> aw2013_brightness_set() locks chip->mutex before calling
-> aw2013_chip_in_use().  Any queued work therefore waits until
-> aw2013_probe_dt() has finished and chip->num_leds is already set.
-> 
-> Also, aw2013_chip_disable() returns early when !chip->enabled, preventing
-> an unbalanced regulator_bulk_disable() if aw2013_chip_enable() was skipped,
-> and the driver functions are named aw2013_brightness_set() and
-> aw2013_chip_in_use() rather than aw20xx_*.
-> 
-
-The robot is internally inconsistent and incoherent.
-Feel free to drop this patch if you don't find it necessary.
-See the robot's prior review here:
-https://lore.kernel.org/linux-leds/20260908000128.B92201F00A3A@smtp.kernel.org/
-
- > [ ... ]
-
- > -		led->cdev.brightness_set_blocking = aw2013_brightness_set;
- > -		led->cdev.blink_set = aw2013_blink_set;
- > +		led->cdev.brightness_set_blocking = aw20xx_brightness_set;
- > +		led->cdev.blink_set = aw20xx_blink_set;
- >
- >  		ret = devm_led_classdev_register_ext(&chip->client->dev,
- >  						     &led->cdev, &init_data);
-
- > [Severity: High]
- > This is a pre-existing issue, but does assigning chip->num_leds after
- > registering the LED class devices cause initialization problems?
- > Looking at aw20xx_probe_dt(), chip->num_leds is set to i after the loop
- > completes. However, devm_led_classdev_register_ext() executes default 
-triggers
- > synchronously, which call aw20xx_brightness_set(). If num_leds is 
-still 0,
- > aw20xx_chip_in_use() silently returns false, skipping chip enablement 
- > and causing unbalanced regulator disables while probe is still
- > running.
-
-
--- 
-Hal: They're going for the kernel!
-Margo: Colonel Who?
+>
+> commit d2d9cbc7744fd9c3d95a63b1d3df85d5cbe99afb
+> Author: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+>
+> arm64: dts: qcom: Add Samsung Galaxy XR
+>
+> This commit adds the device tree for the Samsung Galaxy XR headset based
+> on the Qualcomm Halliday SoC (SXR2250P).
+>
+> > diff --git a/arch/arm64/boot/dts/qcom/halliday-samsung-xrvst2.dts b/arc=
+h/arm64/boot/dts/qcom/halliday-samsung-xrvst2.dts
+> > new file mode 100644
+> > index 0000000000000..6fcc1aaafd59c
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/halliday-samsung-xrvst2.dts
+> > @@ -0,0 +1,218 @@
+> [ ... ]
+> > +/ {
+> > +     model =3D "Samsung Galaxy XR";
+> > +     compatible =3D "samsung,xrvst2", "qcom,halliday";
+> > +     chassis-type =3D "headset";
+>
+> [Severity: Low]
+> Is "headset" a valid value for chassis-type in the root node?  The
+> Devicetree Specification and dtschema (schemas/root-node.yaml) only permi=
+t
+> desktop, laptop, convertible, server, tablet, handset, watch, embedded,
+> television, and all-in-one, so dtbs_check fails on this DTB unless a
+> standard value (such as "embedded") is used or chassis-type is omitted.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261109-halliday=
+-dts-v1-0-289114ab8197@gmail.com?part=3D17
