@@ -1,117 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794226704;
-	b=Z1Z70XZg2/OTTmzETNsxhS8fEV5q4cTirnIIxEU4rNwgfFqlbocV5363WaOzpnRA3GdM
-	 ASwRHz93MVfARLC4veIsqiGCwPduqdH0p2+CWcGDhtqH/sHgYBnbyT9cO+AzvDAUPzznZ
-	 wFBbfz4+sr6UJFAUEBCdpOaCx34/ahLowTt0aa9a3ygCubKfOqDrhm4w+AoZLevgEeml0
-	 lMN6GrMJR1YByIZsHY0n5P7C5H4kNSY5Zy6m+9NF5lZQFg6NGMb7nD7eW3KSjIqkbZwsz
-	 T3dG61pD+EgBV982E649Fdtsny0Dy283ubcyuCwfGT3cRXunN+Xd/YpH4cH83YP3jJQ==
+	t=1794226728;
+	b=fbnoa7nye3fGyWRUW2kxp/eI7nomU03COYwZhT526ibDY4lJE5UDrCwfETiExHMNqXcN
+	 W6XxWABEjRfjudAfWchHA1tHaPhEcg5RgDoALe7z9sH3juGFuBTkDqDFrb8pTMLWgJzuF
+	 JEYYtCaCkkhq6hUOKstkd59DtX4RdhVugxFgzH387z9H5RZurE6VCaQQb46kA10h6s+Gk
+	 aTMIoo5Aol2TY8/yo/AnisKyzUs57ixzCdnog5xTO9VPr3SR+ums6U+mXBtXfxHOwzM2K
+	 dizoBx/lM9y5uOuWtj0yWw1U1qTwxpTov5eMtfHhJBftQhu6pvsKK4ZgbujyS2MaZOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794226704;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-	 X-Spamd-Result:X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:
-	 X-Spam-Score:X-Spam-Level:X-Rspamd-Queue-Id;
-	bh=s8QpvVpNDVewFKc/qW8KTv/Yu1CsTkwsgK7/aqBn6Vw=;
-	b=qYulFmYk4eMGuanOtCHmr6glKc4usR+bIZPmbY2shllXCaH5E03cQlzHwo/qIFijMkJu
-	 6lrxNmUFB2zsdkABRMjrPY1GNcRGN/cQ0U4aJFT8CdRNDIewaqc16HRXiuXtzkRU4pAi5
-	 2+OYcOnURP0vkwM/W7/0c7T0V8e2BJttv9WH8psyjJrbqjnJxvDGhPNcata5newXP7BLP
-	 RuA0+af0tZRr0mMd1e++WrCLOkOP8n7VLSV61g5RYEJtncstpN0U3MfixpjHK/bdwlWi4
-	 BhSjF8j2MEfro9ZvLx1ofarCtb4gvtOKMplAhRqCGZbdVkO71xOTneGFL3bx6U6wqiw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794226728;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=ZMzmCKSIkoQfwrqG+6d9p6F4cnVpKsZmbCb0zDMSihk=;
+	b=QdrM89WHMk4A+uhg3c0hiPpMZpS5UyZCQHpdaddR/+T3BvXJm/e2Poi6pt+LLlDwwrNe
+	 HUTy8synzBEDRDJOiqp1FY6eBnqLV3r7vqxAbaZ2W1mjlUE+tPmXQl90EXaZsLn5QIZsf
+	 vGefx8zxXNDRJIEalquedmd7XPMZMkKaYQY90MTWpNZMAkLPchBW/6PWZYVId3AobfnJV
+	 btcgWVxJro6ris22/EBYkykdAqW7h134fQszT3WOSEL1zzGSMSG8APFo35OpJv+1K077G
+	 7QmTbYstvLWPmUG4K7qxSyDyuGjB0j2XWR4qKiHGvAbM28A5jhr+WOgn3XUDPoA35aA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=SIJR7PaZ;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=1r3Ro8cV;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=1Z1BTZMu;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=mGqoE1nd;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUWugq1T;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFD2606A31C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 12:18:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EEFD2606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F347606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 12:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=SIJR7PaZ;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=1r3Ro8cV;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=1Z1BTZMu;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=mGqoE1nd
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id D51A221E44;
-	Mon,  9 Nov 2026 12:18:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794226702; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=s8QpvVpNDVewFKc/qW8KTv/Yu1CsTkwsgK7/aqBn6Vw=;
-	b=SIJR7PaZ4U+XpZq2vvPgIgqvTCDwGnKA36pP50wEu8wyjZtemA+nWy2k986BZsVss1ka5f
-	nCz6mXG0qCurcmfC8GSfWtiGK9MebGccxUkz5rgFUdhqqBB2N+MQF85M2vVzToTJi66HPz
-	6jMN/EfDP0NjUAsrkZ+3ELZYmmOLlWk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794226702;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=s8QpvVpNDVewFKc/qW8KTv/Yu1CsTkwsgK7/aqBn6Vw=;
-	b=1r3Ro8cVIcesg7nk8K7EtvH8t+DP10ADIvcSpKiavdtleRUwXS+mgEjIHrRwtOcdn3lb+6
-	AvbBcZ5pc03M4fAw==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1Z1BTZMu;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mGqoE1nd
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794226701; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=s8QpvVpNDVewFKc/qW8KTv/Yu1CsTkwsgK7/aqBn6Vw=;
-	b=1Z1BTZMugD6HYxTAQkRQzosn0DP13T0XGiqTTmppMxuG0rRpqQ100/xvQmywNaetv5m1TL
-	iGgpm9FwtZ+sJNWE/uTcpiMQTcOuuzN4MaRw+R6zedmVynm7AziMGsrvXyexCQ/EbYxIt5
-	+HmO6laH1qBjB2VQsLgJWJaVxFodxZc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794226701;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=s8QpvVpNDVewFKc/qW8KTv/Yu1CsTkwsgK7/aqBn6Vw=;
-	b=mGqoE1ndjGEs5d7VGq4ZZvTVuxkzAhovZ+okVogOHVFLw5R801DXUW3Owo37UZBqmUEsdi
-	vNlRjVsW9IkBxBAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C74AA13302;
-	Mon,  9 Nov 2026 12:18:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id qQuAJQy68WpUXAAAD6G6ig
-	(envelope-from <pfalcato@suse.de>); Mon, 09 Nov 2026 12:18:20 +0000
-Date: Mon, 9 Nov 2026 12:18:19 +0000
-From: Pedro Falcato <pfalcato@suse.de>
-To: Kiryl Shutsemau <kirill@shutemov.name>, 
-	"David Hildenbrand (Arm)" <david@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, 
-	Andrew Morton <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>, 
-	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Michal Hocko <mhocko@suse.com>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
-	Hugh Dickins <hughd@google.com>, Chris Mason <mason@kernel.org>, linux-mm@kvack.org, 
-	kernel-team@meta.com
-Subject: Re: [PATCH] mm/memory: refuse to map page cache folios that are not
- uptodate
-Message-ID: <avG5Wmrff1v-0p8G@pedro-suse.tail5790ac.ts.net>
-References: <20261106144323.3634477-1-kirill@shutemov.name>
- <sashiko-outbox-202966@kernel.org>
- <8cd50b75-0845-4e82-a8ed-acfd3a261a3e@kernel.org>
- <avGvM5kpv_z2ezoz@thinkstation>
- <avGwAfK4I31KAPHl@pedro-suse.tail5790ac.ts.net>
- <avG1Rg8OyP74VIFV@thinkstation>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUWugq1T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033011F0089F;
+	Mon,  9 Nov 2026 12:18:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794226727;
+	bh=ZMzmCKSIkoQfwrqG+6d9p6F4cnVpKsZmbCb0zDMSihk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VUWugq1T8LES3WvDoryymkJe/5u+zIris0rGfjfH5o/eCc4OYGe/jqNNYSQBTkB08
+	 yuLv0k+CV5aasQM+lmC5Q9cIim0b0K92C2mY25tBKSEpq+Che2kWXSdFTn/dLVOwY6
+	 qoDFmAm4Ajg5HsFg8Lt/nfMALrPqyKwelqycnIuEm1E19ecReL+ARFKT71gfwXKctJ
+	 gtHYhuzgfnt5Kv/8CHwcVEgLDCTpkEo1veT6Us7YPkhn+0uRh4q2brKBgUxWrDTzso
+	 Sa7J4Cj4ddnkWVjvB/Eyhuy2SxOK5g1KKIqnF9o/X67vYD172gNC7JZT8CLTUmZgw6
+	 qibxRFwKNjMoA==
+Date: Mon, 9 Nov 2026 19:58:35 +0800
+From: Jisheng Zhang <jszhang@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Tejun Heo <tj@kernel.org>, Dennis Zhou <dennis@kernel.org>,
+	Christoph Lameter <cl@gentwo.org>, kasan-dev@googlegroups.com,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 4/4] arm64: alternatives: Make branch and ADRP offset
+ helpers noinst
+Message-ID: <avG1a9aVNdkiiGX_@xhacker>
+References: <20261107071339.17467-1-jszhang@kernel.org>
+ <20261107071339.17467-5-jszhang@kernel.org>
+ <sashiko-outbox-203636@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -121,67 +67,126 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <avG1Rg8OyP74VIFV@thinkstation>
-X-Spamd-Result: default: False [-13.51 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	MISSING_XM_UA(0.00)[];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -13.51
-X-Spam-Level: 
-X-Rspamd-Queue-Id: D51A221E44
+In-Reply-To: <sashiko-outbox-203636@kernel.org>
 
-On Mon, Nov 09, 2026 at 11:58:18AM +0000, Kiryl Shutsemau wrote:
-> On Mon, Nov 09, 2026 at 11:37:42AM +0000, Pedro Falcato wrote:
-> > On Mon, Nov 09, 2026 at 11:32:44AM +0000, Kiryl Shutsemau wrote:
-> > > On Sat, Nov 07, 2026 at 07:17:52PM +0100, David Hildenbrand (Arm) wrote:
-> > > > > - [Medium] mm: missing folio_test_uptodate() recheck in
-> > > > >   do_shared_fault() mkwrite path
-> > > > 
-> > > > Kiryl, can you look into that?
-> > > 
-> > > Yeah, that's legit. Will fix in v2.
-> > 
-> > Related: https://lore.kernel.org/linux-mm/as-fqjiGj5T5NLOe@casper.infradead.org/
-> > 
-> > At some point, if filesystems can randomly clear uptodate as a way to signal
-> > writeback failure (even without the folio lock!!), these kinds of checks can
-> > become a bit too error prone.
-> > 
-> > Perhaps we need to address this problem first?
+On Sun, Nov 08, 2026 at 07:43:58AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] arm64: insn: branch profiling instrumentation in noinstr
+>   offset helpers
+> --
 > 
-> The clearers Sashiko pointed at (ext4, ecryptfs, ntfs) hold the folio
-> lock. Which one does it without?
+> commit b08429609214cdffaa257c9ef953b28e179973db
+> Author: Jisheng Zhang <jszhang@kernel.org>
+> 
+> arm64: alternatives: Make branch and ADRP offset helpers noinst
+> 
+> This commit marks the branch and ADRP offset helpers noinstr and introduces
+> __always_inline immediate encoding and decoding helpers so that
+> patch_alternative() does not call instrumentable code while modifying
+> instructions.
+> 
+> > diff --git a/arch/arm64/lib/insn.c b/arch/arm64/lib/insn.c
+> > index e70ac02385153..b98610fcab32e 100644
+> > --- a/arch/arm64/lib/insn.c
+> > +++ b/arch/arm64/lib/insn.c
+> 
+> [ ... ]
+> 
+> > @@ -1299,23 +1316,23 @@ u32 aarch64_insn_gen_adr(unsigned long pc, unsigned long addr,
+> >   * signed value (so it can be used when computing a new branch
+> >   * target).
+> >   */
+> > -s32 aarch64_get_branch_offset(u32 insn)
+> > +s32 noinstr aarch64_get_branch_offset(u32 insn)
+> >  {
+> >  	s32 imm;
+> >  
+> >  	if (aarch64_insn_is_b(insn) || aarch64_insn_is_bl(insn)) {
+> > -		imm = aarch64_insn_decode_immediate(AARCH64_INSN_IMM_26, insn);
+> > +		imm = __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_26, insn);
+> >  		return (imm << 6) >> 4;
+> >  	}
+> >  
+> >  	if (aarch64_insn_is_cbz(insn) || aarch64_insn_is_cbnz(insn) ||
+> >  	    aarch64_insn_is_bcond(insn)) {
+> > -		imm = aarch64_insn_decode_immediate(AARCH64_INSN_IMM_19, insn);
+> > +		imm = __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_19, insn);
+> >  		return (imm << 13) >> 11;
+> >  	}
+> >  
+> >  	if (aarch64_insn_is_tbz(insn) || aarch64_insn_is_tbnz(insn)) {
+> > -		imm = aarch64_insn_decode_immediate(AARCH64_INSN_IMM_14, insn);
+> > +		imm = __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_14, insn);
+> >  		return (imm << 18) >> 16;
+> >  	}
+> >  
+> > @@ -1327,35 +1344,35 @@ s32 aarch64_get_branch_offset(u32 insn)
+> >   * Encode the displacement of a branch in the imm field and return the
+> >   * updated instruction.
+> >   */
+> > -u32 aarch64_set_branch_offset(u32 insn, s32 offset)
+> > +u32 noinstr aarch64_set_branch_offset(u32 insn, s32 offset)
+> >  {
+> >  	if (aarch64_insn_is_b(insn) || aarch64_insn_is_bl(insn))
+> > -		return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_26, insn,
+> > +		return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_26, insn,
+> >  						     offset >> 2);
+> >  
+> >  	if (aarch64_insn_is_cbz(insn) || aarch64_insn_is_cbnz(insn) ||
+> >  	    aarch64_insn_is_bcond(insn))
+> > -		return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_19, insn,
+> > +		return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_19, insn,
+> >  						     offset >> 2);
+> >  
+> >  	if (aarch64_insn_is_tbz(insn) || aarch64_insn_is_tbnz(insn))
+> > -		return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_14, insn,
+> > +		return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_14, insn,
+> >  						     offset >> 2);
+> >  
+> >  	/* Unhandled instruction */
+> >  	BUG();
+> >  }
+> >  
+> > -s32 aarch64_insn_adrp_get_offset(u32 insn)
+> > +s32 noinstr aarch64_insn_adrp_get_offset(u32 insn)
+> >  {
+> >  	BUG_ON(!aarch64_insn_is_adrp(insn));
+> > -	return aarch64_insn_decode_immediate(AARCH64_INSN_IMM_ADR, insn) << 12;
+> > +	return __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_ADR, insn) << 12;
+> >  }
+> >  
+> > -u32 aarch64_insn_adrp_set_offset(u32 insn, s32 offset)
+> > +u32 noinstr aarch64_insn_adrp_set_offset(u32 insn, s32 offset)
+> >  {
+> >  	BUG_ON(!aarch64_insn_is_adrp(insn));
+> > -	return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_ADR, insn,
+> > +	return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_ADR, insn,
+> >  						offset >> 12);
+> >  }
+> 
+> [Severity: Medium]
+> Can these four noinstr helpers still call into ftrace_likely_update() when
+> CONFIG_TRACE_BRANCH_PROFILING is enabled?
+> 
+> Although f22c81bebf8b ("arm64: Disable branch profiling for all arm64 code")
+> added -DDISABLE_BRANCH_PROFILING to arch/arm64/Kbuild, arch/arm64/lib/ is
+> built via libs-y in arch/arm64/Makefile rather than arch/arm64/Kbuild, so
+> arch/arm64/lib/insn.o is compiled without DISABLE_BRANCH_PROFILING.
+> 
+> As a result, the generic BUG_ON() in aarch64_insn_adrp_get_offset() and
+> aarch64_insn_adrp_set_offset() expands to unlikely(), and the if statements
+> in aarch64_get_branch_offset() and aarch64_set_branch_offset() are
+> instrumented under CONFIG_PROFILE_ALL_BRANCHES.  When patch_alternative()
+> calls these helpers while patching live instructions before cache
+> maintenance completes, they call the instrumentable ftrace_likely_update().
+> 
+> Passing -DDISABLE_BRANCH_PROFILING in arch/arm64/lib/Makefile (or defining
+> DISABLE_BRANCH_PROFILING in arch/arm64/lib/insn.c) would prevent branch
+> profiling instrumentation here.
 
-You seem to be correct, from a quick look I can't find anyone doing this
-without the folio lock. So it seems we're safe from that angle.
+All comments should have been addressed in v2. Plz review
 
-So the only thing we _cannot_ do is assert this on e.g an unmap (since we
-stop holding the folio lock).
-
--- 
-Pedro
+Thanks very much for the comments and hints!
