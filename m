@@ -1,106 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794240435;
-	b=UbA4fo122yD0D0fRRLePjhO2KFtTnnH7+a0eO9esAZv2wVYllB1OVjVhPSFH1MsJMKg7
-	 nADvM5cUqn6O1g9hrNHuho4vCZBs5ctCRXnHeb4cV3aT6M6boxviBEhR87KWQcrqWrwgH
-	 tnX5KBsrQnIgWmg95p9OUIDGS1QNkLxHDEpneDVNPpOEgFIuOVB+xrNQyWBaY2k3EFY+M
-	 J1/EvHOO3F/7Q21ta9zndHR6XUS7d1pHPlFYNsirgDxUkQ62nqvW4qkqRRgF5ZTou8zbW
-	 zUa38lVU9q1lL79yOIZ+Mqi/FTXDOdXeGhPse/frKoJIP5bmetUWdbk4iA0tOPo4Bsg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794240435;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+NgIZ94zuDgUp+uszh12oHM+e3kglPF/onpqBOfOj5g=;
-	b=eEWJ527CemA1XZrfIdjVPOHWBynFwQ0tLKk8zcGJ2bTV1UMZb2ZlSKmIPINeIiihtUHx
-	 ZGmgF7lJ3lCP9u0UGaEvxMhocYSwoV9RZggJ0/xJwwkwQ4miXTHBsxZZsTJWc9xUtqOmD
-	 rXIIegGkSnGztsFcsusTNlg+c8xgGdosJB3T+oi9eXuZwZ+LJnneM4Lz8wyDHjH5fS2P5
-	 g7Xx0ps+tnuOmoiIl1881ddZcoIg+kcDw9qBNgICrF09WfpGkJ2tj0V5KWmwtlmNYvQBo
-	 gcJXyOVJnLEhdeePWnjkmm0yvwGcGDyQi//UXTzmuZExEDi1xzitj2BtUvMl57eAS6A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CAmwlg0s;
-	arc=none smtp.remote-ip=209.85.221.43
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=136.143.188.112
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794241000;
+	b=xdgvU6kEPFT72ORehcfn2cSr9RD+UFLjtX0/COEptFYuX+kH6JnoRdAQ8FG6d5Ft1Dk8
+	 6uPOB8/NTWzSaYrnekiDUuKaX3SMbt1/vCkXDMK7muxfz+U43QvYOfAp3fXuAEETA8jN9
+	 dTu1+dPkshCPwbXhB2vvLjPUTim/OtjQGk5fkk821SSWMXjN41LXwMUl09mttd+kG1RIk
+	 G4fCBH6lxwxWUp7RpOKmZnoKZPFHNa2gLQ7IiMP0bpta5myRbiOl4SM0Q11Jc30oSxfIT
+	 8qMVGUlArUn0bE5cRdgv4LLLwr3UYMlsvXI7hbtDpWA/nfMIIEiTR/uuEPQgIq097ow==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794241000;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date:
+	 MIME-Version:User-Agent:X-ZohoMailClient;
+	bh=H2Wioz1O6TcHqEi+DkEornUk3PVxiZUaQwIY/oZW1Z4=;
+	b=euChlP94OGz9K2lySUsdp2KBqV6YdqUXJOJ3gtJeqg/Bzwopv5XHiqFPhVz9eqUba8hT
+	 IniWFlhUqc9kS81e425Zcv6R7F+3+JKJXQqQOfV1QCzi2qtFQImtJimybeJNDLTj05UC/
+	 /3Q4uGtUU89+PWCyZJjLEZIqA7uhCvjKrf0y5JXvNzwJ68DprgXIn/Tb7ObumDQVKSuik
+	 7kkMAi7PBIT9cnLIlNrTLg+fIGGeA266jN/iR5W/kPHLrwOzi64LMhORDT7n1Gmq+0NNH
+	 wj74OcBfMk2ymh4+dElOlmyxinlxXG05scUQUBonEKUrJTJ90y2/WabYmsyBBjcXrZw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=rong.moe;
+	spf=pass smtp.mailfrom=rong.moe;
+	dkim=pass header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=Bd2KV+QN;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=136.143.188.112
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1164C606EE9B
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 16:07:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1164C606EE9B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44A1606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 16:16:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C44A1606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rong.moe
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CAmwlg0s
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-492f563d1c6so387270f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 08:07:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794240433; x=1794845233; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+NgIZ94zuDgUp+uszh12oHM+e3kglPF/onpqBOfOj5g=;
-        b=CAmwlg0samsD5P6N1orOp5TGp9+2oAsYt2EmDQv7AQqz+clOyhLIfK1oBX5JkkG7qs
-         zzS5NWALVw3Agy/nMxUoL5yXSnCD+aU3oyzRNMCeMbyoJ9LsS8U7fuOaDS4zCsiy1Whu
-         gJ2HMUx4zlv9PWSocBLecBgkz0U/xVf5gkfJEookQAGv0+2F6g88UmXiIz5VdSfNcI0A
-         nWHSwQ3nNGR4YqmWIASvt24AJKu247bYRchjEjci5NXmrAlgFO53+mHkp4eshYSrfHOp
-         tbve0cZRubSDBFK7FsBNwLA4qPPa1eCCcifUtXOpicX/1GIIEjp7zatF7AItr62+Nbe/
-         EjCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794240433; x=1794845233;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+NgIZ94zuDgUp+uszh12oHM+e3kglPF/onpqBOfOj5g=;
-        b=WhNSRnLJDAWB97t+VdAVpO7y2+TMUnRW9UKx3QD79VJJOB4/lfIfFbuzkKYIIFBlW9
-         mTEVKf8XU9Ls8JvqEeE+pubwyZ3MyiRF+PFr8Yv5VRSLw/WJuWpQE9ElJDDohu54dcyp
-         EtnCYidCLA+ntHeIWSvu8MelWaMYZQQCaaOGOkhx+9iItMBv+vOV9T3eJozbZSjPHygF
-         14m8aQXbUa8ZLMqy0+d7JWpvUmnOUAfI5PyCd5M6C8jv+BuXL4VEVcv93QbpNJlneaco
-         wqyi4fI1/Km8L+OI50IBAyKiXAcYnIJEH19b+FFhu8Htqcj2iBXTi0MrhHqtLc4Nzndz
-         VvrA==
-X-Forwarded-Encrypted: i=1; AL+hErGGNNYWz6mFkp8eNZDDuFQwRVKvoz9FEK1tr/ZqR7RYMnwp48eHROcZD5ptFliB/Hybzif74kotT+otZ/GHYF4=@lists.linux.dev
-X-Gm-Message-State: APuU4Z++XwaShTuL0WrcbbrOFodqWLNXcw5r7n0nSggcKcacAm1m0gjd
-	vs3iBbtQZ5RhJnxsX6BrVT3HqRmVczcdorENJ4FQOQEoud0MC2yCTQ6E
-X-Gm-Gg: AYBFou3PoXbkWIoZ+XbJXR7VGgzsPrFHLeGlJdS3hW3pjR2lqdzuYer4X9HHf5SIeWq
-	uvxMPVfAWg1zIqk/mCFQR+GJdChdJqXsVAysF0gWZt64hfM+P0tGcRNIHsA2epTnqJ8KwArmdSA
-	AfzbLd+szzDRMb7INCCeCrmL/wZb/OJ9gJ74AExj/1hFvLIiLZB2yExdo36CXWRtG5YHr58ggD5
-	uVfEIZQbCYOJVl32V1EjIWcDJm70+pBXZuhIVhNtu/BqUMgQlZTKpiH6aNyb6cZseiukyv8QXXG
-	djK3S33bofnWC8XeSjaJY8fSN322Uz4sZ5SLjsMjjwox4mlgSdy3k5CoE9N4qK7Z1Gev9aiaZv6
-	hYFqeJLe5wD5jb8F/AtvLgMfPxZwmNIrp8JrTZni9S96UGhgoiK6PT2/eCcxDEZUyuia97V5s5U
-	w1Y8wVfd6r7DBz4Y8tEMBtpUfZaxF2OU6oIk4O8D3xTmPcBlnJ4iGae+WpraVHSKG74TH6M3lnw
-	/UCvMszO34VaxJKkmr8L+3dE8yjhqOcOWnQm3Eub03Ln7mxEak8b7i4Ex1weIHylMpwPygHXtNV
-	A0io4RRjadc2uZ/cA0Qu89aR+tGtRBN/ka5no5ep/HJNJuesU/uQ6xZVExJQZaKHGSifURn645H
-	vowjs5uhrJnZ7aEIuFKqOEktTUCrqvHfBMPjuBHZFdNE800OZowz8TyCdf5tGUIA=
-X-Received: by 2002:a05:600c:1d0a:b0:4b1:4017:c4f4 with SMTP id 5b1f17b1804b1-4b963c741f8mr77671625e9.20.1794240433343;
-        Mon, 09 Nov 2026 08:07:13 -0800 (PST)
-Received: from romain-ThinkPad-P14s-Gen-5-AMD.tail433d9c.ts.net ([2001:863:742:6109:ac9d:152:38c3:6463])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b90f119b96sm159174245e9.15.2026.11.09.08.07.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 08:07:13 -0800 (PST)
-From: Romain TISSERAND <romain.tisserand@gmail.com>
-To: Igor Reznichenko <igor@reznichenko.net>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: [PATCH v2 3/3] drm/panel: ilitek-ili9488: add the PocketGo S30 panel
-Date: Mon,  9 Nov 2026 17:07:06 +0100
-Message-ID: <20261109160706.2272332-4-romain.tisserand@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261109160706.2272332-1-romain.tisserand@gmail.com>
-References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=Bd2KV+QN
+ARC-Seal: i=1; a=rsa-sha256; t=1794240997; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=SyFeDmzXN16XeQrhnwx422HGQHxaGZHSZY5Knwg8G87YkBxk/esOdeDm1Z4H/ngu6SBBWoBotcO/MyyhL4lvzVpT0UNZm3ARr/PWgs6g7tDnS0UMElNBw7RE5/BwEzFDpIm0Uxv4ATAn6KRkKbzHHabLhshkz1PsNoSCBf8D1Gg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794240997; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=H2Wioz1O6TcHqEi+DkEornUk3PVxiZUaQwIY/oZW1Z4=; 
+	b=KqAE1nbvhbfvJLnXY1EqqPXr0614aYzvl41iUrcLJHW4NrI49GxdhRVUew53ddoy6ik7QHld7KpHH7ccC8KdEXh2vO15qx2mWnhSKWGyE9Wivb1tvdjLw6R3dxOQxFTiOPezsJmps8Zx/FjkJAHQMbHSHbyCo4nMzUtb3o6V9Cw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=rong.moe;
+	spf=pass  smtp.mailfrom=i@rong.moe;
+	dmarc=pass header.from=<i@rong.moe>
+DKIM-Signature: a=rsa-sha256; b=Bd2KV+QNQfRnXvJVqj1IGa3F0+CMT8/ZaM3qN2ysue2BMypxZQgK12FJPlCtGJ3EP3nqFquPot+xqWPIkKmS/b5jXCqQmGRU6UwR6yovuLmVJm+a7cK+rHNz0cMK8DaRbbdvdYjrNjLRD20jRCjfQV4XA59iOQ+Niz2O1IrTRN/BUqgbHTq7CSalTKAZj3lR7fBXa2sR63UwnNNnJUJr5YFeCM4PPGgtDjgknETPfWnRdYhQNDCEkbbe7KVpoeedGEbEKBpjkay6K3ICbPuVV2+MpSHffPhRWNQDOBPoeKcGXRTeJU1g8ZRay5S4oUlzXb+0pSBFCiSHbS8o7c2fJg==; c=relaxed/relaxed; s=zmail2048; d=rong.moe; v=1; bh=H2Wioz1O6TcHqEi+DkEornUk3PVxiZUaQwIY/oZW1Z4=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794240995952299.6904193871194;
+	Mon, 9 Nov 2026 08:16:35 -0800 (PST)
+Message-ID: <5b37cf208370a60373d27c13257eb10090d64578.camel@rong.moe>
+Subject: Re: [PATCH 3/9] HID: haptic, multitouch: Check haptic prerequisite
+ properly
+From: Rong Zhang <i@rong.moe>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+In-Reply-To: <sashiko-outbox-192550@kernel.org>
+References: <20261102-hid-haptic-kmod-v1-0-a3de5626dade@rong.moe>
+	 <20261102-hid-haptic-kmod-v1-3-a3de5626dade@rong.moe>
+	 <sashiko-outbox-192550@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 10 Nov 2026 00:11:32 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -110,102 +69,217 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Evolution 3.62.1-3 
+X-ZohoMailClient: External
 
-The Miyoo PocketGo S30 handheld (Allwinner A33) has a 320x480 1-lane
-MIPI-DSI panel built around an Ilitek ILI9488.
+Hi All,
 
-The init sequence is the stock kernel's, read back from the running
-stock system. It differs from the E35GH-I-MW800CB sequence only in VCOM
-(0x26 instead of 0x25), the display function control (2 parameters
-instead of 3) and the position of the inversion command. The interface
-pixel format (COLMOD) is kept at the stock value.
+On Sun, 2026-11-01 at 17:57 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] HID: haptic: hid_haptic_check_pressure_unit() misses non-force=
+ unit mismatch
+> - [Medium] HID: multitouch: one-way is_haptic_touchpad leaks state to oth=
+er MT inputs
+> --
+>=20
+> commit 8758bcd8ba263569bfbee87a3d749e9ff7ea4489
+> Author: Rong Zhang <i@rong.moe>
+>=20
+> HID: haptic, multitouch: Check haptic prerequisite properly
+>=20
+> This commit stores the HID_DG_TOUCHPAD input device and validates pressur=
+e
+> unit annotations across usages in hid_haptic_check_pressure_unit(), ensur=
+ing
+> hid_haptic_input_configured() only initializes haptics for the matching i=
+nput
+> device. It also converts td->is_haptic_touchpad into a one-way flag and g=
+uards
+> probe-time hid_haptic_*() calls with td->haptic.
+>=20
+> > diff --git a/drivers/hid/hid-haptic.c b/drivers/hid/hid-haptic.c
+> > index 9cbacc827dc9c..27cc8a2d9b595 100644
+> > --- a/drivers/hid/hid-haptic.c
+> > +++ b/drivers/hid/hid-haptic.c
+> > @@ -48,17 +48,40 @@ void hid_haptic_feature_mapping(struct hid_device *=
+hdev,
+> >  }
+> >  EXPORT_SYMBOL_GPL(hid_haptic_feature_mapping);
+> > =20
+> > -bool hid_haptic_check_pressure_unit(struct hid_haptic_device *haptic,
+> > +void hid_haptic_check_pressure_unit(struct hid_haptic_device *haptic,
+> >  =09=09=09=09    struct hid_input *hi, struct hid_field *field)
+> >  {
+> > -=09if (field->unit =3D=3D HID_UNIT_GRAM || field->unit =3D=3D HID_UNIT=
+_NEWTON) {
+> > -=09=09haptic->force_logical_minimum =3D field->logical_minimum;
+> > -=09=09haptic->force_physical_minimum =3D field->physical_minimum;
+> > -=09=09haptic->force_resolution =3D input_abs_get_res(hi->input,
+> > -=09=09=09=09=09=09=09     ABS_MT_PRESSURE);
+> > -=09=09return true;
+> > +=09if (hi->application !=3D HID_DG_TOUCHPAD)
+> > +=09=09return;
+> > +
+> > +=09/* Don't care about input devices with no pressure sensor. */
+> > +=09if (field->unit !=3D HID_UNIT_GRAM && field->unit !=3D HID_UNIT_NEW=
+TON)
+> > +=09=09return;
+> > +
+> > +=09if (IS_ERR(haptic->input_dev))
+> > +=09=09return;
+> > +
+> > +=09if (!haptic->input_dev) {
+> > +=09=09haptic->input_dev =3D hi->input;
+> > +=09=09haptic->pressure_field =3D field;
+> > +=09=09haptic->force_resolution =3D input_abs_get_res(hi->input, ABS_MT=
+_PRESSURE);
+> > +=09=09return;
+> >  =09}
+> > -=09return false;
+> > +
+> > +=09if (haptic->input_dev =3D=3D hi->input &&
+> > +=09    haptic->pressure_field->unit =3D=3D field->unit &&
+> > +=09    haptic->pressure_field->logical_minimum =3D=3D field->logical_m=
+inimum &&
+> > +=09    haptic->pressure_field->physical_minimum =3D=3D field->physical=
+_minimum &&
+> > +=09    haptic->force_resolution =3D=3D input_abs_get_res(hi->input, AB=
+S_MT_PRESSURE))
+> > +=09=09return;
+> > +
+> > +=09/*
+> > +=09 * Reject if:
+> > +=09 * - there are multiple input devices with pressure sensors
+> > +=09 * - the pressure annotation mismatches
+> > +=09 */
+> > +=09haptic->input_dev =3D ERR_PTR(-EPROTO);
+> > +=09return;
+> >  }
+>=20
+> [Severity: Medium]
+> What happens if a HID_DG_TOUCHPAD input device has multiple
+> HID_DG_TIPPRESSURE usages where some specify HID_UNIT_GRAM or HID_UNIT_NE=
+WTON
+> and others have a non-force unit (such as 0)?
+>=20
+> In mt_input_mapping() -> mt_touch_input_mapping():
+>=20
+> =09case HID_DG_TIPPRESSURE:
+> =09=09set_abs(hi->input, ABS_MT_PRESSURE, field,
+> =09=09=09cls->sn_pressure);
+> =09=09if (td->haptic)
+> =09=09=09hid_haptic_check_pressure_unit(td->haptic, hi, field);
+>=20
+> Because hid_haptic_check_pressure_unit() returns early when field->unit i=
+s
+> neither HID_UNIT_GRAM nor HID_UNIT_NEWTON before checking haptic->input_d=
+ev:
+>=20
+> 1. If an earlier HID_DG_TIPPRESSURE usage on hi->input has a valid force =
+unit
+> and a later usage on the same hi->input has unit 0, set_abs() overwrites
+> ABS_MT_PRESSURE parameters and resets its resolution to 0 on hi->input, w=
+hile
+> hid_haptic_check_pressure_unit() returns early instead of setting
+> haptic->input_dev =3D ERR_PTR(-EPROTO).
+>=20
+> 2. Conversely, if the first HID_DG_TIPPRESSURE usage on hi->input has uni=
+t 0
+> and a subsequent usage has HID_UNIT_GRAM or HID_UNIT_NEWTON, the first us=
+age
+> is ignored and the subsequent usage sees !haptic->input_dev and accepts t=
+he
+> device despite the mismatched annotations across usages.
+>=20
+> Should hid_haptic_check_pressure_unit() reject the device when a non-forc=
+e
+> unit is encountered on the same hi->input as a force unit?
 
-Timings and video mode are from the stock configuration: 12 MHz pixel
-clock, htotal 382, vtotal 524, active low sync (lcd_hv_sync_polarity 0),
-non-burst video mode with sync pulses and without EoT packets.
+Makes sense. I will soon submit a v2 fixing this.
 
-Reviewed-by: Igor Reznichenko <igor@reznichenko.net>
-Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
----
- drivers/gpu/drm/panel/panel-ilitek-ili9488.c | 55 ++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+>=20
+> [ ... ]
+>=20
+> > diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.=
+c
+> > index 4e19a0c4d2381..d744ccc3e0b0b 100644
+> > --- a/drivers/hid/hid-multitouch.c
+> > +++ b/drivers/hid/hid-multitouch.c
+>=20
+> [ ... ]
+>=20
+> > @@ -1955,14 +1956,11 @@ static int mt_input_configured(struct hid_devic=
+e *hdev, struct hid_input *hi)
+> >  =09struct hid_report *report;
+> >  =09int ret;
+> > =20
+> > -=09if (td->is_haptic_touchpad && (td->mtclass.name =3D=3D MT_CLS_WIN_8=
+ ||
+> > -=09    td->mtclass.name =3D=3D MT_CLS_WIN_8_FORCE_MULTI_INPUT ||
+> > -=09    td->mtclass.name =3D=3D MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE)) {
+> > -=09=09if (hid_haptic_input_configured(hdev, td->haptic, hi) =3D=3D 0)
+> > -=09=09=09td->is_haptic_touchpad =3D false;
+> > -=09} else {
+> > -=09=09td->is_haptic_touchpad =3D false;
+> > -=09}
+> > +=09if (td->haptic && !td->is_haptic_touchpad &&
+> > +=09    (td->mtclass.name =3D=3D MT_CLS_WIN_8 ||
+> > +=09     td->mtclass.name =3D=3D MT_CLS_WIN_8_FORCE_MULTI_INPUT ||
+> > +=09     td->mtclass.name =3D=3D MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE))
+> > +=09=09td->is_haptic_touchpad =3D hid_haptic_input_configured(hdev, td-=
+>haptic, hi);
+> > =20
+> >  =09list_for_each_entry(report, &hi->reports, hidinput_list) {
+> >  =09=09rdata =3D mt_find_report_data(td, report);
+>=20
+> [Severity: Medium]
+> When a composite HID device has a haptic HID_DG_TOUCHPAD collection along=
+side
+> another multitouch application collection (such as a HID_DG_TOUCHSCREEN
+>=20
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9488.c b/drivers/gpu/drm/panel/panel-ilitek-ili9488.c
-index 6ab8ae72abbf..29b869a6e909 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9488.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9488.c
-@@ -86,6 +86,50 @@ static const struct drm_display_mode e35gh_i_mw800cb_display_mode = {
- 	.type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
- };
- 
-+static void pocketgo_s30_init(struct mipi_dsi_multi_context *ctx)
-+{
-+	/* Gamma control 1,2 */
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xE0, 0x00, 0x10, 0x14, 0x01, 0x0E, 0x04, 0x33,
-+				     0x56, 0x48, 0x03, 0x0C, 0x0B, 0x2B, 0x34, 0x0F);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xE1, 0x00, 0x12, 0x18, 0x05, 0x12, 0x06, 0x40,
-+				     0x34, 0x57, 0x06, 0x10, 0x0C, 0x3B, 0x3F, 0x0F);
-+	/* Power control 1,2 */
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xC0, 0x0F, 0x0C);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xC1, 0x41);
-+	/* VCOM Control */
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xC5, 0x00, 0x26, 0x80);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0x36, 0x48);
-+	/* Interface pixel format 18bpp */
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0x3A, 0x66);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xB0, 0x00);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xB1, 0xA0);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xB4, 0x02);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xB6, 0x02, 0x02);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xE9, 0x00);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0x21);
-+	mipi_dsi_dcs_write_seq_multi(ctx, 0xF7, 0xA9, 0x51, 0x2C, 0x82);
-+}
-+
-+static const struct drm_display_mode pocketgo_s30_display_mode = {
-+	.clock = 12000,
-+
-+	.hdisplay = 320,
-+	.hsync_start = 320 + 22,
-+	.hsync_end = 320 + 22 + 12,
-+	.htotal = 320 + 22 + 12 + 28,
-+
-+	.vdisplay = 480,
-+	.vsync_start = 480 + 22,
-+	.vsync_end = 480 + 22 + 4,
-+	.vtotal = 480 + 22 + 4 + 18,
-+
-+	.width_mm = 49,
-+	.height_mm = 74,
-+
-+	.flags = DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
-+	.type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
-+};
-+
- static inline struct ili9488 *panel_to_ili9488(struct drm_panel *panel)
- {
- 	return container_of(panel, struct ili9488, panel);
-@@ -269,8 +313,19 @@ static const struct ili9488_desc e35gh_i_mw800cb_desc = {
- 	.bpc = 6,
- };
- 
-+static const struct ili9488_desc pocketgo_s30_desc = {
-+	.init_sequence = pocketgo_s30_init,
-+	.display_mode = &pocketgo_s30_display_mode,
-+	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-+		      MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET,
-+	.format = MIPI_DSI_FMT_RGB888,
-+	.lanes = 1,
-+	.bpc = 6,
-+};
-+
- static const struct of_device_id ili9488_of_match[] = {
- 	{ .compatible = "focuslcds,e35gh-i-mw800cb", .data = &e35gh_i_mw800cb_desc },
-+	{ .compatible = "miyoo,pocketgo-s30-panel", .data = &pocketgo_s30_desc },
- 	{ }
- };
- 
--- 
-2.43.0
+I don't know whether devices with both HID_DG_TOUCHSCREEN and
+HID_DG_TOUCHPAD really exist or not. Such a combination sounds cursed...
 
+>  or a
+> second non-haptic HID_DG_TOUCHPAD without a pressure sensor),
+>=20
+
+It should become irrelevant as long as the previous issue is fixed.
+
+Anyway, I will fix both issues in v2.
+
+Thanks,
+Rong
+
+>  does latching
+> td->is_haptic_touchpad to true here affect the other multitouch inputs on=
+ the
+> same hid_device?
+>=20
+> Once mt_input_configured() configures the haptic touchpad hid_input and s=
+ets
+> td->is_haptic_touchpad =3D true, any subsequent hid_input processed by
+> mt_input_configured() -> mt_touch_input_configured() will see:
+>=20
+> =09if (td->is_haptic_touchpad)
+> =09=09app->mt_flags |=3D INPUT_MT_TOTAL_FORCE;
+>=20
+> and set INPUT_MT_TOTAL_FORCE on that non-haptic application as well.
+>=20
+> Similarly, at runtime, mt_process_slot() and mt_sync_frame() only check
+> td->is_haptic_touchpad rather than verifying whether input matches
+> td->haptic->input_dev:
+>=20
+> =09if (td->is_haptic_touchpad)
+> =09=09hid_haptic_pressure_increase(td->haptic, *slot->p);
+>=20
+> and:
+>=20
+> =09if (td->is_haptic_touchpad)
+> =09=09hid_haptic_pressure_reset(td->haptic);
+>=20
+> Could touches on a non-haptic multitouch input on the same HID device fee=
+d
+> into and reset td->haptic->pressure_sum?
