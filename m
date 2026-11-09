@@ -1,62 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794247643;
-	b=mPgxfAUUQ0UDzcUTNlSeG1V8KoVPLCQLs1SHdpBjaV7eqcDzlA9pdQLaggJVnEzL39ty
-	 B/yqrCpPQ7HtHgy/LjW3FHF4hgtj7wYtYG38ReQOokqOoP3wR/SCvrUOGvik3EemTKaSt
-	 aPRn7E5DTuzZld382ftsfm/sVPASSFj9adAe+LVxXxtHrphOwpmgCbDq3CGo8TjZStrKy
-	 b48JyCMcb0o7SswuLwImmlJzlPdojXYudbmKbtaWa7shaQNjCthW07bs1c5i+lLGR9Cte
-	 mXBhjSnXzJUdPnQX8KkTVTeHuVGHsWvrSorVNwVEeZ1RD8wLrAg7bqiSWNJJy5+TR5g==
+	t=1794247782;
+	b=NVWesBPoAKnxbxdrX6nXzOFXluHMEzcEXWQ3JUfDOs3AHW6twaBq3rOZ8WrJsbEuJUgo
+	 YVlTHrS45jA6xpWZDk+KyiKcjpsBSemDLR7G+R+2IHOukyDdo8ozx43o9ykqbh0NjtiR2
+	 WRALJl5NV7dpyqb2lVWSDuhLCgO7ckKdn2+EIPHR4GW1d9SWhd+nD5l2tb4QrrpcBUoCD
+	 0E/tVoUlCIQ5f6J25qFk7TafhthJz5bgynw6B9C38S14a3AvhqZi2vIahmbzPHPrzIv+9
+	 BbhqCCcp4sFe35GTXsJOwjlCjpgoJ5RlshEidiVXLxCjHtKknsUaFLm7RahIySBFygQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794247643;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Disposition:Content-Transfer-Encoding;
-	bh=9SX+jH/mGjt4SuPHBiqFjWciDYJaR9hX+EeARBcc/oU=;
-	b=i6ulLB15XiZdPczjHvKystO4Qh9eXof0AFfBfvF5Up1incCnsl4wNus7ARESOlWHvTlL
-	 oigQtOR+1HA96uqhW3iJNX3UPn49kOkxCDeaU6/yB9xj8Os9k8kh1Otu1O3I2kjQk01B6
-	 ImCbAWh8M9nmmVOcNbWs6aqlWShhkhv+E8U8Ks23t7md4ggyV+WJjTgTelm/5y/rsw1un
-	 gCTa3wB7RCKnT637DoEb8FPxiYRyaZFn0rmx+bLyTGieXEBmVV8MI6zakP3pkojhIhFjZ
-	 Enibk1FlmxExSQyMtG53j6C3qsOMnAjZdHvKQEHfYIv/wt5yygRqbh1QHseXnnPjKDQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794247782;
+	h=DMARC-Filter:Date:DKIM-Signature:DKIM-Signature:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To;
+	bh=hoQOzrsBfuekc5HffGWMwvLYL2nRUtXJwxmyC3goQbg=;
+	b=YCGCn8+IlqD7H7/hM7frxD72FW9TRyZya9BcRZl0uSUVQO3wTd7Q+pc1HgIrviDGy5Ga
+	 JGCy5H5MUKUpXpBlA928w47y2iPL1e97Ef5cviKiK3FUv9nIIMsk2Wmz1Y84iMWlhe+mJ
+	 iGrZlTATQYUTFn4SlTrtD9dInd4lmcSMMK3VznBnOLd+jIFGE8VpBJiXjnFNqm2vTVNRY
+	 sppNtYxqP3YEgp6gelLRKkRDCbRpXGyQLYZBIO4eTdd0TdEiHIKd+0E5Oi1TedqfF6NnS
+	 klu8EQylcvtHQZAtRO4ydL3kwLJuDdn1AB5w9/8KEBOg6JVqhjPt9DsM2An67JY3OlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=qP+j2+Ou;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65EEC606A32A;
-	Mon,  9 Nov 2026 18:07:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65EEC606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=c1YnfyYH;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=cZnTZKI4;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F770606A338;
+	Mon,  9 Nov 2026 18:09:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F770606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=qP+j2+Ou
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A57AC1476;
-	Mon,  9 Nov 2026 10:07:18 -0800 (PST)
-Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5F0173F85F;
-	Mon,  9 Nov 2026 10:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794247641; bh=sg6g4W54QBZxZYKEgqRqF44StZN9salD9l+AhfoCf24=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qP+j2+OuqLKE4Lm1XPuvDQfifQzUJQrjIkKWp7O+3YIWfTLRRKALZBcqMBJBQ4pVj
-	 UnRfSf2OfKmjhmX5moUFLtpmbRdwBu9Jh1YNNCvkMCNM20pc19zX+JUhymaFR6y48Q
-	 ODg7QF+BE2r+iUQBNRqwepfxrL0MrxFWU9EBIJ9Y=
-From: Leonardo Bras <leo.bras@arm.com>
-To: Tian Zheng <zhengtian10@huawei.com>
-Cc: Leonardo Bras <leo.bras@arm.com>,
-	sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	liuyonglong <liuyonglong@huawei.com>
-Subject: Re: [PATCH v5 11/15] KVM: arm64: Reserve dirty ring space for the HDBSS buffer
-Date: Mon,  9 Nov 2026 18:07:17 +0000
-Message-ID: <avIL1UFsFmQFXwew@LeoBrasDK>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <494abfd0-b19b-4ef3-a035-d21626828a6a@huawei.com>
-References: <20260929103655.85107-1-zhengtian10@huawei.com> <20260929103655.85107-12-zhengtian10@huawei.com> <20260929110035.71FB41F000FF@smtp.kernel.org> <494abfd0-b19b-4ef3-a035-d21626828a6a@huawei.com>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=c1YnfyYH;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=cZnTZKI4
+Date: Mon, 9 Nov 2026 19:09:36 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1794247778;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hoQOzrsBfuekc5HffGWMwvLYL2nRUtXJwxmyC3goQbg=;
+	b=c1YnfyYH4Jkf1wyvgFuiBZhOGHbif341DwyM9F/dA/kFZoJ3zmersEJqTTGNjl6Sracff/
+	28jhNQ6RIu2Q6TygiohXin57t1gyEcrFcBLHQjaKl4DIp9OahytWc9vCOeIPIt+tLfprf2
+	5J+gUM+rNO0rG789piUC0cSE3zcgxRXgQB58uzjNk8OeVpE0p06RemNywnkh4i8DBfHCF1
+	DFYvantMZ5rOOqGO5STNwpg5fvMPIOCC6FjanFaIBo2c7bgNxEvKJgqBj0zRjEe6uz2vhT
+	aWHRoFgrAyRJaWROKpTWT4x46Qi2fARrXTHtpjdMLPkFfClvOOsLm8fJtxLqog==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1794247778;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hoQOzrsBfuekc5HffGWMwvLYL2nRUtXJwxmyC3goQbg=;
+	b=cZnTZKI4NHAI3Dktunl/gh47SVwPWYsMWTdlJLbeHZtMW+885w8vJswl+YnbI88JZ+CAZO
+	5ACkXliLEDXbP8Ag==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Clark Williams <clrkwllms@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	John Ogness <john.ogness@linutronix.de>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@amutable.com>,
+	Daan De Meyer <daan.j.demeyer@gmail.com>,
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	linux-rt-devel@lists.linux.dev, debian-kernel@lists.debian.org,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 02/10] kconfig-checker: Introduce PREEMPT_RT
+ configuration rules
+Message-ID: <avIMYMqTKkwAozk_@lx-t490>
+References: <20261106091922.7560-1-darwi@linutronix.de>
+ <20261106091922.7560-3-darwi@linutronix.de>
+ <sashiko-outbox-202757@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -68,103 +90,33 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-202757@kernel.org>
 
-On Mon, Nov 09, 2026 at 06:03:03PM +0800, Tian Zheng wrote:
-> 
-> 
-> On 9/29/2026 7:00 PM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [High] arm64: kvm: UAPI breakage for dirty ring size on 64KB page systems
-> > --
-> > 
-> > commit 38dde0ab2f10c37402c620c7b1328624808205ad
-> > Author: Tian Zheng <zhengtian10@huawei.com>
-> > 
-> > KVM: arm64: Reserve dirty ring space for the HDBSS buffer
-> > 
-> > This commit reserves space in the dirty ring for CPU-side dirty buffers by
-> > implementing kvm_cpu_dirty_log_size(). It also pins the HDBSS buffer size to
-> > PAGE_SIZE when the dirty ring is enabled.
-> > 
-> > > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > > index 7bf82d65041c8..c1e09ba98d48a 100644
-> > > --- a/arch/arm64/kvm/mmu.c
-> > > +++ b/arch/arm64/kvm/mmu.c
-> > [ ... ]
-> > > @@ -2841,3 +2841,11 @@ void kvm_toggle_cache(struct kvm_vcpu *vcpu, bool was_enabled)
-> > >   	trace_kvm_toggle_cache(*vcpu_pc(vcpu), was_enabled, now_enabled);
-> > >   }
-> > > +
-> > > +int kvm_cpu_dirty_log_size(struct kvm *kvm)
-> > > +{
-> > > +	if (!system_supports_hdbss())
-> > > +		return 0;
-> > > +
-> > > +	return kvm_hdbss_buffer_size(kvm) / sizeof(u64);
-> > > +}
-> > 
-> > [Severity: High]
-> > Does this calculation break the UAPI for standard dirty ring size requests on
-> > 64KB page systems?
-> > 
-> > Since KVM_ARM_HDBSS_DEFAULT_SIZE is tied to PAGE_SIZE, this calculation scales
-> > with the system page size. On a 64KB page system, kvm_hdbss_buffer_size() yields
-> > 65536 bytes, returning 8192 reserved entries (65536 / 8).
-> > 
-> > When a userspace process requests a standard dirty ring size of 65536 bytes
-> > (64KB) via KVM_ENABLE_CAP for KVM_CAP_DIRTY_LOG_RING, it seems the ioctl will
-> > now fail:
-> > 
-> > virt/kvm/kvm_main.c:kvm_vm_ioctl_enable_cap() {
-> >      ...
-> > 	if (size < kvm_dirty_ring_get_rsvd_entries(kvm) *
-> > 	    sizeof(struct kvm_dirty_gfn) || size < PAGE_SIZE)
-> > 		return -EINVAL;
-> >      ...
-> > }
-> > 
-> > Because (8192 + 64) * 16 = 132096 bytes is greater than the requested 65536
-> > bytes, the ioctl rejects previously valid userspace configurations with -EINVAL,
-> > which would cause QEMU and other VMMs to fail to start VMs.
-> > 
-> > Could this buffer size be decoupled from PAGE_SIZE to avoid the entry inflation
-> > and ABI breakage on 64KB page systems?
-> > 
-> 
-> You were right, this is a real UAPI break on 64KB-page kernels. The
-> PAGE_SIZE default made the ring reservation scale with the kernel page
-> size, so a standard 64KB ring request got rejected there.
-> 
-> Leo, the PAGE_SIZE default goes back to your suggestion in the v4
-> discussion at [1]:
-> 
-> > That means 512 entries in 4kB pagesize, an 8K entries in 64kB
-> pagesize.
-> 
-> > I mean, yes, maybe we could allocate a 64k page, and set SZ=4K in
-> HDBSSBR, but that would be a waste of memory, right?
-> 
-> If we keep PAGE_SIZE, the ring ABI stays broken on larger-page kernels,
-> since the reservation keeps scaling with the page size. With SZ_4K there
-> is still some breakage, the smallest ring sizes (4KB and 8KB), but that
-> is the smallest scope we can get, because 4KB is the smallest buffer the
-> hardware can encode. Defaulting to SZ_4K also brings our ring
-> requirements in line with x86, where PML reserves the same fixed 576
-> entries.
-> 
-> Do you think we should default to SZ_4K and accept the page waste you
-> pointed out, or keep PAGE_SIZE?
-> 
+On Sat, 07 Nov 2026, sashiko-bot@kernel.org wrote:
+>
+> [Severity: Medium]
+> Should this also check CONFIG_NO_HZ_IDLE?
+>
 
-Maybe we should rethink the way of handling this, and maybe reserved 
-entries is not the way out. 
+Correct, it should be added, as legacy "compatible" CONFIG_NO_HZ might be
+removed in the future.
 
-(It was for x86, but it's a very different architecture, as I mentioned 
-before)
+>
+> [Severity: Medium]
+> Will any .config with CONFIG_DEBUG_INFO=y or CONFIG_DEBUG_FS_ALLOW_NONE=y
+> still fail against the CONFIG_DEBUG_.* pattern rule?
+>
 
-Another approach could be to those reserved pages to not be counted in the 
-ring size limit, but that could become really messy.
+Correct, both CONFIG_DEBUG_FS_ALLOW_NONE and CONFIG_DEBUG_INFO.* should be
+handled.
 
-Thanks!
-Leo
+>
+> [Severity: Low]
+> Is this rationale meant for CONFIG_DEBUG_KERNEL rather than
+> CONFIG_DEBUG_MISC?
+>
+
+Correct!
+
+Thanks,
+Ahmed
