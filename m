@@ -1,100 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794230961;
-	b=RQvg/LX/26Xeq9x9z62CpqbxzmVAt2VAL0UWMKUbz+epNXejBjBHsOyoGVmqvXH8jKbz
-	 ltCCleWyoQkbcMpIQgpHgy0n6zXFHEu3s+WxSh6bJYWy+fiPcvGTByNm9Ad4TIjh5/aCe
-	 z1RCPPIHvDpk4TEtGTP0Xv6YGFWm64hNadwjuonwukdKDvb1Yg7i9MJ3ZPC4eHbweSj7B
-	 Tt5OcoqIVTASgbNjkTFKyujBnOe6sWtl2H9LPjgHl4Zu4e2Q4s6w8tonaWBQv0JaT9/yr
-	 jRso55lYZftRgv/3LzpFQ70IvwCxQWezCy3M6/x5VNIJFl+YqGV4MbCP+gJToV2GsdA==
+	t=1794232690;
+	b=EnrgjgsFv2ME3a6v2VFTBmEzDKSBol1MRMmG238zwkCn9axK4EfrszUUQAmEwyo2z7E3
+	 B6q5eKvLX7aw3X/UY6GtbDN4L+nPZx/gzZ9zHTIwjEnOoi5Ha7iDrG8iIk+llb9u2krvC
+	 A1MT1KmoLSc8EVFzqkd6zlNXSelsGeqna13lkDSN5MG8H5SrZ64tTFHecyv7uG4MEX2Mj
+	 /KzI1gilf4RFe6D1qbP3LFcj3Tssm0yWeRS6TSJ2sYocitIRrpXHo5KowNUd8Kvz8KOmu
+	 J4sXuJBwMVcerjdBCE0WQuW+PCWMekR5nkN0JlTnglIEjAVo1OS9abosD5aRDoODq6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794230961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794232690;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=p8KeZQ1gDNMPi4Q0Vpjy/FG6SeCgCptXYJ2kECeS9lk=;
-	b=cc5gXCQ36HRzuaQ+TeTLydgW+x6Ta8+ldUGs4ahgtskUhYADDrMAnnLfRljn9ev1ToZ1
-	 CY3PoYW2X3z+7hdq/ochfMQHdvrEHmdvIUbovamT7d4Uxp5twFnbby68AB7cqsXRVScNO
-	 miLhainYj0xILL9Ji/Ld0iddkTZU7wqqvZUxzH/6kckXW+u+KiHh/qgKena0TTHO/KbZL
-	 Gvud+mLKIPDYPzt4mqovpprKvReDxAGu4nYi8IeaP0SKxa8eg8tGVBV3B47/NEdOuIE7l
-	 +3DuybjZ5s5Mz5NHaZ7uj7kK1zG/BeEgRCjXkoIarQqBmPidiSOZRoRSk9XH5shK2eQ==
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=dZDeE2xZH0nMQ26DQzLtMh8DKmBlzuXu6Jf57xM5sMI=;
+	b=Uwq14mzp1Nhqul+CCnSbuEHPnmpmr9GuFjx5Xcv9T1LpbOFyIHJDpQR/XPglQEyOOMIS
+	 YWSQjge//hjyNZ2Eu2x4agMAOBG12gTVqBjI8OFVYmK7Iyh4VRASwQnnA3pBl6H/6ZozQ
+	 slZJVWKoFPmU8I6p+8sj/EdKCOmgUpVaEWvwqo34gBxKmX38uKQAkN62cwPwSTOLErOjw
+	 LTuMAr5gOONpRXIq3nJTd2TQvWkFSaq2sruZJzBPCl+93kH5PzWgbeSrnsSMBeJaNUA0+
+	 sST5KrD74T959sGHdhSCPJc/+VetdU0M8zvadjpGUNrGiVKWwUJv8K36FKl2lYX0DBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=V9TQhlQy;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eSyTer1w;
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DFF606A322
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 13:29:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66DFF606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8D5606A332
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 13:58:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E8D5606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=V9TQhlQy
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a5177d78c7so7151715e9.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 05:29:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eSyTer1w
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so5091535e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 05:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1794230959; x=1794835759; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=p8KeZQ1gDNMPi4Q0Vpjy/FG6SeCgCptXYJ2kECeS9lk=;
-        b=V9TQhlQyfTKWphXcorF5a6gXcL5MBWQrGz0bHsUpFgragi5NnZlvU2cMTweH3ZDl/g
-         X1V+Prw7MAtIHE5rDZVgKdyUWTLRNoK27e++VQFTPFfRaI7Sv+Ut0vk1Z/PWyblGhr70
-         q+oDSBS1Tnh7t9oCPTUAKUXtc2QlsDdxaTQZI8RuxPXpf6NW+UAqw0SkoM46nJLuvYOk
-         hWhTj/72DQt9p0G5oSgUo3GQWU5Vz7XViwju41KO8ms2NYVVi0EP0wANXlPaLGD13kcu
-         3P5njhVXKnkoXOcOOpe+dgJkdzlDxvMU+EGh0x2h0uliwPY0iFpvmt/0zvAJE2IqhLaI
-         pFxg==
+        d=gmail.com; s=20260707; t=1794232689; x=1794837489; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dZDeE2xZH0nMQ26DQzLtMh8DKmBlzuXu6Jf57xM5sMI=;
+        b=eSyTer1wcHfU7p8wUJT4n42dSEUkFwE3SU3MjD7t0CamuACSxY+ERx261YyPZ16d0O
+         N2lYg0ZCVNwvtmaJLVrOX1ny7W++uj0i8qxdD6O2O9RamaMrpm6UNtpC6NLAvQxMI9yh
+         cfYJDoaAGYVCUFZ+Tg5tVX2M1WfV3AL+HaJCSRlMTaDezaLSkiTINClVgB7OuH5gsVgD
+         bKolw9KTjfd5ZKyUQgOugvHY5M0leOX2Tjf7AxWUwc9GxavnBJlkm8DfZGwpd+FHAtHo
+         LnkA/iFKtxFPnFNiOhmcAuYyj3cnDiuRAL2hRbfjV1/RwkqD2J86CoX/zMYfnfTRlBcG
+         v7Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794230959; x=1794835759;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=p8KeZQ1gDNMPi4Q0Vpjy/FG6SeCgCptXYJ2kECeS9lk=;
-        b=h9ebFOZIxCF4dfQKw92iCEG9XGycRj3Rl0iiTg/GZ5dmDKu1VLs00GAZh3bzbk4r6e
-         F5WXQJL9yb/7MM72Py3ix3oDtXBapaQAPBIGFunwRerYvpRbyZ4hIhidIMhRV3yfhL3v
-         bAgdscnLMa3ZZwYos3x2xwdGopKP1S4eeGUG/DO6e3MenjsxmdbUwT1MDcY9LlPlrKVH
-         wv4Vf+xeTMTVKrg4zHgeSEkMJozQyCVUxArts133sK2Pq1mcwqxfXe4jqtaGzOr5uu9t
-         jIio6OXYYxgK8hJMRZmRVXGCHnmtU6EyuZJXW94Zb//U/O/2/US1gu1ldYqaNDh3tALa
-         s2/g==
-X-Gm-Message-State: APuU4Z/0HqA4Ckk9Nb7oTlQWJVUa2UW/3IR/5zSkKRavKySL85TKL4zZ
-	pfTpqY+Hed+AbsOyFZiJK9ZDFGUepFP5F/ZIHIeyKzQYzJu1vRvr8cBw7xgvRnItg1R9qKz1JH0
-	w6AQU16A=
-X-Gm-Gg: AYBFou2TaMARZls7jCAws/4E2U8hRfkFahdiN+ZpwD7xb1Mg/Uv3LD62RbXovA6/w7X
-	9ht5W0wBLzAuj/nCIK4qXvQ7X2ZbMr4NB6qx1BVuH9356KApjoVrtR/NKxK4MIhegH8ehEvdgKX
-	ESdZPwafFtn50ZOReRCDsW9MiVMlUpkFo0Klnx22z6sZojn/sDfyd5UmyGRwdFne3ai6/kpjD24
-	S/KqNDTNjfI8DKtfrOkSQu9h54fcKaCqiEvAiBy3c1T38ngD8oD76YI+fntrlLJGqoyV0PrGzXb
-	iiv5x+JYjNceRwac2STx+o/Ytv/DVoSaFAjtonOAUA7uYuGzZ2FOpq/RUiYqxdRm/9sz0ZLQepO
-	TZ2Zh/Y10XXXCLnMEBB3AoLYGBDdYsSsEsGGqgUsu3ewplFEY81odflgj5PC5Zsgkqi6/aBo/wq
-	kVvGIvSch2q84AJ4QGHtGTH2vONBQXVGP14YRjW7q3SF5a/ktvI6vgkg2VxAImi13cU8wybWiSR
-	YiRZt/AstL3CUU/CRnNeHyNP4qARBu9wPpWBXKo/cPmfISRLOl2uU9pgv0jkFYzbl+QvPjEiFbx
-	pM4nBR2U/DXKCRCxJN/79plbEJnhig==
-X-Received: by 2002:a05:600c:46d2:b0:4a0:1fb9:2f51 with SMTP id 5b1f17b1804b1-4b963c814c8mr73950475e9.14.1794230958732;
-        Mon, 09 Nov 2026 05:29:18 -0800 (PST)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b7efb1b64esm244819165e9.13.2026.11.09.05.29.17
+        d=1e100.net; s=20260707; t=1794232689; x=1794837489;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=dZDeE2xZH0nMQ26DQzLtMh8DKmBlzuXu6Jf57xM5sMI=;
+        b=FqACbs2cRlO3dowTmmgNxe2jTCpZGGBvoaURkI5fxzzvrQmEyO5UKkNpgi9sIi9Qpz
+         co3dZk3b86o04ZJ4/yzFn9328sVy3xFLCOQ4Oc8nGIKhI/sA0blm4cX1hh23mf3sTyZV
+         YZiitvZgqYpHqi/axpCUllJ0Nt7agGd1MxCTg0HObuOz5x5uph63zWah1A3G4tzz1j9o
+         pLaf0vV/AYw1gdToa2vptfZ9Hza1klhuU9vnX2ReFQrnIjJXnWwwoBM06K6KCgE55nZE
+         9eyLeaMYIdFY8MhrDp1Q91a66WK4puqCfLAuYfW6p7j8uYdMtCGljqDSarEko0SS1B+m
+         ZfxA==
+X-Gm-Message-State: APuU4Z/8chQN5J8/jvf7W/hHjNoGDnTZowlAUpNSjeQS0Uz1zc84CT1X
+	bBMH8xHf+wgAoPSIPdZXMPlIn3hQRTGvR8oYMzaQh3OfM6ucP6srAIVIxDcYxg==
+X-Gm-Gg: AYBFou2kjPXqN09Mts+3DNC21zOP7YVTPW4f/fH9v8KDrZDfTKcrsnYh7YDZLgQtdxA
+	g6yffIbGRdvF3JX84Wd9ATDM8o6W1i3FAUdEe3CHZk/owjZoQWaBF3qaKu7weCMiQy3t3TQKYw1
+	dVLA/hqCngQu3Gabspr6s+pi6ZAobV4zSHgRrhVdal99PRlHan2LKM8AFauZdAEp1pqAKhGIM5Z
+	kMCkVSJIyQB2SMnByXBgx7CQEYYZc9QhfCN60IGVrPuQIOf8KuhiSIxkUyhrKb5+iNmIPQTG5QN
+	x5m5a0P0CnrE+yX9OMWGhicAi0PnPFygJtcvYPyZrE0bgAGL/FjZW3bSsIyX6tkM2SsPtl6LWr4
+	Rb5SYkz4DXmKcX6YBNVHfuLV0OpyRVp6ODrASJgK/ET/yOzT3vFphPiphoN+Daf2CS7IyGMCJqW
+	fVXOCcdv/JK3BlIw4EW3WjxfzDyQap8BkK6VUwIssHbZtWYOso9dxa2QuuKXnidR9Z2R3O39s/7
+	mNKiknZdmfPsywlYyswnAhhZlTIE3mxhI6/reOhWfuLCLSmijs1x6zvE+QmYjcq/eXtnyMOhdbI
+	4DxawTIAd7XU7Pxjp2xaVmBbZJyEkNFmcg7t
+X-Received: by 2002:a05:600d:84ca:10b0:4b9:ff69:19ac with SMTP id 5b1f17b1804b1-4b9ff6919f8mr13489005e9.11.1794232688967;
+        Mon, 09 Nov 2026 05:58:08 -0800 (PST)
+Received: from mail.gmail.com ([2a04:ee41:4:b2de:1ac0:4dff:fe0f:3782])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b7e32b46a3sm252430215e9.6.2026.11.09.05.58.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 05:29:18 -0800 (PST)
-Date: Mon, 9 Nov 2026 14:29:16 +0100
-From: Petr Mladek <pmladek@suse.com>
+        Mon, 09 Nov 2026 05:58:07 -0800 (PST)
+Date: Mon, 9 Nov 2026 14:09:42 +0000
+From: Anton Protopopov <a.s.protopopov@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: John Ogness <john.ogness@linutronix.de>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Chris Down <chris@chrisdown.name>,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	printk@lists.linux.dev
-Subject: Re: [PATCH v6 04/16] printk: Separate code for adding/updating
- preferred console metadata
-Message-ID: <avHKrPxxBDIuHUBd@pathway.suse.cz>
-References: <20261106171952.207909-1-pmladek@suse.com>
- <20261106171952.207909-5-pmladek@suse.com>
- <sashiko-outbox-201935@kernel.org>
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH v1 bpf-next 16/18] selftests/bpf: Test fmod_ret
+ candidates found by bpf_scan_ir
+Message-ID: <avHUJhNSgifusdtc@mail.gmail.com>
+References: <20261106210314.1767267-1-a.s.protopopov@gmail.com>
+ <20261106210314.1767267-16-a.s.protopopov@gmail.com>
+ <sashiko-outbox-202287@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,67 +97,57 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-201935@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-202287@kernel.org>
 
-On Fri 2026-11-06 17:30:05, sashiko-bot@kernel.org wrote:
+On 26/11/06 09:09PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] printk: malformed kernel-doc comment for
->   add_or_update_preferred_console()
+> - [Low] selftests/bpf: missing KASAN and KCSAN exclusions for
+>   bpf_testmod_retval.o
 > --
 > 
-> commit 53283e23ffd138683d26af82f710d22a050dc49e
-> Author: Petr Mladek <pmladek@suse.com>
+> commit 628c6eb28eaac0eeb5e557c0b787a65b02cd6e06
+> Author: Anton Protopopov <a.s.protopopov@gmail.com>
 > 
-> printk: Separate code for adding/updating preferred console metadata
+> selftests/bpf: Test fmod_ret candidates found by bpf_scan_ir
 > 
-> This commit splits the logic for adding or updating a preferred console
-> entry out of __add_preferred_console() into a new helper function,
-> add_or_update_preferred_console().
+> This commit adds bpf_testmod fixtures and BPF selftests to verify the
+> fmod_ret target tags generated by the bpf_scan_ir compiler plugin and the
+> verifier's enforcement of restricted return values.
 > 
-> > diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-> > index 27bf77a777a2e..24bb6f63c070a 100644
-> > --- a/kernel/printk/printk.c
-> > +++ b/kernel/printk/printk.c
-> [ ... ]
-> > @@ -2543,26 +2544,34 @@ asmlinkage __visible void early_printk(const char *fmt, ...)
-> >  }
-> >  #endif
+> > diff --git a/tools/testing/selftests/bpf/test_kmods/Makefile b/tools/testing/selftests/bpf/test_kmods/Makefile
+> > index 031c7454ce65f..475df9a7680ea 100644
+> > --- a/tools/testing/selftests/bpf/test_kmods/Makefile
+> > +++ b/tools/testing/selftests/bpf/test_kmods/Makefile
+> > @@ -23,7 +23,16 @@ MODULES = bpf_testmod.ko bpf_test_no_cfi.ko bpf_test_modorder_x.ko \
 > >  
-> > -static void set_user_specified(struct preferred_console *pc, bool user_specified)
-> > +/** add_or_update_preferred_console - Add or update a given entry in
-> > + *	the preferred_consoles[] array.
-> > + *
-> > + * @i: index of the entry in @preferred_consoles table which should get updated.
-> > + * @name: The name of the preferred console driver.
-> > + * @idx: Preferred console index, e.g. port number.
-> > + * @devname: The name of the preferred physical device.
-> > + * @options: Options used when setting up the console driver.
-> > + * @brl_options: Options used when setting up the console driver
-> > + *	as a braille console.
-> > + * @user_specified: True if preferred via the kernel command line.
-> > + *
-> > + * The function adds or updates an entry in preferred_consoles[] array. Also
-> > + * it updates some global variables which are used to make the right decisions
-> > + * in register_console().
-> > + */
-> > +static int add_or_update_preferred_console(unsigned int i,
+> >  $(foreach m,$(MODULES),$(eval obj-m += $(m:.ko=.o)))
+> >  
+> > -CFLAGS_bpf_testmod.o = -I$(src)
+> > +bpf_testmod-y := bpf_testmod_main.o
+> > +# The functions for bpf_scan_ir use clang extensions and need the plugin
+> > +bpf_testmod-$(CONFIG_CLANG_PLUGIN_BPF_SCAN_IR) += bpf_testmod_retval.o \
+> > +						  bpf_testmod_retval_strong.o
+> > +# Coverage instrumentation makes every path of the fixtures dirty
+> > +GCOV_PROFILE_bpf_testmod_retval.o := n
+> > +KCOV_INSTRUMENT_bpf_testmod_retval.o := n
+> > +KMSAN_SANITIZE_bpf_testmod_retval.o := n
 > 
 > [Severity: Low]
-> As reported by Chris Down on v5 [1], scripts/kernel-doc requires the opening
-> /** marker to be on its own line, so placing the function identifier on that
-> first line causes the parser to skip this kernel-doc block, and it is also
-> missing a Return: section.
+> Should KASAN_SANITIZE_bpf_testmod_retval.o and
+> KCSAN_SANITIZE_bpf_testmod_retval.o also be set to n here?
 > 
-> [1] https://lore.kernel.org/r/auLwTYSza9exX3ba@chrisdown.name
+> bpf_testmod_retval_private_store() and bpf_testmod_retval_private_memset()
+> use __attribute__((optnone)) to keep their stack writes and memset in the
+> IR until OptimizerLast.  When CONFIG_KASAN or CONFIG_KCSAN is enabled, the
+> sanitizer pass runs before bpf_scan_ir and instruments those operations
+> with shadow stores and runtime calls (__asan_report_store4, __asan_memset,
+> __tsan_write4), which bpf_scan_ir rejects as side effects, causing the tags
+> subtest in test_fmodret_retval() to fail.
 
-Ah, I misunderstood the probem. I added an empty space after the
-title. But it wants to have "/**" on a separate line.
+Added KCSAN and UBSAN (just in case, neither is enabled in tests).
 
-Will fix in v7 or when committing.
-
-Best Regards,
-Petr
-
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261106205523.1765622-1-a.s.protopopov@gmail.com?part=16
