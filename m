@@ -1,61 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.27.42.3
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794214421;
-	b=V12/9LfmXi2BypO/4+8fO0Km/e2uKJ5nBWcb9I0+kQPMbc++ESv89ZTvaBzj33j9h2/d
-	 EqzqZ0HxXemiccWZgYeQCDe7k1DJ9PUoVbf7y4jeCCSswTupfInGw3khgdvEG+HN5p6ZU
-	 HIdTkOcERuLK4PoyOL66lbFcWWqD2QIaUnm8BJte6HsIw96CiGSKdfU5y+9rR4h/T579M
-	 0gW6QOLo2DIgLPnARh4BY5Ff2G9wrzan3MYv//aYwXCbzO0vUDgeXtByBo044p34AJz4Q
-	 XiJpNx1UX4HIJ7qPX9bSI8sg9WFQj7jaEY9aB9eW1cGObd8Yf8SDFI3j4gXZPp1SFcw==
+	t=1794216273;
+	b=nwu4vO0PHNHEXRrdTytzBC9zLeSFpsKHiyjL88M9Tk0jLtTmqf/VyMzeBEiHVQv0BpZ+
+	 moZYkCXYV+JX7wPGAh6jv3D4OIjX898h7gIt4IpbsXVei1tINvci3xl2bjgh9hPNHMtTd
+	 BqA5vQNI5bIMoYq9NBA0ikv1VLAlRNR/mkLT0++rEUOcddCz3Iz4/gTeiikIayffNBETh
+	 8AF+Sp8KXlUu3yKCDorlLP63emrTfm0TKMATNMORjZKRUozIk6H48ZLaN5QeyC+QbPfQ/
+	 2t7FJX7jvzBUY+M3lW1jklNQeXyJz9JLh6V/Bs2JxTbMAFc2/aD9FYljn8eU1WcSK3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794214421;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=wK3Kj9ggnG7kxPcgujmWtBo3WnCYjA2Q28UFcLisF6c=;
-	b=JWbaqx7v8dEnat6U4M4VdXwRQti+o1sQ1GlemrVqDs6WkuuynmZf98tjW99ln9A6AOAX
-	 w+ecIcRztwJGPd3/Z23JczK3g2svNAm03G4FOhYxBxNgDFkDOG3h8wdQNezROvQ8fRvFz
-	 Gx3TL2oHrwHNyBk11Mz50vhQExXBlswp/4DTYQt5IqaJ05mSSOidYrZf4SX3sJMbKiMm6
-	 XbpnMy+oMHegUOUAZVfAKxrCMclA+Z4o43NK/Qp2k4B1yJyA9PFaaLPn4Uflu08AA4HoF
-	 p+TkQW28wwZivOT9iGNyFSbIEsVetn/3TUK/LhxCL0gZTynt6NlUjQD22H78jDuIPiA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794216273;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=6zSslAcgLSDpoJlg4DDhAvmXHB18Ak1qiHeBJZawCiE=;
+	b=10MIrf7S7258ojU4IEsBYb2DcWEwvsrV/ZhMTjXrmHFQitSMBx6CexPvmCSEDU0OwPWn
+	 opxeL1WF2aKUnJehPZghWenGFzIJEJpTIsviex2GkMPyL2kXoW7Ikm/KZPl0SkANEz9TW
+	 3RqtxMfnd2PlnY3e2IhZIdtYrdWTI4WNza+ceGrXF+0pJCfR9/VKccwapZESGi4HCCTaJ
+	 dGOCy7yM2kwO9mq8NxbWySan8PbA87UKs1My0S2ZXVLs6pSXlFivVBWw++fhmHQlhujZP
+	 YZmU5r98Gxlbcp7Dq4ATijxWdnzeeeruUi1tVqhKqmQIuwg7+ECB9t0p2rED9bTS+BA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=GmQltGGf;
-	arc=none smtp.remote-ip=91.218.175.171
-Received: from mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=free.fr;
+	spf=pass smtp.mailfrom=free.fr;
+	arc=none smtp.remote-ip=212.27.42.3
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E44606D80F
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 08:53:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08E44606D80F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=GmQltGGf
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=z1iR6/blDGadFjt4UJ120lWqA44OWbGZlUOQA5is+Kw=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794214417; v=1; x=1794819217;
- b=GmQltGGfrTRBUljc6pE0pz7Mu0htxj0pppojL9LWHniQGiK9XjB4pRmucf+Uv9ZWQirxRZJX
- vRdwZaGM1f21wuPAZGw9YdDSisUb39cCtS5fq0JA+BI7H6XERvwC6Cl68CeYkpPUwweukifKr1Q
- gbQYE9fZgvaTYALmI1j6nyC8=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 368778e633d6f8a2;
-	Mon, 09 Nov 2026 08:53:37 +0000
-X-Mizu-Trace-ID: 368778e633d6f8a2
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5be58ad9600so2606e87.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 00:53:32 -0800 (PST)
-X-Gm-Message-State: APuU4Z+13bRg7D46odkg65lA4WYdUW0LcbJgSBguAWZha2qkSMIEsYGD
-	WS1so8QuLLpS1AKa4a+VXq/o/ZFwENx7QYzm2VSJIv9A7gHxBE+AckeyAc6+AC492OpUQ5I7Oy7
-	MtU02d49OP004x5vf4ClZrogwXVri9s2L6lxInXJj
-X-Received: by 2002:a05:6512:1192:b0:5bf:f0fb:2c9c with SMTP id
- 2adb3069b0e04-5c00b5c77a9mr135877e87.5.1794214259400; Mon, 09 Nov 2026
- 00:50:59 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF4E606EEB1
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 09:24:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDF4E606EEB1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+Received: from L30177.local (unknown [82.65.104.223])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 00DCF13F88F;
+	Mon,  9 Nov 2026 10:24:05 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1794216253;
+	bh=4CPZ+2D+MohnvaVvAPW41N5ZGuWYUqT+prNnmrrnU/c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LuApu94a/jIJ5ETrgixMMjj+1upOLRTfD1qB3ZoxLYnWm7zhUD3qM8eKTzrHeYKNS
+	 8WZ3iq7U4sHdOtlOPzlrZ6kypytrAMXpc868xBlprcJkRuq6gSWSBV+e9Df/CwQcEI
+	 9Fq9S+6cor1E7Y1fXwXVcd8qeJx8c3LTR6waH97hq4/M8me3Jw42DcE4TN0mjQ2GiA
+	 H013mkF6bBEwshi2vCiA5VnnhlWkX30ksQa2eq+CA1lAfYAdYJIA+t4IlpJC5kilel
+	 KdPS8LXyhVoW6EtBI8F95p+eBL8ai5LiTuV8DTJB/qExzuth33HG5GvQb3KQNLW12f
+	 JfYKRwxBpkWDg==
+Date: Mon, 9 Nov 2026 10:24:04 +0100
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: Horia =?utf-8?Q?Geant=C4=83?= <horia.geanta@nxp.com>,
+	Pankaj Gupta <pankaj.gupta@nxp.com>,
+	Sahil Malhotra <sahil.malhotra@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-crypto@vger.kernel.org
+Subject: Re: [PATCH RFC] crypto: caam - never share the gcm and skcipher
+ descriptors serially
+Message-ID: <avGRNCLts4SX3NgX@L30177.local>
+References: <20261109-for-upstream-caam-shdsc-share-never-v1-v1-1-65a1dd146db2@free.fr>
+ <sashiko-outbox-204176@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,30 +67,31 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261109083205.806619-1-fuad.tabba@linux.dev> <20261109083205.806619-5-fuad.tabba@linux.dev>
- <sashiko-outbox-204612@kernel.org>
-In-Reply-To: <sashiko-outbox-204612@kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Mon, 9 Nov 2026 08:50:22 +0000
-X-Gmail-Original-Message-ID: <CA+EHjTwgOuCha6e7PREa8WkJMChtgiRfFZjTBadV-ZjzqA=miA@mail.gmail.com>
-X-Gm-Features: AclHuK--kTlM3MBNHvnwf6yTPpfzyPkz-vODHm7UL62nptqv6qWIB2G90_uWc1M
-Message-ID: <CA+EHjTwgOuCha6e7PREa8WkJMChtgiRfFZjTBadV-ZjzqA=miA@mail.gmail.com>
-Subject: Re: [PATCH 04/16] KVM: arm64: Advertise ID_AA64ZFR0_EL1 to protected VMs
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, kvm@vger.kernel.org, 
-	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-204176@kernel.org>
 
-On Mon, 9 Nov 2026 at 08:48, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [High] KVM: arm64: GPA and GPI exposed without vm_has_ptrauth() in
->   pvmid_aa64isar1 [1]
+Hi Mx Bot,
 
-Fixed here:
+> [Severity: Low]
+> With HDR_SHARE_NEVER, should HDR_SAVECTX and the JUMP_COND_SHRD jumps also
+> be dropped from these four descriptors?
+> 
+> All CAAM job backends defer sharing mode to the shared descriptor header,
+> so HDR_SHARE_NEVER disables descriptor sharing across jobs and JUMP_COND_SHRD
+> is never true. Keeping key_jump_cmd and the JUMP_COND_SHRD branch in
+> append_dec_op1() called by cnstr_shdsc_skcipher_decap() leaves unreachable
+> instructions in the descriptors that waste space and DECO cycles on every
+> job, and HDR_SAVECTX only applies when a descriptor is self-shared.
 
-https://lore.kernel.org/all/20261109084854.840576-2-fuad.tabba@linux.dev/
 
-/fuad
+Right, both are void under HDR_SHARE_NEVER: the SHRD condition never
+holds, and Save Context only acts under serial self-sharing (SEC RM, HEADER
+command).
+
+They are here on purpose for this RFC: to focus on the change under discussion.
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261109-for-upstream-caam-shdsc-share-never-v1-v1-1-65a1dd146db2@free.fr?part=1
