@@ -1,76 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.110
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794227313;
-	b=LaED0rL8t5/6+UW3Aqs/Th3rZfmQSbUIx9MJ0C9V5Tre/F6ARK9Igpm0OIzBaHS2fGxP
-	 FN/oNR7C+nv4Dn2zD1voqdZ6uUsOH4oet+ufatBOdBNHb1s4WmnkliREVGFkhI7xoBxWB
-	 xRFMt6SvodvQq3/NSdew1/hig6Fz235mDLpd7d0GOwh9/MMjHpo0bp1LU6TL7yS+XYorn
-	 MeqrBQjprymBBWMsxQbC86uQZSMr6B1roQss/tp1dOLcVvpEEe3ZgGWnb8j0cwOHGY8Gf
-	 xS8FJcrVON3gb7tPHBg0GjI9jgQ5jzZ9iqw6aPSKj6zdpurD/rPizPGpA4/Fs3NBgDQ==
+	t=1794227711;
+	b=x3E8vbSZVZCjAguI1YjVPTkcrBfxA3KwBpHg5dUjMa9eI4WxZvvYK2vPq3aqCtsTd16R
+	 Shhryn04nWSGwnAimhRcbvD0Z1RbgAPWLVnblVg+neikIT9/RHqmQZdCKQ/5w7BLGwc27
+	 r6SKod54HpleiYo7Q5TVDd1AzKf+RZyfmTbu/XWamnlDMODxfQdKRQW9YbiKT3vMSGlD2
+	 5tFzXVlFZKhRUVqmEeB+Fk1HN2gslOHD3r8TVXkr4V23Xcd0FQvLMw/ribt2ir+XjrdGt
+	 CM0Lg479K41pi2a8Tba0GredL3npn5ByK8oNsm7E2lFjG/xPpveYHDwQ3X+57rSxlmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794227313;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=xoF1P9G5WXT87H0pZV4NIMLWo/wgprLcTPKBhi/rVeY=;
-	b=Hf5ZoQrrRIcsbx+XYxuwOHhjILXpjVNdTApDEM2VIxtz6/qk2pRBQm/BTRwygv8sd3MB
-	 PuOCsVTeUqYa7VfCchckJI4/7PpBHTrxcfu/wSzA8sb7yVSXhhfQ5krv6MbU61pM7AuBR
-	 FulOAyEEwp18DM/z8dGtWZBD+ArLNWVOhyW/6ceplOYSarfjriBdGZsXqklJH9UFAD6Yo
-	 zEnt2uacPQ9pALe8Vvod5UvwJGc9E20WYIgcAWZGx75x0+qriqTSm2m9Xs86unv3DLRrG
-	 fTBSKuabWG+zib1Ih2ErWN3O2oZEDD75m/hFRu08f+Qlq3UnvvSJW1wN3Nc3eSrnaLw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794227711;
+	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=Z3l8voVSRQ1W+oAj6jnsq+7tQcEM1c8H4FbUsCQNMds=;
+	b=kpk9vnTm2l5EZYWskvBWsbJBJ5lfTt1/3qWzkiLDRChTQdq30+0HSOi3HinWfW/0LGEP
+	 ayhi6I2nXLokzh/sj1CX5K7Ef3Hrdx5/K1SxOAlCdfnNQONXwWwCnq4uz7CcPrFraUqk6
+	 brVEwV3T/kVAN4o8tpBRfYbO4KBKaxq7qoR7QfFxDKnjDkNVBVnO81lW1V5BLykOW3HbV
+	 +h3wKYhJCqdOPMYBS+P7jnd0MdGuHZL2VuscNCYBNzB6pvRbth5PnYoTdPXbKXQKkhZMq
+	 MJImnCuUBDfd6GKh+THKg/DTnCoE3f3TJp4F7HR8ksC2VCwdPe0ctc40qcz0Z0X2NKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YyeifZVe;
-	arc=none smtp.remote-ip=198.175.65.13
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=linux.alibaba.com;
+	spf=pass smtp.mailfrom=linux.alibaba.com;
+	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=u9MBA7QE;
+	arc=none smtp.remote-ip=115.124.30.110
+Received: from out30-110.freemail.mail.aliyun.com (out30-110.freemail.mail.aliyun.com [115.124.30.110])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7F0606A326
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 12:28:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD7F0606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43FE606EE94
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 12:35:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C43FE606EE94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YyeifZVe
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794227312; x=1825763312;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=LmETJpGMgjLjr8Im26YCx3N//D7EYImpYh6xeVHum14=;
-  b=YyeifZVebAMUMHU/wVl5tolLjO3uGHF+wvioPf3J6NzK5wdDndsWCCzy
-   JvyQsoWGILIJCjO3wDdwe7tVFDGHgdggGDsfy0hjv2dLx6IaKiVjBxof9
-   1otXXZSy7t3gds9hYSzbJa61yFiv0mA26Bz4o+NJ89wgFNAGiYWzet5ws
-   guSrjbxGVhpLCO9IC7maoUVdCF7wPB7KhY8BFb+xR5kwLdjSdajRTPbnL
-   38exdY9zJMv4YVxqEApu9ol3Xc/RNFfTIP1hxvnh4wZ5XtYOE23eNWvcN
-   YAt2ehXvAdSLuLU+8lQaH7yHGCgqzPfzMxo1WK5Nk1S3RKAXXIrRJ0Qxe
-   A==;
-X-CSE-ConnectionGUID: grPvPEZ+QbarUDFXfrCfbA==
-X-CSE-MsgGUID: UKSU3O2fT42AAwmjZuFzdw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11960"; a="2824468"
-X-IronPort-AV: E=Sophos;i="6.27,203,1787036400"; 
-   d="scan'208";a="2824468"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 04:28:31 -0800
-X-CSE-ConnectionGUID: 4s5bagvTQa6BAYW/kfDA1Q==
-X-CSE-MsgGUID: Q7yj2/jkSrmsNHjTxqZhJQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,203,1787036400"; 
-   d="scan'208";a="8178997"
-Received: from ettammin-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.244.135])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 04:28:30 -0800
-Date: Mon, 9 Nov 2026 14:28:27 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH 4/4] drm/xe: Use intel_display_gse_irq_handler()
-Message-ID: <avG8a-CkptBuzQir@intel.com>
-References: <20261109114554.19597-1-ville.syrjala@linux.intel.com>
- <20261109114554.19597-5-ville.syrjala@linux.intel.com>
- <sashiko-outbox-204904@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=u9MBA7QE
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1794227705; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=Z3l8voVSRQ1W+oAj6jnsq+7tQcEM1c8H4FbUsCQNMds=;
+	b=u9MBA7QEk4blLEfsfs+Y3FY/oQ9lLnqOaKD8k1a6/SIZbZVnPPpHnJWGjkPWnoWgFZ+tzqbpmnp0uF0HK22P6LezYC7suMPf+WgNGSQEAO4WxFln2ugMOl/FPcgGh6OHOEs4qLv4zSOJc54cfs342I1IlSQeWEqbrpAD97vN2uA=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R241e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045133197;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=2;SR=0;TI=SMTPD_---0XEPkcQv_1794227704;
+Received: from 30.178.85.177(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XEPkcQv_1794227704 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Mon, 09 Nov 2026 20:35:05 +0800
+Message-ID: <1b5dc444-89b7-47cd-8af6-736145bc302f@linux.alibaba.com>
+Date: Mon, 9 Nov 2026 20:35:03 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -80,49 +53,76 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] nvme: define the SMART / Health Status async event
+ bit
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-nvme@lists.infradead.org
+References: <20261109120207.1352165-1-kanie@linux.alibaba.com>
+ <20261109120207.1352165-2-kanie@linux.alibaba.com>
+ <sashiko-outbox-204916@kernel.org>
+From: Guixin Liu <kanie@linux.alibaba.com>
+In-Reply-To: <sashiko-outbox-204916@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-204904@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On Mon, Nov 09, 2026 at 11:51:05AM +0000, sashiko-bot@kernel.org wrote:
+
+
+åœ¨ 2026/11/9 20:09, sashiko-bot@kernel.org å†™é“:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [High] drm/xe: call to undeclared and undefined
->   intel_display_gse_irq_handler()
+> - [Medium] nvme: NVME_AEN_BIT_SMART and NVME_AEN_CFG_SMART use wrong
+>   OAES/CFG bit
 > --
-> 
-> commit da9b4f3b875bfbf33a72170de1fb2c018547566b
-> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> 
-> drm/xe: Use intel_display_gse_irq_handler()
-> 
-> This commit replaces the direct call to intel_opregion_asle_intr() in
-> xe_display_gse_irq_handler() with intel_display_gse_irq_handler().
-> 
-> > diff --git a/drivers/gpu/drm/xe/display/xe_display.c b/drivers/gpu/drm/xe/display/xe_display.c
-> > index 21692408f9be0..0236f69a0f883 100644
-> > --- a/drivers/gpu/drm/xe/display/xe_display.c
-> > +++ b/drivers/gpu/drm/xe/display/xe_display.c
-> > @@ -220,7 +220,7 @@ void xe_display_gse_irq_handler(struct xe_device *xe, u32 gu_misc_iir)
-> >  		return;
-> >  
-> >  	if (gu_misc_iir & GU_MISC_GSE)
-> > -		intel_opregion_asle_intr(display);
-> > +		intel_display_gse_irq_handler(display);
-> >  }
-> 
-> [Severity: High]
-> Does this break the build when CONFIG_DRM_XE_DISPLAY is enabled?
-> intel_display_gse_irq_handler() is neither declared nor defined anywhere
-> in the tree, causing an implicit function declaration error during
-> compilation and an undefined symbol at link time.
+>
+> commit be7079eb32755ede896d21f96ed7d1785a179279
+> Author: Guixin Liu <kanie@linux.alibaba.com>
+>
+> nvme: define the SMART / Health Status async event bit
+>
+> This commit adds NVME_AEN_BIT_SMART and NVME_AEN_CFG_SMART definitions to
+> include/linux/nvme.h.
+>
+>> diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+>> index 6248711784b37..2b4f8e269d12d 100644
+>> --- a/include/linux/nvme.h
+>> +++ b/include/linux/nvme.h
+>> @@ -867,6 +867,7 @@ enum {
+>>  };
+>>  
+>>  enum {
+>> +	NVME_AEN_BIT_SMART		= 1,
+>>  	NVME_AEN_BIT_NS_ATTR		= 8,
+>>  	NVME_AEN_BIT_FW_ACT		= 9,
+>>  	NVME_AEN_BIT_ANA_CHANGE		= 11,
+>> @@ -874,6 +875,7 @@ enum {
+>>  };
+>>  
+>>  enum {
+>> +	NVME_AEN_CFG_SMART		= 1 << NVME_AEN_BIT_SMART,
+>>  	NVME_AEN_CFG_NS_ATTR		= 1 << NVME_AEN_BIT_NS_ATTR,
+>>  	NVME_AEN_CFG_FW_ACT		= 1 << NVME_AEN_BIT_FW_ACT,
+>>  	NVME_AEN_CFG_ANA_CHANGE		= 1 << NVME_AEN_BIT_ANA_CHANGE,
+> [Severity: Medium]
+> Do NVME_AEN_BIT_SMART and NVME_AEN_CFG_SMART match the NVMe specification
+> for Identify Controller OAES and NVME_FEAT_ASYNC_EVENT?
+>
+> The value 1 is the Asynchronous Event Type (NVME_AER_SMART = 1) reported
+> in CQE DW0 bits 2:0, not an OAES or Asynchronous Event Configuration bit.
+> In the NVMe Base Specification, SMART / Health Critical Warning events are
+> mandatory, so bits 7:0 of OAES are reserved and zero on compliant
+> controllers. Checking ctrl->oaes & NVME_AEN_CFG_SMART will therefore find
+> the bit cleared and never subscribe to the event.
+>
+> In the NVME_FEAT_ASYNC_EVENT feature (CDW11), bits 7:0 are individual
+> Critical Warning bitmasks corresponding to byte 0 of struct nvme_smart_log,
+> already defined right above in include/linux/nvme.h as
+> NVME_SMART_CRIT_SPARE through NVME_SMART_CRIT_VOLATILE_MEMORY (and used by
+> NVMET_AEN_CFG_ALL in drivers/nvme/target/nvmet.h). Passing 1 << 1 to Set
+> Features only enables NVME_SMART_CRIT_TEMPERATURE and leaves spare,
+> reliability, media, and volatile memory warnings disabled.
+Sashiko is right, this is a big mistake, Will fix in v2.
 
-Your baseline is too old.
+Please ignore this version.
+>
 
--- 
-Ville Syrjälä
-Intel
