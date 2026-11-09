@@ -1,83 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794240431;
-	b=l3qKTFkHIKxLa1t6Xlw3szm+sSN2ywnMDxg39D5JmxtBIENCocW/oSiJZpiLR6rh/RGS
-	 MDuyCLF7BHAhB7TgyL5Q1alh9lWRqoYCMKcJdDo8vGKQPg7DOhw6G/zjB4kG0jy8GPDnu
-	 zFxGrlVc5NJcTxEh5n36uglsaKaGmSTazQV7zn/NU+AolfrqBFgke2LTXtuHOuWoWMydY
-	 pzzHbMC7UB/Ebs+yakgjpfMwXqjucf/gGYGKInm5yXcUdCFSSNki0GywLFAPYawQ4vi6z
-	 kwnCIlxcbTe5vGIOqReX7aWAnC4NxpPABtqXi3k6zjVtI8Md7Dulh/oRUmTaEhRkVrA==
+	t=1794240433;
+	b=th/WTFQ7gkV+nGvRIk41Wif2qKU9kvLHyu/si+DUgPSTTaKyX6JdNw4dRZu4nZebdEtI
+	 juQtpeZTU/uDEDKdIa7KpCSTw05XXyAOo/1dln143F0jxoRqcBzfVAt/zpIlx/y2pxf24
+	 xYdwz7s50HJN2iH2ND2oxhwRuHFJc7iQ8Bnrps5JptaKBin1HEJ6+hTrTCszHEVgCHxE1
+	 vXbmUXnMHg9gDlUQq1KuOpDVLamqiH0WLKs7kBmpNVNwqCk6MBTbdcodPm+5nsHFLRa2y
+	 AlT7UJe1UAibE48lvvroKhqTpNpIUXKJw6zLg8ZwFXfCxRLzkga2Nhms7+Mazh4utQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794240431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794240433;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=PAVOiEo7yvU59/BVYzddko8QH5/O/35Z26C3YJ1MLT0=;
-	b=ZYsxOOFSvZ9vVvmIRo1Bq3CgHRk8C6JhKr5Z13elzeiy3E1M0rMsXRei4AKIknB7RHMx
-	 uhq0fBHcNpsmra431pTMF5qGnQnfdUTbEkOTrydiE4Yj+NGSNKhQeaSyduprLvSYu795d
-	 D3ZCKpLIUWX6+JjuEl02HoNRV0kmqyntrOLMbiyXrQmTr5QB3sZYcCIxKKX943QNbTaly
-	 PHhjDcq8NCUFebqQ6VrlwA564e/zRhcfpD9221/qN4DJThfhynmKaKzQImuYM/kH/52tm
-	 oalec1PbRk25g1+XWblpl3Uk7Pmno/QCJc6nczPToch7aCMYPn3KzqjTlf6ptpDu4EA==
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=YeXOVU3Dlu3RGzoo7GptmhPvzHeqqfiDgx6SA9rp6Cg=;
+	b=U20mYe66sHPNP/T64gOMwr4g6GkF4f8zPpPrmn0wj9jC85jrrwCudVkoC2bRKquPguve
+	 Yt5Ybr7P6d09AnVvF+s/Q2J/u4efaY3FqhOm1byUIJL7fJJyUOjw/Itit5ckC3um7wxtX
+	 5K92ETiOIBQiR/jKdqMUNfXVwt/c9/Qt5ZTj2AHpoFI7mrMSwnzHkkx2Us1RbqQLydT35
+	 vmVh5+bZljU9af+zW6Oc2RM78BAZM8XzeirFobwcYpaGbSZFyQCfoYCDIaXtY6pCN/4OQ
+	 3CDOBicI9orx/iEHBNT6vk/VNRD+MD8rIXBrK/beKO96sSDEQ7Izcl5JbOD6R0ZmzFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LCaK1eIK;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gpZG8jVS;
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E11606A331
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 16:07:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B3E11606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07663606A335
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 16:07:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 07663606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LCaK1eIK
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4afe2d546f9so15425235e9.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 08:07:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gpZG8jVS
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a5087a5348so9056005e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 08:07:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794240429; x=1794845229; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=PAVOiEo7yvU59/BVYzddko8QH5/O/35Z26C3YJ1MLT0=;
-        b=LCaK1eIKUBEtOvs7dogUw4ugR8ozybfJ1vJFcbps2W19bcECXukyUD9XQ+8EaUWuM6
-         /nNAcs14bZA+oeQox4hWLmXVSxWQdAYM+y+W5ItHm4Lw0W4xDFXeFWzS9suCdOYHH6q2
-         SlDe+3f430KAN6pysxRKO6TorK4CmArBl7ANuouWVuYtWcPHim4OHScTszgo+m0bmKo6
-         E5lR39DCQ2p/dISyvmW0tMQqasPQZAIiYH8rZ7eLC5l0EGU2XcUvB+o89WYrGQaGEH7D
-         4J+RDLo90q5c+l/+EvgadqW4f1X8TYyN099AQLXdIWWbicai6QHaFeL3DgW71E1ojLNQ
-         oLTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794240429; x=1794845229;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1794240431; x=1794845231; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=PAVOiEo7yvU59/BVYzddko8QH5/O/35Z26C3YJ1MLT0=;
-        b=opvHOOgAGJHZ5wsGb+TROg5BcjXfPCO9aTIeLlHXX3GnR8XWIs4u8Sx195alMuXMXh
-         7JeYo7KyRxu21hI4XXxLXD/5iEIEQNzA5ptuMB7ZkO3nvKEauX9VatZe/S0nt8gvtLHm
-         fOpRb9M8rtjBXbhaUKcxtVHJOf3OzZB+5M3y/eHc2RuC8bY/Noat8G1M8yojuo628sJw
-         JQibSz6iJOyhQcaut7ExTL2wIhn3Uqv3UAqrAdZo0fMIzhkFDeuHoJQ+IRenRDQ55bkS
-         e8PPXyaya+AB2+Vfy2fDoBXk/s6CVkaWUd89iVz3J8QJ6xuRsoippWCF4h1+PR65LA4P
-         s5Pw==
-X-Forwarded-Encrypted: i=1; AL+hErGm1sVedaqXOSXSPtn6m1Fp2FT98md2wmtndV5+TGDN2sFRrMYyh69eMOEvPbOc6meB2mkrEUDMYI0jD7Ny2Jc=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9tLOiviVhL7A0RQkh1PBIAmR35dg92dCPPbJ4aDIQHItPZpVrT
-	LotZDHz2eaCqqte1YB/bfsIATvApgsA1qQdw6f4sqUPnDLg0BejJkO7w
-X-Gm-Gg: AYBFou0V/flaxY/bc7JeceoRz8CjctgBeW5PXDxOmlCkz6A7dIQCyPiVcam76s6BiFr
-	0qbwjE18sFglNEHU9tJMriOGmtVQAxhjiD9Pqv3ZfnvVhqmsRNrPwXofFopL/w94jTA+IX/J0dk
-	k+QoTfBfcprQFLjQg88Zm08gJ2hL/aRx8RXZ5I/K9GKFNFb24pxmsQI7bKXhXJVq8LxlPkfEGET
-	YnttAH/Q0XcgfSdbDSqBw+a/QsB91knnW8JyHxRAj/m+nWmmfL5IBlGwOmjaKFKUmvkEmZlV1Pw
-	+8UQxPwXdpt5OpagYEAVnM2w7qwyJ3HdKlL9M13GVCmehwi9lOCLcsxs4sqwbK0h8MqBO5fTuAR
-	yuNY4fBqCZPQiC1wE8b3ygrQtYt1AhofeEwJgPqeaG6NwTjcVkkzff2RleNbYihefGx9uOkP70D
-	JkAsIyHSxVgyb52HQK5USClFmMzCksIkxFM7taTA8pthOWa0uzQGqIP51EfV7G2aW38tVYEcjBi
-	qdZuyt9N8jPG0yjC5zp3m/dVyA92hpzjbGjz282AhONA6jP+Sb2au4yfkkrnARIrI3ut3BkMi05
-	KJ6Bw8yqqCK1zbeDqCH32yBX7NnoEzT8xxCzJkFRbcCn5I50bznWKeukCcsFOad95eSdvONXD2g
-	Hs5vaJnucOyZzA4AQP7fbuz4VPPpHK4k56iYROWjJDw==
-X-Received: by 2002:a05:600c:4f86:b0:4a1:fa21:fd90 with SMTP id 5b1f17b1804b1-4b960d9b17dmr83943565e9.9.1794240428927;
-        Mon, 09 Nov 2026 08:07:08 -0800 (PST)
+        bh=YeXOVU3Dlu3RGzoo7GptmhPvzHeqqfiDgx6SA9rp6Cg=;
+        b=gpZG8jVSBsgIQ17YviMS/hevR7ztW+tplXcy25CjSpLfyuUR0v17rpwGji2s2HUXzk
+         EWPwYxPohii2AVPJHSMTSYPwM6LnWaZ+pv3t7XFJEnbmflA2a1W0Cbp0v7owfEEsqsne
+         n7amlCTwfxYcuHOJmtyGptzSxT/Lzs8YpaczbskKlegjOkRapnFu05wUm6OpCMN9itvT
+         YNssqylsMr55gq6Px+WUEJ6ioIE1GjWLUufXZjo1fVRq48RtqN4HUUlcNuVg/ZqyAbnS
+         JeRVHR5m2ItPO4zHioCRuD8YeEK5c3/LzX9aJ5dz+D7QkmllblLXAdADc5cXmxoJl1gX
+         lO2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794240431; x=1794845231;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=YeXOVU3Dlu3RGzoo7GptmhPvzHeqqfiDgx6SA9rp6Cg=;
+        b=MN5Gfp+N1c+Q9/1xFwXTfPqvIL8Gpj1ieiJddKvDt3aKCY/DDBWln133ZcNy8//Yjk
+         mT/ao1xFXOnYq5pOtnw2rbAa7evbaXJ/MFhza5tsbK05sTxsAuMu4fHfUNMVYG99t9k4
+         PCi2+3RQtgUwkhylEph30CEqeMxH0lvgp/vkYx4uWOWL3imulgvCt+utBn23n6EFMAX1
+         Q2MzCjfFruVet5ehvXN3QJf1hR8Eixu+ajNBD8z/qvKieIU52gYHqLavkU2TwvfP9iDF
+         IrkUKJwyFmor8t6pMDWi7mRMPyuXF9VBv3oaQQ375bjcubbIN9XiEeO8RUC71VNMOjOU
+         pLjg==
+X-Forwarded-Encrypted: i=1; AL+hErFi2eqtySiyr/yU3KjY/KrBz7PeYxNesb9kS+pr3SkzZC7JMHnVUJhm7MJHRo2c2KG9/8m9SnyUGqwgUSM9BGY=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9/Oy6rYVvyfoFJ/JSCOOPsI9Lb5rDWk8BaK79mNZP4xD1vSViR
+	VT9nblX8vz9GrCNVFDfoHdOP0rTUEpI/uWQiqZ/qOIH2unDoz8lim0I8
+X-Gm-Gg: AYBFou1HFj7+cQrQULBgvnk7DKN4MOlq4K9q6WzwFRR8OWZ49lYVBoCaVIKs8V7j3Sa
+	//fXVeNBv5Hv+4oIg1qVNhyKEJ652C74sS1fXCLhud7B3iTZGaxdaUwW6p0JM3X49wvfn7btMCR
+	kqvaxVyi5Y+WGHw3tITy7ggDaD2bnBpet3rpW6lJZ7KH9/0WEeqTSidfvwpwMz+B08TdYhH0u75
+	oSWkADKDsLIEqt481/DPdie175PaSRgXyw3OEf6YKXah+ckSkyBZzJc1Yf9lSHgbV858Oidh2PZ
+	CD1AyfU/Ug9klCc7Wp/DL/a1nudUejtqZ9KGDHmZGO9BQ81WwrsbSoRFChaKoOvlc3kUCNDuakv
+	JKPvv1IA0nG2uLDL6txru86tXLbzYMStVLP4u6p+Sfm44+uy45T597m/McxXcolr1PHLmOnirpv
+	AXRJdZ2k8KvyeirkDx5j2yQ/hL/aL+34BK5TNKcQivW7XBHVpKY4mUGzbVegTJajGKu1ScX6f+j
+	j9pv9glOuRLOZNcAJ9UC5sc+t2y33YmSWmLMSGJL/P2Ibt2CRekCSy7pyfCxoNX12+QPy7rTndo
+	AGGmhp6zXMj7L0c/HLwxDYCTVABSmGLScAgDpDk3RZChlUa5yrRzUmLG+OvbbHzTKTOHBvv2PMa
+	m/0VTjM2arvFfJyGaIVbuDQKrx8fdVnJuQXfJiqCIeNzzpkqqDCZYPtlq/LAhHD8=
+X-Received: by 2002:a05:600c:34cc:b0:4a1:de8a:603a with SMTP id 5b1f17b1804b1-4b960da49admr82912395e9.6.1794240430762;
+        Mon, 09 Nov 2026 08:07:10 -0800 (PST)
 Received: from romain-ThinkPad-P14s-Gen-5-AMD.tail433d9c.ts.net ([2001:863:742:6109:ac9d:152:38c3:6463])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b90f119b96sm159174245e9.15.2026.11.09.08.07.07
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b90f119b96sm159174245e9.15.2026.11.09.08.07.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 08:07:08 -0800 (PST)
+        Mon, 09 Nov 2026 08:07:10 -0800 (PST)
 From: Romain TISSERAND <romain.tisserand@gmail.com>
 To: Igor Reznichenko <igor@reznichenko.net>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
@@ -94,10 +95,12 @@ Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev
-Subject: [PATCH v2 0/3] drm/panel: ilitek-ili9488: add the PocketGo S30 panel
-Date: Mon,  9 Nov 2026 17:07:03 +0100
-Message-ID: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+Subject: [PATCH v2 1/3] dt-bindings: display: panel: ilitek,ili9488: make the port optional
+Date: Mon,  9 Nov 2026 17:07:04 +0100
+Message-ID: <20261109160706.2272332-2-romain.tisserand@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -109,54 +112,34 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Miyoo PocketGo S30 is an Allwinner A33 handheld with a 320x480
-1-lane MIPI-DSI panel built around an Ilitek ILI9488. The panel uses the
-existing ILI9488 DSI driver with its own init sequence (from the stock
-kernel), timings and DSI mode; the sequence is close to the
-E35GH-I-MW800CB one.
+The panel is a MIPI-DSI peripheral, a child node of its DSI host, and the
+driver does not use a graph port. A port is only needed when the host
+links its panel through the graph; other DSI hosts, such as the Allwinner
+sun6i-a31-mipi-dsi one, link the child node and have no output port to
+point at. The PinePhone panel is described that way on the same host,
+without a port.
 
-Patch 1 makes the binding's port optional: the Allwinner sun6i DSI host
-links its panel as a child node and has no output port, and the driver
-does not use one. Patch 2 adds the compatible, patch 3 the panel. The
-board devicetree will be sent to the sunxi tree separately.
+Keep the port allowed (panel-common) but no longer required, as for other
+DSI panels such as ilitek,ili9881c.
 
-Testing: each patch built with W=1 for arm (multi_v7_defconfig,
-DRM_PANEL_ILITEK_ILI9488=y and =m) and arm64 (defconfig, =m), no
-warnings; dt_binding_check clean for ilitek,ili9488.yaml. Tested on a
-PocketGo S30 on 7.3.1 with v1 (A33 sun6i DSI, one lane): the panel
-probes and attaches to the DSI host, and the picture shows the right
-colors, size and position. v2 only renames the compatible and edits a
-commit message.
+Reviewed-by: Igor Reznichenko <igor@reznichenko.net>
+Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
+---
+ .../devicetree/bindings/display/panel/ilitek,ili9488.yaml        | 1 -
+ 1 file changed, 1 deletion(-)
 
-Changes in v2:
-- Drop the "pocketgo" vendor prefix patch: PocketGo is a product line,
-  not a company (Krzysztof). The S30 is made by Bittboy/Miyoo, so use
-  the existing "miyoo" prefix: "miyoo,pocketgo-s30-panel".
-- 3/3: drop the claim that COLMOD sets the panel to 6 bits per color
-  over DSI, only say the stock value is kept (Igor).
-- Add Igor's Reviewed-by. I kept it on 2/3 and 3/3 although their
-  compatible changed from "pocketgo,s30-panel" to
-  "miyoo,pocketgo-s30-panel"; nothing else changed in them.
-- Link to v1: https://lore.kernel.org/all/20261103110524.2812831-1-romain.tisserand@gmail.com/
-
-Tool disclosure: this series was prepared with Claude Opus 5.5
-(Anthropic) as a coding assistant, in an interactive session: it
-extracted the stock init table and timings, wrote the code, the
-bindings and the messages. I reviewed and understand it, and tested it
-as described.
-
-Romain TISSERAND (3):
-  dt-bindings: display: panel: ilitek,ili9488: make the port optional
-  dt-bindings: display: panel: ilitek,ili9488: add the PocketGo S30
-    panel
-  drm/panel: ilitek-ili9488: add the PocketGo S30 panel
-
- .../display/panel/ilitek,ili9488.yaml         |  2 +-
- drivers/gpu/drm/panel/panel-ilitek-ili9488.c  | 55 +++++++++++++++++++
- 2 files changed, 56 insertions(+), 1 deletion(-)
-
-
-base-commit: a1e63ab695ad76850ab9787b9eb6aab695dc2965
+diff --git a/Documentation/devicetree/bindings/display/panel/ilitek,ili9488.yaml b/Documentation/devicetree/bindings/display/panel/ilitek,ili9488.yaml
+index ea7449273022..016a573893b7 100644
+--- a/Documentation/devicetree/bindings/display/panel/ilitek,ili9488.yaml
++++ b/Documentation/devicetree/bindings/display/panel/ilitek,ili9488.yaml
+@@ -32,7 +32,6 @@ required:
+   - iovcc-supply
+   - reset-gpios
+   - backlight
+-  - port
+ 
+ unevaluatedProperties: false
+ 
 -- 
 2.43.0
 
