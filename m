@@ -1,87 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794194741;
-	b=qNE0LfsPL69Y5wgVY4FfIyN2xqG1Hz22NgxqtcJVdpoeCSIWJThEsmX6+sz08E30m1bT
-	 tgL72twMeN5VC2cB6PTW1XnuyZf/rfaJvgxVtUJFzXB94nbtQ8HISDEI59D2VwkbwLTv6
-	 +HpyBIfKUKip6CfwvCMl98qS2V0aAHTKV+wX9eM6Rpub2q0QdZO4kjsqax+9K9c8zIZ3h
-	 rP12NybpPyUnAuhJSloqQzwa7bbcz5OxNQzvNEHEyhTYQaA3stXgCtWxB/FmVtfy1+1yx
-	 +9coMAOOBy87BmtQ/Q/QQklvkt68hKh7joKZWKIb/74uTqChj6eB0/WjeOyU2gtaRFw==
+	t=1794198236;
+	b=nWaNgTgBDGFE6YnE5VfIr2yvkanl4GgIpq9BpEFm5BVjH6gSx/WGdrbLuINmKvFVJ2jq
+	 ziOptYq9EceqDsikkAC6ZoSPeDzETTV++kb+/Ocqaue+BXS8r/9y8JoBVZdUf7q0e2EIM
+	 ZVjMLSP4/8uVzK6LnNmJ0IyVd+1JzVMH++2A9+tAezNLh4hXT63bxgRCPZ0dWh9j27moW
+	 x4Doc0928TsffjCLWH+eZTZ+xjb3BsSAi3+dqEn4uNb55lgjaSmrk/DPOJtWt2wzAGin/
+	 ngxofzMh0Hfb/xExviB39uJ5suQ6NvsmBCwPnvEFN0zVAt0/ld6LSyb+C1XoD033kBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794194741;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=z8n7JaPkB/Y4IA6cU4L2s+2dB40viJ/GtgSnJTcko/M=;
-	b=OD4OtFcHkIemLokDJroGCkYoHG5kQziKSJeiQD33/iCKS3ZAfVCuO6Wh3s2rjAzK+KdS
-	 HvUAAB4JECF0k/rGScpctigbMSaMtM4hWxWOr26zbrGdMU8dYXc2ccC1WhLzsmBqbDtJb
-	 8ZCzDX541m2s3+2XgMBaPRMG3juvnZdqrkhW6alrnU4dgby72Avi1izLadg99iDZE5q1N
-	 c9iQd6Mf0/m2DAR/OAguku1TpLlhrvFANEYHCpDTGjjIhfWF6X0n4vonGBePUoy0wFRjI
-	 1kYn/NSlKXfiqGgb8AbGsIl0VeSwuKCcsBoWHGpeAktIifS/2+3DYWO4PVG0u0WBxyg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794198236;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-Id:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=WGU9Dd8X9NzN2gOkVbewP2kXsl+Worp16R1bZIHkL+4=;
+	b=dwJNDsVYEzYczoojOzuofNl6FWJxcyOVoDFJrylj/omQj3MPmZjddmUQcnbTnqf2tkPv
+	 DGsE3S8Dgvr2IEUMbcNCAOzhYegt3l+VCfmEDA74UyeuAHups6Z2gl4jsHfj1LR/NfTpK
+	 dY0+K5+ryuygzuwnnnXg/mVxLwH3ZTonfvk647U6YE16y7hTtEjpVlgyC7zXii83px4ge
+	 WuqZokQRXpU5GSEibeWLx2Xyi6UqX0T9cBy0d5GEO1eE6M4ilYXRkdRkix1sxrioSV/D4
+	 ZGj8aU1H9Vdu16nIoQVa5z5trwjOIJ2LjJWigkaWMFnr1RCSzfKA53YtGWA7JgKTviA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="xA/FtYIt";
-	arc=none smtp.remote-ip=209.85.216.47
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cTO+k2yk;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC37E606A320
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 03:25:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC37E606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AA8606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 04:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xA/FtYIt
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3ae6b4c669fso199543a91.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 19:25:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794194740; x=1794799540; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=z8n7JaPkB/Y4IA6cU4L2s+2dB40viJ/GtgSnJTcko/M=;
-        b=xA/FtYItYwq3DD0L/PzkozBpXAULCEiaerLRWOJP1O8cTSMDkh7nKy+L3Dmyxpzwx7
-         FlaQq7hP+6NnBzhktDtTgXj2iUIbPS59MCuP1u6fhQlrFWFM+y/a+QrVao4PxWMtqtHF
-         6eJZMDMgN7l85joo1BmNNaSC5fylqSGmeg24kfm1uU8xayABPZN2ewiPj23w6r62I+rp
-         37k//raM5M8nvD+l54DJdjRKcbT+LvNPUQzL9rEZyZaOi6Pf3WZX4sKjiWqv/dXbQyhj
-         VawQ/oWX8MwxFPHbNTPdJxqt7THwEFx4Era4EWpo/rWRLORlcAQsZ2p5JAFCGlvC16ps
-         capQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794194740; x=1794799540;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=z8n7JaPkB/Y4IA6cU4L2s+2dB40viJ/GtgSnJTcko/M=;
-        b=djiAdxJ5svos5LK+jEEQWRc6qmJyCxWyQC8s6xHPmyK1jrqkpQ+SSW9/HbaYwA1p2V
-         Yl+V06jH+FoglTZIPtSIRRJrjFRVIY25m24UE5cX1S9hey8tULTDItktjpMkvWEcKa5/
-         rFcuBqRqyGkG0NbBxPCpDK++RYEfY0KA8St3Gu1OLUZGOIbfsGvNxfDd78XU3b67bDr9
-         rKprZNSh1DXhhF6TTkV4KaFoel7hi6C4TLh4rsbKhzsrrawH3NJ8eikl44g1VZJxvoCB
-         vED0fm3yfYP+JNuLskjFIP64M+2d9K7WBWvQA69Ic0DWO25glWNQPBW96DNjYtq0s4hA
-         xLUA==
-X-Gm-Message-State: APuU4Z9CbPe3hYjdQTkpgkhycqsnEN/wKDd9mppSXoVlfefvzci+atKi
-	LF4KMyd6QrOSuYr2zf9C0CfhSEegZmogYN87Ufno6ZQbHaZt684yp22vo2KxpA==
-X-Gm-Gg: AYBFou3lh8CWVNSalKdB+b/VY/hg6oDw+8kKKB3DIZ7UmvqR5xtcLCwYO0QjXhkxDBi
-	woms9DYEMvAIgxf4JpJzUsE1bcxrCGjsPm2wYEJAshW/HHppqexLmK+B8GI5RzfAESfiE87lb56
-	DHd94gDeDMcWq991VWhXmU15HYWoMc4vjVdj6PJgVRE3f72W5RV4i1xtI1gfFTihODsFAgrHlCR
-	nQjyQ6Cg9bbbE+QOZL/vii/sn+BOMzHv+6Xg8kk+MqWQxt+TPTwm1ATMD21UJ+TW4UpTJo2w/aC
-	9gjGjTYdGlrZicmvu3HYDpxJSAFBNNH+Lvc0OGgixTnYFjTxgikZndhpOPZoQ1cw7q1AieIzE5B
-	56klMfShez1vSHU/R+eJxtmLmUNilKt8+pS7S8YN0Iyeem7/q3Lnu5vz41UREzFIv2zIMJeQSgl
-	RISyPaRBLeLWanxntN1qS5jGA5d/vaDFgFaXZiEH1eXB9STgG/D5d4OGa50JsyzGMUfCoJGHCeF
-	GQFMLwXPfWiHpCW6Typzj7I71CgyBbw/m+I/acMCzidaMtHXG1KqIdsVFxfGDlAMq+E/2ENfPWb
-	dlkQkoyJSvoO+w43IInn4FoxWaJ5bBqlO6A44kki/BqeTUdW+NGY6DEwpDXaD4tXpguSluug3mK
-	/TNQqzyit
-X-Received: by 2002:a17:90b:3b50:b0:3b0:e388:d9c9 with SMTP id 98e67ed59e1d1-3b12d3fc0aemr1747792a91.12.1794194739886;
-        Sun, 08 Nov 2026 19:25:39 -0800 (PST)
-Received: from [192.168.0.100] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1164f16b3sm3657744a91.0.2026.11.08.19.25.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Nov 2026 19:25:39 -0800 (PST)
-Message-ID: <4e271e16-c3a6-462d-ac55-abd9129e03e1@gmail.com>
-Date: Mon, 9 Nov 2026 11:25:36 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cTO+k2yk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE111F0089F;
+	Mon,  9 Nov 2026 04:23:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794198235;
+	bh=WGU9Dd8X9NzN2gOkVbewP2kXsl+Worp16R1bZIHkL+4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=cTO+k2ykCQ7JYXsgkXvMdub0CRpfhpkglaSibhmXltkNUZul5Zj2H8bY16Ck+OQLx
+	 7lKarH/apQ71G/a44jkmMm8RLENbUNV9hUvXBENcqqaDaZ0YPS3gOrNRo1qWiV1191
+	 ++shIm2/f3arcZgbOgY76LCNhr8UxPTl774dKsxQHUYb9BgOYxh3IDJsgd4vcYDrA/
+	 KWndcQ/nFHyvugIVE4mHwwQ0LqDtDNdiHsgSx5LHftwGYX/gs4kxsRwi0ADZTBWzt7
+	 MJ3V27KNeNBBabg0F9HetmGx4I8ScrwJBXHkAMgklNuUZYV5MBU2I4lqz7ba8/vEVq
+	 Lra90H9WYpANg==
+From: Barry Song <baohua@kernel.org>
+To: kunwu.chan@gmail.com
+Cc: akpm@linux-foundation.org,
+	axelrasmussen@google.com,
+	baohua@kernel.org,
+	baolin.wang@linux.alibaba.com,
+	baoquan.he@linux.dev,
+	david@kernel.org,
+	hannes@cmpxchg.org,
+	hui.zhu@linux.dev,
+	liam@infradead.org,
+	lianux.mm@gmail.com,
+	linux-mm@kvack.org,
+	liuxiang.277@bytedance.com,
+	ljs@kernel.org,
+	lyugaofei@xiaomi.com,
+	mhocko@kernel.org,
+	mhocko@suse.com,
+	qi.zheng@linux.dev,
+	ridong.chen@linux.dev,
+	rppt@kernel.org,
+	ryncsn@gmail.com,
+	sashiko-reviews@lists.linux.dev,
+	shakeel.butt@linux.dev,
+	surenb@google.com,
+	wangzicheng@honor.com,
+	weixugc@google.com,
+	yuanchu@google.com,
+	zhangbo56@xiaomi.com,
+	zhuhui@kylinos.cn
+Subject: Re: [RFC PATCH v5 05/14] mm/mglru: skip zones above reclaim_idx instead of rotating them
+Date: Mon,  9 Nov 2026 12:23:48 +0800
+Message-Id: <20261109042348.51689-1-baohua@kernel.org>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <CAN_Opa-AScm9=EeXO_Uy8VjbQ=bqY9P++rFP8H1RhUB4dOt6xw@mail.gmail.com>
+References: <CAN_Opa-AScm9=EeXO_Uy8VjbQ=bqY9P++rFP8H1RhUB4dOt6xw@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,214 +85,237 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/4] phy: nuvoton: phy-ma35d1-usb2: extend to dual-port
- with OTG support
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, neil.armstrong@linaro.org,
- linux-phy@lists.infradead.org, olteanv@gmail.com, vkoul@kernel.org,
- robh@kernel.org, conor+dt@kernel.org
-References: <20261008060629.2736806-1-a0987203069@gmail.com>
- <20261008060629.2736806-5-a0987203069@gmail.com>
- <sashiko-outbox-163689@kernel.org>
-Content-Language: en-US
-From: Joey Lu <a0987203069@gmail.com>
-In-Reply-To: <sashiko-outbox-163689@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+On Mon, Nov 2, 2026 at 6:00 PM KunWu Chan <kunwu.chan@gmail.com> wrote:
+>
+> On Sun, Oct 25, 2026 at 12:19 AM Kairui Song <ryncsn@gmail.com> wrote:
+> >
+> > On Sat, Oct 24, 2026 at 6:03 AM <sashiko-bot@kernel.org> wrote:
+> > >
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > - [High] mm/mglru: pinned min_seq in higher zones stalls aging in scan_folios()
+> > > --
+> > >
+> > > commit 1b2f683d6b8bd1e171eb9677315ba8a3d9431b9b
+> > > Author: Kairui Song <kasong@tencent.com>
+> > >
+> > > mm/mglru: skip zones above reclaim_idx instead of rotating them
+> > >
+> > > This commit restricts scan_folios() and lruvec_populated_min_seq() during
+> > > eviction to zones at or below sc->reclaim_idx, and removes the ineligible-zone
+> > > rotation branch from sort_folio(). try_to_inc_min_seq() continues to check all
+> > > zones up to MAX_NR_ZONES before advancing min_seq.
+> > >
+> > > > diff --git a/mm/vmscan.c b/mm/vmscan.c
+> > > > index a365a4bc8c988..09ea72b354a56 100644
+> > > > --- a/mm/vmscan.c
+> > > > +++ b/mm/vmscan.c
+> > > > @@ -4132,7 +4132,7 @@ static bool inc_min_seq(struct lruvec *lruvec, int type, int swappiness)
+> > > >
+> > > >  /* Similar to lruvec_evictable_size, return the oldest populated seq of the type */
+> > > >  static unsigned long lruvec_populated_min_seq(struct lruvec *lruvec, int type,
+> > > > -                                           unsigned long max_seq)
+> > > > +                                           int zone_limit, unsigned long max_seq)
+> > > >  {
+> > > >       int gen, zone;
+> > > >       unsigned long min_seq;
+> > > > @@ -4143,7 +4143,7 @@ static unsigned long lruvec_populated_min_seq(struct lruvec *lruvec, int type,
+> > > >       min_seq = READ_ONCE(lrugen->min_seq[type]);
+> > > >       while (min_seq <= max_seq) {
+> > > >               gen = lru_gen_from_seq(min_seq);
+> > > > -             for (zone = 0; zone < MAX_NR_ZONES; zone++) {
+> > > > +             for (zone = 0; zone < zone_limit; zone++) {
+> > > >                       if (!list_empty(&lrugen->folios[gen][type][zone]))
+> > > >                               return min_seq;
+> > > >               }
+> > > > @@ -4166,7 +4166,7 @@ static void try_to_inc_min_seq(struct lruvec *lruvec, int swappiness)
+> > > >       /* Requires at least MIN_NR_GENS gens for basic functionality */
+> > > >       seq = lrugen->max_seq - MIN_NR_GENS;
+> > > >       for_each_evictable_type(type, swappiness) {
+> > > > -             min_seq[type] = lruvec_populated_min_seq(lruvec, type, seq + 1);
+> > > > +             min_seq[type] = lruvec_populated_min_seq(lruvec, type, MAX_NR_ZONES, seq + 1);
+> > > >               if (min_seq[type] > lrugen->min_seq[type])
+> > > >                       seq_inc_flag = true;
+> > > >       }
+> > >
+> > > [ ... ]
+> > >
+> > > > @@ -4863,10 +4864,8 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
+> > > >        * longer be promoted or protected, so just isolate them. The one
+> > > >        * exception is lru_gen_reparent_memcg(), which is handled above.
+> > > >        */
+> > > > -     if (min_gen == max_gen) {
+> > > > -             VM_WARN_ON_ONCE(zone > sc->reclaim_idx);
+> > > > +     if (min_gen == max_gen)
+> > > >               return false;
+> > > > -     }
+> > > >
+> > > >       /* protected */
+> > > >       if (tier > tier_idx || refs + workingset == BIT(LRU_REFS_WIDTH) + 1) {
+> > > > @@ -4883,13 +4882,6 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
+> > > >               return true;
+> > > >       }
+> > > >
+> > > > -     /* ineligible */
+> > > > -     if (zone > sc->reclaim_idx) {
+> > > > -             gen = folio_inc_gen(lruvec, folio, min_gen);
+> > > > -             list_move_tail(&folio->lru, &lrugen->folios[gen][type][zone]);
+> > > > -             return true;
+> > > > -     }
+> > > > -
+> > > >       return false;
+> > > >  }
+> > > >
+> > > > @@ -4921,16 +4913,17 @@ static int scan_folios(unsigned long nr_to_scan, struct lruvec *lruvec,
+> > > >                      struct scan_control *sc, int type, int tier,
+> > > >                      struct list_head *list, int *isolatedp)
+> > > >  {
+> > > > -     int i;
+> > > >       enum node_stat_item item;
+> > > > +     int zone_idx;
+> > > >       int sorted = 0;
+> > > >       int scanned = 0;
+> > > >       int isolated = 0;
+> > > >       int skipped = 0;
+> > > >       int gen, max_gen;
+> > > > -     unsigned long min_seq;
+> > > > +     unsigned long seq;
+> > > >       unsigned long remaining = nr_to_scan;
+> > > >       struct lru_gen_folio *lrugen = &lruvec->lrugen;
+> > > > +     struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+> > > >       DEFINE_MAX_SEQ(lruvec);
+> > > >
+> > > >       VM_WARN_ON_ONCE(nr_to_scan > MAX_LRU_BATCH);
+> > > > @@ -4942,24 +4935,22 @@ static int scan_folios(unsigned long nr_to_scan, struct lruvec *lruvec,
+> > > >        * when under pressure to respect swappiness more and reduce IO cost.
+> > > >        */
+> > > >       if (sc->priority == DEF_PRIORITY)
+> > > > -             min_seq = lrugen->min_seq[type];
+> > > > +             seq = lrugen->min_seq[type];
+> > > >       else
+> > > > -             min_seq = lruvec_populated_min_seq(lruvec, type, lrugen->max_seq);
+> > > > +             seq = lrugen->max_seq;
+> > > >
+> > > > -     gen = lru_gen_from_seq(min_seq);
+> > > > +     seq = lruvec_populated_min_seq(lruvec, type, sc->reclaim_idx + 1, seq);
+> > > > +     gen = lru_gen_from_seq(seq);
+> > > >       max_gen = lru_gen_from_seq(max_seq);
+> > > >
+> > > > -     for (i = MAX_NR_ZONES; i > 0; i--) {
+> > > > +     /* Scan eligible zones in descending order. */
+> > > > +     for (zone_idx = sc->reclaim_idx; zone_idx >= 0; zone_idx--) {
+> > >
+> > > [Severity: High]
+> > > During zone-constrained reclaim in mm/vmscan.c (where sc->reclaim_idx is below
+> > > MAX_NR_ZONES - 1 and zones above sc->reclaim_idx are populated, such as
+> > > GFP_DMA32 reclaim with a populated ZONE_NORMAL or GFP_KERNEL reclaim with a
+> > > populated ZONE_MOVABLE), can keeping MAX_NR_ZONES in try_to_inc_min_seq()
+> > > while removing the ineligible-zone rotation from sort_folio() stall aging and
+> > > memcg rotation?
+> >
+> > Yeah it can stall aging, but this series lifted the restriction of
+> > MIN_NR_GEN on eviction, and eviction will start the the last populated
+> > gen of a zone instead of min_seq, and we have more proactive aging
+> > when the gens are imbalanced, so this won't be a problem, it won't
+> > cause OOM. I'm not sure if it will cause any performance issue though,
+> > if this is concerning we can keep the old behavior, or trigger aging
+> > when the populated gen that satisfy a reclain is below (MIN_NR_GEN -
+> > 1) or imbalanced, this seems a better solution to me, still avoid a
+> > lot of redundant work while ensure there is no reclaim effenciency
+> > issue. We already have the right helper to do so in this series, so
+> > seem not hard or dirty.
+>
+> Thanks, that makes sense regarding OOM.
+> Could lru_gen_imbalanced() trigger aging soon enough when few
+> populated generations are eligible for reclaim, or could reclaim
+> efficiency suffer while min_seq remains pinned?
+>
+> Would the additional trigger you suggested for this case be worthwhile?
 
-On 10/8/2026 2:26 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] phy: Kconfig missing USB_ROLE_SWITCH dependency causes built-in link failure
-> - [High] phy: DT backward compatibility regression for over-current polarity
-> - [Medium] phy: ignored regmap_read return values cause uninitialized variable usage and info leak
-> - [Medium] phy: regression in PHY reset fallback when clock polling fails
-> - [Medium] PM/clock: PHY permanently holds HUSBH0_GATE preventing USB suspend
-> --
->
-> commit dce53df5cfe4dcfac8af16f8b29743a3f4e147e0
-> Author: Joey Lu <a0987203069@gmail.com>
->
->      phy: nuvoton: phy-ma35d1-usb2: extend to dual-port with OTG support
->      
->      PHY0 and PHY1 use the same power-on/reset sequence in USBPMISCR, with
->      PHY1 control bits shifted 16 positions relative to PHY0.  A separate
->      driver for PHY1 would duplicate this logic, so the existing driver is
->      extended to manage both ports.
->
->> diff --git a/drivers/phy/nuvoton/phy-ma35d1-usb2.c b/drivers/phy/nuvoton/phy-ma35d1-usb2.c
->> index 0b9976fb15c17..25bd0a7a1314b 100644
->> --- a/drivers/phy/nuvoton/phy-ma35d1-usb2.c
->> +++ b/drivers/phy/nuvoton/phy-ma35d1-usb2.c
-> [ ... ]
->> -static int ma35_usb_phy_power_on(struct phy *phy)
->> +static int ma35_usb_phy_init(struct phy *phy)
->>   {
->> -	struct ma35_usb_phy *p_phy = phy_get_drvdata(phy);
->> +	struct ma35_phy_port *port = phy_get_drvdata(phy);
->> +	struct ma35_usb_phy *p = container_of(port - port->idx,
->> +					      struct ma35_usb_phy, port[0]);
->> +	unsigned int n = port->idx;
->>   	unsigned int val;
->>   	int ret;
->>   
->> -	ret = clk_prepare_enable(p_phy->clk);
->> -	if (ret < 0) {
->> -		dev_err(p_phy->dev, "Failed to enable PHY clock: %d\n", ret);
->> -		return ret;
->> +	regmap_read(p->sysreg, MA35_SYS_USBPMISCR, &val);
->> +
->> +	if (!(val & USBPMISCR_PHY_SUSPEND(n))) {
-> [Severity: Medium]
-> Is this code branching on uninitialized stack memory?
->
-> If regmap_read() fails, the return value is ignored and val is left
-> uninitialized, leading to non-deterministic PHY state handling.
-Leaving this as is.
->
-> [Severity: Medium]
-> Could this strict condition remove the fallback reset sequence?
->
-> The original driver would reset the PHY if the clock failed to stabilize during
-> polling. By encapsulating the reset strictly inside this block, it skips the
-> reset entirely if the PHY is already running.
->
-> If the subsequent clock polling times out, the driver immediately returns an
-> error. Can this cause a regression where the PHY fails initialization permanently
-> if it was left running but unstable by the bootloader or a prior kexec?
-PHY reset fallback: valid, v7 dropped the old reset-on-unstable-clock
-behaviour. In v8 I'll restore it: if SUSPEND is already set, poll the ready
-bits first and return on success; on timeout (or if SUSPEND was clear) 
-run the
-POR assert / udelay(20) / POR deassert sequence, then poll again and 
-fail only
-if the second poll times out. This covers a PHY left running but unstable by
-the bootloader or a prior kexec.
->> +		regmap_update_bits(p->sysreg, MA35_SYS_USBPMISCR,
->> +				   USBPMISCR_PHY_CTL_MASK(n),
->> +				   USBPMISCR_PHY_POR(n) | USBPMISCR_PHY_SUSPEND(n));
->> +		udelay(20);
->> +
->> +		regmap_update_bits(p->sysreg, MA35_SYS_USBPMISCR,
->> +				   USBPMISCR_PHY_CTL_MASK(n),
->> +				   USBPMISCR_PHY_SUSPEND(n));
->>   	}
-> [ ... ]
->> -static int ma35_usb_phy_power_off(struct phy *phy)
->> -{
->> -	struct ma35_usb_phy *p_phy = phy_get_drvdata(phy);
->> +static const struct phy_ops ma35_usb_phy_ops = {
->> +	.init		= ma35_usb_phy_init,
->> +	.owner		= THIS_MODULE,
->> +};
-> [Severity: Medium]
-> Will the removal of dynamic clock toggling in .power_on and .power_off cause
-> a power regression?
->
-> Since the clock is now acquired permanently via devm_clk_get_enabled() during
-> probe, the USB host clock gate (HUSBH0_GATE) remains open permanently,
-> preventing it from closing and consuming unnecessary power when the USB host
-> controller (EHCI0/OHCI0) suspends.
-HUSBH0_GATE: valid. devm_clk_get_enabled() keeps the gate open for the
-driver's lifetime. In v8 I'll use devm_clk_get() in probe and restore
-.power_on/.power_off doing clk_prepare_enable()/clk_disable_unprepare(). 
-Both
-ports share the one clock; the PHY core calls these per port and the clk
-framework refcounts, so the gate closes once neither port is powered. init
-will also enable the clock around its register accesses and polling.
->> +
->> +static int ma35_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
->> +{
->> +	return -EOPNOTSUPP;
->> +}
->> +
->> +static enum usb_role ma35_role_sw_get(struct usb_role_switch *sw)
->> +{
->> +	struct ma35_usb_phy *p = usb_role_switch_get_drvdata(sw);
->> +	u32 val;
->> +
->> +	regmap_read(p->sysreg, MA35_SYS_PWRONOTP, &val);
->> +
->> +	return (val & PWRONOTP_USBP0ID) ? USB_ROLE_HOST : USB_ROLE_DEVICE;
->> +}
-> [Severity: Medium]
-> Can this leak uninitialized stack memory to userspace?
->
-> If regmap_read() fails, the return value is ignored and val remains
-> uninitialized. This uninitialized data determines the returned USB role,
-> inadvertently leaking 1 bit of kernel stack state to userspace via the sysfs
-> role attribute.
-Leaving this as is.
->> +
->> +static int ma35_role_switch_init(struct platform_device *pdev,
->> +				 struct ma35_usb_phy *p)
->> +{
->> +	struct usb_role_switch_desc sw_desc = {0};
->> +
->> +	sw_desc.set = ma35_role_sw_set;
->> +	sw_desc.get = ma35_role_sw_get;
->> +	sw_desc.allow_userspace_control = true;
->> +	sw_desc.driver_data = p;
->> +	sw_desc.fwnode = dev_fwnode(&pdev->dev);
->> +
->> +	p->role_sw = usb_role_switch_register(&pdev->dev, &sw_desc);
-> [Severity: High]
-> Would this introduce a built-in link failure if the driver is built-in
-> (CONFIG_PHY_MA35_USB=y) and the role switch framework is modular
-> (CONFIG_USB_ROLE_SWITCH=m)?
->
-> In this configuration, IS_ENABLED(CONFIG_USB_ROLE_SWITCH) evaluates to true,
-> so include/linux/usb/role.h declares the external functions instead of providing
-> inline stubs, causing an undefined reference to usb_role_switch_register.
->
-> Should drivers/phy/nuvoton/Kconfig be updated to include
-> depends on USB_ROLE_SWITCH || !USB_ROLE_SWITCH for PHY_MA35_USB to prevent
-> this invalid Kconfig combination?
-Kconfig: valid, thanks. In v8 I'll add
-"depends on USB_ROLE_SWITCH || !USB_ROLE_SWITCH" to PHY_MA35_USB in
-drivers/phy/nuvoton/Kconfig. With the role switch disabled, the existing
--ENODEV handling in ma35_role_switch_init() still lets probe succeed.
->> +	if (IS_ERR(p->role_sw)) {
-> [ ... ]
->>   static int ma35_usb_phy_probe(struct platform_device *pdev)
->>   {
->>   	struct phy_provider *provider;
->> -	struct ma35_usb_phy *p_phy;
->> -	struct phy *phy;
->> +	struct ma35_usb_phy *p;
->> +	struct clk *clk;
->> +	int n, ret;
->> +	u32 code;
-> [ ... ]
->> +	regmap_update_bits(p->sysreg, MA35_SYS_MISCFCR0, MISCFCR0_UHOVRCURH,
->> +			   of_property_read_bool(pdev->dev.of_node,
->> +						 "nuvoton,oc-active-high") ?
->> +			   MISCFCR0_UHOVRCURH : 0);
-> [Severity: High]
-> Does this unconditional write break device tree backward compatibility?
->
-> If the optional property nuvoton,oc-active-high is absent, this explicitly
-> writes 0 to the bit, forcing the over-current polarity to active-low. The
-> original driver relied on the bootloader's configuration.
->
-> Will this cause a regression in over-current detection on existing boards that
-> use active-high hardware configured by the bootloader but lack this new
-> property in their older device tree?
-OC polarity: the unconditional write is intentional. The binding in
-patch 1 defines "property absent" as active-low, and writing the bit in both
-cases makes the result independent of what the bootloader left in MISCFCR0.
-This bit only affects the EHCI/OHCI host ports' VBUS switch and is 
-irrelevant
-to the gadget (DWC2) use the old driver supported, so existing gadget-only
-users are not affected. The old driver never touched MISCFCR0, and no 
-mainline
-DT uses this PHY with host ports, so no mainline board depends on a
-bootloader-programmed polarity; nuvoton,oc-active-high is new in this 
-series.
-Out-of-tree boards with an active-high switch need to add the property. I'll
-state this explicitly in the commit message and binding description.
+Hi Kunwu,
 
-Joey
->> +
->> +	for (n = 0; n < MA35_PHY_NUM; n++) {
+Thanks very much for reviewing this series.
+I'd really appreciate it if you could keep going :-)
+
+I'm trying an incremental patch like this while rebasing the
+series on top of mm-new. It may resolve the problem.
+
+diff --git a/mm/trace_vmscan.h b/mm/trace_vmscan.h
+index 565c56428364..9dafdb5bd3ce 100644
+--- a/mm/trace_vmscan.h
++++ b/mm/trace_vmscan.h
+@@ -488,9 +488,9 @@ TRACE_EVENT(mm_mglru_aging,
+ 			unsigned long seq = max_seq - MAX_NR_GENS + 1 + i;
+ 
+ 			__entry->nr_anon[i] =
+-				lruvec_gen_size(lrugen, LRU_GEN_ANON, seq);
++				lruvec_gen_size(lrugen, LRU_GEN_ANON, seq, MAX_NR_ZONES);
+ 			__entry->nr_file[i] =
+-				lruvec_gen_size(lrugen, LRU_GEN_FILE, seq);
++				lruvec_gen_size(lrugen, LRU_GEN_FILE, seq, MAX_NR_ZONES);
+ 		}
+ 		__entry->nid = lruvec_pgdat(lruvec)->node_id;
+ 		__entry->priority = sc->priority;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 4ca04812eea3..fa0245a07caa 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4217,7 +4217,7 @@ static void lruvec_evictable_size(struct lruvec *lruvec, struct scan_control *sc
+ 		if (type == LRU_GEN_ANON && !can_reclaim_anon_pages(memcg, nid, sc))
+ 			continue;
+ 		for (seq = min_seq[type]; seq <= max_seq; seq++)
+-			nr[type] += lruvec_gen_size(lrugen, type, seq);
++			nr[type] += lruvec_gen_size(lrugen, type, seq, sc->reclaim_idx + 1);
+ 	}
+ }
+ 
+@@ -5082,9 +5082,9 @@ static bool lru_gen_imbalanced(struct lruvec *lruvec, struct scan_control *sc,
+ 	for_each_evictable_type(type, swappiness) {
+ 		unsigned long seq;
+ 
+-		youngest[type] = lruvec_gen_size(lrugen, type, max_seq);
++		youngest[type] = lruvec_gen_size(lrugen, type, max_seq, sc->reclaim_idx + 1);
+ 		for (seq = min_seq[type]; seq < max_seq; seq++)
+-			old[type] += lruvec_gen_size(lrugen, type, seq);
++			old[type] += lruvec_gen_size(lrugen, type, seq, sc->reclaim_idx + 1);
+ 	}
+ 
+ 	/* the vast majority of pages sit in the youngest gen */
+@@ -5835,7 +5835,7 @@ static int lru_gen_seq_show(struct seq_file *m, void *v)
+ 			char mark = full && seq < min_seq[type] ? 'x' : ' ';
+ 
+ 			seq_printf(m, " %10lu%c",
+-				   lruvec_gen_size(lrugen, type, seq), mark);
++				   lruvec_gen_size(lrugen, type, seq, MAX_NR_ZONES), mark);
+ 		}
+ 
+ 		seq_putc(m, '\n');
+diff --git a/mm/vmscan.h b/mm/vmscan.h
+index c6b583fc7493..2599d7c614ac 100644
+--- a/mm/vmscan.h
++++ b/mm/vmscan.h
+@@ -119,12 +119,13 @@ struct scan_control {
+ #ifdef CONFIG_LRU_GEN
+ /* The number of pages of @type in the generation @seq, summed over all zones */
+ static inline unsigned long lruvec_gen_size(struct lru_gen_folio *lrugen,
+-					    int type, unsigned long seq)
++					    int type, unsigned long seq,
++					    int max_zone)
+ {
+ 	int gen = lru_gen_from_seq(seq);
+ 	unsigned long size = 0;
+ 
+-	for (int zone = 0; zone < MAX_NR_ZONES; zone++)
++	for (int zone = 0; zone < max_zone; zone++)
+ 		size += max(READ_ONCE(lrugen->nr_pages[gen][type][zone]), 0L);
+ 
+ 	return size;
+
+>
+> Thanks,
+> Kunwu
+
+Thanks,
+Barry
