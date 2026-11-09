@@ -1,47 +1,128 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.141
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794225028;
-	b=d5Bo3YHv1TY9/7ifq2m5kPPrXS3+nnYdAnP6LA3Wf8FGdgFI5lIVamKen9Vp/C6pJtDz
-	 WeOlkCjKt1TvL9pxID7PgmL+EG7NbtCk9EcVPkWcBlTssiGCHqAPMM0WHJZFQmEGpbYjQ
-	 JA5HL/zbIoAO9CM6agdMlOq9YW/1cWdiCHxnMqlu7AjMQDzZ6ZXgy9GsvefL0qQOQb+pS
-	 fJKCmqDcAdufvUFWRKlvuEuV9Yl9N7eYOGRhE1on3b7UUREXtygloX7X0vjUblnXUP1ca
-	 2//LO6d3Nj3JkJ0u/CliE27SoOfF+4Fdvt3XsNMJ6AgNWV0/+dB0aBzFxl+MA5jKXrQ==
+	t=1794225502;
+	b=owMuZ1AalNBfdlRuciO0mT87tRGMwhU0HDsQHYo27wlw2M8ixQ2iWV8hPXN1qC61tCAA
+	 /NE5ySKn9P4h3NdU0Lzae/8DSfy+CPMB4JOm2583NwlahCyonTIHRDTn9SeD6aq3OnKgm
+	 bduIr+b9IHB1zzUbx9s7Ny5cgYdd3+v4WN2y2DoQqJZCdV0D/KoHyHHwvnstxG6NDEFu+
+	 yzVGmy7DyYLZM1KlJ0yj4xX0v1IpuFJgvqkHMEuqFFtd+qR+OM8JYPKY6rSQuFhcCUgVX
+	 HBrWJt5GJ/pV1wg3eN9KrHhhFXY80zH3zqFqM3rfwkKNF7PnsvNgrl2lO1tbJBXGZSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794225028;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Exoo2CmOlzngpZBFMsAcvX6yQB+s302nR1CiYpzE3eM=;
-	b=D7cxp2CBRuEuAjzxjwO4n8WupE4/tacynGRrXPr3lK/NKfF9cLkFaZrV6AHPt+eNt88n
-	 qPxeDz+qqtEFHDFPvR3O/DKiG6/PtMv5/UrdQjjNbOhjD8fXWbf8ldGzaG1/UwtWXOm2f
-	 2dRkUPwjtCQljh0gA562vxVHejy5rNH5Eo7kNvUj1oyrBM1R2m8S+jGBd1lngfj1tFim5
-	 ZQK4gMcpeRU7cwU3MVExPD7W42lODvPIaqQ9XaRrpStVXWfWE3KjdhG8Uc5ODHwV3Vnrl
-	 83W9RoQsfDXSa6ydDyUqwufGyCpCpMJ3rI8MTRHbITKois2DMLo/GcjODxDczJkJDqQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794225502;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=2f74xI8ENOaYm5Fxf2K0EU/+aEKl3TphPyCxFled6CU=;
+	b=Oops3ITSv6l2WXaouoYvE6+pO3mEr4bODZDdV1Y1cXgwv/wol3lut0QUcYpC1zoRApma
+	 8s8/75OurTzErJ3UUGSD1a9PI820fRxuhvsWLgGnxFnQWTc/zdedZwg8TujgUwU/sBPuc
+	 EmLC0Vdk4YtiMmEURt70ABaECMZOwtz3fb5BjNd1DbDqFVeNGIsT7W/vZp2xWNih8e4eZ
+	 d9B/ibYAyCiBkTm9VdMCu6TmcFSyUuMeGka5DeXZ8ZIqMoNHjjhPAE0rWKwwwBTTVjW55
+	 teTOFk6EeT/h965kc1tVX39Uw4JeQ4zlnM3GhCQhBANiBcp6cBd0GpzKqdq8gr0dtdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PPSzIqD8;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=none header.from=shutemov.name;
+	spf=pass smtp.mailfrom=shutemov.name;
+	dkim=pass header.d=shutemov.name header.i=@shutemov.name header.a=rsa-sha256 header.s=fm1 header.b=qsTj4MUJ;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FecShwTH;
+	arc=none smtp.remote-ip=202.12.124.141
+Received: from flow-b6-smtp.messagingengine.com (flow-b6-smtp.messagingengine.com [202.12.124.141])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DB5606A31C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 11:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB12606A325
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 11:58:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9EB12606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shutemov.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PPSzIqD8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00191F0089F;
-	Mon,  9 Nov 2026 11:50:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794225027;
-	bh=Exoo2CmOlzngpZBFMsAcvX6yQB+s302nR1CiYpzE3eM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=PPSzIqD8KC/PuDyfIcG4TCHGmJCurK6iOEWZtaA8iFu8UDAgVHjQzyJOs8aE8YCgL
-	 At941m3HjeRpUZgFSGef5OvylFwacttLmjZlLxqmiIPRk9CINHunqtethL8KVrh0F8
-	 gc8LrODCFAY2Z9JG3XfuT2jbIDIe5rZdX3Ex5pyOK89nveg+WTKVSoEi2neOo4tDZV
-	 wUb94nsWqMoEyoQqw8yhySJ9hfcChm5mFJaQqAtlM6yAVMDkqdxjevK769nS/H9HBQ
-	 CA7ch64TWsbgpOSErIqZxp/lp4s2nMTMcQzyUYoeHB2wP+lA4JQ3QCOe9NYgn9kHKT
-	 x2z1chZOgOAew==
-Message-ID: <4932c957-f6e7-4435-afeb-ba45d01cda22@kernel.org>
-Date: Mon, 9 Nov 2026 12:50:19 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=shutemov.name header.i=@shutemov.name header.a=rsa-sha256 header.s=fm1 header.b=qsTj4MUJ;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FecShwTH
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailflow.stl.internal (Postfix) with ESMTP id E3A761301E1B
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 06:58:20 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 09 Nov 2026 06:58:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shutemov.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1794225500; x=
+	1794232700; bh=2f74xI8ENOaYm5Fxf2K0EU/+aEKl3TphPyCxFled6CU=; b=q
+	sTj4MUJB9LnjMT9ddWekMI5rQ6MfnVa9ipVwS+H2fBwHe/DfEwD055meMlYZRstV
+	UAGGbZkvi7d97cf6EbLVgU3kEIIn8O0ofrC6csuxwMhHOwxJIHGi2vyt35TBZ41A
+	5O0Z15rOVt2B2fg93sTHnNf9BTeI3GJckezJ/SkLZjBdpzqIq7406ghqY8WJb4LO
+	bNfTuEWE5xZu5yd+gBJ5lNAk95qbu8PXOMulaniOQ2gVtvA9ekCvxtO7CaxNQlHT
+	7zWt6bleZgSWEHOp2orQYYTHUGsPII9mTXG/LfpfiZ9gvGiLyTCzcDDQZU+Y7hct
+	8LWtIkM2vDV7LIhB3fGiQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1794225500; x=1794232700; bh=2f74xI8ENOaYm5Fxf2K0EU/+aEKl3TphPyC
+	xFled6CU=; b=FecShwTHdhiR9AwHTjfsmdtyg5h1Xmh8oaoAgRhk9nikwOpQ51k
+	LataX+4L9yYZOox7XSrQiGm6SuIuNau6havAM2rF9Njpc/qbWfOmGC50v+ZSWCxC
+	uTGylQ++lirX9Lz/578E4XVhjMVbof1GBhuF2o0WE3z6Qbrk1LErac2n5T9Pyfug
+	xFkwSCBi33dmn/1h/96GNfGY9MF30A28wQU4W4XNQnFf/pZ+fd1M9MSrx8EgicVr
+	fqvjr6AUplf6wkK8k7T0jXqSmzmm5c/eU0ybMzWsxzCAsGJl7ogBZ5P9GncOUrdS
+	r4Txumvi1t785NDiaDkrINk7q+kswkT0Vyg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=shutemov.name a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794225500; d=shutemov.name;
+	mf=PGtpcmlsbEBzaHV0ZW1vdi5uYW1lPg==;
+	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+	s=fm1:rsa-sha256:WGRtuAwUskqPhFJTM+5aY0cbJESClf4GqYkPGN1NqxLlttc
+	vg6vHhf2nOk/Qvu9t41Cwq6GiDplAneDBTcC3hYYuvWjQRT+578vcUSdw/F0sOSX
+	P7+eszj97CR7G29wlFE6+KfcFlzF1XLzGlNIzEpSAvnKxfP7iQ1jSjTZZK5/CEOL
+	wwdSZ563snw7MqDmwcL0PAwxsxaVtolVetvI51oC8jO4n3FUPsBnj6VSB6vw6nwe
+	CEUAT14mUfBidTRE3Kh6iOiqgIfYk2LWpgOHVNXoY5mOBG/cKOUZNwErtSG1P8tP
+	5NfJ6qkigaCzeDvSTMx+7XDdYWqbn5TGUpU2YuA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:DwW0TWkwnhBQyqz0EkCMgRSesyG8g63gT2ui/HE93d8=:t7q5gP6od/flbVtBtebQGEUZvnyLJolctkwjR3cAcMM=;
+X-ME-Sender: <xms:XLXxavxThDx3KML4QDtIECejD0S9tXBfXTiJ8QXjQjqqy7EcBd-2bw>
+    <xme:XLXxanYKJAr6bEhrXs5UnTKKqAjSLPPfkKPeneI_zBAPSkFQHP-JPJfcrHrN-Cni1
+    3jOU0-6CCJ0XpN0gJCF5Z01ssSJFLpNmQZRsC5nQ3fLgvIgsyOw144>
+X-ME-Received: <xmr:XLXxanLWXKbkj24EUk_fxFv76VYbPgBJtO85BMPETt66UGzQKHRfubil808>
+X-ME-Proxy-Cause: dmFkZTGkIihStJ7Mcmq5LDnjB5YEQJi8XMzYdh/yQxMmWscvf9u1zH1XQgYTPBth0AAHyQ
+    jdFCb38Zp3R4bTIZ3PY9QbSW4/pBhbNhPt+KrL3Zufep6BcNhf2o0JXIP4mv8moVDKFblQ
+    ATkO4XJ9KMx/diY4R/hBXfRI4w9nn/YxpX7bCaM+TvgIw8oCVLn6lx+Gr2Z5/hUXZpgE5K
+    fRnq5VAvcYh9GLbhZTTTnpe+DsJucZEHkYXfMfppUfx7Pld45PnirZQJNYRyzg9i9809qe
+    xHUNjsv1cyUV38v0nYt5Olfd1othXynNXM8dLj42EwQw+mYnQn5sj6/FKSyyzyoMH5mvKn
+    E2nQvEAMba1Lk62MwKexTtMKFdFXBRzSQRXfbejhGgy8vKNYNVZVzVLAPfjzfnkwntU7pC
+    GI4R5ezscLsCfBKfcbyhemZV7qJPLDJD6gGNFusgqBmhSPhq1puvBAKGCZWerShA6VYuos
+    26hdPy0OqkBjUyKAi59Jc8FW8YT4Ra0Jybpvroj9nEBVSIC/ktAAplF4kvRrx7eGoDOw7h
+    M2LiUMHq9NbUs4QjRarRzvhSRO1D77NBrt9mgMuupXWT25y5nKy4SWtSFXM+j7B/lalrYr
+    9VJ9oglTUl6fyoZ/EKmgfDxGRGil2+KR5B0+yMgmc/ZJ7ul4vqHvnLXVQC1A
+X-ME-Proxy: <xmx:XLXxatz5Pl_qRVcem_Qq7EaB1074dofQFkNj8LDUMQxASspbEhn2rg>
+    <xmx:XLXxavO4NZsSIauJudFLRbY2ZggTjnAfR-P6VI-3l7gwEgKBdL_Stw>
+    <xmx:XLXxahsFlEN-IlAZqgILwUNXPcxiXEcO4S87u9f9gna67o6_Q15w3Q>
+    <xmx:XLXxas2U8sQUZ9RTlUfgaW-IRBdQ3MfJjC_tc-L9P51HupgtLnn8DQ>
+    <xmx:XLXxat6y-Te_YlPNnU7x_VjMARnzSITKp35gE6pAZbz2hkd0Zf31Rx_0>
+Feedback-ID: ie3994620:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Nov 2026 06:58:19 -0500 (EST)
+Date: Mon, 9 Nov 2026 11:58:18 +0000
+From: Kiryl Shutsemau <kirill@shutemov.name>
+To: Pedro Falcato <pfalcato@suse.de>
+Cc: "David Hildenbrand (Arm)" <david@kernel.org>, 
+	sashiko-reviews@lists.linux.dev, Andrew Morton <akpm@linux-foundation.org>, 
+	Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
+	Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport <rppt@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Hugh Dickins <hughd@google.com>, Chris Mason <mason@kernel.org>, 
+	linux-mm@kvack.org, kernel-team@meta.com
+Subject: Re: [PATCH] mm/memory: refuse to map page cache folios that are not
+ uptodate
+Message-ID: <avG1Rg8OyP74VIFV@thinkstation>
+References: <20261106144323.3634477-1-kirill@shutemov.name>
+ <sashiko-outbox-202966@kernel.org>
+ <8cd50b75-0845-4e82-a8ed-acfd3a261a3e@kernel.org>
+ <avGvM5kpv_z2ezoz@thinkstation>
+ <avGwAfK4I31KAPHl@pedro-suse.tail5790ac.ts.net>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,79 +132,19 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/memory: refuse to map page cache folios that are not
- uptodate
-To: Pedro Falcato <pfalcato@suse.de>, Kiryl Shutsemau <kirill@shutemov.name>
-Cc: sashiko-reviews@lists.linux.dev, Andrew Morton
- <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Michal Hocko <mhocko@suse.com>, "Matthew Wilcox (Oracle)"
- <willy@infradead.org>, Hugh Dickins <hughd@google.com>,
- Chris Mason <mason@kernel.org>, linux-mm@kvack.org, kernel-team@meta.com
-References: <20261106144323.3634477-1-kirill@shutemov.name>
- <sashiko-outbox-202966@kernel.org>
- <8cd50b75-0845-4e82-a8ed-acfd3a261a3e@kernel.org>
- <avGvM5kpv_z2ezoz@thinkstation>
- <avGwAfK4I31KAPHl@pedro-suse.tail5790ac.ts.net>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <avGwAfK4I31KAPHl@pedro-suse.tail5790ac.ts.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 11/9/26 12:37, Pedro Falcato wrote:
+On Mon, Nov 09, 2026 at 11:37:42AM +0000, Pedro Falcato wrote:
 > On Mon, Nov 09, 2026 at 11:32:44AM +0000, Kiryl Shutsemau wrote:
->> On Sat, Nov 07, 2026 at 07:17:52PM +0100, David Hildenbrand (Arm) wrote:
->>>
->>> Kiryl, can you look into that?
->>
->> Yeah, that's legit. Will fix in v2.
+> > On Sat, Nov 07, 2026 at 07:17:52PM +0100, David Hildenbrand (Arm) wrote:
+> > > > - [Medium] mm: missing folio_test_uptodate() recheck in
+> > > >   do_shared_fault() mkwrite path
+> > > 
+> > > Kiryl, can you look into that?
+> > 
+> > Yeah, that's legit. Will fix in v2.
 > 
 > Related: https://lore.kernel.org/linux-mm/as-fqjiGj5T5NLOe@casper.infradead.org/
 > 
@@ -133,11 +154,8 @@ On 11/9/26 12:37, Pedro Falcato wrote:
 > 
 > Perhaps we need to address this problem first?
 
-Thanks for the pointer. Would that mean that we shouldn't use WARN for now, or
-do you think there are legimite cases where we would want to map a folio without
-the uptodate flag set? (sounds very scary and shaky)
+The clearers Sashiko pointed at (ext4, ecryptfs, ntfs) hold the folio
+lock. Which one does it without?
 
 -- 
-Cheers,
-
-David
+  Kiryl Shutsemau / Kirill A. Shutemov
