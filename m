@@ -1,100 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794238892;
-	b=LZLa/1GwsP2PFgGkBWxMI8iMLJJ1QdaBqVpWZtVqfKmyaUzr8WF9zwcKDjX1XDuWCdTT
-	 ybAakdv11xYPlEtWjiZZmVK7EHWWkl+ofD/+bkao4fdmEAda++2C9rtVARsEhwAear9G7
-	 P7+JQ7Ge8KNbH1cyyIh+VtKhZoyZNq0m2pmiyMZBgDxkSEV3xvz1ZCq5amZy4NPSV4JXd
-	 5wfd0KS2YOV6f2GlauO9N76Dud/f64c/grUBdw7/aFYK/AXVMk6gBxIm0CsGY+XqVw6z0
-	 u3gmosPSb1zSH5tgy9cK1pI12MtGVBCVMJ5Q6kpUA6ZVUH3z7GIDJ5snIDZRd2+Alng==
+	t=1794240431;
+	b=l3qKTFkHIKxLa1t6Xlw3szm+sSN2ywnMDxg39D5JmxtBIENCocW/oSiJZpiLR6rh/RGS
+	 MDuyCLF7BHAhB7TgyL5Q1alh9lWRqoYCMKcJdDo8vGKQPg7DOhw6G/zjB4kG0jy8GPDnu
+	 zFxGrlVc5NJcTxEh5n36uglsaKaGmSTazQV7zn/NU+AolfrqBFgke2LTXtuHOuWoWMydY
+	 pzzHbMC7UB/Ebs+yakgjpfMwXqjucf/gGYGKInm5yXcUdCFSSNki0GywLFAPYawQ4vi6z
+	 kwnCIlxcbTe5vGIOqReX7aWAnC4NxpPABtqXi3k6zjVtI8Md7Dulh/oRUmTaEhRkVrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794238892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794240431;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=IpremIRTkTVFOAJN8j3i3/tFGcO5s568XdtEcWHXTOQ=;
-	b=pZu13CJtytHx3i7VmeREGFnrxXiEWFo3DQ/W3NnDvUWD9jcX31LrDLU2mvLYABMkRJD0
-	 AeLHpXV6KRVWF72QRvMDhqKwK49GV6gCeU9buSy/g/IXYpfvxVI/9j/GP/GA9Oqk7kuKA
-	 Hv4msV8rZ+UGg68CSVcDAOXxZG3OvRMvjB1K8kClVPpaS3XPllbKtAxG3SIq0vNJCe55I
-	 GSWtZx8rqDQR/crtKtITZMAFVXwnUM9+dwOy+HOGG48cxnZFcqgLcRO+HhWoJUitf8kDP
-	 R6GgS1iBK1c56zPNlKacGZlKGV+HQ0irMtAmRVB0AC5TE9QXuKWhkQyU6h2S3/wNEkA==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=PAVOiEo7yvU59/BVYzddko8QH5/O/35Z26C3YJ1MLT0=;
+	b=ZYsxOOFSvZ9vVvmIRo1Bq3CgHRk8C6JhKr5Z13elzeiy3E1M0rMsXRei4AKIknB7RHMx
+	 uhq0fBHcNpsmra431pTMF5qGnQnfdUTbEkOTrydiE4Yj+NGSNKhQeaSyduprLvSYu795d
+	 D3ZCKpLIUWX6+JjuEl02HoNRV0kmqyntrOLMbiyXrQmTr5QB3sZYcCIxKKX943QNbTaly
+	 PHhjDcq8NCUFebqQ6VrlwA564e/zRhcfpD9221/qN4DJThfhynmKaKzQImuYM/kH/52tm
+	 oalec1PbRk25g1+XWblpl3Uk7Pmno/QCJc6nczPToch7aCMYPn3KzqjTlf6ptpDu4EA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=MNWZ5Wkv;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LCaK1eIK;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759DD606A32A
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 15:41:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 759DD606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E11606A331
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 16:07:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B3E11606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=MNWZ5Wkv
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a207b02a2cso6997485e9.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 07:41:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LCaK1eIK
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4afe2d546f9so15425235e9.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 08:07:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1794238891; x=1794843691; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=IpremIRTkTVFOAJN8j3i3/tFGcO5s568XdtEcWHXTOQ=;
-        b=MNWZ5WkvABjNm+5qzJ6DXZxoMCsK88MHgYEr4MOtYIVTBKP+6qHBAmMAj2nzrbON2v
-         tuEwcrkWIV+ZjiLpoGmafR7alxDYOfk5Z7MUWerfuAJ5i34i5gZXK6C8ta8jnpJxCpUl
-         5EbjkhQsbrw7KjGYxhLK9m7q8DRiVde5ZOB+K9pGAhHcOo6mM3ND8mlf4kzw3okfC28i
-         W4+/NZbWmjutCxvi9T5qBqFm3L6/GTTIlewSpqDOu+sjiIBai666j6rXR4GE+Km/2sd1
-         7N3/9BHxj6BtG9B/arYKZBU9chU9q2fJl5JSHMzEhgAVE9J+xR1C+lps84+tq0Ykqon9
-         qd3g==
+        d=gmail.com; s=20260707; t=1794240429; x=1794845229; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=PAVOiEo7yvU59/BVYzddko8QH5/O/35Z26C3YJ1MLT0=;
+        b=LCaK1eIKUBEtOvs7dogUw4ugR8ozybfJ1vJFcbps2W19bcECXukyUD9XQ+8EaUWuM6
+         /nNAcs14bZA+oeQox4hWLmXVSxWQdAYM+y+W5ItHm4Lw0W4xDFXeFWzS9suCdOYHH6q2
+         SlDe+3f430KAN6pysxRKO6TorK4CmArBl7ANuouWVuYtWcPHim4OHScTszgo+m0bmKo6
+         E5lR39DCQ2p/dISyvmW0tMQqasPQZAIiYH8rZ7eLC5l0EGU2XcUvB+o89WYrGQaGEH7D
+         4J+RDLo90q5c+l/+EvgadqW4f1X8TYyN099AQLXdIWWbicai6QHaFeL3DgW71E1ojLNQ
+         oLTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794238891; x=1794843691;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IpremIRTkTVFOAJN8j3i3/tFGcO5s568XdtEcWHXTOQ=;
-        b=IMYi6frrg8gmILsF+DnlSYNnfCg6j9RXePev6XwMEoISK1iB0Wc5Qep1AKSAqLJRXc
-         VtcUvcrVdW/gNgrHbmGfP+O74mSLGMmDUw8z+MBX9mnGjGTHCzzODO/TOSl4sEPPeIhd
-         5HD7bCGaq4Cd9/d7sdFiw0U72dSURg+aTNQJQLrszo2qvY9YrC1/ySAgvnXzbaTwWH+I
-         3O+STxUFlYy2nbtbA4mT7YfKx61wAG2PoXfwVhtqU/mbCo/fyDzqhYxBJZ6GsSgDIWDy
-         INQDIAIrWAdGQdPSjwxwFKF7JzjR61LCndm7p3dZg20bb2Wdys5CBsnhLh7COhf3F184
-         cwEg==
-X-Gm-Message-State: APuU4Z88apxslabP3gcR+Sg4BlFDiE9DtpmQ8HonhvxrMnS7fdE1+k9p
-	8aMvFr8PF45+kA5bx+xob7FOFns3XV6G2wi3vkhMObrZ3AxB4ljqebJk2PoSCuoHIxaJC61BS/F
-	EUvCUcjg=
-X-Gm-Gg: AYBFou2BD2tnsF9Huab0ZYRzjsukthcf4GvyZUQDPrIIYzXCopIa4msSAxqCzztN0OL
-	Pz/qT4KiEmh5zrrMdJTDGDIolZbyEH0AGoH7kgDhXL4EwNI9nq/ll1883+ZukJbRVJMm7oxK3xA
-	u/fd1LCV5NCdBmdrQng1Vi/DNsQmBMunVOOZK1E0oQxsnnb6d/F6OsQwvIzDS0KsOnVtTTL9d7L
-	bqarqWRKA6Otq4tRiXij5+M6Wn7oUPNfPFGiqp7yJdb78ZQ3b81SszA1NJXkmGcdbe8g36IvfUj
-	OMw8HSfEMLKmKW9wbnbRo1PjtftL2Mz3/4fDAKxyoPqc+8zakmYHJFjeL02aHUfiBeqtV3wVa9D
-	4N9Ajhjm32+dzWK2bTTL1XD19WjXgdSMX42eGWW36/HRhgewDlTf9CK+PWiP6HZGnWFYuupgpD/
-	YI1OhJP6VsfZVia8c16GE94misDNqfmVsaYioY62decA2cbBJwy2SWRJidkPadV+lPm+zW2HuSR
-	bkXZe6f4qk2pPE4YwrGE9d0eezfcX4Rv0zAG0FeoKfR/gBDsCh6xuxMIoVc01iLKjoIRur96XMu
-	/vMQDdxXm7AuRfBxhWgIsyA2eGPYZw==
-X-Received: by 2002:a05:600c:4f52:b0:4a1:dadf:9876 with SMTP id 5b1f17b1804b1-4b963c6e061mr99726635e9.23.1794238890834;
-        Mon, 09 Nov 2026 07:41:30 -0800 (PST)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b76cb75913sm181306315e9.0.2026.11.09.07.41.30
+        d=1e100.net; s=20260707; t=1794240429; x=1794845229;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=PAVOiEo7yvU59/BVYzddko8QH5/O/35Z26C3YJ1MLT0=;
+        b=opvHOOgAGJHZ5wsGb+TROg5BcjXfPCO9aTIeLlHXX3GnR8XWIs4u8Sx195alMuXMXh
+         7JeYo7KyRxu21hI4XXxLXD/5iEIEQNzA5ptuMB7ZkO3nvKEauX9VatZe/S0nt8gvtLHm
+         fOpRb9M8rtjBXbhaUKcxtVHJOf3OzZB+5M3y/eHc2RuC8bY/Noat8G1M8yojuo628sJw
+         JQibSz6iJOyhQcaut7ExTL2wIhn3Uqv3UAqrAdZo0fMIzhkFDeuHoJQ+IRenRDQ55bkS
+         e8PPXyaya+AB2+Vfy2fDoBXk/s6CVkaWUd89iVz3J8QJ6xuRsoippWCF4h1+PR65LA4P
+         s5Pw==
+X-Forwarded-Encrypted: i=1; AL+hErGm1sVedaqXOSXSPtn6m1Fp2FT98md2wmtndV5+TGDN2sFRrMYyh69eMOEvPbOc6meB2mkrEUDMYI0jD7Ny2Jc=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9tLOiviVhL7A0RQkh1PBIAmR35dg92dCPPbJ4aDIQHItPZpVrT
+	LotZDHz2eaCqqte1YB/bfsIATvApgsA1qQdw6f4sqUPnDLg0BejJkO7w
+X-Gm-Gg: AYBFou0V/flaxY/bc7JeceoRz8CjctgBeW5PXDxOmlCkz6A7dIQCyPiVcam76s6BiFr
+	0qbwjE18sFglNEHU9tJMriOGmtVQAxhjiD9Pqv3ZfnvVhqmsRNrPwXofFopL/w94jTA+IX/J0dk
+	k+QoTfBfcprQFLjQg88Zm08gJ2hL/aRx8RXZ5I/K9GKFNFb24pxmsQI7bKXhXJVq8LxlPkfEGET
+	YnttAH/Q0XcgfSdbDSqBw+a/QsB91knnW8JyHxRAj/m+nWmmfL5IBlGwOmjaKFKUmvkEmZlV1Pw
+	+8UQxPwXdpt5OpagYEAVnM2w7qwyJ3HdKlL9M13GVCmehwi9lOCLcsxs4sqwbK0h8MqBO5fTuAR
+	yuNY4fBqCZPQiC1wE8b3ygrQtYt1AhofeEwJgPqeaG6NwTjcVkkzff2RleNbYihefGx9uOkP70D
+	JkAsIyHSxVgyb52HQK5USClFmMzCksIkxFM7taTA8pthOWa0uzQGqIP51EfV7G2aW38tVYEcjBi
+	qdZuyt9N8jPG0yjC5zp3m/dVyA92hpzjbGjz282AhONA6jP+Sb2au4yfkkrnARIrI3ut3BkMi05
+	KJ6Bw8yqqCK1zbeDqCH32yBX7NnoEzT8xxCzJkFRbcCn5I50bznWKeukCcsFOad95eSdvONXD2g
+	Hs5vaJnucOyZzA4AQP7fbuz4VPPpHK4k56iYROWjJDw==
+X-Received: by 2002:a05:600c:4f86:b0:4a1:fa21:fd90 with SMTP id 5b1f17b1804b1-4b960d9b17dmr83943565e9.9.1794240428927;
+        Mon, 09 Nov 2026 08:07:08 -0800 (PST)
+Received: from romain-ThinkPad-P14s-Gen-5-AMD.tail433d9c.ts.net ([2001:863:742:6109:ac9d:152:38c3:6463])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b90f119b96sm159174245e9.15.2026.11.09.08.07.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 07:41:30 -0800 (PST)
-Date: Mon, 9 Nov 2026 16:41:28 +0100
-From: Petr Mladek <pmladek@suse.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: John Ogness <john.ogness@linutronix.de>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Chris Down <chris@chrisdown.name>,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	printk@lists.linux.dev
-Subject: Re: [PATCH v6 16/16] printk: Try enable preferred consoles only when
- there are any
-Message-ID: <avHpqFG7qYOKRUMf@pathway.suse.cz>
-References: <20261106171952.207909-1-pmladek@suse.com>
- <20261106171952.207909-17-pmladek@suse.com>
- <sashiko-outbox-201948@kernel.org>
+        Mon, 09 Nov 2026 08:07:08 -0800 (PST)
+From: Romain TISSERAND <romain.tisserand@gmail.com>
+To: Igor Reznichenko <igor@reznichenko.net>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <jesszhan0024@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: [PATCH v2 0/3] drm/panel: ilitek-ili9488: add the PocketGo S30 panel
+Date: Mon,  9 Nov 2026 17:07:03 +0100
+Message-ID: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,97 +107,56 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-201948@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri 2026-11-06 17:35:38, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] printk: try_enable_console() skips preferred console updated
->   with brl
-> --
-> 
-> commit 72647c5e02d15452d74306497aa4961e3c65fa1a
-> Author: Petr Mladek <pmladek@suse.com>
-> 
-> printk: Try enable preferred consoles only when there are any
-> 
-> This commit moves the try_enable_preferred_console() calls into the else
-> branch of the list_empty(&preferred_dev_console) check in
-> try_enable_console().
-> 
-> > diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-> > index bbef405141573..a45a6fae91669 100644
-> > --- a/kernel/printk/printk.c
-> > +++ b/kernel/printk/printk.c
-> > @@ -4103,7 +4103,7 @@ static int try_enable_default_console(struct console *newcon)
-> >  
-> >  static int try_enable_console(struct console *newcon)
-> >  {
-> > -	int err;
-> > +	int err = -ENOENT;
-> >  
-> >  	/*
-> >  	 * First, try to enable the console driver as a Braille console.
-> > @@ -4142,16 +4142,24 @@ static int try_enable_console(struct console *newcon)
-> >  			if (err != -ENOENT)
-> >  				return err;
-> >  		}
-> > -	}
-> > +	} else {
-> > +		/* See if this console matches one we selected on the command line */
-> > +		err = try_enable_preferred_console(newcon, true);
-> > +		if (err != -ENOENT)
-> > +			return err;
-> >  
-> > -	/* See if this console matches one we selected on the command line */
-> > -	err = try_enable_preferred_console(newcon, true);
-> > -	if (err != -ENOENT)
-> > -		return err;
-> > +		/* If not, try to match against the platform default(s) */
-> > +		err = try_enable_preferred_console(newcon, false);
-> > +		if (err != -ENOENT)
-> > +			return err;
-> > +	}
-> 
-> [Severity: Medium]
-> Can this skip a preferred console if the command line specifies the same
-> console first without Braille options and then again with them (for
-> example, console=ttyS1,115200 console=brl,ttyS1,115200)?
-> 
-> When __add_preferred_console() matches an existing entry, it calls
-> add_or_update_preferred_console() with is_new_entry set to false:
-> 
-> kernel/printk/printk.c:add_or_update_preferred_console() {
->     ...
-> 	if (is_new_entry) {
-> 		pc->options = options;
-> 		braille_set_options(pc, brl_options);
-> 	}
->     ...
-> 	if (brl_options) {
-> 		want_braille_console = true;
-> 		list_del_init(&pc->preferred_dev_node);
-> 	} else if (!is_braille_console_preferred(pc)) {
-> 		list_move(&pc->preferred_dev_node, &preferred_dev_console);
-> 	}
-> }
-> 
-> Because braille_set_options() is only called when is_new_entry is true,
-> pc->brl_options remains NULL and try_enable_braille_console() ignores the
-> entry.  At the same time, the if (brl_options) branch unlinks
-> pc->preferred_dev_node from preferred_dev_console.  If no other
-> non-Braille console is preferred, preferred_dev_console is now empty, so
-> this regression prevents try_enable_preferred_console() from running and
-> leaves the console either disabled (if another default console registers
-> first) or enabled with default index 0 and NULL options via
-> try_enable_default_console().
+The Miyoo PocketGo S30 is an Allwinner A33 handheld with a 320x480
+1-lane MIPI-DSI panel built around an Ilitek ILI9488. The panel uses the
+existing ILI9488 DSI driver with its own init sequence (from the stock
+kernel), timings and DSI mode; the sequence is close to the
+E35GH-I-MW800CB one.
 
-This is the same problem as in the 14th patch. My proposal is fix it
-by a separate patch which would always update pc->brl_options when
-they were not set before, see
-https://lore.kernel.org/all/avHpL7ojyapVvGlY@pathway.suse.cz/
+Patch 1 makes the binding's port optional: the Allwinner sun6i DSI host
+links its panel as a child node and has no output port, and the driver
+does not use one. Patch 2 adds the compatible, patch 3 the panel. The
+board devicetree will be sent to the sunxi tree separately.
 
-Best Regards,
-Petr
+Testing: each patch built with W=1 for arm (multi_v7_defconfig,
+DRM_PANEL_ILITEK_ILI9488=y and =m) and arm64 (defconfig, =m), no
+warnings; dt_binding_check clean for ilitek,ili9488.yaml. Tested on a
+PocketGo S30 on 7.3.1 with v1 (A33 sun6i DSI, one lane): the panel
+probes and attaches to the DSI host, and the picture shows the right
+colors, size and position. v2 only renames the compatible and edits a
+commit message.
+
+Changes in v2:
+- Drop the "pocketgo" vendor prefix patch: PocketGo is a product line,
+  not a company (Krzysztof). The S30 is made by Bittboy/Miyoo, so use
+  the existing "miyoo" prefix: "miyoo,pocketgo-s30-panel".
+- 3/3: drop the claim that COLMOD sets the panel to 6 bits per color
+  over DSI, only say the stock value is kept (Igor).
+- Add Igor's Reviewed-by. I kept it on 2/3 and 3/3 although their
+  compatible changed from "pocketgo,s30-panel" to
+  "miyoo,pocketgo-s30-panel"; nothing else changed in them.
+- Link to v1: https://lore.kernel.org/all/20261103110524.2812831-1-romain.tisserand@gmail.com/
+
+Tool disclosure: this series was prepared with Claude Opus 5.5
+(Anthropic) as a coding assistant, in an interactive session: it
+extracted the stock init table and timings, wrote the code, the
+bindings and the messages. I reviewed and understand it, and tested it
+as described.
+
+Romain TISSERAND (3):
+  dt-bindings: display: panel: ilitek,ili9488: make the port optional
+  dt-bindings: display: panel: ilitek,ili9488: add the PocketGo S30
+    panel
+  drm/panel: ilitek-ili9488: add the PocketGo S30 panel
+
+ .../display/panel/ilitek,ili9488.yaml         |  2 +-
+ drivers/gpu/drm/panel/panel-ilitek-ili9488.c  | 55 +++++++++++++++++++
+ 2 files changed, 56 insertions(+), 1 deletion(-)
+
+
+base-commit: a1e63ab695ad76850ab9787b9eb6aab695dc2965
+-- 
+2.43.0
+
