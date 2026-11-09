@@ -1,124 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.129
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794253278;
-	b=rCBeA33RIWQbz7PLp4jPQ11vcEggTt0RxEgF/iLDtv8yUpd2pwJhg5hdQmT7tJK7+tSF
-	 rRVxqjmHEBZKw3kKfk9ultQyI/4X8oI/46YLEHFmOmJVTjv1cjhsetz1bezCogyJY9R3L
-	 qP00wn93oaYmEHdCRkOKlAbjQVfJ7pinahWllWn8KNfClx4oq6IYSPiatotr1e4c8fjO3
-	 ciqmUaNMCZJNRFf/FKc58gdU/3SJmQ9ySoLxIs16f6v7+DceNpw/GGE/RwB3x/VeFM/Zz
-	 ylwNb6gD3FVLQLLyu34F4g0eC1PqonT/NzP0lmp5Q7gN5kwiqTJba+o8GjmQzYX/uzA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794253278;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=zGiXObjqajzxHNSgI/jeYKfJRVDc/3Xvpwfjq2l+fcg=;
-	b=hPdX9OrWpbGRSgS7TP9BWc85+VLb9QhQox6S15326zJw583ArVP66yLYyTgm6lGjLta1
-	 TkezYlvrB9I/e3K0v1hYP8B36zx1wgLCAVqsgOd5pF5trWDEWb4jfxU6s7AEXLG7XOBBi
-	 bLquRCoeNhcURnT+D9QoL6bFmdYEr60MVA2ket7mh3ire/7qV+hJWESWMJNNeGMS2voCu
-	 cYh7MV/5DH578VkNqW5ezcCf/pLA1GeOU0F8V9ug+Gtt8qo6d5hr+nQGK783cDwCUOkDR
-	 X5AI3dZzHRbfVKeJuGZYI8Ibi4TvmIBDlqI7UvFWAL62Z7XWb8HE+unKWlFtvq2kRDw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=efficios.com;
-	spf=pass smtp.mailfrom=efficios.com;
-	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=j+txKzLf;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.129
-Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022129.outbound.protection.outlook.com [40.107.193.129])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794253341;
+	b=X05NAjBzU2ymaKTscTUtwcQGsutuXmF58ZDm+lhWh7LXDiwLYY9YGp/5DAYRS+ClE/uU
+	 CakmPJz+2Mv6rcJ8paxoHSSbD1UUuSTLU0L3T4bSAuNoZnc2U6QwEYS78VEFOAc+cEMvW
+	 1DTYsVE8/Qo71tq5NMlewzpvVXRi5/YRdUsX1ZuKy0nMeYvryCdrK45L5bmE7w+QASrPn
+	 lub9fHKGwlBoTb+C2wNYya0CH0+apIGyWb/uQf+WDdP1o52bqEoIrdDQuVCxXTfdDfODL
+	 zQGdWURpP9FvhZ7r18iaq4LEFMhT3l8aaIK1sVStqkpu5HX5J5V0wpuAype1RY7ojCw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794253341;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:X-Google-Original-From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=mbBQPOCqIPjbtfPgMbeVngds0pJQUl8FFvkH7QvbAp4=;
+	b=aN/ST4ftkXKQ7gxkClXwnXpn8nGBuip/nNi8Hxmxu1dxVPMtYSEUcunC/9ey8H9iSp6H
+	 DM9iAFhU6t3V+6YURYwog9SFMDuO4YgcgYbc/VjlONuhi8d+6GVgZDML75NU2jkgxrxkp
+	 yMmsEzgpPMFbiZ+t8Vi9o+o7dOEkbyKFsiqmbRdq3UrvaDva2Pmg65qUhCruKNZliN3Rj
+	 +ClrrYxzom7XT1ScDXXv1BFj6RrQ/v8zUknDSbxBdwPh9Dm8/6vsEWY33lfO7QU8pzQ1t
+	 FghlMBbJ2R27ASuOPEXL7mLhnvg7ljlo+9Hy1sBKdU+34kDYtO1zLyUM3HKI6imNL0w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VJAxBE11;
+	arc=none smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2F960A260E
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 19:41:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A2F960A260E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0325660A2630
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 19:42:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0325660A2630
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=j+txKzLf
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=A7El65aV03cMWUn++LHHklHd4BHbz6xuNRlyhwwFxe/DksQR5jLxd0CBVF4s091qxUaoXqNwfR9c6GkFIdnpaoHW0PzNSskk0rxfJVzHNpklxxqTqm/Q8qm9uUKX95EBekL1A9dKAuKQn8/Rc/6lxtb+H9TftxBjCj6CmDPiUvgMJxpJUm5dIwGs4iug29uZ8ahjBhtIN8p6gnE4LOF20OsGYKc37f/SNpKgjA8ofBjFUt8zN5gZgdyAe8gw7ZluVJXFbqbdm43MmhbvhFzuNBoMU2AQKioY1jYDsp4JkJ4QEA731lXm3xIaYNkASTIahXN5qSSmBmhTtBd4OhfptA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zGiXObjqajzxHNSgI/jeYKfJRVDc/3Xvpwfjq2l+fcg=;
- b=rFsYhlPrlz5VgN0ZRUmLc2gcO1P4r0NT0wNjBdDjXOhB5XNWODwTclGTu7VJ3y+4joY1tIJPkmWhqTYSCLCGUVIoHxKlmcjkkchwoNAMQBZw1kKfPSZhN9PoJUq8ZjqkIqZginBR3Qh1b6pDlQfBEfAbybmlmrUH2srSxekrUkC9Z6BIoAXVcCOF6AIga1/m3m+lBqwVXRhFzNZ4NzYADHTkvADriS6GhEn7EAO0syhG6ssJwzXuyeDiEfUm3csAArdMVSQ28I4gKGLML66r19vcms4MejG81Fbu1I+TSd35a2xCllowiyMNbDIS7/FK61NvpQCvy2XoZMO2+XpAaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
- dkim=pass header.d=efficios.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zGiXObjqajzxHNSgI/jeYKfJRVDc/3Xvpwfjq2l+fcg=;
- b=j+txKzLfv3g58DfV/TecTdSXTdk/3+8MoNi+2U3FWWeABmA5eYN0tGbKVJs+K1QcVDifK42nalFNrkFCAoWeLxCUvNYxOu7GDMPmoVRzau4WHxgBPh2nIoqh4JDp2HGbTsRnGXpl3tK/8w1P9Jo67za/zyuh2Z95oj2uQk1wqTnvry2tE1K/HEyR7WdePdccef537VaLnqFluk3spDnI+EtlnJlLsiAoaHS9oWIXqQ3kGffqyd1VEesrrKKgg0CSWI9gTS6e6ICdv/Uej4fhDUwkJ53tQyHXzRhvTeey6r6CYrIZSavmoP+3turCVQQQQ+Xyam1BZAei8PFwPskyvw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=efficios.com;
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10) by YT5PR01MB261024.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:19a::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Mon, 9 Nov
- 2026 19:41:17 +0000
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0592.012; Mon, 9 Nov 2026
- 19:41:17 +0000
-Message-ID: <b7f754d2-ddbe-421f-9672-aa1176e89dc4@efficios.com>
-Date: Mon, 9 Nov 2026 14:41:14 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v24 10/10] lib: add a benchmark of hierarchical
- per-cpu counters
-To: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>,
- Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Dennis Zhou <dennis@kernel.org>,
- Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>,
- Martin Liu <liumartin@google.com>, David Rientjes <rientjes@google.com>,
- christian.koenig@amd.com, Shakeel Butt <shakeel.butt@linux.dev>,
- SeongJae Park <sj@kernel.org>, Michal Hocko <mhocko@suse.com>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
- Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Vlastimil Babka <vbabka@kernel.org>, Christian Brauner <brauner@kernel.org>,
- Wei Yang <richard.weiyang@gmail.com>, Miaohe Lin <linmiaohe@huawei.com>,
- Al Viro <viro@zeniv.linux.org.uk>, Yu Zhao <yuzhao@google.com>,
- Roman Gushchin <roman.gushchin@linux.dev>, Mateusz Guzik
- <mjguzik@gmail.com>, Matthew Wilcox <willy@infradead.org>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Aboorva Devarajan <aboorvad@linux.ibm.com>,
- David Carlier <devnexen@gmail.com>, Andrew Morton
- <akpm@linux-foundation.org>, linux-mm@kvack.org,
- Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
- Randy Dunlap <rdunlap@infradead.org>, Ingo Molnar <mingo@redhat.com>,
- Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- Dietmar Eggemann <dietmar.eggemann@arm.com>, Ben Segall
- <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
- Valentin Schneider <vschneid@redhat.com>,
- K Prateek Nayak <kprateek.nayak@amd.com>, Kees Cook <kees@kernel.org>,
- linux-trace-kernel@vger.kernel.org, Jan Kara <jack@suse.cz>,
- Oleg Nesterov <oleg@redhat.com>
-References: <20261105203639.1459524-1-mathieu.desnoyers@efficios.com>
- <20261105203639.1459524-11-mathieu.desnoyers@efficios.com>
- <sashiko-outbox-202248@kernel.org>
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-202248@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQBP288CA0023.CANP288.PROD.OUTLOOK.COM
- (2603:10b6:c01:6a::19) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VJAxBE11
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a214af2076so9374205e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 11:42:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794253339; x=1794858139; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mbBQPOCqIPjbtfPgMbeVngds0pJQUl8FFvkH7QvbAp4=;
+        b=VJAxBE11jutn6ZEKjPJ1gew8bgnsIbikjpgp2WWaF+atAbLm8+3PHcqvFVgTLygKQc
+         znaBGApEA+quKLv7E5IXobaUuaQB9rGzZWfMonWD++cgB2slpWnMGS5lmW70LBdLfCHR
+         o8Vnw2cEkxOFJ8Gu0TklexsVsrWoEy+ZeScl8uXSSk6AavM6WNFDflCkUT2SWgRYn9OJ
+         c5mTZP2pLqxt4fZ5HRs82OgS1vOnNYItX+xw+1ac4gZvH00J47UO6a8VjbvXuQRxLrN0
+         yKhGgyXnirwQPdA8Xr0jBcJbzzAThT2DQMjqavE20xX0vOi2LhWgC2e3VpRK0xDvkcF1
+         yiLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794253339; x=1794858139;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=mbBQPOCqIPjbtfPgMbeVngds0pJQUl8FFvkH7QvbAp4=;
+        b=jPn1WYGH2GDKpBerMcaCBnVn5VuN9Kq4UIMqiXKlfP74G7qS5WaPao88p5ljX2nZx9
+         k0bDhphMtQDABHPfplqg7gXY68ghW1lhttfV+L6HEHpT6PVSGlnN7X17BaZwJ5TJcHMk
+         9iIHMgjjwTJzVKZ0XdxadpM4pjNnZFH5jHCwqpV3yVaHCqo8Jw6oHvRy9Gm1fNNyAO3i
+         +DysXjgzM/u5tyihrJz5er8FIcIpDDOD5NB1HK46d6O/uhPgoNwiY1y0PJQzAlkaNnmV
+         El2Seth+qUJdFN8/TPqmPTYOuY9usvzHjjV8IWCxsKab94fI0p6DXQc5JolvH4i6/CaX
+         Hg/g==
+X-Forwarded-Encrypted: i=1; AL+hErE0SxtKIunLZp8zshDBGLdj2Vn1KBQmrPI6XCVJbQDQOwPSnf7L0u7EqZcOJhOTGM+CiQZsHRBO9hjZGKpujIQ=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8xEOGS8DnXotGp17lC6RPfO1a9/ZlaUyWDETogeZ1XHxKs1I3v
+	8OpuAWUMsBR6ynWx6Y4m2ww/tLxkSLD8OpADI77lJaG5y8qwD4bQz/jU
+X-Gm-Gg: AYBFou3uy83P7Jrzgsj7sHhpmMqjkJ/4lmqjCMShQT60C4Sr0IISCt6ffTIdomsV2DU
+	dSnvN6ioL4bnbEovfBh4uZRMECCK+rnUF5kZSul8PVL9XM5rTGovvmPeLBHpaNkERMODtk7/+fp
+	xpb/LmFBZh0BoIqEkKDvrNy13zJRjzbUvdhqNXlrUFaOkaYtricl0blnQb5sfS7PUOk5FIAlci6
+	vWr47UJsPCtZRHPE6+M8MpJllXk4yTaRHMCLQUQGpKeXf+p72K602X6yLfMDQf5yd0xH/pZybsf
+	xvX5+b6dg3fO1xpIfVW35RFDPsAit9225DM6WCOdY1QqOeI3jC1a6Bgg7QdAB+6CypyJ+QdECUC
+	KO6wWuYXMRskO9QwOD/pE++NMHxUyOnIfwYAGcAdcCRCPQ4QGcVypDLXrrygiCeQFlGEzuQtROY
+	Eu1DCAWmgUSuHW24VkaQn72QImBL1yEQQk+vmP2oqUzKdKGYK+mSyIAD08gvyA+575sHQuukyjg
+	eWAiljzuTgNHlVtSQDGBbr1QMAqLv78DZdqrPFaDp23+ibphXzwxzfdpwPPbhtOh2OXQ23GDqQM
+	v93ESEPv/7Sq5ACeUvgEmp+L5wGboJMLzvKn+puT6ZiJaOUVN1QdHY9RQie/HDqb+21Kf4Ap4w=
+	=
+X-Received: by 2002:a05:600c:3b2a:b0:4a2:148b:c88c with SMTP id 5b1f17b1804b1-4ba0233f98fmr4406435e9.8.1794253339265;
+        Mon, 09 Nov 2026 11:42:19 -0800 (PST)
+Received: from acer-gaming (121.red-88-28-14.dynamicip.rima-tde.net. [88.28.14.121])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba01fef675sm9446975e9.14.2026.11.09.11.42.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Nov 2026 11:42:18 -0800 (PST)
+From: Juan Parrado <jparrado.1817@gmail.com>
+X-Google-Original-From: Juan Parrado <jparrado1817@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: dmitry.torokhov@gmail.com,
+	jparrado.1817@gmail.com,
+	linux-input@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Juan Parrado <jparrado1817@gmail.com>
+Subject: [PATCH v3] [PATCH v3] xpad.c - Add support to Hori Real Arcade Pro 4
+Date: Mon,  9 Nov 2026 20:41:18 +0100
+Message-ID: <20261109194118.18127-1-jparrado1817@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <sashiko-outbox-204846@kernel.org>
+References: <sashiko-outbox-204846@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -128,92 +102,41 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT5PR01MB261024:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3dd20bf7-f7b1-40d1-c34f-08df3e996b93
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|7416014|18002099003|22082099003|10067099003|3023799007|4143699003|56012099006|261022075727099003|261009221227099003|261026121527099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info:
-	dpeRUDXmelBvE9D+2jAwONE4n/hwgkaRUVHHuy1r6mFZHTBgY630EO46O/aDI/8p/d1/fQ4IGjjzA6wl+BmAnCn1fytQMsQ0e2E1yMEY+msgHwVRTbfPB+MCqu+5BVsL3XmmEy8m9/944G2VuWyvirEbquxQjA+a5bPKJmmiVPu2YPRQxMEFIH2QWwosI5+nnujBqcNo6FCIpnPcVstQBdtT8sHaXByobhmmWJ+1+uhErU8mfqHO0rtaLjdVDZu320bttVqyQWbFCduEd0dQWrvO2KPVMPiEM6JlauSWKkO2lV+T/zU9wcQFGGGzfCtQegcUU3c0TzVctXUbETkcevv9ZpvUMoK+4x6KCZsFykqa2lZV0f2jVdS43oiCRkvLvYRqhw0Vi6V3/GYOc1gxiuSUHForkD5Zej4MkcZpjqiLEWE2SuZKjWgsLqHfdS74Wk3s55DyUaHijMI1T4udtqV3+BjMn9sDL88oPDrZ31LDafeNq3AVjvMm5FsjNkhPesgQFTN9bU6FSlR8iD54PS8vJ5BAHWl382YGJfyzvo2y3LzTDtiE4GQ2IcHBkOPpouEXPxezNQI9DHTWT90RDCATTdMmTJzVJumFrt5PCxE=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(7416014)(18002099003)(22082099003)(10067099003)(3023799007)(4143699003)(56012099006)(261022075727099003)(261009221227099003)(261026121527099003)(261009223027099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?LzJCMHBULzNhNHNTR2Y1TXNuNFJDZVQ2cHJOMFVQTU53U1lYYWxZcVVGcGh3?=
- =?utf-8?B?VG1NUGVvV3Y1aGRBU3V6UmdsY3VWU1o3aE5lMzR1djdHVHZOTWlWeHpYTmdG?=
- =?utf-8?B?Z0xSdUIxZzBWTDVaWXBvdnF4dGJwbHdzaHp4SWI2UFRralhPQnBCWElRb3Bv?=
- =?utf-8?B?RmdNUDhkMUtKNEMvVTdrbGZUU0RpcE5VZCtINDZjTHdoS0NSUVdvbjlKN3Bq?=
- =?utf-8?B?NnpVbVNIZzVwOVpJTUVHSWJ6QzJMSndoNGVqK09tVE5mSGFJVHZBRmk2Unkx?=
- =?utf-8?B?SEF2V0xBNzdkOUhNZml6bDFHZGttWkRmTjVwSlhIaW82M25Jc0EvZUhVN09V?=
- =?utf-8?B?aDZLZGlHVW5Wa3IvQjF3b05PRXdGa3dJVTUyRjYxVU5HQ3BpdUZXRHJoaVB5?=
- =?utf-8?B?aTl3cWorSEowdEdyOUhCSG1mS28vTndBZEhRV3ZMeUVCRkQvRlY4eDZvVmlR?=
- =?utf-8?B?MlpGcDA5YnFKVnhSb0ExV2VWZjQ5U0pEc1NHK1RBd0RRdWdjYkRTWWtld0Ja?=
- =?utf-8?B?bHRNOG1EVGZNM0haZk1pU0VSZ1F3bjc0a09ROGZnQjRHM2x1d29ZdDMrMkJR?=
- =?utf-8?B?TnZvZ2RHN3dPMzFGeU1RTGQrYkJOS0UzanFCK05MTHRSQXlvdU5YV3RTdnNU?=
- =?utf-8?B?clpDaUEwMzJvcDRlYWYvc0I1ZTE0cXl5eGVXSlh6b0NxdVZ4UFE1RElQOExa?=
- =?utf-8?B?K3hFdlU1U2JBQ2czU2VHT05XVHB1TC83K0twbmZBeWN6N0QwUjlPeUVzRHVl?=
- =?utf-8?B?cy9mZnVrbXRCazRmTWpkeFpUcTFwbE9mazZxL1ZzRWdOMWZiU01rV3dVS09x?=
- =?utf-8?B?bUpHM3M0ajE2akZET0dsRU0xVmYzUDI2QzRSZFphNVJiMGRpck5reXNqQlE1?=
- =?utf-8?B?M1Y3OHcxdHBteVpVODJ4Ly9jcUZRcFZxL3I3T2RSeHhkNHRKcFZKa2hubWQy?=
- =?utf-8?B?YWdVTUNENWFvVTNmT2MrZW1yeWdlZ3FVOGt1dmxZOWxmbVdhV1N4VndyeWNR?=
- =?utf-8?B?Wmk2ZkJKbVhNakh4RHpwV2VOKzJvOHZmV0hlajFCRWxPY2FEV3R0dnlCWE9F?=
- =?utf-8?B?dERjOXN4UVFYTmt3MFJYZUg2MkhWTUNvT3N3S3haWm50YlRPUFdJUllWam5J?=
- =?utf-8?B?bWxUNmJKSHZ3Z2Q2Ti9lZjJ5eVNKSUFYRWNiOHZDV0ZPc0xLMHMyRjBxVld6?=
- =?utf-8?B?MURseVplVzQzdlh2VmRpaWFMVnowbEhPazVyR1B1NUdnM2FFcmllWFhUMGZV?=
- =?utf-8?B?Q2lrN2xxTVN1eFRrRmRvY2tWVnlsRm1PUGRzbGMyenB3TkZQdnRYb05tbXBP?=
- =?utf-8?B?ZlBIaGl0cUhsZWJIdU1lbXFmNWJkNk1udTVURURqamJPSXhndTZlSXEzK24y?=
- =?utf-8?B?RklEUU5TM1F2MnhtUHB0NTdhR1pkSUdrT2JrYndqV0YzajVMZ0JPZGppbHZ0?=
- =?utf-8?B?cE9rS3pDSWJCVXd5K1lxZHNaZlJOSEppT0tSTzg4QktnTlJnY3pwcCtNYWh1?=
- =?utf-8?B?aDd3TFUyYi9FeXBsSWJBUVlHVkQvTDZGV1d1VDFIZDZZN2hGS0pJNnRUdXdn?=
- =?utf-8?B?YUF3WXFFQVJiMFBLRURRRHdST0tLOXFQbVdhbGZhektlQnlDa3pHMDdYbTZt?=
- =?utf-8?B?QUtGV00zNkxIZWhvdnQwNzJpWk1DbUIwUmRxMlhmTXpoYVpUWVJIejE5aGpO?=
- =?utf-8?B?Q21RNUgwTVlsd05YNytrd0dqUGcybi8za0pnVzcwU25sOWNGVExPN0NYTUFN?=
- =?utf-8?B?cU9BSnViSGdVU0FoUVFWSWIzck9zTWc5SjNVbHBnd0l0MDRtaHV0RXRESkps?=
- =?utf-8?B?dGdaNkxkTDNZUmVyYkZLZEx4VHFFYXllcks1aHdWRUY2MmdmYUhzLzVSM1NG?=
- =?utf-8?B?SmE2RzNreVZqMkIwWUVjc2FselEvc3c3cTIwQlJUQTRiTDRmU21UMk1YTTF5?=
- =?utf-8?B?anpEZ0x3Y0w4bDU2Y2VWRUd3a3ZhMXphdDMvYjVCQUMrZkd3YjRpWTk1ejlC?=
- =?utf-8?B?RGoyRmV2TW1MdHFadERrdEMyQjE2bFJGS3k3MldzYk9YdmhxQ0h0NmZSSFND?=
- =?utf-8?B?ckprOE5BZHlFU2VOeDVqTFExOFRvL1JUbzJ3WGQxcHlPVkhVMEFicFJzdE5U?=
- =?utf-8?B?dzNYTXdMNjE1TlpLOExieGxpb2FWelFRWjBDaytrQ05XUWE2QWphcU80dkpZ?=
- =?utf-8?B?cnBuL0JsOUx6ZVpSUVk4eG9FS0xqVzVIeHFSd09kMTBJOWJac0FCWUQwTTA3?=
- =?utf-8?B?OW5QREhNMHFqQlBmM1JGUkxUcE45Q2djTkpLallCVGJoYkdRV2xLVW81SlQ0?=
- =?utf-8?B?Tm1Ra01SaDJSR2JUU1VLNmRlSVFqN3lFVktZQ3BZWFdkak8rSUZkck1lU0ZJ?=
- =?utf-8?Q?rfIcmucdFnQIURa0YLJlZeUOnWtc9eXfVYKPt?=
-X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3dd20bf7-f7b1-40d1-c34f-08df3e996b93
-X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2026 19:41:16.9674
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ordq+wixIJkXzmnaLdMDZFeNd/DwmEx7izR/g8NP/5OCnUm1C1cT/sLjcyrpTLy6ydO8fos0ApvldMuMT5nejGUD20pFRA5Kmx9yGJdoe38=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT5PR01MB261024
+Content-Transfer-Encoding: 8bit
 
-On 2026-11-06 15:37, sashiko-bot@kernel.org wrote:
-> [Severity: Low]
-> As reported by Sashiko on RFC v23 [1], lib/tests/percpu_counter_tree_bench.c
-> defines the batch module parameter via module_param(batch, uint, 0444) under
-> CONFIG_PERCPU_COUNTER_TREE_BENCH,
+The HORI Real Arcade Pro 4 in PC mode is currently recognized by xpad.c as
+a 'Generic X-Box pad' and works out of the box. However, this generic name
+does not match the actual device name, making it difficult for users to
+distinguish this controller when multiple devices are connected.
 
-[...]
+Tested on physical hardware. The proposed change works perfectly as is.
+The MAP_TRIGGERS_TO_BUTTONS parameter does not work here. Other arcade
+sticks use an identical configuration, such as the 'Street Fighter IV
+FightPad' and the 'Hori Real Arcade Pro.EX Premium VLX'.
 
-> Should percpu_counter_tree_bench.batch= also be documented in
-> Documentation/admin-guide/kernel-parameters.txt?
+Signed-off-by: Juan Parrado <jparrado.1817@gmail.com>
+---
+v3:
+ - Updated commit subject and description details.
+ - Fixed metadata and updated patch version history.
+v2:
+ - Fixed truncated code lines in xpad.c.
+ 
+ drivers/input/joystick/xpad.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-No change planned, as for v23. kernel-parameters.txt does not list the
-parameters of test modules. For example, the parameters of test_vmalloc
-and test_lockup are not there either. The batch parameter is documented
-by its MODULE_PARM_DESC() and in the Kconfig help.
-
-Thanks,
-
-Mathieu
-
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index 810e52782..2567ea3bd 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -255,6 +255,7 @@ static const struct xpad_device {
+ 	{ 0x0f0d, 0x0063, "Hori Real Arcade Pro Hayabusa (USA) Xbox One", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x0f0d, 0x0067, "HORIPAD ONE", 0, XTYPE_XBOXONE },
+ 	{ 0x0f0d, 0x0078, "Hori Real Arcade Pro V Kai Xbox One", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
++	{ 0x0f0d, 0x008c, "Real Arcade Pro 4", 0, XTYPE_XBOX360 },
+ 	{ 0x0f0d, 0x00c5, "Hori Fighting Commander ONE", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x0f0d, 0x00dc, "HORIPAD FPS for Nintendo Switch", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x0f0d, 0x0151, "Hori Racing Wheel Overdrive for Xbox Series X", 0, XTYPE_XBOXONE },
 -- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+2.56.0
+
