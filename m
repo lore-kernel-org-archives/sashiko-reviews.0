@@ -1,54 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.6
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.227
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794191161;
-	b=mzn5lptAE1fywWH1oXPiJ7+powPV7k//5tT5avShjOXyUxcXnDL6A9Dk/8RKXgqOCKhh
-	 CZOSz7g1e4xL8uchcd74X4Kkxfxa26O4mKwF0raVROSQfCQdjWaZnH3PSaifzDTl4i1bC
-	 8/ufoDPDvlcsSmY9IU2NDTRVEyRwm1tKFlivsruVowFbRsF3b3B2tiea0t3SXe8z5yWpu
-	 DIOPb8y/0GkaYa6beEN4oRzwzo0D6pT+iNch5Mgjkhx3Sfw+jHpOSXYRDDPudjMlYLx8L
-	 tq02nY4JBKcSnRHL42DJsyN12Tb6rY/blDVBfo/cZSYsipkKiwS6XjbTc/+b+TxTniQ==
+	t=1794191744;
+	b=2nR4LoLa4ZW4GLVyjT2Twptdl2qqZvRzkO+4JhRVwAg8WN5p58LUdbgXJ2UhJUwMmg1F
+	 tRWV/u4lJl62INdWbybv/7kblpgPLC7dEeKn5x+wujuLM9liuhfh0QpGu/TV8gWUWw2AJ
+	 xJtjAuhdampiA6nX8P1CLRhmEyXdgVeeuHxMXR7kfHsCzoOnl535P3L/LCPhMIDhT8VDl
+	 pUlsu47st5QOJ8yag7ep4ZF4HM3sGeMuLmHFEF8mP1wKj1svnaAW9tGttmXAaiV+O2GnH
+	 WfTpq9bREyGQUHR2npcArtHiU/co0qnmn5/+BfmnTJUlN7XTpGxaFTUCA918UzpHb0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794191161;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794191744;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
 	 Cc:Subject:To:References:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=WtwmJoa5jwRbvW7yFmjKyxfZjcIBewf+YKrRBbn3v2s=;
-	b=ikvP8aV3alJB4vEPuAMqUt3kii4TAe6vySGIhd1vv3mUHK85nusAo527CQwCzITecwnc
-	 IcJ/xXZHePuU4uUFNh6TGM7QViMHvhY2x35sbQf9ad/j007l2aJLe6CNMUn+h6YZMdrF+
-	 t5p9M/zzDcYoYSSMgOt/QN9SQflYvc/n/K/GQOD8IC/LfItxi/iAvpewQwiHDy/SK9JS0
-	 i3dG6JmuqMYuFFwGME6Iq1iz/a0XjaZ5IBPEPH3L2KRAY8s6Jsylg8pae8IdGLVZFXJSc
-	 UtJ5b8ojreZitWxvv8aeGy5ZHp29E3tV0HIdPedoeQWdO1JshjqVnvrcbzcS/13unLQ==
+	bh=D8KACQV8GEkM7sg/l0LY+n4eIcnrDwVtQhDVvbChlsc=;
+	b=laLpf1BPl2FbSH6Gd0IsCC+OC0Ydp4B7KhZKy7Ksoy8yD9/gJKYZQ3vXO5RNN8nvIx8z
+	 bSEjcc4BN68uf+vfxK9wLgguRBMLYDgndkVwbqo+v9JlrBCeX6n7pg5MXLU/71Hi+hJJJ
+	 btiTwQC514u2vzZkeOu25uk/ICJATxp5MxuL+Cs8KUn0vkk28GK4OfxmI0PtwA6frIuHF
+	 zpXnrNuyhH1ti1rByG6LUn11RgxgTBU9fsbk5F6zv28myxnetELrXuPQgRty+7qo7Oypo
+	 /wc5z5kDOE3bupv6dglAf6KjZWUMxHzbWpPduNn6exDuACrbLYArPqKsbV6iD0WMbLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=mxJ5f8vT;
-	arc=none smtp.remote-ip=91.218.175.6
-Received: from mta0.migadu.com (out-6.mta0.migadu.com [91.218.175.6])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=bYiGH0Ig;
+	arc=none smtp.remote-ip=95.215.58.227
+Received: from mta1.migadu.com (out-227.mta1.migadu.com [95.215.58.227])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C53606A323
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 02:25:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 26C53606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FA3606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 02:35:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65FA3606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=mxJ5f8vT
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=bYiGH0Ig
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=3wQFNru/GSW5wMzbNQX/aezP9rAklvDUaKeBXnZI+gw=;
+DKIM-Signature: a=rsa-sha256; bh=sahaBfdN8dM3MC+nyYsLDXJ4FM7JRPlU6iwwEbjUDHg=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794191158; v=1; x=1794795958;
- b=mxJ5f8vTD5vQI/xxFid8apJbYaunElojr7df5vF3uWKiE8sIfF7AXHUkOhzPmEzINJxLhVlA
- QB5jKEX5FmNVqABGE1BGcfxACrjburhNnxQzOJ1Zb90mvmrXxE12AWSIOAg8A5UukyrxkPv8ZCP
- tOv3XPDPn4x+AOdU9HhQ0lQg=
+ t=1794191741; v=1; x=1794796541;
+ b=bYiGH0IgxvZF/5ne/+c7iACluGFTwBiAQvmcNlf8D3MdLksl5cvzS6sNC2i7HQg8o6sVhy/L
+ 4lKc+Lmg6pmGJNgYlkZ0ZPVF60xPm2ucG8Oey81eCcFOqfhT/chLaTgL/ScW3PlN/wi5kU8x2xc
+ 9Z1iE3MMbQYUB78VcCEofCGA=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 1a20c7d2490421e5;
-	Mon, 09 Nov 2026 02:25:58 +0000
-X-Mizu-Trace-ID: 1a20c7d2490421e5
+Received: by smtp.migadu.com with ESMTPS id ccc0e3a2462894c9;
+	Mon, 09 Nov 2026 02:35:24 +0000
+X-Mizu-Trace-ID: ccc0e3a2462894c9
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <a583bcd4-b502-4733-9592-58203e941d7d@linux.dev>
-Date: Mon, 9 Nov 2026 10:25:49 +0800
+Message-ID: <f10075aa-0917-472c-855d-afabbc9697ff@linux.dev>
+Date: Mon, 9 Nov 2026 10:35:12 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,8 +69,8 @@ Cc: cui.tao@linux.dev, linux-mm@kvack.org,
  robin.murphy@arm.com, mason@kernel.org, aesteve@redhat.com,
  tjmercier@google.com, harry@kernel.org, vbabka@suse.cz, cuitao@kylinos.cn,
  media-ci@linuxtv.org
-Subject: Re: [PATCH 1/7] scsi: sg and st: account the command buffer memory to
- memcg
+Subject: Re: [PATCH 4/7] tracing: account ring buffer pages and trace_array
+ metadata to memcg
 To: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org,
  dgilbert@interlog.com, mkp@kernel.org, loberman@redhat.com,
  jmeneghi@redhat.com, kraxel@redhat.com, vivek.kasireddy@intel.com,
@@ -79,223 +79,191 @@ To: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org,
  vdonnefort@google.com, mhiramat@kernel.org, jgg@ziepe.ca,
  kevin.tian@intel.com, axboe@kernel.dk
 References: <20261106131829.3228926-1-cui.tao@linux.dev>
- <20261106131829.3228926-2-cui.tao@linux.dev>
- <sashiko-outbox-202918@kernel.org>
+ <20261106131829.3228926-5-cui.tao@linux.dev>
+ <sashiko-outbox-202921@kernel.org>
 From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <sashiko-outbox-202918@kernel.org>
+In-Reply-To: <sashiko-outbox-202921@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 Hi,
 
 在 2026/11/7 21:27, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 4 potential
+> Thank you for your contribution! Sashiko AI review found 3 potential
 > issues to consider:
-> - [High] scsi: sg: GFP_ATOMIC | __GFP_ACCOUNT in sg_build_indirect()
->   bypasses memcg max
-I'll take another look at the allocation context and whether GFP_ATOMIC
-is still required here.
-> - [Medium] scsi: sg: unrelated and broken blktrace CAP_SYS_ADMIN gate in
->   sg_ioctl_common()
-The capability check doesn't belong in this patch.  It was accidentally
-carried over while splitting the series and should have remained in the
-separate blktrace patch.  I'll remove it from this patch.
-> - [Medium] scsi: st: misattributed GFP_KERNEL_ACCOUNT probe charges in
->   new_tape_buffer()
-Thanks for pointing this out.  v2 drops the st side and keeps the
-accounting on the sg side.
-> - [Low] scsi: sg: commit message cites non-existent history in
->   sg_build_indirect()
-The commit message is indeed inaccurate.  I'll fix the historical
-description and clarify the reserved buffer limit in the next revision.
+> - [Medium] tracing: alloc_cpu_data() mischarges global_trace and
+>   read-page swaps
+Correct.  Charging alloc_cpu_data() unconditionally pins the global
+trace buffers to whoever first triggers the lazy expansion, and the
+read-page swap can move charges between the reader's memcg and the
+ring buffer.
+> - [Medium] tracing: alloc_cpu_data() memcg limit triggers
+>   trace_rb_cpu_prepare() WARN
+Also possible.  With __GFP_ACCOUNT, allocation failures from memcg
+limits can now reach this path as well, making the existing WARN()
+reachable from a constrained memcg.  I'll avoid charging allocations
+performed from the hotplug prepare path in the respin.
+> - [Low] tracing: inaccurate snapshot size claim and inconsistent
+>   GFP_KERNEL_ACCOUNT use
+The snapshot size description in the changelog will be corrected in the
+respin.
 > It also noticed 1 related pre-existing issue this patch does not
 > introduce:
-> - [High] scsi: sg: shift-out-of-bounds in sg_build_indirect() [1]
-Thanks for pointing that out.  It predates the series, and I'll
-investigate it separately.
+> - [Medium] tracing: memory leak in trace_array_create_systems() [1]
+That one predates this series as well.  I'll investigate it separately
+and send a dedicated fix if confirmed.
+
+The v2 respin narrows the accounting.  Only buffers belonging to
+non-root trace instances will be allocated with __GFP_ACCOUNT (via a
+new RB_FL_ACCOUNT flag).  The global trace, read-page pool and CPU
+hotplug allocations will remain unaccounted, and the changelog will be
+updated accordingly.
+
+Thank
 > --
 > 
-> commit ec96b2b0cdd1df3575b4521cd9f81da9824bc2b2
+> commit a11da3138f9fda850c1b05bae82b0be7e738b994
 > Author: Tao Cui <cuitao@kylinos.cn>
 > 
-> scsi: sg and st: account the command buffer memory to memcg
+> tracing: account ring buffer pages and trace_array metadata to memcg
 > 
-> This commit adds __GFP_ACCOUNT to buffer and descriptor allocations in the
-> sg and st drivers to charge them to the calling process's memory cgroup, and
-> adds a CAP_SYS_ADMIN check for blktrace ioctls in sg_ioctl_common().
+> This commit adds __GFP_ACCOUNT to ring buffer subbuffer allocations in
+> alloc_cpu_data() and switches trace_array allocations in
+> trace_array_create_systems() to GFP_KERNEL_ACCOUNT.
 > 
->> The sg data buffers are unaccounted: the per-fd reserved buffer, the
->> scatter-gather page array, and the order-0..N pages behind it, plus the
->> per-device tape buffer in st.  All of it is user controllable.  The
->> reserved size is capped only by the device max_sectors, SG_MAX_QUEUE
->> (16) commands can be in flight per fd, and the fd count is bounded by
->> RLIMIT_NOFILE.  Nothing is charged to the memcg of the process driving
->> it.  The September 2026 fixes in sg_build_indirect reshaped the element
->> sizing and left the accounting alone.
+>> diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+>> index e760d2fe386fb..f925936378639 100644
+>> --- a/kernel/trace/ring_buffer.c
+>> +++ b/kernel/trace/ring_buffer.c
+>> @@ -441,7 +441,13 @@ static struct buffer_data_page *alloc_cpu_data(int cpu, int order)
+>>  	 * gracefully without invoking oom-killer and the system is not
+>>  	 * destabilized.
+>>  	 */
+>> -	mflags = GFP_KERNEL | __GFP_RETRY_MAYFAIL | __GFP_COMP | __GFP_ZERO;
+>> +	/*
+>> +	 * The subbuffers are charged to the memcg of whoever caused the
+>> +	 * allocation: the creator of a trace instance, or root at boot for
+>> +	 * the global trace.
+>> +	 */
+>> +	mflags = GFP_KERNEL | __GFP_RETRY_MAYFAIL | __GFP_COMP | __GFP_ZERO |
+>> +		  __GFP_ACCOUNT;
+>>  
+>>  	page = alloc_pages_node(cpu_to_node(cpu), mflags, order);
+>>  	if (!page)
+> 
+> [Severity: Medium]
+> Does charging every alloc_cpu_data() call to current's memcg misattribute
+> global_trace subbuffers and swapped read pages?
+> 
+> At boot, tracer_alloc_buffers() keeps global_trace at its minimum size
+> (ring_buf_size = 1) when ring_buffer_expanded is false.  global_trace is
+> only expanded to trace_buf_size at runtime in tracing_update_buffers() or
+> tracing_set_tracer() when a task first enables an event, sets a tracer, or
+> loads a module using trace_printk().  With __GFP_ACCOUNT in
+> alloc_cpu_data(), those global_trace pages are charged to whichever cgroup
+> triggers the lazy expansion and stay pinned to that memcg because
+> global_trace is never freed.
+> 
+> In addition, ring_buffer_alloc_read_page() calls alloc_cpu_data() when
+> reading or splicing from trace_pipe_raw, and ring_buffer_read_page() swaps
+> that reader-allocated page directly into reader->page while handing the old
+> ring buffer page back to the reader to be freed:
+> 
+> kernel/trace/ring_buffer.c:ring_buffer_read_page() {
+>     ...
+> 		dpage = reader->page;
+> 		reader->page = data_page->data;
+> 		local_set(&reader->write, 0);
+> 		local_set(&reader->entries, 0);
+> 		reader->read = 0;
+> 		data_page->data = dpage;
+>     ...
+> }
+> 
+> A host process reading trace_pipe_raw from a container's instance will
+> replace the container's charged pages with uncharged pages and uncharge the
+> container as the old pages are freed, while a cgroup task reading
+> global_trace will swap pages charged to its own memcg into global_trace.
+> Similarly, trace_rb_cpu_prepare() during runtime CPU hotplug allocates
+> per-CPU buffers for all existing instances in the context of the task
+> onlining the CPU.
+> 
+> [Severity: Medium]
+> Can hitting the memcg limit in alloc_cpu_data() during instance creation
+> trigger the WARN(1) in trace_rb_cpu_prepare()?
+> 
+> When alloc_buffer() creates a ring buffer, it allocates the first CPU's
+> buffer directly and then calls
+> cpuhp_state_add_instance(CPUHP_TRACE_RB_PREPARE, &buffer->node), which runs
+> trace_rb_cpu_prepare() for each remaining present CPU:
+> 
+> kernel/trace/ring_buffer.c:trace_rb_cpu_prepare() {
+>     ...
+> 	buffer->buffers[cpu] =
+> 		rb_allocate_cpu_buffer(buffer, nr_pages, cpu);
+> 	if (!buffer->buffers[cpu]) {
+> 		WARN(1, "failed to allocate ring buffer on CPU %u\n",
+> 		     cpu);
+> 		return -ENOMEM;
+> 	}
+>     ...
+> }
+> 
+> Because __rb_allocate_pages() only checks si_mem_available() against global
+> memory, a cgroup with enough headroom for the first CPU (~1.375 MB) that
+> hits its memcg limit on any subsequent CPU in trace_rb_cpu_prepare() will
+> trigger this WARN(1) and crash the host if panic_on_warn is set.
+> 
+>> diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+>> index 08614af8fad1c..fd1cfd1f66fbe 100644
+>> --- a/kernel/trace/trace.c
+>> +++ b/kernel/trace/trace.c
+>> @@ -8677,11 +8677,11 @@ trace_array_create_systems(const char *name, const char *systems,
+>>  	int ret;
+>>  
+>>  	ret = -ENOMEM;
+>> -	tr = kzalloc_obj(*tr);
+>> +	tr = kzalloc_obj(*tr, GFP_KERNEL_ACCOUNT);
+>>  	if (!tr)
+>>  		return ERR_PTR(ret);
+>>  
+>> -	tr->name = kstrdup(name, GFP_KERNEL);
+>> +	tr->name = kstrdup(name, GFP_KERNEL_ACCOUNT);
+>>  	if (!tr->name)
+>>  		goto out_free_tr;
+>>  
+>> @@ -8692,7 +8692,7 @@ trace_array_create_systems(const char *name, const char *systems,
+>>  		goto out_free_tr;
+>>  
+>>  	if (systems) {
+>> -		tr->system_names = kstrdup_const(systems, GFP_KERNEL);
+>> +		tr->system_names = kstrdup_const(systems, GFP_KERNEL_ACCOUNT);
+>>  		if (!tr->system_names)
+>>  			goto out_free_tr;
+>>  	}
 > 
 > [Severity: Low]
-> Is the commit message accurate about the history of sg_build_indirect() and
-> the reserved buffer cap?
+> Should the alloc_cpumask_var() and zalloc_cpumask_var() calls right between
+> tr->name and tr->system_names, as well as alloc_cpu_page() and
+> alloc_cpu_buffer() in ring_buffer.c, also use GFP_KERNEL_ACCOUNT?
 > 
-> In git history, sg_build_indirect() has not been modified since
-> aaff5ebaa269 ("scsi: remove the unchecked_isa_dma flag") in 2021, and its
-> element sizing has not changed since 10db10d144c0 ("sg: convert the indirect
-> IO path to use the block layer") in 2008.  In addition, the initial per-fd
-> reserved buffer in sg_add_sfp() is capped by min_t(int, def_reserved_size,
-> max_sectors_bytes(sdp->device->request_queue)), while only resizing via
-> SG_SET_RESERVED_SIZE is capped solely by max_sectors_bytes().
-> 
->> diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
->> index 5408f002e6c01..80d919fa5cf91 100644
->> --- a/drivers/scsi/sg.c
->> +++ b/drivers/scsi/sg.c
->> @@ -910,6 +910,19 @@ static int put_compat_request_table(struct compat_sg_req_info __user *o,
->>  }
->>  #endif
->>  
->> +/*
->> + * The sg passthrough of the blktrace ioctls has the same exposure as the
->> + * block device path: holding the node is the only requirement today, and
->> + * a created trace outlives the fd.  Must match the gate in
->> + * blk_trace_ioctl().
->> + */
->> +static bool sg_is_blktrace_cmd(unsigned int cmd)
->> +{
->> +	return cmd == BLKTRACESETUP || cmd == BLKTRACESETUP2 ||
->> +	       cmd == BLKTRACESTART || cmd == BLKTRACESTOP ||
->> +	       cmd == BLKTRACETEARDOWN;
->> +}
->> +
->>  static long
->>  sg_ioctl_common(struct file *filp, Sg_device *sdp, Sg_fd *sfp,
->>  		unsigned int cmd_in, void __user *p)
->> @@ -919,6 +932,9 @@ sg_ioctl_common(struct file *filp, Sg_device *sdp, Sg_fd *sfp,
->>  	Sg_request *srp;
->>  	unsigned long iflags;
->>  
->> +	if (sg_is_blktrace_cmd(cmd_in) && !capable(CAP_SYS_ADMIN))
->> +		return -EPERM;
->> +
+> Also, the commit message says creating an instance immediately allocates a
+> full ~1.375 MB per-CPU snapshot buffer, but trace_allocate_snapshot() passes
+> size = 1 when allocate_snapshot is false (which is always the case after
+> boot), so snapshot_buffer only allocates the minimum pages until a snapshot
+> is armed.
 > 
 > [Severity: Medium]
-> Does this capability check belong in a memcg accounting commit, and does it
-> cause a UAPI regression for unprivileged users with access to /dev/sg*?
+> This problem wasn't introduced by this patch, but in
+> trace_array_create_systems() [1], does the out_free_tr error path leak
+> tr->tracers when trace_array_create_dir() fails?
 > 
-> Despite the comment, blk_trace_ioctl() in kernel/trace/blktrace.c does not
-> check capable(CAP_SYS_ADMIN); block devices gate these ioctls only on access
-> to the device node.  Moreover, sg_is_blktrace_cmd() matches BLKTRACESETUP2
-> even though sg_ioctl_common() only implements BLKTRACESETUP, BLKTRACESTART,
-> BLKTRACESTOP, and BLKTRACETEARDOWN, so unprivileged callers now get -EPERM
-> instead of -ENOTTY for BLKTRACESETUP2.
+> trace_array_create_dir() calls __update_tracer() -> add_tracer(), which
+> allocates struct tracers and struct tracer_flags entries on tr->tracers.  If
+> a later step in trace_array_create_dir() fails and jumps to out_free_tr,
+> nothing calls free_tracers(tr), leaking the entries already added to
+> tr->tracers.
 > 
->> @@ -1841,7 +1857,7 @@ static int
->>  sg_build_sgat(Sg_scatter_hold * schp, const Sg_fd * sfp, int tablesize)
->>  {
->>  	int sg_bufflen = tablesize * sizeof(struct page *);
->> -	gfp_t gfp_flags = GFP_ATOMIC | __GFP_NOWARN;
->> +	gfp_t gfp_flags = GFP_ATOMIC | __GFP_NOWARN | __GFP_ACCOUNT;
->>  
->>  	schp->pages = kzalloc(sg_bufflen, gfp_flags);
->>  	if (!schp->pages)
->> @@ -1856,7 +1872,8 @@ sg_build_indirect(Sg_scatter_hold * schp, Sg_fd * sfp, int buff_size)
->>  	int ret_sz = 0, i, k, rem_sz, num, mx_sc_elems;
->>  	int sg_tablesize = sfp->parentdp->sg_tablesize;
->>  	int blk_size = buff_size, order;
->> -	gfp_t gfp_mask = GFP_ATOMIC | __GFP_COMP | __GFP_NOWARN | __GFP_ZERO;
->> +	gfp_t gfp_mask = GFP_ATOMIC | __GFP_COMP | __GFP_NOWARN |
->> +			 __GFP_ACCOUNT | __GFP_ZERO;
->>  
->>  	if (blk_size < 0)
->>  		return -EFAULT;
-> 
-> [Severity: High]
-> This problem wasn't introduced by this patch, but can the ret_sz shift in
-> sg_build_indirect() trigger a signed shift-out-of-bounds [1]?
-> 
-> drivers/scsi/sg.c:sg_build_indirect() {
-> 	...
-> 	num = scatter_elem_sz;
-> 	...
-> 	order = get_order(num);
-> retry:
-> 	ret_sz = 1 << (PAGE_SHIFT + order);
-> 	...
-> }
-> 
-> On 4 KB page architectures, setting the scatter_elem_sz module parameter
-> near INT_MAX gives order == 19, so 1 << (PAGE_SHIFT + order) evaluates the
-> signed 32-bit shift 1 << 31, triggering UBSAN or yielding a negative ret_sz
-> that corrupts the allocation loop.
-> 
->> @@ -2146,7 +2163,7 @@ sg_add_sfp(Sg_device * sdp)
->>  	unsigned long iflags;
->>  	int bufflen;
->>  
->> -	sfp = kzalloc_obj(*sfp, GFP_ATOMIC | __GFP_NOWARN);
->> +	sfp = kzalloc_obj(*sfp, GFP_ATOMIC | __GFP_NOWARN | __GFP_ACCOUNT);
->>  	if (!sfp)
->>  		return ERR_PTR(-ENOMEM);
-> 
-> [Severity: High]
-> Does combining GFP_ATOMIC with __GFP_ACCOUNT in sg_build_sgat(),
-> sg_build_indirect(), and sg_add_sfp() allow processes to bypass their memcg
-> memory.max limit?
-> 
-> GFP_ATOMIC sets __GFP_HIGH and lacks __GFP_DIRECT_RECLAIM.  When a memcg is
-> at memory.max, try_charge_memcg() skips reclaim because the allocation
-> cannot block and then force-charges past memory.max because __GFP_HIGH is
-> set:
-> 
-> mm/memcontrol.c:try_charge_memcg() {
-> 	...
-> nomem:
-> 	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH)))
-> 		return -ENOMEM;
-> force:
-> 	page_counter_charge(&memcg->memory, nr_pages);
-> 	...
-> }
-> 
-> All callers of sg_add_sfp(), sg_build_sgat(), and sg_build_indirect()
-> (sg_open(), SG_SET_RESERVED_SIZE in sg_ioctl_common(), and sg_start_req())
-> run in sleepable process context holding only mutexes, so using GFP_KERNEL
-> would allow memcg reclaim and enforce memory.max.
-> 
->> diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
->> index f1c3c49466379..7083d37622c08 100644
->> --- a/drivers/scsi/st.c
->> +++ b/drivers/scsi/st.c
->> @@ -3973,7 +3973,7 @@ static struct st_buffer *new_tape_buffer(int max_sg)
->>  {
->>  	struct st_buffer *tb;
->>  
->> -	tb = kzalloc_obj(struct st_buffer);
->> +	tb = kzalloc_obj(struct st_buffer, GFP_KERNEL_ACCOUNT);
->>  	if (!tb) {
->>  		printk(KERN_NOTICE "st: Can't allocate new tape buffer.\n");
->>  		return NULL;
->> @@ -3982,7 +3982,8 @@ static struct st_buffer *new_tape_buffer(int max_sg)
->>  	tb->use_sg = max_sg;
->>  	tb->buffer_size = 0;
->>  
->> -	tb->reserved_pages = kzalloc_objs(struct page *, max_sg);
->> +	tb->reserved_pages = kzalloc_objs(struct page *, max_sg,
->> +					  GFP_KERNEL_ACCOUNT);
->>  	if (!tb->reserved_pages) {
->>  		kfree(tb);
->>  		return NULL;
-> 
-> [Severity: Medium]
-> Does using GFP_KERNEL_ACCOUNT in new_tape_buffer() charge the device probe
-> context instead of the process driving tape I/O?
-> 
-> new_tape_buffer() is only called from st_probe() when a tape device is
-> attached, and both tb and tb->reserved_pages live until scsi_tape_release(),
-> so they are never charged to the process performing I/O.  Meanwhile, the
-> per-I/O page array allocated in the driving process's context during direct
-> I/O in sgl_map_user_pages() (pages = kmalloc_objs(*pages, max_pages))
-> remains unaccounted.
-> 
-> [1] https://sashiko.dev/#/bug/linux-ccac9556-cc9e-4b08-b44f-5f7ffb342827
+> [1] https://sashiko.dev/#/bug/linux-9449d18e-1233-4181-9199-09eaead7b576
 > 
 
