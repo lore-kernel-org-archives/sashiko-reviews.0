@@ -1,98 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794254331;
-	b=Wrp29vZiRJuxGumWLcnTSwmcN2GN2w8DsF5v7aurDjRburWr5Y0ammGtBOpwUvfSsQyy
-	 Ls36HW7BVVXJ7vWj1PrGQAQgWzg60s3pbbn+9BhH+8qP7YA4oq0PLVAS851nbnUYtmCti
-	 uN4lPddOMlSz+W3OcPlthTKS5K6c1BeozMGiNGexAlQjyMG2OZmxutJzIeeQ84RkvGWV2
-	 3e7/HYd48mUZIsbb2BbQVl1emFsksTWRvXn4lP7JJuEKfUUWyrd51i4T+LNUPLVjginKS
-	 7nsUeLzhWEkhS0unVcAm2hP/e1aujoV2VqNic0F/SkYKHOtPdbRS6Jb+GFpy1peiMBw==
+	t=1794254836;
+	b=U5hXxXc10RpkluC7UmlM8Sy8sp33kAJZv06nxGDFDof0/tqbT2Cn3jkeO3uWraQ6EQfJ
+	 Pi7ZQATsjhWhhcNqaAdn0wCKbw8/JBuvtb+wH/jHBpUj52TePK3mSsUklW6C2HLrj9QgH
+	 xErCZbpyjChdTMqbhzShvoUzfr4Q+lpgrzVKnO8LU39eq/uu7SzEswk6Gy0k6iH2D4+Oa
+	 JwCk13glag7SQYu6l9LQwPt4K2M3RpTI9dHWN9+QZHFLuA0sikvcGGv6C+B/BjvUm6C9Y
+	 hol/89yNAE5lpknMlZzXCVgIsdiEuPRMzTNzGM+OxOEkVO/bTHy8tHUAOluvMgD72mQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794254331;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:X-Google-Original-From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=+iyECRctbczd6ccDWJllCZGndv7fKJ3cecECSIHK5nQ=;
-	b=tJGYi8zkJFLHARv5HxSbbC3+q7T+dtymJq0kQ3LiUxxKrxn1JBB0xliTXuL91x5KLEX9
-	 fBfF+WlFh1sX8oiPgsAdqJYG4V8ER+NhaEy12KIj+0Pus7zDhRUBjGFXEoJ1JP+lr8KES
-	 v98QYNSAuZjxRyWwz2UDT4InHsJ7yIdyWok3WTy1EHRqrYBn3MEOhlCPLQcCAjQTzYW4F
-	 ELAiq9eDP7lOkQiV090pFQJ6V3En2c/PwSXpJrU5rrd3q+tL2XcEdEEl8gJKYOHk9CAie
-	 geQHyXLrKMH04hf9HisED2Vgk812f7648/lhvCjoGNX//NQytQy8eK9QyNSm+8bzG4A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794254836;
+	h=DMARC-Filter:Date:DKIM-Signature:DKIM-Signature:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To;
+	bh=yRz3xBS2P6QB23UW9SPrskdtcdbexIqa29HxXhxwnyc=;
+	b=ZJM/s3OOYa5lproxiKI6v18pdxuo/1IojAw0vtbOY5bctPcU2XWpSgOjLAzw+fayJ5nI
+	 PjCFqupZ4EXFH4kNVM8vZHwofbvBhjAbDhPv9m/Y/i5BDe8ilvQ2xzVv/cGdlNFyG1mwI
+	 PFR2R8gIW22PDVAaUa6pCcqqHouLsrxEagBfwQUXZJLf6GRegCIFMPPZCQ1mwH0FsByDT
+	 GaTL+jy1abI29QOtogufXHItGpTdIq+qr/BBrvOHbEAJeQKXIs5j7eZEFSfJ56eH/yoNG
+	 AL6KXuVT+uoe6QBX6jGKEBby8qpAxtzXRCimPnEYWuOuPMghS2e8hIi6NSD+ODcmskQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="ZPd/7H1N";
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=1yaSpnxb;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=Lq9+W8xG;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F703606A326
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 19:58:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F703606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FF3606A332;
+	Mon,  9 Nov 2026 20:07:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C6FF3606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZPd/7H1N
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-49412eb1474so854088f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 11:58:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794254329; x=1794859129; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+iyECRctbczd6ccDWJllCZGndv7fKJ3cecECSIHK5nQ=;
-        b=ZPd/7H1N6Sf/J1Gl/PgPjU0NTPSpLOS9Ta/oYz9RtZAaqjPUbPb5Mm21Q7y5QTO1aO
-         btxE6vgHM948oPrEdBGsXewbWnAU2sJIa7nKFS/s3EVzGQ3HqNzHpLR2vvBlsCP4bg9X
-         +7+I4t4fnLeg4Zrf4kuaqQCjzvIo7JEGmjpTmcQjWvr63xGW6XxYuyof8W2CbHT8cUl7
-         sUshdiZlF8w1Ape27xSER5a9Is7DsqhqhGixQPHtIKfObroP+LnPaXDE3zTmYJkyKjzM
-         n37kn4/r0MgTZn6+/rFdbqicNuQO/n7g9FnDahFMPhXJd0xbJKL6RlqzToblDxHet+aa
-         Nedw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794254329; x=1794859129;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+iyECRctbczd6ccDWJllCZGndv7fKJ3cecECSIHK5nQ=;
-        b=icdDycNENxTnAN06RtWpGHh8QgsCNnfRDNzWfK7io9sR84wVbi8imJjoLSMQDqEcNN
-         jbGoOcA9EvZuDiIXOvZKvNDhUe/JKr/mioObE1BgmleTHFtkMWboV6dYrWi3RuvWqEcM
-         ENDyRxU6InAtm5nVXoM+ztwlJfWb8oou7oHtnLJbonrFx4pMrUwYlHxf7avJ7HEtB1XQ
-         7phM3fiyOfJYr0+mDJjWiZsKiy8YbyuOs09r59N2qeoVQOzIEZS1YCBey3VCuCTEqDZW
-         b2cCoqd6Ttdw+fW0iuYYDg5fDI/qzO1Z3D/oBNdfgbuCSMiuZoIaiPglTKTH9pMaGG69
-         ZhXQ==
-X-Forwarded-Encrypted: i=1; AL+hErEXw9s2cOQ7Ql6P/JzZZ3gLs0Z5Axni55VNuEKLP4eL4oAjfZNFSri/nTAwET/I994G/i+yNqksjyd9ePgQIjw=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9jIA5cYSkBaFllc2Pyncl8rgtWeQc0ErdHcz79rZT3czaf9VML
-	oD2GD0TZkGuHlDMlJcZIDuJOuHn0mdhW2PN8s68kg8l7mjms7R26Eg2+
-X-Gm-Gg: AYBFou0ejUfk/BnjHVZXMf1vorSkJF5II4M7MP94kpemYDePzYOPTLXLpjhdfHRL/TS
-	u+UBy/YD1SK+lpkuXd8t8AyVK5Qwzj+xpAG+ecjUN6wddwUUl1rnmszi1GHFnjMlKiPJEsQQIJ/
-	oBOoWM/qSPqVNvPP/SP6brK0SAHwDEhNzIe9PdDKThBYBSHX18vrp5/McDVrdsvIRTWrxw5ZJcw
-	l2f6y4J5nFWtjUckacB6sx6hp8yIQK1Lo4DCJBjViDvS8UM4ma4UfPBwvwUiNHCd3FjyNROZ4Q6
-	07kirRVp7i+ebya0EJRXZ0976Yy7yQUgJwH25aQjOlcAa5Nvb8f9u7yW092h6YZd3w6illIK5hm
-	z6PTK2/0jzFJQhK/GVzlU/yQ0I9qIyKq+aCIuw5ob+OBJQystRMPeEY/G6ftaOg7cSYjUxJr4GY
-	7RfxjPNAVXvGJkOay+CN6fnZJT3N7mkiir1Dw+jZlJqit6vV2KIhBYq7qORJ3Pz5PBzoX5YRgq5
-	XkJYJEg6eauAv3mQ9CIGipXzHKi6MdTKH+le6TVnvb8AgHVA4OTawdZqvYPyj1+883zCoI6592l
-	rB7zHUU5QiE9DvDkGJB+ca5Yd9fHkmchTgiO+IpftY+ATUWrqI1AW1Y1zSsOeoMqERkq6vYMBA=
-	=
-X-Received: by 2002:a05:6000:24c6:b0:490:411a:1eed with SMTP id ffacd0b85a97d-4983105fa73mr947073f8f.39.1794254329550;
-        Mon, 09 Nov 2026 11:58:49 -0800 (PST)
-Received: from acer-gaming (121.red-88-28-14.dynamicip.rima-tde.net. [88.28.14.121])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-498369a3f4esm792446f8f.53.2026.11.09.11.58.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 11:58:49 -0800 (PST)
-From: Juan Parrado <jparrado.1817@gmail.com>
-X-Google-Original-From: Juan Parrado <jparrado1817@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: dmitry.torokhov@gmail.com,
-	jparrado.1817@gmail.com,
-	linux-input@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Juan Parrado <jparrado1817@gmail.com>
-Subject: [PATCH v3] [PATCH v3] xpad.c - Add support to Hori Real Arcade Pro 4
-Date: Mon,  9 Nov 2026 20:58:30 +0100
-Message-ID: <20261109195830.22156-1-jparrado1817@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <sashiko-outbox-204846@kernel.org>
-References: <sashiko-outbox-204846@kernel.org>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=1yaSpnxb;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=Lq9+W8xG
+Date: Mon, 9 Nov 2026 21:07:11 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1794254833;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yRz3xBS2P6QB23UW9SPrskdtcdbexIqa29HxXhxwnyc=;
+	b=1yaSpnxbovoH8DcGVOVIMJL9Az88a0SGbTS3bMkFvGcQ+RD6tW2e6AH6d0Wg4X6Z1j8GaM
+	dxvrPPKg7lg2BFVOdzeAX0tRB0SA92IFwFEl1p72wqlq5MektW7DukRuClJvIqHStKK3ks
+	SQeVdIOprrbGjTCOkA5FYhWL1ZzXAiuUZ0LKWPAo9yU3C45AEmIZU0KwCluYhPe7zHs8Nk
+	kN6EYnLYWkESkQ9HUSnu7T2n+P67zZq7CE/rJrc1WQAYnVSEcFShsgLGtIuZeLXVvYN+PQ
+	MqiF8UdD0mUerK01lK+zm7wIbPTGwz5nEO+QUfIB6iSCwLH/gAeeH0yhP58v1g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1794254833;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yRz3xBS2P6QB23UW9SPrskdtcdbexIqa29HxXhxwnyc=;
+	b=Lq9+W8xGRwCZ/RcDWGQ44nuGzp9INi8Xrq8+3iktck6bvjvXB854avzo9gr3d7qXi0FRCV
+	HOxH5FqIXHnRGDBg==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Clark Williams <clrkwllms@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	John Ogness <john.ogness@linutronix.de>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@amutable.com>,
+	Daan De Meyer <daan.j.demeyer@gmail.com>,
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	linux-rt-devel@lists.linux.dev, debian-kernel@lists.debian.org,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 04/10] kconfig: Introduce checkconfig target
+Message-ID: <avIn71Md3LtNaYje@lx-t490>
+References: <20261106091922.7560-1-darwi@linutronix.de>
+ <20261106091922.7560-5-darwi@linutronix.de>
+ <sashiko-outbox-202759@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,42 +87,78 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-202759@kernel.org>
 
-The HORI Real Arcade Pro 4 in PC mode is currently recognized by xpad.c as
-a 'Generic X-Box pad' and works out of the box. However, this generic name
-does not match the actual device name, making it difficult for users to
-distinguish this controller when multiple devices are connected.
+On Sat, 07 Nov 2026, sashiko-bot@kernel.org wrote:
+> >
+> > +checkconfig := $(PYTHON3) -B $(srctree)/tools/kconfig-checker/check.py
+> > +list_checkconfig_rules =						\
+> > +	echo -n >&2 "Available RULES: ";				\
+> > +	$(checkconfig) list-rules >&2;					\
+> > +	echo >&2
+> > +
+> > +PHONY += checkconfig
+> > +checkconfig:
+> > +	$(Q)if [ -z "$(RULES)" ]; then					\
+> > +		echo >&2 "Usage: make RULES=<profile> checkconfig";	\
+> > +		$(list_checkconfig_rules);				\
+> > +		exit 2;							\
+> > +	fi
+> > +	$(Q)if ! $(checkconfig) list-rules | grep -qw "$(RULES)"; then	\
+> > +		echo >&2 "Unknown RULES profile = $(RULES)";		\
+> > +		$(list_checkconfig_rules);				\
+> > +		exit 2;							\
+> > +	fi
+> > +	$(Q)$(checkconfig) check -r "$(RULES)" -c "$(KCONFIG_CONFIG)"
+>
+...
+>
+> When either module is missing, check.py writes the error to stderr,
+> produces no stdout, and exits with os.EX_UNAVAILABLE.  Because the POSIX
+> shell pipeline ignores the exit status of $(checkconfig) list-rules,
+> grep -qw exits 1 on the empty stdout and the negated condition enters the
+> branch.  That reports a valid setting such as RULES=preempt_rt as an
+> unknown profile and runs $(list_checkconfig_rules), which invokes check.py
+> a second time and prints a duplicate module error on the same line after
+> "Available RULES: ".
 
-Tested on physical hardware. The proposed change works perfectly as is.
-The MAP_TRIGGERS_TO_BUTTONS parameter does not work here. Other arcade
-sticks use an identical configuration, such as the 'Street Fighter IV
-FightPad' and the 'Hori Real Arcade Pro.EX Premium VLX'.
+It works, so there is no reason to complicate things.
 
-Signed-off-by: Juan Parrado <jparrado.1817@gmail.com>
----
-v3:
- - Updated commit subject and description details.
- - Fixed metadata and updated patch version history.
- - Corrected device name in code.
-v2:
- - Fixed truncated code lines in xpad.c.
- 
- drivers/input/joystick/xpad.c | 1 +
- 1 file changed, 1 insertion(+)
+For example, invoking the make target from a container with old Python:
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 810e52782..2567ea3bd 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -255,6 +255,7 @@ static const struct xpad_device {
- 	{ 0x0f0d, 0x0063, "Hori Real Arcade Pro Hayabusa (USA) Xbox One", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x0f0d, 0x0067, "HORIPAD ONE", 0, XTYPE_XBOXONE },
- 	{ 0x0f0d, 0x0078, "Hori Real Arcade Pro V Kai Xbox One", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
-+	{ 0x0f0d, 0x008c, "Hori Real Arcade Pro 4", 0, XTYPE_XBOX360 },
- 	{ 0x0f0d, 0x00c5, "Hori Fighting Commander ONE", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x0f0d, 0x00dc, "HORIPAD FPS for Nintendo Switch", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x0f0d, 0x0151, "Hori Racing Wheel Overdrive for Xbox Series X", 0, XTYPE_XBOXONE },
--- 
-2.56.0
+   $ make checkconfig
+   Usage: make RULES=<profile> [OVERLAY=<overlay>] checkconfig
+   Available RULES: Error: Python 3.9 or later is required
 
+   make[2]: *** [scripts/kconfig/Makefile:138: checkconfig] Error 2
+   make[1]: *** [/home/darwi/linux/Makefile:772: checkconfig] Error 2
+   make: *** [Makefile:248: __sub-make] Error 2
+
+and:
+
+   $ make RULES=nonExistent checkconfig
+   Error: Python 3.9 or later is required
+   Unknown RULES profile = nonExistent
+   Available RULES: Error: Python 3.9 or later is required
+
+   make[2]: *** [scripts/kconfig/Makefile:139: checkconfig] Error 2
+   make[1]: *** [/home/darwi/linux/Makefile:772: checkconfig] Error 2
+   make: *** [Makefile:248: __sub-make] Error 2
+
+The duplicate error, which is a single line, is no big deal. IMO, it's
+better than complicating the Makefile for that single edge case.
+
+>
+> In addition, grep -qw treats $(RULES) as a regular expression with word
+> boundaries against the comma-separated output of list-rules rather than
+> matching an exact profile name, and spawns Python twice on every valid
+> invocation even though check.py check -r already validates the profile
+> name.
+>
+
+That's good catch; will fix.
+
+Thanks,
+Ahmed
