@@ -1,55 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794200052;
-	b=EvUtAJ3NInsgh2EzbHOLYPYaH8h45w7qcNSy03h4+MHqhR3+0aBBnC81drZOS1Ad+DC2
-	 C1sf+IhjtPSsThuBzfkBofvbT03J69oqUf/FLfzH9oJRhjbuiLOT8R7MKMpy7MrfDept1
-	 RvcQK+vRaBh9Px6xcw17SicewRlB4HJjDDRPI9QfeTim04ZJHVt3gvGKyKM/qnTSHCbVn
-	 4jpBSXYWIN5+ag/WBoeAHhMdY8hbWhA7QR64jpXuQdTGTgNv9g0wlncY0aaf3+3Cr7xDm
-	 EkvqdgbRj2pXRSkVqWIrDJ7tWXbveeMRLGHvJDJVNPQR+S3nRWuvVmLSpnpENMLVdBg==
+	t=1794200378;
+	b=JpavobNzABNJAGJD1nS5156o5VJHhVQjS0IauaT9GMZBJMMXQjzMZzXvbi4ZLjex/cIu
+	 2BAlm0IWEVyMSUdtJSmDIsOLQKEnRGjteOdRluLujvXyNZ6DzmLdgTheP/9pwPhKv8SkI
+	 0lrz97eIpR3L+tN4WDsxD90X667EHHNrh0Q6TbcFsI9r/V3FXy/VnXxGwCbnyTNOAT9zO
+	 l9HgAhyPXRofGeD+u0Vg7kBZUto85fCnjCOe9FO5fkokV1qJfa1PpxOujIWFkRxSRM1Os
+	 XVhv8EdXZ3+UGSTvLJmgibFkWz59CT6szZTzAGIwdgzhim98RlcQtpvQ15nz77rZlLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794200052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794200378;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=sd2WwpJ7V11KSwVkYLBiWfHVWV9mru2Fe0vNaIGhdo8=;
-	b=IX6OxGTBxkmzA/pnjjfmHfrHzjT++4fFdKh36euFa9fMGnByFHx5v+8c/DCUBbSLS+bp
-	 zOJLlpIZO0QIIW6ttD3iXafIo7xrvJZF0cxsG3iCloeEqwN/1oNM96VmKqCzjqH5v4O7d
-	 /bXNbehPmomIo/kqQFvecvV4TsZMSz/2gRENGFER1o0UV7cMFc6nIZ//GkWLz08Gm79z+
-	 5U+QuK2SZX+neU17T96YWWLY4vp8aj9Hku1EWbagfkclmE+ULieI0l9XN95bUz3YW+3uU
-	 7TCJDSDWwQYl/GvECojgmqxd2LukaCUjN/8yK7dXIaBQeh5J0BvWapvPZp2YuiSjNfQ==
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=ERG2I7Pd24sxoFvp82kJAGtR6dHyLv+SwnsIesDmAb0=;
+	b=BCDIgwCwPLVwAHRSocubI7yLnOqCNz3nWCDDc2lEHowi3GzW3uBhJnC8LkI39vImIl6W
+	 LizzmDthbtCOXk2dq6dgamn3GzDb2CXgtZTnnI1pW3THdSKOHEHC6MQpnPC79b74SSIU7
+	 nMp+CLCj7xwwM2CPNRVcKGeBXthGxw5IAGhAj3R2DbBtk7uhL8Y2A1aSPcYiP57/EqQT7
+	 pZGWLU5fDUEzji6tvBRQN+LfnCw4w08bhnZMQJRNJNuzSruc07SUm4HqzDxK7y5X5lJad
+	 pIY4BP0qflTc7f40CzlvTuxXREfoU78ee61BL3a97MMEVVTAfHT9BbWaQ6yyLiEmMAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="j/DQneqK";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MfqYncIT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F2606A321;
-	Mon,  9 Nov 2026 04:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E20A606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 04:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j/DQneqK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7981F0089F;
-	Mon,  9 Nov 2026 04:54:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MfqYncIT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8721F0089F;
+	Mon,  9 Nov 2026 04:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794200051;
-	bh=sd2WwpJ7V11KSwVkYLBiWfHVWV9mru2Fe0vNaIGhdo8=;
+	s=k20260515; t=1794200378;
+	bh=ERG2I7Pd24sxoFvp82kJAGtR6dHyLv+SwnsIesDmAb0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=j/DQneqKA5ka4IAFJQjewxXYG2T5A8HY8BH4FUPrF5Qmri+QCXO/kFoMESvn7ZSfO
-	 88dOfaYqEW3egkUl8GU4EkjOd36MEQdt7MHollWYEkm0HBKDuXxr/PD9XW2yWcLTIh
-	 Qp8ztnwHFcGe3GII+12YsgAqyLG5HRdc55YvdqOL1Um3mEAyQ8jLNffc9dbUStqV2i
-	 up+fsIe4jh2QPX0KFiOlzfkAhRtcIZNoQInn9M1ujW9XmVfQm3unDX5TG5DIZrr65m
-	 tDS3mea3Zbt9jHTVsl+jYMSYn92kK4uHM6C1yORlM3Uyw+K9G6MAiG60/ctfJwiF4E
-	 yir/oVcQDgCdw==
-Date: Sun, 8 Nov 2026 20:54:10 -0800
-From: Namhyung Kim <namhyung@kernel.org>
-To: Tiezhu Yang <yangtiezhu@loongson.cn>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v1 1/2] perf tests: Assign return value of ioctl in
- wp_modify test
-Message-ID: <avFR8t2S7Q0ZeKqB@z2>
-References: <20261106092808.6914-1-yangtiezhu@loongson.cn>
- <20261106092808.6914-2-yangtiezhu@loongson.cn>
- <sashiko-outbox-201127@kernel.org>
- <79708703-7e59-315b-04f6-9d24a694eece@loongson.cn>
+	b=MfqYncITt25+ECW2QvR5aoo9iAQhXLKcQ2LdXpuZzDe0mnvVZC3n726QmHzfgQh8y
+	 DfwvfSOExCsM+2jHtIJDTkiqujRoLgPcduIvhE7yCWF7HRVm5Dnc8n4S07lj4uYw+N
+	 oC13rcU8BzslZRwR2c0TdtfDFaY+5upd7x6RZeBUyCxFCXABHd7FI5UFByFQdKgi1Z
+	 R5iTB2vqMVn+hM7bHW3mLT90DD/IgrKT87ztZ8D/jhL+TOlXISPnsgQud0PU4hQFau
+	 yNWlBQADuUTXqiU5hEU5qaihGJtxUnFG1Vhix1HROVJwJDjs/yOMYcVjS/psdLXRqd
+	 rsuSCirkQUrVA==
+Date: Mon, 9 Nov 2026 12:39:25 +0800
+From: Jisheng Zhang <jszhang@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Tejun Heo <tj@kernel.org>, Dennis Zhou <dennis@kernel.org>,
+	Christoph Lameter <cl@gentwo.org>, kasan-dev@googlegroups.com,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 1/4] arm64: percpu: Always inline helpers used by noinstr
+ code
+Message-ID: <avFOfUZFBqTzrT4X@xhacker>
+References: <20261107071339.17467-1-jszhang@kernel.org>
+ <20261107071339.17467-2-jszhang@kernel.org>
+ <sashiko-outbox-203633@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,27 +70,61 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <79708703-7e59-315b-04f6-9d24a694eece@loongson.cn>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-203633@kernel.org>
 
-On Fri, Nov 06, 2026 at 05:51:35PM +0800, Tiezhu Yang wrote:
-> On 11/6/26 5:36 PM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
+On Sun, Nov 08, 2026 at 07:43:56AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] arm64: percpu: __PERCPU_OP_CASE() and sibling helpers not marked
+>   __always_inline
+> --
 > 
-> ...
+> commit 3a2df0916b5200b227df21487897e171275b29f4
+> Author: Jisheng Zhang <jszhang@kernel.org>
 > 
-> > [Severity: Low]
-> > This fixes a missing return value assignment introduced when the
-> > watchpoint test was added.  Should the commit message include a Fixes
-> > tag?
-> > 
-> >    Fixes: 2e85d5979e8d ("perf test: Add watchpoint test")
+> arm64: percpu: Always inline helpers used by noinstr code
 > 
-> This is just a simple test case fix, so I'll let the maintainers
-> decide if a Fixes tag is necessary when applying the patch.
+> This commit marks __hyp_my_cpu_offset(), __kern_my_cpu_offset(), and
+> __percpu_read_##sz() as __always_inline so they are not emitted out of line
+> when called from non-instrumentable code.
+> 
+> > diff --git a/arch/arm64/include/asm/percpu.h b/arch/arm64/include/asm/percpu.h
+> > index 3cc316091d665..7c344de5052d5 100644
+> > --- a/arch/arm64/include/asm/percpu.h
+> > +++ b/arch/arm64/include/asm/percpu.h
+> 
+> [ ... ]
+> 
+> > @@ -129,7 +129,7 @@ static inline unsigned long __kern_my_cpu_offset(void)
+> >  #endif
+> >  
+> >  #define PERCPU_RW_OPS(w, sfx, sz)						\
+> > -static inline unsigned long __percpu_read_##sz(void __percpu *pcp)		\
+> > +static __always_inline unsigned long __percpu_read_##sz(void __percpu *pcp)		\
+> >  {										\
+> >  	u16 *gprs = &current_thread_info()->pcpu_gprs;				\
+> >  	unsigned long off;							\
+> 
+> [Severity: Low]
+> Should __PERCPU_OP_CASE() and the remaining __percpu_* helpers in this header
+> (__percpu_write_##sz(), __PERCPU_RET_OP_CASE(), PERCPU_XCHG_OP(),
+> PERCPU_CMPXCHG_OP(), and __percpu_cmpxchg_128()) also be marked
+> __always_inline?
+> 
+> The noinstr function lockdep_hardirqs_on() calls
+> __debug_atomic_inc(redundant_hardirqs_on), which under CONFIG_DEBUG_LOCKDEP=y
+> expands to this_cpu_inc(lockdep_stats.redundant_hardirqs_on) ->
+> __percpu_add_case_64().  Because __PERCPU_OP_CASE() still uses plain static
+> inline and is also called from instrumentable lockdep functions, builds with
+> CONFIG_CC_OPTIMIZE_FOR_SIZE=y can emit __percpu_add_case_64() out of line in
+> .text and call it from .noinstr.text before RCU and lockdep state are ready
+> for instrumentation.
 
-Yep, I'll add this.
+Good catch! I will address this in v2. Before that, I will wait
+for a while to collect review comments.
 
-Thanks,
-Namhyung
-
+Thanks
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261107071339.17467-1-jszhang@kernel.org?part=1
