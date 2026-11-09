@@ -1,47 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794229080;
-	b=QDNi1Io/yaqJlHejT/otr4j0jRON4M8eaCORF3kGqPRWnq7f73BijtrPfqyMtVsUpsUB
-	 oW/tHrueZDl6VmnTseseCdbPLd8rCr5erK6Mm6CcfBS1ySZyYLzPTIRJ5st4yGXL0Cl9n
-	 g0rRgSdTDPJNU2/7zHOAuYWXOrgJiWqNzmVgAKDfaqrj5bcGdLLEcPzFLb3sZgw2J8E0e
-	 7sImrKtkqh2KkJtZ7MXDmf6VCfgRdbO8JMMKR6u9v8N4HCllVN9ghxZjNjMCZSybwJtW0
-	 beIijcsU28vRDmymha2gDB+xqu2gh3iaj7ianfUGLeJIFVBdzTdU5HM4DFtSW0hp1tw==
+	t=1794229375;
+	b=qq09Xpbj1RlYxA/TiaR/KIQh+InF9yKkzsWWb6XP0zOSOsCFp2SL0WLdY/l6UEgVWjN7
+	 wTUS+GUUU2/ZvQnHlGaHYqQ01ZHLfzao3wpqYAV7S2dDF2+NyZyMwizOgMm/WmEbDMxyD
+	 II0WDq4+d/OjtY3z+kPzwRwGiR+6D2zLeQIXRci3OhUKFw86Sqo/jPYWYUjnqzfYJVzqn
+	 V/Wmp9To0Dte3JP4gWpntjAY8PCUsvEHvf5CiYd6ezGDccIcttPX+6VcP0g4p9vMIzO8K
+	 tDkeXv4+FsCmpIXa6dTx63uL51vzIgq9VdJnAF7/YMHFcAScuxjfsq3O4KsfYvH2q/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794229080;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=ta6wbXptveLQwdVO2l5UsnQtwOC+Kp6z3kgO+pESTVI=;
-	b=tQbZGd449dokCHfV639Xkjqel9Rw8p6sMcEo1SdqCYgiWuiqDwAInwrQec6HtgP8ZB09
-	 93j46JAfbIr9eKUwhCig9+r8XDzEQcrk9Ta0I8okSkXiYdpuUNBvlBpEIiuX5aBUWRWDS
-	 1ZnMQmOTjeU+dKUXCO5og4fdbVgavPvaRDRW5pTEUWfH6B3HfCMN7Wma22aHCCBE3eYyh
-	 eVPQzmsVTe1KyOv35dUNEQxCm8CE38N0IPrtUPFhvZgtLIEVSyZM3FU3sWJF2CT3epxzj
-	 tpqkTWe9ZMrw4ceZ/fwIB3bjax1lriZ8FNcsNFQ9McYs/WdKjwgLMAnFNO+8gQ41lyA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794229375;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=B6AQPvXxUiFUnq3vsSRV0XvSHf+1Sj1rCT95ruc8cHE=;
+	b=ogiBuISUSbP+ieSBu5zcFgvnnipxgxij1bu/StF0k+1s/jKKUw+lO6sb1yhJWbUSjtNz
+	 vw0uznrD8D5Ov0TzJT80VY97W77crdNQe8zXLnvhiS+bD8IvhpUMLqsO2s652b1AJ4urs
+	 YQ7o7MP0v34rwMjpkGMzQQGA8X0IOS3NiWiNK1HnR6QULvdY3LfsFby9m01cGnKbQdHam
+	 ByKjC56L7bTfueQdkYO71qdiAJ0bkTpLx+unb8JKZ1hyfpNyjklW8/FSokyQf0D2aRygk
+	 JXt4h/OlT7cnKbU53qsU6P+tXlvwS3DHDgpNZV94PUf7e1oUsw5fYZHM9WGHne1s6yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fligvshl;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=02SZlJh4;
+	arc=none smtp.remote-ip=209.85.218.46
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE78606A321;
-	Mon,  9 Nov 2026 12:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3746606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 13:02:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F3746606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fligvshl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71D21F008A3;
-	Mon,  9 Nov 2026 12:57:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794229080;
-	bh=ta6wbXptveLQwdVO2l5UsnQtwOC+Kp6z3kgO+pESTVI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Fligvshlmzi5fvDbnF99CY+QS0zNJr0YRoT1Rvyq23btHmpA9DpsTFltcQxenPyTz
-	 K8SCuh3ou3Q8fRRc2kLbT+nQeQeKq+kbgZ/ZMsU4H7xWVk4zLk4ieHCW+YXRq7Q7QV
-	 uiZBkSp8OOSQU5QlRIx9nb5D4UzlAShyqVm4XL+YdhOisKv5B6AZsuW09zqzlYbpS2
-	 MayogMBhAQEer50SpzOVY+ch9gQLCTlIRV5HZJS3F1qw7TVjgazK65luMcdmzL/SNi
-	 4NM1YoHh/37D9Lbu5682PuKBfiU9+rsagDgRtXHxmgRclQAJgO38eU+z+DJHQm+/Cf
-	 8s0nyRsMyu2Yg==
-Message-ID: <0cc263e5-9bdf-460c-956f-873c3285699e@kernel.org>
-Date: Mon, 9 Nov 2026 13:57:55 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=02SZlJh4
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c4d581da0aaso82776366b.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 05:02:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794229373; x=1794834173; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=B6AQPvXxUiFUnq3vsSRV0XvSHf+1Sj1rCT95ruc8cHE=;
+        b=02SZlJh4lDG/PjCCZg3vg0NOsvURQQjOK29SZAykYJGpbaUFaSLH+fG3Lks+ZO1hEA
+         NXKs/Ui0kYhpKG8P4aBV8E6tvMAL8ljowCqTEpJiqe16vubFstPQy0lDHlwMBJ6D8lwd
+         NrTmapLZVY4m/1B7lYSXIy8q6pxKjGpmRyrqLS99lGrTG3gNL0tEcwUBJ4mugR5W+Z9A
+         35YbK0z3Is8iVTu8we/SBc4n6Yoa2Kg556JXiVAW/cpjPfm3xz//HKQ4/7A2gD/zUUxa
+         3SMyvubhPsneedJPTHdX0ZxxR/XdRxjZIteKj/xdwLGtpxVLJLWTLTEisgvP6/kVXY10
+         qHMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794229373; x=1794834173;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=B6AQPvXxUiFUnq3vsSRV0XvSHf+1Sj1rCT95ruc8cHE=;
+        b=LYtSTyMKyg3WRfeVcNUaBBaotew8kMU8a4nwGby+Por4FNa2zTqHCI/xwM+bEaYQNf
+         e6iDJ7wG7eeJQ/gzDYvi1fTULqGD2yA7my1ZPrx2gAcIUmuJBFKKwR0yT2ICztUUXOsM
+         GB/WpW69fSC9EREallVWNS+i4cNrNeZQnbohnNf5ZiaPMk/FgZAD7B0Oj0eqIuDbnvUt
+         Zi/tRk/yXRvF7fUOkLNjop94M/L5apc0xkFm9Vf53+o+Byc0SNuYLgcwixnfY37FecCB
+         7zvUI9OKrxJwc4EuX/y9hg+0d8GnchWGF7KNng4D3wgJ+bfP54reN6PpQFPYp4A3zYIg
+         8PVQ==
+X-Gm-Message-State: APuU4Z+K0mCubWuKY5UU8ULzmZlftlt5/+aH1ndTc3Vh56k7EDmEAtlr
+	/qw61zKrhOQABrK0P5f/AaYEcoKH1FpgiCsgpHoS8phj3GNZkKPvhbk5kocGdQ==
+X-Gm-Gg: AYBFou0eJPucIDnJTu+KP9zp0mIvwjiupyYqSDCDxWA7eJ5YXwI6P9r7CEYNl7emm/g
+	FrjItqKbXiDXjtOYxGoNmRDWAtKv3kcIlRu7jRa4okljq8wsejDZlSpqDypxqa+E3xUBVKFvDO8
+	TpFN/JEMbjPf3RyhbNHnjsqx7hkchfcOekwmQJlEJcUdwEFEFEA9fSgAyqDO4MJNmH8Jcz3rEFz
+	Corzeujwr/kVn8DAz1/F8Er9BYMdPjTCowrqm4r6k3NEmMmbDOP202dyB+fDL0Se1SpZxt+DsZM
+	FsJXZv6nK7SDffiwLsG9OM/AH4br2KGp7ea78vtdKi5g+68nkHKla9ZZRr1jPbOuJ4bI7vcbLe3
+	hXl3oEasFxHv4VW+uTst0NfTJh7p7gdBroLGwj9pJjOB7VIAODgJxoK24WgH79QtF28s8cZKzS8
+	FdJnMHG1kXfFzM40FDYQfa3JVup354iBwgqXcWriIDN3o+xsGCOJPmlc+npQEoFUyeg+OCiSGBC
+	S25fuDd0bB3jFqJypcvMg37aRrz7STfTS5hXsGTqlICJP1LR4O3LYq7wQcKj3//7mJNBeGAnhQk
+	m7XQUQOW+QYKxbGeG8s4sSvmL5+8mKQi2gcu
+X-Received: by 2002:a17:907:8690:b0:c4d:5820:325a with SMTP id a640c23a62f3a-c4d6dd768c9mr282571866b.39.1794229373239;
+        Mon, 09 Nov 2026 05:02:53 -0800 (PST)
+Received: from mail.gmail.com ([2a04:ee41:4:b2de:1ac0:4dff:fe0f:3782])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d68d53b77sm168456466b.11.2026.11.09.05.02.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Nov 2026 05:02:52 -0800 (PST)
+Date: Mon, 9 Nov 2026 13:14:26 +0000
+From: Anton Protopopov <a.s.protopopov@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH v1 bpf-next 13/18] bpf: Check the return values of
+ fmod_ret programs on found targets
+Message-ID: <avHHMqdiCgT79XWT@mail.gmail.com>
+References: <20261106210314.1767267-1-a.s.protopopov@gmail.com>
+ <20261106210314.1767267-13-a.s.protopopov@gmail.com>
+ <sashiko-outbox-202293@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,123 +97,80 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/huge_memory: use folio_dup_file_rmap_pud() in
- copy_huge_pud()
-To: sashiko-reviews@lists.linux.dev,
- Konstantin Khorenko <khorenko@virtuozzo.com>, Zi Yan <ziy@nvidia.com>,
- Andrew Morton <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
- Alistair Popple <apopple@nvidia.com>, Dan Williams <djbw@kernel.org>
-Cc: linux-mm@kvack.org, nvdimm@lists.linux.dev
-References: <20261106-khorenko-vstor-151183-copy_huge_pud-dup-rmap-v1-1-cf8ee4fafabb@virtuozzo.com>
- <sashiko-outbox-203086@kernel.org>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <sashiko-outbox-203086@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-202293@kernel.org>
 
-On 11/7/26 18:05, sashiko-bot@kernel.org wrote:
+On 26/11/06 09:17PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found no new issues
 > in this patch, but noticed 1 related pre-existing issue it does not
 > introduce:
-> - [Medium] mm: hardware A/D bits discarded for PUD folios in
->   zap_huge_pud() [1]
+> - [Critical] bpf: use-after-free in check_helper_call() [1]
 > --
 > 
-> commit a6bb79712598f2da7fdcc94c9b1b5f8b9aad8851
-> Author: Konstantin Khorenko <khorenko@virtuozzo.com>
+> commit f5e3bd12bcf921a0d31fb8a40c17694ea46d4300
+> Author: Anton Protopopov <a.s.protopopov@gmail.com>
 > 
-> mm/huge_memory: use folio_dup_file_rmap_pud() in copy_huge_pud()
+> bpf: Check the return values of fmod_ret programs on found targets
 > 
-> This commit adds folio_dup_file_rmap_pud() to duplicate file rmap mapcounts
-> at the PUD level and uses it in copy_huge_pud() instead of
-> folio_add_file_rmap_pud().
+> This commit parses the "bpf_fmodret_retval:" BTF decl tag on fmod_ret
+> target functions and verifies that attached fmod_ret programs only return
+> 0 or one of the specified error values, while disallowing tail calls and
+> freplace extensions on such programs.
 > 
->> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
->> index d0e19d9e6b651..13caf81cb51af 100644
->> --- a/mm/huge_memory.c
->> +++ b/mm/huge_memory.c
->> @@ -2100,7 +2100,7 @@ int copy_huge_pud(struct vm_area_struct *dst_vma, struct vm_area_struct *src_vma
->>  		 * TODO: once we support anonymous pages, use
->>  		 * folio_try_dup_anon_rmap_*() and split if duplicating fails.
->>  		 */
->> -		folio_add_file_rmap_pud(folio, page, dst_vma);
->> +		folio_dup_file_rmap_pud(folio, page, dst_vma);
->>  		add_mm_counter(dst_mm, mm_counter_file(folio), HPAGE_PUD_NR);
->>  	}
+> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> > index 1b58a1796a2e4..71fbb30e4d768 100644
+> > --- a/kernel/bpf/verifier.c
+> > +++ b/kernel/bpf/verifier.c
+> > @@ -13338,6 +13338,14 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
+> >  	}
+> >  
+> >  	if (func_id == BPF_FUNC_tail_call) {
+> > +		/*
+> > +		 * The program which a tail call jumps to returns for this one,
+> > +		 * and a program array does not check the values it may return.
+> > +		 */
+> > +		if (env->prog->aux->fmodret_retvals) {
+> > +			verbose(env, "tail calls are not allowed in fmod_ret programs with restricted return values\n");
+> > +			return -EINVAL;
+> > +		}
+> >  		if (env->cur_state->curframe) {
+> >  			struct bpf_verifier_state *branch;
+> >  
 > 
-> [Severity: Medium]
-> This problem wasn't introduced by this patch, but does zap_huge_pud()
-> discard hardware accessed and dirty bits on the PUD folio [1]?
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but in check_helper_call(),
+> can passing an RCU-protected or iterator-yielded pointer to a pointer-cast
+> helper such as bpf_skc_to_tcp_sock() drop its lifetime constraints on
+> regs[BPF_REG_0] [1]?
 > 
-> mm/huge_memory.c:zap_huge_pud() {
+> kernel/bpf/verifier.c:check_helper_call() {
 > 	...
-> 	orig_pud = pudp_huge_get_and_clear_full(vma, addr, pud, tlb->fullmm);
-> 	...
-> 	} else {
+> 	if (is_ptr_cast_function(func_id) &&
+> 	    find_reference_state(env->cur_state, meta.ref_obj.id)) {
 > 		...
-> 		page = pud_page(orig_pud);
-> 		folio = page_folio(page);
-> 		folio_remove_rmap_pud(folio, page, vma);
-> 		add_mm_counter(tlb->mm, mm_counter_file(folio), -HPAGE_PUD_NR);
+> 		regs[BPF_REG_0].type &= ~PTR_MAYBE_NULL;
+> 		regs[BPF_REG_0].id = meta.ref_obj.id;
+> 	}
 > 	...
 > }
 > 
-> Unlike zap_huge_pmd(), which checks the cleared entry and calls
-> folio_mark_accessed() and folio_mark_dirty(), zap_huge_pud() removes the
-> PUD rmap without propagating the young and dirty bits from orig_pud to the
-> folio.  When unmapping a refcounted Device DAX PUD mapping, those hardware
-> A/D bits are lost, leaving the folio with stale access and dirty state.
+> RET_PTR_TO_BTF_ID initializes regs[BPF_REG_0] without propagating MEM_RCU or
+> parent_id from the input argument, and the cast block above only runs when
+> find_reference_state() finds an acquired reference.  Because RCU-protected
+> and iterator-yielded pointers are tracked via MEM_RCU or parent_id rather
+> than a reference state, regs[BPF_REG_0] is left as an unconstrained
+> PTR_TO_BTF_ID.  When the iterator advances or bpf_rcu_read_unlock() is
+> called, the parent pointer is invalidated while the cast pointer remains
+> trusted, allowing a use-after-free.
 
-Probably not that relevant for fsdax, which is the only one supporting PUD THPs
-IIRC.
+Not related to this patchset.
 
--- 
-Cheers,
+The bug itself looks real, I think it requires a follow up,
+will try to not forget to send it.
 
-David
+> [1] https://sashiko.dev/#/bug/linux-97cfbde4-a454-41bd-bdcf-b13a51d2adaa
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261106205523.1765622-1-a.s.protopopov@gmail.com?part=13
