@@ -1,93 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.97.179.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794230101;
-	b=wLpo/9oyBCkU02tghCTFfq2ls2FZzhzadkH8M/rK6gRTLWtnsHV9o0XvU2nj72syQFpm
-	 cLdcdWEDZKF2Kv3M+rurB9j+mdUqBROQOtKtqcRSV9hXyDWpxnmAPxZkIzpiI+KckRerz
-	 dwc65XOmxvaH4jT3iV2/WeURyjlZvhijUlL/Nsge8u48PXgoM8SC5mbtKXc9QXCJ2jzBp
-	 HTZ/zMCMIGNHy8t+hH/Ja5rmS8MmPxT4FkhkJIJnZvsg7S9yDNDjgqYhUBAPXQXlaTppR
-	 eOc9GUt1t5uRKSPtYRfzwNwkwiZbOREhTJWqXdbqDAwQUE2mEwEZO6BwuU4cNYQjNtQ==
+	t=1794230615;
+	b=xCHsEqzMpO3aHK8yK2VqzphjCDdCONIBGeFsaZqYSWYlPMAdKl2xTndbuSFlwYF2fFuC
+	 0fX4kXPKNw3GCZBCQhB92k/qivN72xyy+63BwApWRwGsnBUxtUilMoMEqB8CgPytytL4T
+	 Xb28kVMRu4pc9/cF9Uu5I/9JKQfO7wzyRjcoFpqKQFXXP7Zv54L8Jve3Un+TKGDs+PEnI
+	 iuEhcd6961wAJp1VypQt2ZyZZQMBOxddo22fitMB28fDBG0kH4g/QlskHtq4qBYpOfjsJ
+	 Z8EWaa1rrBU/ZtNqP+lMbMw/TmqfqgkKMgxiOIXSNlkVhLdx7Ew+hJYJ33G+zULlIJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794230101;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=qGVRi8XeHmRiRp7mXvZ/UI22QQobRMG4w7o25Ae4/kA=;
-	b=wkWUHkoomaYYmn8ivkLJ1l3aCon/FQXrsGU5k0h/aWMsmxAPT8R740UOC884R/+3vEVW
-	 LDhaHqyL742Stv7NVf0rL8UNlBXmfCHG5fGPypxcGKSEhXFg7zTsmOK50lStM8BuCxAsD
-	 CdmtebbacnoTa4pns8g3OqhxuOo9OVqB1IIaiaYr9S2EoPNceRIT6hkSkn/CN1vsr50Uo
-	 AnMO9PR9eGwLGVnRsV6cFQNGEbhe1MADQmdU7/deO4E8oLpW7oWhJiY1/DKktItUukD/4
-	 tLnoh2nENTAi4+Ou8NFpgOmmtCfCabFiATqM/mxllsQCIiwfEOFrIXhVC1RFcpXaJlw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794230615;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=E7k+XtyvTbOgMpzzEIXkCAsFuuvYd8RfNhrY6WdEzZg=;
+	b=k7D83Io7sRMxFhzX3ksJYhK5wWjl+LqWmiQpCHq/gHN7gr0Qri2pZF9ieQce3+OI/cTK
+	 tas5pBEiag83jEowxmztfqIpP/5siPGEHaK76FbglnybSU9XecSoIfotd1y2qxv7QesmY
+	 JIEPK0lamjvySXLr16I+a8GsT04LeY+fHmqBl93SMDr5HwMnFaTD4iD1vF4zgXIqYaTh9
+	 vb/k/zHoU4WlViwCtye1a6ejfJItAUWDalPKgSgZkQWyUwSkNBJmrZZutBtzX+2h9tANy
+	 dnfiq+essvzBX+6ydU+fE4BYbrjXQUFrIaWkyt9FkCTTjAjEzU8CcM1ERyV+dRGRUdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ceO24OwF;
-	arc=none smtp.remote-ip=209.85.218.44
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=igalia.com;
+	spf=pass smtp.mailfrom=igalia.com;
+	dkim=pass header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=n2v2isfA;
+	arc=none smtp.remote-ip=213.97.179.56
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15FC606A31C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 13:15:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E15FC606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C414E606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 13:23:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C414E606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ceO24OwF
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so117163066b.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 05:15:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794230099; x=1794834899; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qGVRi8XeHmRiRp7mXvZ/UI22QQobRMG4w7o25Ae4/kA=;
-        b=ceO24OwFFPbef+0cIrjU2UcHtO7b4kSVIplqjxvO4R2pzxi4r5VndZCxm1WRBiRJ0W
-         NVt9JWL1bjGBlpECvJRofEY6n0iW9tD87mCLxdE1A0hIa00lV73Fb2RKUfQlyTmxPH7y
-         SZIRj29V92cGLGYxBU3UmlexTAUl+GlUQBkYNjp9LKYKZSy6MtnnDERzEPEQCCQcBWbV
-         BoRVE8g8l4jjPcGuWqLn4Ze7TSQXIZtIGsLUbYtV1OBiS5xu7i3s83Y7zqtIBeEWjiFJ
-         bqSTPHZb4CUGTU6qduyq3bc5LflbuOChcx7Ks8uSh+NFbAFtlOAwuGtbAL8SKlLTXBck
-         E3Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794230099; x=1794834899;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=qGVRi8XeHmRiRp7mXvZ/UI22QQobRMG4w7o25Ae4/kA=;
-        b=BRFyf6Ol6/zKd60mp3ubX4156Cc9UhKEpQPO92JBqat4AIYBKT2e2PcEEJ214nKf+M
-         gTYTZAG67/f6CzF2TuUKFNxuok0dsGD3M7m3bOY98reuMHUymHnAaUYwKeD88M0sD2Cr
-         E/A5v0xHqhTD+SmyWbIOEK9t1JNXk+1MJgFsxuxgx6xKpfuE49PEQNT+6G9iFpyOMr+0
-         U7pB+IZqqZVWTMFV6JlkSA8jWp0Yx6hgPvlPxHC3lvH+nY1aRKKv8s/8PRvbMCupmmAN
-         HkQs0uFs2Pz10kUknupJYJ8a/E6au3mZbgHkRunBZdqJ9s0RIsfHaD24Na2+zybN/M3h
-         5OZA==
-X-Gm-Message-State: APuU4Z/dw+DIQn5r3F1sxHIUt131tG18U2NOIKcNayPTmfZ7t4+tyhhv
-	f3n+Ip0OoSDamOPuDb/32TjMeZY+OzjBP8nhjuHh3JWM2y5P1ZJIbpqVGVFIgA==
-X-Gm-Gg: AYBFou3zE5fcGTzN4AlqBR9Xo75EWRquEI4wqSXqsjy95FTwy/ZzCJKVkyZmjRFGYuH
-	qWjj0ze+82BOKdUTHTuLnLjNasuGVrLfW85qpNcgXPsdiAOh7c2Scwq9rziUbbfdGMaNm8OcUud
-	Cks1+3A7km6S5YdTi5CLALoNrEZVjapROz8Nb3yNw+p2IX9nfFxFuRqR2hvbOAEzTQVyd9V2rQv
-	Es0WQUFKfVRHFsu4PTW65dmu+qnv1yZybefB46n3Vp+iCoRwts/Zo+TnHcARiWQ32qo4PCEZxUN
-	W069Rz1ViCBUZP8a8grBPYwIliqqbeL1N6NnToe7zhXORSD6ytt6dMfcL/eNXmh7lzxUddOadnc
-	MFbtgbChWTN7WeUzr2PHW/Ih2lJS++bPbEV1PcWHjDR6lAxFwDapyYcFzO0s1YMkkqgOX0YF3Nx
-	4vDjCDAb7Xke9+foY1KhzSs+H8UrOOXpFsuadPeOPW2m3IiCTtzkcsobeyhhsK8RMyFzQnpm484
-	XVnEBTF4udbesCdPbdmPZvOSfxGs640v2/BHOu84cW9fkkRoWBeiQLMC4UcxAiItEh35X48O9kc
-	pLRJstG9CRIJ3EeSD2L0x5xfLf20N6OCY67Y
-X-Received: by 2002:a17:907:daa:b0:c48:1977:e1c3 with SMTP id a640c23a62f3a-c4d6db217acmr336983066b.21.1794230099175;
-        Mon, 09 Nov 2026 05:14:59 -0800 (PST)
-Received: from mail.gmail.com ([2a04:ee41:4:b2de:1ac0:4dff:fe0f:3782])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d68d53b9bsm173722966b.10.2026.11.09.05.14.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 05:14:58 -0800 (PST)
-Date: Mon, 9 Nov 2026 13:26:32 +0000
-From: Anton Protopopov <a.s.protopopov@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH v1 bpf-next 15/18] resolve_btfids: Tag fmod_ret
- candidates as targets
-Message-ID: <avHKCIvezIs8YjWJ@mail.gmail.com>
-References: <20261106210314.1767267-1-a.s.protopopov@gmail.com>
- <20261106210314.1767267-15-a.s.protopopov@gmail.com>
- <sashiko-outbox-202290@kernel.org>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=n2v2isfA
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
+	MIME-Version:Date:Message-ID:From:Reply-To;
+	bh=E7k+XtyvTbOgMpzzEIXkCAsFuuvYd8RfNhrY6WdEzZg=; t=1794230613; x=2109590613; 
+	b=n2v2isfACD5bk5w9+l+gMOGYtsQgCV95qjpUvXkhKdRVwic2m7rSPq8WK4im7/BUWFNuhwifCX0
+	X9OSlJQ9ZaXTjDvOwINd/HHeoMOrv3Xc2/kYljq26U7Lk59O8OCwdQcT8sh4AdQFjueLoDr7qyzLi
+	6BR2j1Duw6YaeAwqTODWTvahHZxkhTd4G3S1Q4/OR0+4CXifRvCuUJHoYpZJ1XPtnIkQTp73Ehhzm
+	j5S2plTCs2IXh7rx9Iy6pNNGrD+j4Rik10m8N+m6VGNjIXz3A8P/cauWw0w3BbP+Zv2ditGjWQB9E
+	wwmZ7cMZ221SsfrC5oLH4Wnqsnr5/5ov1YOw==;
+Received: from [81.79.79.1] (helo=[192.168.0.116])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1xQPLO-007Iyo-PY; Mon, 09 Nov 2026 14:23:30 +0100
+Message-ID: <2d36879b-221a-4427-9800-779311fab70c@igalia.com>
+Date: Mon, 9 Nov 2026 13:23:30 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,101 +57,244 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-202290@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 7/8] drm/sched: Replace completion with a flush
+To: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org
+Cc: intel-xe@lists.freedesktop.org, Philipp Stanner <phasta@kernel.org>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+References: <20261020154123.33631-1-tvrtko.ursulin@igalia.com>
+ <20261020154123.33631-8-tvrtko.ursulin@igalia.com>
+ <sashiko-outbox-179331@kernel.org>
+Content-Language: en-GB
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+In-Reply-To: <sashiko-outbox-179331@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 26/11/06 09:14PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] bpf: resolve_btfids: choose_functions() skips records on
->   duplicate names
+
+
+On 20/10/2026 17:07, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] drm/sched: stopped entity re-enters rbtree in drm_sched_rq_pop_entity()
+
+This seems to be a pre-existing issue going all the way back to when 
+FIFO was added. I'll send a fix.
+
+> - [Critical] drm/sched: concurrent drm_sched_entity_kill() skips run_work flush
+
+This one at least appears to be a real problem. So I think the 
+simplification will not fly after all and I will need to drop this patch.
+
+Cc: Philipp and Christian for visibility.
+
+Regards,
+
+Tvrtko
+
+> - [High] drm/sched: workqueue deadlock in drm_sched_entity_kill() from free_job
 > --
 > 
-> commit 592223df16723596e1694e3167578ff1cfdd0320
-> Author: Anton Protopopov <a.s.protopopov@gmail.com>
+> commit 271930dfdc1a5516f290d150182ce8d6b1d2358b
+> Author: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 > 
-> resolve_btfids: Tag fmod_ret candidates as targets
+> drm/sched: Replace completion with a flush
 > 
-> This commit reads candidate records from .BTF_fmodret_candidates in
-> resolve_btfids, filters eligible traceable functions, and emits
-> bpf_fmodret and bpf_fmodret_retval: BTF declaration tags for them.
+> This commit replaces struct drm_sched_entity.entity_idle with a flush of
+> the scheduler's work_run_job work item in drm_sched_entity_kill() after
+> removing the entity from the run-queue.
 > 
-> > diff --git a/tools/bpf/resolve_btfids/fmodret.c b/tools/bpf/resolve_btfids/fmodret.c
-> > new file mode 100644
-> > index 0000000000000..1c29ab9a8616a
-> > --- /dev/null
-> > +++ b/tools/bpf/resolve_btfids/fmodret.c
+>> diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
+>> index 3ca671af02ed5..79ea20838328d 100644
+>> --- a/drivers/gpu/drm/scheduler/sched_entity.c
+>> +++ b/drivers/gpu/drm/scheduler/sched_entity.c
+> [ ... ]
+>> @@ -304,16 +299,23 @@ static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
+>>    */
+>>   void drm_sched_entity_kill(struct drm_sched_entity *entity)
+>>   {
+>> +	struct drm_gpu_scheduler *sched;
+>>   	struct drm_sched_job *job;
+>>   	struct dma_fence *prev;
+>>   
+>>   	spin_lock(&entity->lock);
+>>   	entity->stopped = true;
+>> -	drm_sched_rq_remove_entity(entity->rq, entity);
+>> +	sched = drm_sched_rq_remove_entity(entity->rq, entity);
+>>   	spin_unlock(&entity->lock);
+>>   
+>> -	/* Make sure this entity is not used by the scheduler at the moment */
+>> -	wait_for_completion(&entity->entity_idle);
+>> +	/*
+>> +	 * Make sure this entity is not used by the scheduler at the moment.
+>> +	 *
+>> +	 * Scheduler is guaranteed to be stable after the entity was stopped and
+>> +	 * removed from the run-queue.
+>> +	 */
+>> +	if (sched)
+>> +		drm_sched_flush_run_work(sched);
+> 
+> [Severity: Critical]
+> Can an in-flight drm_sched_run_job_work() re-insert the stopped entity
+> back into rq->rb_tree_root while drm_sched_entity_kill() is waiting inside
+> drm_sched_flush_run_work()?
+> 
+> When an entity has two or more queued jobs and drm_sched_run_job_work()
+> selects it via drm_sched_select_entity() -> drm_sched_rq_select_entity(),
+> rq->lock is dropped before calling drm_sched_entity_pop_job(entity), which
+> peeks the first job and checks its dependencies without holding rq->lock
+> or entity->lock.
+> 
+> If drm_sched_entity_kill() runs during that unlocked window, it sets
+> entity->stopped = true, removes entity->list and entity->rb_tree_node via
+> drm_sched_rq_remove_entity(), and blocks in drm_sched_flush_run_work()
+> before draining entity->job_queue.
+> 
+> The in-flight drm_sched_entity_pop_job() then acquires entity->lock, pops
+> the first job, and calls drm_sched_rq_pop_entity(entity):
+> 
+> drivers/gpu/drm/scheduler/sched_entity.c:drm_sched_entity_pop_job() {
+> 	...
+> 	spin_lock(&entity->lock);
+> 	prev_last_scheduled = entity->last_scheduled;
+> 	entity->last_scheduled = dma_fence_get(&sched_job->s_fence->finished);
+> 	spsc_queue_pop(&entity->job_queue);
+> 	drm_sched_rq_pop_entity(entity);
+> 	spin_unlock(&entity->lock);
+> 	...
+> }
+> 
+> In drm_sched_rq_pop_entity(), neither entity->stopped nor
+> list_empty(&entity->list) is checked, and because the second job is still
+> in entity->job_queue, next_job is non-NULL:
+> 
+> drivers/gpu/drm/scheduler/sched_rq.c:drm_sched_rq_pop_entity() {
+> 	...
+> 	next_job = drm_sched_entity_queue_peek(entity);
+> 	if (next_job) {
+> 		ktime_t ts;
+> 		...
+> 		drm_sched_rq_update_fifo_locked(entity, rq, ts);
+> 	}
+> 	...
+> }
+> 
+> This re-inserts entity->rb_tree_node into rq->rb_tree_root before
+> drm_sched_run_job_work() re-queues sched->work_run_job and finishes.
+> 
+> Once drm_sched_flush_run_work() returns, won't the re-queued
+> drm_sched_run_job_work() be able to select the entity again concurrently
+> with drm_sched_entity_kill() draining entity->job_queue and
+> drm_sched_entity_fini() freeing the entity, or leave a dangling
+> entity->rb_tree_node in rq->rb_tree_root because subsequent calls to
+> drm_sched_rq_remove_entity() see list_empty(&entity->list) and return NULL
+> early?
+> 
+> [Severity: High]
+> Can calling drm_sched_flush_run_work(sched) here deadlock when
+> drm_sched_entity_kill() is invoked from a driver's free_job() callback on
+> sched->submit_wq?
+> 
+> When an entity pushes a job, drm_sched_rq_add_entity() links entity->list
+> onto rq->entities, and entity->list stays linked even after all jobs have
+> been popped and completed until drm_sched_rq_remove_entity() is called in
+> drm_sched_entity_kill(). As a result, drm_sched_rq_remove_entity() returns
+> a non-NULL sched for any entity that has ever submitted a job, causing
+> drm_sched_entity_kill() to call flush_work(&sched->work_run_job).
+> 
+> By default, sched->submit_wq is allocated via drm_sched_alloc_wq() as an
+> ordered workqueue (max_active = 1) shared by sched->work_run_job and
+> sched->work_free_job. In drivers such as msm and panfrost, freeing a job in
+> drm_sched_free_job_work() -> sched->ops->free_job() can drop the last
+> reference to a closed context or submitqueue and tear down its entities:
+> 
+> drm_sched_free_job_work()
+>    -> msm_job_free()
+>      -> msm_gem_submit_put()
+>        -> __msm_gem_submit_destroy()
+>          -> msm_submitqueue_put() / msm_context_put()
+>            -> __msm_context_destroy()
+>              -> drm_sched_entity_destroy()
+>                -> drm_sched_entity_fini()
+>                  -> drm_sched_entity_kill()
+>                    -> drm_sched_flush_run_work()
+>                      -> flush_work(&sched->work_run_job)
+> 
+> and similarly via panfrost_job_free() -> panfrost_job_put() ->
+> panfrost_job_cleanup() -> panfrost_jm_ctx_put() ->
+> panfrost_jm_ctx_release() -> drm_sched_entity_destroy().
+> 
+> If sched->work_run_job is queued on the ordered sched->submit_wq when
+> drm_sched_free_job_work() runs this path, won't flush_work(&sched->work_run_job)
+> deadlock waiting for work_run_job, which cannot start until
+> drm_sched_free_job_work() finishes (and trigger a recursive lockdep
+> warning on drm_sched_lockdep_map)?
+> 
+>>   
+>>   	spin_lock(&entity->lock);
+>>   	prev = dma_fence_get(entity->last_scheduled);
+> [ ... ]
+>> diff --git a/drivers/gpu/drm/scheduler/sched_rq.c b/drivers/gpu/drm/scheduler/sched_rq.c
+>> index 23f46ec610e78..79f7bdb5b3f0a 100644
+>> --- a/drivers/gpu/drm/scheduler/sched_rq.c
+>> +++ b/drivers/gpu/drm/scheduler/sched_rq.c
+>> @@ -297,23 +297,32 @@ drm_sched_rq_add_entity(struct drm_sched_entity *entity, ktime_t ts)
+>>    * @entity: scheduler entity
+>>    *
+>>    * Removes a scheduler entity from the run queue.
+>> + *
+>> + * Return: DRM scheduler selected to handle this entity or NULL if entity has
+>> + * already been removed.
+>>    */
+>> -void drm_sched_rq_remove_entity(struct drm_sched_rq *rq,
+>> -				struct drm_sched_entity *entity)
+>> +struct drm_gpu_scheduler *
+>> +drm_sched_rq_remove_entity(struct drm_sched_rq *rq,
+>> +			   struct drm_sched_entity *entity)
+>>   {
+>> +	struct drm_gpu_scheduler *sched;
+>> +
+>>   	lockdep_assert_held(&entity->lock);
+>>   
+>>   	if (list_empty(&entity->list))
+>> -		return;
+>> +		return NULL;
+>>   
+>>   	spin_lock(&rq->lock);
+>>   
+>> -	atomic_dec(rq->sched->score);
+>> +	sched = rq->sched;
+>> +	atomic_dec(sched->score);
+>>   	list_del_init(&entity->list);
+>>   
+>>   	drm_sched_rq_remove_fifo_locked(entity, rq);
+>>   
+>>   	spin_unlock(&rq->lock);
+>> +
+>> +	return sched;
+>>   }
+> 
+> [Severity: Critical]
+> What happens if two threads call drm_sched_entity_kill() on the same
+> entity concurrently (for instance, one thread in file_operations->flush
+> calling drm_sched_entity_flush() -> drm_sched_entity_kill() upon SIGKILL,
+> and another thread closing the context and calling drm_sched_entity_fini()
+> -> drm_sched_entity_kill()) while drm_sched_run_job_work() is using the
+> entity?
+> 
+> Previously, both callers waited on wait_for_completion(&entity->entity_idle)
+> until drm_sched_run_job_work() called complete_all(&entity->entity_idle).
+> 
+> With this change, the first caller into drm_sched_rq_remove_entity() runs
+> list_del_init(&entity->list), receives the non-NULL sched pointer, drops
+> entity->lock, and blocks in drm_sched_flush_run_work(sched).
+> 
+> When the second caller enters drm_sched_rq_remove_entity(), it sees
+> list_empty(&entity->list) and gets NULL back, so in drm_sched_entity_kill()
+> it skips drm_sched_flush_run_work(sched) and proceeds directly to draining
+> entity->job_queue and freeing the entity in drm_sched_entity_fini() while
+> drm_sched_run_job_work() is still running. Can this cause a use-after-free
+> and concurrent SPSC queue access on entity->job_queue?
 > 
 > [ ... ]
 > 
-> > +/* Choose the targets among the functions and describe them in RESULT */
-> > +static int choose_functions(struct elf_function_list *functions, const struct btf *btf,
-> > +			    const struct btf_func *btf_funcs, size_t nr_btf_funcs,
-> > +			    const unsigned char *buf, size_t ptr_size,
-> > +			    unsigned int encoding, struct fmodret_retvals *result,
-> > +			    struct fmodret_stats *stats, int verbose)
-> > +{
-> > +	size_t i = 0, j;
-> > +
-> > +	qsort(functions->functions, functions->nr, sizeof(*functions->functions),
-> > +	      cmp_elf_function_name);
-> > +	for (i = 0; i < functions->nr; i = j) {
-> > +		const struct elf_function *f = &functions->functions[i];
-> > +		size_t record = chosen_record(f);
-> > +		const char *reason = NULL;
-> > +		unsigned int flags = 0;
-> > +		struct fmodret_retval *r;
-> > +		__u32 size;
-> > +		int id = 0;
-> > +
-> > +		for (j = i + 1; j < functions->nr; j++)
-> > +			if (strcmp(f->name, functions->functions[j].name))
-> > +				break;
-> > +
-> > +		if (!f->nr_strong && !f->nr_weak)
-> > +			continue;
-> > +		if (record == NO_FUNCTION) {
-> > +			stats->ambiguous_body++;
-> > +			reason = "ambiguous-body";
-> > +			goto rejected;
-> > +		}
-> > +		/*
-> > +		 * A strong definition without values has no record. If it
-> > +		 * replaced a weak one, only the record of the weak one points
-> > +		 * to its body.
-> > +		 */
-> > +		if (!f->nr_strong && !f->weak_symbol) {
-> > +			stats->overridden++;
-> > +			reason = "overridden-weak";
-> > +			goto rejected;
-> > +		}
-> > +		if (!read_elf_value(buf + record + 16 + ptr_size, 4, encoding))
-> > +			continue;
-> > +		stats->with_values++;
-> > +		flags = read_elf_value(buf + record + 12, 4, encoding);
-> > +		if (j - i != 1) {
-> > +			stats->ambiguous_name++;
-> > +			reason = "ambiguous-name";
-> > +			goto rejected;
-> > +		}
-> 
-> [Severity: Low]
-> Does choose_functions() skip candidate records on functions[i + 1 .. j - 1]
-> when multiple ELF functions share the same name?
-> 
-> add_record() attaches each record only to the functions at that specific
-> location, and choose_functions() then groups all functions with the same
-> name into [i, j) and advances with i = j.  If functions[i] (the lowest
-> address instance, such as a static helper in another translation unit) has
-> no record or zero values, the continue statements skip the rest of the
-> group before reaching the j - i != 1 check, leaving stats->with_values and
-> stats->ambiguous_name undercounted and omitting the verbose rejection log
-> for records on functions[i + 1 .. j - 1].
 
-It's not a functional bug, stats may be 1 off,
-but this is not verifiable on practice
-
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261106205523.1765622-1-a.s.protopopov@gmail.com?part=15
