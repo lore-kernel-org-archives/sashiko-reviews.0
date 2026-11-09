@@ -1,112 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794190861;
-	b=Njll7f77oSKAMQtt0CAyJsJyKbzWpJc9VYamyZGnl7d5s3prf92zPm2JHxXVObVPipYf
-	 3NmJ1clDZdC0ASzwyEAP/vspbvRHszOanLlBBtWUCrq9fn8OmtdEQhlawcpFWwUrroo/b
-	 LxW5+BRUb3plLp8vAPvtavs3ENVHcPRp/7Kr4HT/Vc9qf5LQu2v5vNnay1/FM107y1uxQ
-	 oRxGnJCTuhic5+zTdl/tBnNzo6KJ/IRFkmPXSNMr+taW2DGOrAVSxbPbjulnnCVe1oodr
-	 bK1TlxvNr8NDYScvMgJgZHgJKpjQWa/IMaUjJVKQffwEjNbw8lol+nZkAAI4Xli+9Nw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794190861;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:X-Authority-Analysis:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=vTHCJSTydXzyoZqC+6clQ/H8kutgx2FD4bqzC+SBHLQ=;
-	b=1en/lKjE2bWMrzshHJ5zqeaiQENQOOw0zdhp2Ywp6FVyfhXRJXidpqnEfrdfJjOnpu9R
-	 012JaV+Wy6FVTsx2hjf5MnVK4uqcaT4eSaaY6J3BQx3gCo2VU7khmC1KEcpX+odYpZ75Z
-	 Ym4dGMeeAWSGR+veXN1mW36ATnyl+8GrPCJUCdkRPLvkt4R5TUCK9lxQnCuu2qnwaj5I+
-	 91g5NJhz1E3ATcu0u5GsCwRhAhyyXKhW9P4cRv/VnrDxt9Zga5miM9YmWN8DOo4RLaBWX
-	 zTWgsI0J54oUyWZ49z/ih0G1mAULY5V+1Bcx3rB5Zc4ISlnSYCXIa36q5qVYaKXGhog==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Xq4YDBbg;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=FvC5zVxi;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.74.86
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794190948;
+	b=syqKVvv49erQhKIaARjega5itXNdFcfT9yrZe/PlTaIJqFC3n+lXYR9MmLkbyscvovmt
+	 4A5dOasDQnHgXGOqZHh8l8K3ZuiTXTXGKukJQtc5vYu7QBx7NaGATH2Vr7mCZQFDqWtZ6
+	 jr+dH9a39lK7uyUeHMptmxmB2IfRuxQcfardIelJuTYBs/5xGfNgDseD6m4wpfBAHh6rG
+	 8ch4UdfKZrB0a0T2uKpK1SKYKYODTBspSkrQ4dc5nKXR19o/O6gzz5OpuQlUmNuuFVy4v
+	 Od21bq+n9lm8Eqdfwt3F30k3kPi6rmZDuMnzs5MQ9lIgFdQq+cVQj8kuyCYa8O/Cpeg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794190948;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=85IkSqN7JkVYTx4blSrTX9ObNi1697lJ9OKA4wJJ8vs=;
+	b=Qlw6JFex/DpvndVAdUboATDTQiHHrtLh5xLmZhUXC3qLmc5TO49ZNoI6IaBMyXV22IuE
+	 97aPWIs4HY3EGUK65ydnkRXBhs2mxqiiasZGKxFfadvp69VuHJbPjC2HI6Kp/m62j7o28
+	 Zx5Pb5sk3G3MGG8H5kgOwCXq0kqUEQFNkF6fnkfBshB04K4iO/65TZsfTK/9IgLInFFR5
+	 BgfL16jP13gyrBK/09cLvQiN71uteQ5MmWZ+RjDn9RgF1nv/hud7n+mf7xf8fjtVBB/vz
+	 pQ4WkU7SmJkWMtT4CGrOC8kDjr4/63vhnCcMUkXz7Bph0YfhDYA3LSeb4v5tnxQZ/Pg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=valinux.co.jp;
+	spf=pass smtp.mailfrom=valinux.co.jp;
+	dkim=fail reason="signature verification failed" header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=dCSNpDlr;
+	arc=fail smtp.remote-ip=40.107.74.86
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021086.outbound.protection.outlook.com [40.107.74.86])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54152606A31C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 02:21:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54152606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6DE606A320
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 02:22:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0C6DE606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Xq4YDBbg;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=FvC5zVxi
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A90HSXZ1266765
-	for <sashiko-reviews@lists.linux.dev>; Mon, 9 Nov 2026 02:21:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vTHCJSTydXzyoZqC+6clQ/H8kutgx2FD4bqzC+SBHLQ=; b=Xq4YDBbgOranx0+u
-	WArNa9ZawxoY9HxYffDHwnZ+aN6p9hVwn/tSbbRi/E0PQBLz4UzNwokfi4UFpu6H
-	CgG8kDSx4KUjuuQj/VzluU+ePM+0JJ1TTl9zwObGSrPYYNlZyKTabIApp6n1hIPS
-	DOcHxxiGDwblZqf6TA2pAooDOHwR8N8fN+JrozW4MFB3ObLaKne3DGoU47TdFuo5
-	q/HevaVpCn86rpqewqN/TR3u2pPIBzpREilS4A2FByUovbd9ixydMNYxL4SqQMPj
-	XhlDThZWiEAw2jDAaZYoBCDHGfabnNciA/51OF7rdTn0mXI3URgdarXMuqYsa6AU
-	L4XhsQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hsw5k45ea-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 02:21:00 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3ae19907a31so318936a91.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 18:21:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1794190860; x=1794795660; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vTHCJSTydXzyoZqC+6clQ/H8kutgx2FD4bqzC+SBHLQ=;
-        b=FvC5zVxiEJhTYQ5U1wtJj1pp9bt/wsAiOlKXw/KxEvAK78gtWwsXd170OJ/feV8vxi
-         NQWFkG7dMfEGsHUkazd7dML15VlxBJzcUfdTYsDMnciRInVnOy58pkWffeFtXddVII+u
-         m4xjsP2Yp+xgNJggsqFXLMXy1plfA02h16YpMYF1fixX/i4gM3jVGXsbtz8Xm9+VoFx5
-         bs/w5yxfCy7ZutnEF1PBx1hI+rBpnuqrwrqpfhR6o4od+B0mj8MdIZaJnFwmoW+hZ7IO
-         j8LN7fSL+e0yLQbVCaoIy4JPuUSzxj30lISzl428uLDRFaqrpIewk5rPxA4rK+d8VFDm
-         ipxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794190860; x=1794795660;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=vTHCJSTydXzyoZqC+6clQ/H8kutgx2FD4bqzC+SBHLQ=;
-        b=K5EY885FFh+GfWoKpltpfwfH3ON6hMNWzp2zI0bSjHPPcRmu6tZKG+y5EwRIUhR5vg
-         CzME5t/Kb+cKfHLFSgP6h5IoZFzzCJkOo1yhWC7dno7cjr5/p72ZB5Et+YaWMhtiqPw2
-         cRaG8DMFx12SVu1Ur0s23GgO17KK/zX/MegCeBWScfVzHKjEWBYWFRuvu2Qazgap/j/F
-         A8JanQgYoH3XX45grHzgWHOomlfs+73Nb7ACWEGd1nPldp8cV5ZHQTB17okkCa3DtCcC
-         1wMnlq2MjVeTSfgGhYHMb9IpSO86g5POXHma4b+jhmgFPGKwjyMusj7LUTIMNZ/0or4R
-         T7TQ==
-X-Forwarded-Encrypted: i=1; AL+hErFniq/Fc3wVfrvIip0+uz62jZ+LT5/GYBb37FvSNOtnDFeKfwB3vFNS4Y7jTq4rgConvBpqt8BtRtXqzN/BpkM=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+b2FsaVubFEzaRN7rtVGFK6Uhkqa3bkwAGeQDAjQz1rbwn0Z71
-	hUT+yHQSvEpvSR5SsJRxTUaF7IfuAl9oXc+Htm5GGHZI/wokR3vMZdkl7yA94D0zS7W4GZV7xFx
-	9J91tobu1w3AFJnEkRqklpXioJIFjacQIx2PHOypF8w1qS3bRJ3CXIRU9H+aXRzps17YHi0A=
-X-Gm-Gg: AYBFou0lIeYPYNhmguob1MmXkzMN5JTC/I4xOnGrRr6/upogDdTD9kK2NAIXNXDX0P/
-	czPuuUvnPxlbI8zDtTzE59o79ogbpt8ikg/5qxUym+QyheNB9HVKmUMA5gfWM7xpcQdBLF35iBo
-	wnms1C1KyoNlaY4oXONuuXLFuHSh6FRGSK6aOBTeTO9Q+cGhq+UKNDYSXWzkycxQhM+yQr/jing
-	w1Fp69xb2RRmYZXGmk/q3DMFI1hhdRQm1CEg64+RixxWKHcfIoK/PCn4l3Zw2nf7rNePiytpcfK
-	jeKPcF7NB5IAPtP9pN41JGMs4f1lPJK3+DGRUamD85+nMS8tl0yn0HhBlbm+wJnz+pCfVKrAPiU
-	jf6e7aWIVrLdAKl8lkJj1U9GbBuyvNAg7kADCMD3Jt6qBQZ0ficKOAn6EOwobsM95yvYQKfo3lr
-	aWaRtAYg3TTxY91RPbEb7eDvto4p/hkOIG
-X-Received: by 2002:a17:90b:2588:b0:3ae:3b3d:c617 with SMTP id 98e67ed59e1d1-3b12d54a316mr2013102a91.29.1794190859732;
-        Sun, 08 Nov 2026 18:20:59 -0800 (PST)
-X-Received: by 2002:a17:90b:2588:b0:3ae:3b3d:c617 with SMTP id 98e67ed59e1d1-3b12d54a316mr2013087a91.29.1794190859258;
-        Sun, 08 Nov 2026 18:20:59 -0800 (PST)
-Received: from [10.239.96.176] ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1032b8c55sm4961050a91.2.2026.11.08.18.20.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Nov 2026 18:20:58 -0800 (PST)
-Message-ID: <f5a3fbf4-a7fe-429a-89d2-7334a2375da4@oss.qualcomm.com>
-Date: Mon, 9 Nov 2026 10:20:54 +0800
+	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=dCSNpDlr
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YGwvzzU8kS9vLUwMVCcmSqIOtzj8u7ZN8UThUuh/UmlafcMfyGwjf3sX+yGJjthTPQbETMn0dHqHXjOq+A77U6JaA/ftQ/kYg4UlSFIpUSzyzejUhRTCFTuTryMMQ26F4KsKkkkRSD1UKDMoaJ3Za4gvNcBBpSG2pGJXva9tCtKNUAMklH5tWF53X490oRvzd0HXDJigFbVhzrzOI9eN6+8cpTosTr7x0Rm9Jfl4MU/v/dHOP/TriRR71vPgwD0A6CVZL7qANtr79lp24oX1ifaWiyLEksil8n15ia0SpmoLr0QZSp9qn9JReELucenMGEVzspdJeHfr4gCJ/5dlfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2D+wdGlJbT/LP6rpoj8z9g7I/5H6rsnor9k+JV0AA3U=;
+ b=iYX1Xzmlfxv2AP0wiV8z7mdr41mdy844kVxvg+YBbrKtaSueE1awpGfiVmFzSP+AfS+kkcchdbOJImMZSwnygshfKxAr01kd3V0C2o47rNsX91bI97i2KCjYZP/HP/qZqIThUiTyFsUnF6idiZC/dK7HxqHJDiPJf3CDgUlM0fv2MPPsfop+KiN79jSpcMD9zvYCK73JnsFJXw2tuaQNuFuYR47giHYqNhebqe7FSHqzsEwAv9ykmY8wC2Y+KFTxmsIDVWk5c2xizKk2v5c7cm6WH2v23gCG3+khh+VKnCbPfoCb6BTaLkV28tWZJWE3JhXak1/izSKnXp83stOWGg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2D+wdGlJbT/LP6rpoj8z9g7I/5H6rsnor9k+JV0AA3U=;
+ b=dCSNpDlramIaDK9Totdi4//Gslw4o4+vfPYH+EUB9N6n87mVkg1rUEPiUyoZWAL+OG5RQ5y2IHMiCyTk10fbCp2jJVJbqp0lsGWCgNl21bGm4nTipbvHYeaIN3EB6doUH0u7nNlKwn/6qbs90TyQ8mYBu8BYJIk2MvS5VQLvBbs=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
+ by OS9P286MB6999.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:413::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.12; Mon, 9 Nov
+ 2026 02:22:22 +0000
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0592.010; Mon, 9 Nov 2026
+ 02:22:22 +0000
+Date: Mon, 9 Nov 2026 11:22:21 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org, 
+	Frank.Li@kernel.org
+Subject: Re: [PATCH v8 6/7] dmaengine: dw-edma: Dynamically append requests
+ while running
+Message-ID: <v6oar76kmbnuqtascq6eunjy4uszbuzogxp5etoxsl7v2nmbfu@vv322u7ohp2t>
+References: <20261107133027.364237-1-den@valinux.co.jp>
+ <20261107133027.364237-7-den@valinux.co.jp>
+ <sashiko-outbox-202935@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-202935@kernel.org>
+X-ClientProxiedBy: TYCP286CA0214.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:3c5::10) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:325::11)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -116,124 +99,151 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 11/15] media: qcom: camss: tpg: Add support for v2.4.0
- TPG
-To: bod@kernel.org, sashiko-reviews@lists.linux.dev
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, robh@kernel.org,
-        conor+dt@kernel.org, media-ci@linuxtv.org, vkoul@kernel.org,
-        neil.armstrong@linaro.org, olteanv@gmail.com
-References: <20261102-kaanapali-camss-v24-0-d6b8f3f6f66f@oss.qualcomm.com>
- <20261102-kaanapali-camss-v24-11-d6b8f3f6f66f@oss.qualcomm.com>
- <sashiko-outbox-193294@kernel.org>
- <179406416444.650304.12581893664974319470.b4-reply@b4>
-Content-Language: en-US
-From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-In-Reply-To: <179406416444.650304.12581893664974319470.b4-reply@b4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDAwOSBTYWx0ZWRfX1q0lkXyrImUv
- b+/V/NWzQJIkeeRoAPox8N95knA4M8fEW1eYUjGLd9fy1+MRMx4nGKL5waSaZF+y46gRue0FsBu
- cd0cAcOGqZog6HlP95T1li8P+wdHVJ+0rVwZSNmpLD1KFZcW7oM9BZz1BKv7WhK3MA0V4CS0hTX
- BcYTHRR9b/0sI4qKFuJO/zEck3t9/57Mq8QZ1BQphvNIKNceo3b/ve7vNwpkd6X52VD0fO+mHby
- WATbDnNraQ8gixMnLgr6406CzvthsZAXRxF0oMbbBaer2iBiYBSGFucbjDBFEgTVztOR+WNuxPb
- g51cBA+uAbf6bUSPywVb2QWJVdZBR8aO3JE9+6vdWTGn0wYC2UrcyN7KE/0yqrkewZ7xV4TYbFw
- L2Zg+bKZhr+TAHZ+iisObtEA2D2Hox0PoPdMMM2lYe8690Mg2+q2zHp+6eczpStMhFraGtIzHnN
- oaSl4c19Nf3LaOeufww==
-X-Proofpoint-ORIG-GUID: YG1qbWYkoEWLY4C6dUF0HqFCYSPhxHev
-X-Proofpoint-GUID: YG1qbWYkoEWLY4C6dUF0HqFCYSPhxHev
-X-Authority-Analysis: v=2.4 cv=G/aJgNk5 c=1 sm=1 tr=0 ts=6af12e0c cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=VwQbUJbxAAAA:8 a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VNQ3AZqY8Cfn8RaTT-QA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
- a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDAwOSBTYWx0ZWRfX5DNnvIUDRmh4
- Q4wkDXBxvJsFiYCctyt+VyN6nOV5/SIxPm/WDMJvvr2btnS8Q3zFkfB8os19lDFE8xKEc5qOuuV
- 6rfb6cIDidwIkfItgT0mJIvijxAforQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-09_01,2026-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 spamscore=0 phishscore=0 clxscore=1015
- bulkscore=0 adultscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090009
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|OS9P286MB6999:EE_
+X-MS-Office365-Filtering-Correlation-Id: 56dc3ccc-1155-49e5-e56c-08df3e084984
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|23010399003|376014|366016|1800799024|4143699003|56012099006|261021121427099003|261022105027099003|261009223027099003|261026140227099003|261026135527099003|261026121527099003|261028144727099003|261102123227099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	GkAK5Ccoz+cjICcU8eLDvdrt8Ivr3PqXSXZE+DsTe+eaJaSRBFqx6Zt/qWheZvyM+rmKgSeB9W93gXAWlY9CTy9rn2zJTCc3VX4OIXWVmEqG7MpaBBpXZSq/thw/mBlheU7RokAhHxxdlYtPKiau9c8E+eU5aDUWQE/4Z78Hgzeqx8T0d8JmCP5TIlgQz4F1gJ3rdTNhN4WLhNGgfkIPPZKPysA2o9trlXtZswgY75cpCOdISJqi/DNW3UFw1y9Og2Cuq4XK9z+HWtVqxweQVmallZeCvKJUUi8jbbz6NwvATqzpQxDzk5kuqqPAq1oRN6pxjlt4e2P4/ihq557XZ0S/USr1cz7SxlkJdSaT2a0LSG5PJPq0rkECwhm2YVSYk/qB9SzU3qI1G9RroRrRSnTY/Q3S+KYovSQAJYFreaGJWC/AajrUlaxeryvQUJIX658PhSNERzBWDqoTJkAdtjfJwbVWmtkDERaW3Qa1CMg59Do9l91cy3SX6kTSP9Cknx/znmTgs3MOYmesI0tf45mXDiBb5uqCUGaEStZfMZkJ/Atdjtt006TQtlm1CuHoiS/pY95kmc870m6rLMAimZjuhxnjo4B5Kk9i5HweLTs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(23010399003)(376014)(366016)(1800799024)(4143699003)(56012099006)(261021121427099003)(261022105027099003)(261009223027099003)(261026140227099003)(261026135527099003)(261026121527099003)(261028144727099003)(261102123227099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?t2FFzfRmJkavXvkpl8sk1/0KlizBmSie568CwFmqY5h3JmmWI6ilbKYqgD?=
+ =?iso-8859-1?Q?ASSTGotqspZQq4ObTg+XO3LzRMIeOFVktjx12H6G8DUqh/YNBXH3KrQgA9?=
+ =?iso-8859-1?Q?e8dOmYXZUrdw+bgvhct2AZQLNopbAn4qDjfOnK3yRxlPQQqRPIhq0njsiM?=
+ =?iso-8859-1?Q?2EmcXJToxMmeneHdITQbRzmSVUqM+xE1tYSfmkbGRq0ZuwBCRXm9ZBMTch?=
+ =?iso-8859-1?Q?WoGqfnFxr2rwv82irRSUVuibRuZfXHX/4WuJbrkDj5odKKjiZx0ZU3Zf5V?=
+ =?iso-8859-1?Q?lBeoSyyzKN/dzlYs1iSiVTyAt9H5a+fQpU8ipSuqieQgeCFg8gc/maKY+Y?=
+ =?iso-8859-1?Q?+a+R27M8PZCmmcNO5Qj+4X3n9ClQu4LTZF8tewTnOAIT6xY7x65Z1Mgn4f?=
+ =?iso-8859-1?Q?EdSJB1qws3MBKtT61TqdwHLkwm9zClmPvR7Yns0+EnWMIviyXFs9mLQCBM?=
+ =?iso-8859-1?Q?AbbgZDcytxMvDc0Cv+AeN/86vMEraNiNfcqcsTQMTUm2R5DIKDmjm2EYMH?=
+ =?iso-8859-1?Q?AZx9SFhSA/JzkocXslF7lFtgomzyLzxoIMR+osS7BFbw3ppb58tCPWaviQ?=
+ =?iso-8859-1?Q?DE7Bu4xUx174ch04Wm6cFG2hTmy2y8im8xVbqTxswhSMeHlJEz5ppF1snH?=
+ =?iso-8859-1?Q?qgIfcj4hE4NHI5Rr8ZBOsGDn6QJDdRRgvKkm+yIgNakj2ht+U7WBF2A9J6?=
+ =?iso-8859-1?Q?vq0XmrQYbt8cwYsia+RE5w4EcVZu9EE74TDhHqY8hBh1t9xzgLCsggujg0?=
+ =?iso-8859-1?Q?y64dmMystBSOqY9wE3yl4o3poubBpFdWIrtRLhtr7IS1j4D6GJSplD8DRn?=
+ =?iso-8859-1?Q?BRxQXx7Q51RFG58NH5mLifO5TB8OmgkLvZm2ZIPrSw+1WIHaW7l6udiDyj?=
+ =?iso-8859-1?Q?NpGb3IatO6x2m28kwjIT5tu2H+KvoygUWbAg3xuLMg/W1dgndq2LQe2sfQ?=
+ =?iso-8859-1?Q?9QZAY4PAT/2qY0hJiATRle4L+YcMdVPvEv2qr3qQkUf4vCMKUS4kEFCugN?=
+ =?iso-8859-1?Q?rnH/9/Jkb4d142jP+ujaB7FFjGG1N+ycJOL/zJHXPVk4U8G51jEKNtg+Dl?=
+ =?iso-8859-1?Q?A7u8XvbIebIpGH3DAHKyez544qrlEgFcHU9X+unDrleKsPLJe3l5q/cUGr?=
+ =?iso-8859-1?Q?dG74Vfzp0oH7FimznOMklIl6KxKlrSIuRR1IvShWo49wCteiA9VA/Igtyn?=
+ =?iso-8859-1?Q?fVWPobqgKFV4JfhUDmAFM52W6oeMunlFRZENDa1eNUJ8BTyhMhYWWNdGqK?=
+ =?iso-8859-1?Q?t1OmrJbjtOLfLNL/j61+ukpC6aMHRIhhuPCq0OfdIoNovX5C11F396DjNV?=
+ =?iso-8859-1?Q?/XgbIAw3i0icE+EmIOqwdJMu0P0dB3hYaxMkTjhhl0kgCIw/PcTjn+fuXJ?=
+ =?iso-8859-1?Q?koqECqDCWrhI6xO2uCbpVR7N9OzIwE9jLwPCYal6OOh2HNz9iBN/SVnHYC?=
+ =?iso-8859-1?Q?LqEhoIb4nz5wW1Eg3Qw4BpIJAjwC+wOqCTObMJODKIM2OymMiZnXTudSpG?=
+ =?iso-8859-1?Q?sdaLKlLksWS/LJVXOB2lyQ5kDRQIhCUoL0s++48QpCpnT5a8PbQSi9xupQ?=
+ =?iso-8859-1?Q?0znOl3NjweHj5ETZKDTJHUnWiLjTrjnKt5DaTLmcadCU9G92DEl8wLrm5L?=
+ =?iso-8859-1?Q?tQyJDI1z07YEpITcfMbCFyp0jR5rLstlVByX1SDjZ2BKSqYPepi5KJcwUS?=
+ =?iso-8859-1?Q?fQJpw0tnVrZQzfa52BzWwfGGqSdte0GqXSwb6P5kpVkc6X73OaDJibS6cT?=
+ =?iso-8859-1?Q?UIaCGvsCGHVoi3vmBDNgllYwcvd0M25FyrZrAfq0t6I3n2BsM7UBg7zzA5?=
+ =?iso-8859-1?Q?EgcnNh2JMNy93qaCC8GHjIC8s/W6LieDoBcw/zBsCaTBeCdsVFYk?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 56dc3ccc-1155-49e5-e56c-08df3e084984
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2026 02:22:22.5831
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: eDfx87qI46Ey/odlXU7+Eirx3ZEyNH9XUxnVgFwWmoagNawI6YqO4hr4qpl7/6v86fx0O9m6V9dBJ4hG1nnBGg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB6999
 
-On 11/7/2026 11:09 PM, bod@kernel.org wrote:
-> On 2026-11-02 10:52 +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Medium] media: qcom: camss: uninitialized hw_version check in tpg_reset()
->> --
->>
->> commit ea18d39e5144ca1e8d628aa5ab708e84983e10a3
->> Author: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
->>
->> media: qcom: camss: tpg: Add support for v2.4.0 TPG
->>
->> This commit adds support for TPG hardware version 2.4.0 on Kaanapali,
->> controlling test-enable and hardware reset via the TPG_CTRL_CMD register and
->> routing the TPG output into CSID 1080 RX through the CSI2 TPG mux.
->>
->>> diff --git a/drivers/media/platform/qcom/camss/camss-tpg-gen1.c b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
->>> index d29de5f93c18e..cabbb2638cf38 100644
->>> --- a/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
->>> +++ b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
->>
->> [ ... ]
->>
->>> @@ -164,18 +167,26 @@ static int tpg_stream_on(struct tpg_device *tpg)
->>
->> [ ... ]
->>
->>>   static int tpg_reset(struct tpg_device *tpg)
->>>   {
->>> -	writel(0, tpg->base + TPG_CTRL);
->>> -	writel(1, tpg->base + TPG_CLEAR);
->>> +	if (tpg->hw_version < TPG_HW_VER_2_4_0)
->>> +		writel(0, tpg->base + TPG_CTRL);
->>
->> [Severity: Medium]
->> As reported by Sashiko on v17 [1], is tpg->hw_version initialized when
->> tpg_reset() is called for the first time from tpg_set_power()?
->>
->> In drivers/media/platform/qcom/camss/camss-tpg.c, tpg_set_power() calls
->> reset() before hw_version() populates tpg->hw_version from the
->> TPG_HW_VERSION register:
->>
->> drivers/media/platform/qcom/camss/camss-tpg.c:tpg_set_power() {
->> 	...
->> 		tpg->res->hw_ops->reset(tpg);
->>
->> 		tpg->res->hw_ops->hw_version(tpg);
->> 	...
->> }
->>
->> On the first power-on after probe, tpg->hw_version is still 0, so
->> tpg->hw_version < TPG_HW_VER_2_4_0 evaluates to true and tpg_reset() writes
->> 0 to TPG_CTRL even on v2.4.0 hardware. Should tpg_set_power() call
->> hw_version(tpg) before reset(tpg), or should tpg_reset() read the version if
->> needed?
+On Sat, Nov 07, 2026 at 01:59:34PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] dmaengine: dw-edma: stranded or aborted queued descriptors on
+>   LL reset
+> --
 > 
-> Hangxiang can you have a look at this, seems credible to me.
->   
->> [1] https://lore.kernel.org/r/20260929061248.E035C1F000FF@smtp.kernel.org
->>
->> -- 
->> Sashiko AI review Â· https://sashiko.dev/#/patchset/20261102-kaanapali-camss-v24-0-d6b8f3f6f66f@oss.qualcomm.com?part=11
->>
+> commit a60bb88e6010e30a59b85799859be8d9e37e8b49
+> Author: Frank Li <Frank.Li@nxp.com>
 > 
-Hi Bryan, You're right. I had previously argued that the TPG_HW_VERSION 
-register always resets to 0x20040000, but that doesn't help here. 
-tpg->hw_version is only populated by hw_version(), which tpg_set_power() 
-calls after reset(). So on the first power-on after probe, tpg_reset() 
-still sees hw_version == 0 and takes the legacy path.
+> dmaengine: dw-edma: Dynamically append requests while running
+> 
+> This commit allows dw_edma_device_issue_pending() to append new linked-list
+> entries while a channel is running and aborts in-flight descriptors when
+> resetting the ring.
+> 
+> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > index 1d13a25663eff..bcf4fca345914 100644
+> > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> > @@ -111,8 +111,22 @@ static void dw_edma_complete_vdesc(struct virt_dma_desc *vd,
+> >  
+> >  static void dw_edma_core_reset_ll(struct dw_edma_chan *chan)
+> >  {
+> > +	struct virt_dma_desc *vd, *tmp;
+> >  	u32 i;
+> >  
+> > +	/*
+> > +	 * We cannot tell which pending entries completed before the reset.
+> > +	 * Abort their descriptors to avoid repeating a transfer.
+> > +	 */
+> > +	list_for_each_entry_safe(vd, tmp, &chan->vc.desc_issued, node) {
+> > +		struct dw_edma_desc *desc = vd2dw_edma_desc(vd);
+> > +
+> > +		if (desc->start_burst == desc->done_burst)
+> > +			continue;
+> > +
+> > +		dw_edma_complete_vdesc(vd, DMA_TRANS_ABORTED);
+> > +	}
+> 
+> [Severity: Medium]
+> Does this leave unstarted descriptors in chan->vc.desc_issued stranded on an
+> idle channel after a hardware abort?
 
-This went unnoticed in my local and E2E testing because the extra write 
-to TPG_CTRL happens to be harmless on v2.4.0, but the logic is wrong 
-regardless.
+Thanks, Sashiko.
 
----
-Best Regards,
-Hangxiang
+I replied to this point in the v7 thread:
+https://lore.kernel.org/r/rtfjvblptmdez2znjgx7t4v5fumj6wabp2ft6zmnsm353nsves@vow63wcrnpol/
+
+ "Yes, and this has been long-standing behavior since commit e63d79d1ffcd
+  ("dmaengine: Add Synopsys eDMA IP core driver"). It's orthogonal to this series.
+  I think this should be handled in a separate fix."
+
+> 
+> When issued descriptors exceed the free LL ring capacity, dw_edma_start_transfer()
+> stops once dw_edma_core_get_free_num(chan) reaches zero, leaving trailing
+> descriptors in chan->vc.desc_issued with start_burst == 0 and done_burst == 0.
+> When dw_edma_abort_interrupt() runs, dw_edma_core_reset_ll() skips those
+> unstarted descriptors, and dw_edma_abort_interrupt() then sets chan->status to
+> EDMA_ST_IDLE without starting them:
+> 
+> drivers/dma/dw-edma/dw-edma-core.c:dw_edma_abort_interrupt() {
+>     ...
+> 	if (!chan->non_ll)
+> 		dw_edma_core_reset_ll(chan);
+> 	dw_edma_set_request(chan, EDMA_REQ_NONE);
+> 	chan->status = EDMA_ST_IDLE;
+> 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+> }
+> 
+> Because the client already called dma_async_issue_pending() for those
+> descriptors, they never execute or complete unless another transfer is issued
+> later.
+> 
+> Conversely, if both DW_EDMA_DEFERRED_DONE and DW_EDMA_DEFERRED_ABORT are
+> pending in dw_edma_irq_work(), dw_edma_ll_interrupt() runs first and calls
+> dw_edma_ll_advance() -> dw_edma_start_transfer(), which publishes those
+> waiting descriptors into the freed LL slots (setting start_burst > 0) right
+> before dw_edma_abort_interrupt() -> dw_edma_core_reset_ll() aborts them with
+> DMA_TRANS_ABORTED.
+
+Same here too (from the same reply):
+
+ "Yes, but I consider this an acceptable trade-off for keeping the error path
+  simple."
+
+Best regards,
+Koichiro Den
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261107133027.364237-1-den@valinux.co.jp?part=6
