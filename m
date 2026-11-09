@@ -1,64 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794200378;
-	b=JpavobNzABNJAGJD1nS5156o5VJHhVQjS0IauaT9GMZBJMMXQjzMZzXvbi4ZLjex/cIu
-	 2BAlm0IWEVyMSUdtJSmDIsOLQKEnRGjteOdRluLujvXyNZ6DzmLdgTheP/9pwPhKv8SkI
-	 0lrz97eIpR3L+tN4WDsxD90X667EHHNrh0Q6TbcFsI9r/V3FXy/VnXxGwCbnyTNOAT9zO
-	 l9HgAhyPXRofGeD+u0Vg7kBZUto85fCnjCOe9FO5fkokV1qJfa1PpxOujIWFkRxSRM1Os
-	 XVhv8EdXZ3+UGSTvLJmgibFkWz59CT6szZTzAGIwdgzhim98RlcQtpvQ15nz77rZlLQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794200378;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=ERG2I7Pd24sxoFvp82kJAGtR6dHyLv+SwnsIesDmAb0=;
-	b=BCDIgwCwPLVwAHRSocubI7yLnOqCNz3nWCDDc2lEHowi3GzW3uBhJnC8LkI39vImIl6W
-	 LizzmDthbtCOXk2dq6dgamn3GzDb2CXgtZTnnI1pW3THdSKOHEHC6MQpnPC79b74SSIU7
-	 nMp+CLCj7xwwM2CPNRVcKGeBXthGxw5IAGhAj3R2DbBtk7uhL8Y2A1aSPcYiP57/EqQT7
-	 pZGWLU5fDUEzji6tvBRQN+LfnCw4w08bhnZMQJRNJNuzSruc07SUm4HqzDxK7y5X5lJad
-	 pIY4BP0qflTc7f40CzlvTuxXREfoU78ee61BL3a97MMEVVTAfHT9BbWaQ6yyLiEmMAQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MfqYncIT;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794200489;
+	b=qjLZ9FankE1L2N1V0I1d9dp2/LoULMoRhmBC1HMSxLK/A5B4Csa/wzFu+K0KWf9Psp+Q
+	 wN/uOjpCM+7o5AnB806b/Gv+QbSJWQYBU42mrTd8isVNGj64dqGPCY8VyWnjOem6J2p5U
+	 m2vDrQpp+/rC/7H+aotikWypZE8yNq8eeuAkOUsBvlQSTFHkv/7P8rLrdnyPrQDOlP6AI
+	 D/aixd8rfIcKK4HH1+GbU58gDDX8bzlAZtF8/5TnxaRzu2DVzN8KOvJiAGH8rd6In9cqe
+	 2GO8qkraRr7aYm+GLePZ79vrR4nvcvaEpkG+H+2dU9WVX0lvAlBTatUU0HLAdU2i8cA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794200489;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=gkMIpScCaOHHTxz3h31CJ9cN+FPf4BX1WK6GsfzWcC0=;
+	b=ZLq4S8X74mcoW7efBUmHIJodSTipG0d1D/6xPa/dx4WUsWTs2tDJuf7fGEzDl3pDB3vb
+	 0n8HsbXLySnoeKN2R49QxFvmpdD3k05zVAHXAQnLiIjFmBKLDE3mJ/kLhGNVGe7GcP5jv
+	 UnplQzF2nbYCaXRLmDp1BnZZ21ABGrCQBNI/dijCxEnLV57NjnpxaTFQGjfmdyWcqypJ2
+	 qwkf3lUl07yDLivoncWiY7aXWv+6fzK+hxHldNF25sVJAKXQYUpfny4N2+4QfEgDtr982
+	 KFBgOJdFpe5kuzj+hn0ZdcG+5QUP501FEp5RoI1FOGMJT2Xbuq++o1LegvMI9XwcoLQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LHLUcp7N;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.46
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E20A606A321
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 04:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57846606A322
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 05:01:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57846606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MfqYncIT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8721F0089F;
-	Mon,  9 Nov 2026 04:59:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794200378;
-	bh=ERG2I7Pd24sxoFvp82kJAGtR6dHyLv+SwnsIesDmAb0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=MfqYncITt25+ECW2QvR5aoo9iAQhXLKcQ2LdXpuZzDe0mnvVZC3n726QmHzfgQh8y
-	 DfwvfSOExCsM+2jHtIJDTkiqujRoLgPcduIvhE7yCWF7HRVm5Dnc8n4S07lj4uYw+N
-	 oC13rcU8BzslZRwR2c0TdtfDFaY+5upd7x6RZeBUyCxFCXABHd7FI5UFByFQdKgi1Z
-	 R5iTB2vqMVn+hM7bHW3mLT90DD/IgrKT87ztZ8D/jhL+TOlXISPnsgQud0PU4hQFau
-	 yNWlBQADuUTXqiU5hEU5qaihGJtxUnFG1Vhix1HROVJwJDjs/yOMYcVjS/psdLXRqd
-	 rsuSCirkQUrVA==
-Date: Mon, 9 Nov 2026 12:39:25 +0800
-From: Jisheng Zhang <jszhang@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Tejun Heo <tj@kernel.org>, Dennis Zhou <dennis@kernel.org>,
-	Christoph Lameter <cl@gentwo.org>, kasan-dev@googlegroups.com,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 1/4] arm64: percpu: Always inline helpers used by noinstr
- code
-Message-ID: <avFOfUZFBqTzrT4X@xhacker>
-References: <20261107071339.17467-1-jszhang@kernel.org>
- <20261107071339.17467-2-jszhang@kernel.org>
- <sashiko-outbox-203633@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LHLUcp7N
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3b10ca4e3f9so219522a91.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 08 Nov 2026 21:01:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794200489; cv=none;
+        d=google.com; s=arc-20260327;
+        b=KBr+Uxklo227eqKMOz+tsmlb1kPU7J6XWkdPC5nUxyEsTYeywVXBRhAn4cAiiBCXKS
+         lCUzSXL4xXBR2wx/Jqsktdc4Uoz8AQjFYKRedfm8Bvrl5PDCKT+ekAo+NH0PJsuuRP7Z
+         fYZNdPYRPyUtd8+iZEV2h4iH8SYnxib+xkXPVCz4B5uh3cz2y5/KpZEXRQqLqIwa2yE6
+         7ZElj62bv1GqCQkKnZjRj+iOBnNpcyoJPWieD/3m0J29KUBEG591kQGow/bd1bGozaBG
+         uR05xlBmBTQ68bB5xD14FUTKU7HS+n+9jp/fHwNxMu6EpEXqd97xr8t6K3Mbp9WfmcNX
+         BxBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=gkMIpScCaOHHTxz3h31CJ9cN+FPf4BX1WK6GsfzWcC0=;
+        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
+        b=Q5wQDFKXqqPtERPUN5Bukwe56MBSiV4UKN372BlwUsfH4JudEWnM5hHpsJKEFF1ZXV
+         KaYFJHJAHpp1PnmcuSzX08qU5xDwx9OJvku4hqPB36pPAQnEOF6LGmMiaogpg88Duz9s
+         j4Vugt70jOXelz1Lgp4TVYzXY/U6uPrURBN7v1hzC3CWrmfIY32KsGCqNfT/To+MQul0
+         U830qCsVDSebwbpJeZqo0vS2b5mT+ADwF5K45ANSKjS8tVH2sEqN+TPzkRlG0JDKefPT
+         fr0ChWy9Np2UQHojXTT/EkPfkLWz2s6RAa1Qh9ArwiV6EpBRlR0/UG4R97FGhyAkOC6T
+         K3Zw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794200489; x=1794805289; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gkMIpScCaOHHTxz3h31CJ9cN+FPf4BX1WK6GsfzWcC0=;
+        b=LHLUcp7NgMqXUB/IpewDZ3uwj70qOFpmylisM0v79tZlMNPMjnShVVAH9Il+JGPAiy
+         gFpmsC6r3uXQCN3vnSQocoQJtRNwDZb4TjxTMznrWF/VKD9vvUtKxd8bX+i+unDYREvv
+         MxzRpxZ4RKWa8tMhnyjPho1l5fwUaer6EbahsWcck8lxkAEnFjeqiiA2tfYovXtBxIbm
+         PLE2eTvPRpzle4GAO12IN45ycWkd+76fpX2KfXxWOCQhctymV4Oy3mLwdpfjMafeVBl0
+         /sRd8imo6OM2t/Glglis1QalhPW3pFGFy6HEd8AQYMXcLu5056BkuEe6dzOzCm3sdI0P
+         h0BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794200489; x=1794805289;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=gkMIpScCaOHHTxz3h31CJ9cN+FPf4BX1WK6GsfzWcC0=;
+        b=YiQonrhicA9c+DQU4mmFyIfKt0D4UkWJc46y9nFG2vhN4ByFT3PKQw/Fqc+0oG1Oyg
+         yYlgyxlivQwkBWYZZVBgH//Ij9ZOE4d+SdPpmAZSy8o973kOoEkw60poF5LhSFh5iq6a
+         TdfjFI+h6Y4lNK131+iWkSTmDcIGJBNh+93fNUq5iXSiVgZZLAImIH8LCAJlHRwRpVp2
+         LdlxoFC8l+CO4t62urg1Lj505yrIeonv5Gr3cjGF3yfGTYgmtN6SujtEl9J+p9MRci2s
+         VPgF4XRhAz51Pkoie5mq9zzy7P8nXlNAv/OVRVA2AZr5yizy3DIwzPIiu/D8bOd4pDZZ
+         VLoA==
+X-Gm-Message-State: APuU4Z+6/gpSs1ccgGKz1kwbWlaB1TfyOnyZvYs2cWC9jFDdjGamwiR9
+	ag5VSL5mSMSX7XU6DLoKXl+JYaAlg+5iEPqJXVfVtAXwPcjzLsIRsDZHPXjB51p+T/JYb+NIXzR
+	u/6oo5MBvY8yChv2PLPqx7iNHkTFtPRvrYmL4
+X-Gm-Gg: AYBFou2tiWF+2w+uXQadiaXjTaoY/Op/NFMQcbpiUEDNbDVJN7n1zKH4DGF8VqUe1ZU
+	XgQhDXVE/LDlQaRzRde7K+cmqkugopFPaoV4JXTOfcPMSkYb2nER8doSeWpB4O7KeyhP//y14E0
+	QG3bXke3GQhr8HkRKR4nelhKO9VVLGlV5fTxJS5cF9kb9SDalwXBG2JccM2gZSnVMVmF8NQgwdF
+	+9huchsQ9ZB1j852G2pGd0DZ1ZGDHa+g36yw6h+XyiKAai9CqbLulSEl5FZcEPg6LXifcw9UNPf
+	aWTlJWdxr7b/kJP8p30gJugCeqTQ9jYkcuqKYts7Mf747fA3lUrA0AqAZZ/CzaG8TWJj+9f+udm
+	+Xg5AhOlgTROrjWtxfFnGZRAD2M3mpsdSrRIZ0IklVXkmi95BAQtdJ5KWIcvWtdhASEe5NePxLF
+	ZbQH+cC8Oah0xvW2UD8QcsvXLGmZNvuP1u1x8QyJeeFlfpWijK
+X-Received: by 2002:a17:90a:cb93:b0:3b1:4018:bfdd with SMTP id
+ 98e67ed59e1d1-3b14018c05dmr1328463a91.7.1794200488303; Sun, 08 Nov 2026
+ 21:01:28 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -68,63 +103,25 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-203633@kernel.org>
+References: <20261106112940.53550-1-phucduc.bui@gmail.com> <20261106112940.53550-6-phucduc.bui@gmail.com>
+ <sashiko-outbox-201333@kernel.org>
+In-Reply-To: <sashiko-outbox-201333@kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Mon, 9 Nov 2026 12:01:16 +0700
+X-Gm-Features: AclHuK_O0wbrzQKBAOvzzwdSeKE-pl4ntwv6Yz_1ad6WU0wDxVfnxKoJwNwEAAU
+Message-ID: <CAABR9nHrU_x++FxAgw=q9-WA6h-GieLMG3sAVuj2s4ijVygKnQ@mail.gmail.com>
+Subject: Re: [PATCH 5/5] ASoC: dwc: Remove redundant error messages
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Nov 08, 2026 at 07:43:56AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] arm64: percpu: __PERCPU_OP_CASE() and sibling helpers not marked
->   __always_inline
+>
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [Critical] ASoC: dwc: use-after-free in jh7110_i2s_crg_master_init()
+>   [1]
 > --
-> 
-> commit 3a2df0916b5200b227df21487897e171275b29f4
-> Author: Jisheng Zhang <jszhang@kernel.org>
-> 
-> arm64: percpu: Always inline helpers used by noinstr code
-> 
-> This commit marks __hyp_my_cpu_offset(), __kern_my_cpu_offset(), and
-> __percpu_read_##sz() as __always_inline so they are not emitted out of line
-> when called from non-instrumentable code.
-> 
-> > diff --git a/arch/arm64/include/asm/percpu.h b/arch/arm64/include/asm/percpu.h
-> > index 3cc316091d665..7c344de5052d5 100644
-> > --- a/arch/arm64/include/asm/percpu.h
-> > +++ b/arch/arm64/include/asm/percpu.h
-> 
-> [ ... ]
-> 
-> > @@ -129,7 +129,7 @@ static inline unsigned long __kern_my_cpu_offset(void)
-> >  #endif
-> >  
-> >  #define PERCPU_RW_OPS(w, sfx, sz)						\
-> > -static inline unsigned long __percpu_read_##sz(void __percpu *pcp)		\
-> > +static __always_inline unsigned long __percpu_read_##sz(void __percpu *pcp)		\
-> >  {										\
-> >  	u16 *gprs = &current_thread_info()->pcpu_gprs;				\
-> >  	unsigned long off;							\
-> 
-> [Severity: Low]
-> Should __PERCPU_OP_CASE() and the remaining __percpu_* helpers in this header
-> (__percpu_write_##sz(), __PERCPU_RET_OP_CASE(), PERCPU_XCHG_OP(),
-> PERCPU_CMPXCHG_OP(), and __percpu_cmpxchg_128()) also be marked
-> __always_inline?
-> 
-> The noinstr function lockdep_hardirqs_on() calls
-> __debug_atomic_inc(redundant_hardirqs_on), which under CONFIG_DEBUG_LOCKDEP=y
-> expands to this_cpu_inc(lockdep_stats.redundant_hardirqs_on) ->
-> __percpu_add_case_64().  Because __PERCPU_OP_CASE() still uses plain static
-> inline and is also called from instrumentable lockdep functions, builds with
-> CONFIG_CC_OPTIMIZE_FOR_SIZE=y can emit __percpu_add_case_64() out of line in
-> .text and call it from .noinstr.text before RCU and lockdep state are ready
-> for instrumentation.
 
-Good catch! I will address this in v2. Before that, I will wait
-for a while to collect review comments.
-
-Thanks
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261107071339.17467-1-jszhang@kernel.org?part=1
+This is a pre-existing issue unrelated to the current patch,
+so I'll keep the patch scope unchanged.
