@@ -1,63 +1,95 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794226728;
-	b=fbnoa7nye3fGyWRUW2kxp/eI7nomU03COYwZhT526ibDY4lJE5UDrCwfETiExHMNqXcN
-	 W6XxWABEjRfjudAfWchHA1tHaPhEcg5RgDoALe7z9sH3juGFuBTkDqDFrb8pTMLWgJzuF
-	 JEYYtCaCkkhq6hUOKstkd59DtX4RdhVugxFgzH387z9H5RZurE6VCaQQb46kA10h6s+Gk
-	 aTMIoo5Aol2TY8/yo/AnisKyzUs57ixzCdnog5xTO9VPr3SR+ums6U+mXBtXfxHOwzM2K
-	 dizoBx/lM9y5uOuWtj0yWw1U1qTwxpTov5eMtfHhJBftQhu6pvsKK4ZgbujyS2MaZOQ==
+	t=1794227183;
+	b=NrIrE9yApcsqVd5SU3ZiyjqhfbZBh5i9xqCllwy+/hpyEwnCiS9SINaoa6Nt+fUm03/o
+	 fSO+N6hU2uCUpIlnNgaOXaadMOlPMsC0NbaZzZNjjDV8PC/xItR0ckRcVlGT9kxIFFixY
+	 VUf+T1NyZCkRZcPK7JdMhmUUFxBOjZVGNELacL30Wk8gmNM6dTX685/qV+C5OD9OmUqUb
+	 Ok1ugviyAv9D9QiIIn34Pw2u2P2+5TZYwomOD28zXQCQ4npqdbrc7HGXcX3E4SE0pfRZs
+	 a99t9hcKkDfF4UhcVQfzZVLN6+IvL511H/gq5aIBZiSzAsJ5tFBnycme0oiHzRvPguA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794226728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794227183;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=ZMzmCKSIkoQfwrqG+6d9p6F4cnVpKsZmbCb0zDMSihk=;
-	b=QdrM89WHMk4A+uhg3c0hiPpMZpS5UyZCQHpdaddR/+T3BvXJm/e2Poi6pt+LLlDwwrNe
-	 HUTy8synzBEDRDJOiqp1FY6eBnqLV3r7vqxAbaZ2W1mjlUE+tPmXQl90EXaZsLn5QIZsf
-	 vGefx8zxXNDRJIEalquedmd7XPMZMkKaYQY90MTWpNZMAkLPchBW/6PWZYVId3AobfnJV
-	 btcgWVxJro6ris22/EBYkykdAqW7h134fQszT3WOSEL1zzGSMSG8APFo35OpJv+1K077G
-	 7QmTbYstvLWPmUG4K7qxSyDyuGjB0j2XWR4qKiHGvAbM28A5jhr+WOgn3XUDPoA35aA==
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=6+EKYQdPiDyWXkzzfV/UN8vBxInBjW4N6ZELhlBfhOI=;
+	b=FravJIZPmJWItFVVMLMskbgWqU7crZr5vlViguxVfCH3UAh8W/8KcprpC5sqA27dNA6I
+	 XfQfEuYpWdg10AGdYVERwxyvnJTUiRbAtpxtRdMnRBKrQfCMFQsYR6la6ycqBr5L+cbF/
+	 CCbl8pXhNakEck3IKSCctFEHMMlJCfRDWgGqSd0sTvU0F/UU1Gl9Q44SM7pZ2reCzL6G7
+	 S5F3OJANODDPdlcak96qiA+K+bKGmxy7eqE0fMlif8fmo552dmgDtzyPPyyfH0yYLfS4h
+	 R3KWz87o4PQqkpirYcU3rc+cEthaL0341PymLTfKsM8Ova9CwXG1AeVGR9mIkY44iEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUWugq1T;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VhodTs+A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F347606A31C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 12:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9811606A321;
+	Mon,  9 Nov 2026 12:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUWugq1T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033011F0089F;
-	Mon,  9 Nov 2026 12:18:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VhodTs+A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937971F0089F;
+	Mon,  9 Nov 2026 12:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794226727;
-	bh=ZMzmCKSIkoQfwrqG+6d9p6F4cnVpKsZmbCb0zDMSihk=;
+	s=k20260515; t=1794227182;
+	bh=6+EKYQdPiDyWXkzzfV/UN8vBxInBjW4N6ZELhlBfhOI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=VUWugq1T8LES3WvDoryymkJe/5u+zIris0rGfjfH5o/eCc4OYGe/jqNNYSQBTkB08
-	 yuLv0k+CV5aasQM+lmC5Q9cIim0b0K92C2mY25tBKSEpq+Che2kWXSdFTn/dLVOwY6
-	 qoDFmAm4Ajg5HsFg8Lt/nfMALrPqyKwelqycnIuEm1E19ecReL+ARFKT71gfwXKctJ
-	 gtHYhuzgfnt5Kv/8CHwcVEgLDCTpkEo1veT6Us7YPkhn+0uRh4q2brKBgUxWrDTzso
-	 Sa7J4Cj4ddnkWVjvB/Eyhuy2SxOK5g1KKIqnF9o/X67vYD172gNC7JZT8CLTUmZgw6
-	 qibxRFwKNjMoA==
-Date: Mon, 9 Nov 2026 19:58:35 +0800
-From: Jisheng Zhang <jszhang@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Tejun Heo <tj@kernel.org>, Dennis Zhou <dennis@kernel.org>,
-	Christoph Lameter <cl@gentwo.org>, kasan-dev@googlegroups.com,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 4/4] arm64: alternatives: Make branch and ADRP offset
- helpers noinst
-Message-ID: <avG1a9aVNdkiiGX_@xhacker>
-References: <20261107071339.17467-1-jszhang@kernel.org>
- <20261107071339.17467-5-jszhang@kernel.org>
- <sashiko-outbox-203636@kernel.org>
+	b=VhodTs+AWpB6b78audXhz1hdToGnTfiqsIeh7C9iS51ypshI9FNnayYXFucaMgeLZ
+	 xeEIungcy0zjIPzwmpAqArp8eRXgn6aLR4nNmqHiWaRHWsbsQ7Qxh3+PgSaQmGodli
+	 iH97FzOVZfiuF5Da5WjkLmXe3XJknzf7SbtxrzdHDZZM2QKqqAHZOHOY4doionvKHw
+	 4h930muPKhPQSSHI+AAJgxUYDe3aTAGC8NAItOXceOH2dwmRr1lJ1teB6f1iCQBu+D
+	 7GUCaRQliXvLQza+jV5DiZhXeIr64nvzKuidlvAiLong4iDN+nDILPyMHrAS7gpG/t
+	 Sxhmv2E4eHoMw==
+Date: Mon, 9 Nov 2026 12:26:00 +0000
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: Barry Song <baohua@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, 
+	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Jason Gunthorpe <jgg@ziepe.ca>, John Hubbard <jhubbard@nvidia.com>, Peter Xu <peterx@redhat.com>, 
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Rik van Riel <riel@surriel.com>, 
+	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+	Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
+	Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
+	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
+	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
+	Alistair Popple <apopple@nvidia.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
+	Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, Xu Xin <xu.xin@linux.dev>, 
+	Chengming Zhou <chengming.zhou@linux.dev>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
+	Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, 
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>, 
+	Shrikanth Hegde <sshegde@linux.ibm.com>, Pedro Falcato <pfalcato@suse.de>, 
+	Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Axel Rasmussen <axelrasmussen@google.com>, 
+	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, Leon Romanovsky <leon@kernel.org>, SJ Park <sj@kernel.org>, 
+	Rakie Kim <rakie.kim@sk.com>, David Rientjes <rientjes@google.com>, 
+	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
+	Adrian Hunter <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	John Johansen <john.johansen@canonical.com>, Georgia Garcia <georgia.garcia@canonical.com>, 
+	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
+	"Serge E. Hallyn" <serge@hallyn.com>, Mimi Zohar <zohar@linux.ibm.com>, 
+	Roberto Sassu <roberto.sassu@huawei.com>, Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, 
+	Eric Snowberg <eric.snowberg@oracle.com>, Fan Wu <wufan@kernel.org>, 
+	Stephen Smalley <stephen.smalley.work@gmail.com>, Ondrej =?utf-8?B?TW9zbsOhxI1law==?= <omosnacek@gmail.com>, 
+	linux-mm@kvack.org, kvm@vger.kernel.org, damon@lists.linux.dev, 
+	linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org, apparmor@lists.ubuntu.com, 
+	linux-security-module@vger.kernel.org, selinux@vger.kernel.org
+Subject: Re: [PATCH 02/13] mm/filemap: convert fault and readahead logic to
+ use vma_flags_t
+Message-ID: <avG7mvt0okaFGUT7@gremlin>
+References: <20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org>
+ <20261105-late-2026-vma-flags-v1-2-0d3cd15ab75f@kernel.org>
+ <sashiko-outbox-200257@kernel.org>
+ <au2_PPpdAMgRJZtX@gremlin>
+ <CAGsJ_4yWQom=cG5vw2B-FR8+7wNU+rwZkvghjAxusym+3OH96A@mail.gmail.com>
+ <CAGsJ_4zvRSUSspBe_hNwTYDjK3-TLuq6Mhi5gDyOPZGDXN8gDw@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,124 +101,54 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-203636@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGsJ_4zvRSUSspBe_hNwTYDjK3-TLuq6Mhi5gDyOPZGDXN8gDw@mail.gmail.com>
 
-On Sun, Nov 08, 2026 at 07:43:58AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] arm64: insn: branch profiling instrumentation in noinstr
->   offset helpers
-> --
-> 
-> commit b08429609214cdffaa257c9ef953b28e179973db
-> Author: Jisheng Zhang <jszhang@kernel.org>
-> 
-> arm64: alternatives: Make branch and ADRP offset helpers noinst
-> 
-> This commit marks the branch and ADRP offset helpers noinstr and introduces
-> __always_inline immediate encoding and decoding helpers so that
-> patch_alternative() does not call instrumentable code while modifying
-> instructions.
-> 
-> > diff --git a/arch/arm64/lib/insn.c b/arch/arm64/lib/insn.c
-> > index e70ac02385153..b98610fcab32e 100644
-> > --- a/arch/arm64/lib/insn.c
-> > +++ b/arch/arm64/lib/insn.c
-> 
-> [ ... ]
-> 
-> > @@ -1299,23 +1316,23 @@ u32 aarch64_insn_gen_adr(unsigned long pc, unsigned long addr,
-> >   * signed value (so it can be used when computing a new branch
-> >   * target).
-> >   */
-> > -s32 aarch64_get_branch_offset(u32 insn)
-> > +s32 noinstr aarch64_get_branch_offset(u32 insn)
-> >  {
-> >  	s32 imm;
-> >  
-> >  	if (aarch64_insn_is_b(insn) || aarch64_insn_is_bl(insn)) {
-> > -		imm = aarch64_insn_decode_immediate(AARCH64_INSN_IMM_26, insn);
-> > +		imm = __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_26, insn);
-> >  		return (imm << 6) >> 4;
-> >  	}
-> >  
-> >  	if (aarch64_insn_is_cbz(insn) || aarch64_insn_is_cbnz(insn) ||
-> >  	    aarch64_insn_is_bcond(insn)) {
-> > -		imm = aarch64_insn_decode_immediate(AARCH64_INSN_IMM_19, insn);
-> > +		imm = __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_19, insn);
-> >  		return (imm << 13) >> 11;
-> >  	}
-> >  
-> >  	if (aarch64_insn_is_tbz(insn) || aarch64_insn_is_tbnz(insn)) {
-> > -		imm = aarch64_insn_decode_immediate(AARCH64_INSN_IMM_14, insn);
-> > +		imm = __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_14, insn);
-> >  		return (imm << 18) >> 16;
-> >  	}
-> >  
-> > @@ -1327,35 +1344,35 @@ s32 aarch64_get_branch_offset(u32 insn)
-> >   * Encode the displacement of a branch in the imm field and return the
-> >   * updated instruction.
-> >   */
-> > -u32 aarch64_set_branch_offset(u32 insn, s32 offset)
-> > +u32 noinstr aarch64_set_branch_offset(u32 insn, s32 offset)
-> >  {
-> >  	if (aarch64_insn_is_b(insn) || aarch64_insn_is_bl(insn))
-> > -		return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_26, insn,
-> > +		return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_26, insn,
-> >  						     offset >> 2);
-> >  
-> >  	if (aarch64_insn_is_cbz(insn) || aarch64_insn_is_cbnz(insn) ||
-> >  	    aarch64_insn_is_bcond(insn))
-> > -		return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_19, insn,
-> > +		return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_19, insn,
-> >  						     offset >> 2);
-> >  
-> >  	if (aarch64_insn_is_tbz(insn) || aarch64_insn_is_tbnz(insn))
-> > -		return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_14, insn,
-> > +		return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_14, insn,
-> >  						     offset >> 2);
-> >  
-> >  	/* Unhandled instruction */
-> >  	BUG();
-> >  }
-> >  
-> > -s32 aarch64_insn_adrp_get_offset(u32 insn)
-> > +s32 noinstr aarch64_insn_adrp_get_offset(u32 insn)
-> >  {
-> >  	BUG_ON(!aarch64_insn_is_adrp(insn));
-> > -	return aarch64_insn_decode_immediate(AARCH64_INSN_IMM_ADR, insn) << 12;
-> > +	return __aarch64_insn_decode_immediate(AARCH64_INSN_IMM_ADR, insn) << 12;
-> >  }
-> >  
-> > -u32 aarch64_insn_adrp_set_offset(u32 insn, s32 offset)
-> > +u32 noinstr aarch64_insn_adrp_set_offset(u32 insn, s32 offset)
-> >  {
-> >  	BUG_ON(!aarch64_insn_is_adrp(insn));
-> > -	return aarch64_insn_encode_immediate(AARCH64_INSN_IMM_ADR, insn,
-> > +	return __aarch64_insn_encode_immediate(AARCH64_INSN_IMM_ADR, insn,
-> >  						offset >> 12);
-> >  }
-> 
-> [Severity: Medium]
-> Can these four noinstr helpers still call into ftrace_likely_update() when
-> CONFIG_TRACE_BRANCH_PROFILING is enabled?
-> 
-> Although f22c81bebf8b ("arm64: Disable branch profiling for all arm64 code")
-> added -DDISABLE_BRANCH_PROFILING to arch/arm64/Kbuild, arch/arm64/lib/ is
-> built via libs-y in arch/arm64/Makefile rather than arch/arm64/Kbuild, so
-> arch/arm64/lib/insn.o is compiled without DISABLE_BRANCH_PROFILING.
-> 
-> As a result, the generic BUG_ON() in aarch64_insn_adrp_get_offset() and
-> aarch64_insn_adrp_set_offset() expands to unlikely(), and the if statements
-> in aarch64_get_branch_offset() and aarch64_set_branch_offset() are
-> instrumented under CONFIG_PROFILE_ALL_BRANCHES.  When patch_alternative()
-> calls these helpers while patching live instructions before cache
-> maintenance completes, they call the instrumentable ftrace_likely_update().
-> 
-> Passing -DDISABLE_BRANCH_PROFILING in arch/arm64/lib/Makefile (or defining
-> DISABLE_BRANCH_PROFILING in arch/arm64/lib/insn.c) would prevent branch
-> profiling instrumentation here.
+On Sun, Nov 08, 2026 at 03:42:36PM +0800, Barry Song wrote:
+> On Sun, Nov 8, 2026 at 3:20 PM Barry Song <baohua@kernel.org> wrote:
+> >
+> > On Fri, Nov 6, 2026 at 7:53 PM Lorenzo Stoakes (ARM) <ljs@kernel.org> wrote:
+> > [...]
+> > > > --
+> > > > Sashiko AI review · https://sashiko.dev/#/patchset/20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org?part=2
+> > >
+> > > It seems these are valid, oops!
+> > >
+> > > Andrew suggested a fix off-list, and I agreed to this as an in-place fixup to
+> > > avoid respin.
+> > >
+> > > I have also updated the series locally to reflect this change:
+> >
+> > Seems like a reasonable fix. maybe_unlock_mmap_for_io()
+> > could have released mmap_lock, leaving the VMA
+> > unprotected. but  ra->size *= 2 is still going there no matter
+> > if the vma has disappeared
+> >
+> > For the original patch combined with the fix,
+> >
+> > Reviewed-by: Barry Song <baohua@kernel.org>
+> >
+>
+> BTW, one question is whether mmap-based readahead is
+> still worthwhile if the VMA is actually gone after we
+> release mmap_lock (or the VMA lock). Perhaps we don't
+> need to continue readahead in that case.
+>
+> However, we don't have a reliable way to know whether
+> the VMA is really gone until the page fault is retried.
+> We release the lock to perform readahead, so in this
+> racy case, readahead might be happening for a VMA that
+> is being removed.
+>
+> I'm not challenging this patch, just leaving a note
+> to think about later :-)
 
-All comments should have been addressed in v2. Plz review
+I suspect it's one of those 'not worth checking' situations, VMAs can come
+and go at will at any time and theoretically you can do useless work, as
+long as that's mostly not the case I think we're OK.
 
-Thanks very much for the comments and hints!
+And in general I think these code paths need significant rework before we
+revisit stuff like this, we always pay a tax for code complexity!
+
+--
+Cheers, Lorenzo
