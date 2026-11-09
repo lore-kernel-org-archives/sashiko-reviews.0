@@ -1,58 +1,113 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794219468;
-	b=aJREHlFTkpVGxs7/iHDfZpCsDU0+sai3AHxcqWCtDFxhDlgZoUzIBQcmqo6V+WM8QC9V
-	 nq6GPP1FcBS3K+7JwkS/WBZuKKT0siel4dQ3lUo4j4lJoMg4Se5KlZPh8rFOizwDnwHfh
-	 RkEZyHQIp+kic7OnuQpLoWPqwxxoYLK78dQPDLA0DFU9awuIrQVVm4FALMI5U4+t7uA++
-	 3bvjWq9om9PpyHLUX/GhPR62tq2t+CYDKriULn5CjQvrgYkjYNz9+eogjOCs/lLkBphqQ
-	 k+mxld2l1AIa8HN9j4AnzAdipkUEcfF9iz1gQ/aktYrO41N/LIfZ7aF6QrulBVVLNHg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794219468;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=Ic7jHUfVZKqM2TKIUT0rc5yz6Z3PrS89BpZFZ+a+Jzc=;
-	b=aPaEWngmpuVyiIBm/KVnGKnhTf/drrDiMAms6tBdGU6xMEdpdtn5zcVbjWEJt4C3+Mjx
-	 xC3XQ/QodX4sRYxN4ZQcAdQEbACR7lfXam0Sq1JGVkOUKqonND8q8Mh1hoG4vZFey4y/d
-	 W5JjpOM8myf7AL+yQXG7lV1yifWj73xR2+n9jokYRvp/kaRptV2Owr9RAZXzV8w5g7c/S
-	 K7P7XeT3jfFU1+vbMjtpxpFN+eZDFTQRzXM1R496lOjR4RSTz4UO/x3jfHsY8ubusmQDe
-	 iHS4JFiBwsarnsBFJupcOZtzlda16+RlCh4Vnsvhawk5A8zNGW8HaDO5uvi0tmOsylw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FBPJjp+g;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.0
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794220350;
+	b=zkky7ImNUDVcemHCjaNcjirPE08ubxS0e8gHXLjx6ps0DYtKbLTjbWaQ4wjSBzh4TdU+
+	 9W+gL+YyDFsiYgMdPdkgtB7fsg7dZYPnw88ldcfrZnhXdAJKukGQjPGhmrzr/Nur6CH+9
+	 SVK3ZxHjulmEIOT3vJkAWWeh4z8f2jKI/nz1R5P7VEGGqX79ZzYAsMF8bLhBaxzmwgzWs
+	 QBh/bF1IclUaJsxMyD7Tdoukbx780Iw3KFOqoCycifwgqvzSHVvrdEWQlJZG50CCtJkJA
+	 Wni01mJjho7I45+l2tLVm/css/V9HEGMx41voZYgPCocs9xx3hb01YpuFpz1L6NAfIQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794220350;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Message-ID:Subject:From:To:CC:Date:In-Reply-To:References:
+	 Content-Type:Content-Transfer-Encoding:User-Agent:MIME-Version:
+	 X-Originating-IP:X-ClientProxiedBy:X-EOPAttributedMessage:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=gmFqsqyWnW7YKrrZGGP3gVz3TTkdhCyOsxnQAOyZ1N0=;
+	b=MmLuDWulUrcnzOJ8MPwxTfyRIIygBpHr2ajQdLA4W/BWS8ab6/qw0SNNmXesGGUT5POh
+	 JGTcjuJbY38vnQQbQH3358vIG4VpWtCH1zV/moGEi2SZyEMkg0u9JR1o9RG6x9b0lqEKz
+	 2otn2uBuqIQzmFLq1viMM+ZyNHOU6GDbMNqhN+DaHkdEbSzuI2KNpGj1nm+FK2r0//xMN
+	 08UEjuraU006aYJMxeSHBWZciQt3OLI0ACULGhpn0seOSs54fl0Nl/A7XmgYKLUNqg47X
+	 qRF9kb50Rx+9LdbxXWUcXsyz5mzG3U4uyTaHC16WLOzswwP2h0GipHKnOK1Hq/yqktQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=foss.st.com;
+	spf=pass smtp.mailfrom=foss.st.com;
+	dkim=pass header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=MnSqivOS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.0
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013000.outbound.protection.outlook.com [52.101.83.0])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2E6606D80B;
-	Mon,  9 Nov 2026 10:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8BA606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon,  9 Nov 2026 10:32:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3C8BA606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FBPJjp+g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC461F0089F;
-	Mon,  9 Nov 2026 10:17:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794219467;
-	bh=Ic7jHUfVZKqM2TKIUT0rc5yz6Z3PrS89BpZFZ+a+Jzc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FBPJjp+gHW5kzA3N2B/1DVWywmDXUy459v5nXcSoeQv9eGyqPE7KRG+BaJdelgjiE
-	 IMNkLvuvIFOwOPdSASYqn31ocuI3nBtrdKWPvrVhoEUivf9h1ER6FNUCjEl8WIhBsP
-	 5X7YbBbvAvZBfchMek1jQhdVmKRuhbS2s6Ib0KrCJkx9YJmAF4tO1TgvN9MHGcwfzx
-	 VWxXVtK511vxCSbNT5aNlI48Xi+ZshWS0n1cg8YzVVczz8r2MJEXfob1psi/gqE9pR
-	 L36KsI8PZBfYhA2HFvA168MKXcvAscLYwHCNx1sAHRbYcWG/uy5MJ2vfeIJ9+oEPDG
-	 8eSQCRUdQRwFg==
-Date: Mon, 9 Nov 2026 11:17:45 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Junyi Zhao <junyi.zhao@amlogic.com>, linux-i3c@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org, imx@lists.linux.dev, 
-	robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, 
-	neil.armstrong@linaro.org, Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: Re: [PATCH v3 2/2] dt-bindings: i3c: silvaco,i3c-master: Add Amlogic
- A9 support
-Message-ID: <20261109-meticulous-salamander-of-ampleness-a74ce6@quoll>
-References: <20261106-a9_i3c-v3-0-804b69b9095b@amlogic.com>
- <20261106-a9_i3c-v3-2-804b69b9095b@amlogic.com>
- <sashiko-outbox-200991@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=MnSqivOS
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nVDwOyQow0kLvwT4eurfRV0e3FL1e+hHw8FcjbIqAVeYCkUsgUSrdsubyNVgY97ix2G9rnVRyYdjcN2xz++pqelGtDj3FPheZG5xCXa9WNcEB6+HGm9j3iJ6qgO2NX95P4v7t4OU4gtLaoF0ZoQDu7ikbYD4aU5zbYxb6a2NI/mNGJ0rxGnabI/v1tcsJxCOXi7qaCKe03mOn8TcBAOen2EE68W7Ff1RNyzkuVk9jmNYThOIKT7axADPVMn5nkPmjuk2VI17Zp6gLcApWgKpP3bxwQ+ty6+poVYrYLz/bPpCfCZu+7n+8o8TWBwxSdxVm+12P/+zRn7NqFEpREgZWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gmFqsqyWnW7YKrrZGGP3gVz3TTkdhCyOsxnQAOyZ1N0=;
+ b=Ny1llnwAIdhzWeFE169y48A0EqOtBErJmB1HB2QfB3vNM3HgyU1OEqZer1A05FsjWgnCbeKM945PDBBM0zQ9u6iTiJDhhHHWLJKqJB9l7nEr/e+z/WslfirU5YFoTshFSeLcxSep6MM3l1GyN+IE18Po6DnwRY3tVIXGCOn6T+5ZWB5GePIvzBNTi0Lzqq4TkmH4VxDIOP65bbzQ3orBnm9gCNfUZj3mGpNFMMoy0opmBN47kI8x1nBs59fiIJE2+YSzzkmM8W0f/rLdnnrgoiAThsRBNeF4cDDKcf5+RZonQ1/vZNDXkRRQuL8Y9Sk/zwFrtKyghxsu8NaseOd6xA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 164.130.1.60) smtp.rcpttodomain=roeck-us.net smtp.mailfrom=foss.st.com;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gmFqsqyWnW7YKrrZGGP3gVz3TTkdhCyOsxnQAOyZ1N0=;
+ b=MnSqivOSvc8B52AnzKLahdO2GuzzGhO3NY8yRvvlkUfPcU3TKTOU01qTdKFvf0UwDx8uEIDoalHFjiBXGVS01IDYJ97A7jvb19bsvS3Gi/HOubwCIxASC5hi1wrMJIQlE/tZ65Xgi25ZqafBOYecHBAMbRHLspMrAAuIEOZdYLTYxDXcWCLhiWUdrCO+hWrzk32HBBBWp+H8sMdm34aB83ByRkvCXlcjhP5x2CrDuExdxuVxAVv9VCeVhzw8vRt9c4cvyic1OCBCcpMohcAgH/nYLE1eHSvJ4l4xOiB4uuffIoq3lvkbI0Uqe6j3M0eAIo75q+SZYOjG4MTzxk5w1w==
+Received: from PA7P264CA0386.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:399::18)
+ by GV4PR10MB920511.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:416::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.7; Mon, 9 Nov 2026
+ 10:32:26 +0000
+Received: from MI3PEPF00008499.eurprd03.prod.outlook.com
+ (2603:10a6:102:399:cafe::ab) by PA7P264CA0386.outlook.office365.com
+ (2603:10a6:102:399::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.13 via Frontend Transport; Mon, 9
+ Nov 2026 10:32:25 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=fail (sender IP
+ is 164.130.1.60) smtp.mailfrom=foss.st.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=foss.st.com;
+Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
+ designate 164.130.1.60 as permitted sender) receiver=protection.outlook.com;
+ client-ip=164.130.1.60; helo=smtpO365.st.com;
+Received: from smtpO365.st.com (164.130.1.60) by
+ MI3PEPF00008499.mail.protection.outlook.com (10.167.240.184) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.615.4 via Frontend Transport; Mon, 9 Nov 2026 10:32:25 +0000
+Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpO365.st.com
+ (10.250.44.72) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Mon, 9 Nov
+ 2026 11:33:21 +0100
+Received: from [192.168.8.15] (10.48.87.124) by STKDAG1NODE2.st.com
+ (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 9 Nov
+ 2026 11:32:24 +0100
+Message-ID: <6a898ce8036a37af9f1cc2791852dc93f893e13e.camel@foss.st.com>
+Subject: Re: [PATCH v3 04/13] ARM: stm32: enable arm smc watchdog on
+ stm32mp1xx
+From: Antonio Borneo <antonio.borneo@foss.st.com>
+To: Guenter Roeck <linux@roeck-us.net>, <sashiko-reviews@lists.linux.dev>,
+	<devicetree@vger.kernel.org>
+CC: <linux-watchdog@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>
+Date: Mon, 9 Nov 2026 11:32:22 +0100
+In-Reply-To: <bf99b912-7a98-4d97-852b-45cb3c3c58be@roeck-us.net>
+References: <20261106163429.618392-1-antonio.borneo@foss.st.com>
+	 <20261106163429.618392-5-antonio.borneo@foss.st.com>
+	 <sashiko-outbox-201910@kernel.org>
+	 <bf99b912-7a98-4d97-852b-45cb3c3c58be@roeck-us.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,42 +117,132 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <sashiko-outbox-200991@kernel.org>
+X-ClientProxiedBy: ENXCAS1NODE2.st.com (10.75.128.138) To STKDAG1NODE2.st.com
+ (10.75.128.133)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PEPF00008499:EE_|GV4PR10MB920511:EE_
+X-MS-Office365-Filtering-Correlation-Id: 892da7e4-a66b-498c-960c-08df3e4cbf06
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|36860700016|1800799024|82310400026|11063799006|4143699003|56012099006|261021121427099003|261021135927099003|261022105027099003|261022075727099003|261009223027099003|261026140227099003|261026121527099003|261028144727099003|261102123227099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	NHbIKCwd6XO18OKMNWfRptWmkWRytJKttRt2D88u36ouRjTrqFDnFTlxVVOnlpcOd4UPCboJHmt3zH1aXkk0zZNFI8sREn2+Hw+6n8y8d1qB7Q2GfhymWcZMVl1HI2kujpr+5vH4ixGy1S6XlEBL0/cPxHkfoKuTBy/9weAaQKeERjQEH493GJxqMyVgN3c1YeICocY04rG12lDEWQy3foaCYN7Npvt83tMejK8KaJTNhWIBCZM9veVBlUMto215wAcpNoma3Yn3DL04NkmNOcp3B4yFRDydBweVbQG43dULpkfIKo5maJwDjyEawc8bDsZBVgAYrjV24w36voke969qb4OHQ3ci3TOvD+fjB/o3mCzwxpQ5KC7eK5lQb0SfyTVHC9hARPPJB24jrE/gwq+GGzZ1BOQSvv8UzTYlBhphe2odUu40pbs71VbESEhfR3KvhK4XPvyaQsJxOFFa8hzV00vfE+MXtz85R7TaOB1PVSXRUXfQyhXHaKYBdSra8JDSR56Mc92DfjeFMPiJY/Zk9QRTaW0Z/AU6BLUOQJwoilDIA4XvFzc+kQsnADeoA4nA308xB2h35jpvTivRaqzwAFDR3MRd19pw+qNiRHzJ5giASCHkceeX2bO2JCZjyHEFbFgEhwakACUG9XE8ZBTfuukpRCg2j3g1xkkQmGWhVBqzeSTf4bCSyDnESv6jmt6LI1PNWaVvb694CZBtbw==
+X-Forefront-Antispam-Report:
+	CIP:164.130.1.60;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(376014)(36860700016)(1800799024)(82310400026)(11063799006)(4143699003)(56012099006)(261021121427099003)(261021135927099003)(261022105027099003)(261022075727099003)(261009223027099003)(261026140227099003)(261026121527099003)(261028144727099003)(261102123227099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	FLrzNmTTwrReP40zcwXyKHAQAvBy8VJkFTzdhjRQIo6erU1Cqw09WUnALx/cQEGFYxFvmfDbzJwxIDOoeciby07T0h1n9c6FA6zwXZPj2wDpWaFU6IOktRH5RaAG4TL39/vJSqltbkI9pf7l7szhlhUSQx+d62U+NlzJSXWehESW8zXm3GCdprG1S0lU9cFuGFX5AZyYjRmBEPVJcKJHP66nbicrZmPsexh0ehZmg+HeLVUfqhQeTet2PnzLSvGWimrLygzAMqrjnCc1Bf7Opd7CjL57CJT1q7wPPp3csOJ4lNXQMffjFgbGY4B7dTJzOWVnPgsWlvUnO9AeEPa+P2ycH/3VqSkV8XF1AQhci8A12UvgiVPCifVptdYxaPrzTJnjkcFITFHwxUFCMy69rEBdCygufmR1GCvDvkUj2fVBQnjOmmZbcnRB050PM3DY
+X-OriginatorOrg: foss.st.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2026 10:32:25.2477
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 892da7e4-a66b-498c-960c-08df3e4cbf06
+X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.60];Helo=[smtpO365.st.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MI3PEPF00008499.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV4PR10MB920511
 
-On Fri, Nov 06, 2026 at 07:22:59AM +0000, sashiko-bot@kernel.org wrote:
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            enum:
-> > +              - amlogic,a9-ao-i3c
-> > +    then:
-> > +      properties:
-> > +        clocks:
-> > +          maxItems: 1
-> > +          description:
-> > +            The "ao" variant is the controller instance in the Always-=
-On (AO)
-> > +            domain, which has no separate bus clock and derives the
-> > +            bus clock from an internal divider.
-> > +        clock-names:
-> > +          maxItems: 1
+On Fri, 2026-11-06 at 14:18 -0800, Guenter Roeck wrote:
+> On 11/6/26 09:19, sashiko-bot@kernel.org=C2=A0wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential
+> > issue to consider:
+> > - [Low] ARM: stm32: selecting WATCHDOG and ARM_SMC_WATCHDOG forces
+> > =C2=A0=C2=A0 built-in config
+> > --
+> >=20
+> > commit 4450302b23f46b760d6b23f33c853eaddb3d821b
+> > Author: Antonio Borneo <antonio.borneo@foss.st.com>
+> >=20
+> > ARM: stm32: enable arm smc watchdog on stm32mp1xx
+> >=20
+> > This commit selects WATCHDOG and ARM_SMC_WATCHDOG from ARCH_STM32 when
+> > ARCH_MULTI_V7 is enabled.
+> >=20
+> > > diff --git a/arch/arm/mach-stm32/Kconfig b/arch/arm/mach-stm32/Kconfi=
+g
+> > > index 4ac3384e397aa..de09b2afa0f2e 100644
+> > > --- a/arch/arm/mach-stm32/Kconfig
+> > > +++ b/arch/arm/mach-stm32/Kconfig
+> > > @@ -13,6 +13,8 @@ menuconfig ARCH_STM32
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0select RESET_CONTROLL=
+ER
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0select STM32_EXTI if =
+ARM_SINGLE_ARMV7M
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0select STM32_FIREWALL
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0select WATCHDOG if ARCH_MU=
+LTI_V7
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0select ARM_SMC_WATCHDOG if=
+ ARCH_MULTI_V7
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0help
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Support for ST=
+Microelectronics STM32MP1 processors using Cortex-A7
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cores. Note th=
+at support for the earlier Cortex-M based variants
+> >=20
+> > [Severity: Low]
+> > Does selecting WATCHDOG and the tristate ARM_SMC_WATCHDOG from the bool=
+ean
+> > ARCH_STM32 force both symbols to y whenever ARCH_MULTI_V7 is enabled?=
+=C2=A0 That
+> > prevents building arm_smc_wdt as a loadable module or disabling the dri=
+ver
+> > and watchdog subsystem on multi-platform ARMv7 kernels with ARCH_STM32
+> > enabled.
+> >=20
+> > Could ARM_SMC_WATCHDOG instead use a default in drivers/watchdog/Kconfi=
+g
+> > (the way STM32_WATCHDOG uses default ARCH_STM32) or be enabled in the
+> > relevant defconfig?
+> >=20
 >=20
-> [Severity: Low]
-> Does this new if/then block pass dt_binding_check?
+> ARCH_ASPEED and ARCH_S3C64XX also use select, but those architectures dep=
+end
+> on the watchdog driver's board reset capabilities. The smc watchdog does =
+not
+> support board resets, and select should not be used here. As far as I can
+> see this patch is simply unnecessary: Both WATCHDOG and ARM_SMC_WATCHDOG
+> can be enabled in the configuration file if needed/desired.
 >=20
-> The dtschema meta-schema requires enum arrays to have at least two items,
-> so matching the single amlogic,a9-ao-i3c string under contains needs const
-> rather than a single-entry enum.  Also, property descriptions belong in t=
-he
-> top-level properties block rather than inside an if/then conditional.
+> Guenter
+>=20
 
-Feels like hallucination
+Hi Guenter,
 
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106-a9_i3c-v=
-3-0-804b69b9095b@amlogic.com?part=3D2
+on platforms STM32MP1xx the trusted firmware starts the watchdog.
+On such platforms the upstream kernel configured with multi_v7_defconfig ne=
+eds
+ARM_SMC_WATCHDOG to prevent a reset during kernel boot.
+
+The same boot constraint is present on arm64 platforms STM32MP2xx, but ther=
+e
+the defconfig already enables ARM_SMC_WATCHDOG thanks to 72a9e7fea586
+("watchdog: Add new arm_smc_wdt watchdog driver").
+
+I considered as too invasive patching directly multi_v7_defconfig as too ma=
+ny
+platforms use it. Plus here I would have to select 'y' or 'm' for all the u=
+sers.
+
+I also considered adding in drivers/watchdog/Kconfig
+
+config ARM_SMC_WATCHDOG
+	...
+	default y if (ARCH_STM32 && ARCH_MULTI_V7)
+
+but it looks strange to me to have, inside the watchdog Kconfig, such link
+between a generic watchdog and a specific platform.
+Anyway, this option has the advantage to not impact the other platforms whe=
+n
+ARCH_STM32 is not selected.
+
+At the end decided for placing it in the platform specific mach-stm32/Kconf=
+ig.
+
+Please advice what should be the preferred way to select it.
+
+Thanks,
+Antonio
