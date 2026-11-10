@@ -1,93 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794312221;
-	b=cLGllDu+bb/prIFCLrD03CKuC313Ci4h9Y4tTY+g5/g58aina/xb5OVHbkxzP8eqta1u
-	 GLyi+aSTykoVHE1T7r16xjC4DKRSRpceo5ZVbU/1ue4v1nELF6gPFbW2airvTBPwr0NVz
-	 xkvwKh58VUI7RgwP5nlMtTzyAjmQO3/ELG74HjNueBLn8MXitsPyhXIUqZt2g1Vdo7h+A
-	 9qxo5qYQrBrHndYPqleggo4u2ZM2dYbE6W6EEOwTAfi2AlnrEWrhQ9kLFJnitkB/UjcLd
-	 3U54ydcWwkcr2lhrHm34+vbluI/MajGjHoBUwFzBzAy6krArMvJES2II0ipmUS2vL6A==
+	t=1794312228;
+	b=iINSgdArqrkLUlhAPBZOUkWecTuOWE/YewXfAuBd9+Nyc1NXyVL0IqiATwak/kIHc+d/
+	 StfbyIydRnRbtUXLDqQVgOcxkV067gdeEri9/HJdXQQn/99eJiMTjapn2wj1nJUVww/c9
+	 3B57WPGhmvKjBLtW3sXXmGJVoy9DWyd2wOT5Um9o0/PNg9YSe6c657lx3b4iYJeOQyyjL
+	 Y0y99mQs7hFijYIGfDmRcykcDhc8kV9S9MCBMhMmhWvP4GBzm7d9p7YRP1Lkv9TjntLlI
+	 QOgyPZrK43W8hQ9TwT0HvciEl0AZj/wuETioj5ZCHZuwxr0dEh4a/+zcrEvQYfEQRkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794312221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794312228;
 	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
 	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Transfer-Encoding:X-Rspamd-Queue-Id:
-	 X-Spam-Level:X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:
-	 X-Spamd-Result:X-Spam-Score;
-	bh=go2ahT4J/OnyocruO+TgN7OM95Vdo2X0uJ3MT6oMFXk=;
-	b=EE38Nwb8f0pxb8gipixmFaPJwu464bMxPiY0FIA8m2cQhIBHxUAAtSWcE4YJL/gu2LCo
-	 wA3tJvuyht2kyCiMKMkZgUk2peLPb0tV8nX35sY1MXRw4gk2OMaEwScr2Yq9LEfHF1mL2
-	 bRKx2GNmr3hQy0ZZ9zKC4WZFe/sxacXXzwTFZWteGX6Uzy+DV1HvXcA6oAHoDb2iRihaE
-	 uTgmQ8tr36ePaYIV5BHthay1dJEcy/XvzwJS/dd7z/CpbU/9jG6lNdAldR4b9qRUHg/Nb
-	 0kJPIWjsiN6cZIJ8UEHuTNgA0+r+cLTEABlpVhcymWSqszbH3wmmKUYPYcIa2jnfVyw==
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:
+	 X-Spam-Score;
+	bh=LAAuX8bTZKrY820u1Aa9twHuXNdM18/vVAKUQE+qlSk=;
+	b=GJs83/q1d5HOBAWcKBuEGme33vLANlG43V8khgIIUNDP7dxeW1I2QHZWPsiK4jNi+Ceg
+	 fpkHd3jB9dNR0+POo2c9iIqa/AFOoTLJ2Y6S66pGHJQ6CBCYJokPZz0ewJudNO7/pAokf
+	 06WcRnairj8KYk4F6A93ePiBP6cY7r3VMAI98bPKTPYO3GPAXb7bUFvVebHzx2zLSeGYd
+	 WbU+wgwHzM3gVaacM2uBrIp/Eiex2ZIecn6k6eDNhZwJt+ClXm+kStQDMlCIHQzcgCBTQ
+	 Wb4LtCO7GkcozHwzNPpWHCyazgsfMVJXSlmssDiZGg7pk2Gn2S8GTi2xmufl0WRhqhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=zY5HeK2a;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="1djRc/xn";
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=c6RB1tVg;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=YkRxJbQV;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=uzeDSQ+l;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=WGViF1Q7;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=uzeDSQ+l;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=WGViF1Q7;
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59C2606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 12:03:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C59C2606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02066606A326
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 12:03:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02066606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=zY5HeK2a;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=1djRc/xn;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=c6RB1tVg;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=YkRxJbQV
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=uzeDSQ+l;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=WGViF1Q7;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=uzeDSQ+l;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=WGViF1Q7
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 2E59A1F453;
-	Tue, 10 Nov 2026 12:03:31 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id A78CC21ED0;
+	Tue, 10 Nov 2026 12:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
 	t=1794312212; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=go2ahT4J/OnyocruO+TgN7OM95Vdo2X0uJ3MT6oMFXk=;
-	b=zY5HeK2aSkBydJQNfaPAP0/nJeoTiL7t+en/vRlvWB3Z2SoPiVeBMlkDp2viegJLRmZwgj
-	hXp3zcQ7FraifsLXS+V6U2xPETe9AtbawBUoJDnIhfGXP67m+TZYImqNUHWf0Jn9cpgpzJ
-	UHLzu0n9gBgUaGA/jZzDlXoqcfA3+a4=
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LAAuX8bTZKrY820u1Aa9twHuXNdM18/vVAKUQE+qlSk=;
+	b=uzeDSQ+lR/x3dQgiXLFK+7Vo9zVx1OY4BV62qBZJWy9g0ku1dc0ZYW3vUU1I/DN9yVXqFj
+	YJ90k+bl1za27wqCRA7jvp5kNz7/OhwPX4EMzCw1WwWheXWG8JyTNXiA8VZ0cwZ8DsDE82
+	ywUgizPq5HV1uKfyn+0TVPEQ8qwTHEw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
 	s=susede2_ed25519; t=1794312212;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=go2ahT4J/OnyocruO+TgN7OM95Vdo2X0uJ3MT6oMFXk=;
-	b=1djRc/xnP2/CVTqCbRwBhzjgu1jfg0aIN01mFRMHjT2uvLuoXKhcIGVdwiuenPOHKOCaOb
-	iwwZA8rcYImL8eAg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=c6RB1tVg;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=YkRxJbQV
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LAAuX8bTZKrY820u1Aa9twHuXNdM18/vVAKUQE+qlSk=;
+	b=WGViF1Q7mHTp85MRRTROhiXOCzxXlSSCR5chhfKKON87XD6oj7HQe8oZe3EXHv0VnFLtto
+	l7ccXQ44EqL/JHBA==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794312211; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=go2ahT4J/OnyocruO+TgN7OM95Vdo2X0uJ3MT6oMFXk=;
-	b=c6RB1tVg5PuJdU7J/l6Ib6kzbhgubOCWGSD8Cdg7vLYwa99D/WWiJe+ad0dwQX38dUu66T
-	em7ynhHaO8FG6qzPOHcY0e6+E57e2KcMNq5r9b/92psTGytiut6IG5KzKsUTKgmJDUYfx0
-	71baDUD0ZAwfLOOW/tGpOgSwwUzRr+Y=
+	t=1794312212; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LAAuX8bTZKrY820u1Aa9twHuXNdM18/vVAKUQE+qlSk=;
+	b=uzeDSQ+lR/x3dQgiXLFK+7Vo9zVx1OY4BV62qBZJWy9g0ku1dc0ZYW3vUU1I/DN9yVXqFj
+	YJ90k+bl1za27wqCRA7jvp5kNz7/OhwPX4EMzCw1WwWheXWG8JyTNXiA8VZ0cwZ8DsDE82
+	ywUgizPq5HV1uKfyn+0TVPEQ8qwTHEw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794312211;
+	s=susede2_ed25519; t=1794312212;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=go2ahT4J/OnyocruO+TgN7OM95Vdo2X0uJ3MT6oMFXk=;
-	b=YkRxJbQVw1VFSKFi/VICpQhySVCwv9YA3iz01lZ/0yAchSwG0JefjaqhHzxLWhGVuirvpi
-	dT+juOgw8eDAUBAg==
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LAAuX8bTZKrY820u1Aa9twHuXNdM18/vVAKUQE+qlSk=;
+	b=WGViF1Q7mHTp85MRRTROhiXOCzxXlSSCR5chhfKKON87XD6oj7HQe8oZe3EXHv0VnFLtto
+	l7ccXQ44EqL/JHBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BCB3713479;
-	Tue, 10 Nov 2026 12:03:30 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D5CF134F4;
+	Tue, 10 Nov 2026 12:03:32 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 9RxpJBII82qUDQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 10 Nov 2026 12:03:30 +0000
+	id 9RxpJBII82qUDQAAD6G6ig:T6
+	(envelope-from <tzimmermann@suse.de>); Tue, 10 Nov 2026 12:03:32 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: alexander.deucher@amd.com,
 	christian.koenig@amd.com,
@@ -99,10 +106,12 @@ Cc: amd-gfx@lists.freedesktop.org,
 	dri-devel@lists.freedesktop.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 0/5] drm/amdgpu,radeon: Inline drm_crtc_init()
-Date: Tue, 10 Nov 2026 12:53:26 +0100
-Message-ID: <20261110120326.538252-1-tzimmermann@suse.de>
+Subject: [PATCH 5/5] drm: Remove drm_crtc_init()
+Date: Tue, 10 Nov 2026 12:53:31 +0100
+Message-ID: <20261110120326.538252-6-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261110120326.538252-1-tzimmermann@suse.de>
+References: <20261110120326.538252-1-tzimmermann@suse.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -113,76 +122,213 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 2E59A1F453
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
 X-Spam-Flag: NO
-X-Spamd-Result: default: False [-12.01 / 50.00];
+X-Spam-Level: 
+X-Spamd-Result: default: False [-11.80 / 50.00];
 	SUSE_INTERNAL_BYPASS(-9.00)[];
 	BAYES_HAM(-3.00)[100.00%];
 	MID_CONTAINS_FROM(1.00)[];
 	NEURAL_HAM_LONG(-1.00)[-1.000];
 	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	NEURAL_HAM_SHORT(-0.20)[-1.000];
 	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_TLS_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
 	FREEMAIL_TO(0.00)[amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	FROM_HAS_DN(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Score: -12.01
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_TLS_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Score: -11.80
 
-The helper drm_crtc_init() sets up a CRTC with a primary plane for
-non-atomic mode setting. Only drivers for some AMD hardware still
-use it.
+There are no remaining users of drm_crtc_init(), so remove the helper
+and the internal data structures for the primary plane that the helper
+creates.
 
-Inline drm_crtc_init() into amdgpu and radeon and remove it from
-DRM. All new code implements atomic mode setting, which does not
-use drm_crtc_init().
+Also remove the format_default flag from struct drm_plane. Without
+drm_crtc_init(), no drivers set it to true.
 
-DRM support for kernel panic is only implemented in amdgpu. Take
-the panic helpers from drm_crtc_init() in amdgpu, but clean it up
-in radeon.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ drivers/gpu/drm/drm_crtc.c           | 26 +++-------
+ drivers/gpu/drm/drm_modeset_helper.c | 74 ----------------------------
+ include/drm/drm_modeset_helper.h     |  3 --
+ include/drm/drm_plane.h              |  5 --
+ 4 files changed, 7 insertions(+), 101 deletions(-)
 
-With this series in place, DRM's helpers for drawing panic screens
-can be further integrated with other drawing helpers, as outlined
-in [1].
-
-Tested on radeon with a Radeon HD 6570.
-
-[1] https://lore.kernel.org/dri-devel/20261019154612.777074-1-tzimmermann@suse.de/
-
-Thomas Zimmermann (5):
-  drm/amdgpu: dce_v6_0: Inline drm_crtc_init()
-  drm/amdgpu: dce_v8_0: Inline drm_crtc_init()
-  drm/amdgpu: dce_v10_0: Inline drm_crtc_init()
-  drm/radeon: Inline drm_crtc_init()
-  drm: Remove drm_crtc_init()
-
- drivers/gpu/drm/amd/amdgpu/dce_v10_0.c  | 44 ++++++++++++++-
- drivers/gpu/drm/amd/amdgpu/dce_v6_0.c   | 44 ++++++++++++++-
- drivers/gpu/drm/amd/amdgpu/dce_v8_0.c   | 44 ++++++++++++++-
- drivers/gpu/drm/drm_crtc.c              | 26 +++------
- drivers/gpu/drm/drm_modeset_helper.c    | 74 -------------------------
- drivers/gpu/drm/radeon/radeon_display.c | 47 +++++++++++++---
- include/drm/drm_modeset_helper.h        |  3 -
- include/drm/drm_plane.h                 |  5 --
- 8 files changed, 170 insertions(+), 117 deletions(-)
-
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index 5295ec122e0d..b7cf18b79b1d 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -334,10 +334,7 @@ static int __drm_crtc_init_with_planes(struct drm_device *dev, struct drm_crtc *
+  * @funcs: callbacks for the new CRTC
+  * @name: printf style format string for the CRTC name, or NULL for default name
+  *
+- * Inits a new object created as base part of a driver crtc object. Drivers
+- * should use this function instead of drm_crtc_init(), which is only provided
+- * for backwards compatibility with drivers which do not yet support universal
+- * planes).
++ * Inits a new object created as base part of a driver crtc object.
+  * The &drm_crtc_funcs.destroy hook should call drm_crtc_cleanup() and kfree()
+  * the crtc structure. The crtc structure should not be allocated with
+  * devm_kzalloc().
+@@ -417,10 +414,7 @@ static int __drmm_crtc_init_with_planes(struct drm_device *dev,
+  * @funcs: callbacks for the new CRTC
+  * @name: printf style format string for the CRTC name, or NULL for default name
+  *
+- * Inits a new object created as base part of a driver crtc object. Drivers
+- * should use this function instead of drm_crtc_init(), which is only provided
+- * for backwards compatibility with drivers which do not yet support universal
+- * planes).
++ * Inits a new object created as base part of a driver crtc object.
+  *
+  * Cleanup is automatically handled through registering
+  * drmm_crtc_cleanup() with drmm_add_action(). The crtc structure should
+@@ -806,18 +800,12 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 
+ 		/*
+ 		 * Check whether the primary plane supports the fb pixel format.
+-		 * Drivers not implementing the universal planes API use a
+-		 * default formats list provided by the DRM core which doesn't
+-		 * match real hardware capabilities. Skip the check in that
+-		 * case.
+ 		 */
+-		if (!plane->format_default) {
+-			if (!drm_plane_has_format(plane, fb->format->format, fb->modifier)) {
+-				drm_dbg_kms(dev, "Invalid pixel format %p4cc, modifier 0x%llx\n",
+-					    &fb->format->format, fb->modifier);
+-				ret = -EINVAL;
+-				goto out;
+-			}
++		if (!drm_plane_has_format(plane, fb->format->format, fb->modifier)) {
++			drm_dbg_kms(dev, "Invalid pixel format %p4cc, modifier 0x%llx\n",
++				    &fb->format->format, fb->modifier);
++			ret = -EINVAL;
++			goto out;
+ 		}
+ 
+ 		ret = drm_crtc_check_viewport(crtc, crtc_req->x, crtc_req->y,
+diff --git a/drivers/gpu/drm/drm_modeset_helper.c b/drivers/gpu/drm/drm_modeset_helper.c
+index cca623eb23e5..d462b347bde6 100644
+--- a/drivers/gpu/drm/drm_modeset_helper.c
++++ b/drivers/gpu/drm/drm_modeset_helper.c
+@@ -101,80 +101,6 @@ void drm_helper_mode_fill_fb_struct(struct drm_device *dev,
+ }
+ EXPORT_SYMBOL(drm_helper_mode_fill_fb_struct);
+ 
+-/*
+- * This is the minimal list of formats that seem to be safe for modeset use
+- * with all current DRM drivers.  Most hardware can actually support more
+- * formats than this and drivers may specify a more accurate list when
+- * creating the primary plane.
+- */
+-static const uint32_t safe_modeset_formats[] = {
+-	DRM_FORMAT_XRGB8888,
+-	DRM_FORMAT_ARGB8888,
+-};
+-
+-static const struct drm_plane_funcs primary_plane_funcs = {
+-	DRM_PLANE_NON_ATOMIC_FUNCS,
+-	DRM_PANIC_PLANE_FUNCS,
+-};
+-
+-/**
+- * drm_crtc_init - Legacy CRTC initialization function
+- * @dev: DRM device
+- * @crtc: CRTC object to init
+- * @funcs: callbacks for the new CRTC
+- *
+- * Initialize a CRTC object with a default helper-provided primary plane and no
+- * cursor plane.
+- *
+- * Note that we make some assumptions about hardware limitations that may not be
+- * true for all hardware:
+- *
+- * 1. Primary plane cannot be repositioned.
+- * 2. Primary plane cannot be scaled.
+- * 3. Primary plane must cover the entire CRTC.
+- * 4. Subpixel positioning is not supported.
+- * 5. The primary plane must always be on if the CRTC is enabled.
+- *
+- * This is purely a backwards compatibility helper for old drivers. Drivers
+- * should instead implement their own primary plane. Atomic drivers must do so.
+- *
+- * Returns:
+- * Zero on success, error code on failure.
+- */
+-int drm_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
+-		  const struct drm_crtc_funcs *funcs)
+-{
+-	struct drm_plane *primary;
+-	int ret;
+-
+-	/* possible_crtc's will be filled in later by crtc_init */
+-	primary = __drm_universal_plane_alloc(dev, sizeof(*primary), 0, 0,
+-					      &primary_plane_funcs,
+-					      safe_modeset_formats,
+-					      ARRAY_SIZE(safe_modeset_formats),
+-					      NULL, DRM_PLANE_TYPE_PRIMARY, NULL);
+-	if (IS_ERR(primary))
+-		return PTR_ERR(primary);
+-
+-	/*
+-	 * Remove the format_default field from drm_plane when dropping
+-	 * this helper.
+-	 */
+-	primary->format_default = true;
+-
+-	ret = drm_crtc_init_with_planes(dev, crtc, primary, NULL, funcs, NULL);
+-	if (ret)
+-		goto err_drm_plane_cleanup;
+-
+-	return 0;
+-
+-err_drm_plane_cleanup:
+-	drm_plane_cleanup(primary);
+-	kfree(primary);
+-	return ret;
+-}
+-EXPORT_SYMBOL(drm_crtc_init);
+-
+ /**
+  * drm_mode_config_helper_suspend - Modeset suspend helper
+  * @dev: DRM device
+diff --git a/include/drm/drm_modeset_helper.h b/include/drm/drm_modeset_helper.h
+index 7e3d4c5a7f66..6b9421aee536 100644
+--- a/include/drm/drm_modeset_helper.h
++++ b/include/drm/drm_modeset_helper.h
+@@ -37,9 +37,6 @@ void drm_helper_mode_fill_fb_struct(struct drm_device *dev,
+ 				    const struct drm_format_info *info,
+ 				    const struct drm_mode_fb_cmd2 *mode_cmd);
+ 
+-int drm_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
+-		  const struct drm_crtc_funcs *funcs);
+-
+ int drm_mode_config_helper_suspend(struct drm_device *dev);
+ int drm_mode_config_helper_resume(struct drm_device *dev);
+ 
+diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+index 410d7b02b77a..3f6a1408cf5e 100644
+--- a/include/drm/drm_plane.h
++++ b/include/drm/drm_plane.h
+@@ -738,11 +738,6 @@ struct drm_plane {
+ 	uint32_t *format_types;
+ 	/** @format_count: Size of the array pointed at by @format_types. */
+ 	unsigned int format_count;
+-	/**
+-	 * @format_default: driver hasn't supplied supported formats for the
+-	 * plane. Used by the non-atomic driver compatibility wrapper only.
+-	 */
+-	bool format_default;
+ 
+ 	/** @modifiers: array of modifiers supported by this plane */
+ 	uint64_t *modifiers;
 -- 
 2.56.0
 
