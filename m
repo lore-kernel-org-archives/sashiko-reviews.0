@@ -1,51 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.89
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.134
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794280149;
-	b=0Yk0GQgS+YO28Cj/CconY5z8b2G3oD6CXqltH9sf0iyxuJIMko0VB4WgyqZtWeW6Zigj
-	 wXFNp8P4swghY19GBB7/jisoi4npvvooJlGpKfTcbhBzYqJ3ZwJCWEAC0IkkV0wDqsxVI
-	 otHrtV3fUah0Y0+zr4sxm2y9xgxSJ+VRsUJXjDDA2As7tUzJr9rJOiEUeNGDj3xKNwh0h
-	 DvMcl7/JDZ7Bw0QR40IqlWz+pojlVaOmTXUj/cnURJP6TxpdAH+zbTLmfnyVxE6sTKtM9
-	 IYRixLOp6gSGjNJhI6OobSDGenxJsk4wSFiwBA1OvlCRAWVXEfvsgEaSGTsBFrtJAmw==
+	t=1794280620;
+	b=aSMVF/1/ecbJeBnEd/BvRYX8Iq5XXDKwenhbz2x+nCFStTqIf9Ci9ycZMWsVUuWvgSCZ
+	 abWC8dDzOqqYxdtxDCOxmbYITXkFNXVEqXTftQER3TB+jz0vZtXaqjOV8wTuQsRw75tEq
+	 RBMes91U9gPk6ZAf3wzxQCzGYRDHblpU94cByTf3FUI6Sp2wBTY5fTcI4gNiiw9+c0x6h
+	 ODTeTrAEvqmmVmxAuB28QD/QoFhisNoyyA5scTqQWguqNLE1QHh8mi4nI9/4uCq8/bnxB
+	 xOnxplyEFwWybVCwM8ly4+yR5TcZQ7sLc9gEpMho759fjGGEeih54/xnMPSmrWkhkUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794280149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794280620;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
 	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
 	 To:X-Mailer;
-	bh=/VXI1onF5SeS09KK9lzcvTcmpzrz6Lunid7ms1UK5Nw=;
-	b=TMrILL6IjSMXPyTYaxh4uyQVKbOKQbmNvQ8AMbf3C5ouu1GH6l73ai05n6izwjATlN5i
-	 7KtrZWzaVErvSId97U3biTyCIMMNZzkrk1Aezdm5HqReo9Ucizzl/z6xTYkFr1GNwT4oi
-	 Ntw7t9SDvTOIuQN+EYWSFGvGU6GfQeFgwATORgExW+rG5l73vUr607KnkY3MgRCcJEdjT
-	 BwKrxJ4MbKzfwF8GYsaSLEd5yqx81G3yZ/5f9WmaHnnVu9MgyhLRCEvrmCIE1PouSW0wE
-	 7EHVGWBoYBrL2VhBUae/g1l5T+gQqCEjiWbB+bxPn5wTSLs4+riQlD5CFyqsuj8H8UA==
+	bh=q9M+59aJycwvDGVPdRUa9bBhiCb7/lm1Bh0m6F9EGyg=;
+	b=QxLYv7159K0jWxMTqbqJjgzXFy/rmPJY29L1Yfq/4rz0fbZK7wmr6xlx3y8cMacRkTLf
+	 7c5xVF0cVEOCxs37BkTBa5WPCgd49twYbVANBkHsDINQteZS6DuVoUh+N3hp11Rp34xMP
+	 BhiyiOdjyDDiZEnTeyGu247QXyuCSv7CWKvoNYmCwB6Ej0YinMkMNfsOJu5XTolStkTMY
+	 eoXYHNIW3CksEEvBqEQuYbUVMXxggFkaeVxrU/G6TqIYAl3bECfLYmIlZkO063XH/rVXW
+	 QIjC6iufurypz2pKnYTzPkUVZpiU6K1SupLNgy4fAfXbMaE6EkHlvChVRGcw0vPFMUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="bhiX/sg9";
-	arc=none smtp.remote-ip=91.218.175.89
-Received: from mta0.migadu.com (out-89.mta0.migadu.com [91.218.175.89])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=U1AQqdle;
+	arc=none smtp.remote-ip=91.218.175.134
+Received: from mta0.migadu.com (out-134.mta0.migadu.com [91.218.175.134])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5AA606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:09:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3D5AA606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C721606A32E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:16:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C721606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=bhiX/sg9
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=U1AQqdle
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=4vNRBThxCRg1/lwUML9Zpz0Ty+nyn6/jDAJxsej0PWU=;
+DKIM-Signature: a=rsa-sha256; bh=kgr+9iyrM1cxLzfU7kLaTKxlcTZDi3ushAYcoMpeJik=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794280145; v=1; x=1794884945;
- b=bhiX/sg9FPtDK3iMLNvJz7zXB6dMMvEYHUUslfV4P4zbO3qth0HImCn+hr2JXeA1kktzmScU
- c6Mt17R+gbskOLXahCJnU8H3k1TAuJBBIFTO6wQ179GEaJX+ClrTcJbtAubAANM4sL/JvVAaKUy
- +EqsJeUV15NXEEi+Dhp5UpUU=
+ t=1794280617; v=1; x=1794885417;
+ b=U1AQqdleFer8Cpa+HpBvRL752oKSv9M+OpFO33gHWt+5EdZx9DCqHHUHqmjeQqsBQR6Ph0HN
+ lc+umU3Ly7W5ZYGwBe6iR3SFrpfrtiFhUEyoA/ZuAUvs+PfXuFwQ4n8Bx4gAh5psHXzi6KKxv5I
+ sDv7QOOWxygLwY7lAJ3NVRdw=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id dd3535646e2a8843;
-	Tue, 10 Nov 2026 03:09:05 +0000
-X-Mizu-Trace-ID: dd3535646e2a8843
+Received: by mta12.migadu.com with ESMTPS id 9c1d7389bb465916;
+	Tue, 10 Nov 2026 03:16:57 +0000
+X-Mizu-Trace-ID: 9c1d7389bb465916
 X-Migadu-Flow: FLOW_OUT
 Content-Type: text/plain;
 	charset=utf-8
@@ -58,11 +58,11 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH 02/11] mm/mm_init: factor out common struct page
- initialization
+Subject: Re: [PATCH 05/11] mm/hugetlb: drop boot-time HVO handling for
+ gigantic folios
 From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <sashiko-outbox-204836@kernel.org>
-Date: Tue, 10 Nov 2026 11:08:43 +0800
+In-Reply-To: <sashiko-outbox-204839@kernel.org>
+Date: Tue, 10 Nov 2026 11:16:43 +0800
 Cc: Muchun Song <songmuchun@bytedance.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  David Hildenbrand <david@kernel.org>,
@@ -78,10 +78,10 @@ Cc: Muchun Song <songmuchun@bytedance.com>,
  Qi Zheng <qi.zheng@linux.dev>,
  linux-mm@kvack.org
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <01DEE4E5-49E9-4C33-BBC4-EB04611803B3@linux.dev>
+Message-Id: <7EBF14BA-50E3-456C-A005-CE96CE148B5A@linux.dev>
 References: <20261109095807.41547-1-songmuchun@bytedance.com>
- <20261109095807.41547-3-songmuchun@bytedance.com>
- <sashiko-outbox-204836@kernel.org>
+ <20261109095807.41547-6-songmuchun@bytedance.com>
+ <sashiko-outbox-204839@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
@@ -89,99 +89,187 @@ X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
 > On Nov 9, 2026, at 18:43, sashiko-bot@kernel.org wrote:
 >=20
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] mm/mm_init: __meminit on memmap_init_page_common() crashes at
->  runtime
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 2 related pre-existing issues it does not
+> introduce:
+> - [High] mm/memory-failure: race between hugetlb_update_hwpoison() and
+>  HVO head remap [1]
+> - [Critical] mm/hugetlb_vmemmap: race between deferred PMD split flush
+>  and PTE remap in vmemmap_split_pmd() [2]
 > --
+
+I will not fix both pre-existing problems in this series.
+
 >=20
-> commit bb3e83c26b241fd60613632a0fd50cc529ce8be7
+> commit da0d2d6e0b849f9a259d74fcb047aaceb9617411
 > Author: Muchun Song <muchun.song@linux.dev>
 >=20
-> mm/mm_init: factor out common struct page initialization
+> mm/hugetlb: drop boot-time HVO handling for gigantic folios
 >=20
-> This commit factors out PFN-independent struct page initialization =
-into
-> memmap_init_page_common() and uses it in both __init_single_page() and
-> vmemmap_shared_tail_page().
+> This commit removes the boot-time bulk vmemmap optimization call and =
+tail
+> page initialization fallback for gigantic folios, relying instead on =
+the
+> section-based vmemmap optimization infrastructure during bootmem =
+gathering.
 >=20
->> diff --git a/mm/mm_init.c b/mm/mm_init.c
->> index 0129152b74d87..9677698f30d3a 100644
->> --- a/mm/mm_init.c
->> +++ b/mm/mm_init.c
->> @@ -602,15 +602,28 @@ static inline void =
-vmemmap_optimization_verify_zone(struct page *page)
->> 			page_zone_id(page));
->> }
->>=20
->> -void __meminit __init_single_page(struct page *page, unsigned long =
-pfn,
->> -				unsigned long zone, int nid)
->> +/* Initialize PFN-independent fields common to pages in the same =
-zone. */
->> +void __meminit memmap_init_page_common(struct page *page,
->> +		enum zone_type zone, int nid)
+>> diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
+>> index ba8e11e399b24..d73ceeef392eb 100644
+>> --- a/mm/hugetlb_vmemmap.c
+>> +++ b/mm/hugetlb_vmemmap.c
+>> @@ -552,7 +552,6 @@ static int hugetlb_vmemmap_pteify_folio(const =
+struct hstate *h, struct folio *fo
+>> void hugetlb_vmemmap_optimize_folios(struct hstate *h, struct =
+list_head *folio_list)
 >> {
->> 	mm_zero_struct_page(page);
->> -	set_page_links(page, zone, nid, pfn);
->> -	init_page_count(page);
->> -	atomic_set(&page->_mapcount, -1);
->> +	set_page_zone(page, zone);
->> +	set_page_node(page, nid);
->> 	page_cpupid_reset_last(page);
->> 	page_kasan_tag_reset(page);
->> +	atomic_set(&page->_mapcount, -1);
->> +#ifdef CONFIG_ZONE_DEVICE
->> +	if (zone =3D=3D ZONE_DEVICE)
->> +		__SetPageReserved(page);
->> +#endif
->> +}
->=20
-> [ ... ]
->=20
->> diff --git a/mm/sparse-vmemmap.c b/mm/sparse-vmemmap.c
->> index 9b80dd7326f7e..fd869617423a3 100644
->> --- a/mm/sparse-vmemmap.c
->> +++ b/mm/sparse-vmemmap.c
->> @@ -212,12 +212,7 @@ struct page __ref =
-*vmemmap_shared_tail_page(unsigned int order, struct zone *zon
->>=20
->> 	for (int i =3D 0; i < PAGE_SIZE / sizeof(struct page); i++) {
->> 		page =3D (struct page *)addr + i;
->> -		mm_zero_struct_page(page);
->> -		atomic_set(&page->_mapcount, -1);
->> -		set_page_node(page, zone_to_nid(zone));
->> -		set_page_zone(page, zone_idx(zone));
->> -		if (zone_is_zone_device(zone))
->> -			__SetPageReserved(page);
->> +		memmap_init_page_common(page, zone_idx(zone), =
-zone_to_nid(zone));
->> 		prep_compound_tail(page, NULL, order);
->> 	}
+>> 	struct folio *folio;
+>> -	unsigned long nr_to_optimize =3D 0;
+>> 	LIST_HEAD(vmemmap_pages);
+>> 	unsigned long flags =3D VMEMMAP_DEFER_TLB_FLUSH;
 >=20
 > [Severity: High]
-> Can vmemmap_shared_tail_page() call memmap_init_page_common() after
-> .init.text has been freed when CONFIG_MEMORY_HOTPLUG is disabled?
+> This problem wasn't introduced by this patch, but can a concurrent =
+memory
+> failure race with vmemmap optimization [1] and lose hardware poison
+> state on a newly allocated hugetlb folio?
+>=20
+> After init_new_hugetlb_folio() sets the hugetlb flag on a fresh folio
+> (for example in prep_and_add_allocated_folios()), both
+> folio_test_hugetlb_freed() and folio_test_hugetlb_migratable() remain
+> false while hugetlb_vmemmap_optimize_folios() remaps its vmemmap =
+pages:
+>=20
+> CPU0                                  CPU1
+> hugetlb_vmemmap_optimize_folios()
+>  __hugetlb_vmemmap_optimize_folio()
+>    vmemmap_optimize_folio()
+>      vmemmap_optimize_pte()
+>        vmemmap_dup_page_from_list()
+>          copy_page(dst, src)
+>                                      try_memory_failure_hugetlb()
+>                                        get_huge_page_for_hwpoison()
+>                                          // returns MF_HUGETLB_RETRY
+>                                        // retries with MF_NO_RETRY:
+>                                        get_huge_page_for_hwpoison()
+>                                          spin_lock_irq(&hugetlb_lock)
+>                                          hugetlb_update_hwpoison()
+>                                            =
+folio_test_set_hwpoison(folio)
+>                                            llist_add(&raw_hwp->node, =
+head)
+>                                          =
+spin_unlock_irq(&hugetlb_lock)
+>        set_pte_at(..., dst, ...)
+>  flush_tlb_all()
+>  free_vmemmap_page_list()  <-- old head page freed, hwpoison lost
+>=20
+> Because vmemmap_optimize_pte() copies and remaps the head struct page
+> without synchronizing with hugetlb_lock (and defers the TLB flush =
+across
+> the batch), hugetlb_update_hwpoison() can write PG_hwpoison and the
+> raw_hwp_page list entry to the old head struct page after copy_page() =
+has
+> already finished.  Once the remap and TLB flush complete, the =
+raw_hwp_page
+> allocation is leaked and the poisoned hugepage is added to the pool
+> unmarked.
+>=20
+>> @@ -560,18 +559,7 @@ void hugetlb_vmemmap_optimize_folios(struct =
+hstate *h, struct list_head *folio_l
+>> 		return;
+>>=20
+>> 	list_for_each_entry(folio, folio_list, lru) {
+>> -		int ret;
+>> -
+>> -		/*
+>> -		 * Bootmem gigantic folios may already be marked =
+optimized when
+>> -		 * their vmemmap layout was prepared earlier, so skip =
+them here.
+>> -		 */
+>> -		if (folio_test_hugetlb_vmemmap_optimized(folio))
+>> -			continue;
+>> -
+>> -		nr_to_optimize++;
+>> -
+>> -		ret =3D hugetlb_vmemmap_pteify_folio(h, folio, flags);
+>> +		int ret =3D hugetlb_vmemmap_pteify_folio(h, folio, =
+flags);
+>>=20
+>> 		/*
+>> 		 * Splitting the PMD requires allocating a page, thus =
+let's fail
+>> @@ -583,9 +571,6 @@ void hugetlb_vmemmap_optimize_folios(struct =
+hstate *h, struct list_head *folio_l
+>> 			break;
+>> 	}
+>>=20
+>> -	if (!nr_to_optimize)
+>> -		return;
+>> -
+>> 	flush_tlb_all();
+>=20
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but can deferring the =
+TLB
+> flush across PMD splits here race with a concurrent single-folio =
+vmemmap
+> optimization [2] and remap PTEs before the 2MB PMD split is
+> flushed from the TLB?
 
-Right. I'll remove __meminit from memmap_init_page_common to fix this.
-
-Thanks.
+Right. I'll fix it later in a separate patch.
 
 >=20
-> When !CONFIG_MEMORY_HOTPLUG, __meminit expands to __init, placing
-> memmap_init_page_common() in .init.text, while __ref on
-> vmemmap_shared_tail_page() suppresses the modpost section mismatch =
-warning.
-> With CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP=3Dy (which does not depend =
-on
-> CONFIG_MEMORY_HOTPLUG), allocating HugeTLB pages at runtime reaches
-> vmemmap_optimize_pte() -> folio_vmemmap_shared_tail_page() ->
-> vmemmap_shared_tail_page() and executes freed .init.text the first =
-time a
-> zone's shared tail page for that order is allocated after boot.
+> A single 2MB vmemmap PMD covers 64 2MB folios.  While
+> hugetlb_vmemmap_optimize_folios() splits PMDs with =
+VMEMMAP_DEFER_TLB_FLUSH
+> during bulk pool resize or demotion, a concurrent
+> hugetlb_vmemmap_optimize_folio() (such as from
+> alloc_surplus_hugetlb_folio()) can optimize another folio covered by =
+the
+> same vmemmap PMD:
+>=20
+> CPU0                                  CPU1
+> hugetlb_vmemmap_optimize_folios()
+>  hugetlb_vmemmap_pteify_folio()
+>    ...
+>      vmemmap_split_pmd()
+>        pmd_populate_kernel()
+>        // skips TLB flush
+>                                      hugetlb_vmemmap_optimize_folio()
+>                                        ...
+>                                          vmemmap_pmd_entry()
+>                                            // !pmd_leaf(*pmd), returns =
+0
+>                                          vmemmap_optimize_pte()
+>                                            set_pte_at()
+>                                        free_vmemmap_page_list()
+>                                          <-- old vmemmap pages freed =
+with
+>                                              stale 2MB PMD TLB entry =
+live
+>  flush_tlb_all()
+>=20
+> Because CPU0 has already replaced the leaf PMD under
+> init_mm.page_table_lock, CPU1 sees !pmd_leaf(*pmd) in =
+vmemmap_pmd_entry()
+> and proceeds directly to vmemmap_optimize_pte() without a PMD-range =
+TLB
+> flush.  CPU1 then installs 4KB PTEs pointing to different physical =
+pages,
+> flushes only its own folio's vmemmap range, and frees the displaced
+> vmemmap pages while stale 2MB PMD TLB entries remain active, which can
+> cause overlapping-TLB machine checks or use-after-free writes to the =
+freed
+> vmemmap pages.
+>=20
+> [1] =
+https://sashiko.dev/#/bug/linux-18e93f17-529b-4d84-ba44-a41829f4be64
+> [2] =
+https://sashiko.dev/#/bug/linux-fbdc3410-a4cf-457e-88e6-684380fbadfe
 >=20
 > --=20
 > Sashiko AI review =C2=B7 =
 https://sashiko.dev/#/patchset/20261109095807.41547-1-songmuchun@bytedance=
-.com?part=3D2
+.com?part=3D5
 
