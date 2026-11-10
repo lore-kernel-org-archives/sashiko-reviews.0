@@ -1,93 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.74.81
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1794285587;
-	b=gTM3TcGKgeLT4vgq0OxNO/trwGhEzGWLdfKM0vW00MBSdWgWf9j0jbzh4szf9zmzrFwo
-	 KKzhe/xQf9myzIk4zq9nJ4SA9Vqu/88B0uyQIBSYy7NwC9VMzTreVBWcp2/4LQ9TLBvN0
-	 NozucS2/N2wStPJ1lAAurQKBQyoCCXfylONqE+QEkSDFG0mrZb0DJvM/VOX10P1ZFMSnx
-	 Y5N6iGVnc+MjImD+VVP2Va/aQ/F2OXQ+/Oim9CtiuqAX85fiKN77nATpkp5mkJB8H2Y+k
-	 7gmlmrJcMQvwH/uZj0C0D8zr6Smd2Q37RcT+bG7q7EPlc5ckesz+LI2YCCcFFqfmZxA==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.47
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794285735;
+	b=R5DiNivNNXnkCRkPWN9Ng6Tkm+1UEycS5J7+mJ2bZVeV04bLejGKN83JNUlSQXSrC0Tm
+	 eBKarj5M3aiTtM2SzmBQxRfFVv2Ail1Dmmw3e5wVcLalBgy1/TR/zkmnCi9RVE/yMrsc2
+	 g830r6GWNk0ZVF3lhVGg8ii4Uapc3LZhh5uBgANlGKA9xCkt7Bdp0KMGHsjvrA8Y5Qfsx
+	 wz11jJvg36xgshkUW63BelYEcKjfqhcjoYWxWHWKytd1J0qDqIY5FwJAa9oRLNYiH2/bO
+	 zWR3CFbfBDu1b41AqRJJGCq1R2qdWrycrZNN65FN3pds33WMrZIl444UVJKW6OqtCxQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794285587;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=ANnG2vDn9typgM+nx/ChI4yxnDb+1iRzRuA5XP+xrrc=;
-	b=Wx30ttNxohUWZcMwSAbQ1/C0X42Dh2DJQlBflpKB6/ecKs/lO2spELtOameCQ8WyO+gl
-	 AZxIeyMwR9L2mLXu7NgFHdnDHuI5hEkNecLr/uutUz0zqFEncplyfQQ1lFuw0tQYeTKMW
-	 F3Cyu5PhFxCd1P1cSA16nieMkhh9pETu/1hNqKWO2anf7r7zfki3j7FUKZ8uCuVIwJyH2
-	 vfJ/Y6D4DL5U701o34+HGVc7YmU7h8VrSOm1oa9/Z5fXUuupSKKTxkVe3k3N8v8ZMJOYT
-	 mJBXRAWWlfj70q7eU/SbPO4nd/U6uZVkKMNOba+RTkN7GGqSUZxD7W/B9ScWO02RJoA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794285735;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
+	b=eCFPDAispvOEFff7vqou03RJybZZaqFL2+9ePe/OoAfeCtWk/RY4DeCmb3ttlHKpPqcu
+	 2CF1KLro5xYnRzoTQ0UXSPIZrtkKfvtC9lBrYCy3ptiB7RFl144g7cH2hMBDy/SLMwq3R
+	 70jt5ZQ9aEe35oXLTOevzKnhWfOrTia8DkGPZINurAcIP3lqvHndFQKXiWTkwWlBvEaH0
+	 eE6ES7TEGlpEc8t8rbqa+FM7R3JSMu9/pTWsQvRQ49pExZxLEsQeSo7MMXJG8PyeiXN6o
+	 vL6w0sDoujUN9ffsMGyVG6p/R0Wt5zLN5xZFaHc6jw6wFNxfSM3g84dY0V+Bs1NVgUQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=valinux.co.jp;
-	spf=pass smtp.mailfrom=valinux.co.jp;
-	dkim=fail reason="signature verification failed" header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b="c6vKp2A/";
-	arc=fail smtp.remote-ip=40.107.74.81
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021081.outbound.protection.outlook.com [40.107.74.81])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=cloudflare.com;
+	spf=pass smtp.mailfrom=cloudflare.com;
+	dkim=pass header.d=cloudflare.com header.i=@cloudflare.com header.a=rsa-sha256 header.s=google09082023 header.b="Hm+3BMk/";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.47
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F269606A325;
-	Tue, 10 Nov 2026 04:39:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F269606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F81606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 04:42:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73F81606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudflare.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=c6vKp2A/
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=brgVfPZOIHamHcvKQzdZKGHLRzO0GalQPZrigHS626uMp58aKy6IZ7APMqnnibT7ZjFGuHr2DQjsn6690tIKrB2KRXHLYuxTgKxZxmHO/hJeTp8fSx3agXijs351CD1lqJ6ohXhGOqIjw6e0Z73RXCMSyJBDSEBgi4CeF93kFD4CDiY5ehO9HZAbUFOexgFx2XHYckTKCdVlxO6DuI0u1Jmu6kT6dEq91IXwfYtWgjmD2+zSGLR6ah3qRSrKECmtfNQrPtbZhYstEDmr9h2RHlPc9e8R4vLVHzRKZcGqKX0A72unTsoxzN78IGd/0VlyfFYCz6/w+TWg5pJt8wa39w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WsQgIvOaaQVuZ/EexQJOgp8BBcbP1A/qctMN/ej6+Rc=;
- b=Lgd9HcRgFJpxCve5JnTQsBxFxZXu8f62MAi1QosJkEEqm7p7ioM/89swIudpInXLXg7xj6pd+v7fqGGbB0UbRSF0sGHFeWsFc5Dx8HTM/HFIrqdcZYrgzmahjTHEztVwQCtoUfcN7BbNoOI5r6P0OxmER0uEeSGbcCuwO/k6UAKn2YmFXv0kg8uOO4AbatXDiUy6XCyqwPlc5oicsjB7IDN+U6p/asAhEofSlnHOGqGhk/CaNWsyDf6n5AJDygEXT6dpm/jLYRSNhwuH8ruEkPvtkj6bawfTggHMgcCv/w5K+VeI85jVka08jrKP5ztxA68H5EcbjI4VhhDm2BLNqA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WsQgIvOaaQVuZ/EexQJOgp8BBcbP1A/qctMN/ej6+Rc=;
- b=c6vKp2A/dFroYUeX0oaZTZeWXIO8y/DrQR4bW0Fs0bu9knbGhLT5HGZo0Lv8bTRfPBbuRKPeoP0ac4Nna1lxy27Exdl3WBUcSuzqkeCMzXZUCkNsRlAMS7gem8GbYxou9ahnWEpx5WZNDDFd1Rca0sKhzxwcNBfKHXBwpT6GDC4=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by TYCP286MB2366.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:18c::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Tue, 10 Nov
- 2026 04:39:42 +0000
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0592.012; Tue, 10 Nov 2026
- 04:39:41 +0000
-Date: Tue, 10 Nov 2026 13:39:40 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, ntb@lists.linux.dev
-Subject: Re: [PATCH v8 02/10] PCI: dwc: Expose endpoint DMA resources
-Message-ID: <uvq3ukrznnilb5jl5utfvezi25xnmtto3ucormlhrns4rkbdto@t2xvccuuhc76>
-References: <20261022082230.3164834-1-den@valinux.co.jp>
- <20261022082230.3164834-3-den@valinux.co.jp>
- <sashiko-outbox-181198@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-181198@kernel.org>
-X-ClientProxiedBy: TYCPR01CA0137.jpnprd01.prod.outlook.com
- (2603:1096:400:2b7::13) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:325::11)
+	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.a=rsa-sha256 header.s=google09082023 header.b=Hm+3BMk/
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6dd7070699eso957688eaf.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 20:42:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794285734; cv=none;
+        d=google.com; s=arc-20260327;
+        b=l+5APYPZ2Va6IUsqsyspB097BDFJm8+HzFccIDJ+M2XMhFvDOTodea6z7uqagDyCXf
+         b51g2jb5XQLkxHKaohHrTaT/qLpwGJttVqf6nb737EA7mLp6DwfNV/VIWSZNScjyNYct
+         DF4/TbvoY0Cb02OPGPoIT8iU1gNjYGjHG9YYQeFM/joABSzxyf8C/aAsbk+nI1b/9oQC
+         LaQ2QED52OjRtTAUTATkSBSWXRwjn/IgBlt3Lf2U+HmBlLHaWwIRoEvWoURlk7yOVJLA
+         rSsKTG5A30PULvZyBUjXfuU761zZ8bz5cTscaX9qCDdA9M9T8HmUjt2IVx98BTMUNdV1
+         CjVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
+        fh=PqfXm7a08WrvkxC4ErIq7QV7bol4Dqx8CeublptW7zA=;
+        b=HSX35H6j2ka6OIzjVUGF6OUYR1eEIxqoSKb3ihcoLEw73hb8pDrED6ch3O/dWEfx5q
+         KaKZ0Up4U73WhEaM4plx7LcRMdXdTFn1F6YCuhzIe3oZNjimh4CcBY45hdQVrOAodTS7
+         V3YZ88qb8bLKZVK4WQrOqlzo2hsYADv0RR1RV2euruKpxrDJelsXywsfQuw922I4apKX
+         GfoOBVNAT1dfMZ/bAWy1a50pe3QDLQCan4Y92sAJaxu8mBpIhrI14fGxbJeWdvGcGDpq
+         cMwgm+LUJ4iDIIlYeY+4ITgfALvYNzYHK95XLfxnG9ayF3eij7APVemX9NNNoCyzRDKv
+         Wx8g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudflare.com; s=google09082023; t=1794285734; x=1794890534; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
+        b=Hm+3BMk/YTedr5q3oEJWYfAQea05WE5FtVLse+Xj7ysYT2p61ktMIUXpnZRlAFWckH
+         wwCwIwSsXAwT2vSFx/3MnrQmQCRZ1asIccT9M4NgI97QCumWm6OrXW0WHHk07f1wxJOS
+         XR379gmpVhwrCoQoyY8odOXk1n/kNojiLCv2LZ+w75TZ+BIkQOM9jX2FkYhthOeWsXia
+         PgyTv1MhulCy/QTJHklXXe2aMq+CDp5KqZb2SbpiVmFDhjoLJyGwM3PzAFSP26nzin2F
+         PLR7H+2jFRmQoFjHiEb0c5WoQN0gvPdAgD4PaY+pCra6KTq6zRDzYpS+y4XXxH7SKcCg
+         7Zuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794285734; x=1794890534;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
+        b=ur1XtgrGM+1H2bH9bzd7F9jd+pq3D9Hy8thpn2SDXpQwpqFBqXtaTZQ/EGu0SpPofb
+         uz8CIfCdGVFJwjL8yGV/QqxSU/r5R3aaXItwtYQMo2s2rLkunBDhx1XKnOrMyBLYM5xP
+         nwmXmZNKLnXpKnqTbeMmbNVtb32mjdZzQnMA+/P3L+DT2/D2UBKOwJdSZ/4XBNdNc1AQ
+         +nH9W5vfOz1PO8CNdz0DfyaHjLhUY38JCeOLo6ku7mEUd7UEWaJ16MK8QloyRIIB7jSB
+         gdEtRdKxvLS/C4Vs02//W0f66W4eLO/6PXqvUwCbBxk27LYq9cPTJAoi13fJl9KEDwV1
+         hUKg==
+X-Gm-Message-State: APuU4Z9AYfgaRlAQ0Puq1q0z8Lb2xkZwQQeSdYD+Lt/x8u+pz27Bsp0r
+	wSxCVEAbqBSZIiqEqilUXggH8s5nAcO4UgUgpdw5Gervsn/5nFXVav3uIiXsQxXfGrSbfUhyWEA
+	O1NbT1GnQYgvg02m85SrUrDyrluQRZapMla24hRGxjvTUAveI6LHBoLrlxw==
+X-Gm-Gg: AYBFou1NvmLdiDeuyD8Iu2DqzkfPhQ3pSwsHvHQ5R0qHHdGEIqEGM1mh0jN5YKbj9/u
+	Or3ItRHyhql6KBaQt/96YJQznjt66g+PQsWrC7CT0yEP5DQ8+/CzOjTaQBaMUSMaVsmI/Of28hd
+	ZBf7vCP0mQIYm4Ui1Ntmsvrnh7tkFmNVCKJzP8heuhxOuHHLELBkYpbt/fYbW04geByAJmwDDvB
+	DFdlA5yt4prejFUxXAQYGoBm30KC2x0+kLmNh8VsyNWWhTBFL3labS1U7KsMqMIVDQT659Ymbix
+	fleDNSlzbN6mJj0yiU4Iq+qZZ213/b2zPi00YClHxIeGiK+Gs69jJGMUXLTNjlJ9kbkShZqH7lt
+	T7Iq2ExdKCiiglG7N/qEXt3HbAyLiN12B740Hbqwoht/5L+Cilk7g0FFg2Xg79fJmk1kcYeyDsv
+	PlCRi/ppZcVw==
+X-Received: by 2002:a05:6820:824:b0:715:2424:b6c7 with SMTP id
+ 006d021491bc7-718a25631ebmr744221eaf.2.1794285734188; Mon, 09 Nov 2026
+ 20:42:14 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,214 +104,80 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|TYCP286MB2366:EE_
-X-MS-Office365-Filtering-Correlation-Id: dd0684c7-6555-4fbf-511f-08df3ee4a2ad
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|10070799003|23010399003|1800799024|22082099003|18002099003|6133799003|3023799007|4143699003|56012099006|10067099003|261028144727099003|261102130727099003|261009223027099003|261102123227099003|261026121527099003|261026135527099003|261022075727099003|261021123027099003|261021121427099003|261022105027099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info:
-	gkW6Z9+AjfLLJeybVJwuV03DN6g8Gxzo8JMb4u5vZvTaWXRUoTsOJnNNgtfIL0HwBWzcJEV6n7av97Py9Ti4x0mBUiaT6udvIBk+4jZU8zF2v+mldTNoSLeeZh+/WaqJc6r3VbMnfM4hCMaCVExqEuBeKgseIaoP2W6D/+7cbb8NzJ33qB85b6+hEOarvICGfIpxBtOdYVxnU1Y/LMQ1DJe3LTkPms3PLlwvMVU8BSdYh2C73DhouPLFzj7e/v43zq+zrh0CBh3UdRrpXVvrdjPqh84JNTq8NJuBWwG3c7u5Ge5qfWvZTNpeT4K4vPQE0bKHNiKwZnrRi1nypS9/SR4Qnw881fuaLyU60lXWy98a1KYZTAoaFFdBv/FlBU0okfUXa6M4kqedmIYTU9sV5Nu511zpzcp2vB9lU9EGvUHrXJIuyrxsd1zovZoThu4Cf/+rQZejozq7nMGHUgWDa2L5JcRJyH4SCyZZsmCIn3jBCJC1AYk7hp+xdkPh4OULF3UmEndpbENNCbrHy5W8fS1Ehai2YWvhCrBTHD/A+nGoP8SnlZyBL4FEoPg+awZr0WS8YcG+LWz9q3OUuvK5tlTcQ9gVgPfDrPR1E3tL4dA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(10070799003)(23010399003)(1800799024)(22082099003)(18002099003)(6133799003)(3023799007)(4143699003)(56012099006)(10067099003)(261028144727099003)(261102130727099003)(261009223027099003)(261102123227099003)(261026121527099003)(261026135527099003)(261022075727099003)(261021123027099003)(261021121427099003)(261022105027099003)(261026140227099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?ODTKhoVEPtrcaKeOFunZCDlrc8YaiSHza1derFz+B+Psl+jytj+GQnOMZ3?=
- =?iso-8859-1?Q?rz+ZolKHuvo9ALSVW8nkbReaaQTay8q6QmDOs/+6gGma69Z+4wqSvEdD3G?=
- =?iso-8859-1?Q?YCMAzklHDlP5Y66gBZqJxVUdzVhr9APUGmBVKK9oFfIU04XhIFK0JeqcF6?=
- =?iso-8859-1?Q?5gTvWFlY/6hYgYWHQF0wbCRvdFY3PYC5UyBIQi+FblyRmale9MGP1fzbAQ?=
- =?iso-8859-1?Q?le9zDIt5va175OzVQ1PkMsq5Y0MTw1c7/dSfNIIpj2Ys30IWjgX1ac7G4T?=
- =?iso-8859-1?Q?gg0xWfuKG1qpxVKC9wejmQY1V7Ot2T8u41GRMa2WwSxiKFN9Zv0PHOM3Dx?=
- =?iso-8859-1?Q?E202aus2BqFhuB81yG5vebfNrBGbjOclPlQhrjZwk6elaZyxFFXqitRlrb?=
- =?iso-8859-1?Q?l4thJoQ9FJoM9ePnq5R2p4xFAtjBtQq7bOLubRUACmFrSDc7hKbbTLkp0N?=
- =?iso-8859-1?Q?RyPz55z9Sr5ohOl3zO3ouCjfx3MU2HBQ5i2yI/zHAcX8Dof23MjgYHOU0E?=
- =?iso-8859-1?Q?gbD4tn3fQ/s4po2S6DnOCMTlYn9WMovR3xLY02lUM0mmfPjFKVox2dbXuP?=
- =?iso-8859-1?Q?3LxTWURh6uujGZLqflXYTGhZ+4GQRdz1PGaxTiEmhpFYJhIPjv6VlpvqT5?=
- =?iso-8859-1?Q?t9GuL87VXsI96hZxwy8O27zN2Hoeohi7LDnc0JPn8d4qHDjmFL013/dyKS?=
- =?iso-8859-1?Q?f5ooLckOeSE296eKiMYh3BrlHuTJgIbPBEIlL1ClX0nthC17YtQc3OJAIl?=
- =?iso-8859-1?Q?9i3KSxYpvF3UrIsoewz3fGociUcZttoLAgM/mP9v4dOR3MTK/KhCuA84Lg?=
- =?iso-8859-1?Q?i9UtKQfz9y/PXEyk9rzw/CR/9/iXg1H0aqGS1LoF09kkaFPgfrA28QzqQ+?=
- =?iso-8859-1?Q?jGP4jYLWhi5D7KRWfYPoOcyCSr/fbO/w2JLJIeBlRv57JZ+V+VoyGo+JX+?=
- =?iso-8859-1?Q?w9vP29cALeQOklVZyWjhwOFJn9OUtcUHiL6KkHDa8n1JR+6+x8OwYbmhYu?=
- =?iso-8859-1?Q?eCSPpzb29taq4cETtiBhYEhYTp856MP/w98Z3bpbC58LHPuFObU+4IT8E/?=
- =?iso-8859-1?Q?egbkzmCzIoMFp5E9r0qaeebBMTPmrmg2IpGvU0RJoNTH378Lgp+HFEa7r9?=
- =?iso-8859-1?Q?Qku+QgMYeLEA0PdtMw/Zxr3VkdSgBzDBijzoSoRWmjUHcmoeHsezY9o0Eu?=
- =?iso-8859-1?Q?z9K2+9OMp/8RBlSaw0fNTF4VBXmQ+DptN5Ge3BFKmQmuAUJVudyaTgltlP?=
- =?iso-8859-1?Q?/PmfmNoASp8UxKnEEgEwNHvCNMGixQpa/nJwAi5Ov2T4hZxD3PvRltTjBw?=
- =?iso-8859-1?Q?CHzlhpfgl3J/pnVUZ5i6PxWRRulCsLwVAnaYGxZEI9NyoJiX4Q1skF9Rjm?=
- =?iso-8859-1?Q?cazvy7vgafCCDTEJ0qDI83nmpa6z37oRc0HYTKYXdY0xhB2MpfRZfih6xZ?=
- =?iso-8859-1?Q?ZeT+n5nJEyHi78x/q0NahL8jfB/3NbDRy2P0mXp2kSRGRSSAGxO+nrVPwa?=
- =?iso-8859-1?Q?jh4dkHj4UaraNLt1WLZ31qISW13XLxGPVMDiz1S7NgteByTFfCqB7FSfjK?=
- =?iso-8859-1?Q?aExzZD+y8UnH1Mp3y8BFn7XHi63rd9hMnG7xLHAxRDGvXgOAUxhknJ4Pt8?=
- =?iso-8859-1?Q?CiKRaBB7CVxV1ZX2u+RYdTJpvfBw71DVyeyKDVyjg9nleL1m0OJhyhx2kK?=
- =?iso-8859-1?Q?71+ov8CtLGaJ9qsCGspMb/g+nEjrC6B+IH/9EHUhoE66k1BhbG1x+8J6Ht?=
- =?iso-8859-1?Q?GDMG2OZxiP5ETE6pEoAYUqPy2PzhfrS/6f1OgFTefAKelcfUEiu2Bv1EOy?=
- =?iso-8859-1?Q?9fQw16oU7NIH0T/f5R3CZY9ZJm7HwwGFIFr3c5cc3V3j/hRqJtw+?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd0684c7-6555-4fbf-511f-08df3ee4a2ad
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 04:39:41.4979
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LviDowiHqtYCn9EUGh7217U5IPdOfFdxfd9OJNrQ8jbOOKbgIJf7JJU9V3g9Yuv/VPAOVZq+0+EHVgGACMzGMw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB2366
+References: <cover.1794281983.git.tianyi@cloudflare.com> <115997f55d63b507ce54fbe9e22900b59016f3c3.1794281983.git.tianyi@cloudflare.com>
+ <sashiko-outbox-206183@kernel.org>
+In-Reply-To: <sashiko-outbox-206183@kernel.org>
+From: Tianyi Gao <tianyi@cloudflare.com>
+Date: Tue, 10 Nov 2026 04:42:03 +0000
+X-Gm-Features: AclHuK8b0bXERRMbxB4h1nf7ja09xd60YTNUFZCGO3eGicEqv2ygIU4ZDyBl9Fw
+Message-ID: <CAG4wq-f7LgXVUu_DpH_Nk1ab1ghistFijw1m2mTxHxN_0hBWxQ@mail.gmail.com>
+Subject: Re: [PATCH bpf-next 01/15] xdp: reserve an skb core extension area
+ after the xdp_frame
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, intel-wired-lan@lists.osuosl.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 22, 2026 at 08:42:57AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] PCI: dwc: stale edma->dw in dw_pcie_ep_get_aux_resources() after eDMA removal
+Hi,
+
+Both comments follow the style around them in include/net/xdp.h.
+Most block comments in this file start the text on the /* line.
+I will keep them as they are.
+
+Cheers,
+Tianyi Gao
+
+On Tue, Nov 10, 2026 at 4:18=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] xdp: multi-line comment style violation in include/net/xdp.h
 > --
-> 
-> commit 9475ea2f70e5c9c7b09a2bc537c0f97a6e428f7f
-> Author: Koichiro Den <den@valinux.co.jp>
-> 
-> PCI: dwc: Expose endpoint DMA resources
-> 
-> This commit exposes the endpoint-integrated eDMA register window and
-> linked-list memory regions via the EPC auxiliary resource API. It also
-> checks that the local dw-edma device is registered and rejects virtual
-> function queries.
-> 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > index 630ba172280c2..7166ec7f212bd 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+>
+> commit c815cea2f0a60c677b6335d7bc98d4ff8c9346df
+> Author: Tianyi Gao <tianyi@cloudflare.com>
+>
+> xdp: reserve an skb core extension area after the xdp_frame
+>
+> This commit reserves an skb core extension area in the XDP headroom after
+> struct xdp_frame and updates XDP head, metadata, and pull-data helpers to
+> preserve it.
+>
+> Link: https://lore.kernel.org/all/1d5521eb-84fc-4417-a3f5-6366694d160a@ke=
+rnel.org/
+>
+> > diff --git a/include/net/xdp.h b/include/net/xdp.h
+> > index 07231adfb5f82..c888353425d42 100644
+> > --- a/include/net/xdp.h
+> > +++ b/include/net/xdp.h
+> > @@ -81,6 +81,9 @@ enum xdp_buff_flags {
+> >        * XDP program is not attached.
+> >        */
+> >       XDP_FLAGS_FRAGS_UNREADABLE      =3D BIT(2),
+> > +     XDP_FLAGS_HAS_SKB_EXT           =3D BIT(3), /* skb core extension=
+ header
+> > +                                                * is valid
+> > +                                                */
+> >  };
+>
 > [ ... ]
-> > @@ -865,14 +874,30 @@ dw_pcie_ep_get_aux_resources_count(struct pci_epc *epc, u8 func_no,
-> >  	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
-> >  	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-> >  	struct dw_edma_chip *edma = &pci->edma;
-> > +	u16 ll_wr_cnt, ll_rd_cnt;
-> > +	int count = 0;
-> > +	int ret;
-> >  
-> >  	if (!pci->edma_reg_size)
-> >  		return 0;
-> >  
-> > -	if (edma->db_offset == ~0)
-> > +	ret = dw_pcie_ep_check_edma_vfunc(vfunc_no);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (!edma->dw)
-> >  		return 0;
-> >  
-> > -	return 1;
-> > +	ll_wr_cnt = edma->ll_wr_cnt;
-> > +	ll_rd_cnt = edma->ll_rd_cnt;
-> > +
-> > +	if (!edma->cfg_non_ll)
-> > +		count += 1 + ll_wr_cnt + ll_rd_cnt;
-> > +
-> > +	if (edma->db_offset != ~0)
-> > +		count++;
-> > +
-> > +	return count;
+>
+> > @@ -450,6 +464,37 @@ struct xdp_frame *xdp_convert_buff_to_frame(struct=
+ xdp_buff *xdp)
+> >       return xdp_frame;
 > >  }
-> >  
-> >  static int
-> > @@ -885,14 +910,32 @@ dw_pcie_ep_get_aux_resources(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
-> >  	const struct pci_epc_bar_rsvd_region *rsvd;
-> >  	struct dw_edma_chip *edma = &pci->edma;
-> >  	enum pci_barno dma_ctrl_bar = NO_BAR;
-> > -	resource_size_t db_offset = edma->db_offset;
-> > +	resource_size_t db_offset;
-> >  	resource_size_t dma_ctrl_bar_offset = 0;
-> >  	resource_size_t dma_reg_size;
-> > -	int count;
-> > +	u16 ll_wr_cnt, ll_rd_cnt;
-> > +	bool has_ll;
-> > +	unsigned int i;
-> > +	int count, ret;
-> >  
-> > -	count = dw_pcie_ep_get_aux_resources_count(epc, func_no, vfunc_no);
-> > -	if (count < 0)
-> > -		return count;
-> > +	if (!pci->edma_reg_size)
-> > +		return 0;
-> > +
-> > +	ret = dw_pcie_ep_check_edma_vfunc(vfunc_no);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (!edma->dw)
-> > +		return 0;
-> > +
-> > +	ll_wr_cnt = edma->ll_wr_cnt;
-> > +	ll_rd_cnt = edma->ll_rd_cnt;
-> > +	db_offset = edma->db_offset;
-> > +	has_ll = !edma->cfg_non_ll;
-> > +
-> > +	count = db_offset != ~0;
-> > +	if (has_ll)
-> > +		count += 1 + ll_wr_cnt + ll_rd_cnt;
-> 
-> [Severity: Medium]
-> Can edma->dw remain a non-NULL stale pointer here after the local dw-edma
-> device has been unregistered?
-> 
-> Both dw_pcie_ep_get_aux_resources_count() and dw_pcie_ep_get_aux_resources()
-> check edma->dw to verify that the local dw-edma device is registered before
-> exposing PCI_EPC_AUX_DMA_CTRL_MMIO and PCI_EPC_AUX_DMA_DESC_MEM resources.
-> 
-> However, when the eDMA device is torn down via dw_pcie_edma_remove() ->
-> dw_edma_remove(), either on the err_remove_edma error path in
-> dw_pcie_ep_init_registers():
-> 
-> drivers/pci/controller/dwc/pcie-designware-ep.c:dw_pcie_ep_init_registers() {
-> 	...
-> err_remove_edma:
-> 	dw_pcie_edma_remove(pci);
-> 
-> 	return ret;
-> }
-> 
-> or during fundamental reset in dw_pcie_ep_cleanup():
-> 
-> drivers/pci/controller/dwc/pcie-designware-ep.c:dw_pcie_ep_cleanup() {
-> 	...
-> 	dwc_pcie_debugfs_deinit(pci);
-> 	dw_pcie_edma_remove(pci);
-> }
-> 
-> dw_edma_remove() in drivers/dma/dw-edma/dw-edma-core.c unregisters the DMA
-> device (and resets chip->db_offset = ~0 via dw_edma_emul_irq_free()), but
-> neither dw_edma_remove() nor dw_pcie_edma_remove() clears chip->dw:
-> 
-> drivers/dma/dw-edma/dw-edma-core.c:dw_edma_remove() {
-> 	...
-> 	/* Deregister eDMA device */
-> 	dma_async_device_unregister(&dw->dma);
-> 	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
-> 				 vc.chan.device_node) {
-> 		tasklet_kill(&chan->vc.task);
-> 		list_del(&chan->vc.chan.device_node);
-> 	}
-> 
-> 	return err;
-> }
-> 
-> If an endpoint function driver subsequently queries
-> pci_epc_get_aux_resources_count() and pci_epc_get_aux_resources() while the
-> eDMA device is unregistered, wouldn't the !edma->dw check pass and expose
-> DMA control MMIO and linked-list descriptor resources for a removed eDMA
-> instance?
-
-You're right, but I think it should/can be fixed separately in the dmaengine
-core.
-
-The vNTB path still needs to acquire the channels via dma_request_channel(),
-which should fail once unregistration has completed. Returning stale metadata
-alone therefore does not let vNTB export those DMA resources.
-I don't think this needs to block this series.
-I'll prepare a small patch for dmaengine tree.
-
-Best regards,
-Koichiro Den
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261022082230.3164834-1-den@valinux.co.jp?part=2
+> >
+> > +/* skb core extensions: RX metadata that an XDP program stores in the
+> > + * headroom right after the xdp_frame, for the skb that is built later=
+.
+> > + */
+>
+> [Severity: Low]
+> This isn't a bug, but BPF coding style puts the opening /* of multi-line
+> comments on its own line, with the comment text starting on the next line=
+,
+> for both XDP_FLAGS_HAS_SKB_EXT and the comment above enum xdp_skb_ext_id.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1794281983.=
+git.tianyi@cloudflare.com?part=3D1
