@@ -1,94 +1,99 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794300437;
-	b=b0KP9Z32y3mh623OmY0URmVdWZOam61k1APc1A3TIaQCD3a6qJSBFHlrJfiIgJwE1lOH
-	 pgwOZ8S0Q2utpCYqPoLvquGU1H5fBS5p9KFczQPDz9SxmuMAKmJ5ysgS//0Hy3qBI2Xvc
-	 TAhQ5geNPPr/kif11913IwXkNanFAh+doNjg0L4kSayBLvu/IhaBtnCRGI6FYoq8E7DXq
-	 EmJylomrKEycCToA/G/re1T0CaEWbLg8/MlS8TsvIOJ95obk7ZK2Z3SIab5c+qSA2CItL
-	 pzBq+IU/35+TrsHx8HtK029S3n6Sv1E8gsvS66zu4uUcRQCPR305kc4SqPi6/NuAJzg==
+	t=1794300444;
+	b=Q90xfeNKQ2oHY3l271fG3SulvqnwsxSMDv5+3Vwxcvk4r6DDMa3CLU36XbyfyMDYupyO
+	 WmRaM841hVLzrcP2uzmpwRUSumA0HdX9WdoxOizKBxKYujzFbJM3pXHC9X/lv7Jhx9F4N
+	 ELpQ/Xk+ryjg8b6aZ+z+9o66kwF713E+uoOET+w8H1a7jTG+HdHyqdHcfsOyC3jVlQEr2
+	 lgTOeDNNNKgvhYhYLbGhhEd2b659lJ8i13aBPh+IOGS3waKKr/C2XAfhfEP2jaAT+GDfv
+	 li00MsAZtT27z7zWosFzfPTtnt+Kxrk8RzuD+5kn9TcUzHD+/0cqvs18PoI4zYJU3lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794300437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794300444;
 	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
 	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Spam-Flag:X-Spam-Level:X-Spamd-Result:X-Spam-Score;
-	bh=gf7pTwJPhFzUtbLnWfDnE0wE5d9lqMRUEpjDndG2sW4=;
-	b=32K8ljdcaBVlsNcizo9r+xcZXwcG4giEkwDnsuEisX3boQXGXV8wzQF4ixmXijjPQoe0
-	 YMpuPKFmTJ/lbLt/sgbE3Yy3Zw/SptWnDwEh8RtS7G4Sr9hO+5Yx7MlLJr5hhrqK0FEr1
-	 VkmBQqAjMXIlBh8CWHIVk6wJpd2he5DuPYsiMkf+qjXTV56yMzOBjIFAjDbNzgQZVCwec
-	 RH8moleKD36t1lcSvg1j7D9MmpIz0+CYigUBkwp3IQ8o2Ydq6P207/074GdSiByXUOtDb
-	 TnCY4g0zWok/iRwsATFccDlkmEjc2flDcl2r046RAy0O0pxH/XfT/jGNkF7BXP5g/jw==
+	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Spamd-Result:X-Spam-Score:X-Spam-Level:
+	 X-Spam-Flag;
+	bh=6cUVptpHv3XOVaNUbbyHyVf6R5LgqLqMQhFeVA4GL+o=;
+	b=TmCXuTWdpbV2kSo9xvVye4B94KY/4Jg/SHwK6fEB+hwMdj5hjGPO8hwMk9JjYsmHwqts
+	 Dye0Gvu42x2GYg1A+p/uKB7FOr3ZztRjEULq8c+0gu632hCVAr9CoY34Ezamt79nOCCgI
+	 40I9pImEaG2wQ6KzRqLhlpp20jLm6+pnmF8wb0Qim/bn7FGMVz9BxP6qj2CXvp6S2ddZD
+	 zkG8bAJG/eSNvYTOKOto7kYCHvhm2WEGxKbK3mN8Nll54VQ3BljK6BnAsTJVq/aXiabUM
+	 1ySXazswzt0yHgW2AzG5AbEC5280c4CoA/sr6NRoEeZkWn8T76UMGAPKJ+hQm1ZIIzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Tl7anW6B;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=f9drRnks;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Tl7anW6B;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=f9drRnks;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=eebLj8cv;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="aJuaYI/2";
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=eebLj8cv;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="aJuaYI/2";
 	arc=none smtp.remote-ip=195.135.223.130
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7827606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 08:47:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7827606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A830A606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 08:47:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A830A606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Tl7anW6B;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=f9drRnks;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Tl7anW6B;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=f9drRnks
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=eebLj8cv;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=aJuaYI/2;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=eebLj8cv;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=aJuaYI/2
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 0D93B21F49;
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 5E14621FC4;
 	Tue, 10 Nov 2026 08:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
 	t=1794300435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=gf7pTwJPhFzUtbLnWfDnE0wE5d9lqMRUEpjDndG2sW4=;
-	b=Tl7anW6BmKqc2elIgxRlEJ5FM+FiqHaE61gVTDRL/ky1stHaAMRLALM38scHYIaPfer1QJ
-	ue33wHWTqTL+Sr++5cJm1DpCd44s9lJH8JRkmfeRW4j5D+NCzEw0IgMZZFtrNjUuCIrFr5
-	/8pMhCQ6yKNqfkK+GpWkYJSQAay4zbs=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6cUVptpHv3XOVaNUbbyHyVf6R5LgqLqMQhFeVA4GL+o=;
+	b=eebLj8cvEvvdbsO2UC7dRmP34GDW8HhmzWuYQtUTofcSM4VN3PiKBs+BzfjdQ/1EC4exfG
+	fIbo92NKKFSs2CqFj+CLCr91Y6mq9NUi7W8Sm1ne6ylYB16ARgd+kzZM6noPFLtURIObiQ
+	atHFYvWaRDyMTt5epeu+op4ma7CoNwU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
 	s=susede2_ed25519; t=1794300435;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=gf7pTwJPhFzUtbLnWfDnE0wE5d9lqMRUEpjDndG2sW4=;
-	b=f9drRnksGQ5uESjzkO98F1QKCV819slfRgolVfNI79QPapfnT3br/+oemaWYXkipeRtDk9
-	YIcYPWGoDSg5WZAA==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6cUVptpHv3XOVaNUbbyHyVf6R5LgqLqMQhFeVA4GL+o=;
+	b=aJuaYI/2/crlSnjQDkqTdUcrYBVduEgQAUlLft2Qo6y/+EH31gPgtYTfOJ0OAOxnoCw8z4
+	UH3y06vFzBpZCIBA==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
 	t=1794300435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=gf7pTwJPhFzUtbLnWfDnE0wE5d9lqMRUEpjDndG2sW4=;
-	b=Tl7anW6BmKqc2elIgxRlEJ5FM+FiqHaE61gVTDRL/ky1stHaAMRLALM38scHYIaPfer1QJ
-	ue33wHWTqTL+Sr++5cJm1DpCd44s9lJH8JRkmfeRW4j5D+NCzEw0IgMZZFtrNjUuCIrFr5
-	/8pMhCQ6yKNqfkK+GpWkYJSQAay4zbs=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6cUVptpHv3XOVaNUbbyHyVf6R5LgqLqMQhFeVA4GL+o=;
+	b=eebLj8cvEvvdbsO2UC7dRmP34GDW8HhmzWuYQtUTofcSM4VN3PiKBs+BzfjdQ/1EC4exfG
+	fIbo92NKKFSs2CqFj+CLCr91Y6mq9NUi7W8Sm1ne6ylYB16ARgd+kzZM6noPFLtURIObiQ
+	atHFYvWaRDyMTt5epeu+op4ma7CoNwU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
 	s=susede2_ed25519; t=1794300435;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=gf7pTwJPhFzUtbLnWfDnE0wE5d9lqMRUEpjDndG2sW4=;
-	b=f9drRnksGQ5uESjzkO98F1QKCV819slfRgolVfNI79QPapfnT3br/+oemaWYXkipeRtDk9
-	YIcYPWGoDSg5WZAA==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6cUVptpHv3XOVaNUbbyHyVf6R5LgqLqMQhFeVA4GL+o=;
+	b=aJuaYI/2/crlSnjQDkqTdUcrYBVduEgQAUlLft2Qo6y/+EH31gPgtYTfOJ0OAOxnoCw8z4
+	UH3y06vFzBpZCIBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 92386134F4;
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E613313479;
 	Tue, 10 Nov 2026 08:47:14 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id GTbNGhLa8mojQwAAD6G6ig
+	id GTbNGhLa8mojQwAAD6G6ig:T2
 	(envelope-from <tzimmermann@suse.de>); Tue, 10 Nov 2026 08:47:14 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: ville.syrjala@linux.intel.com,
@@ -101,11 +106,14 @@ To: ville.syrjala@linux.intel.com,
 	louis.chauvet@bootlin.com
 Cc: dri-devel@lists.freedesktop.org,
 	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 0/2] drm/vblank: timer: Fix race condition in enable_vblank
-Date: Tue, 10 Nov 2026 09:45:18 +0100
-Message-ID: <20261110084710.503870-1-tzimmermann@suse.de>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	stable@vger.kernel.org
+Subject: [PATCH v2 1/2] drm/vblank: timer: Do not block within critical section
+Date: Tue, 10 Nov 2026 09:45:19 +0100
+Message-ID: <20261110084710.503870-2-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261110084710.503870-1-tzimmermann@suse.de>
+References: <20261110084710.503870-1-tzimmermann@suse.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -117,77 +125,145 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-12.30 / 50.00];
+X-Spamd-Result: default: False [-16.30 / 50.00];
 	SUSE_INTERNAL_BYPASS(-9.00)[];
+	REPLY(-4.00)[];
 	BAYES_HAM(-3.00)[100.00%];
 	MID_CONTAINS_FROM(1.00)[];
 	NEURAL_HAM_LONG(-1.00)[-1.000];
 	NEURAL_HAM_SHORT(-0.20)[-1.000];
 	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,redhat.com,broadcom.com,bootlin.com];
 	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
 	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -12.30
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,bootlin.com:email,lists.freedesktop.org:email,intel.com:email,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -16.30
+X-Spam-Level: 
+X-Spam-Flag: NO
 
-Busy-waiting in drm_crtc_vblank_start_timer() until a previous vblank
-timer has completed can deadlock. Rework how the vblank timer's start
-and cancel helpers interact with the timer function.
+Remove try-to-cancel loop from drm_crtc_vblank_start_timer() to avoid
+a possible livelock while spinning within the loop. Hold interval_lock
+when starting and forwarding the vblank timer's hrtimer to avoid
+forwarding an already queued timer.
 
-Patch 1 fixes the possible deadlock by removing the busy-wait loop from
-drm_crtc_vblank_start_timer(). To avoid possible interference between
-_start_timer()'s hrtimer_start() and hrtimer_forward_now() in the timer
-function, extend the interval_lock around both. Both, _start_timer() and
-the timer function, can still overlap, but hrtimer initialization should
-work reliably. At most, the first vblank event after changing the interval
-might be off.
+The vblank helper drm_vblank_disable_and_save() and the vblank IRQ
+handler hold the spin lock vblank_time_lock at some point. This can
+result in a deadlock if the vblank timer's disable code in
+drm_crtc_vblank_cancel_timer() calls hrtimer_cancel() directly: the
+helper waits for the timer function to complete and the timer function
+waits for the helper to release vblank_time_lock.
 
-Fix the possible overlap by canceling the vblank timer's internal hrtimer.
-Do this outside of the vblank code's critical section after switching
-the vblank timer off. With the hrtimer being canceled, the next vblank
-event will be sent at the correct time.
+drm_crtc_vblank_cancel_timer() works around this problem by calling
+hrtimer_try_to_cancel() instead. For re-enabling the vblank timer,
+drm_crtc_vblank_start_timer() currently waits for the vblank timer
+to stop. It runs into the same locking problem while waiting for the
+timer function to complete.
 
-Tested with bochs on qemu.
+Resolve the locking problem by removing hrtimer_try_to_cancel() from
+drm_crtc_vblank_start_timer(). Hold interval_lock while starting or
+forwarding the hrtimer. Without holding interval_lock,
+drm_crtc_vblank_start_timer() could set an interval and start the
+hrtimer; while a concurrent timer function forwards the timer with the
+old interval. This can corrupt the ordering of the hrtimer's internal
+queue. Holding the lock prevents this from happening.
 
-Additional notes: there have been reports about vblank timers not happening
-in time, such as [1]. We suspected that might happen due to guest systems
-running under high CPU load. But the problem could also be caused by the
-deadlock fixed in patch 1.
+When starting the vblank timer, it is still possible that an already
+running timer sends out a vblank event at the previous vblank interval.
+This is merely an inconsistency and not critical.
 
-v2:
-- handle uninitialized timer in drm_crtc_vblank_cancel_timer()
+Closes: https://lore.kernel.org/dri-devel/20260914111129.300691F00898@smtp.kernel.org/
+Suggested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
+Cc: Louis Chauvet <louis.chauvet@bootlin.com>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.19+
+---
+ drivers/gpu/drm/drm_vblank.c | 34 ++++++++++++----------------------
+ 1 file changed, 12 insertions(+), 22 deletions(-)
 
-[1] https://lore.kernel.org/dri-devel/6a176ae6.d07c18fe.1069e4.0016.GAE@google.com/
-
-Thomas Zimmermann (2):
-  drm/vblank: timer: Do not block within critical section
-  drm/vblank: Cancel vblank timer outside of critical section
-
- drivers/gpu/drm/drm_vblank.c         | 90 ++++++++++++++++++----------
- drivers/gpu/drm/drm_vblank_helper.c  | 16 +++++
- drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c  |  3 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c |  2 +
- drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c |  2 +
- drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c |  2 +-
- include/drm/drm_crtc.h               |  9 +++
- include/drm/drm_vblank.h             | 16 +++++
- include/drm/drm_vblank_helper.h      |  2 +
- 9 files changed, 108 insertions(+), 34 deletions(-)
-
-
-base-commit: 7d502136b31169f6b5575f7f89c3da60cdf7891d
+diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
+index f90fb2d13e42..8cc8d018d353 100644
+--- a/drivers/gpu/drm/drm_vblank.c
++++ b/drivers/gpu/drm/drm_vblank.c
+@@ -2179,19 +2179,18 @@ static enum hrtimer_restart drm_vblank_timer_function(struct hrtimer *timer)
+ 	struct drm_crtc *crtc = vtimer->crtc;
+ 	const struct drm_crtc_helper_funcs *crtc_funcs = crtc->helper_private;
+ 	struct drm_device *dev = crtc->dev;
+-	unsigned long flags;
+-	ktime_t interval;
+-	u64 ret_overrun;
++	u64 ret_overrun = 1;
+ 	bool succ;
+ 
+-	spin_lock_irqsave(&vtimer->interval_lock, flags);
+-	interval = vtimer->interval;
+-	spin_unlock_irqrestore(&vtimer->interval_lock, flags);
++	scoped_guard(spinlock_irqsave, &vtimer->interval_lock) {
++		ktime_t interval = vtimer->interval;
+ 
+-	if (!interval)
+-		return HRTIMER_NORESTART;
++		if (!interval || hrtimer_is_queued(timer))
++			return HRTIMER_NORESTART;
++
++		ret_overrun = hrtimer_forward_now(timer, interval);
++	}
+ 
+-	ret_overrun = hrtimer_forward_now(&vtimer->timer, interval);
+ 	if (ret_overrun != 1)
+ 		drm_dbg_vbl(dev, "vblank timer overrun\n");
+ 
+@@ -2220,7 +2219,6 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
+ {
+ 	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+ 	struct drm_vblank_crtc_timer *vtimer = &vblank->vblank_timer;
+-	unsigned long flags;
+ 
+ 	if (!vtimer->crtc) {
+ 		/*
+@@ -2230,22 +2228,14 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
+ 		spin_lock_init(&vtimer->interval_lock);
+ 		hrtimer_setup(&vtimer->timer, drm_vblank_timer_function,
+ 			      CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+-	} else {
+-		/*
+-		 * Timer should not be active. If it is, wait for the
+-		 * previous cancel operations to finish.
+-		 */
+-		while (hrtimer_active(&vtimer->timer))
+-			hrtimer_try_to_cancel(&vtimer->timer);
+ 	}
+ 
+ 	drm_calc_timestamping_constants(crtc, &crtc->mode);
+ 
+-	spin_lock_irqsave(&vtimer->interval_lock, flags);
+-	vtimer->interval = ns_to_ktime(vblank->framedur_ns);
+-	spin_unlock_irqrestore(&vtimer->interval_lock, flags);
+-
+-	hrtimer_start(&vtimer->timer, vtimer->interval, HRTIMER_MODE_REL);
++	scoped_guard(spinlock_irqsave, &vtimer->interval_lock) {
++		vtimer->interval = ns_to_ktime(vblank->framedur_ns);
++		hrtimer_start(&vtimer->timer, vtimer->interval, HRTIMER_MODE_REL);
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.56.0
 
