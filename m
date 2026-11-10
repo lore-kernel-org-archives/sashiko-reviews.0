@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794274584;
-	b=jEKr9SZLH788/YF7z0A/lSFOWHCZ1MjhSPJxwLURHPkYnFOQeqN4KN0/PaYEE1kB/tWp
-	 D55rYRhUJla+/S7THnYeYt6A+nCblx9xlHsrNVVG+W1Fx5FxYvr1OzP7SS0Pa4aslmIPx
-	 Q23bh4OzW8Doft9WF7Vh0tXHM7pmNnkAJqfZhEc18gftQYYqHE6VJfdvCZxD2b9MC4cCH
-	 0b0ec/hBxyfZpW9zJhUNdm7Q7fF1SBNqqWppYm8YK3P1cauzHxGLP7WIGkYqs+UM4eCUU
-	 W1TUbWjBr3ZqRndIbHWOgFQIKaiIgIQfrDakhRi44Cxr1wWaynFuAbzTpTfAFQhD1Rw==
+	t=1794274660;
+	b=3qYDNZF7aFx6FkXlm8hxuNy9IEaUHiDK8nnQ4jgj7AzqLKIaXFwk9yoKuvHRad9pYMj1
+	 tbwlZOsIhuI2CyCOWKfnK/ResTaVi60fErP10lmOqhtazn5Hn0RguBAxu+ROHnNYaFU05
+	 Yn+861k4NGlxM8Wv/6h80ufU7D/PcR5wVNzFXn2tvzf/S8QduVH+JkJwLPuSv6WVhuA+c
+	 R/B8wQfCHFJTW4ZNnLJGVc6sT5QBBg+8x20gAEYvpHQwDVLDlBVCCJRFp072L82XOb6Os
+	 /ggt4HZxiLkFqekrspy/W6eafDaItvgCpbMO2gL3Zpqs0gya937wG2cKKr7/9WkzB2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794274584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794274660;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=T4Ebh8dhdAtqQW32OzgRtdpRlNomsu9HMRNHYFGmf0o=;
-	b=ZVgVuxVq1buZvHS6MtLRPAv0aMNnLghBBjmyWyRas7ZaOP6sxEt1UUiqSAaNjWdFVo0p
-	 5hOGvDuiekJZwCkw9ksRruloZlhFqUcUvVDmsU52FRDCmw44HRoKD4b0yr3746oRdpHk6
-	 BDzj509gi0+qnaaUcB1aEC2NT21Rv8x9U9jk7Gw1IZx53n2bAatiUFxIbKdAB6rMZX+q0
-	 vRNI8QedwyHwFRykAMV0Avs/tmAR+qhmGH8N4DszHa/z5haFF6cVemwpyN1xYVcmAVYgP
-	 WLksBqT5+CmC+lMYzoCeuebUYJqIC+wI8/DEGY8eSJqLobAo01ALqCGbMnVJUC6FVfw==
+	bh=3ifG6N3GjuE9TBQMDJaU7DFuzuDNphSyfQc7VRPrMxs=;
+	b=Qsbm+2xjFMND2KOgAF1RgGuR/GnY77cyWEfAV0Qxo2cM8CWMLkDMBMbgN1HR35oPBJiS
+	 pm9qabN4QZKUGQbzlBWIgIVIvVLWwR7NHrPbmfc8yw3lJGQR0raFor/jjdnZ8GOxGnwzH
+	 7+Xs0YyhH57yRjZQQoygA7pLGVkVQDLQ1BMVmtHivm3XSuRdn67zddVAO7D0x5nRLc3T/
+	 YFVqQUwew1sK/kFRmq+0LAgQQJbRLytZoLxNDZP4lJb1QmfL2liVHAb7hc3t52VlffWal
+	 UFQNjrZKAL1RRsYLsPdexdOWvGacytj3S8OQr4Bm1O5DGtEZMe4GIvHrh8/szeNEqPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DRfxedrE;
-	arc=none smtp.remote-ip=209.85.216.51
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="D8Fn/iRP";
+	arc=none smtp.remote-ip=209.85.215.173
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6CD606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 01:36:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A6CD606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E8D606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 01:37:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 49E8D606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DRfxedrE
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3ae7626d14aso774429a91.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 17:36:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D8Fn/iRP
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-cdab8873d9dso619404a12.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 17:37:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794274583; x=1794879383; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794274659; x=1794879459; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=T4Ebh8dhdAtqQW32OzgRtdpRlNomsu9HMRNHYFGmf0o=;
-        b=DRfxedrEZRdc5EGI9XC21YxIq9Ldnltn+ZfN4vBmYn2N7b5RZsW7tuT14HK2UPRoGP
-         GCSlkdWgE8MhKpZ5TyYBR6PaeUQ/n5Rwsf1ZyI1CFOHHT6lUiN31iWUuCT6ml1fIgZMR
-         1Hb7N9aHS5adb6Xw94/wYuqj3GNJ7ns0HRzBiyUSEMvSkRHjxFsiWbwyQci8B3VcQRFb
-         PtfHtAAumpzzs+mG9HCBRTQMsu+6lLamzUipPpTxZhw+7uYL3fAX4PI1s6zhZPcTSDZ+
-         SibLef9gcFVbbfrwjcHvRhGlex1P5QUBPMMw1WyY38y9HAcVU0OgifTjitjT3mjCq112
-         +fQQ==
+        bh=3ifG6N3GjuE9TBQMDJaU7DFuzuDNphSyfQc7VRPrMxs=;
+        b=D8Fn/iRPpFY0WIvqkOhDb6shEFktyjM9/eOkwfH4CrB3WLaTbjVzrsrAocZOn8gD+8
+         8JUUBPyXCCeRTdTkv1mk+BlYPyIkgFDDWBDAmnqV7jaGKlSqpLcjU25i+N/Fk683eDvs
+         QRso8CgVAyGU01QCFhBLr9G7ZbaQaN8vhbVxH1QVWS/1ZMHibO2zaS0KAuoRJWm93iM3
+         X2/9HSDDwgKM7aI22k1CZtKs8A2DLfkxdjeov3glx7ixVkSa5KSctCPJSt1xVF8i5B/0
+         zBTZXTrXE1GVUryMI0XgO6YTiGBuXfQ5KX0sDH2Ncv7WmluyBbVODnVum4hd3/7ZOM7g
+         mnmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794274583; x=1794879383;
+        d=1e100.net; s=20260707; t=1794274659; x=1794879459;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=T4Ebh8dhdAtqQW32OzgRtdpRlNomsu9HMRNHYFGmf0o=;
-        b=cB5w1zAsd/Jv7QNjBuD4RkVxn94zheWYAe3N25+Ukrnriq6Dx+1Lzidm8SsxJo7lYv
-         4H3jMd7wzQqI/3r2E4gMJnUY7K2bvs2u7zYL30Ox+obrzVdh4KxmdXNTM7ZnyFk3x3ss
-         ngNXspyGcuuf+MoyjwMj7Bnn0c2axhDVj3pSglXD6I2hDB4ofa+xe2s4DWkFlNIGsP3g
-         bHNytilSC9KrwWwOPf7/5kIvW4w7fC319wLI4FRSGTboyEGMsVjYXpTQxt3pqgRrcpfd
-         6ls6Yn457/EakVmFzU6PBPD2jvAl32LohQVOSjw1ANMojz5fdxb0h5twGZwpqWLT3dWA
-         sPEA==
-X-Gm-Message-State: APuU4Z8/TOJzxPIB+QBx8PIc6ahrDsAHtVg26aWXITzHSdtIOLvvr1lG
-	5+RnIDSjkde80sm+sM+YvoOKmt5yHp/GvbCStxrGwkg6Bi/AreR0VrWhZgSGMQ==
-X-Gm-Gg: AYBFou2ajKx1oKhxqLlB2gN8VGFR/UmPVvA6HAlPf8gDYYas5dmetQNouIZP1E7wpqY
-	UfbsBTFG/tw1hBnxBIQW6KgbYasNnEIDk6iuSL0qfhrVxTGcD626/W6pcpzjgPbILE5qwg5DSOT
-	c3CiXk3+zI6oTN+VFxqn8/e3xz3cQQn8ihS0I1wDr4zExxZLckA+Q1fwKWpBNI2lK7E4CWWf/7n
-	yfwzmjQI5Pj9g7Svrn4iplPLsKlvC1uNPDLNc7mFXsavkNI+lI+VwpTOhxu4LuhZEuu7ikL4sSz
-	rIMtMceblLux9NFH+jBR8nhfiKFtDw2mN2T6x+8Cnhq2t/ClKVPw0KAMfy7Bt6Duky2+a8Y7euZ
-	4xll/G2KuqfF2GdEXvYh9o+SQuQnmGYMhJ6lsFgCRuT3WVpT7JzomjHI9K7Cpu7GVNZbiG7V+nx
-	wMMtfs6wMtto3YIIyrYLhsOvoLlNfFn7cvX0EUUZYGIda20ls5PNPICJpGZP5pRcMIZgWiS2ZpR
-	Ov5sii++DkpnYUfsiz/24R8UjdKaefaNkLnOQ2FiY1gp/zrvaN7UX979UMZQewbIwZYEOSWJ12L
-	32GEeaDJ2+sqKGdYU8uThj9HICgOLjml5KMMfTwJHmKwXknQ0PBv4CMTYeeDX0sf0csncTUL8ZA
-	A2ploxHBUKA==
-X-Received: by 2002:a17:90a:ec83:b0:3a7:b260:9ced with SMTP id 98e67ed59e1d1-3b166cecc28mr1338219a91.58.1794274582333;
-        Mon, 09 Nov 2026 17:36:22 -0800 (PST)
+        bh=3ifG6N3GjuE9TBQMDJaU7DFuzuDNphSyfQc7VRPrMxs=;
+        b=LfnVJ3FpAR+uQmwIU+qOeyekdqOSJuN3xAmHLrd6qmJoJVW57brDnZNEat92rGSLyB
+         MHpcUT31jBtc2L42ZjliU5C5FBKAF2YA2hxIUVFSKkufK+vONmJoRqry+46NsPjEXIZb
+         k40wmJs1nKzxMvQmsaK1LDKxFzL33vA/TCkZyS7bfs8sZvqoYlj2EOjzzvKzGNYNSpjc
+         GCR/lqoPxsHlsisRHWoDK71mhZeucmGfV5AjOQJ8I+oznIP3+iHnNL4dItEqHKtZ7CSQ
+         EkPp10jA6QwMIrINOvHD/e460kL3/slacmkLAPDLDCWJnaCAPJx2IZGFxnha2DkOSSsK
+         kDiQ==
+X-Gm-Message-State: APuU4Z+GFqnldpoJ+OVqv757MHHGfiNILe6EpcOQl0FD7yHd55BrxXHC
+	OR6RnXZcAX1AykLLDGmTyBv6oyLLtOhsusl+k0vEfg6GfHx8Hiq6b5C47EOadw==
+X-Gm-Gg: AYBFou2KiK6L+rAkaT6s9sX/4n7WtnhhORRuvgo6em8YM/SHAeaZvskyKD8OcHHezNQ
+	xCWcVhmc0Lbcl6wyZ0z4oLnQzMtjbiH9s86JrpidlwX7oDV5RS2g7hXDqVcYns/n7ls0lxneQcC
+	NQtmholwl7byviJIvBY9T3vS9cKO785A9+9Rk7Mzt86LNfnSTplHUMvKp1dDkKmKtjNllWxvzxs
+	UBSx6bAtCNAh0Il8u7ib7fMOtUJa8ek2FqXtYitz+so78s4q/nktI5BgzVEmbtK7ssWtIbKXI8b
+	4yLCpeVv4xglc1lH2L10a3OtOQxCsudGqzj27V3XpGg/X3O8KVT5wKX6YllWdiBE7FwSAlprnVc
+	kpCUJhMwFROMSAmTOIPjITntBVeCo1jmkTcGZjbHbCwcyqzpzhnQ0ymJKhR1dMSPMtzdlFBdkQ+
+	16gBNiY1B2Q3y6AdtPoDPhb0eNYn0O/ZgNhW14l8an+Joxj2M3jNFv7m523jtSQRriEaMAEN7Lv
+	Ury9s1CR2oz+DfooXLOj++SUkThBdAgL3Ftsm86RKPRkHXArSV1X1Hvby5S3IItjlWRUS8wRn/8
+	LP44MgutPGrioUdhhXap+RiPEVx8INEitjO/mwUySAxlnOdq5tvtrzUCDI8Ep2OEU0qWIJTOjxK
+	TxVPMreiKMw==
+X-Received: by 2002:a17:90b:2e49:b0:3ae:8106:6074 with SMTP id 98e67ed59e1d1-3b166c92193mr1307280a91.16.1794274659234;
+        Mon, 09 Nov 2026 17:37:39 -0800 (PST)
 Received: from [192.168.0.100] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b594sm1694983a91.6.2026.11.09.17.36.20
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16792aabfsm1657287a91.12.2026.11.09.17.37.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Nov 2026 17:36:21 -0800 (PST)
-Message-ID: <84e38db6-ebd4-4b32-a36a-32f36bff3550@gmail.com>
-Date: Tue, 10 Nov 2026 09:36:18 +0800
+        Mon, 09 Nov 2026 17:37:38 -0800 (PST)
+Message-ID: <81e91f05-f172-4bbf-b5a6-76f2767ea82b@gmail.com>
+Date: Tue, 10 Nov 2026 09:37:35 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -92,71 +92,129 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 2/4] arm64: dts: nuvoton: ma35d1: add USB controllers
- and dual-port PHY node
+Subject: Re: [PATCH v8 4/4] phy: nuvoton: phy-ma35d1-usb2: extend to dual-port
+ with OTG support
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
  robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
  neil.armstrong@linaro.org, olteanv@gmail.com
 References: <20261109065606.62641-1-a0987203069@gmail.com>
- <20261109065606.62641-3-a0987203069@gmail.com>
- <sashiko-outbox-204536@kernel.org>
+ <20261109065606.62641-5-a0987203069@gmail.com>
+ <sashiko-outbox-204535@kernel.org>
 Content-Language: en-US
 From: Joey Lu <a0987203069@gmail.com>
-In-Reply-To: <sashiko-outbox-204536@kernel.org>
+In-Reply-To: <sashiko-outbox-204535@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
-On 11/9/2026 3:16 PM, sashiko-bot@kernel.org wrote:
+On 11/9/2026 3:14 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] arm64: dts: nuvoton: ma35d1: usb@40200000 reg size 0x1000
->    truncates DWC2 FIFOs
+> - [Medium] phy: nuvoton: missing MFD_SYSCON select and unchecked
+>    regmap_read()
 > --
 >
-> commit aa9ff21b68491f1e002468f4d400c0d7fd2b192f
+> commit ce87e45e509dca5386021bb0dd4e3bb91e3935d8
 > Author: Joey Lu <a0987203069@gmail.com>
 >
-> arm64: dts: nuvoton: ma35d1: add USB controllers and dual-port PHY node
+> phy: nuvoton: phy-ma35d1-usb2: extend to dual-port with OTG support
 >
-> This commit adds the dual-port USB 2.0 phy, dwc2 gadget, and ehci/ohci host
-> controller nodes to the ma35d1 device tree and enables them on the som-256m
-> and iot-512m boards.
+> This commit extends the Nuvoton MA35D1 USB 2.0 PHY driver to support both
+> PHY0 and PHY1, updates clock-stability polling in phy_init(), registers a
+> read-only USB role switch for PHY0, and adds resistor calibration and
+> over-current polarity device-tree properties.
 >
->> diff --git a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
->> index 7228ad4735b5c..72a1659207fa7 100644
->> --- a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
->> +++ b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
+>> diff --git a/drivers/phy/nuvoton/Kconfig b/drivers/phy/nuvoton/Kconfig
+>> index d02cae2db315a..1f37e860de507 100644
+>> --- a/drivers/phy/nuvoton/Kconfig
+>> +++ b/drivers/phy/nuvoton/Kconfig
+>> @@ -6,6 +6,7 @@ config PHY_MA35_USB
+>>   	tristate "Nuvoton MA35 USB2.0 PHY driver"
+>>   	depends on ARCH_MA35 || COMPILE_TEST
+>>   	depends on OF
+>> +	depends on USB_ROLE_SWITCH || !USB_ROLE_SWITCH
+>>   	select GENERIC_PHY
+>>   	help
+>>   	  Enable this to support the USB2.0 PHY on the Nuvoton MA35
+>> diff --git a/drivers/phy/nuvoton/phy-ma35d1-usb2.c b/drivers/phy/nuvoton/phy-ma35d1-usb2.c
+>> index 0b9976fb15c17..bc706356c4341 100644
+>> --- a/drivers/phy/nuvoton/phy-ma35d1-usb2.c
+>> +++ b/drivers/phy/nuvoton/phy-ma35d1-usb2.c
 > [ ... ]
 >
->> @@ -431,5 +439,62 @@ mdio1: mdio {
->>   				#size-cells = <0>;
->>   			};
->>   		};
+>> +static int ma35_usb_phy_init(struct phy *phy)
+>> +{
+>> +	struct ma35_phy_port *port = phy_get_drvdata(phy);
+>> +	struct ma35_usb_phy *p = container_of(port - port->idx,
+>> +					      struct ma35_usb_phy, port[0]);
+>> +	unsigned int n = port->idx;
+>>   	unsigned int val;
+>>   	int ret;
+>>   
+>> -	ret = clk_prepare_enable(p_phy->clk);
+>> -	if (ret < 0) {
+>> -		dev_err(p_phy->dev, "Failed to enable PHY clock: %d\n", ret);
+>> -		return ret;
+>> -	}
+>> +	ret = clk_prepare_enable(p->clk);
+>> +	if (ret)
+>> +		return dev_err_probe(p->dev, ret, "failed to enable clock\n");
+>>   
+>> -	regmap_read(p_phy->sysreg, MA35_SYS_REG_USBPMISCR, &val);
+>> -	if (val & PHY0SUSPEND) {
+>> -		/*
+>> -		 * USB PHY0 is in operation mode already
+>> -		 * make sure USB PHY 60 MHz UTMI Interface Clock ready
+>> -		 */
+>> -		ret = regmap_read_poll_timeout(p_phy->sysreg, MA35_SYS_REG_USBPMISCR, val,
+>> -						val & PHY0DEVCKSTB, 10, 1000);
+>> -		if (ret == 0)
+>> -			return 0;
+>> -	}
+>> +	regmap_read(p->sysreg, MA35_SYS_USBPMISCR, &val);
+>>   
+>> -	/*
+>> -	 * reset USB PHY0.
+>> -	 * wait until USB PHY0 60 MHz UTMI Interface Clock ready
+>> -	 */
+>> -	regmap_update_bits(p_phy->sysreg, MA35_SYS_REG_USBPMISCR, 0x7, (PHY0POR | PHY0SUSPEND));
+>> +	if ((val & USBPMISCR_PHY_SUSPEND(n)) &&
+>> +	    !ma35_usb_phy_wait_ready(p, n, &val))
+>> +		goto out;
+> [ ... ]
+>
+>> +static enum usb_role ma35_role_sw_get(struct usb_role_switch *sw)
+>> +{
+>> +	struct ma35_usb_phy *p = usb_role_switch_get_drvdata(sw);
+>> +	u32 val;
 >> +
->> +		usb: usb@40200000 {
->> +			compatible = "snps,dwc2";
->> +			reg = <0x0 0x40200000 0x0 0x1000>;
+>> +	regmap_read(p->sysreg, MA35_SYS_PWRONOTP, &val);
+>> +
+>> +	return (val & PWRONOTP_USBP0ID) ? USB_ROLE_HOST : USB_ROLE_DEVICE;
+>> +}
 > [Severity: Medium]
-> Does the 0x1000 register size for usb@40200000 truncate the dwc2 per-endpoint
-> data fifo region?
+> Can val be used uninitialized in ma35_usb_phy_init() and
+> ma35_role_sw_get() when regmap_read() fails or is stubbed out?
 >
-> A 0x1000 window only covers the core global, host, device, and power control
-> registers (offsets 0x000 through 0xe04), while the dwc2 driver defines
-> per-endpoint fifos starting at offset 0x1000:
+> Neither PHY_MA35_USB nor ARCH_MA35 selects MFD_SYSCON, so PHY_MA35_USB can
+> be built with CONFIG_MFD_SYSCON=n and CONFIG_REGMAP=n.  In that
+> configuration, syscon_regmap_lookup_by_phandle() always fails with
+> -ENOTSUPP, and the regmap_read() stub returns -EINVAL without writing val,
+> causing the compiler to flag val as uninitialized in ma35_usb_phy_init()
+> and ma35_role_sw_get().
 >
-> drivers/usb/dwc2/hw.h:
-> #define EPFIFO(_a)			HSOTG_REG(0x1000 + ((_a) * 0x1000))
->
-> dwc2_driver_probe() maps the exact length from reg via
-> devm_platform_get_and_ioremap_resource().  If the controller runs in slave/pio
-> mode, dwc2_hsotg_write_fifo() and dwc2_hsotg_rx_data() access these fifo
-> registers at offset 0x1000 and above, faulting outside the 4 kb mapping.
-dwc2 register size: valid. dwc2 places the per-endpoint FIFOs at
-0x1000 + n * 0x1000 (EPFIFO() in hw.h), so a 0x1000 window cuts them off.
-The USB0 region in the MA35D1 spec is 0x4020_0000-0x4024_0000, so in v8 I'll
-change it to reg = <0x0 0x40200000 0x0 0x40000>. I checked the other USB 
-nodes
-(EHCI0/1, OHCI0/1) against the spec; their 0x1000 ranges are correct, so
-only this node changes.
+> Selecting MFD_SYSCON in PHY_MA35_USB and checking the regmap_read() return
+> value (or initializing val) would avoid both issues.
+MFD_SYSCON: valid in part. Neither ARCH_MA35 nor PHY_MA35_USB selects
+MFD_SYSCON, and with CONFIG_REGMAP=n the regmap_read() stub returns -EINVAL
+without writing val, so the compiler can warn about val being uninitialized.
+In practice the probe would already fail at 
+syscon_regmap_lookup_by_phandle()
+(-ENOTSUPP) and never reach those paths. The missing dependency is the real
+problem, so in v9 I'll add "select MFD_SYSCON" to PHY_MA35_USB (it selects
+REGMAP_MMIO as well). I'll keep regmap_read() unchecked as discussed with
+Mani, since once syscon is guaranteed the reads are plain MMIO and do not
+fail.
+
+Joey
