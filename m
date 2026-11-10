@@ -1,49 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794269306;
-	b=bhBnT2OcqVaPY/8ZL4sX31N9MNjEvYBa5uEGX1ZG3sdhTDVH8HL1dyzzM+LhCioh0iNr
-	 rQbb5q4NX/ybAdDiRw/jHUVx6y53625OI33sHIRH4XN2rLCmLm8+GufkG4Z0kD2OT9Hl8
-	 rt6OZBMH65hB2nimJwulewIJj2zB+z6UEpjwXbK4pXNzCaCo4yDV+5ZqwroNej/dq5+Ah
-	 FKl4XxluJnjd8e3HvnhYMCaaovSVdm3L7EaupfxWplbhKjJRj/mYZeG1NuecclFVHDq0Q
-	 rS6Q94+kOHbMgGWSutqeZPuB60ChtZWTz1BC/BGyiDNPji+8Bq5FX3ogx6KpGX1W0gg==
+	t=1794274584;
+	b=jEKr9SZLH788/YF7z0A/lSFOWHCZ1MjhSPJxwLURHPkYnFOQeqN4KN0/PaYEE1kB/tWp
+	 D55rYRhUJla+/S7THnYeYt6A+nCblx9xlHsrNVVG+W1Fx5FxYvr1OzP7SS0Pa4aslmIPx
+	 Q23bh4OzW8Doft9WF7Vh0tXHM7pmNnkAJqfZhEc18gftQYYqHE6VJfdvCZxD2b9MC4cCH
+	 0b0ec/hBxyfZpW9zJhUNdm7Q7fF1SBNqqWppYm8YK3P1cauzHxGLP7WIGkYqs+UM4eCUU
+	 W1TUbWjBr3ZqRndIbHWOgFQIKaiIgIQfrDakhRi44Cxr1wWaynFuAbzTpTfAFQhD1Rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794269306;
-	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Status:
-	 X-Spam-Checker-Version;
-	bh=ZAlmiMbCs5Fxt/OX69COOKdAVsxWJrbxSKZq5I1sz6M=;
-	b=JbI7s96Jem1LxMYxp1nleqxHl80aHyR1omzRVABH6EJQpxvT0Zts9R4SL1BtTxGqvjeK
-	 XMetBWb5p+Im3KSK4uwYmN9APLt/lyLJWEoxp2P4TAT16Ytd47ArSfpR5u3P8//0Oin0G
-	 rmaW3jcFsEHmNuni3uqscUkO75DHSCYjE0ZSr7A8pRHzqYzq3upteSMfDF9sLEcivXnIH
-	 DEEWse7YnUcLQxgzwCcyPKuL6xNVR127sj6lz7Gfnuga37k/I4yjVf5FR2IgjISepxwe9
-	 YyvxsyUabL1TpsB0ykq8GlG591H0xD+4xmrElsvssbaOGUjmar3tFnJn87hWkX+vq1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794274584;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=T4Ebh8dhdAtqQW32OzgRtdpRlNomsu9HMRNHYFGmf0o=;
+	b=ZVgVuxVq1buZvHS6MtLRPAv0aMNnLghBBjmyWyRas7ZaOP6sxEt1UUiqSAaNjWdFVo0p
+	 5hOGvDuiekJZwCkw9ksRruloZlhFqUcUvVDmsU52FRDCmw44HRoKD4b0yr3746oRdpHk6
+	 BDzj509gi0+qnaaUcB1aEC2NT21Rv8x9U9jk7Gw1IZx53n2bAatiUFxIbKdAB6rMZX+q0
+	 vRNI8QedwyHwFRykAMV0Avs/tmAR+qhmGH8N4DszHa/z5haFF6cVemwpyN1xYVcmAVYgP
+	 WLksBqT5+CmC+lMYzoCeuebUYJqIC+wI8/DEGY8eSJqLobAo01ALqCGbMnVJUC6FVfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.microsoft.com;
-	spf=pass smtp.mailfrom=linux.microsoft.com;
-	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=W3mBhVmc;
-	arc=none smtp.remote-ip=13.77.154.182
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 679B560A2619
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 00:08:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 679B560A2619
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DRfxedrE;
+	arc=none smtp.remote-ip=209.85.216.51
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6CD606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 01:36:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A6CD606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=W3mBhVmc
-Received: from [192.168.0.88] (192-184-212-33.fiber.dynamic.sonic.net [192.184.212.33])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 7A6FB20B7169;
-	Mon,  9 Nov 2026 16:08:23 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7A6FB20B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1794269303;
-	bh=ZAlmiMbCs5Fxt/OX69COOKdAVsxWJrbxSKZq5I1sz6M=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=W3mBhVmczKwT2hIXaXm9J6i+d+EfIroi2E6ePq3guXRBSuLA98TUZHgxQE273Ivl3
-	 pbpJwWVly/0bIzjOQ8ocqLrnAMtyLWYYwQoxBUFdXeIf2lMrv7pQ8aPeDdjwd2qB6u
-	 cpWgadfKQAxcjLqjoBZv2ln9vvObbflSFOy5SNVg=
-Message-ID: <15b3d0f2-fb44-c1cd-0a77-9c286e97a745@linux.microsoft.com>
-Date: Mon, 9 Nov 2026 16:08:25 -0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DRfxedrE
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3ae7626d14aso774429a91.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 17:36:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794274583; x=1794879383; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=T4Ebh8dhdAtqQW32OzgRtdpRlNomsu9HMRNHYFGmf0o=;
+        b=DRfxedrEZRdc5EGI9XC21YxIq9Ldnltn+ZfN4vBmYn2N7b5RZsW7tuT14HK2UPRoGP
+         GCSlkdWgE8MhKpZ5TyYBR6PaeUQ/n5Rwsf1ZyI1CFOHHT6lUiN31iWUuCT6ml1fIgZMR
+         1Hb7N9aHS5adb6Xw94/wYuqj3GNJ7ns0HRzBiyUSEMvSkRHjxFsiWbwyQci8B3VcQRFb
+         PtfHtAAumpzzs+mG9HCBRTQMsu+6lLamzUipPpTxZhw+7uYL3fAX4PI1s6zhZPcTSDZ+
+         SibLef9gcFVbbfrwjcHvRhGlex1P5QUBPMMw1WyY38y9HAcVU0OgifTjitjT3mjCq112
+         +fQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794274583; x=1794879383;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=T4Ebh8dhdAtqQW32OzgRtdpRlNomsu9HMRNHYFGmf0o=;
+        b=cB5w1zAsd/Jv7QNjBuD4RkVxn94zheWYAe3N25+Ukrnriq6Dx+1Lzidm8SsxJo7lYv
+         4H3jMd7wzQqI/3r2E4gMJnUY7K2bvs2u7zYL30Ox+obrzVdh4KxmdXNTM7ZnyFk3x3ss
+         ngNXspyGcuuf+MoyjwMj7Bnn0c2axhDVj3pSglXD6I2hDB4ofa+xe2s4DWkFlNIGsP3g
+         bHNytilSC9KrwWwOPf7/5kIvW4w7fC319wLI4FRSGTboyEGMsVjYXpTQxt3pqgRrcpfd
+         6ls6Yn457/EakVmFzU6PBPD2jvAl32LohQVOSjw1ANMojz5fdxb0h5twGZwpqWLT3dWA
+         sPEA==
+X-Gm-Message-State: APuU4Z8/TOJzxPIB+QBx8PIc6ahrDsAHtVg26aWXITzHSdtIOLvvr1lG
+	5+RnIDSjkde80sm+sM+YvoOKmt5yHp/GvbCStxrGwkg6Bi/AreR0VrWhZgSGMQ==
+X-Gm-Gg: AYBFou2ajKx1oKhxqLlB2gN8VGFR/UmPVvA6HAlPf8gDYYas5dmetQNouIZP1E7wpqY
+	UfbsBTFG/tw1hBnxBIQW6KgbYasNnEIDk6iuSL0qfhrVxTGcD626/W6pcpzjgPbILE5qwg5DSOT
+	c3CiXk3+zI6oTN+VFxqn8/e3xz3cQQn8ihS0I1wDr4zExxZLckA+Q1fwKWpBNI2lK7E4CWWf/7n
+	yfwzmjQI5Pj9g7Svrn4iplPLsKlvC1uNPDLNc7mFXsavkNI+lI+VwpTOhxu4LuhZEuu7ikL4sSz
+	rIMtMceblLux9NFH+jBR8nhfiKFtDw2mN2T6x+8Cnhq2t/ClKVPw0KAMfy7Bt6Duky2+a8Y7euZ
+	4xll/G2KuqfF2GdEXvYh9o+SQuQnmGYMhJ6lsFgCRuT3WVpT7JzomjHI9K7Cpu7GVNZbiG7V+nx
+	wMMtfs6wMtto3YIIyrYLhsOvoLlNfFn7cvX0EUUZYGIda20ls5PNPICJpGZP5pRcMIZgWiS2ZpR
+	Ov5sii++DkpnYUfsiz/24R8UjdKaefaNkLnOQ2FiY1gp/zrvaN7UX979UMZQewbIwZYEOSWJ12L
+	32GEeaDJ2+sqKGdYU8uThj9HICgOLjml5KMMfTwJHmKwXknQ0PBv4CMTYeeDX0sf0csncTUL8ZA
+	A2ploxHBUKA==
+X-Received: by 2002:a17:90a:ec83:b0:3a7:b260:9ced with SMTP id 98e67ed59e1d1-3b166cecc28mr1338219a91.58.1794274582333;
+        Mon, 09 Nov 2026 17:36:22 -0800 (PST)
+Received: from [192.168.0.100] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b594sm1694983a91.6.2026.11.09.17.36.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Nov 2026 17:36:21 -0800 (PST)
+Message-ID: <84e38db6-ebd4-4b32-a36a-32f36bff3550@gmail.com>
+Date: Tue, 10 Nov 2026 09:36:18 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,142 +91,72 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH] mshv: Do pre-commit before mapping a guest VM GPA
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 2/4] arm64: dts: nuvoton: ma35d1: add USB controllers
+ and dual-port PHY node
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
+ neil.armstrong@linaro.org, olteanv@gmail.com
+References: <20261109065606.62641-1-a0987203069@gmail.com>
+ <20261109065606.62641-3-a0987203069@gmail.com>
+ <sashiko-outbox-204536@kernel.org>
 Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev, linux-hyperv@vger.kernel.org
-References: <20261107024842.3929415-1-mrathor@linux.microsoft.com>
- <sashiko-outbox-202522@kernel.org>
-From: Mukesh R <mrathor@linux.microsoft.com>
-In-Reply-To: <sashiko-outbox-202522@kernel.org>
+From: Joey Lu <a0987203069@gmail.com>
+In-Reply-To: <sashiko-outbox-204536@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/6/26 19:11, sashiko-bot@kernel.org wrote:
+
+On 11/9/2026 3:16 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [High] mshv: GFP_KERNEL allocation in hv_pre_commit_gpa() during MMU
->    invalidation
+> - [Medium] arm64: dts: nuvoton: ma35d1: usb@40200000 reg size 0x1000
+>    truncates DWC2 FIFOs
 > --
-> 
-> commit 326d99247cfb889e00e7b24f8217bcbc574b15e8
-> Author: Mukesh R <mrathor@linux.microsoft.com>
-> 
-> mshv: Do pre-commit before mapping a guest VM GPA
-> 
-> This commit adds an HVCALL_PRECOMMIT_GPA_PAGES step before mapping guest
-> GPAs in hv_do_map_gpa_hcall() to pre-allocate hypervisor data structures
-> and reduce TLB flushes.
-> 
->> diff --git a/drivers/hv/mshv_root_hv_call.c b/drivers/hv/mshv_root_hv_call.c
->> index e761addda50e1..595d044fb9264 100644
->> --- a/drivers/hv/mshv_root_hv_call.c
->> +++ b/drivers/hv/mshv_root_hv_call.c
->> @@ -181,6 +181,54 @@ int hv_call_delete_partition(u64 partition_id)
->>   	return hv_result_to_errno(status);
->>   }
->>   
->> +/*
->> + * Pre commit to reduce TLB flush overheads in the hypervisor. On systems with
->> + * large CPUs, there is signficant advantage to doing this. Pre-commit allows
->> + * the hypervisor to build all data structs needed in anticipation of the map
->> + * gpa hypercall, thus reducing or eliminating deposit page returns from the
->> + * map gpa hypercall, and as a result reducing TLB flushes.
->> + */
->> +static int hv_pre_commit_gpa(u64 pt_id, u64 gfn, u64 num_pages)
->> +{
->> +	ulong irq_flags;
->> +	struct hv_input_precommit_gpa_pages *input_page;
->> +	int rc = 0;
->> +	u64 status, done = 0;
+>
+> commit aa9ff21b68491f1e002468f4d400c0d7fd2b192f
+> Author: Joey Lu <a0987203069@gmail.com>
+>
+> arm64: dts: nuvoton: ma35d1: add USB controllers and dual-port PHY node
+>
+> This commit adds the dual-port USB 2.0 phy, dwc2 gadget, and ehci/ohci host
+> controller nodes to the ma35d1 device tree and enables them on the som-256m
+> and iot-512m boards.
+>
+>> diff --git a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
+>> index 7228ad4735b5c..72a1659207fa7 100644
+>> --- a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
+>> +++ b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
+> [ ... ]
+>
+>> @@ -431,5 +439,62 @@ mdio1: mdio {
+>>   				#size-cells = <0>;
+>>   			};
+>>   		};
 >> +
->> +	while (done < num_pages) {
->> +		u16 rep_count = min(num_pages - done, HV_REP_COUNT_MAX);
->> +
->> +		local_irq_save(irq_flags);
->> +		input_page = *this_cpu_ptr(hyperv_pcpu_input_arg);
->> +		memset(input_page, 0, sizeof(*input_page));
->> +
->> +		input_page->partition_id = pt_id;
->> +		input_page->target_gpa_base = gfn;
->> +
->> +		status = hv_do_rep_hypercall(HVCALL_PRECOMMIT_GPA_PAGES,
->> +					     rep_count, 0, input_page, NULL);
->> +		local_irq_restore(irq_flags);
->> +
->> +		done += hv_repcomp(status);
->> +		gfn += hv_repcomp(status);
->> +
->> +		if (hv_result_needs_memory(status)) {
->> +			rc = hv_deposit_memory(pt_id, status);
->> +			if (rc)
->> +				break;
->> +
->> +		} else if (!hv_result_success(status)) {
->> +			pr_err("%s: failed to pre commit for gfn %#llx done %llu/%llu, status=%#llx (%s)\n",
->> +			       __func__, gfn, done, num_pages, status,
->> +			       hv_result_to_string(hv_result(status)));
->> +			rc = hv_result_to_errno(status);
->> +			break;
->> +		}
->> +	}
->> +
->> +	return rc;
->> +}
->> +
->>   /* Ask the hypervisor to map guest ram pages or the guest mmio space */
->>   static int hv_do_map_gpa_hcall(u64 partition_id, u64 gfn, u64 page_struct_count,
->>   			       u32 flags, struct page **pages, u64 mmio_spa)
->> @@ -205,6 +253,10 @@ static int hv_do_map_gpa_hcall(u64 partition_id, u64 gfn, u64 page_struct_count,
->>   		page_count >>= large_shift;
->>   	}
->>   
->> +	ret = hv_pre_commit_gpa(partition_id, gfn, page_struct_count);
->> +	if (ret)
->> +		return ret;
-> 
-> [Severity: High]
-> Can calling hv_pre_commit_gpa() unconditionally here sleep and enter
-> direct reclaim from an MMU notifier invalidation callback?
-> 
-> mshv_region_interval_invalidate() calls mshv_region_remap_pages() with
-> HV_MAP_GPA_NO_ACCESS while holding region->mreg_mutex inside
-> mmu_notifier_invalidate_range_start(), including when
-> !mmu_notifier_range_blockable(range):
-> 
-> drivers/hv/mshv_regions.c:mshv_region_interval_invalidate() {
-> 	...
-> 	if (mmu_notifier_range_blockable(range))
-> 		mutex_lock(&region->mreg_mutex);
-> 	else if (!mutex_trylock(&region->mreg_mutex))
-> 		goto out_fail;
-> 
-> 	mmu_interval_set_seq(mni, cur_seq);
-> 
-> 	ret = mshv_region_remap_pages(region, HV_MAP_GPA_NO_ACCESS,
-> 				      page_offset, page_count);
-> 	...
-> }
-> 
-> That reaches hv_do_map_gpa_hcall(), which now calls hv_pre_commit_gpa()
-> with page_struct_count (4K pages, with input_page->flags = 0 even when the
-> region was mapped with HV_MAP_GPA_LARGE_PAGE).  If the hypervisor asks for
-> more memory (for example to shatter a 2M SLAT entry into 4K entries),
-> hv_deposit_memory() -> hv_call_deposit_pages() allocates pages with
-> GFP_KERNEL.  This sleeps in non-blockable MMU notifier context, triggers a
-> lockdep splat on __mmu_notifier_invalidate_range_start_map in
-> fs_reclaim_acquire(), and can deadlock if direct reclaim re-enters
-> mshv_region_interval_invalidate() on region->mreg_mutex.
-> 
-
-All pre-commit does is pre-deposit pages, so map hypercall right below
-doesn't keep coming back with insufficient memory. So there is no
-regression here... As for the reclaim notifier issue, it needs to
-be addressed for movable pages, or rather, movable pages needs to
-be re-assessed to resolve such issues.
-
-Thanks,
--Mukesh
-
-
+>> +		usb: usb@40200000 {
+>> +			compatible = "snps,dwc2";
+>> +			reg = <0x0 0x40200000 0x0 0x1000>;
+> [Severity: Medium]
+> Does the 0x1000 register size for usb@40200000 truncate the dwc2 per-endpoint
+> data fifo region?
+>
+> A 0x1000 window only covers the core global, host, device, and power control
+> registers (offsets 0x000 through 0xe04), while the dwc2 driver defines
+> per-endpoint fifos starting at offset 0x1000:
+>
+> drivers/usb/dwc2/hw.h:
+> #define EPFIFO(_a)			HSOTG_REG(0x1000 + ((_a) * 0x1000))
+>
+> dwc2_driver_probe() maps the exact length from reg via
+> devm_platform_get_and_ioremap_resource().  If the controller runs in slave/pio
+> mode, dwc2_hsotg_write_fifo() and dwc2_hsotg_rx_data() access these fifo
+> registers at offset 0x1000 and above, faulting outside the 4 kb mapping.
+dwc2 register size: valid. dwc2 places the per-endpoint FIFOs at
+0x1000 + n * 0x1000 (EPFIFO() in hw.h), so a 0x1000 window cuts them off.
+The USB0 region in the MA35D1 spec is 0x4020_0000-0x4024_0000, so in v8 I'll
+change it to reg = <0x0 0x40200000 0x0 0x40000>. I checked the other USB 
+nodes
+(EHCI0/1, OHCI0/1) against the spec; their 0x1000 ranges are correct, so
+only this node changes.
