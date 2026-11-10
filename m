@@ -1,118 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794300451;
-	b=IWtOmV5Pi73IVSReipFRpRzTflFVoiHo/eFicGdGvmAkYBCRfg5w3IMr6Jhf99RFq3JG
-	 0GUO3kOlnocVOF3wL2kiv3tA1lEbrHCg/Ie+cV/ox6iD53TYsPteoF0A6aGqGzGD20YbD
-	 FH8XqVHArxEnAbKPKofGerAJ9SWynKP4T3xXPnFW8oQ54JFnWrs0MQl081Fl6bhUlmpP0
-	 iCMxXrbWdmdwhA2gaq2cn0HEOxuPBA6iRra4suHij02bVZNoCrtlEpERxQYt+vUhhQTMR
-	 aBEnEHEzWB8oPY9SaUJ96VjoSAcD+59r7k7VPLabrDvilZ2od8czEifxuxd/Eo7azSA==
+	t=1794301635;
+	b=Ar9pw+SxiCx7TE2rEsPoKHbLNxLCLsJgfHUxK4Lzpxkit5NqGTA0J7S31pAFvK6cBHnl
+	 gatQoAxbNNPesqFDQ/zjUM4e7d316NSVyC8/6Z95PZJa4oj4ECYTBTS+a2yRBgz/3ROLD
+	 iJCMDDiZLdr/CSkd584BK8qo412Nnw0Iulwl2AuldraH5cTPcc2tgtIn2bw+esMRIKN9K
+	 oqSE0vUdIaeIHI6mXPWzOYSHUAzQjY99tH+ytW0wB5I1+lwwXzDRqSatMfVtxYDp7c/6w
+	 HmAVyGGoEx0RRuGjmpW5RY+AL1dcIwnPg6FoDWspQp+Lr7DXk91dLNx3w3xOxAYqrnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794300451;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=wjLCFHMq4L7EraxJkCj/mFTRxT9QiHb57xgvmsJUPoM=;
-	b=d5sOerMeeXKPk14QoRqJ47rQKyiixDh0FAbwiNJZZHYVm+Dnqg5rtILW9OasCbEszkEJ
-	 M7z7d5OuK+WQDTNB790zEDDJ33cWQ7n6yL2alrHq96H74IIWyr9eipNIqIyBEwJeGEEG7
-	 4GTVTT5FoIdWWyYL6NhpHvXZgGqA2SRKRejn2lhAl2P/ik7qxbqXtHThmcGrblKIE7KHN
-	 a5w0pik6bgoeDnv3SG54BTuknL1ScGICcagdY/4tJoBcR3p1GxdszIjEl1prRKQFJA+uz
-	 f1uHXH8/dqoJJBeYwS506B1wUW+w0g8gNW6xFefXRx3w8VIrXPMuyBAnY7Emz1H8ulQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794301635;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=OD0A0N5jCafTuhqB9U387BTo/UUFlEn4+AHiFajNJbc=;
+	b=P3mYBETiDKg5ZdSRYAyr/0F2pP4N+N2cCLgoqe8C8NDGqB++qjwVafXXoOW0k71l6bxv
+	 QsSbWY8iPZpmeVfpOUEdTEM4XhjjvDXmjO1G9JGVKmTuVnXLO5FzczQjyMmS8RYikN19K
+	 v4adT2gVmks8VVzk6sG/0a8lEUoIw/VIRH3jUQTl6GaxTgHwBp8G86vCIizQHsXeNFm5Y
+	 FB+0e+EeAT4cts4F1YPifJyQkY6MxWz/iWlJ58VxB/R8znLiNNVmOLunhCKq9dDRAmC0s
+	 8LIcWLtEATltA3fZ/p7TpFtClsIEwQa3yFxN5kUL5tUeHB2RpwoUbJQK7k1Kjx0lwnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=wiGyt9kG;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FimjtOch;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=wiGyt9kG;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FimjtOch;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EMe5Ued2;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1413606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 08:47:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1413606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B841606A31C;
+	Tue, 10 Nov 2026 09:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=wiGyt9kG;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FimjtOch;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=wiGyt9kG;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FimjtOch
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id A9E9E22054;
-	Tue, 10 Nov 2026 08:47:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794300435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wjLCFHMq4L7EraxJkCj/mFTRxT9QiHb57xgvmsJUPoM=;
-	b=wiGyt9kG5wDm93ebHyG1FtWau2cIahpr0w9F6BqTBlUV7+4pEUW5Bt+uplbTb/uo2KZ1qj
-	IW8Q2Jq0tX5UjS/qU3VIsUf2zN4yoEWr3IpOfCqf/bVsiu+dg15autnlYwxYQSvUHREv2N
-	ISBNZVi4UZdVheu+bvnJAz0w3XzRev8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794300435;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wjLCFHMq4L7EraxJkCj/mFTRxT9QiHb57xgvmsJUPoM=;
-	b=FimjtOchf9kMW6yNdyc5Ge27GQprQ2HaqLgnDqHrJ/P27nD28bSGMrkYgl0wIvgreTejFU
-	wi240PWWqy6BpmDA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794300435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wjLCFHMq4L7EraxJkCj/mFTRxT9QiHb57xgvmsJUPoM=;
-	b=wiGyt9kG5wDm93ebHyG1FtWau2cIahpr0w9F6BqTBlUV7+4pEUW5Bt+uplbTb/uo2KZ1qj
-	IW8Q2Jq0tX5UjS/qU3VIsUf2zN4yoEWr3IpOfCqf/bVsiu+dg15autnlYwxYQSvUHREv2N
-	ISBNZVi4UZdVheu+bvnJAz0w3XzRev8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794300435;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wjLCFHMq4L7EraxJkCj/mFTRxT9QiHb57xgvmsJUPoM=;
-	b=FimjtOchf9kMW6yNdyc5Ge27GQprQ2HaqLgnDqHrJ/P27nD28bSGMrkYgl0wIvgreTejFU
-	wi240PWWqy6BpmDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 45E4E134F4;
-	Tue, 10 Nov 2026 08:47:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id GTbNGhLa8mojQwAAD6G6ig:T3
-	(envelope-from <tzimmermann@suse.de>); Tue, 10 Nov 2026 08:47:15 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: ville.syrjala@linux.intel.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	javierm@redhat.com,
-	zack.rusin@broadcom.com,
-	louis.chauvet@bootlin.com
-Cc: dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 2/2] drm/vblank: Cancel vblank timer outside of critical section
-Date: Tue, 10 Nov 2026 09:45:20 +0100
-Message-ID: <20261110084710.503870-3-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261110084710.503870-1-tzimmermann@suse.de>
-References: <20261110084710.503870-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EMe5Ued2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4716F1F0089F;
+	Tue, 10 Nov 2026 09:07:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794301635;
+	bh=OD0A0N5jCafTuhqB9U387BTo/UUFlEn4+AHiFajNJbc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=EMe5Ued2ovNBDBFFJbHDxkdMQTtfxPaa/IcyHmBQZndOkHtQf56/hjPEe5d1pZD6U
+	 HvmQCaG47iKvJgBtUon4vIu7nAujZR+mdoe9KSz5X6yXMQds+KhlvOIaQdfnbm653+
+	 tzIdEy6J+Y+h2ZcCWjh25WM/W5oLOzXjWwX9ZY9A0d8KGcpl7eS9SAQB8VnU/eKTD4
+	 7m6pUBzLqFesDewE6PnFKgin7AZc0iLWI7caLyT1CwKhyCul+iREfEQrV26lYBo/fj
+	 OrXvl+wJ34PDFgqnoS78e+E1Eq3/ffwjKAZov3gTUTftGTNI4uXhlucI53iRjDUbhQ
+	 2pnZ+gLHIc1bg==
+Date: Tue, 10 Nov 2026 09:07:11 +0000
+From: Lee Jones <lee@kernel.org>
+To: Armin Wolf <W_Armin@gmx.de>
+Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org
+Subject: Re: [PATCH 08/10] leds: class: Split led_classdev_register_ext()
+Message-ID: <20261110090711.GC6323@joneslee-macbookpro.roam.internal>
+References: <20261018135339.1109271-1-W_Armin@gmx.de>
+ <20261018135339.1109271-9-W_Armin@gmx.de>
+ <sashiko-outbox-176189@kernel.org>
+ <bc1371ba-1355-4e45-be2c-d3e806c485a9@gmx.de>
+ <4d9e01c3-acaf-4f5c-bbc1-fc4c78582571@gmx.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -122,331 +60,188 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-15.80 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,redhat.com,broadcom.com,bootlin.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	R_RATELIMIT(0.00)[to_ip_from(RLgb6padn6wcu17bxtda1k7h6p)];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Score: -15.80
+In-Reply-To: <4d9e01c3-acaf-4f5c-bbc1-fc4c78582571@gmx.de>
 
-Cancel the vblank timer's hrtimer after disabling the vblank timer to
-avoid running timer function with outdated interval.
+On Sat, 07 Nov 2026, Armin Wolf wrote:
 
-Stopping and restarting the vblank timer with a different interval can
-leave behind an already-running timer function that uses the previous
-interval. This can result in a vblank event with inconsistent timing. At
-the same time, canceling the hrtimer in drm_crtc_vblank_cancel_timer() with
-hrtimer_cancel() is not possible due to a deadlock between vblank_time_lock
-and the hrtimer.
+> Am 18.10.26 um 19:14 schrieb Armin Wolf:
+> 
+> > Am 18.10.26 um 16:15 schrieb sashiko-bot@kernel.org:
+> > 
+> > > Thank you for your contribution! Sashiko AI review found 2 potential
+> > > issue(s) to consider:
+> > > - [High] leds: dangling led_cdev->dev pointer on error in
+> > > led_classdev_init()
+> > > - [High] leds: premature device_set_node() in led_classdev_init()
+> > > breaks fw_devlink
+> > > -- 
+> > > 
+> > > commit 7efb333e9420ea13e705d9a114384e841e92d2b2
+> > > Author: Armin Wolf <W_Armin@gmx.de>
+> > > 
+> > > leds: class: Split led_classdev_register_ext()
+> > > 
+> > > This commit splits led_classdev_register_ext() into
+> > > led_classdev_init() and
+> > > led_classdev_add() so that LED class devices can be initialized before
+> > > being added to the subsystem.
+> > > 
+> > > > diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+> > > > index 77a0fce039528..ace417a2388e0 100644
+> > > > --- a/drivers/leds/led-class.c
+> > > > +++ b/drivers/leds/led-class.c
+> > > [ ... ]
+> > > 
+> > > > @@ -539,23 +550,54 @@ int led_classdev_register_ext(struct
+> > > > device *parent,
+> > > >       if (!led_cdev->max_brightness)
+> > > >           led_cdev->max_brightness = LED_FULL;
+> > > >   -    mutex_lock(&led_cdev->led_access);
+> > > > -    led_cdev->dev = device_create_with_groups(&leds_class,
+> > > > parent, 0, led_cdev,
+> > > > -                          led_cdev->groups, "%s", final_name);
+> > > > -    if (IS_ERR(led_cdev->dev)) {
+> > > > -        mutex_unlock(&led_cdev->led_access);
+> > > > -        return PTR_ERR(led_cdev->dev);
+> > > > +    led_cdev->dev = kzalloc_obj(*led_cdev->dev);
+> > > > +    if (!led_cdev->dev)
+> > > > +        return -ENOMEM;
+> > > > +
+> > > > +    device_initialize(led_cdev->dev);
+> > > > +    led_cdev->dev->class = &leds_class;
+> > > > +    led_cdev->dev->parent = parent;
+> > > > +    led_cdev->dev->groups = led_cdev->groups;
+> > > > +    dev_set_drvdata(led_cdev->dev, led_cdev);
+> > > > +    ret = kobject_set_name(&led_cdev->dev->kobj, "%s", final_name);
+> > > > +    if (ret < 0)
+> > > > +    {
+> > > > +        put_device(led_cdev->dev);
+> > > > +        return ret;
+> > > >       }
+> > > [Severity: High]
+> > > Does this leave led_cdev->dev as a dangling pointer when
+> > > kobject_set_name()
+> > > fails here, or when led_classdev_add() fails in
+> > > led_classdev_register_ext()
+> > > below?
+> > > 
+> > > Previously, led_cdev->dev was assigned the return value of
+> > > device_create_with_groups(), so on any failure it remained either
+> > > NULL or an
+> > > ERR_PTR(). Commit 1dbb9fb4082ce2 ("leds: Allow to call
+> > > led_classdev_unregister() unconditionally") added an
+> > > IS_ERR_OR_NULL() check
+> > > to led_classdev_unregister() so drivers can call it unconditionally
+> > > in their
+> > > error and removal paths:
+> > > 
+> > > drivers/leds/led-class.c:led_classdev_unregister() {
+> > >     if (IS_ERR_OR_NULL(led_cdev->dev))
+> > >         return;
+> > > ...
+> > >     led_stop_software_blink(led_cdev);
+> > > ...
+> > >     flush_work(&led_cdev->set_brightness_work);
+> > > 
+> > >     device_unregister(led_cdev->dev);
+> > > 
+> > >     down_write(&leds_list_lock);
+> > >     list_del(&led_cdev->node);
+> > >     up_write(&leds_list_lock);
+> > > ...
+> > > }
+> > > 
+> > > Many drivers rely on this guarantee during error unwind or removal,
+> > > such as
+> > > asus_wmi_led_init() -> asus_wmi_led_exit() in
+> > > drivers/platform/x86/asus-wmi.c,
+> > > asus_led_init() -> asus_led_exit() in
+> > > drivers/platform/x86/asus-laptop.c, and
+> > > samsung_leds_init() -> samsung_leds_exit() in
+> > > drivers/platform/x86/samsung-laptop.c.
+> > > 
+> > > With this change, put_device(led_cdev->dev) frees the device via
+> > > led_classdev_release(), but led_cdev->dev is not reset to NULL. A
+> > > subsequent
+> > > call to led_classdev_unregister() will bypass the
+> > > IS_ERR_OR_NULL(led_cdev->dev)
+> > > check, operate on uninitialized blink_timer and set_brightness_work
+> > > structures
+> > > if kobject_set_name() failed before led_init_core(), trigger a
+> > > use-after-free
+> > > and double-free in device_unregister(led_cdev->dev), and crash in
+> > > list_del(&led_cdev->node).
+> > > 
+> > > >         if (init_data && init_data->fwnode)
+> > > >           device_set_node(led_cdev->dev, init_data->fwnode);
+> > > [Severity: High]
+> > > Could calling device_set_node() in led_classdev_init() before
+> > > device_add() is
+> > > called in led_classdev_add() break fw_devlink for child LED nodes?
+> > > 
+> > > Previously, device_create_with_groups() called device_add() while
+> > > led_cdev->dev->fwnode was still NULL, and device_set_node() was only
+> > > called
+> > > after device_add() returned. When the parent LED controller finished
+> > > probing,
+> > > device_links_driver_bound() ->
+> > > fw_devlink_pickup_dangling_consumers() marked
+> > > the child LED fwnodes with FWNODE_FLAG_NOT_DEVICE and attached
+> > > consumer links
+> > > to the parent LED controller device.
+> > > 
+> > > Now that led_cdev->dev->fwnode is populated before
+> > > led_classdev_add() calls
+> > > device_add(led_cdev->dev), this block in device_add() will trigger
+> > > during the
+> > > parent driver's probe:
+> > > 
+> > > drivers/base/core.c:device_add() {
+> > > ...
+> > >     if (dev->fwnode && !dev->fwnode->dev) {
+> > >         dev->fwnode->dev = dev;
+> > >         fw_devlink_link_device(dev);
+> > >     }
+> > > ...
+> > > }
+> > > 
+> > > Because led_cdev->dev is a class device that never binds to a driver:
+> > > 
+> > > 1. __fw_devlink_link_to_consumers(led_cdev->dev) converts consumer
+> > > fwnode_links
+> > >     on init_data->fwnode into managed device links with
+> > > led_cdev->dev as the
+> > >     supplier instead of the parent LED controller. During boot (while
+> > >     fw_devlink_drv_reg_done is false), consumers remain blocked with
+> > >     -EPROBE_DEFER until fw_devlink_drivers_done() runs, and are
+> > > never linked to
+> > >     the parent controller for runtime PM, suspend/resume, or unbind
+> > > ordering.
+> > > 
+> > > 2. __fw_devlink_link_to_suppliers(led_cdev->dev, fwnode) creates
+> > > managed device
+> > >     links with led_cdev->dev as the consumer for any supplier
+> > > properties on the
+> > >     child LED node (such as gpios in gpio-leds or pwms in pwm-leds).
+> > > Since
+> > >     led_cdev->dev never probes a driver, those links stay in
+> > > DL_STATE_AVAILABLE
+> > >     and prevent the GPIO or PWM suppliers from reaching sync_state().
+> > 
+> > I have no experience with devicetree, so i cannot verify if this is
+> > true, why do we call
+> > device_set_node() in the first place after having already registered the
+> > device?
+> > 
+> > Thanks,
+> > Armin Wolf
+> > 
+> Any thoughts on this?
 
-Resolve this problem by calling hrtimer_cancel() outside of
-vblank_time_lock's critical section. Implement this with the new callback
-sync_vblank in struct drm_crtc_funcs. Invoke this callback after switching
-off the vblank. Some internal bookkeeping is necessary to ensure that the
-timer is really switched off.
+You're talking to an AI.  =:-)
 
-Implement sync_vblank for vblank timers with the new helper
-drm_crtc_vblank_helper_sync_vblank_timer(). From there, the vblank function
-drm_crtc_blank_stop_timer() stops the hrtimer unconditionally. Install
-drm_crtc_vblank_helper_sync_vblank_timer() in most drivers via
-DRM_CRTC_VBLANK_TIMER_FUNCS. Update vmwgfx, which does not use this macro.
-
-Implement the locking in drm_crtc_vblank_cancel_timer() with a guard. Also
-remove the call to hrtimer_try_to_cancel() from that function. It is no
-longer needed with sync_vblank invoking hrtimer_cancel().
-
-v2:
-- handle uninitialized timer in drm_crtc_vblank_cancel_timer()
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/drm_vblank.c         | 56 +++++++++++++++++++++++-----
- drivers/gpu/drm/drm_vblank_helper.c  | 16 ++++++++
- drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c  |  3 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c |  2 +
- drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c |  2 +
- drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c |  2 +-
- include/drm/drm_crtc.h               |  9 +++++
- include/drm/drm_vblank.h             | 16 ++++++++
- include/drm/drm_vblank_helper.h      |  2 +
- 9 files changed, 96 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-index 8cc8d018d353..c26464ca4a12 100644
---- a/drivers/gpu/drm/drm_vblank.c
-+++ b/drivers/gpu/drm/drm_vblank.c
-@@ -1403,6 +1403,9 @@ void drm_crtc_vblank_off(struct drm_crtc *crtc)
- 
- 	spin_unlock_irq(&dev->event_lock);
- 
-+	if (crtc->funcs->sync_vblank)
-+		crtc->funcs->sync_vblank(crtc);
-+
- 	/* Will be reset by the modeset helpers when re-enabling the crtc by
- 	 * calling drm_calc_timestamping_constants(). */
- 	vblank->hwmode.crtc_clock = 0;
-@@ -2246,28 +2249,61 @@ EXPORT_SYMBOL(drm_crtc_vblank_start_timer);
-  * @crtc: the CRTC
-  *
-  * Drivers should call this function from their CRTC's disable_vblank
-- * function to stop a vblank timer.
-+ * function to stop a vblank timer. Only signals the timer to stop at
-+ * the next invocation. Non-blocking. To fully stop the vblank timer,
-+ * drivers should invoke drm_crtc_vblank_stop_timer().
-  */
- void drm_crtc_vblank_cancel_timer(struct drm_crtc *crtc)
- {
- 	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
- 	struct drm_vblank_crtc_timer *vtimer = &vblank->vblank_timer;
--	unsigned long flags;
-+
-+	if (!vtimer->crtc)
-+		return;
- 
- 	/*
--	 * Calling hrtimer_cancel() can result in a deadlock with DRM's
--	 * vblank_time_lime_lock and hrtimers' softirq_expiry_lock. So
-+	 * Calling hrtimer_cancel() here can result in a deadlock between
-+	 * DRM's vblank_time_lock and hrtimers' softirq_expiry_lock. So
- 	 * clear interval and indicate cancellation. The timer function
--	 * will cancel itself on the next invocation.
-+	 * will cancel itself on the next invocation. Otherwise cancel it
-+	 * in drm_crtc_vblank_stop_canceled_timer().
- 	 */
-+	scoped_guard(spinlock_irqsave, &vtimer->interval_lock)
-+		vtimer->interval = 0;
-+}
-+EXPORT_SYMBOL(drm_crtc_vblank_cancel_timer);
-+
-+/**
-+ * drm_crtc_vblank_stop_canceled_timer - Stops a CRTC's previously canceled vblank timer
-+ * @crtc: the CRTC
-+ *
-+ * Drivers should call this function from their CRTC's sync_vblank
-+ * function to fully stop a vblank timer. The timer must have been
-+ * canceled before. Use drm_crtc_vblank_stop_timer() to stop a vblank
-+ * timer unconditionally.
-+ *
-+ * The function blocks until a running timer function has returned.
-+ */
-+void drm_crtc_vblank_stop_canceled_timer(struct drm_crtc *crtc)
-+{
-+	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
-+	struct drm_vblank_crtc_timer *vtimer = &vblank->vblank_timer;
-+	ktime_t interval;
- 
--	spin_lock_irqsave(&vtimer->interval_lock, flags);
--	vtimer->interval = 0;
--	spin_unlock_irqrestore(&vtimer->interval_lock, flags);
-+	if (!vtimer->crtc)
-+		return;
- 
--	hrtimer_try_to_cancel(&vtimer->timer);
-+	/*
-+	 * The vblank timer is off if it has an interval of zero. Cancel
-+	 * it before drm_crtc_vblank_start_timer() reprograms it.
-+	 */
-+	scoped_guard(spinlock_irqsave, &vtimer->interval_lock)
-+		interval = vtimer->interval;
-+
-+	if (!interval)
-+		hrtimer_cancel(&vtimer->timer);
- }
--EXPORT_SYMBOL(drm_crtc_vblank_cancel_timer);
-+EXPORT_SYMBOL(drm_crtc_vblank_stop_canceled_timer);
- 
- /**
-  * drm_crtc_vblank_get_vblank_timeout - Returns the vblank timeout
-diff --git a/drivers/gpu/drm/drm_vblank_helper.c b/drivers/gpu/drm/drm_vblank_helper.c
-index d3f8147ecdc1..7465d74ce29e 100644
---- a/drivers/gpu/drm/drm_vblank_helper.c
-+++ b/drivers/gpu/drm/drm_vblank_helper.c
-@@ -146,6 +146,22 @@ void drm_crtc_vblank_helper_disable_vblank_timer(struct drm_crtc *crtc)
- }
- EXPORT_SYMBOL(drm_crtc_vblank_helper_disable_vblank_timer);
- 
-+/**
-+ * drm_crtc_vblank_helper_sync_vblank_timer - Implements struct &drm_crtc_funcs.sync_vblank
-+ * @crtc: The CRTC
-+ *
-+ * The helper drm_crtc_vblank_helper_sync_vblank_timer() implements
-+ * sync_vblank of struct drm_crtc_funcs for CRTCs that require a
-+ * VBLANK timer.
-+ *
-+ * See also struct &drm_crtc_funcs.sync_vblank.
-+ */
-+void drm_crtc_vblank_helper_sync_vblank_timer(struct drm_crtc *crtc)
-+{
-+	drm_crtc_vblank_stop_canceled_timer(crtc);
-+}
-+EXPORT_SYMBOL(drm_crtc_vblank_helper_sync_vblank_timer);
-+
- /**
-  * drm_crtc_vblank_helper_get_vblank_timestamp_from_timer -
-  *	Implements struct &drm_crtc_funcs.get_vblank_timestamp
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c b/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c
-index 0dea09cc29a7..e8c7100a3dc8 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c
-@@ -33,7 +33,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_fourcc.h>
--
-+#include <drm/drm_vblank_helper.h>
- 
- #define vmw_crtc_to_ldu(x) \
- 	container_of(x, struct vmw_legacy_display_unit, base.crtc)
-@@ -256,6 +256,7 @@ static const struct drm_crtc_funcs vmw_legacy_crtc_funcs = {
- 	.page_flip = drm_atomic_helper_page_flip,
- 	.enable_vblank          = vmw_vkms_enable_vblank,
- 	.disable_vblank         = vmw_vkms_disable_vblank,
-+	.sync_vblank            = drm_crtc_vblank_helper_sync_vblank_timer,
- 	.get_vblank_timestamp   = vmw_vkms_get_vblank_timestamp,
- };
- 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c b/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
-index 39d58fc392bf..a74cafb1769e 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
-@@ -35,6 +35,7 @@
- #include <drm/drm_damage_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_vblank.h>
-+#include <drm/drm_vblank_helper.h>
- 
- #define vmw_crtc_to_sou(x) \
- 	container_of(x, struct vmw_screen_object_unit, base.crtc)
-@@ -312,6 +313,7 @@ static const struct drm_crtc_funcs vmw_screen_object_crtc_funcs = {
- 	.page_flip = drm_atomic_helper_page_flip,
- 	.enable_vblank          = vmw_vkms_enable_vblank,
- 	.disable_vblank         = vmw_vkms_disable_vblank,
-+	.sync_vblank            = drm_crtc_vblank_helper_sync_vblank_timer,
- 	.get_vblank_timestamp   = vmw_vkms_get_vblank_timestamp,
- };
- 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-index b505f8ba3e83..d3f7a5c2d131 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-@@ -37,6 +37,7 @@
- #include <drm/drm_damage_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_vblank.h>
-+#include <drm/drm_vblank_helper.h>
- 
- #define vmw_crtc_to_stdu(x) \
- 	container_of(x, struct vmw_screen_target_display_unit, base.crtc)
-@@ -785,6 +786,7 @@ static const struct drm_crtc_funcs vmw_stdu_crtc_funcs = {
- 	.page_flip = drm_atomic_helper_page_flip,
- 	.enable_vblank		= vmw_vkms_enable_vblank,
- 	.disable_vblank		= vmw_vkms_disable_vblank,
-+	.sync_vblank            = drm_crtc_vblank_helper_sync_vblank_timer,
- 	.get_vblank_timestamp	= vmw_vkms_get_vblank_timestamp,
- 	.get_crc_sources	= vmw_vkms_get_crc_sources,
- 	.set_crc_source		= vmw_vkms_set_crc_source,
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c
-index 3d0d5dfa869f..8ce10cf9c19e 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c
-@@ -299,7 +299,7 @@ vmw_vkms_crtc_cleanup(struct drm_crtc *crtc)
- 	struct vmw_display_unit *du = vmw_crtc_to_du(crtc);
- 
- 	if (vmw->vkms_enabled)
--		drm_crtc_vblank_cancel_timer(crtc);
-+		drm_crtc_vblank_stop_timer(crtc);
- 
- 	if (du->vkms.surface)
- 		vmw_surface_unreference(&du->vkms.surface);
-diff --git a/include/drm/drm_crtc.h b/include/drm/drm_crtc.h
-index be5dca538d87..46546006f361 100644
---- a/include/drm/drm_crtc.h
-+++ b/include/drm/drm_crtc.h
-@@ -908,6 +908,15 @@ struct drm_crtc_funcs {
- 	 */
- 	void (*disable_vblank)(struct drm_crtc *crtc);
- 
-+	/**
-+	 * @sync_vblank:
-+	 *
-+	 * Synchronizes vblank hardware and software state after switching off
-+	 * vblanks for the given CRTC. Called without holding vblank locks. Allows
-+	 * the driver to clean up vblank state outside of critical sections.
-+	 */
-+	void (*sync_vblank)(struct drm_crtc *crtc);
-+
- 	/**
- 	 * @get_vblank_timestamp:
- 	 *
-diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
-index 2fcef9c0f5b1..257b83d145ce 100644
---- a/include/drm/drm_vblank.h
-+++ b/include/drm/drm_vblank.h
-@@ -319,6 +319,22 @@ void drm_crtc_set_max_vblank_count(struct drm_crtc *crtc,
- 
- int drm_crtc_vblank_start_timer(struct drm_crtc *crtc);
- void drm_crtc_vblank_cancel_timer(struct drm_crtc *crtc);
-+void drm_crtc_vblank_stop_canceled_timer(struct drm_crtc *crtc);
-+
-+/**
-+ * drm_crtc_vblank_stop_timer - Stops a CRTC's vblank timer
-+ * @crtc: the CRTC
-+ *
-+ * Drivers should call this function to fully stop a CRTC's vblank timer.
-+ *
-+ * The function blocks until a running timer function has returned.
-+ */
-+static inline void drm_crtc_vblank_stop_timer(struct drm_crtc *crtc)
-+{
-+	drm_crtc_vblank_cancel_timer(crtc);
-+	drm_crtc_vblank_stop_canceled_timer(crtc);
-+}
-+
- void drm_crtc_vblank_get_vblank_timeout(struct drm_crtc *crtc, ktime_t *vblank_time);
- 
- /*
-diff --git a/include/drm/drm_vblank_helper.h b/include/drm/drm_vblank_helper.h
-index 28051f08d0f4..dd0029e045be 100644
---- a/include/drm/drm_vblank_helper.h
-+++ b/include/drm/drm_vblank_helper.h
-@@ -37,6 +37,7 @@ void drm_crtc_vblank_atomic_disable(struct drm_crtc *crtc,
- 
- int drm_crtc_vblank_helper_enable_vblank_timer(struct drm_crtc *crtc);
- void drm_crtc_vblank_helper_disable_vblank_timer(struct drm_crtc *crtc);
-+void drm_crtc_vblank_helper_sync_vblank_timer(struct drm_crtc *crtc);
- bool drm_crtc_vblank_helper_get_vblank_timestamp_from_timer(struct drm_crtc *crtc,
- 							    int *max_error,
- 							    ktime_t *vblank_time,
-@@ -51,6 +52,7 @@ bool drm_crtc_vblank_helper_get_vblank_timestamp_from_timer(struct drm_crtc *crt
- #define DRM_CRTC_VBLANK_TIMER_FUNCS \
- 	.enable_vblank = drm_crtc_vblank_helper_enable_vblank_timer, \
- 	.disable_vblank = drm_crtc_vblank_helper_disable_vblank_timer, \
-+	.sync_vblank = drm_crtc_vblank_helper_sync_vblank_timer, \
- 	.get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp_from_timer
- 
- #endif
 -- 
-2.56.0
-
+Lee Jones
