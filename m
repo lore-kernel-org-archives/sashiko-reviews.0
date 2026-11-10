@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794333052;
-	b=iloAoXon0ZJCUst944k2l+qXqfEZO6zrQzzLWB+q/4EB1jHg2m/QMvTf+K8NfN2429fB
-	 GhammlRLx1LoSugEkGpVQwPYlSglbd+xPPOtUNbGQJB32mUg38XTTtv46Fp9tIK1OdKxt
-	 YOSFimiEu/91t+ze3eqkOTVvHNCMShhQVlNtV7SCtlOnaOWjut+5nhjgCgZi2N3B+6F9k
-	 GrrN0YBAYbGK5vCel7/THwf768rKyhykbmb6w9Pqc44VXzyfnCN3GonAymLVJv/xCzj0q
-	 fxHPfBDn8B5V8kbeLJSUB3cMi4/kTYhD8cjLvjrSM32Q2NmfxKE9uI6+adMCaMdgXrw==
+	t=1794334521;
+	b=O7bRhCHYCsEUiXmd2Pi8VYEyjBn2H+etk8G901al8ObJxVJ4YOYtZ4ofBCA8I3/+vpsp
+	 931XsCt27boBLgDdEQl4//OhtPjmLhUY9zmb5P9oaFjHdzsYdAiA0ivo/wvpdQglS7EMM
+	 +TjUte9mxEjh4Aw0jz+dxU8oujNhv9fRfXAaxRyCL0YIV7M2N5nAvQlQCtxZNnyNEMznm
+	 hTBZKxcVxK/p5n4IlqVLO9cDyLBT3HI+BvM4jupctaVH8Zs/hEcXaXgc3h4MyyFUM+gC+
+	 PWUeAtST+4acfBUxEbpUBTJErG0aTQAdP8P5dD+w1/OfdTePPThgw2v8vqCULVVMhYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794333052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794334521;
 	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding:X-SA-Exim-Connect-IP:
 	 X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:X-Spam-Checker-Version:
 	 X-Spam-Level:X-Spam-Status:Subject:X-SA-Exim-Version:
 	 X-SA-Exim-Scanned;
-	bh=OhBmBB5csoRwUskFDo3bdowpIsJJII9UaiaDaNs2X5E=;
-	b=Qr8hGz2H2X3AQdVNxqgvOErmnFdvvyExIr85AkBEbjwOp9L6lBzcPnftKUu0HbsZPof0
-	 BKyJ6w37AWEptrAjAfzl5pO4uE8FI4xGQCM6Ac/j1+7aakigVTlYc+2kIVDTNJl4YxKR/
-	 7Jxxr//BdFWZfzQN7eNzzWwNEbTvbZFOhLa8HOZJCz8m+POnmIiIGqDP0PUH/1c5KV0Ra
-	 l4DjopGJPHNH1Wqb9LeXLJdBwlZaP8iQMWjDVUoaQ8itNN/5C5YMUHNPY9jQiLgsta5NS
-	 jJHR63KAXdGLc3YrG28KcmFyrn17GsY2t3CjjyseSG4EI5c5SKu9+0Mtnd1voqMgrtQ==
+	bh=hZcz5ydihOXe/GuAwZ5VWgUTG/VWm+MFA26U9CKQQV8=;
+	b=QEKXG7I3jCHTDaFDbJ2TZz/RTCVcR5M+vTNxNRE00ywUCYpGP/156HVuDWDkVkx87MrC
+	 fvnIpSNN70yWkL9hkCBHTF5iYFE5qiHZZx6ZSNcMIH7bIKvs46iw8zT3jeOI1ajEMk4EL
+	 hrbaar8J0e+H1lG15SPS8ZUvAe7D2AHvaum8B5ASbDHYJM2B9WOBPCT7d3nFneSCMqmaf
+	 pR0MHBWM1FZ/VyTTi2/Tz0pS9W6gknDXKvKsYYQ2cMw7yiQxPcBI0n9fF5NKhDnZV5JM0
+	 ZHUcSXFpoHEpI4gkX20NRhZF4H2D3WlwZ+L7ixjrsdQPw1NLc1Fvha1Q+G8xbEFjRsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=deltatee.com;
 	spf=pass smtp.mailfrom=deltatee.com;
-	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=JUudkuDA;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=mQcBNRAs;
 	arc=none smtp.remote-ip=204.191.154.188
 Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD65B606A323;
-	Tue, 10 Nov 2026 17:50:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AD65B606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3918606A31C;
+	Tue, 10 Nov 2026 18:15:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3918606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=JUudkuDA
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=mQcBNRAs
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
 	MIME-Version:Date:Message-ID:content-disposition;
-	bh=OhBmBB5csoRwUskFDo3bdowpIsJJII9UaiaDaNs2X5E=; b=JUudkuDAVtlFw1EnsYsjLhHAhG
-	IyV35tZj3p7vLYnJEAJiPXH1DiWvDzDRgKCtpOu4nFObOrCq/0parJuG98XPw/Tf2MysTOBw5dcmI
-	sAS2e5TBQBdRqaS/kpbVlDZsSLGfh3sBNObCa8Jf75rJGvL82ZL+s0vsv+avZ4LgwWmhtgQWBzssT
-	o9bXbnfMXEGj+tbd4UUKs2bS7/xFNxxuGd2R9r+UMyiQh8Z8/WERLuB2VLQg2wrsf7bIr+IT8PTOw
-	IpFb502Ee1aCW956bbBFyv80WHx3mmsXVgVAW4Am14wNkDRDMx6M7tb8Xnx2+2+SxoUbgd9ucwhgW
-	sqjilA0A==;
+	bh=hZcz5ydihOXe/GuAwZ5VWgUTG/VWm+MFA26U9CKQQV8=; b=mQcBNRAsbuuVQb4Y3ICEE+vpDA
+	xFk/V+emWvgSBKMwA9HhqYL+nj6hjlS6YVb4Bj2vDFwTYibSJjOdjgXv4oFTJpYXPfogWJredH/rH
+	C3UfS0Z5520AktxsRaOmsHo80VQJLNmfWSJSi/KcHWBQ8HsMH2yo/1HJkyGh3Jku6reGmSarjB+Ms
+	tXAbbEQVo0CJ2lpYNNyZ83MawYj1ylDaudj4ITLChKFU5iVhOFyU4oRLZuXz8aE5/6r+3m58+bVAv
+	E2r8h1R6uNC0YhIOcccgidPpifrFDIQ4y5ITvFlSA9qVspbeCk9m+QSOQsim6JT7J/VaCTMLmFJmS
+	UI4vegBA==;
 Received: from guinness.priv.deltatee.com ([172.16.1.162])
 	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 	(Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xQpze-00000000oJB-0dMp;
-	Tue, 10 Nov 2026 11:50:50 -0600
-Message-ID: <dbe72187-4c12-4a8f-a63f-0c4238e50ec5@deltatee.com>
-Date: Tue, 10 Nov 2026 11:50:49 -0600
+	id 1xQqNL-00000000oyl-014i;
+	Tue, 10 Nov 2026 12:15:19 -0600
+Message-ID: <0b924ece-f666-4905-ae19-910be9d6d9ce@deltatee.com>
+Date: Tue, 10 Nov 2026 12:15:18 -0600
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -64,32 +64,33 @@ Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org
-Cc: vkoul@kernel.org, Frank.Li@kernel.org,
- Kelvin Cao <kelvin.cao@microchip.com>
-References: <20261110173137.623764-1-logang@deltatee.com>
- <20261110173137.623764-5-logang@deltatee.com>
- <sashiko-outbox-207513@kernel.org>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+References: <20261110173927.624629-1-logang@deltatee.com>
+ <20261110173927.624629-3-logang@deltatee.com>
+ <sashiko-outbox-207537@kernel.org>
 Content-Language: en-CA
 From: Logan Gunthorpe <logang@deltatee.com>
-In-Reply-To: <sashiko-outbox-207513@kernel.org>
+In-Reply-To: <sashiko-outbox-207537@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 172.16.1.162
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, kelvin.cao@microchip.com
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
 X-SA-Exim-Mail-From: logang@deltatee.com
 X-Spam-Level: 
-Subject: Re: [PATCH v4 4/4] dmaengine: switchtec-dma: add pmon sysfs
- attributes
+Subject: Re: [PATCH v2 2/6] dmaengine: plx_dma: fix descriptor ring leak in
+ alloc_chan_resources()
 X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
 X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
 
 
-On 2026-11-10 11:47, sashiko-bot@kernel.org wrote:
-> [Severity: Low]
-> Does latency_selector_show() violate the sysfs one-value-per-file rule?
-Strictly speaking yes, but we think the text printed is
-self-documentation that's worth having here. If others feel strongly
-against this we can revisit it.
+On 2026-11-10 11:58, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Low] dmaengine: plx_dma: missing Fixes trailer for
+>   alloc_chan_resources() leak fix
+> - [Low] dmaengine: plx_dma: duplicate cleanup in plx_dma_free_desc()
+I've made the recommended duplicate cleanup and added Fixes trailers to
+all of the commits. I'll send a v3 next week.
 
 Logan
