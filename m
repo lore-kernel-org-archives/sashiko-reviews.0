@@ -1,51 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.134
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.97
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794280620;
-	b=aSMVF/1/ecbJeBnEd/BvRYX8Iq5XXDKwenhbz2x+nCFStTqIf9Ci9ycZMWsVUuWvgSCZ
-	 abWC8dDzOqqYxdtxDCOxmbYITXkFNXVEqXTftQER3TB+jz0vZtXaqjOV8wTuQsRw75tEq
-	 RBMes91U9gPk6ZAf3wzxQCzGYRDHblpU94cByTf3FUI6Sp2wBTY5fTcI4gNiiw9+c0x6h
-	 ODTeTrAEvqmmVmxAuB28QD/QoFhisNoyyA5scTqQWguqNLE1QHh8mi4nI9/4uCq8/bnxB
-	 xOnxplyEFwWybVCwM8ly4+yR5TcZQ7sLc9gEpMho759fjGGEeih54/xnMPSmrWkhkUQ==
+	t=1794281052;
+	b=oi6LlJ4XgD56FIoEmGR0ghfTshWY4bYUEHyNQZ5UcmJolCdef7qMyi6BsftNGMzCxaBb
+	 0GafI1ZpUwMol5HZd7LlluNK58xZHZtmQrvOoQVysvkPxQJOp33PjdinmGAjTuW2Xy5Hg
+	 nrGbtY0tuI6MOUs/pgvvX2OdISCXERVEN7IMpa0AH7urPJC81rTGbf2OpXoFIZnQWcUdC
+	 0/79Q+NQVe2B/NsTh95vYqWqndY2nxADv3Mk6jVjQ1l8tl0eBslmfA/FzNLwIfM2tD/fe
+	 G5vc64ot1jd0xRV+fmcl9fLfShww5nIdeE3nQg1PBOdsL7Wk7xIhK1U8ngKdRZqsoSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794280620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794281052;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
 	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
 	 To:X-Mailer;
-	bh=q9M+59aJycwvDGVPdRUa9bBhiCb7/lm1Bh0m6F9EGyg=;
-	b=QxLYv7159K0jWxMTqbqJjgzXFy/rmPJY29L1Yfq/4rz0fbZK7wmr6xlx3y8cMacRkTLf
-	 7c5xVF0cVEOCxs37BkTBa5WPCgd49twYbVANBkHsDINQteZS6DuVoUh+N3hp11Rp34xMP
-	 BhiyiOdjyDDiZEnTeyGu247QXyuCSv7CWKvoNYmCwB6Ej0YinMkMNfsOJu5XTolStkTMY
-	 eoXYHNIW3CksEEvBqEQuYbUVMXxggFkaeVxrU/G6TqIYAl3bECfLYmIlZkO063XH/rVXW
-	 QIjC6iufurypz2pKnYTzPkUVZpiU6K1SupLNgy4fAfXbMaE6EkHlvChVRGcw0vPFMUg==
+	bh=0zxg/oHV6c7bTdjTEStCmT/9znR1pi4716FSd95ju8o=;
+	b=hD9XlIyalxfy3qgYzHKeJ1jYYv+7O+sdQAMe8beohm4TXJxJ2QwinwfHK+h7CqXK3zxc
+	 D49WmttYJgKR/iQ1CgPx53Hx0sdHFpOT9IL6llNB3Pv9wrq1+B+ftyFEvCYaRCQ5yUF2+
+	 i57os9lZXZsbPEfBlL4NFxM9UGP8bUfTAPLO8DZXah18Z4os2tVvhO1M9lgeYLnQH+2Lx
+	 Kx8vKw0Kk4LXF6YkmyqODgcg2VCQRgJPSPvHkDCQX8MI9JPuA2TjQOccsiD+dQVliUiRE
+	 ATPCamTQHwxmi3xbIoU3wyNkghowHV9QO+w6YRMYZwMfW5u335BsnC1zoZpbM4fsLyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=U1AQqdle;
-	arc=none smtp.remote-ip=91.218.175.134
-Received: from mta0.migadu.com (out-134.mta0.migadu.com [91.218.175.134])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=UDtQZH6p;
+	arc=none smtp.remote-ip=95.215.58.97
+Received: from mta1.migadu.com (out-97.mta1.migadu.com [95.215.58.97])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C721606A32E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:16:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C721606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AD3606A331
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:24:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25AD3606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=U1AQqdle
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=UDtQZH6p
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=kgr+9iyrM1cxLzfU7kLaTKxlcTZDi3ushAYcoMpeJik=;
+DKIM-Signature: a=rsa-sha256; bh=AOwIJhgzOk7txoq52yOkZ0HGi+vTCQjqFm7cTO02lc0=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794280617; v=1; x=1794885417;
- b=U1AQqdleFer8Cpa+HpBvRL752oKSv9M+OpFO33gHWt+5EdZx9DCqHHUHqmjeQqsBQR6Ph0HN
- lc+umU3Ly7W5ZYGwBe6iR3SFrpfrtiFhUEyoA/ZuAUvs+PfXuFwQ4n8Bx4gAh5psHXzi6KKxv5I
- sDv7QOOWxygLwY7lAJ3NVRdw=
+ t=1794281049; v=1; x=1794885849;
+ b=UDtQZH6poI6uKc9PBSA7zBkug/rsyHxmlpAm1bxuO52q3FmBOJtGqyL0N6xYSmd/1nbqi82u
+ Ed75jq8nw2GHFHymGG/axmW8r5qEnU02KMymEOqm1aXNuN/91qlV9LaovMO1a9QF5F6Qyx84jnU
+ n4Ip9kwIiNXN4i5hnEgCpfa4=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id 9c1d7389bb465916;
-	Tue, 10 Nov 2026 03:16:57 +0000
-X-Mizu-Trace-ID: 9c1d7389bb465916
+Received: by mta12.migadu.com with ESMTPS id ca01e065db3b1e04;
+	Tue, 10 Nov 2026 03:24:08 +0000
+X-Mizu-Trace-ID: ca01e065db3b1e04
 X-Migadu-Flow: FLOW_OUT
 Content-Type: text/plain;
 	charset=utf-8
@@ -58,11 +58,11 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH 05/11] mm/hugetlb: drop boot-time HVO handling for
- gigantic folios
+Subject: Re: [PATCH 06/11] mm/hugetlb: initialize all struct pages for bootmem
+ hugepages
 From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <sashiko-outbox-204839@kernel.org>
-Date: Tue, 10 Nov 2026 11:16:43 +0800
+In-Reply-To: <sashiko-outbox-204840@kernel.org>
+Date: Tue, 10 Nov 2026 11:23:51 +0800
 Cc: Muchun Song <songmuchun@bytedance.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  David Hildenbrand <david@kernel.org>,
@@ -78,10 +78,10 @@ Cc: Muchun Song <songmuchun@bytedance.com>,
  Qi Zheng <qi.zheng@linux.dev>,
  linux-mm@kvack.org
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <7EBF14BA-50E3-456C-A005-CE96CE148B5A@linux.dev>
+Message-Id: <2C89ED4A-9709-42AC-8DF2-3D7691475239@linux.dev>
 References: <20261109095807.41547-1-songmuchun@bytedance.com>
- <20261109095807.41547-6-songmuchun@bytedance.com>
- <sashiko-outbox-204839@kernel.org>
+ <20261109095807.41547-7-songmuchun@bytedance.com>
+ <sashiko-outbox-204840@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
@@ -89,187 +89,134 @@ X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
 > On Nov 9, 2026, at 18:43, sashiko-bot@kernel.org wrote:
 >=20
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 2 related pre-existing issues it does not
-> introduce:
-> - [High] mm/memory-failure: race between hugetlb_update_hwpoison() and
->  HVO head remap [1]
-> - [Critical] mm/hugetlb_vmemmap: race between deferred PMD split flush
->  and PTE remap in vmemmap_split_pmd() [2]
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] mm/hugetlb: hugetlb_folio_init_vmemmap() wipes KMSAN metadata =
+on
+>  head page
 > --
-
-I will not fix both pre-existing problems in this series.
-
 >=20
-> commit da0d2d6e0b849f9a259d74fcb047aaceb9617411
+> commit e4e80712cfb9bd9a2f1df0a9b2aae1625edb6829
 > Author: Muchun Song <muchun.song@linux.dev>
 >=20
-> mm/hugetlb: drop boot-time HVO handling for gigantic folios
+> mm/hugetlb: initialize all struct pages for bootmem hugepages
 >=20
-> This commit removes the boot-time bulk vmemmap optimization call and =
-tail
-> page initialization fallback for gigantic folios, relying instead on =
-the
-> section-based vmemmap optimization infrastructure during bootmem =
-gathering.
+> This commit marks the entire boot-time gigantic hugepage as noinit in
+> memblock and initializes the head struct page alongside the tail =
+struct
+> pages in hugetlb_folio_init_vmemmap().
 >=20
->> diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
->> index ba8e11e399b24..d73ceeef392eb 100644
->> --- a/mm/hugetlb_vmemmap.c
->> +++ b/mm/hugetlb_vmemmap.c
->> @@ -552,7 +552,6 @@ static int hugetlb_vmemmap_pteify_folio(const =
-struct hstate *h, struct folio *fo
->> void hugetlb_vmemmap_optimize_folios(struct hstate *h, struct =
-list_head *folio_list)
->> {
->> 	struct folio *folio;
->> -	unsigned long nr_to_optimize =3D 0;
->> 	LIST_HEAD(vmemmap_pages);
->> 	unsigned long flags =3D VMEMMAP_DEFER_TLB_FLUSH;
->=20
-> [Severity: High]
-> This problem wasn't introduced by this patch, but can a concurrent =
-memory
-> failure race with vmemmap optimization [1] and lose hardware poison
-> state on a newly allocated hugetlb folio?
->=20
-> After init_new_hugetlb_folio() sets the hugetlb flag on a fresh folio
-> (for example in prep_and_add_allocated_folios()), both
-> folio_test_hugetlb_freed() and folio_test_hugetlb_migratable() remain
-> false while hugetlb_vmemmap_optimize_folios() remaps its vmemmap =
-pages:
->=20
-> CPU0                                  CPU1
-> hugetlb_vmemmap_optimize_folios()
->  __hugetlb_vmemmap_optimize_folio()
->    vmemmap_optimize_folio()
->      vmemmap_optimize_pte()
->        vmemmap_dup_page_from_list()
->          copy_page(dst, src)
->                                      try_memory_failure_hugetlb()
->                                        get_huge_page_for_hwpoison()
->                                          // returns MF_HUGETLB_RETRY
->                                        // retries with MF_NO_RETRY:
->                                        get_huge_page_for_hwpoison()
->                                          spin_lock_irq(&hugetlb_lock)
->                                          hugetlb_update_hwpoison()
->                                            =
-folio_test_set_hwpoison(folio)
->                                            llist_add(&raw_hwp->node, =
-head)
->                                          =
-spin_unlock_irq(&hugetlb_lock)
->        set_pte_at(..., dst, ...)
->  flush_tlb_all()
->  free_vmemmap_page_list()  <-- old head page freed, hwpoison lost
->=20
-> Because vmemmap_optimize_pte() copies and remaps the head struct page
-> without synchronizing with hugetlb_lock (and defers the TLB flush =
-across
-> the batch), hugetlb_update_hwpoison() can write PG_hwpoison and the
-> raw_hwp_page list entry to the old head struct page after copy_page() =
-has
-> already finished.  Once the remap and TLB flush complete, the =
-raw_hwp_page
-> allocation is leaked and the poisoned hugepage is added to the pool
-> unmarked.
->=20
->> @@ -560,18 +559,7 @@ void hugetlb_vmemmap_optimize_folios(struct =
-hstate *h, struct list_head *folio_l
->> 		return;
->>=20
->> 	list_for_each_entry(folio, folio_list, lru) {
->> -		int ret;
->> -
+>> diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+>> index ff6f837b6df01..d2aaad235458e 100644
+>> --- a/mm/hugetlb.c
+>> +++ b/mm/hugetlb.c
+>> @@ -3216,15 +3216,7 @@ static bool __init =
+alloc_bootmem_huge_page(struct hstate *h, int nid)
+>> 		list_add_tail(&m->list, &huge_boot_pages[nid]);
+>> 		m->flags |=3D HUGE_BOOTMEM_ZONES_VALID;
+>> 		hugetlb_vmemmap_optimize_bootmem_page(pfn, =
+huge_page_order(h));
 >> -		/*
->> -		 * Bootmem gigantic folios may already be marked =
-optimized when
->> -		 * their vmemmap layout was prepared earlier, so skip =
-them here.
+>> -		 * Only initialize the head struct page in =
+memmap_init_reserved_pages,
+>> -		 * rest of the struct pages will be initialized by the =
+HugeTLB
+>> -		 * subsystem itself.
+>> -		 * The head struct page is used to get folio information =
+by the HugeTLB
+>> -		 * subsystem like zone id and node id.
 >> -		 */
->> -		if (folio_test_hugetlb_vmemmap_optimized(folio))
->> -			continue;
->> -
->> -		nr_to_optimize++;
->> -
->> -		ret =3D hugetlb_vmemmap_pteify_folio(h, folio, flags);
->> +		int ret =3D hugetlb_vmemmap_pteify_folio(h, folio, =
-flags);
->>=20
->> 		/*
->> 		 * Splitting the PMD requires allocating a page, thus =
-let's fail
->> @@ -583,9 +571,6 @@ void hugetlb_vmemmap_optimize_folios(struct =
-hstate *h, struct list_head *folio_l
->> 			break;
+>> -		memblock_reserved_mark_noinit(__pa((void *)m + =
+PAGE_SIZE),
+>> -				huge_page_size(h) - PAGE_SIZE);
+>> +		memblock_reserved_mark_noinit(__pa(m), =
+huge_page_size(h));
 >> 	}
 >>=20
->> -	if (!nr_to_optimize)
->> -		return;
->> -
->> 	flush_tlb_all();
+>> 	return true;
+>> @@ -3255,22 +3247,23 @@ static void __init =
+hugetlb_folio_init_tail_vmemmap(struct folio *folio,
+>> }
+>>=20
+>> static void __init hugetlb_folio_init_vmemmap(struct folio *folio,
+>> +					      unsigned long pfn,
+>> 					      struct hstate *h,
+>> +					      enum zone_type zone, int =
+nid,
+>> 					      unsigned long nr_pages)
+>> {
+>> -	int ret;
+>> +	struct page *head =3D &folio->page;
+>>=20
+>> 	/*
+>> 	 * This is an open-coded prep_compound_page() whereby we avoid
+>> 	 * walking pages twice by initializing/preparing+freezing them =
+in the
+>> 	 * same go.
+>> 	 */
+>> -	__folio_clear_reserved(folio);
+>> +	__init_single_page(head, pfn, zone, nid);
 >=20
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but can deferring the =
-TLB
-> flush across PMD splits here race with a concurrent single-folio =
-vmemmap
-> optimization [2] and remap PTEs before the 2MB PMD split is
-> flushed from the TLB?
+> [Severity: Low]
+> Under CONFIG_KMSAN=3Dy, does calling __init_single_page() on head here =
+wipe
+> head->kmsan_shadow and head->kmsan_origin after kmsan_init_shadow() =
+has
+> already populated them?
 
-Right. I'll fix it later in a separate patch.
+This is a pre-existing KMSAN issue introduced by commit fde1c4ecf916 =
+("mm:
+hugetlb: skip initialization of gigantic tail struct pages if freed by =
+HVO").
+
+That commit already reinitialized the tail struct pages after
+kmsan_init_shadow(), potentially clearing their KMSAN metadata pointers. =
+This
+series extends the same behavior to the head page. I think the complete =
+KMSAN
+fix should be handled separately for both head and tail pages.
+
+So, I will not fix it in this series.
+
+Thanks.
 
 >=20
-> A single 2MB vmemmap PMD covers 64 2MB folios.  While
-> hugetlb_vmemmap_optimize_folios() splits PMDs with =
-VMEMMAP_DEFER_TLB_FLUSH
-> during bulk pool resize or demotion, a concurrent
-> hugetlb_vmemmap_optimize_folio() (such as from
-> alloc_surplus_hugetlb_folio()) can optimize another folio covered by =
-the
-> same vmemmap PMD:
+> During mm_core_init(), kmsan_init_shadow() allocates and installs =
+KMSAN
+> metadata for all memblock.reserved ranges, including =
+MEMBLOCK_RSRV_NOINIT
+> regions:
 >=20
-> CPU0                                  CPU1
-> hugetlb_vmemmap_optimize_folios()
->  hugetlb_vmemmap_pteify_folio()
->    ...
->      vmemmap_split_pmd()
->        pmd_populate_kernel()
->        // skips TLB flush
->                                      hugetlb_vmemmap_optimize_folio()
->                                        ...
->                                          vmemmap_pmd_entry()
->                                            // !pmd_leaf(*pmd), returns =
-0
->                                          vmemmap_optimize_pte()
->                                            set_pte_at()
->                                        free_vmemmap_page_list()
->                                          <-- old vmemmap pages freed =
-with
->                                              stale 2MB PMD TLB entry =
-live
->  flush_tlb_all()
+> mm/kmsan/init.c:kmsan_init_shadow() {
+> 	...
+> 	for_each_reserved_mem_range(loop, &p_start, &p_end)
+> 		kmsan_record_future_shadow_range(phys_to_virt(p_start),
+> 						 phys_to_virt(p_end));
+> 	...
+> }
 >=20
-> Because CPU0 has already replaced the leaf PMD under
-> init_mm.page_table_lock, CPU1 sees !pmd_leaf(*pmd) in =
-vmemmap_pmd_entry()
-> and proceeds directly to vmemmap_optimize_pte() without a PMD-range =
-TLB
-> flush.  CPU1 then installs 4KB PTEs pointing to different physical =
-pages,
-> flushes only its own folio's vmemmap range, and frees the displaced
-> vmemmap pages while stale 2MB PMD TLB entries remain active, which can
-> cause overlapping-TLB machine checks or use-after-free writes to the =
-freed
-> vmemmap pages.
+> When page_alloc_init_late() later runs gather_bootmem_prealloc_node() =
+->
+> hugetlb_folio_init_vmemmap() -> __init_single_page() ->
+> memmap_init_page_common() -> mm_zero_struct_page(head) (and similarly =
+via
+> memmap_init_compound_page_frozen() in commit "mm/hugetlb: use common
+> compound page initialization helper"), the entire struct page is =
+zeroed,
+> leaking those shadow and origin pages and leaving head->kmsan_shadow =
+and
+> head->kmsan_origin as NULL (extending the existing tail-page behavior =
+in
+> hugetlb_folio_init_tail_vmemmap() to the head page).
 >=20
-> [1] =
-https://sashiko.dev/#/bug/linux-18e93f17-529b-4d84-ba44-a41829f4be64
-> [2] =
-https://sashiko.dev/#/bug/linux-fbdc3410-a4cf-457e-88e6-684380fbadfe
+> If the bootmem gigantic folio is later freed to the buddy allocator at
+> runtime, kmsan_free_page() hits KMSAN_WARN_ON(true) and subsequent
+> allocations from the first pageblock cause a NULL pointer dereference =
+in
+> kmsan_alloc_page().
 >=20
 > --=20
 > Sashiko AI review =C2=B7 =
 https://sashiko.dev/#/patchset/20261109095807.41547-1-songmuchun@bytedance=
-.com?part=3D5
+.com?part=3D6
 
