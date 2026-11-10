@@ -1,92 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794318681;
-	b=1OSTM3QQXqAtNe+DkUeGq0bxC5JU0DKv5blXxu7E5yYbIjKtlgZb500QD4QmRG+QlI+1
-	 pJwTlTxZ94aZlVyFpCn2T9q51yV6a2DOUK5gRjF1N632pUb658+ZKLjBHlC+IV8l0Ng3d
-	 N5VwYoN8QTXUoMYymKZ9QNrflsOOaSW7dD5rEInUax6o8/8CH6PSVaQ1y0Rsx/SFPeUPM
-	 s9mYf0dMirkDqrOlBtOca8cJcsHUykE48N9BcWT/SVMTPxtLdd7wVdXQTPEq2LuS76ueV
-	 tl2Nla+zOdW3e3dFeDx5l9ISu1wm7UIUN9yuexRZdEn5od//fniCJlpolxN6AGo0sUQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794318681;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=x1qBW8RoYHIsd8MuKQz0jzwuZbI8dPJ3tz/udwg6UjY=;
-	b=VSmTrpy6TsSWjMDr6syTsgGCRvsYbIw5dYj9jpR0mf5udWeOM+OpMgzabE8aBINBHey5
-	 SEPUInz3c6aYtcJRsrqqQbRiFTOExTmRbdtsNHD9e4Oay8UDAAkLBwmNileg4ZQHMjaiA
-	 9zJqkgjBEqa4mD67KZsS1maGcoQeQMgyBE+fbMkNGP6eqrQ+szOklv8OZcB21NPWX0mdN
-	 naNPKiBH6qkp0ziM7PwS7FbV6Xr93k5UUkL7oxP3dKd5srW1/kF7KAlS8D9JjTM6oEbfH
-	 /MK8tDe75q0jiiSloUao9PPKTzhw/B+BlqqMHj6HI26jbZWDwmiVB0nCfNp7klkCfzQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q8MfRVfd;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.61
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794318839;
+	b=KdQLGc7FdEb2WeyRzl0kwTCUzNADRJdl50Y3B/KuDd5u1TAvBQIVdLLS/uZOFUYnAT5+
+	 Lq4NnqF14UzfYlxrFcRG8bvSSMBqs05BqJz5A4J9sL1NucryeH9UY4OIX4ZmAZJQxYI50
+	 sQj+2bHVsC2Qow65nWSXS/D/Nf6D9+DwV4g/xl82EXPFSPqCYOkP3+zhM8UY8kvmesjT2
+	 sj3yksYSc26LibUjCuFPoJAx6DxmHdcG3oFOIRD8CeTV4NxfNXqmWcy6YueenxRRjlTEx
+	 cu6yukVNVIyAmVCuBB1AkvHM/+2O3mrHtBRTK7KJMu/uS0Dzd75y7Tg2pCk3eKsEjLw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794318839;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=RUHCUODfuq1c64hGLlX0P/gNGeDJu9itr1RCJOXHwKM=;
+	b=Di/shyWLbIHAm3L80sOpMXqT1TCjnC/mtEbf2WjgGTavyQ2VaVJnwhsGEAMQNTVSFb4T
+	 aTnQP+Sw2UiuOreLkeYBwAMtU3e3Rz0KwHIEzPKJl+Ssl1DQ+F0urqF8NBCmLhNXx34GV
+	 T0nWg+HN0iwQkg25oBkreRWiN8quORbJS0VUgFRUyIpCpgCfZuoT45POZYo9gbW9aHrak
+	 ZZ0hlVmDeOOAFd6XaYIRwOvf/HaJhuV5v8L8F20+rWCjYhVG38ieKvoHoUhhZvbZTIjuQ
+	 7G3cYDgR2OvTJjbO8asE+PbtQjZpdQItEOFV/bcdyt+BvgvAEDDpHFFAA7UpRbGkiBg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=GpIuFKKt;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.61
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013061.outbound.protection.outlook.com [40.107.159.61])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E2A606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 13:51:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62E2A606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22420606A321;
+	Tue, 10 Nov 2026 13:53:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 22420606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q8MfRVfd
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so17159865e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 05:51:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794318680; x=1794923480; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=x1qBW8RoYHIsd8MuKQz0jzwuZbI8dPJ3tz/udwg6UjY=;
-        b=Q8MfRVfdCOVUJylwqwi/4N3LDyzOV60C8/gwrxFeM/vQpCHHDn6LtUxdqQ/Rhrujhg
-         YtSdcITZLBYz0SXfj8aoTdrcS0yI/ZnDjqUr48xr34xgrcc3oUH6MRiOCj7J9dA3PSO9
-         7G7+qT4OrWK2QWzocqd+16hGx4SglPw/EW5JheBuI1Ai2bgaLV1TIOL7DaQBidEQSsRy
-         OYmB6ev3PtJozO0UTWtlsgXmrbBnnMANiOuKumbXNpkEFYen1HUdGuZmao9DgdLvFYxk
-         ELWg80KxgbxM1TI/CzTWyZLfJvWHNwv0ehdb+1JCLlVZIk1XjmXE2mVmpuwcLJ79gUzG
-         VcAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794318680; x=1794923480;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=x1qBW8RoYHIsd8MuKQz0jzwuZbI8dPJ3tz/udwg6UjY=;
-        b=honkvAWImRNwbmoKhsIu3wWEO5wz7JC9jpZ5+4XPXd9g9cofwUON8FhvMwovYN9aCO
-         9HTd+Q+Iscj7m725vZ54j4tbicpWG7CNEuoKB3CXVWAo8UkoRZJzzzHRVjgL7lqRsN5o
-         SB+B18iqTS9BU23JN3TcLw9pIzvvSKIgH/YD03IqQajb6BRR3xcODSH2cuM31rAWCfyF
-         /ma5/flEnjxo86M5hRsu9M5e7O/4Slu/GkIipNS/1NMISBS3hweypRYjzyIYWAC3MvBR
-         NhE3BcSEXQJJuXSjZh/PEzWB7DTcX3q3/fPduxNktQMPhrgjPdg+NR7+5wZgoxLD2b4L
-         hF1w==
-X-Gm-Message-State: APuU4Z/E7SBl1wAIv45Lj22WsPvWGWp/PPUR6zCAR3O+LKpWNXAEJS32
-	3mgnye7ymlTgEx71HrKltEJ4TMLLNnufRsKRk0f5gv5zzzQeudXUBRLIwcv/9Q==
-X-Gm-Gg: AYBFou3bRZbiCZAOXDd9L5scWtRpJ+J+RXPPKgnJkapSKPhMrZgxrXMM2rbxq1KTs1g
-	eVdAWXjOxCX/NXRPEYfXQLWy+yrU9b6B+IWR2GMDt3k78wyMB2XzE00dfNF8RU92byOBt8Ydc3N
-	7zORMHGGwXu/fuL/nM0sPPWooN4/VGvbJ4/o0jeN4JsS1RrL/TClmVrdr5F9SLTJCQTQwIGsGCU
-	2KXP0m9um5oLFmabUujZPAZRc29qpmb0camFGzxCrsE1UATn4+PpUtGB9IfH6tZwZA7s10JY8IT
-	jc5bNZE1vN7wbv24T0gp3LwWnJuAryAvhR2JUj6fMphsaIDw4lYQCC6vVW9ruexzcjb5SiXTrG/
-	VYDtBjl6NMRpbRPt4bTCzhrqkRe33kwSmHzxuEPCJureNQ9i0By+jAYwEV37yTZr5VpqMJ1BCOk
-	Jw55ByHWfhbWfUe9V7UFCh4ZGuBXUhi+6LW8rrvRegz4cWpwmxaDpkSnL+qYj0qJkjlKDBDbhcU
-	kfV9sVyKlGPIUiSGtxzS+D6WW6NFdErZ8/eKJHru8nqWjgyaroNbim2mGkXyqJr8qTMw5kcRtie
-	CEfrWqlVWrlf4+qyHxbQ/VDXRXRQYLfq/DArxA==
-X-Received: by 2002:a05:600c:3e1a:b0:4a1:de8a:603a with SMTP id 5b1f17b1804b1-4ba0233a429mr47496295e9.6.1794318679654;
-        Tue, 10 Nov 2026 05:51:19 -0800 (PST)
-Received: from mail.gmail.com ([2a04:ee41:4:b2de:1ac0:4dff:fe0f:3782])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba01fef1d0sm64488975e9.13.2026.11.10.05.51.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:51:18 -0800 (PST)
-Date: Tue, 10 Nov 2026 14:02:50 +0000
-From: Anton Protopopov <a.s.protopopov@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH v2 bpf-next 07/18] scripts: Add LLVM plugin infrastructure
-Message-ID: <avMkCh9LLezKS151@mail.gmail.com>
-References: <20261109170550.141443-1-a.s.protopopov@gmail.com>
- <20261109170550.141443-8-a.s.protopopov@gmail.com>
- <sashiko-outbox-205331@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=GpIuFKKt
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=n/PSsFBqmmihppHbK5f6NpSAB/CkC5YxK15CxRdYYsD9tLcKaGIljrUwZjFenN8R5XvzaGzSeKREHI+UkvXcHVQlSg8rF73hhQs8a6dzWLEVDZ51Yd4HIMWn8u67I2b0rPlqgPqCW6svAb0a33QL2hzYJAUvHmDzBE0SQ4Hj/Z4V5rZ/5XH+D1ex1gEfWh5ndLLuyElAuHZ1g43jahK5BClwn6Gz7DGZJCxN/YNzuVdYafS/bIdXCIiTmEnoWn9uCBUjap68IjZoSo4aJnUu9USWKJTZEm+31OhcOWZrZyKjcDuRSylKgE9NqTNxRNh2MZzon/g70/zzVe9V5KVpgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RUHCUODfuq1c64hGLlX0P/gNGeDJu9itr1RCJOXHwKM=;
+ b=pauUi/dvIq9JrO+T3tzfNfpi097CxirAUAR4wk2xOG4I66hDwC4ZT3Z8RhzC7bn4VaMz8dk59pD+gp6rGgv8mK2/zSJt5PegjY66WhclSe64kEarYuJhZY3pCBm6GDgzzC7N98fU92A9ZzRpOHgG/c/uDYJDCm1cR8Uxy7eb6oLv9x69puEwQiafd2QC38jkLJS5gMhtlmNvWQ7Yururgbf1qcT2QhW++ieR6gs8CaEtbySY3bcyu2omPMzQZ6uF++LwBt34fErvacwWRbWz8end3w14qGDV/yb/ZWtedJ6xuOH5kOjoczd4Z23wWh65+5cTtEMX4y3VgkL2QlaE5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RUHCUODfuq1c64hGLlX0P/gNGeDJu9itr1RCJOXHwKM=;
+ b=GpIuFKKt9KVM2H14OSlWsKW5pIIac+5aA16W8ycSrcIKeenI+mfmuo+qUkZhfbouClQQITRzhveP4XkLrSUUKd4Mr2dABPt+Zgb8s4sWemH/e1gEAhlESyQhEFrq2j5tz3vUu4rUMQqdpKROPJZNbJbCX2ZQKfLTbqSLh3H/E1PkmbHYW0M3pJc3VEQk4pUSXebV/uvtKxX9HRwwBrUl1cLW1lALzYlzerw6ccsxp/pNuitbfKQB+paTnyk08qEs3W/n8iCcFho6UmifKi/0f3h6v2bWZUMnIsGhAEavNaCQFCO5Fozj5fFzvMqbFua/RLurXilherf7jOL+tj9Unw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from DBBPR04MB7883.eurprd04.prod.outlook.com (2603:10a6:10:1e9::23)
+ by AMBPR04MB12232.eurprd04.prod.outlook.com (2603:10a6:20b:75b::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Tue, 10 Nov
+ 2026 13:53:55 +0000
+Received: from DBBPR04MB7883.eurprd04.prod.outlook.com
+ ([fe80::3a91:cf25:36c9:c3bb]) by DBBPR04MB7883.eurprd04.prod.outlook.com
+ ([fe80::3a91:cf25:36c9:c3bb%7]) with mapi id 15.21.0592.012; Tue, 10 Nov 2026
+ 13:53:55 +0000
+Date: Tue, 10 Nov 2026 21:58:49 +0800
+From: Peng Fan <peng.fan@oss.nxp.com>
+To: khj <hj351016@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev,
+	Frank.Li@kernel.org, linux-remoteproc@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: Re: [PATCH] remoteproc: imx_dsp_rproc: drain the vq work before
+ freeing the mailbox
+Message-ID: <avMjGRmXKL1xcNx+@shlinux89>
+References: <20261110105436.2487822-1-hj351016@gmail.com>
+ <sashiko-outbox-206921@kernel.org>
+ <CAGr5VtP-Sb3k9dT5zuJ0D=AQYVfsBN4igVE2ocArZ3=s050rNg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGr5VtP-Sb3k9dT5zuJ0D=AQYVfsBN4igVE2ocArZ3=s050rNg@mail.gmail.com>
+X-ClientProxiedBy: SI1PR02CA0020.apcprd02.prod.outlook.com
+ (2603:1096:4:1f4::9) To DBBPR04MB7883.eurprd04.prod.outlook.com
+ (2603:10a6:10:1e9::23)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,79 +101,197 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-205331@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DBBPR04MB7883:EE_|AMBPR04MB12232:EE_
+X-MS-Office365-Filtering-Correlation-Id: 001945f9-0147-40d2-cb2d-08df3f320f96
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|19092799006|261026121527099003|11063799006|4143699003|261021121427099003|261021123027099003|56012099006|261009223027099003|261022105027099003|261026140227099003|261022075727099003|261028144727099003|261102123227099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	FCnqfNGt/KUYPkEEozlP19EwnUwGfNJzIkxbB6a/dh6Zru87SnANDaKAPX0iE0AFIZQWzjvK85cbha39JJe8g0zkrD9CjJ0OSmbdqYHO28v5L0OiY1mYyI/of5ova+0+h92ROTXIhTouSaI8qvZgJ941jixJjaojvi1Qsux+FeEyoqFLy1yjb00YWIWf9Sruij/vgKxf1cYEFWb8JgqeZV+NNOkJI9uKgWLp1yC+6NEuu2xNzzh6GkvJrNN4h6OVBrg68XTGR4AKZKf5oJnCpb7FHsaob8xjHrVuBofEV/hLjrEc4FSoMr4dE9SwC80/IL2FlGHOSs5d94/xBdk/YtOzKQTmiOJwFarnnqE31wW5DYZGnIVll4dOE1ukdvzd8T4Y3nrxzidDHNLiaSGa8mT7Fhto2qk/Ld1JtFMrBdJHSpgAV3YvkAYfFhHAg9LLiY/atIXvX3BmzTDt/+Yo6gK+Dvb2mFFwnf6z0FzClCoNwZweeuZYc75J/ANr1OoqpaX74gqYpmiud40x0Ynp7CFb/AUzFWckugNVgrQHqP8HwC23cG3synkGsuACp/27ri4bqTcqdu3Ky28unLLmaUEzJaI/Hnm/+tQ5WMVTVZc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR04MB7883.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(19092799006)(261026121527099003)(11063799006)(4143699003)(261021121427099003)(261021123027099003)(56012099006)(261009223027099003)(261022105027099003)(261026140227099003)(261022075727099003)(261028144727099003)(261102123227099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QWFRL0VPVXBSUEdqRGFXcWdFSnZ0aUFTQll3YmQwMlBoVmNwQXp2NnlNYXNL?=
+ =?utf-8?B?bjhkOVBtenc3SzdkcFpHZGVEbjBUbjY1YnhTTGNvSFVicFY1OUQrUFZiSWtD?=
+ =?utf-8?B?Q0Vka21WUGZEWXNOQis1eVNFTGZkd05YZ09idVhjV2lwc0RiaE4xT3ExcXV2?=
+ =?utf-8?B?T0JUejBLUGpCSUh5Vi9IT0ZFOHRDTitQQUlYTWVwTWMzaDdIQ0ErOUw4YWpv?=
+ =?utf-8?B?NUsxVTJvQWtuS3pNWjFSRlI2ODJmVEpHMVlJV29BZGN5MThRVlBXMHhqL3Y2?=
+ =?utf-8?B?MU9jMkljMlFwRTBnbGNkNXNTOWQ2bTRmcnRleWtNa0gvWU9vS3pldmsvcmZH?=
+ =?utf-8?B?M2NlMWJIWlFLMkxtR3N6ekFXVEpqZGQ2SXJrOE1EUFZMNkFmdHdaMWNiOUtq?=
+ =?utf-8?B?c3dZK3JBYnpXaHNhZGxaWUE3OFdXQzlBaC9yOHQ3dm9pbzUva0dndWRlTXBW?=
+ =?utf-8?B?Y3dqN21QT1d5c1FiSVFPVkxBSlZ5S0U3UTdXUGFseFVZRlNTYld1eGRIVGFk?=
+ =?utf-8?B?MDhURUxWVXJmTWN0MDhoNkhJanBCcDAraExwTGV6SE9IWHJFSEZEdlFQQ3pQ?=
+ =?utf-8?B?bGdWbHJJVGZNWEgzNFdUaHluZzZ0MVZjM1FjbDhXWGdZMEVHSitvNnBQQ3J1?=
+ =?utf-8?B?VGFVb2xBbUV5YWI3TGlxbkk0bmlqMjN0d2J4WlloaUZFcjIyemtYaEZOY2Vo?=
+ =?utf-8?B?QzZOdTNsRkpkUlFHeEp5NmtGWmRJZDZaSnRUa0FBaXJKTlhnQy9SSFd3YWRl?=
+ =?utf-8?B?ak1qSTlVUjdWaWx6cEpmM1VjY2h0NVBRVnRFMzM3bWRXR3Q0ZG9yaGM1a25X?=
+ =?utf-8?B?NTBQWUk4Zi9OSGJab2h1UmpnRTJ1RGxJZ1pzUUhnMjkyVC9XTEV3NExUVUdq?=
+ =?utf-8?B?L2lMTUZWSHNLY2F6ZkpFR1p1bFNIeUV2dnYzZmVNY0w2NUxPbmtDY0F2S1p1?=
+ =?utf-8?B?Uk1WbG9YMmdxOFp4MHFJOFZUdWIrZS8xNzRIRW9JbERVSUNJWGFIcElPRUVF?=
+ =?utf-8?B?bUIwSDJqdTE1YjNDNm9pZnFvblNjKy83VE5WbGhRcEFraGVrZnBYWDdUOUh6?=
+ =?utf-8?B?ekw4cjRLOE9KNzRrRGhtQlpISHhBRnhUVnE1OTI2THY3NU9zSGZBSzBtK0ZU?=
+ =?utf-8?B?em53OWtlV0E1SnRWd0I0dWZQT2NaNysyVGI1U1lvZGJqeDdlckJncmhkd2Ur?=
+ =?utf-8?B?Y0NXUmpIRmxZb1ArOXkvbHhTS0pFV1M4eHBYV2hFREw1eXc0SHBKWm9XTmk1?=
+ =?utf-8?B?TmlycWpPUTNvUVFieVYvZVBiT2ZUemZHMFlWbFVtQ0Y4N3lVM2Qwek4xTVU4?=
+ =?utf-8?B?QkRUWExqVzFDRnZ2M1EyYWFrcmRUOHlIZis5NitTeGp0bXZKSkthWFNuNVlq?=
+ =?utf-8?B?a1dsSVJ4VkovUDZaNE5kOXdrY3pORU9WMGNRVTluVXhIakNsSW4rUUZhR0tX?=
+ =?utf-8?B?QlJLb3U2NW5lRm9ldm15QXA4ZDNXYStNRFRNK1k4YW9lbDNCOC9EYnEyOUpi?=
+ =?utf-8?B?ZlNNS0dVbTF1MnlrTzdGZ2h4am5ObW9SWHNVRHRYeWptbml5UEs5RVBTeWNV?=
+ =?utf-8?B?U2E0TGI1MndOWmdPeTRVQTRLZnU2YWpEQ2RvSE1oQU5jY3JJa3N2TWllOWlo?=
+ =?utf-8?B?bDBXOFJQVTIweWVmL0hJR2w2OTRNK1BQZjdYVzZEN2swelZVZy9tTkpOeU5C?=
+ =?utf-8?B?RTM4RDRrNERRYjRBQm9tYmYzOTRLVHpqVGx3b0ZrY3NmNUtZYnh4WVplelp4?=
+ =?utf-8?B?VHBBQnBHZXpIRjlST0RUTHhHKzNQK0d6S0xMaHFabmZybE03b0Q2UFVYU1Jy?=
+ =?utf-8?B?VWdWalNvZlJ2Z3p1dG5iSVpqUFMrUC8wK1B1UmQxQ3ZkVVc4US82RWpuai9F?=
+ =?utf-8?B?VmtlWU1zcVRqNlBsa1l6Yzh4bzZpbVdHUEVhSGI2NTFlWVZublRmYXVJc0NC?=
+ =?utf-8?B?V2xaRWpvalh0a3BnWlpSNGNsTi9XTzk2UUxqK3pHMGg3ckhqd2VsMkVQYmx5?=
+ =?utf-8?B?SDI2RlhiN0JHektNbUdIenBTZTkwdDlwVEdGOTdpRXdlYzNXYytSTjJYVjJ2?=
+ =?utf-8?B?aHBNcGhwUVh0Nk5Bcm9yYTYwSURSbnpHc1g2clV5RDdsNFlMTEt2UmFDaDEy?=
+ =?utf-8?B?Nlg4THg3NHdtWDE2dWJGRkxRNFlsd2xReWpFbVNsYnB5ekx0UHBCRHRWblFj?=
+ =?utf-8?B?WUdaTGJneUpocklPZW1GNjluZ28zTm1mdlFwYVdtMWU4eEZPYndmNHNDMWxP?=
+ =?utf-8?B?a0dLM2wweVZMWTkvSjloeExqdnU2ajVCenF3czNiQlhkdzRlOGRxVkFrU1lr?=
+ =?utf-8?B?aWxBRDVIK0VjZW8xUHRvTTZEa0JwZU1QdVdZbWp4ZnBabVFMNTRFTHBvSEd0?=
+ =?utf-8?Q?JT9A+1g+84or625jJfuLdE9yJxKwL5VzXaj3P?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 001945f9-0147-40d2-cb2d-08df3f320f96
+X-MS-Exchange-CrossTenant-AuthSource: DBBPR04MB7883.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 13:53:55.3883
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: o5xS0+JB2GP46PVSmY40oTwFDJeGxYm6r/jcC4EZO0lvTnxf86gSW03FffWQsUuVWBiSDAyhEBRWhPvuUhanpHd60n+1oZfmhy3Y1jLioUC33/GlOpvcTrhbg6qhfxod
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR04MB12232
 
-On 26/11/09 05:45PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Low] riscv: pi: filter out LLVM_PLUGINS_CFLAGS from KBUILD_CFLAGS
-> - [Low] vdso: avoid stripping LLVM_PLUGINS_CFLAGS from kernel objects
-> --
+Add back remoteproc list.
 
-no, riscv is not supported yet, vdso is not target for fmodret
+Peng
 
-> commit 072fb07f8d2d07b80e87b0ea8e05cc60c466504e
-> Author: Anton Protopopov <a.s.protopopov@gmail.com>
-> 
-> scripts: Add LLVM plugin infrastructure
-> 
-> This commit adds Kbuild and Kconfig infrastructure for building and loading
-> LLVM IR pass plugins with -fpass-plugin, and excludes LLVM_PLUGINS_CFLAGS
-> from vDSO, EFI stub, and early boot builds.
-> 
-> > diff --git a/arch/arm64/kernel/pi/Makefile b/arch/arm64/kernel/pi/Makefile
-> > index a273ab5af805c..5813bb75c9925 100644
-> > --- a/arch/arm64/kernel/pi/Makefile
-> > +++ b/arch/arm64/kernel/pi/Makefile
-> > @@ -10,6 +10,7 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
-> >  		   -D__DISABLE_EXPORTS -ffreestanding -D__NO_FORTIFY \
-> >  		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
-> >  		   $(CONFIG_CC_OPT_NO_ADDRSIG)
-> > +KBUILD_CFLAGS	:= $(filter-out $(LLVM_PLUGINS_CFLAGS),$(KBUILD_CFLAGS))
-> 
-> [Severity: Low]
-> Should arch/riscv/kernel/pi/Makefile also filter out $(LLVM_PLUGINS_CFLAGS)
-> from KBUILD_CFLAGS?
-> 
-> Like arch/arm64/kernel/pi/Makefile, it compiles pre-MMU position-independent
-> early boot objects with -fpie and -ffreestanding, filters out
-> CC_FLAGS_FTRACE and CC_FLAGS_LTO, and prefixes symbols with __pi_ via
-> objcopy.  Leaving LLVM_PLUGINS_CFLAGS enabled there can break symbol
-> confinement or introduce absolute addresses before the MMU and relocations
-> are active.
-> 
-> [ ... ]
-> 
-> > diff --git a/lib/vdso/Makefile.include b/lib/vdso/Makefile.include
-> > index cedbf15f80874..848d58296ba23 100644
-> > --- a/lib/vdso/Makefile.include
-> > +++ b/lib/vdso/Makefile.include
-> > @@ -1,5 +1,8 @@
-> >  # SPDX-License-Identifier: GPL-2.0
-> >  
-> > +# vDSO code executes outside the kernel.
-> > +KBUILD_CFLAGS := $(filter-out $(LLVM_PLUGINS_CFLAGS),$(KBUILD_CFLAGS))
-> > +
-> >  GENERIC_VDSO_MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-> >  GENERIC_VDSO_DIR := $(dir $(GENERIC_VDSO_MK_PATH))
-> 
-> [Severity: Low]
-> Does stripping $(LLVM_PLUGINS_CFLAGS) from the directory-wide KBUILD_CFLAGS
-> here also drop LLVM plugins from standard in-kernel objects built in those
-> directories?
-> 
-> Makefiles that include lib/vdso/Makefile.include also build obj-y kernel
-> objects linked into vmlinux, such as arch/sparc/vdso/vma.o and the
-> vdso*-image.o targets in arch/x86/entry/vdso/common/Makefile.include,
-> arch/sparc/vdso/Makefile, and arch/mips/vdso/Makefile.  Those Makefiles
-> scope $(GCC_PLUGINS_CFLAGS) removal to $(vobjs) (as this patch does for
-> arch/x86/um/vdso/Makefile), whereas modifying KBUILD_CFLAGS unconditionally
-> in lib/vdso/Makefile.include prevents enabled LLVM plugins from running on
-> the in-kernel objects and drops their <generated/llvm-plugins.h> rebuild
-> dependency.
-> 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20261109170550.141443-1-a.s.protopopov@gmail.com?part=7
+On Tue, Nov 10, 2026 at 08:40:44PM +0900, khj wrote:
+>Thanks -- both are correct, and my patch is wrong.
+>
+>[High] The AB-BA deadlock is real. imx_dsp_rproc_free_mbox() runs from the
+>pm_runtime suspend path (__rproc_shutdown() -> rproc_unprepare_device() ->
+>imx_dsp_rproc_unprepare() -> pm_runtime_put_sync() ->
+>imx_dsp_runtime_suspend()),
+>and __rproc_shutdown() holds rproc->lock across that. imx_dsp_rproc_vq_work()
+>also takes rproc->lock, so cancel_work_sync() there waits for the work while the
+>work waits for the lock -- a deadlock. The cancel must not run under
+>rproc->lock,
+>so it cannot live in free_mbox().
+>
+>[Critical] You're right that the unbind path can skip free_mbox() entirely:
+>devm_rproc_add() is registered before devm_pm_runtime_enable(), so on unbind
+>devres disables runtime PM before devm_rproc_remove() runs rproc_del() /
+>__rproc_shutdown(). pm_runtime_put_sync() then returns -EACCES without calling
+>imx_dsp_runtime_suspend(), so free_mbox() never runs -- the mailbox channels and
+>rproc_work stay live while the rproc / imx_dsp_rproc are freed (UAF + the clk
+>leak you note). So my one-liner does not even fix the unbind UAF it targeted.
+>
+>So this needs a teardown rework rather than a cancel in free_mbox(): e.g.
+>reorder devm_pm_runtime_enable() before devm_rproc_add() so the suspend path
+>(and mailbox free) actually runs on unbind, and drain rproc_work from a context
+>that does not hold rproc->lock. Since that touches the driver's probe/teardown
+>ordering, I'd rather not guess at the shape -- Mathieu, Frank, how would you
+>prefer this handled? I'm happy to send a v2 once the preferred
+>direction is clear.
+>
+>Thanks,
+>Hyunjung
+>
+>2026년 11월 10일 (화) 오후 8:08, <sashiko-bot@kernel.org>님이 작성:
+>>
+>> Thank you for your contribution! Sashiko AI review found 1 potential
+>> issue to consider:
+>> - [High] remoteproc: imx_dsp_rproc: AB-BA deadlock in
+>>   imx_dsp_rproc_free_mbox()
+>> It also noticed 1 related pre-existing issue this patch does not
+>> introduce:
+>> - [Critical] remoteproc: imx_dsp_rproc: use-after-free and resource
+>>   leaks on unbind [1]
+>> --
+>>
+>> commit 17e3fec9a8c6e436afd532f653405b5a78e316af
+>> Author: Hyunjung Ko <hj351016@gmail.com>
+>>
+>> remoteproc: imx_dsp_rproc: drain the vq work before freeing the mailbox
+>>
+>> This commit calls cancel_work_sync(&priv->rproc_work) in
+>> imx_dsp_rproc_free_mbox() after freeing the mailbox channels to drain any
+>> pending virtqueue work item.
+>>
+>> > diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
+>> > index 96d619daf3f5b..89c72d916b1e4 100644
+>> > --- a/drivers/remoteproc/imx_dsp_rproc.c
+>> > +++ b/drivers/remoteproc/imx_dsp_rproc.c
+>> > @@ -642,6 +642,13 @@ static void imx_dsp_rproc_free_mbox(struct imx_dsp_rproc *priv)
+>> >       mbox_free_channel(priv->tx_ch);
+>> >       mbox_free_channel(priv->rx_ch);
+>> >       mbox_free_channel(priv->rxdb_ch);
+>> > +
+>> > +     /*
+>> > +      * The mailbox rx callback schedules rproc_work; the channels are now
+>> > +      * freed, so no new work can be queued. Drain any pending work before
+>> > +      * the rproc (which the work dereferences) can be freed.
+>> > +      */
+>> > +     cancel_work_sync(&priv->rproc_work);
+>> >  }
+>>
+>> [Severity: High]
+>> Can calling cancel_work_sync(&priv->rproc_work) in imx_dsp_rproc_free_mbox()
+>> cause an ABBA deadlock with rproc->lock?
+>>
+>> CPU0                              CPU1
+>> ----                              ----
+>> mutex_lock(&rproc->lock)
+>>                                   imx_dsp_rproc_vq_work()
+>> cancel_work_sync(&priv->rproc_work)
+>>                                     mutex_lock(&rproc->lock)
+>>
+>>  *** DEADLOCK ***
+>>
+>> CPU0: __rproc_shutdown() -> rproc_unprepare_device() ->
+>>       imx_dsp_rproc_unprepare() -> pm_runtime_put_sync() ->
+>>       imx_dsp_runtime_suspend() -> imx_dsp_rproc_free_mbox()
+>> CPU1: process_one_work() -> imx_dsp_rproc_vq_work()
+>>
+>> Because priv->rx_ch remains active until mbox_free_channel(priv->rx_ch) runs
+>> inside imx_dsp_rproc_free_mbox(), an inbound mailbox interrupt before or
+>> during shutdown can queue priv->rproc_work while __rproc_shutdown() holds
+>> rproc->lock.  imx_dsp_rproc_vq_work() then blocks on rproc->lock while
+>> imx_dsp_rproc_free_mbox() waits in cancel_work_sync(&priv->rproc_work).
+>>
+>> [Severity: Critical]
+>> This problem wasn't introduced by this patch, but can unbinding an active
+>> DSP remoteproc device skip imx_dsp_rproc_free_mbox() entirely [1] and
+>> leave both the mailbox channels and priv->rproc_work active when the rproc is
+>> freed?
+>>
+>> drivers/remoteproc/imx_dsp_rproc.c:imx_dsp_rproc_probe() {
+>>         ...
+>>         ret = devm_rproc_add(dev, rproc);
+>>         if (ret)
+>>                 return dev_err_probe(dev, ret, "rproc_add failed\n");
+>>
+>>         rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_XTENSA);
+>>
+>>         return devm_pm_runtime_enable(dev);
+>> }
+>>
+>> Because devm_rproc_add() is registered before devm_pm_runtime_enable(),
+>> devres teardown disables runtime PM before devm_rproc_remove() calls
+>> rproc_del() and __rproc_shutdown().  When imx_dsp_rproc_unprepare() then
+>> calls pm_runtime_put_sync(), rpm_suspend() fails with -EACCES without
+>> calling imx_dsp_runtime_suspend() or imx_dsp_rproc_free_mbox(), leaving
+>> priv->clks enabled and the mailbox channels and priv->rproc_work able to
+>> dereference the freed rproc and imx_dsp_rproc structures.
+>>
+>> [1] https://sashiko.dev/#/bug/linux-a6e902ee-9958-4d44-96cc-d854c6256124
+>>
+>> --
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20261110105436.2487822-1-hj351016@gmail.com?part=1
+>
+>
