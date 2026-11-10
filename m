@@ -1,94 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=180.76.5.236
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794295650;
-	b=yCjV3dywAC0EP29fnPb3KAd95DXZKHbn/tD1ahZ4BNhrw0DtISFzkBAcgELUDCNQSamY
-	 GtgFIYIMWOZkLGOPaOexNkd4CDjRp4zry5/Q+g+J27AC+m82pO60XP7Dos8+O0HyWI9tw
-	 TPIbOdjpB0W+78jY2BchKBncRaS5/XOzPhDroPQM8KgJVCrAQPPQ+71VGPGjQAJlT+orw
-	 V5iV3mJlLW8iLnvqknuEBlKiyB3vZtAcfPm/yZEvdU3qGW/1Bm30mYkGzA+fzji6VqGtC
-	 Mi4mngplf4bIw92cT8+b98MZRtLIXtASoxxFZvQrkCQRQgJd5j31uB0Hqb2UvTyU98g==
+	t=1794298302;
+	b=LuAapNH0Pr0lEZrFS4zW9h/5Ndjsogvsh0jfkW6/xWU4rNlwZfcYrZ9KA7jJQyFmGdgm
+	 Cqmq7ILvj3cgip1sNAeWqpZ2fE5izFHDQq+YJTWxcPYnxFVtm9ZU2y671Q33XbNBVX0Re
+	 314DWb9B3gsT3Z2HCvzUrKLznOW+VI3tm4N8gRQmtDBw13bMtQhwSmuI4pSXicC2YAjkw
+	 p9dOZKGHXZKwuulQYfZwes6gsdtHDT0RfuwMb9kqoNM0p0dPZMa7XRgc/l1hFJMRoF4dr
+	 /POkf1BDM7eDwfvJeZH/vGNoKLcnif9qUxTgYmWlCoAHLk5wZ1fI0VXzCKQQn6XvJhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794295650;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=fXEgxHGGbNywcAgwLjVcb2CWVAIvTJVpGwgt60PS7Ns=;
-	b=GPXpzm+/AVWMmz8JJ3J2wIh+P5xsC+ELFbMjVAM1Vsj9R9O7FNPxRk7jqIVhpbXClIdS
-	 +Zc8rrXpK9dprRJI1Kz4yekK7U0MaL/sRIRyaoB9YB+0zbIVKqC5mYqj7bKX67f8EXqFM
-	 lvd6jxubZ3ZJv4qHjEtqoKF55NsF7Nv8xgoWhExj2vs6I90XcD70j2umjmkhsIz08oIhA
-	 Ci9x7zlHGazbbjLm/O5ho26aU7ld0w6UOLxQ7azmHw66Q1aUlOy+YVWmjDgxmtvnOzJKE
-	 7LiXpVxkkSjDgS8dICeqZ73LS5SB4MkyRef1ry3MECkUrDVgjp2xl4/fe/xhF0Twd1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794298302;
+	h=DMARC-Filter:X-MD-Sfrom:X-MD-SrcIP:From:To:Subject:Thread-Topic:
+	 Thread-Index:Date:Message-ID:References:In-Reply-To:Accept-Language:
+	 Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 x-originating-ip:Content-Type:Content-Transfer-Encoding:MIME-Version:
+	 DKIM-Signature;
+	bh=KI4pxAuikkCspTSZ/dEtczfsWFab+Z5NAl9UMoH1mZI=;
+	b=qi5L6yj3YPJeXARJnI3qC/nIEjHkK21kjKZEIdP8DpNyKisFd+pGE0zuaj/btGvYP5Fe
+	 3T+RsqyN2n879elejDT3Mam8pe0AUcvT7EkUxlL6M1E9rx0dYsRaab40xSmscJuFpQNYR
+	 pKRvtT9/3A/WV1vjOku+EzbCnwqZz6dEvF+TOx7g323a/FDrV/CXiiavzPJk3oG1VWWdp
+	 NJcSZ5Zku2TJUe8hErbF23HumM0e0TIZ1YT9cQ5xXOnwwUdX/dyS/JrO9+3awPCZXyp9e
+	 uHY0ybyyJBmrj53x+wYkZ4/VWVzMEEWQv5xGjvlYzwY8dwOW466k1rs1uYrZld5G6ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BMH6Z8Re;
-	arc=none smtp.remote-ip=209.85.214.171
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918F8606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 07:27:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 918F8606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	dmarc=pass header.from=baidu.com;
+	spf=pass smtp.mailfrom=baidu.com;
+	dkim=pass header.d=baidu.com header.i=@baidu.com header.a=rsa-sha256 header.s=selector1 header.b=JWLBkZwy;
+	arc=none smtp.remote-ip=180.76.5.236
+Received: from outbound.baidu.com (outbound.baidu.com [180.76.5.236])
+	by smtp.subspace.kernel.org (Postfix) with SMTP id 6F9A6606A32A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 08:11:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F9A6606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=baidu.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baidu.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BMH6Z8Re
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2ea138a3497so11086055ad.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 23:27:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794295649; x=1794900449; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=fXEgxHGGbNywcAgwLjVcb2CWVAIvTJVpGwgt60PS7Ns=;
-        b=BMH6Z8ReBP39awtr+OjPihWWNgG/tPl7Lij4X6I7AUIIkc4jSRDpjaYZ7cbsYeY1Qc
-         ZNxAxmCZmtyFRvQp6IETIJF4lQGqOCSb0d02jqdyuANBfsorOSKDts9uYemfD5VFr5Wp
-         fR7K9W6ywn8sMkvPJWMMfiFksH1xsXiHOnjq5inp7JErLeaUT3u36arOyIsCyiPvTmyD
-         Kx3jGs1tFRxGgN3qGaadItVf9jpxTZuNfC+O3k+afNtH5NlEHrFCxSTowO3mlBG7DJYz
-         0p3VZRvyiYHMq1YCW3+jQgcHApRfQUDWp0GcAqJiCPgYzx32FD7gTy1oh6wUSG+C0PB6
-         7vRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794295649; x=1794900449;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=fXEgxHGGbNywcAgwLjVcb2CWVAIvTJVpGwgt60PS7Ns=;
-        b=Ebl4Unvg8cFyB1TGdo5kzCjNQIu3jziCZn81CrVWJNKbg9wch6eZT8UfQ/IBh76Dql
-         DDYikpF73cMJ7aHrra6xNy3ZB1Zp3IidQRz11LGTm5BI0vwWJ1ycvmg2+BTRJ/wKhUO+
-         X8SxhqkzhqiQTuQ/BjcQywoZC3UNBToTyfhO7VuUPgrcdP0rjcaFyibA+EVLV9auNLd/
-         eYqKyqOM50wRcgdy7JWFVvFWv7ZKv+ezVV97ucbpX+VUNe4h7kiP+8Sd5hYji+dJ2SKX
-         R/LFdug2Aso/boT0ggsEM+57sOLEKIxnQdgiAslH925dvpM37ts4crvhKfZbPHJ5cZoF
-         C4ew==
-X-Gm-Message-State: APuU4Z9bsuWX8bp+wqgt1ahVtaeEKdBti7MtxclLXyypjwXaXsyTG/Gy
-	J+OKDBr4mibrlp8/M4n2kZxfy1Jt9ilZGA70sJWpRbuo+ZVkwtMB9PszAgswz/vw
-X-Gm-Gg: AYBFou1ZDv648U76ROvtFXFZfL3+2xD3YmlJMbAFEFnMELJMEEv+BCumAsajG5x3NiX
-	22Mpu2EuLHFIxgEWOcGPscCDgqaLY8csOCk2+bOe2Do/J5834wFJGutj6MTyJ2gXtUatb2zE/cQ
-	TCU0wH6Ql3dDumwt005PE3bgfhjhtMrPQtXh31mzLx9/u1+dxDDVBRy3gzfhWM0SE5vnDXjy25z
-	A1LQbYJ5MWjzhgQJ/4hLHQ5GbA3nLQBUrOiYRjLpsbic/H+xCq6ks2EFXASsgijNla2VVry3ura
-	la8ulX0f6yVuY0Bi78ARHDtcBioqrl9bi/3Z9hC4cjubf3sbzyXCeNTKe024CuZSpTAZ2NEDAza
-	XZla7F7jvE0IlCWYxsKXbx/B6fCRyhVy8ybVHB+aYq3gDE0L107ISQb6EEEjCPQOUVIB0z3k+t9
-	TEPPPUCm4cNG3HU3PgEtej1VdVW86Mfu4fBEym476XwI14llo+Nt8NO8u04Qa1YhMU22vLCkRHM
-	TH426c6FpNSUoYmRHWN9APhGzzmBIxZVX4T1+FtTjv77vf9vItfRov/mkSqakUe+eTbGor70XRt
-	Hzy0szW8N7QAy9om3SBkRA13PbI=
-X-Received: by 2002:a17:903:1a2b:b0:2e9:5507:b538 with SMTP id d9443c01a7336-2edb8fb38f2mr16009195ad.3.1794295648858;
-        Mon, 09 Nov 2026 23:27:28 -0800 (PST)
-Received: from localhost ([2001:19f0:8000:3bef:5400:6ff:fef9:667])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2edb6e0c9cesm5627985ad.69.2026.11.09.23.27.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 23:27:28 -0800 (PST)
-Date: Tue, 10 Nov 2026 15:27:09 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: sashiko-reviews@lists.linux.dev, Inochi Amaoto <inochiama@gmail.com>
-Cc: devicetree@vger.kernel.org, linux-usb@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org
-Subject: Re: [PATCH 2/4] usb: dwc2: drd: Sync the generic PHY mode with role
- requests
-Message-ID: <avLHFUl6S3BUOqeI@inochi.infowork>
-References: <20261110070627.217946-1-inochiama@gmail.com>
- <20261110070627.217946-3-inochiama@gmail.com>
- <sashiko-outbox-206474@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=baidu.com header.i=@baidu.com header.a=rsa-sha256 header.s=selector1 header.b=JWLBkZwy
+X-MD-Sfrom: lirongqing@baidu.com
+X-MD-SrcIP: 172.31.3.13
+From: "Li,Rongqing" <lirongqing@baidu.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
+Subject: =?utf-8?B?562U5aSNOiBb5aSW6YOo6YKu5Lu2XSBSZTogW1BBVENIXSBQQ0kvQUNQSTog?=
+ =?utf-8?B?Q2hlY2sgdGhlIGZvdW5kIGhhbmRsZSBpbiBhY3BpX2dldF9yY19yZXNvdXJj?=
+ =?utf-8?Q?es()?=
+Thread-Topic: =?utf-8?B?W+WklumDqOmCruS7tl0gUmU6IFtQQVRDSF0gUENJL0FDUEk6IENoZWNrIHRo?=
+ =?utf-8?B?ZSBmb3VuZCBoYW5kbGUgaW4gYWNwaV9nZXRfcmNfcmVzb3VyY2VzKCk=?=
+Thread-Index: AQHdcNUobQv5k3NCC0iG91KwaRoRgLcmRF6AgACwElA=
+Date: Tue, 10 Nov 2026 08:11:35 +0000
+Message-ID: <a0ce357a4abe4a64aca5cdc982e434f1@baidu.com>
+References: <20261110053423.2517-1-lirongqing@baidu.com>
+ <sashiko-outbox-206326@kernel.org>
+In-Reply-To: <sashiko-outbox-206326@kernel.org>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,171 +63,43 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-206474@kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
+	s=selector1; t=1794298297;
+	bh=KI4pxAuikkCspTSZ/dEtczfsWFab+Z5NAl9UMoH1mZI=;
+	h=From:To:Subject:Date:Message-ID:Content-Type;
+	b=JWLBkZwy+3oySOw6Ji0U1X7m/ctcnEoAFFqF7Q70weV0cd3yA6CHb4wb9+8ybBqJl
+	 GqNdhco0J6QbvqGdHRd3Bxpfa19wRgtoW439vKHxDzETmaH4eg2QRtCQvxmX2cTp5+
+	 B+wZ7jk6Vdo9p7VmuCStEr1ikNLyfPkiTdXnUL95yzi+zOywibzWntwVWlwpHW4o3E
+	 VE9aZuauNY2XOv5MxqyHaRvqMlM1VlKIsfjYOhDmX9tdK46r1IxN9MCjZeOOmyiyMJ
+	 17WDl4hMgV7PWqO0EZW4G3OtyJVS+eZF8ccRqju4/vbORdkmUBy+VX2Oy5EFQ0UoYB
+	 I86x0ov5qnoVg==
 
-On Tue, Nov 10, 2026 at 07:18:48AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] usb: dwc2: drd: inverted default mode check in dwc2_drd_init()
-> - [Medium] usb: dwc2: drd: unupdated PHY mode on USB_ROLE_NONE in
->   dwc2_drd_role_sw_set()
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [High] usb: dwc2: early role switch registration race in
->   dwc2_driver_probe() [1]
-> --
-> 
-> commit 5fa24c9321d10a0419f734968d84804314b53dd6
-> Author: Inochi Amaoto <inochiama@gmail.com>
-> 
-> usb: dwc2: drd: Sync the generic PHY mode with role requests
-> 
-> This commit updates the generic PHY mode via phy_set_mode() during DRD
-> initialization, role switch updates, and system resume.
-> 
-> > diff --git a/drivers/usb/dwc2/drd.c b/drivers/usb/dwc2/drd.c
-> > index 1ad8fa3f862a1..1ad3804cbc805 100644
-> > --- a/drivers/usb/dwc2/drd.c
-> > +++ b/drivers/usb/dwc2/drd.c
-> 
-> [ ... ]
-> 
-> > @@ -111,14 +113,11 @@ static int dwc2_drd_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
-> >  	 * mode and sessions. It is the case if cable is plugged at boot.
-> >  	 */
-> >  	if (!hsotg->ll_hw_enabled && hsotg->clk) {
-> > -		int ret = clk_prepare_enable(hsotg->clk);
-> > -
-> > +		ret = clk_prepare_enable(hsotg->clk);
-> >  		if (ret)
-> >  			return ret;
-> >  	}
-> >  
-> > -	spin_lock_irqsave(&hsotg->lock, flags);
-> > -
-> >  	if (role == USB_ROLE_NONE) {
-> >  		/* default operation mode when usb role is USB_ROLE_NONE */
-> >  		if (hsotg->role_sw_default_mode == USB_DR_MODE_HOST)
-> > @@ -127,6 +126,15 @@ static int dwc2_drd_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
-> >  			role = USB_ROLE_DEVICE;
-> >  	}
-> >  
-> > +	if (role == USB_ROLE_HOST || role == USB_ROLE_DEVICE) {
-> > +		ret = phy_set_mode(hsotg->phy, role == USB_ROLE_HOST ?
-> > +				   PHY_MODE_USB_HOST : PHY_MODE_USB_DEVICE);
-> > +		if (ret)
-> > +			goto out_clk;
-> > +	}
-> 
-> [Severity: Medium]
-> Does guarding phy_set_mode() on USB_ROLE_HOST || USB_ROLE_DEVICE leave
-> hsotg->phy stuck in PHY_MODE_USB_HOST when switching from USB_ROLE_HOST to
-> USB_ROLE_NONE?
-> 
-> When hsotg->role_sw_default_mode is USB_DR_MODE_UNKNOWN and hsotg->dr_mode
-> is USB_DR_MODE_OTG, role remains USB_ROLE_NONE.  This skips phy_set_mode(),
-> whereas dwc2_force_mode(hsotg, role == USB_ROLE_HOST) below forces the
-> controller into device mode (matching dwc2_drd_init() and
-> dwc2_drd_resume(), which both set PHY_MODE_USB_DEVICE for USB_ROLE_NONE).
-> 
-
-Yes, the check can be removed
-
-> [ ... ]
-> 
-> > @@ -160,26 +168,40 @@ static int dwc2_drd_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
-> >  		/* This will raise a Connector ID Status Change Interrupt */
-> >  		dwc2_force_mode(hsotg, role == USB_ROLE_HOST);
-> 
-> [Severity: High]
-> This problem wasn't introduced by this patch, but registering the role
-> switch in dwc2_drd_init() before dwc2_driver_probe() finishes initializing
-> the core and workqueue allows concurrent role switches to race with probe
-> [1]:
-> 
-> CPU0 (probe)                      CPU1 (role switch / IRQ)
-> dwc2_driver_probe()
->   dwc2_drd_init()
->     usb_role_switch_register()
->                                   dwc2_drd_role_sw_set()
->                                     dwc2_force_mode()
->                                       /* unlocked RMW on GUSBCFG */
->   dwc2_core_init()
->     /* RMW on GUSBCFG */
->                                   dwc2_handle_conn_id_status_change_intr()
->                                     if (hsotg->wq_otg) /* NULL */
->                                       queue_work(...)  <-- event dropped
-> 
-> dwc2_force_mode() modifies GUSBCFG without holding hsotg->lock, racing with
-> dwc2_core_init().  In addition, because hsotg->wq_otg is not allocated yet,
-> dwc2_handle_conn_id_status_change_intr() drops the connector ID status
-> change interrupt, leaving the controller in a mismatched state.
-> 
-> >  
-> > -	if (!hsotg->ll_hw_enabled && hsotg->clk)
-> > -		clk_disable_unprepare(hsotg->clk);
-> > -
-> >  	dev_dbg(hsotg->dev, "%s-session valid\n",
-> >  		role == USB_ROLE_NONE ? "No" :
-> >  		role == USB_ROLE_HOST ? "A" : "B");
-> >  
-> > -	return 0;
-> > +out_clk:
-> > +	if (!hsotg->ll_hw_enabled && hsotg->clk)
-> > +		clk_disable_unprepare(hsotg->clk);
-> > +
-> > +	return ret;
-> >  }
-> >  
-> >  int dwc2_drd_init(struct dwc2_hsotg *hsotg)
-> >  {
-> >  	struct usb_role_switch_desc role_sw_desc = {0};
-> >  	struct usb_role_switch *role_sw;
-> > +	bool is_host;
-> >  	int ret;
-> >  
-> >  	if (!device_property_read_bool(hsotg->dev, "usb-role-switch"))
-> >  		return 0;
-> >  
-> >  	hsotg->role_sw_default_mode = usb_get_role_switch_default_mode(hsotg->dev);
-> > +
-> > +	if (hsotg->role_sw_default_mode != USB_DR_MODE_UNKNOWN)
-> > +		is_host = hsotg->dr_mode == USB_DR_MODE_HOST;
-> > +	else
-> > +		is_host = hsotg->role_sw_default_mode == USB_DR_MODE_HOST;
-> > +
-> > +	ret = phy_set_mode(hsotg->phy,
-> > +			   is_host ? PHY_MODE_USB_HOST : PHY_MODE_USB_DEVICE);
-> 
-> [Severity: High]
-> Are the if and else branches inverted here?
-> 
-> When role_sw_default_mode is configured (for example USB_DR_MODE_HOST on an
-> OTG controller where dr_mode is USB_DR_MODE_OTG), the if branch ignores
-> role_sw_default_mode and checks dr_mode instead.  When role_sw_default_mode
-> is USB_DR_MODE_UNKNOWN, the else branch evaluates USB_DR_MODE_UNKNOWN ==
-> USB_DR_MODE_HOST, which is always false.  This sets hsotg->phy to
-> PHY_MODE_USB_DEVICE while dwc2_ovr_init() at the end of dwc2_drd_init()
-> forces the controller into host mode:
-> 
-> drivers/usb/dwc2/drd.c:dwc2_ovr_init() {
->     ...
-> 	dwc2_force_mode(hsotg, (hsotg->dr_mode == USB_DR_MODE_HOST) ||
-> 				(hsotg->role_sw_default_mode == USB_DR_MODE_HOST));
-> }
-> 
-
-Yes, it is inverted.
-
-I will fix them in the next version.
-
-Regards,
-Inochi
-
-> [1] https://sashiko.dev/#/bug/linux-a825f666-6a3b-40af-8377-023f8afa7caf
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261110070627.217946-1-inochiama@gmail.com?part=2
+DQoNCj4gLS0tLS3pgq7ku7bljp/ku7YtLS0tLQ0KPiDlj5Hku7bkuro6IHNhc2hpa28tYm90QGtl
+cm5lbC5vcmcgPHNhc2hpa28tYm90QGtlcm5lbC5vcmc+DQo+IOWPkemAgeaXtumXtDogMjAyNuW5
+tDEx5pyIMTDml6UgMTM6NDENCj4g5pS25Lu25Lq6OiBMaSxSb25ncWluZyA8bGlyb25ncWluZ0Bi
+YWlkdS5jb20+OyBsaW51eC1wY2lAdmdlci5rZXJuZWwub3JnDQo+IOS4u+mimDogW+WklumDqOmC
+ruS7tl0gUmU6IFtQQVRDSF0gUENJL0FDUEk6IENoZWNrIHRoZSBmb3VuZCBoYW5kbGUgaW4NCj4g
+YWNwaV9nZXRfcmNfcmVzb3VyY2VzKCkNCj4gDQo+IFRoYW5rIHlvdSBmb3IgeW91ciBjb250cmli
+dXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDEgcG90ZW50aWFsIGlzc3VlIHRvDQo+IGNv
+bnNpZGVyOg0KPiAtIFtMb3ddIFBDSS9BQ1BJOiBtaXNzaW5nIEZpeGVzIHRyYWlsZXIgZm9yIGFj
+cGlfZ2V0X3JjX3Jlc291cmNlcygpIGZpeA0KPiAtLQ0KPiANCj4gY29tbWl0IDJkZDI2M2M4NzQx
+ZGMyZjI0YTU5ZGM0OGQwZGVmOThjMzE4NzJjZTINCj4gQXV0aG9yOiBMaSBSb25nUWluZyA8bGly
+b25ncWluZ0BiYWlkdS5jb20+DQo+IA0KPiA+IFBDSS9BQ1BJOiBDaGVjayB0aGUgZm91bmQgaGFu
+ZGxlIGluIGFjcGlfZ2V0X3JjX3Jlc291cmNlcygpDQo+ID4NCj4gPiBhY3BpX2dldF9kZXZpY2Vz
+KCkgcmV0dXJucyBBRV9PSyBldmVuIHdoZW4gdGhlIG5hbWVzcGFjZSB3YWxrIGZpbmlzaGVzDQo+
+ID4gd2l0aG91dCBhIG1hdGNoLCBpbiB3aGljaCBjYXNlIHRoZSByZXR1cm5fdmFsdWUgYXJndW1l
+bnQgaXMgbm90IHdyaXR0ZW4uDQo+ID4gVGhlIGNhbGxlciBwYXNzZXMgYW4gdW5pbml0aWFsaXpl
+ZCBhY3BpX2hhbmRsZSBhbmQgaGFuZHMgaXQgdG8NCj4gPiBhY3BpX2ZldGNoX2FjcGlfZGV2KCks
+IHdoaWNoIGRlcmVmZXJlbmNlcyBpdCBhcyBhbiBBQ1BJIG5vZGUuDQo+ID4NCj4gPiBJbml0aWFs
+aXplIHRoZSBoYW5kbGUgYW5kIHJlamVjdCBhIG1pc3NpbmcgbWF0Y2guDQo+ID4NCj4gPiBTaWdu
+ZWQtb2ZmLWJ5OiBMaSBSb25nUWluZyA8bGlyb25ncWluZ0BiYWlkdS5jb20+DQo+IA0KPiBbU2V2
+ZXJpdHk6IExvd10NCj4gU2luY2UgdGhpcyBmaXhlcyBhbiB1bmluaXRpYWxpemVkIGhhbmRsZSBk
+ZXJlZmVyZW5jZSBpbg0KPiBhY3BpX2dldF9yY19yZXNvdXJjZXMoKSB3aGVuIGFjcGlfZ2V0X2Rl
+dmljZXMoKSBjb21wbGV0ZXMgd2l0aG91dCBhIG1hdGNoLA0KPiBwbGVhc2UgYWRkIGEgRml4ZXMg
+dGFnOg0KPiANCj4gICBGaXhlczogMTY5ZGU5NjljMDE4ICgiUENJL0FDUEk6IFByb3ZpZGUgYWNw
+aV9nZXRfcmNfcmVzb3VyY2VzKCkgZm9yIEFSTTY0DQo+IHBsYXRmb3JtIikNCj4gDQoNCkkgdGhp
+bmsgdGhpcyBpc3N1ZSBoYXMgbGltaXRlZCBpbXBhY3QsIHNvIEkgZGlkbid0IGFkZCBhIEZpeGVz
+IHRhZy4gUGxlYXNlLCBtYWludGFpbmVyLCBjaGVjayB3aGV0aGVyIGEgRml4ZXMgdGFnIGlzIG5l
+ZWRlZCB3aGVuIG1lcmdpbmcuDQoNCltMaSxSb25ncWluZ10gDQoNCj4gLS0NCj4gU2FzaGlrbyBB
+SQ0KPiByZXZpZXcgwrcgaHR0cHM6Ly9zYXNoaWtvLmRldi8jL3BhdGNoc2V0LzIwMjYxMTEwMDUz
+NDIzLjI1MTctMS1saXJvbmdxaW5nDQo+IEBiYWlkdS5jb20/cGFydD0xDQo=
