@@ -1,54 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794345933;
-	b=s0imQbDSg26iIyI4ix2Dsa0EIglSdawezs5rT2UwkuJhgOVo3u7rQwRTOIwIxPcSg71g
-	 /XC8VBiNzblqJzbKksHcfkurLdFUQsttMoAB66LSpFCTe5wUl4zByfeIG1HSlJ/I799Go
-	 ayJ3M1MUWzNoLomxVkGZ9nNrmzYB2HDiBdKx/Qt8g8N5QX3GoEwgMRB5rgSyM9hy4hI3S
-	 CJFBKs/5TwUavRUOARnh5UUhVa//VAD3Yh+J3VTNkOKGRZQTfGhW5XXk+e1K/MTuHd4Q6
-	 sC8feCpyRLsAaGo+TAzFtWUflexw7xweJBRol3bLNO4DycsfmYz1zd1ZwAQ+vIkId6w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794345933;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=y0gm0TGoxut+75ypiNOEVMsTMwXFowvyRq5zMv35qXg=;
-	b=VLJCxUmyS1Mci4okgRSp8wtX6C2SkoS/FG4ttJUMk4vRXNuGxHZ7YK3kZZXOmJV/TQ1b
-	 yK8gmVUJZRPb51g7APlS5U7QnX1GCNNJJuCHR2MtP2qhSe5A+NGMKQ6AiLyYrMOPYwH/c
-	 53gLZFevsSubKU+BjlPGmO2OvSbOpkoLvwDlRCuXK67rpn2pgT/x2bExkiUdWUba73K4y
-	 TPYJBgkyDMReaMPFqxO7ND0/dPN9OPh84o0e/IibhSGHrH3xC+hnc7iCTYcSxqpJ/6bGK
-	 0OO3CVqkRNAoGE83voxat0orSztaXIGeLck5O1NYovIy7RWqRfsWeOnElNX0TY/Izjw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=o1CTBC5V;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.180
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794347397;
+	b=EeGv0eBZqw9qAOj4ShYheukznPzB8VVIlHaPsEGbnImmc5Xm+hIHNdyBGSYUtHSnFkdC
+	 uA2GxOwKC7OCWJHwbe/YAnTDr7ea7h8zcitSHKs1cog4acwjVQhIgYaZW0gkI3IssMSg/
+	 sAYO5Fj8EgrHmlbkvxmCY4sfdhc7IqvcgitCIyPLmHF52tsLGUyZhVbpDxP8035yb3NxB
+	 nS+pMnh0MxU9uAAE+3radNK0A84VjX9bnFrE9oUoe052jnmZZGegWcrYjLM9AKbTn7X6Y
+	 Gj7TSPnik+yLexpWfYLQgff5IXrnix4sXMgDBpljoh0jI5QanaRZllYuWIHIn0dCY0A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794347397;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=lc2d75OL7aQ19NWtHaPUWdOA/U+qQ69pXWLu70/x14s=;
+	b=CQtoKg9xNd/VMoT3rc3D0E/MOQnz3dP9AqRUrhfQ1zXxJmNrrNDNhGDwevdfreV6PMJ5
+	 G03TH3rL9YcbAFbS+PXrGp76QzoGT8kTwSDcoTdDd/qM62W3wJhdWQKHm2dnjg6FXr7Sj
+	 fqeQEO0FLqzYi23lQ9SMzTEh1oomjBHNRBHPodsmLW10cj2+s8xF6bvNPPmS1WUo/JFhe
+	 SCjDqPzo9ik4NgdzJkjBcuQm0WSf+sqqzCwu7iPwR5L50BhMXIb36dO34uSqBH1eu8CJz
+	 ZRlaHOjXyIBgx61WUGpybIixpwlYRFsHi7RS4Pb2Gfq+paGjtMyzS46RaHxU7Xb6Y9A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vmbPzGlJ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.180
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE326606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 21:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6196606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 21:49:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6196606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=o1CTBC5V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D6A1F0089F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 21:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794345932;
-	bh=y0gm0TGoxut+75ypiNOEVMsTMwXFowvyRq5zMv35qXg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=o1CTBC5VQhREW4/n9g1IdTTVaaakAGNQqdYf0hhDAnN04rdPDTtRV8bYQ8UPfo43T
-	 5uBuMI3o2+ykYO1/ork2Q4x1AwAB9G8mtxKQ7BRfuG5Xi1HJg/auU9PtK3fHXE4p9a
-	 uhQhXLShQ2boZwCPOuYHQ8dJ/tY8XPb+xeYraxeaQtgEqPotudzrSrHPgsb/OQNJUq
-	 XqCetp7TDwQqbLoa2EQAwg2SkK/IX8fq5l+IdjmMK4nt0XgSTH5hm/T4Hqsm/qPGev
-	 5CfRQ4ficivHYLLF8/Bt+i7LA91fQ+V2D9+D8IyqsTSxqxMNdLT/qOQbUQE7Gy98Ef
-	 m05PkPSQ4gUgw==
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-943e8d35f74so218144285a.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 13:25:32 -0800 (PST)
-X-Gm-Message-State: APuU4Z+i2rXrzSb4yOArOSw1iZCx6Q1buOHZSPXFOrYOQkUEoHsrVMku
-	WGVYqChR+onJSAS+DXYzmPAICy4h0mC0YNIDN0YPRptaUsWaFawRqXQeovH0USEGevTIIy5SxvZ
-	VGbvOD1vMM53JHgFReeUA2p7DaoIHIHA=
-X-Received: by 2002:a05:620a:1d08:b0:93e:e425:22b3 with SMTP id
- af79cd13be357-947b00d6dc9mr39116285a.82.1794345931716; Tue, 10 Nov 2026
- 13:25:31 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vmbPzGlJ
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-33bb5afa736so293587eec.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 13:49:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794347396; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Su3SxsLkNkfl9QUfXXYMYTbtqk8XyprLP0i8Q25dkbGQ7rrhHq4n4phxV/raeYkhw0
+         SnH3Hb186ECJHSBjknqsZzPjb8qf0TZa/kwvyGuMjK2N8AcXtZ949EvZ6vDfwI/KcDjp
+         8FwYqqkPYMzn2vNWT+shqH6mrIITeahfY3gfQ/BTpPahrEYZWR9/9wtlVBGm1BSDWJjZ
+         nv+ALpmKBdrkLe/+kEiZT95v46QQAdC5a4xx5tKHonyrsKgiHrlCU8z4QtugiXHGcKAw
+         uvUyoMXUEgFFlwPVsVPVlynDFb9kX1+oP5qXqjfnQOEHcwcc3365FEvC2/tDWfAcpxMI
+         pZqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=lc2d75OL7aQ19NWtHaPUWdOA/U+qQ69pXWLu70/x14s=;
+        fh=tk5HmGYP9yIbpt4FfndQpazTxzLfjTHFB991PS49kqw=;
+        b=SUXSOOWM6jIiSJaR54Ckkz+vR6tolue8i8fDlYKK6IivhnHFbdIFMS5ciTD4hdb6M+
+         srM5fsxDoDBYDQo4bij1Iucm/16Pu5on8qfKJ/Ji+hCrESzOcgXgQOrfbb/LyEGWVdCY
+         PJvkEFlnst7Vss2PJ1aD/1uMxciS3JK0cLp5jpoaUuKpzKeWh9oeF/Vh08sRBM4QDsXD
+         2jbdHa1Obw/8H2Z9zRRO2c4qriLFkhTiDWQlXjrmLAEohKY4H9H01VmmzlU+bicBK0nV
+         IYjp52XMGJOfLORjSV5iqrqM9uYL1CKV4qkWczP0e6UfzIBicG/o+4rBtH3p5dUA2ivt
+         PnIQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794347396; x=1794952196; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=lc2d75OL7aQ19NWtHaPUWdOA/U+qQ69pXWLu70/x14s=;
+        b=vmbPzGlJzZeecwrTLY5w2lNCfas2z9GVCJk0ThErGsH2QVCs8rsF01sirGjOjUhkI/
+         7nLkp//7PFogKgT/68Tto4EGvh8B+4hnM9+T2D4OEtNqk+70NtkFOCDMnnNxx7AkLgrW
+         ocF+MB/L0B5NMprq335W3kySRf+dwsPMt/QUalvh7/ziAUK8hUk74XWbEe/m0EYPZKkr
+         ZvCyvYbLfCRF9xB5WDeYXPDwYXRk8aomIf3I5BrmDQ9S8luiM66y0Uz5FtPJfly/qLA3
+         aVU9HpReC9A/fggS3s1jUSLFLI396aahDBp4pXfv1Y2HDV/0gm23QsIKVfGhDZCQWHZV
+         GiEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794347396; x=1794952196;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lc2d75OL7aQ19NWtHaPUWdOA/U+qQ69pXWLu70/x14s=;
+        b=ztz3NEo1MX9CTWoh46A7oL4A/NOpMwXnT7lYg0gxQWZQ1rm2gIArJwaN+WT3Nhbfkw
+         8FfQdpu4UIhrDzNNOkA0Gxje6+if17Qeu6zWT2WStbIT5TJ2kuXheOBTd/HFxo1xRf6p
+         5HJb+NB3EqozKCiCwsvtEfZ5qWfKMx6BZk0AlhpwxDnSF2PgC2uKMjq3rMD31g/vGCwd
+         /AF8gKw24b/q4n2XaCihaE9pD/QbZILlIaME1EWuGF9faEQRRMyaJGRbW6617EBrGON/
+         XTyVseojS5BbuMe3HoiBRkd+Ey/EcAbcUF0NqtmAe/2JNf6Yt6qvpPJGyq4Lt0+bxOdu
+         HLbA==
+X-Forwarded-Encrypted: i=1; AL+hErESvNDnG2C9L3+6StzO2PydXZOjSK4RBD15NJFiR/SJYTuref6krty8P4GX9bPm7Z+O6fyDWJ3xFZoafadWrYs=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+2AaimvI9+fGrzj9RmV7JVVuBvgv3CSflPfbTkdJSrHyYwkHTV
+	aGk1dMkwSpPGZrmiSIHxsZBiwbpaPXDT2bFV33NhnXwbwwj9ubeGG9bFyt0z/8W5XgGupcu7hYZ
+	bVfL1z9AWq/3VVCVtusNQQgEccx8Ri1E=
+X-Gm-Gg: AYBFou1p9ynTcXuPTD4FP7x0EKInfKWR2+hayB8foYh3HDvk92Y8l+QCCkb4mU2KSeB
+	wcwK+6/6L6qlraaY19m2CsfC01fLBoM8u4olhoAUMl7Bu1Hfc3DVQS5nMLMQn++w7Ucdl/Hp5tt
+	92cF01GX50Iw6/7IOYpTuewe5NpDLEBNK/mOzFBb+QkibwXA3uayFu63h/nrb//mOvKIlHHzVWl
+	gCERN7ObZus/bkxREO28s/GmCUyG/6PELtlIHBMsKft7G9ZVYhQVLj7xdcQ85OEgzLEKJP7pqt7
+	PUnwVFnpZXzOEeTJg3lRgk/7Yo9OfY8w/0q0OvGchhlXECQnnXdzqFHDZXsT5JsLWqMtwzlo3l4
+	WipKaTvOTtsQaIEF+NVEClxMZ+78KNqSMM8PHcT2m8J1Jo/YICEJbDnSeuQ48SZdRzgRZKBpbXy
+	LpfwtKIobGWjkWrZ/j8KR8c9hqxHAE1CfZYkZLyss7Hg58kXM4VU8ijmIaMJk=
+X-Received: by 2002:a05:693c:41cb:20b0:36e:66d8:1424 with SMTP id
+ 5a478bee46e88-37680a60bbdmr1218085eec.0.1794347395773; Tue, 10 Nov 2026
+ 13:49:55 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,101 +105,72 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110202025.25736-1-baohua@kernel.org> <20261110202025.25736-6-baohua@kernel.org>
- <sashiko-outbox-207742@kernel.org>
-In-Reply-To: <sashiko-outbox-207742@kernel.org>
-From: Barry Song <baohua@kernel.org>
-Date: Wed, 11 Nov 2026 05:25:20 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4xREpXsexDfepfpM0MOX9iepBe7-fr-WuGAV=da0w2eyg@mail.gmail.com>
-X-Gm-Features: AclHuK9NqIDdOADDWra6OtrXoYnbTURFVTVsaxnZwIx1C_wxpmnfiMYIQg1pKQw
-Message-ID: <CAGsJ_4xREpXsexDfepfpM0MOX9iepBe7-fr-WuGAV=da0w2eyg@mail.gmail.com>
-Subject: Re: [PATCH v6 05/15] mm/mglru: skip zones above reclaim_idx instead
- of rotating them
-To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, linux-mm@kvack.org, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
-	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
-	liam@infradead.org, lianux.mm@gmail.com, liuxiang.277@bytedance.com, 
-	lyugaofei@xiaomi.com, mhocko@kernel.org, mhocko@suse.com, qi.zheng@linux.dev, 
-	ridong.chen@linux.dev, rppt@kernel.org, ryncsn@gmail.com, 
-	shakeel.butt@linux.dev, surenb@google.com, wangzicheng@honor.com, 
-	weixugc@google.com, yuanchu@google.com, zhangbo56@xiaomi.com, 
-	zhuhui@kylinos.cn, sidchintamaneni@gmail.com
+References: <20261110120326.538252-1-tzimmermann@suse.de>
+In-Reply-To: <20261110120326.538252-1-tzimmermann@suse.de>
+From: Alex Deucher <alexdeucher@gmail.com>
+Date: Tue, 10 Nov 2026 16:49:43 -0500
+X-Gm-Features: AclHuK_r02Bf4QXu75VAdsauSxMk2WkxkkNGMymOSn-A5ONgkHUPX0j_0Ud49DY
+Message-ID: <CADnq5_NCF2J0Dzea5swubs+eEKBLq+8ontc5n=kihYZVA3A1aw@mail.gmail.com>
+Subject: Re: [PATCH 0/5] drm/amdgpu,radeon: Inline drm_crtc_init()
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: alexander.deucher@amd.com, christian.koenig@amd.com, airlied@gmail.com, 
+	simona@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
+	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+	sashiko-reviews@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 11, 2026 at 4:56=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Tue, Nov 10, 2026 at 7:11=E2=80=AFAM Thomas Zimmermann <tzimmermann@suse=
+.de> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [Medium] mm: inconsistent PGSCAN stat accounting in scan_folios() [1]
-> --
+> The helper drm_crtc_init() sets up a CRTC with a primary plane for
+> non-atomic mode setting. Only drivers for some AMD hardware still
+> use it.
 >
-> commit 91b0962145533fb9dabae36c077150538170ace0
-> Author: Kairui Song <kasong@tencent.com>
+> Inline drm_crtc_init() into amdgpu and radeon and remove it from
+> DRM. All new code implements atomic mode setting, which does not
+> use drm_crtc_init().
 >
-> mm/mglru: skip zones above reclaim_idx instead of rotating them
->
-> This commit restricts scan_folios() and lruvec_populated_min_seq() to zon=
-es
-> up to sc->reclaim_idx rather than rotating folios in ineligible zones to =
-a
-> younger generation.
->
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index db0a8a3e88872..6b16706779744 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
->
-> [ ... ]
-> >                       list_splice(&moved, head);
-> > -                     __count_zid_vm_events(PGSCAN_SKIP, zone, skipped_=
-zone);
-> > +                     __count_zid_vm_events(PGSCAN_SKIP, zone_idx, skip=
-ped_zone);
-> >                       skipped +=3D skipped_zone;
-> >               }
-> >
->
-> [Severity: Medium]
-> This problem wasn't introduced by this patch, but should scan_folios() pa=
-ss
-> scanned rather than isolated to mod_lruvec_state() for PGSCAN_KSWAPD and
-> PGSCAN_ANON + type [1]?
->
-> mm/vmscan.c:scan_folios() {
->         ...
->         item =3D PGSCAN_KSWAPD + reclaimer_offset(sc);
->         mod_lruvec_state(lruvec, item, isolated);
->         mod_lruvec_state(lruvec, PGREFILL, sorted);
->         mod_lruvec_state(lruvec, PGSCAN_ANON + type, isolated);
->         ...
-> }
->
-> Folios that are promoted via sort_folio() or skipped are counted in
-> scanned, but passing isolated here omits them from the PGSCAN vmstat
-> counters and underreports the scan rate compared to the classic LRU path.
 
-If this is unrelated to the patch, could you please avoid
-reporting it?
+I'd like to drop all of the old amdgpu non-DC code since DC is now the
+default, and we have an LTS kernel now.  I'm planning to send these
+out in the near future:
+https://gitlab.freedesktop.org/agd5f/linux/-/commits/remove-non-dc-display?=
+ref_type=3Dheads
+So that just leaves radeon.
 
-I also think this is a false positive. MGLRU uses
-sort_folio() to lazily promote or protect folios, avoiding
-unnecessary isolation. We don't want to count those
-folios as scanned.
+Alex
 
-CLRU has no such concept, so nr_scanned is roughly equal
-to the number of isolated folios, except in some special
-cases, such as folio_zonenum(folio) > sc->reclaim_idx or
-!sc->may_unmap && folio_mapped(folio).
-
+> DRM support for kernel panic is only implemented in amdgpu. Take
+> the panic helpers from drm_crtc_init() in amdgpu, but clean it up
+> in radeon.
 >
-> [1] https://sashiko.dev/#/bug/linux-ebd28175-5aad-4454-b9f3-a9510e3c4655
+> With this series in place, DRM's helpers for drawing panic screens
+> can be further integrated with other drawing helpers, as outlined
+> in [1].
+>
+> Tested on radeon with a Radeon HD 6570.
+>
+> [1] https://lore.kernel.org/dri-devel/20261019154612.777074-1-tzimmermann=
+@suse.de/
+>
+> Thomas Zimmermann (5):
+>   drm/amdgpu: dce_v6_0: Inline drm_crtc_init()
+>   drm/amdgpu: dce_v8_0: Inline drm_crtc_init()
+>   drm/amdgpu: dce_v10_0: Inline drm_crtc_init()
+>   drm/radeon: Inline drm_crtc_init()
+>   drm: Remove drm_crtc_init()
+>
+>  drivers/gpu/drm/amd/amdgpu/dce_v10_0.c  | 44 ++++++++++++++-
+>  drivers/gpu/drm/amd/amdgpu/dce_v6_0.c   | 44 ++++++++++++++-
+>  drivers/gpu/drm/amd/amdgpu/dce_v8_0.c   | 44 ++++++++++++++-
+>  drivers/gpu/drm/drm_crtc.c              | 26 +++------
+>  drivers/gpu/drm/drm_modeset_helper.c    | 74 -------------------------
+>  drivers/gpu/drm/radeon/radeon_display.c | 47 +++++++++++++---
+>  include/drm/drm_modeset_helper.h        |  3 -
+>  include/drm/drm_plane.h                 |  5 --
+>  8 files changed, 170 insertions(+), 117 deletions(-)
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110202025.25=
-736-1-baohua@kernel.org?part=3D5
-
-Thanks,
-Barry
+> 2.56.0
+>
