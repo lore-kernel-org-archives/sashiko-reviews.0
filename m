@@ -1,99 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.174
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794289495;
-	b=rRaVT/FkcYTNMe0xD9k+w6hCfg2gMZ3eFsoaB25sEN14A+Z7RrL9LIfwruSRACzNFYso
-	 7VOuVhkpTqrfiT5bYebfpIVHxQfLtBTaT0/PN0fqGMM1MzgoxhcPVATz5GKJ6mS25J3Kb
-	 g8IVr05TtcKE/pqmQsNPl+51pd23dcbIQ/v2ZXbEknpW6PKDva6K/x9+Q9suQSYLPfbdK
-	 b7vSO7xeSaR/1Ds6vZl+/bCOkF6PxsZZB/pKakyRZKu5B1rlB/ySvcAIeqTfFPpR/72U8
-	 n9RiFhDCe7XdfrWOfvbDxn5vcAnhl2K4KWv1omxb4C6SdbCDleeg89e2tXCsSlPZeQQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794289495;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=g39QjZX8zY3AOOtpXk7OF2YWb6Q3Y2gF3RAt0e8I4Pk=;
-	b=0Ce3sqWsOzeYge0wizdxj8GF/V0vSjUb8mmrkyyhhkt+mKkXVdIoOSOSbss9eZwaorCz
-	 BBQsac4aizTgni7P9KpfD0Sx9fAlAflJkpBSVgrYurCcEt3JK0v9cNtRnluhegusxZSrW
-	 EnMEF+LxtlyYrFx+fQGEmNMxJF/f0V81D+OmT6ZpwdQsLk5i7+leN98VLKTWnoIWEMWEQ
-	 MJTim/IJwU37wZDrctO0Qgzp6q6hPt/0jiEgdUCAwy/8F7YtMqj5tvgOWZzXinKkTxiBM
-	 RQwXoQSswYZ4+7qYqJJWn2gPglUkZhB9Rf7HkERdZ3J0i2do0f4Iih+Ncf7Z97juJGg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="RpwUxM/O";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.174
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.37
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794289595;
+	b=WOAgvLirMbXj5mqbDO8iZKPx2tsCQqhg3EkWFSK6Y9eKuMJbTG/qHKrUh73GFdgbIpD+
+	 T6x0hTuE0zvJa2Ma+4J2VnvvJs1KVma2fWdlkIEd/eyFe9wq43Z39HwJB2s2reFI1pvkd
+	 3eDH7gXnlj3NeBXo3L+zC0EskuYWUrDFX0x4BGUdpX6EfNMuPJg7mTyVfTpDSEjg1DjbU
+	 pC26bmPCqcCbUzWl1VnW2Uiv2IzOPPzjVMO6O5K/Sh6AsNfdfOc3IW1GHwQgsL/9zOe6N
+	 b62BPXla8ewKvKEyQyZ1BTS04FmijHeoBnQea+zlpjMTiInAgoIs/A9mYO9Z/zulmQQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794289595;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=3B+QyeakYCTdn90PfE5XnDzYZ1omGiEHTw6D+xzriIU=;
+	b=aiNW5LUQI1mBZsaTo1xmV03odm1ktA7XTYIHEyAnjlPVyquzq4yBD94uPxLMvhcxwHC3
+	 WCNeeeRnlasMWEzEmDfM0l7bE9AYWrX7zzL4gU035u60YbrObBm06iEBF+k2SOb7E6rDa
+	 DhN9L3lEnxX0cv4HxsAeT+l9rghJBzRge6qOeafE1IkYz1nRkGdWJ0wLiqu7pZn5tI7QF
+	 DH5IvYLlpT5oPbAetpBLrKOpggdj1m65DSAb6VL5LzZBi/C6Lg5sEphtVIWuGghCeeCid
+	 XCHIFF6dNghRCSrpVeWHEieyopASCZ2owlagGQ7icEC8hGeTMi3EDNT8aeX9RGb4Lbw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=E+9WPu2S;
+	arc=none smtp.remote-ip=44.202.169.37
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38440606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 05:44:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38440606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C67606A32E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 05:46:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2C67606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RpwUxM/O
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-3700ed8dbe3so2289200eec.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 21:44:55 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794289494; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UNj9ldnEEFLuD4YaBRW6pN/qguXcTSBsEruTu+CYBonAREIMKHuNmW7wOovajpUbhR
-         yyPHwHTvZz2uwyvzwm9CoyP4SzHkSWho3GE2VKFnz0vHv373tj9n1s+f4ofOuVfb6MWp
-         tf0bFDoepV6pTkaumP37IJ7JaXduPA+MsWJpSCssdNtVbiRtzk/z1qw+J/izBMn6DgGW
-         P5CiBPrwgbcayvVF5b9x4PvC4tLDbN4r1bGqtvVooy7StnalPNLPvwIk9916cO/CFubx
-         +Z0DLukEeDfu4EU/mTWqp6gZSLMtQwHkPndO75BzDKBf2QctLkMla3cpGznqx3hBpPNo
-         sMLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=g39QjZX8zY3AOOtpXk7OF2YWb6Q3Y2gF3RAt0e8I4Pk=;
-        fh=/XafWwXInU6xSAMitUKTVJtcnn7zkW/jx5Qszu7SSug=;
-        b=ZeeH6bSIQah9zd50XWrjhv0AFuO4lqPQySzh/XZT6qZtZLI7t+0dNBQfc7NIXVKXud
-         wGtH8xwozA2vjSIXp1+8MM+HThm62ofm18r2Zsoxmpl7x0FLfErgWboGpUb3/Yc2kPZk
-         cJ9Wm/btKmqOY5nVp29goXATy5BCCKrNpUjFn7/eptimT3gzxNsx3cyUKlntdACbYss4
-         W5zMj4Kx/7rotv99EAiymWcM4BWhnXGwd/O+aGQJ/ShgXKM8OVUVqhQoiRYUAwDRy1yI
-         b9h7wxqet0TzpafszpVuFaa4YDWFetVAF7vBYuhkxuE5Ps6R8VN01qqMrMUg4c3V9hbY
-         9Zzg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794289494; x=1794894294; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=g39QjZX8zY3AOOtpXk7OF2YWb6Q3Y2gF3RAt0e8I4Pk=;
-        b=RpwUxM/OBUUa0t2D9iOz1rAjM9u9j8pkq/CDw5ZJkskVIyZ7bDepeTNblgBo2KsK+o
-         Yx7w0WaxM3Z5FqeMs2CoQvBJPbZgYdmkyistDqEmUH5AesVgxhuGhCokMIbkLQzuHhh1
-         4q58NzKl0N/u2b4+lIW/sqZ36fd77ZRoqYgyIz96IaeOWQZZdgAFt2uX47RnB8AWc0p5
-         iDLQLVzbW1gWXNRmdRq1pz1XXEQoRMBVfrA2UY8SFcpye5CF9mE9XdrLGdFTmKNwiTmV
-         w5SUxV+x0s8AWPbDj83tJYX9BACOW/FNV2D/Vap5mB6ek4gDiZD3pJHZAb3iH/VikzIv
-         C2Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794289494; x=1794894294;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=g39QjZX8zY3AOOtpXk7OF2YWb6Q3Y2gF3RAt0e8I4Pk=;
-        b=KYIys458yg58DvmeQj+kFGP39tBqsWK9BNridWj3xjMR2YVCGJv2PezTpj2PUS5+TE
-         pmqHZF73ME1KnfXoKgBPNX4B/EGgNFKa46U67wF6MV7bhTUYrLakFaA0pcs0g5P3xNOT
-         q/NM0OE55uHGwZM7UHSbihH6O4dC9G3t3r+fXmEZT1j+vRfHESI45HhWGkJ5OkGpR6v9
-         c2FLtctywpOmIiWiZ5ezOX3cOztbJ7BKAq+V0yStXiZ+7PQ+h+zTjA12eQFnJ4ME4Evc
-         BEMf5H1m67YcDcXsW+XUKA0ijTk7xcYTR+geiQ2p5Jc1t7+LEeEEonS0DDj7ZOOeXysb
-         6Mbw==
-X-Gm-Message-State: APuU4Z+8hPbsREzsJOluqi3lANGMWlTuvQo0g6tnwJG895oNdXfaEu99
-	s8hiMXTiTcIr2+E9z4x3NGcH0iZ4yRyqM1kTaqwv6zuohm3S8iC3Igg49egsVa40a13t4lUB5YR
-	oxf7tthG90JHcZXMgzc/VaoRk4sx0OcvhFOcJVfs=
-X-Gm-Gg: AYBFou0RcysuXn5Jh3m4VZWHEpHYwTHHenpMQJcT32tO+Ra94/BZLbcDfPXWfV3aAXx
-	J8yEMFFj0mQB1mdSpDFdpS3dZZ8HWQyn8uWSkiuUfF/s5nx76EGADele/ZahuRnnjPK5fzASaf2
-	PR7vDs0uRLCPc2JMrkyJ6kPC7iKZV8zm3QUzgfbvb733V+9179LHSoqm2NbWsE0GbbGKZP1CPdG
-	JsOT+uFiZCWS1uXNHAXcoiog7AvhK2/nuFUjY01X1kPzZjPRPrCHTgb3sVgfDGQi6i3LBKtIHBw
-	Qp6nPrUC+NRJ0PrNdLSSJddv09wbv11F+sZoA4zxOzgEJ9s4V99ysDi3YXFwHT07lYFsPFQP6Oe
-	ilfHHAk30xwDho4KAfFOQDHFF5UbPAa6aDKORdb4Cbyibnp79wdb+/DlGPNdU0548G9nn
-X-Received: by 2002:a05:693c:6384:10b0:369:f05d:6c5c with SMTP id
- 5a478bee46e88-3751f467bcamr2356563eec.28.1794289493975; Mon, 09 Nov 2026
- 21:44:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=E+9WPu2S
+Received: from eig-obgw-6006b.ext.cloudfilter.net ([10.0.30.211])
+	by cmsmtp with ESMTPS
+	id QQPZxWVqzJFmFQegjx9ofI; Tue, 10 Nov 2026 05:46:33 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id QegixQwwMFhzrQegjxhgU5; Tue, 10 Nov 2026 05:46:33 +0000
+X-Authority-Analysis: v=2.4 cv=JY+8rVKV c=1 sm=1 tr=0 ts=6af2afb9
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=c92rfblmAAAA:8
+ a=VwQbUJbxAAAA:8 a=_jlGtV7tAAAA:8 a=7TBn4WtbrrthgNnLwnUA:9 a=QEXdDO2ut3YA:10
+ a=GvGzcOZaWPEFPQC_NcjD:22 a=nlm17XC03S6CtCLSeiRr:22 a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID:Sender:
+	Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=3B+QyeakYCTdn90PfE5XnDzYZ1omGiEHTw6D+xzriIU=; b=E+9WPu2SqfIY
+	/7f1PYudG01D7SJb0rNaoHZYwWWdOEFa5ehC29DYm7CisOzJmEzA+PEGlYyLGYOqvmpoDtMDljWsx
+	1rmOPWY4gxcn8DJ4/k7aBLkWYkI6BG8OYgldm1z5qFmKYeEioGBG/8v6kQZ9LCxKQag0e9p1Sxgm6
+	mQlCFKAPDnqy7BKZzFs/EddcYRFXCFglclYT+GNk8fGlOc1XS5xAh2SpZRSNvuZ0idjtihkx41r/U
+	WXwrm9gryaVus3hva6jdOzXKa7y8+TU/ACQVXGn0wZ55+oNIW4ISJbnmK1vqTV5t4yUePp74tFy0e
+	BxY8hSCUCY07G8Fa5XuYFg==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:56848)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xQegi-00000004Ojc-2hDU;
+	Tue, 10 Nov 2026 11:16:32 +0530
+Message-ID: <3c1dc435-3019-4ebd-aa7e-0945b462ea4e@roeck-us.net>
+Date: Mon, 9 Nov 2026 21:46:31 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,159 +76,151 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261108134001.536207-1-hj351016@gmail.com> <sashiko-outbox-203786@kernel.org>
-In-Reply-To: <sashiko-outbox-203786@kernel.org>
-From: khj <hj351016@gmail.com>
-Date: Tue, 10 Nov 2026 14:44:42 +0900
-X-Gm-Features: AclHuK83zmSBicAkhGXR_nnbiD7uLYv-Y5HwVWYFh-U9eG4xV_6xhYX0d6KFHCc
-Message-ID: <CAGr5VtOWtjDFraii2qMu20=_mePfjFUwMU_dhnGm7aiw6QTwUQ@mail.gmail.com>
-Subject: Re: [PATCH] usb: phy: cancel charger work in usb_remove_phy() to
- avoid use-after-free
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFT PATCH 1/3] hwmon: (nct6775) Fix target temp and tolerance
+ for NCT6106/6116/6126
+To: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
+References: <20261110035955.3968731-1-linux@roeck-us.net>
+ <20261110035955.3968731-2-linux@roeck-us.net>
+ <sashiko-outbox-206182@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <sashiko-outbox-206182@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xQegi-00000004Ojc-2hDU
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:56848
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 2
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfNMQlQjJ1wJ0+P7BvKq2gML4moJ5esk9CKP/R+FCup+hvspaQ5fQA8vPfyt7xO0mweEyB+WNVAYzWMp1KIGGN/WAqd8hu6W1Lza1cmdeVq656A/Bf46/
+ M4FVrQLp/1qpIUKY74xqylGxIW6qv+gt/7YFw4n/5JA3ahtJz9CpPYAYFsPfRW9UHJ8z5cPdNTkhAa1DO7ZbB2/O+vevoH73m5IKrKSrlJbJaw+aPzUBjjbw
 
-Thanks, both are valid.
-
-You're right that cancel_work_sync() alone doesn't fully close this: the
-extcon type_nb notifier reaches the usb_phy via container_of() (not the
-phy_list), so an extcon event can re-queue chg_work after the cancel, and
-for providers that free the containing struct in .remove() the devm extcon
-notifiers are torn down only later (at the provider's devres), after the
-struct is already gone.
-
-This patch is a partial mitigation of the chg_work window; the complete
-fix is an architectural one for the usb_phy framework lifetime -- the
-notifiers would need to be unregistered symmetrically before the work is
-drained in usb_remove_phy(), and more fundamentally struct usb_phy is
-devm-allocated yet handed to consumers via usb_get_phy()/get_device(), so
-a consumer holding a reference can still use it after the provider's devres
-frees it (the Critical you point to). That wants proper get/put refcounting
-of the usb_phy rather than devm, which affects every USB PHY provider.
-
-I'd rather not fold a core-framework lifetime rework into this one-line
-teardown fix and risk regressing every PHY driver. Happy to take this
-either way you prefer: keep this as the incremental chg_work fix and do the
-notifier-unregister + refcount rework as a separate series, or drop this in
-favour of that series. What would you like?
-
-Thanks,
-Hyunjung
-
-2026=EB=85=84 11=EC=9B=94 8=EC=9D=BC (=EC=9D=BC) =EC=98=A4=ED=9B=84 10:50, =
-<sashiko-bot@kernel.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
->
+On 11/9/26 20:15, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] usb: phy: chg_work re-queued after cancel_work_sync() in
->   usb_remove_phy()
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [Critical] usb: phy: use-after-free in usb_get_phy() [1]
+> - [High] hwmon: (nct6775) REG_TARGET marked word-sized in
+>    nct6775_reg_is_word_sized()
+
+Unless I am  missing something, this should be fixed with
+"hwmon: (nct6775) Handle dual use registers".
+
+Guenter
+
 > --
->
-> commit 4a4ffa5316b9cec2015871ada70b2fe24ed654b1
-> Author: Hyunjung Ko <hj351016@gmail.com>
->
-> usb: phy: cancel charger work in usb_remove_phy() to avoid use-after-free
->
-> This commit calls cancel_work_sync(&x->chg_work) in usb_remove_phy() afte=
-r
-> removing the PHY from phy_list so pending charger notification work finis=
-hes
-> before the usb_phy is freed.
->
-> > diff --git a/drivers/usb/phy/phy.c b/drivers/usb/phy/phy.c
-> > index 5a9b9353f343d..caae74988fd95 100644
-> > --- a/drivers/usb/phy/phy.c
-> > +++ b/drivers/usb/phy/phy.c
-> > @@ -731,6 +731,15 @@ void usb_remove_phy(struct usb_phy *x)
-> >       if (x)
-> >               list_del(&x->head);
-> >       spin_unlock_irqrestore(&phy_lock, flags);
-> > +
-> > +     /*
-> > +      * The charger-notify work, scheduled from usb_phy_set_charger_*(=
-)
-> > +      * and the charger-type detection, dereferences the usb_phy. The =
-PHY
-> > +      * is now off the lookup list, so no new work can be queued; drai=
-n any
-> > +      * work still pending before the caller frees the usb_phy.
-> > +      */
-> > +     if (x)
-> > +             cancel_work_sync(&x->chg_work);
-> >  }
->
-> [Severity: Medium]
-> Can x->chg_work still be re-queued after cancel_work_sync(&x->chg_work)
-> returns?
->
-> Removing x from phy_list does not stop extcon charger notifications,
-> because usb_add_extcon() registers x->type_nb on x->edev via
-> devm_extcon_register_notifier(), and usb_phy_get_charger_type() obtains
-> the struct usb_phy with container_of(nb, struct usb_phy, type_nb) rather
-> than looking it up in phy_list:
->
-> drivers/usb/phy/phy.c:usb_phy_get_charger_type() {
->         struct usb_phy *usb_phy =3D container_of(nb, struct usb_phy, type=
-_nb);
->
->         __usb_phy_get_charger_type(usb_phy);
->         return NOTIFY_OK;
+> 
+> commit 7460f66a45ab993c8409879e58f676a24f6e5ad1
+> Author: Guenter Roeck <linux@roeck-us.net>
+> 
+> hwmon: (nct6775) Fix target temp and tolerance for NCT6106/6116/6126
+> 
+> This commit initializes target_temp_mask, tolerance_mask, and
+> speed_tolerance_limit for NCT6106, NCT6116, and NCT6126 in nct6775_probe().
+> 
+> Link: https://sashiko.dev/#/bug/linux-76f191d0-4c79-4982-887e-e5c9a2ed7136
+> 
+>> diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+>> index 6e97e4f08b90b..9340525689cff 100644
+>> --- a/drivers/hwmon/nct6775-core.c
+>> +++ b/drivers/hwmon/nct6775-core.c
+>> @@ -3574,6 +3574,9 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+>>   
+>>   		data->fan_from_reg = fan_from_reg13;
+>>   		data->fan_from_reg_min = fan_from_reg13;
+>> +		data->target_temp_mask = 0xff;
+>> +		data->tolerance_mask = 0x07;
+>> +		data->speed_tolerance_limit = 63;
+> 
+> [Severity: High]
+> Does setting target_temp_mask to 0xff expose that REG_TARGET (0x111, 0x121,
+> 0x131, and 0x191, 0x1a1 on nct6116/nct6126) is marked word-sized in
+> nct6775_reg_is_word_sized()?
+> 
+> drivers/hwmon/nct6775-core.c:nct6775_reg_is_word_sized() {
+> 	...
+> 	case nct6106:
+> 		return reg == 0x20 || reg == 0x22 || reg == 0x24 ||
+> 		  (reg >= 0x59 && reg < 0x69 && (reg & 1)) ||
+> 		  reg == 0xe0 || reg == 0xe2 || reg == 0xe4 ||
+> 		  reg == 0x111 || reg == 0x121 || reg == 0x131;
+> 	case nct6116:
+> 	case nct6126:
+> 		return reg == 0x20 || reg == 0x22 || reg == 0x24 ||
+> 		  reg == 0x26 || reg == 0x28 || reg == 0x59 || reg == 0x5b ||
+> 		  reg == 0xe0 || reg == 0xe2 || reg == 0xe4 || reg == 0xe6 ||
+> 		  reg == 0xe8 || reg == 0x111 || reg == 0x121 || reg == 0x131 ||
+> 		  reg == 0x191 || reg == 0x1a1;
+> 	...
 > }
->
-> PHY drivers call usb_remove_phy() from their .remove() callback before
-> devres_release_all() unregisters x->type_nb (and fsl_otg_remove() calls
-> kfree(fsl_otg_dev) immediately after usb_remove_phy()):
->
-> CPU0                              CPU1
-> fsl_otg_remove()
->   usb_remove_phy(&fsl_otg_dev->phy)
->     list_del(&x->head)
->     cancel_work_sync(&x->chg_work)
->                                   usb_phy_get_charger_type()
->                                     __usb_phy_get_charger_type()
->                                       schedule_work(&usb_phy->chg_work)
->   kfree(fsl_otg_dev)
->                                   usb_phy_notify_charger_work()
->                                     usb_phy->chg_state ... <-- use-after-=
-free
->
-> Unregistering the extcon notifiers in usb_remove_phy() before calling
-> cancel_work_sync(&x->chg_work) would prevent extcon events from
-> re-scheduling the work.
->
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but can a consumer holding =
-a
-> reference from usb_get_phy() [1] still trigger a use-after-free on
-> struct usb_phy when the PHY provider unbinds?
->
-> usb_get_phy() pins phy->dev with get_device(phy->dev) under phy_lock:
->
-> drivers/usb/phy/phy.c:usb_get_phy() {
->         ...
->         phy =3D __usb_find_phy(&phy_list, type);
->         if (IS_ERR(phy) || !try_module_get(phy->dev->driver->owner)) {
->                 ...
->                 goto err0;
->         }
->
->         get_device(phy->dev);
-> }
->
-> However, most PHY drivers allocate the structure embedding struct usb_phy
-> with devm_kzalloc() during probe.  When the provider driver unbinds,
-> usb_remove_phy() removes the PHY from phy_list and devres_release_all()
-> frees the devm-allocated struct usb_phy even though the consumer still
-> holds get_device(phy->dev).  Any later call by that consumer (such as
-> usb_phy_set_charger_current(), PHY callbacks, or usb_put_phy()) then
-> dereferences freed memory.
->
-> [1] https://sashiko.dev/#/bug/linux-7f476623-2458-498a-85ca-75ee73ec5f0c
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108134001.53=
-6207-1-hj351016@gmail.com?part=3D1
+> 
+> Because nct6775_reg_is_word_sized() returns true for REG_TARGET, a read via
+> nct6775_read_value() performs a 16-bit big-endian read across REG_TARGET
+> (placed in bits 15:8) and the adjacent REG_TOLERANCE_H at reg + 1 (placed in
+> bits 7:0).  In nct6775_update_pwm_limits(), masking reg_t with
+> target_temp_mask (0xff) then discards REG_TARGET and stores REG_TOLERANCE_H
+> into data->target_temp[i], while also corrupting data->target_speed[i] in
+> speed_cruise mode.
+> 
+> When writing pwm*_target_temp in thermal_cruise mode, pwm_update_registers()
+> passes the 8-bit data->target_temp[nr] to nct6775_write_value(), which writes
+> 0x00 (value >> 8) to REG_TARGET and overwrites REG_TOLERANCE_H with
+> target_temp[nr].  Should 0x111, 0x121, 0x131, 0x191, and 0x1a1 be removed from
+> nct6775_reg_is_word_sized()?
+> 
+
