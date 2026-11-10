@@ -1,59 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.19
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794324415;
-	b=Sr2ca9itUGbhnidnNEXfkuLq8KJhDXlrXFS47Cp5FKeK2O49k71aePoKjwX78QG5xQtA
-	 zecfz1NWl9puWEHLNgwOYp+05H5VYm4x3R1NR4M6QBQwaIJKB46kfdYvjEdcYAsQULeSp
-	 zZJG+Kj+bm2xPNFbvfu1MHDhj4HGDmK8DWdPYLrM+ktj+jlQE0uAH+4X8ex4B8SHk3i2Z
-	 1jRkyvkXd5qszknniahMEbYKD0dHd5bvyCznFJl5XVT7AwlzR4E39MhEFrwZt2QOT/4od
-	 AdPDfxUPZA+FxiouQTlZMed9XtL/OcJiDqlLIXDsS+zss44kosLb8oxDDbmQbVCQ9Fw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794324415;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
-	bh=pTUT7AzDh2H/DCL2n4u5fT+Ydav8M/1ajCl3Fod0vfc=;
-	b=KJgQkfAVJQoLVHFPtdJNRbO9hkALtIYvzjC5epyjNTYgcNG3dWTXc1gedZvdZfVb1I81
-	 cJkeIfE3TmhmeA+7bUARPoJvIsVOkNTQlhMvPN5XsZ5M4VYmNezKq5ZYnUKuUdHqYX1sq
-	 pwoqR309OfbTwtV2mdc8v2WbnbGKDy0BYeSmkUjmYGbufCI2PFyZvoC1wvBVHhmcHgtlj
-	 04wQyl6mKUHB1CUN5MCKJRpBrn+xOycfJrJ/er03jrJA+AprohA0pG+GqCk9LnVn9YX7V
-	 dViSZVcg7xlVFQPrphx1SavwMs4a4q/ImqYjlYgvHoiOADpYHKzjMonl6kN55ks8aog==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=w_armin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=L4NYMe+g;
-	arc=none smtp.remote-ip=212.227.15.19
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.228.91
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794325212;
+	b=ZB3uQgbwGWaD8iG1fC7iLsjB8JkB9OkMzzDjpZfeKT8b0BzVKiIlNu/STfXIjF3hQqdx
+	 1jVDyLw8Kv1qxEOU6MemLO58qB4uznPSn4SAX4wkUPjuGCAaYkN/zsYqABGqNs/C4FfMB
+	 FOcVbs1uiR2Fvvmwo4Fft5XJwqOfqB0/bE7LLx7nDPI97nzUT2c2aQJgZnnOcq+ptBYDi
+	 GQJ7qmkE+qIzhIlT6/q0nexXxY/7bvAzFSROp3I7pZWcF3ViFKo/x2UT1tJHaCABw3A6u
+	 Gkpb7tR6OD9RJtS6KSAuctqV3oa2vuqeLCz2Y+Ig2uTMl4okjY5Jly/LTXyJlehPMzw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794325212;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=GugCPs66RgcqiaCXFfVUII7DOIhyw7VOu8pUy+p1cYE=;
+	b=pIyL0ZJdpk2UgrJHWyWp+UoQ3rwk/PoWKsTkNe+kMFPSW52y2QJAue6IlQzcJAhOv0/r
+	 DMkY5YFF1amT81WeKSVibTHkKeFIjWv3Zz8uSTxnDM920igE9FDM09kWa94NMe5LNF9L+
+	 Jf+fSmOKrZ5HWbDejm0L46gQeVLZM2iA52rdUpK4GY9ewOY0WHrtFcN52KxwJIKuUtllc
+	 iGAncaY3lOUQasfjINbzIDkZT5phAptMnlwLTz1dSih4ZbDmT2FYuXg9N/mQNR3KiSTBL
+	 5z62kDdaP/20ScfGLowTqzihitxCqUkjJN1zDp5/O/chuffJJNhdzJpkBHdkEqrqdRQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=valinux.co.jp;
+	spf=pass smtp.mailfrom=valinux.co.jp;
+	dkim=fail reason="signature verification failed" header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b="T7XJF0/y";
+	arc=fail smtp.remote-ip=52.101.228.91
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020091.outbound.protection.outlook.com [52.101.228.91])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59195606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 15:26:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59195606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D50606A331;
+	Tue, 10 Nov 2026 15:40:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95D50606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=w_armin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=L4NYMe+g
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1794324412; x=1794929212; i=w_armin@gmx.de;
-	bh=pTUT7AzDh2H/DCL2n4u5fT+Ydav8M/1ajCl3Fod0vfc=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=L4NYMe+gleGYaU18nEbL4XRvJehz7g4cqieDM3xMvQWCoAVM+9Qh/gMGvgq9FIgQ
-	 B2Z8t1vKDRQKbi1/7aEUTWIEASj1FPYoJY+bXsuw0CvqqbgUv8Cl6YdiVVuR6GeTm
-	 LhY5WmPEQVUMPR8dQSIhERycmxlayObduYzKsdr4DmpCnUwRpJTMHzZvrwIIu+4cr
-	 DQbvgs4X7riu3eGP1daXhEam6G7dOWBSvZrIHP3OJ7+vOltLInvNNLE5OiYhnQj28
-	 pTbD0Rr6HuYoLmn/dNSfKP3XB7b0lNjmjZYkiqsoAiaQaG9/VUZXsuzAX3mNZe3c2
-	 ssBpHiAZPxLdg2JQdg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mk0Ne-1wl7C81BQu-00kNb6; Tue, 10
- Nov 2026 16:26:52 +0100
-Message-ID: <22dad689-4a80-4e41-9b42-c2d696643e0d@gmx.de>
-Date: Tue, 10 Nov 2026 16:26:51 +0100
+	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=T7XJF0/y
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=avn9J8TGqD1qtJE4QYhdeqhzZnHMUDx/L6jxgFyDlHiXsdKehZUEpX4IKvR0+z/zOn8tW6afQDCWOL8pBOkkXKXT4RnUBU+PkjIMnxfG/r1vuHzabHuaEDdsu10ce7ixtbWP9tFnypDvtLPY4cG04ryq9iaIcQqqRlIM9XKK4ndco6210oeJ9jd/Ewq2IesN12bZcrIttDmhz8DFYFNvBp4BirS86u2csEG852FVIXarPp5Ygkq6+vqWZvJUU2tm2IgYJqVx5acttJ5X0oGleZZp38fqzG4vVk8cLXQJNLhhF75I8l6hlCvJw6FfRIxrmMYNTWuYqyYHf/zxtWYkAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0wFQFLKGGxyfe7lA2gfUPPY74W960WBBrztV4sh+gn4=;
+ b=NTWyQrxwMYApI0ZDjk+vWpC5dREWaF3L5Khv2Tkt/I2OG3PwQjCLrr2VFOkWnzb2X6Btp/u1rdjRM6LqIlD2aU6IyFEfClUSQlmcg56FGhOUnXhaN74/1eSQB6+PjvM90es1UsaSIapvNr1E7+Hc0h1Ra40CsY/1N2c+J4uWFqb+6pi8xCPWt68c/DDTHcp+AeYMOwx6h2uaJTW3mWHDRKSB9cakc0QnQDTGVg9gqR4wfrOdaVI9P0zNGY26tyYm0b0Sal7o4vOleGsvYredqSWDDSL/sBytejSUNwCcvMxo22zTabuAW8ROnWpzo2aQ1K5QnUtqYE7c0ql+qEkekQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0wFQFLKGGxyfe7lA2gfUPPY74W960WBBrztV4sh+gn4=;
+ b=T7XJF0/y8+njQ8HPEfPUAF3EA+9lILXLyqPIdZ+fr//wlShnuyeqijb5yZYxUgd+9e0tfK02omnwxFdRC8zppKVt7VDjsGL2DxhOGI6sCCGD6ugdXZmjNIDEn3mrQxEteRvvqSOBSwekAxYfRhwvtqTfSDbYRRGqf2e/ap2VfoM=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
+ by TYCP286MB3186.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2c7::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Tue, 10 Nov
+ 2026 15:40:07 +0000
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0592.012; Tue, 10 Nov 2026
+ 15:40:07 +0000
+Date: Wed, 11 Nov 2026 00:40:05 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev, Frank Li <Frank.Li@kernel.org>
+Cc: linux-pci@vger.kernel.org, ntb@lists.linux.dev
+Subject: Re: [PATCH v9 09/10] NTB: ntb_hw_epf: Discover vNTB-embedded DMA
+Message-ID: <3qbu2n7k5smmthlfklarhwo5t6qtimu4ddrqymv5b4r7jdsfiw@hy3kj2ft2q63>
+References: <20261110082459.1798763-1-den@valinux.co.jp>
+ <20261110082459.1798763-10-den@valinux.co.jp>
+ <sashiko-outbox-206684@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-206684@kernel.org>
+X-ClientProxiedBy: TY6P301CA0025.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:3bf::7) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:325::11)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -63,335 +97,218 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] leds: class: Split led_classdev_register_ext()
-To: Lee Jones <lee@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org
-References: <20261018135339.1109271-1-W_Armin@gmx.de>
- <20261018135339.1109271-9-W_Armin@gmx.de> <sashiko-outbox-176189@kernel.org>
- <bc1371ba-1355-4e45-be2c-d3e806c485a9@gmx.de>
- <4d9e01c3-acaf-4f5c-bbc1-fc4c78582571@gmx.de>
- <20261110090711.GC6323@joneslee-macbookpro.roam.internal>
-Content-Language: en-US
-From: Armin Wolf <W_Armin@gmx.de>
-In-Reply-To: <20261110090711.GC6323@joneslee-macbookpro.roam.internal>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:S7wr+E8gjKbWmFzA+Kk6rufqn/YMy1jv57msvAaBcQ3xxXbTeG4
- WCQ+5Sw5FN//HMDZNhJWEGL0rf2iaMjmZEjOBDjzV0wOOaDCOEwL45pW7BJF4Xk/W2f3Gp7
- xk5xMY2Jh7f8f1fLHSrKF7pwh0GQszdwdtnTvnw1JnlT9W9eBGmNI082eUv4GXFQE8/Mwrd
- T1nC/PVH9tJMdUeu7WK9Q==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ms+vMf7HkY8=;ctlzuWOM3NxCJrMDhsOUeHm6qD+
- 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
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|TYCP286MB3186:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9c2ebcbe-f459-465c-675b-08df3f40e56f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|10070799003|23010399003|376014|1800799024|4143699003|56012099006|22082099003|18002099003|6133799003|10067099003|261022105027099003|261021123027099003|261021121427099003|261026121527099003|261026140227099003|261026135527099003|261028144727099003|261102123227099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info:
+	ddgglL1OaCpZ//iOOlh14xPGLncyoVV+hHOF8++V0sAT6ORr5CpGklTt9n9mKE97NUk1PT6MgDmSLsQ1nTGFln1su30Q8o2ZWsIf/7QC7Fq9mvqDwPZf2An2tYym929rXRTZQDL9S+WhZ8bMx/YtgpTkwF+mpYlXZWFNo6wCpqKj/KoMek0m3VK+khlnlt5vx/x62iimecQXlwa9hiZu4PXsZH53DcGim7z5fRfdNjx3Lx0AqFwogLTbAK7GKlrbRXQNWsEO56CEb1aJWZswkmH5V8hzTFpi2K1kOE+tiNu3+SGta/j+xlml0U+JgXKIvlpyx/uSTa6rekLJKJctH/gCJtXZH38of8DF3w7mWXT1eGaVX2W0bZERc7csT4W6FOQj8x5LuykeUmAOtII6h3TdoD3Eq8euYDjGKbPXHf3nYj3N6jhQvDpFn7EdKk17bkT8wl4GuBjxdT1CPgjExA9f5f+Qz9rDyeQKdwyBfskjuu7IDkeofZBDt+WWScuvPXWNpHYtQZB8nx2QNfbhMRU/L2JKKcWgK1Pw6jZWS7XQTiJTDihB3cTzginpIUZOCRKEUEzqtT7UDq90r2CYgeg61BEWeVaolx+nXpT9Icc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(10070799003)(23010399003)(376014)(1800799024)(4143699003)(56012099006)(22082099003)(18002099003)(6133799003)(10067099003)(261022105027099003)(261021123027099003)(261021121427099003)(261026121527099003)(261026140227099003)(261026135527099003)(261028144727099003)(261102123227099003)(261009223027099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?1RyiAx0L/yhN0qoz6d3UuLg4AXjVfzuxG2u2jif4GBuf+/3W0jv7EZ38VB?=
+ =?iso-8859-1?Q?AuMWs3iVj9JVVuv0FeAMcaog7B50isHe8WBqluu9QVNFxXpGYHi8UMmHAE?=
+ =?iso-8859-1?Q?iMkntbKEc9GFmpuyPFPMbOqSrQ0PwfasKN5BqSMP+FdeZ5YJ9byljo9i+G?=
+ =?iso-8859-1?Q?bh04YKAIQrwsCpD6WB3mGe3iMQjd3pnobhiHEV6mCwRc6oAVM7r2egFWHS?=
+ =?iso-8859-1?Q?mV/qiO/Cjj8q9GbWCR7HxlgOdbeGH7h5eGtL0wh2ox36oYeCbg80M+40ef?=
+ =?iso-8859-1?Q?KFfsT7jL3Hpa3pLeK9cwq+mjAMA/qWOhniczE2dJnge6QX3gx7FNPLcnAg?=
+ =?iso-8859-1?Q?Sto4IKyTqDw8mA9viLi4jt7suPMQpUFh+eEa0zrvTxTh5eeFVooq+WPD4D?=
+ =?iso-8859-1?Q?hLaEIZ8Z/d4Vk58SC1njYMHRzpCARRE2q+LMe7W72hSQQD9U+0tNV+jcSc?=
+ =?iso-8859-1?Q?4qkhgQm8va3RvIZldcnMOZs8cQsfdtAL2Gur5FcsklCu+a+Q9cuo+1l+oT?=
+ =?iso-8859-1?Q?541rmWTqJT67+4gaDRSrAFzyJYVHN2Q5LZaIy4/6LPTca8RZnMUwLQZCmh?=
+ =?iso-8859-1?Q?XlQ9McBbV+ETiZpstUU2Se5tz5YuOm5e3XZfTjH9oVkDeHUhBN/cOovYvC?=
+ =?iso-8859-1?Q?WAiiZXqf4kAeeYFdjE4Lfs8osEJ1PVfuL6i///yB+nHhdAmlTdRSskFXSe?=
+ =?iso-8859-1?Q?T/Iy3JiG9gF0CmJSFWum0nYH/wvFKK9QQyy+KUlfE4J4ZnKqnCL/eWvE04?=
+ =?iso-8859-1?Q?hNRf6MyL343Ba5GA3IlWWvm1CTEl5FKRovK2bZoytwCjBYiCc+VK+d18KZ?=
+ =?iso-8859-1?Q?+3/zalM0SBb4yd8fyrcuUMnVjxbUUV1x0UnaET00fjq0D38ldDUaajKRK+?=
+ =?iso-8859-1?Q?Z3E6A4TCy6/aawTzjtbXaAPnKmuLUlKfS4xlO8WT7dKMyMtc8vmty1wnK9?=
+ =?iso-8859-1?Q?VCA1x8QTPTdpTwGCBfvpNDsTvXfO5JiANZMgmF/CVHTrjzAf/0cgY7pqVq?=
+ =?iso-8859-1?Q?syiDTX+JEVEUroV4ZJt2/2CYnO0Cf/nOH6hUPscMEXTi+PHq7vm5wZg1L4?=
+ =?iso-8859-1?Q?AdcgSCSLR4jgUeFzbFM354yv08vADkNq6T3jDalqDqZCINROaTbgpr5zU/?=
+ =?iso-8859-1?Q?3HkmcfjqDt3mbYjl0LoZg97POa1UrfKAd+s8QExX7WUSm/xUW0hOxeeH0D?=
+ =?iso-8859-1?Q?VkSxq+IDBIdnszqyWgNY5dLo/I7BTtn9gvuylt+qdPe3xvlRsk9P8rE0JI?=
+ =?iso-8859-1?Q?quqmsqW2GthXTlc+XQYelqPtntK79RonoHMV5ojAerXLmWiqzOWDcK8gnl?=
+ =?iso-8859-1?Q?eQjg7VKVMOQanA+7piPJ3gWklx1ltkqjIBw+07DJoHeXWIZkfESfWNAHFN?=
+ =?iso-8859-1?Q?e5t/wugo6pQ3nhR1AXORA9oNChJO5VWp/f1f7+5HFEN8mMa1qaM3hcD/nR?=
+ =?iso-8859-1?Q?C+zT+dPWpxXmqNNvSsgx2MJP/0eDEdDp1gxMeB54YVaiBH/E8ousLozHNw?=
+ =?iso-8859-1?Q?RnWAZN6Hr6M6a64jT0Ah6UHVW/2USQZu5lu2rnHcuUHto+HqgVV2epgryF?=
+ =?iso-8859-1?Q?ZP2CiYiXzhWNRRbLnr2qPGP74cCOYbQh8bv9UxEE3BlYykdkp0rqcPt6hp?=
+ =?iso-8859-1?Q?1UcZbDc+jau6N6Frhr4htUqRYrpWpFM3JguOtVVUtnXAwwEzAkH0pmf/V7?=
+ =?iso-8859-1?Q?IEw/MWZKFXCmQ9NWDX/jsx3ABSsio8sI/w5+IX7lxhWSJba6ZGLa4QlZmB?=
+ =?iso-8859-1?Q?WbnJFAT/7zM380guVzhvDHOMf6XumfapZP2J2pNmdXZ+f3mi76QGp/u9V3?=
+ =?iso-8859-1?Q?lG8qQ6hB+q8DCuYrP5T8ceHxnubhL395SiNgO4CAnwqOkqQaR4Kn?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9c2ebcbe-f459-465c-675b-08df3f40e56f
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 15:40:07.1005
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /37X+w6aiXlhueCAqn7rMgl/5rPreA3KRUz8CSW4OY0wKM7IEydq5sPxi/ui1kEg1oLYNLU42NZ2D3beeFWqMg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB3186
 
-Am 10.11.26 um 10:07 schrieb Lee Jones:
-> On Sat, 07 Nov 2026, Armin Wolf wrote:
->=20
->> Am 18.10.26 um 19:14 schrieb Armin Wolf:
->>
->>> Am 18.10.26 um 16:15 schrieb sashiko-bot@kernel.org:
->>>
->>>> Thank you for your contribution! Sashiko AI review found 2 potential
->>>> issue(s) to consider:
->>>> - [High] leds: dangling led_cdev->dev pointer on error in
->>>> led_classdev_init()
->>>> - [High] leds: premature device_set_node() in led_classdev_init()
->>>> breaks fw_devlink
->>>> --=20
->>>>
->>>> commit 7efb333e9420ea13e705d9a114384e841e92d2b2
->>>> Author: Armin Wolf <W_Armin@gmx.de>
->>>>
->>>> leds: class: Split led_classdev_register_ext()
->>>>
->>>> This commit splits led_classdev_register_ext() into
->>>> led_classdev_init() and
->>>> led_classdev_add() so that LED class devices can be initialized befor=
-e
->>>> being added to the subsystem.
->>>>
->>>>> diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
->>>>> index 77a0fce039528..ace417a2388e0 100644
->>>>> --- a/drivers/leds/led-class.c
->>>>> +++ b/drivers/leds/led-class.c
->>>> [ ... ]
->>>>
->>>>> @@ -539,23 +550,54 @@ int led_classdev_register_ext(struct
->>>>> device *parent,
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!led_cdev->max_brightness)
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 led_cdev->ma=
-x_brightness =3D LED_FULL;
->>>>>  =C2=A0 -=C2=A0=C2=A0=C2=A0 mutex_lock(&led_cdev->led_access);
->>>>> -=C2=A0=C2=A0=C2=A0 led_cdev->dev =3D device_create_with_groups(&led=
-s_class,
->>>>> parent, 0, led_cdev,
->>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 led_cdev->groups, "%s", final_name);
->>>>> -=C2=A0=C2=A0=C2=A0 if (IS_ERR(led_cdev->dev)) {
->>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mutex_unlock(&led_cdev->=
-led_access);
->>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return PTR_ERR(led_cdev-=
->dev);
->>>>> +=C2=A0=C2=A0=C2=A0 led_cdev->dev =3D kzalloc_obj(*led_cdev->dev);
->>>>> +=C2=A0=C2=A0=C2=A0 if (!led_cdev->dev)
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -ENOMEM;
->>>>> +
->>>>> +=C2=A0=C2=A0=C2=A0 device_initialize(led_cdev->dev);
->>>>> +=C2=A0=C2=A0=C2=A0 led_cdev->dev->class =3D &leds_class;
->>>>> +=C2=A0=C2=A0=C2=A0 led_cdev->dev->parent =3D parent;
->>>>> +=C2=A0=C2=A0=C2=A0 led_cdev->dev->groups =3D led_cdev->groups;
->>>>> +=C2=A0=C2=A0=C2=A0 dev_set_drvdata(led_cdev->dev, led_cdev);
->>>>> +=C2=A0=C2=A0=C2=A0 ret =3D kobject_set_name(&led_cdev->dev->kobj, "=
-%s", final_name);
->>>>> +=C2=A0=C2=A0=C2=A0 if (ret < 0)
->>>>> +=C2=A0=C2=A0=C2=A0 {
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 put_device(led_cdev->dev=
-);
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return ret;
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>>> [Severity: High]
->>>> Does this leave led_cdev->dev as a dangling pointer when
->>>> kobject_set_name()
->>>> fails here, or when led_classdev_add() fails in
->>>> led_classdev_register_ext()
->>>> below?
->>>>
->>>> Previously, led_cdev->dev was assigned the return value of
->>>> device_create_with_groups(), so on any failure it remained either
->>>> NULL or an
->>>> ERR_PTR(). Commit 1dbb9fb4082ce2 ("leds: Allow to call
->>>> led_classdev_unregister() unconditionally") added an
->>>> IS_ERR_OR_NULL() check
->>>> to led_classdev_unregister() so drivers can call it unconditionally
->>>> in their
->>>> error and removal paths:
->>>>
->>>> drivers/leds/led-class.c:led_classdev_unregister() {
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0if (IS_ERR_OR_NULL(led_cdev->dev))
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
->>>> ...
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0led_stop_software_blink(led_cdev);
->>>> ...
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0flush_work(&led_cdev->set_brightness_work);
->>>>
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0device_unregister(led_cdev->dev);
->>>>
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0down_write(&leds_list_lock);
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0list_del(&led_cdev->node);
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0up_write(&leds_list_lock);
->>>> ...
->>>> }
->>>>
->>>> Many drivers rely on this guarantee during error unwind or removal,
->>>> such as
->>>> asus_wmi_led_init() -> asus_wmi_led_exit() in
->>>> drivers/platform/x86/asus-wmi.c,
->>>> asus_led_init() -> asus_led_exit() in
->>>> drivers/platform/x86/asus-laptop.c, and
->>>> samsung_leds_init() -> samsung_leds_exit() in
->>>> drivers/platform/x86/samsung-laptop.c.
->>>>
->>>> With this change, put_device(led_cdev->dev) frees the device via
->>>> led_classdev_release(), but led_cdev->dev is not reset to NULL. A
->>>> subsequent
->>>> call to led_classdev_unregister() will bypass the
->>>> IS_ERR_OR_NULL(led_cdev->dev)
->>>> check, operate on uninitialized blink_timer and set_brightness_work
->>>> structures
->>>> if kobject_set_name() failed before led_init_core(), trigger a
->>>> use-after-free
->>>> and double-free in device_unregister(led_cdev->dev), and crash in
->>>> list_del(&led_cdev->node).
->>>>
->>>>>  =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (init_data && init_data->f=
-wnode)
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 device_set_n=
-ode(led_cdev->dev, init_data->fwnode);
->>>> [Severity: High]
->>>> Could calling device_set_node() in led_classdev_init() before
->>>> device_add() is
->>>> called in led_classdev_add() break fw_devlink for child LED nodes?
->>>>
->>>> Previously, device_create_with_groups() called device_add() while
->>>> led_cdev->dev->fwnode was still NULL, and device_set_node() was only
->>>> called
->>>> after device_add() returned. When the parent LED controller finished
->>>> probing,
->>>> device_links_driver_bound() ->
->>>> fw_devlink_pickup_dangling_consumers() marked
->>>> the child LED fwnodes with FWNODE_FLAG_NOT_DEVICE and attached
->>>> consumer links
->>>> to the parent LED controller device.
->>>>
->>>> Now that led_cdev->dev->fwnode is populated before
->>>> led_classdev_add() calls
->>>> device_add(led_cdev->dev), this block in device_add() will trigger
->>>> during the
->>>> parent driver's probe:
->>>>
->>>> drivers/base/core.c:device_add() {
->>>> ...
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0if (dev->fwnode && !dev->fwnode->dev) {
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dev->fwnode->dev =3D dev;
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fw_devlink_link_device(de=
-v);
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0}
->>>> ...
->>>> }
->>>>
->>>> Because led_cdev->dev is a class device that never binds to a driver:
->>>>
->>>> 1. __fw_devlink_link_to_consumers(led_cdev->dev) converts consumer
->>>> fwnode_links
->>>>  =C2=A0=C2=A0=C2=A0 on init_data->fwnode into managed device links wi=
-th
->>>> led_cdev->dev as the
->>>>  =C2=A0=C2=A0=C2=A0 supplier instead of the parent LED controller. Du=
-ring boot (while
->>>>  =C2=A0=C2=A0=C2=A0 fw_devlink_drv_reg_done is false), consumers rema=
-in blocked with
->>>>  =C2=A0=C2=A0=C2=A0 -EPROBE_DEFER until fw_devlink_drivers_done() run=
-s, and are
->>>> never linked to
->>>>  =C2=A0=C2=A0=C2=A0 the parent controller for runtime PM, suspend/res=
-ume, or unbind
->>>> ordering.
->>>>
->>>> 2. __fw_devlink_link_to_suppliers(led_cdev->dev, fwnode) creates
->>>> managed device
->>>>  =C2=A0=C2=A0=C2=A0 links with led_cdev->dev as the consumer for any =
-supplier
->>>> properties on the
->>>>  =C2=A0=C2=A0=C2=A0 child LED node (such as gpios in gpio-leds or pwm=
-s in pwm-leds).
->>>> Since
->>>>  =C2=A0=C2=A0=C2=A0 led_cdev->dev never probes a driver, those links =
-stay in
->>>> DL_STATE_AVAILABLE
->>>>  =C2=A0=C2=A0=C2=A0 and prevent the GPIO or PWM suppliers from reachi=
-ng sync_state().
->>>
->>> I have no experience with devicetree, so i cannot verify if this is
->>> true, why do we call
->>> device_set_node() in the first place after having already registered t=
-he
->>> device?
->>>
->>> Thanks,
->>> Armin Wolf
->>>
->> Any thoughts on this?
->=20
-> You're talking to an AI.  =3D:-)
+On Tue, Nov 10, 2026 at 08:58:45AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] NTB: ntb_hw_epf: DMA IRQ reservation conflicts with vNTB tail
+>   doorbell vector
+> --
+> 
+> commit f7a63c5c0603979fdb93290006c7e19909b1a6bf
+> Author: Koichiro Den <den@valinux.co.jp>
+> 
+> NTB: ntb_hw_epf: Discover vNTB-embedded DMA
+> 
+> This commit decodes the vNTB endpoint-local DMA extension in ntb_hw_epf
+> and registers advertised DW eDMA channels before registering the NTB
+> device.
+> 
+> > diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
+> > index ff92c2a61ce7d..e0016128b95c0 100644
+> > --- a/drivers/ntb/hw/epf/ntb_hw_epf.c
+> > +++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+> 
+> [ ... ]
+> 
+> > @@ -347,16 +581,20 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
+> >  {
+> >  	struct pci_dev *pdev = ndev->ntb.pdev;
+> >  	struct device *dev = ndev->dev;
+> > +	unsigned int dma_max = ndev->dma.nr_irqs;
+> > +	unsigned int dma_min;
+> >  	u32 argument = EPF_NTB_MSIX_ENABLE;
+> > +	unsigned int ntb_irqs;
+> >  	int irq;
+> >  	int ret;
+> >  	int i;
+> >  
+> > -	irq = pci_alloc_irq_vectors(pdev, msi_min, msi_max, PCI_IRQ_MSIX);
+> > +	irq = pci_alloc_irq_vectors(pdev, msi_min,
+> > +				    msi_max + dma_max, PCI_IRQ_MSIX);
+> >  	if (irq < 0) {
+> >  		dev_dbg(dev, "Failed to get MSIX interrupts\n");
+> > -		irq = pci_alloc_irq_vectors(pdev, msi_min, msi_max,
+> > -					    PCI_IRQ_MSI);
+> > +		irq = pci_alloc_irq_vectors(pdev, msi_min,
+> > +					    msi_max + dma_max, PCI_IRQ_MSI);
+> >  		if (irq < 0) {
+> >  			dev_err(dev, "Failed to get MSI interrupts\n");
+> >  			return irq;
+> > @@ -364,8 +602,17 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
+> >  		argument &= ~EPF_NTB_MSIX_ENABLE;
+> >  	}
+> >  
+> > -	ndev->db_count = irq - 1;
+> > -	for (i = 0; i < irq; i++) {
+> > +	dma_min = dma_max && irq > msi_min;
+> > +	/* Reserve one shared DMA IRQ when available, then give the rest to NTB. */
+> > +	ntb_irqs = min_t(unsigned int, irq - dma_min, msi_max);
+> > +	ndev->dma.nr_irqs = irq - ntb_irqs;
+> > +	if (dma_max && !ndev->dma.nr_irqs) {
+> > +		dev_warn(dev,
+> > +			 "No IRQ available for endpoint DMA, continuing without DMA\n");
+> > +		ndev->dma.type = 0;
+> > +	}
+> > +	ndev->db_count = ntb_irqs - 1;
+> > +	for (i = 0; i < ntb_irqs; i++) {
+> >  		ndev->irq_ctx[i].ndev = ndev;
+> >  		ndev->irq_ctx[i].irq_no = i;
+> >  		ret = request_irq(pci_irq_vector(pdev, i), ntb_epf_vec_isr,
+> > @@ -377,7 +624,7 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
+> >  	}
+> >  
+> >  	ret = ntb_epf_send_command(ndev, EPF_NTB_COMMAND_CONFIGURE_DOORBELL,
+> > -				   argument | irq);
+> > +				   argument | ntb_irqs);
+> 
+> [Severity: Medium]
+> Does reserving tail vectors for DMA here conflict with the endpoint's
+> last doorbell vector?
+> 
+> In MSI-X mode, pci-epf-vntb sets the MSI-X table size to ntb->db_count
+> (at most 32), so pci_alloc_irq_vectors() returns irq = ntb->db_count <=
+> msi_max.  When irq > msi_min, dma_min is 1, which sets ntb_irqs =
+> ntb->db_count - 1 and assigns 0-based vector ntb->db_count - 1 to
+> dw_edma via ntb_epf_dw_edma_irq_vector().  However, pci-epf-vntb ignores
+> the vector count in argument:
+> 
+> drivers/pci/endpoint/functions/pci-epf-vntb.c:epf_ntb_cmd_handler() {
+> 	case EPF_NTB_COMMAND_CONFIGURE_DOORBELL:
+> 		...
+> 		ntb->peer_msix = argument & EPF_NTB_MSIX_ENABLE;
+> 		ctrl->command_status = EPF_NTB_COMMAND_STATUS_OK;
+> 		break;
+> }
+> 
+> Because vntb_epf_db_valid_mask() still exposes all ntb->db_count - 2
+> doorbells on the endpoint, ringing doorbell bit ntb->db_count - 3 raises
+> vector ntb->db_count - 1 on the host, routing the doorbell interrupt to
+> dw_edma instead of ntb_epf_vec_isr().  The mismatched
+> ntb_db_valid_mask() between host and endpoint also causes
+> ntb_transport_probe() to compute a different qp_count on each side when
+> mw_count >= ntb->db_count - 3, preventing the transport link from coming
+> up.
 
-My question was directed at you and Pavel, but it seems that Sashiko has=
-=20
-removed some people from the CC.
+Yes, correct.
 
-I will resend my question as a reply to the original patch.
+To summarize, the impact:
+- ntb_transport: qp_count mismatch only if mw_count >= db_count - 3,
+  i.e. db_count 5..7 by default (vNTB has at most 4 MWs).
+  Larger is fine (e.g. 32 with 4 or 8 QPs).
+- Other NTB clients: top doorbell rung by the EP can be lost.
 
-Thanks,
-Armin Wolf
+TBH, taking the last vector was a deliberate shortcut (EP untouched)
+for simplicity's sake, but the EP still exposes the doorbell, so the
+two sides disagree on the doorbell count.
+
+I thought that was acceptable as a first implementation: in practice
+only a few QPs are needed, so setting 'db_count' large enough (via
+configfs) avoids the problem, and I wanted to keep the implementation as
+simple as possible at this point. But now that Sashiko has flagged it as
+an issue, I think it is better to rework it (?). Assuming so:
+
+v10 plan in my mind: shared DMA IRQ on slot 1 instead of the last vector.
+
+  - Slot 1 has historically been unused, i.e. no kernel has ever used it
+    for link/doorbell events, see commit 84af8a5f5ef2 ("NTB: epf:
+    Document legacy doorbell slot offset in ntb_epf_peer_db_set()").
+
+  - With this approach,
+    * It can be a host-side-only change in patch 9 (plus a howto wording
+      update maybe). The simplicity is kept.
+    * EP behaviour, wire format, compat matrix (see the cover letter)
+      unchanged. Slot 1 goes to DMA only if the EP advertises the DMA
+      extension.
+    * Host doorbells same as without DMA.
+    * No spare vector needed, as it just uses the skipped vector.
+
+  - I don't think this makes it hard to support multiple DMA IRQs later:
+    * v9 gets at most one DMA vector from vNTB too.
+    * More vectors would need the endpoint to provide extra ones and to
+      advertise them, i.e. a wire format extension, whichever layout we
+      pick now. Once that exists, keeping slot 1 as vector 0 and
+      returning the advertised ones for the rest from .irq_vector() is
+      easy.
+    * Completion already runs in per-channel work since commit
+      35de39e4511f ("dmaengine: dw-edma: Defer channel IRQ handling to
+      workqueue"), done for SoCs with a single fixed SPI for the EP-side
+      eDMA. One shared host vector is much the same, so I expect no
+      performance-driven need for more any time soon.
+
+If no objections, I'll send v10 with this (in a few days).
+
+Frank: you already gave R-b to patch 9 as is. If you'd rather keep the
+v9 scheme, please let me know.
+
+Best regards,
+Koichiro Den
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261110082459.1798763-1-den@valinux.co.jp?part=9
