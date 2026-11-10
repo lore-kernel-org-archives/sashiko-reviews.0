@@ -1,73 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794330370;
-	b=FHqYzCr1JH9J8q8MGUY3SBzwFpx6ZQmUbggmI/hYMnd0vrK6ObArsjZkaHP5kOUpi0j+
-	 hLop0/R0jQwy6EbY4+iPcAX6ljxdOiNZLZgVCxUOReqciL86ZbU+7/rRuFh0Vgvxi8CB7
-	 4SqEGXV9PwTiYKFUELu93aKpKB68bfzWkfXUf6e2AtcAlFt4FFptmMTY2nevnBUeetg7X
-	 FXtftrFjec26nK/eDvf3RXZPnggW5jc63Ek669Hd6KI6Tj5yOD5g1iQqXQGwX1l719KC+
-	 UgHZ+r1sY/BCdD0rui12gK6DbgySkPYxU21OSTuuP2hdyhkHI5LqQ6JBtsK5vtV4lbg==
+	t=1794330506;
+	b=VpG1Qn2QTEGUNE4JiVMI0gHUs4kmLoSTyeNLWTyOIOMB57Jx7nMzJjLsJBBwKJ8UCgKr
+	 rulZZnds138gQ4hNfX44+oAFNRiFRJ+vjgqFUjAD3kFBYdlUikL4QhZp6/ACwLcrrNfKD
+	 jA2NiWq6gtT2XG10aSUqIExGM/Ec6BGIM9v4s02RLyT0pRcSQkIi6FvDpb+T7VzBJbzgR
+	 TPVO+rS/a8dI8a7JY8iQ2C7IyD8VrFBMzIgALpjDB/ZAVispjbooIHfPYS3TF5tNMt4lp
+	 Vbf40nTbDPfLuCgBFfKEunU73+DrKxC88zT2yEJTBg2A/62v54lW30DxrIhhlikFIlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794330370;
-	h=DMARC-Filter:From:DKIM-Signature:DKIM-Signature:To:Cc:Subject:
-	 In-Reply-To:References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=2rq+PIwUCms8DsPAO6QrWfvrFWsMOaqlsYD/F2PLF74=;
-	b=ucMURoLDNaDaOttYG5h7z0YluQCCgpdMSqF4ifT6zRuS5b/UPyP9FI/1XuqgeNSoiL+f
-	 5vuVvOunjmQ2griN76aAwXd0m9NbtWZCwjdB7RYRlmlRrCgenCp8OpQ5iDY0JajYqBNrw
-	 8FrYk0OdQ6TsGx6cBfSCZppr/dtRhNGtS/xuulrE8TRgVYei9dOXtTTVzuoWu2MCUS6pw
-	 4g767892VC26oe+JIWtslPAXejtTJJbPvGkIlbjam+576XFgdr8oebetvHZtrxAcutPsV
-	 laGI+1EGn4M13vKaL5BsImFMYVIzFy/EGj+K6o/QSyBEiYP5y1EMAMP4WmOR25mjE3Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794330506;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=W4toJnlwxo6gYnBNO7MZe8ejf7vNnhvthFCmzNs0KII=;
+	b=ZIMzwV4CqCpBUOA+zSN8oqh9uRvjlUEriI5sj54XhDYEt46Dwk3l2QmpicUpjsehURWN
+	 3tUlgVAJMj8Z2aOgPsAjtdPMUYHaOVCIu7HLaax9vLP2cVPgP3+vL6aWe8vpxoqqhGzMc
+	 bnORc63e09fqz87BKt1I27OTk0LPh4vWYIZWaoeDWErRUQd99ue5AxNSs4asR28pjiuKY
+	 EDCNKciNnrkLg2ftlxWoPGnCzgNCA850pfGR+KAlE8kPI/tFSGKXJ0zDSem6YehICp9M5
+	 9Mrsz+cfd65dp81ZmUiIWHY7r2rvqck5xDDZiZJoHrvyRyLaYnkeQ+7GXxb7Dv4Jsfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linutronix.de;
-	spf=pass smtp.mailfrom=linutronix.de;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b="V4Y/AMqH";
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b="q0VrR/6I";
-	arc=none smtp.remote-ip=193.142.43.55
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k2lMMVu0;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B843606A32D;
-	Tue, 10 Nov 2026 17:06:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B843606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DAC606A31C;
+	Tue, 10 Nov 2026 17:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=V4Y/AMqH;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=q0VrR/6I
-From: John Ogness <john.ogness@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1794330367;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2rq+PIwUCms8DsPAO6QrWfvrFWsMOaqlsYD/F2PLF74=;
-	b=V4Y/AMqHngDCyYOPHxZRRmocjtzPDsy3sgKUNNiJUo18QnilpFPy07nUQaTvgphf/OwkNL
-	qNKdqoZSMUp9XDYyRepFC2AC2d9vHLp0liyv0MSNv/aDYI474e1RDafJB+bWtU/W5CDSHN
-	mwl2bmjtT9267mPGUoPT0okTSz3qWlGfl8fZZBJNXcUw6uDeKV7zNKSuwocLNmQPtIGk9u
-	wBV4hBQ2S+U6IdOp/gbmSi8O48QLtqIe20E/rCuFyF3Shga1FWyOh+JyXwS0I4SGb/3yo4
-	x0EqGqnW4e6QsxamRQJJKVNfVFVkZ4+w+K0bD32DGxXPRSP0MjETeht9rlRiRw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1794330367;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2rq+PIwUCms8DsPAO6QrWfvrFWsMOaqlsYD/F2PLF74=;
-	b=q0VrR/6IJ1xVqfZBfrbXgxQrzJAxCnuencnGHp7KLoxttWlbROYIFGzzy1GHkp5uBip2oM
-	Xxd/jyJLBbVz7XDA==
-To: sashiko-reviews@lists.linux.dev, Petr Mladek <pmladek@suse.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, Steven Rostedt
- <rostedt@goodmis.org>, Ryan
- Roberts <ryan.roberts@arm.com>, Breno Leitao <leitao@debian.org>,
- printk@lists.linux.dev, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH printk 3/6] printk: Evaluate flush policy in
- nbcon_allow_unsafe_takeover()
-In-Reply-To: <sashiko-outbox-207024@kernel.org>
-References: <20261109123127.489676-1-john.ogness@linutronix.de>
- <20261109123127.489676-4-john.ogness@linutronix.de>
- <sashiko-outbox-207024@kernel.org>
-Date: Tue, 10 Nov 2026 18:12:06 +0106
-Message-ID: <8733t8ipkx.fsf@jogness.linutronix.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k2lMMVu0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DA21F0089F;
+	Tue, 10 Nov 2026 17:08:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794330505;
+	bh=W4toJnlwxo6gYnBNO7MZe8ejf7vNnhvthFCmzNs0KII=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=k2lMMVu0DXMibVy3EmJeXu1BBP9LzaZ+qFOkFKbiyyr7I71yF6EsgqCzDR8pdSBIo
+	 qecPgaS/MhiunL7X1SEnw3lR2lTP6BwoqZk6uefjwRjRbQpIt3Utr6+IQq3CSj7pCQ
+	 XuEgxQRvnh4tbyEQ9lTeLUeqX5tcFuGX7BoqIWr9+3bzH3FYABV5RskZjyVzl/TwRL
+	 NC/8/5/TdYHyIGoySa9+EKyv2VRc5c3liUe3/jVGmom9XU6RvUbD5a3HLqd5U+224c
+	 6gvIde6SvgNeiem1HcakWSaA3CtHngQNEUb1XPQY4lYKzm3SV68pAXSyJlGO0ENOi7
+	 JSCCNvxWyTW+A==
+Date: Tue, 10 Nov 2026 17:08:15 +0000
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, Jonathan Corbet <corbet@lwn.net>, 
+	Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap <rdunlap@infradead.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, "Liam R. Howlett" <liam@infradead.org>, 
+	Vlastimil Babka <vbabka@kernel.org>, Jann Horn <jannh@google.com>, Pedro Falcato <pfalcato@suse.de>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, Peter Xu <peterx@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Zi Yan <ziy@nvidia.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <nico.pache@linux.dev>, 
+	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
+	Lance Yang <lance.yang@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
+	Kiryl Shutsemau <kas@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, linux-mm@kvack.org, 
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] mm/khugepaged: check for empty PTE tables before
+ retracting
+Message-ID: <avNO1pvPuMYIdYTE@gremlin>
+References: <20261107-b4-uffd_marker_loss-v1-0-82926b22704c@kernel.org>
+ <20261107-b4-uffd_marker_loss-v1-2-82926b22704c@kernel.org>
+ <sashiko-outbox-203403@kernel.org>
+ <28b818cb-f038-43ce-a2e2-a9c97befba09@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,76 +71,60 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <28b818cb-f038-43ce-a2e2-a9c97befba09@kernel.org>
 
-On 2026-11-10, sashiko-bot@kernel.org wrote:
->> diff --git a/include/linux/console.h b/include/linux/console.h
->> index 0841bf5e88aac..8f5097e7f4741 100644
->> --- a/include/linux/console.h
->> +++ b/include/linux/console.h
->> @@ -670,13 +670,6 @@ static inline bool console_is_usable(struct console *con, short flags, bool use_
->>  			/* The write_atomic() callback is optional. */
->>  			if (!con->write_atomic)
->>  				return false;
->> -
->> -			/*
->> -			 * An unsafe write_atomic() callback is only usable
->> -			 * when unsafe takeovers are allowed.
->> -			 */
->> -			if ((flags & CON_NBCON_ATOMIC_UNSAFE) && !nbcon_allow_unsafe_takeover())
->> -				return false;
->>  		}
->>  
->>  		/*
+On Mon, Nov 09, 2026 at 04:08:23PM +0100, David Hildenbrand (Arm) wrote:
+> On 11/8/26 00:51, sashiko-bot@kernel.org wrote:
+> > [Severity: Medium]
+> > Can removing the VM_COPY_ON_FORK flag checks here cause retract_page_tables()
+> > to race with copy_page_range() during fork()?
+> >
+> > In dup_mmap(), the child VMA is linked into mapping->i_mmap and
+> > i_mmap_unlock_write(mapping) is dropped before copy_page_range() runs.
+> > vma_needs_copy() copies page tables not only when vma_has_anon_rmap() is set,
+> > but also when VM_COPY_ON_FORK flags (VM_MAYBE_GUARD, VM_MAYBE_UFFD_POISON,
+> > VM_UFFD_WP, or VM_UFFD_RWP) are set on a file or shmem VMA whose anon_vma is
+> > still NULL.
 >
-> [Severity: High]
-> Does removing the CON_NBCON_ATOMIC_UNSAFE check from console_is_usable()
-> allow console_flush_one_record() to invoke an unsafe write_atomic()
-> callback during normal runtime?
+> Ah, try_collapse_pte_mapped_thp() runs withe the mmap lock, whereby
+> retract_page_tables() only holds the rmap lock.
 
-Indeed. nbcon_legacy_emit_next_record() needs to set and check
-@allow_unsafe_takeover in the atomic case. Something like this:
+[ ... ]
 
-@@ -1547,6 +1548,12 @@ bool nbcon_legacy_emit_next_record(struct console *con, bool *handover,
- 	ctxt->prio	= nbcon_get_default_prio();
- 
- 	if (use_atomic) {
-+		ctxt->allow_unsafe_takeover = nbcon_allow_unsafe_takeover(con, printk_legacy_reason);
-+		if ((console_srcu_read_flags(con) & CON_NBCON_ATOMIC_UNSAFE) &&
-+		    !ctxt->allow_unsafe_takeover) {
-+			return false;
-+		}
-+
- 		/*
- 		 * In an atomic or unknown context, use the same procedure as
- 		 * in console_emit_next_record(). It allows to handover.
+> > Once the PMD is pmd_none, the next fault in finish_fault() installs a huge
+> > PMD before checking userfaultfd_armed(vma):
+> >
+> > mm/memory.c:finish_fault() {
+> > 	if (pmd_none(*vmf->pmd)) {
+> > 		if (!needs_fallback && folio_test_pmd_mappable(folio)) {
+> > 			ret = do_set_pmd(vmf, folio, page);
+> > 			if (ret != VM_FAULT_FALLBACK)
+> > 				return ret;
+> > 		}
+> >     ...
+> > 	/* Using per-page fault to maintain the uffd semantics */
+> > 	if (unlikely(userfaultfd_armed(vma)) || unlikely(needs_fallback)) {
+> > 		nr_pages = 1;
+> > }
+> >
+> > When userspace later issues UFFDIO_RWPROTECT on that file or shmem VMA,
+> > change_pmd_range() sees pgtable_split_needed() is true and calls
+> > __split_huge_pmd(), which zaps the file huge PMD back to pmd_none without
+> > populating a PTE table (since pgtable_populate_needed() is false for
+> > MM_CP_UFFD_RWP), so RWP protection is lost and subsequent accesses fault the
+> > unprotected huge PMD back in without delivering RWP faults.  Installing a
+> > huge PMD also causes PAGEMAP_SCAN to report all 512 pages as accessed or
+> > written after a single 4KB page fault.
+>
+> "Since pgtable_populate_needed() is false for MM_CP_UFFD_RWP" I think RWP also
+> needs proper uffd marker support, independent of the change here.
 
-Of course, the question becomes, where does @printk_legacy_reason come
-from? For legacy consoles the whole call chain is horrible and hidden
-under console_unlock(). So passing in a reason is not feasible. My
-suggestion is to introduce a horrible hack: a global variable
-@printk_legacy_reason, initialized to PR_FLUSH_RUNTIME and modified in
-printk_trigger_flush(). Something like this:
+Hey,
 
-@@ -4743,8 +4749,11 @@ void printk_trigger_flush(enum pr_flush_reason reason)
- 	if (ft.nbcon_offload)
- 		nbcon_kthreads_wake();
- 	if (ft.legacy_direct) {
--		if (console_trylock())
-+		if (console_trylock()) {
-+			printk_legacy_reason = reason;
- 			console_unlock();
-+			printk_legacy_reason = PR_FLUSH_RUNTIME;
-+		}
- 	}
- 	if (ft.legacy_offload)
- 		defer_console_output();
+Wondered if you planned to do a respin on this? Want to know whether to delay
+review for that or not, thanks!
 
-My justification is that legacy is on its way out, so we should not
-spend too much effort trying to beautify it. Also, since
-@printk_legacy_reason is modified and used under the console_lock, this
-should be good enough.
-
-Thoughts?
-
-John
+--
+Cheers, Lorenzo
