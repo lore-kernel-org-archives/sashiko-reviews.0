@@ -1,93 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.228.91
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1794325212;
-	b=ZB3uQgbwGWaD8iG1fC7iLsjB8JkB9OkMzzDjpZfeKT8b0BzVKiIlNu/STfXIjF3hQqdx
-	 1jVDyLw8Kv1qxEOU6MemLO58qB4uznPSn4SAX4wkUPjuGCAaYkN/zsYqABGqNs/C4FfMB
-	 FOcVbs1uiR2Fvvmwo4Fft5XJwqOfqB0/bE7LLx7nDPI97nzUT2c2aQJgZnnOcq+ptBYDi
-	 GQJ7qmkE+qIzhIlT6/q0nexXxY/7bvAzFSROp3I7pZWcF3ViFKo/x2UT1tJHaCABw3A6u
-	 Gkpb7tR6OD9RJtS6KSAuctqV3oa2vuqeLCz2Y+Ig2uTMl4okjY5Jly/LTXyJlehPMzw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794325212;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=GugCPs66RgcqiaCXFfVUII7DOIhyw7VOu8pUy+p1cYE=;
-	b=pIyL0ZJdpk2UgrJHWyWp+UoQ3rwk/PoWKsTkNe+kMFPSW52y2QJAue6IlQzcJAhOv0/r
-	 DMkY5YFF1amT81WeKSVibTHkKeFIjWv3Zz8uSTxnDM920igE9FDM09kWa94NMe5LNF9L+
-	 Jf+fSmOKrZ5HWbDejm0L46gQeVLZM2iA52rdUpK4GY9ewOY0WHrtFcN52KxwJIKuUtllc
-	 iGAncaY3lOUQasfjINbzIDkZT5phAptMnlwLTz1dSih4ZbDmT2FYuXg9N/mQNR3KiSTBL
-	 5z62kDdaP/20ScfGLowTqzihitxCqUkjJN1zDp5/O/chuffJJNhdzJpkBHdkEqrqdRQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=valinux.co.jp;
-	spf=pass smtp.mailfrom=valinux.co.jp;
-	dkim=fail reason="signature verification failed" header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b="T7XJF0/y";
-	arc=fail smtp.remote-ip=52.101.228.91
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020091.outbound.protection.outlook.com [52.101.228.91])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D50606A331;
-	Tue, 10 Nov 2026 15:40:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95D50606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794325279;
+	b=CPJ0bAq3Z+WX0taH5aPxY49pXrVnXGLfzz79PnqnSaFpOCR+L6Cs6FyGDYTOTUaqq2+Z
+	 oX53QYUeoQAx9C8PrLuvB/L6LAUFCo3KbZbLeNFXJ2tse4Gy+mnsDKBx2QwHEk+bBXrjY
+	 g3mGKgIKJM9+/zZUe3LKSks4fMAZBmiL1stMmMtZH7uyr9QS7J6R2/vZ0bTzvWrp2L285
+	 ArMfmO3gRx1QFKJoZxo3lEhASkT1UKxItFOWD1ChKOfNBSwgAVASNNOLwPqZXBDQxkyp8
+	 ezSIyePq89nonvpn1NOYG5GVhN2gJZGjmV6d2ay8FjMqKs85Dw/ThlhwPEG6aSmyJAA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794325279;
+	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=QHx7C/AerpPhdwsuFtDPfcaly8BfFFQVyiFbTns4uE8=;
+	b=VTlvfLQW2hqGv9kuvkgI7t6CDVIoLM7NyABrwwWjiqpU8gtyPXb9h/l96K0l+oMHM2ro
+	 +yLPWriAEN8WKQxRv/aC1YlVQj/TWPuLRPCs2Jphv+FEWlZ4SKo8sfptdIfeJe2RU1PKO
+	 Rd1yJniOVJAlkduMC688ifywlIl3mexcWQ9ZSl0LdkEbVSqsR1RjuPVmT/kKMcAprL3bs
+	 rXhcI5+DHL9owlLP92T/hhEOKMxmHP8JcnSuV6mrE8DQMqlYy8Pr8yB02OWs93bkXZJF4
+	 hl9e8FIlWFuxGNmRbAs2HvTH/+jmhxkHL4lwM09Pkjsfw08hnRWJjP/8HiTp/m07iPg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.microsoft.com;
+	spf=pass smtp.mailfrom=linux.microsoft.com;
+	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=b5mRhHJu;
+	arc=none smtp.remote-ip=13.77.154.182
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F102606A339
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 15:41:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F102606A339
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=T7XJF0/y
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=avn9J8TGqD1qtJE4QYhdeqhzZnHMUDx/L6jxgFyDlHiXsdKehZUEpX4IKvR0+z/zOn8tW6afQDCWOL8pBOkkXKXT4RnUBU+PkjIMnxfG/r1vuHzabHuaEDdsu10ce7ixtbWP9tFnypDvtLPY4cG04ryq9iaIcQqqRlIM9XKK4ndco6210oeJ9jd/Ewq2IesN12bZcrIttDmhz8DFYFNvBp4BirS86u2csEG852FVIXarPp5Ygkq6+vqWZvJUU2tm2IgYJqVx5acttJ5X0oGleZZp38fqzG4vVk8cLXQJNLhhF75I8l6hlCvJw6FfRIxrmMYNTWuYqyYHf/zxtWYkAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0wFQFLKGGxyfe7lA2gfUPPY74W960WBBrztV4sh+gn4=;
- b=NTWyQrxwMYApI0ZDjk+vWpC5dREWaF3L5Khv2Tkt/I2OG3PwQjCLrr2VFOkWnzb2X6Btp/u1rdjRM6LqIlD2aU6IyFEfClUSQlmcg56FGhOUnXhaN74/1eSQB6+PjvM90es1UsaSIapvNr1E7+Hc0h1Ra40CsY/1N2c+J4uWFqb+6pi8xCPWt68c/DDTHcp+AeYMOwx6h2uaJTW3mWHDRKSB9cakc0QnQDTGVg9gqR4wfrOdaVI9P0zNGY26tyYm0b0Sal7o4vOleGsvYredqSWDDSL/sBytejSUNwCcvMxo22zTabuAW8ROnWpzo2aQ1K5QnUtqYE7c0ql+qEkekQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0wFQFLKGGxyfe7lA2gfUPPY74W960WBBrztV4sh+gn4=;
- b=T7XJF0/y8+njQ8HPEfPUAF3EA+9lILXLyqPIdZ+fr//wlShnuyeqijb5yZYxUgd+9e0tfK02omnwxFdRC8zppKVt7VDjsGL2DxhOGI6sCCGD6ugdXZmjNIDEn3mrQxEteRvvqSOBSwekAxYfRhwvtqTfSDbYRRGqf2e/ap2VfoM=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by TYCP286MB3186.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2c7::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Tue, 10 Nov
- 2026 15:40:07 +0000
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0592.012; Tue, 10 Nov 2026
- 15:40:07 +0000
-Date: Wed, 11 Nov 2026 00:40:05 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev, Frank Li <Frank.Li@kernel.org>
-Cc: linux-pci@vger.kernel.org, ntb@lists.linux.dev
-Subject: Re: [PATCH v9 09/10] NTB: ntb_hw_epf: Discover vNTB-embedded DMA
-Message-ID: <3qbu2n7k5smmthlfklarhwo5t6qtimu4ddrqymv5b4r7jdsfiw@hy3kj2ft2q63>
-References: <20261110082459.1798763-1-den@valinux.co.jp>
- <20261110082459.1798763-10-den@valinux.co.jp>
- <sashiko-outbox-206684@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-206684@kernel.org>
-X-ClientProxiedBy: TY6P301CA0025.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:3bf::7) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:325::11)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=b5mRhHJu
+Received: by linux.microsoft.com (Postfix, from userid 1216)
+	id E091020B7168; Tue, 10 Nov 2026 07:41:09 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E091020B7168
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1794325269;
+	bh=QHx7C/AerpPhdwsuFtDPfcaly8BfFFQVyiFbTns4uE8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=b5mRhHJubjI7FLZIOHtOvKCOdufAiqKmhGC15RsGRKNWkiwH7lLDbXpAG3MzKLkFM
+	 hUuXZmyzqtIGTDoj0dRdSQo+iO1qMvjV663S7ZN4wRI8MRdWGWvFO0a6xy9EAHXaWG
+	 Hl0xp9r/NLdwO1M9b2pd/xonQjxJPB+nf4i/uyaQ=
+Date: Tue, 10 Nov 2026 10:41:09 -0500
+From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+Subject: Re: [PATCH net] net: mana: report RX checksum offload for IPv6
+Message-ID: <avM7FRuRZaod1wqk@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20261109142856.779955-1-hamzamahfooz@linux.microsoft.com>
+ <sashiko-outbox-207192@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,218 +57,90 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|TYCP286MB3186:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c2ebcbe-f459-465c-675b-08df3f40e56f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|10070799003|23010399003|376014|1800799024|4143699003|56012099006|22082099003|18002099003|6133799003|10067099003|261022105027099003|261021123027099003|261021121427099003|261026121527099003|261026140227099003|261026135527099003|261028144727099003|261102123227099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info:
-	ddgglL1OaCpZ//iOOlh14xPGLncyoVV+hHOF8++V0sAT6ORr5CpGklTt9n9mKE97NUk1PT6MgDmSLsQ1nTGFln1su30Q8o2ZWsIf/7QC7Fq9mvqDwPZf2An2tYym929rXRTZQDL9S+WhZ8bMx/YtgpTkwF+mpYlXZWFNo6wCpqKj/KoMek0m3VK+khlnlt5vx/x62iimecQXlwa9hiZu4PXsZH53DcGim7z5fRfdNjx3Lx0AqFwogLTbAK7GKlrbRXQNWsEO56CEb1aJWZswkmH5V8hzTFpi2K1kOE+tiNu3+SGta/j+xlml0U+JgXKIvlpyx/uSTa6rekLJKJctH/gCJtXZH38of8DF3w7mWXT1eGaVX2W0bZERc7csT4W6FOQj8x5LuykeUmAOtII6h3TdoD3Eq8euYDjGKbPXHf3nYj3N6jhQvDpFn7EdKk17bkT8wl4GuBjxdT1CPgjExA9f5f+Qz9rDyeQKdwyBfskjuu7IDkeofZBDt+WWScuvPXWNpHYtQZB8nx2QNfbhMRU/L2JKKcWgK1Pw6jZWS7XQTiJTDihB3cTzginpIUZOCRKEUEzqtT7UDq90r2CYgeg61BEWeVaolx+nXpT9Icc=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(10070799003)(23010399003)(376014)(1800799024)(4143699003)(56012099006)(22082099003)(18002099003)(6133799003)(10067099003)(261022105027099003)(261021123027099003)(261021121427099003)(261026121527099003)(261026140227099003)(261026135527099003)(261028144727099003)(261102123227099003)(261009223027099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?1RyiAx0L/yhN0qoz6d3UuLg4AXjVfzuxG2u2jif4GBuf+/3W0jv7EZ38VB?=
- =?iso-8859-1?Q?AuMWs3iVj9JVVuv0FeAMcaog7B50isHe8WBqluu9QVNFxXpGYHi8UMmHAE?=
- =?iso-8859-1?Q?iMkntbKEc9GFmpuyPFPMbOqSrQ0PwfasKN5BqSMP+FdeZ5YJ9byljo9i+G?=
- =?iso-8859-1?Q?bh04YKAIQrwsCpD6WB3mGe3iMQjd3pnobhiHEV6mCwRc6oAVM7r2egFWHS?=
- =?iso-8859-1?Q?mV/qiO/Cjj8q9GbWCR7HxlgOdbeGH7h5eGtL0wh2ox36oYeCbg80M+40ef?=
- =?iso-8859-1?Q?KFfsT7jL3Hpa3pLeK9cwq+mjAMA/qWOhniczE2dJnge6QX3gx7FNPLcnAg?=
- =?iso-8859-1?Q?Sto4IKyTqDw8mA9viLi4jt7suPMQpUFh+eEa0zrvTxTh5eeFVooq+WPD4D?=
- =?iso-8859-1?Q?hLaEIZ8Z/d4Vk58SC1njYMHRzpCARRE2q+LMe7W72hSQQD9U+0tNV+jcSc?=
- =?iso-8859-1?Q?4qkhgQm8va3RvIZldcnMOZs8cQsfdtAL2Gur5FcsklCu+a+Q9cuo+1l+oT?=
- =?iso-8859-1?Q?541rmWTqJT67+4gaDRSrAFzyJYVHN2Q5LZaIy4/6LPTca8RZnMUwLQZCmh?=
- =?iso-8859-1?Q?XlQ9McBbV+ETiZpstUU2Se5tz5YuOm5e3XZfTjH9oVkDeHUhBN/cOovYvC?=
- =?iso-8859-1?Q?WAiiZXqf4kAeeYFdjE4Lfs8osEJ1PVfuL6i///yB+nHhdAmlTdRSskFXSe?=
- =?iso-8859-1?Q?T/Iy3JiG9gF0CmJSFWum0nYH/wvFKK9QQyy+KUlfE4J4ZnKqnCL/eWvE04?=
- =?iso-8859-1?Q?hNRf6MyL343Ba5GA3IlWWvm1CTEl5FKRovK2bZoytwCjBYiCc+VK+d18KZ?=
- =?iso-8859-1?Q?+3/zalM0SBb4yd8fyrcuUMnVjxbUUV1x0UnaET00fjq0D38ldDUaajKRK+?=
- =?iso-8859-1?Q?Z3E6A4TCy6/aawTzjtbXaAPnKmuLUlKfS4xlO8WT7dKMyMtc8vmty1wnK9?=
- =?iso-8859-1?Q?VCA1x8QTPTdpTwGCBfvpNDsTvXfO5JiANZMgmF/CVHTrjzAf/0cgY7pqVq?=
- =?iso-8859-1?Q?syiDTX+JEVEUroV4ZJt2/2CYnO0Cf/nOH6hUPscMEXTi+PHq7vm5wZg1L4?=
- =?iso-8859-1?Q?AdcgSCSLR4jgUeFzbFM354yv08vADkNq6T3jDalqDqZCINROaTbgpr5zU/?=
- =?iso-8859-1?Q?3HkmcfjqDt3mbYjl0LoZg97POa1UrfKAd+s8QExX7WUSm/xUW0hOxeeH0D?=
- =?iso-8859-1?Q?VkSxq+IDBIdnszqyWgNY5dLo/I7BTtn9gvuylt+qdPe3xvlRsk9P8rE0JI?=
- =?iso-8859-1?Q?quqmsqW2GthXTlc+XQYelqPtntK79RonoHMV5ojAerXLmWiqzOWDcK8gnl?=
- =?iso-8859-1?Q?eQjg7VKVMOQanA+7piPJ3gWklx1ltkqjIBw+07DJoHeXWIZkfESfWNAHFN?=
- =?iso-8859-1?Q?e5t/wugo6pQ3nhR1AXORA9oNChJO5VWp/f1f7+5HFEN8mMa1qaM3hcD/nR?=
- =?iso-8859-1?Q?C+zT+dPWpxXmqNNvSsgx2MJP/0eDEdDp1gxMeB54YVaiBH/E8ousLozHNw?=
- =?iso-8859-1?Q?RnWAZN6Hr6M6a64jT0Ah6UHVW/2USQZu5lu2rnHcuUHto+HqgVV2epgryF?=
- =?iso-8859-1?Q?ZP2CiYiXzhWNRRbLnr2qPGP74cCOYbQh8bv9UxEE3BlYykdkp0rqcPt6hp?=
- =?iso-8859-1?Q?1UcZbDc+jau6N6Frhr4htUqRYrpWpFM3JguOtVVUtnXAwwEzAkH0pmf/V7?=
- =?iso-8859-1?Q?IEw/MWZKFXCmQ9NWDX/jsx3ABSsio8sI/w5+IX7lxhWSJba6ZGLa4QlZmB?=
- =?iso-8859-1?Q?WbnJFAT/7zM380guVzhvDHOMf6XumfapZP2J2pNmdXZ+f3mi76QGp/u9V3?=
- =?iso-8859-1?Q?lG8qQ6hB+q8DCuYrP5T8ceHxnubhL395SiNgO4CAnwqOkqQaR4Kn?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c2ebcbe-f459-465c-675b-08df3f40e56f
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 15:40:07.1005
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /37X+w6aiXlhueCAqn7rMgl/5rPreA3KRUz8CSW4OY0wKM7IEydq5sPxi/ui1kEg1oLYNLU42NZ2D3beeFWqMg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB3186
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-207192@kernel.org>
 
-On Tue, Nov 10, 2026 at 08:58:45AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] NTB: ntb_hw_epf: DMA IRQ reservation conflicts with vNTB tail
->   doorbell vector
+On Tue, Nov 10, 2026 at 02:29:17PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [High] net: mana: memory leak on XDP drop path in mana_rx_skb() [1]
 > --
 > 
-> commit f7a63c5c0603979fdb93290006c7e19909b1a6bf
-> Author: Koichiro Den <den@valinux.co.jp>
+> commit 44321b6481b9b9f9a70166beb9fc63a817e238f6
+> Author: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 > 
-> NTB: ntb_hw_epf: Discover vNTB-embedded DMA
+> net: mana: report RX checksum offload for IPv6
 > 
-> This commit decodes the vNTB endpoint-local DMA extension in ntb_hw_epf
-> and registers advertised DW eDMA channels before registering the NTB
-> device.
+> This commit removes the rx_iphdr_csum_succeed check in mana_rx_skb() so
+> that IPv6 TCP and UDP packets with validated L4 checksums receive
+> CHECKSUM_UNNECESSARY.
 > 
-> > diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
-> > index ff92c2a61ce7d..e0016128b95c0 100644
-> > --- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-> > +++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-> 
-> [ ... ]
-> 
-> > @@ -347,16 +581,20 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
-> >  {
-> >  	struct pci_dev *pdev = ndev->ntb.pdev;
-> >  	struct device *dev = ndev->dev;
-> > +	unsigned int dma_max = ndev->dma.nr_irqs;
-> > +	unsigned int dma_min;
-> >  	u32 argument = EPF_NTB_MSIX_ENABLE;
-> > +	unsigned int ntb_irqs;
-> >  	int irq;
-> >  	int ret;
-> >  	int i;
+> > diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > index e6d494df22e4d..05bd4b4b8349e 100644
+> > --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > @@ -2179,10 +2179,9 @@ static void mana_rx_skb(void *buf_va, bool from_pool,
+> >  	skb_checksum_none_assert(skb);
+> >  	skb_record_rx_queue(skb, rxq_idx);
 > >  
-> > -	irq = pci_alloc_irq_vectors(pdev, msi_min, msi_max, PCI_IRQ_MSIX);
-> > +	irq = pci_alloc_irq_vectors(pdev, msi_min,
-> > +				    msi_max + dma_max, PCI_IRQ_MSIX);
-> >  	if (irq < 0) {
-> >  		dev_dbg(dev, "Failed to get MSIX interrupts\n");
-> > -		irq = pci_alloc_irq_vectors(pdev, msi_min, msi_max,
-> > -					    PCI_IRQ_MSI);
-> > +		irq = pci_alloc_irq_vectors(pdev, msi_min,
-> > +					    msi_max + dma_max, PCI_IRQ_MSI);
-> >  		if (irq < 0) {
-> >  			dev_err(dev, "Failed to get MSI interrupts\n");
-> >  			return irq;
-> > @@ -364,8 +602,17 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
-> >  		argument &= ~EPF_NTB_MSIX_ENABLE;
-> >  	}
-> >  
-> > -	ndev->db_count = irq - 1;
-> > -	for (i = 0; i < irq; i++) {
-> > +	dma_min = dma_max && irq > msi_min;
-> > +	/* Reserve one shared DMA IRQ when available, then give the rest to NTB. */
-> > +	ntb_irqs = min_t(unsigned int, irq - dma_min, msi_max);
-> > +	ndev->dma.nr_irqs = irq - ntb_irqs;
-> > +	if (dma_max && !ndev->dma.nr_irqs) {
-> > +		dev_warn(dev,
-> > +			 "No IRQ available for endpoint DMA, continuing without DMA\n");
-> > +		ndev->dma.type = 0;
-> > +	}
-> > +	ndev->db_count = ntb_irqs - 1;
-> > +	for (i = 0; i < ntb_irqs; i++) {
-> >  		ndev->irq_ctx[i].ndev = ndev;
-> >  		ndev->irq_ctx[i].irq_no = i;
-> >  		ret = request_irq(pci_irq_vector(pdev, i), ntb_epf_vec_isr,
-> > @@ -377,7 +624,7 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
-> >  	}
-> >  
-> >  	ret = ntb_epf_send_command(ndev, EPF_NTB_COMMAND_CONFIGURE_DOORBELL,
-> > -				   argument | irq);
-> > +				   argument | ntb_irqs);
+> > -	if ((ndev->features & NETIF_F_RXCSUM) && cqe->rx_iphdr_csum_succeed) {
+> > -		if (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed)
+> > -			skb->ip_summed = CHECKSUM_UNNECESSARY;
+> > -	}
+> > +	if ((ndev->features & NETIF_F_RXCSUM) &&
+> > +	    (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed))
+> > +		skb->ip_summed = CHECKSUM_UNNECESSARY;
 > 
-> [Severity: Medium]
-> Does reserving tail vectors for DMA here conflict with the endpoint's
-> last doorbell vector?
+> [Severity: High]
+> This problem wasn't introduced by this patch, but can mana_rx_skb() leak
+> rxq->xdp_save_va [1] on its drop path when rxq->frag_count > 1?
 > 
-> In MSI-X mode, pci-epf-vntb sets the MSI-X table size to ntb->db_count
-> (at most 32), so pci_alloc_irq_vectors() returns irq = ntb->db_count <=
-> msi_max.  When irq > msi_min, dma_min is 1, which sets ntb_irqs =
-> ntb->db_count - 1 and assigns 0-based vector ntb->db_count - 1 to
-> dw_edma via ntb_epf_dw_edma_irq_vector().  However, pci-epf-vntb ignores
-> the vector count in argument:
+> When a pre-allocated buffer (from_pool == false) is dropped, mana_rx_skb()
+> stores buf_va in rxq->xdp_save_va for reuse:
 > 
-> drivers/pci/endpoint/functions/pci-epf-vntb.c:epf_ntb_cmd_handler() {
-> 	case EPF_NTB_COMMAND_CONFIGURE_DOORBELL:
+> drivers/net/ethernet/microsoft/mana/mana_en.c:mana_rx_skb() {
+> 	...
+> drop:
+> 	if (from_pool) {
 > 		...
-> 		ntb->peer_msix = argument & EPF_NTB_MSIX_ENABLE;
-> 		ctrl->command_status = EPF_NTB_COMMAND_STATUS_OK;
-> 		break;
+> 	} else {
+> 		WARN_ON_ONCE(rxq->xdp_save_va);
+> 		/* Save for reuse */
+> 		rxq->xdp_save_va = buf_va;
+> 	}
 > }
 > 
-> Because vntb_epf_db_valid_mask() still exposes all ntb->db_count - 2
-> doorbells on the endpoint, ringing doorbell bit ntb->db_count - 3 raises
-> vector ntb->db_count - 1 on the host, routing the doorbell interrupt to
-> dw_edma instead of ntb_epf_vec_isr().  The mismatched
-> ntb_db_valid_mask() between host and endpoint also causes
-> ntb_transport_probe() to compute a different qp_count on each side when
-> mw_count >= ntb->db_count - 3, preventing the transport link from coming
-> up.
+> However, mana_get_rxfrag() only checks and reclaims rxq->xdp_save_va when
+> rxq->frag_count == 1:
+> 
+> drivers/net/ethernet/microsoft/mana/mana_en.c:mana_get_rxfrag() {
+> 	...
+> 	if (rxq->frag_count == 1) {
+> 		/* Reuse XDP dropped page if available */
+> 		if (rxq->xdp_save_va) {
+> 			va = rxq->xdp_save_va;
+> 			page = virt_to_head_page(va);
+> 			rxq->xdp_save_va = NULL;
+> 		...
+> 		return va;
+> 	}
+> 
+> 	page =  page_pool_dev_alloc_frag(rxq->page_pool, &offset,
+> 					 rxq->alloc_size);
+> }
+> 
+> When rxq->frag_count > 1, mana_get_rxfrag() ignores rxq->xdp_save_va and
+> allocates a new fragment from the page pool, so a subsequent drop of a
+> pre-allocated buffer triggers the WARN_ON_ONCE() and overwrites
+> rxq->xdp_save_va, leaking the saved page.
+> 
 
-Yes, correct.
+Since, this is an existing issue, I will fix it in it's own patch.
 
-To summarize, the impact:
-- ntb_transport: qp_count mismatch only if mw_count >= db_count - 3,
-  i.e. db_count 5..7 by default (vNTB has at most 4 MWs).
-  Larger is fine (e.g. 32 with 4 or 8 QPs).
-- Other NTB clients: top doorbell rung by the EP can be lost.
-
-TBH, taking the last vector was a deliberate shortcut (EP untouched)
-for simplicity's sake, but the EP still exposes the doorbell, so the
-two sides disagree on the doorbell count.
-
-I thought that was acceptable as a first implementation: in practice
-only a few QPs are needed, so setting 'db_count' large enough (via
-configfs) avoids the problem, and I wanted to keep the implementation as
-simple as possible at this point. But now that Sashiko has flagged it as
-an issue, I think it is better to rework it (?). Assuming so:
-
-v10 plan in my mind: shared DMA IRQ on slot 1 instead of the last vector.
-
-  - Slot 1 has historically been unused, i.e. no kernel has ever used it
-    for link/doorbell events, see commit 84af8a5f5ef2 ("NTB: epf:
-    Document legacy doorbell slot offset in ntb_epf_peer_db_set()").
-
-  - With this approach,
-    * It can be a host-side-only change in patch 9 (plus a howto wording
-      update maybe). The simplicity is kept.
-    * EP behaviour, wire format, compat matrix (see the cover letter)
-      unchanged. Slot 1 goes to DMA only if the EP advertises the DMA
-      extension.
-    * Host doorbells same as without DMA.
-    * No spare vector needed, as it just uses the skipped vector.
-
-  - I don't think this makes it hard to support multiple DMA IRQs later:
-    * v9 gets at most one DMA vector from vNTB too.
-    * More vectors would need the endpoint to provide extra ones and to
-      advertise them, i.e. a wire format extension, whichever layout we
-      pick now. Once that exists, keeping slot 1 as vector 0 and
-      returning the advertised ones for the rest from .irq_vector() is
-      easy.
-    * Completion already runs in per-channel work since commit
-      35de39e4511f ("dmaengine: dw-edma: Defer channel IRQ handling to
-      workqueue"), done for SoCs with a single fixed SPI for the EP-side
-      eDMA. One shared host vector is much the same, so I expect no
-      performance-driven need for more any time soon.
-
-If no objections, I'll send v10 with this (in a few days).
-
-Frank: you already gave R-b to patch 9 as is. If you'd rather keep the
-v9 scheme, please let me know.
-
-Best regards,
-Koichiro Den
-
+> [1] https://sashiko.dev/#/bug/linux-2ba39e78-7dc4-4027-a76e-f2d315147bad
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261110082459.1798763-1-den@valinux.co.jp?part=9
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261109142856.779955-1-hamzamahfooz@linux.microsoft.com?part=1
