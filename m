@@ -1,99 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.47
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794281433;
-	b=hDxGPxmITUF3SjtbPIxzWOeyrtSL79+jzKbgNYlIvgJwlj3+Bbn42nRSoOeQX5IvJXnE
-	 0oYadpUoAMvK32GF6xHyQV0JC3W31gno2uJJV2j8fu5VARLN+sKpdt2uhPvQKyEdUw99x
-	 c2MtTTN3FnlQwiqYp8KY9vV6Qh35I4LLBKILzXVF62sdJZTvIGFEXUBfTDuph2AD4SHV5
-	 rMvjAg4yUL2odKicL9N7jt7yv2VoNYh0un9zIp7Qn0aMDJTrNHzDcUh/qFVOxxuJR1mCD
-	 LNgIsz2QTKekWuOUNAXKKDRjckrLMrfskzZIgYq0U3/kplDYDLF4oss2bx8e/qNXH0g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794281433;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=4qRqqhKQqWrrboy8HsAud/37m8y92m/NCTDkQF7hqO0=;
-	b=TOgTuB4YbUNeVsPHcW4jhSCWtS70ysoEbypCmr/O5mmdgDBC0WjLleQK8nX/h6QyKCPk
-	 dTWcKAYwLr94n0sf29JkLs/Ti6W1JQXDCCkIIYR4f6JCpPWWhCcU8SCkE8X8audtV6ugJ
-	 VSuGOJj2gBUMVSdAf83BoH4LKTxYlcoiFDJY+HM3VdrjzWc3IsUD5q+A+xi5bGncOgwhw
-	 BGAo2G+XpV3hdii0of3Yi6Jwh6UxvKUMWs8jvWtgtIvCQcrSWuQclA8Bd8eEPlpJCioTK
-	 Ace7Nf3XXSK3ZPy6NPY3yU9QspkuU6igrUJzr0kOdVLEc9pE39BI3BdGiSP0bWUb7EQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=RF99D3He;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.47
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794282016;
+	b=fH5f3nB6sekkZtsgT1x+jeqNvhLWXSi/7TEoOBW3n8qzc9PtC6FvpJd8Oi+4RfO56db/
+	 mVAmCGirBvU8anbMc0O7PUW9Dlck2jEL1g045+W5BaMsaxT6/DuFBYsg56KXAEoEP0x17
+	 ikLMAms/2NP013GbN4BilY8W1wnRjDn13od8wl+J1jfNGTqkaQ6uNGP0gZgWiMQv+mBFx
+	 ZfL98jk/VqNJ/WywI0SJ78A9abwOheXwgF0d5XrJ7QqM0fCxj/J9Cisa8Nab1mD9ku+DS
+	 LJ7wgz9CDbvl9JS5l6yUfRaI9QsnacKTdEAVBz+GAJ3Zrj7/EZA8FGoZV0lO0+JqZRw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794282016;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
+	 X-Proofpoint-Reinject:X-Authority-Analysis:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=yQHJV/ve8eAEgSivz91f5kWHgn+LmGnJAbhGiLAmTrw=;
+	b=xHSWS0lT6mCFaff4bAhO0sRjxJXijyZduCotjXWVsBNR9GQUXIW8C/IOqR+PBw4Bm060
+	 BpmPh8CO+4oCqrf3KNiEht6YneaS4ASeNNdyc7NZjKxegdBNrSXDVlNhaFA/mQUfG/ZUU
+	 fb9WTutGKYW/83SyPeBbt2nVmdhi3Dgwcpz2mEAINQW5HiPC/zGxo2Rk2+Fdpr59pMTWl
+	 iAIYNpG/+d1gUGEkrFGRnrrE5kCJsKS8iUALa694IrrpYGO/mk60AyC27AuPw9fbH7x6U
+	 TOIZ3Al4a0Au3aSVBW1nFBeDGeNDhqy6XpE3H6uL4K6i8bQzsKBkTfQe/mFop4tomFw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b="Rm/5sirq";
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B8D606A325
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:30:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58B8D606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB20606A31C;
+	Tue, 10 Nov 2026 03:40:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AFB20606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=RF99D3He
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6b56c90b38eso6955a12.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 19:30:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794281432; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YHA59DqaMUCSMSJWIc32wwAVhbqtRkstykAsSQ74WvFihvtj/NjapR54WqoSoIOVKz
-         kKwLdrBJB9z1wW7pBZw6dM2g1MxKreRleEhW/23RvOTn2HZ+y/hZJ/Ffc+xY07brQNnS
-         2tmHPg/2s+nppBaLTvFmmAL99SBWx0mJLwRdGlm8lPa27Z/y0Y1XQOo2fybpa/i63MnU
-         k42S/Ow2Ro4RGdoYiSM2ENzX/MNW44rIRFZAoq8A2mFulNrewUa8TNUhF3laeLGExmOP
-         +917cVj2XPSp00takTWS4fxzub4FFt9OC4B5eACx78r/98RuBKJjQX2YKjbhHeeLmNh4
-         t8Mg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4qRqqhKQqWrrboy8HsAud/37m8y92m/NCTDkQF7hqO0=;
-        fh=fItrUtV5UsY1KSNx1ZNnzv3miYMbODbRRQWQ18AP5Zc=;
-        b=K8N/kiG/sIqsZ60x1OnOxnbvS1AA6Xl8rPcySKqK+W3+Cdoz05DaLiqdgikZUyAtIj
-         QA4a75IBpw+vRSE+wVrdJ4EdcymBcHuQmaOOa4nt4Oq6ygqtIkVaTyxBwxvAjooaq558
-         rdmkjcb39i8sPiuhNi6jEyiS5cCGeFOx1ztiZ3tODZi/1oensu5ZaRYxI5AUt0acPdvE
-         3TF0z+QwC2QhsBPkDSZIa9MtW9Gnmh0o8+fF5Cv+RsVBbIuq4cX4wWC5r67u5IwgjVjv
-         /fbA0lY0pJgFtNNxP4hsz56cq35z5tej0shv496uz1Nwzf+6I0I8pn4jIMMy1dVIXU9M
-         de3g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1794281432; x=1794886232; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4qRqqhKQqWrrboy8HsAud/37m8y92m/NCTDkQF7hqO0=;
-        b=RF99D3He8oMesRxZ7YbDxz2UPcGEL/oawGCwO+M0/jNVsHTefvfOTb4Yuu6P9piZkI
-         l5olOolGmS20JRr8R8z0aCU9kj3IOBCIGWkVr7HvWwFPrKnE0xPzT7lQ/WyLit764Fu0
-         nGWXy7FYKhnogt4EJ/oJlNEFfxUpIEDlJ8KT4VGQxgDErmJZNI2UZ2b1GN9vt41NwR6t
-         Pvi8noP9vrD1ZmCpRLuRedJba0fpjSYRUndwO1x5PRIGvpHdkHI9E3Hp+VbnWfRBCF3B
-         U2fgU/bF3sqb27XfCPOcx3dJ4sfifwIWOYCfdklZWxGZK19FO4Gvkt4TvYdlWzZhonn9
-         zvvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794281432; x=1794886232;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4qRqqhKQqWrrboy8HsAud/37m8y92m/NCTDkQF7hqO0=;
-        b=dAD3HMocKfFZaPtMjqPnoEdIjS6wh/2qBFnM+jHlWEEFQyfgu12Wir5s8TDTvD9GTt
-         Z5LyDe9tmP9PWz8DQe9xBhrkZfMz1CtCkqbuu+QZJxVJWkQLzXacAwG9YAJov7blrks7
-         asG5hHzt2s8RWVGUxDaFv6/ZZKjRjSOeDDw/FhCLqtiW7M4DFxSfc9wFkuFQJ5/V6CSG
-         gqVAWrTU6oXGcklImH6pwxx5XB697JN+P2/zajA4uWXagldBb/M/VUkt5Iji/L3XHnCw
-         IvHkvcXVdsz+XobEC8bzh1vQbNRN8XTqj31vBrozUHTh3VssBmtD5oDAbfleyG5oA750
-         wCYw==
-X-Gm-Message-State: APuU4Z+HyI4BDLr1fZAGnggWt7TUkaUPfLEfOhRuvRYcraEjKEhSeum2
-	YBYZX4ay8meOZb1r0r2JZUGVf9G8na6FQ4ONALkO8LVtlCBniS1zAhUxG4AVLoXLmGnfs+L+ROH
-	+arVad6ovhadmZst/3PFYwtsYcZm1GOFc3OWLE7spCz30a3v8ZxjnCXIXOQc=
-X-Gm-Gg: AYBFou17J4GODehp48b58iJ+8BZsS6jGCgDBVkXFuhX+JH+1khBpI+AAaU5gMPt5GWK
-	lGqyGTWdGDLYutfZ8FJ9893oKS/6f/eCPGwywkJihAwTuROSDYYjU8J/hxji05XFUSWkP3p5kWc
-	uB7g6kNHH+Xm0610myAMK8ACaOokUZJoD+S7GuUyYMH6GOcB1yEPmMtpfSTwsFzx7jmQdBQj24Q
-	XYJO+aehJd0/W9B7+PTo/53JiO6WE4nyIwXJcbkj1ollXzjCMnqt6EqYyH8XYfI+JRzRNsjH0Ln
-	cC0KIimXXcc9Y9k3ZZjpEr1vYXGz6MjHHbg1zskfxd4mLqzN4A1LGKvOPox3pcIxksp/GNfJKlN
-	jAXN0xwgsVhmzLI7cfoJ9sdiB+ADn1vvjEz6l25Y4KbMOJiJMyAdslJ5vKyiO2n9sCqXMNLmb
-X-Received: by 2002:a05:6402:a2c8:20b0:6b1:a517:5bce with SMTP id
- 4fb4d7f45d1cf-6b75a7c6522mr28354a12.16.1794281431344; Mon, 09 Nov 2026
- 19:30:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Rm/5sirq
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AA0jx8G3910804;
+	Tue, 10 Nov 2026 03:40:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=yQHJV/
+	ve8eAEgSivz91f5kWHgn+LmGnJAbhGiLAmTrw=; b=Rm/5sirqhz/FRX2FOkg/Qr
+	zBoaK+TaVXX0Ra3jUZtJkpA4gLWU++C+uOxBw3SBfryNjltUw3ujW0RSU601aRJo
+	Mu/U81/Y0ze1xnfI2b1KH6lYDSeJ63sXavOjP5kFXI95/1PkklphgrMNQUTqugvp
+	qwj2kllwXK8LK8x914USC4PcauJ7bMA0YbTi9nIVT8xu1MttPgCbZ4ZdyFpcnDXy
+	niHBPia+ryAMrS+b6NNHdn2xDU7sWjwJEZmh2BT+6qoAXxMTrw79yeVotukVRKD0
+	+S6snzsHI/EtLTnsjcwhqp3zCq8zA4cTz+qqToGYfdKYIlaSfeVCGnuA7wRXg+cw
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hstdg2k6q-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 10 Nov 2026 03:40:03 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AA0nt2H954688;
+	Tue, 10 Nov 2026 03:40:03 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4htfak4xnb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Nov 2026 03:40:03 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
+	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6AA3e1JU17695448
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 10 Nov 2026 03:40:02 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DE71758056;
+	Tue, 10 Nov 2026 03:40:01 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7C78D58061;
+	Tue, 10 Nov 2026 03:39:57 +0000 (GMT)
+Received: from [9.123.14.23] (unknown [9.123.14.23])
+	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 10 Nov 2026 03:39:57 +0000 (GMT)
+Message-ID: <93b91092-b7e2-436d-9e8e-ebc59f18ab57@linux.ibm.com>
+Date: Tue, 10 Nov 2026 09:09:56 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,103 +86,247 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110004037.125692-1-jmattson@google.com> <sashiko-outbox-205939@kernel.org>
-In-Reply-To: <sashiko-outbox-205939@kernel.org>
-From: Jim Mattson <jmattson@google.com>
-Date: Mon, 9 Nov 2026 19:30:19 -0800
-X-Gm-Features: AclHuK_t2oHdnmeVqgjWcz_GKdX1UpYOLcrSY1YQYKpKAAI9ePQZ2Ojqfb1wqFw
-Message-ID: <CALMp9eS9reJ07aYs3THr7oboWqw3Ji=Pv_LyvzVpuW4DmLN_TA@mail.gmail.com>
-Subject: Re: [PATCH] KVM: nSVM: Add missing CET VMRUN consistency checks
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 7/9] pseries/plpks: add HCALLs for PKWM wrapping key
+ life cycle management
+To: sashiko-reviews@lists.linux.dev, keyrings@vger.kernel.org
+Cc: maddy@linux.ibm.com, ritesh.list@gmail.com, sshegde@linux.ibm.com,
+        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
+        James.Bottomley@HansenPartnership.com, jarkko@kernel.org,
+        zohar@linux.ibm.com, linux-security-module@vger.kernel.org,
+        nayna@linux.ibm.com, rnsastry@linux.ibm.com
+References: <20261105144320.357260-1-ssrish@linux.ibm.com>
+ <20261105144320.357260-8-ssrish@linux.ibm.com>
+ <sashiko-outbox-199277@kernel.org>
+Content-Language: en-US
+From: Srish Srinivasan <ssrish@linux.ibm.com>
+In-Reply-To: <sashiko-outbox-199277@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=J+M/fwnS c=1 sm=1 tr=0 ts=6af29214 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=lSR6CTt58exauEyhIgcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEwMDAxMiBTYWx0ZWRfXz68sEZqTjKtw
+ aMp3UALFU9YmsJWcAUGqsfWSOdma6ClFaZ/maBemzZD5ntizHomhnLm7VWj2aFa+r6kHsNbZMEN
+ IHC4QzWIeClyNiRDo7OwRq3TNqU7bqrhH1jpJrpqxEHXHJwpGC4yFdhiwmiAykWivPdw5OCI1Qd
+ hdLWzmCKzxqRZgBKt+BjoUY8TFIDAo5MAfv+tfPK2ADMqoboSiyyEf4S1gCDfDC55Yd1si2MJMJ
+ 9IKjrv3v1yrvTQGqyf70cIaJvPG5D6BSt/pwNJSF1sEBLwYBBe1LubxHIccwM1MMV5MT+D9bWdT
+ iYAQJi9tVXjdfJwi1JuwBVYhvuzX2k7C8SHyzPFSkdV9tIkmaly3FaJfPlt1dpEgqXpJ8K0/Aaz
+ wgkjNF612kEypzryY6Z6sMQWvjKPMCo4510Rxt38z+lWOLyl6wsJ2VBt6JoxCBR1/FlQli+q6vs
+ 00VxfKo88gu7f2B3oCw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEwMDAxMiBTYWx0ZWRfX8T1nbkEXwkj3
+ NndiN9Z3TT5NRWFaF1MRWYfPfsqd0LdR/k2n5Wgw/roP4FlFk4+CwTdTsVSjMT0VE3yZ/lR0tFW
+ wmBFyYlj98pQitO0t3PQlGzx4YcVRUA=
+X-Proofpoint-GUID: sgJxV4c-SXNwQSrylox01WZJsBX3QAXT
+X-Proofpoint-ORIG-GUID: qR6g1Ez7zwzV5bZ0Fy24r_BDDvJVCdPf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-10_01,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ malwarescore=0 clxscore=1011 priorityscore=1501 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611100012
 
-On Mon, Nov 9, 2026 at 5:07=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [High] KVM: nSVM: vCPU left in guest mode when enter_svm_guest_mode()
->   fails in RSM [1]
+Hi
+
+On 11/5/26 8:26 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] pseries/plpks: output_buf leak and -EAGAIN return in plpks_get_object_labels()
 > --
->
-> commit b87b2411f4552cf28fa62d1f5b9a2e342f4694d4
-> Author: Jim Mattson <jmattson@google.com>
->
-> KVM: nSVM: Add missing CET VMRUN consistency checks
->
-> This commit adds software VMRUN consistency checks for illegal CET state
-> combinations in nested_vmcb_check_save() so that invalid states trigger a
-> nested #VMEXIT to L1 instead of KVM_EXIT_FAIL_ENTRY.
->
-> > diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-> > index f9090b601efaa..a3affdbc15c24 100644
-> > --- a/arch/x86/kvm/svm/nested.c
-> > +++ b/arch/x86/kvm/svm/nested.c
-> > @@ -469,6 +469,21 @@ static bool nested_vmcb_check_save(struct kvm_vcpu=
- *vcpu,
-> >       if (CC(!__kvm_is_valid_cr4(vcpu, save->cr4)))
-> >               return false;
-> >
-> > +     if (CC((save->cr4 & X86_CR4_CET) && !(save->cr0 & X86_CR0_WP)))
-> > +             return false;
-> > +
-> > +     if (guest_cpu_cap_has(vcpu, X86_FEATURE_SHSTK) &&
-> > +         CC(!kvm_is_valid_u_s_cet(vcpu, save->s_cet)))
-> > +             return false;
-> > +
-> > +     if ((save->cr4 & X86_CR4_CET) && (save->rflags & X86_EFLAGS_VM)) =
-{
-> > +             u64 u_cet =3D 0;
-> > +
-> > +             if (!__kvm_emulate_msr_read(vcpu, MSR_IA32_U_CET, &u_cet)=
- &&
-> > +                 CC(u_cet & CET_SHSTK_EN))
-> > +                     return false;
-> > +     }
-> > +
-> >       if (CC(!kvm_valid_efer(vcpu, save->efer)))
-> >               return false;
->
-> [Severity: High]
-> This problem wasn't introduced by this patch, but can nested_vmcb_check_s=
-ave()
-> allow an illegal save->cr3 through on RSM and leave the vCPU stranded in
-> guest mode [1]?
->
-> nested_vmcb_check_save() only checks save->cr3 with kvm_vcpu_is_legal_cr3=
-()
-> when both EFER_LME and X86_CR0_PG are set.  When resuming an L2 guest fro=
-m
-> SMM with either bit clear and save->cr3 bits set beyond MAXPHYADDR,
-> svm_leave_smm() passes nested_svm_check_cached_vmcb12() and calls
-> enter_svm_guest_mode():
->
-> arch/x86/kvm/svm/nested.c:enter_svm_guest_mode() {
->         ...
->         svm_switch_vmcb(svm, &svm->nested.vmcb02);
->         nested_vmcb02_prepare_control(svm);
->         nested_vmcb02_prepare_save(svm);
->
->         ret =3D nested_svm_load_cr3(&svm->vcpu, svm->nested.save.cr3,
->                                   nested_npt_enabled(svm), from_vmrun);
->         if (ret)
->                 return ret;
->         ...
-> }
->
-> nested_svm_load_cr3() unconditionally checks kvm_vcpu_is_legal_cr3() and
-> returns -EINVAL before kvm_init_mmu() runs, after the vCPU has already
-> switched to vmcb02, set HF_GUEST_MASK, and pointed vcpu->arch.mmu at
-> guest_mmu.  Because emulator_leave_smm() returns X86EMUL_UNHANDLEABLE
-> immediately when leave_smm() fails, it skips the kvm_leave_nested() clean=
-up
-> at the end of the function, leaving the subsequent KVM_REQ_TRIPLE_FAULT t=
-o
-> run in guest mode with an uninitialized guest_mmu and un-restored SMM sta=
-te.
 
-Thank you for the review. I believe that Paolo is already addressing
-this issue in https://lore.kernel.org/all/20261102174130.8779-2-pbonzini@re=
-dhat.com.
+
+Yes, these are valid findings and I will fix these in my next version.
+
+Thanks,
+Srish.
+
+
+>
+> commit 41ef08b282e00765eba284dad461f1985057d371
+> Author: Srish Srinivasan <ssrish@linux.ibm.com>
+>
+> pseries/plpks: add HCALLs for PKWM wrapping key life cycle management
+>
+> This commit adds support for the H_PKS_REVOKE_OBJECT, H_PKS_UNREVOKE_OBJECT,
+> and H_PKS_GET_OBJECTLABELS hypercalls to manage the life cycle of PKWM
+> wrapping keys and retrieve wrapping key labels in the Platform Keystore.
+>
+>> diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+>> index d5adc563f71f0..6e10bd6a9a481 100644
+>> --- a/arch/powerpc/platforms/pseries/plpks.c
+>> +++ b/arch/powerpc/platforms/pseries/plpks.c
+> [ ... ]
+>> @@ -1205,6 +1237,457 @@ int plpks_unwrap_object(u8 **input_buf, u64 input_len, u8 **output_buf,
+> [ ... ]
+>> +int plpks_get_object_labels(u8 **output_buf, u64 *output_len,
+>> +			    char *comp_prefix)
+>> +{
+>> +	unsigned long retbuf[PLPAR_HCALL_BUFSIZE] = { 0 };
+>> +	u8 *labels_buf = NULL;
+>> +	u8 *tmp_buf = NULL;
+>> +	struct plpks_auth *auth;
+>> +	struct label_attr *metadata = NULL;
+>> +	u8 prefix[PLPKS_OBJLABEL_PREFIX_LEN];
+>> +	u16 label_len;
+>> +	u64 labels_count;
+>> +	u64 continuetoken = 0, output_buf_len = 0;
+>> +	int rc, pseries_status;
+>> +	size_t labels_buf_offset = 0, output_buf_offset = 0;
+>> +	size_t obj_label_entry_size, i;
+>> +
+>> +	if (!output_buf || !output_len || !comp_prefix)
+>> +		return -EINVAL;
+>> +
+>> +	*output_buf = NULL;
+>> +	*output_len = 0;
+>> +
+>> +	memset(prefix, 0, sizeof(prefix));
+>> +	memcpy(prefix, comp_prefix, strnlen(comp_prefix, sizeof(prefix)));
+>> +
+>> +	auth = construct_auth(PLPKS_OS_OWNER);
+>> +	if (IS_ERR(auth))
+>> +		return PTR_ERR(auth);
+>> +
+>> +	do {
+>> +		labels_buf =
+>> +			kzalloc(PLPKS_OBJLABEL_BUF_SIZE, GFP_KERNEL);
+>> +
+>> +		if (!labels_buf) {
+>> +			rc = -ENOMEM;
+>> +			goto out_free_output_buf;
+>> +		}
+>> +
+>> +		rc = plpar_hcall(H_PKS_GET_OBJECTLABELS, retbuf,
+>> +				 virt_to_phys(auth), continuetoken,
+>> +				 virt_to_phys(labels_buf),
+>> +				 PLPKS_OBJLABEL_BUF_SIZE);
+>> +
+>> +		pseries_status = rc;
+>> +		rc = pseries_status_to_err(rc);
+>> +
+>> +		if (rc && rc != -EAGAIN) {
+>> +			pr_err("H_PKS_GET_OBJECTLABELS failed. pseries_status=%d rc=%d\n",
+>> +			       pseries_status, rc);
+>> +			goto out_free_labels_buf;
+>> +		} else {
+>> +			/*
+>> +			 * Setting an incorrect countinuetoken upon
+>> +			 * receiving H_CONTINUE would result in H_P2. Since
+>> +			 * the continuetoken is being set to the expected
+>> +			 * value from the previous call, H_P2 must not be
+>> +			 * returned.
+>> +			 */
+>> +			continuetoken = retbuf[1];
+>> +
+>> +			labels_count = retbuf[0];
+>> +			if (!labels_count) {
+>> +				kfree(labels_buf);
+>> +				labels_buf = NULL;
+>> +				goto out;
+>> +			}
+>> +
+>> +			/*
+>> +			 * Filter out object labels that don't have the provided
+>> +			 * component prefix.
+>> +			 */
+>> +
+>> +			output_buf_len += PLPKS_OBJLABEL_BUF_SIZE;
+>> +
+>> +			tmp_buf = krealloc(*output_buf, output_buf_len,
+>> +					   GFP_KERNEL);
+>> +
+>> +			if (!tmp_buf) {
+>> +				rc = -ENOMEM;
+>> +				goto out_free_labels_buf;
+>> +			}
+>> +
+>> +			*output_buf = tmp_buf;
+>> +
+>> +			for (i = 0; i < labels_count; ++i) {
+>> +				if (labels_buf_offset +
+>> +				    PLPKS_OBJLABEL_LEN_FIELD_SIZE >
+>> +				    PLPKS_OBJLABEL_BUF_SIZE) {
+>> +					rc = -EIO;
+>> +					goto out_free_labels_buf;
+>> +				}
+>> +
+>> +				label_len =
+>> +					get_unaligned_be16(labels_buf +
+>> +							   labels_buf_offset);
+>> +
+>> +				obj_label_entry_size =
+>> +					PLPKS_OBJLABEL_LEN_FIELD_SIZE +
+>> +					label_len;
+>> +
+>> +				if (label_len < sizeof(struct label_attr) ||
+>> +				    labels_buf_offset + obj_label_entry_size >
+>> +				    PLPKS_OBJLABEL_BUF_SIZE) {
+>> +					rc = -EIO;
+>> +					goto out_free_labels_buf;
+>> +				}
+>> +
+>> +				metadata =
+>> +					(struct label_attr *)(labels_buf +
+>> +					labels_buf_offset +
+>> +					PLPKS_OBJLABEL_LEN_FIELD_SIZE);
+>> +
+>> +				if (!memcmp(metadata->prefix, prefix,
+>> +					    PLPKS_OBJLABEL_PREFIX_LEN)) {
+>> +					memcpy(*output_buf + output_buf_offset,
+>> +					       labels_buf + labels_buf_offset,
+>> +					       obj_label_entry_size);
+>> +
+>> +					output_buf_offset +=
+>> +						obj_label_entry_size;
+>> +					(*output_len) += 1;
+>> +				}
+>> +				labels_buf_offset += obj_label_entry_size;
+>> +			}
+>> +			kfree(labels_buf);
+>> +			labels_buf = NULL;
+>> +			labels_buf_offset = 0;
+>> +		}
+>> +	} while (rc == -EAGAIN);
+>> +
+>> +	goto out;
+>> +
+>> +out_free_labels_buf:
+>> +	kfree(labels_buf);
+>> +	labels_buf = NULL;
+>> +out_free_output_buf:
+>> +	kfree(*output_buf);
+>> +	*output_buf = NULL;
+>> +	*output_len = 0;
+>> +out:
+>> +	kfree_sensitive(auth);
+>> +	return rc;
+>> +}
+> [Severity: Medium]
+> Can plpks_get_object_labels() leak *output_buf or return -EAGAIN to the
+> caller?
+>
+> First, inside the do-while loop, when labels_count > 0, *output_buf is
+> allocated or grown via krealloc() before checking whether any of the returned
+> labels match comp_prefix. If PLPKS contains objects for other components so
+> labels_count > 0, but none of those labels match comp_prefix, the loop
+> completes with rc == 0 and *output_len == 0 and jumps to out without freeing
+> *output_buf. Unlike the case where PLPKS has 0 total objects on the first
+> call (which returns 0 with *output_len == 0 and *output_buf == NULL), this
+> returns 0 with *output_len == 0 while *output_buf points to an allocated
+> buffer of uninitialized heap memory. Callers checking *output_len == 0 will
+> leak *output_buf, while callers checking *output_buf != NULL will read
+> uninitialized memory.
+>
+> Second, if !labels_count (retbuf[0] == 0) is encountered when
+> H_PKS_GET_OBJECTLABELS returns H_CONTINUE (converted by
+> pseries_status_to_err() to rc = -EAGAIN) or on a subsequent continuation
+> iteration after *output_buf was already allocated, jumping directly to out
+> bypasses the loop condition and out_free_output_buf. Could that return the
+> internal continuation code -EAGAIN to the caller and leak any *output_buf
+> allocated in prior iterations?
+>
