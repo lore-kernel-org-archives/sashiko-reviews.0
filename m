@@ -1,68 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794303930;
-	b=nKd+Aid1nY01EAlWx1oVLBQKQZwgG2qqRAhpSqAFVgrsj645qC0NZ+Op8h0JdQVaYyY6
-	 JrM4U5tiww580oniav3gHd7tMrIAxMXHeBLpH+IHF8jKDTNQ19nsxVk0CrZcwXo5CclYI
-	 kJek4Y40ClAIlPBSHvkY635gMUvOHjNrklo3Z4TtoI0G22cTIo+b4zR+T8AcisdeO/xmA
-	 /A+EyycW6CZatYJrET1tvvVKVGYXw6khyjMNs29NdMjgz2Jv/UZXKcNja80IqYkHPVh4G
-	 bYAwfrwsOwFic0oGWs+xLj6qfzv2EeiuvOpWt3xAADgR+0fjRd4+ROsOS14wP59uutw==
+	t=1794303932;
+	b=20To67JxO9WZpDaOZOhxqUCZ6LuLRP3U1s+OZeg6msKxrB/4XQ3A9AL9HitFgWo0vScV
+	 cyg2QNg/u8BJjF4OYGTIWdrcliZvj0nvI6lolz6Lh65Rj/h+jpYiuMY0scsmAgM58EfwM
+	 SKCXLHouOPiZwLaL1LsnOetDNukQcWYsMUV7ZvpTDJreAKoNqWGQg5FTArSin+iuXCu5E
+	 dasAqhg1YHTC9Dy8wpuUXJlfTjAzR+78TRjRNAvbOb/YiLG9pFd5/MglWDWzIjbrLROY7
+	 bXfbThW8IVbcMRgwGyQhvJmeOHhRDTVafhvSvklCuoLAjJMz5voC8HrLEZ7wRu1/LSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794303930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794303932;
 	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
 	 X-Mimecast-MFC-AGG-ID:Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:X-Scanned-By:
 	 X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:Content-Language:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=I0aHNpYYYJjXnks0yXtv3vruSoxZWqR1NIB39pb6v0Q=;
-	b=IHZFTiWslJsf16hGXPp05+t8ICy/fhjrW0LSbbzaWXKaQ/v+92dSQKsh0C6aR+yKIQd8
-	 r37QTZkMPYv92Mz+szpOZ+t4cVneFyTd6tEMxw215BKPWnG01Gltl2l+1wGmzt26tu5XB
-	 TxLWjKfXr5u3ii13VJJ6NpzYxfH/iKJeVoS1aJHC9GvtjpJRyVIf7y2FYmhG+nM3wvX4u
-	 /cOP1edBo8kfoiKZ6Rn8DkyyyxlO0Wgpvh9I7W2OdwMwsOl/l9qkBu9tNuNMbsk36Q0ch
-	 Cd/YRZr4faYJ+2mPhc3l+gNsaqYM0lCRQiuh1g/7B5T13EScmfXs96+661wP7nStgjg==
+	bh=Yt1RUkpWxEjGNFb0fWteE6fFY2lB9nSa+4LX3gy4fTM=;
+	b=oHB0/mEERckXEaxSlmYXwLm4y2Py3SeZG0b7oMXFl9MbcLpBcKRylJAuj2foJ/W31CcL
+	 8/WZvyyIMKF5v5Qj1HXH7IDc0RSNu99LDQYHOgUXBR9WDmD+Qy1bJBy3w63MGEmMiMpfY
+	 tHtWauwQx9mKB+sO+yAcEb4FRUPHKaDBEiF9S9uAalcjBNYeClFJGY3PxdPnxA2Tj2kLX
+	 DR48WDdTgDNOa2LRlDI1rhD0vWuya/66zvwfJ3lnyn5xHibL91G1LmK8nH2qKOoZICbuF
+	 n3MVrZEEnRT8+Y9HX0SUdVFI/6mHF0KQR1ACKux5Y0rGj+vH57unEyWyUD1rzJ/6jnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=redhat.com;
 	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=G70RrlbR;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=J4PgORa7;
+	arc=none smtp.remote-ip=170.10.129.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584F2606B9D7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 09:45:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 584F2606B9D7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32860606B9D9
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 09:45:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 32860606B9D9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=G70RrlbR
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=J4PgORa7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1794303929;
+	s=mimecast20190719; t=1794303931;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=I0aHNpYYYJjXnks0yXtv3vruSoxZWqR1NIB39pb6v0Q=;
-	b=G70RrlbRKA2CrmAUY1woke1HyZZpdVeM4cg0vRIlzyP8LOgPm5FG4yKMLAyErNgyTIoNdc
-	UeHhQg3DsFTjLiSTV9mA9dkOEKjO3QYtqPZrX6lgPiWGBEjzlGHmfBhVQoZxFOUc5wOQbA
-	JGN/TfrMFNavsetrkel6OUnmqrvOOx0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+	bh=Yt1RUkpWxEjGNFb0fWteE6fFY2lB9nSa+4LX3gy4fTM=;
+	b=J4PgORa7zIwG2eBxWoxXTPBQ6JPpGRi4FuttCZ/YcqX3H9bW6cwO8ieqNxwuuaSbS1Qv08
+	kQhqRwM5FJfIjR3gx25o4jRYBii9Cl5+EA26h8r1YnH9L7HoU2GhyH4nLADHhhVW6zwYZL
+	IkfD8lMW6Xi8rKKRwxm+K0bRO2XitEQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-M3SqPeGFPAiHztvTxAVf4g-1; Tue,
- 10 Nov 2026 04:45:23 -0500
-X-MC-Unique: M3SqPeGFPAiHztvTxAVf4g-1
-X-Mimecast-MFC-AGG-ID: M3SqPeGFPAiHztvTxAVf4g_1794303922
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-8ytUxQaUOf-lyaIqo9r1PQ-1; Tue,
+ 10 Nov 2026 04:45:27 -0500
+X-MC-Unique: 8ytUxQaUOf-lyaIqo9r1PQ-1
+X-Mimecast-MFC-AGG-ID: 8ytUxQaUOf-lyaIqo9r1PQ_1794303926
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 9A52619560B7;
-	Tue, 10 Nov 2026 09:45:22 +0000 (UTC)
+	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 73CFA1800347;
+	Tue, 10 Nov 2026 09:45:26 +0000 (UTC)
 Received: from [100.91.101.41] (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
-	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id B840A1956086;
-	Tue, 10 Nov 2026 09:45:21 +0000 (UTC)
-Message-ID: <d5acc725-dd95-4e96-89ca-364db2444b61@redhat.com>
-Date: Tue, 10 Nov 2026 10:45:20 +0100
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 7189E1956086;
+	Tue, 10 Nov 2026 09:45:25 +0000 (UTC)
+Message-ID: <da73c81a-7fd9-47c5-bd09-3652c83d44cf@redhat.com>
+Date: Tue, 10 Nov 2026 10:45:25 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,91 +73,70 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 02/10] ice: dpll: serialize changes of the SyncE
- CGU registers
+Subject: Re: [PATCH net-next 06/10] dpll: add KUnit tests for core locking
 To: sashiko-reviews@lists.linux.dev
 Cc: intel-wired-lan@lists.osuosl.org,
  "netdev@vger.kernel.org" <netdev@vger.kernel.org>
 References: <20261106121005.1327603-1-ivecera@redhat.com>
- <20261106121005.1327603-3-ivecera@redhat.com>
- <sashiko-outbox-202874@kernel.org>
+ <20261106121005.1327603-7-ivecera@redhat.com>
+ <sashiko-outbox-202878@kernel.org>
 From: Ivan Vecera <ivecera@redhat.com>
-In-Reply-To: <sashiko-outbox-202874@kernel.org>
+In-Reply-To: <sashiko-outbox-202878@kernel.org>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-X-Mimecast-MFC-PROC-ID: dSXeFKkqgguE5geC2YlREh5d2IpQ2Q5UJkTRXBZy7J8_1794303922
+X-Mimecast-MFC-PROC-ID: C7ZFrNcjV6IUB7zwjeca8rzYBI4hYZuUtSl6ZhYaWL8_1794303926
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 11/7/26 13:11, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] ice: ptp: unconditional R10 write and lock scope in
->    ice_ptp_link_change()
-> - [Low] ice: dpll: missing Fixes trailer for commit ad1df4f2d591
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] dpll: dt_fwnode_pin_add() duplicates
+>    kunit_fwnode_create_software_node()
 > --
 > 
-> commit 6fdc60cccd47bebe7d61ff60807ee77303bf58bd
+> commit cb6cfd6901bcce17d3e841bfa531bd7cce8efeac
 > Author: Ivan Vecera <ivecera@redhat.com>
 > 
->> ice: dpll: serialize changes of the SyncE CGU registers
->>
->> On dual complex E825 only complex 0 has a functional CGU and the second
->> complex reaches it through cgu_peer, so PFs of both complexes share the
->> CGU registers R10 and R11. They read, modify and write them when the
->> state of an RCLK pin changes, and ice_ptp_link_change() rewrites R10 when
->> a link changes, under the pf->dplls.lock of their own PF only.
->>
->> ice_ptp_link_change() does not hold dpll_lock, so it can already overwrite
->> an update of another PF. RCLK callbacks are serialized by dpll_lock, but
->> the DPLL core is going to serialize callbacks per (module, clock_id), and
->> each complex has its own DSN and so its own clock_id. With that change, a
->> test toggling RCLK pins of both complexes lost an update.
->>
->> Add a mutex to struct ice_adapter, which all E825C PFs share, and hold it
->> around these sequences.
->>
->> Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+> dpll: add KUnit tests for core locking
+> 
+> This commit adds KUnit tests using a mock driver to verify domain locking,
+> callback serialization, cross-domain pin registrations, and notification
+> ordering in the DPLL core.
+> 
+>> diff --git a/drivers/dpll/dpll_core_kunit.c b/drivers/dpll/dpll_core_kunit.c
+>> new file mode 100644
+>> index 0000000000000..a58800eda5ff5
+>> --- /dev/null
+>> +++ b/drivers/dpll/dpll_core_kunit.c
+> [ ... ]
+>> +static void dt_fwnode_release(void *data)
+>> +{
+>> +	fwnode_remove_software_node(data);
+>> +}
+>> +
+>> +/* Creates a pin with a fwnode so that it can be registered with another dpll */
+>> +static void dt_fwnode_pin_add(struct kunit *test, struct dt_pin *pin,
+>> +			      u64 clock_id, u32 idx)
+>> +{
+>> +	struct fwnode_handle *fwnode;
+>> +
+>> +	fwnode = fwnode_create_software_node(NULL, NULL);
+>> +	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, fwnode);
+>> +	KUNIT_ASSERT_EQ(test, kunit_add_action_or_reset(test, dt_fwnode_release,
+>> +							fwnode), 0);
+>> +	dt_pin_add(test, pin, clock_id, idx, &dt_prop);
+>> +	dpll_pin_fwnode_set(pin->pin, fwnode);
+>> +}
 > 
 > [Severity: Low]
-> Since this fixes concurrent CGU register updates in E825-C SyncE support,
-> should it include:
-> 
->    Fixes: ad1df4f2d591 ("ice: dpll: Support E825-C SyncE and dynamic pin discovery")
-> 
+> This isn't a bug, but could dt_fwnode_pin_add() use
+> kunit_fwnode_create_software_node(test, NULL, NULL) from
+> include/kunit/fwnode.h instead of open-coding fwnode_create_software_node()
+> and the dt_fwnode_release() cleanup action?
 
-Yes, the race with ice_ptp_link_change() is there since that commit. The
-patch now goes to net with this tag:
-
-https://lore.kernel.org/netdev/20261110094350.184185-1-ivecera@redhat.com/
-
-v2 of this series will drop it.
-
-> [ ... ]
-> 
->> diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
->> index 3df08714510da..4d4b6aaaf30c2 100644
->> --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
->> +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
->> @@ -1395,7 +1395,9 @@ void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
->>   				break;
->>   			}
->>   
->> +			mutex_lock(&pf->adapter->cgu_synce_lock);
->>   			err = ice_tspll_cfg_synce_ethdiv_e825c(hw, clk_pin);
->> +			mutex_unlock(&pf->adapter->cgu_synce_lock);
->>   			if (active && err) {
->>   				dev_err_once(ice_pf_to_dev(pf),
->>   					     "Failed to configure SyncE ETH divider for pin %d, err %d\n",
-> 
-> [Severity: Medium]
-> Should cgu_synce_lock also cover ice_tspll_bypass_mux_active_e825c(), and
-> should ice_tspll_cfg_synce_ethdiv_e825c() be skipped when active is false?
-
-Yes to both, also there since ad1df4f2d591. Patch 2 of the net posting
-skips the outputs the port does not drive and checks the mux under
-cgu_synce_lock.
+Will use it in v2.
 
 Thanks,
 Ivan
