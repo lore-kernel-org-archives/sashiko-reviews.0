@@ -1,68 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.15
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794310904;
-	b=EhteFHnmwVRYPBb3Xqr2VcQQVDoBNlQk+CwfGIz+YtXTw/iek3PVysH4ZePAM30KkdnH
-	 NyfQlv8ekfSqALyaHc1CciVZkM/fFvVelUfSURLJHQ/fvXdqZVuy/u5DAw8r0vi0QgTaD
-	 wADXaJFNaF+TbGqd3XQ1zXMYDWlqww/GkeVrLnCyHDVX4ccO+ucd60Bk61mFim+iUXFf/
-	 Z07eSCY+cmZj4njXKXvy5ahELYNGYAu3IaOvMPqxnjxHSrrBHsCb2p32681JNIR7KEATm
-	 PgRhtbsMJOVyzDgBO6eCuakHkervcjdp23GJwfQbC/ZdnWDoGkcMFJzQ+6r+drurCbQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794310904;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=JTS26rJUwIrFKSwC41JGXvoI6xZdaHsM8RUwM//Alb4=;
-	b=UgK6LHFfDkaJVlP/mtf6Vw+kzpEUscPk8JLBOc8NN5KIcGjJl9//xixv+mNDUI+stK05
-	 zZwchmwMTZbl3Q8a1TGaTTEPNbCpswDzC5KbQGH9gwEtT0ODgO1cNDiSDlou4shgf8Kqe
-	 zaYxsOvJjug3jkcAnlfdjoLWoEnQ809Z1QVKaRHA0lvS5LYIlnocJRUm1FRTBoZ6h/JBz
-	 +8DmF4waFXsNER6RDkca3Mz9SWqxbN9s6fPm3z4RL+8UOhhCk43ruqJKPPguvLTRUAT9c
-	 FsA/fvva35HETY2a0IUSDjQZ2GkMYvGqxsSngdOp4pNrAIKP9M6jxPwNtMUkSNC/gPw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IweSLYlC;
-	arc=none smtp.remote-ip=198.175.65.15
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794311320;
+	b=NuWkCxKEfopeP2dVC72MESXiWLC3BoHiYZHUWU/km03JfY1Sc1VyKfo5e0ZWyZqxOine
+	 A/J75kVofauWFIVb4eV0oodGzWAr3kSQ0NtsIMKJe1rO9yFVB7PNeSmW0FlDaic9k9u+Z
+	 BxIICZDMZDIaMvJBV160x4CRPW6LuW9m+27wQRkL/Y8jtH0bRcPD5C2j5dkv84Ebydsai
+	 gu7X9+TtibeVdSvc6IPrdoKEdtYzZ+VZBkMR39vjNUtCRoeahaH5qyhQii6Q51xSggTzJ
+	 QrJqUAQgDqKTF2DTeqt4GHrnNb1izYy0CSUKqh6Qo66hAYLBWVnA77Yj3AgPL9jxelw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794311320;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=TCGSXQkkp9CYRjtPCbFI0n0SwhiyqiBh4xY4kDY/tRc=;
+	b=skT3Lhk+BMTNf3TqusZRT5gPIaqhVwLcNtBXrAlRKcrwVgpTIKZryYNWEK5ZLAsTcK8O
+	 TKpVcNH4vbchNcUOrgi6xdft+ajg6EXQy9RqlYboUPOyVHJuV+4CywJPetThUjkrKvDG4
+	 /vFA+EScaKPdXvNhByfnG5PHF6D6WbfaSEvTaNDur8m85ubpovvAOTlC5tTbYTM3hVhpP
+	 fUbr1kaIoQQ15K6VL3Z/HLDwC12nhF6dV55AAD/OW/3/HIgKmeu7SwL9c2WyxpZupleoB
+	 qyvO3xsEWN1aS/tfztuwj2hGmVUwaxmzXMZE0uxscTELfZRSB938yEAU6XJFqMYZVNw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZIFEw0FN;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.48
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FFE606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 11:41:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E5FFE606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E53606A325
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 11:48:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98E53606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IweSLYlC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794310903; x=1825846903;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=iM7IWakVCcIz8WMJVolWHC/3np93vJAPlCV71FNMb/w=;
-  b=IweSLYlCD4Abd/uXUpbnu2NfBz8pT3wap3HkhNMVuG+QBYhWG3qMQ0qG
-   yxkSS0eremUm+0h+kgtd58j77NWF/dz7WlOIzcypAYRdUxYjC0EyQ9Lf4
-   fj6BVBW0RojiW0A/zAhE+0Wzzl93m+qq1CCvRL3wVPhxMtX1vrZt6cUvo
-   iz2+QMGW9MDH8X+fAaLleVFP4qbjv8zcd522zi6uxUkVGLdg4/g8SvBLK
-   2UsitwjWBo39w3FYStWt/Cyr/H0o5EuTj1jGwEAiEFI/WvTZSlMY8m7gU
-   aXTfRcQFSoJr6I8PWud/C8j2T10tCByXUS7srcD2Q3YsJapm3HUwtA4N9
-   A==;
-X-CSE-ConnectionGUID: NJIhTqESSgu1LdvgumAURg==
-X-CSE-MsgGUID: 34/Zux+NTqeGMKbvrG9Mpw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11961"; a="3053408"
-X-IronPort-AV: E=Sophos;i="6.27,205,1787036400"; 
-   d="scan'208";a="3053408"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2026 03:41:42 -0800
-X-CSE-ConnectionGUID: j5tlAoxkRQy/q3wZA0e94g==
-X-CSE-MsgGUID: ushUxuIbTTi204rlZvcNdA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,205,1787036400"; 
-   d="scan'208";a="8281806"
-Received: from soc-pf6038af.clients.intel.com (HELO [10.217.180.114]) ([10.217.180.114])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2026 03:41:42 -0800
-Message-ID: <413a803a-0978-467f-ace4-1121140418f6@linux.intel.com>
-Date: Tue, 10 Nov 2026 12:41:39 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZIFEw0FN
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91eb5559b34so14554316d6.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:48:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794311318; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PfNLpNM2EmJzXDHKMv/dBGpl/yHmDWfwIMdxig7zW1P8JDUPbjGGWhakkwMX0moXJF
+         Y2BnHLlvlMhaA6qRJQBin88CGUMQocnvf40bOZfv5MJzV/C3hilKcYnfvlQq2YQC4UqO
+         s0zvAZd+pnmECzGXPg00bg5/nPPsnKa1xuFs/tFXLe8boA5EAP19plnh0GqnRRfucjQk
+         LV2LFuokiQYDOjBUdur6Mb/9WGAyl7JsJ+rGQ6zcMglmocWE+zO4bHJuXHATYshvuLPy
+         7tQWudFP4CXBVIwHlVOTGxllKGUPm6XhwcQjJu3dMpnTpwKgRuLUl9x0KPSKPr2QqlQM
+         zg/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=TCGSXQkkp9CYRjtPCbFI0n0SwhiyqiBh4xY4kDY/tRc=;
+        fh=/XafWwXInU6xSAMitUKTVJtcnn7zkW/jx5Qszu7SSug=;
+        b=ONmFeFOhta6gcsE1uG8IomTzMKBD4/0NTzDnV+nv0S6fRY1nz0rLkrKMfRveaFkLba
+         9VIphJeRkt0WKVLncmdDWOE1GoqyfJIyqnFiZxZhDyYYCekYu5HXWlBUMw/EeyCM3KmS
+         1RRkAg7zCohxa9sBmP/Ko/3qEbEQYQIQ/9n8m2TPPe37PaGttF35ETiRrBHa/02BpnH+
+         e8yl9Hc1XhOMBCX3pqj53Qp+ws5OQPEd0F+zRHjypB14GsgBPnceqSgWwcwSfQoCwJha
+         2+rkO0eOwf6zioHeeVTrgGLefw7HorumKOdBgVrkCgPvtvkoNAmtNZCiT60DVpP5N0fT
+         6UmA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794311318; x=1794916118; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=TCGSXQkkp9CYRjtPCbFI0n0SwhiyqiBh4xY4kDY/tRc=;
+        b=ZIFEw0FNSsAZ9pn3rL6FbrOtRrS/N48RQGiKgY5a9u6pMvKOHm/ICc4dNB7xDNiteK
+         pyR35vbAmqBIkxHslaADuwB5nA4DsNI/j5qtnYJU03OlyhXi9q5M+WMMs+ze7MQyeVSH
+         im66YUlC9dgoiA9LmYMpNXrS8v4Yhj7AzTHhAS44uvxah6s+fOHcU8AsewXrYvARtM2V
+         /bi0NLnTD28Qur8MxJxefMUSXV3jtX7kBdhTQ7MkF8A7zUa7OOW5zyBSjGMNJEmmfaq/
+         Ih2iOFMxvUQ5zHNZzYJxgZWkVI5QYD87zcbMNaMFdZ47Nkd0vzNVbU4nu4iivnz1MyHB
+         GdqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794311318; x=1794916118;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TCGSXQkkp9CYRjtPCbFI0n0SwhiyqiBh4xY4kDY/tRc=;
+        b=HRJZghdX/uCsq9gGd6C8SW/EQ6Q7feflImQFZ7aUsd2I5MXQdsmJedsPFXKgkALW0b
+         BcrurN2h3WJFDMgiv/fvUeK0O6z71H9waVKgxNy2x+HQcT2oJXvg2Ts8impOPhorUqLK
+         zlaccGxDPi8W9P3AU0fC8cKeySGQm8bBh9IE3FAy2tIx7mrDapcCFbPfuoxAHTiu0mvF
+         6yR404lXG0b0DVWM8D3qJ5sLoLFmIfVzp5iGGgVktobxUmunb7JogxA8Kdipom3RH5Pw
+         tTbq+yO6doqlVNbeAlFKX9r60LkRW9h/a/DyVBtLmwpdU7yOG5gUW6GoKewcene/ns2X
+         NPhA==
+X-Gm-Message-State: APuU4Z92N/YQiPtgWLjHSf8sK3syeIfgL7HanuH9f/B9RbAJyb7zDBtm
+	lEb3JVGP93KmpShwSak/IX5w0VeW8Fs2HSfPkrSuV3UTs18S7Bpiu9/ZQ68wkxZqSsEM5G8+MOM
+	LLufHd1wN71kZRV55LWWqxBxNlPmNxAE4bX9PcRs=
+X-Gm-Gg: AYBFou0Gk1BAoJqv9FXGIXxln2GnhFE8RH69ukC5RrHMmuhhtH8Yj9GYfxHws+C76ml
+	jDS7h/n2qAtKwRAJJNoTsBkHWoOHsbMSTVJpT/rLtgGjnvaEu8FqmUrj8MvMHLM45SUFYj7HCrL
+	4olCEin2wsnb/uxIpWOeTGBHChnrn5o16kZR8/NpM9QEAxoYQG35wAuwZJTgtIeUwIp9YkyguvG
+	Aarf+Jrdj2KyHVw/6BP4yVat+c/SWlLrpK+5VCV94ueEmi2jORLnNK6bTfXHi21qdQcBdkaq3RZ
+	fLwWYyilEfAE+A+93QE2Np8tAH2I3XjayF+nIJENo4ulJR3scrSHBqORCaDjmXXbd5mT4XzOp03
+	eT8LfkxhOzVMWOxXcE8/ub4Ei/mCMQDbERVcX/RBJ6HTWkygJC+kaisTpMTEJ9CHNy7cD
+X-Received: by 2002:a05:6214:411d:b0:917:a278:ce0c with SMTP id
+ 6a1803df08f44-91eef953c89mr38462386d6.43.1794311318387; Tue, 10 Nov 2026
+ 03:48:38 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,103 +103,102 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] accel/ivpu: Defer recovery until probe completes
-To: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org
-References: <20261107174215.15818-1-swizzguy76@gmail.com>
- <20261110085003.3527014-1-karol.wachowski@linux.intel.com>
- <sashiko-outbox-206716@kernel.org>
-Content-Language: en-US
-From: Karol Wachowski <karol.wachowski@linux.intel.com>
-In-Reply-To: <sashiko-outbox-206716@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20261110113523.2517891-1-hj351016@gmail.com> <sashiko-outbox-206950@kernel.org>
+In-Reply-To: <sashiko-outbox-206950@kernel.org>
+From: khj <hj351016@gmail.com>
+Date: Tue, 10 Nov 2026 20:48:26 +0900
+X-Gm-Features: AclHuK-hlRCBmE0NXc2HkIod5l2gSiVzm8_S6uudo7AfNbetvFYsjZ296z-4DPI
+Message-ID: <CAGr5VtP3FAJLYDRfMumwJR4ALceYA9i-N11Ff_GkUik3SqBjYw@mail.gmail.com>
+Subject: Re: [PATCH] usb: gadget: aspeed_udc: cancel wake work on device removal
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10-Nov-26 10:13, sashiko-bot@kernel.org wrote:
+Thanks -- you're right, please disregard this patch.
+
+udc->wakeup_en is never set to true in aspeed_udc: there is no
+.set_remote_wakeup op, and ast_udc_ep0_handle_setup() forwards
+SET/CLEAR_FEATURE to the gadget driver without handling
+USB_DEVICE_REMOTE_WAKEUP. So ast_udc_wakeup() always returns -EINVAL before
+ast_udc_wakeup_all(), wake_work is never scheduled, and the use-after-free =
+I
+described cannot occur. The cancel is harmless but unnecessary; drop it.
+
+(The dead wake_work plumbing could be removed instead, but that's a separat=
+e
+cleanup, not a fix.)
+
+Thanks,
+Hyunjung
+
+2026=EB=85=84 11=EC=9B=94 10=EC=9D=BC (=ED=99=94) =EC=98=A4=ED=9B=84 8:43, =
+<sashiko-bot@kernel.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] accel/ivpu: race in ivpu_pm_enable() queues recovery_work
->    twice
+> - [Medium] usb: gadget: aspeed_udc: wake_work is unreachable in
+>   ast_udc_wakeup()
 > --
-> 
-> commit 53feec71cd6cb0035da92ea965a242f974fa21d7
-> Author: Karol Wachowski <karol.wachowski@linux.intel.com>
-> 
-> accel/ivpu: Defer recovery until probe completes
-> 
-> This commit disables recovery_work in ivpu_pm_init() and re-enables and
-> flushes it in ivpu_pm_enable() to prevent recovery from running during
-> probe before device initialization finishes.
-> 
->> diff --git a/drivers/accel/ivpu/ivpu_pm.c b/drivers/accel/ivpu/ivpu_pm.c
->> index aa813262253e4..7aee728b19ef1 100644
->> --- a/drivers/accel/ivpu/ivpu_pm.c
->> +++ b/drivers/accel/ivpu/ivpu_pm.c
->> @@ -415,6 +415,7 @@ void ivpu_pm_init(struct ivpu_device *vdev)
->>   	atomic_set(&pm->engine_reset_counter, 0);
->>   
->>   	INIT_WORK(&pm->recovery_work, ivpu_pm_recovery_work);
->> +	disable_work(&pm->recovery_work);
->>   	INIT_DELAYED_WORK(&pm->job_timeout_work, ivpu_job_timeout_work);
->>   
->>   	if (ivpu_disable_recovery)
->> @@ -439,6 +440,12 @@ void ivpu_pm_enable(struct ivpu_device *vdev)
->>   {
->>   	struct device *dev = vdev->drm.dev;
->>   
->> +	enable_work(&vdev->pm->recovery_work);
->> +	if (atomic_read(&vdev->pm->reset_pending)) {
->> +		queue_work(system_dfl_wq, &vdev->pm->recovery_work);
->> +		flush_work(&vdev->pm->recovery_work);
->> +	}
-> 
+>
+> commit 59e63d484d3cece4c9053b24c7e169339b0f2919
+> Author: Hyunjung Ko <hj351016@gmail.com>
+>
+> usb: gadget: aspeed_udc: cancel wake work on device removal
+>
+> This commit cancels udc->wake_work in ast_udc_remove() after unregisterin=
+g
+> the gadget.
+>
+> > diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/u=
+dc/aspeed_udc.c
+> > index 10214232c08fa..2acf84c489909 100644
+> > --- a/drivers/usb/gadget/udc/aspeed_udc.c
+> > +++ b/drivers/usb/gadget/udc/aspeed_udc.c
+> > @@ -1460,6 +1460,14 @@ static void ast_udc_remove(struct platform_devic=
+e *pdev)
+> >       struct ast_udc_dev *udc =3D platform_get_drvdata(pdev);
+> >
+> >       usb_del_gadget_udc(&udc->gadget);
+> > +
+> > +     /*
+> > +      * ast_udc_wakeup() schedules wake_work, whose handler dereferenc=
+es udc.
+> > +      * The gadget is unregistered above, so no new work is queued; dr=
+ain a
+> > +      * pending one before the devm-allocated udc is freed.
+> > +      */
+> > +     cancel_work_sync(&udc->wake_work);
+>
 > [Severity: Medium]
-> Can ivpu_pm_enable() race with ivpu_pm_trigger_recovery() and queue
-> recovery_work twice for a single fault?
-> 
-> In ivpu_pm_trigger_recovery(), reset_pending is set to 1 before
-> ivpu_hw_diagnose_failure(), ivpu_hw_irq_disable(), and queue_work():
-> 
-> drivers/accel/ivpu/ivpu_pm.c:ivpu_pm_trigger_recovery() {
-> 	...
-> 	if (atomic_cmpxchg(&vdev->pm->reset_pending, 0, 1) == 0) {
-> 		ivpu_hw_diagnose_failure(vdev);
-> 		ivpu_hw_irq_disable(vdev); /* Disable IRQ early to protect from IRQ storm */
-> 		queue_work(system_dfl_wq, &vdev->pm->recovery_work);
-> 	}
+> Can udc->wake_work ever be scheduled in this driver?
+>
+> ast_udc_wakeup_all() is only called from ast_udc_wakeup() after checking
+> udc->wakeup_en:
+>
+> drivers/usb/gadget/udc/aspeed_udc.c:ast_udc_wakeup() {
+>         ...
+>         if (!udc->wakeup_en) {
+>                 UDC_DBG(udc, "Remote Wakeup is disabled\n");
+>                 rc =3D -EINVAL;
+>                 goto err;
+>         }
+>
+>         UDC_DBG(udc, "Device initiated wakeup\n");
+>         ast_udc_wakeup_all(udc);
+>         ...
 > }
-> 
-> And reset_pending stays 1 until ivpu_pm_reset_complete() finishes, while
-> the workqueue clears WORK_STRUCT_PENDING_BIT as soon as a worker dequeues
-> recovery_work:
-> 
-> CPU0                              CPU1                        kworker
-> ivpu_pm_trigger_recovery()
->    atomic_cmpxchg(reset_pending, 0, 1)
->    ivpu_hw_diagnose_failure()
->                                    ivpu_pm_enable()
->                                      enable_work(&recovery_work)
->                                      if (atomic_read(reset_pending))
->                                        queue_work(&recovery_work)
->                                        flush_work(&recovery_work)
->                                                                ivpu_pm_recovery_work()
->    ivpu_hw_irq_disable()
->    queue_work(&recovery_work)  <-- queued a second time
-> 
-> The same double queueing happens if ivpu_pm_trigger_recovery() runs right
-> after enable_work() and a worker starts ivpu_pm_recovery_work() before
-> ivpu_pm_enable() checks reset_pending.
-> 
-> In the first interleaving, ivpu_pm_recovery_work() runs concurrently with
-> ivpu_hw_diagnose_failure() and ivpu_hw_irq_disable(), and flush_work()
-> only waits for the first execution.  The second queued recovery_work then
-> runs after flush_work() returns, performing a second full NPU reset
-> concurrently with pm_runtime_allow() and pm_runtime_put_autosuspend() and
-> reintroducing the race where recovery disables runtime PM during the
-> initial autosuspend request.
-> 
-
-I'll send V3 that addresses recovery that leaves the device in D0.
-
-Karol
-
+>
+> Nothing in drivers/usb/gadget/udc/aspeed_udc.c ever sets udc->wakeup_en t=
+o
+> true: ast_udc_ep0_handle_setup() forwards USB_REQ_SET_FEATURE and
+> USB_REQ_CLEAR_FEATURE directly to req_driver without handling
+> USB_DEVICE_REMOTE_WAKEUP, and ast_udc_ops does not implement
+> .set_remote_wakeup.  As a result, ast_udc_wakeup() always returns -EINVAL=
+,
+> udc->wake_work is unreachable dead code, and the use-after-free described
+> in the commit message cannot happen.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110113523.25=
+17891-1-hj351016@gmail.com?part=3D1
