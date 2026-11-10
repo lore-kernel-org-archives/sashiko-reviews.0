@@ -1,54 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.2
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794282932;
-	b=shP7yCZAXeMj3LVV5FBKnkv06+sAQCi5AB1fTHPq4dHihu2TTdrd7WcSLZmwjFO+OghX
-	 feS2nvFIdyW4u7CBh5LosB9ob5kSF7j0kBxp9XZ1DsooMXoyUodvCpaOmT45Stz87QRP3
-	 SuFyK2+dO45jpDr44h+3rQddZFNnP87TvSgm7chamjkK9TbmUoJhoubIOPb3cW1h1lhWj
-	 /C+g+EI7QFKHGPJIswukqdXbSPLh/Y7hZHOZnu/T6oBwVFbvXjnPh0c681WiEj96Rupzn
-	 Y3lq6i0j9tC18R7XdXCT+q+GWNzasXHmf38OTyy1fGzaqAL2EHn46us0aA7Dotziikw==
+	t=1794283900;
+	b=RRuh7EkRTKz8bCb3uNHifMIVLMI+yC1m1wDy2wJxFnwYNzBHynBaMgPC8JcLALI2FsL0
+	 cGDqnc/qcs+sn2E7HhCLCQzrm4e7hQ9Lvmla3cWFwrNbjQ/sPUedNtVp3GEVV7GFZe+Sh
+	 8zjvvdpi8T/oe2CqOdg5kzKcBlYrHahQhFV1cpT/42nbEngdlrjUaIRCQNNfkXDsmZ7Io
+	 ISmQ/RISbl3TO2e7GwQT0663O4oAsi2EGqcnRCF2gzTPnN4oD0AlRG/pdFZ2ltEtmdtwu
+	 JyTs9hRwKbHguXLzzsZo73OQka+P63N2pCNOON7PUq3zvfTq0cBREabFY/YNOzoQb/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794282932;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
-	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
-	 To:X-Mailer;
-	bh=DzWy6/WNRqeEWa/9epvO5IlQ0oGV8ntkJrwHkR0I+2M=;
-	b=pu5OOJVvRz/eCdBMG/I4jwYTLxMQUQkQ18zqCFDQofg6sDSla3w2OimxaW78kgA/tkpQ
-	 VhPAF33+Lzuc7Y+umjHCf70nooiiqpR2VxE3iMT0Qh3Eb4m3heIBILj3jAIoNm+P94t+8
-	 ui9NezMgdlpvaqlx6sPDxZcvPXmvP/NuThPe2v3hYY8MoP5rEIR05zSXsxiZCMyDMqbC4
-	 D62+NRf40MG7EtUYGhCCSsVeoXFzPPSxmfoaTDrkdqKTzeEnRJ8L5R8YBC0cEcIbFvqRq
-	 CXuk3aUt+JmwvonYrJrk6WrBtdz39JuSl4BzAqx0WoM63A3wUlbWKPi0KZ8XxzwblHg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794283900;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=YHXidAFNXoaiLO002WziYhPSP8qLeOfv4lUIVNDDdBI=;
+	b=zZbfNqsCbS71AXew91uoTA487l739649zCR7omzUKOwV+CcmXxbhTDDawl8t73bVW8Lx
+	 n0yMUWfytHRVYJGVZjItdlSTxkpBRy9BwpcKEw9uXDHj7DwpL7eQkdTiV5Nz9iefd06Qe
+	 bcd3VBshPYFK8mgzu1A2Mv6ZHVLVG2YafsZctmkYjuMKNevn/MZ+AYX9oOsZFIESA6zlB
+	 /HHIuKN6jGEuckVfBUm1u5XqL2FjKKQVCgnJi6YUK9kRbhm+6oNhIHMXo63CXaI/0iRQg
+	 z6XRO7ojgOquAhkL+w/6mdDpYnLxkYtFFdgNUx+Yddu7JGRtykiAP/RTMftz5BYypEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Un60vQTJ;
-	arc=none smtp.remote-ip=95.215.58.2
-Received: from mta1.migadu.com (out-2.mta1.migadu.com [95.215.58.2])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XDQgoYhz;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A9606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:55:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 274A9606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id 6AC2C606AA08;
+	Tue, 10 Nov 2026 04:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Un60vQTJ
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=1DHEogHVtoCxTluCnUyg4zaFiqVYIq8x+VghISvowBE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794282929; v=1; x=1794887729;
- b=Un60vQTJ3j78T+OSWYN0nMxxH6nctMKd0PQWffpcjpHsvOp2ZeOuqE0+Kzr6jyfriHMdsSro
- b0WmtWUpl2UBnuo4OlRpgtA+iR1LadHN/Bb89+txD2JFUqRFSfb6rRYCoIVU5xVvAsV7ebdA8iN
- uBsa02r2+oxMtyKiSeNDRWIM=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id a0e095d83234cbec;
-	Tue, 10 Nov 2026 03:55:28 +0000
-X-Mizu-Trace-ID: a0e095d83234cbec
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XDQgoYhz
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 482C61F0092B;
+	Tue, 10 Nov 2026 04:11:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794283900;
+	bh=YHXidAFNXoaiLO002WziYhPSP8qLeOfv4lUIVNDDdBI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=XDQgoYhzLB1XsKLafILGmqd0YGsnN0nbPJHcJvNgo0e9h6urfd8eONU8I1fRsk9vZ
+	 t8KRELDKpo0U/YkqQ15tASfqFXYWezQ/kFtwjshV5bXG8s7NS2s5frdw26wLdn0wri
+	 4L+4v7faS0/1zWMMF/aqzaT5dam9UzUGCRp8jFyiEn1ylnSW5dmpsOvV4arI3xm6qe
+	 jQHfiWibd4x2jh6cEbk1ATEYt0rgydieaU4aAfuqaeLFt/BAPaL5JwFuKCK3txZdZf
+	 a8besfPzisZ9qNerp1H29SsSAYGosVacDRo9Hf7G6ThpnCs31+2XF6GYd397dPVLOq
+	 NGI0Dd2AU2CdQ==
+Date: Tue, 10 Nov 2026 06:11:36 +0200
+From: Jarkko Sakkinen <jarkko@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: David Howells <dhowells@redhat.com>, bpf@vger.kernel.org,
+	dm-devel@lists.linux.dev, fsverity@lists.linux.dev,
+	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
+	Alasdair Kergon <agk@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>, Alex Shi <alexs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Ignat Korchagin <ignat@linux.win>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	James Morris <jmorris@namei.org>, Jiri Olsa <jolsa@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Shuah Khan <skhan@linuxfoundation.org>, Song Liu <song@kernel.org>,
+	"Theodore Y. Ts'o" <tytso@mit.edu>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v7 2/3] KEYS: Replace assoc_array with rhashtable
+Message-ID: <avKZeB9VH0cavfr4@kernel.org>
+References: <20261110033738.2495880-1-jarkko@kernel.org>
+ <20261110033738.2495880-3-jarkko@kernel.org>
+ <sashiko-outbox-206155@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,153 +84,32 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH 11/11] mm/mm_init: move pageblock migratetype init to
- memmap helpers
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <sashiko-outbox-204845@kernel.org>
-Date: Tue, 10 Nov 2026 11:55:13 +0800
-Cc: Muchun Song <songmuchun@bytedance.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@kernel.org>,
- Oscar Salvador <osalvador@suse.de>,
- Mike Rapoport <rppt@kernel.org>,
- Lorenzo Stoakes <ljs@kernel.org>,
- "Liam R . Howlett" <liam@infradead.org>,
- Vlastimil Babka <vbabka@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>,
- Michal Hocko <mhocko@suse.com>,
- James Houghton <jthoughton@google.com>,
- Lance Yang <lance.yang@linux.dev>,
- Qi Zheng <qi.zheng@linux.dev>,
- linux-mm@kvack.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B97DC5CB-5A3A-497C-B051-213A1A14411C@linux.dev>
-References: <20261109095807.41547-1-songmuchun@bytedance.com>
- <20261109095807.41547-12-songmuchun@bytedance.com>
- <sashiko-outbox-204845@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-206155@kernel.org>
 
+On Tue, Nov 10, 2026 at 03:56:03AM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Medium]
+> As reported by Eric Biggers on v5 [1], should keyring_link_params set
+> .insecure_elasticity = true instead of looping on -EBUSY here?
+> 
+> Without .insecure_elasticity, rhashtable_insert_fast() enforces the
+> 16-entry bucket chain limit (RHT_ELASTICITY) and returns -EBUSY to trigger
+> a rehash.  Because keyring_obj_hashfn() only hashes the 32-bit link->hash
+> via jhash_1word(), entries with colliding 32-bit SipHash digests cannot be
+> split by rehashing with a new seed, so __key_link_begin() can spin
+> indefinitely in this loop while holding keyring->sem.  This was fixed in
+> v6 by setting .insecure_elasticity = true and dropping the retry loop, but
+> appears to have been lost in v7.
 
+Ugh, I fixed this already.
 
-> On Nov 9, 2026, at 18:43, sashiko-bot@kernel.org wrote:
->=20
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] mm/mm_init: commit message cites nonexistent
->  memmap_init_page_frozen()
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [Critical] mm: uninitialized migratetype in
->  pageblock_migratetype_init_range() [1]
-> --
->=20
-> commit e81bf248ba8e6f6857b5a558e23fdf0fa0e68ad6
-> Author: Muchun Song <muchun.song@linux.dev>
->=20
-> mm/mm_init: move pageblock migratetype init to memmap helpers
->=20
-> This commit moves MIGRATE_MOVABLE pageblock initialization into
-> memmap_init_compound_page_frozen() and =
-memmap_init_zone_device_basepages(),
-> and removes hugetlb_bootmem_init_migratetype().
->=20
->> Move the MIGRATE_MOVABLE pageblock initialization into the frozen =
-memmap
->> initialization helpers instead. This makes memmap_init_page_frozen()
->> initialize the pageblock for single pages and
->> memmap_init_compound_page_frozen() initialize the whole range for =
-compound
->> pages, so the ZONE_DEVICE and hugetlb bootmem paths can share the =
-same
->> initialization.
->=20
-> [Severity: Low]
-> This isn't a bug, but the commit message mentions a nonexistent
-> memmap_init_page_frozen() helper.  The patch updates
-> memmap_init_zone_device_basepages() to initialize the pageblock range =
-for
-> ZONE_DEVICE base pages instead.
+Clearly something went wrong with the rebase :-/
 
-My bad. It should be memmap_init_zone_device_basepages().
+I'll manually apply v6 patches and send v8.
 
->=20
->> diff --git a/mm/mm_init.c b/mm/mm_init.c
->> index 61a720bb44dce..e05db8abde2fd 100644
->> --- a/mm/mm_init.c
->> +++ b/mm/mm_init.c
->> @@ -751,6 +751,9 @@ void __meminit =
-memmap_init_compound_page_frozen(struct page *head,
->> 	for (unsigned long i =3D 1; i < nr_pages; i++)
->> 		memmap_init_page_from_template(head + i, pfn + i, zone, =
-&template);
->> 	prep_compound_head(head, order);
->> +
->> +	pageblock_migratetype_init_range(pfn, 1UL << order, =
-MIGRATE_MOVABLE,
->> +					 /* isolate */ false, /* atomic =
-*/ false);
->> }
->>=20
->> struct zone __meminit *pfn_to_zone(unsigned long pfn, int nid)
->> @@ -1110,6 +1113,9 @@ static void =
-memmap_init_zone_device_basepages(unsigned long start, unsigned long
->> 		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
->> 			cond_resched();
->> 	}
->> +
->> +	pageblock_migratetype_init_range(start, end - start, =
-MIGRATE_MOVABLE,
->> +					 /* isolate */ false, /* atomic =
-*/ false);
->> }
->=20
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but can
-> pageblock_migratetype_init_range() leave the first partial pageblock's
-> migratetype uninitialized [1] when the starting PFN is not aligned to
-> a pageblock boundary?
+I honestly don't know what happened (likely the branch was not up to
+date in the first place). Sorry.
 
-The condition is reachable, but it does not appear to cause a functional
-problem. The partial pageblock retains its existing migratetype, or
-MIGRATE_UNMOVABLE from the zero-initialized bitmap; it does not contain
-uninitialized data. ZONE_DEVICE pages do not enter the buddy allocator =
-or normal
-isolation path, so this does not affect allocation, migration, or =
-removal.
-
-Moreover, the pageblock also covers PFNs outside the pgmap range, so =
-overwriting
-its migratetype could affect adjacent memory. So I'll not fix it.
-
-Thanks.
-
->=20
-> mm/mm_init.c:pageblock_migratetype_init_range() {
->    ...
-> 	for (pfn =3D pageblock_align(pfn); pfn < end; pfn +=3D =
-pageblock_nr_pages) {
-> 		enum migratetype mt =3D kho_bootmem_migratetype(pfn, =
-migratetype);
->=20
-> 		init_pageblock_migratetype(pfn_to_page(pfn), mt, =
-isolate);
->    ...
-> }
->=20
-> pageblock_align(pfn) rounds the starting PFN upward to the next =
-pageblock
-> boundary.  When a caller such as ZONE_DEVICE initialization or memory
-> hotplug passes a range starting in the middle of a pageblock, the loop
-> skips that initial partial pageblock, leaving its pageblock flags
-> uninitialized.
->=20
-> [1] =
-https://sashiko.dev/#/bug/linux-492df7cc-d097-43e5-9701-9954aee1d064
->=20
-> --=20
-> Sashiko AI review =C2=B7 =
-https://sashiko.dev/#/patchset/20261109095807.41547-1-songmuchun@bytedance=
-.com?part=3D11
-
+Br, Jarkko
