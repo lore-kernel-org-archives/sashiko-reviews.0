@@ -1,94 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.228.111
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1794286109;
-	b=DeCvcIVBMZ5pPuGiRU3iyz2mAXQOm9x+ruI4Wg8z+aDj836B8IxlHlNsYUmovZ74PFOU
-	 ZKOHRyMDCW4M9sAtTNqawP+6ZGn/TiFu0zy4BsnR8aECoYS9VU9uCUyskEkgzwxmqIDnA
-	 STUDBjcsOdGalbmWBbF1V6J8X7XNwLqmag4dWpE1YtU14pgjo/inU5B9wM3UF358VndXR
-	 jNJXzRBJ122xFyE32rMG+o0SVI0+wnzdX3SXnapDhErfJwHq6Xvs9MVaH6Y5eQpIllXIp
-	 rzFELNgyygoxF8FkgfTCEUDP0oMqJZYYGoO/U0FDMC66o2BQKBWRpL2oTaP78vDkoOQ==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.169
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794287063;
+	b=0Dh+AEJ6XQ4CM7R1+OcFmwp7JtFBDNeGnu39bSHdyD3pBty4NQcQrJZ80/TYdtEkz7Q9
+	 U5FbeWHlME1XZcszxsU7ofO8e1rbJVbob1OOuGvOYgXdXcBXOkoJWJu8cUS+4GCxFbuwV
+	 gwVLQTG7tMHSOIxFd66COsrqfnsPewAXfxcOXKYBeZf8D50Wgd2hLKXWkcB/PA7Ourd7h
+	 qvOEe5PDGbL0UTRUlK33h9M2Ly+hiy+dG6tCzfXtLgpK7cOSrUpdpgIG5r9rujdICaSkM
+	 bC30aDcujwPUxN50b3TvcIhViwrW7IZQ9cM//W9TYLnHDUGAuCq4rL9VM9q23/xq81g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794286109;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=c1ejmBa5iIhKoGsz/adUpkVCxgtyIkf0/u1cPyQp0q0=;
-	b=na5iw0p8zNrGqx6wENdJkTAkOHUbq98RE/xIiFzlcNG7VBe8Aoy12xv2HU9wGEjtIh7c
-	 W9pcbTiRa00Fq8V94IjUfU0I/FNFB1d2MZMb/BUyg4sQPUGXH3vR5oh5f34qr4NStw+qc
-	 t91X3VcXt9ugG75vmxiqm6g1iPOgYsTwQ8YLAxxqTz+POeomr6HMh2/964thQCkfjO4U7
-	 exylxOAAdW1on6nlTB99Ltb//lJwV84qNaldE+PXWAUb+BSECutfvl1WBLiLGL2i8+QUm
-	 HK/vscbiniigTEv8G0sIZzlz9mHfv/KoZG8AFxUutJrqi85xKmb9kwq5xkD4n6cxL5Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794287063;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Q2Yn1tisP/OswiGPs+zHZTzs8s2dnxotdAvNysGFK0A=;
+	b=4P9wxNAuq9D/Y7qKAH/kmw7J+csDj8ZvFX3XT91BBm+WIUdK1hbm6/y3wIpnRI50m+LX
+	 IA6yJ27Nge0sZLoUPt9CUavLDj8T7wg2NCN81F8hKErsglbAkRjYZLh+s2XLiTEX0u/T0
+	 653vt6XY39197ayZlmOb2WEYocfY9/jbVwr1Y59yoioQnCd/vKICM8BGHQ7MIilQMB7t4
+	 T7xgoHTswixr+UBqayBUwYr7sLNLze163f6kSk1Y6MNbbUW36ZpC2w0Lqc6kH5lmDtzhz
+	 lTwHe6a/i9PzWMn9mGgV/eSEr0mBMT3YuJYV+g70BRJSwFdvvksmMiQWudE0xe/glqQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=valinux.co.jp;
-	spf=pass smtp.mailfrom=valinux.co.jp;
-	dkim=fail reason="signature verification failed" header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=Mml0Ax9D;
-	arc=fail smtp.remote-ip=52.101.228.111
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020111.outbound.protection.outlook.com [52.101.228.111])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="J/ZKxQHF";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.169
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC1C606A32E;
-	Tue, 10 Nov 2026 04:48:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4DC1C606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4007606B0A5
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 05:04:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B4007606B0A5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=Mml0Ax9D
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jnkHRdEzJO6Ck5HegpYH/reNKehkPkY8ghLD1szkhDaPTkYIol0aa7v1sf+FCYXUDCTzQw2C3fulG4TpYj4J4Auf0y2X4UuIEd3WYsRNgDwFBkzBDmau1ADSIwpHg5Ul+EYOusPZPN2BPhCfFE7nRLCC8/2vOi+8m8XnjxLjVhUyRhlcbojAYq49RZpNE1m8yo4dw057k3xoV6J9KLE9i228iM5MRsiR4ph19gSMSf6J0KWLMhEBaUq3nP56UsOch1S9iwkU1Lqv8GS/yr65oPQl9bprpc8QcBRW3VO2yoslrz7SI7DKuTG5wMqd2XiVTZsZOTNBRl4sMklkvmbRmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d5VrvDB60lHxCcq+rwFkI3BHDQ20tYmLlZz8Lc2u/Ig=;
- b=A39PcS0P37GdXQOmHgw9jRG2IUTzdyT+csyWYh8ce5F8B+XDRzoEmbGVchkgbCEAqPMk2ibuyXuwbm92XUFZEVLh2kLj8nmYA+XzgHeN8A+p3h3NJsF8Dd9b1uZTlu2Xsx5DZ+9Ia0zAC4BBnwfGtcw1Ciu+TZK7BZsitKKhrKcgl7jWbQHlA7kp947BI9Tt9mY5SC1MTRmPd8P83Jz0qF3imP/wZr26vGfdfFWRnVma4wGC+x//IMhhLWzceM/e79tLcimgDCgIDHzLty1x+PH8kG6gfQW32iVYqWtgrQYrd8PyZ/0wEsM/NLmqoCsBAPgsCvdYgOZcp1OY9+6P+A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d5VrvDB60lHxCcq+rwFkI3BHDQ20tYmLlZz8Lc2u/Ig=;
- b=Mml0Ax9Dn4MzP7lPRMWIIj4+6mydd1lpUK+Yj2WDkTj9jj5yV4LKYSKdaW+EPGt/GDJdgQuD8Ljc3jiw48ih1mPvIrvJqfOoP06MqbW+7BUV7PIJeDWwiF1MMyeIRNf1umPydUVqorZ9otbFRMeoODZJlS3H6aFBdVESj9JwVrQ=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by OS3P286MB1591.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:160::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Tue, 10 Nov
- 2026 04:48:24 +0000
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0592.012; Tue, 10 Nov 2026
- 04:48:23 +0000
-Date: Tue, 10 Nov 2026 13:48:22 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, ntb@lists.linux.dev
-Subject: Re: [PATCH v8 05/10] PCI: endpoint: pci-epf-vntb: Export endpoint
- DMA channels
-Message-ID: <y346l5tlv2abdjvjqbqitmi7xmi46trm2dvmbgihlbieal4hz7@rc2dcugxd5aq>
-References: <20261022082230.3164834-1-den@valinux.co.jp>
- <20261022082230.3164834-6-den@valinux.co.jp>
- <sashiko-outbox-181210@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-181210@kernel.org>
-X-ClientProxiedBy: TYCPR01CA0197.jpnprd01.prod.outlook.com
- (2603:1096:405:7a::10) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:325::11)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J/ZKxQHF
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-33bf40b0c8bso2857054eec.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 21:04:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794287062; cv=none;
+        d=google.com; s=arc-20260327;
+        b=EQ2xjNexXRSo9uuwmNzqpTu39Bw5wJqZof/OfhYzszG9fL9NSulhPXUwQ3sbhDH837
+         qV/6OCrIREciuYTr+Kbys56E+sSiXnOidv2+f/lQoABYXRXdwWD2C6aWn+SWg6zUalCI
+         SUqS7qSSgnSeRnprI3ex3DuncvDNUs+nSWzRDbf/LLEZUQNugKZtuhaEsTdhpO6iSomN
+         WvCirrNQYTWiFX3101m9P+66blhhvpbk2jGm2Z3tLn6QubJqYAxphpYLSVQiqzaWCCxD
+         xlKlD12e5c0lE9Hvi7RKKI3lTrAbdv7eTO2mopk7entLbbhf1b8Vuk31/PMSWGc2yR/2
+         R+sQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Q2Yn1tisP/OswiGPs+zHZTzs8s2dnxotdAvNysGFK0A=;
+        fh=UDmiFjDUsl58/oI1pbxKLXmAuoEiB7qNSJQzd9c7Gr0=;
+        b=TmHdu7Tb+Hk2tQ1I5h3bRW8FEl0AJguT7z4ceHSAEmnVDySZGb7GYhVynUodw/yZHb
+         pC8gZCeyNZ4Se3WBJ2fJpXQstjZVccgIUZKYa9Jwjr5UI9JYNJeekxXwzIeI/AYEOu5s
+         uVu91UxzjG5Y/N8pb9HEXO8i0pAZNjT6cUfJSvgW0FIt+6lJlhQeZJEQq2mpSEgU5mfZ
+         ST12CZLEHCnMfDZs91aW8xVp4vq3gVmv8SokkGQY3UcdIPMJJc1m60ov5d7SCYqqa36u
+         d47jBvfxR2Mo19zHLBbo9BO/GiMjqwUGQKUFiOg9Xk/3XtCAw6yVK5U17vq4mrIL4liy
+         u9tQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794287062; x=1794891862; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Q2Yn1tisP/OswiGPs+zHZTzs8s2dnxotdAvNysGFK0A=;
+        b=J/ZKxQHF2dikWy+53v6iVztx//3IDNB/PD3PDMlzmOLG9WUvk96PMNc9L7EWRmXA56
+         41R10W6iRHq8MF8z8BsuqQGcGXTE29ij8GyZKA9FR+9sO/Prroaw+7sq4YrUcfK47m82
+         hXypjQV7cm/PeMAltQ8W/qe/DyTZ82p5zeiKl/5Urg4t7kkiaFztJMLY93Z8F2fBSERa
+         BYsBS547WUHnwXs1QJniBxFmwBgZ0MuEa/SGanR+AH/guvPM2hdtqxJP8g5PQcZUXvco
+         587hV25rF4N3Vo1gCXQWgbhAlsxaGiU/kYdUrDUl7iTZpferaSY96E2pAGMet8vbZrAC
+         G2fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794287062; x=1794891862;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Q2Yn1tisP/OswiGPs+zHZTzs8s2dnxotdAvNysGFK0A=;
+        b=unzGaykWi9XUC7MwrgAB88u/p3ZGvJMusDPXGbS9RgxTPvkulwsvtZ3D5K0VovlDE8
+         raObNKb/DTH4QrStJvtCobY6IRjIbt2k+y3SLAfRTZoTj3fLUsRrPfU89pxOiX/xL6f9
+         3TU5+HaIBhbNPjsd/v5faLqTsigltWt4tSJVJQckT7bJf+cUnXZpVm8/yKolE/8YjLtP
+         BhXCOM6e4o76NqsmMfhQtopmYKqzuTGGVof7AW8tLzfsVF3YjPt5SBJjNtcQ/kk/v3BO
+         jHixtHKAtOwt83gSO3sm8dSjAKV8EBYfO8kQ7GdEaw5vLS+s99W9/4mZL9L7OQE87E1U
+         EvlQ==
+X-Gm-Message-State: APuU4Z+IRLXwj4xdivyzzGZjuDOdsZqtJN5eZ0yiapu2aecRXHAh5AYz
+	PTAGYsHwhIQ+S20alLe+nqGXTy/GQkLEUT3dPnEAJRnfDQK7KwTTkW9ApEN/C8VK4P5y/VrZ6i8
+	ql2hWluCW7AS1pGkWX5cxGxCVALi2VvBVD6ANoPw=
+X-Gm-Gg: AYBFou2zFlhLbLTlYx6b5nmcwRAoODEDyLPLccmlORfgl74PRcTBwJ6BK4rvXyp8fhM
+	EbEnzIjaBGd8gSnxtoDm8/Bq7DaSPasMaP1xBaR3s+oEqJQm8CvZ2+ivJt61L09V+0jdZecHBMA
+	loY+OdrKZyETCTaADojzL1/LIsUKNC9OYumMemfGn8hrFAKbJq4a1xjONuSyViFiS5zL22wxyQt
+	STwXyYh+N1JgfL8KZKE9Hk7tUc7wJ4sLu6IIdp2zJIzbvmNCva5PYLBj3xF9XU4O6mBEFOj0Lyf
+	Ygs2WEg6EpDcPWvNev2tk79py9bzIy+vna1tA74M+2JBaMMko7NbCL8CubkODJI3SiZP4fpTbPx
+	HJczfRZhIfpXwW/cycd1Q4AJxuGFQW9vzy+ei0KyLTThhO48AzCkcmOIN2SXB0ibz1k/W
+X-Received: by 2002:a05:7301:4d14:b0:375:4f3e:643d with SMTP id
+ 5a478bee46e88-3754f3e6572mr1366564eec.27.1794287061607; Mon, 09 Nov 2026
+ 21:04:21 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,157 +103,139 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|OS3P286MB1591:EE_
-X-MS-Office365-Filtering-Correlation-Id: a2ed7b6d-21dd-4841-afee-08df3ee5d9f7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|10070799003|366016|23010399003|4143699003|56012099006|261022105027099003|261021121427099003|261026121527099003|261026135527099003|10067099003|261026140227099003|261102130727099003|261028144727099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	D3b7AVdxti+5Fmfht72ffACIJP86g4ifQ7rtGPIPvGNiF/wQIVUqLomNwKpiJmos8Wmdj7KCEYWS1QliQ1SOHBYsb7Qt8FnBC+7fVYiC5tah705G+47erIay+1SH2CqGc360u3RpqFwma5HdsjoAM1yZwlkE9rWrillZmRXspNfltDkg+ks0fygm7KUCBnXukMIvPL1eiwJPJG48MzABZa+4BcdPjXEwT9J4satwIFrfdERpOtrlDGVvYu3+Tn/bZpsk7Y5xsw+0S1TeVGk+oijIzPOmUNUqWuHpnqatgmSRWKz/ac2n3DAvJZfF02SUiUfAUwODPGwHbtJAGSmuiYe/UAVDv0IuQ0P/mvMI0We6oIZ84Mzg3HqwhAvWKE2eF6jR6vV+19+TdedR0ZWU1S+RbRwuK732AHxZHb3jkeaYhiCys+b6XW9CN5C0TFVkl1vcEXDF3xzh9HVFe8pz03tn7wRULR+DkaKyLfJrsDgpFjQZxIdG5FsBpOAdGmSIvnHS1V0WIU177zQhi51wp1AySjgdQc6KFtBV3jqAwQX2ESo+fxNjrMFoR5octApmGfi8c2oARpdKaXZS316bmOes8midCpJKnhMjhi9EjVQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(10070799003)(366016)(23010399003)(4143699003)(56012099006)(261022105027099003)(261021121427099003)(261026121527099003)(261026135527099003)(10067099003)(261026140227099003)(261102130727099003)(261028144727099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?C6rGZBw1RnoKrxeQq4KXZy4u0db7voWgD04H1jUT1nFZcxq+tP09uvfYPF?=
- =?iso-8859-1?Q?x0XssGOPfoCZ62InhtQf8aUwT+Pxy9ko2I2YKvZEY5AVo5LYYE/hfZ0BfA?=
- =?iso-8859-1?Q?wI8Df0oTJitzi90RaxcrveqfnVnJduzLb12bFPUvcm3iVTJ0Vo2rnyXDJz?=
- =?iso-8859-1?Q?nPvwLKAGaPv1bZ2T0muJgkYNaqGLnAT3C2QFVqKmGGUnqtaxg9KlevhHXJ?=
- =?iso-8859-1?Q?lxKzrtVOZ7wvaCsTOeKyqgixxaJKn7MN6kPNbG7mGS4AyO8bIxXHLzaUOY?=
- =?iso-8859-1?Q?tcfQsip3Yn36VzpkGRgBFkfGdL6Wy1bj0TC9RjQYRhP2iFZpi4AOtly2H8?=
- =?iso-8859-1?Q?U5TwAzfiidbobTaR2kHpm7NGr8fU8qYAVTfqosVYGsSXke00I7kMO1Kfyb?=
- =?iso-8859-1?Q?WsZ2AMT7NnHm5uscziza2s49hq2Kh+Frl8Jn6s4+SVNTLsvuxVegquObMn?=
- =?iso-8859-1?Q?vBPF5ZhWt3mSI1ElyZGuI2TLXpclOe8cnyz1Kltg5TBAOaUkcygWIuC7dx?=
- =?iso-8859-1?Q?+i/SYjY7T8lok2TEMF/6FbY4tdB66HU2itmt7iLLKWwWsn+ZM75qcptcHO?=
- =?iso-8859-1?Q?BjHAdCEAZEy6I1rhBKtdJUj1EVseLRbVHSpjuZ7wHYfG7bjYMySoIGwhuq?=
- =?iso-8859-1?Q?Ufo800YZOjgEcSmdvh5Cbqs9zuQYFP9fqCCbd2/pcbz6G/eZlNiCJKVGVb?=
- =?iso-8859-1?Q?gat0AtCqXsrZikjzlY4Z8P0LAMOT3dt2WyNzIk5t9FAgmuJJTKwMA7TWFj?=
- =?iso-8859-1?Q?IUMc9XV6SQ2T6UiQOKdOlDMl2HZzD0Pt7XSf5NWt+9m5pip8BIJbs1hHQE?=
- =?iso-8859-1?Q?K7isqAJTOVApdxnPl7I2UYzcHOGlmP/jAKlamkl8FUqZGtq5JZOdUA18k2?=
- =?iso-8859-1?Q?gsaRG3MKhDl4OkpC2ld0el/KPH5pPK3he/1x+2jz6+UNZibdMS4guHxwAD?=
- =?iso-8859-1?Q?/4/UsiXHMlDywgUCdLfnB4ikzkqCdg3EyQorVBUJMpzDvkJqy2HQT5ehTG?=
- =?iso-8859-1?Q?U+Gp5s6yHWs1DIFG+LIbN0DbAva+5jfOmwdRqT3huKj1bqJ7RG/94D557D?=
- =?iso-8859-1?Q?2vMy9p7e6VfqeToBgGaAqO5cWcsFFvNa3eSEUV6vgXsHa70GhKJR5314CM?=
- =?iso-8859-1?Q?xbuVSqn3E+M3wQOl34++hWl8c11/OQcoYhukTDc64BI8BQjDWmTllaRI5t?=
- =?iso-8859-1?Q?5+GrTmhYUzkp+8NCsfYjkfyezvBM0KOj2NheohyX2YYNhe+P2H9JNxrXRy?=
- =?iso-8859-1?Q?484pXNzyke+i9u964ggr18vMxwVENgOMivaGotq6h+eNQ9jlp48+C+tFd+?=
- =?iso-8859-1?Q?RRxigSEUvB3q5JHxCxyQvzh61NLgAUE0rC7R/nUn1a9bTQlW/zQyj+SVGk?=
- =?iso-8859-1?Q?/X9OuESf459dmUaoBotr7MmU6TFIZtXMKO1NyTsFGX4lH75kIET3OCi4Fd?=
- =?iso-8859-1?Q?USjblCtXB0rYh8akSry3K3LV4WLdXx4PlPerbD1iytFUUwTkP0+zKoEEf3?=
- =?iso-8859-1?Q?3QboUcWHUThjsBUjk6gK2yrpiHlGUquvgSWdVG2aPGagr3zFDlFQoEFU5c?=
- =?iso-8859-1?Q?criS2jVAKrri6CMvUiVHX+AfW79bbOZ/KN2LRJqVTrFlysvLERcmvRpEt0?=
- =?iso-8859-1?Q?6gaPIT7OlNry5A00bNSXiAsT1OIk6TqNiFAYbKhAXRGXq1JNI+rLjsE/gz?=
- =?iso-8859-1?Q?lFRcks0snYZgoDyof02uhXRfXwy8bI5K0IOvS6Dba8lfQ/hechc/MLDejZ?=
- =?iso-8859-1?Q?02Rl+FHqvFmDf3R8M+6iiYI6qXeIzIjBYYCepjwHI0RRL9nvIMfe7Zk5fB?=
- =?iso-8859-1?Q?vsPV7vcOX2WkoFbORuqZQf4bJ3sVBu5pAyIK3f8T7F07jBH4+I4k?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2ed7b6d-21dd-4841-afee-08df3ee5d9f7
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 04:48:23.6151
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pvY0Obs6cSUM6kGZB99aHlh2N0ypFqBUPYYehe83SjksYkpboZ+A2WDt7oRRYMxMMe1HJW7TywQUcdB3wm+YiQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3P286MB1591
+References: <20261109044911.1163505-1-hj351016@gmail.com> <sashiko-outbox-206243@kernel.org>
+In-Reply-To: <sashiko-outbox-206243@kernel.org>
+From: khj <hj351016@gmail.com>
+Date: Tue, 10 Nov 2026 14:04:08 +0900
+X-Gm-Features: AclHuK8NPclpnxbDVfdRuupti_xIrnwGoz-1etxbLKHG71lGSd6n99Oe1ZbDtoQ
+Message-ID: <CAGr5VtNkwbhJSg9sFi=Lk67y9SA6ofQnpuBFa2NrKy8=mUecmQ@mail.gmail.com>
+Subject: Re: [PATCH v2] can: peak_usb: pcan_usb: shut down restart timer on
+ free to avoid use-after-free
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>, 
+	Oliver Hartkopp <socketcan@hartkopp.net>, Vincent Mailhol <mailhol@kernel.org>, 
+	Oleksij Rempel <o.rempel@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 22, 2026 at 08:53:00AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] PCI: endpoint: pci-epf-vntb: epf_ntb_dma_set_bar() returns 0 when DMA is disabled
+Thanks for the review.
+
+You're right that timer_shutdown_sync() alone is not sufficient. The
+restart URB submitted in pcan_usb_restart() is not anchored, so
+peak_usb_unlink_all_urbs() does not kill it, and its completion handler
+pcan_usb_restart_pending() can still run after free_candev() and
+dereference the freed pcan_usb via mod_timer(&pdev->restart_timer, ...).
+Shutting the timer down does not help once the object backing it is gone.
+
+So the complete fix has to stop that URB as well, not just the timer --
+e.g. anchor the restart URB so peak_usb_unlink_all_urbs() kills it, and
+also cover the probe-error paths you point out (dev_free() being skipped
+on a pcan_usb_get_serial() failure, and running before unregister_candev()
+on a dev_set_bus() failure, with the restart URB potentially still in
+flight because probe failure does not unlink it).
+
+Since that becomes a teardown reorganization in your driver, I'd rather
+not guess at the shape. Marc, how would you prefer this handled -- anchor
+the restart URB into one of the existing anchors (tx_submitted) or a
+dedicated one, and should the register_candev()-before-dev_init() ordering
+be part of the same change? I'm happy to send a v3 once the preferred
+direction is clear.
+
+Thanks,
+Hyunjung
+
+2026=EB=85=84 11=EC=9B=94 10=EC=9D=BC (=ED=99=94) =EC=98=A4=ED=9B=84 1:49, =
+<sashiko-bot@kernel.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] can: peak_usb: unanchored restart URB and timer mishandled in
+>   pcan_usb_free()
 > --
-> 
-> commit 2da1c2a8d12099e9d914603258e8edaefa818fbc
-> Author: Koichiro Den <den@valinux.co.jp>
-> 
-> PCI: endpoint: pci-epf-vntb: Export endpoint DMA channels
-> 
-> This commit adds support for exporting endpoint-local eDMA read channels to
-> the root complex through a configurable dma_bar configfs attribute and a
-> control-region extension in pci-epf-vntb.
-> 
-> > diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> > index 3adbaa9d85db2..ac83af54122f7 100644
-> > --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> > +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> 
-> [ ... ]
-> 
-> > +static int epf_ntb_dma_set_bar(struct epf_ntb *ntb)
+>
+> commit 5d0ce26d62347660cb47c1b9c3037c160879b961
+> Author: Hyunjung Ko <hj351016@gmail.com>
+>
+> can: peak_usb: pcan_usb: shut down restart timer on free to avoid use-aft=
+er-free
+>
+> This commit adds a dev_free callback to pcan_usb that calls
+> timer_shutdown_sync() on pdev->restart_timer before freeing the device.
+>
+> > diff --git a/drivers/net/can/usb/peak_usb/pcan_usb.c b/drivers/net/can/=
+usb/peak_usb/pcan_usb.c
+> > index 8fd058c328564..113b2e7453310 100644
+> > --- a/drivers/net/can/usb/peak_usb/pcan_usb.c
+> > +++ b/drivers/net/can/usb/peak_usb/pcan_usb.c
+> > @@ -882,6 +882,19 @@ static int pcan_usb_start(struct peak_usb_device *=
+dev)
+> >       return pcan_usb_set_ext_vcc(dev, 0);
+> >  }
+> >
+> > +static void pcan_usb_free(struct peak_usb_device *dev)
 > > +{
-> > +	struct pci_epf_bar_submap *old_submap;
-> > +	struct epf_ntb_dma *dma = ntb->dma;
-> > +	unsigned int old_num_submap;
-> > +	struct pci_epf_bar *bar;
-> > +	int restore, ret;
+> > +     struct pcan_usb *pdev =3D container_of(dev, struct pcan_usb, dev)=
+;
 > > +
-> > +	if (!dma)
-> > +		return 0;
-                       ^^(a)
-> > +
-> > +	bar = &ntb->epf->bar[ntb->epf_ntb_bar[BAR_DMA]];
-> > +
-> > +	old_submap = bar->submap;
-> > +	old_num_submap = bar->num_submap;
-> > +	bar->submap = dma->submap;
-> > +	bar->num_submap = dma->num_submap;
-> > +
-> > +	ret = pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
-> > +			      ntb->epf->vfunc_no, bar);
-> > +	if (!ret)
-> > +		return 0;
-> > +
-> > +	/* A failed dynamic update may have already removed the old mapping. */
-> > +	bar->submap = old_submap;
-> > +	bar->num_submap = old_num_submap;
-> > +	restore = pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
-> > +				  ntb->epf->vfunc_no, bar);
-> > +	if (restore)
-> > +		dev_warn(&ntb->epf->dev,
-> > +			 "failed to restore DMA BAR mapping: %d\n", restore);
-> > +
-> > +	return ret;
+> > +     /*
+> > +      * The restart timer is armed from the restart-command URB comple=
+tion
+> > +      * (pcan_usb_restart_pending()), which is not anchored and so out=
+lives
+> > +      * ndo_stop/unlink_all_urbs. Shut it down -- not just delete it -=
+- so a
+> > +      * late completion cannot re-arm it after free_candev().
+> > +      */
+> > +     timer_shutdown_sync(&pdev->restart_timer);
 > > +}
-> > +
-> >  /**
-> >   * epf_ntb_configure_mw() - Configure the Outbound Address Space for VHOST
-> >   *   to access the memory window of HOST
-> > @@ -342,6 +774,11 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
-> >  		epf_ntb_teardown_mw(ntb, argument);
-> >  		ctrl->command_status = EPF_NTB_COMMAND_STATUS_OK;
-> >  		break;
-> > +	case EPF_NTB_COMMAND_SETUP_DMA_BAR:
-> > +		ret = epf_ntb_dma_set_bar(ntb);
-> > +		ctrl->command_status = ret ? EPF_NTB_COMMAND_STATUS_ERROR :
-> > +					     EPF_NTB_COMMAND_STATUS_OK;
-> > +		break;
-> 
+>
 > [Severity: Medium]
-> When dma_bar is left unassigned (NO_BAR), epf_ntb_dma_collect() returns 0
-> without allocating ntb->dma, leaving ntb->dma as NULL.
-> 
-> If the peer subsequently writes EPF_NTB_COMMAND_SETUP_DMA_BAR to
-> ctrl->command, epf_ntb_cmd_handler() calls epf_ntb_dma_set_bar(ntb), which
-> checks if (!dma) and returns 0. epf_ntb_cmd_handler() then sets
-> ctrl->command_status to EPF_NTB_COMMAND_STATUS_OK even though DMA export is
-> disabled and no DMA BAR or subrange mapping was configured.
-> 
-> Should epf_ntb_dma_set_bar() in drivers/pci/endpoint/functions/pci-epf-vntb.c
-> return a negative error code (such as -EINVAL or -EOPNOTSUPP) when ntb->dma
-> is NULL so that ctrl->command_status is set to EPF_NTB_COMMAND_STATUS_ERROR?
-> 
-> >  	case EPF_NTB_COMMAND_LINK_UP:
-> >  		ret = epf_ntb_set_link_enabled(ntb, true);
-> >  		if (ret < 0)
-
-Thanks for the catch. Will change the return value at (a) to -EOPNOTSUPP in v9.
-
-Best regards,
-Koichiro Den
-
-> 
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261022082230.3164834-1-den@valinux.co.jp?part=5
+> Can timer_shutdown_sync(&pdev->restart_timer) prevent a use-after-free if
+> pcan_usb_restart_pending() runs after free_candev()?
+>
+> pdev->restart_timer is embedded in struct pcan_usb (allocated inside
+> netdev_priv()), so a late pcan_usb_restart_pending() calling
+> mod_timer(&pdev->restart_timer, ...) after free_candev() still
+> dereferences freed memory.
+>
+> Also, in peak_usb_create_dev(), register_candev() is called before
+> dev_init() and dev_set_bus():
+>
+> drivers/net/can/usb/peak_usb/pcan_usb_core.c:peak_usb_create_dev() {
+>     ...
+>         err =3D register_candev(netdev);
+>     ...
+>         if (dev->adapter->dev_init) {
+>                 err =3D dev->adapter->dev_init(dev);
+>                 if (err)
+>                         goto lbl_unregister_candev;
+>         }
+>
+>         /* set bus off */
+>         if (dev->adapter->dev_set_bus) {
+>                 err =3D dev->adapter->dev_set_bus(dev, 0);
+>                 if (err)
+>                         goto adap_dev_free;
+>         }
+>     ...
+> adap_dev_free:
+>         if (dev->adapter->dev_free)
+>                 dev->adapter->dev_free(dev);
+>
+> lbl_unregister_candev:
+>         unregister_candev(netdev);
+>     ...
+> }
+>
+> If the registered interface is brought up and triggers a restart while
+> probe is still running, a failure in pcan_usb_get_serial() inside
+> pcan_usb_init() jumps to lbl_unregister_candev and skips pcan_usb_free()
+> completely.  A failure in dev_set_bus() runs pcan_usb_free() before
+> unregister_candev(), and because probe failure does not call
+> usb_disable_interface() and peak_usb_unlink_all_urbs() does not kill the
+> unanchored restart URB, that URB can remain in flight across
+> free_candev().
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261109044911.11=
+63505-1-hj351016@gmail.com?part=3D1
