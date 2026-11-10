@@ -1,173 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.19
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794328619;
-	b=UTAfkU1jeBqXtXK2WxGeN6ygUtgglqTtLcC29ilC1SEo1tsq6LXe2E10+gu75+QfAWDP
-	 pWQ4rRTV93/hNYDY8uR/jicBn1OyeeOKCjtR1k1p4tAhwfr1s1I+PG+Px88SssaFrysQq
-	 L/Xce4pDfbS1CZkyPgogrN+k1mgjjJsXD/AbMeXt3/t+XAwN74uq7eJ5HV34WwHDlyN4O
-	 dufKDyAtQQOBHVmt1P33YQ2Wia0wCEghNynf30JaBUvb3wGN7/PpbE/i4bu4Y7IERJeNQ
-	 TXgy6Ts9UfYEy/69Lb5NL/U7W3X23xH3lSEdX7ocalqmBsc8FKAstsdgrm33YUXsHCg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794328619;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:From:To:Subject:Thread-Topic:Thread-Index:
-	 Date:Message-ID:References:In-Reply-To:Accept-Language:
-	 Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:
-	 X-Exchange-RoutingPolicyChecked:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=8mvNiUSKitGyDmKMFVF+IrhFX4gG3KOWCR3u8aFRjv8=;
-	b=rskO5efWxoQoIOX4vYNDD+SxUL0nolpPAxMhS0jO8uriVojRhqwcpfokSVl0yEPfxWkM
-	 Pl4q6R3R7dS9STJLBcFO4vCLxDNxoOkB85jTv6xW2h153fcaXU5vrg5jcProEtUAGHaha
-	 PFzITyt1oOOSj4Xbk0151dmJtP/lLOZNsS0vn2OJAG4yb5TyUDDGvB4HG3FS09JpzaOwq
-	 i4GzovU+JAjbwFeVSMzbt0pC2dVsCM99AYEe8uNfoB4K12gu6xT4Y2PUJ/zH3Hlh4NpBy
-	 asYQdmIxZgWVYtpS3CHFd5+3wulGQFzoc+0p5W2ONLq+i0J0rQElr5mXBHiZobcnuVQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YJ6RvUxh;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.19
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794330307;
+	b=OgP+ME5+4/H119UI7+edzHmo7StSDtURcoLMdyxq2orFoNv5l3jLjOyGlF+gaH08p1iR
+	 kugOwemi3QLZ1L3tSk56ECQnYWZq0Y4FxRU6nH0YSwl7auFHj6VoTmRNl3TnAXMA7EZrU
+	 r1MhkqJawsnLh6m+lMXB8Ejb0V730jDN7b+XUpfXBBmovGZMpxxHj3TlQBrpP94A3kNde
+	 W5kvjyoJkC1vjly8Kdu0EaLR2ftPhozeZZdhga5rTIK6AEyVxKbt9WCQunyLdh+6vQ+8O
+	 gBs3tstiJeRBGqqF12jJ6ieuZ44ZzHX7XGwyDR2ywCU4ahlr98tpFlTb0WZqR8z60KA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794330307;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=w5OK7L+XHYDyvpdUN7iinyt/hLzBrVtJ/Mqo1j/GW2Q=;
+	b=niCmY3CVTu1tyDzmBSrLcpYMxD7DGD40ktH3d7o3s5aUHXWih3wsEGQGAXvERiJU+2MR
+	 mPawoQzPzWiiIcHS11ANFW+RzFLv+Hy++sU+a1yfkskZe7brh8J2/XgB+1OV3e21qkPV1
+	 f4oM0Ug83c6feLfAw4TWPLWjjVJtwSq7cZFDi1vGOtsWjx/h624DxhaZwjO7sZqlOAo8g
+	 +LQxIOiD7ZW9cR8VD+Z1a8U25PAsYnSTDY7nACFTFG6MDAUtqZLNdqMeSVBwhOQxxoDDd
+	 hKd/76DuzZ9YCFLMOqss6hDs1AfCfC48OGKweiW8Y5wxFxgqOBKuTkSz4/3crlo45rw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZQBitt5s;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFD3606A20D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 16:36:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9DFD3606A20D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7D5606A31C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 17:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YJ6RvUxh
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794328619; x=1825864619;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=hxKFRgUeu5LKUClz+Tg72Bxx2CUTi8TERN1QyWh2oE8=;
-  b=YJ6RvUxhrDYLamNGy5CIvwWsy1TaBaxzfFGQwB3uCslA/KXOgcSWngUP
-   QsA1YaJUW4t+3BVMfuKwwCDMhGFH5ivzalIDloUM7m1OmyY/wrgk3TW5z
-   FhIMy0Mg96fzzspf68dd6E6RJVugbBt0i3of5w+poZdhL/cRfNtph/rNP
-   2ZuDyU66pB1wCFmgP4sMh+tsODAT4HtR//3XXrN6UpkoE30m5WO797bt1
-   HTMZ3pEHxXMYdLxrk36wGvOYf/2qFXz5e2097Ly/4/sSMrNnBkZ+bXyWc
-   hLndPUMyhH2++Yczas2n1p6ZAxnSEAOT0ptnkI0L23Tsx8n9iKf0ud/1t
-   Q==;
-X-CSE-ConnectionGUID: w9z32aakS2GE7eNAvh1gqg==
-X-CSE-MsgGUID: bkWOwEIJTgS0+C5qnyd83w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11962"; a="3121208"
-X-IronPort-AV: E=Sophos;i="6.27,206,1787036400"; 
-   d="scan'208";a="3121208"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2026 08:36:58 -0800
-X-CSE-ConnectionGUID: KWWhR9TZTgCEhPS0BpH+4w==
-X-CSE-MsgGUID: nx7SvvLHSraf3+tNNpjSPw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,206,1787036400"; 
-   d="scan'208";a="8065848"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2026 08:36:58 -0800
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Tue, 10 Nov 2026 08:36:57 -0800
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Tue, 10 Nov 2026 08:36:57 -0800
-Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.52) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Tue, 10 Nov 2026 08:36:57 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s0V2dF7sfqT8/lHcmiiFhLLniHJLHG6YBBR+K6I4t9vxzINL9ZeZnanm0ZRxMhMUvJHH4N7rOZxVciCy2aH5PfBeeRgQcFRVaHDp4j2wfDLr+jdJdMEyTQjdR2H24Y4t589gUYS5ib80OvzbCT17FihkYiVoIQDyDKGbUXO2WgvzBQIuS5LlrOyUGUoJB3cOoyq7hdSwWzyh3n6PbdZaakFRVLnaN8yZLccE7vPRZ8s1smdevD6FmbvZUgLCmE9V0jHGm+0sVTxpyflrOfyCcCNX+dAg36mFE+DXcBtHMG+gJxz/ImrcQsf4WIzMjOR1b04HorR4ewsZOxcQB+cbJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8mvNiUSKitGyDmKMFVF+IrhFX4gG3KOWCR3u8aFRjv8=;
- b=Cs0LoEEJ8OY5CAq0CKXCGm2RKY1Rso+baKKE4v7lsC1pZNx6t1Ge/yyJcbgVpCw8a3+GLuXzbPiyseGvMEcqAA9u22rxlptiOz52O2AJ+RuIf8IUg0QuFDLw88aeZfVQfJri+XqEKhzV9QHGZarbGIyIV4NpCOfW+nyPoj+EmKxUI6v1gRLsmVxg8RtT/NIDUObDHRbktHLmIWUlbIJ6Cb+StvgngLifQBarNUhQANcfRhoVCPfK3P52TuN1v4+EFlfubNvz03iL/ko1yDaPI7vn8ymQY4fXrdud5iqyboljHkUCfoZ/Wmeir2XX3hAxOp2t+kHVAM+7WwFGQgjQEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from CH3PR11MB046149.namprd11.prod.outlook.com
- (2603:10b6:610:367::19) by LV3PR11MB8726.namprd11.prod.outlook.com
- (2603:10b6:408:21a::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Tue, 10 Nov
- 2026 16:36:52 +0000
-Received: from CH3PR11MB046149.namprd11.prod.outlook.com
- ([fe80::7c3f:5300:19c4:b823]) by CH3PR11MB046149.namprd11.prod.outlook.com
- ([fe80::7c3f:5300:19c4:b823%6]) with mapi id 15.21.0615.007; Tue, 10 Nov 2026
- 16:36:51 +0000
-From: "Ruhl, Michael J" <michael.j.ruhl@intel.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>
-Subject: RE: [PATCH v13 16/16] drm/xe/vsec: Support survivability mode for CRI
-Thread-Topic: [PATCH v13 16/16] drm/xe/vsec: Support survivability mode for
- CRI
-Thread-Index: AQHdaxeEfV9HeIgtu06+sH9JphLeCrcbX9EAgAwrWoA=
-Date: Tue, 10 Nov 2026 16:36:51 +0000
-Message-ID: <CH3PR11MB046149480C7E56AFD8BE6A24F4C1722@CH3PR11MB046149.namprd11.prod.outlook.com>
-References: <20261102221314.119028-18-michael.j.ruhl@intel.com>
- <20261102221314.119028-34-michael.j.ruhl@intel.com>
- <sashiko-outbox-194294@kernel.org>
-In-Reply-To: <sashiko-outbox-194294@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR11MB046149:EE_|LV3PR11MB8726:EE_
-x-ms-office365-filtering-correlation-id: 53f089be-9162-4b64-2f9f-08df3f48d2c2
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|38070700021|260925022911599003|260925021911599003|260925021311599003|4143699003|56012099006|11063799006|18002099003|22082099003|6133799003|10067099003|261009223027099003|261021121427099003|261028144727099003|261102123227099003|261022075727099003|261022105027099003|261026140227099003|261026121527099003;
-x-microsoft-antispam-message-info: Q9PCcM5zh8obLz/ayszbzA1Faq7tsHDtEYwl44bbKX+czorOQD9UQkgrSIGHuDDI5XecpHX+0dyBg8YJSWX4P6QkvMWKPholwr7UoyyEyrMaKZxU56ZbbsRoHMbQ7gN5r7hAJOL57T1yVXs/Fpe9NNFMyqsJbRQlK52YIf1g5jOtExz9wlCFlZvGxoE/r/dpk0+yHhdX92TrMEblojz7OXnjWXNPdtpkgDdr7Z2F+rNJfL+wbbRq9ULXCzoNtHTc0xQSWSg1NYq+MM9REGjkOW9aOtzjYY2BKXzZ/4jMVH2Yb54P4G+JuxcuZfyludpnnZK0WhqBZECRTyvytTyle0mBj/GsILff0PFrrQo/O1IfGL2c8BtpU5oUZnJ8uvr4B+D7br3n+daGL5UwGVe1PPubO4PGBP1Fem8Wtm2QWrkTnvvERw8yG0iHcVZnPTKbl3xltU/XXblgmwhPYCkNvxLXft7P6ne1B0nzezivbHZ9VGsS2VzaUMLReF/iZy6QXXYkb1sZIeAlE0MYJb6oSDIhyV1Tf17lGigiIRJgByU4fj4LqrB/b/mabM87KxJiGfXkJ8tcnN5xAwmiw9paSU2BaLAzBuHgmUJl51oeSYkQd+hKTJMGMvQYsO8Os9KBRSTrymr4QKzxvgHiHu3maYsBXbnj/PimISEooLxKJQY=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR11MB046149.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(38070700021)(260925022911599003)(260925021911599003)(260925021311599003)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003)(6133799003)(10067099003)(261009223027099003)(261021121427099003)(261028144727099003)(261102123227099003)(261022075727099003)(261022105027099003)(261026140227099003)(261026121527099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?AhH4VYyIYv2jCu3u549+wNBl151k/AVw99XsMsnKeK9jpTY2YO9o8myQCl1E?=
- =?us-ascii?Q?Xqa/4HVwXaC+REDCTlQ5MakHgaznKqNFsUla2uNqZG05Q2G1TN8uMdX/T44d?=
- =?us-ascii?Q?OtLt54NymcxDKXrg4mZaWXM8WS0nrgfKdhmTrNhGCtJNlhea9zfmleSyF1kF?=
- =?us-ascii?Q?XYasLHWRqERdSngfbCwPMC9L1TSdIRdcj/VbjMgDIvIFhOk+IUrYCxcqeK5T?=
- =?us-ascii?Q?MmZU6ZdDsUcObZOYEje50H8Sy8wlWp2pV4rJoIfK6m1qXkIcloZu8mfZkryg?=
- =?us-ascii?Q?aQAFv1lfZ/PYi11WIGrHatOHYuAB1fDaco4MwaG1IKStribDnxy009OfyNln?=
- =?us-ascii?Q?Yh2f+aPZidJ2o6QIEI59UIDr4ATHj2qtmiKhKRxzLuNnNlagMl0OZmNnOrGU?=
- =?us-ascii?Q?Z9DRD+FEYtjSNplGOotrzzrBkdEWJNn4vJi+vK2LW18eZxLOWP2kvuXUKtdU?=
- =?us-ascii?Q?nrXpJ/1SDE46K8Uygmr1hh7sg5WVmBokLurds79Z4tjFao0iSnrk9IH9jD7z?=
- =?us-ascii?Q?+hX70LWVfn3gk50/biW+FdWG+WpZV+75kWuQvUESWsa4PffOAfR/nprCyWRe?=
- =?us-ascii?Q?lyLI0XS6qGJ215djIAxNx5wMR14tY3uSszXkBg5kPpgvr/yWEATsjJv3aoCA?=
- =?us-ascii?Q?whn2uGt780QcynyJ3ESAA+7V8ixC9tYZ9XcE+V1ibfdmYIskNvLUla1xEF1E?=
- =?us-ascii?Q?ZWahSE8EO2H6l1uiLwvFfxqJW5xbfum7ewBRBLAEATm76zEIN/RnRX7CuPnX?=
- =?us-ascii?Q?cttTzXTqKv+SM7+PvsDhedx0F+VRoz6UgpeLfNEEm9Ji4TEHHypgiAoeO5ke?=
- =?us-ascii?Q?8c6/tUp6obFICZF0GPihxqgdo6t58Q75WohzfpdOO4Ae9LmQ8+QtnozOrzKr?=
- =?us-ascii?Q?ZgTh7jCE5cfnapEHLVPPVfVeiBIA8vhIasvEhFqoQF9P7/5e5mtsoblmJnsB?=
- =?us-ascii?Q?RkfwsaYTJ49uJJDsNPgTqwakhxoqcc0g8pB9vHIEgg9SDreVk3lantNiTI5K?=
- =?us-ascii?Q?/Tr/f7+kIDadqPk9yH6WJSWkkQPVgTGPR/Qy4pEVdZ58WIL52CHoZ9pUC/tS?=
- =?us-ascii?Q?t9Phq/FrbLE35U5ZJu9PUZkgDKcEWUDUzKgvP5YZQdnCSQ5ErxKGtyOKcDpd?=
- =?us-ascii?Q?6OkiX//63/v4r1xxWJ2Q1mzyFbpwvuVekPy6FfCMm82qUI018WmAwwLCV6SR?=
- =?us-ascii?Q?NytN2QoXfJul9ShUzh9+P8crMaALTP5+6W7BzHC1TCUu26J16ckL0fS8he1m?=
- =?us-ascii?Q?J9HNj8LTLmPQQ44ot6rIgGSyDxbzBfjnKSrlmocccBlt/sOfeSP8H3tKq0h8?=
- =?us-ascii?Q?vy+P7Ym9UWe7AETuxQ7Jl36i+xFfcCs7HZKLXyirhDY/UxkE/GM8BSoI5Kii?=
- =?us-ascii?Q?7wCtKy9lS6hUWCEvxljFOXTFNON2AA/mz60hDkqM9Mh5TmKaFXFLAo7RUXx+?=
- =?us-ascii?Q?sI2byVVgCnIGvuDgw0mvoJSFx0Fpa4K8qCCyYc3RtjVc/rX8r1yOfpqqNnnn?=
- =?us-ascii?Q?H9B9xiify8nq6bbScx0dRbvfWQmChG4IiuecscSBFzcu4ITD1wn3wCQJxHMi?=
- =?us-ascii?Q?PgP9aDW4ip5tx+3BPTwmZqbsTf29WI8VDzXR78KeTQulypplfjdvHmorYMWF?=
- =?us-ascii?Q?58YeW8X0aEXqekNgyt6y4T7kccuHXqRQqJU+ekhfIy67v/dwxdi72dAc+q1A?=
- =?us-ascii?Q?nhpNgULQqP9IeRJg0iO9ARpboMbq9R9GXqCXacUjd6iilKAsUychyXCYpIdx?=
- =?us-ascii?Q?NL4oB8raaQ=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZQBitt5s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84E61F0089F;
+	Tue, 10 Nov 2026 17:05:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794330306;
+	bh=w5OK7L+XHYDyvpdUN7iinyt/hLzBrVtJ/Mqo1j/GW2Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ZQBitt5sjfK1x5mRbZ5LvBWqcEfWKKg2fwb/9fJFUVZkbWg9OQRzlp6S2u+Vof+wP
+	 yRDyF9oMqKClI3QjvNbIpy03NMhhwC3N+yQyPoWKlDZg8FyzuCqcdje4b621f/LaIt
+	 KBo3XKV3N3JS1l9RGDkIq6PkP2RjNNvMeeLWZOjEnH7QAn0fRENuEsp066FRlpsWUI
+	 UQJnQyHwWbWJsYL4UffzXtXZnhlhctdCgLELWIgk0E6NWXTkC1uffkngQJ/E3dhj6p
+	 kfEcs1Mxu1lSXXD8cZfC+0/xc4IR4kwOrpWCkBGGRjv1NiITlmwzRBMOndSt/0Tlkb
+	 2FKVndk9ce78g==
+Date: Tue, 10 Nov 2026 17:05:00 +0000
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: David Hildenbrand <david@kernel.org>, Zi Yan <ziy@nvidia.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, "Liam R. Howlett" <liam@infradead.org>, 
+	Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
+	Barry Song <baohua@kernel.org>, Lance Yang <lance.yang@linux.dev>, 
+	Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org
+Subject: Re: [PATCH v2 3/3] mm/khugepaged: release contended mmap read lock
+ after scanning enough VMAs
+Message-ID: <avNOl0O5C9KW5R_3@gremlin>
+References: <20261105-khugepaged-latency-fix-v2-0-4384bbfe4606@kernel.org>
+ <20261105-khugepaged-latency-fix-v2-3-4384bbfe4606@kernel.org>
+ <sashiko-outbox-202266@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -177,144 +64,200 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: StX6lISSKTYp3Q1d2hyudnuyu0Dft1Pkt/PnoavbOINXwLkqyPp2H6bZDYxM+2H1ZD6vJtTBznJzrh29h9v9XZ+BkZFvQMdyihQVkEKZ1XIm+5rkS/t7bBmc4q0d2wzJhUZu+CAh54lI7S2eWd2U3XNz6Bd3+l3QUyCRhOLQqSWUwCJV8L+cxZDQA13DDfu2NUDtzo8Y9033+ZDTJ2d5VMq5OZL6IbFXI84OTHZtCr+mSPEQ3YwfvDV3GRVnqu3pUU2zG97KR7VB6wwxkxXky1F4JRL0Shs6VECyr5k8YqTq6Mxsb4gZdCgaSXFSxibmJcmD/ofHHOZjXBfh/zT+1g==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB046149.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 53f089be-9162-4b64-2f9f-08df3f48d2c2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Nov 2026 16:36:51.5642
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ocmNv8q562RSQycLCnjNMhxHnlhXEjRsmV9Ug77vPkjnz/mfayCegpQCByLXtrSWmc0jFGOyMbHKoZv9xUEIE9PgFWJ1dW9tDFtROH+AzNk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR11MB8726
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-202266@kernel.org>
 
->-----Original Message-----
->From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
->Sent: Monday, November 2, 2026 5:39 PM
->To: Ruhl, Michael J <michael.j.ruhl@intel.com>; intel-xe@lists.freedesktop=
-.org
->Subject: Re: [PATCH v13 16/16] drm/xe/vsec: Support survivability mode for
->CRI
+On Fri, Nov 06, 2026 at 08:58:05PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] mm/khugepaged: lack of forward progress in
+>   collapse_scan_mm_slot()
+> - [Medium] mm/khugepaged: sub-PMD mTHP VMAs bypass cursor advance and
+>   overflow check
+> --
 >
->Thank you for your contribution! Sashiko AI review found 1 potential issue=
-(s) to
->consider:
->- [Medium] drm/xe/vsec: NULL sc->mmio dereference in wait_for_fw() on
->survivability error
->--
+> commit 9bc41c7859cdd4759479e883a9c557ea64a1a2c7
+> Author: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 >
->commit 6e126caaac7b556b33b3c1891921257efd2a418a
->Author: Michael J. Ruhl <michael.j.ruhl@intel.com>
+> mm/khugepaged: release contended mmap read lock after scanning enough VMAs
 >
->drm/xe/vsec: Support survivability mode for CRI
+> This commit periodically checks whether mmap_lock is contended in
+> collapse_scan_mm_slot() after scanning a batch of VMAs, dropping and
+> re-acquiring the read lock and resetting the VMA iterator to
+> mm_slot->address. It also checks for unsigned long overflow when aligning
+> vma->vm_end for ineligible VMAs.
 >
->This commit adds a VSEC configuration for Crescent Island in survivability
->mode to expose the PUNIT crashlog PMT capability and initializes the SoC
->remapper during boot survivability mode.
+> > diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+> > index 216c4b8d28c40..eaa01dae5a030 100644
+> > --- a/mm/khugepaged.c
+> > +++ b/mm/khugepaged.c
+> > @@ -66,6 +66,12 @@ static DEFINE_READ_MOSTLY_HASHTABLE(mm_slots_hash, MM_SLOTS_HASH_BITS);
+> >
+> >  static struct kmem_cache *mm_slot_cache __ro_after_init;
+> >
+> > +/*
+> > + * The number of VMAs to walk before checking for, and relieving, mmap lock
+> > + * contention, as a function of the pages_to_scan budget.
+> > + */
+> > +#define KHUGEPAGED_MAX_VMA_SCAN_BATCH(pages_to_scan) ((pages_to_scan) / 4)
+> > +
+> >  /**
+> >   * struct khugepaged_mm_slot - khugepaged information per mm that is being scanned
+> >   * @slot: hash lookup from mm to mm_slot
+> > @@ -2910,6 +2916,7 @@ static void collapse_scan_mm_slot(unsigned int progress_max,
+> >  	struct mm_struct *mm;
+> >  	struct vm_area_struct *vma;
+> >  	unsigned int progress_prev = cc->progress;
+> > +	unsigned int nr_vmas_batch = 0;
+> >
+> >  	lockdep_assert_held(&khugepaged_mm_lock);
+> >  	*result = SCAN_FAIL;
+> > @@ -2942,15 +2949,35 @@ static void collapse_scan_mm_slot(unsigned int progress_max,
+> >  	for_each_vma(vmi, vma) {
+> >  		unsigned long hstart, hend;
+> >
+> > +		/* Relieve mmap lock contention after walking a batch of VMAs. */
+> > +		if (nr_vmas_batch++ >= KHUGEPAGED_MAX_VMA_SCAN_BATCH(progress_max)) {
+> > +			nr_vmas_batch = 0;
+> > +			if (mmap_lock_is_contended(mm)) {
+> > +				mmap_read_unlock(mm);
+> > +				cond_resched();
+> > +				mmap_read_lock(mm);
+> > +				vma_iter_set(&vmi, mm_slot->address);
+> > +				continue;
+> > +			}
+> > +		}
 >
->> diff --git a/drivers/gpu/drm/xe/xe_survivability_mode.c
->b/drivers/gpu/drm/xe/xe_survivability_mode.c
->> index d73cdad0b3a9c..4ce84bafcbf57 100644
->> --- a/drivers/gpu/drm/xe/xe_survivability_mode.c
->> +++ b/drivers/gpu/drm/xe/xe_survivability_mode.c
->[ ... ]
->> @@ -352,6 +353,7 @@ static int enable_boot_survivability_mode(struct
->pci_dev *pdev)
->>
->>  	xe_heci_gsc_init(xe);
->>
->> +	xe_soc_remapper_init(xe);
->>  	xe_vsec_init(xe);
->>
->>  	if (survivability->fdo_mode) {
->> diff --git a/drivers/gpu/drm/xe/xe_vsec.c b/drivers/gpu/drm/xe/xe_vsec.c
->> index 1ed904ec14965..6d4ef9cb9f60f 100644
->> --- a/drivers/gpu/drm/xe/xe_vsec.c
->> +++ b/drivers/gpu/drm/xe/xe_vsec.c
->[ ... ]
->> @@ -316,9 +336,10 @@ static void cri_late_bind_probe_work(struct
->work_struct *work)
->>
->>  static bool wait_for_fw(struct xe_device *xe)
->>  {
->> +	struct xe_survivability *survivability =3D &xe->survivability;
->>  	int retries =3D VSEC_LATE_BIND_RETRY;  /* wait up to 20 secs */
->>
->> -	if (xe->info.platform !=3D XE_CRESCENTISLAND)
->> +	if (xe->info.platform !=3D XE_CRESCENTISLAND || survivability->mode)
->>  		return true;
->>
->>  	while (retries--) {
+> [Severity: High]
+> Can collapse_scan_mm_slot() fail to make forward progress here when
+> mmap_lock is contended?
 >
->[Severity: Medium]
->Can this dereference a NULL xe->sc.mmio pointer and lock an uninitialized
->xe->sc.cmd_lock mutex if enable_boot_survivability_mode() fails after
->xe_vsec_init()?
+> In pages_to_scan_store(), khugepaged_pages_to_scan can be set to any positive
+> value:
 >
->During early probe in xe_device_probe_early(), xe_sysctrl_init() has not r=
-un
->yet, so xe->sc.cmd_lock is uninitialized and xe->sc.mmio is NULL.
->enable_boot_survivability_mode() sets survivability->mode =3D true and cal=
-ls
->xe_vsec_init(xe), which registers the crashlog auxiliary device via
->intel_vsec_register() with devm-managed cleanup:
+> mm/khugepaged.c:pages_to_scan_store() {
+> 	err = kstrtouint(buf, 10, &pages);
+> 	if (err || !pages)
+> 		return -EINVAL;
 >
->drivers/gpu/drm/xe/xe_survivability_mode.c:enable_boot_survivability_mode(
->) {
->	...
->	survivability->mode =3D true;
+> 	khugepaged_pages_to_scan = pages;
+> }
 >
->	xe_heci_gsc_init(xe);
+> When khugepaged_pages_to_scan (passed as progress_max) is 1, 2, or 3,
+> KHUGEPAGED_MAX_VMA_SCAN_BATCH(progress_max) evaluates to 0. Because the batch
+> check runs at the top of the for_each_vma() loop before
+> collapse_test_exit_or_disable(mm) or any VMA handling, nr_vmas_batch++ >= 0
+> triggers on the first VMA before any VMA is scanned. If mmap_lock_is_contended()
+> is true, it resets nr_vmas_batch to 0, drops and re-acquires mmap_read_lock(mm),
+> rewinds vmi to the unchanged mm_slot->address, and executes continue without
+> advancing mm_slot->address, incrementing cc->progress, or checking
+> collapse_test_exit_or_disable(mm).
 >
->	xe_soc_remapper_init(xe);
->	xe_vsec_init(xe);
+> Even when progress_max >= 4, for an eligible VMA whose vm_end is not aligned
+> to HPAGE_PMD_SIZE:
 >
->	if (survivability->fdo_mode) {
->		ret =3D xe_nvm_init(xe);
->		if (ret)
->			goto failed;
->	}
+> mm/khugepaged.c:collapse_scan_mm_slot() {
+> 		hstart = ALIGN(vma->vm_start, HPAGE_PMD_SIZE);
+> 		hend = ALIGN_DOWN(vma->vm_end, HPAGE_PMD_SIZE);
+> 		if (mm_slot->address > hend) {
+> 			cc->progress++;
+> 			continue;
+> 		}
+> 		if (mm_slot->address < hstart)
+> 			mm_slot->address = hstart;
+> 		...
+> 		while (mm_slot->address < hend) {
+> 			...
+> 			mm_slot->address += HPAGE_PMD_SIZE;
+> 			...
+> 		}
+> }
 >
->	ret =3D xe_i2c_probe(xe);
->	if (ret)
->		goto failed;
->	...
->failed:
->	xe_log_err_fatal(pdev, SURVIVABILITY, ret, "Failed to enable Boot
->Mode!\n");
->	survivability->mode =3D false;
->	return ret;
->}
+> Once the inner loop finishes (or if hstart == hend), mm_slot->address is left
+> at hend, which is less than vma->vm_end and still lies inside that VMA. If the
+> batch contention check triggers at the start of the next VMA (for example when
+> progress_max is 4..7 so the batch threshold is 1), vma_iter_set(&vmi,
+> mm_slot->address) rewinds the iterator back to the previous VMA where
+> mm_slot->address == hend, which then does no work and neither advances
+> mm_slot->address nor increments cc->progress.
 >
->If xe_nvm_init() or xe_i2c_probe() fails, survivability->mode is reset to
->false while the VSEC crashlog device and its sysfs attributes remain
->registered until PCI probe teardown runs devres_release_all().
+> > +
+> >  		cond_resched();
+> >  		if (unlikely(collapse_test_exit_or_disable(mm))) {
+> >  			cc->progress++;
+> >  			break;
+> >  		}
+> >  		if (!collapse_possible_orders(vma, vma->vm_flags, TVA_KHUGEPAGED)) {
+> > -			/* Unable to collapse, skip to the next candidate. */
+> > -			mm_slot->address = ALIGN(vma->vm_end, HPAGE_PMD_SIZE);
+> > +			const unsigned long next =
+> > +				ALIGN(vma->vm_end, HPAGE_PMD_SIZE);
+> > +
+> >  			cc->progress++;
+> > +			/* Check for overflow. */
+> > +			if (unlikely(next < vma->vm_end)) {
+> > +				vma = NULL;
+> > +				break;
+> > +			}
+> > +			/* Unable to collapse, skip to the next candidate. */
+> > +			mm_slot->address = next;
+> >  			continue;
+> >  		}
+> >  		hstart = ALIGN(vma->vm_start, HPAGE_PMD_SIZE);
 >
->If userspace reads the crashlog sysfs attributes during that teardown wind=
-ow,
->xe_pmt_telem_read() or xe_pmt_read_reg() calls wait_for_fw(xe), which sees
->survivability->mode =3D=3D false and calls:
->
->  wait_for_fw(xe)
->    -> xe_sysctrl_is_oobmsm_fw_ready(xe)
->      -> xe_sysctrl_send_command(xe, ...)
->        -> guard(mutex)(&sc->cmd_lock)
->        -> sysctrl_send_command(sc, ...)
->
->Because xe_sysctrl_init() was never called, would this lock the uninitiali=
-zed
->sc->cmd_lock and dereference the NULL sc->mmio pointer?
 
-caching the survivability mode value in the PMT context.  If the error path=
- is taken
-the state will remain.
+This is already addressed in newer revision.
 
-The sysctrl usage will not happen.
+> [Severity: Medium]
+> As reported by Sashiko on v1 [1], what happens if an anonymous VMA does not
+> span a full PMD (so hstart >= hend), but sub-PMD anonymous mTHP orders are
+> enabled?
+>
+> In collapse_possible_orders(), anonymous VMAs are checked against
+> THP_ORDERS_ALL_ANON:
+>
+> mm/khugepaged.c:collapse_possible_orders() {
+> 	if ((tva_flags == TVA_KHUGEPAGED) && vma_is_anonymous(vma))
+> 		orders = THP_ORDERS_ALL_ANON;
+> 	else
+> 		orders = BIT(HPAGE_PMD_ORDER);
+>
+> 	return thp_vma_allowable_orders(vma, vm_flags, tva_flags, orders);
+> }
+>
+> A faulted-in anonymous VMA that is smaller than HPAGE_PMD_SIZE (or does not
+> span a full PMD) will return non-zero from collapse_possible_orders() when a
+> sub-PMD order is enabled, skipping the !collapse_possible_orders() block:
+>
+> 1. If the VMA starts at or straddles a PMD boundary (so hstart == hend), it
+>    sets mm_slot->address = hstart (< vma->vm_end), skips the inner while
+>    (mm_slot->address < hend) loop without incrementing cc->progress, and
+>    leaves mm_slot->address inside the VMA, so vma_iter_set(&vmi,
+>    mm_slot->address) will rewind back to this VMA on contention.
+>
+> 2. On architectures where user mappings can reach the top incomplete PMD range
+>    above ULONG_MAX - HPAGE_PMD_SIZE + 1 (such as 64-bit s390 where TASK_SIZE
+>    is -PAGE_SIZE), a sub-PMD anonymous VMA with vm_start > ULONG_MAX -
+>    HPAGE_PMD_SIZE + 1 bypasses the next < vma->vm_end overflow check above.
+>    Then hstart = ALIGN(vma->vm_start, HPAGE_PMD_SIZE) wraps to 0 while hend =
+>    ALIGN_DOWN(vma->vm_end, HPAGE_PMD_SIZE) is ULONG_MAX - HPAGE_PMD_SIZE + 1,
+>    causing the while (mm_slot->address < hend) loop to run from address 0 with
+>    the wrong VMA and rewind mm_slot->address.
+>
+> Should the hstart >= hend case also advance mm_slot->address to
+> ALIGN(vma->vm_end, HPAGE_PMD_SIZE) with the overflow check before computing
+> hstart?
+
+This seems liek a pre-existing issue. Are they being snuck in by not being
+flagged as such now? ;)
 
 >
->--
->Sashiko AI review *
->https://sashiko.dev/#/patchset/20261102221314.119028-18-
->michael.j.ruhl@intel.com?part=3D16
+> [1] https://lore.kernel.org/r/20261103-khugepaged-latency-fix-v1-5-a07ab16ac860@kernel.org
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261105-khugepaged-latency-fix-v2-0-4384bbfe4606@kernel.org?part=3
+
+--
+Cheers, Lorenzo
