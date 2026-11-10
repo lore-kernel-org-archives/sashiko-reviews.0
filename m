@@ -1,94 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.89
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794279674;
-	b=HRRRyLfikc8NLmLGGf0UGRCWSjTSxQbKIB6duWgevad3bcJDI583HreOQuQ2cxKbXwtc
-	 AtpFuMIbxeahRMrZ6W7L7+1U2V78cqP88VQF2xjMpDfjiZh8M/Fr1LMNvTplBnq7WP1zR
-	 Qd76vdrrLBamuG5sXWlglczgcn3DEcRf6l8V64b4wN3hHNVN62eC169rvRf/XgW2r6NsZ
-	 hB487Fi6qgKOtLCn/a1jx7L3Ioy+XWXNxoP4A89tnj0w7JK/0KFlHiJNmsV0YcblPyneH
-	 XCgs4JyduV1kh12crkM72uJnMxQN5YnHTAIyUnINoeD5SCAFnNRW51rvnXzS0Kt3qUQ==
+	t=1794280149;
+	b=0Yk0GQgS+YO28Cj/CconY5z8b2G3oD6CXqltH9sf0iyxuJIMko0VB4WgyqZtWeW6Zigj
+	 wXFNp8P4swghY19GBB7/jisoi4npvvooJlGpKfTcbhBzYqJ3ZwJCWEAC0IkkV0wDqsxVI
+	 otHrtV3fUah0Y0+zr4sxm2y9xgxSJ+VRsUJXjDDA2As7tUzJr9rJOiEUeNGDj3xKNwh0h
+	 DvMcl7/JDZ7Bw0QR40IqlWz+pojlVaOmTXUj/cnURJP6TxpdAH+zbTLmfnyVxE6sTKtM9
+	 IYRixLOp6gSGjNJhI6OobSDGenxJsk4wSFiwBA1OvlCRAWVXEfvsgEaSGTsBFrtJAmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794279674;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=keimOPBn6zqYZGZ+MFySGLhtS4gerw7P0fcwObyzCWU=;
-	b=aXLSmTNSwXRmcCcJublU0FDyiTQs+4PenL227CFGc1nEFZw6EsasPixgFmNi+UGxnCpz
-	 QJFb1pfPcujw0LfDCMZRDYTi63fXpT3NEGCwiJ7A/3jAMmpMct7V7+EZtodI4GiKL+Pl+
-	 IZODgUkm/F00di8Bqc8/QwXfYJj+7+6VlwFvozQYT/txeyymaVnlqf3pz75UI8KbxXtEI
-	 Mhm9sV21ZraFISkVkgGwYzp4A1m+R7gRNctzldhCYn1EQgw9Fli69TbNFNme5aW2cTOB0
-	 fmxTIkar/NUIeU46M7w6ovL0qF2Z+gloARg0q5GFsh1cvuFhedoKJuqBilLipfsxydg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794280149;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=/VXI1onF5SeS09KK9lzcvTcmpzrz6Lunid7ms1UK5Nw=;
+	b=TMrILL6IjSMXPyTYaxh4uyQVKbOKQbmNvQ8AMbf3C5ouu1GH6l73ai05n6izwjATlN5i
+	 7KtrZWzaVErvSId97U3biTyCIMMNZzkrk1Aezdm5HqReo9Ucizzl/z6xTYkFr1GNwT4oi
+	 Ntw7t9SDvTOIuQN+EYWSFGvGU6GfQeFgwATORgExW+rG5l73vUr607KnkY3MgRCcJEdjT
+	 BwKrxJ4MbKzfwF8GYsaSLEd5yqx81G3yZ/5f9WmaHnnVu9MgyhLRCEvrmCIE1PouSW0wE
+	 7EHVGWBoYBrL2VhBUae/g1l5T+gQqCEjiWbB+bxPn5wTSLs4+riQlD5CFyqsuj8H8UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=chromium.org;
-	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=jkgHjOcs;
-	arc=none smtp.remote-ip=209.85.214.179
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="bhiX/sg9";
+	arc=none smtp.remote-ip=91.218.175.89
+Received: from mta0.migadu.com (out-89.mta0.migadu.com [91.218.175.89])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C10606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:01:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74C10606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5AA606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:09:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3D5AA606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=jkgHjOcs
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2ed1e9ae5a8so4998925ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 19:01:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1794279674; x=1794884474; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=keimOPBn6zqYZGZ+MFySGLhtS4gerw7P0fcwObyzCWU=;
-        b=jkgHjOcsPlWHvOVY2jTv47hglSlFVpUs1GQpOz36dChzIDFsMNwU/fn++T6PPVSMWp
-         jGu7x1TP5f0bTDPott3ZYD3lC0OajaXPxQUnzhNb7aPVl4phGnJWPjs0HWWikwAyF8X3
-         /02pOnBDVYF7dZkxGrNQMe3xrFBGZMe7AtKSc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794279674; x=1794884474;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=keimOPBn6zqYZGZ+MFySGLhtS4gerw7P0fcwObyzCWU=;
-        b=OXU5zyNjGQagjGK6ahXpwe2YEHDp/bmPv+JGD5v/9KQ3n+8DN7/GjmLJv8V4P74bF/
-         xBuiSYiLvQqVMUBjTPZjvdB/gdd+7i8qF8kfiYK1lJKDow+E9GRcR+jH6xLBPnKAFGjQ
-         ukbW6GTtyxcKdXv72n/VEZqCWDbf8xubRbh+3pXJnttLFTT+6aPNMev1bIGbg3i9JCBr
-         7ZNZubGGJRzM6zQWmsDksmVfzG2RIhNWyETLKVnmpnYKDjbjnm6XtFIpuOBcx7/XgW0B
-         Ai9sPaQEs1oPwSrtjsF4U95eMfHEzBuq1l5ak5dlSqncCYCU8RVUMcraUfYXW5YDUSvg
-         MmhQ==
-X-Gm-Message-State: APuU4Z9rmVReuVkYShn6AsJ1bVoO2VLJ1kwjqAhyzfTec9tcYz+jo23m
-	b+nD29Kt47rAvQqH5tvKT7e9nk1QmUePj9l+mKpc6G+ugc+lXGorxHuvp2PYPYMoD+XJTl9YBQk
-	XHs4=
-X-Gm-Gg: AYBFou2PHp2UsIJ0Z3DJY5m74TobhODTxzbEuoM5kdivooQaNKRm9VBNlxLYQCzpghn
-	RxXbeBMP6NOelLXG6e8ij9EuBX2F5Jbd2IpQD/HsqmFjttUCHiWG8gDrrPcDSOf1FIYfcIpjOqw
-	Q7MFpPcWbGcpjMFkiuZziqAOi8aDxDwljlCWwv787+PMARJqDRthxSIPrhgRAoshG1TVjiDtofH
-	Lv5XlKzML4AgBYHRY9FB0Bv0mTMvqYRBZ9kjhQi+Cs7bygJboOoSLG/u67XE3I6LF2UmxHlt/sd
-	JG0mW9S53gXnQZ7oYGVScigu/FyMFHLw4MlUzsRPRL7b+ZtJD6ztM1fprpvqMKF7zgh/DU4djbi
-	HN25IVnUoNted7Z+3QRRvx4piA+LpxXpaRxHPQTnFuERPyU8bkRcl05iu0Y1yB8ZKwehS3GjsMW
-	7jXbCWuTjtAa3WLUp8h8mYra4q1aSwc1LjB2Zq2HpA0e9i1hheQv+fd/FoJsvZS+OjZMQPIPtUf
-	M59aCNI4uTUkbDYao/c8FEe/TEI1ENZftryxgJd2fXuhN29ktzLCjMxKKIz72vaWMrVAcXsdnYT
-	wSh3lj8s/gLqKCn5w3yHOkM7LjfQG4J7em87u4I2/9c1CJKB5pWp221bJJ+1zBre0qNFyw==
-X-Received: by 2002:a17:903:2f45:b0:2ed:1c15:ffc0 with SMTP id d9443c01a7336-2edb91be092mr12516445ad.30.1794279673820;
-        Mon, 09 Nov 2026 19:01:13 -0800 (PST)
-Received: from google.com ([2a00:79e0:2031:6:e137:9384:7cd8:6e40])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2edb6dc9ea4sm3699045ad.54.2026.11.09.19.01.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 19:01:13 -0800 (PST)
-Date: Tue, 10 Nov 2026 12:01:08 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, Nhat Pham <nphamcs@gmail.com>, 
-	Yosry Ahmed <yosry.ahmed@linux.dev>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Brian Geffon <bgeffon@google.com>, Minchan Kim <minchan@kernel.org>, 
-	Richard Chang <richardycc@google.com>, linux-mm@kvack.org
-Subject: Re: [PATCH 4/7] zram: allocate zsmalloc object under slot lock
-Message-ID: <avKISrcR0goF2NXv@google.com>
-References: <20261105044752.1997895-1-senozhatsky@chromium.org>
- <20261105044752.1997895-5-senozhatsky@chromium.org>
- <sashiko-outbox-200764@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=bhiX/sg9
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=4vNRBThxCRg1/lwUML9Zpz0Ty+nyn6/jDAJxsej0PWU=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794280145; v=1; x=1794884945;
+ b=bhiX/sg9FPtDK3iMLNvJz7zXB6dMMvEYHUUslfV4P4zbO3qth0HImCn+hr2JXeA1kktzmScU
+ c6Mt17R+gbskOLXahCJnU8H3k1TAuJBBIFTO6wQ179GEaJX+ClrTcJbtAubAANM4sL/JvVAaKUy
+ +EqsJeUV15NXEEi+Dhp5UpUU=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta11.migadu.com with ESMTPS id dd3535646e2a8843;
+	Tue, 10 Nov 2026 03:09:05 +0000
+X-Mizu-Trace-ID: dd3535646e2a8843
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,40 +57,131 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-200764@kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH 02/11] mm/mm_init: factor out common struct page
+ initialization
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <sashiko-outbox-204836@kernel.org>
+Date: Tue, 10 Nov 2026 11:08:43 +0800
+Cc: Muchun Song <songmuchun@bytedance.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>,
+ Oscar Salvador <osalvador@suse.de>,
+ Mike Rapoport <rppt@kernel.org>,
+ Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R . Howlett" <liam@infradead.org>,
+ Vlastimil Babka <vbabka@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>,
+ James Houghton <jthoughton@google.com>,
+ Lance Yang <lance.yang@linux.dev>,
+ Qi Zheng <qi.zheng@linux.dev>,
+ linux-mm@kvack.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <01DEE4E5-49E9-4C33-BBC4-EB04611803B3@linux.dev>
+References: <20261109095807.41547-1-songmuchun@bytedance.com>
+ <20261109095807.41547-3-songmuchun@bytedance.com>
+ <sashiko-outbox-204836@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
-On (26/11/06 04:48), sashiko-bot@kernel.org wrote:
-[..]
-> > +	slot_lock(zram, index);
-> > +	slot_free(zram, index);
-> >  	handle = zs_malloc(zram->mem_pool, comp_len,
-> >  			   GFP_NOIO | __GFP_NOWARN |
-> >  			   __GFP_HIGHMEM | __GFP_MOVABLE, page_to_nid(page));
-> >  	if (IS_ERR(handle)) {
-> >  		zcomp_cstrm_put(zstrm);
-> > +		slot_unlock(zram, index);
-> >  		return PTR_ERR(handle);
-> >  	}
-> >  
-> >  	if (!zram_can_store_page(zram)) {
-> >  		zcomp_cstrm_put(zstrm);
-> >  		zs_free(zram->mem_pool, handle);
-> > +		slot_unlock(zram, index);
-> >  		return -ENOMEM;
-> >  	}
-> 
-> [Severity: Critical]
-> Does calling slot_free() before zs_malloc() and zram_can_store_page() in
-> write_incompressible_page() and zram_write_page() cause existing data in the
-> slot to be lost if the allocation or memory limit check fails?
 
-Realistically mem_limit is the only scenario to consider and I will
-move mem_limit check before slot_free/zs_store.  The mem_limit was
-never a hard limit anyway, overshooting it by one zspage is not a
-huge problem.
 
-The zs_store() failure is very unlikely in practice, because it implies
-a 0-order page allocation failure.
+> On Nov 9, 2026, at 18:43, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] mm/mm_init: __meminit on memmap_init_page_common() crashes at
+>  runtime
+> --
+>=20
+> commit bb3e83c26b241fd60613632a0fd50cc529ce8be7
+> Author: Muchun Song <muchun.song@linux.dev>
+>=20
+> mm/mm_init: factor out common struct page initialization
+>=20
+> This commit factors out PFN-independent struct page initialization =
+into
+> memmap_init_page_common() and uses it in both __init_single_page() and
+> vmemmap_shared_tail_page().
+>=20
+>> diff --git a/mm/mm_init.c b/mm/mm_init.c
+>> index 0129152b74d87..9677698f30d3a 100644
+>> --- a/mm/mm_init.c
+>> +++ b/mm/mm_init.c
+>> @@ -602,15 +602,28 @@ static inline void =
+vmemmap_optimization_verify_zone(struct page *page)
+>> 			page_zone_id(page));
+>> }
+>>=20
+>> -void __meminit __init_single_page(struct page *page, unsigned long =
+pfn,
+>> -				unsigned long zone, int nid)
+>> +/* Initialize PFN-independent fields common to pages in the same =
+zone. */
+>> +void __meminit memmap_init_page_common(struct page *page,
+>> +		enum zone_type zone, int nid)
+>> {
+>> 	mm_zero_struct_page(page);
+>> -	set_page_links(page, zone, nid, pfn);
+>> -	init_page_count(page);
+>> -	atomic_set(&page->_mapcount, -1);
+>> +	set_page_zone(page, zone);
+>> +	set_page_node(page, nid);
+>> 	page_cpupid_reset_last(page);
+>> 	page_kasan_tag_reset(page);
+>> +	atomic_set(&page->_mapcount, -1);
+>> +#ifdef CONFIG_ZONE_DEVICE
+>> +	if (zone =3D=3D ZONE_DEVICE)
+>> +		__SetPageReserved(page);
+>> +#endif
+>> +}
+>=20
+> [ ... ]
+>=20
+>> diff --git a/mm/sparse-vmemmap.c b/mm/sparse-vmemmap.c
+>> index 9b80dd7326f7e..fd869617423a3 100644
+>> --- a/mm/sparse-vmemmap.c
+>> +++ b/mm/sparse-vmemmap.c
+>> @@ -212,12 +212,7 @@ struct page __ref =
+*vmemmap_shared_tail_page(unsigned int order, struct zone *zon
+>>=20
+>> 	for (int i =3D 0; i < PAGE_SIZE / sizeof(struct page); i++) {
+>> 		page =3D (struct page *)addr + i;
+>> -		mm_zero_struct_page(page);
+>> -		atomic_set(&page->_mapcount, -1);
+>> -		set_page_node(page, zone_to_nid(zone));
+>> -		set_page_zone(page, zone_idx(zone));
+>> -		if (zone_is_zone_device(zone))
+>> -			__SetPageReserved(page);
+>> +		memmap_init_page_common(page, zone_idx(zone), =
+zone_to_nid(zone));
+>> 		prep_compound_tail(page, NULL, order);
+>> 	}
+>=20
+> [Severity: High]
+> Can vmemmap_shared_tail_page() call memmap_init_page_common() after
+> .init.text has been freed when CONFIG_MEMORY_HOTPLUG is disabled?
+
+Right. I'll remove __meminit from memmap_init_page_common to fix this.
+
+Thanks.
+
+>=20
+> When !CONFIG_MEMORY_HOTPLUG, __meminit expands to __init, placing
+> memmap_init_page_common() in .init.text, while __ref on
+> vmemmap_shared_tail_page() suppresses the modpost section mismatch =
+warning.
+> With CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP=3Dy (which does not depend =
+on
+> CONFIG_MEMORY_HOTPLUG), allocating HugeTLB pages at runtime reaches
+> vmemmap_optimize_pte() -> folio_vmemmap_shared_tail_page() ->
+> vmemmap_shared_tail_page() and executes freed .init.text the first =
+time a
+> zone's shared tail page for that order is allocated after boot.
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261109095807.41547-1-songmuchun@bytedance=
+.com?part=3D2
+
