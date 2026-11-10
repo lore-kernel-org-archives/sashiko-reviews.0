@@ -1,100 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.47
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794285735;
-	b=R5DiNivNNXnkCRkPWN9Ng6Tkm+1UEycS5J7+mJ2bZVeV04bLejGKN83JNUlSQXSrC0Tm
-	 eBKarj5M3aiTtM2SzmBQxRfFVv2Ail1Dmmw3e5wVcLalBgy1/TR/zkmnCi9RVE/yMrsc2
-	 g830r6GWNk0ZVF3lhVGg8ii4Uapc3LZhh5uBgANlGKA9xCkt7Bdp0KMGHsjvrA8Y5Qfsx
-	 wz11jJvg36xgshkUW63BelYEcKjfqhcjoYWxWHWKytd1J0qDqIY5FwJAa9oRLNYiH2/bO
-	 zWR3CFbfBDu1b41AqRJJGCq1R2qdWrycrZNN65FN3pds33WMrZIl444UVJKW6OqtCxQ==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.228.111
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794286109;
+	b=DeCvcIVBMZ5pPuGiRU3iyz2mAXQOm9x+ruI4Wg8z+aDj836B8IxlHlNsYUmovZ74PFOU
+	 ZKOHRyMDCW4M9sAtTNqawP+6ZGn/TiFu0zy4BsnR8aECoYS9VU9uCUyskEkgzwxmqIDnA
+	 STUDBjcsOdGalbmWBbF1V6J8X7XNwLqmag4dWpE1YtU14pgjo/inU5B9wM3UF358VndXR
+	 jNJXzRBJ122xFyE32rMG+o0SVI0+wnzdX3SXnapDhErfJwHq6Xvs9MVaH6Y5eQpIllXIp
+	 rzFELNgyygoxF8FkgfTCEUDP0oMqJZYYGoO/U0FDMC66o2BQKBWRpL2oTaP78vDkoOQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794285735;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
-	b=eCFPDAispvOEFff7vqou03RJybZZaqFL2+9ePe/OoAfeCtWk/RY4DeCmb3ttlHKpPqcu
-	 2CF1KLro5xYnRzoTQ0UXSPIZrtkKfvtC9lBrYCy3ptiB7RFl144g7cH2hMBDy/SLMwq3R
-	 70jt5ZQ9aEe35oXLTOevzKnhWfOrTia8DkGPZINurAcIP3lqvHndFQKXiWTkwWlBvEaH0
-	 eE6ES7TEGlpEc8t8rbqa+FM7R3JSMu9/pTWsQvRQ49pExZxLEsQeSo7MMXJG8PyeiXN6o
-	 vL6w0sDoujUN9ffsMGyVG6p/R0Wt5zLN5xZFaHc6jw6wFNxfSM3g84dY0V+Bs1NVgUQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794286109;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=c1ejmBa5iIhKoGsz/adUpkVCxgtyIkf0/u1cPyQp0q0=;
+	b=na5iw0p8zNrGqx6wENdJkTAkOHUbq98RE/xIiFzlcNG7VBe8Aoy12xv2HU9wGEjtIh7c
+	 W9pcbTiRa00Fq8V94IjUfU0I/FNFB1d2MZMb/BUyg4sQPUGXH3vR5oh5f34qr4NStw+qc
+	 t91X3VcXt9ugG75vmxiqm6g1iPOgYsTwQ8YLAxxqTz+POeomr6HMh2/964thQCkfjO4U7
+	 exylxOAAdW1on6nlTB99Ltb//lJwV84qNaldE+PXWAUb+BSECutfvl1WBLiLGL2i8+QUm
+	 HK/vscbiniigTEv8G0sIZzlz9mHfv/KoZG8AFxUutJrqi85xKmb9kwq5xkD4n6cxL5Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cloudflare.com;
-	spf=pass smtp.mailfrom=cloudflare.com;
-	dkim=pass header.d=cloudflare.com header.i=@cloudflare.com header.a=rsa-sha256 header.s=google09082023 header.b="Hm+3BMk/";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.47
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=valinux.co.jp;
+	spf=pass smtp.mailfrom=valinux.co.jp;
+	dkim=fail reason="signature verification failed" header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=Mml0Ax9D;
+	arc=fail smtp.remote-ip=52.101.228.111
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020111.outbound.protection.outlook.com [52.101.228.111])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F81606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 04:42:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73F81606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudflare.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC1C606A32E;
+	Tue, 10 Nov 2026 04:48:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4DC1C606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.a=rsa-sha256 header.s=google09082023 header.b=Hm+3BMk/
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6dd7070699eso957688eaf.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 09 Nov 2026 20:42:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794285734; cv=none;
-        d=google.com; s=arc-20260327;
-        b=l+5APYPZ2Va6IUsqsyspB097BDFJm8+HzFccIDJ+M2XMhFvDOTodea6z7uqagDyCXf
-         b51g2jb5XQLkxHKaohHrTaT/qLpwGJttVqf6nb737EA7mLp6DwfNV/VIWSZNScjyNYct
-         DF4/TbvoY0Cb02OPGPoIT8iU1gNjYGjHG9YYQeFM/joABSzxyf8C/aAsbk+nI1b/9oQC
-         LaQ2QED52OjRtTAUTATkSBSWXRwjn/IgBlt3Lf2U+HmBlLHaWwIRoEvWoURlk7yOVJLA
-         rSsKTG5A30PULvZyBUjXfuU761zZ8bz5cTscaX9qCDdA9M9T8HmUjt2IVx98BTMUNdV1
-         CjVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
-        fh=PqfXm7a08WrvkxC4ErIq7QV7bol4Dqx8CeublptW7zA=;
-        b=HSX35H6j2ka6OIzjVUGF6OUYR1eEIxqoSKb3ihcoLEw73hb8pDrED6ch3O/dWEfx5q
-         KaKZ0Up4U73WhEaM4plx7LcRMdXdTFn1F6YCuhzIe3oZNjimh4CcBY45hdQVrOAodTS7
-         V3YZ88qb8bLKZVK4WQrOqlzo2hsYADv0RR1RV2euruKpxrDJelsXywsfQuw922I4apKX
-         GfoOBVNAT1dfMZ/bAWy1a50pe3QDLQCan4Y92sAJaxu8mBpIhrI14fGxbJeWdvGcGDpq
-         cMwgm+LUJ4iDIIlYeY+4ITgfALvYNzYHK95XLfxnG9ayF3eij7APVemX9NNNoCyzRDKv
-         Wx8g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudflare.com; s=google09082023; t=1794285734; x=1794890534; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
-        b=Hm+3BMk/YTedr5q3oEJWYfAQea05WE5FtVLse+Xj7ysYT2p61ktMIUXpnZRlAFWckH
-         wwCwIwSsXAwT2vSFx/3MnrQmQCRZ1asIccT9M4NgI97QCumWm6OrXW0WHHk07f1wxJOS
-         XR379gmpVhwrCoQoyY8odOXk1n/kNojiLCv2LZ+w75TZ+BIkQOM9jX2FkYhthOeWsXia
-         PgyTv1MhulCy/QTJHklXXe2aMq+CDp5KqZb2SbpiVmFDhjoLJyGwM3PzAFSP26nzin2F
-         PLR7H+2jFRmQoFjHiEb0c5WoQN0gvPdAgD4PaY+pCra6KTq6zRDzYpS+y4XXxH7SKcCg
-         7Zuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794285734; x=1794890534;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ROinplkTxqEpdG8wQz+UQs4W74CbHVLhLR8dpDiNGwY=;
-        b=ur1XtgrGM+1H2bH9bzd7F9jd+pq3D9Hy8thpn2SDXpQwpqFBqXtaTZQ/EGu0SpPofb
-         uz8CIfCdGVFJwjL8yGV/QqxSU/r5R3aaXItwtYQMo2s2rLkunBDhx1XKnOrMyBLYM5xP
-         nwmXmZNKLnXpKnqTbeMmbNVtb32mjdZzQnMA+/P3L+DT2/D2UBKOwJdSZ/4XBNdNc1AQ
-         +nH9W5vfOz1PO8CNdz0DfyaHjLhUY38JCeOLo6ku7mEUd7UEWaJ16MK8QloyRIIB7jSB
-         gdEtRdKxvLS/C4Vs02//W0f66W4eLO/6PXqvUwCbBxk27LYq9cPTJAoi13fJl9KEDwV1
-         hUKg==
-X-Gm-Message-State: APuU4Z9AYfgaRlAQ0Puq1q0z8Lb2xkZwQQeSdYD+Lt/x8u+pz27Bsp0r
-	wSxCVEAbqBSZIiqEqilUXggH8s5nAcO4UgUgpdw5Gervsn/5nFXVav3uIiXsQxXfGrSbfUhyWEA
-	O1NbT1GnQYgvg02m85SrUrDyrluQRZapMla24hRGxjvTUAveI6LHBoLrlxw==
-X-Gm-Gg: AYBFou1NvmLdiDeuyD8Iu2DqzkfPhQ3pSwsHvHQ5R0qHHdGEIqEGM1mh0jN5YKbj9/u
-	Or3ItRHyhql6KBaQt/96YJQznjt66g+PQsWrC7CT0yEP5DQ8+/CzOjTaQBaMUSMaVsmI/Of28hd
-	ZBf7vCP0mQIYm4Ui1Ntmsvrnh7tkFmNVCKJzP8heuhxOuHHLELBkYpbt/fYbW04geByAJmwDDvB
-	DFdlA5yt4prejFUxXAQYGoBm30KC2x0+kLmNh8VsyNWWhTBFL3labS1U7KsMqMIVDQT659Ymbix
-	fleDNSlzbN6mJj0yiU4Iq+qZZ213/b2zPi00YClHxIeGiK+Gs69jJGMUXLTNjlJ9kbkShZqH7lt
-	T7Iq2ExdKCiiglG7N/qEXt3HbAyLiN12B740Hbqwoht/5L+Cilk7g0FFg2Xg79fJmk1kcYeyDsv
-	PlCRi/ppZcVw==
-X-Received: by 2002:a05:6820:824:b0:715:2424:b6c7 with SMTP id
- 006d021491bc7-718a25631ebmr744221eaf.2.1794285734188; Mon, 09 Nov 2026
- 20:42:14 -0800 (PST)
+	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=Mml0Ax9D
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jnkHRdEzJO6Ck5HegpYH/reNKehkPkY8ghLD1szkhDaPTkYIol0aa7v1sf+FCYXUDCTzQw2C3fulG4TpYj4J4Auf0y2X4UuIEd3WYsRNgDwFBkzBDmau1ADSIwpHg5Ul+EYOusPZPN2BPhCfFE7nRLCC8/2vOi+8m8XnjxLjVhUyRhlcbojAYq49RZpNE1m8yo4dw057k3xoV6J9KLE9i228iM5MRsiR4ph19gSMSf6J0KWLMhEBaUq3nP56UsOch1S9iwkU1Lqv8GS/yr65oPQl9bprpc8QcBRW3VO2yoslrz7SI7DKuTG5wMqd2XiVTZsZOTNBRl4sMklkvmbRmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d5VrvDB60lHxCcq+rwFkI3BHDQ20tYmLlZz8Lc2u/Ig=;
+ b=A39PcS0P37GdXQOmHgw9jRG2IUTzdyT+csyWYh8ce5F8B+XDRzoEmbGVchkgbCEAqPMk2ibuyXuwbm92XUFZEVLh2kLj8nmYA+XzgHeN8A+p3h3NJsF8Dd9b1uZTlu2Xsx5DZ+9Ia0zAC4BBnwfGtcw1Ciu+TZK7BZsitKKhrKcgl7jWbQHlA7kp947BI9Tt9mY5SC1MTRmPd8P83Jz0qF3imP/wZr26vGfdfFWRnVma4wGC+x//IMhhLWzceM/e79tLcimgDCgIDHzLty1x+PH8kG6gfQW32iVYqWtgrQYrd8PyZ/0wEsM/NLmqoCsBAPgsCvdYgOZcp1OY9+6P+A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d5VrvDB60lHxCcq+rwFkI3BHDQ20tYmLlZz8Lc2u/Ig=;
+ b=Mml0Ax9Dn4MzP7lPRMWIIj4+6mydd1lpUK+Yj2WDkTj9jj5yV4LKYSKdaW+EPGt/GDJdgQuD8Ljc3jiw48ih1mPvIrvJqfOoP06MqbW+7BUV7PIJeDWwiF1MMyeIRNf1umPydUVqorZ9otbFRMeoODZJlS3H6aFBdVESj9JwVrQ=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
+ by OS3P286MB1591.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:160::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Tue, 10 Nov
+ 2026 04:48:24 +0000
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0592.012; Tue, 10 Nov 2026
+ 04:48:23 +0000
+Date: Tue, 10 Nov 2026 13:48:22 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, ntb@lists.linux.dev
+Subject: Re: [PATCH v8 05/10] PCI: endpoint: pci-epf-vntb: Export endpoint
+ DMA channels
+Message-ID: <y346l5tlv2abdjvjqbqitmi7xmi46trm2dvmbgihlbieal4hz7@rc2dcugxd5aq>
+References: <20261022082230.3164834-1-den@valinux.co.jp>
+ <20261022082230.3164834-6-den@valinux.co.jp>
+ <sashiko-outbox-181210@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-181210@kernel.org>
+X-ClientProxiedBy: TYCPR01CA0197.jpnprd01.prod.outlook.com
+ (2603:1096:405:7a::10) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:325::11)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,80 +98,157 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <cover.1794281983.git.tianyi@cloudflare.com> <115997f55d63b507ce54fbe9e22900b59016f3c3.1794281983.git.tianyi@cloudflare.com>
- <sashiko-outbox-206183@kernel.org>
-In-Reply-To: <sashiko-outbox-206183@kernel.org>
-From: Tianyi Gao <tianyi@cloudflare.com>
-Date: Tue, 10 Nov 2026 04:42:03 +0000
-X-Gm-Features: AclHuK8b0bXERRMbxB4h1nf7ja09xd60YTNUFZCGO3eGicEqv2ygIU4ZDyBl9Fw
-Message-ID: <CAG4wq-f7LgXVUu_DpH_Nk1ab1ghistFijw1m2mTxHxN_0hBWxQ@mail.gmail.com>
-Subject: Re: [PATCH bpf-next 01/15] xdp: reserve an skb core extension area
- after the xdp_frame
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, intel-wired-lan@lists.osuosl.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|OS3P286MB1591:EE_
+X-MS-Office365-Filtering-Correlation-Id: a2ed7b6d-21dd-4841-afee-08df3ee5d9f7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|10070799003|366016|23010399003|4143699003|56012099006|261022105027099003|261021121427099003|261026121527099003|261026135527099003|10067099003|261026140227099003|261102130727099003|261028144727099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	D3b7AVdxti+5Fmfht72ffACIJP86g4ifQ7rtGPIPvGNiF/wQIVUqLomNwKpiJmos8Wmdj7KCEYWS1QliQ1SOHBYsb7Qt8FnBC+7fVYiC5tah705G+47erIay+1SH2CqGc360u3RpqFwma5HdsjoAM1yZwlkE9rWrillZmRXspNfltDkg+ks0fygm7KUCBnXukMIvPL1eiwJPJG48MzABZa+4BcdPjXEwT9J4satwIFrfdERpOtrlDGVvYu3+Tn/bZpsk7Y5xsw+0S1TeVGk+oijIzPOmUNUqWuHpnqatgmSRWKz/ac2n3DAvJZfF02SUiUfAUwODPGwHbtJAGSmuiYe/UAVDv0IuQ0P/mvMI0We6oIZ84Mzg3HqwhAvWKE2eF6jR6vV+19+TdedR0ZWU1S+RbRwuK732AHxZHb3jkeaYhiCys+b6XW9CN5C0TFVkl1vcEXDF3xzh9HVFe8pz03tn7wRULR+DkaKyLfJrsDgpFjQZxIdG5FsBpOAdGmSIvnHS1V0WIU177zQhi51wp1AySjgdQc6KFtBV3jqAwQX2ESo+fxNjrMFoR5octApmGfi8c2oARpdKaXZS316bmOes8midCpJKnhMjhi9EjVQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(10070799003)(366016)(23010399003)(4143699003)(56012099006)(261022105027099003)(261021121427099003)(261026121527099003)(261026135527099003)(10067099003)(261026140227099003)(261102130727099003)(261028144727099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?C6rGZBw1RnoKrxeQq4KXZy4u0db7voWgD04H1jUT1nFZcxq+tP09uvfYPF?=
+ =?iso-8859-1?Q?x0XssGOPfoCZ62InhtQf8aUwT+Pxy9ko2I2YKvZEY5AVo5LYYE/hfZ0BfA?=
+ =?iso-8859-1?Q?wI8Df0oTJitzi90RaxcrveqfnVnJduzLb12bFPUvcm3iVTJ0Vo2rnyXDJz?=
+ =?iso-8859-1?Q?nPvwLKAGaPv1bZ2T0muJgkYNaqGLnAT3C2QFVqKmGGUnqtaxg9KlevhHXJ?=
+ =?iso-8859-1?Q?lxKzrtVOZ7wvaCsTOeKyqgixxaJKn7MN6kPNbG7mGS4AyO8bIxXHLzaUOY?=
+ =?iso-8859-1?Q?tcfQsip3Yn36VzpkGRgBFkfGdL6Wy1bj0TC9RjQYRhP2iFZpi4AOtly2H8?=
+ =?iso-8859-1?Q?U5TwAzfiidbobTaR2kHpm7NGr8fU8qYAVTfqosVYGsSXke00I7kMO1Kfyb?=
+ =?iso-8859-1?Q?WsZ2AMT7NnHm5uscziza2s49hq2Kh+Frl8Jn6s4+SVNTLsvuxVegquObMn?=
+ =?iso-8859-1?Q?vBPF5ZhWt3mSI1ElyZGuI2TLXpclOe8cnyz1Kltg5TBAOaUkcygWIuC7dx?=
+ =?iso-8859-1?Q?+i/SYjY7T8lok2TEMF/6FbY4tdB66HU2itmt7iLLKWwWsn+ZM75qcptcHO?=
+ =?iso-8859-1?Q?BjHAdCEAZEy6I1rhBKtdJUj1EVseLRbVHSpjuZ7wHYfG7bjYMySoIGwhuq?=
+ =?iso-8859-1?Q?Ufo800YZOjgEcSmdvh5Cbqs9zuQYFP9fqCCbd2/pcbz6G/eZlNiCJKVGVb?=
+ =?iso-8859-1?Q?gat0AtCqXsrZikjzlY4Z8P0LAMOT3dt2WyNzIk5t9FAgmuJJTKwMA7TWFj?=
+ =?iso-8859-1?Q?IUMc9XV6SQ2T6UiQOKdOlDMl2HZzD0Pt7XSf5NWt+9m5pip8BIJbs1hHQE?=
+ =?iso-8859-1?Q?K7isqAJTOVApdxnPl7I2UYzcHOGlmP/jAKlamkl8FUqZGtq5JZOdUA18k2?=
+ =?iso-8859-1?Q?gsaRG3MKhDl4OkpC2ld0el/KPH5pPK3he/1x+2jz6+UNZibdMS4guHxwAD?=
+ =?iso-8859-1?Q?/4/UsiXHMlDywgUCdLfnB4ikzkqCdg3EyQorVBUJMpzDvkJqy2HQT5ehTG?=
+ =?iso-8859-1?Q?U+Gp5s6yHWs1DIFG+LIbN0DbAva+5jfOmwdRqT3huKj1bqJ7RG/94D557D?=
+ =?iso-8859-1?Q?2vMy9p7e6VfqeToBgGaAqO5cWcsFFvNa3eSEUV6vgXsHa70GhKJR5314CM?=
+ =?iso-8859-1?Q?xbuVSqn3E+M3wQOl34++hWl8c11/OQcoYhukTDc64BI8BQjDWmTllaRI5t?=
+ =?iso-8859-1?Q?5+GrTmhYUzkp+8NCsfYjkfyezvBM0KOj2NheohyX2YYNhe+P2H9JNxrXRy?=
+ =?iso-8859-1?Q?484pXNzyke+i9u964ggr18vMxwVENgOMivaGotq6h+eNQ9jlp48+C+tFd+?=
+ =?iso-8859-1?Q?RRxigSEUvB3q5JHxCxyQvzh61NLgAUE0rC7R/nUn1a9bTQlW/zQyj+SVGk?=
+ =?iso-8859-1?Q?/X9OuESf459dmUaoBotr7MmU6TFIZtXMKO1NyTsFGX4lH75kIET3OCi4Fd?=
+ =?iso-8859-1?Q?USjblCtXB0rYh8akSry3K3LV4WLdXx4PlPerbD1iytFUUwTkP0+zKoEEf3?=
+ =?iso-8859-1?Q?3QboUcWHUThjsBUjk6gK2yrpiHlGUquvgSWdVG2aPGagr3zFDlFQoEFU5c?=
+ =?iso-8859-1?Q?criS2jVAKrri6CMvUiVHX+AfW79bbOZ/KN2LRJqVTrFlysvLERcmvRpEt0?=
+ =?iso-8859-1?Q?6gaPIT7OlNry5A00bNSXiAsT1OIk6TqNiFAYbKhAXRGXq1JNI+rLjsE/gz?=
+ =?iso-8859-1?Q?lFRcks0snYZgoDyof02uhXRfXwy8bI5K0IOvS6Dba8lfQ/hechc/MLDejZ?=
+ =?iso-8859-1?Q?02Rl+FHqvFmDf3R8M+6iiYI6qXeIzIjBYYCepjwHI0RRL9nvIMfe7Zk5fB?=
+ =?iso-8859-1?Q?vsPV7vcOX2WkoFbORuqZQf4bJ3sVBu5pAyIK3f8T7F07jBH4+I4k?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2ed7b6d-21dd-4841-afee-08df3ee5d9f7
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 04:48:23.6151
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pvY0Obs6cSUM6kGZB99aHlh2N0ypFqBUPYYehe83SjksYkpboZ+A2WDt7oRRYMxMMe1HJW7TywQUcdB3wm+YiQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3P286MB1591
 
-Hi,
-
-Both comments follow the style around them in include/net/xdp.h.
-Most block comments in this file start the text on the /* line.
-I will keep them as they are.
-
-Cheers,
-Tianyi Gao
-
-On Tue, Nov 10, 2026 at 4:18=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] xdp: multi-line comment style violation in include/net/xdp.h
+On Thu, Oct 22, 2026 at 08:53:00AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] PCI: endpoint: pci-epf-vntb: epf_ntb_dma_set_bar() returns 0 when DMA is disabled
 > --
->
-> commit c815cea2f0a60c677b6335d7bc98d4ff8c9346df
-> Author: Tianyi Gao <tianyi@cloudflare.com>
->
-> xdp: reserve an skb core extension area after the xdp_frame
->
-> This commit reserves an skb core extension area in the XDP headroom after
-> struct xdp_frame and updates XDP head, metadata, and pull-data helpers to
-> preserve it.
->
-> Link: https://lore.kernel.org/all/1d5521eb-84fc-4417-a3f5-6366694d160a@ke=
-rnel.org/
->
-> > diff --git a/include/net/xdp.h b/include/net/xdp.h
-> > index 07231adfb5f82..c888353425d42 100644
-> > --- a/include/net/xdp.h
-> > +++ b/include/net/xdp.h
-> > @@ -81,6 +81,9 @@ enum xdp_buff_flags {
-> >        * XDP program is not attached.
-> >        */
-> >       XDP_FLAGS_FRAGS_UNREADABLE      =3D BIT(2),
-> > +     XDP_FLAGS_HAS_SKB_EXT           =3D BIT(3), /* skb core extension=
- header
-> > +                                                * is valid
-> > +                                                */
-> >  };
->
+> 
+> commit 2da1c2a8d12099e9d914603258e8edaefa818fbc
+> Author: Koichiro Den <den@valinux.co.jp>
+> 
+> PCI: endpoint: pci-epf-vntb: Export endpoint DMA channels
+> 
+> This commit adds support for exporting endpoint-local eDMA read channels to
+> the root complex through a configurable dma_bar configfs attribute and a
+> control-region extension in pci-epf-vntb.
+> 
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > index 3adbaa9d85db2..ac83af54122f7 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> 
 > [ ... ]
->
-> > @@ -450,6 +464,37 @@ struct xdp_frame *xdp_convert_buff_to_frame(struct=
- xdp_buff *xdp)
-> >       return xdp_frame;
-> >  }
-> >
-> > +/* skb core extensions: RX metadata that an XDP program stores in the
-> > + * headroom right after the xdp_frame, for the skb that is built later=
-.
-> > + */
->
-> [Severity: Low]
-> This isn't a bug, but BPF coding style puts the opening /* of multi-line
-> comments on its own line, with the comment text starting on the next line=
-,
-> for both XDP_FLAGS_HAS_SKB_EXT and the comment above enum xdp_skb_ext_id.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1794281983.=
-git.tianyi@cloudflare.com?part=3D1
+> 
+> > +static int epf_ntb_dma_set_bar(struct epf_ntb *ntb)
+> > +{
+> > +	struct pci_epf_bar_submap *old_submap;
+> > +	struct epf_ntb_dma *dma = ntb->dma;
+> > +	unsigned int old_num_submap;
+> > +	struct pci_epf_bar *bar;
+> > +	int restore, ret;
+> > +
+> > +	if (!dma)
+> > +		return 0;
+                       ^^(a)
+> > +
+> > +	bar = &ntb->epf->bar[ntb->epf_ntb_bar[BAR_DMA]];
+> > +
+> > +	old_submap = bar->submap;
+> > +	old_num_submap = bar->num_submap;
+> > +	bar->submap = dma->submap;
+> > +	bar->num_submap = dma->num_submap;
+> > +
+> > +	ret = pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
+> > +			      ntb->epf->vfunc_no, bar);
+> > +	if (!ret)
+> > +		return 0;
+> > +
+> > +	/* A failed dynamic update may have already removed the old mapping. */
+> > +	bar->submap = old_submap;
+> > +	bar->num_submap = old_num_submap;
+> > +	restore = pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
+> > +				  ntb->epf->vfunc_no, bar);
+> > +	if (restore)
+> > +		dev_warn(&ntb->epf->dev,
+> > +			 "failed to restore DMA BAR mapping: %d\n", restore);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> >  /**
+> >   * epf_ntb_configure_mw() - Configure the Outbound Address Space for VHOST
+> >   *   to access the memory window of HOST
+> > @@ -342,6 +774,11 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
+> >  		epf_ntb_teardown_mw(ntb, argument);
+> >  		ctrl->command_status = EPF_NTB_COMMAND_STATUS_OK;
+> >  		break;
+> > +	case EPF_NTB_COMMAND_SETUP_DMA_BAR:
+> > +		ret = epf_ntb_dma_set_bar(ntb);
+> > +		ctrl->command_status = ret ? EPF_NTB_COMMAND_STATUS_ERROR :
+> > +					     EPF_NTB_COMMAND_STATUS_OK;
+> > +		break;
+> 
+> [Severity: Medium]
+> When dma_bar is left unassigned (NO_BAR), epf_ntb_dma_collect() returns 0
+> without allocating ntb->dma, leaving ntb->dma as NULL.
+> 
+> If the peer subsequently writes EPF_NTB_COMMAND_SETUP_DMA_BAR to
+> ctrl->command, epf_ntb_cmd_handler() calls epf_ntb_dma_set_bar(ntb), which
+> checks if (!dma) and returns 0. epf_ntb_cmd_handler() then sets
+> ctrl->command_status to EPF_NTB_COMMAND_STATUS_OK even though DMA export is
+> disabled and no DMA BAR or subrange mapping was configured.
+> 
+> Should epf_ntb_dma_set_bar() in drivers/pci/endpoint/functions/pci-epf-vntb.c
+> return a negative error code (such as -EINVAL or -EOPNOTSUPP) when ntb->dma
+> is NULL so that ctrl->command_status is set to EPF_NTB_COMMAND_STATUS_ERROR?
+> 
+> >  	case EPF_NTB_COMMAND_LINK_UP:
+> >  		ret = epf_ntb_set_link_enabled(ntb, true);
+> >  		if (ret < 0)
+
+Thanks for the catch. Will change the return value at (a) to -EOPNOTSUPP in v9.
+
+Best regards,
+Koichiro Den
+
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261022082230.3164834-1-den@valinux.co.jp?part=5
