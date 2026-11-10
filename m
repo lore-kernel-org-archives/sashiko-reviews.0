@@ -1,56 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794301635;
-	b=Ar9pw+SxiCx7TE2rEsPoKHbLNxLCLsJgfHUxK4Lzpxkit5NqGTA0J7S31pAFvK6cBHnl
-	 gatQoAxbNNPesqFDQ/zjUM4e7d316NSVyC8/6Z95PZJa4oj4ECYTBTS+a2yRBgz/3ROLD
-	 iJCMDDiZLdr/CSkd584BK8qo412Nnw0Iulwl2AuldraH5cTPcc2tgtIn2bw+esMRIKN9K
-	 oqSE0vUdIaeIHI6mXPWzOYSHUAzQjY99tH+ytW0wB5I1+lwwXzDRqSatMfVtxYDp7c/6w
-	 HmAVyGGoEx0RRuGjmpW5RY+AL1dcIwnPg6FoDWspQp+Lr7DXk91dLNx3w3xOxAYqrnQ==
+	t=1794303930;
+	b=nKd+Aid1nY01EAlWx1oVLBQKQZwgG2qqRAhpSqAFVgrsj645qC0NZ+Op8h0JdQVaYyY6
+	 JrM4U5tiww580oniav3gHd7tMrIAxMXHeBLpH+IHF8jKDTNQ19nsxVk0CrZcwXo5CclYI
+	 kJek4Y40ClAIlPBSHvkY635gMUvOHjNrklo3Z4TtoI0G22cTIo+b4zR+T8AcisdeO/xmA
+	 /A+EyycW6CZatYJrET1tvvVKVGYXw6khyjMNs29NdMjgz2Jv/UZXKcNja80IqYkHPVh4G
+	 bYAwfrwsOwFic0oGWs+xLj6qfzv2EeiuvOpWt3xAADgR+0fjRd4+ROsOS14wP59uutw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794301635;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=OD0A0N5jCafTuhqB9U387BTo/UUFlEn4+AHiFajNJbc=;
-	b=P3mYBETiDKg5ZdSRYAyr/0F2pP4N+N2cCLgoqe8C8NDGqB++qjwVafXXoOW0k71l6bxv
-	 QsSbWY8iPZpmeVfpOUEdTEM4XhjjvDXmjO1G9JGVKmTuVnXLO5FzczQjyMmS8RYikN19K
-	 v4adT2gVmks8VVzk6sG/0a8lEUoIw/VIRH3jUQTl6GaxTgHwBp8G86vCIizQHsXeNFm5Y
-	 FB+0e+EeAT4cts4F1YPifJyQkY6MxWz/iWlJ58VxB/R8znLiNNVmOLunhCKq9dDRAmC0s
-	 8LIcWLtEATltA3fZ/p7TpFtClsIEwQa3yFxN5kUL5tUeHB2RpwoUbJQK7k1Kjx0lwnw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794303930;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:X-Scanned-By:
+	 X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:Content-Language:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=I0aHNpYYYJjXnks0yXtv3vruSoxZWqR1NIB39pb6v0Q=;
+	b=IHZFTiWslJsf16hGXPp05+t8ICy/fhjrW0LSbbzaWXKaQ/v+92dSQKsh0C6aR+yKIQd8
+	 r37QTZkMPYv92Mz+szpOZ+t4cVneFyTd6tEMxw215BKPWnG01Gltl2l+1wGmzt26tu5XB
+	 TxLWjKfXr5u3ii13VJJ6NpzYxfH/iKJeVoS1aJHC9GvtjpJRyVIf7y2FYmhG+nM3wvX4u
+	 /cOP1edBo8kfoiKZ6Rn8DkyyyxlO0Wgpvh9I7W2OdwMwsOl/l9qkBu9tNuNMbsk36Q0ch
+	 Cd/YRZr4faYJ+2mPhc3l+gNsaqYM0lCRQiuh1g/7B5T13EScmfXs96+661wP7nStgjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EMe5Ued2;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=G70RrlbR;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B841606A31C;
-	Tue, 10 Nov 2026 09:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584F2606B9D7
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 09:45:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 584F2606B9D7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EMe5Ued2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4716F1F0089F;
-	Tue, 10 Nov 2026 09:07:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794301635;
-	bh=OD0A0N5jCafTuhqB9U387BTo/UUFlEn4+AHiFajNJbc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=EMe5Ued2ovNBDBFFJbHDxkdMQTtfxPaa/IcyHmBQZndOkHtQf56/hjPEe5d1pZD6U
-	 HvmQCaG47iKvJgBtUon4vIu7nAujZR+mdoe9KSz5X6yXMQds+KhlvOIaQdfnbm653+
-	 tzIdEy6J+Y+h2ZcCWjh25WM/W5oLOzXjWwX9ZY9A0d8KGcpl7eS9SAQB8VnU/eKTD4
-	 7m6pUBzLqFesDewE6PnFKgin7AZc0iLWI7caLyT1CwKhyCul+iREfEQrV26lYBo/fj
-	 OrXvl+wJ34PDFgqnoS78e+E1Eq3/ffwjKAZov3gTUTftGTNI4uXhlucI53iRjDUbhQ
-	 2pnZ+gLHIc1bg==
-Date: Tue, 10 Nov 2026 09:07:11 +0000
-From: Lee Jones <lee@kernel.org>
-To: Armin Wolf <W_Armin@gmx.de>
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org
-Subject: Re: [PATCH 08/10] leds: class: Split led_classdev_register_ext()
-Message-ID: <20261110090711.GC6323@joneslee-macbookpro.roam.internal>
-References: <20261018135339.1109271-1-W_Armin@gmx.de>
- <20261018135339.1109271-9-W_Armin@gmx.de>
- <sashiko-outbox-176189@kernel.org>
- <bc1371ba-1355-4e45-be2c-d3e806c485a9@gmx.de>
- <4d9e01c3-acaf-4f5c-bbc1-fc4c78582571@gmx.de>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=G70RrlbR
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1794303929;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I0aHNpYYYJjXnks0yXtv3vruSoxZWqR1NIB39pb6v0Q=;
+	b=G70RrlbRKA2CrmAUY1woke1HyZZpdVeM4cg0vRIlzyP8LOgPm5FG4yKMLAyErNgyTIoNdc
+	UeHhQg3DsFTjLiSTV9mA9dkOEKjO3QYtqPZrX6lgPiWGBEjzlGHmfBhVQoZxFOUc5wOQbA
+	JGN/TfrMFNavsetrkel6OUnmqrvOOx0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-M3SqPeGFPAiHztvTxAVf4g-1; Tue,
+ 10 Nov 2026 04:45:23 -0500
+X-MC-Unique: M3SqPeGFPAiHztvTxAVf4g-1
+X-Mimecast-MFC-AGG-ID: M3SqPeGFPAiHztvTxAVf4g_1794303922
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 9A52619560B7;
+	Tue, 10 Nov 2026 09:45:22 +0000 (UTC)
+Received: from [100.91.101.41] (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id B840A1956086;
+	Tue, 10 Nov 2026 09:45:21 +0000 (UTC)
+Message-ID: <d5acc725-dd95-4e96-89ca-364db2444b61@redhat.com>
+Date: Tue, 10 Nov 2026 10:45:20 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,188 +72,93 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4d9e01c3-acaf-4f5c-bbc1-fc4c78582571@gmx.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 02/10] ice: dpll: serialize changes of the SyncE
+ CGU registers
+To: sashiko-reviews@lists.linux.dev
+Cc: intel-wired-lan@lists.osuosl.org,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>
+References: <20261106121005.1327603-1-ivecera@redhat.com>
+ <20261106121005.1327603-3-ivecera@redhat.com>
+ <sashiko-outbox-202874@kernel.org>
+From: Ivan Vecera <ivecera@redhat.com>
+In-Reply-To: <sashiko-outbox-202874@kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Mimecast-MFC-PROC-ID: dSXeFKkqgguE5geC2YlREh5d2IpQ2Q5UJkTRXBZy7J8_1794303922
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, 07 Nov 2026, Armin Wolf wrote:
-
-> Am 18.10.26 um 19:14 schrieb Armin Wolf:
+On 11/7/26 13:11, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] ice: ptp: unconditional R10 write and lock scope in
+>    ice_ptp_link_change()
+> - [Low] ice: dpll: missing Fixes trailer for commit ad1df4f2d591
+> --
 > 
-> > Am 18.10.26 um 16:15 schrieb sashiko-bot@kernel.org:
-> > 
-> > > Thank you for your contribution! Sashiko AI review found 2 potential
-> > > issue(s) to consider:
-> > > - [High] leds: dangling led_cdev->dev pointer on error in
-> > > led_classdev_init()
-> > > - [High] leds: premature device_set_node() in led_classdev_init()
-> > > breaks fw_devlink
-> > > -- 
-> > > 
-> > > commit 7efb333e9420ea13e705d9a114384e841e92d2b2
-> > > Author: Armin Wolf <W_Armin@gmx.de>
-> > > 
-> > > leds: class: Split led_classdev_register_ext()
-> > > 
-> > > This commit splits led_classdev_register_ext() into
-> > > led_classdev_init() and
-> > > led_classdev_add() so that LED class devices can be initialized before
-> > > being added to the subsystem.
-> > > 
-> > > > diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
-> > > > index 77a0fce039528..ace417a2388e0 100644
-> > > > --- a/drivers/leds/led-class.c
-> > > > +++ b/drivers/leds/led-class.c
-> > > [ ... ]
-> > > 
-> > > > @@ -539,23 +550,54 @@ int led_classdev_register_ext(struct
-> > > > device *parent,
-> > > >       if (!led_cdev->max_brightness)
-> > > >           led_cdev->max_brightness = LED_FULL;
-> > > >   -    mutex_lock(&led_cdev->led_access);
-> > > > -    led_cdev->dev = device_create_with_groups(&leds_class,
-> > > > parent, 0, led_cdev,
-> > > > -                          led_cdev->groups, "%s", final_name);
-> > > > -    if (IS_ERR(led_cdev->dev)) {
-> > > > -        mutex_unlock(&led_cdev->led_access);
-> > > > -        return PTR_ERR(led_cdev->dev);
-> > > > +    led_cdev->dev = kzalloc_obj(*led_cdev->dev);
-> > > > +    if (!led_cdev->dev)
-> > > > +        return -ENOMEM;
-> > > > +
-> > > > +    device_initialize(led_cdev->dev);
-> > > > +    led_cdev->dev->class = &leds_class;
-> > > > +    led_cdev->dev->parent = parent;
-> > > > +    led_cdev->dev->groups = led_cdev->groups;
-> > > > +    dev_set_drvdata(led_cdev->dev, led_cdev);
-> > > > +    ret = kobject_set_name(&led_cdev->dev->kobj, "%s", final_name);
-> > > > +    if (ret < 0)
-> > > > +    {
-> > > > +        put_device(led_cdev->dev);
-> > > > +        return ret;
-> > > >       }
-> > > [Severity: High]
-> > > Does this leave led_cdev->dev as a dangling pointer when
-> > > kobject_set_name()
-> > > fails here, or when led_classdev_add() fails in
-> > > led_classdev_register_ext()
-> > > below?
-> > > 
-> > > Previously, led_cdev->dev was assigned the return value of
-> > > device_create_with_groups(), so on any failure it remained either
-> > > NULL or an
-> > > ERR_PTR(). Commit 1dbb9fb4082ce2 ("leds: Allow to call
-> > > led_classdev_unregister() unconditionally") added an
-> > > IS_ERR_OR_NULL() check
-> > > to led_classdev_unregister() so drivers can call it unconditionally
-> > > in their
-> > > error and removal paths:
-> > > 
-> > > drivers/leds/led-class.c:led_classdev_unregister() {
-> > >     if (IS_ERR_OR_NULL(led_cdev->dev))
-> > >         return;
-> > > ...
-> > >     led_stop_software_blink(led_cdev);
-> > > ...
-> > >     flush_work(&led_cdev->set_brightness_work);
-> > > 
-> > >     device_unregister(led_cdev->dev);
-> > > 
-> > >     down_write(&leds_list_lock);
-> > >     list_del(&led_cdev->node);
-> > >     up_write(&leds_list_lock);
-> > > ...
-> > > }
-> > > 
-> > > Many drivers rely on this guarantee during error unwind or removal,
-> > > such as
-> > > asus_wmi_led_init() -> asus_wmi_led_exit() in
-> > > drivers/platform/x86/asus-wmi.c,
-> > > asus_led_init() -> asus_led_exit() in
-> > > drivers/platform/x86/asus-laptop.c, and
-> > > samsung_leds_init() -> samsung_leds_exit() in
-> > > drivers/platform/x86/samsung-laptop.c.
-> > > 
-> > > With this change, put_device(led_cdev->dev) frees the device via
-> > > led_classdev_release(), but led_cdev->dev is not reset to NULL. A
-> > > subsequent
-> > > call to led_classdev_unregister() will bypass the
-> > > IS_ERR_OR_NULL(led_cdev->dev)
-> > > check, operate on uninitialized blink_timer and set_brightness_work
-> > > structures
-> > > if kobject_set_name() failed before led_init_core(), trigger a
-> > > use-after-free
-> > > and double-free in device_unregister(led_cdev->dev), and crash in
-> > > list_del(&led_cdev->node).
-> > > 
-> > > >         if (init_data && init_data->fwnode)
-> > > >           device_set_node(led_cdev->dev, init_data->fwnode);
-> > > [Severity: High]
-> > > Could calling device_set_node() in led_classdev_init() before
-> > > device_add() is
-> > > called in led_classdev_add() break fw_devlink for child LED nodes?
-> > > 
-> > > Previously, device_create_with_groups() called device_add() while
-> > > led_cdev->dev->fwnode was still NULL, and device_set_node() was only
-> > > called
-> > > after device_add() returned. When the parent LED controller finished
-> > > probing,
-> > > device_links_driver_bound() ->
-> > > fw_devlink_pickup_dangling_consumers() marked
-> > > the child LED fwnodes with FWNODE_FLAG_NOT_DEVICE and attached
-> > > consumer links
-> > > to the parent LED controller device.
-> > > 
-> > > Now that led_cdev->dev->fwnode is populated before
-> > > led_classdev_add() calls
-> > > device_add(led_cdev->dev), this block in device_add() will trigger
-> > > during the
-> > > parent driver's probe:
-> > > 
-> > > drivers/base/core.c:device_add() {
-> > > ...
-> > >     if (dev->fwnode && !dev->fwnode->dev) {
-> > >         dev->fwnode->dev = dev;
-> > >         fw_devlink_link_device(dev);
-> > >     }
-> > > ...
-> > > }
-> > > 
-> > > Because led_cdev->dev is a class device that never binds to a driver:
-> > > 
-> > > 1. __fw_devlink_link_to_consumers(led_cdev->dev) converts consumer
-> > > fwnode_links
-> > >     on init_data->fwnode into managed device links with
-> > > led_cdev->dev as the
-> > >     supplier instead of the parent LED controller. During boot (while
-> > >     fw_devlink_drv_reg_done is false), consumers remain blocked with
-> > >     -EPROBE_DEFER until fw_devlink_drivers_done() runs, and are
-> > > never linked to
-> > >     the parent controller for runtime PM, suspend/resume, or unbind
-> > > ordering.
-> > > 
-> > > 2. __fw_devlink_link_to_suppliers(led_cdev->dev, fwnode) creates
-> > > managed device
-> > >     links with led_cdev->dev as the consumer for any supplier
-> > > properties on the
-> > >     child LED node (such as gpios in gpio-leds or pwms in pwm-leds).
-> > > Since
-> > >     led_cdev->dev never probes a driver, those links stay in
-> > > DL_STATE_AVAILABLE
-> > >     and prevent the GPIO or PWM suppliers from reaching sync_state().
-> > 
-> > I have no experience with devicetree, so i cannot verify if this is
-> > true, why do we call
-> > device_set_node() in the first place after having already registered the
-> > device?
-> > 
-> > Thanks,
-> > Armin Wolf
-> > 
-> Any thoughts on this?
+> commit 6fdc60cccd47bebe7d61ff60807ee77303bf58bd
+> Author: Ivan Vecera <ivecera@redhat.com>
+> 
+>> ice: dpll: serialize changes of the SyncE CGU registers
+>>
+>> On dual complex E825 only complex 0 has a functional CGU and the second
+>> complex reaches it through cgu_peer, so PFs of both complexes share the
+>> CGU registers R10 and R11. They read, modify and write them when the
+>> state of an RCLK pin changes, and ice_ptp_link_change() rewrites R10 when
+>> a link changes, under the pf->dplls.lock of their own PF only.
+>>
+>> ice_ptp_link_change() does not hold dpll_lock, so it can already overwrite
+>> an update of another PF. RCLK callbacks are serialized by dpll_lock, but
+>> the DPLL core is going to serialize callbacks per (module, clock_id), and
+>> each complex has its own DSN and so its own clock_id. With that change, a
+>> test toggling RCLK pins of both complexes lost an update.
+>>
+>> Add a mutex to struct ice_adapter, which all E825C PFs share, and hold it
+>> around these sequences.
+>>
+>> Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+> 
+> [Severity: Low]
+> Since this fixes concurrent CGU register updates in E825-C SyncE support,
+> should it include:
+> 
+>    Fixes: ad1df4f2d591 ("ice: dpll: Support E825-C SyncE and dynamic pin discovery")
+> 
 
-You're talking to an AI.  =:-)
+Yes, the race with ice_ptp_link_change() is there since that commit. The
+patch now goes to net with this tag:
 
--- 
-Lee Jones
+https://lore.kernel.org/netdev/20261110094350.184185-1-ivecera@redhat.com/
+
+v2 of this series will drop it.
+
+> [ ... ]
+> 
+>> diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> index 3df08714510da..4d4b6aaaf30c2 100644
+>> --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> @@ -1395,7 +1395,9 @@ void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
+>>   				break;
+>>   			}
+>>   
+>> +			mutex_lock(&pf->adapter->cgu_synce_lock);
+>>   			err = ice_tspll_cfg_synce_ethdiv_e825c(hw, clk_pin);
+>> +			mutex_unlock(&pf->adapter->cgu_synce_lock);
+>>   			if (active && err) {
+>>   				dev_err_once(ice_pf_to_dev(pf),
+>>   					     "Failed to configure SyncE ETH divider for pin %d, err %d\n",
+> 
+> [Severity: Medium]
+> Should cgu_synce_lock also cover ice_tspll_bypass_mux_active_e825c(), and
+> should ice_tspll_cfg_synce_ethdiv_e825c() be skipped when active is false?
+
+Yes to both, also there since ad1df4f2d591. Patch 2 of the net posting
+skips the outputs the port does not drive and checks the mux under
+cgu_synce_lock.
+
+Thanks,
+Ivan
+
