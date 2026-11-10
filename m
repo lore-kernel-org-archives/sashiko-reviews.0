@@ -1,82 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.2
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794282288;
-	b=eb7VFs2tlTgkY9XRshddMoclzSiAGJ4wqJTMZvUGSzcUeuVhIylIpbs194MwVk5TG5Bg
-	 iQdE2vKZsJGbeDjOSMrlAtw1J4PGPj0GuATNTaW3lHHt5hPu6wgnJfbuPbnSBiCnVkY4J
-	 lA5imIQczpZjE1gQv6gGsHJmlJGi58SATBloUhelCo6jYIL1e0nOtvFhZhU16OqU7pkOv
-	 UxagiaI6BSsvswwPf50J+zmWgs1QsjPjOcN5h7fJxJuJjwTbX9iUR19Mu6qNv/i4kDqkm
-	 Gfr7cYGP7pFDNCfvSj0pspXlqn2ySXZAsgck1MlvWv0vXnuaFR07Y7VdThiGKscOzWA==
+	t=1794282932;
+	b=shP7yCZAXeMj3LVV5FBKnkv06+sAQCi5AB1fTHPq4dHihu2TTdrd7WcSLZmwjFO+OghX
+	 feS2nvFIdyW4u7CBh5LosB9ob5kSF7j0kBxp9XZ1DsooMXoyUodvCpaOmT45Stz87QRP3
+	 SuFyK2+dO45jpDr44h+3rQddZFNnP87TvSgm7chamjkK9TbmUoJhoubIOPb3cW1h1lhWj
+	 /C+g+EI7QFKHGPJIswukqdXbSPLh/Y7hZHOZnu/T6oBwVFbvXjnPh0c681WiEj96Rupzn
+	 Y3lq6i0j9tC18R7XdXCT+q+GWNzasXHmf38OTyy1fGzaqAL2EHn46us0aA7Dotziikw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794282288;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
-	 X-Proofpoint-Reinject:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:X-Authority-Analysis:
-	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=uhwaCPa5JRqgUjXCODgcbcqwFsDag4JYrxFt3GwiJ78=;
-	b=mDBy9TFK8LyPH+eQnMJoomLqfGci0A6iAytfu3VfVKWQAIJgs1XsyOCzlpVczB/gqaAQ
-	 hutEWQtKnIWh6P+Ls0Enzk7H5p992m2yrCpfsJFd/crelXOfAYPX39BgAKkaKgqh5Chg0
-	 FwP1AGCujvJPD6LEzG9uADfJKHZwCK2mK0qw8uRTODKKybrUx+JFHiZ4ph7U+oImiLaaT
-	 q9d7L1Ysj/SnV3MuY+YFZN/46A/hV8NKfcUssDSEU/1goRB0Ea6nWE+IFTOg2kkCKVnLl
-	 xR2snwpjP7WJpDr0QWRel40VAQ+dBeyLUdPGwa+2xgtaAxJWqmaToIic37vXOXkk+SA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794282932;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=DzWy6/WNRqeEWa/9epvO5IlQ0oGV8ntkJrwHkR0I+2M=;
+	b=pu5OOJVvRz/eCdBMG/I4jwYTLxMQUQkQ18zqCFDQofg6sDSla3w2OimxaW78kgA/tkpQ
+	 VhPAF33+Lzuc7Y+umjHCf70nooiiqpR2VxE3iMT0Qh3Eb4m3heIBILj3jAIoNm+P94t+8
+	 ui9NezMgdlpvaqlx6sPDxZcvPXmvP/NuThPe2v3hYY8MoP5rEIR05zSXsxiZCMyDMqbC4
+	 D62+NRf40MG7EtUYGhCCSsVeoXFzPPSxmfoaTDrkdqKTzeEnRJ8L5R8YBC0cEcIbFvqRq
+	 CXuk3aUt+JmwvonYrJrk6WrBtdz39JuSl4BzAqx0WoM63A3wUlbWKPi0KZ8XxzwblHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OM8uwNaZ;
-	arc=none smtp.remote-ip=148.163.156.1
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Un60vQTJ;
+	arc=none smtp.remote-ip=95.215.58.2
+Received: from mta1.migadu.com (out-2.mta1.migadu.com [95.215.58.2])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD40606A31C;
-	Tue, 10 Nov 2026 03:44:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BAD40606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A9606A31C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 03:55:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 274A9606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OM8uwNaZ
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AA0i9K93480173;
-	Tue, 10 Nov 2026 03:44:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=uhwaCP
-	a5JRqgUjXCODgcbcqwFsDag4JYrxFt3GwiJ78=; b=OM8uwNaZkSKKkVsZu25oM/
-	eUncYj+TeGLvWGTnJKh/tzMvs6CYAnP8kt99eDfjKnsk7PowxuX1+3g8OkztNHTu
-	Z/VBFYFs18kvEdeHyxhVdpPLuDnXVblZosyyvLTghLQ/Dz3Puxta+yo+oXZvJpt0
-	5/1n0PTeYulZ6+BvSFqUVy9OkX/knsLsKl59//vTcE1xVRZUYnTFfALWDeqdC+7r
-	uRRB7L1Rvwu72Z89YnUobRj1Fn8zgyw5TlRDOIx1W75p3hqPir873EPP7N+oSZxU
-	WnZjVKBxq2iRD/qNaovFGGrozr6EmerKu+Nzh+v+2ndMbDC1JPmC8pXC0G7Uw9cA
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsunt303y-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 10 Nov 2026 03:44:36 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AA0o1eb954794;
-	Tue, 10 Nov 2026 03:44:35 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4htfak4xvs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Nov 2026 03:44:35 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6AA3iYW832047646
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 10 Nov 2026 03:44:34 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1FE4E58056;
-	Tue, 10 Nov 2026 03:44:34 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A82CD5803F;
-	Tue, 10 Nov 2026 03:44:29 +0000 (GMT)
-Received: from [9.123.14.23] (unknown [9.123.14.23])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 10 Nov 2026 03:44:29 +0000 (GMT)
-Message-ID: <d0b84ceb-8926-4e7b-bca6-9cc8b837658e@linux.ibm.com>
-Date: Tue, 10 Nov 2026 09:14:28 +0530
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Un60vQTJ
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=1DHEogHVtoCxTluCnUyg4zaFiqVYIq8x+VghISvowBE=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794282929; v=1; x=1794887729;
+ b=Un60vQTJ3j78T+OSWYN0nMxxH6nctMKd0PQWffpcjpHsvOp2ZeOuqE0+Kzr6jyfriHMdsSro
+ b0WmtWUpl2UBnuo4OlRpgtA+iR1LadHN/Bb89+txD2JFUqRFSfb6rRYCoIVU5xVvAsV7ebdA8iN
+ uBsa02r2+oxMtyKiSeNDRWIM=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta12.migadu.com with ESMTPS id a0e095d83234cbec;
+	Tue, 10 Nov 2026 03:55:28 +0000
+X-Mizu-Trace-ID: a0e095d83234cbec
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,286 +57,153 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 9/9] pseries/plpks/wrapkey: expose PKWM wrapping key
- management to userspace via sysfs
-To: sashiko-reviews@lists.linux.dev, keyrings@vger.kernel.org
-Cc: maddy@linux.ibm.com, ritesh.list@gmail.com, sshegde@linux.ibm.com,
-        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
-        James.Bottomley@HansenPartnership.com, jarkko@kernel.org,
-        zohar@linux.ibm.com, linux-security-module@vger.kernel.org,
-        nayna@linux.ibm.com, rnsastry@linux.ibm.com
-References: <20261105144320.357260-1-ssrish@linux.ibm.com>
- <20261105144320.357260-10-ssrish@linux.ibm.com>
- <sashiko-outbox-199284@kernel.org>
-Content-Language: en-US
-From: Srish Srinivasan <ssrish@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-199284@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEwMDAxNCBTYWx0ZWRfX3kCLRQv9uUri
- fA9YGBxVaer3SELKqfF2fsZCPJNQ/xBWn904QVmcZ0FNx5ucSIBQghUzrDV+L9Xa01JSGf1QeqC
- 1dxlwFgYPW0XHf9/w3jkYowuVHHPqosPYN7TUb490GZ5Y0Wk77GLyUjHjfrybDQpIJVyFX8fwgf
- wSHzJw6VdUbkM8rGHsYu/LKVyG3qI0DvZpCbUHAqUKINDNKruH42TVJR6a5WPxqjZb8vDkZAH7T
- 3U7lypyQDWN9zxs6MXFAuytkH/FhFetqI48evMeLnrJzggmtZGbqeJtQ3h/A7tJM9hckUOc8yKd
- HndhG3NJtN7XDTUY93oRr2Ox7jamG5vqVf2FrweJu5+IkSMz2VRB/b7c/YZQ/zV4LcHn80kGGt5
- ENk51EJJ4i/XcJObI+wrBC47V8IkVrSQqXGZkMyihZhPnm62tWEgIh+ZMmwlcLv9QFUz9cyTiu2
- frwtjnLIHfmRIATKMBQ==
-X-Proofpoint-ORIG-GUID: ZR7XViUcabHuWNbR42r2QoUvpE7ypHwj
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEwMDAxNCBTYWx0ZWRfX6tM6yJPfifuv
- u0X7b9csavYrKt9811kXZEvSnGvZbrbj2IjqN7470afwgC63jQHAnKTyCRExBOMp+IrJO3+yETj
- C9satVS39ioyW1Bnb89BHKxllOdRxtY=
-X-Authority-Analysis: v=2.4 cv=euZKXYpX c=1 sm=1 tr=0 ts=6af29324 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=QUUJxjL6Vp10tb9qvx0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: nKMORCa3UUQg_mvwF9PdaoBSQ5FFdkHj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-10_01,2026-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1011 suspectscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611100014
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH 11/11] mm/mm_init: move pageblock migratetype init to
+ memmap helpers
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <sashiko-outbox-204845@kernel.org>
+Date: Tue, 10 Nov 2026 11:55:13 +0800
+Cc: Muchun Song <songmuchun@bytedance.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>,
+ Oscar Salvador <osalvador@suse.de>,
+ Mike Rapoport <rppt@kernel.org>,
+ Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R . Howlett" <liam@infradead.org>,
+ Vlastimil Babka <vbabka@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>,
+ James Houghton <jthoughton@google.com>,
+ Lance Yang <lance.yang@linux.dev>,
+ Qi Zheng <qi.zheng@linux.dev>,
+ linux-mm@kvack.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B97DC5CB-5A3A-497C-B051-213A1A14411C@linux.dev>
+References: <20261109095807.41547-1-songmuchun@bytedance.com>
+ <20261109095807.41547-12-songmuchun@bytedance.com>
+ <sashiko-outbox-204845@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
-Hi
 
-On 11/5/26 8:32 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] pseries/plpks: label truncation and undocumented format in list_key_labels()
-> - [Medium] pseries/plpks: TOCTOU race between delete_store() and unrevoke_store()
-> - [Low] pseries/plpks: duplicated sysfs store/show logic in plpks-wrapkey-sysfs.c
+
+> On Nov 9, 2026, at 18:43, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] mm/mm_init: commit message cites nonexistent
+>  memmap_init_page_frozen()
+> It also noticed 1 related pre-existing issue this patch does not
+> introduce:
+> - [Critical] mm: uninitialized migratetype in
+>  pageblock_migratetype_init_range() [1]
 > --
-
-
-Yes, these are valid findings and I will fix these in my next version.
-
-Thanks,
-Srish
-
-
->
-> commit 58203a02dbc210e21378df2545831a7ea49bbca4
-> Author: Srish Srinivasan <ssrish@linux.ibm.com>
->
-> pseries/plpks/wrapkey: expose PKWM wrapping key management to userspace via sysfs
->
-> This commit adds a sysfs interface under /sys/firmware/plpks/wrapkey to allow
-> userspace to create, revoke, unrevoke, delete, and list PKWM wrapping keys.
->
->> diff --git a/arch/powerpc/platforms/pseries/plpks-wrapkey-sysfs.c b/arch/powerpc/platforms/pseries/plpks-wrapkey-sysfs.c
->> new file mode 100644
->> index 0000000000000..c293196cc9adf
->> --- /dev/null
->> +++ b/arch/powerpc/platforms/pseries/plpks-wrapkey-sysfs.c
-> [ ... ]
->> +static ssize_t list_key_labels(char *buf, u8 *obj_labels_buf,
->> +			       u64 obj_labels_count, int revoked)
->> +{
->> +	struct plpks_var var = { 0 };
->> +	u8 *obj_labels_buf_ptr, *comp_prefix;
->> +	u8 *key_label_ptr;
->> +	u16 obj_label_len;
->> +	int len = 0;
->> +	int is_revoked;
->> +	u64 i;
->> +
->> +	var.os = PLPKS_VAR_LINUX;
->> +	var.component = PLPKS_WRAPKEY_COMPONENT;
->> +	obj_labels_buf_ptr = obj_labels_buf;
->> +
->> +	for (i = 0; i < obj_labels_count; ++i) {
->> +		obj_label_len = get_unaligned_be16(obj_labels_buf_ptr);
->> +		comp_prefix = obj_labels_buf_ptr +
->> +			      PLPKS_OBJLABEL_LEN_FIELD_SIZE;
->> +
->> +		var.namelen = obj_label_len - PLPKS_MAX_LABEL_ATTR_SIZE;
->> +		var.name = kzalloc(var.namelen + 1, GFP_KERNEL);
->> +
->> +		if (!var.name)
->> +			return -ENOMEM;
->> +
->> +		key_label_ptr = comp_prefix + PLPKS_MAX_LABEL_ATTR_SIZE;
->> +		memcpy(var.name, key_label_ptr, var.namelen);
->> +
->> +		is_revoked = plpks_is_wrapping_key_revoked(&var);
->> +		if (is_revoked == revoked)
->> +			len += sysfs_emit_at(buf, len, "<%s>\n",
->> +					     (char *)var.name);
-> [Severity: Medium]
-> Can list_key_labels() silently truncate wrapping key labels when reading
-> /sys/firmware/plpks/wrapkey/list_active or list_revoked?
->
-> plpks_get_object_labels() can retrieve labels across multiple 4KB buffers via
-> H_CONTINUE, and each label can be up to PLPKS_MAX_NAME_SIZE (239) bytes.
-> However, a standard kobj_attribute show buffer is limited to PAGE_SIZE - 1
-> bytes. Once len reaches PAGE_SIZE - 1, sysfs_emit_at() returns 0 and any
-> remaining wrapping key labels are silently omitted without any error or
-> indication to userspace.
->
-> Also, list_key_labels() formats each label wrapped in angle brackets
-> ("<%s>\n"), whereas Documentation/ABI/testing/sysfs-firmware-plpks does not
-> mention the angle-bracket format for list_active and list_revoked. Should the
-> output format and buffer limit be addressed or documented?
->
->> +		else if (is_revoked < 0)
->> +			pr_warn("Failed to get revocation status for <%s>\n",
->> +				(char *)var.name);
->> +
->> +		kfree(var.name);
->> +		obj_labels_buf_ptr = key_label_ptr + var.namelen;
->> +	}
->> +
->> +	return len;
->> +}
->> +
->> +static ssize_t list_active_show(struct kobject *kobj,
->> +				struct kobj_attribute *attr, char *buf)
->> +{
->> +	u8 *obj_labels_buf = NULL;
->> +	u64 obj_labels_count = 0;
->> +	int rc;
->> +
->> +	rc = plpks_get_object_labels(&obj_labels_buf, &obj_labels_count,
->> +				     PLPKS_WRAPKEY_COMPONENT);
->> +	if (rc) {
->> +		pr_err("Retrieving object labels failed. rc=%d\n", rc);
->> +		goto out;
->> +	}
->> +
->> +	rc = list_key_labels(buf, obj_labels_buf, obj_labels_count,
->> +			     PLPKS_WRAPKEY_UNREVOKED);
->> +
->> +out:
->> +	kfree(obj_labels_buf);
->> +	return rc;
->> +}
->> +
->> +static ssize_t list_revoked_show(struct kobject *kobj,
->> +				 struct kobj_attribute *attr, char *buf)
->> +{
->> +	u8 *obj_labels_buf = NULL;
->> +	u64 obj_labels_count = 0;
->> +	int rc;
->> +
->> +	rc = plpks_get_object_labels(&obj_labels_buf, &obj_labels_count,
->> +				     PLPKS_WRAPKEY_COMPONENT);
->> +	if (rc) {
->> +		pr_err("Retrieving object labels failed. rc=%d\n", rc);
->> +		goto out;
->> +	}
->> +
->> +	rc = list_key_labels(buf, obj_labels_buf, obj_labels_count,
->> +			     PLPKS_WRAPKEY_REVOKED);
->> +
->> +out:
->> +	kfree(obj_labels_buf);
->> +	return rc;
->> +}
->> +
->> +static ssize_t create_store(struct kobject *kobj, struct kobj_attribute *attr,
->> +			    const char *buf, size_t count)
->> +{
-> [ ... ]
->> +static ssize_t unrevoke_store(struct kobject *kobj, struct kobj_attribute *attr,
->> +			      const char *buf, size_t count)
->> +{
->> +	struct plpks_var var = { 0 };
->> +	int rc;
->> +
->> +	if (!capable(CAP_SYS_ADMIN)) {
->> +		rc = -EPERM;
->> +		goto out;
->> +	}
->> +
->> +	if (!count) {
->> +		rc = -EINVAL;
->> +		goto out;
->> +	}
->> +
->> +	if (count > PLPKS_MAX_NAME_SIZE) {
->> +		rc = -ENAMETOOLONG;
->> +		goto out;
->> +	}
->> +
->> +	if (!strcmp(buf, PLPKS_DEFAULT_WRAPKEY_LABEL)) {
->> +		rc = -EINVAL;
->> +		goto out;
->> +	}
->> +
->> +	if (!is_wrapkey_label_alnum(buf, count)) {
->> +		rc = -EINVAL;
->> +		goto out;
->> +	}
->> +
->> +	var.name = kstrndup(buf, count, GFP_KERNEL);
->> +	if (!var.name) {
->> +		rc = -ENOMEM;
->> +		goto out;
->> +	}
->> +
->> +	var.namelen = count;
->> +	var.os = PLPKS_VAR_LINUX;
->> +	var.component = PLPKS_WRAPKEY_COMPONENT;
->> +
->> +	rc = plpks_unrevoke_wrapping_key(&var);
->> +
->> +	if (rc) {
->> +		pr_err("un-revocation of wrapping key <%s> failed. rc = %d\n",
->> +		       (char *)var.name, rc);
->> +		goto out;
->> +	}
->> +
->> +	rc = count;
->> +out:
->> +	kfree(var.name);
->> +	return rc;
->> +}
+>=20
+> commit e81bf248ba8e6f6857b5a558e23fdf0fa0e68ad6
+> Author: Muchun Song <muchun.song@linux.dev>
+>=20
+> mm/mm_init: move pageblock migratetype init to memmap helpers
+>=20
+> This commit moves MIGRATE_MOVABLE pageblock initialization into
+> memmap_init_compound_page_frozen() and =
+memmap_init_zone_device_basepages(),
+> and removes hugetlb_bootmem_init_migratetype().
+>=20
+>> Move the MIGRATE_MOVABLE pageblock initialization into the frozen =
+memmap
+>> initialization helpers instead. This makes memmap_init_page_frozen()
+>> initialize the pageblock for single pages and
+>> memmap_init_compound_page_frozen() initialize the whole range for =
+compound
+>> pages, so the ZONE_DEVICE and hugetlb bootmem paths can share the =
+same
+>> initialization.
+>=20
 > [Severity: Low]
-> This isn't a bug, but create_store(), revoke_store(), unrevoke_store(), and
-> delete_store() all duplicate the same CAP_SYS_ADMIN check, count validation,
-> PLPKS_DEFAULT_WRAPKEY_LABEL check, is_wrapkey_label_alnum() validation,
-> kstrndup() allocation, and struct plpks_var initialization (with
-> unrevoke_store() returning -EINVAL instead of -EPERM for
-> PLPKS_DEFAULT_WRAPKEY_LABEL).
->
-> Similarly, list_active_show() and list_revoked_show() duplicate the
-> plpks_get_object_labels() call and cleanup, differing only in passing
-> PLPKS_WRAPKEY_UNREVOKED vs PLPKS_WRAPKEY_REVOKED to list_key_labels().
->
-> Could the shared store validation/setup and show label retrieval logic be
-> factored into common helpers?
->
+> This isn't a bug, but the commit message mentions a nonexistent
+> memmap_init_page_frozen() helper.  The patch updates
+> memmap_init_zone_device_basepages() to initialize the pageblock range =
+for
+> ZONE_DEVICE base pages instead.
+
+My bad. It should be memmap_init_zone_device_basepages().
+
+>=20
+>> diff --git a/mm/mm_init.c b/mm/mm_init.c
+>> index 61a720bb44dce..e05db8abde2fd 100644
+>> --- a/mm/mm_init.c
+>> +++ b/mm/mm_init.c
+>> @@ -751,6 +751,9 @@ void __meminit =
+memmap_init_compound_page_frozen(struct page *head,
+>> 	for (unsigned long i =3D 1; i < nr_pages; i++)
+>> 		memmap_init_page_from_template(head + i, pfn + i, zone, =
+&template);
+>> 	prep_compound_head(head, order);
 >> +
->> +static ssize_t delete_store(struct kobject *kobj, struct kobj_attribute *attr,
->> +			    const char *buf, size_t count)
->> +{
-> [ ... ]
->> +	rc = plpks_del_wrapping_key(&var);
-> [Severity: Medium]
-> What prevents a TOCTOU race if delete_store() and unrevoke_store() are called
-> concurrently on the same revoked wrapping key?
->
-> In arch/powerpc/platforms/pseries/plpks.c, plpks_del_wrapping_key() enforces
-> that a key is revoked before deletion across two separate hypercalls without
-> any lock:
->
-> plpks_del_wrapping_key()
->      rc = plpks_is_wrapping_key_revoked(var);
->      if (rc == 1) {
->          ...
->          rc = plpks_remove_var(PLPKS_WRAPKEY_COMPONENT, var->os, vname);
->
-> Because delete and unrevoke are separate sysfs attributes, kernfs only holds
-> its per-open-file mutex separately for each attribute. If CPU 0 enters
-> delete_store() -> plpks_del_wrapping_key() and sees
-> plpks_is_wrapping_key_revoked() == 1, and CPU 1 concurrently runs
-> unrevoke_store() -> plpks_unrevoke_wrapping_key() (H_PKS_UNREVOKE_OBJECT)
-> before CPU 0 calls plpks_remove_var() (H_PKS_REMOVE_OBJECT), won't CPU 0
-> delete the now-active wrapping key?
->
+>> +	pageblock_migratetype_init_range(pfn, 1UL << order, =
+MIGRATE_MOVABLE,
+>> +					 /* isolate */ false, /* atomic =
+*/ false);
+>> }
+>>=20
+>> struct zone __meminit *pfn_to_zone(unsigned long pfn, int nid)
+>> @@ -1110,6 +1113,9 @@ static void =
+memmap_init_zone_device_basepages(unsigned long start, unsigned long
+>> 		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
+>> 			cond_resched();
+>> 	}
+>> +
+>> +	pageblock_migratetype_init_range(start, end - start, =
+MIGRATE_MOVABLE,
+>> +					 /* isolate */ false, /* atomic =
+*/ false);
+>> }
+>=20
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but can
+> pageblock_migratetype_init_range() leave the first partial pageblock's
+> migratetype uninitialized [1] when the starting PFN is not aligned to
+> a pageblock boundary?
+
+The condition is reachable, but it does not appear to cause a functional
+problem. The partial pageblock retains its existing migratetype, or
+MIGRATE_UNMOVABLE from the zero-initialized bitmap; it does not contain
+uninitialized data. ZONE_DEVICE pages do not enter the buddy allocator =
+or normal
+isolation path, so this does not affect allocation, migration, or =
+removal.
+
+Moreover, the pageblock also covers PFNs outside the pgmap range, so =
+overwriting
+its migratetype could affect adjacent memory. So I'll not fix it.
+
+Thanks.
+
+>=20
+> mm/mm_init.c:pageblock_migratetype_init_range() {
+>    ...
+> 	for (pfn =3D pageblock_align(pfn); pfn < end; pfn +=3D =
+pageblock_nr_pages) {
+> 		enum migratetype mt =3D kho_bootmem_migratetype(pfn, =
+migratetype);
+>=20
+> 		init_pageblock_migratetype(pfn_to_page(pfn), mt, =
+isolate);
+>    ...
+> }
+>=20
+> pageblock_align(pfn) rounds the starting PFN upward to the next =
+pageblock
+> boundary.  When a caller such as ZONE_DEVICE initialization or memory
+> hotplug passes a range starting in the middle of a pageblock, the loop
+> skips that initial partial pageblock, leaving its pageblock flags
+> uninitialized.
+>=20
+> [1] =
+https://sashiko.dev/#/bug/linux-492df7cc-d097-43e5-9701-9954aee1d064
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261109095807.41547-1-songmuchun@bytedance=
+.com?part=3D11
+
