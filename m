@@ -1,78 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794266038;
-	b=TGVCwQiRqf9GwIpPHOifcJsA1Pqxp2Fo6L8O6VRVZLiS8Xiu1MMkPbrfEGpkodlQaCpX
-	 Ae1sihLUvIv095SxA+nEu0mI0b3uNHL2ZeYEmYKN/JYiDjmj6Ciztp7VhgkAT4NMHy2ZK
-	 q4A6IPwWMCBBSH5ojCA7PW0UMEyUQfFPALgN4t/dbLFLlw+UZA2p1YYWH0IXFaMXNAQw1
-	 u2F50OZ5RBmKxlYSb54vKr6HlqPQxXFeQZrh55v1Y6Z0XWm7dcYfdIkyUwJRYulmTyqE8
-	 6ThlVAK56k1447/P1e9anWTPHs2iRGkoimGvHIxyaKYhfA+AjKIAJpcTsLN1A6NxaWA==
+	t=1794269306;
+	b=bhBnT2OcqVaPY/8ZL4sX31N9MNjEvYBa5uEGX1ZG3sdhTDVH8HL1dyzzM+LhCioh0iNr
+	 rQbb5q4NX/ybAdDiRw/jHUVx6y53625OI33sHIRH4XN2rLCmLm8+GufkG4Z0kD2OT9Hl8
+	 rt6OZBMH65hB2nimJwulewIJj2zB+z6UEpjwXbK4pXNzCaCo4yDV+5ZqwroNej/dq5+Ah
+	 FKl4XxluJnjd8e3HvnhYMCaaovSVdm3L7EaupfxWplbhKjJRj/mYZeG1NuecclFVHDq0Q
+	 rS6Q94+kOHbMgGWSutqeZPuB60ChtZWTz1BC/BGyiDNPji+8Bq5FX3ogx6KpGX1W0gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794266038;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=IC6PJ/RZVkQgMpY8cIohbFHuIH5eqvjrcXnHJ1rI6uY=;
-	b=dVx1Mde254U6AEyTJp8jzrvB1hxoZkq56bzGsIn8HS5tE2xuC3SP7uC9t19lCAL/kFz1
-	 njCopDpWST6SxjdFU5W8mh4sdfnRTfQLDRV9lyeYJ3wsgoQ8IiE8Gaflq8Sk2oXx7sLf+
-	 A+mNC8X1xFr9Pqqa9x+8ECtLB0C+RM9vrVGZJ5ilmAhqRbPNdZ0VzyLygMNvFvM0+53gO
-	 CLr1UVnpQ14H5YX5R5dvye7huK6spJMslc4PW411KcR1CjUMjDUZekLDWrgCMA2MYAcaN
-	 gAy0dyPNVuNI/HIBDbHbaskSPEK0PurFy8g9m/kFeNEsvDURlrWC1e9GDbba6EARqMg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794269306;
+	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:References:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Status:
+	 X-Spam-Checker-Version;
+	bh=ZAlmiMbCs5Fxt/OX69COOKdAVsxWJrbxSKZq5I1sz6M=;
+	b=JbI7s96Jem1LxMYxp1nleqxHl80aHyR1omzRVABH6EJQpxvT0Zts9R4SL1BtTxGqvjeK
+	 XMetBWb5p+Im3KSK4uwYmN9APLt/lyLJWEoxp2P4TAT16Ytd47ArSfpR5u3P8//0Oin0G
+	 rmaW3jcFsEHmNuni3uqscUkO75DHSCYjE0ZSr7A8pRHzqYzq3upteSMfDF9sLEcivXnIH
+	 DEEWse7YnUcLQxgzwCcyPKuL6xNVR127sj6lz7Gfnuga37k/I4yjVf5FR2IgjISepxwe9
+	 YyvxsyUabL1TpsB0ykq8GlG591H0xD+4xmrElsvssbaOGUjmar3tFnJn87hWkX+vq1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hlRoaz+F;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id 28822606A31C;
-	Mon,  9 Nov 2026 23:13:57 +0000 (UTC)
+	dmarc=pass header.from=linux.microsoft.com;
+	spf=pass smtp.mailfrom=linux.microsoft.com;
+	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=W3mBhVmc;
+	arc=none smtp.remote-ip=13.77.154.182
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 679B560A2619
+	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 00:08:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 679B560A2619
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hlRoaz+F
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 4C1421F0089F;
-	Mon,  9 Nov 2026 23:13:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794266037;
-	bh=IC6PJ/RZVkQgMpY8cIohbFHuIH5eqvjrcXnHJ1rI6uY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hlRoaz+FYhaKeQrUUn6debqh1nygeJvK3YQfYYgaklSvf1hUgfCsE8iQjuggGwFcc
-	 KYVURUH0yM9BsgmDIqW3uU0UzCdMvV18zlqfWlkOHnuDW0Pc2XK/DmiG7YrXN1ZQSp
-	 bhCRyX86WYQy/XhnBu0TJBVniqL+6QmmcyJmLpB3D0NtUv0zLxbIvBGst50YoqdNPZ
-	 /JqY7UyAxhuYuIlIYOcKPEacHnUkpuj2MvLj+NSIxgclM23cy1tNfhxpsFWgvqOYZN
-	 RLeMSKshTMTS1ktK8EFJCXJypWBcg6k1O0fWUIyrqgUCOb2unBxZjvV5K+mIMjLBPq
-	 1wm79nHvLy0mQ==
-Date: Tue, 10 Nov 2026 01:13:53 +0200
-From: Jarkko Sakkinen <jarkko@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: David Howells <dhowells@redhat.com>, keyrings@vger.kernel.org,
-	linux-s390@vger.kernel.org, linux-security-module@vger.kernel.org,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Anna Schumaker <anna@kernel.org>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	James Morris <jmorris@namei.org>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>, Paul Moore <paul@paul-moore.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Simon Horman <horms@kernel.org>, Sumit Garg <sumit.garg@kernel.org>,
-	Sven Schnelle <svens@linux.ibm.com>, Tom Talpey <tom@talpey.com>,
-	Trond Myklebust <trondmy@kernel.org>,
-	Vasily Gorbik <gor@linux.ibm.com>, Chuck Lever <cel@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: Re: [PATCH v5 06/12] KEYS: trusted: TEE: Synchronize session lifetime
-Message-ID: <avJTsUib2ss8rzOG@kernel.org>
-References: <20261108222719.304712-1-jarkko@kernel.org>
- <20261108222719.304712-7-jarkko@kernel.org>
- <sashiko-outbox-205732@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=W3mBhVmc
+Received: from [192.168.0.88] (192-184-212-33.fiber.dynamic.sonic.net [192.184.212.33])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 7A6FB20B7169;
+	Mon,  9 Nov 2026 16:08:23 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7A6FB20B7169
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1794269303;
+	bh=ZAlmiMbCs5Fxt/OX69COOKdAVsxWJrbxSKZq5I1sz6M=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=W3mBhVmczKwT2hIXaXm9J6i+d+EfIroi2E6ePq3guXRBSuLA98TUZHgxQE273Ivl3
+	 pbpJwWVly/0bIzjOQ8ocqLrnAMtyLWYYwQoxBUFdXeIf2lMrv7pQ8aPeDdjwd2qB6u
+	 cpWgadfKQAxcjLqjoBZv2ln9vvObbflSFOy5SNVg=
+Message-ID: <15b3d0f2-fb44-c1cd-0a77-9c286e97a745@linux.microsoft.com>
+Date: Mon, 9 Nov 2026 16:08:25 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -82,23 +53,142 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-205732@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH] mshv: Do pre-commit before mapping a guest VM GPA
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev, linux-hyperv@vger.kernel.org
+References: <20261107024842.3929415-1-mrathor@linux.microsoft.com>
+ <sashiko-outbox-202522@kernel.org>
+From: Mukesh R <mrathor@linux.microsoft.com>
+In-Reply-To: <sashiko-outbox-202522@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 09, 2026 at 10:28:27PM +0000, sashiko-bot@kernel.org wrote:
+On 11/6/26 19:11, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] KEYS: trusted: missing Fixes trailers for TEE lifetime and
->   init_trusted() fixes
+> - [High] mshv: GFP_KERNEL allocation in hv_pre_commit_gpa() during MMU
+>    invalidation
+> --
+> 
+> commit 326d99247cfb889e00e7b24f8217bcbc574b15e8
+> Author: Mukesh R <mrathor@linux.microsoft.com>
+> 
+> mshv: Do pre-commit before mapping a guest VM GPA
+> 
+> This commit adds an HVCALL_PRECOMMIT_GPA_PAGES step before mapping guest
+> GPAs in hv_do_map_gpa_hcall() to pre-allocate hypervisor data structures
+> and reduce TLB flushes.
+> 
+>> diff --git a/drivers/hv/mshv_root_hv_call.c b/drivers/hv/mshv_root_hv_call.c
+>> index e761addda50e1..595d044fb9264 100644
+>> --- a/drivers/hv/mshv_root_hv_call.c
+>> +++ b/drivers/hv/mshv_root_hv_call.c
+>> @@ -181,6 +181,54 @@ int hv_call_delete_partition(u64 partition_id)
+>>   	return hv_result_to_errno(status);
+>>   }
+>>   
+>> +/*
+>> + * Pre commit to reduce TLB flush overheads in the hypervisor. On systems with
+>> + * large CPUs, there is signficant advantage to doing this. Pre-commit allows
+>> + * the hypervisor to build all data structs needed in anticipation of the map
+>> + * gpa hypercall, thus reducing or eliminating deposit page returns from the
+>> + * map gpa hypercall, and as a result reducing TLB flushes.
+>> + */
+>> +static int hv_pre_commit_gpa(u64 pt_id, u64 gfn, u64 num_pages)
+>> +{
+>> +	ulong irq_flags;
+>> +	struct hv_input_precommit_gpa_pages *input_page;
+>> +	int rc = 0;
+>> +	u64 status, done = 0;
+>> +
+>> +	while (done < num_pages) {
+>> +		u16 rep_count = min(num_pages - done, HV_REP_COUNT_MAX);
+>> +
+>> +		local_irq_save(irq_flags);
+>> +		input_page = *this_cpu_ptr(hyperv_pcpu_input_arg);
+>> +		memset(input_page, 0, sizeof(*input_page));
+>> +
+>> +		input_page->partition_id = pt_id;
+>> +		input_page->target_gpa_base = gfn;
+>> +
+>> +		status = hv_do_rep_hypercall(HVCALL_PRECOMMIT_GPA_PAGES,
+>> +					     rep_count, 0, input_page, NULL);
+>> +		local_irq_restore(irq_flags);
+>> +
+>> +		done += hv_repcomp(status);
+>> +		gfn += hv_repcomp(status);
+>> +
+>> +		if (hv_result_needs_memory(status)) {
+>> +			rc = hv_deposit_memory(pt_id, status);
+>> +			if (rc)
+>> +				break;
+>> +
+>> +		} else if (!hv_result_success(status)) {
+>> +			pr_err("%s: failed to pre commit for gfn %#llx done %llu/%llu, status=%#llx (%s)\n",
+>> +			       __func__, gfn, done, num_pages, status,
+>> +			       hv_result_to_string(hv_result(status)));
+>> +			rc = hv_result_to_errno(status);
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	return rc;
+>> +}
+>> +
+>>   /* Ask the hypervisor to map guest ram pages or the guest mmio space */
+>>   static int hv_do_map_gpa_hcall(u64 partition_id, u64 gfn, u64 page_struct_count,
+>>   			       u32 flags, struct page **pages, u64 mmio_spa)
+>> @@ -205,6 +253,10 @@ static int hv_do_map_gpa_hcall(u64 partition_id, u64 gfn, u64 page_struct_count,
+>>   		page_count >>= large_shift;
+>>   	}
+>>   
+>> +	ret = hv_pre_commit_gpa(partition_id, gfn, page_struct_count);
+>> +	if (ret)
+>> +		return ret;
+> 
+> [Severity: High]
+> Can calling hv_pre_commit_gpa() unconditionally here sleep and enter
+> direct reclaim from an MMU notifier invalidation callback?
+> 
+> mshv_region_interval_invalidate() calls mshv_region_remap_pages() with
+> HV_MAP_GPA_NO_ACCESS while holding region->mreg_mutex inside
+> mmu_notifier_invalidate_range_start(), including when
+> !mmu_notifier_range_blockable(range):
+> 
+> drivers/hv/mshv_regions.c:mshv_region_interval_invalidate() {
+> 	...
+> 	if (mmu_notifier_range_blockable(range))
+> 		mutex_lock(&region->mreg_mutex);
+> 	else if (!mutex_trylock(&region->mreg_mutex))
+> 		goto out_fail;
+> 
+> 	mmu_interval_set_seq(mni, cur_seq);
+> 
+> 	ret = mshv_region_remap_pages(region, HV_MAP_GPA_NO_ACCESS,
+> 				      page_offset, page_count);
+> 	...
+> }
+> 
+> That reaches hv_do_map_gpa_hcall(), which now calls hv_pre_commit_gpa()
+> with page_struct_count (4K pages, with input_page->flags = 0 even when the
+> region was mapped with HV_MAP_GPA_LARGE_PAGE).  If the hypervisor asks for
+> more memory (for example to shatter a 2M SLAT entry into 4K entries),
+> hv_deposit_memory() -> hv_call_deposit_pages() allocates pages with
+> GFP_KERNEL.  This sleeps in non-blockable MMU notifier context, triggers a
+> lockdep splat on __mmu_notifier_invalidate_range_start_map in
+> fs_reclaim_acquire(), and can deadlock if direct reclaim re-enters
+> mshv_region_interval_invalidate() on region->mreg_mutex.
+> 
 
-It's kind of weird that this was the only relevant Sashiko response.
+All pre-commit does is pre-deposit pages, so map hypercall right below
+doesn't keep coming back with insufficient memory. So there is no
+regression here... As for the reclaim notifier issue, it needs to
+be addressed for movable pages, or rather, movable pages needs to
+be re-assessed to resolve such issues.
 
-I went through all the others and they are "no issues" responses. Just
-wanted to address this so that there is no misimpression that the patch
-set would need another "Sashiko spin".
+Thanks,
+-Mukesh
 
-The issue above should not be considered a blocker for a review, and
-is trivial to address.
 
-Br, Jarkko
