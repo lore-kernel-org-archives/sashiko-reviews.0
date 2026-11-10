@@ -1,54 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.65
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794308619;
-	b=JvSvGb0zimZqSSi8wvsEmC2YlfalcwvGDZRtXihFwp/lR1IIc0Qaad7V+BIXOPpBWF/j
-	 oRNWHRbfWekDCDb3YEwWjHPXB6lsC3ivds+ogWPayGj5W4okVU4WRYW7K0tXtYfQr5sty
-	 2PBvlSHoDrjat6ZTTQONKp1qcpYts6/HXoavoqmkp8+9Cz1ROeWLIiYigEsS1r5xDd0ap
-	 lWecRSs75SfTr0blzrJJmuRyNjpLsGZURMxUHrTiOOj44ds/QlNDvx/kCKZODP7A21EU+
-	 TDDciYbTfT/VacWG7Tf+YTtIUHtNOy5gL/+JhnWAlmHdyyibMRRzy3bAuPlZgAD3Eog==
+	t=1794310765;
+	b=jwp33Hy1ecWlihmGoPDI2JoD0FDqDRVAXBQCCb0jcvg0ibo5roMN2u/NjwWUBn+tl56e
+	 ewnDaDO3YG0PpLJjcy34p6qNI/Bde8nQMydhA7BDv59iyz89nfPsQuBZLgWSFPQXk/OuY
+	 kVZBYySAXCoP8e8RaTSwb0qhmlCF9UyaGNT+UDUC5SaFPmG1fElCbbf8kqa8Yg9/v2G65
+	 t9tAIH4m9f5KWQYI8LZkp3FrQ+eLu5NjE5lFm8x7ppiHYfl1diYJ/ztRt2dBnXakSgGsl
+	 ENM1aPgEkRpucGkwq0xTgOzPqptyKzy+08Ke3GIEGT8TU7G1Fb4s0oe3FS0tkb6HH2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794308619;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=mosdG3m1bRhwTBPl1OmMcPEQ8m7G/FmmnXvyKEgSjA8=;
-	b=3oKbFcextOFWhCj6LMeXh9Pi6AvpuybQnyYJFmq6F7jr8zLxnfP5HEQbRW4iCRXwOoU4
-	 54cchpOL40rVVBqVo4AqBWN49mB5WAHOz+1IX1w0oSEkcPlNi06skf14C7/boLr4fGMiY
-	 02jY/EAgrruiusqidB30MIprAMxnB3pFOPU/V6KfDKOMg8hIG/wIR0U+WoQsdb068Mpfy
-	 i9z11DqQ988El6emA9o19BwanYvXgjvUv3/STkEN9O406IYlD6ZNrNKp4/u5wgjgrxU1g
-	 Qjci0lTTS/Abi5knplwM2sTAAthECHXgXW4I+VEpGdSkJ7gMgsrCRzOleJxgd0+SIfA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794310765;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:Content-Language:To:Cc:References:From:Autocrypt:Organization:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=61iXqObBoRbHUHb9L4kL8O8fx5dOAyzxdr1sttsno+Q=;
+	b=gh1QRi/iTOhcifhp28L3oQ129fPqmtyNdZ68G4wkiJs/KxXthaddgzIECIrTouPatEhd
+	 xIV3gv1ixJoZzj3N2AjYqXhQ4k08QsY5eX9C0oWFiq70zMOjmdSTr2jRHDI9Ik3060+Gt
+	 CCI2Vi2tjtgSiBalVJK7SdDWBCpK1jxtxzFpSTLa4Wb0OoxEihOkcOClm7zgwb0lWTsl6
+	 VyfOL8Ls7/3qu8cJm9BK8rwmV5vGBdcSrlSDWlQ2cvCB5C5eU9SUzMzHmywdrPoCOXXJ5
+	 Z3wRxgzSXhIqk3xJ4xqO1WfufCorj5FYFzmCJAb3sWcVtEcWnPMNWb10FDBIDhLt/4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=f6b5mj7B;
-	arc=none smtp.remote-ip=91.218.175.65
-Received: from mta0.migadu.com (out-65.mta0.migadu.com [91.218.175.65])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FlmAFEMc;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED0D606A326
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 11:03:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6ED0D606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA995606A325;
+	Tue, 10 Nov 2026 11:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=f6b5mj7B
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=mUPWKMxHATpoQg7UoNknqz6Qt/NzOxdqRnGP/yPu89E=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794308615; v=1; x=1794913415;
- b=f6b5mj7B7q+PSXXmwKjKMIWzWnQS0vX+kTwLDLRUe6Y+jhcGmcs3KEt/pVtI9B8nHzlLNYnM
- KuDwFz3Bgua5wwnJ4EcX+/z+xBohEDdNn6tCKAMEC+bXQ25kuq/rTmHj3jLJWOjJkFCpMGhVWiP
- vCqhlC+77YL93s3QTPO9Xd8o=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id e0298fe87bd0bf54;
-	Tue, 10 Nov 2026 11:03:35 +0000
-X-Mizu-Trace-ID: e0298fe87bd0bf54
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <37001416-f72c-4c32-857d-4202aa181d72@linux.dev>
-Date: Tue, 10 Nov 2026 19:03:25 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FlmAFEMc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A651F008A4;
+	Tue, 10 Nov 2026 11:39:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794310764;
+	bh=61iXqObBoRbHUHb9L4kL8O8fx5dOAyzxdr1sttsno+Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=FlmAFEMco9/vwwZbY1x8fMa9VkyGo8Df7nTFSSqeQhLgEQHtOi6cU4wOqdby450d6
+	 BWgQypHzu6Tos01Zo4HfEFhVTLrDFkvBgMu9pXyZD6WE5RlrnEolFRedJG7co7Rd6D
+	 0E3Yf9cD2hiPF+GWkagrC9FcY/1LSy70+xSkIRQDKD2q621tDE90SNpLywhUAe8RJJ
+	 +sq5bHADVIvLUGE06ap5bvJWFWD9Ato/I9Hvbcvhegtd7Hy+2067KShGC4KW+zMq1Y
+	 IU5Ml58hrfpv3lUf5lnV1DakoACGL3zC1olgnaTv0YwnuAJnOJrtJ+p0Q1sYAaW2jC
+	 ib3VCUivyMPGg==
+Message-ID: <f3949fb9-8f4c-488a-810b-1f5be8044a42@kernel.org>
+Date: Tue, 10 Nov 2026 12:39:20 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,373 +51,227 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] mm: hugetlb: enable CMA allocation for PMD-sized
- pages
-To: sashiko-reviews@lists.linux.dev, muchun.song@linux.dev, david@kernel.org,
- osalvador@suse.de, akpm@linux-foundation.org, azpijr@gmail.com,
- Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: linux-mm@kvack.org
-References: <cover.1792651104.git.zhengqi.arch@bytedance.com>
- <5edd1dc82bd3b0b09005c0b36cafa2f7baea6d3d.1792651104.git.zhengqi.arch@bytedance.com>
- <sashiko-outbox-181243@kernel.org>
-From: Qi Zheng <qi.zheng@linux.dev>
-In-Reply-To: <sashiko-outbox-181243@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH mptcp-next v7 6/6] Squash to previous one
+Content-Language: fr
+To: gang.yan@linux.dev
+Cc: sashiko-reviews@lists.linux.dev, mptcp@lists.linux.dev
+References: <cover.1790147728.git.yangang@kylinos.cn>
+ <6a1cbdd1a0f4866ff6cda3b8679450172c203f5b.1790147728.git.yangang@kylinos.cn>
+ <20260923101140.E62E41F000FF@smtp.kernel.org>
+ <da961f27c729d9232a59e509e8e3c2f50bc1db00@linux.dev>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <da961f27c729d9232a59e509e8e3c2f50bc1db00@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Hi Gang,
 
+On 24/09/2026 03:53, gang.yan@linux.dev wrote:
+> September 23, 2026 at 6:11 PM, sashiko-bot@kernel.org mailto:sashiko-bot@kernel.org  wrote:
+> 
+> 
+>>
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [High] mptcp: uaf and uninitialized access in pm_ops during disconnect
+>> --
+>>
+>> commit 89b80a47ef923bdc04a9069fdcf06de447841c5b
+>> Author: Gang Yan <yangang@kylinos.cn>
+>>
+>> Squash to previous one
+>>
+>> This patch applies RCU discipline to msk->pm.ops, moving its initialization,
+>> publication, and release to better align with RCU patterns. It updates readers
+>> to use rcu_dereference() and writers to use rcu_assign_pointer() under the
+>> PM lock.
+>>
+>> Link: https://sashiko.dev/#/patchset/20260819125629.49823-1-gang.yan@linux.dev?part=5
+>>
+>>>
+>>> mptcp_destroy(), the final close path: mptcp_token_destroy() has
+>>>  already removed the socket from the token hash by then, so no new
+>>>  reader can find the msk anymore.
+>>>  
+>>>  Note that rcu_assign_pointer() before pm_ops->init(msk) does not
+>>>  publish a partially initialised object: the ops are registered
+>>>  immutable, init() only prepares the per-socket state, and the msk is
+>>>  not reachable by readers until its token is registered.
+>>>
+>> [Severity: High]
+>> Is this assumption accurate? A concurrent SoftIRQ can receive an MP_JOIN
+>> request, look up the socket via mptcp_token_get_sock(), increment its refcnt,
+>> and drop the RCU read lock. Concurrently, the socket could be disconnected,
+>> calling mptcp_disconnect() -> mptcp_pm_data_reset() -> mptcp_pm_ops_init().
+>>
+>> The SoftIRQ thread could then re-acquire the RCU read lock and call
+>> mptcp_pm_get_local_id(), accessing the actively tearing down or uninitialized
+>> per-socket state.
+> 
+> The concurrent softirq reader you describe does exist -- that is
+> exactly the race this patch fixes. But note what that reader
+> consumes: mptcp_pm_get_local_id() consults the per-net endpoint
+> table (inside its own RCU section) and the msk addresses; it does
+> not read any of the per-socket state managed by init()/release()
+> (pm->work_pending, accept_addr, ...), which is only consumed by
+> the PM worker under the socket lock. So the reader cannot observe
+> the teardown/reset of the fields those callbacks manage. It's safe
+> for now.
+> 
+>>
+>> [ ... ]
+>>
+>>>
+>>> diff --git a/net/mptcp/pm.c b/net/mptcp/pm.c
+>>>  index 64244a1a01bca..66fb7c3d9c827 100644
+>>>  --- a/net/mptcp/pm.c
+>>>  +++ b/net/mptcp/pm.c
+>>>
+>> [ ... ]
+>>
+>>>
+>>> @@ -1158,23 +1166,39 @@ void mptcp_pm_worker(struct mptcp_sock *msk)
+>>>  static void mptcp_pm_ops_init(struct mptcp_sock *msk,
+>>>  struct mptcp_pm_ops *pm_ops)
+>>>  {
+>>>  - if (!pm_ops || !bpf_try_module_get(pm_ops, pm_ops->owner)) {
+>>>  - pr_warn_once("pm %s fails, fallback to default pm", pm_ops->name);
+>>>  - pm_ops = &mptcp_pm_kernel;
+>>>  + struct mptcp_pm_ops *old;
+>>>  +
+>>>  + spin_lock_bh(&msk->pm.lock);
+>>>  + old = rcu_dereference_protected(msk->pm.ops,
+>>>  + lockdep_is_held(&msk->pm.lock));
+>>>  + if (old != pm_ops)
+>>>  + rcu_assign_pointer(msk->pm.ops, pm_ops);
+>>>
+>> [Severity: High]
+>> Does this publish the new ops to readers before its state is initialized via
+>> init(msk) below? If a reader finds the socket, it could access the new ops
+>> before its per-socket state is ready.
+>>
+> 
+> On the publish-before-init concern: pm_ops->init(msk) prepares
+> the per-socket state, not the ops -- the ops are registered
+> immutable, their callbacks are valid from registration. A reader
+> entering between the assign and init() would call valid ops code
+> and read fields it does not consume (see comments above); this
+> ordering also matches the previous, non-RCU code.
+> 
+>>>
+>>> + spin_unlock_bh(&msk->pm.lock);
+>>>  +
+>>>  + if (old) {
+>>>  + synchronize_rcu();
+>>>  + if (old->release)
+>>>  + old->release(msk);
+>>>
+>> [Severity: High]
+>> If old == pm_ops, we skip the rcu_assign_pointer() above, meaning the ops
+>> are still actively published in msk->pm.ops. Does calling old->release(msk)
+>> here violate RCU removal rules by releasing the ops state while it is still
+>> reachable by readers?
+>>
+> 
+> On releasing the still-installed ops when old == pm_ops: no
+> in-tree PM defines release() today, so this is currently dead
+> code. For a future PM that does define it, the synchronize_rcu()
+> in front guarantees no in-flight reader is executing the ops when
+> release() runs, so no RCU removal rule is violated. It's also an old
+> issue raised by sashiko before, this code can address it correctly I
+> think (call .release before remove it).
+> 
+>>>
+>>> + bpf_module_put(old, old->owner);
+>>>  }
+>>>  
+>>>  - msk->pm.ops = pm_ops;
+>>>  - if (msk->pm.ops->init)
+>>>  - msk->pm.ops->init(msk);
+>>>  + if (pm_ops->init)
+>>>  + pm_ops->init(msk);
+>>>  
+>>>  pr_debug("pm %s initialized\n", pm_ops->name);
+>>>  }
+>>>
+>> [ ... ]
+>>
+>>>
+>>> diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+>>>  index 14aa82647c3d1..4953cfa329e81 100644
+>>>  --- a/net/mptcp/subflow.c
+>>>  +++ b/net/mptcp/subflow.c
+>>>  @@ -94,14 +94,17 @@ static struct mptcp_sock *subflow_token_join_request(struct request_sock *req)
+>>>  return NULL;
+>>>  }
+>>>  
+>>>  + rcu_read_lock();
+>>>  local_id = mptcp_pm_get_local_id(msk, (struct sock_common *)req);
+>>>
+>> [Severity: High]
+>> This is where a concurrent reader accesses the PM ops using a cached msk
+>> reference. Does this disprove the assumption in the commit message that
+>> the socket is unreachable, since the reader already holds a reference to msk?
+>>
+> 
+> It's the misleading of the commit message, as the first comment of this letter
+> said.
+> 
+> @Matt, @Geliang
+> So for now, I think all the patches in this series are ready for review. It’s
+> not urgent, so please take a look when you have time.
 
-On 10/22/26 5:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] mm: hugetlb: infinite FOLL_LONGTERM migration loop for PMD CMA folios
-> - [High] mm: hugetlb: alloc_buddy_frozen_folio() consumes CMA pages without bitmap bits
-> - [High] mm: hugetlb: folio_lock deadlock in CMA alloc for PMD hugetlb faults
-> --
-> 
-> commit 9cf077a849a76f9279657f4fa6aef60b1b9348ba
-> Author: Qi Zheng <qi.zheng@linux.dev>
-> 
-> mm: hugetlb: enable CMA allocation for PMD-sized pages
-> 
-> This commit enables configuring a dedicated CMA pool for PMD-sized HugeTLB
-> pages via hugetlb_cma=<capacity>@<page-size>, trying buddy allocation first
-> for non-gigantic PMD pages before falling back to CMA.
-> 
->> diff --git a/mm/hugetlb.c b/mm/hugetlb.c
->> index c1a8d00be11ac..bad5cd4978c5e 100644
->> --- a/mm/hugetlb.c
->> +++ b/mm/hugetlb.c
->> @@ -1835,22 +1835,20 @@ static struct folio *only_alloc_fresh_hugetlb_folio(struct hstate *h,
->>   {
->>   	struct folio *folio = NULL;
->>   	int order = huge_page_order(h);
->> +	bool cma_only = hugetlb_cma_exclusive_alloc(order);
->>   
->>   	if (nid == NUMA_NO_NODE)
->>   		nid = numa_mem_id();
->>   
->> -	if (allow_cma && order_is_gigantic(order))
->> +	if (!order_is_gigantic(order) && !cma_only)
->> +		folio = alloc_buddy_frozen_folio(order, gfp_mask, nid, nmask,
->> +						 node_alloc_noretry);
-> 
-> [Severity: High]
-> When hugetlb_cma=<size>@<pmd-size> is configured without hugetlb_cma_only=1,
-> can calling alloc_buddy_frozen_folio() first consume pages from the reserved
-> CMA pool without marking the CMA bitmap, leading to a livelock in
-> alloc_and_dissolve_hugetlb_folio() or premature failure in cma_range_alloc()?
-> 
-> For non-gigantic PMD hstates where hugepage_movable_supported(h) is true,
-> htlb_alloc_mask(h) includes GFP_HIGHUSER_MOVABLE. In
-> __alloc_frozen_pages_noprof(), prepare_alloc_pages() and
-> alloc_flags_slowpath() set ALLOC_CMA via alloc_flags_cma(gfp_mask), which
-> allows mm/page_alloc.c:__rmqueue() to allocate PMD-sized folios directly
-> from the MIGRATE_CMA freelists of the hugetlb_cma pool without setting bits
-> in cmr->bitmap:
+Thank you for having replied to Sashiko.
 
-Yes, alloc_buddy_frozen_folio() can allocate PMD-sized HugeTLB folios
-from MIGRATE_CMA when the allocation mask permits it.
+After a quick look, the series looks good to me. Do you mind sending a
+new version after a rebase and having squashed 5/6 and 6/6 together, please?
 
-Leaving the CMA bitmap clear is expected for such buddy allocations. The
-bitmap tracks explicit CMA allocations; movable buddy allocations can
-temporarily occupy those ranges and are reclaimed through migration or
-dissolution when CMA selects them.
-
-> 
-> mm/page_alloc.c:__rmqueue()
-> 	case RMQUEUE_CMA:
-> 		if (alloc_flags & ALLOC_CMA) {
-> 			page = __rmqueue_cma_fallback(zone, order);
-> 			if (page) {
-> 				*mode = RMQUEUE_CMA;
-> 				return page;
-> 			}
-> 		}
-> 
-> Once completely free PMD-order buddy blocks are exhausted,
-> only_alloc_fresh_hugetlb_folio() falls back to
-> hugetlb_cma_alloc_frozen_folio() -> cma_alloc_frozen_compound() ->
-> cma_range_alloc(). Because the bitmap bits for the buddy-allocated PMD
-> HugeTLB folios are still zero, cma_range_alloc() selects those ranges and
-> calls alloc_contig_frozen_range() -> isolate_migratepages_block() ->
-> isolate_or_dissolve_huge_folio() -> alloc_and_dissolve_hugetlb_folio().
-> 
-> During batch pool allocation in hugetlb_hstate_alloc_pages_onenode(),
-> hugetlb_pages_alloc_boot_node(), or set_max_huge_pages(), the earlier
-> buddy-allocated folios are still held on the caller's local list with
-> refcount 0 and without the hugetlb_freed flag set until
-> prep_and_add_allocated_folios() runs after the loop. When
-> alloc_and_dissolve_hugetlb_folio() encounters one of those folios, it spins
-> indefinitely waiting for the current task to enqueue it on the freelist:
-
-Agreed. Enabling CMA fallback for non-gigantic PMD HugeTLB allocations
-makes this same-task livelock reachable:
-
-set_max_huge_pages()
-   -> allocate folio P through buddy from MIGRATE_CMA
-   -> keep P on the private page_list
-        refcount = 0, HPG_freed = 0, CMA bitmap = 0
-   -> allocate another PMD folio
-        -> buddy allocation fails
-        -> CMA selects the range containing P
-        -> alloc_and_dissolve_hugetlb_folio(P)
-             -> wait for HPG_freed
-
-Only the outer caller can publish P through
-prep_and_add_allocated_folios(), after the allocation returns.
-
-The task is waiting for an operation that it must perform later itself.
-cond_resched() cannot resolve that dependency.
-
-Before this change, PMD allocation returned after buddy failure,
-allowing the caller to publish its batch. Explicit gigantic CMA
-allocations already reserve their bitmap ranges, and gigantic source
-folios are rejected before reaching this wait. They do not create this
-particular same-task dependency.
-
-I propose the following preparatory change before enabling PMD CMA
-fallback. An unqueued folio should be treated as busy. Using free_new
-also releases hugetlb_lock and any unused replacement allocated before a
-source state change.
-
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 6fba92b0f6749..fe54e93d81025 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2721,13 +2721,12 @@ static int 
-alloc_and_dissolve_hugetlb_folio(struct folio *old_folio,
-                 goto free_new;
-         } else if (!folio_test_hugetlb_freed(old_folio)) {
-                 /*
--                * Folio's refcount is 0 but it has not been enqueued in the
--                * freelist yet. Race window is small, so we can succeed 
-here if
--                * we retry.
-+                * The folio has not been enqueued on the freelist yet. 
-It may
-+                * belong to an allocation batch owned by the current 
-task, so
-+                * waiting for it to be enqueued could prevent forward 
-progress.
-                  */
--               spin_unlock_irq(&hugetlb_lock);
--               cond_resched();
--               goto retry;
-+               ret = -EBUSY;
-+               goto free_new;
-         } else {
-                 h = folio_hstate(old_folio);
-                 if (!new_folio) {
-
-This allows CMA to try another range or return, so the caller can finish
-publishing its batch.
-
-> 
-> mm/hugetlb.c:alloc_and_dissolve_hugetlb_folio()
-> 	} else if (!folio_test_hugetlb_freed(old_folio)) {
-> 		spin_unlock_irq(&hugetlb_lock);
-> 		cond_resched();
-> 		goto retry;
-> 	} else {
-> 		h = folio_hstate(old_folio);
-> 		if (!new_folio) {
-> 			spin_unlock_irq(&hugetlb_lock);
-> 			gfp_mask = htlb_alloc_mask(h) | __GFP_THISNODE;
-> 			new_folio = alloc_fresh_hugetlb_folio(h, gfp_mask, nid,
-> 							      NULL, false);
-> 			if (!new_folio)
-> 				return -ENOMEM;
-> 
-> Even when old_folio is already on the HugeTLB freelist (or in use when no
-> free pool pages remain), alloc_and_dissolve_hugetlb_folio() or
-> unmap_and_move_hugetlb_folio() -> alloc_migration_target() calls
-> alloc_fresh_hugetlb_folio() with allow_cma set to false. That retries the
-> same alloc_buddy_frozen_folio() call that just failed and returns -ENOMEM,
-> causing mm/cma.c:cma_range_alloc() to break out of the bitmap scan loop
-> immediately without trying the remaining CMA pageblocks:
-
-The early exit on -ENOMEM can happen, but it is existing 
-allocation-failure policy. It should be considered separately from the 
-new batch
-livelock.
-
-Here P is a buddy-borrowed 2M HugeTLB folio already on the freelist or
-in use:
-
-PMD request:
-   buddy fails -> PMD CMA selects a range containing P
-
-Existing 1G request:
-   1G CMA selects a range containing P
-
-Both paths:
-   -> alloc_contig_frozen_range()
-   -> replacing/migrating P requires a 2M target
-   -> target allocation fails: -ENOMEM
-   -> cma_range_alloc(): clear bitmap
-   -> ret != -EBUSY: break
-
-Explicit CMA-allocated 1G folios have their bitmap bits set and are not
-selected again. However, the old 1G CMA area can contain buddy-borrowed
-2M folios with clear bitmap bits. This failure path therefore predates
-PMD CMA; the new support adds a direct same-size buddy-to-CMA fallback.
-
-I need to think more about the appropriate handling here. Simply
-changing -ENOMEM to -EBUSY would broaden the retry policy and could
-repeat expensive target allocations across candidate ranges.
-
-> 
-> mm/cma.c:cma_range_alloc()
-> 		mutex_lock(&cma->alloc_mutex);
-> 		ret = alloc_contig_frozen_range(pfn, pfn + count, ACR_FLAGS_CMA, gfp);
-> 		mutex_unlock(&cma->alloc_mutex);
-> 		if (!ret)
-> 			break;
-> 
-> 		cma_clear_bitmap(cma, cmr, pfn, count);
-> 		if (ret != -EBUSY)
-> 			break;
-> 
->> +
->> +	if (!folio && allow_cma)
->>   		folio = hugetlb_cma_alloc_frozen_folio(order, gfp_mask, nid, nmask);
-> 
-> [Severity: High]
-> Can this cause an infinite migration loop when a userspace process pins a
-> PMD-sized HugeTLB mapping with FOLL_LONGTERM via __gup_longterm_locked() or
-> memfd_pin_folios()?
-
-Yeah, and I think the patch below can fix this issue:
-
-https://lore.kernel.org/all/586d6c53ab7e4c64d6e89ad3cf0cf7e07dabbfaf.1794046188.git.zhengqi.arch@bytedance.com/
-
-> 
-> Folios allocated by hugetlb_cma_alloc_frozen_folio() are placed in
-> MIGRATE_CMA pageblocks, so folio_is_longterm_pinnable() returns false. When
-> pinning with FOLL_LONGTERM, mm/gup.c:__gup_longterm_locked() (and
-> memfd_pin_folios()) sets PF_MEMALLOC_PIN via memalloc_pin_save() and loops
-> while check_and_migrate_movable_pages() returns -EAGAIN:
-> 
-> mm/gup.c:__gup_longterm_locked()
-> 	flags = memalloc_pin_save();
-> 	do {
-> 		nr_pinned_pages = __get_user_pages_locked(mm, start, nr_pages,
-> 							  pages, locked,
-> 							  gup_flags);
-> 		if (nr_pinned_pages <= 0) {
-> 			rc = nr_pinned_pages;
-> 			break;
-> 		}
-> 
-> 		/* FOLL_LONGTERM implies FOLL_PIN */
-> 		rc = check_and_migrate_movable_pages(nr_pinned_pages, pages);
-> 	} while (rc == -EAGAIN);
-> 
-> Previously, only gigantic folios were allocated from hugetlb_cma, and
-> alloc_migrate_hugetlb_folio() rejected gigantic hstates, terminating the
-> loop with -ENOMEM. With non-gigantic PMD folios now allocated from CMA,
-> migrate_longterm_unpinnable_folios() calls migrate_pages() with
-> alloc_migration_target() and MR_LONGTERM_PIN, which passes allow_cma as true
-> (mtc->reason != MR_CONTIG_RANGE):
-> 
-> mm/migrate.c:alloc_migration_target()
-> 	if (folio_test_hugetlb(src)) {
-> 		struct hstate *h = folio_hstate(src);
-> 
-> 		gfp_mask = htlb_modify_alloc_mask(h, gfp_mask);
-> 		return alloc_hugetlb_folio_nodemask(h, nid,
-> 						mtc->nmask, gfp_mask,
-> 						htlb_allow_alloc_fallback(mtc->reason),
-> 						mtc->reason != MR_CONTIG_RANGE);
-> 	}
-> 
-> When dequeue_hugetlb_folio_node_exact() skips free CMA folios in the pool
-> because PF_MEMALLOC_PIN is set and falls back to
-> alloc_migrate_hugetlb_folio() -> alloc_fresh_hugetlb_folio() ->
-> only_alloc_fresh_hugetlb_folio(), if cma_only is true or if
-> alloc_buddy_frozen_folio() fails to find a non-movable buddy block,
-> hugetlb_cma_alloc_frozen_folio() in mm/hugetlb_cma.c does not check
-> PF_MEMALLOC_PIN and allocates another MIGRATE_CMA folio. Migration then
-> succeeds into the new CMA folio, check_and_migrate_movable_pages() returns
-> -EAGAIN, and the pin path loops indefinitely migrating between CMA folios.
-> 
-> Should hugetlb_cma_alloc_frozen_folio() or only_alloc_fresh_hugetlb_folio()
-> skip CMA allocation when current->flags & PF_MEMALLOC_PIN is set?
-> 
-> [Severity: High]
-> Could falling back to hugetlb_cma_alloc_frozen_folio() for non-gigantic PMD
-> pages during a HugeTLB page fault also deadlock on folio_lock?
-> 
-> During a HugeTLB fault (hugetlb_fault() -> hugetlb_wp() or
-> hugetlb_no_page()), alloc_hugetlb_folio() is called while holding
-> hugetlb_fault_mutex_table[hash] and hugetlb_vma_lock_read(vma). In the
-> copy-on-write path in mm/hugetlb.c:hugetlb_wp(), the faulting task also
-> holds folio_lock(old_folio) with HPG_migratable set on old_folio:
-> 
-> mm/hugetlb.c:hugetlb_wp()
-> 	spin_unlock(vmf->ptl);
-> 	new_folio = alloc_hugetlb_folio(vma, vmf->address, cow_from_owner);
-> 
-> When surplus allocation in alloc_surplus_hugetlb_folio() ->
-> only_alloc_fresh_hugetlb_folio() falls back to
-> hugetlb_cma_alloc_frozen_folio() -> cma_alloc_frozen_compound() ->
-> cma_range_alloc() -> alloc_contig_frozen_range(), if the target CMA range
-> contains an in-use buddy-allocated PMD HugeTLB folio src,
-> mm/hugetlb.c:isolate_or_dissolve_huge_folio() only rejects gigantic folios
-> and isolates src onto cc.migratepages:
-> 
-> mm/hugetlb.c:isolate_or_dissolve_huge_folio()
-> 	if (order_is_gigantic(folio_order(folio)))
-> 		return -ENOMEM;
-> 
-> 	if (folio_ref_count(folio) && folio_isolate_hugetlb(folio, list))
-> 		ret = 0;
-> 
-> __alloc_contig_migrate_range() then calls migrate_pages() ->
-> migrate_hugetlbs() -> unmap_and_move_hugetlb_folio() with mode set to
-> MIGRATE_SYNC. Once alloc_migration_target() obtains a replacement folio, on
-> pass > 2 (force == 1) mm/migrate.c:unmap_and_move_hugetlb_folio() performs a
-> blocking folio_lock(src):
-> 
-> mm/migrate.c:unmap_and_move_hugetlb_folio()
-> 	if (!folio_trylock(src)) {
-> 		if (!force)
-> 			goto out;
-> 		switch (mode) {
-> 		case MIGRATE_SYNC:
-> 			break;
-> 		default:
-> 			goto out;
-> 		}
-> 		folio_lock(src);
-> 	}
-> 
-> In hugetlb_wp(), if src is old_folio, the current task already holds
-> folio_lock(old_folio) and will self-deadlock. Even if src is a different
-
-Yes. PMD HugeTLB CMA fallback makes this same-task deadlock
-reachable, provided a migration target can be obtained:
-
-hugetlb_wp(): holds lock(old_folio)
-   -> new 2M allocation falls back to CMA
-   -> CMA selects the buddy-borrowed old_folio
-   -> migration target obtained, source trylock fails
-   -> forced MIGRATE_SYNC waits for lock(old_folio)
-      -> self-deadlock
-
-I need to think more about the appropriate handling here.
-
-Thanks,
-Qi
-
-> folio (or in hugetlb_no_page()), blocking on folio_lock(src) while holding
-> hugetlb_fault_mutex_table[hash] and hugetlb_vma_lock_read(vma) inverts the
-> hugetlb_fault_mutex -> vma_lock -> folio_lock lock ordering against a
-> concurrent task in hugetlb_wp() on src, which holds folio_lock(src) while
-> dropping and re-acquiring hugetlb_fault_mutex_table[hash] and
-> hugetlb_vma_lock_read(vma) around unmap_ref_private().
-> 
-> [ ... ]
-> 
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
 
