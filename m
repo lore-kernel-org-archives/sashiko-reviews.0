@@ -1,75 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794332968;
-	b=n3W/M27W/yk1ftav9mJntrkHAN7JIv2Ge7WTSb8HOZ4BjwhQ90DoRzEXAynFM7UAJHIZ
-	 FdC1soGvBsXuqACZsdP6YF6Q1QLf1d6Cf8lTBtT09RYpLd+Su3KV3qVbVR0a5C4PVO7vA
-	 T3e/9WMs3JjlmCuXMhnDDEi49wPTVycF4C3fgY5eF1HZ7twtD7EM0p/UKcUlV1n64w20s
-	 RC+dYOMZMzjBM0pJM9DZi16CdlQLtJfzhUSv3kkULoEYZ8Bc0rRmzgYBqg+eh5nl//gX9
-	 HqP2j6JuZlOsL9OFRa48ayPXk+3AtqizUeVDPN3k0mMwxFphJlqBL4Ob6sE0yFtvygw==
+	t=1794333052;
+	b=iloAoXon0ZJCUst944k2l+qXqfEZO6zrQzzLWB+q/4EB1jHg2m/QMvTf+K8NfN2429fB
+	 GhammlRLx1LoSugEkGpVQwPYlSglbd+xPPOtUNbGQJB32mUg38XTTtv46Fp9tIK1OdKxt
+	 YOSFimiEu/91t+ze3eqkOTVvHNCMShhQVlNtV7SCtlOnaOWjut+5nhjgCgZi2N3B+6F9k
+	 GrrN0YBAYbGK5vCel7/THwf768rKyhykbmb6w9Pqc44VXzyfnCN3GonAymLVJv/xCzj0q
+	 fxHPfBDn8B5V8kbeLJSUB3cMi4/kTYhD8cjLvjrSM32Q2NmfxKE9uI6+adMCaMdgXrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794332968;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:DKIM-Signature:Subject:From:
-	 To:Date:In-Reply-To:References:Organization:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version;
-	bh=ZBtYwIztatKAIg9rOVcpTo1UVvFd4ZVcnLUIkP9ibuU=;
-	b=QDh7IOB62mMFzQt2R/mnPH6otOWl2nVxhyx6LzudpmeqSRiWnORkOZ1UQIlP52OkMjtA
-	 cp0ZjsIdo4EB17Mw+FGIYEYlQWJ6TfMyTf2QOC03BqrjrqyB3e02/hXAfWa3qGzC8fCyI
-	 xwV8ROnGt4f9qVeSOCafIYrEikog53QJZMP5Ni1HUVOxznj9NwtLWts6J8a8x5okWGEle
-	 hdIAU+V3RRfdaK1n+Z87E2HkCTL1mpocu+/XM0REi4PYVWwgWuhkhQR7mYszjn0iRDmI0
-	 lOVD8z8Z4xG3bx/XofGWl8n3BYbqFl9bcbiYTtXo43zeQaHzGKtgUatLARIMjel44CA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794333052;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-SA-Exim-Connect-IP:
+	 X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:X-Spam-Checker-Version:
+	 X-Spam-Level:X-Spam-Status:Subject:X-SA-Exim-Version:
+	 X-SA-Exim-Scanned;
+	bh=OhBmBB5csoRwUskFDo3bdowpIsJJII9UaiaDaNs2X5E=;
+	b=Qr8hGz2H2X3AQdVNxqgvOErmnFdvvyExIr85AkBEbjwOp9L6lBzcPnftKUu0HbsZPof0
+	 BKyJ6w37AWEptrAjAfzl5pO4uE8FI4xGQCM6Ac/j1+7aakigVTlYc+2kIVDTNJl4YxKR/
+	 7Jxxr//BdFWZfzQN7eNzzWwNEbTvbZFOhLa8HOZJCz8m+POnmIiIGqDP0PUH/1c5KV0Ra
+	 l4DjopGJPHNH1Wqb9LeXLJdBwlZaP8iQMWjDVUoaQ8itNN/5C5YMUHNPY9jQiLgsta5NS
+	 jJHR63KAXdGLc3YrG28KcmFyrn17GsY2t3CjjyseSG4EI5c5SKu9+0Mtnd1voqMgrtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linutronix.de;
-	spf=pass smtp.mailfrom=linutronix.de;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=4RufZvbG;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=ztl6GNyw;
-	arc=none smtp.remote-ip=193.142.43.55
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	dmarc=pass header.from=deltatee.com;
+	spf=pass smtp.mailfrom=deltatee.com;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=JUudkuDA;
+	arc=none smtp.remote-ip=204.191.154.188
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D054606A337
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 17:49:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D054606A337
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD65B606A323;
+	Tue, 10 Nov 2026 17:50:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AD65B606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=4RufZvbG;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=ztl6GNyw
-Message-ID: <34d508d55d6ba60c2e78ffc863670ece319f1ef6.camel@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1794332966;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZBtYwIztatKAIg9rOVcpTo1UVvFd4ZVcnLUIkP9ibuU=;
-	b=4RufZvbGqpd2BYbq0rA5ruUzo2IGQxx3bnjdnKiCX6Szqk+qP9LuHP1yxc/QG/mXef3h+8
-	FUr28e1WhWVPeyFQY6G4NcG3cn00B6QC+7VtNhy6s2RutD22yOqxiKtsiDgcdWmCzXI3KR
-	HSFwKQ52yEezErnhgtOwWA2vdafW3m3ASAooQ+XiYIUrmv6Zs+gIYMLt1Lr63IrHap3lPE
-	GC8qR68xzitjB+oqEiGIbfG4XmivmamCpr6XnpwrmDN98kBh5b/DYM/z2yUdGlQte6EzYc
-	yEgKHamPvtBbufBjzVcRcneXzzNW1Q7Z/18/HHwo0W1YvzHi6UzMdIMBLFr87A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1794332966;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZBtYwIztatKAIg9rOVcpTo1UVvFd4ZVcnLUIkP9ibuU=;
-	b=ztl6GNywPacdeaSyS7E3LimLxzm34rqSX1kktck1Yr27dy92Z366D7/iswrE7HanLYQmkC
-	a3Oitvgpl1PRFeCw==
-Subject: Re: [PATCH net-next v4 5/8] net: dsa: Add tag handling for SoC-e
- switches
-From: Vasilij Strassheim <v.strassheim@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Date: Tue, 10 Nov 2026 18:49:26 +0100
-In-Reply-To: <sashiko-outbox-201561@kernel.org>
-References: 
-	<20261105-devel-vstrassheim-soce-dsa-ml-v4-0-02f3cde2afa1@linutronix.de>
-	 <20261105-devel-vstrassheim-soce-dsa-ml-v4-5-02f3cde2afa1@linutronix.de>
-	 <sashiko-outbox-201561@kernel.org>
-Organization: Linutronix GmbH
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=JUudkuDA
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
+	MIME-Version:Date:Message-ID:content-disposition;
+	bh=OhBmBB5csoRwUskFDo3bdowpIsJJII9UaiaDaNs2X5E=; b=JUudkuDAVtlFw1EnsYsjLhHAhG
+	IyV35tZj3p7vLYnJEAJiPXH1DiWvDzDRgKCtpOu4nFObOrCq/0parJuG98XPw/Tf2MysTOBw5dcmI
+	sAS2e5TBQBdRqaS/kpbVlDZsSLGfh3sBNObCa8Jf75rJGvL82ZL+s0vsv+avZ4LgwWmhtgQWBzssT
+	o9bXbnfMXEGj+tbd4UUKs2bS7/xFNxxuGd2R9r+UMyiQh8Z8/WERLuB2VLQg2wrsf7bIr+IT8PTOw
+	IpFb502Ee1aCW956bbBFyv80WHx3mmsXVgVAW4Am14wNkDRDMx6M7tb8Xnx2+2+SxoUbgd9ucwhgW
+	sqjilA0A==;
+Received: from guinness.priv.deltatee.com ([172.16.1.162])
+	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1xQpze-00000000oJB-0dMp;
+	Tue, 10 Nov 2026 11:50:50 -0600
+Message-ID: <dbe72187-4c12-4a8f-a63f-0c4238e50ec5@deltatee.com>
+Date: Tue, 10 Nov 2026 11:50:49 -0600
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,86 +62,34 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org,
+ Kelvin Cao <kelvin.cao@microchip.com>
+References: <20261110173137.623764-1-logang@deltatee.com>
+ <20261110173137.623764-5-logang@deltatee.com>
+ <sashiko-outbox-207513@kernel.org>
+Content-Language: en-CA
+From: Logan Gunthorpe <logang@deltatee.com>
+In-Reply-To: <sashiko-outbox-207513@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 172.16.1.162
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, kelvin.cao@microchip.com
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: Re: [PATCH v4 4/4] dmaengine: switchtec-dma: add pmon sysfs
+ attributes
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-On Fri, 2026-11-06 at 14:17 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] net: dsa: insufficient skb headroom in sdsa_xmit() for
->   non-802.1Q VLAN
-> --
->=20
-> commit ae5577cfb919384ffe32e9238c7345ef431b5a12
-> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
->=20
-> net: dsa: Add tag handling for SoC-e switches
->=20
-> This commit adds a DSA tag driver for SoC-e switches using an 8-byte
-> EtherType 0xdcdc SDSA header. It handles transmit and receive frame
-> tagging, including 802.1Q TCI metadata encoding and non-802.1Q VLAN
-> header insertion.
->=20
-> > diff --git a/net/dsa/tag_sdsa.c b/net/dsa/tag_sdsa.c
-> > new file mode 100644
-> > index 0000000000000..dcfa5de0ac6bd
-> > --- /dev/null
-> > +++ b/net/dsa/tag_sdsa.c
-> > @@ -0,0 +1,168 @@
->=20
-> [ ... ]
->=20
-> > +static struct sk_buff *sdsa_xmit(struct sk_buff *skb, struct net_devic=
-e *dev)
-> > +{
-> > +	struct dsa_port *dp =3D dsa_user_to_port(dev);
-> > +	struct sdsa_tag *tag;
-> > +	bool encode_vlan;
-> > +	bool tag_present;
-> > +	u16 vlan_tci;
-> > +
-> > +	BUILD_BUG_ON(sizeof(*tag) !=3D SDSA_HLEN);
-> > +
-> > +	/* SDSA carries no TPID, so only encode 802.1Q C-tags. */
-> > +	tag_present =3D skb_vlan_tag_present(skb);
-> > +	encode_vlan =3D tag_present && skb->vlan_proto =3D=3D htons(ETH_P_802=
-1Q);
-> > +	/* Prevent the conduit from inserting a VLAN header ahead of SDSA. */
-> > +	if (tag_present && !encode_vlan) {
-> > +		skb =3D __vlan_hwaccel_push_inside(skb);
-> > +		if (!skb)
-> > +			return NULL;
-> > +	}
-> > +
-> > +	skb_push(skb, SDSA_HLEN);
->=20
-> [Severity: High]
-> Can this skb_push(skb, SDSA_HLEN) underflow skb->head and trigger
-> skb_under_panic() when transmitting a packet with a non-802.1Q hardware
-> accelerated VLAN tag (for example ETH_P_8021AD)?
->=20
-> sdsa_netdev_ops sets needed_headroom to SDSA_HLEN (8 bytes), so
-> dsa_user_xmit() -> skb_ensure_writable_head_tail() only guarantees
-> SDSA_HLEN + conduit->needed_headroom bytes of headroom before calling
-> sdsa_xmit():
->=20
-> dsa_user_xmit()
->   skb_ensure_writable_head_tail(skb, dev)
->   sdsa_xmit()
->     __vlan_hwaccel_push_inside()
->       __vlan_insert_inner_tag()
->         skb_cow_head(skb, VLAN_HLEN)
->         skb_push(skb, VLAN_HLEN)
->     skb_push(skb, SDSA_HLEN)
->=20
-> When skb enters sdsa_xmit() with 8 to 11 bytes of headroom,
-> __vlan_hwaccel_push_inside() sees enough room for VLAN_HLEN (4 bytes)
-> without reallocating and consumes 4 bytes via skb_push(skb, VLAN_HLEN),
-> leaving only 4 to 7 bytes of headroom before skb_push(skb, SDSA_HLEN)
-> pushes another 8 bytes.
->=20
-> Should sdsa_xmit() call skb_cow_head() before pushing, or should
-> sdsa_netdev_ops reserve SDSA_HLEN + VLAN_HLEN in needed_headroom?
->=20
 
-Yes, that's true. I will add VLAN_HLEN to needed_headroom and check
-the edge cases.
 
+On 2026-11-10 11:47, sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Does latency_selector_show() violate the sysfs one-value-per-file rule?
+Strictly speaking yes, but we think the text printed is
+self-documentation that's worth having here. If others feel strongly
+against this we can revisit it.
+
+Logan
