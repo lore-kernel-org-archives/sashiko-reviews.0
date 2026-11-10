@@ -1,117 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794312228;
-	b=J8YF59fUyPsDZz72P7u1EWINa3cxpsljazxxRZI8a48XlKansp5t/pDVxnnoEku6x0Ew
-	 V+WUTKYair9pOlKpGgSF1+tCADp4fPp5Ls6KzP3xe3Y/MF8HnZm5r4WattbiaMuifo8+6
-	 OVPkBgLLqbkz2Q39CDWsLQsf6vlsvNxBQcRnSIBQqDccLTbJ3hk6+53XRv/Uxkxl3eeWS
-	 Z8x7StEhsYPXturhUcX3yErLOl2e+yOSPsgXlmQFcDN7oJbzIgZWktUAPtrN5sIc38L/E
-	 lK87bnAUYc9upgDnxtCnSPbznVsbg8qEo5qClHZdV6UmTyEkZe7bNYke3v4ly+JpMxw==
+	t=1794314036;
+	b=YGhxue2O58ABpmYFa5MjQaUWBnArbBtr03tuRBmG64ayhXU6/056ivX3YRXe2mYuxuVo
+	 8U06zFHI2OKLSLQ8J9xTFNhPqhmjk4jpKAhBq7PKflIJL/+IaskZ98nb+XJrpvgavYboy
+	 hjS9tMy10sBsQGWx+orzf8XvKqnM8G++a/SPWjXjcA/kyyVQ6Oi7CaT/Cqw3ZZC5G04bm
+	 WynQTf6pjiUyM/xSJ3lKUIiWYpERttCmBbZI2sWwg5TeGT19Xlp4eHW7E95zrf6sF0owj
+	 c36wsi0QQd5pa6r6fz9wShZqI6o2eRdyHgfhjQAL3t54N+ti20CDI+mJE+H7G6wPwRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794312228;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-Spamd-Result:X-Spam-Score:X-Spam-Level:
-	 X-Spam-Flag;
-	bh=GzQTUZPQ1hoARYyFZ22d+5IVW/g3DHU3JqLPiVZjhss=;
-	b=H5nvMGXBwYKE0jJDxbXGy3Q6r9IGvoWur22Xgpn4bedNpnFafeZMvRSxXCaAr2xLQFHH
-	 n4vZ2279WxtHziQxwq5POeyQeilkOA8zWdGiw0LiCJJDpn3IRlQp7LNw/pAKKqpAcsVkq
-	 eW7ANBGFuFH9GkL4MCzsv79f2E07jqLgyK6gGxYhhoan0tWsThCIUKavLnODNkKGCG8Cr
-	 wAZikMODWNyKZOzgLbJ1PjsG3hSMO7E7SKYRBRf9LxqZzfiDPtXPybM62Z3vwHk2FnB7A
-	 IOnHQYrqPbldhUuGdIQBw+qZt7Tr4dDlOhKa2mgEsg0QXkmGk0KJpNHlViyH5qImDew==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794314036;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=GTzfLzc0u8rKgofNE0jg+z1Ua/5PCIE7H4gnXQiu5+I=;
+	b=0NJkPMTZqxUIe7+1LhMojcE/vLSVXeQHtErtnpwQrx7rdzgWVc8LnW/oggrDkVY/YGKL
+	 ukdQd4QT2veGzv0/9PPuCrkMzXvOIig23g4Q7YrXkAacQo44xPM9eZieRaY/SCve1NK/X
+	 uYtfu+RvYLgopNnp+yp7/xxID8NHnWFMP3bVk6rxSXY58cz2wc3rCrMp914ZPWvh7g0MG
+	 yVrcGH/4KSdhKt1TOAJ9T4+/oWDndO2WdDqFlFJyzXvEhJeqZ6DTSP/JBEXKNy4ab4eVk
+	 C3S7Ef6+bH/aXURAhcMdyyUaVJ4mEyHQcrWMMmJKiOb40+fqvUST/hLrq0ILkMZGByg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0qclQtBL;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=HBV1dkUm;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0qclQtBL;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=HBV1dkUm;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JVGyJHKp;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C67D606A325
-	for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 12:03:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C67D606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69304606A339;
+	Tue, 10 Nov 2026 12:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0qclQtBL;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=HBV1dkUm;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0qclQtBL;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=HBV1dkUm
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 5C04B1F7D9;
-	Tue, 10 Nov 2026 12:03:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794312212; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GzQTUZPQ1hoARYyFZ22d+5IVW/g3DHU3JqLPiVZjhss=;
-	b=0qclQtBLIxhEC1FFpXnZHYnnjGP+hrf2NgJP8kTcnEcL7UupRuVAgASDVVNOqghCqux26O
-	inVKjvxp3DZtFB83zn7LcrBlbNpLtDOepIus7a36c+gBoAY6NGLgjcVZv0CoGzWr3LPare
-	4Hgdwyet2/9cAPkUr/SDq3qhi2QHQ8U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794312212;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GzQTUZPQ1hoARYyFZ22d+5IVW/g3DHU3JqLPiVZjhss=;
-	b=HBV1dkUmlIL5B9p9g/PCjuOqBqCAQg5BCyPVGWlchby2dK5dZGIJWyeWPJC3+MCM2V9TqK
-	EDM9GgkCp0cbrFCA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794312212; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GzQTUZPQ1hoARYyFZ22d+5IVW/g3DHU3JqLPiVZjhss=;
-	b=0qclQtBLIxhEC1FFpXnZHYnnjGP+hrf2NgJP8kTcnEcL7UupRuVAgASDVVNOqghCqux26O
-	inVKjvxp3DZtFB83zn7LcrBlbNpLtDOepIus7a36c+gBoAY6NGLgjcVZv0CoGzWr3LPare
-	4Hgdwyet2/9cAPkUr/SDq3qhi2QHQ8U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794312212;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GzQTUZPQ1hoARYyFZ22d+5IVW/g3DHU3JqLPiVZjhss=;
-	b=HBV1dkUmlIL5B9p9g/PCjuOqBqCAQg5BCyPVGWlchby2dK5dZGIJWyeWPJC3+MCM2V9TqK
-	EDM9GgkCp0cbrFCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F25C113693;
-	Tue, 10 Nov 2026 12:03:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 9RxpJBII82qUDQAAD6G6ig:T5
-	(envelope-from <tzimmermann@suse.de>); Tue, 10 Nov 2026 12:03:31 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: alexander.deucher@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org
-Cc: amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 4/5] drm/radeon: Inline drm_crtc_init()
-Date: Tue, 10 Nov 2026 12:53:30 +0100
-Message-ID: <20261110120326.538252-5-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261110120326.538252-1-tzimmermann@suse.de>
-References: <20261110120326.538252-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JVGyJHKp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484901F008A4;
+	Tue, 10 Nov 2026 12:33:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794314036;
+	bh=GTzfLzc0u8rKgofNE0jg+z1Ua/5PCIE7H4gnXQiu5+I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=JVGyJHKpdb//PBHZ/hVCXQVOi6jwaPWnhSIvd1Nm1q0yf2FWErBGReupwad0516H9
+	 iJoJpWUMoT/+yVBDZ6BtDpwq43Ei4FAdI66KXx1egujfHwknaIBFXaiqewszm0eu3I
+	 1yhvlRbpDuK4gMQaiXX1ynAE9Hfp+V1Q9X298w19k6VtdwWFx1+1Mcxk2HSXKBBE8J
+	 KoNXscXzucTOhwNIl92gagrQ+KnfHfmbwi7j0GgqN/A4F2thvipZeHJLOQk3yK8qIo
+	 xmGWDNmwRN1oNOb8icU7mMSoBxm5RlL7w+cTHiFDEv42n2Kx1DHpiet3AYhQhUffK8
+	 oD2jZROqT9l0Q==
+Date: Tue, 10 Nov 2026 13:33:52 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Romain TISSERAND <romain.tisserand@gmail.com>
+Cc: Igor Reznichenko <igor@reznichenko.net>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2 2/3] dt-bindings: display: panel: ilitek,ili9488: add
+ the PocketGo S30 panel
+Message-ID: <20261110-didactic-black-polecat-517d7d@quoll>
+References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+ <20261109160706.2272332-3-romain.tisserand@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -121,135 +64,22 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-11.80 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	FREEMAIL_TO(0.00)[amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Score: -11.80
-X-Spam-Level: 
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261109160706.2272332-3-romain.tisserand@gmail.com>
 
-Inline drm_crtc_init() into radeon CRTC initialization. The helper is
-only used by drivers for AMD hardware to implement legacy mode setting.
+On Mon, Nov 09, 2026 at 05:07:05PM +0100, Romain TISSERAND wrote:
+> The Miyoo PocketGo S30 handheld has a 320x480 1-lane MIPI-DSI panel
+> built around an Ilitek ILI9488.
+> 
+> Reviewed-by: Igor Reznichenko <igor@reznichenko.net>
+> Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
+> ---
+>  .../devicetree/bindings/display/panel/ilitek,ili9488.yaml        | 1 +
+>  1 file changed, 1 insertion(+)
 
-As in drm_crtc_init(), create a primary plane for the CRTC. Use the same
-formats as with drm_crtc_init(). Format modifiers are still marked as
-unsupported and handled internally by the plane. For the CRTC, call
-drm_crtc_init_with_planes() for initialization. Clean up on errors.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-Radeon does not support DRM panic helpers. Therefore do not initialize
-the primary plane's panic-helper callbacks.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/radeon/radeon_display.c | 47 +++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/gpu/drm/radeon/radeon_display.c b/drivers/gpu/drm/radeon/radeon_display.c
-index aac6733ddd82..4b784df4679f 100644
---- a/drivers/gpu/drm/radeon/radeon_display.c
-+++ b/drivers/gpu/drm/radeon/radeon_display.c
-@@ -38,6 +38,7 @@
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_modeset_helper.h>
-+#include <drm/drm_plane_helper.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_vblank.h>
- #include <drm/radeon_drm.h>
-@@ -47,6 +48,17 @@
- #include "radeon.h"
- #include "radeon_kms.h"
- 
-+static const u32 radeon_primary_plane_formats[] = {
-+	DRM_FORMAT_XRGB8888,
-+	DRM_FORMAT_ARGB8888,
-+};
-+
-+static const struct drm_plane_funcs radeon_primary_plane_funcs = {
-+	.update_plane = drm_plane_helper_update_primary,
-+	.disable_plane = drm_plane_helper_disable_primary,
-+	.destroy = drm_plane_helper_destroy,
-+};
-+
- static void avivo_crtc_load_lut(struct drm_crtc *crtc)
- {
- 	struct radeon_crtc *radeon_crtc = to_radeon_crtc(crtc);
-@@ -680,20 +692,31 @@ static const struct drm_crtc_funcs radeon_crtc_funcs = {
- static void radeon_crtc_init(struct drm_device *dev, int index)
- {
- 	struct radeon_device *rdev = dev->dev_private;
-+	struct drm_plane *primary;
- 	struct radeon_crtc *radeon_crtc;
-+	int ret;
- 
--	radeon_crtc = kzalloc_obj(*radeon_crtc);
--	if (radeon_crtc == NULL)
-+	primary = __drm_universal_plane_alloc(dev, sizeof(*primary), 0, 0,
-+					      &radeon_primary_plane_funcs,
-+					      radeon_primary_plane_formats,
-+					      ARRAY_SIZE(radeon_primary_plane_formats),
-+					      NULL, DRM_PLANE_TYPE_PRIMARY, NULL);
-+	if (IS_ERR(primary))
- 		return;
- 
-+	radeon_crtc = kzalloc_obj(*radeon_crtc);
-+	if (!radeon_crtc)
-+		goto err_drm_plane_cleanup;
-+
- 	radeon_crtc->flip_queue = alloc_workqueue("radeon-crtc",
- 						  WQ_HIGHPRI | WQ_PERCPU, 0);
--	if (!radeon_crtc->flip_queue) {
--		kfree(radeon_crtc);
--		return;
--	}
-+	if (!radeon_crtc->flip_queue)
-+		goto err_kfree;
- 
--	drm_crtc_init(dev, &radeon_crtc->base, &radeon_crtc_funcs);
-+	ret = drm_crtc_init_with_planes(dev, &radeon_crtc->base, primary, NULL,
-+					&radeon_crtc_funcs, NULL);
-+	if (ret)
-+		goto err_destroy_workqueue;
- 
- 	drm_mode_crtc_set_gamma_size(&radeon_crtc->base, 256);
- 	radeon_crtc->crtc_id = index;
-@@ -713,6 +736,16 @@ static void radeon_crtc_init(struct drm_device *dev, int index)
- 		radeon_atombios_init_crtc(dev, radeon_crtc);
- 	else
- 		radeon_legacy_init_crtc(dev, radeon_crtc);
-+
-+	return;
-+
-+err_destroy_workqueue:
-+	destroy_workqueue(radeon_crtc->flip_queue);
-+err_kfree:
-+	kfree(radeon_crtc);
-+err_drm_plane_cleanup:
-+	drm_plane_cleanup(primary);
-+	kfree(primary);
- }
- 
- static const char *encoder_names[38] = {
--- 
-2.56.0
+Best regards,
+Krzysztof
 
