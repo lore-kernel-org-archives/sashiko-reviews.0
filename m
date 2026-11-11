@@ -1,110 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794395341;
-	b=okFD8HcrOz9DyOds9fIycWP4/fiR1cXKyDkWaycqIewA1A0D8erkV9q2HarKqHcCBZNh
-	 4fCF6qtZc94hx+08HfM9KjDlv9bT9w3OsCM9sZbDiR0HgBMUGo1MrC6K/LzCbLsFQ/etI
-	 y57CmFS81as2PvUygDqR5+msbgZEVu83UgysbNx2GNUOHG3OZIYUcHx/fHcdozurc4ie6
-	 Nz7OkpNC9iRT0USyyxGeQ97RFPx38vC9nMUxAw3JPJRrx4cnMFir4d1qm31fe9qy0WGdp
-	 Bh6vpQvVzSewv2PLK/q/PDrii6H7wNl6Sm+VmhW8IiSkKiuVAw3sy0h2iGxGPaBJdlA==
+	t=1794395478;
+	b=vzdWCGnRkX0zl3uNlVF1m9JPOGX1r066zyoAiKTS5kvniMUPWIVz8GQWpOtJEsIwa+q0
+	 mNEqeSi4Ydj5WLDKJk2fxwB8lKzzYK1qcDGDFk2tifUPU2qEzZ3RPE2oveMdnicKZEwko
+	 f1f41Fas9Lg/8qBtmt0iz366GFLm8Ep5hy5eaZluaQK0Sb5M5K1nQY82Zixo+iGBcsdC2
+	 63Tdoe7HY33RWf6IneJg5L2WyR2iXOxy0tLFy1WvIcTUgRz8Qx/8wXE3Seljmv7edbKSm
+	 4IA5uuIrCEHfiNVlB0/PhduPtYoCBK2tLM6kL7kF/xN5EOnWAsS3ZUC6IdwJBABf+bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794395341;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=qHF7jRXM+zw02VGvxhRerWYbgHE7/+sznttGm8ywh6Q=;
-	b=LJ7iMH1bsA1BxUBJkkxnbBnhd5FzRC02ZMka/ny4xIQ/My0Iq3GMDIjpBB+/Vd+2BZik
-	 SU9BgTVUCyBRtpPmTeB9wMgLb7ZmLHG/jy4gCD5KvRY69/xDs4FEPvJH6fZr5uGbCTArF
-	 L/bAYKLcrRs87K6SLruGG3kw8LvZlOsIqkHkK+jgtuJXmd3ddaloJfGD3Ai2BY8TqIM6Q
-	 q8rxdhdsxxhFh1jfIIIoJLab1nYl3atuZlI4v0oV0vQQUO8geBxcSFlJu+Kit6c6ARGOO
-	 ww32lj3EQV1kjCijtyKuaSqwiW59PEDbQTMXLxhYm51l1c+VIi/tsIV5VLCNDxzr7gg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794395478;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:X-Scanned-By:
+	 X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:Content-Language:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Rp/bVGLD3Hu4GX8rmkPcKIk9iXQY7yCw/hdUf9azH8Q=;
+	b=d3rkpIaIrwd5enzTtjP/9u92p0hg/+WxqUnAnV1NJQf2257w2XKI1lTxTnB89WC51JkP
+	 yQHphb6iC2uatyXZfFDwUL42aoOsbi3RGMntd+h6/ChsntFraLiTm0RHTuNG56JJQxFAH
+	 nBA+/ljo1jGg+Nm9JaEeJoLLvMaybfecMFXxEeB9Wv8/GdYNPzdDSCwNmUvh64hOO0F6V
+	 k/ouzTaKZCChyrlwGjrU8ctmSdJsPeTVjfn9xL9vbGkL3o7YMkQ9PvOI0I50B6Y4wJnVN
+	 p2fFlKzqqhvXr+cLksQZfs0ETo2p6EkVvjxL5WsTJMjJksIOnO3Dx5ij9DqB6MbQcXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pdPiRGuw;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YPvGf1Cl;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=adzmzsXh;
+	arc=none smtp.remote-ip=170.10.129.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEE3606A331
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:09:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3BEE3606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFC5606A8A5
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:11:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9EFC5606A8A5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pdPiRGuw;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YPvGf1Cl
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ABB0HdJ864185
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:09:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qHF7jRXM+zw02VGvxhRerWYbgHE7/+sznttGm8ywh6Q=; b=pdPiRGuwcTbIcMax
-	Tq6emJJtjaQQrkh54EI8ETC+6YJLtePSWgVq+RHHyHbk5pSSGaLVzx/7Kz44RS4T
-	urDVBRqyzjAepsRPX4mxvDxuYmQQLuRWm/tBQZGQZr3KajnC8IJPn4OqhR2yDVRK
-	Rj6Ww5FRbIkfpqK0O2PVewf5i5/rIcus+KR3XbIyFgnV80XBvqAhQDV/ZmiogdKD
-	Fbg8wUIHQ7N2tSucPrQUnyW5fL1LJ8yldTouYtux4t+/Xa5SOwCiWO/JzcNU3Yqj
-	8UDLb3D8ULEW6VIoBpzMn2t+eDhXGnx02yrknAXhDbpYAE/N7rC8z1uHlQux61Pc
-	aR71oA==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hvfawhurk-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:09:00 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-999bc06bfd0so2160628241.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 03:09:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1794395339; x=1795000139; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qHF7jRXM+zw02VGvxhRerWYbgHE7/+sznttGm8ywh6Q=;
-        b=YPvGf1ClM1qZLKGR22sZESTd4DDLQU8E1nFFcLeTYH7XeG8ociMlNakks4+NmleLIi
-         0GC8ywD9ErLZn4JLRL/E5BVSq/fZwJTesI5ShznoWec1otzlSUJpJ7LXrISGj6HKyJNj
-         CATCajyCIGnk4dUcdaODdS2uDZZeq0bnNnGjxeIzC/KYhQZ3qfNhJxUH1E1SvKgT5U0y
-         qzzQe0ke2YyYTtP85y+E26F1OJfz7480p8KDfcQRgsZKJeRAdRjz+f2eyWPhOXP73/be
-         GrIk4KoWeUlgwCkQw4wZ8aa9ZTg4vhS2Wbi4iMCWb9vJMFt/0InRpqTPM5pZg5FIwn+a
-         V9Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794395339; x=1795000139;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=qHF7jRXM+zw02VGvxhRerWYbgHE7/+sznttGm8ywh6Q=;
-        b=j+l7iL/+9/1tJ2p+NgBk45/OturnMaHCWgqgd8F/G0wVku+m4C8KevphpOs/KIm4N1
-         tKHEfzPPEiL8E4MI5yt67vDoMUm47cZz8IVigIMKL0ttqoPIzdHlf2cvurl+afwy87yx
-         NvWgFLsKphqcjVKtI2lNiEgkOcmAxrSj1Mn1GSxFB5W0shLYzFTx/eHYtWAzb7Nvozfj
-         bXc+eZU1QdbUSFRdS/f3bWxdGSVXG34EKz+zI7MhS8BzWmsMjYl/pTnCwippvVF7aYWe
-         kZMQ8xOx8+q/5tsyvCg0CQqaxT6pIyxemcgZ9QD1JTmDN+f4ZciVv0fw9N42hMWi28Rv
-         GX6w==
-X-Gm-Message-State: APuU4Z8r9ctF2XMz8wD/IZGdvLINhNKrgVyhYUQ2eeL+MPucSD4ZFIFg
-	QO9NyzDDIGbzkh+Jp5TcAlnd6EbaPWVrj2UPZtop5ANUS5BI3uVQj8yjc2Yk3laq66SaU8drulc
-	6PdTTR2fxXfdXZOK3YznMEEqTU5RVj+y8+VSkce668lITkihkDecKFWD9uJZa3LLJRjPeNddXrN
-	V6HtM=
-X-Gm-Gg: AYBFou2yB+jey9hGy7PZRwbFOYvnuz99/E1vPveyXCf+1w1/3xcbiPa9PCSB+6kNMga
-	2qDdIdzWXtWXviKTW/8FppCFAY4kHvVofL4yaVs4ZdbMF20U6zF37CAnS6GTM2OM5bKbZFc9au1
-	Fe22La0UaCB5aj85XgUqNn+YjLZqzP6ZjaEvElIb/TrHrGEYLIm+Z1pmpd9tZA2f8WeZUMSwDiy
-	+YhTmY3XaeAsDB62kyxkOLFGULORMLUqlNo1CAlZZJe7tM3Q2xauR+Y9EmmlomTB7BOYnFLPDOp
-	SN7Gsi/goAGpfZ44YoPrQcxoT7RlYIv6oQT5imQ7HHZEpgdmimPouoRR3Y+0LRX2U1b6kh0UNVM
-	a6IkzviYWNl4Bos3wCDryAB9/JKuwqhH3XHEzOrlOFDY1Dh0VXPlzg5EJcprZuBbz32SvcWgTkh
-	0=
-X-Received: by 2002:a05:6102:3ec7:b0:7d0:5688:f507 with SMTP id ada2fe7eead31-7d4fb2d76aamr606142137.20.1794395339223;
-        Wed, 11 Nov 2026 03:08:59 -0800 (PST)
-X-Received: by 2002:a05:6102:3ec7:b0:7d0:5688:f507 with SMTP id ada2fe7eead31-7d4fb2d76aamr606137137.20.1794395338779;
-        Wed, 11 Nov 2026 03:08:58 -0800 (PST)
-Received: from [192.168.1.110] ([178.197.218.7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba08e423dfsm51330085e9.1.2026.11.11.03.08.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Nov 2026 03:08:57 -0800 (PST)
-Message-ID: <3b2e2b31-cf65-43a8-9a6c-f5111aea8ec6@oss.qualcomm.com>
-Date: Wed, 11 Nov 2026 12:08:56 +0100
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=adzmzsXh
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1794395476;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Rp/bVGLD3Hu4GX8rmkPcKIk9iXQY7yCw/hdUf9azH8Q=;
+	b=adzmzsXh57OEqV8bixblWp1bBGLcVja3qsgjYN4UMU8inwDO0x02H+hE5qWxP36EkbkCLP
+	MTTwuyBNLj/fxjK9apZry5ZzIN+EFG+8r+Fy1hbBITnepLlftucJqJcfGgh0yKBfZI44Ua
+	8KsFPLLC+UtIaRjqmHF3yJbRsroWywc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-wRYvuWRePkGJU8Nsa9FDjg-1; Wed,
+ 11 Nov 2026 06:11:14 -0500
+X-MC-Unique: wRYvuWRePkGJU8Nsa9FDjg-1
+X-Mimecast-MFC-AGG-ID: wRYvuWRePkGJU8Nsa9FDjg_1794395473
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 108D0180060B;
+	Wed, 11 Nov 2026 11:11:13 +0000 (UTC)
+Received: from [100.91.101.41] (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 285791956087;
+	Wed, 11 Nov 2026 11:11:11 +0000 (UTC)
+Message-ID: <3ab31a32-2517-449d-8891-9216f5f83636@redhat.com>
+Date: Wed, 11 Nov 2026 12:11:10 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,52 +73,63 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: example-schema: Show example of
- dependentRequired
-To: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org
-Cc: robh@kernel.org, conor+dt@kernel.org
-References: <20261111090449.53511-2-krzysztof.kozlowski@oss.qualcomm.com>
- <sashiko-outbox-208675@kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH net 1/2] ice: dpll: serialize changes of the SyncE CGU
+ registers
+To: sashiko-reviews@lists.linux.dev
+Cc: intel-wired-lan@lists.osuosl.org,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>
+References: <20261110094350.184185-1-ivecera@redhat.com>
+ <20261110094350.184185-2-ivecera@redhat.com>
+ <sashiko-outbox-208713@kernel.org>
+From: Ivan Vecera <ivecera@redhat.com>
+In-Reply-To: <sashiko-outbox-208713@kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Mimecast-MFC-PROC-ID: VmvT5-WOZ8Y4LXTbUV2dPMrkAeOZB_5TUDNS3G4bZVQ_1794395473
+X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-In-Reply-To: <sashiko-outbox-208675@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTExMDA0NCBTYWx0ZWRfXzZpQph+mK4pi
- HXCWu3NBQCpRXxyl8OdJVfYOgcQGpo7E8mhzhBGAbQJvTmWdNNj9tJBxBgj2XX+WWW/JlK9+RGg
- 6IqqwIC0Y+FqMjK4uZ+2FB4VYlau88M=
-X-Proofpoint-ORIG-GUID: ZXrP8NBPqd0_VlhNW805qAaEJOG3FUsb
-X-Proofpoint-GUID: ZXrP8NBPqd0_VlhNW805qAaEJOG3FUsb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTExMDA0NCBTYWx0ZWRfX1CQivmWM9MS7
- vaQm1ldQooC2qTXmCr+eDFOcgmROfGxfIDm/P9FW85a4KNxhw/B/a4qGSaR61H+iE+xAvS0S/ar
- b9koeQjV9jaCPbsk4sQwwI8GXy4H0IRJszH/sIC58XzX2lFu/zcX4Iw0pLYq5SxbhskMuTQvN1e
- CeIlNCN7kwAY4wVPw5ckIy9A8wCLdmpQsg5IiT0uLTbFJsIyb/wS3axbxRO3OsGJJMoVQ7l16pY
- RbU/dI+weAkcgkyhdYDVuq+TV1kvTMZvAOWber71os+GemfLYYCS2MGbBXZdoJwGKqzR8xnektu
- 2/8FjqrPanNQxQ97dVGIlBUP/4lN16M+snj9RQw4LrCcwC2J7N7WWjXdOdT98Y7g3zbFBjOIvdD
- cuHlB+nU4EGfM7d4fo4R3gTPLU4sJ+6ViRfixU62Mrj9UbKkZGVAJNLSU3/BsZ/PV8+nkI9EDet
- Uc3+FjmvKJpna0hbiqQ==
-X-Authority-Analysis: v=2.4 cv=CZadd7rl c=1 sm=1 tr=0 ts=6af44ccc cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=uyPgTw0bjBTS2cVxpiNm5w==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=WmuVTcnx4i-heN2spVUA:9 a=QEXdDO2ut3YA:10
- a=o1xkdb1NAhiiM49bd1HK:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-11_02,2026-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- phishscore=0 adultscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611110044
 
-On 11/11/2026 10:14, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] dt-bindings: example-schema: conflicting and duplicate
->   dependentRequired example
+On 11/11/26 10:44, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [Medium] ice: wrong port modulo in ice_tspll_bypass_mux_active_e825c()
+>    [1]
+> --
+> 
+> commit 54d93c3b2bb6d3588addc95fab52eae6473a669b
+> Author: Ivan Vecera <ivecera@redhat.com>
+> 
+> ice: dpll: serialize changes of the SyncE CGU registers
+> 
+> This commit adds a mutex to struct ice_adapter to serialize read-modify-write
+> updates to the shared E825C SyncE CGU registers R10 and R11 across PFs.
+> 
+>> diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> index 7980eaf9ce253..449819cf8c879 100644
+>> --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> @@ -1368,7 +1368,9 @@ void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
+>>   				break;
+>>   			}
+>>   
+>> +			mutex_lock(&pf->adapter->cgu_synce_lock);
+>>   			err = ice_tspll_cfg_synce_ethdiv_e825c(hw, clk_pin);
+>> +			mutex_unlock(&pf->adapter->cgu_synce_lock);
+>>   			if (active && err) {
+>>   				dev_err_once(ice_pf_to_dev(pf),
+>>   					     "Failed to configure SyncE ETH divider for pin %d, err %d\n",
+> 
+> [Severity: Medium]
+> This problem wasn't introduced by this patch, but does
+> ice_tspll_bypass_mux_active_e825c() compute the wrong port index when setting
+> active here [1]?
 
-I should choose different properties...
+Yes. Patch 2/2 of this series fixes it, the check now compares with
+port + ICE_CGU_BYPASS_MUX_OFFSET_E825C, as
+ice_tspll_cfg_bypass_mux_e825c() and ice_dpll_rclk_update_e825c() do.
 
-Best regards,
-Krzysztof
+Thanks,
+Ivan
+
