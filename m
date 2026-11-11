@@ -1,54 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794434506;
-	b=GsUhaWvk3QXWDlwLf/xOUESBxf2SX2iGUADpLdTzPzX0tnpXv1qnmNSp60RgF1vP4eR5
-	 k3gf86tBawBXMUUYRlPDAD5QykO4LeaIDIWK7UpICwTDpSzVK5zoyRm5CLHbqJ23FN+/9
-	 /6CeQtKMQ5CQL/dqIzH77tFYeZG2qDLhMNHbPVlP0FSI27qXL5zTa6ipHxjy16s05O3R4
-	 SXFvdn83K2UKJ6Rwh143/TkKTxBVnIyRkx0mGg1DhphDQmyslBJwxQV7+VxWWjETNTtsB
-	 x98mQ/9mANCtmAp2AvbCtsOAV+TTOuG9iphAXNgmrYoBl86feJ49IVSS4uh+vJVnF8Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794434506;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794436184;
+	b=erQLrEP7PgS6NrlZDl6o8GIxSOYqcQIdVM0wDps+XfcLRxLrH1NeNmL61H1ymNxftRxp
+	 G/z009U1SkFRbJkHi8y2a7EpKTxNsV249hZxlTkrha5ZsUb0uyUqF/iKUTo3z0LG1GWCB
+	 LTysUmVC4urcIrp5qAVwGCMu7UIQxl0LJTnSBN2svldfsBRIJqi/1p4u15ZsoB9AI1qZC
+	 oKAjU7k6zAowrqXLD6siEOr36281/No8mhovzI1efSTlm6X78PWx9Bn3ITYyptH+5nW3R
+	 YIESK525upjq+fRRQmM978MGaP/T4egKxVkIiEmXJsBXYnaT/rjPSWFXn2TLBt54Rlg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794436184;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=XW+W+IvRYtlcrp5klt8UaDvpzVbHTAiI7YDJRBlK4lQ=;
-	b=CCoSFj57aVOA4mu3vkGmyrME47FFLQav1f/KEjABN6pluKFv9YTFcs4s7qSmxdLDZi5X
-	 coESvKAYDp7sMh3t/wuoA22WEE9qX6WoAhNaLQfQplDqBdzURwJib3x0LGM7MVmpvU5PH
-	 ZYmCt5DujF2ambbe/g4LvGFwILsMOkzvp9GoZr4cbvbIu9KSZzZQlUXhJ2/5rJBAh+tk3
-	 7HQuzbquEN2du2f5640mmE54R8ECWcGCCyheOr1bHrGufyzFVR9ShQDzotuzvCpgyOIG5
-	 zbv7c9+dE9+DbQUg3eSxu73uijfw7EfIParaPYpM3nkiuiYjaC3PHTS4Ia1Z9wgEjZg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YF3EXwH+;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	bh=l88aQEthU6YDCYl3Vpu0UwlZOCfC9J5sQ3/7Brd6dlY=;
+	b=EjQo2oCxwcxkKBhseYAEoBvt5xyvoOiyy6p5WK4woy51HaEiz8kGGISUGd5Xy/ZyJ2Um
+	 NP8lG5mD+I9o1fG7U4fHbT6FqJE96GRHMy7Kdkh1l78jR5wgOpYnXxEXRPbLkt0GpKxJ5
+	 qCRN2iscnIX4bygzV50GZoLPcpfioZ6MOBHOmEpDiLKdbdB5peeLiiRGtdh7OC5oVhJ2l
+	 MPQLuzJ8zeyyEqZLC78o2Hx9H5K3iCaa1yMrkJT9qpzqBTTjirStFOY/J0piqiuzcuJcE
+	 GviuCEDcM8mso0yMhCNWyzBA4/KR0V4GD61+ybqr951rV2EkedC+AmE0ZJSvN7YmNVg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FsdXJCIt;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64895606C2E3
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 22:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED66606E20D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 22:29:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3ED66606E20D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YF3EXwH+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E611F00A0C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 22:01:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794434506;
-	bh=XW+W+IvRYtlcrp5klt8UaDvpzVbHTAiI7YDJRBlK4lQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=YF3EXwH+ua/1/5jd4ldBXvrOqGSZbGBPvVownMlXdP8v5aClB3aSYZBAweqZR0vPt
-	 fALT2kbP0N+JKld2X0qqj/MewTeGCWOeT00YwXg6/1+rLKOdP2sP9fsU7JTAsDokoh
-	 U1+xbcMqzpbAWTUspCHMf9D+Lt690xKXYgyGJQBpleSaGZ7Bby/z05mQzjWesmFcgg
-	 XhWfXNnoBWiMqZR/WtAGASri1p/ZsTZwk2RO3YWhF2eMr0cxNz+RPLOJV6jsmLPT8k
-	 fiCoXwHaJmHEtrcC+XmTfLqydf6LqpZJEnnrCRROO1fhP8YRk6FpG1Yl/aohjiyYKo
-	 FoWVgKdlDmwpw==
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-93e6eb77f0bso325888785a.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 14:01:45 -0800 (PST)
-X-Gm-Message-State: APuU4Z95JOFZYCtpljbYkAUF4n6s4dmWC6fBHazn+bVBAjton6C5e3m5
-	tia3eXj79t+yZBFkdmrHLWsskGVV+8XwmC13eLkOJscTiP+H7NHK55TmOpYE/p+FmQ7uNykWWAW
-	x7IuYBwhsO5rNgz1w0rp2eVfZQ0k/+wo=
-X-Received: by 2002:a05:620a:a195:20b0:947:b201:fad6 with SMTP id
- af79cd13be357-947b2022f47mr420628885a.68.1794434504674; Wed, 11 Nov 2026
- 14:01:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FsdXJCIt
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b547d6c07bso4436366a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 14:29:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794436183; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LDo8HyU+meBQw+LxqmxqO5nHFAjMFRECRhuRNODjbrAw5BZEKV51nrB8/L4x4dIADv
+         /UDpUT2bg6RqqtQ0Z/6e6KU2/RN16p0EDSHXglf4FRfZERSmn7x7dv6z3jxPnmEVsVnH
+         edc+fWQaWDIuPY/FrN821I8zRX9QiFOlWMNVmLB7KgeaDsRmEWyigLSUQwR8jCRjlAh2
+         uCU+aLd2PTvmxaDahlzpZugGgT2d/DF4ExTKaTUBRpBU22bK5+z+kp3A3GYflrgy9Uyj
+         iPd7yoqR9ZrbvxHA+Llfd2PORcuDk5Qnl5MT9m/sB0//1pct5na/3KJMFTAZ5h0nyfCo
+         uG2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=l88aQEthU6YDCYl3Vpu0UwlZOCfC9J5sQ3/7Brd6dlY=;
+        fh=3vEt61QNJOheRnm9fd3Av6wBGJCAISb+cqsY1Q+5YgY=;
+        b=Mlm9WAAh2x1/ksdJnT4uhlFPb1QVa3Shm3J5eEcu1TxDkIL8hhcRCkJ/3NtwuOxg4L
+         2/wOXA3ubL8C9PkQJdbl4ywJpDaG37zymjWX4bfIQv5FINuBVdEWQzRm5DIyeF7m2oHz
+         CJJGacy9pJd8Xw38667qIW5eaEwJwSBVc0p85I/GX6fZSuHG9I5KMste7UwglWYNhrSG
+         qTb9xM5YMPagic9ZRPKv51Swafsy2gfDBmVE3hLi66RvsE4uvSJrdTqDOkW/LN7ygaT8
+         jRtPyx86IvLWL8AzZvi4vZm2dHQOWZXC7z57vJJ84tQcflzseGcIJ4sGQypvcmroUz4A
+         WpIQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794436183; x=1795040983; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=l88aQEthU6YDCYl3Vpu0UwlZOCfC9J5sQ3/7Brd6dlY=;
+        b=FsdXJCItxQt4dcYQVHtP+jauYChedRdZk8VhrPwg0vVUqbwM3+Btae/+qElM8J526A
+         vURd/IfcxTRxKpwDupzXUEpy9UXkrwmsdhUN/YCa8CUzyefvb1yCg3gzT742mZ7j6AAt
+         0EVF4MsIFQXSFtcLolF69y9/bsrDifXM1PPBhgJhp2p1FMrkZhCvqIDl0gsF7XHM5KEz
+         i/neyC4M0UuHJ4EI4MSCG4BtqEv8+qXHxJMAKn5KDThJzf6yBqCBTSnHph97ZDfqHIr9
+         NDqgz0iGywOpmgCcGCoCdhxwLT6+GQmCjaevsymDHnW8iNpMCDm5d5BrfOAaT7ymCnDf
+         DDFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794436183; x=1795040983;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=l88aQEthU6YDCYl3Vpu0UwlZOCfC9J5sQ3/7Brd6dlY=;
+        b=ihabUi3hgegQ9LDyxiqh7cJwZOiKo5NBDenOQbOEtgZNrUWqg//GqVnxBNyjZ0/2+w
+         Lz7B8zaiDX4QOSkkxiSQFAjWpCdsQlJ0xFh1r2bDRhlbqpunU3uPerc44JOCkUCrBh21
+         gCKaSVppAkJDHtlTYnrRRGtYw5Og06sB/VRuMlAQoJ3l6pb35MqRnFgRS5PY4D3BJDoX
+         Y8j9ifcCBrmV8pFuuAJFcWWoUwgQvQ/Lum+XAQLNywei/2oW9+1CgYAj0kBBT6mbMDi2
+         szquVk3nJlOM3KDclklhzJyBPiZXYULOH9LpKusfWkpN/GG3c0FmGzFnAHR4vYwrPr4I
+         mJeQ==
+X-Gm-Message-State: APuU4Z/nu6mZki4ryw4PwoKPycsG4tjCobqpO7QrjMn4vrg3s2bLOXKj
+	2e21YE5hfWLNpCsMRD4m6kMmI+GP14ybql0baRjVKwxoFmZAn0c10+p19BcwywihuRfHszb+4/i
+	HHdmibwEF0cmLIS7X2QRE9eS3iTufq0glfRwX
+X-Gm-Gg: AYBFou1+OP0vK/LtX0irbERvfZJLrrWGVzAlIJd5WYpIlwRyhXqhqNb7J6KufqUpVoX
+	7kmW+StM/3aai18EHcaORm3ncuwsUzuAM6tuLJHBh5pkbq/3eVP+UKwP4istlaTwhIGRq16QnWF
+	Pzmrq21FfR1kfiK89GjMtkBI0jyG3Mxl+qQZzv5t5B1GHgwK1KTHxxcVgubyZx7rjDq94s0Mqg4
+	9z0PoSmAZXuSgJCv6ZmDK7qDXWAKoSHZqTqsl/GpwAmpY327q0FGARFh6wkeLQzy7vU/+z0NVKz
+	IwKzwMmDDruxDrLco5uVv7CpQaHr2wi9usLyEbNh75Ny5l3kgtFCXNAvXbBc7xuVaQAIUUHGljE
+	OKwvzGysAi6nwgR7rmnLYCbJVYkAXGcSBIEcBPY8JzmyUMQdGjX0NOupTHOPSs9r5w+DjITGRnv
+	45Jjr1sq+AS+R0aFlLt642Pw2pc2BjPxOCI2+FLgVWpl8H9kMcPbCt/H30FYJ3TmqOfkh6t9yzF
+	duaKdVYKjXoLqNn/2f1zUmxMBF4V42AC151CTuVvCdc0tP2jQ==
+X-Received: by 2002:a05:6402:c6c1:10b0:6b5:962e:e00f with SMTP id
+ 4fb4d7f45d1cf-6b77780f404mr2255040a12.28.1794436182455; Wed, 11 Nov 2026
+ 14:29:42 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,323 +105,83 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110202025.25736-1-baohua@kernel.org> <20261110202025.25736-8-baohua@kernel.org>
- <sashiko-outbox-207744@kernel.org>
-In-Reply-To: <sashiko-outbox-207744@kernel.org>
-From: Barry Song <baohua@kernel.org>
-Date: Thu, 12 Nov 2026 06:01:32 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4y4PBNutH3antEorzOw75GzAj50Y4-zXa3AW6wZ1PQP0w@mail.gmail.com>
-X-Gm-Features: AclHuK-znX198smVgGAytsDbBJGgYonffly9uT4RSqSFEL392RS9laz-yJy7pwE
-Message-ID: <CAGsJ_4y4PBNutH3antEorzOw75GzAj50Y4-zXa3AW6wZ1PQP0w@mail.gmail.com>
-Subject: Re: [PATCH v6 07/15] mm/mglru: balance anon and file scan budget by
- refault rate
+References: <20261111215729.10683-1-rosenp@gmail.com> <20261111215729.10683-7-rosenp@gmail.com>
+ <sashiko-outbox-209774@kernel.org>
+In-Reply-To: <sashiko-outbox-209774@kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Wed, 11 Nov 2026 14:29:31 -0800
+X-Gm-Features: AclHuK_NMj1qq8-W9ISvxeZgzbGMriIS_aT5l7uzjtRMavpKllDh5UrOmxBfjQA
+Message-ID: <CAKxU2N-DMRg=Azrb1QRmLw4zBjij_fui9s8fubK_ystZAKfBfA@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] clk: add a driver for the Atheros/Qualcomm ath79
+ PLL controller
 To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, linux-mm@kvack.org, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
-	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
-	liam@infradead.org, lianux.mm@gmail.com, liuxiang.277@bytedance.com, 
-	lyugaofei@xiaomi.com, mhocko@kernel.org, mhocko@suse.com, qi.zheng@linux.dev, 
-	ridong.chen@linux.dev, rppt@kernel.org, ryncsn@gmail.com, 
-	shakeel.butt@linux.dev, surenb@google.com, wangzicheng@honor.com, 
-	weixugc@google.com, yuanchu@google.com, zhangbo56@xiaomi.com, 
-	zhuhui@kylinos.cn, sidchintamaneni@gmail.com
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	conor+dt@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 11, 2026 at 4:56=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Wed, Nov 11, 2026 at 2:14=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [Medium] mm/mglru: lru_gen_balance_scan() budgets un-scannable
->   generations
-> - [Low] mm/mglru: lru_gen_prepare_scan() re-adds obsolete offline memcg
->   check
-> - [Low] mm/mglru: u64 overflow in lru_gen_balance_scan() excess budget
->   handoff
-> - [Low] mm/mglru: unzeroed budget on empty scan in evict_folio_lists()
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] clk: ath79: zeroed hfrac shift in qca956x_pll_rate()
 > --
 >
-> commit 20aa81528d31d5bc56afcb10aeda259624bda6c8
-> Author: Kairui Song <kasong@tencent.com>
+> commit 423abf763de32c1b127032d8210181c833b02aa9
+> Author: Rosen Penev <rosenp@gmail.com>
 >
-> mm/mglru: balance anon and file scan budget by refault rate
+> clk: add a driver for the Atheros/Qualcomm ath79 PLL controller
 >
-> This commit replaces MGLRU's single-type-per-batch selection with
-> lru_gen_balance_scan() and evict_folio_lists() to split the scan budget
-> between anon and file LRUs based on per-type refault rates and LRU sizes.
+> This commit adds a common clock driver for the Atheros/Qualcomm ath79 PLL
+> controller to replace the arch/mips/ath79/clock.c setup code.
 >
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index e2807faf26deb..6b325fe73436a 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> > @@ -4858,79 +4858,110 @@ static int get_tier_idx(struct lruvec *lruvec,=
- int type)
->
-> [ ... ]
->
-> > +     /* Cross-multiply the ratio above. */
-> > +     anon_scan =3D mul_u64_u64_div_u64(total_scan, anon_factor, anon_f=
-actor + file_factor);
-> > +     file_scan =3D (u64)total_scan - anon_scan;
-> > +
-> >       /*
-> > -      * We scanned some folios but failed to isolate any due to promot=
-ions,
-> > -      * protections, or races. Retry once to avoid a larger loop.
-> > +      * Bound each type by its evictable size. Hand the exceeding part=
- to
-> > +      * the other type. Any excess left when total_scan exceeds both s=
-izes
-> > +      * is dropped, since it only stresses the scanner with no gain.
-> >        */
-> > -     if (scanned && !tried) {
-> > -             tried =3D true;
-> > -             goto retry;
-> > -     }
-> > -
-> > -     return total_scanned;
-> > +     if (anon_scan > nr[LRU_GEN_ANON])
-> > +             file_scan +=3D anon_scan - nr[LRU_GEN_ANON];
-> > +     if (file_scan > nr[LRU_GEN_FILE])
-> > +             anon_scan +=3D file_scan - nr[LRU_GEN_FILE];
-> > +     nr[LRU_GEN_ANON] =3D min_t(u64, anon_scan, nr[LRU_GEN_ANON]);
-> > +     nr[LRU_GEN_FILE] =3D min_t(u64, file_scan, nr[LRU_GEN_FILE]);
-> >  }
->
-> [Severity: Low]
-> Can anon_scan overflow u64 when total_scan exceeds total and both if
-> branches run?
->
-> In lru_gen_seq_write() -> run_cmd() -> run_eviction(), the optional
-> nr_to_reclaim argument defaults to ULONG_MAX, so total_scan passed to
-> lru_gen_balance_scan() can be near U64_MAX.  When anon_scan exceeds
-> nr[LRU_GEN_ANON], the first branch sets file_scan to
-> total_scan - nr[LRU_GEN_ANON] without clamping anon_scan, and the second
-> branch then adds total_scan - total to the unclamped anon_scan.  If
-> anon_scan + total_scan - total wraps modulo 2^64 to a value smaller than
-> nr[LRU_GEN_ANON], nr[LRU_GEN_ANON] is truncated below the available
-> anonymous size.  Using else if (or clamping total_scan to total upfront)
-> avoids the overflow.
-
-yes. else if:
-
-        if (anon_scan > nr[LRU_GEN_ANON])
-                file_scan +=3D anon_scan - nr[LRU_GEN_ANON];
-        else if (file_scan > nr[LRU_GEN_FILE])
-                anon_scan +=3D file_scan - nr[LRU_GEN_FILE];
-
+> > diff --git a/drivers/clk/clk-ath79.c b/drivers/clk/clk-ath79.c
+> > new file mode 100644
+> > index 0000000000000..6eab4cd1a91f7
+> > --- /dev/null
+> > +++ b/drivers/clk/clk-ath79.c
+> > @@ -0,0 +1,782 @@
 >
 > [ ... ]
 >
-> > @@ -5051,18 +5083,22 @@ static bool should_run_aging(struct lruvec *lru=
-vec, unsigned long max_seq,
-> >       return evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS =3D=
-=3D max_seq;
-> >  }
-> >
-> > -static long get_nr_to_scan(struct lruvec *lruvec, struct scan_control =
-*sc,
-> > -                        struct mem_cgroup *memcg, int swappiness)
-> > +static void lru_gen_prepare_scan(struct lruvec *lruvec, struct scan_co=
-ntrol *sc,
-> > +             struct mem_cgroup *memcg, int swappiness,
-> > +             unsigned long nr_to_scan[])
-> >  {
-> > -     unsigned long nr_to_scan, evictable, sizes[ANON_AND_FILE];
-> > +     unsigned long total;
-> >
-> > -     lruvec_evictable_size(lruvec, swappiness, sizes);
-> > -     evictable =3D sizes[LRU_GEN_ANON] + sizes[LRU_GEN_FILE];
-> > +     lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
-> > +     total =3D nr_to_scan[LRU_GEN_ANON] + nr_to_scan[LRU_GEN_FILE];
-> >
-> > -     nr_to_scan =3D apply_proportional_protection(memcg, sc, evictable=
-);
-> > -     nr_to_scan >>=3D sc->priority;
-> > +     /* Just scrape all pages calculated above if this memcg was delet=
-ed */
-> > +     if (!mem_cgroup_online(memcg))
-> > +             return;
-> >
-> > -     return nr_to_scan;
-> > +     total =3D apply_proportional_protection(memcg, sc, total);
-> > +     total >>=3D sc->priority;
-> > +     lru_gen_balance_scan(lruvec, swappiness, total, nr_to_scan);
-> >  }
->
-> [Severity: Low]
-> Does this re-introduce the !mem_cgroup_online(memcg) early return that
-> 2e203d692b0cb ("mm/vmscan: remove redundant !mem_cgroup_online() checks")
-> removed from get_nr_to_scan()?
->
-> Offlined memcgs already have all LRU folios reparented and
-> lruvec_evictable_size() equal to 0, so returning early here only skips
-> apply_proportional_protection() and misses setting sc->memcg_low_skipped
-> when an offlined memcg still has stale effective memory.low protection.
-
-Oops, my fault. As mentioned in the cover letter, I ran into
-quite a few conflicts while rebasing, and handled this one
-incorrectly. I'll drop the following in v7:
-
-/* Reclaim all pages calculated above if this memcg was deleted */
-if (!mem_cgroup_online(memcg))
-       return;
-
+> > +#define QCA956X_PLL_CONFIG1_NFRAC_L                  GENMASK(4, 0)
+> > +#define QCA956X_PLL_CONFIG1_NFRAC_H                  GENMASK(17, 5)
+> > +#define QCA956X_PLL_CONFIG1_NINT                     GENMASK(26, 18)
 >
 > [ ... ]
 >
-> > @@ -5095,6 +5131,30 @@ static bool should_abort_scan(struct lruvec *lru=
-vec, struct scan_control *sc)
-> >       return true;
-> >  }
-> >
-> > +static long evict_folio_lists(unsigned long nr_to_scan[], struct lruve=
-c *lruvec,
-> > +                          struct scan_control *sc, int swappiness, uns=
-igned long max_batch)
+> > +static unsigned long qca956x_pll_rate(unsigned long ref, u32 config,
+> > +                                   u32 config1, u32 refdiv_mask,
+> > +                                   u32 outdiv_mask)
 > > +{
-> > +     int type;
-> > +     unsigned long batch, scanned, total_scanned =3D 0;
+> > +     u32 ref_div, out_div, nint, hfrac, lfrac;
+> > +     u64 rate;
 > > +
-> > +     /*
-> > +      * Scan both types with the given budgets; the caller checks if
-> > +      * reclaim is satisfied after each pass.
-> > +      */
-> > +     for (type =3D LRU_GEN_FILE; type >=3D LRU_GEN_ANON; type--) {
-> > +             if (!nr_to_scan[type])
-> > +                     continue;
+> > +     ref_div =3D (config & refdiv_mask) >> __ffs(refdiv_mask);
+> > +     out_div =3D (config & outdiv_mask) >> __ffs(outdiv_mask);
+> > +     nint =3D FIELD_GET(QCA956X_PLL_CONFIG1_NINT, config1);
+> > +     hfrac =3D FIELD_GET(QCA956X_PLL_CONFIG1_NFRAC_H, config1);
+> > +     lfrac =3D FIELD_GET(QCA956X_PLL_CONFIG1_NFRAC_L, config1);
 > > +
-> > +             batch =3D min(nr_to_scan[type], max_batch);
-> > +             scanned =3D evict_folios(batch, lruvec, sc, type, swappin=
-ess);
+> > +     if (!ref_div)
+> > +             return 0;
 > > +
-> > +             nr_to_scan[type] -=3D min(nr_to_scan[type], scanned);
-> > +             total_scanned +=3D scanned;
-> > +     }
-> > +
-> > +     return total_scanned;
-> > +}
->
-> [Severity: Low]
-> When evict_folios() returns 0 for one type because that type has no folio=
-s
-> in scannable generations, shouldn't nr_to_scan[type] be cleared to 0?
->
-> Leaving nr_to_scan[type] unchanged causes try_to_shrink_lruvec() to call
-> evict_folios() on the empty type on every subsequent MIN_LRU_BATCH pass
-> while the other type still has budget, and then run one extra iteration
-> (including should_run_aging() and try_to_inc_max_seq()) after the
-> scannable type's budget reaches 0.
-
-I guess we can do an aging when one type has no populatable folios:
-
-@@ -5116,6 +5117,13 @@ static bool should_run_aging(struct lruvec
-*lruvec, unsigned long max_seq,
-        if (sc->priority =3D=3D DEF_PRIORITY)
-                return false;
-
-+       /*
-+        * Run aging if scan budget remains but no folios
-+        * in populatable generations are available to scan.
-+        */
-+       if (no_populatable)
-+               return true;
-+
-        /* better to run aging even though eviction is still possible */
-        if (evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS =3D=3D max=
-_seq)
-                return true;
-@@ -5220,20 +5228,17 @@ static bool try_to_shrink_lruvec(struct lruvec
-*lruvec, struct scan_control *sc)
-        lru_gen_prepare_scan(lruvec, sc, memcg, swappiness, nr);
-
-        while (nr[LRU_GEN_ANON] > 0 || nr[LRU_GEN_FILE] > 0) {
-+               unsigned long orig_file, orig_anon;
-                DEFINE_MAX_SEQ(lruvec);
-+               bool no_populatable;
-
-                if (mem_cgroup_below_min(sc->target_mem_cgroup, memcg)) {
-                        need_rotate =3D true;
-                        break;
-                }
-
--               if (should_run_aging(lruvec, max_seq, sc, swappiness)) {
--                       trace_mm_mglru_aging(lruvec, sc, swappiness);
--                       if (try_to_inc_max_seq(lruvec, max_seq,
-swappiness, false))
--                               need_rotate =3D true;
--                       should_age =3D true;
--               }
--
-+               orig_anon =3D nr[LRU_GEN_ANON];
-
->
-> [ ... ]
->
-> > @@ -5781,8 +5838,11 @@ static int run_eviction(struct lruvec *lruvec, u=
-nsigned long seq, struct scan_co
-> >               if (sc->nr_reclaimed >=3D nr_to_reclaim)
-> >                       return 0;
-> >
-> > -             nr_batch =3D min(nr_to_reclaim - sc->nr_reclaimed, MAX_LR=
-U_BATCH);
-> > -             if (!evict_folios(nr_batch, lruvec, sc, swappiness))
-> > +             lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
-> > +             lru_gen_balance_scan(lruvec, swappiness,
-> > +                                  nr_to_reclaim - sc->nr_reclaimed, nr=
-_to_scan);
-> > +
-> > +             if (!evict_folio_lists(nr_to_scan, lruvec, sc, swappiness=
-, MAX_LRU_BATCH))
-> >                       return 0;
-> >
-> >               cond_resched();
+> > +     rate =3D div_u64((u64)ref * nint, ref_div);
+> > +     rate +=3D div_u64((u64)ref * lfrac, (ref_div * 25) << 13);
+> > +     rate +=3D div_u64((u64)ref * (hfrac >> 13), ref_div);
 >
 > [Severity: Medium]
-> Can lru_gen_balance_scan() assign scan budget to a type that has no folio=
-s
-> in scannable generations instead of handing that budget to the other type=
-?
->
-> Previously, isolate_folios() fell back to !type whenever scan_folios()
-> returned 0.  Now, lru_gen_balance_scan() only transfers excess budget whe=
-n
-> a type's share exceeds nr[type] from lruvec_evictable_size(), which sums
-> folios across all generations min_seq[type]..max_seq including protected
-> younger generations (such as max_seq - 1 and max_seq at DEF_PRIORITY).
->
-> When one type has drained all folios in its scannable cold generations
-> while still holding folios in younger generations, lruvec_evictable_size(=
-)
-> remains non-zero and lru_gen_balance_scan() keeps assigning budget to tha=
-t
-> type.  In try_to_shrink_lruvec(), that share of the scan budget is lost;
-
-Should be handled by the no-populatable aging logic above.
-
-> in run_eviction() (where priority is fixed at DEF_PRIORITY), if the
-> remaining scannable type's share rounds down to 0 (for example when
-> nr_to_reclaim - sc->nr_reclaimed is small or at swappiness =3D=3D
-> MAX_SWAPPINESS), evict_folio_lists() scans nothing and aborts proactive
-> reclaim early while the other type still has cold folios.
-
-For run_eviction(), I think we can remove the newly added
-code, since sc->priority used to be always 0:
-
-@@ -5845,6 +5905,7 @@ static ssize_t lru_gen_seq_write(struct file
-*file, const char __user *src,
-  .may_writepage =3D true,
-  .may_unmap =3D true,
-  .may_swap =3D true,
-+ .priority =3D DEF_PRIORITY,
-  .reclaim_idx =3D MAX_NR_ZONES - 1,
-  .gfp_mask =3D GFP_KERNEL,
-  .proactive =3D true,
-
+> Does (hfrac >> 13) always evaluate to 0 here?  QCA956X_PLL_CONFIG1_NFRAC_=
+H
+> is a 13-bit mask (GENMASK(17, 5)), so hfrac is at most 0x1fff and shiftin=
+g
+> it right by 13 drops the upper fractional multiplier completely when
+> computing the QCA956x CPU, DDR, and AHB clock rates.  Matching the lfrac
+> term above, it looks like the divisor should be shifted instead:
+> div_u64((u64)ref * hfrac, ref_div << 13).
+This was present in the old code. Unfortunately, I don't have the
+hardware to test this.
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110202025.25=
-736-1-baohua@kernel.org?part=3D7
-
-Thanks,
-Barry
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111215729.10=
+683-1-rosenp@gmail.com?part=3D6
