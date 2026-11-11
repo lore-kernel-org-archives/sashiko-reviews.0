@@ -1,49 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.246
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794410341;
-	b=2SY+XLE6KKONyLazlrP/R5TfZkR1NasHNRReJn+aoN9XZ9AfVYBBrHYc9YRIBDlKPCnV
-	 GlJU6uvqdh/reICITjj5Bos1qGSh00SLoUxV2RfOS96YeKzTAequTQmQytwDuzh6lStTZ
-	 dT8MMsSKrRLaaQ7CyWPBc+Q7ALX/vin7FK/Ga58q88sNt4wAWov5sIIf/poLT5biWjScj
-	 w1fcWzGuVDfEDPFwD8v6V42fNF0s+DH6rk0mSWnbgOV7R8BhDSLuqiXJfxphaTXhQ3aIc
-	 Vf1/2ISC4pOuwfXlsRXTHpUr2ddmOyYmFgnN7sh4N0ebhmFjQkbAKDwuDKwkqKpaJ3g==
+	t=1794411137;
+	b=UDivxzZcBNRfrvdjsRT4b18gH9LXtpbutQqPXldCnq4CSYn6b1qyT2hqUOxfZ6YD6HBr
+	 2OSnt4XByUpO7BHMObuhtfd75ArfyFu9eB0QjiS6ih8nU3hVjAIL/AVgZVfYMm1XsMSK0
+	 TIq9B84mTBPyG/QU3If64HTDubZS073taZqETa9YPFaXzEV1a4wudZeVcGCDkjbjQ8J6P
+	 aOfKOuQx4f46z1VYEJJUnUYZmOTs1pPgDilPd5Yh5V95DhvIDWIC5I1f+1+xzk6MaLNeW
+	 mcQZ9xWq+KKn6un0hVHkQL0eXASyrSoocdYHcfcIkYlpmn3AiKGr8LvPa3+9jidy0Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794410341;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=KRk3hY6OxrgIUUvXnGsk+3o0qrfqVOAaie3G63vpVoQ=;
-	b=3KmgNDJRaGphFVTrKRDs0ew9+ttouStzQWeZqFtVIJ4lWU5b3pmttWBKXA3aLs7VXTGY
-	 5n4eqxLOU6XVJS4pL90EpXxFzvNiCBLOb3yd9AsYGm2T4s+Ms8F7vIABbZYJYFZUCNMGY
-	 GcbnQnsNhSBCaaFaTd6h3Xab920iNG+aba8GCgKo2u0bsYcFGCJgYNwk4vgjZYtL2p3YN
-	 UUJxh3CFxrA8FRj+4DGi6dHOCnfK5YEKa7LEnTYr1x+IsO86qKtiSsg9T4C7vpGc03hzt
-	 Mr00ACN3HQnSd0L7AknADFSekyqTc7ZRsDXTQ4fVvL2PH7JQBi58kUadkUjut9Kw1og==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794411137;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=3V+m0lHRYCGoAKQSowYBsC0G4rGRJb6ZqIoJs29bl7k=;
+	b=DOZK9D3+XK16bB/eO9ZvW09atyKS1fzyY6zEsvUDhOaMGD1OcOHAUPJ9WBONNNNTZPgq
+	 nEIaSFkUvj9rIWfrIJ5a1KgKbXe7nSKjIR71lPppVTLxAOSRwuxik9EMzLR5dmtFaV4bW
+	 3OsbP2s9b9BXuEZL+iKY2JMQf5IVGB1HvqUsaBakWHhRAvCGmKq2bVPfrp83R4Dl7ry6u
+	 daNieRzVnTij+QOqf9GnXAOgpu+uyJ31MKiizao1Q7gJctvYtRuvSGFJq2wbhOr9ll8LA
+	 yQa7j9yyhbTc1TN9uwHFTAHlSMR4r6o5L6E/+Rt2uvLMiRl6ZHgsnXts5ZLIg2HdqOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=QkPGJIg2;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4288D606A326
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:19:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4288D606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="uy/BQTuH";
+	arc=none smtp.remote-ip=95.215.58.246
+Received: from mta1.migadu.com (out-246.mta1.migadu.com [95.215.58.246])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CB1606A326
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:32:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92CB1606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=QkPGJIg2
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 75D3B1576;
-	Wed, 11 Nov 2026 07:18:57 -0800 (PST)
-Received: from [10.43.20.72] (e126510-lin.lund.arm.com [10.43.20.72])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4F7853F632;
-	Wed, 11 Nov 2026 07:18:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794410340; bh=K/XoUAuP8agS+YAJXtE2UoZzMy+glW6cZvjG+mAtTjI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QkPGJIg2CJOeLzjtVDkULCNadPWNyrorR/1C3mAUX8c/pyOkkWvDHG9G3CGYEhMev
-	 qUJgES66VYZtNmeSHicJvJWPKlisEzf+05LgJxfpCQgOaimgsIvi/LnEu/6LHVJoQQ
-	 7r13JTYY6omaLAN2C8gYibM2JsE67D2KGh3HWRew=
-Message-ID: <fe64be42-03aa-43fc-bdcd-e6b581eb9984@arm.com>
-Date: Wed, 11 Nov 2026 16:18:50 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=uy/BQTuH
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=kIVasq+kbRO5M1l3P8L45IfXEI+1KoQRMMmYUB4tDUA=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794411134; v=1; x=1795015934;
+ b=uy/BQTuH1p1ATdCj2A8VhzZehT9qYzVNonM57K+p4inGNTVaQXmtsBPYRVvzgSAHCZn9Qf4C
+ gfVtHwbMv9QYaCCFTcMNN290d85usZMRWU4MacWAZ9/LLJFRU97vdQ0p3b+fq7FcKmTP/pmGuG5
+ lYZtmUmmXj+DAmK2Q0OUwJaE=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 04a8524071039322;
+	Wed, 11 Nov 2026 15:32:14 +0000
+X-Mizu-Trace-ID: 04a8524071039322
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <b7d1f4cf-7488-4fe7-a8c2-280dd8e49dd1@linux.dev>
+Date: Wed, 11 Nov 2026 23:32:10 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,100 +59,70 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v10 04/22] arm64: Implement asm/kpkeys.h using POE
-To: sashiko-reviews@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
- Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
- Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
- Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
- Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
- <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- Pierre Langlois <pierre.langlois@arm.com>,
- =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
- Quentin Perret <qperret@google.com>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
- Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
- Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
- Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
- Thomas Gleixner <tglx@kernel.org>
-References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
- <20261109-kpkeys-v10-4-aa6c4d9603bc@arm.com>
- <sashiko-outbox-207318@kernel.org>
-From: Kevin Brodsky <kevin.brodsky@arm.com>
-Content-Language: en-GB
-In-Reply-To: <sashiko-outbox-207318@kernel.org>
+Subject: Re: [PATCH bpf-next 3/9] bpf: Add log support for iter link_create
+To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Cc: linux-trace-kernel@vger.kernel.org
+References: <20261109140816.5196-1-leon.hwang@linux.dev>
+ <20261109140816.5196-4-leon.hwang@linux.dev>
+ <sashiko-outbox-205082@kernel.org>
+Content-Language: en-US
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <sashiko-outbox-205082@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
->> [...]
->>
->> +#ifdef CONFIG_ARM64_POE
->> +
->> +static inline u64 por_set_kpkeys_context(u64 por, enum kpkeys_ctx ctx)
->> +{
->> +	por = por_elx_set_pkey_perms(por, 0, POE_RWX);
->> +
->> +	return por;
->> +}
->> +
->> +static __always_inline void __kpkeys_set_pkey_reg_nosync(u64 pkey_reg)
->> +{
->> +	/*
->> +	 * Writing to POR_EL1 potentially affects all memory accesses, so
->> +	 * use barrier() to ensure load/store instructions cannot be reordered
->> +	 * past the write.
->> +	 */
->> +	barrier();
->> +	write_sysreg_s(pkey_reg, SYS_POR_EL1);
->> +	barrier();
->> +}
->> +
->> +static __always_inline
->> +bool arch_kpkeys_enter_context(enum kpkeys_ctx ctx,
->> +			       struct arch_kpkeys_state *state)
->> +{
->> +	const u64 prev_por = read_sysreg_s(SYS_POR_EL1);
->> +	const u64 new_por = por_set_kpkeys_context(prev_por, ctx);
->> +
->> +	if (prev_por == new_por)
->> +		return false;
->> +
->> +	state->por = prev_por;
-> [Severity: Medium]
-> Should this block be guarded by CONFIG_ARCH_HAS_KPKEYS instead of
-> CONFIG_ARM64_POE?
->
-> include/linux/kpkeys_types.h only includes <asm/kpkeys_types.h> (for
-> struct arch_kpkeys_state) and defines enum kpkeys_ctx when
-> CONFIG_ARCH_HAS_KPKEYS is enabled:
->
-> include/linux/kpkeys_types.h:
->     #ifdef CONFIG_ARCH_HAS_KPKEYS
->     #include <asm/kpkeys_types.h>
->     #endif
->
->     #if defined(CONFIG_ARCH_HAS_KPKEYS) && !defined(__ASSEMBLY__)
->
->     enum kpkeys_ctx {
->     	KPKEYS_CTX_DEFAULT = 0,
->     	KPKEYS_CTX_COUNT,
->     };
->
-> Because CONFIG_ARM64_POE is enabled by default on arm64 and does not
-> select ARCH_HAS_KPKEYS until the later commit "arm64: Enable kpkeys",
-> when commit "arm64: Context-switch POR_EL1" includes <asm/kpkeys.h> in
-> arch/arm64/kernel/process.c, the build fails with incomplete type errors
-> for enum kpkeys_ctx and struct arch_kpkeys_state, breaking bisection.
+On 2026/11/9 22:22, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] bpf: misattributed iter_info error log messages in
+>   bpf_iter_link_attach()
+> --
+> 
+> commit d8f64c129a2738b81f1bf280ca7bbad040d70081
+> Author: Leon Hwang <leon.hwang@linux.dev>
+> 
+> bpf: Add log support for iter link_create
+> 
+> This commit passes the verifier log to bpf_iter_link_attach() and logs
+> diagnostic messages when BPF_LINK_CREATE fails for iterator programs.
+> 
+>> diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
+>> index f0b29a1709357..dfefa5579e033 100644
+>> --- a/kernel/bpf/bpf_iter.c
+>> +++ b/kernel/bpf/bpf_iter.c
+> [ ... ]
+>> @@ -538,24 +539,36 @@ int bpf_iter_link_attach(const union bpf_attr *attr, bpfptr_t uattr,
+> [ ... ]
+>>  	if (!bpfptr_is_null(ulinfo)) {
+>>  		err = bpf_check_uarg_tail_zero(ulinfo, sizeof(linfo),
+>>  					       linfo_len);
+>> -		if (err)
+>> +		if (err) {
+>> +			bpf_log(log, "Invalid iter_info.\n");
+>>  			return err;
+>> +		}
+>>  		linfo_len = min_t(u32, linfo_len, sizeof(linfo));
+>> -		if (copy_from_bpfptr(&linfo, ulinfo, linfo_len))
+>> +		if (copy_from_bpfptr(&linfo, ulinfo, linfo_len)) {
+>> +			bpf_log(log, "Invalid iter_info_len.\n");
+>>  			return -EFAULT;
+>> +		}
+>>  	}
+> 
+> [Severity: Low]
+> Are the log messages for iter_info and iter_info_len swapped or
+> misattributed here?
+> 
+> By the time copy_from_bpfptr() runs, linfo_len has already been clamped to
+> sizeof(linfo), so copy_from_bpfptr() only fails when reading from the
+> ulinfo pointer (attr->link_create.iter_info) faults, yet it logs "Invalid
+> iter_info_len.".  Conversely, bpf_check_uarg_tail_zero() rejects linfo_len
+> values larger than PAGE_SIZE with -E2BIG without touching ulinfo, which
+> logs "Invalid iter_info.".
+> 
 
-Will use CONFIG_ARCH_HAS_KPKEYS instead. The idea was that this
-implementation is POE-specific, but in fact another implementation would
-likely be runtime-selected so using the generic #ifdef makes more sense.
+Sounds reasonable to me, will swap them in the next revision.
 
-- Kevin
+Thanks,
+Leon
+
