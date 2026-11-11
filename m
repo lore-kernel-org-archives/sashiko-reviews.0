@@ -1,96 +1,146 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.81
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.84.140
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794415655;
-	b=rwPnEPMB4UmoHCGLqo0Or9smsnQo5rlySuJ0bEVzLuHAwREvc1jqhAspE8QUlR0u3EbV
-	 ZCfcRM/plcBtlo1n+4Pdrh7h733/muPzMnKO34xqBseZrGqCU91X+aKE7O6/DQq+U9t0C
-	 gSdmwpoB2Xcdk7yJPSPFsDGD/6FoTzeOfeuyO8UQf0hV0k/6Mj8Rktes74mmh1D71RQYk
-	 x04jNRLwHuq2NrjVEFPm8hN6aiDpIFXZFuTTlrjm0CCo7IRV5cY3Bjn0ycG4MD/7GjF1W
-	 V9mkBnS3WVs/K9BU52xih75HplUzFUxPztnqTzaJ5gzKBJv/yJX1sf8lkcoq+qrkPhQ==
+	t=1794415741;
+	b=05UZDZhs6AJBWD5fYy+llLHHWuN4HD36nk2N7zrxOuhhXt4tcBhF8krw2DB2prullazS
+	 Crk60L2ciNUHgWFMrKf/EDQ5ihFKUcrMGc28fnawWtt7ehS69O8p3Iy5mX+0xEPkQPiNm
+	 lHnPj8h6qEn7soRV4FA/BaS55eV5C93QYMyB6GoH8l/23G45WiqaFW6e/zVh9TREHGCy4
+	 U0Oy37W1DDE6R8I7Yxzr8/uTZvc/4bLO8Tl9ls/PR6axEfeDGj/s74SnGrE319Sw1UaSM
+	 LxP8F12NnSOFpxb782Lbmc2BQpLd23T29Q3L4prQBa2qLJtTj7knFZzJ8RGiM8r1Eqg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794415655;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794415741;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
+	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 msip_labels:x-ms-traffictypediagnostic:x-ms-publictraffictype:
+	 client-request-id:request-id:x-ms-office365-filtering-correlation-id:
+	 x-ms-exchange-senderadcheck:x-ms-exchange-antispam-relay:
+	 x-microsoft-antispam:x-microsoft-antispam-message-info:
+	 x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=EMiAQBOiUz2ChvkBt8DRBDunBPlqeujwYF4d3JR2Pto=;
-	b=XtL4UgmjpLdojXL4lIKuey4b6htLdPkuR4/yrX4YxrmU5UNWO071AbE0nhWd1mkGDXD1
-	 u3E6xWmos4duPDfm50LmNzqOoQnVbYu109r8gQRIwHhTSIoMPMCmqits9zXFbvZwI0e9l
-	 FDmNIRTHE80xqbgJrqLJYMSW83MyFGKG4b1aIhFtUmLYs5XVHPc1/SZhsjzkYCMXye07J
-	 95u/FBm6agZk8iKhrnByPba7OEW81Zd67uWd6ZytDxlNGc0MzlavG9X62qU3brgP/NHlq
-	 xpHxYzRwuBlskOEeQrGQtfKoL/AfsRlgmMRHarIGRjo8q+Q9/uc+83Ujub06yBFPOpw==
+	bh=uftAJCYeGcXrKvzmzMp5TzZgBBS59oBMQoP3d9tmS6Q=;
+	b=q+GhBztk5DKBdvkZwzplNiCjQtmAN8yAL3rIotdULiwU7qqEPUIUlSotnUbK9udKvGK9
+	 nrpfsLgZVreFW6D968JbuozPMStsM34Ae38Dx0KRjj757wdKBfAkMe5KGL6xNRlV0kBqA
+	 1dw97fcoDe2unRrsR7s3csG2faSs+AccCi5ZvRtBVC7wRZ6XUOM+I/ZqyFPPH+tdC+rhT
+	 20IZ8drbpSjfk4si2RWtrArQiMV03bwJGMi+XIZI0a9jmh5nD6LB/bugWaWMGx3KrX5ZY
+	 gC4tkoX2bySUFeewwZ84BYIdJoo0MExMSzytmhzyBEfzk8pGR0afENO5jOXAoxJK2rQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gcore.com;
-	spf=pass smtp.mailfrom=gcore.com;
-	dkim=pass header.d=gcore.com header.i=@gcore.com header.a=rsa-sha256 header.s=selector1 header.b=DMoDdxwP;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.81
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11022081.outbound.protection.outlook.com [52.101.66.81])
+	dmarc=pass header.from=microsoft.com;
+	spf=pass smtp.mailfrom=microsoft.com;
+	dkim=pass header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=JOyFInld;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.84.140
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11020140.outbound.protection.outlook.com [52.101.84.140])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57A1606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 16:47:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B57A1606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gcore.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gcore.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4B0606A332
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 16:49:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B4B0606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gcore.com header.i=@gcore.com header.a=rsa-sha256 header.s=selector1 header.b=DMoDdxwP
+	dkim=pass (1024-bit key, unprotected) header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=JOyFInld
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eHAlGdB5E5iwZt5uvFV+owXZofs6UJ3nOpc8E16J7aRzilSYqtirOb2NRj73lKkAl9nKB56kGp8CwJsGmanQYS11f50oWnPpxpSHZC4AH6DmtX6Ie0KcUK4OhCSECl697XRGqlAwevtiKnf5uVNOI2PTIsUtJm6WQKjfmEJpLOrxys0BQUK8isu8KnsJE9BvL40LrNJcn2J7wWzGuk/VWd4Q/qrAslAPoRHw94kt6QUmApsjTGHhoYuM6YVmxKvB5JtSK8oO9CTa8RA4LISpUOX+B595A/U8UfqvEvyBpeRj07wB0aPeCrL+DQS1+FZjzdnbyM7gIqEyu8ci2nTZwQ==
+ b=jc7211ozCsEDK6a8fuefjJWlciZM0ItrqWij/LfYAan5RcRWhlHWClKs1dKQa+lU9w/BtRHjHs6FGTTMfUal4MkTsbNYaWzHoceDuoFDbW2eg+pLxb4yGsz2yHm+xVnWDKkBfUTNMDPROZnfLgRYkf5791lw7YgAQ9sYXQkCLHdAe7wgwdiJqPZkNxtZn8hygFo+7gYa4Zp4MuOB/bIVbocCTgEzhEkw5KYnOfllEHCuP9k9UE9kIJT0tByerE7+h8Cp+EzIN1uOe57td5wiquIZyL5HZLBC2pNI3mV94PMsh7PylTzZULnvgNi9VE4ViQKz2NxXgXwfzF+AAXbTtA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EMiAQBOiUz2ChvkBt8DRBDunBPlqeujwYF4d3JR2Pto=;
- b=wb33Q/eC2aHbwn7HVYdp0v2hgnabNHBt9hVLgxm7B3GpbKe/BSLdwTbEGHgYiqZMpk1uRq2o8mUfPnXG/BAZBLuDB+Oj7c+DDVYB1dNx/+rOVXfAHjlHtsTsdwI7cwDh2MQ4NOdUnYL3MznmZchc7HYD/TI5EkLAFuhQJLyPtMqOGqJ3IS/w5AS1Jv2qBoIML1tyMyL3L/YrJpch2vlsDG1wgC8S2ASj0PIgNZA9IGTOpuiOqMlgdc98I9QJhkMNlVvZFqoAKokwM8X38rIJ0uLuJheIRi/9Bk9ldGfeuCHWS5OnMqZvGc8Iwo26J5YLcGCexYrXY/U9zPxopNNXBw==
+ bh=uftAJCYeGcXrKvzmzMp5TzZgBBS59oBMQoP3d9tmS6Q=;
+ b=SrMRO7MxM91X/d4EpYn2/omy29iBceWBYUrZbyWT0DmoDPJw6W9t24vIimSIT96DA3FScHzs/qnbQS6U6EvYlz3XBA95n0uQDoZ1LybrJEv+wuJfP2ztOpdDcwbpMkcTLrgbjlxNvrZxeych0nIg3cE55dFQhWqJ5eAc5a2ZAl2sMCTHn+apB8adM6i2ih+svFJNnvCnC2Z+hu9wBKwaw6aHwVu+zyP2ElkAf79NWxKfG1J2/G/TpI9wfJq6ZQ+unLRgSB/VW8dXlFlOR1buTRn05VzeJMRi88eCy7bQ2H/a0FO3mHe1rqrrhNjUMVV/0Kz9cxT2HWOnR5osz9WQeg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gcore.com; dmarc=pass action=none header.from=gcore.com;
- dkim=pass header.d=gcore.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gcore.com;
- s=selector1;
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EMiAQBOiUz2ChvkBt8DRBDunBPlqeujwYF4d3JR2Pto=;
- b=DMoDdxwPLcI09HPWRyauqOE3UoTPIdX1ZlkwXppU5YP8JXOAuaoDXolHnxWLQO3UkeSNsp1kiINaQ5sEHXsxY/SenA9gSYg74wNsMb+2JPusTDHJ1KCNph4W9l1ZvpxQLwPiPn8emCy5dBRzHG+b8+9LtOP1GvhMJQCePsJXKajFKpKnkubq4B6YM2laxUKnoRr/MQJPDjt/NO1Ci43MxQK/SJ37CARgOg08SLRNGPlHxoe/K9dQRtH9VeYW0ZXnI8g/je8DXQbRDUUd1rQAYpUkyw8ux99jWtHP9+JkSFk5XHkXR6UcvXTiRAXw0477247Kb9Z8+2870kYuVJKGmg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gcore.com;
-Received: from VI0PR02MB10572.eurprd02.prod.outlook.com (2603:10a6:800:203::5)
- by PR3PR02MB6043.eurprd02.prod.outlook.com (2603:10a6:102:2f::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Wed, 11 Nov
- 2026 16:47:30 +0000
-Received: from VI0PR02MB10572.eurprd02.prod.outlook.com
- ([fe80::6eb6:a37b:93aa:fe19]) by VI0PR02MB10572.eurprd02.prod.outlook.com
- ([fe80::6eb6:a37b:93aa:fe19%3]) with mapi id 15.21.0592.012; Wed, 11 Nov 2026
- 16:47:30 +0000
-Message-ID: <1ef4ead0-998b-498d-b581-353519be1e9b@gcore.com>
-Date: Wed, 11 Nov 2026 11:47:26 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2] net: add SO_BYPASS_RFS to exclude a socket
- from RFS and aRFS
-To: netdev@vger.kernel.org
-Cc: sashiko-reviews@lists.linux.dev, davem@davemloft.net,
- edumazet@kernel.org, kuba@kernel.org, pabeni@redhat.com, horms@kernel.org,
- willemb@google.com, Kuniyuki Iwashima <kuniyu@google.com>
-References: <20261109014547.81555-1-vitaly.zuevsky@gcore.com>
- <sashiko-outbox-205984@kernel.org>
-Content-Language: en-GB
-From: Vitaly Zuevsky <vitaly.zuevsky@gcore.com>
-In-Reply-To: <sashiko-outbox-205984@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AS4P250CA0026.EURP250.PROD.OUTLOOK.COM
- (2603:10a6:20b:5e3::14) To VI0PR02MB10572.eurprd02.prod.outlook.com
- (2603:10a6:800:203::5)
+ bh=uftAJCYeGcXrKvzmzMp5TzZgBBS59oBMQoP3d9tmS6Q=;
+ b=JOyFInldIicMxKrPhD31sT9h4YsBoW+zqXsQ2wH61kQKOkJoAIHb3x32icRQfTvyvKHyJKisptZ5r64uiWSzPIJIysqYILyPMU1BofHt3lstCrNS/UAJc3S/Hur++OP1YKzbRfeQrrZkqIkGIQZ3mpTjIKaqF4DygFeyqjM4vB8=
+Received: from MA8PR83MB465002.EURPRD83.prod.outlook.com
+ (2603:10a6:250:7c::20) by PA6PR83MB0599.EURPRD83.prod.outlook.com with HTTP
+ via P2P; Wed, 11 Nov 2026 16:48:57 +0000
+Received: from MA8PR83MB465002.EURPRD83.prod.outlook.com
+ ([fe80::7dc3:38ee:abc1:5102]) by MA8PR83MB465002.EURPRD83.prod.outlook.com
+ ([fe80::7dc3:38ee:abc1:5102%5]) with mapi id 15.21.0639.000; Wed, 11 Nov 2026
+ 16:48:57 +0000
+From: Konstantin Taranov <kotaranov@microsoft.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	Konstantin Taranov <kotaranov@linux.microsoft.com>
+CC: "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>
+Subject: Re: [PATCH rdma-next v10 7/9] RDMA/mana_ib: Poll RC completions using
+ PSN and FSN progress
+Thread-Topic: [PATCH rdma-next v10 7/9] RDMA/mana_ib: Poll RC completions
+ using PSN and FSN progress
+Thread-Index: AQHdcfyL0ejDEr9f4EibuSeG//lBzA==
+Date: Wed, 11 Nov 2026 16:48:57 +0000
+Message-ID:
+ <MA8PR83MB465002C26A8B53D12CDE962941B4712@MA8PR83MB465002.EURPRD83.prod.outlook.com>
+References: <20261111121417.1265896-1-kotaranov@linux.microsoft.com>
+ <20261111121417.1265896-8-kotaranov@linux.microsoft.com>
+ <sashiko-outbox-209073@kernel.org>
+In-Reply-To: <sashiko-outbox-209073@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=2803d78a-1923-46bb-ad65-124e93e8b0fd;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-11-11T16:46:18Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
+ 3, 0, 1;
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-traffictypediagnostic: MA8PR83MB465002:EE_|PA6PR83MB0599:EE_
+x-ms-publictraffictype: Email
+client-request-id: 4ecfa8e3-8356-45f2-b57e-33bf68e798fe
+request-id: eea76ec7-4e08-4631-91de-08df4013adc5
+x-ms-office365-filtering-correlation-id: eea76ec7-4e08-4631-91de-08df4013adc5
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|261021130227099003|261026135527099003|38070700021|261009221227099003|261021123027099003|261026121527099003|261022113327099003|261021135927099003|261022105027099003|261021121427099003|261026140227099003|11063799006|261026130827099003|261009221727099003|4143699003|261009220027099003|56012099006|261009223327099003|261009223027099003|261022075727099003|7146999003|261021133027099003|261022115727099003|261028144727099003|10067099003|22082099003|18002099003|261102123227099003|4133799003;
+x-microsoft-antispam-message-info:
+ FT5y4leUfg4xjz3eeOUgciGbNICAJhbWlgfS3a3XGTvwODt43mBFkdMiWhTCLVnlBfY/awxa4GMfdY2w1nTDAC+dqJHPfvnJR0wD7QfsG5nRd/gOYTEs6nQUqZJOoKo6ls7oV9ihJKud+8APgeqWsuLL9aNaQ1ENuVDLqkrr63Tilmw+FXsx9aqyp3mMFwurFHwz5/lwRMiB5S+lezM9wFqqmGmBHw3Ti5RUFRKhwzX/bL3WV+SXG5avsD+q5RdOG6GYLn61pXIlLi7fKgJ0Qbpt2l35IlRywdqrEqy12PSUH/de3q3hOV2JgIP6XvVrpNN2Fb1Id0IjaspGIy4Eyacyor6g6XrcSp2ePKPpVFSPVepIDLHkwNZ0GI9OXDz8IKXhMsiU20tarthGxxij9nd0puQWIY1arl15q+Y2eKDuuP9Q6JYUd9kxqVUYNKu6DOmFTKcaXkOozzrh0OyA1umA8MdWf+w2Dwhle9W7pL/zxwHQJhanco0n/p1YA0JhCKzTJRqeyXbn+rHeNP6d04ynxraHqAQ5NmfOCA21Mu5J5uP2QVArZvZkPYy6qsqyL7Z/G46ktYeZ1CiNjF+5NeX1enZgz1N3IZdbwWjcyWgseToRZUuWcXc5XVGjx/XvQ0Fy5ZG7mHCKLyBhTY6vEyHiOTDyDEMAtd+VStrPjEod6PoXyJXXi3ci+d0bbWeWeiPnxpcqNhFpyez4nJenzpkqJ8mvhWJGTwP5mhzi74I=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(261021130227099003)(261026135527099003)(38070700021)(261009221227099003)(261021123027099003)(261026121527099003)(261022113327099003)(261021135927099003)(261022105027099003)(261021121427099003)(261026140227099003)(11063799006)(261026130827099003)(261009221727099003)(4143699003)(261009220027099003)(56012099006)(261009223327099003)(261009223027099003)(261022075727099003)(7146999003)(261021133027099003)(261022115727099003)(261028144727099003)(10067099003)(22082099003)(18002099003)(261102123227099003)(4133799003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?opP+21OLTTA+m4ydnqOPcmwPQ1q6+yMB7ZSXuioHE5PQ9DH9J+It69buyGO9?=
+ =?us-ascii?Q?1bSOmkmhfSI20TeCu9B+eT/vgjAhzDivWk7I3LDVd5w6ymV2yYUxnHK173Iv?=
+ =?us-ascii?Q?rTQIJIX6DLdm89lUTMTDG+pfbGh8/rclf5NgSAz0Lmuaw+V28Amz0Es0un5P?=
+ =?us-ascii?Q?qfmL90Yh4DJo/KstXot1r/dCHYcDb/Zuq3/7xOiDgNdBM7yEesXvUYsvnYBT?=
+ =?us-ascii?Q?k3ahdWvQUJXe2Y8Oh55LmPp1qOtypT6i4IZ+JJF+A2crlosQCIC7zLaqXRSi?=
+ =?us-ascii?Q?haduBAF1HyYe3fHQUFIlzjnIoNCf2u/jLLnmoDfZydoXyB5INyrWWAFI4fbr?=
+ =?us-ascii?Q?AbZo5rEjFW3cq3Wc14I8rm//z5rml8tCQx7vKrN/lbnimyd6eVdv/uO2E7eT?=
+ =?us-ascii?Q?e2bchoKiUs1NHQQshpCEbBal9vMnuYNhDoc7guLjPgaDxzd89qTYQjl3kWlE?=
+ =?us-ascii?Q?WTpQwExfqG60i+/GjVGoTpty2OtSfKE29gexQRyWOcR9OcziZh4y/xSQF4cU?=
+ =?us-ascii?Q?De7F9ND86q8TjPD9DjD/g1/7mYqyFbYitLO6SPR60/Zs81yfdSxEoVnq9Usn?=
+ =?us-ascii?Q?3LqDbjCvrbBxjQt7Me6uv5PRlUJ+bTyeZQzEkYx+qKn5+30U5Yf+8LhPto4X?=
+ =?us-ascii?Q?kIplgP8uzUPPaWF3B73koHYxXNFRP+NGWIW7scI0BANQAX9sDoaeVWaHX/pf?=
+ =?us-ascii?Q?xYvoMoOTbWbq+tl5ITct1pb467I6DZ+tFqbk3wSnggwPB2V9D12ookOrNCzg?=
+ =?us-ascii?Q?gJdxx1J2mZa00Fbxjsj1gN2BzAee5oIHaDvyf8ttz32BLU3COjlqseFfmOVn?=
+ =?us-ascii?Q?fqhlm8lOG/QOg/3IhCwZZmeXBOyO3ILu5z0I3AmXTExW4xJyeBbIvneLPwfO?=
+ =?us-ascii?Q?4UJIVIUXwKEW4R0D6wJQZ8SPXcLd1zPoqXFKsiquy9rL2TZYI4E+L7U/v4Ue?=
+ =?us-ascii?Q?heMAqglqdJYQE051s0WB8OW68xVn0FFMvcVHSpRSL8TjPqnh2NTSbeYhscbh?=
+ =?us-ascii?Q?q6OjYHpnd3w2cMDLWlNZbKDA3Rvf05hQW5JB67TbT/C8lZNLUpdZffwU0Rkl?=
+ =?us-ascii?Q?42lkhIiKIlnPey2kWLNk+wvmc/BQ2STYgnf9xbzfu40aKs62Abr5NnPJXNYh?=
+ =?us-ascii?Q?/tE92qclwpCDGFIGb9DccTlijv2aJWQJXflBhHRv33Lvbt4D/jAFLj9Q9DTG?=
+ =?us-ascii?Q?OmdAvcznrGVyFK4Qno18eBQgutGEswKGstgWVdqTsxg7Bsx13zT2QpWQTDVO?=
+ =?us-ascii?Q?4c3lIyxlqX/d/+r9xnxsZEwYKn7T/F51mXJERZiLnU2FEqhQ6vFcv6TKy0kz?=
+ =?us-ascii?Q?e/AkKG+JLCREr6eBwsZ4eHtZ33RpsD+O9lsHQbZwcuCLy1w4sMhCverHhgu/?=
+ =?us-ascii?Q?5YZWScS3DgfmlwGAmF624kAtIe59YPpsUP012Kq4FCmzN9GLD5jY2u0e7NpO?=
+ =?us-ascii?Q?cqoqFKyXEb9EYq+ZPYXQ6BbIYf9WIX0VrXOVdjUtssE1aawXYyNz9/L7ygnF?=
+ =?us-ascii?Q?tD6tFnY8zYM9cRuwTK/HGQW+G8z0awta2wcz7iFLIe7q+iVX2t1dhigX49XJ?=
+ =?us-ascii?Q?0IDYKejQwM5Uk/H+oSq22QC8DnN82GggS2xa7MdXVoOr3RFWtFM+ZlMFhsU3?=
+ =?us-ascii?Q?w/3bnNN1jorFlNPMvZmxgBUsSjb9qdgg021krPmjVA4DOmrIMg3eA4A0Lqd3?=
+ =?us-ascii?Q?os/aCg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,144 +150,134 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR02MB10572:EE_|PR3PR02MB6043:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5723bb55-20b3-4cfd-41f8-08df401379bc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|6133799003|22082099003|18002099003|10067099003|11063799006|5023799004|4143699003|56012099006|261028144727099003|261026121527099003|261022105027099003|261021121427099003|261021123027099003|261009223027099003|261022075727099003|261102123227099003|261026140227099003|260925021911599003|260925021311599003|260925022911599003;
-X-Microsoft-Antispam-Message-Info:
-	skqSp4gVBVMYr2ZaVctxGeUvWJ0XNlYb5jSzqiO+SI7Pajn/m4jtHtv2CWsQWUx6ovTTL0ZhLTfb1EDySAAyUfsz8aHzxOf7Sbs+/VOlY/pofv/7NTbQCVRsGlQlf3FgKmzMUpvsp3ajs7nz2v5yrycpZK/l2rrnYwByNfMB67bvbw/DzBXwdi2zkKuNRgqTxoJ1H3/UCH7jxlepFAnggS9Wg8WM74Dzon+ktxkpelaoJmISNkvYWWohg2JqVsny0j7RcZ+iUJ0PFnaS05Rbwtvv0sb/A1qokYxJVoa1mLwITIz2ZYhgGUHAcqmREHL5elei7CtRGEb4ja3PzELnDax07cBx1lscQ2y+PC6bk80B3wcR5Gp9yzACl9SH2G68G8YCHemGpvqVw4LctzYdHvSCxH87ur73qnoj1/pMTVskjbwTVdHfd1HRVIE4aQJBmFCamIEZ4jAm2yoGQMyWkceB9FunDD59oWZFawN5bQT6krFoaGMlTCcQd6RQlX20s5oChHP3p3AAUQqK2ifdOUM4YNz7n2e09wQN1EqmwPQ7KErv5jF7hxsP4yLcMkJYYxhZl5uPWpUqDhP0aRrpmbf2LTMrK3jWQn4NZYdwhFoTbajAcI/ViOQIZ4wh21V5ZFUJccIL2Ao7vsZzKlO/P7KrXsawf3L/sP1trQKfSA8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0PR02MB10572.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(6133799003)(22082099003)(18002099003)(10067099003)(11063799006)(5023799004)(4143699003)(56012099006)(261028144727099003)(261026121527099003)(261022105027099003)(261021121427099003)(261021123027099003)(261009223027099003)(261022075727099003)(261102123227099003)(261026140227099003)(260925021911599003)(260925021311599003)(260925022911599003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cDgwZjhIM2pUeHlpbDNha0k3d1dabTkvZGRTdmgzOHAwVmtrZzFGSUd6Wjhp?=
- =?utf-8?B?VDhuVklGZXNhSy9ZNEpMYmVxb3JDTkpRL2pIK2w4eHFuZjFmaDM4eDVDamcw?=
- =?utf-8?B?WktXYlBveXoxVjhoN0NpM2RhQXZSTU9BK1FuN3lzbGNsUVN1bXlsMXVQUDRn?=
- =?utf-8?B?cHd0SlhxNmt0Z1p4TWppdG55Tm11NDBzNjZrRTJHNkdIZmdnTkZmcGV4SWc4?=
- =?utf-8?B?SnpxVTdWMk1GNnVXQVN1NEJhNkRJWUdLN1M5cGpXYTMyVmZBNUdKWWl2SUdV?=
- =?utf-8?B?Z05KZWxqeFVhSzhpMjU5NFNTSCtJUVAzcWZCbEpBckIvL2xEeFlIWExYMXFM?=
- =?utf-8?B?Si9ER2huS093MExGb0pqYkZHMEY2WjYrME1nR3RxR3gvem80N2NpcUNLZEpO?=
- =?utf-8?B?Uy85WEhFUUw0dE5OcVNSVW5mK1dsVGQxS2ZRODc3eUc0ODdsOTIrMmRaUXhF?=
- =?utf-8?B?R2dqRGdNRmtyWGhlbkY2YVVNTHBKdytjVE5tRVduUlp4YW4xaFZjMXpRWWpC?=
- =?utf-8?B?Tlp4WTgxdlhlMDUzL3I2akN3L2Z5MUdqQTYzVkRDY2tkWk4xemYydE93NklC?=
- =?utf-8?B?ekVCc1k4TWMrTWJWMmFSZDhLanU1QkhsQk1tcERYUFlmL3ljM1dxK0wrOXRT?=
- =?utf-8?B?b1hkNm4xSjVxdVNON2dGSTMvSm1FeXh2Qk1QcnRXUkhNTWJreCtWcWhrRGtq?=
- =?utf-8?B?ZkpWd1EvQURMc3phWTEwUXFraklZQ0NxbVMzTWd5d3kzQ1JDcGNpaW41MlFM?=
- =?utf-8?B?OUU4aXA1MHhKVm1tNEUremNKTzNkU0t6U09VRkx5d2w1cnI3MTFzNFNtaUww?=
- =?utf-8?B?MkN0TWs2YTBWQU5HU0JVSVVPTVVpeVBKU2VJQ1NBcHZ5UHV3dS9IK3cvTWhM?=
- =?utf-8?B?QXFMcmNPcGw3YTJJTHVIUHRhWk5jMXN1eW5vVk1jWUxia0plK2xROW1kdkRs?=
- =?utf-8?B?VjQ4M3c1VkFybEZJdUMxMVJ0NXA3bTY0eXhwbWxpVEJMZkQvOTZSYzdldlVi?=
- =?utf-8?B?S2U4S3RCejF6ZVh1ZDJvT3piRkNSSWxaekkrTCs5Q3Z3TnBGY2VqYXRCRnNi?=
- =?utf-8?B?SlFkeDJoUlFTWXhBSFFJbWpCY1RPV2YzNTJUT0hpZUN4aVBaSEV1YkNQa3RP?=
- =?utf-8?B?aHhROCtMQmZYdmpKeFJqK0JGSXVvZzY1M0FvSkZwazhWYlZweVhtTWVXeWVj?=
- =?utf-8?B?NzZDL2tmTnlteDZLZVBPZDJ2Yk5YcnhFSCtXeVVqelI2enJnU1J2U0dsUzlN?=
- =?utf-8?B?ZXVjcklQSFYvRTVqTTJJVlNCVWxWOXBYNDdJSFgyeTZXRXd4Y2Y4UlBrb3o5?=
- =?utf-8?B?RnQvazA4eUxJZk1Gc0ZnSWlFalZBWElycG5SRkV0bUVYakhBbHJBU1M1UFRk?=
- =?utf-8?B?dDErNzQxWDVyYnROUFoydXc2cEpFRHJHdXZEcGthZjZoUzFCVUcwejBFamN6?=
- =?utf-8?B?SEN0VGZoMEt1VnMxcERKZUgzMktTS1d5Y0Z6OElrTWIxdmlvdG50ZFFkMWdD?=
- =?utf-8?B?UXd5T2k1ZDMyM3dJK3dIbEp2eE9PaU9BMlk4Rk5kMy9PUitHQXVSYS9PaUpI?=
- =?utf-8?B?NkNPQm03anlPaSsvMGJBcnpIbWVMMXR3TUFWaXNKczNPZjFCdXlvUllQNlk0?=
- =?utf-8?B?NWRSWjdYQTNGMkkya2s0Q0VxS1ZrRGFqbDBOQVFnK3JaRC9YT0pZNERhYklE?=
- =?utf-8?B?YVNORnREc3hROGpVZkgrTGIwVS9GOUxWMy9mVDBJenEwNm5JTHpGbS9SWGkz?=
- =?utf-8?B?TUhxeDd5dFVIZnVqVUJiVVVjaURzbEtXL3BDV3F0UVJ5cG91SmxmRWRHQTBE?=
- =?utf-8?B?RFE1aERIVW9WRzVVdjV4UDJLZzdQQXIrcUFjdVlVbWlrTDlzbGJnYkR0VDF0?=
- =?utf-8?B?cXZzZjYxZ3hPK0FzTll2UDNNcVdTaW9DSUNtZ2ZYWVdtMzhBb2FaOXllZDRD?=
- =?utf-8?B?UmdlMDdBcmJNNzJUdDdRRU80WXRRdGE0aDJVWjJESGVoOXYyZVNGUFdkMUNs?=
- =?utf-8?B?ak5BaVZ1ZW12dTBaamM4b0MwSE9lTndSdEhVYld1MjVuUDZOeGl3UGlMRHdZ?=
- =?utf-8?B?UkppSEo0T3RpTG1kVWZRaWpoUzlSQ3pvTVFydlVtcmRES0NxamNUWmUrUVl5?=
- =?utf-8?B?SVE4RGRsQ0YrMlBwcndxVW41WHorK2VvbExWcXViTjVWWHpBLzgrTnJnYm5E?=
- =?utf-8?B?Q0FZTXBsU0duYnd2QjdkZnRUL011cXhlS1dRRXZ3cFEvQVJza1dYOFJZemFN?=
- =?utf-8?B?dWxrdTQwUktjN2E0dG1aTVU2c2tycmF2SkkzS3Y3aVllbHNoWnVSaEFtUVoz?=
- =?utf-8?B?bkQ1WVczQ0dlbnlqTkJXY3NtdGpJcnJVMlRhZlBWUFlUbXNLMCtHQT09?=
-X-OriginatorOrg: gcore.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5723bb55-20b3-4cfd-41f8-08df401379bc
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR02MB10572.eurprd02.prod.outlook.com
+X-OriginatorOrg: microsoft.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 16:47:30.3162
+X-MS-Exchange-CrossTenant-AuthSource: MA8PR83MB465002.EURPRD83.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eea76ec7-4e08-4631-91de-08df4013adc5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2026 16:48:57.3231
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fc8b6b47-53ef-4529-aea4-8c6c20a851cf
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BnyaQm8958en9hmGC9ADzTXAVcDtoe9n3fsckpMPZAYcw5pcl/5HmHR1PWONxLrooEm+431tcTYuGeyiKM+6NQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR02MB6043
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: W6Z5XnIrzQHfvE+d0R7FTRjBZUjVwCQRhosTaxVTwh7zLGQS/oYDmhBT7XfQpdl9wecUEqJZodX/dW4+NvogDg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR83MB0599
 
-On 09/11/2026 20:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] net: race in sk_setsockopt() deleting RFS flow before setting
->    sk_bypass_rfs
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [Medium] net: file descriptor leak in sk_getsockopt() [1]
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e to
+> consider:
+> - [Medium] RDMA/mana_ib: stale pending_cqe left on shared CQ in
+>   mana_remove_qp_from_cqs()
 > --
-> 
-> commit 0bb55ec9420355430d450dec603d8adf895ff281
-> Author: Vitaly Zuevsky <vitaly.zuevsky@gcore.com>
-> 
-> net: add SO_BYPASS_RFS to exclude a socket from RFS and aRFS
-> 
-> This commit adds the SO_BYPASS_RFS boolean socket option and a skc_bypass_rfs
-> bit in struct sock_common to exclude a socket from RFS and aRFS flow recording
-> and deletion.
-> 
->> diff --git a/net/core/sock.c b/net/core/sock.c
->> index e2401d735c5a7..00808217aebf1 100644
->> --- a/net/core/sock.c
->> +++ b/net/core/sock.c
+>=20
+> commit 806a276151b888efca6e4438e92abdefb2dc1d9e
+> Author: Konstantin Taranov <kotaranov@microsoft.com>
+>=20
+> RDMA/mana_ib: Poll RC completions using PSN and FSN progress
+>=20
+> This commit decodes RC receive, armed-PSN, and MMQ completions, retiring
+> requester and MMQ shadow entries using PSN and FSN progress while
+> honoring cross-queue fence dependencies and rearming the next signaled PS=
+N.
+>=20
+> > diff --git a/drivers/infiniband/hw/mana/cq.c
+> > b/drivers/infiniband/hw/mana/cq.c index 843e2c64b32bc..307383bfa4ac7
+> > 100644
+> > --- a/drivers/infiniband/hw/mana/cq.c
+> > +++ b/drivers/infiniband/hw/mana/cq.c
+>=20
 > [ ... ]
->> @@ -1597,6 +1598,14 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
->>   		reuseport_update_incoming_cpu(sk, val);
->>   		break;
->>   
->> +#ifdef CONFIG_RPS
->> +	case SO_BYPASS_RFS:
->> +		if (valbool)
->> +			sock_rps_delete_flow(sk);
->> +		sk->sk_bypass_rfs = valbool;
->> +		break;
->> +#endif
->> +
->>   	case SO_CNX_ADVICE:
->>   		if (val == 1)
->>   			dst_negative_advice(sk);
-> 
+>=20
+> > @@ -277,15 +283,18 @@ int mana_ib_arm_cq(struct ib_cq *ibcq, enum
+> ib_cq_notify_flags flags)
+> >  	struct mana_ib_cq *cq =3D container_of(ibcq, struct mana_ib_cq, ibcq)=
+;
+> >  	struct gdma_queue *gdma_cq =3D cq->queue.kmem;
+> >  	unsigned long irq_flags;
+> > +	bool missed =3D false;
+> >
+> >  	if (!gdma_cq)
+> >  		return -EINVAL;
+> >
+> >  	spin_lock_irqsave(&cq->cq_lock, irq_flags);
+> >  	mana_ib_cq_doorbell(cq, SET_ARM_BIT);
+> > +	if (flags & IB_CQ_REPORT_MISSED_EVENTS)
+> > +		missed =3D cq->has_pending_cqe;
+> >  	spin_unlock_irqrestore(&cq->cq_lock, irq_flags);
+> >
+> > -	return 0;
+> > +	return missed;
+> >  }
+>=20
+> [ ... ]
+>=20
+> > @@ -390,17 +425,108 @@ static void handle_rq_cqe(struct mana_ib_qp
+> *qp, struct gdma_comp *cqe,
+> >  	shadow_queue_advance_consumer(&qp->shadow_rq);
+> >  }
+>=20
+> [ ... ]
+>=20
+> >  static bool mana_handle_cqe(struct mana_ib_cq *cq, struct mana_ib_dev
+> *mdev,
+> >  			    struct mana_cq_poll *poll)
+> >  {
+> >  	struct gdma_comp *cqe =3D &cq->pending_cqe;
+> >  	struct mana_rdma_cqe *rdma_cqe =3D (struct mana_rdma_cqe *)cqe-
+> >cqe_data;
+> >  	struct mana_ib_qp *qp =3D mana_get_qp_ref(mdev, cqe->wq_num,
+> > cqe->is_sq);
+> > +	bool consumed =3D true;
+> >
+> >  	if (!qp)
+> >  		return true;
+> >
+> >  	switch (rdma_cqe->cqe_type) {
+> > +	case CQE_TYPE_ARMED_CMPL:
+> > +		consumed =3D handle_psn_cqe(qp, rdma_cqe-
+> >rc_armed_completion.psn, poll);
+> > +		break;
+> > +	case CQE_TYPE_LWR:
+> > +		consumed =3D handle_mmq_cqe(qp, rdma_cqe->rc_mm.fsn,
+> poll);
+> > +		break;
+>=20
 > [Severity: Medium]
-> Can a concurrent receive or send re-record the flow between
-> sock_rps_delete_flow() and setting sk->sk_bypass_rfs?
-> 
-> Callers such as inet_recvmsg() invoke sock_rps_record_flow() without
-> holding the socket lock:
-> 
-> CPU0                              CPU1
-> sk_setsockopt(SO_BYPASS_RFS, 1)
->    sock_rps_delete_flow(sk)
->      _sock_rps_delete_flow(sk)
->                                    inet_recvmsg()
->                                      sock_rps_record_flow(sk)
->                                        /* sk->sk_bypass_rfs is still 0 */
->                                        _sock_rps_record_flow(sk)  <-- re-records flow
->    sk->sk_bypass_rfs = 1;
-> 
-> Once sk->sk_bypass_rfs is set, sock_rps_delete_flow() returns early, so
-> the re-recorded entry stays in rps_sock_flow_table while SO_BYPASS_RFS is
-> enabled and is not cleared when the socket closes.  Setting
-> sk->sk_bypass_rfs before calling _sock_rps_delete_flow() would avoid
-> leaving a stale entry if a concurrent reader races with setsockopt().
+> Can destroying an RC QP leave a stale cq->pending_cqe on a shared CQ when
+> handle_psn_cqe() or handle_mmq_cqe() hits poll->budget?
 
-The record path is lockless by design and the table holds hints; a 
-recvmsg() racing with the setsockopt() can leave one, which is tolerated 
-like any other stale entry. Reordering narrows race-window at a cost of 
-dropping the wrapper, consider:
+I agree that it was possible. I will add stopping kernel QPs (by moving to =
+RESET) on destroy
+and will also clean CQ from stale CQEs when we destroy.
+Will be fixed in v11.
 
-sk->sk_bypass_rfs = valbool;
-if (valbool) _sock_rps_delete_flow(sk);
+Konstantin
 
-|CPU0: setsockopt       |CPU1: recvmsg
-                         |CPU1: test bit -> 0
-|CPU0: bit = 1          |CPU1: preemted
-|CPU0: delete slot      |CPU1: preemted
-                         |CPU1: record   -> hint written
+>=20
+> When mana_advance_send() exhausts poll->budget, mana_handle_cqe()
+> returns false and mana_ib_poll_cq() leaves cq->has_pending_cqe set.  If t=
+hat QP
+> is then destroyed before the remaining WQEs are polled, mana_ib_arm_cq()
+> with IB_CQ_REPORT_MISSED_EVENTS falsely reports a missed event, and if th=
+e
+> hardware queue ID is reused by a new QP before the next poll,
+> mana_ib_poll_cq() will process the destroyed QP's pending_cqe against the
+> new QP and prematurely retire its shadow WQEs.
+>=20
+> Follow-up commit "RDMA/mana_ib: Handle error CQEs for kernel QPs" in this
+> series adds mana_ib_cq_clean() to mana_remove_qp_from_cqs(), but only
+> under if (reset), so mana_ib_destroy_rc_qp() calling
+> mana_remove_qp_from_cqs(qp, false) still leaves the destroyed QP's
+> pending_cqe and unpolled CQEs on the shared CQ.
+>=20
+> --
+> Sashiko AI review *
+> https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fsashi=
+ko.
+> dev%2F%23%2Fpatchset%2F20261111121417.1265896-1-
+> kotaranov%40linux.microsoft.com%3Fpart%3D7&data=3D05%7C02%7Ckotaranov
+> %40microsoft.com%7C5a297a517fa543ee42bd08df3ff8ed2e%7C72f988bf86f1
+> 41af91ab2d7cd011db47%7C1%7C0%7C639300010526733979%7CUnknown%
+> 7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJX
+> aW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3D4f%2F
+> 58DrkaoHVfyi4DZ4FnNAfk7EIExnhjQ0qHjufNoE%3D&reserved=3D0
 
