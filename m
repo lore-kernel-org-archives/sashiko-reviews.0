@@ -1,108 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.50
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.221
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794383439;
-	b=goefllJxXLa0JqScTS8XF3tw5o0Wz05OQPlci//zhr8ZipWizfHvQ1fU89Eqr+p7ajC6
-	 YAZjPfKlgqcjPngHNSRIdhbtdkDzR7PgBlL/bwBu3FITqsFeh8PYMvcT/He27FEEBzeD/
-	 88GcqncAE49EeDdOfgjImrj7+qPc9ypqawZ7Obykr4+DJRBh7W+/69rDuFmzFlQ4dzJCJ
-	 xrCwv3gB6K7GqXgkmGkgYw2PM9OCz0xAK2vxwXBPjwyEwOmuA6lxL7VqB8BoEAijTLxLZ
-	 lGBQ9az0PSwG7ImCsO31kxUGh+kJss6ZBcWqGfvFg7rRTw5FtHAi+CfNzntM/JtTMrw==
+	t=1794383741;
+	b=Jqklxw36h2gllv+jvGPl/v20InrDhb/1nl41UAHm7TszKIHTIHmNeekywWEQqkm228R4
+	 FdimZmUJdYoXfxDCMg5S6HV7mG7nZYt6Lq038eRfE7NGnSrEJB+4ajayHvUoQZUy0VQEU
+	 xR4s2pElPwAdbn/lqvuEzZmFXhFrsWUg+XbH3/k0ESJWG7Mrk/vTt7bRf2O3R/6liK5Ow
+	 vuuL+5SLnXgUCvZzmJW1K3MWimgGupyspj5uh401KOwb3WLRHT3NF8u1wXE2aqhpOUUOO
+	 MH0nyWFHt0iQ+6MXCwGznodtV8Hz459MlEdGevLuy3YKc8eGeTrJDNmWJYeq1rMyNjA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794383439;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:From:To:CC:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
-	 References:Content-Type:MIME-Version:Content-Transfer-Encoding:
-	 X-Originating-IP:X-ClientProxiedBy:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=yqFS2kQGzjj6F98UM90YlQhPqfeWjKXAgiJ9YLn/sdI=;
-	b=RbbnYTh21JhvjjNOq/e0Tl+aCLd1hnjh2ENM02Iro6az/TJkERZMrHJkVLLWzfHXfzZT
-	 Ct4JNHKq0n7kKUjhQnXIbbGhaVy/vC4GDYhg+Hj+XmbqaXluZxutxlJjIQnO+bAF1+cPc
-	 g6ZOaE0KOT/QsUdiMYmPLO2YVamsEBKg2t5WRdqN64WAIfTDq7Iemlx1ln1k3iemAQi3s
-	 WCt8oSZFn52uplkSw8hukAeuIJOLLEOnWwScmd8JNU2+jnJ+oyiIXqZaHrJysTOqccboL
-	 XcKQ3NfFmBzDbzw7/RNjMyuJjMUwVJ1e83ATg0Wg6PgTXjogUoSUc4oIVswiW4BhBag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794383741;
+	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=slaQOwRsetkGk36DC1Cw60lFZumwKuraQqlt3b4pMFI=;
+	b=M1jZKR/iVYwwb4ryGDlsm7rgwLFccKx1Loq2af9IiTtdlFHE8TLxIHa3hlSPV4Ru18Bx
+	 vwD0rsufqNJzPGmV30peQ1X9M8lx2F4NArMl3YVYpeCoRRrUJ7Riqn0b5hKRdhbSrusy7
+	 48wP0HFRB4xGP5EiMPEN6t+49XsqGrWJCHse3JXunkFf6gw+SSG5qSJg47iDWJdWLynjD
+	 EW7w0Iwtn3rxXhSZ6dSZ5mordDBbPp+QV05RgYOuovG9SiSgfNAk2aHATT18rjMgmF8WF
+	 jjzUpTXSpV44vIaXxoXlVmN+gSCIDWRrahQIuSckxTOZtjWqI19hIVcEYU75udU4xGw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b="Xo0nq/1B";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.50
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012050.outbound.protection.outlook.com [40.107.209.50])
+	dmarc=pass header.from=hartkopp.net;
+	spf=fail smtp.mailfrom=hartkopp.net;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=MTN2uFgQ;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=ogpXQP+2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.221
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.221])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C33606A320
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 07:50:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B3C33606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14B2606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 07:55:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B14B2606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Xo0nq/1B
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qT0S/blvFg3E01Nq0DRGQ0AhDHTP9pMxHcvPuRTGSe9ubStarM5xFQKkojcqzzSW1t+O6AZTB1EskDs4yzQ59REN9hYB74g4beVCfuT05DcMST2r9oZBBntUx62lTf1r8O4FVtDmJW/JT9OuIiZFGGq2ipxrB/nuGopJoe6h23I2rLGWSDxeID2TxYTgRvHWxEgqqTIu89zE5QX7xppCjkcZlOWi52uJXPbLlBAur2qP1/jTryagYVsLfsrC/aMFHMxEHLgmDa73Bll75jnVS9oX25HK3x2rl1y8GewVhD+CGH5yRcI6XhBkDVbRU+3HsxTWPlYFfTRRdEv4okILPw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yqFS2kQGzjj6F98UM90YlQhPqfeWjKXAgiJ9YLn/sdI=;
- b=zGC0MzV3iDUL6LJIszlq6G62ocgtXXAyJIUdXBRY4Z1ts+TRgNZog26qlY3T/1kR9ejszQmxVu9tuQQQRBQLRYvw1SEvmEPyOiEmy21TPca6gxR+wu2VWkgyUyJk1bYooEhGJKXlejtQb274F6CNhpCJdxtUNARDS6aSARLNK3wuHiXRZKR51CWppK9EwCS5gafDMo6WL9vRVg6xmtqe1ri9i9KaSUtvEiggNckF9cJKLr21Z5LrLpNujuvDKaitlw2O9FQXupUYeeN523NZw9Y9NvwGUWvdfamzlag/tS4rwX/myR3cEHDrJhNNDe6z7J+FS7Mm7vYrWJFPdmweWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yqFS2kQGzjj6F98UM90YlQhPqfeWjKXAgiJ9YLn/sdI=;
- b=Xo0nq/1B4XtZOTN61y1cU0hfdMKSaPjVXCCeESYUSdPXRR4x3GdKCVU4Hacj2PcOuCH1HcOOAKvCjA0VWS8oXwRk9MPyzyooWDX4ocgZxspRGJssHRdNqYazpTt+fa0nZ1+HarjgBtxM0p3IMMWsXB+U5m4vXyM6mvJacZ0/CQMp+HrCEj2K1rhyunmd8CoAsG4dll2aMweF+DxjMNhoUQg3FQSUKCSo+ztJCcd4oYQP37ybh4Ipd+gjhvht5vDvMM+H3OIrNJ2/5qDkSq8tfCkhiS2Qf2BcffQwCauQj6YjNobgUg1nEVydE8j90EEnAlfTgPGrpCvqtcvp+mj9Ww==
-Received: from CH2PR16CA0022.namprd16.prod.outlook.com (2603:10b6:610:50::32)
- by DS0PR12MB7746.namprd12.prod.outlook.com (2603:10b6:8:135::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Wed, 11 Nov
- 2026 07:50:33 +0000
-Received: from DM3PEPF000265BC.namprd04.prod.outlook.com
- (2603:10b6:610:50:cafe::4) by CH2PR16CA0022.outlook.office365.com
- (2603:10b6:610:50::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.8 via Frontend Transport; Wed, 11
- Nov 2026 07:50:33 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DM3PEPF000265BC.mail.protection.outlook.com (10.167.23.249) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Wed, 11 Nov 2026 07:50:32 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Tue, 10 Nov
- 2026 23:50:18 -0800
-Received: from nvidia.com (10.126.231.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Tue, 10 Nov
- 2026 23:50:16 -0800
-From: Jacky Huang <jackyhuang@nvidia.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <devicetree@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>,
-	Jacky Huang <jackyhuang@nvidia.com>
-Subject: Re: [PATCH v2 2/2] ARM: dts: aspeed: Add NVIDIA MGX Vera C2 BMC
-Date: Wed, 11 Nov 2026 15:49:41 +0800
-Message-ID: <20261111074106.fb5ad69cfbaa.c2-reply@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-195218@kernel.org>
-References: <sashiko-outbox-195218@kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=MTN2uFgQ;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=ogpXQP+2
+ARC-Seal: i=1; a=rsa-sha256; t=1794383701; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=T/w5+aJjB659cVKUsqJbp6bahEHw8tPmLaet5w9/WYjEQ8BFwy0WkbwhZaBEqWZ+bN
+    tZRNmjI+gFgqJ0XMtHo3oZBAzDgAcqQM8NkdrilaCCitB+SWL4Xw6zPmqIsLFzFvM6nk
+    pxvzNt+ejkt8A6ya42Nbrf7Kd9I4HFYG6evCuAsc+bcWdBe2/Tpqxg9fXLI/BebkqEAp
+    BHxtd01hZohlLqKAWXLZ+Dtqh2+mN8JY8WVFU4dLFhYjevdx+8flAieWmeAQXpiFhvFq
+    rHnGXsBYQMDeM6kJAQqyxeVRwcx9ZzpK+7cQA5wuhHndUBBbarXg15QdqbQsSw7Xvqhy
+    f7Zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794383701;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=slaQOwRsetkGk36DC1Cw60lFZumwKuraQqlt3b4pMFI=;
+    b=C9CpZpyZb7V2tG+jm9LppwtTCBBHXhasVJJQJjQbdPCr2oZsVepCBhIF3lnfitjgnQ
+    qTLIhNs3NB1x6tBWvdj2UQhJTNDDWAlV+sSo1BQnASsbY6WmjIb15vkqm0mqmlS+rp0y
+    7LrfyGhbpBFgp/vW1Opj3oYt+IAs/TRZsUKacGUJhep1UshA1BjhEGLFRG6jWjF6JOPY
+    sfPPmozDrBMNbdFTxUpNpfcsLKFZfJEjj7dICiiAw0JVDm4Tkx8XQBvGVxFUrtePA0a0
+    8+cs4tBb+2pG9ruxzkKEitCeFJQydsQpAYZk1VPsTKnJBCWO8ri8oc3eooojUacXudK8
+    49fw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794383701;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=slaQOwRsetkGk36DC1Cw60lFZumwKuraQqlt3b4pMFI=;
+    b=MTN2uFgQNbaHD1ng+7VLFQtByPP6xT5S7/HeyKnlKRyn3uZv7HD6h9HLkuDAx1Hgnj
+    r9l2pODSdIK7GDnFF+ODV39mn/D2VkFgQ/NYYqg/lyOfieQfpQEoP+ztHJ8IYl/LQAAk
+    1S3mSMufnxqfDVySFVdgfumKjADcY0oQmQKXTfud32qQG0xNpXF9plhnPEQ0HKXUHh+x
+    LkPVbICvD26ecPYmYwN2mifljWKFEVeTwzdvrureY8YmLehgeVukE5d/uLlMWTDSymX5
+    scljbyE0mQbLFripb3vgrAqvPklTiB47bldIU7+FuqAwYHavb96b3iih0X3gL7S9Lsuy
+    nj0A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794383701;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=slaQOwRsetkGk36DC1Cw60lFZumwKuraQqlt3b4pMFI=;
+    b=ogpXQP+2GOAiInmpJEmUg1JA9/mag421S1byCxX6TMhDgd40gPqhbOt0S0+uz2mGfy
+    XowL5+iXl2l3V+6cx4DQ==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.3 AUTH)
+    with ESMTPSA id Kfdf2a2AB7t03O4
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Wed, 11 Nov 2026 08:55:00 +0100 (CET)
+Message-ID: <79548879-7305-40cf-9602-966f5684eb8a@hartkopp.net>
+Date: Wed, 11 Nov 2026 08:54:56 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -112,46 +95,102 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PEPF000265BC:EE_|DS0PR12MB7746:EE_
-X-MS-Office365-Filtering-Correlation-Id: ef3e6a01-f499-4724-97f1-08df3fc876d3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|23010399003|82310400026|376014|1800799024|18002099003|22082099003|11063799006|56012099006|261026121527099003|261022105027099003|10067099003|261028144727099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info:
-	yvqBUsdaiXEKQdAoYwP40szbWBhmh0vvQrgtscR1Uc1O1KQ9rMFPvqWQZ9MTFhjerNtFiQwPmiqJnXsT311vIh7IvRgOh/T5ukc+GLab3vGnSg2+mXO4v122vPb6czjz8XdOwUScPlLG70lFrQb7SZoIb/WITYGSsw0rmhiVwLCG5hv2KB6Y52a4GFb68xSLDyzLMFpuSrbd1kOcRKY77CTvkwjGIOlnbplIEb3LXiHUczwiIoxp8Zjc+Tl+dH4IWZ9Dn9u2FUhmDn5pET245orAxfUppGR6Ju0sXsulTDa8IOQyNCSOl2tBRIVGHJNxJD/m6HmDjL2ayqZVXwrrw0ZiHzAOQbsCvamcXT2wDBwbBEhbKXfVGezvA0jxkMKO4vJ62lXx8H0GhqPQYlw7dhaH7i4mX/ugzZCkIgDV0uF5LemPXYw0PwF1KmeWaUYFX19yLBkaaeMd+89ufwpeHsb2d+HAKHbHhoJAJR3ZBVhzzikN3Kqq6nm4VnqWKz69ZxlDud0p+Y9fsGCRl3E5HhZooUFxzjwSJgmDDYCMSRbMK19YsVYax35BrwqGxIkOl6W1BZsT1pgKiMKAe6NP8vIG4rtIXNloKDoqBifH80y+fepTquXeTHK7jhBEhWhgvhnmApbuDf5NEN7x3gL1Y4q0Wmg7QS/X2wKdsMOg+u3elxbcz+0UjriLQf2i8FP/9Mor4nQ5cC4lq780q/sEEQ==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(82310400026)(376014)(1800799024)(18002099003)(22082099003)(11063799006)(56012099006)(261026121527099003)(261022105027099003)(10067099003)(261028144727099003)(261026140227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	OIDE5q88NT5DUCWP8EzCUbUIBFjhP/qmrR+9d0C7mKvGe8KTAsogsMHG3Qu9DhjtdjXLrJ4q9c0WBOZVn/0G7BRFRCjSoNY92bn39BkVSriP6QQFl57FsgreN6AKy02loj3pjUQgCNLcWRjSDN/qsVdn+Qdz5jmZTQxhhp+E1gXctUXZrhxqo9brQ6d0y/xI6Boecf+BsTQxvzVqUXkTPTC4O7tPvz068s9fZ0BJUYUTPfkegp5f9BNpa371f6lG4pCF4/yyCwh0W+eYhIrkkcSqZkfci3X0uSwVfNcFMvmlH32uZVe+Mi0Z3n3H8Zmf0gw7cbbVZRgrCr4JxjmHWYeKzOhlOe7X2Nw/hZCWVwsbHDWb3oSOr2wdQILyIIMqjIm+soiXNy0ILED2mfhvYBY31OTuVyJ4ztoxABlrbzg8p3V/DvOKzpW6JxJhHGg7
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 07:50:32.8343
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ef3e6a01-f499-4724-97f1-08df3fc876d3
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DM3PEPF000265BC.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7746
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] can: gw: avoid losing statistics updates on concurrent
+ receive
+To: sashiko-reviews@lists.linux.dev, Zhu Jun <zhujun2@cmss.chinamobile.com>
+Cc: linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
+References: <20261111062907.16857-1-zhujun2@cmss.chinamobile.com>
+ <sashiko-outbox-208446@kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <sashiko-outbox-208446@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> Is this framebuffer shared-dma-pool node intentionally left unreferenced?=
-=0D
-=0D
-This pool is reserved for future use. It is marked reusable, so unused=0D
-pages remain available for movable allocations.=0D
-=0D
-> Does pinctrl_rmii3_default on &mac2 conflict with the gpio0 lines=0D
-> SGPIO_I2C_MUX_SEL-O (GPIOC0) and UART1_MUX_SEL-O (GPIOD3)?=0D
-=0D
-H24 and E26 are not required for NC-SI on this platform. Their GPIO line=0D
-names are retained for potential future use.=0D
-=0D
-Jacky=0D
+
+
+On 11.11.26 07:33, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [High] can: data race modifying shared SKB in can_send() [1]
+> --
+
+No problem here.
+
+Sashiko groundhog day ...
+
+https://lore.kernel.org/linux-can/ac22b59e-129b-4883-b9c6-da5e69e4078d@hartkopp.net/
+
+
+> 
+> commit 10078742ee4a6687a5a77083fa056c99b8f26a52
+> Author: Zhu Jun <zhujun2@cmss.chinamobile.com>
+> 
+> can: gw: avoid losing statistics updates on concurrent receive
+> 
+> This commit converts the frame statistics counters in struct cgw_job to
+> atomic_t so concurrent receive paths and netlink dumps do not race on
+> counter updates.
+> 
+>> diff --git a/net/can/gw.c b/net/can/gw.c
+>> index 8a5327d8a00e8..a5233b4606dad 100644
+>> --- a/net/can/gw.c
+>> +++ b/net/can/gw.c
+> 
+> [ ... ]
+> 
+>> @@ -510,7 +511,7 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
+>>   		nskb = skb_clone(skb, GFP_ATOMIC);
+>>   
+>>   	if (!nskb) {
+>> -		gwj->dropped_frames++;
+>> +		atomic_inc(&gwj->dropped_frames);
+>>   		return;
+>>   	}
+> 
+> [ ... ]
+> 
+>> @@ -571,9 +572,9 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
+>>   
+>>   	/* send to netdevice */
+>>   	if (can_send(nskb, gwj->flags & CGW_FLAGS_CAN_ECHO))
+>> -		gwj->dropped_frames++;
+>> +		atomic_inc(&gwj->dropped_frames);
+>>   	else
+>> -		gwj->handled_frames++;
+>> +		atomic_inc(&gwj->handled_frames);
+>>   }
+> 
+> [Severity: High]
+> This problem wasn't introduced by this patch, but can routing an unmodified
+> CAN FD frame cause a data race [1] on the shared skb payload in
+> can_send()?
+> 
+> When no modification functions are configured (!mod->modfunc[0]),
+> can_can_gw_rcv() duplicates the incoming skb with skb_clone(), which shares
+> skb->data with the original skb, and passes nskb to can_send():
+> 
+> net/can/af_can.c:can_send() {
+> 	...
+> 	} else if (can_is_canfd_skb(skb)) {
+> 		struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
+> 
+> 		skb->protocol = htons(ETH_P_CANFD);
+> 
+> 		/* set CAN FD flag for CAN FD frames by default */
+> 		cfd->flags |= CANFD_FDF;
+> 	...
+> }
+> 
+> can_send() modifies cfd->flags in place on the shared buffer while other
+> receivers (such as raw sockets or packet sniffers) may be reading the
+> original skb concurrently, causing a data race and corrupting the flags for
+> concurrent readers.
+> 
+> [1] https://sashiko.dev/#/bug/linux-89b38ada-4acb-4bf7-afe0-3d8d244ba058
+> 
+
