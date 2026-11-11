@@ -1,99 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.181
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794361793;
-	b=QpmNzDrgPctkAUtKyYNHI57zEGNsnenpeAAmJ0/LCTUGbvF5DePLoLVIwiXlYExRT/g1
-	 +haIpNPVPChFsMGDVaGkp8dbMJ3Q7xG7RDHS6/vGUzPg4dpHw3K2a9tMrpfVleoiND/PM
-	 xwJpjTvEyg1xlmQflirCzo5oJ/nqvOdU4npmUPZVtlF71gHuKQSYw3avDsANzQdY9caZB
-	 B5uUM+1pvVNFY5c10daY5dNKaoZveY0CIlckpetxTcz4p6AmZt4i7b7FVTK0VyTfwk4lX
-	 0kRuqapreUIDHdI6U1fonbf++pGBxm5/YRZ4o7yJ/lUWieLBoUOkZ36oKWk8D5FyntA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794361793;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=VDdksnIZ51u4SA1+w5FzMxah+sSDW95kejJrw3tPOQc=;
-	b=T1TIR+mCZlYdK0M5SsdjiqwJBZLbxgec1OPh0zkTI4R4ejhYyssh5TJzT9An1nYZPP0H
-	 EaoPBZwKMGPeBwDA8imNTPUPO7WH6wP1HM69sjMkZuaItv63eFo/NKV5Q3TFG8cc37871
-	 SAvZH6uJa0Jz3oqL6uD/R3jy13I8ZBhZpxsMTsJ5NGhgUYa39jTMAmRzXYrlbeeILyk43
-	 K3X9O2FEeufgv4LtqKWIn5aIuqCAx2+M1GT6ERKt4V0dXvBp+/R24JA+XPTq2U0hbLTgN
-	 prlBiGJjkFdwmi9UhTYBtGEyT8rvSlziroV8VVv/K4Uq/kof3HIVWkGitol++QX8Gag==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DzAAUM7Z;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.181
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.230.115
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794366921;
+	b=wXK/2G5NfK6y+BidNFSvFTgQ4qHAs05G80tBsnRy77h7dykPwLd7Jzr/ZwCgyRLoZSwM
+	 +FMQwXvNa15jlkuBLZVxsweOYOGfkc5U/R6Mj9+b5gavl43cCndYZZZ9cTWxIrZUJ2Zz+
+	 YF0s0vxv/DyJrFWlo1t8mclZ1SGJsGjL41iUevr8PST7F0j6UZqppZkhioW2lA2HV4hsY
+	 tp7nmbeOg1d5UE9pkNMOr7EfYBTOw2t5x3TedeuJI7cZmtwzFxrJaZHG/3UBMAT8Q1hr4
+	 4EHjOkBHHu/O5HHbo8Dh5oX4QM0e8gvnZvR/yJLrmjjz+arl4MiyIXnYiX0eklwLA0w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794366921;
+	h=DMARC-Filter:DKIM-Signature:Subject:In-Reply-To:User-Agent:To:
+	 X-Original-From:X-Lms-Return-Path:Content-Type:Mime-Version:From:Date:
+	 Message-Id:References:Content-Transfer-Encoding:Cc;
+	bh=15rFtJmRbMHnBEJouMfOvitJtkWvgnl2tL0+uVof8uI=;
+	b=mzME27Q/EnwbePdcY/8ijV7dQTmagnEX34qtCQ5xlWgzoovvd2jAq3U07RLpPP5ImYnp
+	 7S/Pa0089sfsoARZW1BQXC30DvUDDHSmcn8MC7A/oGo6xP1XWGz1J0PNL5ayOROqSlkTV
+	 V+564G+xMfNR7TVrVUx4EakV1rtqKuHIF3ZWMuKrtvdJ8CU9tQsC6/1LOH9Z8H9mL5h4q
+	 s/kBin0Y1/XHIZo6ZWIu5ZlKIg4q12hyCl/2Ys9+pN0oenh8TOCQCM0p7/9z7pQEOUTaq
+	 3bUhK3JbzsGM/museTBM1RHfWIY3xCqvbRezROAVo7st2VlxXq2E8iBb6jTDDmBSLrw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=bytedance.com;
+	spf=pass smtp.mailfrom=bytedance.com;
+	dkim=pass header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=2212171451 header.b=Lb4DwdF8;
+	arc=none smtp.remote-ip=209.127.230.115
+Received: from va-1-115.ptr.blmpb.com (va-1-115.ptr.blmpb.com [209.127.230.115])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D60606A324
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 01:49:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98D60606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75986606A33F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 03:15:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75986606A33F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DzAAUM7Z
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ed2bfe3252so10163975ad.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 17:49:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794361793; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jWVHiHEmGZiyf7n190Q1FFM51z/LvdunKfisoxtKjePxSFIu8ZUEX83DbYLRDgu6W6
-         7XFyfKsyJSUlPC4UrbIa9pZyWosb/ENKG+gB8810A6J6ebHvbDyCKXH3x8z8HhYa3KM/
-         q7CDRW/C258mY10fqVu+x91jRwAYBM7MB9k6xOgwEXduE7fwYR4CvaO5pc2Ax9yHTeAG
-         kfhVNHAzSMBUs28yIs+wwM4Tl++numUCs+FWLxm6vRsffzSrhze/ZOPyShFNa3fGpHTa
-         yroux1EKinOduUnV0oY+nLm9jED7gjDvhqG73j1+tk7WMLMV3OHNWsMD0hH568nMx1Fn
-         wPPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=VDdksnIZ51u4SA1+w5FzMxah+sSDW95kejJrw3tPOQc=;
-        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
-        b=pcIokE4+s/YapXBq90dToYEeU2Jmcg5w3Tk93sUh9DNI4bgkPdvhA7E2HqVwPNdfo0
-         tJJ1K92CKB6aWkeJfv95TlxrrcXw9THeyPCBYxNqEnAVQ+0TA9KT8sL6/iK3cxw7Bw6R
-         4oCwfiiKIgpodrzcyVpXzmrDS3aMgwBpRFdFo52pnlLj5O+KN7u8uBtVlMjX3FlMBgmw
-         vOCZMb9untGmxzom6HdJX+P/Ta1N4bl/gN5fD7K5Yq8lX36ZXYnjwcVvTa8Jda7isQO0
-         piCBcydDBpRc5GGM9RNP4ZYJoQSSVmDH8U9/i/yyhJDCSzyhp9jpRT+6mPy0n/qmGpPg
-         NUcA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794361793; x=1794966593; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VDdksnIZ51u4SA1+w5FzMxah+sSDW95kejJrw3tPOQc=;
-        b=DzAAUM7Z6F6Bp1rDuGzqkxcZJUIimv/685YF4hrm46aGTPkgsh0wpMvVxyqmMfNK2k
-         o/fALQ+R1nXeoR71dFTDiVufu4BjJLf1iIYvdBHw7PeYiw3KAxm0VC4WxGOaHXJgLpCB
-         +eGmv7TL/BEdrU6OUVAwJRhMajxHs2kz0xx1fqfmpzsRDBgQ5vlqpiwkzvDBvaFXenPF
-         3C/6WBi5grHAO9KCmszc4JQ7PFlVUoBOTAlwgDkTHRNbDvULSCdAzaeSXtMjL/yvAgSd
-         Wccj2CDBoWPNooeNeNWiRZx1QwJffqpwRaKoonRVc1u465luf/hqL4uZVLr9nUZkI15+
-         SUNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794361793; x=1794966593;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=VDdksnIZ51u4SA1+w5FzMxah+sSDW95kejJrw3tPOQc=;
-        b=c1zdQq99sj4RS8rLDppnzlExBFrPSZ0v9QWrbDWoN4BPkqfZjIKHgbZNJaahP4AddM
-         e0Lj4Lp/3VvRJqc9XNKPbagInTf2LLxHpYkFksgAdV6d4tjwQxuRJrKHQO8eohR1Gpf2
-         2i+UAq9Ayo8ugr8CdMRaa+ZwIdf3e3+u6WmcWrlvBnaU1cgw0PlDWLuqVxa50isojuzj
-         0Zf1PEgOE6bS79FSIAgcK83E670AOpA/lE+OzFOSA12mdxdlnIyzSye7APhmOTrL1NX2
-         Ri4HX/Ttdngm+gwnaLehtUFN7NoFi7TWoEg1gXwqXX0DkDW5tUC8kc2JcvAwA6sI5FU1
-         8syA==
-X-Gm-Message-State: APuU4Z8eGJCxXf/73EeE5BLcawabByRhjLGxyDYa6gqDRhL8KL1u4T7k
-	z5pQA9EGFfvgxlzatTgX3HUTaUQ/uwvSLF+0XwwLYIrY+1E2riiTM3Jr/tfPGY+FehoMoBZrZGM
-	NzjBHHjzbQ+UqJ5R9JF7NTpBhf3oEOz7aJo3D
-X-Gm-Gg: AYBFou3vdTk9bCredduzDeZkbt8G1n6/2LNUgcdtR5B97rxs7Hd4MqiQ54Wr2NW9BWC
-	i76jHgM5Uh0OrLIn+XHf8t4Ve22logTdDbJYn6wXZMigre1CVb0Zy8LHupXje4bGhdQpK3cZ40o
-	d39GYr2VbpQJW1nF96sxQuD68Mf9H5E85/aZ/EL2u5O7vW2/sbk7hw1YuVG36vE5AxqBrJ/GKNi
-	Jys8ty/kM/dHlu5XbnsvFt9XOTsO/UICB26tl/x8cNN24RtHzNLkWoA6Vt9/5yRhibghoZlkDuC
-	yIs7N+B8/kVXjPPSE1TaWtUzNVh10sxzNIgcYha4RZJDnr8arruzz37fS/ZNx37n3jB6HwvNh6j
-	cBwqtehsN7CPKLtICb6O8WcI4mYPIPS6CiaW8obM1p6XttshUOJ+B6+tV/mIxfr0gLD1scZJjg1
-	2pQgM0hfy8/gXB/Id+9OnddjwENbBHbpGdiUkOSfH13qi1E83a/rH9FxtxxQdLCXRsxImspA==
-X-Received: by 2002:a17:903:1a44:b0:2e9:64b9:a330 with SMTP id
- d9443c01a7336-2edd770aa68mr11073695ad.11.1794361792649; Tue, 10 Nov 2026
- 17:49:52 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=2212171451 header.b=Lb4DwdF8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1794366914; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=15rFtJmRbMHnBEJouMfOvitJtkWvgnl2tL0+uVof8uI=;
+ b=Lb4DwdF8QQKgIped/h+QE4Ar81wdi63JIQFPnnVPXD3k1TZMHBKNFri0XePS3dyUzzPi1G
+ ZyCSml0waJIbKI1an7oMDhhaEc+UxRm34RLgbgu9J9dj6kCQpwynxKilA3Ua52LTRZVf2r
+ 9eneIbeYTEflGeLvQEw6RtQ2rQS95snf20UiZNp0hPI8mcxMlBdMLQ/qKbIrLJ61OL0T7a
+ WhmQ6fmnq8ZLYwNLmFaGBQ6wvv95gvhW/LJz06w6pNEyy47OKauV3jF7HWclhlz0jS52IB
+ zXINOnqqq26QSVN1K6WFqRHrCg5EF/gWMQWCWu660NZtq1ka33rFRDBR9LODPQ==
+Subject: Re: [PATCH v2 2/2] mm/hugetlb: optimize bootmem hugepage tail vmemmap init
+In-Reply-To: <sashiko-outbox-207133@kernel.org>
+User-Agent: Mozilla Thunderbird
+To: <sashiko-reviews@lists.linux.dev>, <akpm@linux-foundation.org>, 
+	<apopple@nvidia.com>, <balbirs@nvidia.com>, <david@kernel.org>, 
+	<muchun.song@linux.dev>, <osalvador@suse.de>, <rppt@kernel.org>
+X-Original-From: Li Zhe <lizhe.67@bytedance.com>
+X-Lms-Return-Path: <lba+26af3ddb6+f7214b+lists.linux.dev+lizhe.67@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,27 +60,89 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261110095525.504660-1-phucduc.bui@gmail.com>
- <20261110095525.504660-5-phucduc.bui@gmail.com> <sashiko-outbox-206828@kernel.org>
-In-Reply-To: <sashiko-outbox-206828@kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Wed, 11 Nov 2026 08:49:39 +0700
-X-Gm-Features: AclHuK8KXNuOVTdyXRsPKzDhKnjywq8-M4TuAaByLK27noLJZJj0Dz43IhVpt8s
-Message-ID: <CAABR9nGcZ6uD5z30NbJ9sWLEDiFhF=KQ++Kwp8tPmST0hFweEw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/6] ASoC: dwc: Fix DMA fifo_size calculation
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+From: "Li Zhe" <lizhe.67@bytedance.com>
+Date: Wed, 11 Nov 2026 11:14:46 +0800
+Message-Id: <0bb7599b-b20f-4bba-a7b8-fca2a093fcf9@bytedance.com>
+References: <20261110114859.76343-1-lizhe.67@bytedance.com> <20261110114859.76343-3-lizhe.67@bytedance.com> <sashiko-outbox-207133@kernel.org>
+Content-Transfer-Encoding: 7bit
+Cc: <linux-mm@kvack.org>
 
+On 11/10/26 9:35 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] mm/hugetlb: out-of-bounds write in
+>    hugetlb_folio_init_tail_vmemmap()
+> --
 >
-> [Severity: Low]
-> While 52ea7c0543f8 ("ASoC: dwc: i2s: Add StarFive JH7110 SoC support")
-> added the calculation in dw_configure_dai_by_pd(), the broken fifo_size
-> calculation in dw_configure_dai_by_dt() was introduced earlier. Should
-> this also include:
+> commit 5be89b38412d58045fd600596787f54c7559d32c
+> Author: Li Zhe <lizhe.67@bytedance.com>
 >
->   Fixes: 0d274544bfee ("ASoC: dwc: Add devicetree support for Designware I2S")
+> mm/hugetlb: optimize bootmem hugepage tail vmemmap init
 >
+> This commit optimizes bootmem hugepage tail struct page initialization by
+> seeding a template from the first tail page and initializing the remaining
+> tail pages via memmap_init_page_from_template().
+>
+>> diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+>> index cb2de24affdc4..6ae5d2679e3aa 100644
+>> --- a/mm/hugetlb.c
+>> +++ b/mm/hugetlb.c
+>> @@ -3239,6 +3239,7 @@ static void __init hugetlb_folio_init_tail_vmemmap(struct folio *folio,
+>>   	enum zone_type zone = folio_zonenum(folio);
+>>   	int nid = folio_nid(folio);
+>>   	struct page *page = folio_page(folio, start_page_number);
+>> +	struct page template;
+>>   	unsigned long head_pfn = folio_pfn(folio);
+>>   	unsigned long pfn, end_pfn = head_pfn + end_page_number;
+>>   	unsigned int order = huge_page_order(h);
+>> @@ -3247,11 +3248,20 @@ static void __init hugetlb_folio_init_tail_vmemmap(struct folio *folio,
+>>   	 * As we marked all tail pages with memblock_reserved_mark_noinit(),
+>>   	 * we must initialize them ourselves here.
+>>   	 */
+>> -	for (pfn = head_pfn + start_page_number; pfn < end_pfn; page++, pfn++) {
+>> -		__init_single_page(page, pfn, zone, nid);
+>> -		prep_compound_tail(page, &folio->page, order);
+>> -		set_page_count(page, 0);
+>> -	}
+>> +	pfn = head_pfn + start_page_number;
+>> +
+>> +	/*
+>> +	 * Seed a template from the first real tail page and refresh only
+>> +	 * PFN-dependent fields before copying it.
+>> +	 */
+>> +	__init_single_page(page, pfn, zone, nid);
+>> +	prep_compound_tail(page, &folio->page, order);
+>> +	set_page_count(page, 0);
+>> +	memcpy(&template, page, sizeof(template));
+>> +
+>> +	for (pfn++; pfn < end_pfn; pfn++)
+>> +		memmap_init_page_from_template(pfn_to_page(pfn), pfn, zone,
+>> +					       &template);
+> [Severity: High]
+> Can peeling the first iteration out of the loop overwrite the struct page
+> past the end of folio when start_page_number >= end_page_number?
+>
+> Previously, the loop was a no-op when pfn >= end_pfn.  Now, when HVO does
+> not optimize a gigantic folio, prep_and_add_bootmem_folios() calls
+> hugetlb_folio_init_tail_vmemmap(folio, h,
+> VMEMMAP_OPTIMIZATION_NR_STRUCT_PAGES, pages_per_huge_page(h)) after
+> gather_bootmem_prealloc_node() has already initialized the first
+> VMEMMAP_OPTIMIZATION_NR_STRUCT_PAGES pages.
+>
+> On configurations where a gigantic page has pages_per_huge_page(h) <=
+> VMEMMAP_OPTIMIZATION_NR_STRUCT_PAGES (for example, powerpc
+> mpc885_ads_defconfig with 16 KiB pages, MAX_PAGE_ORDER == 8, and 8 MiB
+> gigantic hugepages of order 9, where both values are 512), this
+> unconditionally initializes folio_page(folio, start_page_number) and marks
+> the adjacent physical page's struct page as a compound tail of folio,
+> corrupting mem_map.
 
-Agreed. I'll add the Fixes tag in the next version.
+
+Thanks for the report. This looks valid.
+
+I will restore the empty-range check before seeding the template in v3.
+
+Thanks,
+Zhe
+
