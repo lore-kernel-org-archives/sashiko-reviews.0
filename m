@@ -1,77 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.122
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794411418;
-	b=owDgYOq8o37RdMxvN2sjLeWZ6CKuKBpfvN0K9tmBxc3CLAoNR4pEModj1j8PZm3TEieY
-	 5UjsQzQYPY0M8SUHLlJbU8A/SU5bwy932WMKaoxyd2DbB42F5JDBA5wGcUVkVpAOU1Tqf
-	 h1t15K6dh5ZS0+/eyDwoLlH22Sijf7PPOK8NnbOvnVLckSDrt9RSUb9f83esNTuVvUEaL
-	 Mbh4ujR1HKvSGDWUQ0zr21RT4DAJZ1i6ZDpmuCkYKzIvOvM6AIOv7SvPEqOp76jaCy/XR
-	 pxEjaP7G1emIJZW1Jfhm/JThgUPeZgv/JUQXgq0WGWysf8rwNmppGcVZUhYl35mNaVg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794411418;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
-	 Date:In-Reply-To:References:Organization:Content-Type:
-	 Content-Transfer-Encoding:User-Agent:MIME-Version:X-ZohoMailClient;
-	bh=cXcdL4RZkRanD7v6ytYiFI+7QElAQaeTLZZui243kdY=;
-	b=nY998e3AwTG6qpK0ezo6NwYywdQG67bEzpUuuzrESv3qeaW4xIORZiplvJxhDKeJNjGr
-	 V8gLQ+Rzxt6r4099aRDrMfJFReUi+pJeGe2Zb/6v38B/W0I7d7dAFEwRrzHAp666VzsVX
-	 uIy2RebGXd8LnYGDi7xqlAk+OOi0Sa1dxNGzKF3Mnbodl0pF0ZPJaBvGHBGNmrcbNRw4U
-	 qwyQHVNrBRd2Rm2oMOhKKicl5huTlO/HKldVIjIG/2VDoY94xoLZnYYKeCBcCn8agnD0a
-	 imETgY24LLJVSISnqz0u7TGTMDbbDsSrmi5DCwvv75fjjNtt7i5pqkE1ZsF1SQf5Ibw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=icenowy.me;
-	spf=pass smtp.mailfrom=icenowy.me;
-	dkim=pass header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=dxdnf1tU;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.122
-Received: from sender6-pp-g122.zoho.com (sender6-pp-g122.zoho.com [165.173.180.122])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794411664;
+	b=opFwKA3iIiTFvGuy6J9pflifuEveAkn+b2x4Hv+UsDDZJAzeVTLd4mxncpk9GADvjqGo
+	 kZ+zmR6czM1i2ZFBl/2ORbwoa5f31IdnqbNhwLfB40Yz0Nz6OmPA+CQuTZzYKq7JaxKye
+	 EMvvG15tR9mDDfAqI+z0kr+qrJQh6yJZMJmNNZzhxUQ0fl61a6dIntgC1lCt6TXIFInCN
+	 bYEH8YstDULSvdhRGIBo/w2VHbyDbscZuoGbfBNl8VU8rInzaBo9FWDZllF1Xa9GQREtj
+	 jIY9S33DPbIUpd0s4Rz6OHKwR/iCUGX/flyArsH/yHTbBFlhpHhH629nL6jmswzwCNg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794411664;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=Gumcpnox9RWZNFmJ4fGU2nbq4jZfZ90jzjsHQu9+HC8=;
+	b=vmYq2rvlDrsdlpd5BTZ/arVIrE4UTmrfHM4eXCQxbfhqO03vvh/4jj7CRgBq3+BAasUU
+	 yfoz8a1JUiWVHqNZVs7VU2pmk73TtAscRmk778kXPzMQTrKTMoR8AHTeGRUkehKw51+ZT
+	 fHwxs9914n+WAknh71OVmUJdU/Ng2JKHSEKLi95ylAICBgEegr6+yYMWrHMNNWG8DzYnr
+	 ur/H8Lzm1IacKh2A9tad4eT9kBNaLXL5Uhismsf2jQ2Ug+qOnwEwTD2NzqymDEKnHuU+G
+	 V8VNhx+HUNfI0oKS1lAx2HYRL0+RGnHs1BVDTFUKntmLXVcAEfiVC/7psHIQK73imRA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=suse.com;
+	spf=pass smtp.mailfrom=suse.com;
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=RJlPqjKU;
+	arc=none smtp.remote-ip=209.85.221.47
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B799C606A32A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:36:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B799C606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397B0606A330
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:41:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 397B0606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=dxdnf1tU
-ARC-Seal: i=1; a=rsa-sha256; t=1794411407; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=DX/IsIaBVZXylZ/Jwnp0NZE8RSGRsJlESrHEhffSHS/5GENMZ6v/5mjFgTKIufzEMOUK0PB0w8oJmQLIy21JMhwIDtufnKqQd1a9WHi/NuZbrubZgaF/fCWv3bgLFB84zvtVjQRC7yBBIFy4G8rFzMD/equE7zwJrnkpS+wEbK4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794411407; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=cXcdL4RZkRanD7v6ytYiFI+7QElAQaeTLZZui243kdY=; 
-	b=kWvTSObDt0NBbPPIV3TcQjYHSpoTlrfiRVZoCP+loOw6kU0oeUCcQdj+402hsas8i4KrP4lL/nm/TKTHOInPLj8BmzOVcAbQhPXSXZcJJGvIQttCgAJSY5N6egvV1zV1MgQRlFKmp+v31Qco9voXY1ULjm1htgx4Ag00o23Kfs0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=icenowy.me;
-	spf=pass  smtp.mailfrom=uwu@icenowy.me;
-	dmarc=pass header.from=<uwu@icenowy.me>
-DKIM-Signature: a=rsa-sha256; b=dxdnf1tUvtmfd8NCGQ4jY2u8KeigYZZdannJxSknt4wTNUENqBjXFcImw/bT4G5G1sK2PJCHaTHWjHVGbKa2tIb0wcH5ILoWbElbiZvAsHEEORtxM8uLwKOQKulRnPDa8Ov1dX7ppVnHxrshnbwPB03LVhVfZ4XOoAlzNkUtJl+8msLAeXCM6mRVEgJEcL8i5syHaBm75z5m0rjpjPZh1xgjhU6RRhHLrGTEt8AGSQ07FD+8UPB8AnlAS6uFYQPgO4/y8yA4mpmi6pweK4oK+hnV7W+bbdctHhqo/6nDCzqUlrjJ2nLHFCSSZhtyGHqFKM3XjF7qnrVEQolZmzo5Cg==; c=relaxed/relaxed; s=zmail2; d=icenowy.me; v=1; bh=cXcdL4RZkRanD7v6ytYiFI+7QElAQaeTLZZui243kdY=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794411405388314.12732903469475;
-	Wed, 11 Nov 2026 07:36:45 -0800 (PST)
-Message-ID: <fe657d0fb030632683705b7a9637d50782dd8acb.camel@icenowy.me>
-Subject: Re: [PATCH v2 1/3] dt-bindings: display: panel: ilitek, ili9488:
- make the port optional
-From: Icenowy Zheng <uwu@icenowy.me>
-To: Krzysztof Kozlowski <krzk@kernel.org>, Romain TISSERAND
-	 <romain.tisserand@gmail.com>
-Cc: Igor Reznichenko <igor@reznichenko.net>, Neil Armstrong	
- <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann	 <tzimmermann@suse.de>, David
- Airlie <airlied@gmail.com>, Simona Vetter	 <simona@ffwll.ch>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, 	dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, 	linux-kernel@vger.kernel.org,
- sashiko-reviews@lists.linux.dev
-Date: Wed, 11 Nov 2026 23:36:37 +0800
-In-Reply-To: <aac5e0a0-754a-4323-9417-cc17d7d42930@kernel.org>
-References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
-	 <20261109160706.2272332-2-romain.tisserand@gmail.com>
-	 <20261110-comical-adder-from-saturn-8c8fbb@quoll>
-	 <aac5e0a0-754a-4323-9417-cc17d7d42930@kernel.org>
-Organization: Anthon Open-Source Community
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=RJlPqjKU
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-4918c2d727fso1850792f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 07:41:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1794411662; x=1795016462; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Gumcpnox9RWZNFmJ4fGU2nbq4jZfZ90jzjsHQu9+HC8=;
+        b=RJlPqjKU4RXHKCXPbAYf0kd35hmZasr+7oa06a7137gbN3HQlqBtJBl0yZRU11HVgn
+         DySCWereWLUm7a7RooWHdsoLZ8GyfRu+TBdaY0qUWI1rSV6oMkkZ0AIuoqqI3LPETm4t
+         DGGv2LzDQU3hZEEWvSdoE90CENvh3akoqqVVjenDlLkIJD+FMw9+U96uBYIrWPkW/F7q
+         ib8ou1DAZ8jNE5rH4WtTuGaGIgmiT9ELOYRTRxFwOqzhKLsfDIdlPcy6ccxaOHlUdr8X
+         stBz39DAJ7nyRodSqgTvbWPW+U9Hdtv6c1eYftN/g0Pu5/mT+kykgl8kRnesvcfMy1TR
+         lTrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794411662; x=1795016462;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Gumcpnox9RWZNFmJ4fGU2nbq4jZfZ90jzjsHQu9+HC8=;
+        b=oS0Wco5Mbh8lVlhR7o6HvtmtpNpfyprJak3+syQahraWGCzWWqJNgVQWmxZde5EukD
+         bMetEoo7SgDIFqIni9/JSZ3MJBgZrWBBQAcCW61jOIcoXDnA29iNBWdTrswUW5rrKi0I
+         xN2lAH/is2f9NfFW3JT1GfBA9jfXw3GRjUOB3tpbL+lBF9OTZCwbJVZX2um+N1ACOu7U
+         7L07z4UjHg/PIn7p3UoxMmiBuFK3sGdFKUl1EltKS2uiq6mzkIH48aZnghu+32bEJNqt
+         BeQsipXoM86P/JJBiPvFbBpb5U8DTFSMo0g2Spneuj3vhPD21kLDQnTxCVLeQZAtHiYm
+         xYJg==
+X-Gm-Message-State: APuU4Z/9EvzQycBS8KLxkI/c6CohDq3lLPuzemw9RT0o9JMaYditMf3d
+	61GgokSp7gkBbVavW7VAsyv/lJ0TfFkQ+c+94p44F33AxoCd3s8HAML2jAuJ3A7WXdGiBxqV/g0
+	vbq3A4VU=
+X-Gm-Gg: AYBFou15wzACSpPTyYPQ+ZCIhVfXRoU0DM7m1Q3wUQnjzSsex8aomAlCkbL4vBb35aL
+	xl0Qoj/Epstp486pNQbqsfHHWS30So1QZ6g/v9SESROo03dzkBgpdV0b4iej2FI/w1zNOKKsQQc
+	YeQykOzEaIgSaLEAzlSLlSKQ5gMdbUu0KgIWke3/AoHDnUkpJkBnGLborZL862FHIGVae9atn35
+	y7wmDJEnc4/5fLHrfrx3DVq0M2TvlPxfz/MxodEv1bRl1MdescY2H9PtVjEV2lcFzNVAc0vrJR9
+	dqiRG36eeuN1Nm1npTY+IFFpjXIAa7ZhvKDoRL+BhyZBdNNah16l3TMmX1odi1jxI9p5xWSaelp
+	NemUcrcUeiFV1WpsZ/yl5X0Tw662ZqLVuFKmDwV5DNgGMxRGtWtW5cKTpzZ6uMZSP43q1yTxA9x
+	dnMXw8Xy/2Ut+Ccg6nDerNK4uAbKYi1vMWH4s2UZqS0v9cwlk6MWamEJKgn9eHBwHaqzHXJ8MId
+	s2hLrfZ9o7TvfodyhDdkhnta5yJv4fw4nhiGb5AQhQjNKr2S2Jn3e0FV2Cnybr6ciqrZlvb+djo
+	iC/G1VV68MTykEZsGK+CoifgzE5gO+U=
+X-Received: by 2002:a05:6000:2c06:b0:48d:f36e:fbcb with SMTP id ffacd0b85a97d-499c5d46d91mr5111990f8f.14.1794411662491;
+        Wed, 11 Nov 2026 07:41:02 -0800 (PST)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4983600bc9asm10823768f8f.29.2026.11.11.07.41.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 07:41:02 -0800 (PST)
+Date: Wed, 11 Nov 2026 16:40:59 +0100
+From: Petr Mladek <pmladek@suse.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: John Ogness <john.ogness@linutronix.de>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Chris Down <chris@chrisdown.name>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	printk@lists.linux.dev
+Subject: Re: [PATCH v6 14/16] printk: Do not set Braille console as
+ preferred_console
+Message-ID: <avSMiz0n0aXLC65_@pathway.suse.cz>
+References: <20261106171952.207909-1-pmladek@suse.com>
+ <20261106171952.207909-15-pmladek@suse.com>
+ <sashiko-outbox-201949@kernel.org>
+ <avHm3aYaDdcif-ss@pathway.suse.cz>
+ <avHpL7ojyapVvGlY@pathway.suse.cz>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -81,51 +106,61 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <avHpL7ojyapVvGlY@pathway.suse.cz>
 
-=E5=9C=A8 2026-11-10=E4=BA=8C=E7=9A=84 13:48 +0100=EF=BC=8CKrzysztof Kozlow=
-ski=E5=86=99=E9=81=93=EF=BC=9A
-> On 10/11/2026 13:00, Krzysztof Kozlowski wrote:
-> > On Mon, Nov 09, 2026 at 05:07:04PM +0100, Romain TISSERAND wrote:
-> > > The panel is a MIPI-DSI peripheral, a child node of its DSI host,
-> > > and the
-> > > driver does not use a graph port. A port is only needed when the
-> > > host
-> > > links its panel through the graph; other DSI hosts, such as the
-> > > Allwinner
-> > > sun6i-a31-mipi-dsi one, link the child node and have no output
-> > > port to
-> > > point at. The PinePhone panel is described that way on the same
-> > > host,
-> > > without a port.
-> > >=20
-> > > Keep the port allowed (panel-common) but no longer required, as
-> > > for other
-> > > DSI panels such as ilitek,ili9881c.
-> >=20
-> > ilitek,ili7807s and a few others have the same and it is confusing.
-> > The
-> > port should be required when this is connected over SPI or I2C, but
-> > not
-> > for MIPI DSI. I think that for MIPI DSI port is meaningless so
-> > actually
-> > incorrect.
-> >=20
-> > Why was it added in the first place?
-> >=20
->=20
-> However won't all DRM drivers actually require panel? see
-> b089c0a9b14c
-> and 169466d4e59c which removed fallback to the child node.
+On Mon 2026-11-09 16:39:27, Petr Mladek wrote:
+> On Mon 2026-11-09 16:29:42, Petr Mladek wrote:
+> > On Fri 2026-11-06 17:36:30, sashiko-bot@kernel.org wrote:
+> > I would fix this inconsistency by a separate patch:
+> 
+> Grr, I sent an older version of the patch. I later modified it to
+> update the entry only when it was not set before. I wanted to
+> send this version:
+> 
+> >From b4e425390a42bedb5cd19a8bc959b6d1c4a61d49 Mon Sep 17 00:00:00 2001
+> From: Petr Mladek <pmladek@suse.com>
+> Date: Mon, 9 Nov 2026 16:01:35 +0100
+> Subject: [PATCH v2] printk: Update Braille options when preferred more times
+> 
+> The current behavior is not consistent when the same console driver
+> is preferred several times as Braille or non-Braille console.
+> 
+> In particular, preferred_dev_console is not updated when @brl_options
+> are passed. But @brl_options are stored only it is a new entry in
+> preferred_consoles[].
+> 
+> It is even more hairy because preferred_console[] entry is considered
+> a Braille entry only when .brl->options are defined.
+> 
+> Make the behavior consistent and always update pc->brl_options when
+> @brl_options are passed and they were not defined yet.
+> 
+> diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+> index e248f2d0d01c..60423c765520 100644
+> --- a/kernel/printk/printk.c
+> +++ b/kernel/printk/printk.c
+> @@ -2665,10 +2665,10 @@ static int add_or_update_preferred_console(unsigned int i,
+>  	 * Historically, the preferred options are stored only by the first
+>  	 * caller who prefers the particular console.
+>  	 */
+> -	if (is_new_entry) {
+> +	if (is_new_entry)
+>  		pc->options = options;
+> -		braille_set_options(pc, brl_options);
+> -	}
+> +	else if (brl_options)
+> +		braille_update_options(pc, brl_options);
 
-The sun6i-mipi-dsi driver just tries to acquire a panel with the MIPI
-DSI downstream device OF node using of_drm_find_panel().
+JFYI, the "else" was wrong. It caused that the braille options
+were not stored for new entries. It should be:
 
-Well I start to doubt whether a bridge would work in this case now.
+	if (is_new_entry)
+		pc->options = options;
 
-Thanks,
-Icenowy
+	if (brl_options)
+		braille_update_options(pc, brl_options);
 
->=20
-> Best regards,
-> Krzysztof
+Best Regards,
+Petr
