@@ -1,99 +1,146 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794405401;
-	b=M/rVRNl1wtdX6AveFMQidZxKoiAQztb0u+XU8Ujb123dD6/B5A1RweQjybD50/RKCu0b
-	 aP37fPZkoqtMY+x0ewALy56/9px/T//da/lvZp8rWvpn73P3n7ODouxrm2HIVs9oH4/Aa
-	 gTEze31zvGGxPqDCe6DkWr2YcjaTSZMVBdimC28YTnrJyrfc01FX0310JgAvTetyq7/lJ
-	 64sMPUcUF9srbS+eldAthpcZvFNnh8v0Q4C/2tuGq4+i4eJkrCPn9QDk8nluR6CeujgE6
-	 EtNUQkFVDXYutlQINGUWWKlzGXkH6DvKZAYmjycQ/lB9moB5A099eolLMqbueymu8ew==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.159.109
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794405812;
+	b=1q3eAgEiJtI5bP5Ng6YqswfMKw9MW0DW/A73mJOHgVRDXaEznsRWiVcN+jaR4R2YSEit
+	 EpEZrS9cFkMzR06lf9mQWVmFdt5ZXWcKDAMAkTIAnOXMf64QSYPuDyj4qyGc+mWUkBz2h
+	 knDjgKcjkZQOB5sVTr2xqqXJK24waUDd3ISNaEZlM0K8j5FZ0rB674l9lzsGtECqEC9Nv
+	 dTpCkyzn2eCl8OOcE7lIYPLjEers9ukv/EcCZARi8aFo1XmnWOoSgRsP0OyLWQu1Ey9vM
+	 kXg59KF7hHSCyFUIe7ZRvj+fLxXG17DUfw2MPS7AuKNQ5Swi8Fr3cp795QjMRr/EmJA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794405401;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=oRF2guphEyqLr1O9h9fq+s+FW78qBgZ0/k6wviHnruU=;
-	b=r58HGgL4AfDUL9w280genlNIssRIoM2ewMXPWGy9ZuuR/4lB3tM18X1i/UNEpIwNHGhA
-	 sktsJJmcPAVJ9jbqjaBhlBGDcxfQdenZBEcYytbA7X3Oq+VMNc5O5mRZESpQFxqh1PsL6
-	 YUKI8yfL4GvichKEBVzfRPao9qpR5OQKnK7rr3JjYa1ImY65i+YWNhuWedm444/dDEXmc
-	 k4PKOTo1CdTvssyLwIB1l6MHGbFaeSla8rQK5x6F7gJ45piJcstd6EYodUEEacvqNZqO2
-	 K7Bum+W2cTF0td4yx5Ko+sy/PDtp0DEFH0OS3SdJ/pSX5pH8fZrHooF77C7ir5LMjmw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794405812;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
+	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 msip_labels:x-ms-traffictypediagnostic:x-ms-publictraffictype:
+	 client-request-id:request-id:x-ms-office365-filtering-correlation-id:
+	 x-ms-exchange-senderadcheck:x-ms-exchange-antispam-relay:
+	 x-microsoft-antispam:x-microsoft-antispam-message-info:
+	 x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=y3e2tBnimtlVQON8IDAQEAlvy105ueOX1a0YENk/diw=;
+	b=kz+d2/TnKHc+irFw8wZH08R0vlopnu9TmqZTk6Mrawb3Xj7c5fnXeqzzOTCvj8jGkGre
+	 IdLV0g44/OjIR+mzjK007FKw23UQe9BnDpRqVrf6hjgzp76Pri3XeMopO6Y+ujzLUQk3+
+	 /AGOz2ei6mCZhEokEfndQuFE38+rrXMUdFkA3NUtAFB/qPrG+enztVwYDeD+XV9Db3Fr6
+	 Gb00uAiwYhJK1UhAKUIBpj10qND+XtWdJ84gSlfp7q84qIHqVg2HAVL3r3pyWKD7Z/D9C
+	 sCAsW7aJOa/VX3k+TKNQfykdRo+mVfvfAvttN3OODiaeOzLXKbaVuRmcAS/yfjGgLCA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y9pYz1F6;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.51
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=microsoft.com;
+	spf=pass smtp.mailfrom=microsoft.com;
+	dkim=pass header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=K3lpKFiK;
+	arc=fail smtp.remote-ip=40.107.159.109
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11023109.outbound.protection.outlook.com [40.107.159.109])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B68606A33F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 13:56:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0B68606A33F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D77B606A326
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 14:03:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D77B606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y9pYz1F6
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a2167bd087so31716505e9.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 05:56:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794405399; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Iw6yh8y26K6FDPuoE/RtVLMLZqrcdinIBO+jNPaKmHHZn7r06vhv4FnsCbhROdQNb7
-         Poo7+XDFWaxXIglu/VFc+cxbIdIOzvqN5uneiHDKhggxXAzYJPYDy6qVC6CWXjJg4/6r
-         ijI1ClRMoJv4yaNgmg8VUSgAzFEfVAOHPcWy+4ZeY70vi1Qbrq0wepxLoGdDSE9k8QMc
-         stwm4DIEJ3aGQLNvyBjlYsQe5KpC5vPR5lUb0XoA8zsFASy2Fg62qpMng2rZUxA0mZvH
-         gyacd2EjnR/7n7DipRfGVjDRRTbMce+TAaYzXBw1hPJPjeVHB6qwjuzrS3mBjZA3a7NA
-         G2ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=oRF2guphEyqLr1O9h9fq+s+FW78qBgZ0/k6wviHnruU=;
-        fh=Yu0Dfym12co158fxrW/f55mYiC0mlWJv2B2E0RkxqOs=;
-        b=nW3RB21KEMnIhXkBGx8/u1L+Fu4RWdAPqnZNpxFbkpujPAjJyiwTWZvebJjQrbeOQd
-         vClHeyzuMxa+iPWz+BTBNRtym1qe+oeqGMksOJsMZf6UhI2Ioqg1lcSi81AbRK1eM58g
-         yWRAORGXl785aniLYyikJR8ysJlzNl57dasGsMPZJX8eGHMkxdNCUy5Lt4G/ptN1r8+i
-         WCEAbfRbWMLHz+fiSHXH9DiWRfTYe1ZBV/fcNPU5w4rkDem+PhTiOsvheA76aunPfF4g
-         Rtaxy7ACyE7/PXAeU4FNV4b6ci72MoS9e/U4f6nHpuxr/QNmM+KOPHmuJjwV6vxWDrnt
-         qpsw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794405399; x=1795010199; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=oRF2guphEyqLr1O9h9fq+s+FW78qBgZ0/k6wviHnruU=;
-        b=Y9pYz1F69ntzW31kyyqgzvmrG4K74iytoCtLuwu07XHU4eSjnf0mGcNVztPFiFq+g/
-         aP4Zsrr2kSw81kuwlrNeKzGPTxFboA1QkqTUmCYqyB9sgUG3w4/dVbHP31tWo+Jrojye
-         4A5T6gWM9bow2aYVUuIr994/6baUgwxEmwZ541UMa/eBqLG9rSQNBkKryNYoLc2FWhok
-         PHkbvSdke7aGMnvA6nIXOspUvyWLuRdrK65Y+szvSN/WXjcYtaU2WMRi+f8JKHkbrlpJ
-         B9VSYDfrQ7VXlYeFvErr6U87WAYoEoXKz9JqOzQQrxLCNikKiTVgyxHpTq1Cfv5NCezt
-         yD3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794405399; x=1795010199;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=oRF2guphEyqLr1O9h9fq+s+FW78qBgZ0/k6wviHnruU=;
-        b=QYK+5ipraFmf5Lxw4u/ieuKSmrK9606aARCrt0LgfxpQAzFEBT8BxjKGcQkGzWs8ef
-         zJjf6MTxJlkN68CY0P51ywyaYVYwuQaqQM++hkjKZY6QeXxSvuX3e8VTY0MbctrtpAlw
-         NcyLYVmACZG3K9vr2VpsPNO3OQitteqSuLTwQjACK8DUCGrvD0U52WhMKtGICtEFL7qS
-         2yLhw5uemgU91L9gYtJTA2VdC2zdABTppftajtvhu0GbvsR8/KO8tlpf2W++Kpuh/cJu
-         1E6u7b3Q/43DCLgtirwwXeXyotksMeH7EFCe8f5LTrG9Oz8Yjazhs+w1EBKSdLwu1yH0
-         hdLA==
-X-Gm-Message-State: APuU4Z8SsQa7BjNnQqupmDe9yGBFdtro8pxVlEyuSRic3FYp/trsE6TI
-	2k5AZKZZ9/qXPLoFz43rCplZmUYi0X44Y7LF+g4p9OulwcV+X2fgbrPTBUolHNlZ6VOdNoozJBl
-	vvUtCCCsvI1C2etASm1+1M84jvDMIg1Y=
-X-Gm-Gg: AYBFou0CDJTZ0Fn3nqFlYVRdRrJRKMGhtNM+przjQjj6Wa8X+pykMczoBRfFmTgkdW+
-	dtl8uawpeh6SIjOVouI+vS8d0xadnXhF+7TqzujfSh32GiViQamyRAfEgayXd3h93rSFwBXmp20
-	7bLENBAP55RbLlG55fYU1HJCaMaraTeMXK/OFupPUwaSHNmNqUDEGBwS872W4uNOduIpNsfyyMm
-	bKGmL8Ac9L4HLhQv3OaWOAFq4bjsJAXmE9zTHpQYYTVqYZgTaf6kwGfaHxHZ0cMm6EIQFEzo5kS
-	AxbTrNB1nQ1h98pAubqwGlP2enq45HXYkJLb4r9NXjiXQf7tu3+FlXYWSta2iOO/UR7K1/r2k/P
-	Y3+cj+ZbjwalciKLkAmkEIfXnxMaE5iNc2uqB65jaGbmrj0lq5JeH6EZL+88=
-X-Received: by 2002:a05:600c:3485:b0:4a5:a5ca:de1d with SMTP id
- 5b1f17b1804b1-4ba093a9321mr49991515e9.30.1794405398960; Wed, 11 Nov 2026
- 05:56:38 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=K3lpKFiK
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z75DNobOJ7bFi0Rwinv6i3Me0OAAcbm1N/rfZbraYGiz2SE5/Q5JrSGxAUTbK0XWdu04L1Hac4bbWqacHEkRDnCDnMQhogMlzbRC7cUP2Sy01wvuf6hStTbwZgriYdrmZdX32bzI86smXVInTePA9TmqJrX78PeKDPbASE/vF+h2FNRVM/o7kgRCXdgFt126QXPtCg3d1EFOa7cadvATeHAZqmuX9v0xTT2ChRx1IvqHZQDwCqgaBQKUKF2EuFUl1I1vO1RtTd3x7APfMzSPFYyGZjg/f4XhCmrHpqWm/rKIBDE4a6Og5Wvs0PWR3SLcyF+Wlax8ibGYyd2/zfg55Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=y3e2tBnimtlVQON8IDAQEAlvy105ueOX1a0YENk/diw=;
+ b=uaG9DTaGnSHhxdBiZh3PGKYnxc8ZjIQGhQOwm2kvRV++h4s9wno4anYeCo26wpTbTGS1xEyuLILRMSyRTkOI59sYI2SvzRGjrEpz8Q2WIJKyGlE77hyiQ2Nnsnn3900YWYp0MYF2D84kkOHjvQK/p/W8ZJpFtPAGMdYvBqNb3XtupgXiPwTOhV0vE9bIY5LxoXXDWLL/uSJRxsx7VA5N7AiBG+QzdH7+1PrnwUGlDYD11XQ3kK3kA+B+AOiGpeblkiblVwlMgV4+nv9zhBZBNFUsJ23iBbHHs5KJFtNRko+pgvRCwlU935qAYewVP/+NbtmDaMIT0y6sIrsnnTCHyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=y3e2tBnimtlVQON8IDAQEAlvy105ueOX1a0YENk/diw=;
+ b=K3lpKFiKCq1IOzMYkBVWms1h+Cm5w1vLCXbbeglbGio9YtxjgqFtMG2IdcutuL3l5+81Xl79FLxwJYQbwupejOhOto+7HTU1oeGemaA72EtPWAlaZ6RJal0CsSRGYdxE/bgvThIx+QFldlJ5sHVF5dC9yHKdc/L4QMLuc4AcXZ4=
+Received: from MA8PR83MB465002.EURPRD83.prod.outlook.com
+ (2603:10a6:250:7c::20) by DU6PR83MB0826.EURPRD83.prod.outlook.com with HTTP
+ via P2P; Wed, 11 Nov 2026 14:03:28 +0000
+Received: from MA8PR83MB465002.EURPRD83.prod.outlook.com
+ ([fe80::7dc3:38ee:abc1:5102]) by MA8PR83MB465002.EURPRD83.prod.outlook.com
+ ([fe80::7dc3:38ee:abc1:5102%5]) with mapi id 15.21.0639.000; Wed, 11 Nov 2026
+ 14:03:28 +0000
+From: Konstantin Taranov <kotaranov@microsoft.com>
+To: Leon Romanovsky <leon@kernel.org>, "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+CC: Konstantin Taranov <kotaranov@linux.microsoft.com>,
+	"linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>
+Subject: Re: [PATCH rdma-next] RDMA/mana_ib: Enable RDMA devices on the CDX
+ bus
+Thread-Topic: [PATCH rdma-next] RDMA/mana_ib: Enable RDMA devices on the CDX
+ bus
+Thread-Index: AQHdceVtYi6daMcyq0y10M9ezSvIXQ==
+Date: Wed, 11 Nov 2026 14:03:28 +0000
+Message-ID:
+ <MA8PR83MB465002960449176635E159479DB4712@MA8PR83MB465002.EURPRD83.prod.outlook.com>
+References: <20261103115032.736554-1-kotaranov@linux.microsoft.com>
+ <sashiko-outbox-195213@kernel.org> <20261104094108.GA478286@unreal>
+In-Reply-To: <20261104094108.GA478286@unreal>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=88976812-7e08-4c4f-bc7a-2f936f8e70b4;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-11-11T13:58:25Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
+ 3, 0, 1;
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-traffictypediagnostic: MA8PR83MB465002:EE_|DU6PR83MB0826:EE_
+x-ms-publictraffictype: Email
+client-request-id: e1af5f30-9d55-44dc-a9b0-87e81b7cc59f
+request-id: 7cf34227-1ae9-40e4-8e1b-08df3ffc8f8c
+x-ms-office365-filtering-correlation-id: 7cf34227-1ae9-40e4-8e1b-08df3ffc8f8c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|38070700021|261009223027099003|261026140227099003|261028144727099003|261021135927099003|261021123027099003|11063799006|4143699003|261021121427099003|261009221227099003|56012099006|261102123227099003|261026121527099003|261022105027099003|7146999003|18002099003|6133799003|22082099003|10067099003;
+x-microsoft-antispam-message-info:
+ t52Hgiva4Dh+O0eYPkXehAcQhdmjrPIP5DSHZik0qwvurdKqu5XY5X6F86RUs7zk3CITLBJ4NaB1t3p1BEDHuiFDlj5mWeydb75OBiDgQIvAoj2ZlnJ/D5fxlQrduTASaT9Lgu2NGrvKbv31BjXh2yydAhCuRLqnwK1lLEhx7H8VUgWL7OK+Wqu9TCMfTSGb/Yup55tMp3vuMACrllH60djhoG296jEvBcT3jdvdDaqG/W/HGVcA0N1i23KEuSju79T6GgMQNUl7YrL2to4hVIglxWoIBr2g5rD5HUYb4+Put4r6F34NLwEsi8+ef3+GUPsGFY8NSpcIM7PngJyCJk/rKsYF37uQeNCt+wAFkcufkSFzxRmcSjLKQCvhI5mVUbeJxmAb7onX1RKFG9h8ksOESjHIN+t1RtxUvYbzdlrC1PSudU5zIXD+0cZfLz7dqZhvtyuckiLf6HOqjmh2nKdOjZSwhCl1JEi5EQEIPOezFCgGRmC8FaCJWArcEveYmNyWocw12e/enYydt01pGXkhi56QwSA7glUirSqzDDVf3hdambaAxj8U8CHE8HucepZiMN3dq+Y15b2m2/e6OF9Z58m9K8nYqgTyyWCCU2rGBpQQeSvlYtHSq2coU0ZrYEjkVlfCKlptbAA+nrFqikRqSujOogHqwDY2gJ6g11e0K9GceAnOw70ccywUjAl1XEbxBAaaE0tnzWj/owDpAVVU+bXuItQc2c7IyMOPqkk=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(38070700021)(261009223027099003)(261026140227099003)(261028144727099003)(261021135927099003)(261021123027099003)(11063799006)(4143699003)(261021121427099003)(261009221227099003)(56012099006)(261102123227099003)(261026121527099003)(261022105027099003)(7146999003)(18002099003)(6133799003)(22082099003)(10067099003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?q2+Tl4HfBOMrMtG5ijCsOVeBwRIUokb0qANlbOkrpKJziiDJY+THg5rvP4RT?=
+ =?us-ascii?Q?P7Pzlu6mEpP9bMMANHtUn6ztIEY+VIHvTPYd6Uq2d+oUvXoSTW4taB68eb7z?=
+ =?us-ascii?Q?dYDh9x1PZEaOxAuG4OO+wdfN/EU6MfzPLcOTkeJQw6VYpdo2/aDRyf2LJvMp?=
+ =?us-ascii?Q?5kcrjBDELgweYpMlxd/rbLPYPOMPNLcpfvx59quzVPhCB9s/PFkbdv+3AOoF?=
+ =?us-ascii?Q?N4HB3orAKjiNzUYS0OwF+dDnPyS1QrTWu1z3TTSVOT1YbRal6W8wEy+iNJRz?=
+ =?us-ascii?Q?BVNSU05AWRY7e5XV69g3reIc3L9yU7rvmdpmEmiU0rzeDPtISWgxy3Lm6Vdu?=
+ =?us-ascii?Q?ZqMRQzREV40ha8WlFsvRv09+mI0C0aqeaI5UIhGsveUsNNAE1c8BGaqA07eP?=
+ =?us-ascii?Q?0b6oO2RN8GFtrkunXpeGbgPw91MNxTWBhjX4f8QPx/M7+yWq3ophezZmASfY?=
+ =?us-ascii?Q?zEm5TDL0gQfWHwtnncAd8JCm1hOBBGqe+HWKcFn2ohFVKdJn7qdNZGwBSjTq?=
+ =?us-ascii?Q?vQuQCgLta8sQUHpl+9tEtd3ZNhPdW/F+cUCOR6Yq5Yh5iFebXhtMArvwSlpA?=
+ =?us-ascii?Q?mREJ4YGa5gTHBFrnlSVbY4wh2Cyr3tLoFqzNhFsH7WZ7Tz2ti9kz+PJzUig6?=
+ =?us-ascii?Q?X4V1iQdSlrLTDQece0V82wo3P/yOOKLn/rw6FWyXfVUTkG+WzPOoLtKFtyAc?=
+ =?us-ascii?Q?mcOpiI1s7hdUxvwE7+8rdlX9tNAYYOpGoJS16F4Q32CwJ43K9n+9ZoiRsJTM?=
+ =?us-ascii?Q?vjt48C+NCyk256lUX+gI0+060ia+DzQXqS0J7XcnrZugi0LspbN9+zX9sPjN?=
+ =?us-ascii?Q?an1vZPaILWDylaMOsXAtVBtjBZ4cvyT0yrC1ffzPpoEivYpqrNISQCJTBVTN?=
+ =?us-ascii?Q?XqfYFdCFzu+oWUrqyz3aPlJIGzIrLYeA/wuMuI1sLv61s3pyHS7dHxaGADQP?=
+ =?us-ascii?Q?u/Sze3DbgbaRdEWQkluYLOt7j18O1Nc4go8LQmDRA1q8CC+uVKy7MVjst9yW?=
+ =?us-ascii?Q?3GjoBJeBPPCM9FghpwtXi5f6Pv+ymtbAgYLbDWEVbVTZo71vWRVWQimFwBIz?=
+ =?us-ascii?Q?qWEShUay8TD2YDGQkcVCYTCbeIS7P/bSK6H+XyjJteVkUUpvSIbTysFLTOvP?=
+ =?us-ascii?Q?0wxuhljae/+0KOwEmmg0O3oFQkt76CahJo85WMCzcqk/WDGS6KJhjXsqMT4B?=
+ =?us-ascii?Q?wWWiPoS3svy5YeaexSXe5k1Q/igqR6TaGn/+Uzi7a3vC/fNp9DvBlubHvgyY?=
+ =?us-ascii?Q?k6FA0F0AqzPoKz2y4Q5RCgJX6zE/SXHrS84cgpMc/2t/s6tf+XYGs5Q2oojv?=
+ =?us-ascii?Q?rUGs+sOiBzhrSYO3d2NDAY76yp3wTk447RK7nMv6IKFUrtQeCYl3ItMtsdfz?=
+ =?us-ascii?Q?JMZ9nqkNyWfdzwP5zds/24Vz4GnxJN6GyKSVvEenIuAVOdyQkpd6FpZg/Ae+?=
+ =?us-ascii?Q?/dovcpY+JU6liRWmCOzzWPNXgB9vWAWDPZgHTzkXp8yEyths2zm7buZHzhZ8?=
+ =?us-ascii?Q?LxJYlF/jxpUs5faaq3vcgyczqnv9VlQbOgpmg47i71mYmVL8P90IG/u4r1vz?=
+ =?us-ascii?Q?ioxGAgc3VLWY9A0n0u2sdn95mRM+E1MjI1MFZ7btrODWo+zje7EOepdODxPE?=
+ =?us-ascii?Q?M5cme/vmYV2uMAcs+acBwn8JUWvQa+ile4egoOQge3TONb0Uf4ZDQDcDcjQv?=
+ =?us-ascii?Q?RKGdTA=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,90 +150,102 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029-work-fs-sb_rdonly-v2-0-2f44f64f0b66@kernel.org>
- <20261029-work-fs-sb_rdonly-v2-6-2f44f64f0b66@kernel.org> <sashiko-outbox-191225@kernel.org>
- <CAKFNMombDWkJ=m+CjMy7qnd_yy-vZ9c-EE7R95HKKkcy-M0+SQ@mail.gmail.com> <20261110-deformation-knabe-geltung-3bb7600eaead@brauner>
-In-Reply-To: <20261110-deformation-knabe-geltung-3bb7600eaead@brauner>
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Date: Wed, 11 Nov 2026 22:56:21 +0900
-X-Gm-Features: AclHuK-kg_k64kD5D3ppXkSngFLDCk2NlJ0a-lNWh9VMpnIyjECtxc1ueGN5wqg
-Message-ID: <CAKFNMomUbm3JUBy2GthZwAuFZWh5TSb7i0+g8u1qv1aRviqdaw@mail.gmail.com>
-Subject: Re: [PATCH v2 06/34] nilfs2: don't set SB_RDONLY after filesystem errors
-To: Christian Brauner <brauner@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, Jan Kara <jack@suse.com>, 
-	Al Viro <viro@zeniv.linux.org.uk>, linux-ext4@vger.kernel.org, linux-mm@kvack.org, 
-	linux-efi@vger.kernel.org, linux-mtd@lists.infradead.org, 
-	Karl Mehltretter <kmehltretter@gmail.com>, dsterba@suse.cz, tytso@mit.edu, 
-	Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>, 
-	Joseph Qi <joseph.qi@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MA8PR83MB465002.EURPRD83.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7cf34227-1ae9-40e4-8e1b-08df3ffc8f8c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2026 14:03:28.2132
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6GJDubdMuSkjjvkTHiwmI1IHymT4S76jVqMmyRM8rFj1JZOwio33ilbD7jGWJPJ7cNnXg0axXRT5FqcbgjA0sw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU6PR83MB0826
 
-On Wed, Nov 11, 2026 at 6:56=E2=80=AFAM Christian Brauner wrote:
->
-> On Wed, Nov 04, 2026 at 02:32:10AM +0900, Ryusuke Konishi wrote:
-> > Sashiko's point here has a valid aspect.
+> On Tue, Nov 03, 2026 at 12:05:41PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s)
+> to consider:
+> > - [High] RDMA/mana_ib: NULL dma_parms in mana_ib_probe() on CDX
+> > devices
+> > --
 > >
-> > This inconsistency can be resolved by inserting the following handling
-> > logic if sb_emergency_ro(s) is true:
+> > commit 4f88c8811c923b9c16d7e0dbf8674249f05b4f08
+> > Author: Zhiyue Qiu <zhiyueqiu@microsoft.com>
 > >
-> >        } else if (!ctx->cno) {
-> >                 if (nilfs_tree_is_busy(s->s_root)) {
-> >                         if (sb_emergency_ro(s)) {
-> >                                 if (!(fc->sb_flags & SB_RDONLY)) {
-> >                                         err =3D -EROFS;
-> >                                         goto failed_super;
-> >                                 } else {
-> >                                         s->s_flags |=3D SB_RDONLY;
-> >                                 }
->
-> Meh, I'd not set SB_RDONLY there. Because it changes the read-only state
-> outside of reconfigure_super() which is precisely what this series gets
-> rid of.
->
-> The superblock can be frozen at that point, e.g., when the error hit
-> while it was frozen, and then thaw_super() leaves s_writers locked again:
->
->   mount /dev/sda /mnt
->   fsfreeze -f /mnt
->   <error>                       -> sb_set_emergency_ro()
->   mount -o ro /dev/sda /mnt2    -> SB_RDONLY on the frozen superblock
->   fsfreeze -u /mnt              -> s_writers stay locked
->
-> It also turns the superblock read-only underneath the existing
-> read-write mount without sb_prepare_remount_readonly().
->
-> The busy-tree branch does what get_tree_bdev() does for every other
-> block device filesystem. A second read-only mount fails with EBUSY and a
-> second read-write mount gets the superblock and every write fails with
-> EROFS. That's what ext4 does since commit d3476f3dad4a ("ext4: don't set
-> SB_RDONLY after filesystem errors").
->
-> If we want the second read-only mount to work I think we should do it
-> for get_tree_bdev() and nilfs2 alike and treat the emergency state as
-> read-only in the comparison without touching s_flags:
->
->         if ((bool)(fc->sb_flags & SB_RDONLY) !=3D
->             (sb_rdonly(s) || sb_emergency_ro(s))) {
->
-> But I'd do that on top.
+> > RDMA/mana_ib: Enable RDMA devices on the CDX bus
+> >
+> > This commit enables MANA RDMA on the CDX bus by depending on the
+> > shared GDMA core, matching CDX auxiliary devices, mapping non-PCI
+> > userspace doorbells with pgprot_device(), and reporting the Microsoft v=
+endor
+> ID directly.
+> >
+> > > diff --git a/drivers/infiniband/hw/mana/device.c
+> > > b/drivers/infiniband/hw/mana/device.c
+> > > index 62c7803ca6c60..33e47490755f6 100644
+> > > --- a/drivers/infiniband/hw/mana/device.c
+> > > +++ b/drivers/infiniband/hw/mana/device.c
+> > > @@ -257,6 +257,8 @@ static void mana_ib_remove(struct
+> > > auxiliary_device *adev)  static const struct auxiliary_device_id
+> mana_id_table[] =3D {
+> > >  	{ .name =3D "mana.rdma", },
+> > >  	{ .name =3D "mana.eth", },
+> > > +	{ .name =3D "mana_cdx.rdma", },
+> > > +	{ .name =3D "mana_cdx.eth", },
+> >
+> > [Severity: High]
+> > When mana_ib_probe() binds to mana_cdx.rdma or mana_cdx.eth, does
+> > passing
+> > gc->dev to ib_register_device() trigger a warning and fall back to a
+> > gc->64 KiB
+> > DMA segment size limit because gc->dev->dma_parms is NULL?
+> >
+> > In drivers/infiniband/hw/mana/device.c, mana_ib_probe() registers the
+> > IB device with gc->dev as the dma_device:
+> >
+> > 	ret =3D ib_register_device(&dev->ib_dev, mana_ib_is_rnic(dev) ?
+> "mana_%d" : "manae_%d",
+> > 				 gc->dev);
+> >
+> > And in drivers/infiniband/core/device.c, ib_register_device() checks:
+> >
+> > 	WARN_ON(dma_device && !dma_device->dma_parms);
+> > 	device->dma_device =3D dma_device;
+> >
+> > Unlike struct pci_dev, struct cdx_device does not attach a dma_parms
+> > structure, which is noted in mana_cdx_setup_hwc_irqs() in
+> > drivers/net/ethernet/microsoft/mana/gdma_cdx.c:
+> >
+> > 	/* The PCI path also calls dma_set_max_seg_size(), but that is
+> > 	 * deliberately omitted here: the CDX core does not attach a
+> > 	 * dma_parms to the device, so the helper would only WARN, and
+> MANA
+> > 	 * never builds scatter-gather lists, so the limit is never read.
+> > 	 */
+> >
+> > In addition to triggering the warning in ib_register_device() on
+> > probe,
+> > mana_ib_create_queue() and mana_ib_reg_user_mr() build scatter-gather
+> > lists via ib_umem_get_cq_buf_or_va() and ib_umem_get_va(), where
+> > __ib_umem_get_va() calls ib_dma_max_seg_size() ->
+> > dma_get_max_seg_size() and falls back to SZ_64K instead of UINT_MAX whe=
+n
+> dma_parms is NULL.
+>=20
+> The analysis looks correct to me. How was it tested?
 
-Thanks for the detailed explanation and the concrete scenario with
-fsfreeze; that
-makes complete sense.
+Thanks for pointing it out. Yes, it was tested but manually with our RDMA t=
+esting scripts.
+The difference is that CDX is on a test lab machine that cannot be used in =
+our existing
+automated VM testing. So all the tests succeeded and the dmesg was not prop=
+erly checked.
 
-While the "s->s_flags |=3D SB_RDONLY" assignment in my example could simply=
- be
-dropped, your approach of treating it directly in the comparison looks bett=
-er
-as it is more conservative and natural.
+We added the check of the dmesg in the tests to not miss it next time.
 
-I also agree with aligning this secondary mount behavior across get_tree_bd=
-ev()
-and nilfs2 alike in a separate follow-up series on top.
+Thanks for understanding
 
-So, I am completely fine with keeping the current v2 patch as-is for this p=
-art.
+>=20
+> Thanks
 
-Thanks,
-Ryusuke Konishi
