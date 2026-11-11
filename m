@@ -1,98 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794419265;
-	b=NhE9SGaVVlEmcfX+eC579ks+/jB86AMpKcrAibdm8nC+ujwD7Zx9Jg86QyXK+BOKLiOE
-	 tqTSMIqLhHsYkWoHCHSe61FQzRS/cEA7ifOyLDwVSYXWlYXp5yzqowlHx3GojqZOGoA7o
-	 8U/Y/1Qh84VE2C5A9y93u/TT6HQhDnIi/duhvozvRwzWvn2eyrvcQyMf2UXb1G47OTnnQ
-	 8IbYUzcYJehZCS0bRv1gCZukLUV6WfXagm7iKsOXWex9WeK12iRAkTG+ZD2Tdt25Xhuf0
-	 h9vRhkm9+kv+MyEby4hPjmj3mnvf2LZggWWKi236kqKdpSMJ3jf7lbfX/svz0Co79Hw==
+	t=1794420095;
+	b=llcnzgtJBdwQDBtp85btCAgrOt/IuGN+EcqarAmxpiXhFmaWnVt91JFd98thNPJu9yeh
+	 0FqiyM7VQ610O6RZCZh5v8GrXGqDKQK/uZBfC4quNLyQKl6ywl5uYrAq7DGFUm+ucHTFA
+	 XM35Qv2fLEtlZfW0VRAWizQgHtz/xL0aExkhCfVHuUZo5GTMoLMykpZu4qbu63WwaEjUt
+	 SQPgWK7bEYn2p1aPkVr5eqEwuXAlCwWEEUgVDoHFPaS4ZRNYdVY2Jj9FGek6WoeEGQgZT
+	 Kb1sCytvGsE0H4l2Nq+v9+DfvF1fKZxZ3Saoeg1zki6AGLr1sbMkMyrdSa/91KVp2RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794419265;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=Cavo6rumtYx83DhhSgHjGqxw295JLU9mSeXiMoOdbTo=;
-	b=k+BjQMUBoh1gPXdAKPwGETc75eZUfW7CaeiALEYRi0joWHIR3y+nI6hIlIxneJjwCMEj
-	 aTpJT/eGeUAJtJCK7Tewh3Nlr7jtW94dgHvlYc8EdTo+PvhDT9nqZwSN7lOWZimqBI1LO
-	 4wSgbEVQuMDJHUJz0JHdES59H4gEQ1UO8jUiTOArzRsXyXWydjTTqUkhNF42tbjfom5y1
-	 C/k93GC/IX2roCcYvPU4s128zzbpFv5uP/x4fHzPj3/AsgFljo9ojROOQTP4UFrdqLB9i
-	 qFnE3th8G1mrXclfNKxB6WeY/Rqs0XCV/Hndxj0WU+72j59Jw6KUdFce9VCLJieRrUg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794420095;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
+	 X-TM-AS-GCONF:X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Info:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=xkKB/6JlXiA5b+HTPJzwSIjwVffaKzmj2FfhyQqfzds=;
+	b=TmuWVj40yLcaDfngt9StWdOJo+3ETJ+BgpndEpNBbXF0yWi3zLkPNdOpG3v5mDw/IocC
+	 TWxtl//UwXTb2ErSjaLTdrTq42grNQ2Hxea6sE4XUytZXTG9WOPsxHRIEn8iETuQt05J5
+	 els0TAJ/Dej/9kXSQKFsJyq4MPZmCIjYf9ZpmAuHAB476nejoLijOw6/D1OoGnsB8g1nu
+	 uNgPx6YGG587ieTnck+wJCQM7xZLvaYdapXQoasgp8zlK4TqQ3eS9oxrC0vBcuL3+sB2H
+	 AmFcKIYBhU92pgK2TnvejdqUIfUK5hGPP4cGinJr9kKWcWDR3mUZixbPdhjYzQIAi7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=TKN7zRdl;
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=NiUBiJEr;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81239606A331
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 17:47:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81239606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257E2606A32A;
+	Wed, 11 Nov 2026 18:01:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 257E2606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=TKN7zRdl
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a20a37703bso24798755e9.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 09:47:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1794419263; x=1795024063; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Cavo6rumtYx83DhhSgHjGqxw295JLU9mSeXiMoOdbTo=;
-        b=TKN7zRdlOfiykSTNykGzbhoNDaAWDHod0hE3D5kokwbJFexSxX02GXKwNf/nOW4Vuy
-         CzIrxKLQhxryYg/zic7n04zUE1xBKV9/cvEQd51/WqWFb6oBYiRMNspzqeuA8nflH9Y3
-         jKBwLNinxEUZjoiI0rhtYJ2B4jT9nA4zh37BQ5/LvqGejhZxs8DtdvmA+BJfaK3IAlKP
-         ghxOxvyVojRLK71zymNR1plL09lvWuig6KvonRqiyVMTCi0ouNEPbWp+z8v+Dvn8xSmK
-         obTwrCQst1BLtkPzei2zdWhUInTC6ZOCrjo03jnkY57mD1P3UWx81UuW06R3fL1RwpPF
-         6mEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794419263; x=1795024063;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Cavo6rumtYx83DhhSgHjGqxw295JLU9mSeXiMoOdbTo=;
-        b=0IMp1sSixr8ZPpPxaExzV9tHkt/yCX7iTdOpMuGA12w5Lm3g8t3rCWVVvXKFLrsGwx
-         +q+zhM+aN6FnLRLdW+DcAw4t4+KV5f5wPdVYO0bVFVklwBuk8/9HVm+qh6kYLAQrXYzW
-         NQL1brFUVR9BlhtZU8xjWRRv/oTwLRuGKDlqOCJcexG7UaW1RnrlJmMkKuYGK7QUaufd
-         LMNRRwC9nvCP3qo0n6iOgjjUklYwLANM8tzRynnGhiF7vZF5cB3tsDXvIsBrwAcO3B/L
-         lxZWP/AfoiExFt3LQlgPaYbDzTbmpdA1exOmws1gxr+cLJo5EpIEqRVsNOlElyL8H9z8
-         WTTQ==
-X-Gm-Message-State: APuU4Z+7k3kFHPf1tok91st2Q1pRUs7cCm7VXG0rrJBu46XZCRfQz9KX
-	tkTakr6EmARBf80SLA/3iRbqJJ8hU7hm9NtlpGXKaeKDWPSa3Z7d8gKL5J8NeApkMcY=
-X-Gm-Gg: AYBFou2FLK7cGesJlSXWcWrdWjOfhIXxDipvV6rOBCH8PPUB6WiJbMFqvK5oNX4Rvwk
-	CMFt3N8nGoxIZbfZcC9qlSl9IwipcJm7VYZiArgjwTEcYMJcoZuokp0JUVFiMYgSUkwoABjaYVS
-	ij02WKe7A2igCejJoU2SPONTks1BughggINnDTahwJ6eyT7PMcrvqdD5HK3FPYIggBwrewT+uZA
-	m/CRXwguAXXU1l5ogFOH/WmjbUqSyoCIOXS9HW6OPmOIDt6Wi+Z4+POFcJrDRoAfPhGbsUx/aID
-	2O1hxjmLN3S9xXN41GGAr6H8HZ+aao3vjdMNky5iC9p9h94YDvRpFmLNUXjABJCZKy4Fin798GC
-	TjJ7z55FzHsHVQDRypo7m9EVAlYPd/PNcywSfQwi66f3TnU++u+8sORTWcigdIYE2LTq0Md7D43
-	+FHwZqL7BBr7clv7njpSOJonKkqZyAGMLnFsruHKDV+LE2msP/bWpOvJosxJYufwJ1fYLCN/SJ/
-	3sBsBI0gOjufPzN1S+1Ye+ac6zCWyVukjF2IhhQeKXqmi+5It6lJysTto8xxibLRm85moSrBERV
-	Q26cq6Cn7EHImEbdFvblVRk/fEEnWEZRwVyMSRfZjxRm9T3eQ6p+Fg==
-X-Received: by 2002:a05:600c:3f07:b0:4a5:87a:50ba with SMTP id 5b1f17b1804b1-4ba0938a6a7mr55235815e9.33.1794419263442;
-        Wed, 11 Nov 2026 09:47:43 -0800 (PST)
-Received: from localhost.localdomain ([2001:af0:8000:1409:193:86:92:181])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4e2593e4sm5375895e9.5.2026.11.11.09.47.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 09:47:43 -0800 (PST)
-Date: Wed, 11 Nov 2026 18:47:41 +0100
-From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
-To: Joanne Koong <joannelkoong@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
-	yosry@kernel.org, shakeel.butt@linux.dev, hannes@cmpxchg.org, mhocko@kernel.org, 
-	roman.gushchin@linux.dev, muchun.song@linux.dev, nphamcs@gmail.com, 
-	chengming.zhou@linux.dev, sj@kernel.org, david@kernel.org, ljs@kernel.org, 
-	linux-mm@kvack.org, damon@lists.linux.dev, tj@kernel.org
-Subject: Re: [PATCH v2 2/4] mm: memcg: read root lruvec stats from the node
- counters
-Message-ID: <avSqMxGjwYPrQLlV@localhost.localdomain>
-References: <20261110015321.611093-1-joannelkoong@gmail.com>
- <20261110015321.611093-3-joannelkoong@gmail.com>
- <sashiko-outbox-206041@kernel.org>
- <CAJnrk1aQrRE78wqd2yZWS2Sk8MiCHd9x0dveZBh5LHE5w75nkg@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=NiUBiJEr
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ABFE6WK4004915;
+	Wed, 11 Nov 2026 18:01:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=xkKB/6JlXiA5b+HTPJzwSIjwVffaKz
+	mj2FfhyQqfzds=; b=NiUBiJErtIDXwq9hJTdd2COZ8mEtzQxAHRI7rXgS/lBqQg
+	QSBgENxa7WaxfD73IPTKwiBzaAd1VDpsTDh1TxH2dGF0LYH++KNA0bM6zZAbTvnr
+	tsN7GNzr4LQWAxXspUtJw82jB43zZ93RAKqsR/BnOMrxzq/BqAxPbRKfdFNIc6aM
+	JvNAlRSso9CMvJREEsKdm0wECPWiddOae6SmDCUDpWk/O4mglwG9sPF9hHvJD2h/
+	rrd1n0LBvCcRKB/UWAIq+D2nhK41vBz2MGmBYuuejkb042VofXvqtpQPGdNinN47
+	qqHmKxS6UQWmEjG2HLDj1tPk4W/TRjnHIHqwZkGA==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsuntbtdw-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Wed, 11 Nov 2026 18:01:32 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6ABF4vKw3451767;
+	Wed, 11 Nov 2026 18:01:31 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hv3325j2k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Nov 2026 18:01:31 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
+	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6ABI1V0a35979804
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 11 Nov 2026 18:01:31 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3840C58059;
+	Wed, 11 Nov 2026 18:01:31 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E0C7758017;
+	Wed, 11 Nov 2026 18:01:30 +0000 (GMT)
+Received: from e (unknown [9.61.143.75])
+	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Wed, 11 Nov 2026 18:01:30 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v18 13/13] scsi: ibmvfc: handle extended FPIN events
+In-Reply-To: <sashiko-outbox-199829@kernel.org> (sashiko-bot@kernel.org's
+	message of "Thu, 05 Nov 2026 19:15:32 +0000")
+References: <20261105-ibmvfc-fpin-support-v18-0-d683b74736a3@linux.ibm.com>
+	<20261105-ibmvfc-fpin-support-v18-13-d683b74736a3@linux.ibm.com>
+	<sashiko-outbox-199829@kernel.org>
+Date: Wed, 11 Nov 2026 12:01:30 -0600
+Message-ID: <87fqx7b62t.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,138 +93,333 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJnrk1aQrRE78wqd2yZWS2Sk8MiCHd9x0dveZBh5LHE5w75nkg@mail.gmail.com>
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTExMDA3MCBTYWx0ZWRfXzXHk98NfOJ3b
+ frXVf0PN6CTc2+2LRvEkJgPqwcXl/jEYIq8ew33+bSjS5FOTehJ0KTPuEuet9JcBxMUkhNoB1pn
+ OA0rmlYj2ZysWZE6ZgL+ncfxcGOPz4yohWw5lsST2z32cCAghyarLCGI03jqozUKUU/qkUGuQLR
+ XZBnL4oCecEThfERoYlHa9LH/i3S45kK3odDgU8yTOqwQ99EuybmZnq+M98/dYePgSM6ffyJMi0
+ MDbJAefhEO/RqxOYYkm5jAvVEgJv0oCjv/z7Xh24zv/dLq7sWFyl+nNXGckFt5exqe3WEx19mYD
+ zDmFVORMD9chlKkGDIGOzHSM3A2VMgMoxwksRb56yDaoS4To1MliIElbDFGFz5Or9ZyOLIYNqAu
+ hmCHVDNAeACNgrw6FWEfEt6fBvxaS76lszah4c4lUVX3xQLxF+UB/sa6I5UxQpHFpYAF/SCYH2s
+ nI1S7cqSsrjv+WbbSUQ==
+X-Proofpoint-ORIG-GUID: GLEtfslZ1TOJq0BkFglbT3aWs49ZoZXc
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTExMDA3MCBTYWx0ZWRfX1U/ERD9/hqmZ
+ EotcaejHVZW4n+F965K8AFpo64SIyG1satiyFVlYWl4rblsJ38CVlWGjVlQ9jujcPtn7yrXNSf9
+ nTuYpCoS06MMknw5bnz/DAFF5hQRVqo=
+X-Authority-Analysis: v=2.4 cv=euZKXYpX c=1 sm=1 tr=0 ts=6af4ad7c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=bHtrxmW-Cm59waH3iFsA:9
+X-Proofpoint-GUID: GLEtfslZ1TOJq0BkFglbT3aWs49ZoZXc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-11_04,2026-11-11_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 suspectscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611110070
 
-On Tue, Nov 10, 2026 at 03:10:54PM -0800, Joanne Koong <joannelkoong@gmail.com> wrote:
-> On Mon, Nov 9, 2026 at 6:23 PM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
-> > - [Medium] mm: memcg: node_stat_includes_unaccounted() omits file and
-> >   writeback stats
-> > --
-> >
-> > commit d2ba314724a8ba015e3bf2a30f155f1beba25a8c
-> > Author: Joanne Koong <joannelkoong@gmail.com>
-> >
-> > mm: memcg: read root lruvec stats from the node counters
-> >
-> > This commit changes lruvec_page_state() and lruvec_page_state_monotonic()
-> > to read per-node vmstat counters instead of rstat values for the root
-> > memcg when querying stats that only track memory charged to a memcg.
-> >
-> > > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-> > > index 1ebc9330aeae5..2575bf2ba0ea6 100644
-> > > --- a/mm/memcontrol.c
-> > > +++ b/mm/memcontrol.c
-> >
-> > [ ... ]
-> >
-> > > @@ -504,13 +511,52 @@ struct lruvec_stats {
-> > >       long state_pending[NR_MEMCG_NODE_STAT_ITEMS];
-> > >  };
-> > >
-> > > +/*
-> > > + * Whether the node counter for @idx can also count memory that isn't charged
-> > > + * to a memcg (eg kernel memory that isn't accounted). For these stats, the
-> > > + * node counter can be larger than the root memcg's value, so the root memcg
-> > > + * has to read its rstat value instead.
-> > > + */
-> > > +static bool node_stat_includes_unaccounted(enum node_stat_item idx)
-> > > +{
-> > > +     switch (idx) {
-> > > +     case NR_SLAB_RECLAIMABLE_B:
-> > > +     case NR_SLAB_UNRECLAIMABLE_B:
-> > > +     case WORKINGSET_NODERECLAIM:
-> > > +     case NR_VMALLOC:
-> > > +     case NR_KERNEL_STACK_KB:
-> > > +     case NR_PAGETABLE:
-> > > +     case NR_SECONDARY_PAGETABLE:
-> > > +#ifdef CONFIG_HUGETLB_PAGE
-> > > +     case NR_HUGETLB:
-> > > +#endif
-> > > +             return true;
-> > > +     default:
-> > > +             return false;
-> > > +     }
-> > > +}
-> >
-> > [Severity: Medium]
-> > Should node_stat_includes_unaccounted() also include NR_FILE_PAGES,
-> > NR_FILE_MAPPED, and NR_WRITEBACK?
-> >
-> > For NR_FILE_PAGES, swapcache operations such as __swap_cache_add_folio(),
-> > __swap_cache_del_folio(), and __swap_cache_alloc() update NR_FILE_PAGES
-> > only in the node counter while accounting swapcache in the lruvec under
-> > NR_SWAPCACHE:
-> >
-> > mm/swap_state.c:__swap_cache_add_folio() {
-> >         ...
-> >         node_stat_mod_folio(folio, NR_FILE_PAGES, nr_pages);
-> >         lruvec_stat_mod_folio(folio, NR_SWAPCACHE, nr_pages);
-> >         ...
-> > }
-> >
-> > Reading node_page_state(pgdat, NR_FILE_PAGES) for the root lruvec
-> > therefore includes all swapcache pages, which inflates the "file" counter
-> > in the root cgroup's memory.numa_stat (double-counting swapcache alongside
-> > "swapcached") and causes it to diverge from memory.stat even after a
-> > flush.
-> >
-> > Similarly, __folio_mod_stat() -> lruvec_stat_mod_folio() updates the node
-> > NR_FILE_MAPPED counter without updating memcg rstat whenever an uncharged
-> > folio (folio_memcg(folio) == NULL, such as a driver mapping or a
-> > root-cgroup __GFP_ACCOUNT kernel folio) is mapped into userspace, and
-> > nfs_folio_mark_unstable() and nfs_folio_clear_commit() update
-> > NR_WRITEBACK only in the node counter for unstable NFS pages awaiting
-> > server COMMIT.
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20261110015321.611093-1-joannelkoong@gmail.com?part=2
-> 
-> Thanks, this is a good point about the folio stats.
-> 
-> Hmm... I wonder if we should go with an allowlist instead of a
-> denylist. The allowlist is longer (31 stats vs 11) but would be more
-> resilient to failures (a stat missing from the allowlist just reads
-> the rstat value whereas a stat missing from the denylist will silently
-> report the wrong value) for any stats added in the future. Any
-> thoughts?
+sashiko-bot@kernel.org writes:
 
-I agree the opposite predicate would be more robust and potentially
-easier to review (review only the _listed_ cases, not the "unknown"
-complement).
+>>     scsi: ibmvfc: handle extended FPIN events
+>>     
+>>     Implement support for extended FPIN messages received via the
+>>     asynchronous sub-queue, completing full FPIN functionality.
+>>     
+>>     Extended FPIN messages provide more detailed information about fabric
+>>     events compared to basic FPIN messages, including specific event types,
+>>     modifiers, thresholds, event counts, and severity.
+>>     
+>>     Add ibmvfc_ext_fpin_to_desc() to convert extended FPIN messages from
+>>     async sub-queue format to fc_els_fpin structures with complete descriptor
+>>     information. Thread detecting_wwpn (fc_host_port_name()) through
+>>     ibmvfc_ext_fpin_to_desc() to ibmvfc_common_fpin_to_desc() consistent
+>>     with ibmvfc_basic_fpin_to_desc() and ibmvfc_full_fpin_to_desc(). Update
+>>     ibmvfc_process_async_work() and ibmvfc_handle_async() to zero node_name
+>>     and dispatch to ibmvfc_ext_fpin_to_desc() when the
+>>     IBMVFC_ASYNC_IS_FPIN_EXT flag is set.
+>>     
+>>     Extend ibmvfc_common_fpin_to_desc() with a severity parameter so that
+>>     extended FPIN events can propagate the severity value from the VIOS when
+>>     IBMVFC_FPIN_SEVERITY_VALID is set, rather than always defaulting to
+>>     FPIN_CONGN_SEVERITY_WARNING. Severity is only carried by the congestion
+>>     descriptor used for IBMVFC_AE_FPIN_LINK_CONGESTED and
+>>     IBMVFC_AE_FPIN_CONGESTION_CLEARED; the peer congestion and link
+>>     integrity descriptors have no severity field, so a severity supplied
+>>     for the other FPIN statuses is ignored.
+>>     
+>>     Set the IBMVFC_CAN_HANDLE_FPIN_EXT capability bit (0x800) during login
+>>     to inform the VIOS that the client can process extended FPIN messages.
+>>     Add the IBMVFC_CAN_CLS_CRQ_PRE_DMP capability bit (0x400) definition
+>>     for the intervening protocol-defined capability. Also add the
+>>     IBMVFC_SUPPORT_FPIN_EXT response capability bit definition used to gate
+>>     extended FPIN processing.
+>>     
+>>     In ibmvfc_process_async_work(), use goto to bypass the generic "FPIN
+>>     event received, unable to process" error message when a more specific
+>>     diagnostic has already been emitted for invalid or unsupported extended
+>>     FPIN events.
+>>     
+>>     Add a KUnit test, ibmvfc_extended_fpin_test(), that sends extended FPIN
+>>     events through ibmvfc_process_async_work() for each FPIN status with
+>>     the event types valid for that status, setting only
+>>     IBMVFC_FPIN_EVENT_TYPE_VALID, and checks that the matching fc_host or
+>>     rport FPIN statistic is incremented. The test is skipped if no ibmvfc
+>>     device, online target rport, or IBMVFC_SUPPORT_FPIN_EXT capability is
+>>     available. It does not exercise the modifier, threshold, severity or
+>>     event count fields, nor the error paths for a missing
+>>     IBMVFC_FPIN_EVENT_TYPE_VALID flag or an unadvertised
+>>     IBMVFC_SUPPORT_FPIN_EXT capability.
+>>     
+>>     Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+>>     Signed-off-by: Dave Marquardt <davemarq@linux.ibm.com>
+>
+> [Severity: Low]
+> This isn't a bug in the code, but does the commit message match the changes
+> in this patch?
+>
+> The third paragraph states that this patch updates
+> ibmvfc_process_async_work() and ibmvfc_handle_async() to zero node_name when
+> IBMVFC_ASYNC_IS_FPIN_EXT is set, however ibmvfc_handle_async() is untouched
+> here and zeroing node_name in both functions was already introduced in
+> commit 6abed589f0fb ("scsi: ibmvfc: extend async event handlers for async
+> sub-CRQ events").
+>
+> Conversely, setting severity = 0 for IBMVFC_AE_FPIN_PORT_CLEARED and
+> IBMVFC_AE_FPIN_CONGESTION_CLEARED in ibmvfc_basic_fpin_to_desc() and
+> ibmvfc_full_fpin_to_desc() is done in this commit, whereas it was described
+> in the commit message for 6abed589f0fb.
 
-Also, instead of
+Right on both counts. node_name zeroing is already added in patch 9, and
+patch 13 doesn't change ibmvfc_handle_async(). severity = 0 handling is
+implemented in patch 13.
 
-       if (something && !mem_cgroup_is_root(eviction_memcg))
-                mem_cgroup_flush_stats_ratelimited(eviction_memcg);
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index 6e1ecf6891c71..bc65c4d9cb7ec 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>
+> [ ... ]
+>
+>> @@ -3507,7 +3517,48 @@ ibmvfc_full_fpin_to_desc(struct ibmvfc_async_sub_crq *ibmvfc_fpin,
+>>  	return ibmvfc_common_fpin_to_desc(ibmvfc_fpin->fpin_status, detecting_wwpn,
+>>  					  cpu_to_be64(wwpn), type, cpu_to_be16(0),
+>>  					  cpu_to_be32(IBMVFC_FPIN_DEFAULT_EVENT_THRESHOLD),
+>> -					  cpu_to_be32(1));
+>> +					  cpu_to_be32(1), severity);
+>> +}
+>> +
+>> +/**
+>> + * ibmvfc_ext_fpin_to_desc(): allocate and populate a struct fc_els_fpin struct
+>> + * containing a descriptor.
+>> + * @ibmvfc_fpin:	Pointer to async subq FPIN data
+>> + * @detecting_wwpn:	WWPN of the local port that detected the event (big-endian)
+>> + * @wwpn:		attached port WWPN (host-endian)
+>> + *
+>> + * Allocate a struct fc_els_fpin containing a descriptor and populate
+>> + * based on data from *ibmvfc_fpin. The caller must have verified that
+>> + * IBMVFC_FPIN_EVENT_TYPE_VALID is set in the FPIN data flags.
+>> + *
+>> + * Return:
+>> + * NULL     - unable to allocate structure
+>> + * non-NULL - pointer to populated struct fc_els_fpin
+>> + */
+>> +static struct fc_els_fpin *
+>> +ibmvfc_ext_fpin_to_desc(struct ibmvfc_async_subq_fpin *ibmvfc_fpin,
+>> +			__be64 detecting_wwpn, u64 wwpn)
+>> +{
+>> +	u8 flags = ibmvfc_fpin->fpin_data.flags;
+>> +	__be32 threshold = cpu_to_be32(IBMVFC_FPIN_DEFAULT_EVENT_THRESHOLD);
+>> +	__be16 modifier = 0;
+>> +	__be32 count = cpu_to_be32(1);
+>> +	__be16 type = ibmvfc_fpin->fpin_data.event_type;
+>> +	__u8 severity = FPIN_CONGN_SEVERITY_WARNING;
+>> +
+>> +	if (flags & IBMVFC_FPIN_MODIFIER_VALID)
+>> +		modifier = ibmvfc_fpin->fpin_data.event_type_modifier;
+>> +	if (flags & IBMVFC_FPIN_THRESHOLD_VALID)
+>> +		threshold = ibmvfc_fpin->fpin_data.event_threshold;
+>> +	if (flags & IBMVFC_FPIN_EVENT_COUNT_VALID)
+>> +		count = ibmvfc_fpin->fpin_data.event_data.event_count;
+>> +	if (flags & IBMVFC_FPIN_SEVERITY_VALID)
+>> +		severity = ibmvfc_fpin->fpin_data.event_data.severity;
+>> +
+>> +	return ibmvfc_common_fpin_to_desc(ibmvfc_fpin->fpin_status, detecting_wwpn,
+>> +					  cpu_to_be64(wwpn), type,
+>> +					  modifier, threshold, count,
+>> +					  severity);
+>>  }
+>
+> [Severity: Medium]
+> Should severity in ibmvfc_ext_fpin_to_desc() default to 0 for cleared
+> congestion events when IBMVFC_FPIN_SEVERITY_VALID is not set?
+>
+> In ibmvfc_basic_fpin_to_desc() and ibmvfc_full_fpin_to_desc(), this patch
+> sets severity = 0 for IBMVFC_AE_FPIN_PORT_CLEARED and
+> IBMVFC_AE_FPIN_CONGESTION_CLEARED:
+>
+> 	case IBMVFC_AE_FPIN_PORT_CLEARED:
+> 	case IBMVFC_AE_FPIN_CONGESTION_CLEARED:
+> 		type = cpu_to_be16(FPIN_CONGN_CLEAR);
+> 		severity = 0;
+> 		break;
+>
+> In ibmvfc_ext_fpin_to_desc(), severity is initialized to
+> FPIN_CONGN_SEVERITY_WARNING and is only updated if
+> IBMVFC_FPIN_SEVERITY_VALID is set in flags. When an extended FPIN event for
+> IBMVFC_AE_FPIN_CONGESTION_CLEARED (or with event_type FPIN_CONGN_CLEAR) is
+> received without the optional IBMVFC_FPIN_SEVERITY_VALID flag (as in
+> ibmvfc_extended_fpin_test()), cdesc->severity in the ELS FPIN descriptor is
+> populated with FPIN_CONGN_SEVERITY_WARNING instead of 0.
 
-I'd consider
+I agree. In v19, for IBMVFC_AE_FPIN_PORT_CLEARED and
+IBMVFC_AE_FPIN_CONGESTION_CLEARED, ibmvfc_ext_fpin_to_desc() will
+default severity to 0, like the basic and full conversion routines, and
+only used the VIOS-provided severity when IBMVFC_FPIN_SEVERITY_VALID is
+set.
 
-       if (something)
-                mem_cgroup_flush_stats_ratelimited_opt(eviction_memcg,
-		1UL<<NR_ACTIVE_ANON|
-		1UL<<NR_INACTIVE_ANON| ... );
+>> @@ -3624,14 +3681,30 @@ VISIBLE_IF_KUNIT void ibmvfc_process_async_work(struct work_struct *work)
+>>  		goto free;
+>>  	}
+>>  
+>> -	if (crq)
+>> +	if (crq) {
+>>  		fpin = ibmvfc_basic_fpin_to_desc(crq,
+>>  				cpu_to_be64(fc_host_port_name(vhost->host)),
+>>  				tgt->wwpn);
+>> -	else
+>> -		fpin = ibmvfc_full_fpin_to_desc(subq,
+>> -				cpu_to_be64(fc_host_port_name(vhost->host)),
+>> -				tgt->wwpn);
+>> +	} else {
+>> +		sqfpin = (struct ibmvfc_async_subq_fpin *)subq;
+>> +		if ((subq->flags & IBMVFC_ASYNC_IS_FPIN_EXT) == 0) {
+>> +			fpin = ibmvfc_full_fpin_to_desc(subq,
+>> +					cpu_to_be64(fc_host_port_name(vhost->host)),
+>> +					tgt->wwpn);
+>> +		} else if (!(sqfpin->fpin_data.flags & IBMVFC_FPIN_EVENT_TYPE_VALID)) {
+>> +			dev_err_ratelimited(vhost->dev,
+>> +					    "Invalid extended FPIN event received\n");
+>> +			goto skip_generic_error;
+>> +		} else if (!ibmvfc_check_caps(vhost, IBMVFC_SUPPORT_FPIN_EXT)) {
+>> +			dev_err_ratelimited(vhost->dev,
+>> +					    "Unexpected extended FPIN event received\n");
+>> +			goto skip_generic_error;
+>> +		} else {
+>> +			fpin = ibmvfc_ext_fpin_to_desc(sqfpin,
+>> +					cpu_to_be64(fc_host_port_name(vhost->host)),
+>> +					tgt->wwpn);
+>> +		}
+>> +	}
+>
+> [Severity: High]
+> What happens in ibmvfc_process_async_work() when a host-scope FPIN event
+> (IBMVFC_AE_FPIN_LINK_CONGESTED or IBMVFC_AE_FPIN_CONGESTION_CLEARED) arrives
+> on the async sub-CRQ with wwpn == 0 or with a WWPN that does not match a
+> target in scsi_scrqs or nvme_scrqs?
+>
+> Earlier in ibmvfc_process_async_work(), when aw->event.type ==
+> IBMVFC_ASYNC_CRQ_SUB and IBMVFC_ASYNC_IS_FPIN_EXT is set, scsi_id,
+> node_name, and assoc_id are all set to 0, while crq remains NULL:
+>
+> 	if (aw->event.type == IBMVFC_ASYNC_CRQ_SUB) {
+> 		subq = &aw->event.subq;
+> 		scsi_id = 0;
+> 		wwpn = subq->wwpn;
+> 		fpin_status = subq->fpin_status;
+> 		if (subq->flags & IBMVFC_ASYNC_ID_IS_ASSOC_ID) {
+> 			node_name = 0;
+> 			assoc_id = subq->id.assoc_id;
+> 		} else if (subq->flags & IBMVFC_ASYNC_IS_FPIN_EXT) {
+> 			node_name = 0;
+> 			assoc_id = 0;
+> 		} else {
+> 			node_name = subq->id.node_name;
+> 			assoc_id = 0;
+> 		}
+> 	}
+>
+> If wwpn is also 0, the zero-identifier check right after that is taken:
+>
+> 	if (!scsi_id && !wwpn && !node_name && !assoc_id) {
+> 		if (fpin_status == IBMVFC_AE_FPIN_LINK_CONGESTED ||
+> 		    fpin_status == IBMVFC_AE_FPIN_CONGESTION_CLEARED)
+> 			fpin = ibmvfc_basic_fpin_to_desc(crq,
+> 					cpu_to_be64(fc_host_port_name(vhost->host)), 0);
+> 		goto send_fpin;
+> 	}
+>
+> Here crq is NULL, so ibmvfc_basic_fpin_to_desc(crq, ...) dereferences
+> crq->fpin_status on a NULL pointer.
+>
+> In addition, if wwpn is non-zero (for example, set to the host's own WWPN or
+> a target whose rport/nvme_remote_port is no longer present) so
+> ibmvfc_find_target() returns NULL, the fallback path only calls
+> ibmvfc_basic_fpin_to_desc() or ibmvfc_full_fpin_to_desc():
+>
+> 	} else {
+> 		spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+> 		if (fpin_status == IBMVFC_AE_FPIN_LINK_CONGESTED ||
+> 		    fpin_status == IBMVFC_AE_FPIN_CONGESTION_CLEARED) {
+> 			if (crq)
+> 				fpin = ibmvfc_basic_fpin_to_desc(crq,
+> 						cpu_to_be64(fc_host_port_name(vhost->host)), 0);
+> 			else
+> 				fpin = ibmvfc_full_fpin_to_desc(subq,
+> 						cpu_to_be64(fc_host_port_name(vhost->host)), 0);
+> 			goto send_fpin;
+> 		}
+>
+> Because IBMVFC_ASYNC_IS_FPIN_EXT and ibmvfc_ext_fpin_to_desc() are only
+> handled on the tgt != NULL path, shouldn't the zero-identifier and
+> target-not-found host-scope paths also handle subq and
+> IBMVFC_ASYNC_IS_FPIN_EXT?
 
-and collect the exceptional handling in memcontrol.c:
+The zero identifier branch will be addressed in patch 9 in the next
+revision. You're right that the host-scop paths only use the full
+helper. I'll fix this in v19.
 
-        void mem_cgroup_flush_stats_ratelimited_opt(struct mem_cgroup *memcg, unsigned long needs)
-        {
-                if ((needs & ~node_stat_equivalent) == 0 &&
-                        mem_cgroup_is_root(mem_cgroup))
-                        return;
-		...
+>>  send_fpin:
+>>  	if (fpin) {
+>> @@ -3642,6 +3715,7 @@ VISIBLE_IF_KUNIT void ibmvfc_process_async_work(struct work_struct *work)
+>>  	} else
+>>  		dev_err_ratelimited(vhost->dev, "FPIN event received, unable to process\n");
+>>  
+>> + skip_generic_error:
+>>  	if (tgt)
+>>  		kref_put(&tgt->kref, ibmvfc_release_tgt);
+>>   free:
+>
+> [Severity: Critical]
+> Can tgt be uninitialized when reaching kref_put(&tgt->kref,
+> ibmvfc_release_tgt) in ibmvfc_process_async_work()?
+>
+> At the top of ibmvfc_process_async_work(), tgt is declared without being
+> initialized to NULL:
+>
+> 	struct ibmvfc_target *tgt;
+>
+> When all target identifiers are zero (!scsi_id && !wwpn && !node_name &&
+> !assoc_id, such as for host-scope FPIN events or the zero-identifier test
+> cases in ibmvfc_async_fpin_test()), the function jumps to send_fpin before
+> tgt is assigned by ibmvfc_find_target():
+>
+> 	if (!scsi_id && !wwpn && !node_name && !assoc_id) {
+> 		if (fpin_status == IBMVFC_AE_FPIN_LINK_CONGESTED ||
+> 		    fpin_status == IBMVFC_AE_FPIN_CONGESTION_CLEARED)
+> 			fpin = ibmvfc_basic_fpin_to_desc(crq,
+> 					cpu_to_be64(fc_host_port_name(vhost->host)), 0);
+> 		goto send_fpin;
+> 	}
+>
+> After send_fpin, execution falls through to skip_generic_error and checks
+> if (tgt) kref_put(&tgt->kref, ibmvfc_release_tgt) using the uninitialized
+> tgt pointer on the stack. Should tgt be initialized to NULL at declaration?
 
-This way in-kernel flushers will be expicitly annotated so that
-potential mismatch is more obvious to spot (and it adds possibility of
-future optimizations).
+This will be fixed in patch 6 by initializing tgt and fpin to NULL, and
+the NULL crq issue will be fixed in patch 9.
 
-(This is all only a concept, it may turn out uglier when worked out to
-details...)
-
-HTH,
-Michal
+-Dave
