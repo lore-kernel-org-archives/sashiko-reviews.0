@@ -1,82 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794370811;
-	b=OOhJA/faAAiZwPgex8X60LZEojuMeiHhUqvgJ+dDXzUoXnsIUuxSSS31+Qg5I8PdTXFB
-	 GJxLSEzx3R6o3j2BxokMzVj9rmr+o6UarIP0M2kOX/Ys1Fil9/A1UUb1zZPdoIOZwy4PC
-	 GTxKCIKaM7poXiUrCZFWi5nuAPTMRPilCIP74FG7zB1+Kjsf7hn9oiw4Cip2yBEGLAxDS
-	 s86QV0F4cl0dmAxv8nrya0y+fj8Z4J6EP/4ikujK1Ez4fX+xtOkuGhQEWEgZ127qsnDQ9
-	 FnGvp/Dtqfo8HkncEhFZ9lFyNhV8q0qtzKtX1kaAVtD86qf4DvWAESWqXUw67zycZyw==
+	t=1794371090;
+	b=35Lm+OpqQcTd+Nxpedg2CbjhJCxke2ockW1kCM87Lw4Cx/QzMuYYBk/spiRVqeWIN24L
+	 bx/1h0IJzPNtAr9hnC5iarkzb9GQld2QcN4N7pS4cS6xF+P4D87GUPDEBQfCvVKyOIAVj
+	 qpw+3e9Mkp1Q+Li2IVZ77I47WBkW6IxQnzCFhZDzY+grlLg8a0Ha/wYVkm0WAdouJZPG4
+	 VU0BZpG1ScB7vXK5dM1NBkYIIKkvyOlHLl2wkU3NBL4ASaLexu1tmlRS3vn4UnRTEe40j
+	 SdbQEeOHHsZNG3VXrAJx7u2BVAEydUBS0cVPMxTyJsBWE3spsiqWDgGKHg0npHCLpFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794370811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794371090;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=tUypj32nZSwBas8qX97kQX7vq5hG+6Yam8/Va9N0Am4=;
-	b=VgUjRoxTbZAx4Owd33XxP21krNhiFttp4pXeWtXONi7M3TwRyzz+gmmVVfNerAzbUOzX
-	 tmn95eR9fRNyC/8u2pcLpr9kF4cPzxl8TAgTMXyC+jD4xJhnflbfNfFfz2foykbkbpxGE
-	 t6Gvh5o2r9exh3kIgvJ+OYMT69bdi/8b8KHTzdMZZvILcBpZw3RrvyTEBg5tq0ME9ql36
-	 y53WVfk629IYY8uMaqXF6WTgcP8toeddyMdNk45hhyvR6O+FyNa/0vX9VWSOAUvUwLEVs
-	 j3MyjILx+0z2VVTkMFTOAARzDu74W43+bzXelYI+Tpk0ZVUVHC/acLZgBnWO0bJGgHg==
+	bh=5+PpphlpajmWTe2u74lHALG+B1qJVE8FkqGWsdeseUE=;
+	b=sonF0sfQg9XPXx/llrcW9BGwsHmoQK9Nt3OHXOcn0dC7o1uaMthQerZkiNhMsSR5wJfn
+	 GKQYmhRgPA6l1ksQLRSztNVu9REnkbJIFoRMOOZVZwgnVetocR8K9mPSYK+WUYgqOxsUO
+	 4cA+SqF93SlQ01fFPiJGk0ZlcoyX8/ByT6ItCvaHV0gkYg3QcmrXzA1961lpgSlr9K3EV
+	 tVYB6HQqrxNSO2z6l32J2USpgN4zpEw3MHKZ4KjfXsr2FzjOnbb62SehhGU4jr2XTJ1jI
+	 CjsI5Lv5SNELFW+fAesI8ow+f7uBBjCEu6p0fLN+CtyLmdXSrcc9gDOWR8s3PRB5M2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=chromium.org;
 	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=DuAb90Ve;
-	arc=none smtp.remote-ip=209.85.216.54
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=Ia1FKhjU;
+	arc=none smtp.remote-ip=209.85.216.52
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797B8606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 04:20:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 797B8606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1D7606A326
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 04:24:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC1D7606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=DuAb90Ve
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3b147e06befso1291600a91.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 20:20:11 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=Ia1FKhjU
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3ac91ac8924so1637580a91.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 20:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1794370811; x=1794975611; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1794371089; x=1794975889; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=tUypj32nZSwBas8qX97kQX7vq5hG+6Yam8/Va9N0Am4=;
-        b=DuAb90VeHrc+qtH8pge+G0aejfllD5jrMkLi84rI28ttRP25/FxzpBBqQGV1wkS9uH
-         GmiqRx8H/yLEbwXnslX1R+0t429ftQSP+JMeyI/vQ4/6rdk9tLhrlrNEpCREE5cAwQH9
-         8Jb7tiu2+dMq1a/1zAwsKOak/vuExB3bJfThE=
+        bh=5+PpphlpajmWTe2u74lHALG+B1qJVE8FkqGWsdeseUE=;
+        b=Ia1FKhjUg+oOcCHNXnPNsToLvJgzjiGjzt2P4dIqIE9TFL2SFBg/wOlKluyaT+3IXd
+         9iNDEZyRsNZRbrYY8MAvmEJEK0RwyIaDhLxLs19u/q79hAPZW/4L3cQcy06APlEcYcgf
+         oA/6ag2YOYAGVBpTf6c1KMKqum1hRC1cynTkA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794370811; x=1794975611;
+        d=1e100.net; s=20260707; t=1794371089; x=1794975889;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tUypj32nZSwBas8qX97kQX7vq5hG+6Yam8/Va9N0Am4=;
-        b=CT4WvVUZ5Ozq4boBvDoMTTlq0YMYlR9KSXlHbgTr/KXhf8POMfA45JkUWz+JptHAsX
-         uvvNNO5a01K0tbz0FB5jkzsQdw5vfd+QcYZlXjSkEzeWrflx9njA/ymnYAn0Zkp3YDch
-         LE6w+SrTbigxEFDILXojN3RWLVn2qxlDsOEnDpmHucXdOs1QJWL17Dui5Ypl+Uw5TIIm
-         8PHAFEwHe+/GEPNMchuafPTVV5TAEzfDOtvLv1gQqZZSzacHnpWFnOnMfsPejfrBuq8M
-         7ZBK3AHDOJ4LNLCrXwtow5v5dgUnCioutpZr8V+NMLLE1Lof6ievnCQFivqjKWO6MldZ
-         YC4A==
-X-Gm-Message-State: APuU4Z96NDEL9uCpCUSFwYAAOe0dWzXEZH2q9OLmLcMYvEs5NkXmT10r
-	xBagMy25tk1YKzeOL/A9XfBfHqpuijojZyL8/p3UJr/q4DQ7gZYGnvpkBypp7QoqIeyKy/Jsma7
-	7RqI=
-X-Gm-Gg: AYBFou3mb+H230BvtJI5Nb+iW4+fdzzszzAVJdy3Fnw8U6AAxWZqwhyVOxUDYZOPbv7
-	mzQHeZhO/RC21ACp75GxCWSYavIPprEho8voTIRBWN+i9FItWNR9LT4ySaH2sY/HQCo9cE4imi6
-	hWfAwkpqcbuumu0QmhTaF1tFIz+FkozOgBLDuYdLh24Rd7eFuG54dtymy4IPk6VkvEoO4oJEBAK
-	kSZrRz/+asKh/OnzyLUBWPwpzHf9EgKyu8XHRFPO2XUkiMWFQDmsjmKa6gObRIhd+vwmxaolPi/
-	zL71/vwGBfwr7ckuUYlUqVHm/njBIJXWm/oGh4k+yFRKki+yFsYSJMSAWJrhxiAb75BwrUJlVnH
-	SpWc9R0Sl8KNBkcosIFOEagsku6USSVfSNbNgqqpIiEU/26mMSmUY8dr7TjWk5a3Hb5ltf//H0x
-	9cR03ltF2ZT3BLXgUUqnVuodvQbuiI2DVCMKZjEAanJrSrsWZ/Vb1lVA6iAUcVJj7h+ZPDfYg7h
-	SkCam4MCRHhd2dzQCEb51f83isoH0pRKautxh+Raxwf734hwEPvz7TgZexesFZkrEOux5aj95Yj
-	fSuRfplEiItiUUXuGZGoirux3e+OmAEMOa10EEAZSFL8k7L6HgVkL7HrjgWq4rNrnvOE5w==
-X-Received: by 2002:a17:90b:37c3:b0:3ab:413:49bc with SMTP id 98e67ed59e1d1-3b182ee2462mr1396102a91.37.1794370810775;
-        Tue, 10 Nov 2026 20:20:10 -0800 (PST)
+        bh=5+PpphlpajmWTe2u74lHALG+B1qJVE8FkqGWsdeseUE=;
+        b=BAOpzPM5qujqXALyhycsCZ49vOy9/jZTNd/vSkz+A4WIGzZ0Tm/IL/JmaSTT+j34DU
+         CNgxLaEaXsnYHUsEWvF/HITPBb2UhthSSLcM5s2+aeeVriEigvyYoFlWLOpbi0JdzPNq
+         +z03NPWiGgiKJtaJQPaJXNJ/F1mDoywjD5tBB26X6Oq46SW84mYvyjil9XKK9Pt78QJM
+         NRkiu1WC4rxJK1ftxFE3YmrBF2G0wDuKRtg+N//dDA9g1X4xrNWlnYcNf1OABENCbmRp
+         lBQQffQtz7NYXW+iv4pWKuj+lm6K2cdr9mFuHaW3S16HiB99khN1WlQZiZAsSFy0+czO
+         cS+A==
+X-Gm-Message-State: APuU4Z9+9dfW8dDvwX/ps2Pmtuu/uD3zbtaUdWgmuNCZm08lO+DTCTZu
+	wqdIauBnxu42OkdB1fv/4Dxh9Xl6Sj6587r2H17fFObGFJ2eUaRZ5PiQ9VhbQ5xy4MLejXDXz8u
+	7x4s=
+X-Gm-Gg: AYBFou0weS+UAs5Qjok/+eyY6LzMJAQiiW2sH0NXkP/Qp5guHz1VTRF76wj6aR3CjHc
+	3s1A1+5KLLYOGc+Aw5/s8RUoYq9WUgStvWvyPQEYAeknk0ugkf1S2cXTc/8O2tb+kEBbifyH1qq
+	tVpyOrhehXtbhzQT+RLNNIGYP6sFqeFM5k9eMJAqWsGlhpWaN6Dm769fR+7VqT1WcRtBzWNeaYF
+	+GXWjEXVsjzzQu3C00Cfqcd+c5tlips0OO8bCfBM0h6Q2gpgKswJMn/muZMgsUPNitz8K6+IrHy
+	hfAwcfCgK26bJu3yFbbWlDvt+x5k26jtMFn92J5DRSuKT/vBGXckEzsJAmKivnmLJl4T9+X7Tnt
+	wWS5u6HQfHR/jL0FPOuryZvq/0kHghJUMlaTKqVwXPRigLugM10NOPmZtC1CArD0RlgvbFj3t5V
+	tqI28szpufzQ4kZRn1HLAtcYFiWK2Hwe+j8QEFetgjsExkcsMW8spPrSfj3if4vS7q9V1+uPJDd
+	AFpLguuBW2wzwXrE86C04NlThqkIWrBg7FikCHhUDKwPbC1QkPmFUf6VeqDxb5TZl7dFd+I1UuZ
+	giPOiCf7ZRKkfquFmAwehnoxsRDpMuuYAGV5tybhgkqIOHUf6J9NTBi1HQYaYo2pS0reVA==
+X-Received: by 2002:a17:90b:3c44:b0:3b0:d365:f8ed with SMTP id 98e67ed59e1d1-3b182efb65bmr1194697a91.21.1794371089135;
+        Tue, 10 Nov 2026 20:24:49 -0800 (PST)
 Received: from google.com ([2a00:79e0:2031:6:ad6a:b446:df00:78dc])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b17e0d0e16sm2532464a91.5.2026.11.10.20.20.08
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b17dfb7a84sm2353036a91.2.2026.11.10.20.24.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 20:20:10 -0800 (PST)
-Date: Wed, 11 Nov 2026 13:20:06 +0900
+        Tue, 10 Nov 2026 20:24:48 -0800 (PST)
+Date: Wed, 11 Nov 2026 13:24:44 +0900
 From: Sergey Senozhatsky <senozhatsky@chromium.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
@@ -84,12 +84,12 @@ Cc: Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Yosry Ahmed <yosry.ahmed@linux.dev>, Johannes Weiner <hannes@cmpxchg.org>, 
 	Brian Geffon <bgeffon@google.com>, Minchan Kim <minchan@kernel.org>, 
 	Richard Chang <richardycc@google.com>, linux-mm@kvack.org
-Subject: Re: [PATCH v2 05/11] zram: check mem_limit before allocating
- zsmalloc object
-Message-ID: <avPshTNHkZ5O64Xf@google.com>
+Subject: Re: [PATCH v2 08/11] zsmalloc: encode 1-based obj_idx so valid obj
+ is never 0
+Message-ID: <avPto_ATpOqET8af@google.com>
 References: <20261110054836.1515030-1-senozhatsky@chromium.org>
- <20261110054836.1515030-6-senozhatsky@chromium.org>
- <sashiko-outbox-207587@kernel.org>
+ <20261110054836.1515030-9-senozhatsky@chromium.org>
+ <sashiko-outbox-207590@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,33 +101,44 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-207587@kernel.org>
+In-Reply-To: <sashiko-outbox-207590@kernel.org>
 
 On (26/11/10 18:37), sashiko-bot@kernel.org wrote:
-[..]
-> [Severity: Low]
-> Can zram_can_store_page() return false when mem_limit is cleared to 0 at
-> runtime?
+> > @@ -169,9 +170,6 @@
+> >  static_assert(ZS_OBJ_IDX_BITS >= ZS_PAGES_PER_ZSPAGE_BITS,
+> >  	      "zsmalloc: ZS_MIN_ALLOC_SIZE would exceed ZS_MAX_ALLOC_SIZE");
+> >  
+> > -/* ZS_MIN_ALLOC_SIZE must be multiple of ZS_ALIGN */
+> > -#define ZS_MIN_ALLOC_SIZE \
+> > -	MAX(32, (ZS_MAX_PAGES_PER_ZSPAGE << PAGE_SHIFT >> ZS_OBJ_IDX_BITS))
+> >  /* each chunk includes extra space to keep handle */
+> >  #define ZS_MAX_ALLOC_SIZE	PAGE_SIZE
+> >  
+> > @@ -189,6 +187,11 @@ static_assert(ZS_OBJ_IDX_BITS >= ZS_PAGES_PER_ZSPAGE_BITS,
+> >   *  (reason above)
+> >   */
+> >  #define ZS_SIZE_CLASS_DELTA	(PAGE_SIZE >> CLASS_BITS)
+> > +#define _ZS_MIN_ALLOC_RAW \
+> > +	DIV_ROUND_UP(ZS_MAX_PAGES_PER_ZSPAGE << PAGE_SHIFT, ZS_OBJ_IDX_MASK)
+> > +#define ZS_MIN_ALLOC_SIZE \
+> > +	MIN(ZS_MAX_ALLOC_SIZE, \
+> > +	    MAX(32UL, ALIGN(_ZS_MIN_ALLOC_RAW, ZS_SIZE_CLASS_DELTA)))
+> >  #define ZS_SIZE_CLASSES	(DIV_ROUND_UP(ZS_MAX_ALLOC_SIZE - ZS_MIN_ALLOC_SIZE, \
+> >  				      ZS_SIZE_CLASS_DELTA) + 1)
 > 
-> The write path does not hold zram->dev_lock, while mem_limit_store()
-> updates zram->limit_pages under it.  Because zs_get_total_pages() is an
-> external call, the compiler reloads zram->limit_pages afterwards:
+> [Severity: Medium]
+> Should ZS_MIN_ALLOC_SIZE align _ZS_MIN_ALLOC_RAW to ZS_ALIGN instead of
+> ZS_SIZE_CLASS_DELTA?
 > 
-> CPU0                              CPU1
-> zram_write_page()
->   zram_can_store_page()
->     if (!zram->limit_pages)
->       /* sees non-zero limit */
->     zs_get_total_pages(...)
->                                   mem_limit_store()
->                                     zram->limit_pages = 0;
->     return pages <= zram->limit_pages;
->       /* pages <= 0 is false */
-> 
-> When at least one page is allocated in zram->mem_pool, disabling the limit
-> causes an in-flight write that was within the previous limit to fail with
-> -ENOMEM.  Reading zram->limit_pages once into a local variable with
-> READ_ONCE() avoids the second load.
+> Because _ZS_MIN_ALLOC_RAW uses DIV_ROUND_UP() with a non-zero numerator, it
+> is always at least 1.  On 16KB and 64KB page kernels, ZS_SIZE_CLASS_DELTA is
+> 64 and 256 respectively, so ALIGN(_ZS_MIN_ALLOC_RAW, ZS_SIZE_CLASS_DELTA)
+> rounds _ZS_MIN_ALLOC_RAW up to 64 or 256 and overrides the 32-byte floor in
+> MAX(32UL, ...), eliminating small size classes even when ZS_OBJ_IDX_MASK can
+> index 32-byte objects.  As noted in the comment above ZS_SIZE_CLASS_DELTA,
+> ZS_MIN_ALLOC_SIZE only needs to be a multiple of ZS_ALIGN.
 
-I guess I can READ_ONCE(), but this scenario is extremely unlikely.
-(I'm not even sure if anyone is using ->mem_limit.)
+Hmm need to think about it.
+
+Those min-size-classes are never used anyway, e.g. compressing 16KB to 64
+bytes is just not happening often enough (if ever).
