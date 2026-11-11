@@ -1,60 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=79.135.106.97
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794410275;
-	b=xbN6BV2OOWRbv31ICt4lioevZ4R4lhYHqE2DpeLW+pZJzmbKWXoX2rEdMM1Nc8M8vNIo
-	 eWKNOvJKKy7AqMIS0do+8bsGmkNguOH3AVBZhTOqQ82ykKKERUUMj8IJ5FOgg3J7atFZ3
-	 N9T41lRfAFUWeBsX+EK3hxEPbFPJTBN09OkHEuACQn2BSAH4j696h1Nm0uY0QnZNc65zD
-	 d91TvJjqqotAk/GbDE62L68WIFF1syW+RgJD4BXqTtsuZgJMW8ep2Wb6q3UY0JBsZnJpu
-	 uA6Qt1cPMnQqFwcVDeJbptWzNvMs/NGggI0lLqm2E4ZzgToqtHcZM2YMgpHRqVEo5hw==
+	t=1794410341;
+	b=2SY+XLE6KKONyLazlrP/R5TfZkR1NasHNRReJn+aoN9XZ9AfVYBBrHYc9YRIBDlKPCnV
+	 GlJU6uvqdh/reICITjj5Bos1qGSh00SLoUxV2RfOS96YeKzTAequTQmQytwDuzh6lStTZ
+	 dT8MMsSKrRLaaQ7CyWPBc+Q7ALX/vin7FK/Ga58q88sNt4wAWov5sIIf/poLT5biWjScj
+	 w1fcWzGuVDfEDPFwD8v6V42fNF0s+DH6rk0mSWnbgOV7R8BhDSLuqiXJfxphaTXhQ3aIc
+	 Vf1/2ISC4pOuwfXlsRXTHpUr2ddmOyYmFgnN7sh4N0ebhmFjQkbAKDwuDKwkqKpaJ3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794410275;
-	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
-	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Mi0v1lmmEqzU5bB2WTOYLc+GgpnTUYzvYcIj9//zMpM=;
-	b=jH/df19Yq/uzbCRpll63m9Rz8GtW6h8qOe6iSVFKN2Yl9cyB3R0Y7VLvmfrSBDUBtKpV
-	 1eiQeknL4WF14fC/iYwDOh3cm0TfehrvDywTTZh3zukQTM9Ljb2+iBKYOMELIrrQ6Pi4I
-	 Rt+9RTQzPscNBDY4Do36gsGr8s/gsVXj6kN6zC8NQbTG3N6S7E3MWgugbH56IxxFEGlRq
-	 1OZZXeefVjG0DtasGrhWyXs3es9uqBAZHtbrL2S4Yse+gbOQlQaX6lDqk3HXGtFFgGlx5
-	 r8y96WhZ1xgSwWVQ/VRuUE9VZP8dL+RPxSn6snDRzHebP03FM7s3Gt8n3XiR4wOy1RA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794410341;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=KRk3hY6OxrgIUUvXnGsk+3o0qrfqVOAaie3G63vpVoQ=;
+	b=3KmgNDJRaGphFVTrKRDs0ew9+ttouStzQWeZqFtVIJ4lWU5b3pmttWBKXA3aLs7VXTGY
+	 5n4eqxLOU6XVJS4pL90EpXxFzvNiCBLOb3yd9AsYGm2T4s+Ms8F7vIABbZYJYFZUCNMGY
+	 GcbnQnsNhSBCaaFaTd6h3Xab920iNG+aba8GCgKo2u0bsYcFGCJgYNwk4vgjZYtL2p3YN
+	 UUJxh3CFxrA8FRj+4DGi6dHOCnfK5YEKa7LEnTYr1x+IsO86qKtiSsg9T4C7vpGc03hzt
+	 Mr00ACN3HQnSd0L7AknADFSekyqTc7ZRsDXTQ4fVvL2PH7JQBi58kUadkUjut9Kw1og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=proton.me;
-	spf=pass smtp.mailfrom=proton.me;
-	dkim=pass header.d=proton.me header.i=@proton.me header.a=rsa-sha256 header.s=protonmail2 header.b=y7D3424g;
-	arc=none smtp.remote-ip=79.135.106.97
-Received: from mail-10697.protonmail.ch (mail-10697.protonmail.ch [79.135.106.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5977F606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:17:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5977F606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=QkPGJIg2;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4288D606A326
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:19:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4288D606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=proton.me header.i=@proton.me header.a=rsa-sha256 header.s=protonmail2 header.b=y7D3424g
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail2; t=1794410271; x=1794669471;
-	bh=Mi0v1lmmEqzU5bB2WTOYLc+GgpnTUYzvYcIj9//zMpM=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=y7D3424g3Z9N1Y8iLYWHFGw4KfoJ3ny7oKXZF8hLtvdBefL0KfXffzzwJ86lrTstj
-	 oc8HS0T1sx92vU4vWe6YTjjcY95DjwaOpjHR+uV/iEGIYfIOiJdVneGOG59CiThOjo
-	 E4YRZAtk/V0Q1bYUNdr55feAXdKIE01uyJw/3kEwyda4/J9pbJDwImPOhAhW4h0Ttz
-	 hSSfVe463CAHtz9qlsPiTMT/vtyaxs+nmeFjkcbUJVIuZONF2sj0kfi542HL3qZ7oU
-	 qGQYhuiORklpYLmBKasBtRO3IbPGlKI5zIg1kyYK7DDIkKhG2k6dbSu48MjHTSPUQY
-	 qXOe8M/qf9fUw==
-Date: Wed, 11 Nov 2026 15:17:49 +0000
-To: sashiko-reviews@lists.linux.dev
-From: Nordschamane <nordschamane1@proton.me>
-Cc: linux-sound@vger.kernel.org
-Subject: Re: [PATCH RFC v2] ALSA: pci: add analog support for ESI MAYA44e
-Message-ID: <UcT-nUWewZGHvjh7Ra2vOtMNCP8r2Ak9fGDeH47-EtQWRT0vC__sp2norUyN7cFUjOwnVM8t8k-_XNrDfYFV6jwxRP-TEWuUzP2gSYuryLo=@proton.me>
-In-Reply-To: <sashiko-outbox-208724@kernel.org>
-References: <20261111-codex-alsa-maya44e-v2-1-c5f94d722b54@proton.me> <sashiko-outbox-208724@kernel.org>
-Feedback-ID: 234176850:user:proton
-X-Pm-Message-ID: c77acffb4c6e53623573068f2ed3ed23b28806ef
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=QkPGJIg2
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 75D3B1576;
+	Wed, 11 Nov 2026 07:18:57 -0800 (PST)
+Received: from [10.43.20.72] (e126510-lin.lund.arm.com [10.43.20.72])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4F7853F632;
+	Wed, 11 Nov 2026 07:18:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1794410340; bh=K/XoUAuP8agS+YAJXtE2UoZzMy+glW6cZvjG+mAtTjI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=QkPGJIg2CJOeLzjtVDkULCNadPWNyrorR/1C3mAUX8c/pyOkkWvDHG9G3CGYEhMev
+	 qUJgES66VYZtNmeSHicJvJWPKlisEzf+05LgJxfpCQgOaimgsIvi/LnEu/6LHVJoQQ
+	 7r13JTYY6omaLAN2C8gYibM2JsE67D2KGh3HWRew=
+Message-ID: <fe64be42-03aa-43fc-bdcd-e6b581eb9984@arm.com>
+Date: Wed, 11 Nov 2026 16:18:50 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -64,36 +53,101 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v10 04/22] arm64: Implement asm/kpkeys.h using POE
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
+ Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
+ Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
+ Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+ Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
+ <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ Pierre Langlois <pierre.langlois@arm.com>,
+ =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
+ Quentin Perret <qperret@google.com>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
+ Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
+ Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
+ Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>
+References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
+ <20261109-kpkeys-v10-4-aa6c4d9603bc@arm.com>
+ <sashiko-outbox-207318@kernel.org>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-207318@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thanks for the follow-up.
+On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
+>> [...]
+>>
+>> +#ifdef CONFIG_ARM64_POE
+>> +
+>> +static inline u64 por_set_kpkeys_context(u64 por, enum kpkeys_ctx ctx)
+>> +{
+>> +	por = por_elx_set_pkey_perms(por, 0, POE_RWX);
+>> +
+>> +	return por;
+>> +}
+>> +
+>> +static __always_inline void __kpkeys_set_pkey_reg_nosync(u64 pkey_reg)
+>> +{
+>> +	/*
+>> +	 * Writing to POR_EL1 potentially affects all memory accesses, so
+>> +	 * use barrier() to ensure load/store instructions cannot be reordered
+>> +	 * past the write.
+>> +	 */
+>> +	barrier();
+>> +	write_sysreg_s(pkey_reg, SYS_POR_EL1);
+>> +	barrier();
+>> +}
+>> +
+>> +static __always_inline
+>> +bool arch_kpkeys_enter_context(enum kpkeys_ctx ctx,
+>> +			       struct arch_kpkeys_state *state)
+>> +{
+>> +	const u64 prev_por = read_sysreg_s(SYS_POR_EL1);
+>> +	const u64 new_por = por_set_kpkeys_context(prev_por, ctx);
+>> +
+>> +	if (prev_por == new_por)
+>> +		return false;
+>> +
+>> +	state->por = prev_por;
+> [Severity: Medium]
+> Should this block be guarded by CONFIG_ARCH_HAS_KPKEYS instead of
+> CONFIG_ARM64_POE?
+>
+> include/linux/kpkeys_types.h only includes <asm/kpkeys_types.h> (for
+> struct arch_kpkeys_state) and defines enum kpkeys_ctx when
+> CONFIG_ARCH_HAS_KPKEYS is enabled:
+>
+> include/linux/kpkeys_types.h:
+>     #ifdef CONFIG_ARCH_HAS_KPKEYS
+>     #include <asm/kpkeys_types.h>
+>     #endif
+>
+>     #if defined(CONFIG_ARCH_HAS_KPKEYS) && !defined(__ASSEMBLY__)
+>
+>     enum kpkeys_ctx {
+>     	KPKEYS_CTX_DEFAULT = 0,
+>     	KPKEYS_CTX_COUNT,
+>     };
+>
+> Because CONFIG_ARM64_POE is enabled by default on arm64 and does not
+> select ARCH_HAS_KPKEYS until the later commit "arm64: Enable kpkeys",
+> when commit "arm64: Context-switch POR_EL1" includes <asm/kpkeys.h> in
+> arch/arm64/kernel/process.c, the build fails with incomplete type errors
+> for enum kpkeys_ctx and struct arch_kpkeys_state, breaking bisection.
 
-> Pseudonymous Signed-off-by trailer and MODULE_AUTHOR
+Will use CONFIG_ARCH_HAS_KPKEYS instead. The idea was that this
+implementation is POE-specific, but in fact another implementation would
+likely be runtime-selected so using the generic #ifdef makes more sense.
 
-Nordschamane is my public identity for this project, and this address
-is how to reach me. The current DCO instructions ask for a known
-identity. The kernel documentation change explicitly confirms that
-nicknames are accepted:
-https://github.com/torvalds/linux/commit/d4563201f33a022fc0353033d9dfeb1606=
-a88330
-
-I kept MODULE_AUTHOR as the project name and moved the revision notes
-about the review below the patch separator.
-
-> Race between maya_prepare() and maya_pcm_reset()
-
-In RFC v3, the reset that completes PREPARE clears both playback DMA
-rings and the ALSA staging buffer. The clear and the pointer rebase
-now run under the same PCM stream lock, so ACK cannot insert samples
-between them. The prepare-time clear is skipped for explicit RESET of
-a running stream, and START is rejected while prepare is in progress.
-
-On a physical MAYA44e, I checked the kernel playback pointers after
-repeated capture-initiated linked PREPARE, refreshed the ALSA-lib
-playback handle, and completed three linked mmap playback and capture
-cycles at 48 kHz. I also exercised explicit RESET while running and
-verified both stereo outputs after S3. The capture inputs were undriven.
-
-Thanks,
-Nordschamane
+- Kevin
