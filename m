@@ -1,92 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794423452;
-	b=Zv7HgbU9Q1eTbGK+9cSqM4g/eUvDIJfhl/3lSi1WDBaAiwKYo8GaPxedjb3pj4SDxsbw
-	 RUtpU2JuUIr1cjvd8Cnxp7fLddUzf5nqg1XfBtJ29kJgzFgc8itQXAfAwTACAF+jfocpu
-	 XrlixE6fAYTumq/if2/OtfxSyHMRbQObjsELrAdqedGVp32a3ceem4uTqUko4Qh0nkTCn
-	 UpJIb9TTvhN+Wn9uFzvhk7d7scYxw3dRHwT/BiSFby1/VcekuKo/DG7WsRMWqOnTFtpzE
-	 PsA0/wkuYqj4pZH6l6yDERWoWEFjOShEVNpD1TVDMiVu163rHJKiW/QASdUdemPCD6A==
+	t=1794423917;
+	b=QNIf15h/PqdQ601dPVtcNB94dYEXX49YCsd4Xy+soHBtK+NyvoexaPPovc/ZdvgWm1QF
+	 xMAdecqMoPhYcJgI1tBfDEBA0umH7aD0AIwYM/XwFLaNU87Iwu7fWE1eZmV/UppmhKKw1
+	 7G7Sqf+6YEFSDNecffYt7SBc/Rxi8YX3yomsXq8KPQWca+eGa6nBL0ZnC9lQ7TYiyFlM+
+	 qUKH9Xty5RXR95RJmSXhKgW6HWB34A7BPQLU+F1jzVwEPLGBBHbSCyau36gIJUciwzJTL
+	 dEG0JaxrZTrU7Si0wF0df+bkzIXFaTw4YWl37lwTsBYC2Bad17oTfOisphnPKclgP0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794423452;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:Message-ID:From:
-	 To:Cc:Subject:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Content-Disposition;
-	bh=PvpWB91aPTgwry8ewGxxPpJ/Tnw5Kh2x9Pevtsk6tvc=;
-	b=oYJ9Q7S5937m1umAm+sbVVaAJkNaZ8/DbGTBwgdiXKRRIPwP0rrto/mnAtWgLrb3Q6ot
-	 UdEr9IRMaE3iu4IzPmpsLN8l/ODL0TIQFGee99KDdObIA330LWGde9KAvKHlqZ1eCjDOK
-	 qsCCvWo3O+nBui+wjYLyeO7KOAm9vnLM3W7As4sXoJmPXtKPuf++hSg2uUaAn5bKgU6Ng
-	 OnsCpy6Sbc5Ht9I9shmsaoIcS9X6mbl39KmvS0agZwesP+LOlqZKXTDWH6hru4kLFZCuK
-	 uHgvtCRooVIGpTG0O8k8rOgY/tYBdjDcKu/EHA9hsOaTl3ibW2zYJVY5T8+XHM6ARhw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794423917;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Authority-Analysis:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=vHQpceOMVqrxK4K5nhzSoZfKVb5Q6Arz3ZXzuTEVYQ8=;
+	b=fzizkO2MtmeodniMRWwJQTpHGQVK8QFDy4zolV1g3h3eBGMQqJ3U7lJsxODMAMJSCc3z
+	 A7WCcg8yWxEDBKX9x8ZCChUu1FqAcNwecB+0eMlyaiB1Fmva9EgxkPI67WKsQvCYa0/9H
+	 QSKm/6iz/5YEGKU9IIrAF5UIXZq/gfe5huLwgAcMIXLrt4xFnOKuSDjT78KID4+ADfUDW
+	 BsiYuVZV/HONsaExl3wiSdCx29BiELjRRAYuCjKTxzd1uhC7Nkqm83wsB0sA108Yw1amE
+	 pVhlWUIdRxefQCXJdUb8ph0xaD8an4ZmTrtTX/LBBIh+ND7SFjX5balRYgJyn5rLZ7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Xi8678gD;
-	arc=none smtp.remote-ip=74.125.82.42
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=WA4r7QNw;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=I1cJkD9Y;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1263606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 18:57:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1263606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B244606A330
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:05:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B244606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Xi8678gD
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-1a2af4c8d00so3270133c88.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 10:57:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=WA4r7QNw;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=I1cJkD9Y
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ABIpCE13186600
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:05:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vHQpceOMVqrxK4K5nhzSoZfKVb5Q6Arz3ZXzuTEVYQ8=; b=WA4r7QNwYdUWzD1g
+	ik1urAHVhkUJ9bk3VXGgwlhcsaikJWbfCrXBb6izH5Gfe06Zx4kXTHnfndj+3Sjd
+	5JRFprhF1M1qhbxvBEzVhlOAYHET9SZBZaVdom5T5ha5fgbZOD/4DAAIfXC+tk16
+	pt/mj3d4+7WEWUIQkp/RvUsEu8dGMdUPprrekaTki+X99MXMqONYMLQsVU8lTevD
+	B+4+JDh3lIiVAhVdFBV8pFzU5Tw7V4LQ3cHyvSa8i8fWudR+K+zwptxCxeGzKMgb
+	BFaLCsIhkbpS1/FpZQx8F7txXChQdWsWZhTJNMzQwtfdwThxx+4eoa9vNP8EEnYY
+	7YcNcg==
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hvgjdkeh2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:05:16 +0000 (GMT)
+Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-5ece3cd5a00so2663723e0c.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:05:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794423451; x=1795028251; darn=lists.linux.dev;
-        h=content-disposition:content-transfer-encoding:content-type
-         :mime-version:references:in-reply-to:subject:cc:to:from:message-id
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=PvpWB91aPTgwry8ewGxxPpJ/Tnw5Kh2x9Pevtsk6tvc=;
-        b=Xi8678gDkuhX+8g/EvCRYe0oarcdqAjxtcVzYH8egUVOMSB9dK1TuwINq2gN/nl0nE
-         pMtnEzzfN/OsGvBN3f4QNlWuQPm/j3YIoA88A+/3v9k0qndGbSaCAAKerVpxJrD+Y2TC
-         eE6Bl3WMQg1/S6gqKuF6X9Y9WPIVZcAba1GvtHQCCIm0RcRAzUrgv1sHurFaCq/e4sKl
-         Pmreh91ncH+r04HUIFd1GQmDaQf+eOnfbqt+Bjt/FJAf1QumYqStQjSthQTOc5Soyc6X
-         RLK1f26+/OMOLV5LNhWGfoZ2kewnFJBjFTBA0ZTvrjMMMDU2RKHysyuntYMGybjgIHvn
-         ltNA==
+        d=oss.qualcomm.com; s=google; t=1794423915; x=1795028715; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=vHQpceOMVqrxK4K5nhzSoZfKVb5Q6Arz3ZXzuTEVYQ8=;
+        b=I1cJkD9Y2l8cgVk4r+bSJLEujZpOrcTLVduWk+mJbPRs9140UeTd3pZ7z7VEgGxGz+
+         YhJLHqDBDaivlML/vbGX5eXlaETkP0sI1nsHrbMr1B4Rr+g4J/xJh/0Nyn9S3R317e3a
+         YaBOh6jByoz0QN1u+tiNiAIHJVr2V70R+bQUudKId5vLLV3C7z33aeqRu0hvT5h2HPw2
+         rkfNexNPn2gHOf74SxKPeUB6peGzOQMxuMJQVHkk9I5hX1wQqsVsnFwNxQNluDPzt6dV
+         iQuuZ5i6Vd10nzuEuZ6MtAWC8Yvzw9hVdDdMfPJwIOIdNfZiuPy1IC87QedfQUOq63tI
+         Ltug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794423451; x=1795028251;
-        h=content-disposition:content-transfer-encoding:content-type
-         :mime-version:references:in-reply-to:subject:cc:to:from:message-id
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=PvpWB91aPTgwry8ewGxxPpJ/Tnw5Kh2x9Pevtsk6tvc=;
-        b=Hk0cx3IGkUv7ge5mptg7bBGV4Pn8FQaxIEzTFLAgDAKGK4adn6LDn0+dlt0cGP/8PH
-         tXejxE9cVnbg6Lhd4sF9KupPXXC+9qURpYz9c1zEwailBAW7iGSx8nO8MPtwJa0f4NY5
-         eeQGhetMcHOZYR4kHVPwfAWq4FdqYWOKPZZx17BvsVwAfNoX/YIBOUkQFVSszYsxZTDE
-         yjY3gYqT8TrHfVLuixohCrMbnhvl6UxtFaknwGtujWGxZapGIMYWGBqWJAkLBlvFKEVP
-         rGmyFYYdQ0i+Oy069SK4xPjXZ4GyTktsoppVvmRrDpxGSyARB0ICZagBS7r4lcri322x
-         k1SA==
-X-Gm-Message-State: APuU4Z9QwKEFLr6lk2n0wUFvuCc4fL+ah9lRBRlInDphW1C0E22+YDdA
-	97L4QbfhbxOqDu5UBaBg5UZQK5Y8AeriCmnO57xY48rqP5QrbwJBeDkaJ1tzuA==
-X-Gm-Gg: AYBFou3U2VKNhOFcQuAMbAQHxFyyK/KiBTVXX4TzO/ZmLdLKuvwuDCyPyUF9mnd/atT
-	P8acy+pQDpjNBReerHtywSMOxM0LxGDck4CAcqkvnTCxZ3hbuRYjjC0Hk9eCvsi4sPVk7ZvmjHN
-	Ftpsuu2CZU9qCIrZmPVKSfq3pVWMbQM1nUxUmi9d6hAcMz3cPD2sNlGkOOtnlrnarOzI4kcI8po
-	c3kUKnCxid4EMDAxCXdVky2+DI/iumFNnXD46/yf1vHhNehwRUKctMwHCz5vDX0VrMW4RuaQQka
-	6GE9+LmgxmU1uaeyKFBJFieVOPfjERABaj9RYoKLtyrxBZXNi74BbqHFwcuSdzHctY/F+mCQGDT
-	JA1n8TcRA9HqbwibtFZve2BXXrk7rFQX230MnNZDJEC0DNjVOqFFrjBc4QJj/4xbMmKq6nlpLVS
-	6g/4A807TTLpV3aHdauMjIeN74rEyLvaBM4ovOnjj8lwSz1d/oe4WgjXUHLFUt3w2dJD5t6zvEy
-	KzTswzsYhelkBUKBEdFnuJUarCHEAyU0PSdv3H+3u9smtv7bpiU9nkEjcFUoK4wU3kjw1+bTfZf
-	tzF3CCkyqyYWutshqYpKIdBQrQVzPKhNIPhVxzok7KOEru2n0Y1+lDtS6dSuQZhWycyVTw==
-X-Received: by 2002:a05:7300:1ca2:b0:36a:12c1:3adb with SMTP id 5a478bee46e88-37685896bc5mr3836499eec.20.1794423450736;
-        Wed, 11 Nov 2026 10:57:30 -0800 (PST)
-Received: from localhost ([2a00:79e0:2ebe:8:311a:ad7a:93f8:96c8])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37520bfb58dsm33703047eec.18.2026.11.11.10.57.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 10:57:29 -0800 (PST)
-Date: Wed, 11 Nov 2026 10:57:28 -0800
-Message-ID: <496e56a7c537e04be4b946e46439e103@gmail.com>
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org,
-	linux-input@vger.kernel.org
-Subject: Re: [PATCH v2 16/33] HID: logitech-hidpp: preserve transport error codes in __hidpp_send_report()
-In-Reply-To: <sashiko-outbox-208632@kernel.org>
-References: <20261110-hid-logitech-hidpp-v2-0-30743e91d83b@gmail.com> <20261110-hid-logitech-hidpp-v2-16-30743e91d83b@gmail.com> <sashiko-outbox-208632@kernel.org>
+        d=1e100.net; s=20260707; t=1794423915; x=1795028715;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=vHQpceOMVqrxK4K5nhzSoZfKVb5Q6Arz3ZXzuTEVYQ8=;
+        b=qTzl54jSEs0PQNmSXBHpg6MLP6H8G4R6HiAuvknqDWyI4xT0i9QchmDyO78Lgna0vu
+         G7h9kf3d9Ncu8H0qsTm8BJRQ2/xDbMum+qj/r2g8BfkfF5rbWdCe6qqZ6e+EOnHGTJHJ
+         1M4Om6jQUOkj42KtiEpzF2U/6sc2waAzI6lbJPlBKCFRSC5scebluXg5qg1MgZPz06S9
+         9UTA+leik9eyQc8TsYDIshRl80zs2woaOi5Ny6HN38mHXnwM5jUb3iTwR5kLrh5wxNYk
+         s3zGzNMeUvDIsgM9SNuhAEoDTAXyL97RTRHzC7dKlzuuqyoFUVouudSfX3F/OAUfWI/g
+         d1tQ==
+X-Gm-Message-State: APuU4Z+VvNRAqHzGl4T6S6l7oNIO7oxc1ukMhzhDA+OLxBEuqkdgYoPF
+	egOUudY9Un8xtVIMf1iFBgTNBQJYIgik3PYl3uFhBXLbVh2RD+Ha5sxjph3q4tIwSEYO77nPnmH
+	1/EjBnZ6Pzy1szmyorsIlMWSMi+hd5HVipgoE81tnQ2UgL966omVbUnWy6Vtk6ZO7d6JTftzMWN
+	7r+sQ=
+X-Gm-Gg: AYBFou0qNWS5dGrLiwP0Za6iYGourLDbtl+vTDga2KTVD3u5XgjvsZDdc0WhmhdLg7h
+	KF8hEBRA1EmF9NyZgvhXtWIBRcEYBS8F8LHnIbzRyeQBjeaPVZzjP/Lk1UGXH8Ouhsak4ZW8MmT
+	Y7YVSpAiIUKZrEbOdr6w6ujCmq+Jope5deAjCdNpj/qlbnp9cg5EfD6f2J2qnPJgdFsW/WsJQmi
+	Xw9C8ASnleKqjOJJBV3TMa5+yWpnM7oAQh8yHpSAMjU+TRZQe7gH/8W39nl1xjyTQCY8nqikq9q
+	/9hXrXIk1XOabjP+E6hSYYOfRPKK/UJG7imkcuU4FHmRXfEyLfpkvui7qOUr8I1tbjBirdADvZN
+	u5SzTk6kbY+z5ec8WR6Rh/0FEN47B79F2+YMJJ4snG6PrkFNr6X3vgmbfqjJpZqLOaV7g8PyDZt
+	Y=
+X-Received: by 2002:a05:6122:20a8:b0:5ea:be1b:1b24 with SMTP id 71dfb90a1353d-5ee1c42fdbemr1303136e0c.13.1794423915169;
+        Wed, 11 Nov 2026 11:05:15 -0800 (PST)
+X-Received: by 2002:a05:6122:20a8:b0:5ea:be1b:1b24 with SMTP id 71dfb90a1353d-5ee1c42fdbemr1303095e0c.13.1794423914770;
+        Wed, 11 Nov 2026 11:05:14 -0800 (PST)
+Received: from [192.168.1.110] ([178.197.218.7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4e1f5810sm9023055e9.0.2026.11.11.11.05.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Nov 2026 11:05:13 -0800 (PST)
+Message-ID: <9e2aba1a-61ea-445d-ba32-95ec57ab8139@oss.qualcomm.com>
+Date: Wed, 11 Nov 2026 20:05:12 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,23 +114,55 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: msm8916: Disable disconnected
+ DSI
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        robh@kernel.org, conor+dt@kernel.org
+References: <20261111-display-msm-of-graph-v2-0-fdf8fd97f49d@oss.qualcomm.com>
+ <20261111-display-msm-of-graph-v2-1-fdf8fd97f49d@oss.qualcomm.com>
+ <sashiko-outbox-209493@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-209493@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+X-Authority-Analysis: v=2.4 cv=E7tYNqdl c=1 sm=1 tr=0 ts=6af4bc6c cx=c_pps
+ a=+D9SDfe9YZWTjADjLiQY5g==:117 a=uyPgTw0bjBTS2cVxpiNm5w==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=nhleFx_QHpCl84HZKpIA:9 a=QEXdDO2ut3YA:10 a=arBHhYMabMMA:10
+ a=vmgOmaN-Xu0dpDh8OwbV:22
+X-Proofpoint-ORIG-GUID: F34HLIzFO5pegGcM-_WbSjHmHM09OYj5
+X-Proofpoint-GUID: F34HLIzFO5pegGcM-_WbSjHmHM09OYj5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTExMDA3NiBTYWx0ZWRfXyMdNTWj4qGzj
+ Uo6OjVmlSv94nv5IWlkUsm0q7t4CJCzDNv8X7hvxGmBq46Rxp0vAdlhzOoIT/ihcKH8rn7R67fo
+ +8I6EvnY5APhDtWJRvPO6uVtkWRd/oKVgNVx0SZzGZHEePmN049g84c1NXaIpU+S0vkavOsuqUv
+ DElbqaQq20byaCa7pXzpSYhHrAvELq9ffhHcvSY2Hi/MmRHnCGCHKrW9/oYu39Emj1k2r/cyDyz
+ zQS2jqEhEN2QWovcyYoXZWNKeaD18ujznIxKQ9Evpe3a0DMFYiBJRRrFAAm/FdqzTexG6y+c2RI
+ xKB15tvCFuXYrBJfr24eePI6ldPJl0n5SdB4cG2HWWk25HLPUGMNwKk0svoef1ZpPNbP2kyNeYA
+ 0oNzl4S3Pu2YxboU8eYy6vAeXFrmDtnYbhgAiK8wQ8pwz7pzm1j9fOr2qfBhe6hmwa2emAAKrYh
+ ciMosId4grEv6nPsmfA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTExMDA3NiBTYWx0ZWRfX4p3VwT+wRiOP
+ E24vao4HEH/6Faw1E/7EGnsw/2IrJnKRkkW5ddKBwnxxeVlI4HVmflt+c+WNvlCpur2Yj10M28q
+ 0t964BeBq8oViErg1xRqYnlPhJP1ua0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-11_05,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 priorityscore=1501 impostorscore=0 adultscore=0
+ malwarescore=0 clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611110076
 
-On Wed, Nov 11, 2026 at 08:47:14AM +0000, sashiko-reviews@lists.linux.dev wrote:
-> [Severity: Low]
-> Since this fixes the return value logic in __hidpp_send_report(), should
-> the commit message include a Fixes tag:
->
->   Fixes: 2f31c5252910 ("HID: Introduce hidpp, a module to handle Logitech hid++ devices")
+On 11/11/2026 19:48, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] arm64: dts: qcom: msm8916: mdss_dsi0 left disabled on apq8016
+>   boards
 
-This is a preparatory cleanup for the negative error code rework in the
-following patch rather than a critical or urgent standalone bug fix that
-needs to be backported to stable trees, so omitting the Fixes tag here is
-intentional.
+I swear these were enabled... ehhh...
 
-Thanks.
-
--- 
-Dmitry
+Best regards,
+Krzysztof
