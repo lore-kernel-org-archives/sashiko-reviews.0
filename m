@@ -1,94 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794426590;
-	b=rPd2Hqn36Y8hZQnur7TKj2Ctu4Zd2ZpPX0U/BOeBX0FEVMwZYItsrUDks8TBw2qHD7PP
-	 U3eFHzBk/5sDmIc6rkmCmWP85oWjNI6L7ab9euYYPgEsagdUPN+BPeB2vRD3zbSPIKa4r
-	 5zSm0bPK6g8Cpc+FQzgOw6QRjjiraw/HTuxeNefpHlQ98cXMmQmoaBFn3Th1PRRbdi5jU
-	 KcB6tbnuqt7GZe4sblaUsCRrMQ0aZi/SXTW44LpHLDLyOYEeTmST+UdhVl3FHwjV+Q9r6
-	 F7e30DfG6vts+p4gYN15uiTszSBX+PzUO/G2uHaIGae/HRzqKGV5fb1BYyY5ofhkpFQ==
+	t=1794426709;
+	b=flXy+xO5WpVzdWK6pEbHG4+VyGbVKtmg2Hq2nEMuCeF4WvU6Erl52Bh529XCC+swkQWB
+	 cA67Zpugcg4VkG24oV6zgW7p/T0tWdswFftOcqRLe22UJA2+/Taqpkh7Ur9/H2+cSbN1U
+	 SRX09UDfF0iKqzJCM87U0P6TSnlpE4feVH/FOlIZqfUcXBOmHoOsQp7DaAmKkkRFlwt4e
+	 ZID9Wsf6rkcyqcG6SL9q24JxCBIQ/YyirGDexCNOOjdcu8P2r7D6QseRauzH9ZLImXdPk
+	 dMHHWl++cE21HVH0bH04mfiyckanz2Hshaqnlhuxc3dIMOMCtpTMyeDZ7NAp8V5Mkgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794426590;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=tWMbiH1ZllDhFsIxq3gitmWeOGpdMedMJ/cafKoVRxA=;
-	b=s/HFLls2OugZ4IV4lAjmLj23Uzd6cJPoQa3JuKEMYR4VixF19ybzQKXsG2XexzLgpbKk
-	 vkXqgfqULVMdxo7baOFPqGrmjK6o42hXVrZzUFTS7aDE2498PLTed4iJtKX5xihSG9yXy
-	 nIjPHJRRfuCheKCOGaZTapwlNc6ixNq8H5gfFbdeP3KUrKiL1Q+YrB3ZtLXCUd+1M7EY7
-	 YLkGaWCYqNWlbsTFAR3xOv/IGPHz7biANRCpJVorBjd64epHeImC4biOqYiCwAIJVcKOI
-	 atM3WLJcRMyyVtq2kx9nVzmD0WJ+4UhB6JkOvyt8/pnRZHcTfiaBVE2+0D0jpPh61zQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794426709;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
+	 Cc:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=13YqSnIhjrSGBdnncrmkRLcLAqs3gUqrk+ICDgkhd5A=;
+	b=xRv9Bx4yz5HBHQlCOvu+okKw3Ezn9vTblyz3nZR8uybiEo4M3ojFbDB7BZDvB04aERjU
+	 ZBwmMwNbjDROCl6iotu0Enk9oWLbtINPbmL9/4p3KBHeIJPaockwuZ6xkxIz6gGKDnliT
+	 wUjeKcjY3zNUk0HmEbszwa9Y/VNFdfYoE0kNvxzX8HOVzxTZNteBvHC1B2PCyDj5G+4x4
+	 gIJ/mM2YRCsP3aAOcZA2FJbHowB7rxsCYPQAW5NeT3RpvfGb9BSNrpPRelfvy1lhfA7qc
+	 C0C1whcvdLlLJnHSu+Tg9x4bhtG6wqSZZCGCW3cLA4eM0Vv0DPtnwbdeFWjtfiYnuiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E6F7AWpm;
-	arc=none smtp.remote-ip=74.125.82.182
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bR14ee2s;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C7D606A331
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:49:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7C7D606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB18A606A321
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:51:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB18A606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E6F7AWpm
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-37000e7234bso2405345eec.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:49:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794426589; x=1795031389; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tWMbiH1ZllDhFsIxq3gitmWeOGpdMedMJ/cafKoVRxA=;
-        b=E6F7AWpmINcH0ytKhjUFZx1xjx2kPY5VmKXzYHNOGS2LjR86XRueYCVUvKxwEcYM+K
-         k08RBaj7oA6+6rprIAlLIqNgLxd5bdd58ejltiHZNZk3ROKbfOuxEXOsymV7ynMBRBmE
-         kEn7DKCtE1fYOP1gwITZw3uyWqcZTRHOSkI3q/EdAoTGrG2i3z6r/GwCQsQOj8+sz9+M
-         O1nXtOrT94jgqUjrzEhqFNgpAmn+qqcUENSZ/JZRRCPcDehyapA5G8/X+y4j9j7TGBbS
-         CUog2SltWB6ZP1HeRi5ZtFwS3Cz7vC1fAiSa0rXa1PTjxEY+ezJB+vTuygOiWowRvBFZ
-         yT6g==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bR14ee2s
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1794426707;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=13YqSnIhjrSGBdnncrmkRLcLAqs3gUqrk+ICDgkhd5A=;
+	b=bR14ee2sTML+z8wHq+6wWOLy8acuyvOGPOTb7ymXIohTEedoRiq7I33vrSuCCJeWEAnloe
+	yw6BaEvmvrlspRVpc+BkEpEG54PALjZk1UXOBR7aBvta9q/ZmWT+VoZ7dBE5jTLb2vFQ7I
+	+OruPCCkxPjCWcdpEtf6x2TXYYBlkDQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-586-3Iiy3TwFMl-g3WVuKZLCmg-1; Wed, 11 Nov 2026 14:51:46 -0500
+X-MC-Unique: 3Iiy3TwFMl-g3WVuKZLCmg-1
+X-Mimecast-MFC-AGG-ID: 3Iiy3TwFMl-g3WVuKZLCmg_1794426705
+Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c25edb54d22so441399166b.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:51:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794426589; x=1795031389;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1794426705; x=1795031505;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tWMbiH1ZllDhFsIxq3gitmWeOGpdMedMJ/cafKoVRxA=;
-        b=IvRMBdTI7Q4TmrkhcOLROA4HrH+zmBYboBcCZImvXy2M6s7bOTAFCG99RVsmVb6/0N
-         S1COELqNM6+iIyBDCZG6+pcj/RZsYwlXzX8tFJz3HviKOIu+4KhCaqLpb26tvDphU3fe
-         +aoVHeVPABZP7j3vb/Khv/vAHbEYQErki+gOdlG4ZDwzncl+sebwtzbodFwhxw9F0yg2
-         atKyt9l4CzUWsRKfnbHJl1bnbLIxLIrYXMW8OuU98HlWd/4exGm0qcGLbBvGqF3+B+n6
-         eMDHg0ixwsK1Uuq1kEegs8jrAM0vC5CqissYVgAW+fSFtNTyLavpl4gQFi6qKDyqRECH
-         SBvw==
-X-Forwarded-Encrypted: i=1; AL+hErFlvyOxnokSjd0UX3avb/l/YFRHg0YW0Pu0T5AehH+kdgSejc3F27bHS42D9Zh8ax2phY0PRbGdeOnoERgzm/g=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8KckBZstTaP8vbCvorLyHM+/xUeiMtwVSeOfDEXH1IuYpGZJZZ
-	XCf/7XO5FJX+ZdI6fH8th32QRH/zaIo8MFjeObiKfMOVET4Qov6VsanD
-X-Gm-Gg: AYBFou27DAzoeBv4wzCCWfu5r3Ibv9ADtnIf5HkqG8QYpof8M04IxKvrd7sB0Em+5D+
-	Q9P30VBiarr5hEp6RQUC4Z7B4s1tb/Rgf48SQNCxewoUnVq0wL4pq7XKTsq209MWrPCuEHVpSGz
-	LLaP6zOQR+Z6ylk3JGEvH7quOFQsNwIVLZYlfn7dWKKpvtJR1maj+YvWI9e6jBXi4Y2TJpvgAog
-	xBdcONRnWFQSYolr2Y3rmdBaLI9LGdhCvGSqXu6Op1zJDGAUjz4OD7oRRmkbg/6Lo/6lUSX9Jkm
-	wRAVi95Y9A5OMMVEr+wgBEUdBsA5EOh3lFbacwCmL9xrDcdmQlcCpsGRsb/2P3L9rwgGWbPWqad
-	wURlsztG7PRR4GLzf4LUS/6C3I30B4I8tB/sfbkM8+WUIuWzvSHRxtm265wcSrqwUOTGJXD6zwB
-	2bVHm55T/DhAtGNiU/w0/CYsNWD6WrU6e1yRkq6XnXUSSVV7VQ9aIGI9Ctne4HW83TYuxBLdSNs
-	lLw2LSQndiEwoIVWioEvLLx9UtNO1bCmcnJ/ZBdixE0tRcqnQrslDvDaj8qO7+K76ZagOjJDJRT
-	yKNha9n5heh4Cr2La6XQ0Rh/BndFPG1MvDv4Vl4TzybIYOKJowpiBrYnp0ewfOdLfJ2Vvmw=
-X-Received: by 2002:a05:693c:638e:10b0:375:dbeb:b363 with SMTP id 5a478bee46e88-37686d341eemr3916361eec.28.1794426588437;
-        Wed, 11 Nov 2026 11:49:48 -0800 (PST)
-Received: from google.com ([2a00:79e0:2ebe:8:311a:ad7a:93f8:96c8])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3766146551asm10505501eec.1.2026.11.11.11.49.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 11:49:47 -0800 (PST)
-Date: Wed, 11 Nov 2026 11:49:44 -0800
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Juan Parrado <jparrado.1817@gmail.com>
-Cc: sashiko-bot@kernel.org, linux-input@vger.kernel.org, 
-	sashiko-reviews@lists.linux.dev, Juan Parrado <jparrado1817@gmail.com>
-Subject: Re: [PATCH v3] [PATCH v3] xpad.c - Add support to Hori Real Arcade
- Pro 4
-Message-ID: <avTG1Mkv0FLBGLPF@google.com>
-References: <sashiko-outbox-204846@kernel.org>
- <20261109195830.22156-1-jparrado1817@gmail.com>
+        bh=13YqSnIhjrSGBdnncrmkRLcLAqs3gUqrk+ICDgkhd5A=;
+        b=tLZg3vG7aC9IawF99NQO0XVbqHCstRNSivdCLyXz2BR5Pd1FEo5N976zVM7JoYd8rx
+         MQtarJqBpmF+DxLFLOTtKKWfegFgNvN9ZWREFOJpJFH5MLlKJ3P7gzSVX9CLkVp4X1Vl
+         cam/seXnPByqRWEUTXup7/rSk3IM+7924ycX9Hm6Dlv450gQInanjFU/UqWNYVWDhKRG
+         w9mAKdWatNnayVe6911XdRsX1c5x0P7hS3nnGEM+bUidFTSwwNXs6g1oNIqC+rkC434L
+         naEePAtRktgWPQ9ndku5VTkUMZkKKH290BlqrNUz+z+VsKj9wknM8LB5p/lhqAkj62ry
+         ZvDw==
+X-Gm-Message-State: APuU4Z8Sx7SJ862QyjsTuEx20GtyM158SvRI/jMswzLC9sPpCq4aHGWe
+	Zng/epb562o2EMyXz7IcY7Ps2Eftn4mZASTEJntFDecL1qZBFA822KH4Yj5TS4PAw1x/skKld0a
+	on75kJYDRzxyn1PKD8ob4XzOeNvULvWPmRUjOwbNojuKWjB2it2YQQSCVcbEbQHsZepbRJ+e7e3
+	CrpT2jpilIVMyofOf35zCK2z86u9rXWGxHrqoURNfTQUrPdUeOUaWDvtc=
+X-Gm-Gg: AYBFou2Ju6GP69YG5TP1W5nX+xSHxZTYILi788TQcNDxtOUfuP3bECBMBHN3beE7SAR
+	7HhSdlrRP4GqzcXiXgmUjOoRgv2Gi+gnjvGmcdifXPo0cFMDzd0332Xo9vwvuzWxRSFO72MV+tL
+	OgOi/5qZvvLRhTkdnbIDScNpImhMfwr3UtqMRBRpBWqjEoCS4Ky3sVxgaOmNRCMMbwNgIzvHkDJ
+	yemdU8G3JKGCf5hy23MTuVvAUgvscGaX2bPIMMAk5GiCA==
+X-Received: by 2002:a17:907:ea8e:b0:c46:ca3a:10d5 with SMTP id a640c23a62f3a-c5066cc8684mr274077066b.45.1794426705289;
+        Wed, 11 Nov 2026 11:51:45 -0800 (PST)
+X-Received: by 2002:a17:907:ea8e:b0:c46:ca3a:10d5 with SMTP id
+ a640c23a62f3a-c5066cc8684mr274075766b.45.1794426704946; Wed, 11 Nov 2026
+ 11:51:44 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,24 +89,47 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261109195830.22156-1-jparrado1817@gmail.com>
+References: <20261111152057.59798-2-jeff@bencteux.fr> <sashiko-outbox-209282@kernel.org>
+In-Reply-To: <sashiko-outbox-209282@kernel.org>
+From: Ricardo Robaina <rrobaina@redhat.com>
+Date: Wed, 11 Nov 2026 16:51:33 -0300
+X-Gm-Features: AclHuK-8KRi28-wO7lCotvLzx3R8YClP1yWzaHbkuRqhTMvlvvdXcMtNFCDLN6M
+Message-ID: <CAABTaaB9zXgaM2uUMQ3h4nc0rERCDf1_OmSR5mfkxid3bFFNfg@mail.gmail.com>
+Subject: Re: [PATCH v2] audit: add missing syscalls to signal class
+To: sashiko-reviews@lists.linux.dev
+Cc: audit@vger.kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: VWbbTshX96KsXh1JMBZD5p-Fn8v6ohIjCR6IoyayFlw_1794426705
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 09, 2026 at 08:58:30PM +0100, Juan Parrado wrote:
-> The HORI Real Arcade Pro 4 in PC mode is currently recognized by xpad.c as
-> a 'Generic X-Box pad' and works out of the box. However, this generic name
-> does not match the actual device name, making it difficult for users to
-> distinguish this controller when multiple devices are connected.
-> 
-> Tested on physical hardware. The proposed change works perfectly as is.
-> The MAP_TRIGGERS_TO_BUTTONS parameter does not work here. Other arcade
-> sticks use an identical configuration, such as the 'Street Fighter IV
-> FightPad' and the 'Hori Real Arcade Pro.EX Premium VLX'.
-> 
-> Signed-off-by: Juan Parrado <jparrado.1817@gmail.com>
+On Wed, Nov 11, 2026 at 1:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> > The pidfd_send_signal(), rt_sigqueueinfo() and rt_tgsigqueueinfo()
+> > system calls are missing from the AUDIT_CLASS_SIGNAL* class. It seems
+> > to be used only in kernel/auditfilter.c to increment the audit_signals
+> > counter.
+> >
+> > This counter is used to determine if information related to a target
+> > process of a syscall audit rule using signals, such as its pid,
+> > should be logged (e54dc2431d740a79a6bd013babade99d71b1714f).
+> >
+> > Information related to signals sent via these system calls are
+> > currently not correctly logged. The current patch adds it to the
+> > AUDIT_CLASS_SIGNAL* class.
+> >
+> > Signed-off-by: Jeffrey Bencteux <jeff@bencteux.fr>
+>
+> Sashiko has reviewed this patch and found no issues.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111152057.59=
+798-2-jeff@bencteux.fr?part=3D1
+>
+>
 
-Applied, thank you.
+Looks good to me.
 
--- 
-Dmitry
+Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+
