@@ -1,49 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794392698;
-	b=UrM5OAiSfaDJWrgw1LjPAYuTJ/neyLBYM2yCB8i05TwnF8oY11I1IrFviYbxk3tthOAC
-	 HyzFHH1Xx5uK8G/RSnlbCyZ5M94r1KauKJGMJWdrL70O4grKI6h8sZ8bBNDD4rb5WXcDy
-	 CLAlUHwguA2UuRbJlZS2Ofxw7GtkB5RGavzlM+edgByhza2sQHBBrO6+VF2e3HNCcIpJY
-	 MYTiF4QWaezT0ccfSdfvvKpMQCQ/EnNDUxvV4yTv9jGakFXK6BDOTyTxHC2H6tUuWN+4O
-	 K0ErV8pWyBtRTF2sx75UcLGmJg7WXuxRCJ0Olq1+YaDykw1KY6aH80eKT82icWwBhDg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794392698;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=JnH6E3m3OytwHtdIb9v7wOGuBamv9Irg/1uvzHNiYxQ=;
-	b=J/zwPnU7/jhn+cuZ5N/DbMJtxcWWRF1mhPjYtisLlEC2cwyijOoTIcgyour2hmg+B1U+
-	 oTvEl/5++2fIuJGj7uzv5UqK3yf1OqWHyPkwYr1bPbLeG37SReNdewtrX3PJo9C/jThlp
-	 /SA/RpNceEbG0UOdSWP51gzBhkBI9HJJ7LD6B2EaRL50PgrX3uS15aI0RyGsJQSrddGI2
-	 dKdfWzgZQspGQEk37eGiG7qa02Ft314moNW6fWCkFA5f+cz2pbxroR0Tku9/wp+DEniWL
-	 GzmOYTd/43+W26k6d18OXXlvVAJNGm//d0HmhfI5DBy5nW5DDRlGGLGHIrrlC04M2ow==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=NQHo0OpC;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C56F606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 10:24:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C56F606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794392828;
+	b=Tt37BJsD8Kh6687ZbNZbViPoItJpZYhZjZGUJN8z9ZxlCCBpJCWQaqXqxftFJImX+fA4
+	 Fv5KhaU0WxGqeQw8+JYObEtf5IrEXhTzQmPr1gz7ImWkPKMdbmodUHZqCyH08XX9fpTgj
+	 0FblcnayP4heoXAMlhVHTkRPob6/LzP8HEPotGazqR1/gGJVa+zExpygA4qgEvV6iWgby
+	 oWrY1KdJIheOZmHyaIigZi1wQnNXibiXRLbY7s3Dh1ukbmQk5BMadNZu3I1yeg8T9fjoJ
+	 F7JxzyofLlk15OMH5Um6Vu1tpPEN4wNYxngaQ23IPW9AgNSVyYuBD8W795v51VSCOYQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794392828;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
+	 Date:In-Reply-To:References:Organization:Content-Type:
+	 Content-Transfer-Encoding:User-Agent:MIME-Version:X-ZohoMailClient;
+	bh=izBfG5NYxgsrXHkibSx3HWmcn07W3wT6ndQmqom6GNQ=;
+	b=lEH6v+iJFQ35pBazEmTs5ro+tsClpYzD6eXjsZqW7xqfqWtDwuLeVQqpFHgR2jmPALqe
+	 w9VKvqCoibrbw7vCQ+755Zmn9slMl1WD+U4QADCZ1FvBn5ayFDh1OrxcfwuIPpLmehgoy
+	 UWFBvpcfXNLu31+05rmj7XqIzKa89HQO45OMwTwi05TA8vov6mVrKTA4uGIlhpKY0PNH7
+	 2OVxta2UbCOC7DdTJXV7XW/mu///GAGlc83sLLJpY/LMbkRbx2lX7sxIHRGhvlPTdCiF4
+	 O8ENKTbHN0TSi3x+E6epYxx3FBD/c0Jc0QF8JTF11PwGjpnMt2QUu1uyOkLlSvoAjMw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=icenowy.me;
+	spf=pass smtp.mailfrom=icenowy.me;
+	dkim=pass header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=J9OSvhXi;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D781B606A324
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 10:27:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D781B606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=NQHo0OpC
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A4FF51576;
-	Wed, 11 Nov 2026 02:24:54 -0800 (PST)
-Received: from [10.57.63.24] (unknown [10.57.63.24])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5293A3F632;
-	Wed, 11 Nov 2026 02:24:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794392697; bh=fS7+dm1lVrR3kORF0oVfw8gO0FZtBp9Mzni64/2uajE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NQHo0OpCNlDTSyVwt9AskltMoLOC5DmzwE0FLofcyuQKXSh1OQ1LRblNqRoVCwt5D
-	 47za/dhQFqhiljNKutssaQNItZ5vVOwNbXueiF1wf174d18hrJ0Dw+pX/osNlH1KtV
-	 wvmVCbGhtttzbT1gy+aQN1BIJ3boc+tDGe7M8IOI=
-Message-ID: <0dcf6c71-9584-48c8-86ba-43b9bda0d16f@arm.com>
-Date: Wed, 11 Nov 2026 11:24:44 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=J9OSvhXi
+ARC-Seal: i=1; a=rsa-sha256; t=1794392820; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=X/HX67F92GhFRj7qyinZmwx/H96yrqVKh3qzZ20sgUcU7Bq1EzlL4LwKbanj16DaHIeAsfl1B+qcOUKXcizeVDto7mVnyPeb9dgTMese2SySaXW1ka1t9lhlN5Y+3CSRxekdfQgYz+oHyMlLSu0jRqR//hXS8AZbXWHAvWjoI0M=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794392820; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=izBfG5NYxgsrXHkibSx3HWmcn07W3wT6ndQmqom6GNQ=; 
+	b=fwDqvphywJ3uYhLeRoF5hlcNDhVwtmYKj+nvlJei0yPlkZDg9A4tiAZKXH69aS5hneBpcZfV9cMpkqr9nOp23zSTyrLLRrN8YEby+YjzvNa3APgIz0pqTH/UC1hjuQV87+GimXIrKW594bKrR5Vbi3pkoloHftpi0cIplmKMhfc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=icenowy.me;
+	spf=pass  smtp.mailfrom=uwu@icenowy.me;
+	dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: a=rsa-sha256; b=J9OSvhXiOr8lL3EQgkc/e/NNi3TnxQ3XlcIW5iQ8G8O4YIpzmpfsofd64NZF96sK6sewXhziyjoWP4mrKydKsJxgtjUpg2plbX4qatreUxLCiOELTmxBkVvc01H9QyYa6GM54yi/P/dU+zcWbFQIIN633UnCFgJ4GRxBmIgIc3mpxEXXdNxdsf74Nvk+CH7nUy6EL5EwtTsi9ih7WxFgsjBDvLUaN3jnfb+Vxy/NmmLDgKgqeJEk11+N8VYRGRJRlQMUh/809aREBoWNb3QBbvydxClqopz9L0FHDHbTFBwP/IGHUIFYf/LnxVdk2xdAxDAeih67xe8Q+Pa5XczMgw==; c=relaxed/relaxed; s=zmail2; d=icenowy.me; v=1; bh=izBfG5NYxgsrXHkibSx3HWmcn07W3wT6ndQmqom6GNQ=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794392818762580.4241612026577;
+	Wed, 11 Nov 2026 02:26:58 -0800 (PST)
+Message-ID: <68b5a51d767248a71c050110d5faf6c50c964d50.camel@icenowy.me>
+Subject: Re: [PATCH v2 1/3] dt-bindings: display: panel: ilitek, ili9488:
+ make the port optional
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Romain TISSERAND
+	 <romain.tisserand@gmail.com>
+Cc: Igor Reznichenko <igor@reznichenko.net>, Neil Armstrong	
+ <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann	 <tzimmermann@suse.de>, David
+ Airlie <airlied@gmail.com>, Simona Vetter	 <simona@ffwll.ch>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, 	dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, 	linux-kernel@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+Date: Wed, 11 Nov 2026 18:26:51 +0800
+In-Reply-To: <20261110-comical-adder-from-saturn-8c8fbb@quoll>
+References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+	 <20261109160706.2272332-2-romain.tisserand@gmail.com>
+	 <20261110-comical-adder-from-saturn-8c8fbb@quoll>
+Organization: Anthon Open-Source Community
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,68 +80,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v10 01/22] mm: Introduce kpkeys
-To: sashiko-reviews@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
- Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
- Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
- Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
- Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
- <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- Pierre Langlois <pierre.langlois@arm.com>,
- =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
- Quentin Perret <qperret@google.com>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
- Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
- Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
- Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
- Thomas Gleixner <tglx@kernel.org>
-References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
- <20261109-kpkeys-v10-1-aa6c4d9603bc@arm.com>
- <sashiko-outbox-207315@kernel.org>
-From: Kevin Brodsky <kevin.brodsky@arm.com>
-Content-Language: en-GB
-In-Reply-To: <sashiko-outbox-207315@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
->> [...]
->>
->> +/**
->> + * KPKEYS_GUARD_COND() - helper to define a guard type that conditionally
->> + *                       switches to a given kpkeys context
->> + * @name: the name of the guard type
->> + * @ctx: the kpkeys context to switch to
->> + * @cond: an expression that is evaluated as condition
->> + *
->> + * Define a guard type that switches to @ctx if @cond evaluates to true,
->> + * and does nothing otherwise.
->> + */
->> +#define KPKEYS_GUARD_COND(name, ctx, cond)				\
->> +	__DEFINE_CLASS_IS_CONDITIONAL(name, false);			\
->> +	DEFINE_CLASS(name, struct kpkeys_state,				\
->> +		     kpkeys_leave_context(&_T),				\
->> +		     (cond) ? kpkeys_enter_context(ctx) :		\
->> +			      (struct kpkeys_state) {}, void);		\
->> +	static inline							\
->> +	void *class_##name##_lock_ptr(struct kpkeys_state *_T)		\
->> +	{ return _T; }
-> [Severity: Low]
-> Could KPKEYS_GUARD_NOOP() and KPKEYS_GUARD_COND() use
-> DEFINE_CLASS_IS_UNCONDITIONAL(name) after DEFINE_CLASS() instead of
-> open-coding __DEFINE_CLASS_IS_CONDITIONAL() and class_##name##_lock_ptr()?
-> include/linux/cleanup.h already provides DEFINE_CLASS_IS_UNCONDITIONAL() for
-> this purpose, avoiding reliance on internal cleanup.h helpers.
+=E5=9C=A8 2026-11-10=E4=BA=8C=E7=9A=84 13:00 +0100=EF=BC=8CKrzysztof Kozlow=
+ski=E5=86=99=E9=81=93=EF=BC=9A
+> On Mon, Nov 09, 2026 at 05:07:04PM +0100, Romain TISSERAND wrote:
+> > The panel is a MIPI-DSI peripheral, a child node of its DSI host,
+> > and the
+> > driver does not use a graph port. A port is only needed when the
+> > host
+> > links its panel through the graph; other DSI hosts, such as the
+> > Allwinner
+> > sun6i-a31-mipi-dsi one, link the child node and have no output port
+> > to
+> > point at. The PinePhone panel is described that way on the same
+> > host,
+> > without a port.
+> >=20
+> > Keep the port allowed (panel-common) but no longer required, as for
+> > other
+> > DSI panels such as ilitek,ili9881c.
+>=20
+> ilitek,ili7807s and a few others have the same and it is confusing.
+> The
+> port should be required when this is connected over SPI or I2C, but
+> not
+> for MIPI DSI. I think that for MIPI DSI port is meaningless so
+> actually
+> incorrect.
 
-Agreed, that's the helper I was looking for but it didn't exist when I
-first wrote this code!
+I found that the dw-mipi-dsi common code (e.g. on Rockchip SoCs with
+dw_mipi_dsi-rockchip) would expect the panel to be connected via a port
+even if it's the child node of the DSI controller.
 
-- Kevin
+Such an example is at arch/arm64/boot/dts/rockchip/rk3399-pinephone-
+pro.dts .
+
+Thanks,
+Icenowy
+
+>=20
+> Why was it added in the first place?
+>=20
+> >=20
+> > Reviewed-by: Igor Reznichenko <igor@reznichenko.net>
+> > Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
+> > ---
+> > =C2=A0.../devicetree/bindings/display/panel/ilitek,ili9488.yaml=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |
+> > 1 -
+> > =C2=A01 file changed, 1 deletion(-)
+>=20
+> Reviewed-by: Krzysztof Kozlowski
+> <krzysztof.kozlowski@oss.qualcomm.com>
+>=20
+> Best regards,
+> Krzysztof
