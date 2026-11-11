@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794355774;
-	b=uICZTqbl08r5erwSpfGGAU792z4/4udwysdjNC7CxK0rwede3JKFY7XsWGQ9PzCoWgWi
-	 4VyaAHdAblA0CzaoWNs5k9cWJUq3dRbDoHPhIMyCT8lgLXqgzPnSp6ixI1oC/RE/Mp/X7
-	 HCzM4fbOQCh3BO/S2HJr/9/lreyomSjvzxe5Ff3DqNAodwReRSKJNTB0rNswtTsytcxHx
-	 gtghMfIy7f7tEqG5y1MrjcJn3tpmqaeePu7Ob1htVNYz8LWOaSf0yW4VBMreiNtgRjtNv
-	 fA1KI3/YAbI9lDdPC6l+382n2UA8Wat4OMK0LE0i6fKCQjXWWJkcajTdPHm4eVIz2SA==
+	t=1794356876;
+	b=D0iobn8vR2TeJH02e9xnin2w3UeFtMaAYTl0+xrox3pwnTP/6Nb1OLq6qDcswPajI0St
+	 LdEiv2kIq5qONSmsf1hJReHn2fZbvrMzAOywt7n187I1sDyJaVK4oatYycNlbXKNHxxWf
+	 lCfT8B/GXDeSXnnoeG2NQZyqWC5AQryiE13YWxMDAQnpml4cmLZaHq1uP3F2lDc/jZ1Y+
+	 D56HAJsB+J+HK1YXNRSamiyW+TIyuKQXd6B51uV3xdD8g+MpD0iIwpA9T99uBERvHrS8B
+	 RQyGKDvqjmXG+m9nh2a0tM3K1btCSjrzadPL1v8Xo/4zznQef0PSdnTxAnyp1iSwxJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794355774;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=D9RbdabYHrbLRamg3GYETMJN16hdNDL32IGRIbktV74=;
-	b=rZeZe8q9ona+SiL6wwWrGDVtSUKzdHAZp9bV8lSIygFlT/6odqXMf+x52jN3xo+YlOC5
-	 Ax03egur/pf8PQ8I+aYRQ8SuwD14214RmNSRc4cxF9Tss3GwBCvSElOEem79ZIH/ihjTe
-	 2t5qItK8R5L4fwwXW39pEzTfMRobua79AAfFAmPkH21W3bEVR2D1tnH5HZU1kPxd6xjwj
-	 fKXoPkwQAIs0+ZbDX4ZcNctQYxJHcFxoYNxpl3YlzeWyygQ7r/2za+Nbf80VGWZTNtJoa
-	 ruA2L9Plxrk4ErcokgiJkTzBrBvL9kMxde4pICA+UIOikT8Xb7h/nyQqJ6YNEcrWugA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794356876;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=QxouRG1KYEdTCRqc89wWZcbxBTtvnYZZATf1L46tV18=;
+	b=QO6cr19zL1l9huGhxiRGNC4gvOzGIXArkAk/dksD8sS9o1to1cX4FBcrZa8tov6v8jU5
+	 fZ4btRSK+bxNwkKkIsJSWJ/kEGplQsonV2EPd4U1HKHc1SgaGGuTzWP1yH+QrdgbCCspy
+	 5QRmTDVwJvHZSH/RG2fQgBM1y/6JhV1TDld+UV56S/xs7zY8i+zOrlkcTQZIykeVHlown
+	 fh1D+FK0krh3myNEb4aSKg09iDqRQUMROfzB5/6tT9PcJEGOyyW73bG6Ahe6gdVKCHDrK
+	 FMHd8eGXPb7ya8fE+QKe6KeiIe2NAzm3GaHbnB7y5q9Uz3Pqu6CymHOlSPJeuiOnq/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KJBOk22H;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=i8yNWGFP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79FD606A330
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 00:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E190606A31C;
+	Wed, 11 Nov 2026 00:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KJBOk22H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D801F00A14
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 00:09:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=i8yNWGFP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA5E1F0089F;
+	Wed, 11 Nov 2026 00:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794355774;
-	bh=D9RbdabYHrbLRamg3GYETMJN16hdNDL32IGRIbktV74=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=KJBOk22HBLkc6tfUu20Eh9xeMYaip5XleiEMISeXaxysRPDLpDmH612ksig07pAgv
-	 oGgJBRSewh1EMfh0Bv/WzpbPc9TTs/V55rtx4I8NQ0m50YamECnqyZUWHJypRfOkMD
-	 P5Hj0956d8kgNvlUz2NtH18CVGxcQ8/i8yyFt7b0qqh6JG/u4RC8Jhh4zOq/deY0F3
-	 5wDcO0WKw19+2wz0E04QwPlazcNA1CYk3hEaqeAjFmvmL2ArEMjiP9EDIU/oVH8i8Q
-	 s1FfPw+TcvBntwsSfbCWUUbV3SQL21EmvexAYuuYCPqdWf+Bc+TtTrWw9OGctpuKkF
-	 O5PPkfnfxs+aQ==
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5ed2f163a2fso816573e0c.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 16:09:34 -0800 (PST)
-X-Gm-Message-State: APuU4Z9bTB+QsnxuKgytCneGFEAqBAI/5YoVC6ZpDp2s/9VdR8ezF43e
-	J7T6GaREgoeaMdjbBBgnYEK6bQ7Iy9bI9vIRQipS2Teqz3WlYejD7g5OlajnVoXmZkzkob5ojxr
-	J90pEgRAnH54xAKj597S00qeXGcbPuLo=
-X-Received: by 2002:a05:6122:32d1:b0:5ec:e522:70d9 with SMTP id
- 71dfb90a1353d-5ee1c44ac6amr261128e0c.16.1794355773513; Tue, 10 Nov 2026
- 16:09:33 -0800 (PST)
+	s=k20260515; t=1794356875;
+	bh=QxouRG1KYEdTCRqc89wWZcbxBTtvnYZZATf1L46tV18=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=i8yNWGFPsUq6WxBEAz4FCU2EgZSv4uWyeQZsCObLRbazsnyDmOcF1yc/xdRjS/kX2
+	 +aTWhv0gs8ERKg471ZEJ0l/ZyvIvJBWElC9dEY/eUmkZkBJjRCZZG1Bf0aOey/4No7
+	 +U6MDol+Oxxiw2066UxjBzAHIz4ygPERr8KaeHYvZUKJYjU1kfABuQeSL16Yimwx1a
+	 3KW4ThZSGtowi0pd1ZB9dAlyVTuHnRPge1cRlmq+NrSyMqsiTM8pl44F6KuxdjtVKr
+	 B1/o8MkyncXJTdwOi/ApjNRTruuMi75IUoGC864GRcwyP0KSX3ylN19533FZiLqRKB
+	 mKr/zRFclEPIg==
+Date: Wed, 11 Nov 2026 01:27:52 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	robh@kernel.org, conor+dt@kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v3 5/5] string: Make strprefix() const-qualifier-generic
+Message-ID: <avOw9gLozCslpK_D@devuan>
+References: <cover.1794323750.git.alx@kernel.org>
+ <35bf6672f84f07de3f40e8db9e7fcfd643894fec.1794323750.git.alx@kernel.org>
+ <sashiko-outbox-207284@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,107 +58,179 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110202025.25736-1-baohua@kernel.org> <20261110202025.25736-10-baohua@kernel.org>
- <sashiko-outbox-207746@kernel.org>
-In-Reply-To: <sashiko-outbox-207746@kernel.org>
-From: Barry Song <baohua@kernel.org>
-Date: Wed, 11 Nov 2026 08:09:21 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4zfU11fP=ekrVfFBb+nj=fs3uYAVZD8Fpm9dAS1fjZnpA@mail.gmail.com>
-X-Gm-Features: AclHuK-sb02KucytR3FEDb8aRkGKMDn9o1EWXzBQq9iNIOSpuFJuwJQ7A_HDsNA
-Message-ID: <CAGsJ_4zfU11fP=ekrVfFBb+nj=fs3uYAVZD8Fpm9dAS1fjZnpA@mail.gmail.com>
-Subject: Re: [PATCH v6 09/15] mm/mglru: Avoid placing rejected folios below
- populated gen
-To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, linux-mm@kvack.org, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
-	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
-	liam@infradead.org, lianux.mm@gmail.com, liuxiang.277@bytedance.com, 
-	lyugaofei@xiaomi.com, mhocko@kernel.org, mhocko@suse.com, qi.zheng@linux.dev, 
-	ridong.chen@linux.dev, rppt@kernel.org, ryncsn@gmail.com, 
-	shakeel.butt@linux.dev, surenb@google.com, wangzicheng@honor.com, 
-	weixugc@google.com, yuanchu@google.com, zhangbo56@xiaomi.com, 
-	zhuhui@kylinos.cn, sidchintamaneni@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="khawwxmlw3jv7fmk"
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-207284@kernel.org>
+
+
+--khawwxmlw3jv7fmk
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	robh@kernel.org, conor+dt@kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v3 5/5] string: Make strprefix() const-qualifier-generic
+Message-ID: <avOw9gLozCslpK_D@devuan>
+References: <cover.1794323750.git.alx@kernel.org>
+ <35bf6672f84f07de3f40e8db9e7fcfd643894fec.1794323750.git.alx@kernel.org>
+ <sashiko-outbox-207284@kernel.org>
+MIME-Version: 1.0
+In-Reply-To: <sashiko-outbox-207284@kernel.org>
 
-On Wed, Nov 11, 2026 at 4:56=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+> Date: 2026-11-10 15:44:36+0000
+> From: sashiko-bot@kernel.org
 >
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [Medium] mm: uncleared LRU_REFS_FLAGS in lru_gen_add_folio() [1]
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] string: strprefix() breaks Clang builds via void * subscript in
+>   QVoid_of()
+
+This seems nonsense; already replied to in the review of 4/5.
+
+> - [Medium] string: strprefix() always returns char * due to non-const
+>   (strprefix)()
+
+Hmmm.  Fixed for v4.
+
+> - [Low] string: strprefix() macro parameter pfx mismatches @prefix
+>   kernel-doc
+
+Hmmm.  Fixed for v4.
+
 > --
->
-> commit 8ef17c06cc7c92ed5b07f7cf40e28066a3ac2fb0
-> Author: Barry Song (Xiaomi) <baohua@kernel.org>
->
-> mm/mglru: Avoid placing rejected folios below populated gen
->
-> This commit passes the scanned generation sequence number from
-> scan_folios() to move_folios_to_lru() so rejected folios are placed above
-> the populated generation or in the youngest generation, and removes the
-> previous folio_set_active() call from evict_folios().
->
-> > diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-> > index ab69b9930893f..f6f4bc9a704fe 100644
-> > --- a/include/linux/mm_inline.h
-> > +++ b/include/linux/mm_inline.h
-> > @@ -332,7 +332,8 @@ static inline unsigned long lru_gen_folio_seq(const=
- struct lruvec *lruvec,
-> >       return max(READ_ONCE(lrugen->max_seq) - gen + 1, READ_ONCE(lrugen=
-->min_seq[type]));
-> >  }
-> >
-> > -static inline bool lru_gen_add_folio(struct lruvec *lruvec, struct fol=
-io *folio, bool reclaiming)
-> > +static inline bool __lru_gen_add_folio(struct lruvec *lruvec, struct f=
-olio *folio,
-> > +             unsigned long scanned_seq, bool reclaiming)
+>=20
+> commit f882ec908122ee0c3f780648b859ed41700664d0
+> Author: Alejandro Colomar <alx@kernel.org>
+>=20
+> string: Make strprefix() const-qualifier-generic
+>=20
+> This commit wraps strprefix() in a const_cast(CQChar_of(s) *, ...) macro =
+so
+> that its return type preserves the const qualifier of its first argument.
+>=20
+> > diff --git a/include/linux/string.h b/include/linux/string.h
+> > index cb096e9eb9835..3e8a0537b86bb 100644
+> > --- a/include/linux/string.h
+> > +++ b/include/linux/string.h
+> > @@ -577,7 +577,9 @@ void memcpy_and_pad(void *dest, size_t dest_len, co=
+nst void *src, size_t count,
+> >   * *  @s+strlen(@prefix) if @s starts with @prefix
+> >   * *  NULL if @s does not start with @prefix
+> >   */
+> > -static inline char *strprefix(const char *s, const char *prefix)
+> > +#define strprefix(s, pfx)  const_cast(CQChar_of(s) *, strprefix(s, pfx=
+))
+>=20
+> [Severity: High]
+> Does expanding CQChar_of(s) here break Clang builds (make LLVM=3D1)?
+
+I can't even seem to build with LLVM=3D1, so can't reproduce, but as said
+in the other subthread (4/5), this makes no sense.  Clang accepts this
+code just fine.
+
+> CQChar_of(s) expands to QChar_of(const, s), which expands QVoid_of(s):
+>=20
+> include/linux/string.h:
+> #define QVoid_of(p)       typeof((__QVoidptr_of(p)){0}[0])
+> #define __QVoidptr_of(p)  typeof(1?(p):(void*){0})
+>=20
+> Because __QVoidptr_of(p) is void * or const void *, applying the [0] array
+> subscript operator to it fails to compile under Clang ("error: subscript =
+of a
+> pointer to void") in every translation unit that calls strprefix(), such =
+as
+> drivers/base/property.c, and triggers -Wpointer-arith under W=3D3 in GCC.
+
+Hmmmm, I see why it says Clang may not compile.  For that to happen, one
+needs to enable non-usual diagnostics.
+
+	alx@devuan:~/tmp$ cat const.c=20
+	#include <stddef.h>
+
+	#define QVoid_of(p)       typeof((__QVoidptr_of(p)){0}[0])
+	#define __QVoidptr_of(p)  typeof(1?(p):(void*){0})
+
+	int
+	main(void)
+	{
+		const void  *p;
+		QVoid_of(p) *q;  // const void *
+	}
+	alx@devuan:~/tmp$ gcc -Wall -Wextra -Wpointer-arith -Wno-unused const.c=20
+	const.c: In function =E2=80=98main=E2=80=99:
+	const.c:3:55: warning: pointer of type =E2=80=98void *=E2=80=99 used in ar=
+ithmetic [-Wpointer-arith]
+	    3 | #define QVoid_of(p)       typeof((__QVoidptr_of(p)){0}[0])
+	      |                                                       ^
+	const.c:10:9: note: in expansion of macro =E2=80=98QVoid_of=E2=80=99
+	   10 |         QVoid_of(p) *q;  // const void *
+	      |         ^~~~~~~~
+
+I think this diagnostic isn't very useful, which is why it isn't in
+-Wall -Wextra.
+
+> [Severity: Low]
+> Does naming the macro parameter pfx instead of prefix cause scripts/kerne=
+l-doc
+> warnings?  The kernel-doc comment immediately above documents @prefix, and
+> scripts/kernel-doc binds that comment to the macro definition that follow=
+s it.
+
+Solved.
+
+> > +
+> > +static inline char *(strprefix)(const char *s, const char *prefix)
 > >  {
-> >       unsigned long seq;
-> >       unsigned long flags;
-> > @@ -347,6 +348,8 @@ static inline bool lru_gen_add_folio(struct lruvec =
-*lruvec, struct folio *folio,
-> >               return false;
-> >
-> >       seq =3D lru_gen_folio_seq(lruvec, folio, reclaiming);
-> > +     if (scanned_seq !=3D -1UL)
-> > +             seq =3D max(seq, min(scanned_seq + 1, lrugen->max_seq));
-> >       gen =3D lru_gen_from_seq(seq);
-> >       flags =3D (gen + 1UL) << LRU_GEN_PGOFF;
-> >       /* see the comment on MIN_NR_GENS about PG_active */
->
+> >  	size_t len =3D strlen(prefix);
+> >  	return strncmp(s, prefix, len) =3D=3D 0 ? (char *) s + len : NULL;
+>=20
 > [Severity: Medium]
-> This problem wasn't introduced by this patch, but should set_mask_bits()
-> in __lru_gen_add_folio() also clear LRU_REFS_FLAGS [1]?
->
-> include/linux/mm_inline.h:__lru_gen_add_folio() {
->         ...
->         set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK | BIT(PG_active=
-), flags);
->         ...
-> }
->
-> Omitting LRU_REFS_FLAGS from the mask leaves stale PG_referenced and
-> LRU_REFS_MASK bits set when a folio is placed into a new generation,
-> inflating its tier access count and causing cold folios to be protected
-> from reclaim at the expense of hotter ones.
+> Does strprefix(s, pfx) still unconditionally return char * even when s is
+> const char *?
+>=20
+> include/linux/stddef.h:
+> #define const_cast(T, p)  _Generic(p, const T: (T) (p), default: (p))
+>=20
+> In const_cast(CQChar_of(s) *, strprefix(s, pfx)), the first _Generic
+> association is const CQChar_of(s) *, which is const char *.  Because the
+> underlying (strprefix)() function returns char *, the controlling express=
+ion
+> never matches const char * and always selects the default branch, returni=
+ng
+> an unqualified char * and stripping const from read-only strings.  Should
+> (strprefix)() return const char * and avoid casting s to char *?
 
-Again, if this is unrelated to the patch, could you please
-not report it?
+Solved.
 
-Also, this is a false positive. If we need to clear the
-refs, we already do so before calling lru_gen_add_folio().
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1794323750.=
+git.alx@kernel.org?part=3D5
 
-Also, in mglru-fg, we intentionally keep some values there for
-frequency guidance.
+--=20
+<https://www.alejandro-colomar.es>
 
->
-> [1] https://sashiko.dev/#/bug/linux-d2209941-6149-4b37-a97a-08c70d875d2c
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110202025.25=
-736-1-baohua@kernel.org?part=3D9
+--khawwxmlw3jv7fmk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Barry
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrztogACgkQ64mZXMKQ
+wqkDsA//TrX0eaNU2ZrsuPHyztzNkL4tyerQqWmXJ1YWMYONjTmVggnDol7/6kmz
+FuwHqMDUIuhLuDyuUlKREO075UEFaqh4CgaONl79PE8TGgqfgh+mD5M1aKgpWyjx
+efmJutiWmQrwUrXdq7s0o2hjKrWFmDS7Fakren6/asWJiUmjw8Gud6eFyUGCcT7V
+i9JuoWRn5ZtmbNhqwMDVKRXWzluHEz88Vu06VC1DHyW71r8zpcSKIh8z/vY92ZCS
+S6JS9hLzto2pNp9sRtZSedpJVCUyPN3V4pXVztFJzkBnJNzVrkVKMU8zme/mVjoJ
+LIq+nv1tZHqsux9yTPWSP+r86YEuVJoF3xyZrtaTVEffX7jGxYpZAwtRVH+Op2cn
+nXyWfZvQW4kHk1XghRN6oiidLarQgL2SxPndIvzLnW7SHtpwyoQ9lD4nONGvW0ho
+0+U3IX+1N7wPYbI0NigZGUxM9h1kVNfWnEU82K1raV7boQ1HP41PxhxrsOnRt22l
+/M8UABw1395cOvD9HUUYuN4n24U/S2JPL0fJJVK2z8xaU4qMMHqZW4dDFiYKmbxu
+cXaSw5HnmZ+JZiaJr7gvtF9SMCRtDx36Mu2gr04K6KQ2rVGgO+S5AI6aPMIYZAq+
+0vrsXL31Fz6f3EHD9rhGpcNdUus7vsgf4oVSg3cuywAv4zpOZvI=
+=JswK
+-----END PGP SIGNATURE-----
+
+--khawwxmlw3jv7fmk--
