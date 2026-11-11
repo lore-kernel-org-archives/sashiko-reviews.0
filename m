@@ -1,56 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794420287;
-	b=0P2VLIE99k7GZqj44/T1Yk32QGf5l1HOkW/9VgG/o/d7L7Zc7L+v0jkkPVpKLdTbKr1D
-	 Vf702UnOyu6IScN3RURr2tM6Rs2N2eB2vtEktkMU6HgVUfZOVOkuaJvDyH43rs+zOOyn0
-	 zRsVsy84C9ev/mJ84eQcvuudAOiHIw43fMgL/2Ug39vntnzhf8L14xUeyvG9/qdWbLL5/
-	 +G1Qg2MGNT9dtvbgJG8a/JIXK3KAIvWDUeEPmlP5yvFezxuiXJmMx+0Fr454Tw/ygsSwO
-	 LQFsNSk/f6MUpTjmp8JYdJOXtSiP2VbUhPSOpSiYwtwuZpXBzsajIAZ/RvdagrNXAbg==
+	t=1794420480;
+	b=WhEgRhQk0YICFO+LVcWhosffMQ89GEfq2qHvNbnll1RktC+vGS937bO9ss4EThZHRkkw
+	 d/jUVhTNS3d/fHLfBTzYR6yb5g38oL2b20SDiaXOx32VnVq7a1BXgdBkl7CpY1y7OTspa
+	 4WqW6iOS5IFaqJoiZ/Dtjj9h8tRVn6kvo3S1e/ci2q/6THCss1vRJT7dqemj08OGLW0xN
+	 mLCYeKHEaGYGpGqUOl29NVnzZa3YvFa8+fCtdkwWjewfcEpNzHduzN+SN5rUQf/Xb49MC
+	 COvgQcAgBn0ysOozXXHhLp2yFz8I0lrluYeVisI4rlLvxWBQCZKAf1frjOvq7UJomtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794420287;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=oOG3LYk9vtgL9dcZ1ZryVaj5bJKrx63IWhlTOwABRsI=;
-	b=XRutFBsrWLb9sA8EqPUyMlMXAgFTNKWDq7llWNt/Mt9Z1rXdYS74fKOwC2GFlgwqjj+Z
-	 WKtEKrBQnG0WNXHnU79w5X+KjPIVeg8iCvRRREx+T2x+USRqRqZkFMy3VDPqkPFi3v7/E
-	 mzM+KCTQjRdC0f0t3h+z7nB9i3znyHa4o07PAiGSg2srEWMMp8juGi0mzOVIkaaUo0LGO
-	 uvmPdJRYZFPDuBvTe/0H0vlLQuTaXz5v+Yl4ruqGTh3i/lRHi0QG3X1VZgNj8Hp92zxy3
-	 +v3KXWeM2FyLCUzKc6OILnwBBl2wEVKuXJ8IPhXUeHIFuTfgzHGxD0n8yrwuc/ECkUg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794420480;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Sender:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type;
+	bh=Dr6L6LTyTheZ7MJebrdlyOleZNT81+rS/ZxvoiAlOaw=;
+	b=PghV1v2nk2jH/g1URks8juDjMeYtgwsqP8wQsQX0fTgR8AYXRl2QNPoml5r4cZsqbRr8
+	 yXfR+T8dcf5gk9WwgBG1y3fnBOiRhSe21P5XwP2nn4ifvyyQYOmUBao49zhq4ReM03RON
+	 ghyda+lMOyGi3ngv50t5NMfnLg2/d4y+Yj7r/rmF1EdeTsb1zZOYjM8Kufkz54Wud0aMC
+	 X4WIU/nOFClaYdk0O9/OueD9HWT/qX+veLKgTc8G8xffxWzYmGiaVpTgMBszCULQZyRZv
+	 3zKaJSe/wNn2+2jlXR8g2unimdytbSPIbbUJnPp8o2kBSvVAA4Og/PjQy+6Fik6C46w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BVWme5c8;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XS1qIIWW;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1B2606A31C;
-	Wed, 11 Nov 2026 18:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D88606A321
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 18:07:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16D88606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BVWme5c8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818F51F00A05;
-	Wed, 11 Nov 2026 18:04:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794420286;
-	bh=oOG3LYk9vtgL9dcZ1ZryVaj5bJKrx63IWhlTOwABRsI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BVWme5c8j0wUINyJzlKMDwvaevI0nZziEzAPeor13Pn4GZ31y5dJ4xA0EfUfse4sX
-	 Mh78P28sz14DHVHwxpdbRqJ4isoVassr8IrUZZ2wINBRnXbMVEPe/zQOGgZCNBcD1k
-	 QJHZ0Uz0JEXuUzfNpmOW1r2TfG+8wi9eFQ3lKlArOtCksGpqlxlf3mcDfMnrBR4K36
-	 qjSE/qtDHNdC3fJoRuQTeQKYkc+5qX2LVj4IvxfX0iF6QGPte/lwRxM1Z/tR3RFHi2
-	 +s8h3GPUvE3vWCwqrnhqmtUdlLxamKzdOfz+P0/IqwIn9uiY8LgUoqEVmkSimZys40
-	 e24CC4fRmBH/g==
-Date: Wed, 11 Nov 2026 18:04:42 +0000
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Paolo Pisati <p.pisati@gmail.com>, linux-ide@vger.kernel.org,
-	mfd@lists.linux.dev, dlemoal@kernel.org, cassel@kernel.org
-Subject: Re: [PATCH v1 1/7] zorro: warp mfd: add the CS-Lab Warp
- multifunction parent
-Message-ID: <20261111180442.GE6323@joneslee-macbookpro.roam.internal>
-References: <20261111163735.227286-1-p.pisati@gmail.com>
- <20261111163735.227286-2-p.pisati@gmail.com>
- <sashiko-outbox-209365@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XS1qIIWW
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a4d7ae1ae9so32076525e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 10:07:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794420478; x=1795025278; darn=lists.linux.dev;
+        h=content-type:in-reply-to:from:content-language:references:cc:to
+         :subject:user-agent:mime-version:date:message-id:sender:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Dr6L6LTyTheZ7MJebrdlyOleZNT81+rS/ZxvoiAlOaw=;
+        b=XS1qIIWWHWuL1cGwLEaMfHgtUrkZM22vC+vUY72M2TSs6WOAURBH/Ux0UfOhULxTUJ
+         EUWv26o40tv9shGog3ZT1PhdjgoMvLbAKSTacrOni7Ltptm45ana5p7A7Z87cScRHX3d
+         R5mt/ZQSyWm6b33SKtC75iShB3zc1D5xPXgkofIfpFmrXkDvbtkDbaEvO1Ra2aM0YrOi
+         DSfytaG6YhS/HJT9mJK5pzeQ68lzFqzHeLwymTiTMYeiamG8WJ06kl4VxGoDUbx0tPPu
+         SL3GRANTV98HA18kOA4kwqGcO9ddwO/3iv/Rnj+XZLA7GDoJUYfBc1f+86mEZSRlbhqQ
+         jvkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794420478; x=1795025278;
+        h=content-type:in-reply-to:from:content-language:references:cc:to
+         :subject:user-agent:mime-version:date:message-id:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Dr6L6LTyTheZ7MJebrdlyOleZNT81+rS/ZxvoiAlOaw=;
+        b=hBkTEpQywIGjd8mqNOVozIuDrJZdiR1HJJpKA8Q4Jio++rt+O3wW5lgqqCCYaXIwTI
+         gkCWjOt1AfU2JmMhEY8sbtOJjW50wcZlXGHbTy/RKBsq0M0UZ+ZsoJlpHBufLmtA3W67
+         s7govjFp7ZT7fKNMv7QZRkAD/3ecZN09eeMvUr6jmwzj5qE4FPOkh/r3Tt9Gm63BhQNV
+         oZZinlX1TVVN4+Sh0vnqvkzdNsVhXvx0VnEenFZur1C8/zur32vzprNPESpoWo1eGqYM
+         VUGEjKI6ZEYf8XZ0AZQut9bNnUJ60eHNuElGAa9vYX06Oaok6/+Ww3VGM+xegzX78gzn
+         gKbg==
+X-Gm-Message-State: APuU4Z/QPjp/UxD7Pm1m/At44qnTzZPFyjW1cv15ueGN9beKZyhsb+jZ
+	r2iQGHE8jNu2ST0Kuy7hSp4fteQXz2XU6CEj/rnOSnBldSxp4DMkiUCCtpgE8CoOd+4=
+X-Gm-Gg: AYBFou2qVo5LjxiVTpXLd6tDj2NAN/+mzDN/O2KVmFhcBVU/P4DEdwiFEeYn4rrSI6d
+	ZWLW8h64tQPYeEeDnhSpMph/1cjZw+87p4YQgjXQdNuYi8VN3SKBVWYAoJ9aVHDm5Plj7+P9puY
+	IAtpy/6ce2UUM9QAfhPvc7yY8ojXxx0KymqGx0rqIfhdSsmQ+dOmA4B4Bgmed8/Dwiyvv4pSsBq
+	bxmGReconPSbc6QMxPztVO3mh0X0PSiNS8o9c4x53/qJfFfitgJdPCohp/86JD7waxLUvRvD4u6
+	2uOnm80eJWKkUUuC6JUWdUVlh9cd/IuksA4CGD2wFJiquhHsKkiR/GC3GPzJzHHcQtslcjIaVup
+	bY3SEOxRlew9XK5rjIUUGD4a6beK8THxd5EHW8+lQNj9QVYta80PNQ7yJN8kyPR6ndISvMnVkSO
+	n1BEID4KC+/zEkqy0Qjh0kwCMIxALF1Qadu8JYfStf1J2137vjJdYeeUud/3jdin/Y8F9BBpnTA
+	qmou4w+HLNNlrKCSe+D4tusMNXnuj/onRJdlfYhqJYfZdyyye2T7O97PTbDMr1rA9YEAKCFKPal
+	K+Ekv24FI+yNLpabcPS+3Cpjtn8EoW4s0vpfqXcQ9OwgEUhjPcK5cqEySI68IFe2pTBXeYCwPfT
+	+i846OARJGE8E9l2T9iZIKVW5vm1NzcdxIqOC4zxD8vc=
+X-Received: by 2002:a05:600c:34c7:b0:49f:e701:51c8 with SMTP id 5b1f17b1804b1-4ba093583eemr53113775e9.9.1794420478047;
+        Wed, 11 Nov 2026 10:07:58 -0800 (PST)
+Received: from [10.128.10.232] (195-23-151-163.net.novis.pt. [195.23.151.163])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4e27a8b0sm5301115e9.15.2026.11.11.10.07.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Nov 2026 10:07:56 -0800 (PST)
+Sender: Julian Braha <julian.braha@gmail.com>
+Message-ID: <86085222-625d-41aa-8b60-2ac8960ffb76@gmail.com>
+Date: Wed, 11 Nov 2026 18:07:55 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,157 +91,162 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-209365@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] kconfig: wrap long expressions in menuconfig
+To: sashiko-reviews@lists.linux.dev, nathan@kernel.org, nsc@kernel.org
+Cc: ojeda@kernel.org, a.hindborg@kernel.org, nico@fluxnic.net,
+ rdunlap@infradead.org, grahamr@qti.qualcomm.com, jakub.git@horky.net,
+ linux-kbuild@vger.kernel.org, gary@garyguo.net
+References: <20261110173526.1548434-1-julianbraha@gmail.com>
+ <20261110173526.1548434-3-julianbraha@gmail.com>
+ <sashiko-outbox-209420@kernel.org>
+Content-Language: en-US
+From: Julian Braha <julianbraha@gmail.com>
+In-Reply-To: <sashiko-outbox-209420@kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------2YgqhCnYwobn2orogHEgpL9Y"
 
-On Wed, 11 Nov 2026, sashiko-bot@kernel.org wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------2YgqhCnYwobn2orogHEgpL9Y
+Content-Type: multipart/mixed; boundary="------------DYp1KHBOXMdl7yEfQ0JE6JLl";
+ protected-headers="v1"; hp="clear"
+Message-ID: <86085222-625d-41aa-8b60-2ac8960ffb76@gmail.com>
+Date: Wed, 11 Nov 2026 18:07:55 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] kconfig: wrap long expressions in menuconfig
+To: sashiko-reviews@lists.linux.dev, nathan@kernel.org, nsc@kernel.org
+Cc: ojeda@kernel.org, a.hindborg@kernel.org, nico@fluxnic.net,
+ rdunlap@infradead.org, grahamr@qti.qualcomm.com, jakub.git@horky.net,
+ linux-kbuild@vger.kernel.org, gary@garyguo.net
+References: <20261110173526.1548434-1-julianbraha@gmail.com>
+ <20261110173526.1548434-3-julianbraha@gmail.com>
+ <sashiko-outbox-209420@kernel.org>
+Content-Language: en-US
+From: Julian Braha <julianbraha@gmail.com>
+In-Reply-To: <sashiko-outbox-209420@kernel.org>
 
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [Low] mfd: warp_mfd_probe() places new MFD core driver in
->   drivers/zorro/
-> - [Low] mfd: warp_mfd_driver hard-codes mfd in names and uses wrong
->   subject prefix
-> - [Low] mfd: warp_mfd_cells registers only a single child cell and
->   Kconfig mismatches code
-> - [Low] mfd: warp_mfd_probe() passes z->dev.id instead of
->   PLATFORM_DEVID_AUTO
+--------------DYp1KHBOXMdl7yEfQ0JE6JLl
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-All of these are hard blockers.
-
-Why are you adding a whole new subsystem for your device?
-
-This clearly lives in drivers/mfd.
-
+On 11/11/26 17:35, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] kconfig: broken '(' and operator wrapping in
+>   expr_print_gstr_helper()
 > --
-> 
-> commit 9af1a8469b32d3686430ab985b8dd9f3f752e76e
-> Author: Paolo Pisati <p.pisati@gmail.com>
-> 
-> zorro: warp mfd: add the CS-Lab Warp multifunction parent
-> 
-> This commit adds a Zorro parent driver for the CS-Lab Warp 1260 board that
-> registers the on-board IDE window as an mfd cell for pata_cswarp.
-> 
-> > diff --git a/drivers/zorro/Kconfig b/drivers/zorro/Kconfig
-> > index 41475ad46e45f..c9ab9fb4b9ee7 100644
-> > --- a/drivers/zorro/Kconfig
-> > +++ b/drivers/zorro/Kconfig
-> > @@ -17,3 +17,33 @@ config ZORRO_NAMES
-> >  
-> >  	  When in doubt, say Y.
-> >  
-> > +# Zorro multifunction drivers
-> > +
-> > +config WARP_MFD
-> > +	tristate "CS-Lab Warp multifunction driver"
-> > +	depends on ZORRO
-> > +	select MFD_CORE
-> [ ... ]
-> > +	  This driver hands the IDE window to pata_cswarp - which needs
-> > +	  idemode=native set in Warp Configuration to be of any use - and
-> > +	  exposes the configuration and telemetry reachable over the dual-port
-> > +	  RAM in sysfs: voltages, temperatures, fan, firmware version and
-> > +	  Kickstart slot. Nothing else on the list has a driver yet.
-> [ ... ]
-> > diff --git a/drivers/zorro/Makefile b/drivers/zorro/Makefile
-> > index 91ba82e633e76..6fe7cc1822dc1 100644
-> > --- a/drivers/zorro/Makefile
-> > +++ b/drivers/zorro/Makefile
-> > @@ -7,6 +7,8 @@ obj-$(CONFIG_ZORRO)	+= zorro.o zorro-driver.o zorro-sysfs.o
-> >  obj-$(CONFIG_PROC_FS)	+= proc.o
-> >  obj-$(CONFIG_ZORRO_NAMES) +=  names.o
-> >  
-> > +obj-$(CONFIG_WARP_MFD) += warp-mfd.o
-> 
+>=20
+> commit 89202a55a9cf081fc680fbfa051ebe8d0cfa7113
+> Author: Julian Braha <julianbraha@gmail.com>
+>=20
+> kconfig: wrap long expressions in menuconfig
+>=20
+> This commit wraps long Kconfig expressions across lines with matching
+> indentation in menuconfig search and help text, keeping '!' prefixes an=
+d
+> value annotations attached to their symbols.
+>=20
+>> diff --git a/scripts/kconfig/expr.c b/scripts/kconfig/expr.c
+>> index 2b91d16bf14fb..9284ccb20259c 100644
+>> --- a/scripts/kconfig/expr.c
+>> +++ b/scripts/kconfig/expr.c
+>> @@ -1155,30 +1155,40 @@ static void expr_print_gstr_helper(void *data,=
+ struct symbol *sym, const char *s
+>>  	if (sym)
+>>  		sym_str =3D sym_get_string_value(sym);
+>> =20
+>> -	if (gs->max_width) {
+>> +	if (gs->max_width && !strchr(str, '\n')) {
+>>  		unsigned extra_length =3D strlen(str);
+>>  		const char *last_cr =3D strrchr(gs->s, '\n');
+>>  		unsigned last_line_length;
+>> +		unsigned int prefix_len =3D strlen(gs->s) - gs->wrap_pos;
+>> =20
+>> -		if (sym_str)
+>> +		/* Ensure the value annotation stays attached to the symbol on wrap=
+ */
+>> +		if (sym_str && sym->type !=3D S_UNKNOWN)
+>>  			extra_length +=3D 4 + strlen(sym_str);
+>> =20
+>> -		if (!last_cr)
+>> -			last_cr =3D gs->s;
+>> +		last_line_length =3D strlen(last_cr ? last_cr + 1 : gs->s);
+>> =20
+>> -		last_line_length =3D strlen(gs->s) - (last_cr - gs->s);
+>> -
+>> -		if ((last_line_length + extra_length) > gs->max_width)
+>> -			str_append(gs, "\\\n");
+>> +		if (last_line_length > gs->indent + prefix_len &&
+>> +		    last_line_length + extra_length > gs->max_width) {
+>> +			gs->s[gs->wrap_pos] =3D '\0';
+>> +			str_printf(gs, "\n%*s", gs->indent, "");
+>> +			while (prefix_len--)
+>> +				str_append(gs, "!");
+>> +			if (!sym)
+>> +				str +=3D strspn(str, " ");
+>> +		}
+>>  	}
+>> =20
+>>  	str_append(gs, str);
+>>  	if (sym && sym->type !=3D S_UNKNOWN)
+>>  		str_printf(gs, " [=3D%s]", sym_str);
+>> +	/* Ensure '!' stays attached to the symbol on wrap */
+>> +	if (sym || strcmp(str, "!"))
+>> +		gs->wrap_pos =3D strlen(gs->s);
+>>  }
 > [Severity: Low]
-> Should this driver and its local header live under drivers/mfd/ instead of
-> drivers/zorro/?  Per the mfd subsystem guidelines, new core mfd drivers
-> that call mfd_add_devices() or devm_mfd_add_devices(), along with headers
-> shared only between the parent and its children, belong in drivers/mfd/.
-> 
-> > diff --git a/drivers/zorro/warp-mfd.c b/drivers/zorro/warp-mfd.c
-> > new file mode 100644
-> > index 0000000000000..94af7c9d0ea5e
-> > --- /dev/null
-> > +++ b/drivers/zorro/warp-mfd.c
-> [ ... ]
-> > +static const struct mfd_cell warp_mfd_cells[] = {
-> > +	{
-> > +		.name		= "warp-pata",
-> > +		.num_resources  = 1,
-> > +		.resources	= (const struct resource []) {
-> > +			DEFINE_RES_MEM_NAMED(WARP_OFFSET_ATA, WARP_ATA_SIZE,
-> > +					     "pata"),
-> > +		}
-> > +	}
-> > +};
-> 
-> [Severity: Low]
-> Is an mfd driver appropriate when warp_mfd_cells[] only registers a single
-> child device?  The mfd subsystem guidelines require mfd to be used only for
-> devices registering multiple children across different subsystems.
-> 
-> In addition, the Kconfig help text states that this driver exposes
-> dual-port RAM configuration and telemetry in sysfs (voltages, temperatures,
-> fan, firmware version, and Kickstart slot), none of which is present in
-> this commit, and drivers/zorro/warp-mfd.h defines dual-port RAM offsets and
-> sizes that have no users here.  Even later in the series, telemetry is
-> added as custom sysfs attributes on the parent Zorro device rather than as
-> a child device in the appropriate subsystem such as hwmon.
-> 
-> > +static int warp_mfd_probe(struct zorro_dev *z,
-> > +			  const struct zorro_device_id *ent)
-> > +{
-> > +	int error;
-> > +
-> > +	dev_info(&z->dev, "Warp at %pR\n", &z->resource);
-> > +
-> > +	error = mfd_add_devices(&z->dev, z->dev.id, warp_mfd_cells,
-> > +				ARRAY_SIZE(warp_mfd_cells), &z->resource,
-> > +				0, NULL);
-> > +	if (error) {
-> > +		dev_err(&z->dev, "mfd_add_devices() failed %d\n", error);
-> > +		return error;
-> > +	}
-> > +	return 0;
-> > +}
-> > +
-> > +static void warp_mfd_remove(struct zorro_dev *z)
-> > +{
-> > +	mfd_remove_devices(&z->dev);
-> > +}
-> 
-> [Severity: Low]
-> This isn't a bug, but mfd guidelines prefer automatic platform device IDs
-> over passing z->dev.id to mfd_add_devices() when subdevices do not require
-> explicit numbering.  Using devm_mfd_add_devices() would also drop
-> warp_mfd_remove() and keep child teardown ordered with devres resources
-> added later in the series.
-> 
-> Similarly, warp_mfd_cells[] could use the standard mfd cell resource helper
-> macro instead of open-coding .num_resources and a compound literal, and
-> warp_mfd_init() / warp_mfd_exit() could use module_driver().
-> 
-> [ ... ]
-> 
-> > +static struct zorro_driver warp_mfd_driver = {
-> > +	.name		= "warp-mfd",
-> > +	.id_table	= warp_mfd_ids,
-> > +	.probe		= warp_mfd_probe,
-> > +	.remove		= warp_mfd_remove
-> > +};
-> 
-> [Severity: Low]
-> This isn't a bug, but mfd subsystem conventions avoid hard-coding "mfd" in
-> driver, symbol, Kconfig, and file names (such as "warp-mfd",
-> warp_mfd_driver, and warp-mfd.c), and expect commit subjects in the form
-> "mfd: <driver>: <Capitalized description>".
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261111163735.227286-1-p.pisati@gmail.com?part=1
+> Does expr_print_gstr_helper() mishandle wrapping around "(" and wrapped=
 
--- 
-Lee Jones
+> operators?
+>=20
+> When expr_print() formats a negated parenthesized expression such as
+> "!(A || B)", it emits "!" and then "(" before the first symbol.  Becaus=
+e
+> strcmp("(", "!") is non-zero, printing "(" updates gs->wrap_pos to poin=
+t
+> after "!(" and resets prefix_len to 0.  If the first symbol plus its
+> "[=3D...]" annotation then exceeds gs->max_width, it wraps after "(",
+> leaving "!(" (or "(") dangling at the end of the previous line.
+>=20
+> In addition, the guard "last_line_length > gs->indent + prefix_len"
+> assumes only indentation and "!" can precede the first symbol on a line=
+=2E
+> After " && " or " || " wraps onto a new line (or after "(" or "[" is
+> printed at the start of a line), gs->wrap_pos is updated past that toke=
+n,
+> making last_line_length greater than gs->indent + prefix_len before any=
+
+> symbol is printed on the line.  If the following symbol and its value
+> annotation exceed gs->max_width, expr_print_gstr_helper() wraps a secon=
+d
+> time and leaves "&& ", "|| ", "(" or "[" stranded on a line by itself.
+>=20
+> -- Sashiko AI review =C2=B7 https://sashiko.dev/#/
+> patchset/20261110173526.1548434-1-julianbraha@gmail.com?part=3D2
+>=20
+
+Sashiko is hallucinating this time.
+
+I mean, what it's saying is correct, but this is intended behavior not a
+bug.
+
+- Julian Braha
+
+--------------DYp1KHBOXMdl7yEfQ0JE6JLl--
+
+--------------2YgqhCnYwobn2orogHEgpL9Y
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQT6qjll++tIFxF8TUPElYPCBXNxIAUCavSu+wUDAAAAAAAKCRDElYPCBXNxIHCK
+AP4vp9i2du+IMG1TAXWX8fIRLdqwBhfKh22XNBYcb4Z5qwEApEedx8d8HxSEf9Bzx5914VRB9W1r
+h3M4MMxDa8Dulwo=
+=dZ0l
+-----END PGP SIGNATURE-----
+
+--------------2YgqhCnYwobn2orogHEgpL9Y--
