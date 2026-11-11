@@ -1,81 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794411153;
-	b=NuvdHoSUIIQV065OGXv1Nolw+GpAzHwy2DeuIxuO0n9aB5S+qz2JZQ3dDH5dNz6byS7V
-	 tEuwFSHsaMNkgqpukJhb5ONs5kOsYI1D7/7PZrWdNyJ1HX34ZfeGtvK3gzEhvwEOj3HgD
-	 6ynlVm3sFks/sWaeAzgVnmjSxyH97wpRqj0/sOqsL2VJpwR3n7nJ+DnK7jR852vlJpVzN
-	 FKF9WG+nY5XkDnnlidkH8s9B7+6agIFPPOreHA1aC4EJDuzI5iybprrf9EdHwENhq9Nl+
-	 hoa1y4ky7lPDxc1vZga2wvtMnpB3ztWhRoL4ulWArli+S3oftnGyd1GtyDzqDBcjrbQ==
+	t=1794411161;
+	b=fzUGAzoZ8IQG1HagpAroLfV6YRlGA7nvdsUvlq0N0ZcJJ/hicyL1Man9gUUutNDoHX6l
+	 S9MVPZ28TOGhr7wM8Zr1VIU4fIfOLsktwFfiXFbSvQ2Iow8osLvhU64ugiZhG5EdWIirT
+	 /RaXJciztFxevZXlTBIemkQSxTUALcC3vhLcNhetjTydiE0SvgRumd8xfY+v0a/Eddsmw
+	 ajTim3VRR9vRmTP8PtXUvW0ng6gDYMF2NWU9XQw4bZkFoDed2WHbiRJqvjrJ7Ze2WGwVP
+	 OAe0rFX6wPu4jzf4pmLTj3y9FGv37ViROaifWzGWMmvG6bgsZJB4ac/Gb6GdOsKR29A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794411153;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
-	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=HbIYwUvdCF/rcWDA0aAqCb5MdD4dtRR03IC0RYr6j8w=;
-	b=IcVRuoO8HzQfZ+TPIqey/Ee32R5m7TrYLUqJalUmQzXMfZmD+bn2Lq8b8XpDGDj65+EX
-	 dowqyF9A8HzoA8Pte9lmUQb1x5iSRP3BHIc0Kb0heCbFB3b3jWSwv0LqzvM4ZSVgI8Vdc
-	 5Rc7G7bdGo9f1qEVgyv9qc8zGrdFKnbPPDTqG/FJVyMtsg5WvLNwMIcyJEY24wX3M4m18
-	 C+oS2FOMlK3uxE4WaSugKarpwQ3MsKrZ9fdZOFAX8MC6vpqjlB4d/fSwDO9YPL7Go5Bd/
-	 GxLel45Fqx9vy13zmzpYw8EiqX5gmChytEbFS5KzrjgTR5EG5SW0jOYkIB16y+BccpA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794411161;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=PgP1qIz2w/OR/xuvf7y5aFs0i8Rdt5F7Eb+3pqImopk=;
+	b=Yc1Yw8rbLkUZrSR88SFsYB8Ekx/Ciir24dIwPgg5+rpw0kvRg6KIInMHUgk7WaIzj8nC
+	 NxzHTJgR0gaWtYpQ2lsuxFbmJAJf/E7KsWNmUNkz3nj1hysMqZfUTyxxK4QLGL9QWoXbd
+	 riEWaYW4uCuv5pod2P8kX+4bhAp4gyTjUpe2icmoRY4113d16NJaAmDbDJ69eEooiH+Ep
+	 Q9YPmgwmzFlcDyYofpN9FgRCUn+iqJaUZ5i0WWnSYLd/Sg8mZ6vC1i1b+9EUnqFNHL3IR
+	 qIEwwnHgk8JTDTeyVca5VcUvprlAvFf9i2mj5VWG9Nj7ZmDEvpmKR7iL0oU9GDDletA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SQ3iuRRR;
-	arc=none smtp.remote-ip=148.163.158.5
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=suse.com;
+	spf=pass smtp.mailfrom=suse.com;
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=CJcEmX2q;
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA333606A324;
-	Wed, 11 Nov 2026 15:32:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA333606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671FE606A32D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:32:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 671FE606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SQ3iuRRR
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ABFEKdN1392022;
-	Wed, 11 Nov 2026 15:32:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=HbIYwU
-	vdCF/rcWDA0aAqCb5MdD4dtRR03IC0RYr6j8w=; b=SQ3iuRRRPmXS6zny0q9wZK
-	zeMVVe4RsGAUpBEvyNwJwDQo7UjhvTljzIRpM9lDDKNfSs78+ps37gD0daVL9LEZ
-	OE0nTBte4CmtbwcW6m8FNHy+T+XmJaMpD0rwdPEAHqLuo8T3KiXbshy29ySHw4Kn
-	1xujgNuzEHiXCCph6atm7iAm+c29kKBVxox99ODirAxEGVUgyWaoTxmcISmTwez6
-	PRRS+FX23UJgKzC3yMHtIgQC6Wvbwxrvr5M34Moe9P7PL5T3Qy3g5FhrRxVAUHDS
-	ZtzsZJVqhaDTFlxhYTpfY/Fd24SgLsF1vIsY5TJk/Q7JZsvZwVVp8ZAzRpPpm/iw
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hssdkttqc-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 11 Nov 2026 15:32:31 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6ABFJpVY3536671;
-	Wed, 11 Nov 2026 15:32:31 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hvkq0sg0v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Nov 2026 15:32:30 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6ABFWTBX16384680
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 11 Nov 2026 15:32:29 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 61E445805A;
-	Wed, 11 Nov 2026 15:32:29 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C0EDA58052;
-	Wed, 11 Nov 2026 15:32:28 +0000 (GMT)
-Received: from [9.61.182.62] (unknown [9.61.182.62])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 11 Nov 2026 15:32:28 +0000 (GMT)
-Message-ID: <d6fcd8d5-d614-4a8b-8625-8feacc754a8a@linux.ibm.com>
-Date: Wed, 11 Nov 2026 10:32:28 -0500
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=CJcEmX2q
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a215e64962so37041645e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 07:32:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1794411159; x=1795015959; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=PgP1qIz2w/OR/xuvf7y5aFs0i8Rdt5F7Eb+3pqImopk=;
+        b=CJcEmX2q+lUnjjs7YH/SUU/rum2yNhnbmYQqiE39Ucaj/3BSEB80Zchl5cgr/H6OMK
+         dKVr9MALtCo/9SUhwfMAWyYB9oX5iveHYUlNHguqiV4Bi17TgSxjNNkz9/xiif7Vw8HU
+         sAWGyGzAl1HGL96flg8epB1BMDoleksjY9unA8dFOc94SO1RE+vThhsBMYaU9iFtcPPP
+         D4hHyRkFj7Y9skQdymecdOrgi8ePJEZJr5r2j/RRA6twEN3fRv7MmevOvZY3vyM1U/uo
+         Bk/gh0RJGnHk5uKv1tRSDJ7PUzuLHi19NRnOu6it/pjN8r2m6+HP4NR/8oGJCjknR5Oz
+         LelA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794411159; x=1795015959;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PgP1qIz2w/OR/xuvf7y5aFs0i8Rdt5F7Eb+3pqImopk=;
+        b=U0ryPKfdx7vNsw8BK+kluGWcLz3GFcse2RmQxqOG0lhIvXmeHFWxPayqi5SLnvlS5m
+         V+2bqQSWoePMJ0nyjlOeaTjIPQ0Q2fQX2HY3C33rlVSDnznIn1xrk9NTDVB9DWrWiO+w
+         FqkjZFBfRYRwHr7FbasHi7iAwIQYxa3A4fNXuR6HOIlz9CLVSKKzQFlS7ENOPKSmCwg9
+         JhJ1m7wipuRP6JrFG/qrXFziRyT0XTFy4wfVvsaRhWo1hMGIeXM6np9xaAQtn/ksEBPA
+         jOFqF6XWJI7U1OugDGuUvIplVPJkU4eDrYeWi9l/Vdq/Jj3ZhFOkRHb6ewrcEO94JYz2
+         VsMw==
+X-Gm-Message-State: APuU4Z+rJ6R/jM0hVOODFSnUdOThiYEwywe/no75PIYld84QCrClgrpt
+	BTQEWUTwvUXDxIT2Niesl3HY8URpeKnW/P+AOCWDcfqUEbVpJQV7HtYrOH8YqDenUeWfEP7E10O
+	uEG25Sho=
+X-Gm-Gg: AYBFou0YrwX7ejVlmf1QNp2DeJAFpRBsBNhEovJUxq5wEuQCJwA1MEkcyn7jwDF9i0N
+	f2myGfjxbDaYVJlhnnHyECz/j3z45wHH4OaExVsY+7+YeMYJ75zPJONFjSLtkI9mDRrtzLqHc1v
+	tQpxaioGKTRnnQ8aDrLWCyLJTq4vVskynCV2k9sdHS8sevKpQ2VcLjyxnJRpHq0AIixbybH+WzI
+	JqYAY8N0gGmAqn2eG9ymY/m4i7Ihs6xOYyU/um7vhX5djsemZ6kH/m44wazZ5NX6vQdXwTO8lby
+	/fAYRXJvD36NK011jgPLOAG24+r+YdFHiru6b0q2z95D7pNlI6MDqVjBPVunyVvSwu8CjeM9Tcb
+	7ow6iDoV4fXxUfUxxyiZJEe/CZSKraocyzV2sKNS80hxc056hsHBmTq3OBKBjYj8AkK7ru5KgbZ
+	KBG4uigcTNc2IC7BuULQQQdnR1Of1LkbjcQ5pK3LiD/PhFBRTvHsSL3J+cbMaBKi5DKIU3gZ3Qm
+	OcXbWw8tOqgbHeKnQ00fzyHcgdazP+F5eRw/TXQK4Td7fzyVk+zuDaPIeW8Vp0dGjCi4lSxSlOo
+	W8foGlq6KlBPBKXWuTWs1qO5dVgG874K
+X-Received: by 2002:a05:600c:c11c:b0:4ba:4395:5755 with SMTP id 5b1f17b1804b1-4ba439563abmr31167145e9.5.1794411158644;
+        Wed, 11 Nov 2026 07:32:38 -0800 (PST)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4c53bb94sm3822685e9.8.2026.11.11.07.32.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 07:32:38 -0800 (PST)
+Date: Wed, 11 Nov 2026 16:32:36 +0100
+From: Petr Mladek <pmladek@suse.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: John Ogness <john.ogness@linutronix.de>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Chris Down <chris@chrisdown.name>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	printk@lists.linux.dev
+Subject: Re: [PATCH v6 08/16] printk: Ensure consistent name and devname when
+ updating preferred console
+Message-ID: <avSKlPchC04gjpky@pathway.suse.cz>
+References: <20261106171952.207909-1-pmladek@suse.com>
+ <20261106171952.207909-9-pmladek@suse.com>
+ <sashiko-outbox-201951@kernel.org>
+ <avHTsnRan9cALOEu@pathway.suse.cz>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,119 +105,169 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 12/14] s390/vfio-ap: Set up for vfio-ap device
- migration
-To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
-        kvm@vger.kernel.org
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20261106152259.1360651-1-akrowiak@linux.ibm.com>
- <20261106152259.1360651-13-akrowiak@linux.ibm.com>
- <sashiko-outbox-201766@kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-201766@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=POqaavqC c=1 sm=1 tr=0 ts=6af48a8f cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=MkKTXG4A8xCSamybnNwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTExMDA2MCBTYWx0ZWRfX0hLE4p+yVquw
- SPDPSHo3Kjs8ghJNjU+iktc3jfpMIC59dfY94PLBRAs+hSZvSC//nTaFjtUIgpJhYnkMjV53BKm
- Qi+fMUK/v9X7/n2wpDtdho3jTZBpzW7CiNKZ4ZYzutL1bzqDHaF1G4Te8p6mfcd/lQOJ7Z9gPZ/
- +VZH73A5MXj8m3atbZR05I0Xub/ljMiKmSVrsCi8u4IJ2ari/BNqjiWlPh8YZSpJXfelXORmvRb
- VqyRMYo69t9fesKqJYKYDb+/xIZ39vHbly3O7Uve64hyCOfMWsX83i6/arviisIv24yET3hKrPV
- ojZmD0EHPGnUd28mGM8y3m7dSUZ1MXqBKxuKWI15hbva/skUWHY1wHz4fSIq82tGsvqcnLlHMbr
- UbtpT4Fpo8NMkHfaFqy/cxTM2e1rw6rz0PfXQ6qLVzgmtiOOv+4WyyaImITuekcWpqOk5RgRXPn
- We6K6fRgl2J8J2/DNyw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTExMDA2MCBTYWx0ZWRfX60GilzvjxDUQ
- CjK4IzmxjqZG0s8HC66bCzRTKXkOMapk52aldensFxamU1mTvstkHREfBQifM8b9TOdlBFznueW
- 77kP+ZnChrDCLjmsku+z+KIdJChERnc=
-X-Proofpoint-ORIG-GUID: bbZKGcE3DsH2quWGHjyjKG-J32NrlPRi
-X-Proofpoint-GUID: bbZKGcE3DsH2quWGHjyjKG-J32NrlPRi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-11_04,2026-11-11_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611110060
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <avHTsnRan9cALOEu@pathway.suse.cz>
 
+On Mon 2026-11-09 15:07:46, Petr Mladek wrote:
+> On Fri 2026-11-06 17:37:13, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential
+> > issue to consider:
+> > - [Low] printk: cross-type update corrupts entry in
+> >   add_or_update_preferred_console()
+> > --
+> > 
+> > commit dac2f22b5af57f05f13a7369b2af922602449749
+> > Author: Petr Mladek <pmladek@suse.com>
+> > 
+> > printk: Ensure consistent name and devname when updating preferred console
+> > 
+> > This commit adds validation in add_or_update_preferred_console() to check
+> > that existing preferred console entries match the provided devname or
+> > name and index when updated.
+> > 
+> > > diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+> > > index 26fab79c32c4b..ba644a0650910 100644
+> > > --- a/kernel/printk/printk.c
+> > > +++ b/kernel/printk/printk.c
+> > > @@ -2564,6 +2564,8 @@ asmlinkage __visible void early_printk(const char *fmt, ...)
+> > >   *
+> > >   *   2. Either @name and valid @idx OR @devname and @idx=-1 are allowed. [*]
+> > >   *
+> > > + *   3. Only matching entries can be updated.
+> > > + *
+> > >   *  [*] A valid @name and @idx will get assigned for a devname later when
+> > >   *	@devname matches during the device initialization, see
+> > >   *	match_devname_and_update_preferred_console().
+> > > @@ -2589,10 +2591,7 @@ static int add_or_update_preferred_console(unsigned int i,
+> > >  		return -EINVAL;
+> > >  	}
+> > >  
+> > > -	if (!pc->name[0] && !pc->devname[0])
+> > > -		is_new_entry = true;
+> > > -
+> > > -	if (is_new_entry && devname) {
+> > > +	if (devname) {
+> > >  		/*
+> > >  		 * A valid console name and index will get assigned when
+> > >  		 * a matching device gets registered.
+> > > @@ -2608,11 +2607,18 @@ static int add_or_update_preferred_console(unsigned int i,
+> > >  			return -EINVAL;
+> > >  		}
+> > >  
+> > > -		strscpy(pc->devname, devname);
+> > > -		pc->index = idx;
+> > > +		if (!pc->devname[0]) {
+> > > +			is_new_entry = true;
+> > > +			strscpy(pc->devname, devname);
+> > > +			pc->index = idx;
+> > > +		} else if (strcmp(pc->devname, devname) != 0) {
+> > > +			pr_err("Updating a preferred console with an invalid devname: %s vs. %s\n",
+> > > +			       pc->devname, devname);
+> > > +			return -EINVAL;
+> > > +		}
+> > >  	}
+> > >  
+> > > -	if (is_new_entry && name) {
+> > > +	if (name) {
+> > >  		/* A console name must be defined with a valid index. */
+> > >  		if (idx < 0) {
+> > >  			pr_err("Adding a preferred console with an invalid index: %s, %d\n",
+> > > @@ -2620,8 +2626,15 @@ static int add_or_update_preferred_console(unsigned int i,
+> > >  			return -EINVAL;
+> > >  		}
+> > >  
+> > > -		strscpy(pc->name, name);
+> > > -		pc->index = idx;
+> > > +		if (!pc->name[0]) {
+> > > +			is_new_entry = true;
+> > > +			strscpy(pc->name, name);
+> > > +			pc->index = idx;
+> > > +		} else if (strcmp(pc->name, name) != 0 || pc->index != idx) {
+> > > +			pr_err("Updating a preferred console with an invalid name or index: %s%d vs. %s%d\n",
+> > > +			       pc->name, pc->index, name, idx);
+> > > +			return -EINVAL;
+> > > +		}
+> > >  	}
+> > 
+> > [Severity: Low]
+> > As reported by Chris Down on v5 [1], does replacing the combined
+> > (!pc->name[0] && !pc->devname[0]) check with separate !pc->devname[0] and
+> > !pc->name[0] checks allow a cross-type update on an occupied slot to
+> > corrupt the entry instead of returning -EINVAL?
+> > 
+> > If preferred_consoles[i] was added by name (so pc->name[0] is set and
+> > pc->devname[0] is empty) and add_or_update_preferred_console() is called
+> > on that slot with a devname, !pc->devname[0] is true.  It treats the
+> > existing entry as new, sets pc->index to -1 while pc->name remains set,
+> > and overwrites pc->options and braille options.  The reverse also happens
+> > when a name update hits an unresolved devname entry where !pc->name[0] is
+> > still true.
+> > 
+> > Keeping is_new_entry = (!pc->name[0] && !pc->devname[0]) and checking
+> > if (is_new_entry) before the strcmp() branches would reject both
+> > mismatched updates with -EINVAL.
+> > 
+> > [1] https://lore.kernel.org/r/auLxQDWkHLV01D1t@chrisdown.name
+> 
+> This problem currently does not exist because there is only one
+> caller in __add_preferred_console(). And it calls this function
+> only when "name+idx" or "devname" matched. And only "name+idx"
+> or "devname" could be defined.
+> 
+> Well, this patch is supposed to add paranoid checks to make sure
+> that it is called correctly. So, we should catch these cross-update.
+> I would add two more checks:
+> 
+> --- a/kernel/printk/printk.c
+> +++ b/kernel/printk/printk.c
+> @@ -2606,6 +2606,11 @@ static int add_or_update_preferred_console(unsigned int i,
+>  			       devname, idx);
+>  			return -EINVAL;
+>  		}
+> +		if (pc->name[0]) {
+> +			pr_err("Updating a preferred console via devname when name is already assigned: %s, %d for %s%d\n",
+> +			       devname, idx, pc->name, pc->index);
 
+I thought more about it and this check looks to strict.
+It might make sense to update the preferred_consoles[] entry
+even when it was already used to register a console. For example,
+someone might want to unregister the console and register it again
+with another options.
 
-On 11/6/26 11:05 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] s390/vfio-ap: stale commit message in
->    vfio_ap_setup_vfio_device_migration()
-> --
->
-> commit 91bb5c1f210ed8cb015ed15a312ace69b31f9fa7
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Set up for vfio-ap device migration
->
-> This commit adds vfio_ap_setup_vfio_device_migration() to configure
-> migration flags and callbacks on the vfio_device for non-SE guests and
-> calls it from vfio_ap_mdev_probe() prior to device registration.
->
->> * The initial migration state of the vfio-ap device is set to RUNNING
->>
->> * The boolean flag indicating that all data sent from userspace during the
->>    RESUMINMG phase has been received is initialized to false.
-> [ ... ]
->
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> index 4af734aeee17e..924c25585987c 100644
->> --- a/drivers/s390/crypto/vfio_ap_migration.c
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
->> @@ -217,6 +217,30 @@ static int vfio_ap_release_mig_file(struct inode *file_inode, struct file *filp)
->>   	return 0;
->>   }
->>   
->> +static const struct vfio_migration_ops vfio_ap_migration_ops;
->> +
->> +/**
->> + * vfio_ap_setup_vfio_device_migration:
->> + *
->> + * Plug the object containing the function pointers to the migration callbacks
->> + * used to facilitate migration into the vfio device and set the flags
->> + * indicating migration states STOP, STOP_COPY and RESUMING are supported.
->> + *
->> + * @matrix_mdev: pointer to object containing the vfio device (vdev)
->> + */
->> +void vfio_ap_setup_vfio_device_migration(struct ap_matrix_mdev *matrix_mdev)
->> +{
->> +	/*
->> +	 * Live guest migration is not supported for SE guests, so there is no
->> +	 * need to initialize the migration capabilities.
->> +	 */
->> +	if (ap_is_se_guest())
->> +		return;
->> +
->> +	matrix_mdev->vdev.migration_flags = VFIO_MIGRATION_STOP_COPY;
->> +	matrix_mdev->vdev.mig_ops = &vfio_ap_migration_ops;
->> +}
-> [Severity: Low]
-> This isn't a bug, but the last two bullet points of the commit message
-> describe initializing mig_state to VFIO_DEVICE_STATE_RUNNING and
-> resuming_mig_data_complete to false, which was already done in
-> vfio_ap_init_migration_data() in commit "s390/vfio-ap: Functions to
-> initialize/release vfio device migration data" rather than in this patch.
->
-> Also, placing vfio_ap_setup_vfio_device_migration() after the definition
-> of vfio_ap_migration_ops alongside vfio_ap_init_migration_data() would
-> avoid the forward declaration of vfio_ap_migration_ops.
+> +			return -EINVAL;
+> +		}
+>  
+>  		if (!pc->devname[0]) {
+>  			is_new_entry = true;
+> @@ -2625,6 +2630,15 @@ static int add_or_update_preferred_console(unsigned int i,
+>  			       name, idx);
+>  			return -EINVAL;
+>  		}
+> +		/*
+> +		 * The name should get assinged when matching the devname, see
+> +		 * match_devname_and_update_preferred_console().
+> +		 */
+> +		if (pc->devname[0]) {
+> +			pr_err("Updating a preferred console via name when it was preferred via devname: %s%d for %s, %d\n",
+> +			       name, idx, pc->devname, pc->index);
+> +			return -EINVAL;
 
-Fixing both for v13
+Same here.
 
->
+> +		}
+>  
+>  		if (!pc->name[0]) {
+>  			is_new_entry = true;
 
+I am going to keep the check whether it is a new entry separate.
+I mean the check:
+
+	if (!pc->name[0] && !pc->devname[0])
+		is_new_entry = true;
+
+Sashiko should stop complaining that we miss cross-updates.
+It seems that it even makes the code more straightforward.
+
+Best Regards,
+Petr
