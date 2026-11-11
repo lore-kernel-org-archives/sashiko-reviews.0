@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794426042;
-	b=CjfyAkKhUApDOkY8YxKrydr7D0ziPEOck+B3kVNdwXPnySnsBu9NkI8wjACzhVA8nTVx
-	 imXMlVeBTNrnqXap+uvNMIFySlssx+/gf4KxkDr+th6gUQdebCaUb8tzzztvOvUBcsEUN
-	 C5fOzRKWloTnK+0CBNB6lGZw2iujanmq8Emo4KUKLG77OOncnZBXhnXn4Squ2eXZiS790
-	 lVRq1DK8WFmX9PNyGSCIFOF6ILjqVmPGSXEMzkyYyu/37ilPk8ENm6xE4HIWoFjLvpcsO
-	 uxZISSRWwZyXbVj/quyGEQVVRBMsyw+wSQZtdy9dnhQhHOPEBrvE34GVcz2LfS/F7CQ==
+	t=1794426232;
+	b=pBLf9z6QyGIT99UW2yOnd0UIoWk4x7cSOlUTxbmYGhhlyPtMVySmdJ1sceUDDc8/ZJwT
+	 EoIw1rj7Bc1BoYA2ojeEPFmM/o2M5A+tib8DWRu/jZCukVm1n8IIqbDWgMqAnsQdPL+oc
+	 ZzK0yLxJAvI5KwLzwDHaKX9EAj24AO4sxKpg08yMFocMh0yYcF768C25Erd66TFwLF7eY
+	 EhCHIGy+g19BtGGlzRHqmmSYufnEmmHwEnF/fCvu1HfR07+W477ZOUF8yELxRfS9p0voh
+	 Ql4YkqN2d3bacQoI74h3d56/ztLUmSo9YFNT61HFjGSx4/Br8xGqYqlm9bajuxHRYYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794426042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794426232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
 	 Date:Message-ID:MIME-Version:Content-Type;
-	bh=B9+U4iNiHz63kgEwzrgZfWzI7/jqnf7J3/4pv9aI/zc=;
-	b=yw0la63qBEfJ8JIU0DhnUq11B/GfcY65Mh8udgieY2DZex9aq5luzWuamQbJzHHXMsig
-	 J7GB8IHJeTUAYRpDT8NiBK9ukr4uxWrCimg7nXff4zOkKfWM9jmy6/xiSQleBX06YqMrN
-	 /EclMoZk4s8N+jLDHgth/GxqB44p67/t8ibGwGRpRunEDjeDwgo6+ZosmeSE3EbRnkmrJ
-	 gXCXYljgn/d2eISV/XVVwt83woVtT66hdAK3sHuU8Zv8n3sfg+gbMERY+YaOJPYnhBIMM
-	 OUatOF5B+unAi01h76nVCPpsAh4XNHqa2uGLxVx/YXEIWHJzctBR8OfT0yoh+KN+4AA==
+	bh=6Uj72/TkNOSKLa/NvnCJF39YYiorN2RudsmWa61UIzo=;
+	b=tbSKSuRKqGheq+CLGVWSCP/MJ4RKL8BhAt/dOuZ2b7hSPSFIB0eC3/Ho7/+cGP9LEQl+
+	 UAri22SS4eXq/8VrJgUIA7w47cLAjsz6pHEchf2ebaErccva+9aROyT/LXURg2rhdjlA9
+	 LS1f+gnpQz1OWHEDWNx1q7jipwuL/J51Vb9touWZfwk5HPRX7pNmxA/y6sdxYgu+qWo3j
+	 z1mEz/MgntRYJ2Fssh7QzKFk2AFd2L87RAvh3bymQLhxELyEej9bPjPoVLXVpowgTr9pM
+	 Fla12V2MB01FAVGaCJzhfyiuEzIvTHs4DrLpPtwcgM+HkrsqKm4sGkn8lKHutRFssjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Zx+nIfXZ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0TEn7bo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9260960700A8
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F350606A32A;
+	Wed, 11 Nov 2026 19:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Zx+nIfXZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8279C1F00A0A;
-	Wed, 11 Nov 2026 19:40:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0TEn7bo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E45F1F00A05;
+	Wed, 11 Nov 2026 19:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794426042;
-	bh=B9+U4iNiHz63kgEwzrgZfWzI7/jqnf7J3/4pv9aI/zc=;
+	s=k20260515; t=1794426232;
+	bh=6Uj72/TkNOSKLa/NvnCJF39YYiorN2RudsmWa61UIzo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=Zx+nIfXZJ5nduKwV4Kohuy6/wPdBQ4ZIaJJqYxE+zuPQGTjFy0XKAB/vd5Nul6mWS
-	 dfbb8UYEW+trGtamk7bCAjRFBbU/f9x+NGE3/pvTn1LX17XvYSldT9RNfsRDtbg5ZF
-	 yMx9oiUTY1wuYeAu49os930Inq/rwkyDpMpahOZV4+zQhdZc6ZrMe2sWjWkNp9CnMJ
-	 5gwC/xRFPp8FsEMGuA0isPQ0XSW15BK4OQ2abwu82gu1KzNB6abF6XDM+IDpfsBueP
-	 tE2J47l2c9YtzO73s6ESRKnkVBC+VbnnD+c+f74bsv7iVifmphXZ9IdlkaBHomBLvZ
-	 RDQpI7pIY1AcQ==
+	b=P0TEn7boxctwTXgjGvCCkHxSFAxUViGYhYp2RLKQzv3rCLNSA9j279J2TO4qYMp5M
+	 Are//SoG1FmYXNapiCZqdhWYiptsMIgQVO1lTTOcfRSG3Ngr8pS1xp3NKwMV63Sp1/
+	 ILvCg4F1GN7zIr0CNUUa9nq3jTAzTPvsDojCOcb7xaEakPpVeVCQCpcQ+LCe7uhZfd
+	 8na3XgjuKauR1u4s1VYEfS+qGSXxY3ponUyIJqkyh5kPRIcjudRYcSDfgzpPN510Of
+	 QAq69VbvOi8R/nnWj9AFrjeutEq6c9wSpVK8LpB4uIJB0YuvnhWk67PDa8JgxwBWTP
+	 XWHeMILzdw1Hg==
 From: Andreas Hindborg <a.hindborg@kernel.org>
 To: sashiko-reviews@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
  Lorenzo Stoakes <ljs@kernel.org>, "Liam R.
@@ -53,16 +53,15 @@ To: sashiko-reviews@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
  <tamird@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, Onur
  =?utf-8?Q?=C3=96zkan?=
  <work@onurozkan.dev>, Lyude Paul <lyude@redhat.com>
-Cc: linux-mm@kvack.org
-Subject: Re: [PATCH v5 1/4] rust: io: require freedom from plain accesses
- for `SysMem`
-In-Reply-To: <sashiko-outbox-209186@kernel.org>
+Cc: linux-mm@kvack.org, rust-for-linux@vger.kernel.org
+Subject: Re: [PATCH v5 2/4] rust: sync: atomic: add atomic_per_byte_memcpy
+In-Reply-To: <sashiko-outbox-209187@kernel.org>
 References: <20261110-page-volatile-io-v5-0-a91ef252c24b@kernel.org>
- <20261110-page-volatile-io-v5-1-a91ef252c24b@kernel.org>
- <lAtM0NMr_K13f2Z2C_qDZsigOTH50qf6QuQZFFVh8k5-v2pkTO25UdKBCrSXWiHNHqhYUtZjNkwa-xsZraO9Og==@protonmail.internalid>
- <sashiko-outbox-209186@kernel.org>
-Date: Wed, 11 Nov 2026 20:40:24 +0100
-Message-ID: <875wy3w40n.fsf@t14s.mail-host-address-is-not-set>
+ <20261110-page-volatile-io-v5-2-a91ef252c24b@kernel.org>
+ <zJFQbYV67YWG-NtiQ0DX5nJ_8ddkkCuW7PYYnJDTumjlWS9_CnUvPigc1ieKk9xUcTCPH85viXhev1LXc5mMXA==@protonmail.internalid>
+ <sashiko-outbox-209187@kernel.org>
+Date: Wed, 11 Nov 2026 20:43:39 +0100
+Message-ID: <8733t7w3v8.fsf@t14s.mail-host-address-is-not-set>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,83 +75,87 @@ Content-Type: text/plain
 
 <sashiko-bot@kernel.org> writes:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] rust: io: SysMem::new() no-plain-access invariant violated by
->   callers
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Low] rust: sync: atomic: missing #[inline] attribute on
+>   atomic_per_byte_memcpy()
+> - [Low] rust: sync: atomic: wrong core::ptr::copy() doc on
+>   atomic_per_byte_memcpy()
 > --
 >
-> commit 2301a5fd31bd2665dfd4001d0e9beab25a81725b
+> commit cade864abc69fc627ff4e6283efdc3170c94fccf
 > Author: Andreas Hindborg <a.hindborg@kernel.org>
 >
-> rust: io: require freedom from plain accesses for `SysMem`
+> rust: sync: atomic: add atomic_per_byte_memcpy
 >
-> This commit adds a type invariant to SysMem and a safety requirement on
-> SysMem::new() requiring that no plain accesses are performed to the memory
-> region for the lifetime of the view.
+> This commit adds atomic_per_byte_memcpy() in kernel::sync::atomic, wrapping
+> the kernel's memcpy() to perform byte-wise atomic memory copies.
 >
->> diff --git a/rust/kernel/io.rs b/rust/kernel/io.rs
->> index a877df11a03e0..3bc4be35e3554 100644
->> --- a/rust/kernel/io.rs
->> +++ b/rust/kernel/io.rs
-> [ ... ]
->> @@ -1570,8 +1582,10 @@ impl<'a, T: ?Sized> SysMem<'a, T> {
->>      ///
->>      /// # Safety
->>      ///
->> -    /// `ptr.addr() .. ptr.addr() + KnownSize::size(ptr)` must be valid and aligned kernel
->> -    /// accessible memory region for the lifetime `'a`.
->> +    /// - `ptr.addr() .. ptr.addr() + KnownSize::size(ptr)` must be valid and aligned kernel
->> +    ///   accessible memory region for the lifetime `'a`.
->> +    /// - No plain access (see [`SysMem`]) to that memory region may be performed for the lifetime
->> +    ///   `'a`.
->>      #[inline]
->>      pub unsafe fn new(ptr: *mut T) -> Self {
->>          // INVARIANT: Per safety requirement.
+>> diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
+>> index 6d27898add42c..cbcb081d8674e 100644
+>> --- a/rust/kernel/sync/atomic.rs
+>> +++ b/rust/kernel/sync/atomic.rs
+>> @@ -848,3 +848,38 @@ pub unsafe fn cmpxchg<T: AtomicType, Ordering: ordering::Ordering>(
+>>      // per LKMM.
+>>      unsafe { Atomic::from_ptr(ptr) }.cmpxchg(old, new, o)
+>>  }
+>> +
+>> +/// Copy `len` bytes from `src` to `dst` using byte-wise atomic operations.
+>> +///
+>> +/// This is the concurrent-safe counterpart of `core::ptr::copy()` (the equivalent of standard
+>> +/// C's `memcpy()`). Because of the atomicity at byte level, when racing with another concurrent
 >
-> [Severity: Medium]
-> Does this new SysMem<'a, T> invariant conflict with the existing
-> SysMem::new() callers in Coherent and VMap?
+> [Severity: Low]
+> Should this documentation (and the commit message) refer to
+> core::ptr::copy_nonoverlapping() instead of core::ptr::copy()?
 >
-> In rust/kernel/dma.rs, <&'a Coherent<'_, T> as IoBase<'a>>::as_view() is a
-> safe method that wraps the buffer in SysMem<'a, T> inside CoherentView<'a, T>,
-> while CoherentView::as_ref() and CoherentView::as_mut() hand out &'a T and
-> &'a mut T references for plain accesses over the same lifetime 'a:
->
-> rust/kernel/dma.rs:CoherentView::as_ref() {
->     pub unsafe fn as_ref(self) -> &'a T {
->         // SAFETY: pointer is aligned and valid per type invariant. Aliasing rule is satisfied per
->         // safety requirement.
->         unsafe { &*self.cpu_addr.as_ptr() }
->     }
-> }
->
-> rust/kernel/dma.rs:<&'a Coherent<'_, T> as IoBase<'a>>::as_view() {
->     fn as_view(self) -> CoherentView<'a, Self::Target> {
->         CoherentView {
->             // SAFETY: `cpu_addr` is valid and aligned kernel accessible memory.
->             cpu_addr: unsafe { SysMem::new(self.cpu_addr.as_ptr()) },
->             dma_addr: self.dma_addr,
->         }
->     }
-> }
->
-> Any plain read or write through those references during 'a violates the
-> SysMem<'a, T> invariant even when no concurrent access occurs.  Similarly,
-> <&'a VMap<D, R, SIZE> as IoBase<'a>>::as_view() in
-> rust/kernel/drm/gem/shmem.rs calls SysMem::new() without VMap's invariants or
-> its SAFETY comment guaranteeing that no plain accesses occur during 'a.
+> core::ptr::copy() is the equivalent of C's memmove() and permits overlapping
+> regions, whereas core::ptr::copy_nonoverlapping() corresponds to C's
+> memcpy() and matches the safety requirement below that src and dst do not
+> overlap.
 
-The last bullet of the safety requirement for `SysMem::new` is not
-formulated correctly. It should state that no plain accesses may race
-with accesses performed through the view, not that all accesses are
-prohibited. I will fix this in the next version.
+Thanks, this is correct. I will fix this.
 
-I will also update the safety comment on the call sites. The calls do
-comply with the requirement, as far as I can tell.
+>> +/// atomic access (or when a normal read races with an atomic read), or with an external access
+>> +/// (from DMA or userspace), the behavior of this function is defined: the memory is copied at
+>> +/// (at least) byte granularity.
+>> +///
+>> +/// Implementation note: this is currently implemented by the kernel's `memcpy()`, which is
+>> +/// implemented in a way such that byte-wise atomic memory load/store instructions are used.
+>> +///
+>> +/// # Safety
+>> +///
+>> +/// Callers must ensure that:
+>> +///
+>> +/// - `src` is valid for atomic reads for `len` bytes for the duration of the call.
+>> +/// - `dst` is valid for atomic writes for `len` bytes for the duration of the call.
+>> +/// - The memory regions `src .. src + len` and `dst .. dst + len` do not overlap.
+>> +pub unsafe fn atomic_per_byte_memcpy(src: *const u8, dst: *mut u8, len: usize) {
+>> +    // SAFETY: By the safety requirements of this function, the following operation will not:
+>> +    //  - Trap.
+>> +    //  - Invalidate any reference invariants.
+>> +    //  - Race with any operation by the Rust AM, as `bindings::memcpy` is a byte-wise atomic
+>> +    //    operation and all operations by the Rust AM to the involved memory areas use byte-wise
+>> +    //    atomic semantics.
+>> +    //  - Copy between overlapping regions, which `memcpy()` does not support.
+>> +    unsafe {
+>> +        bindings::memcpy(
+>> +            dst.cast::<kernel::ffi::c_void>(),
+>> +            src.cast::<kernel::ffi::c_void>(),
+>> +            len,
+>> +        )
+>> +    };
+>> +}
+>
+> [Severity: Low]
+> Should atomic_per_byte_memcpy() be marked #[inline]?  It is a non-generic
+> function in the kernel crate that forwards directly to bindings::memcpy(),
+> so without #[inline] callers in other crates cannot inline the wrapper
+> unless LTO is enabled.
+
+I will add the inline attribute.
 
 Best regards,
 Andreas Hindborg
-
 
 
