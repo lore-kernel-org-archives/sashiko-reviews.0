@@ -1,87 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.231.136
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794425919;
-	b=jZcmqscKimMRuNQglaGCefzJ9mfQoeM/vg4vQgT2vDBhIh4d/P295K8bA1t85Gaunebr
-	 /unUcbzimRilENHJ3kQ2rQJ17tW9ELXLkywCl350k4v/gArYO5tKse0IiO6sK82uKObMu
-	 tcmQzshr7m+Dpb5V5IJwFfWbHll7Z+YJOCQUVK6t/bUF5ogPPVLRnzps3hhjUZydnXTEf
-	 KRduc8Lx1s6VgppnsnWN8KZfTy3YLpX0dC0jK/m+JXgu9C7TrHLRFJ9LJUetOlfXj94Ri
-	 nuHoQ3C3lBmob1Pu/YjQ4nApUxraAixmJ05o9fFib8kJpIgBk8549G5wwRxdGkHMcWA==
+	t=1794426042;
+	b=CjfyAkKhUApDOkY8YxKrydr7D0ziPEOck+B3kVNdwXPnySnsBu9NkI8wjACzhVA8nTVx
+	 imXMlVeBTNrnqXap+uvNMIFySlssx+/gf4KxkDr+th6gUQdebCaUb8tzzztvOvUBcsEUN
+	 C5fOzRKWloTnK+0CBNB6lGZw2iujanmq8Emo4KUKLG77OOncnZBXhnXn4Squ2eXZiS790
+	 lVRq1DK8WFmX9PNyGSCIFOF6ILjqVmPGSXEMzkyYyu/37ilPk8ENm6xE4HIWoFjLvpcsO
+	 uxZISSRWwZyXbVj/quyGEQVVRBMsyw+wSQZtdy9dnhQhHOPEBrvE34GVcz2LfS/F7CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794425919;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=UgemrjOaWZ2A85yJM6JRsBPML8uCzY9gPVtlKFZpxk4=;
-	b=nieqG0v+PEo+4wwpMZ695u5F4UzwOoFnKKZU9jxQEqGcRuptrY6VHaWFVMV6hqe36lb4
-	 wzmfZu0eop03MFimrtzOQPec3TW8qnelNrt9WskZ+d6zbH/JegMUw4Bw8iq1J6S9fc4CU
-	 xNBhh+gDWzcSK/i04Rkal9xdarAFcQHJx9OwlyM5x8YyjgdwrtPnHI+mG1Nl78x6gn0gJ
-	 ZL14gZ/J+GoS/UlLe8cfPTb2VuKlh1pQPrgnXu+DZAKeITvLLTXOMdTPYc3pvykJY9Hnk
-	 dy40GxTH+XicdC5AkJflrr1ELjih/7hqhqGq2GxbWBNks5WdwG4opvRJb2e+7Gb9wOg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794426042;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type;
+	bh=B9+U4iNiHz63kgEwzrgZfWzI7/jqnf7J3/4pv9aI/zc=;
+	b=yw0la63qBEfJ8JIU0DhnUq11B/GfcY65Mh8udgieY2DZex9aq5luzWuamQbJzHHXMsig
+	 J7GB8IHJeTUAYRpDT8NiBK9ukr4uxWrCimg7nXff4zOkKfWM9jmy6/xiSQleBX06YqMrN
+	 /EclMoZk4s8N+jLDHgth/GxqB44p67/t8ibGwGRpRunEDjeDwgo6+ZosmeSE3EbRnkmrJ
+	 gXCXYljgn/d2eISV/XVVwt83woVtT66hdAK3sHuU8Zv8n3sfg+gbMERY+YaOJPYnhBIMM
+	 OUatOF5B+unAi01h76nVCPpsAh4XNHqa2uGLxVx/YXEIWHJzctBR8OfT0yoh+KN+4AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="DUIy/W1/";
-	arc=none smtp.remote-ip=74.125.231.136
-Received: from mail-oo2-f8.google.com (mail-oo2-f8.google.com [74.125.231.136])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Zx+nIfXZ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F63606A324
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:38:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 22F63606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9260960700A8
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DUIy/W1/
-Received: by mail-oo2-f8.google.com with SMTP id 46e09a7af769-843c8bbfbc4so1444821a34.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:38:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794425918; x=1795030718; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=UgemrjOaWZ2A85yJM6JRsBPML8uCzY9gPVtlKFZpxk4=;
-        b=DUIy/W1/91nV5GlEpMwi5Aanc7cjWQF8A6AnC7m/FIp4kCcDhfGlzkLZBrDdEPFbal
-         9oMFua/4fdZ32qohtsUSNfZJemjH2Gz0HoQRxUFWyKvshkWqXaU+i6sE/7LU/FHmlAhg
-         vVqfgM+cuP6/KKSACLvukX3RjpncCkzgTGksZQxFZ5FopdvRze//E8ouuJC7bpmAFzPR
-         zqmPzMWFcZywRI9HzBVfSCm3UCF4dw7BSUoPqQWTTSgLHOVkztqcQiW1aYeojs/SPq3a
-         3Inzam5dJ2Qgv3W+RoysX7IiRwOdKwGnyAFapNQMsOaYiE7o1GkftKILDFJudZ/vvcPd
-         eBbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794425918; x=1795030718;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=UgemrjOaWZ2A85yJM6JRsBPML8uCzY9gPVtlKFZpxk4=;
-        b=nj7/hFkJ4yXQkJD9eYLpQJEEBJESNjZh2an3EsPDNLWFIIi26P3Ha1ekyIIXq1uR7F
-         nEKJEpBQ3LYNtRvMNGf6ozzoyffAsDDMf3VQ8CA1/xhvpjTDA+6q75l4FsRJP6R4HmWO
-         /cbqC9YigY6qjj/34w2FfuU5Oh3Qw3xFH2A3dhdB7pPmr6RAc9SS/M/wxAdqLe7qaec8
-         36FTIaSG8wNyDa6X7vveW4/LE06Wbrcv+7hWLktpuGvu1fz0Ud+cMEoi8IoRA/soN/Op
-         1KYM0Ssr9OVlhVUbFCJ1CMDHM4FmidCpN6scKmG61Q3Mp1cwV9Jdj1F+8WOXvFkj+7zd
-         2xLw==
-X-Gm-Message-State: APuU4Z+O6RzMSdh+PSwtzVhN/8vxfFpMhcxLGC5uWwhh4IhCmB/aLCwC
-	CMeNauIOBSKei8WCcfLtpsCJ7YPf9F+I2tE70w4Q1LrmGyNDgROtRO3AFQjA12vlX40=
-X-Gm-Gg: AYBFou3wKGkjjTXEApLNwydfofqiq/uXXh6FH6dyX4sB0mJ9gV3FZSyFlRCikcQB9J0
-	1eIz061b3AKpzcAFfpTs6shewrf9OpH/jpsUfQEoxjQ9kxyDWt1+m4oRIFUxFnqj92y0kE5Nhti
-	WNE7K5JyPusiKTbfrMxBctGkAW5ugccWLRn4gjrFhgiaHSZmbfJxXcU0qzYyHiIojkwI8NK6uZo
-	MxpvoVbG5BASuDLvhPgKcNh35Czp3/CnG1cL1GN7tlzVkmXfKi5viQvTBijgXwxAYGgW8o1AONl
-	OXM4h3A8McUvUeyNqrJwkeYUfthcGaQ7VyQeDj6LbJNqsvS+RK1wylDyVJ4Jg7O446nTyNFzoSn
-	XlmxjVib4SbztU0u6+VvnRjI08FdvKo4HQXPbb8gi1g3FLdLjAhHYgaml3629zp156cd/ii/Kvk
-	W3YzP25+54hgYq+38ytxdba1PRWmT96jgdXK1eZYbhmNey6Pi8W3lYEYb/sVdHJN/ZlJsyCHr3Z
-	dFE0hUZVIM26l1XkdHSkQaA1fSTE2FxrsEOvOtTAXDBPTSUvGf/laeAdlsJqf35Ccu0cU66kdDa
-	3BGZx2lybRQB5ELm/yqW67gVENW8qpWZQBh5xyzi4LFaxb8yJLB7HUv58NBwI5SkHpW5QBG1UR+
-	m7ZFbtLVyvOgVmg9ub9s=
-X-Received: by 2002:a05:6830:640d:b0:85d:502e:a26a with SMTP id 46e09a7af769-860f2848713mr3424226a34.14.1794425917990;
-        Wed, 11 Nov 2026 11:38:37 -0800 (PST)
-Received: from [10.10.18.223] (wsip-64-207-253-118.tu.ok.cox.net. [64.207.253.118])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-860dcb5f7b4sm5098512a34.4.2026.11.11.11.38.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Nov 2026 11:38:37 -0800 (PST)
-Message-ID: <8e18dc61-4d6c-4da7-bd06-d547afc5c545@gmail.com>
-Date: Wed, 11 Nov 2026 13:38:36 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Zx+nIfXZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8279C1F00A0A;
+	Wed, 11 Nov 2026 19:40:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794426042;
+	bh=B9+U4iNiHz63kgEwzrgZfWzI7/jqnf7J3/4pv9aI/zc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=Zx+nIfXZJ5nduKwV4Kohuy6/wPdBQ4ZIaJJqYxE+zuPQGTjFy0XKAB/vd5Nul6mWS
+	 dfbb8UYEW+trGtamk7bCAjRFBbU/f9x+NGE3/pvTn1LX17XvYSldT9RNfsRDtbg5ZF
+	 yMx9oiUTY1wuYeAu49os930Inq/rwkyDpMpahOZV4+zQhdZc6ZrMe2sWjWkNp9CnMJ
+	 5gwC/xRFPp8FsEMGuA0isPQ0XSW15BK4OQ2abwu82gu1KzNB6abF6XDM+IDpfsBueP
+	 tE2J47l2c9YtzO73s6ESRKnkVBC+VbnnD+c+f74bsv7iVifmphXZ9IdlkaBHomBLvZ
+	 RDQpI7pIY1AcQ==
+From: Andreas Hindborg <a.hindborg@kernel.org>
+To: sashiko-reviews@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
+ Lorenzo Stoakes <ljs@kernel.org>, "Liam R.
+ Howlett" <liam@infradead.org>, Miguel Ojeda <ojeda@kernel.org>, Boqun
+ Feng <boqun@kernel.org>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6r?=
+ =?utf-8?Q?n?= Roy Baron
+ <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, Trevor Gross
+ <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, Will Deacon
+ <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Mark Rutland
+ <mark.rutland@arm.com>, Daniel
+ Almeida <daniel.almeida@collabora.com>, Tamir Duberstein
+ <tamird@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, Onur
+ =?utf-8?Q?=C3=96zkan?=
+ <work@onurozkan.dev>, Lyude Paul <lyude@redhat.com>
+Cc: linux-mm@kvack.org
+Subject: Re: [PATCH v5 1/4] rust: io: require freedom from plain accesses
+ for `SysMem`
+In-Reply-To: <sashiko-outbox-209186@kernel.org>
+References: <20261110-page-volatile-io-v5-0-a91ef252c24b@kernel.org>
+ <20261110-page-volatile-io-v5-1-a91ef252c24b@kernel.org>
+ <lAtM0NMr_K13f2Z2C_qDZsigOTH50qf6QuQZFFVh8k5-v2pkTO25UdKBCrSXWiHNHqhYUtZjNkwa-xsZraO9Og==@protonmail.internalid>
+ <sashiko-outbox-209186@kernel.org>
+Date: Wed, 11 Nov 2026 20:40:24 +0100
+Message-ID: <875wy3w40n.fsf@t14s.mail-host-address-is-not-set>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,38 +72,87 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] arm64: dts: mediatek: mt8173-amazon-suez: Enable the
- volume keys
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261111-rbrue-suez-upstreaming-amazon-suez-dts-v1-0-77b47cdea702@gmail.com>
- <20261111-rbrue-suez-upstreaming-amazon-suez-dts-v1-4-77b47cdea702@gmail.com>
- <sashiko-outbox-209564@kernel.org>
-Content-Language: en-US
-From: Ryan Brue <ryanbrue.dev@gmail.com>
-In-Reply-To: <sashiko-outbox-209564@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+<sashiko-bot@kernel.org> writes:
 
-
-On 11/11/26 1:31 PM, sashiko-bot@kernel.org wrote:
-> [Severity: Low]
-> Does enabling &keyboard cause make dtbs_check to fail on
-> mt8173-amazon-suez.dtb?
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] rust: io: SysMem::new() no-plain-access invariant violated by
+>   callers
+> --
 >
-> In arch/arm64/boot/dts/mediatek/mt8173.dtsi, keyboard@10010000 uses
-> compatible = "mediatek,mt8173-keypad", "mediatek,mt6779-keypad", but
-> Documentation/devicetree/bindings/input/mediatek,mt6779-keypad.yaml does not
-> list mediatek,mt8173-keypad in its compatible enum.
+> commit 2301a5fd31bd2665dfd4001d0e9beab25a81725b
+> Author: Andreas Hindborg <a.hindborg@kernel.org>
+>
+> rust: io: require freedom from plain accesses for `SysMem`
+>
+> This commit adds a type invariant to SysMem and a safety requirement on
+> SysMem::new() requiring that no plain accesses are performed to the memory
+> region for the lifetime of the view.
+>
+>> diff --git a/rust/kernel/io.rs b/rust/kernel/io.rs
+>> index a877df11a03e0..3bc4be35e3554 100644
+>> --- a/rust/kernel/io.rs
+>> +++ b/rust/kernel/io.rs
+> [ ... ]
+>> @@ -1570,8 +1582,10 @@ impl<'a, T: ?Sized> SysMem<'a, T> {
+>>      ///
+>>      /// # Safety
+>>      ///
+>> -    /// `ptr.addr() .. ptr.addr() + KnownSize::size(ptr)` must be valid and aligned kernel
+>> -    /// accessible memory region for the lifetime `'a`.
+>> +    /// - `ptr.addr() .. ptr.addr() + KnownSize::size(ptr)` must be valid and aligned kernel
+>> +    ///   accessible memory region for the lifetime `'a`.
+>> +    /// - No plain access (see [`SysMem`]) to that memory region may be performed for the lifetime
+>> +    ///   `'a`.
+>>      #[inline]
+>>      pub unsafe fn new(ptr: *mut T) -> Self {
+>>          // INVARIANT: Per safety requirement.
+>
+> [Severity: Medium]
+> Does this new SysMem<'a, T> invariant conflict with the existing
+> SysMem::new() callers in Coherent and VMap?
+>
+> In rust/kernel/dma.rs, <&'a Coherent<'_, T> as IoBase<'a>>::as_view() is a
+> safe method that wraps the buffer in SysMem<'a, T> inside CoherentView<'a, T>,
+> while CoherentView::as_ref() and CoherentView::as_mut() hand out &'a T and
+> &'a mut T references for plain accesses over the same lifetime 'a:
+>
+> rust/kernel/dma.rs:CoherentView::as_ref() {
+>     pub unsafe fn as_ref(self) -> &'a T {
+>         // SAFETY: pointer is aligned and valid per type invariant. Aliasing rule is satisfied per
+>         // safety requirement.
+>         unsafe { &*self.cpu_addr.as_ptr() }
+>     }
+> }
+>
+> rust/kernel/dma.rs:<&'a Coherent<'_, T> as IoBase<'a>>::as_view() {
+>     fn as_view(self) -> CoherentView<'a, Self::Target> {
+>         CoherentView {
+>             // SAFETY: `cpu_addr` is valid and aligned kernel accessible memory.
+>             cpu_addr: unsafe { SysMem::new(self.cpu_addr.as_ptr()) },
+>             dma_addr: self.dma_addr,
+>         }
+>     }
+> }
+>
+> Any plain read or write through those references during 'a violates the
+> SysMem<'a, T> invariant even when no concurrent access occurs.  Similarly,
+> <&'a VMap<D, R, SIZE> as IoBase<'a>>::as_view() in
+> rust/kernel/drm/gem/shmem.rs calls SysMem::new() without VMap's invariants or
+> its SAFETY comment guaranteeing that no plain accesses occur during 'a.
 
-Same issue as [1]. The binding has been applied to input, but since the 
-mailing list patch doesn't apply to v7.4-rc2 cleanly, I didn't add it as 
-a prerequisite.
+The last bullet of the safety requirement for `SysMem::new` is not
+formulated correctly. It should state that no plain accesses may race
+with accesses performed through the view, not that all accesses are
+prohibited. I will fix this in the next version.
 
-[1] 
-https://lore.kernel.org/all/b005af5b-96a3-47da-b53d-5dd034b6d56b@gmail.com/
+I will also update the safety comment on the call sites. The calls do
+comply with the requirement, as far as I can tell.
 
-Best Regards,
-Ryan Brue
+Best regards,
+Andreas Hindborg
+
+
+
