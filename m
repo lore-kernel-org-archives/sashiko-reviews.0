@@ -1,96 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.84.33
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1794430816;
-	b=KjZUFpNouv+y56GFKcb8Lm+QtzT55jgXafL8XF5YX28zkLaOABVxStSNLVpNfA+cL/4/
-	 gb/8JMB6vhaIIOTkTlaTB886dckQqujH0Ahdw+faLQnqWUSO5+p+BbOM4/fv0AG0XJor8
-	 Wkshr6Bw8G+cRebtDKxWvEp/wLo8eUlP2mwCgUzNPDVvZIji/15vFXKS+KsSoAVWuFdju
-	 MMpoN+ff48wlW89dHAn1AzHX2qwqSq8VG7xO02CTsZJk2Zpf6SX6lAYwa+USPEIT0dTdU
-	 emLs8lP+ITi/Q2JpGAEeuUJNG+2EwGLduxWoiMh6f8qo2mSukFC29Q1ZZFK4X7IFWkw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794430816;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=27mlUSvT+QjpiH4Uvpt2/jMMejZOFb0tB/tiL0cfYxE=;
-	b=R84ycTpLE7YSRA6DvegQNBs4L4V6dCzm0CxHOKadav/iUeYe6m3B5Oq377aezByI0xsE
-	 FmOs2v58hbJn4K+EMSThSukBLLhyWSd+uCnpSFmS8j3PDLMSDE/6CeqgSpWK78m0cuzZW
-	 o2ruwc/6tVKWE8YglimUERWf1myNDTpvQWyqFt0KD2ShX7glbAWh/lGHIsob3DjpGEL+h
-	 4rZHF9t2ujBpX5p55MKZBBiQifP8rnrD3LMD4N0PnynfLSvhbXmB6dEKgzJjse22WJz/P
-	 tDaFp6poM+dC+o3UoSzkDYjqlDj68rKPKNrZ6wg82bQy+GSdnyAtYGlH0IpXyEOYZCA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=FgRcRiT9;
-	arc=fail smtp.remote-ip=52.101.84.33
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010033.outbound.protection.outlook.com [52.101.84.33])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794434506;
+	b=GsUhaWvk3QXWDlwLf/xOUESBxf2SX2iGUADpLdTzPzX0tnpXv1qnmNSp60RgF1vP4eR5
+	 k3gf86tBawBXMUUYRlPDAD5QykO4LeaIDIWK7UpICwTDpSzVK5zoyRm5CLHbqJ23FN+/9
+	 /6CeQtKMQ5CQL/dqIzH77tFYeZG2qDLhMNHbPVlP0FSI27qXL5zTa6ipHxjy16s05O3R4
+	 SXFvdn83K2UKJ6Rwh143/TkKTxBVnIyRkx0mGg1DhphDQmyslBJwxQV7+VxWWjETNTtsB
+	 x98mQ/9mANCtmAp2AvbCtsOAV+TTOuG9iphAXNgmrYoBl86feJ49IVSS4uh+vJVnF8Q==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794434506;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=XW+W+IvRYtlcrp5klt8UaDvpzVbHTAiI7YDJRBlK4lQ=;
+	b=CCoSFj57aVOA4mu3vkGmyrME47FFLQav1f/KEjABN6pluKFv9YTFcs4s7qSmxdLDZi5X
+	 coESvKAYDp7sMh3t/wuoA22WEE9qX6WoAhNaLQfQplDqBdzURwJib3x0LGM7MVmpvU5PH
+	 ZYmCt5DujF2ambbe/g4LvGFwILsMOkzvp9GoZr4cbvbIu9KSZzZQlUXhJ2/5rJBAh+tk3
+	 7HQuzbquEN2du2f5640mmE54R8ECWcGCCyheOr1bHrGufyzFVR9ShQDzotuzvCpgyOIG5
+	 zbv7c9+dE9+DbQUg3eSxu73uijfw7EfIParaPYpM3nkiuiYjaC3PHTS4Ia1Z9wgEjZg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YF3EXwH+;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97161606A321;
-	Wed, 11 Nov 2026 21:00:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97161606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64895606C2E3
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 22:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=FgRcRiT9
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fCyL9rXSVkhTXhlHh9+77MxKS6PvJe2K5A6Ubiy2jkqMC8HJOaFvxtJJYnRBnI8LZ2GpU4Bgtc0V6OAQPcbp9/mPb8huztwdScXveDSxEt6P0T+KL4h2+MJdVLNoPtYoC6L3gmVSreemxrEjsz3oIs3NJocj+CAvW6NZv+6hMOaGQXWJlaTl/5Zzg+W5G1CKhtm3xXx0JGuXO1dwMaD5AvHA9WtYgqj+58bJi/cKNqKp7GwnQpvt+yzIDsg28GqhdgQqv04Cx68dqECEK8VtyI3KbGO8DMNRb5UDbUWVlFRV3/6DIufleyMqTr0yAKfO+BP9N/HT4JFXFBFJALlOGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pQr71hIPv7FE+tW7ImxldACbZfEONMNu/T8reYdiJFQ=;
- b=qd+YqksxDU4X0EjdKwyKlBulT7SnYWt68s0DjIGZ1QaQ02Jr6hd6GDyqgPt26JqgWKaM8wgEiv+2l2ZfuRGrPnV5c1v0wHEtsxW7s6WV2zLmn7cwXGuJD3dR7fHe0yL8A2nxJiYRHjysnEyd0nFJ34zc9+yBbjAS6PjFTPe+51NwmtoP5GR231bLQch0mGn6WRWsIy0GeoovrxAXQUScFgj2FLqlDllmYveK9WDJsVAyOtoC6F1OPURJqHFSGWaNVCXuLbjfm9qZqaORPbtG5pOrG9m88WUJF6UOtyUlgLQdShQ5+WH8NP549MTNyEZ0rgXj6iu17bNqKkuNT6z/aw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pQr71hIPv7FE+tW7ImxldACbZfEONMNu/T8reYdiJFQ=;
- b=FgRcRiT9UM+pmFXho/YLRmEKhjffo7miALbk2q7OnW8L34xQNx3BIMTS5FkVu1Bj8CP67FD9z8Nq0cd81cUq1nphAOfEUrikq68DsHdzM+DqIGbD7WCh0gSbuvp21Nb5UFSIIObhY1hMc3M9GPwkxxEYxCwCEe1CaSBDW/oRSjdy0ynz4SZKy2tCBxPuxBdTCCn+iBfwKClNgAxVhLnJOXm5D2T3vJj8YTIW1P/AtDYr3KtaXqrdB7Ipa42RMngu61OiODSkUNRQYNffiW3BnlaJMnOO7m9my+8bpYEyi3qQqPqvrAZ/mM4Pk+G6kbutJNluNm4HxWKINSLTjEt6VQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AM0PR04MB7090.eurprd04.prod.outlook.com (2603:10a6:208:19e::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Wed, 11 Nov
- 2026 21:00:13 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.007; Wed, 11 Nov 2026
- 21:00:12 +0000
-Date: Wed, 11 Nov 2026 16:00:06 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Stefano Radaelli <stefano.radaelli21@gmail.com>,
-	devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
-	conor+dt@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v1 1/2] arm64: dts: imx93-var-dart-sonata: enable UART
- wakeup
-Message-ID: <avTXVpCGD4nNsHwB@lizhi-Precision-Tower-5810>
-References: <cover.1793645417.git.stefano.r@variscite.com>
- <b51bef917d08b83bd231a4a228fb2d23c19a858b.1793645417.git.stefano.r@variscite.com>
- <sashiko-outbox-193978@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-193978@kernel.org>
-X-ClientProxiedBy: DS7PR05CA0012.namprd05.prod.outlook.com
- (2603:10b6:5:3b9::17) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YF3EXwH+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E611F00A0C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 22:01:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794434506;
+	bh=XW+W+IvRYtlcrp5klt8UaDvpzVbHTAiI7YDJRBlK4lQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=YF3EXwH+ua/1/5jd4ldBXvrOqGSZbGBPvVownMlXdP8v5aClB3aSYZBAweqZR0vPt
+	 fALT2kbP0N+JKld2X0qqj/MewTeGCWOeT00YwXg6/1+rLKOdP2sP9fsU7JTAsDokoh
+	 U1+xbcMqzpbAWTUspCHMf9D+Lt690xKXYgyGJQBpleSaGZ7Bby/z05mQzjWesmFcgg
+	 XhWfXNnoBWiMqZR/WtAGASri1p/ZsTZwk2RO3YWhF2eMr0cxNz+RPLOJV6jsmLPT8k
+	 fiCoXwHaJmHEtrcC+XmTfLqydf6LqpZJEnnrCRROO1fhP8YRk6FpG1Yl/aohjiyYKo
+	 FoWVgKdlDmwpw==
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-93e6eb77f0bso325888785a.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 14:01:45 -0800 (PST)
+X-Gm-Message-State: APuU4Z95JOFZYCtpljbYkAUF4n6s4dmWC6fBHazn+bVBAjton6C5e3m5
+	tia3eXj79t+yZBFkdmrHLWsskGVV+8XwmC13eLkOJscTiP+H7NHK55TmOpYE/p+FmQ7uNykWWAW
+	x7IuYBwhsO5rNgz1w0rp2eVfZQ0k/+wo=
+X-Received: by 2002:a05:620a:a195:20b0:947:b201:fad6 with SMTP id
+ af79cd13be357-947b2022f47mr420628885a.68.1794434504674; Wed, 11 Nov 2026
+ 14:01:44 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,139 +58,323 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AM0PR04MB7090:EE_
-X-MS-Office365-Filtering-Correlation-Id: a557bd1a-6fa2-4e42-1284-08df4036c77a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|19092799006|11063799006|260925021311599003|10067099003|260925022911599003|4143699003|5023799004|56012099006|260925021911599003|261022105027099003|261022075727099003|261026140227099003|261026121527099003|261028144727099003|261021121427099003|261102123227099003|261009221227099003|261009223027099003|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	IAQGQN5fhxqxndaqhPzU6YUpX7Tt3M4mMQFLumtzwphpXtggKwWKlb7RTzhd3YsKLmDleXx8kCMzq2M8pE7lxWLNp8Ztp/a6c6zhJgOGGg3mg5UBAow5Qg5KujsnByNfbWEYHZ7suGDJz2uW1Y0gyhve/J5aLMc1jIefllV4Dwzct2D+qelBTwbla8v9jF2ySoPS/l8Eh0SRgS0MpKU5ZSnEJsCNwdc2cZC/fMJgQRQuAlUkon6Kx0SWSNsTlIMBsjb2V+jQE1bxZzNx8FYR7lniH7Auwy/rLmfheZUksDYVriBKtqCz+8miXFyqytE5Ry4YBUnb+ux+Co+s6QtQ/DhABDHAATyQ0py1gMEGW69KkJ1+kyeIs4yoySlLSxnGZHXSVOwYHy7C4i2XIKrQwABYqr/Zzr8I6PfFJTzWKR5e2IC8nwWRO9xW+LcwZP728qIhV7sEUzPFAMjRI4SMhjYoiMbUYpxg0d7uAV7SPZT9VpYSG6F+5HHEEYWO59nyEXaeFZjCCaxPmkaTWYaz8sryS3VxjjKzK2eEIKPTWffN04ahy73XhADeX18GOBJAZz2F6k4F6ceCidLHpb7cu7tBmqHAa9/2hr5MmUxmUt8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(19092799006)(11063799006)(260925021311599003)(10067099003)(260925022911599003)(4143699003)(5023799004)(56012099006)(260925021911599003)(261022105027099003)(261022075727099003)(261026140227099003)(261026121527099003)(261028144727099003)(261021121427099003)(261102123227099003)(261009221227099003)(261009223027099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?CvUdIqqhD67tb2FExZ5uJzfaQzKlZQRKhNtP3srdifYkuVyjU23/vE0od4?=
- =?iso-8859-1?Q?RZORPKr6+exUEwCy5qplNbDsZM9zb4uf5LYgTlxaIPtxaB1rFttiPArQLP?=
- =?iso-8859-1?Q?dA3LRKMyf8dqhVPAwq+9v2fmCHvrKOCEV7MUYKrDybqnaaz0E7PshUJMl7?=
- =?iso-8859-1?Q?iyM+3FuYwskJ33MfrARjv2q+m9RSldPHXM8NJgB8OEwkEBMe0TvWjypgWl?=
- =?iso-8859-1?Q?oFlx5vcjBrD9Hgp3BJT6OeZ4yyJBbX4C36ULbZ+fY6s2gAGiEyChpCWALm?=
- =?iso-8859-1?Q?bDKnb4abPGV1xdDMefbSpak4qc2m1775hCMJ//EOCGMvxBIGFp3nV5qlAA?=
- =?iso-8859-1?Q?52Yg7AgjZ/cCzUGMXVxtJuzSy0Wgl0vm4pNuYiGbndLn2xfU0wtvRGVX6b?=
- =?iso-8859-1?Q?nTGcupHWR0OsQ86p0FmhQ63T3guq5c7S1bfSQ5VRI+LlBhyMxej21ucTLx?=
- =?iso-8859-1?Q?sa7dUsB+wb/uqGCRg1iMXdfWZ6NrFTKDLkBxzkDMBGrQJM5izzj3nhqVCk?=
- =?iso-8859-1?Q?OBBu6CXfQThTedECiH4hYaFtOXfaWDLuWtBlhBkdm0ycsQBZDMS0ZzJct4?=
- =?iso-8859-1?Q?TECQOVXWO48m81Znr7dUN0v/xZtq/Nm1QphrZifjovglbnDy2ZsnI6b2wE?=
- =?iso-8859-1?Q?6fmEf80yXJy+684cTCD3d9ENmNyMLKjkA8+QrIOIV5qMuQWhksU6O2zRw0?=
- =?iso-8859-1?Q?os1Idil2caVhyPOIkxcxTXZVR+/4M9Ic0FdYaRx4F4on8R67kbCdDUFMiB?=
- =?iso-8859-1?Q?W16IwLAHdlAH8vykY/Ed/nZTnKRB0HtJVJUwFCzqQhADtccVOaoiy4KqTl?=
- =?iso-8859-1?Q?zEQ3vBL8JH4Ykbi503WLG/9oDvBGQ9L9qV+Lu0uks5qy6bZN7h9cFkwY51?=
- =?iso-8859-1?Q?5XzxGcFU2VsEWiKO3aKovfInfSC2768cNVRCHA99IHwE63EPB3HhYhy3xQ?=
- =?iso-8859-1?Q?HNuyxtYJXr/rJNmsiRA9Y70A8X6Jh9NHN+j0zDBpwIFx1v8zNIKzWYsRsi?=
- =?iso-8859-1?Q?YFYghV32RTJlg/NBPfy0dmb9Nu7KQ0Vmi/4/Qxd4fSKCgfBB0uaB3nFyxq?=
- =?iso-8859-1?Q?3kkIzalcBvKYUyCGbOOj/NQtM/oIuCf6r9cZq2iON9lP7GcZZKokIRM3FH?=
- =?iso-8859-1?Q?Z6Ff1RAV8jCvVGMgoGdOx5QHz3XtRqyCrqUnEF5J/N1tVkkQp05IqLdJLM?=
- =?iso-8859-1?Q?04CnSdNFlIK3YeR74zxocnBN4fSpsHPeQn38MN2tLwNqrz9cGlxaw1CyK7?=
- =?iso-8859-1?Q?3Igud5UsBVChry2aA9WxmlMTxFEFopQ4QYqHjJ3DgfM76rcGnWdKz2enEJ?=
- =?iso-8859-1?Q?eL4GBAH2XIyDOtPqwv17pBe6Eb7KJWpSZj2R8qB4hai+OrKqGDMSuag5EI?=
- =?iso-8859-1?Q?vmcrBHlLJ9o5de1bRiKepQbAJnQPfezZwCLgFSkePHPIHXU38pe13pKJUK?=
- =?iso-8859-1?Q?6VsrUHMcGnu/qQKzrMVGXKBKg4rf8knj3Oz3j92g92RbY6R7YfduR0cS0v?=
- =?iso-8859-1?Q?jK/hJU6Pg3U4ka29qHbnVWWL8eo99GKFPJNsK4N73Xw5MkUu70PpGLK4dp?=
- =?iso-8859-1?Q?qG+H3sjwwEVqP5YiZoRwsXXzKFTigwdW2stHs0yp95fUEvbBu2fEfVe3pj?=
- =?iso-8859-1?Q?ttnmLR+K+LtQUZqhzAV7D+3nUULWlWchjiczjgeFI2lbK+Ijis9KDHzRMR?=
- =?iso-8859-1?Q?0Hd4fgvPI7jl9y6xx5YkCU4VWf2xSGFYotDmB/mAtYzDfhqFUMdYufWTHR?=
- =?iso-8859-1?Q?7S56O6Uvdar7Vkm5Q8yJBVr7P+LPMxjBqz/tLXJZx7T/qMUWDKWqcha+E0?=
- =?iso-8859-1?Q?WsUl5JDyaNHlppmmVJNUQCx8zd0hJygMGZGlyutm1S3LCc1sCjC1?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a557bd1a-6fa2-4e42-1284-08df4036c77a
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 21:00:12.9612
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4tlcoC4Zmiq/48ilGOWuvhHZ8XnjDMgEAeMPOAimJeAbHfvGQ0iOSDCIop8yc0DOwyeKziElpINXQixJt30AWksZctppG6mpeskar/Qc59PUBeUueJohgii/lzcKDt8h
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7090
+References: <20261110202025.25736-1-baohua@kernel.org> <20261110202025.25736-8-baohua@kernel.org>
+ <sashiko-outbox-207744@kernel.org>
+In-Reply-To: <sashiko-outbox-207744@kernel.org>
+From: Barry Song <baohua@kernel.org>
+Date: Thu, 12 Nov 2026 06:01:32 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4y4PBNutH3antEorzOw75GzAj50Y4-zXa3AW6wZ1PQP0w@mail.gmail.com>
+X-Gm-Features: AclHuK-znX198smVgGAytsDbBJGgYonffly9uT4RSqSFEL392RS9laz-yJy7pwE
+Message-ID: <CAGsJ_4y4PBNutH3antEorzOw75GzAj50Y4-zXa3AW6wZ1PQP0w@mail.gmail.com>
+Subject: Re: [PATCH v6 07/15] mm/mglru: balance anon and file scan budget by
+ refault rate
+To: sashiko-reviews@lists.linux.dev
+Cc: akpm@linux-foundation.org, linux-mm@kvack.org, axelrasmussen@google.com, 
+	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
+	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
+	liam@infradead.org, lianux.mm@gmail.com, liuxiang.277@bytedance.com, 
+	lyugaofei@xiaomi.com, mhocko@kernel.org, mhocko@suse.com, qi.zheng@linux.dev, 
+	ridong.chen@linux.dev, rppt@kernel.org, ryncsn@gmail.com, 
+	shakeel.butt@linux.dev, surenb@google.com, wangzicheng@honor.com, 
+	weixugc@google.com, yuanchu@google.com, zhangbo56@xiaomi.com, 
+	zhuhui@kylinos.cn, sidchintamaneni@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 02, 2026 at 07:03:54PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] arm64: dts: imx93-var-dart-sonata: invalid wakeup-source on lpuart1
+On Wed, Nov 11, 2026 at 4:56=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 4 potential
+> issues to consider:
+> - [Medium] mm/mglru: lru_gen_balance_scan() budgets un-scannable
+>   generations
+> - [Low] mm/mglru: lru_gen_prepare_scan() re-adds obsolete offline memcg
+>   check
+> - [Low] mm/mglru: u64 overflow in lru_gen_balance_scan() excess budget
+>   handoff
+> - [Low] mm/mglru: unzeroed budget on empty scan in evict_folio_lists()
 > --
 >
-> commit 65667fa7cde1bed5fd9129933907d0e5e0428a2f
-> Author: Stefano Radaelli <stefano.r@variscite.com>
+> commit 20aa81528d31d5bc56afcb10aeda259624bda6c8
+> Author: Kairui Song <kasong@tencent.com>
 >
-> arm64: dts: imx93-var-dart-sonata: enable UART wakeup
+> mm/mglru: balance anon and file scan budget by refault rate
 >
-> This commit adds the wakeup-source property to the lpuart1 node in
-> imx93-var-dart-sonata.dts to allow the serial console to wake the system from
-> suspend.
+> This commit replaces MGLRU's single-type-per-batch selection with
+> lru_gen_balance_scan() and evict_folio_lists() to split the scan budget
+> between anon and file LRUs based on per-type refault rates and LRU sizes.
 >
-> > diff --git a/arch/arm64/boot/dts/freescale/imx93-var-dart-sonata.dts b/arch/arm64/boot/dts/freescale/imx93-var-dart-sonata.dts
-> > index 1ca3ec8330d07..d368a09dc9167 100644
-> > --- a/arch/arm64/boot/dts/freescale/imx93-var-dart-sonata.dts
-> > +++ b/arch/arm64/boot/dts/freescale/imx93-var-dart-sonata.dts
-> > @@ -385,6 +385,7 @@ can0: can@0 {
-> >  &lpuart1 {
-> >  	pinctrl-names = "default";
-> >  	pinctrl-0 = <&pinctrl_uart1>;
-> > +	wakeup-source;
+> > diff --git a/mm/vmscan.c b/mm/vmscan.c
+> > index e2807faf26deb..6b325fe73436a 100644
+> > --- a/mm/vmscan.c
+> > +++ b/mm/vmscan.c
+> > @@ -4858,79 +4858,110 @@ static int get_tier_idx(struct lruvec *lruvec,=
+ int type)
+>
+> [ ... ]
+>
+> > +     /* Cross-multiply the ratio above. */
+> > +     anon_scan =3D mul_u64_u64_div_u64(total_scan, anon_factor, anon_f=
+actor + file_factor);
+> > +     file_scan =3D (u64)total_scan - anon_scan;
+> > +
+> >       /*
+> > -      * We scanned some folios but failed to isolate any due to promot=
+ions,
+> > -      * protections, or races. Retry once to avoid a larger loop.
+> > +      * Bound each type by its evictable size. Hand the exceeding part=
+ to
+> > +      * the other type. Any excess left when total_scan exceeds both s=
+izes
+> > +      * is dropped, since it only stresses the scanner with no gain.
+> >        */
+> > -     if (scanned && !tried) {
+> > -             tried =3D true;
+> > -             goto retry;
+> > -     }
+> > -
+> > -     return total_scanned;
+> > +     if (anon_scan > nr[LRU_GEN_ANON])
+> > +             file_scan +=3D anon_scan - nr[LRU_GEN_ANON];
+> > +     if (file_scan > nr[LRU_GEN_FILE])
+> > +             anon_scan +=3D file_scan - nr[LRU_GEN_FILE];
+> > +     nr[LRU_GEN_ANON] =3D min_t(u64, anon_scan, nr[LRU_GEN_ANON]);
+> > +     nr[LRU_GEN_FILE] =3D min_t(u64, file_scan, nr[LRU_GEN_FILE]);
+> >  }
+>
+> [Severity: Low]
+> Can anon_scan overflow u64 when total_scan exceeds total and both if
+> branches run?
+>
+> In lru_gen_seq_write() -> run_cmd() -> run_eviction(), the optional
+> nr_to_reclaim argument defaults to ULONG_MAX, so total_scan passed to
+> lru_gen_balance_scan() can be near U64_MAX.  When anon_scan exceeds
+> nr[LRU_GEN_ANON], the first branch sets file_scan to
+> total_scan - nr[LRU_GEN_ANON] without clamping anon_scan, and the second
+> branch then adds total_scan - total to the unclamped anon_scan.  If
+> anon_scan + total_scan - total wraps modulo 2^64 to a value smaller than
+> nr[LRU_GEN_ANON], nr[LRU_GEN_ANON] is truncated below the available
+> anonymous size.  Using else if (or clamping total_scan to total upfront)
+> avoids the overflow.
+
+yes. else if:
+
+        if (anon_scan > nr[LRU_GEN_ANON])
+                file_scan +=3D anon_scan - nr[LRU_GEN_ANON];
+        else if (file_scan > nr[LRU_GEN_FILE])
+                anon_scan +=3D file_scan - nr[LRU_GEN_FILE];
+
+>
+> [ ... ]
+>
+> > @@ -5051,18 +5083,22 @@ static bool should_run_aging(struct lruvec *lru=
+vec, unsigned long max_seq,
+> >       return evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS =3D=
+=3D max_seq;
+> >  }
+> >
+> > -static long get_nr_to_scan(struct lruvec *lruvec, struct scan_control =
+*sc,
+> > -                        struct mem_cgroup *memcg, int swappiness)
+> > +static void lru_gen_prepare_scan(struct lruvec *lruvec, struct scan_co=
+ntrol *sc,
+> > +             struct mem_cgroup *memcg, int swappiness,
+> > +             unsigned long nr_to_scan[])
+> >  {
+> > -     unsigned long nr_to_scan, evictable, sizes[ANON_AND_FILE];
+> > +     unsigned long total;
+> >
+> > -     lruvec_evictable_size(lruvec, swappiness, sizes);
+> > -     evictable =3D sizes[LRU_GEN_ANON] + sizes[LRU_GEN_FILE];
+> > +     lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
+> > +     total =3D nr_to_scan[LRU_GEN_ANON] + nr_to_scan[LRU_GEN_FILE];
+> >
+> > -     nr_to_scan =3D apply_proportional_protection(memcg, sc, evictable=
+);
+> > -     nr_to_scan >>=3D sc->priority;
+> > +     /* Just scrape all pages calculated above if this memcg was delet=
+ed */
+> > +     if (!mem_cgroup_online(memcg))
+> > +             return;
+> >
+> > -     return nr_to_scan;
+> > +     total =3D apply_proportional_protection(memcg, sc, total);
+> > +     total >>=3D sc->priority;
+> > +     lru_gen_balance_scan(lruvec, swappiness, total, nr_to_scan);
+> >  }
+>
+> [Severity: Low]
+> Does this re-introduce the !mem_cgroup_online(memcg) early return that
+> 2e203d692b0cb ("mm/vmscan: remove redundant !mem_cgroup_online() checks")
+> removed from get_nr_to_scan()?
+>
+> Offlined memcgs already have all LRU folios reparented and
+> lruvec_evictable_size() equal to 0, so returning early here only skips
+> apply_proportional_protection() and misses setting sc->memcg_low_skipped
+> when an offlined memcg still has stale effective memory.low protection.
+
+Oops, my fault. As mentioned in the cover letter, I ran into
+quite a few conflicts while rebasing, and handled this one
+incorrectly. I'll drop the following in v7:
+
+/* Reclaim all pages calculated above if this memcg was deleted */
+if (!mem_cgroup_online(memcg))
+       return;
+
+>
+> [ ... ]
+>
+> > @@ -5095,6 +5131,30 @@ static bool should_abort_scan(struct lruvec *lru=
+vec, struct scan_control *sc)
+> >       return true;
+> >  }
+> >
+> > +static long evict_folio_lists(unsigned long nr_to_scan[], struct lruve=
+c *lruvec,
+> > +                          struct scan_control *sc, int swappiness, uns=
+igned long max_batch)
+> > +{
+> > +     int type;
+> > +     unsigned long batch, scanned, total_scanned =3D 0;
+> > +
+> > +     /*
+> > +      * Scan both types with the given budgets; the caller checks if
+> > +      * reclaim is satisfied after each pass.
+> > +      */
+> > +     for (type =3D LRU_GEN_FILE; type >=3D LRU_GEN_ANON; type--) {
+> > +             if (!nr_to_scan[type])
+> > +                     continue;
+> > +
+> > +             batch =3D min(nr_to_scan[type], max_batch);
+> > +             scanned =3D evict_folios(batch, lruvec, sc, type, swappin=
+ess);
+> > +
+> > +             nr_to_scan[type] -=3D min(nr_to_scan[type], scanned);
+> > +             total_scanned +=3D scanned;
+> > +     }
+> > +
+> > +     return total_scanned;
+> > +}
+>
+> [Severity: Low]
+> When evict_folios() returns 0 for one type because that type has no folio=
+s
+> in scannable generations, shouldn't nr_to_scan[type] be cleared to 0?
+>
+> Leaving nr_to_scan[type] unchanged causes try_to_shrink_lruvec() to call
+> evict_folios() on the empty type on every subsequent MIN_LRU_BATCH pass
+> while the other type still has budget, and then run one extra iteration
+> (including should_run_aging() and try_to_inc_max_seq()) after the
+> scannable type's budget reaches 0.
+
+I guess we can do an aging when one type has no populatable folios:
+
+@@ -5116,6 +5117,13 @@ static bool should_run_aging(struct lruvec
+*lruvec, unsigned long max_seq,
+        if (sc->priority =3D=3D DEF_PRIORITY)
+                return false;
+
++       /*
++        * Run aging if scan budget remains but no folios
++        * in populatable generations are available to scan.
++        */
++       if (no_populatable)
++               return true;
++
+        /* better to run aging even though eviction is still possible */
+        if (evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS =3D=3D max=
+_seq)
+                return true;
+@@ -5220,20 +5228,17 @@ static bool try_to_shrink_lruvec(struct lruvec
+*lruvec, struct scan_control *sc)
+        lru_gen_prepare_scan(lruvec, sc, memcg, swappiness, nr);
+
+        while (nr[LRU_GEN_ANON] > 0 || nr[LRU_GEN_FILE] > 0) {
++               unsigned long orig_file, orig_anon;
+                DEFINE_MAX_SEQ(lruvec);
++               bool no_populatable;
+
+                if (mem_cgroup_below_min(sc->target_mem_cgroup, memcg)) {
+                        need_rotate =3D true;
+                        break;
+                }
+
+-               if (should_run_aging(lruvec, max_seq, sc, swappiness)) {
+-                       trace_mm_mglru_aging(lruvec, sc, swappiness);
+-                       if (try_to_inc_max_seq(lruvec, max_seq,
+swappiness, false))
+-                               need_rotate =3D true;
+-                       should_age =3D true;
+-               }
+-
++               orig_anon =3D nr[LRU_GEN_ANON];
+
+>
+> [ ... ]
+>
+> > @@ -5781,8 +5838,11 @@ static int run_eviction(struct lruvec *lruvec, u=
+nsigned long seq, struct scan_co
+> >               if (sc->nr_reclaimed >=3D nr_to_reclaim)
+> >                       return 0;
+> >
+> > -             nr_batch =3D min(nr_to_reclaim - sc->nr_reclaimed, MAX_LR=
+U_BATCH);
+> > -             if (!evict_folios(nr_batch, lruvec, sc, swappiness))
+> > +             lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
+> > +             lru_gen_balance_scan(lruvec, swappiness,
+> > +                                  nr_to_reclaim - sc->nr_reclaimed, nr=
+_to_scan);
+> > +
+> > +             if (!evict_folio_lists(nr_to_scan, lruvec, sc, swappiness=
+, MAX_LRU_BATCH))
+> >                       return 0;
+> >
+> >               cond_resched();
 >
 > [Severity: Medium]
-> Does adding wakeup-source to &lpuart1 pass dtbs_check or take effect at
-> runtime?
+> Can lru_gen_balance_scan() assign scan budget to a type that has no folio=
+s
+> in scannable generations instead of handing that budget to the other type=
+?
 >
-> The lpuart1 node in arch/arm64/boot/dts/freescale/imx91_93_common.dtsi uses
-> the "fsl,imx93-lpuart", "fsl,imx8ulp-lpuart", "fsl,imx7ulp-lpuart"
-> compatibles, which are matched by
-> Documentation/devicetree/bindings/serial/fsl-lpuart.yaml:
+> Previously, isolate_folios() fell back to !type whenever scan_folios()
+> returned 0.  Now, lru_gen_balance_scan() only transfers excess budget whe=
+n
+> a type's share exceeds nr[type] from lruvec_evictable_size(), which sums
+> folios across all generations min_seq[type]..max_seq including protected
+> younger generations (such as max_seq - 1 and max_seq at DEF_PRIORITY).
 >
->   required:
->     - compatible
->     - reg
->     - interrupts
->     - clocks
->     - clock-names
->
->   unevaluatedProperties: false
->
-> Neither fsl-lpuart.yaml nor the schemas it references (serial.yaml and
-> rs485.yaml) define wakeup-source, so this causes an unevaluated property
-> validation failure on serial@44380000.
+> When one type has drained all folios in its scannable cold generations
+> while still holding folios in younger generations, lruvec_evictable_size(=
+)
+> remains non-zero and lru_gen_balance_scan() keeps assigning budget to tha=
+t
+> type.  In try_to_shrink_lruvec(), that share of the scan budget is lost;
 
-Please check this, look like correct.
+Should be handled by the no-populatable aging logic above.
 
-Frank
+> in run_eviction() (where priority is fixed at DEF_PRIORITY), if the
+> remaining scannable type's share rounds down to 0 (for example when
+> nr_to_reclaim - sc->nr_reclaimed is small or at swappiness =3D=3D
+> MAX_SWAPPINESS), evict_folio_lists() scans nothing and aborts proactive
+> reclaim early while the other type still has cold folios.
 
->
-> In addition, neither lpuart_probe() in drivers/tty/serial/fsl_lpuart.c nor
-> serial_core_add_one_port() in drivers/tty/serial/serial_core.c reads
-> wakeup-source from the controller device node. Instead,
-> serial_core_add_one_port() unconditionally marks the child tty device as
-> wakeup-capable:
->
->   tty_dev = tty_port_register_device_attr_serdev(port, drv->tty_driver,
->                   uport->line, uport->dev, &uport->port_dev->dev, port,
->                   uport->tty_groups);
->   if (!IS_ERR(tty_dev)) {
->           device_set_wakeup_capable(tty_dev, 1);
->   }
->
-> And lpuart_uport_is_active() in drivers/tty/serial/fsl_lpuart.c checks
-> wakeup state on that child tty_dev (configured via sysfs) rather than the
-> platform device:
->
->   tty = tty_port_tty_get(port);
->   if (tty) {
->           tty_dev = tty->dev;
->           may_wake = tty_dev && device_may_wakeup(tty_dev);
->           tty_kref_put(tty);
->   }
->
-> Should fsl-lpuart.yaml and the driver be updated to support wakeup-source
-> before adding this property to the devicetree?
+For run_eviction(), I think we can remove the newly added
+code, since sc->priority used to be always 0:
+
+@@ -5845,6 +5905,7 @@ static ssize_t lru_gen_seq_write(struct file
+*file, const char __user *src,
+  .may_writepage =3D true,
+  .may_unmap =3D true,
+  .may_swap =3D true,
++ .priority =3D DEF_PRIORITY,
+  .reclaim_idx =3D MAX_NR_ZONES - 1,
+  .gfp_mask =3D GFP_KERNEL,
+  .proactive =3D true,
+
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1793645417.git.stefano.r@variscite.com?part=1
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110202025.25=
+736-1-baohua@kernel.org?part=3D7
+
+Thanks,
+Barry
