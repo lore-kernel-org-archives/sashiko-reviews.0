@@ -1,70 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794418521;
-	b=tMlMEYX9w3DpZ7f9IakobbuLhVKTmb/cxwknM75qFR7ICLGIsZxUClMgU5msnpU1Proh
-	 nBwE2rxvEED39yoYAeRMBTsGpHK/eSUyU2NGHTRrMUosmuj2sk3iYnBKVEFndUatm9X6Y
-	 /ebf3IzPlCzfy460SVH4U+hC5q3AHwums/E1MUg68iSGzdVII7bgLrMtAO9Bavr58uoXX
-	 zAUwkKoKM8vqbx+xT8rJh9tiVATTHtLhpwydDdkjF2YIWYRz0+opg4A4MrG1JDLrxWcWQ
-	 Mw2x1JWEmEysw9IIXTz+DlXtX9LHgiDbFF7EXHCLl0Me+1XlfSzhhI/QOkE/RofvccQ==
+	t=1794419265;
+	b=NhE9SGaVVlEmcfX+eC579ks+/jB86AMpKcrAibdm8nC+ujwD7Zx9Jg86QyXK+BOKLiOE
+	 tqTSMIqLhHsYkWoHCHSe61FQzRS/cEA7ifOyLDwVSYXWlYXp5yzqowlHx3GojqZOGoA7o
+	 8U/Y/1Qh84VE2C5A9y93u/TT6HQhDnIi/duhvozvRwzWvn2eyrvcQyMf2UXb1G47OTnnQ
+	 8IbYUzcYJehZCS0bRv1gCZukLUV6WfXagm7iKsOXWex9WeK12iRAkTG+ZD2Tdt25Xhuf0
+	 h9vRhkm9+kv+MyEby4hPjmj3mnvf2LZggWWKi236kqKdpSMJ3jf7lbfX/svz0Co79Hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794418521;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Debian-User;
-	bh=SBjsNrGoXRYjHeYNxlw6XSlAt+wBO4QS9+w7Q2owwCA=;
-	b=ltVuoGGc0VvwAYdQU+eAelkCd7C68nm7V5usJ2glB7zrq9rzs6yb9//XtfacvCh/7tmh
-	 3QeQiUcne0HQrpzDCL6B3ST5sd2QRe4/PYC6TKhmaeY/ZofCMQYXUqXEkYRtzHrLvSn28
-	 43mvtR/yZ2LYkx3ZU7vXQYitxwiEEoMy2MtiGto3zHXMr1lAQXMefpRsOOQq+Vh7Bo0Rk
-	 dw4Rs4nR37uLgGVuU8OuBc5BJagTENVk70muGH0rdxBrUVQh+tmRPaVM99xal/fSNQO7T
-	 pVzNvIt9ogVTp2Y9EooucPPqXmC3cCTHKlLQPC2DnItD/3AdmK9oic4O37wgTYaGGPQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794419265;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=Cavo6rumtYx83DhhSgHjGqxw295JLU9mSeXiMoOdbTo=;
+	b=k+BjQMUBoh1gPXdAKPwGETc75eZUfW7CaeiALEYRi0joWHIR3y+nI6hIlIxneJjwCMEj
+	 aTpJT/eGeUAJtJCK7Tewh3Nlr7jtW94dgHvlYc8EdTo+PvhDT9nqZwSN7lOWZimqBI1LO
+	 4wSgbEVQuMDJHUJz0JHdES59H4gEQ1UO8jUiTOArzRsXyXWydjTTqUkhNF42tbjfom5y1
+	 C/k93GC/IX2roCcYvPU4s128zzbpFv5uP/x4fHzPj3/AsgFljo9ojROOQTP4UFrdqLB9i
+	 qFnE3th8G1mrXclfNKxB6WeY/Rqs0XCV/Hndxj0WU+72j59Jw6KUdFce9VCLJieRrUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=debian.org;
-	spf=pass smtp.mailfrom=debian.org;
-	dkim=pass header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=dFJ9mwDH;
-	arc=none smtp.remote-ip=82.195.75.108
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=suse.com;
+	spf=pass smtp.mailfrom=suse.com;
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=TKN7zRdl;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F05606A31C;
-	Wed, 11 Nov 2026 17:35:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59F05606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81239606A331
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 17:47:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81239606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=dFJ9mwDH
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=SBjsNrGoXRYjHeYNxlw6XSlAt+wBO4QS9+w7Q2owwCA=; b=dFJ9mwDH7tr5QFpcqR3mvhWYzU
-	gqOVrUf6698CNa0sZlbCmngt5Hi5wiZ27BuiVZHIbWq29VRx7OnYn69+LSjm/wKlOZmcUCbe3of/r
-	WkVGzBJKDus1d91p/BvWJXvClForJAWDpkDwDy7L+cmPKYLjA04YPzHfCaKDT1gMaOpKoskmRUfr5
-	TDJ6/ihTQDEElJ2aInM5wCr9Y7Zi4xkwPV479vLHNRgjoNmHPqEaok/SjW5Dewyt/QiV5qX2pwrm5
-	Tp32oa3PBAoSXEgViXI9qf1TzqIHiCMIX322fLiXaPAuYXQsP6xMNPNMXTeDNLw+LlVaA3GiQgV4i
-	3m3MDZLg==;
-Received: from authenticated-user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <leitao@debian.org>)
-	id 1xRCE1-00DLgV-2A;
-	Wed, 11 Nov 2026 17:35:14 +0000
-Date: Wed, 11 Nov 2026 09:35:03 -0800
-From: Breno Leitao <leitao@debian.org>
-To: John Ogness <john.ogness@linutronix.de>
-Cc: sashiko-reviews@lists.linux.dev, Petr Mladek <pmladek@suse.com>, 
-	Sergey Senozhatsky <senozhatsky@chromium.org>, Steven Rostedt <rostedt@goodmis.org>, 
-	Ryan Roberts <ryan.roberts@arm.com>, printk@lists.linux.dev, 
-	Gustavo Luiz Duarte <gustavold@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Subject: Re: [PATCH printk 6/6] netconsole: Always perform unsafe flushing on
- panic/kdb/restart
-Message-ID: <avSXwwYEXZ6qsL4g@gmail.com>
-References: <20261109123127.489676-1-john.ogness@linutronix.de>
- <20261109123127.489676-7-john.ogness@linutronix.de>
- <sashiko-outbox-207027@kernel.org>
- <87qzgrmnql.fsf@jogness.linutronix.de>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=TKN7zRdl
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a20a37703bso24798755e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 09:47:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1794419263; x=1795024063; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Cavo6rumtYx83DhhSgHjGqxw295JLU9mSeXiMoOdbTo=;
+        b=TKN7zRdlOfiykSTNykGzbhoNDaAWDHod0hE3D5kokwbJFexSxX02GXKwNf/nOW4Vuy
+         CzIrxKLQhxryYg/zic7n04zUE1xBKV9/cvEQd51/WqWFb6oBYiRMNspzqeuA8nflH9Y3
+         jKBwLNinxEUZjoiI0rhtYJ2B4jT9nA4zh37BQ5/LvqGejhZxs8DtdvmA+BJfaK3IAlKP
+         ghxOxvyVojRLK71zymNR1plL09lvWuig6KvonRqiyVMTCi0ouNEPbWp+z8v+Dvn8xSmK
+         obTwrCQst1BLtkPzei2zdWhUInTC6ZOCrjo03jnkY57mD1P3UWx81UuW06R3fL1RwpPF
+         6mEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794419263; x=1795024063;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Cavo6rumtYx83DhhSgHjGqxw295JLU9mSeXiMoOdbTo=;
+        b=0IMp1sSixr8ZPpPxaExzV9tHkt/yCX7iTdOpMuGA12w5Lm3g8t3rCWVVvXKFLrsGwx
+         +q+zhM+aN6FnLRLdW+DcAw4t4+KV5f5wPdVYO0bVFVklwBuk8/9HVm+qh6kYLAQrXYzW
+         NQL1brFUVR9BlhtZU8xjWRRv/oTwLRuGKDlqOCJcexG7UaW1RnrlJmMkKuYGK7QUaufd
+         LMNRRwC9nvCP3qo0n6iOgjjUklYwLANM8tzRynnGhiF7vZF5cB3tsDXvIsBrwAcO3B/L
+         lxZWP/AfoiExFt3LQlgPaYbDzTbmpdA1exOmws1gxr+cLJo5EpIEqRVsNOlElyL8H9z8
+         WTTQ==
+X-Gm-Message-State: APuU4Z+7k3kFHPf1tok91st2Q1pRUs7cCm7VXG0rrJBu46XZCRfQz9KX
+	tkTakr6EmARBf80SLA/3iRbqJJ8hU7hm9NtlpGXKaeKDWPSa3Z7d8gKL5J8NeApkMcY=
+X-Gm-Gg: AYBFou2FLK7cGesJlSXWcWrdWjOfhIXxDipvV6rOBCH8PPUB6WiJbMFqvK5oNX4Rvwk
+	CMFt3N8nGoxIZbfZcC9qlSl9IwipcJm7VYZiArgjwTEcYMJcoZuokp0JUVFiMYgSUkwoABjaYVS
+	ij02WKe7A2igCejJoU2SPONTks1BughggINnDTahwJ6eyT7PMcrvqdD5HK3FPYIggBwrewT+uZA
+	m/CRXwguAXXU1l5ogFOH/WmjbUqSyoCIOXS9HW6OPmOIDt6Wi+Z4+POFcJrDRoAfPhGbsUx/aID
+	2O1hxjmLN3S9xXN41GGAr6H8HZ+aao3vjdMNky5iC9p9h94YDvRpFmLNUXjABJCZKy4Fin798GC
+	TjJ7z55FzHsHVQDRypo7m9EVAlYPd/PNcywSfQwi66f3TnU++u+8sORTWcigdIYE2LTq0Md7D43
+	+FHwZqL7BBr7clv7njpSOJonKkqZyAGMLnFsruHKDV+LE2msP/bWpOvJosxJYufwJ1fYLCN/SJ/
+	3sBsBI0gOjufPzN1S+1Ye+ac6zCWyVukjF2IhhQeKXqmi+5It6lJysTto8xxibLRm85moSrBERV
+	Q26cq6Cn7EHImEbdFvblVRk/fEEnWEZRwVyMSRfZjxRm9T3eQ6p+Fg==
+X-Received: by 2002:a05:600c:3f07:b0:4a5:87a:50ba with SMTP id 5b1f17b1804b1-4ba0938a6a7mr55235815e9.33.1794419263442;
+        Wed, 11 Nov 2026 09:47:43 -0800 (PST)
+Received: from localhost.localdomain ([2001:af0:8000:1409:193:86:92:181])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4e2593e4sm5375895e9.5.2026.11.11.09.47.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 09:47:43 -0800 (PST)
+Date: Wed, 11 Nov 2026 18:47:41 +0100
+From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
+To: Joanne Koong <joannelkoong@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
+	yosry@kernel.org, shakeel.butt@linux.dev, hannes@cmpxchg.org, mhocko@kernel.org, 
+	roman.gushchin@linux.dev, muchun.song@linux.dev, nphamcs@gmail.com, 
+	chengming.zhou@linux.dev, sj@kernel.org, david@kernel.org, ljs@kernel.org, 
+	linux-mm@kvack.org, damon@lists.linux.dev, tj@kernel.org
+Subject: Re: [PATCH v2 2/4] mm: memcg: read root lruvec stats from the node
+ counters
+Message-ID: <avSqMxGjwYPrQLlV@localhost.localdomain>
+References: <20261110015321.611093-1-joannelkoong@gmail.com>
+ <20261110015321.611093-3-joannelkoong@gmail.com>
+ <sashiko-outbox-206041@kernel.org>
+ <CAJnrk1aQrRE78wqd2yZWS2Sk8MiCHd9x0dveZBh5LHE5w75nkg@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -74,67 +102,138 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87qzgrmnql.fsf@jogness.linutronix.de>
-X-Debian-User: leitao
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJnrk1aQrRE78wqd2yZWS2Sk8MiCHd9x0dveZBh5LHE5w75nkg@mail.gmail.com>
 
-On Wed, Nov 11, 2026 at 03:50:34PM +0106, John Ogness wrote:
-> On 2026-11-10, sashiko-bot@kernel.org wrote:
-> >>  	.write_thread = netconsole_write_basic,
-> >>  	.write_atomic = netconsole_write_basic,
+On Tue, Nov 10, 2026 at 03:10:54PM -0800, Joanne Koong <joannelkoong@gmail.com> wrote:
+> On Mon, Nov 9, 2026 at 6:23 PM <sashiko-bot@kernel.org> wrote:
 > >
-> > [Severity: Critical]
-> > This problem wasn't introduced by this patch, but can netconsole_write()
-> > race with target list updates or device teardown [1] when called from
-> > write_atomic without target_list_lock?
+> > Thank you for your contribution! Sashiko AI review found 1 potential
+> > issue to consider:
+> > - [Medium] mm: memcg: node_stat_includes_unaccounted() omits file and
+> >   writeback stats
+> > --
 > >
-> > While write_thread holds target_list_lock via netconsole_device_lock(),
-> > write_atomic invokes netconsole_write() locklessly.  netconsole_write()
-> > traverses target_list with non-RCU list_for_each_entry() and dereferences
-> > nt->np.dev in netif_running(nt->np.dev) and netcons_skb_pop():
+> > commit d2ba314724a8ba015e3bf2a30f155f1beba25a8c
+> > Author: Joanne Koong <joannelkoong@gmail.com>
 > >
-> > drivers/net/netconsole.c:netconsole_write() {
-> > 	...
-> > 	list_for_each_entry(nt, &target_list, list) {
-> > 		if (nt->extended != extended || nt->state != STATE_ENABLED ||
-> > 		    !netif_running(nt->np.dev))
-> > 			continue;
-> > 	...
+> > mm: memcg: read root lruvec stats from the node counters
+> >
+> > This commit changes lruvec_page_state() and lruvec_page_state_monotonic()
+> > to read per-node vmstat counters instead of rstat values for the root
+> > memcg when querying stats that only track memory charged to a memcg.
+> >
+> > > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+> > > index 1ebc9330aeae5..2575bf2ba0ea6 100644
+> > > --- a/mm/memcontrol.c
+> > > +++ b/mm/memcontrol.c
+> >
+> > [ ... ]
+> >
+> > > @@ -504,13 +511,52 @@ struct lruvec_stats {
+> > >       long state_pending[NR_MEMCG_NODE_STAT_ITEMS];
+> > >  };
+> > >
+> > > +/*
+> > > + * Whether the node counter for @idx can also count memory that isn't charged
+> > > + * to a memcg (eg kernel memory that isn't accounted). For these stats, the
+> > > + * node counter can be larger than the root memcg's value, so the root memcg
+> > > + * has to read its rstat value instead.
+> > > + */
+> > > +static bool node_stat_includes_unaccounted(enum node_stat_item idx)
+> > > +{
+> > > +     switch (idx) {
+> > > +     case NR_SLAB_RECLAIMABLE_B:
+> > > +     case NR_SLAB_UNRECLAIMABLE_B:
+> > > +     case WORKINGSET_NODERECLAIM:
+> > > +     case NR_VMALLOC:
+> > > +     case NR_KERNEL_STACK_KB:
+> > > +     case NR_PAGETABLE:
+> > > +     case NR_SECONDARY_PAGETABLE:
+> > > +#ifdef CONFIG_HUGETLB_PAGE
+> > > +     case NR_HUGETLB:
+> > > +#endif
+> > > +             return true;
+> > > +     default:
+> > > +             return false;
+> > > +     }
+> > > +}
+> >
+> > [Severity: Medium]
+> > Should node_stat_includes_unaccounted() also include NR_FILE_PAGES,
+> > NR_FILE_MAPPED, and NR_WRITEBACK?
+> >
+> > For NR_FILE_PAGES, swapcache operations such as __swap_cache_add_folio(),
+> > __swap_cache_del_folio(), and __swap_cache_alloc() update NR_FILE_PAGES
+> > only in the node counter while accounting swapcache in the lruvec under
+> > NR_SWAPCACHE:
+> >
+> > mm/swap_state.c:__swap_cache_add_folio() {
+> >         ...
+> >         node_stat_mod_folio(folio, NR_FILE_PAGES, nr_pages);
+> >         lruvec_stat_mod_folio(folio, NR_SWAPCACHE, nr_pages);
+> >         ...
 > > }
 > >
-> > A concurrent target addition, removal, or device release on another CPU can
-> > corrupt the list traversal or cause a NULL pointer dereference or
-> > use-after-free on nt->np.dev:
+> > Reading node_page_state(pgdat, NR_FILE_PAGES) for the root lruvec
+> > therefore includes all swapcache pages, which inflates the "file" counter
+> > in the root cgroup's memory.numa_stat (double-counting swapcache alongside
+> > "swapcached") and causes it to diverge from memory.stat even after a
+> > flush.
 > >
-> > CPU0                                CPU1
-> > drop_netconsole_target()            netconsole_write()
-> >   spin_lock_irqsave(&target_list_lock)
-> >   list_del(&nt->list)
-> >                                       list_for_each_entry(nt, &target_list, ...)
-> >                                         <-- follows torn pointer / LIST_POISON
-> > netcons_release_dev()
-> >   nt->np.dev = NULL
-> >                                         netif_running(nt->np.dev)
-> >                                           <-- NULL pointer dereference
+> > Similarly, __folio_mod_stat() -> lruvec_stat_mod_folio() updates the node
+> > NR_FILE_MAPPED counter without updating memcg rstat whenever an uncharged
+> > folio (folio_memcg(folio) == NULL, such as a driver mapping or a
+> > root-cgroup __GFP_ACCOUNT kernel folio) is mapped into userspace, and
+> > nfs_folio_mark_unstable() and nfs_folio_clear_commit() update
+> > NR_WRITEBACK only in the node counter for unstable NFS pages awaiting
+> > server COMMIT.
 > >
-> > [1] https://sashiko.dev/#/bug/linux-5d4ba9e4-a230-401f-bfcf-b5d9ed4aa3b5
+> > --
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20261110015321.611093-1-joannelkoong@gmail.com?part=2
 > 
-> @Breno:
+> Thanks, this is a good point about the folio stats.
 > 
-> One option would be to change @target_list to be an nmi-safe srcu
-> protected list, such as the @console_list. In your cover page [0] for
-> the RFC NBCON netconsole you mentioned it as a "next step". It is
-> important if we want to use unsafe flushes from non-panic situations.
-> 
-> Although, we could get that for free if your "one console per target"
-> patch [2] is merged. That would be an important additional benefit.
+> Hmm... I wonder if we should go with an allowlist instead of a
+> denylist. The allowlist is longer (31 stats vs 11) but would be more
+> resilient to failures (a stat missing from the allowlist just reads
+> the rstat value whereas a stat missing from the denylist will silently
+> report the wrong value) for any stats added in the future. Any
+> thoughts?
 
-Right, and I've started to work on it with commit a9560343d4e9da
-("netconsole: publish the userdata payload with RCU"), and this is on my
-todo list.
+I agree the opposite predicate would be more robust and potentially
+easier to review (review only the _listed_ cases, not the "unknown"
+complement).
 
-IIRC the real problem is not target_list, which would be simple to move
-to RCU, but the TX lock on network side (__netpoll_send_skb() ->
-HARD_TX_TRYLOCK(dev, txq)), which seems to be incompatible with NMI
-context, even being a trylock?
+Also, instead of
+
+       if (something && !mem_cgroup_is_root(eviction_memcg))
+                mem_cgroup_flush_stats_ratelimited(eviction_memcg);
+
+I'd consider
+
+       if (something)
+                mem_cgroup_flush_stats_ratelimited_opt(eviction_memcg,
+		1UL<<NR_ACTIVE_ANON|
+		1UL<<NR_INACTIVE_ANON| ... );
+
+and collect the exceptional handling in memcontrol.c:
+
+        void mem_cgroup_flush_stats_ratelimited_opt(struct mem_cgroup *memcg, unsigned long needs)
+        {
+                if ((needs & ~node_stat_equivalent) == 0 &&
+                        mem_cgroup_is_root(mem_cgroup))
+                        return;
+		...
+
+This way in-kernel flushers will be expicitly annotated so that
+potential mismatch is more obvious to spot (and it adds possibility of
+future optimizations).
+
+(This is all only a concept, it may turn out uglier when worked out to
+details...)
+
+HTH,
+Michal
