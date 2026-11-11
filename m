@@ -1,54 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.91
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794411236;
-	b=r/KFzZkfQkxrZhXtDEC9aMRKShuX+D8OrFFPveeUBzW+TYZfOXPk15qBXCTixX+7RwK7
-	 pQGVXSNMpPR7i8cWPEdZ0RvuljlXblj2HBEsOyyOpJZK6Ivj2ewknWkwd+fX8JUjF3eRf
-	 wy5bd23MLrA4IEJ+KmpcM8L9aODHUo7T4NWawW+aoVHAKRK3EJ44ygYHaI0OMkWssvpRd
-	 uk2BxiIBH/gTCuI0u9GrPmBG94Pt3Qknb2FwdqJUYkqFdpLonFKOtEfSu77SKXxW30gH8
-	 PBO8Ux2Xn3Fo02PecNoNawpl2H8I2IPcElI5ngwsxTm7D00jYYT4r7ls6DKnPT1ZQIw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794411236;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=/QzRHwbFkfbNnZOUmwpP9Tp3Pl7GSNdM2Tkd/OqZeso=;
-	b=PP9sFozQxOe0KNnIHuXwmN3ZxZwieIarQFmqpmGuh2V2OaCO5vmnrvS3GYH7N7CgfBfc
-	 Gq/AjIfKTDlTObsnotSHBScHPkBjSsPjriCvzFTvR5WBA1i+ySmXLZc/ZC/Yf1TLH+bdV
-	 CvHWpGgKDymMAtFzlMHtaI71Iu4hDj7gsvlg88g25koeL5Jt+XM05CWb4PTzPzTfai/Zu
-	 Cbh4xfOldAT/sNBB93eMTnvJGLBGDBTHHTLNmBY2POT8r4ug7icHjZ5JK5rVoTkeYR149
-	 TCUw+uDXpfEgZx0r7dpj2fz/aq/vADUCFm+mmpPGReYKADuQxSD1WE9vIf23PvjLORA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=rUubxQ7f;
-	arc=none smtp.remote-ip=95.215.58.91
-Received: from mta1.migadu.com (out-91.mta1.migadu.com [95.215.58.91])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.122
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794411418;
+	b=owDgYOq8o37RdMxvN2sjLeWZ6CKuKBpfvN0K9tmBxc3CLAoNR4pEModj1j8PZm3TEieY
+	 5UjsQzQYPY0M8SUHLlJbU8A/SU5bwy932WMKaoxyd2DbB42F5JDBA5wGcUVkVpAOU1Tqf
+	 h1t15K6dh5ZS0+/eyDwoLlH22Sijf7PPOK8NnbOvnVLckSDrt9RSUb9f83esNTuVvUEaL
+	 Mbh4ujR1HKvSGDWUQ0zr21RT4DAJZ1i6ZDpmuCkYKzIvOvM6AIOv7SvPEqOp76jaCy/XR
+	 pxEjaP7G1emIJZW1Jfhm/JThgUPeZgv/JUQXgq0WGWysf8rwNmppGcVZUhYl35mNaVg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794411418;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
+	 Date:In-Reply-To:References:Organization:Content-Type:
+	 Content-Transfer-Encoding:User-Agent:MIME-Version:X-ZohoMailClient;
+	bh=cXcdL4RZkRanD7v6ytYiFI+7QElAQaeTLZZui243kdY=;
+	b=nY998e3AwTG6qpK0ezo6NwYywdQG67bEzpUuuzrESv3qeaW4xIORZiplvJxhDKeJNjGr
+	 V8gLQ+Rzxt6r4099aRDrMfJFReUi+pJeGe2Zb/6v38B/W0I7d7dAFEwRrzHAp666VzsVX
+	 uIy2RebGXd8LnYGDi7xqlAk+OOi0Sa1dxNGzKF3Mnbodl0pF0ZPJaBvGHBGNmrcbNRw4U
+	 qwyQHVNrBRd2Rm2oMOhKKicl5huTlO/HKldVIjIG/2VDoY94xoLZnYYKeCBcCn8agnD0a
+	 imETgY24LLJVSISnqz0u7TGTMDbbDsSrmi5DCwvv75fjjNtt7i5pqkE1ZsF1SQf5Ibw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=icenowy.me;
+	spf=pass smtp.mailfrom=icenowy.me;
+	dkim=pass header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=dxdnf1tU;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.122
+Received: from sender6-pp-g122.zoho.com (sender6-pp-g122.zoho.com [165.173.180.122])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9810F606A334
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:33:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9810F606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B799C606A32A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:36:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B799C606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=rUubxQ7f
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=p8HknJLppCkWqal251xel/ZGyV7bFk2X8EESci1r2ec=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794411233; v=1; x=1795016033;
- b=rUubxQ7fbkePxaLZ/tPw5HelOCQ35HVbgzV44leadVflYhVaEVjTSKrLXG6gsHEcmFEaIz+X
- kbJygjfpztvKDVgbNHu3I8WjxNev6K6rjGoVj5GV6nwBoyRT7MZ1PFAYhz9wMbEBVcruVD17HjO
- VQkhgtLUiTj0IuaAMyj5fA2s=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 31b42524a28fd5cd;
-	Wed, 11 Nov 2026 15:33:53 +0000
-X-Mizu-Trace-ID: 31b42524a28fd5cd
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <4f3cc2e8-0c38-4350-9f3e-d652655c7b79@linux.dev>
-Date: Wed, 11 Nov 2026 23:33:49 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=dxdnf1tU
+ARC-Seal: i=1; a=rsa-sha256; t=1794411407; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=DX/IsIaBVZXylZ/Jwnp0NZE8RSGRsJlESrHEhffSHS/5GENMZ6v/5mjFgTKIufzEMOUK0PB0w8oJmQLIy21JMhwIDtufnKqQd1a9WHi/NuZbrubZgaF/fCWv3bgLFB84zvtVjQRC7yBBIFy4G8rFzMD/equE7zwJrnkpS+wEbK4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794411407; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=cXcdL4RZkRanD7v6ytYiFI+7QElAQaeTLZZui243kdY=; 
+	b=kWvTSObDt0NBbPPIV3TcQjYHSpoTlrfiRVZoCP+loOw6kU0oeUCcQdj+402hsas8i4KrP4lL/nm/TKTHOInPLj8BmzOVcAbQhPXSXZcJJGvIQttCgAJSY5N6egvV1zV1MgQRlFKmp+v31Qco9voXY1ULjm1htgx4Ag00o23Kfs0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=icenowy.me;
+	spf=pass  smtp.mailfrom=uwu@icenowy.me;
+	dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: a=rsa-sha256; b=dxdnf1tUvtmfd8NCGQ4jY2u8KeigYZZdannJxSknt4wTNUENqBjXFcImw/bT4G5G1sK2PJCHaTHWjHVGbKa2tIb0wcH5ILoWbElbiZvAsHEEORtxM8uLwKOQKulRnPDa8Ov1dX7ppVnHxrshnbwPB03LVhVfZ4XOoAlzNkUtJl+8msLAeXCM6mRVEgJEcL8i5syHaBm75z5m0rjpjPZh1xgjhU6RRhHLrGTEt8AGSQ07FD+8UPB8AnlAS6uFYQPgO4/y8yA4mpmi6pweK4oK+hnV7W+bbdctHhqo/6nDCzqUlrjJ2nLHFCSSZhtyGHqFKM3XjF7qnrVEQolZmzo5Cg==; c=relaxed/relaxed; s=zmail2; d=icenowy.me; v=1; bh=cXcdL4RZkRanD7v6ytYiFI+7QElAQaeTLZZui243kdY=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794411405388314.12732903469475;
+	Wed, 11 Nov 2026 07:36:45 -0800 (PST)
+Message-ID: <fe657d0fb030632683705b7a9637d50782dd8acb.camel@icenowy.me>
+Subject: Re: [PATCH v2 1/3] dt-bindings: display: panel: ilitek, ili9488:
+ make the port optional
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Romain TISSERAND
+	 <romain.tisserand@gmail.com>
+Cc: Igor Reznichenko <igor@reznichenko.net>, Neil Armstrong	
+ <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann	 <tzimmermann@suse.de>, David
+ Airlie <airlied@gmail.com>, Simona Vetter	 <simona@ffwll.ch>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, 	dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, 	linux-kernel@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+Date: Wed, 11 Nov 2026 23:36:37 +0800
+In-Reply-To: <aac5e0a0-754a-4323-9417-cc17d7d42930@kernel.org>
+References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+	 <20261109160706.2272332-2-romain.tisserand@gmail.com>
+	 <20261110-comical-adder-from-saturn-8c8fbb@quoll>
+	 <aac5e0a0-754a-4323-9417-cc17d7d42930@kernel.org>
+Organization: Anthon Open-Source Community
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,150 +81,51 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 5/9] libbpf: Add log_opts support for
- BPF_TRACE_ITER
-To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Cc: linux-trace-kernel@vger.kernel.org
-References: <20261109140816.5196-1-leon.hwang@linux.dev>
- <20261109140816.5196-6-leon.hwang@linux.dev>
- <sashiko-outbox-205120@kernel.org>
-Content-Language: en-US
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <sashiko-outbox-205120@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On 2026/11/9 22:36, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [Low] libbpf: missing OPTS_ZEROED() check for BPF_TRACE_ITER in
->   bpf_link_create()
-> - [Low] libbpf: unreachable iter.len check in bpf_link_create()
-> - [Low] libbpf: deprecated iter_info fields used in
->   bpf_program__attach_iter()
-> --
-> 
-> commit 254d03820df80f0d29b270cec3be5cafe9178fe6
-> Author: Leon Hwang <leon.hwang@linux.dev>
-> 
-> libbpf: Add log_opts support for BPF_TRACE_ITER
-> 
-> This commit adds iter.info and iter.len to struct bpf_link_create_opts so
-> that BPF_TRACE_ITER link creation can pass iterator parameters alongside
-> log_opts, while keeping the legacy iter_info and iter_info_len fields for
-> callers that do not use log_opts.
-> 
->> diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
->> index 38dcb31e8c0ed..174a8bfaf6638 100644
->> --- a/tools/lib/bpf/bpf.c
->> +++ b/tools/lib/bpf/bpf.c
->> @@ -808,11 +808,6 @@ int bpf_link_create(int prog_fd, int target_fd,
->>  	if (iter_info_len && attach_type != BPF_TRACE_ITER)
->>  		return libbpf_err(-EINVAL);
->>  
->> -	if (iter_info_len)
->> -		iter_info = OPTS_GET(opts, iter_info, (void *)0);
->> -	else
->> -		log_opts = OPTS_GET(opts, log_opts, (void *)0);
->> -
->>  	/* validate we don't have unexpected combinations of non-zero fields */
->>  	if (iter_info_len || target_btf_id) {
->>  		if (iter_info_len && target_btf_id)
->> @@ -821,6 +816,16 @@ int bpf_link_create(int prog_fd, int target_fd,
->>  			return libbpf_err(-EINVAL);
->>  	}
->>  
->> +	if (iter_info_len) {
->> +		if (OPTS_GET(opts, iter.len, 0))
->> +			return libbpf_err(-EINVAL);
-> 
-> [Severity: Low]
-> Can OPTS_GET(opts, iter.len, 0) ever be non-zero here?  When iter_info_len
-> is set, the preceding if (iter_info_len || target_btf_id) block has already
-> verified OPTS_ZEROED(opts, target_btf_id), which rejects any non-zero bytes
-> in the union following target_btf_id, including opts->iter.
-Agreed.
+=E5=9C=A8 2026-11-10=E4=BA=8C=E7=9A=84 13:48 +0100=EF=BC=8CKrzysztof Kozlow=
+ski=E5=86=99=E9=81=93=EF=BC=9A
+> On 10/11/2026 13:00, Krzysztof Kozlowski wrote:
+> > On Mon, Nov 09, 2026 at 05:07:04PM +0100, Romain TISSERAND wrote:
+> > > The panel is a MIPI-DSI peripheral, a child node of its DSI host,
+> > > and the
+> > > driver does not use a graph port. A port is only needed when the
+> > > host
+> > > links its panel through the graph; other DSI hosts, such as the
+> > > Allwinner
+> > > sun6i-a31-mipi-dsi one, link the child node and have no output
+> > > port to
+> > > point at. The PinePhone panel is described that way on the same
+> > > host,
+> > > without a port.
+> > >=20
+> > > Keep the port allowed (panel-common) but no longer required, as
+> > > for other
+> > > DSI panels such as ilitek,ili9881c.
+> >=20
+> > ilitek,ili7807s and a few others have the same and it is confusing.
+> > The
+> > port should be required when this is connected over SPI or I2C, but
+> > not
+> > for MIPI DSI. I think that for MIPI DSI port is meaningless so
+> > actually
+> > incorrect.
+> >=20
+> > Why was it added in the first place?
+> >=20
+>=20
+> However won't all DRM drivers actually require panel? see
+> b089c0a9b14c
+> and 169466d4e59c which removed fallback to the child node.
 
-Will drop this iter.len check.
+The sun6i-mipi-dsi driver just tries to acquire a panel with the MIPI
+DSI downstream device OF node using of_drm_find_panel().
 
-> 
->> +		iter_info = OPTS_GET(opts, iter_info, (void *)0);
->> +	} else {
->> +		log_opts = OPTS_GET(opts, log_opts, (void *)0);
->> +		iter_info = OPTS_GET(opts, iter.info, (void *)0);
->> +		iter_info_len = OPTS_GET(opts, iter.len, 0);
->> +	}
-> 
-> [Severity: Low]
-> Should bpf_program__attach_iter() also be updated to populate
-> link_create_opts.iter.info and link_create_opts.iter.len instead of the
-> deprecated iter_info and iter_info_len fields?
-> 
-> tools/lib/bpf/libbpf.c:bpf_program__attach_iter() {
->     ...
-> 	link_create_opts.iter_info = OPTS_GET(opts, link_info, (void *)0);
-> 	link_create_opts.iter_info_len = OPTS_GET(opts, link_info_len, 0);
->     ...
-> }
-> 
-> Because iter_info shares a union with log_opts, calling
-> bpf_program__attach_iter() with link_info != NULL and link_info_len == 0
-> causes bpf_link_create() to take the else branch above and dereference the
-> union bpf_iter_link_info pointer as struct bpf_log_opts *log_opts in
-> __sys_bpf_fd().
-> 
-
-Will update bpf_program__attach_iter() to use iter.info and iter.len in
-the next revision. And, will add log_opts for bpf_program__attach_iter()
-btw.
-
-> [ ... ]
-> 
->> diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
->> index fe3b7fd8512bd..2ac143fd1102e 100644
->> --- a/tools/lib/bpf/bpf.h
->> +++ b/tools/lib/bpf/bpf.h
-> 
-> [ ... ]
-> 
->> @@ -478,6 +482,10 @@ struct bpf_link_create_opts {
->>  			const __u64 *cookies;
->>  			__u32 cnt;
->>  		} tracing_multi;
->> +		struct {
->> +			union bpf_iter_link_info *info;
->> +			__u32 len;
->> +		} iter;
->>  	};
->>  	size_t :0;
->>  };
-> 
-> [Severity: Low]
-> Does case BPF_TRACE_ITER in bpf_link_create() miss an OPTS_ZEROED(opts,
-> iter) check?
-
-Will add OPTS_ZEROED(opts, iter) check.
+Well I start to doubt whether a bridge would work in this case now.
 
 Thanks,
-Leon
+Icenowy
 
-> 
-> tools/lib/bpf/bpf.c:bpf_link_create() {
->     ...
-> 	switch (attach_type) {
-> 	case BPF_TRACE_ITER:
-> 		attr.link_create.iter_info = ptr_to_u64(iter_info);
-> 		attr.link_create.iter_info_len = iter_info_len;
-> 		break;
->     ...
-> }
-> 
-> When opts->iter is used (so iter_info_len and target_btf_id are 0),
-> trailing bytes in the anonymous union after opts->iter overlapping larger
-> members such as uprobe_multi are not checked for zero, unlike all other
-> union members in the switch statement.  Also, opts->iter.info and
-> opts->iter.len are read in the !iter_info_len branch even when attach_type
-> is not BPF_TRACE_ITER.
-> 
-
+>=20
+> Best regards,
+> Krzysztof
