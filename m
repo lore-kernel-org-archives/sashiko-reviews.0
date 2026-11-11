@@ -1,85 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794426709;
-	b=flXy+xO5WpVzdWK6pEbHG4+VyGbVKtmg2Hq2nEMuCeF4WvU6Erl52Bh529XCC+swkQWB
-	 cA67Zpugcg4VkG24oV6zgW7p/T0tWdswFftOcqRLe22UJA2+/Taqpkh7Ur9/H2+cSbN1U
-	 SRX09UDfF0iKqzJCM87U0P6TSnlpE4feVH/FOlIZqfUcXBOmHoOsQp7DaAmKkkRFlwt4e
-	 ZID9Wsf6rkcyqcG6SL9q24JxCBIQ/YyirGDexCNOOjdcu8P2r7D6QseRauzH9ZLImXdPk
-	 dMHHWl++cE21HVH0bH04mfiyckanz2Hshaqnlhuxc3dIMOMCtpTMyeDZ7NAp8V5Mkgw==
+	t=1794427231;
+	b=kwTcURWP1vT4Vhn7UAgrBpaMMLTBMAPz4RNwFZH3PVHxuplKYXLqYvQhiQrLUeodjaiZ
+	 ImT4tL3dBdmOivAxdIe3rSf0m9g7il6dHl4Cn0nTM5EwuosPLW8PC32PSTGXG02vvhs2H
+	 ejPtlaLaZBe115zO1bdO9A8V1qcRpez6tyKcOn0PIKKqRnmS5kPJK77CQFbWctLAJXCf/
+	 k33hjpdKj5cmX4YVH3bQK0bOu6NDnYRrQVhPVPVNNfjj7HqHPPYMP0s9cEKJBM4Glg4bo
+	 eO96jZ61K8Kss858WdVVMiIUj/2l/mHOc9LdCo0zk8ig4EzuyPPLZa8Zu4HdAdXMLfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794426709;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 Cc:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=13YqSnIhjrSGBdnncrmkRLcLAqs3gUqrk+ICDgkhd5A=;
-	b=xRv9Bx4yz5HBHQlCOvu+okKw3Ezn9vTblyz3nZR8uybiEo4M3ojFbDB7BZDvB04aERjU
-	 ZBwmMwNbjDROCl6iotu0Enk9oWLbtINPbmL9/4p3KBHeIJPaockwuZ6xkxIz6gGKDnliT
-	 wUjeKcjY3zNUk0HmEbszwa9Y/VNFdfYoE0kNvxzX8HOVzxTZNteBvHC1B2PCyDj5G+4x4
-	 gIJ/mM2YRCsP3aAOcZA2FJbHowB7rxsCYPQAW5NeT3RpvfGb9BSNrpPRelfvy1lhfA7qc
-	 C0C1whcvdLlLJnHSu+Tg9x4bhtG6wqSZZCGCW3cLA4eM0Vv0DPtnwbdeFWjtfiYnuiQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794427231;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=p+2Z0iAhcp8VOXafcysdCm6gOgr7IJoVThJ4qYkpC4o=;
+	b=3zMzUQayX4dlSSXXVjY7CmIjBanS+w0JzGhzfaH9F36Dt2pC80Nr5jSYMlLsjgB/VYUC
+	 udHF9ZSTu5FVaT9aGuYm/kcRB2yAXCgcvjyU2QvQVERwDUVU84SE5vwK1I8wWENEdgoyG
+	 Iqk+PfQfThnxnpT1Y/GtXiJSElD3/t0wCh7vsXj+qwQncsyUnGJMzu/9eRhLxiHxDsPQz
+	 Y8hap6fF16tuAkZ96r0rd8/xkbwLSSfSgaqiy7mddxvt7FmivCWgvjuRKSNHzj87WoT+3
+	 FRTuycinpAxy+Ej5CCaZV4BZrS3CLsWKDf0LfrVk3TU/w87H9BVH1zQx8HapiiKestQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bR14ee2s;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=szc184QW;
+	arc=none smtp.remote-ip=209.85.167.51
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB18A606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:51:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB18A606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95861606A327
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 20:00:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95861606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bR14ee2s
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1794426707;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=13YqSnIhjrSGBdnncrmkRLcLAqs3gUqrk+ICDgkhd5A=;
-	b=bR14ee2sTML+z8wHq+6wWOLy8acuyvOGPOTb7ymXIohTEedoRiq7I33vrSuCCJeWEAnloe
-	yw6BaEvmvrlspRVpc+BkEpEG54PALjZk1UXOBR7aBvta9q/ZmWT+VoZ7dBE5jTLb2vFQ7I
-	+OruPCCkxPjCWcdpEtf6x2TXYYBlkDQ=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-3Iiy3TwFMl-g3WVuKZLCmg-1; Wed, 11 Nov 2026 14:51:46 -0500
-X-MC-Unique: 3Iiy3TwFMl-g3WVuKZLCmg-1
-X-Mimecast-MFC-AGG-ID: 3Iiy3TwFMl-g3WVuKZLCmg_1794426705
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c25edb54d22so441399166b.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:51:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=szc184QW
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5be4a2d94adso3213724e87.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 12:00:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794427230; x=1795032030; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=p+2Z0iAhcp8VOXafcysdCm6gOgr7IJoVThJ4qYkpC4o=;
+        b=szc184QW4dsLA0qvL8b5AJtf1wDV3ChyruGG7c0xbi8nTi4DxwBRzQfvCWC5jlm+3M
+         p5PlPIcSZrv6Y+gda3K/isITj+BVmjYELXzooc2jHJ5RYFU+Ph6kI5x6gexbWIzXq3/K
+         KLIdfmnpEjeCnxr1zuBBQnfxN16Pr4TpJjteKYFj8jRv1vFY0qkXLdiuH4LQqXlBo3Yz
+         eS0uICdMADWLlfAchWp894tHIkLh5Uplbi45/Thrur+zVxt03Q9Ot62PEX5mVm5CVM5H
+         tRHn+E7S2EdNcnKkyU0mwSgT6KIP0rsMaQ4mHyaPrf5ITtyhyhkTqIM5iDfp4IbrofVk
+         PjoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794426705; x=1795031505;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=13YqSnIhjrSGBdnncrmkRLcLAqs3gUqrk+ICDgkhd5A=;
-        b=tLZg3vG7aC9IawF99NQO0XVbqHCstRNSivdCLyXz2BR5Pd1FEo5N976zVM7JoYd8rx
-         MQtarJqBpmF+DxLFLOTtKKWfegFgNvN9ZWREFOJpJFH5MLlKJ3P7gzSVX9CLkVp4X1Vl
-         cam/seXnPByqRWEUTXup7/rSk3IM+7924ycX9Hm6Dlv450gQInanjFU/UqWNYVWDhKRG
-         w9mAKdWatNnayVe6911XdRsX1c5x0P7hS3nnGEM+bUidFTSwwNXs6g1oNIqC+rkC434L
-         naEePAtRktgWPQ9ndku5VTkUMZkKKH290BlqrNUz+z+VsKj9wknM8LB5p/lhqAkj62ry
-         ZvDw==
-X-Gm-Message-State: APuU4Z8Sx7SJ862QyjsTuEx20GtyM158SvRI/jMswzLC9sPpCq4aHGWe
-	Zng/epb562o2EMyXz7IcY7Ps2Eftn4mZASTEJntFDecL1qZBFA822KH4Yj5TS4PAw1x/skKld0a
-	on75kJYDRzxyn1PKD8ob4XzOeNvULvWPmRUjOwbNojuKWjB2it2YQQSCVcbEbQHsZepbRJ+e7e3
-	CrpT2jpilIVMyofOf35zCK2z86u9rXWGxHrqoURNfTQUrPdUeOUaWDvtc=
-X-Gm-Gg: AYBFou2Ju6GP69YG5TP1W5nX+xSHxZTYILi788TQcNDxtOUfuP3bECBMBHN3beE7SAR
-	7HhSdlrRP4GqzcXiXgmUjOoRgv2Gi+gnjvGmcdifXPo0cFMDzd0332Xo9vwvuzWxRSFO72MV+tL
-	OgOi/5qZvvLRhTkdnbIDScNpImhMfwr3UtqMRBRpBWqjEoCS4Ky3sVxgaOmNRCMMbwNgIzvHkDJ
-	yemdU8G3JKGCf5hy23MTuVvAUgvscGaX2bPIMMAk5GiCA==
-X-Received: by 2002:a17:907:ea8e:b0:c46:ca3a:10d5 with SMTP id a640c23a62f3a-c5066cc8684mr274077066b.45.1794426705289;
-        Wed, 11 Nov 2026 11:51:45 -0800 (PST)
-X-Received: by 2002:a17:907:ea8e:b0:c46:ca3a:10d5 with SMTP id
- a640c23a62f3a-c5066cc8684mr274075766b.45.1794426704946; Wed, 11 Nov 2026
- 11:51:44 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794427230; x=1795032030;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=p+2Z0iAhcp8VOXafcysdCm6gOgr7IJoVThJ4qYkpC4o=;
+        b=eVS/bOf5/sznvt/YHV1+5w/TTIX2PYumtSybAApgaJpV2Rhx3H20t5/6LhqC8lbSjD
+         KU97fWOktaSQzo8MWV7c48sJeUQAPT6ATnqtUq7hG4t2azP0LXUxbFDETDF0fjqaDFGA
+         f8YDslXe4ZSa6hre/r732K71vEhJx/Y7HRXhSCB+XSTdxmv1ZoV7tlol3fFXx5kUP4/C
+         RyeK+jCLeC4/fGnQsM9RHeY1X6p/Gz1voIsqe4LfpsHksN7l5uGTLKRAmEQEueKO1+KV
+         ev14AVZX5vhsQ+HJwbRoZmd5mRFeixvqpQY5lROA8oeR6qnDQMk2t8WKtN9xdwGLNNI1
+         bagw==
+X-Gm-Message-State: APuU4Z/Gs6kJBvkphv2i+/HT8HmYsifK9TRAQxl6Rh6cuRExJmoZmrMh
+	FbE1xt7Hy/yagPqXcnl3ekZtdq09zeu1bWMqacVhNE6C/INvhzthq9HsWvrnzySE
+X-Gm-Gg: AYBFou3nwggL01LZPtbIY9nxeTbdjwbLOYWE51wivJcIyMZiB5ANraMqM/dUTgKFSVH
+	OOqu1uUOcG6cIW97pNJ8Yg482gpGB3J/MVoRM8pdVkC2XjQQSWphOypj5QJArZ5Z8kBmHz1IJ5g
+	K3DSbBUh+S665PGmVd1/iFYAJfCAuIDvXSwRCNv4zvEajyg4myJpBBfyaojMorBDUAHe+qsbcxp
+	C5KRxJ2GBBmpN3JaPNciKjKSmWy/tkHCKUjFkj/I665en/ywjrvU2uJ2zL8ReARgCAhEtATk2F3
+	ZgFRb8lRno4cv001Er2mFF61SyNZDTMRxby8+RAcT/dhk5zcj3IUAvjPx44rYYYqSy+lI/j/QQd
+	4w8/hiZuqd1JYMQOA2bwy85nlVitqcuJrHXxKDZp86LXZtlvyyfZRyuM/4CENHsvG2Um1DQiNhk
+	QwgmYpcUZWMMPh5yb3SMfke7W5ij4zHdTN+3BcVrsIyNFSRWnrOTqAMmdvZ6YUblH9K7p20yekg
+	AHV1HUEN+XhkwypHVWPNAKFtK5ZpgtKDDSvA2c8mHdzL38YzEZX5akwpCzlkl6DWPUJW6GUcSPq
+	6tFFY/1EMChZQR9ou0b8NVy4XF/RYfRHTQZQHBnWfXAw1DaeFuBtg4knlKZH5a5tPULLxgA7PkN
+	fjmcAmZ+F3NyUZac5FcCV241x3iw6wEhdh/j2
+X-Received: by 2002:a05:6512:b8e:b0:5c1:5cce:7f1d with SMTP id 2adb3069b0e04-5c15d58a87amr1050525e87.9.1794427229586;
+        Wed, 11 Nov 2026 12:00:29 -0800 (PST)
+Received: from yantra.. (nekmmqtce067ylb1za0-1.v6.elisa-laajakaista.fi. [2001:99a:d7d:c300:5558:447:baa4:a7d8])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c157bbe89csm1102957e87.81.2026.11.11.12.00.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 12:00:29 -0800 (PST)
+From: Rupesh Majhi <zoone.rupert@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Andy Shevchenko <andy@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Eddie James <eajames@linux.ibm.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Rob Herring <robh@kernel.org>,
+	devicetree@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Paulius Zaleckas <paulius.zaleckas@gmail.com>
+Subject: Re: [PATCH 2/2] iio: pressure: dps310: add a data-ready trigger
+Date: Wed, 11 Nov 2026 22:00:25 +0200
+Message-ID: <20261111200025.38344-1-zoone.rupert@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <sashiko-outbox-208073@kernel.org>
+References: <20261110154254.39092-1-zoone.rupert@gmail.com> <20261110154254.39092-3-zoone.rupert@gmail.com> <sashiko-outbox-208073@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,47 +107,21 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261111152057.59798-2-jeff@bencteux.fr> <sashiko-outbox-209282@kernel.org>
-In-Reply-To: <sashiko-outbox-209282@kernel.org>
-From: Ricardo Robaina <rrobaina@redhat.com>
-Date: Wed, 11 Nov 2026 16:51:33 -0300
-X-Gm-Features: AclHuK-8KRi28-wO7lCotvLzx3R8YClP1yWzaHbkuRqhTMvlvvdXcMtNFCDLN6M
-Message-ID: <CAABTaaB9zXgaM2uUMQ3h4nc0rERCDf1_OmSR5mfkxid3bFFNfg@mail.gmail.com>
-Subject: Re: [PATCH v2] audit: add missing syscalls to signal class
-To: sashiko-reviews@lists.linux.dev
-Cc: audit@vger.kernel.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: VWbbTshX96KsXh1JMBZD5p-Fn8v6ohIjCR6IoyayFlw_1794426705
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 11, 2026 at 1:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> > The pidfd_send_signal(), rt_sigqueueinfo() and rt_tgsigqueueinfo()
-> > system calls are missing from the AUDIT_CLASS_SIGNAL* class. It seems
-> > to be used only in kernel/auditfilter.c to increment the audit_signals
-> > counter.
-> >
-> > This counter is used to determine if information related to a target
-> > process of a syscall audit rule using signals, such as its pid,
-> > should be logged (e54dc2431d740a79a6bd013babade99d71b1714f).
-> >
-> > Information related to signals sent via these system calls are
-> > currently not correctly logged. The current patch adds it to the
-> > AUDIT_CLASS_SIGNAL* class.
-> >
-> > Signed-off-by: Jeffrey Bencteux <jeff@bencteux.fr>
->
-> Sashiko has reviewed this patch and found no issues.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111152057.59=
-798-2-jeff@bencteux.fr?part=3D1
->
->
+On Wed, 11 Nov 2026 02:15:48 +0000
+sashiko-bot@kernel.org wrote:
 
-Looks good to me.
+> Should dps310_fill_channels() read pressure first and use
+> dps310_refresh_temp_locked() like dps310_read_pressure_value() does?
 
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+Yes. The wait came with the triggered buffer support, so it is older
+than this patch and holds any trigger faster than temperature to the
+temperature rate. Fixed on its own:
 
+https://lore.kernel.org/linux-iio/20261111195118.36853-1-zoone.rupert@gmail.com/
+
+With the fix, this trigger keeps up at 8 and 32 Hz with temperature at
+1 Hz. I'll mention it in v2.
+
+Rupesh
