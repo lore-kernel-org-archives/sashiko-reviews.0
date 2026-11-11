@@ -1,95 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.52
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794371090;
-	b=35Lm+OpqQcTd+Nxpedg2CbjhJCxke2ockW1kCM87Lw4Cx/QzMuYYBk/spiRVqeWIN24L
-	 bx/1h0IJzPNtAr9hnC5iarkzb9GQld2QcN4N7pS4cS6xF+P4D87GUPDEBQfCvVKyOIAVj
-	 qpw+3e9Mkp1Q+Li2IVZ77I47WBkW6IxQnzCFhZDzY+grlLg8a0Ha/wYVkm0WAdouJZPG4
-	 VU0BZpG1ScB7vXK5dM1NBkYIIKkvyOlHLl2wkU3NBL4ASaLexu1tmlRS3vn4UnRTEe40j
-	 SdbQEeOHHsZNG3VXrAJx7u2BVAEydUBS0cVPMxTyJsBWE3spsiqWDgGKHg0npHCLpFA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794371090;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.177
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794372240;
+	b=BzFsre6wvMcwgxkEbMRZZV3L1B1C2AQ70MFkFU3d3KW69P/GDx8Ye9IlHUHsJuXXxUJK
+	 xt0RDSUo6sSPZP7BTlUlt788t9yMnDuHJ47nrCa4SOG9pGCNd44fu1VjQmM+l2tAYF7Mr
+	 7lx3c5Q+89czuiqYUAX+jSwk4sdvPXWVwU7mxLuhf+kR09C+J0BJ3H1Kt3EDhbCNvOU7f
+	 ONY4DmsLIYhrLTEZv/kLz9VLzfcMCBy3KnQOPJnHlzcQk2lISlH7cbdQSrfqa2Bd6qMdv
+	 Cn44xlKFQAZB+beaM0O0lb7G/NZofo1IdlwURGJNbH24R4M061aj6gf16UCm3MNppqA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794372240;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=5+PpphlpajmWTe2u74lHALG+B1qJVE8FkqGWsdeseUE=;
-	b=sonF0sfQg9XPXx/llrcW9BGwsHmoQK9Nt3OHXOcn0dC7o1uaMthQerZkiNhMsSR5wJfn
-	 GKQYmhRgPA6l1ksQLRSztNVu9REnkbJIFoRMOOZVZwgnVetocR8K9mPSYK+WUYgqOxsUO
-	 4cA+SqF93SlQ01fFPiJGk0ZlcoyX8/ByT6ItCvaHV0gkYg3QcmrXzA1961lpgSlr9K3EV
-	 tVYB6HQqrxNSO2z6l32J2USpgN4zpEw3MHKZ4KjfXsr2FzjOnbb62SehhGU4jr2XTJ1jI
-	 CjsI5Lv5SNELFW+fAesI8ow+f7uBBjCEu6p0fLN+CtyLmdXSrcc9gDOWR8s3PRB5M2w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=chromium.org;
-	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=Ia1FKhjU;
-	arc=none smtp.remote-ip=209.85.216.52
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=p31hRBuZ5v29aEoLLlgdY/9GGUqvzL1veqJRdGoKp7E=;
+	b=J0de88IKIdrcfVbcxoPMTh/t0Npdw7v5aKh2tvAijfHc7tycjfI+UzU+jVY+OcCOTu9S
+	 RFv80XJf666HAyHSRsIv/pq/2QM559LIM+oOVDa3BR+W0kQ4n5GQseVbfCZUBFdG73SkS
+	 oyvg8t42wLOH2GCCxb3PDjc3srP5bAOkKoffP29tijhWGIMxTuHsCbFdC+SIJNsZLGvjP
+	 xYEWbwl/emm2qlPR9y3dIYq649jVgu3C8RyXXcSQDxbhAhgcxEm/qS+rKhNIhaV21xjaT
+	 qo3BL4pqXuoWUt7Zbq4ad+cTAymYs2GwlO5WoAFWydP4gCH+WQ/h7zXSaTPZQSI0v5g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GUsOuEzy;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.177
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1D7606A326
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 04:24:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC1D7606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC52606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 04:43:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9DC52606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=Ia1FKhjU
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3ac91ac8924so1637580a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 20:24:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GUsOuEzy
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2eb18f4da15so11151895ad.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 20:43:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794372239; cv=none;
+        d=google.com; s=arc-20260327;
+        b=HHVayNpAS8XxZtMYcl8UZOjUNprbJ3De7BJW3r/01XunPq9F6GKDuEtHCE0QtO4lFN
+         pEasqn+xcUNpHsAvgin9vcN0UG+qifPjsInDQHL/LTj2vWrJJ3IyuY2OhIqjr0cbum2A
+         TLlnHP1Qz294JwZPs3cG/Eh7ddhnuCg9kOxU8gCyZIVnHFpfRDi3qTIU/Z/QEOAPxsk+
+         pti+ouliyh6fZTd9yNy9kVkjZWuoUWClvbQZedclFGwBqtCYQl11teixDqx8tKre5Qh0
+         PU6bRoG9uGYY8SYQin+R2VC5aKmN3J3VnyZ8bTCa/WLMqT5UOVTphc0Jn3HB4ZikZCQp
+         0xZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=p31hRBuZ5v29aEoLLlgdY/9GGUqvzL1veqJRdGoKp7E=;
+        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
+        b=cDq14Tb9Xjl0UFL7WjxqWjGEFWMzFSPPjz6FKOUehZeU1yVot+SEiH1MEcAUWysFK/
+         8Jg6gtZNLJLNDWURaUAZSKS/tK8Bfe2H300Wl02gfuInpfC7m7IRDimq93xs0fgfYm1F
+         z+Nq9qI3HC1qWV9swus9J1zdDAHOj9vvn0aUPgIA4ieU3Wiv1m9WgOVfGlrHX72qF5PA
+         68tptysTm97GfkeoGgKI2kcGnw5H4MqKIRhA65btIewRpnRhSLnmAsxfiokNF5P2+JK2
+         buReoRdoeHLVm+/pfHlzch0wOtVJqmQBvoGVk4mTCHucfDAzmvcCSMwjZwR/9MVT6Cxp
+         vrLg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1794371089; x=1794975889; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=5+PpphlpajmWTe2u74lHALG+B1qJVE8FkqGWsdeseUE=;
-        b=Ia1FKhjUg+oOcCHNXnPNsToLvJgzjiGjzt2P4dIqIE9TFL2SFBg/wOlKluyaT+3IXd
-         9iNDEZyRsNZRbrYY8MAvmEJEK0RwyIaDhLxLs19u/q79hAPZW/4L3cQcy06APlEcYcgf
-         oA/6ag2YOYAGVBpTf6c1KMKqum1hRC1cynTkA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794371089; x=1794975889;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1794372239; x=1794977039; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5+PpphlpajmWTe2u74lHALG+B1qJVE8FkqGWsdeseUE=;
-        b=BAOpzPM5qujqXALyhycsCZ49vOy9/jZTNd/vSkz+A4WIGzZ0Tm/IL/JmaSTT+j34DU
-         CNgxLaEaXsnYHUsEWvF/HITPBb2UhthSSLcM5s2+aeeVriEigvyYoFlWLOpbi0JdzPNq
-         +z03NPWiGgiKJtaJQPaJXNJ/F1mDoywjD5tBB26X6Oq46SW84mYvyjil9XKK9Pt78QJM
-         NRkiu1WC4rxJK1ftxFE3YmrBF2G0wDuKRtg+N//dDA9g1X4xrNWlnYcNf1OABENCbmRp
-         lBQQffQtz7NYXW+iv4pWKuj+lm6K2cdr9mFuHaW3S16HiB99khN1WlQZiZAsSFy0+czO
-         cS+A==
-X-Gm-Message-State: APuU4Z9+9dfW8dDvwX/ps2Pmtuu/uD3zbtaUdWgmuNCZm08lO+DTCTZu
-	wqdIauBnxu42OkdB1fv/4Dxh9Xl6Sj6587r2H17fFObGFJ2eUaRZ5PiQ9VhbQ5xy4MLejXDXz8u
-	7x4s=
-X-Gm-Gg: AYBFou0weS+UAs5Qjok/+eyY6LzMJAQiiW2sH0NXkP/Qp5guHz1VTRF76wj6aR3CjHc
-	3s1A1+5KLLYOGc+Aw5/s8RUoYq9WUgStvWvyPQEYAeknk0ugkf1S2cXTc/8O2tb+kEBbifyH1qq
-	tVpyOrhehXtbhzQT+RLNNIGYP6sFqeFM5k9eMJAqWsGlhpWaN6Dm769fR+7VqT1WcRtBzWNeaYF
-	+GXWjEXVsjzzQu3C00Cfqcd+c5tlips0OO8bCfBM0h6Q2gpgKswJMn/muZMgsUPNitz8K6+IrHy
-	hfAwcfCgK26bJu3yFbbWlDvt+x5k26jtMFn92J5DRSuKT/vBGXckEzsJAmKivnmLJl4T9+X7Tnt
-	wWS5u6HQfHR/jL0FPOuryZvq/0kHghJUMlaTKqVwXPRigLugM10NOPmZtC1CArD0RlgvbFj3t5V
-	tqI28szpufzQ4kZRn1HLAtcYFiWK2Hwe+j8QEFetgjsExkcsMW8spPrSfj3if4vS7q9V1+uPJDd
-	AFpLguuBW2wzwXrE86C04NlThqkIWrBg7FikCHhUDKwPbC1QkPmFUf6VeqDxb5TZl7dFd+I1UuZ
-	giPOiCf7ZRKkfquFmAwehnoxsRDpMuuYAGV5tybhgkqIOHUf6J9NTBi1HQYaYo2pS0reVA==
-X-Received: by 2002:a17:90b:3c44:b0:3b0:d365:f8ed with SMTP id 98e67ed59e1d1-3b182efb65bmr1194697a91.21.1794371089135;
-        Tue, 10 Nov 2026 20:24:49 -0800 (PST)
-Received: from google.com ([2a00:79e0:2031:6:ad6a:b446:df00:78dc])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b17dfb7a84sm2353036a91.2.2026.11.10.20.24.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 20:24:48 -0800 (PST)
-Date: Wed, 11 Nov 2026 13:24:44 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, Nhat Pham <nphamcs@gmail.com>, 
-	Yosry Ahmed <yosry.ahmed@linux.dev>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Brian Geffon <bgeffon@google.com>, Minchan Kim <minchan@kernel.org>, 
-	Richard Chang <richardycc@google.com>, linux-mm@kvack.org
-Subject: Re: [PATCH v2 08/11] zsmalloc: encode 1-based obj_idx so valid obj
- is never 0
-Message-ID: <avPto_ATpOqET8af@google.com>
-References: <20261110054836.1515030-1-senozhatsky@chromium.org>
- <20261110054836.1515030-9-senozhatsky@chromium.org>
- <sashiko-outbox-207590@kernel.org>
+        bh=p31hRBuZ5v29aEoLLlgdY/9GGUqvzL1veqJRdGoKp7E=;
+        b=GUsOuEzyKMpPBiQD4T//eMB+/6VmZ2jum6pbQLhCfkaej5P7x/ocjS95+9UCS9acfZ
+         Ge9VLhWLVNH6Wb/4Asm6oSYQrOjeU+BO33K0ELdHuVnR6wqYmsGRayMtmxkbOEqwbeVs
+         KnksD83dODvelcx2oCUZohD9v3GG3OIezFKbErhQDdNtnNFOGsGUezmrzKPBdAGzZKCN
+         5SDWvMis2AB0ctxKi9wmG5sExkeVVQLzQRM7tGG1JvWYVd3AhP4MLZcki70jHF45nf5I
+         jrYONPlK8Xa5+Kl1QCn1JX4o1VRSG2PUagDWkMUX3QsNxikLq2LdpVjXhpIV+Srqx7Fa
+         UOLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794372239; x=1794977039;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=p31hRBuZ5v29aEoLLlgdY/9GGUqvzL1veqJRdGoKp7E=;
+        b=Xc8SNbdonPADURpZhF7Z0soCX3+3DsN3l4pGN6hD9Wj+zZmgPFrHVyZpBPjsbezeoZ
+         jt4VGrdel5KVKlM0F/PWSFQ4IRYN0Vz4HT/tVm7/ovrUl8PB5ykHj41jVvX+2zlAbEdM
+         MiAgD410fDMGVgf37h9MM8mtBUw7mooR6auOkIn/1pDln9wpCkE45H2c/iFOKfGTgF6S
+         qUY99ElzIXZu8L2Pxuzz/MKWqjVtE6O/B6z2X/O6kWEf6faIIthkmCUVK1/kP+NWYcEU
+         lps1OLJfd1NTC8cCy9uu8Eg3mZFvgBuT3ChIxFmb0l1GZkhuS1EpT7ATA2mU4G4KJsh1
+         pZ1g==
+X-Gm-Message-State: APuU4Z+qnIgXTNJygUgY8B1O/OWcjN6Ka4qUsgrXjp7Q8UA5ZskYDeCk
+	JjkX/Dl3xY844VTjLuIbjR4MO8M2WIQtB01ser8gvHbD/qT+t7WeUF8SzT6ZHWw2uOx4JlDC8V4
+	JBuc4WzuLbbEFBbUA7eWPjkyhJxNikpLTf0rr
+X-Gm-Gg: AYBFou0DUiVJ6swmcXxdaM0O3RCNEnX27GoSv9cBPqVId24kvipzCC7alRyBN+1z8gD
+	d6wG9vegxsWSH4LLizIx2JqxYvUnM7mz7F7hev2hsSq2lTQFihjSok+CtD2q01NLTRyP9tLGBek
+	mT674sEzDWXISKS+OemstcwRAI7jM2qukr/xpLS8gyxjSlDkS35PBnree+j3VHuwD9dte3kb/g/
+	hJjrz/2Y3diWXe9M6JO4Vafz4GtljjMI1kcq2VZuhagrRm9ayA3OArenED5V1ImnfSFnFQVO51h
+	pJCTFK9B8mN/iQ1my1zyBCPBK+ay/4zG3EhdJfaSeFA68QdihEpNjs3DG0SuqX/asBmmUZ+Qr2k
+	vt/gEoAmfYpcJiw0UNy/SAZt5Z216lBi0Stp6mYMHuBC38zlE0jVkmHL551Bl9KbRKFyFeE9eKG
+	vg88hYWrDFnnQLbjFUfB9yLWsHkgtyRobf7Xx1vC811BivOdcFiSUPmcep05Uk9J3K6+Mf+w==
+X-Received: by 2002:a17:903:22ce:b0:2e9:6790:213a with SMTP id
+ d9443c01a7336-2edd7b397e8mr15511145ad.27.1794372239006; Tue, 10 Nov 2026
+ 20:43:59 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,46 +103,24 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-207590@kernel.org>
+References: <20261111042746.14714-1-phucduc.bui@gmail.com> <sashiko-outbox-208300@kernel.org>
+In-Reply-To: <sashiko-outbox-208300@kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Wed, 11 Nov 2026 11:43:47 +0700
+X-Gm-Features: AclHuK9ir-MmdyEJwmsH7iSiqbs8LV1rrQVMYa6Y6nx83eIH1wY1eDCqtmpPl3I
+Message-ID: <CAABR9nH9P5jOJ=Q8oxR9QMOKmttDh=-=jHsqnFR_szqzONgysQ@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: atmel-i2s: Use devm_clk_get_enabled() for pclk
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On (26/11/10 18:37), sashiko-bot@kernel.org wrote:
-> > @@ -169,9 +170,6 @@
-> >  static_assert(ZS_OBJ_IDX_BITS >= ZS_PAGES_PER_ZSPAGE_BITS,
-> >  	      "zsmalloc: ZS_MIN_ALLOC_SIZE would exceed ZS_MAX_ALLOC_SIZE");
-> >  
-> > -/* ZS_MIN_ALLOC_SIZE must be multiple of ZS_ALIGN */
-> > -#define ZS_MIN_ALLOC_SIZE \
-> > -	MAX(32, (ZS_MAX_PAGES_PER_ZSPAGE << PAGE_SHIFT >> ZS_OBJ_IDX_BITS))
-> >  /* each chunk includes extra space to keep handle */
-> >  #define ZS_MAX_ALLOC_SIZE	PAGE_SIZE
-> >  
-> > @@ -189,6 +187,11 @@ static_assert(ZS_OBJ_IDX_BITS >= ZS_PAGES_PER_ZSPAGE_BITS,
-> >   *  (reason above)
-> >   */
-> >  #define ZS_SIZE_CLASS_DELTA	(PAGE_SIZE >> CLASS_BITS)
-> > +#define _ZS_MIN_ALLOC_RAW \
-> > +	DIV_ROUND_UP(ZS_MAX_PAGES_PER_ZSPAGE << PAGE_SHIFT, ZS_OBJ_IDX_MASK)
-> > +#define ZS_MIN_ALLOC_SIZE \
-> > +	MIN(ZS_MAX_ALLOC_SIZE, \
-> > +	    MAX(32UL, ALIGN(_ZS_MIN_ALLOC_RAW, ZS_SIZE_CLASS_DELTA)))
-> >  #define ZS_SIZE_CLASSES	(DIV_ROUND_UP(ZS_MAX_ALLOC_SIZE - ZS_MIN_ALLOC_SIZE, \
-> >  				      ZS_SIZE_CLASS_DELTA) + 1)
-> 
 > [Severity: Medium]
-> Should ZS_MIN_ALLOC_SIZE align _ZS_MIN_ALLOC_RAW to ZS_ALIGN instead of
-> ZS_SIZE_CLASS_DELTA?
-> 
-> Because _ZS_MIN_ALLOC_RAW uses DIV_ROUND_UP() with a non-zero numerator, it
-> is always at least 1.  On 16KB and 64KB page kernels, ZS_SIZE_CLASS_DELTA is
-> 64 and 256 respectively, so ALIGN(_ZS_MIN_ALLOC_RAW, ZS_SIZE_CLASS_DELTA)
-> rounds _ZS_MIN_ALLOC_RAW up to 64 or 256 and overrides the 32-byte floor in
-> MAX(32UL, ...), eliminating small size classes even when ZS_OBJ_IDX_MASK can
-> index 32-byte objects.  As noted in the comment above ZS_SIZE_CLASS_DELTA,
-> ZS_MIN_ALLOC_SIZE only needs to be a multiple of ZS_ALIGN.
+> Can enabling dev->pclk here cause atmel_i2s_interrupt() to dereference a
+> NULL dev->regmap or access registers while dev->pclk is disabled during
+> teardown?
+>
 
-Hmm need to think about it.
-
-Those min-size-classes are never used anyway, e.g. compressing 16KB to 64
-bytes is just not happening often enough (if ever).
+This scenario is unlikely, but it is possible.
+To be safe, I'll move the devm_request_irq() call below the clock
+initialization
+and dev->regmap setup.
