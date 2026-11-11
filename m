@@ -1,56 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794389828;
-	b=Rtca4QfuD4Vdl9/+ivx6wUsknxcgtb4Sv5kuPyC50j0mmhU/ESAD4P7fuW1ffR3RCax7
-	 TOrVBJdu085tV4JmpZflw/sWoNsDXuXbWyzQ6/xQRB26kVyNT866vhpnUvmEg7SK8NKV2
-	 302IxzS0iSLukWlYseK+kdJ4vs0108Pqbx8BMLP9iIEORDxAuV6ARAoGkXUYsPA/s7UxK
-	 BanaOt6BCYfk0Q2FOaTdBm9wX1knDLzJUrUYivoU7uTAsY5CO5qUsku1+vSovrOV0xMM9
-	 W29o/pWWNTY5z7n0BVvgjjYS78pu0Fb2JbHhs+Kh1BZw4M2k5m1YuxQ+eanPbNkMTdg==
+	t=1794392698;
+	b=UrM5OAiSfaDJWrgw1LjPAYuTJ/neyLBYM2yCB8i05TwnF8oY11I1IrFviYbxk3tthOAC
+	 HyzFHH1Xx5uK8G/RSnlbCyZ5M94r1KauKJGMJWdrL70O4grKI6h8sZ8bBNDD4rb5WXcDy
+	 CLAlUHwguA2UuRbJlZS2Ofxw7GtkB5RGavzlM+edgByhza2sQHBBrO6+VF2e3HNCcIpJY
+	 MYTiF4QWaezT0ccfSdfvvKpMQCQ/EnNDUxvV4yTv9jGakFXK6BDOTyTxHC2H6tUuWN+4O
+	 K0ErV8pWyBtRTF2sx75UcLGmJg7WXuxRCJ0Olq1+YaDykw1KY6aH80eKT82icWwBhDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794389828;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=V3OCk+N8SB0awCd36HtzgSzqG30/oaImEUc9AZVKUng=;
-	b=wzBZurbBF98D6A8cQwjmPZC2kjYZIaRVsP7GXo/dWF6fUR/PFVY5jCABCvUE3kEN7XGU
-	 MjMxe83E06HoIhz6YPCagOiyOUs+yCrZuvn5XiED88jBp3oBQq+GEfZmMY/AQJc6kUyS/
-	 7IA84gKPpMPaDpdQKuBHDhC6ZV0Zpte7yLFTEwQ6ZMt2Si1UPSjWsjJj/kirXFdiVfpBW
-	 MtPNhscXVCUP7l8Y7KRiX7Ylaix1vqXw3uq9r+Vg4uprA6GHngWF1SxAnGf2Gmanielld
-	 nKgdTZj1f4gz2dNUK/xm6Bpga6uFhb8VWreX40zk/hFTGIt0he8S0NgjxL+e1tATupQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794392698;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=JnH6E3m3OytwHtdIb9v7wOGuBamv9Irg/1uvzHNiYxQ=;
+	b=J/zwPnU7/jhn+cuZ5N/DbMJtxcWWRF1mhPjYtisLlEC2cwyijOoTIcgyour2hmg+B1U+
+	 oTvEl/5++2fIuJGj7uzv5UqK3yf1OqWHyPkwYr1bPbLeG37SReNdewtrX3PJo9C/jThlp
+	 /SA/RpNceEbG0UOdSWP51gzBhkBI9HJJ7LD6B2EaRL50PgrX3uS15aI0RyGsJQSrddGI2
+	 dKdfWzgZQspGQEk37eGiG7qa02Ft314moNW6fWCkFA5f+cz2pbxroR0Tku9/wp+DEniWL
+	 GzmOYTd/43+W26k6d18OXXlvVAJNGm//d0HmhfI5DBy5nW5DDRlGGLGHIrrlC04M2ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S3A4M8PG;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B07606A324;
-	Wed, 11 Nov 2026 09:37:08 +0000 (UTC)
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=NQHo0OpC;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C56F606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 10:24:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C56F606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S3A4M8PG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D071F00A05;
-	Wed, 11 Nov 2026 09:37:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794389828;
-	bh=V3OCk+N8SB0awCd36HtzgSzqG30/oaImEUc9AZVKUng=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=S3A4M8PGrXZZOjpczvfRgaHWV379jGtDI+QSGgXmCBtKj/ifTm4o2c/Ak/jI1r70F
-	 2G46uDCdpQPL2kqtHqHS5rV/1XDUQoXAxQT2YrsX0fEoyBXHynKrsDXD6F4ZFfE9Iv
-	 rg9rJLzMKxS14WpcNgCywWHctZHbfmICCX40LkQshwDheWrF1im1dw2Juu+6OxXvsI
-	 QR+QoVJrLogbfPB2tmdB2QXkbfq6pDu14YuQu21BrehPbP86A/CS6YUpMGnawv5j+g
-	 vvsgo74iOZRxBtosfh27sXCrUErO6RMDC9/L5pG6pwW800na+FQoE9k4Xsp5ln0jFn
-	 2jqesqNPs4+vQ==
-Date: Wed, 11 Nov 2026 10:37:02 +0100
-From: Christian Brauner <brauner@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jan Kara <jack@suse.com>, Al Viro <viro@zeniv.linux.org.uk>, 
-	linux-ext4@vger.kernel.org, linux-mm@kvack.org, linux-efi@vger.kernel.org, 
-	linux-mtd@lists.infradead.org, dsterba@suse.cz, tytso@mit.edu, Mark Fasheh <mark@fasheh.com>, 
-	Joel Becker <jlbec@evilplan.org>, Joseph Qi <joseph.qi@linux.alibaba.com>
-Subject: Re: [PATCH v2 28/34] ubifs: don't set SB_RDONLY after errors
-Message-ID: <20261111-perfekt-dekaden-bildband-0e31f4bd1858@brauner>
-References: <20261029-work-fs-sb_rdonly-v2-0-2f44f64f0b66@kernel.org>
- <20261029-work-fs-sb_rdonly-v2-28-2f44f64f0b66@kernel.org>
- <sashiko-outbox-191247@kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=NQHo0OpC
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A4FF51576;
+	Wed, 11 Nov 2026 02:24:54 -0800 (PST)
+Received: from [10.57.63.24] (unknown [10.57.63.24])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5293A3F632;
+	Wed, 11 Nov 2026 02:24:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1794392697; bh=fS7+dm1lVrR3kORF0oVfw8gO0FZtBp9Mzni64/2uajE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=NQHo0OpCNlDTSyVwt9AskltMoLOC5DmzwE0FLofcyuQKXSh1OQ1LRblNqRoVCwt5D
+	 47za/dhQFqhiljNKutssaQNItZ5vVOwNbXueiF1wf174d18hrJ0Dw+pX/osNlH1KtV
+	 wvmVCbGhtttzbT1gy+aQN1BIJ3boc+tDGe7M8IOI=
+Message-ID: <0dcf6c71-9584-48c8-86ba-43b9bda0d16f@arm.com>
+Date: Wed, 11 Nov 2026 11:24:44 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,25 +53,68 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-191247@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v10 01/22] mm: Introduce kpkeys
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
+ Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
+ Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
+ Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+ Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
+ <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ Pierre Langlois <pierre.langlois@arm.com>,
+ =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
+ Quentin Perret <qperret@google.com>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
+ Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
+ Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
+ Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>
+References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
+ <20261109-kpkeys-v10-1-aa6c4d9603bc@arm.com>
+ <sashiko-outbox-207315@kernel.org>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-207315@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 30, 2026 at 04:10:12PM +0000, sashiko-bot@kernel.org wrote:
-> Should ubifs_ro_mode() call sb_set_emergency_ro(c->vfs_sb) unconditionally?
+On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
+>> [...]
+>>
+>> +/**
+>> + * KPKEYS_GUARD_COND() - helper to define a guard type that conditionally
+>> + *                       switches to a given kpkeys context
+>> + * @name: the name of the guard type
+>> + * @ctx: the kpkeys context to switch to
+>> + * @cond: an expression that is evaluated as condition
+>> + *
+>> + * Define a guard type that switches to @ctx if @cond evaluates to true,
+>> + * and does nothing otherwise.
+>> + */
+>> +#define KPKEYS_GUARD_COND(name, ctx, cond)				\
+>> +	__DEFINE_CLASS_IS_CONDITIONAL(name, false);			\
+>> +	DEFINE_CLASS(name, struct kpkeys_state,				\
+>> +		     kpkeys_leave_context(&_T),				\
+>> +		     (cond) ? kpkeys_enter_context(ctx) :		\
+>> +			      (struct kpkeys_state) {}, void);		\
+>> +	static inline							\
+>> +	void *class_##name##_lock_ptr(struct kpkeys_state *_T)		\
+>> +	{ return _T; }
+> [Severity: Low]
+> Could KPKEYS_GUARD_NOOP() and KPKEYS_GUARD_COND() use
+> DEFINE_CLASS_IS_UNCONDITIONAL(name) after DEFINE_CLASS() instead of
+> open-coding __DEFINE_CLASS_IS_CONDITIONAL() and class_##name##_lock_ptr()?
+> include/linux/cleanup.h already provides DEFINE_CLASS_IS_UNCONDITIONAL() for
+> this purpose, avoiding reliance on internal cleanup.h helpers.
 
-Yes, the background thread doesn't hold s_umount. I'll do that.
+Agreed, that's the helper I was looking for but it didn't exist when I
+first wrote this code!
 
-> Does allowing ubifs_remount_ro() to run after c->ro_error is set cause a NULL
-> pointer dereference on c->write_reserve_buf or trigger assertions in
-> reserve_space() and ubifs_wbuf_sync_nolock()?
-
-ubifs_remount_ro() won't sync the write-buffers or write the master node
-after an error anymore and ubifs_sync_fs() fails early. See my other reply.
-
-> Now that ubifs_reconfigure() no longer returns -EROFS on a read-only remount
-> when c->ro_error is set, should the assertion at the end of
-> ubifs_reconfigure() also be guarded by !c->ro_error, similar to
-> ubifs_put_super()?
-
-Yes.
+- Kevin
