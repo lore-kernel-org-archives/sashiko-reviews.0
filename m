@@ -1,67 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794426232;
-	b=pBLf9z6QyGIT99UW2yOnd0UIoWk4x7cSOlUTxbmYGhhlyPtMVySmdJ1sceUDDc8/ZJwT
-	 EoIw1rj7Bc1BoYA2ojeEPFmM/o2M5A+tib8DWRu/jZCukVm1n8IIqbDWgMqAnsQdPL+oc
-	 ZzK0yLxJAvI5KwLzwDHaKX9EAj24AO4sxKpg08yMFocMh0yYcF768C25Erd66TFwLF7eY
-	 EhCHIGy+g19BtGGlzRHqmmSYufnEmmHwEnF/fCvu1HfR07+W477ZOUF8yELxRfS9p0voh
-	 Ql4YkqN2d3bacQoI74h3d56/ztLUmSo9YFNT61HFjGSx4/Br8xGqYqlm9bajuxHRYYQ==
+	t=1794426590;
+	b=rPd2Hqn36Y8hZQnur7TKj2Ctu4Zd2ZpPX0U/BOeBX0FEVMwZYItsrUDks8TBw2qHD7PP
+	 U3eFHzBk/5sDmIc6rkmCmWP85oWjNI6L7ab9euYYPgEsagdUPN+BPeB2vRD3zbSPIKa4r
+	 5zSm0bPK6g8Cpc+FQzgOw6QRjjiraw/HTuxeNefpHlQ98cXMmQmoaBFn3Th1PRRbdi5jU
+	 KcB6tbnuqt7GZe4sblaUsCRrMQ0aZi/SXTW44LpHLDLyOYEeTmST+UdhVl3FHwjV+Q9r6
+	 F7e30DfG6vts+p4gYN15uiTszSBX+PzUO/G2uHaIGae/HRzqKGV5fb1BYyY5ofhkpFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794426232;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
-	 Date:Message-ID:MIME-Version:Content-Type;
-	bh=6Uj72/TkNOSKLa/NvnCJF39YYiorN2RudsmWa61UIzo=;
-	b=tbSKSuRKqGheq+CLGVWSCP/MJ4RKL8BhAt/dOuZ2b7hSPSFIB0eC3/Ho7/+cGP9LEQl+
-	 UAri22SS4eXq/8VrJgUIA7w47cLAjsz6pHEchf2ebaErccva+9aROyT/LXURg2rhdjlA9
-	 LS1f+gnpQz1OWHEDWNx1q7jipwuL/J51Vb9touWZfwk5HPRX7pNmxA/y6sdxYgu+qWo3j
-	 z1mEz/MgntRYJ2Fssh7QzKFk2AFd2L87RAvh3bymQLhxELyEej9bPjPoVLXVpowgTr9pM
-	 Fla12V2MB01FAVGaCJzhfyiuEzIvTHs4DrLpPtwcgM+HkrsqKm4sGkn8lKHutRFssjQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794426590;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=tWMbiH1ZllDhFsIxq3gitmWeOGpdMedMJ/cafKoVRxA=;
+	b=s/HFLls2OugZ4IV4lAjmLj23Uzd6cJPoQa3JuKEMYR4VixF19ybzQKXsG2XexzLgpbKk
+	 vkXqgfqULVMdxo7baOFPqGrmjK6o42hXVrZzUFTS7aDE2498PLTed4iJtKX5xihSG9yXy
+	 nIjPHJRRfuCheKCOGaZTapwlNc6ixNq8H5gfFbdeP3KUrKiL1Q+YrB3ZtLXCUd+1M7EY7
+	 YLkGaWCYqNWlbsTFAR3xOv/IGPHz7biANRCpJVorBjd64epHeImC4biOqYiCwAIJVcKOI
+	 atM3WLJcRMyyVtq2kx9nVzmD0WJ+4UhB6JkOvyt8/pnRZHcTfiaBVE2+0D0jpPh61zQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0TEn7bo;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E6F7AWpm;
+	arc=none smtp.remote-ip=74.125.82.182
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F350606A32A;
-	Wed, 11 Nov 2026 19:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C7D606A331
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 19:49:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7C7D606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0TEn7bo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E45F1F00A05;
-	Wed, 11 Nov 2026 19:43:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794426232;
-	bh=6Uj72/TkNOSKLa/NvnCJF39YYiorN2RudsmWa61UIzo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=P0TEn7boxctwTXgjGvCCkHxSFAxUViGYhYp2RLKQzv3rCLNSA9j279J2TO4qYMp5M
-	 Are//SoG1FmYXNapiCZqdhWYiptsMIgQVO1lTTOcfRSG3Ngr8pS1xp3NKwMV63Sp1/
-	 ILvCg4F1GN7zIr0CNUUa9nq3jTAzTPvsDojCOcb7xaEakPpVeVCQCpcQ+LCe7uhZfd
-	 8na3XgjuKauR1u4s1VYEfS+qGSXxY3ponUyIJqkyh5kPRIcjudRYcSDfgzpPN510Of
-	 QAq69VbvOi8R/nnWj9AFrjeutEq6c9wSpVK8LpB4uIJB0YuvnhWk67PDa8JgxwBWTP
-	 XWHeMILzdw1Hg==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-To: sashiko-reviews@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
- Lorenzo Stoakes <ljs@kernel.org>, "Liam R.
- Howlett" <liam@infradead.org>, Miguel Ojeda <ojeda@kernel.org>, Boqun
- Feng <boqun@kernel.org>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6r?=
- =?utf-8?Q?n?= Roy Baron
- <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, Trevor Gross
- <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, Will Deacon
- <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Mark Rutland
- <mark.rutland@arm.com>, Daniel
- Almeida <daniel.almeida@collabora.com>, Tamir Duberstein
- <tamird@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, Onur
- =?utf-8?Q?=C3=96zkan?=
- <work@onurozkan.dev>, Lyude Paul <lyude@redhat.com>
-Cc: linux-mm@kvack.org, rust-for-linux@vger.kernel.org
-Subject: Re: [PATCH v5 2/4] rust: sync: atomic: add atomic_per_byte_memcpy
-In-Reply-To: <sashiko-outbox-209187@kernel.org>
-References: <20261110-page-volatile-io-v5-0-a91ef252c24b@kernel.org>
- <20261110-page-volatile-io-v5-2-a91ef252c24b@kernel.org>
- <zJFQbYV67YWG-NtiQ0DX5nJ_8ddkkCuW7PYYnJDTumjlWS9_CnUvPigc1ieKk9xUcTCPH85viXhev1LXc5mMXA==@protonmail.internalid>
- <sashiko-outbox-209187@kernel.org>
-Date: Wed, 11 Nov 2026 20:43:39 +0100
-Message-ID: <8733t7w3v8.fsf@t14s.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E6F7AWpm
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-37000e7234bso2405345eec.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 11:49:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794426589; x=1795031389; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=tWMbiH1ZllDhFsIxq3gitmWeOGpdMedMJ/cafKoVRxA=;
+        b=E6F7AWpmINcH0ytKhjUFZx1xjx2kPY5VmKXzYHNOGS2LjR86XRueYCVUvKxwEcYM+K
+         k08RBaj7oA6+6rprIAlLIqNgLxd5bdd58ejltiHZNZk3ROKbfOuxEXOsymV7ynMBRBmE
+         kEn7DKCtE1fYOP1gwITZw3uyWqcZTRHOSkI3q/EdAoTGrG2i3z6r/GwCQsQOj8+sz9+M
+         O1nXtOrT94jgqUjrzEhqFNgpAmn+qqcUENSZ/JZRRCPcDehyapA5G8/X+y4j9j7TGBbS
+         CUog2SltWB6ZP1HeRi5ZtFwS3Cz7vC1fAiSa0rXa1PTjxEY+ezJB+vTuygOiWowRvBFZ
+         yT6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794426589; x=1795031389;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tWMbiH1ZllDhFsIxq3gitmWeOGpdMedMJ/cafKoVRxA=;
+        b=IvRMBdTI7Q4TmrkhcOLROA4HrH+zmBYboBcCZImvXy2M6s7bOTAFCG99RVsmVb6/0N
+         S1COELqNM6+iIyBDCZG6+pcj/RZsYwlXzX8tFJz3HviKOIu+4KhCaqLpb26tvDphU3fe
+         +aoVHeVPABZP7j3vb/Khv/vAHbEYQErki+gOdlG4ZDwzncl+sebwtzbodFwhxw9F0yg2
+         atKyt9l4CzUWsRKfnbHJl1bnbLIxLIrYXMW8OuU98HlWd/4exGm0qcGLbBvGqF3+B+n6
+         eMDHg0ixwsK1Uuq1kEegs8jrAM0vC5CqissYVgAW+fSFtNTyLavpl4gQFi6qKDyqRECH
+         SBvw==
+X-Forwarded-Encrypted: i=1; AL+hErFlvyOxnokSjd0UX3avb/l/YFRHg0YW0Pu0T5AehH+kdgSejc3F27bHS42D9Zh8ax2phY0PRbGdeOnoERgzm/g=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8KckBZstTaP8vbCvorLyHM+/xUeiMtwVSeOfDEXH1IuYpGZJZZ
+	XCf/7XO5FJX+ZdI6fH8th32QRH/zaIo8MFjeObiKfMOVET4Qov6VsanD
+X-Gm-Gg: AYBFou27DAzoeBv4wzCCWfu5r3Ibv9ADtnIf5HkqG8QYpof8M04IxKvrd7sB0Em+5D+
+	Q9P30VBiarr5hEp6RQUC4Z7B4s1tb/Rgf48SQNCxewoUnVq0wL4pq7XKTsq209MWrPCuEHVpSGz
+	LLaP6zOQR+Z6ylk3JGEvH7quOFQsNwIVLZYlfn7dWKKpvtJR1maj+YvWI9e6jBXi4Y2TJpvgAog
+	xBdcONRnWFQSYolr2Y3rmdBaLI9LGdhCvGSqXu6Op1zJDGAUjz4OD7oRRmkbg/6Lo/6lUSX9Jkm
+	wRAVi95Y9A5OMMVEr+wgBEUdBsA5EOh3lFbacwCmL9xrDcdmQlcCpsGRsb/2P3L9rwgGWbPWqad
+	wURlsztG7PRR4GLzf4LUS/6C3I30B4I8tB/sfbkM8+WUIuWzvSHRxtm265wcSrqwUOTGJXD6zwB
+	2bVHm55T/DhAtGNiU/w0/CYsNWD6WrU6e1yRkq6XnXUSSVV7VQ9aIGI9Ctne4HW83TYuxBLdSNs
+	lLw2LSQndiEwoIVWioEvLLx9UtNO1bCmcnJ/ZBdixE0tRcqnQrslDvDaj8qO7+K76ZagOjJDJRT
+	yKNha9n5heh4Cr2La6XQ0Rh/BndFPG1MvDv4Vl4TzybIYOKJowpiBrYnp0ewfOdLfJ2Vvmw=
+X-Received: by 2002:a05:693c:638e:10b0:375:dbeb:b363 with SMTP id 5a478bee46e88-37686d341eemr3916361eec.28.1794426588437;
+        Wed, 11 Nov 2026 11:49:48 -0800 (PST)
+Received: from google.com ([2a00:79e0:2ebe:8:311a:ad7a:93f8:96c8])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3766146551asm10505501eec.1.2026.11.11.11.49.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 11:49:47 -0800 (PST)
+Date: Wed, 11 Nov 2026 11:49:44 -0800
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Juan Parrado <jparrado.1817@gmail.com>
+Cc: sashiko-bot@kernel.org, linux-input@vger.kernel.org, 
+	sashiko-reviews@lists.linux.dev, Juan Parrado <jparrado1817@gmail.com>
+Subject: Re: [PATCH v3] [PATCH v3] xpad.c - Add support to Hori Real Arcade
+ Pro 4
+Message-ID: <avTG1Mkv0FLBGLPF@google.com>
+References: <sashiko-outbox-204846@kernel.org>
+ <20261109195830.22156-1-jparrado1817@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -71,91 +98,24 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261109195830.22156-1-jparrado1817@gmail.com>
 
-<sashiko-bot@kernel.org> writes:
+On Mon, Nov 09, 2026 at 08:58:30PM +0100, Juan Parrado wrote:
+> The HORI Real Arcade Pro 4 in PC mode is currently recognized by xpad.c as
+> a 'Generic X-Box pad' and works out of the box. However, this generic name
+> does not match the actual device name, making it difficult for users to
+> distinguish this controller when multiple devices are connected.
+> 
+> Tested on physical hardware. The proposed change works perfectly as is.
+> The MAP_TRIGGERS_TO_BUTTONS parameter does not work here. Other arcade
+> sticks use an identical configuration, such as the 'Street Fighter IV
+> FightPad' and the 'Hori Real Arcade Pro.EX Premium VLX'.
+> 
+> Signed-off-by: Juan Parrado <jparrado.1817@gmail.com>
 
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Low] rust: sync: atomic: missing #[inline] attribute on
->   atomic_per_byte_memcpy()
-> - [Low] rust: sync: atomic: wrong core::ptr::copy() doc on
->   atomic_per_byte_memcpy()
-> --
->
-> commit cade864abc69fc627ff4e6283efdc3170c94fccf
-> Author: Andreas Hindborg <a.hindborg@kernel.org>
->
-> rust: sync: atomic: add atomic_per_byte_memcpy
->
-> This commit adds atomic_per_byte_memcpy() in kernel::sync::atomic, wrapping
-> the kernel's memcpy() to perform byte-wise atomic memory copies.
->
->> diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
->> index 6d27898add42c..cbcb081d8674e 100644
->> --- a/rust/kernel/sync/atomic.rs
->> +++ b/rust/kernel/sync/atomic.rs
->> @@ -848,3 +848,38 @@ pub unsafe fn cmpxchg<T: AtomicType, Ordering: ordering::Ordering>(
->>      // per LKMM.
->>      unsafe { Atomic::from_ptr(ptr) }.cmpxchg(old, new, o)
->>  }
->> +
->> +/// Copy `len` bytes from `src` to `dst` using byte-wise atomic operations.
->> +///
->> +/// This is the concurrent-safe counterpart of `core::ptr::copy()` (the equivalent of standard
->> +/// C's `memcpy()`). Because of the atomicity at byte level, when racing with another concurrent
->
-> [Severity: Low]
-> Should this documentation (and the commit message) refer to
-> core::ptr::copy_nonoverlapping() instead of core::ptr::copy()?
->
-> core::ptr::copy() is the equivalent of C's memmove() and permits overlapping
-> regions, whereas core::ptr::copy_nonoverlapping() corresponds to C's
-> memcpy() and matches the safety requirement below that src and dst do not
-> overlap.
+Applied, thank you.
 
-Thanks, this is correct. I will fix this.
-
->> +/// atomic access (or when a normal read races with an atomic read), or with an external access
->> +/// (from DMA or userspace), the behavior of this function is defined: the memory is copied at
->> +/// (at least) byte granularity.
->> +///
->> +/// Implementation note: this is currently implemented by the kernel's `memcpy()`, which is
->> +/// implemented in a way such that byte-wise atomic memory load/store instructions are used.
->> +///
->> +/// # Safety
->> +///
->> +/// Callers must ensure that:
->> +///
->> +/// - `src` is valid for atomic reads for `len` bytes for the duration of the call.
->> +/// - `dst` is valid for atomic writes for `len` bytes for the duration of the call.
->> +/// - The memory regions `src .. src + len` and `dst .. dst + len` do not overlap.
->> +pub unsafe fn atomic_per_byte_memcpy(src: *const u8, dst: *mut u8, len: usize) {
->> +    // SAFETY: By the safety requirements of this function, the following operation will not:
->> +    //  - Trap.
->> +    //  - Invalidate any reference invariants.
->> +    //  - Race with any operation by the Rust AM, as `bindings::memcpy` is a byte-wise atomic
->> +    //    operation and all operations by the Rust AM to the involved memory areas use byte-wise
->> +    //    atomic semantics.
->> +    //  - Copy between overlapping regions, which `memcpy()` does not support.
->> +    unsafe {
->> +        bindings::memcpy(
->> +            dst.cast::<kernel::ffi::c_void>(),
->> +            src.cast::<kernel::ffi::c_void>(),
->> +            len,
->> +        )
->> +    };
->> +}
->
-> [Severity: Low]
-> Should atomic_per_byte_memcpy() be marked #[inline]?  It is a non-generic
-> function in the kernel crate that forwards directly to bindings::memcpy(),
-> so without #[inline] callers in other crates cannot inline the wrapper
-> unless LTO is enabled.
-
-I will add the inline attribute.
-
-Best regards,
-Andreas Hindborg
-
-
+-- 
+Dmitry
