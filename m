@@ -1,101 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.173
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.35
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794412321;
-	b=SARKx9JcHpvZhRz+h/rseDLpsuhQ39X9kbRwULeNJCmilzf0HXN/yZgxLHNIXIGUi5OM
-	 YDb6gUKQ9nIwEgUimm6PMIpOxXuQHkNclY4+Uk6Srkmz18RtZhVmZjzt+DH2otFd77m9+
-	 4n6pjqaQKVkfxiVCDa+Qn0AWNPYlNLdqKgmkQWnZlBi5B84tj3+15pWdk2LxxFF1xn6F9
-	 Il4IyfGSJiA2z6To1jAnJXMtKi6TfKVxjwNJrDX4ta2FHwHyeDlyni2mEjW2I0AqVbZ2f
-	 nD83R8rOfaAtNz8MMX57hTQweNyjCoLn4rwXp6VsM+9LRXWrqoswv4ypRGKiusJJWxQ==
+	t=1794412327;
+	b=4rJgQvB/TQ1V23cEnJJrngCFuV2POHR5W4K39ualhtjW9hIwCePP2mZK8KUSHcX8k2Lv
+	 FYTnKbdcb8TFdzwpiGnHXNHaT2KCAuE64jYxZZxn0s51eP/nfO36jRoGsxEYKiDOofyVS
+	 TQ4hi70fXUxzCRIwr80IOhAagjasF3TFnUq/E8N6qBvSoB90CThBrXrX+VmrosaGvgOtv
+	 eWAnyeF947P4TOQylqwE4NDlPMAtMpozwbYgMhsC1eGCIXmQs1XRsmtRmzNmNRyLnAuMi
+	 e78NMcRQ4ucLVKUCbc1raGS9ssb8cOKcpwZWmmTkYz38fPOL7Y2BfI0KAMm92425qkA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794412321;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=KBQmXpergQV0k3yAGb4YmxsK7ApjQIjQQTJj+akkdKY=;
-	b=tAcKjpc7AuxP9rrzBRFZuzEWtI0Wmwg0vAQ1AQSQ6Ml+rbKHW91P38ysY3A/nTkAXBkx
-	 NcIKKzIoo+Xs0DoOSvKlKGqC5tYxGsAzW5CgJYZJNF6zF3Dw8JTVSJPDeZiNSLCWrpVqX
-	 J5OpCtR01gBQwLZjQTFYsDKUpgunIgfk0sfWIEZUpSQLml2D+bBLUVILBu8dgIynT7iOM
-	 6YfdrOJKRHiL5LHSZOA0gJ9hzER5iIh7MS3fXiGhGnAXVuct3p7hcEqM1GCre99fEBGoH
-	 s57FrWtou1BjGFsSUOP/gJ869kvFBBZfRUgw/kKdHtcVaj5DTb35/eQXorpjcS/JjVw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794412327;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=lgGrbJcYUU+gCpuOdYiMLcKFXce2afjz5UIe8IguZyQ=;
+	b=q122NXmK4U0rXagmfuoC0CPXasT/miA9duOw+czPhxpT7bcb6JoodnSo7Yrge7Iw3NgZ
+	 ZtV1HLeggN026nGHUU97YtkUN0uAOAQwbvr1BVSjmNpybWZx58IXyzGVt41UdzdQx31/s
+	 QqTqeH/oypQ6gmI+UH5OCNIez0F+EUtlcxnWAQ6dkeF4tu9fzE1aXXVGayNgyZIWqKOUp
+	 wpnvCqIIBXG0s3rZxzVXKYPsNWgNswWUisxYSaSthQOI4Qxcg5h6S+/GWUMqFSrtzX+B6
+	 rBKzwQvFRU56gedIPAbuHGpwa/os1L1QUCMvS8qkf6ESlrDCgCZHHJT4YOIZGUQeZTQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VchtzLEL;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.173
-Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=kRSBVf4D;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.35
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010035.outbound.protection.outlook.com [40.93.198.35])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85804606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:52:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 85804606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF55A606A8BD
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 15:52:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AF55A606A8BD
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VchtzLEL
-Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-370f4e5cfc9so94259eec.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 07:52:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794412320; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FPwy04By5PPOW85CKyzbA/yIId0u9mgNIT47x0tYKV3TVnFgENCZNLFi8IIRFeklT2
-         WCz5XKGFnmdIOKi+u9lQZxhMNpX9T4glBeboGG+pr/KnGSbvhoBclhg9879tmrlGX1Ru
-         Y2L94UAiu3rUqujhRlMcpGLIqJ8KyMNjRFekILFtglBW0eXO81bxs13LcORDueL5tZ26
-         701z00UKMOwipwbKOpX+dACizTTB/8RKdmoK1puDzIMGMSrwDsiCGPyBGNUNvgM8qoaq
-         tImLyDvi6QunPmxzeCmgUJZcr1Y3kS2lEOIStuZkuBIsjHqihZzIcfnOaON5A8zdkKZ1
-         HvEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=KBQmXpergQV0k3yAGb4YmxsK7ApjQIjQQTJj+akkdKY=;
-        fh=i3hAu5buUQj14XjPS3yuucXs4d8wNC6UvvUfx22vFWI=;
-        b=n1LPrmTSC8wr1NhDfQKCxdBl3rj6tMbbnIxMsRF2iw+YgSiD/sVvTt1f4hrsBF4hXu
-         iZwx/uvWAXUmKUnN0hgb+tKZNFWZ7H0yJ3YV5vNC3tFCTY/yh1Hc9PPQVoE+Et73c0Yy
-         ThjZJZe6XTYgwRkZ2E+EWT4ouRk2xLx6G4RQ7sOrmIxHK088E2yMJMwCeZlycUHUPtD9
-         Bcxwckrl+FPbXgEfnQHmyuL7fyEejynRNOhN2ZkK6OLb6dmBALI+Zr6XZoaKV40qnPKF
-         DjgYT9gmNZtPwj8f+gr87KWex6z6kzBOB1wFrKQSSN01raKM+WOao8eR77XUB6IdonZB
-         Gw5Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794412320; x=1795017120; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=KBQmXpergQV0k3yAGb4YmxsK7ApjQIjQQTJj+akkdKY=;
-        b=VchtzLEL0kLt8C8OO4mYcRky+2lFHnc1ISwZHb2xkKGZs7y0XdvI0tLY1CrJkBw6gs
-         xR1hcZbI1asSmeSwyn9wa39IVmrpC5f02BHmtihu+putYPlymS6fySQFn14x5rbX1Wjt
-         vxoqBjq9C2N7w9/+jTgB0SaN8FqfPmQ5NE8VGWobweWMmhihL1/JMGp5Mq7UuJ/X8zm+
-         71LKL4UbPXa+y2c5qQ9vSH4tfclb4XsomgR1B6xkG0OCVe/txbgExKOKurI/sNol1mlV
-         siF5qBsnF3MQogYN8YM+HCcbljlzykhEnPsHSaDokpVsXp0WqagzE+d9D3BorUoHnu1D
-         ldLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794412320; x=1795017120;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=KBQmXpergQV0k3yAGb4YmxsK7ApjQIjQQTJj+akkdKY=;
-        b=0YsFvdQIfEZndV5UQBSg+yZvydrUGcz7wnfQxI8K0MVdHgQNnNNOnOUBeBkpasX7im
-         sX22N0v5SNsBCaw9J2AOj/VCCq6YExjk/g9qFvNn7FMMO3FIDWYtIuapFi54m5nG/WGN
-         F4zrn1wn6Zqv3mvnQOlxpEJfoqItCfOzhUMyEhVXDzAc2KgVCPWf+IDgAB+oq/tskafg
-         ocofbeDHs5hmpFe6z+NWHSXVVsbtDELqHIcwCoCblYVSRqNRT+1kGkTyCqmN6eZCy/ND
-         +1umdJ/yJaJAxpG+IUy/O0AwyT1OVbNUCjyOQFafIveor/IOpFNI3+mWvMAlQgXlZ2ZS
-         Cocg==
-X-Forwarded-Encrypted: i=1; AL+hErFR6P7wSHgPc2I+cHugaP+7RBMhnMAYqRDuyhOX5HOFkXEvmKgSMUnGF57ntl80Uim4UL2KIOb9L7GFEp93U+g=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/cNcRqaPPmAFVJQ84cILBNUDZ3c02cEz4zbeXx32BAfyiSadBL
-	ALqja/pmIH/CwP56OY8h/7NUsHr+859wEluvJYpZII96SYaNZxrDP4iz4Txd3R9L0tafwjpmtl0
-	4ThwMDOKNtJddd1IMTjDncp4H5UPzAqI=
-X-Gm-Gg: AYBFou0CWZ8X1yMemHcAChNv0Dt8JaXYQUO2mj3V3XIqbq5BA5xoCCfYTedZH9NNvOj
-	P20kMHEZJRAZf5HieZWMA17Y9mp9ksFtCb22bWX+cF9pHcxT4Wh3kFQ6CWWVPSRF0noWFvt8/XX
-	ov6JhWjxwxhVmGUN80PAkp5VNnOWlAGbCH4lvFpdPYQZ91at/QZ/IO9qgnHbv4lLZTWIY5l32fX
-	8XewYke8KT4HyKPVSx8F5FVzyHbY+6zbItVH12wbeSo7yqOT5hCDtKtWsJxP6ktfSa2HoPJ/zi5
-	w8W5fN4av48woG6sUZsvZsj6KIhJfuYA6ANL85JnsCHoM46jx6ljLBFGk8Jj46Ckzk4v5OOi9fV
-	Lvod2jP8nfORTbyHCjDZpY28JpY/cPePEzeYGkGEDv7qdTucfzeNeSDf1D9iZJ/XJbXBdMRiuX8
-	eYrVPeKD6z1hUA2RBhUbe4gkugxdX+H3GwTUtdJLtVTtNH4PiobyMomYFl35g=
-X-Received: by 2002:a05:7022:5f1c:b0:165:be2f:c56e with SMTP id
- a92af1059eb24-1b3c02e9530mr3474381c88.2.1794412320307; Wed, 11 Nov 2026
- 07:52:00 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=kRSBVf4D
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=U4Gquf2Zsd4hjGz0Q8FIS7t8S5FDCRUMkN9jgRCVlguAFFTckeWh5pbU/ZSGjm/OQVmd/CZMJHtfW+vmrkr5ob7NIaaMLusauWaC8ug8qU9mqMg2uNNH46pMrKwRTZvUp0gI3N293eC19na2jlLS/Qy9BOif9rVngpJgVMvtlEOxftYmUPAXzh6mpYFWLyN2PGacPD6m91W7aL73848ZRz4hgEOCfR8vK6I3esdAFASXqqd4d6H8jpKx/JrIlRNzBKNbWk0JAL7LGZbda5J3kTC1qzltmjkcZBwfI6sLmkf/oDu9HcMaSR2JxOrEjJ3SdRphi/g20/uv6yNhpR6kuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lgGrbJcYUU+gCpuOdYiMLcKFXce2afjz5UIe8IguZyQ=;
+ b=ZXystCVBWjPqr94z8VC8jp8bDDKNEdEBtwXfR1CFdZiteMUhOKSvcUOmtDqamHhCAHqex9QChBEXDNRYCioITHrrcry+ANiOs7LuUbyuLIJ01wSy3OpCW7LzvPLGfmhpz/Y6mw9tPwacni+iP124WZjTx8qKx0n00pegJSzqAbEM8BWV7NmoTrRYSokhNuBUDME2y4PPXCBVOn4AmR86icIZJjZ9WhsfK0B6covrpVYxrl85st4UC84WjWd4HA7qty+g4a8Pfownbn1YEgrUrIbpyx1jUHWgDLqx5JIMo1bRLOVOgTMRNp/vAjIB0gffybj6Nj1eKW1yQhAGyNH0yQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lgGrbJcYUU+gCpuOdYiMLcKFXce2afjz5UIe8IguZyQ=;
+ b=kRSBVf4DerOuNLrAPejk7Zu5WIbEgKSBA64u6Sc+FbDBvZ3PLubqXpdABHv3xO+RoQ5nldgAimilmTRvBsjw8TsUhxLsmZX7CTDYMHDSC3T4kCojctsLiZjbv+b3BdNn2YTSdbb+VyrzlDb0sIsIEnPRzDxeOoq5TeWXnYUALMneas9HrbprUVQtX9FFdDhUy0LTeYeug+kYpASrgGpgEDmdCfNgEcUMt/PUyjUUHGtBtjmRFNP2IkJJNlrTbmWQTYYGLnfSfmC0XMEseYtzWqgrIkOCIOqwzNlq5unZcWN6QXZ11TqadMDWsE+nPfzxsKOkfT/6jGViBD3CI/td1g==
+Received: from DS1PR07CA0018.namprd07.prod.outlook.com (2603:10b6:8:44d::13)
+ by SJ5PPFCD5E2E1DE.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::9a2) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Wed, 11 Nov
+ 2026 15:51:46 +0000
+Received: from CY7PEPF000000F5.namprd05.prod.outlook.com
+ (2603:10b6:8:44d:cafe::a1) by DS1PR07CA0018.outlook.office365.com
+ (2603:10b6:8:44d::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.9 via Frontend Transport; Wed, 11
+ Nov 2026 15:51:46 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 216.228.117.161) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CY7PEPF000000F5.mail.protection.outlook.com (10.167.247.153) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.615.4 via Frontend Transport; Wed, 11 Nov 2026 15:51:45 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Wed, 11 Nov
+ 2026 07:51:28 -0800
+Received: from [10.125.206.103] (10.126.230.37) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Wed, 11 Nov
+ 2026 07:51:27 -0800
+Message-ID: <a746452d-c193-4b6b-ad70-8ba51beb6f29@nvidia.com>
+Date: Wed, 11 Nov 2026 17:51:25 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,107 +104,125 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110120326.538252-1-tzimmermann@suse.de> <CADnq5_NCF2J0Dzea5swubs+eEKBLq+8ontc5n=kihYZVA3A1aw@mail.gmail.com>
- <cd49a9ea-a992-4b38-a5d7-d46d1647010f@suse.de>
-In-Reply-To: <cd49a9ea-a992-4b38-a5d7-d46d1647010f@suse.de>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Wed, 11 Nov 2026 10:51:47 -0500
-X-Gm-Features: AclHuK-V9rhzh3ZjlBaGulsYdclwg7wvF6eK8h0-zGf088bOkC0LAbbJi1wg6Ks
-Message-ID: <CADnq5_Oi3-zGYV_BiuJzV5VQvxTSTLN1btqFFH7JYz0ra+dP0g@mail.gmail.com>
-Subject: Re: [PATCH 0/5] drm/amdgpu,radeon: Inline drm_crtc_init()
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: alexander.deucher@amd.com, christian.koenig@amd.com, airlied@gmail.com, 
-	simona@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	sashiko-reviews@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 rdma-next 03/24] net/mlx5: Add capability filtering in
+ adversarial mode
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-rdma@vger.kernel.org>
+References: <20261110134320.34408-1-yishaih@nvidia.com>
+ <20261110134320.34408-4-yishaih@nvidia.com>
+ <sashiko-outbox-209088@kernel.org>
+Content-Language: en-US
+From: Yishai Hadas <yishaih@nvidia.com>
+In-Reply-To: <sashiko-outbox-209088@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY7PEPF000000F5:EE_|SJ5PPFCD5E2E1DE:EE_
+X-MS-Office365-Filtering-Correlation-Id: 07e3be85-3eef-4e01-a5e7-08df400bb085
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|82310400026|376014|36860700016|261102123227099003|261022105027099003|261021121427099003|261028144727099003|261026121527099003|261026140227099003|261022075727099003|11063799006|261009223027099003|10067099003|6133799003|18002099003|22082099003|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	SMVU3Wz/BgtUSRN3zp0VEi/GqGfg0aAS3B4YxHSZV563YTqTGnhohOKKo6F3G4t8SU3BS31peXr/5Zbj7i2JGKK2ykppCoIgFGnaDK1EZVSMQJDb7FVU7ctb0vBJ35TW/0HI1WZqfCdfa4nXjPPn803tB9X04rSmjbJAcXRheKbCH1mVsFt7X67a5KH8isrH6u6ENwFl6y2JOxsagUJdrGg5ou9+iG9xLpJkNme9YLfgz3eI+E0ey0nrnxD3K4IJRaE9XCgyg9qv6E08vKUynWJWEMheHzr6xT9XlXDZOsXOfY2d+x8+0eGdQSszaioqCd/SrzMyxjwEj7MDmFvE7QESd3WJ4BOdJ2MRiQmQTw/xpOfZRrdafsZGFHALo7Abp0rDx/MePJcTP0J5XDIQdgDIdpFHNH246VVuYayLJq76BZWEuz6VmSuhx6BczICKGwUrd3xivBpa5M5jMnETyES/YtRkZbbBtx4z7CjQxXTU4K/H03lYAA9BG8IR+eYsid9zCyYoKKA8HxhGKeVvrB7+1BgcpNSqSD4BUnjQDufxB/559Fk+gd7RXJGon5GrLu72O2hib3TJJ0Y0GXFX7tIfLSDzTZhebZhfj7yiMKlhQCDdv2+skyyUvWZN+rfRrDcmvuiuvfwnT4S/Ib66GUh8t+v9F7iBtqEJkm6xn02yNNHPvjM8UHdo24hGSEgHbd3OEWL+H8elGxfCNdf13A==
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(82310400026)(376014)(36860700016)(261102123227099003)(261022105027099003)(261021121427099003)(261028144727099003)(261026121527099003)(261026140227099003)(261022075727099003)(11063799006)(261009223027099003)(10067099003)(6133799003)(18002099003)(22082099003)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	aC4RcWpWMCTBdRnTzE60oSghX8TRsUEEKy98FcCi2FkU03iEP6MBDk5IjC8bP8l71zQ5wZV7IXLseQhYZe6pJzY8Jwg2zCckS7jW+xH3WEjVfafpG8vlRugtPzxqgKoHmoHfuKf2v3ER0naO+o/9TNXSrK36HbDWgZ120oo/Il3OgTnK1kyma7SI/lpQIMNP72YVwIS3hLaiLv1cTxdi11KkwnVyjNYoAxO9psn5OOc94uGS9BET8yuoW+inNwghVtqQdrd7iGFp4lMALKtbJ+T3QY7Gv+Q5yKNNC4awJr5EuUCrr9W+ArXrxJRkqfpaxr15UXBR/V07Ki/KBJD3fVpdudS0tCB6xa5XixuXvG+l15//9CRrZCiMWRdNObehkZLz2tIoBiDPCklZjNaktpJbc2Q7Ca8LVWXMLguumgxnlT4qYG49ZseSBp9ukpBr
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 15:51:45.9268
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07e3be85-3eef-4e01-a5e7-08df400bb085
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY7PEPF000000F5.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFCD5E2E1DE
 
-On Wed, Nov 11, 2026 at 4:35=E2=80=AFAM Thomas Zimmermann <tzimmermann@suse=
-.de> wrote:
->
-> Hi
->
-> Am 10.11.26 um 22:49 schrieb Alex Deucher:
-> > On Tue, Nov 10, 2026 at 7:11=E2=80=AFAM Thomas Zimmermann <tzimmermann@=
-suse.de> wrote:
-> >> The helper drm_crtc_init() sets up a CRTC with a primary plane for
-> >> non-atomic mode setting. Only drivers for some AMD hardware still
-> >> use it.
-> >>
-> >> Inline drm_crtc_init() into amdgpu and radeon and remove it from
-> >> DRM. All new code implements atomic mode setting, which does not
-> >> use drm_crtc_init().
-> >>
-> > I'd like to drop all of the old amdgpu non-DC code since DC is now the
-> > default, and we have an LTS kernel now.  I'm planning to send these
-> > out in the near future:
-> > https://gitlab.freedesktop.org/agd5f/linux/-/commits/remove-non-dc-disp=
-lay?ref_type=3Dheads
->
-> That's even better. :) Do you have an ETA for this work? Resolving
-> drm_crtc_init() is required for that series I referred to at [1].
-
-Just sent them out.
-
-Thanks,
-
-Alex
-
->
->
-> > So that just leaves radeon.
->
-> I'll fix the Sashiko report and send this out in a separate patch.
->
-> Best regards
-> Thomas
->
-> >
-> > Alex
-> >
-> >> DRM support for kernel panic is only implemented in amdgpu. Take
-> >> the panic helpers from drm_crtc_init() in amdgpu, but clean it up
-> >> in radeon.
-> >>
-> >> With this series in place, DRM's helpers for drawing panic screens
-> >> can be further integrated with other drawing helpers, as outlined
-> >> in [1].
-> >>
-> >> Tested on radeon with a Radeon HD 6570.
-> >>
-> >> [1] https://lore.kernel.org/dri-devel/20261019154612.777074-1-tzimmerm=
-ann@suse.de/
-> >>
-> >> Thomas Zimmermann (5):
-> >>    drm/amdgpu: dce_v6_0: Inline drm_crtc_init()
-> >>    drm/amdgpu: dce_v8_0: Inline drm_crtc_init()
-> >>    drm/amdgpu: dce_v10_0: Inline drm_crtc_init()
-> >>    drm/radeon: Inline drm_crtc_init()
-> >>    drm: Remove drm_crtc_init()
-> >>
-> >>   drivers/gpu/drm/amd/amdgpu/dce_v10_0.c  | 44 ++++++++++++++-
-> >>   drivers/gpu/drm/amd/amdgpu/dce_v6_0.c   | 44 ++++++++++++++-
-> >>   drivers/gpu/drm/amd/amdgpu/dce_v8_0.c   | 44 ++++++++++++++-
-> >>   drivers/gpu/drm/drm_crtc.c              | 26 +++------
-> >>   drivers/gpu/drm/drm_modeset_helper.c    | 74 -----------------------=
---
-> >>   drivers/gpu/drm/radeon/radeon_display.c | 47 +++++++++++++---
-> >>   include/drm/drm_modeset_helper.h        |  3 -
-> >>   include/drm/drm_plane.h                 |  5 --
-> >>   8 files changed, 170 insertions(+), 117 deletions(-)
-> >>
-> >> --
-> >> 2.56.0
-> >>
->
+On 11/11/2026 15:46, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] net/mlx5: unclamped log_max_flow_counter_bulk causes OOB heap
+>    read
+> - [High] net/mlx5: unclamped max_tc in mlx5_adversarial_filter_general()
+>    overflows stack
+> - [Medium] net/mlx5: unclamped log_max_*_list caps in
+>    mlx5_adversarial_filter_general()
 > --
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Frankenstr. 146, 90461 N=C3=BCrnberg, Germany, www.suse.com
-> GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG N=C3=BCrnbe=
-rg)
->
->
+> 
+> commit 3a4fed029c43a049522bf33112212c850561f40e
+> Author: Dragos Tatulea <dtatulea@nvidia.com>
+> 
+> net/mlx5: Add capability filtering in adversarial mode
+> 
+> This commit introduces capability filtering and range validation for HCA
+> capabilities queried from firmware when running in adversarial mode.
+> 
+>> diff --git a/drivers/net/ethernet/mellanox/mlx5/core/caps_filter.c b/drivers/net/ethernet/mellanox/mlx5/core/caps_filter.c
+>> new file mode 100644
+>> index 0000000000000..023f996bc95ea
+>> --- /dev/null
+>> +++ b/drivers/net/ethernet/mellanox/mlx5/core/caps_filter.c
+>> @@ -0,0 +1,381 @@
+> [ ... ]
+>> +static int mlx5_adversarial_filter_general(struct mlx5_core_dev *dev, void *dst,
+>> +					   void *src)
+>> +{
+> [ ... ]
+>> +	/* 0 is invalid, 8 is for MLX5_MAX_PORTS */
+>> +	MLX5_HCA_CAP_CLAMP(cmd_hca_cap, num_ports, 1, 8);
+>> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, log_max_msg);
+>> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, max_tc);
+>> +	MLX5_HCA_CAP_ALLOW(cmd_hca_cap, dcbx);
+> 
+> [Severity: High]
+> Should max_tc be clamped to IEEE_8021QAZ_MAX_TCS (8)?
+> 
+> max_tc is a 4-bit field, so untrusted firmware can report up to 15 and make
+> mlx5_max_tc() return up to 14.  When qos and ets are also enabled,
+> mlx5e_ets_init() and mlx5e_dcbnl_ieee_setets_core() run during mlx5e probe
+> and loop up to mlx5_max_tc() + 1, overflowing the 8-entry arrays in struct
+> ieee_ets, tc_group[], tc_tx_bw[], and qetc_reg on the stack:
+> 
+> drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c:mlx5e_ets_init() {
+> 	ets.ets_cap = mlx5_max_tc(priv->mdev) + 1;
+> 	for (i = 0; i < ets.ets_cap; i++) {
+> 		ets.tc_tx_bw[i] = MLX5E_MAX_BW_ALLOC;
+> 		ets.tc_tsa[i] = IEEE_8021QAZ_TSA_VENDOR;
+> 		ets.prio_tc[i] = i;
+> 	}
+> ...
+> }
+
+This is a net flow, which is out of scope of this series.
+
+> [Severity: High]
+> Can an unclamped log_max_flow_counter_bulk cause an out-of-bounds heap read
+> past fc_stats->bulk_query_out?
+> log_max_flow_counter_bulk is an 8-bit field.  During mlx5_init_fc_stats(),
+> get_init_bulk_query_len() shifts 1 by log_max_flow_counter_bulk as a signed
+> int:
+> 
+> drivers/net/ethernet/mellanox/mlx5/core/fs_counters.c:get_init_bulk_query_len() {
+> 	return min_t(int, MLX5_INIT_COUNTERS_BULK,
+> 		     (1 << MLX5_CAP_GEN(dev, log_max_flow_counter_bulk)));
+> }
+
+Only aging counters are bulk queried, and only net flows create them.
+This is out of scope of this series.
+
+> [Severity: Medium]
+> Can log_max_vlan_list, log_max_current_mc_list, or log_max_current_uc_list
+> overflow the signed shift in mlx5e_vport_context_update_vlans() and
+> mlx5e_vport_context_update_addr_list()?
+
+This is a net flow, which is out of scope of this series.
+
+Yishai
