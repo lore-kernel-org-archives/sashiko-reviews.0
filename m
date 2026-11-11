@@ -1,47 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794392895;
-	b=Ld/5k3T7sSlx2h7DWpOeeHHBgPKi7sO6zhTwlz+ERnluXaIj1QrrkFa4qrnebJxJNIOp
-	 6YUdBo4gALtEl48ko1MtQEiTIItJ/QxqRHP4asQkPSJfN2qMTvPt6MbhdUmuwpBISrRXP
-	 6C2tHPkhCoTn36RS3iuC71SXAtGn7Sgddn1yMZJSqInTaRv1tygy/YzAmOQbbPc+O3RTS
-	 zHhZH4WI8ZCyOMXSc20HJsXg+H/aKAiE58BrCzBq1bCuG6gYk0zvQESRSnbAYcmYKl4vo
-	 rI2ClYvtnyJpj6lZgtcrIiZe4E/4uGe8en37JwgwzbBdfDBTtLoakkOJAabdFsXBL5Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794392895;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=pffzYjLc24zLkwM750JTE8R2tBDNVqjTU9V9Vefp1ME=;
-	b=MBd76xcBleyjW6Nan58+J3Js/9P7HFu9wvqZsyj2JjN7+C6hS2h18Q8r3Yc25WN1GpXK
-	 gDP+zLBhb5f9kvN7KQIyPsC/vTXAL5garDsWaVYsv/zBSrZ49zu7n+GvQ7trm7MwhF5QT
-	 vUtd398wXnOOvoEhcaOHALa+fPu718Vhqwn4+52cMjgyjtAmTDm5D7y3VUyFyX+Hp3nz+
-	 zEjUpekXr2MdFAsK63pv10pl4QGfpIJ9J6FxQkFYjKYMh2xbZYB1YQrKHF/fpBiM1t1tP
-	 2eOGSItYrFtFzib0z9z580tnbiWkb2kAr8pbosoSb4SdqlPJS26msW2ac8MtWheMQ5Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZeAi18VV;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794394232;
+	b=apWVAPeaSGXF/85HSPsVlH6WRiNxesswC0hxVVEhYLexGaFSeBPoTPGNNvlrOqFhXkbn
+	 8e4O96FaVTnR7CMH8OOM2/fCB68xNAc+61XosGsapvaq70udIzYRP+PxmzLmRc4TufQ1f
+	 wSJt0f39FoQA7UHWvVsv1Mp9ZXC7vQzCUFfD2ZKSe1LTlTF8GAiEbNDwxaiq4nyEfigY2
+	 lrjJ0aCmJDPaWjvEA3fqwKJ8hofGbiJsUQrCGAZyilenz+KB9AhTZaI7qieQ15BkZujrX
+	 HaW2qCG8ArprKfBk1z6lybABaflam++55FoQOjcHs9VA093k5/Fw/rQgTP2xJgiHBDA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794394232;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
+	 Date:In-Reply-To:References:Organization:Content-Type:
+	 Content-Transfer-Encoding:User-Agent:MIME-Version:X-ZohoMailClient;
+	bh=nqwOqzySF41xP+3vbWTy+4PqTdvp+LYNGH4DxM7B10o=;
+	b=aAA3EO+Ow3Snb2rAegz4bX1//3uH5su6Mwp4aaFqa+A3BsIz3Wc8gJufHjjNe5frOjy4
+	 /2Fq7v4jYGsdLYW8KU/IVZTyIgM9VwL7EcSKkTvODhJjXJWwYc5ewkTE2vmmz15MZVYNI
+	 IS44LxVub0dyZz6T3Fa2Z16DBbCQlqELMCQqzDAj1xrhlxssmPWDkzLrkmhDf/IZj7Bm1
+	 Ip5rJPMnsV/cfYvBREDMWXSQ+BnyhWGfVE1bDvvtFRcHw3yVXZ7H0MHq3mmBx+2HZXDMe
+	 0AS1pgNSluQUbIZEcqSJ8Bir+mS2v6RgbML4w0nG45ptL1gpNaaCvNOmTPqfVntKI7Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=icenowy.me;
+	spf=pass smtp.mailfrom=icenowy.me;
+	dkim=pass header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=orInLMA2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.12
+Received: from sender6-op-o12.zoho.com (sender6-op-o12.zoho.com [165.173.180.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCE0606A89A;
-	Wed, 11 Nov 2026 10:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF97E606A326
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 10:50:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF97E606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZeAi18VV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5CC1F00A05;
-	Wed, 11 Nov 2026 10:28:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794392895;
-	bh=pffzYjLc24zLkwM750JTE8R2tBDNVqjTU9V9Vefp1ME=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ZeAi18VVLJ89QheHEsiQjTnP8iCg6V2rf6LvWg5a0h7xltizH6zWe5sg86ldUby96
-	 dIA+Ygwf4Ik4Uj9AGqGdIivaJ4KZeaFIZ6XOt48WTXojFL6vkpJMCJExDlp/IoAMpK
-	 E6V0u9tUsJGDBJWo4xyZvsXHb3SZ2wXLE9DyxW10QTozVGGsIKFk/kzmoU/5k0dEHo
-	 nnV7kUpe9qLry6Wo1759xeBLlT86qbm2X+nOBHXp6XFRLJrqCa1K7grlJeughGRBic
-	 YVReqvSAOf4ENAQRqy3fRFh3C0e8um2R/Md4BjL5NTpJii+DJVUFb3I+v/6cC5iOkL
-	 ZforpNeZjRvPA==
-Message-ID: <5398114b-538c-4e7a-9b36-35029f301630@kernel.org>
-Date: Wed, 11 Nov 2026 11:28:06 +0100
+	dkim=pass (2048-bit key) header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=orInLMA2
+ARC-Seal: i=1; a=rsa-sha256; t=1794394220; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=DvrtU2o00B0Y2Jj4/kXnw4llxFrSJJMmeFG6gkdPfdM3rU0vM4hti+ddaaby6HYH3Tro/hvlt19vWpUaLhZME9jwOjJgZiL0bWZEnpu/4Ug7hTKkgLbwKnYJBQ+p92b+l0pC+Q3S31J9q0BJsvjJtHCtop8t40oyQblxcagPEyM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794394220; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=nqwOqzySF41xP+3vbWTy+4PqTdvp+LYNGH4DxM7B10o=; 
+	b=FQbLI2IQ6aLuocLskqU8GiwCUZG7E/eg4QpVeyB0pe7vzgXUfXym1GfjaMN6qCpcObn0k/jgabQB72qvjXyZbnBOJrepUqD1bfWpXTI2maXvAD9gs0rZuA+SLmQ2S/3rbwhRAVgVkrpkubSFQEou1KqCV1hilmxCtCMuy28FSUc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=icenowy.me;
+	spf=pass  smtp.mailfrom=uwu@icenowy.me;
+	dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: a=rsa-sha256; b=orInLMA2EkgsgLOrC4la/lkznRmTWyN4xG04Nb3b2qOmWvd1X8XdWpYL38B+BJCim0ILDNBCOcIYVchcJgUtYJJ9VqHZcLFgeLeI6UicTjwdUFiVM5gfxHvbn7/LY4MXJ0J/BNW5Soni89LXTsM4ITYkg6l+8UQQ0xtpI7HSW4VNlmaX+z353jp0r4cHm7Td+1ML0mkysmken5ZrIbpx1FnO6LidHOm4tJiv+E2yk73bFctpEucirZRKzn4p9/CwTefC85PEKlZwmzJzwNfhZ8NfpWWa8umE6/OGCV0al45PyxFILyrGf5d90wRhj6lljdoLDQ7M0BDXOXaroh1H8A==; c=relaxed/relaxed; s=zmail2; d=icenowy.me; v=1; bh=nqwOqzySF41xP+3vbWTy+4PqTdvp+LYNGH4DxM7B10o=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794394218186406.20269284396034;
+	Wed, 11 Nov 2026 02:50:18 -0800 (PST)
+Message-ID: <7567f858b5a4e1a5ae59b73385f731180b721747.camel@icenowy.me>
+Subject: Re: [PATCH v2 1/3] dt-bindings: display: panel: ilitek, ili9488:
+ make the port optional
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Romain TISSERAND
+	 <romain.tisserand@gmail.com>
+Cc: Igor Reznichenko <igor@reznichenko.net>, Neil Armstrong	
+ <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann	 <tzimmermann@suse.de>, David
+ Airlie <airlied@gmail.com>, Simona Vetter	 <simona@ffwll.ch>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, 	dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, 	linux-kernel@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+Date: Wed, 11 Nov 2026 18:50:10 +0800
+In-Reply-To: <5398114b-538c-4e7a-9b36-35029f301630@kernel.org>
+References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
+	 <20261109160706.2272332-2-romain.tisserand@gmail.com>
+	 <20261110-comical-adder-from-saturn-8c8fbb@quoll>
+	 <68b5a51d767248a71c050110d5faf6c50c964d50.camel@icenowy.me>
+	 <5398114b-538c-4e7a-9b36-35029f301630@kernel.org>
+Organization: Anthon Open-Source Community
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,110 +82,69 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: display: panel: ilitek, ili9488: make
- the port optional
-To: Icenowy Zheng <uwu@icenowy.me>,
- Romain TISSERAND <romain.tisserand@gmail.com>
-Cc: Igor Reznichenko <igor@reznichenko.net>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- sashiko-reviews@lists.linux.dev
-References: <20261109160706.2272332-1-romain.tisserand@gmail.com>
- <20261109160706.2272332-2-romain.tisserand@gmail.com>
- <20261110-comical-adder-from-saturn-8c8fbb@quoll>
- <68b5a51d767248a71c050110d5faf6c50c964d50.camel@icenowy.me>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <68b5a51d767248a71c050110d5faf6c50c964d50.camel@icenowy.me>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On 11/11/2026 11:26, Icenowy Zheng wrote:
-> 在 2026-11-10二的 13:00 +0100，Krzysztof Kozlowski写道：
->> On Mon, Nov 09, 2026 at 05:07:04PM +0100, Romain TISSERAND wrote:
->>> The panel is a MIPI-DSI peripheral, a child node of its DSI host,
->>> and the
->>> driver does not use a graph port. A port is only needed when the
->>> host
->>> links its panel through the graph; other DSI hosts, such as the
->>> Allwinner
->>> sun6i-a31-mipi-dsi one, link the child node and have no output port
->>> to
->>> point at. The PinePhone panel is described that way on the same
->>> host,
->>> without a port.
->>>
->>> Keep the port allowed (panel-common) but no longer required, as for
->>> other
->>> DSI panels such as ilitek,ili9881c.
->>
->> ilitek,ili7807s and a few others have the same and it is confusing.
->> The
->> port should be required when this is connected over SPI or I2C, but
->> not
->> for MIPI DSI. I think that for MIPI DSI port is meaningless so
->> actually
->> incorrect.
-> 
-> I found that the dw-mipi-dsi common code (e.g. on Rockchip SoCs with
-> dw_mipi_dsi-rockchip) would expect the panel to be connected via a port
-> even if it's the child node of the DSI controller.
-> 
-> Such an example is at arch/arm64/boot/dts/rockchip/rk3399-pinephone-
-> pro.dts .
-> 
+=E5=9C=A8 2026-11-11=E4=B8=89=E7=9A=84 11:28 +0100=EF=BC=8CKrzysztof Kozlow=
+ski=E5=86=99=E9=81=93=EF=BC=9A
+> On 11/11/2026 11:26, Icenowy Zheng wrote:
+> > =E5=9C=A8 2026-11-10=E4=BA=8C=E7=9A=84 13:00 +0100=EF=BC=8CKrzysztof Ko=
+zlowski=E5=86=99=E9=81=93=EF=BC=9A
+> > > On Mon, Nov 09, 2026 at 05:07:04PM +0100, Romain TISSERAND wrote:
+> > > > The panel is a MIPI-DSI peripheral, a child node of its DSI
+> > > > host,
+> > > > and the
+> > > > driver does not use a graph port. A port is only needed when
+> > > > the
+> > > > host
+> > > > links its panel through the graph; other DSI hosts, such as the
+> > > > Allwinner
+> > > > sun6i-a31-mipi-dsi one, link the child node and have no output
+> > > > port
+> > > > to
+> > > > point at. The PinePhone panel is described that way on the same
+> > > > host,
+> > > > without a port.
+> > > >=20
+> > > > Keep the port allowed (panel-common) but no longer required, as
+> > > > for
+> > > > other
+> > > > DSI panels such as ilitek,ili9881c.
+> > >=20
+> > > ilitek,ili7807s and a few others have the same and it is
+> > > confusing.
+> > > The
+> > > port should be required when this is connected over SPI or I2C,
+> > > but
+> > > not
+> > > for MIPI DSI. I think that for MIPI DSI port is meaningless so
+> > > actually
+> > > incorrect.
+> >=20
+> > I found that the dw-mipi-dsi common code (e.g. on Rockchip SoCs
+> > with
+> > dw_mipi_dsi-rockchip) would expect the panel to be connected via a
+> > port
+> > even if it's the child node of the DSI controller.
+> >=20
+> > Such an example is at arch/arm64/boot/dts/rockchip/rk3399-
+> > pinephone-
+> > pro.dts .
+> >=20
+>=20
+> Yes, the same for Qualcomm. So I actually wonder who needs the change
+> here.
 
-Yes, the same for Qualcomm. So I actually wonder who needs the change here.
+I wonder too because I just created a MIPI DSI driver based on the dw-
+mipi-dsi common code.
 
-Best regards,
-Krzysztof
+I think the different requirement between sun6i-mipi-dsi and dw-mipi-
+dsi is=C2=A0exposing the implementation details of the corresponding
+drivers. Maybe this should be eliminated, but this would be some big
+work.
+
+Thanks,
+Icenowy
+
+>=20
+> Best regards,
+> Krzysztof
