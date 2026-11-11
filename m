@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794355430;
-	b=TxoL0i6Asera+hTuH0kp/sI3+AnwVqwbHrruLrNfGCuq3tAeM+K1DIq+lH8mX44Zckoq
-	 U+AC3Cvg012yoXKWKVMdt3K7xOXZ8vP8ApJMZCin5thl/lHrGlTX0/AexugUAh0JzHoAu
-	 zbihFV6Ee5+J9SmXSWAvdnzmRE5qwVEuTlDlWU1km/tatnOq6sOqng3n1a81vC4J6v8L4
-	 +G4txGrYHAakr6wKwTkeyW/KLBXzKymNJGWmUbIZg9To1qB/nkbsgjbBPowuGmkHclBBj
-	 IzjtLHL4kKEvh9Rk4pQhBJhhhk4st7AGyVOVuewB659DRGYP8oCG4Fth5xaXOGq6dvw==
+	t=1794355774;
+	b=uICZTqbl08r5erwSpfGGAU792z4/4udwysdjNC7CxK0rwede3JKFY7XsWGQ9PzCoWgWi
+	 4VyaAHdAblA0CzaoWNs5k9cWJUq3dRbDoHPhIMyCT8lgLXqgzPnSp6ixI1oC/RE/Mp/X7
+	 HCzM4fbOQCh3BO/S2HJr/9/lreyomSjvzxe5Ff3DqNAodwReRSKJNTB0rNswtTsytcxHx
+	 gtghMfIy7f7tEqG5y1MrjcJn3tpmqaeePu7Ob1htVNYz8LWOaSf0yW4VBMreiNtgRjtNv
+	 fA1KI3/YAbI9lDdPC6l+382n2UA8Wat4OMK0LE0i6fKCQjXWWJkcajTdPHm4eVIz2SA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794355430;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=G6vtQZE3ujvpxlS2I2KZ02SKJAR98+LOdANoRmy/Db8=;
-	b=f51UNJiu0AVyj/2DDO4ZHt4+KLU5QA/SW0qTSlkDflSWqMmbcoqKM3alUTBc6iNwULOw
-	 kE4EFdOXXXJCjmHZS/gHhnamx/3azQ78KVIxcI9ongOf61XQ1ueEa5hmYVhfFMpzp33kE
-	 IRkhTUd2t2/EDq5lbgl7UIAQ+G0MxXUgCxMCf3GUn3So/fle1n5wEISaxIZg/Aj/s11VK
-	 tGHNzJPgsvVK8ou26dNZw1deA4VZEoCJo6ZtvWS5r2pnWcg/pxHlloOntXGdIn6gUCkKc
-	 xbP6rhl3YjQUyVhDPIzTpGDSboP9xeCbSImh3PeCTr9BRBfe4qFYx+JgmMfUtWfy28w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794355774;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=D9RbdabYHrbLRamg3GYETMJN16hdNDL32IGRIbktV74=;
+	b=rZeZe8q9ona+SiL6wwWrGDVtSUKzdHAZp9bV8lSIygFlT/6odqXMf+x52jN3xo+YlOC5
+	 Ax03egur/pf8PQ8I+aYRQ8SuwD14214RmNSRc4cxF9Tss3GwBCvSElOEem79ZIH/ihjTe
+	 2t5qItK8R5L4fwwXW39pEzTfMRobua79AAfFAmPkH21W3bEVR2D1tnH5HZU1kPxd6xjwj
+	 fKXoPkwQAIs0+ZbDX4ZcNctQYxJHcFxoYNxpl3YlzeWyygQ7r/2za+Nbf80VGWZTNtJoa
+	 ruA2L9Plxrk4ErcokgiJkTzBrBvL9kMxde4pICA+UIOikT8Xb7h/nyQqJ6YNEcrWugA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gf6gFqXN;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KJBOk22H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDD8606A321;
-	Wed, 11 Nov 2026 00:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79FD606A330
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 00:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gf6gFqXN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A60A1F0089F;
-	Wed, 11 Nov 2026 00:03:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KJBOk22H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D801F00A14
+	for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 00:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794355429;
-	bh=G6vtQZE3ujvpxlS2I2KZ02SKJAR98+LOdANoRmy/Db8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=gf6gFqXNZ9CoFov+cIHt/cLKduR6rdDO3hZNovZFqQjIJb91tU7vfitfeuSQzC/fv
-	 fWIQCb2bUxxHk1W128Gd//Ji/w6uMyBqoBfIIg1ntXT9Qu6jwAxnVcWbOmSQwChBVT
-	 vMwFfp+4vDBcfwQPf2vXZOCtwgNtFkWXPW70CNmirYevx4C7KuBUIL4HZkNIkONfb+
-	 MD8kMgoXiD9tNKkXeZgTuaDEEFDDdd8vzWfCqJczzmWOgxK9oAQgi94iYZXH8CRGcC
-	 prnhCdr6jI5sdhjddXFqbDL1iF0YsQOB/cUkGz9cD5XljsTwQ9bOI/jHOPLUZTl+8N
-	 QGJamtB4FVfwQ==
-Date: Wed, 11 Nov 2026 01:03:46 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	robh@kernel.org, conor+dt@kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH v3 4/5] string: Add [C]QChar_of() and QVoid_of()
-Message-ID: <avOuLrmqKK5Vb2vH@devuan>
-References: <cover.1794323750.git.alx@kernel.org>
- <415453a31ebf1aed3b41da1a28913f5cbe58f175.1794323750.git.alx@kernel.org>
- <sashiko-outbox-207285@kernel.org>
+	s=k20260515; t=1794355774;
+	bh=D9RbdabYHrbLRamg3GYETMJN16hdNDL32IGRIbktV74=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=KJBOk22HBLkc6tfUu20Eh9xeMYaip5XleiEMISeXaxysRPDLpDmH612ksig07pAgv
+	 oGgJBRSewh1EMfh0Bv/WzpbPc9TTs/V55rtx4I8NQ0m50YamECnqyZUWHJypRfOkMD
+	 P5Hj0956d8kgNvlUz2NtH18CVGxcQ8/i8yyFt7b0qqh6JG/u4RC8Jhh4zOq/deY0F3
+	 5wDcO0WKw19+2wz0E04QwPlazcNA1CYk3hEaqeAjFmvmL2ArEMjiP9EDIU/oVH8i8Q
+	 s1FfPw+TcvBntwsSfbCWUUbV3SQL21EmvexAYuuYCPqdWf+Bc+TtTrWw9OGctpuKkF
+	 O5PPkfnfxs+aQ==
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5ed2f163a2fso816573e0c.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 10 Nov 2026 16:09:34 -0800 (PST)
+X-Gm-Message-State: APuU4Z9bTB+QsnxuKgytCneGFEAqBAI/5YoVC6ZpDp2s/9VdR8ezF43e
+	J7T6GaREgoeaMdjbBBgnYEK6bQ7Iy9bI9vIRQipS2Teqz3WlYejD7g5OlajnVoXmZkzkob5ojxr
+	J90pEgRAnH54xAKj597S00qeXGcbPuLo=
+X-Received: by 2002:a05:6122:32d1:b0:5ec:e522:70d9 with SMTP id
+ 71dfb90a1353d-5ee1c44ac6amr261128e0c.16.1794355773513; Tue, 10 Nov 2026
+ 16:09:33 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,153 +58,107 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k4z2mch3442cdwfc"
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-207285@kernel.org>
-
-
---k4z2mch3442cdwfc
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
+References: <20261110202025.25736-1-baohua@kernel.org> <20261110202025.25736-10-baohua@kernel.org>
+ <sashiko-outbox-207746@kernel.org>
+In-Reply-To: <sashiko-outbox-207746@kernel.org>
+From: Barry Song <baohua@kernel.org>
+Date: Wed, 11 Nov 2026 08:09:21 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4zfU11fP=ekrVfFBb+nj=fs3uYAVZD8Fpm9dAS1fjZnpA@mail.gmail.com>
+X-Gm-Features: AclHuK-sb02KucytR3FEDb8aRkGKMDn9o1EWXzBQq9iNIOSpuFJuwJQ7A_HDsNA
+Message-ID: <CAGsJ_4zfU11fP=ekrVfFBb+nj=fs3uYAVZD8Fpm9dAS1fjZnpA@mail.gmail.com>
+Subject: Re: [PATCH v6 09/15] mm/mglru: Avoid placing rejected folios below
+ populated gen
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	robh@kernel.org, conor+dt@kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH v3 4/5] string: Add [C]QChar_of() and QVoid_of()
-Message-ID: <avOuLrmqKK5Vb2vH@devuan>
-References: <cover.1794323750.git.alx@kernel.org>
- <415453a31ebf1aed3b41da1a28913f5cbe58f175.1794323750.git.alx@kernel.org>
- <sashiko-outbox-207285@kernel.org>
-MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-207285@kernel.org>
+Cc: akpm@linux-foundation.org, linux-mm@kvack.org, axelrasmussen@google.com, 
+	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
+	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
+	liam@infradead.org, lianux.mm@gmail.com, liuxiang.277@bytedance.com, 
+	lyugaofei@xiaomi.com, mhocko@kernel.org, mhocko@suse.com, qi.zheng@linux.dev, 
+	ridong.chen@linux.dev, rppt@kernel.org, ryncsn@gmail.com, 
+	shakeel.butt@linux.dev, surenb@google.com, wangzicheng@honor.com, 
+	weixugc@google.com, yuanchu@google.com, zhangbo56@xiaomi.com, 
+	zhuhui@kylinos.cn, sidchintamaneni@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Date: 2026-11-10 15:45:13+0000
-> From: sashiko-bot@kernel.org
+On Wed, Nov 11, 2026 at 4:56=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] string: void pointer subscript in QVoid_of() breaks Clang
->   builds
-
-It seems I can't build with LLVM in the way that sashiko suggested in
-the other mail, so I can't reproduce this:
-
-	$ make LLVM=3D1
-	  SYNC    include/config/auto.conf
-	  HOSTCC  scripts/basic/fixdep
-	clang: error: invalid linker name in argument '-fuse-ld=3Dlld'
-	make[3]: *** [scripts/Makefile.host:114: scripts/basic/fixdep] Error 1
-	make[2]: *** [Makefile:682: scripts_basic] Error 2
-	make[1]: *** [/srv/alx/src/linux/linux/llvm/Makefile:912: include/config/a=
-uto.conf] Error 2
-	make[1]: *** [include/config/auto.conf] Deleting file 'include/generated/r=
-ustc_cfg'
-	make[1]: *** [include/config/auto.conf] Deleting file 'include/generated/a=
-utoconf.h'
-	make: *** [Makefile:248: __sub-make] Error 2
-
-But I see no reason why Clang shouldn't build this.  I've written
-a small test program just to see, and Clang seems to just work well:
-
-	alx@devuan:~/tmp$ cat const.c=20
-	#include <stddef.h>
-
-	#define QVoid_of(p)       typeof((__QVoidptr_of(p)){0}[0])
-	#define __QVoidptr_of(p)  typeof(1?(p):(void*){0})
-
-	int
-	main(void)
-	{
-		const void  *p;
-		QVoid_of(p) *q;  // const void *
-	}
-	alx@devuan:~/tmp$ gcc -Wall -Wextra -Wno-unused const.c=20
-	alx@devuan:~/tmp$ clang -Wall -Wextra -Wno-unused const.c=20
-	alx@devuan:~/tmp$=20
-
-Unless anyone can actually reproduce the build issue, I'll assume this
-report is nonsense.
-
-> - [Medium] string: QChar_of() fails to compile when pointee has
->   qualifiers other than Q
-
-That's actually desirable.  You don't want to call strchr(3) with
-a pointer to volatile.
-
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [Medium] mm: uncleared LRU_REFS_FLAGS in lru_gen_add_folio() [1]
 > --
->=20
-> commit cea37634307d89ede7b6ca6128f006d50a90391c
-> Author: Alejandro Colomar <alx@kernel.org>
->=20
-> string: Add [C]QChar_of() and QVoid_of()
->=20
-> This commit introduces the QVoid_of(), QChar_of(), and CQChar_of() helper
-> macros in include/linux/string.h to support qualifier-generic string macr=
-os.
->=20
-> > diff --git a/include/linux/string.h b/include/linux/string.h
-[...]
->=20
-> [Severity: High]
-> Does applying the array subscript [0] to a void pointer in QVoid_of()
-> break Clang builds?
-
-I don't see why it would.  I can't use LLVM myself, so can't reproduce,
-but a small test program shows that Clang works just fine with it.
-
-> __QVoidptr_of(p) produces a pointer to (qualified) void.  Because array
-> subscripting requires a pointer to a complete object type, Clang rejects
-> (__QVoidptr_of(p)){0}[0] even inside typeof() with an incomplete type
-> error, and GCC emits a -Wpointer-arith warning when pointer arithmetic
-> warnings are enabled.  Using unary * instead of [0], such as
-> typeof(*(__QVoidptr_of(p)){0}), avoids both issues.
-
-This is a lie, unless anyone can confirm.
-
-[...]
+>
+> commit 8ef17c06cc7c92ed5b07f7cf40e28066a3ac2fb0
+> Author: Barry Song (Xiaomi) <baohua@kernel.org>
+>
+> mm/mglru: Avoid placing rejected folios below populated gen
+>
+> This commit passes the scanned generation sequence number from
+> scan_folios() to move_folios_to_lru() so rejected folios are placed above
+> the populated generation or in the youngest generation, and removes the
+> previous folio_set_active() call from evict_folios().
+>
+> > diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
+> > index ab69b9930893f..f6f4bc9a704fe 100644
+> > --- a/include/linux/mm_inline.h
+> > +++ b/include/linux/mm_inline.h
+> > @@ -332,7 +332,8 @@ static inline unsigned long lru_gen_folio_seq(const=
+ struct lruvec *lruvec,
+> >       return max(READ_ONCE(lrugen->max_seq) - gen + 1, READ_ONCE(lrugen=
+->min_seq[type]));
+> >  }
+> >
+> > -static inline bool lru_gen_add_folio(struct lruvec *lruvec, struct fol=
+io *folio, bool reclaiming)
+> > +static inline bool __lru_gen_add_folio(struct lruvec *lruvec, struct f=
+olio *folio,
+> > +             unsigned long scanned_seq, bool reclaiming)
+> >  {
+> >       unsigned long seq;
+> >       unsigned long flags;
+> > @@ -347,6 +348,8 @@ static inline bool lru_gen_add_folio(struct lruvec =
+*lruvec, struct folio *folio,
+> >               return false;
+> >
+> >       seq =3D lru_gen_folio_seq(lruvec, folio, reclaiming);
+> > +     if (scanned_seq !=3D -1UL)
+> > +             seq =3D max(seq, min(scanned_seq + 1, lrugen->max_seq));
+> >       gen =3D lru_gen_from_seq(seq);
+> >       flags =3D (gen + 1UL) << LRU_GEN_PGOFF;
+> >       /* see the comment on MIN_NR_GENS about PG_active */
+>
 > [Severity: Medium]
-> Can QChar_of() fail to compile when the pointed-to type of p carries a
-> qualifier other than Q?
+> This problem wasn't introduced by this patch, but should set_mask_bits()
+> in __lru_gen_add_folio() also clear LRU_REFS_FLAGS [1]?
+>
+> include/linux/mm_inline.h:__lru_gen_add_folio() {
+>         ...
+>         set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK | BIT(PG_active=
+), flags);
+>         ...
+> }
+>
+> Omitting LRU_REFS_FLAGS from the mask leaves stale PG_referenced and
+> LRU_REFS_MASK bits set when a folio is placed into a new generation,
+> inflating its tier access count and causing cold folios to be protected
+> from reclaim at the expense of hotter ones.
 
-Indeed, a desirable property.
+Again, if this is unrelated to the patch, could you please
+not report it?
 
-> QVoid_of(p) preserves all qualifiers on the target of p, but the _Generic
-> selection only matches exact Q void * and unqualified void *.  Passing a
-> volatile char * or const volatile char * to CQChar_of(p) produces a
-> volatile void * or const volatile void * controlling expression, which
-> matches neither association and fails at compile time.  Matching against
-> Q QVoid_of(p) *: (Q char){0} and default: (char){0} would test specifical=
-ly
-> for Q regardless of other qualifiers.
+Also, this is a false positive. If we need to clear the
+refs, we already do so before calling lru_gen_add_folio().
 
-You certainly don't want to pass a volatile char* to strchr(3).
+Also, in mglru-fg, we intentionally keep some values there for
+frequency guidance.
 
+>
+> [1] https://sashiko.dev/#/bug/linux-d2209941-6149-4b37-a97a-08c70d875d2c
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110202025.25=
+736-1-baohua@kernel.org?part=3D9
 
-Alex
-
---=20
-<https://www.alejandro-colomar.es>
-
---k4z2mch3442cdwfc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmrzsNsACgkQ64mZXMKQ
-wqlYyA//WP431CwOyyGiJ5Z4Nq4DkoB7lbZioy90Yl+g7zuCkZGvPoK5u3DTM6y2
-RcILdOR7a+CcZwlnfZ+uq6cFM0MSdsj4AkNWGVChYTCRKNaO3K4Ln6S62Gj9/xqR
-f1EGFr7gHkARKeFJCb+nAUUKHuRXXOsXEmAvFZrxsG/SM33rP3kmnKO829UvLoBQ
-DDi3V2Gmf3N3AS9MKk8yfv7yWFktDkogn2WPwRr7l+7QP0KbM8pyeFCQ8DtxXzMQ
-nHJ4/Xyg3O1SYFOFSr30b7TVDSg9sX0WHFTg6vy6Q097B/+nZ0mcXtUebgFc6i+v
-ctGoaRYlL9/ULqWYqyOWb/yMxDXKJuiLmLh2BVGfQsIHG+KC19F+aSoCehyawg0J
-2Sv1qGWgZhaE/5DdwPr2VRD3bYDx79n6JemIS2z3YDMpN4YmjNkOHolqFr3I8qMZ
-p7+mc5t7ACtB7psgUh4BJ+oUAPaLflvXKCjn0tFtbNRS94SfiMpwxfYrMT+MzPI1
-h0HvUuS+8kGTZhvriKw5pKLe5qXf1m+iwIfzznyEY0e5Dsz/hdxLK/vhDORsnGSJ
-UBW2c9G67/dZS8FdNJC+GLfLLeJSFLEf1onrBjtigp5ebFOwwjrM5j+m5XZO8gfM
-3T5YUS4eDKCZLwzH38VjkYqQ+ztrEmFtGggF746acwwtrGj9wTo=
-=N5aI
------END PGP SIGNATURE-----
-
---k4z2mch3442cdwfc--
+Thanks,
+Barry
