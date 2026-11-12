@@ -1,72 +1,112 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.67.36.66
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794510206;
-	b=yNBQ5ijds+28pq1F6YOu1qP15Q9iWZr6yuHpmpup3L/OLbqajiTPxUvgE++bUKXEadju
-	 yWsoUMSM1YoX1yblDN6teVGPFCorPSoy87sXXdCncYHZipg6+32M/l6OpIleaIrKDEANi
-	 DEJnNjdPnD3ait5ZdCJJp5samHw2y1EjH5rlE/CYMQNtLXa68Z6PdN6IPtrX++5fspXrn
-	 cpi9bWCflVGNFui5NrjbIK72/n22uxHND9G1aOboVa8zY4B0dLbrfZ2L9OpJbiGxbFu0Y
-	 Vw9qnY4rtmOcVYVbjdyIuNy0ZRxRyDCAU5Ly80k9AxjAxGkhj2/MGXUN78WZ7wPjg0A==
+	t=1794510234;
+	b=kjNL+icCBcR0MVUJqrMFufBf1sgHy75aLNXsHNHUP9lR2F6s2GYcRO8sMJmT4kVAdSyM
+	 iDw2YYUWkq0KF0+Gcm/OTGv10oNMOm32GAuug1cA/CApkEBzHyKGMDmjKkL0bPtdcxTeT
+	 FOztC4IjtNgc+E7NLEz3ic9S17ZDC9dsvYC1bzjcIVjDb2yFBdCkDPFTjcwtYFD5ml2Jp
+	 1QGUwjJym5wF6Wpb6A/ZoOT9npyDzzjqYwnA/Zr9NRQBxSMzlg3lh7dZK7vkp9fxmkLnv
+	 xP8q/JZaDgUJNtk8Y8F36Crxqrvxb+oOsAEaBMW7LBnVxQqUExiEAXcGBORa8uH6sIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794510206;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=BKmPHjD7F+lAu5Y1PmUklxdmbSrVzMFLB6y7wwm9rn4=;
-	b=bnJ9aix64ZwsiWBCyjfbi8hiuPiH4eXUUgm04rsLhVd/O94fNuagQCJnyO72L38D9VuD
-	 TV0yhIRf2uyrQ/ZYNGm65ORHQV+BQ0CZZUT3w1pFlpXOT9WB9b2ggPdDs9k3d79gpcpue
-	 ASCa6p7+Or5bnUGh2APjoP0mWZRtmwL3rnUHOvsJEtlr5TRLdlEmcpb5d+VyxYsuJTcUe
-	 mAVzv8thYkphruXWcOtbiGMVeFuC9kcbxnx285J3ixVGwzjJF/OI4gEohqm5Uup3btXmz
-	 MV4GD8KNV657u4E0lheDqY1d0nisS4VcsGQAMYqwnLBUNLkfI6hHSayvh3lXsOPpTTg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794510234;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Message-ID:Subject:
+	 From:To:Cc:Date:In-Reply-To:References:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP;
+	bh=34UOelsS1u8J1Uax+iSptlCYL+hzY+Ctl8Zrfoy2beI=;
+	b=mJTFPA340+oCdA/HL88Ej0Zf9bny641aliRItJyFjGDaLW3Fh/qe74Qx7xpKIT/jA2FF
+	 Y8wwhfd+t6hCTzd7EhOe2ucq6STssq9DXO35OxIyPwrio/zhnQrkPNLKMxYx/GtDm+gGz
+	 RVsJfAt8zS1Ex4Wdb0B7VJBh6spTP7UCg/2UYfjT6L6NbHFGqnjUgnWtDzUJYsk2l0pE6
+	 KFztcbbYr7MMWce+bON1hF68nniildd/24X0djplm71IewBkHL4A6kjecsXgYuRqLIHNp
+	 JyGllwjZksJKb8l3flsMgsevBB3YfWU6XMT6jIhRq0Kxg5Z1cer02hathS5M/5+zXbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jUA8Avn0;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=posteo.de;
+	spf=pass smtp.mailfrom=posteo.de;
+	dkim=pass header.d=posteo.de header.i=@posteo.de header.a=rsa-sha256 header.s=1984.8680eb header.b=MTKfHkLr;
+	arc=none smtp.remote-ip=185.67.36.66
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED59606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 19:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC9D606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 19:03:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AC9D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jUA8Avn0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3621F000C4;
-	Thu, 12 Nov 2026 19:03:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794510205;
-	bh=BKmPHjD7F+lAu5Y1PmUklxdmbSrVzMFLB6y7wwm9rn4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=jUA8Avn0OjggNIl/nRhZLsftG1CcIsE+P07qqfFSyNsEQTVpwK0yFjIsaw9V+7rk4
-	 i7S3HPu3az0GPuU9xPZzMQBHQQr1nbT2UsRxik+CnjdlyZxOq+1XDs7tzT78aPPKpG
-	 7bJnBFcXUMXzoEBBMDroROB8HmzksqS/gmG9vmOaxHNz91DXBwz06sMNkD2KXVe/Af
-	 +r3SD42o6nZLXHKB2Ze/w/ZUePNrC5Gr5fOlM3gqBuvYU7iZ/jLKLGtD5jIYuPZ5hX
-	 oFS2PKujVTNdUmnXUYpniuAoB2acN92bEYS+2D0wJXcdaGfISyfJfLHpcsCJ74fxye
-	 WYPVlA8ScGQuA==
-Date: Thu, 12 Nov 2026 19:03:13 +0000
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=posteo.de header.i=@posteo.de header.a=rsa-sha256 header.s=1984.8680eb header.b=MTKfHkLr
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id 4CB0C240101
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 20:03:51 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
+	s=1984.8680eb; t=1794510231;
+	bh=34UOelsS1u8J1Uax+iSptlCYL+hzY+Ctl8Zrfoy2beI=;
+	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP:From;
+	b=MTKfHkLrUB9e6B15w0F22opC06VcAJd1ydSpfvLnR6643YBgVnLf+7sViZP/yrcqM
+	 oTn4V1BoVM3tfoZXI/9QEWXxVjgVNklFwwPxCto49gdAtNKOJL4q8zDmlQqKfuubA/
+	 j5znxSMp3yS4Mk9czxaFp8/rqXiYaXSU4WHTFBudDHnleagk0qe1xjQWkOitl0gLLH
+	 MsTfM+DekI2tJBz+lgRnvSZvwTdP3koMNuJvasc8gPFu6I3kOoMNUe7IrHvRj4WJFu
+	 Cc+briRs+VDSTU9iNwNlBRq8h5WrCfIN6JX3PqYqQN9SZTCylEuRceU6+593ZqashM
+	 gFO1+hF4zw5Rg==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4jQVD65HZ3z6txj;
+	Thu, 12 Nov 2026 20:03:50 +0100 (CET)
+Message-ID: <62071b5d53e8b7674cec5d8d1f496331c7eaeda8.camel@posteo.de>
+Subject: Re: [PATCH v6 1/4] tty: serdev: Add mutex lock
+From: Markus Probst <markus.probst@posteo.de>
 To: sashiko-reviews@lists.linux.dev
-Cc: David Hildenbrand <david@kernel.org>, 
-	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Michal Hocko <mhocko@suse.com>, David Rientjes <rientjes@google.com>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, Andrew Morton <akpm@linux-foundation.org>, 
-	Jann Horn <jannh@google.com>, Pedro Falcato <pfalcato@suse.de>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Nhat Pham <nphamcs@gmail.com>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
-	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
-	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Alistair Popple <apopple@nvidia.com>, Usama Arif <usama.arif@linux.dev>, 
-	Kairui Song <kasong@tencent.com>, Balbir Singh <balbirs@nvidia.com>, 
-	=?utf-8?B?SsOpcsO0bWU=?= Glisse <jglisse@redhat.com>, Kiryl Shutsemau <kas@kernel.org>, 
-	Yu-cheng Yu <yu-cheng.yu@intel.com>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>, 
-	Peng Fan <peng.fan@nxp.com>, Josef Bacik <jbacik@fb.com>, Chris Mason <mason@kernel.org>, 
-	linux-mm@kvack.org, "Borislav Petkov (AMD)" <bp@alien8.de>, 
-	Mark Brown <broonie@kernel.org>, "Dennis Zhou (Facebook)" <dennisszhou@gmail.com>, 
-	Rick Edgecombe <rick.p.edgecombe@intel.com>, Roman Gushchin <roman.gushchin@linux.dev>
-Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
-Message-ID: <avYJ-CxBEpdO1Wmu@gremlin>
-References: <20261111-mason-migrate-et-al-fixes-v1-0-3d2454362e8d@kernel.org>
- <20261111-mason-migrate-et-al-fixes-v1-10-3d2454362e8d@kernel.org>
- <sashiko-outbox-211681@kernel.org>
+Cc: linux-serial@vger.kernel.org, ojeda@kernel.org, gary@garyguo.net
+Date: Thu, 12 Nov 2026 19:03:51 +0000
+In-Reply-To: <sashiko-outbox-211656@kernel.org>
+References: 
+	<20261112-rust_serdev_probe_refactor-v6-0-3568ed56264c@posteo.de>
+	 <20261112-rust_serdev_probe_refactor-v6-1-3568ed56264c@posteo.de>
+	 <sashiko-outbox-211656@kernel.org>
+Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
+ keydata=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
+ jfGillcaQOqFZ3WwVqyzG1BUfTow==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-IdMqXOY+BoFXe+5ky473"
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,85 +116,195 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-211681@kernel.org>
+OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
-+cc Roman
 
-Roman - see below - I was under the impression mm was not supposed to receive
-'unrelated to this patch but' reports? Did something change?
+--=-IdMqXOY+BoFXe+5ky473
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks!
-
-On Thu, Nov 12, 2026 at 06:16:31PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [Critical] mm: out-of-bounds write in migrate_vma_setup() [1]
+On Thu, 2026-11-12 at 17:58 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] tty: serdev: late close in serdev_device_remove() and missed
+>   driver unbind
+> - [High] tty: serdev: returning -EALREADY in ttyport_open() breaks
+>   hci_mrvl probe
+> - [Low] tty: serdev: dev_WARN() used instead of dev_warn() in
+>   serdev_device_remove()
 > --
->
-> commit a0bf8430c5e68cd904038ab8081c7bc9a9b0f7de
-> Author: Chris Mason <mason@kernel.org>
->
-> mm/migrate_device: refuse to migrate shadow stacks
->
-> This commit rejects VMA device migration in migrate_vma_setup() when the VMA
-> has VMA_SHADOW_STACK set.
->
-> > diff --git a/mm/migrate_device.c b/mm/migrate_device.c
-> > index 0f2a2832e0bd1..c27f513ee46e3 100644
-> > --- a/mm/migrate_device.c
-> > +++ b/mm/migrate_device.c
-> > @@ -759,6 +759,8 @@ int migrate_vma_setup(struct migrate_vma *args)
-> >  	/* The migrate_vma page walk has no hugetlb support. */
-> >  	if (!vma_is_mm_backed(vma) || vma_is_hugetlb(vma) || vma_is_dax(vma))
-> >  		return -EINVAL;
-> > +	if (vma_test_single_mask(vma, VMA_SHADOW_STACK))
-> > +		return -EINVAL;
-> >  	if (nr_pages <= 0)
-> >  		return -EINVAL;
-> >  	if (args->start < vma->vm_start || args->start >= vma->vm_end)
->
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but can migrate_vma_setup()
-> write out of bounds on args->src and args->dst when given unaligned
-> addresses [1]?
-
-I don't like big buts and I can deny! As above, I thought we disabled this?
->
-> mm/migrate_device.c:migrate_vma_setup() {
-> 	const struct vm_area_struct *vma = args->vma;
-> 	long nr_pages = (args->end - args->start) >> PAGE_SHIFT;
->
-> 	args->start &= PAGE_MASK;
-> 	args->end &= PAGE_MASK;
+>=20
+> commit 5353012a0aab4d9161723d4449dfeeb88d3f481c
+> Author: Markus Probst <markus.probst@posteo.de>
+>=20
+> tty: serdev: Add mutex lock
+>=20
+> This commit adds mutex locking to serdev-ttyport to serialize open, close=
+,
+> and receive operations, returns -EALREADY on duplicate opens, makes closi=
+ng
+> an already-closed device a no-op, and closes the device with a warning in
+> serdev_device_remove() if left open.
+>=20
+> > diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
+> > index 7500efcdfc218..86d9cf8215edc 100644
+> > --- a/drivers/tty/serdev/core.c
+> > +++ b/drivers/tty/serdev/core.c
+> > @@ -142,6 +142,13 @@ void serdev_device_remove(struct serdev_device *se=
+rdev)
+> >  	struct serdev_controller *ctrl =3D serdev->ctrl;
+> > =20
+> >  	device_unregister(&serdev->dev);
+> > +
+> > +	/* Warn if driver did not close the serial device. */
+> > +	if (ctrl->ops->close && ctrl->ops->close(ctrl)) {
+>=20
+> [Severity: High]
+> Does closing the controller after device_unregister(&serdev->dev) leave a
+> use-after-free window on serdev and its devres data?
+Yes, pretty much the reason for the WARN. See below.
+>=20
+> When a child driver leaves the device open, SERPORT_ACTIVE remains set
+> while device_unregister() runs device_unbind_cleanup() (freeing devm
+> resources and clearing drvdata) and put_device() -> serdev_device_release=
+()
+> -> kfree(serdev), before ctrl->ops->close(ctrl) clears SERPORT_ACTIVE and
+> ctrl->serdev is set to NULL:
+>=20
+> CPU0                                  CPU1
+> serdev_device_remove()
+>   device_unregister(&serdev->dev)
 >     ...
+>     device_unbind_cleanup()
+>     kfree(serdev)
+>                                       ttyport_receive_buf()
+>                                         serdev_controller_receive_buf()
+>                                           serdev =3D ctrl->serdev;
+>                                           serdev->ops->receive_buf(serdev=
+, ...)
+>                                             <-- use-after-free
+>   ctrl->ops->close(ctrl)
+>   ctrl->serdev =3D NULL
+>=20
+> In addition, serdev_device_remove() only runs when the struct serdev_devi=
+ce
+> itself is unregistered, not when a client driver is unbound via
+> serdev_drv_remove() (e.g. module unload or sysfs unbind).  If a driver
+> leaves the port open across unbind, this fallback close never runs,
+> leaving SERPORT_ACTIVE set with NULL drvdata and causing any later re-pro=
+be
+> to fail in serdev_device_open() with -EALREADY.
+>=20
+> > +		dev_WARN(&ctrl->dev, "Child driver did not close the serial device")=
+;
+> > +		pm_runtime_put(&ctrl->dev);
+> > +	}
+Not sure. Can be moved later on if the case. The check also only makes
+sense once devm has been run (which likely is not the case inside
+`serdev_drv_remove` yet).
+
+>=20
+> [Severity: Low]
+> As reported by Greg Kroah-Hartman on v4 [1], this should log a normal
+> kernel warning rather than a WARN_ON() splat.  dev_WARN() expands to
+> WARN(1, ...), which still triggers a backtrace and crashes systems with
+> panic_on_warn; dev_warn() (with a trailing newline) logs at KERN_WARNING
+> without a WARN trap.
+Intentional.
+
+This should NEVER happen, so a backtrace is wanted in order to fix it.
+Before closing the device (partially recovering), there is a window in
+which the device is open and resources are already cleaned up. Thus a
+call to `receive_buf` (which can happen at this stage if not closed),
+will likely result in a use-after-free or nullptr dereference
+vulnerability.
+
+If panic_on_warn is enabled, the user deliberately choose to panic on
+this event.
+>=20
+> [ ... ]
+>=20
+> > diff --git a/drivers/tty/serdev/serdev-ttyport.c b/drivers/tty/serdev/s=
+erdev-ttyport.c
+> > index b6638f9f40d2d..17c18d4b0cb8f 100644
+> > --- a/drivers/tty/serdev/serdev-ttyport.c
+> > +++ b/drivers/tty/serdev/serdev-ttyport.c
+> [ ... ]
+> > @@ -99,14 +103,23 @@ static int ttyport_open(struct serdev_controller *=
+ctrl)
+> >  	struct ktermios ktermios;
+> >  	int ret;
+> > =20
+> > +	mutex_lock(&serport->lock);
+> > +
+> > +	if (test_bit(SERPORT_ACTIVE, &serport->flags)) {
+> > +		ret =3D -EALREADY;
+> > +		goto err_flags_unlock;
+> > +	}
+>=20
+> [Severity: High]
+> Does returning -EALREADY here break probing of Marvell serdev Bluetooth
+> devices in drivers/bluetooth/hci_mrvl.c?
+>=20
+> During probe, mrvl_serdev_probe() calls hci_uart_register_device() ->
+> hci_uart_register_device_priv(), which opens hu->serdev and then calls
+> p->open(hu):
+>=20
+> drivers/bluetooth/hci_serdev.c:hci_uart_register_device_priv() {
+> 	...
+> 	err =3D serdev_device_open(hu->serdev);
+> 	if (err)
+> 		goto err_rwsem;
+>=20
+> 	err =3D p->open(hu);
+> 	if (err)
+> 		goto err_open;
+> 	...
 > }
->
-> nr_pages is computed before args->start and args->end are masked with
-> PAGE_MASK.  For example, if args->start is 0x1fff and args->end is 0x3001,
-> nr_pages is 1, but masking rounds the range to [0x1000, 0x3000), which spans
-> 2 pages.  When migrate_vma_collect() walks the aligned range, it writes past
-> the end of the caller's args->src and args->dst arrays.
+>=20
+> mrvl_open() then calls serdev_device_open(hu->serdev) a second time:
+>=20
+> drivers/bluetooth/hci_mrvl.c:mrvl_open() {
+> 	...
+> 	if (hu->serdev) {
+> 		ret =3D serdev_device_open(hu->serdev);
+> 		if (ret)
+> 			goto err;
+> 	}
+> 	...
+> }
+>=20
+> With ttyport_open() returning -EALREADY when SERPORT_ACTIVE is already se=
+t,
+> mrvl_open() and mrvl_serdev_probe() will unconditionally fail.
+I am currently investigating this issue, see
 
-This is silly. It's not critical. Nothing in-tree does this.
+https://lore.kernel.org/all/341e56b1ff7d8a5b109e26e30dfed61faa54d603.camel@=
+posteo.de/
 
-If internal kernel stuff does incredibly stupid things then incredibly stupid
-things happen. We can't nanny everything endlessly.
+>=20
+> [1] https://lore.kernel.org/r/2026101758-confidant-comprised-e1c0@gregkh
 
-A monolithic kernel means that the function and its callers are considered
-together.
+--=-IdMqXOY+BoFXe+5ky473
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-If an out-of-tree module does it then it's your fault for using an out-of-tree
-module (ugh EXPORT_SYMBOL()'d).
+-----BEGIN PGP SIGNATURE-----
 
->
-> [1] https://sashiko.dev/#/bug/linux-ca91ac03-4056-4cf8-8afb-0e516e08797f
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261111-mason-migrate-et-al-fixes-v1-0-3d2454362e8d@kernel.org?part=10
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmr2DZYbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSqzgQAJQmKTIpx8no8/fj63SQ
+egzrxg/cRwaE0jY6XjWofcLaxBf+eV4CMj/SdYcMMy5vxEicXDizlLwstfyTC7od
+dQUYUuxsrWsdSqq42InSZCc4aPLLHfpHSIw1JwRcnTJ5H6kiA2kc23BJiHevH7ii
+nBgdk99zTBC1lkTB60AkCojBFO8Qr6kTCCQhAxSrWgXQKxY3v4XiTTpNwXKRa63c
+hCbijIiW9ybsMRWvI/l+EHr/WkOJfAgbM/fUUeLMmHe2us9U9ZLOqFTdpCxdUsay
+nzIT+TiuqANLUS1LGbXuxPBesrieIc0XgH/n10FXNECPisLlNOq/UdmZpqjvjUAF
+AYvtDcP1gqeqUbDtyCvXX1xcafQssmAm7wCTtlR7tYBY1bx9XZAgFUtzKnj/JZBi
+Xh1Jic+WfRH6HyVLVt1Vm2QACZZ4YZJC6UZAeTS1zJoynX+ZQbVs1v4zglhtNFDZ
+FLkwZgeq25gqlfTncDrVSDgtZ/pWjQswKCkF8FUEI2Gw2pu6T4LOR714x3rUg4eb
+0fsNmfmplPBXTft+hA0fBPo68pIza/hDagRsHCf5zzv8APzJaqYttMmabnQbDLZ0
+n+W6TQc1uhDkx7vQc8d++LDLmGm/Kd9gVMxgYRJF6MTEIbN5cNuV+eWvEClvfCzV
+xu4NIH+paL6eqsHQ5lLINelV
+=PJhy
+-----END PGP SIGNATURE-----
 
---
-Cheers, Lorenzo
+--=-IdMqXOY+BoFXe+5ky473--
