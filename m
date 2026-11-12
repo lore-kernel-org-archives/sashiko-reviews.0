@@ -1,95 +1,127 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794482026;
-	b=Wqae8KDYhmeziKggYAsPOSqiIyDbs1InoeCRYXx/SRV+umsfsVs0dBTFt7bqtwBoNdhj
-	 IwE3az6vggdVOIdHs9KXPqVc1HCDFQjPlWoW0BHzgOvNEA+E2TVFV2CycZQkbrylMBa/C
-	 xpuYVwK09kyeyeD18g/oxxMMLU2UKnunAl/2ttfJIJJ6VdQz+eqLHp2KAVpy4FgmTGDOP
-	 rwHCANt5sercmNuy8Fs2E57TyNdOn1GcvwrTV2KEDSF3jIdAL2K0FQK7MtQy4DBg8ae29
-	 oeMDiPfY4IZODI7i0wt0MDLzDQZoncR4bSv0akonrEu/rVNv4SQ5XxuM/C0rXE6tsZQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794482026;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-TM-AS-GCONF:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:X-Authority-Analysis:
-	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=fPm5qWpoTMUiXwuBUzfxdmJX/oGj7gJoI751d6rX+q0=;
-	b=e4zhzKjc9voaHVZ2EOyePXZKrGlXCwLUFRxs+WRp8MHhH026NuVVIPtwKuitG1NldxNw
-	 SUfaCPDOEWgiRmfQgfh3F0ahKPxUyhRAz7abl3NBqo70DKmj7vFrH4Ov4oJplApfIm1Eh
-	 BGj1UdIlyDTmQbW9AI68VJb2xAbQXReWniCVAgq5MYbkBrnJSpgD54jkwA+Ue8s0UGsZ3
-	 8++sym8z+lLY6U2SYht7g2RXBjCjGtoK7EbEwsM9K9dZFdWRti4sPLd76kBfVZzsMMOyO
-	 HiSe1ezez2uSrRv3ieOQExWjmre54I6rFVpWPQQYn1H7zsWvC5uP3A5mSoqD/HYKJSQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lHiu+8xC;
-	arc=none smtp.remote-ip=148.163.156.1
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=67.231.152.168
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794482575;
+	b=AtBwRdBxzeeLLaBHqAEH9nDAN9bkgunxy3hHBr0z3FqPyMvZYPCGmERUJPNAlgiAlJ7E
+	 IFKYaC9sIkaW2uMwoNkl5C1ZUOeSIs0irQ3/CnnvMwF9wO7MlHHBM3Zz/emrbQ5xx8USC
+	 txH7rY9LtMLsg+oMMvGSdhMYX32u/H/eBZz/zrpc1S0wljNufApXMwRJYt8D+nlGeY7rb
+	 HZARYPyxPZSFmpLaUZ+ijOIyG8x7TFMc0kXlzQWUC5FhrWOz+h8d8ShsyAUHe8jXssxk+
+	 oN9A/q3lGKMykUKeb3A5u8QFs7dGl3ofyrWTF0cNxk+AMam+MGucoKKCnSHwaS9yHig==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794482575;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:DKIM-Signature:
+	 Received:Received:X-MS-Exchange-Authentication-Results:Received-SPF:
+	 Received:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-OriginatorOrg:X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
+	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Reason;
+	bh=3EmtcX8XafoRa35CRXrmIMtCCc0YVulX5MZaNrix4Ok=;
+	b=hF4RqRUYP51PbGhxjssyqIMqRCvOgSdlCPagoxQbjwuCrk1xNPYHpYceCDib2YDzMnuu
+	 PZpewKxFM89GJzq5l+K18/NYP8jcZt8pqmJYn/jtLtDrdgr9PU43RsnHR52id+ziUrcOc
+	 0W+Fm7glEIY1wUJj9Bf17UN6XL/GxwKKDWcR/wli161WoRxvk6KqxkWvbUOr2EqrjzEBM
+	 cXeJAvSi2Dzf8Yqk3AQpgzAIK7XXx5r1RoHLjZgQNt8XcFW81gPOyJs1bYJSwhLeiQrgt
+	 vk3ZRi0pWnCCBL2Qghlb4AkNdlgs+kFinpLR8/7uuOGNK5YAF++WENAbcLce6AugIZg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=opensource.cirrus.com;
+	spf=pass smtp.mailfrom=opensource.cirrus.com;
+	dkim=pass header.d=cirrus.com header.i=@cirrus.com header.a=rsa-sha256 header.s=PODMain02222019 header.b=EmNemTop;
+	dkim=pass header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-cirrus4-onmicrosoft-com header.b=cgkJKVUY;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=67.231.152.168
+Received: from mx0b-001ae601.pphosted.com (mx0b-001ae601.pphosted.com [67.231.152.168])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3C4606A31C;
-	Thu, 12 Nov 2026 11:13:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B3C4606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6581D606A88F;
+	Thu, 12 Nov 2026 11:22:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6581D606A88F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lHiu+8xC
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AC2iqBh1215427;
-	Thu, 12 Nov 2026 11:13:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=fPm5qW
-	poTMUiXwuBUzfxdmJX/oGj7gJoI751d6rX+q0=; b=lHiu+8xCAuMoTUGu1EXcKo
-	59S8mIcXI6O5B1gj00XB34+TTZNnSq4rjQIiSb+QFYnvagMmtXZqhUqtyBvJWDMT
-	SWvgUwI5guuAz2qkzB4+epIEn1t3JyTfE1LuuhPwlxaOcWIJVqSdE0vRc+EhyHDu
-	eNMdAOTs406K7NXjYr2y/1CN1oZZJDxUdpK2nV4PcZQy0rIXyHhXDE4CBwRVamyv
-	OVng9VARNedGl5MTFFaTqwYyfEkolKw6OY8mmKcY9LPG21T5qOGqRogK+RCgpYxb
-	VvPhkrM7esBfxe4/ZwkKFBDznIRZ+6KY4BC46tZQUFz23zVPtfJPwsdOOCRnO5Qg
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsuntf5g6-1
+	dkim=pass (2048-bit key, unprotected) header.d=cirrus.com header.i=@cirrus.com header.a=rsa-sha256 header.s=PODMain02222019 header.b=EmNemTop;
+	dkim=pass (1024-bit key, unprotected) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-cirrus4-onmicrosoft-com header.b=cgkJKVUY
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+	by mx0b-001ae601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ACBJD2I1862193;
+	Thu, 12 Nov 2026 05:22:51 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=PODMain02222019; bh=3EmtcX8XafoRa35CRX
+	rmIMtCCc0YVulX5MZaNrix4Ok=; b=EmNemTopjCJSQ+8SWXhCGS6pl136p6sNAU
+	jjnNKQqiekqyr1UHcu3aOofr8FtXDFyv/CPz21UZJAlUXRWLWdHUvwFxaEGQru9f
+	b20h759S79emOBk/dgX0sq+U1KUC3mKr2Pju00fJQGZgbXBVkFmpl09VkokBxWXl
+	lHDBlWWlLG+TOx8YuTAdYNJLhG/MkN/bN6/O2rbGg+7gJreKWUDlWCV6lL94wWnZ
+	EhQac1lrxNmo7NggpoA7gOwpavVnGaboq2NLfpKfW9h6ZjIMXzBfgM5tXfaXS/d3
+	9f4XQ5bTCh3l93GNR03Rcym19CijSmUTiFMGpLFjJPUwUMuFUo9w==
+Received: from co1pr03cu002.outbound.protection.outlook.com (mail-westus2azon11020116.outbound.protection.outlook.com [52.101.46.116])
+	by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 4hwcfpg04m-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 12 Nov 2026 11:13:44 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AC8C046053981;
-	Thu, 12 Nov 2026 11:13:43 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hv309rh3n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Nov 2026 11:13:43 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6ACBDde751249408
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 12 Nov 2026 11:13:39 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1AAE820049;
-	Thu, 12 Nov 2026 11:13:39 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E89B820040;
-	Thu, 12 Nov 2026 11:13:38 +0000 (GMT)
-Received: from thinkpad-T15 (unknown [9.68.31.198])
-	by smtpav06.fra02v.mail.ibm.com (Postfix) with SMTP;
-	Thu, 12 Nov 2026 11:13:38 +0000 (GMT)
-Date: Thu, 12 Nov 2026 12:13:37 +0100
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-To: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-s390
- <linux-s390@vger.kernel.org>,
-        "Heiko Carstens" <hca@linux.ibm.com>,
-        "Vasily
- Gorbik" <gor@linux.ibm.com>,
-        "Alexander Gordeev" <agordeev@linux.ibm.com>,
-        "Christian Borntraeger" <borntraeger@linux.ibm.com>
-Subject: Re: [PATCH v2] s390/mm: Allow hugepage migration for s390
-Message-ID: <20261112121337.3c07acb7@thinkpad-T15>
-In-Reply-To: <sashiko-outbox-209541@kernel.org>
-References: <20261111182944.4154805-1-gerald.schaefer@linux.ibm.com>
-	<sashiko-outbox-209541@kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	Thu, 12 Nov 2026 05:22:51 -0600 (CST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FgGggWXQdnphfYx0/QDkR6SlsnbibUO50vsO1MH09Qpt/hfx+zTDKeP6xGCcrtDKJrxO3T5X7LDjq1jbxCpWyQ7QtguUvV/EVPUU7RUefXnRsB8uVx4OSV8GAS5DAaRUok3RH30Sdu5nCUWZ06+LiSNOipLfYez0i7Moxm/3YmE1s6lJqGlWGGWwUvAb4RqapNRmqh39RHdIVYcpMB5RMbV3MR0If0ki4EgzAX8DYxwDLp2y/DblcBPXWy3GUPTTAC+51GR/eFk1SkKZ2w9TMaAZIUNssgovlwWQMMZuvU6KtVr22z2COdGEaHJTEdarIduZSnV+0Rzy0VfmwIGVMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3EmtcX8XafoRa35CRXrmIMtCCc0YVulX5MZaNrix4Ok=;
+ b=KvJZK0cxyaG73wTb7KF8jS2D5FnM55W3Em5v0YB8fPyLI0P8wHWByBPlCaETuMWVsWNBrxl42HA9euBZD8+SdFAVcbVpw7y8t4Zk7nylR71gizG8nCbcO8Wpxa2/R1waJho9PPfLnIOenA+Xx2velbIhp9ebt88+sLYphTPvGYt7GTGS4ZjlkoSGG4ieyybNmFD7I/a6umH9IRqiugIT0956519fo+NBYFxh60dIb6FWdjKZT9sxmBGOJpw84vfVTh4CTfm/jiKeJ0rBsxQNeUeI85UyphQccJKIUOzZPHOJ7z5EamqrTiUaHGa72CbHuuEfIWITsuyVjdUpVIz7zw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 84.19.233.75) smtp.rcpttodomain=kernel.org
+ smtp.mailfrom=opensource.cirrus.com; dmarc=fail (p=reject sp=reject pct=100)
+ action=oreject header.from=opensource.cirrus.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3EmtcX8XafoRa35CRXrmIMtCCc0YVulX5MZaNrix4Ok=;
+ b=cgkJKVUYmLgwjm/N/viLesCJMTdhJzn1nAufT8Jc0uGGnHGzzEiNviJNnex2VGjplS4Scim1Am4nlgRZva74Q2yQ0G9aCzuA0mGzIoCD3gIhIoFKFCIA15zvwDU+yKLjOroBpwDvG3mshDaNSWcsuslLMbTpVixJ7c+a94/xUJU=
+Received: from BN9PR03CA0178.namprd03.prod.outlook.com (2603:10b6:408:f4::33)
+ by SAEPR19MB317699.namprd19.prod.outlook.com (2603:10b6:802:205::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Thu, 12 Nov
+ 2026 11:22:47 +0000
+Received: from BN1PEPF00018071.namprd04.prod.outlook.com
+ (2603:10b6:408:f4:cafe::4e) by BN9PR03CA0178.outlook.office365.com
+ (2603:10b6:408:f4::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.8 via Frontend Transport; Thu, 12
+ Nov 2026 11:22:47 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=softfail (sender
+ IP is 84.19.233.75) smtp.mailfrom=opensource.cirrus.com; dkim=none (message
+ not signed) header.d=none;dmarc=fail action=oreject
+ header.from=opensource.cirrus.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ opensource.cirrus.com discourages use of 84.19.233.75 as permitted sender)
+Received: from edirelay1.ad.cirrus.com (84.19.233.75) by
+ BN1PEPF00018071.mail.protection.outlook.com (10.167.245.199) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.4
+ via Frontend Transport; Thu, 12 Nov 2026 11:22:46 +0000
+Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by edirelay1.ad.cirrus.com (Postfix) with ESMTPS id 592FB406559;
+	Thu, 12 Nov 2026 11:22:45 +0000 (UTC)
+Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPSA id 4550A820273;
+	Thu, 12 Nov 2026 11:22:45 +0000 (UTC)
+Date: Thu, 12 Nov 2026 11:22:44 +0000
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org, mfd@lists.linux.dev, lee@kernel.org
+Subject: Re: [PATCH 2/2] ASoC: cs42l43: Update load detect procedure for
+ cs42l43b
+Message-ID: <avWhhKiOK/DzfdbO@opensource.cirrus.com>
+References: <20261111171032.1491717-1-ckeepax@opensource.cirrus.com>
+ <20261111171032.1491717-3-ckeepax@opensource.cirrus.com>
+ <sashiko-outbox-209438@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,171 +131,118 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA0MiBTYWx0ZWRfX2lQoZGPmfves
- yyb0upySaxAKL8p2zMRFyEbxmgFoZ3+RItm+Fa2oW9j4KcCD6HszXXm8IExZpIOFNeJHVXFD2PO
- V/6aXmUeZd5B0l95lsshhzEUEiu/urMyFE+ecA6TTsaoqCBnjl9g3nKb8YAX62TEAdaBf9fwbBF
- snJ3DceWKopGiDJqjXzz5x+5DZdKEbCkkzREKSpXdNUOsYRGOC586lJiQowLOZDLIUZu8N/HOZS
- lTV1K6ycWCMpKFP4SIwjofqkLp4ovvtPIgM1lSWbo3NH86OG6AssuLMcAKwP7c9v9He/WdxQvZB
- get6rH0bidYKNRwY7TBBLDdR9QwI/oTIz2KaGn8l3Qm+1+fQEbb1jr59GfMtwoas5p80vxlLGD9
- fzYxsMnaYIIBRai7eBokiuuHuukoVjIGTYdwh6p1I4aHZL5GoPq01IgYhw1zObEmK3yQM7LrYFz
- nFPvmQ1FA5r8N88hCFQ==
-X-Proofpoint-ORIG-GUID: btVzQ312fbO2SCzSrno8v8cympUxKJNh
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA0MiBTYWx0ZWRfX4W3HdT4uU9kL
- SFkthCGCeOmFiFqFZtf0X3RZ3xRw8nNoODf38RQl8LoAKl6AnBM1AiM9g/1TgR1PZnXAHv51wxo
- 8nwZzRPhyNQc+ZAnJLhMUT2jmjZoNkc=
-X-Authority-Analysis: v=2.4 cv=euZKXYpX c=1 sm=1 tr=0 ts=6af59f68 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=cVApB3_Vmn0YrNpntUEA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: btVzQ312fbO2SCzSrno8v8cympUxKJNh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-12_01,2026-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1011 suspectscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120042
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-209438@kernel.org>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00018071:EE_|SAEPR19MB317699:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7e7bed05-dbe3-48a5-ab7f-08df40af46fe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|36860700016|61400799027|82310400026|261026140227099003|10067099003|4143699003|56012099006|11063799006|261009223027099003|261028144727099003|261026121527099003|261022105027099003|22082099003|18002099003|16102099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	w7xAuwHHFut3XCe8fXWZxE7skAKv4VsvZVUhlUHAjEfRhZF+Ti4iA4BMkFG5ono72i6m63bPXsClN0BgBBx/4fyqPl3bvxkd96FxDxvmYQYjBOEd8I3zemn68+/uqB20OfkIJTDcD2QqXoFy2Q1XUGtfD7ZyUfTutcAKTTb5+4NT9uLCFCWbqtizL1/DeSE8YoAi2vOwGd+ZZmIVW+dma9DcfRdepJqa2QaSJgv1fylLqA5WEFxyw6Dw9x8ycRkYORceGUmpmMi4zexfejGsBa8c0V+twpuMkKw6OqXtdKhxSU1MqKuzJzSq8z2UA8QLCez0pNwRhXKqqWWiCo7B6A2mE6e1hp789gcg1iONbyv1RRLn/DToeyFRm4BAXvGvIAy4fSaah9EXA8pvqvyc4qPW5NlLui63EJpm58c4aYsmDefe1XkDKL7/sdCzRackxqKb2QSTnVNHvJZJn/N+Mx0ISJc3qAOqaqitu1bDR7PLoGmn8FpcgJ1UaPOpXzgqSzVSi53ALWVmhKgZ8eAe77euWA72kc823XFta9cfecxZ2THaST8u96zNJZbz9ZwMqJdX3dj5k+AHK9YxhQB6G7XemEg6afw69DQhheRx79aRkUIqoMND8e43aWRfdeL1YAF7cgoDf6oxu2R1vsjwdJbqF5x6VtpOW0tOSasnBfU7TJfK0lzy48NC3O5WceaKEzPWC73BJYj87saL0NB/oA==
+X-Forefront-Antispam-Report:
+	CIP:84.19.233.75;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:edirelay1.ad.cirrus.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(23010399003)(376014)(36860700016)(61400799027)(82310400026)(261026140227099003)(10067099003)(4143699003)(56012099006)(11063799006)(261009223027099003)(261028144727099003)(261026121527099003)(261022105027099003)(22082099003)(18002099003)(16102099003)(3023799007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	Qky4SwgtMKX/sznmwzBNzkPrC+XKB2GFVp0p4LDMA/MPf6m6Sap5/XYSjHf4g7Mtz8MDS2WR5gt5te3HbbxaIFZlP74bQX75woqslBd7EnrvW2V4vwPT8SKEtahVAQKeZ+vdzEh56DJzT2XPvuB99k1k3OpUWobat4/xhI66yFnV1UEKDqdu1M0G93VCQY2jGn5VuNbP2yQfZ0ZtTtv4KFu5Pj/KnHV9GdbCSz0QrahjdlA1F16e91qz2Ey5V7+8dHBnFUm9kduyWh/C206ByfUjSi207es0AQZtHQHHT7hNlCgpG0zMPlvZvOp/UVyGgTuJejdgSgcnqJOL5twKWcT4G2DOzetFGmE4N35obwo10IbK5uX9lwuF4vhXyjMuCWDyKlHkBoX+RSaPhDfRoGlNbIWInwvW0AlenSdWEl/L+fRYR8bHqYpaUHYixjHb
+X-Exchange-RoutingPolicyChecked:
+	RoLD+ED7o47QlaOZweDOaugvSMfRhEmhOLMP9ClDHkq5IdzSrk2yFY81vjs3iQewDmo87S5ssB5IZgZCp02Oo6KDGT9bWEkw0tquTBAZTOVYbUizA1IhYNZfKWHqFMk7RxWYwP/EiI7JJ/CdcI5rJPrqB5xokqszSM4CidolyUI+ig1WMGRTIoaKd5+xjMtHz5fcM9nvkjgM9cCqqKpC86Hyw2NozuKsjcBdO9KDJp8+Cc6PACRq3lVrv2IqQvojkqdIO0RqXcBAU2hKHZ10HZoOLWnXKaxa53GAcgqHZdsA+ye5+nz66SAVAptEEfo0pE6mtd7/0h3HOR05icZEdw==
+X-OriginatorOrg: opensource.cirrus.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2026 11:22:46.2305
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7e7bed05-dbe3-48a5-ab7f-08df40af46fe
+X-MS-Exchange-CrossTenant-Id: bec09025-e5bc-40d1-a355-8e955c307de8
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=bec09025-e5bc-40d1-a355-8e955c307de8;Ip=[84.19.233.75];Helo=[edirelay1.ad.cirrus.com]
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-BN1PEPF00018071.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAEPR19MB317699
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA0NCBTYWx0ZWRfX2g4ZFXslJRKM
+ RQfKscEcDNcrt6PnhcAu6E6T30fjgtl34tUwzeD9ij0vvo9icEQQDqnnoOCPzJUp94tbv/tqYty
+ AqH+3zgmM8s1CjA5dGYx/BD1bmLr7+Gd/ckt/P7RRz1Iz1c52xdGcqgose3JNW6JZ082mFQJddd
+ d1QcYs7CMNPGKBdWJxhtsUDE5eJhVhJ+j5VxuWY6bTRInr10IsgjOQqdnBz5W5JY6W9DPz8/A7I
+ gRqXNZCfGHESLtEWSbpeUtSBF5Co8wfxfgZvN4msuCdNrPw9dWbBTDkMv+3JJJOeKH8CRQKT5SV
+ ZaHPPRuTmsSsHV6827C6iFzc8Y0xd2DIRkoV2te5zfBkTIfU+mI5ePPZ7eo6jvRRgr0QsMZIikL
+ 93Nh3oCkFvwsVo4XoYlkufYVToAkxSmJXbkMIHoA8WSSwN41yk4kIPC5JgQ/tnD1cCC+D6+ZcC7
+ 680xYLaENlC9s6dT6QA==
+X-Proofpoint-GUID: 1L1RtJHrC2utkfxyH7NKxF-eznfo2IOM
+X-Proofpoint-ORIG-GUID: 1L1RtJHrC2utkfxyH7NKxF-eznfo2IOM
+X-Authority-Analysis: v=2.4 cv=Woi+otfv c=1 sm=1 tr=0 ts=6af5a18b cx=c_pps
+ a=ouQKzlSDvkUBIcrmkWtKoA==:117 a=h1hSm8JtM9GN1ddwPAif2w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=kj9zAlcOel0A:10 a=zJRp6_cAMcgA:10 a=RWc_ulEos4gA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=iX4cTi3TZMoOKdANLEfx:22 a=KfkQE9S9VqCBgivYGm0O:22
+ a=VwQbUJbxAAAA:8 a=nfo7bpZeE-W30gQE22IA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA0NCBTYWx0ZWRfXyiEn90Zk918d
+ dyojlbS2DgsCaFcZyp+yGkEckoEBT1z8a1N9kPircymG+/5FBaoo3E8nzz/CaMEOobqV2CNc0hH
+ Npj+WQiu273yTFgprVK4i4qbqIqopds=
+X-Proofpoint-Spam-Reason: safe
 
-On Wed, 11 Nov 2026 19:14:22 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] s390/mm: guest storage key loss on 1M/2G hugetlbfs page
->   migration
-
-@Claudio, could you please have a look, if this is a valid issue?
-
-> - [Medium] s390/mm: loss of soft-dirty bit in __pte_to_rste() and
->   __rste_to_pte() on hugetlb migration
-
-No problem, soft-dirty tracking not supported for hugetlbfs, see below.
-
-> --
-> 
-> commit d03e5331e4e0b88aa75246fc7dc6aef18e7c8cdd
-> Author: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-> 
-> s390/mm: Allow hugepage migration for s390
-> 
-> This commit selects ARCH_ENABLE_HUGEPAGE_MIGRATION on s390 and defines
-> arch_hugetlb_migration_supported() for 1M and 2G hugepages so hugetlbfs
-> pages can be migrated and allocated from ZONE_MOVABLE.
-> 
-> > diff --git a/arch/s390/mm/hugetlbpage.c b/arch/s390/mm/hugetlbpage.c
-> > index f84aa9265430f..2c6e94888bd06 100644
-> > --- a/arch/s390/mm/hugetlbpage.c
-> > +++ b/arch/s390/mm/hugetlbpage.c
-> > @@ -224,7 +224,7 @@ pte_t *huge_pte_offset(struct mm_struct *mm,
-> >  	return (pte_t *) pmdp;
-> >  }
-> >  
-> > -bool __init arch_hugetlb_valid_size(unsigned long size)
-> > +static bool __hugetlb_valid_size(unsigned long size)
-> >  {
-> >  	if (cpu_has_edat1() && size == PMD_SIZE)
-> >  		return true;
-> > @@ -241,3 +241,15 @@ unsigned int __init arch_hugetlb_cma_order(void)
-> >  
-> >  	return 0;
-> >  }
-> > +
-> > +bool __init arch_hugetlb_valid_size(unsigned long size)
-> > +{
-> > +	return __hugetlb_valid_size(size);
-> > +}
-> > +
-> > +#if IS_ENABLED(CONFIG_ARCH_ENABLE_HUGEPAGE_MIGRATION)
-> > +bool arch_hugetlb_migration_supported(struct hstate *h)
-> > +{
-> > +	return __hugetlb_valid_size(huge_page_size(h));
-> > +}
-> > +#endif  
-> 
-> [Severity: High]
-> Does migrating a 1M or 2G hugetlbfs folio backing a KVM guest lose the
-> guest's hardware storage keys?
-> 
-> For 1M and 2G mappings (KVM_CAP_S390_HPAGE_1M / KVM_CAP_S390_HPAGE_2G),
-> the KVM gmap uses large leaf CRSTEs without PGSTEs, and guest storage keys
-> live only in the physical page frames.  When unmap_and_move_hugetlb_folio()
-> unmaps the folio via mmu_notifier_invalidate_range_start(),
-> _gmap_unmap_crste() clears the large CRSTE to _CRSTE_EMPTY without saving
-> or splitting the hardware storage keys:
-> 
-> arch/s390/kvm/gmap/gmap.c:_gmap_unmap_crste() {
-> 	...
-> 	if (!old.h.fc)
-> 		return 0;
-> 
-> 	if (old.s.fc1.pr && test_bit(GMAP_FLAG_EXPORT_ON_UNMAP, &priv->gmap->flags))
-> 		folio = phys_to_folio(crste_origin_large(old));
-> 	ok = gmap_crstep_xchg_atomic(priv->gmap, crstep, old, _CRSTE_EMPTY(old.h.tt), gfn);
-> 	...
-> }
-> 
-> folio_copy() -> copy_highpage() -> copy_page() then copies only the 4K
-> page contents via mvcl and does not copy the hardware storage keys to the
-> destination frames, leaving the guest with stale storage keys and causing
-> guest protection exceptions or memory corruption.
+On Wed, Nov 11, 2026 at 05:47:46PM +0000, sashiko-bot@kernel.org wrote:
+> > +		switch (type) {
+> > +		case CS42L43_TYPE_OMTP:
+> > +			regmap_write(cs42l43->regmap, CS42L43B_LOAD_DET_SEL, 0x89);
+> > +			break;
+> > +		default:
+> > +			regmap_write(cs42l43->regmap, CS42L43B_LOAD_DET_SEL, 0x98);
+> > +			break;
+> > +		}
+> > +		break;
+> > +	}
 > 
 > [Severity: Medium]
-> Does migrating a hugetlbfs page also drop its soft-dirty bit in
-> __pte_to_rste() and __rste_to_pte()?
-> 
-> When try_to_migrate_one() installs a hugetlb migration entry, it sets
-> _PAGE_SOFT_DIRTY via pte_swp_mksoft_dirty() and calls set_huge_pte_at().
-> However, the swap entry branches in __pte_to_rste() and __rste_to_pte() do
-> not transfer _PAGE_SOFT_DIRTY to and from _SEGMENT_ENTRY_SOFT_DIRTY:
-> 
-> arch/s390/mm/hugetlbpage.c:__pte_to_rste() {
-> 	...
-> 	} else if (!pte_none(pte)) {
-> 		/* swap pte */
-> 		arch_entry = __pte_to_swp_entry(pte);
-> 		rste = mk_swap_rste(__swp_type(arch_entry), __swp_offset(arch_entry));
-> 	...
-> }
-> 
-> arch/s390/mm/hugetlbpage.c:__rste_to_pte() {
-> 	...
-> 	} else if (!none) {
-> 		/* swap rste */
-> 		arch_entry = __rste_to_swp_entry(rste);
-> 		pte = mk_swap_pte(__swp_type_rste(arch_entry), __swp_offset_rste(arch_entry));
-> 		pteval = pte_val(pte);
-> 	...
-> }
-> 
-> As a result, remove_migration_pte() reads back old_pte via huge_ptep_get()
-> with pte_swp_soft_dirty(old_pte) == 0 and clears _PAGE_SOFT_DIRTY on the
-> restored hugepage PTE, breaking soft-dirty tracking via /proc/pid/pagemap.
+> Does writing CS42L43B_LOAD_DET_SEL via regmap_write() here and in
+> cs42l43_stop_load_detect() cache the register in REGCACHE_MAPLE and cause
+> every subsequent regcache_sync() in cs42l43_runtime_resume() to re-write
+> it to hardware?
 
-Hugetlbfs does not support soft-dirty page tracking in the kernel:
-vma_wants_writenotify() in mm/vma.c explicitly excludes hugetlb VMAs from
-soft-dirty tracking, clear_refs_walk_ops in fs/proc/task_mmu.c does not
-implement a hugetlb_entry callback, and mm/hugetlb.c never sets or
-preserves soft-dirty bits on hugetlb PTEs or migration entries.
+Yeah the register should be marked as readable missed the fact
+that overrides precious. Will spin for this.
 
-The RSTE swap entry soft-dirty bit (bit 62) exists for THP PMD
-swap/migration entries rather than hugetlbfs. Generic hugetlb migration
-handling in mm/hugetlb.c (copy_hugetlb_page_range() and
-hugetlb_change_protection()) also does not preserve pte_swp_soft_dirty()
-when rebuilding hugetlb migration swap entries.
+> > -	switch (type & CS42L43_HSDET_TYPE_STS_MASK) {
+> > -	case 0x0: // CTIA
+> > -	case 0x1: // OMTP
+> > -	case 0x4:
+> > -		return cs42l43_run_load_detect(priv, true);
+> > -	case 0x2: // 3-pole
+> > -		return cs42l43_run_load_detect(priv, false);
+> > -	case 0x3: // Open-circuit
+> > +	type &= CS42L43_HSDET_TYPE_STS_MASK;
+> > +
+> > +	if (type == CS42L43_TYPE_OPEN)
+> >  		return CS42L43_JACK_EXTENSION;
+> > -	default:
+> > -		return -EINVAL;
+> > -	}
+> > +	else
+> > +		return cs42l43_run_load_detect(priv, type);
+> >  }
+> 
+> [Severity: Medium]
+> Does replacing the switch in cs42l43_run_type_detect() cause invalid
+> CS42L43_HS_STAT values (0x5..0x7) to be misclassified as a 4-pole headset
+> instead of returning -EINVAL?
+> 
+> In cs42l43_run_type_detect(), type is initialized to 0xff and
+> regmap_read(cs42l43->regmap, CS42L43_HS_STAT, &type) is not checked for
+> errors; if that read fails or hardware reports 0x5..0x7, type &
+> CS42L43_HSDET_TYPE_STS_MASK is passed to cs42l43_run_load_detect(), which
+> now hits the default branch, enables headset bias and button detection,
+> and reports CS42L43_JACK_HEADSET.  In addition, the CS42L43_TYPE_OPEN
+> cases in cs42l43_start_load_detect() and cs42l43_run_load_detect() are
+> unreachable because cs42l43_run_type_detect() returns
+> CS42L43_JACK_EXTENSION when type == CS42L43_TYPE_OPEN.
 
-However, I was not aware that try_to_migrate_one() actually does set
-_PAGE_SOFT_DIRTY via pte_swp_mksoft_dirty() also for hugetlbfs pages,
-even though it is not being used anywhere yet. This bit is indeed lost
-after __pte_to_rste() conversion from a swap PTE. But it does not break
-soft-dirty tracking for hugetlbfs, because that does not exist. It also
-does not conflict with or corrupt the RSTE swap type or offset calculation.
+I think we are happy with these, failing the headset detect is
+not super useful. And it is safer to handle the open cases
+even if at the moment we can't hit those in load detect, load
+detect has historically been uses a couple of times to try and
+detect what is/when something is connected to an extension cable,
+so probably safer against future refactoring.
 
-Of course, it probably would be good practice to already preserve
-_PAGE_SOFT_DIRTY now, even if it is not needed yet, and further changes to
-generic code would be required if it should ever be supported. Will look
-into this in v3.
+Thanks,
+Charles
