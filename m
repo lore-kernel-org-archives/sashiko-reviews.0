@@ -1,91 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.100
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.72.192.73
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794506679;
-	b=mFf/CHql0U1u6jUi/uk9tRAO4T+hDu8r2AKMVwJHEkbxEc/ItsL1ALvucS8XHgu6/uyR
-	 d3ZCQdMEhOJ1PAdKETJqn2JybY9Bdfo+hoRKwHba5k9aItJqhkUJ2jCK8IJBd2lAOHlCa
-	 uvGWcXDk+Mn8w9zriaRaJu/EH9uTOSZr//EoTmyW7LOfR36mVNddw1NpE5Whn0zc3y+NR
-	 Mw3tPD4pnXQ+ZEJ/Yq7lrhKN76s9nXb28L8Uq2CPhOw4yg55R8p/J0R//H5rzmDIqVT7K
-	 REdKkiZ2KeEnNdNkDvzadt6Gne9ARwZkjTvn0srbIM+ssdJftU9ROpWoBpa3OgXNpYA==
+	t=1794507199;
+	b=IRiFUHRG214JPqVagcj7dbIRsiKZjv8A94Beg1FiGm8VjmqdV5NY2wTx8xGk+RwWvzL/
+	 lapAtDZ8e95g1S0+GmWoet2VOOkImrDAtUXRwTWC8rMQJRh7x5pAO9rauI9bqxjbqflfJ
+	 3OCqFMH2QDUONcEg7xj+omJpcmShIefXTp5060H43rS2e32o1iLkPCpsnJeW9RwpL1jm2
+	 uoe7H1PIArdJxkvRIAchrL+CM5uF7VryXopSzw8egMSUeV9CfHaFOfKwO9k8YK7eRbE+V
+	 VYRFckhe3JKL32Dnto0mipodAiJeAzX8owJ43NlM7IlJno/8WIOndTjIEA6JzLXYsSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794506679;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
-	 X-Gm-Gg:X-Received:Received:X-Relaying-Domain:X-CFilter-Loop:Received:
-	 DKIM-Signature:X-Received:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 X-DetectorID-Processed:Content-Type;
-	bh=0joxMgfNTt8HdQVwU7JhylkZYolthAtQtj0YTxMXbik=;
-	b=ov7nR5fAiGcls0mwrXogPBCf6NzNMZzG0lsxabkO7NInJydpOCFEXiJFqA7ArClPP/8o
-	 6W/KQ6FZMTDh6qqqt1mKi1tZ6uuNg/wy3avO+KUwyi6wkoh8xruzwLwSFhXQ6D+/2yjIo
-	 tcU+IEthduJi011kNzsSbfkxgQ3TELX+au/n+SoWvzEAFAf4Ahwjt6vRvJeIXOn6E2gVd
-	 zmSUjwJvO6f7IawrYPeApdvfn0kyHyjKYT9/y+FwgGg0Yj40s4IhwhwOVJYEA+ZX3TBeW
-	 yK791gtdvvlE1tkHh08OK/AF82yTO3Ad30v8S9AGZ8Bx1N1lUCzndtqIT6Qcq4JXOHA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794507199;
+	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=f6og1mflS+f6FYGDq7VgPPhrrQtK0lH/JcILM0m+pus=;
+	b=YX+EV+7CI1vGSf80VPuX17cJ6TY8RaGOPihdGxDhepJLjjxIzboLJrPaDT4oW6xtDMYg
+	 AonvScvATrlDkJxwqVDb9BkafSJYkDU4sQjar45x9y55gCEoCnq15ZDb5KY0cDkfgpjCk
+	 cQZ3kOYucNR0AmPc7wZudd6y6I5HyCg/GU9aV+5HbaKTkaNLFgMKV07ELqB/gHbtGlHqL
+	 O/rnO/C8toVeDg6C2HsxQVWLIi2w/khcDSvlJjxV5xCFEz6JJfDolAgvtWAs3jRhYaTsg
+	 s7ut82Exq03mPo9h0SDjntKO/CtBtfcMPZOv2DGgB6n7lObWvJaLhYj+gWRiTvnpzbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=broadcom.com;
-	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=FB7NWHmI;
-	arc=none smtp.remote-ip=209.85.219.100
-Received: from mail-qv1-f100.google.com (mail-qv1-f100.google.com [209.85.219.100])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=oldschoolsolutions.biz;
+	spf=pass smtp.mailfrom=oldschoolsolutions.biz;
+	dkim=pass header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.a=rsa-sha256 header.s=s1-ionos header.b=uOcuWN0I;
+	arc=none smtp.remote-ip=217.72.192.73
+Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65255606A327
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 18:04:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65255606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17748606A321
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 18:13:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17748606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=FB7NWHmI
-Received: by mail-qv1-f100.google.com with SMTP id 6a1803df08f44-91e8a05ec5aso862756d6.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 10:04:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794506678; x=1795111478;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=0joxMgfNTt8HdQVwU7JhylkZYolthAtQtj0YTxMXbik=;
-        b=Cg/xQqbdFQG5infXyhN80z+whTYyU/2JplRsdk/vn+tbwRZ/EDRSCQCJO9ttbcMN3i
-         OvgIogPwl4uvH97Kt0lwhZpbDth+QmJqE1GrWVlHvkIHOXIMMZwiGr1KeSlnV9eQCd/K
-         WZez7wlGHNv++jkhhv7pbBh2ahMh+jI5oUF7HrWL+jBPB7fJE2yjqa6sE/NM1ZRdbqKK
-         oAo0Wr45TfvoLF7NVAiVI9GshSjb3dK7P73Qka0UOsHWP+bU9v21rDRgFkRzi/6bcI6a
-         TMX7BJnJarIfL1Ab6RdJl2p7jmZuF6NPqgEXROyKVpJvEfdOK4jOQwjanTtKyZZgESsD
-         ebGg==
-X-Gm-Message-State: APuU4Z+8Ft/nIETAIMAYyu0SR2IKEP5HuY3UnnZ8SrLfiXH829dlZKUo
-	7nVyWilbZJqy2aTXcJp4jH6Ftk+G4w7gN64JKRlV//MHxc/WMVk9tPY+57wtxM/f3AMW1hKTKQd
-	wWluAgvq24dxkFyyfXqppBWCBwxTZFc07l7EJHnm907whvTnvL77ThW9Ju8pdBC3YNip3pIqEVF
-	nZ7uHqw1Koq078Ki9KuvC7LvK1Qsut7Manl4QwKAek0CgGKh25SrZW8dzbys4H7QKxE049Ao9Jv
-	ly0BtGI8MJc2iRVSZj0
-X-Gm-Gg: AYBFou3zEFtgJvnIEfPcT+IYthW3ulxfQtPHKJYbIhXHW8ETGf/rUYw/hMz6AST+/Z2
-	3VRH+CeZn+uG4eupfx7jpvMQHrHBkF5RYeOP5DPPwOE2ht7VnUe5o67hKY7CBwpXmoW6fOQgdy8
-	aRu4gzVLiJ8+YhTORpbGD8sxy0TeDcZTW/nIX3Zigc8FdtaZFb8PInzVWpkOhBeJTrIIJ0KLR/R
-	XBRulNQ6YapQpTXUzdS1j9roG55dH88ugmO3/yzzuKzSIwwB4I2xn0nFit26KzhnZubg2ei8QUP
-	61TJaATDB5Mvafr5DBA7fUoUF0i9NfNRsx1/J+gWOCLy80sFIXZVq2LYEVIY0XAwx1+ajjqqUdK
-	6UdZ9yZnLEvX1pnxpOp2XOpPu13ZLjwbJHf9aaSx0XXeT0qie5SV/jqLBVVfExZYiSRVfzBfOSa
-	FH8iEo2jO19zf2wsOC+LJsTnUtQC3LS+dh
-X-Received: by 2002:a05:620a:278e:b0:947:9060:7efb with SMTP id af79cd13be357-9494bb838a8mr30999485a.18.1794506678061;
-        Thu, 12 Nov 2026 10:04:38 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-22.dlp.protect.broadcom.com. [144.49.247.22])
-        by smtp-relay.gmail.com with ESMTPS id af79cd13be357-9479ef8a7f1sm108750485a.7.2026.11.12.10.04.37
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Nov 2026 10:04:38 -0800 (PST)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-4b37620eb73so74592b6e.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 10:04:37 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.a=rsa-sha256 header.s=s1-ionos header.b=uOcuWN0I
+DKIM2-Signature:  i=1; m=1; t=1794507190;
+ mf=PGplbnMuZ2xhdGhlQG9sZHNjaG9vbHNvbHV0aW9ucy5iaXo+;
+ rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+ d=oldschoolsolutions.biz;
+ s=s1-ionos:rsa-sha256:NcdEDrL8xgGUIvdeLz7XZnZSElfX
+   GRQMghiOcBfAYus7hhSdUtP+9ks7TBbTprtPE/mgdVDsAQLsederUG/20DO8HD4C6H/VTQ5hSYd
+   KY449XfWoKzRfvIK6bRNcPVJGM7KxDNrVnzTiY43VqETcxuEslzvrYNUDbOeRyGvxLxXfjqtLds
+   dw/CqBxOgSUuexB/Y5kuha7sZtLxtQ9Ag40tX42hcwN8y12fp+b3Hd93X3P8vDxi61LCG9fwqw4
+   fYpZh4f3GEWJ1kE60R+P8ELt8bWV/hOn/iJUDOrADkGGhilCh7hmc8XWqw10F7BDfzI7UeOjF2U
+   TxHlPVI3Txo4FQ==;
+Message-Instance:  m=1;
+ h=sha256:
+   wUhEu6DoOLgqCXZ1lPyNke6Y8gSJO/Fwf8HkxCOEL+A=:
+   3YhHG6K7Vdob8qJmLIxB88n4Ch9BrCx0c8Fi/UvgWU8=,
+  sha512:
+   jSv4wDsBifXmGvgNtjwzmsbvh/YcNqnzr/5TkpU17/l2cCgIy9we4UJGcu0t6sQVXbOhaoyDxHjFo0eh4BhcRQ==:
+   CmrZ3O+C4nkNnLmbjYrc0wndDX3QDPFk6nUdSZPtC0YzFLx0bLcHgPsqTu6KefDGKSXpfZXKlwysWEmCrkNt+A==;
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1794506677; x=1795111477; darn=lists.linux.dev;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0joxMgfNTt8HdQVwU7JhylkZYolthAtQtj0YTxMXbik=;
-        b=FB7NWHmIcIHkn6jL4oiJ6cmlDIc3PzdzkwVUZEkgFfPvZS2jbczwrkEqF4meemdft9
-         p+gdRJWG/HySD9VqD1qG5NyaOlQMBlwfho8Kowy3O87+l/9J0ShKeDVpbd8cp9aE/2qU
-         havxZF5vp4xWu0jDXhmATSmsiv/XnPsdaQdCk=
-X-Received: by 2002:a05:6808:1a10:b0:4d6:308d:4ca7 with SMTP id 5614622812f47-56b97102509mr6217622b6e.24.1794506677116;
-        Thu, 12 Nov 2026 10:04:37 -0800 (PST)
-X-Received: by 2002:a05:6808:1a10:b0:4d6:308d:4ca7 with SMTP id
- 5614622812f47-56b97102509mr6217573b6e.24.1794506676627; Thu, 12 Nov 2026
- 10:04:36 -0800 (PST)
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1794507190; x=1795111990;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=f6og1mflS+f6FYGDq7VgPPhrrQtK0lH/JcILM0m+pus=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=uOcuWN0Il7EeWeVaNCJ6qckMwBxf0iVsWUnQYH+djSmMufXmeRUi4JtyGWqIZM/9
+	 gVJvefqA+uJES/q9QgLgZDICIU/0IA7OW1RmZGnsU4oitSnhQyfi+xEK9IygvJtiT
+	 0zgcJv4Xju7dd6V/emk6ap7hYG1XaX8tHj+bgl/BHQjYhVaeuCBCb4yDFyQT6XT1V
+	 o32otsB8zXJHt3ScFIX3xVUkWOLqALS65IfPhih8w7pK79LDqTHbxyKlosdSqjF3a
+	 xvroSkBhzMje+ITxihnjxJozzPjQ01t925R0DGkzznQwnrEGYnn/g2Ci2xuQn9Zls
+	 CpOj7i7kv/1zHFOILQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue106
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 1M6EKU-1xPOV33xPs-005qEi; Thu, 12
+ Nov 2026 19:13:10 +0100
+Message-ID: <a2ab7524-6dfd-44ed-84f5-305e6f610719@oldschoolsolutions.biz>
+Date: Thu, 12 Nov 2026 19:13:09 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,202 +82,132 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261111194426.1652644-1-kamal.dasu@broadcom.com>
- <20261111194426.1652644-4-kamal.dasu@broadcom.com> <sashiko-outbox-209729@kernel.org>
-In-Reply-To: <sashiko-outbox-209729@kernel.org>
-From: Kamal Dasu <kamal.dasu@broadcom.com>
-Date: Thu, 12 Nov 2026 13:04:00 -0500
-X-Gm-Features: AclHuK9qjSALadKVcGiEqIbcbRtni7bR5Wv4nEmvIVE6z4hw48p0pn0vtVxm5YE
-Message-ID: <CAKekbetyyqPVjDPZadELCmKMeFziEE7eY38H=_DR9ASYjAvzZQ@mail.gmail.com>
-Subject: Re: [PATCH v12 3/6] mmc: core: Add option to keep an eMMC powered on
- at system suspend
-To: sashiko-reviews@lists.linux.dev
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000000fb07f066018253e"
-
---0000000000000fb07f066018253e
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] power: sequencing: pcie-m2: stop requiring subsystem
+ IDs for WCN6855/WCN7850
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
+References: <20261106-pwrseq-bt-subsystem-v1-1-11fb09f63c93@oldschoolsolutions.biz>
+ <sashiko-outbox-201312@kernel.org>
+ <1c9b4722-0466-4c74-ac86-4d0f61c350a9@oldschoolsolutions.biz>
+ <avXPkTkW2ZE_fngY@debian>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <avXPkTkW2ZE_fngY@debian>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YnXzGOmC/8Bsq+OW1YJ/+ORBf0y6Cb+wLasX2/XAVilS+SxQwIU
+ v1VpkRyc6Zsshn9OAZ189ZzxCA7TOg0l6ZScoazVfBzdRmnagFIVoHOfuCPD0MO7J2sbIBp
+ DDpLp6Cqw8rM56xThlBCqZReZt3mrNIM1q1rvt5mC0EGVtYOvY92zgfJvBd0lfvAAGEJ5He
+ 1QP+VSk4IhSD43uWPWDfg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:v3hc+oWL56c=;+R27gY0DnUcrvAv7FJWIXxzcy2A
+ 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
 
-On Wed, Nov 11, 2026 at 4:59=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+Hi Mani,
+
+On 11/12/26 15:43, Manivannan Sadhasivam wrote:
+> On Fri, Nov 06, 2026 at 07:30:06PM +0100, Jens Glathe wrote:
+[...]
+>> I took another look, this driver is loaded when it is a compatible in a
+>> device tree. Usually this means the hardware got described, and you can=
+ draw
+>> conclusions from the device tree on what is supported. For the conflict=
+ing
+>> case, the device tree would need to describe the USB and the serial por=
+t on
+>> the e-key connector. When you have a connector wired up this way, the d=
+river
+>> would need directions on what to choose, for instance by providing the
+>> subsystem IDs as base for a decision. These are the special cases, thou=
+gh.
+>> For most boards describing the uart on the connector would suffice to c=
+hoose
+>> the right, mostly generic driver for WCN6855 and WCN7850. So it would b=
+e
+>> better to have the driver detect the "both ports are defined in the dt"=
+ case
+>> and=C2=A0 not create a serdev:
+>>
+>> static bool pwrseq_pcie_m2_bt_ambiguous(struct device *dev)
+>> {
+>>  =C2=A0 =C2=A0 bool has_usb=C2=A0 =3D pwrseq_pcie_m2_check_remote_node(=
+dev, 2, 0, "usb");
+>>  =C2=A0 =C2=A0 bool has_uart =3D pwrseq_pcie_m2_check_remote_node(dev, =
+3, 0, "serial");
+>>
+>>  =C2=A0 =C2=A0 return has_usb && has_uart;
+>> }
+>>
+> This is wrong. A generic slot can define both 'usb' and 'serial' endpoin=
+t
+> nodes and users can connect any key E cards to the slot. So having both =
+nodes
+> doesn't mean that the user is only going to connect BT-UART cards.
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] mmc: core: CQE left active in _mmc_suspend() on
->   MMC_NO_POWEROFF_SUSPEND
-> --
+> While I agree with you that populating the ID table for each module is a=
+ pain,
+> we can't magically detect the card type before probing the device.
 >
-> commit 719eca51e9b0da2d046fb99b21cbf5ff86d8cbfe
-> Author: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
->
-> mmc: core: Add option to keep an eMMC powered on at system suspend
->
-> This commit adds support for keeping an eMMC powered on during system
-> suspend when MMC_PM_KEEP_POWER is set, introducing MMC_NO_POWEROFF_SUSPEN=
-D
-> to skip power-off and keep the card active on resume.
->
-> > diff --git a/drivers/mmc/core/mmc.c b/drivers/mmc/core/mmc.c
-> > index a02b04938e1a0..c936272bcd813 100644
-> > --- a/drivers/mmc/core/mmc.c
-> > +++ b/drivers/mmc/core/mmc.c
-> [ ... ]
-> > @@ -2157,6 +2158,15 @@ static int _mmc_suspend(struct mmc_host *host, e=
-num mmc_poweroff_type pm_type)
-> >                       goto out;
-> >       }
-> >
-> > +     if (pm_type =3D=3D MMC_NO_POWEROFF_SUSPEND) {
-> > +             if (host->retune_period) {
-> > +                     mmc_retune_timer_stop(host);
-> > +                     mmc_retune_needed(host);
-> > +             }
-> > +             mmc_card_set_suspended(host->card);
-> > +             goto out;
-> > +     }
->
-> [Severity: Medium]
-> Can this leave CQE active across suspend when _mmc_flush_cache() returns
-> without sending a command (for example, when the eMMC cache is disabled)?
->
-> The existing _mmc_suspend() paths turn off CQE either by issuing a legacy
-> command via __mmc_start_request() or by calling mmc_power_off() ->
-> mmc_set_initial_state().  With MMC_NO_POWEROFF_SUSPEND, if
-> _mmc_flush_cache() is a no-op, _mmc_suspend() returns with host->cqe_on
-> still true and CQHCI unhalted.  When the host driver later runs
-> cqhci_suspend() -> cqhci_deactivate() -> __cqhci_disable(), CQHCI_ENABLE
-> and host->cqe_on are cleared without calling cqhci_off() or
-> cq_host->ops->disable(), so later legacy commands and resume paths also
-> skip host->cqe_ops->cqe_off(host), leaving CQE controller state active an=
-d
-> breaking non-CQE commands after resume.
->
-> Should this path call host->cqe_ops->cqe_off(host) when host->cqe_on is
-> set?
->
+> - Mani
 
-Hi Ulf,
+Of course it is :) Side note: the hamoa/purwa-iot-evk describes the m.2=20
+port as having only the serdev, not the usb port. But usb_2 is connected=
+=20
+to it. So, this logic won't do a thing there, either. For me this more=20
+or less sounds like a negative list, like... same device ID, but an USB=20
+variant (subdevice ID) should lead to not creating a serdev. That list=20
+is probably shorter(?). Anyway, its RFC. I was just a bit surprised that=
+=20
+my T14s BT got killed by the new powerseq driver.
 
-Sashiko points out that with MMC_NO_POWEROFF_SUSPEND, CQE can stay on
-across suspend if _mmc_flush_cache() sends no command (e.g. cache
-disabled), since the flush is then the only thing that would call
-->cqe_off(). It looks valid to me from reading the code.
+with best regards
 
-This patch is unchanged since v10 and Sashiko had no findings on it for
-v11.
+Jens
 
-In any case would you like a guard in that branch, e.g.
-"if (host->cqe_on) host->cqe_ops->cqe_off(host);"? I can fold it into
-the next version if so.
-
-Kamal
-
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111194426.16=
-52644-1-kamal.dasu@broadcom.com?part=3D3
-
---0000000000000fb07f066018253e
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-H0K0rs+X8O45xZIUJlxzf5UZex3BLi1f/H+08rSQULWEtO/ECwkFod2DIzSX7fZdz5RQ1PpziEOp
-goo/JZPYIeCmgt3rIyvMuupj8Ymb0J/velhpXfQuYUM52viw2nmqVcxCwBqyM3Iq7eI4xtEOFRmR
-wxSizd3MSQMf6GCHA4/B/6ttnxhGAr3utaOU+x/RnzG0gPLTW1XRAQ0+GVc/tGFdI864OG1cyrRl
-GvBnHJQSAFOIKwYrUk2oFpgMbafQ6osCAwEAAaOCAdswggHXMA4GA1UdDwEB/wQEAwIFoDAMBgNV
-HRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggrBgEFBQcwAoY6aHR0cDovL3NlY3VyZS5n
-bG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1lY2EyMDIzLmNydDA5BggrBgEFBQcwAYYt
-aHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyNnNtaW1lY2EyMDIzMGUGA1UdIAReMFww
-CQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgoDAjA0MDIGCCsGAQUFBwIBFiZodHRw
-czovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzBBBgNVHR8EOjA4MDagNKAyhjBodHRw
-Oi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMy5jcmwwIgYDVR0RBBswGYEX
-a2FtYWwuZGFzdUBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYBBQUHAwQwHwYDVR0jBBgwFoAU
-ACk2nlx6ug+vLVAt26AjhRiwoJIwHQYDVR0OBBYEFOV9h+N/T9ZsJ40qRxh7NYYD+N6MMA0GCSqG
-SIb3DQEBCwUAA4ICAQAKtKh30wv1/30230mCimgUjMWQE/LImRmyfDgrp2IhBVS6mDun+wH8thEB
-WhBHQMz3gsGixU4ZBJG72eWi39IzQ7CGnisJwA0+hsGaGg03AVtFtqo1rXYRZ81MEDOb6BPYLigJ
-RsHbNmrUGR+LsGeUwOWUeRXqBrYaYFrkgHKvVK1NEewv+vUY08n4tsezO3jq0HKhVDY46bMbf8vL
-oQqqhtcQvu2+5FK2jpUayeubpzPwobjEG61RIhBvM0KivY4CB2s9A7qgjL1XBycAybIvG03BbFoT
-t282FqXwk9JU6YihLlt+hpzO9UF7E8GZYlQlVIZOLOvytqilhua+2h77Yy8Jz/FJyIXKuaLPtvb2
-SC2shL7jF28kQbP3QUKwAig+cxwbpngnUkd9D9cXSHVq9PPwYm0A4eAO0YQ/80Uq20+gXF++g0sy
-NKrrV3i0T1dbCd86miGDKvarGzjh7pdsdwNY15liGP6Orib1tnWkJcbtP1rJty4r/mbbxcK8ILO4
-IvTGFG6BfjJ+La0aRt69i1fQmjUWHLwzkLNpw9cJH8/MONZcEJeDkq9WELSyy29bagStk5KHu7NO
-TH65sZg+i/4qmj3DEeEGTr/Shzp4YWSNn4W7NEelr0VgDlwa7xqlwZjXxG4MIJqy0SsQlAwEXtqd
-nH2FpJfzgAetkuyU6DGCAlcwggJTAgEBMGIwUjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2Jh
-bFNpZ24gbnYtc2ExKDAmBgNVBAMTH0dsb2JhbFNpZ24gR0NDIFI2IFNNSU1FIENBIDIwMjMCDEca
-ZUGCu6d0oT1M+zANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgPpkoq2jOLQliCVdR
-XrGrQwWwc1qBVcBzkoHsATE85FgwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-CQUxDxcNMjYxMTEyMTgwNDM3WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
-ZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEw
-DQYJKoZIhvcNAQEBBQAEggEAa+r1NFXtrGAQoK7xcwADCceUalH/yOOP5YRmbUQZGujm/5r3Q+Dy
-WJSmdpu1r8+2wX3fBLdrOFGyPh28fdvQ5g2maRQtjU60KiD8B/NIeZ0rAhe27ng6k8RPtLkZ7vlG
-YKkbPamG9s5UL3lDnLEjapUKYCxv+W+eK2g4DOmhcSN5Frywrq/dR9diuxveDtgO7dkSyrObYxgL
-S8arxfuUM0QiF6TaejTJzXOWKasrvSq9ECS+VVsbOvL8/rceUK/c3EO4FhvIAHZmoHbGtN1TJTZS
-xEDhpT39wdvoDTBElhU9LDZeiJrGvnJUREnR85lJnQHxMFGOx9jM4ywXNvMJYQ==
---0000000000000fb07f066018253e--
