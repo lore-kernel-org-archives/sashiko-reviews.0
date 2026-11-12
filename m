@@ -1,93 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794489355;
-	b=NgLE3j6beFc65GceZTFse3kbEg0J1RmrbneLSm7Ix24d0pSj+DiWoCO6p/R5RcCn9CKv
-	 KeT/OSgJSArl8mtdST0JlsXx1wrG7rOVjIUTSpjGZVmj+TfUHc0IBbGEkYPJEosbtIAmO
-	 PJefLWwsHyN1tXS2HZTutjmeCoDNCcFJsKlurJUbya1BSzjcsecWkiSMxnNemSNyZUjpC
-	 jJ72OR/Y3lcYKbmCtRGgrTN6e4525mri83Rv0T6MM44KyORWy4qYG1JjAX+FYojNmoe3B
-	 JA+LOr6RoIM3QWM9gHIqVrFtDh+uFj24dtmCmoRzYcFzkg9Rfo+bXgSK/vzdGhtXrIg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794489355;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.54
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794489414;
+	b=iRRTQuTc0N45I7nbgW3tWz5Uk06KZERTJVipAQDP1jNmZvTBiyi92V5TAnGjfNQdjQAn
+	 fKT7ZBTI+xucdgSSqFYoCQ9XBepkiBuba0X80wXJqbVq+L4MFLBzCQ22cCFV+Xd/wB1Gs
+	 P7MmGmqBn4331GH2yQ+89Z6yZt7T8R18RuXpgKBu0ZryirJf1//bEQphnTi7qOk8eaZAw
+	 UCqhmExY5O/hG5OCPaV8rOiAUWXjhzncVGunALIX/bFJDluKDpPpTJ0u7fg0T1A55QjNx
+	 u0ThzYbqhys1sJYnorKJ8HMVIeCOuhu84NqM4yN9jPoeTesqyR5eZ1c3PHgIDfvE4Sw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794489414;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 In-Reply-To:References:Date:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=jAZcQQUpnQ9GKTr7ms5g7gJOwcuBaJvlyqVQ5mDpxJQ=;
-	b=pFnET6pXAPB8lXCE1+W875Mi+GPc8ZQsjZ6Myh260R3JBQdBNlh7xEYSGZggvH9ZBsyq
-	 XH3kVR/6oW3wAWZDMNDUb9BPjsK1xl6S00oFUBhcv4PB1maBbwAqpe290KHIhaRC3v5jS
-	 zigMdkmPEyDnoqSQjcfmg2m/ZAl/eQtKKdjaYci59w7nYwTWuhZvVzxx1Muv6eeq8FVFh
-	 7y7TqP+yyF+tMqTUCvinme9SW4F/jbWKpSe1TiVu0/VR2yBZNZ34V8IL+GbLz6Vm4yZZF
-	 x9Up+pfCtTsMN4TVn9XqfDV1UtMlwjqHo+lfU/cm2rtCiay4IwdUWRRnX632kFb2Z6g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=IhzF0+tcNo5kCDahctjPTIknxC8jK7QawDXcg2iqpig=;
+	b=23+3PeGEAyo8z0rulIkjwWSKTtTl1htGS8sNPS4r5gdGuDtMVCkoHipnADLKBKjsZmPg
+	 SL2y30/5zxZoiD6QfiSF7VL5TAkfGXWJsLYcenurdoAdFYYBdMdNMbk04yeNVl4JRF+zA
+	 atgURlKQKaz9Bl2ZNC791nJAd2wfI8yOkWTVnc6rW2TXVm30JlNk9Odk7qOHlEg2WEpeb
+	 jdeoIeIYbdvuxdLiBYpJjWxJn36HkaQRxk4TlWHIqiKOPmr66WajriC7McGLRa4RWn4JW
+	 hR0ad4u3O2KcpJU9LaGg38zkKcqBgcF9m4sGuyA19kMchzjpwuf16TmqmVzRqt5Oybw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vhCK65fP;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OL6mCssb;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.54
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A709A606A32A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 13:15:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A709A606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAD9606A8B2
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 13:16:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0DAD9606A8B2
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vhCK65fP
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a5177d78c7so37515295e9.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 05:15:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OL6mCssb
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3ac91ac8924so2448972a91.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 05:16:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794489413; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dHWl20tE/KrxLB5LqMWwP/TJSoax1JoeTkloULtCDzMQ5AYW1tyOrqk0zZkmCMGRwe
+         fYE9cMx2IzDHMmO0pcWUR3923LpVLaD7r1bo8QZ2HKIRRPLq2lIun9EQGuVYvFAbMIgW
+         i2WPH98YRMyDsvEHjjJHR74RDA8DNwsTUhDF7K1YU1ISH6Ox28HzTd/kOk6aG20dTlIw
+         gvA/oLNEhzCEQ6xxkuoP5k7UPMU/sSF3RezuLLqE47GVJS9DMtza5OfkGU/oLfw1vuxR
+         KCFUmqzDp7gtcYI0N6Y9V6cFnrC7NNq3zwlpgLPkXuMv2hv6Uuhj1DOdt4TcDOKEkY8k
+         SjoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=IhzF0+tcNo5kCDahctjPTIknxC8jK7QawDXcg2iqpig=;
+        fh=/QP+n2O4Hyc4wPS4zFFRlhIZQ4uvqm/l12+HjjpmfsY=;
+        b=ar/Db8a100ufiSxbvuW1xFwXLWPrQ6EYtL7aa+t37RenGIdZZ3xm3Lbq6ReqHC+IH2
+         rlTwebhkZBJSPTJtCUe2HnXsfMKJWj7mFs5dtk1DT05LXZqH3wPK0IQZ/SZPptQ4c9uA
+         IIbwqIXKPJ7GKzPDq1Ca0PpXGsQJrDOZ88B0Mb46EozmxbMXxeL8KH7tMbzY4Kb7V1sn
+         vYiY+Gmq1jHOgUf7vj0+qF2dnHa78laRF65pnC3DZwyP1/r6r4MLpO+dWuIPB+HuSiuX
+         1S5AoOhm5mGmKiwBpYan2HWUDgMC1bN8u07SzqqKIUIrmPg6C5T4FylY0gz42SRAQ8H/
+         pr8Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794489353; x=1795094153; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jAZcQQUpnQ9GKTr7ms5g7gJOwcuBaJvlyqVQ5mDpxJQ=;
-        b=vhCK65fPMvAkTIO9rtrSchECShINw74+4ZSJZqDoOvWcXYs2pPO3uCDvQE2IaTUoAS
-         1f3eiTrLuGHSdI3OP8kMkcCjoLvuNQzvXY7M8WIGSSyGcQwznq2y6NYHULsWw2wxqlJm
-         LP6u4aG1b9MGsT+neNoYAhq7gY7+JbpUPX+8b1KYf1zzsy8ICw0yoLsqCz4Rw0OKKxkC
-         E3JFeW6bYouVG1l+9tPWYQ1mZDtJyqmZvGVj5p1EFmLU+ZmGNz2eroNqPyJ1sVldOzlf
-         loBtAMO/gxuX/vwbES4wSXfUAlAuniOrWuuiHiSbTl4sg6VOteAf6kRDzbEeEHAPnsG2
-         N7SQ==
+        d=gmail.com; s=20260707; t=1794489413; x=1795094213; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=IhzF0+tcNo5kCDahctjPTIknxC8jK7QawDXcg2iqpig=;
+        b=OL6mCssbgg3VOtShcf5jlpOS18Xo4SJpyyLCo7hPc+HNdmWDNp6FFoMZ73ZYE6L2S6
+         pu9X8lZBIqU6nR8Bkw5qcwCLXO3/TtGy6lMsYxZWK3aotjqodGH4PMu32ERbPA4ik4Dj
+         mFnECv+ylX9SB7CmzakcWclG2gNQ5iDDQhQsHlnHhzmtNj+c3A9AahCXlbBRWjAQkhoP
+         svlr2pOZhdwJ/p8Tf3wOCYMvIshJEdIuYDH3Z8gtzV35U2aC9DDPy+xzg1o6PMpQnmKF
+         rYqqvj5Xk305Bym44bPC+MQGSdu0acWWt2OlTHy5W6keg73PTCPimjRpUfzDHFYVpg3j
+         SjQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794489353; x=1795094153;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1794489413; x=1795094213;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=jAZcQQUpnQ9GKTr7ms5g7gJOwcuBaJvlyqVQ5mDpxJQ=;
-        b=To0zodZisvy5Qdow7IXvyHkl+z4YFafwr7NdNdhAFGhg7MAxIFDxTxmUaGDKkBM1GQ
-         Iz4RasAc0ikpZbzM+Xt6wrSL28ygexH3rf8mvnKPE8iKykPx/U9N3LXgT706D1OpnHW7
-         m/xFsT4g3beOh1zcJelHwww51fZvQ9+JcbyF+EJNE8v7l6ZzZdWDyynpjjiVsSD8nSdx
-         S0DhdCNDA2Bzj8jlbsTn2HtYML735Gwq16DSYKl4/CE0TgkwZ9cT6GovIcRWE9Gj6EKF
-         AcEmVhQzA7PR57/akDepS9ohY9TPjbjaeWlvV2/thhALHYgxKfh4AeHWgnHniLu0xQVy
-         KuFA==
-X-Gm-Message-State: APuU4Z80d0qJBhUgZ+k70C23rW1ByqFXDzvkAGIvGyKOfX0XswMVhO8g
-	h45OBrkyHRTcvqvxdEsIJ+LuKg4cI+n5x56XZ3ft4fgx7XRC6mawVYX0BA1Ctw==
-X-Gm-Gg: AYBFou2RdV29v6pe90IaIDSujw6us1aZpAniBi7ceo3BODDMzXTFh2n6jigt26A63id
-	BJKgW4WW5OCnapgmDFyKPe3ZTL43SkGwX1T84tE1m1CQaC115MfGjvJ6GlNNiCwfUChv00dTAS1
-	7sh3UNly7e3rTHMeIydCb6N38Gt9627/HbGycbog++1tfo5Dw0RpbWN+DMAQA++C+ATPtiDNkYA
-	ELVQ/qxdBET1qrfk7Hc1gy18sXzY6nzfsIYzy57VDMj9moMaLLdN6zmg74Bv5oryFwlMzO28Qnw
-	hSw4i5CLnhQHXzj5vx0G9rmeRXwz5azd+c4t/dr6wLxXoPZ7D4K43lnCYRaDUqfdgS5iBpSy8EQ
-	Lfbu3FWlG6tJ6VVmNj2AE4/kJ3Q/TiQBaX/ApWaQUn8663o9LBpqZqQNrKnOMZyyhztFp7qYq/H
-	wrEX0rrOXIiRT829uhKVB8xmwg/Ka6JvaH0D4Ga3NIBYnpVFf3niMTzVoIbBwjQDlGNgDmevoAi
-	LNIH8qfEZEVuUeyQ0bPQOz6g/tbuCS3Rr2hWnyuC5pKcw6t9wmjwdiMi/J1vLdJwd0+m/kBVUSq
-	0Vn6Std+xZCR2fvc0uHFgOHCdyTDyghyDhhDfauTYEkMTtuUW6B2IHbHWU+6+E47Lza7ovM3UEL
-	SHyQAko+O
-X-Received: by 2002:a05:600c:810c:b0:4a3:59c9:a756 with SMTP id 5b1f17b1804b1-4ba09364b9emr102437525e9.6.1794489352840;
-        Thu, 12 Nov 2026 05:15:52 -0800 (PST)
-Received: from Abds-MacBook-Air.local ([195.72.110.73])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4e29daa5sm74401895e9.12.2026.11.12.05.15.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 05:15:52 -0800 (PST)
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
-Subject: Re: [PATCH] md: make mddev_get() fail until md_alloc() has finished
-In-Reply-To: <sashiko-outbox-211074@kernel.org>
-References: <20261112114958.2244-1-abd.masalkhi@gmail.com>
- <sashiko-outbox-211074@kernel.org>
-Date: Thu, 12 Nov 2026 14:15:51 +0100
-Message-ID: <m2tslm1988.fsf@gmail.com>
+        bh=IhzF0+tcNo5kCDahctjPTIknxC8jK7QawDXcg2iqpig=;
+        b=cwM2rOcxXQXhnQZdDMHQbwKmGGA8a8hvzJE3ATRQZdp5J+P34mvYOmk7JI4uEUKdxV
+         VAUqQQ+mp5uc9S4JP1BmSctOEkxb+5E42S8bY4Dukvbx2vhCMDnAbWAvdfJ37qCgVhWC
+         sGVrNeLu2h5bdCMyu4Hj8sjAxFqoEhdK0K9/cnrnx2xKeYrE817QUo3EdZ90clBfAvj9
+         u11trN6cWjjjqNL+j6COSIpno2bZ5KdSzq0wQNgxvh040e7J7lj6gqP8OXU6Z9KYd/Td
+         9x1icrgz7HgfrYOOzVBygu7LuHLJurpofCW8/AcrbnW69BKc+SA7J7oll0fSiNgcfTGb
+         7exg==
+X-Gm-Message-State: APuU4Z/Hd1VTP7UVmGYU5mEcCOVzdpSqZ3tKEclB6TIGRF13blsBZRSp
+	bznDPq4UVLs+i8TqBZu19zX4O8TePvdqZ7uKCh9SBX/Pv/X+qWGru7kQqXzKEHd8jv6MaLbS327
+	KqaEQcSRYwzeKBbSRT2IZmMEDi0P4pEOcYM0JMw0=
+X-Gm-Gg: AYBFou2Q2XnKo5VNmwZbTyDDPbhdWBpLA9HhyQA5HdF115fbnEV6FIBDWo+yVGs6Rua
+	hwwQLSBcqDdIYNSP4/nKaizDN3k22lvzwj1iwVtxKxwhjVJNO7sUQhF/y1GGLjqaPIY9E1ZBD+r
+	bCaOm/dSCBus3Mh6zWOroIhJo8uZmyNdS/IKfQ08gp3IVGaRRxTKtGbNg4cgOA45i2H2UjLRgzl
+	wEjT+E0Yq/+XRaxH4FGNBp8GYmonSIeU5sXISBqTKf/sXVIRy84adeFvZyBt3FJABtKbtG8Rphz
+	nMTXJG/mRtrUDDbI9tEBRVs3RJXEDVVzMhUxkvNWSPszZzNSS3Y0eahR+PNW9NVYzghSR5qe/vI
+	Z6jHDYi4tVmOf86ff0AzmEdzVyPmMoS8NabFUrM2gFNKehxyp4Y3LYJt9FvJmppX9faAPqg==
+X-Received: by 2002:a17:90a:b107:b0:3b1:83aa:5b53 with SMTP id
+ 98e67ed59e1d1-3b183aa5ed3mr3810832a91.58.1794489412974; Thu, 12 Nov 2026
+ 05:16:52 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,154 +103,116 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20261111-vt8500-serial-cleanup-v1-0-b33594a25f87@gmail.com>
+ <20261111-vt8500-serial-cleanup-v1-1-b33594a25f87@gmail.com> <sashiko-outbox-209587@kernel.org>
+In-Reply-To: <sashiko-outbox-209587@kernel.org>
+From: Alexey Charkov <alchark@gmail.com>
+Date: Thu, 12 Nov 2026 17:16:40 +0400
+X-Gm-Features: AclHuK_EzwJVOg4AvJFgWeK4zwSmKMqdVxsBfBYhFYya4Gb1hOc3LGAcrZC_RjQ
+Message-ID: <CABjd4YyN0aj_AY+GmsREkq7LavmSJRB2c61JyMR2yn7eiEkwMg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] serial: vt8500: Find console ports in the serial core state
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-serial@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Kuai,
-
-On Thu, Nov 12, 2026 at 12:13 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] md: premature KOBJ_ADD uevent in add_disk() while mddev_get()
->   fails
-> - [Low] md: stale reconfig_mutex lock and comment in md_alloc()
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [Medium] md: kernfs_node memory leak in mddev_unlock() [1]
+On Wed, Nov 11, 2026 at 11:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] serial: vt8500: direct access to private uart_driver.state field
 > --
 >
-> commit 2ddaaecbff58458e8c38353164498300daf7d131
-> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+> commit 97ad19d6dd8fe51bf33a0dd201b9aa1860b0702f
+> Author: Alexey Charkov <alchark@gmail.com>
 >
-> md: make mddev_get() fail until md_alloc() has finished
+> serial: vt8500: Find console ports in the serial core state
 >
-> This commit adds an mddev->sysfs_live flag set under all_mddevs_lock after
-> kobject_add() succeeds in md_alloc(), and updates mddev_get() to fail unt=
-il
-> that flag is set.
+> This commit removes the driver's vt8500_uart_ports[] array and looks up
+> the console port via vt8500_uart_driver.state[co->index].uart_port in
+> vt8500_console_write() and vt8500_console_setup().
 >
-> Link: https://sashiko.dev/#/patchset/20261029202209.1422567-1-abd.masalkh=
-i@gmail.com?part=3D4
+> > diff --git a/drivers/tty/serial/vt8500_serial.c b/drivers/tty/serial/vt=
+8500_serial.c
+> > index a7f167a734160..6c53e108756a8 100644
+> > --- a/drivers/tty/serial/vt8500_serial.c
+> > +++ b/drivers/tty/serial/vt8500_serial.c
+> > @@ -444,7 +444,6 @@ static int vt8500_verify_port(struct uart_port *por=
+t,
+> >       return 0;
+> >  }
+> >
+> > -static struct vt8500_port *vt8500_uart_ports[VT8500_MAX_PORTS];
+> >  static struct uart_driver vt8500_uart_driver;
+> >
+> >  #ifdef CONFIG_SERIAL_VT8500_CONSOLE
+> > @@ -472,28 +471,27 @@ static void vt8500_console_putchar(struct uart_po=
+rt *port, unsigned char c)
+> >  static void vt8500_console_write(struct console *co, const char *s,
+> >                             unsigned int count)
+> >  {
+> > -     struct vt8500_port *vt8500_port =3D vt8500_uart_ports[co->index];
+> > +     struct uart_port *port =3D vt8500_uart_driver.state[co->index].ua=
+rt_port;
+> >       unsigned long ier;
+> >
+> >       BUG_ON(co->index < 0 || co->index >=3D vt8500_uart_driver.nr);
+> >
+> > -     ier =3D vt8500_read(&vt8500_port->uart, VT8500_URIER);
+> > -     vt8500_write(&vt8500_port->uart, VT8500_URIER, 0);
+> > +     ier =3D vt8500_read(port, VT8500_URIER);
+> > +     vt8500_write(port, VT8500_URIER, 0);
+> >
+> > -     uart_console_write(&vt8500_port->uart, s, count,
+> > -                        vt8500_console_putchar);
+> > +     uart_console_write(port, s, count, vt8500_console_putchar);
+> >
+> >       /*
+> >        *      Finally, wait for transmitter to become empty
+> >        *      and switch back to FIFO
+> >        */
+> > -     wait_for_xmitr(&vt8500_port->uart);
+> > -     vt8500_write(&vt8500_port->uart, VT8500_URIER, ier);
+> > +     wait_for_xmitr(port);
+> > +     vt8500_write(port, VT8500_URIER, ier);
+> >  }
+> >
+> >  static int __init vt8500_console_setup(struct console *co, char *optio=
+ns)
+> >  {
+> > -     struct vt8500_port *vt8500_port;
+> > +     struct uart_port *port;
+> >       int baud =3D 9600;
+> >       int bits =3D 8;
+> >       int parity =3D 'n';
+> > @@ -502,16 +500,15 @@ static int __init vt8500_console_setup(struct con=
+sole *co, char *options)
+> >       if (unlikely(co->index >=3D vt8500_uart_driver.nr || co->index < =
+0))
+> >               return -ENXIO;
+> >
+> > -     vt8500_port =3D vt8500_uart_ports[co->index];
+> > +     port =3D vt8500_uart_driver.state[co->index].uart_port;
 >
->> diff --git a/drivers/md/md.c b/drivers/md/md.c
->> index 03e35386a8028..47118e9d1a656 100644
->> --- a/drivers/md/md.c
->> +++ b/drivers/md/md.c
->> @@ -641,7 +641,7 @@ static inline struct mddev *mddev_get(struct mddev *=
-mddev)
->>  {
->>  	lockdep_assert_held(&all_mddevs_lock);
->>=20=20
->> -	if (test_bit(MD_DELETED, &mddev->flags))
->> +	if (test_bit(MD_DELETED, &mddev->flags) || !mddev->sysfs_live)
->>  		return NULL;
->>  	atomic_inc(&mddev->active);
->>  	return mddev;
->> @@ -6432,10 +6432,16 @@ struct mddev *md_alloc(dev_t dev, char *name)
->>  		return ERR_PTR(error);
->>  	}
->>=20=20
->> -	kobject_uevent(&mddev->kobj, KOBJ_ADD);
->>  	mddev->sysfs_state =3D sysfs_get_dirent_safe(mddev->kobj.sd, "array_st=
-ate");
->>  	mddev->sysfs_level =3D sysfs_get_dirent_safe(mddev->kobj.sd, "level");
->
-> [Severity: Medium]
-> This problem wasn't introduced by this patch, but when
-> legacy_async_del_gendisk is disabled, does mddev_unlock() leak
-> mddev->sysfs_state and mddev->sysfs_level [1]?
->
-> md_kobj_release() only calls sysfs_put() on mddev->sysfs_state and
-> mddev->sysfs_level when legacy_async_del_gendisk is true, and the
-> !legacy_async_del_gendisk teardown path in mddev_unlock() deletes
-> mddev->kobj and mddev->gendisk without releasing those kernfs_node
-> references:
->
-> drivers/md/md.c:md_kobj_release() {
-> 	if (legacy_async_del_gendisk) {
-> 		if (mddev->sysfs_state)
-> 			sysfs_put(mddev->sysfs_state);
-> 		if (mddev->sysfs_level)
-> 			sysfs_put(mddev->sysfs_level);
-> 		del_gendisk(mddev->gendisk);
-> 	}
-> 	put_disk(mddev->gendisk);
-> }
->
->> +
->> +	spin_lock(&all_mddevs_lock);
->> +	mddev->sysfs_live =3D true;
->> +	spin_unlock(&all_mddevs_lock);
->> +
->> +	kobject_uevent(&mddev->kobj, KOBJ_ADD);
->>  	mutex_unlock(&disks_mutex);
->> +
->>  	return mddev;
->>=20=20
->>  out_put_disk:
->
-> [Severity: Medium]
-> Does making mddev_get() fail until mddev->sysfs_live is set cause a
-> regression where udevd or concurrent openers fail with -ENODEV in md_open=
-()
-> and -EBUSY on md/ sysfs attributes right after add_disk() announces the
-> disk?
->
-> kobject_uevent(&mddev->kobj, KOBJ_ADD) is dropped by dev_uevent_filter()
-> because mddev->kobj has ktype &md_ktype rather than &device_ktype.  The
-> KOBJ_ADD uevent that actually reaches user space is sent earlier inside
-> add_disk() -> add_disk_final() -> disk_uevent(disk, KOBJ_ADD), right after
-> bdev_add() publishes the block device inode while mddev->sysfs_live is
-> still false:
->
-> CPU0                              CPU1 (udevd / opener)
-> md_alloc()
->   add_disk(disk)
->     add_disk_final(disk)
->       bdev_add(...)
->       disk_uevent(disk, KOBJ_ADD)
->                                   blkdev_get_no_open()
->                                   md_open()
->                                     mddev_find()
->                                       mddev_get() -> NULL  <-- -ENODEV
->   kobject_add(&mddev->kobj, ...)
->   mddev->sysfs_live =3D true
->
-
-I missed this case. Do you have a suggestion for a better fix, or should
-I just drop this patch?
-
 > [Severity: Low]
-> Since mddev_get() now returns NULL until mddev->sysfs_live is set after
-> mddev_unlock(mddev), md_open() can no longer succeed while reconfig_mutex
-> is held across add_disk() and kobject_add() from commit d1472ca2ca5d ("md:
-> don't hand out the array before md_alloc() has added mddev->kobj").
+> Should vt8500_console_write() and vt8500_console_setup() reach into
+> vt8500_uart_driver.state directly?
 >
-> drivers/md/md.c:md_alloc() {
-> 	/*
-> 	 * add_disk() makes the array openable before mddev->kobj exists.
-> 	 * Hold reconfig_mutex until kobject_add() is done so that ioctls
-> 	 * issued in between wait instead of using an uninitialised kobj.
-> 	 */
-> 	mddev_lock_nointr(mddev);
-> 	error =3D add_disk(disk);
+> include/linux/serial_core.h:struct uart_driver {
 >     ...
-> 	error =3D kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md"=
-);
-> 	mddev_unlock(mddev);
-> }
+>         /*
+>          * these are private; the low level driver should not
+>          * touch these; they should be initialised to NULL
+>          */
+>         struct uart_state       *state;
+>         struct tty_driver       *tty_driver;
+> };
 >
-> Does this make the comment and reconfig_mutex critical section in
-> md_alloc() obsolete, as well as the commit message's first paragraph
-> claiming that ioctls such as ADD_NEW_DISK can run before kobject_add()
-> completes?
->
-> [1] https://sashiko.dev/#/bug/linux-460ea5ed-96ea-49a0-8383-cfa84f28520b
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261112114958.22=
-44-1-abd.masalkhi@gmail.com?part=3D1
+> struct uart_driver::state is marked private to the serial core and not
+> meant to be accessed directly by low-level UART drivers.
 
---=20
-Best Regards,
-Abd-Alrhman
+This is true, although sh-sci.c and xilinx_uartps.c reach into .state
+directly currently. I'll add an accessor instead as part of v2.
+
+Best regards,
+Alexey
