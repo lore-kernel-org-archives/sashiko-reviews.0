@@ -1,54 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794481906;
-	b=mVaaadOc60Y+at5rXRV62+6h3QrYZAxXaW9zx3twFAcPLM+hchxXZ5jo6k/ZKpLfm2oX
-	 5A6a0yGYgEENc0pMwAv+JvA8OHHpXB4uw9p66bdk+um06wuqyIbnpLmIR4hP6AMu6i/YA
-	 b7MCUpD8rIIMMfpFiIxE4USWw8YflhcdPadI6MA9yQFNKioGvukuhV9b9ytrf/CkzRCIK
-	 jAC4+AmMohCNhaIb7lJDKBGjFf3FWw6WTL696r9J9TZQOhaT7kEtkX33Ujy5cFyprF3p3
-	 c7hF8GcChrx8eukP5IKM4Nnea6hadtJUh68WofUOZ8GJy0BgQPj38sDT0DrWjS338rA==
+	t=1794482026;
+	b=Wqae8KDYhmeziKggYAsPOSqiIyDbs1InoeCRYXx/SRV+umsfsVs0dBTFt7bqtwBoNdhj
+	 IwE3az6vggdVOIdHs9KXPqVc1HCDFQjPlWoW0BHzgOvNEA+E2TVFV2CycZQkbrylMBa/C
+	 xpuYVwK09kyeyeD18g/oxxMMLU2UKnunAl/2ttfJIJJ6VdQz+eqLHp2KAVpy4FgmTGDOP
+	 rwHCANt5sercmNuy8Fs2E57TyNdOn1GcvwrTV2KEDSF3jIdAL2K0FQK7MtQy4DBg8ae29
+	 oeMDiPfY4IZODI7i0wt0MDLzDQZoncR4bSv0akonrEu/rVNv4SQ5XxuM/C0rXE6tsZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794481906;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=NnGEZvnnpMRgr4BGvsUdhBhUeS7aU015fsB7ODIPjaA=;
-	b=UtWhwaHDICIhoH7a8ZJ8kUb/VbCgiQvulM9wsliqrKpmhUPa/DoZKAFz7BI6NxoVZM1/
-	 kl8q0ff7+Ho0bUBDNnK0HJwXXdAoh5/vQW+HRUtBCjYXqptz4l+YfRcmSms0UWobgMVzu
-	 3giteQrnb1EhrKTXdmabJwdjzL49HFZ99EsmfqzDbq8Fmbkka8bXMNzDK6AwkI4XN4Hao
-	 MY8vWYEyuxjIACIljgXObHwE/S/kjJTXvW7iqqZTI47QgOwENwOnv+64EwPButyO1NjKS
-	 py4roV5rco8BXosCchD6QVn6Oybt8/ZLFcl4uz6IlHOWl2YIg9yxyNVuKl/wL4yeYKA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794482026;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:Date:From:To:Cc:Subject:
+	 Message-ID:In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-TM-AS-GCONF:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:X-Authority-Analysis:
+	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=fPm5qWpoTMUiXwuBUzfxdmJX/oGj7gJoI751d6rX+q0=;
+	b=e4zhzKjc9voaHVZ2EOyePXZKrGlXCwLUFRxs+WRp8MHhH026NuVVIPtwKuitG1NldxNw
+	 SUfaCPDOEWgiRmfQgfh3F0ahKPxUyhRAz7abl3NBqo70DKmj7vFrH4Ov4oJplApfIm1Eh
+	 BGj1UdIlyDTmQbW9AI68VJb2xAbQXReWniCVAgq5MYbkBrnJSpgD54jkwA+Ue8s0UGsZ3
+	 8++sym8z+lLY6U2SYht7g2RXBjCjGtoK7EbEwsM9K9dZFdWRti4sPLd76kBfVZzsMMOyO
+	 HiSe1ezez2uSrRv3ieOQExWjmre54I6rFVpWPQQYn1H7zsWvC5uP3A5mSoqD/HYKJSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gF5tFVOm;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lHiu+8xC;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5441606A321
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 11:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3C4606A31C;
+	Thu, 12 Nov 2026 11:13:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B3C4606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gF5tFVOm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9FA1F00A09
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 11:11:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794481906;
-	bh=NnGEZvnnpMRgr4BGvsUdhBhUeS7aU015fsB7ODIPjaA=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=gF5tFVOmj+hKuv/u9tJMEmOyOCPsaE0qV+Un4d9UHLL7OfMzB09iBVQJD2QiO226E
-	 qlEeB42uSzqlHfNlZDR9eInWm8lnG7Bp1CKxtZMLrxITcjrwSivLBy5pMuGc4LAi7B
-	 EOxD6kTOsmKcRZC0UZtERibG+9dDQgCyr6pBWG4ZtxyCAblZMmkSceXcPC3cRNTi5N
-	 iwInF/U11HR1EUftYsUl2DrndX/cO6MSdfxmOUowRALlwu91BNxOUUvonjAHgU2R5I
-	 xotvpvrHRledIPnK3Br7jkpmxW2YUkBx6YzQVNhmhd24HoDpS9gP2lSw6zCus0MA2l
-	 a8mRDcjiZEd0A==
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-91f0272ce61so18802946d6.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 03:11:46 -0800 (PST)
-X-Gm-Message-State: APuU4Z+xpJozfN2y5w0n0VIlUwmK4OI/2NQMyzKOlhR4RH5voeii4rBC
-	7J7U5nb4VeVgECNscaOuv3y4wxe+/ufEhNSfKI8Vk+o3L7unxMTwvCD3bOID2HRwHsTKj7s91AI
-	ZzxkSOBuDz//NPyQNe9hcDjDxsTdJfx8=
-X-Received: by 2002:a05:620a:472b:b0:944:16e7:15c1 with SMTP id
- af79cd13be357-947afd68775mr958246785a.19.1794481905538; Thu, 12 Nov 2026
- 03:11:45 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lHiu+8xC
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AC2iqBh1215427;
+	Thu, 12 Nov 2026 11:13:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=fPm5qW
+	poTMUiXwuBUzfxdmJX/oGj7gJoI751d6rX+q0=; b=lHiu+8xCAuMoTUGu1EXcKo
+	59S8mIcXI6O5B1gj00XB34+TTZNnSq4rjQIiSb+QFYnvagMmtXZqhUqtyBvJWDMT
+	SWvgUwI5guuAz2qkzB4+epIEn1t3JyTfE1LuuhPwlxaOcWIJVqSdE0vRc+EhyHDu
+	eNMdAOTs406K7NXjYr2y/1CN1oZZJDxUdpK2nV4PcZQy0rIXyHhXDE4CBwRVamyv
+	OVng9VARNedGl5MTFFaTqwYyfEkolKw6OY8mmKcY9LPG21T5qOGqRogK+RCgpYxb
+	VvPhkrM7esBfxe4/ZwkKFBDznIRZ+6KY4BC46tZQUFz23zVPtfJPwsdOOCRnO5Qg
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsuntf5g6-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 12 Nov 2026 11:13:44 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AC8C046053981;
+	Thu, 12 Nov 2026 11:13:43 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hv309rh3n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Nov 2026 11:13:43 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6ACBDde751249408
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 12 Nov 2026 11:13:39 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1AAE820049;
+	Thu, 12 Nov 2026 11:13:39 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E89B820040;
+	Thu, 12 Nov 2026 11:13:38 +0000 (GMT)
+Received: from thinkpad-T15 (unknown [9.68.31.198])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with SMTP;
+	Thu, 12 Nov 2026 11:13:38 +0000 (GMT)
+Date: Thu, 12 Nov 2026 12:13:37 +0100
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+To: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-s390
+ <linux-s390@vger.kernel.org>,
+        "Heiko Carstens" <hca@linux.ibm.com>,
+        "Vasily
+ Gorbik" <gor@linux.ibm.com>,
+        "Alexander Gordeev" <agordeev@linux.ibm.com>,
+        "Christian Borntraeger" <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH v2] s390/mm: Allow hugepage migration for s390
+Message-ID: <20261112121337.3c07acb7@thinkpad-T15>
+In-Reply-To: <sashiko-outbox-209541@kernel.org>
+References: <20261111182944.4154805-1-gerald.schaefer@linux.ibm.com>
+	<sashiko-outbox-209541@kernel.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,276 +99,171 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261111232603.9934-1-baohua@kernel.org> <20261111232603.9934-12-baohua@kernel.org>
- <sashiko-outbox-210419@kernel.org>
-In-Reply-To: <sashiko-outbox-210419@kernel.org>
-From: Barry Song <baohua@kernel.org>
-Date: Thu, 12 Nov 2026 19:11:32 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4wFye_co4bnJwuaoyshZOE+gcWFthmWD3r94dQgVHp8GQ@mail.gmail.com>
-X-Gm-Features: AclHuK9A1r3vfYFu07CpdiG2lvAl7dAtD7d-JH_1uYu-MWR7CtRFEOHr2tv8OVU
-Message-ID: <CAGsJ_4wFye_co4bnJwuaoyshZOE+gcWFthmWD3r94dQgVHp8GQ@mail.gmail.com>
-Subject: Re: [PATCH v7 11/16] mm/mglru: Run aging when one type has no
- populatable folios
-To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
-	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
-	liam@infradead.org, lianux.mm@gmail.com, linux-mm@kvack.org, 
-	liuxiang.277@bytedance.com, lyugaofei@xiaomi.com, mhocko@kernel.org, 
-	mhocko@suse.com, qi.zheng@linux.dev, ridong.chen@linux.dev, rppt@kernel.org, 
-	ryncsn@gmail.com, shakeel.butt@linux.dev, surenb@google.com, 
-	wangzicheng@honor.com, weixugc@google.com, yuanchu@google.com, 
-	zhangbo56@xiaomi.com, zhuhui@kylinos.cn, sidchintamaneni@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA0MiBTYWx0ZWRfX2lQoZGPmfves
+ yyb0upySaxAKL8p2zMRFyEbxmgFoZ3+RItm+Fa2oW9j4KcCD6HszXXm8IExZpIOFNeJHVXFD2PO
+ V/6aXmUeZd5B0l95lsshhzEUEiu/urMyFE+ecA6TTsaoqCBnjl9g3nKb8YAX62TEAdaBf9fwbBF
+ snJ3DceWKopGiDJqjXzz5x+5DZdKEbCkkzREKSpXdNUOsYRGOC586lJiQowLOZDLIUZu8N/HOZS
+ lTV1K6ycWCMpKFP4SIwjofqkLp4ovvtPIgM1lSWbo3NH86OG6AssuLMcAKwP7c9v9He/WdxQvZB
+ get6rH0bidYKNRwY7TBBLDdR9QwI/oTIz2KaGn8l3Qm+1+fQEbb1jr59GfMtwoas5p80vxlLGD9
+ fzYxsMnaYIIBRai7eBokiuuHuukoVjIGTYdwh6p1I4aHZL5GoPq01IgYhw1zObEmK3yQM7LrYFz
+ nFPvmQ1FA5r8N88hCFQ==
+X-Proofpoint-ORIG-GUID: btVzQ312fbO2SCzSrno8v8cympUxKJNh
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA0MiBTYWx0ZWRfX4W3HdT4uU9kL
+ SFkthCGCeOmFiFqFZtf0X3RZ3xRw8nNoODf38RQl8LoAKl6AnBM1AiM9g/1TgR1PZnXAHv51wxo
+ 8nwZzRPhyNQc+ZAnJLhMUT2jmjZoNkc=
+X-Authority-Analysis: v=2.4 cv=euZKXYpX c=1 sm=1 tr=0 ts=6af59f68 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=cVApB3_Vmn0YrNpntUEA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: btVzQ312fbO2SCzSrno8v8cympUxKJNh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-12_01,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1011 suspectscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120042
 
-On Thu, Nov 12, 2026 at 1:01=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential
+On Wed, 11 Nov 2026 19:14:22 +0000
+sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [High] mm/mglru: skipped aging in try_to_shrink_lruvec() when zero
->   folios are scanned
-> - [Medium] mm/mglru: repeated aging in try_to_shrink_lruvec() when
->   no_populatable persists
-> - [Low] mm/mglru: stale max_seq passed to should_run_aging() in
->   try_to_shrink_lruvec()
+> - [High] s390/mm: guest storage key loss on 1M/2G hugetlbfs page
+>   migration
+
+@Claudio, could you please have a look, if this is a valid issue?
+
+> - [Medium] s390/mm: loss of soft-dirty bit in __pte_to_rste() and
+>   __rste_to_pte() on hugetlb migration
+
+No problem, soft-dirty tracking not supported for hugetlbfs, see below.
+
 > --
->
-> commit b68a220713e0f1b121c4874a48ac05f55108264a
-> Author: Barry Song (Xiaomi) <baohua@kernel.org>
->
-> mm/mglru: Run aging when one type has no populatable folios
->
-> This commit moves the aging check in try_to_shrink_lruvec() after
-> evict_folio_lists() and passes a no_populatable flag to should_run_aging(=
-)
-> so aging runs when one LRU type makes no scan progress despite remaining
-> scan budget.
->
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index 085450819ee8e..41dd77652c82f 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> > @@ -5105,7 +5105,8 @@ static bool lru_gen_imbalanced(struct lruvec *lru=
-vec, struct scan_control *sc,
+> 
+> commit d03e5331e4e0b88aa75246fc7dc6aef18e7c8cdd
+> Author: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+> 
+> s390/mm: Allow hugepage migration for s390
+> 
+> This commit selects ARCH_ENABLE_HUGEPAGE_MIGRATION on s390 and defines
+> arch_hugetlb_migration_supported() for 1M and 2G hugepages so hugetlbfs
+> pages can be migrated and allocated from ZONE_MOVABLE.
+> 
+> > diff --git a/arch/s390/mm/hugetlbpage.c b/arch/s390/mm/hugetlbpage.c
+> > index f84aa9265430f..2c6e94888bd06 100644
+> > --- a/arch/s390/mm/hugetlbpage.c
+> > +++ b/arch/s390/mm/hugetlbpage.c
+> > @@ -224,7 +224,7 @@ pte_t *huge_pte_offset(struct mm_struct *mm,
+> >  	return (pte_t *) pmdp;
 > >  }
-> >
-> >  static bool should_run_aging(struct lruvec *lruvec, unsigned long max_=
-seq,
-> > -                          struct scan_control *sc, int swappiness)
-> > +                          struct scan_control *sc, int swappiness,
-> > +                          bool no_populatable)
+> >  
+> > -bool __init arch_hugetlb_valid_size(unsigned long size)
+> > +static bool __hugetlb_valid_size(unsigned long size)
 > >  {
-> >       DEFINE_MIN_SEQ(lruvec);
-> >
-> > @@ -5117,6 +5118,13 @@ static bool should_run_aging(struct lruvec *lruv=
-ec, unsigned long max_seq,
-> >       if (sc->priority =3D=3D DEF_PRIORITY)
-> >               return false;
-> >
-> > +     /*
-> > +      * Run aging if scan budget remains but no folios
-> > +      * in populatable generations are available to scan.
-> > +      */
-> > +     if (no_populatable)
-> > +             return true;
+> >  	if (cpu_has_edat1() && size == PMD_SIZE)
+> >  		return true;
+> > @@ -241,3 +241,15 @@ unsigned int __init arch_hugetlb_cma_order(void)
+> >  
+> >  	return 0;
+> >  }
 > > +
-> >       /* better to run aging even though eviction is still possible */
-> >       if (evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS =3D=3D m=
-ax_seq)
-> >               return true;
-> > @@ -5221,20 +5229,17 @@ static bool try_to_shrink_lruvec(struct lruvec =
-*lruvec, struct scan_control *sc)
-> >       lru_gen_prepare_scan(lruvec, sc, memcg, swappiness, nr);
-> >
-> >       while (nr[LRU_GEN_ANON] > 0 || nr[LRU_GEN_FILE] > 0) {
-> > +             unsigned long orig_file, orig_anon;
-> >               DEFINE_MAX_SEQ(lruvec);
-> > +             bool no_populatable;
-> >
-> >               if (mem_cgroup_below_min(sc->target_mem_cgroup, memcg)) {
-> >                       need_rotate =3D true;
-> >                       break;
-> >               }
-> >
-> > -             if (should_run_aging(lruvec, max_seq, sc, swappiness)) {
-> > -                     trace_mm_mglru_aging(lruvec, sc, swappiness);
-> > -                     if (try_to_inc_max_seq(lruvec, max_seq, swappines=
-s, false))
-> > -                             need_rotate =3D true;
-> > -                     should_age =3D true;
-> > -             }
-> > -
-> > +             orig_anon =3D nr[LRU_GEN_ANON];
-> > +             orig_file =3D nr[LRU_GEN_FILE];
-> >               if (!evict_folio_lists(nr, lruvec, sc, swappiness, MIN_LR=
-U_BATCH))
-> >                       break;
-> >
->
+> > +bool __init arch_hugetlb_valid_size(unsigned long size)
+> > +{
+> > +	return __hugetlb_valid_size(size);
+> > +}
+> > +
+> > +#if IS_ENABLED(CONFIG_ARCH_ENABLE_HUGEPAGE_MIGRATION)
+> > +bool arch_hugetlb_migration_supported(struct hstate *h)
+> > +{
+> > +	return __hugetlb_valid_size(huge_page_size(h));
+> > +}
+> > +#endif  
+> 
 > [Severity: High]
-> Does moving should_run_aging() and try_to_inc_max_seq() after
-> evict_folio_lists() skip aging whenever evict_folio_lists() scans zero
-> folios?
->
-> mm/vmscan.c:scan_folios() {
->         ...
->         if (sc->priority =3D=3D DEF_PRIORITY)
->                 seq =3D lrugen->max_seq - MIN_NR_GENS;
->         else if (sc->priority > DEF_PRIORITY / 2)
->                 seq =3D lrugen->max_seq - 1;
->         else
->                 seq =3D lrugen->max_seq;
->
->         seq =3D lruvec_populated_min_seq(lruvec, type, sc->reclaim_idx + =
-1, seq);
->         ...
+> Does migrating a 1M or 2G hugetlbfs folio backing a KVM guest lose the
+> guest's hardware storage keys?
+> 
+> For 1M and 2G mappings (KVM_CAP_S390_HPAGE_1M / KVM_CAP_S390_HPAGE_2G),
+> the KVM gmap uses large leaf CRSTEs without PGSTEs, and guest storage keys
+> live only in the physical page frames.  When unmap_and_move_hugetlb_folio()
+> unmaps the folio via mmu_notifier_invalidate_range_start(),
+> _gmap_unmap_crste() clears the large CRSTE to _CRSTE_EMPTY without saving
+> or splitting the hardware storage keys:
+> 
+> arch/s390/kvm/gmap/gmap.c:_gmap_unmap_crste() {
+> 	...
+> 	if (!old.h.fc)
+> 		return 0;
+> 
+> 	if (old.s.fc1.pr && test_bit(GMAP_FLAG_EXPORT_ON_UNMAP, &priv->gmap->flags))
+> 		folio = phys_to_folio(crste_origin_large(old));
+> 	ok = gmap_crstep_xchg_atomic(priv->gmap, crstep, old, _CRSTE_EMPTY(old.h.tt), gfn);
+> 	...
 > }
->
-> At DEF_PRIORITY, when only MIN_NR_GENS generations remain
-> (evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS > max_seq),
-> scan_folios() caps seq to max_seq - MIN_NR_GENS, which is below min_seq
-> and already empty.  evict_folio_lists() then returns 0 and breaks out of
-> the loop before reaching should_run_aging(), making the mandatory
-> evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS > max_seq aging
-> check unreachable at DEF_PRIORITY.
->
-> Similarly, at DEF_PRIORITY / 2 < sc->priority < DEF_PRIORITY,
-> scan_folios() caps seq to max_seq - 1.  Whenever all evictable folios for
-> the budgeted type(s) are in max_seq (for example when both types only hav=
-e
-> folios in max_seq, or when only one type has budget left),
-> evict_folio_lists() returns 0 and breaks before aging can run, leaving
-> need_rotate false as well so shrink_one() fails to rotate a sizable memcg=
-.
->
-> Finally, when sc->priority <=3D DEF_PRIORITY / 2, running
-> evict_folio_lists() before should_run_aging() scans directly from max_seq
-> (where min_gen =3D=3D max_gen in sort_folio() disables tier protection) b=
-efore
-> aging can split the youngest generation, and breaks without aging if the
-> first batch satisfies should_abort_scan().
-
-As I mentioned in my earlier reply [1], Bo Zhang suggested
-the following change to me off-list:
-
-@@ -5233,6 +5231,7 @@ static bool try_to_shrink_lruvec(struct lruvec
-*lruvec, struct scan_control *sc)
-                unsigned long orig_file, orig_anon;
-                DEFINE_MAX_SEQ(lruvec);
-                bool no_populatable;
-+               long scanned;
-
-                if (mem_cgroup_below_min(sc->target_mem_cgroup, memcg)) {
-                        need_rotate =3D true;
-@@ -5241,8 +5240,7 @@ static bool try_to_shrink_lruvec(struct lruvec
-*lruvec, struct scan_control *sc)
-
-                orig_anon =3D nr[LRU_GEN_ANON];
-                orig_file =3D nr[LRU_GEN_FILE];
--               if (!evict_folio_lists(nr, lruvec, sc, swappiness,
-MIN_LRU_BATCH))
--                       break;
-+               scanned =3D evict_folio_lists(nr, lruvec, sc,
-swappiness, MIN_LRU_BATCH);
-
-                if (should_abort_scan(lruvec, sc))
-                        break;
-@@ -5263,6 +5261,9 @@ static bool try_to_shrink_lruvec(struct lruvec
-*lruvec, struct scan_control *sc)
-                        should_age =3D true;
-                }
-
-+               if (!scanned)
-+                       break;
-+
-                cond_resched();
-        }
-
-
-This gives aging a chance to run even when
-evict_folio_lists() returns 0.
-
-[1] https://lore.kernel.org/linux-mm/CAGsJ_4xMUoTsPU-=3D_QVDqZ-p4Dt+vGJC5G8=
-hed3PWNAk3iv8Bw@mail.gmail.com/
-
->
-> > @@ -5248,6 +5253,15 @@ static bool try_to_shrink_lruvec(struct lruvec *=
-lruvec, struct scan_control *sc)
-> >               if (root_reclaim(sc) && should_age)
-> >                       break;
-> >
-> > +             no_populatable =3D (nr[LRU_GEN_ANON] && nr[LRU_GEN_ANON] =
-=3D=3D orig_anon) ||
-> > +                              (nr[LRU_GEN_FILE] && nr[LRU_GEN_FILE] =
-=3D=3D orig_file);
->
+> 
+> folio_copy() -> copy_highpage() -> copy_page() then copies only the 4K
+> page contents via mvcl and does not copy the hardware storage keys to the
+> destination frames, leaving the guest with stale storage keys and causing
+> guest protection exceptions or memory corruption.
+> 
 > [Severity: Medium]
-> Can no_populatable stay true across every MIN_LRU_BATCH iteration and
-> trigger repeated aging when one type still scans 0 folios after aging?
->
+> Does migrating a hugetlbfs page also drop its soft-dirty bit in
+> __pte_to_rste() and __rste_to_pte()?
+> 
+> When try_to_migrate_one() installs a hugetlb migration entry, it sets
+> _PAGE_SOFT_DIRTY via pte_swp_mksoft_dirty() and calls set_huge_pte_at().
+> However, the swap entry branches in __pte_to_rste() and __rste_to_pte() do
+> not transfer _PAGE_SOFT_DIRTY to and from _SEGMENT_ENTRY_SOFT_DIRTY:
+> 
+> arch/s390/mm/hugetlbpage.c:__pte_to_rste() {
+> 	...
+> 	} else if (!pte_none(pte)) {
+> 		/* swap pte */
+> 		arch_entry = __pte_to_swp_entry(pte);
+> 		rste = mk_swap_rste(__swp_type(arch_entry), __swp_offset(arch_entry));
+> 	...
+> }
+> 
+> arch/s390/mm/hugetlbpage.c:__rste_to_pte() {
+> 	...
+> 	} else if (!none) {
+> 		/* swap rste */
+> 		arch_entry = __rste_to_swp_entry(rste);
+> 		pte = mk_swap_pte(__swp_type_rste(arch_entry), __swp_offset_rste(arch_entry));
+> 		pteval = pte_val(pte);
+> 	...
+> }
+> 
+> As a result, remove_migration_pte() reads back old_pte via huge_ptep_get()
+> with pte_swp_soft_dirty(old_pte) == 0 and clears _PAGE_SOFT_DIRTY on the
+> restored hugepage PTE, breaking soft-dirty tracking via /proc/pid/pagemap.
 
-This is very unlikely. As long as while (!list_empty(head))
-holds, we will have a non-zero scanned count:
+Hugetlbfs does not support soft-dirty page tracking in the kernel:
+vma_wants_writenotify() in mm/vma.c explicitly excludes hugetlb VMAs from
+soft-dirty tracking, clear_refs_walk_ops in fs/proc/task_mmu.c does not
+implement a hugetlb_entry callback, and mm/hugetlb.c never sets or
+preserves soft-dirty bits on hugetlb PTEs or migration entries.
 
-while (!list_empty(head)) {
-        struct folio *folio =3D lru_to_folio(head);
-        int delta =3D folio_nr_pages(folio);
+The RSTE swap entry soft-dirty bit (bit 62) exists for THP PMD
+swap/migration entries rather than hugetlbfs. Generic hugetlb migration
+handling in mm/hugetlb.c (copy_hugetlb_page_range() and
+hugetlb_change_protection()) also does not preserve pte_swp_soft_dirty()
+when rebuilding hugetlb migration swap entries.
 
-        scanned +=3D delta;
+However, I was not aware that try_to_migrate_one() actually does set
+_PAGE_SOFT_DIRTY via pte_swp_mksoft_dirty() also for hugetlbfs pages,
+even though it is not being used anywhere yet. This bit is indeed lost
+after __pte_to_rste() conversion from a swap PTE. But it does not break
+soft-dirty tracking for hugetlbfs, because that does not exist. It also
+does not conflict with or corrupt the RSTE swap type or offset calculation.
 
-Aging should also help move some folios into
-populatable generations.
-
-> nr[] is computed once in lru_gen_prepare_scan() and is only decremented b=
-y
-> scanned folios.  If scan_folios() continues to return 0 for one type whil=
-e
-> the other type makes progress (for instance when sc->priority <=3D
-> DEF_PRIORITY / 2 already scans up to max_seq, when max_seq has no eligibl=
-e
-> folios of that type, or when walk_mm() promotes all referenced folios int=
-o
-> the new youngest generation), nr[type] remains equal to orig_anon or
-> orig_file.  In cgroup reclaim (!root_reclaim(sc)), the loop does not brea=
-k
-
-Folios shouldn't be promoted repeatedly, as earlier aging
-should have already cleared their PTE young bits.
-
-> on should_age, so should_run_aging() returns true and calls
-> try_to_inc_max_seq() on every 64-page batch of the other type; in
-> root_reclaim(sc), it runs unnecessary aging and aborts scanning the
-> populated type after one extra batch.
-
->
-> > +             if (should_run_aging(lruvec, max_seq, sc, swappiness, no_=
-populatable)) {
-> > +                     trace_mm_mglru_aging(lruvec, sc, swappiness);
-> > +                     if (try_to_inc_max_seq(lruvec, max_seq, swappines=
-s, false))
-> > +                             need_rotate =3D true;
-> > +                     should_age =3D true;
-> > +             }
->
-> [Severity: Low]
-> Can should_run_aging() see a stale max_seq alongside a fresh min_seq here=
-?
->
-> DEFINE_MAX_SEQ(lruvec) snapshots max_seq at the start of the loop before
-> evict_folio_lists(), whereas should_run_aging() reads min_seq after
-> evict_folio_lists() finishes.  If a concurrent reclaimer advances max_seq
-> and min_seq during eviction, should_run_aging() compares the new min_seq
-> against the old max_seq, which can falsely trigger the aging branch, fail
-> try_to_inc_max_seq() on the stale max_seq, and set should_age =3D true so
-> root_reclaim(sc) aborts on the next pass.
-
-I guess this is a pre-existing race that could also occur
-before this patchset, but the patch somehow widens the race
-window. One possible approach is to read max_seq later,
-just before calling should_run_aging().
-
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111232603.99=
-34-1-baohua@kernel.org?part=3D11
+Of course, it probably would be good practice to already preserve
+_PAGE_SOFT_DIRTY now, even if it is not needed yet, and further changes to
+generic code would be required if it should ever be supported. Will look
+into this in v3.
