@@ -1,92 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.229.59
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1794453610;
-	b=RFgTgaZ8dPK9ecMVlBnVxCojRUHR5K9ZR/tLC8zchJZv+XqNTLY7URp+l2eEHVfrhdfu
-	 wq7yyItUl0mXKKTkFRGjOvg4X4TyhF9ieFIa3fqsmDtvlaeP/uyjubjtISaVyLna/ieYb
-	 Yh7Y+voPwLlPUsDVWz8lCIZNPSUCMzh6SiKLtDIxuweLPumStJMA7Dzk+UDEQY42r3hiH
-	 zv1rUzBrk0EaOYahti7FWNX9fSt8bOTX9aJeaFmMjv5Hh/gKfgLw2BMRbhPWjpEoj662X
-	 19tFNGv8niCEXl7AFEEySbVQwN0YHBZUqF7qwz3sfE7Pw+6oNfg3nWOGbSqkvEomgZw==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794459063;
+	b=hLIzxNgXucbGplc3OZHr5QOEO4dVHyQDqKf2glqoukfEca0ykZbArYm28uQIDDl1oMrr
+	 DXOzMZ2UN7Kb4C2mOFFCz7NHZdFjRhQqzdisbqyfj6Dh49sL44XMQfkGqYEY7yw9UIlXO
+	 /8S9vOiZa6VgS4GMhEMXYUUIr/kohsnGjblyW0MkMJxjJY7HSg+24rLf2H2C1c3IB9Uo2
+	 Tbv2a8iAheQaoCzzIvW6qBuCWs9nf7zRhHL21xPyuTbZFKeoH11xJU3tTxON/T6t9aFM9
+	 Jt5DsHvpLEx7rv9sl9eZdN8zdh1drCx/QagNRNB60RZeAmSs402L6hQhgjel5Kqef+w==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794453610;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:From:To:Cc:
-	 Subject:In-Reply-To:References:User-Agent:Content-Type:Date:
-	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=rxARY0OkXlDmA9IS+e/TgiLSFsCaXaMoYzj4W9AepGo=;
-	b=v1nUotayOLhrDXQIpbQDaRqf6bcSVFkrCIyQ3yVlqpY23MVQtjyERY/NMLkoRiVcPtph
-	 P5XClsLmXzLMMLTqu+8dIXt1ZUVXTsGU3SXvzbaoAHLrlg+eqBG1tmYlp+QqU8qxEEGbe
-	 94TFB94nf64ZKN07F5Kz0fBVlH91I6RxS4IsbzvPDLhyqvnC6ezGaNWnWJwnVev7dMwuW
-	 w6t9ae4qiOSSG4znMXjzgNlHN0oixt2uUPKELqRC1Ts06lLx6wzTht+/wnVwe6eRW7Pvw
-	 VXeV0kk1ahNzTA92AuAqEp3MOJCJujmLRBTI29nOMK1UCmNMmUjfntun95+Co0rxPWg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794459063;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
+	b=LnJmFoi3BmjteEILba+O0/Wdc+bShMKkJAFAzlG6K4FmDywD3yjCXXK4VnLrbPy9j19K
+	 R7Rh1s3QvEKepkDzSxs1GVoXENWLDJ1dLzfiO2Q5DjZKweaH/Cprjax4gh2vxnRTj9iyI
+	 ZEBlIIsYVrCTup/IyjHcUH6x0llWxldOgjWqDpDWqApgyMMf+dtAELBv2n3OlKQcKORWi
+	 Ecsn0Mj6WOm+CrpQVq342nSIXna51xK21IjlLfJif08k2NUKvmW0Qktre31inIev5AP4X
+	 L83tyloW3Q2EgX6QT1ht/PTXYpCuYg3FOPKxiRbAmZ99JSpQB8XoKS9SJ4WPYKCDZiw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=renesas.com;
-	spf=pass smtp.mailfrom=renesas.com;
-	dkim=pass header.d=renesas.com header.i=@renesas.com header.a=rsa-sha256 header.s=selector1 header.b=oVldV2Jo;
-	arc=fail smtp.remote-ip=52.101.229.59
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11010059.outbound.protection.outlook.com [52.101.229.59])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fW5esMJC;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.51
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45C3606A33B
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 03:20:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C45C3606A33B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B765D606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 04:51:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B765D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=renesas.com header.i=@renesas.com header.a=rsa-sha256 header.s=selector1 header.b=oVldV2Jo
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vDbaUO1IAv7vaLXI48jf8WEEszeb9gSIzC5L40HBpcz6XdXIe3D3a7ZG4fuUjGRcT/qDiAW2pUPSksVLD5k7WE7LUeIWJGGPPTWSgfnkl6V17cixhsEzf264wslJMsvkig54414MDLWzSUnACL+VYqDU6erGkWJNeyw0DgK3jfo5kuMGHzZgRih0ZmP9mxi0DM35hTNU7i76116c9Wts9Qu97PkBp59NHF9iYSrvUjj2hWbhh0uDH3P8+9PvCJ8h4An4jOWkW1RsOY/E2/ubYjA8Q+/Swu2HlagNY4kGiD7BwdFoNbCNRKlyeJvtnX8buds0bLYjMu3VlrvdbM09fA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rxARY0OkXlDmA9IS+e/TgiLSFsCaXaMoYzj4W9AepGo=;
- b=kl9U/yhm7u2TtW33uCPFC03PQyj2tKIvi0DBwIuTNjvGqKNzydlfV/4F3WhL+TU1iz2L8N+60sDV97frUnuoPi1CGjLj5RaHJSrn9LKf7A8WgpVMs6tBkE12YkTnqoKCzoeH8QkMUMg3KKEvdVIA4qcKxjCNbqDGLu5t9lNj0cKsDP2u+rsgB8aBx8UdIL+/Y+p+HGrUcF/oG45/udgWuIgT6tLg/qLdB+3pxe8M/LbX44HuxP03aKMNjtub+MWiJzBhBT1elYJq7g1fWDy3YkhDip8ebKNzVzoh0I0sj59w8kGYYZh+EUi+3qHeKQrVl3mlXv7iAryWvMrnTfpAPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rxARY0OkXlDmA9IS+e/TgiLSFsCaXaMoYzj4W9AepGo=;
- b=oVldV2Jo7WGUFo3mv097VYHcpBJHum7Cf+DRwf+Ihkb1DUT/+HLbCv/JutYjTDPbw6pYnlE1muX2E36Of8xk68vpFfTkcelkbywKZrh1qcLEiJ72RR34cwiguUOrg5pC5ivgrvpQUHJ/phSt3TVNwndaLhyRfeVCv51ijUpt/vc=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-Received: from TYYPR01MB15175.jpnprd01.prod.outlook.com (2603:1096:405:27d::8)
- by TYCPR01MB9617.jpnprd01.prod.outlook.com (2603:1096:400:194::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Thu, 12 Nov
- 2026 03:20:03 +0000
-Received: from TYYPR01MB15175.jpnprd01.prod.outlook.com
- ([fe80::9bfd:a110:68f1:134d]) by TYYPR01MB15175.jpnprd01.prod.outlook.com
- ([fe80::9bfd:a110:68f1:134d%6]) with mapi id 15.21.0615.008; Thu, 12 Nov 2026
- 03:20:03 +0000
-Message-ID: <87ik22zqfx.wl-kuninori.morimoto.gx@renesas.com>
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org
-Subject: Re: [PATCH v2 09/27] ASoC: soc-devres: use snd_soc_component_unregister() for devm_snd_soc_register_component()
-In-Reply-To: <sashiko-outbox-210088@kernel.org>
-References: <87zeve28ol.wl-kuninori.morimoto.gx@renesas.com>
-	<87mrre28kj.wl-kuninori.morimoto.gx@renesas.com>
-	<sashiko-outbox-210088@kernel.org>
-User-Agent: Wanderlust/2.15.9 Emacs/30.2 Mule/6.0
-Content-Type: text/plain; charset=US-ASCII
-Date: Thu, 12 Nov 2026 03:20:03 +0000
-X-ClientProxiedBy: OS7PR01CA0173.jpnprd01.prod.outlook.com
- (2603:1096:604:24c::16) To TYYPR01MB15175.jpnprd01.prod.outlook.com
- (2603:1096:405:27d::8)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fW5esMJC
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so580006166b.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 20:51:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794459061; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QaqWh7tyHg9WUGHew6csGTLmMU0eoTxFdWWuVuJdnXKs7awQ+l7edVUNqdeEF7mQVH
+         68JVSnDQRlvA5bGTkuaXQoPZVa8UXmhhk0lzR9757+2FqGxyBfPib3U1cIuH700worTN
+         AtIFHrmu0Go/0jNq0G65fYCVw/hrKmJmmoIAQBFKDAeQpZE2lDnKMib8m+ik1QMpJm+f
+         DiJa48zkdsJ3g1dhZL4EhRXBsi2P0qbqsfx23Wh5FOW3O7Jhhws+lPBRC57C4CwuAz43
+         Rg8kTTVm81z6VXtDb9Cy1voXDcl57KuJQKHtkfwa6v5HxSvKyeXc/YwR0RqQoOg2nYUF
+         kBkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
+        fh=EHxm7QpXaTXPHbUcKm2SQkkoCE9UjyMGkH5PL3cfdQo=;
+        b=FTh2gW0YoSMiEYfF/yn9JDvfOTUx+1xou3+ypkQojPsM7Rz/arUDARy5L0GIcxlkBn
+         ssAN388OHRi8pIWw4DM2i4cTFZMnSB8r4KewBykNQ1tI4m2dVUkK5c6QnHG7SBec5huk
+         rf2+Z5v1r1YBpkoIOFm9UZmpmODy42g7UeKN6xMG3EAhXpPrzs4v7jmfwg5hNRf3H4Vn
+         FR5iNXhpehHHLd+I60+hlJqRYWjjItFiX+T1Uoh3jUDgH8KUmaVpdlnUrzv1hghlAuGv
+         PlU/k1eT6elyB+0sJ2c83q3q0rAXRWrOE0oIkyACxJknjKbiBsWAe0UiXLaS9ptCEcbk
+         RJgA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794459061; x=1795063861; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
+        b=fW5esMJCqQAuS0qLdzU4cs3m/WsxcDV/kwl5PSXU8b4bzwHMSMVh0O04s4ygbo3Ius
+         KgQrCPvo65FqU0ORCJ3szy6lyhF45waxv8xonIfR/opZdPkTmXfQ+z6r2CgsdEPFR+AN
+         HKzST+0psSdWztmjuzwZjOtZIAH5ov3rUFUdgSWyil1KIUlBGd3MdVz6ltvqHb108kiR
+         5Ju/Y57v2dm72fMRp6eL36bAKH4jAPSKnJCukE7XDjXjjf3Ey7Dp8v7vQxrxjPgrSFz6
+         iXy2zGc+YpmQVeXB4H1j+d7lbxs0iDHlBb9LdfXX8hzMmTQgYDVo1WNNwYbMB28osJ28
+         LHrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794459061; x=1795063861;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
+        b=QBJ/sd+ipwMBdBmexlISxi2H/rAQWowc3muHCDrKSK+NCDzwIh4mN1b6+YKixBZ7mt
+         ZmVFA7Bn/KSU/SSa+6DSvwmGmjFEmZ9P0g5QqVcpdrpSZxbeql4MhOhNY3YDNPysvjLV
+         kjkJcx6MuseY3TzNSCb96ppVA9AOeOu4+055S3MsUv+Jicpb2bdPVc4IRxTEqM4na3JC
+         RkUOzOwrt/eTY7hvLmWL4mLKTwM7xgTwgUQ/a0OkHBjuqY00wUitZrIHzwWNjJyPdpvE
+         q4mV39YBnN5J0UyCaqKAFVmDILpzP64L9GqngCs0njTNOH2dRxrGz6a+ZsSYMD3FccGt
+         CXiw==
+X-Gm-Message-State: APuU4Z+WoTSCUirgAiDojsaRMJ45tpkNc+1jMcy8vaQQAFSvtP67LCuk
+	djx+9IWpz7h/x7iWGRxME6CAEhdxX2LKQ+MDUHahn6ba1ijxkoKj60Ls42hP0taTlWxLqPqKyrC
+	PiQJ5DBEudW8VDr8YtUGOMb83eQl8zSMRSw==
+X-Gm-Gg: AYBFou3kQeuYBmOoSzx+V1Rx7czh0H8bZzlJ00DsTCj2eK1Qo0VImwJOxDsmBsN49Do
+	8AHnlA65hSWUFohNklA1eAeBdLxjvx7uNnOPvw0I+aaUXTgOC+BQnh1q1OTprx2Q8Vri2l0bsDy
+	/qfzvMM8/h4KCMmxaNcwecK3NfoJAF2Hqu91VxhkQzk6Hacs4xhss7c+tY6rqbT8Nd8zQfJbtx7
+	Z6PT6SivlOHXrTf5/fmcXUWjOhVVS3ZxppFh6ytUQpteWPoMi9IKH7rqO6NLXjY3IIm6xh5g1Qm
+	vK6jSBP1NGZ/6rrIlZ2UA2v+Q/RomKkbFMYjog6V0X5P2F/IGBubkFOHb5H48G8nm+6Vdo5Dtpv
+	WNgBlBsjvbbNwzylDUu0USeJouJ+JP/YhiNgXgUgZU974XjCzbMLsDJ6efK0Ycx9XPFaY
+X-Received: by 2002:a17:907:6c17:b0:c29:4915:83cb with SMTP id
+ a640c23a62f3a-c5066d6947dmr397522366b.39.1794459060886; Wed, 11 Nov 2026
+ 20:51:00 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,82 +103,215 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYYPR01MB15175:EE_|TYCPR01MB9617:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6251b16c-c879-4f90-d181-08df406bd7a1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|52116014|18002099003|22082099003|6133799003|261009223027099003|5023799004|11063799006|56012099006|4143699003|261021121427099003|261102123227099003|10067099003|261021123027099003|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	T60O6kz6KGBMhsetLNBOcpvrOZ6gsNpyMMZGsAvwbvBqrIAl4rlN5u5dATfa6p6f4plTAh2T0qgIW4reSJK7lz5Gcsk8CJTfoEAYEiCKFNVUeYmWGJ7t6iiNO/QgddsP4slV0rElyQzeJOxxUUQaZ2ZT82oqmTeV9Mfpp8JGerPvUFh3oFflkQKk1q6SsFy86T7gkHqieJkzKS/vDljygZ6XdjOcEqMswAcFUB7efa2SsGflF0zFJcTterD5xSXaL00UnbcR3Sts8VoB/FIWTjMWW9O1JZrsllXpijS5jusBS5Ze5F7zzJMD1gDIAkXq4pCgd/xBUC2fvdRWlj5A6mKVO65oum0VdCVAiOnpD1nrDQWPhV+wS3LQAET0zTTfpBxz2O6NoJctWJuBdXPp/b5+3tO04nBryP5m/SBksxRhLmDFU0CGZtyLl/Xm6lnqSjRdPkpnwfnT01sTqMD7yjk+GAXmQ/e++W2bw2IbchC4XO9qfITUgLE6JLh9oBNInRt8srbxJ2/AQFQJ+Kb220g5WDgenwNDHwSLfl9RTb/Kxc+Kmucoqi9QUizuCOr1s2c/TLpREz69WGGbynuiDY0RdXqlkgVTX42Q4iscAS7MmxyrYT1ubBN5b2lcnyhAmstZoVNkNcvDO1sffNWDrcVqey0LQfV6qOFCAZo+TAV7Uy55DqDGndPzhG99UV6UUK4PZDdDQ5aCcMEyN1JRN4y4+JU2OyanFgxjTCF6P1k=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYYPR01MB15175.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(52116014)(18002099003)(22082099003)(6133799003)(261009223027099003)(5023799004)(11063799006)(56012099006)(4143699003)(261021121427099003)(261102123227099003)(10067099003)(261021123027099003)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?1Lj6KTsyG02zeQxyK5A9aLZgUWpmDvW47gWPcwuoWKZlHV0GKIBs09MlB9QE?=
- =?us-ascii?Q?zt9/JYV36y30+7XYCVBqxIsiXUnMeC+uNDe9MLgeaaxJff+BpaAypy6Q+sfV?=
- =?us-ascii?Q?eG/RwOntXzSPfgyBUlSmExokvZ/DmxDU2aYJC5/ez9yV9FDGMPQmrkdWGgq7?=
- =?us-ascii?Q?FDKXL5/HoydcW1jY/6E4JwkGUPS0IXFaGJq1O4IcGZzg8EBEahKgMhYADqJZ?=
- =?us-ascii?Q?cdvssC4LXua7oO8HVklMC6JFxW0MUM13J5120wJv9/dcS3X6TXZIeL0DcbVN?=
- =?us-ascii?Q?jYSEg6Gj7Mcx73A/XcUPTHJJ0W8cgcvCyK8Jc/2Di38f7bqsgVzw05fMH/H+?=
- =?us-ascii?Q?4uYmpitzF9xRoFOZjwmxPteQlCf8w+Z2iGM1rMiVME0eyoBwDgTKLlymPJ64?=
- =?us-ascii?Q?o/5WvIXBYK4twxIfNJEvVZAQI/za8fSFkgoT+ndjfFLvscC4EnDyriJCtDwW?=
- =?us-ascii?Q?TKEbvBb8bLGE5lMO9t/obkr5t+Vq4SXaqPZG4ij2YhEskZobU8Qzb2dQcv7o?=
- =?us-ascii?Q?T2OyRgkQ9RKo3fu5nv5kNgHBw3d4h6txu++gTF4csSdnVv01szUfgjsp+1nm?=
- =?us-ascii?Q?49KMXdzQ7C1y9hzF8JSqs2Wx8usX5BKVZQRzHrhLOAIXdTqBU2nhuFGbTp/h?=
- =?us-ascii?Q?LFJ8J7OF6FNSA/x6mTtcfMQSY2h6Ps/sdegsX/MDMBoc90guA4k3QgkRf5m/?=
- =?us-ascii?Q?0vqmuhukZkq7liBc+6Dm5upDe/vSp17LHiwtdQnyhRwh0X2fxANSG0xD9B0M?=
- =?us-ascii?Q?4O+Y0Hpd2AUujvWAxQOQkdOIFBV+IUukDrB0GypCUH9CZJ53LYcqY00qDRaI?=
- =?us-ascii?Q?8iub9JbvtG4uesFuTtRs9jAzJQD0DRXQTq2F9OH3jjsNYdGYRYHUm/oHoO47?=
- =?us-ascii?Q?qsnay5UwMmL59RjgFiBFQyBVZkThBM1hFLC0kphD7qbaWnbsnR9qK393YZIv?=
- =?us-ascii?Q?3xIUEM6pKCf3sRys5HyI5unzTgye7VvJwONXpupUw6t50f+pR51Uyzj+2YfO?=
- =?us-ascii?Q?aWr7SMx9KbnH2Y1rNL3itFQqG3y4WQjU6guB6lpvEXDpbinTlePqreH2l+cg?=
- =?us-ascii?Q?NsLb2K/0cECbYH31bo0PL6Jm94aKeVLA1OSXlps7yTJggoiJPFgyHZRLacqn?=
- =?us-ascii?Q?HKu4K4mMkxKO1DBpBR3goWDPIU6ubjRPMjJg0pxRJVsG9fvJ46DtLeysTKrP?=
- =?us-ascii?Q?e0iBgb/a33MxFsu3bUwU85oDaHdbCmFUTPN8NZpoI/5dLEo+C57FFOSZN9NI?=
- =?us-ascii?Q?sTk6q+RJ1FMkYFK7CoTsUPhGxSGypWVnK2ykGgfUYj4hhY/yzPCgUkcFbeja?=
- =?us-ascii?Q?5jFHeggLQ5Rb2trar3TA+zXadxzPf2J3SikZwK/i84KFyYKA1em7YV6G09Ww?=
- =?us-ascii?Q?/P5p02UScvup7DZ2L6+6+U/yh8LBoOP5GptLDI4Em4XYcc7BLQoLY6nEaJmv?=
- =?us-ascii?Q?v1ZaIFj91i1Oghi2iSV4pkfgz8aJVM0cYQ5De38R71h9cR73oG78rLAbm94J?=
- =?us-ascii?Q?/2T2nUom/wzkD99X5Kp40Cybztx4/ArlTWtCc/Do2bFD3/fEULHlvG7g7Q+1?=
- =?us-ascii?Q?AdhvZDoIVHS5l6ZrEVq9tLOg1AynyLkyHZ6PZ3RVMB4KSbzYZ7Vp08MbIrS2?=
- =?us-ascii?Q?OC5WYxuYORNlA2nzWCZAN/8KmfJ9HEzpQcykT7AEUL99b9GauuqHgowEPKU5?=
- =?us-ascii?Q?a56H7SJr4JWEXhwZ3UL/qe6d46J40SUQ30u+fMuE6Dn4WoCcgIdd/GPvRNvF?=
- =?us-ascii?Q?14f7LwyP2gZBe37MlYR+oU+J+jBCygYZ7f6m35bE8FZNnf7gstBq?=
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6251b16c-c879-4f90-d181-08df406bd7a1
-X-MS-Exchange-CrossTenant-AuthSource: TYYPR01MB15175.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2026 03:20:03.5002
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XsBao/92O3LJvvYtDYilc0lp0V7fDKW4CHhiyrT1+0caHhoq14g3cY5Q5acEx3EqSoVtD4nTzKcZ26zQt6M8Yk9SnBdCKB2sHgBkpND97nU8iQ++jurhVLlBL2d8s248
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB9617
+References: <20261110041832.1730924-1-alistair.francis@wdc.com>
+ <20261110041832.1730924-18-alistair.francis@wdc.com> <sashiko-outbox-206231@kernel.org>
+In-Reply-To: <sashiko-outbox-206231@kernel.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 12 Nov 2026 14:50:34 +1000
+X-Gm-Features: AclHuK-9VHicJV1Vi_F_TXRxI13n5FCeFli60f1unwNFJ7VY-Njj1MkgHyWgv9E
+Message-ID: <CAKmqyKMa7p6hkD1_NrABuaxxv3c=MQ0cDMUcAcYbPjtfOmJ4gQ@mail.gmail.com>
+Subject: Re: [PATCH v6 17/25] lib: rspdm: Support SPDM negotiate_algorithms
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, linux-cxl@vger.kernel.org, ojeda@kernel.org, 
+	gary@garyguo.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Nov 10, 2026 at 2:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] lib: rspdm: build failure in update_response_algs() without
+>   crypto Kconfigs
+> - [Low] lib: rspdm: unreachable extended algorithm loops in
+>   NegotiateAlgsRsp::validate()
+> --
+>
+> commit 69781025c793b90efaa465da8436c6f48e861229
+> Author: Alistair Francis <alistair.francis@wdc.com>
+>
+> lib: rspdm: Support SPDM negotiate_algorithms
+>
+> This commit adds support for the SPDM NEGOTIATE_ALGORITHMS command,
+> including request construction, response validation, and algorithm state
+> selection.
+>
+> > diff --git a/lib/rspdm/state.rs b/lib/rspdm/state.rs
+> > index cb6a351fe6085..169d0d3fee9bd 100644
+> > --- a/lib/rspdm/state.rs
+> > +++ b/lib/rspdm/state.rs
+> [ ... ]
+> > @@ -265,4 +323,113 @@ pub(crate) fn get_capabilities(&mut self) -> Resu=
+lt<(), Error> {
+> >
+> >          Ok(())
+> >      }
+> > +
+> > +    fn update_response_algs(&mut self) -> Result<(), Error> {
+> > +        match self.base_asym_alg {
+> > +            #[cfg(CONFIG_CRYPTO_RSA)]
+> > +            SPDM_ASYM_RSASSA_2048 =3D> {
+> > +                self.sig_len =3D 256;
+> > +                self.base_asym_enc =3D c"pkcs1";
+> > +            }
+> > +            #[cfg(CONFIG_CRYPTO_RSA)]
+> > +            SPDM_ASYM_RSASSA_3072 =3D> {
+> > +                self.sig_len =3D 384;
+> > +                self.base_asym_enc =3D c"pkcs1";
+> > +            }
+> > +            #[cfg(CONFIG_CRYPTO_RSA)]
+> > +            SPDM_ASYM_RSASSA_4096 =3D> {
+> > +                self.sig_len =3D 512;
+> > +                self.base_asym_enc =3D c"pkcs1";
+> > +            }
+> > +            #[cfg(CONFIG_CRYPTO_ECDSA)]
+> > +            SPDM_ASYM_ECDSA_ECC_NIST_P256 =3D> {
+> > +                self.sig_len =3D 64;
+> > +                self.base_asym_enc =3D c"p1363";
+> > +            }
+> > +            #[cfg(CONFIG_CRYPTO_ECDSA)]
+> > +            SPDM_ASYM_ECDSA_ECC_NIST_P384 =3D> {
+> > +                self.sig_len =3D 96;
+> > +                self.base_asym_enc =3D c"p1363";
+> > +            }
+> > +            #[cfg(CONFIG_CRYPTO_ECDSA)]
+> > +            SPDM_ASYM_ECDSA_ECC_NIST_P521 =3D> {
+> > +                self.sig_len =3D 132;
+> > +                self.base_asym_enc =3D c"p1363";
+> > +            }
+> > +            _ =3D> {
+> > +                dev_err!(&self.dev, "Unknown asym algorithm\n");
+> > +                return Err(EPROTO);
+> > +            }
+> > +        }
+> > +
+> > +        let hash_name =3D match self.base_hash_alg {
+> > +            #[cfg(CONFIG_CRYPTO_SHA256)]
+> > +            SPDM_HASH_SHA_256 =3D> c"sha256",
+> > +            #[cfg(CONFIG_CRYPTO_SHA512)]
+> > +            SPDM_HASH_SHA_384 =3D> c"sha384",
+> > +            #[cfg(CONFIG_CRYPTO_SHA512)]
+> > +            SPDM_HASH_SHA_512 =3D> c"sha512",
+> > +            _ =3D> {
+> > +                dev_err!(&self.dev, "Unknown hash algorithm\n");
+> > +                return Err(EPROTO);
+> > +            }
+> > +        };
+> > +
+> > +        self.crypto =3D Some(Shash::new(hash_name)?);
+> > +
+> > +        Ok(())
+> > +    }
+> > +
+> > +    pub(crate) fn negotiate_algs(&mut self) -> Result<(), Error> {
+> [ ... ]
+> > +        self.base_asym_alg =3D response.base_asym_sel;
+> > +        self.base_hash_alg =3D response.base_hash_sel;
+> > +        self.meas_hash_alg =3D response.measurement_hash_algo;
+> > +
+> > +        if self.base_asym_alg & SPDM_ASYM_ALGOS =3D=3D 0 || self.base_=
+hash_alg & SPDM_HASH_ALGOS =3D=3D 0 {
+> > +            dev_err!(&self.dev, "No common supported algorithms\n");
+> > +            return Err(EPROTO);
+> > +        }
+>
+> [Severity: Medium]
+> Does this fail to build when CONFIG_RSPDM=3Dy is enabled without any asym=
+metric
+> crypto option (CONFIG_CRYPTO_RSA and CONFIG_CRYPTO_ECDSA both disabled) o=
+r
+> without any hash option (CONFIG_CRYPTO_SHA256 and CONFIG_CRYPTO_SHA512 bo=
+th
+> disabled)?
 
-Hi ALSA ML
+Probably, but that would be an invalid option and probably should fail to b=
+uild
 
-> [Severity: High]
-> Can devm_component_release() call list_del(&component->list) a second
-> time if the driver already called snd_soc_unregister_component(dev)?
-> 
-> Previously, snd_soc_unregister_component_by_driver() looked up the
-> component on component_list first, making devm_component_release() a
-> no-op if it had already been removed.  Now, calling
-> snd_soc_component_unregister(*component) directly invokes
-> snd_soc_component_unregister_unlocked(), which unconditionally runs
-> list_del(&component->list) without checking whether the component is
-> still linked.
+Alistair
 
-Ah, good cache.
-I will fixup it in v3
-
-
-Thank you for your help !!
-
-Best regards
----
-Kuninori Morimoto
+>
+> When both options in either pair are disabled, the corresponding match in
+> update_response_algs() collapses to the diverging wildcard arm alone, whi=
+ch
+> triggers rustc unreachable_code and unused_variables errors as well as
+> clippy::match_single_binding.  In addition, SPDM_ASYM_ALGOS or
+> SPDM_HASH_ALGOS evaluates to 0, so the bitmask check in negotiate_algs()
+> triggers clippy::bad_bit_mask.
+>
+> > diff --git a/lib/rspdm/validator.rs b/lib/rspdm/validator.rs
+> > index 66212f0faf5f1..335f2f43dc07c 100644
+> > --- a/lib/rspdm/validator.rs
+> > +++ b/lib/rspdm/validator.rs
+> [ ... ]
+> > +        // We currently never request extended algorithms or algorithm=
+ structures
+> > +        if header.param1 !=3D 0 || ext_asym_sel_count !=3D 0 || ext_ha=
+sh_sel_count !=3D 0 {
+> > +            dev_err!(
+> > +                &context.dev,
+> > +                "Responder selected unsupported extended algorithms\n"
+> > +            );
+> > +            return Err(EPROTO);
+> > +        }
+> > +
+> > +        let mut offset =3D NEGOTIATE_ALGS_RSP_SZ;
+> > +
+> > +        let mut ext_asym =3D KVec::new();
+> > +        for _ in 0..ext_asym_sel_count {
+> > +            ext_asym.push(read_le32(offset)?, GFP_KERNEL)?;
+> > +            offset +=3D mem::size_of::<u32>();
+> > +        }
+> > +
+> > +        let mut ext_hash =3D KVec::new();
+> > +        for _ in 0..ext_hash_sel_count {
+> > +            ext_hash.push(read_le32(offset)?, GFP_KERNEL)?;
+> > +            offset +=3D mem::size_of::<u32>();
+> > +        }
+> > +
+> > +        let mut resp_alg_struct =3D KVec::new();
+> > +        for _ in 0..header.param1 {
+> > +            let alg_type =3D *unvalidated.get(offset).ok_or(EPROTO)?;
+> > +            let alg_count =3D *unvalidated.get(offset + 1).ok_or(EPROT=
+O)?;
+> > +            let fixed_alg_count =3D (alg_count >> 4) as usize;
+> > +            let ext_alg_count =3D (alg_count & 0xf) as usize;
+> > +            offset +=3D 2;
+> > +
+> > +            let mut alg_supported =3D KVec::new();
+> > +            alg_supported.extend_from_slice(
+> > +                unvalidated
+> > +                    .get(offset..offset + fixed_alg_count)
+> > +                    .ok_or(EPROTO)?,
+> > +                GFP_KERNEL,
+> > +            )?;
+> > +            offset +=3D fixed_alg_count;
+> > +
+> > +            let mut alg_external =3D KVec::new();
+> > +            for _ in 0..ext_alg_count {
+> > +                alg_external.push(read_le32(offset)?, GFP_KERNEL)?;
+> > +                offset +=3D mem::size_of::<u32>();
+> > +            }
+> > +
+> > +            resp_alg_struct.push(
+> > +                RespAlgStruct {
+> > +                    alg_type,
+> > +                    alg_count,
+> > +                    alg_supported,
+> > +                    alg_external,
+> > +                },
+> > +                GFP_KERNEL,
+> > +            )?;
+> > +        }
+>
+> [Severity: Low]
+> This isn't a bug, but since NegotiateAlgsRsp::validate() returns Err(EPRO=
+TO)
+> above whenever header.param1, ext_asym_sel_count, or ext_hash_sel_count i=
+s
+> non-zero, the three loops that follow can never execute (and duplicate th=
+e
+> parsing in SupportedAlgorithms::from_bytes()).
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110041832.17=
+30924-1-alistair.francis@wdc.com?part=3D17
