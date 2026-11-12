@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.160.73.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794481008;
-	b=wClJNxJyPoJMGSXexPY1ha9y/SmHQTRy0h58tksF1uQBf3tR5ZjA1d6ITXMS0XLvSTaA
-	 0O43KX6gtQLhAb2xPiIUz03O81Ce8M1rZTtuPS1IiO9tvLa2GX+FpHTWvy/3sRx5P0x6m
-	 PYrzo+qs33EtE4veaBdpWC42vsTXf4qt0AnIe7xweNvSxTUDVNFmz09bSG0ho6lZQWujD
-	 VRaoJhm8O75SzmNzZHtFDTvXaGXwM2SP76sRGOw+hnVyrtAEGJ52DYBkAyLsjFcQtpWI+
-	 z4lGzhgDc3E0HMh9GpysX9iCyPlWVFCrl4A59Uv+D2UEaPFZmUXNVNY1nof0y8IMnXQ==
+	t=1794481062;
+	b=nsTdPZzFgDxEEzv2VjCdgzBL5/Xve16qJDXRJMh4WvyM4uAS7TqqOOhXGV54299oBuO4
+	 7BOdsFdxW5uRVkkFZvWxudHb9MtQpJNciMC2YFGalGuGQsSyupsk8JMv/hT3hjyKAIXzJ
+	 Ys4pN1ReFVb+TcrfC6IXMDfyimc4nL1k9MKnnoKI2joZjlYvOEFMeQ9s6WOqVIBYCB9/X
+	 yo1+zOVwg3H8/WDos5e86GEah/SwPsvkeoFfb33I5wbPP8n/ERAimfK5Vd0UN1q0HyDxc
+	 WAF77qhU01t0f6hRc3JhYZ+nEIC8oT7UeiQ83LRfBEnKYG4oH7PUMTkVvkOHD78qP4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794481008;
-	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:Date:
-	 Message-ID:In-Reply-To:References:MIME-Version:Content-Type;
-	bh=kKN5BRpLDy7pI7ND1ZNHTvq6FOkgszxeU7B28rE9CG8=;
-	b=K/Leu/zP+f3Vhc1cagVlfrnkZUCTmtCLv6tGcisaeznyaKJSNmjHz8iq7WTiL4Ay2y9s
-	 aTOZ479GDp03/XWS5KzdJuDpEbETgHg2vMA+HLJwFbOmyN9pGznXDd63osftIAzw0rmr/
-	 vP2KHxQcLyzu+d51k5MQ60dvqmGVVC116je4oKHLj7r5f64MllgN2w+RJij9h2XOpzjIy
-	 tcJiMmAai+7NeEYbWRF2v+N8BfVTaaIotjZ8hTSw+gDf4t/SsQi7pI7uxo0PWj/8OlzcS
-	 fDTmnsByNTe1qHl0CiezWih8oL8l6M7AtRWxzbVHH7Dee3PMwatO3u2leB/jyZwh17g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794481062;
+	h=DMARC-Filter:Received:DKIM-Signature:From:To:Subject:Date:Message-ID:
+	 In-Reply-To:References:MIME-Version:Content-Type;
+	bh=8P9ng6dnAOZ1uLRwI2Xyior8nl1Uol/mP/8AoZqdZUo=;
+	b=a4sqabsGnquFb5os3Qp+55ioruBkTopOeQ6hjceRlNc7rGB4NTMeLpAN/T2mSe7iKLDf
+	 My14F+eVTmnaHarzMT0tfS5rHBPFTJjMGbmofv3OFCDh/Ds2bfqlyXk8A6VMGLemy9JfV
+	 J9jvLUx6nea6QCPaV4HzDMaXJ+jke3G64hSTeIMULkkwarPP3KzlNRHTwZJ4PwumPXyY6
+	 wvOQmyUkY7ItWPT+5pNhld/oOF36wqmqOYDMP3FDsSApXPt6NxPUx+i1JwEk7bFQXDLsI
+	 RkXFFxxbtsczArfgUMb0b7JWehMdJscRyHdYtt35waBIYTJ4aLe6hN+EtREhwSMXh9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=narfation.org;
 	spf=pass smtp.mailfrom=narfation.org;
-	dkim=pass header.d=narfation.org header.i=@narfation.org header.a=rsa-sha256 header.s=20121 header.b=qFHkR0Xb;
+	dkim=pass header.d=narfation.org header.i=@narfation.org header.a=rsa-sha256 header.s=20121 header.b=aZBIcGHd;
 	arc=none smtp.remote-ip=213.160.73.56
 Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADE9606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 10:56:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CADE9606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220A6606A32D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 10:57:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 220A6606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.a=rsa-sha256 header.s=20121 header.b=qFHkR0Xb
-Received: by dvalin.narfation.org (Postfix) id 7D8EE200DB;
-	Thu, 12 Nov 2026 10:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.a=rsa-sha256 header.s=20121 header.b=aZBIcGHd
+Received: by dvalin.narfation.org (Postfix) id 46F7F1FEF7;
+	Thu, 12 Nov 2026 10:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1794481005;
+	s=20121; t=1794481060;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kKN5BRpLDy7pI7ND1ZNHTvq6FOkgszxeU7B28rE9CG8=;
-	b=qFHkR0XbVfifMrgt2QHY6emn44dB8WfcIKX+LYNsuepHAJkR9j1ZGO5hyTPwZ8iKACQ4kP
-	zeZuT0HPLoZmJpslYoruU8GNWfXS8K7GQMWFHB0iwjUo4hxbrejZHrCoh3VmLY7gG9PU78
-	eA09VfWVsyANpZK20qyoTwTFA1Fy9lc=
+	bh=8P9ng6dnAOZ1uLRwI2Xyior8nl1Uol/mP/8AoZqdZUo=;
+	b=aZBIcGHdgmTgfk0JcPXJLdRysccdxIvZ/gaPvXpts6Ofv5Y3eOzvbwWlk3Cs5A0WFSNdlC
+	aXjzjLzKCOIB85shL/DCf4ggsC9869mYZ9NSWOp2K5ht2NFUHFIfa1J1JkBsqpC+2fk3dO
+	uiewdbMYQkq+6nYDyjZ4z8TL97QIwfo=
 From: Sven Eckelmann <sven@narfation.org>
-To: Simon Wunderlich <sw@simonwunderlich.de>, sashiko-reviews@lists.linux.dev
-Cc: marek.lindner@mailbox.org, antonio@mandelbit.com
+To: sashiko-reviews@lists.linux.dev, b.a.t.m.a.n@lists.open-mesh.org,
+ netdev@vger.kernel.org
 Subject:
  Re: [PATCH net-next 09/15] batman-adv: annotate originator last_seen with
  READ/WRITE_ONCE
-Date: Thu, 12 Nov 2026 11:56:42 +0100
-Message-ID: <3711917.V25eIC5XRa@ripper>
+Date: Thu, 12 Nov 2026 11:57:37 +0100
+Message-ID: <1831685.QkHrqEjB74@ripper>
 In-Reply-To: <sashiko-outbox-210959@kernel.org>
 References:
  <20261111102729.2096241-1-sw@simonwunderlich.de>
@@ -65,16 +65,15 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart3774230.LM0AJKV5NW";
+Content-Type: multipart/signed; boundary="nextPart4751616.8F6SAcFxjW";
  micalg="pgp-sha512"; protocol="application/pgp-signature"
 
---nextPart3774230.LM0AJKV5NW
+--nextPart4751616.8F6SAcFxjW
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
 From: Sven Eckelmann <sven@narfation.org>
-Cc: marek.lindner@mailbox.org, antonio@mandelbit.com
-Date: Thu, 12 Nov 2026 11:56:42 +0100
-Message-ID: <3711917.V25eIC5XRa@ripper>
+Date: Thu, 12 Nov 2026 11:57:37 +0100
+Message-ID: <1831685.QkHrqEjB74@ripper>
 In-Reply-To: <sashiko-outbox-210959@kernel.org>
 MIME-Version: 1.0
 
@@ -106,20 +105,20 @@ This is adjusted in the next two patches in this patchset.
 
 Regards,
 	Sven
---nextPart3774230.LM0AJKV5NW
+--nextPart4751616.8F6SAcFxjW
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part.
 Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCavWbagAKCRBND3cr0xT1
-y7oWAP4sOl4ZRDJWUHcjbWCz30XsZ/Wdc4GE3vP4bxj2MEZpfgD/WesixklV98WI
-U+Jjl9XBVuvIs02YlFGUlM+xc1E/+gU=
-=22tQ
+iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCavWboQAKCRBND3cr0xT1
+y30qAQCxM2pzrCpWwjtmdG17Uozu4UXuGHZ7Y558+4W2pqCO7wD/dz9ukJGdb+Jv
+qjF9rkCqVOr4xg+aDzhwJ5Pan1aQGww=
+=hGQR
 -----END PGP SIGNATURE-----
 
---nextPart3774230.LM0AJKV5NW--
+--nextPart4751616.8F6SAcFxjW--
 
 
 
