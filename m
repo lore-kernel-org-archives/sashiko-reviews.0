@@ -1,99 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794498748;
-	b=MFmI3nqiiNRtMm+zGSQij+ab/GfjPyAT73Xv3sqw060jfVQ0ivxzw3GLxlnO3Zahs+l6
-	 2Os9RRoSmlpltjconDnMpQpKJD5mdsqxnmXEIX7M9OLOeOAEIa3nvZ6rFr8p5qc6WRt9Y
-	 Q/Vusl6sWPA5HP73ZyYgotFZWUUnFR8Rh6AmN/MW6mwmISld55nMRozANTEOdZsQ8mKEF
-	 7fl14D/lwa/A9Nuc6os7RAIdYGzuUZ5DQz9qOws/NXQaGyJIg3Z+1gld0f7kX0kvhgjNr
-	 LyMZ7za9/pJhzdaRRYL2iR5pEpyZfwdD2CxKTFQWgrjN5Lq7MQTWRbG2wczLH/JcEyA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794498748;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=pFkKfIywj/ZyBZbX5KkOiMNv3xL2LHNwZUtS7p196fg=;
-	b=qKsdygQGUy/Ea4fgzFDeO5g5CkxRyCkb4KE8nniiH6Uiy5X8W7aJHs0oUa78S0vW9FIj
-	 XiwqjzYohVWpMlfMVHb+0Vu0PVDbQYIWTlg8FGW1UiLvI1ipqb/a0NQs6MxASKUf3W4md
-	 vfSrwsgTh2J+dm+Js9aNPi9LADHqf+JUCFrXRmOuWjCulXtewtjzkxSJxA8IgXqy6RSjS
-	 faOEo+mRYcqKzrs02NTs7I59DauVD+XOw72umMsB4LL5k60i9k+KKGyc1Fxd46NuPcWk6
-	 +IC7M562UQoQLmTr5YRgwyYbhUYlMk1j6JGFolcjzeT7LEJBUkbBnryMzgCaSrVvPhQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lC2F9Y6W;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.42
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794498799;
+	b=x85uaWkUcCXoC8eZL9bIl1ucwUdAv0L7Jtg17tHF3L1K9i/rwh4Bqao7LIzJb2F8pxHM
+	 qUGN/PLlUdepY7CHWP88bPdTeTghb/Zvo8wCz2rFxeKoXHzoCqEYTpuxTC2/RSq6vH+KI
+	 zmVi6BUp9G7rUNZ1oDpIDHH5/DAQSi911kBh7MC1LaOBu+XZ0qztA7w3a+Hwt12nAZXbH
+	 3Mw3Lz6OOX/zLA3lmDvZj8GJxQ1ZNE5xBcAkfpupY0wkDHl/V5pr037r2pbnKSpIWyeuU
+	 tpbfpN2u6i3/YTinZ4yElNgxJ4NwqsmLEaOsUqGFvPDbb8GUYMKAb3mkl4hqDlZg4kQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794498799;
+	h=DMARC-Filter:Date:DKIM-Signature:DKIM-Signature:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To;
+	bh=UFtl5GLe9nZn9BitOJaL1QWLScfaFrXmqzl4iAP7tmo=;
+	b=eAWyn7LikTrJZsApMuiPLOQtBtTcrWiQ+Qbe5/H02eqwjV89FRBbt3Skyl9mk2RTRUdq
+	 mlxrWT3yZ37GP/bDOKx5jorzJioKste6qANKDI5OXZT/v5fUSBS4Ia37l5rlutLLrsoLv
+	 hOnpCLe6xdA1qhIOAtuE9jO88xAoADZZlLMecDwciq9beXW1T02zQeTy1HPp17tcRgYFY
+	 g+PrdSThb/u+ideuzqxYnxJDbCscF93lLQGhh6erUDmuN8YWfB19zoFu2AsqFz01XjfUp
+	 aPWORyEAggzE3f4hRVWearkCCgqI78ueYm9BNyqNTGMjsK3AH8T7LJb23u88OMWzKPA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=wixbtCzT;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b="EPiN0gr/";
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E9D606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 15:52:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0E9D606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29818606A338;
+	Thu, 12 Nov 2026 15:53:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29818606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lC2F9Y6W
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3b083afebe4so214929a91.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 07:52:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794498747; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mXTxzaVaHeX5b2KwbBD7YSlxUwI8/x9wJ5uIxK8IVb0QQGvTcTpoo7GjiTaDCadtIY
-         Qv5nYeHf/LsxpSCxLbPxcQfYdqLOUWQmQXbOZfCR+KydJWGsXlbsjja4fq2XOkWXIfIb
-         g0Gss50+sIcgybie8D4ImOu7nGlqM3jhTCB/GZnjh+FdvIem1MbYnOg+1dZHdWaTXTpo
-         BqJDNkLBjmhXGkHVonDXGH7CAgfmFwJ/XRuzwHzee65/aYnLSoerFAEeAR+GJ/t2Fv6W
-         XWN8QYreykleXX7a9iUQV2zCSmJRJI1gQRyLRXWEdc64nXQqIVSqVN8SSGl4eV99CAas
-         VL7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=pFkKfIywj/ZyBZbX5KkOiMNv3xL2LHNwZUtS7p196fg=;
-        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
-        b=heFRRkzzXabj0u55W/kdxt+BCclWM72IlXtFLyBqoJrncvSVRySA3sjdm3ekzrq+dU
-         qetzIqnpk6Yf00e754ZPSpaNIJfznTXioDmTu/SqHNKF01Kz2XW3OOTwRLUR14tM05cD
-         FhvtR5Y6nlaMPf9z6di9NS+UweJFnl0bXgF5Ob/9lAwGOM0T2ZkoMPXWmXdbO1La7cSE
-         nH2UKXPL5TayKW+qecOnhcKBu0/UTkIyWdX6RiwupMqPsFeP7i554JHiP/o5D0TfQcyw
-         dcMG8PFbk7vHWxz6l1hxfSk86x9w7oYYCqDmy6tlZLEbx9Fp1U6tg4SemJsyE3J5uyU1
-         AHOg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794498747; x=1795103547; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=pFkKfIywj/ZyBZbX5KkOiMNv3xL2LHNwZUtS7p196fg=;
-        b=lC2F9Y6WkmqUaFtr6Re6UN/9yKyuJTzsQj8BDtQzg2Hh1eBxkxHRdDDfCbfd3UlfX2
-         CP/vT6vTPGbozofHQkEZmHm762qxe3H56hVCKha7jNDFQZO+kl4JeK6sK3/6H2aJ/IQL
-         XPrNeT0tNpQsdC6u3YNZ9RwvxUwxF+sd5I2GEqwWHi8JvNlfHSwcxYqgUxS37ABR6oMb
-         5P5pJG+uspMglyVhhCYjNHGcjC+/fZnXQ095U1EGXCQSZyubkO7H2KCiIITOKQx6hy3R
-         rMJgTbtTzRMQM/d4FeAQtE8PZTric/LiWDpXuJjYWlXqkeCBkykPBCw+pqR+61PFTEiF
-         jTBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794498747; x=1795103547;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pFkKfIywj/ZyBZbX5KkOiMNv3xL2LHNwZUtS7p196fg=;
-        b=Au+Cojf7ur8OsfkATQLAVUkUyH7AzI1UNUiGgCTwOG/Cg/j0Yf8VE8FyLtygOFt3ud
-         ajxn2gojfuvWjqFMCScoe+HRSOhOAw7lnQEcMuXmKExWOgcwnnMFeDy4EULlUKEyaEjZ
-         TmDgCwpzR4XOBREHGcNiRtbnXTKHdFf81kPey8y6KXDreIESm9Jvb2Xgskb3LESkMq65
-         qzZXtIFeXZtbJdyUOZlNjXampGH/h3h2EcA7eFZJ62bnOFVgxygysOnW5t0Uw50btIu8
-         va1/d/ic4w1SlC09oWxq5Pdjf6Szrn0vETNuTnhb2nBr9YpYPTZmt5XSCWWi7WIZ2k86
-         KvMg==
-X-Gm-Message-State: APuU4Z9+0wdO/y/Uk+CfxYvb0uUA2mRgvk0w6NFQ3k8zNaUV6BexkK18
-	0hDdd5AH7fbsA7y8E84/ivNU4+73yGqq6I+kzSMo2ineNjupeU+9q08G53orO9na7VCbWn1gt49
-	w/TH02XTQVdHvRz22EJtO5PPS29W7IghYaS37
-X-Gm-Gg: AYBFou2nzAXmzHF3YQeqFONFAMdsgEgcp3nlRGbfSH+AfuQmEYWRQF2HjdPJUmFXtub
-	c0XA64LmBz8Ka0u6R/gNMIBAdOWYFshvrY4717TS2RPhjQpFDEHAuR95MGMcgjwx+DAHHjkVSph
-	YC2ZiJJ634GH7BXqpjkl/phYu+ITHRlfUSca5YRhK586Qm2BuZb0VDCBNsyt3PjsI+n+OgZPs+4
-	nl3sbbW80W3DmzjUZguVGfUxd2VP0s40Xh6rLnzkyoj6LtGqTY1UOqLbVtlv5RaL2o2GFKtv3sh
-	HW2rWuLh0WiQonR6c+lUG9nDOA0wuFcUFJx3mwHR4Dbl//qecPn45AJbVWr0mprJuoY9x/8d8Fs
-	wWtfE6T1AMyzi4UAINBny2++nr0GOivBUsPDLHQ==
-X-Received: by 2002:a17:90b:134e:b0:3a0:c162:51af with SMTP id
- 98e67ed59e1d1-3b182d6a766mr9385950a91.0.1794498745885; Thu, 12 Nov 2026
- 07:52:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=wixbtCzT;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=EPiN0gr/
+Date: Thu, 12 Nov 2026 16:53:15 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1794498797;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UFtl5GLe9nZn9BitOJaL1QWLScfaFrXmqzl4iAP7tmo=;
+	b=wixbtCzT/zD161L+fADU+VHbeRMZthwXbLkiVMNah81RqVCw2wzAKwfpzzus6M/7kO0RAp
+	/tWy9x4NrY0pRp4v+UxF9R4CZcEJ1OXdOgYYMNZc8RdkS5XFzNFYU6XWBtq0VhbMtKwvT6
+	ah0TtMHGjxhjhNzAzrvkAIcG8El7w5eo0q04tdbA15qtVahuX6mKZEm1hVT+aeSmb9oK5q
+	0TNrNfMn3ai8m8LFrGgn8++TQ2Q+RTL79AZXBy95trZjGvpTWrJJ6d79JttJTyJr4MOUBs
+	DfIJK2huLxIdJstif3P3/DMh7W7QhRUuj+WfkyycYWN1+YIQuM0NcZlyrA4gsg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1794498797;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UFtl5GLe9nZn9BitOJaL1QWLScfaFrXmqzl4iAP7tmo=;
+	b=EPiN0gr/Zgzia99J1JDPUJoaPrfPvrXsBek11pT6qFUTeLfD1Cv8Kef56XEAkhQ/Hhmgr1
+	nt+9Cz4rCi37O7Cw==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Clark Williams <clrkwllms@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	John Ogness <john.ogness@linutronix.de>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@amutable.com>,
+	Daan De Meyer <daan.j.demeyer@gmail.com>,
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	linux-rt-devel@lists.linux.dev, debian-kernel@lists.debian.org,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 04/10] kconfig: Introduce checkconfig target
+Message-ID: <avXg6yuLW0GwFiYr@lx-t490>
+References: <20261106091922.7560-1-darwi@linutronix.de>
+ <20261106091922.7560-5-darwi@linutronix.de>
+ <sashiko-outbox-202759@kernel.org>
+ <avIn71Md3LtNaYje@lx-t490>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,64 +88,30 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261107165303.13508-1-lui2012qwq@gmail.com> <sashiko-outbox-204751@kernel.org>
-In-Reply-To: <sashiko-outbox-204751@kernel.org>
-From: Chengyu Liu <lui2012qwq@gmail.com>
-Date: Thu, 12 Nov 2026 23:52:13 +0800
-X-Gm-Features: AclHuK-DW0Wyf1thbDSXO7RLTdFK8837q2tulUfBni-HUsH0xnhsu0BaucfkLqE
-Message-ID: <CAE=Q7=5M2XXqWpO4SXL4uSzBL5Yvt_Tg6o2nDTpZak281w8keQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/gem-atomic-helper: fix fence leak on
- dma_fence_chain_alloc() failure
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <avIn71Md3LtNaYje@lx-t490>
 
-On Mon, Nov 9, 2026 at 5:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> [Severity: Low]
-> Should this commit include a Fixes: tag for the commit that introduced th=
-e
-> leak:
+On Mon, 09 Nov 2026, Ahmed S. Darwish wrote:
 >
->   Fixes: 1ea28bc5542d ("drm: handle kernel fences in drm_gem_plane_helper=
-_prepare_fb v2")
+> On Sat, 07 Nov 2026, sashiko-bot@kernel.org wrote:
+>
+> >
+> > In addition, grep -qw treats $(RULES) as a regular expression with word
+> > boundaries against the comma-separated output of list-rules rather than
+> > matching an exact profile name.
+> >
+>
+> That's good catch; will fix.
+>
 
-Thanks, v2 will include the fix tag.
+I've just verified that 'grep -w' considers ',' as a valid word separator:
 
-On Mon, Nov 9, 2026 at 5:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] drm/gem-atomic-helper: missing Fixes trailer for commit
->   1ea28bc5542d
-> --
->
-> commit b6d9ff23bfcc702d784107d5026972257646c1fc
-> Author: Chengyu Liu <lui2012qwq@gmail.com>
->
-> > drm/gem-atomic-helper: fix fence leak on dma_fence_chain_alloc() failur=
-e
-> >
-> > In drm_gem_plane_helper_prepare_fb(), when both "new" (the plane's GEM
-> > singleton fence) and "fence" (explicit or previous plane's) exist, they
-> > are wrapped in a freshly allocated chain.  If dma_fence_chain_alloc()
-> > fails, the error path runs before dma_fence_chain_init() adopts "new",
-> > and error: only puts "fence" - leaking one fence reference per failure.
-> >
-> > Put "new" in the allocation-failure branch.
-> >
-> > Found by static analysis.
-> >
-> > Signed-off-by: Chengyu Liu <lui2012qwq@gmail.com>
->
-> [Severity: Low]
-> Should this commit include a Fixes: tag for the commit that introduced th=
-e
-> leak:
->
->   Fixes: 1ea28bc5542d ("drm: handle kernel fences in drm_gem_plane_helper=
-_prepare_fb v2")
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261107165303.13=
-508-1-lui2012qwq@gmail.com?part=3D1
+    $ echo 'word1,preempt_rt,word2' | grep -qw preempt_rt
+    $ echo $?
+    0
+
+So, Sashiko, this is also a non-issue.
+
+Thanks,
+Ahmed
