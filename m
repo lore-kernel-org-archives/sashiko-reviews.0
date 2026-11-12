@@ -1,74 +1,74 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794494813;
-	b=qptaH4cUcIzLUTj4ZPcWoZ0bgESn3RHGV/21PFJmiiTvArU9MSJR931M/Vumtw14VFqy
-	 ykNud0XBRaayo9nMcCceq0THT83maitr/BEO6JH7A6Pji4iZYuxgQ4mY3aKE8DewdfkC7
-	 DQawvehxqt6tV/MxDVnRZk+HP8QzgTjDw5qb8+nQtw8Z1CVHX3MPxIqa6TV3wEX/lmpYV
-	 oAd8yd/JwyN3JLtlFqABwFyAo56ifFxf/UMfnHN7wv03iarheJOhRS+WRKQC+0/sTW/Ak
-	 mLJxSYDz3e+HSiiD5SyQygT40ZRQ5MCxBN+DNtDdisynB9W9tDl58NdSp1xVNbPSExw==
+	t=1794495599;
+	b=Ik92cPTDm9pmKNtuJXWsDFYjbw0dmMtFZboivznZwnyOu7CV55mnWs/6jnfGzOMU1Xhi
+	 CdRv7ggPQ/BYYpQV40PXvYA8awXlF1zW7W04BhTGqJD5motYMXnigi57nQ8EyjljMlumd
+	 epEDDNujTdTPQbZG3tOlP3kiLL2eHxQLyzL3NJ2QPhDSDW4U4qmKNcWfalbcSeyJZ8FhK
+	 2BGKcOchhtixVlWWNbpth1Gnfc0I4TSPQCK24kSgTznG5CCxn1+cgbcoAevy69riqHIHL
+	 4Stm4joIy4zPtMraJdnHSbeucZqxcl152qq2Ikjh3LvPk5Rqo8SGiDov34E+tZsrVWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794494813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794495599;
 	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:X-ME-Received:
 	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=6YweJ4ATSwAQpdC3B4Lj/lC1Mz6y+Skt6vUq+MxWglk=;
-	b=Z7JRBja6TMv8NTqqHWiGtvVMZXFPGM/wPpsT7A6v6pSawj5bRyNzTDOD9UV8FwujPbF/
-	 3FJ53SfaAt47MHgLdWWAbmUVhZAOAPplBrHYSkmpd833Aw049ZK3EzZkmWaN0ZA3t08cR
-	 RKJv07A2AW/WvkHTn/9k6UJw+nYzigmkXcynn7mUnKIdFhw7fO1SrbDY2pNuLpdk8AdcW
-	 JrjxG3pS6WFCNZc2HLOS7HD3VaOidR5yOo2v7nP1bvPZoDLn9hjXapqEZ8rGJkw/LOdug
-	 MYQ8C35x7j14dTzAvhr8k3hQtpu6EOwAl4V9fXH2kec8sXRkOu0PGeSOqmgAv9y5wFg==
+	bh=92f73/9CRUvx1XycGVQ0WiOmwZv9qXnh6P99S8eFYaw=;
+	b=mPDBtO2AxGZR/0MLl/wSfgpu0MZZkKl5Q5oSGOLtisJ8vDx7HIV7IxnqC1rNOzzr0PVO
+	 4rAWkbxPYWbt9I3kjFZs3RLEjLGAS/RLDJ9cqdBdRsfTXnOz8tUXIFwouq9C35sZ9Tnjz
+	 Gy0o05lltVGJwVTEnyIpSJe6sPmW5N/z4fBcpfKx8sM3jjZm+28THst2DSIN5D/OQX9Ta
+	 WjdQn0a+PaZSHhP7dypR7/0z9cbDTUWOGQ9fIOnmqk5OQjR/A694nW4Puuh8qCTm37LoB
+	 7VVNs25J4g6UMOj9wl7tEcpP64A4WE5L4ZORxlkFo5h1/u/w1GvEDUMi0swtV5+XJJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bTQamDpG;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lN0NhBYF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF21606A33B
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 14:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19448606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 14:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bTQamDpG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FE11F00A08;
-	Thu, 12 Nov 2026 14:46:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lN0NhBYF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2F01F00A09;
+	Thu, 12 Nov 2026 14:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794494812;
-	bh=6YweJ4ATSwAQpdC3B4Lj/lC1Mz6y+Skt6vUq+MxWglk=;
+	s=k20260515; t=1794495598;
+	bh=92f73/9CRUvx1XycGVQ0WiOmwZv9qXnh6P99S8eFYaw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bTQamDpGyMVV2YlIgDlfQjG/7pUPOU4QeYaMTeXznWGJXoiS7thfxwzGVRpGzm9iE
-	 8Uwirs5X9SIBjpT7kPq3KwVzKRZ8wfKiCZlPDd3U0Iu40ai166PKHxgS+jVshYnOhb
-	 fNawnjkGUvZzp9vZaSG1SM9CxqySvd6ii5g5klVF7XuMt4pRXuXA9FxosJ7uFsco+V
-	 l2KzibLUym83vzjNnU2UwvPnCRu6H7q38NOjWr3L0TEeL+u0xCgGuz0O8IsX/hZiBC
-	 GfwGytMoxz4TL4A9oQvMs33xr9oLcTx/CJQk4x3wWrDC3z9JrbuHOrsz6RrRF0XBEp
-	 KLJPI4JyuYGsQ==
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfauth.ams.internal (Postfix) with ESMTP id 8F361198003A;
-	Thu, 12 Nov 2026 09:46:41 -0500 (EST)
+	b=lN0NhBYF6MSKjwH4qYrBxBtqWs0Srd63fM+L/w2MB8LbaCOatU+NrC7u46gDPBkeg
+	 pnlQhsC0EhtKTFXG2APIyZ8Rx9dSVCz+PudoDUDo2d3D0EZV5nk1C0umAptzosneHe
+	 +tMYIslnzpPAUpz3+myupN1WYH5W/mm2+W8nzBy4tyTyYbaziFBJFr3VIpgb1IitdX
+	 hASwn853Zb6lDdRl11B6IQGOcajCwcxixVDlsa2Zn6FMDj1+/dNr6KbduVQ1gsPxke
+	 zudTNMlTNCdNmWO9R6vGZot73PY0mVnrbobchYXKN5/kcwppN2tmE+t1EiT64Gb5C+
+	 zToVuovfuptdA==
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 6E27C198003A;
+	Thu, 12 Nov 2026 09:59:47 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 12 Nov 2026 09:46:48 -0500
-X-ME-Sender: <xms:UdH1ahpGL7jUPQjkAJRl2JhIaeaGv8tVQ9u6odzUqHPBriRGKQGDJQ>
-    <xme:UdH1ahM7OXB0snsMeUK5nrOtiIHoVLQbZBwXBuMbhrqbmw3f71-kFPxpQtHLEZvu6
-    oUin6n0C6URjJMIF2bPybPHEczYghBtQigBW_DzRFJhl6a6h5UXfII>
-X-ME-Received: <xmr:UdH1avgQkuuFdq9uQ9SCs9qSpEBoDeprsnjzqhAR-9vUxe64so3jh43n8hk>
-X-ME-Proxy-Cause: dmFkZTFZXCPOdpgoG7Sn06VYsFtSSOVX4LvRR+IZONGtpob6pMpAAKO/67brjXXiKC/yqt
-    PCnhbCbvHUOoVYCNT4kVjuveGw+dXvIprFD/YACgqbtnel/TmFMV6qGskDYUa0P8h3Od75
-    wrI/nnPxoscSdAEJx1gJYLeSoSvZIyEQFlDGL5x+GpMb1jaNZHzRlgCV+E3Cu8RgWJK+9e
-    BsDvN+pM4I2WWFu/gxlAAso9/LyfSk55MURq7DRxPKfBR2AVy6mcitcvb8EC1zSjecqXVf
-    g8U8l32ogRWuJQCndXaeCOZwVCIK7+RsqRc8uDYNYEtot18m3Tu+IX07SgfKp5VRUjIyKq
-    j4kRNug8fCs72e2RK9boHuMIh2JZ2XGBklGuD+2DcGj8tYzVQHHJKtbfASFUEPwIHpjkku
-    ddqC/C4SI0gyTEpk8FijU2gaINJFeT694ExXq6/ngFUlw3HIIY6+v7r73xIaxSms06tpPO
-    nGsI30IFUeVVAVDvEK5+uPDFKoT3d9REgtvDz81UtDvHituV7gsg+SWaOEuojwNplJ7/Tm
-    ZJ0jfo/LKbuo4HKiPIt5GP+SpqH9xe5udyuOJJ05B1Zk28PZ5NEzrTNwbYVTLi1kDLBMg7
-    FPj3L2omtFfHnSqwIyGqJobSo5ulLYr3DB3ZddEHBuAgoVg1iuVmNWmOxWhw
-X-ME-Proxy: <xmx:UdH1anSuIXUCB0mZYpoiTtzk9D5vNJQY2WyL_6xOVXXY_1_7K2tQYQ>
-    <xmx:UdH1avWiYN6nhjeXMunCKXAjjz_PgW4CnuGRIdT_7Rp3DAyZucq8Ng>
-    <xmx:UdH1ap482GbXSt_Cej7PhQkdzn9CopUhK6PaZyDjBgviMlsGbv7GXQ>
-    <xmx:UdH1aq8G5E7g7yv1IM7uzeTJkytrcfZkJmB6vvtNuEzUug0B1zLedg>
-    <xmx:UdH1ahn4tNaiOyi6IckarLgDd3PwKQQdiZ2nevXMjGI65FM5QHh4nrOR>
+  by phl-compute-01.internal (MEProxy); Thu, 12 Nov 2026 09:59:54 -0500
+X-ME-Sender: <xms:YtT1an4cxLHamg5sYIcUVoA0XrEkaAEGbO6Ar5TZXRLLHdST1ac3hw>
+    <xme:YtT1aoL6UqLIiqvXjyDEvc1EkEq8-L3J1rBlN8paZ18P2DDsllZQGtA-3z4XcwXep
+    wspR9RrWKz9zfJGNooamnjEKjy7G4ng2Y9KY_KLDFWt4KvgsHvGmQ>
+X-ME-Received: <xmr:YtT1auuYmqeLlOqp9qgg-q4x4paBIcUo1VV2zHMrTGvVlv4cOMbqGLCGI7s>
+X-ME-Proxy-Cause: dmFkZTFFtf/isF8asN8syO9R8D7ImZyw9S7EENZhVbdmJZv7Bj/fwggTGDjuxjfSxGmHz9
+    SfzDwNAGDgi5AT/uPeOC8SB5U2EOL8l1kHKnEd4mgcL3Y0LUEnmx1xI+31otE1VjQpc08O
+    FE5QBUYl1ongapLPYt0Fyv6XJ5nPUh0jZOR3rZXkzxWk25xwnsuP92sP5+bzwUJrFWnK5a
+    vyUeFTvyf9WPujspMEYtJYg4pzMCdGbEWNmGUUkEVezxbNQyIVxy17II162e3fpBiYxt/p
+    aSyjFkkjDsIlLoMD2f90shIQsscdG37PL4qpVypIvNMnV9nUF80ntJOfAasqedfc/atFtc
+    VphcJ14tpA1Bfd9IBgIorTFzlAeQWy+5cRtH1MrIQkPOigKp2ziYFQOtNHZumpNwe5nWEy
+    zx77jPFCTMhuc4rng8RA0LX2ED6xHo7kuPmu9eVqppgr82LYaJk5mbMu9pthsb7OZ3eA/q
+    Wv1RrAPmaa617bdA7Dmayy19Md2uvj7iVZSS6l60n9kDnzN+FYOj4DJuPSiAAVz+O0zHRT
+    FWf/IdLf6ih9P36lTu9IcQfCUTdCR0UG8vpq+tqDLGSWFRuTflDT4+KVVIhpo3U5kZI71J
+    0SJ8SrW1kAKhJlZD1+5tj1z1rUWRxHsq2I2DE9bEqKs8XGjMB+5Uxfyl0nQQ
+X-ME-Proxy: <xmx:YtT1alz6SDp3LuNY3ZUeZk0KVT4aOTM3ZWDhVtbiqqxnwkFuuxvKOQ>
+    <xmx:YtT1apWEhU8LI9rRlHDUgds2yXnk1DtbwdXaMlJZUbzFmujZUimcbw>
+    <xmx:YtT1agc3nLYmgY9ypCkK8kPPjwZHbPaEEGj-E-MWdfFSKBUYKw3cVg>
+    <xmx:YtT1ag4WUAc0Nbno7wpewdcw-F7dQW3zajg5kIhM_qS4mpYbDFIQwQ>
+    <xmx:YtT1ak3ahUq9KmPoSl3PHStBCmLcEAsi9l3NOy1sOQv17Lp7MvqOp0gc>
 Feedback-ID: i10464835:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Nov 2026 09:46:40 -0500 (EST)
-Date: Thu, 12 Nov 2026 14:46:39 +0000
+ 12 Nov 2026 09:59:46 -0500 (EST)
+Date: Thu, 12 Nov 2026 14:59:45 +0000
 From: Kiryl Shutsemau <kas@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: Andrew Morton <akpm@linux-foundation.org>, 
@@ -91,12 +91,12 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>, Pedro Falcato <pfalcato@suse.de>, 
 	Luis Chamberlain <mcgrof@kernel.org>, Ilya Gladyshev <ilya.gladyshev@linux.dev>, 
 	Jaegeuk Kim <jaegeuk@kernel.org>, linux-mm@kvack.org, kernel-team@meta.com
-Subject: Re: [RFC PATCH v2 08/18] mm/compaction: free the migrated folios
- that wait for a grace period
-Message-ID: <avXQtaMRRsSNAJcT@thinkstation>
+Subject: Re: [RFC PATCH v2 09/18] mm/memory-failure: handle folios with
+ PG_rcu_free
+Message-ID: <avXURJ6gUjDC6861@thinkstation>
 References: <20261104130118.2507513-1-kas@kernel.org>
- <20261104130118.2507513-9-kas@kernel.org>
- <sashiko-outbox-199101@kernel.org>
+ <20261104130118.2507513-10-kas@kernel.org>
+ <sashiko-outbox-199102@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,17 +108,29 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-199101@kernel.org>
+In-Reply-To: <sashiko-outbox-199102@kernel.org>
 
-On Thu, Nov 05, 2026 at 01:03:39PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] mm/compaction: compact_zone() misses pages captured in rcu_free_drain()
+On Thu, Nov 05, 2026 at 01:03:41PM +0000, sashiko-bot@kernel.org wrote:
+> - [High] mm/memory-failure: unsafe RCU wait in memory_failure() already-poisoned path
 
-The capture check misses the same spot without this series:
-lru_add_drain_cpu_zone() frees the migrated-from pages from the per-cpu
-lists there and can capture the block just the same.
+In v3 PG_rcu_free stays set until the grace period ends, so the first
+case does not happen.  v3 waits there unconditionally anyway: the path
+already sleeps, and the test looked at a folio it held no reference to.
+The second case is real for shmem; v3 checks PageHWPoison() on each
+page in the lockless copy.
 
-If it is worth fixing, it is a separate compaction patch.
+> - [High] mm/memory-failure: mf_free_rcu_pages() skips sync while rcu_free_pages() runs
 
+The window between the last put and the deferral is the put_page() race
+memory_failure() has without this series.  For the counter, v3 drains
+without checking it: the drain waits for the works in flight and starts
+no grace period when nothing waits.  The per-cpu half does not happen:
+get_hwpoison_page() drains the per-cpu lists before get_any_page().
+
+> - [Medium] mm/memory-failure: order-0 PG_rcu_free page dropped after setting PG_hwpoison
+
+By design: the free drops a poisoned order-0 page, as it does when the
+last put races with memory_failure() without this series.  The page is
+never reused.
 -- 
   Kiryl Shutsemau / Kirill A. Shutemov
