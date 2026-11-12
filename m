@@ -1,86 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.135
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794482635;
-	b=g9sKel2KJrlqNFO0ScjlWBTn8mYFWbuNwekvzwy+rq0qgtljoDvKGhbQ9gC9X0xMTSf3
-	 s1KESkgW5NVjRM78QDffzwiEz6YGqJ11ILuHFE4RMKwk36pq+7Sgmbtps5/FOB6DI+xGr
-	 zcBhu/wcil+MupxbCjgRLUdZmON0cqIJxWexh7m6U7mOrXvSH8vXJkfUCMJAbYbwP9YtT
-	 2MBy6f4OA8FdFW0qxORK2pSn7xzc4KovKnDvW9uv2KLx1Lyb5EK8zeWOXCeMhifca3LqV
-	 tBowfMgeTFjB7DTsk2tJ43CT/L3EehsXMKJOYN6xUm4MG7OzaWd3JYnp6oKBEXwKB2g==
+	t=1794482947;
+	b=jgXhZoW20PR2X9ywr9oc90CVLDrus0x72xejdgPnVMpo6TTlemONqpqSS6RaA5LPd4jC
+	 35BoYGv+MRCIu/iRg0OK9QprlBpeZEO8Ix0vsPS6GJEQFUopRGE8WkjKoMAbI8bD+f9mu
+	 hBENQwjyI56zZa7ouOd4af6ZrzaiDzyO1edekzWIwDQ2oZ3xH98mp2zpqB/uOshwk9mAb
+	 YBnzxejtTzNhGtB0/5qBOMMGTr0CnVZDubsxGM6inysBcPJXZJ9UQ7+2jxeIC5tSKmspI
+	 3XixqnY+F40W9mf52WN5D9S3sRstOkCkzMBkSic9IWO6GkUnykTlyAkT9CmxFUSsQvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794482635;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=WAvNZqDuM5KxCPGrNAiypS/+CAhcttiS2jUQXMyF64I=;
-	b=vZU69o/+06sKeHRmWfwnsEMdepkR8ukRxZCDJ9YSEUezn9AznGUxLF4fwURwYaYKmQPE
-	 aEOijGeZRbTkNoPTqJs0QicFCfhWEmskUr/q1ttZ4/taeliXFZTxuo/OJSd/6xvNC4739
-	 hLwOOtBCoeno1en21P8eW6IJlI/QMoVV7dAB8InCSucA3g5HJk1F3CDQpuqAlRWBJ/+PC
-	 1oDHzpseQiPhdEOq3Xgh1WF7IxNhDIOjjXidUyp23PblFQgSiBNBIycIeAkjEbKHKXG2+
-	 PQ9whdESAYg+88r4FQUAM9v4cf7/xG9katbadGe19YnfX/jDQplud9ElzDbSZHDZVew==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794482947;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=omP2ka6eqdRebpd9f2r0exDtmLmc6R/khoAMBzVyA3w=;
+	b=FCsPMlBkbeTMQk0HyYY45LeZVcyX5rcUlomSbyEkdKYAGybWcjgNHDhT+Pyt21ftk+k/
+	 AGleQ2I1mpDZruWTCIw+mQyd8rj0g7TLywyri4hL5I1ypoZUcYBXTMrxDwylVvysjAKw/
+	 vIPyuEUr6dngaaga9CXVKjhUghvOeWfoc049OyXoz82lPjYUDVi0Hc7UwGlWp0mmV2How
+	 USBAXAA+H8eGzy3hi+ks8jbxGIsZUl+shmoQQ5pSxZNzv9J3H/HKW0+7YQ1vl+LDkRqBE
+	 S/IX/3fPdu5UXD9aaLZeM4JBW29utMmuMUbVB7BWON68Bdgw7Njs/PemK7+IDicqg+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xxkOD9gT;
-	arc=none smtp.remote-ip=74.125.224.135
-Received: from mail-yx2-f7.google.com (mail-yx2-f7.google.com [74.125.224.135])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6919B606A8B6
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 11:23:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6919B606A8B6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=JNB2g3Zm;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E4AE606B59B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 11:29:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E4AE606B59B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xxkOD9gT
-Received: by mail-yx2-f7.google.com with SMTP id 956f58d0204a3-67be538da49so2033953d50.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 03:23:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794482634; x=1795087434; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WAvNZqDuM5KxCPGrNAiypS/+CAhcttiS2jUQXMyF64I=;
-        b=xxkOD9gTPUmHMM79TxvknwCkV4dDs+Fa4qGvvK64e3lIqh/gkeHnvj89NS2MHgfuNG
-         RmsE0TgDQFB4StcojNsWuAMBKjahQvrWqoKBIYISweGCZTLXxHbG63FdKED2f8msIoSC
-         fXr3vk8q8VsITNw5s3TebvexLVd3b/Q7ZZIzxOZOopoBNnqD7cfIiuZKYdgBcx353f4e
-         kitE77dpiHjoLP46gzzsgXGlH+Qfl/ZZjKRluvVUnoPSRgJPKEDY4VvUpStdJ6SOk/kW
-         iYWGxo3c+z6MIWbEF9SpL9h3J4Z9y6RHsxtzAMTXE5TFzINlGQwa/qBXYjpcAkkz8gJG
-         7HKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794482634; x=1795087434;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WAvNZqDuM5KxCPGrNAiypS/+CAhcttiS2jUQXMyF64I=;
-        b=TH0mLoRk8OcSS6qk1dxGjDc5iJ6NQ9r59lcz76FlPt+fQkF4RfrKAVuPKXFMZa79Sc
-         aJp2qxVfXVaPzSLOFIIBfxyC3aBtSWXxa3oLkzCiCcXasXxLgIrduvaVKDFzTW4NsriJ
-         XZS6ZuF2y5aOjik2d+wO+u7Lnh4YUGk518hD0QH9dvfFGmYg2PrKqnNVNr7wLZukt7e6
-         iXkGwdyWd9LYu1WlsD9iKCdZMxMQ6UgBIm6HFOZAx+WuD5Z/kpAMa1R4IkAzvMvpnymc
-         bkUoQSd+NWTvcqY+bBrntxHHA4EtYauptxdQvBVhPMx2V8Y4NqLjMPK9ryswdMOV0ltW
-         5/xg==
-X-Gm-Message-State: APuU4Z+DM9LSXmwfbQ2R0KLcunIXQzwsuMLRkFJlfN6FRjcgVzD6mONm
-	cmIFsJEiukL/1ta0etl7A1+F6KvosvaaTcet8YbXqV93/vd3NurtiLma1uRYLcCr
-X-Gm-Gg: AYBFou0/h4hM/sGzDLPz+t1Xns/kcJQ7U41YSC2myN33OQ3JKyLOF6nnzHhOjhq7q4I
-	2I6U62N2M/QvL4PnoO1iKketjvKfjyxDOQ6ahwpejlZG2FV/7dm+GMt2gbs2000UYXLfVMkhZZO
-	ONrut7C3c1XJ/HVkmSkQFsF8IOZrNCvNDzP2ySBOEVoVog8NDGL52E8QN2dzLNemd6pOUyal6Ln
-	cNkXlOqS6jT/crhNk7Fj2NBSJ1oCrUGScosMs/LfYTMITBzSOLn046oMDCDhD5lKJkhmewMYibg
-	zVeDRvMOkHOL11qQgGO7bsAVuwiLWfiOa/x/YjQuekfa6RFPVt8hKjOiioB7A0ZmOCOzMZFfzT4
-	kl2yXvkd7UURIuQ/GSwaWv2ntaCo6GzfOdL6MxJFc0yvnuWaqa3lbpKJsfBIhXj/JP0b4NEpJe+
-	MQrEQuzWmnTGJClPl3GWZHREiGSosaZkg8lwXDpHKPCPrUzcV9jwkJSCP7wq8HyaGjkWa1E1OBn
-	B2W2Bl3nkwxNNUyFfT787KkvyAEX/Lws7WeK0k5gKe93qJLwtyubnZiAVUihavyIAsq0A4G92nf
-	zkKlHau00ZHY4myvgM7QTVNA/YRdYzQvCTKd
-X-Received: by 2002:a05:690c:c0cd:20b0:8b3:ffe:ade9 with SMTP id 00721157ae682-8b3a7de595cmr24768907b3.9.1794482634396;
-        Thu, 12 Nov 2026 03:23:54 -0800 (PST)
-Received: from [10.0.0.48] ([71.69.222.122])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67c589c4e9bsm6873053d50.10.2026.11.12.03.23.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Nov 2026 03:23:53 -0800 (PST)
-Message-ID: <77e8c2f4-9381-4e76-a75f-083e14473c94@gmail.com>
-Date: Thu, 12 Nov 2026 06:23:52 -0500
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=JNB2g3Zm
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 82305153B;
+	Thu, 12 Nov 2026 03:29:02 -0800 (PST)
+Received: from [10.57.59.183] (unknown [10.57.59.183])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 45FFC3FA7A;
+	Thu, 12 Nov 2026 03:28:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1794482945; bh=GM+wYOwDu4RHFLVq/TBNKwG/MbfYaJS+I1C0GInFgZc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=JNB2g3ZmQqRZ5i+qpkSU6aSNW2KEfP/6eEdrA4U5pGDP5V+3MgICDJlffO51AcsQL
+	 Ay60k6osyIJCBlnzKeZP6Hn4/sWuap8Rl800g52mwF2zB1ROVV+8nEYPmBSdFcc9Oi
+	 53FaBbGBQsbN16dxZvALt9asmN5jzazd454fKKwI=
+Message-ID: <65433c02-7b1c-449b-bf92-417bdedbbe54@arm.com>
+Date: Thu, 12 Nov 2026 12:28:55 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,48 +54,110 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] nvme-tcp: consume TLS records without application
- data
+Subject: Re: [PATCH RFC v10 13/22] mm: kpkeys: Protect early kernel page
+ tables
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-References: <20261111-nvme-tcp-live-ctrlrec-v2-0-6295202b84de@gmail.com>
- <20261111-nvme-tcp-live-ctrlrec-v2-3-6295202b84de@gmail.com>
- <sashiko-outbox-209836@kernel.org>
-Content-Language: en-US
-From: Martin Belanger <martin.nvme.dev@gmail.com>
-In-Reply-To: <sashiko-outbox-209836@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
+ Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
+ Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
+ Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+ Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
+ <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ Pierre Langlois <pierre.langlois@arm.com>,
+ =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
+ Quentin Perret <qperret@google.com>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
+ Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
+ Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
+ Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>
+References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
+ <20261109-kpkeys-v10-13-aa6c4d9603bc@arm.com>
+ <sashiko-outbox-207327@kernel.org>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-207327@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 11/11/26 17:54, sashiko-bot@kernel.org wrote:
+On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
+>> +static int __init protect_p4d_table(pgd_t *pgd, unsigned long addr,
+>> +				    unsigned long next, struct mm_walk *walk)
+>> +{
+>> +	pgd_t entry;
+>> +
+>> +	if (mm_p4d_folded(walk->mm))
+>> +		return 0;
+>> +
+>> +	entry = pgdp_get(pgd);
+>> +	if (!pgd_present(entry) || pgd_leaf(entry))
+>> +		return 0;
+>> +
+>> +	protect_pgtable_page(p4d_offset(pgd, 0));
+>> +
+>> +	return 0;
+>> +}
 > [Severity: Medium]
-> Can nvme_tcp_try_recv() leave subsequent TLS records or NVMe PDUs stranded
-> on a poll queue after consuming a control record?
-[...]
-> Because strp->msg_ready and strp->msg_announced are already set, later TCP
-> data will not trigger nvme_tcp_data_ready(), stalling the queue until I/O
-> times out.  Looping back to read_sock() after nvme_tcp_recv_tls_record()
-> succeeds would drain any remaining records under the same receive call.
+> When CONFIG_KASAN_GENERIC or CONFIG_KASAN_SW_TAGS is enabled, does this walk
+> and call set_direct_map_pkey() millions of times on the shared
+> kasan_early_shadow_{p4d,pud,pmd,pte} tables?
 
-On a queue without polling, only io_work reads. After the control
-record, nvme_tcp_try_recv() returns a positive value, so
-nvme_tcp_io_work() sets pending and calls read_sock() again, which
-reads record 2. The announcement of record 2 also queues io_work,
-because NVME_TCP_Q_POLLING is not set.
+Yes, KASAN support needs to be addressed, as mentioned in the cover letter.
 
-On a poll queue, the announcement is suppressed and nvme_tcp_poll()
-returns 0, as you describe. But a poll queue only carries polled
-requests, and their submitter (io_uring IOPOLL, bio_poll()) keeps
-calling nvme_tcp_poll() until the request completes. The next call
-reads record 2. The same applies when io_work sees
-NVME_TCP_Q_TLS_RECORD set and returns 0. A record that is not yet
-complete (tls_rx_rec_wait() returns 0) is handled the same way
-today.
+> kasan_init() runs in setup_arch() before mm_core_init() calls
+> kpkeys_hardened_pgtables_init(), populating unbacked shadow ranges in
+> [PAGE_OFFSET, ULONG_MAX) with shared static tables where all 512 entries at
+> each level point to the same next-level kasan_early_shadow_* page.  Unlike
+> mm/ptdump.c, which detects those tables and sets walk->action =
+> ACTION_CONTINUE, the callbacks here descend through every entry and invoke
+> set_direct_map_pkey() (including a direct-map page table walk and broadcast
+> TLB flush) for every 2 MiB PMD slot across the multi-terabyte shadow range,
+> stalling boot.
+>
+> [ ... ]
+>
+>> +static void __init protect_early_kernel_pgtables(void)
+>> +{
+>> +	int ret;
+>> +
+>> +	mmap_write_lock(&init_mm);
+>> +	/*
+>> +	 * [PAGE_OFFSET, ULONG_MAX) covers all early kernel mappings on arm64
+>> +	 * and x86 (at least).
+>> +	 */
+>> +	ret = walk_kernel_page_table_range(PAGE_OFFSET, ULONG_MAX,
+>> +					   &protect_pgtable_ops, NULL, NULL);
+>> +	mmap_write_unlock(&init_mm);
+>> +	WARN_ON_ONCE(ret);
+>> +}
+> [Severity: Medium]
+> On arm64 with CONFIG_ARM64_LPA2=y running on hardware where the top page
+> table level is dynamically folded (vabits_actual < VA_BITS), does starting
+> at PAGE_OFFSET walk and re-protect swapper_pg_dir 16 or 32 times?
+>
+> On arm64, PAGE_OFFSET is the compile-time _PAGE_OFFSET(VA_BITS) rather than
+> _PAGE_OFFSET(vabits_actual).  When !pgtable_l5_enabled() on 4K pages (or
+> !pgtable_l4_enabled() on 16K pages), pgd_none() is always false and
+> pgd_to_folded_p4d() (or p4d_to_folded_pud()) wraps each top-level step in
+> [PAGE_OFFSET, ULONG_MAX) back to the start of swapper_pg_dir:
+>
+> arch/arm64/include/asm/pgtable.h:pgd_to_folded_p4d() {
+> 	return (p4d_t *)PTR_ALIGN_DOWN(pgdp, PAGE_SIZE) + p4d_index(addr);
+> }
+>
+> As a result, walk_kernel_page_table_range() traverses the entire kernel page
+> table hierarchy and flushes TLBs across all page table pages 16 times on 4K
+> pages (or 32 times on 16K pages) during boot.
 
-Calling read_sock() again in nvme_tcp_try_recv() would save one poll
-call. It would also need a limit for a peer that keeps sending
-tickets. I do not plan to change this.
+Right. Addresses don't really matter here, so for the next version I'm
+planning to use the synthetic range [0, SZ) where SZ is PTRS_PER_PXX *
+PXX_SIZE and PXX is the highest non-folded level (PGD if there is no
+folding).
 
-Martin
+- Kevin
