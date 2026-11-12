@@ -1,78 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.72.192.73
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.233
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794507199;
-	b=IRiFUHRG214JPqVagcj7dbIRsiKZjv8A94Beg1FiGm8VjmqdV5NY2wTx8xGk+RwWvzL/
-	 lapAtDZ8e95g1S0+GmWoet2VOOkImrDAtUXRwTWC8rMQJRh7x5pAO9rauI9bqxjbqflfJ
-	 3OCqFMH2QDUONcEg7xj+omJpcmShIefXTp5060H43rS2e32o1iLkPCpsnJeW9RwpL1jm2
-	 uoe7H1PIArdJxkvRIAchrL+CM5uF7VryXopSzw8egMSUeV9CfHaFOfKwO9k8YK7eRbE+V
-	 VYRFckhe3JKL32Dnto0mipodAiJeAzX8owJ43NlM7IlJno/8WIOndTjIEA6JzLXYsSQ==
+	t=1794507790;
+	b=FhPEm954yJr1MTTWL/RTNWgY+odkuqEvDh6qr/pkXohyv3AcReCPJUdSxjhLPNvNxdaS
+	 eJtwH0ahAhm+FuoBAQkegV60TdOgCoaQblikDwZjp+JVR9YHr4LYYZp9Q4pZSd+Cdt6wB
+	 v9zxdYg8+1aUKVNRWkgLKFFpfyjAtObT+ubswvMgl2wMYW3wuUOnhck14y60J4oz8RA2t
+	 msf+4oEonJhoz1Ts7c5aJ+4e3t1CR1R6v7nlKnRby163LGEC2VqxKshWLAwlRw1kLkmp9
+	 G164sqIZQqfEOLTEQIxjOCB3wZyj6G6teEcr4ZVo/2o9s269CvNClr5tqT9UfWmXcMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794507199;
-	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
-	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport;
-	bh=f6og1mflS+f6FYGDq7VgPPhrrQtK0lH/JcILM0m+pus=;
-	b=YX+EV+7CI1vGSf80VPuX17cJ6TY8RaGOPihdGxDhepJLjjxIzboLJrPaDT4oW6xtDMYg
-	 AonvScvATrlDkJxwqVDb9BkafSJYkDU4sQjar45x9y55gCEoCnq15ZDb5KY0cDkfgpjCk
-	 cQZ3kOYucNR0AmPc7wZudd6y6I5HyCg/GU9aV+5HbaKTkaNLFgMKV07ELqB/gHbtGlHqL
-	 O/rnO/C8toVeDg6C2HsxQVWLIi2w/khcDSvlJjxV5xCFEz6JJfDolAgvtWAs3jRhYaTsg
-	 s7ut82Exq03mPo9h0SDjntKO/CtBtfcMPZOv2DGgB6n7lObWvJaLhYj+gWRiTvnpzbg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794507790;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=37g18HIt+4q8l/uSb99DhUWkEswcluGqVCtxPLxOe4g=;
+	b=w/cT/T+FmqMIFqCnXLoNo+m7hqCpmau1fFnobszaJxP1KgAmzvOJRqe7JVg9kKNVSWoH
+	 LaaxmZ9x65nwnYSPjhvk4fCpegAUcxhXLm0RLAHghiKskGAPF4wlE28ED6QTiNAA3VvTD
+	 GwJK4z5zhaRUY9PHK6icJ5xEf/Ht5yb8QfDb2Na4yOkL4csJ39NPH7QWkKXMko5+amUlE
+	 QADz/eO9WDGTQSUGxc2GS0uDKs/b4PFS4yNhVfajfiT/dqaD+ScomsngokWXOzIvlOTTd
+	 BO0JBbu/n5ZoqmOrdraYPjrLK5Yihq5PKTPe8aUA1t4DtxUGfR7XLrQCA7Qiwzx/8Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oldschoolsolutions.biz;
-	spf=pass smtp.mailfrom=oldschoolsolutions.biz;
-	dkim=pass header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.a=rsa-sha256 header.s=s1-ionos header.b=uOcuWN0I;
-	arc=none smtp.remote-ip=217.72.192.73
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=SbWSsCYG;
+	arc=none smtp.remote-ip=91.218.175.233
+Received: from mta0.migadu.com (out-233.mta0.migadu.com [91.218.175.233])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17748606A321
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 18:13:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17748606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17893606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 18:23:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17893606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.a=rsa-sha256 header.s=s1-ionos header.b=uOcuWN0I
-DKIM2-Signature:  i=1; m=1; t=1794507190;
- mf=PGplbnMuZ2xhdGhlQG9sZHNjaG9vbHNvbHV0aW9ucy5iaXo+;
- rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
- d=oldschoolsolutions.biz;
- s=s1-ionos:rsa-sha256:NcdEDrL8xgGUIvdeLz7XZnZSElfX
-   GRQMghiOcBfAYus7hhSdUtP+9ks7TBbTprtPE/mgdVDsAQLsederUG/20DO8HD4C6H/VTQ5hSYd
-   KY449XfWoKzRfvIK6bRNcPVJGM7KxDNrVnzTiY43VqETcxuEslzvrYNUDbOeRyGvxLxXfjqtLds
-   dw/CqBxOgSUuexB/Y5kuha7sZtLxtQ9Ag40tX42hcwN8y12fp+b3Hd93X3P8vDxi61LCG9fwqw4
-   fYpZh4f3GEWJ1kE60R+P8ELt8bWV/hOn/iJUDOrADkGGhilCh7hmc8XWqw10F7BDfzI7UeOjF2U
-   TxHlPVI3Txo4FQ==;
-Message-Instance:  m=1;
- h=sha256:
-   wUhEu6DoOLgqCXZ1lPyNke6Y8gSJO/Fwf8HkxCOEL+A=:
-   3YhHG6K7Vdob8qJmLIxB88n4Ch9BrCx0c8Fi/UvgWU8=,
-  sha512:
-   jSv4wDsBifXmGvgNtjwzmsbvh/YcNqnzr/5TkpU17/l2cCgIy9we4UJGcu0t6sQVXbOhaoyDxHjFo0eh4BhcRQ==:
-   CmrZ3O+C4nkNnLmbjYrc0wndDX3QDPFk6nUdSZPtC0YzFLx0bLcHgPsqTu6KefDGKSXpfZXKlwysWEmCrkNt+A==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1794507190; x=1795111990;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=f6og1mflS+f6FYGDq7VgPPhrrQtK0lH/JcILM0m+pus=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=uOcuWN0Il7EeWeVaNCJ6qckMwBxf0iVsWUnQYH+djSmMufXmeRUi4JtyGWqIZM/9
-	 gVJvefqA+uJES/q9QgLgZDICIU/0IA7OW1RmZGnsU4oitSnhQyfi+xEK9IygvJtiT
-	 0zgcJv4Xju7dd6V/emk6ap7hYG1XaX8tHj+bgl/BHQjYhVaeuCBCb4yDFyQT6XT1V
-	 o32otsB8zXJHt3ScFIX3xVUkWOLqALS65IfPhih8w7pK79LDqTHbxyKlosdSqjF3a
-	 xvroSkBhzMje+ITxihnjxJozzPjQ01t925R0DGkzznQwnrEGYnn/g2Ci2xuQn9Zls
-	 CpOj7i7kv/1zHFOILQ==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue106
- [212.227.15.183]) with ESMTPSA (Nemesis) id 1M6EKU-1xPOV33xPs-005qEi; Thu, 12
- Nov 2026 19:13:10 +0100
-Message-ID: <a2ab7524-6dfd-44ed-84f5-305e6f610719@oldschoolsolutions.biz>
-Date: Thu, 12 Nov 2026 19:13:09 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=SbWSsCYG
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=7ZMvZrC6WW80QsW15QUoMF+I+fNGAUUIs8Md51Ez5T0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794507786; v=1; x=1795112586;
+ b=SbWSsCYGvw/LLhZSCKgl+hxXRq2dsdnZuwLjnFUusL39/pYny5xySywdO3JMnwtso5FC88+f
+ +dBswxB5eMVcJc2BM/BdJI24HifsVFHg+U9RN6K0xhfdnU3YVViY+3BcN4Puu9eXMbBEYvp42D5
+ CiNwqL5y6JUazo5FjW4EQBnU=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b3e96c6073110e8e;
+	Thu, 12 Nov 2026 18:23:06 +0000
+X-Mizu-Trace-ID: b3e96c6073110e8e
+X-Migadu-Flow: FLOW_OUT
+Date: Thu, 12 Nov 2026 10:23:05 -0800
+From: Shakeel Butt <shakeel.butt@linux.dev>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, tj@kernel.org, hannes@cmpxchg.org, 
+	mkoutny@suse.com
+Subject: Re: [PATCH bpf-next 3/3] bpf, cgroup: Protect cgroup_bpf state with
+ its own mutex
+Message-ID: <avYD5SOXPBQiey5v@linux.dev>
+References: <20261112172721.440275-1-shakeel.butt@linux.dev>
+ <20261112172721.440275-4-shakeel.butt@linux.dev>
+ <sashiko-outbox-211618@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -82,132 +66,70 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] power: sequencing: pcie-m2: stop requiring subsystem
- IDs for WCN6855/WCN7850
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-References: <20261106-pwrseq-bt-subsystem-v1-1-11fb09f63c93@oldschoolsolutions.biz>
- <sashiko-outbox-201312@kernel.org>
- <1c9b4722-0466-4c74-ac86-4d0f61c350a9@oldschoolsolutions.biz>
- <avXPkTkW2ZE_fngY@debian>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <avXPkTkW2ZE_fngY@debian>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YnXzGOmC/8Bsq+OW1YJ/+ORBf0y6Cb+wLasX2/XAVilS+SxQwIU
- v1VpkRyc6Zsshn9OAZ189ZzxCA7TOg0l6ZScoazVfBzdRmnagFIVoHOfuCPD0MO7J2sbIBp
- DDpLp6Cqw8rM56xThlBCqZReZt3mrNIM1q1rvt5mC0EGVtYOvY92zgfJvBd0lfvAAGEJ5He
- 1QP+VSk4IhSD43uWPWDfg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:v3hc+oWL56c=;+R27gY0DnUcrvAv7FJWIXxzcy2A
- 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
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-211618@kernel.org>
 
-Hi Mani,
+On Thu, Nov 12, 2026 at 05:41:57PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [Medium] bpf: lost error codes in __cgroup_bpf_query() [1]
+> --
+> 
+> commit 20190389f8922442abed742617dfa9e59bf26340
+> Author: Shakeel Butt <shakeel.butt@linux.dev>
+> 
+> bpf, cgroup: Protect cgroup_bpf state with its own mutex
+> 
+> This commit introduces a dedicated cgroup_bpf_mutex to protect cgroup BPF
+> state so that operations not modifying the hierarchy do not have to contend
+> on cgroup_mutex.
+> 
+> > diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+> > index 334237096759f..ae082ac86130b 100644
+> > --- a/kernel/bpf/cgroup.c
+> > +++ b/kernel/bpf/cgroup.c
+> 
+> [ ... ]
+> 
+> > @@ -1518,7 +1565,7 @@ static int __cgroup_bpf_query(struct cgroup *cgrp, const union bpf_attr *attr,
+> >  	for (atype = from_atype; atype <= to_atype && total_cnt; atype++) {
+> >  		if (effective_query) {
+> >  			effective = rcu_dereference_protected(cgrp->bpf.effective[atype],
+> > -							      lockdep_is_held(&cgroup_mutex));
+> > +							      cgroup_bpf_held());
+> >  			cnt = min_t(int, bpf_cgroup_array_length(effective, atype), total_cnt);
+> >  			ret = bpf_cgroup_array_copy_to_user(effective, prog_ids, cnt, atype);
+> >  		} else {
+> 
+> [Severity: Medium]
+> This problem wasn't introduced by this patch, but can assigning ret from
+> bpf_cgroup_array_copy_to_user() drop an earlier -ENOSPC or -EFAULT error
+> [1]?
+> 
+> Before the loop, __cgroup_bpf_query() sets ret = -ENOSPC when
+> attr->query.prog_cnt < total_cnt:
+> 
+> kernel/bpf/cgroup.c:__cgroup_bpf_query() {
+> 	...
+> 	if (attr->query.prog_cnt < total_cnt) {
+> 		total_cnt = attr->query.prog_cnt;
+> 		ret = -ENOSPC;
+> 	}
+> 
+> 	for (atype = from_atype; atype <= to_atype && total_cnt; atype++) {
+> 		if (effective_query) {
+> 			...
+> 			ret = bpf_cgroup_array_copy_to_user(effective, prog_ids, cnt, atype);
+> 	...
+> }
+> 
+> When effective_query is set, bpf_cgroup_array_copy_to_user() overwrites
+> ret with 0 when the truncated slice fits in the array, or a later
+> iteration (for BPF_LSM_CGROUP) can overwrite an earlier -EFAULT, causing
+> __cgroup_bpf_query() to return 0 on truncated or faulted queries.
+> 
+> [1] https://sashiko.dev/#/bug/linux-20442c38-bcc8-440c-9711-1977ea6cd04b
 
-On 11/12/26 15:43, Manivannan Sadhasivam wrote:
-> On Fri, Nov 06, 2026 at 07:30:06PM +0100, Jens Glathe wrote:
-[...]
->> I took another look, this driver is loaded when it is a compatible in a
->> device tree. Usually this means the hardware got described, and you can=
- draw
->> conclusions from the device tree on what is supported. For the conflict=
-ing
->> case, the device tree would need to describe the USB and the serial por=
-t on
->> the e-key connector. When you have a connector wired up this way, the d=
-river
->> would need directions on what to choose, for instance by providing the
->> subsystem IDs as base for a decision. These are the special cases, thou=
-gh.
->> For most boards describing the uart on the connector would suffice to c=
-hoose
->> the right, mostly generic driver for WCN6855 and WCN7850. So it would b=
-e
->> better to have the driver detect the "both ports are defined in the dt"=
- case
->> and=C2=A0 not create a serdev:
->>
->> static bool pwrseq_pcie_m2_bt_ambiguous(struct device *dev)
->> {
->>  =C2=A0 =C2=A0 bool has_usb=C2=A0 =3D pwrseq_pcie_m2_check_remote_node(=
-dev, 2, 0, "usb");
->>  =C2=A0 =C2=A0 bool has_uart =3D pwrseq_pcie_m2_check_remote_node(dev, =
-3, 0, "serial");
->>
->>  =C2=A0 =C2=A0 return has_usb && has_uart;
->> }
->>
-> This is wrong. A generic slot can define both 'usb' and 'serial' endpoin=
-t
-> nodes and users can connect any key E cards to the slot. So having both =
-nodes
-> doesn't mean that the user is only going to connect BT-UART cards.
->
-> While I agree with you that populating the ID table for each module is a=
- pain,
-> we can't magically detect the card type before probing the device.
->
-> - Mani
-
-Of course it is :) Side note: the hamoa/purwa-iot-evk describes the m.2=20
-port as having only the serdev, not the usb port. But usb_2 is connected=
-=20
-to it. So, this logic won't do a thing there, either. For me this more=20
-or less sounds like a negative list, like... same device ID, but an USB=20
-variant (subdevice ID) should lead to not creating a serdev. That list=20
-is probably shorter(?). Anyway, its RFC. I was just a bit surprised that=
-=20
-my T14s BT got killed by the new powerseq driver.
-
-with best regards
-
-Jens
-
+Seems like an independent bug. I will send the fix separately.
