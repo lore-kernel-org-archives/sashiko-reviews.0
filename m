@@ -1,62 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.233
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794507790;
-	b=FhPEm954yJr1MTTWL/RTNWgY+odkuqEvDh6qr/pkXohyv3AcReCPJUdSxjhLPNvNxdaS
-	 eJtwH0ahAhm+FuoBAQkegV60TdOgCoaQblikDwZjp+JVR9YHr4LYYZp9Q4pZSd+Cdt6wB
-	 v9zxdYg8+1aUKVNRWkgLKFFpfyjAtObT+ubswvMgl2wMYW3wuUOnhck14y60J4oz8RA2t
-	 msf+4oEonJhoz1Ts7c5aJ+4e3t1CR1R6v7nlKnRby163LGEC2VqxKshWLAwlRw1kLkmp9
-	 G164sqIZQqfEOLTEQIxjOCB3wZyj6G6teEcr4ZVo/2o9s269CvNClr5tqT9UfWmXcMg==
+	t=1794510206;
+	b=yNBQ5ijds+28pq1F6YOu1qP15Q9iWZr6yuHpmpup3L/OLbqajiTPxUvgE++bUKXEadju
+	 yWsoUMSM1YoX1yblDN6teVGPFCorPSoy87sXXdCncYHZipg6+32M/l6OpIleaIrKDEANi
+	 DEJnNjdPnD3ait5ZdCJJp5samHw2y1EjH5rlE/CYMQNtLXa68Z6PdN6IPtrX++5fspXrn
+	 cpi9bWCflVGNFui5NrjbIK72/n22uxHND9G1aOboVa8zY4B0dLbrfZ2L9OpJbiGxbFu0Y
+	 Vw9qnY4rtmOcVYVbjdyIuNy0ZRxRyDCAU5Ly80k9AxjAxGkhj2/MGXUN78WZ7wPjg0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794507790;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=37g18HIt+4q8l/uSb99DhUWkEswcluGqVCtxPLxOe4g=;
-	b=w/cT/T+FmqMIFqCnXLoNo+m7hqCpmau1fFnobszaJxP1KgAmzvOJRqe7JVg9kKNVSWoH
-	 LaaxmZ9x65nwnYSPjhvk4fCpegAUcxhXLm0RLAHghiKskGAPF4wlE28ED6QTiNAA3VvTD
-	 GwJK4z5zhaRUY9PHK6icJ5xEf/Ht5yb8QfDb2Na4yOkL4csJ39NPH7QWkKXMko5+amUlE
-	 QADz/eO9WDGTQSUGxc2GS0uDKs/b4PFS4yNhVfajfiT/dqaD+ScomsngokWXOzIvlOTTd
-	 BO0JBbu/n5ZoqmOrdraYPjrLK5Yihq5PKTPe8aUA1t4DtxUGfR7XLrQCA7Qiwzx/8Tw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794510206;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=BKmPHjD7F+lAu5Y1PmUklxdmbSrVzMFLB6y7wwm9rn4=;
+	b=bnJ9aix64ZwsiWBCyjfbi8hiuPiH4eXUUgm04rsLhVd/O94fNuagQCJnyO72L38D9VuD
+	 TV0yhIRf2uyrQ/ZYNGm65ORHQV+BQ0CZZUT3w1pFlpXOT9WB9b2ggPdDs9k3d79gpcpue
+	 ASCa6p7+Or5bnUGh2APjoP0mWZRtmwL3rnUHOvsJEtlr5TRLdlEmcpb5d+VyxYsuJTcUe
+	 mAVzv8thYkphruXWcOtbiGMVeFuC9kcbxnx285J3ixVGwzjJF/OI4gEohqm5Uup3btXmz
+	 MV4GD8KNV657u4E0lheDqY1d0nisS4VcsGQAMYqwnLBUNLkfI6hHSayvh3lXsOPpTTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=SbWSsCYG;
-	arc=none smtp.remote-ip=91.218.175.233
-Received: from mta0.migadu.com (out-233.mta0.migadu.com [91.218.175.233])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jUA8Avn0;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17893606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 18:23:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17893606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED59606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 19:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=SbWSsCYG
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=7ZMvZrC6WW80QsW15QUoMF+I+fNGAUUIs8Md51Ez5T0=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794507786; v=1; x=1795112586;
- b=SbWSsCYGvw/LLhZSCKgl+hxXRq2dsdnZuwLjnFUusL39/pYny5xySywdO3JMnwtso5FC88+f
- +dBswxB5eMVcJc2BM/BdJI24HifsVFHg+U9RN6K0xhfdnU3YVViY+3BcN4Puu9eXMbBEYvp42D5
- CiNwqL5y6JUazo5FjW4EQBnU=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id b3e96c6073110e8e;
-	Thu, 12 Nov 2026 18:23:06 +0000
-X-Mizu-Trace-ID: b3e96c6073110e8e
-X-Migadu-Flow: FLOW_OUT
-Date: Thu, 12 Nov 2026 10:23:05 -0800
-From: Shakeel Butt <shakeel.butt@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jUA8Avn0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3621F000C4;
+	Thu, 12 Nov 2026 19:03:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794510205;
+	bh=BKmPHjD7F+lAu5Y1PmUklxdmbSrVzMFLB6y7wwm9rn4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jUA8Avn0OjggNIl/nRhZLsftG1CcIsE+P07qqfFSyNsEQTVpwK0yFjIsaw9V+7rk4
+	 i7S3HPu3az0GPuU9xPZzMQBHQQr1nbT2UsRxik+CnjdlyZxOq+1XDs7tzT78aPPKpG
+	 7bJnBFcXUMXzoEBBMDroROB8HmzksqS/gmG9vmOaxHNz91DXBwz06sMNkD2KXVe/Af
+	 +r3SD42o6nZLXHKB2Ze/w/ZUePNrC5Gr5fOlM3gqBuvYU7iZ/jLKLGtD5jIYuPZ5hX
+	 oFS2PKujVTNdUmnXUYpniuAoB2acN92bEYS+2D0wJXcdaGfISyfJfLHpcsCJ74fxye
+	 WYPVlA8ScGQuA==
+Date: Thu, 12 Nov 2026 19:03:13 +0000
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, tj@kernel.org, hannes@cmpxchg.org, 
-	mkoutny@suse.com
-Subject: Re: [PATCH bpf-next 3/3] bpf, cgroup: Protect cgroup_bpf state with
- its own mutex
-Message-ID: <avYD5SOXPBQiey5v@linux.dev>
-References: <20261112172721.440275-1-shakeel.butt@linux.dev>
- <20261112172721.440275-4-shakeel.butt@linux.dev>
- <sashiko-outbox-211618@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>, 
+	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, David Rientjes <rientjes@google.com>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Andrew Morton <akpm@linux-foundation.org>, 
+	Jann Horn <jannh@google.com>, Pedro Falcato <pfalcato@suse.de>, 
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Nhat Pham <nphamcs@gmail.com>, 
+	Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
+	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
+	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
+	Alistair Popple <apopple@nvidia.com>, Usama Arif <usama.arif@linux.dev>, 
+	Kairui Song <kasong@tencent.com>, Balbir Singh <balbirs@nvidia.com>, 
+	=?utf-8?B?SsOpcsO0bWU=?= Glisse <jglisse@redhat.com>, Kiryl Shutsemau <kas@kernel.org>, 
+	Yu-cheng Yu <yu-cheng.yu@intel.com>, Dave Hansen <dave.hansen@linux.intel.com>, 
+	Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>, 
+	Peng Fan <peng.fan@nxp.com>, Josef Bacik <jbacik@fb.com>, Chris Mason <mason@kernel.org>, 
+	linux-mm@kvack.org, "Borislav Petkov (AMD)" <bp@alien8.de>, 
+	Mark Brown <broonie@kernel.org>, "Dennis Zhou (Facebook)" <dennisszhou@gmail.com>, 
+	Rick Edgecombe <rick.p.edgecombe@intel.com>, Roman Gushchin <roman.gushchin@linux.dev>
+Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
+Message-ID: <avYJ-CxBEpdO1Wmu@gremlin>
+References: <20261111-mason-migrate-et-al-fixes-v1-0-3d2454362e8d@kernel.org>
+ <20261111-mason-migrate-et-al-fixes-v1-10-3d2454362e8d@kernel.org>
+ <sashiko-outbox-211681@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -66,70 +76,85 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-211618@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-211681@kernel.org>
 
-On Thu, Nov 12, 2026 at 05:41:57PM +0000, sashiko-bot@kernel.org wrote:
++cc Roman
+
+Roman - see below - I was under the impression mm was not supposed to receive
+'unrelated to this patch but' reports? Did something change?
+
+Thanks!
+
+On Thu, Nov 12, 2026 at 06:16:31PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found no new issues
 > in this patch, but noticed 1 related pre-existing issue it does not
 > introduce:
-> - [Medium] bpf: lost error codes in __cgroup_bpf_query() [1]
+> - [Critical] mm: out-of-bounds write in migrate_vma_setup() [1]
 > --
-> 
-> commit 20190389f8922442abed742617dfa9e59bf26340
-> Author: Shakeel Butt <shakeel.butt@linux.dev>
-> 
-> bpf, cgroup: Protect cgroup_bpf state with its own mutex
-> 
-> This commit introduces a dedicated cgroup_bpf_mutex to protect cgroup BPF
-> state so that operations not modifying the hierarchy do not have to contend
-> on cgroup_mutex.
-> 
-> > diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-> > index 334237096759f..ae082ac86130b 100644
-> > --- a/kernel/bpf/cgroup.c
-> > +++ b/kernel/bpf/cgroup.c
-> 
-> [ ... ]
-> 
-> > @@ -1518,7 +1565,7 @@ static int __cgroup_bpf_query(struct cgroup *cgrp, const union bpf_attr *attr,
-> >  	for (atype = from_atype; atype <= to_atype && total_cnt; atype++) {
-> >  		if (effective_query) {
-> >  			effective = rcu_dereference_protected(cgrp->bpf.effective[atype],
-> > -							      lockdep_is_held(&cgroup_mutex));
-> > +							      cgroup_bpf_held());
-> >  			cnt = min_t(int, bpf_cgroup_array_length(effective, atype), total_cnt);
-> >  			ret = bpf_cgroup_array_copy_to_user(effective, prog_ids, cnt, atype);
-> >  		} else {
-> 
-> [Severity: Medium]
-> This problem wasn't introduced by this patch, but can assigning ret from
-> bpf_cgroup_array_copy_to_user() drop an earlier -ENOSPC or -EFAULT error
-> [1]?
-> 
-> Before the loop, __cgroup_bpf_query() sets ret = -ENOSPC when
-> attr->query.prog_cnt < total_cnt:
-> 
-> kernel/bpf/cgroup.c:__cgroup_bpf_query() {
-> 	...
-> 	if (attr->query.prog_cnt < total_cnt) {
-> 		total_cnt = attr->query.prog_cnt;
-> 		ret = -ENOSPC;
-> 	}
-> 
-> 	for (atype = from_atype; atype <= to_atype && total_cnt; atype++) {
-> 		if (effective_query) {
-> 			...
-> 			ret = bpf_cgroup_array_copy_to_user(effective, prog_ids, cnt, atype);
-> 	...
-> }
-> 
-> When effective_query is set, bpf_cgroup_array_copy_to_user() overwrites
-> ret with 0 when the truncated slice fits in the array, or a later
-> iteration (for BPF_LSM_CGROUP) can overwrite an earlier -EFAULT, causing
-> __cgroup_bpf_query() to return 0 on truncated or faulted queries.
-> 
-> [1] https://sashiko.dev/#/bug/linux-20442c38-bcc8-440c-9711-1977ea6cd04b
+>
+> commit a0bf8430c5e68cd904038ab8081c7bc9a9b0f7de
+> Author: Chris Mason <mason@kernel.org>
+>
+> mm/migrate_device: refuse to migrate shadow stacks
+>
+> This commit rejects VMA device migration in migrate_vma_setup() when the VMA
+> has VMA_SHADOW_STACK set.
+>
+> > diff --git a/mm/migrate_device.c b/mm/migrate_device.c
+> > index 0f2a2832e0bd1..c27f513ee46e3 100644
+> > --- a/mm/migrate_device.c
+> > +++ b/mm/migrate_device.c
+> > @@ -759,6 +759,8 @@ int migrate_vma_setup(struct migrate_vma *args)
+> >  	/* The migrate_vma page walk has no hugetlb support. */
+> >  	if (!vma_is_mm_backed(vma) || vma_is_hugetlb(vma) || vma_is_dax(vma))
+> >  		return -EINVAL;
+> > +	if (vma_test_single_mask(vma, VMA_SHADOW_STACK))
+> > +		return -EINVAL;
+> >  	if (nr_pages <= 0)
+> >  		return -EINVAL;
+> >  	if (args->start < vma->vm_start || args->start >= vma->vm_end)
+>
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but can migrate_vma_setup()
+> write out of bounds on args->src and args->dst when given unaligned
+> addresses [1]?
 
-Seems like an independent bug. I will send the fix separately.
+I don't like big buts and I can deny! As above, I thought we disabled this?
+>
+> mm/migrate_device.c:migrate_vma_setup() {
+> 	const struct vm_area_struct *vma = args->vma;
+> 	long nr_pages = (args->end - args->start) >> PAGE_SHIFT;
+>
+> 	args->start &= PAGE_MASK;
+> 	args->end &= PAGE_MASK;
+>     ...
+> }
+>
+> nr_pages is computed before args->start and args->end are masked with
+> PAGE_MASK.  For example, if args->start is 0x1fff and args->end is 0x3001,
+> nr_pages is 1, but masking rounds the range to [0x1000, 0x3000), which spans
+> 2 pages.  When migrate_vma_collect() walks the aligned range, it writes past
+> the end of the caller's args->src and args->dst arrays.
+
+This is silly. It's not critical. Nothing in-tree does this.
+
+If internal kernel stuff does incredibly stupid things then incredibly stupid
+things happen. We can't nanny everything endlessly.
+
+A monolithic kernel means that the function and its callers are considered
+together.
+
+If an out-of-tree module does it then it's your fault for using an out-of-tree
+module (ugh EXPORT_SYMBOL()'d).
+
+>
+> [1] https://sashiko.dev/#/bug/linux-ca91ac03-4056-4cf8-8afb-0e516e08797f
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261111-mason-migrate-et-al-fixes-v1-0-3d2454362e8d@kernel.org?part=10
+
+--
+Cheers, Lorenzo
