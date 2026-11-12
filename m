@@ -1,75 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=67.231.145.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794511246;
-	b=sLREEsiLRYjvLhYJQWrKW2PpTgj3MgqjM1MW03UVxpjCs1fdJr2lVsVrLWrlXCoYojNv
-	 7sxRizzCZO5Ngp1vukYq+hognbcSYWlBk63x66d/1K+YcZlg+oxdOMCdsipeREf4JIDaL
-	 2UpuWHAU3uaDiTSXhgQur/JLsfJVbDyeGxOxTeYYDCfZFqjWkMQpXRCaQ5kqu1hDJJ/ea
-	 jSbPalVSbj6VLbNw37gBjjWqopm46IoXBZqrgGx03tCASHB5/coPhTN1LfeSdKm9bFD7a
-	 iUonaogV3/ECJQ8crgHd40UXLWu5X2BcOYQG6csCB8L0me2VEAw15PbreWCXfNYwyuw==
+	t=1794514195;
+	b=M3o+QEXJyuA83yS4HPbJ3UszyB1ULxOlvoiPMmiGOpXTLkSiSJpNgTOfubby5i28eCRR
+	 dXCVrWUOPuvykNDNJSgTbENXzwPjGM0C+oRtEcdU2mKpZZBC3JTEgTjkI2EbkCXJ4BfB2
+	 LfKMDA0dPkZMYPbDhCpHaXdFiuswiQBJjiWziXOlEaHHBR5OoZPIcwTnly6+/dBDaSgTr
+	 is/BvYkhHAoBPfveJs8S41jfyGIf7eQEvgYxqNwo7fXRgOACLY/fvAoeAh/jiao4Otnh9
+	 x9NiYp9n7ZoloXtDgrILRzO/Mvdw1SeAORsVRzM+IkLrU4k5Lin1CQhp+MVn6QqLnjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794511246;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Date:From:To:
-	 CC:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Originating-IP:X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:X-Authority-Analysis:
-	 X-Proofpoint-Virus-Version;
-	bh=v/YioOVQin3KFuWXwOiFXbRbDlfWyZR4IkZliHHOkXg=;
-	b=mjzO0l4xFCzOD/vaJnceFtP5AVyLDBeKwoZ30f1NjvTjCrADKgNPJJ7mdvkbjGCFx+0H
-	 Sy8NTz6U7ORX+29ruu89y9WzMzB3ABsqYsA8GHmScFTto03grSAqF8c4R8mb+Vy8ybPFg
-	 BTIm9Dee3dl9LPOOlhU8OmKZdPi27qvYyRh2Ol6K89we2SkAb2qDyyqNMtZeFVK2cMusL
-	 TKamJ7ZRB1G7EmOoVeZce0SBS+/JdvkqLx9Qm1EPljVqBeZdaNiTg20QVW0BBg9lVrKz+
-	 bXUz4IJCClsvdHmZEpiONAadmIRD8D4/bGJXB4U9PWtY3AWvwX4BjmVd8nxTQqCF9/Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794514195;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Date:From:To:
+	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=8L8kC9u4P2bhXSG9aS8f2aG6Mk5zc5krKHneokhV9uw=;
+	b=UJnp1wmEZX+f2MqBlqxjYprLNLQzjt5B2Equ0h7nlvIk50+et8go5U+XWxAGg4MlwN6L
+	 xZVZXuPM7XpzADo/l87nWgnQ+j6E2/tXTY62jAQ6ACXWXo3JLbdaYYPsPiWRINRnuGuf9
+	 W9IF4XbYotcW10avucV3emM92WNp70wOwPfFExnN0snQGKGHOUyRWXsjwEwSMropaDHYW
+	 TqRI06HiQQFuTuAoTC+AnR4HKMKqYfaBU4vTD9fnzsGApHyVyWDjR0b4m1vQXMfLCCbZV
+	 0DnZxx3nOC8q0xHteiB8YbVkjUz5S1Lt9M1zoC6t3LtAEqN3/ZUxsC1moLhCbA22n4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=meta.com;
-	spf=pass smtp.mailfrom=meta.com;
-	dkim=pass header.d=meta.com header.i=@meta.com header.a=rsa-sha256 header.s=pps82601-s2048-2026-q3 header.b=mBPUACCh;
-	arc=none smtp.remote-ip=67.231.145.42
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com [67.231.145.42])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=VzNtIYQH;
+	arc=none smtp.remote-ip=198.175.65.15
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7655606A31C;
-	Thu, 12 Nov 2026 19:20:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7655606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=meta.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBAF606A31C;
+	Thu, 12 Nov 2026 20:09:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFBAF606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.a=rsa-sha256 header.s=pps82601-s2048-2026-q3 header.b=mBPUACCh
-Received: from pps.filterd (m0528007.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ACFalW9183540;
-	Thu, 12 Nov 2026 11:20:45 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	pps82601-s2048-2026-q3; bh=v/YioOVQin3KFuWXwOiFXbRbDlfWyZR4IkZli
-	HHOkXg=; b=mBPUACChT+MURotoMhctfvSQrXx47h+IrKsVFwn0ctyYrY0LvqTHT
-	d/lGmkzmNtqiGX6sGwqXPdBeBLWtKR/R6K4gW3egQUku7Pg8fEdmMwjX2fI+GKMY
-	Ks5S44hlT1QrjK25b6mLRLHQUShlqYxJj5IigIfW6/bw805Sxl+afFU78TrqFMq6
-	Q6OuLggRtiJQaMI3YDZPqeSKFNILdAmrsh9W3wn9cJnZQUQHDMWO1+BIFRylaJ9R
-	PN87nGHsyjWW+q3xI20cQGG8a6AXcV6fnvAyiw+t3He/cGyz8PwQCbxmTlTud0nu
-	PAjLHSAxnGFt90bFabYakHeYRBky49diA==
-Received: from mail.thefacebook.com ([163.114.134.16])
-	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4hvahfrbj7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Thu, 12 Nov 2026 11:20:44 -0800 (PST)
-Received: from localhost (2620:10d:c085:108::4) by mail.thefacebook.com
- (2620:10d:c08b:78::c78f) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.56; Thu, 12 Nov
- 2026 19:20:44 +0000
-Date: Thu, 12 Nov 2026 11:20:43 -0800
-From: Bobby Eshleman <bobbyeshleman@meta.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <virtualization@lists.linux.dev>, <kvm@vger.kernel.org>,
-        "Michael S.
- Tsirkin" <mst@redhat.com>,
-        Eugenio Perez <eperezma@redhat.com>
-Subject: Re: [PATCH net-next v5 4/7] vsock: add a netlink command to assign
- the g2h device to a netns
-Message-ID: <avYRi9reTERM9O2/@devvm29614.prn0.facebook.com>
-References: <20261103-vsock-guest-ns-v5-0-48179b9b66b8@meta.com>
- <20261103-vsock-guest-ns-v5-4-48179b9b66b8@meta.com>
- <sashiko-outbox-198420@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=VzNtIYQH
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794514195; x=1826050195;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=o0Jmt3RGWgn8b3wNzBOG3FMike2nuQx+tirONUWZoXQ=;
+  b=VzNtIYQHwlz1Y6NVnRqUzQw0z/UVmyprT13N2MQ3wBbUzFufbeyT5WAB
+   ptdpx8dGS1YxDQf5UxKj8GqbjHk0JK3J4tfYIprApWjn4NUKIKB1A6SrK
+   3M01PFEwM1uPQOqdL8meoTHHuTMiI/MWZ72HFwPtfMO3h3i/8uUmAkQgl
+   wq34Fb6ek8tawZ8tWT9wCOTQwEpbgryTgamJ2URTPtGZsMcgmY3JR495e
+   VM/D4fTbJ9L1sd9GY7DEm9e4hQQNz7wZFTofTLrKYwl7YLAjoBnthRUtS
+   fDPiq+MFN+Pq3jdWy3NUIQwmfVxCnV8H0PUyGRlKZkfIYGkYxhGYxwGqb
+   A==;
+X-CSE-ConnectionGUID: BKxY8+SwQxOleIbkbeoKcQ==
+X-CSE-MsgGUID: wVW9iJefQ263UDmrZzpoyw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11964"; a="3315824"
+X-IronPort-AV: E=Sophos;i="6.27,210,1787036400"; 
+   d="scan'208";a="3315824"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2026 12:09:55 -0800
+X-CSE-ConnectionGUID: XJP+f/0XSauhbTSsG5X+HQ==
+X-CSE-MsgGUID: YAaFgH0hQYKPDDCj9imqfw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,210,1787036400"; 
+   d="scan'208";a="9074008"
+Received: from lkp-server01.sh.intel.com (HELO 0caa9d2d175c) ([10.239.97.150])
+  by fmviesa001.fm.intel.com with ESMTP; 12 Nov 2026 12:09:51 -0800
+Received: from kbuild by 0caa9d2d175c with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1xRb7E-000000011zv-3F9X;
+	Thu, 12 Nov 2026 20:09:48 +0000
+Date: Fri, 13 Nov 2026 04:09:19 +0800
+From: kernel test robot <lkp@intel.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>, alexander.deucher@amd.com,
+	christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH v2 2/2] drm: Remove drm_crtc_init()
+Message-ID: <202611130335.vCIEnRqF-lkp@intel.com>
+References: <20261112125039.66082-3-tzimmermann@suse.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,195 +85,113 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-198420@kernel.org>
-X-Proofpoint-ORIG-GUID: BIDSt9FsOSAfs28UfiQ8yeTOyLYaPiMZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA3NyBTYWx0ZWRfX7cMkqfNSz/ws
- ksEQU0aPXHLkncCL5UGnPYKrZMdUWEz5uAimI07FEgYkLvnzeTk/GczYQMPGXs17NENpcIRkRNt
- VwBykjMg6DG8tBNi/+Jw/CM3ir1Vo08=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA3NyBTYWx0ZWRfX4r+2OHzQGJ1I
- nYYmFY9v0M8Vaq1+S4YQACRtTCD/ozRBYc6hWGCGvqZzhdhKQfOXMgylAbqDhzctREz7Njrydlj
- eESVbj1998eTC12g1uHsDpfNw/vUsNV0S/KWsK5h8tsCHW3MB0BtOgJnWsMHK+/lyRwPg2rUNS4
- iIO5Y+1BZLDaPSBpX51TahaEX98vVAgt0rQJtwpOztPmHee+eLEYcda1SUHGjVHA49GMxAS4wxp
- +OHF1EQgv0lk8e4wwxOquQdEaVJBqnOPhxIl9SInwjIouQzJnAYSWud2zIIVHxwcXJ9F6DFmzml
- 8IK++FQrYt5Qcx/2HBBvJ5g0pvAg7JMpGJ6dEl0Tl81xIrpPLV4dDOzOa2MdqcRfHdccXpSy6IJ
- 2uzxVAXfSUFcKKc8SxJfJ/ELqO/ExV752dDBdrjlbmumJT0Yez7fTEXb1nDIP7jj2QNxMR2MDQT
- 087v95P745Fsuyz7Zyw==
-X-Proofpoint-GUID: BIDSt9FsOSAfs28UfiQ8yeTOyLYaPiMZ
-X-Authority-Analysis: v=2.4 cv=HuPjiETS c=1 sm=1 tr=0 ts=6af6118d cx=c_pps
- a=CB4LiSf2rd0gKozIdrpkBw==:117 a=CB4LiSf2rd0gKozIdrpkBw==:17
- a=8nJEP1OIZ-IA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=7x6HtfJdh03M6CCDgxCd:22 a=4h92JMTCafKA-fb_NiOh:22 a=VwQbUJbxAAAA:8
- a=c92rfblmAAAA:8 a=VabnemYjAAAA:8 a=Z8m0FVilGhqSmMIZlYEA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22 a=gKebqoRLp9LExxC7YDUY:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-12_02,2026-11-11_03,2025-10-01_01
+In-Reply-To: <20261112125039.66082-3-tzimmermann@suse.de>
 
-On Thu, Nov 05, 2026 at 01:54:39AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] vsock: connect() corrupts state and bytes_unsent on swept established socket
-> --
-> 
-> commit 1f8c2b3f7e5cf0bf0bba26600e236377dd6b1fe3
-> Author: Bobby Eshleman <bobbyeshleman@meta.com>
-> 
-> vsock: add a netlink command to assign the g2h device to a netns
-> 
-> This commit introduces a vsock generic netlink family with
-> VSOCK_CMD_DEV_NETNS_SET and VSOCK_CMD_DEV_NETNS_GET to assign the
-> guest-to-host vsock device to a network namespace and query its assignment.
-> Sockets that can no longer reach the device after an assignment are closed
-> with ECONNRESET.
-> 
-> Link: https://lore.kernel.org/all/20200427142518.uwssa6dtasrp3bfc@steredhat/
-> 
-> > diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-> > index c9b28e34b1b3c..7140a3c708389 100644
-> > --- a/net/vmw_vsock/af_vsock.c
-> > +++ b/net/vmw_vsock/af_vsock.c
-> 
-> [ ... ]
-> 
-> > @@ -742,8 +868,269 @@ bool vsock_find_cid(unsigned int cid)
-> 
-> [ ... ]
-> 
-> > +/* Close every connected socket of @t that can no longer reach the g2h device.
-> > + */
-> > +static void vsock_g2h_reset_unreachable(const struct vsock_transport *t)
-> > +{
-> > +	struct vsock_sock *vsk;
-> > +	unsigned int i = 0;
-> > +	struct sock *sk;
-> > +	bool reset;
-> > +
-> > +	lockdep_assert_held(&vsock_g2h_assign_mutex);
-> > +	lockdep_assert_not_held(&vsock_register_mutex);
-> > +
-> > +	/* lock_sock() cannot be taken under vsock_table_lock, so pick the
-> > +	 * sockets one at a time, then recheck each under both locks.
-> > +	 */
-> > +	while ((sk = vsock_next_connected_socket(t, &i,
-> > +						 vsock_g2h_should_reset))) {
-> > +		vsk = vsock_sk(sk);
-> > +
-> > +		lock_sock(sk);
-> > +
-> > +		reset = false;
-> > +		spin_lock_bh(&vsock_table_lock);
-> > +		/* It may have been closed since we dropped the table lock. */
-> > +		if (__vsock_in_connected_table(vsk) && vsk->transport == t &&
-> > +		    vsock_g2h_should_reset(vsk)) {
-> > +			__vsock_remove_connected(vsk);
-> > +			reset = true;
-> > +		}
-> > +		spin_unlock_bh(&vsock_table_lock);
-> > +
-> > +		if (reset) {
-> > +			sock_set_flag(sk, SOCK_DONE);
-> > +			WRITE_ONCE(vsk->peer_shutdown, SHUTDOWN_MASK);
-> > +			sk->sk_state = TCP_CLOSE;
-> > +			sk->sk_err = ECONNRESET;
-> > +			sk_error_report(sk);
-> > +		}
-> > +
-> > +		release_sock(sk);
-> > +		sock_put(sk);
-> > +	}
-> > +}
-> 
-> [ ... ]
-> 
-> > @@ -1705,6 +2093,16 @@ static void vsock_connect_timeout(struct work_struct *work)
-> >  	sock_put(sk);
-> >  }
-> >  
-> > +/* Avoid breaking the socket when another thread has changed its sock->state
-> > + * while we were asleep.
-> > + */
-> > +static void vsock_connect_close(struct socket *sock)
-> > +{
-> > +	sock->sk->sk_state = TCP_CLOSE;
-> > +	if (sock->state == SS_CONNECTING)
-> > +		sock->state = SS_UNCONNECTED;
-> > +}
-> > +
-> >  static int vsock_connect(struct socket *sock, struct sockaddr_unsized *addr,
-> >  			 int addr_len, int flags)
-> >  {
-> > @@ -1863,8 +2261,7 @@ static int vsock_connect(struct socket *sock, struct sockaddr_unsized *addr,
-> >  			 * sk_state == TCP_SYN_SENT, which hereby we break.
-> >  			 * In such case VIRTIO_VSOCK_OP_RST will follow.
-> >  			 */
-> > -			sk->sk_state = TCP_CLOSE;
-> > -			sock->state = SS_UNCONNECTED;
-> > +			vsock_connect_close(sock);
-> >  
-> >  			/* Try to cancel VIRTIO_VSOCK_OP_REQUEST skb sent out by
-> >  			 * transport->connect().
-> > @@ -1878,10 +2275,8 @@ static int vsock_connect(struct socket *sock, struct sockaddr_unsized *addr,
-> >  	}
-> >  
-> >  	err = sock_error(sk);
-> > -	if (err) {
-> > -		sk->sk_state = TCP_CLOSE;
-> > -		sock->state = SS_UNCONNECTED;
-> > -	}
-> > +	if (err)
-> > +		vsock_connect_close(sock);
-> 
-> [Severity: Medium]
-> What happens in vsock_connect() when a socket reaches TCP_ESTABLISHED while
-> sleeping in schedule_timeout(), and is then swept by
-> vsock_g2h_reset_unreachable() before vsock_connect() reacquires
-> lock_sock(sk)?
-> 
-> While vsock_connect() has released lock_sock(sk) in schedule_timeout(),
-> virtio_transport_recv_connecting() can receive VIRTIO_VSOCK_OP_RESPONSE,
-> transition sk->sk_state to TCP_ESTABLISHED, set sock->state to SS_CONNECTED,
-> and insert vsk into vsock_connected_table. Once established, a concurrent
-> vsock_connectible_sendmsg() on another thread can acquire credits via
-> virtio_transport_get_credit() (incrementing vvs->bytes_unsent) and enqueue
-> VIRTIO_VSOCK_OP_RW skbs onto send_pkt_queue.
-> 
-> If VSOCK_CMD_DEV_NETNS_SET then runs vsock_g2h_reset_unreachable() before
-> vsock_connect() reacquires lock_sock(sk), it sets sk->sk_state to TCP_CLOSE
-> and sk->sk_err to ECONNRESET while leaving sock->state as SS_CONNECTED. When
-> vsock_connect() wakes up, the once-established check:
-> 
-> 	if (sk->sk_state == TCP_ESTABLISHED ||
-> 	    sk->sk_state == TCP_CLOSING) {
-> 		err = 0;
-> 		goto out_wait;
-> 	}
-> 
-> does not match because sk->sk_state is TCP_CLOSE rather than TCP_CLOSING (unlike
-> virtio_transport_do_close()) and sock->state == SS_CONNECTED is not checked.
-> 
-> If signal_pending(current) || timeout == 0 holds, vsock_connect() proceeds to
-> call vsock_transport_cancel_pkt(vsk) -> virtio_transport_purge_skbs(), which
-> purges the post-connection VIRTIO_VSOCK_OP_RW skbs without calling
-> virtio_transport_consume_skb_sent() to decrement vvs->bytes_unsent. Doesn't
-> this leak vvs->bytes_unsent and cause vsock_linger() on close() to block until
-> sk_lingertime expires, similar to the issue fixed by commit 002541ef650b
-> ("vsock: Do not allow signal/timeout on established sockets")?
-> 
-> And if no signal or timeout is pending, vsock_connect() exits the wait loop,
-> consumes sk->sk_err via sock_error(sk), calls vsock_connect_close(sock), and
-> returns -ECONNRESET while leaving sock->state as SS_CONNECTED with sk->sk_err
-> cleared to 0.
-> 
-> Should vsock_g2h_reset_unreachable() set sk->sk_state = TCP_CLOSING like
-> virtio_transport_do_close(), or should vsock_connect() also check for
-> sock->state == SS_CONNECTED after schedule_timeout()?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261103-vsock-guest-ns-v5-0-48179b9b66b8@meta.com?part=4
+Hi Thomas,
 
-This is legit and thinking I'll move to the TCP_CLOSING solution.
+kernel test robot noticed the following build errors:
 
-Best,
-Bobby
+[auto build test ERROR on drm-misc/drm-misc-next]
+[also build test ERROR on linus/master v7.4-rc2 next-20261111]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-radeon-Inline-drm_crtc_init/20261112-134508
+base:   https://gitlab.freedesktop.org/drm/misc/kernel.git drm-misc-next
+patch link:    https://lore.kernel.org/r/20261112125039.66082-3-tzimmermann%40suse.de
+patch subject: [PATCH v2 2/2] drm: Remove drm_crtc_init()
+config: arc-randconfig-1001-20261112 (https://download.01.org/0day-ci/archive/20261113/202611130335.vCIEnRqF-lkp@intel.com/config)
+compiler: arc-linux-gcc (GCC) 12.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20261113/202611130335.vCIEnRqF-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202611130335.vCIEnRqF-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/gpu/drm/amd/amdgpu/dce_v10_0.c: In function 'dce_v10_0_crtc_init':
+>> drivers/gpu/drm/amd/amdgpu/dce_v10_0.c:2677:9: error: implicit declaration of function 'drm_crtc_init'; did you mean 'drm_exec_init'? [-Werror=implicit-function-declaration]
+    2677 |         drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v10_0_crtc_funcs);
+         |         ^~~~~~~~~~~~~
+         |         drm_exec_init
+   cc1: some warnings being treated as errors
+--
+   drivers/gpu/drm/amd/amdgpu/dce_v8_0.c: In function 'dce_v8_0_crtc_init':
+>> drivers/gpu/drm/amd/amdgpu/dce_v8_0.c:2603:9: error: implicit declaration of function 'drm_crtc_init'; did you mean 'drm_exec_init'? [-Werror=implicit-function-declaration]
+    2603 |         drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v8_0_crtc_funcs);
+         |         ^~~~~~~~~~~~~
+         |         drm_exec_init
+   cc1: some warnings being treated as errors
+--
+   drivers/gpu/drm/amd/amdgpu/dce_v6_0.c: In function 'dce_v6_0_crtc_init':
+>> drivers/gpu/drm/amd/amdgpu/dce_v6_0.c:2645:9: error: implicit declaration of function 'drm_crtc_init'; did you mean 'drm_exec_init'? [-Werror=implicit-function-declaration]
+    2645 |         drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v6_0_crtc_funcs);
+         |         ^~~~~~~~~~~~~
+         |         drm_exec_init
+   cc1: some warnings being treated as errors
+
+
+vim +2677 drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+
+7e50642d41050c Alex Deucher 2024-10-31  2667  
+aaa36a976bbb9b Alex Deucher 2015-04-20  2668  static int dce_v10_0_crtc_init(struct amdgpu_device *adev, int index)
+aaa36a976bbb9b Alex Deucher 2015-04-20  2669  {
+aaa36a976bbb9b Alex Deucher 2015-04-20  2670  	struct amdgpu_crtc *amdgpu_crtc;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2671  
+aaa36a976bbb9b Alex Deucher 2015-04-20  2672  	amdgpu_crtc = kzalloc(sizeof(struct amdgpu_crtc) +
+aaa36a976bbb9b Alex Deucher 2015-04-20  2673  			      (AMDGPUFB_CONN_LIMIT * sizeof(struct drm_connector *)), GFP_KERNEL);
+aaa36a976bbb9b Alex Deucher 2015-04-20  2674  	if (amdgpu_crtc == NULL)
+aaa36a976bbb9b Alex Deucher 2015-04-20  2675  		return -ENOMEM;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2676  
+4a580877bdcb83 Luben Tuikov 2020-08-24 @2677  	drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v10_0_crtc_funcs);
+aaa36a976bbb9b Alex Deucher 2015-04-20  2678  
+aaa36a976bbb9b Alex Deucher 2015-04-20  2679  	drm_mode_crtc_set_gamma_size(&amdgpu_crtc->base, 256);
+aaa36a976bbb9b Alex Deucher 2015-04-20  2680  	amdgpu_crtc->crtc_id = index;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2681  	adev->mode_info.crtcs[index] = amdgpu_crtc;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2682  
+aaa36a976bbb9b Alex Deucher 2015-04-20  2683  	amdgpu_crtc->max_cursor_width = 128;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2684  	amdgpu_crtc->max_cursor_height = 128;
+4a580877bdcb83 Luben Tuikov 2020-08-24  2685  	adev_to_drm(adev)->mode_config.cursor_width = amdgpu_crtc->max_cursor_width;
+4a580877bdcb83 Luben Tuikov 2020-08-24  2686  	adev_to_drm(adev)->mode_config.cursor_height = amdgpu_crtc->max_cursor_height;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2687  
+aaa36a976bbb9b Alex Deucher 2015-04-20  2688  	switch (amdgpu_crtc->crtc_id) {
+aaa36a976bbb9b Alex Deucher 2015-04-20  2689  	case 0:
+aaa36a976bbb9b Alex Deucher 2015-04-20  2690  	default:
+aaa36a976bbb9b Alex Deucher 2015-04-20  2691  		amdgpu_crtc->crtc_offset = CRTC0_REGISTER_OFFSET;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2692  		break;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2693  	case 1:
+aaa36a976bbb9b Alex Deucher 2015-04-20  2694  		amdgpu_crtc->crtc_offset = CRTC1_REGISTER_OFFSET;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2695  		break;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2696  	case 2:
+aaa36a976bbb9b Alex Deucher 2015-04-20  2697  		amdgpu_crtc->crtc_offset = CRTC2_REGISTER_OFFSET;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2698  		break;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2699  	case 3:
+aaa36a976bbb9b Alex Deucher 2015-04-20  2700  		amdgpu_crtc->crtc_offset = CRTC3_REGISTER_OFFSET;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2701  		break;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2702  	case 4:
+aaa36a976bbb9b Alex Deucher 2015-04-20  2703  		amdgpu_crtc->crtc_offset = CRTC4_REGISTER_OFFSET;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2704  		break;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2705  	case 5:
+aaa36a976bbb9b Alex Deucher 2015-04-20  2706  		amdgpu_crtc->crtc_offset = CRTC5_REGISTER_OFFSET;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2707  		break;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2708  	}
+aaa36a976bbb9b Alex Deucher 2015-04-20  2709  
+aaa36a976bbb9b Alex Deucher 2015-04-20  2710  	amdgpu_crtc->pll_id = ATOM_PPLL_INVALID;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2711  	amdgpu_crtc->adjusted_clock = 0;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2712  	amdgpu_crtc->encoder = NULL;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2713  	amdgpu_crtc->connector = NULL;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2714  	drm_crtc_helper_add(&amdgpu_crtc->base, &dce_v10_0_crtc_helper_funcs);
+7e50642d41050c Alex Deucher 2024-10-31  2715  	drm_plane_helper_add(amdgpu_crtc->base.primary, &dce_v10_0_drm_primary_plane_helper_funcs);
+aaa36a976bbb9b Alex Deucher 2015-04-20  2716  
+aaa36a976bbb9b Alex Deucher 2015-04-20  2717  	return 0;
+aaa36a976bbb9b Alex Deucher 2015-04-20  2718  }
+aaa36a976bbb9b Alex Deucher 2015-04-20  2719  
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
