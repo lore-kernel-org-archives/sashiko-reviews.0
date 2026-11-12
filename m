@@ -1,54 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794482997;
-	b=lFSUnJB+IpSfrtLo80RGLIy/DgYREYcqBar8KVojDrlK41JtyzknMCF1f3ssiO3NUdwN
-	 sYszb4rkpV/mhsua6dCLi1FZB1bTDoHIbgjjVQk/l3MBvadxLdKWoRl89TmISbiBJ85Fy
-	 ZHaJu231AC7kXaAbQ8ujACbp8PiCMG3hC/OLthgEYPdwvnvVX6vWygbrRriNpzbwdkL/6
-	 YP56ZSY0Z3zWmF0oOPewjvxaOjYvWooSwcgjWKX0pQ2k4TxN+Mm8NGjs1AI9D3BZrEXYV
-	 ARwajPraSxQc5dQxlXr5Yxf4X23XB/9hqJE+Z0GCet5bh8la659oPf7TGayab5Rr1rQ==
+	t=1794483599;
+	b=XNf9ebEynaxWrXoazPDxOfntuwFKbtHPeqCUm7T5c8vsn+vNBkce9x+hPhkqzir/2Zmg
+	 q1Hv9hL5zjXm1CcAYQ1QtizkotocHSeXSbNpnCQv3WU5qgLIhhj5dCcusanFv2kbFuXin
+	 gK6jrCLorkxOSuilXyysEa6cdYH1+vtAGxGw9iprEjyBMgdLisxUlTjTFnh1BNUgF9wRK
+	 WgpG7HS8EJuwQGpplYMHQQhFcXQ2H4J0WfPyV6Vy7DYGvwrHA3Lf0zODmky9V4DuFeWax
+	 Vs/U3zMKbvEUiNlnrL2fzygnrDnpyQ4TTirSyDrvM61LUUBWzTaHuTxHUirB82yBPtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794482997;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794483599;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=aQt3sQWn6kEinu0EVH9z6KwTT7qLSz6YeVkphNhq1Qw=;
-	b=U7sPuUEu4uY46/QXqbGd+f5eHGMOpe26Pi79g2/fn92KSabo5tzXW7H58I/ETih9JEBB
-	 uQfArEy91hVYF7bphqOf5GEycSx04n2a0Hlq/kWCbnhPbT5kFZ4M5KrIHFi4nvD1ZiYBm
-	 YSKl0me5iuTZxKgBZA0WEyD/tiZ8Y6pHRISP8XyHDmtrC3RGj6QipJ+E7AX7SM4qMxRmE
-	 WVOPHuUDMiTSWxDc0juPjJMz6xo0jbLqyFJ87OOsHOeaoJikGzq8zyTU30VkZvj7Q5U71
-	 CgM7FOB7gf2B8E3TvwNnsYZJn+IThf3qpI1D7arCIyC/yKF0nOSMo86lY4uodX9Y3IA==
+	bh=wvzeSRN1LnFuQrjCW1cXNkgqhbYpZ/s7WcQkRBfJar8=;
+	b=kXiwrEW8v13852RphOUYtVeNfhGTkLxRZhzKH+jJDv9Q7b9yzcZNhVLARPyOuTmhTdOe
+	 qPCPIX9oYEyjQh0VPgxhDFNcDikOc+fVwNpD0Qu5MR3boflM2rx2ZBWiKK362dOMbm81C
+	 Z8ZKvzVbboUtQDHf+mclV174fpft4un5RtuWpk4tO/PirY1Lm4UCTfySSV9f3f3vGng3L
+	 pZ0X34imfbKL3W0KdN3B4R6jP/OSv9mVem+O7AHEmP77210mlFp7FHLH4yECcXo9WnKFo
+	 92uUt32Hgw3NSgILbJnvMMPpMUAux3GSLfPvZ/2bc+XgMa1jJvFNus4anvOKC0+G3LQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZEaim28R;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TQcIWvzl;
+	arc=none smtp.remote-ip=74.125.82.174
+Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0DF606A8A3
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 11:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA6E606A335
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 11:39:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6FA6E606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZEaim28R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7571F00AD1
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 11:29:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794482997;
-	bh=aQt3sQWn6kEinu0EVH9z6KwTT7qLSz6YeVkphNhq1Qw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ZEaim28RYqaq+C//lihfDLxN33NDmUDam854qSUMg0aAHhVkGLpgFM2u63JB8AYdY
-	 ir9MI2zrr9gueQROVu1MKKM8n3lbgCgGT4A7GSjZP2SlBOT0HClFj+KJhbyAqTm9Vc
-	 P0YJsneYKXHMp8QuZmwP5aZvvswjNcGAhy+LihDvCvj5+X0OaLE/wzWG55tyBo/cFx
-	 fDxz6CGZGLqxi96k5IxU0BNepbndnSEvW+Udt9wRloHmIGnbNS3BSoPxgwSzkuMM8Q
-	 4VJeoaMo6zYsAnKilR0DSG6JIh7nsOkYnnasightx5sS8c2uq1AmQhfJ8cEl+0FfAN
-	 HXt8WAZnAkv8w==
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-93e63ee7b4cso378066585a.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 03:29:57 -0800 (PST)
-X-Gm-Message-State: APuU4Z/dZia2dp6bOoDy4hoUbucFnupnScovnELFNAoE+8qb20vcfIei
-	r8vmDoRN05lENfO6C7uKYNIdKZvhm/fzrXHn+um3kgM51XdpmQ+VypPcrX4SKMcFP5ok2drhM0f
-	IQT/YwiWdTZwcS4XBwBtGz2XzYxFMGmY=
-X-Received: by 2002:a05:620a:8018:b0:93f:4921:6965 with SMTP id
- af79cd13be357-947b00b3c2amr775889085a.61.1794482996962; Thu, 12 Nov 2026
- 03:29:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TQcIWvzl
+Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-3704d30b84fso5347886eec.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 03:39:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794483599; x=1795088399; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=wvzeSRN1LnFuQrjCW1cXNkgqhbYpZ/s7WcQkRBfJar8=;
+        b=TQcIWvzl5tyE5QSHKujHUE5VX209jSpvJwbxN6GWydpKJPnmy89+p2hO0j8+zu3v9M
+         o8BAd5mU3jwImaNnvW9eqorNmQg2mcgQ9lDJ5xHF9jVPgCWRvmFLkcrodLQfnDhLFYjc
+         dDxpBIXp7syAsfNkUgA9KqZqKryP2Gd+2EtOnFnuXqXqBwNZ1z4BzJfDl0gFs/fAzhD/
+         3ARuomw3wO+iK55SLs2EdayfUuBgadwyK4bJPvQXV6QbqwC9JQfR7vs517zdsZlKE7c1
+         WkdYHuVsxhWWM1q84idj6DnSc7w8A6LXSeaWvVDti8tBHhtH9xL0QSWj0XBi9lXxy2FM
+         coAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794483599; x=1795088399;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wvzeSRN1LnFuQrjCW1cXNkgqhbYpZ/s7WcQkRBfJar8=;
+        b=nI40DtWaETKTVMk2lIaivy7TG2oeO78ZADZpuHqgshVzrQUiZmHn3kXWlahHkbhLMT
+         kZNdYLFZnTDVlOdh90gJRS3UE/b/8xMNdCvia8y9UOclvuPjb9i3dNJoQYzHIoZdRunL
+         yTTgE4RN9EA392w6xZz0W75vLB+SxthYFiIW+BbRUG14VvD3V22aYduDe6kcDshd1sgO
+         by8dBblf9Q0XvEj/q2s4Lzcsd9RsEt04m4b/7mxgMOno6LLkj6c6eV3TcOeO9lpQ96+B
+         vcTI64qJS8lmcf06QmkZ2EB4uSVilLERiHsTX8Nb40RxekhCWQOQ0+dSZtoJ1OWnWei2
+         xl3w==
+X-Gm-Message-State: APuU4Z920Ggse7xAr0wE5whGIlncB/tW0lZV4rr+g2sUIey9wKs7y6Vp
+	guS313ZEgZF0jAu4JagIJTXJicj3kn07D3RhiQ6wPJjPIa/mFbevwIYLD4f1dcveP8o=
+X-Gm-Gg: AYBFou02O3KU1qqOZ0TNMyUaOeYDy0UD3C8t6rvql160GNFacoDuOfV9V0XXmXES8g1
+	bCASzjYRbyl5fmFpctTASWQzZvy1LbzQ3Y2jAlj84sZOJwcZ1kt4AyX6BV3YlOgfgFyJ4qQtTgJ
+	5xC8ECAylrtXUXqzigEPqCa2vSY0d2+bh3gWl+GeO3dQP0dShdXCz3rods8JCqsb6YO2zKp+xM3
+	g8LDZOE7P1YqO/U7nyBFCtTjjXJDB6UJ6pKSZhWsWopEgBxv9KSyFppN2BB8yoqkWaNMbXgEngN
+	5gb2J/pKZN4+nb16LZ4J5+oSPOj625OqCIbAeAeoXptFzJKp52nEE+T+CuckC5Ykvx5zW+jkF7f
+	gBgLwlNxFtQaEjcpsTTGwrHnvlFxDhHHIpj8JvBIA8vh+lvaDcEeTvtie1VxzGjTBZJwPKqWzqK
+	3y7KGhM+vWz5+cfpR2EgI3ez9+NUYGKDWD5GkXWEc53r4DWf/6KMLhl5uEWNPDXH1i9ef7QWjXN
+	BjKzZXtkIj0dYTgZossBO8PPKxu2OvAsZeEzRW/2T+CXHKnozz8UUlcL+Z925PA67/rUNKKyCqj
+	6BSeTjMuZg9aJ/oxyzoDhfxW8/lJpcq9rke9n1T1c0J3AWhtIyo4gFivphU4JsQ=
+X-Received: by 2002:a05:7301:4902:b0:376:f63a:cb24 with SMTP id 5a478bee46e88-376f63ad124mr4989397eec.3.1794483598526;
+        Thu, 12 Nov 2026 03:39:58 -0800 (PST)
+Received: from DESKTOP-NM9EKIA ([180.67.33.100])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-375212e9e03sm50308720eec.23.2026.11.12.03.39.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Nov 2026 03:39:58 -0800 (PST)
+From: Joonhoe Kim <26rote@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: sashiko-bot@kernel.org,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] usb: dwc3: qcom: Use the UTMI clock as PIPE clock in DisplayPort-only modes
+Date: Thu, 12 Nov 2026 20:39:58 +0900
+Message-ID: <20261112113958.166-1-26rote@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.5
+In-Reply-To: <sashiko-outbox-195459@kernel.org>
+References: <20261103135057.1682-1-26rote@gmail.com> <20261103135057.1682-3-26rote@gmail.com> <sashiko-outbox-195459@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,163 +106,65 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261111232603.9934-1-baohua@kernel.org> <20261111232603.9934-17-baohua@kernel.org>
- <sashiko-outbox-210424@kernel.org>
-In-Reply-To: <sashiko-outbox-210424@kernel.org>
-From: Barry Song <baohua@kernel.org>
-Date: Thu, 12 Nov 2026 19:29:46 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4y5G3U+grKw5pRJoQvtdd7LnEJDPPs+xOTN5JzUawhOJQ@mail.gmail.com>
-X-Gm-Features: AclHuK8TWfaCB6dw4xbPzg8qNYoschgIoS8z5RybB7ZZ36slXR8J7WXQfbKrMOQ
-Message-ID: <CAGsJ_4y5G3U+grKw5pRJoQvtdd7LnEJDPPs+xOTN5JzUawhOJQ@mail.gmail.com>
-Subject: Re: [PATCH v7 16/16] mm/mglru: Avoid scan anon while swapcache is low
- for GFP_NOIO allocation
-To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
-	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
-	liam@infradead.org, lianux.mm@gmail.com, linux-mm@kvack.org, 
-	liuxiang.277@bytedance.com, lyugaofei@xiaomi.com, mhocko@kernel.org, 
-	mhocko@suse.com, qi.zheng@linux.dev, ridong.chen@linux.dev, rppt@kernel.org, 
-	ryncsn@gmail.com, shakeel.butt@linux.dev, surenb@google.com, 
-	wangzicheng@honor.com, weixugc@google.com, yuanchu@google.com, 
-	zhangbo56@xiaomi.com, zhuhui@kylinos.cn, sidchintamaneni@gmail.com, 
-	Kunwu Chan <chentao@kylinos.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 12, 2026 at 1:01=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] mm/mglru: stalled aging in try_to_shrink_lruvec() under
->   GFP_NOIO
-> --
->
-> commit c2e07c75b5549aa295c630747e1cecd7625269f0
-> Author: Bo Zhang <zhangbo56@xiaomi.com>
->
-> mm/mglru: Avoid scan anon while swapcache is low for GFP_NOIO allocation
->
-> This commit skips anonymous folio scanning in MGLRU when GFP_NOIO is set
-> and swapcache is low by checking can_reclaim_anon_pages() in
-> lruvec_evictable_size().
->
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index f36e9a379b62a..4fdbf0c2dcde0 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> [ ... ]
-> > @@ -4213,6 +4206,8 @@ static void lruvec_evictable_size(struct lruvec *=
-lruvec, struct scan_control *sc
-> >       int type;
-> >       unsigned long seq;
-> >       struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
-> > +     struct mem_cgroup *memcg =3D lruvec_memcg(lruvec);
-> > +     int nid =3D lruvec_pgdat(lruvec)->node_id;
-> >       DEFINE_MAX_SEQ(lruvec);
-> >       DEFINE_MIN_SEQ(lruvec);
-> >
-> > @@ -4220,6 +4215,8 @@ static void lruvec_evictable_size(struct lruvec *=
-lruvec, struct scan_control *sc
-> >       nr[LRU_GEN_FILE] =3D 0;
-> >
-> >       for_each_evictable_type(type, swappiness) {
-> > +             if (type =3D=3D LRU_GEN_ANON && !can_reclaim_anon_pages(m=
-emcg, nid, sc))
-> > +                     continue;
-> >               for (seq =3D min_seq[type]; seq <=3D max_seq; seq++)
-> >                       nr[type] +=3D lruvec_gen_size(lrugen, type, seq, =
-sc->reclaim_idx + 1);
-> >       }
->
-> [Severity: Medium]
-> Can zeroing nr[LRU_GEN_ANON] here while swappiness remains non-zero stall
-> MGLRU aging during GFP_NOIO reclaim?
->
-> When swap space is available and NUMA demotion is not, get_swappiness()
-> stays in 1..MAX_SWAPPINESS even when can_reclaim_anon_pages() returns
-> false. Because nr[LRU_GEN_ANON] is 0, evict_folio_lists() only scans file
-> generations, so min_seq[LRU_GEN_ANON] stays at max_seq - 3 and
-> try_to_inc_min_seq() clamps min_seq[LRU_GEN_FILE] to max_seq - MIN_NR_GEN=
-S:
->
-> mm/vmscan.c:try_to_inc_min_seq() {
->         ...
->         if (swappiness && swappiness <=3D MAX_SWAPPINESS) {
->                 unsigned long seq =3D lrugen->max_seq - MIN_NR_GENS;
->
->                 if (min_seq[LRU_GEN_ANON] > seq && min_seq[LRU_GEN_FILE] =
-< seq)
->                         min_seq[LRU_GEN_ANON] =3D seq;
->                 else if (min_seq[LRU_GEN_FILE] > seq && min_seq[LRU_GEN_A=
-NON] < seq)
->                         min_seq[LRU_GEN_FILE] =3D seq;
->         }
-> }
->
-> Once populatable file generations are drained, evict_folio_lists() return=
-s
-> 0 and try_to_shrink_lruvec() breaks out of the loop before setting
-> no_populatable, while should_run_aging() sees evictable_min_seq() at
-> min_seq[LRU_GEN_ANON] (max_seq - 3) and lru_gen_imbalanced() still counts
-> unreclaimable anon pages in old[LRU_GEN_ANON]. As a result, reclaim fails
-> to age from DEF_PRIORITY down to DEF_PRIORITY / 2 + 1 and then directly
-> evicts the youngest file generation (max_seq) without page-table aging or
-> tier protection.
+On Tue, 03 Nov 2026 14:35:19 +0000, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+[...]
+> Should state->mode == TYPEC_STATE_SAFE and TYPEC_STATE_USB be checked
+> before inspecting state->alt, and can gating qcom->dp_only on
+> !qcom->dp_active miss valid transitions to DP-only mode?
 
-This is a similar performance concern to the ones raised
-earlier [1][2]. As mentioned in my earlier reply, it could
-be addressed by the approach Bo Zhang suggested to me
-off-list:
-@@ -5233,6 +5231,7 @@ static bool try_to_shrink_lruvec(struct lruvec
-*lruvec, struct scan_control *sc)
-                unsigned long orig_file, orig_anon;
-                DEFINE_MAX_SEQ(lruvec);
-                bool no_populatable;
-+               long scanned;
+Yes to both.
 
-                if (mem_cgroup_below_min(sc->target_mem_cgroup, memcg)) {
-                        need_rotate =3D true;
-@@ -5241,8 +5240,7 @@ static bool try_to_shrink_lruvec(struct lruvec
-*lruvec, struct scan_control *sc)
+typec_altmode_set_mux() passes the DP altmode with the safe and USB
+states as well. pmic_glink_altmode passes no altmode with the safe
+state, so this did not show up in my tests. v3 checks the safe state
+first and treats only the modal states with the DP SVID as
+DisplayPort.
 
-                orig_anon =3D nr[LRU_GEN_ANON];
-                orig_file =3D nr[LRU_GEN_FILE];
--               if (!evict_folio_lists(nr, lruvec, sc, swappiness,
-MIN_LRU_BATCH))
--                       break;
-+               scanned =3D evict_folio_lists(nr, lruvec, sc,
-swappiness, MIN_LRU_BATCH);
+The USB states from the DisplayPort altmode driver (exit, removal,
+configuration back to USB) all follow a safe state, so they now switch
+back to the PIPE clock. Always selecting the UTMI clock for C or E also
+covers a change from D to C/E without a safe state in between.
 
-                if (should_abort_scan(lruvec, sc))
-                        break;
-@@ -5263,6 +5261,9 @@ static bool try_to_shrink_lruvec(struct lruvec
-*lruvec, struct scan_control *sc)
-                        should_age =3D true;
-                }
+v3 also always selects the UTMI clock for pin assignment C or E. It
+keeps the UTMI clock on a change from C/E to D/F while DisplayPort is
+active. If the PHY switches then, USB 2.0 keeps working and USB 3 waits
+until a USB state follows the next safe state. The PIPE clock while the
+PHY is in DP-only mode would stop USB, so v3 errs towards the UTMI
+clock.
 
-+               if (!scanned)
-+                       break;
-+
-                cond_resched();
-        }
+> [Severity: High]
+> How does the synchronization between dwc3_qcom_mux_set(), system sleep, and
+> runtime PM handle the following cases?
+[...]
+> Could the clock selection check be performed inside dwc3_qcom_resume() (so
+> both system resume and runtime resume apply any pending change before the
+> core resumes), with qcom->pipe_clk_lock and qcom->pm_suspended covering the
+> full suspend and resume sequences?
 
+Yes, the cases are real. v3 follows the suggestion:
 
-[1] https://lore.kernel.org/linux-mm/CAGsJ_4xMUoTsPU-=3D_QVDqZ-p4Dt+vGJC5G8=
-hed3PWNAk3iv8Bw@mail.gmail.com/
-[2] https://lore.kernel.org/linux-mm/CAGsJ_4wFye_co4bnJwuaoyshZOE+gcWFthmWD=
-3r94dQgVHp8GQ@mail.gmail.com/
+- The mux callback no longer resumes the glue.
+- A flag set under the lock at the start of a runtime or system suspend
+  and cleared after the core has resumed makes the callback only
+  record the state in between (cases 1 and 2). If the suspend fails,
+  the flag is cleared and the state applied right away.
+- dwc3_qcom_resume() compares the recorded state with the clock
+  selected in QSCRATCH and switches before the core resumes (cases 1,
+  3 and 4). v3 has no cached clock state any more. A change recorded
+  while the core resumes is applied when the flag is cleared.
 
->
-> Should get_swappiness() return 0 when !can_reclaim_anon_pages() instead, =
-so
-> swappiness is 0 consistently across try_to_shrink_lruvec(),
-> try_to_inc_min_seq(), should_run_aging(), and lru_gen_imbalanced()?
+I kept pm_suspended as it is, because the resume interrupt handler
+uses it.
 
-No. Please don't suggest hacking get_swappiness() again.
-It would cause a cold/hot inversion in inc_min_seq().
+Tested on the Lenovo Y700 Gen 5 (TB323FU, Kaanapali); details are in
+the v3 cover. In those tests the mux state came after resume or needed
+no clock change, so a recorded change was not applied on resume.
 
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111232603.99=
-34-1-baohua@kernel.org?part=3D16
+v3: https://lore.kernel.org/all/20261112113838.506-1-26rote@gmail.com/
+
+Thanks,
+Joonhoe Kim
