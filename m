@@ -1,87 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.100
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794505548;
-	b=3RTwu7Jm9mH+fc3ELdnEwumoYmoYh67Ct2CsCOHhUgEz7XlmlEONL2U++W8v1Y0VkXr3
-	 PWKP6GKim9GT2pdnOI7UwwDZjaE5ssv/ZUhE19Y1vXpFe7TGnaJK+f7cOLGj0KNxT6qJd
-	 oUN4Iy8z8h/IVHoxvXPj9wqh+cz4U2W9L4K1s1GqPRQnR/Lz75EWRzymLO2uAPvr4P4dy
-	 i5VAdzrUszQHKFSqjZwsH94cIAmMa7LguTdhAmhNf2p3PvZ3p6CsFnuJ7Tv3YguTeOTwC
-	 2arePq42Uos0UMKqAnjUn8gLS2sSP1w4Ch1XDPskvV7KulDMQIc5D62QtXIjCztE3gQ==
+	t=1794506679;
+	b=mFf/CHql0U1u6jUi/uk9tRAO4T+hDu8r2AKMVwJHEkbxEc/ItsL1ALvucS8XHgu6/uyR
+	 d3ZCQdMEhOJ1PAdKETJqn2JybY9Bdfo+hoRKwHba5k9aItJqhkUJ2jCK8IJBd2lAOHlCa
+	 uvGWcXDk+Mn8w9zriaRaJu/EH9uTOSZr//EoTmyW7LOfR36mVNddw1NpE5Whn0zc3y+NR
+	 Mw3tPD4pnXQ+ZEJ/Yq7lrhKN76s9nXb28L8Uq2CPhOw4yg55R8p/J0R//H5rzmDIqVT7K
+	 REdKkiZ2KeEnNdNkDvzadt6Gne9ARwZkjTvn0srbIM+ssdJftU9ROpWoBpa3OgXNpYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794505548;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=czdhaGFv7cIrx8yTbMDRh9Bkh0lnaUBxN3R0u1dkKDY=;
-	b=bKnJxraImjgkBC/kY0LcXYn7eXTIRFRiJcth/cnW4JuQzcPT319nY/NcRNSmcBEX3OuJ
-	 dsxDnDrkvKLsP08wSEgV51S+s+ACj15Dir2cME5OpGAX0QAdMsTKGJJ1AnnpjbItaGo9o
-	 gfYFw/dUGEXDKmHg3/lxtcLjx9CmS/X6VmXHhy7x/czFf7PVq4kYqfOD7NzTDx2EH6ome
-	 2iK0PzX6tb2wlKofERGB9pJas71rcFZU/dTURJL+jnYNgY/7Mt5D0LlTqBZQlMWMFE40M
-	 HXu/uvHpu2xiA89YzGW6fwFOGuUBwbHOoyR5dV6kiB2YGxSoF+a3eM8FqerfhxKqY7w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794506679;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:Received:X-Relaying-Domain:X-CFilter-Loop:Received:
+	 DKIM-Signature:X-Received:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
+	 X-DetectorID-Processed:Content-Type;
+	bh=0joxMgfNTt8HdQVwU7JhylkZYolthAtQtj0YTxMXbik=;
+	b=ov7nR5fAiGcls0mwrXogPBCf6NzNMZzG0lsxabkO7NInJydpOCFEXiJFqA7ArClPP/8o
+	 6W/KQ6FZMTDh6qqqt1mKi1tZ6uuNg/wy3avO+KUwyi6wkoh8xruzwLwSFhXQ6D+/2yjIo
+	 tcU+IEthduJi011kNzsSbfkxgQ3TELX+au/n+SoWvzEAFAf4Ahwjt6vRvJeIXOn6E2gVd
+	 zmSUjwJvO6f7IawrYPeApdvfn0kyHyjKYT9/y+FwgGg0Yj40s4IhwhwOVJYEA+ZX3TBeW
+	 yK791gtdvvlE1tkHh08OK/AF82yTO3Ad30v8S9AGZ8Bx1N1lUCzndtqIT6Qcq4JXOHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bDsM1Kng;
-	arc=none smtp.remote-ip=74.125.82.42
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
+	dmarc=pass header.from=broadcom.com;
+	spf=fail smtp.mailfrom=broadcom.com;
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=FB7NWHmI;
+	arc=none smtp.remote-ip=209.85.219.100
+Received: from mail-qv1-f100.google.com (mail-qv1-f100.google.com [209.85.219.100])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E47606A323
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 17:45:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5E47606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65255606A327
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 18:04:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65255606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bDsM1Kng
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-1b3beeaf6f9so2671981c88.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 09:45:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794505547; x=1795110347; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=czdhaGFv7cIrx8yTbMDRh9Bkh0lnaUBxN3R0u1dkKDY=;
-        b=bDsM1KngE01npSdCPuGYMvmavk5Pod9SQSnU12ZCoj+gC30dRhwlVElS+BC516X3E8
-         G/vCfL3gpUOHGvkcWtnTq48Svkr3XeYX7JRV2Mh2S/obQ6y2ItYW/sZTuGQXGXuEqa+K
-         5RPs6mMnS6cUZV0mn6Dr2AxNmjDYtDHeBoHSM4GI4u8kH3iMyVj1i8ejoi3LLrzBVhVP
-         7+lBskuhozli0A134M9f4cNhbzho7m8Oaj6QTxz6bL1wSNSy8zT9wlbdcojQPaH6oBgb
-         avH5gnWarSiNrdJq1aVEyL0u3npFDovGeCVUpS2nFSf01kA7I6DfiMYolGRDpo3KQd/7
-         +HcQ==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=FB7NWHmI
+Received: by mail-qv1-f100.google.com with SMTP id 6a1803df08f44-91e8a05ec5aso862756d6.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 10:04:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794505547; x=1795110347;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=czdhaGFv7cIrx8yTbMDRh9Bkh0lnaUBxN3R0u1dkKDY=;
-        b=d3HE0oMKwxRpuRMtN3h/ZZNryOIMr6ZJloSKgvdlEHaq0CWPcv4vY3M/Z6Nzw5JTjJ
-         LemstfNJn+vzi6mnu1taZvQNMiEigjvP7UhYGXTAZod7jD7DhtV6bus2XO2nXZMgrASw
-         hdRkKw11AzXm+r7sT6fJa2Lm6SzAhBJmrri3L/Cy58j70NyPLNI00YrAsgTWOHF4HpZz
-         g0dBFknqsA9D8O5/xpeO9KCXcRZLqvQ08bLeZid2I7EPevoxowlUSzpYtVF2PVsjAp0y
-         RFFNMRZKx99r6ohGTNlfY5vUTeu1rdA3Dz7wg1XCRQjOprVq0xfj9T1PQWpHvR+ssMlr
-         VxWA==
-X-Gm-Message-State: APuU4Z/8q6V+OJwAHkNEQ4TusjvDBujXZlNSoAk8K1pZ2dKcLEEFiXJg
-	adN/pCjaPUISrdppCvKQnoHcj3Zyx8JxRagkqux2CHtQnfKievJ++ZhFbFUc7w==
-X-Gm-Gg: AYBFou3uN4zXXoXoAQPBzaMggU0ywXvaC/oHUMjrKQiecsge4x6fIracKLt9SzqE9xq
-	uzByopG3Ggq13MNbD5jva3QrgboEI08zViOj8WjOagbZn1iWc3emv4P4YmcUL2dDQOAdIcg673R
-	GrRZCuo9j2vCB5ipytLJ2LrSPOjDi28pESyt9kkF4sL4XDGIZwxXi/QSU4K2RVY0EhW4YN6xvG0
-	TiTUiM7bfcK5+W1d9mvT4Wd9ic683gUm6SnFqzKyuTJ524gKb3Lp7O8Tr5xVVroSIqkoPqaizxJ
-	l/th6BKxmoNPp5Suhetbft7V+thVJl+OID0qlFzhG3hMfe1eT108oc44/oU9UY4r0mCwRMm/mZQ
-	Nvupk4Ip1iPi+Whrjs8BN7jehMAtlPKUZ1Lbperly0ukCIFMn84eM1G9GH4kDCpvT1LFiVex76U
-	/UXb8Or+DM4aIGrG03CXIwkDVccNOJCmdo/98sFxav0nuFvyZlF3TOxA2cCr6nM3f2P2vwGGLKD
-	uVt1IIYwmZojPeRlyuFNO9YWLlencWBRWLf90amNKlMlHs2ULn/vB6gfeNP6O9a4Q69QktRfDTN
-	IKiHKP+eZJyo4VI6nF63b3T0KohWFdZYLvGFFGnN6RXkXqe1csm2Rb+q+fVW8PhuUYQTPWbmxxO
-	EyIXgUo7vmlV8YDkebb3IV587dmSAVQ7E5W4TFQ==
-X-Received: by 2002:a05:7300:23d2:b0:36e:800a:71fe with SMTP id 5a478bee46e88-37683861491mr6399782eec.1.1794505546344;
-        Thu, 12 Nov 2026 09:45:46 -0800 (PST)
-Received: from ?IPV6:2a03:83e0:1151:15:c24:4ad9:f660:1904? ([2620:10d:c090:500::6:db98])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37956bad6casm59005eec.26.2026.11.12.09.45.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Nov 2026 09:45:45 -0800 (PST)
-Message-ID: <b1df2930-2bb5-484d-b134-de842762ce89@gmail.com>
-Date: Thu, 12 Nov 2026 09:45:44 -0800
+        d=1e100.net; s=20260707; t=1794506678; x=1795111478;
+        h=content-type:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=0joxMgfNTt8HdQVwU7JhylkZYolthAtQtj0YTxMXbik=;
+        b=Cg/xQqbdFQG5infXyhN80z+whTYyU/2JplRsdk/vn+tbwRZ/EDRSCQCJO9ttbcMN3i
+         OvgIogPwl4uvH97Kt0lwhZpbDth+QmJqE1GrWVlHvkIHOXIMMZwiGr1KeSlnV9eQCd/K
+         WZez7wlGHNv++jkhhv7pbBh2ahMh+jI5oUF7HrWL+jBPB7fJE2yjqa6sE/NM1ZRdbqKK
+         oAo0Wr45TfvoLF7NVAiVI9GshSjb3dK7P73Qka0UOsHWP+bU9v21rDRgFkRzi/6bcI6a
+         TMX7BJnJarIfL1Ab6RdJl2p7jmZuF6NPqgEXROyKVpJvEfdOK4jOQwjanTtKyZZgESsD
+         ebGg==
+X-Gm-Message-State: APuU4Z+8Ft/nIETAIMAYyu0SR2IKEP5HuY3UnnZ8SrLfiXH829dlZKUo
+	7nVyWilbZJqy2aTXcJp4jH6Ftk+G4w7gN64JKRlV//MHxc/WMVk9tPY+57wtxM/f3AMW1hKTKQd
+	wWluAgvq24dxkFyyfXqppBWCBwxTZFc07l7EJHnm907whvTnvL77ThW9Ju8pdBC3YNip3pIqEVF
+	nZ7uHqw1Koq078Ki9KuvC7LvK1Qsut7Manl4QwKAek0CgGKh25SrZW8dzbys4H7QKxE049Ao9Jv
+	ly0BtGI8MJc2iRVSZj0
+X-Gm-Gg: AYBFou3zEFtgJvnIEfPcT+IYthW3ulxfQtPHKJYbIhXHW8ETGf/rUYw/hMz6AST+/Z2
+	3VRH+CeZn+uG4eupfx7jpvMQHrHBkF5RYeOP5DPPwOE2ht7VnUe5o67hKY7CBwpXmoW6fOQgdy8
+	aRu4gzVLiJ8+YhTORpbGD8sxy0TeDcZTW/nIX3Zigc8FdtaZFb8PInzVWpkOhBeJTrIIJ0KLR/R
+	XBRulNQ6YapQpTXUzdS1j9roG55dH88ugmO3/yzzuKzSIwwB4I2xn0nFit26KzhnZubg2ei8QUP
+	61TJaATDB5Mvafr5DBA7fUoUF0i9NfNRsx1/J+gWOCLy80sFIXZVq2LYEVIY0XAwx1+ajjqqUdK
+	6UdZ9yZnLEvX1pnxpOp2XOpPu13ZLjwbJHf9aaSx0XXeT0qie5SV/jqLBVVfExZYiSRVfzBfOSa
+	FH8iEo2jO19zf2wsOC+LJsTnUtQC3LS+dh
+X-Received: by 2002:a05:620a:278e:b0:947:9060:7efb with SMTP id af79cd13be357-9494bb838a8mr30999485a.18.1794506678061;
+        Thu, 12 Nov 2026 10:04:38 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-22.dlp.protect.broadcom.com. [144.49.247.22])
+        by smtp-relay.gmail.com with ESMTPS id af79cd13be357-9479ef8a7f1sm108750485a.7.2026.11.12.10.04.37
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Nov 2026 10:04:38 -0800 (PST)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-4b37620eb73so74592b6e.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 10:04:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1794506677; x=1795111477; darn=lists.linux.dev;
+        h=content-type:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0joxMgfNTt8HdQVwU7JhylkZYolthAtQtj0YTxMXbik=;
+        b=FB7NWHmIcIHkn6jL4oiJ6cmlDIc3PzdzkwVUZEkgFfPvZS2jbczwrkEqF4meemdft9
+         p+gdRJWG/HySD9VqD1qG5NyaOlQMBlwfho8Kowy3O87+l/9J0ShKeDVpbd8cp9aE/2qU
+         havxZF5vp4xWu0jDXhmATSmsiv/XnPsdaQdCk=
+X-Received: by 2002:a05:6808:1a10:b0:4d6:308d:4ca7 with SMTP id 5614622812f47-56b97102509mr6217622b6e.24.1794506677116;
+        Thu, 12 Nov 2026 10:04:37 -0800 (PST)
+X-Received: by 2002:a05:6808:1a10:b0:4d6:308d:4ca7 with SMTP id
+ 5614622812f47-56b97102509mr6217573b6e.24.1794506676627; Thu, 12 Nov 2026
+ 10:04:36 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,126 +95,202 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v4] net/mlx5e: advertise tcp-data-split support
+References: <20261111194426.1652644-1-kamal.dasu@broadcom.com>
+ <20261111194426.1652644-4-kamal.dasu@broadcom.com> <sashiko-outbox-209729@kernel.org>
+In-Reply-To: <sashiko-outbox-209729@kernel.org>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
+Date: Thu, 12 Nov 2026 13:04:00 -0500
+X-Gm-Features: AclHuK9qjSALadKVcGiEqIbcbRtni7bR5Wv4nEmvIVE6z4hw48p0pn0vtVxm5YE
+Message-ID: <CAKekbetyyqPVjDPZadELCmKMeFziEE7eY38H=_DR9ASYjAvzZQ@mail.gmail.com>
+Subject: Re: [PATCH v12 3/6] mmc: core: Add option to keep an eMMC powered on
+ at system suspend
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-rdma@vger.kernel.org
-References: <20261111170558.1654691-1-dimitri.daskalakis1@gmail.com>
- <sashiko-outbox-211565@kernel.org>
-Content-Language: en-US
-From: Dimitri Daskalakis <dimitri.daskalakis1@gmail.com>
-In-Reply-To: <sashiko-outbox-211565@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="0000000000000fb07f066018253e"
 
-On 11/12/26 9:06 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] net/mlx5e: missing HW-GRO cap check in
->   mlx5e_ethtool_set_tcp_data_split()
-> - [Low] net/mlx5e: missing Fixes trailer for commit 46bcce5dfd33
+--0000000000000fb07f066018253e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Nov 11, 2026 at 4:59=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mmc: core: CQE left active in _mmc_suspend() on
+>   MMC_NO_POWEROFF_SUSPEND
 > --
-> 
-> commit 10e87fc2f39f7859cabd43f8c342a731e4043353
-> Author: Dimitri Daskalakis <daskald@meta.com>
-> 
->> net/mlx5e: advertise tcp-data-split support
->>
->> Since commit 46bcce5dfd33 ("net/mlx5e: Support ethtool tcp-data-split
->> settings"), mlx5 no longer reports tcp-data-split from
->> mlx5e_ethtool_get_ringparam() and the reply carries only the stored
->> config. With the default config (auto) the attribute is omitted, so the
->> device looks like it does not support tcp-data-split, even while HW-GRO
->> is on and SHAMPO is splitting headers.
->>
->> On mlx5, header-data split is performed by SHAMPO, which is used only
->> when HW-GRO is enabled. The driver already keeps HW-GRO on while
->> tcp-data-split is enabled, but nothing enforces the other direction.
->> A user can disable tcp-data-split and then enable rx-gro-hw, leaving
->> the device splitting while the config says it is off.
->>
->> To make the feature handling consistent, report tcp-data-split as on
->> when SHAMPO is active and off otherwise. Only allow disabling
->> tcp-data-split while HW-GRO is off, and keep HW-GRO off in
->> mlx5e_fix_features() when tcp-data-split is already disabled.
->>
->> Signed-off-by: Dimitri Daskalakis <daskald@meta.com>
-> 
-> [Severity: Low]
-> As reported by Björn Töpel on v3 [1], should this include a Fixes tag for
-> stable backports:
-> 
->   Fixes: 46bcce5dfd33 ("net/mlx5e: Support ethtool tcp-data-split settings")
-> 
-
-The fix was for updating netdev features after a successful ring param
-change. That was sent here [1].
-
-As for the rest of this patch, it's more of a user behavior change than a
-fix. The HW splitting capability still works when GRO is enabled, it's just
-reporting to the stack/user that gets corrected.
-
-[1]
-https://lore.kernel.org/all/20261017005401.1582755-1-dimitri.daskalakis1@gmail.com/
-
->> diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
->> index 1f534051cdfe4..8e7c748caf2d2 100644
->> --- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
->> +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
->> @@ -388,6 +388,13 @@ static void mlx5e_get_ringparam(struct net_device *dev,
->>  	struct mlx5e_priv *priv = netdev_priv(dev);
->>  
->>  	mlx5e_ethtool_get_ringparam(priv, param, kernel_param);
->> +
->> +	if (dev->hw_features & NETIF_F_GRO_HW)
->> +		kernel_param->tcp_data_split =
->> +			priv->channels.params.packet_merge.type ==
->> +			MLX5E_PACKET_MERGE_SHAMPO ?
->> +			ETHTOOL_TCP_DATA_SPLIT_ENABLED :
->> +			ETHTOOL_TCP_DATA_SPLIT_DISABLED;
->>  }
->>  
->>  static bool mlx5e_ethtool_set_tcp_data_split(struct mlx5e_priv *priv,
->> @@ -399,7 +406,14 @@ static bool mlx5e_ethtool_set_tcp_data_split(struct mlx5e_priv *priv,
->>  	if (tcp_data_split == ETHTOOL_TCP_DATA_SPLIT_ENABLED &&
->>  	    !(dev->features & NETIF_F_GRO_HW)) {
->>  		NL_SET_ERR_MSG_MOD(extack,
->> -				   "TCP-data-split is not supported when GRO HW is disabled");
->> +				   "TCP-data-split can not be enabled without HW-GRO, set it to 'auto' and enable HW-GRO first");
->> +		return false;
->> +	}
->> +
->> +	if (tcp_data_split == ETHTOOL_TCP_DATA_SPLIT_DISABLED &&
->> +	    dev->features & NETIF_F_GRO_HW) {
->> +		NL_SET_ERR_MSG_MOD(extack,
->> +				   "TCP-data-split can not be disabled while HW-GRO is on, set it to 'auto' and disable HW-GRO first");
->>  		return false;
->>  	}
-> 
+>
+> commit 719eca51e9b0da2d046fb99b21cbf5ff86d8cbfe
+> Author: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+>
+> mmc: core: Add option to keep an eMMC powered on at system suspend
+>
+> This commit adds support for keeping an eMMC powered on during system
+> suspend when MMC_PM_KEEP_POWER is set, introducing MMC_NO_POWEROFF_SUSPEN=
+D
+> to skip power-off and keep the card active on resume.
+>
+> > diff --git a/drivers/mmc/core/mmc.c b/drivers/mmc/core/mmc.c
+> > index a02b04938e1a0..c936272bcd813 100644
+> > --- a/drivers/mmc/core/mmc.c
+> > +++ b/drivers/mmc/core/mmc.c
+> [ ... ]
+> > @@ -2157,6 +2158,15 @@ static int _mmc_suspend(struct mmc_host *host, e=
+num mmc_poweroff_type pm_type)
+> >                       goto out;
+> >       }
+> >
+> > +     if (pm_type =3D=3D MMC_NO_POWEROFF_SUSPEND) {
+> > +             if (host->retune_period) {
+> > +                     mmc_retune_timer_stop(host);
+> > +                     mmc_retune_needed(host);
+> > +             }
+> > +             mmc_card_set_suspended(host->card);
+> > +             goto out;
+> > +     }
+>
 > [Severity: Medium]
-> Does mlx5e_ethtool_set_tcp_data_split() allow setting
-> ETHTOOL_TCP_DATA_SPLIT_DISABLED on devices that do not support
-> NETIF_F_GRO_HW?
-> 
-> On hardware without SHAMPO support, dev->features & NETIF_F_GRO_HW is
-> always 0, so requesting ETHTOOL_TCP_DATA_SPLIT_DISABLED succeeds and saves
-> that value in dev->cfg->hds_config.  Because rings_prepare_data() copies
-> dev->cfg->hds_config into kernel_ringparam.tcp_data_split before calling
-> mlx5e_get_ringparam(), and mlx5e_get_ringparam() leaves tcp_data_split
-> untouched when NETIF_F_GRO_HW is not in dev->hw_features, subsequent
-> ETHTOOL_MSG_RINGS_GET queries will report tcp-data-split as supported and
-> disabled on unsupported hardware.  Requesting ETHTOOL_TCP_DATA_SPLIT_ENABLED
-> on such devices also returns an extack telling the user to enable HW-GRO
-> first when the device cannot support it.
-> 
-> Rejecting non-ETHTOOL_TCP_DATA_SPLIT_UNKNOWN values in
-> mlx5e_ethtool_set_tcp_data_split() when !(dev->hw_features & NETIF_F_GRO_HW)
-> would prevent this.
+> Can this leave CQE active across suspend when _mmc_flush_cache() returns
+> without sending a command (for example, when the eMMC cache is disabled)?
+>
+> The existing _mmc_suspend() paths turn off CQE either by issuing a legacy
+> command via __mmc_start_request() or by calling mmc_power_off() ->
+> mmc_set_initial_state().  With MMC_NO_POWEROFF_SUSPEND, if
+> _mmc_flush_cache() is a no-op, _mmc_suspend() returns with host->cqe_on
+> still true and CQHCI unhalted.  When the host driver later runs
+> cqhci_suspend() -> cqhci_deactivate() -> __cqhci_disable(), CQHCI_ENABLE
+> and host->cqe_on are cleared without calling cqhci_off() or
+> cq_host->ops->disable(), so later legacy commands and resume paths also
+> skip host->cqe_ops->cqe_off(host), leaving CQE controller state active an=
+d
+> breaking non-CQE commands after resume.
+>
+> Should this path call host->cqe_ops->cqe_off(host) when host->cqe_on is
+> set?
 >
 
-I don't think it's worth the extra code. Presumably these devices cannot
-split anyway, so it's fine for a user to disable the feature.
+Hi Ulf,
 
-> [1] https://lore.kernel.org/r/87a4ons7dd.fsf@all.your.base.are.belong.to.us
-> 
+Sashiko points out that with MMC_NO_POWEROFF_SUSPEND, CQE can stay on
+across suspend if _mmc_flush_cache() sends no command (e.g. cache
+disabled), since the flush is then the only thing that would call
+->cqe_off(). It looks valid to me from reading the code.
 
+This patch is unchanged since v10 and Sashiko had no findings on it for
+v11.
+
+In any case would you like a guard in that branch, e.g.
+"if (host->cqe_on) host->cqe_ops->cqe_off(host);"? I can fold it into
+the next version if so.
+
+Kamal
+
+
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111194426.16=
+52644-1-kamal.dasu@broadcom.com?part=3D3
+
+--0000000000000fb07f066018253e
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+H0K0rs+X8O45xZIUJlxzf5UZex3BLi1f/H+08rSQULWEtO/ECwkFod2DIzSX7fZdz5RQ1PpziEOp
+goo/JZPYIeCmgt3rIyvMuupj8Ymb0J/velhpXfQuYUM52viw2nmqVcxCwBqyM3Iq7eI4xtEOFRmR
+wxSizd3MSQMf6GCHA4/B/6ttnxhGAr3utaOU+x/RnzG0gPLTW1XRAQ0+GVc/tGFdI864OG1cyrRl
+GvBnHJQSAFOIKwYrUk2oFpgMbafQ6osCAwEAAaOCAdswggHXMA4GA1UdDwEB/wQEAwIFoDAMBgNV
+HRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggrBgEFBQcwAoY6aHR0cDovL3NlY3VyZS5n
+bG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1lY2EyMDIzLmNydDA5BggrBgEFBQcwAYYt
+aHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyNnNtaW1lY2EyMDIzMGUGA1UdIAReMFww
+CQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgoDAjA0MDIGCCsGAQUFBwIBFiZodHRw
+czovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzBBBgNVHR8EOjA4MDagNKAyhjBodHRw
+Oi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMy5jcmwwIgYDVR0RBBswGYEX
+a2FtYWwuZGFzdUBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYBBQUHAwQwHwYDVR0jBBgwFoAU
+ACk2nlx6ug+vLVAt26AjhRiwoJIwHQYDVR0OBBYEFOV9h+N/T9ZsJ40qRxh7NYYD+N6MMA0GCSqG
+SIb3DQEBCwUAA4ICAQAKtKh30wv1/30230mCimgUjMWQE/LImRmyfDgrp2IhBVS6mDun+wH8thEB
+WhBHQMz3gsGixU4ZBJG72eWi39IzQ7CGnisJwA0+hsGaGg03AVtFtqo1rXYRZ81MEDOb6BPYLigJ
+RsHbNmrUGR+LsGeUwOWUeRXqBrYaYFrkgHKvVK1NEewv+vUY08n4tsezO3jq0HKhVDY46bMbf8vL
+oQqqhtcQvu2+5FK2jpUayeubpzPwobjEG61RIhBvM0KivY4CB2s9A7qgjL1XBycAybIvG03BbFoT
+t282FqXwk9JU6YihLlt+hpzO9UF7E8GZYlQlVIZOLOvytqilhua+2h77Yy8Jz/FJyIXKuaLPtvb2
+SC2shL7jF28kQbP3QUKwAig+cxwbpngnUkd9D9cXSHVq9PPwYm0A4eAO0YQ/80Uq20+gXF++g0sy
+NKrrV3i0T1dbCd86miGDKvarGzjh7pdsdwNY15liGP6Orib1tnWkJcbtP1rJty4r/mbbxcK8ILO4
+IvTGFG6BfjJ+La0aRt69i1fQmjUWHLwzkLNpw9cJH8/MONZcEJeDkq9WELSyy29bagStk5KHu7NO
+TH65sZg+i/4qmj3DEeEGTr/Shzp4YWSNn4W7NEelr0VgDlwa7xqlwZjXxG4MIJqy0SsQlAwEXtqd
+nH2FpJfzgAetkuyU6DGCAlcwggJTAgEBMGIwUjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2Jh
+bFNpZ24gbnYtc2ExKDAmBgNVBAMTH0dsb2JhbFNpZ24gR0NDIFI2IFNNSU1FIENBIDIwMjMCDEca
+ZUGCu6d0oT1M+zANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgPpkoq2jOLQliCVdR
+XrGrQwWwc1qBVcBzkoHsATE85FgwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
+CQUxDxcNMjYxMTEyMTgwNDM3WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
+ZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEw
+DQYJKoZIhvcNAQEBBQAEggEAa+r1NFXtrGAQoK7xcwADCceUalH/yOOP5YRmbUQZGujm/5r3Q+Dy
+WJSmdpu1r8+2wX3fBLdrOFGyPh28fdvQ5g2maRQtjU60KiD8B/NIeZ0rAhe27ng6k8RPtLkZ7vlG
+YKkbPamG9s5UL3lDnLEjapUKYCxv+W+eK2g4DOmhcSN5Frywrq/dR9diuxveDtgO7dkSyrObYxgL
+S8arxfuUM0QiF6TaejTJzXOWKasrvSq9ECS+VVsbOvL8/rceUK/c3EO4FhvIAHZmoHbGtN1TJTZS
+xEDhpT39wdvoDTBElhU9LDZeiJrGvnJUREnR85lJnQHxMFGOx9jM4ywXNvMJYQ==
+--0000000000000fb07f066018253e--
