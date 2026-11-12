@@ -1,81 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.15
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794514195;
-	b=M3o+QEXJyuA83yS4HPbJ3UszyB1ULxOlvoiPMmiGOpXTLkSiSJpNgTOfubby5i28eCRR
-	 dXCVrWUOPuvykNDNJSgTbENXzwPjGM0C+oRtEcdU2mKpZZBC3JTEgTjkI2EbkCXJ4BfB2
-	 LfKMDA0dPkZMYPbDhCpHaXdFiuswiQBJjiWziXOlEaHHBR5OoZPIcwTnly6+/dBDaSgTr
-	 is/BvYkhHAoBPfveJs8S41jfyGIf7eQEvgYxqNwo7fXRgOACLY/fvAoeAh/jiao4Otnh9
-	 x9NiYp9n7ZoloXtDgrILRzO/Mvdw1SeAORsVRzM+IkLrU4k5Lin1CQhp+MVn6QqLnjw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794514195;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Date:From:To:
-	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=8L8kC9u4P2bhXSG9aS8f2aG6Mk5zc5krKHneokhV9uw=;
-	b=UJnp1wmEZX+f2MqBlqxjYprLNLQzjt5B2Equ0h7nlvIk50+et8go5U+XWxAGg4MlwN6L
-	 xZVZXuPM7XpzADo/l87nWgnQ+j6E2/tXTY62jAQ6ACXWXo3JLbdaYYPsPiWRINRnuGuf9
-	 W9IF4XbYotcW10avucV3emM92WNp70wOwPfFExnN0snQGKGHOUyRWXsjwEwSMropaDHYW
-	 TqRI06HiQQFuTuAoTC+AnR4HKMKqYfaBU4vTD9fnzsGApHyVyWDjR0b4m1vQXMfLCCbZV
-	 0DnZxx3nOC8q0xHteiB8YbVkjUz5S1Lt9M1zoC6t3LtAEqN3/ZUxsC1moLhCbA22n4Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=VzNtIYQH;
-	arc=none smtp.remote-ip=198.175.65.15
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794522150;
+	b=MpFGmJI2bzo7Mp8OAOjwbrdtaqs++Le6FifqVVhn9M6Q91qLQCFT9Nd87cv26kyCSPO0
+	 xKN57Z3UuRE2sS+oUPpJJjDjOS7UdDKzN9RcJ3m2a4CbXQGIlIOewD/GpheRkY+9aQCky
+	 g3BtL4gxtH/qtKOgxpyK1g28cL1Jmz772jDMehuvPMjbYS7GnZ7A4Ym9ylEhdd/GC5hQW
+	 mY0EDHXhNVqypBpASlj64HYm61MMhpdDsIv7ke5gzWtjRJDoZavHDTCgo/QrP/i+ZPf5G
+	 T23WhGreySRc2xbznAhU5VbgB5AStZgiYxImZSW99HR4XSzi5YRX28pmywCD53qmtqg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794522150;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=QrgIfCS7YStc9wryNUO5eUzghFQY2XE+PPHAxJEeCS4=;
+	b=k/vqSqDqcVFjCRgVmNiMPgpBfXO61SRYcsPEqvyP2StWAoYEB2zzHrXYYyCy1wSGDvGL
+	 fvNUUQvUiGHwP0d+KUrqoAvTk5bpvPLW2NKcvVQJz/KbFWmZUWamONDXHW1/uJOJADUI1
+	 NaXvOQS1sjl2F3CBGQo2ttAi4jKKCE6kWOpDKMnmFwOeT/mUfOV0w5wy0ImksK4f+JdLr
+	 bnr8c+Z90FTICoqZXyrFhpRkpyr3aCUOwIrVhLN6pIQ0XtLIriime7/CfsGDHA9cfEM4e
+	 mPtP9yW9+hxeyHdC7n42Vsz7MQuOYzRZ6JYkOYdVkKOUiy2KMMpknHzio7GoItDiuHw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=ceh7wgQb;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.44
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBAF606A31C;
-	Thu, 12 Nov 2026 20:09:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFBAF606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D0A606A321
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 22:22:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30D0A606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=VzNtIYQH
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794514195; x=1826050195;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=o0Jmt3RGWgn8b3wNzBOG3FMike2nuQx+tirONUWZoXQ=;
-  b=VzNtIYQHwlz1Y6NVnRqUzQw0z/UVmyprT13N2MQ3wBbUzFufbeyT5WAB
-   ptdpx8dGS1YxDQf5UxKj8GqbjHk0JK3J4tfYIprApWjn4NUKIKB1A6SrK
-   3M01PFEwM1uPQOqdL8meoTHHuTMiI/MWZ72HFwPtfMO3h3i/8uUmAkQgl
-   wq34Fb6ek8tawZ8tWT9wCOTQwEpbgryTgamJ2URTPtGZsMcgmY3JR495e
-   VM/D4fTbJ9L1sd9GY7DEm9e4hQQNz7wZFTofTLrKYwl7YLAjoBnthRUtS
-   fDPiq+MFN+Pq3jdWy3NUIQwmfVxCnV8H0PUyGRlKZkfIYGkYxhGYxwGqb
-   A==;
-X-CSE-ConnectionGUID: BKxY8+SwQxOleIbkbeoKcQ==
-X-CSE-MsgGUID: wVW9iJefQ263UDmrZzpoyw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11964"; a="3315824"
-X-IronPort-AV: E=Sophos;i="6.27,210,1787036400"; 
-   d="scan'208";a="3315824"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2026 12:09:55 -0800
-X-CSE-ConnectionGUID: XJP+f/0XSauhbTSsG5X+HQ==
-X-CSE-MsgGUID: YAaFgH0hQYKPDDCj9imqfw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,210,1787036400"; 
-   d="scan'208";a="9074008"
-Received: from lkp-server01.sh.intel.com (HELO 0caa9d2d175c) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 12 Nov 2026 12:09:51 -0800
-Received: from kbuild by 0caa9d2d175c with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1xRb7E-000000011zv-3F9X;
-	Thu, 12 Nov 2026 20:09:48 +0000
-Date: Fri, 13 Nov 2026 04:09:19 +0800
-From: kernel test robot <lkp@intel.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>, alexander.deucher@amd.com,
-	christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH v2 2/2] drm: Remove drm_crtc_init()
-Message-ID: <202611130335.vCIEnRqF-lkp@intel.com>
-References: <20261112125039.66082-3-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=ceh7wgQb
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6b56c90b38eso2424a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 14:22:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794522148; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Jyo8/B6gu9uZLVhXRmay2+KY/H2O6zM/8B7YREZLIWop+q6+zZw0TsDEfSsjyBNJ3d
+         dBcX0v4CZkFBDuXWOhB/3g1PZW1cp5nd1fi+mbPA7z9SUdiG2+Y48royNi3QB8ZR9Uvj
+         5HtjpJLlJDThW5xAiAtxfN95dbHH6EkRwPHwj5ZSIna+DrWGn3iT0+Iut+I1FfzZ1rk2
+         Mq8B4FSbvK0WQcJqtDOu2okd7PPRFsT/qM31oYwL9+n6GbuKdiN4gaKE/wv7xBmg8c/o
+         PY8Mp3HWVJUdRnrYnA3Me2rHwFQz+2eG4RBMjyXEqez2bBEd8hKs/vOKtkanHbUL2IgE
+         6JAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=QrgIfCS7YStc9wryNUO5eUzghFQY2XE+PPHAxJEeCS4=;
+        fh=fItrUtV5UsY1KSNx1ZNnzv3miYMbODbRRQWQ18AP5Zc=;
+        b=sbD8BLS8Tr1Nly2eB0+Yf8w09eoLhudc9JS2HDVDI6r8QtgAuGh+MRy6Or+LHfrs66
+         LwqUXBdNiwSCGj0scHssosOgzqucJtEFEkklkbjmmXqoa8Vw65xMqyG7HY55oLcA8qJ0
+         R5dJCuF8vWZd9Xw/cGpuNl6zbK8xUQt3gzde+GkBqxT5vLQjqJcRThgLY7GgLcpn0pxG
+         x22sycdzFd1aIvEzAJ6VM4/VhqoQsmJON0rcqLFLg397UY6xBb0VszNjXlPN2AlxO0CB
+         8eg0CQP8FCfWaBdyqN+4I2Bk+Dc1yONyZj7pYYv+3Tf/mq2a0fq2jox+/Bt4OKDodoNt
+         aSCg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1794522148; x=1795126948; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=QrgIfCS7YStc9wryNUO5eUzghFQY2XE+PPHAxJEeCS4=;
+        b=ceh7wgQbb1lGMPgDJudrjwHznj0z9f4XtG/oFhnDWc9UDntVlGYujZoUIu4tcxIpIQ
+         MhHj6PfGqv2TXuXTUKBw4VY26rVlmaZCthXjU6VGnuh9YLA0pFjSDp41E2ycKjnzLHGd
+         alIlpWdM1Uf1w/pAZrqmnEWejGQhNBa+KC5U4SeEiAgJnQ5FnFmhtP1NecTOxx/1xzPF
+         ByIMc6fZo+hYo+BVqTcIzDI5RzvVQYNr834qBd3lKc4bwmJwb332slUXsEhMPwH4DUVq
+         ldzriszJgPPIOceCsPt/YG5PZYUssZWtMVDzyPzryfb0Y4ef3VKbzas+pyudWrGXoyA2
+         codQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794522148; x=1795126948;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QrgIfCS7YStc9wryNUO5eUzghFQY2XE+PPHAxJEeCS4=;
+        b=k8z8BCKBInrdqMhhU64CJaMprVMX1bqRIL+QmM8H9bwvYLsNaHO5PDZnqwiu3uzeEE
+         e12ohMQj6tcgUh4oQ6T7pqLG8CAcEzns7xUNhotB5F9T3GLSHWM7P0l6YZqvQVMNTUM3
+         IIzLQE94ZL18JFSlbYmEUqX96lpJ5SemdXR2ouTSpku4jnF5CrBAZoavLcDAuNeharyR
+         m3V8tLTanIn3kMtDMbWvImaaVd9qV+yY1Dp65GabFEyiuoOmNFGC5Tf5KfQBjuur0PV1
+         617MtqQcgCbQTkZB3zt7GMmixPStX+Iyv5rtX/rANEhXwnwshAAz91Sb8StoDkCsNw87
+         2A9w==
+X-Gm-Message-State: APuU4Z9by1lQUhAD/YgkwdJjMReTnG/L22R2m02oHHgsSZN78k178bvp
+	5Uo8znbGlOF97Xe2uxaFuYBp7FjK/qdYAHFMajzcNbj1xAUp/2MHMg6EyIPnBr9xqxvQCkhYz4S
+	KzEtda8O++a5pg/ux/rblbcxiJdoyaXZQ23fPuL1yRIK/w7XD616LybelDTs=
+X-Gm-Gg: AYBFou08PCwVTQKgO0LeC/fr3bfai+M6EQLX4PZke9Z9gncHU9qui6TQt4cq1NWncjY
+	KBy64/w1ws8Gmfvdmwv2yVXCQPsrKPYkQ3tx1HLVHyAT9XOwyqU7AuYqhbZRqb4DboBdf8WHDGb
+	0IZrcCVHeAZ4F3UhQ4fezYMcN3M17RjfHxN0kxST0VEybKI9+RoCigggXmmOAN9ctUEarGlmc+B
+	jGYboNMZNJQzW+T4KnjeHVEEH5ZukEGD03JhawcNEg4FyC0DV6wuk8k4xu5TQavBHTmKXszYYbk
+	UD7Ms5GR+hfKtkcvEV8L+v3RB43ibv5CJBpZmx7mSLXVmtFbWxV8f4Pa0HcYe34JTJD7mo7PRzz
+	2VonBjVHFRkUOWCEWwKQFdVhqtWYW+elHBhER34YoX+3Dnz69jYFDGtrf6q0JKrg+yts0OwDS
+X-Received: by 2002:a05:6402:a306:b0:6b5:5d24:5d90 with SMTP id
+ 4fb4d7f45d1cf-6b7c33b4044mr33238a12.3.1794522148143; Thu, 12 Nov 2026
+ 14:22:28 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,113 +103,72 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261112125039.66082-3-tzimmermann@suse.de>
+References: <20261112212628.265262-1-jmattson@google.com> <sashiko-outbox-211867@kernel.org>
+In-Reply-To: <sashiko-outbox-211867@kernel.org>
+From: Jim Mattson <jmattson@google.com>
+Date: Thu, 12 Nov 2026 14:22:15 -0800
+X-Gm-Features: AclHuK9ee6Z7MEJHoBdy4dj0b2KNlvJa6JYEsQ4nMaHf-mKBUBV3DO4EK52PSLU
+Message-ID: <CALMp9eQWBoeroBs1oXCYVH59ZX0P2kEaWxOYeLFHMN1vjPESfQ@mail.gmail.com>
+Subject: Re: [PATCH] KVM: nSVM: Gate CET state copy in svm_copy_vmrun_state()
+ on guest SHSTK
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Thomas,
+On Thu, Nov 12, 2026 at 1:32=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] KVM: nSVM: undeclared vcpu in svm_copy_vmrun_state() breaks
+>   build
+> --
+>
+> commit 11b89023661c173dccf1cc07088879a6b4ff0bef
+> Author: Jim Mattson <jmattson@google.com>
+>
+> KVM: nSVM: Gate CET state copy in svm_copy_vmrun_state() on guest SHSTK
+>
+> This commit changes svm_copy_vmrun_state() to check
+> guest_cpu_cap_has(vcpu, X86_FEATURE_SHSTK) instead of
+> kvm_cpu_cap_has(X86_FEATURE_SHSTK) before copying CET shadow stack fields=
+.
+>
+> > diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+> > index f9090b601efaa..2a1c279bd54a1 100644
+> > --- a/arch/x86/kvm/svm/nested.c
+> > +++ b/arch/x86/kvm/svm/nested.c
+> > @@ -1218,7 +1218,7 @@ void svm_copy_vmrun_state(struct vmcb_save_area *=
+to_save,
+> >       to_save->rip =3D from_save->rip;
+> >       to_save->cpl =3D 0;
+> >
+> > -     if (kvm_cpu_cap_has(X86_FEATURE_SHSTK)) {
+> > +     if (guest_cpu_cap_has(vcpu, X86_FEATURE_SHSTK)) {
+> >               to_save->s_cet  =3D from_save->s_cet;
+> >               to_save->isst_addr =3D from_save->isst_addr;
+> >               to_save->ssp =3D from_save->ssp;
+>
+> [Severity: High]
+> Does this fail to build because vcpu is undeclared in
+> svm_copy_vmrun_state()?  The function only takes to_save and from_save, s=
+o
+> its signature and callers in svm_set_nested_state(), svm_enter_smm(), and
+> svm_leave_smm() need to pass vcpu as well.
 
-kernel test robot noticed the following build errors:
+I should have mentioned that the base-commit is
+dea4f6380f4ec96e8f3b0aaf2343764bd0d25ef4.
 
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on linus/master v7.4-rc2 next-20261111]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Commit cd0e6f4d7cec ("KVM: SVM: Add a vCPU-aware helper to get
+supported DEBUGCTL bits") changed the signature of
+svm_copy_vmrun_state().
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-radeon-Inline-drm_crtc_init/20261112-134508
-base:   https://gitlab.freedesktop.org/drm/misc/kernel.git drm-misc-next
-patch link:    https://lore.kernel.org/r/20261112125039.66082-3-tzimmermann%40suse.de
-patch subject: [PATCH v2 2/2] drm: Remove drm_crtc_init()
-config: arc-randconfig-1001-20261112 (https://download.01.org/0day-ci/archive/20261113/202611130335.vCIEnRqF-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 12.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20261113/202611130335.vCIEnRqF-lkp@intel.com/reproduce)
+Odd that you quote me as writing:
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202611130335.vCIEnRqF-lkp@intel.com/
+@@ -1218,7 +1218,7 @@ void svm_copy_vmrun_state(struct vmcb_save_area *to_s=
+ave,
 
-All errors (new ones prefixed by >>):
+when, in fact, I wrote:
 
-   drivers/gpu/drm/amd/amdgpu/dce_v10_0.c: In function 'dce_v10_0_crtc_init':
->> drivers/gpu/drm/amd/amdgpu/dce_v10_0.c:2677:9: error: implicit declaration of function 'drm_crtc_init'; did you mean 'drm_exec_init'? [-Werror=implicit-function-declaration]
-    2677 |         drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v10_0_crtc_funcs);
-         |         ^~~~~~~~~~~~~
-         |         drm_exec_init
-   cc1: some warnings being treated as errors
---
-   drivers/gpu/drm/amd/amdgpu/dce_v8_0.c: In function 'dce_v8_0_crtc_init':
->> drivers/gpu/drm/amd/amdgpu/dce_v8_0.c:2603:9: error: implicit declaration of function 'drm_crtc_init'; did you mean 'drm_exec_init'? [-Werror=implicit-function-declaration]
-    2603 |         drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v8_0_crtc_funcs);
-         |         ^~~~~~~~~~~~~
-         |         drm_exec_init
-   cc1: some warnings being treated as errors
---
-   drivers/gpu/drm/amd/amdgpu/dce_v6_0.c: In function 'dce_v6_0_crtc_init':
->> drivers/gpu/drm/amd/amdgpu/dce_v6_0.c:2645:9: error: implicit declaration of function 'drm_crtc_init'; did you mean 'drm_exec_init'? [-Werror=implicit-function-declaration]
-    2645 |         drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v6_0_crtc_funcs);
-         |         ^~~~~~~~~~~~~
-         |         drm_exec_init
-   cc1: some warnings being treated as errors
-
-
-vim +2677 drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-
-7e50642d41050c Alex Deucher 2024-10-31  2667  
-aaa36a976bbb9b Alex Deucher 2015-04-20  2668  static int dce_v10_0_crtc_init(struct amdgpu_device *adev, int index)
-aaa36a976bbb9b Alex Deucher 2015-04-20  2669  {
-aaa36a976bbb9b Alex Deucher 2015-04-20  2670  	struct amdgpu_crtc *amdgpu_crtc;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2671  
-aaa36a976bbb9b Alex Deucher 2015-04-20  2672  	amdgpu_crtc = kzalloc(sizeof(struct amdgpu_crtc) +
-aaa36a976bbb9b Alex Deucher 2015-04-20  2673  			      (AMDGPUFB_CONN_LIMIT * sizeof(struct drm_connector *)), GFP_KERNEL);
-aaa36a976bbb9b Alex Deucher 2015-04-20  2674  	if (amdgpu_crtc == NULL)
-aaa36a976bbb9b Alex Deucher 2015-04-20  2675  		return -ENOMEM;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2676  
-4a580877bdcb83 Luben Tuikov 2020-08-24 @2677  	drm_crtc_init(adev_to_drm(adev), &amdgpu_crtc->base, &dce_v10_0_crtc_funcs);
-aaa36a976bbb9b Alex Deucher 2015-04-20  2678  
-aaa36a976bbb9b Alex Deucher 2015-04-20  2679  	drm_mode_crtc_set_gamma_size(&amdgpu_crtc->base, 256);
-aaa36a976bbb9b Alex Deucher 2015-04-20  2680  	amdgpu_crtc->crtc_id = index;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2681  	adev->mode_info.crtcs[index] = amdgpu_crtc;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2682  
-aaa36a976bbb9b Alex Deucher 2015-04-20  2683  	amdgpu_crtc->max_cursor_width = 128;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2684  	amdgpu_crtc->max_cursor_height = 128;
-4a580877bdcb83 Luben Tuikov 2020-08-24  2685  	adev_to_drm(adev)->mode_config.cursor_width = amdgpu_crtc->max_cursor_width;
-4a580877bdcb83 Luben Tuikov 2020-08-24  2686  	adev_to_drm(adev)->mode_config.cursor_height = amdgpu_crtc->max_cursor_height;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2687  
-aaa36a976bbb9b Alex Deucher 2015-04-20  2688  	switch (amdgpu_crtc->crtc_id) {
-aaa36a976bbb9b Alex Deucher 2015-04-20  2689  	case 0:
-aaa36a976bbb9b Alex Deucher 2015-04-20  2690  	default:
-aaa36a976bbb9b Alex Deucher 2015-04-20  2691  		amdgpu_crtc->crtc_offset = CRTC0_REGISTER_OFFSET;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2692  		break;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2693  	case 1:
-aaa36a976bbb9b Alex Deucher 2015-04-20  2694  		amdgpu_crtc->crtc_offset = CRTC1_REGISTER_OFFSET;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2695  		break;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2696  	case 2:
-aaa36a976bbb9b Alex Deucher 2015-04-20  2697  		amdgpu_crtc->crtc_offset = CRTC2_REGISTER_OFFSET;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2698  		break;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2699  	case 3:
-aaa36a976bbb9b Alex Deucher 2015-04-20  2700  		amdgpu_crtc->crtc_offset = CRTC3_REGISTER_OFFSET;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2701  		break;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2702  	case 4:
-aaa36a976bbb9b Alex Deucher 2015-04-20  2703  		amdgpu_crtc->crtc_offset = CRTC4_REGISTER_OFFSET;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2704  		break;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2705  	case 5:
-aaa36a976bbb9b Alex Deucher 2015-04-20  2706  		amdgpu_crtc->crtc_offset = CRTC5_REGISTER_OFFSET;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2707  		break;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2708  	}
-aaa36a976bbb9b Alex Deucher 2015-04-20  2709  
-aaa36a976bbb9b Alex Deucher 2015-04-20  2710  	amdgpu_crtc->pll_id = ATOM_PPLL_INVALID;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2711  	amdgpu_crtc->adjusted_clock = 0;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2712  	amdgpu_crtc->encoder = NULL;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2713  	amdgpu_crtc->connector = NULL;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2714  	drm_crtc_helper_add(&amdgpu_crtc->base, &dce_v10_0_crtc_helper_funcs);
-7e50642d41050c Alex Deucher 2024-10-31  2715  	drm_plane_helper_add(amdgpu_crtc->base.primary, &dce_v10_0_drm_primary_plane_helper_funcs);
-aaa36a976bbb9b Alex Deucher 2015-04-20  2716  
-aaa36a976bbb9b Alex Deucher 2015-04-20  2717  	return 0;
-aaa36a976bbb9b Alex Deucher 2015-04-20  2718  }
-aaa36a976bbb9b Alex Deucher 2015-04-20  2719  
-
---
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+@@ -1248,7 +1248,7 @@ void svm_copy_vmrun_state(struct kvm_vcpu *vcpu,
+struct vmcb_save_area *to_save,
