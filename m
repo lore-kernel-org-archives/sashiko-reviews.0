@@ -1,184 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=50.112.246.219
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794488004;
-	b=uMt4732g4T7KQUL0/38vgwRwTVhmFYhy0IQstdQjwiUWg6uypZFt9bisugfEgMyLlciz
-	 k1LiuAWeam/wYxUEQsXEt9+jEJ4kdl/00klRWbW92np9pZRLxg04X6tByLeCUmmOW4uji
-	 DwBaOGRSJHHRA/NjESIuwHpe13TbdxlZUQhvPty2zh31nnu241ukkSYnTauF7w7LNCCcl
-	 b1JnjOvPc0aHc/m5YkbvcgbjPC+pTMjGIWLH5QzjlxJ3livo1Pll2wP+qPBkFV/0HjXLu
-	 SlrGvZPWXvgbu3h9nIVZkBQuQd2OHzUY6dvcWCMr0nFl4WU0D15eZwmBs8h14UQnETQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794488004;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:Received:Received:X-Farcaster-Flow-ID:Received:Received:
-	 Received:Received:Received:From:To:CC:Subject:Thread-Topic:
-	 Thread-Index:Date:Message-ID:References:In-Reply-To:Accept-Language:
-	 Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:
-	 X-Exchange-RoutingPolicyChecked:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=tKf/Yo74oUjRTXaddGbnrtxpkMkYjz230OHU5VH5YsE=;
-	b=Abjq7fUOHrZUK4uZTezw8UlMKkvkxRrzrLTxOS6OtvOdI5TZ+McSGmrXvwvBUxRfo+cA
-	 0mNJTbxeVyxQOawM+91oZm/LJqLos00J5OCWndKSRCuK1MXQcQ2saRtQlK1oHWrW6DIV7
-	 Qz0HW4qI7oBpn/BDnBPbd9M7OuY9Uknz7tro4daald0k16Ar4dDimKEHAE46jyf2gXVBk
-	 dIgnwNoLOONEHCQKtTWVzHcwRcoJk+OXa6atmtfcg2CHKCEYApQJeT6e85h16uy1uZoiL
-	 h2RytvJ3ZSKec/aQejKBINU8Km9VQ11GIdgZXWpNhutenyq8TXzQMQpuvuIm69ytfRQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amazon.com;
-	spf=pass smtp.mailfrom=amazon.com;
-	dkim=pass header.d=amazon.com header.i=@amazon.com header.a=rsa-sha256 header.s=amazoncorp2 header.b=rwzPwmKI;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=50.112.246.219
-Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com [50.112.246.219])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794488032;
+	b=hdibrYKakVKH6RC8DvQxNgMQuqsRIYplg41s+ESHL067jZHA/FXq2bUwDSjF/8owIdhR
+	 ninWrQ+nOONLhzjSkxmIGlu35jWDAjy0H3dxGGCGBFLFs5BrhooOStrWeEYFT7fYBoEDr
+	 RZPrJARx23XMoZhSQb7d0alg5R0VdIw/JnumNg+mfG62HMXopVSVKzz2X62fChIQGWwnR
+	 iI4YhQYTJTLFUbGu74BXuEs8wEefyCqWJJRuy0OROKSJOFFv+UL03Anf+/gHs4rIW5y6o
+	 f0Je8kKB6Bn4xP1ScHH3O7PWppGooEl4olV0xED+s/62LhOvoJ3VBe29stX27nBXaQg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794488032;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:X-ME-Received:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=5ZrUjxQ1X/We7wtRHupxrDAx8TTm7+SwxqIT1sIDYs8=;
+	b=IDTHcfXyJn4x3/ynhPdpT9Yrl8332QpVloIiwk96bsPg5/67NaugZ1jCqi/klQC7os+C
+	 1HI3uEnfEJ5uKPAhn/JRj/mVm89EeRnbyQuhI00K/lRegTfj6aU7/p8eY7sjhH4/mGWVo
+	 Wkuf4Qc/5Ipd5DAl7+k8bODTjVDs1D/pJPw4TQL29lrNcJXiqqL+dp822JIk53HOwgBml
+	 BHmKfO+Jx12GN9K3cys2/UUxwpKphCCNf04NL3fgS7ZoSbzdjAqz4GsJvkomKBRheg/C4
+	 3nj9loPwjEhCV6TxhEMmlcl6rz1Pdaa2w4UhEWuIJGeSLdETdESfwDoIcKdZ5T5FzkA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="KlsD5/fD";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BAA606A333
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 12:53:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03BAA606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3300606A323
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 12:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=amazon.com header.i=@amazon.com header.a=rsa-sha256 header.s=amazoncorp2 header.b=rwzPwmKI
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
-  t=1794488004; x=1826024004;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=tKf/Yo74oUjRTXaddGbnrtxpkMkYjz230OHU5VH5YsE=;
-  b=rwzPwmKIHop4cu2jwIUU7cpQzWnNkU8I0TSoXokfW0aFjuiKUL2hVWTc
-   huIy84BEiLjdamiKYpcc6FXSZ7yPAAPFeJghhzAscwr6MuztNEu78Ysow
-   xJX5AQDVBPTddeVS1bhJM9pv877k8oiVVG3q10PaQN+u/eajzi5eGc0b7
-   NrD/37yXzY+xLwbEmYrtgMAm3lmUnGLyohVTWR+QOuCm5rvJ+XGEw4D9f
-   Fqv0ODAnsXyZY2Bu2mxLxqKAxwB7tWLY6zPoDlMOVFBgVshgPW+ydffHx
-   qHAhb5dsnh6HfGGTalkJLt4emottus9rjXB9pvC9AKpGSe2XNYpFTuRB2
-   Q==;
-X-CSE-ConnectionGUID: YAF0ZwZ0Q+qSB1ZZ5RcXKg==
-X-CSE-MsgGUID: 9jbAWJypQIm9jAI7YKXs9w==
-X-IronPort-AV: E=Sophos;i="6.27,209,1787011200"; 
-   d="scan'208";a="33589278"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
-  by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2026 12:53:20 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:2987]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.5.141:2525] with esmtp (Farcaster)
- id 6051b07e-eb99-4536-b92f-478617cdecba; Thu, 12 Nov 2026 12:53:20 +0000 (UTC)
-X-Farcaster-Flow-ID: 6051b07e-eb99-4536-b92f-478617cdecba
-Received: from EX19EXOUWB001.ant.amazon.com (10.250.64.229) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.56;
- Thu, 12 Nov 2026 12:53:20 +0000
-Received: from EX19EXOUWA001.ant.amazon.com (10.250.64.209) by
- EX19EXOUWB001.ant.amazon.com (10.250.64.229) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.56;
- Thu, 12 Nov 2026 12:53:20 +0000
-Received: from BYAPR08CU003.outbound.protection.outlook.com (10.250.64.238) by
- EX19EXOUWA001.ant.amazon.com (10.250.64.209) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.56
- via Frontend Transport; Thu, 12 Nov 2026 12:53:20 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W6rMTgzP4OSDUaQKILbygp5SSP4wbSH5mAwt/4GNonY1V1KbsnFe4Nai47J3m0hDrKuXAf4RzXUmzT8xRt0jKfVqIvkSHQmXOH7gHobQ0EmAzVCXNwr76QOEv6ZhYgpK+d0Ig+a1FIMu3zxlEC8VBK6VM4EM5SCz4aqIYvN4+1JY3Aw8OhZ22gfSY7Hr4Nyy8UX/fO0Yu3Z9cBUqVg+XCPuecMncr6YkOlXQhnc4MBvljhYvfBub9QQ3xSCN9VKQjuuxcdcj8ciyE+DzYF2JAiXFwmSeomBT4fKHv17P5Dp4bUVV8Vgop5mAVteB2weX3JXRxy61gE6sVpaF3dFQGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tKf/Yo74oUjRTXaddGbnrtxpkMkYjz230OHU5VH5YsE=;
- b=H4Es3PD+CV0l1rJCo8FM61VxAx6qwZOJsaMhZ3a7zVlRX4jAfCtCxCuHffi2IDeyTGz9S5tOWb7ogvh7jTTLxh7LD3+ujNnve5qATmDjZHiZfDcQJKZhK49WhohydSmRxZntZW7CNKHXWat0quSBTV6Kw4I1zk1tExsBXfqugcbZXKJ/epGlordSwMplnL0mqwzbJTdKHdwj12cRVNTOaPqy4GOI8Yt6iEw9j8AnkWQ+/8R7mSuqDMbv7JSzuTHxFLTFpEazTRVyMrnatYpbvDhR4eiCS4Ui6L5+fVcjaAK4SlbPn8cuZuBN2smY+FpSy8RmLLALPz1jI4NiqIu48g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amazon.com; dmarc=pass action=none header.from=amazon.com;
- dkim=pass header.d=amazon.com; arc=none
-Received: from BY3PR18MB4722.namprd18.prod.outlook.com (2603:10b6:a03:3c9::19)
- by DSAPR18MB502825.namprd18.prod.outlook.com (2603:10b6:8:519::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Thu, 12 Nov
- 2026 12:53:17 +0000
-Received: from BY3PR18MB4722.namprd18.prod.outlook.com
- ([fe80::e307:5f61:2694:b219]) by BY3PR18MB4722.namprd18.prod.outlook.com
- ([fe80::e307:5f61:2694:b219%4]) with mapi id 15.21.0592.009; Thu, 12 Nov 2026
- 12:53:17 +0000
-From: "Farber, Eliav" <farbere@amazon.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>
-CC: David Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>, Jann Horn <jannh@google.com>, Pedro Falcato
-	<pfalcato@suse.de>, "linux-mm@kvack.org" <linux-mm@kvack.org>
-Subject: RE: [PATCH 2/4] mm: add vmf_insert_pfn_order() and vmf_pfn_order_ok()
- helpers
-Thread-Topic: [PATCH 2/4] mm: add vmf_insert_pfn_order() and
- vmf_pfn_order_ok() helpers
-Thread-Index: AQHdcqTJW91ATHw22EGKOL1LwREUbQ==
-Date: Thu, 12 Nov 2026 12:53:17 +0000
-Message-ID: <BY3PR18MB47226FDD9A957C4935B7B6F4C6702@BY3PR18MB4722.namprd18.prod.outlook.com>
-References: <20261111113045.35368-1-farbere@amazon.com>
- <20261111113045.35368-3-farbere@amazon.com>
- <sashiko-outbox-209831@kernel.org>
-In-Reply-To: <sashiko-outbox-209831@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amazon.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY3PR18MB4722:EE_|DSAPR18MB502825:EE_
-x-ms-office365-filtering-correlation-id: 4c38b51d-69bd-4b87-bcc4-08df40bbebfb
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014|23010399003|22082099003|18002099003|261022075727099003|261022105027099003|261021121427099003|261102123227099003|261028144727099003|261026121527099003|261026140227099003|56012099006|10067099003|11063799006|4143699003|38070700021;
-x-microsoft-antispam-message-info: 9LK0SiGptIMK318SxZTvbZ+sgPokSli6JR5QesOk1eqL46jB8f388GeYg4IAVp4NRZJEZ+jDuZlc17n3z6/oAJfTPxAma7scztRYhAbvrnLuDCd9cVy8rhfL2EgDMLDZBqi4Wh/p/PzhEuwAfqmFxxQkTe0uGkIQU2KfiO1B8z/VQMJrbkXXBSdmzWOYalWVsO/mihLP0b8VOxSDH3YGtdxvxJPUXhmc2vkEmi0pz1txe0/n42TzCWJbQJ03TGoBGUpH13taXCUog8K8wOGuxrbzPVGkuqHl+0EW0wOMIz2jGisn0unU3rvbtOEPy/JbA/pOSFjM/eRtVEKvP53Kw4s0IdRDlPeurBu2r9aaBICEe9iRxBmU2yL4zuJTi+AcJw9X8FbKZuuY3QEoxzAjNC2SaUeHxoSp+JQlOplmYkKebwa1jknaxxMY3UHG4YG9eBK9bXt7DSEZX/1rV1Q5ru1r3yRQWMs+Q6cN8T2F63OrLrRaBwtYOXsFvInN5iqASg1GKqRdGSDKDjOmAu5Q6SwJjMz7WRwDnh8xTsKLrJyz1SnbgW+XIqAewCixvC/1lhc5Vo6yh7YUEGGH8VEYAp0Xss7Hgqz8+QfOQX5N4hDI+dEtmXp4a7CncTin6l6tkICofle/NB1thOYMs8aGZqv1TkFigObH202zf++GX+ZRyrPCM+LDiF7z+QGmmGc3e/i9ixBdWALBOQfMrNSHi4dWVs9/fvNb8upfpQ1biCQ=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY3PR18MB4722.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(22082099003)(18002099003)(261022075727099003)(261022105027099003)(261021121427099003)(261102123227099003)(261028144727099003)(261026121527099003)(261026140227099003)(56012099006)(10067099003)(11063799006)(4143699003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?N3BpdWU0dG5QdjgwdVNZekFVU3pZS2REckVpTGhtay9RUlJmWGZFNzhNWGpl?=
- =?utf-8?B?V2t3Y3hnT0JKSmxPZGp1R3VtUTh4OTJmdnA3QWdtMVN0UGtER3dmK3hiNmFT?=
- =?utf-8?B?TVQzRkhxNFc4dnJyNWo3UHg3UXNjemlibUhPWHVSejUvejJGRTRybUc5Y0Nj?=
- =?utf-8?B?aVpPTmJhaHBiakl5VVBRdVVldjlLWDdnSXhvUnY4dGZBK2hwMjh4VGw0NTVo?=
- =?utf-8?B?R3k4aEtMSG5rVHQrdlZ5VTFBSnVueWtTdzQyS3o0M0s2ZHI3Z3dhQ1d5U1Bs?=
- =?utf-8?B?RHRiUE50NE12R1hqaFBaV3ZEM2pBcHFDNDRHbFNJeEFHWFhUem5kbFlGMzdB?=
- =?utf-8?B?Nk45ZE84elI3RDREWm9KcklFbzJHNDJnSW1EN1NubUtOZzB1TTJBWHZidktW?=
- =?utf-8?B?YTE0S3pPUXJoTU51TlV0NUorNERFTFB4NnV4Yk1sQXNQRlkvUUx5TVYybUtt?=
- =?utf-8?B?cWVzVDUyeFdMQktndHhlV0prbTl5RkpSSitaZGV4WThuMEFvYWNqaWpVU1Zi?=
- =?utf-8?B?d2NIR2dtVzlIMWpNSFU1bkMzTFF2RUNVY3MzSXYyUmR0cytQNlBGbmxRMUZj?=
- =?utf-8?B?alhUdStoUExzY2w1eVdrcHZFQjYxdTdkcXRHWVhMakdhNjIweDRDL250dzNi?=
- =?utf-8?B?OXdneE4zMjQ0L0taYU5LZUhDTnFWZ0ZyaXZ1aEJCekZ1UFZ4bGladFBubGR4?=
- =?utf-8?B?eDVQUE13VUFhcWJSR3VwTmdndmhIeStWa3BCbGpDNnlLUFJwT1lmbitwQWZX?=
- =?utf-8?B?QU5DR1djMVluRWFDQXNiL1Y5Q2JQeFpjN2xFVEU4L2NWZ3Q2ZGgzT1dBbGJL?=
- =?utf-8?B?T1FjQkVpR2pScUg3T3VtWDVCbE1oYWkzRUpoWFROWEtqd2tMTDV5a1JOdTVy?=
- =?utf-8?B?MjU2QVVIanE1SE9PNUVTazFTVFFWNUZRNzRCS2F4QjV4Vm43SFN2Z0FKdElv?=
- =?utf-8?B?aWRBa3IvUjM1dzBKN0ZNM3VGbUhvZHk0ZFI4WWlkSnhicHl1SFdQQUZnWS9w?=
- =?utf-8?B?aWY4T1pTWVcrNUlBWUJxYTJiUy9ncm1NK1pJUHI1bEU2SnNHL1ZibkI5aHJQ?=
- =?utf-8?B?elhFamVSMFAra0F1QmJEZXRpckZ1MFRsVHFlaHhxakIzNHhqaHdGeEFNZFpm?=
- =?utf-8?B?NXlLUFhyZG4waGlnVURmMm1BWG55OTVuTGNOTWdnOFdlSmxLQ1k5dWxxTWhj?=
- =?utf-8?B?RDNJdFJVREFWdWtyQ1YvaHhyZHpqenFzbyt3UDdxY0hyUnVQZ3I5MzBJUXli?=
- =?utf-8?B?V1NaVWd0dmc0SVcrc2luZDNYcDN0aG04UG1RMDJFY1F0RUlBeFUxc0lDQWxD?=
- =?utf-8?B?S2NuWGdCUENEczRlMjdHKy9Ga0x6TVIzT2tUZlVwN2R3MUI5aUVteHRMb2xX?=
- =?utf-8?B?OEcreC8zRk5YZm0wcG5JZ0JmUkJaSUpDTkl6QXhDZXo4WXYwK1pzVjZNdmZl?=
- =?utf-8?B?Q3lJazBuUTljVDFlLzRmRUZHS1dXUGpWWmdWSEMrY0xmSFNtbTZITFkxY3BG?=
- =?utf-8?B?cmRJNTN6cEVBTnBNa1Z3UEJTOXZqdzBjU25ESy9zVW5NMGRzcTAxVTlmTFVr?=
- =?utf-8?B?eHBxS1FDQzZ5bjIwTXkrWExCcXEvT0l1b0hvQ2Z6UVl3WVA1bWhwZkxiMmF2?=
- =?utf-8?B?NFkwaUVwYkRQeDgrb1NkY0FuVTMreVgzN2gxWnZEK1N0SUJSd1dpUjEvZGZl?=
- =?utf-8?B?WEhIS2lVVEpSaEV1VzFHVFNyT3JBME5RN2pkV0FIS2tLRDYrVjRRdUk2cndF?=
- =?utf-8?B?UTRzM2dBMlkyUVM5SG81Q0ZaWlVYQytJbHhYTTJOTURYVW5JeWFxdTVhSG1V?=
- =?utf-8?B?QVhRd2IwY0pTa0J0N2RFWXl6Qlc4NjJVTEZ0QmJ1U1JSWEhGRUk3d1NuYito?=
- =?utf-8?B?eGhWTXc5TVJ0b3JESXN5TmtoakNzcUkxdmsxOGxvVmRaR1NzZGFOZGgvN3pj?=
- =?utf-8?B?U2tRUm1rVzFINDlveFZ3R2VoMlZmdnVucEpPdThnaTY0ZEJsL1dBVmNiSWJj?=
- =?utf-8?B?eVVwS3E2QXJtYzE0SW1qSjNOdHFqQjhEeDdva1BEcWM3NUZLWFR5d3JyL1ZI?=
- =?utf-8?B?UXVCckEzKzZSbUF6U2JnMUZlVFBWRWRLa2p2Vy9xazh3Wm9IdVhxdjlOZU5l?=
- =?utf-8?B?THVRMkhCdm5uT0QrUC85eGt6cWpjNWpKcndZaldQVHZRZ0lCR3hyNnhLaGoy?=
- =?utf-8?B?MHZFQ2pPOWlMVWkwM0MrM2paZHBUcFNTSDRCYnlqS3lZd0J3dkY0RndjbVZl?=
- =?utf-8?B?T1FUbW53ejNBZE5NcnpROFNvYVpXZFAxSW56aWpkejI3dC9HNXNjWjRBSXY0?=
- =?utf-8?Q?XFrxZI88OjPW9xRlzO?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KlsD5/fD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282D71F00A05;
+	Thu, 12 Nov 2026 12:53:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794488032;
+	bh=5ZrUjxQ1X/We7wtRHupxrDAx8TTm7+SwxqIT1sIDYs8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=KlsD5/fDIsqfPCfdiKHytK35h7uvYxYrUze6fdg/0xfS5GdIy3Qdzwoiqxsy6TQxk
+	 PvSsHrdDooxG757ynturfT5Jp1GjoYPdtswhj5LJWDhkWNIJyzyTFWIdMG87sY5HbE
+	 M4m0dLpdvTw7srV/Tj4KVPWwO3EAu8GLt0g38v0RjbNi/pzaQWmIkk57ti0M0ZRCX/
+	 TJLMaw0UQDju14m48deW5o8bwmTU5r8cfHd+WTc6V9CxgzEqzEzAJCWscmUIcN4+TF
+	 Li9oK0AJPGWj5sj9x84090j2rjFGMTn6PWIglFkoUaGPiFAcLxKgnhEOXmEu3KNsQo
+	 PQsO02yU03ADg==
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 5EEB51980047;
+	Thu, 12 Nov 2026 07:53:41 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 12 Nov 2026 07:53:48 -0500
+X-ME-Sender: <xms:1Lb1avbqYJ96LVa9G8j8KGDf6QPd8ThRC_rCA8Kwibzl1QJFLZE85g>
+    <xme:1Lb1ap_mwaYWryEov-o_6hfF_RYnwb4_q81yG3axwY2TJCnk1ON-kRtNwY7E63Hoo
+    Bp2Iui6JukMiOK9Pch-yNvVnk26NHqTV7CGCheWsFZzKKCtA0ThPw56>
+X-ME-Received: <xmr:1Lb1ao-wZ-pDSr7UYUr1o5q-LriP5K8KoWoFL1Bfzt8jbYDA3nNg76TwH_k>
+X-ME-Proxy-Cause: dmFkZTGpc2ngwwYoKY78wwM9oTdiUFMdbNknNo/bzCD9ox6CwBy3Bae6ac3Pn2KNSG69io
+    DjjSRQA+ArMHIJlqqToeBv2DuKjHaexSBKpjRpEneCf/9m7ijFudy4tMLdJCDVAS88IZxT
+    ljujfxRBPh/0Qww/nQXmrETum1Cv87lC/wq6AdyCL5zA21NYdJmNBPjvIaFGQYxP35tRSJ
+    twxmmrXTtBDACJ+v/NMff8Ez7le0JwbqH0qPmrmF0AY2K5IAL9jbb5ji+sFi+IZvYTKKpx
+    zx98PLZAbI70f9z8nSTz/ir5t8tP8METbjMjfP3rgKtV/F4AeqoyEA12VrelbA92HmNwOZ
+    CN4WcOOMGdlBMYv+tIShCcVMbXgLI9FUUOcLxCfkG+VYluTwDKMLamFXmV6TVl4u1Qhbco
+    +jMi2PoHmBpKwD7Jg5LQa9R3aT4xxrRvXo9PDh4HSvq/QKEJneRRCCN78AXBKQuQysNSMe
+    uxj6c+RTR4+wEuvLnXrbXNAk7rxkIi8ORKAq4MDa5dfN5RsAUdLvr10rxV6IDFsWcyJPb7
+    VfsIuBEsJ0Yljqod7sr1P9kFBYHd+sl+NzWhPsaMMTek1s5yD5hX0US8QTepnvYqzX3IWz
+    ob3uAdU9lh/SDU/vM7t2Ngo2ShIZ0DHmL+ghORCbgdu3QNhRGsC5YdMsyFQg
+X-ME-Proxy: <xmx:1Lb1anTK9w0SORBsrIHD59_zPH5qQSLYxXO5V6-EBHGKi9QCNPTNcQ>
+    <xmx:1Lb1arEnxAIYkN5wbK3s5QBA-Vllj9jy5zLl0qwAcyCwSYPUMKTvsw>
+    <xmx:1Lb1asYvDtdgz37mQGWjQOAjMXf7ffZSS22pO1qw5MXJfDAyH0rSIw>
+    <xmx:1Lb1auQgx4SSpt8NmB8AZZe6ZV5XL-P0HWnOnjyEQKdoAnWn1hbFww>
+    <xmx:1Lb1aic3bpvJ1B6a2XMTHFufFqpCG4HjwMk7D90AUjH1BVN7gqdmfiPE>
+Feedback-ID: i10464835:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Nov 2026 07:53:40 -0500 (EST)
+Date: Thu, 12 Nov 2026 12:53:39 +0000
+From: Kiryl Shutsemau <kas@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Matthew Wilcox <willy@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+	Lorenzo Stoakes <ljs@kernel.org>, Jan Kara <jack@suse.cz>, Hugh Dickins <hughd@google.com>, 
+	Christian Brauner <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Harry Yoo <harry@kernel.org>, Miklos Szeredi <miklos@szeredi.hu>, 
+	Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, 
+	Oscar Salvador <osalvador@suse.de>, "Liam R. Howlett" <liam@infradead.org>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, Brendan Jackman <brendan.jackman@linux.dev>, 
+	Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <nico.pache@linux.dev>, 
+	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
+	Lance Yang <lance.yang@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
+	Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Axel Rasmussen <axelrasmussen@google.com>, 
+	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Pedro Falcato <pfalcato@suse.de>, 
+	Luis Chamberlain <mcgrof@kernel.org>, Ilya Gladyshev <ilya.gladyshev@linux.dev>, 
+	Jaegeuk Kim <jaegeuk@kernel.org>, linux-mm@kvack.org, kernel-team@meta.com
+Subject: Re: [RFC PATCH v2 06/18] mm: free the pages waiting for a grace
+ period before OOM
+Message-ID: <avW2llfFWagr5Cmi@thinkstation>
+References: <20261104130118.2507513-1-kas@kernel.org>
+ <20261104130118.2507513-7-kas@kernel.org>
+ <sashiko-outbox-199099@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -188,36 +106,26 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: FuED+JdrOFxiQqgKfGel5XdmqpavikUvtUgzDCeFwmj5UTZIfPaafCz6BtQL3WzZGhQx1WpTxDH75n3IDGyrNeCSTrhZyPBfoxy5yqiScGaWrvH9Eoyrru3AAafij81ygytpWix/gWWCp97p8gCqBL0PfBTtva/peHAkPOVQgiETA94E4dc2qgsh6U6XMoWVcOGwjHIftTzkD6wyFgFspt4grFOjQImd8NRLX3QE8hNo6oJBJLSr0QCNea4BnU65eCIQ35EfwAfBD9fZl4n2HN5qJZoUsI/4CW/fa+VVwhvctmO2QDc7/0oyixjnMCULXKW/bSsYjsGWN7JlSatttw==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY3PR18MB4722.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4c38b51d-69bd-4b87-bcc4-08df40bbebfb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Nov 2026 12:53:17.1820
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5280104a-472d-4538-9ccf-1e1d0efe8b1b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ZelAui7vMGxZhCLLtmfT02NcJYQaArM0WLPCc9j4bu3u722uvhDDcaDaOLcnqhRV5VzMfdMdk5kLaz3BtmIF0Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSAPR18MB502825
-X-OriginatorOrg: amazon.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-199099@kernel.org>
 
-T24gMTEvMTEvMjYsIFNhc2hpa28gQUkgcmV2aWV3IHdyb3RlOg0KPiBbU2V2ZXJpdHk6IENyaXRp
-Y2FsXQ0KPiBUaGlzIHByb2JsZW0gd2Fzbid0IGludHJvZHVjZWQgYnkgdGhpcyBwYXRjaCwgYnV0
-IGNhbiBmYWxsaW5nIGJhY2sgdG8NCj4gb3JkZXItMCBoZXJlIG9yIGRpc3BhdGNoaW5nIHRvIHZt
-Zl9pbnNlcnRfcGZuX3BtZCgpIGFuZA0KPiB2bWZfaW5zZXJ0X3Bmbl9wdWQoKSBiZWxvdyBieXBh
-c3MgemVyb3BhZ2UgY2hlY2tzIGFjcm9zcyBncmFudWxhcml0aWVzDQo+IFsxXT8NCg0KWWVzLCB0
-aGUgYXN5bW1ldHJ5IGlzIHJlYWw6IF9fdm1mX2luc2VydF9wZm5fcHJvdCgpIGNoZWNrcyBpc196
-ZXJvX3BmbigpDQpidXQgbm90IGlzX2h1Z2VfemVyb19wZm4oKSwgdm1mX2luc2VydF9wZm5fcG1k
-KCkgdGhlIHJldmVyc2UsIGFuZA0Kdm1mX2luc2VydF9wZm5fcHVkKCkgbmVpdGhlci4NCg0KSSBs
-ZWZ0IGl0IGFsb25lIGJlY2F1c2UgdGhpcyBzZXJpZXMgZG9lcyBub3QgcmVhY2ggaXQuIFVJTyB0
-YWtlcyB0aGUgcGZuDQpmcm9tIG1lbS0+YWRkciwgc28gdXNlcnNwYWNlIHBpY2tzIGEgbWFwIGlu
-ZGV4IHJhdGhlciB0aGFuIGFuIGFkZHJlc3MuDQovZGV2L21lbSBkb2VzIGxldCB1c2Vyc3BhY2Ug
-bmFtZSB0aGUgYWRkcmVzcywgYnV0IGJvdGggemVybyBwYWdlcyBhcmUNClN5c3RlbSBSQU0sIHdo
-aWNoIHJhbmdlX2lzX2FsbG93ZWQoKSByZWZ1c2VzIHVuZGVyIENPTkZJR19TVFJJQ1RfREVWTUVN
-Lg0KQW5kIHJlbWFwX3Bmbl9yYW5nZSgpLCB3aGljaCB0aGVzZSBwYXRjaGVzIHJlcGxhY2UsIGhh
-cyBubyB6ZXJvcGFnZQ0KY2hlY2sgYXQgYWxsLCBzbyB0aGUgbmV3IG9yZGVyLTAgcGF0aCBpcyB0
-aGUgc3RyaWN0ZXIgb2YgdGhlIHR3by4NCg0KVGhlIHZtZl9pbnNlcnRfcGZuX3B1ZCgpIGdhcCBs
-b29rcyB3b3J0aCBhIHBhdGNoIG9mIGl0cyBvd24uIElmIHlvdQ0Kd291bGQgcmF0aGVyIHZtZl9p
-bnNlcnRfcGZuX29yZGVyKCkgZGVjbGluZWQgYm90aCBhdCBodWdlIG9yZGVyLCBhZGRpbmcNCmlz
-X3plcm9fcGZuKCkgYmVzaWRlIHRoZSBpc19odWdlX3plcm9fcGZuKCkgdGVzdCBpcyBhIG9uZS1s
-aW5lci4NCg0KVGhhbmtzLA0KRWxpYXYNCg==
+On Thu, Nov 05, 2026 at 01:03:34PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] mm: order-0 check in rcu_free_wait() starves high-order compaction
+> - [High] mm: rcu_free_drain() misses rcu_free_workfn() and PCP-freed pages
+> - [Medium] mm: rcu_free_wait() counts unreclaimable pages after retry limit
+
+All three are valid.
+
+In v3 the drain moves out of should_reclaim_retry().  It runs after the
+compaction retries, before defrag_mode drops ALLOC_NOFRAGMENT and before
+the OOM killer.  Reclaim has given up by then, so reclaimable pages are
+no longer counted.  An allocation drains at most MAX_RECLAIM_RETRIES
+times.
+
+The drain also waits for rcu_free_workfn() and drains the per-cpu lists
+the works free to.
+
+-- 
+  Kiryl Shutsemau / Kirill A. Shutemov
