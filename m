@@ -1,96 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794492930;
-	b=jRaz+c0wgf5MR3QTGZ6Ff/ucTLdrLe+mLShgkyQ3jQztCqDNY7j1VjrA7txEdMfGh/kV
-	 hIWkSnp96tCEfjmBXwA+o+ifYCwz7dit8p6G6mYFmlg+wd3mvOb5pdetZXtE5Uo4RPbf+
-	 NzbBeXPczq2QYMAlMzTx/4q30fSL0v0SUJz75riVy0o8LNBKp8Rr9ixMGqtdpmXYu7WuD
-	 hPTDJkPzeJXy4QD8105Pk/V3w8tgORjWHLKqIW+wmcOVbJbdi+lBHyw7ATfIinI5Qb/PP
-	 0L2IBKz8y7VA/JWaYjKeS5j5E2HxW3qZsTGZ4QeY+eBifTi5R0DxnJdx8J/DYZLUy0g==
+	t=1794493696;
+	b=tvSSFg6VeJHHpn31HMf3UfjIVk9jjCeAQGGWJT3oDPr01aafC8/LR7YlA876IPhJgN1r
+	 pN9ywIVMnkfmeWFf00Sy0LmXI/Oti17HUMBisHyDl78NGi3MIoObtlI7ktldIPoxCwrz4
+	 yrrFTQAu/O9zS6nzH09f8Y0JCBvFRPAjTGFIBP97SN8VHBgh2BVGquBxGGBmo6vdSQn4k
+	 XfN5kQVJFSc2W69q9goJ0eKSYrBr8/iGVo1uMU/S+pRUGk1YQh5w2ECjMxYawxPsBAesA
+	 n6zokU/GwS0eWoICeGh1oKBBjm8V8fGvnFgvW8lI4sYkg6M2U5c4fsPG2kyZIFqbyoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794492930;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=tnSOR2iS2NQ60s3hHjAc+QO7cCCKVbLJKOG9OogfW+w=;
-	b=M+EYRvDj2JUFQHJBu5oiM2TbVdtUR/r1H4vTpaCHSxV9H6oOhxObBaA42IKdar8a/5Qh
-	 f4gIrr7xXM0dgNU/+jZ6dGJPs5oHZ7dtTq3ZPBOA+7CJrbvWoCu4iemQ3mZiw1aP3mV1B
-	 7qTORdJbk20hPu6k+gadW/Gd3jf87u+FDeDIda5x7g+dNIrE392RWPoTtdziM7lzShbnv
-	 DRe0bRjeDguK6D/wzjuhu8lYsW4pOSbbj6imvOOsGeILlGbv/KBaPz834/YBJv3/AbCy3
-	 y2uJk5X22ofiGzVkCD/BDcxknWXKGqkmvUIKcnlFmQJVw+xOsaN01+kMI3VT8jKLkjw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794493696;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:X-ME-Received:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=JGHAVjE9egfx0TL5yO8Wnc3z2E6MAvDLE5lotamLz9Y=;
+	b=3VOSvUHlrJgXef7gR4UyMk8xikbSQSPF73Vuj9ILlgVrCPmlcklj0P67Yke9+e2tK/sb
+	 8cArY603JMw15GLPZF9c4Vv+aqTdVwiRG4x3FK7TB2g++DsCzhpftj3Wvrf60wjLt0YRq
+	 46ZRZznN8xUVC+oNeFaWF3HNUv3WKoPC3F5+vyGudBKqOF12ToAh9qh33fJEYOdmzGXhz
+	 q1U/PIOx92q2n/f75Icx2gMazGsEuLvj1N4E3Pv+El2p7XuLeInwIRaVxKQp39KsA0D0/
+	 pMytoZb2ktbp6tSnxUowV6ITM6TswDQ/HZ1Pg6ZKtvNjYJ1rsepfus2RO/teHEd4g6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pqljp2jR;
-	arc=none smtp.remote-ip=209.85.216.44
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ejuTkYDA;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDFF606A88C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 14:15:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ACDFF606A88C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF17606D54C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 14:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pqljp2jR
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3b1535be329so2434239a91.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 06:15:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794492929; x=1795097729; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tnSOR2iS2NQ60s3hHjAc+QO7cCCKVbLJKOG9OogfW+w=;
-        b=pqljp2jRin6QFmA9MxBY2t4VJLpWWVCCYyrBVj+BB5kGdn66qMS4bShwNLoLUI7DcB
-         qy84AydcLnQhIF2YWprCSqJLvD96w1XdGTJIwWhuy8+vDnnBuT9mtgwUSa8JVlYk5KOa
-         ypTSNb1aatbZ1BROd2MDRKrsiT4YVg3c6UUzrVZw9wEiAj3UbFNXwl1/ySKIIPkmQvo+
-         P1NIr/DVmjU8OziHA+KKES6q6kJy4Wcqqvik6IfFGTCxVDR5s4+CiQunbUe44SFmiv76
-         oDGGDMqaOx3RSBoNvYjyMxZ7H3z5pYhfYazuKxvnRZR9aSI3ANs/WOtelOmBee2flZVJ
-         vA1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794492929; x=1795097729;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tnSOR2iS2NQ60s3hHjAc+QO7cCCKVbLJKOG9OogfW+w=;
-        b=jxXil0X65tDIMtOsAZ9daA+pJRNsVPhbhXixPguzLCsMMeWH4o47QxWswtpuTjPc7U
-         BLfrterNM6OxSYYFbgzgvBzYQ5sNefppMrnbyTdwywQbdnuGAguzL9Ek1uTLjaqoG2Ux
-         CfI8XcR56ayjP0YlAKkZ/3gBSxdLh21kn+sOOkPGZRpE9K6WClXn+vhRIOUdTMkZVwjK
-         kFJl9WtH3m7ktcoXRuKwcmQK9wSUbPRLmcyVpM7QnoyXUxgVifyaG/gsFeYPYj8JDdhv
-         PQFDMeZSPbGYErttl8vM3AgIpBsuDyly3wQPE3zDxHrWaxkdi4+lIS/2eOqPb+dwH6JJ
-         m2Uw==
-X-Gm-Message-State: APuU4Z+LeQOQdD7PakcgQ/HSSj3Czjv9MoTsMSuvXD4V1ZumADLKhzjY
-	gitJREvCVIjHMLt9bvwJahvkf8YoFMorN49gkIlBacTAaeVr+kJT/DdGieMENFWfTeI=
-X-Gm-Gg: AYBFou2XmWQ3NlrBDEY+a0tK3SIggGXof6/aGNpqyxSrx8fXa+weS2YrmAuAPUG20Aj
-	OKe9gOBTfVYNhTpqJUZ2TNOfAsGG20tc35fPqS5H0Qg7bqjAcEw/Myc0VnVwOH6DS+qUMZc8+CX
-	ahlBXCP7zXWoXMRmYH5DLObxOHB/mv/Th31tOp9tKJpku4MicG3voSk/dl/CcQNx0zG+pPLuid2
-	KOJZq0eyt270dU7aEfOGMTolXspLRJ2V116tO9uVVLrvvmTeY+AO9TAwrNvavv4jipmIoJAXzPX
-	xUN6m/68O/sa6CGR7mqQlkibt7p6pssw1mBdqt1k+t05PkADGQr5h2JcL7BrpqfJPqTkIeZKXzt
-	l24wH+PdJ2dD3mFFPnsku798VikISwtlZ9LHU7dXdotgbW0+ANyrNKIyylPHPV63zrYIRQXrPap
-	eJXMcFQm395Jy8Jw68RA3ovvRCcvs7o2CD/wHm3H1QwT1xEp596RfbtKQPcShXh3mhhzte3t3fC
-	wpjPYkNVianQ4im7qg6aHsyI4iPjY/8jhZ79Ae8WiZCyVklRRsNPJmPiV7hIKseETd5r208hR2y
-	jvn/d5Sw+02DQ6lxaLzy25fd0qsBo3kjuSeYIdRDew==
-X-Received: by 2002:a17:90b:5405:b0:3b1:7329:a127 with SMTP id 98e67ed59e1d1-3b182efada7mr5054338a91.20.1794492928640;
-        Thu, 12 Nov 2026 06:15:28 -0800 (PST)
-Received: from DESKTOP-NM9EKIA ([180.67.33.100])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b197c42a4csm4979523a91.4.2026.11.12.06.15.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 06:15:28 -0800 (PST)
-From: Joonhoe Kim <26rote@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ejuTkYDA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F431F00A07;
+	Thu, 12 Nov 2026 14:28:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794493696;
+	bh=JGHAVjE9egfx0TL5yO8Wnc3z2E6MAvDLE5lotamLz9Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ejuTkYDAuxlddYFCBL9BkEFpRcy8oWfjdYzMbHVPR4/aEGTyTGwLhh8dqsUFK4ZOd
+	 0O95S/EgTBmW0CS93Qqd/QhttL6y89c+zd+DFsIG5KO/UfoS+Ql0RXR1PVCMN9aw/v
+	 t22iRl7bfHL2rkTqFZ1iZ0sUpXnrn+aEKS+RufmNJk/lRwHoGdxayaKUVo0/VaRCgN
+	 XbvT/NMikv3xSj9YmM/q9NhtjBtkBnJ0vIY1aXFaUpjUVhmfnkJpWMEcmP8ialBNXS
+	 dM71BGOvqMpK4dhe2JwQEfMObIxTzDdBtnf7/mgQlQ83NPCtxI3trq2wxI+pzw2CW4
+	 AnnA7WEHroVCw==
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfauth.ams.internal (Postfix) with ESMTP id D3782198003A;
+	Thu, 12 Nov 2026 09:28:04 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Thu, 12 Nov 2026 09:28:11 -0500
+X-ME-Sender: <xms:9Mz1aow8wOBRRrvcBTNdEbXatcZVGj3_VkmONVfV9u7cF28_kRJWCA>
+    <xme:9Mz1an1n7GllvM6tFpr0U77bzzoZeZzQ5jFS4Vgl2E9ZPpBnosrwQvhmhfUNYbkJc
+    ehuI-mtzsc9ZOSZZMSqYmC9vQqOdr0OE0ZmZzJKkbMznmZ45kqjkRxU>
+X-ME-Received: <xmr:9Mz1ahUD8IO9wm4Hx1pNkUKSlEi8MakBOzQ8eTsi9tE0Qa3an6CHg7cin58>
+X-ME-Proxy-Cause: dmFkZTFTIeiygbRCBA1nU4GEH05qhStamhmNSoX0vHPTYZdYgAMI+CMH3M3m9jAOJmtlqx
+    4CxZn2goV6sPlbh99O7NOAxJ082JAqSwWcexA+j2sCeoqqSCMWizR4n1VLKNjNnjVLK8z4
+    FjyJbbS1lT+ccXhQhAOQ6e+pGzIY5WNJqZA/1/7tODdBCIL8FBdgka1io5Mnhan5LYD+uE
+    IPip02MQ+Ux0ZDerQGeC0PcqiZpBPD317wk7pWyq3SMCU7w5oTRFis8+whrQbxVTXetaHA
+    A4dynw5FjykDkomkb4d9RmZNDszj76xdTTB0vm2rGWEreC9ICrVcQ9IbeLBVw+LV7Q7nT6
+    O0ECVWoP3Jb06bLRKhhGN/jTAwjd+4ax3nV0kC19Cr8N73m0yC7QMcEWorcQKcAEKBtSES
+    VoHcAVKgZjLeLpbCJhzS0to/BMGFk9x7IhCReJWSoFbx/iRUD/KypKv1iJJbOz1lsSlKmq
+    EDvlWlD/Hs7sX8NJ8/9F5msOAYBCwQ6QBXuDT0aTcaI+4NqPR5Gs6WgyB31fRCDp6ZFgJw
+    Mp1YOoQDNX9Gtg6M8/ydAp6t5cRtIE76QMGBdQvmL3Ony5AnW+954zST4t5TUE9R0b+CY3
+    xLsSompzBNs3kwgEp5MSu84k6BIefMNejtFogqv9QGMLkiet3f3ruQ8whz/Q
+X-ME-Proxy: <xmx:9Mz1aoJRry5AJkZ2MMVegsOn4HORQAooppu7YhbjeEZm6HMAXD_67w>
+    <xmx:9Mz1aqc8J3nMWPYX6MUv9jZJ85XR2Er911GLJsaaVySsdOkK2I4ReA>
+    <xmx:9Mz1aoQg2-rFOKOjAQEB52tL1uK7s6qpZScuVwYbLi3akUwed6rNOQ>
+    <xmx:9Mz1aspVfMaa5kgLYS33tyPN9gJG0YTo4FRhEgoCoLV5zJuJdqLZCQ>
+    <xmx:9Mz1ahVhJJuv7wJcZRyyDnz7nbZ8VT7_UegZKk9UfI6OYC_FgQZuanre>
+Feedback-ID: i10464835:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Nov 2026 09:28:03 -0500 (EST)
+Date: Thu, 12 Nov 2026 14:28:02 +0000
+From: Kiryl Shutsemau <kas@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Mathias Nyman <mathias.nyman@intel.com>,
-	linux-usb@vger.kernel.org
-Subject: Re: [PATCH RESEND] usb: dwc3: tell xHCI that it lost its state when the core is powered off
-Date: Thu, 12 Nov 2026 23:15:24 +0900
-Message-ID: <20261112141524.112-1-26rote@gmail.com>
-X-Mailer: git-send-email 2.55.0.windows.5
-In-Reply-To: <sashiko-outbox-211064@kernel.org>
-References: <20261112114053.412-1-26rote@gmail.com> <sashiko-outbox-211064@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Matthew Wilcox <willy@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+	Lorenzo Stoakes <ljs@kernel.org>, Jan Kara <jack@suse.cz>, Hugh Dickins <hughd@google.com>, 
+	Christian Brauner <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Harry Yoo <harry@kernel.org>, Miklos Szeredi <miklos@szeredi.hu>, 
+	Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, 
+	Oscar Salvador <osalvador@suse.de>, "Liam R. Howlett" <liam@infradead.org>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, Brendan Jackman <brendan.jackman@linux.dev>, 
+	Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <nico.pache@linux.dev>, 
+	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
+	Lance Yang <lance.yang@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
+	Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Axel Rasmussen <axelrasmussen@google.com>, 
+	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Pedro Falcato <pfalcato@suse.de>, 
+	Luis Chamberlain <mcgrof@kernel.org>, Ilya Gladyshev <ilya.gladyshev@linux.dev>, 
+	Jaegeuk Kim <jaegeuk@kernel.org>, linux-mm@kvack.org, kernel-team@meta.com
+Subject: Re: [RFC PATCH v2 07/18] mm: free the pages waiting for a grace
+ period before isolation fails
+Message-ID: <avW-RbkC78FkS7_n@thinkstation>
+References: <20261104130118.2507513-1-kas@kernel.org>
+ <20261104130118.2507513-8-kas@kernel.org>
+ <sashiko-outbox-199100@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,31 +106,37 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-199100@kernel.org>
 
-On Thu, 12 Nov 2026 12:00:08 +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Medium]
-> Does the DWC3_GCTL_PRTCAP_OTG case in dwc3_suspend_common() also need to
-> set dwc->xhci_power_lost?
-[...]
-> [Severity: High]
-> This problem wasn't introduced by this patch, but in OTG host mode
-> does dwc3_suspend_common() power off the core via
-> dwc3_core_exit() without telling xhci-plat that power was lost?
+On Thu, Nov 05, 2026 at 01:03:37PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] mm: premature NR_FREE_RCU_PAGES decrement in rcu_free_pages() skips sync
 
-Yes, both are the same gap. The OTG case always powers the core off for
-system suspend, so v2 sets the flag there too when the host role is
-active. OTG mode is not tested; this board switches roles through
-usb-role-switch and never runs in DWC3_GCTL_PRTCAP_OTG.
+Only the zone's last batch can make zone_rcu_free_waiting() read 0
+while a work is still freeing it, and the pages reach the buddy lists
+right after.  alloc_contig_range() fails as it does on a transient
+page reference, and offline_pages() takes one more pass.  I don't
+think the window is worth closing.
 
-> [Severity: Medium]
-> Can dwc->xhci_power_lost remain 1 after resume and cause an unnecessary
-> xHCI reset on a later aborted suspend?
+> - [Medium] mm: stale outer_start in alloc_contig_frozen_range_noprof() after RCU free merge
 
-Yes. v2 clears the flag in the resume quirk once xhci-plat has read it.
+The first case is real.
 
-v2: https://lore.kernel.org/all/20261112141512.1840-1-26rote@gmail.com/
+In v3 alloc_contig_range() finds outer_start again and re-checks
+whenever the check fails, not only when pages are waiting.
 
-Thanks,
-Joonhoe Kim
+The second case is a free racing with isolate_freepages_range(), which
+can happen without this series too.
+
+> - [Medium] mm: page_is_unmovable() treats freed compound PG_rcu_free folios as unmovable
+
+Valid.
+
+In v3 the flag stays set until the grace period ends, and
+page_is_unmovable() counts a large folio with PG_rcu_free and no
+references as movable.
+
+-- 
+  Kiryl Shutsemau / Kirill A. Shutemov
