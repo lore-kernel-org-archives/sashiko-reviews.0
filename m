@@ -1,99 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794459063;
-	b=hLIzxNgXucbGplc3OZHr5QOEO4dVHyQDqKf2glqoukfEca0ykZbArYm28uQIDDl1oMrr
-	 DXOzMZ2UN7Kb4C2mOFFCz7NHZdFjRhQqzdisbqyfj6Dh49sL44XMQfkGqYEY7yw9UIlXO
-	 /8S9vOiZa6VgS4GMhEMXYUUIr/kohsnGjblyW0MkMJxjJY7HSg+24rLf2H2C1c3IB9Uo2
-	 Tbv2a8iAheQaoCzzIvW6qBuCWs9nf7zRhHL21xPyuTbZFKeoH11xJU3tTxON/T6t9aFM9
-	 Jt5DsHvpLEx7rv9sl9eZdN8zdh1drCx/QagNRNB60RZeAmSs402L6hQhgjel5Kqef+w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794459063;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794460329;
+	b=tSgYx/NEkWO1tblGG4Wkq3r+CJ9P5zV73XG+isUmmBhmjuh4TqJNC9Uop0O/1FA0XHdG
+	 Ifj0+FOV1CrtpRX7JVWajHuImnEh06VlXODhaAXwEz3cPM6ywrRiPWXmUfvX/fvaohApp
+	 5ZAlrMDWWnCOPY+rrbjKxwlRpkQa7gs6wEvWI6fwdk5AFbciBpsk3ImieKuSvvvuSrDKw
+	 8wbQwHK/22rLFoDonN4SpprVDdoMebip5+D/61DPgsdvZFhn12gSFepsdPyZofSjprXNT
+	 ZjsU9nggCsmg9y7wey4rh2v8B5HUutQfexTdCaXOrDaS6IhX5yzUPmn+LCFBxiBTmNA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794460329;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
-	b=LnJmFoi3BmjteEILba+O0/Wdc+bShMKkJAFAzlG6K4FmDywD3yjCXXK4VnLrbPy9j19K
-	 R7Rh1s3QvEKepkDzSxs1GVoXENWLDJ1dLzfiO2Q5DjZKweaH/Cprjax4gh2vxnRTj9iyI
-	 ZEBlIIsYVrCTup/IyjHcUH6x0llWxldOgjWqDpDWqApgyMMf+dtAELBv2n3OlKQcKORWi
-	 Ecsn0Mj6WOm+CrpQVq342nSIXna51xK21IjlLfJif08k2NUKvmW0Qktre31inIev5AP4X
-	 L83tyloW3Q2EgX6QT1ht/PTXYpCuYg3FOPKxiRbAmZ99JSpQB8XoKS9SJ4WPYKCDZiw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fW5esMJC;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.51
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	bh=udLw4xWZiN/RL0nJMpzRBuktpxg/7u9GaKiX9eOBGPg=;
+	b=wh2vpSlRiUXRe0DMUmAHH6G+YHbOdNxNQn2b6wyktxeJhCEE7+pSeC3rTSGZmkov7tot
+	 RZm663ecMwztCG7vfEG6LXiwwKjfhC1McVEBPQ+AteqB/HoqPz2EwhaZ5oDVZDFB19cRy
+	 Tz940yqXn3xJQfcz3rmHVU4TrjliBXm25mGHu9J3YLcxUZg2U0CN5633kaUJrwnkQ9mmV
+	 Q6iA7vJzmsOMi5taUNlaUOilOYk/pgzSekUiLix7T5PLv6bU3gw4znHow/qmi90hwQHf+
+	 oKurYu9o+gxxQQKDzFAY6Bi8Ly+j0phGOZzbdgc4M9meEK36cnOU6yXtmUbFV97r0HA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DOIUurRY;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B765D606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 04:51:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B765D606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7C6606A899
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 05:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fW5esMJC
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so580006166b.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 20:51:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794459061; cv=none;
-        d=google.com; s=arc-20260327;
-        b=QaqWh7tyHg9WUGHew6csGTLmMU0eoTxFdWWuVuJdnXKs7awQ+l7edVUNqdeEF7mQVH
-         68JVSnDQRlvA5bGTkuaXQoPZVa8UXmhhk0lzR9757+2FqGxyBfPib3U1cIuH700worTN
-         AtIFHrmu0Go/0jNq0G65fYCVw/hrKmJmmoIAQBFKDAeQpZE2lDnKMib8m+ik1QMpJm+f
-         DiJa48zkdsJ3g1dhZL4EhRXBsi2P0qbqsfx23Wh5FOW3O7Jhhws+lPBRC57C4CwuAz43
-         Rg8kTTVm81z6VXtDb9Cy1voXDcl57KuJQKHtkfwa6v5HxSvKyeXc/YwR0RqQoOg2nYUF
-         kBkQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
-        fh=EHxm7QpXaTXPHbUcKm2SQkkoCE9UjyMGkH5PL3cfdQo=;
-        b=FTh2gW0YoSMiEYfF/yn9JDvfOTUx+1xou3+ypkQojPsM7Rz/arUDARy5L0GIcxlkBn
-         ssAN388OHRi8pIWw4DM2i4cTFZMnSB8r4KewBykNQ1tI4m2dVUkK5c6QnHG7SBec5huk
-         rf2+Z5v1r1YBpkoIOFm9UZmpmODy42g7UeKN6xMG3EAhXpPrzs4v7jmfwg5hNRf3H4Vn
-         FR5iNXhpehHHLd+I60+hlJqRYWjjItFiX+T1Uoh3jUDgH8KUmaVpdlnUrzv1hghlAuGv
-         PlU/k1eT6elyB+0sJ2c83q3q0rAXRWrOE0oIkyACxJknjKbiBsWAe0UiXLaS9ptCEcbk
-         RJgA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794459061; x=1795063861; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
-        b=fW5esMJCqQAuS0qLdzU4cs3m/WsxcDV/kwl5PSXU8b4bzwHMSMVh0O04s4ygbo3Ius
-         KgQrCPvo65FqU0ORCJ3szy6lyhF45waxv8xonIfR/opZdPkTmXfQ+z6r2CgsdEPFR+AN
-         HKzST+0psSdWztmjuzwZjOtZIAH5ov3rUFUdgSWyil1KIUlBGd3MdVz6ltvqHb108kiR
-         5Ju/Y57v2dm72fMRp6eL36bAKH4jAPSKnJCukE7XDjXjjf3Ey7Dp8v7vQxrxjPgrSFz6
-         iXy2zGc+YpmQVeXB4H1j+d7lbxs0iDHlBb9LdfXX8hzMmTQgYDVo1WNNwYbMB28osJ28
-         LHrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794459061; x=1795063861;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aCR4+4F4D0AC9cGsRZ13mMFu9/arHyThIEzuRiyV5r8=;
-        b=QBJ/sd+ipwMBdBmexlISxi2H/rAQWowc3muHCDrKSK+NCDzwIh4mN1b6+YKixBZ7mt
-         ZmVFA7Bn/KSU/SSa+6DSvwmGmjFEmZ9P0g5QqVcpdrpSZxbeql4MhOhNY3YDNPysvjLV
-         kjkJcx6MuseY3TzNSCb96ppVA9AOeOu4+055S3MsUv+Jicpb2bdPVc4IRxTEqM4na3JC
-         RkUOzOwrt/eTY7hvLmWL4mLKTwM7xgTwgUQ/a0OkHBjuqY00wUitZrIHzwWNjJyPdpvE
-         q4mV39YBnN5J0UyCaqKAFVmDILpzP64L9GqngCs0njTNOH2dRxrGz6a+ZsSYMD3FccGt
-         CXiw==
-X-Gm-Message-State: APuU4Z+WoTSCUirgAiDojsaRMJ45tpkNc+1jMcy8vaQQAFSvtP67LCuk
-	djx+9IWpz7h/x7iWGRxME6CAEhdxX2LKQ+MDUHahn6ba1ijxkoKj60Ls42hP0taTlWxLqPqKyrC
-	PiQJ5DBEudW8VDr8YtUGOMb83eQl8zSMRSw==
-X-Gm-Gg: AYBFou3kQeuYBmOoSzx+V1Rx7czh0H8bZzlJ00DsTCj2eK1Qo0VImwJOxDsmBsN49Do
-	8AHnlA65hSWUFohNklA1eAeBdLxjvx7uNnOPvw0I+aaUXTgOC+BQnh1q1OTprx2Q8Vri2l0bsDy
-	/qfzvMM8/h4KCMmxaNcwecK3NfoJAF2Hqu91VxhkQzk6Hacs4xhss7c+tY6rqbT8Nd8zQfJbtx7
-	Z6PT6SivlOHXrTf5/fmcXUWjOhVVS3ZxppFh6ytUQpteWPoMi9IKH7rqO6NLXjY3IIm6xh5g1Qm
-	vK6jSBP1NGZ/6rrIlZ2UA2v+Q/RomKkbFMYjog6V0X5P2F/IGBubkFOHb5H48G8nm+6Vdo5Dtpv
-	WNgBlBsjvbbNwzylDUu0USeJouJ+JP/YhiNgXgUgZU974XjCzbMLsDJ6efK0Ycx9XPFaY
-X-Received: by 2002:a17:907:6c17:b0:c29:4915:83cb with SMTP id
- a640c23a62f3a-c5066d6947dmr397522366b.39.1794459060886; Wed, 11 Nov 2026
- 20:51:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DOIUurRY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BFE1F00A0A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 05:12:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794460328;
+	bh=udLw4xWZiN/RL0nJMpzRBuktpxg/7u9GaKiX9eOBGPg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=DOIUurRYrYdoGHsUDKaM8EY4mr+oKpr9uiPgYohVoHZI6VeHzgRc9pyeG/xuAzbRF
+	 2960g0JJaAWCSxahGkOlTs48VKfnXKUe2qkzGQZed/Fr7uvH8LRlzarpIJgBVSeujV
+	 Rk4755u4D6hl1FXY8gde8HVmSFIzasjoSH1eGmfcVb0NbsAJ/R8ZNF0nkAJLOqZt/K
+	 LYNbAkD2R75smDDkAu+4VKUBgADS0tDWEmFZCa9uE8ptuxTo6UtSC7kdYJMW/XRYUm
+	 Osqrpvrmb9bcmXCex4F/D/O7AqZxVul9E2bQkv8YlEYi4yN7/jlVXt5CWsarOK2Q5J
+	 arGqK1S++Tp3A==
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-93f259cdc86so344497385a.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 11 Nov 2026 21:12:08 -0800 (PST)
+X-Gm-Message-State: APuU4Z9g3wX++Iy4o3dBf8bPzY0sRFU9yTH4FDpTQHbj8kocu4y+FX4u
+	QKttgnOTBvT25N8uqW73zZBXqUKLcZV4U3cuQVj8wNblSvJLjNm636iTdGKkdRRfJPRGGwe/lVM
+	5yCz71/AVSuNlqiEr6e65IQG3O0rnLOE=
+X-Received: by 2002:a05:620a:6ccd:b0:93f:6e05:22eb with SMTP id
+ af79cd13be357-947b004790fmr805777285a.48.1794460327831; Wed, 11 Nov 2026
+ 21:12:07 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,215 +58,123 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110041832.1730924-1-alistair.francis@wdc.com>
- <20261110041832.1730924-18-alistair.francis@wdc.com> <sashiko-outbox-206231@kernel.org>
-In-Reply-To: <sashiko-outbox-206231@kernel.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 12 Nov 2026 14:50:34 +1000
-X-Gm-Features: AclHuK-9VHicJV1Vi_F_TXRxI13n5FCeFli60f1unwNFJ7VY-Njj1MkgHyWgv9E
-Message-ID: <CAKmqyKMa7p6hkD1_NrABuaxxv3c=MQ0cDMUcAcYbPjtfOmJ4gQ@mail.gmail.com>
-Subject: Re: [PATCH v6 17/25] lib: rspdm: Support SPDM negotiate_algorithms
+References: <20261111232603.9934-1-baohua@kernel.org> <20261111232603.9934-3-baohua@kernel.org>
+ <sashiko-outbox-210410@kernel.org>
+In-Reply-To: <sashiko-outbox-210410@kernel.org>
+From: Barry Song <baohua@kernel.org>
+Date: Thu, 12 Nov 2026 13:11:56 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4z8Xh-AeJScRY35yxu4Q2VA9RWc65hLOcR=qPf0Kg5T5w@mail.gmail.com>
+X-Gm-Features: AclHuK-adsV3p3T53pKhzF58lye_dnBVy2PQxeZn1uz83gTILSeoRI6H6dSrch4
+Message-ID: <CAGsJ_4z8Xh-AeJScRY35yxu4Q2VA9RWc65hLOcR=qPf0Kg5T5w@mail.gmail.com>
+Subject: Re: [PATCH v7 02/16] mm/mglru: extract lruvec_populated_min_seq() helper
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, linux-cxl@vger.kernel.org, ojeda@kernel.org, 
-	gary@garyguo.net
+Cc: akpm@linux-foundation.org, axelrasmussen@google.com, 
+	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
+	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
+	liam@infradead.org, lianux.mm@gmail.com, linux-mm@kvack.org, 
+	liuxiang.277@bytedance.com, lyugaofei@xiaomi.com, mhocko@kernel.org, 
+	mhocko@suse.com, qi.zheng@linux.dev, ridong.chen@linux.dev, rppt@kernel.org, 
+	ryncsn@gmail.com, shakeel.butt@linux.dev, surenb@google.com, 
+	wangzicheng@honor.com, weixugc@google.com, yuanchu@google.com, 
+	zhangbo56@xiaomi.com, zhuhui@kylinos.cn, sidchintamaneni@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 10, 2026 at 2:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Nov 12, 2026 at 1:00=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] lib: rspdm: build failure in update_response_algs() without
->   crypto Kconfigs
-> - [Low] lib: rspdm: unreachable extended algorithm loops in
->   NegotiateAlgsRsp::validate()
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] mm/mglru: shadowed local variable seq in try_to_inc_min_seq()
 > --
 >
-> commit 69781025c793b90efaa465da8436c6f48e861229
-> Author: Alistair Francis <alistair.francis@wdc.com>
+> commit 7a4927e9f0aa8623b1c83f69afd1fb935c342dd5
+> Author: Kairui Song <kasong@tencent.com>
 >
-> lib: rspdm: Support SPDM negotiate_algorithms
+> mm/mglru: extract lruvec_populated_min_seq() helper
 >
-> This commit adds support for the SPDM NEGOTIATE_ALGORITHMS command,
-> including request construction, response validation, and algorithm state
-> selection.
+> This commit extracts the search for the oldest populated generation of a
+> type from try_to_inc_min_seq() into a new lruvec_populated_min_seq()
+> helper.
 >
-> > diff --git a/lib/rspdm/state.rs b/lib/rspdm/state.rs
-> > index cb6a351fe6085..169d0d3fee9bd 100644
-> > --- a/lib/rspdm/state.rs
-> > +++ b/lib/rspdm/state.rs
+> > diff --git a/mm/vmscan.c b/mm/vmscan.c
+> > index ed224cb80a75a..f98cd483f014a 100644
+> > --- a/mm/vmscan.c
+> > +++ b/mm/vmscan.c
+>
 > [ ... ]
-> > @@ -265,4 +323,113 @@ pub(crate) fn get_capabilities(&mut self) -> Resu=
-lt<(), Error> {
+>
+> >  static void try_to_inc_min_seq(struct lruvec *lruvec, int swappiness)
+> >  {
+> > -     int gen, type, zone;
+> > +     int type;
+> >       bool seq_inc_flag =3D false;
+> >       struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
+> >       DEFINE_MIN_SEQ(lruvec);
+> > +     unsigned long seq;
 > >
-> >          Ok(())
-> >      }
-> > +
-> > +    fn update_response_algs(&mut self) -> Result<(), Error> {
-> > +        match self.base_asym_alg {
-> > +            #[cfg(CONFIG_CRYPTO_RSA)]
-> > +            SPDM_ASYM_RSASSA_2048 =3D> {
-> > +                self.sig_len =3D 256;
-> > +                self.base_asym_enc =3D c"pkcs1";
-> > +            }
-> > +            #[cfg(CONFIG_CRYPTO_RSA)]
-> > +            SPDM_ASYM_RSASSA_3072 =3D> {
-> > +                self.sig_len =3D 384;
-> > +                self.base_asym_enc =3D c"pkcs1";
-> > +            }
-> > +            #[cfg(CONFIG_CRYPTO_RSA)]
-> > +            SPDM_ASYM_RSASSA_4096 =3D> {
-> > +                self.sig_len =3D 512;
-> > +                self.base_asym_enc =3D c"pkcs1";
-> > +            }
-> > +            #[cfg(CONFIG_CRYPTO_ECDSA)]
-> > +            SPDM_ASYM_ECDSA_ECC_NIST_P256 =3D> {
-> > +                self.sig_len =3D 64;
-> > +                self.base_asym_enc =3D c"p1363";
-> > +            }
-> > +            #[cfg(CONFIG_CRYPTO_ECDSA)]
-> > +            SPDM_ASYM_ECDSA_ECC_NIST_P384 =3D> {
-> > +                self.sig_len =3D 96;
-> > +                self.base_asym_enc =3D c"p1363";
-> > +            }
-> > +            #[cfg(CONFIG_CRYPTO_ECDSA)]
-> > +            SPDM_ASYM_ECDSA_ECC_NIST_P521 =3D> {
-> > +                self.sig_len =3D 132;
-> > +                self.base_asym_enc =3D c"p1363";
-> > +            }
-> > +            _ =3D> {
-> > +                dev_err!(&self.dev, "Unknown asym algorithm\n");
-> > +                return Err(EPROTO);
-> > +            }
-> > +        }
-> > +
-> > +        let hash_name =3D match self.base_hash_alg {
-> > +            #[cfg(CONFIG_CRYPTO_SHA256)]
-> > +            SPDM_HASH_SHA_256 =3D> c"sha256",
-> > +            #[cfg(CONFIG_CRYPTO_SHA512)]
-> > +            SPDM_HASH_SHA_384 =3D> c"sha384",
-> > +            #[cfg(CONFIG_CRYPTO_SHA512)]
-> > +            SPDM_HASH_SHA_512 =3D> c"sha512",
-> > +            _ =3D> {
-> > +                dev_err!(&self.dev, "Unknown hash algorithm\n");
-> > +                return Err(EPROTO);
-> > +            }
-> > +        };
-> > +
-> > +        self.crypto =3D Some(Shash::new(hash_name)?);
-> > +
-> > +        Ok(())
-> > +    }
-> > +
-> > +    pub(crate) fn negotiate_algs(&mut self) -> Result<(), Error> {
-> [ ... ]
-> > +        self.base_asym_alg =3D response.base_asym_sel;
-> > +        self.base_hash_alg =3D response.base_hash_sel;
-> > +        self.meas_hash_alg =3D response.measurement_hash_algo;
-> > +
-> > +        if self.base_asym_alg & SPDM_ASYM_ALGOS =3D=3D 0 || self.base_=
-hash_alg & SPDM_HASH_ALGOS =3D=3D 0 {
-> > +            dev_err!(&self.dev, "No common supported algorithms\n");
-> > +            return Err(EPROTO);
-> > +        }
->
-> [Severity: Medium]
-> Does this fail to build when CONFIG_RSPDM=3Dy is enabled without any asym=
-metric
-> crypto option (CONFIG_CRYPTO_RSA and CONFIG_CRYPTO_ECDSA both disabled) o=
-r
-> without any hash option (CONFIG_CRYPTO_SHA256 and CONFIG_CRYPTO_SHA512 bo=
-th
-> disabled)?
-
-Probably, but that would be an invalid option and probably should fail to b=
-uild
-
-Alistair
-
->
-> When both options in either pair are disabled, the corresponding match in
-> update_response_algs() collapses to the diverging wildcard arm alone, whi=
-ch
-> triggers rustc unreachable_code and unused_variables errors as well as
-> clippy::match_single_binding.  In addition, SPDM_ASYM_ALGOS or
-> SPDM_HASH_ALGOS evaluates to 0, so the bitmask check in negotiate_algs()
-> triggers clippy::bad_bit_mask.
->
-> > diff --git a/lib/rspdm/validator.rs b/lib/rspdm/validator.rs
-> > index 66212f0faf5f1..335f2f43dc07c 100644
-> > --- a/lib/rspdm/validator.rs
-> > +++ b/lib/rspdm/validator.rs
-> [ ... ]
-> > +        // We currently never request extended algorithms or algorithm=
- structures
-> > +        if header.param1 !=3D 0 || ext_asym_sel_count !=3D 0 || ext_ha=
-sh_sel_count !=3D 0 {
-> > +            dev_err!(
-> > +                &context.dev,
-> > +                "Responder selected unsupported extended algorithms\n"
-> > +            );
-> > +            return Err(EPROTO);
-> > +        }
-> > +
-> > +        let mut offset =3D NEGOTIATE_ALGS_RSP_SZ;
-> > +
-> > +        let mut ext_asym =3D KVec::new();
-> > +        for _ in 0..ext_asym_sel_count {
-> > +            ext_asym.push(read_le32(offset)?, GFP_KERNEL)?;
-> > +            offset +=3D mem::size_of::<u32>();
-> > +        }
-> > +
-> > +        let mut ext_hash =3D KVec::new();
-> > +        for _ in 0..ext_hash_sel_count {
-> > +            ext_hash.push(read_le32(offset)?, GFP_KERNEL)?;
-> > +            offset +=3D mem::size_of::<u32>();
-> > +        }
-> > +
-> > +        let mut resp_alg_struct =3D KVec::new();
-> > +        for _ in 0..header.param1 {
-> > +            let alg_type =3D *unvalidated.get(offset).ok_or(EPROTO)?;
-> > +            let alg_count =3D *unvalidated.get(offset + 1).ok_or(EPROT=
-O)?;
-> > +            let fixed_alg_count =3D (alg_count >> 4) as usize;
-> > +            let ext_alg_count =3D (alg_count & 0xf) as usize;
-> > +            offset +=3D 2;
-> > +
-> > +            let mut alg_supported =3D KVec::new();
-> > +            alg_supported.extend_from_slice(
-> > +                unvalidated
-> > +                    .get(offset..offset + fixed_alg_count)
-> > +                    .ok_or(EPROTO)?,
-> > +                GFP_KERNEL,
-> > +            )?;
-> > +            offset +=3D fixed_alg_count;
-> > +
-> > +            let mut alg_external =3D KVec::new();
-> > +            for _ in 0..ext_alg_count {
-> > +                alg_external.push(read_le32(offset)?, GFP_KERNEL)?;
-> > +                offset +=3D mem::size_of::<u32>();
-> > +            }
-> > +
-> > +            resp_alg_struct.push(
-> > +                RespAlgStruct {
-> > +                    alg_type,
-> > +                    alg_count,
-> > +                    alg_supported,
-> > +                    alg_external,
-> > +                },
-> > +                GFP_KERNEL,
-> > +            )?;
-> > +        }
+> >       VM_WARN_ON_ONCE(!seq_is_valid(lruvec));
+> >
+> > -     /* find the oldest populated generation */
+> > +     /* Requires at least MIN_NR_GENS gens for basic functionality */
+> > +     seq =3D lrugen->max_seq - MIN_NR_GENS;
+> >       for_each_evictable_type(type, swappiness) {
+> > -             while (min_seq[type] + MIN_NR_GENS <=3D lrugen->max_seq) =
+{
+> > -                     gen =3D lru_gen_from_seq(min_seq[type]);
+> > -
+> > -                     for (zone =3D 0; zone < MAX_NR_ZONES; zone++) {
+> > -                             if (!list_empty(&lrugen->folios[gen][type=
+][zone]))
+> > -                                     goto next;
+> > -                     }
+> > -
+> > -                     min_seq[type]++;
+> > +             min_seq[type] =3D lruvec_populated_min_seq(lruvec, type, =
+seq + 1);
+> > +             if (min_seq[type] > lrugen->min_seq[type])
+> >                       seq_inc_flag =3D true;
+> > -             }
+> > -next:
+> > -             ;
+> >       }
 >
 > [Severity: Low]
-> This isn't a bug, but since NegotiateAlgsRsp::validate() returns Err(EPRO=
-TO)
-> above whenever header.param1, ext_asym_sel_count, or ext_hash_sel_count i=
-s
-> non-zero, the three loops that follow can never execute (and duplicate th=
-e
-> parsing in SupportedAlgorithms::from_bytes()).
+> This isn't a bug, but adding seq at function scope causes the existing
+> inner declaration in try_to_inc_min_seq() to shadow it and recompute the
+> same value:
+>
+> mm/vmscan.c:try_to_inc_min_seq() {
+>         ...
+>         if (swappiness && swappiness <=3D MAX_SWAPPINESS) {
+>                 unsigned long seq =3D lrugen->max_seq - MIN_NR_GENS;
+>         ...
+> }
+>
+> Dropping the inner declaration would avoid the -Wshadow warning under W=
+=3D2
+> and reuse the value already computed.
+
+This makes sense to me, we can do:
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 9f759d213614..a640590f6be3 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4033,8 +4033,6 @@ static void try_to_inc_min_seq(struct lruvec
+*lruvec, int swappiness)
+
+        /* see the comment on lru_gen_folio */
+        if (swappiness && swappiness <=3D MAX_SWAPPINESS) {
+-               unsigned long seq =3D lrugen->max_seq - MIN_NR_GENS;
+-
+                if (min_seq[LRU_GEN_ANON] > seq && min_seq[LRU_GEN_FILE] < =
+seq)
+                        min_seq[LRU_GEN_ANON] =3D seq;
+                else if (min_seq[LRU_GEN_FILE] > seq &&
+min_seq[LRU_GEN_ANON] < seq)
+
+
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110041832.17=
-30924-1-alistair.francis@wdc.com?part=3D17
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111232603.99=
+34-1-baohua@kernel.org?part=3D2
