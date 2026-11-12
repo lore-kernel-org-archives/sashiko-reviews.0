@@ -1,55 +1,102 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794494588;
-	b=Ourudo892z0hSRiryyvB9T2qopwulawvxlDa8EMcAsI6gUxAScrBUwnDWUvWLF7LBKDX
-	 k8WgmQ5bkeUAqP95tIovNVadw1X21bMZsmPXonDGs7AvS+y2FMiEau6DGkMyHiLa28HWH
-	 nvIh5ypdpKb/DHLJJ+sJOl1fhMGoNODEVWuaymE/wJ5iro6kEyxfU74D4XffjZ0yH1WNi
-	 BfKCsf1OO/H2vDXF6QKX1eSIVegoFWFGH6nHFTExDt0OOKGXKiRET9kuFKVDRfFfGTg2E
-	 uI5WniMkRqpLp7jOE0rdv/hO/VhjfpntXxFzlZGuie60lP6Ld6oS26hPVhnDX1NwIrQ==
+	t=1794494813;
+	b=qptaH4cUcIzLUTj4ZPcWoZ0bgESn3RHGV/21PFJmiiTvArU9MSJR931M/Vumtw14VFqy
+	 ykNud0XBRaayo9nMcCceq0THT83maitr/BEO6JH7A6Pji4iZYuxgQ4mY3aKE8DewdfkC7
+	 DQawvehxqt6tV/MxDVnRZk+HP8QzgTjDw5qb8+nQtw8Z1CVHX3MPxIqa6TV3wEX/lmpYV
+	 oAd8yd/JwyN3JLtlFqABwFyAo56ifFxf/UMfnHN7wv03iarheJOhRS+WRKQC+0/sTW/Ak
+	 mLJxSYDz3e+HSiiD5SyQygT40ZRQ5MCxBN+DNtDdisynB9W9tDl58NdSp1xVNbPSExw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794494588;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=jRuMej/UssxCu0WfAqyK3aFAeYxCdtDxIB4ndk/e91Y=;
-	b=rBzv8UGieWFxZr9gdRaXL4K1gfrdJgX/ixVYi9ebJpjdvobBwR0nfoto0eDvcbVblPSb
-	 cHh517XTdIpsViRqkEj7YJhn6hz7KiidIcw/aR+3JRZllVo90uZLOJsz4yJ60DX+1qoka
-	 CaCl8q1YL5M4WNCMFQIod7T9DTFPtEHzCk+9ZubfgZv0NymwRvh0Z7aiUTma++FW9VsAs
-	 qEKpTMs5PxynH8r2bPf0wBlaxkl/XBMR3sFMqWWOaDJSmSAqzHBhDgz7/bUd5nW7VE/r8
-	 mhzLtv+3JTlDAF4GZgIIkSpWOprj3wMbUk5kADKM79qLQd6MkER9tCZQ6QOTRGd1qvw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794494813;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:X-ME-Received:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=6YweJ4ATSwAQpdC3B4Lj/lC1Mz6y+Skt6vUq+MxWglk=;
+	b=Z7JRBja6TMv8NTqqHWiGtvVMZXFPGM/wPpsT7A6v6pSawj5bRyNzTDOD9UV8FwujPbF/
+	 3FJ53SfaAt47MHgLdWWAbmUVhZAOAPplBrHYSkmpd833Aw049ZK3EzZkmWaN0ZA3t08cR
+	 RKJv07A2AW/WvkHTn/9k6UJw+nYzigmkXcynn7mUnKIdFhw7fO1SrbDY2pNuLpdk8AdcW
+	 JrjxG3pS6WFCNZc2HLOS7HD3VaOidR5yOo2v7nP1bvPZoDLn9hjXapqEZ8rGJkw/LOdug
+	 MYQ8C35x7j14dTzAvhr8k3hQtpu6EOwAl4V9fXH2kec8sXRkOu0PGeSOqmgAv9y5wFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gF4FaKa6;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bTQamDpG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C89606A321;
-	Thu, 12 Nov 2026 14:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF21606A33B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 14:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gF4FaKa6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F061F00A05;
-	Thu, 12 Nov 2026 14:43:06 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bTQamDpG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FE11F00A08;
+	Thu, 12 Nov 2026 14:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794494587;
-	bh=jRuMej/UssxCu0WfAqyK3aFAeYxCdtDxIB4ndk/e91Y=;
+	s=k20260515; t=1794494812;
+	bh=6YweJ4ATSwAQpdC3B4Lj/lC1Mz6y+Skt6vUq+MxWglk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=gF4FaKa6B22vd7rEBBJMDa3CQ1envHjmOTw6kpq39uxXL3i8tIxEmZuA4GGaHYIA0
-	 IeFYF/TN/+JDB+K6y5s4GjTqeoGo//OgQWp1oOLQJ3mFuG7OfG1W7vyp86akt7ntQe
-	 EwsgWsB+FjpGNECdaAe1QUm/V1kg7iY9Cs5MLplglRBLmxle71TWrMO3HnxN9UufEt
-	 LyuSDp/k76zWluxV3bKcecIdZ/77ag6hS2C3r0QFb9767CfparS/TakBDlLfwP8nkg
-	 7DRWkpjorupWP4NOUeW5j2dewkQKuozoiWp9mHUj1LpdZiy4WKaJEsZQPM6LPHh+Kv
-	 MKAzObwDZTo9A==
-Date: Thu, 12 Nov 2026 20:13:00 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-Subject: Re: [PATCH RFC] power: sequencing: pcie-m2: stop requiring subsystem
- IDs for WCN6855/WCN7850
-Message-ID: <avXPkTkW2ZE_fngY@debian>
-References: <20261106-pwrseq-bt-subsystem-v1-1-11fb09f63c93@oldschoolsolutions.biz>
- <sashiko-outbox-201312@kernel.org>
- <1c9b4722-0466-4c74-ac86-4d0f61c350a9@oldschoolsolutions.biz>
+	b=bTQamDpGyMVV2YlIgDlfQjG/7pUPOU4QeYaMTeXznWGJXoiS7thfxwzGVRpGzm9iE
+	 8Uwirs5X9SIBjpT7kPq3KwVzKRZ8wfKiCZlPDd3U0Iu40ai166PKHxgS+jVshYnOhb
+	 fNawnjkGUvZzp9vZaSG1SM9CxqySvd6ii5g5klVF7XuMt4pRXuXA9FxosJ7uFsco+V
+	 l2KzibLUym83vzjNnU2UwvPnCRu6H7q38NOjWr3L0TEeL+u0xCgGuz0O8IsX/hZiBC
+	 GfwGytMoxz4TL4A9oQvMs33xr9oLcTx/CJQk4x3wWrDC3z9JrbuHOrsz6RrRF0XBEp
+	 KLJPI4JyuYGsQ==
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 8F361198003A;
+	Thu, 12 Nov 2026 09:46:41 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 12 Nov 2026 09:46:48 -0500
+X-ME-Sender: <xms:UdH1ahpGL7jUPQjkAJRl2JhIaeaGv8tVQ9u6odzUqHPBriRGKQGDJQ>
+    <xme:UdH1ahM7OXB0snsMeUK5nrOtiIHoVLQbZBwXBuMbhrqbmw3f71-kFPxpQtHLEZvu6
+    oUin6n0C6URjJMIF2bPybPHEczYghBtQigBW_DzRFJhl6a6h5UXfII>
+X-ME-Received: <xmr:UdH1avgQkuuFdq9uQ9SCs9qSpEBoDeprsnjzqhAR-9vUxe64so3jh43n8hk>
+X-ME-Proxy-Cause: dmFkZTFZXCPOdpgoG7Sn06VYsFtSSOVX4LvRR+IZONGtpob6pMpAAKO/67brjXXiKC/yqt
+    PCnhbCbvHUOoVYCNT4kVjuveGw+dXvIprFD/YACgqbtnel/TmFMV6qGskDYUa0P8h3Od75
+    wrI/nnPxoscSdAEJx1gJYLeSoSvZIyEQFlDGL5x+GpMb1jaNZHzRlgCV+E3Cu8RgWJK+9e
+    BsDvN+pM4I2WWFu/gxlAAso9/LyfSk55MURq7DRxPKfBR2AVy6mcitcvb8EC1zSjecqXVf
+    g8U8l32ogRWuJQCndXaeCOZwVCIK7+RsqRc8uDYNYEtot18m3Tu+IX07SgfKp5VRUjIyKq
+    j4kRNug8fCs72e2RK9boHuMIh2JZ2XGBklGuD+2DcGj8tYzVQHHJKtbfASFUEPwIHpjkku
+    ddqC/C4SI0gyTEpk8FijU2gaINJFeT694ExXq6/ngFUlw3HIIY6+v7r73xIaxSms06tpPO
+    nGsI30IFUeVVAVDvEK5+uPDFKoT3d9REgtvDz81UtDvHituV7gsg+SWaOEuojwNplJ7/Tm
+    ZJ0jfo/LKbuo4HKiPIt5GP+SpqH9xe5udyuOJJ05B1Zk28PZ5NEzrTNwbYVTLi1kDLBMg7
+    FPj3L2omtFfHnSqwIyGqJobSo5ulLYr3DB3ZddEHBuAgoVg1iuVmNWmOxWhw
+X-ME-Proxy: <xmx:UdH1anSuIXUCB0mZYpoiTtzk9D5vNJQY2WyL_6xOVXXY_1_7K2tQYQ>
+    <xmx:UdH1avWiYN6nhjeXMunCKXAjjz_PgW4CnuGRIdT_7Rp3DAyZucq8Ng>
+    <xmx:UdH1ap482GbXSt_Cej7PhQkdzn9CopUhK6PaZyDjBgviMlsGbv7GXQ>
+    <xmx:UdH1aq8G5E7g7yv1IM7uzeTJkytrcfZkJmB6vvtNuEzUug0B1zLedg>
+    <xmx:UdH1ahn4tNaiOyi6IckarLgDd3PwKQQdiZ2nevXMjGI65FM5QHh4nrOR>
+Feedback-ID: i10464835:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Nov 2026 09:46:40 -0500 (EST)
+Date: Thu, 12 Nov 2026 14:46:39 +0000
+From: Kiryl Shutsemau <kas@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Matthew Wilcox <willy@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+	Lorenzo Stoakes <ljs@kernel.org>, Jan Kara <jack@suse.cz>, Hugh Dickins <hughd@google.com>, 
+	Christian Brauner <brauner@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Harry Yoo <harry@kernel.org>, Miklos Szeredi <miklos@szeredi.hu>, 
+	Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, 
+	Oscar Salvador <osalvador@suse.de>, "Liam R. Howlett" <liam@infradead.org>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, Brendan Jackman <brendan.jackman@linux.dev>, 
+	Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <nico.pache@linux.dev>, 
+	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
+	Lance Yang <lance.yang@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
+	Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Axel Rasmussen <axelrasmussen@google.com>, 
+	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Pedro Falcato <pfalcato@suse.de>, 
+	Luis Chamberlain <mcgrof@kernel.org>, Ilya Gladyshev <ilya.gladyshev@linux.dev>, 
+	Jaegeuk Kim <jaegeuk@kernel.org>, linux-mm@kvack.org, kernel-team@meta.com
+Subject: Re: [RFC PATCH v2 08/18] mm/compaction: free the migrated folios
+ that wait for a grace period
+Message-ID: <avXQtaMRRsSNAJcT@thinkstation>
+References: <20261104130118.2507513-1-kas@kernel.org>
+ <20261104130118.2507513-9-kas@kernel.org>
+ <sashiko-outbox-199101@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,106 +106,19 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1c9b4722-0466-4c74-ac86-4d0f61c350a9@oldschoolsolutions.biz>
+In-Reply-To: <sashiko-outbox-199101@kernel.org>
 
-On Fri, Nov 06, 2026 at 07:30:06PM +0100, Jens Glathe wrote:
-> Hi sashiko-bot,
-> 
-> On 11/6/26 12:26, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
-> > - [High] pwrseq: pcie-m2: bare PCI_DEVICE() creates bogus serdev on
-> >    USB-BT cards
-> > --
-> > 
-> > commit 651d16502b81077112cba212f5fb84dc03306321
-> > Author: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> > 
-> > power: sequencing: pcie-m2: stop requiring subsystem IDs for WCN6855/WCN7850
-> > 
-> > This commit replaces the subsystem-specific PCI_DEVICE_SUB() entries for
-> > Qualcomm WCN6855 (0x1103) and WCN7850 (0x1107) in pwrseq_m2_pci_ids[] with
-> > bare PCI_DEVICE() entries.
-> > 
-> > > diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-> > > index 56c5d51293c10..72c721149dfae 100644
-> > > --- a/drivers/power/sequencing/pwrseq-pcie-m2.c
-> > > +++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-> > > @@ -217,15 +217,9 @@ static const struct pci_device_id pwrseq_m2_pci_ids[] = {
-> > >   	  .driver_data = (kernel_ulong_t)"nxp,88w8987-bt" },
-> > >   	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1103, PCI_VENDOR_ID_QCOM, 0x0108),
-> > >   	  .driver_data = (kernel_ulong_t)"qcom,qca2066-bt" },
-> > > -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1103, PCI_VENDOR_ID_FOXCONN, 0xe105),
-> > > +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x1103),
-> > >   	  .driver_data = (kernel_ulong_t)"qcom,wcn6855-bt" },
-> > > -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1103, PCI_VENDOR_ID_QCOM, 0x337e),
-> > > -	  .driver_data = (kernel_ulong_t)"qcom,wcn6855-bt" },
-> > > -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_QCOM, 0x337c),
-> > > -	  .driver_data = (kernel_ulong_t)"qcom,wcn7850-bt" },
-> > > -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_LENOVO, 0xe0e9),
-> > > -	  .driver_data = (kernel_ulong_t)"qcom,wcn7850-bt" },
-> > > -	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_FOXCONN, 0xe0ee),
-> > > +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x1107),
-> > >   	  .driver_data = (kernel_ulong_t)"qcom,wcn7850-bt" },
-> > >   	{ } /* Sentinel */
-> > >   };
-> > [Severity: High]
-> > Won't matching bare 0x1103 and 0x1107 device IDs reintroduce the regression
-> > fixed by a39ac4651e3b ("power: sequencing: pcie-m2: Match WCN6855 and
-> > WCN7851 UART BT variants by subdevice ID") whenever a USB-BT M.2 card is
-> > plugged into a socketed M.2 Key E slot?
-> > 
-> > The pcie-m2-e-connector node describes the physical M.2 slot wiring on the
-> > host board, not the card installed in it.  Boards with a general-purpose M.2
-> > Key E socket (such as arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts) wire the
-> > SoC UART to the slot and define port@3 unconditionally in their static DT.
-> > 
-> > When a USB-BT WCN6855 or WCN7850/WCN7851 card is inserted into such a slot,
-> > pwrseq_pcie_m2_create_serdev() -> pwrseq_pcie_m2_create_serdev_one() sees
-> > port@3 on ctx->dev and matches 0x1103 or 0x1107 in pwrseq_m2_pci_ids[].  It
-> > then creates a bogus bluetooth OF node and UART serdev device, causing
-> > hci_qca to bind alongside btusb and fail with -ETIMEDOUT in qca_setup() on
-> > the unconnected UART lines.
-> > 
-> > Also, the commit message notes that Lenovo T14s Gen 6 (17aa:e0e9) is missing
-> > from the table, but 58a003302481 ("power: sequencing: pcie-m2: Add Lenovo
-> > ThinkPad T14s gen6 WCN7850 subsystem PCI ids") already added that entry
-> > above.
-> Well. It was missing upstream when I made the experience on my T14s G6.
-> Having a whitelist for every subsystem that is allowed in such a generic
-> driver is not the best design decision, IMO.
-> I took another look, this driver is loaded when it is a compatible in a
-> device tree. Usually this means the hardware got described, and you can draw
-> conclusions from the device tree on what is supported. For the conflicting
-> case, the device tree would need to describe the USB and the serial port on
-> the e-key connector. When you have a connector wired up this way, the driver
-> would need directions on what to choose, for instance by providing the
-> subsystem IDs as base for a decision. These are the special cases, though.
-> For most boards describing the uart on the connector would suffice to choose
-> the right, mostly generic driver for WCN6855 and WCN7850. So it would be
-> better to have the driver detect the "both ports are defined in the dt" case
-> and  not create a serdev:
-> 
-> static bool pwrseq_pcie_m2_bt_ambiguous(struct device *dev)
-> {
->     bool has_usb  = pwrseq_pcie_m2_check_remote_node(dev, 2, 0, "usb");
->     bool has_uart = pwrseq_pcie_m2_check_remote_node(dev, 3, 0, "serial");
-> 
->     return has_usb && has_uart;
-> }
-> 
+On Thu, Nov 05, 2026 at 01:03:39PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] mm/compaction: compact_zone() misses pages captured in rcu_free_drain()
 
-This is wrong. A generic slot can define both 'usb' and 'serial' endpoint
-nodes and users can connect any key E cards to the slot. So having both nodes
-doesn't mean that the user is only going to connect BT-UART cards.
+The capture check misses the same spot without this series:
+lru_add_drain_cpu_zone() frees the migrated-from pages from the per-cpu
+lists there and can capture the block just the same.
 
-While I agree with you that populating the ID table for each module is a pain,
-we can't magically detect the card type before probing the device.
-
-- Mani
+If it is worth fixing, it is a separate compaction patch.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+  Kiryl Shutsemau / Kirill A. Shutemov
