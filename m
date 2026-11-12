@@ -1,49 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.198
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794501517;
-	b=dubcP957vYZZrlJiFNh/PiyZDjFHIrUYm4lZnURkFwVvdxS2YPL4wTTWUADaGaoXZ43b
-	 fZ6eldIsdAmTCfjWyyDBK380wfMh3KYKrntwngWf0Cbnd1dwu833Qyh/xrXT/1vf6P+mP
-	 OnObmmFmDUGiL4jltTbyUVAdMkpz5xwcBJB/JzBeLHkIOF/Zb3hvogUQtcd2POiVQH6cx
-	 rVr5ntS96LOmdkScuF9Z1IFIetzk4sZ0Pi/D9e0mbJ1K7eQrK0Pz5xInmq+7trhpF3ZoD
-	 KAeXBi+5aTDP2R5JFw1bN8sC2bTAaC5qJFwvBA1FpXIBxyE0RgvgEcTo4EKm6ZxzQSw==
+	t=1794501740;
+	b=m2gVp6ddvkwTCcPSJ+eE7YDxck+0FV11MKYA1be2BCv5BxBtobciBiwmhkYqO0wWasdx
+	 /RumeeeVOq1zBKE3cQ9VyF+1qX/5KMVE3fOWRL167B7ZUYp2wvqk0KY1SzxJgPr86nbjd
+	 +tlNM1/rCLawYGcvCXF/YdhXD7hUOzR/99dtJskkYBg8rXmahZC1NZiHtinoejlzs8JMb
+	 cDOB+lms1ldZTYNh8HmXf2PjDaFLcR8IPBNhAxFH0SgfZnr7CddBy61w8ug+QGK0eVbtO
+	 8r/ihODPGIkSwc8xslpJOpzNKGNPRInefeWc4CUECeo3Q5nFzDPj1mbbv/6OJ9KrRWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794501517;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=v2gF4aHHWpEIFImP/DPmIYRLFp+X8A6di/NiItcHlnE=;
-	b=jFaapCU7M45UhY3IvzYzrYV65pa2MSV8Z6p9TGiencPbLMVbfYAPfpJHnw1y5QOUHEvZ
-	 xRjoWCTQzLu359LzpIjNv1PAqp7HaUBYkZMPa1qKu1sKtv7rFCsanPMoLvAHKjbfIBG7U
-	 dReS6MfebG5WFLgxzBP5RztsPmasE+8fQzNgPALoevMSluQc7yTvUDnM0eovU8OGDP0ZK
-	 CsQeTO2rPT+6lI/xbJ2fWJsUFv47mz5AXL8wBngMx2noHjfE48vFNztEskEDChAhFmbS6
-	 eWXRtXUVFUMzsyqG2dAx8JTx9UCNt6y1WxFiCfElKWNNUAMtH7QayXAwySL5ZnoQmHQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794501740;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=AkbVykVZBQUYEeZ40x+qwIRW7yVXsi+IgJgibQddBlo=;
+	b=VXOIF+qpjhiyNXGW72zq6D0yVWG9a4egOPUGrvU5SJwYLnGdXCAF5DP3QCS+okO9RZtl
+	 1FSLZ9CEI3rPqv0Lyd1PivmGREnwiTU2sVj0ytLLLvnyRjLuJVE7e1sYnD4dWeH6HznH3
+	 B7RgDmlaL4qLb2Euphh6Y9Z64SeHI73s5zIRbvZQafFcPVs2y8/cYlCpU2fOU4kpdQQHK
+	 hS3ifxBv+i5u8DricYb4R3GLTg/TPfnrUNVdZuxFEyRlsiA5AlKp7Vup0a9KQo7WJpdWN
+	 64upzts5c4jWJgRWIsSiMHug/L9gtVAF/gdgNsRmnyEDIecbZ4Ill2ZSFHRuv412kJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=d1CjBbn2;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27D2560A2633;
-	Thu, 12 Nov 2026 16:38:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27D2560A2633
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=T9lSnHv4;
+	arc=none smtp.remote-ip=209.85.214.198
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DC5606A327
+	for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 16:42:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5DC5606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=d1CjBbn2
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 571DE1516;
-	Thu, 12 Nov 2026 08:38:32 -0800 (PST)
-Received: from [10.0.129.47] (e122027.cambridge.arm.com [10.0.129.47])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 176583F673;
-	Thu, 12 Nov 2026 08:38:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794501515; bh=IfAVo4vBtykoPmUjXuBHIIJ7Pw85nRDkVIIg21ET3+s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=d1CjBbn2/7//aQwbZNDEwljJyfRcnwXmXdrb6lOxiOtX9xrDqdPR+W+mFNUUZ4JQ5
-	 JmrnwK1mR2oqvhLSsFKv9tPPlRxdoGWTXhaqzitDiDKrAr95QpHiSv/X/QjAPiTgaG
-	 BODMYd3h+x81om2HLBH7685OhvLmZST938Waokyk=
-Message-ID: <f9c3deee-2526-46a5-be98-f02235ad57be@arm.com>
-Date: Thu, 12 Nov 2026 16:38:32 +0000
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=T9lSnHv4
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2eb2437d752so845315ad.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 08:42:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1794501739; x=1795106539; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AkbVykVZBQUYEeZ40x+qwIRW7yVXsi+IgJgibQddBlo=;
+        b=T9lSnHv4SN12DFoFjBJYneFWK5DWGfHjdYi32kkuFhLAbmxdWEHePtTzB7ngj25PCx
+         xbGPAYo0Yf6i+u9M/JeKvJC6KLcCdHRMxCucGtAOKW5P8C0OadWppx2kWhIZc15yf9mH
+         Xwc2r6ZGn93CHhs2knMebJs251SPUIqxO6pcc3VDNY+lAAXmDCFcpzxpYuVGYFo8q5mQ
+         ZbqGFcLi8V+kFntWvz2qDapwWAYOpFmZwSF7QWCsVRpuAuLNbFWfhK/At8jyX/Bi0EAX
+         T2Ek9D3j9Ogx4BzBP1ilMr9yimIMyR5VvcYLXPu+zRdSoiBvFM34OnjIdjk83DSOw8/P
+         v6VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794501739; x=1795106539;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=AkbVykVZBQUYEeZ40x+qwIRW7yVXsi+IgJgibQddBlo=;
+        b=fnpIcIVdfPYSY2nGgS0TkgiM93tCvMLiNOh9S4uaBiPUCAptNImqf5yi64VdcAi26x
+         mDvj5W8OwtFX9WTBDB7+n+9vRYf89D4pGwgAQUvvW+jbb9Y0ZXZx/kbVSyN5yowqPobd
+         pmpUeIwZbk4IPfiGBGSPTdU2mBpVjCdf4TAIVMiGkwsoq0n5613XJ3VdLkZlTxkQWr7J
+         T0VPlZ5Q+CXith0cxqZi/Hvtp2MQFAusFfobsYGHUQ8VDS3RgeO+lP+gqkV2qEyEaPLF
+         hbY6qBTVrxp7LJosxqCVareLGEU+hRbNncgjHstp6qKgPy+Giz+LvbDcb4AII22mPkkF
+         nfsA==
+X-Gm-Message-State: APuU4Z/eOLvMYLLGZGB2ri+04EnT0Km9v/XBRYeXhzbXJHF3MroTLY7g
+	2SJU41v1TW4yWKC17E0PPq9vfElqc7HvmWwHCd8dB/zM45J1/GQlMqCB192CmSsUTU3GaN5cNqz
+	a5mAkXNoJyLoESx0FYzxP4PHe4VogPPHpg7dM1L38pBzKSacpByHBWCMFPNG0ainvj0AoxS+2Xo
+	+kxfWre2gseGavOzJvKmxWkX4VTDpjaurGq4zay4CMcDMr4SZN
+X-Received: from pjuw13.prod.google.com ([2002:a17:90a:d60d:b0:3ab:133b:49b6])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:5584:b0:3ac:8fff:5a1b
+ with SMTP id 98e67ed59e1d1-3b182edd001mr5732914a91.34.1794501738408; Thu, 12
+ Nov 2026 08:42:18 -0800 (PST)
+Date: Thu, 12 Nov 2026 08:42:16 -0800
+In-Reply-To: <sashiko-outbox-210535@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,194 +77,55 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/12] KVM: arm64: CCA: Add Realm RTT mapping and
- invalidation helpers
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261111145758.217946-1-steven.price@arm.com>
- <20261111145758.217946-9-steven.price@arm.com>
- <sashiko-outbox-209447@kernel.org>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <sashiko-outbox-209447@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <57324d544da1e92cf3b30ff7c40595dfbca1933d.1794465097.git.priyankamani2100@gmail.com>
+ <sashiko-outbox-210535@kernel.org>
+Message-ID: <avXsaIGjGotdeJiR@google.com>
+Subject: Re: [PATCH] KVM: nSVM: Check full nested state size before writing to
+ user buffer
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Priyanka Mani <priyankamani2100@gmail.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On 11/11/2026 18:06, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] KVM: arm64: wrong granule level when skipping missing RTT in
->   realm_fold_rtt_level()
-> - [Medium] KVM: arm64: cca: unhandled GFP_ATOMIC failure in
->   realm_create_rtt_levels()
-> --
+On Thu, Nov 12, 2026, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> This problem wasn't introduced by this patch, but in the paired setter
+> svm_set_nested_state() [1], does a failed nested_svm_load_cr3()
+> leave the vCPU in guest mode with an active nested MMU context?
 > 
-> commit 68d993c0f3cb9846fd5972acfd789cb5ebe22bac
-> Author: Steven Price <steven.price@arm.com>
+> arch/x86/kvm/svm/nested.c:svm_set_nested_state() {
+>     ...
+> 	nested_vmcb02_prepare_control(svm);
+>     ...
+> 	ret = nested_svm_load_cr3(&svm->vcpu, vcpu->arch.cr3,
+> 				  nested_npt_enabled(svm), false);
+> 	if (ret)
+> 		goto out_free;
+>     ...
+> }
 > 
-> KVM: arm64: CCA: Add Realm RTT mapping and invalidation helpers
-> 
-> This commit adds helpers to create, fold, and unmap Realm Translation
-> Tables (RTTs) for shared and private IPA ranges.
-> 
->> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
->> index b904e6541fb07..5aa34d68de595 100644
->> --- a/arch/arm64/kvm/rmi.c
->> +++ b/arch/arm64/kvm/rmi.c
-> 
-> [ ... ]
-> 
->> @@ -156,12 +286,94 @@ static int realm_tear_down_rtt_range(struct realm *realm,
->>  					 start, end);
->>  }
->>  
->> +/*
->> + * Returns 0 on successful fold, a negative value on error, a positive value if
->> + * we were not able to fold all tables at this level.
->> + */
->> +static int realm_fold_rtt_level(struct realm *realm, int level,
->> +				unsigned long start, unsigned long end)
->> +{
->> +	int not_folded = 0;
->> +	ssize_t map_size;
->> +	unsigned long addr, next_addr;
->> +
->> +	if (WARN_ON(level > KVM_PGTABLE_LAST_LEVEL))
->> +		return -EINVAL;
->> +
->> +	map_size = kvm_granule_size(level - 1);
->> +
->> +	for (addr = start; addr < end; addr = next_addr) {
->> +		phys_addr_t rtt_granule;
->> +		long ret;
->> +
->> +		next_addr = ALIGN(addr + 1, map_size);
->> +
->> +		ret = realm_rtt_fold(realm, addr, level, &rtt_granule);
->> +		if (ret < 0)
->> +			return ret;
->> +
->> +		switch (RMI_RESULT_STATUS(ret)) {
->> +		case RMI_SUCCESS:
->> +			free_rtt(rtt_granule);
->> +			break;
->> +		case RMI_ERROR_RTT: {
->> +			int err_level = RMI_RESULT_DATA_LEVEL(ret);
->> +
->> +			if (err_level < level) {
->> +				/* No RTT at this level; skip the missing ancestor. */
->> +				if (WARN_ON(err_level < get_start_level(realm)))
->> +					return -EINVAL;
->> +				next_addr = ALIGN(addr + 1,
->> +						  kvm_granule_size(err_level - 1));
->> +				break;
->> +			}
-> 
-> [Severity: Medium]
-> Should this advance next_addr by kvm_granule_size(err_level) instead of
-> kvm_granule_size(err_level - 1) (matching realm_unmap_shared_range() and
-> realm_unmap_private_range())?
+> nested_vmcb02_prepare_control() enters guest mode and initializes the
+> nested MMU context, but the out_free error path only frees save and ctl
+> without calling leave_guest_mode() or nested_svm_uninit_mmu_context().
+> If userspace passes an invalid guest CR3 and then continues running the
+> vCPU after KVM_SET_NESTED_STATE fails, the vCPU runs with a corrupted
+> nested state and leaked MMU state.
 
-Indeed, this looks wrong. I'll correct in the next version.
+Ya, I have this locally, just need to write a changelog and get it posted:
 
-> When realm_rtt_fold() fails at err_level < level, the walk stopped at a
-> single non-table entry in the table at err_level, which spans
-> kvm_granule_size(err_level).  Using err_level - 1 skips the span of the
-> entire table at err_level, leaving any foldable sibling RTTs in the rest of
-> that table unfolded, and evaluates kvm_granule_size(-1) when err_level is 0
-> on 4-level stage-2 tables (shifting past 64 bits on 16KB and 64KB pages).
-> 
-> [ ... ]
-> 
->> @@ -191,6 +403,154 @@ int kvm_realm_teardown_stage2(struct kvm *kvm)
->>  	return 0;
->>  }
->>  
->> +static void realm_unmap_shared_range(struct kvm *kvm,
->> +				     unsigned long start,
->> +				     unsigned long end,
->> +				     bool may_block)
->> +{
-> 
-> [ ... ]
-> 
->> +		case RMI_ERROR_RTT: {
->> +			int err_level = RMI_RESULT_DATA_LEVEL(ret);
->> +			int level = find_map_level(realm, addr, end);
->> +
->> +			if (WARN_ON(err_level > KVM_PGTABLE_LAST_LEVEL))
->> +				return;
->> +
->> +			if (err_level >= level) {
->> +				/* Nothing present, so skip */
->> +				next_addr = ALIGN(addr + 1,
->> +						  kvm_granule_size(err_level));
->> +				break;
->> +			}
->> +
->> +			ret = realm_create_rtt_levels(realm, addr, err_level,
->> +						      level, NULL);
->> +			if (WARN_ON(ret))
->> +				return;
-> 
-> [ ... ]
-> 
->> +static void realm_unmap_private_range(struct kvm *kvm,
->> +				      unsigned long start,
->> +				      unsigned long end,
->> +				      bool may_block)
->> +{
-> 
-> [ ... ]
-> 
->> +		case RMI_ERROR_RTT: {
->> +			int err_level = RMI_RESULT_DATA_LEVEL(ret);
->> +			int level = find_map_level(realm, addr, end);
->> +
->> +			if (WARN_ON(err_level > KVM_PGTABLE_LAST_LEVEL))
->> +				return;
->> +
->> +			if (err_level >= level) {
->> +				/* Nothing present, so skip this RTT entry. */
->> +				next_addr = ALIGN(addr + 1,
->> +						  kvm_granule_size(err_level));
->> +				break;
->> +			}
->> +
->> +			ret = realm_create_rtt_levels(realm, addr, err_level,
->> +						      level, NULL);
->> +			if (WARN_ON(ret))
->> +				return;
-> 
-> [Severity: Medium]
-> Can realm_create_rtt_levels() fail with -ENOMEM here, triggering WARN_ON()
-> and aborting the unmap?
-> 
-> Passing mc = NULL causes alloc_delegated_granule() to allocate RTT pages
-> with GFP_ATOMIC | __GFP_ZERO | __GFP_ACCOUNT.  When unmapping a sub-block
-> range under memory pressure or a memcg limit, an allocation failure fires
-> WARN_ON(ret) and returns early, leaving the rest of [addr, end) mapped in
-> the Realm RTTs (for example across an MMU notifier invalidation before the
-> host frees the backing pages).
-
-Yes, this isn't ideal.
-
-This should really have a memcache and allocate from that - that would
-stop this path hitting in the normal case where the allocation can be
-satisfied from the cache. With the cache being topped up when necessary
-with the mmu_lock dropped.
-
-Finally I could handle the case where we actually can't allocate an RTT
-(and therefore can't split a huge page) by simply unmapping the huge
-page in one go. For the shared range this is fine (the pages can be
-faulted back in - assuming the memory becomes available), for the
-private range it would be fatal to the VM, but the system can continue.
-
-As Sashiko has pointed out, this would already have provoked a WARN_ON()
-from the allocator, so I think that's probably fine.
-
-Steve
-
+diff --git arch/x86/kvm/svm/nested.c arch/x86/kvm/svm/nested.c
+index 07554089ec05..4b1cdc7798bb 100644
+--- arch/x86/kvm/svm/nested.c
++++ arch/x86/kvm/svm/nested.c
+@@ -2114,8 +2114,10 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+         */
+        ret = nested_svm_load_cr3(&svm->vcpu, vcpu->arch.cr3,
+                                  nested_npt_enabled(svm), false);
+-       if (ret)
++       if (ret) {
++               svm_leave_nested(vcpu);
+                goto out_free;
++       }
+ 
+        svm->nested.force_msr_bitmap_recalc = true;
