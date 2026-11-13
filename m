@@ -1,64 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=203.205.221.205
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794566318;
-	b=S0wObVsx6VdGQFOrgTmye4NgY8OpHo8QaUhcuFBEBLZce4qy+QLPD9e38PM+Br+M/0vL
-	 vukCPsDeMYCR4dD9qGcKc2nAxqYpqPvDQ2d2vtF+IkfyvC91kypkinzjsAKyZ3vsN+Evr
-	 uoGL2ROKCbrG5pLj2b8EkDDjZkeruDrlZ1DXnpcOUD33O8h+HPfMDpjGWm17ESBEQmQe7
-	 WtAjXjiETd/POlvgjbUSUzpRthvnVyDsq9gTuEf1UFhQyLcILPlgOmnBoq+WEoNaz76Fp
-	 11i8R/8mUC3g02bWijDH16zGV0ZkhVrx7ZmGy5Yivcgoy8rSvln0YTWkcXkvhcw9ofQ==
+	t=1794566898;
+	b=DwTCU0/nbHLeqxNbPP0nq949uDIR7xj+8GzvNvKfas9MVYQUw8WjK11wW/kUiPL9OB6b
+	 lP1Ritf+5GZWcK1sjBG4OIjDYLWZOLufPjFIQaK/3DTMPtyekEm+P0SPeWF29qrfuR1kQ
+	 zo7jS5MYPZ8SP5T1svPbbmtw4IeM8rfMHWMTQd1AzrkaC4w9MUvOHfPsyw8C7CxYp1jwx
+	 hX9XRtYyyXtjJnfme1i07qmMTOkbPTaLZdcdmc5MDim8z1nZ53Phswf9t5S/hq7C+67RN
+	 nT8trPnt3oc1t4MBfyi6l/LJyeGB0q7I6j+NyIW+8QBNN3GGcTauN41Ct4USs5CfWpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794566318;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-XMRINFO:X-QQ-XMAILINFO:From:To:Cc:
-	 Subject:Mime-Version:Content-Type:Content-Transfer-Encoding:Date:
-	 X-Priority:Message-ID:X-QQ-MIME:X-Mailer:X-QQ-Mailer:References:
-	 In-Reply-To:X-QQ-mid;
-	bh=yiVvrAzHhnqGTuFkC7TTJCqz/SjLoNkNWUXIur4ZiLg=;
-	b=46EcsA51JEmDQSNCl88/Xxn4H7pcIxuHVMvBh7yI/sZ6FeCNdNAqOXLt080zc6dvyf1v
-	 IlBSqtFZIHht5+wJ0AtuVDyZ24ee/tgdSlXL6A/o15OV9zAKWUXQvMa7I8hzv/FYkoK1c
-	 2d8JoqJXU5lQHxbOUPOCgiWknarrM+qO6eP1BD3RjpP2kWKO7rT7RAqsbcRouzyq2ydHI
-	 QMLaxoJzqtTK52VKcsvnDV5cN0qkVaiWNJe3G6od8tRyG73ZVL9LPc135f7S3OKb2BgvY
-	 4ZxLlXCZb7vS3f6dUF8Y1eg/Akb9gzchJklMo+7+/sLVe71fGRAoW31muwp41DEnrFg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794566898;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=33cVRKk3YgstXddql5txx0xbzf1mHptz6aS9wSjcTFw=;
+	b=b4ap0MReJxvaNeJXj5VKYodgosHEjt6HhycA3PpnWDp5vygcuf6LrsjNZl8tdQirwDmW
+	 MmPXX1T30Qi/i1d1J0vdN3UoIMwrV+sLS+EvOOk6oNSctR/E/fYFv9R5obT/fubd956e7
+	 gnkeIVP4InOIhye7KJj2r8YmeXSMsClj9WxrKca9wwM8e0T+xi5dU3GJcVn5Gqv2cCqzx
+	 jI3m+HTdzQ6p2hxVdDtyve2bEh+lGErnuvbmMyvUfCubpAYaj8IquMYk+XMvoru0mVNQe
+	 7EiIo1CHOQy/VsjCeG0ebdmTeqKkl0NFqiN063R22hJdFK0FzgF7Ui1eAoXM1g5NOQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=qq.com;
-	spf=pass smtp.mailfrom=qq.com;
-	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b="tS/lmvhl";
-	arc=none smtp.remote-ip=203.205.221.205
-Received: from out203-205-221-205.mail.qq.com (out203-205-221-205.mail.qq.com [203.205.221.205])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S543vWSv;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70497606A321;
-	Fri, 13 Nov 2026 10:38:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70497606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849BA606A31C;
+	Fri, 13 Nov 2026 10:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=tS/lmvhl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1794566313; bh=yiVvrAzHhnqGTuFkC7TTJCqz/SjLoNkNWUXIur4ZiLg=;
-	h=From:To:Cc:Subject:Date:References:In-Reply-To;
-	b=tS/lmvhlGN1l30n3FyOvB5Y7Nih4AeKywVlGpqDnyIQYvbQ8zqfVZRIQ8yxvoyjpY
-	 kMlqSYsh+vvUXNQD72Q0eaPC+6qGS/3MJOiPNiYpkwxj5vNzdJERKNpk1X2JEwsWix
-	 FfFba6Wwe2nbKBe+4mJZoRYmoiFdx7fzAXtxnY5c=
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-XMAILINFO: MdmyWVu0InhAUNv16odREWE3a5Yrsgy7rtEDxoUgTS2ie18ZbVUAkOcRxWt9fT
-	 4j1eF8tIfoohuluP79yuvsLukrdHD/kH9A5Vn/zwjoMMTKGIcq8e+gaADcSvPJ7cavRYK6C1ww8nj
-	 0Z1+JNM0SeFyG4kDDz9XcYv4/7SzYwNt1GUv0tkITh5mGp+o/gGBlalC+hi6T459gQseq3535SywF
-	 ClLd0azcL8Pb7Cku0byYtihoaz05lAi4eMgMpj3qf6P+Z/BmkLBSsHDjmwGenwrkrl7p+ypscJJb+
-	 WWALE+mZZWrPI3DL9EP2Fg0nzkzMS9Wbt0N74zH2mNqlJzaDmTB8eTuPQqmYW7c1a4hu7wWZ8H57B
-	 zX5U9ncn+D4BCi3hn33XwmX39EHw/k5Z30oNMAWxjHqFZrd1AU5sgg7nL/VSJbvEkEOcNOPWippSc
-	 AOglTHjcKXAxiavZ6JI5xg6H/uIkGrMSNeJpESisk0zERdAnQW4lid0EMX1BJOrtO4ATnQHgOFuGu
-	 L3L4xRG0GWjuUkICNsL2ci69vRtD6Ti48cTBCb8dPGtx5Lz1jNm0qDT2BrZ2ZdEBaG76OEcbXoJDS
-	 C8LNV5AUnFR+bzjK542nMAILCUPV7XGhYNXxCNFT4U5WrdcnsC1ytJLo/s8A5xOCcqlD/4+jergdQ
-	 Ll/oEBTZImYamPHrSawVsqGALtUoB3O89O+oVUS3oYdu9TVIk0GRzFEHzzM5hNl4V2stbIJNPvd4I
-	 LDn+Fn6tAmWZl4gmCpXJpt9HM1q+CjzcQqHQ1VCRjWMmnr5HFfqnczs1nQaqIUZvylVPJFLvePvHZ
-	 Q0U+qMvpVCBvZPuIVrznhn/WX3rLNjxwT+jEn7m7pSEbT1kqJxpXr2tFzXO0z1aSfg+6KlX5RWAvS
-	 Ql7HYux3csJ6pQ47NKfBwC3vKUKB8u1bmw09JHpnCV96BrKyx1Hrn4fF3Du/1ZsmE8bgDjFHz3ipk
-	 eaVSvxi1+PQTt5UYUypHy+ALbJSkntBDKkvbsSa8A0XaVSI830MbqeDz4mgPxFVLVRh2cYFH7bkgM
-	 bkChzXAwICxYn2+zca2BfOfAioiBsqiQLGvK2hapWrn7CHD+eYaccVyskT48j0kgqZ5P3
-From: "=?utf-8?B?emNq?=" <zcjie0802@qq.com>
-To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
-Cc: "=?utf-8?B?dmlydHVhbGl6YXRpb24=?=" <virtualization@lists.linux.dev>, "=?utf-8?B?TWljaGFlbCBTLiBUc2lya2lu?=" <mst@redhat.com>, "=?utf-8?B?RXVnZW5pbyBQZXJleg==?=" <eperezma@redhat.com>
-Subject: Re: [PATCH net 2/2] virtio_net: mask callbacks before releasing NAPI ownership
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S543vWSv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A254F1F000C4;
+	Fri, 13 Nov 2026 10:48:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794566898;
+	bh=33cVRKk3YgstXddql5txx0xbzf1mHptz6aS9wSjcTFw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=S543vWSvlhe1976ESvDx0Sh8BK29rzjm9wRA/T4CDpA0WLlHO8848X+WcfQS63iOi
+	 Nhz3JLybLhmz93t2GNNQ6NCUV8JbmlWh4gQ7c2QkLyZdVXIjgvZA7pyBnYZw39HMb6
+	 ZfHWNZOWsAjUs1G307mf40Rri7lATqBoGvUAWMYq1wG+zsrSHgokWCOhnRXBd1vRBf
+	 Rn40AGWVJ0/DQRhVlOJdULOcYE76LwTWqE0pZlm6Upf1nesfauMThvJob+pd2QvqL7
+	 +qGxqYsDaYTsXaVgQp7sG2IvhW49f74sc/ngcEyoG4zmS2toEumlD3Diz4g5gF4T5v
+	 EIDdH4WTzsWCw==
+Date: Fri, 13 Nov 2026 10:48:15 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Ulf Hansson <ulfh@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	spacemit@lists.linux.dev, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] pmdomain: spacemit: Add power domain driver
+Message-ID: <20261113104815-GKB73509@kernel.org>
+References: <20261112-04-k3-pm-support-v4-0-de3931aa5153@kernel.org>
+ <20261112-04-k3-pm-support-v4-2-de3931aa5153@kernel.org>
+ <sashiko-outbox-210694@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -67,37 +58,183 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Fri, 13 Nov 2026 18:38:31 +0800
-X-Priority: 3
-Message-ID: <tencent_1F60CBD50DC4A0CAE66E5B5BE4FCE941CD0A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <tencent_AA4F39DA7ADE330C721C03AAA832B92DD608@qq.com>
- <tencent_3206E4502773D7AC6F720CF4046674E5A809@qq.com>
-	<sashiko-outbox-211234@kernel.org>
-In-Reply-To: <sashiko-outbox-211234@kernel.org>
-X-QQ-mid: xmsezc52-0t1794566311t4y03mkfz
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-210694@kernel.org>
 
-PiBTaG91bGQgaXQgaW5jbHVkZSBhIEZpeGVzIHRhZyBmb3IgdGhlIHBvc3QtY29tcGxldGlv
-bgo+IHZpcnRxdWV1ZV9kaXNhYmxlX2NiKCkgY2FsbD8KPgo+ICAgRml4ZXM6IGZkYWE3Njdh
-ZWZjMSAoInZpcnRpb19uZXQ6IERpc2FibGUgaW50ZXJydXB0cyBpZiBuYXBpX2NvbXBsZXRl
-X2RvbmUgcmVzY2hlZHVsZWQgbmFwaSIpCgpUaGFua3MgZm9yIHRoZSByZXZpZXcuCgpmZGFh
-NzY3YWVmYzEgaW50cm9kdWNlZCB0aGUgcG9zdC1jb21wbGV0aW9uIHZpcnRxdWV1ZV9kaXNh
-YmxlX2NiKCkKY2FsbC4gSG93ZXZlciwgYmVmb3JlIDZmOGIxMmQ2NjFkMCwgdGhlIGZhbHNl
-LXJldHVybiBwYXRocyBpbgpuYXBpX2NvbXBsZXRlX2RvbmUoKSBkaWQgbm90IGNsZWFyIE5B
-UElfU1RBVEVfU0NIRUQuCgo2ZjhiMTJkNjYxZDAgYWRkZWQgdGhlIGhhcmQgSVJRIGRlZmVy
-cmFsIHBhdGggdGhhdCBjYW4gY2xlYXIgU0NIRUQsCmFybSB0aGUgd2F0Y2hkb2cgYW5kIHJl
-dHVybiBmYWxzZS4gVGhpcyBhbGxvd3MgYSBzdWNjZXNzb3IgcG9sbCB0bwpyZWFybSBjYWxs
-YmFja3MgYmVmb3JlIHRoZSBvbGQgY2FsbGVyIGRpc2FibGVzIHRoZW0uCgpGb3IgdGhlIHdh
-dGNoZG9nLWRyaXZlbiBpbnRlcmxlYXZpbmcgcmVwb3J0ZWQgaGVyZSwgSSBiZWxpZXZlIHRo
-ZQphcHByb3ByaWF0ZSBhdHRyaWJ1dGlvbiBpczoKCkZpeGVzOiA2ZjhiMTJkNjYxZDAgKCJu
-ZXQ6IG5hcGk6IGFkZCBoYXJkIGlycXMgZGVmZXJyYWwgZmVhdHVyZSIpCgpJIHBsYW4gdG8g
-aW5jbHVkZSB0aGlzIHRhZyBpbiB0aGUgbmV4dCByZXZpc2lvbi4gVGhlIHByb3Bvc2VkIGNv
-ZGUKY2hhbmdlcyB3aWxsIHJlbWFpbiB0aGUgc2FtZS4KClRoYW5rcywKQ29uZ2ppZSBaaG91
+Hi Ulf,
+
+I'm seeking help for last review comment from sashiko, see my reply
+at end of this mail..
 
 
+On 08:22 Thu 12 Nov     , sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] pmdomain: spacemit: devres frees active domains when
+>   pm_genpd_remove() fails
+> - [Low] pmdomain: spacemit: log ret instead of pm_index on power
+>   transition error
+> --
+> 
+> commit 1bedd4d63c29dbe88ab766b2b331bdd5d01ee76c
+> Author: Yixun Lan <dlan@kernel.org>
+> 
+> pmdomain: spacemit: Add power domain driver
+> 
+> This commit adds a generic power domain driver for SpacemiT K1 and K3 SoCs
+> as an auxiliary bus driver supporting both software and hardware power
+> sequencing modes.
+> 
+> > diff --git a/drivers/pmdomain/spacemit/spacemit-pm-domains.c b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
+> > new file mode 100644
+> > index 0000000000000..dd0613c1912a0
+> > --- /dev/null
+> > +++ b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
+> > @@ -0,0 +1,424 @@
+> 
+> [ ... ]
+> 
+..
+> > +
+> > +static int spacemit_pd_power_on(struct generic_pm_domain *domain)
+> > +{
+> > +	struct spacemit_pm_domain *pd = to_spacemit_pd(domain);
+> > +	struct spacemit_pmu *pmu = pd->pmu;
+> > +	const struct spacemit_pm_domain_param *p = pd->param;
+> > +	unsigned int val;
+> > +	int ret = 0;
+> > +
+> > +	if (!p->use_hw) {
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_sleep1));
+> > +		fsleep(20);
+> > +
+> > +		val = BIT(p->bit_sleep2) | BIT(p->bit_sleep1);
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
+> > +		fsleep(20);
+> > +
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_isolation));
+> > +		fsleep(15);
+> > +
+> > +		ret = regmap_read_poll_timeout(pmu->regmap,
+> > +					       APMU_POWER_STATUS_REG,
+> > +					       val,
+> > +					       (val & BIT(p->bit_pwr_stat)),
+> > +					       5,
+> > +					       APMU_POWER_TIMEOUT_US);
+> > +	} else {
+> > +		val = BIT(p->bit_auto_pwr_on) | BIT(p->bit_hw_mode);
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
+> > +		fsleep(300);
+> > +
+> > +		ret = regmap_read_poll_timeout(pmu->regmap,
+> > +					       APMU_POWER_STATUS_REG,
+> > +					       val,
+> > +					       (val & BIT(p->bit_hw_pwr_stat)),
+> > +					       5,
+> > +					       APMU_POWER_TIMEOUT_US);
+> > +	}
+> > +
+> > +	if (ret)
+> > +		dev_err(&domain->dev, "failed to power on domain %s: %d\n",
+> > +			p->name, pd->pm_index);
+> > +
+> > +	return ret;
+> > +}
+> 
+> [Severity: Low]
+> As reported by Troy Mitchell on v3 [1], should these dev_err() calls in
+> spacemit_pd_power_off() and spacemit_pd_power_on() pass ret instead of
+> pd->pm_index so that the error code is logged rather than the 0-based
+> domain index?  With that changed, pd->pm_index can also be dropped.
+> 
+Ok, I see the point..
+I was initially trying to log the id (pm_index) of power domain, but
+with p->name, it's not necessary, I will fix it in next version.
+
+I would completely remove member pm_index from struct which not useful..
+
+> [ ... ]
+> 
+> > +static int spacemit_pm_add_one_domain(struct spacemit_pmu *pmu, int id,
+> > +				      const struct spacemit_pm_domain_param *param)
+> > +{
+> > +	struct spacemit_pm_domain *pd;
+> > +	int ret;
+> > +
+> > +	pd = devm_kzalloc(pmu->dev, sizeof(*pd), GFP_KERNEL);
+> > +	if (!pd)
+> > +		return -ENOMEM;
+> > +
+> > +	pd->pm_index        = id;
+> > +	pd->param           = param;
+> > +	pd->pmu             = pmu;
+> > +	pd->genpd.name      = param->name;
+> > +	pd->genpd.flags     = param->flags;
+> > +	pd->genpd.power_off = spacemit_pd_power_off;
+> > +	pd->genpd.power_on  = spacemit_pd_power_on;
+> > +
+> > +	ret = pm_genpd_init(&pd->genpd, NULL, spacemit_pm_is_off_state(pmu, pd));
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	pmu->domains[id] = &pd->genpd;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
+> > +{
+> > +	struct spacemit_pm_domain *pd;
+> > +	int i, ret;
+> > +
+> > +	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
+> > +		if (!pmu->domains[i])
+> > +			continue;
+> > +
+> > +		pd = to_spacemit_pd(pmu->domains[i]);
+> > +		ret = pm_genpd_remove(pmu->domains[i]);
+> > +		if (ret)
+> > +			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
+> > +				pd->param->name, ret);
+> > +	}
+> > +}
+> 
+> [ ... ]
+> 
+> > +static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
+> > +{
+> > +	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
+> > +	struct device *dev = &adev->dev;
+> > +
+> > +	of_genpd_del_provider(dev->of_node);
+> > +	spacemit_pm_domain_cleanup(pmu);
+> > +}
+> 
+> [Severity: High]
+> As reported by Troy Mitchell on v3 [1], can unbinding this driver or
+> unloading the module while a consumer device is attached cause a
+> use-after-free on pd->genpd?
+> 
+This is an alter solution.. but just workaround the problem
+
+> Because the auxiliary device shares its parent CCU platform device's
+> of_node, fw_devlink links consumer devices to the parent CCU device rather
+> than to adev->dev, so consumer devices are not detached when
+> spacemit_pm_domain_remove() runs.  pm_genpd_remove() then fails with
+> -EBUSY because genpd->device_count > 0, leaving pd->genpd linked in the
+> global gpd_list and referenced by consumers' dev->pm_domain pointers right
+> before devres frees the devm_kzalloc()-allocated struct
+> spacemit_pm_domain.
+> 
+> [1] https://lore.kernel.org/r/DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com
+> 
+
+I've attempted to submit a patch to fix this issue, Ulf, can
+you give an early comment on this? I'd like to see if it's a
+right direction before I go further.. see below
+https://lore.kernel.org/all/20261112-01-pm-device-link-v1-1-8932e0862378@kernel.org/
+
+-- 
+Yixun Lan (dlan)
