@@ -1,57 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794580356;
-	b=VPFGDShUa4h56diXhjKq6gYLaJGD0r4A0a/OsLumrZpaH3SZH7r79pZE5it3oFdb3tLL
-	 4abzque+czsSyHrMCuDzlJ0uKCqyA+j92DrLKoFpPQq+Arx/DAYjixFRFMz8ZiDQtgAwe
-	 BS6NUuf4eaaAQPYuWrZ9iZNWCIFcxh8xgG/iFRRBWAOwcfQTbecXMivhMryXRJUaGmSgo
-	 2HummtK7Iy2ikCyM/iIJEMZ9u/dvZKcfj+F2mLZMXXE61gjFxAgvrOU25nNHE8F26KvGJ
-	 QWyeilOR/s6FuFHeNEUKYHHI42kZ3KfjT9RPmJ4nREzja6Ij4pHymxWJA8zGJ4/0HJA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794580356;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=1BIQo279ufFQ+nv7mKGQRHTWFJlbN4h1fXmbpkje77E=;
-	b=yALGf7YSXlu01bZ9ahyqlNREmNGANdhQ8Sy+JiQRkLbxD//1lyuJu/pLM839b+zn92TB
-	 XTTx+Rh6+JsM/XwI6ckQmD3xcRII9I3KKS1L3YQniW1bAJ60oh0H6NlJghl8ZSdiAajpv
-	 xSI4Qd5BfqWoPHXWMHIsJ58epZ/MN5AcC0zpeUbADQt71nKfClNBShLtVHT1IKzRw7T5K
-	 j79toIzPWkpJx5g8ljkRB27fooMoEm4U18hP0CTm6Mo0C2tTJCNXevgwOhZvloPpukvlw
-	 TZejDKZBP7uKK23pKgwBxdkw5wruLvb60SzaADQtBvSTTI0h75zAyBqzbdEOrUh4X/w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ev2SkSwq;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.116
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794580657;
+	b=vIhUoQuFmbdPQPGXJzcVE1MmYhlob4+eDITqOLyA2pDUPQ8BCrtN1Up+2fbmLYswD//e
+	 Yty4LGah4WFE9XV9spAhEq8+CIua59p1dI8P64VjNVgJ73vPJpbRk3hOGvhUNRarZj/7k
+	 6+/mqiua2UOoMG2cOZ4c4V/W7EgqdN3REqlt5QjEzDaFRcuXJp5cZuRtJ8yhi/hoA3Pmv
+	 n7ImGCkYaCc4Pjf2B/uwuawtgn3Q0f8RIyzuB2TmwlW7NkqFrV1tez0xNUDW9PxjHlhyR
+	 WjoinZt2i3dg0fD4rTWui3FWVVDoOzsMPnrarq8wNeaxtSGAES11V+lYyTuieo1Oo5A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794580657;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=/RYVCqV7k7xTPgRrR2CDb38P/NJSsTKrT2U6zO68EaA=;
+	b=AHcOd56Q56v2rBLZkoUHpA4vIfFqjl+xHK++UCXCs5KU+ojZaPOO9dw6r8PXqtR3Mm9t
+	 etBDQqESK2DNPHAET1HpQiREIOpouV7GOQHoQTn5JoI6Xuw2TMm8V2oczN2ZtY9ANqbwx
+	 c8WAE5RGQbe2NFvlj5gyNicM/3ruRSlM0wx54/G9er3v/GEV5AdzFZVJ5BKoa/NVZXy8R
+	 8RGKwDz7e5uWy/C4NJB1do3lgNFdtcxTI+u1rWKGTWp3LZw/OtbD0om3C/vlTwvdyfLYw
+	 1Is2bCSeAMbF+yMf8O1pVfdWmJDBQKUVIcI5+RVYvMzOxjKTl8A215Gjk3qS5pR789Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=m0jnPKVs;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.116
+Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022116.outbound.protection.outlook.com [40.107.193.116])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE216606A32E;
-	Fri, 13 Nov 2026 14:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBD7606A32D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 14:37:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7DBD7606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ev2SkSwq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4ACD1F000C4;
-	Fri, 13 Nov 2026 14:32:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794580355;
-	bh=1BIQo279ufFQ+nv7mKGQRHTWFJlbN4h1fXmbpkje77E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Ev2SkSwqhOZ6E0bTjz9w+sL9egRPteyMV8MLasaOCyNylx0lXNMRMemQBzm6IC/ce
-	 F9ZYyOTHLa87GU83Huvpk4e3sIl+QrtLgzeZbuJrodpKWvUc72uIOgnt0EZEZ7nf0H
-	 0vEC14VeJJZIkVqGsdhQlD/Q8FXmYDn+BqIdnWcB7eg72tuVgWWGRAgWUpqUSV1zGG
-	 Qj3hdHxhnTBICsGYp92vdVcBwAqH7avWRpO+mvYJtN+WNycm1j6N1wS2oi/hBRSqDY
-	 4e+YmXNsE+L6AoT0SKd0CWidKBR0ssQRSwOlDKEF5i5dgGmVtHDKcDE+fYOqGo5wMb
-	 cTvF0+nOGigBA==
-Date: Fri, 13 Nov 2026 15:32:31 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-hardening@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Andy Shevchenko <andy@kernel.org>
-Subject: Re: [PATCH v5 2/7] string: Warn if the prefix is the empty string
-Message-ID: <avce5JRaIf8P6aGT@devuan>
-References: <cover.1794574496.git.alx@kernel.org>
- <df3a35c469c60c2c9658d66b30e67468ba053863.1794574496.git.alx@kernel.org>
- <sashiko-outbox-212859@kernel.org>
- <avcUA0z7CuQqs6Bz@devuan>
- <avcd38TtBtRtWSMe@ashevche-desk.local>
+	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=m0jnPKVs
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HPZyWASnZIjDfIJsLMruSVyzhbTk6oCADYFCaXukApBU7wow6peVFjn28IyVtlaM9M3l19a6GO1UvjrskB4LF9e39L0GXAbI+uL5RuohIDU1NPfqgqngvErajGBfFtjBH73aDH6QY95aZSADXyohrIZIuoF+avbaWshtkDwgdgA5HVgLZBTgDcaKO99BLsQIx3pdqHnFjoHz99MZJVDaeQIIfPqd6s+HKbK323pw3S5kHTvOljxCmqpVBbgVJ98k8wzeavKhbCuRLLQigQ9Ky100fWGi5uJ+WkBwdo7o7dLgasqpRE4Jqh+be4gueOfcKElsiOpq1caQiBSeD683cQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/RYVCqV7k7xTPgRrR2CDb38P/NJSsTKrT2U6zO68EaA=;
+ b=Lgp6jI6MLZW1a1oTJRYjupvWcSd/vqTaMXkBIzxP0R1fl0tA29L/boL+qXrid9qjJKXENgpT7CB85HVfSjeptYcU6ycFOvlmOSPMQh/Uggz9nBjoOC3V89IFoeorfkdWB9cFno2lORrAiXvz7pw2EiBYHziatSOvmW/reKC/W3JueyQ6cb93kLtNwieNkWgJSXWXfsFrB5O+kwpAzkFCUlc1I+F9KDFI1NrHLqQci0hhY5bZx0NqMXLD1DA5HM9P/AphNdCFHnzFMkkLGcfl9uORcOvSr7vQ7S39cmpUML0tRYRlm/mlD+Xp40UAcs3LXwkODF52K2DC42lW0n+stQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
+ dkim=pass header.d=efficios.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/RYVCqV7k7xTPgRrR2CDb38P/NJSsTKrT2U6zO68EaA=;
+ b=m0jnPKVs7PNgGxMNqabU3Z6JW3Bz16zQy7IiiaJPehoIvUXV0g2Ge7hrwOAVeDubeD7L3dHsB6/jIDQFe3D+7BqqjH1y+VTnrYKsr2kOJAEC0TISJN16FSSqDeyVpC0KxiTV74/n1az1cBWTZopa0+OsGUadsKNkDuArgDq1xnv44bZi9vEb6LDXUQf7rRURLCMGdAE9Tnwmlu01WZeVqg6OQYbVbTNS1jPOO8rlIk9MQe3aEzghKTiZEV8aVelvY30A0rHNkgxUy/rI2gK4pIU/jhZWDDC+1GagS7VSaO1VHVXghLeLEMgUGQ6qhtiBeKB9QheDiJShZnK6l5k3TQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=efficios.com;
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10) by YT6PR01MB940077.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1ba::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Fri, 13 Nov
+ 2026 14:37:33 +0000
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0615.008; Fri, 13 Nov 2026
+ 14:37:33 +0000
+Message-ID: <9b274b15-7b4d-4611-b894-d1651b99c490@efficios.com>
+Date: Fri, 13 Nov 2026 09:37:32 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 15/16] selftests/membarrier: Check the memory barriers
+ of each thread
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org
+References: <20261113131903.157186-1-mathieu.desnoyers@efficios.com>
+ <20261113131903.157186-16-mathieu.desnoyers@efficios.com>
+ <sashiko-outbox-212919@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-212919@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YT4PR01CA0003.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d1::7) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,115 +99,135 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rknuryoxk7agv5hb"
-Content-Disposition: inline
-In-Reply-To: <avcd38TtBtRtWSMe@ashevche-desk.local>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT6PR01MB940077:EE_
+X-MS-Office365-Filtering-Correlation-Id: 61686479-b856-4d12-7c27-08df4193a795
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|22082099003|18002099003|261009223027099003|56012099006|4143699003|261028144727099003|261026140227099003|261022105027099003|261022075727099003|261026121527099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	30VbqRvNKbnH4K8pqeTeEqUgrgxYiB8p3W5MWSZaVUoRQfwl+rZy0zqVcwEBRYEUO8NhrHoMGH0Numxnc1hY2IvQQA6hGpl+j3FwhPYghF1cachW2CeLN7G6gQIoV/sx5ZXaQwduAEmu0hxemrMoF5XFZDPkXTWDJo5S1OFlwP8aqfBJadgQUYtnf3VwHlFrEIJAL9cU6leyW5Dq1DT14luW5ZMCIgCelw36j0whMh+xVA4xmHNE0Hisdl0Bd1/tsj6YAU0LBya3jbCcy1/eAY7ixZOhXL/U0m3saOIl5Pqq9S8MCz8v1LjNeBOT+MbZ+WNxd9BllqMF7ZCIXzDZmR/cEpsPubrKdpyikFBSVnC9AKJZh8Nx5sKg9Ft/g6F09LpOO6polmTZItRWocyZ5D61JQ4kS1aDJzrVxRbxVq7p3CYY/2MFOyg3biEXPzoga803U/yoKqezV+Qh8151o5W/HbTanhmayOyEpk6RKfjcDnZZIPM/pHZYQJvutGi9vFGB2X6ro0SbKpVZCd4dLfE31nM3knawM+gqCsVlff3m+XcYDE8aQ0n0Qd8vjVFTh/u7eJv6OuRnsAVBiZsr8jskPPtcnkuQRv9cr5B9jKc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(22082099003)(18002099003)(261009223027099003)(56012099006)(4143699003)(261028144727099003)(261026140227099003)(261022105027099003)(261022075727099003)(261026121527099003)(10067099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SHIzeERKMjZwWW9rOURkaVAxR0l0aHE3VWF5YytBbmJaSlRobHV2RGJsQkpt?=
+ =?utf-8?B?VFdIUjh1TGUxSkxCdUQ2cXNGUndJaEVIVStSYkNydEdHaDAzMUxFZU1hVTlr?=
+ =?utf-8?B?QzNTblBKK0NqM3ZlQmpUaWhSYk1rY0hPcGtIWXc1d1ZySG9BTmZ4emZnQzNO?=
+ =?utf-8?B?UXR2dHRCSk96c3BQMnZRL290TkxvZHhQNTBja2FkRERDSHFCdzVST1g0Rnlj?=
+ =?utf-8?B?Mm9UVVdFenNkcHJZLzVJeFVIWlkzUm9seFgwcml2bnlBVWtHc3BiTDVwbmI3?=
+ =?utf-8?B?SndheFZrZVhXT0ZXaitDYjNQdTJtSlVQT0dUVHdETytweEpOWFdXQStGUm1y?=
+ =?utf-8?B?dDQ2OFB6ajJjeE51V0l0cXl2R3BNTTVIUzlpN0h4ZkJlTFNuOEV1Uk5nVExk?=
+ =?utf-8?B?K3ZaclhlNGtRYzFIVWRjdFc0ZEZQYWc5SXZzdVZ4V0NmYzlLVzZYTHd6VXIw?=
+ =?utf-8?B?UTZLU1BEN3NCZy9qb2ZlODJ6bkxad2IyeGpLbTlyZUJqZjJQWVJkRERrQWZm?=
+ =?utf-8?B?aXlORElxbkJBT3k5clM4QmppZnM5WnlYbzVVRHdWU1BDNEc3bkhxaFBVZEov?=
+ =?utf-8?B?bzhPZDVERklXVE9FcVIxd3FzQjg1SlgrMFc0RnJaSWo4Q3hKa0xPaTdhOE05?=
+ =?utf-8?B?TVhMRVF6aHB4M2d4UkJvMjlZR2EzR2QxZ0xLdUJSZ3E3cTNFN0dZRHd6MmdS?=
+ =?utf-8?B?U05udTAxblJoOUFEN1VTNjFKUG91RHM5N0R4VEJDc0wwUC9tMnB5dFZLelUz?=
+ =?utf-8?B?NG5ZbnhVTUpZMTR5WGdYOFB5M0VJd1liU1dXbzhFMStBVXNaNndaRFhRSlpZ?=
+ =?utf-8?B?UHFSTkpnUHRkOEFrdS93MVJQNCtJaGtMMDcwUHBtY0hObGs2cWppT09LdTBB?=
+ =?utf-8?B?U0ZWNStzQUNJTW0vR3Y5WTM1WVpsWjdyZ01qMXpQVGdRajRrYzFpZnlVbUdz?=
+ =?utf-8?B?UER5TTc0ZTAxU1V0MkwvTDNLbDNWQmVEZEtNR2Z4R01tOURTOFpUV3NzeDNW?=
+ =?utf-8?B?ZzBvaFo2UkRCb2lKRkZZMThpemcrQzIzRGVHN0JPa2RNK0N6c1A0Nlhyelcv?=
+ =?utf-8?B?bUpMMlR3Wmk5blh0elV2cUY0VVI3R3ZDRGFIS01QMENPT0NmcTVqMTQ3M2xQ?=
+ =?utf-8?B?Ukp4SEI2TE13c2IwNk9SZ2pmY2VKdjR1L2FTQkExNGhEZWh1Sy9Zb0EyT1lU?=
+ =?utf-8?B?aEtYWC9FbGo4d0hPRVhVNjdxNU1HMjUwVFZSa0pjdGlxZWUzQXdXanI5N1RL?=
+ =?utf-8?B?OHY1b2x0NXB3OE4wVFh4VjlZYStxNW1IREJxN3hVbXpHV2tjbGg0VFg4MlBp?=
+ =?utf-8?B?bDRHelBwNjJPMzVraFhhcDAzYnNuRjRONElETlFQUE1tRm43NS9Semg3R2JD?=
+ =?utf-8?B?dkplbUM3ZHNLNGY5S3ZaYWdqL0FZQWdUUDNUcUNwUHNkUW1IaGFpVkoweVly?=
+ =?utf-8?B?ZVVaZG1sazRIQ1pqRGZxT2p5K29WMUFjalhjU1BVZUVIVk1FRkpUV1QyK3Rp?=
+ =?utf-8?B?SDVXaXI3SnpQVEF5ZC9nOENXcUkxSDc0bXhNdjk4cVBDT3VlTkNxTUJSNlZ2?=
+ =?utf-8?B?YVd1cWM1UHl2enZPNWp3dWJValNNNUVVajBqR2p1OTUxQkE0NTZ2ZzhRZ3M2?=
+ =?utf-8?B?TWljNjhISDFwZGMxK2dseTFmNG5XUFRMRFYvZVZwS0kwME5TWml2ekdyUDBK?=
+ =?utf-8?B?bmZ0eGp1T1pyeTNrcm5DVTB5d2hjZkdOd3d0KzR5VGFyMithdmEyTUx2d2lm?=
+ =?utf-8?B?aHUrZUM3NGliLzRJWlBzdk8ySHNnbmZQYWpLT2Vvc3JGN3o3Ym03VTJKWmJ3?=
+ =?utf-8?B?UW9RNU5MU1hGRmdFZlhzd3k5ZkVVZnR4Wmk1UFdodHFYa0dvZzdOa0pTSkdo?=
+ =?utf-8?B?K0NsemFhczFxREZXOWo5cmtoREVEdkVMQ01yL0Y2RysyNkZpZXRLTkVhTXNu?=
+ =?utf-8?B?U29wbnE2TEdBeUFyTmhhOFlRUGs0eHA1L2RDRHZJQmdnMDk1bndNMWZudjM2?=
+ =?utf-8?B?MHZoelZ0THV0UzUwUkZIZm1FRjQvdXFrRExreTJtaWpaZmlnWkFYWGR1eHZO?=
+ =?utf-8?B?QnJHVjQ2cVZmMlcyVGFTWE5xZXo5cW8wT3dCZGxHVjhJWnRJeWsxU2xLYUtL?=
+ =?utf-8?B?eTR2LzRBU21hTThYeU43ajhuWW5UdGdBdWd6ZkxJUGtUTTFkdzljZ1p0TWJ4?=
+ =?utf-8?B?clN5L2JYVnVldElRMXpmbXhxZmFMYjlGV1ZGWDNQajdNb05pMXRyNENrNzhs?=
+ =?utf-8?B?SjRoRENTVWZjY2ZxMUZWT2ZaOE55SVc0M080TldrKzNGMFJucjcvcEJNT3BE?=
+ =?utf-8?B?bS91aFBUV1hNNjlpWW51QUQxVmZrK0wzbkpkaEpNaEphQnVoV2ZYSEtEeEM3?=
+ =?utf-8?Q?7irTrs05e1HlscrfZ7GrpCVvp2xeDqF9nG1H0?=
+X-OriginatorOrg: efficios.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 61686479-b856-4d12-7c27-08df4193a795
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 14:37:33.8330
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /+tA+82iCRUX6YM2vww1KoglqnmkfB2hV+Zg8YgVsInUpvWKa2rxPShHowpnDyzo7O0GtY1pJvKRMr8piPTVeS+3F4Q+B5ZcVQmyq8/YXk8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT6PR01MB940077
 
-
---rknuryoxk7agv5hb
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-hardening@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Andy Shevchenko <andy@kernel.org>
-Subject: Re: [PATCH v5 2/7] string: Warn if the prefix is the empty string
-Message-ID: <avce5JRaIf8P6aGT@devuan>
-References: <cover.1794574496.git.alx@kernel.org>
- <df3a35c469c60c2c9658d66b30e67468ba053863.1794574496.git.alx@kernel.org>
- <sashiko-outbox-212859@kernel.org>
- <avcUA0z7CuQqs6Bz@devuan>
- <avcd38TtBtRtWSMe@ashevche-desk.local>
-MIME-Version: 1.0
-In-Reply-To: <avcd38TtBtRtWSMe@ashevche-desk.local>
-
-Hi Andy,
-
-> Date: 2026-11-13 16:25:35+0200
-> From: Andy Shevchenko <andriy.shevchenko@intel.com>
+> [Severity: Medium]
+> Does setting setup_broken = true before bpf_object__load() and
+> bpf_program__attach() cause main() to fail instead of skipping when the
+> kernel lacks required BPF features?
 >
-> On Fri, Nov 13, 2026 at 02:48:01PM +0100, Alejandro Colomar wrote:
->=20
-> ...
->=20
-> > > [Severity: Low]
-> > > Does moving str_has_prefix() out-of-line into lib/string.c bypass
-> > > CONFIG_FORTIFY_SOURCE and prevent compile-time constant folding of
-> > > strlen(prefix)?
-> >=20
-> > Preventing the compile-time constant folding of strlen(3) is indeed
-> > a performance degradation, but that's necessary to be able to
-> > WARN_ON_ONCE(), so there isn't anything we can do.
-> >=20
-> > > lib/string.c is built with __NO_FORTIFY and its top-of-file comment n=
-otes
-> > > that it is reserved for routines that have architecture-specific
-> > > alternatives in <asm/string.h> or get overloaded by FORTIFY_SOURCE, w=
-hile
-> > > other helpers belong in lib/string_helpers.c.
-> >=20
-> > Do we want to move it to "lib/string_helpers.c"?  I don't know enough
-> > about the organization in these files, so just let me know what I should
-> > do.
->=20
-> string library (generic) is for broad use, so it should really be clean f=
-rom
-> kernel things. string_helpers is exactly for some custom abstractions we =
-use
-> in kernel. Now you should answer these questions (or more than that):
-> - Are there or potentially be users that needs this API earlier at the bo=
-ot?
-> - Is this API is detached from the rest of string library semantically?
->   I.o.w. can we group semantically coupled APIs and consider them as a bu=
-ndle?
-> - Due to the above, ask the first Q against semantically grouped APIs.
->=20
-> My personal feeling that what you are trying to do is no go for generic s=
-tring
-> as is. If you confirm that these APIs are not used / needed at early stag=
-es at
-> boot, they can be moved completely to string_helpers.
+> A kernel with CONFIG_DEBUG_INFO_BTF=y and CONFIG_PROC_KCORE=y can still
+> lack CONFIG_BPF_EVENTS=y (needed to load kprobe/tracing programs and
+> BPF_MAP_TYPE_TASK_STORAGE) or have BPF JIT disabled (needed to attach
+> tp_btf/sched_switch).
 
-Thanks!  I guess I'll just drop the addition of WARN_ON_ONCE().  Let's
-leave the function as is, and document its problems.  It's not worth the
-effort.  After all, I think it's a bad function, and should not be used
-in new code.
+Yes for CONFIG_BPF_EVENTS. The same holds for CONFIG_KPROBE_EVENTS,
+which the kprobes of the test need. The test should skip in both cases.
+
+The BPF JIT is not needed. The sched_switch program is attached as a raw
+tracepoint, which does not use a BPF trampoline. I built a kernel
+without CONFIG_BPF_JIT: the test attaches and all 13 test cases pass.
+
+Planned fix for the next round: bpf_setup() checks both options before
+it treats an error as a failure. It probes the kprobe program type with
+libbpf_probe_bpf_prog_type(), and it looks for the kprobe PMU in sysfs.
+I tested this on a kernel without each option: the test is skipped.
+
+> [Severity: Medium]
+> Does calling pin_to_cpu(target->cpu) before map_counters() miss the
+> lazy-TLB context switch in global_expedited_lazy_tlb?
+
+[...]
+
+> As a result, sched_switch never sets OWES_BARRIER or increments
+> MBT_SCHED_IN for that lazy-TLB switch.  Calling map_counters() before
+> pin_to_cpu(target->cpu) registers the thread in task_slot before it
+> migrates back to cpus[1].
+
+Yes. The target moves back to its CPU before it has a counter slot. The
+BPF program does not see that switch, so the barrier which the scheduler
+owes the target there is not checked.
+
+The checks of each call start after the registration, so they are not
+affected. Without the fix of patch 1, the test case still fails.
+
+Planned fix for the next round: run_target() calls map_counters() before
+pin_to_cpu().
+
+> [Severity: Low]
+> Can zeroing shared->next_slot in reset_shared() let an exiting task from a
+> finished test case clobber the BPF counters of a new thread in the next
+> test case?
+
+[...]
+
+> Preserving shared->next_slot across reset_shared() avoids reusing counter
+> slots across test cases.
+
+Yes, this window exists. I did not reproduce it.
+
+Planned fix for the next round: reset_shared() keeps next_slot. The 13
+test cases use about 270 of the 512 slots at most.
+
+Thanks,
+
+Mathieu
 
 
-Have a lovely day!
-Alex
-
->=20
-> --=20
-> With Best Regards,
-> Andy Shevchenko
->=20
->=20
-
---=20
-<https://www.alejandro-colomar.es>
-
---rknuryoxk7agv5hb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmr3H3kACgkQ64mZXMKQ
-wqlgvQ/9Gqld7Ifyn3BujxPTUwCIiMyV0wtEymbSvp903UjMMbfetRsaoj4NMZzm
-V2pcmjF4QtAgWtqPElhyaCNxEL1cEDrvWgrv/MhaItz6QRAgAf0SjdWctkMhDgoS
-xGdWcC7tbfDozmXnBWibd0B/I6LPziil94CSwD5ZRjgmPoG9+Xxdf5b328vLJJfO
-yySOpcex0R64+F93i+O1pDiGYBok0kID6ymaS1bRTffmeDRLpBmM10DjmHk66+ke
-NI+8BC9kQLCJ19ot8VWQMmRMHvqlJveDDJzOgdVIndTYprdjL6BX0IEfhb2jw/80
-3xZx5v6ITHEmB8l59Oe+yKIGLR7GsGNxiAj4OaxVgXbvzpfDXGnRwyWFPLWXMJCZ
-OTKqOl4O02PUj4ZwMyAWBsX2bxG3AzGcfOOYPBAVu6Zae/DOTD1qW+0OdfzztJPe
-cxrf4gaMnLPmCCwfn5sSUwSRykeC0pjI4b4dfTUxYKCr5g4JNS34znCqZxo90GFB
-8M72vSPHgTIx0NZi8PvUnZZm64Iz9N9Kega3/Y+ozeAY4/7/XjsZ/TdV2D7moAzy
-9C2wi5ivTvvncg/ni72Of0Fx/NyejZhyesldRMLf4T89MHGK+cI8P+08LimphLct
-nlHXXfYxBLFKWXqRNEJI2yoSNFErOZe1F+6E19ua5mf8RGAxQ2o=
-=Jcqx
------END PGP SIGNATURE-----
-
---rknuryoxk7agv5hb--
+-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
