@@ -1,54 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794549489;
-	b=iP0dTEqg8PfKOHkDzj71/gOUEgXV+fYbFMl5krEZSaqCDLvUYscoqEN4WcNl2YpLOfTR
-	 PuTlIqvM3rmmKbbfm0C6D0OofRti8AZYwhcuAeYvMrQxkDM1gwkgQEqRuzqf5VbLkMyyo
-	 fliKmycacqy0E72o+f+LrK3/3rCGtK8hBjoJDaTjkMkCB7WGIFemsgZgNrZI9apFbMO4n
-	 AIXIxYiTvMEQBoee+1SF+ZZJs67IRGk4zZXCcxxHQl766cxVyQwqZq4Vkw6DhhnAXX96B
-	 iqRUGeYbkUVnmqF5fvQf8zRUk/FskOg2ULAHNun/8yB2jR46GXOoIbL59+Fj5PF974w==
+	t=1794549955;
+	b=q2dS6w+Q0yvmSUCF0VpbWPP2ccNj7V8u7EaLp+RkACpC8Bp2KpTs41a0XeAM2gSo+RzW
+	 VvM65yaKdc43Opb0umrD9To2wfCvmTd2lLr4/7dkQE7yV+SdMQdSeBcir/o8QLekbpNjI
+	 gkZamKK3NqOQ4bwHDY9RZezugPSV4glFnvmOBTxkqv/GBnLnw7GoRD16Imnqe1rrEjxr7
+	 tOTWuzAGoT30eLa41CULN2hwh8gK6S/kMMXGL71Fi41HssvUSowplVZ9OkjGmXI0oEhtv
+	 7X0VsOAIiJTmLxRtDh9BUTLp+ky6eq35d3l+DBG1DQmrJo8x5K6swJO50eBLMuTIhrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794549489;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=smxez4a4cpwU5haMt1Qy+s3oYad8QJKBdb5k+aJyAn0=;
-	b=3XZlrd9mGvm0+YSlmEP2x9mS5dqnnXPziqvzEhgZijSJMUFnuLuvaW91ivOcBaDtLEOM
-	 UwY/CXTBrlw4JZtyren38pntoioi5zhSMtZ8gKoO9fGBnNVHqKb89LCsTlxmpoz0de5/T
-	 HCLgaL6OS5i2hmvDvG5tg4WksyR1ITp4ZCwMWVWC+Bf5Nn2cNUYVsILuEj/knE+wGOPrV
-	 9pHia2Btnb+bSm/aM6y4sL/fvsXlWqYRZmti8mW0PXcTBLLz2fK3w3rL+e1FNoIAz8Arb
-	 EZxpX2SPtZ+XysVD4n0jGe/dr5lSjtSxbteTTvRIM/cl/zm0CvHPmhZVKSMPWxJ+Xfw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794549955;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:
+	 X-Authority-Analysis:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=cZb/Vxwnk5i0rmxVkJY09IQ9GprsoSJqpVPX6mlp4WM=;
+	b=OA5R+i6JOT9EHSrm3UHC5vB3TJFzWzhTc+ihe/3ART8hLfrUojwqzQvvFTfafqZLDoqT
+	 jb9u3ZOESMBz+yEb9ttoUYSbhxJ0ki5U68Dv+KIRETRYXLwK8NjmmUss7pNB98zh+QBQQ
+	 2Y668lRmIPooyhU1UwT3LgKZhpa2t8y9hBGeDwUcZ98t8ZO+G5s5y7vUZw9/EfwgfLFRd
+	 bd92qWjwtYdU2UtsJKfXX7mJwCXytsxPEfIRFWpzjDmkkLZrIGxT7WbqQovGgTibmxsyR
+	 vp10cNdKQSvzpvRhgTrqRGL4aCUvYI4z7+0KHFOFtWgiw7f6H8Ms9McyKJwoaLCQwYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JbpxuY6s;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=iK5azXCa;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=apqeOhdp;
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526EC606A321
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 05:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCC9606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 06:05:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BCC9606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JbpxuY6s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6B01F000CB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 05:58:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794549489;
-	bh=smxez4a4cpwU5haMt1Qy+s3oYad8QJKBdb5k+aJyAn0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=JbpxuY6s8p/uMo5IM8wIor2lYcD1IhFC8wD2mFAM4Zfsw6h8gRQPA8kPsQCUF3ZTr
-	 1vkENvuP2tMlypzdhzU7G7EXQehtMOktzPLKlgt6yMOq19C0tablpRUCBeBfFtZ3/b
-	 cwzeAYXN7sFS7qayPqOmPo/L8+amxLuwVAhRfsju7JD06uGf0evjFQ+R81UFZEaPkX
-	 4V55+TxlCxRfTh7J7GmQaBxIu7qrvk0JExGmu157n1TaRc7gUbrwzolsklKDTCyJra
-	 F8uuPYrCW5cQp+atzPhogKSmyqyolA9ELw8bdKbb35P5ssEIzHI/vX73O8qSGxGlT1
-	 K16NpBU/kqJTg==
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-93e63ee7b4cso98283785a.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 21:58:09 -0800 (PST)
-X-Gm-Message-State: APuU4Z9R3cffDlh41I+0D5GB7IJgx8Oz8oxBtA6GFXFR71511nTzZdE0
-	lup561cE+muS71luYZ1GkYZiESa5HhAysOokUpTgQBlMerIosXed/JEe6Igdc4/HQLRWtXlq1j5
-	wm5/AkoWXjcfaQqJjCopOrAUmTqIKyHM=
-X-Received: by 2002:a05:620a:6f01:b0:93b:d7a0:d9e6 with SMTP id
- af79cd13be357-9494bb6f8bfmr264863585a.64.1794549488490; Thu, 12 Nov 2026
- 21:58:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=iK5azXCa;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=apqeOhdp
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AD5tfdZ1756086
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 06:05:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cZb/Vxwnk5i0rmxVkJY09IQ9GprsoSJqpVPX6mlp4WM=; b=iK5azXCaJCPVKurd
+	A7xRECXm0jzpDgcuH80i7qEzkJ7G+JTaA4JQYjvGRyI9ZSzyJAzM03I2YFwqa6Ev
+	tJOpFb/iNmI84HoIuZtTxB40VdSKYw8sOAhFEK0AlLx58jn0Rm5cgT4jkqMapCdU
+	ayrNZcr2E99ePIQlJCslG79aTFGJZs0X1i0IDselNteMjcEgzCIIO567bF3YlxtU
+	aPREa1BJZeKzb9ZWKP6iZH+xBvYOqNg8AFPZO7rFFM8v6t8IAcmXSREsRxKRrgWl
+	f8bC8w9UeMCJALc8hu6251nAFUbnFZ7lEnkqWBL5AV0eiMvRoMI/w31e7vwwhhgS
+	NsP7Og==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwvu6r1e8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 06:05:53 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-cd6969473a4so333909a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 22:05:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1794549952; x=1795154752; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cZb/Vxwnk5i0rmxVkJY09IQ9GprsoSJqpVPX6mlp4WM=;
+        b=apqeOhdpafMH8TqMriTiHr8qdCIjsIWykEHutpGmrOpL9NvQGGiiNX8vLpCfzPhMiy
+         Rg91gkK7r4zzCudGx8lC1h3GsSFh3/sYLs3SHaA6E1Mtvyc1XoSXGhjIeN31jXaJcQz7
+         vCBtJrvoZd/R28dAvdOiXFRf3+YxX7M9eSibqlZRWGajRAhELsusmwZICPa+H/hWVvQl
+         VsSz7LJkwVQNcoz3mja3vkAD3Lqc9bfz4coDjMX4Il2jJUfG0OnGtDbmD81kCrNhwtx6
+         MJaWUyUO/nOJ1e9Igi5y3p2L5rgTnkg8tvubqUX4FELC3pZ+crv5NyKQtzvOSnpD+Swd
+         xTYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794549952; x=1795154752;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=cZb/Vxwnk5i0rmxVkJY09IQ9GprsoSJqpVPX6mlp4WM=;
+        b=RtowMRBbHlp75q8FDPpF2pXdsqw2gh03k6FmwPyvMSeTfRd+1co98owSLekk3mg7/K
+         PCo5jCSvbfCfCzGo5bCkrqCLvtl2kUSl9u1lellKPknkqq4yg9tEVmyk1jTYcbzZGmrk
+         OzjCHweVay2/Oi2RScM2IIoF9xj9bs7WYNeAw13Og/TOiRAs93iqNCL58dzU0Dyh5lku
+         CFKko9s2V+VmLqqFpofPzIcE2iJQhGERW+fiud5yrcSpHNO6wbsM4SoRxFLEVSPRsMXS
+         u9h2srSK5x65wJPfds0OXC5NICZEdZ5zIlnPV7uuKV4o7cApoQLEl3yYnGe7HFtkxQ9J
+         phYg==
+X-Gm-Message-State: APuU4Z/QfENmpX3ZL8pu3s6CW2MLqhYhK3WahDwSe6JEC5+eRCfgfKeP
+	JyRcwU2qb/Kt/B4u/qRRClPJonTUQIc3LMdpZx/LJMEwDDBOKjxKh9DmWLE4Qt9yHte8cSiRLgL
+	8SkAy4MX3xlxZn352etbEbsJwP17Aqjdci5PFGvKyDxWiT8X/c0iDG1e24HoQQgBZTh+TRzHUKF
+	PMxXk=
+X-Gm-Gg: AYBFou2BySGipx3aJ+K1uXQmCWmM/78SlOlxEWHKTg4FP+E3dIPUdU3ZWJrD232d8xG
+	zTqdS/ZtniYwODZffCyaVhT2ANKYLC2la/e19QqwwJhw185+o7GY7ha+W/Nj2JS+3fR2hA47ktf
+	NJlT5nwtBMNWCyAIPeeGQs10oaLwTCydcTVvNdHfyDmWgs7VmU8RDCGAMTpy3RIxn9UjXxzxo4y
+	vCeV+MVJYD0kb37XN7xYDWDctC+yWTk11dL61nwUW2PiwQwqjkuRbECknMh9q0elrHT7pLrE9Ao
+	r11ZW3isXP+1xqyrUDkiwL6DL42lR7Gapk2125ZhJyWpWc1OGhIBKOK3DmcJQEh6DQItLsBMVjl
+	N5IwzOyezORUyWhfC1jrHDlLlboOLpyDqKGwopsraq85GV0sYpwSrADkwrnyKUol/oFJHN3vuvi
+	S3ick=
+X-Received: by 2002:a17:90b:4f85:b0:3b0:91ce:6720 with SMTP id 98e67ed59e1d1-3b1b0a1ef3emr1153172a91.30.1794549952067;
+        Thu, 12 Nov 2026 22:05:52 -0800 (PST)
+X-Received: by 2002:a17:90b:4f85:b0:3b0:91ce:6720 with SMTP id 98e67ed59e1d1-3b1b0a1ef3emr1153150a91.30.1794549951512;
+        Thu, 12 Nov 2026 22:05:51 -0800 (PST)
+Received: from [10.239.133.243] ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1b3bf46b3sm662099a91.3.2026.11.12.22.05.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Nov 2026 22:05:50 -0800 (PST)
+Message-ID: <9c0d7254-1248-4174-b858-f1060523eb3d@oss.qualcomm.com>
+Date: Fri, 13 Nov 2026 14:05:47 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,264 +115,115 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261111232603.9934-1-baohua@kernel.org> <20261111232603.9934-15-baohua@kernel.org>
- <sashiko-outbox-210422@kernel.org> <CAGsJ_4ykeDu9XyyiNs9HBp2w--Pm7=oqs0=M5cPiypQ1qq9yTg@mail.gmail.com>
- <CAMgjq7Cx0Z6mxQXKJN5KfRYbMNMD1qOy4Yrt51prbGz+=2F+2w@mail.gmail.com>
-In-Reply-To: <CAMgjq7Cx0Z6mxQXKJN5KfRYbMNMD1qOy4Yrt51prbGz+=2F+2w@mail.gmail.com>
-From: Barry Song <baohua@kernel.org>
-Date: Fri, 13 Nov 2026 13:57:57 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4x_F=m2irpO96PrxEkDpe5FLETuHG9rT1-uGy0-QL0W5A@mail.gmail.com>
-X-Gm-Features: AclHuK-BtN6duN0Nw2xNYdnH-GL2E8mcqjETysKEfCxuyiMN4yvJ_ve-YYDyzsU
-Message-ID: <CAGsJ_4x_F=m2irpO96PrxEkDpe5FLETuHG9rT1-uGy0-QL0W5A@mail.gmail.com>
-Subject: Re: [PATCH v7 14/16] mm/mglru: Avoid prolonged anon reclaim with swappiness=200
-To: Kairui Song <ryncsn@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
-	axelrasmussen@google.com, baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, 
-	hannes@cmpxchg.org, hui.zhu@linux.dev, kunwu.chan@gmail.com, 
-	liam@infradead.org, lianux.mm@gmail.com, linux-mm@kvack.org, 
-	liuxiang.277@bytedance.com, lyugaofei@xiaomi.com, mhocko@kernel.org, 
-	mhocko@suse.com, qi.zheng@linux.dev, ridong.chen@linux.dev, rppt@kernel.org, 
-	shakeel.butt@linux.dev, surenb@google.com, wangzicheng@honor.com, 
-	weixugc@google.com, yuanchu@google.com, zhangbo56@xiaomi.com, 
-	zhuhui@kylinos.cn, sidchintamaneni@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 06/10] qcom-tgu: Add TGU decode support
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261113024935.3173715-1-songwei.chai@oss.qualcomm.com>
+ <20261113024935.3173715-7-songwei.chai@oss.qualcomm.com>
+ <sashiko-outbox-212113@kernel.org>
+Content-Language: en-US
+From: "Songwei.Chai" <songwei.chai@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-212113@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEzMDAyNCBTYWx0ZWRfX6ahcivEnUMnq
+ lV99kyT8kqoq2KfZRyHmP+IGbj4W12OOOYfhTSqkswdtV+sL4xFMpW5vbnDhBybUPZEHqwHmns+
+ Jqe6cFZDBGTRjVvP26qrK0OCG5SLJn980SEHhOoI4A9rkO6gZdhwTHjYEazErg43xesoHFLw87N
+ ZjkEsa/OdoJlXrtQzB7sMnhNfO7BzV31fDgsQVNXOvtmL9zhPLzmc30GU8QXc1HKbO7bi8xG5MN
+ P+yh6+UyK4Gkl/u071maqCHg7h8AL2IPHssmbGYjC4z5dCvxylSihRxMkmqHvAoUtpCiiFbVjyR
+ zNC/loU6jF40m/cP9AZFJZh87jeXohGJeuu2P+DFqnQSVDCgjK2E45y4WC9L9P8ffp8jmhpKYF1
+ R3Y2iIbHDPTOaYwFF+s9qS8GKeJXOTLDdROkuUEY/4kPz5cBSEQpm0LlKcTZANR/yX78g81hpqa
+ 8EfMX57b1Ee887EQMMQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEzMDAyNCBTYWx0ZWRfXxOLddMMowrg8
+ k7Mo+GWQbKkzcbRfO8fjbB7VPv20U2l6e0//l7/PJ9kpAt+ovtepd5aQ6XP2vtxmzxcJaJv1eB9
+ rs0VFllKFchtt9HQaPiYgIYAsT6th3U=
+X-Proofpoint-GUID: MKuQ2_Wn3lwZrnCdwks6Twhyl43Wi81S
+X-Proofpoint-ORIG-GUID: MKuQ2_Wn3lwZrnCdwks6Twhyl43Wi81S
+X-Authority-Analysis: v=2.4 cv=JfcpPkKV c=1 sm=1 tr=0 ts=6af6a8c1 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ip5MbSc5NOlZf4faZLsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-13_02,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0 clxscore=1011
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611130024
 
-On Thu, Nov 12, 2026 at 6:46=E2=80=AFPM Kairui Song <ryncsn@gmail.com> wrot=
-e:
-[...]
-> > > > @@ -5891,7 +5896,7 @@ static int run_eviction(struct lruvec *lruvec=
-, unsigned long seq, struct scan_co
-> > > >                       return 0;
-> > > >
-> > > >               lruvec_evictable_size(lruvec, sc, swappiness, nr_to_s=
-can);
-> > > > -             lru_gen_balance_scan(lruvec, swappiness,
-> > > > +             lru_gen_balance_scan(lruvec, sc, swappiness,
-> > > >                                    nr_to_reclaim - sc->nr_reclaimed=
-, nr_to_scan);
-> > > >
-> > > >               if (!evict_folio_lists(nr_to_scan, lruvec, sc, swappi=
-ness, MAX_LRU_BATCH))
-> > >
-> > > [Severity: Medium]
-> > > Does passing sc from run_eviction() into lru_gen_balance_scan() cause
-> > > swappiness=3D200 via debugfs proactive reclaim to always calculate a =
-non-zero
-> > > file_factor?
-> > >
-> > > lru_gen_seq_write() initializes sc on the stack without setting .prio=
-rity
-> > > to DEF_PRIORITY, leaving sc.priority zero-initialized when passed to
-> > > run_cmd() -> run_eviction().  In lru_gen_balance_scan(), sc->priority=
- <
-> > > DEF_PRIORITY / 2 (0 < 6) is then unconditionally true, so proactive
-> > > eviction with swappiness=3D200 always reclaims file pages instead of
-> > > preferring anonymous memory.
-> >
-> > Well, I'm getting tons of complaints about
-> > lru_gen_seq_write(), even though it's just a debug
-> > interface that probably very few people actually use.
-> >
-> > If anyone is actually using it, please let me know.
-> > Otherwise, I think we should consider removing it in the
-> > long term. Both memcg and node already have proactive
-> > reclaim interfaces, so this one seems redundant and
-> > difficult to maintain.
+
+On 11/13/2026 10:59 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] qcom-tgu: transposed step_index and operation_index in
+>    tgu_dataset_rw()
+> --
 >
-> For now I think we just be really lenient about that interface, e.g.g
-> keep it at DEF_PRIORITY like in previous version
+> commit be12a60019509b692fe89759e5c9e8345578b9d2
+> Author: Songwei Chai <songwei.chai@oss.qualcomm.com>
 >
-> > All Sashiko comments seem to suggest:
-> >
-> > @@ -5955,6 +5956,7 @@ static ssize_t lru_gen_seq_write(struct file
-> > *file, const char __user *src,
-> >         struct blk_plug plug;
-> >         int err =3D -EINVAL;
-> >         struct scan_control sc =3D {
-> > +               .priority =3D DEF_PRIORITY,
-> >                 .may_writepage =3D true,
-> >                 .may_unmap =3D true,
-> >                 .may_swap =3D true,
-> >
-> > But I think this approach could introduce its own problems.
-> > Suppose we have four generations for both file and anon,
-> > and users use the debugfs interface to reclaim the oldest
-> > generation.
-> >
-> > 1. Even at DEF_PRIORITY, we can currently scan up to
-> > lrugen->max_seq - MIN_NR_GENS, which means the
-> > second-oldest generation can also be reclaimed. This
-> > somehow violates the user's request to reclaim only the
-> > oldest generation.
-> >
-> > 2. With swappiness=3D1 or 200, if we run out of the
-> > preferred file or anon type in the oldest generation,
-> > we can fall back to the other type and reclaim all of
-> > its oldest generation, as we did before scan-budget mode
-> > was introduced. With the new approach, however, we stick
-> > to the preferred type at DEF_PRIORITY and don't fall
-> > back to the other type. As a result, evict_folio_lists()
-> > can return 0 earlier than it would with the fallback
-> > approach.
-> >
-> > I guess the only way to address all these issues is to add
-> > a separate reclaim path for requests from
-> > lru_gen_seq_write(), with evict_folio_lists() handling
-> > these requests differently from regular reclaim to preserve
-> > the old behavior before this patchset introduced the
-> > budget-based model.
-> >
-> > Something like the following, though it would be very ugly:
-> >
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index 4fe516d33703..24c6abe37189 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> > @@ -4745,7 +4745,8 @@ static bool isolate_folio(struct lruvec *lruvec,
-> > struct folio *folio, struct sca
-> >  static int scan_folios(unsigned long nr_to_scan, struct lruvec *lruvec=
-,
-> >                        struct scan_control *sc, int type, int tier,
-> >                        struct list_head *list, int *isolatedp,
-> > -                      unsigned long *scanned_seq)
-> > +                      unsigned long *scanned_seq,
-> > +                      bool cmd_proactive)
-> >  {
-> >         enum node_stat_item item;
-> >         int zone_idx;
-> > @@ -4768,7 +4769,9 @@ static int scan_folios(unsigned long nr_to_scan,
-> > struct lruvec *lruvec,
-> >          * newest generation when under severe pressure, so hot folios =
-are
-> >          * not evicted as soon as priority is raised.
-> >          */
-> > -       if (sc->priority =3D=3D DEF_PRIORITY)
-> > +       if (unlikely(cmd_proactive))
-> > +               seq =3D lrugen->min_seq[type];
-> > +       else if (sc->priority =3D=3D DEF_PRIORITY)
-> >                 seq =3D lrugen->max_seq - MIN_NR_GENS;
-> >         else if (sc->priority > DEF_PRIORITY / 2)
-> >                 seq =3D lrugen->max_seq - 1;
-> > @@ -4966,7 +4969,8 @@ static void lru_gen_balance_scan(struct lruvec
-> > *lruvec, struct scan_control *sc,
-> >  }
-> >
-> >  static int evict_folios(unsigned long nr_to_scan, struct lruvec *lruve=
-c,
-> > -                       struct scan_control *sc, int type, int swappine=
-ss)
-> > +                       struct scan_control *sc, int type, int swappine=
-ss,
-> > +                       bool cmd_proactive)
-> >  {
-> >         LIST_HEAD(list);
-> >         LIST_HEAD(clean);
-> > @@ -4990,7 +4994,7 @@ static int evict_folios(unsigned long
-> > nr_to_scan, struct lruvec *lruvec,
-> >
-> >         tier =3D get_tier_idx(lruvec, type);
-> >         scanned =3D scan_folios(nr_to_scan, lruvec, sc,
-> > -                             type, tier, &list, &isolated, &scanned_se=
-q);
-> > +                             type, tier, &list, &isolated,
-> > &scanned_seq, cmd_proactive);
-> >         nr_isolated =3D isolated;
-> >         if (nr_isolated)
-> >                 __mod_node_page_state(pgdat, NR_ISOLATED_ANON + type,
-> > @@ -5177,11 +5181,13 @@ static bool should_abort_scan(struct lruvec
-> > *lruvec, struct scan_control *sc)
-> >  }
-> >
-> >  static long evict_folio_lists(unsigned long nr_to_scan[], struct
-> > lruvec *lruvec,
-> > -                            struct scan_control *sc, int swappiness,
-> > unsigned long max_batch)
-> > +                            struct scan_control *sc, int swappiness,
-> > unsigned long max_batch,
-> > +                            bool cmd_proactive)
-> >  {
-> >         int type;
-> >         unsigned long batch, scanned, total_scanned =3D 0;
-> >
-> > +retry:
-> >         /*
-> >          * Scan both types with the given budgets; the caller checks if
-> >          * reclaim is satisfied after each pass.
-> > @@ -5191,8 +5197,13 @@ static long evict_folio_lists(unsigned long
-> > nr_to_scan[], struct lruvec *lruvec,
-> >                         continue;
-> >
-> >                 batch =3D min(nr_to_scan[type], max_batch);
-> > -               scanned =3D evict_folios(batch, lruvec, sc, type, swapp=
-iness);
-> > +               scanned =3D evict_folios(batch, lruvec, sc, type,
-> > swappiness, cmd_proactive);
-> >
-> > +               /* if it is a debugfs proactive reclaim, lend budget
-> > to the other type */
-> > +               if (!scanned && cmd_proactive && swappiness &&
-> > swappiness <=3D MAX_SWAPPINESS) {
-> > +               if (!scanned && cmd_proactive && swappiness &&
-> > swappiness <=3D MAX_SWAPPINESS) {
-> > +                       nr_to_scan[!type] +=3D nr_to_scan[type];
-> > +                       goto retry;
-> > +               }
-> >                 nr_to_scan[type] -=3D min(nr_to_scan[type], scanned);
-> >                 total_scanned +=3D scanned;
-> >         }
-> > @@ -5240,7 +5251,7 @@ static bool try_to_shrink_lruvec(struct lruvec
-> > *lruvec, struct scan_control *sc)
-> >
-> >                 orig_anon =3D nr[LRU_GEN_ANON];
-> >                 orig_file =3D nr[LRU_GEN_FILE];
-> > -               scanned =3D evict_folio_lists(nr, lruvec, sc,
-> > swappiness, MIN_LRU_BATCH);
-> > +               scanned =3D evict_folio_lists(nr, lruvec, sc,
-> > swappiness, MIN_LRU_BATCH, false);
-> >
-> >                 if (should_abort_scan(lruvec, sc))
-> >                         break;
-> > @@ -5896,7 +5907,7 @@ static int run_eviction(struct lruvec *lruvec,
-> > unsigned long seq, struct scan_co
-> >                 lru_gen_balance_scan(lruvec, sc, swappiness,
-> >                                      nr_to_reclaim - sc->nr_reclaimed,
-> > nr_to_scan);
-> >
-> > -               if (!evict_folio_lists(nr_to_scan, lruvec, sc,
-> > swappiness, MAX_LRU_BATCH))
-> > +               if (!evict_folio_lists(nr_to_scan, lruvec, sc,
-> > swappiness, MAX_LRU_BATCH, true))
-> >                         return 0;
-> >
-> >                 cond_resched();
-> >
-> > However, this would make the code much more complex and
-> > probably isn't worth the effort for a rarely used debugfs
-> > interface, especially given that we already have proactive
-> > reclaim interfaces for both memcg and nodes.
-> >
-> > So perhaps we should simply set .priority =3D DEF_PRIORITY
-> > and live with the two less significant issues described
-> > above.
+> qcom-tgu: Add TGU decode support
 >
-> I agree with this, actually maybe later we can use something in
-> scan_control like an extra field, CLRU has a lot of special tweaks in
-> that, which also needs to be sorted.
+> This commit adds sysfs attributes and register programming for the
+> per-step condition decode registers on the Qualcomm TGU.
+>
+>> diff --git a/drivers/hwtracing/qcom/tgu.c b/drivers/hwtracing/qcom/tgu.c
+>> index c00e95e68214c..72b98a96d7f20 100644
+>> --- a/drivers/hwtracing/qcom/tgu.c
+>> +++ b/drivers/hwtracing/qcom/tgu.c
+>> @@ -18,8 +18,8 @@
+>>   
+>>   struct tgu_attribute {
+>>   	struct device_attribute attr;
+>> +	enum operation_index operation_index;
+>>   	u8 step_index;
+>> -	u8 priority;
+>>   	u8 reg_num;
+>>   };
+> [Severity: High]
+> Does placing operation_index before step_index in struct tgu_attribute
+> transpose the two fields in every attribute initialized by
+> tgu_dataset_rw()?
+>
+> tgu_dataset_rw() uses positional initialization and still passes
+> step_index before the priority/operation argument:
+>
+> drivers/hwtracing/qcom/tgu.c:
+>      #define tgu_dataset_rw(name, step_index, priority, reg_num)              \
+>      	(&((struct tgu_attribute[]){ {                                   \
+>      		__ATTR(name, 0644, tgu_dataset_show, tgu_dataset_store), \
+>      		step_index,                                              \
+>      		priority,                                                \
+>      		reg_num,                                                 \
+>      	} })[0].attr.attr)
+>
+> As a result, operation_index receives step_index (0..7) and step_index
+> receives the priority or TGU_CONDITION_DECODE (4).  In
+> tgu_node_visible(), tgu_dataset_show(), and tgu_dataset_store(), this
+> hides attributes for steps 5..7, maps step[0:3]_condition_decode to
+> drvdata->priority at step 4, and transposes step and priority indices.
+Confirmed.
 
-Agreed. I'll add a few words to the changelog.
+Will provide the fix in next version: Changed tgu_dataset_rw() to use 
+C99 designated initializers (.attr =, .operation_index =, .step_index =, 
+.reg_num =) instead of positional initialization
 
-"Note that we are already lenient with the debugfs proactive
-reclaim interface. We may reclaim one generation ahead even
-at DEF_PRIORITY, and with extreme swappiness values such
-as 1 and 200, we may not fall back to the other type.
+-#define tgu_dataset_rw(name, step_index, priority, reg_num)              \
+-       (&((struct tgu_attribute[]){ {              \
+-               __ATTR(name, 0644, tgu_dataset_show, tgu_dataset_store), \
+-               step_index,         \
+-               priority,         \
+-               reg_num,          \
++#define tgu_dataset_rw(name, step_index, operation, reg_num)              \
++       (&((struct tgu_attribute[]){ {                 \
++               .attr = __ATTR(name, 0644, tgu_dataset_show,             \
++                               tgu_dataset_store),            \
++               .operation_index = operation,            \
++               .step_index = step_index,            \
++               .reg_num = reg_num,            \
 
-To address these cases and preserve the behavior of the
-previous model before scan-budget-based reclaim, we would
-need to add another flag to scan_control. However, this
-may not be worthwhile for a debugfs interface that is likely
-to be rarely used, especially given that we already have
-memory-level and node-level proactive reclaim interfaces."
-
-Thanks,
-Barry
+>
