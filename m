@@ -1,68 +1,116 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794601062;
-	b=RuUm/TrZ20H9tTFE83E5aglyQyGmg2ImRkFy97R7BXBGuHsMJTfv0FZUJckQg8hM1uRF
-	 ZhBFsQX1PDdKz8UTmz+mTH0RwRqubah7mKdKzyaYzyFKCOlO3CkYKRvK5UW+Ml+rzxatO
-	 rtJg6+NOFHzLIhvJxZOhWfswg+28+YUFhn8msybI1vX8+kCo27bL/nR4AOrx7tOEwRXUz
-	 gSa8u5FJ3uk+ygS1IzBog07/PIU3sfNCfo0RSuFe24bXtaew0h8jaV1YzJjeifEppnr/p
-	 MjCJuHZk838karXuyTZfFafOBtW2buWD92K56UtdoWCXyQzTSwQVRfTd2gPnj9l5E0g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794601062;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=sQw4GvATXFtrzEViTcI7yXb0PY3EJAnllv1+ldzoAew=;
-	b=wC3Ki96a8N87ok/QNW/1FtpJatCQr77JIEvlKKoKC4SDG0H55kmJV2boxIOgmsQ1gCNN
-	 0SNS/SGQE/POERO88kEACSLQgJJ/3gMCFFkxxbpcBJ64pcI46fZQxv6uDZNO5f9h0rDLb
-	 k9HmSgg0VMrLExR8gMc0TbAjnUfblQolYcOswfYXRQFXGl59F5tGOLsPd+NYs8vTzdCo8
-	 bVNQyPdlopzrKPlv6EfFo3YTc3oLqqcjsUg+rRgjQ480FzzcIxu22G1DZzfmK0aDvIueJ
-	 oGz8rU86wwHluLNY/3nMxOwJK4XzEBzE4BMF5MziUguOM6/mY+vzN+Ef3JXsMdCg8NA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Na7LhR87;
-	arc=none smtp.remote-ip=192.198.163.18
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.47
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794601257;
+	b=HhWadeSFsrgdu2QsJnR8H8uDREqdevVYweLgRkXhg8wHRPVNkRS8aGMapHqgWUe/QWTm
+	 /y1BksMZ4AGo0hAPQ90RfMWLz9QTYA4oohJSYb7OOmC0di2JjH4ZYPTaEhViFkWe18pM/
+	 i5XYlmmHmVomcV1L2gA/3y6OpErVGp9C4LJAJG7k7soXQkqdiX9ekMlUoP7qUjeyDMSiR
+	 4BdiAZYDQ8SDM2C6yaWDsISCtfpOfwIy5A9NRqnP9MP7PlC6EbL7hP6Bjo3FGb3/PsSkC
+	 x6jFCTavF1gtMJOyN7/pm4tgcLIWD6PLBX3la3i7S0NcennElgFnRXO+BDHcB0Efsgg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794601257;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 Date:X-Mailer:Message-ID:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding:X-MS-Reactions:X-ClientProxiedBy:
+	 MIME-Version:X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=e2RwzbOxIvy29ZA3zLLGwHwe69Cf+J9skwxB3S9b6yE=;
+	b=oQg4qOU0oDVLg656XL1bnvBusaK59gggTES8dlkzsswaQe35j9HyhZ5YI59fPh2AI4Uz
+	 mKgPQJ+kEzt5YPRLcwgVTgGKONfEmC3BDG47Kzdww9QiiRVbLds8Xrtrqr64lRto50+Y5
+	 sYMcSnZuxc2v9Ig2ue2tDMDe4vjj8rUWsAK0gYO2kAnrbxkQ9VCNtReyyf9sgV7qPPeAx
+	 xxxdDefUb7AFbEUaQkXMJpzLgAErqfuazX95HXPhDvNgk14hGOYNGOBFf/fWnwQacpyL1
+	 5/2kOdvF7lptZQyMgqN78nOiwQMYXtdz2MehAIao8USWS6T124+BQ6Ke9NZkJXzh03Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=dJh3r2FG;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.47
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010047.outbound.protection.outlook.com [52.101.85.47])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D06606A330
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 20:17:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60D06606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4794606A334
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 20:20:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4794606A334
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Na7LhR87
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794601061; x=1826137061;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=FLioU4cDbbnRDreB0K/kLhwrT7wLL1csVX23RCfV9/0=;
-  b=Na7LhR87jFvmPWijzZu3VtuDKhCj6zsvCd6AKe8mwfs7+1yJ0Wjpn4Oz
-   PvCSmMhByEa82HX/S6nwnM7t04Z/h3AcgQFJzbEI0xXJcTpzyNdWMgX5p
-   Pf/O2+hDX2OJFqzIfNLnJ9guaf+AkDhMoI+bYUBgjxKfXnAI4KmDPJamO
-   9KZEonybfasViTZjE1zkJwHTkf1mI2OqqLrTrhlWtDHkFydXBW+zoH+3T
-   yLnewWEsV5XuSQTsr013vYX3wMEczj3T3lmSMkbynKpEenLlzTPiGHZhj
-   towE1BYmnNru8JqyBME4Q6w7rXE48Zo1lRx4E7MaQ0duaWjIwtPqQ3QRQ
-   A==;
-X-CSE-ConnectionGUID: UC4bBbDQQxG+jUd7LzvRDw==
-X-CSE-MsgGUID: auUWlRE8Szup1alu98pZFg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11965"; a="3446815"
-X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
-   d="scan'208";a="3446815"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 12:17:41 -0800
-X-CSE-ConnectionGUID: ipjc2YimRcKAr4DI/2LA0A==
-X-CSE-MsgGUID: 3xVpcVvLTgm3oq0L90T70g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
-   d="scan'208";a="9325321"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.184.228]) ([10.122.184.228])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 12:17:40 -0800
-Message-ID: <2a3c1d34-b3f3-47f1-ae15-c3b466f0a363@intel.com>
-Date: Fri, 13 Nov 2026 14:17:39 -0600
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=dJh3r2FG
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ECxbXDqEYjNsxrDtHgRDd3hfP0VaDq7HxkI1nDSeCH3GY0sV6PjhhIsAoO+7E6gHgNqdG8T2Zc1mVjDabsZnxRBl8XNqauZLM8+ktPqOfHtnYqpiM8yG2cjYKZNl0b+q+Gs5q4kKTNbOGUTa7TFPyEEHSzwKz2ehzEeVuuHq64FRuSr0cx50Vt8aFbCsG6LLPSf12HZaoAbSxaTSZrtWCNfUsmK8NrB3qzNk9qsEDC5hETrySW6mATPzGolgHphv+LjzWztJfRAa1BpEeTgP5hHGXgCkXTCmBCqc1heaScOBI+f9LnR1iLEX0WL1R9TQpQIWngt+QNcKL+Klyr1wlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=e2RwzbOxIvy29ZA3zLLGwHwe69Cf+J9skwxB3S9b6yE=;
+ b=m5iM3yDcNNipDX2t1fhmB4Ia+yCs+M9cGZDbxJIQKHtIM4WOG+L7QhpyhYS2D0EPHJMEHdwmdzFfA+kOnxHtk1Wwcdl4BpbUYV7Kody1fdkYiCfTlg2+HfDdacGS6YJaxogmn/FDoja0xJ408+KZc3rG6FuIuxFjiJrnKJsJX1kqr3N6TW8MN7O58fKnRXI8IBcd7ac+TISBQNQ05LVv8D8m+fUZi5078BWNk0MB6VsYbKgzY09K4tt2xB7EaTM31leu+z0B/4auIRin+J5O+aez5jFWqBQGiCjrYRmEVJiPi25s/dw6Vp9gpiJzKXSv1WsB/ls7TDAAQ+pyBilwDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=e2RwzbOxIvy29ZA3zLLGwHwe69Cf+J9skwxB3S9b6yE=;
+ b=dJh3r2FGFExjcNzOUi5CD92T6+Gj1gLhJHu3FP/3YkEWAxxCR1yqpfOP9gmeLBSipyqldoQK5OFPGlDDWRQkE1SfClzL+jHWO8cnW0enmu62FQzSsjwsKzmui4i9w+QeJ5583zTjKM6hMFKpZnTsGijixb3bZy7DGh7Hq6y3KCNN0nua7n+49h+Xkw36bJdZwOUR5u9DiDuMawVsWXHKl2F6uy0rVek0Ck01Z1bn+1zk/NJIWapGN4Pc0kLxal/WRF4NJdkGaIv8QMnlDVHNb9TWy5ixGnmUM24Ckx0rCbCcDUe2bOxBJniPTcJmYCezuWZS0SQod9gJ4Zuu7Gw8Kg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA0PR12MB8374.namprd12.prod.outlook.com (2603:10b6:208:40e::7)
+ by MW5PR12MB5650.namprd12.prod.outlook.com (2603:10b6:303:19e::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
+ 2026 20:20:49 +0000
+Received: from IA0PR12MB8374.namprd12.prod.outlook.com
+ ([fe80::d85f:4c87:ae84:3f16]) by IA0PR12MB8374.namprd12.prod.outlook.com
+ ([fe80::d85f:4c87:ae84:3f16%6]) with mapi id 15.21.0615.007; Fri, 13 Nov 2026
+ 20:20:49 +0000
+From: Zi Yan <ziy@nvidia.com>
+To: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>,
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>, David Rientjes <rientjes@google.com>,
+ Shakeel Butt <shakeel.butt@linux.dev>,
+ Andrew Morton <akpm@linux-foundation.org>, Jann Horn <jannh@google.com>,
+ Pedro Falcato <pfalcato@suse.de>, Matthew Wilcox <willy@infradead.org>,
+ Jan Kara <jack@suse.cz>, Nhat Pham <nphamcs@gmail.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Matthew Brost <matthew.brost@intel.com>,
+ Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>,
+ Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>,
+ Alistair Popple <apopple@nvidia.com>, Usama Arif <usama.arif@linux.dev>,
+ Kairui Song <kasong@tencent.com>, Balbir Singh <balbirs@nvidia.com>,
+ =?utf-8?b?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
+ Kiryl Shutsemau <kas@kernel.org>, Yu-cheng Yu <yu-cheng.yu@intel.com>,
+ Dave Hansen <dave.hansen@linux.intel.com>, Dennis Zhou <dennis@kernel.org>,
+ Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>,
+ Peng Fan <peng.fan@nxp.com>, Josef Bacik <jbacik@fb.com>,
+ Chris Mason <mason@kernel.org>, linux-mm@kvack.org,
+ Borislav Petkov <bp@alien8.de>, Mark Brown <broonie@kernel.org>,
+ Dennis Zhou <dennisszhou@gmail.com>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
+Date: Fri, 13 Nov 2026 15:20:45 -0500
+X-Mailer: MailMate (3.0r7038)
+Message-ID: <F185BA4F-F26B-48EF-AB3C-848D72FA630D@nvidia.com>
+In-Reply-To: <avdveCV9uW1zwXXd@gremlin>
+References: <avYJ-CxBEpdO1Wmu@gremlin>
+ <816E22E2-C7DD-4DD1-AAC9-F51F4D1ED71C@linux.dev> <avdveCV9uW1zwXXd@gremlin>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-MS-Reactions: disallow
+X-ClientProxiedBy: BN9PR03CA0449.namprd03.prod.outlook.com
+ (2603:10b6:408:113::34) To IA0PR12MB8374.namprd12.prod.outlook.com
+ (2603:10b6:208:40e::7)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,129 +120,105 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 21/21] KVM: selftests: Support fixed counters bitmap in
- pmu_counters_test
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20261112203227.289379-1-zide.chen@intel.com>
- <20261112203227.289379-22-zide.chen@intel.com>
- <sashiko-outbox-211841@kernel.org>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <sashiko-outbox-211841@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR12MB8374:EE_|MW5PR12MB5650:EE_
+X-MS-Office365-Filtering-Correlation-Id: 47cd258e-b7fc-4bdf-d2e6-08df41c39b4f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|366016|376014|23010399003|1800799024|18002099003|22082099003|11063799006|56012099006|4143699003|10067099003|261026121527099003|261022105027099003|261022075727099003|261028144727099003|261026140227099003;
+X-Microsoft-Antispam-Message-Info:
+	JmM43uP/lZ+UahEO/YjH0XKfGrz/me4BOblx2NIZjuXHeY36eb2dS9l+Q3QbV8DLsEQ4eF+nj3sLaX3dzVOguKpVRWEXHSBaqy9It9Iv6c0mE3H++kjfKRCSF4yeko4n2M+XQJmiZpR20DJpq2mpQSm+baQ3Q7IIYJyyycQW4a0vpg3Y6qdJwxdo5LacK7abxmCgvhM5nRt+smMBXqWpB4cQNYK9OEFdjvUdBYKC0XT9n5cF4aiGz+4KBI5NM0dQbvrAVp+SLDAbT54t11aVlRoy70PR22Xug6hAsJSLn9it8fc3vlOpG33otoZR6Z7fDz56Y1iPGcY8fgZedJ0fiA85js81hLc+dquCDoLs5UQn/IR3xNLRlauSZGf2bi5i9DA6M8qGDAxg7TfD4zLgx2Ki7Wte9kEO19xdF02Mu7o4f+NEhHxy2eAIUvdmaOs5RCEBIN0ejxUqb5Hwn1syhXADJ4sKCPt3rUVQUSep6yLTHAapvbZ5TDVlSYciS+GCxqWMODgI0tK5iHyAfOFzrmwKe6veV23VQqOuGFG734ejoIxHyz5/PQ/B7tOJOjtpWIfvBijYcexGxlXAW7e3J/rb/D0g1YxzU8hygtVaKRJEx695rKXZFnPuDbjQNlQP+ezVhbuIL3nm5HdFLJmrqczzoQO50Qi0RZJT+BwOXaM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR12MB8374.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(23010399003)(1800799024)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003)(10067099003)(261026121527099003)(261022105027099003)(261022075727099003)(261028144727099003)(261026140227099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Tm41cmJPNmtHdXA2bG9rVXVBY2JyQy9xZzRKbWs3cCszZ3dpQkdJOXFLaUV3?=
+ =?utf-8?B?Rm5URWFtSFM1VG9HT1AzcHZNUXdKVisybGloZDZUNkFjYzBFSzdaOHdSbTU0?=
+ =?utf-8?B?VjZLUjlCMjlUOEtHa0pyMU1JN1pmaklJUUtkQmtLYnFibHhkZzRHRzFkRGxy?=
+ =?utf-8?B?Q1hEdk9mOEgvK05ZM0ZReHJ2NUMvUHoramQxbXFSVVJBK3QwbTU3MUphUU5L?=
+ =?utf-8?B?QTU5V2kxUy9JdEN0ZzBGL3Vqb0pmeVJaUW0xSHcxZEVZQW9RaEhXallOMWI0?=
+ =?utf-8?B?LzZ3bHpqTkMxM1BrYWsvWUpyTU5RNG81M3F3NHRpWExFQ3kzZ3RqWVd4QXVF?=
+ =?utf-8?B?RGV6clZoRWpCSlgyMTFXL0RKN3FmZ2dJdmsxTG1ZYmQ3VUdwWWMwYkw1RVlM?=
+ =?utf-8?B?UDdSZTk0TU55cVV3YUNpaHB2MmRKaHorbG5VSDBvd0FLUGJ2bVhiNG1nSFUv?=
+ =?utf-8?B?cmoveGkvMjFoRTM1LzF2WkIyeERreGVzMDVyWmxxN3FIcFNnYnpSNG95eEZY?=
+ =?utf-8?B?a0xKNjh5dzNRNXEvY0tkMmEwZ2I3eU00enB6WERaM0Q3Sk0wL1NMcU9raEgw?=
+ =?utf-8?B?YlZNeEovQ3RzMUZFMkFFc0RZU3hMSUJxUGhTSlBVelMxNHlDc2ZXWXR4dGFB?=
+ =?utf-8?B?MEtiM3l4TkQ1U2JDMmFDaDJ2NXB1b1Q5c2dkVVc2M0dGRUIyd01zb3ZjeEpu?=
+ =?utf-8?B?eDVxSEJsTXNNMS95ZFp3RGJTYmlCc2M2ZkRpQU51dzJMMzFWSkR5RzJqZ0d2?=
+ =?utf-8?B?ZlZ3eForSjQrN1RQZmw4ZjNNUGJCTWxqQ29Nb1oxUGVMSDhCL3ZJck03QTE3?=
+ =?utf-8?B?UEpnODRGUEx4ZzZnS3ZDWk1qMkJKU0Z1akxkZEtWTkIvTVVXdHR1cW53Y29Y?=
+ =?utf-8?B?Zk54eFFPY3VNc3FpNXZwbnFuZWprNmY3aTNlNWg3TUE0RnZwREdBeGE0ZnRH?=
+ =?utf-8?B?QXpyVmFUbWlFSlpmM3FmaGF5amRMa0Y0eFZWWjcwRDdtQldxUzBNOTdIT2pT?=
+ =?utf-8?B?VjZUNlA4VFFNOXZGc3R5cEU1TEsxenBqMXJiN29BUHpLemRRKzRsT013WkFj?=
+ =?utf-8?B?eFVwTEorUXA4VE0yRm42MEMxOHdJNUhKMGxJMSsybFVhb3p1NEFJRTZmS0Zw?=
+ =?utf-8?B?Z0h5b1A2YU1lRk0wSmJtT0xCUjFuS09rdFdXRW9LQlJUMWtIS3VVaUtrSGpK?=
+ =?utf-8?B?ZU53Mi9aMUhzbi9EOGkxemVRZ2NrYTZVZTNjWEZzTy9Xak90RlZwSWFGT3hW?=
+ =?utf-8?B?Nk5nSkUwMDFKSGNYZlE2aDdRTWpTNSszZXJ1SmdHejZNQy80MVZjeDduSStV?=
+ =?utf-8?B?bE9UWTNkL1VRNUtsdXhGUHpkUk5kM05JVGFtNGZFd0M1M2crZWVaWU80bzYy?=
+ =?utf-8?B?QStCOXIvTjNqRjk2aXFjZ2c2RE9iWWxncmI4dVh3QUtLZ2JKeFIrNHVsQjVn?=
+ =?utf-8?B?M3g3cWYrYmFWa0F2MjIwT25UN3ZtcUZ0N1RSb1ExcHJLOHhLNVVkQ0RIR05a?=
+ =?utf-8?B?a2t0aEV0eUxkM3A1VW9GMDZlbEVaQjVFeFdzdW4yalJDaUZ3bzZwbmtnV1lI?=
+ =?utf-8?B?RUZQMmxFQ0gvN3d0RHdpNlBFeCttS051MDZhL0RBS3hVUXgxb1lMcytkbmM1?=
+ =?utf-8?B?V0JOcmIxVSt6ZmFhR1gwRzJqWXRUMXNuZWJoSEZ1Zi95dEF6OFBlTnd6cEpX?=
+ =?utf-8?B?bE5LRzdUaDM0Tk1XWFJBNURYQ0pjMzVESU5BM3M2WE0wb0RTY0FORWtsZTNM?=
+ =?utf-8?B?dFFBOVZZelp6MktwSWpvVmtDT2wwYlk2dVZWbXhoenNLNVRLRDlZdFJ0ck9k?=
+ =?utf-8?B?bFI4MkVEeThxSUVRcGQ3TzRWMVdGWkRTQXpCOUFCbE85empyRURYQ0tmazZx?=
+ =?utf-8?B?Q2tIdnFxeHkwcm9qUE44WmhnMm1LRWZTL04wMEpoRG05TEJ1amJ2Ly85aGcz?=
+ =?utf-8?B?eWE5eGQxeFd2eGRyVTY2U3o0ek5UR21wTHJDOHFhM3UydUljK0hmNDA4Nis1?=
+ =?utf-8?B?eG5ka2gvd2NYdE5sczcvOGxMWDQvZ2lDRXRoZHlqSmd3OXU3cHE3cHFQcERr?=
+ =?utf-8?B?UFdxNUdBRDhLb252ZXZnWDRnV25jZjROQWtyQW1ZeVBlVGc2Q3pZd3F1cXpi?=
+ =?utf-8?B?MTdMUFZhYTlMREhRZWhiWjRvaG1wZGRLQWRzMWhVcktSOUxyYmxrNVI4bjJ0?=
+ =?utf-8?B?TEc0QnBaSTVmd1BJVlIxeEYzNDZ4MU5BR3h0Mkw1Qis3ZDVDUWVScmhjdzFV?=
+ =?utf-8?B?dTlHNXZQVzBTM1RPUlI0ZFNPcU95eUxwejBiSmpuS3Y0VXQyZTVWUGZXK0Iw?=
+ =?utf-8?Q?sMg2f+ZDq7E5JuWZG0?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 47cd258e-b7fc-4bdf-d2e6-08df41c39b4f
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB8374.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:20:49.1803
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: CtX97G42pX4OrbdJOrGFGCQ/bhvwnqNnOiFc6oEdyU1XdW3IwilMaiXMZAZuBEdJ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5650
+
+On 13 Nov 2026, at 15:17, Lorenzo Stoakes (ARM) wrote:
+
+> On Thu, Nov 12, 2026 at 02:53:44PM -0800, Roman Gushchin wrote:
+>>> On Nov 12, 2026, at 11:03 AM, Lorenzo Stoakes (ARM) <ljs@kernel.org> wrote:
+>>>
+>>> ﻿+cc Roman
+>>>
+>>> Roman - see below - I was under the impression mm was not supposed to receive
+>>> 'unrelated to this patch but' reports? Did something change?
+>>
+>> Yes, sashiko started reporting pre-existing bugs again, but in a better way:
+>> strictly once (per bug)
+>> only for the first non-rfc version
+>> somewhat related to the proposed patch
+>> not more than 1-2 per patch
+>> not exposing security-sensitive stuff this way
+>>
+>> Obviously the goal here it to increase the chances for the problem to be fixed.
+>> It’s global, not mm-specific.
+>
+> (Sorry only just saw this!)
+>
+> Ah, I thought it was an mm opt-out.
+>
+> In general they're spawning a lot of AI sloppers to go off and send ever
+> more fixes and causing ever longer days for us, it's quite a noticeable
+> impact unfortunately.
+>
+> And often they're duplicative of already-sent fixes so you can see the
+> conundrum with this :)
+
+I wonder if there is a plan to make Sashiko identify duplicated fixes
+and send an email to point out the existing patches. So maintainers do
+not need to do that manually.
 
 
-
-On 11/12/2026 3:00 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] KVM: selftests: missing EDX/ECX combinations in
->   test_fixed_counters()
-> --
-> 
-> commit 3d8b2ca900bb2a01f5f9cee15fc9a12bc40184ad
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
-> 
-> KVM: selftests: Support fixed counters bitmap in pmu_counters_test
-> 
-> This commit updates this_pmu_has() to check the guest PMU version before
-> consulting CPUID.0AH:ECX and updates test_fixed_counters() to test
-> supported fixed counter bitmasks alongside CPUID.0AH:EDX[4:0].
-> 
->> diff --git a/tools/testing/selftests/kvm/x86/pmu_counters_test.c b/tools/testing/selftests/kvm/x86/pmu_counters_test.c
->> index c3e784e16348c..61e6fe5b6ef48 100644
->> --- a/tools/testing/selftests/kvm/x86/pmu_counters_test.c
->> +++ b/tools/testing/selftests/kvm/x86/pmu_counters_test.c
-> 
-> [ ... ]
-> 
->> @@ -631,25 +632,43 @@ static void __test_fixed_counters(struct kvm_vcpu *vcpu, u8 nr_fixed_counters,
->>  static void test_fixed_counters(u8 pmu_version, u64 perf_capabilities)
->>  {
->>  	u8 nr_fixed_counters = kvm_cpu_property(X86_PROPERTY_PMU_NR_FIXED_COUNTERS);
->> +	unsigned long fixed_subset;
->>  	struct kvm_vcpu **vcpus;
->>  	struct kvm_vm *vm;
->> +	u32 fixed_bitmap;
->>  	int i = 0;
->> -	u32 k;
->>  	u8 j;
->>  
->>  	pr_info("Testing %u fixed counters, PMU version %u, perf_caps = %lx\n",
->>  		nr_fixed_counters, pmu_version, perf_capabilities);
->>  
->> +	fixed_bitmap = BIT(nr_fixed_counters) - 1;
->> +	if (pmu_version >= 5)
->> +		fixed_bitmap |= kvm_cpu_property(X86_PROPERTY_PMU_FIXED_COUNTERS_BITMASK);
->>  
->> -	vm = pmu_vm_create_with_vcpus((nr_fixed_counters + 1) * BIT(nr_fixed_counters),
->> +	/* One vCPU per subset of fixed_bitmap, plus one per legacy EDX test. */
->> +	vm = pmu_vm_create_with_vcpus(BIT(__builtin_popcount(fixed_bitmap)) + nr_fixed_counters,
->>  				      guest_test_fixed_counters,
->>  				      pmu_version, perf_capabilities, &vcpus);
->>  
->> -	for (j = 0; j <= nr_fixed_counters; j++) {
->> -		for (k = 0; k <= (BIT(nr_fixed_counters) - 1); k++)
->> -			__test_fixed_counters(vcpus[i++], j, k);
->> +	for (fixed_subset = 0; fixed_subset <= fixed_bitmap; fixed_subset++) {
->> +		u32 nr_contiguous;
->> +
->> +		/*
->> +		 * The loop walks all values from 0 to fixed_bitmap, so skip any
->> +		 * value that is not a subset of fixed_bitmap.
->> +		 */
->> +		if (fixed_subset & ~fixed_bitmap)
->> +			continue;
->> +
->> +		nr_contiguous = find_first_zero_bit(&fixed_subset,
->> +						    MAX_NR_FIXED_COUNTERS);
->> +		__test_fixed_counters(vcpus[i++], nr_contiguous, fixed_subset);
->>  	}
->>  
->> +	for (j = 1; j <= nr_fixed_counters; j++)
->> +		__test_fixed_counters(vcpus[i++], j, 0);
->> +
->>  	pmu_vm_free(vm, vcpus);
->>  }
-> 
-> [Severity: Medium]
-> Does deriving nr_contiguous from fixed_subset drop test coverage for fixed
-> counters enabled solely via CPUID.0AH:ECX when EDX[4:0] is 0?
-> 
-> Whenever bit 0 of fixed_subset is set, find_first_zero_bit() returns at
-> least 1, and the second loop only tests supported_bitmask == 0 with j >= 1.
-> As a result, fixed counter 0 (and any contiguous prefix of fixed_subset
-> starting at bit 0) is never tested with nr_fixed_counters == 0 and ECX[i]
-> set, nor does a guest with pmu_version < 5 get tested with EDX[4:0] == 0
-> and a non-zero contiguous ECX mask to verify that KVM ignores ECX.
-
-The mentioned configuration is architecturally invalid and can be
-ignored: if fixed counter 0 is supported (ECX[0] == 1), EDX[4:0] cannot
-be zero.
-
-Furthermore, verifying that KVM ignores ECX on pmu_version < 5 with
-EDX[4:0] == 0 is already tested for all subsets where bit 0 is clear
-(e.g. subsets 2, 4, 6), where find_first_zero_bit() returns 0 and the
-guest explicitly asserts #GP.
-
-> 
-> In addition, gating X86_PROPERTY_PMU_FIXED_COUNTERS_BITMASK on
-> pmu_version >= 5 skips non-contiguous host ECX bits when testing guest
-> pmu_version < 5, so the test never verifies that KVM ignores those bits on
-> older PMU versions.  Keeping the outer loop over j in 0..nr_fixed_counters
-> and the inner loop over subsets of an unconditionally constructed
-> fixed_bitmap would cover all (EDX[4:0], ECX) combinations across all PMU
-> versions.
-> 
-
-The proposed nested loop produces massive duplication without covering
-any new counter configurations.
-
-In contrast, the current single loop exercises all 2^N unique subsets of
-available counters exactly once with consistent EDX/ECX pairs, and the
-second loop explicitly exercises legacy EDX-only enumeration (ECX = 0).
-
-Therefore, I prefer to keep the current implementation.
+Best Regards,
+Yan, Zi
