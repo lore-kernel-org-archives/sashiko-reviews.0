@@ -1,66 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794593545;
-	b=uNEdEeaYxS0X5p/94WQ2azm1eNub6FnslDOR2OqLhB7y7qE/Oa1ubzdz83kSfXXxcsbU
-	 J7MzzIFhNrEWuiXgxGGDfISUAKVvqo2kbk8fw8tcCpjLd9QxZ2wySyw7DLESpsRXCFbqY
-	 7vz9V+Dls6234OgjP2jvMdlw+SllnXzwUcidM+o5N73KfG/2WMLaUe4F1ztyc2r2sHE/g
-	 HAAwK3jbunMnJa/Qqp75UR7e3EL1sUfGKAD25QRPr8CVDiSzbjvkT8TGxMOTF6edtd6de
-	 hNIn7IFqaAoHaHe4ThCbnxqk3YswxZaEwLIC/G1kNnCdJXqSYlcoBj6yld/v9Ud3C7g==
+	t=1794597223;
+	b=BDdsacd8O223psgbwRHjVDMqwu2BF3yMku42FBg449Lk7jI7fzjzUKMLm3ubytIG9CvM
+	 ALb8tikZYaFRozelziG/ZOhXoKStya8jYhl/nndOeeV22jM/5Ajg/tuGKtmD34GHtkgVk
+	 2rEWtj+SWey2dYrHj19DmV+ZVv4/VY5D2iLxWLgupwR1WK8eNiXB6Tr2xAjDQFjlnwxGU
+	 7Gei0bI5gNNkoCC8p6sSvweTLVKxdWKpfHqGmdFXTeLRqRxMgnsXEL3NgTrIuHZLWdDnd
+	 sDWbfGjad3iKptEhbgLw7R6C1Pabrc8IFcQ2m0FEMfhMCEpkqOgJ9fJ2XrFk85J89hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794593545;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
-	 Date:In-Reply-To:References:Content-Type:User-Agent:MIME-Version:
-	 X-SRS-Rewrite;
-	bh=fybYiSf+M7uMecdbblEUmHL9Px4XJ9OqE2JbpPP9ijI=;
-	b=R0bntbCwtY5qwN9g4CKJxpxBr7xP9FPl+HwMUIAZNlLfTz5HTuY4koA1zZd1JkKFwc5G
-	 RTIyq0REmYXybwAEXSqqzKwgJViA4gfv2MU+9/GPmioajQhiEYaaGNLQybeHPJZhWhm4q
-	 bKFrh+rrVqSYSDQYaPODWGFzkDSCXdOyqL45XtHPMnNm6Hz2xPKuMPO+PwPIkl9HOrlQ5
-	 nFvmTHu7GVCAVJmmWalnSSyoBp+6OvtfaDfeetskkWWgDenmi9OL/15jgXPBd1VFjKGV9
-	 SrgRLanUjckyH0BCMTzuxLVS0O0fMCDV0lDlx8a7XGw3qefen1KWV2ExBuxlYEJEb9g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794597223;
+	h=DMARC-Filter:Message-ID:DKIM-Signature:DKIM-Signature:Subject:From:
+	 To:Date:In-Reply-To:References:Organization:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=mlKa/S1T+ePpqDxgAQsOW+J9fnHtOhXIZrJe3UiE9do=;
+	b=yup6LuiUIXvx8QLv+n79Gp3gqJ/4srHzt5hUWTSkHejtR5OxcyxNNDFtfAZLm+8mny9j
+	 xPBASqaLiJN1JnHNfIerATc24sZtm+1uFVj8B6m6+V+mqEwZs+XZe4FiVQ419hogl0Z9X
+	 COcw4m0/j18Cse6hOqKd65gnLcbZqpCJSD2y2sGKJG/geeN80+kE57+tIgCvQap3i9bHA
+	 UNPEpUanOcBWS/1Rl1l0iVoUAJ0gtGhmb3trxh3xRSBRZBbip2tEXg0WHg5jTBqWm5lXv
+	 RpKvTr6tgZ4V3cSNvIUUEyuxrMZH0w0/NH7UyB0FQCtihxxeMbaPnsky/EbqbmfeVaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=none smtp.mailfrom=casper.srs.infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=B19n2k4G;
-	arc=none smtp.remote-ip=90.155.50.34
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b="1yZg01/z";
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=3qawMNU4;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F4E606A327;
-	Fri, 13 Nov 2026 18:12:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88F4E606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEBE606A323
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 19:13:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2BEBE606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=B19n2k4G
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=fybYiSf+M7uMecdbblEUmHL9Px4XJ9OqE2JbpPP9ijI=; b=B19n2k4Gdh/IysWbD1S92YiSEf
-	en0fiQNLAEzda9gYEzNMq5n/apUkmru7DhBwvH2NO10WKhSKYvosrxlJ2rEZUdDyZSqVLoyh2E2Kq
-	LFV9Aelz67+gJMQHbBUOhu+/e8wcoD4Wwi+t/MiTeH/tjXthVtIuQEclu3pEGmJRUThEq5OdSz34A
-	bf0ouVcwxQwtY2FpcWy2PJblXg3K45Q7fcyOvTQUG4A34I5UpTcbljhmMxZWkP9HciYjhncnLdrT0
-	TyjqSsGnoAaWrvlCWUZgQ+S39UirosGqnaJPAO60Kkf+MaCsFsrKw6/sXTHFqCzl4f+y6s1BVXjOZ
-	YoW2Bh0g==;
-Received: from 54-240-198-32.amazon.com ([54.240.198.32] helo=freeip.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xRvl8-00000004XhJ-3Egx;
-	Fri, 13 Nov 2026 18:12:23 +0000
-Message-ID: <60a1a6aaf5db7c212197c23ec1cfc209bf911a06.camel@infradead.org>
-Subject: Re: [PATCH v2 4/4] KVM: selftests: Add Hyper-V hypercall forwarding
- test
-From: David Woodhouse <dwmw2@infradead.org>
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Cc: linux-hyperv@vger.kernel.org
-Date: Fri, 13 Nov 2026 11:12:20 -0700
-In-Reply-To: <sashiko-outbox-213294@kernel.org>
-References: <20261113170535.79246-1-dwmw2@infradead.org>
-	 <20261113170535.79246-5-dwmw2@infradead.org>
-	 <sashiko-outbox-213294@kernel.org>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-LfCStWnXqzqFHSMHVQ/7"
-User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=1yZg01/z;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=3qawMNU4
+Message-ID: <6b3f1f7d358ab1ca20646ae0383d1408472e0293.camel@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1794597220;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mlKa/S1T+ePpqDxgAQsOW+J9fnHtOhXIZrJe3UiE9do=;
+	b=1yZg01/zZYZNSdV5LoOUd6MBE+ySsNItD+FbnZKHNJa3rjGwkxtx153EDYsqNOAti1dPkA
+	b9+WVZtn/s2XxpPem085Yno5EJqU6xJt/0Lxejpvm3+Zznpz1rV6eiY8qJ3xXeObIPTEz1
+	YgbVEyStrtlnQa6EeEaJ8qSo4wkfMekav0z1CuBVV3H77Z+42x0byb0zbsgdgkwlfPM745
+	sz2ty9P7RixklCzveZ5iBlMF+Iw6VYb/QbIbS0alhUU5K16ZYyO0M2k4jIWfJG6kGbWjhS
+	aySJQYoN3X2z56usspICH5AAmgUdfy/+drPXm81oWtuBCrC6YWG1tD62QrEQHg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1794597220;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mlKa/S1T+ePpqDxgAQsOW+J9fnHtOhXIZrJe3UiE9do=;
+	b=3qawMNU4HZhOG3+Dle4iGtSrBEdWt+/sLHu8bfRcoeSC464OFMTOJ5CdxEmFRBjl4Cg5Np
+	HjZOQf1WiNU1iMAg==
+Subject: Re: [PATCH net-next v4 8/8] net: dsa: soce: Add VLAN membership
+ table support
+From: Vasilij Strassheim <v.strassheim@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Date: Fri, 13 Nov 2026 20:13:40 +0100
+In-Reply-To: <sashiko-outbox-201564@kernel.org>
+References: 
+	<20261105-devel-vstrassheim-soce-dsa-ml-v4-0-02f3cde2afa1@linutronix.de>
+	 <20261105-devel-vstrassheim-soce-dsa-ml-v4-8-02f3cde2afa1@linutronix.de>
+	 <sashiko-outbox-201564@kernel.org>
+Organization: Linutronix GmbH
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -70,135 +79,168 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 
-
---=-LfCStWnXqzqFHSMHVQ/7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, 2026-11-13 at 17:22 +0000, sashiko-bot@kernel.org wrote:
+On Fri, 2026-11-06 at 14:17 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] KVM: selftests: missing volatile and XMM constraints in
-> =C2=A0 guest_code()
+> - [High] net: dsa: soce: broken VID 1 untagging in
+>   swip_vlan_write_entry()
+> --
+>=20
+> commit 25c6cf2ff3f136587d102371c25a636e1af52a26
+> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
+>=20
+> net: dsa: soce: Add VLAN membership table support
+>=20
+> This commit adds VLAN membership table programming for SoC-e switch cores
+> that implement the Port VLAN synthesis option, initializing VLAN-capable
+> cores with PVID 1 and updating per-VID hardware membership and untagging
+> masks on VLAN add and delete operations.
+>=20
+> > diff --git a/drivers/net/dsa/soce-swip.c b/drivers/net/dsa/soce-swip.c
+> > index 70fc2da91dd25..7cc3f4abc691d 100644
+> > --- a/drivers/net/dsa/soce-swip.c
+> > +++ b/drivers/net/dsa/soce-swip.c
+> [ ... ]
+> > @@ -179,6 +212,185 @@ static void swip_stp_disable(struct swip_dsa_loca=
+l *local)
+> [ ... ]
+> > +static void swip_vlan_config_port(struct swip_priv *priv, int port)
+> > +{
+> > +	struct swip_dsa_local *local =3D &priv->local;
+> > +	void __iomem *base =3D local->vlan;
+> > +	u32 regval;
+> > +
+> > +	swip_vlan_select_port(local, port);
+> > +	writel(SWIP_VLAN_PORT_MODE_HYBRID, base + SWIP_VLAN_PORT_MODE_OFFSET)=
+;
+> > +	writel(SWIP_VLAN_PORT_TYPE_UNAWARE, base + SWIP_VLAN_PORT_TYPE_OFFSET=
+);
+> > +	writel(FIELD_PREP(SWIP_VLAN_PORT_VLAN_PVID_MASK,
+> > +			  SWIP_STANDALONE_PVID),
+> > +	       base + SWIP_VLAN_PORT_VLAN_OFFSET);
+> > +	writel(0, base + SWIP_VLAN_PORT_INGR_FILTER_OFFSET);
+> > +	writel(SWIP_VLAN_PORT_INGR_ACCEPT_ALL,
+> > +	       base + SWIP_VLAN_PORT_INGR_ACCEPT_OFFSET);
+> > +
+> > +	regval =3D readl(base + SWIP_VLAN_PORT_EGR_TAG_OFFSET);
+> > +	regval &=3D ~SWIP_VLAN_PORT_EGR_TAG_MASK;
+> > +	regval |=3D FIELD_PREP(SWIP_VLAN_PORT_EGR_TAG_MASK,
+> > +			     SWIP_VLAN_PORT_EGR_TAG_UNTAG_PORT);
+> > +	writel(regval, base + SWIP_VLAN_PORT_EGR_TAG_OFFSET);
+> > +}
+> > +
+> > +static int swip_vlan_write_entry(struct swip_priv *priv, u16 vid)
+> > +{
+> > +	struct swip_dsa_local *local =3D &priv->local;
+> > +	void __iomem *base =3D local->vlan;
+> > +	struct dsa_port *dp;
+> > +	u32 standalone =3D 0;
+> > +	u32 cpu_ports;
+> > +	u32 untagged;
+> > +	u32 members;
+> > +	int ret;
+> > +
+> > +	cpu_ports =3D dsa_cpu_ports(&priv->ds);
+> > +	/* Bridge VLAN deletion must not remove standalone membership. */
+> > +	if (vid =3D=3D SWIP_STANDALONE_PVID) {
+> > +		dsa_switch_for_each_user_port(dp, &priv->ds) {
+> > +			if (!dsa_port_bridge_dev_get(dp))
+> > +				standalone |=3D BIT(dp->index);
+> > +		}
+> > +	}
+> > +	members =3D priv->vlan_members[vid] | standalone;
+> > +	/* CPU membership preserves VLAN delivery to the conduit. */
+> > +	if (members)
+> > +		members |=3D cpu_ports;
+> > +	/* Explicit VLAN configuration takes precedence over default untaggin=
+g. */
+> > +	untagged =3D standalone & ~priv->vlan_members[vid] & ~cpu_ports;
+>=20
+> [Severity: High]
+> Does this clear hardware VID 1 untagging whenever a port joins a software
+> bridge (or adds a VID 1 VLAN upper), causing all untagged frames transmit=
+ted
+> out of that port to egress tagged with VID 1 on the wire?
+>=20
+> In swip_vlan_config_port(), every port including the CPU port is configur=
+ed
+> with SWIP_VLAN_PORT_TYPE_UNAWARE, PVID =3D SWIP_STANDALONE_PVID (1), and
+> SWIP_VLAN_PORT_EGR_TAG_UNTAG_PORT. When the CPU transmits an untagged fra=
+me
+> via sdsa_xmit(), SDSA_TAG_VLAN_BIT is not set, so the switch classifies t=
+he
+> frame into the CPU port's PVID (VID 1) and strips the tag on egress from =
+a
+> user port only if BIT(port) is set in SWIP_VLAN_UNTAG_PORTS_OFFSET for VI=
+D 1.
+>=20
+> Because swip_switch_ops does not implement .port_bridge_join, joining a
+> Linux bridge takes the software fallback path:
+>=20
+>   dsa_user_changeupper()
+>     -> dsa_port_bridge_join()
+>       -> dsa_switch_bridge_join() -> returns -EOPNOTSUPP
+>       -> dsa_port_bridge_destroy() -> sets dp->bridge =3D NULL
+>=20
+> As a result, dp->bridge is always NULL and dsa_port_bridge_dev_get(dp) in
+> swip_vlan_write_entry() is always NULL for every port.
+>=20
+> When br_add_if() -> nbp_vlan_init() -> nbp_vlan_add() adds the bridge's
+> default_pvid (VID 1, untagged), __vlan_vid_add() sees that the port is no=
+t
+> switchdev-offloaded and falls back to vlan_vid_add(dev, br->vlan_proto, 1=
+).
+> Because swip_probe() sets ds->needs_standalone_vlan_filtering =3D
+> priv->features.port_vlan, the user port has NETIF_F_HW_VLAN_CTAG_FILTER s=
+et,
+> so vlan_vid_add() calls:
+>=20
+>   dsa_user_vlan_rx_add_vid()
+>     -> dsa_port_vlan_add()
+>       -> swip_port_vlan_add()
+>=20
+> with vid =3D 1 and flags =3D 0 (since ndo_vlan_rx_add_vid does not carry
+> BRIDGE_VLAN_INFO_UNTAGGED).
+>=20
+> swip_port_vlan_add() sets BIT(port) in priv->vlan_members[1], and
+> swip_vlan_write_entry() then computes:
+>=20
+>   untagged =3D standalone & ~priv->vlan_members[vid] & ~cpu_ports;
+>=20
+> which clears BIT(port) in SWIP_VLAN_UNTAG_PORTS_OFFSET for VID 1. Once th=
+at
+> bit is cleared, untagged frames sent on the bridge or port are classified
+> into VID 1 at the CPU port and egress the user port with an 802.1Q VID 1 =
+tag
+> instead of untagged.
+>=20
+> Conversely, because dsa_port_bridge_dev_get(dp) is always NULL, deleting
+> VID 1 from the bridged port (for example via bridge vlan del dev swp0 vid=
+ 1)
+> clears BIT(port) in priv->vlan_members[1], which leaves BIT(port) set in
+> standalone and restores the port to both SWIP_VLAN_MEMBER_PORTS_OFFSET an=
+d
+> SWIP_VLAN_UNTAG_PORTS_OFFSET for VID 1.
 
-https://lore.kernel.org/kvm/20261113181053.81779-1-dwmw2@infradead.org
+No, I could not reproduce the unexpected VID 1 tagging with a VLAN 1
+upper or a software bridge. But looking again at the documentation, I
+see that the "Custom Untag" register programming is not needed in the
+current mode. It works because the ports use "Untag Port VLAN", so the
+Custom Untag table is not used. I will remove the unnecessary register
+programming in the next version and add more comments as documentation.
 
---=-LfCStWnXqzqFHSMHVQ/7
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+>=20
+> Also, because dp->bridge is always NULL and
+> ds->needs_standalone_vlan_filtering is false when !priv->features.port_vl=
+an,
+> can swip_port_vlan_add() or swip_port_vlan_del() ever be reached when
+> priv->features.port_vlan is false?
+>=20
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-NDA5NlNIQTM4NDIwMjRDQTEuY3J0MA0GCSqGSIb3DQEBCwUAA4ICAQChxpuuHVw93mze9jmueUFV
-BJNzvOzZlazrt0AiW1H7TlYQutgKVXPNSEyz8s4k+WsRSjjlQMOiZerfwPEV6lo9336I0uNd+ffc
-Rf8gbjiPTiVT+gX9GD1V5AguRgtsJn/H3A6M0dlzhI3J1jsOG9/+xPloHPzy7sPn5rNkntB/VTnv
-Bix4IfUy3ScOu2vnLX0gnwP3EknfdEUvq9+kdkEEBDz7dGqQo3EuhXZoW9CHF2GM0sOpO/cuNQh2
-JzA+to3smTES7sJXYuRrt5GomCRYvtIrRiYGMalFp+z6Jw/843lEIIpNNvpWVfx5Mbawkl+wWG8k
-0IK3rF7FtbNa0it8/s288G/AEHvfsDIQYFmRLlo2LNMxxREkZO/1Qq8GHUsX/602Fi0u88I3uh5w
-bOEIeG32NzBKTKBOjdjpiUrdCA676dyaIFt967CUtnUvFti8bqGA2pe/u7pjIANthqMBAlcnY5B6
-ff2mbdD8BBLItgb4HyUOCVawzy1hc+UR2tglySwYroWeohfoG6afjesGigsl2JmnhaZ9Z0vanF74
-vFEOOmuaq7VamuLEPFQtJM4olmipOW6CzrLcFz6J/6yAecEG3P1ZDoy08eSHvM40MAUgpwGa/w6o
-9ALHQXda/c4TJvAylfHQ6wqArzAuV1pfWldwy7IOBMtKqzQBXQ4dSDGCBCAwggQcAgEBMHYwYjEL
-MAkGA1UEBhMCVVMxFzAVBgNVBAoTDkRpZ2lDZXJ0LCBJbmMuMTowOAYDVQQDEzFEaWdpQ2VydCBB
-c3N1cmVkIEcyIFNNSU1FIFJTQTQwOTYgU0hBMzg0IDIwMjQgQ0ExAhADNSi2uzJskfEdOMo4hV0g
-MA0GCWCGSAFlAwQCAQUAoIIBezAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNjExMTMxODEyMjBaMC8GCSqGSIb3DQEJBDEiBCDurgbFLPk0fyFL6W9ZIY1ikjKEYi0Y
-mJvaUWtAMD3LOjCBhQYJKwYBBAGCNxAEMXgwdjBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGln
-aUNlcnQsIEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBT
-SEEzODQgMjAyNCBDQTECEAM1KLa7MmyR8R04yjiFXSAwgYcGCyqGSIb3DQEJEAILMXigdjBiMQsw
-CQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFz
-c3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQgMjAyNCBDQTECEAM1KLa7MmyR8R04yjiFXSAw
-DQYJKoZIhvcNAQEBBQAEggIAV5sXGBRC9oenSil1zb3itQuA5b5CBO8HVKLr0bcEwkf3VTsn5Vw4
-CmhCUwJROuKvHIvFtZrHzYJLDPS27yyXOXWMftIBvGE3Ixr8aB1nb7frmTg1pid1vgHQhY8V2suk
-kOTn380HYzHB7rYMw5AyA393gjvwNK6m4vsbZx/U3mwvnGo4FqqS38COujHXcWoRyA8hbLvfWvSq
-FD15od0TWVWv9dLL+Ek2M5Rn+izuLXm5z8hXWugA/5RLSuTEWHkJvQ+tMFS5XSmDOCBM+7ANa3TK
-eDqMkRs1CPJd2eGOfHzHFRdXVxMvoOo5caOj0rxFwtSlwYRzO2nPLCYkx2N1arLX2Kw9Y0rJBuvi
-Yf9an/yyE34JjySy6EK+DsAKetPOmTq7EMtG1jdjYQzA1bj6734/ACr6tDzF4VhoZXxOlkiTEYMm
-ZdTPgMgzV4CL6vRyweVuWoFC9XygfpfjWbx2l9i9KNJek0XDSoMe7gtT8B/ITUsrwbTdXmDlHdY9
-QgVEXgXb/v4SZ9fEluQE5RUMYGE799M0HVy486eUHkTd0z8AJAKz6Nmn/rWfaFT0nzOdCxaw0bxx
-iHCCv4Wyw2gh96afPoz20l+1JLZ6cKveQl+X8+dKLdmXMM7WiESpj4NhB/kgDjuDGJ5d5Tpbo3O3
-4GpfbMlNHlIGsXi0vA8pKmoAAAAAAAA=
+Regarding VLAN callbacks: yes, in the current configuration they will
+not be reached through the normal VLAN/bridge paths if
+features.port_vlan is false. I would prefer to keep the checks since the
+callbacks are available in the ops structure, even if the VLAN resources
+are not initialized without that feature.
 
-
---=-LfCStWnXqzqFHSMHVQ/7--
