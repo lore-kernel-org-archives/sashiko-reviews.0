@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.171
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794543062;
-	b=JOtM+SFdkK0jYDX0wwJenma/svkTR8ureKkuOwwIf6hEkGTByf6uPr/MN+/lWCIwf+O6
-	 acIpfmLVm8T9U5UVCgoE/H8kkWRjN47fDwYMUXavmSzWYE8YWnQy3F3U8mwWVFvicwUr3
-	 6BjYPjlfHiU5ZPaJsw87yYg2HKeBdv2SvE7gUupT1TJUoHQFqGCOk+s9VHmiko3MdDbT5
-	 JLTXcFCgXGdm98eQe0Bu738Re5PfdnayQxl8VTv3rILhRew+VjmwFtLtiGnZoE4UQH/nk
-	 RyCVJeThKMSL0ipCzZd28Ti4dNW9l+jmmfMZcHF1Ol94B3rEIKYezGcx/i5YG1DtVXQ==
+	t=1794543153;
+	b=N4UUYfqJp/XZkfJ512MkN3AoQy1HM9rncgT/+InzTGwunTYYRBqWemGPTaO6Dm0qwR0D
+	 OLHe4H537MXYtYWzixGMBWbGTgO7Cksc0Z1Pj0x5KYVC7BudIp5vJ538aQB9tj/d09hGW
+	 e34BVHGcqaNCzhnyXf0Kh7cxWjBxGN6KVk+WSQ0GWlsx8rc1tgyVlO3t+adYqLy2r6laK
+	 WzjyiOc3l7SKZZLUIYIXg4UfoRpvpIon2EdcQRgOEvIWanNi1mP8FUdXE9CYt4sgZUZ0X
+	 OBa51OAgpovgga9oj498AcBNakWsqc/fFRzTtMaJP6cN0/3vcW3CCbp2ir0d/doeUyg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794543062;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794543153;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type;
-	bh=Wi7hiqi2qVCH+ZGMHLiTp3SoPsoI9N8FiG5CgJtXgw8=;
-	b=ug6ZdJSpMmirtl9qo0WB01ishQUCpSpW0uq+Za36mX4uZ/NxI9JtZrUsZ5FtZ7Zgn1Ed
-	 DNEXH1+Vs67fLai/KAzgWixLEmJYa9tj8qigJE3cpAf8PtJHq/2P6EDRKAfAsZUaJKIp2
-	 W6hQqwr2c+lHRjuGSh3pdwYAguqGvheqwzT1JzcAjKafagorfAaa4nKAkQDaAbqRkzWhR
-	 +Rmgmo8K4iD5cmv3Hlu87z/kzbp6fyAB+WVi7fweylIa01Xc9pWDth+snAhoCt4fyVX4a
-	 tpj9LQwfTP4MTG2uCqg3fQcV4ySubqEKOgNmSaSHxUJ/TMuvdyMt9FDUXFbO/zNZULA==
+	bh=nCgmRaYxEgo+SI8l55N+Zi055vVLjhQIc00v9kfFU80=;
+	b=mMRDmAMUbprkCV/NgUJ7Jr8EJtqQ897R4GUwgr9q3IZKqFc44qQJEjcnm+NXOCk5V/jQ
+	 NZ+LGHJrpBxapSqQLOgX7Qj0mT91lBGKpjWJru6d1SDONDBS9aD90jniBgCFoMDOCAsjA
+	 PSD17pquqFUMByOC5I0K7iuT4xO9CTt34rcTm7O2ziaTMfVSd6IXZ2DZ6SrOazPG6oFD1
+	 ezw0NRZ/OQf6+N00/H5QOztFqbTF1Oj2rNUzosI+NXZNYCYh39tdSvGskTfmqJ+MKq5lI
+	 1Uztbj+KV6z/M6RuAIOeFhAGBAoJsF44LRqAx384DVLGqroz3NCwfeyNQ9QQ6Xz0tzQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UEOjBK53;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.53
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C0Ub5POW;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.171
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABBE606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 04:11:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7ABBE606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68B2606A327
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 04:12:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C68B2606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UEOjBK53
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3b155f50c24so837376a91.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 20:11:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794543062; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C0Ub5POW
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2ea138a3497so2843065ad.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 20:12:32 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794543152; cv=none;
         d=google.com; s=arc-20260327;
-        b=jg1dYNOyOyuZkj4xHov5mGV6012suH64a78uCv9j/QAUWsMR+ugongY0eHDPTEfIAn
-         GSXwknpWqeqGRTQA0y4kiABZt9UWjLEumqgC99WO9MNLFJUd/Q/ON+lmrK8o//z1GHGA
-         gmgb1tms95WHyclOiFRz98aAm5WlOFys4dPbUjlPYr+tAWUkNatW/hDOmqU+DLsXyE7z
-         oKJFPw29kF0RbWshq1JgSLtNettSphiVNchJ/AhVQ3bXTnnjYfCXiQPAmTf5rI6gaDmS
-         CbX7491dZYmWnf6Cw5qOtYxT5/H8EjO48jV5+gbTuvKLIpzwdwQmFj0wNLt213lew/4/
-         1qHA==
+        b=bZYnJdNRXxebDlsfs5TXU1A1YFm1UDHKNUkx8NpCex3otTbpeaXtFSNI6tgvlhnPtF
+         RhaEkBeB3nC3ZTIAC5LTK2LqslBRmKpVejBCmSwr007CSE8V1srWqQk4uRDhsMoQvhVQ
+         ZMhO8XkPqt6pGzrCATigJEZV5YmfJ81hJWgFesemTGoZlxIq3IoaNzrajsb0fT1/XQjV
+         bGOub5zNqi0uUoySPMet3wP0nzBzCKid+DYT7I5DA/qiSpIhhZjSF79yhWSCxUY6kaCh
+         GOMNQarLN6lghaVC50uIfARkQE6hVKtMGaL7dk6Pj/C6Z9ugCPZJB5FEMO1q7ZOf1C0g
+         O0Vg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=Wi7hiqi2qVCH+ZGMHLiTp3SoPsoI9N8FiG5CgJtXgw8=;
+        bh=nCgmRaYxEgo+SI8l55N+Zi055vVLjhQIc00v9kfFU80=;
         fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
-        b=bv9Rey2Ro3sFE4rXw9nyV6yHM6w9hiB42yiBYuHSCCQt3hzIdUtj2jvabV9Nv4478a
-         RHklr6iGP9KL4hEiD9Un013Pps7lrG2akO20qn8pN0ODKMsp7FM532M1qf49o5vuni+9
-         QjCg7vsDfazxD9NZ37teEkBgjMhWhRiHFXrB+qtNPPSwCvNenRCtrc4/oAPJUTei1hNW
-         m5ytBCesjajUVBSey1pA/6qaayARVJdDd4j7LDA67A9etAmOJFHUzxg8b7xFzWibrE0U
-         ss7fnp8uKCJmFCYgqhGqg9Ld2xQpVfewPEo4yLTZ5Rfos9bEqAcPtger2NrcwnhcSvA0
-         b+Zw==;
+        b=N6phFvdgOA4EXjDy5hncWeWvhW+duobekNZJvtt+EDPRhZhJFOgPFypk0p1i8RHu1J
+         FthAxKBZcn6Ljq9p+7A+xThjYDdCqTVV8YEwohgSd9JlnOO84EyAGW65sIDg7EBK4Qa9
+         u9khTeZSiIK/B2rPotUGlXaRtdS+H0rZNpY998mhVNqUF0jApRVjrqfPgx4uwmJGnWfn
+         UIcAT1tyxbazIRdoRpDlzYuJo6/TE4pVkv9rJzc1xFXEKXO4Ynk9mMtIBOWqXprtANbz
+         slaewH27M2EZnLJNtBECmEKW96vIJLwmPs3+iJJmkaRBn68VOpLkF2CmFKeddAcl1Mf9
+         K5iQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794543062; x=1795147862; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794543152; x=1795147952; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Wi7hiqi2qVCH+ZGMHLiTp3SoPsoI9N8FiG5CgJtXgw8=;
-        b=UEOjBK53WMus4gwj7luGAFH0lNplXd9Ncsiegj86MYH1jpj3vllkzoRjZMGVBX+mTB
-         gFiEBhWfwiVbMhCwHMlHCdvSj/5FTDd+JWVOfAij4Nq8EdP7ngXep7X83ys1N86Mn/aE
-         gMAexxF6lE8yrHZhfIvEnyXoz67A+fAUxpmy/NQabANv4pJ29M5xMA3MTEjY9hkHeKwk
-         oXNlN843SQ1tJaaYuMG7aGSDbTTa7J2E0ogVscuU4zHhze0+NKM7xGoosRcQ8ZwqTEGB
-         kT8FY2Pp9vzWI/2FK4WbCuPlllrW4d8bXx28Mu3Sw/I2e3Ug0Nf6cWPrWdlHSxcCDK9d
-         xNCg==
+        bh=nCgmRaYxEgo+SI8l55N+Zi055vVLjhQIc00v9kfFU80=;
+        b=C0Ub5POWi+T61aik8UdhueTgcOcCFQfFYBgQlZqFjWTeVAT8C5sZKGLHOEX/N8grXh
+         3pHLfvwMW0ewE7STgiP1+k48nw+OtbvmkWftaGEhc4b0KnvOvucDEMprt6HoLtGlwafS
+         am5IJge6zH7pY+bG5RWSOad/1EBXsflOMT5DH6cgUVMtWDeU1wq1ATXFnakeP8V7DuUs
+         dXFVUrnEJjOYwD6MdGWqAjQc6sKsjhKvkK29XbXglI8t0R6XzJ8eIJachoEZBctHsa2b
+         1xP4H9OK1r5FVMI9T7+Kod+GrwC/uCA20CGQgRGU2GXSiGC3PuTQXzQRc0aqYFWNiBXB
+         27xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794543062; x=1795147862;
+        d=1e100.net; s=20260707; t=1794543152; x=1795147952;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Wi7hiqi2qVCH+ZGMHLiTp3SoPsoI9N8FiG5CgJtXgw8=;
-        b=beq3gbOszpqJKOc+pZkIw2DiNBLoVCOYHGGMh1KQOP8MmWS+Xo5qSCniCuZ6CPrPEj
-         5jTUcNRzVbFIEh/APD0TY3W6wTnOa6hKUhXIDhki1rRW14f2ULbmKgWrFJ/Is4morHOM
-         1M5yxTHtt96guDWkCNXUba0Qk7/z2C+2GVsDdoYvJy/tQdKBIZWEv07/fUI+CLE9OyNG
-         4WsHEAMH6L+sSFuMpZtAdkdr5HMSanxywlf73D+JOHSW3/2QuJ0uzahK4NMft6Akzt4L
-         ZRUozioW4KkWHCOspKeXyvgQNK+85OIif2Ke4kG9Y1HBBX+12UszbKfdhVHyQ9QOSA9+
-         XzLg==
-X-Gm-Message-State: APuU4Z+vu2Uol74CVZSeV46jmMvOdheREgFTEsAkYVd/L97baghszTWU
-	CUhXN6Ng05wSGT1spW0eixDGnyjgV+DoQPk3EUq0OQQIZjDlq4iJsH9d+hYvGklJmGQHRecUtOM
-	7OtyVaU5QFXoTgn9HIbrHdB782g7vCVHTfi+I
-X-Gm-Gg: AYBFou2mzJ4IgJFts7meiN3gilvs01dSyjcQqVgBdCQw4dlPCR2HBjgl251Y3D278sF
-	buR/EEMCarwp+kvV8QQpKxi0KNqxEmhI0P1ygJ9I8gNA0YQcYSBP/5P9zS8DW8Xvb5/kCj0v4/y
-	dgcbtxoR8icFvCTQuK10i4w8JU6nOWLTEUTXAq2i2tQni7x3aMu/u2SWEjM8x+z+4BHoYmdsHeG
-	hIWUQC3/6tcvX667skdRG9iM88mxW0TsZOFHY5m0NCYDcA8OyuWptuLFDpiONDVvde2z0u0wn3w
-	jTjDYGJ3fuWOQ7TjBdNYAWraZkiOy7X105OfRNSdoE+zHIhu11Jm5zUXKXV4c2Xec/pYFaWFe2V
-	yCD3vgX14JKKXsHjTfVn6FVkwFSf4EkaN/sW6Rbc26aQrDxxbdAy7NCHc1V3XM88KFQ+IyoEFdn
-	37gc3KXXe685KR3cufE5ja+Cr/dlJX710LJjyo8z1Tu8rZtgqJaYiahwGrFoaqZKMXmmU2iw==
-X-Received: by 2002:a17:90b:57cc:b0:3ad:a462:f07f with SMTP id
- 98e67ed59e1d1-3b1b0cd0fe9mr1161971a91.45.1794543061626; Thu, 12 Nov 2026
- 20:11:01 -0800 (PST)
+        bh=nCgmRaYxEgo+SI8l55N+Zi055vVLjhQIc00v9kfFU80=;
+        b=xlDxu3HC9GtGgkrWeFM0TVtas+UJVOk5wUF2wGyTGCAC2yIhgOv4vTg95WipBE+7i0
+         L+vr745t1oq3fEUvtEiV9Gr4sdjYU5y0m8FvN2E1onY0yEdBHYAW4RgXJ4YO3t17N8hO
+         Fw2YBnmCVHqN2UHoJpFA/nE1k1wNocBLze+XdX9diZ7QTAuEP1kM8Xrelo2RYeo+Ar0j
+         mFDazrmDC+/NDQ6sr95BYNxy9NsVrLqWFirTN89z5SPS4xq6WJBSMj6rT/N59SfIpU1d
+         9nHhiMt3dPsJ2akWs3Vsn3Jz2la1MI2GASxFfkRWccISD1b/uikTSrtbi1l25t/wto9T
+         zwmQ==
+X-Gm-Message-State: APuU4Z85Ie399u2bfhxUzRkUwTqXCVoCa1bCcM63Odw0DDWk43C5t4Hj
+	LdqdSCCPlyrf3EVt1ELe3qU+8MhtRqjz7HHT2OyV/7MbQx2tN3XvNZIYIDarMNrJsGYYTIdTb47
+	HfAHABcvvt9OXhS+yxpvbrGQBq/0B6rt53ERL
+X-Gm-Gg: AYBFou1kdcUGGIu3JHeNt9CAyJkfCQjiwHyNV7rkXqH8o9tlEKjmU6HhTy82cv1lNlw
+	rsjbYUrcvLrXBllHnTQyG6GxehO35XETrrHrP5OV6Ip1xvWzqfihfeinCxdCh6c+3BEDvpNE1V8
+	ZpwpUp1vXEoHy/YKUIYhnwH9g8r3L1/40qizFA2cJ2ISr8Oaa0UiEFwZggOmxb5GyiKBF7E0vP4
+	MDcmopYwZmECGUy9pbfO+erWIQyBCnD4eccjrMLIMsJiQIVsMqxCIYV66DXa7hZEzfRkjoEU6p1
+	dFw0aNOLpFBTDh/0UA4ft3JDcKm+e+aBirkNzHEt2GdCbTms6Al9xqTpeRFn05UUBUdfSZYvAbn
+	204F4pf8xBVqJMMu+eXBbdOFcQXZlst76VGLbjNqF7UXhgURFx/QROnmnE7S121ioVe2dMzwsSo
+	JI4tf+ioMg25DpBltNN4sZ9YwpEQapmXx1WrZeEuJFIy7ZEIWG
+X-Received: by 2002:a17:903:1c6:b0:2ed:2e3a:1faf with SMTP id
+ d9443c01a7336-2ee0dc772cbmr13160465ad.47.1794543151902; Thu, 12 Nov 2026
+ 20:12:31 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,32 +103,43 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261112105116.32274-1-phucduc.bui@gmail.com> <20261112105116.32274-4-phucduc.bui@gmail.com>
- <sashiko-outbox-210984@kernel.org>
-In-Reply-To: <sashiko-outbox-210984@kernel.org>
+References: <20261112105116.32274-1-phucduc.bui@gmail.com> <20261112105116.32274-6-phucduc.bui@gmail.com>
+ <sashiko-outbox-210986@kernel.org>
+In-Reply-To: <sashiko-outbox-210986@kernel.org>
 From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Fri, 13 Nov 2026 11:10:49 +0700
-X-Gm-Features: AclHuK8PCS-tPrFWQVDfCW_VcQwFfTkRV94vefTGZJMawzt2VOoRcy2Kw7Qsg4I
-Message-ID: <CAABR9nE_C_UZyEJ=6G-zCYMkBgZphP7KymUw5U8+CR_yfYzsnQ@mail.gmail.com>
-Subject: Re: [PATCH 3/5] ASoC: fsl_asrc: Fix runtime PM usage count on init failure
+Date: Fri, 13 Nov 2026 11:12:20 +0700
+X-Gm-Features: AclHuK-EzYz6_0u6Yz6Hrxu43cxUaT0UCJf819xej1Ox7hyEl1KMsad9G04Ad8A
+Message-ID: <CAABR9nHy59D=zQwQbLP6eVT6bsZ3Db8vo2-cKHDCdqkS42TiJQ@mail.gmail.com>
+Subject: Re: [PATCH 5/5] ASoC: fsl_asrc: Use devm for runtime PM cleanup
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-sound@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
+> [Severity: Medium]
+> If CONFIG_PM is disabled and fsl_asrc_runtime_resume() fails here, does
+> devres unwind end up calling fsl_asrc_runtime_suspend() while the clocks are
+> still disabled?
 >
-> [Severity: Low]
-> Commit 286d658477a4 ("ASoC: fsl_asrc: register m2m platform device") only
-> added fsl_asrc_m2m_init() at the end of fsl_asrc_probe() and did not touch
-> fsl_asrc_init() or its error path.  The unbalanced runtime PM usage count on
-> fsl_asrc_init() failure was introduced by commit cab04ab5900f ("ASoC:
-> fsl_asrc: Don't use devm_regmap_init_mmio_clk"), so the Fixes tag should
-> point to that commit instead.
+> When CONFIG_PM is disabled, pm_runtime_enabled() and
+> pm_runtime_status_suspended() both return false.  If
+> fsl_asrc_runtime_resume() fails, it cleans up any clocks it enabled and
+> returns an error, which now triggers fsl_asrc_runtime_suspend_action().
+> fsl_asrc_runtime_suspend() then reads the volatile REG_ASRCFG register over
+> MMIO with all ASRC clocks gated (which can cause an external abort or bus
+> hang on i.MX) and calls clk_disable_unprepare() on clocks that were never
+> enabled.
 >
-> Also, fsl_asrc_probe() acquires the reference via pm_runtime_resume_and_get()
-> rather than pm_runtime_get_sync() since commit d05040741afe ("ASoC: fsl_asrc:
-> using pm_runtime_resume_and_get to simplify the code").
+> Registering fsl_asrc_runtime_suspend_action() after the !pm_runtime_enabled()
+> block (or using devm_add_action_or_reset() after devm_pm_runtime_enable()
+> with the !pm_runtime_enabled() resume handled first) would avoid suspending
+> an unresumed device.
 >
 
-Good catch, thanks.
-I will fix the Fixes tag to point to cab04ab5900f and mention
-pm_runtime_resume_and_get() in the commit message in v2.
+Good catch, thanks. With CONFIG_PM disabled, a failed
+fsl_asrc_runtime_resume() would indeed run the action on a
+device that is not powered.
+
+I'd like to keep the action registered before
+devm_pm_runtime_enable(), so it still runs after runtime PM is
+disabled. In v2 I'll drop it with devm_remove_action() in that
+error path instead.
