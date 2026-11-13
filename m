@@ -1,91 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.225
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794606122;
-	b=T1sT+HOug8UyltDWBlS8csnguHmlJ/xW/Yca5/7pkjb4Tc9RjCam6xFI4Pn5hC0nmXRC
-	 ldKHgHB5bvNqXGR2EiJFax7cjzTDPXqqnUQL5kwY7d77R5sLJSGLndJKJD1FyQTxsiJhS
-	 7/hucrgZW9kQ4fynHCNAZsR4nQSZp5dnzL9vHh23Hcj2+RvON9nK6OgglITNkGNex+DHS
-	 lZcmp6UVeuUCGGEWwI9qqnvFf7FF8wE1N38SbJAEs+HlJysd19D3/oCeerujsLYZaJY+7
-	 LhE3Zi8dvr0zR+euxZOaPg0LLYrcWFEdMSmxsqkOF1NJtsZ7R4E4zABtAIIuKNpNznA==
+	t=1794606776;
+	b=gizdasO1lkgxGpQKEVHFm1124jYVj3AGZA9XWf+zMJ0ZpEIOtZ7VE2YcKrED8sFMJhhL
+	 k23CGyvEnVBsL1f22kH0oH61RBqXwEO0q2TEjHMufFWVIx5H4hXzypHzVM7DPEcvxQ2Yc
+	 xSw3A9eKP39XlnHeRbJFPmo6bZAV01uhdvvuJJdiX2Kzhk9JY94O9Cp2YGaxMRqBh1356
+	 WsqvwirTuRCQZEtSKKOGYxELcom59aHjd0ndOy2TzKqrnVczE/31A09+d9UHgIeVHquzF
+	 DTn7NNwPFZh4ba+Yg5GnAJCoWI+h5XhD0ZZtAx4COPqtwNw104oA/Yq1RFZS8FUcEDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794606122;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
-	 X-Gm-Gg:X-Received:Received:X-Relaying-Domain:X-CFilter-Loop:Received:
-	 DKIM-Signature:X-Received:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 X-DetectorID-Processed:Content-Type;
-	bh=P9eqwV95T2ivxxhcffd/gV5+Wg/2FJ60hgjwKxtY7bk=;
-	b=pe2yvx0/Mu7TEw/XY0iYZYiUFEaGrfQwj0Zy3NcblolJVOEBw4d2gzwOJuZFZU/afPWq
-	 O020Dbnz8jfqNKVzfhhQ8HzQ0p9uq5FVE0zdj6bou6IYf3sJ9Wm2Xy5yxaNA8aTyLkV+L
-	 TPDTIx3kRx3lKEb/R/P457ykIZIDs+6HPLX8vTc5VNxIbe6SSZIz6fMY9MN4VSg+d1fD+
-	 gakCir6Ho3qpEZMqunGQSXF2GodrNVlJKZlfxbms0IqU18TVW3WAtx3BifboiI0xMju5q
-	 oQ9W8kwzbyESUkgnO2aNGN8pXwdqhHue7gKBy482brxXTK3ixFnRFxaEaDuHEpDQDgQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794606776;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=5eNMmr+DnF90TqvCN5l/r2SqPu00Gu4aNG8AXgfyJ3U=;
+	b=Xs20aZJR2poQV3gDlropr4o4pfHUC3WsC1IIf9iyn1mcaMk5kfvGz2lo6h1JHaHCjoYf
+	 WwUAH10y5wO237tomCfdNSJj57g6HR752sy3R8l0aZRAZl/0U34OEiwEPsEr5YCphszWK
+	 Lwv+r5hOoMC/B0TPpEiDha1UpAG+/LGqfZoynYhAfQ703snFTp1yUT2TggJ3F7+iM41wr
+	 S8pg1zL9B0dvPC4PnFE+V/USMzFoxPP+bYGoxWOpVUiC8GAUqCkcnt7UUL+HZK3qjcwFe
+	 D7hpz8YApQtYt3Fw9qTGD4zs4eA4kpY+f/ziRPoAZYpU7QJAyKrFrgmLIa+Dp5skWmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=broadcom.com;
-	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b="c0/r5viY";
-	arc=none smtp.remote-ip=209.85.222.225
-Received: from mail-qk1-f225.google.com (mail-qk1-f225.google.com [209.85.222.225])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J7Svx08m;
+	arc=none smtp.remote-ip=74.125.82.43
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF29606A338
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 21:42:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2FF29606A338
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19E3606A32D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 21:52:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D19E3606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=c0/r5viY
-Received: by mail-qk1-f225.google.com with SMTP id af79cd13be357-93e63ee7b4cso220507585a.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 13:42:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794606120; x=1795210920;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=P9eqwV95T2ivxxhcffd/gV5+Wg/2FJ60hgjwKxtY7bk=;
-        b=XU7TlFOfUD6I8gFrD9knrE9XU7I3Dia5ki9sYLlOIUmH8eO8de31FfuRCtaQ3Yp0sj
-         a5PZqX1b0qfd5rfcnInWr81YT1Gq3AP6FZCitekRHvbYQIqAdqqZqZjMKPvWG/SE3m0i
-         fHLksL43QYgvfBwBSSQOByCFMDZ5Lweu4djyzN8EpsnhATPGFW1W4glI96PHAj9g7Rox
-         pUNc59LbRi8TCgXiRsQQc6yF/jtl8dWjWHGvukyzHFUCpoaFOkMUDS/nU+Epj1c4FTu8
-         hZbn+NIHMwb7FLnGSWdbjM5KBw2FqcDhkegdhSrVmwLwoPoZIvQOPz04imen4fLZsaKs
-         P+3g==
-X-Gm-Message-State: APuU4Z9cW+BqyMOKlDn4TQzChC7Z9Znw4bNjZTxygkGztg7ujFL0FrbP
-	LnH358iU48fRimu9PE6jH42+I5OdTCkC8iPP22Hbtqgx8vT0/IbDNPKrIe3CvO7kt79dWnAvvMP
-	7Ec/p1wouRAkRy1ZFsQ9Bc0FP+67BwiHWtckpmeI7cD9j5JPB1f7XLEGBiC23ETP2rWo5BE0BK+
-	9c3oP2Ra5aV0TJcv8QHIL0CgRTMmiPIHkS8P6hrJ0+E3l9ncZbyHF9clHoynp+LMnLVb6wnaMKe
-	Kz9o8y6G6ZwMLh8rAgm
-X-Gm-Gg: AYBFou1d693aKOvfU1aOZ73g2XJr75P45L+ajPu56gtIpJo/Z+rZ1glyW9UR1u51Qko
-	GFiQTF+TDlmlwLMvh0hLuxkfFl4/4t6tuFdyOxOeMJxsxvNvvdqJnFaG0HqE1p2nVdfFjv4WqSb
-	nMK2X2NjImKoFS/Ziuk5sY5g4NueB8EYxDVWN5E22QhPCrYprkTC5bAvKX/0Fz6xXilkezLgsKQ
-	rUjQZ0CWVjyBToFhZYXPLcInk49a9Nm3s/O0gMSMtxr21amWuagdmk4QFnulWn01DObPRytMK31
-	SEdQmSqyO+pVNiAqG38bmOtOykI5Fc77UvKpgX4jO4nWdpEQP14P3ZBCYjvlIO1RGxRIUnJzW5q
-	KVjJypCIia4+0mHWM1h91UJds9l6FFX/k+J3ntT4Ph4t6og1CF8ndK4q4g583kWNI7MfC0JFPFT
-	ELMTcbB6Wksww2kXaDYMmJkdqE8p7R3NgXWpo=
-X-Received: by 2002:a05:620a:2615:b0:944:941:c060 with SMTP id af79cd13be357-9494ba7e1damr632927785a.15.1794606119817;
-        Fri, 13 Nov 2026 13:41:59 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-119.dlp.protect.broadcom.com. [144.49.247.119])
-        by smtp-relay.gmail.com with ESMTPS id af79cd13be357-9494c7b9255sm77671285a.14.2026.11.13.13.41.59
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Nov 2026 13:41:59 -0800 (PST)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-4db3db8687fso2095470b6e.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 13:41:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J7Svx08m
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1b3b4944a0eso665142c88.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 13:52:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1794606119; x=1795210919; darn=lists.linux.dev;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1794606774; x=1795211574; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=P9eqwV95T2ivxxhcffd/gV5+Wg/2FJ60hgjwKxtY7bk=;
-        b=c0/r5viYmBDfCvQClbqMqeiaTeoLNgR+rg+zsh1TvFxIBfi5MzEtxLcPqZr9enpx40
-         7Yiv3BjbAisVEc0KMIAORUnu9KNYJlp4eH9yTzE01w4g2vtvu3BJyZOJ7xE9h9vUvZWu
-         IDQTFdvpKX0v+VDGwffJUi/HBqZij7gl0OoT8=
-X-Received: by 2002:a05:6809:184:20b0:571:ceaa:3e16 with SMTP id 5614622812f47-571ceaa4046mr146896b6e.0.1794606118737;
-        Fri, 13 Nov 2026 13:41:58 -0800 (PST)
-X-Received: by 2002:a05:6809:184:20b0:571:ceaa:3e16 with SMTP id
- 5614622812f47-571ceaa4046mr146883b6e.0.1794606118228; Fri, 13 Nov 2026
- 13:41:58 -0800 (PST)
+        bh=5eNMmr+DnF90TqvCN5l/r2SqPu00Gu4aNG8AXgfyJ3U=;
+        b=J7Svx08mMUlVcOxJhbV8Jd353ZuheAlayWcaW2j3L6omj678tTvelravyONsJoSORP
+         039wi1bCKW5Axi62GDOTx2auBMzeuH9bMas+mcKgUUoBosELZvO4oKyzeapDbfd5QEtO
+         FBVcTBORzn6rkLcLmfSfmXH48jCMcH9HrVTn27uRvK3+auHOK18FiDlGGO8Vn9kYHhwu
+         xOWZ69tlHHqoMbhbl0sUxRjoTwObwuwJyn+gAQV1HK7IBuVstk/q3/XN8gOpYlY8unRR
+         F5bhpmhJtKstf03mmXhnjibW22Ic/XR7RrsI1DRqrDJgakDpHRRZkj24GJWgm+ISMhGp
+         HnzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794606774; x=1795211574;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5eNMmr+DnF90TqvCN5l/r2SqPu00Gu4aNG8AXgfyJ3U=;
+        b=rv/N5x9i+y6IuLSrOEGQS76a/aVgirWTgksFAvQmgOoHjeyEFrrPrLDVtKAB2XDTv1
+         C24X2YdInqigPm9Dd/a0vSOJQQ/o1dMBmmB0pUCRRnEuL7dY0cd/jCZJ5BNQr07eF5Zb
+         oQ8QwlMb5kn5UWAIei+uUNW/8sADS1Sa0RgsNMJ7W/duSI13x3LwpAyxlLmqjtGbkX7h
+         QrTvUHAYcfVeXfgxRDd4NJqJmi/ced37qW++if1vUpHg7cJu+Csgk1B3139pVHZqQejE
+         y6Eoe1HojwiSepwEvZDlaILUU7q97zcGgnN2Vr7xKHGRCnGl0zfdPkDF6MEE+oBouwfA
+         PE6A==
+X-Gm-Message-State: APuU4Z8JE385hg8FggqFjrAW50TWdNwO7/9WetfbSjE/5vtjLNTw8wGy
+	7QnIl65VPro4vtexvgxsu03d4gZRq3//9TUGi+APcGKWDzjzATBtKSHpPTsi4A==
+X-Gm-Gg: AYBFou1PUykwLf/prom4YgHs6/uNFtRqFIErJF04Uxkqiuv7Zd+xWjpSJB4LAxEQO6K
+	wVruFP/F1ewX5Hcv5EmBFQDFASdVANGaj+D7kdcxpfXiMWEfMQqklK0jESBrh/jlfh11rCZjVGr
+	FY2ZLliywwQ75uaQOvoVqvbP95zKxnVly7MyFZDFIqovxzf6NIFMP9mByaIsUr6bgbXT8HUqnqg
+	CTkRHpvKsBYcufSXwoJOqrxNsNqFqNwylkcfsEDSPz2GXU3tTHqDzizl51aaGs2+fPlc1nimwov
+	C5boRfYpfLSXTXueA8fXH93kG+0EJFY/96NVq1oR/neCkz+ErB9afF6diKq8D3u1xozirJGmoV2
+	2EGkaX3Qge+Ijlq4G6/wwjiiTS86guYDgOTr2D5fdxGwfa0+fisQlxkSumQs/YaeDsEjZJ/dzFm
+	1nA53ZvDaSyLKBwpZymg0PzYktNRLV1CLdBMtx+6RKdpF0C6H5xfobk8epAv0mrmu7i49H5fWEr
+	PxjBiMkJmoECSGChT8IBqs3PEYpcnuddJraT4eDM8NBZobdKf94/aIfHnfbJyZp3FR2+Mwt8om0
+	wGTkKODPQwtR5ASzTOlXTHtVTcptc3lOm7Tb7K2APdapXUuOGy+lpkNAxloqr93jY56v55riV5o
+	Cuj4=
+X-Received: by 2002:a05:7022:1205:b0:138:30b1:4c00 with SMTP id a92af1059eb24-1b5030681c1mr3410577c88.3.1794606773661;
+        Fri, 13 Nov 2026 13:52:53 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b50309b27dsm9100380c88.2.2026.11.13.13.52.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Nov 2026 13:52:53 -0800 (PST)
+Message-ID: <cc2f6b19-3e40-4835-8831-379fcaef5c5d@gmail.com>
+Date: Fri, 13 Nov 2026 13:52:52 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,194 +91,153 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113211143.3759154-1-kamal.dasu@broadcom.com>
- <20261113211143.3759154-7-kamal.dasu@broadcom.com> <sashiko-outbox-213725@kernel.org>
-In-Reply-To: <sashiko-outbox-213725@kernel.org>
-From: Kamal Dasu <kamal.dasu@broadcom.com>
-Date: Fri, 13 Nov 2026 16:41:21 -0500
-X-Gm-Features: AclHuK9lwK-J6E2Y4fwPPuFMW4wBFiMM0Hh-TZwKVcmMySmxmuiJ1JSCpAL0Z5w
-Message-ID: <CAKekbevvJx11j3LMGd76jwMWOgXuy43eyy=dOZauYmQsZR8AFg@mail.gmail.com>
-Subject: Re: [PATCH v13 6/6] mmc: core: Add support for resetting an eMMC at
- system resume
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/4] MIPS: Ingenic: Add XBurst SMP support
 To: sashiko-reviews@lists.linux.dev
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000003d031506602f4cc0"
+Cc: "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
+References: <20261113190836.470937-1-f.fainelli@gmail.com>
+ <20261113190836.470937-4-f.fainelli@gmail.com>
+ <sashiko-outbox-213561@kernel.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <sashiko-outbox-213561@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---0000000000003d031506602f4cc0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-This has been reviewed before its not an issue
-
-On Fri, Nov 13, 2026 at 4:38=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] mmc: core: stale MMC_PM_KEEP_POWER from
->   mmc_host_class_prepare()
+On 11/13/26 11:40, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] mips: idle: cached need_resched() load after dcache flush in
+>    xburst_wait_irqoff()
+> - [Medium] MIPS: Ingenic: missing IRQF_NO_SUSPEND on mailbox IPI in
+>    xburst_prepare_cpus()
+> - [Low] mips: idle: xburst_wait_irqoff() calls non-noinstr
+>    r4k_blast_dcache()
 > --
->
-> commit 4d49b02aec950ca34b4c4a7b8bdc8427b11a7e76
-> Author: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
->
-> mmc: core: Add support for resetting an eMMC at system resume
->
-> This commit adds support for the reset-card-at-resume DT property via
-> MMC_CAP2_RESET_AT_RESUME, keeping the card powered during system suspend
-> and resetting it in mmc_resume().
->
-> > diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
-> > index 8e9e618391980..94c8ec81ee08c 100644
-> > --- a/drivers/mmc/core/host.c
-> > +++ b/drivers/mmc/core/host.c
-> > @@ -48,6 +48,14 @@ static int mmc_host_class_prepare(struct device *dev=
-)
-> >       if (host->bus_ops->pre_suspend)
-> >               return host->bus_ops->pre_suspend(host);
-> >
-> > +     /*
-> > +      * If it's required to make a reset of the card at system resume,=
- this
-> > +      * indirectly also means that we must keep the card powered on du=
-ring
-> > +      * system suspend.
-> > +      */
-> > +     if (host->caps2 & MMC_CAP2_RESET_AT_RESUME)
-> > +             return mmc_set_host_pm_flags(host, MMC_PM_KEEP_POWER);
-> > +
-> >       return 0;
-> >  }
->
+> 
+> commit 2871a54058216bdde1330a67071ead0fedc13363
+> Author: 周琰杰 (Zhou Yanjie) <zhouyanjie@wanyeetech.com>
+> 
+> MIPS: Ingenic: Add XBurst SMP support
+> 
+> This commit adds SMP support for the second XBurst core on the JZ4780 SoC
+> using CP0 mailboxes for IPIs and adds an XBurst idle handler that flushes
+> the private data cache before executing the wait instruction.
+> 
+> Link: https://lkml.iu.edu/hypermail/linux/kernel/2005.2/03488.html
+> Link: https://lists.openwall.net/linux-kernel/2020/05/13/1482
+> Link: https://lists.openwall.net/linux-kernel/2020/05/19/1099
+> 
+>> diff --git a/arch/mips/ingenic/ingenic-smp.c b/arch/mips/ingenic/ingenic-smp.c
+>> new file mode 100644
+>> index 0000000000000..27b9b573a7e07
+>> --- /dev/null
+>> +++ b/arch/mips/ingenic/ingenic-smp.c
+> 
+> [ ... ]
+> 
+>> +static void __init xburst_prepare_cpus(unsigned int max_cpus)
+>> +{
+>> +	struct device_node *np;
+>> +	u32 reim;
+>> +	int ret;
+>> +
+>> +	ret = request_irq(XBURST_MBOX_IRQ, xburst_mbox_interrupt,
+>> +			  IRQF_PERCPU | IRQF_NO_THREAD, "core mailbox", NULL);
+> 
 > [Severity: Medium]
-> Can setting MMC_PM_KEEP_POWER in mmc_host_class_prepare() leave a stale
-> flag in host->pm_flags when system suspend aborts?
->
-> MMC_PM_KEEP_POWER is only cleared in mmc_resume().  If system suspend
-> aborts after mmc_host_class_prepare() runs (for example, if a later devic=
-e
-> fails dpm_prepare() or _mmc_flush_cache() fails inside mmc_suspend()),
-> host->card->dev is not suspended, so dpm_resume() skips mmc_bus_resume() =
-->
-> mmc_resume() and dpm_complete() runs mmc_host_class_complete() without
-> clearing the flag.  That leaves MMC_PM_KEEP_POWER set in host->pm_flags
-> during normal runtime, affecting runtime PM paths that test
-> host->mmc->pm_flags & MMC_PM_KEEP_POWER such as dw_mci_runtime_resume().
->
-> Also, mmc_host_class_prepare() only checks host->bus_ops->pre_suspend
-> (which is only set by mmc_sdio_ops) rather than verifying that an eMMC ca=
-rd
-> is attached.  If an SD card is used on a host with MMC_CAP2_RESET_AT_RESU=
-ME,
-> mmc_host_class_prepare() sets MMC_PM_KEEP_POWER even though
-> mmc_sd_suspend() powers off the card and mmc_sd_resume() never clears the
-> flag, causing host controller suspend/resume callbacks such as
-> sdhci_resume_host() to treat a powered-off card as having kept power.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261113211143.37=
-59154-1-kamal.dasu@broadcom.com?part=3D6
+> Should this request_irq() call include IRQF_NO_SUSPEND?
+> 
+> Unlike request_percpu_irq(), request_irq() with IRQF_PERCPU does not set
+> IRQF_NO_SUSPEND automatically, leaving desc->no_suspend_depth at 0.  During
+> system suspend (such as suspend-to-idle), suspend_device_irqs() disables
+> XBURST_MBOX_IRQ, which runs mask_mips_irq() and clears STATUSF_IP3 in
+> CP0_STATUS on the calling CPU.  That blocks IPIs during noirq suspend and
+> s2idle, and if resume_device_irqs() runs on the other CPU, STATUSF_IP3 stays
+> masked after resume and hangs subsequent cross-CPU smp_call_function() calls.
+> 
+>> diff --git a/arch/mips/kernel/idle.c b/arch/mips/kernel/idle.c
+>> index 80e8a04a642e0..6c44715d81d5b 100644
+>> --- a/arch/mips/kernel/idle.c
+>> +++ b/arch/mips/kernel/idle.c
+>> @@ -18,6 +18,7 @@
+>>   #include <asm/cpu-type.h>
+>>   #include <asm/idle.h>
+>>   #include <asm/mipsregs.h>
+>> +#include <asm/r4kcache.h>
+>>   
+>>   /*
+>>    * Not all of the MIPS CPUs have the "wait" instruction available. Moreover,
+>> @@ -71,6 +72,28 @@ static void __cpuidle rm7k_wait_irqoff(void)
+>>   		"	.set	pop					\n");
+>>   }
+>>   
+>> +/* XBurst gates its private cache clock in WAIT; write back dirty data first. */
+>> +static void __cpuidle xburst_wait_irqoff(void)
+>> +{
+>> +	unsigned long pending;
+>> +
+>> +	if (need_resched())
+>> +		return;
+>> +
+>> +	r4k_blast_dcache();
+> 
+> [Severity: Low]
+> Does calling r4k_blast_dcache() from __cpuidle xburst_wait_irqoff() violate
+> noinstr idle rules?
+> 
+> xburst_wait_irqoff() runs between ct_cpuidle_enter() and ct_cpuidle_exit()
+> while RCU is not watching, but r4k_blast_dcache() calls out-of-line
+> blast_dcache32() in .text, which only has notrace from inline and lacks
+> __no_sanitize_coverage, __no_profile and __no_kcsan.  Besides making
+> cpu_in_idle() return false during the flush, builds with CONFIG_KCOV,
+> CONFIG_GCOV_PROFILE_ALL or CONFIG_KCSAN run instrumentation while RCU is not
+> watching and dirty the private L1 D-cache on return from blast_dcache32()
+> right before wait gates the cache clock.
+> 
+>> +	/* Recheck work that may have arrived during the cache flush. */
+>> +	pending = read_c0_cause() & read_c0_status() & CAUSEF_IP;
+>> +	if (!need_resched() && !pending) {
+> 
+> [Severity: High]
+> Does calling need_resched() after r4k_blast_dcache() pull the idle task's
+> struct thread_info cache line back into the private L1 D-cache right before
+> wait stops the cache clock?
+> 
+> need_resched() loads current_thread_info()->flags from KSEG0 cacheable
+> memory, caching the line with _TIF_NEED_RESCHED clear in the sleeping CPU's
+> private L1 D-cache.  When the other CPU sets _TIF_NEED_RESCHED on the idle
+> thread_info->flags and sends SMP_RESCHEDULE_YOURSELF while the cache clock is
+> gated:
+> 
+> CPU0                              CPU1
+> xburst_wait_irqoff()
+>    r4k_blast_dcache()
+>    need_resched()
+>      /* caches thread_info with
+>       * _TIF_NEED_RESCHED == 0
+>       */
+>    wait
+>                                    resched_curr()
+>                                      set_tsk_need_resched(idle)
+>                                      smp_send_reschedule()
+>    <mailbox IPI wakes CPU>
+>    handle_int / irq_enter()
+>      /* writes regs / preempt_count
+>       * in stale thread_info line
+>       */
+>    scheduler_ipi() /* no-op */
+>    /* _TIF_NEED_RESCHED lost */
+> 
+> On MIPS, scheduler_ipi() does not modify thread_info->flags, so when CPU0
+> takes the interrupt and writes other fields in the same 32-byte struct
+> thread_info cache line (or if remote snoops stall while the cache clock is
+> stopped), the reschedule is lost or the waking CPU stalls.  Since local IRQs
+> are disabled and any remote wakeup during r4k_blast_dcache() raises the
+> mailbox IPI in CP0_CAUSE, checking pending alone avoids touching the D-cache
+> after the flush.
+> 
 
---0000000000003d031506602f4cc0
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-H0K0rs+X8O45xZIUJlxzf5UZex3BLi1f/H+08rSQULWEtO/ECwkFod2DIzSX7fZdz5RQ1PpziEOp
-goo/JZPYIeCmgt3rIyvMuupj8Ymb0J/velhpXfQuYUM52viw2nmqVcxCwBqyM3Iq7eI4xtEOFRmR
-wxSizd3MSQMf6GCHA4/B/6ttnxhGAr3utaOU+x/RnzG0gPLTW1XRAQ0+GVc/tGFdI864OG1cyrRl
-GvBnHJQSAFOIKwYrUk2oFpgMbafQ6osCAwEAAaOCAdswggHXMA4GA1UdDwEB/wQEAwIFoDAMBgNV
-HRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggrBgEFBQcwAoY6aHR0cDovL3NlY3VyZS5n
-bG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1lY2EyMDIzLmNydDA5BggrBgEFBQcwAYYt
-aHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyNnNtaW1lY2EyMDIzMGUGA1UdIAReMFww
-CQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgoDAjA0MDIGCCsGAQUFBwIBFiZodHRw
-czovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzBBBgNVHR8EOjA4MDagNKAyhjBodHRw
-Oi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMy5jcmwwIgYDVR0RBBswGYEX
-a2FtYWwuZGFzdUBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYBBQUHAwQwHwYDVR0jBBgwFoAU
-ACk2nlx6ug+vLVAt26AjhRiwoJIwHQYDVR0OBBYEFOV9h+N/T9ZsJ40qRxh7NYYD+N6MMA0GCSqG
-SIb3DQEBCwUAA4ICAQAKtKh30wv1/30230mCimgUjMWQE/LImRmyfDgrp2IhBVS6mDun+wH8thEB
-WhBHQMz3gsGixU4ZBJG72eWi39IzQ7CGnisJwA0+hsGaGg03AVtFtqo1rXYRZ81MEDOb6BPYLigJ
-RsHbNmrUGR+LsGeUwOWUeRXqBrYaYFrkgHKvVK1NEewv+vUY08n4tsezO3jq0HKhVDY46bMbf8vL
-oQqqhtcQvu2+5FK2jpUayeubpzPwobjEG61RIhBvM0KivY4CB2s9A7qgjL1XBycAybIvG03BbFoT
-t282FqXwk9JU6YihLlt+hpzO9UF7E8GZYlQlVIZOLOvytqilhua+2h77Yy8Jz/FJyIXKuaLPtvb2
-SC2shL7jF28kQbP3QUKwAig+cxwbpngnUkd9D9cXSHVq9PPwYm0A4eAO0YQ/80Uq20+gXF++g0sy
-NKrrV3i0T1dbCd86miGDKvarGzjh7pdsdwNY15liGP6Orib1tnWkJcbtP1rJty4r/mbbxcK8ILO4
-IvTGFG6BfjJ+La0aRt69i1fQmjUWHLwzkLNpw9cJH8/MONZcEJeDkq9WELSyy29bagStk5KHu7NO
-TH65sZg+i/4qmj3DEeEGTr/Shzp4YWSNn4W7NEelr0VgDlwa7xqlwZjXxG4MIJqy0SsQlAwEXtqd
-nH2FpJfzgAetkuyU6DGCAlcwggJTAgEBMGIwUjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2Jh
-bFNpZ24gbnYtc2ExKDAmBgNVBAMTH0dsb2JhbFNpZ24gR0NDIFI2IFNNSU1FIENBIDIwMjMCDEca
-ZUGCu6d0oT1M+zANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQg6HZMxY1G7nHDnR9u
-Cy5ljcHUInGqIpnPicCUSPrVkpwwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-CQUxDxcNMjYxMTEzMjE0MTU5WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
-ZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEw
-DQYJKoZIhvcNAQEBBQAEggEAYIkzXPz1WHV829diopmzfbUCxfICdytE2JytMkOK2RlxYSpMuD3j
-gHq/F67rMip5dlo/1TydripPLVjt3acuZ5YI08IJoJFcfyLsvjveHshrAfaWHSTdivwqQXwhRqb1
-hKCsHh8NZBXnYVT3U9joeUw4putTdCEkiuxGg4XcFK7VHMqzbHZxLgymfj7zqVU7rLvU09NWEhsf
-R1eStiWrDlxdNoecbCrQzWNlfe2rcw35g1EezEPgOOYAKy/v9AnR1dYxear1tPk+BnzX3aoVEycX
-0d1k8nRQj/bsahOJyxe5MzpZekN+RHXGNskbNFosbbfKQ5h/EmvY228d2bmF0g==
---0000000000003d031506602f4cc0--
+All valid points, thanks for the feedback.
+-- 
+Florian
