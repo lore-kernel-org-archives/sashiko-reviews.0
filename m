@@ -1,99 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794568763;
-	b=xXpZml2EaY6AZ17BJ6dYVy0YIIXs5Ih0Lc4P9aACnTRhJSCO9XrVBtjI7fJtLsa84+z7
-	 zmG/cxA2D1iOSq6HIrt98OkgYgTY83fIwmpojfalzrWy26gf4aiQbjsl0GqUoXf6PCFJv
-	 jwig6LFrMedFq6E5RynKw92G/YDCj5OEJE60HIImaQjTBbxiBqPgDUiRzSDpJxhZpETIg
-	 V1mN1ou9WCev1KsZEgezi9Gv7P9ZH7w3eyVXCaORu9Y5RWqAvzmlinrIy3lJOX2/hhdQ5
-	 7s0Yonhm2GeOh/7OONB7TdxVLcXvidgzQUHb0w/jSboXbdomlbQhXtbsT8sHhP5OwSA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794568763;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=+zGxPdvMhrc9IRSomhZ6SC6Dr+mt0l9nYB2IDRDUv2M=;
-	b=CScFDVAODZtAbPJX+H9VdKJu4VOtNN+nUQseBKoizheMdiiOqWBYeKfqhLQDyhlz2KQ/
-	 OzyzDK0dhejhXBIrzEefTstXtSOkpAYwpHpyeV8cFu/BxveNtErRKxs9nGaR3ASJpuvqV
-	 hE7d7MD3Ca3ZXbifL6VQMYOV8uU9nsyOOM00zt4RIONTTAiT3im0kDD7rF3tc9aPgxZOr
-	 cVQvtBaJaFw2utOe8T+tSARjyAW47k2NIYbSK5ApJ7E4J3+i9lEhZJHnHdZaYqoHzjih0
-	 l2N8giH8BLIBlPfy0BqFYjYCWYj5zHu23hPuZRL1D3SphYr4fuUzI3llmJXwIFha4ZA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=flipper.net;
-	spf=pass smtp.mailfrom=flipper.net;
-	dkim=pass header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=BDLGgQp+;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794569848;
+	b=px16aq/zlIjH78d+piZ5FaYN68w2HZQfyobeSQI9YcsGoFDPDgbiiI/YJTbnAUbi2d09
+	 cDAlq0HFw9WAf0XcQrvSXxIN1s61fAylSCUFDOJVWDnLfPuaMGV9tsfej4GxmvrZbjpX9
+	 VYHy5gzFQxMQ5tmwQOaMGzK+tXtTs9g2dJ+RNm57zmVJx+3k9bM95tPUrrt7VO+JBVa4K
+	 I5yZWMoGdN/Wdjh4fYckBqSbAef3ojF/IGIQJJmDO51lzaz23A4QO/iWXuXocjaIgLQDj
+	 MMsmSjBRcE7WuSBKWgwnyf3J4QU2HICjboCAfALj74f7Kvxc66LP+bqh3OQclJ2nyiA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794569848;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=eqDaFOXbn6o3S8HHZlHZu0Vt6yoGbjygKulRUdW7kQ4=;
+	b=kIEVR6u6IugIm1cbKptbuERGFO2Br3OlL0RgZ7j+xOydVoKh+lGUUr1vAC6DwOdkkjAG
+	 I3DJzQjINiU0hCq3Kqyjb+r9oUoqGwFbItE1+Gt92mcJWV/2hFBuuoWPIcGKLER5LcNO6
+	 Z7qbYVlB3iz7OeVEfqJazGGVFvk2WejxHxpg8ozYkfwuRfPk4lA1nMqb+R87VDY4qvYdl
+	 H8n1vkANMekJn3FlC1v/77DHj3uUYP7TTg4nqmDwxo/goowiYsJLWeyDlhk7zPQtZEiwb
+	 otCdQJqvwGEyP0b1d2Ztfl37ZnxshWl/qUEdO3r29wYrAZsxr7/EY9NNM4oI05wx0UQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=arndb.de;
+	spf=pass smtp.mailfrom=arndb.de;
+	dkim=pass header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=XMutx78q;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=w+C5MlwO;
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68E9606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 11:19:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A68E9606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B012C606A323
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 11:37:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B012C606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=BDLGgQp+
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c3f04e0e65fso201010566b.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 03:19:22 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794568761; cv=none;
-        d=google.com; s=arc-20260327;
-        b=EA75hOyBiuxdb2yJGmJwNzl5QeymHz5ct+FyUGo76ky5t226I2m9tgUCZDpQBMHmZ6
-         kWywtCNE6aBr6zRFDFwMFWIwF5thU2XMhqn+LaoaAwtMaqQDU4GY2uZMi0sqaQPwgfY/
-         Dnr7zWJ67rB7UbH25otzkyGiR7w00I1Tb3gwZV15DfdYSjoGImTZlb51phf0bRuCGLm3
-         CG1BfiT5cyue8dQ5OaQ2wLE8r6jLJQU4jBWRhkNUyaaJvv9akzsB1gcDgYrygtx0VrGw
-         2sClKtYKhIJHVDBVTOOvnhPyFUaNcgtuJg3h13wqcd1DwotiDhQPPRCby9P9bI258rn5
-         RB/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+zGxPdvMhrc9IRSomhZ6SC6Dr+mt0l9nYB2IDRDUv2M=;
-        fh=/XafWwXInU6xSAMitUKTVJtcnn7zkW/jx5Qszu7SSug=;
-        b=AXMpBgN9HSF45SsQK2xffcele+Au2VxEQPLvPxWdNRrc6fuIbNsFyqOtTWxj2hYgND
-         NrydXwdwkdPFPvBfDyNhDygOjhAkeheOC8qDu0v5Dz2l8biRLtf448KqKTFsJgxLUUw+
-         AbBHvcE/UFY4VM2CDxqfoJYCI3TkV00v/iLNfVBOMEPL9WfHsOa+MnT1ARdmtl1yXnE4
-         cplxKbPPf9q58XUal2URSwrUbVd9zazCNV8T6xOod5wrstVtm/zdaOhgG6cOi0F7YFn9
-         kjnAYSSXHluhzXON+zhqtVkFtQr32ecprczRcfEQ3Qcs2xoGBib2j2t9623BZiA+vn4P
-         MYMw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flipper.net; s=google; t=1794568761; x=1795173561; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+zGxPdvMhrc9IRSomhZ6SC6Dr+mt0l9nYB2IDRDUv2M=;
-        b=BDLGgQp+/h0AjAAO89kk6OwMGvyBiw9i/WVPYRxHtmo99W3m/c3vsxj1d1onicDBas
-         e224fiDjZTEOWMl1aGXKnMT9+tURMfpeF/yIUWeYfJg/dAwmZl+hyTf4BllVEqT6P2eS
-         dfuT937SU79FUJMIqGk9A2wu7XAgRau7PATwkR19VUagzo5+CjPwEMkqfZfVLJaamn5X
-         PKArwYndvrbSdTy8wPi0GnMwLUTAEzaowkSvL+/gM2AUViG8IvUqQpZyKGWHDwx1nExH
-         lUguC+AAfu92NvyKmP5WwzYsXn15hMsVUe/Ps61Mr9vyqj0wiG9DvaRc33uabKGBgtLI
-         UFSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794568761; x=1795173561;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+zGxPdvMhrc9IRSomhZ6SC6Dr+mt0l9nYB2IDRDUv2M=;
-        b=DEVM4uZqP7U3ZjdE/qrSxiwAtOxSVZLNEDBQeNEhEy/bCw2hrD/xjERqI8AHA3Bw5m
-         TMVilnK4a/a1vkA6n70TD1Dv9wWCw0u1yOAO9M4vehLtYg1DqkBHYUpMinour5COc8/F
-         YOWib+balMLNYR5luhfJCUQzsDk40qAGIO2+yspuALST3VIihGF5QBBXf9WqYrPVBh+N
-         bRCBogQNiSgKd51NQiwfw0zrZk6QeG14Y8MdBMedro9nRTdxRGqXplnH3YfSBkv+QM/w
-         eWFv8EaJoTZHhcUY3Zs4ZofsCIy+8npnddx/8FVo3p7W8Nnkqe9Td1+4mo+eTXyXJvN7
-         bY4w==
-X-Gm-Message-State: APuU4Z8/x4EqpmL8oimpEXlL0s9Z7YZbOC6A0WrFLKh4p4Ru50Sf+0dI
-	I7+VDMmeJAzSTIVFhSpwAtKnCPuMYsqfOZjAXAikqogH49GL8JgMajD/rDNgUs8v+lU2duk46WM
-	41f4uJ8dap/GDw6ikrDdw0bso+A9dpT1H5tXTWAU84wqoPvfXDLVyp+LarQ==
-X-Gm-Gg: AYBFou3n23psV8CEVlaNa/uC91Xy0DR4RKSUFwswOvsuGJV/OFg3Wnu+pkEDdUkugYu
-	E3p7/7Tg9oxugx7rSxh8YUqGcbIERmFPOnDaauNdUX7vT+cOOvadhYy2xBJJ6sGVVDgPxcI9/xo
-	Yu6zYe7f1BPEBsRK4gry/5R/mBE6uQAdilo7Wu6k9fAaLBjAvFVNxMA0wvMJjAnjInhSNEfOjVD
-	RF2XNEdu+IHR/V3rxmahII1b9J64Hf2Js05pbmBLEUP7xhK30BoAHeIIVWVHXn5gg3Oy09iUs4Y
-	Q9mEh4kyW0lM2NgOWR6oTwuRoNkpJvoniKKHspjnblWQvqMKU5DpSs040NVl79CYLe6e2uXCT3l
-	gN5Z6bG+OecexBTH6bzplXFgmyM9dErBDcMbkt9U8vlMsKGdP5l0hWN76Au7wNh8N+7Cx
-X-Received: by 2002:a17:907:d29:b0:c4d:31ad:9de9 with SMTP id
- a640c23a62f3a-c50963b430dmr206562766b.42.1794568761017; Fri, 13 Nov 2026
- 03:19:21 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=XMutx78q;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=w+C5MlwO
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9B4621D00410
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 06:37:26 -0500 (EST)
+Received: from ams-imap-03 ([10.64.2.23])
+  by ams-compute-02.internal (MEProxy); Fri, 13 Nov 2026 06:37:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1794569837;
+	 x=1794656237; bh=eqDaFOXbn6o3S8HHZlHZu0Vt6yoGbjygKulRUdW7kQ4=; b=
+	XMutx78qZZJRLQBEXzsM8JfnagfBjawSSER4G2o/lHAG4GclepEtc397hOUipJMY
+	z4lTMbAmk4ggZwaelA2gCoHXmjMR6dStPLtBXXMenhT0Ql2p0Xnv3507K231VCRF
+	Oi1whI3yML1yqwmCTfvQMppSkY17Bonh1uOVmthFwcK3KUOgUh+UDz/DSeDQijnF
+	28D+uS9reJr1SVbr+VUm0ZAx6RAxSfWvUmruo300gu0URXxLJFufHKBJ4iiR1PK5
+	pxxfruk3XN8GHq8Pdz4iNh8WQc5W7N2HXhZHUbP3bOm/b6Ctg0DenyLnhcpBFOxT
+	8s7E9/c7hf5EiS5Zdg/jMQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794569837; x=
+	1794656237; bh=eqDaFOXbn6o3S8HHZlHZu0Vt6yoGbjygKulRUdW7kQ4=; b=w
+	+C5MlwOo/fDVHYBD0Yw3/zx5Jp25EhMJTgU0Jg8PC8Dpq5FP591YE5zfr0wOPv+a
+	LDK7kDZadY35KqzMNxWkVF8MHPFANB+YlnnzxWVC97ej6J++HELDKvx8gN2V715N
+	STm06619ceX5QsG5dNNFWzMAF1+5dGZ1UrBDRGbNbJENBWMIOm2BvaOHFK17oVCp
+	hndemLShkyFAYMtJZ5UtUUs78YpfyIn/6nAZBlG7USgA2qewNVuU7scntIAIAVKF
+	FEeOs3j4so5KYczmeJw052ZJmo4dYWhHO3Mfg1aZDWSEtDJbc1yD9hRYnSkRecxL
+	Q9H21PMwSFVMaP15vv4Ag==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=arndb.de a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794569837; d=arndb.de;
+	mf=PGFybmRAYXJuZGIuZGU+;
+	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+	s=fm2:rsa-sha256:hqrwUp0w/27wCZJZN1p7nNbYdf7rgxvbtOvaiQ1sbJQUgYr
+	wRecX7bZoCSx04Tvl9pE/hayu07TtUURhD/Vqb3flH5I0+mvqRy4ePqVU905tDIs
+	OmJ4t49Kx+ebA+OCvzlYlxLFnx5BengYN4s0Rv5pUsfnxG96FxMIwi5rsEIDEcyk
+	VxCeM9d4Q10evlHcFrFCjarjw6QZV5cw0k2ye8cd/yezasOW7i7uj+cyWaWahRVL
+	mJTxrBQn2XT5A5vuLWrp3Ae2aY6/VsDciALQd9Xvf+/iGRR7KcDIPZe2hvYmZ8A9
+	FVaF2Td3n/G2kp6+nClIvU8PMiGsY4mZPYaTrqg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:hcQpqBspszF/VCz1NmfPwhsfTCNQAReFRYNvZ9kSFUo=:hO/C540qRnhOl18EbccET9beT52alCAQHyu6g6Clb98=;
+X-ME-Sender: <xms:Zfb2avCT-tojmG4Ikepw-p54Wlm9eUwu96QJgpS8e03i3ED6zqXKGQ>
+    <xme:Zfb2agVxabpjuFZFE55yrfdaf9tLdiiaOi5g3IR8DfhCsw6E-85mYGPe-onXhwe-n
+    NZLr0-AC6gAggAX9NGiRYjQYYR0yHI-bZTIK1kzqkGYEy-pPRAqTLNc>
+X-ME-Proxy-Cause: dmFkZTEDiFGDLqF2H9+O9kclr9WMnCL6OtmFN7CRKWU2znaeciKnGD6T5j5ItjEVdHlbGD
+    YqBOW+DNJB3dxdSQcDHRdnBA8Y7s/6uO3tiPJMyD4uWrj6XfbTOwNenN9IscialPmsIZTK
+    0iXO6p/j6egEf168nQnX7Ck6iDbBV5k8fS1NCDx9srTPTp1fs71+kDyys9TsxsMrai3vEK
+    +ri/I9u4ybluZLH5CI9YpmOiwlGpVMB4Y4GEpFea1kOP42w2C9SvPojFV8FOhqAVm34u82
+    VKymHdXDCNJQNZsoaCTkpz9i0gZrK8MW0epDqLwnQl7FJ5LF1BzvR1o+nFKuQX8UZdb6IW
+    vOonpJG+PF8aQuzJD8V+7aUD8HkmaFjkS3opKaRUMsNBqhGJataxqpCMThvDzXTwmxAXHz
+    woFgxf15w7KvjgekxfLIoHkjn7nIBQg8vaHS/krIq2iahPBj4zymyaZrWQmE4zWSH034dX
+    sK1RskPxfHErcP1SFbw32+61oRvnbATkD8cHsRr5EtKz8079tRU6jZV1uzy+hTrFmZBHN1
+    rklbhmOOVcg1/Bz3kp1d+I+NtKAEHa34pfcAyYPJKNVPYQyb4eczQ9pzyVhHqytdgdCQXO
+    0GSL4s2CbPUYh0tnyuKXggyeCYqA60zBxDp/vBqOH017HTQVKwjQYdZ7uyBg
+X-ME-Proxy: <xmx:aPb2asthTUH2x8jA2KOwo1d3rh6en4ZcMR3WviUnQxNyoPSM1862vA>
+    <xmx:aPb2an9DeWTknrfvXqc42PZmXbc0v-go1eebiGOYUyjyrJo5WOhSJg>
+    <xmx:aPb2aunyVYsbVLl4cnBH2qPOM0Uf2YGHWWzaod_a0tT3Bar_JyQzQw>
+    <xmx:aPb2avMOCFp0ldrdZ_SDhy2jWGzMP8RkeSQzvVn51CLQ7Ep9lYDaYw>
+    <xmx:bfb2alyWeOT9UQF5g9D6se6HL21AL870fqnXN6bf27AtiRM2unC88dvf>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id D0D2E32A0099; Fri, 13 Nov 2026 06:37:09 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,116 +115,38 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113-udc-connect-v2-0-f51b11f07eb8@flipper.net>
- <20261113-udc-connect-v2-4-f51b11f07eb8@flipper.net> <sashiko-outbox-212565@kernel.org>
-In-Reply-To: <sashiko-outbox-212565@kernel.org>
-From: Alexey Charkov <alchark@flipper.net>
-Date: Fri, 13 Nov 2026 15:19:08 +0400
-X-Gm-Features: AclHuK-FqQN5oUw9MnQi77vdHOak_yOmchgkwngpVp-7ydgu0G-GT1QAHVlaw28
-Message-ID: <CAKTNdwFwHZ8cUNXhNJ0qRHECMV6Ab4CSXBsXiDFtP7=BR6tZVw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] usb: gadget: udc: Decide on connecting in one place
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: An903QizF2Ds
+Date: Fri, 13 Nov 2026 12:36:49 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: sashiko-reviews@lists.linux.dev, "Arnd Bergmann" <arnd@kernel.org>,
+ linux-mm@kvack.org
+Cc: "Andrew Morton" <akpm@linux-foundation.org>,
+ "Andreas Larsson" <andreas@gaisler.com>,
+ "Christophe Leroy" <chleroy@kernel.org>,
+ "Dave Hansen" <dave.hansen@linux.intel.com>,
+ "David Hildenbrand (Red Hat)" <david@kernel.org>,
+ "Jason Gunthorpe" <jgg@nvidia.com>,
+ "Linus Walleij" <linus.walleij@linaro.org>,
+ "Lorenzo Stoakes" <ljs@kernel.org>, "Matthew Wilcox" <willy@infradead.org>,
+ "Malin Jonsson" <malin.jonsson@est.tech>,
+ "Richard Weinberger" <richard@nod.at>,
+ "Russell King" <linux@armlinux.org.uk>, x86@kernel.org
+Message-Id: <2c9ad267-7908-4b62-940e-dc877dba5a75@app.fastmail.com>
+In-Reply-To: <sashiko-outbox-212715@kernel.org>
+References: <20261112112528.1116405-1-arnd@kernel.org>
+ <20261112112528.1116405-2-arnd@kernel.org> <sashiko-outbox-212715@kernel.org>
+Subject: Re: [PATCH v2 1/6] ARM: remove support for highmem on VIVT
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 13, 2026 at 1:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] usb: gadget: udc: stale gadget->connected if pullup disable
->   fails on unbind
-> --
->
-> commit 8198ac49b976bc4f15b1f15c4abb55ae61ceb982
-> Author: Alexey Charkov <alchark@flipper.net>
->
-> usb: gadget: udc: Decide on connecting in one place
->
-> This commit centralizes the UDC connection rules in
-> usb_udc_update_connection_locked() so that gadget->connected only tracks
-> whether the pullup is enabled.
->
-> > diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/cor=
-e.c
-> > index 84dc0820c2cb9..e592705de55e4 100644
-> > --- a/drivers/usb/gadget/udc/core.c
-> > +++ b/drivers/usb/gadget/udc/core.c
-> [ ... ]
-> > @@ -1236,16 +1238,8 @@ static inline int usb_gadget_udc_start_locked(st=
-ruct usb_udc *udc)
-> >       }
-> >
-> >       ret =3D udc->gadget->ops->udc_start(udc->gadget, udc->driver);
-> > -     if (!ret) {
-> > +     if (!ret)
-> >               udc->started =3D true;
-> > -             /*
-> > -              * The pullup is never enabled while the UDC is stopped, =
-so any
-> > -              * connection recorded meanwhile was only a request. Forg=
-et it,
-> > -              * so that the next usb_gadget_connect_locked() enables t=
-he
-> > -              * pullup rather than returning early.
-> > -              */
-> > -             udc->gadget->connected =3D false;
-> > -     }
-> >
-> >       return ret;
-> >  }
-> [ ... ]
-> > @@ -1733,15 +1729,17 @@ static void gadget_unbind_driver(struct device =
-*dev)
-> >
-> >       dev_dbg(&udc->dev, "unbinding gadget driver [%s]\n", driver->func=
-tion);
-> >
-> > -     udc->allow_connect =3D false;
-> > -     cancel_work_sync(&udc->vbus_work);
-> >       mutex_lock(&udc->connect_lock);
-> > -     usb_gadget_disconnect_locked(gadget);
-> > +     udc->bound =3D false;
-> > +     usb_udc_update_connection_locked(udc);
-> >       usb_gadget_disable_async_callbacks(udc);
-> >       if (gadget->irq)
-> >               synchronize_irq(gadget->irq);
-> >       mutex_unlock(&udc->connect_lock);
-> >
-> > +     /* A VBUS event can no longer connect the gadget, so just wait it=
- out */
-> > +     cancel_work_sync(&udc->vbus_work);
->
-> [Severity: Medium]
-> Can gadget->connected stay set across unbind and prevent the next bound
-> gadget driver from enabling the pullup?
->
-> In usb_gadget_disconnect_locked(), gadget->connected is only cleared when
-> gadget->ops->pullup(gadget, 0) returns 0, and some UDC drivers fail that
-> call when VBUS is already inactive:
->
-> drivers/usb/gadget/udc/fsl_udc_core.c:fsl_pullup() {
->         ...
->         if (!udc->vbus_active)
->                 return -EOPNOTSUPP;
->         ...
-> }
->
-> When that happens during gadget_unbind_driver(), neither
-> usb_gadget_udc_stop_locked() nor usb_udc_forget_driver_locked() clears
-> gadget->connected, and usb_gadget_udc_start_locked() no longer resets it
-> either.  On the next gadget_bind_driver(), usb_gadget_connect_locked() se=
-es
-> gadget->connected =3D=3D 1 and returns early without calling
-> gadget->ops->pullup(gadget, 1).
->
-> Also, if vbus_work is pending when cancel_work_sync() runs after
-> usb_gadget_disable_async_callbacks(), a lingering gadget->connected =3D=
-=3D 1
-> causes vbus_event_work() -> usb_gadget_disconnect_locked() to invoke
-> driver->disconnect() after async callbacks have been disabled.
+On Fri, Nov 13, 2026, at 12:26, sashiko-bot@kernel.org wrote:
 
-Looks valid. Will fix in the next version.
+> [Severity: Low]
+> Should arch/arm/configs/mv78xx0_defconfig also drop CONFIG_HIGHMEM=y?
+> ARCH_MV78XX0 selects CPU_FEROCEON, which selects CPU_CACHE_VIVT, leaving
+> CONFIG_HIGHMEM=y unreachable there as well.
 
-Best regards,
-Alexey
+I have already sent an unrelated  patch to remove that file, so
+changing it here would only cause a merge conflict.
+
+      Arnd
