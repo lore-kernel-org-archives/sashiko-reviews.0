@@ -1,87 +1,136 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.43
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794606776;
-	b=gizdasO1lkgxGpQKEVHFm1124jYVj3AGZA9XWf+zMJ0ZpEIOtZ7VE2YcKrED8sFMJhhL
-	 k23CGyvEnVBsL1f22kH0oH61RBqXwEO0q2TEjHMufFWVIx5H4hXzypHzVM7DPEcvxQ2Yc
-	 xSw3A9eKP39XlnHeRbJFPmo6bZAV01uhdvvuJJdiX2Kzhk9JY94O9Cp2YGaxMRqBh1356
-	 WsqvwirTuRCQZEtSKKOGYxELcom59aHjd0ndOy2TzKqrnVczE/31A09+d9UHgIeVHquzF
-	 DTn7NNwPFZh4ba+Yg5GnAJCoWI+h5XhD0ZZtAx4COPqtwNw104oA/Yq1RFZS8FUcEDw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794606776;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=5eNMmr+DnF90TqvCN5l/r2SqPu00Gu4aNG8AXgfyJ3U=;
-	b=Xs20aZJR2poQV3gDlropr4o4pfHUC3WsC1IIf9iyn1mcaMk5kfvGz2lo6h1JHaHCjoYf
-	 WwUAH10y5wO237tomCfdNSJj57g6HR752sy3R8l0aZRAZl/0U34OEiwEPsEr5YCphszWK
-	 Lwv+r5hOoMC/B0TPpEiDha1UpAG+/LGqfZoynYhAfQ703snFTp1yUT2TggJ3F7+iM41wr
-	 S8pg1zL9B0dvPC4PnFE+V/USMzFoxPP+bYGoxWOpVUiC8GAUqCkcnt7UUL+HZK3qjcwFe
-	 D7hpz8YApQtYt3Fw9qTGD4zs4eA4kpY+f/ziRPoAZYpU7QJAyKrFrgmLIa+Dp5skWmw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J7Svx08m;
-	arc=none smtp.remote-ip=74.125.82.43
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.21
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794608851;
+	b=fEwkhdcDz3r3lY5rbQMoFjvGRqXBD/yPfbZfQu73SMp1Vn4FVFeOG7Vgn8YybpjrQHuv
+	 oO7BpOsR9JBoZbwsZgkLMjEsBoQtzeMLvva70P93uk4SsnXzXXsVAn+sQJiPWaSs6AgSA
+	 96+bVl9WddDdX2ID6mpT8OUimxoRvuIArT3RE11D4GhJEsjnL6bRnJBvi5KW+mYMxePUw
+	 1UqK8Cfe80qIGRfatSb1bmf/d8k2JPhn7/5SJbTM+K/Mj+ZltdLOwfBwvZXiDKl3SxI35
+	 MsKOBw8mAkGkGRENSTW/nPNNnrKww2gX1XEiJxPalUJT5ZKruY7ZkRy7w0chFB/h1ew==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794608851;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:DKIM-Signature:Received:Received:Date:From:To:CC:Subject:
+	 Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=Th79lCgQI2zwV6P3lWpVMylZrmJxD8Hm7W7asDrELN4=;
+	b=b3wMdQAbTLY6wybZlyiQmaHk0xbd/Bivx9B1QPEc0MWw5eiTSTt2c9N28gHRnKze/eBG
+	 7umpY6UqjRbb2Lj54kjwnvPhdJXEn1rm3IVxo8tADBIjYDFd/Ryrvq4BwSb5MtLbR1gnA
+	 C0LocIYy6Ou7SG9hetnVcu9UieZ+ghBRPosmQcN2WbRtmcTgWTkEaMLDaMom/yJiACN1t
+	 U0tckT4VGIv3Uizx7Wa0N6fvWpMCKxIzEyyV6W3CTUGlMKpHFtrnt4Z4g8VSJrSO6M5YO
+	 I53S9FcTsBnWVlu3iZHGH3ku25g7dUnfUpfO35e1OOTojC+qyR7C2dAnCvfr7LXCNDA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=UPn6N2j2;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=YJWbBsKJ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.21
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19E3606A32D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 21:52:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D19E3606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D0D606A882
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 22:27:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 84D0D606A882
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J7Svx08m
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1b3b4944a0eso665142c88.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 13:52:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794606774; x=1795211574; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5eNMmr+DnF90TqvCN5l/r2SqPu00Gu4aNG8AXgfyJ3U=;
-        b=J7Svx08mMUlVcOxJhbV8Jd353ZuheAlayWcaW2j3L6omj678tTvelravyONsJoSORP
-         039wi1bCKW5Axi62GDOTx2auBMzeuH9bMas+mcKgUUoBosELZvO4oKyzeapDbfd5QEtO
-         FBVcTBORzn6rkLcLmfSfmXH48jCMcH9HrVTn27uRvK3+auHOK18FiDlGGO8Vn9kYHhwu
-         xOWZ69tlHHqoMbhbl0sUxRjoTwObwuwJyn+gAQV1HK7IBuVstk/q3/XN8gOpYlY8unRR
-         F5bhpmhJtKstf03mmXhnjibW22Ic/XR7RrsI1DRqrDJgakDpHRRZkj24GJWgm+ISMhGp
-         HnzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794606774; x=1795211574;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5eNMmr+DnF90TqvCN5l/r2SqPu00Gu4aNG8AXgfyJ3U=;
-        b=rv/N5x9i+y6IuLSrOEGQS76a/aVgirWTgksFAvQmgOoHjeyEFrrPrLDVtKAB2XDTv1
-         C24X2YdInqigPm9Dd/a0vSOJQQ/o1dMBmmB0pUCRRnEuL7dY0cd/jCZJ5BNQr07eF5Zb
-         oQ8QwlMb5kn5UWAIei+uUNW/8sADS1Sa0RgsNMJ7W/duSI13x3LwpAyxlLmqjtGbkX7h
-         QrTvUHAYcfVeXfgxRDd4NJqJmi/ced37qW++if1vUpHg7cJu+Csgk1B3139pVHZqQejE
-         y6Eoe1HojwiSepwEvZDlaILUU7q97zcGgnN2Vr7xKHGRCnGl0zfdPkDF6MEE+oBouwfA
-         PE6A==
-X-Gm-Message-State: APuU4Z8JE385hg8FggqFjrAW50TWdNwO7/9WetfbSjE/5vtjLNTw8wGy
-	7QnIl65VPro4vtexvgxsu03d4gZRq3//9TUGi+APcGKWDzjzATBtKSHpPTsi4A==
-X-Gm-Gg: AYBFou1PUykwLf/prom4YgHs6/uNFtRqFIErJF04Uxkqiuv7Zd+xWjpSJB4LAxEQO6K
-	wVruFP/F1ewX5Hcv5EmBFQDFASdVANGaj+D7kdcxpfXiMWEfMQqklK0jESBrh/jlfh11rCZjVGr
-	FY2ZLliywwQ75uaQOvoVqvbP95zKxnVly7MyFZDFIqovxzf6NIFMP9mByaIsUr6bgbXT8HUqnqg
-	CTkRHpvKsBYcufSXwoJOqrxNsNqFqNwylkcfsEDSPz2GXU3tTHqDzizl51aaGs2+fPlc1nimwov
-	C5boRfYpfLSXTXueA8fXH93kG+0EJFY/96NVq1oR/neCkz+ErB9afF6diKq8D3u1xozirJGmoV2
-	2EGkaX3Qge+Ijlq4G6/wwjiiTS86guYDgOTr2D5fdxGwfa0+fisQlxkSumQs/YaeDsEjZJ/dzFm
-	1nA53ZvDaSyLKBwpZymg0PzYktNRLV1CLdBMtx+6RKdpF0C6H5xfobk8epAv0mrmu7i49H5fWEr
-	PxjBiMkJmoECSGChT8IBqs3PEYpcnuddJraT4eDM8NBZobdKf94/aIfHnfbJyZp3FR2+Mwt8om0
-	wGTkKODPQwtR5ASzTOlXTHtVTcptc3lOm7Tb7K2APdapXUuOGy+lpkNAxloqr93jY56v55riV5o
-	Cuj4=
-X-Received: by 2002:a05:7022:1205:b0:138:30b1:4c00 with SMTP id a92af1059eb24-1b5030681c1mr3410577c88.3.1794606773661;
-        Fri, 13 Nov 2026 13:52:53 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b50309b27dsm9100380c88.2.2026.11.13.13.52.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Nov 2026 13:52:53 -0800 (PST)
-Message-ID: <cc2f6b19-3e40-4835-8831-379fcaef5c5d@gmail.com>
-Date: Fri, 13 Nov 2026 13:52:52 -0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=UPn6N2j2;
+	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=YJWbBsKJ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794608847; x=1826144847;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=+abkPE5mhdKWwWsMCcrWT9s1t0dZxYlXtUt60hyVUfc=;
+  b=UPn6N2j2f2NZOU+fZ4fv3QIHVY9sEXh3+lReW7R8NezJh4G265aaCAJS
+   myrVb6oknPebxXc5G/9ZT3G41mktbyLUU2UdrTKTXTnmHT37RfCcEa38e
+   zAk5uw9ORnZtFEgJfULywcz8RtRl1FqKbvRB8qRfk2PmxMdJVY4N0l3t5
+   UakNIN2sgeSzug3rnVDe/iSPu7m6XQaqjkwBgVi3Xf7MI0+xpKygjnSNe
+   jVIvfzWUrdgC9dGDnLOQvgK0Nq+xjGrMZU0+twE6TDgL/4GvYjBCxYmoz
+   RghFbpYqFmdBseuQJWc+toKeS7o7OWG42OhyLUyLrbqMk15swnd0WO59C
+   w==;
+X-CSE-ConnectionGUID: 00yntF0pS4S4mZWMxNCuCA==
+X-CSE-MsgGUID: p9f4fVU0TnuugYrk8hs2Hg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11965"; a="3504022"
+X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
+   d="scan'208";a="3504022"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 14:27:27 -0800
+X-CSE-ConnectionGUID: cjYilp4XSGuuvem5kkVwpQ==
+X-CSE-MsgGUID: RbrleesARLOf0wZAgLqm1A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
+   d="scan'208";a="9199517"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 14:27:27 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Fri, 13 Nov 2026 14:27:26 -0800
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Fri, 13 Nov 2026 14:27:26 -0800
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.25) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Fri, 13 Nov 2026 14:27:26 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UkVOiHRuYD1Rrw100ggOZf5YpZFkJf8hpeLbUpplzIoxnrJq2htXGj9VQPAnyNi1DrpvbH1/aCu9UY++2s1cixYoGF/6xJyoBv6COqVUkNTfxnsihMP/S56Y7QgoQnbsnr1vWBU3O7qbB9nbloSqgtzVQUI98CXoHBMs7BGXR8A7Ek+KfnY67gIwzYrPMDm+SfN2fkUt3o87x8qB1DVvUh6n9xrcVYJKqqxOsxHxQw9ZgizYCT8XkEXLfppcCWOgp2mluoQiwFNZZPbrbm8kzWEjI7V+8pbXt1DzJO+yRGLixLdDZ04b/Bt9xNDJtnSOAwub+o9gYrSi0mnqZ6ZTBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Th79lCgQI2zwV6P3lWpVMylZrmJxD8Hm7W7asDrELN4=;
+ b=Hz7UAi/K8rvxXepATnEeP2LrKaAnd1/K3afjJjgfwTaKZpxRK+NNT8Fm0hjrA1Ucw1PJgmgN4phRnumP4LOTcbuSYRGdUIP7GEQsCnWY9wllpmzI4XCJlvTRXyfqZDTLER74ChY2kz0AIMX67V89WrwCH17nYhrI3GeD0gYqF0m0opTrxDTv73GmyDvtFf8iCcnvbbqL70v3jc8pFwF6KUzEpj9RTLSagYAoudSApiucnSBN7Tpf604O05IS96Pd76ar07wGZiTQGir878qwyBm3uHUnssvHo9eLzUM0vxT5iNJzXO37lFR1MLhTdFJaZpKSaqs75Z/P82buxUL65A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Th79lCgQI2zwV6P3lWpVMylZrmJxD8Hm7W7asDrELN4=;
+ b=YJWbBsKJ6aSB41q0hsOAhEtfsHHLZHYJIXpGcT3sbCwKVEYYj24CUAl5n8oam7yNrW5wsdStcK2bzoTpzpCr/V30yqA4yrl7k3ZITwCrKBqx01sWS4hA+GmYtRmgLWYSl7gfT2/944dxEyfrDAp9vbe4ouoF9s4m29mvNNyqU0A=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7408.namprd11.prod.outlook.com (2603:10b6:8:136::15)
+ by DM4PR11MB6429.namprd11.prod.outlook.com (2603:10b6:8:b5::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Fri, 13 Nov
+ 2026 22:26:47 +0000
+Received: from DS0PR11MB7408.namprd11.prod.outlook.com
+ ([fe80::53aa:3f7a:59cd:e057]) by DS0PR11MB7408.namprd11.prod.outlook.com
+ ([fe80::53aa:3f7a:59cd:e057%6]) with mapi id 15.21.0592.012; Fri, 13 Nov 2026
+ 22:26:47 +0000
+Date: Fri, 13 Nov 2026 14:26:01 -0800
+From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH v5 4/7] drm/xe/oa: Skip OA HW teardown on a wedged device
+Message-ID: <aveOefedREMKMgzt@soc-5CG1426VCC.clients.intel.com>
+References: <20261110190052.3514226-9-umesh.nerlige.ramappa@intel.com>
+ <20261110190052.3514226-13-umesh.nerlige.ramappa@intel.com>
+ <sashiko-outbox-207649@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-207649@kernel.org>
+X-ClientProxiedBy: MW4PR04CA0291.namprd04.prod.outlook.com
+ (2603:10b6:303:89::26) To DS0PR11MB7408.namprd11.prod.outlook.com
+ (2603:10b6:8:136::15)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,153 +140,129 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/4] MIPS: Ingenic: Add XBurst SMP support
-To: sashiko-reviews@lists.linux.dev
-Cc: "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
-References: <20261113190836.470937-1-f.fainelli@gmail.com>
- <20261113190836.470937-4-f.fainelli@gmail.com>
- <sashiko-outbox-213561@kernel.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <sashiko-outbox-213561@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7408:EE_|DM4PR11MB6429:EE_
+X-MS-Office365-Filtering-Correlation-Id: d306e868-8878-4feb-e9a3-08df41d53389
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|4143699003|11063799006|56012099006|22082099003|18002099003|261022105027099003|10067099003|261028144727099003|261026140227099003|261026121527099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info: Z38DhBi+PAh8tp1SQg6NMmDyhSXYfmehwGFFoziiZI9T7WY/hILWrmvPQhew2PlKctU5V8GCvsNiUyHSlhz67GBJ2Sno9PrMOiLNvTcbbrawLcx0nymdY4YZKeTuA9lOWFdN4/0tTzSYPDK4vBfeYOnYMXeS6ph0KVXNQZMoB3fq5DnjZJzk/8sXYnoS98Sx0SgVXzxY8eDp4Rc13fXU2guutFHUW5PjF7Hpmrum99jj7DYDCqDvMHqQuPnQ7p3KNTg1zwz4hhnoqINAzoWmHrVKnJgLrrnMhxgCZ/ANYLgkT4s7FzdRKGFG4a/FmrIPxU6dKdmmXf48OnTjaSWSaj6gBRFKmUhky1+XwOa5ILItu+uGL6yuCp/AiqvAAerUQ8T91G0RVdmmQt4DGn83WxPGKDI891YpatggS//ola56ma7bUlcz7tF3U2mJycuzDcwOvgVA7PWD+PrLP/g60k0e+6cBdKwXlA8qg4N5A7XXWbkT4DGXKc/MrsZcddwkOdQBwosZtPMe0jgvbDcmvUaI1synAq0NRL2cc4f/3KUhivpSQO+9TATX0PLZ9lg4JVO6d0tAxsz8vnifWswQ+PPVzvDMgdklpzygz75U20c=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7408.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(4143699003)(11063799006)(56012099006)(22082099003)(18002099003)(261022105027099003)(10067099003)(261028144727099003)(261026140227099003)(261026121527099003)(261009223027099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SmRrUVA2YVhVYWtnWWdFQjhwMkZidkpCOS9zTFpaYisvZEJ4Zis4NEg2QUJq?=
+ =?utf-8?B?aVJCWUZLaTkwM0FqRi9TUzhRb1dKdzJQS0JlYzUxWmxmaC9vSHZCMDdJb3FO?=
+ =?utf-8?B?dkw3dnpuVGpMalVwWVFoV2FuUVVFSXBRMURZYSt6WkxmSFVFVGE0bGx2ZENS?=
+ =?utf-8?B?OUIxcG92SXBxTVpLQmR1aEp5cWxVQ3ZraFFxVnlKQ0dKUG8yK3I4TVJVYTZ0?=
+ =?utf-8?B?QzkxWWhWWGgyMGVFTVRWempyK0l5T053UXNnTU52bzljZjNOL09YMU1IZzNN?=
+ =?utf-8?B?Qk0zVm90cThQVktoWG5ydWxtdSttYytwaUV5Wm5BQVZiQlhaR3FuemR4Nkhv?=
+ =?utf-8?B?MGlOVjRoWkpYaUF2SjAxakxnT3MwRnkzTW1wWm9wZjRGZHpvWUphSVFWU2xw?=
+ =?utf-8?B?amRRNmxnUFg3SGFpRWJUR09hNnh3WDg4VkJZMUNVY2VCZXU1L3NZanRZOUtW?=
+ =?utf-8?B?Zzc3cWNVb3hoQm93SmJTVlJ6amlqbUV0akhyQllXYk1yS21iekp5UU9ua0t1?=
+ =?utf-8?B?djVOWEdMZUhsbzkxa2lLNkx0RXRvV3JjdWc2TTdVcUN3bmlqMjhoMDR2TnhC?=
+ =?utf-8?B?UVZCRG8wNk9Ud1BxNVpMdXE4ZnlhcGNVQlNJN2drejlyVWNwN0JERDJuQVY1?=
+ =?utf-8?B?UWorZFJTK0tHbitxcldlaVIzRFkwQ1BFQU5IVGF4RmMrZlNsZjltdnVCa1Zk?=
+ =?utf-8?B?a3lkNkgyTVZsZDJsYUFpQTdTSTNlN0dUcEw5MDRGS2IyeXpTZTdXOXdsby96?=
+ =?utf-8?B?T0ZXSDhMQmUwUlRpcG44aXRpZUUwa05pRENYSURvS0xyVDZ2QzR2TXVZWEUv?=
+ =?utf-8?B?ajlQQWJaOFBRYm1rcVVJcTU3am1xb0tWSFlMZUcxZnYxaDc5N29nVS9VZGhS?=
+ =?utf-8?B?aVovcVYxcG1HVUZLS01Sd0UyYU9uQ1M1dVlMSzRlbkh0MVB0YURXaW5ncThs?=
+ =?utf-8?B?WlB6cHZYL1FNZ0NwUlEwTEkzNlN4aHh3TXZTWEsxdE5pY3ljNWRLclB1UFZZ?=
+ =?utf-8?B?UHhlZ0dNOGxvU2gzdWd2bmxoQ3BnM3RwMmRMS2x2ekdiZjd0U2Q0cHNabFNZ?=
+ =?utf-8?B?V0VaNHRyWDJMcDM3ek1qOHIycDZoNmh2cllqL2hTVzd1Q3ZQa3hYbGtuSUND?=
+ =?utf-8?B?MFN3UGRtYkxHWVo3VmZQcUtNOEc3bXc3SHF6MXhlSnZEelZkOXhmWTFKeHl1?=
+ =?utf-8?B?UWtvREl0QlBZYnhKUTFHbUJxVVFWYkY2Y0g0NDNDY2N2L3Ewc1dHY2YweWts?=
+ =?utf-8?B?eElRdHEvRDREVnhLZVQyaEljVXhzZllidnRyOHBxbHpiS3hpaHE5d1YveDlU?=
+ =?utf-8?B?ZDUvcFJTYU4zMm5zb3hrNVg3eXE1c1hOaE9kemx6Qno1cWVFLzdMWmJQeHAr?=
+ =?utf-8?B?czN1bmkzcHpNNU9ZTU92TjhObTd6bURBVDRJL1hOeHhvWC9vVmRNYVVoODQ5?=
+ =?utf-8?B?eE1JU0V4NklFOC9QTS8yNXJ4VFZkU1daV1N4Rk5ZdC81UldDZERkOWRRVDU2?=
+ =?utf-8?B?K3puWS9KWVZucTcxbGo3L0ZibFZDMTYxRzcwNy8vNE5jOCtCVFU2cW4xUG5U?=
+ =?utf-8?B?eWdHRlR1YWI3VzZ0TGc3REpubGJoN2VsOSsxWW0wd1A0aEl6eHFFSVIxY0FH?=
+ =?utf-8?B?L1F6TWVSckh0MDJKTTJYdUxKMmhDRXBQN1BZWWx4SHgxZHNlSkVRNUExY2ND?=
+ =?utf-8?B?dGNPb29IZGxvaSsrUkJvdk81aHlHdVBieGFkbGpCZmN4MEI2ZTZjMFFBVm5j?=
+ =?utf-8?B?Q3ZzTnhycGYyOTN1aUxsMTNFSlEzQXpxRUlZNzQ2WVhNalhuaUp3N1RpaDhH?=
+ =?utf-8?B?Y1IwU2FHc0M5ZG9DVzJkaTE1OUN1ZlpTNXlodWVKV0QwbWZoQVRIdlRIYWQr?=
+ =?utf-8?B?RU52U2EwZHFVWVVsS09ZLzduMzArMkJPY2szVjdFTG8zNDAyWkJaNTIxa1Bo?=
+ =?utf-8?B?T21DVCs1alBlOEFUYmYvYjZNYldadiszL2ZVNEhDVkFXMytZdFBrVWRQTmVK?=
+ =?utf-8?B?Y3NUYmhuZi9oR3Z1blRlMDBIWHI4dG9xa0NTVXB4bCs5ZkhoNWg4bVhHQnND?=
+ =?utf-8?B?ajhDZU8rRytqQ2J2ZUNvYUVRbWljYTREMUFhdHkyNzkyOCszbkR1WjlOL2RN?=
+ =?utf-8?B?Qmx4K2xiTGVHTjdTRnVEN0hrbzJRc01MWGJEYVo1UUR4ek9uajVqYUw1SCtk?=
+ =?utf-8?B?YjlEamJwTzN2YjVkTXZSS0w5K1ZIWmZqK2ZnM1dURTVHK2QvY3J2VzNDK2I0?=
+ =?utf-8?B?ZFRmM2V2bHlpOE5NS1RZYlJwdHJqcWcxMXphd1o3K0xoTzVwVThmMGZmQlpo?=
+ =?utf-8?B?R1R5emtDRXNIcWxlYmdLemNRQy93QWVIanJVaGJGZHVKWW15L3p5SnUySEFs?=
+ =?utf-8?Q?Lsba5sqXJgd9+870=3D?=
+X-Exchange-RoutingPolicyChecked: fHOIpFE+827CfsrhlKWuaQ7ub3enuQkySKr5V+sQjD680S1V8pnRiS6MQx2Ty4qVhcnz6hDlWxlZF8HHmPNtbuxEuZ8Dcug5Z1ztoijL0h2hCtWxhyEL+0FFqr80kaJAO92N8EwcGJSK1EFkVgOauZCkdhj6vMUO1Fin0vNb3zlkz/x23UCG2pGO/ikl7gQCAE3msuurjEaj2X6oTwZUae/Ae/Xw3ioQ6y77+b3kEbfnTRzT1K0PJFdX1WnIyra7S6Ki/zufBW+Imgn5WQa0Sy5O9pVMk5kBYqDncZcIpFsK2bFUdfRrqKbLadsJcHam2/NxCjmZQieMGOjFqH1zug==
+X-MS-Exchange-CrossTenant-Network-Message-Id: d306e868-8878-4feb-e9a3-08df41d53389
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7408.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 22:26:47.1497
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: AQfNWS2S6PeXFEueWZBMLNKHiGe0mcsrmEAp0om9Q6Jcc+Afd93Qb+SUKgPCnwGCR+u4HgeSxnH717EwCAoUN/Eu80s3dSSsNqiBS3eHu8E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6429
+X-OriginatorOrg: intel.com
 
-On 11/13/26 11:40, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [High] mips: idle: cached need_resched() load after dcache flush in
->    xburst_wait_irqoff()
-> - [Medium] MIPS: Ingenic: missing IRQF_NO_SUSPEND on mailbox IPI in
->    xburst_prepare_cpus()
-> - [Low] mips: idle: xburst_wait_irqoff() calls non-noinstr
->    r4k_blast_dcache()
-> --
-> 
-> commit 2871a54058216bdde1330a67071ead0fedc13363
-> Author: 周琰杰 (Zhou Yanjie) <zhouyanjie@wanyeetech.com>
-> 
-> MIPS: Ingenic: Add XBurst SMP support
-> 
-> This commit adds SMP support for the second XBurst core on the JZ4780 SoC
-> using CP0 mailboxes for IPIs and adds an XBurst idle handler that flushes
-> the private data cache before executing the wait instruction.
-> 
-> Link: https://lkml.iu.edu/hypermail/linux/kernel/2005.2/03488.html
-> Link: https://lists.openwall.net/linux-kernel/2020/05/13/1482
-> Link: https://lists.openwall.net/linux-kernel/2020/05/19/1099
-> 
->> diff --git a/arch/mips/ingenic/ingenic-smp.c b/arch/mips/ingenic/ingenic-smp.c
->> new file mode 100644
->> index 0000000000000..27b9b573a7e07
->> --- /dev/null
->> +++ b/arch/mips/ingenic/ingenic-smp.c
-> 
-> [ ... ]
-> 
->> +static void __init xburst_prepare_cpus(unsigned int max_cpus)
->> +{
->> +	struct device_node *np;
->> +	u32 reim;
->> +	int ret;
+On Tue, Nov 10, 2026 at 07:17:22PM +0000, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential
+>issue to consider:
+>- [High] drm/xe/oa: build failure from non-existent xe_wedge.h and
+>  xe_wedged()
+>--
+>
+>commit cfe215fb928c6338b6dd8582d19a4f894fb6bd7d
+>Author: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+>
+>drm/xe/oa: Skip OA HW teardown on a wedged device
+>
+>This commit skips OA stream disabling and hardware teardown when destroying
+>an OA stream on a wedged device, and ensures the poll timer is unconditionally
+>canceled in xe_oa_stream_destroy().
+>
+>> diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
+>> index df9a3ea0875d1..6383a2e036ab0 100644
+>> --- a/drivers/gpu/drm/xe/xe_oa.c
+>> +++ b/drivers/gpu/drm/xe/xe_oa.c
+>> @@ -43,6 +43,7 @@
+>>  #include "xe_sriov.h"
+>>  #include "xe_sync.h"
+>>  #include "xe_wa.h"
+>> +#include "xe_wedge.h"
+>
+>[ ... ]
+>
+>> @@ -905,7 +911,12 @@ static void xe_oa_stream_destroy(struct xe_oa_stream *stream)
+>>
+>>  	mutex_destroy(&stream->stream_lock);
+>>
+>> -	xe_oa_stream_hw_teardown(stream);
+>> +	/* The poll timer may still be armed if the OA disable was skipped */
+>> +	hrtimer_cancel(&stream->poll_check_timer);
 >> +
->> +	ret = request_irq(XBURST_MBOX_IRQ, xburst_mbox_interrupt,
->> +			  IRQF_PERCPU | IRQF_NO_THREAD, "core mailbox", NULL);
-> 
-> [Severity: Medium]
-> Should this request_irq() call include IRQF_NO_SUSPEND?
-> 
-> Unlike request_percpu_irq(), request_irq() with IRQF_PERCPU does not set
-> IRQF_NO_SUSPEND automatically, leaving desc->no_suspend_depth at 0.  During
-> system suspend (such as suspend-to-idle), suspend_device_irqs() disables
-> XBURST_MBOX_IRQ, which runs mask_mips_irq() and clears STATUSF_IP3 in
-> CP0_STATUS on the calling CPU.  That blocks IPIs during noirq suspend and
-> s2idle, and if resume_device_irqs() runs on the other CPU, STATUSF_IP3 stays
-> masked after resume and hangs subsequent cross-CPU smp_call_function() calls.
-> 
->> diff --git a/arch/mips/kernel/idle.c b/arch/mips/kernel/idle.c
->> index 80e8a04a642e0..6c44715d81d5b 100644
->> --- a/arch/mips/kernel/idle.c
->> +++ b/arch/mips/kernel/idle.c
->> @@ -18,6 +18,7 @@
->>   #include <asm/cpu-type.h>
->>   #include <asm/idle.h>
->>   #include <asm/mipsregs.h>
->> +#include <asm/r4kcache.h>
->>   
->>   /*
->>    * Not all of the MIPS CPUs have the "wait" instruction available. Moreover,
->> @@ -71,6 +72,28 @@ static void __cpuidle rm7k_wait_irqoff(void)
->>   		"	.set	pop					\n");
->>   }
->>   
->> +/* XBurst gates its private cache clock in WAIT; write back dirty data first. */
->> +static void __cpuidle xburst_wait_irqoff(void)
->> +{
->> +	unsigned long pending;
+>> +	if (!xe_wedged(stream->oa->xe))
+>> +		xe_oa_stream_hw_teardown(stream);
 >> +
->> +	if (need_resched())
->> +		return;
->> +
->> +	r4k_blast_dcache();
-> 
-> [Severity: Low]
-> Does calling r4k_blast_dcache() from __cpuidle xburst_wait_irqoff() violate
-> noinstr idle rules?
-> 
-> xburst_wait_irqoff() runs between ct_cpuidle_enter() and ct_cpuidle_exit()
-> while RCU is not watching, but r4k_blast_dcache() calls out-of-line
-> blast_dcache32() in .text, which only has notrace from inline and lacks
-> __no_sanitize_coverage, __no_profile and __no_kcsan.  Besides making
-> cpu_in_idle() return false during the flush, builds with CONFIG_KCOV,
-> CONFIG_GCOV_PROFILE_ALL or CONFIG_KCSAN run instrumentation while RCU is not
-> watching and dirty the private L1 D-cache on return from blast_dcache32()
-> right before wait gates the cache clock.
-> 
->> +	/* Recheck work that may have arrived during the cache flush. */
->> +	pending = read_c0_cause() & read_c0_status() & CAUSEF_IP;
->> +	if (!need_resched() && !pending) {
-> 
-> [Severity: High]
-> Does calling need_resched() after r4k_blast_dcache() pull the idle task's
-> struct thread_info cache line back into the private L1 D-cache right before
-> wait stops the cache clock?
-> 
-> need_resched() loads current_thread_info()->flags from KSEG0 cacheable
-> memory, caching the line with _TIF_NEED_RESCHED clear in the sleeping CPU's
-> private L1 D-cache.  When the other CPU sets _TIF_NEED_RESCHED on the idle
-> thread_info->flags and sends SMP_RESCHEDULE_YOURSELF while the cache clock is
-> gated:
-> 
-> CPU0                              CPU1
-> xburst_wait_irqoff()
->    r4k_blast_dcache()
->    need_resched()
->      /* caches thread_info with
->       * _TIF_NEED_RESCHED == 0
->       */
->    wait
->                                    resched_curr()
->                                      set_tsk_need_resched(idle)
->                                      smp_send_reschedule()
->    <mailbox IPI wakes CPU>
->    handle_int / irq_enter()
->      /* writes regs / preempt_count
->       * in stale thread_info line
->       */
->    scheduler_ipi() /* no-op */
->    /* _TIF_NEED_RESCHED lost */
-> 
-> On MIPS, scheduler_ipi() does not modify thread_info->flags, so when CPU0
-> takes the interrupt and writes other fields in the same 32-byte struct
-> thread_info cache line (or if remote snoops stall while the cache clock is
-> stopped), the reschedule is lost or the waking CPU stalls.  Since local IRQs
-> are disabled and any remote wakeup during r4k_blast_dcache() raises the
-> mailbox IPI in CP0_CAUSE, checking pending alone avoids touching the D-cache
-> after the flush.
-> 
+>>  	xe_oa_free_oa_buffer(stream);
+>>  	xe_oa_stream_free_resources(stream);
+>>  }
+>> @@ -1704,7 +1715,8 @@ static void xe_oa_destroy_locked(struct xe_oa_stream *stream)
+>>  {
+>>  	xe_pm_runtime_get(gt_to_xe(stream->gt));
+>>
+>> -	if (stream->enabled)
+>> +	/* A wedged device may be unresponsive, skip HW access */
+>> +	if (stream->enabled && !xe_wedged(gt_to_xe(stream->gt)))
+>>  		xe_oa_disable_locked(stream);
+>
+>[Severity: High]
+>Does this break the build?  Neither xe_wedge.h nor xe_wedged() exists in the
+>tree.  The helper for checking whether an xe_device is wedged is
+>xe_device_wedged() in drivers/gpu/drm/xe/xe_device.h, which xe_oa.c already
+>includes.
 
-All valid points, thanks for the feedback.
--- 
-Florian
+I see both xe_wedge.h and xe_wedged() defined in the code. CI builds 
+fine too.
+
+Umesh
+>
+>-- 
+>Sashiko AI review · https://sashiko.dev/#/patchset/20261110190052.3514226-9-umesh.nerlige.ramappa@intel.com?part=4
