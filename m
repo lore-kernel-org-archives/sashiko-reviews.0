@@ -1,111 +1,128 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794579575;
-	b=YaHaH8JnGt+vYilJoaHlXOZvA9yTVSENVJQaWv1YXyLX8T0li1eFXqLz79eK40w9PlLr
-	 sJ59HoegTFNY8Q1khtUZX4IFhQRNGoXxwGUH7vgVpzvvSj5dnx/X6IYI0EmyqrR3KaB/8
-	 iHODTZQmwSKyReTnnyLFQ2TR4oexvrDRh/BBDklEPFnAw3T6gQY2hl8kv8mS3/gjcnxZh
-	 PgtY2BIk4+9HzqIe3PH++CjS0GZw4I6Ap9ywICzFmbydBmjGap2b1ECwvWBq7VLAGAPg/
-	 1IK7uGtBhjw6CU+5rnMK67g/FPFdPJyGcCSIgblWDVEV8K5TlcIUhCYHScJ4hbMy0Zg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794579575;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=RoUJPoDvqPyMYdvLAx7wuzjFIAugHN09/qGUDFufoyw=;
-	b=UnZbU13KIpkzpFGOkKf6dk6cEHpBZWuuBpTS4Nsvc1qc/G9B9yhC/4iybpWelMMvsyV6
-	 XpUX8vmeBjhW9qHonuOyEAIYsfifrxGeoG9JQeuKdWkskMQbbsJyEO4+SsYcDqWEyyFtF
-	 UmnE6qxajbZs5XDOhTLAV6u8wt+N+cGou/0pH0sG4rKqT6aYSRipDMIxbbH/bHqgKKHBk
-	 dcZrvI/vI8fxZjPBHQwKcC5WXTkW22ea31CZpv+xm5K54Dy/bFRPSPSgfAmxtcSDhl7ML
-	 WJQUucGEEFCCjbkWwA4dFXxSl6Jro6rkTacNavjy6CK0uby0h5gQ4XYpobgvZ9dxO6w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arndb.de;
-	spf=pass smtp.mailfrom=arndb.de;
-	dkim=pass header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=CmTQ43rB;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=X16WGVVA;
-	arc=none smtp.remote-ip=103.168.172.149
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.113
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794579627;
+	b=AckgQYk9CFJomXAgiPZ7zV8Zi+1SU11IjZD9SNhkQ+CcKVAzWMobB7FBJrJG6gBEDgB2
+	 arrFXEIYXuJvAYPlReUK32UVYmiWXQWNz0uMH2eNWqeNKPw4G1OpxIOuk7rjvDVYRhyzH
+	 +zhA7ovzProPfagLXXX7CyJoiJc1bruB9d+PfByv5UNACPJLaGwecCnZQc6F4fRNweUpq
+	 gL/Fzk2oVj+P87hkHQ+ACPCVKu6dcFHMPTLwcJyFOq6Bl+JJ7cEIfbW4Kfg/4xyMBEFKr
+	 Nng+IzJgVx+9rUjK7lMzTZ9xB4FiAQg2VJWv+y2qZCBMynEEMW2ImR/HK4PLBdsQMwA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794579627;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=vlj1VHIvMIhokJ0S/I4jje3LcJk4c5K8IdFpClvui20=;
+	b=3nu1+K13V+8ei0kgdBz/5Malp0/iap+p+Mjum6cv9kdy7gRe4tunZyoujMWq5+SusYYs
+	 nWXadJiUJBcC+mjVZstQCZ1BQyOtkqQ/Uk3Kyr5BY5kYiNxUBh2fVCIzbArU1V3s3zvVI
+	 vorNro/hZ7vUCX6FGF0zjdK9GadE2IYUGhE20TtFL+2c0bSyFUqOnEdU2+oka7NWbc+XM
+	 dg72dg+FOOvNlpLFwOhqqjAjfvsUhew/ybTBgMi+9D2jSRi10u9hIsDQ1zDx7fdUT0QYm
+	 FBOZtpN8FYBnfEJ25aHawQB0IpDE/0txUJDWGvtZ6f3ZxhURKqkczTktJj75Uz5relw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b="Tw/oKwI5";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.113
+Received: from YQZPR01CU011.outbound.protection.outlook.com (mail-canadaeastazon11020113.outbound.protection.outlook.com [52.101.191.113])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E2B606A32D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 14:19:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8E2B606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139A5606A327
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 14:20:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 139A5606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=CmTQ43rB;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=X16WGVVA
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfout.phl.internal (Postfix) with ESMTP id 87D39EC12D9
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 09:19:33 -0500 (EST)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Fri, 13 Nov 2026 09:19:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1794579566;
-	 x=1794665966; bh=RoUJPoDvqPyMYdvLAx7wuzjFIAugHN09/qGUDFufoyw=; b=
-	CmTQ43rBhbkcxyywSU0bptwkSqP6To64HsK5B8YL54z/R5clS28bSUfGkTSQcfu7
-	ALMrkgVPuiRH+kOqiFnXjy9YweGLaaOfBxMP4BpW81UtvpLMti/a7Id0educ0Ibd
-	DM8NPg5hWfh/UWw/IQqjtdpITUfCsnSDVPj5lQgQU4QDYNTE0jPgO8MKui2bkX/S
-	XPlLt4abhXs1qra3zkUV7Blo4jplQvZdgo62hBNtpNlJMMx3nswF/k8bA4rhpClP
-	7TUt2m2aMCLcGoifqqhKs5kkhhEzblepw/XMd1GdL4XgD2awgyT1u68OmBq70fJT
-	7X/GaJGfxBEgu7Xr/Uqncg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794579566; x=
-	1794665966; bh=RoUJPoDvqPyMYdvLAx7wuzjFIAugHN09/qGUDFufoyw=; b=X
-	16WGVVANI6Bqsy0uCsTe4x+zQiKpPZe9eSyhr6jGzPe9x9YMtI5yJqtk0MD6Qtwx
-	HgjsfqvpN9S4SAO3QSsEXrCgA2Yo7slHfOaWzNH4FsyCkc4OBXLL6VpWZ1QYHFVw
-	mnD1/dS00+PMLEwRU8AuZdgjqB6KU/vePt0Aq/pyfNkMqUWD4EQF+7zmJpX7ZAO5
-	cw7QVJeicYH9lirqrwLilYF4cKHAV4vYhQ3tBBAZAI1CzUIwXIgd5OSzSMSpsBJF
-	4Zip12t/GvuoJh8PCZbeswjzS6ZyYJ7xJdXKxcv8sss1InBwjkNSsAP8Rps8PZQi
-	ogUOw8DKFMBW11XghO6ng==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=arndb.de a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794579566; d=arndb.de;
-	mf=PGFybmRAYXJuZGIuZGU+;
-	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
-	s=fm2:rsa-sha256:SGyrEqwB94XQPLYu1VH/y8tyR3BDnxMNXsghRBWMLh4vDOn
-	PiGTEiUavHIOJ/7LOiAQrnGWs339BqkyZPhiO2Xp/bwML4t4IaPDIFj/yczQgHZ0
-	6Eiq/ps7xWSwKjiQWDBYVhjaQrquyrDProDgPqyDVaG4EqutLtYcBBSvFENve2ZI
-	EzAePft1bOLnTTq1H8Ks2gzgOxi6LH4eseJfEMKAqhJZZGvOppcNJ0yYTPWseRzl
-	A0ItF4DAeLfIGdv1NBOOgsznoVSUd1XVMMDBqBL8NWtG79WL26VCThtFxEsDZXqM
-	poUHxN3vOPek5VxSmqMAmOPTNen0RtlzsXsSfyA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:wtdkm8qMoH1idKb883rNB76Vp10NABjxoQnp9E0viKs=:B7YiVtR0x9J0dYjfQTIGq65fnKeg0k+9jyGvYJDIcmA=;
-X-ME-Sender: <xms:Zxz3aq-1MXSyvJlOCToClarup4KSpOgP1q__TfAaeof1DJ7EGbrO3w>
-    <xme:Zxz3alhpSD21XzllWkSwOR3KSR348xbE2yibNqdEB0YeMcy7M8JBKYqKDNTdxzger
-    _38B3M9q9p0H9V28qGdaf0qrnkrgFr_WuE51I-lIz95KlzuGvEvLO8i>
-X-ME-Proxy-Cause: dmFkZTEUbeBCFv6J3xC3FebRJK+AUjb1IUXCOcUbsghJIWlnF2ZS1EW33U0egd23z4Zy4T
-    tt8oubCPe42K6/ZYcmo8IIGtXnOIXLQvQ8CfOmjTl6V72JTKA9OuPd3jnrjL2AVfappj7N
-    OBDVVB/EQaO9sT6vVIyW6k2vsxKQojH/P/zhTVVd/rz3QBMxtGSn/U2miHCiN+XU1ZKiBa
-    1s/QVDdylMFa2nHz5ao1iqgL9X6gx6uwA6ZFK2EChRbmiqCoMud4OUNILzDihLkGTl7d4G
-    qsODNF1zNy97PzqR/G02uhk7UkJBnkt0cCaAT2mISpTzmrq5VI2NFV9F+T145g+uvSTQUh
-    hz16/Cyr/49qmisNWrebI6v96Y74eYzmmdG4PY6JzSCKqsETaxSumpoHPv0yyMj0ATdAEJ
-    BJoedHBOgjDhP4fd1IlCUfB+nwUVUH8wjTq3m4IvQ5ycs+SaOnrTBQL9EJQGMM7U8IJ7Tx
-    2WrsSgur8WQZCAczQzcuGQuaZTb4hxwr//Bnyx01WtorUmZvopAJq5PTvmK/3jNGp8sMd3
-    m8hHk6Tivw57m6Ive0LnTb9V8kXN6W/42Q8m5d+j86CIJ0MJnvS6ZHRp8jKDpwqOGvbGPB
-    IDdOEL28N+nRtWvahSxAP/RoU9RnAsNc5Tctg+K2tqk1BfKm7AoYdZTz86rQ
-X-ME-Proxy: <xmx:ahz3aurOslNFv6Oft_IRmYk5AIAoT625RsEdEdYDmDw5APrQAfcI4A>
-    <xmx:ahz3arKTRtTdAJFiMhlYCfYL6l2MUwy-TcpVhcVVh5bdjDfoEiGOjg>
-    <xmx:ahz3aqDq0sSF3jR4QAVUEUL9JSTSXwDRzKeKNF_QQiy_ZtgoOw80wQ>
-    <xmx:ahz3at7xfymhRZt7mmM-4RZ8HMpWmu50Rbkbcj8nM5ma0o0aw_cp8A>
-    <xmx:bhz3ak9abl_Xa5ZlTqbigXkWh38eXBJYNio0F0uX0-4ttVAB2dTVm1Uc>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 2636932A009C; Fri, 13 Nov 2026 09:19:19 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=Tw/oKwI5
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dtFpp92fO0MPlg68DZOLLVUVkyFZxlC/b9k4tXZ2of2dLdJWzGpy6gkjaj/n4z/DbeEChJJOSLTrCioIv2WQMb5ShDUVq2sy5GvmfKEm82e8j3lMkIzkqva02AzQ0ALeg1jU8TH09JLITJCALUSw8gdOaBasuwhtHGozsy10w7v5OF2rr8n7TYOsoAXYhxkJcKTyk9Ky1hiFFFTXpA3OG7euYrZp8P3kkMxx1KIVLMq3Nx5KTzqMvVjoD6lKFKWMaz1ojeVlnb46kljwsnfnmRN72M2Fi9gRf4EQBv3Ll7q2oq0lgYOMrysTwnK1NUkcDG4Rg3Aw0x7GofnLAmCjzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vlj1VHIvMIhokJ0S/I4jje3LcJk4c5K8IdFpClvui20=;
+ b=s4bGv3kGgq9N4dcdoPLA1ITMe75O+fO5TYv1evsnfs4Ue1aOccDtslquxH9EBVCEESsJK8spTMbp6dUT/5ID2Q7cBxidXqOJmN9uaf5Icip0vWPME+kcgniprINmLwf41Mtb2OIjpmdqfo3wzY9e69z6opijeuPSIbp5ZKeMWf+Xv4Zzo7ZMZuciUM1wRj+m56+M7jTpa2z6ed/gptuThoXRIqC3aB1N2Yixs4YQJ7RIgUUHJ4qVB3bO2Ohd96vjr1QRF1fCVrqCDpLdT129OgyNpjksY4SB23yPheuH6aE20avPONn6lWX+9chHIbKRQE+KdkuivALC0Dz9fxIZSg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
+ dkim=pass header.d=efficios.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vlj1VHIvMIhokJ0S/I4jje3LcJk4c5K8IdFpClvui20=;
+ b=Tw/oKwI55y8oR/Zsca5PF1TniY1Gwt4q/gxMCYrCkwQVw6GJf5OJpxcFY7TFqoZM+BXoYOh/yoA2i67CzhtpRaR/yX8rpQS9CN995GjUecYSEMdnt1Wp0a7h+QPI/1nTgfNF4VwCED8405nU4jht29vPTLSHW11vnH9WHhQovjx/Zc4rcMX/qJcWcEUcG6UWDyrVE58SFi07k/7kjPjAikPbyLreWARL389wbon3GUzLzZY0AxBk95Buf64wPxhg7WsngGKbHAjWbApbnsaV9yVA2zJu5BKmkGZ4SailtZsD3+UfxkygYjj+Vz39LArVnZ/vBTXN+3gX155Zfw9YzQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=efficios.com;
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10) by YT5PR01MB912907.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b00:15::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Fri, 13 Nov
+ 2026 14:20:23 +0000
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0615.008; Fri, 13 Nov 2026
+ 14:20:23 +0000
+Message-ID: <f45a858d-61c4-41c0-883f-c2465bbf3983@efficios.com>
+Date: Fri, 13 Nov 2026 09:20:20 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v25 07/14] mm: keep the RSS counters of
+ single-threaded processes exact
+To: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>,
+ Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu
+ <mhiramat@kernel.org>, Dennis Zhou <dennis@kernel.org>,
+ Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>,
+ Martin Liu <liumartin@google.com>, David Rientjes <rientjes@google.com>,
+ christian.koenig@amd.com, Shakeel Butt <shakeel.butt@linux.dev>,
+ SeongJae Park <sj@kernel.org>, Michal Hocko <mhocko@suse.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+ Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Vlastimil Babka <vbabka@kernel.org>, Christian Brauner <brauner@kernel.org>,
+ Wei Yang <richard.weiyang@gmail.com>, Miaohe Lin <linmiaohe@huawei.com>,
+ Al Viro <viro@zeniv.linux.org.uk>, Yu Zhao <yuzhao@google.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>, Mateusz Guzik
+ <mjguzik@gmail.com>, Matthew Wilcox <willy@infradead.org>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Aboorva Devarajan <aboorvad@linux.ibm.com>,
+ David Carlier <devnexen@gmail.com>, Andrew Morton
+ <akpm@linux-foundation.org>, linux-mm@kvack.org,
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+ Randy Dunlap <rdunlap@infradead.org>, Harry Yoo <harry@kernel.org>,
+ Hao Li <hao.li@linux.dev>, Kees Cook <kees@kernel.org>,
+ Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+ Juri Lelli <juri.lelli@redhat.com>,
+ Vincent Guittot <vincent.guittot@linaro.org>,
+ Dietmar Eggemann <dietmar.eggemann@arm.com>, Ben Segall
+ <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+ Valentin Schneider <vschneid@redhat.com>,
+ K Prateek Nayak <kprateek.nayak@amd.com>,
+ linux-trace-kernel@vger.kernel.org, Jan Kara <jack@suse.cz>,
+ Oleg Nesterov <oleg@redhat.com>, Alan Stern <stern@rowland.harvard.edu>,
+ Andrea Parri <parri.andrea@gmail.com>, Will Deacon <will@kernel.org>,
+ Boqun Feng <boqun@kernel.org>, Hugh Dickins <hughd@google.com>
+References: <20261111203626.95838-1-mathieu.desnoyers@efficios.com>
+ <20261111203626.95838-8-mathieu.desnoyers@efficios.com>
+ <sashiko-outbox-211802@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-211802@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YT1PR01CA0088.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:2d::27) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,75 +132,108 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: ArjohY43VwOF
-Date: Fri, 13 Nov 2026 15:18:09 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: sashiko-reviews@lists.linux.dev, "Arnd Bergmann" <arnd@kernel.org>,
- linux-mm@kvack.org
-Cc: "Andrew Morton" <akpm@linux-foundation.org>,
- "Andreas Larsson" <andreas@gaisler.com>,
- "Christophe Leroy" <chleroy@kernel.org>,
- "Dave Hansen" <dave.hansen@linux.intel.com>,
- "David Hildenbrand (Red Hat)" <david@kernel.org>,
- "Jason Gunthorpe" <jgg@nvidia.com>,
- "Linus Walleij" <linus.walleij@linaro.org>,
- "Lorenzo Stoakes" <ljs@kernel.org>, "Matthew Wilcox" <willy@infradead.org>,
- "Malin Jonsson" <malin.jonsson@est.tech>,
- "Richard Weinberger" <richard@nod.at>,
- "Russell King" <linux@armlinux.org.uk>, x86@kernel.org
-Message-Id: <3f53782e-5def-4ff4-8d87-27b6d3b2a45e@app.fastmail.com>
-In-Reply-To: <sashiko-outbox-212720@kernel.org>
-References: <20261112112528.1116405-1-arnd@kernel.org>
- <20261112112528.1116405-7-arnd@kernel.org> <sashiko-outbox-212720@kernel.org>
-Subject: Re: [PATCH v2 6/6] ARM: add CONFIG_VMSPLIT_2G_OPT option
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT5PR01MB912907:EE_
+X-MS-Office365-Filtering-Correlation-Id: a9d4e602-2d63-4b27-8ec1-08df4191411e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|7416014|261028144727099003|261026121527099003|261102123227099003|261026140227099003|261022075727099003|261021121427099003|56012099006|4143699003|261022105027099003|10067099003|22082099003|261009223027099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	7wYBMrPDI8qbX2VtjdPM5Hv38JW0clz0l6qMI5DQW7YY6oLYzBRsdPYC0ir7G2dvYjWWblVRT9eHgDaZwQTFspeUrlFkXuUsfIM1NDvqYzTmHE0ae1MkDkGQkyH+Mi1OBVqfg1ZIiIXyXlYqagGbeZLafAHjeeBiADyPHTgjtm/2Rmbduun5WCKKVDEDAk4E+6VA5sGYaUZXcJqpEx5FQ+a9ig2HokkZmLRac+GQAd5yo/5Lqx8Ezho0iuSvYly9dfJrmGN+9TWPdLlnyEdAU4+dA7ZqoUVSMHGV1p42Qbls9WackOI1ZBYxENyLFWa0BXYNM2rCtPsymQYO+ujNbiCn5ErU/Bk36drmtCrG3sh89OlXq8/pAOxnmUYAZQXUXCiYD41qJWuOeNOZM1kaYd2mOAm4MrHWAn+rAb2dE9qhQsyXr7XcVDyZTiTxjQuNQW5HmkGQzPUgPaRRHZc2qzHT+xpC8vjb4dESuDqY8bLBQFHDbgoK8/kVxfNGh7RUzM6IGPFMYEWvgDI54X3ZIQwI+g/TOqaGpkv/3AAcgcJLnkIBkkB9hwgf0ZndGVOeUDm+1gXi0RpNyK7untPhZhX/A/x2hThgKNxmVsU39dk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(261028144727099003)(261026121527099003)(261102123227099003)(261026140227099003)(261022075727099003)(261021121427099003)(56012099006)(4143699003)(261022105027099003)(10067099003)(22082099003)(261009223027099003)(18002099003)(6133799003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VytnQVlJejdGdGRORjVQZlRkcHp6YjZkQ3orcG1TQ0VBWE93TytWdGp2S3Y1?=
+ =?utf-8?B?L3Y5anpPQldjNmZ2VE9vcHVJZFhXcGE4cklXSHVGejk0TlFvN3Nhd240dFRL?=
+ =?utf-8?B?UUhoTDBrM2FrV1RBVFVkOFhkcEREOEZxV0NKcGpCM3hucUNVemZnM0RQMWRW?=
+ =?utf-8?B?V1ByZGVpeXdSQ1FDbHc2ZGs2cHJiQ0VSMkppazdlbko3bFRFam5NVEJqL280?=
+ =?utf-8?B?ekk3MzVjNVR1WkVHUUJSWm10TFhmL0hiWTcyOEJiTmZNbWE0OXNBc2FhNFZP?=
+ =?utf-8?B?R2RINEVwQlE5Z2ExV0VMUm5oY0R5bG04bmFqZkFKMmJCUmhBa25YdGRYdlpH?=
+ =?utf-8?B?cE82dXFpSkhpUXFzSGNRRnJVUTh6VGorYkwrRTZkQlFkYXV4S0k5WG5jeDgw?=
+ =?utf-8?B?cmRVR3ZQREtJRDBoVnl1UVJQRUwvaGpvTmFFeUZmc2Z3KytHcTVSZjJBWGVr?=
+ =?utf-8?B?Tkk1eW02Tzd6dDNIZVhUMk9PNWpHRDNBQmhHajlvYTY0UFUxNkt4RnFDUm1a?=
+ =?utf-8?B?UmV1cTVqSDlDQStsWUROMjF2ellWSlRhV01QTGN6L2trOURQaElmTmtsaGNX?=
+ =?utf-8?B?VmhtZ0hqNGphcGFGd1k1dnZLUE1VdnFEWEtoM3Z5Y1Yzd1FvZWNsdDN3VjA5?=
+ =?utf-8?B?Q0NCT09ZWE1HRTBqVFl3OGdSKzNSSnZkVWxOY1FZRnRJWDJ5SzRZeTV2V3VC?=
+ =?utf-8?B?TVpCSGxCbFRxVkV5Qm0yWmxHeWpUazloekxDQm9rd0NBN2UzcjVPY1YwVE84?=
+ =?utf-8?B?dy9LeDlXMXJrNit6RTJFcUc5OStvdURWbkFwY3BOQ29uTzZRT3NWNFZicXlr?=
+ =?utf-8?B?dnc0RXdyQ05KcExpeEFQcDl1dmx6ZGxOYXNyZ3VRV1ZvWHZiZ0t2ZWNrQnJB?=
+ =?utf-8?B?ajhjRk5xRGxHdnFVUjNWNmRQYTB2Z3BKd1JwWElnL2JLRU5JaFBZRGRZM1N0?=
+ =?utf-8?B?cUtiWDhsS2h3YXNhT3BWN1Y5TkpFU2dJR3MyQUo0WlNzN1A2N2lobEMveHpD?=
+ =?utf-8?B?QktUSmNqVkVNd0VYczJFZXhYc3d4M0Y4d0JPYnBFTzc5cEpVcUMySm0xSHBq?=
+ =?utf-8?B?ZndnRWNSMUxiSXRCSHZqWEdISTZMK3hQbFUvbEpkaGhRdVQ5Q0hIb2xnVC9m?=
+ =?utf-8?B?Q2k0MXEzZDdzV0pCTHFFM0dkay96NXY5bE8waXQzNTZON0wycHJsSDBadSs4?=
+ =?utf-8?B?dTZFR0lTMlpuTzBwNXRyUzR0ZUFSTlFzT3MvS2hqQnRzbnljK2ZaZk5KZElS?=
+ =?utf-8?B?WlhCZktKeGVOUkdXYXkxMG9zQ0VqdlNYZ0Jrb0pTY0VEV09pTVQ2R3VKbXdK?=
+ =?utf-8?B?WFcrd0VuOFhNT0hWRndSNm44dmllTzk2NXpRN3dvaWoydFZsWHBGOVdUd1pX?=
+ =?utf-8?B?RVdTSlplYjhGRUc5eHhNN0p3Q0pDNmRoYWllWjFwdlZUeHZsamhCbnR4VVNU?=
+ =?utf-8?B?Q2crTVcvMkx0TEtFZHFrbzVVVVlXZnlBb2tvc2JTZ0FHR3A5ZFg5cEJJeW11?=
+ =?utf-8?B?ZmtyKy9Kc09ZNmF1eU1ydTlUYldVMXZ5dlpTQkR0UUtqeFBNSDBTTENBbG5D?=
+ =?utf-8?B?ODlKUEdtK1VpQ2dPUjlaTmhBemFCRE4vVHZ0R2xiNEhCUUlDVEQ4eFVtZFJY?=
+ =?utf-8?B?NE41aU1VTkhGRkR3MEJIVlZCMlN0cTE3bjBFZjd0NlNzTzRCRFNOSGswM3Az?=
+ =?utf-8?B?VHBjZWoyVVpibGdwOVI2cU1ZSTFjTENpSk56ZnpsZ2UwdlRUZll0RU5iYWtL?=
+ =?utf-8?B?NGxUOVA5YUQ3SkxyMWdHcXNvaFNsSmZUMld4VXFWNVdZRHJpek1tc1RVaERR?=
+ =?utf-8?B?WUQ2aURtMERjVUVzV3dUZUtlMldoVXE2eGticGtoSWVvcWQzZFBVOXEvTFhN?=
+ =?utf-8?B?OHRzV3UyZTBlcCtCZE5mTHo2dGxRLzFyY0xRLzlFRWtIQ2R2UHdOSzI1c2k0?=
+ =?utf-8?B?aUtKOUdlT0RXUkgvcXRYOHlNSjcrQVBIRnNFY0ltL1RsWXp3SUhYZDI2NnJC?=
+ =?utf-8?B?citsS2x5enVLUG4vdC9FdzY2VHZMUmUyS0lCNHFUdWFCazUyeVNDdEQwT2Nw?=
+ =?utf-8?B?bjJnbXNkNGsyTlV6RDlmQ215Y2JqdEpKU3p0SEFwYUtoSmxRVHRxZVVVVWN2?=
+ =?utf-8?B?ZGVKcmV3Y1VQbWlTZDJUY21jdlVtdGI3YWdoVWNwalBjbFp2ZEMyODR5MnpR?=
+ =?utf-8?B?YmNsRWVYeXRobjBWVW9LeVJpSXhSdENVZ0ZrRXREUXlzRy9FTFB4NUY4T0Jo?=
+ =?utf-8?B?MjdZUVprSTF6T1h4ZWs3cC9CSEdTbkRMRHJ1cC95bW5UeUFtcnBhdlNNei9r?=
+ =?utf-8?B?TmFud2F0UnNobjkyNWFRL1Q1Ym10ZWw4enFWL0kxcGltZ1hMWm9YU2NDWHow?=
+ =?utf-8?Q?Ij2Zfw7lrPCBNi6g=3D?=
+X-OriginatorOrg: efficios.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a9d4e602-2d63-4b27-8ec1-08df4191411e
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 14:20:22.9614
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xtH2t8FYOg8O+6vGV5DPdNusHFOsGJ31zovDosi4q7R55TQbbvp0lrujJ5NYaWVYz8R7+CKvGDAH8egktddw1sDYRtzxlpdTk06L3czD+fc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT5PR01MB912907
 
-On Fri, Nov 13, 2026, at 12:26, sashiko-bot@kernel.org wrote:
->> @@ -1052,6 +1056,7 @@ config PAGE_OFFSET
->>  	hex
->>  	default PHYS_OFFSET if !MMU
->>  	default 0x40000000 if VMSPLIT_1G
->> +	default 0x70000000 if VMSPLIT_2G_OPT
->>  	default 0x80000000 if VMSPLIT_2G
->>  	default 0xB0000000 if VMSPLIT_3G_OPT
->>  	default 0xC0000000
+> [Severity: Medium]
+> Can a failed fork leave mm->rss_owner pointing to a freed task_struct?
+
+[...]
+
+> If an external reference holds mm->mm_users > 1 across that mmput(), mm
+> outlives tsk.  A new task allocated at the same slab address as tsk can
+> then match current == READ_ONCE(mm->rss_owner) in __add_mm_counter() and
+> perform unsynchronized non-atomic updates via
+> percpu_counter_tree_add_owner(), losing counter updates or triggering a
+> Bad rss-counter state report in check_mm().
 >
-> [Severity: Low]
-> Should ARCH_MMAP_RND_BITS_MAX also handle PAGE_OFFSET=0x70000000?
->
-> arch/arm/Kconfig:
-> config ARCH_MMAP_RND_BITS_MAX
-> 	default 14 if PAGE_OFFSET=0x40000000
-> 	default 15 if PAGE_OFFSET=0x80000000
-> 	default 16
->
-> With VMSPLIT_2G_OPT, PAGE_OFFSET=0x70000000 falls through to 16 bits
-> (up to 256 MiB of mmap randomization), which is twice the maximum
-> allowed for the larger user address space under PAGE_OFFSET=0x80000000.
-> When KASAN is enabled (shrinking TASK_SIZE to 0x5ce00000) and the stack
-> gap reaches MAX_GAP, a 16-bit random offset can exceed STACK_TOP -
-> MAX_GAP in mmap_base() and cause top-down mmap allocations to fall back
-> to bottom-up.
+> Clearing mm->rss_owner alongside mm->owner on both error paths before
+> mmput() would avoid leaving the dangling pointer.
 
-I've changed it now to use '<=' instead of '=' and hopefully handle
-do something sensible for any PAGE_OFFSET value. I'm not sure I understand
-if these are intended as heuristics or if there is a hard limit we
-can use instead. Should this be 'default 14 if PAGE_OFFSET < 0x80000000'?
+Yes, both error paths leave rss_owner pointing to the child. This was
+found by reading the code, I did not reproduce it.
 
-      Arnd
+No update would be lost, though. rss_owner is only compared with
+current, never dereferenced. At most one live task has that address at a
+time, so the plain counter still has a single writer. The other tasks
+update the atomic counter. The counters would still work.
 
---- a/arch/arm/Kconfig
-+++ b/arch/arm/Kconfig
-@@ -329,8 +329,8 @@ config ARCH_MMAP_RND_BITS_MIN
-        default 8
- 
- config ARCH_MMAP_RND_BITS_MAX
--       default 14 if PAGE_OFFSET=0x40000000
--       default 15 if PAGE_OFFSET=0x80000000
-+       default 14 if PAGE_OFFSET<=0x40000000
-+       default 15 if PAGE_OFFSET<=0x80000000
-        default 16
- 
- config ARCH_MULTIPLATFORM
+What breaks is the identity of the owner: a task which does not run on
+the mm would update the plain counter as its owner. The owner should
+stay the task running on the mm.
 
+Planned fix for the next round: clear mm->rss_owner next to mm->owner on
+both error paths. In copy_process() this is done only when rss_owner is
+the child, because with CLONE_VM the mm is the parent's.
+
+Thanks,
+
+Mathieu
+
+
+-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
