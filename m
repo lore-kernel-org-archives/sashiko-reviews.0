@@ -1,111 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794569848;
-	b=px16aq/zlIjH78d+piZ5FaYN68w2HZQfyobeSQI9YcsGoFDPDgbiiI/YJTbnAUbi2d09
-	 cDAlq0HFw9WAf0XcQrvSXxIN1s61fAylSCUFDOJVWDnLfPuaMGV9tsfej4GxmvrZbjpX9
-	 VYHy5gzFQxMQ5tmwQOaMGzK+tXtTs9g2dJ+RNm57zmVJx+3k9bM95tPUrrt7VO+JBVa4K
-	 I5yZWMoGdN/Wdjh4fYckBqSbAef3ojF/IGIQJJmDO51lzaz23A4QO/iWXuXocjaIgLQDj
-	 MMsmSjBRcE7WuSBKWgwnyf3J4QU2HICjboCAfALj74f7Kvxc66LP+bqh3OQclJ2nyiA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794569848;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=eqDaFOXbn6o3S8HHZlHZu0Vt6yoGbjygKulRUdW7kQ4=;
-	b=kIEVR6u6IugIm1cbKptbuERGFO2Br3OlL0RgZ7j+xOydVoKh+lGUUr1vAC6DwOdkkjAG
-	 I3DJzQjINiU0hCq3Kqyjb+r9oUoqGwFbItE1+Gt92mcJWV/2hFBuuoWPIcGKLER5LcNO6
-	 Z7qbYVlB3iz7OeVEfqJazGGVFvk2WejxHxpg8ozYkfwuRfPk4lA1nMqb+R87VDY4qvYdl
-	 H8n1vkANMekJn3FlC1v/77DHj3uUYP7TTg4nqmDwxo/goowiYsJLWeyDlhk7zPQtZEiwb
-	 otCdQJqvwGEyP0b1d2Ztfl37ZnxshWl/qUEdO3r29wYrAZsxr7/EY9NNM4oI05wx0UQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arndb.de;
-	spf=pass smtp.mailfrom=arndb.de;
-	dkim=pass header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=XMutx78q;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=w+C5MlwO;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.32
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794570575;
+	b=Ts1+Gcj3SDCt5pxLb2k8v3abs4lZ9c9jylkBOOi8Q+VU53lYy8lOIFG3C2yRec0+fFQp
+	 zHq7jWYIqWxO6wrvzT2tQ7CRPnD7gFuqO6GKyzaUmEP85yuiANctYOMSgNT0eQSRC74UE
+	 uqs32lOPE2sPfVMCKxSEJ/BKSwuHAoLoYzywM60+RsOb+kBYGHclbI7B81neP135xZUb/
+	 TSuRN636N9JXhS7dsAutm/TbbYUuxjptAQOQMq6uBwef5dqEhizm5EzDcSBdI2sCwKujc
+	 WY/ubpFj1X+MqPRdXOIad52c1uEpr9ktIClEY2aZmmBGZPKyrhhyriXMQohT80IuJAw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794570575;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:
+	 X-MS-Exchange-AntiSpam-MessageData-1:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=NXoc4U1JzfFRyoJiXo63v8zJM+DBz+irZur++YrHMbQ=;
+	b=uIVYEBPCeeb43qeb4i929IcWnnHPEzEVSXUX2wW7ImB6UZu6C5hOeKt/S8ha4vi+i1W3
+	 zZiO9VhjWFmAGNBwQVbZH+bRB4e3unsElVgroUCOV9yKexKf87Gqjqochk3wctfIa8COt
+	 RedYX6pzgDAtnL0dz5b49ZraiajuxlcatGAV2+hIRYYKtIF/cDkVEkydZVgH43rDFcLcw
+	 kya6wHr2xEC+JEyEna2pgd6fOT3gCNhkILQfN/HgpySfmp9Gcsd9zj4WKEoABJUsvRxOe
+	 q5FYPm7eVtGRUk8xpSyzwnp59YPuv3oHd3FRs9ha8ncAdmJ/BrIzjzAneaqEJ2uWtPQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nxp.com;
+	spf=pass smtp.mailfrom=nxp.com;
+	dkim=pass header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector1 header.b=KZEgI8sK;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.32
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013032.outbound.protection.outlook.com [52.101.72.32])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B012C606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 11:37:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B012C606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41316606A327;
+	Fri, 13 Nov 2026 11:49:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 41316606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=XMutx78q;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=w+C5MlwO
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9B4621D00410
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 06:37:26 -0500 (EST)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Fri, 13 Nov 2026 06:37:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1794569837;
-	 x=1794656237; bh=eqDaFOXbn6o3S8HHZlHZu0Vt6yoGbjygKulRUdW7kQ4=; b=
-	XMutx78qZZJRLQBEXzsM8JfnagfBjawSSER4G2o/lHAG4GclepEtc397hOUipJMY
-	z4lTMbAmk4ggZwaelA2gCoHXmjMR6dStPLtBXXMenhT0Ql2p0Xnv3507K231VCRF
-	Oi1whI3yML1yqwmCTfvQMppSkY17Bonh1uOVmthFwcK3KUOgUh+UDz/DSeDQijnF
-	28D+uS9reJr1SVbr+VUm0ZAx6RAxSfWvUmruo300gu0URXxLJFufHKBJ4iiR1PK5
-	pxxfruk3XN8GHq8Pdz4iNh8WQc5W7N2HXhZHUbP3bOm/b6Ctg0DenyLnhcpBFOxT
-	8s7E9/c7hf5EiS5Zdg/jMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794569837; x=
-	1794656237; bh=eqDaFOXbn6o3S8HHZlHZu0Vt6yoGbjygKulRUdW7kQ4=; b=w
-	+C5MlwOo/fDVHYBD0Yw3/zx5Jp25EhMJTgU0Jg8PC8Dpq5FP591YE5zfr0wOPv+a
-	LDK7kDZadY35KqzMNxWkVF8MHPFANB+YlnnzxWVC97ej6J++HELDKvx8gN2V715N
-	STm06619ceX5QsG5dNNFWzMAF1+5dGZ1UrBDRGbNbJENBWMIOm2BvaOHFK17oVCp
-	hndemLShkyFAYMtJZ5UtUUs78YpfyIn/6nAZBlG7USgA2qewNVuU7scntIAIAVKF
-	FEeOs3j4so5KYczmeJw052ZJmo4dYWhHO3Mfg1aZDWSEtDJbc1yD9hRYnSkRecxL
-	Q9H21PMwSFVMaP15vv4Ag==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=arndb.de a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794569837; d=arndb.de;
-	mf=PGFybmRAYXJuZGIuZGU+;
-	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
-	s=fm2:rsa-sha256:hqrwUp0w/27wCZJZN1p7nNbYdf7rgxvbtOvaiQ1sbJQUgYr
-	wRecX7bZoCSx04Tvl9pE/hayu07TtUURhD/Vqb3flH5I0+mvqRy4ePqVU905tDIs
-	OmJ4t49Kx+ebA+OCvzlYlxLFnx5BengYN4s0Rv5pUsfnxG96FxMIwi5rsEIDEcyk
-	VxCeM9d4Q10evlHcFrFCjarjw6QZV5cw0k2ye8cd/yezasOW7i7uj+cyWaWahRVL
-	mJTxrBQn2XT5A5vuLWrp3Ae2aY6/VsDciALQd9Xvf+/iGRR7KcDIPZe2hvYmZ8A9
-	FVaF2Td3n/G2kp6+nClIvU8PMiGsY4mZPYaTrqg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:hcQpqBspszF/VCz1NmfPwhsfTCNQAReFRYNvZ9kSFUo=:hO/C540qRnhOl18EbccET9beT52alCAQHyu6g6Clb98=;
-X-ME-Sender: <xms:Zfb2avCT-tojmG4Ikepw-p54Wlm9eUwu96QJgpS8e03i3ED6zqXKGQ>
-    <xme:Zfb2agVxabpjuFZFE55yrfdaf9tLdiiaOi5g3IR8DfhCsw6E-85mYGPe-onXhwe-n
-    NZLr0-AC6gAggAX9NGiRYjQYYR0yHI-bZTIK1kzqkGYEy-pPRAqTLNc>
-X-ME-Proxy-Cause: dmFkZTEDiFGDLqF2H9+O9kclr9WMnCL6OtmFN7CRKWU2znaeciKnGD6T5j5ItjEVdHlbGD
-    YqBOW+DNJB3dxdSQcDHRdnBA8Y7s/6uO3tiPJMyD4uWrj6XfbTOwNenN9IscialPmsIZTK
-    0iXO6p/j6egEf168nQnX7Ck6iDbBV5k8fS1NCDx9srTPTp1fs71+kDyys9TsxsMrai3vEK
-    +ri/I9u4ybluZLH5CI9YpmOiwlGpVMB4Y4GEpFea1kOP42w2C9SvPojFV8FOhqAVm34u82
-    VKymHdXDCNJQNZsoaCTkpz9i0gZrK8MW0epDqLwnQl7FJ5LF1BzvR1o+nFKuQX8UZdb6IW
-    vOonpJG+PF8aQuzJD8V+7aUD8HkmaFjkS3opKaRUMsNBqhGJataxqpCMThvDzXTwmxAXHz
-    woFgxf15w7KvjgekxfLIoHkjn7nIBQg8vaHS/krIq2iahPBj4zymyaZrWQmE4zWSH034dX
-    sK1RskPxfHErcP1SFbw32+61oRvnbATkD8cHsRr5EtKz8079tRU6jZV1uzy+hTrFmZBHN1
-    rklbhmOOVcg1/Bz3kp1d+I+NtKAEHa34pfcAyYPJKNVPYQyb4eczQ9pzyVhHqytdgdCQXO
-    0GSL4s2CbPUYh0tnyuKXggyeCYqA60zBxDp/vBqOH017HTQVKwjQYdZ7uyBg
-X-ME-Proxy: <xmx:aPb2asthTUH2x8jA2KOwo1d3rh6en4ZcMR3WviUnQxNyoPSM1862vA>
-    <xmx:aPb2an9DeWTknrfvXqc42PZmXbc0v-go1eebiGOYUyjyrJo5WOhSJg>
-    <xmx:aPb2aunyVYsbVLl4cnBH2qPOM0Uf2YGHWWzaod_a0tT3Bar_JyQzQw>
-    <xmx:aPb2avMOCFp0ldrdZ_SDhy2jWGzMP8RkeSQzvVn51CLQ7Ep9lYDaYw>
-    <xmx:bfb2alyWeOT9UQF5g9D6se6HL21AL870fqnXN6bf27AtiRM2unC88dvf>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id D0D2E32A0099; Fri, 13 Nov 2026 06:37:09 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector1 header.b=KZEgI8sK
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jXx9F56yaXHAz8UNM0stu+e/qL+PKAUFGaODdxXWblTwVyoQqabOXpFJtVp+gb86+msMCLurq5iiZPFKsw4ksZyKTKLodRHjyKH7O5Sx3bovea0W8e69bzBxiRmUIvfrgqrEXrPu+LHGkiEyowfDkJdYBixPwxxuqW36nmA6j0Myph/0lqP8tvVIES7wTNiKq+2f0AKbDUujA/44bwRpVlwyQEVtb4O7F9LNfBExgGLCasXLHyEl/ApLg1dWbdMclYoX3ZveVAgEvhbS28k0vunwzRYbGo3UQe0Pl7e/m8scajZC5EiFqJsUQYSYZJAmSIm8gAKGhrpMUG5KBg9hhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NXoc4U1JzfFRyoJiXo63v8zJM+DBz+irZur++YrHMbQ=;
+ b=a3Cdelu0HZwfjTb7OIldFAthEKCFwwHQ0iGDKtqmS1nryPug+du+sbYOzmZsf2I4Uqk/AZtr39wS5gXNKPA0IK40lkUErGLC+6AA5TzJpBzGusU14v3+tI9GXz96h8AqcBWMtRNyi1krQrlCegrHmvcokxNNXeKjz1NxXasz1t8iqlYAGhg10X4mPv7W77hb1m2dbjxHtuY9AStFymwIhFEvMWdu4nnPJ7ldbQQC/YYV7mKKdDCeEvzBB0wi56PyhfOe15GPy1SHO4hyU+va8t0ZOAMfoSp4ZRtCfGFKAZlIzmxEquWg3mHsCjR0EU2gJAvsGtsmr4zHHudiDe7UKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NXoc4U1JzfFRyoJiXo63v8zJM+DBz+irZur++YrHMbQ=;
+ b=KZEgI8sKuSJdY3XCKBXeBoCp2ysUsPZBkmloOJQeCJbHh8WH0AMrXfYVGtEhQXiOM41mh3TCJXe1pJTytTYo6ovWTRSSj1nD+lSXhl1YsY83oGvuOoQgoG7rYW12cp6bimZ/XPcknJWYjxclLUUlrSEkMO+jEanWMje0bIdTYzHXhAk92zJiRkcr7RUf5mAhLC3XtbsAk+iMlZh/jdtErzdy+4z/DCSAfii3mjwfxE5igGyQAqgzpbgc0TO+P7lVumzqTmUxN5DsgddoigU+7Xgpi78s8/nZcrao6LO2A3aPqvGnTMZDAlDS9YZP7pwHGlMoyjaGTwA6fPKGTtKn9g==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by DU4PR04MB11054.eurprd04.prod.outlook.com (2603:10a6:10:581::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
+ 2026 11:49:30 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%4]) with mapi id 15.21.0615.009; Fri, 13 Nov 2026
+ 11:49:30 +0000
+Date: Fri, 13 Nov 2026 13:49:26 +0200
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: sashiko-reviews@lists.linux.dev, netdev@vger.kernel.org
+Cc: imx@lists.linux.dev, Frank.Li@kernel.org, Wei Fang <wei.fang@nxp.com>
+Subject: Re: [PATCH net 3/3] net: enetc: let core segment GSO super-skb when
+ headers exceed TSO_HEADER_SIZE
+Message-ID: <avbw3r3Wc5XFbSdK@lxl00025.wbi.nxp.com>
+References: <20261111233149.479596-1-vladimir.oltean@nxp.com>
+ <20261111233149.479596-4-vladimir.oltean@nxp.com>
+ <sashiko-outbox-211955@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-211955@kernel.org>
+X-ClientProxiedBy: WA1PEPF00005B70.POLP291.PROD.OUTLOOK.COM
+ (2603:10a6:1d8::609) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,38 +97,163 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: An903QizF2Ds
-Date: Fri, 13 Nov 2026 12:36:49 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: sashiko-reviews@lists.linux.dev, "Arnd Bergmann" <arnd@kernel.org>,
- linux-mm@kvack.org
-Cc: "Andrew Morton" <akpm@linux-foundation.org>,
- "Andreas Larsson" <andreas@gaisler.com>,
- "Christophe Leroy" <chleroy@kernel.org>,
- "Dave Hansen" <dave.hansen@linux.intel.com>,
- "David Hildenbrand (Red Hat)" <david@kernel.org>,
- "Jason Gunthorpe" <jgg@nvidia.com>,
- "Linus Walleij" <linus.walleij@linaro.org>,
- "Lorenzo Stoakes" <ljs@kernel.org>, "Matthew Wilcox" <willy@infradead.org>,
- "Malin Jonsson" <malin.jonsson@est.tech>,
- "Richard Weinberger" <richard@nod.at>,
- "Russell King" <linux@armlinux.org.uk>, x86@kernel.org
-Message-Id: <2c9ad267-7908-4b62-940e-dc877dba5a75@app.fastmail.com>
-In-Reply-To: <sashiko-outbox-212715@kernel.org>
-References: <20261112112528.1116405-1-arnd@kernel.org>
- <20261112112528.1116405-2-arnd@kernel.org> <sashiko-outbox-212715@kernel.org>
-Subject: Re: [PATCH v2 1/6] ARM: remove support for highmem on VIVT
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|DU4PR04MB11054:EE_
+X-MS-Office365-Filtering-Correlation-Id: ffd8e312-dc9e-48fb-b271-08df417c2d19
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|19092799006|23010399003|376014|10070799003|18002099003|22082099003|4143699003|10067099003|11063799006|56012099006|261026121527099003|261026140227099003|261028144727099003|261022075727099003|261022105027099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info:
+	JEbXsL/o+qYYh0+t+fvQOH0YrwLo3g8CoW1NOYUUakwihzOvzTmMctljaxbh40p9CGccDKXxSjAe+iHgcCvUJkyEkuvjX2Sr2Anhy7GnDSawoja9/pSWNZRX4F/1vSiCdazB1MyC1oRJCXwRqUeqzE0SbkdRfhOLPtmN7fOuWYTzHP2CnkYr/jBFWFDZ6RL/36h67v3imjEC93B0FiegJ4Dlzwq6APmucm0xHYCBTR5tCsTILCsDWlwS5bbLfxK0bd5vGQyDcT76kzwbJdTlMTZMXKfCZKaSpxAyV28jW3dp+aNCgELjNmJR7JXTQ2dNrCI5p0EJ5zRa8iAFMUIZi4w9M0qdpsyplDHqOb7Ft8ms60/vbKGyYDX7bqVzGaDnYYmMY08R5hETkM0Pg3H8LzgTAAarCLWgBcKeT5Xn8qMxvNh3Jl1RJhLFcgBO38CSYSYmqxJ+oyLQU/RR0WfqfyqqHPTW/bcHBTF0f/fOtg4rmjUu5KSfCNNchh2sOWclreZjbFZedtnZwaMQskyKQtgPzMgBHPs6c+X7zBE7KaavFXvH2uuqproyOYJvL5eDW0UjGUhsd2nvW+KkDquQRmc5eLPtsRmXMEXRXXhGXLg=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(19092799006)(23010399003)(376014)(10070799003)(18002099003)(22082099003)(4143699003)(10067099003)(11063799006)(56012099006)(261026121527099003)(261026140227099003)(261028144727099003)(261022075727099003)(261022105027099003)(261009223027099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?zcCSk319jiT8zSnd6/q6ZwSwng/JW1NhyG4aBHkTNIZTNPoffhzbDXw1fFG0?=
+ =?us-ascii?Q?ypyBRK1/r2YDe5hcOJgWQcPSIITQ+ldC4BEdd8HYjNgcTZ8eJe2S4iXNR9wo?=
+ =?us-ascii?Q?qRTt3MGlaWVOwt1+zYHYiqc1tQm66cBTOCjeWiNtCdWIn/+t8NSSMbxJ6Uop?=
+ =?us-ascii?Q?E5YOhTBrakC8Ufu8eF0CNVDLDWXlGQt1JRpFdvePqj3AvYdOD2KbUUSeQ20Y?=
+ =?us-ascii?Q?GM7ymeXhzDy8dLG2JgJM139yhikI8/RZBDcbGP+kbT0ScPIo07WLRkd8LwJ5?=
+ =?us-ascii?Q?7pkrzcBLWl7aMNSDMu4+Dm0X7zncs9acIXEeXfcn0FcxREMHHMd+a7QjMoWX?=
+ =?us-ascii?Q?4yHcSv4AywkKlxSGMOQPDoHe12JhTnGrKmIRCXh6oN1Ud7x9GsOLVGHgnxLp?=
+ =?us-ascii?Q?lmjNksmPt6XFkt77dQFlMQC8mctzXx/XUrubcS7N+yxe5mB9/la8zAP4xaCK?=
+ =?us-ascii?Q?6TXLozD3Ofkq9Dd2h/GWe4lI8P0AGmL5xX9WfR38IyaOTJGLOIQZeQhd/6zT?=
+ =?us-ascii?Q?mwCZSbfejsMOH/QcVw/dgCPE0YjK39d8sjcJSLO5VL6v9iV/ArRitasNxbod?=
+ =?us-ascii?Q?pmca4Cgze+uI+LUTwERXVO7KVdYQjTw9CIdM9tvKGKHw70I2ZF6Y1dhq23A8?=
+ =?us-ascii?Q?sUfu56s3Z7IyR6MZsn9ocn9WF/Zjw8HmmX5iTvhzeYKuDaRqVV/DNMjhg5ql?=
+ =?us-ascii?Q?sL/eiKgLF6C4viaNvPsWbPA0BMW1EZNWxJ4/JsZPFkSkxSFRsjGyiiYlIN/a?=
+ =?us-ascii?Q?TqM/WAB5hMv0LXPECSDpO/K4dR9kHC8JOTVhlwzgbhSvV5D+Y7xL9UVaZa3+?=
+ =?us-ascii?Q?C4S7tkiuajzwiHJyWb8okRHey6fO5gkn/VgLY2WAttal+YCo1zlcf6SyI7rs?=
+ =?us-ascii?Q?XsDDWDZ8dZJQkRgzh9bWyHnu3r5C8AVL3Xq3DAy8M7TVKEJaTWJiaej5JwW/?=
+ =?us-ascii?Q?IrG0BEmnZM9ZGBzMaN4iSkAMGUT8pEXNbF0tnEuqTsOPYtE/3sjdV+TvO28f?=
+ =?us-ascii?Q?g+k+SQT3DqVBFlmApj2y8lVT2SUOykWH5EzJApEA8E+gD6XAAlPa19zPMMgb?=
+ =?us-ascii?Q?enFX38IDEEbhznUcfV805d0Of1E2THBaT5BGXOLonGCi+nx6HmGKwpbK0bcB?=
+ =?us-ascii?Q?T5kfFsvADy4vQmRCYkNBGHaUmy84JmdUVH0nEzPKDJvG65edWC/sCKuWas1a?=
+ =?us-ascii?Q?PF7W7KEOXr8D1NcUPG+bdrt2kNIxITdTTk12vokoE/UBhRLVjUfb0HAGM7Bd?=
+ =?us-ascii?Q?38pJzMrL320BDKwQsNGCno3JGBKgTBjwH326OaxogHN0hJT1iZ2H8v+XIN6A?=
+ =?us-ascii?Q?a7o1YRgvMRdCaKd7d2Oo1LxX0Q3LJt3pHspPq9KmbuhxcGRD3EJecdtcsHms?=
+ =?us-ascii?Q?JZu4Z14rCCC52zOc3qKMGSyTx+fapoOdG6wAoGXCk6LNpaKnz+4HIeYhAKkF?=
+ =?us-ascii?Q?Ujusxc9zLDYVGfUnBMWNuHXs7hXq9po36cMtlUL8G9Bk1TqKn8StLG1NZocm?=
+ =?us-ascii?Q?pH9B8xgPP5OxeF1gIX7EOdDdwyntdWAA7I+l/ZPveIzCyWAGdobX0cBoI+6G?=
+ =?us-ascii?Q?IJwDDBsOR83tqKkQm/oDUcLkTxHY5Vx7xJ6R4ho5Ka+TaIBWadAxTCrUYo4f?=
+ =?us-ascii?Q?2fBvowegJMsKQzdE1NZ6XFMJrlfKCFxSAY06551dCAiAAeQIT+EvVxwOGgLE?=
+ =?us-ascii?Q?ilt7DiRsJUgW8QRBhxN2Kbj3s2mZvULv//Xss91n5DSbFsbHPf8h3aVwMarG?=
+ =?us-ascii?Q?OzlavzY88XgKziVsyZk7oLZPKSyq94XYEOBdo10gtlMeCVm/olQyQTX7AgKa?=
+X-MS-Exchange-AntiSpam-MessageData-1: lhhVUB3FmjmXCA==
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ffd8e312-dc9e-48fb-b271-08df417c2d19
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 11:49:30.0270
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KATUvByVHtYGseCUGD9o1VQoV7czzA298L7KZlLvPHLNj4a/XS3Xbl2MlSny76w05l9YeBVahQBetZsSLBeqzw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB11054
 
-On Fri, Nov 13, 2026, at 12:26, sashiko-bot@kernel.org wrote:
+On Thu, Nov 12, 2026 at 11:32:05PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] net: enetc: VLAN tag push after enetc_features_check()
+>   overflows TSO header
+> - [Medium] net: enetc: u8 hdr_len truncation in enetc_lso_start() for
+>   256-byte headers
+> It also noticed 1 related pre-existing issue this patch does not
+> introduce:
+> - [High] net: enetc: lockup in enetc_map_tx_tso_hdr() via undersized TSO
+>   descriptor [1]
+> --
+> 
+> commit b5eb34f7b5b23a1224c351b91a143ecbd34866d9
+> Author: Vladimir Oltean <vladimir.oltean@nxp.com>
+> 
+> net: enetc: let core segment GSO super-skb when headers exceed TSO_HEADER_SIZE
+> 
+> This commit clears NETIF_F_GSO_MASK in enetc_features_check() when the GSO
+> packet headers exceed TSO_HEADER_SIZE so the networking core segments the
+> packet instead of overflowing the per-ring TSO header slot.
+> 
+> > diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+> > index 7f089a84d9a65..3c5478238e356 100644
+> > --- a/drivers/net/ethernet/freescale/enetc/enetc.c
+> > +++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+> > @@ -1122,7 +1122,15 @@ netdev_features_t enetc_features_check(struct sk_buff *skb,
+> >  
+> >  	features = vlan_features_check(skb, features);
+> >  
+> > -	if (!skb_is_gso(skb) || enetc_skb_uses_lso(priv, skb))
+> > +	if (!skb_is_gso(skb))
+> > +		return features;
+> > +
+> > +	if (enetc_lso_get_hdr_len(skb) > TSO_HEADER_SIZE) {
+> > +		features &= ~NETIF_F_GSO_MASK;
+> > +		return features;
+> > +	}
+> 
+> [Severity: High]
+> Can a non-offloaded VLAN tag push the header past TSO_HEADER_SIZE after
+> this check?
+> 
+> In validate_xmit_skb(), netif_skb_features() runs before
+> validate_xmit_vlan().  When a GSO skb carries an out-of-band VLAN tag that
+> is not offloaded in hardware (such as an 802.1ad S-TAG, or an 802.1Q C-TAG
+> when NETIF_F_HW_VLAN_CTAG_TX is disabled), a 253..256 byte header passes
+> enetc_features_check() and then grows by VLAN_HLEN (4 bytes) when
+> validate_xmit_vlan() calls __vlan_hwaccel_push_inside().  In
+> enetc_map_tx_tso_buffs(), tso_build_hdr() then copies 257..260 bytes into
+> a 256-byte slot in tx_ring->tso_headers, overflowing into the next slot or
+> past the end of the coherent DMA buffer.
 
-> [Severity: Low]
-> Should arch/arm/configs/mv78xx0_defconfig also drop CONFIG_HIGHMEM=y?
-> ARCH_MV78XX0 selects CPU_FEROCEON, which selects CPU_CACHE_VIVT, leaving
-> CONFIG_HIGHMEM=y unreachable there as well.
+This seems to be a good point. Will compare against TSO_HEADER_SIZE - VLAN_HLEN
+in v2.
 
-I have already sent an unrelated  patch to remove that file, so
-changing it here would only cause a merge conflict.
+pw-bot: cr
 
-      Arnd
+> [Severity: Medium]
+> Can a 256-byte header still break the hardware LSO path because
+> lso->hdr_len is a u8?
+> 
+> Because this check uses > TSO_HEADER_SIZE (256), a GSO packet whose headers
+> are 256 bytes passes through to enetc_lso_start():
+> 
+> drivers/net/ethernet/freescale/enetc/enetc.h:
+> struct enetc_lso_t {
+> 	...
+> 	u8	hdr_len; /* LSO header length */
+> 
+> drivers/net/ethernet/freescale/enetc/enetc.c:enetc_lso_start() {
+> 	...
+> 	lso->hdr_len = enetc_lso_get_hdr_len(skb);
+> 	lso->total_len = skb->len - lso->hdr_len;
+> }
+> 
+> Assigning 256 to lso->hdr_len truncates it to 0, so enetc_lso_map_hdr()
+> copies 0 header bytes and programs hdr_len = 0 in the LSO descriptor while
+> enetc_lso_map_data() maps the headers as payload.
+
+This also seems to be a good point, but it further looks like an
+artificial limitation. The LSO header length is programmed into the TX
+BD 'BUF_LEN' field (bits 79-64), which is 16 bits wide, so I don't know
+why it is only saved in an u8 field in struct enetc_lso_t (since there
+is even a 1 byte hole in that structure which can be used). For v3 I'll
+extend lso->hdr_len to u16, and then this patch should come on top.
+
+> [Severity: High]
+> This problem wasn't introduced by this patch, but in [1] can a GSO
+> packet with hdr_len < 16 lock up the controller in enetc_map_tx_tso_hdr()?
+> 
+> While this check bounds the maximum header length, a crafted GSO packet
+> (for example via AF_PACKET) with hdr_len < 16 still reaches
+> enetc_map_tx_tso_hdr(), which writes hdr_len directly into
+> txbd_tmp.buf_len.  An undersized first TSO descriptor below the hardware's
+> 16-byte minimum stalls the ENETC transmitter.
+> 
+> [1] https://sashiko.dev/#/bug/linux-835a7475-1686-40c3-bf3a-572547fbf43f
+
+Great, so the system has sufficient context to know what's the problem
+I'm approaching towards, but not enough context to read my cover letter
+where I explicitly said this is a preparatory series towards that.
+
+This problem is out of scope for this patch set.
