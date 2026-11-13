@@ -1,49 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.111
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.101
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794548398;
-	b=Lf8Lphtqvet0RW7IyavvI0F2bfF2CHS+q1lrAWEWBQ1WJKOMx/WbxHDGJVoMlU+YWJCJ
-	 EAG/QJwyPIyZRe1cuNKtE7fjTmt7LeQ9UIxsdWs+ONfO90xwe6xJJWkYLha0sNMcgXP60
-	 ko0A9qapVq5PqsWffTA51rIrUBtyzStjg1p7w3B3twLFG5a9pvdFW9aEvva1pqeiVIfIi
-	 7y2loLXHdyEAN8dwRYIQXheYk8MsPQrbJrmW6XTFi/ssfatjq4T+7TSYt937E325A/D6o
-	 Rb/OI00Gv7Q0puZlJtOt2Ll5SgdHjsZjRBWyRvomv6PkR3d5Ky9VE1sA3D0loHHPbAA==
+	t=1794548856;
+	b=K49Ph9+c+LXQB3u7MGiCZOnNV19kJ7uDnGUs/kR7m4WBvUpmnXiKUkTg9U6qfXu3dXrt
+	 2njLWP6xxWugbowg54ctoEfhwzo1kqCF9YUvUfDaICiPd2w/MiU+/lIWIu1EutZPcbIS9
+	 advNRKO2BHPixtHGmJ5vc4tMz0cXJILxdmq+RXS6RmGmwvwEGdAn65ZbG51gBKo4PaoUs
+	 wjseXIjiFV6vzf8wbKTz0AJJs/dhp1wcVq6FBy3E7B2wpKWUvLlXwErdWzc4a7anSg+jp
+	 ImwudPzMBTpJrTGt+IGFVgih4F2h/0EBYq+r/o9FmsBzRkZ4mzFya/AiqLoq9zITBFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794548398;
-	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=0rfDGBAcafKezqinDyA203mmJPgTuUKXlIMMfgq4UE8=;
-	b=3Ciaeuwzu+TkXIFd2HjkRmWObE3pUZrgPPU6qmJpKuTIVugRK9oumYW0ePiyTZhPY3fT
-	 IZvnTe18vjpSNX84pWWt4OgN/lqCJzfQVNQhyGyg1SDrZviE7T0feQef1/g00mqBmsRN3
-	 9ez/RAH1yoIbJztHaDZgc49xVWHdmEvt0wKUEudw+1qjAvqG/dRZmj7erAzT+9G2qO5zN
-	 xV7sjN5D6rWcOb4Gw4k88kIC3eyOga5eVpka+jFHGBOgXWXDi+e8e2zkmhbJ2JkD/LqIE
-	 k7YH3FFsweV1y790NL89erSibpvcu19+TTDtxSh0oXRE6Hrco2j7+F0U0E4K6Mt9jrQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794548856;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=tH9MRkHQTZbs1LzKP4zwJuzcXsw9kcfIaj2yccY1Tzc=;
+	b=O8+PcO7PN03CA05FuL0EtmWArIwa0GjDmb5xWrVnJck3v9ZLRQxLSmdgwMmQEmgZmuYk
+	 5Cu0EjKZBsmHcstv8Eu6roaBqiZRYzghakhXBVfbS4cnBrOXqTUkg/yRD5EA8cedXxIAv
+	 mg3ICKFbVgpvL2eiHN2IZwKsE0GWyLAK6lTvMc2knP+dCdQeUvQONwQ0NO5A7+wbdDp1U
+	 D/zum4+VfTTjK/BcaqmkE3sUQh14ns5qetLdcZm3N77IVGYmJN1O9ScXk5r2hFBMaYc3j
+	 C8hWqe6vLX4VPipJT3jTLtsl3imLuSsFa7qZmxnyYMtwDEu/HJdCDnpur53acZnlXTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.alibaba.com;
-	spf=pass smtp.mailfrom=linux.alibaba.com;
-	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=G7cDiFdo;
-	arc=none smtp.remote-ip=115.124.30.111
-Received: from out30-111.freemail.mail.aliyun.com (out30-111.freemail.mail.aliyun.com [115.124.30.111])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=vah1V1BJ;
+	arc=none smtp.remote-ip=95.215.58.101
+Received: from mta1.migadu.com (out-101.mta1.migadu.com [95.215.58.101])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773AB606A8A4
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 05:39:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 773AB606A8A4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E19606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 05:47:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08E19606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=G7cDiFdo
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1794548389; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=0rfDGBAcafKezqinDyA203mmJPgTuUKXlIMMfgq4UE8=;
-	b=G7cDiFdoHzMBGw1ssqlxSV4U5tYNGxFyj2W/38dfvEeG3snf7NwTs3YQfwWaCidgvhI3v7+y2N+hfjF63HF9REenjIBdC+n14gEJgdZxappPDac2OqlUbAJKOlM/BJhWGaOPXpBthfN8y5HyzLgLO7WSbDtib6O7T9psaTQq3Y0=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R201e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam011083073210;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=9;SR=0;TI=SMTPD_---0XEe.jFP_1794548359;
-Received: from 30.74.144.124(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0XEe.jFP_1794548359 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Fri, 13 Nov 2026 13:39:20 +0800
-Message-ID: <8e342039-2e73-4657-9ff6-55a71b5cb678@linux.alibaba.com>
-Date: Fri, 13 Nov 2026 13:39:18 +0800
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=vah1V1BJ
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=k23lgE2Jzwowgo6m52d31kwDYMIKzjyRuwBX8TKnliw=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794548852; v=1; x=1795153652;
+ b=vah1V1BJzyDQPBXiFoiTCNiHazPgAheKdRO33bHipe52/y+yAl43SB0Ku0GgJ1V00l0jR64R
+ gNZEwA/rC3wGHfKH5EC1jOD3dd6dcxe+kruvkxcP9wAPduHUaHJzKIMkrOL062xAgoCL2lhYlpj
+ r8OK8eWv7WROLSvGnQ/SL8H8=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta10.migadu.com with ESMTPS id 6a17f1505f6787fd;
+	Fri, 13 Nov 2026 05:47:32 +0000
+X-Mizu-Trace-ID: 6a17f1505f6787fd
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,114 +57,174 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/shmem: drop the second folio batch from
- shmem_undo_range()
-To: sashiko-reviews@lists.linux.dev, Qiliang Yuan <qiliang.yuan@linux.dev>,
- Hugh Dickins <hughd@google.com>, Andrew Morton <akpm@linux-foundation.org>,
- Jan Kara <jack@suse.cz>, Qiliang Yuan <odys.yuan@gmail.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: linux-mm@kvack.org, kernel test robot <lkp@intel.com>
-References: <20261111-bug-mm-shmem-undo-frame-v1-1-e50a95b8f9b2@linux.dev>
- <sashiko-outbox-212134@kernel.org>
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
-In-Reply-To: <sashiko-outbox-212134@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH v2 12/14] mm/cma: centralize CMA pageblock initialization
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <sashiko-outbox-212157@kernel.org>
+Date: Fri, 13 Nov 2026 13:47:13 +0800
+Cc: Muchun Song <songmuchun@bytedance.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>,
+ Oscar Salvador <osalvador@suse.de>,
+ Mike Rapoport <rppt@kernel.org>,
+ Li Zhe <lizhe.67@bytedance.com>,
+ Andrew Popple <apopple@nvidia.com>,
+ Balbir Singh <balbirs@nvidia.com>,
+ Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R . Howlett" <liam@infradead.org>,
+ Vlastimil Babka <vbabka@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>,
+ James Houghton <jthoughton@google.com>,
+ Lance Yang <lance.yang@linux.dev>,
+ Qi Zheng <qi.zheng@linux.dev>,
+ linux-mm@kvack.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EDBD7566-17EA-4B8D-8510-E670614DDA01@linux.dev>
+References: <20261113033442.62970-1-songmuchun@bytedance.com>
+ <20261113033442.62970-13-songmuchun@bytedance.com>
+ <sashiko-outbox-212157@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
 
 
-On 11/13/26 11:39 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [Critical] mm/shmem: skipped boundary zeroing on swapin failure in
->    shmem_undo_range() [1]
+> On Nov 13, 2026, at 12:07, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mm/cma: skipped and per-PFN managed page accounting in
+>  cma_activate_area()
 > --
-> 
-> commit 785bd3384006f8bb06c3c8f9b1b5d455eba3d449
-> Author: Qiliang Yuan <qiliang.yuan@linux.dev>
-> 
-> mm/shmem: drop the second folio batch from shmem_undo_range()
-> 
-> This commit removes the second folio_batch from shmem_undo_range() by
-> passing fbatch directly to delete_from_page_cache_batch() after removing
-> swap entries, and using truncate_inode_folio() when undoing a failed
-> fallocate().
-> 
->> diff --git a/mm/shmem.c b/mm/shmem.c
->> index 156469423a866..5bcbdd6078a73 100644
->> --- a/mm/shmem.c
->> +++ b/mm/shmem.c
->> @@ -1352,9 +1352,6 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
->>   	index = start;
->>   	while (index < end && find_lock_entries(mapping, &index, end - 1,
->>   			&fbatch, indices)) {
->> -		struct folio_batch remove;
+>=20
+> commit cd588f911bb59c4583e63d2e776ba252d0663161
+> Author: Muchun Song <muchun.song@linux.dev>
+>=20
+> mm/cma: centralize CMA pageblock initialization
+>=20
+> This commit moves the initialization of early-reserved CMA pageblocks =
+from
+> hugetlb into cma_activate_area() and restores managed-page accounting =
+for
+> those pages if CMA activation fails.
+>=20
+>> diff --git a/mm/cma.c b/mm/cma.c
+>> index 9ec1d1fd5dff5..46e72734ba729 100644
+>> --- a/mm/cma.c
+>> +++ b/mm/cma.c
+>=20
+> [ ... ]
+>=20
+>> @@ -191,12 +195,13 @@ static void __init cma_activate_area(struct cma =
+*cma)
+>> 	/* Expose all pages to the buddy, they are useless for CMA. */
+>> 	if (!test_bit(CMA_RESERVE_PAGES_ON_ERROR, &cma->flags)) {
+>> 		for (r =3D 0; r < cma->nranges; r++) {
+>> -			unsigned long start_pfn;
 >> -
->> -		folio_batch_init(&remove);
->>   		for (i = 0; i < folio_batch_count(&fbatch); i++) {
->>   			folio = fbatch.folios[i];
->>   
->> @@ -1366,13 +1363,14 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
->>   				continue;
->>   			}
->>   
->> -			if (!unfalloc || !folio_test_uptodate(folio)) {
->> +			if (!unfalloc)
->>   				truncate_cleanup_folio(folio);
->> -				folio_batch_add(&remove, folio);
->> -			}
->> +			else if (!folio_test_uptodate(folio))
->> +				truncate_inode_folio(mapping, folio);
->>   		}
->> -		delete_from_page_cache_batch(mapping, &remove);
->>   		folio_batch_remove_exceptionals(&fbatch);
->> +		if (!unfalloc)
->> +			delete_from_page_cache_batch(mapping, &fbatch);
->>   		for (i = 0; i < folio_batch_count(&fbatch); i++)
->>   			folio_unlock(fbatch.folios[i]);
->>   		folio_batch_release(&fbatch);
-> 
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but can shmem_undo_range()
-> leave partial boundary ranges unzeroed when swapping in a boundary folio
-> fails [1]?
-> 
-> Later in shmem_undo_range(), shmem_get_partial_folio() is called to fault
-> in boundary folios at lstart >> PAGE_SHIFT and lend >> PAGE_SHIFT before
-> passing them to truncate_inode_partial_folio():
-> 
-> mm/shmem.c:shmem_get_partial_folio() {
-> 	...
-> 	folio = NULL;
-> 	shmem_get_folio(inode, index, 0, &folio, SGP_READ);
-> 	return folio;
-> }
-> 
-> mm/shmem.c:shmem_undo_range() {
-> 	...
-> 	folio = shmem_get_partial_folio(inode, lstart >> PAGE_SHIFT);
-> 	if (folio) {
-> 		same_folio = lend < folio_next_pos(folio);
-> 		folio_mark_dirty(folio);
-> 		truncate_inode_partial_folio(folio, lstart, lend, &start,
-> 					     same_folio ? &end : NULL);
-> 	...
-> }
-> 
-> If the boundary falls inside a swapped-out entry and shmem_swapin_folio()
-> fails with -ENOMEM under memory pressure, shmem_get_partial_folio() ignores
-> the error from shmem_get_folio() and returns NULL.  shmem_undo_range() then
-> skips truncate_inode_partial_folio() for that boundary while the subsequent
-> whole_folios loop skips any swap entry crossing start or end, leaving stale
-> non-zero data in the swap entry that becomes visible on later reads or file
-> extensions.
+>> 			cmr =3D &cma->ranges[r];
+>> -			start_pfn =3D r <=3D allocrange ? early_pfn[r] : =
+cmr->early_pfn;
+>> +			end_pfn =3D r <=3D allocrange ? early_pfn[r] : =
+cmr->early_pfn;
+>> +			for (pfn =3D cmr->base_pfn; pfn < end_pfn; =
+pfn++)
+>> +				=
+adjust_managed_page_count(pfn_to_page(pfn), 1);
+>> +
+>> 			end_pfn =3D cmr->base_pfn + cmr->count;
+>> -			for (pfn =3D start_pfn; pfn < end_pfn; pfn++)
+>> +			for (; pfn < end_pfn; pfn++)
+>> 				free_reserved_page(pfn_to_page(pfn));
+>> 		}
+>> 	}
+>=20
+> [Severity: Medium]
+> Does gating the adjust_managed_page_count() loop on
+> !CMA_RESERVE_PAGES_ON_ERROR leave early-reserved gigantic hugetlb =
+pages
+> unaccounted in zone->managed_pages and totalram_pages if CMA =
+activation
+> fails?
 
-This is unrelated to the current patch. David already raised this 
-concern before [1], and I'll think about whether there's a reliable fix 
-for such edge cases.
+Right. I think the following diff will fix it.
 
-[1] 
-https://lore.kernel.org/all/20261026-fixes_shmem-v1-0-703206d5fa0c@kernel.org/
+diff --git a/mm/cma.c b/mm/cma.c
+index 7ca0e100504d..e8845747f7cf 100644
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -200,18 +200,23 @@ static void __init cma_activate_area(struct cma =
+*cma)
+        for (r =3D 0; r < allocrange; r++)
+                bitmap_free(cma->ranges[r].bitmap);
+
+-       /* Expose all pages to the buddy, they are useless for CMA. */
+-       if (!test_bit(CMA_RESERVE_PAGES_ON_ERROR, &cma->flags)) {
+-               for (r =3D 0; r < cma->nranges; r++) {
+-                       cmr =3D &cma->ranges[r];
+-                       end_pfn =3D r <=3D allocrange ? early_pfn[r] : =
+cmr->early_pfn;
+-                       for (pfn =3D cmr->base_pfn; pfn < end_pfn; =
+pfn++)
+-                               =
+adjust_managed_page_count(pfn_to_page(pfn), 1);
+-
+-                       end_pfn =3D cmr->base_pfn + cmr->count;
+-                       for (; pfn < end_pfn; pfn++)
+-                               free_reserved_page(pfn_to_page(pfn));
+-               }
++       for (r =3D 0; r < cma->nranges; r++) {
++               cmr =3D &cma->ranges[r];
++               end_pfn =3D r <=3D allocrange ? early_pfn[r] : =
+cmr->early_pfn;
++               /* Restore managed page accounting for early-reserved =
+pages. */
++               for (pfn =3D cmr->base_pfn; pfn < end_pfn; pfn++)
++                       adjust_managed_page_count(pfn_to_page(pfn), 1);
++
++               if (test_bit(CMA_RESERVE_PAGES_ON_ERROR, &cma->flags))
++                       continue;
++
++               /* Expose the remaining pages to the buddy. */
++               end_pfn =3D cmr->base_pfn + cmr->count;
++               for (; pfn < end_pfn; pfn++)
++                       free_reserved_page(pfn_to_page(pfn));
+        }
+        totalcma_pages -=3D cma->count;
+        cma->available_count =3D cma->count =3D 0;
+
+>=20
+> When crashkernel=3D...,cma is used alongside hugetlb_cma,
+> hugetlb_cma_add_crashkernel_ranges() sets CMA_RESERVE_PAGES_ON_ERROR =
+on
+> the hugetlb_cma area before hugetlb_bootmem_alloc() reserves gigantic
+> pages from it via cma_reserve_early().  gather_bootmem_prealloc_node()
+> always skips adjust_managed_page_count() for hugetlb_early_cma(h) =
+folios,
+> and those folios remain active in the hugetlb pool even if
+> cma_activate_area() fails, so their managed page count needs to be
+> restored regardless of CMA_RESERVE_PAGES_ON_ERROR.
+>=20
+> Also, calling adjust_managed_page_count(pfn_to_page(pfn), 1) once per =
+base
+> PFN invokes setup_per_zone_lowmem_reserve() for every 4 KiB page =
+(262,144
+> times per 1 GiB page) instead of stepping by pageblock_nr_pages or
+> adjusting by end_pfn - cmr->base_pfn.
+
+Batching is not generally safe here. Activation can fail before zone =
+validation,
+or because the CMA range crosses zones, while =
+adjust_managed_page_count(page, count)
+charges the full count to page_zone(page). Since this is an exceptional =
+early-boot
+failure path, I prefer to retain the per-PFN accounting.
+
+Thanks.
+
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261113033442.62970-1-songmuchun@bytedance=
+.com?part=3D12
+
