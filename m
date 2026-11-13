@@ -1,65 +1,109 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794537434;
-	b=3f2LQhq7+tPDdOEqHXecNRMUOB2rUOfX159cAysv1nxV9BMMF7rGUM8DoyhORKy0cOtc
-	 5oBcnyFlNA8X7TmM09hldnH4UQLBFon9564ZFGsD6Bm1mI7vpb70R0C6ndd9Y4Ev/omEo
-	 8pigPP4yvM3JYaHn3yd1RXzDCWUTtqSApR6urCEOpmbs0Np5XSwfo8qdSx+TxWzhJ0JwH
-	 1YqNbwxR34KrYehr2AvrYi1/9GTsOyd4PelHhvDSblk1jByuN+ego1BuRyF3sppoTKCfm
-	 uAqS3CjZVxlnYKrbOxfYl+ZIk3iqKUn26RiRVKI+ZaDhl8HtYYngVqNn7pccZksiSBA==
+	t=1794539553;
+	b=4HqFOQh3tyA/zot0O6UDjogaWVypqbdo9ZQa3K2p1LQguZla6p70M42ojxfYoAc45F4F
+	 xdj+3rZS9eYazKra6ECKaUDD4T3JH0LtO/iRD1GmETvTZkMsEApQyR2PJv+IEPsX8sgkQ
+	 UREgtECOc1SGKDwjDnNKWjt4UbGx96oFBBZDS6mMrencCweZB4HGbNfDtcQ5artY4LuZm
+	 oJFRWi/Rjr9Q+Qz+pXuIolkPOxALBAwjm0jNApEj7uYFm6RHbnE8uouZc+Plo3iOVD7R3
+	 Ccu9vSXlP3UgVOFKZfIDuXEolrqtRIK+B4fKBWvH5eDNJ+6XicJAsXfD8ncPHF4Eecw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794537434;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=K1FZSZTtwlQFE90cbI0Nr3F5RUyKerMzzNbSuIEFiEg=;
-	b=5LgVoGT/0QRhW3oiunh4Bon8k67/IqZfhgy+MkbDzM19AvRaNaTTgLZuig2lclB3KWt9
-	 3QPjgg7StqR4cdfFH2Z5hODnvGfbCLO+3WRJRSoG9WgHpSqoFqKdQEykmSqQlaJlmCPd0
-	 MFWYg0pCI7/lCc3gbXij4m+orTr7Yre/LiR+c+AOKFC0li0NvuVLBsEPQirp7D8SXkCeX
-	 1faD7WZPbBZPEQv+sok7wJXIS595qyKH/Wsu7OgBz2TXQrgFvRWJiZXULXn6dAh1Pvmrf
-	 xaOxAQU+bFtd0lC9Gc/6D5YsffJj/cxFOgYMbd4OaBqQ9eJPWu1miqr6R8HOLSpjwgw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794539553;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=OsTrCOvBFWxn4axo5RZn2nb5R4o7XckDXTyC7dJ8tr4=;
+	b=HP7HSMvI9MyyygWNip3LJU2X7CzvqAjAqKjptb66fDz16H+15YfKrZDVQBr6bFKJF6SB
+	 /g6azu22Bi9HVp28NOutgutwpIxG7Gmt9TTRxAebQWPBxHm+XoERlA+H0onItIDkRWf7e
+	 Ye/11p06zoKjAhaJOGQJ1dMgyXQEqf3WvbYsgVTqoa1MFKIYCsAe4ABBlIReA4O6Nm4W3
+	 8EIjPTyH2y68tNFkmjl67KQteA2q2rAdhmFGxChWZWCriCcV2CfE4IvhZVQYhJYd3Zc2g
+	 TydfVfrYVCTQG78XSu/K0+QlmlEO6HF+HQDuLfAqdRY+pYzsOVY3b91cpcrmTbS4EBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Kmi42mXl;
-	arc=none smtp.remote-ip=95.215.58.155
-Received: from mta1.migadu.com (out-155.mta1.migadu.com [95.215.58.155])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VBTNmNHO;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F61606A321
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 02:37:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02F61606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D26606A31C;
+	Fri, 13 Nov 2026 03:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Kmi42mXl
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=MFXk5wTZQlNYOhRGLZAR7H0oTSAkWycqp+1VJkXLZqo=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794537431; v=1; x=1795142231;
- b=Kmi42mXlThlbRJtif9w0jI/C3akIzoRzs+jo9m20zM/DvMgcGRPO8XeGs0yhyiOO8CDfTl8W
- VuZLmw8sC/4EbVCE87fDYr4Wsh8UlxQkxi0KnQ5rw7fx8+cBCCSEET8OfOgenNnX1cREAfhlg6p
- 2XRWMiXpgmH3dhF+SBEK91SU=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 5429636b6996bd30;
-	Fri, 13 Nov 2026 02:37:11 +0000
-X-Mizu-Trace-ID: 5429636b6996bd30
-X-Migadu-Flow: FLOW_OUT
-Date: Thu, 12 Nov 2026 18:37:10 -0800
-From: Shakeel Butt <shakeel.butt@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VBTNmNHO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EA21F000C4;
+	Fri, 13 Nov 2026 03:12:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794539553;
+	bh=OsTrCOvBFWxn4axo5RZn2nb5R4o7XckDXTyC7dJ8tr4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=VBTNmNHOV2NCySGEhL4lt7Zm/2MSpOfxDQE/jEAxoMxO7N6+ovffiyo7YxD3k03W1
+	 /VOXAv8B0lHM/gdfXd5cPnbE5LuHWQbFdU4WzMKVCjThec8hmkOetbyDIpqnB5CEpC
+	 FE7FznFYkMgrXZqiTrod+75QWnHgld0efwHFQnUawpERdtj2MYdzLFzXsW1sDS3QBf
+	 cAvwrKaSDd+MVXcH4YxcT5YLy5Faon8BI1A2BJ8QZU0F3n9NPjQ8kJ+V54TcgFW490
+	 RLFqWodLIe4mEXN61GnNjX8mvC0Lq1d51IpDU+k2S3eJ9kAFDvRpJwUf6ySLDfL28E
+	 hCW+/9Cz85YNA==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Dave Chinner <david@fromorbit.com>, Johannes Weiner <hannes@cmpxchg.org>, 
-	David Hildenbrand <david@kernel.org>, Michal Hocko <mhocko@kernel.org>, 
-	Roman Gushchin <roman.gushchin@linux.dev>, Muchun Song <muchun.song@linux.dev>, 
-	Qi Zheng <qi.zheng@linux.dev>, Meta kernel team <kernel-team@meta.com>, linux-mm@kvack.org, 
-	Chris Mason <mason@kernel.org>
-Subject: Re: [PATCH] mm: list_lru: don't use a new memcg's lists for an
- offline memcg
-Message-ID: <avZ3rcGiLnWS4qUq@linux.dev>
-References: <20261112221248.3512447-1-shakeel.butt@linux.dev>
- <sashiko-outbox-211977@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Mike Rapoport <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian =?utf-8?Q?K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joerg Roedel <joro@8bytes.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Brian Starkey <Brian.Starkey@arm.com>,
+	John Stultz <jstultz@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Radu Rendec <radu@rendec.net>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <chleroy@kernel.org>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H . Peter Anvin" <hpa@zytor.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	"K . Y . Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	dri-devel@lists.freedesktop.org, linux-mm@kvack.org,
+	kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
+	media-ci@linuxtv.org
+Subject: Re: [PATCH v9 06/14] dma-pool: Allocate CoCo atomic pools using
+ CoCo shared memory allocator
+In-Reply-To: <sashiko-outbox-199544@kernel.org>
+References: <20261104164555.3555725-1-aneesh.kumar@kernel.org>
+ <20261104164555.3555725-7-aneesh.kumar@kernel.org>
+ <sashiko-outbox-199544@kernel.org>
+Date: Fri, 13 Nov 2026 08:42:10 +0530
+Message-ID: <yq5amrrdmnlh.fsf@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,63 +113,48 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-211977@kernel.org>
+Content-Type: text/plain
 
-On Fri, Nov 13, 2026 at 12:15:11AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] mm: list_lru: missing mlru->memcg check in
->   memcg_list_lru_allocated()
+sashiko-bot@kernel.org writes:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] dma-pool: cc_make_shared() runs after arch_dma_prep_coherent()
 > --
-> 
-> commit d213b82b7b4ca4978c858df10a2a8cdea14626e4
-> Author: Shakeel Butt <shakeel.butt@linux.dev>
-> 
-> mm: list_lru: don't use a new memcg's lists for an offline memcg
-> 
-> This commit records the owning memcg in struct list_lru_memcg and checks it
-> in list_lru_from_memcg() so that an offline memcg whose kmemcg_id was reused
-> does not use the new memcg's lists.
-> 
-> > diff --git a/mm/list_lru.c b/mm/list_lru.c
-> > index d1d256822ccc7..937dbf239c9d4 100644
-> > --- a/mm/list_lru.c
-> > +++ b/mm/list_lru.c
-> > @@ -72,12 +72,15 @@ static int lru_shrinker_id(struct list_lru *lru)
-> >  }
-> >  
-> >  static inline struct list_lru_one *
-> > -list_lru_from_memcg_idx(struct list_lru *lru, int nid, int idx)
-> > +list_lru_from_memcg(struct list_lru *lru, int nid, struct mem_cgroup *memcg)
-> >  {
-> > +	int idx = memcg_kmem_id(memcg);
-> > +
-> >  	if (list_lru_memcg_aware(lru) && idx >= 0) {
-> >  		struct list_lru_memcg *mlru = xa_load(&lru->xa, idx);
-> >  
-> > -		return mlru ? &mlru->node[nid] : NULL;
-> > +		/* Lists at a reused index belong to another memcg. */
-> > +		return mlru && mlru->memcg == memcg ? &mlru->node[nid] : NULL;
-> >  	}
-> >  	return &lru->node[nid].lru;
-> >  }
-> 
+>
+> commit daae4fcc15a00bc83c4081ef4b27786a7f224537
+> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+>
+> dma-pool: Allocate CoCo atomic pools using CoCo shared memory allocator
+>
+> This commit updates atomic_pool_expand() to allocate confidential computing
+> shared atomic DMA pools using the cc_shared layout and transition helpers
+> (cc_shared_calc_layout(), cc_make_shared(), and cc_make_private()), enforcing
+> shared granule size alignment and minimum allocation order.
+>
+>> diff --git a/kernel/dma/pool.c b/kernel/dma/pool.c
+>> index 70b7f64b17ab5..da487c3f9dc61 100644
+>> --- a/kernel/dma/pool.c
+>> +++ b/kernel/dma/pool.c
+>
 > [ ... ]
-> 
-> > @@ -602,6 +604,8 @@ static int __memcg_list_lru_alloc(struct mem_cgroup *memcg,
-> >  			if (!mlru)
-> >  				return -ENOMEM;
-> >  		}
-> > +		/* Set before the lists are published, and never changed after. */
-> > +		mlru->memcg = pos;
-> >  		xas_set(&xas, pos->kmemcg_id);
-> >  		do {
-> >  			xas_lock_irqsave(&xas, flags);
-> 
+>
+>> @@ -126,8 +142,7 @@ static int atomic_pool_expand(struct dma_gen_pool *dma_pool, size_t pool_size,
+>>  	 * shrink so no re-encryption occurs in dma_direct_free().
+>>  	 */
+>>  	if (dma_pool->cc_shared) {
+>> -		ret = set_memory_decrypted((unsigned long)page_to_virt(page),
+>> -					   1 << order);
+>> +		ret = cc_make_shared(page_to_virt(page), pool_size);
+>
 > [Severity: High]
-> Does memcg_list_lru_allocated() also need to check mlru->memcg == memcg?
+> Does calling cc_make_shared(page_to_virt(page), pool_size) after
+> arch_dma_prep_coherent() and dma_common_contiguous_remap() leave dirty cache
+> lines on the cacheable linear mapping alias when CONFIG_DMA_DIRECT_REMAP is
+> enabled?
+>
 
-Yes this is correct and Andrew already have a fix for this.
+This is getting fixed by 
 
+https://lore.kernel.org/all/20261109230830.1707975-1-m.szyprowski@samsung.com
+
+-aneesh
