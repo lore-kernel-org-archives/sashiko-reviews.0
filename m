@@ -1,64 +1,73 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794522513;
-	b=PJzXV/S4y54BbNjv+WZrB+xdky8v/2bX94MmbxvMQvzs5R79J1NJYtoyt1cEWbBQM7/4
-	 vk3+tA1LvVAWLwFXqFEPlodLIKnC3wgtsa5y/yc+oQOhkUeMPL7fVgT1nU6YuMTQ2Mdth
-	 Mwqm/ifxMe4OEbyjlCpgJWFoizc8I6gociDBwZnb3mXMZdWV6s2eZmKFHJfSZpBM9shG7
-	 MEz8uG7ketFM70xg5/64Jx0C7K9Eee9vNxldHBf3vegZEBwf8++tmyukVSaF0VsRwsD8J
-	 Wc9a9+HzRsA8wTUZ1sq0a5tQM3HokMWzn0y7lIptRFK3hCfkQwewX9DNQJxE4W2Pviw==
+	t=1794528893;
+	b=NOI1DnMEgauJW2iogvV108DHS67/GJPiiilm+NzHKjtrprxLfYarssUxV57PlXpMltZf
+	 EtcDdJMNtKBuV8ZI4nzOGQ2rDQD6HDDCZV8/IRlbTsymX6VRqtr2Cunn3YKZXWe2h325U
+	 NL907FS1LdeKiyC1m0E0RNVI93AqXcGpcy8y4EEytrY58Q/Ct3IXD+rD0eGFfTdNqhdTs
+	 KtTurQlhKWrKvx9xhflqhqIG2+yeFMq065yLhYiK177rFa9SoqtMuKw7NmKBihtfppqJz
+	 30tjBTx0epvQSt/J55qLoxkAhlY0MZubhkfCQ2PDxys2lXPfQWMmVfSxXpledJ76WPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794522513;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=pKCNvDsg+oBottVPeFIlN7p+2x8Q5LX68PIH3n/ihSw=;
-	b=W+evM7xt0T09+7hmZvlYDnOFhjtmgSERDZM7hjO1P5/CpCa3KXXi75QkbGDwwVirDjJc
-	 x6TkuD91rQvCxzTpUGbF8dmgKPaMOrOhpJcRHGwDceHX1/eml9+xiaQpw77giXuca+mok
-	 89R3tI4JVGWMIS0pxb3Iro2jF4mG/3QxAnezAJ9AD9bwmmxkwJna60obxpuuPcJydmCF1
-	 QWu0A/8OZtURDP5g+8kIKVzCE2npbeZmEq0Q6k5Ni+oqts+VwluphxkBC1qfem7JgM9x8
-	 10C+8zbPbNs3uSpWuPpCBGxjxbb8oRWfxk0o3fPl9oOp1550c6ZhkXr1VGunyqWsksw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794528893;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=NwR2wSyV2KhYxI0PF/ZwLwdA5AHcVcrKPi/WugyKj04=;
+	b=xKh63Il+SSPmwWwbT989bGoGRhNlT1YN7qDecKV8kS+GxIYRC3Y6swbqIWaKbPAr05N1
+	 z4YuY/6mqfbDNUyRI7r80qbVkBnYE7PFZ/izUbxZLXLTpeZtZZfvDHSo66hNY+DKfkxIf
+	 +10lEWvm9ozrXW6IgUA9WauoLVyHpOB/huBF582nbkjvXMcS4P6ox4zea9Bqmymudwi+U
+	 5IyW9zHePMJBW32osRf+4NB4J4/sYRxfCnjA4O+qx623IKlzpUmR4eSzaBY5DRWDIAG/w
+	 KZglzoh6nbm5XevciuekkkfOb4qBawB8J7yN45KPn9wrqX8o9ehivu1mxpgNsB193JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MwRLVPVo;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hOVrJR0F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EE4606A31C;
-	Thu, 12 Nov 2026 22:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD15606A321;
+	Fri, 13 Nov 2026 00:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MwRLVPVo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC381F000C4;
-	Thu, 12 Nov 2026 22:28:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hOVrJR0F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E711F000C4;
+	Fri, 13 Nov 2026 00:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794522513;
-	bh=pKCNvDsg+oBottVPeFIlN7p+2x8Q5LX68PIH3n/ihSw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=MwRLVPVoSTFwCs3OOmBLZv1XjQye0eWFg4emCJGTKbE2KOq1idYvxEKOwdnaGmggD
-	 3JG8iHJC14U7DiDp/GEWZMv5UB9x6E7e8Xiko1Uwp0B4GwMK+ooAGCY2SH7XkKt46S
-	 qL3AsdcJWxdntKmNSaVH77uFynaJsaqRTuWYSAml//vp2p1TCUHXuDsW96mV3Fxpl3
-	 wNrhjvSyio8rl1NAFJAhV6Xx4V0WVPI6CUVAjVxiU48mEkYTMNlYicJj4IJE2bkhmG
-	 /WX24bimBt+vzuOGWEtkVm4QVCy+6rrcnmlVeEZjEZLo2qET7DVrCViuEO2l7keS/5
-	 PPGeFLL3tUi/A==
-Date: Thu, 12 Nov 2026 16:28:27 -0600
-From: Rob Herring <robh@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Alex Ousherovitch <aousherovitch@rambus.com>,
-	Saravanakrishnan Krishnamoorthy <skrishnamoorthy@rambus.com>,
-	Joel Wittenauer <Joel.Wittenauer@cryptography.com>,
-	Thi Nguyen <thin@rambus.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-crypto@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 1/5] dt-bindings: crypto: add Rambus CryptoManager Hub
-Message-ID: <20261112222827.GA1685895-robh@kernel.org>
-References: <20261110-cmh-b4-a-v8-v8-0-4cea8ebc1d40@rambus.com>
- <20261110-cmh-b4-a-v8-v8-1-4cea8ebc1d40@rambus.com>
- <sashiko-outbox-207462@kernel.org>
+	s=k20260515; t=1794528893;
+	bh=NwR2wSyV2KhYxI0PF/ZwLwdA5AHcVcrKPi/WugyKj04=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=hOVrJR0FwgSdBlB/ZCfPGBgGzEKKmzIDIX2eGD89a5EtSDpsXU8fmqI/d+8NTAjht
+	 kiGhNke1nxh2Wh7Nw7YPXuW3mN+sSVUFpqrHS5mLfBKK4yx2S9Z12a14fqsoN8hrVU
+	 pldGiEO9vLG+Y7qVvbjqtSbDxRPdWyP/eVR3C8gx+LydBEN1kTPK7gDinxABFYmUFu
+	 22FMxLkLQlcmgF1MZ5Dbv7E7NlbmrJamOTKeunZ9OnERCrwMkVVMSOA91RUDTwRgmP
+	 9UzJtVRX3a5CKhP79nSB2HEKKSxTbtg3eyYhGO+EGdgGdUpFAtLzY/WO05HCW3Ix+4
+	 foS+EQEYH1fNQ==
+Received: from stl-compute-04.internal (stl-compute-04.internal [10.204.2.64])
+	by mailfauth.stl.internal (Postfix) with ESMTP id 66D34780043;
+	Thu, 12 Nov 2026 19:14:52 -0500 (EST)
+Received: from stl-imap-13 ([10.204.2.104])
+  by stl-compute-04.internal (MEProxy); Thu, 12 Nov 2026 19:14:52 -0500
+X-ME-Sender: <xms:fFb2asM5SkzXMZe6KFy_fjhaukTl80OF49wPq7Ms-nEIwb_cvazRhQ>
+    <xme:fFb2atyd0mB09GY0L5yli96HBY4mtyuoX3ViD7_g4BaVLCzZq5MKi9BOF86RQkXeQ
+    XWUMBVWKjNpX46AJstxALcm8n8am7ikUdemanGX5kOjvDZZyoEof7s>
+X-ME-Proxy-Cause: dmFkZTEXI+Qp90KuiWLSpiY+3WISfla3t4O0XbbPPLzuWlPj/w53GCXDMqpj4UDBkfkB7B
+    +9qIf81kJMjgKczbDcNTSKKEz08QWe3MM4lnqHodiWHfA6997YNOE9PVpJO3VREUxeDi4x
+    hEh4cI/41WtRSOUeY35G9T3zWKEE1qvebJz20/UQRdvT5IBinwe4a74+ikuEbltF9VjNGT
+    HiIFiMuAWdbaeq1DXhjcLAe/LmCu5KLlKzvlyk+jz8BSiejDjF/2Ilq56hdFvZ0yN24JJC
+    sTrOJjLRZazoAXe8k1sQZOgb+irWzWDGeZTiNbL9MTgfSgdQafOK38Ft3m/jxcdjvO5aO3
+    4POmq8eFS+TRvDiq+PadVSTJ69Oq3Vp4WT3TDkp80H37n8RP6q8N98sdq50JsFnP98wSOG
+    VBPYAcMui8hnv8Tzpcgzz9fKYNOtV0w3r7jJNoUVdCMBUaHSSCSniyKv6rz78MnMwIO/am
+    HvpVh5xanLgk8xeoEGv3n1UV06UAqHmN0ufD05iHdL35LcD2sRThgWFzFAIStJIRWczPgl
+    zvI634dfqRS/LBaKDPSdnVBZsxgC6DR83nUSWWGbYMw7oXCeeUPp0x82lnWNVYtMG4p6wh
+    L+u672JGJGJSiEvfzaOsoXp/M0L9wLmG1m1sKixkFUOzP6XwppgkckXi0ADw
+X-ME-Proxy: <xmx:fFb2amWZ6BIH7-S3ZTQPSkjz99pK9mf3ebApWQybQnPYb4Z4QT-f5A>
+    <xmx:fFb2auBbjFSwXuwG4POKZo9Jc0P665BywutZ59XuCDq73vF8acYohg>
+    <xmx:fFb2at5xuZQb9iLlpX5SrJGs4yHE_Tb6DG10TMVk9UcZ0x8QhMMq_A>
+    <xmx:fFb2ahzWF4egzEzAAq5pWwSP1ooQa8MHqWA3Sc2bUWUGfL_yne9fjQ>
+    <xmx:fFb2aszkZTzBIUV-o-TD9_0VM_hnM7E8lZIHfg_0-g0h0nCxvq7b899f>
+Feedback-ID: iccae4b50:Fastmail
+Received: by mailuser.stl.internal (Postfix, from userid 501)
+	id 0F8FBF60084; Thu, 12 Nov 2026 19:14:52 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -68,55 +77,61 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-207462@kernel.org>
+X-ThreadId: A078c3q8o2BN
+Date: Thu, 12 Nov 2026 19:14:30 -0500
+From: "Chris Mason" <mason@kernel.org>
+To: sashiko-reviews@lists.linux.dev, linux-ext4@vger.kernel.org
+Cc: "Theodore Tso" <tytso@mit.edu>, "Carlos Maiolino" <cem@kernel.org>
+Message-Id: <5efb8c04-ad07-4f39-98d0-2896c800b101@app.fastmail.com>
+In-Reply-To: <sashiko-outbox-211908@kernel.org>
+References: <20261112214604.67875-1-mason@kernel.org>
+ <20261112214604.67875-7-mason@kernel.org> <sashiko-outbox-211908@kernel.org>
+Subject: Re: [PATCH v9 06/14] xfs: recheck direct write alignment after write checks
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 10, 2026 at 05:20:21PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] dt-bindings: crypto: rambus,cmh-v1030: invalid unit suffix
->   and $ref on rambus,slot-stride-bytes
-> --
-> 
-> commit fe48437ab6a40e215371f9ad1c5f69cf88124d19
-> Author: Alex Ousherovitch <aousherovitch@rambus.com>
-> 
-> dt-bindings: crypto: add Rambus CryptoManager Hub
-> 
-> This commit adds the device tree binding schema for the Rambus
-> CryptoManager Hub hardware crypto accelerator and registers the rambus
-> vendor prefix.
-> 
-> > diff --git a/Documentation/devicetree/bindings/crypto/rambus,cmh-v1030.yaml b/Documentation/devicetree/bindings/crypto/rambus,cmh-v1030.yaml
-> > new file mode 100644
-> > index 0000000000000..eef82c2d71794
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/crypto/rambus,cmh-v1030.yaml
-> > @@ -0,0 +1,145 @@
-> 
-> [ ... ]
-> 
-> > +      rambus,slot-stride-bytes:
-> > +        $ref: /schemas/types.yaml#/definitions/uint32
-> > +        enum: [512, 1024]
-> > +        default: 512
-> > +        description:
-> > +          Stride in bytes between consecutive VCQ ring slots for this
-> > +          mailbox's command queue.  Like rambus,num-slots this is a
-> > +          per-board host-memory ring geometry, not derived from the
-> > +          compatible.  A slot must hold a complete command sequence,
-> > +          which needs at least 512 bytes.
-> 
+
+I've done some handwaving around this sashiko complaint in the
+letter, but here are actual details about why claude thinks this
+is the correct path:
+
+On Thu, Nov 12, 2026, at 5:22 PM, sashiko-bot@kernel.org wrote:
 > [Severity: Medium]
-> Does rambus,slot-stride-bytes cause make dt_binding_check to fail?
-> 
-> In dtschema (meta-schemas/vendor-props.yaml), the -bytes unit suffix is
-> deprecated and disallowed on vendor properties, and properties using a
-> standard unit suffix already have their uint32 type assigned by the core
-> schema and must not specify $ref: /schemas/types.yaml#/definitions/uint32.
+> Does returning -EAGAIN from xfs_file_dio_write_aligned() without checking
+> target->bt_logical_sectormask cause sector-unaligned O_DIRECT writes to
+> bounce to buffered I/O instead of failing with -EINVAL?
 
-That's got to be the worst hallucination I've seen from sashiko. There 
-is no -bytes suffix.
+Yes for reflinked and zoned files, and that's intentional.
 
-Rob
+The sector check in xfs_file_dio_write() has only ever seen the range as
+it was submitted, so the unaligned path already does this in 7.4-rc2.
+Here are O_DIRECT|O_APPEND writes to a 100 byte file, with 512 byte
+sectors and 4k blocks:
+
+                            7.4-rc2    v9
+    plain, 4096 bytes       EINVAL     EINVAL
+    plain, 512 bytes        EINVAL     EINVAL
+    reflinked, 4096 bytes   EINVAL     works
+    reflinked, 512 bytes    works      works
+    zoned, 4096 bytes       EINVAL     works
+    zoned, 512 bytes        works      works
+
+So the patch makes the block aligned write behave like the 512 byte one.
+A write cut short by RLIMIT_FSIZE goes the same way.  In every case that
+works the new data is right, the other side of the reflink doesn't
+change, and xfs_repair is clean.
+
+Checking the sector mask again in the aligned path would only keep the
+two paths different.  Checking it in the unaligned path as well would
+fail writes that work today. 
+
+> For non-CoW inodes, xfs_file_dio_write_unaligned() proceeds into
+> iomap_dio_rw() where extending writes allocate unwritten blocks in
+> xfs_direct_write_iomap_begin() before iomap_dio_bio_iter() rejects the
+> bio alignment.
+
+That part isn't new.  Before this patch the aligned path called
+iomap_dio_rw() with the same range, so it allocated the same blocks
+ahead of the same -EINVAL.
+
+-chris
