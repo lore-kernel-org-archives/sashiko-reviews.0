@@ -1,75 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794597223;
-	b=BDdsacd8O223psgbwRHjVDMqwu2BF3yMku42FBg449Lk7jI7fzjzUKMLm3ubytIG9CvM
-	 ALb8tikZYaFRozelziG/ZOhXoKStya8jYhl/nndOeeV22jM/5Ajg/tuGKtmD34GHtkgVk
-	 2rEWtj+SWey2dYrHj19DmV+ZVv4/VY5D2iLxWLgupwR1WK8eNiXB6Tr2xAjDQFjlnwxGU
-	 7Gei0bI5gNNkoCC8p6sSvweTLVKxdWKpfHqGmdFXTeLRqRxMgnsXEL3NgTrIuHZLWdDnd
-	 sDWbfGjad3iKptEhbgLw7R6C1Pabrc8IFcQ2m0FEMfhMCEpkqOgJ9fJ2XrFk85J89hA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794597223;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:DKIM-Signature:Subject:From:
-	 To:Date:In-Reply-To:References:Organization:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version;
-	bh=mlKa/S1T+ePpqDxgAQsOW+J9fnHtOhXIZrJe3UiE9do=;
-	b=yup6LuiUIXvx8QLv+n79Gp3gqJ/4srHzt5hUWTSkHejtR5OxcyxNNDFtfAZLm+8mny9j
-	 xPBASqaLiJN1JnHNfIerATc24sZtm+1uFVj8B6m6+V+mqEwZs+XZe4FiVQ419hogl0Z9X
-	 COcw4m0/j18Cse6hOqKd65gnLcbZqpCJSD2y2sGKJG/geeN80+kE57+tIgCvQap3i9bHA
-	 UNPEpUanOcBWS/1Rl1l0iVoUAJ0gtGhmb3trxh3xRSBRZBbip2tEXg0WHg5jTBqWm5lXv
-	 RpKvTr6tgZ4V3cSNvIUUEyuxrMZH0w0/NH7UyB0FQCtihxxeMbaPnsky/EbqbmfeVaA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linutronix.de;
-	spf=pass smtp.mailfrom=linutronix.de;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b="1yZg01/z";
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=3qawMNU4;
-	arc=none smtp.remote-ip=193.142.43.55
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.69.56
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794600284;
+	b=gnuSaWOf8PR1gLHtoKwbH8H2cmIeXwW09dg2gsTPTrRDSiNmkxDr4nmWyebuFsM46tFR
+	 xskXq1gQY/p8RDvm8O5rGDWix7bKCY8csPKfVz3ceka2s6A1pojOMaFSv0f41aFrK8/Wf
+	 lBLnfJC7CB5VTvJ9teGn+SUBFFmuKV/TiurTcjVcHcoWSwCZYmfxrxPS1AQTMmpmatkBw
+	 8Ww7rKhrvPRmsRPJM2x4eZEmZwiBd1RyhSHty1n70NTRdKE0sN7QRNRPzWgIn2jca29vL
+	 HNxbH+WA3WeLEpwt6qT7XZ4uH/Yy/fJOxDkAcBu6nBNx1IlL7F7k93Dr8PkDdWLnpng==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794600284;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=my1P96R50u8+L398DThu7Aw/skAq9kj14o1z9Rbd2Xk=;
+	b=nINpjR2+EMVKxnD7tlzAOlBHfJZOY+6QTeQCeL4ZLRi3XMOxrGGGQrhHOfqygvZt5HlW
+	 lbcelwQ9QR0SsiSJMSHKS2cfUTctJJNoefs69mGkTNxyFetT8D9uYBZ/St7L+DS4GX9zk
+	 dsLk5bxOEhxoOHROvTiE+tCOG6b0YUzkjDSurWTDzX9MPqH/f5blH62Zr7qeUVt8wmDmy
+	 UYmDa3EosrRito8r3qpK1Ag73ntNH1AhzbzVGgbIPCUohLu405nf9rRvRrJB/N5KzcVL8
+	 lFZKlx2dzgAix+rsYEBy7npbe/FT1pqnI6WTzc7J51XNMFIwGmRkWc4mA23VCPfqH5g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=uiSENmo3;
+	arc=fail smtp.remote-ip=52.101.69.56
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010056.outbound.protection.outlook.com [52.101.69.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEBE606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 19:13:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2BEBE606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2B6606A330
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 20:04:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E2B6606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=1yZg01/z;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=3qawMNU4
-Message-ID: <6b3f1f7d358ab1ca20646ae0383d1408472e0293.camel@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1794597220;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mlKa/S1T+ePpqDxgAQsOW+J9fnHtOhXIZrJe3UiE9do=;
-	b=1yZg01/zZYZNSdV5LoOUd6MBE+ySsNItD+FbnZKHNJa3rjGwkxtx153EDYsqNOAti1dPkA
-	b9+WVZtn/s2XxpPem085Yno5EJqU6xJt/0Lxejpvm3+Zznpz1rV6eiY8qJ3xXeObIPTEz1
-	YgbVEyStrtlnQa6EeEaJ8qSo4wkfMekav0z1CuBVV3H77Z+42x0byb0zbsgdgkwlfPM745
-	sz2ty9P7RixklCzveZ5iBlMF+Iw6VYb/QbIbS0alhUU5K16ZYyO0M2k4jIWfJG6kGbWjhS
-	aySJQYoN3X2z56usspICH5AAmgUdfy/+drPXm81oWtuBCrC6YWG1tD62QrEQHg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1794597220;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mlKa/S1T+ePpqDxgAQsOW+J9fnHtOhXIZrJe3UiE9do=;
-	b=3qawMNU4HZhOG3+Dle4iGtSrBEdWt+/sLHu8bfRcoeSC464OFMTOJ5CdxEmFRBjl4Cg5Np
-	HjZOQf1WiNU1iMAg==
-Subject: Re: [PATCH net-next v4 8/8] net: dsa: soce: Add VLAN membership
- table support
-From: Vasilij Strassheim <v.strassheim@linutronix.de>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=uiSENmo3
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BpwFV/1J7SmBoU/oo3rRLMzgcuNFSHAV1kmSwocDqZevKznvxqsbZDaA+93RNmcbVVbH4s9OrnWdzIq242OAG4hANZhBOlE7HYYMxFZoXY53lsA2pHdrDM+MgUWQUlhuxY0Nh2LP4NgVVal0xAuLW9+afFP9Z1HShc4FkF2KJDo3AIxJt54x6oLejRzu9CFLzx6eSmXf/O5dd9B6LOuDC22SCupZ6I1S0/riF/vPIF79LgnkIiQafVS9yCXy6mEfp6kByAMkJ6Pkg11x41Owo27m2KK0ZUK7byrAsRV0q8Of/86d6o8DmWXypKGm05XstmE2l1/4NeNCHa9J8Ub92Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l9zdcbjJiJckYZVG0tkNrMHarCVdgPuP9lhX1/UDHlU=;
+ b=j/wbTZ1Y+ddNli8AT0szGuc+I5+OBN9BCGkBanU8fvJBe9p7LBCwuPsTmKKAb2tBElLsTHA3LgWlhwLZ3I7gA2JE9YgNVIi8XvbFXaY5/Uc4afC/GISlKZt9cN4PQMTiXOcfhIXg6u8QinMYjchqm8pS4xB4wyUZOAvF8O5DhSxOuigd0Ds0t0GklrHskXYMgbRCW4a9afC02YDIMJnqZZI4fy8qwbVU8lx7ShGyxg21tyUFiNAUUTbv4mVXp+/TuQyjeRpNfydIHpQ1uKrFWbSKiT/AoUnDgvTkP6pJ7kK8JRImeG9HteAV/liPOkTKnnQFTJ2HSQ1cXwZ77RpOjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=l9zdcbjJiJckYZVG0tkNrMHarCVdgPuP9lhX1/UDHlU=;
+ b=uiSENmo3DbncW/56vtN1Z1ghzR2tVAd8nUXQ0zgSldP5iWUldCrHnP/5qP3E5CyeM3ZxgXRxeMxuafNRRED+GdPZqCY4XXzuQWnagb9QFhngymKhpWNZSjnSGQXAAtyQU4zIou0/qd1If8M15e6LlpXTKwUeGhxlCljF/Pn08czCcrYJ6QrmFQTlH1L3cRruJskP9Sa3TVZEHCx7FyL+DhJAVClKycwHH+I2ZMahz94Oz7FOiGsftweAaqLjem/JT4qow1qn63MyAqcKBuWGObteWkr67G6dB5xo7fM87W2B/ewvB6vWUndHGkXK/guKzlZCl3gV1svQYGu4s8kX0w==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by DU4PR04MB11753.eurprd04.prod.outlook.com (2603:10a6:10:615::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
+ 2026 20:04:40 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.009; Fri, 13 Nov 2026
+ 20:04:40 +0000
+Date: Fri, 13 Nov 2026 15:04:34 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Date: Fri, 13 Nov 2026 20:13:40 +0100
-In-Reply-To: <sashiko-outbox-201564@kernel.org>
-References: 
-	<20261105-devel-vstrassheim-soce-dsa-ml-v4-0-02f3cde2afa1@linutronix.de>
-	 <20261105-devel-vstrassheim-soce-dsa-ml-v4-8-02f3cde2afa1@linutronix.de>
-	 <sashiko-outbox-201564@kernel.org>
-Organization: Linutronix GmbH
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH 4/4] dmaengine: loongson: loongson2-apb-cmc-dma: Add
+ pause/resume support
+Message-ID: <avdtUqpPcPf9Ykbo@lizhi-Precision-Tower-5810>
+References: <cover.1792988985.git.zhoubinbin@loongson.cn>
+ <92800ae186112366116647ee4f50d4ba09249ef8.1792988985.git.zhoubinbin@loongson.cn>
+ <sashiko-outbox-184805@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-184805@kernel.org>
+X-ClientProxiedBy: DSZP220CA0024.NAMP220.PROD.OUTLOOK.COM (2603:10b6:5:281::8)
+ To MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,168 +99,160 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DU4PR04MB11753:EE_
+X-MS-Office365-Filtering-Correlation-Id: 88e30fda-9fbf-4246-286c-08df41c15a33
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|19092799006|10067099003|11063799006|4143699003|56012099006|260925021911599003|260925022911599003|260925021311599003|261022105027099003|261028144727099003|261026121527099003|261026140227099003|261022075727099003|261009223027099003|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	25kYAKWcNWyNpZG1rr7VQcPfPCfuh56oHoncnb+pPRTihcGG/HKFqpPjYrpsSzMpwk2dhCuYJG+ozBgVf0MRQ1sgLaBPzKp+a/IQsmMKUXNanUn+0YiSeGVSFJM6E6WH4eZBV0py06mgCVsqPtijrb0DLb1Gy+c0G0l0uugUBByk6rb2MW6jPdMNX5F7nRpCXHXliKINglTfD4BJbIZi6HI99gnhFabRZ1eI1H6u0lRzMaUHUdN1Bv96JLYymdylDQFNvVik1scX7OXfvkQR5n26e0wLrwgdV2sQLqrd4XLbjJDBI1MU3EjgygIb77WLIfvDjEAye8kUZADpL1Zz322hOxGjEAhlCvmN8rphB6CJtR4ffHxFAksh3d7p0o5OiLMF7lRMlnyW68C1DgO+bJNRjvhccUJQMPZSz+biF/yHj3WLKQK/AeLbXsyr4B8ehkkLMfCsorwM7jxEWJTYf1A23ErAD4GbNybg4iUIjQN+WnCLGIeM057wD3n+b9LFi7uR3tuyhDnIOOjJ00D8LekEnNEi1jlN6EAVHv+Msb5BWa0ai/9IT8GGqbDjmJCIJEnNTsWljbPC2QEjlk0JZNhE5HTOLPVub9lbjNwkjag=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(19092799006)(10067099003)(11063799006)(4143699003)(56012099006)(260925021911599003)(260925022911599003)(260925021311599003)(261022105027099003)(261028144727099003)(261026121527099003)(261026140227099003)(261022075727099003)(261009223027099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?0+sjJeyxfpzzJrpe22wDMhJJeaGzvSfsBZgJZg/hTL8sBvJmvrSsDJa9hc?=
+ =?iso-8859-1?Q?eL2mlsin1lIrUs5kHBlAh7QaBOqid8wHCy2QpgIRsspDLjzvryCHKcgd7b?=
+ =?iso-8859-1?Q?vnxLjwuQzud4syKsFcsgjXQ2YEqBhb7IkzneXa/Y2M4/Wa5/OAgqJMt7Db?=
+ =?iso-8859-1?Q?uaDm4VwDRlf5jhcTd8cqXcf7BJl426I/KTtlEYikg4FAFIBwOHYFsZHbjl?=
+ =?iso-8859-1?Q?kdnGaKY2vIMLuL9klkzZikNfCVzJIO3vs6cE5BLOjzDShll8om79gu5zjb?=
+ =?iso-8859-1?Q?J2zqgre8ePhVvITItY2MIqMiKstqn/xSPxCe3hMfWN3WPdLanWzjinm/u6?=
+ =?iso-8859-1?Q?qUdchlksEyrlHIutTyIcwiOIRJ5NdVnVxuq6quJI3Anyoq1fEYy0dVKXQV?=
+ =?iso-8859-1?Q?nlAOFnIqJ+/Y3mJ20+hYl9G3XXKmNw11BIGr7xdxJWfh2YjFe7SmCng8Yz?=
+ =?iso-8859-1?Q?vgrL1VyXfeJVMRkomnH5xsWdIfmQIDYwSu1LkQYJC0RYwOjIiKYqEzFhsr?=
+ =?iso-8859-1?Q?pd4wsblVnTkcNr8yVRiOZL2kFZjKcgR88P0woGDG0lgImThoaShqkYnMZs?=
+ =?iso-8859-1?Q?Tj5LPE8e2k8wh7H7yD+kfPRRWsHYQlUpu15joUPyqKOMms2lPZuDYLfZhP?=
+ =?iso-8859-1?Q?6aAl82WYU7KkAE2YJJvCTJeneVuEuxSzvUcb4l4M4PcbREseO4BKYthfVr?=
+ =?iso-8859-1?Q?oAyxKfPezvg+pkDNjTYmz2npptvDAGPXXMCoz/yVlBOGrVYjXr6wYfVB6m?=
+ =?iso-8859-1?Q?S4QErIsCyK8QwVAfY+gRIsf0KS7nYaAl1X3ThR0mA79akzlz7XSxTdDHsZ?=
+ =?iso-8859-1?Q?5OI9/GmjBeFU6qEQmEhKHai0uOXBbZ2Sg5T5Jcy5coE899oaR/Sq7OdyRE?=
+ =?iso-8859-1?Q?itD0EZ3/JXgJ3PPKjTPyB5xdf62s4g/68dXOs2KnxTczSFdkxUPy+8iv8z?=
+ =?iso-8859-1?Q?c8F3jErangr7VpK0tXOxU95+0QQ83oEeyzf8bs3fYEdKGwryntbUPZYlSQ?=
+ =?iso-8859-1?Q?E9yX+ld1DwxW/R1c3WmXl141VsRtvoLS/KP/zN4STGpl6D42AJM6YQEABJ?=
+ =?iso-8859-1?Q?73D7Og7j9IfYX8M2dRaVOGC4/G035z8H5p0jw+Ai4IkYWWYpvWqISqEWsw?=
+ =?iso-8859-1?Q?f/ii4sMm8Y8bLworZgCcaspACTg+inSJwUvuNOsw4wk6LDtTrPjr5A1+RH?=
+ =?iso-8859-1?Q?ezUI2EkfvXE5WvgcMExllPkpkebgftyhy2fDr8W+pgjVh7opuUpDrJmMOK?=
+ =?iso-8859-1?Q?6L8nraPzpHlAN85QpeNjtB6XHWH4Nile1Qoz/u3jqv+kXJI0iPKbHZ3UGD?=
+ =?iso-8859-1?Q?fwtUSZeV1tJ59C8eKd7KPsdLDBhYefA6Jo1cDNgFVHviFRFtpWFhbohDme?=
+ =?iso-8859-1?Q?gQ5JRD8h65ekzZ1VAazaKmzqKgJ4+Py20vHHHieJZ6ZF5tz9YkMnAu34dI?=
+ =?iso-8859-1?Q?IAcxUvfuGmetqrZUpeMYWTfX3o46L3Ui4rI16pJrMBOWT7Hs4KH31FaHFv?=
+ =?iso-8859-1?Q?6dCEJNC9pzlH1sR2IquMNVEqmmO2PjN/mp9qv89X6ptk1EXL0WeGvwFy4u?=
+ =?iso-8859-1?Q?ZAj2GqzuHC+HR5GesViLwURuuILLWbse5SmLKUbH8Y+v4eeCs3tURbHUOR?=
+ =?iso-8859-1?Q?s2oJHqA4CNEwTggyiZc5iETkj9HTv8I0ihJeLDZipSG/tfP3/S+0AaXEcQ?=
+ =?iso-8859-1?Q?mpIuFYchQTspZYSNmpP869MWBMYbcUfMSc4EZH3lorxqDbD7RwfhOd7rYg?=
+ =?iso-8859-1?Q?5KKf1pn0pK4ITkddb5kYWjykvCDt5vNmn69+uuTJ05HsOOoefouRO6zrM9?=
+ =?iso-8859-1?Q?xxWSRaKDOnzlXbuChUq8/NjJDiFvA1SXbPv9p1GSWUw7dRINRiHw?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88e30fda-9fbf-4246-286c-08df41c15a33
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:04:40.9449
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uHSsQh57v+SoCrx8ixzbR09K6frxchsqVeKy29LiSCPkilMbgaPknW6ITXQRurW41Tg7s2Gj7EL/T6Ic436OulxbnKS+cGfbni+OWr/YL4l+4A2Xs58Wwkz+AHqYSS89
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB11753
 
-On Fri, 2026-11-06 at 14:17 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] net: dsa: soce: broken VID 1 untagging in
->   swip_vlan_write_entry()
+On Mon, Oct 26, 2026 at 09:35:17AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] dmaengine: loongson: loongson2_cmc_dma_start_transfer() clears pause state
+> - [Medium] dmaengine: loongson: loongson2_cmc_dma_tx_status() ignores pause if !state
 > --
->=20
-> commit 25c6cf2ff3f136587d102371c25a636e1af52a26
-> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
->=20
-> net: dsa: soce: Add VLAN membership table support
->=20
-> This commit adds VLAN membership table programming for SoC-e switch cores
-> that implement the Port VLAN synthesis option, initializing VLAN-capable
-> cores with PVID 1 and updating per-VID hardware membership and untagging
-> masks on VLAN add and delete operations.
->=20
-> > diff --git a/drivers/net/dsa/soce-swip.c b/drivers/net/dsa/soce-swip.c
-> > index 70fc2da91dd25..7cc3f4abc691d 100644
-> > --- a/drivers/net/dsa/soce-swip.c
-> > +++ b/drivers/net/dsa/soce-swip.c
+
+Please check above issues
+
+Frank
+
+>
+> commit 8e161a43d78d90e76eaddc39b1b96c7a28b1dd6c
+> Author: Binbin Zhou <zhoubinbin@loongson.cn>
+>
+> dmaengine: loongson: loongson2-apb-cmc-dma: Add pause/resume support
+>
+> This commit adds pause and resume support to the Loongson-2 APB CMC DMA
+> driver by clearing and restoring LOONGSON2_CMCDMA_CCR_EN while preserving
+> the hardware transfer position. It also updates status reporting and
+> cyclic scatterlist advancement to honor the paused state.
+>
+> > diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+> > index c654e05729024..a4153ea854623 100644
+> > --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+> > +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>
 > [ ... ]
-> > @@ -179,6 +212,185 @@ static void swip_stp_disable(struct swip_dsa_loca=
-l *local)
+>
+> > @@ -184,6 +185,8 @@ static void loongson2_cmc_dma_stop(struct loongson2_cmc_dma_chan *lchan)
+> >  	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
+> >
+> >  	loongson2_cmc_dma_irq_clear(lchan, LOONGSON2_CMCDMA_MASKI);
+> > +
+> > +	lchan->paused = false;
+> >  }
+>
+> [Severity: Medium]
+> Can this reset lchan->paused and restart DMA when a segment completion
+> interrupt races with loongson2_cmc_dma_pause() on a non-cyclic transfer?
+>
+> loongson2_cmc_dma_pause() allows pausing any channel with an active
+> lchan->desc, including non-cyclic slave_sg transfers. If a scatterlist
+> segment finishes and latches LOONGSON2_CMCDMA_TCI just before
+> loongson2_cmc_dma_pause() acquires lchan->vchan.lock and sets
+> lchan->paused = true, the interrupt handler will subsequently run:
+>
+>   loongson2_cmc_dma_chan_irq()
+>     -> loongson2_cmc_dma_handle_chan_done()
+>       -> loongson2_cmc_dma_start_transfer()
+>
+> Unlike the cyclic path in loongson2_cmc_dma_configure_next_sg(), the
+> non-cyclic path in loongson2_cmc_dma_handle_chan_done() calls
+> loongson2_cmc_dma_start_transfer():
+>
+> 	loongson2_cmc_dma_stop(lchan);
+> 	...
+> 	/* Start DMA */
+> 	reg->ccr |= LOONGSON2_CMCDMA_CCR_EN;
+> 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, reg->ccr);
+>
+> This clears lchan->paused = false in loongson2_cmc_dma_stop() and
+> unconditionally sets LOONGSON2_CMCDMA_CCR_EN for the next scatterlist
+> entry or next queued descriptor. Should non-cyclic scatterlist
+> advancement also preserve lchan->paused and avoid re-enabling the channel
+> while paused?
+>
 > [ ... ]
-> > +static void swip_vlan_config_port(struct swip_priv *priv, int port)
-> > +{
-> > +	struct swip_dsa_local *local =3D &priv->local;
-> > +	void __iomem *base =3D local->vlan;
-> > +	u32 regval;
-> > +
-> > +	swip_vlan_select_port(local, port);
-> > +	writel(SWIP_VLAN_PORT_MODE_HYBRID, base + SWIP_VLAN_PORT_MODE_OFFSET)=
-;
-> > +	writel(SWIP_VLAN_PORT_TYPE_UNAWARE, base + SWIP_VLAN_PORT_TYPE_OFFSET=
-);
-> > +	writel(FIELD_PREP(SWIP_VLAN_PORT_VLAN_PVID_MASK,
-> > +			  SWIP_STANDALONE_PVID),
-> > +	       base + SWIP_VLAN_PORT_VLAN_OFFSET);
-> > +	writel(0, base + SWIP_VLAN_PORT_INGR_FILTER_OFFSET);
-> > +	writel(SWIP_VLAN_PORT_INGR_ACCEPT_ALL,
-> > +	       base + SWIP_VLAN_PORT_INGR_ACCEPT_OFFSET);
-> > +
-> > +	regval =3D readl(base + SWIP_VLAN_PORT_EGR_TAG_OFFSET);
-> > +	regval &=3D ~SWIP_VLAN_PORT_EGR_TAG_MASK;
-> > +	regval |=3D FIELD_PREP(SWIP_VLAN_PORT_EGR_TAG_MASK,
-> > +			     SWIP_VLAN_PORT_EGR_TAG_UNTAG_PORT);
-> > +	writel(regval, base + SWIP_VLAN_PORT_EGR_TAG_OFFSET);
-> > +}
-> > +
-> > +static int swip_vlan_write_entry(struct swip_priv *priv, u16 vid)
-> > +{
-> > +	struct swip_dsa_local *local =3D &priv->local;
-> > +	void __iomem *base =3D local->vlan;
-> > +	struct dsa_port *dp;
-> > +	u32 standalone =3D 0;
-> > +	u32 cpu_ports;
-> > +	u32 untagged;
-> > +	u32 members;
-> > +	int ret;
-> > +
-> > +	cpu_ports =3D dsa_cpu_ports(&priv->ds);
-> > +	/* Bridge VLAN deletion must not remove standalone membership. */
-> > +	if (vid =3D=3D SWIP_STANDALONE_PVID) {
-> > +		dsa_switch_for_each_user_port(dp, &priv->ds) {
-> > +			if (!dsa_port_bridge_dev_get(dp))
-> > +				standalone |=3D BIT(dp->index);
-> > +		}
-> > +	}
-> > +	members =3D priv->vlan_members[vid] | standalone;
-> > +	/* CPU membership preserves VLAN delivery to the conduit. */
-> > +	if (members)
-> > +		members |=3D cpu_ports;
-> > +	/* Explicit VLAN configuration takes precedence over default untaggin=
-g. */
-> > +	untagged =3D standalone & ~priv->vlan_members[vid] & ~cpu_ports;
->=20
-> [Severity: High]
-> Does this clear hardware VID 1 untagging whenever a port joins a software
-> bridge (or adds a VID 1 VLAN upper), causing all untagged frames transmit=
-ted
-> out of that port to egress tagged with VID 1 on the wire?
->=20
-> In swip_vlan_config_port(), every port including the CPU port is configur=
-ed
-> with SWIP_VLAN_PORT_TYPE_UNAWARE, PVID =3D SWIP_STANDALONE_PVID (1), and
-> SWIP_VLAN_PORT_EGR_TAG_UNTAG_PORT. When the CPU transmits an untagged fra=
-me
-> via sdsa_xmit(), SDSA_TAG_VLAN_BIT is not set, so the switch classifies t=
-he
-> frame into the CPU port's PVID (VID 1) and strips the tag on egress from =
-a
-> user port only if BIT(port) is set in SWIP_VLAN_UNTAG_PORTS_OFFSET for VI=
-D 1.
->=20
-> Because swip_switch_ops does not implement .port_bridge_join, joining a
-> Linux bridge takes the software fallback path:
->=20
->   dsa_user_changeupper()
->     -> dsa_port_bridge_join()
->       -> dsa_switch_bridge_join() -> returns -EOPNOTSUPP
->       -> dsa_port_bridge_destroy() -> sets dp->bridge =3D NULL
->=20
-> As a result, dp->bridge is always NULL and dsa_port_bridge_dev_get(dp) in
-> swip_vlan_write_entry() is always NULL for every port.
->=20
-> When br_add_if() -> nbp_vlan_init() -> nbp_vlan_add() adds the bridge's
-> default_pvid (VID 1, untagged), __vlan_vid_add() sees that the port is no=
-t
-> switchdev-offloaded and falls back to vlan_vid_add(dev, br->vlan_proto, 1=
-).
-> Because swip_probe() sets ds->needs_standalone_vlan_filtering =3D
-> priv->features.port_vlan, the user port has NETIF_F_HW_VLAN_CTAG_FILTER s=
-et,
-> so vlan_vid_add() calls:
->=20
->   dsa_user_vlan_rx_add_vid()
->     -> dsa_port_vlan_add()
->       -> swip_port_vlan_add()
->=20
-> with vid =3D 1 and flags =3D 0 (since ndo_vlan_rx_add_vid does not carry
-> BRIDGE_VLAN_INFO_UNTAGGED).
->=20
-> swip_port_vlan_add() sets BIT(port) in priv->vlan_members[1], and
-> swip_vlan_write_entry() then computes:
->=20
->   untagged =3D standalone & ~priv->vlan_members[vid] & ~cpu_ports;
->=20
-> which clears BIT(port) in SWIP_VLAN_UNTAG_PORTS_OFFSET for VID 1. Once th=
-at
-> bit is cleared, untagged frames sent on the bridge or port are classified
-> into VID 1 at the CPU port and egress the user port with an 802.1Q VID 1 =
-tag
-> instead of untagged.
->=20
-> Conversely, because dsa_port_bridge_dev_get(dp) is always NULL, deleting
-> VID 1 from the bridged port (for example via bridge vlan del dev swp0 vid=
- 1)
-> clears BIT(port) in priv->vlan_members[1], which leaves BIT(port) set in
-> standalone and restores the port to both SWIP_VLAN_MEMBER_PORTS_OFFSET an=
-d
-> SWIP_VLAN_UNTAG_PORTS_OFFSET for VID 1.
-
-No, I could not reproduce the unexpected VID 1 tagging with a VLAN 1
-upper or a software bridge. But looking again at the documentation, I
-see that the "Custom Untag" register programming is not needed in the
-current mode. It works because the ports use "Untag Port VLAN", so the
-Custom Untag table is not used. I will remove the unnecessary register
-programming in the next version and add more comments as documentation.
-
->=20
-> Also, because dp->bridge is always NULL and
-> ds->needs_standalone_vlan_filtering is false when !priv->features.port_vl=
-an,
-> can swip_port_vlan_add() or swip_port_vlan_del() ever be reached when
-> priv->features.port_vlan is false?
->=20
-
-Regarding VLAN callbacks: yes, in the current configuration they will
-not be reached through the normal VLAN/bridge paths if
-features.port_vlan is false. I would prefer to keep the checks since the
-callbacks are available in the ops structure, even if the VLAN resources
-are not initialized without that feature.
-
+>
+> > @@ -534,6 +545,13 @@ static enum dma_status loongson2_cmc_dma_tx_status(struct dma_chan *chan, dma_co
+> >  			/* Active descriptor: compute residue from hardware progress */
+> >  			state->residue = loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
+> >  									lchan->next_sg);
+> > +			/*
+> > +			 * A paused channel still has an active descriptor but is not making
+> > +			 * progress. Report DMA_PAUSED so clients can distinguish it from a
+> > +			 * running transfer.
+> > +			 */
+> > +			if (lchan->paused && status == DMA_IN_PROGRESS)
+> > +				status = DMA_PAUSED;
+> >  		} else if (vdesc) {
+> >  			/* Queued descriptor not yet started: residue is the total length */
+> >  			struct loongson2_cmc_dma_desc *ldesc = to_lmdma_desc(vdesc);
+>
+> [Severity: Medium]
+> What happens if a client queries transfer status on a paused channel with
+> a NULL state pointer, such as via dmaengine_tx_status(chan, cookie, NULL)
+> or dma_async_is_tx_complete()?
+>
+> Earlier in loongson2_cmc_dma_tx_status():
+>
+> 	status = dma_cookie_status(chan, cookie, state);
+> 	if (status == DMA_COMPLETE || !state)
+> 		return status;
+>
+> When state is NULL, loongson2_cmc_dma_tx_status() returns early before
+> acquiring lchan->vchan.lock and checking lchan->paused, so it will return
+> DMA_IN_PROGRESS instead of DMA_PAUSED for the active paused descriptor.
+> Should the lchan->paused check still be performed when state is NULL?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1792988985.git.zhoubinbin@loongson.cn?part=4
