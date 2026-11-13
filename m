@@ -1,47 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.3
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794542340;
-	b=ezlEqvV74Iju3AxEVKNl9pVxM7WOrQx6K/5+rxkGeIupzLs4yC9gVEuhfpTIyksGXkUr
-	 5VUNx2ZzEbeNhYEXjXNCoKGvgshvs0SSf51i36dwWg5k18r/s+sc4N2YsxRWMHEHF8Cl9
-	 uigMT4N0o1qTAscZdWAKd3PRAMQFMIZH9B6NOf5ChvYnf3nThAuA1Sw6ta1EW+UWCaDIQ
-	 WNUqbC9ICteB5Vpf36h1IhMz0hkKuVrVJQewKf0GsHRRF0NTG8MfkgRPRx8+V8agkQFCc
-	 xaIxw4Jbt2BPmvxmiB1S6js/bvRaJraRTBKaPrzH+0dGq6YTHdWxhBkjPqYasnD/v4g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794542340;
-	h=DMARC-Filter:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
-	 X-Coremail-Antispam:X-CM-SenderInfo;
-	bh=2JUOfsFOfJEmlaAFTpTaKsBmsfTT4SLC4fGYq4jy5VE=;
-	b=G295iRaHht+UKj1qfdivt27HZGHg0Ds+3k6+MRbShsI3MuJBa0BpOkXANFOFBSbOSeKF
-	 fyZ76YxrAtYC2WXGn39dsSuXxARKe7HdB8rRC5H95sSS7fLHTVOjaVd87ZVSCaus7ccs8
-	 6FIIH3VDNUWRanMwC18vncq0pyGViQVA3TuOH8P5gXDZkvwBfJFKksT9yCFOKbgPavnf4
-	 ucUwnPWh8XJ9OXO1tE/jn26WnTLwT71s8MGkm+Scy1EW+/lNOjPTZpFeoKzEUI3hCVF76
-	 H9tDeXAGwMrl3Pb4oPo76r6pV4ONgleOLh6bB5MZYVdc0c3JdxiiNik5u91gpOzyvLQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=163.com;
-	spf=pass smtp.mailfrom=163.com;
-	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Lyxm9tmi;
-	arc=none smtp.remote-ip=117.135.210.3
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.175
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794542984;
+	b=HfzaAYWJ0XplHJk1rtx+FD705y9LILpS050HSsJTAY+IB+lcxaWHZiem2Y03rQ/nYttm
+	 ZRlhlSP6TxT0k14yy2bbpZqTV3WoO6eO4qmAnCWSwuNT4JnQrI/XLcr2A/kQZHnMwv+Sa
+	 mNh06IKgzSqIoZ3vAdaoNSL1MWYF7n0DbuFUS7/OmgwZoe91Qy9LBKIGwRQWA8+d9n7q6
+	 /VjemQQ9Om45MsdVCbbKn4oetiHXpLzbYJMdW5snNIr6D2SJGn7eLOdAZcgGstM59lXMI
+	 fBj82tUm/tj0GW6AwdhplsFOpcoiOShZMG0rhrWSMAug1dKyJQgmaGb1XRNrFKaoGhg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794542984;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
+	b=kDTjm4ZY6qE8rqfVKaFEIYzq1+PWM/ejoKKDEfPSs6f2FK9ZS0CuvRT2hpQrXeAFNqh4
+	 /xf5thTZLn3K3bmKwN0QUXu7332QXCLnZI4APZk5TL48b4GlfomOLP7pTd3Ju4XjCHFuZ
+	 7/GCwEkPIvupuN0KIKxwAFgkf/1FCRzb/cZbnZ9yycul7WyHyh/YbU7MNTeSqG9AV6jyF
+	 EmY8VNqod+vIymfLypYvngIR1/L3ubJSwVobqvvysrmcfJTwOaKqsP0T94yGMrkXLmRDc
+	 oFiHlJMRNsJKM87TYXJCM+N7p5QJSvDjWrJRyxmtUWOx+bhkxJvTpGT/EKXuLRsoFNw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GzLPPwu5;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.175
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F9D606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 03:58:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D6F9D606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF358606A321
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 04:09:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF358606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Lyxm9tmi
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=2JUOfsFOfJEmlaAFTpTaKsBmsfTT4SLC4fGYq4jy5VE=;
-	b=Lyxm9tmihZjGz8crX5pRuB65/Xtrx2bBsgaelAvvffoJzTvD7w8G18j7HLR94S
-	bSAwEt6dzdt8Nf/YUB0U2imtO+rft0IVW8zhSCtLvI/Mfq5D/bQpesoMHU7JSnuQ
-	DSRrIYM6ib3ovh2hArvCiOOAK8XUCT2AxdxcXvGyAYrnM=
-Message-ID: <b2ddd82c-7f07-4845-be0d-dce2c4ffb679@163.com>
-Date: Fri, 13 Nov 2026 11:58:20 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GzLPPwu5
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ed0e2015aaso3021585ad.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 20:09:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794542983; cv=none;
+        d=google.com; s=arc-20260327;
+        b=W9VOT9ZePJHP2IlmbbwahntqM3Mivrsju/ZEIQLd9N6DKpJBYqKXfXD6k86fIyVoHl
+         8kDOtdGFinatPX5ZbPUrqkEHkJTXfPSxxyhbqKAKoeP20gwIxwWyucIbQLJodtk/2zpV
+         oOeO2S9hjTFQ+fkl8rWwfbvjIbRLNHV6qTjgQEqDZJup5WecuPRCmsEr9/QWgnf82l2k
+         5cGB7LNni5emdHffEF+v4UyXq082SVd00v/4Go1u3ynk4/qYxE1YOQ5Pu1rcydELJ0oh
+         AFbJMSrR26hxAUwSnMiub64/A7zCMV1g+qLx0q3btLBE5k4g5xGBsXBRYYnCXLQ3ak7i
+         Imkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
+        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
+        b=rcQH3TyPswLeh/NZuZFaz29oRzSJhyXApRK4zS31+yxT5n3U+RonsYM1Rc/8+BUyvt
+         XJyTt2LVnhZMEorlClAFW3uYWtjBuaf34g/u5nmlwgYPzm18CIH4BTp+++9gLs1bVMIJ
+         bS+y7pXgxUHl6C/jGrhkCDMY9uIGt35nXPwgl3c62APE1BJ/s4Uq1VsQ/Ixq0KzQB5Hn
+         FVNV6whwhm8+66UwwGDLVVxwbj3OxY6u3rsF8KnmlmQNj5yUWdBC62dWLT3xdcvz6PIi
+         GL8ViyZmO3QTLTDUhF236Od2ECownwwOi01npVGdAoAT88NOaHFwkHIhWzEzKu2kNG+0
+         X0Pw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794542983; x=1795147783; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
+        b=GzLPPwu5UhBFuzwzqFYPIQSA201sDnQkqHEv+qjhQH27tsKhAVTxzq2nqD3WnyRXy4
+         mbtBBdpXXwiU7ArlWM5WZdbqRl1a3q40iJuoCaa6yLS73mAX0p6fabubNly3kq4M9JPD
+         cZcNEaoAPA+eYUXY9etU63IYmyLTqDv6PeW/tSmWfZcnICoazoNUsDQc1zdvyqXhbLjf
+         hwSBNK4Ute+ymhKK93sq+kZ0GqxghvUSoDMGZ9WAxQiBBg7OPhu59lotlWQofQP/rNOB
+         yF9gp1QqE+UUQjQQZBMoWfim2m/avPKwIOWmVgMl9Cad6cD2cOqjLJNWwLnkHCCCFNz6
+         XlQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794542983; x=1795147783;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
+        b=YX1a+jILiUkwfiJMTegWiVaovcPaXEkYRLivxcg0aZWHTjn/aG2MtUoXFLeT4vLcB9
+         Z9MztOt1kDjwybC8Gl8zP7vOTfG1kgt9+gGzi1CUemqglCPSwMaNZY9yQolbh5MmRpAF
+         Fhz2w8gVXzkkY+Naz95/yd3A+vlmLD5QkR+WFBgs+tIaxIwuX+pa43aEw9ZcrU/+mo8B
+         Sf2Kipje9K1CY0o3E8bRh+DWNeXwrPNvjVbBAqEbmYyWTjGSuFm3KUgSOI8xDzcLHaYA
+         yEOuPxu8pYurX24onnA+m1jx78omEMCNAYGKHEFHvJ7dNN2uxs2uGPiOlYyN4Mviwr3h
+         OqyQ==
+X-Gm-Message-State: APuU4Z8eE+Uc0PA53dwUv3QqTsMyI+sauynL8LWnV8fwKTrOBMh8lUGJ
+	qmT/4rYYsPa7RL/P4TWrGfOkQzt1WZylXNEuN0Rm0RPwbFhMNxzT1j5QFWKyBGTbbsE+zLzD6SB
+	ScSOI0d/LbrzqJS+kbsnCpCoJUZd70LD24DAy
+X-Gm-Gg: AYBFou1su9V4PDnkvBzmyTclxgAm+U7MOET9Yg3f8UcjQybggjlEzIoWSu0whf0sY98
+	ajIMnOQEg00oEgTTLxTbf+y8l0IsPbPXfqu5Ag+tSo+vPz/0veDHWu5FSSWSsbqTKcFfmtLAt4K
+	R15eZ25rlmef9H4dIGkPf/vJcvfbDMedF0BetPL1tH33y5RJ7eHfwDIRXAHfbZ7LhSypPcHGuvS
+	PTMDqAKRGNcbznt3rWTaxWg5SvSzYKkGnhGknpQfk0cEEhmSgtDjPTai3ynQC+RO6ddM6gOw03u
+	nowOYFptrcexDX1JL+flP188NrYQAnpRsDJNV/+UV1pPC0b6KHylC6Ut9CJbRU2euCng/J4z8+d
+	1uv3Ik6KMlvf/dk3uZyrNuoNUj1VGK243F+O2V9KbI+XZ92xefVpg7O01j+NeEpJxOeppdBcwvB
+	lSBDdZzoX9Sat8EAVmZTRnotXRiD4NIF30hupzB+6gc//H0VHf
+X-Received: by 2002:a17:903:94c:b0:2e9:8202:5083 with SMTP id
+ d9443c01a7336-2ee0dd6dec3mr13813135ad.55.1794542982803; Thu, 12 Nov 2026
+ 20:09:42 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,129 +103,50 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] selftests/mm: Handle implicit read permissions in
- madv_populate
-To: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>, Shuah Khan <shuah@kernel.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>, linux-mm@kvack.org,
- chenxionggui@lanxincomputing.com
-References: <20261112031811.56500-1-evers_chen@163.com>
- <sashiko-outbox-212131@kernel.org>
-Content-Language: en-US
-From: cxg <evers_chen@163.com>
-In-Reply-To: <sashiko-outbox-212131@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wD3_0XcivZqFta+Hg--.3699S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGF18XF1DZF43KFWUWr1kGrg_yoWrJr48pa
-	yxJ3WYyr47Gw12yw4vyw4xXr1xKFs3GFW8X348tryFv3sIkFn7WrW8Ka45Kas5AFZYqw1Y
-	vas8Casxuw1qyFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07Um9aPUUUUU=
-X-CM-SenderInfo: xhyh22pbfkv0i6rwjhhfrp/xtbC7B0yPGr2it3HVQAA3m
+References: <20261112105116.32274-1-phucduc.bui@gmail.com> <20261112105116.32274-3-phucduc.bui@gmail.com>
+ <sashiko-outbox-210979@kernel.org>
+In-Reply-To: <sashiko-outbox-210979@kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Fri, 13 Nov 2026 11:09:30 +0700
+X-Gm-Features: AclHuK_FT4t-gHEPN9lEz3pFi9xgaYKjHallEH_VKLm5TSQEzrOCBtvH2q8fMTY
+Message-ID: <CAABR9nGRLeSheafnue9UONDT1My=d4gc7T93gCYxsoR7_SQhDg@mail.gmail.com>
+Subject: Re: [PATCH 2/5] ASoC: fsl_asrc: Fix handling of deferred spba clock
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Andrew,
-
-Thanks for improving the changelog and picking up the patch.
-
-I noticed that the original madv_populate test was introduced by commit 
-e5bfac53e310. Would it make sense to add the following Fixes tag?
-
-Fixes: e5bfac53e310 ("selftests/vm: add test for 
-MADV_POPULATE_(READ|WRITE)")
-
-I also tested an alternative implementation using the existing procmap 
-helpers, as suggested by Sashiko. It passes all 17 tests on RISC-V with 
-Linux 7.2.0.
-
-However, since PROCMAP_QUERY requires a relatively recent kernel, 
-keeping the current /proc/self/maps implementation may be preferable for 
-compatibility with older kernels.
-
-Thanks,
-Xionggui
-
-
-On 11/13/26 11:19, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Low] selftests/mm: custom /proc/self/maps parser in
->    mapping_is_readable()
-> - [Low] selftests/mm: missing Fixes trailer for test_prot_write()
->    failure
-> --
+> [Severity: Medium]
+> This problem wasn't introduced by this patch, but can [1]
+> fsl_asrc_config_pair() leave hardware registers with stale values across a
+> warm reboot?
 >
-> commit 3592bfa7e9663819c643afaf7d6c337f6b102d15
-> Author: Xionggui Chen <chenxionggui@lanxincomputing.com>
+> Earlier in fsl_asrc_probe(), devm_regmap_init_mmio() initializes the regmap
+> cache to all-zero defaults without issuing a hardware soft-reset first:
 >
->> selftests/mm: Handle implicit read permissions in madv_populate
->>
->> The madv_populate selftest assumes that a mapping created with
->> PROT_WRITE cannot be read, and expects MADV_POPULATE_READ to fail
->> with EINVAL.
->>
->> However, some architectures, including RISC-V, may implicitly grant
->> read permission to PROT_WRITE mappings. On such architectures,
->> MADV_POPULATE_READ succeeds, causing the test to fail incorrectly.
->>
->> Check the actual VMA permissions through /proc/self/maps and adjust
->> the expected result accordingly.
->>
->> Add a PROT_NONE test to verify that MADV_POPULATE_READ still fails
->> with EINVAL for mappings without read permission.
->>
->> On RISC-V with Linux 7.2.0, the original test fails 1 out of 16
->> tests, while the updated test passes all 17 tests.
->>
->> Signed-off-by: Xionggui Chen <chenxionggui@lanxincomputing.com>
-> [Severity: Low]
-> Should this commit include a Fixes: tag for the test it fixes?
+> sound/soc/fsl/fsl_asrc.c:fsl_asrc_probe() {
+>         ...
+>         asrc->regmap = devm_regmap_init_mmio(&pdev->dev, regs, &fsl_asrc_regmap_config);
+>         ...
+> }
 >
->    Fixes: e5bfac53e310 ("selftests/vm: add test for MADV_POPULATE_(READ|WRITE)")
->
->> diff --git a/tools/testing/selftests/mm/madv_populate.c b/tools/testing/selftests/mm/madv_populate.c
->> index 7fce5d0b622be..818f99ee20041 100644
->> --- a/tools/testing/selftests/mm/madv_populate.c
->> +++ b/tools/testing/selftests/mm/madv_populate.c
->> @@ -69,10 +69,38 @@ static void test_prot_read(void)
->>   	munmap(addr, SIZE);
->>   }
->>   
->> +static int mapping_is_readable(void *addr)
->> +{
->> +	FILE *maps;
->> +	char line[256];
->> +	unsigned long start, end;
->> +	char perms[5];
->> +	int readable = -1;
->> +
->> +	maps = fopen("/proc/self/maps", "r");
->> +	if (!maps)
->> +		return -1;
->> +
->> +	while (fgets(line, sizeof(line), maps)) {
->> +		if (sscanf(line, "%lx-%lx %4s",
->> +			   &start, &end, perms) != 3)
->> +			continue;
->> +
->> +		if (start <= (unsigned long)addr &&
->> +		    (unsigned long)addr < end) {
->> +			readable = perms[0] == 'r';
->> +			break;
->> +		}
->> +	}
->> +
->> +	fclose(maps);
->> +	return readable;
->> +}
-> [Severity: Low]
-> Could mapping_is_readable() reuse the shared VMA helpers in vm_util.h
-> instead of open-coding a /proc/self/maps parser?
->
-> madv_populate.c already includes vm_util.h and links against vm_util.c,
-> which provide open_self_procmap(), find_vma_procmap(), and close_procmap()
-> (exposing PROCMAP_QUERY_VMA_READABLE in procmap.query.vma_flags) as well as
-> check_vmflag(addr, "rd").  Reusing those avoids duplicating VMA lookup logic
-> and avoids line truncation on mappings with paths longer than 256 bytes.
+> When fsl_asrc_config_pair() later calls regmap_update_bits() on REG_ASRCNCR,
+> REG_ASRCDR, REG_ASRMCR1, or REG_ASRCFG with a target field value of 0 (for
+> example, a 24-bit audio width or 1:1 clock ratio), regmap_update_bits() sees
+> 0 in the cache and skips the register write, leaving the hardware running
+> with non-zero dividers and modes from the prior boot.
 >
 
+This is not related to this patch, but I checked fsl_asrc_config_pair():
+
+- REG_ASRCFG is volatile, so it is read from the hardware and is not
+  affected.
+- REG_ASRCNCR always gets a non-zero channel count (channel_bits = 4),
+  so the write is never skipped.
+- REG_ASRMCR1 is affected: with 24-bit input and output, IWD and OW16
+  are both 0, so the write can be skipped and a previous width kept,
+  e.g. after an unbind/bind.
+- REG_ASRCSR and REG_ASRCDR can be affected only in rare cases
+
+One way to fix this would be to write the register defaults to the
+hardware in fsl_asrc_init().
+I would prefer to keep it out of this series to keep its scope unchanged.
