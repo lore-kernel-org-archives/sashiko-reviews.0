@@ -1,49 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794571908;
-	b=ZuqRKkYTQYD2Jx64IAstBrJqlrtpvAkKFzh3cqrVITzlUfYRef/HXQGFfCVXa1dUhu2P
-	 QqkcwLa7tzxDuZ/B9dzuGfuI8fOLMH9ORWnqN56s3/KW9s8XcTDcvNZeyud7RhOu3geKX
-	 Oka1VxpqeULEa7NG5gdxrEVZ8Wz4VhwoXGdLXT/KeXnjsCIbY1qej75VOyRhPw7ebgMQD
-	 xQnCwjOLC8kPvIRZtj8nsLuAzlT7ulL5eorK6y84QPRjsbHvvo1U7SX/p85rbh0dGOJuO
-	 VVyPNJ0x/uSnZEk61drwGIt6qv9NU8Q4x1DQ8mRQj6pGuvnLEPrgD9PUuYqLzik6mPw==
+	t=1794572830;
+	b=mUWZouuHw6CG+gUnnQG0skkhmg7O1dvW0eBqXOC8ury+8QrPBhWLy0xfUKqrqvwOCmho
+	 5TWurJClPmzFj0xkr2jjwICds5Gujc94tbvRsYlLDh+reGq7WramOPJ4/m54vKCAgr3TS
+	 c8/tRQ8NCXVUaycia2IcX9Ok80jcbCxPxx4HyHORxs0O2S6suGFjV723jw8UtXfyt9OIu
+	 0E1hU8nUTOQJNtaPb+F3Dxq1OX4KRxTCKBlin+wIVMxsS4Ln0f2v9rn0zZ101JqQQ0Yu6
+	 dgBt/DNM+o6AsnCUNLmF3YT5uQG1EcVaSe969lqY4/5QI775YmG7BFeMkFvRRLXZipQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794571908;
-	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Status:
-	 X-Spam-Checker-Version;
-	bh=efnN+vjdwzODKPHA9IZCXD52X2wkz8z0MwotasPDo5s=;
-	b=3Jcq3bXXwPaQPAMaAd4X9Yj4+wqxFnZFm66RBRR+XHAmFC4UuKrFLWrqDtcjarMVEPEi
-	 CNrSKIAnw4bUQ289dcLYVnge9qyMxt0tJqpZLy3ojskBAXSzINWdZVFWCBp9cbtTO+N4L
-	 wPKh9ud6V72TtEa6dVfFu4bZPIqG7NwcIaDYV4opbGcrXATH93TnvmmRZH8iUa7E5gdGG
-	 q+0kGu9YXxCNeLeV5YNgK2STI4OyyqBIO2sOICUV1TuXgLG/kDUPH2XLh9IU1SCwX0D5S
-	 yDLazoO0TZ+Yokk4RqOM8awxdIVCvUL+L7x4z8E2rsivYPhn8F/DLGH+vmC6I9434fw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794572830;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=wQS8+G8zUE7eRedh/eNlx+5Ei152G7Qf9Mz0SPz+noE=;
+	b=eWN+dcGU6TfdYKfQBJfzuBwrU6E0zkfW3or2/tsysPatlO7fwyJPJ4fABD8UBWZSdjnK
+	 H3IzLiBxWTGD/ArlrCRTDsiy1nyLdo7Tr7Lmedy+En5zVqkLXjTfsyHqlG6lKrqc42YCo
+	 ZE9rqLiM+ZWQQwcreFSfGTBCTn4g9oUNoe+qx2wZwAbquNPZpoRi1Nsg83LJj1YUkAGoH
+	 mKpHn4SiZKyihtzQFkSPI9p5mZhnedh43TBNfO+yLFBX7bRwbFn7guVrSjBZ2M4KnJdyx
+	 Ly9+NX9ilhyKjamuKdCshFc95fFGOZ7jlfpw+AvjhezvobuQF6lsojCpmLdZCovdfRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.microsoft.com;
-	spf=pass smtp.mailfrom=linux.microsoft.com;
-	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=qoiUyiAb;
-	arc=none smtp.remote-ip=13.77.154.182
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00857606A32A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 12:11:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 00857606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=G3ZE0lBf;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461BF606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 12:27:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 461BF606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=qoiUyiAb
-Received: from [10.26.7.43] (unknown [4.213.232.21])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 5096620B7167;
-	Fri, 13 Nov 2026 04:11:42 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5096620B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1794571903;
-	bh=efnN+vjdwzODKPHA9IZCXD52X2wkz8z0MwotasPDo5s=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=qoiUyiAb9ogcPQULCmFlF5bS7RfUK4+zSn0tqCw+wPVdVHs6nUs6TeuCrmUIvpNrH
-	 vwNRipnWNvFvFAG4/ESDaqqgMqwFBvuHd1dw0H7Wv+PcPXq90CsgT8uGLeT2zI0nF7
-	 JRSCiV4gcAyOGIx9zJf5AspwYn421WH2bQY2M8cg=
-Message-ID: <08934876-5b05-45aa-adde-07f33d4e7379@linux.microsoft.com>
-Date: Fri, 13 Nov 2026 17:41:43 +0530
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=G3ZE0lBf
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7357B1476;
+	Fri, 13 Nov 2026 04:27:06 -0800 (PST)
+Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F1F693F673;
+	Fri, 13 Nov 2026 04:27:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1794572829; bh=TjVoosr6HqMq8nW/HCbzKJB4G46aGduUougz+nELtKA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=G3ZE0lBf0yvMtKjxWs2lS+kwNScICzsuSt3PN/vaXgGRiWOYWIb6EyG35gA5p99XI
+	 lmoFC4/gSOeIy5HY8ViwUoBBUzPDEoS4MnqpoeBv1rskyqgs7Scl+nXtorBAOHztk1
+	 blRI1d2Xf1UCXz55EOxU/1juRk2+HZiqQMu38DKA=
+Date: Fri, 13 Nov 2026 12:27:04 +0000
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Breno Leitao <leitao@debian.org>, Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>, Hao Li <hao.li@linux.dev>,
+	Christoph Lameter <cl@gentwo.org>,
+	David Rientjes <rientjes@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+	kernel-team@meta.com
+Subject: Re: [PATCH] slab: allow sheaves for SLAB_NOLEAKTRACE caches
+Message-ID: <avcCGNUqCrcwbFG6@arm.com>
+References: <20261112-kmemleak_sheaves-v1-1-e40e3d73b253@debian.org>
+ <sashiko-outbox-212599@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,66 +65,66 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next] net: mana: Add CQE polling as first-level TX
- timeout recovery
-To: sashiko-reviews@lists.linux.dev, linux-hyperv@vger.kernel.org,
- linux-rdma@vger.kernel.org
-References: <20261112105752.978446-1-sahilchandna@linux.microsoft.com>
- <sashiko-outbox-212652@kernel.org>
-Content-Language: en-US
-From: Sahil Chandna <sahilchandna@linux.microsoft.com>
-In-Reply-To: <sashiko-outbox-212652@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-212599@kernel.org>
 
-On 13-11-2026 16:28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [Critical] net: mana: missing netdev_lock() in mana_detach() callers
->   [1]
-> --
+On Fri, Nov 13, 2026 at 10:05:08AM +0000, sashiko-bot@kernel.org wrote:
+> > diff --git a/mm/slub.c b/mm/slub.c
+> > index 8369853ddca72..f19e20b6f9a4f 100644
+> > --- a/mm/slub.c
+> > +++ b/mm/slub.c
+> > @@ -2850,6 +2850,13 @@ static struct slab_sheaf *__alloc_empty_sheaf(struct kmem_cache *s, gfp_t gfp,
+> >  	if (s->flags & SLAB_KMALLOC)
+> >  		alloc_flags |= SLAB_ALLOC_NO_RECURSE;
+> >  
+> > +	/*
+> > +	 * kmemleak allocates its metadata from SLAB_NOLEAKTRACE caches, so
+> > +	 * tracking their sheaves would recurse into kmemleak.
+> > +	 */
+> > +	if (s->flags & SLAB_NOLEAKTRACE)
+> > +		alloc_flags |= SLAB_ALLOC_NO_LEAKTRACE;
+> > +
+> >  	sheaf_size = struct_size(sheaf, objects, capacity);
+> >  	sheaf = kmalloc_flags(sheaf_size, gfp | __GFP_ZERO, alloc_flags, NUMA_NO_NODE);
 > 
-> commit 6f4e15a96596e896188b6e028bb49a0d4c04269b
-> Author: Sahil Chandna <sahilchandna@linux.microsoft.com>
+> [Severity: Medium]
+> Does SLAB_ALLOC_NO_LEAKTRACE leak into nested sheaf and slabobj_ext
+> allocations for the backing normal kmalloc cache?
 > 
-> net: mana: Add CQE polling as first-level TX timeout recovery
+> When s is a SLAB_NOLEAKTRACE cache (such as kmemleak's object_cache),
+> s->flags & SLAB_KMALLOC is false, so __alloc_empty_sheaf() passes
+> SLAB_ALLOC_NO_LEAKTRACE to kmalloc_flags() without SLAB_ALLOC_NO_RECURSE.
+> If the backing normal kmalloc bucket needs a new empty sheaf in
+> alloc_from_pcs() -> __pcs_replace_empty_main() -> alloc_empty_sheaf(),
+> that nested sheaf allocation inherits SLAB_ALLOC_NO_LEAKTRACE and is not
+> registered with kmemleak.
 > 
-> This commit adds a first-level TX timeout recovery mechanism that polls
-> the stalled queue's TX CQ via napi_schedule() before escalating to a
-> port-level queue reset.
+> Because kmemleak never scans that untracked normal kmalloc sheaf:
+> - If the sheaf is later used as pcs->rcu_free in __kfree_rcu_sheaf(),
+>   kvfree_call_rcu() returns before kmemleak_ignore(ptr) while freeing is
+>   deferred, so kmemleak_scan() misses pcs->rcu_free->objects[] and reports
+>   queued objects as false-positive leaks.
+> - Any tracked kmalloc sheaf linked between two untracked sheaves on
+>   barn->sheaves_full or barn->sheaves_empty is unreachable during
+>   kmemleak_scan() and is also reported as a false-positive leak.
+> - In slab_post_alloc_hook() -> alloc_tagging_slab_alloc_hook() ->
+>   prepare_slab_obj_exts_hook() -> alloc_slab_obj_exts(), the slabobj_ext
+>   vector is likewise allocated with SLAB_ALLOC_NO_LEAKTRACE still set,
+>   skipping kmemleak registration before calling kmemleak_not_leak(vec).
 > 
->> diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
->> index e6d494df22e4d..0d8c8b8fbc83f 100644
->> --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
->> +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
->> @@ -336,6 +336,9 @@ static void mana_per_port_queue_reset_work_handler(struct work_struct *work)
->>  	if (err)
->>  		netdev_err(ndev, "mana_attach failed: %d\n", err);
->>  
->> +	/* Let the next TX timeout try a CQE poll recovery first */
->> +	WRITE_ONCE(apc->last_tx_timeout, 0);
-> 
-> [Severity: Critical]
-> This problem wasn't introduced by this patch, but should
-> mana_per_port_queue_reset_work_handler() (along with mana_remove(),
-> mana_probe() on resume, and mana_xdp_set()) hold netdev_lock(ndev) around
-> mana_detach() and mana_attach() [1]?
-> 
-> Because mana_devops sets .net_shaper_ops, netdev_need_ops_lock() is
-> enabled on MANA net_device instances.  Queue teardown in mana_detach()
-> calls napi_disable_locked() and netif_napi_del_locked() via
-> mana_destroy_txq() and mana_destroy_rxq(), while mana_attach() calls
-> netif_napi_add_locked(), netif_napi_add_weight_locked(), and
-> napi_enable_locked().  Calling these under rtnl_lock() alone violates
-> netdev_assert_locked(), leaves NAPI state unserialized against netdev-genl
-> operations, and allows ops-locked ethtool callbacks (such as
-> mana_get_ethtool_stats() or mana_set_coalesce()) running under
-> netdev_lock() without rtnl_lock() to race with apc->rxqs and apc->tx_qp
-> teardown, leading to a use-after-free or NULL pointer dereference.
-> 
-> [1] https://sashiko.dev/#/bug/linux-2946b7e7-6855-49c0-921d-a6daa482c10c
-> 
-Thanks or reporting this, the issue looks real and I will work on this
-in a separate patch.
+> Setting SLAB_ALLOC_NO_RECURSE along with SLAB_ALLOC_NO_LEAKTRACE (or
+> clearing SLAB_ALLOC_NO_LEAKTRACE before nested allocations) would prevent
+> the flag from propagating into the normal kmalloc cache's own metadata.
+
+Sashiko is right here, this could lead to false positives. I don't think
+clearing SLAB_ALLOC_NO_LEAKTRACE before nested allocations is correct
+since that could reintroduce the original recursion. Adding
+SLAB_ALLOC_NO_RECURSE alongside it should fix this.
+
+IIUC, I think we need to include SLAB_NOLEAKTRACE in the
+mark_obj_codetag_empty() condition in __free_empty_sheaf(), alongside
+SLAB_KMALLOC, if we go with the NO_RECURSE option.
+
+-- 
+Catalin
