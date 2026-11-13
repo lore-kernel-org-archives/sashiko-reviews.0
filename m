@@ -1,70 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794601054;
-	b=cf/ohGibmO8jEjhJQacXfTLo6LhHZ00HOD/1YDBCGnRO5YeCwfm7o6x1R2466EXArGUl
-	 9Q2rgPKUPkIwnxMAYRuSzlBb1sk0u3mkf906A+VwgmfudrmphbqSinnYa8zPJ8/cZBrgP
-	 F3unRbeByQXEHWGn+r1nXqUxp6qSMtOewjGOAUDzMwriof+6h+pTlPu+cny2WRfJjVFWX
-	 tiiGnp7x/wGJ+2UEd14VbcFAvPZO6gKVAz12klmVs/iYco42gvTC6ha+jb2Kw5/l0k7fU
-	 WB4y0dF34YOC4bTkdbm4jG0Zi9ggvfu3COjZV4u9kUX4UudvbIWDAavgGETjVMPGx/Q==
+	t=1794601062;
+	b=RuUm/TrZ20H9tTFE83E5aglyQyGmg2ImRkFy97R7BXBGuHsMJTfv0FZUJckQg8hM1uRF
+	 ZhBFsQX1PDdKz8UTmz+mTH0RwRqubah7mKdKzyaYzyFKCOlO3CkYKRvK5UW+Ml+rzxatO
+	 rtJg6+NOFHzLIhvJxZOhWfswg+28+YUFhn8msybI1vX8+kCo27bL/nR4AOrx7tOEwRXUz
+	 gSa8u5FJ3uk+ygS1IzBog07/PIU3sfNCfo0RSuFe24bXtaew0h8jaV1YzJjeifEppnr/p
+	 MjCJuHZk838karXuyTZfFafOBtW2buWD92K56UtdoWCXyQzTSwQVRfTd2gPnj9l5E0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794601054;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=KMgyZIG0LH+AzucSoXIEUf07GbSesuvgObEN4MQKmJA=;
-	b=TevI241SYDO5VMPWHbvCWyRc74JEcXcjgayMw2f2u6eLqyYtSKOe8RZ4ugQpCE4897An
-	 75C4/OcXbawvdUMGXMtC1wSrIdHsCv7qNSxnaDIPTziUFESSq90IrHWYwXBb0cvmObmPY
-	 c5B0c3yFf8N28LOZ/JHuwU3gl/WscoSN+afz6AukWbfBIBbVu7Gtk5W85weXOrzzN77ff
-	 S9zEPX+hEgq0+hBnQ/RAJbPL+OIYdz+ZDf/kP5JhELC6iZdlsplRifCcOV9AaR0Gn26k0
-	 yVF5srGrNjjhfZ8u6VQmx8pwadbcOo2GjxdAA7RqsvAwQPnFYb/x9EvlBGJ/18NpIdw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794601062;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=sQw4GvATXFtrzEViTcI7yXb0PY3EJAnllv1+ldzoAew=;
+	b=wC3Ki96a8N87ok/QNW/1FtpJatCQr77JIEvlKKoKC4SDG0H55kmJV2boxIOgmsQ1gCNN
+	 0SNS/SGQE/POERO88kEACSLQgJJ/3gMCFFkxxbpcBJ64pcI46fZQxv6uDZNO5f9h0rDLb
+	 k9HmSgg0VMrLExR8gMc0TbAjnUfblQolYcOswfYXRQFXGl59F5tGOLsPd+NYs8vTzdCo8
+	 bVNQyPdlopzrKPlv6EfFo3YTc3oLqqcjsUg+rRgjQ480FzzcIxu22G1DZzfmK0aDvIueJ
+	 oGz8rU86wwHluLNY/3nMxOwJK4XzEBzE4BMF5MziUguOM6/mY+vzN+Ef3JXsMdCg8NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ksqi3hNT;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Na7LhR87;
+	arc=none smtp.remote-ip=192.198.163.18
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF8A606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 20:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D06606A330
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 20:17:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60D06606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ksqi3hNT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B491F000CC;
-	Fri, 13 Nov 2026 20:17:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794601054;
-	bh=KMgyZIG0LH+AzucSoXIEUf07GbSesuvgObEN4MQKmJA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Ksqi3hNTqNIsecm151Mv4zSREdF6VM4gl6f8ebPK6i7vV0hrw+/+FObf1VxUFmbpi
-	 umsaygAIzu3XejhtNSTV0Z/s9bDVREmw5UkYREtqjHCOhxGefLP550uo5bFjSYYT5d
-	 Q0RmM9fQJBQozX73fsKKRg/23UmLZw9xYshKQzu+vaGI1ZzcXoUOkJhJFVkfp6q+N5
-	 4B+2plORdoYB2HDLR7B9G7jOJSbByw0nX0iHmd+zM/JA6G82WuxemUZuEPUDpbLpTR
-	 3a+r6bImtnlsekCk0Xxi4ulszOGd1FAkrN0DdrnW8h1cdSj62j0799TsuYtKnErrAF
-	 vgJqz7bboW7MQ==
-Date: Fri, 13 Nov 2026 20:17:22 +0000
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>, 
-	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Michal Hocko <mhocko@suse.com>, David Rientjes <rientjes@google.com>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, Andrew Morton <akpm@linux-foundation.org>, 
-	Jann Horn <jannh@google.com>, Pedro Falcato <pfalcato@suse.de>, 
-	Matthew Wilcox <willy@infradead.org>, Jan Kara <jack@suse.cz>, Nhat Pham <nphamcs@gmail.com>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
-	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
-	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Alistair Popple <apopple@nvidia.com>, Usama Arif <usama.arif@linux.dev>, 
-	Kairui Song <kasong@tencent.com>, Balbir Singh <balbirs@nvidia.com>, 
-	=?utf-8?B?SsOpcsO0bWU=?= Glisse <jglisse@redhat.com>, Kiryl Shutsemau <kas@kernel.org>, 
-	Yu-cheng Yu <yu-cheng.yu@intel.com>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>, 
-	Peng Fan <peng.fan@nxp.com>, Josef Bacik <jbacik@fb.com>, Chris Mason <mason@kernel.org>, 
-	linux-mm@kvack.org, Borislav Petkov <bp@alien8.de>, Mark Brown <broonie@kernel.org>, 
-	Dennis Zhou <dennisszhou@gmail.com>, Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
-Message-ID: <avdveCV9uW1zwXXd@gremlin>
-References: <avYJ-CxBEpdO1Wmu@gremlin>
- <816E22E2-C7DD-4DD1-AAC9-F51F4D1ED71C@linux.dev>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Na7LhR87
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794601061; x=1826137061;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=FLioU4cDbbnRDreB0K/kLhwrT7wLL1csVX23RCfV9/0=;
+  b=Na7LhR87jFvmPWijzZu3VtuDKhCj6zsvCd6AKe8mwfs7+1yJ0Wjpn4Oz
+   PvCSmMhByEa82HX/S6nwnM7t04Z/h3AcgQFJzbEI0xXJcTpzyNdWMgX5p
+   Pf/O2+hDX2OJFqzIfNLnJ9guaf+AkDhMoI+bYUBgjxKfXnAI4KmDPJamO
+   9KZEonybfasViTZjE1zkJwHTkf1mI2OqqLrTrhlWtDHkFydXBW+zoH+3T
+   yLnewWEsV5XuSQTsr013vYX3wMEczj3T3lmSMkbynKpEenLlzTPiGHZhj
+   towE1BYmnNru8JqyBME4Q6w7rXE48Zo1lRx4E7MaQ0duaWjIwtPqQ3QRQ
+   A==;
+X-CSE-ConnectionGUID: UC4bBbDQQxG+jUd7LzvRDw==
+X-CSE-MsgGUID: auUWlRE8Szup1alu98pZFg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11965"; a="3446815"
+X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
+   d="scan'208";a="3446815"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 12:17:41 -0800
+X-CSE-ConnectionGUID: ipjc2YimRcKAr4DI/2LA0A==
+X-CSE-MsgGUID: 3xVpcVvLTgm3oq0L90T70g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
+   d="scan'208";a="9325321"
+Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.184.228]) ([10.122.184.228])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 12:17:40 -0800
+Message-ID: <2a3c1d34-b3f3-47f1-ae15-c3b466f0a363@intel.com>
+Date: Fri, 13 Nov 2026 14:17:39 -0600
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -74,43 +72,129 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <816E22E2-C7DD-4DD1-AAC9-F51F4D1ED71C@linux.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 21/21] KVM: selftests: Support fixed counters bitmap in
+ pmu_counters_test
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <20261112203227.289379-1-zide.chen@intel.com>
+ <20261112203227.289379-22-zide.chen@intel.com>
+ <sashiko-outbox-211841@kernel.org>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <sashiko-outbox-211841@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 12, 2026 at 02:53:44PM -0800, Roman Gushchin wrote:
-> > On Nov 12, 2026, at 11:03 AM, Lorenzo Stoakes (ARM) <ljs@kernel.org> wrote:
-> >
-> > ﻿+cc Roman
-> >
-> > Roman - see below - I was under the impression mm was not supposed to receive
-> > 'unrelated to this patch but' reports? Did something change?
->
-> Yes, sashiko started reporting pre-existing bugs again, but in a better way:
-> strictly once (per bug)
-> only for the first non-rfc version
-> somewhat related to the proposed patch
-> not more than 1-2 per patch
-> not exposing security-sensitive stuff this way
->
-> Obviously the goal here it to increase the chances for the problem to be fixed.
-> It’s global, not mm-specific.
 
-(Sorry only just saw this!)
 
-Ah, I thought it was an mm opt-out.
+On 11/12/2026 3:00 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] KVM: selftests: missing EDX/ECX combinations in
+>   test_fixed_counters()
+> --
+> 
+> commit 3d8b2ca900bb2a01f5f9cee15fc9a12bc40184ad
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> 
+> KVM: selftests: Support fixed counters bitmap in pmu_counters_test
+> 
+> This commit updates this_pmu_has() to check the guest PMU version before
+> consulting CPUID.0AH:ECX and updates test_fixed_counters() to test
+> supported fixed counter bitmasks alongside CPUID.0AH:EDX[4:0].
+> 
+>> diff --git a/tools/testing/selftests/kvm/x86/pmu_counters_test.c b/tools/testing/selftests/kvm/x86/pmu_counters_test.c
+>> index c3e784e16348c..61e6fe5b6ef48 100644
+>> --- a/tools/testing/selftests/kvm/x86/pmu_counters_test.c
+>> +++ b/tools/testing/selftests/kvm/x86/pmu_counters_test.c
+> 
+> [ ... ]
+> 
+>> @@ -631,25 +632,43 @@ static void __test_fixed_counters(struct kvm_vcpu *vcpu, u8 nr_fixed_counters,
+>>  static void test_fixed_counters(u8 pmu_version, u64 perf_capabilities)
+>>  {
+>>  	u8 nr_fixed_counters = kvm_cpu_property(X86_PROPERTY_PMU_NR_FIXED_COUNTERS);
+>> +	unsigned long fixed_subset;
+>>  	struct kvm_vcpu **vcpus;
+>>  	struct kvm_vm *vm;
+>> +	u32 fixed_bitmap;
+>>  	int i = 0;
+>> -	u32 k;
+>>  	u8 j;
+>>  
+>>  	pr_info("Testing %u fixed counters, PMU version %u, perf_caps = %lx\n",
+>>  		nr_fixed_counters, pmu_version, perf_capabilities);
+>>  
+>> +	fixed_bitmap = BIT(nr_fixed_counters) - 1;
+>> +	if (pmu_version >= 5)
+>> +		fixed_bitmap |= kvm_cpu_property(X86_PROPERTY_PMU_FIXED_COUNTERS_BITMASK);
+>>  
+>> -	vm = pmu_vm_create_with_vcpus((nr_fixed_counters + 1) * BIT(nr_fixed_counters),
+>> +	/* One vCPU per subset of fixed_bitmap, plus one per legacy EDX test. */
+>> +	vm = pmu_vm_create_with_vcpus(BIT(__builtin_popcount(fixed_bitmap)) + nr_fixed_counters,
+>>  				      guest_test_fixed_counters,
+>>  				      pmu_version, perf_capabilities, &vcpus);
+>>  
+>> -	for (j = 0; j <= nr_fixed_counters; j++) {
+>> -		for (k = 0; k <= (BIT(nr_fixed_counters) - 1); k++)
+>> -			__test_fixed_counters(vcpus[i++], j, k);
+>> +	for (fixed_subset = 0; fixed_subset <= fixed_bitmap; fixed_subset++) {
+>> +		u32 nr_contiguous;
+>> +
+>> +		/*
+>> +		 * The loop walks all values from 0 to fixed_bitmap, so skip any
+>> +		 * value that is not a subset of fixed_bitmap.
+>> +		 */
+>> +		if (fixed_subset & ~fixed_bitmap)
+>> +			continue;
+>> +
+>> +		nr_contiguous = find_first_zero_bit(&fixed_subset,
+>> +						    MAX_NR_FIXED_COUNTERS);
+>> +		__test_fixed_counters(vcpus[i++], nr_contiguous, fixed_subset);
+>>  	}
+>>  
+>> +	for (j = 1; j <= nr_fixed_counters; j++)
+>> +		__test_fixed_counters(vcpus[i++], j, 0);
+>> +
+>>  	pmu_vm_free(vm, vcpus);
+>>  }
+> 
+> [Severity: Medium]
+> Does deriving nr_contiguous from fixed_subset drop test coverage for fixed
+> counters enabled solely via CPUID.0AH:ECX when EDX[4:0] is 0?
+> 
+> Whenever bit 0 of fixed_subset is set, find_first_zero_bit() returns at
+> least 1, and the second loop only tests supported_bitmask == 0 with j >= 1.
+> As a result, fixed counter 0 (and any contiguous prefix of fixed_subset
+> starting at bit 0) is never tested with nr_fixed_counters == 0 and ECX[i]
+> set, nor does a guest with pmu_version < 5 get tested with EDX[4:0] == 0
+> and a non-zero contiguous ECX mask to verify that KVM ignores ECX.
 
-In general they're spawning a lot of AI sloppers to go off and send ever
-more fixes and causing ever longer days for us, it's quite a noticeable
-impact unfortunately.
+The mentioned configuration is architecturally invalid and can be
+ignored: if fixed counter 0 is supported (ECX[0] == 1), EDX[4:0] cannot
+be zero.
 
-And often they're duplicative of already-sent fixes so you can see the
-conundrum with this :)
+Furthermore, verifying that KVM ignores ECX on pmu_version < 5 with
+EDX[4:0] == 0 is already tested for all subsets where bit 0 is clear
+(e.g. subsets 2, 4, 6), where find_first_zero_bit() returns 0 and the
+guest explicitly asserts #GP.
 
-So ideally we'd like a way to embargo these or have a maintainers-only view
-of them etc. so we can figure out a way of reasonably getting to valid
-cases.
+> 
+> In addition, gating X86_PROPERTY_PMU_FIXED_COUNTERS_BITMASK on
+> pmu_version >= 5 skips non-contiguous host ECX bits when testing guest
+> pmu_version < 5, so the test never verifies that KVM ignores those bits on
+> older PMU versions.  Keeping the outer loop over j in 0..nr_fixed_counters
+> and the inner loop over subsets of an unconditionally constructed
+> fixed_bitmap would cover all (EDX[4:0], ECX) combinations across all PMU
+> versions.
+> 
 
---
-Cheers, Lorenzo
+The proposed nested loop produces massive duplication without covering
+any new counter configurations.
+
+In contrast, the current single loop exercises all 2^N unique subsets of
+available counters exactly once with consistent EDX/ECX pairs, and the
+second loop explicitly exercises legacy EDX-only enumeration (ECX = 0).
+
+Therefore, I prefer to keep the current implementation.
