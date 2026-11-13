@@ -1,90 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794610962;
-	b=AO/ytTxB0M4RxXHWU0t3XLmqUb03pwIastXubN9nSCzHr0HdxwTeUikiFNfyEP8ESvnb
-	 bQxUQADQ26P94zoolKIIFwBw12WhqR015PZBSvjW4ClB1+Rmb4rA9PzpPm77JtlLykD1k
-	 58FOmzuNmy7OW5Wh6M1ndAaLIbBvqJkCOyAQ/g7fJaoyuMlO5/vTdnqnRzuMFEedzztG+
-	 t2xrBUpTmqLb7hPtMkpmtOShGgHVLtMf5JHS4GR1krRUORa5us6dyivYYiV31Say3FOvV
-	 aYIo+4qkbZtxX7iC6KjfzFqjfulpTGQ5xook7XshFMFrLQiGEN3d8KILwV18y+//CRg==
+	t=1794611288;
+	b=WQ9In7rAIaQyfrGSElUX0zlE9g5ueEv6RoFfBp0LAfMqbmrd7GKdxrjLyKSOnIS2dtUc
+	 9jmK20PAs2qc1sa/iOT4hW4ZWMZDOzYqjyXHH8NY/ZLbQYxjwpmY4bRkH5MOhRtmhw4IN
+	 cnbTnyjqsE+cGxe4u+v7cnZB6rSayE7BSK5kdcl67HJz52To+DtEclfZDYZgKdH8oHp8+
+	 9K38SP4d+fAdOJwSaTC1DCHUH9U3aGoT+Xv3IOv737zG67E3KrGxGq5pbHpPSoC+Tc2m/
+	 vmx3dm+SC2jyKelvQoEHFIhWrQFxzftV7v0GGUOIbHKWisZHT8qs5Dcm3pRqTu5yPvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794610962;
-	h=Received:DKIM-Signature:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-	 X-Cookie;
-	bh=Ll4G4Q/q4XxD/HDGmclEgc4oOKKpDop1k/0Nt4LDa/I=;
-	b=Qzufdvom12Cr2xLMkzKCQHYI0Vq8yTt6S5m4SKbIXPX+OGZBU/QpmSDTViAnJf9PwUut
-	 tTjfOYTI+XGb3bQNr+xUnWrxIwxsZ6iq5ZOWCvZ0DqgQby3p0jj+KK0AC6m91U1Ybiykl
-	 atE6LlAWrnAN9eNyl/7HgSvySDMcLZqgk2hIzGaYDfRN0XTlcktXxokyjVZxvQPEvc+QY
-	 F32jcIEC4bhTfsjbkedAwZRGJ36EVbFqQjmwklbdJLv+AzRuEUBHInucy6rYLH8O0pKME
-	 5OUE1C2Rmce0W0lzf0YnjPBOs2oZvcrKu/CLXfg55MFGV09XDY8a0IXCgqT5tWpm8ag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794611288;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
+	 User-Agent:Date:Message-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=06kAyjF7TnFu0sIXC7RFGZg/0iQXbcsoCMf4v8Qle6Y=;
+	b=tk9teHti+5FNJlXSPM7ywxrRCPeW0dAEPDhmsaCVrN7Lqpi9AJKdC7WmRI0o7YURHFBP
+	 4prWk5hWvt9Gi+a2ldxWKKwtX+13eFleYQIOC6eNzGCx7yH6G6gTvNbIwlkObBbmQ3tdW
+	 QZoJP3R4h6Rx1b47Y2PsIGdnc01nrPbjYU4qtduK4TS2MxrJuR6AhMWFeWnrnXPWM/Fj3
+	 wMbSofX47l+jtsxyh4NiooAvajsyq3kFQd2iTa51Ogqzy2SJuCjyQOwzyJA5+KsDeib5o
+	 mXJ5+QV7FMQBEmVsJxm4Axm2PB6AccqszMZfSodsQlBHpxncjMYfEE1/TJzeH4vzWIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YcWOQZ2m;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jwwZoRZh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FDD606A329
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 23:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F67606A339
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 23:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YcWOQZ2m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C431F000C4;
-	Fri, 13 Nov 2026 23:02:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jwwZoRZh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7A31F000C4;
+	Fri, 13 Nov 2026 23:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794610962;
-	bh=Ll4G4Q/q4XxD/HDGmclEgc4oOKKpDop1k/0Nt4LDa/I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YcWOQZ2mnmKIwfWqO86r36Y2thtdPt7NDxIJB1lck9jkiPFShHR8nf2BIT0tT2NP/
-	 JopWy5LGV/I2uPyIA9lN4OxYRrf6K9K9CkF3nsRXOqUvUzFbLh2C98FR/8GCNMwm/Z
-	 0tx2fmGRcFyrFI2fEge6AGnEVDVPxd9G0hj2dPVjejCU/RGcqxZr45+HSiSdZdR7/f
-	 rEiVVLlYql5q3JybO7rdInm9Ap8JxBPlCdvGSY8fSVvGsaqbj3X9I5cUybgbhNRVv2
-	 u8Y5s/KI6ck9NhvAIFsnBadsPV80J19oKVlPlhmPKcc8wWWuj1sjCmE3H4SGUQgQ3C
-	 62V0u9JD1cyWg==
-Received: by traversing.sirena.org.uk (Postfix, from userid 1000)
-	id 8BD9A3287899; Fri, 13 Nov 2026 23:02:37 +0000 (GMT)
-Date: Fri, 13 Nov 2026 23:02:37 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Zi Yan <ziy@nvidia.com>, "Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	sashiko-reviews@lists.linux.dev,
-	David Hildenbrand <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	David Rientjes <rientjes@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>, Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Matthew Wilcox <willy@infradead.org>, Jan Kara <jack@suse.cz>,
-	Nhat Pham <nphamcs@gmail.com>, Johannes Weiner <hannes@cmpxchg.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Usama Arif <usama.arif@linux.dev>, Kairui Song <kasong@tencent.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	=?iso-8859-1?B?Suly9G1l?= Glisse <jglisse@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Yu-cheng Yu <yu-cheng.yu@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>,
-	Christoph Lameter <cl@gentwo.org>, Peng Fan <peng.fan@nxp.com>,
-	Josef Bacik <jbacik@fb.com>, Chris Mason <mason@kernel.org>,
-	linux-mm@kvack.org, Borislav Petkov <bp@alien8.de>,
-	Dennis Zhou <dennisszhou@gmail.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	s=k20260515; t=1794611287;
+	bh=06kAyjF7TnFu0sIXC7RFGZg/0iQXbcsoCMf4v8Qle6Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=jwwZoRZhF5nsQFRrPE0EJgk/oVPJnNV37PiBSxtlxmq1EraKTGVX8YQFPbPx32BEj
+	 qRjZDNql0Gyx6L5oSfZ2t/y/npMKeK7EOPQrZXqXPFmFL9J9kfL+Nc6xRihmxm/Inp
+	 GFAGaNWwtXejLmIbTNPUcmKVR/IvmgfSB810L4xixkTaPn8Wdljnrk9x23adoKTZAi
+	 bJ0BUFmhW9NRKyIn1n/r7lpGnSfgHh+0I4xZa4/nmjXWIBe6FWeCo2IaYs4jd272ex
+	 LOvYp4f0obUUhpXCOT7rCG34YbJsPuZ0pyQIG+NATAiQJLzZj/wCyqzY+5ArVyjmek
+	 fF8q9SkPBJ5dQ==
+From: Roman Gushchin <roman@kernel.org>
+To: Zi Yan <ziy@nvidia.com>
+Cc: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>,  Roman Gushchin
+ <roman.gushchin@linux.dev>,  sashiko-reviews@lists.linux.dev,  David
+ Hildenbrand <david@kernel.org>,  "Liam R. Howlett" <liam@infradead.org>,
+  Vlastimil Babka <vbabka@kernel.org>,  Mike Rapoport <rppt@kernel.org>,
+  Suren Baghdasaryan <surenb@google.com>,  Michal Hocko <mhocko@suse.com>,
+  David Rientjes <rientjes@google.com>,  Shakeel Butt
+ <shakeel.butt@linux.dev>,  Andrew Morton <akpm@linux-foundation.org>,
+  Jann Horn <jannh@google.com>,  Pedro Falcato <pfalcato@suse.de>,  Matthew
+ Wilcox <willy@infradead.org>,  Jan Kara <jack@suse.cz>,  Nhat Pham
+ <nphamcs@gmail.com>,  Johannes Weiner <hannes@cmpxchg.org>,  Matthew Brost
+ <matthew.brost@intel.com>,  Joshua Hahn <joshua.hahnjy@gmail.com>,
+  Byungchul Park <byungchul@sk.com>,  Gregory Price <gourry@gourry.net>,
+  Ying Huang <ying.huang@linux.alibaba.com>,  Alistair Popple
+ <apopple@nvidia.com>,  Usama Arif <usama.arif@linux.dev>,  Kairui Song
+ <kasong@tencent.com>,  Balbir Singh <balbirs@nvidia.com>,  =?utf-8?B?SsOp?=
+ =?utf-8?B?csO0bWU=?= Glisse
+ <jglisse@redhat.com>,  Kiryl Shutsemau <kas@kernel.org>,  Yu-cheng Yu
+ <yu-cheng.yu@intel.com>,  Dave Hansen <dave.hansen@linux.intel.com>,
+  Dennis Zhou <dennis@kernel.org>,  Tejun Heo <tj@kernel.org>,  Christoph
+ Lameter <cl@gentwo.org>,  Peng Fan <peng.fan@nxp.com>,  Josef Bacik
+ <jbacik@fb.com>,  Chris Mason <mason@kernel.org>,  linux-mm@kvack.org,
+  Borislav Petkov <bp@alien8.de>,  Mark Brown <broonie@kernel.org>,  Dennis
+ Zhou <dennisszhou@gmail.com>,  Rick Edgecombe <rick.p.edgecombe@intel.com>
 Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
-Message-ID: <8b5c7020-76a9-404c-bb2d-dba434c8705f@sirena.org.uk>
+In-Reply-To: <F185BA4F-F26B-48EF-AB3C-848D72FA630D@nvidia.com>
 References: <avYJ-CxBEpdO1Wmu@gremlin>
- <816E22E2-C7DD-4DD1-AAC9-F51F4D1ED71C@linux.dev>
- <avdveCV9uW1zwXXd@gremlin>
- <F185BA4F-F26B-48EF-AB3C-848D72FA630D@nvidia.com>
- <20261113144316.57192d4ab088e7fc64eee47a@linux-foundation.org>
+	<816E22E2-C7DD-4DD1-AAC9-F51F4D1ED71C@linux.dev>
+	<avdveCV9uW1zwXXd@gremlin>
+	<F185BA4F-F26B-48EF-AB3C-848D72FA630D@nvidia.com>
+User-Agent: mu4e 1.12.12; emacs 31.1
+Date: Fri, 13 Nov 2026 15:08:05 -0800
+Message-ID: <87y0aw5nze.fsf@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -94,42 +83,51 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Nv7RrJjmbTmkdLju"
-Content-Disposition: inline
-In-Reply-To: <20261113144316.57192d4ab088e7fc64eee47a@linux-foundation.org>
-X-Cookie: Earth is a beta site.
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+Zi Yan <ziy@nvidia.com> writes:
 
---Nv7RrJjmbTmkdLju
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On 13 Nov 2026, at 15:17, Lorenzo Stoakes (ARM) wrote:
+>
+>> On Thu, Nov 12, 2026 at 02:53:44PM -0800, Roman Gushchin wrote:
+>>>> On Nov 12, 2026, at 11:03=E2=80=AFAM, Lorenzo Stoakes (ARM) <ljs@kerne=
+l.org> wrote:
+>>>>
+>>>> =EF=BB=BF+cc Roman
+>>>>
+>>>> Roman - see below - I was under the impression mm was not supposed to =
+receive
+>>>> 'unrelated to this patch but' reports? Did something change?
+>>>
+>>> Yes, sashiko started reporting pre-existing bugs again, but in a better=
+ way:
+>>> strictly once (per bug)
+>>> only for the first non-rfc version
+>>> somewhat related to the proposed patch
+>>> not more than 1-2 per patch
+>>> not exposing security-sensitive stuff this way
+>>>
+>>> Obviously the goal here it to increase the chances for the problem to b=
+e fixed.
+>>> It=E2=80=99s global, not mm-specific.
+>>
+>> (Sorry only just saw this!)
+>>
+>> Ah, I thought it was an mm opt-out.
+>>
+>> In general they're spawning a lot of AI sloppers to go off and send ever
+>> more fixes and causing ever longer days for us, it's quite a noticeable
+>> impact unfortunately.
+>>
+>> And often they're duplicative of already-sent fixes so you can see the
+>> conundrum with this :)
+>
+> I wonder if there is a plan to make Sashiko identify duplicated fixes
+> and send an email to point out the existing patches. So maintainers do
+> not need to do that manually.
 
-On Fri, Nov 13, 2026 at 02:43:16PM -0800, Andrew Morton wrote:
+There is no plan, but I like this idea. Let me think how to implement it
+better.
 
-> The main issue is teaching it how to get reliable, high-bandwidth
-> access to git and to mailing list archives - LLMs are often blocked for
-> <reasons>.  For the mailing-list problem I gave it last-resort access
-> to my local 100GB of email archives.  Gulp.  Dovecot's indexing helps a
-> lot!
-
-Konstantin has maintainer-containter which does a local lore and git
-mirror in a container:
-
-  https://git.kernel.org/pub/scm/utils/maintainer-container/maintainer-container.git
-
-It's early days yet but of particular note here is that it has a MCP
-interface.
-
---Nv7RrJjmbTmkdLju
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQReagvpf3TrrA7BoYYv73Ows9A4iQUCaveXDQAKCRAv73Ows9A4
-iXnLAP9Y6nNY+wLgV+TwNUVGYCPbqtqb8GP+nUAiWl6CW6eEzgEAx/RWJknZapZy
-kzNGR0pB0nFGmHqW3Kqp1r4hvliX4AM=
-=clnb
------END PGP SIGNATURE-----
-
---Nv7RrJjmbTmkdLju--
+Thanks!
