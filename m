@@ -1,54 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.194
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794529356;
-	b=NGYIyN/3mXq9d6MqCarOlufvuJhASjsqSdg5Ok8PO40MyqvR536s5P0T/VvPneq7+scw
-	 c7NQluO5J+JdcZW83SAP67OR7Nb2fkL0Lj7VCae2hl/UOlFfe6CWubQfF8FOtWVs4mG5+
-	 a/CI6Q9InKN+PgvpopYEFISu8oqS6Wk3Nb1ru43mrCYltv5AwqiABMztQ5ZbNcFLAA4WO
-	 wXQsjijPNT+6LBK3Jk57UzZN/XYXAf66PUOFbuiQ3fpwqvuJJT/5mGlC5RtQ0xCWN0Evq
-	 Vwu4LoQ6itPOJqSTe30qgb9/pIgY2TMfRalsBrWiA3PJBMbuB70D7apkjjVd0pDvsRw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794529356;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Content-Transfer-Encoding:
-	 Mime-Version:Subject:From:In-Reply-To:Date:Cc:Message-Id:References:
-	 To:X-Mailer;
-	bh=D1OPI1lt34LpA9BkY3H/uvJw7+nIzQc2Xct83tHpWEg=;
-	b=AhWydlez3kZAGKlF589VCDr8FA6eCngtT1NpCh8GZWEmFdV6oeJywuwjy3yqM23Wq4Js
-	 6Gk0Q10mFgYHvZWw19h1asIiugSlD4GMJXBXAPlJpM8mQBbMs4xw7IsQSCF5t+h8w5CAs
-	 nK1VgSuZLep5VKRsnODdAdX8gjOKmh4X8BoEthMU0tl5GqMgActgyxPGiMe+U6+dJYPyK
-	 xEViO9xQztGMp0fv5iy8d9EP8WbJl+pbHGmPYD4O580siHvaPJoh/N4Fy8062tl4oyU/V
-	 RhjNul+Qwz1xm2QF8+AdrsyOiuKnVtxXAn89WFeRuzvZ34aiAYvyVay87OuVx3xbmEg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=wnw5eaEj;
-	arc=none smtp.remote-ip=95.215.58.194
-Received: from mta1.migadu.com (out-194.mta1.migadu.com [95.215.58.194])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=165.173.182.11
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794532678;
+	b=S2fHyKGxS2R4CZz4JvUL23aMAa/NJ+V7mQaoONiN6Dlj0FYk2JfkGu6wP9ezVaQuAYhq
+	 vREPBgeab9GgIeaxA8vAXhFDr0k+GFNuaLnVRESapKSVF66SqEs2zBbNR0V/YxBvL8HFt
+	 XAfD+xR0kOYGqBoH4c9DXZ1x/V6xGdlMM5RRStU7YhQ83Bgw4tn9YOxAymbTNuNh7gz/P
+	 3kdgFRZibI0jvDqlDHIdppGyL/7he67Bvbk3gFGGRbGV6SYPXam/qNfOyEq359aA2u7pZ
+	 JRdNTWdkVGeiYSLFhyeN7GVjoQ/2mamlTqMAiIiGM6t3hwWtoXSWRQjgLrpLH0tu9uA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794532678;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-Zoho-Virus-Status:
+	 X-Zoho-AV-Stamp;
+	bh=KE1akkFEuJf75Kt6P5uZlGEjaUFqQNlIPt1KnGsOo0k=;
+	b=mhcBqG91PQBoj4zFAAIFPPXE7FvWrOnOIgDWpe6+tLqbskPGTXns8S/1UL20GC9Fxttn
+	 2HWblJKjLw06yeN2o4d/rPtZ0Ue5kbrAHUZFCml2CJDtZY0X6j7JOeWbeLBxJGxXZASNn
+	 rc19x7Z0tlfOqaIgxmNV4HJDKIeM8HDqAi0j6KotqrxoxaxS9h1JOxcH6piCSfS0Igu+b
+	 4hYxGUJixe99JTExFW4KSjGhT/2Kpti0h2RS/ueyi9XOC1KGdeUqoc/M9+A0T+AiunhMl
+	 4dazc5pGdrDJHjzasbjyoTmbUHbDHbFl8mRdiLyAYw+fAGMSpkwnxW4S2cC7O/V3Eqg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=collabora.com;
+	spf=pass smtp.mailfrom=collabora.com;
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=ah1EcesW;
+	arc=fail smtp.remote-ip=165.173.182.11
+Received: from sender5-op-o11.zoho.com (sender5-op-o11.zoho.com [165.173.182.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1C2606A321
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 00:22:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6C1C2606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A404606A321
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 01:17:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A404606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=wnw5eaEj
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=rmnnRyoTz6AZdPc0e7253Fzuu1lAJK2/CJLVmW/V7xA=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794529353; v=1; x=1795134153;
- b=wnw5eaEjDX4SOVvlN5a2q06C6ZyJ4+ICxgto5Z0/9HGEnB8rANbrm0KgYeWFnwoIZYIYfqhi
- EKwmv+UslA04SCijWxJw/FLz9VSaSXUmtnBSfRarZ9+zZroJgkVCLU8YLngsJMEZl6hqAicFhDQ
- MBJw5AVU2m3YTaBYM6SvjNyY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id 04ff1534b9e29b12;
-	Fri, 13 Nov 2026 00:22:30 +0000
-X-Mizu-Trace-ID: 04ff1534b9e29b12
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=ah1EcesW
+ARC-Seal: i=1; a=rsa-sha256; t=1794532671; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=LYVDVsKvyVLFCrMhKau9bzPN1E2+4gar0OyQJ/61scIlFJmUPj60BmNs22GYT7twdC9HV1sEUp/MBlsB4RqTZcycaiJmoAjMfDBTFPp2PQoqhO0PHvJB0pGyCet/WA0yR1PybOxR2tjT2NUrhr/iK70e+bHnA9lwvG7Z2vH3Zp0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794532671; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=/j72zvAt1WMfGgTCF0Yh8J98QSKVFNx6xjG61oB4OkM=; 
+	b=j4cJUW7SO8NIX3R6sAZ5VqaOsdkiqg7RM8DRFG0rvDhh0qK9fcyu6Wi7qf+511V8tqE4Cfox5B+HLw4W9SVsH33awA1+PXJ+XmKnKnsLynUPyD+xC2QPfx97xm2tWJ6TBDsHn5oJNsJGkY+UiJQizMp+iVGjRvGQ0QndanIFgSE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=deborah.brouwer@collabora.com;
+	dmarc=pass header.from=<deborah.brouwer@collabora.com>
+DKIM-Signature: a=rsa-sha256; b=ah1EcesWxMyDmAUOAmDwYXqXQoLc79ZmLJrJ3DGxL50TCiM7ak0p0W9o8F3fNHMXP/SS3lcBoVKr6o4RBd5OOZ+9u0w3tQ0hzmNVcdW5DM9wVbziqnZd9Iy41IXdF8iox/lqWsQyJ6E+b3UMCQl8MPm6WW4BF5MrBR9ssIqreXs=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=KE1akkFEuJf75Kt6P5uZlGEjaUFqQNlIPt1KnGsOo0k=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 17945326710961011.2476114199859;
+	Thu, 12 Nov 2026 17:17:51 -0800 (PST)
+Date: Thu, 12 Nov 2026 18:17:50 -0700
+From: Deborah Brouwer <deborah.brouwer@collabora.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ke Sun <sunke@kylinos.cn>, dri-devel@lists.freedesktop.org,
+	ojeda@kernel.org, gary@garyguo.net
+Subject: Re: [PATCH v6 04/10] drm/tyr: add per-file VM pool
+Message-ID: <avZlPvHqlxmu2hNO@um790>
+References: <20261109-tyr-ioctls-v6-0-b2896bf2b3c9@kylinos.cn>
+ <20261109-tyr-ioctls-v6-4-b2896bf2b3c9@kylinos.cn>
+ <sashiko-outbox-204259@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,118 +66,100 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
-From: Roman Gushchin <roman.gushchin@linux.dev>
-In-Reply-To: <avYJ-CxBEpdO1Wmu@gremlin>
-Date: Thu, 12 Nov 2026 16:22:18 -0800
-Cc: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>,
- Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport <rppt@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
- David Rientjes <rientjes@google.com>,
- Shakeel Butt <shakeel.butt@linux.dev>,
- Andrew Morton <akpm@linux-foundation.org>, Jann Horn <jannh@google.com>,
- Pedro Falcato <pfalcato@suse.de>, Matthew Wilcox <willy@infradead.org>,
- Jan Kara <jack@suse.cz>, Nhat Pham <nphamcs@gmail.com>,
- Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>,
- Matthew Brost <matthew.brost@intel.com>,
- Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>,
- Gregory Price <gourry@gourry.net>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Alistair Popple <apopple@nvidia.com>, Usama Arif <usama.arif@linux.dev>,
- Kairui Song <kasong@tencent.com>, Balbir Singh <balbirs@nvidia.com>,
- =?utf-8?Q?J=C3=A9r=C3=B4me_Glisse?= <jglisse@redhat.com>,
- Kiryl Shutsemau <kas@kernel.org>, Yu-cheng Yu <yu-cheng.yu@intel.com>,
- Dave Hansen <dave.hansen@linux.intel.com>, Dennis Zhou <dennis@kernel.org>,
- Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>,
- Peng Fan <peng.fan@nxp.com>, Josef Bacik <jbacik@fb.com>,
- Chris Mason <mason@kernel.org>, linux-mm@kvack.org,
- Borislav Petkov <bp@alien8.de>, Mark Brown <broonie@kernel.org>,
- Dennis Zhou <dennisszhou@gmail.com>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Message-Id: <49B1B6F1-86DF-4472-970A-055E1DFD8808@linux.dev>
-References: <avYJ-CxBEpdO1Wmu@gremlin>
-To: Lorenzo Stoakes <ljs@kernel.org>
-X-Mailer: iPad Mail (24B119)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-204259@kernel.org>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/294.520.76
 
-> On Nov 12, 2026, at 11:03=E2=80=AFAM, Lorenzo Stoakes (ARM) <ljs@kernel.or=
-g> wrote:
->=20
-> =EF=BB=BF+cc Roman
->=20
-> Roman - see below - I was under the impression mm was not supposed to rece=
-ive
-> 'unrelated to this patch but' reports? Did something change?
->=20
-> Thanks!
->=20
->> On Thu, Nov 12, 2026 at 06:16:31PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found no new issues
->> in this patch, but noticed 1 related pre-existing issue it does not
->> introduce:
->> - [Critical] mm: out-of-bounds write in migrate_vma_setup() [1]
->> --
->>=20
->> commit a0bf8430c5e68cd904038ab8081c7bc9a9b0f7de
->> Author: Chris Mason <mason@kernel.org>
->>=20
->> mm/migrate_device: refuse to migrate shadow stacks
->>=20
->> This commit rejects VMA device migration in migrate_vma_setup() when the V=
-MA
->> has VMA_SHADOW_STACK set.
->>=20
->>> diff --git a/mm/migrate_device.c b/mm/migrate_device.c
->>> index 0f2a2832e0bd1..c27f513ee46e3 100644
->>> --- a/mm/migrate_device.c
->>> +++ b/mm/migrate_device.c
->>> @@ -759,6 +759,8 @@ int migrate_vma_setup(struct migrate_vma *args)
->>>    /* The migrate_vma page walk has no hugetlb support. */
->>>    if (!vma_is_mm_backed(vma) || vma_is_hugetlb(vma) || vma_is_dax(vma))=
+On Mon, Nov 09, 2026 at 12:48:15AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] drm/tyr: off-by-one IdPool capacity in VmPool::new() on
+>   32-bit builds
+> --
+> 
+> commit 6b8d6be457daf3e5e905977c364059ce3d3249e4
+> Author: Alvin Sun <alvin.sun@linux.dev>
+> 
+> drm/tyr: add per-file VM pool
+> 
+> This commit introduces VmPool to manage up to 32 GPU address spaces per open
+> file using an IdPool and an XArray, tearing down remaining VMs when the pool
+> is dropped.
+> 
+> > diff --git a/drivers/gpu/drm/tyr/vm.rs b/drivers/gpu/drm/tyr/vm.rs
+> > index 1dd11b2b12532..6f5518652a03f 100644
+> > --- a/drivers/gpu/drm/tyr/vm.rs
+> > +++ b/drivers/gpu/drm/tyr/vm.rs
+> 
+> [ ... ]
+> 
+> > @@ -947,3 +953,135 @@ fn pt_unmap(dev: &Device, pt: &IoPageTable<'_, ARM64LPAES1>, range: Range<u64>)
+> >  
+> >      Ok(())
+> >  }
+> > +
+> > +/// Maximum number of VMs a single file may hold, matching panthor's
+> > +/// `PANTHOR_MAX_VMS_PER_FILE`.
+> > +const MAX_VMS_PER_FILE: usize = 32;
+> 
+> [ ... ]
+> 
+> > +impl<'drm> VmPool<'drm> {
+> > +    /// Creates a new [`VmPool`].
+> > +    #[expect(dead_code)]
+> > +    pub(crate) fn new(dev: &'drm Device<Bound>) -> impl PinInit<Self> {
+> > +        let ids = IdPool::new();
+> > +        pin_init!(Self {
+> > +            dev,
+> > +            ids <- new_mutex!(ids),
+> > +            vms <- XArray::new(AllocKind::Alloc),
+> > +        })
+> > +    }
+> > +
+> > +    /// Stores the VM and returns the allocated ID.
+> > +    ///
+> > +    /// On failure - ID space exhausted or a store failure - the VM is
+> > +    /// returned in an [`AddError`] so the caller owns the teardown.
+> > +    // TODO: allocate IDs with the XArray directly (once it grows range
+> > +    // allocation, the equivalent of C's `XA_LIMIT`) and drop the IdPool.
+> > +    #[expect(dead_code)]
+> > +    pub(crate) fn add(&self, vm: Arc<Vm<'drm>>) -> Result<u32, AddError<'drm>> {
+> > +        let id = (|| {
+> > +            let mut ids = self.ids.lock();
+> > +            let unused = ids.find_unused_id(1).ok_or(ENOSPC)?;
+> > +            if unused.as_usize() > MAX_VMS_PER_FILE {
+> > +                return Err(ENOSPC);
+> > +            }
+> > +            Ok(unused.acquire())
+> > +        })();
+> 
+> [Severity: Medium]
+> Can VmPool::add() fail with ENOSPC on the 32nd VM on 32-bit builds?
+> 
+> IdPool::new() creates an inline bitmap of length usize::BITS, which is 32 on
+> 32-bit platforms (indices 0..=31).  Because find_unused_id(1) skips bit 0,
+> allocating 32 VMs requires bit index 32, so only 31 VMs (IDs 1..=31) can be
+> allocated before find_unused_id(1) returns None.  Searching from bit 0 and
+> adding 1 to form the 1-based VM ID (subtracting 1 on release_id()) would fit
+> all 32 VMs within indices 0..=31.
 
->>>        return -EINVAL;
->>> +    if (vma_test_single_mask(vma, VMA_SHADOW_STACK))
->>> +        return -EINVAL;
->>>    if (nr_pages <=3D 0)
->>>        return -EINVAL;
->>>    if (args->start < vma->vm_start || args->start >=3D vma->vm_end)
->>=20
->> [Severity: Critical]
->> This problem wasn't introduced by this patch, but can migrate_vma_setup()=
+Yes, this makes sense, on 32-bit builds the bitmap will stop at bit 31
+and since we won't use bit 0, this gives us only 31 possible vm ids.
 
->> write out of bounds on args->src and args->dst when given unaligned
->> addresses [1]?
->=20
-> I don't like big buts and I can deny! As above, I thought we disabled this=
-?
->>=20
->> mm/migrate_device.c:migrate_vma_setup() {
->>    const struct vm_area_struct *vma =3D args->vma;
->>    long nr_pages =3D (args->end - args->start) >> PAGE_SHIFT;
->>=20
->>    args->start &=3D PAGE_MASK;
->>    args->end &=3D PAGE_MASK;
->>    ...
->> }
->>=20
->> nr_pages is computed before args->start and args->end are masked with
->> PAGE_MASK.  For example, if args->start is 0x1fff and args->end is 0x3001=
-,
->> nr_pages is 1, but masking rounds the range to [0x1000, 0x3000), which sp=
-ans
->> 2 pages.  When migrate_vma_collect() walks the aligned range, it writes p=
-ast
->> the end of the caller's args->src and args->dst arrays.
->=20
-> This is silly. It's not critical. Nothing in-tree does this.
->=20
-> If internal kernel stuff does incredibly stupid things then incredibly stu=
-pid
-> things happen. We can't nanny everything endlessly.
->=20
-> A monolithic kernel means that the function and its callers are considered=
+Instead of adding an off-by-one offset which seems like it could add
+more confusion, what do you think of using the IdPool::with_capacity()
+function? Something like:
+  let ids = IdPool::with_capacity(MAX_VMS_PER_FILE + 1, GFP_KERNEL)?;
 
-> together.
+We would need to adjust the error handlings since this
+is fallible but it might be simpler overall.
 
-Agreed. Let me try to fix this to stop reporting problems like this.
+Deborah
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261109-tyr-ioctls-v6-0-b2896bf2b3c9@kylinos.cn?part=4
