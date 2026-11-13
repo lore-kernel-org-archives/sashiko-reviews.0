@@ -1,146 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.141
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.180.131
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794563000;
-	b=0JyooKZdh/U0bGANxwO72NN0Dm1MiS7zvW8A686Nc7dHCuBu81VpAKAtazNZG8LsBFnf
-	 flheLRwK5+75XOp59Wr6vXwXzSjWWYZMv31UHz3xSNjSRtxbu6Xl472KmgOZcr79ESy3E
-	 97rB9QjUA0mc9mHeCKSfl9M67CXfwBLQUbHg49PjQhDixP70oh6ejlzw8hVdjzom39RLp
-	 DMy9SaIpTw7Xy6YH/gzUa+0/m56tS8HX6yFCZBk05dq6Pn+Zro0bjZNKH8XuW6I+NfkZd
-	 p1XlcrTV5x+Vw4ll5QtxtJmoPETnWJ4fE28IIKNxgsC92lsMr2mTaW8BFfo0I7g5z1A==
+	t=1794563148;
+	b=e/H5ikoh6rgjba1KKYEvRPMxp6U77f7fvrSsKuu3wvgCydRxcA6qfTAbHqFwmUTE7+Dy
+	 gOmdtUJtdDlaDh4KI7Jnp+fk4V1qI4Nwo0XI0GoEbKzHkXgSAojYP8An7bWkK5uZDjT3W
+	 PzB66aNrDl/SkLlnfzAqhbNoUgcwHnc8//266VvjBLk3kHJVoQMfVlVBBVqFohJeobrsP
+	 OaeZCSa5ftODSPdLyR7mWc2PxpaGMazmYEk5nYE5BATbkHQQOueY2w4rFrUboZA/NtPhY
+	 E3jclzYorEYgkEUJQ3G5OGb9gfF7Q/6Os/gin0iVJ5s70qKXMCpdM/20kTY1oUlaMeg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794563000;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 msip_labels:x-ms-traffictypediagnostic:x-ms-publictraffictype:
-	 client-request-id:request-id:x-ms-office365-filtering-correlation-id:
-	 x-ms-exchange-senderadcheck:x-ms-exchange-antispam-relay:
-	 x-microsoft-antispam:x-microsoft-antispam-message-info:
-	 x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=zy4Q8xWNYDoTXK8k5IsqQEHkm/sMtvtNl/WR1nzf1Do=;
-	b=a0BILAw4AB0ptY0ap8HRUsme2TwccpaxG5Zw1yPHjRPM6bkHSN9UF7GLY8PMnrJtwVIQ
-	 Ye8qFjjt2KFAOUx8M2mOvrGaoz/4Rs39cuZcxEnoWgYML6NsXZM9/iEubmOWoMU7/umzA
-	 BneZzwx7oGyXAjQuX0fiQR42eMPlF0z0X/VtyTyhzKntjDqVTxr2+eZaty4SvBftEEFq8
-	 1jBzb39WAlxRlzAzVdZTCpiUSvpcEGmB9aIc+bk/9ZepnOurcfXUstpAsMxVzDqJpuC5r
-	 gN+CzSlV4uilkFox0E/Zn86mFWfdm/nv1xipGc64mYMSSIzS58xirRleA126FRebWpg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794563148;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type:
+	 Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=tSfUT4sU0xnYAx/hf7+EtPWA5MZ+dVpgyqFniBJTRTU=;
+	b=y9ZoWHC4tDopisaIsUin+5IkK6QGyjs+L0FNozqaHSTBPoE8BwkYQfPt304WOYPIHnoK
+	 JpH9u7IqFJIEPv4x74/CVXnNwo2+aCyGkVhaowoExy+rP6kOM1zKmNCVpN1PBuKiHTMBY
+	 WkRAdF1mIOyaZfrUQHxDEchQwtEfWQs8WDjcJc5PGVm/ztL0LETYBqv/h3nBBFM8Wb875
+	 gF6R7LZVf9BeRewCmK84kGkJzMdxnl0k8uxuf0US9inzdJK110UXieOvfjpThBDy/BX3T
+	 Zfxe6zgaFGpdpk1FXqsXKrRVi9JsrzFti9Lq42djdXdSqp76NeUpj0jl42efA7iZK+A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=microsoft.com;
-	spf=pass smtp.mailfrom=microsoft.com;
-	dkim=pass header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=EVhNsK+p;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.141
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11020141.outbound.protection.outlook.com [52.101.69.141])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b="OkOD/f9z";
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=gqTWlPJR;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3A4606A327
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 09:43:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F3A4606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6899606A321
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 09:45:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6899606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=EVhNsK+p
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wCLa8GUSslcGc+5mZTvwsaAWaT8zRvShnRxhmG17RlDzAQomZ9H+O4iy4tfHh8wBduDJkgR/FeZ9OFxaJSVL4yEqZqt1TelYHiDxYOSjPxPf4Cueb86NT8fcChZnWQUpvPDd0bhVLodE/F6Xr5bftLqZzKsDOx8EiEzmj2wyE94sC5oMymO11FS+PI1ng6JbJOWNMvuSeEzlNO9XbdT2pfD+Jw8OZMdtkVNbKt5qFpVjcuvmI4rdgxydRk3rdqwdvQIB5r01xYLBNmfsI88uNCr7l77SyJ0w62Hn+l3ScCMNvNn0Me7Hl0HHFU+vbRAL2uXOPCnKTOqSqWNjVd67gg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zy4Q8xWNYDoTXK8k5IsqQEHkm/sMtvtNl/WR1nzf1Do=;
- b=OkD6aKPZYZpZqlBdlSP8bBTmV+7gE72fL5lKV+NKJTQb9Dqq1wIKrvHkO+GIDN8GKS4CR43sT4daizcUdAOU8C7txeAqkI31zZeGRa9vjgXTpZKlo9etOVu/U0NzTfa9/lcbZk58edtC87ZlM//9rkBLMfMlOH6DsvTeu+4WuRJPCMPqWZQC2SouU/dJYnEDtEsfLFqANci5G+8IOWbbJC7yKs39invpOzv5AmqqYxFAGh5fGfPUBKr7g0OY+CIjLTB2j8Z0A4mj+omZZqu0liE8kHoftU4pxCAMfHlgUfgrGETsgi+9ijbz1JpQ0yGS7GEKTowV65nmvwtTUUAndw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zy4Q8xWNYDoTXK8k5IsqQEHkm/sMtvtNl/WR1nzf1Do=;
- b=EVhNsK+pxtBJ7tLoE8La5sORsXXucOct3/mHmRHbWiBUUsuLS7xp0FESohZoG7z7R32RKvI83QdQNCk0nvcgk4/BQivC+dCB/PVOQJ1333/+FMjL6t/OheFPlr2FLHQu8kLd0yMV63mftS1+vUGjz5IOo0XDCWKmjluxUBWESX0=
-Received: from MA8PR83MB465002.EURPRD83.prod.outlook.com
- (2603:10a6:250:7c::20) by ZR6PR83MB223992.EURPRD83.prod.outlook.com with HTTP
- via P2P; Fri, 13 Nov 2026 09:43:16 +0000
-Received: from MA8PR83MB465002.EURPRD83.prod.outlook.com
- ([fe80::7dc3:38ee:abc1:5102]) by MA8PR83MB465002.EURPRD83.prod.outlook.com
- ([fe80::7dc3:38ee:abc1:5102%5]) with mapi id 15.21.0639.000; Fri, 13 Nov 2026
- 09:43:15 +0000
-From: Konstantin Taranov <kotaranov@microsoft.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	Konstantin Taranov <kotaranov@linux.microsoft.com>
-CC: "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>
-Subject: RE: [EXTERNAL] Re: [PATCH rdma-next v11 9/9] RDMA/mana_ib: Handle
- error CQEs for kernel QPs
-Thread-Topic: [EXTERNAL] Re: [PATCH rdma-next v11 9/9] RDMA/mana_ib: Handle
- error CQEs for kernel QPs
-Thread-Index: AQHdcoJzI70KLvjrDEyU1qWVtpjmsLcqKDMAgAGZbKA=
-Date: Fri, 13 Nov 2026 09:43:15 +0000
-Message-ID:
- <MA8PR83MB465002321391E39E6589A88340B47F2@MA8PR83MB465002.EURPRD83.prod.outlook.com>
-References: <20261112084716.1483342-1-kotaranov@linux.microsoft.com>
- <20261112084716.1483342-10-kotaranov@linux.microsoft.com>
- <sashiko-outbox-210859@kernel.org>
-In-Reply-To: <sashiko-outbox-210859@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=48dc3aa0-00e0-4eb2-8da0-8ca2ad140f92;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-11-13T09:42:39Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
- 3, 0, 1;
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-traffictypediagnostic: MA8PR83MB465002:EE_|ZR6PR83MB223992:EE_
-x-ms-publictraffictype: Email
-client-request-id: 2151a23b-fa77-40d0-be52-58e0ab0f9d69
-request-id: fa930d81-13b3-487e-08dd-08df416a8aba
-x-ms-office365-filtering-correlation-id: fa930d81-13b3-487e-08dd-08df416a8aba
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|38070700021|261009223327099003|261009221227099003|261009221727099003|11063799006|261021133027099003|261021121427099003|4143699003|261102123227099003|261021123027099003|261022075727099003|261026140227099003|261022105027099003|261009220027099003|261022115727099003|261026135527099003|261022113327099003|261026130827099003|261021130227099003|56012099006|261021135927099003|261028144727099003|261009223027099003|261026121527099003|22082099003|18002099003|4133799003|10067099003|7146999003;
-x-microsoft-antispam-message-info:
- DVkS+0hz8YFgpbHANPOKL/KELJckK1b8zEHFtZqyaOU1/LJMtNEOgjO6p6XO3opQCeG6musrMPZzIKLFD+WWGdWLkUTSqg2pFDfUqKXt8o4FUs+M21Glldvl5yNtinZ5tg2kpJ2i5UjZEKNQwQQCCnl1vw8BOfk50ecqJNU/h/vZ1XPOadHo2TwGpmP6vUtJmKWXSqDYFaBzOhLEAan//Ek18LKMvjckQx7P3ONN5FiRqpgIyBeliV/mshKx1+NBXO81NcO6+i8rURka8NonUdZC5rUK/uZbiiciL793mDjz0XriOtEmpU5E/H3kXjHfmU6GGpopFfG6IA8JAKuEaJqtzqgm+a6PivKT/zac98eLxIFz94oLQzosKsZ3aF0Cs38/VqRQuhZktaf72259BYoz3nUjwkP3EZkqGEm+AtoVfAljlKmchNlxQVVlE5XJ6riKEVUI1J49P13Q6vFJek+Y/brTxQx5KcS9nitsUB5y/dgde8Sk6kDfAL+il7MzYeJyL0Zcst9OFSm1zMVHjvhfvn4u77n9X76ElTgrHo9efZUghtQDs1Yx/aOCfxHEWPO240GHDQFVvYu38d/6E2UvdbH8UtMNydL3P++4wXAgt4txvczeSPxS7XjSqFarpfH08QwXIOonENelEP4q73CpmTCc6rF8nbmJMrt9u5aJmBlPBFWHOy9RDBts3+70xFyJy8H107VEBtSlROoRYYlUuitiGySsv42a8iYBz/k=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(38070700021)(261009223327099003)(261009221227099003)(261009221727099003)(11063799006)(261021133027099003)(261021121427099003)(4143699003)(261102123227099003)(261021123027099003)(261022075727099003)(261026140227099003)(261022105027099003)(261009220027099003)(261022115727099003)(261026135527099003)(261022113327099003)(261026130827099003)(261021130227099003)(56012099006)(261021135927099003)(261028144727099003)(261009223027099003)(261026121527099003)(22082099003)(18002099003)(4133799003)(10067099003)(7146999003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?E1+tWaT2NRRepBw5mdAXfCZEr7qOi3zKC75/7Ajd2wyBQuEORyX0Pr/6kyS1?=
- =?us-ascii?Q?exNFzkvS4Q8cSrOdRSHP8F+THv5QlId9rCMkpTjHD28l0D3c7sod5meMLaFn?=
- =?us-ascii?Q?yvj/kCOyGNnK6qSl6Xb3zT3izdFGaf0FzsqbIEgLbxp2gtImhpF9GHyU7/wg?=
- =?us-ascii?Q?2qqqUsn6pD9NdJ3yH1lplhsRU21YoeeeNIQpiQcVnXU4NtvaSjdOj2S053iK?=
- =?us-ascii?Q?vRQCaursJcMtAKfjg4xQVq3QEK0IhQf+rlCMPyIjTG6l1bGIyOs/oNns1Z7T?=
- =?us-ascii?Q?uRgobE4zA4P8moBZzywAz4Yr3TJx1gWrFDwvGsKo9umu0MOneoBwU3hWRINM?=
- =?us-ascii?Q?piSJMcCcQavfOFWy1R07/QfcmM1cxY/PqJ+Aouux/xubx9PAJlxtQMmYN9jK?=
- =?us-ascii?Q?767PH32l922WOhw4hcNrkje2+k08gYEgNtXfZG+3A2mZvzw0FPKYV/zD3UeX?=
- =?us-ascii?Q?dVsVCr6PtbpfqD2PXlwxWoNhZeFp4hPKh0gB+DYYMaFJg6gpvJoN95/14UgE?=
- =?us-ascii?Q?mRRXfab5dz7hNR4MoJRl++1uvEbZC5VctjbFkeSkSnaDr8SRk3Ps6pk4QzIp?=
- =?us-ascii?Q?awiJipffNf9CttHrxmfQcKbMKWjUGUURP1wwPHSZ0AZn5P6vAgTr0PhxGdhS?=
- =?us-ascii?Q?1ftZo6c45EVbZbDuhmM8aQNNgNh0rAI5LB3kYanx155MUjEOF0QUJY3h24JO?=
- =?us-ascii?Q?HZc05mPskA0ID/O4lVYhkVcbX3AUHcm4/2DPoUcJZar+1D3BcFgBcPPSy9DL?=
- =?us-ascii?Q?vVTbDeedGEVBVwVush5yD6hreynHdyECjwg2YeL2/KLM+nbLrdKXDJCDxRUX?=
- =?us-ascii?Q?jtoH20v1Uay4v04DtBonXyZKJEwy7MKRFNVTrlpwcjH2+wk7isdb4eDRmwK1?=
- =?us-ascii?Q?AUtHGluoZ1sHEdJdL37T+a1fFsTdyOMBB8JHKLGw15r/kRfYplP5kg6s16vC?=
- =?us-ascii?Q?pSyKbMUTEYYnsNM++y4be42lyWbA5n1C/jfpbQXq0+y1ZOlvQXQixAsfY3sl?=
- =?us-ascii?Q?pOhJ8i6lt7p5nHW0CKqRyxYYojz3a4fRT7kkubw4w6KKsJKQ4j3fwMGN1S2r?=
- =?us-ascii?Q?n4k4n4QOzwoReqK6h4w6At22tUEXrVZ68UJutW0Qkn3hpcOZ3wkiG6dFcTZB?=
- =?us-ascii?Q?AVqKbT2stlkfX69MbvvYa6lh4r+lIP5czE/wbX8d9L1RBVQW650VIKezVMkh?=
- =?us-ascii?Q?7TiBW4Mj0KF1xYT7GkQZVIaU8ndyOf42cE1kUfx731jR4vkFpdHWuzD2hhIk?=
- =?us-ascii?Q?PDZ5G1F4GSCQWjrLLUx5n+nqE6E/wCUZ733t8Hzeb6/uIOxwczm8Io+ZCV2J?=
- =?us-ascii?Q?IHURsBk/evZGRZ3p3MD3Ue7TRo8XH0I4BvEZbySKH5EGluEvzVh87l5hQ8zw?=
- =?us-ascii?Q?PgSfi/MKH1gHR7lqg5ztTYwijTwF+PmZ2tFaXEFguvnQ/C1QHsXCF8tTGUOL?=
- =?us-ascii?Q?4PavXAjWYZfvpEEANO8/sIc1d5Wn7zW1Ex6pcLFfSGLphWiy5fWHGsA/sHZi?=
- =?us-ascii?Q?yocK1qh2qsDWXzTD7hOLMBZbtPfRee/2aGEZ7K43+w7Bi/UgO5J6UzNVkJFN?=
- =?us-ascii?Q?wE6fBz7+90lgF9Nu8t/EX9/mFzAZ10G8KhvhEFhj/tWV4OMX9lJFQLDYmwcr?=
- =?us-ascii?Q?OlDRlcQza4rtfj07GkE5pug51NGL4oQav2k26Fx4pVAdy47KstryHZaAzShu?=
- =?us-ascii?Q?C+fFqA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OkOD/f9z;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=gqTWlPJR
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AD8V1R73826907
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 09:45:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tSfUT4sU0xnYAx/hf7+EtPWA5MZ+dVpgyqFniBJTRTU=; b=OkOD/f9zdTuGaP7w
+	jqtlskGQUwqjU93rE7hmeAZ+xgb3WMSNvnghDBqcU2ZIzDuOYaZyD7eFalKktnZP
+	WPSFCsIsnqm9Dt6VO7tRWHfiCDKq/Bn+iVVWGmQJR06UmRgO7xQr1qC2mgheI52u
+	rU1r5dqhcGzJkpAmo7hvyCvfOpjjTLbqZsgyPXntwdVS/L86kjNGzduu0U+865am
+	K6QdCDLUfVis4CLFbbnzNwT3yP2gyMsB6Pvid+sF5iLJ9+rWKPqm7sSwypoXapeC
+	cbKLzYQdqPgKDI/pvTlLSnl7lidNZa/xRtjFILO2HeR5oR2h9hF7VHH7y73gu8ks
+	KioDpQ==
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com [74.125.224.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwv37gypf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 09:45:46 +0000 (GMT)
+Received: by mail-yx1-f71.google.com with SMTP id 956f58d0204a3-6790b1d37e7so1038193d50.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 01:45:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794563146; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qT5dADzBHbhmK1fhYQTIB6S+ObpBlL1OFKVhYOA4Ve2uiJemLVEYRQrskcoOWHeJNo
+         MgGIhdfmWxWSYG5RuJcUQddfU0D3ayytM+ywMlGBr4A4GYojp1Q3RU6fvWkgL8ZCOqeZ
+         Wr9qwZq84PP04NPVN8Wg/6wvFvyIz3rhkIIKmvpwYkWeGNEAsLz4gsVSAGjOtUeCiYbo
+         XqVwoUOiJ8XGKJw9bSHUyyA9r+7b4Z91vgGozebOVH3pZQdSYp3i3mcNJtN+UPh7BX1f
+         HHKujDER9GtKFwQaLwgzc+gkrf3gzahYXrjL7mDs/upzXeIwoVEdLVVEOVZSMaZ/LKVQ
+         ARzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tSfUT4sU0xnYAx/hf7+EtPWA5MZ+dVpgyqFniBJTRTU=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=sriSPDGGV0OsY9bB4D2fjoVqP3rN11aISL4J2l3Dot/H15eoPFFiFx9aun5vlX4zj9
+         xwW/04P5TMBL9Hp6O+KCUuE8e2Puzv+Xtmw5Yg58H47vXcRzTKorQm3rogEsvyuNuoZH
+         i1zw0mKKwUT+4PPjyf3w4nc+vA2tGXrn/qB/kEChVNeLv8aCjpMxsI9PbudX7KgaXgHq
+         nfxmDuTv80vjcMbUZiAaRJyc/zO3A+4LQ4D2lc9jUxpWjPcngt9tpthFhRWTEdwM+ct/
+         cDLyYX4Yjwt3RTb1rcZRYHLj0BPFjGSk6ti+1aglUiOx+p6UmPpkHDcjgBD+CyY0SzFU
+         eoLg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1794563146; x=1795167946; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=tSfUT4sU0xnYAx/hf7+EtPWA5MZ+dVpgyqFniBJTRTU=;
+        b=gqTWlPJRENQzJjHETwD/yMCd1V8syI4Sbdnal+WtXbGpa4OFRvQqFS1Ck8a7i+yg2V
+         iaPiYc7XpAJK34vd8IyXSKYHm0H1J0vMLt53Dn37CEqkdzeULD2WRSJOBjpg50VFTsfc
+         nNanNvDk9ieK+wXH26JdgOpoMuPrtLjo+3vXzmrvqCGKpP+InjiGHL8fxswpCeo/R6em
+         VlPpLCB38UBfBn+chGmAmLhuaHn8EMcYT7oqU12G9EwOkpEfgap2Cvtp63e3QdFAP8Tw
+         JgsdES4UZ7lT0+MN52udPkEIP2DXB/yFkVJkjyjvfzy8FI0IinlNLqxJFQfC6V8PUFCd
+         4l+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794563146; x=1795167946;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tSfUT4sU0xnYAx/hf7+EtPWA5MZ+dVpgyqFniBJTRTU=;
+        b=uhy/D+kcihQmoOPYa+lailFt0sH+FreaWWki8lx8VWVE/8V5AcTaMWypahoxToBFAE
+         lcLoiUyxFoX4QstspCS2V96wAEyPCjeWfS3/NbW0F7eyG3dPLQjFWvkBJe1navDXvb2L
+         KPep21camGbWg68eudZBr2o6+ySAbXYGQSMKoqFCR/vpS9e2zRM3k4rsqG6x7CNxjBha
+         RazcC9tZvpIjTWer/XxYEpllgjJAR69c1XC+NoZN6rcGvxAdokIriNchKe0dcpweyRTc
+         R2747oH65yQi94DbImix6C2EAPACps0pH0QlGVNxCpEDTck84vK5H5ivF4EswPQkXY8M
+         OwUA==
+X-Gm-Message-State: APuU4Z9SvL35ki9hEXhP3Cnym68e0dyrdMs3gnyP4495ZSSMJmrwEdHk
+	+pXYx7T8n8Oe02xTf+CUJ6ELjCmDUK7l8RaS9a7SCFo07Sy7t30SEgvr0ZRWi/AluLUbEQ1Q3l5
+	BgdibmjyE8MK/RUzO6b+vhM53nDSdem6pmxOVzJUIGhQDlY0YcJYUw7qFRkJXzjs/uoxEDQtvxu
+	ksxseZdIdHoBd1scSFvr3PZxtrHv/LHp0yLgr06qZbXyZ4aO0ggFhgZLam
+X-Gm-Gg: AYBFou0Mt1jGrZv6eHOb/j0yqm0RQIU6g1N4J8abExJn89EhDYEA0ks+kD+6fZgV6vX
+	hFRbtzc5gav1icS0yrCQnlZdnA0otx3Xpn5iQyXhZnxmJH15sj0oce6p2tr7XZ168jzYVl3/h0j
+	uaSAPZrQVolT2x5qS237BYrJSq58cxRodZy3sjKTZsDDpOqHEpl3SiBPd8hg==
+X-Received: by 2002:a05:690e:4086:b0:67c:2350:5b81 with SMTP id 956f58d0204a3-67d895a7c43mr1403136d50.30.1794563146088;
+        Fri, 13 Nov 2026 01:45:46 -0800 (PST)
+X-Received: by 2002:a05:690e:4086:b0:67c:2350:5b81 with SMTP id
+ 956f58d0204a3-67d895a7c43mr1403125d50.30.1794563145637; Fri, 13 Nov 2026
+ 01:45:45 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -150,89 +126,150 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MA8PR83MB465002.EURPRD83.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fa930d81-13b3-487e-08dd-08df416a8aba
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2026 09:43:15.9153
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mmQAUXLNIhpCAzFRV7t4nc8h5jgg+ztG2wpSMsZzNDXF+nyC7bmqea5k5vfTfrH//Vu/Rs1yZ6/WvPb4tuyqAQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR6PR83MB223992
+References: <20261113-nvmem-byte-mask-for-split-macaddr-v1-0-138f715f18c1@oss.qualcomm.com>
+ <20261113-nvmem-byte-mask-for-split-macaddr-v1-1-138f715f18c1@oss.qualcomm.com>
+ <sashiko-outbox-212378@kernel.org>
+In-Reply-To: <sashiko-outbox-212378@kernel.org>
+From: Hongmei Xu <hongmei.xu@oss.qualcomm.com>
+Date: Fri, 13 Nov 2026 17:45:34 +0800
+X-Gm-Features: AclHuK89gL7kvEUVcuZW_xgjh-GrEr5sPSzlQ_xFuAhZu-sd_zL4bxOwpTgENQg
+Message-ID: <CAPTcHHRXttk+sxr4Bevet3kSNZRD3SU3ma0PRFCEsg89aH_53g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: nvmem: add byte-mask property for
+ non-contiguous byte selection
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEzMDAzOCBTYWx0ZWRfX5/oOFYVMr6TX
+ YgSqEFZ/Xq+4SFD/0viCf960o/ts43ZxOXgwDAC1nNBS/mwQ8eHf+9dUp7nd/cRenq1JXCFyJHh
+ innhRGXCpiVBQ2fJ1qWfAH78VMY+wTE=
+X-Proofpoint-ORIG-GUID: abG2Jj18KZXFDklmGcV3uB8Vj7DyGHK9
+X-Proofpoint-GUID: abG2Jj18KZXFDklmGcV3uB8Vj7DyGHK9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEzMDAzOCBTYWx0ZWRfX+1iesCG9SSuD
+ ntc82ziXukGnHlvibivK9nprfE1seNi8vQmbQqXLXr9jLM+N5+IJW4edXGzn8K45IyPaE/yawq9
+ V/kXbR2TFgzuX+JoQCILmN9WbQVvT9Q4SOXMpXRV+fGNNfp87G+ct5i4N3ZxpBjCLhJpizB1nRX
+ KDYOj6Th/dnwwkiKps2QjVU6xeGHR/kxNPZFIo0tMDNYgiKiLHfc2lkBZUAIAOq4ndU+/7F8rHO
+ zUVCHOFAApVgzZqFruXgeJaRD2S/n/ANFdc6DM5iEasZGoxiP+0Ib680PtO6VjeUPynHWqhXYcA
+ 5U6nij5OwYf3V5+HZXag5zJLu2MK47Zu9fVbffr5kLAjk7U15Zhw9RgGIdQuqd4dPa74b/A+/9U
+ DxmDqz42IM88MCO/dHSE/7T7LQ+5yAraRnUL8GRiZULkXBplMOlE6YemtDlJscMHm+pgKWwTjYs
+ Ct57Jci8gl9iMSQT3UQ==
+X-Authority-Analysis: v=2.4 cv=ZeeIpcVA c=1 sm=1 tr=0 ts=6af6dc4a cx=c_pps
+ a=ngMg22mHWrP7m7pwYf9JkA==:117 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=ZpdpYltYx_vBUK5n70dp:22 a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=-yBQcdRjb_lw1M2xZpIA:9 a=QEXdDO2ut3YA:10 a=yHXA93iunegOHmWoMUFd:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-13_03,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1011 priorityscore=1501 malwarescore=0
+ phishscore=0 impostorscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611130038
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e to
-> consider:
-> - [Medium] RDMA/mana_ib: wrong WC status in vendor_error_to_wc_error()
+On Fri, Nov 13, 2026 at 4:02=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] dt-bindings: nvmem: byte-mask redefines reg size and accesses
+>   beyond reg
+> - [Low] dt-bindings: nvmem: missing hardware motivation for byte-mask in
+>   changelog
 > --
->=20
-> commit 3890146d1e1c2dc4555e62f3e8c6c195602b6f98
-> Author: Konstantin Taranov <kotaranov@microsoft.com>
->=20
-> RDMA/mana_ib: Handle error CQEs for kernel QPs
->=20
-> This commit decodes hardware error CQEs for kernel QPs, defers moving
-> errored QPs to the ERR state via a workqueue, and cleans up pending CQEs
-> when resetting or destroying kernel QPs.
->=20
-> > diff --git a/drivers/infiniband/hw/mana/cq.c
-> > b/drivers/infiniband/hw/mana/cq.c index 3d09ff5e5414c..24dca3b6e5bfc
-> > 100644
-> > --- a/drivers/infiniband/hw/mana/cq.c
-> > +++ b/drivers/infiniband/hw/mana/cq.c
->=20
-> [ ... ]
->=20
-> > @@ -37,12 +40,30 @@ static enum ib_wc_status
-> vendor_error_to_wc_error(uint32_t vendor_error)
-> >  	case VENDOR_ERR_TX_ATB_WQE_ACCESS_VIOLATION:
-> >  	case VENDOR_ERR_TX_ATB_WQE_ADDR_RANGE:
-> >  	case VENDOR_ERR_TX_ATB_WQE_CONFIG_ERR:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_MISS:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_IDX_ERROR:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_TAG_MISMATCH_ERROR:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_PDID_MISMATCH_ERROR:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_AR_ERROR:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_PT_OVF:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_PT_LENGHT_MISMATCH:
-> > +	case VENDOR_ERR_TX_RDMA_ATB_CMD_ILLEGAL_CMD:
-> >  	case VENDOR_ERR_RX_ATB_SGE_ADDR_RANGE:
-> >  	case VENDOR_ERR_RX_ATB_SGE_MISSCONFIG:
-> >  		return IB_WC_LOC_PROT_ERR;
-> >  	case VENDOR_ERR_RX_ATB_SGE_ADDR_RIGHT:
-> >  	case VENDOR_ERR_RX_GFID:
-> >  		return IB_WC_LOC_ACCESS_ERR;
-> > +	case VENDOR_ERR_RX_OP_REQ:
-> > +		return IB_WC_REM_INV_REQ_ERR;
-> > +	case VENDOR_ERR_RX_ATB_RKEY_MISCONFIG_ERR:
-> > +	case VENDOR_ERR_RX_ATB_RKEY_ADDR_RIGHT:
-> > +	case VENDOR_ERR_RX_ATB_RKEY_ADDR_RANGE:
-> > +	case VENDOR_ERR_RX_REMOTE_ACCESS_NAK:
-> > +		return IB_WC_REM_ACCESS_ERR;
-> > +	case VENDOR_ERR_RX_INVALID_REQ_NAK:
-> > +	case VENDOR_ERR_RX_REMOTE_OP_ERR_NAK:
-> > +		return IB_WC_REM_OP_ERR;
->=20
+>
+> commit f8160f5bc1c29ed4ba48f6d458beb8ca96b09427
+> Author: Hongmei Xu <hongmei.xu@oss.qualcomm.com>
+>
+> > dt-bindings: nvmem: add byte-mask property for non-contiguous byte sele=
+ction
+> >
+> > Add the byte-mask property to the fixed-cell binding. This allows
+> > selecting non-contiguous physical bytes from an NVMEM region to form
+> > a logical cell value.
+> >
+> > Bit N set in byte-mask means physical byte N relative to the cell's
+> > base offset is included in the output; selected bytes are packed into
+> > the output buffer in ascending byte order. If fewer bytes are selected
+> > than the cell's logical size given by reg, the remaining output bytes
+> > are zero-filled. The number of set bits must not exceed the cell's
+> > logical size given by reg. byte-mask and bits are mutually exclusive.
+> >
+> > Signed-off-by: Hongmei Xu <hongmei.xu@oss.qualcomm.com>
+>
+> [Severity: Low]
+> Could the commit message explain the hardware layout that motivates
+> byte-mask? It repeats the property rules from the schema, but does not
+> describe which SoC or NVMEM layout splits a logical cell across
+> non-contiguous physical bytes or why existing mechanisms such as multiple
+> reg entries or a device-specific layout are insufficient.
+>
+Example and explanation shared in the series cover letter already.
+
+> > diff --git a/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell=
+.yaml b/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
+> > index 38e3ad50ff4fb..cddda3f706917 100644
+> > --- a/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
+> > +++ b/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
+> > @@ -34,6 +34,21 @@ properties:
+> >          description:
+> >            Size in bit within the address range specified by reg.
+> >
+> > +  byte-mask:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    minimum: 1
+> > +    description: >
+> > +      Bitmask selecting which physical bytes within the NVMEM device r=
+egion
+> > +      contribute to this cell's output. Bit N set means physical byte =
+N
+> > +      relative to the cell's base offset is included; selected bytes a=
+re
+> > +      packed into the output buffer in ascending byte order. If fewer =
+bytes
+> > +      are selected than the cell's logical size given by reg, the rema=
+ining
+> > +      output bytes are zero-filled. Byte positions are relative to the=
+ cell's
+> > +      base offset and limited to a 32-byte window. The highest set bit=
+ must
+> > +      not reference a byte beyond the device size. The number of set b=
+its must
+> > +      not exceed the cell's logical size given by reg. Cannot be used
+> > +      together with bits.
+>
 > [Severity: Medium]
-> Should VENDOR_ERR_RX_INVALID_REQ_NAK return
-> IB_WC_REM_INV_REQ_ERR instead of IB_WC_REM_OP_ERR?
+> Does byte-mask conflict with standard reg semantics by treating the reg
+> size as a logical output buffer size while reading physical bytes outside
+> the reg range?
+>
+> Any non-contiguous selection of K bytes spans at least K + 1 physical
+> bytes (highest set bit H >=3D K). A Devicetree author must then either se=
+t
+> the reg size to K and access physical bytes up to offset + H outside the
+> declared reg range, hiding overlaps with sibling cells, or set the reg
+> size to the physical span M >=3D H + 1, which pads the output to M bytes =
+and
+> breaks typed consumers like nvmem_cell_read_u32() that require the cell
+> size to match sizeof(*val).
+>
+reg size is the logical output size, physical access is bounded by the
+nvmem device size =E2=80=94 not by reg.
+The validation in nvmem_validate_byte_mask() explicitly checks:
+if (fls(info->byte_mask) > nvmem->size - info->offset)
+    return -EINVAL;
 
-No, the mapping is correct.
-
-Konstantin
-
->=20
+> Defining software zero-padding in reg also puts buffer formatting policy
+> into the hardware description, and the binding leaves write semantics for
+> cells with byte-mask undefined.
+>
+will fix this.
 > --
-> Sashiko AI review *
-> https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fsashi=
-ko.
-> dev%2F%23%2Fpatchset%2F20261112084716.1483342-1-
-> kotaranov%40linux.microsoft.com%3Fpart%3D9&data=3D05%7C02%7Ckotaranov
-> %40microsoft.com%7Cc8c774311d0f4029843d08df409feabe%7C72f988bf86f1
-> 41af91ab2d7cd011db47%7C1%7C0%7C639300727742495506%7CUnknown%
-> 7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJX
-> aW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DoCF2jr
-> vC59G%2F6C0p8ZlWVzVnNTUTr5o0bpN%2FnQOX52Q%3D&reserved=3D0
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261113-nvmem-by=
+te-mask-for-split-macaddr-v1-0-138f715f18c1@oss.qualcomm.com?part=3D1
 
+pw-bot: cr
+
+Regards,
+Hongmei Xu
