@@ -1,47 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794575821;
-	b=CijMh3Zg8lVem8fEWmZU8S4ma0xKe77vCFElH9SfwE3uX+JBL0JInEPnmMm9ynvdBxd7
-	 PB9I8+wt175TIQyyLpq48XkIxc0QaN8AQAmcR8RZg4qo0/Q1abMjbYscWjdhF4y85exoc
-	 xrVmADWWUHPoZYDP5jSEU8Nn1lvpded5WR2JZ4w650yea/EY/+JRsFiwBbJFTd7gWbhs7
-	 kH0GAemRTeiPOqweC1y1G8oKsk4ldcT7TLe8lqPThTs9QKtOp8eL8LgUxDGbgyHY3cKk8
-	 krYWzBhlN4ezM4d8njGi3okdUt0/TZe2Md9pnHS2mdnAA6GFdfB+1b1HHktdACjXDzA==
+	t=1794576999;
+	b=wFWVkFNJUsytho08Hi7Wn0tp+AjpK2n/WiZUOiIST3D3DsVaihsK9FLcedMjpdJWOH/a
+	 Bi8VN4bTHWhLrdDMMOD0G9jWWH5RQZCesOu9A8zjTA3vPHE36S7XjeKcY5KCGIazwmkfU
+	 c42h+ouEja/e18G2tbGX610KbV3W1AtkbeLC+UiTnzs4HoMYVzUkCiSSlQFYIHzvGd/Kt
+	 tfFgGOdreFc6CoTHJ2zBx41NYGmPGroPS1zGLKORw0SjidiUlz/gQmGnMwqoEe7fBKfwr
+	 nsujmscbqKKe6yrMazP6/XvLSgumsmIQEL1XUcWPP+rcRPBKf/Y8ucS6pIUyJR0wGLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794575821;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=p/lFPjYkfyvd9bsV97VZl0i3yOB/qzb2CVkcE25kYJg=;
-	b=eq+8fEUmDpgtQA9jLfcZVpbIluCeJPquBIX9IeeLAXVK7ipdM39ZfE+aY4Bwmegh5iSn
-	 uvMKoJE+lz7VBEXRevvPhXWWXSy9bXkw6Hw3x0fqscDTTVCqc5lkNhTAoGqJYDm/dXCGW
-	 0qUi+y3lBHgqmBfG9sRSuzXlDtU49ljolAIWVSajuMgyrdTJW6c88YPxoETl8jlF10QdK
-	 zybpFsFtUlZPBtrMmzPZo343MWCOimyl5X8Ic/sF7HnFydpyE3w4rA4VjSGRaugY2XEbo
-	 y32DPP9BqrXlHDEfBc40/MuVkv79dCNOy5LP91CGDfaK28Qx8lfkxedqIlYdV4ea3Tg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794576999;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=igHr7MHuS1FMij64WTlt/9wLf6dbRU+4iLOhJw6BnC4=;
+	b=xkml9zJIGxNWhJh8P969Imvjxu06AGVA3bN4il/QYHrwep/cWbmleqgPZA5OvxcT2r53
+	 X+hTx6obGcjOiryOdYI7s3cNyCfQM3JsxDIOvSG5B1FmxsH32ZOcjMHPozsfX2Kmhbctu
+	 DXuwlmQiG970wqjlWJWZvbkFAIoLN5tCCFkbSSI/60VjVB/sxdIKvGJehAb6cTzR7EURh
+	 8qyFB6+LqNjDQ2F9KjrlBzIYDgKz3BR41xljMVnQDrbhzrC/EoQ4dOOu4BjKwAn2GE5jV
+	 GWYEMfd421JnHEadeSzIqeclsYiqzBA02pIloL6uaVgeDiudGIpf8DCd9cnnIcgZSYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CivLyJHr;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IqZ6ZbOF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4804606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 13:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED4A606A884;
+	Fri, 13 Nov 2026 13:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CivLyJHr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9C71F000C4;
-	Fri, 13 Nov 2026 13:16:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IqZ6ZbOF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EE91F000CD;
+	Fri, 13 Nov 2026 13:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794575820;
-	bh=p/lFPjYkfyvd9bsV97VZl0i3yOB/qzb2CVkcE25kYJg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=CivLyJHr7B/h6VXedWf4rDhzw48dN7J+NZfhTHijKz2usW5fkrEYfK5gxStT8t56k
-	 7WMOIm3Qr6xNjK89skOn1gqcYsoeGeJBCf0PGnX/cvkSekPpRQAWztA2cgEtUfJYdq
-	 thVkR6/ZE4ARHyezJ4UNqMT1XTXYsd3AIIq8dLjCN9dHMFLJEKoBLnuYqZOV93iEhK
-	 V/O5yvhz1rLS3r9SbHbWfXDC8QLArEaleyUXpNEfDpYUBIEFPGR3aZ4teO74IQBub6
-	 jQU8FDSUk5zpbEEb1/qOQNLFlVKdnfuWAFbV4nC8d94JkwgZlzV5TFZAwH7IAdQEQu
-	 +m2MMU5Clgauw==
-Message-ID: <575076ac-abb6-4e7b-95c8-872ea513ff50@kernel.org>
-Date: Fri, 13 Nov 2026 14:16:53 +0100
+	s=k20260515; t=1794576999;
+	bh=igHr7MHuS1FMij64WTlt/9wLf6dbRU+4iLOhJw6BnC4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IqZ6ZbOF9HnlhXXMjEM9fLIg+j9V7zmV0degp1m0Mkto5RnaAE7T9un/4LtOKnbWx
+	 gIzfoK9spaR0Dtu17+kAWOZxs2XjEbeRN1Oh9zLkfAKzKFgCujO4rYJ5En2FlwAfCb
+	 dXM1zBv0ISG3EoQjYWkI8cCHcX+lTM0EKczGtAzlQmuukT+KG2CcdhYuGCMyBaqysB
+	 j5QupkchtzkwuZ3U7qDbecT69wT7Cxki5QoFTzhvxK1I6JPUOFbC5JKPoXj1lndKbV
+	 CQYN4HnylYip9jAT8VhibSqlHeiTerrREyWP63Ay7OtPT0ZGjYVQP5zIJvZnkr4DRj
+	 h9QVdMTABrG1w==
+Date: Fri, 13 Nov 2026 14:36:36 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	robh@kernel.org, conor+dt@kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v5 7/7] string: Implement strstarts() with strprefix()
+Message-ID: <avcR0tSX-Fcq9pPf@devuan>
+References: <cover.1794574496.git.alx@kernel.org>
+ <382a44f7c68672ecead2436d9f569ee23f383830.1794574496.git.alx@kernel.org>
+ <sashiko-outbox-212840@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,110 +58,188 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm: mglru: use pte_table_clamped_end() helper to
- calculate the end
-To: Baolin Wang <baolin.wang@linux.alibaba.com>,
- sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org,
- hannes@cmpxchg.org, kasong@tencent.com
-Cc: baohua@kernel.org, axelrasmussen@google.com, yuanchu@google.com,
- weixugc@google.com, baoquan.he@linux.dev, qi.zheng@linux.dev,
- shakeel.butt@linux.dev, mhocko@kernel.org, linux-mm@kvack.org
-References: <b2386c5da61f9a15e60daa421b033bc1e0bcdd41.1794481498.git.baolin.wang@linux.alibaba.com>
- <sashiko-outbox-212685@kernel.org>
- <9f0d2468-b086-457a-ad3b-a452020305f0@linux.alibaba.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <9f0d2468-b086-457a-ad3b-a452020305f0@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="owupvyj3ozpa6obe"
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-212840@kernel.org>
 
-On 11/13/26 12:54, Baolin Wang wrote:
-> 
-> 
-> On 11/13/26 7:13 PM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential
->> issue to consider:
->> - [High] mm: mglru: call to undeclared pte_table_clamped_end() in
->>    lru_gen_look_around()
->> -- 
->>
->> commit 921adf1dcfd3cc8b15e0745e6085a76a09ac3fb5
->> Author: Baolin Wang <baolin.wang@linux.alibaba.com>
->>
->> mm: mglru: use pte_table_clamped_end() helper to calculate the end
->>
->> This commit replaces the open-coded PTE table and VMA end address
->> calculation in lru_gen_look_around() with pte_table_clamped_end().
->>
->>> diff --git a/mm/vmscan.c b/mm/vmscan.c
->>> index 25a224746c36d..cb8635e41a38a 100644
->>> --- a/mm/vmscan.c
->>> +++ b/mm/vmscan.c
->>> @@ -4340,7 +4340,7 @@ bool lru_gen_look_around(struct page_vma_mapped_walk
->>> *pvmw, unsigned int nr)
->>>       walk = current->reclaim_state ? current->reclaim_state->mm_walk : NULL;
->>>         start = max(addr & PMD_MASK, vma->vm_start);
->>> -    end = min(addr | ~PMD_MASK, vma->vm_end - 1) + 1;
->>> +    end = pte_table_clamped_end(addr, vma->vm_end);
->>
->> [Severity: High]
->> Does this break the build when CONFIG_LRU_GEN is enabled?
->> pte_table_clamped_end() is not declared or defined anywhere in the tree,
->> so compiling mm/vmscan.c fails with an implicit function declaration
->> error.
-> 
-> No. Because you applied the patch to the wrong tree (mm/mm-new). The helper has
-> already been picked up in David's mm/core.git tree.
 
-I'll get the relevant fix upstream next week. Once Andrew rebases he will be
-able to pick this patch up :)
+--owupvyj3ozpa6obe
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	robh@kernel.org, conor+dt@kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v5 7/7] string: Implement strstarts() with strprefix()
+Message-ID: <avcR0tSX-Fcq9pPf@devuan>
+References: <cover.1794574496.git.alx@kernel.org>
+ <382a44f7c68672ecead2436d9f569ee23f383830.1794574496.git.alx@kernel.org>
+ <sashiko-outbox-212840@kernel.org>
+MIME-Version: 1.0
+In-Reply-To: <sashiko-outbox-212840@kernel.org>
 
--- 
-Cheers,
+> Date: 2026-11-13 13:20:16+0000
+> From: sashiko-bot@kernel.org
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] string: strstarts() via strprefix() prevents optimizing out
+>   pointer offset
+> --
+>=20
+> commit 8cdc2e9c96584305ea94313f2618d17d8e28f303
+> Author: Alejandro Colomar <alx@kernel.org>
+>=20
+> string: Implement strstarts() with strprefix()
+>=20
+> This commit changes strstarts() to call strprefix() instead of calling
+> strncmp() and strlen() directly.
+>=20
+> > diff --git a/include/linux/string.h b/include/linux/string.h
+> > index 8c6a79d320474..8ca0deda61606 100644
+> > --- a/include/linux/string.h
+> > +++ b/include/linux/string.h
+> > @@ -595,7 +595,7 @@ static inline const char *strprefix(const char *s, =
+const char *prefix)
+> >   */
+> >  static inline bool strstarts(const char *str, const char *prefix)
+> >  {
+> > -	return strncmp(str, prefix, strlen(prefix)) =3D=3D 0;
+> > +	return strprefix(str, prefix);
+> >  }
+>=20
+> [Severity: Low]
+> Can the compiler actually optimize away the s + len pointer arithmetic in
+> strprefix() here?
+>=20
+> strprefix() returns strncmp(s, prefix, len) =3D=3D 0 ? s + len : NULL, and
+> converting that result to bool requires proving that s + len is non-NULL
+> whenever strncmp() returns 0.  Because the kernel builds with
+> -fno-delete-null-pointer-checks and -fno-strict-overflow, the compiler
+> cannot assume that a runtime pointer is non-NULL or that s + len does not
+> wrap to NULL, so callers of strstarts() end up keeping str and len live
+> across strncmp() and emitting the extra addition and NULL check.
 
-David
+Hmmm, it seems it's right; the compiler can't optimize out.  I hadn't
+taken those flags into account.
+
+Here's a test which seems to corroborate:
+
+	alx@devuan:~/tmp$ cat strstarts.c=20
+	#include <string.h>
+	bool strstarts(const char *s, const char *prefix)
+	{
+		return strncmp(s, prefix, strlen(prefix)) =3D=3D 0;
+	}
+	alx@devuan:~/tmp$ cat strprefix.c=20
+	#include <string.h>
+	bool strstarts(const char *s, const char *prefix)
+	{
+		size_t len =3D strlen(prefix);
+		return strncmp(s, prefix, len) =3D=3D 0 ? s + len : NULL;
+	}
+	alx@devuan:~/tmp$ gcc -Wall -Wextra -O2 -fno-delete-null-pointer-checks -f=
+no-strict-overflow -S strstarts.c=20
+	alx@devuan:~/tmp$ gcc -Wall -Wextra -O2 -fno-delete-null-pointer-checks -f=
+no-strict-overflow -S strprefix.c=20
+	strprefix.c: In function =E2=80=98strstarts=E2=80=99:
+	strprefix.c:5:9: warning: the comparison will always evaluate as =E2=80=98=
+true=E2=80=99 for the pointer operand in =E2=80=98s + (sizetype)len=E2=80=
+=99 must not be NULL [-Waddress]
+	    5 |         return strncmp(s, prefix, len) =3D=3D 0 ? s + len : NULL;
+	      |         ^~~~~~
+	alx@devuan:~/tmp$ diff -u strstarts.s strprefix.s
+	--- strstarts.s	2026-11-13 14:33:48.478848453 +0100
+	+++ strprefix.s	2026-11-13 14:33:51.802880696 +0100
+	@@ -1,4 +1,4 @@
+	-	.file	"strstarts.c"
+	+	.file	"strprefix.c"
+		.text
+		.p2align 4
+		.globl	strstarts
+	@@ -6,24 +6,45 @@
+	 strstarts:
+	 .LFB0:
+		.cfi_startproc
+	-	pushq	%rbx
+	+	pushq	%rbp
+		.cfi_def_cfa_offset 16
+	-	.cfi_offset 3, -16
+	+	.cfi_offset 6, -16
+	+	pushq	%rbx
+	+	.cfi_def_cfa_offset 24
+	+	.cfi_offset 3, -24
+		movq	%rdi, %rbx
+		movq	%rsi, %rdi
+	-	subq	$16, %rsp
+	-	.cfi_def_cfa_offset 32
+	+	subq	$24, %rsp
+	+	.cfi_def_cfa_offset 48
+		movq	%rsi, 8(%rsp)
+		call	strlen@PLT
+		movq	8(%rsp), %rsi
+		movq	%rbx, %rdi
+		movq	%rax, %rdx
+	+	movq	%rax, %rbp
+		call	strncmp@PLT
+		testl	%eax, %eax
+	-	sete	%al
+	-	addq	$16, %rsp
+	+	jne	.L4
+	+	addq	%rbp, %rbx
+	+	setne	%al
+	+	addq	$24, %rsp
+	+	.cfi_remember_state
+	+	.cfi_def_cfa_offset 24
+	+	popq	%rbx
+		.cfi_def_cfa_offset 16
+	+	popq	%rbp
+	+	.cfi_def_cfa_offset 8
+	+	ret
+	+	.p2align 4,,10
+	+	.p2align 3
+	+.L4:
+	+	.cfi_restore_state
+	+	addq	$24, %rsp
+	+	.cfi_def_cfa_offset 24
+	+	xorl	%eax, %eax
+		popq	%rbx
+	+	.cfi_def_cfa_offset 16
+	+	popq	%rbp
+		.cfi_def_cfa_offset 8
+		ret
+		.cfi_endproc
+
+I'll drop patch 7/7 in v6.
+
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1794574496.=
+git.alx@kernel.org?part=3D7
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--owupvyj3ozpa6obe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmr3El4ACgkQ64mZXMKQ
+wqn+Cw/8DzpyfgnM+bTeENWInkEZw8uZmScqu1SNJl9bN3nH5Aa4GoyUSlmKVIkD
+ZAjRaPVlp7XF/kbVyBMIQLzfwT3hVlkghLzp5JU60fac0tP9ujHzKfqu8qw+h992
+5KA7umJ+mjc1OIfPVUpVRIxgqFKT+3x3stheg0jcn/ICBFRRpLvHRuJ7Cin2o7xM
+oQ+fn5tIK9FiRK71lHkbEGUe36AYHAB2vK7wAm3cksQ4dfhQVaQpd9W1zyXpBqp7
+OQvLZsH9Fz0BYXC3o5KGRu5ieOHzNRnmWeBvj0eRgx7LcPL58irHkIiyo2eLG3c+
+AloDFR/eN8PRMCSKfxoJVUigluhrt7DpbxzT8L/Nh+CQdzmCT4/Q5tZTZpNE2MEv
+QCsWteTdjIU0e2nqxUAKBJdffOPfvIYOZb+EU6z5E99tzOYncfW4YPwAZeXoS0M6
+kp2Y0b8lY6fr6kPBTqY8G2VdhfLldDsSw+iOm4flF+NeATuuu6PzfV/rjMci2Ifi
+GgvifIyccMhGRkIPCsnk6kIZPp/dgpTiyi9Frk1DPPJMyzGpRxQPkrbVLz0xi98O
+fo/ZOErsduWY3jjR7uXckzi4a4FwggT/vaeWnsGJzFsjrDuZBsJb7v/p9vtfYkBR
+ldySg5hJH+0gWYC2aMeXNcJ9bVK5pMJE5rMviHDqI8FUO5NeegM=
+=A7Je
+-----END PGP SIGNATURE-----
+
+--owupvyj3ozpa6obe--
