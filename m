@@ -1,116 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.47
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794601257;
-	b=HhWadeSFsrgdu2QsJnR8H8uDREqdevVYweLgRkXhg8wHRPVNkRS8aGMapHqgWUe/QWTm
-	 /y1BksMZ4AGo0hAPQ90RfMWLz9QTYA4oohJSYb7OOmC0di2JjH4ZYPTaEhViFkWe18pM/
-	 i5XYlmmHmVomcV1L2gA/3y6OpErVGp9C4LJAJG7k7soXQkqdiX9ekMlUoP7qUjeyDMSiR
-	 4BdiAZYDQ8SDM2C6yaWDsISCtfpOfwIy5A9NRqnP9MP7PlC6EbL7hP6Bjo3FGb3/PsSkC
-	 x6jFCTavF1gtMJOyN7/pm4tgcLIWD6PLBX3la3i7S0NcennElgFnRXO+BDHcB0Efsgg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794601257;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
-	 Date:X-Mailer:Message-ID:In-Reply-To:References:Content-Type:
-	 Content-Transfer-Encoding:X-MS-Reactions:X-ClientProxiedBy:
-	 MIME-Version:X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=e2RwzbOxIvy29ZA3zLLGwHwe69Cf+J9skwxB3S9b6yE=;
-	b=oQg4qOU0oDVLg656XL1bnvBusaK59gggTES8dlkzsswaQe35j9HyhZ5YI59fPh2AI4Uz
-	 mKgPQJ+kEzt5YPRLcwgVTgGKONfEmC3BDG47Kzdww9QiiRVbLds8Xrtrqr64lRto50+Y5
-	 sYMcSnZuxc2v9Ig2ue2tDMDe4vjj8rUWsAK0gYO2kAnrbxkQ9VCNtReyyf9sgV7qPPeAx
-	 xxxdDefUb7AFbEUaQkXMJpzLgAErqfuazX95HXPhDvNgk14hGOYNGOBFf/fWnwQacpyL1
-	 5/2kOdvF7lptZQyMgqN78nOiwQMYXtdz2MehAIao8USWS6T124+BQ6Ke9NZkJXzh03Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=dJh3r2FG;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.47
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010047.outbound.protection.outlook.com [52.101.85.47])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794601401;
+	b=ZSHUKbYNPFq0PmqGWX9gRxiRCEcJg5a3UqVncgLcJDFBZ1etzMMr3AQn1it24OSfPuy4
+	 SJ+TrK5fV2K5840BwPI2qejkKZVAhK1uK92QF+906H9NkL8M9bEyTW4RcZfxChblkdfhe
+	 3dpGcrzQdNuCgWVJPVSiaf6p95lOygyjABgvsFGv9oz8B/y614RTEPo7N3SCs6Xa/HRht
+	 eKgd1574F8TJj5gkBKcRUn3MEwIiBp20XishoE46HsikLBwtXXspRHK8gtQ0hqQVrcdg6
+	 uKdaa6eFclS+PBbRvcKxmol48orVnbZpqE7gkt5/nvPsZRkLuIpQsma46bbstcBz62w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794601401;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
+	 Subject:From:To:Cc:Date:In-Reply-To:References:User-Agent:
+	 MIME-Version:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:
+	 X-Mimecast-Originator:Content-Type:Content-Transfer-Encoding;
+	bh=OmgP7lpAhGw+ltLrjN+pc1MVDZJ3Kku9R5PxK3eTW1c=;
+	b=lxO28WQapmiLtYqa9aFCguoEaqZRnB7lQiysmQ/3k4pYekSnXWbpIKzo7VN0yS8SmPtc
+	 /gSRYhS9/A9TWxA+8H6Tlv0mDw2zMI0ESHEYbfEwVMsYhoo2wZ99ozf8lgdIrb+QvKWnH
+	 xPi3XfpgM452iQMY+gHtImZ8iXerlKRJHAKu2ARa9ZJIjK4hBdfLSYO46kyPNzwNl4yRh
+	 Coffqpdj08x4D6KEOiPgil3JbjCz6P7FHMWPOiL6r/XObEzEkXmWQYEDZcPiG8dFn338g
+	 LlA0UEPxgimYW0pAJBW2kIwPNLhPgg+1LZmnDivFCPYZ/F253xc3ZSaUg/9ijfMosRg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=g6fFGq2j;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4794606A334
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 20:20:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4794606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC375606A335
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 20:23:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC375606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=dJh3r2FG
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ECxbXDqEYjNsxrDtHgRDd3hfP0VaDq7HxkI1nDSeCH3GY0sV6PjhhIsAoO+7E6gHgNqdG8T2Zc1mVjDabsZnxRBl8XNqauZLM8+ktPqOfHtnYqpiM8yG2cjYKZNl0b+q+Gs5q4kKTNbOGUTa7TFPyEEHSzwKz2ehzEeVuuHq64FRuSr0cx50Vt8aFbCsG6LLPSf12HZaoAbSxaTSZrtWCNfUsmK8NrB3qzNk9qsEDC5hETrySW6mATPzGolgHphv+LjzWztJfRAa1BpEeTgP5hHGXgCkXTCmBCqc1heaScOBI+f9LnR1iLEX0WL1R9TQpQIWngt+QNcKL+Klyr1wlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e2RwzbOxIvy29ZA3zLLGwHwe69Cf+J9skwxB3S9b6yE=;
- b=m5iM3yDcNNipDX2t1fhmB4Ia+yCs+M9cGZDbxJIQKHtIM4WOG+L7QhpyhYS2D0EPHJMEHdwmdzFfA+kOnxHtk1Wwcdl4BpbUYV7Kody1fdkYiCfTlg2+HfDdacGS6YJaxogmn/FDoja0xJ408+KZc3rG6FuIuxFjiJrnKJsJX1kqr3N6TW8MN7O58fKnRXI8IBcd7ac+TISBQNQ05LVv8D8m+fUZi5078BWNk0MB6VsYbKgzY09K4tt2xB7EaTM31leu+z0B/4auIRin+J5O+aez5jFWqBQGiCjrYRmEVJiPi25s/dw6Vp9gpiJzKXSv1WsB/ls7TDAAQ+pyBilwDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e2RwzbOxIvy29ZA3zLLGwHwe69Cf+J9skwxB3S9b6yE=;
- b=dJh3r2FGFExjcNzOUi5CD92T6+Gj1gLhJHu3FP/3YkEWAxxCR1yqpfOP9gmeLBSipyqldoQK5OFPGlDDWRQkE1SfClzL+jHWO8cnW0enmu62FQzSsjwsKzmui4i9w+QeJ5583zTjKM6hMFKpZnTsGijixb3bZy7DGh7Hq6y3KCNN0nua7n+49h+Xkw36bJdZwOUR5u9DiDuMawVsWXHKl2F6uy0rVek0Ck01Z1bn+1zk/NJIWapGN4Pc0kLxal/WRF4NJdkGaIv8QMnlDVHNb9TWy5ixGnmUM24Ckx0rCbCcDUe2bOxBJniPTcJmYCezuWZS0SQod9gJ4Zuu7Gw8Kg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com (2603:10b6:208:40e::7)
- by MW5PR12MB5650.namprd12.prod.outlook.com (2603:10b6:303:19e::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
- 2026 20:20:49 +0000
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16]) by IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16%6]) with mapi id 15.21.0615.007; Fri, 13 Nov 2026
- 20:20:49 +0000
-From: Zi Yan <ziy@nvidia.com>
-To: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
- Roman Gushchin <roman.gushchin@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Michal Hocko <mhocko@suse.com>, David Rientjes <rientjes@google.com>,
- Shakeel Butt <shakeel.butt@linux.dev>,
- Andrew Morton <akpm@linux-foundation.org>, Jann Horn <jannh@google.com>,
- Pedro Falcato <pfalcato@suse.de>, Matthew Wilcox <willy@infradead.org>,
- Jan Kara <jack@suse.cz>, Nhat Pham <nphamcs@gmail.com>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Matthew Brost <matthew.brost@intel.com>,
- Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>,
- Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>,
- Alistair Popple <apopple@nvidia.com>, Usama Arif <usama.arif@linux.dev>,
- Kairui Song <kasong@tencent.com>, Balbir Singh <balbirs@nvidia.com>,
- =?utf-8?b?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
- Kiryl Shutsemau <kas@kernel.org>, Yu-cheng Yu <yu-cheng.yu@intel.com>,
- Dave Hansen <dave.hansen@linux.intel.com>, Dennis Zhou <dennis@kernel.org>,
- Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>,
- Peng Fan <peng.fan@nxp.com>, Josef Bacik <jbacik@fb.com>,
- Chris Mason <mason@kernel.org>, linux-mm@kvack.org,
- Borislav Petkov <bp@alien8.de>, Mark Brown <broonie@kernel.org>,
- Dennis Zhou <dennisszhou@gmail.com>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
-Date: Fri, 13 Nov 2026 15:20:45 -0500
-X-Mailer: MailMate (3.0r7038)
-Message-ID: <F185BA4F-F26B-48EF-AB3C-848D72FA630D@nvidia.com>
-In-Reply-To: <avdveCV9uW1zwXXd@gremlin>
-References: <avYJ-CxBEpdO1Wmu@gremlin>
- <816E22E2-C7DD-4DD1-AAC9-F51F4D1ED71C@linux.dev> <avdveCV9uW1zwXXd@gremlin>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-MS-Reactions: disallow
-X-ClientProxiedBy: BN9PR03CA0449.namprd03.prod.outlook.com
- (2603:10b6:408:113::34) To IA0PR12MB8374.namprd12.prod.outlook.com
- (2603:10b6:208:40e::7)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=g6fFGq2j
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1794601399;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OmgP7lpAhGw+ltLrjN+pc1MVDZJ3Kku9R5PxK3eTW1c=;
+	b=g6fFGq2jz9SCICkNVp8Ec6JZh5qqXa6iqPCN/AAVdPEs4lcMyHnpVKU/7HlOyrXfU0tmnr
+	D3asAoGyUO1xWzT6AhscZcEBm1hWaRfB53n77kWxxPmK8a4qmw9U7Okm3XoPX5eYwdYaCs
+	AEn8SWKudYAcn+xG+sxfMqp2mrD7/7A=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-486-DvmElM77NpqYCmEER_xAhQ-1; Fri, 13 Nov 2026 15:23:18 -0500
+X-MC-Unique: DvmElM77NpqYCmEER_xAhQ-1
+X-Mimecast-MFC-AGG-ID: DvmElM77NpqYCmEER_xAhQ_1794601397
+Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-45a07949855so1823033fac.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 12:23:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794601397; x=1795206197;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OmgP7lpAhGw+ltLrjN+pc1MVDZJ3Kku9R5PxK3eTW1c=;
+        b=jsq8yv002dksZ8D21fynb65RKFR0bH6GsmXRY0ZH1GxqC2KuyCltJTLYX8y1GkdfGu
+         cztrxzGWE92IKBzwv8/4UvL2xTcXWsb4dUDnjP9itRa/R9UJKhNFw7Sa2MWTThsEUy+k
+         oY7lhuxISF9TG+MXnWTbHdo6V1730vWJklTwdQ+C74xMfecsqeRHjNGL5UiQ3cvhF3ut
+         h51SOxv8w9LuTTxFosS3cP7MlHfa63TkqycBs7kXH28W+S45Fvkbsxrw+G8Q8QGCm4+C
+         EvAJfhcdFpXWVfzKG8H2+D3EAQFJwsWyAiIeyuMH1eCqKoHmP65DYBtFHRXFPxRVaUCQ
+         kAwg==
+X-Gm-Message-State: APuU4Z9gtIxuSG+nSR6uYarRASvnEtzbxWaQv+cI30Vai7rSZEsY9Vx9
+	hKqeigA5cWnsVM6nBY2JEv+xyvfU3INeFjx8YfAF3/4LEX+/pD+3NDPJqfH68z3ugsR4F/piLK7
+	H/H7sugwRiyMC+fdMN/3KU+hlnecYMjFFMG7E0cxokSoRYt2pwS7s37K/H38Zya+plwSjFelYRD
+	tPnFGW86FmcIyM2dNnczIpFAuorvr+R4GLqgsmoR8puapA4lkp2zI=
+X-Gm-Gg: AYBFou0BTUKsePv8o+8cyHZmFx1JbXB3tw1pahrzWF5MfShaJMwizNGXsWvg6C/seeo
+	720gYhBGqV41DXyvC0IZuH0GkZ6e8uQmPBQROPwI5WyLoWRF2npZEwsnRxpBd7afmL5f+7SSS6I
+	NxJGJhwRSh5A+8H++gp9OYCRWxwIL9JfeMsPVAniM0FCqG9LrZD/m2r29yohtIQJYXbg1rDXwm3
+	3KKlK8XgGUOPqkDVZyeBCjZj8AtF0WJxYTlB/ctPIcWxY/MjdLiW0Wit+hOpVE3uiSmrZyXc/AP
+	QN+RECDBP9g4wTbkc7VTewuXniCfCfizQka+EwIsAcKJoZRTE1udzWm6rjGiL8sbZQm8sfgBDAW
+	6OJT9AXo/hXCsgakwd0CurKHRxDVySIEgOlNTmt1X3FqokaaiG7foeO3COVvwFDG6AAF+/jh1EY
+	SUcX+WKMPknrs+I0hS4L/IME+ZICU2
+X-Received: by 2002:a05:6870:568a:b0:46a:e87f:a7f3 with SMTP id 586e51a60fabf-4afdf031ac6mr3908835fac.2.1794601397474;
+        Fri, 13 Nov 2026 12:23:17 -0800 (PST)
+X-Received: by 2002:a05:6870:568a:b0:46a:e87f:a7f3 with SMTP id 586e51a60fabf-4afdf031ac6mr3908812fac.2.1794601396986;
+        Fri, 13 Nov 2026 12:23:16 -0800 (PST)
+Received: from crwood-thinkpadp16vgen1.minnmso.csb (71-34-16-191.mpls.qwest.net. [71.34.16.191])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4afe2200c91sm1914434fac.4.2026.11.13.12.23.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2026 12:23:16 -0800 (PST)
+Message-ID: <dc20c6087569c0bba7469216f29832dbb23abd23.camel@redhat.com>
+Subject: Re: [PATCH v7 05/10] tracing/osnoise: Per-cpu mutexes and fd
+ detachment
+From: Crystal Wood <crwood@redhat.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org
+Date: Fri, 13 Nov 2026 14:23:15 -0600
+In-Reply-To: <sashiko-outbox-212329@kernel.org>
+References: <20261113064103.3041704-1-crwood@redhat.com>
+	 <20261113064103.3041704-6-crwood@redhat.com>
+	 <sashiko-outbox-212329@kernel.org>
+User-Agent: Evolution 3.60.2 (3.60.2-3.fc44)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -120,105 +107,52 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR12MB8374:EE_|MW5PR12MB5650:EE_
-X-MS-Office365-Filtering-Correlation-Id: 47cd258e-b7fc-4bdf-d2e6-08df41c39b4f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|366016|376014|23010399003|1800799024|18002099003|22082099003|11063799006|56012099006|4143699003|10067099003|261026121527099003|261022105027099003|261022075727099003|261028144727099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info:
-	JmM43uP/lZ+UahEO/YjH0XKfGrz/me4BOblx2NIZjuXHeY36eb2dS9l+Q3QbV8DLsEQ4eF+nj3sLaX3dzVOguKpVRWEXHSBaqy9It9Iv6c0mE3H++kjfKRCSF4yeko4n2M+XQJmiZpR20DJpq2mpQSm+baQ3Q7IIYJyyycQW4a0vpg3Y6qdJwxdo5LacK7abxmCgvhM5nRt+smMBXqWpB4cQNYK9OEFdjvUdBYKC0XT9n5cF4aiGz+4KBI5NM0dQbvrAVp+SLDAbT54t11aVlRoy70PR22Xug6hAsJSLn9it8fc3vlOpG33otoZR6Z7fDz56Y1iPGcY8fgZedJ0fiA85js81hLc+dquCDoLs5UQn/IR3xNLRlauSZGf2bi5i9DA6M8qGDAxg7TfD4zLgx2Ki7Wte9kEO19xdF02Mu7o4f+NEhHxy2eAIUvdmaOs5RCEBIN0ejxUqb5Hwn1syhXADJ4sKCPt3rUVQUSep6yLTHAapvbZ5TDVlSYciS+GCxqWMODgI0tK5iHyAfOFzrmwKe6veV23VQqOuGFG734ejoIxHyz5/PQ/B7tOJOjtpWIfvBijYcexGxlXAW7e3J/rb/D0g1YxzU8hygtVaKRJEx695rKXZFnPuDbjQNlQP+ezVhbuIL3nm5HdFLJmrqczzoQO50Qi0RZJT+BwOXaM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR12MB8374.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(23010399003)(1800799024)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003)(10067099003)(261026121527099003)(261022105027099003)(261022075727099003)(261028144727099003)(261026140227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Tm41cmJPNmtHdXA2bG9rVXVBY2JyQy9xZzRKbWs3cCszZ3dpQkdJOXFLaUV3?=
- =?utf-8?B?Rm5URWFtSFM1VG9HT1AzcHZNUXdKVisybGloZDZUNkFjYzBFSzdaOHdSbTU0?=
- =?utf-8?B?VjZLUjlCMjlUOEtHa0pyMU1JN1pmaklJUUtkQmtLYnFibHhkZzRHRzFkRGxy?=
- =?utf-8?B?Q1hEdk9mOEgvK05ZM0ZReHJ2NUMvUHoramQxbXFSVVJBK3QwbTU3MUphUU5L?=
- =?utf-8?B?QTU5V2kxUy9JdEN0ZzBGL3Vqb0pmeVJaUW0xSHcxZEVZQW9RaEhXallOMWI0?=
- =?utf-8?B?LzZ3bHpqTkMxM1BrYWsvWUpyTU5RNG81M3F3NHRpWExFQ3kzZ3RqWVd4QXVF?=
- =?utf-8?B?RGV6clZoRWpCSlgyMTFXL0RKN3FmZ2dJdmsxTG1ZYmQ3VUdwWWMwYkw1RVlM?=
- =?utf-8?B?UDdSZTk0TU55cVV3YUNpaHB2MmRKaHorbG5VSDBvd0FLUGJ2bVhiNG1nSFUv?=
- =?utf-8?B?cmoveGkvMjFoRTM1LzF2WkIyeERreGVzMDVyWmxxN3FIcFNnYnpSNG95eEZY?=
- =?utf-8?B?a0xKNjh5dzNRNXEvY0tkMmEwZ2I3eU00enB6WERaM0Q3Sk0wL1NMcU9raEgw?=
- =?utf-8?B?YlZNeEovQ3RzMUZFMkFFc0RZU3hMSUJxUGhTSlBVelMxNHlDc2ZXWXR4dGFB?=
- =?utf-8?B?MEtiM3l4TkQ1U2JDMmFDaDJ2NXB1b1Q5c2dkVVc2M0dGRUIyd01zb3ZjeEpu?=
- =?utf-8?B?eDVxSEJsTXNNMS95ZFp3RGJTYmlCc2M2ZkRpQU51dzJMMzFWSkR5RzJqZ0d2?=
- =?utf-8?B?ZlZ3eForSjQrN1RQZmw4ZjNNUGJCTWxqQ29Nb1oxUGVMSDhCL3ZJck03QTE3?=
- =?utf-8?B?UEpnODRGUEx4ZzZnS3ZDWk1qMkJKU0Z1akxkZEtWTkIvTVVXdHR1cW53Y29Y?=
- =?utf-8?B?Zk54eFFPY3VNc3FpNXZwbnFuZWprNmY3aTNlNWg3TUE0RnZwREdBeGE0ZnRH?=
- =?utf-8?B?QXpyVmFUbWlFSlpmM3FmaGF5amRMa0Y0eFZWWjcwRDdtQldxUzBNOTdIT2pT?=
- =?utf-8?B?VjZUNlA4VFFNOXZGc3R5cEU1TEsxenBqMXJiN29BUHpLemRRKzRsT013WkFj?=
- =?utf-8?B?eFVwTEorUXA4VE0yRm42MEMxOHdJNUhKMGxJMSsybFVhb3p1NEFJRTZmS0Zw?=
- =?utf-8?B?Z0h5b1A2YU1lRk0wSmJtT0xCUjFuS09rdFdXRW9LQlJUMWtIS3VVaUtrSGpK?=
- =?utf-8?B?ZU53Mi9aMUhzbi9EOGkxemVRZ2NrYTZVZTNjWEZzTy9Xak90RlZwSWFGT3hW?=
- =?utf-8?B?Nk5nSkUwMDFKSGNYZlE2aDdRTWpTNSszZXJ1SmdHejZNQy80MVZjeDduSStV?=
- =?utf-8?B?bE9UWTNkL1VRNUtsdXhGUHpkUk5kM05JVGFtNGZFd0M1M2crZWVaWU80bzYy?=
- =?utf-8?B?QStCOXIvTjNqRjk2aXFjZ2c2RE9iWWxncmI4dVh3QUtLZ2JKeFIrNHVsQjVn?=
- =?utf-8?B?M3g3cWYrYmFWa0F2MjIwT25UN3ZtcUZ0N1RSb1ExcHJLOHhLNVVkQ0RIR05a?=
- =?utf-8?B?a2t0aEV0eUxkM3A1VW9GMDZlbEVaQjVFeFdzdW4yalJDaUZ3bzZwbmtnV1lI?=
- =?utf-8?B?RUZQMmxFQ0gvN3d0RHdpNlBFeCttS051MDZhL0RBS3hVUXgxb1lMcytkbmM1?=
- =?utf-8?B?V0JOcmIxVSt6ZmFhR1gwRzJqWXRUMXNuZWJoSEZ1Zi95dEF6OFBlTnd6cEpX?=
- =?utf-8?B?bE5LRzdUaDM0Tk1XWFJBNURYQ0pjMzVESU5BM3M2WE0wb0RTY0FORWtsZTNM?=
- =?utf-8?B?dFFBOVZZelp6MktwSWpvVmtDT2wwYlk2dVZWbXhoenNLNVRLRDlZdFJ0ck9k?=
- =?utf-8?B?bFI4MkVEeThxSUVRcGQ3TzRWMVdGWkRTQXpCOUFCbE85empyRURYQ0tmazZx?=
- =?utf-8?B?Q2tIdnFxeHkwcm9qUE44WmhnMm1LRWZTL04wMEpoRG05TEJ1amJ2Ly85aGcz?=
- =?utf-8?B?eWE5eGQxeFd2eGRyVTY2U3o0ek5UR21wTHJDOHFhM3UydUljK0hmNDA4Nis1?=
- =?utf-8?B?eG5ka2gvd2NYdE5sczcvOGxMWDQvZ2lDRXRoZHlqSmd3OXU3cHE3cHFQcERr?=
- =?utf-8?B?UFdxNUdBRDhLb252ZXZnWDRnV25jZjROQWtyQW1ZeVBlVGc2Q3pZd3F1cXpi?=
- =?utf-8?B?MTdMUFZhYTlMREhRZWhiWjRvaG1wZGRLQWRzMWhVcktSOUxyYmxrNVI4bjJ0?=
- =?utf-8?B?TEc0QnBaSTVmd1BJVlIxeEYzNDZ4MU5BR3h0Mkw1Qis3ZDVDUWVScmhjdzFV?=
- =?utf-8?B?dTlHNXZQVzBTM1RPUlI0ZFNPcU95eUxwejBiSmpuS3Y0VXQyZTVWUGZXK0Iw?=
- =?utf-8?Q?sMg2f+ZDq7E5JuWZG0?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47cd258e-b7fc-4bdf-d2e6-08df41c39b4f
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB8374.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:20:49.1803
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CtX97G42pX4OrbdJOrGFGCQ/bhvwnqNnOiFc6oEdyU1XdW3IwilMaiXMZAZuBEdJ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5650
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: B96rJ0YpcYTPbGAS5pT0UTyoy-_DViCIcl-gt222Iy0_1794601397
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 13 Nov 2026, at 15:17, Lorenzo Stoakes (ARM) wrote:
+On Fri, 2026-11-13 at 07:14 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] tracing/osnoise: missing migration detection in
+>   timerlat_fd_read()
+> --
+>=20
+> commit d34bc9208d90b4be9c903307f53e72248c2ac3b7
+> Author: Crystal Wood <crwood@redhat.com>
+>=20
+> tracing/osnoise: Per-cpu mutexes and fd detachment
+>=20
+> This commit introduces per-cpu mutexes to protect kthread and timerlat fi=
+le
+> descriptor state, replacing the SIGKILL mechanism for user-space timerlat
+> threads with a mutex-protected detachment mechanism.
+>=20
+> [Severity: Medium]
+> In kernel/trace/trace_osnoise.c, timerlat_fd_read() removes the
+> cpu !=3D smp_processor_id() migration handling (which set
+> cpu_tmr_var(cpu)->uthread_migrate =3D 1, tainted osnoise, and stopped
+> tracing) and instead locks this_cpu_tmr_var()->detach_lock before checkin=
+g
+> fdd !=3D osn_var->fdd or tlat->uthread_migrate.
+>=20
+> Can this miss user-space thread migrations when NO_OSNOISE_WORKLOAD is
+> enabled after the timerlat tracer has already been started?
+>=20
+> By default, OSN_WORKLOAD is set in osnoise_options. If the user enables
+> timerlat first and then writes NO_OSNOISE_WORKLOAD to osnoise/options (as
+> shown in Documentation/trace/timerlat-tracer.rst), osnoise_options_write(=
+)
+> does not call register_migration_monitor(), which only runs during initia=
+l
+> tracer startup in osnoise_workload_start() -> osnoise_hook_events() ->
+> hook_thread_events() -> register_migration_monitor() and skips registerin=
+g
+> trace_sched_migrate_callback() when OSN_WORKLOAD is set.
 
-> On Thu, Nov 12, 2026 at 02:53:44PM -0800, Roman Gushchin wrote:
->>> On Nov 12, 2026, at 11:03 AM, Lorenzo Stoakes (ARM) <ljs@kernel.org> wrote:
->>>
->>> ﻿+cc Roman
->>>
->>> Roman - see below - I was under the impression mm was not supposed to receive
->>> 'unrelated to this patch but' reports? Did something change?
->>
->> Yes, sashiko started reporting pre-existing bugs again, but in a better way:
->> strictly once (per bug)
->> only for the first non-rfc version
->> somewhat related to the proposed patch
->> not more than 1-2 per patch
->> not exposing security-sensitive stuff this way
->>
->> Obviously the goal here it to increase the chances for the problem to be fixed.
->> It’s global, not mm-specific.
->
-> (Sorry only just saw this!)
->
-> Ah, I thought it was an mm opt-out.
->
-> In general they're spawning a lot of AI sloppers to go off and send ever
-> more fixes and causing ever longer days for us, it's quite a noticeable
-> impact unfortunately.
->
-> And often they're duplicative of already-sent fixes so you can see the
-> conundrum with this :)
+That's a minor pre-existing bug that shouldn't block this patchset.
 
-I wonder if there is a plan to make Sashiko identify duplicated fixes
-and send an email to point out the existing patches. So maintainers do
-not need to do that manually.
+-Crystal
 
-
-Best Regards,
-Yan, Zi
