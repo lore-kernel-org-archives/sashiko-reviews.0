@@ -1,95 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794584542;
-	b=kg8Ga+b01V5Pbp4ZdBLXdbg90tQCa1jek41meM2QwOMMpUuNWfEBcJNX66gwhmPYkUsL
-	 0Kt+AtSUXAsP/PAogFVnwX1uwe5GfV7wOwq+J6AlKKLesIWWTOcJ9+I7opEB1b8/uhUwC
-	 mTkNQrwZeUcingl+RI1rSRNr4//8blfL/roee5yJbyWjyqsj2YrmoCAbi9J+IyxYrAU+G
-	 MUZqHSXdxtHD5uuoFHN0DLnLrXJYlThWOYLo0EeBlCWlLqC6rRZA25Lpcw5Sfo/BmITUs
-	 nUi4nfm2UHiCJfACjhRCsoYEgCaJaj+ftoSNoIBgwv0DkTtYCiJC18x6W3CGr03OuzA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794584542;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=Yutdol4YhU9457+FPHA+tBgjGyrbMKfxjhIyA/c2xjc=;
-	b=ljfVGf+kFGqSBQ4oGkKLWHyxc9lXtMV+K2y2fti998fj6RZ3Sr0rbFajHBv9LOv2Xwzy
-	 rofYO4h1Lqp5IHDCpNQY6hsGzqlthyrnPEKAAEIriIgeMjue2VqVbNBqNCxZ41NSo3kh2
-	 ADckJAbUR93LQL1Gj1lTkczgNHcdlC8uDBIYLsxsL5ieGTFaMINemqSSboals3H8nwpuB
-	 f/q73hVGkKB5JeNieI7pM7WT7OpriWXpeUslRXtk3if32QCCcbXkmk83qypJNruUn1jEz
-	 4nXDHNiutRcQsWnyqmBpZd1CbBqeBPBpe1Fo5H4TvbPfBYFF9zuacNWaiDySc69M1Aw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=D256DYfY;
-	arc=none smtp.remote-ip=209.85.128.48
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.25
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794584850;
+	b=rvW541OmPU9J3tZdnft/X0UFgITiOKZmi4eY/iADJDv6ruu5mVGaYqkYjPeTWRnqIVjg
+	 ltIQp5TN6MBqHLCo93mORPx2qKtirVe9Za97/ghaS0bhRFgablxviWDoISzBx8iZDYAUK
+	 zzpIlZNVwDNTsNMExaxk15WNzXFqcVkvcbWsQ+4IsIAvbH/NfTnfdk68Ctu6EV2Ho6QVt
+	 e14LUSePJWi1zWutaeA3a6c6pE1dr8120OuDwbVd2ae1Q5Px/TQQAg2OrgxbCaOirGa7I
+	 nC8vb+sOivB+tU6be4WHloD7RLK0L/2rz1rPWRY3WJGbIsNruyw9fG9Z45rtkBOK9Zg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794584850;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=1jj/cTktW/zKqwGxKZfaDqP20iqG3SYgSe/ibtVRq1M=;
+	b=RV/40WPktn826SAMp01mB/pqu9wEoewScfBOloOos40S9XOvLIkMbizTBMjnB3RZy8/T
+	 s/Utd+V+x3NYAS8dsREC93HEt79U51n39bSvLSpH58pBFdfXTQZta1lwU6YoUytoAUs46
+	 3b6kdWuor0RMw83cV/NlRsSFAQCGLv+djWjeuVJKW9AHFyki44a7qC4MvDQDUexpXZhO2
+	 5RM7USj4T7aecnrdKG2BnGl3CM5z3pnHGq2By+s6KIcxnWoUFbNGtDqqSJ0S47zQpEDxP
+	 7z/hDfsh46ePIscpg7vyseVZtO6z9l9B2y6briclbntG//232tHTyq+esLInpM2MKHw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=pnYTHaHS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.25
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013025.outbound.protection.outlook.com [40.93.201.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F344606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 15:42:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F344606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A2E606A32D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 15:47:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0A2E606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=D256DYfY
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a5720b0a57so12352935e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 07:42:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1794584540; x=1795189340; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Yutdol4YhU9457+FPHA+tBgjGyrbMKfxjhIyA/c2xjc=;
-        b=D256DYfYe4wjABQb02yvqO6nj0B0Ch5mPcPjMEU+giAGYyLvFHVD1XRgLuX+1T27Ga
-         uuWCBsugKi7WQTgRZfk86rCATA6A0Thn569nj1csZXpuNlPsPoUYtvTpq18boG8veqTl
-         c9ZdeQ5CvNsAc7+cTs9JZLHUDFdvOGTc/2Wy72elPcT2mat/1XQkwk+IaKqtUPjdw1Zb
-         7odCgATfp1OnO6Ly07Y4tZnPpzNwgnj+zSFGcHYcReZmTBVwFgGaKMY2vdnE2Z+RfbZt
-         npZi8a2CASdDnwyMwHPcRfJxdjMa39OSY8CwcXv2y8LlrM4xSUV2Oxc4Qbqla4Qsb2w2
-         t0Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794584540; x=1795189340;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Yutdol4YhU9457+FPHA+tBgjGyrbMKfxjhIyA/c2xjc=;
-        b=QDUaUpsMKlYHP7scIzcNzAIsqzFBr9+ecRcSpquIvP/eBHleeihIfrZ8/KFN/6y+gz
-         rpzfgK8Qc48BNBa0V5/ighKXlcbP6FPOnPzY404TEMIJY6fv84+UbtoVRhAExopTLF4D
-         3MEWtbBwMVMkvYnPBaU7sVkT2ZZJ60umL7A2gzkoB7EJLoIuZZPvuvV+FxPP7dAdEf+1
-         3QGYAFufrD8Jh/PL1YCi1jejE2NHsZEPph7FS7sDqVnjdR3Wp9VatvHAdR9yGhzXsUb2
-         BrjMIXScWrfzIVFL7yCuldSjUui3kWpBYNHPqexqG1FId4yTmrggN4brkxw23hv8LIIO
-         IGBw==
-X-Gm-Message-State: APuU4Z83JMNEh1z9Q6UlwHHBcIx094T1c0bHK7aR11L2tid6rlT3go98
-	OTI8A31BBjVjAJq4c16S+Uw1vSOHe9KVQJ/0zBj4pPrdBHOM2DOP2yAiy1t0agdAT3oYveuIfa+
-	L1xB5Fkk=
-X-Gm-Gg: AYBFou3jRrOcDiagFmQo5q5h5smZoIaGSisY0b397Z9hnhahi1QDCF5/7qrC2U1yEAn
-	h4XaIB56ewAYz2X+c+qvrQfJZ5WWTz9gf8mQ6Lym7z+lZPtL6/jL3OiLulUKJ6JTCiZCMTZmPlS
-	d5brGNarz1W8JkGuswWm64H4JlPByZyE++ht57qCJ5zsmKjUM2Nch3qZQ+BchTsrMCc5lger+Jg
-	9xi716gLmhRycefuWeYhHC5SW+uXP0OPDsN7Pz3yEg4WkBOI2EFhX8vfXjaFKyokvRJaBxaLfOC
-	+9aB6GQdAhEfkGvI/CittXR3imnsAJLiNBU4Z2EdQUaWqGgjaBrqfsGgfGfLFD6+X65C2LcBQma
-	UZgs0slJ3/gj128QjImxMWMFtATlrZ1mabGgIV4qX1QGuED4xVZ/WLtNP1VRG6/8AAQ0shoCF32
-	VGKjo5SQ+4HsrXugmb92snSK0Sxr9RfgyDukC6WjQ8pxs4/BFTAjD9KNBpjvCkQZG435ZaCNOkM
-	twOv8G6KNePfbgrHyntucAbsfuNzTZDaWhXR/+YeT6lSV/JmR5+/m2EkZrHtliFJbTpIEf8Kogn
-	XEjBXy1rly1S75m1PWG3TsuLFxzIM71b
-X-Received: by 2002:a05:600c:4504:b0:49e:6581:7baf with SMTP id 5b1f17b1804b1-4bb559f044amr58323825e9.2.1794584540422;
-        Fri, 13 Nov 2026 07:42:20 -0800 (PST)
-Received: from localhost.localdomain ([2001:af0:8000:1409:193:86:92:181])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb571df488sm33388225e9.4.2026.11.13.07.42.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 07:42:19 -0800 (PST)
-Date: Fri, 13 Nov 2026 16:42:18 +0100
-From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
-To: Kuniyuki Iwashima <kuniyu@google.com>
-Cc: sashiko-reviews@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org
-Subject: Re: [PATCH 5/5] selftests: cgroup: Deflake test_memcg_sock() in
- test_memcontrol.c.
-Message-ID: <20261113-upside-perfectly-f4b59d80837a@there>
-References: <20261016052811.3085635-1-kuniyu@google.com>
- <20261016052811.3085635-6-kuniyu@google.com>
- <sashiko-outbox-173832@kernel.org>
- <CAAVpQUDnBkB0AUteLOP0f6qFaSJXrWm8CHwGXizvMZ0RsmB4wg@mail.gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=pnYTHaHS
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uHgXB4HWUHg2V+BYP7EkybhJEqlGlsvJKIRqwsiFHSzAxvwrFuKafSk4YK2Q7hxcKJwPWBtglBVwzFe1oJ7kvuttZCJdqmogUoQUZ/8i6Xgv1ei5/1qNqlURro1fLy/F/CyLUqjC5CVzasJN8SVQJ9mAsmnE2bSKxpMTJ4/QzQxJ92jif5YyYHRJc9FgBz6zNnyFUhM64g2CJVEUSRfG9IzTxMWnLI6dTec8E25Eku/R8SAb99C6Qe5BKcGxR8wrP67Czef6B5RofHwZoUvioPKeYqgNdinMf7DcqDUMozKM8VtSwzx9KyBzaG2knPXXlJTE5vnfupyEBqKLaMjFDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1jj/cTktW/zKqwGxKZfaDqP20iqG3SYgSe/ibtVRq1M=;
+ b=RFNv1LH0kZXnc18lUnqaSviXEdILo3CjQ7l4eS6rYTgarCS8SsmuqtkCuG5VCL+kL6hNwVkgRie9sIGOwMDXOKe4I3P9r9tDqBiq7zygdPF1ez5w4bq+gFsF9JoIUgd2MwLFjVNK+euDbZywp5npKxD8s6uhEBNiTigr7cEG+GFINNEgeN9YbTlGgvppu+TMlccjtz0C55sS0Pu7hS7itO2u5G9bcgguqbU3YLGUUF1jWrD71R7Dd9otH0AikNR/FqEqTUypReXLHMbEoK+StTuYgzAwcjpqjU4VmDg46U7nwJ+yrv4y9RXkSJcGVZRVaJdhQKFFpHalxdXEPYkjsA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1jj/cTktW/zKqwGxKZfaDqP20iqG3SYgSe/ibtVRq1M=;
+ b=pnYTHaHSLefKV9VoGS6F3J1l5QgDo2xdk+AGq/b48s5Gynnm4xbH0gUfqRqkMs4+Z+ddGGXzC0G2O9sSjPeqsD0tG5dkNC/X2jRao5L+pFo6TrD9sJ31OI3E173921W39YlOKAZKgiHWAl2OPAFmBzQa6O3m1fmLwEnSHaPkM98=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB9174.namprd12.prod.outlook.com (2603:10b6:510:2ed::9)
+ by DM4PR12MB5938.namprd12.prod.outlook.com (2603:10b6:8:69::9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.615.10; Fri, 13 Nov 2026 15:47:16 +0000
+Received: from PH7PR12MB9174.namprd12.prod.outlook.com
+ ([fe80::eaaa:b430:ba9:5dc]) by PH7PR12MB9174.namprd12.prod.outlook.com
+ ([fe80::eaaa:b430:ba9:5dc%7]) with mapi id 15.21.0615.009; Fri, 13 Nov 2026
+ 15:47:16 +0000
+Message-ID: <4c1fe25b-9e5f-4377-b45d-6b8ee5aae32d@amd.com>
+Date: Fri, 13 Nov 2026 09:47:13 -0600
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] drm/amdgpu: unwind bo_init on GMC sw_init failure
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: amd-gfx@lists.freedesktop.org
+References: <20261113-superm1-amdgpu-memory-leak-v1-0-4a495cfc2c92@amd.com>
+ <20261113-superm1-amdgpu-memory-leak-v1-2-4a495cfc2c92@amd.com>
+ <sashiko-outbox-213039@kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
+In-Reply-To: <sashiko-outbox-213039@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA0PR11CA0130.namprd11.prod.outlook.com
+ (2603:10b6:806:131::15) To PH7PR12MB9174.namprd12.prod.outlook.com
+ (2603:10b6:510:2ed::9)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,133 +96,134 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="z3bxibgpfagwsnha"
-Content-Disposition: inline
-In-Reply-To: <CAAVpQUDnBkB0AUteLOP0f6qFaSJXrWm8CHwGXizvMZ0RsmB4wg@mail.gmail.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB9174:EE_|DM4PR12MB5938:EE_
+X-MS-Office365-Filtering-Correlation-Id: 06deb3c2-8801-4a8c-6e55-08df419d644b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|10067099003|11063799006|4143699003|56012099006|261022105027099003|261026140227099003|261026121527099003|261028144727099003|261022075727099003|261021121427099003|261102123227099003|261009223027099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	GUvZsbpqC5FR+nbYnY7azFtfltDLzdndwrirmiolf5BW6gbc47ySztf1PvvnrLyppM0RywsEcBWl2v9q9CKrpjCoBwdXWQb4pn43KkgcA6bJYhawmrKGx2TtENuUqLJ430kpQ1LeREz0/bXwRGX2GIV4L3CmfxGx2EWgaKtgupaob8P2QpUSLIIV2p6cPlL4nyg5b/X5Drz/3MHJ2/mIuEV7LNRqbDlcTjHkYL3wFr0ydYq4QkAKQ8hItDHHzfUtwkDWvNoeVsJq/hC/TugCMFSAXtVC43DUiy1Ncrod6/c4HSX5Xgsg+osgHz6DCbqzIMa7PZlQCZeIcphmCnug8RllrPle3ymUwncJjK57XrZmbHWHQiRP8QKhu1jGvJnsFu6lK7c7sMOZJVGQ3G4s41dGtg21a/DPCK253booWa3r369WCzaURQoGfdLuVOvXwUATQGS0roFyT+46iIHFkTpqFhLL+vhzoV2mb69MojvWWgKBQilpEfJnnjkDZT596hmVjJ78U+qBv/z+GD29lF+CFo7OdALc3C0gh27+57ehirXLT0/Dr1tdkwLnQLTbC5/Pczh0aYLp1b5fIJtJ/j4KqjzhYHdIsa0+tMbFz1r5/ELeJYHroTXD4M1FwXSz0sCI+x0BpPrRf6b1L3ypEVL9QF+jmMkBVnGBl+kal7A=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB9174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(10067099003)(11063799006)(4143699003)(56012099006)(261022105027099003)(261026140227099003)(261026121527099003)(261028144727099003)(261022075727099003)(261021121427099003)(261102123227099003)(261009223027099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?UkIxQmhaeXg0TmRobm5lSFFJd2xqa0R3WUM0QUJFbWUwQWZOamQxTUhnWm1w?=
+ =?utf-8?B?aUswQzFqNXFUcmUvUU1tcDFmbHJDVHlKa1JyT0daNjRmL3hXY044WlJERWJ0?=
+ =?utf-8?B?QTdRMVJGZWJld01wSUpUcUxLREdjM1RCdlR4MXNDR1BrK0tBb3ZOa2lTdm9N?=
+ =?utf-8?B?ZlBxTUhmS2JmRXJrWnVjUnFWMVEvRFVTTWpFUDcxR1JDVkp0SlR3WllXekQ0?=
+ =?utf-8?B?Nk5TQjRWazZKbmJNa0JVWDhBcG9SeGQwcHdjSTVldGk1T0o3MzZENE05Z01v?=
+ =?utf-8?B?RW5uMEtNdTFHMFhibjNiR2J0VHZMTnRQWkxnU2tDN0tzU1Z1WWtCNDZuVHFF?=
+ =?utf-8?B?RURRQ0FCclMreVE5YzBNdHNndEJqbjc3ZGZzaUFNa3BkcG1hYlJUWmxhQVdx?=
+ =?utf-8?B?YWxaTlU5dit3L0pES3RJM283RE51cTRJUi9xYVUwbXRnelVPZnZDU0JrL2FN?=
+ =?utf-8?B?YmpDU0dabkpINHFnRC9DWHY2QVlWb2V4OEF3Sklac21Qc0g1UnV6VU85NURY?=
+ =?utf-8?B?VlkvaE1tSi9kVUptcDI2TUFKcXRYN3VrM2xoQmJDaHpUZTBlZnlHWmlDVXpM?=
+ =?utf-8?B?MUs2WktFL3FUTi9rZGVsNm1IWkpCeFMzRnlYejdqMWhGcnVHdUFGYlFSdkdi?=
+ =?utf-8?B?REFDQnphU2UzdDhpZHp1Y1V4TXMrTXU4TndBazBqaGdDNjJDWnV2WDFGcFMz?=
+ =?utf-8?B?RFVZK25OWk1TSnlwVzQyR29PZ3p3d1pBbkp4MDJKd1RsNy9UK1VyYkUyVmR1?=
+ =?utf-8?B?a1Nub3BONGlzTkE5aGZSMjhlMVlDcTlsREh4ak1Id3l4OUlPaFh5UEFyVEU2?=
+ =?utf-8?B?QjV4QUJ6WTBsdWJhUC80dlVGY1lGcktGU0kxakpXOE1VZi9HZlZmcjFoeURJ?=
+ =?utf-8?B?OWw3amViOHU2TVJKQ2NCdG5RM0VjVlZiRURmQlF0YnFRUG9MdXVTSFEwOGU0?=
+ =?utf-8?B?L1BJQzExVGNadEhqWnJaZG92UXFzYS9nNXZJWGl1ekx5QTEwaDZCSitnWGxC?=
+ =?utf-8?B?SlROYTdhNzAvWlFLY3ltUUpCd2lERkxoZHFrOHBzdWM4UDF6Z2dTazZzR2hY?=
+ =?utf-8?B?Z0EyN0J4UmNnZFpWS1VYZ1oyVjhSVXpGVDlLTjFiYWlQZ3VxY3dYb3VyZVpB?=
+ =?utf-8?B?bHZ0RERQTjQreTF3V0dySU1MelpMUi8xVWplVzFoVDhGbVNTTU9vOGpsUnlC?=
+ =?utf-8?B?cWtOMW96SWhBYWhPQUl5SjdlcVR3L09tWUVEbWFVd3d1cS9VYVpwZW9GR0FZ?=
+ =?utf-8?B?Z1cyT3FBYktVaUtyMTg2UWJ2MlJ3MzI1RlU0UEF4b1haUVhSYlNoQWZ3N1NL?=
+ =?utf-8?B?eXd1QXpMV3hQbFp4a3dxMUZSeUZNNWptWTdxMEZjY3RKM3ZhU1FMWHdJbGNi?=
+ =?utf-8?B?V1BDb0JPWklkTG43UXlJbStxdDZla0hWbmtrVGw0TXk5bS9oZXpMTG5LVVpu?=
+ =?utf-8?B?bG92TzJLbkRTYVp0UVBLaXhXcXFPanQwUDIyL09VS1VCbDFwV3dieGtBbnAx?=
+ =?utf-8?B?MlRqbDRqU0wyRTRBb2tZeGNyeUVXdkZhWU9KNTFTVEFnWm1zWHU3WG0yRG1s?=
+ =?utf-8?B?bG50R21OV201MVQzYkpKT0UydDFCaGtLWm9RRXhYcmpUQzdTTjJXNFRMdTZY?=
+ =?utf-8?B?UDdFUGhLY1k5Q1RkU2ZIdDNhOVNWd2tLU1RIOXJkTE1tZ094cFRqSis1VVNa?=
+ =?utf-8?B?TVIrQkJVRHp5SG9PRE0vQnFQNDJXWUZzWmVUODBHWEYwTTBpbGdpdW5JcE5B?=
+ =?utf-8?B?Q09KRGxTUnNKdFJpSytKR0RwSEp1M29ZR1pIdmF6UllJZWFZRVNIWHhXdGdr?=
+ =?utf-8?B?V2pVZUdQWmNjVUl1V3djN3MvYXB4VlNIUEVvVjMwR0NMSGRqejdQbUl1T09i?=
+ =?utf-8?B?NUVwdkM3NkluaXBuM3VCV2pSMDE2OTlQenYrQ0xWM3Ayc3J3S3FLUERROVhW?=
+ =?utf-8?B?eWRRQ04wTEJ5Z0xzZFhSQm84VGNBK1dncFhNcEhEeG5sLzNxd3VPeXU2T3BN?=
+ =?utf-8?B?RHByZHpWZXpXVEV0RUYxdFhVMjFWRGRGMU13MXZlNGdCZTFoZ2xQVHJqbEsx?=
+ =?utf-8?B?ZnNaYzMrcVJON2gwNEFhSWxxbmlydk44N21kek0wUWF5SDJxTGtBYmpGUlds?=
+ =?utf-8?B?WmNsQnFIdlM0Mi82dXRJM0paVWE1Tkw2NzY5OWV5ekwvU3c1ckxSQXRta2px?=
+ =?utf-8?B?bUpIaTRNbitnbmNlQ2tQOWE2dzUrTTJ1MVB6THVpd09lZE9wYW9ITS9ybGh6?=
+ =?utf-8?B?UlNFdFhHSW5UVFY2cW9KR1pleDFYMXBudWRFMmFPMW5lY2IybWExaUt3azNO?=
+ =?utf-8?Q?4o9ifmGXkPeJyujR7r?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 06deb3c2-8801-4a8c-6e55-08df419d644b
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB9174.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 15:47:16.1359
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tZuVLefj8uJeYWQjJ5hBsN2UYRH+cy/GzuCVWgvtCfcI4rPmeybn1qT8+EmS5Ao2r0PkjjCLIkpGqCznDgIEYA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5938
 
 
---z3bxibgpfagwsnha
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 5/5] selftests: cgroup: Deflake test_memcg_sock() in
- test_memcontrol.c.
-MIME-Version: 1.0
 
-Hi Kuniyuki.
+On 11/13/26 08:56, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] drm/amdgpu: gmc_v*_sw_init() calls amdgpu_bo_fini() with
+>    GART/PDB0 BOs pinned
+> --
+> 
+> commit 4e2abeed7577cfdf2a67e81d9af414ebfbc361c6
+> Author: Mario Limonciello <mario.limonciello@amd.com>
+> 
+> drm/amdgpu: unwind bo_init on GMC sw_init failure
+> 
+> This commit unwinds amdgpu_bo_init() and amdgpu_vm_manager_init() when
+> gmc_v*_sw_init() fails after initializing the memory manager across GMC v6
+> through v12.
+> 
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+>> index 49f593fe2a876..e59fee3955af0 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+>> @@ -861,7 +861,7 @@ static int gmc_v10_0_sw_init(struct amdgpu_ip_block *ip_block)
+>>   
+>>   	r = gmc_v10_0_gart_init(adev);
+>>   	if (r)
+>> -		return r;
+>> +		goto err_bo_fini;
+>>   
+>>   	/*
+>>   	 * number of VMs
+>> @@ -880,9 +880,15 @@ static int gmc_v10_0_sw_init(struct amdgpu_ip_block *ip_block)
+>>   
+>>   	r = amdgpu_gmc_ras_sw_init(adev);
+>>   	if (r)
+>> -		return r;
+>> +		goto err_vm_fini;
+>>   
+>>   	return 0;
+>> +
+>> +err_vm_fini:
+>> +	amdgpu_vm_manager_fini(adev);
+>> +err_bo_fini:
+>> +	amdgpu_bo_fini(adev);
+>> +	return r;
+>>   }
+> 
+> [Severity: Medium]
+> Does jumping to err_vm_fini tear down TTM while adev->gart.bo is still
+> pinned?
+> 
+> gmc_v10_0_gart_init() allocates and pins adev->gart.bo in VRAM.  If
+> amdgpu_gmc_ras_sw_init() fails, err_vm_fini calls amdgpu_bo_fini() without
+> first freeing the GART table as gmc_v10_0_sw_fini() does.  Because pinned
+> BOs cannot be evicted during amdgpu_ttm_fini(), gpu_buddy_fini() and
+> drm_mm_takedown() hit warnings and leak the pinned BOs and their backing
+> allocations.
+> 
+> The same missing GART cleanup affects the err_vm_fini paths in GMC v7, v8,
+> v9, v11, and v12.  On GMC v9 and v12, gmc_v*_gart_init() also allocates
+> and pins adev->gmc.pdb0_bo when amdgpu_gmc_is_pdb0_enabled() is true, so
+> both err_vm_fini and a failure in amdgpu_gmc_pdb0_alloc() within
+> gmc_v*_gart_init() reach amdgpu_bo_fini() with pinned BOs still allocated.
+> 
 
-On Fri, Oct 16, 2026 at 05:27:49AM +0000, Kuniyuki Iwashima <kuniyu@google.=
-com> wrote:
-> With MEMCG_SOCK batched in per-CPU memcg_stock, test_memcg_sock()
-> can fail in two places:
->
-> 1. In tcp_client(), reading memory.stat only flushes rstat
->    synchronously when vmstats->stats_updates exceeds
->    MEMCG_CHARGE_BATCH * num_online_cpus().  Because mod_memcg_state()
->    is now called less frequently, 16 read() iterations (0x10) on a
->    64-CPU system can finish in a few milliseconds before
->    stats_updates reaches the 4096-page threshold or the 2-second
->    periodic flusher (FLUSH_TIME) runs, leaving "sock " at 0.
+This finding looks correct.  I'll re-spin.
 
-This should be solved by 6360d444ae328 ("selftests: cgroup: make
-test_memcg_sock robust against delayed sock stats") v7.0-rc1~145^2~19
-
-On Fri, Oct 16, 2026 at 12:40:55AM -0700, Kuniyuki Iwashima <kuniyu@google.=
-com> wrote:
-> On Thu, Oct 15, 2026 at 10:43=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] selftests: test_memcg_sock test flakiness due to memory.high=
- drain abort
-> > --
-> >
-> > commit e2cdb9bf5e0d84cc05db8a040ff4bb2ffe26c7cb
-> > Author: Kuniyuki Iwashima <kuniyu@google.com>
-> >
-> > selftests: cgroup: Deflake test_memcg_sock() in test_memcontrol.c.
-> >
-> > This commit attempts to deflake test_memcg_sock() by increasing the num=
-ber
-> > of retries in tcp_client() and writing "0" to memory.high to trigger
-> > drain_all_stock() and flush cached socket memory charges.
-> >
-> > > diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools=
-/testing/selftests/cgroup/test_memcontrol.c
-> > > --- a/tools/testing/selftests/cgroup/test_memcontrol.c
-> > > +++ b/tools/testing/selftests/cgroup/test_memcontrol.c
-> > > @@ -1447,6 +1447,13 @@ static int test_memcg_sock(const char *root)
-> > >       if (cg_read_long(memcg, "memory.current") < 0)
-> > >               goto cleanup;
-> > >
-> > > +     /*
-> > > +      * Drain per-CPU memcg_stock so cached MEMCG_SOCK deltas in
-> > > +      * stock->nr_sock[] are flushed to vmstats.
-> > > +      */
-> > > +     if (cg_write(memcg, "memory.high", "0"))
-> >
-> > [Severity: Medium]
-> > Will this reliably drain the stock on a busy system?
-> >
-> > When writing to memory.high, memory_high_write() calls drain_all_stock()
-> > exactly once per write:
-> >
-> > mm/memcontrol.c:memory_high_write() {
-> >         ...
-> >         if (!drained) {
-> >                 drain_all_stock(memcg);
-> >                 drained =3D true;
-> >                 continue;
-> >         }
-> >         ...
-> > }
-> >
-> > However, drain_all_stock() uses a trylock and will silently abort if
-> > another process is concurrently draining:
-> >
-> > mm/memcontrol.c:drain_all_stock() {
-> >         ...
-> >         /* If someone's already draining, avoid adding running more wor=
-kers. */
-> >         if (!mutex_trylock(&percpu_charge_mutex))
-> >                 return;
-> >         ...
-> > }
-> >
-> > Since the thread holding the lock only schedules drain works for its
-> > specific root_memcg, our memcg's stock might not get queued for drainin=
-g.
-> > Because memory_high_write() sets drained =3D true and doesn't retry, the
-> > subsequent 3-second cg_read_key_long_poll() can time out. Could this
-> > introduce a new source of test flakiness?
->=20
-> All subtests in test_memcontrol run sequentially,=20
-
-Alas, people sometimes execute more of these in parallel (or there's
-other stuff running) :-/
-
-> and other tests in
-> this file (e.g. test_memcg_high() and test_memcg_max()) also rely on
-> a single write to memory.high/max to trigger drain_all_stock(),=20
-
-Are you sure (I'm checking v7.3-rc5)? I think the draining is a running
-issue and your idiom is new.
-What I saw (in LTP), is to pin the test to the current CPU, so that test
-data stick only to there. WDYT?
-
-Michal
-
---z3bxibgpfagwsnha
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJEEABYKADkWIQRCE24Fn/AcRjnLivR+PQLnlNv4CAUCavcv1hsUgAAAAAAEAA5t
-YW51MiwyLjUrMS4xMiwyLDIACgkQfj0C55Tb+AjDnAEAjvQSMXMtW1iAsJNyAoBX
-wC7eWqQ2YjA3i1vN+7falyYBALcPZ5HDHHzqKIQWyIUF5MGVdvcD4kU0FiQzwMOt
-As8O
-=uMZm
------END PGP SIGNATURE-----
-
---z3bxibgpfagwsnha--
