@@ -1,98 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.179
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794552452;
-	b=30swVmEqMe/bWWCTh71ru/AWgEjpSgFSuyCLJKRT4iZnCMSlJEBYQr28NZAwx+q4yYrc
-	 I9+xAunS38egvmYSaU5ZYlbrCZ1gC3pTUcWrwHaTeTBMAqN3luHDnw/Nw7Biys3Wtb+Mz
-	 pXrq3HoZ//1wGczw1zr2UxzB+XzvjFSB8KFlDlGVVCgGqhS6jGGJ8tOmI+zQ/gXuwst3d
-	 xMLOoznFGHe5ShwPYHiMY71pJS/+rYkzFOcH1CPgFer32D6DhV+AG/WeV6/VYrq76euhM
-	 FmDr8xs3qJrVrw+4s7xGElFccnxn7X2xIJMR7O8wdEntjXnys33cdJVHQIDdA+3qDtg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794552452;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=n8bxBGcHfkDJnNGUsjQbeM0Zh/bCqD9yhtP3hgUzXV0=;
-	b=S+kLOCdzZwV9HccIboMTblNerqS6ZaJ6k3MH3LhINCKp13rizVM1poT4RHfmyCaM8CM9
-	 kiWtnb3uZ9refhBqDUWY6aHeXC1mZ+YSd712hqu7GA8quY51NOoIm3JWXrqojTdxbc6vz
-	 SSing6dvVKwPgiHhUeP2LZMg5S7PXNx996xR8P8mNBTESAYrqTOIUW1SJJua+JccVJ3z3
-	 AeuIKta3WLwuKby1TbqKOP5fPsRaXwgZMtPZETnF5Bo+V9jVtCTIIZaK3qMNmVWc/CArT
-	 Zc37lHeBoDigc/jtM9ny/1S2mcZUuvPwQcrIzIC0tRUn3pP+QjlmJAco4+Hc5SFAFSQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=shopee.com;
-	spf=pass smtp.mailfrom=shopee.com;
-	dkim=pass header.d=shopee.com header.i=@shopee.com header.a=rsa-sha256 header.s=shopee.com header.b=Iaf5URez;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.179
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794553649;
+	b=yqItCPsgTfflI0UzeC2tqlQCaBPnD8e4x4HE0jqgSlMWcxUrWfZ4THRsEhnBgUCBzduG
+	 DmQQ7Lt7nr+y5OYPcsF9s8IXx+PazFVApxN8BsemfOK9VuKgjWc2CLZcaQZKOCOb/I7mG
+	 TorOw2VNhwxFPdgaG6BRgEGWhTR9dQXw/mQcAJnYKPEXKAf+zOhC5D8QUS5gEEWx8yg+H
+	 sP+IInYyrZ7RNbRPMLEv9+n8VYbhMqtaJZZCdPuhnvvGoFEndkfDWBZvEQ3pIhl4CufKI
+	 syjsugNQP+h4OJXP63uTsLPI4+AsO2zsHqqhvWGppgLCGeoYnWXrPtuYoJvui9JQffA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794553649;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-Authority-Analysis:
+	 X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=p96z7gHlJIyggbtxrEpMAQxh/HyR0haolziTZhbBFGM=;
+	b=ngnCJYe96JHOGJtjxc4lGIAV1hfZKgPYzHmnX6ag+WpYG+PvP/Nw5SFoVdOUbDjAd9tu
+	 i+h9a2GUmATKY7dTUaijJsVfNVWRg/wOPTGjV5of7IjX6u/PVehYvFdecpOrIUl28I1kU
+	 mjiWGWEk5DOJBvX4swHaRSIiiM3Atd5RfxtsiHTgO/TnuA2QRd8CVtiVWpV0vGGryRDB7
+	 jLllbRXWH6jGaqG6l8UvNJ8b/ROWDZijbjuj45PocMZhYtBzHcxaDCpgBV0uHZX6ibXG5
+	 2lbgirqeCl2xM6sZJSLiNpTiyUsW1jKt6SWiBvh8aQ5xMZSWF3n2cvrcbew8QlE/NXQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Nvx92ajf;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IWCkcEP+;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08364606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 06:47:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08364606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopee.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD40606A893
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 07:07:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AD40606A893
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=shopee.com header.i=@shopee.com header.a=rsa-sha256 header.s=shopee.com header.b=Iaf5URez
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-33fb4680717so1674166eec.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 22:47:31 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794552451; cv=none;
-        d=google.com; s=arc-20260327;
-        b=lzAg6YDu7QlYmZptAhELiXo/Ding7w+IxFZFRF+7tiBvjdxIjHemNtxbRwjIcUujR1
-         sMG2Gh7ldvQJBiOLsKs/aZFNzfFxSjuYKi+wIhu19vrmj0FlwX6Hex3Vr3H2FAVGJwni
-         qSr+ZYw5JoTvQBobgOxWP0VGfSfeTcLkT+LBzXjYKypLemi9ZFVyfeo/OsVoaqsfBttR
-         toiBmI1t+K+VEhCOFOx7MENZBezRWWtkmWzb+Q9MggWgGx2z6yN9TWky/1myRuah4Gxz
-         jxg2UnMr73IgrkJv+DKqVgw34rSHVRbNGcPzUG1YAlB5kMYTTyo0dHqIVwFoXoy8E3X9
-         fO+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=n8bxBGcHfkDJnNGUsjQbeM0Zh/bCqD9yhtP3hgUzXV0=;
-        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
-        b=mgkVR6gRDrafKdNiSvj9hj7iHytRvJUmfn9HqhCiPmbU5a0wvjeIz+LxG9r9YmhSeX
-         ghUxo2qJTT2m8OTNpnBmsYbABsaRlYT4++5IFvJoA9ohM/FOC0yB1jImDowYlIIl0vF2
-         jyQxkO0U+/Za/7k9vJiyykWFlWW7lzFUA+10zD6y+Jc/8LGcjbO22IR3qfgnKBpEeyFd
-         y+6iSGnVwTewbg/q/IfarZUPi0q+Oj+B0dH58aOP/DkzgqOtEqJg3tMBrilr9KeP2Le5
-         QB2JvTRA1AJCpDGKe8KWDG91Jc2pAn0xvYAEAEA2iq10muDrYkvbklOd7cn6odOkObVe
-         wm3A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Nvx92ajf;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IWCkcEP+
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AD57COa1973140
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 07:07:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	p96z7gHlJIyggbtxrEpMAQxh/HyR0haolziTZhbBFGM=; b=Nvx92ajfVht8X/yW
+	6E06eUUrA8LIxC4ChTNzY4Dn/H6OqCctIvAELHzgOIukcltNdrMpQV3Dn/y+AXEo
+	aZFBK/cXhdwjxF7uMaVn/4B5nMHN0d+2npy88I2nWbQ7TfNM6uorZvmZMUv830r0
+	ctYN3auiNcTz5LFwNKHPjajTNtFfjpEt7aiKfP8iioXbID4d3gdvEANYZLAegmSv
+	lEmDVj2R2HD9vwgy5hRXB8cvYroM9vTK4QcQpyrLP8vZlxfdMqGYvPC8XTbGfgAI
+	wk3GRSS9K5ioCubvvH5wqzYkjvlEZYT/jF73p1UMge6E4KjO7B42v8+jXQJ+Uq04
+	6yFlrA==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwg1baxw4-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 07:07:27 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id a92af1059eb24-139b62317d0so2563352c88.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 23:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shopee.com; s=shopee.com; t=1794552451; x=1795157251; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=n8bxBGcHfkDJnNGUsjQbeM0Zh/bCqD9yhtP3hgUzXV0=;
-        b=Iaf5URezYKtsF+sA7aumMEBMg5wcJkDvs7JFXg1KciagQ3eKIIXk9OJPmNyYW5Ylq6
-         B21NtUyQVLcfRVYNSYJWibgIQx2D51k6U29xbRewOV5w/uhA+dKPWBt5khwKAfYxZG48
-         PNX+m9g8DQDQWnU4J77QBI89IrMvvDl6uUcOQrrQPaazbvrrjcLO6XzupX/mnMn8pUJL
-         6Nxhd4hYS5zklWKylH1xkgXKzz+7F2df4+OM3ezzwS16A4gd4ow3haLIpabrsKDc7mGm
-         zaiLfWGGBhP+/msZ6Yl9SK52HS6cPiAiQpIWcn05xH3Y9blIiJxgKzzNkBhK4S/btWLg
-         VvDQ==
+        d=oss.qualcomm.com; s=google; t=1794553647; x=1795158447; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=p96z7gHlJIyggbtxrEpMAQxh/HyR0haolziTZhbBFGM=;
+        b=IWCkcEP+uWSdFwn9ASwTius1TQF8guRRJM3oDMZ5tjGHzQBtur89hjoFB36kMVxkGV
+         kdKeeEkCDfbRDr2VlCPA5i3NH3GJthMQvUMVgrrd1r0skrWju/QF51D/ygYXTg/4gw4y
+         KPCsmfLVc7gldi/h+1pIZm4fu8zr0/3o0w5fXK0wdwObi6qq4PK1RjD2AkpHb4lSCfQT
+         mSvhjzfzosB+93R4HKqHTg2q+EbJTuzHozW/CZ5M0JOlYITK4QDaOWxR6lIzunXFe1Ea
+         IrEoJDdQxJ4/x+9YGDRb5oXC9SvG7878xGYaevlgzptYga1zw9CDNSfkBxtqZqYGt3Qa
+         ns5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794552451; x=1795157251;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=n8bxBGcHfkDJnNGUsjQbeM0Zh/bCqD9yhtP3hgUzXV0=;
-        b=L/ajp96UMtanOhevl2bZbtO3zzWKRfvYkSkJR6ESbVDN1SJcJkFvyo8EicyFZFa2jT
-         2Lj7PKznNRlrCcKMF8DZHmOk1vFcJ/KbGxQcz3SJluyEtaLlHyysia8nFQ/b8A6PTsIf
-         lYxcGhRy0OJ69WCsGfKgFYCiv0r85e8cbfPVx6rwvw1To3dnFopsCCgFLFSCfl2ebN7a
-         eV/wKOPRz8YnVHHu28bKMfINVQrLe+vrXVbCE+lqcSNTMqrSigILEg6cDE2aBihMqEGW
-         O2EItncGmn46xwthsOZkqoDGEM2afUfwFCvPWBgvhY/AyIaZuMpkb8SXP+LWMU2/UIKA
-         rExQ==
-X-Gm-Message-State: APuU4Z+amkQay4z+u5YmMF5hll9u/Ae/erQjgeYSFnUbywuap0XiKbx2
-	5/mNyS1OOJJKbacM7Ev7LCt0NoQXw894pOBEmJk8KXhckVrrZUJVgzIgXbBRqDJuDQUMj1+fNPJ
-	BisjK/qDS/bXfP/3Q4eeT7anhERrmeHp75IcQdXhpanc16LAUgwkR974A8aUk
-X-Gm-Gg: AYBFou2S0wFo6A3+sEX/Y1ORUY3fHLCCcchVn1+Se/zKYg3bbol/g851oVHro9lnKEm
-	arSKpYh63zlfrOJ4rsJSXNqrpMfaBIyvO8emZsYg/0yfzm27G9KTEQ1FxfOY1geFC+SNt5V3QYi
-	zfpeeVUu9uS1fsm/yEvmqlvyWaeuldKC55MLP/ZlBpR8xKpWBEpvxsYpQ3T2Zc19HXHKDwerzKf
-	EXLGTN1uD+ynlExkE1TmJLtLWUM1Uefls73zEZvtpzi9225P8Uq8lmLJRU8vuwiQx0qcP+ah058
-	LLmhAmVC7CcVgYi7R7noduXdWbN5TuLCD5xMPw7GlP6wt6yRKROuZBoW7lrro+yBejDAXCRubbZ
-	o7TwDQrmSWRTcerqd7LutZABgCBpH0lr+UB3Q
-X-Received: by 2002:a05:7301:1506:b0:372:eab:d700 with SMTP id
- 5a478bee46e88-37963953befmr1546055eec.1.1794552450846; Thu, 12 Nov 2026
- 22:47:30 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794553647; x=1795158447;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=p96z7gHlJIyggbtxrEpMAQxh/HyR0haolziTZhbBFGM=;
+        b=kZY1zxVDscbih7xE4YbVqVvDD2vMrDeeuwtw1UROSXpkB86QzMDcolQL1cdq+X/DqO
+         GsZsbKYp/dmNWpkLR2UTP3ImZR1URHH6eLbt5TrHbYkXk3UwPignOC5PZGboo7tGhpPa
+         dU8d+FF3GDFGTpcBZvmM4hUqVIYkxC6LGs+wpytClpigKl0wSVNGYxZ5O1mTTEGDoqay
+         ymaQ/hOvDN36vcNRWfOEPiEzNoq/DL5bpkWThS/mXsOfBN5zYmNEDZGcGjeLvXIc3yGj
+         DlYX9F5U7kJw0uLImZoCOyuXKVVOE9YhirM0l0T2nnJuIryHkucCHYpVSkROxoUS4E01
+         1hjw==
+X-Gm-Message-State: APuU4Z9pNg8zcTW7TebPs+Ijk/u028+6m1gmnIvM77dR0TrejGgTa+hx
+	B7AsMciVaorIb914h8tAibt2mhKMOAdu35m+/pOw2ZZIeseKVe+GfD7IE8fAaBjmHPJxGeVZyS6
+	vNg+3/8/aOdWLIPq+Y7wSvwuH0EjedkFoh2A6xRi98kj/hNlf9cQQg7XJ8xx17NpHbQYGVapBiF
+	8ZKds=
+X-Gm-Gg: AYBFou1sOEdDf1emy2uWCYV40G/sB5dqJkiPVOoaePjwMN7Km+YvCFbKlhyyFt7tIFd
+	DeRzwSJvbB94qquYDPucHB3L0wPlgwBnOuxasAxAeFxCzbjALxjw54VjPegvE0HTrSfIE7Fq5AO
+	wyK3fszELi/cL8Utzd81VHhL0Sx3gH5VgaoRf/eIBWPHe3EgLLoLKoSseQjUUsDzGoxVPeaTjB+
+	zRgt5GoQpYmPVq6nKXn6rd0WxwG8j0bwd9vdcpDBYEGMiw0b6SbXGtj8ahvoje7Hv8z2QYgMPJh
+	xTadCCyAVAVuJdDvOtGRR7kgIpVeoRhNBC1yPuTJiYilHrifP4iovUk1STV/o9cFvViSYKePb4D
+	Dbr70NaAomTblH8FxqXtaYW2qn73kfQJnjTkctqwpRNNm4Jy5E38xEcUAHb3EfKd2agFdh1G/Rb
+	SY
+X-Received: by 2002:a05:701b:21c3:b0:1b3:a8a3:c6de with SMTP id a92af1059eb24-1b50306c4e1mr1737393c88.5.1794553646667;
+        Thu, 12 Nov 2026 23:07:26 -0800 (PST)
+X-Received: by 2002:a05:701b:21c3:b0:1b3:a8a3:c6de with SMTP id a92af1059eb24-1b50306c4e1mr1737370c88.5.1794553645916;
+        Thu, 12 Nov 2026 23:07:25 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b5031b98e5sm5127450c88.14.2026.11.12.23.07.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Nov 2026 23:07:25 -0800 (PST)
+Date: Fri, 13 Nov 2026 12:37:20 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
+Subject: Re: [PATCH 1/8] remoteproc: qcom_wcnss: migrate to
+ qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset()
+Message-ID: <20261113070720.f6nj2vqe3rjq6z5r@hu-mojha-hyd.qualcomm.com>
+References: <20260925155737.4161358-1-mukesh.ojha@oss.qualcomm.com>
+ <20260925155737.4161358-2-mukesh.ojha@oss.qualcomm.com>
+ <20260926155932.D28DD1F000FF@smtp.kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,26 +122,135 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261112041348.66915-1-mingyu.he@shopee.com> <sashiko-outbox-212161@kernel.org>
-In-Reply-To: <sashiko-outbox-212161@kernel.org>
-From: Mingyu He <mingyu.he@shopee.com>
-Date: Fri, 13 Nov 2026 14:47:19 +0800
-X-Gm-Features: AclHuK-cI187UlYy_fXz-xEVx4Dk9Y0HpPoqq117YUjWQTxbvSyC0HwchxEkVvo
-Message-ID: <CAAoBcuQH5cr18CnWoodGT_Fb1EA=kHi0PEVovSRDnDGp7vsBuA@mail.gmail.com>
-Subject: Re: [PATCH v3] mm/bpf: Always flush memcg stats when explicitly requested
-To: sashiko-reviews@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260926155932.D28DD1F000FF@smtp.kernel.org>
+X-Authority-Analysis: v=2.4 cv=c6Q+0h9l c=1 sm=1 tr=0 ts=6af6b72f cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=8nJEP1OIZ-IA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=dhegyi-ghjiyvhX7xUEA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=Fk4IpSoW4aLDllm1B1p-:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: gv7IlINkjN3QF_8100WB7aTRFIR-OlJW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEzMDAyOCBTYWx0ZWRfX1iGdg7znEudc
+ LvThoyrQgiWJs6hW9BRRnRRM+IgpGJK0Y5GUlm2iXLh0WhcFfOz/ANUooCBPzHMO1VNRMgBEB/p
+ Qdi2dVlRA5qcLjaKkfZfy3UwcuFXRXqWeuJv3GzSROjNgN6SJ1xQcWTsck45sEC2e1mK9XvSaAw
+ 2u+JD5W/MOHaQWAQsCUH/kiYlhdTJES/0ci2T7xLULgJYTqRU0ec7Fsxw0zs553Un4QAL2VFqxE
+ 2ILGW/yKBayWwqzkOCu/9NEmCKLUYVePzr3YZrZ5H5Ib8j+U7C89IIFbOu1Wuoj+rt9BSpkYa6q
+ LbG30fA7CPYK0KlFjEu6u1Ga9iYFvxgMBL0/nsq6un8X852FprPGxMwQVstoxb4w+gnWp15pRV1
+ vUg+zrLagdnZcX11LN6PESHifFYK3FkfTGuFDsRPZaWqjPS+4EoQEY5r5EOK+fgQ6B9QuQhmB3k
+ ZA273H2Axu0fYnXxXaQ==
+X-Proofpoint-ORIG-GUID: gv7IlINkjN3QF_8100WB7aTRFIR-OlJW
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEzMDAyOCBTYWx0ZWRfX5V0g3gT4bQjN
+ iRn3Zf8p3opLH5l97D+/mmQlqlRaQ5c7BOkykluQsLWgww1nW1wvIdKkjoFXVaj2+bsltGBSlI7
+ Hqkp3gh1clQIF9lO4qe24Uw6CLyLUbM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-13_02,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611130028
 
-On Fri, Nov 13, 2026 at 12:14=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-
+On Sat, Sep 26, 2026 at 03:59:32PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] remoteproc: qcom_wcnss: DMA memory leak of metadata in wcnss_load()
+> - [High] remoteproc: qcom_wcnss: missing pas_ctx->use_tzmem = true prevents required shmbridge creation
+> --
+> 
+> commit 77b1a378f038e55ff2a11032d9b6f243214fbb7f
+> Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> Date:   Fri Sep 25 15:57:30 2026 +0000
+> 
+>     remoteproc: qcom_wcnss: migrate to qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset()
+> 
+> This commit migrates the Qualcomm WCNSS remoteproc driver to use 
+> qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset(). It allocates a 
+> PAS context during probe to support TrustZone authentication with shmbridge 
+> preparation.
+> 
+> > diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+> > index c856a92af43ce..01f9076aa0b17 100644
+> > --- a/drivers/remoteproc/qcom_wcnss.c
+> > +++ b/drivers/remoteproc/qcom_wcnss.c
+> 
+> [ ... ]
+> 
+> > @@ -157,9 +158,7 @@ static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
+> >  	struct qcom_wcnss *wcnss = rproc->priv;
+> >  	int ret;
+> >  
+> > -	ret = qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
+> > -			    (__force void *)wcnss->mem_region, wcnss->mem_phys,
+> > -			    wcnss->mem_size, &wcnss->mem_reloc);
+> > +	ret = qcom_mdt_pas_load(wcnss->pas_ctx, fw, rproc->firmware, &wcnss->mem_reloc);
+> 
 > [Severity: High]
-> Documentation/process/submitting-patches.rst requires a full real name
-> rather than a single-word nickname or handle in the Author header and
-> Signed-off-by trailer (for example, Mingyu He <mingyu.he@shopee.com>).
+> Does this introduce a DMA memory leak of the metadata buffer?
+> 
+> By passing wcnss->pas_ctx to qcom_mdt_pas_load(), the allocated metadata
+> buffer is retained in wcnss->pas_ctx->ptr. In the previous qcom_mdt_load()
+> implementation, passing a NULL context signaled the backend to free the
+> buffer immediately.
+> 
+> Since the remoteproc operations structure (wcnss_ops) lacks an .unprepare
+> hook, there doesn't seem to be a corresponding call to
+> qcom_pas_metadata_release(wcnss->pas_ctx) when the device is shut down.
+> 
+> Will this persistently leak DMA memory each time the remoteproc is started
+> and stopped via sysfs?
 
-According to Documentation/process/submitting-patches.rst  line 439,
-quote: 'using a known identity (sorry, no anonymous contributions.),'
-and commit
-'Documentation: simplify and clarify DCO contribution example language',
-This is my identity, and it is acceptable.
+As mentioned in the cover letter, this series has the dependency "firmware:
+qcom: pas: Make MDT buffer retention explicit" and as the change is already
+picked, this issue cannot occur and the buffer is freed immediately now as
+well.
+
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=2aa8fafc08e777e9da356307c1a0117e7f4277cf
+
+
+> 
+> >  	if (ret)
+> >  		return ret;
+> 
+> [ ... ]
+> 
+> > @@ -600,6 +599,11 @@ static int wcnss_probe(struct platform_device *pdev)
+> >  	if (ret)
+> >  		return ret;
+> >  
+> > +	wcnss->pas_ctx = devm_qcom_pas_context_alloc(wcnss->dev, WCNSS_PAS_ID,
+> > +						     wcnss->mem_phys, wcnss->mem_size);
+> 
+> [Severity: High]
+> The commit message explicitly states the goal is to include the shmbridge
+> prepare step required before TrustZone authentication. However, does this
+> actually enable the shmbridge?
+
+> 
+> The newly allocated wcnss->pas_ctx is zero-initialized by
+> devm_qcom_pas_context_alloc(), so pas_ctx->use_tzmem defaults to false. When
+> use_tzmem is false, qcom_scm_pas_prepare_and_auth_reset() explicitly skips
+> creating the shmbridge and falls back to the legacy behavior.
+> 
+> Should wcnss->pas_ctx->use_tzmem be set to true here to fulfill the stated
+> security objective?
+
+No, it is correct. No change to use_tzmem is required; it should remain
+false. Perhaps the commit description needs to be updated to convey the
+no-functional-change behavior.
+
+> 
+> > +	if (IS_ERR(wcnss->pas_ctx))
+> > +		return PTR_ERR(wcnss->pas_ctx);
+> > +
+> >  	wcnss->pmu_cfg = mmio + data->pmu_offset;
+> >  	wcnss->spare_out = mmio + data->spare_offset;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260925155737.4161358-1-mukesh.ojha@oss.qualcomm.com?part=1
+
+-- 
+-Mukesh Ojha
