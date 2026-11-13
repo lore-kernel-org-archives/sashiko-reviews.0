@@ -1,99 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.175
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794542984;
-	b=HfzaAYWJ0XplHJk1rtx+FD705y9LILpS050HSsJTAY+IB+lcxaWHZiem2Y03rQ/nYttm
-	 ZRlhlSP6TxT0k14yy2bbpZqTV3WoO6eO4qmAnCWSwuNT4JnQrI/XLcr2A/kQZHnMwv+Sa
-	 mNh06IKgzSqIoZ3vAdaoNSL1MWYF7n0DbuFUS7/OmgwZoe91Qy9LBKIGwRQWA8+d9n7q6
-	 /VjemQQ9Om45MsdVCbbKn4oetiHXpLzbYJMdW5snNIr6D2SJGn7eLOdAZcgGstM59lXMI
-	 fBj82tUm/tj0GW6AwdhplsFOpcoiOShZMG0rhrWSMAug1dKyJQgmaGb1XRNrFKaoGhg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794542984;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
-	b=kDTjm4ZY6qE8rqfVKaFEIYzq1+PWM/ejoKKDEfPSs6f2FK9ZS0CuvRT2hpQrXeAFNqh4
-	 /xf5thTZLn3K3bmKwN0QUXu7332QXCLnZI4APZk5TL48b4GlfomOLP7pTd3Ju4XjCHFuZ
-	 7/GCwEkPIvupuN0KIKxwAFgkf/1FCRzb/cZbnZ9yycul7WyHyh/YbU7MNTeSqG9AV6jyF
-	 EmY8VNqod+vIymfLypYvngIR1/L3ubJSwVobqvvysrmcfJTwOaKqsP0T94yGMrkXLmRDc
-	 oFiHlJMRNsJKM87TYXJCM+N7p5QJSvDjWrJRyxmtUWOx+bhkxJvTpGT/EKXuLRsoFNw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GzLPPwu5;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.175
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.145
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794543039;
+	b=S6srN+397626pg7KWNhhgVK5P1Cru9uoQqi+DuTMNlgGhd/5uDDtUlR7ny7BuiSuFXqk
+	 7VBaNIwtc1lxyU7fktWaZ0WkXCgRP4LpgXvRrw7HFHoWjGSJjh32vvapdicOm+O73wnyJ
+	 6Eheh6OW5/a6JQzo1pON6Zb81JgxdSIVE7woOu3RWCQEhEmVEqTvJr6CkwHB2uFiFi4Ir
+	 oJRv/B5pfig+9j/nCRPJIaGI7S5Gq1tTDMBh1cW0yGI2l/cXfgBqKWR7TDyiHdqvmK4dz
+	 T6qAvLGLNN9sUHpLptO+bp2mO6qJMSAIjUx7ih3lRasL1x8Z1UUmPBJ9KbBZhOVpZ8w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794543039;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=vPOPOrVJDtbv3g8f3odyGjF+HpV+rwXLNAe2t5z1/I0=;
+	b=kNADuwIkFN9FrI7pjEcET9FhK8vjc9UJiS8xvmBcrkEtGwACKrjeZJDQ/ipRDP/n6MPd
+	 +ATmRs8ltO3HXQuCvlL41KHbQLfMTui5kBKKOMGy1jutVXdzUwvX41DcXutBUj6kw8hU8
+	 SZcz5QkLxwEg14SqQrHuBZnpGREl15MkPdTlJB9Yuluc5Z7him6FxpaYTVjiT4x3jDTxQ
+	 ZadsWsBczPv9kXA/pkCvr/C0XfLrmOvrdCJ7uloAxge1XM++X6AMS455HskiJE/ChJlU8
+	 NX/htCK/IGF9npyAyy0LOgFV8ADAWtbei1d5ak/zPJgjSComnAscARKpqQX168UIY9g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="R/zqJBmT";
+	arc=none smtp.remote-ip=95.215.58.145
+Received: from mta1.migadu.com (out-145.mta1.migadu.com [95.215.58.145])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF358606A321
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 04:09:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF358606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4071606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 04:10:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F4071606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GzLPPwu5
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ed0e2015aaso3021585ad.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 12 Nov 2026 20:09:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794542983; cv=none;
-        d=google.com; s=arc-20260327;
-        b=W9VOT9ZePJHP2IlmbbwahntqM3Mivrsju/ZEIQLd9N6DKpJBYqKXfXD6k86fIyVoHl
-         8kDOtdGFinatPX5ZbPUrqkEHkJTXfPSxxyhbqKAKoeP20gwIxwWyucIbQLJodtk/2zpV
-         oOeO2S9hjTFQ+fkl8rWwfbvjIbRLNHV6qTjgQEqDZJup5WecuPRCmsEr9/QWgnf82l2k
-         5cGB7LNni5emdHffEF+v4UyXq082SVd00v/4Go1u3ynk4/qYxE1YOQ5Pu1rcydELJ0oh
-         AFbJMSrR26hxAUwSnMiub64/A7zCMV1g+qLx0q3btLBE5k4g5xGBsXBRYYnCXLQ3ak7i
-         Imkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
-        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
-        b=rcQH3TyPswLeh/NZuZFaz29oRzSJhyXApRK4zS31+yxT5n3U+RonsYM1Rc/8+BUyvt
-         XJyTt2LVnhZMEorlClAFW3uYWtjBuaf34g/u5nmlwgYPzm18CIH4BTp+++9gLs1bVMIJ
-         bS+y7pXgxUHl6C/jGrhkCDMY9uIGt35nXPwgl3c62APE1BJ/s4Uq1VsQ/Ixq0KzQB5Hn
-         FVNV6whwhm8+66UwwGDLVVxwbj3OxY6u3rsF8KnmlmQNj5yUWdBC62dWLT3xdcvz6PIi
-         GL8ViyZmO3QTLTDUhF236Od2ECownwwOi01npVGdAoAT88NOaHFwkHIhWzEzKu2kNG+0
-         X0Pw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794542983; x=1795147783; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
-        b=GzLPPwu5UhBFuzwzqFYPIQSA201sDnQkqHEv+qjhQH27tsKhAVTxzq2nqD3WnyRXy4
-         mbtBBdpXXwiU7ArlWM5WZdbqRl1a3q40iJuoCaa6yLS73mAX0p6fabubNly3kq4M9JPD
-         cZcNEaoAPA+eYUXY9etU63IYmyLTqDv6PeW/tSmWfZcnICoazoNUsDQc1zdvyqXhbLjf
-         hwSBNK4Ute+ymhKK93sq+kZ0GqxghvUSoDMGZ9WAxQiBBg7OPhu59lotlWQofQP/rNOB
-         yF9gp1QqE+UUQjQQZBMoWfim2m/avPKwIOWmVgMl9Cad6cD2cOqjLJNWwLnkHCCCFNz6
-         XlQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794542983; x=1795147783;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=XoLZzG396KJyQUQ2LxytgjwSvwf8GibKblRMQQWhxnE=;
-        b=YX1a+jILiUkwfiJMTegWiVaovcPaXEkYRLivxcg0aZWHTjn/aG2MtUoXFLeT4vLcB9
-         Z9MztOt1kDjwybC8Gl8zP7vOTfG1kgt9+gGzi1CUemqglCPSwMaNZY9yQolbh5MmRpAF
-         Fhz2w8gVXzkkY+Naz95/yd3A+vlmLD5QkR+WFBgs+tIaxIwuX+pa43aEw9ZcrU/+mo8B
-         Sf2Kipje9K1CY0o3E8bRh+DWNeXwrPNvjVbBAqEbmYyWTjGSuFm3KUgSOI8xDzcLHaYA
-         yEOuPxu8pYurX24onnA+m1jx78omEMCNAYGKHEFHvJ7dNN2uxs2uGPiOlYyN4Mviwr3h
-         OqyQ==
-X-Gm-Message-State: APuU4Z8eE+Uc0PA53dwUv3QqTsMyI+sauynL8LWnV8fwKTrOBMh8lUGJ
-	qmT/4rYYsPa7RL/P4TWrGfOkQzt1WZylXNEuN0Rm0RPwbFhMNxzT1j5QFWKyBGTbbsE+zLzD6SB
-	ScSOI0d/LbrzqJS+kbsnCpCoJUZd70LD24DAy
-X-Gm-Gg: AYBFou1su9V4PDnkvBzmyTclxgAm+U7MOET9Yg3f8UcjQybggjlEzIoWSu0whf0sY98
-	ajIMnOQEg00oEgTTLxTbf+y8l0IsPbPXfqu5Ag+tSo+vPz/0veDHWu5FSSWSsbqTKcFfmtLAt4K
-	R15eZ25rlmef9H4dIGkPf/vJcvfbDMedF0BetPL1tH33y5RJ7eHfwDIRXAHfbZ7LhSypPcHGuvS
-	PTMDqAKRGNcbznt3rWTaxWg5SvSzYKkGnhGknpQfk0cEEhmSgtDjPTai3ynQC+RO6ddM6gOw03u
-	nowOYFptrcexDX1JL+flP188NrYQAnpRsDJNV/+UV1pPC0b6KHylC6Ut9CJbRU2euCng/J4z8+d
-	1uv3Ik6KMlvf/dk3uZyrNuoNUj1VGK243F+O2V9KbI+XZ92xefVpg7O01j+NeEpJxOeppdBcwvB
-	lSBDdZzoX9Sat8EAVmZTRnotXRiD4NIF30hupzB+6gc//H0VHf
-X-Received: by 2002:a17:903:94c:b0:2e9:8202:5083 with SMTP id
- d9443c01a7336-2ee0dd6dec3mr13813135ad.55.1794542982803; Thu, 12 Nov 2026
- 20:09:42 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=R/zqJBmT
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=RbVZ7SIC7l2VU0WGvHLgOHP9LnYSWkJv2RkUhwjLIXg=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794543037; v=1; x=1795147837;
+ b=R/zqJBmTExbNsY0t8Buk+NikFPvqJt3PPUbo2rRqvFYE0wlSHA6E+0Nvt3j9pRXLPVrOJD3A
+ ycPqAb+7p34ezBObLOCB15fY2SK+WXMCX5RMc/mT9UBXLQtVo0k1sue4pnwpSiHZVAc5G+ywmc/
+ rsT4+q9O7mAD3bIIAqBOVinU=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta11.migadu.com with ESMTPS id 135ab794c57a1a37;
+	Fri, 13 Nov 2026 04:10:30 +0000
+X-Mizu-Trace-ID: 135ab794c57a1a37
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,51 +57,116 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261112105116.32274-1-phucduc.bui@gmail.com> <20261112105116.32274-3-phucduc.bui@gmail.com>
- <sashiko-outbox-210979@kernel.org>
-In-Reply-To: <sashiko-outbox-210979@kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Fri, 13 Nov 2026 11:09:30 +0700
-X-Gm-Features: AclHuK_FT4t-gHEPN9lEz3pFi9xgaYKjHallEH_VKLm5TSQEzrOCBtvH2q8fMTY
-Message-ID: <CAABR9nGRLeSheafnue9UONDT1My=d4gc7T93gCYxsoR7_SQhDg@mail.gmail.com>
-Subject: Re: [PATCH 2/5] ASoC: fsl_asrc: Fix handling of deferred spba clock
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH v2 02/14] mm/hugetlb: optimize bootmem hugepage tail
+ vmemmap init
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <sashiko-outbox-212147@kernel.org>
+Date: Fri, 13 Nov 2026 12:10:13 +0800
+Cc: Muchun Song <songmuchun@bytedance.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>,
+ Oscar Salvador <osalvador@suse.de>,
+ Mike Rapoport <rppt@kernel.org>,
+ Li Zhe <lizhe.67@bytedance.com>,
+ Andrew Popple <apopple@nvidia.com>,
+ Balbir Singh <balbirs@nvidia.com>,
+ Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R . Howlett" <liam@infradead.org>,
+ Vlastimil Babka <vbabka@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>,
+ James Houghton <jthoughton@google.com>,
+ Lance Yang <lance.yang@linux.dev>,
+ Qi Zheng <qi.zheng@linux.dev>,
+ linux-mm@kvack.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D1F34237-066F-43E8-89F5-2D7A6217D72B@linux.dev>
+References: <20261113033442.62970-1-songmuchun@bytedance.com>
+ <20261113033442.62970-3-songmuchun@bytedance.com>
+ <sashiko-outbox-212147@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
-> [Severity: Medium]
-> This problem wasn't introduced by this patch, but can [1]
-> fsl_asrc_config_pair() leave hardware registers with stale values across a
-> warm reboot?
->
-> Earlier in fsl_asrc_probe(), devm_regmap_init_mmio() initializes the regmap
-> cache to all-zero defaults without issuing a hardware soft-reset first:
->
-> sound/soc/fsl/fsl_asrc.c:fsl_asrc_probe() {
->         ...
->         asrc->regmap = devm_regmap_init_mmio(&pdev->dev, regs, &fsl_asrc_regmap_config);
->         ...
-> }
->
-> When fsl_asrc_config_pair() later calls regmap_update_bits() on REG_ASRCNCR,
-> REG_ASRCDR, REG_ASRMCR1, or REG_ASRCFG with a target field value of 0 (for
-> example, a 24-bit audio width or 1:1 clock ratio), regmap_update_bits() sees
-> 0 in the cache and skips the register write, leaving the hardware running
-> with non-zero dividers and modes from the prior boot.
->
 
-This is not related to this patch, but I checked fsl_asrc_config_pair():
 
-- REG_ASRCFG is volatile, so it is read from the hardware and is not
-  affected.
-- REG_ASRCNCR always gets a non-zero channel count (channel_bits = 4),
-  so the write is never skipped.
-- REG_ASRMCR1 is affected: with 24-bit input and output, IWD and OW16
-  are both 0, so the write can be skipped and a previous width kept,
-  e.g. after an unbind/bind.
-- REG_ASRCSR and REG_ASRCDR can be affected only in rare cases
+> On Nov 13, 2026, at 12:07, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] mm/hugetlb: commit message mismatches
+>  memmap_init_page_from_template()
+> --
+>=20
+> commit 7cc97c08b2296fc2518d9ae6da5950cb731c48eb
+> Author: Li Zhe <lizhe.67@bytedance.com>
+>=20
+> mm/hugetlb: optimize bootmem hugepage tail vmemmap init
+>=20
+> This commit speeds up boot-time HugeTLB tail page vmemmap =
+initialization
+> by seeding a template from the first tail page and initializing the
+> remaining tail pages with memmap_init_page_from_template().
+>=20
+>> Initialize the first tail page normally, then initialize the =
+remaining
+>> tails with hugetlb_init_tail_page().  This copies the already
+>> initialized first tail page with memcpy() and refreshes only the
+>> PFN-dependent fields in the destination page, while avoiding the full
+>> __init_single_page() and prep_compound_tail() sequence for state that =
+is
+>> identical across tail pages in the same huge page.
+>=20
+> [Severity: Low]
+> This isn't a bug, but the commit message appears to describe an =
+earlier
+> version of the patch.  hugetlb_folio_init_tail_vmemmap() copies the =
+first
+> tail page into a stack template and calls =
+memmap_init_page_from_template()
+> (which refreshes the template before copying) rather than a
+> hugetlb_init_tail_page() helper.  The commit message also omits the =
+change
+> in memmap_init_page_from_template() that restricts =
+memcpy_nontemporal() to
+> ZONE_DEVICE pages and uses memcpy() for other zones.
 
-One way to fix this would be to write the register defaults to the
-hardware in fsl_asrc_init().
-I would prefer to keep it out of this series to keep its scope unchanged.
+My bad. I forgot to update the commit message, the corrected commit =
+message
+is as follows:
+
+Boot-time HugeTLB allocation has to initialize tail struct pages itself
+when HugeTLB vmemmap optimization (HVO) is unavailable or fails.  For
+gigantic pages, this can cover a large number of tail pages.  Most state
+installed by __init_single_page() and prep_compound_tail() is identical
+for every tail page in the same huge page, so repeating the full
+initialization sequence for each tail page is unnecessary.
+
+Initialize the first tail page normally and use it as a template for the
+remaining tail pages.  Before each copy,
+memmap_init_page_from_template() refreshes the PFN-dependent fields in
+the template, avoiding repeated initialization of state shared by all
+tail pages.
+
+This extends memmap_init_page_from_template() from ZONE_DEVICE to normal
+memory.  Keep memcpy_nontemporal() for ZONE_DEVICE pages and use
+memcpy() for pages in other zones.  memcpy_nontemporal() was also tested
+for the HugeTLB path, but did not provide a similar benefit; on x86-64,
+memcpy() performed better for this workload.
+
+The fallback path was measured on a v7.4-rc2 base with a temporary
+jiffies-based printk modeled after the existing timing in
+memmap_init_zone_device(), using 4K base pages and 64 boot-time 1G
+hugepages.  HVO is unavailable on arm64; on x86-64,
+hugetlb_free_vmemmap=3Doff was used to exercise the fallback path.
+
+  arch    base      with this patch  reduction
+  arm64   360.8 ms  256.0 ms         29.05%
+  x86-64  171.0 ms  165.0 ms          3.51%
+
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261113033442.62970-1-songmuchun@bytedance=
+.com?part=3D2
+
