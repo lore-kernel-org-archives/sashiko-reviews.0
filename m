@@ -1,128 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.189.108
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794579681;
-	b=SLsvA5Dv7CW8AT5hTHLnfnnx9bHOn7HxeZrwsIAAfYUwif3/LQdyB2sNLGQ2F3Muw6/+
-	 zXu4VjCDGMQ8fWOiAX+1j6QTtRQATcvS336SAdasKo9KgCsPecZ5Gsjb/202ks2ZpvQZH
-	 y5EpqAKFo/07mKjgr/yMpDO+b9nWYfeboVb2Mhl3X2sMyOXPLQGrC69SLygAnCmuYg1EC
-	 2XOV3XlS2CRJKByT5+HJG/Lqa+OrLQVOKN9uLNucNtckYUwiBUiNJjgFkYbkxk9kTG/Xk
-	 sxgWmQ5ySTG2NAlAn6AomWRGh+MZnhM6JO9eNcm2gzoziC1kNe+KT/KQrR3NKJQxA+w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794579681;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=d4Lw3YdQYq+oj1p2tIKtYCZHPrF+4Xhxem8cGrlCsg0=;
-	b=s6D5O2kXXHX0L9cwV/t5VDqlyT3KqXJ0H6sGOuVhtMpMb7u5qAJekz/FvM5qCioTNII3
-	 lxfgpY2AYshjAhyjl3B8yZuNnPPDCFsGhmMLyVKLkvDjaj5TRMPJRJx5TCWKETDZUHQ6l
-	 5FFegAiaa7V113e8atiMuWc+PuLqY92LEFzjWRBJLIBPHc8vx2zgNWuhticFbm+Jzy4ce
-	 5sm8H1NF9svhi1wSvavrOoTsxKmN4Lyed6Qu82jrTVE9SoFL/RglW2bz0BTsJCvf/mqBu
-	 kuTvL/+JbsUkkBooNC3VH+G9WEDEsz2qYdYVlmhRY7rcK3Ms/lj71+l3poEy774MDzg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=efficios.com;
-	spf=pass smtp.mailfrom=efficios.com;
-	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=DIho0Mkm;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.189.108
-Received: from YT3PR01CU008.outbound.protection.outlook.com (mail-canadacentralazon11020108.outbound.protection.outlook.com [52.101.189.108])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=82.195.75.108
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794579687;
+	b=d/j3HV2iz2WsbH8uMHYNmYZPSAmmpstVCJ2k4Xj2wkUuQ/BgLQiE22D6yzwn1rfQ4PF9
+	 VIJfFCsMTXdB9babMZX1MWYPMBYDHqhCdearPIxz3oSrl3D8JpBy63zaTlzhNY//d9Vds
+	 AVMhH2s2f8DbJMeYX0HBt9zRSVd4gtZq3oRrfzmuv66Hvbakq+i7q4R5BG4R1iBhb+yqD
+	 06LsgpCJgCw1wzFi3uURzBkL7UujD1GRXPZuXe4QjUmfE8wokFQNH7Z2f6bSQeKkmMsil
+	 4WN5K2/D0c/W8e2CRQLE0Kum9yEcPtLI0c6uOp4As8FKW3DEnTUz7ChUljiQG4aQMBA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794579687;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-Debian-User;
+	bh=ecGrP1g3wwzch2fnfrpBcZqxZdOYZNnLl1DM9CyDgu0=;
+	b=ek1UzXttRCwO0fgYICirfioCIYILbfGy/HpeHaa/q6H5CXujmv/pO/wNOG/AL2IEsOyP
+	 lNbp9t6qgfqwr2U45SEBBNVbRECNSiCBDK0w/oy43G2wreuVt6CDXaTcQpeq/EyPnw8c/
+	 KK89RXGKlyLSgFF8p5RH28IpBcNl62m6F2R5ZKi2/YsyCn/irST8zS+ud/cpl+MmWSMcg
+	 G4t4d+73s4sXF/TGSnLOMpIaQ6OeBxI8IKxNoMTA046Tzdhu77wGQH7QLomjjeBM4GxVS
+	 pNmIR3OmYxUZljxzvWrCxf5R8DpxYwBOET/Dg6mGQlPleZo+mwhdnfl0AsiOEqNTb+A==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=debian.org;
+	spf=pass smtp.mailfrom=debian.org;
+	dkim=pass header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=Q0owM0de;
+	arc=none smtp.remote-ip=82.195.75.108
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9A5606A886
-	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 14:21:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F9A5606A886
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBF5606A334
+	for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 14:21:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1BBF5606A334
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=DIho0Mkm
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=E5TlA1Ad5gu8wBEXqa1MliMKLe1rNGO2EwMrJCO4rJZstQ+vi9jHrXD9GbnYRZkvFvv3jHZGHJttxLPs/mpLWYjxBm/Y0NTobTirShnazubYFMV9g9JGOH3xcEpqRK1njQgWoBQxpqGgTZxFhk/+qNBd1z3eUQciKL6syLeGMvG14he3sT6jcrJIQZBmnXXzxu7j+gvDbXJMfrR1xOjMLZnn3RRwgUqy2BDR+BOgUMn8BQB68zNKSHyrWzjJR3Ons8XE2KuWE3/TkTfhKRtuvUu8qKATDdsFT8U0p6Pi/ENWB2HSqg3poECxPFbyL/9eyBW1BGNgEUwqwJrtpa8cYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d4Lw3YdQYq+oj1p2tIKtYCZHPrF+4Xhxem8cGrlCsg0=;
- b=k7F5olEXY+bPJm6eOv11viWDxGrBfnIYDK4jybFkdc9obPmWRB3xjH1Apmc1J7QlK/F5ZVRicfMg4szK0GWH7KnNWrw/1Ua58g12O2t87WAsfOh+cJkRYuVeYGgf2ElGpjpfBm7h8/yVTY3P2Kii5fp/hK0Pp5oDRFpyZuIAASvb0AbqB8hk5S6p5bIethtq8Fn8bYui6sFDeqkcpTFnQcB5ImcB37by4ddJH8zdZxnfRYZpXt6587yI3WrtsvF9/zFnQSE8QWvJsGn6jweCNleiDaViDmDX11rZoapVNs+U6tZjFES5d8Guu5UkeDWP/xPu5oyXzbFJ1Os2RYFaSA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
- dkim=pass header.d=efficios.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d4Lw3YdQYq+oj1p2tIKtYCZHPrF+4Xhxem8cGrlCsg0=;
- b=DIho0MkmNznOq3aeniB23IO1V11U5dVhE3jVdtK4MXJWAfr+5HkNu1djGThw6+ZKoZVZOvgJA3btMO6sOPb//SUMSoXkmTTLBN1C4CWNH34ZeMva7c5a+6vWbNde6clCRg04Cg0+x3K5H4frfZtAP16bOiN8ng3Z9BEaaRmXb2VktcTgEdUGs5gE5zZhIxlwjeVC6r54sJB0KnGWOO1BvKRZZ6JGUXrOl7nWeOMlV9QJhXva4GpkLjuFWloSNaccEmdjn8UtmKza06trMU1NNY244IHJW1ga9gHfMpSaEOIwMuuZOBwbScEYmCg5IY6xr2WKcl9gyVWBAIfufBvwQg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=efficios.com;
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10) by YT5PR01MB912907.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b00:15::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Fri, 13 Nov
- 2026 14:21:19 +0000
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0615.008; Fri, 13 Nov 2026
- 14:21:19 +0000
-Message-ID: <3a5521b9-37e5-47d2-8f72-00d205cb52da@efficios.com>
-Date: Fri, 13 Nov 2026 09:21:16 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v25 06/14] lib: percpu_counter_tree: add lazy tree
- activation
-To: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>,
- Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Dennis Zhou <dennis@kernel.org>,
- Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>,
- Martin Liu <liumartin@google.com>, David Rientjes <rientjes@google.com>,
- christian.koenig@amd.com, Shakeel Butt <shakeel.butt@linux.dev>,
- SeongJae Park <sj@kernel.org>, Michal Hocko <mhocko@suse.com>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
- Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Vlastimil Babka <vbabka@kernel.org>, Christian Brauner <brauner@kernel.org>,
- Wei Yang <richard.weiyang@gmail.com>, Miaohe Lin <linmiaohe@huawei.com>,
- Al Viro <viro@zeniv.linux.org.uk>, Yu Zhao <yuzhao@google.com>,
- Roman Gushchin <roman.gushchin@linux.dev>, Mateusz Guzik
- <mjguzik@gmail.com>, Matthew Wilcox <willy@infradead.org>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Aboorva Devarajan <aboorvad@linux.ibm.com>,
- David Carlier <devnexen@gmail.com>, Andrew Morton
- <akpm@linux-foundation.org>, linux-mm@kvack.org,
- Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
- Randy Dunlap <rdunlap@infradead.org>, Harry Yoo <harry@kernel.org>,
- Hao Li <hao.li@linux.dev>, Kees Cook <kees@kernel.org>,
- Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
- Juri Lelli <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- Dietmar Eggemann <dietmar.eggemann@arm.com>, Ben Segall
- <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
- Valentin Schneider <vschneid@redhat.com>,
- K Prateek Nayak <kprateek.nayak@amd.com>,
- linux-trace-kernel@vger.kernel.org, Jan Kara <jack@suse.cz>,
- Oleg Nesterov <oleg@redhat.com>, Alan Stern <stern@rowland.harvard.edu>,
- Andrea Parri <parri.andrea@gmail.com>, Will Deacon <will@kernel.org>,
- Boqun Feng <boqun@kernel.org>, Hugh Dickins <hughd@google.com>
-References: <20261111203626.95838-1-mathieu.desnoyers@efficios.com>
- <20261111203626.95838-7-mathieu.desnoyers@efficios.com>
- <sashiko-outbox-211801@kernel.org>
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-211801@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YT1PR01CA0082.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:2d::21) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10)
+	dkim=pass (2048-bit key, unprotected) header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=Q0owM0de
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=ecGrP1g3wwzch2fnfrpBcZqxZdOYZNnLl1DM9CyDgu0=; b=Q0owM0deYkacAQoU7FXVSIgWzd
+	SkYgR5Djjv+92CsMmzEF2dW4ARPVZxpViMebmSFf63XugaUo3vRmVOokXzNN5NtdKM5BiPGlDZWrf
+	9w8x+JQmp+iCukXKWEcvpmW5oYDq/cI9hG58u0e+Ox+HRT/mMIYWtpgl1v9NTPl2e0aaHZZ8EZcZp
+	acIgaYOjkdWRYniHKIAIF738TDLNhsbj4+Z1pKQa24pk/EOfvVTuS1krIawTMPGZCrf/5EnMWaQ0j
+	ZjgGrXhf445OHXN3taRNp5mlKMq9WyIcWo26uKBt1T05WKB2HRk7EJ2DsCSEhliHm16zZ/S+egZVh
+	CDPBnfxA==;
+Received: from authenticated-user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1xRs9Z-00EoUY-2j;
+	Fri, 13 Nov 2026 14:21:22 +0000
+Date: Fri, 13 Nov 2026 06:21:16 -0800
+From: Breno Leitao <leitao@debian.org>
+To: Catalin Marinas <catalin.marinas@arm.com>
+Cc: sashiko-reviews@lists.linux.dev, Vlastimil Babka <vbabka@kernel.org>, 
+	Harry Yoo <harry@kernel.org>, Hao Li <hao.li@linux.dev>, Christoph Lameter <cl@gentwo.org>, 
+	David Rientjes <rientjes@google.com>, Roman Gushchin <roman.gushchin@linux.dev>, 
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, kernel-team@meta.com
+Subject: Re: [PATCH] slab: allow sheaves for SLAB_NOLEAKTRACE caches
+Message-ID: <avcb-W5ZOWqI9SbN@gmail.com>
+References: <20261112-kmemleak_sheaves-v1-1-e40e3d73b253@debian.org>
+ <sashiko-outbox-212599@kernel.org>
+ <avcCGNUqCrcwbFG6@arm.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -132,97 +70,31 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT5PR01MB912907:EE_
-X-MS-Office365-Filtering-Correlation-Id: 97ce6c92-a160-4b8c-8087-08df419162c7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|7416014|261026121527099003|56012099006|4143699003|10067099003|22082099003|261009223027099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	bmVOnKWC0WgWYBCGCRew+6UFYIdSGCLTzZjICL1NYz6A61ZRlN4dQYTQX0/NlsNqmAgHbcrLR0oec1rmmDEbzJo01F/ORLs7uEW0ggqrdayOsx/31Uhy20ij7upjI+UsKRcFlXBgb2URx43gLT4qYOvfP9TtfE8EiftuJTDQPuLe4futxZwxBrubh19M3t2AWGPVLA8PuYyEzs2N1NxWUYp1dZxlBU9bezLheeBc5g0g6nqXbZvuemffQNKgXwSzUE10xM6b4C3+IRTDN7nJ1Bv2QcFkLypnNxmPWx7ICD+9Bh4+JUXL6hk+6FbbGU36kY2SWv+twynfuQrlVyC03jG8URq0gIGNaComRjtQy8yMjDOxD5PSY1yRzI2l8C6xjD3sLw6XWDUtvrh8dM6z9iLmBYNBIRhbSCYdi4YbY8F6sjTlAhdDhTrtZvqfxUu9bI+hWLa1KeSI9ojvLt9rOaWF/48JbaTdYn5L254kyclgAawmP7XwwUGQBt7oEu1lUfv78GtobgrvfMZRxtWTL1qGkUhhnIcOsoOqYUI4zKPEKUym6Xnmd/erDLupibI/KJ5gUN9OSdky0vuxulojZvKVqR+LnVp7edrPZHOyAh0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(261026121527099003)(56012099006)(4143699003)(10067099003)(22082099003)(261009223027099003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?N2ZlcUFJejRCajVmU0JodFJoU3pQNHdqYW1EK2hQL2pobmtrc3hpbkEzRXdH?=
- =?utf-8?B?cjJjMzNJRy82VVRhMmFBNDFqNFhWZ1JrdEtxUWxjYi9QaDZRUlNBUVV4Z3dY?=
- =?utf-8?B?TlNCcVAyQzdLNzlDWXF5U1FUY2YwV0lEVFJYeDJCU05qZUlKZVh2SWd5RTQr?=
- =?utf-8?B?eXJsRjl1cVhzNDBsVExBSGJ0ekVMU3JjYlNON1FpdSs5eHMwQUc4a1RqSDc0?=
- =?utf-8?B?bXhvNUVaMnowelJJdjJLMGdDSHFtVktsa05TTERTbmFSTmtwV0RBM3QrZFpG?=
- =?utf-8?B?YlZjWlFkYW1jMk81THB0aXcyUTE1RTlkaEMxdnd0ZkVoTkorUm8xdEdXenE1?=
- =?utf-8?B?SVZOaExvSC8wanVod2hEWU00MmtEaDZJNmVVTkk2Ym5EeHR5NlgzSVJaUERy?=
- =?utf-8?B?dEJ6WEZTSjRXM1FBS3ZuM3RJeU81M3A4cWNSdGdEN3RIc1dNZ2Rxb25nNWd6?=
- =?utf-8?B?RENPOW5uQVNJTE1TTzVNeHYvaEpST3puTEJqWTQxV3BGc3hPc3RwS203eUd2?=
- =?utf-8?B?V3M2VGl1SWlHWHluOWZsQVlzSnBwQVVLQUtnV1loVjB5RUlaME1DeTVsOE5D?=
- =?utf-8?B?cHpKVzR3Wm1FNGtWUU50cGRWMkh1ZG44VzFiTmZiSGhMUkREbDRMU0N5NzUx?=
- =?utf-8?B?ZHdSRFFESkd3LytrRElnSHVpTG9GcC9ZNzc5cjZFNXl1dkkxeXNGK3VWVk9C?=
- =?utf-8?B?TXl0a2dPcEs5bEw0RlR5QXk3MWNaYkErMEs3R1JPS3M1SjcwYm5CQzR1TGFm?=
- =?utf-8?B?emdSUFRNWlRPc3UyUy93RGJIaTMrMVVJTmhjeEJ4ckRwNTU0ZmZwNUZlK09r?=
- =?utf-8?B?WS8ya0JEMStFejBpR3B5QzFnaktKanFhbnF0WmtWa0hsMTQxNWt0MkRDNGRv?=
- =?utf-8?B?U2JJZ2pOM0c1VHV3T1U1TGdlYWh6Q0p6QWxHRDJKU3VpVmpWZ3ljVTRNRFIv?=
- =?utf-8?B?OVF4VUNrNHI1ZkpqMEpvN1VBSjhLU1hvaFpkZFU3bkxXbHh6cnF2RG1sM00y?=
- =?utf-8?B?T0FLMnR5S2YyQzRXZEF5T01jNDN4OVhvWjlldkZHdHVLWFpvSk8vV1pPQXBx?=
- =?utf-8?B?OVhDTFg5U3U4NmJTc0NiS2VCT2NEdE1IRGlzUDh3VEsvNU01UiswMDc0bDFG?=
- =?utf-8?B?L3pJQTlENEkrVVU0ekh6Mk90cGs1S2FSc1JhZkM3Vk5MclE3VFErUi9ZTzky?=
- =?utf-8?B?SjVGZms1bWVjKzZ0TFRJNE9aNVFncURhc25OdFEwcTliTHZiVHpTYTdnMDIv?=
- =?utf-8?B?UHN5MzdTbXV0MGJST3dwQzcxOWhsekxqWllSY05BeFBHQlJJcVlFT0hOOGVU?=
- =?utf-8?B?ZTVzQUU3VCtkNDA3RkFBNUdYUThISmowZ0dxQnMxZHVDbEhqL041a1hQQkND?=
- =?utf-8?B?WHRBdXo0QUhCd1k1QlRleUNVZjh1MmFVYkxkaEZFSWw1ZlhGbktEVEhpL290?=
- =?utf-8?B?cEJYL1FoSHExUSt0bnFpUkJPZVNvWnJjVlJFcTczZi9oNm82NUhWdjBEWFVp?=
- =?utf-8?B?cmNYc3VOU3lSWG82ejhUeXU2eUhwdzlENkpjanFuOENhVGtiMU83YktIUzRF?=
- =?utf-8?B?b3AvaVVsRlZ0WmczWFZaUDNRZ0FTdkxwaTZRWnpjbEo5QVlZSWdCNDZFaGlC?=
- =?utf-8?B?MWVxUzhEVkozVXY0TnBHUFZiTEpvTFVKdnJEUmc1cHVxOVk1Ri9WWjFDejRL?=
- =?utf-8?B?L0tNN3ErRjRMK3cvNW9qOTF2cm80dzduWUxoYXIrbFlsQmFBUmsrWWtLbmlP?=
- =?utf-8?B?cGdsOGxPcmtGb3NaSFZLeGgyWjFmRmw1UHE4dUd5Y24vRXRlSjgxZTZnT210?=
- =?utf-8?B?U0RJVHhnUnNOM3VLNUh2T1pLekFtUytvMzNURUs5Wk5FeTg5QTd2YkJwNkgv?=
- =?utf-8?B?UHpoYS85ZnZmcnpER2pmTUdPK0ZiemJPN2FZS0lYYnB2WUZOU3pEUTE5ai9P?=
- =?utf-8?B?SURRclJIMFEwdjg2cFdJcWp6RFZ1UWxmQXVZVkNyNE5ENUZEckRHZHZLUHkw?=
- =?utf-8?B?cGJoUmxHMHlqRWsxZnI2OEpROEhScDc2cXNYeG02RERBei9hcWJwQ09aV01q?=
- =?utf-8?B?R3VIbnovenFHYjA0N2gwTEZVK3FoTGVtRm1YdXNJWWlBTENKMHpzbEszK0RM?=
- =?utf-8?B?UnF3QkJFYUlRaityRU12TWNKc1hLaXdoS1VzK3hvaGZ3T3Zxd2pQVUtQU2Yy?=
- =?utf-8?B?eDA3eWV5VStneGFYcWNXalRkVlNqdzE5Z2pNYk1oUlNZWXQ4UjFJUmczckFM?=
- =?utf-8?B?UkFsZ0lvVlAwa1lBMVdKQWl0dk5XUU9IV3NOcHNsVVBZUXhRR0lwakxCQzBu?=
- =?utf-8?B?UTg5K0wvRVIwT0tyWkNzVFkxajk4bVN2VWxXVndOTDRSdnVUQkxzeUw1eldZ?=
- =?utf-8?Q?IWBBT30nIF23k0CE=3D?=
-X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 97ce6c92-a160-4b8c-8087-08df419162c7
-X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 14:21:19.3963
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p7QpFPZb0Z56/TBFDNaQzE02J8GE+2CjYTG2ee8HUfZmNzzrnhAxM8827JxhaIj8Xz+zG+6oDDwIghT/iv1hMHXGXKWGZdKfrhlo9lseyW8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT5PR01MB912907
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <avcCGNUqCrcwbFG6@arm.com>
+X-Debian-User: leitao
 
-> [Severity: Medium]
-> Does acquiring sh->activate_lock in every non-owner worker right after
-> sh->go becomes true prevent percpu_counter_tree_add() from ever racing
-> with percpu_counter_tree_activate_many()?
+On Fri, Nov 13, 2026 at 12:27:04PM +0000, Catalin Marinas wrote:
+> On Fri, Nov 13, 2026 at 10:05:08AM +0000, sashiko-bot@kernel.org wrote:
+> >
+> > Setting SLAB_ALLOC_NO_RECURSE along with SLAB_ALLOC_NO_LEAKTRACE (or
+> > clearing SLAB_ALLOC_NO_LEAKTRACE before nested allocations) would prevent
+> > the flag from propagating into the normal kmalloc cache's own metadata.
+> 
+> Sashiko is right here, this could lead to false positives. I don't think
+> clearing SLAB_ALLOC_NO_LEAKTRACE before nested allocations is correct
+> since that could reintroduce the original recursion. Adding
+> SLAB_ALLOC_NO_RECURSE alongside it should fix this.
 
-[...]
+ack. I will respin v2 and sets both flags for SLAB_NOLEAKTRACE caches.
 
-> None of the non-owner workers can
-> reach percpu_counter_tree_add() until activation is already complete, so
-> only the owner worker's percpu_counter_tree_add_owner() calls actually
-> race with tree publication.
+> IIUC, I think we need to include SLAB_NOLEAKTRACE in the
+> mark_obj_codetag_empty() condition in __free_empty_sheaf(), alongside
+> SLAB_KMALLOC, if we go with the NO_RECURSE option.
 
-Yes, this is a gap in the test. Each remote worker takes the mutex
-before its next addition. The tree is published by the time it gets the
-mutex. So the test only covers the owner's additions racing with the
-publication, not the remote ones.
+Ack. without that hunk, CONFIG_MEM_ALLOC_PROFILING_DEBUG warns
+"alloc_tag was not set" from __free_empty_sheaf().
 
-Planned fix for the next round: only every other remote worker activates
-the tree. The others add right after the release, so their additions
-race with the activation.
-
-Thanks,
-
-Mathieu
-
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+Thanks for the review, respining v2.
+--breno
