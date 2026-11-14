@@ -1,99 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794664097;
-	b=v2gNG+uD9kwwCedVn+3nT0AB+ZTbq5c9tb+By/+glvlhMLUw2Bfp5SQzNYErr8POHvg2
-	 QWRv5UFaBYZ03vxsMxiUzoyVYiZeEbpIhhLvy6F3mkC+bXFVXTOnCeMtXd9fqFBcnv5H+
-	 rFRSGXvqjtYFeg5mBrvL3eUlOgXzxvwv9NgsU6lGL0vQd++cd3uZMLdc1pSBTimm6k/hZ
-	 eojEzEy3JQHnWYiaSxViP3b6K+tX6O86roAERQLGxMN4Bz+8Q29g5PsWcnvtiyWl5Rwxb
-	 og5oo05c6JBuvObD6u2CoJ8t/TP0tlewtovU5LwjP68wBLQE6q9JujbY9xOtVAkRfmw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794664097;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794666499;
+	b=vdCExbDZkzsMe7PieY0sqc5l2akBEa0BPzlh3WZZEj+qEBolZxqzChtR52Phfw3QnCC5
+	 nuYGua7zpJkYjNqtXCUM1LoZguzea2ups//3i+nhwC1U/xkyvNe/yyrmNC+nMleEbB4ex
+	 HHjOc5YjXxPmSj2IX4+HWAUkI60s63QUSQQotKFSoCr8uMLqTydg1nIkS8n9wi8vZasAY
+	 htpnkH4jA2twQLMI8qCiaDSSt2jM6i+uQ6D1JUacUilIV99N9I8F31F+/Zfo3Wi4Ex62S
+	 tRepOEpRHFFE6DyqmXKfEEYJfJyvHP0qwgPWTLDqRFwSvvyl/UhN74iQsnXiJlW1QpQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794666499;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:In-Reply-To:References:X-Mailer:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=uV9w4XdeJBMVabGCuGulxAnon3qiDUPy4KI5C/5BU4A=;
-	b=AxJPcTZtRYKXaKhygR88+6tAyw8M2p88y1DVxAZRP+YcQ9G86PEltQNa+EJun2vsak1u
-	 AEc2Ndr7VeGdtte6zmcNNsSAzYr3JaHnPK/uy+cboWGcDlWwZp/gUsQwaZVtYuKQ/GvYQ
-	 GxT6xPZ4EtyoNcuKseafxp1g997i4X3U3v//y3Ed9yGfjmcJK5n60Ac/yCzXYvB7SAhAB
-	 F94AsRHlhoknZCnKvzOgaQGRtQ+L/vsHzQo62vUj2v9EwpLZgU4P2w+/ZjPywyLr/s3uG
-	 LY/qE6+ZIe92eOC4ynHiW9KHqbvkzF3a0tkY7oa9SFpI7vb0EDNDkXk8iiYlPAVWpwg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	bh=MKd4jZbLeaqRjSZ/bcG2vE1bYEI/pNWLpN8kMR29sBs=;
+	b=qqgHZkJgxeB0ABisp1QKuYAnBk/mbXvumYLf//D6LnTgSVEHPehzRIJ+poRtXyvKcWoy
+	 +UPmQ+dq2DbC1PAy4o1gJlUHs5k8kAiKh8ZndEsGp2ue0OCKBTnjxj3tJ0n2rP2nZUaeV
+	 tOqRZGm/faXcVYI86U3thgPawe14ZwGPm83044sPpI3+ftQKEyNN3/dTw59M3fhomWiF7
+	 rufgvtQUIxntJoZerw/GI6+6DViz2SCRhj+5XH43tfc5rHBZRtmvKmVvqxdG/bBrrW2/j
+	 DW9VURBnQCxjl/mkKnX+p4OvFgTud3ekyqiJRUgV/E6lRJ7gwszW1W1QZAFzah3nqxA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=K0ZXPrpj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.43
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tUsHIRoV;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26DF606A32D
-	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 13:48:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A26DF606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F4B606A331
+	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 14:28:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60F4B606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=K0ZXPrpj
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c4cb6834eaaso392051566b.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 05:48:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794664095; cv=none;
-        d=google.com; s=arc-20260327;
-        b=c0WErE2/AcdzkIx9CEYvzJJTGcRB/3b6gqxzNYa077tyTpdScaBLSiSi1bQNpMMoEu
-         WsdvH7nnmtbxvjU3DGkVPlTTewp735R+kKDvMEPjD2U7Sdw1h/9GzETZY75FZzsv/iFN
-         ooWenreFHDa+8nqt34CasH0lLPdkk8G+C0PxxZelnCuJjiuaHhKbUMl0k1jzfsykdVdd
-         gNOba9Iu6Q+cmgFoOx8z+pdC7iDrCk0cYRl5vKt4pzZOXcSOjhRxRgobhQ+p9/4ch8yU
-         nn/o4pOeOByNGpSdvdQlwQ0WHX4EgdvnPB+y6qsWAIABI09oEPA4METnv64i4yEq3aee
-         3+CA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=uV9w4XdeJBMVabGCuGulxAnon3qiDUPy4KI5C/5BU4A=;
-        fh=LQfdS+m/cPKdWQ/3kDuhJsIgVCfZY+tYZPFhscd6cXE=;
-        b=YIIV9sU54JMbg5nQEfhEM2zINZe3SANMotjiCFSs8quTfeHLZLQ3i/4DGwGb7YgSCO
-         T3f0AhnGasSWcs6TuVwxdIRcb9IjyhZ8Ru/fQrbZos/Rd7nLe2nn5jWb6bRW6MZKrQ5b
-         pIXc4NDg7QjcPAbMP1cn+hTDKnq1/0nzRELgaCYqiYY1HXZq3vRWSntsK7Z1uO2rhAa1
-         d7dGFjfEI+c17C+IVLeDSTgGQAbd6pEC0LclQoK104LiB3IxhuBDJUQKIBBXG4G3sb4G
-         YrPvlQVDJOO3zY07+PjPJV/CappvmbovoSrzQzxy5xLOO5pCGp5ETDK83lSH+2A+98Jl
-         hDPQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tUsHIRoV
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a140e7405dso22994675e9.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 06:28:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794664095; x=1795268895; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1794666497; x=1795271297; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=uV9w4XdeJBMVabGCuGulxAnon3qiDUPy4KI5C/5BU4A=;
-        b=K0ZXPrpjH1EwnJYUdyC4N6ZLK2qgN4sg+FdiPSp+CHEzuTsjYzkZQmX2UuCm0Rw4dr
-         pMOii8Lo/yR1gDN3JnhSJDB3W5WV0S9ZcXpwCbGX1DCR0VOt0d39tUM2n1EwowpY/3WY
-         l+WZ/9FV3X1O4bQ0sWdQyAv9Ygv5OafpdPsmDSA2CNqRpD4kZ46VOXPh/oUjEfQ6k2wi
-         91Etzz4fjWcA7NlkAZQW3skJ1AvHlhqL9eoch+KTJcTtHPHvFxaT1/UtrMuuRPg5saMk
-         k6aPudh3HPTTKDXsUum16QKnbEKNXAyNE+7sCbME1P4JUX1Pm1ByZB1hOgC0ofIeDOXV
-         GHDg==
+        bh=MKd4jZbLeaqRjSZ/bcG2vE1bYEI/pNWLpN8kMR29sBs=;
+        b=tUsHIRoV6QYHDWf/EGBsgejNFGxtm6y9Y/vJZvNEr62LXkZiC22YfKPk9cKI0zemMu
+         3FWQQkIrr7/Ige/R8KUWuYJcteZI8vM3LMC0om2WCPli4tBgy5Adqmk2pHUiBU8/VgJP
+         Giw7BhQ6noRoHDlkAxQyzmxm820uLK2Duejt3x7V9egZhfqfrUu77RosCbxesObZiUME
+         UPQWVTCITZoi/WwP6dTJgBOKebtPBuZ+zaQqysc7wPIOxnptm41v8whpv28eN94aE96k
+         4fEitw9crdd83wx9T5pz5bB4gW4F4LEkxd99eR2hIy30298mMCoif1fJz2bXTskOisVx
+         dTjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794664095; x=1795268895;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1794666497; x=1795271297;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=uV9w4XdeJBMVabGCuGulxAnon3qiDUPy4KI5C/5BU4A=;
-        b=Mtq/c+Go/LulZsIkDFalRY+3Qj9EPz7gR+ci37aZzTshhO/Ql9zD3bjgbt1LAqnhOW
-         zo+n/HiW88oeM9lPMJqnmXJsL4Q+/5tzn2CRfcTvnNQXuL2jtxW+PoxwpoAR4hrE8t09
-         PUHPBLbi7SETqkI5Z+nWBRFa7rj0cvW2sBupMUPZLkthKDnxUp9cDDMhERuHGCeDkkod
-         UlNOOHtQ89rFwQtdLnaF1eSbR7DkSZloPzIonWVSqxBME8ndLCUkYeLfe3CWecYvhTcZ
-         orzzOmGjBXwGmB5xCn7hh1GkxLvZRmma/9lkahfj0uroVIB75wfNQCVVEA5O9BQdzDbk
-         deRQ==
-X-Gm-Message-State: APuU4Z+bqWnmks8hUve+9wQzSDRRsjX5zLfsEopUh6hjBAsqfKBJalpC
-	Ox76AeIS0hk/jzog3N0A8IB1AsJoe5FKYrZlwbcKZFCIIefwV/CY0GFMzh72mRaD/6HClbAjoo3
-	W9rhWcQHzFZC2SFUd03H0qVLj4oEZdNv+VeYx
-X-Gm-Gg: AYBFou1OqF1jzwktA5FsotqCzsgkIcCuIon37P0aQ3QXpAvm/HBzHZC86t36rDQocDI
-	JtANNuvsfEjhC7McQYK+MAlxv1cTKnKzZtaLdT/zsMJiI08k3VVS4mBm+A0MQbQeW6oitDConFe
-	7Nu8t+e2nZq1fZoKJXJOfUIxol89Cm2AI/QGNQoU/tBEbk5OLLkq20kBhqzeUtAGiiWFwgolrjG
-	tFpBoqHwco6vzTRDHvk2B8e7djODf8FGss+C49h03eCO8B+MNsroVk+DJOC0sSnoKTvBFXK2N0p
-	rAXWdPPTCmTQVve3SlxyAjW+gnqD7IqiFK3NFDnFq7iNBC+CN/GO0499lR0hIFWI8x6Ihw6LCRW
-	3Dp7W4bWF8bEKsH0dHxfzVAZGIbbclW8rZakFeIA=
-X-Received: by 2002:a17:907:2d1e:b0:c4d:28c7:eb21 with SMTP id
- a640c23a62f3a-c50963967fcmr464257666b.29.1794664094926; Sat, 14 Nov 2026
- 05:48:14 -0800 (PST)
+        bh=MKd4jZbLeaqRjSZ/bcG2vE1bYEI/pNWLpN8kMR29sBs=;
+        b=g6AToN1HB/3NFTmealJRMT8AcwqYRZRwuSsu1YegXrDJoPfSthNn7isjyJ6HXyebWH
+         48wFot1/4w9bMWwBgVC1WFoptsRsNh3wbnb7QBoEWKPtjNSIk1Ebwhp2LUDcgBjrpfFc
+         t7P/kfXJ6trat51JoVTXI7SMjoPheVzE97BftUhSYKNn8snLNnhokE4XIMklx9fxg+/2
+         5lYp4FDp7mmve44dnCTLZdjQMX7TzCL0GrF71HOI9dJL1uc3d3D/o3Eg9+zluEQEZRRe
+         R5Y+AlM8N0RnlRXZlHWw8uX/G8kc2ypWaIuM0imm8hzonKnARPeXFfERLJi7s2EDL+mv
+         F0Og==
+X-Gm-Message-State: APuU4Z9tCNVU3r6Nxl083JnK8C5Zypif4sDGzRr6/FVHgXW425HSbnpP
+	oKxZAMtIHYmWRXf24OzAbaH6F5iTyORsgVedM58w2YEyD7HdafBLcZ1H
+X-Gm-Gg: AYBFou2ZjO+QFQ6Gudy1Vm4DHT1bHBdgksaJC9X2HVa1FwarTP2PhOazzT27SWgrtZj
+	BYLiKAsl2WlV8VHVF0vtl/T6qnuZn2bm7qpe+TFHVtsKqgN2bPfUkLz41U583dSx+u7ljHZv51W
+	jzg75cIvsxIPfYOwhWIGaHxvBqEDMZ200l3LJuwzwtkm8H2eFdl44ZK5NPjlSsTCRqVC9kgBqVE
+	LQNFdOzJQKyqyxvrfXXj1Gqu2lSRHUPvkEbtL2hgh7JkiXygvxDq8K0fDk680JLCn/NEnxxj0Cz
+	9Kc2LfptpHPoH/lHutkjooMXhIYkGbE8n8VyhRFMbZ08BmNcKcAP0Vplp3I78TyhGrk3bjCFqw+
+	iS27lz1qKTM9WSi4QUh5nI6qiI6DdGFtpkrrOFnmfUfPHjJKdSdy6GORrKNXzuGRF26Exc52+RD
+	gRIK2JyA3cQN6fumGPori8yRRni0GCVew4Llh8Cyh3roFCPjUe/eki6S6DhsvF1IT2St97U0sUu
+	pelTcaBLKQiEJU+WuRmiaSlxtW9H3e7sSDNrxGNwVtEjqFiqvn+jLP6GHQKYJwDOYboMtFKOYmp
+	Watirzh5FqAm9E1EweuXcc3egto3hxV8rSjmCHevCUKpV4nqFHewd8R1KsN1yDmu9A==
+X-Received: by 2002:a05:600c:83ca:b0:4a2:1612:637a with SMTP id 5b1f17b1804b1-4bb55a4e680mr118360915e9.16.1794666496622;
+        Sat, 14 Nov 2026 06:28:16 -0800 (PST)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55ae5299sm156028195e9.11.2026.11.14.06.28.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2026 06:28:16 -0800 (PST)
+Date: Sat, 14 Nov 2026 14:28:14 +0000
+From: David Laight <david.laight.linux@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Petr Mladek" <pmladek@suse.com>, "Kees
+ Cook" <kees@kernel.org>, linux-kbuild@vger.kernel.org, bpf@vger.kernel.org,
+ "Jim Cromie" <jim.cromie@gmail.com>, "Lorenzo Stoakes" <ljs@kernel.org>,
+ "Luis Chamberlain" <mcgrof@kernel.org>, "Andrey Grodzovsky"
+ <andrey.grodzovsky@crowdstrike.com>, "Steven Rostedt"
+ <rostedt@goodmis.org>, "Andrii Nakryiko" <andrii@kernel.org>, "Samuel Wu"
+ <wusamuel@google.com>, nathan@kernel.org, nsc@kernel.org
+Subject: Re: [PATCH v3 next 02/13] scripts/kallsyms: Improve error reporting
+Message-ID: <20261114142814.30c8786d@pumpkin>
+In-Reply-To: <sashiko-outbox-208961@kernel.org>
+References: <20261111115911.1142000-1-david.laight.linux@gmail.com>
+	<20261111115911.1142000-3-david.laight.linux@gmail.com>
+	<sashiko-outbox-208961@kernel.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,158 +104,51 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113110546.173624-1-a.shimko.dev@gmail.com>
- <20261113110546.173624-4-a.shimko.dev@gmail.com> <sashiko-outbox-214383@kernel.org>
-In-Reply-To: <sashiko-outbox-214383@kernel.org>
-From: Artem Shimko <a.shimko.dev@gmail.com>
-Date: Sat, 14 Nov 2026 16:48:03 +0300
-X-Gm-Features: AclHuK9MsmyVhAUhfYgzoV6y_gIsPjRJJ1_oeWNNQdGoTcpp9jpoFerTmOwCi6c
-Message-ID: <CAOPX745DWr_y5VfuCGoyJDKj=mXOpxWsA8TyzETwpVjeOjPEHg@mail.gmail.com>
-Subject: Re: [PATCH net-next 3/3] net: phy: dap8211r: add led hardware control support
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-leds@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org, lee@kernel.org, Andrew Lunn <andrew@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sat, Nov 14, 2026 at 2:06=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] net: phy: dap8211r: link trigger rejected in
->   dap8211r_led_hw_is_supported()
-> - [Medium] net: phy: dap8211r: LED register not cleared in
->   dap8211r_led_hw_control_set()
+On Wed, 11 Nov 2026 12:14:50 +0000
+sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] scripts/kallsyms: incomplete errx() conversion in write_src()
 > --
->
-> commit 7e5f0824bef63e117be29a9ce8d9c67d5c813bfa
-> Author: Artem Shimko <a.shimko.dev@gmail.com>
->
-> net: phy: dap8211r: add led hardware control support
->
-> This commit adds hardware LED control support to the DAP8211R PHY driver =
-by
-> implementing the led_hw_is_supported(), led_hw_control_set(), and
-> led_hw_control_get() callbacks.
->
-> > diff --git a/drivers/net/phy/dap8211r.c b/drivers/net/phy/dap8211r.c
-> > index 4eb50c26397fb..2e371c231d32c 100644
-> > --- a/drivers/net/phy/dap8211r.c
-> > +++ b/drivers/net/phy/dap8211r.c
+
+I need to do a v4, I'll change the message (and remove the '\n').
+
+David
+
+> 
+> commit 74224a3e189e43104e9d68aefe42fe16a066052c
+> Author: David Laight <david.laight.linux@gmail.com>
+> 
+> scripts/kallsyms: Improve error reporting
+> 
+> This commit converts fatal error reporting in scripts/kallsyms.c to use
+> err() and errx(), updates the usage message, and adds a --verbose option
+> for timing output.
+> 
+> > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
+> > index 140e888bf7133..aa3a8ec83fbb8 100644
+> > --- a/scripts/kallsyms.c
+> > +++ b/scripts/kallsyms.c  
+> 
 > [ ... ]
-> > @@ -57,6 +58,33 @@
-> >   */
-> >  #define DAP8211R_DEFAULT_DEL_SEL     0xD
-> >
-> > +#define DAP8211R_LED_ID_0            0
-> > +#define DAP8211R_LED_ID_1            1
-> > +#define DAP8211R_LED_ID_2            2
-> > +#define DAP8211R_LED_0                       0xA00C
-> > +#define DAP8211R_LED_1                       0xA00D
-> > +#define DAP8211R_LED_2                       0xA00E
-> > +#define DAP8211R_LED_ACT_BLINK               BIT(13)
-> > +#define DAP8211R_LED_FULL_DUPLEX     BIT(12)
-> > +#define DAP8211R_LED_HALF_DUPLEX     BIT(11)
-> > +#define DAP8211R_LED_TX                      BIT(10)
-> > +#define DAP8211R_LED_RX                      BIT(9)
-> > +#define DAP8211R_LED_LINK_1000               BIT(6)
-> > +#define DAP8211R_LED_LINK_100                BIT(5)
-> > +#define DAP8211R_LED_LINK_10         BIT(4)
-> > +
-> > +#define DAP8211R_LED_LINK            (DAP8211R_LED_LINK_10   | \
-> > +                                     DAP8211R_LED_LINK_100   | \
-> > +                                     DAP8211R_LED_LINK_1000)
-> > +
-> > +#define DAP8211R_LED_SUPPORTED_TRG   (BIT(TRIGGER_NETDEV_LINK_10)    |=
- \
-> > +                                     BIT(TRIGGER_NETDEV_LINK_100)    |=
- \
-> > +                                     BIT(TRIGGER_NETDEV_LINK_1000)   |=
- \
-> > +                                     BIT(TRIGGER_NETDEV_TX)          |=
- \
-> > +                                     BIT(TRIGGER_NETDEV_RX)          |=
- \
-> > +                                     BIT(TRIGGER_NETDEV_HALF_DUPLEX) |=
- \
-> > +                                     BIT(TRIGGER_NETDEV_FULL_DUPLEX))
->
-> [Severity: Medium]
-> Should DAP8211R_LED_SUPPORTED_TRG include BIT(TRIGGER_NETDEV_LINK)?
->
-> Without it, dap8211r_led_hw_is_supported() returns -EOPNOTSUPP whenever
-> TRIGGER_NETDEV_LINK is requested, so enabling the netdev link trigger on =
-a
-> DAP8211R LED fails and the TRIGGER_NETDEV_LINK handling in
-> dap8211r_led_hw_control_set() is never reached.
+> 
+> > @@ -490,7 +485,7 @@ static void write_src(FILE *out_bin_file, const char *out_bin_name)
+> >  			long long offset = table[i]->addr - _text;
+> >  
+> >  			if (offset < INT_MIN || offset > INT_MAX) {
+> > -				fprintf(stderr, "kallsyms failure: "
+> > +				errx(EXIT_FAILURE, "kallsyms failure: "
+> >  					"relative symbol value %#llx out of range\n",
+> >  					table[i]->addr);
+> >  				exit(EXIT_FAILURE);  
+> 
+> [Severity: Low]
+> Since errx() already prepends the program name, appends a newline, and
+> does not return, should the "kallsyms failure: " prefix, the trailing
+> newline, and the unreachable exit(EXIT_FAILURE) call be dropped here?
+> 
 
-agreed
-
->
-> > @@ -142,6 +170,156 @@ static int dap8211r_modify_ext(struct phy_device =
-*phydev, u16 reg, u16 mask, u16
-> [ ... ]
-> > +static int dap8211r_led_hw_control_set(struct phy_device *phydev, u8 i=
-ndex, unsigned long rules)
-> > +{
-> > +     u16 led_mode =3D 0, led_reg;
-> > +
-> > +     switch (index) {
-> > +     case DAP8211R_LED_ID_0:
-> > +             led_reg =3D DAP8211R_LED_0;
-> > +             break;
-> > +     case DAP8211R_LED_ID_1:
-> > +             led_reg =3D DAP8211R_LED_1;
-> > +             break;
-> > +     case DAP8211R_LED_ID_2:
-> > +             led_reg =3D DAP8211R_LED_2;
-> > +             break;
-> > +     default:
-> > +             return -EINVAL;
-> > +     }
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_LINK, &rules))
-> > +             led_mode |=3D DAP8211R_LED_LINK;
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_LINK_10, &rules))
-> > +             led_mode |=3D DAP8211R_LED_LINK_10;
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_LINK_100, &rules))
-> > +             led_mode |=3D DAP8211R_LED_LINK_100;
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_LINK_1000, &rules))
-> > +             led_mode |=3D DAP8211R_LED_LINK_1000;
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_RX, &rules))
-> > +             led_mode |=3D DAP8211R_LED_RX | DAP8211R_LED_ACT_BLINK;
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_TX, &rules))
-> > +             led_mode |=3D DAP8211R_LED_TX | DAP8211R_LED_ACT_BLINK;
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_HALF_DUPLEX, &rules))
-> > +             led_mode |=3D DAP8211R_LED_HALF_DUPLEX;
-> > +
-> > +     if (test_bit(TRIGGER_NETDEV_FULL_DUPLEX, &rules))
-> > +             led_mode |=3D DAP8211R_LED_FULL_DUPLEX;
-> > +
-> > +     if (!led_mode)
-> > +             return -EOPNOTSUPP;
-> > +
-> > +     return dap8211r_write_ext(phydev, led_reg, led_mode);
-> > +}
->
-> [Severity: Medium]
-> Does returning -EOPNOTSUPP when led_mode is 0 leave the previous trigger =
-bits
-> enabled in the PHY register when all trigger rules are cleared?
->
-> When the last active netdev trigger rule is disabled (rules =3D=3D 0),
-> dap8211r_led_hw_is_supported() returns 0, so set_baseline_state() in
-> drivers/leds/trigger/ledtrig-netdev.c calls hw_control_set() with mode =
-=3D=3D 0
-> to turn off the hardware triggers.  Returning -EOPNOTSUPP here skips
-> dap8211r_write_ext(), leaving the old configuration active in led_reg.
-
-yeah, this check is no need and causes issues with rules =3D=3D 0 case.
-
-I'll fix in v2. Thanks.
