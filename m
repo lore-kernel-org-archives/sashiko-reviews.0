@@ -1,54 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794623244;
-	b=G0Wrl5Vk3zEfypZnzzDi2dAtz8HZ0Ohw/v6mKlAj4CWG9qr4XeQNiV+lG/o0Du4RTOpD
-	 rK+LOFFeYj9/FkiHkdvX4Pi2iDnfu2TPkjc8rmJXq4ub4wZPHOdAgSwl4ez1I6Tpy/uE6
-	 lF2+sKtgUl9teqaxmKR6V82qF2XrvcHEXsWai5bMOJYcni4AOIwD1GYpbwmSrIM6NPPCa
-	 RQH7WQ7TV9NSTe9p5utO46g9Gbzhy8F1Rkaq/N9xVAkKOx8eQ8Pd36s9tmEMQ1IgMOxpP
-	 J4rccio/N0iww0wwX07HgtOxYtYvTLkQp3Cc0FeCgluJlTmDyQS5a9yTkbSCYE8LXuA==
+	t=1794624712;
+	b=XodbeURfLWvVmKxiqEuWQHG5GBUMRoXCwAdGPX9cuIdplvJee11Ao4fabp2LiXa9xYLy
+	 tA8Kg2arsVsxbYYSuVNAhwh4Yzahsu9kJuSghKSm8wVp8gkBPNbUx41nofU4R4GMEhCQi
+	 TcNqLR8ogi1fCKihlFGtpRRhhpIkqtcBZJUerNUay8QFIICPOAIJMaLbAqaCzPo6j80lz
+	 vvBO2Cj6Wdrp98y39UxLw5EXnz9aRHMQIdlKRn9uWw25ELhetJLQehueNqosTPjsyUHKr
+	 DQ6W/VAMLrTkFepC21NZoUIX+ll+ORccpbPHNliFXfGeEvBCAtiCUAZb/JMi3jcAxww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794623244;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=i+Dnnd/gI7iMHU71/x9uL0ktAaO1UMoD8OaDQ/QTl0k=;
-	b=obtTx4tdfO2eredOTbIlPszoYmK42PgpXWQUmFvafPCp+EvjOSM53i6M6fs8GsgLo3LF
-	 cP3chJwtel3lcD+zCRp3viqtIoGAbc5tChXPUyNXgn4xpM3aCSAOrdy9WNn341hcvhUk2
-	 RA1KkOpi1kQCyzMawR3hrVgJwU3aidWI78oSmrlVKfrEL7wnqodCNre2M6oF2VaSIaGfL
-	 FqwHa9VYvQmNKRfE8U4/4oySUGAfyJtb7rOXLU0O4ZuuYyvKCKfaLq1gzS3QCe/iwwSn7
-	 Jil/f7L8ZNi2WWhgrLeWVXyIMpVR9+avFTC+DI/m+7PAuQ56IqPu8Clmd48248uRBUA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794624712;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=MhJIErRaTVfRxe+/WdgTiC6buoyYG4cHph19YbmHDSc=;
+	b=dbUpWXdrN4LznLkDGMXHP70UhjjtbkBTW89ZMUfWGDNy71kjLOp4XQQlI8o72pv+nBDI
+	 lcl3Uu5/7qx1fmW+OTiwtYHGiAvx/ysOEryli63aiy2m8nRLgHxaoSjXEJjitUS2ppJxe
+	 wB1UZC1wG5MbhczE1z8CG5JfnTU2DlxaYckAJfHMkBvKGtgLnFaPLaGHZOcjQCQqckO8I
+	 8G1faoWmkJn1Y1W4egfY6UPVd1aowqkfP6zotCkF39ZrBcZx90k++bWKS3CFrw9kJJgxE
+	 7W79aRUK2gYa3AAiUeAOnvc55DudM/6FS8gSIioQmhGOmQvX7h4JtH59jUsbAHUM+jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Cd357yU2;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fUpgcazj;
+	arc=none smtp.remote-ip=209.85.218.42
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C310606A329
-	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 02:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B668606A323
+	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 02:51:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9B668606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Cd357yU2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7711F000CD
-	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 02:27:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794623243;
-	bh=i+Dnnd/gI7iMHU71/x9uL0ktAaO1UMoD8OaDQ/QTl0k=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=Cd357yU2vwvBmMA5egy+ScUSy42kd2gJ0WqJD+8nojYCnhMkpwnZfVrjWtaLRMpSe
-	 4rp7Rc/PmY5zivdAtlEc6O5+a4R/rp7ALeBS2Mackb/nwVmrIfrBNoG/xKj3XtWiHF
-	 NoFPeo81VdKqlhhIkL4LDyb1ADq7SFcZw1GqEq4LwvMx+FaYV1j7mCyI5oEAkeeXCi
-	 vMUiRH/zpMsR/kgszKp3LPMpNpuxP1wt4gHxP3VO2i7dWOGtDgz8xjhQufc1kBrJQL
-	 hGsZV9KShKlGFsIoL/ZrUgRCdbi3eAgnDhDL+980VjO5aKZMrm2WOhrXKitJwL89J7
-	 SGe2ZVEAvkcEw==
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-91f0274f88cso33787616d6.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 18:27:23 -0800 (PST)
-X-Gm-Message-State: APuU4Z9e2yAvMI/1l0KutA0Eq4zmMX/LJNMaLc2p4oMuU7kN1Vx+DS1A
-	la9ke7YMQTEwGR+M6dLBkjMXQbS48+u0y5JUZVKkj/D3w3FifC2N5vkZNoZQCWVw1WvuRHK2nki
-	rHTMhzbNFBZ4VbKnn+yTt/ZhPtrHQTdo=
-X-Received: by 2002:a05:620a:4686:b0:93c:5bfb:9a80 with SMTP id
- af79cd13be357-9494b9c66c8mr756327785a.3.1794623242680; Fri, 13 Nov 2026
- 18:27:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fUpgcazj
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c50ac25cdd4so102469966b.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 18:51:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794624710; x=1795229510; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=MhJIErRaTVfRxe+/WdgTiC6buoyYG4cHph19YbmHDSc=;
+        b=fUpgcazj08zVSkLAt7nSaOPOrWSL+LoswtZIpl7QOHnGh2xvJcOhCjAUyotZ/dzyrU
+         k0GpAVxWZoDmfegLnZLNpDfDy0Siy2+5gbE8Ti9Xp28qDUIHaa6o67QIkP1gLfuHiyFw
+         o/cqKr6Bh3nxKlmJZTReFnUMys1VOv3lQvHWvyFWzqBxykgbZAtBn2CYCtcrVkhpuY0c
+         ph3DDIerutWN9lwACko1JpXa2t7uEsobfMhHoBOf3tq4bOHbJ5Az+knV6O4iT154YYSl
+         IelED1APT9a9L2ZBqgqPF3AuC5ovTXBc4bdLAPqKRHsEqAa+zrRul3F7P1iWe+1Y8YHE
+         OGBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794624710; x=1795229510;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=MhJIErRaTVfRxe+/WdgTiC6buoyYG4cHph19YbmHDSc=;
+        b=w2Nyr8/0lp9wxaQdSNRFenIn5xY0dXeMBiNDq9Mr+EDD+jlzflbswR1jZLRzxf3RvD
+         kAOaN5A3qbw/TRo64ZTV0OuWNdo2yhzJrEGDhzG7lyc5rPjCVMMGKXKkELF5FvqLoJcs
+         Hr0mWayiTSMCDJEHRYcX4uq9baw5dWbWnww7/nZaofjJuZExlRar8QAcitXMsKuujh+H
+         Zxoi+R9Wb8jpBNE2PFtHBbXK3ikxhbleVHErNsJqVgyqGLTX4s8aMcUqJLTFTIV3Qa7L
+         6UZor1HqA+JeZA3EavuJQVp5XnoHrDv+UCTar9mtlKWE2fMIDjjQvxxlcmdm2ONpAp/T
+         doFA==
+X-Gm-Message-State: APuU4Z/1+jFVtB4Xi1aqHR1Vys9PGFZxhjrX05Jl5KG2zhvrRy9IWkYE
+	RjgcgqYHw9xxyWRP3iwlONuH6VDCHUoj2fxMgPCX9LSpDM0mj4q5ckxeyS+nmGKzqBc=
+X-Gm-Gg: AYBFou076uM2w2LmMHA/yg7H4Ew3OIdkSga+9vZrhs7D/b9QpqMP+o6mQgYKq521Q57
+	p7qR4uyzqTlxlaXtX0bBlJmT4qCYeLJ9W0wTK6m2wAa4X7h6LLougVjgYPKsChxGIUlCsRHyEn2
+	hv0BN7Htv3QuM3M5JWoUsG9QvvLG+taEpEcwe9l1DC/LOn5xcX3R6iLhJIq5X2ODRcBfWPKMlH+
+	vuUkqJUnHJ7MLTx1BggZEojrYXZWfgBjBdIhdwS6jn+5sfYux0AGg/8jvT+HoQkk7j/YRCV7yDI
+	knImicXvLbBdQmClD6CuyK9Q1+znXbd01XALF+eP1r3sG0TbHcj0ZJF1rDDCpTWhqssO0YQeBfk
+	++zZmLV43Py+oeF6+HZmkRdUkmnjn4Pd/IzMrd4iCgcH7nrA8+YCZJRRfOC/+hS4KcZMSwAjnsP
+	1w4b9RnX8C+P6qPYKZXMvux203pdUhMc5GJpDUMTq6MKV7mpW8M2I7C08yxXtX/VaeVTtu7/KfJ
+	dckoHQfvAWqpN2Eg2KB85e7Plcf/92FvsCqyXN+srTbsCb1cevFI9YfdArX/7czL17GgFg3p+HC
+	0iN8boQmXFtYqHWhHhOQg17bSs0yvNkfSChGIY4uddOrNeO+BrtNz8mRC9ImLcvSCl5TaU9BNjO
+	6Pg5ZlXWNsqeSAIuOL3yDT96sCWS9iVfgkAvKke1cfXzM
+X-Received: by 2002:a17:907:3e10:b0:c40:231:6eab with SMTP id a640c23a62f3a-c5096370c31mr367846866b.16.1794624709830;
+        Fri, 13 Nov 2026 18:51:49 -0800 (PST)
+Received: from SMOK.angora-ide.ts.net (mm-156-219-126-178.vitebsk.dynamic.pppoe.byfly.by. [178.126.219.156])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c5095b58981sm166556766b.45.2026.11.13.18.51.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2026 18:51:49 -0800 (PST)
+From: ElXreno <elxreno@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: ElXreno <elxreno@gmail.com>,
+	intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	ville.syrjala@linux.intel.com,
+	ankit.k.nautiyal@intel.com
+Subject: Re: [PATCH 7/7] drm/i915/vrr: Allow VRR with the pipe joiner
+Date: Sat, 14 Nov 2026 05:51:12 +0300
+Message-ID: <20261114025115.2419087-1-elxreno@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <sashiko-outbox-214052@kernel.org>
+References: <20261114014335.2132756-1-elxreno@gmail.com> <20261114014335.2132756-8-elxreno@gmail.com> <sashiko-outbox-214052@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,158 +101,24 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113185541.70203-1-baohua@kernel.org> <20261113185541.70203-3-baohua@kernel.org>
- <sashiko-outbox-214021@kernel.org>
-In-Reply-To: <sashiko-outbox-214021@kernel.org>
-From: Barry Song <baohua@kernel.org>
-Date: Sat, 14 Nov 2026 10:27:11 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4y0KR86ABy5-Qpmk0ws0LMXB3nZTOcnhPL_Orr1_f26-w@mail.gmail.com>
-X-Gm-Features: AclHuK_VcdHScuYuDyl1DzSIbcyPv1Xg9OwGFirFhFZx4rwZiHRRoplKBudRa38
-Message-ID: <CAGsJ_4y0KR86ABy5-Qpmk0ws0LMXB3nZTOcnhPL_Orr1_f26-w@mail.gmail.com>
-Subject: Re: [PATCH v8 02/16] mm/mglru: extract lruvec_populated_min_seq() helper
-To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, linux-mm@kvack.org, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, hannes@cmpxchg.org, 
-	hui.zhu@linux.dev, kasong@tencent.com, kunwu.chan@gmail.com, 
-	liam@infradead.org, lianux.mm@gmail.com, liuxiang.277@bytedance.com, 
-	lyugaofei@xiaomi.com, mhocko@kernel.org, mhocko@suse.com, qi.zheng@linux.dev, 
-	ridong.chen@linux.dev, rppt@kernel.org, ryncsn@gmail.com, 
-	shakeel.butt@linux.dev, surenb@google.com, wangzicheng@honor.com, 
-	weixugc@google.com, yuanchu@google.com, zhangbo56@xiaomi.com, 
-	zhuhui@kylinos.cn, sidchintamaneni@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Nov 14, 2026 at 10:02=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] mm/mglru: off-by-one loop bound in lruvec_populated_min_seq()
-> --
->
-> commit 9751ca1c29ca665233058e3a3c3cfa85cc385872
-> Author: Kairui Song <kasong@tencent.com>
->
-> mm/mglru: extract lruvec_populated_min_seq() helper
->
-> This commit extracts the search for the oldest populated generation of a
-> given type from try_to_inc_min_seq() into a new lruvec_populated_min_seq(=
-)
-> helper bounded by max_seq.
->
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index 400f87fc51e12..27dfbd3ff02b3 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> > @@ -3992,30 +3992,45 @@ static bool inc_min_seq(struct lruvec *lruvec, =
-int type, int swappiness)
-> >       return true;
-> >  }
-> >
-> > +/* Similar to lruvec_evictable_size, return the oldest populated seq o=
-f the type */
-> > +static unsigned long lruvec_populated_min_seq(struct lruvec *lruvec, i=
-nt type,
-> > +                                           unsigned long max_seq)
-> > +{
-> > +     int gen, zone;
-> > +     unsigned long min_seq;
-> > +     struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
-> > +
-> > +     lockdep_assert_held(&lruvec->lru_lock);
-> > +
-> > +     min_seq =3D READ_ONCE(lrugen->min_seq[type]);
-> > +     while (min_seq <=3D max_seq) {
-> > +             gen =3D lru_gen_from_seq(min_seq);
-> > +             for (zone =3D 0; zone < MAX_NR_ZONES; zone++) {
-> > +                     if (!list_empty(&lrugen->folios[gen][type][zone])=
-)
-> > +                             return min_seq;
-> > +             }
-> > +             min_seq++;
-> > +     }
-> > +
-> > +     return max_seq;
-> > +}
-> > +
-> >  static void try_to_inc_min_seq(struct lruvec *lruvec, int swappiness)
-> >  {
-> > -     int gen, type, zone;
-> > +     int type;
-> >       bool seq_inc_flag =3D false;
-> >       struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
-> >       DEFINE_MIN_SEQ(lruvec);
-> > +     unsigned long seq;
-> >
-> >       VM_WARN_ON_ONCE(!seq_is_valid(lruvec));
-> >
-> > -     /* find the oldest populated generation */
-> > +     /* Requires at least MIN_NR_GENS gens for basic functionality */
-> > +     seq =3D lrugen->max_seq - MIN_NR_GENS;
-> >       for_each_evictable_type(type, swappiness) {
-> > -             while (min_seq[type] + MIN_NR_GENS <=3D lrugen->max_seq) =
-{
-> > -                     gen =3D lru_gen_from_seq(min_seq[type]);
-> > -
-> > -                     for (zone =3D 0; zone < MAX_NR_ZONES; zone++) {
-> > -                             if (!list_empty(&lrugen->folios[gen][type=
-][zone]))
-> > -                                     goto next;
-> > -                     }
-> > -
-> > -                     min_seq[type]++;
-> > +             min_seq[type] =3D lruvec_populated_min_seq(lruvec, type, =
-seq + 1);
-> > +             if (min_seq[type] > lrugen->min_seq[type])
-> >                       seq_inc_flag =3D true;
-> > -             }
-> > -next:
-> > -             ;
-> >       }
->
-> [Severity: Low]
-> Should lruvec_populated_min_seq() loop while (min_seq < max_seq) and
-> return min_seq at the end?
->
-> When min_seq =3D=3D max_seq, both the early return inside the loop and th=
-e
-> final return evaluate to max_seq, so scanning all zones of generation
-> seq + 1 under lruvec->lru_lock is redundant work that the original loop
-> skipped.  In addition, if lrugen->min_seq[type] > max_seq on entry (which
-> happens in commit "mm/mglru: lift youngest gen protection for higher
-> priority" when scan_folios() runs at DEF_PRIORITY while get_nr_gens() is
-> MIN_NR_GENS), returning max_seq yields a sequence number below
-> lrugen->min_seq[type].
+On Sat, Nov 14, 2026 at 02:24:32AM +0000, sashiko-bot@kernel.org wrote:
+> Can allowing vrr.enable on joined pipes trigger a NULL pointer dereference
+> in intel_crtc_needs_joined_update() [...]
 
-it seems you are suggesting the below:
+Yes. I can't reproduce it, no third pipe can be lit on the i915 side of
+my machine. v2 will have
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 18a3332c71e9..307a7cbf5bc2 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3995,7 +3995,7 @@ static unsigned long
-lruvec_populated_min_seq(struct lruvec *lruvec, int type,
-        lockdep_assert_held(&lruvec->lru_lock);
++		/* A DDB change can pull in one joined pipe on its own */
++		if (!new_pipe_crtc_state)
++			return false;
 
-        min_seq =3D READ_ONCE(lrugen->min_seq[type]);
--       while (min_seq <=3D max_seq) {
-+       while (min_seq < max_seq) {
-                gen =3D lru_gen_from_seq(min_seq);
-                for (zone =3D 0; zone < zone_limit; zone++) {
-                        if (!list_empty(&lrugen->folios[gen][type][zone]))
-@@ -4004,7 +4004,7 @@ static unsigned long
-lruvec_populated_min_seq(struct lruvec *lruvec, int type,
-                min_seq++;
-        }
+> When a joined pipe's DDB allocation changes while VRR is enabled, does
+> falling back to per-pipe updates in skl_commit_modeset_enables() break VRR
+> push sequencing?
 
--       return max_seq;
-+       return min_seq;
- }
-
-
-it seems to be simpler than the current code. let me give it a try.
-
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261113185541.70=
-203-1-baohua@kernel.org?part=3D2
+It delays, it does not break: without a push the secondary latches at
+the vmax vblank, one frame of up to 1/min refresh later. The cover
+letter lists DDB changes among the commits that keep the per pipe
+sequence.
