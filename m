@@ -1,96 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.215.172
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794672159;
-	b=3er3DsvuANuOxDwOkmQN8geX2GArU/+6FzPUb6D8O6FYr1fy/9OoMOLI5XuIbYBcLbmL
-	 hLKhw55G2qedfaJUyMAL1IRmz7zL5+ob2lml8YIZ3qpcQMGwYYnJfuRbOw3jkrbnSzOlF
-	 13LJRFhjMzkNzWvtBI5AEU3PuEXFhh+Ub7nIqZb+kBYbUMatutDdGUfFYVFmcW/MvF8qQ
-	 ijlV1X+j/3jxlie8oBmH1CRaCCmgYjKHCWzpRLj91F+iB4pX0PKPFrkh4AWs7JzI//pHb
-	 eCq+sK+NvFPJxS9NY/aWgFZePiPRK6m6JjuqcyuYIM7sH5SYkzq12rcr5TOEOXA+oRA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794672159;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=MprJBhH8IjHCr2vOCfVSYowKiGsQhRGImfmMUR1eCcE=;
-	b=Mtebo3g/rE6Dvboe6B5NcSIrUo472QmKk81+dCN4hqTJSSK2lS18/Urj2MKwMkK/9A6W
-	 yZPNSiPkM1bkKMt/ugw/p3bJ9Yn09SqdTqNMj9WSweWrK0Vz/UD9kt7pZFjEDDrFYgePy
-	 1r+/EPVm4eQI5YCh0CHwnnOqI2tUD5zFfHywpMbu3d2t74zbZWgtIePRajZ2r5KWnjaHj
-	 hVrf36CnENlwBKHAz1uuq6ccrGKo/ukzTcQvqLeB4OQAiu3ou1+NyY6gJRsb1iLzFf+82
-	 Cb842iOQSut5Nf8NqbeUNbzU8lAERCdEnpgs2qVzwaCpCQVHynzXc4WqDBwcjZdgVFQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=omnibond.com;
-	spf=pass smtp.mailfrom=omnibond.com;
-	dkim=pass header.d=omnibond.com header.i=@omnibond.com header.a=rsa-sha256 header.s=google header.b=Qny3S3aQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.215.172
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.37
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794672303;
+	b=RGOU1qdFFD31sW4RfuC9JmFarY6BuNdC1TJsdSuTc7IkFbLkOQ4wsHwgK+1Ofj2yanCs
+	 u8RKO5IDK2RrWgczV5+BoTovXQGNCbbAuk+20cS7F8FrQsoDV/Fu/f4z2CFGDJhRbGAO2
+	 XxbqcctpStSbUYWkSw/9wBApvEKz5cT6TCGg2CMdIT3TlpT9rNCcSn2U3i6GnAjHGGOfE
+	 zFCcL5h2gMVRkatGSjWXVKCJy0W3eqs4Q8ism1TWrbeJT8iwJObz84B2qIudh9DD2NH4I
+	 wysqyeVsuwweUCU/AtO+S5o7S8uNWyOBlU6Lx+viABXFAjVNUnPGo5ozTuk7ttZjNMg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794672303;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=xrc6f4LwHmqJ2Y6wJf6uweYofy/WQ8vGfzG/Wo42pjs=;
+	b=X4h2U7eOhbBMdWzAsBqjNyLxqNHUjR/gM51ohRxXNWoxl06QZImTco39WwOZKrdV68gK
+	 3IKDdawB0+nNx77Ff5fVgP6XR3M2NXV0pWuusvALOOUm06nYNvsGoY09+c6ZjqNEM+Oew
+	 1M6L7HdE/XCt5RYzFykVyNbHedNwXATmFfSwO04CfBpQGemzyTLIq2ga8VDO+FK65PN40
+	 CL0f8DdxvH9urrW19AQUnFVoqgnMhTSnYoID2um9cMnYnRYeCdVVaB87Sixi4XQNREfeF
+	 JIK0q2lJpsn2fFoR6oBkpL/JwhFn6WZTuetrmVTawKwpzFvGP1Mf2FwcsDa8KfJZLEw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=Ylw0FlNf;
+	arc=none smtp.remote-ip=35.89.44.37
+Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B6A606A329
-	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 16:02:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19B6A606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omnibond.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omnibond.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CF1606A32D
+	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 16:05:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42CF1606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=omnibond.com header.i=@omnibond.com header.a=rsa-sha256 header.s=google header.b=Qny3S3aQ
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cdac6d19ddaso892198a12.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 08:02:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794672158; cv=none;
-        d=google.com; s=arc-20260327;
-        b=T3tiFxNLp7utTe3ybbxCmACcvSmxgXbG2yxU3hixN/NW27dONptOaAXcrb5eDzW1P6
-         r3uPFZiIoSoFnIYaF/hd3VuLD2ibsPh5jAGTAqd9VYRgfzF1r4wR42YR1Ck89/XHOa+k
-         10vvZHLYNqACcsQFj3Mg9JShMzCGZKf7qpf/1fzYpAjGuufnBwKVpQdXNBf0pLnYtcM2
-         zysvslY4BBujiQoQB2ESgEp9+f/WaFdtKZrLuwO+Z7rFeVTl7o5h8+3uugpSh+YpAtMd
-         WKe+Wa9azYXSYUgUge8+R208wHYHja3jPDeM/slp5HSMR9liyDoQmUX1P0bP9semQzO0
-         MfAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=MprJBhH8IjHCr2vOCfVSYowKiGsQhRGImfmMUR1eCcE=;
-        fh=bQH5cVqupk3QLnVCp3R9ZxudnATx789g9SIdBZwxX1k=;
-        b=O1ah5eoQ7bDZgzc0iIa0rd36yfjp4K5LGBS/MOI7hIpcQ8t7cHBOjWIZWPlY3iwNqh
-         t1gUJUH8m5E4Fzbst103pEeLKjTQnXwWhFxtlu5nslr4S8kqIN6GVCgAtPNhhJ4LO0is
-         4OZVyEpmavlsOeyJIu2n8Bx0OBB2ULo+rdY/R5WP6hdH8DpewtYuZsmCYE0tVYyAiX5N
-         krNXo1/PF+j/UvzY00ZUjUpVmgL52iw4T+Qtn5O85WOrEUd22Jo5UZL86z8e0uva4nd7
-         OPa+2/hLC+Zu1oQ+zL3naL8EaZP/IPlcZFVa6fipM9CcCJdvdEDsiu2Y1K7Vmv0YBuTw
-         ldbw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=omnibond.com; s=google; t=1794672158; x=1795276958; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=MprJBhH8IjHCr2vOCfVSYowKiGsQhRGImfmMUR1eCcE=;
-        b=Qny3S3aQvZnxtGCbly8Os4EoweNyVK1bs8qjTHfOwIe0tDf+GSJBYDwjRbmIZg0Qgl
-         xSTJOg1i/nxdy0GDCrW0Rq/gWmWORtQRICUF0sitVBJalArfaai47e0g5RO2OUP6pTdv
-         mzj0dseTxeOpTbe29Kib3wCaZze1yD7gjofN4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794672158; x=1795276958;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MprJBhH8IjHCr2vOCfVSYowKiGsQhRGImfmMUR1eCcE=;
-        b=lKT4KhHCKrtnQfkx6jaheHMca4JLhWU8mBSDrm8JjAvR7QkZIoaktGAJWdAAjY0Y67
-         W761L8XCwiEkxcIozttLVwjtqvu8t3h0SyY0RjMgWGqGGqPijWnEP1mCgYu3pdgiLvZ8
-         FJv8QIVYgWWIkPU4J2QSKMrfW5O0YXafaHhJWTTG5mlTYZhCHnLxCV/xxS2NBhC+nsC9
-         xK8IX3DYxFN+2cYLd0Q426GxU1kax70XifCWFLXMF4AAbGaWhNGumP8anhNr7JZiOZZA
-         xY4Xp6kY0YzoWKlJZEQKPfHKLCt7l4Zhm+pQU+UFyye/9IxGSN83ZPBtwUGt7bpg4vN2
-         LsqQ==
-X-Gm-Message-State: APuU4Z+59bxyOtDFm9PTGyocL5PF2AHkUOuiMhvimLrxsp1aqVXRMUCL
-	W+Cy8LHCz66IB1EM5j93cDbOIHiLLjF8ouk+HVifzI/DBnNZ1EuT+0rIXRcwnssRO7OqF7AzDXC
-	nVZeLO4wtR5xvhw37OcVAKNs6Smevvw0uY4y/o3Xk
-X-Gm-Gg: AYBFou048kcL+qIb7QicmKRUc1nIegHLKWExDwJDq6nEclSPlvdhBGL8+VAN2vheA0T
-	ItnsZo4r9K4Ya00aBTQrUmFphVbhh3/boXI8tD9rA/eSW9jxzYjA9gAM+OjVSyDDXYrooKfjLtq
-	v8vh1NGIyz4QmaMZA8lGxg4lyHuDhlgrOw4NHV0d3rubLoa/iOdhBlO3LsoOShrj7+TYoMxYCIU
-	8TRA9W7ZC9af0ovrOCYKobpMe7bFilPGFIPSzZC3iPl45yHw0ul3vPO/2oLrGbArJ8Yz0o6u16j
-	gwoQaskq2/M6HTGsCsw4ZrsLWAxFdiGQ0fJN5yzNfRPzylCnGIhI3GysAPhdLydlFQLLLhTPiiT
-	nyunlo/NnSyNIGjeMOe6y8OciibAp9LpD8cchMRlo2PHY2I+k
-X-Received: by 2002:a17:90a:c2c8:b0:3ac:a11a:7c8d with SMTP id
- 98e67ed59e1d1-3b1b0b5e4e3mr5529866a91.59.1794672158207; Sat, 14 Nov 2026
- 08:02:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=Ylw0FlNf
+Received: from eig-obgw-6006b.ext.cloudfilter.net ([10.0.30.211])
+	by cmsmtp with ESMTPS
+	id SF0WxKVKiVK9USGFSxmBQa; Sat, 14 Nov 2026 16:05:02 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id SGFSxX3VAFhzrSGFSxL7VA; Sat, 14 Nov 2026 16:05:02 +0000
+X-Authority-Analysis: v=2.4 cv=JY+8rVKV c=1 sm=1 tr=0 ts=6af886ae
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=gAnH3GRIAAAA:8 a=HNovrmC_vDOIJ51eOUYA:9 a=QEXdDO2ut3YA:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=xrc6f4LwHmqJ2Y6wJf6uweYofy/WQ8vGfzG/Wo42pjs=; b=Ylw0FlNf819d
+	2tTLi2/PJhLPcR/T75nW2gX47/iyPAtpyKtbXtzy6xruR6LGcpe1LVgJxB/LAA6zPAX2tDNAaxhCu
+	IaIBP4jrOVJH5stgTPptscw7tbNwaHRUqQwpbLmNHF/ZinHNOE195tO7l/6WmH44Vefz2PZVTHCb9
+	EhkLj0P4Oo9Vr+iNMTQD0yyiqfYN3cyAG+oXnmQAfso/LP59JDO+ruFu5ORt/13fLjCowzoR8ZDdn
+	HwSDpSm+qMYzhVZP8ixHywIuYRAqXcw97SD5rWeREHJizr6GPaDtGZ19a07riNvlXxnkdgapeMIRu
+	VMR2u3GycKnng1AsmAynQA==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:58038)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xSGFR-0000000021x-3Aqn;
+	Sat, 14 Nov 2026 21:35:01 +0530
+Message-ID: <73c31a61-9176-49ac-84c6-90f9e17a02e2@roeck-us.net>
+Date: Sat, 14 Nov 2026 08:05:00 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,235 +76,147 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113083336.15152-1-jack@suse.cz> <20261113084700.739002-16-jack@suse.cz>
- <sashiko-outbox-212490@kernel.org> <6vifbr2gkvxhq2rer5agf6jwy3lrsjqpkxcrfdnypjqqjao4uw@j2al5rnaailb>
-In-Reply-To: <6vifbr2gkvxhq2rer5agf6jwy3lrsjqpkxcrfdnypjqqjao4uw@j2al5rnaailb>
-From: Mike Marshall <hubcap@omnibond.com>
-Date: Sat, 14 Nov 2026 11:02:27 -0500
-X-Gm-Features: AclHuK8w0nFYPcNdJvOGfFrUolQ8uILgHyz1m2idTjqCICOoU3cjJ06FvFk0mYY
-Message-ID: <CAOg9mSQYDoH0ASc_HCgR=oZrGa1r=wy5OuS9qwX5arjd0bKP1w@mail.gmail.com>
-Subject: Re: [PATCH 03/13] orangefs: Check PAGECACHE_TAG_DIRTY instead of
- I_DIRTY_PAGES inode state
-To: Jan Kara <jack@suse.cz>
-Cc: sashiko-reviews@lists.linux.dev, Christian Brauner <brauner@kernel.org>, 
-	Andreas Gruenbacher <agruenba@redhat.com>, Martin Brandenburg <martin@omnibond.com>, devel@lists.orangefs.org, 
-	Dave Kleikamp <shaggy@kernel.org>, Carlos Maiolino <cem@kernel.org>, David Howells <dhowells@redhat.com>, 
-	Marc Dionne <marc.dionne@auristor.com>, Miklos Szeredi <miklos@szeredi.hu>, 
-	Chuck Lever <cel@kernel.org>, Jeff Layton <jlayton@kernel.org>, Eric Biggers <ebiggers@kernel.org>, 
-	Jaegeuk Kim <jaegeuk@kernel.org>, linux-fscrypt@vger.kernel.org, 
-	Anna Schumaker <anna@kernel.org>, Mike Marshall <hubcap@omnibond.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] hwmon: (pmbus/ltc2978) Add support for LT7175 and
+ LT7176P
+To: sashiko-reviews@lists.linux.dev,
+ Christopher de Guzman <christopher.deguzman@analog.com>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20261110-upstream-lt7175-lt7176p-v2-0-dd60d28383bf@analog.com>
+ <20261110-upstream-lt7175-lt7176p-v2-2-dd60d28383bf@analog.com>
+ <sashiko-outbox-206843@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <sashiko-outbox-206843@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xSGFR-0000000021x-3Aqn
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:58038
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 22
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfKNjIYcEV8gjtyw3BRZXbhBDWyMzxDAhlHPmkP/TucEU3ShLHzbLfTmiEo038PtVF3JnlHR1mP8B2XKD9XWZu4IU41CV4zeYO69LwH20LqNJaYuZwb4J
+ FU9cTDXPF/AP+79sSGuYLLewKGpz8EJZcTNGkrzPPlpP9t11EZ51Ae2VcOuOHaEw64ptrgmCKwUNZOWYz1U3okKTc22VXBZH3TBHq+hqZp1zpSXaT/JIDrdN
 
-I worked through Jan's patch and sashiko-bot's review
-with grok build, and came up with this... If what I've
-got here passes muster, I'm thinking Jan should still
-be marked as Author: and Signed-off-by:  it is his patch
-with a little change, but I wouldn't want to attribute
-anything to him that he doesn't want attributed, so
-let me know... My version probably won't feed through
-"git am" since I'm using gmail. I'm not sure how to add
-a message to a thread with "git send-email", even
-when I add in the message-id...
-
-
-PAGECACHE_TAG_DIRTY is the authoritative source of dirty folios.
-I_DIRTY_PAGES can stay set after filemap_fdatawrite(), which is how
-orangefs_flush() and orangefs_fsync() write the mapping, so a getattr
-keeps serving the cached inode after the folios are clean.
-
-The dirty tag alone is not enough. folio_start_writeback() clears it
-and sets PAGECACHE_TAG_WRITEBACK before wait_for_direct_io() sends the
-write. OrangeFS writepages does not return until that call finishes, so
-I_DIRTY_PAGES still covers the round trip today. A getattr that looks
-only at the dirty tag stores the server's old size while the write is
-in flight. orangefs_writepage_locked() then reads that size and shortens
-the write.
-
-Hold the cached attributes while either tag is set.
-
-
----
- fs/orangefs/orangefs-utils.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
-
-diff --git a/fs/orangefs/orangefs-utils.c b/fs/orangefs/orangefs-utils.c
-index 9ab1119ebd28..72fa9865bb86 100644
---- a/fs/orangefs/orangefs-utils.c
-+++ b/fs/orangefs/orangefs-utils.c
-@@ -233,6 +233,20 @@ static int orangefs_inode_is_stale(struct inode *inode=
-,
-  return 0;
- }
-
-+/*
-+ * Dirty and writeback tags, not I_DIRTY_PAGES. filemap_fdatawrite()
-+ * leaves that flag set after the folios are clean. folio_start_writeback(=
-)
-+ * clears the dirty tag before wait_for_direct_io() returns, so the
-+ * writeback tag is what covers the server write.
-+ */
-+static bool orangefs_writeback_pending(struct inode *inode)
-+{
-+ struct address_space *mapping =3D inode->i_mapping;
-+
-+ return mapping_tagged(mapping, PAGECACHE_TAG_DIRTY) ||
-+       mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK);
-+}
-+
- int orangefs_inode_getattr(struct inode *inode, int flags)
- {
-  struct orangefs_inode_s *orangefs_inode =3D ORANGEFS_I(inode);
-@@ -247,7 +261,8 @@ again:
-  spin_lock(&inode->i_lock);
-  /* Must have all the attributes in the mask and be within cache time. */
-  if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)) ||
--    orangefs_inode->attr_valid || inode_state_read(inode) & I_DIRTY_PAGES)=
- {
-+    orangefs_inode->attr_valid ||
-+    orangefs_writeback_pending(inode)) {
-  if (orangefs_inode->attr_valid) {
-  spin_unlock(&inode->i_lock);
-  write_inode_now(inode, 1);
-@@ -281,13 +296,14 @@ again2:
-  spin_lock(&inode->i_lock);
-  /* Must have all the attributes in the mask and be within cache time. */
-  if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)) ||
--    orangefs_inode->attr_valid || inode_state_read(inode) & I_DIRTY_PAGES)=
- {
-+    orangefs_inode->attr_valid ||
-+    orangefs_writeback_pending(inode)) {
-  if (orangefs_inode->attr_valid) {
-  spin_unlock(&inode->i_lock);
-  write_inode_now(inode, 1);
-  goto again2;
-  }
-- if (inode_state_read(inode) & I_DIRTY_PAGES) {
-+ if (orangefs_writeback_pending(inode)) {
-  ret =3D 0;
-  goto out_unlock;
-  }
-
-On Fri, Nov 13, 2026 at 5:34=E2=80=AFAM Jan Kara <jack@suse.cz> wrote:
->
-> On Fri 13-11-26 09:00:01, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
-> > - [High] orangefs: stale i_size overwrite during writeback in
-> >   orangefs_inode_getattr()
->
-> ...
->
-> > > diff --git a/fs/orangefs/orangefs-utils.c b/fs/orangefs/orangefs-util=
-s.c
-> > > index 9ab1119ebd28a..4c4036f470cdd 100644
-> > > --- a/fs/orangefs/orangefs-utils.c
-> > > +++ b/fs/orangefs/orangefs-utils.c
-> > > @@ -247,7 +247,8 @@ int orangefs_inode_getattr(struct inode *inode, i=
-nt flags)
-> > >     spin_lock(&inode->i_lock);
-> > >     /* Must have all the attributes in the mask and be within cache t=
-ime. */
-> > >     if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)=
-) ||
-> > > -       orangefs_inode->attr_valid || inode_state_read(inode) & I_DIR=
-TY_PAGES) {
-> > > +       orangefs_inode->attr_valid ||
-> > > +       mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)) {
-> > >             if (orangefs_inode->attr_valid) {
-> > >                     spin_unlock(&inode->i_lock);
-> > >                     write_inode_now(inode, 1);
-> > > @@ -281,13 +282,14 @@ int orangefs_inode_getattr(struct inode *inode,=
- int flags)
-> > >     spin_lock(&inode->i_lock);
-> > >     /* Must have all the attributes in the mask and be within cache t=
-ime. */
-> > >     if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)=
-) ||
-> > > -       orangefs_inode->attr_valid || inode_state_read(inode) & I_DIR=
-TY_PAGES) {
-> > > +       orangefs_inode->attr_valid ||
-> > > +       mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)) {
-> > >             if (orangefs_inode->attr_valid) {
-> > >                     spin_unlock(&inode->i_lock);
-> > >                     write_inode_now(inode, 1);
-> > >                     goto again2;
-> > >             }
-> > > -           if (inode_state_read(inode) & I_DIRTY_PAGES) {
-> > > +           if (mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)=
-) {
-> > >                     ret =3D 0;
-> > >                     goto out_unlock;
-> > >             }
-> >
-> > [Severity: High]
-> > Can orangefs_inode_getattr() overwrite inode->i_size with a stale size =
-from
-> > the server while pagecache writeback is in flight?
-> >
-> > When a buffered write extends a file in orangefs_write_end(), inode->i_=
-size
-> > is updated in memory and the folio is marked dirty, while the server on=
-ly
-> > learns the new size once the writeback RPC in wait_for_direct_io()
-> > completes.  Previously, I_DIRTY_PAGES stayed set in
-> > __writeback_single_inode() across the entire do_writepages() call.
-> > However, folio_start_writeback() clears PAGECACHE_TAG_DIRTY and sets
-> > PAGECACHE_TAG_WRITEBACK before wait_for_direct_io() sends the write to =
-the
-> > server:
-> >
-> > CPU0                                  CPU1
-> > orangefs_writepage_locked()
-> >   folio_start_writeback(folio)
-> >     /* clears PAGECACHE_TAG_DIRTY,
-> >        sets PAGECACHE_TAG_WRITEBACK */
-> >                                       orangefs_getattr()
-> >                                         orangefs_inode_getattr(...,
-> >                                             ORANGEFS_GETATTR_SIZE)
-> >                                           /* PAGECACHE_TAG_DIRTY is fal=
-se */
-> >                                           service_operation(GETATTR)
-> >                                           inode->i_size =3D ...; <-- st=
-ale size
-> >   len =3D i_size_read(inode);
-> >   wait_for_direct_io(ORANGEFS_IO_WRITE, ...)
->
-> Yeah, that's a good catch but I think that this is pre-existing issue. Wh=
-en
-> we don't wait for writeback to complete in __writeback_single_inode()
-> (which happens for sync(2) or for WB_SYNC_NONE writeback), we can clear
-> I_DIRTY_PAGES before writeback completes as well. So this patch just make=
-s
-> the race window larger.
->
-> But I agree with adding a check for PAGECACHE_TAG_WRITEBACK into the
-> conditions as well to close the race window altogether. Another option
-> would be to sample i_size before calling folio_start_writeback() but I fi=
-nd
-> that too subtle, it would require some barriers etc., so I won't do that
-> unless orangefs guys insist.
->
->                                                                 Honza
->
-> >
-> > As a result, any concurrent getattr with non-zero flags (such as
-> > orangefs_getattr() or orangefs_file_llseek()) fetches the pre-write siz=
-e
-> > from the server and clobbers inode->i_size, which also causes
-> > orangefs_writepage_locked() (or a subsequent batch in
-> > orangefs_writepages_work()) to clamp the write length to the stale size=
- and
-> > truncate the buffered write.
-> >
-> > Should these checks also test mapping_tagged(inode->i_mapping,
-> > PAGECACHE_TAG_WRITEBACK) (or mapping_writably_mapped() / a helper cover=
-ing
-> > both PAGECACHE_TAG_DIRTY and PAGECACHE_TAG_WRITEBACK)?
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261113083336.=
-15152-1-jack@suse.cz?part=3D3
+On 11/10/26 02:14, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] hwmon: (pmbus/ltc2978) IEEE-754 peaks compared as LINEAR11 in
+>    ltc_get_max()
 > --
-> Jan Kara <jack@suse.com>
-> SUSE Labs, CR
+> 
+> commit 201c09e7f06ead2d62e423cba00a536dde067159
+> Author: Christopher de Guzman <christopher.deguzman@analog.com>
+> 
+> hwmon: (pmbus/ltc2978) Add support for LT7175 and LT7176P
+> 
+> This commit adds support for the LT7175 and LT7176P PMBus buck regulators
+> and matches PMBUS_IC_DEVICE_ID strings against ltc2978_id[] for the LT7170
+> family.
+> 
+>> diff --git a/drivers/hwmon/pmbus/ltc2978.c b/drivers/hwmon/pmbus/ltc2978.c
+>> index aea7b6c93e74b..888db3213a01e 100644
+>> --- a/drivers/hwmon/pmbus/ltc2978.c
+>> +++ b/drivers/hwmon/pmbus/ltc2978.c
+> [ ... ]
+>> @@ -762,6 +763,8 @@ static int ltc2978_probe(struct i2c_client *client)
+>>   	switch (data->id) {
+>>   	case lt7170:
+>>   	case lt7171:
+>> +	case lt7175:
+>> +	case lt7176p:
+>>   		data->features |= FEAT_CLEAR_PEAKS | FEAT_NEEDS_POLLING;
+>>   		info->read_word_data = ltc3883_read_word_data;
+>>   		info->pages = LTC3883_NUM_PAGES;
+> 
+> [Severity: Medium]
+> Does routing lt7175 and lt7176p (along with lt7170 and lt7171) through
+> ltc3883_read_word_data() corrupt peak readings when the data format is
+> ieee754?
+> 
+> ltc3883_read_word_data() -> ltc3880_read_word_data() ->
+> ltc2978_read_word_data_common() reads PMBUS_VIRT_READ_IOUT_MAX,
+> PMBUS_VIRT_READ_VIN_MAX, and PMBUS_VIRT_READ_TEMP_MAX via ltc_get_max():
+> 
+> drivers/hwmon/pmbus/ltc2978.c:ltc_get_max() {
+>      ...
+> 	ret = ltc_read_word_data(client, page, 0xff, reg);
+> 	if (ret >= 0) {
+> 		if (lin11_to_val(ret) > lin11_to_val(*pmax))
+> 			*pmax = ret;
+> 		ret = *pmax;
+> 	}
+>      ...
+> }
+> 
+> lin11_to_val() treats bit 10 as the two's-complement mantissa sign bit.
+> In IEEE-754 binary16, bit 10 is the least-significant bit of the biased
+> exponent, so positive values with an odd biased exponent (such as
+> temperatures in [64, 128) C or voltages in [16, 32) V) decode as negative
+> and are discarded in favor of smaller readings with an even biased
+> exponent.
+> 
+
+I have not heard back from the author. Without looking into details myself,
+I assume that the problem is real and will need to be addressed.
+
+Thanks,
+Guenter
+
