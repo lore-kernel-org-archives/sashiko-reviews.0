@@ -1,99 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794662324;
-	b=P6gOwzVWHKZNYTgnjnFp+KZ1/G++1fUEB/UJc1Azdu13H+hBLwjaT4MIxlm9IiqWbSUX
-	 oNdlqS3QuBLup0w97oGpOe3tE6lPpRw/PDyTXa66y6ZTPdDXVYuWVvfvs/Amuc2TBuQhU
-	 i8WZbxkD6fenqgAEH5jZORLKUx25arxlnTv027/AWH55jGY1fCEz7ZS1o8Q1xplfDMN6B
-	 s5Ku2GYXERk6vuGNYmNbtA19Va9bGQsrgmV9tnU//8YVWShGTMwEoiJFjLY5icTbUIBCx
-	 cBIHDspIX6ae9ObIeXN32GT4lUgI9ggE2eNlnJ8oWjs/ZpxI2HNp8dWS+ByDKPcgyBA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794662324;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794663297;
+	b=LyXxCiqc2m9J7YDeduvyzhTHOSdvHMT+xma32kElr6gP4jmqcK3j+vsNdNDuafCdacII
+	 gKrfjCBtfff7ozgEGj56xU1wf3RhqMuoUIggbbOFjNkBwKY72FAwxSS1+WlE/GttZgDBv
+	 ITEDlx17jQPntSetwsG0owloWx/W1PYcEVl5pxSkIYXVmJ/8YG7TruZkN2VhVCnh8lt29
+	 vdCM5aOjRXqE2FHFRzz3xSCTAa720R9C96DTDD/JYSdJdmbpxC7kK/qAc7fyts5ccWc98
+	 BPZoefIPIchvNwSMP4DQA2Is2WAM6rQPMdXj8yeOASe0HYnWrLB7No+2WvnzinIryaQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794663297;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=58b7G1H1JueuCMWy4Xbmh+zF/T7ZKS+k82iVJRVD894=;
-	b=Bsxc0o4eZmJLTLqPTlf9Tt0HQszi3HblU34UsgfbllHexoC32Y1arfKhTjs6QIMsnjZF
-	 F3O84iopfoRitSdJ6tpF10tDqmvhLdYh8BGlE8fBQ3ATmiEUVfpK4X8PqWeN0Pmr4Xbkm
-	 bH9yulBOpkvejMrNderL6FusFm5QrQN8EjKUBFXwK3qOBQjN/q0H+BkzIq8vrPB1BRYqe
-	 YSqq20FYs7FJh4P4bFUtzCNNodbhcmeR5x8b9wjCRcwV+c0BVOG4DnRe+ablZgqTaSYsW
-	 DxjV8tc9f9hlTIZvRGyY6URS7E50/3oNx6ew9cf9JQ9xYpxmpddmKpWU6H/RwavewsQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QEpyu2XX;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=iITVNj1hA8VysTM3SegZsQpdbGDdaeAWi8dvud7vL4Q=;
+	b=4IRpVLfbiN/ZGQyc4SpQVBABvB5TCGFk0QKR74cOQ6G2/0B92k6IFwa1KrpeB93sv23v
+	 aVyKN39Pn20h15zm4sUpuFECAuGWOS4ZoEE0uDuRFIXHMo5+Z5BHRSAhzXNy0nTc1jCHA
+	 vOMyFt8zUc6z5jfxFbIsu4QKOBfYk4qvOJSijhJMzK8Ar8pZKZERLlfNAPPrQMz35R8+5
+	 JLOYKS1IgyrkLJVjqpbrfQujRvnjUKwLYVdXdK01uZpwTQRXF/TQ/IcUOK2T483JqL5mq
+	 5oVkwv4E76rPljn3dPjapQ3i7TJOdLw32VvdAdE/v0wnyJbRtJ3Y8Uth046Ant7Wipg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=i6tHhzXQ;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46E4606A880
-	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 13:18:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A46E4606A880
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2064F606A329
+	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 13:34:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2064F606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QEpyu2XX
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c45551fa84eso436300266b.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 05:18:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794662322; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZMvQQtrp3RAKS2MqseqZMvcHxdv3o65ZuVJgvFrapYTTQFDGgwBI1d/7lWGuOyiv05
-         A3zvIFV4T86TXgnuJYGiWvelUQJ6+wWqGFFUFvuvNqNoePTJ59HLhAzlQqisaKKgHr/U
-         suPoTujIC9ad36WVPuY3A377UIUmgUGhxrB2FeNphP4k+/XwJTNIRk3DSfA43CKrje2S
-         CKblQV4u7EByN9yOC7mFQITNLz96XAj53u8S7AQRkQ2Tdt/zcGDZcP2v47wVsCx1gKAx
-         k8mfcx0fdjQj4rSg1pA+kHLzRuQebjIdBuwCHejRoa3nk9PsHpBYq+YamjQYXpriUEsG
-         QsKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=58b7G1H1JueuCMWy4Xbmh+zF/T7ZKS+k82iVJRVD894=;
-        fh=+1h7SXQ5DHmI21+Yvraf6m2PAXvkxbyN0ishmZ3r4eo=;
-        b=sxRfLgQsYuA2PApc0qIb2NVNEI/RC43WXBs5Aa0vKJORx+vWnPigsjv2RAoRbYXphm
-         tGdtj8BqCy+oEk3GbrMjd6fODhjiKl5YBjf45c3Gn0sqWbw1FnzRFd7go4yqFVT6lWHP
-         xOU+rQenAXtE4V1yVogOAxTanMVumnyuV6OMUlLRpeegKEJangGxYoHnFciyvnKnhAsh
-         zV1JAWEabR9vqxZ5+lK+brWbuNoGwisNw6BWTRwZS49Ql2aF1Gvao6Ezrr46Vtn4NUW5
-         fx3PWvrDb0rN4ThKJJZkGw/taBeS5i2n/eBaY3pfFMNyleuNgiDj1pVS12/rFYu/lCnO
-         QKJg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=i6tHhzXQ
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a3517554f7so24017955e9.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 05:34:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794662322; x=1795267122; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=58b7G1H1JueuCMWy4Xbmh+zF/T7ZKS+k82iVJRVD894=;
-        b=QEpyu2XXBT1EedqhFWPZxxYtLtvpI0XjV9Cb5M19dl1+K1kcr4SNo+oZTKs3a8d46V
-         47y+i3gKuny3hITHCaLaSgG6jHEmXFcVbPFXi2cbwOD9mjKbSf4XwUF88mIBDh99IIly
-         /B4Zj76CZL1s36H41Qu2weMltqm6pxga6BSWpGtUk6dkGcaAr3tuQoGSM5Fhx37uSkHI
-         yDYFkI3E+mQ9pbNqL3K5KkWKlZkl5ohQ9NIkX+MJ1GmFLCcKGiOuAFqZACkEXQHErO7g
-         h6XDQEkWa9qSjMv7I/mBSBkFWlE8CEcGwFDHPIhabFbYQRvxRQf8MA+6tglRNWwFO7Rw
-         DcCg==
+        d=google.com; s=20260707; t=1794663295; x=1795268095; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=iITVNj1hA8VysTM3SegZsQpdbGDdaeAWi8dvud7vL4Q=;
+        b=i6tHhzXQ8oMJY9Njf7t/l0MGrIEtnepzdwP29FCBRq6cNktLBCtPYXwyBELc9UV4pg
+         i8aLH/yIDLJq1S+67YnDXQmFgAP7V7a585wNHmrBlw8qZhRtPSJzNDz1EcSO2Ss8xYUn
+         6ThVn3Rafvn60ixVzSi2RfsKsFOgpVuWXIU3jMyxclu92UP/F27JTsg+aLH9uwid/PaU
+         2L1tXa1IYBL29zQlF/+kjVdkHOW+xoS5Pd/7r7/8b6JrqdB44Miljym1TFD3tb8dpJNx
+         /2iN4lvXyCDq/X/m6FC3mzsKnccVvUM6k4NH5DIPVWXaFi7UUYlWpByBAl5fHUMCSBJD
+         Jsrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794662322; x=1795267122;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=58b7G1H1JueuCMWy4Xbmh+zF/T7ZKS+k82iVJRVD894=;
-        b=vvX14IniL6GGL8maTES/crkCLKpZYw3xI23QuO6zbCP+OXdblEyL0Nu3YhdyHvXOE7
-         PsKHK8WvAAU2Q9o1KKIxtaUPD3uE6wJqk92ECCP9fsA3KEElgQ/CzW1va1ZB/QFprAnH
-         e9mbtEy2Eup37+ZvaSlawpPDVT1C1jcjW2lCb0tDcZAWidCJ0DvDeU009PPEbdUdTZpe
-         aQ/SVBWKrNFrlDsxfT8eYcmC8ok3EkEHv5czp2swOaSRxqFYet4b67DvF78SDlxFDevs
-         caRtVRWs5YTA3Lqv4LnoX3dBQYksdBxu1syQ5rASn02ubr3K47hyAammqUhIVfmDbYOy
-         DjVQ==
-X-Gm-Message-State: APuU4Z+xmaUUzsdxr7KdH6Y1IXALO+HRA/lM+cssLVeFlJOMGwSMX1Vz
-	DnLwn5zuYm82fbHbAlsqM6nMjYU39GqjXBsLHKXSVNXjHf5s8zI+JVBBO3bh52P/ZbGqTr6C6Da
-	Oe47WDvEIphK5qht0x1FaPBUxyWi418jQwA==
-X-Gm-Gg: AYBFou3hl/+8tt1VrTR994m4Qo7OuKdZXU+p2DJkF6DAl36h7+VfLrScdptA+3Rul9B
-	qj+dTB3ouqmB8gsgc4o4KPvzp5MnCzo/2gdMrL6Zjd58ynosPF/xXDKVBFoxnCKJP+174fqdhWf
-	JFegf/q7rlrXlg68Tqz4FD9r5ZsssBTThW3PdWn3FthCcoANqHLFqHpYNIw2jAeAMNSY5UL7ljE
-	BbytWXVVOP6JqYCckkylVpHc35X6kGsiWGE2UogoXsKyyDY7u6tqJ2YTSDEeD7+t2rdTxQzK8Yi
-	nv5IRSP+YzSwESyC2V7Gm+9J+sSktG/mvOv61waw+3NX8oa3OFBOV+hnScPNl5c15XyHL1z+Ucn
-	C1749d97xVzEbxOgmwx9v7DLd0tA9vUSB1gmStg==
-X-Received: by 2002:a17:907:60d3:b0:c31:8441:35ff with SMTP id
- a640c23a62f3a-c50968355eemr493838166b.48.1794662321796; Sat, 14 Nov 2026
- 05:18:41 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794663295; x=1795268095;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=iITVNj1hA8VysTM3SegZsQpdbGDdaeAWi8dvud7vL4Q=;
+        b=ldCloNFUU2tw+fDRgYLScoxOl7vg6jbWuE2F3IT6GpdZB07Ach4s/GqDOlNsKjCt7Z
+         mzOuVr9HIKr3Pwi4CWTqIV20zBtmq1ocatreBgdEmqet1kdnBNKei0WGEC9SZr79BJ4R
+         ODPVQM3coZJnhBKM9tCq3dElpaPcno5zqu8qYrn6ag4Av1oEd6tz3uhxugpWlfVpMCdV
+         ekElUFf4HbTYtVWywilH+0yZHEndla8jj0c9K/eMcA0Bx1n7YmWnC5PRfWWFg6JTPQY2
+         gdHmzACNV8b4DN5f1Vb+THsea3o/cedeO2Dm6bVjTu1VHbQMfEIbkVIgQ+Kgv805Z7Wg
+         9klQ==
+X-Gm-Message-State: APuU4Z/2ZgaYQ6PoIYTqrvEJBcjALnoefKijqBEfRTDpcLfflB2Yy861
+	b3Scd+dVTEuhGAqqtdoL48m0qlXbUWH/4L7gUv4PfffMOcuLkxcXdiQeUA2WvUGCpY2bcvBBC6E
+	/KtozoQ==
+X-Gm-Gg: AYBFou3dPxboZyZBIvlfoef1k323CTawH9pR5lCAsz+5oC/Q0zHal1u+Ru+EMoEz3S2
+	qOt5lvdkPSHJJl3H0bjd+mgzpGFZ08i70gPuh9aa7HCYYq4Q3vmfQasmwdVUCfmeqw8nIPgp+C3
+	0k2SvplHbOPXHW4iddeAIIbA775HwEtluj3wcIxBjQZHc0pQo+4uSMuK21HwRB6GAVP8oFT3hyr
+	rbJP0DLRR7N1ocSU4SVlcWO0zZvPPl5GH9VilzazDwmGvOjVh+ekO2OAxZ4xnC2gJ4zrwfZiu7I
+	d+ENDuE0aMsNAGPKvuwD+fLSLCpb3YTXmsHUG3D+jDXjcyirTzILErdJKf0Ck2KXUxd0sZAQ7d4
+	4hwtd7rdJa2wcxF2ToWfiRp7i0HpJsjWn4JBBstvHyUDxr3TAFXA8f97EEx3HXyGT1COt69p3ZQ
+	UEpgxzXmYquY/T6y5KGPE/U8HSScG6yg2kegVJqsd6UQFKD6ixugz9I5pS5iJnzTU+lNvqDYe8J
+	pNk/NpJGUC1JmqXw+6ZYTEts35XXUQOwilFHJGcnsnPdcVLEPajwPbfPKYfJirfxWiuOqVMtsfA
+	b/7EANbVFQPc59gAQNfS9PTSz648CS2e0CRAjfYIvyzfza00BnQucIy0D31FPFdBtA==
+X-Received: by 2002:a05:600c:3b9d:b0:4bb:5dbf:af06 with SMTP id 5b1f17b1804b1-4bb5dbfb103mr85932305e9.9.1794663294856;
+        Sat, 14 Nov 2026 05:34:54 -0800 (PST)
+Received: from google.com (0.182.34.34.bc.googleusercontent.com. [34.34.182.0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4e2adf53sm237952865e9.15.2026.11.14.05.34.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2026 05:34:54 -0800 (PST)
+Date: Sat, 14 Nov 2026 13:34:50 +0000
+From: Vincent Donnefort <vdonnefort@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 3/4] ring-buffer: Order remote page commit with data
+ and timestamp
+Message-ID: <avhjevfc0CuHyvWv@google.com>
+References: <20261113152729.837429-1-vdonnefort@google.com>
+ <20261113152729.837429-4-vdonnefort@google.com>
+ <sashiko-outbox-213099@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,42 +98,80 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113110546.173624-1-a.shimko.dev@gmail.com>
- <20261113110546.173624-2-a.shimko.dev@gmail.com> <sashiko-outbox-214381@kernel.org>
-In-Reply-To: <sashiko-outbox-214381@kernel.org>
-From: Artem Shimko <a.shimko.dev@gmail.com>
-Date: Sat, 14 Nov 2026 16:18:30 +0300
-X-Gm-Features: AclHuK8H_C_3YSuNOFdtrgvuWk2DTznaljzjLDq-5of7gWhmdigWJCNEeRSV-sc
-Message-ID: <CAOPX746fNHakC7O-scwkWTTvgovmbqvMLxbBszQr3vQyqn-8jA@mail.gmail.com>
-Subject: Re: [PATCH net-next 1/3] dt-bindings: net: dptel,dap8211r: add led nodes
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-leds@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org, lee@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-213099@kernel.org>
 
-On Sat, Nov 14, 2026 at 2:06=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Nov 13, 2026 at 03:34:59PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [Critical] tracing: out-of-bounds write in simple_rb_reserve_next()
+>   [1]
+> --
+> 
+> commit b0c88540d75d93c7a85149df8d188a1bfaa9a89e
+> Author: Vincent Donnefort <vdonnefort@google.com>
+> 
+> ring-buffer: Order remote page commit with data and timestamp
+> 
+> This commit adds memory barriers between page::commit, page::data, and
+> page::time_stamp for remote ring-buffers and defers updating read_stamp
+> until committed data is present on the reader page.
+> 
+> > diff --git a/kernel/trace/simple_ring_buffer.c b/kernel/trace/simple_ring_buffer.c
+> > index 5f14ba152fba6..2dddaef638dc6 100644
+> > --- a/kernel/trace/simple_ring_buffer.c
+> > +++ b/kernel/trace/simple_ring_buffer.c
+> > @@ -307,6 +307,11 @@ EXPORT_SYMBOL_GPL(simple_ring_buffer_reserve);
+> >   */
+> >  void simple_ring_buffer_commit(struct simple_rb_per_cpu *cpu_buffer)
+> >  {
+> > +	/*
+> > +	 * Order page::data and page::time_stamp before page::commit. Paired
+> > +	 * with __rb_get_reader_page_from_remote().
+> > +	 */
+> > +	smp_wmb();
+> >  	local_set(&cpu_buffer->tail_page->page->commit,
+> >  		  cpu_buffer->tail_page->write);
+> 
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but can
+> simple_ring_buffer_reserve() return a pointer whose reservation overflows
+> tail->page->data [1]?
+> 
+> In simple_rb_reserve_next(), when an event exceeds PAGE_SIZE -
+> BUF_PAGE_HDR_SIZE, simple_rb_move_tail() rotates to an empty page where
+> !tail->entries is true, and event_size is assigned to tail->write without
+> checking that it fits on a fresh page:
+> 
+> kernel/trace/simple_ring_buffer.c:simple_rb_reserve_next() {
+> 	...
+> 	if (unlikely(write > (PAGE_SIZE - BUF_PAGE_HDR_SIZE)))
+> 		tail = simple_rb_move_tail(cpu_buffer);
+> 
+> 	if (!tail->entries) {
+> 		tail->page->time_stamp = timestamp;
+> 		time_delta = 0;
+> 		ts_ext_size = 0;
+> 		write = event_size;
+> 		prev_write = 0;
+> 	}
+> 
+> 	tail->write = write;
+> 	...
+> }
+> 
+> Writing the caller's payload to the returned event pointer then writes past
+> the end of the page buffer and corrupts adjacent memory.
+> 
+> [1] https://sashiko.dev/#/bug/linux-b2128783-1787-4f13-b863-090db5378e74
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261113152729.837429-1-vdonnefort@google.com?part=3
 
-> [Severity: Medium]
-> Does this leds schema pass dt_binding_check or enforce the 0..2 LED index
-> limit?
->
-> The leds object omits additionalProperties: false (as well as
-> #address-cells and #size-cells), and ^led@[0-2]$ sets
-> additionalProperties: true without a compatible property, both of which
-> fail DT meta-schema validation.
->
-> Because ethernet-phy.yaml# is included in allOf and already defines leds
-> with ^led@[a-f0-9]+$, leaving additionalProperties unset on leds allows
-> child nodes outside ^led@[0-2]$ (such as led@3) to pass validation via
-> ethernet-phy.yaml#, while reg under ^led@[0-2]$ only specifies maxItems: =
-1
-> without restricting the value to 0..2.
->
-> Either drop the leds property block to inherit the definition from
-> ethernet-phy.yaml#, or define #address-cells, #size-cells, and
-> additionalProperties: false on leds and reference
-> /schemas/leds/common.yaml# with unevaluatedProperties: false and
-> maximum: 2 on reg under ^led@[0-2]$.
+There's absolutely no existing event that is big enough to a ring buffer page!
 
-Will fix it.
+-- 
+Vincent
