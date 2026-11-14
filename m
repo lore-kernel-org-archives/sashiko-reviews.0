@@ -1,72 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.37
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794672303;
-	b=RGOU1qdFFD31sW4RfuC9JmFarY6BuNdC1TJsdSuTc7IkFbLkOQ4wsHwgK+1Ofj2yanCs
-	 u8RKO5IDK2RrWgczV5+BoTovXQGNCbbAuk+20cS7F8FrQsoDV/Fu/f4z2CFGDJhRbGAO2
-	 XxbqcctpStSbUYWkSw/9wBApvEKz5cT6TCGg2CMdIT3TlpT9rNCcSn2U3i6GnAjHGGOfE
-	 zFCcL5h2gMVRkatGSjWXVKCJy0W3eqs4Q8ism1TWrbeJT8iwJObz84B2qIudh9DD2NH4I
-	 wysqyeVsuwweUCU/AtO+S5o7S8uNWyOBlU6Lx+viABXFAjVNUnPGo5ozTuk7ttZjNMg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794672303;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=xrc6f4LwHmqJ2Y6wJf6uweYofy/WQ8vGfzG/Wo42pjs=;
-	b=X4h2U7eOhbBMdWzAsBqjNyLxqNHUjR/gM51ohRxXNWoxl06QZImTco39WwOZKrdV68gK
-	 3IKDdawB0+nNx77Ff5fVgP6XR3M2NXV0pWuusvALOOUm06nYNvsGoY09+c6ZjqNEM+Oew
-	 1M6L7HdE/XCt5RYzFykVyNbHedNwXATmFfSwO04CfBpQGemzyTLIq2ga8VDO+FK65PN40
-	 CL0f8DdxvH9urrW19AQUnFVoqgnMhTSnYoID2um9cMnYnRYeCdVVaB87Sixi4XQNREfeF
-	 JIK0q2lJpsn2fFoR6oBkpL/JwhFn6WZTuetrmVTawKwpzFvGP1Mf2FwcsDa8KfJZLEw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=roeck-us.net;
-	spf=fail smtp.mailfrom=roeck-us.net;
-	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=Ylw0FlNf;
-	arc=none smtp.remote-ip=35.89.44.37
-Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794673850;
+	b=P7eM7sS/BsMsvWAvpyQ74yUWlhZ0CahvL8tV4zMcM/rgT35wo2qpJc6A7SuXGupUOUwd
+	 ePeMLctYsWZJuqWfgiDGA+6idM2c5P6vMPDIJwgJDAbwNfbdVn4DTZKzQG7awFzGX1Wqu
+	 dPobIZbdhaZ0GluZTxzTTgn2eOjtBgsMTzNOBwDh91gth7ac/R9kF3z/XXWc1oV1xBJyh
+	 72BfZ6Icby/LGgfRZeSk5UcM2VfCsXbf7VbVV1mCG/VIOFUP2Newam0MJVQyXVW3wdcI4
+	 tg1kdfYzGt+p67ILVF81kHJ25t+2DwFuvr1hSZLrl3DcquqaeVPQ06t80f1zuw6gPSg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794673850;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=fGWxKs0ygx50ezpgbkqjOUBZBQlCGRAkgSt+Tpagf3c=;
+	b=DVT+74Ogs0j0SZPSHnvF5Kcm6Z6GzivlG8wrfOa1fZ4Av+bH3mpsvShj/keltkLVMJUb
+	 HW/qfJE5A+sRNntI3lRMM7uTTLxSfBFFRKhsjXspRQA0e6ucx14l0ZetYsip5hBAvoYGD
+	 8q322++rQ2gtw3LsspdaobQUHSnQmJobvvNczwTBfV+XBocMIN0p32+plU4cB/dD+vlTP
+	 zwvl31W2O5/qg+KHNfkdE1GNDNsrs+hOWxClfzeKYHTmgdrTHHJhJ78wNRmNbdSI2pWBc
+	 i0HKtbZaEMnv6jyHz52+Jk7fGP9VqoX7CXBrqRGMsEY/yJNBpD1Z8BWVvrcEcAsS55Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=uber.com;
+	spf=fail smtp.mailfrom=uber.com;
+	dkim=pass header.d=uber.com header.i=@uber.com header.a=rsa-sha256 header.s=google header.b="Qh68/djE";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CF1606A32D
-	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 16:05:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42CF1606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD02606A327
+	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 16:30:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9BD02606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uber.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=uber.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=Ylw0FlNf
-Received: from eig-obgw-6006b.ext.cloudfilter.net ([10.0.30.211])
-	by cmsmtp with ESMTPS
-	id SF0WxKVKiVK9USGFSxmBQa; Sat, 14 Nov 2026 16:05:02 +0000
-Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
-	by cmsmtp with ESMTPS
-	id SGFSxX3VAFhzrSGFSxL7VA; Sat, 14 Nov 2026 16:05:02 +0000
-X-Authority-Analysis: v=2.4 cv=JY+8rVKV c=1 sm=1 tr=0 ts=6af886ae
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
- a=gAnH3GRIAAAA:8 a=HNovrmC_vDOIJ51eOUYA:9 a=QEXdDO2ut3YA:10
- a=KPbNTLLc3YvdawN95zVk:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=xrc6f4LwHmqJ2Y6wJf6uweYofy/WQ8vGfzG/Wo42pjs=; b=Ylw0FlNf819d
-	2tTLi2/PJhLPcR/T75nW2gX47/iyPAtpyKtbXtzy6xruR6LGcpe1LVgJxB/LAA6zPAX2tDNAaxhCu
-	IaIBP4jrOVJH5stgTPptscw7tbNwaHRUqQwpbLmNHF/ZinHNOE195tO7l/6WmH44Vefz2PZVTHCb9
-	EhkLj0P4Oo9Vr+iNMTQD0yyiqfYN3cyAG+oXnmQAfso/LP59JDO+ruFu5ORt/13fLjCowzoR8ZDdn
-	HwSDpSm+qMYzhVZP8ixHywIuYRAqXcw97SD5rWeREHJizr6GPaDtGZ19a07riNvlXxnkdgapeMIRu
-	VMR2u3GycKnng1AsmAynQA==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:58038)
-	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.100.1)
-	(envelope-from <linux@roeck-us.net>)
-	id 1xSGFR-0000000021x-3Aqn;
-	Sat, 14 Nov 2026 21:35:01 +0530
-Message-ID: <73c31a61-9176-49ac-84c6-90f9e17a02e2@roeck-us.net>
-Date: Sat, 14 Nov 2026 08:05:00 -0800
+	dkim=pass (1024-bit key, unprotected) header.d=uber.com header.i=@uber.com header.a=rsa-sha256 header.s=google header.b=Qh68/djE
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8b2d14968c9so23032927b3.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 08:30:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794673848; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Zi5ea+d2MbTqIdZ85wvmjQlKwvtxFLI/SwYXJS3uXB71P391vKRNuWnxbT6B2yQ+oC
+         icelPp1E77MavWyU8YuTqrEHYlCXnmHGZNyAK7cvDQKsMTQZhxwi/tQ8tPulA3mkRO29
+         GLzUzQBuyltXohotavHJnwy792AzDP+IT8Kt/X+AFFwmFbJq5lYGqhuksi/Bb8ZTpDr7
+         dCyR31mcxHnbg59PgMrzs8lLBzrhpQOPZdqLoclLUexStaRq7fqQUJ3X2mpJMk71+/zW
+         1sygpS9ykrPlNUarh74shKBq0/o1+yaoZE+HsDFE9Fssfqo9aoT1w0iNmXufYiYFHrPJ
+         GqRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=fGWxKs0ygx50ezpgbkqjOUBZBQlCGRAkgSt+Tpagf3c=;
+        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
+        b=mw9iVAm1U9znnA1MWJDgIXstxBxXSRF1iv49+ErV2b2sd+2Rs//2mnfRfukS7YvsQC
+         gcyAkuM447X19TVtZggTLk/aEE5N7QwoCuxWYZLZoXaVJSiGbn69XkagoLPKEL7jB5Pk
+         yOXT0FSGQDgGHllETp5OJ1HyHAMsl20plQsf3Zkq+geUs5K/pgmVYKOLB9R+gWBmvcCc
+         EWBoQ84llzZohQ61vaJ6kBJuJKjvptfdddiMdvEyT/zv6BkkcCJTJL+Q5TFv5JUqBCpt
+         KKo8hqOVhzEcywERQKynp9dDadeium51+mvfIwWEl19u4hB2kxSBYev3JNQIsplGnx+u
+         TT5g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=uber.com; s=google; t=1794673848; x=1795278648; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fGWxKs0ygx50ezpgbkqjOUBZBQlCGRAkgSt+Tpagf3c=;
+        b=Qh68/djE8RG9jGi2wHmFLTHxEIyFw4KNzpRQHrA9Qf0FPDrbbQAnePOreHrqZMXhxS
+         c1/9ccfGBDQvDUft6D+TL2pBV4ot6//4X11lsIHJNr0CUjmtL/16ptUKdUWouDIuRYWv
+         uQ/Sg32PxtlUZ1KW0U8nZWCwpzGjPGbolaiu0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794673848; x=1795278648;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=fGWxKs0ygx50ezpgbkqjOUBZBQlCGRAkgSt+Tpagf3c=;
+        b=LED849+AmTGoS78E8uoCbW/bK15mrs54asb0TD+feDxLwuS7g2bNvRYP9uC89zsv9W
+         /nMc2nq4kLm4tHnHNWlw2B62CCl8OJqakMhLLcCCZHgZCU/q9iNiNCwIxjf4UEfasKp8
+         duxcuqCAkTvd7wsNCNvxaq7Ezm9O5Hpe/FWu6ZrTvsgQM3P+/wazMQl6UEUDwJ1poixJ
+         lCEk9HeTgPXUVoxVNUKiec0L/Kt0vQtcKdAuG6u9JTM3yD4wtU2t/gz7Nac9AFEm50T0
+         JrX87BaWJK6PQ0rsFj535mt0JhXT0BiIb+lsCCENgKjhCbQHqKO9xhfFiMs24mH4SIi+
+         O4AQ==
+X-Gm-Message-State: APuU4Z8ydL0E8XNJth6uYpdHewZOH6hG4ZQRmrauhaDIHGwJNmcUc0yr
+	3KjLX2tpHyovramIh9PL/iZEbvBQfk6e1+U/QYf8VWJDdmCOZn4s5O/3W+Mmwxnh2dQZ3kIoPQ/
+	jdW+jjyuieJpvttDbHWGDF2BYWvbNMEhZsBweAcVH+ScSVCwoYacNTh7RisdY
+X-Gm-Gg: AYBFou31ZvAX6wpEA/hNvB12QcDZ4une6XSSU+4bjR7kXty5UtYfjTnYXOyd3XJlxgL
+	tuZlSJ3a49NkCm3KEcuzGb4eSUfHxRtZjq/ulHujyqxR42Vj4YI/MoSjo/jWC8aoz4/IyeOq8kG
+	wQcTcQKPmqv599erN0hDB0pKyQKByMIQQVnG7eijzB4/8dXZ7CugZ9fcUU9jvOR46p6cBz3++T6
+	cTmvfWNPRGWIny9n8bjX2I+LE31JrK31nEul1+i3CN356bCDTmXxhiI2BXT6xBiFYyxH7TuBIpK
+	akyU+f7760QaRjZjtPu8hlfDjr5GJQ4wqJBhqCbcdOrISSHijIuY2ggX3hwaXZmZlY69V5iV8VH
+	tCGEtVW00EWCGzXmQpx1WH96WvbAMds28Ge6mqDk+MSmkU3cBuVdOvzjnV7FBCBRXDU3cSw==
+X-Received: by 2002:a05:690c:f03:b0:8b1:8aba:afe5 with SMTP id
+ 00721157ae682-8b4aa2eb937mr32268107b3.28.1794673848298; Sat, 14 Nov 2026
+ 08:30:48 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,147 +99,35 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] hwmon: (pmbus/ltc2978) Add support for LT7175 and
- LT7176P
-To: sashiko-reviews@lists.linux.dev,
- Christopher de Guzman <christopher.deguzman@analog.com>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20261110-upstream-lt7175-lt7176p-v2-0-dd60d28383bf@analog.com>
- <20261110-upstream-lt7175-lt7176p-v2-2-dd60d28383bf@analog.com>
- <sashiko-outbox-206843@kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <sashiko-outbox-206843@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1xSGFR-0000000021x-3Aqn
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:58038
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 22
-X-Org: HG=direseller_whb_net_legacy;ORG=directi;
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfKNjIYcEV8gjtyw3BRZXbhBDWyMzxDAhlHPmkP/TucEU3ShLHzbLfTmiEo038PtVF3JnlHR1mP8B2XKD9XWZu4IU41CV4zeYO69LwH20LqNJaYuZwb4J
- FU9cTDXPF/AP+79sSGuYLLewKGpz8EJZcTNGkrzPPlpP9t11EZ51Ae2VcOuOHaEw64ptrgmCKwUNZOWYz1U3okKTc22VXBZH3TBHq+hqZp1zpSXaT/JIDrdN
+References: <20261113-perf-symbol-memory-send-v7-0-d992eced9f9c@uber.com>
+ <20261113-perf-symbol-memory-send-v7-3-d992eced9f9c@uber.com> <sashiko-outbox-214179@kernel.org>
+In-Reply-To: <sashiko-outbox-214179@kernel.org>
+From: Alireza Haghdoost <haghdoost@uber.com>
+Date: Sat, 14 Nov 2026 08:30:32 -0800
+X-Gm-Features: AclHuK982XcYJYA8AaQABqiKfcQLmXN3r5fAt__j6RIZF2emENSLWSuiIVJOgKw
+Message-ID: <CA+w=M=ToJ-WYOZc4GhOPNDF3cbu-bPuCqhbMqvQMZL+pdOmuTg@mail.gmail.com>
+Subject: Re: [PATCH v7 3/4] perf script: Add --lazy-load-symbols to load
+ symbol names lazily
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/10/26 02:14, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] hwmon: (pmbus/ltc2978) IEEE-754 peaks compared as LINEAR11 in
->    ltc_get_max()
-> --
-> 
-> commit 201c09e7f06ead2d62e423cba00a536dde067159
-> Author: Christopher de Guzman <christopher.deguzman@analog.com>
-> 
-> hwmon: (pmbus/ltc2978) Add support for LT7175 and LT7176P
-> 
-> This commit adds support for the LT7175 and LT7176P PMBus buck regulators
-> and matches PMBUS_IC_DEVICE_ID strings against ltc2978_id[] for the LT7170
-> family.
-> 
->> diff --git a/drivers/hwmon/pmbus/ltc2978.c b/drivers/hwmon/pmbus/ltc2978.c
->> index aea7b6c93e74b..888db3213a01e 100644
->> --- a/drivers/hwmon/pmbus/ltc2978.c
->> +++ b/drivers/hwmon/pmbus/ltc2978.c
-> [ ... ]
->> @@ -762,6 +763,8 @@ static int ltc2978_probe(struct i2c_client *client)
->>   	switch (data->id) {
->>   	case lt7170:
->>   	case lt7171:
->> +	case lt7175:
->> +	case lt7176p:
->>   		data->features |= FEAT_CLEAR_PEAKS | FEAT_NEEDS_POLLING;
->>   		info->read_word_data = ltc3883_read_word_data;
->>   		info->pages = LTC3883_NUM_PAGES;
-> 
-> [Severity: Medium]
-> Does routing lt7175 and lt7176p (along with lt7170 and lt7171) through
-> ltc3883_read_word_data() corrupt peak readings when the data format is
-> ieee754?
-> 
-> ltc3883_read_word_data() -> ltc3880_read_word_data() ->
-> ltc2978_read_word_data_common() reads PMBUS_VIRT_READ_IOUT_MAX,
-> PMBUS_VIRT_READ_VIN_MAX, and PMBUS_VIRT_READ_TEMP_MAX via ltc_get_max():
-> 
-> drivers/hwmon/pmbus/ltc2978.c:ltc_get_max() {
->      ...
-> 	ret = ltc_read_word_data(client, page, 0xff, reg);
-> 	if (ret >= 0) {
-> 		if (lin11_to_val(ret) > lin11_to_val(*pmax))
-> 			*pmax = ret;
-> 		ret = *pmax;
-> 	}
->      ...
-> }
-> 
-> lin11_to_val() treats bit 10 as the two's-complement mantissa sign bit.
-> In IEEE-754 binary16, bit 10 is the least-significant bit of the biased
-> exponent, so positive values with an odd biased exponent (such as
-> temperatures in [64, 128) C or voltages in [16, 32) V) decode as negative
-> and are discarded in favor of smaller readings with an even biased
-> exponent.
-> 
+> [Severity: Low]
+> Can skipping the .dynsym copy here change how symbols__fixup_end() and
+> symbols__fixup_duplicate() resolve symbols when .symtab also has a
+> zero-size symbol at the same address?
 
-I have not heard back from the author. Without looking into details myself,
-I assume that the problem is real and will need to be addressed.
+This is valid and I reproduced it with a small binary whose .symtab
+has a sized function followed by a zero-size STT_FUNC label at the same
+address, with the function exported in .dynsym. In this repro eager resolves the
+address to the function, lazy resolved it to the label. It needs that
+exact layout
+and symbol order, so I expect it to be rare; it does not occur in perf
+itself or in a profile with about 1M symbols.
+
+I can fix this in v8, add a loginc in lazy_dynsym_copy() to skip the copy only
+when the last symbol already at that address has a non-zero size,
+so the lazy tree gets the same fixup as the eager one.
 
 Thanks,
-Guenter
-
+Alireza
