@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794641745;
-	b=fiehgGpvTSZ/TOi0vEiDA87A1KYQIuQgT2LUbxZDtqS8YCkIJLTtYfZojyuu3xtakMY1
-	 zU7k76UlJReXXt3wKLrcocLTfMrdOOEUsr+h0LkogxKrw5hlXQVw5SD0eFhO89Zzv71jt
-	 O0KPFyZdG9Qlb0aU9PaM0b7tIJucd4eG+UsMg7OuypSwX9AvcbN0eLkHtF7SrsZAxzWGE
-	 6JW3YIW1IVGcc83MhPp4p8i1HqHc8cCGF7GRREdAsuh9IrLCfS++gbIvWzOAy8Tuz3vSJ
-	 PIqqPM9ODaCtZIEy2/SQGEmOlDdBliX1o5cwpNx1lBpQ4TaiCuU0iw8fj9TmZc1gCcA==
+	t=1794642613;
+	b=0wRvgayo3uTKYfUXfSQnLuu4AwvWb5LJCFBSO9wXx3IehVZiTRqtrwTpDzUkYaIvwXQ+
+	 8YcLnUhOHXsRc5nMvzGO6k7IjplH3tGfMcZWBJtEHg446VfaNQdEGc19h5hHGjRydkcTN
+	 SLfwMuxQG6eNCzSYcIYFSS2hlKcr3tB1TVRuxwz0GABBl2YeQLb2/fkN6uABTxiBo/Dp/
+	 YIq/KYa4WVGN8hUhVy/Hu002/trIhZciJng25hy0eIaik8R+gtlsEl3nVKpMLTpRHD2tm
+	 q3GZXHekgUcK3lc4PAdfmAEy1R0UbvtY/KORoHfCwcgy2Goj5nY4qkz/onZcKT9OEaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794641745;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794642613;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
 	 References:Date:Message-Id:X-Mailer;
-	bh=cahiVRSoQzf74nfMrEDmS6N07dyHDuJ9YLLjX1noXVU=;
-	b=KsEFQWzAKQa8amRtZRSCYcey3Q4OBh/nuxVFT9np/hFOM4/SNvYM2lD2NHK4scuy/J3n
-	 4vNS8s5mn87JRJ8rDhauA/DQwiIwHHhRSHA84+xkGOa236fSTjPCyFgB97jIUQDj8b0tT
-	 XNIXb2tbzcjMDmxYEBOdGJLh7gTYKYtGEKHooeGYOt7uXXQScoa64CkYXDD4OyQHcmSBU
-	 Anb5SytLJqIdz6xwDcTo6LqJRIcDOjHVpC8hcedStcrdBgRELyFdB9TAKDvWV52OqnyQd
-	 CeY38Utsx2mPSCnUdfi1hsVqrseKSyaQHYbhh6polAZfJGmXZEFqtGZuQ+dvRIIv+kg==
+	bh=cGbHDC4e4qa3gSIc5H3tZOXqH9VLSX3BMg1aP/6Q428=;
+	b=N6v1xMw6R4YGrIs3JHO1X6YB2bRwBkrSvjD/u2juL2rKaCIcA0QBNYW+I7yr62GyVjdw
+	 IWpto9uBdkSycMJf2aLGg7zde3rZLQ183IFEAHgaZd3Pjs9jQR4wNAyADkMd6MmqRrl+C
+	 U6QCqxwqgEAZSELihrgX91iXUyEGMEifahhUDvww+4W8laGbMtGW0/HToKWEZDyYQlO+K
+	 crzMgu1Bhz2BAPcYwoMtc78hlg1rrtVdQxHQCOXLAe6H2Uu56Kjbjc8tx6oIrMDRqZAH5
+	 d6zmE/+eUdyd2FAYNroGEQJ4Q05Zcuyt1agB1yQkxnTCQ4BlNsKEVCYGmn6soa9Qluw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=gourry.net;
 	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=tSU35aXT;
-	arc=none smtp.remote-ip=209.85.222.173
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=KWBuS8ym;
+	arc=none smtp.remote-ip=209.85.160.176
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D420606A32D
-	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 07:35:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D420606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7159606A32D
+	for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 07:50:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7159606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=tSU35aXT
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-930c0f9c1b1so273335085a.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 23:35:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=KWBuS8ym
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-53bb57f1310so29601771cf.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 13 Nov 2026 23:50:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1794641744; x=1795246544; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1794642612; x=1795247412; darn=lists.linux.dev;
         h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=cahiVRSoQzf74nfMrEDmS6N07dyHDuJ9YLLjX1noXVU=;
-        b=tSU35aXTDWiEq0X7N1tL4mDTJxEJYLDODeZVwV6x79sI6Hwo6C+0h3c6BIUmJzjNdO
-         TAwAEgcdl+hl2jNDUGgzkTg7l35B4OAwOEolcD/1lrXMyGpqjuvGiSJXvjg5aGLJPm5g
-         0zFEFDeJ4c+JpezfBJRPIMpvz25e/B721nt2jkshJmI23hHPjUD3Dtk+ZsKxrrQtIIIS
-         0G6yl/sywbjJqGJgXYjuw7hA9OZYJ9I2G7AtzIz2lgcLKrXQt8sXvojuN+uFYdFhpxsb
-         iJIGe8oRt+jXxc2qS2tlGZMuJg3g9G7GiEs+tX/H1YA+SAxoJY5+KnKfIQtxryvmQZsw
-         zhBw==
+        bh=cGbHDC4e4qa3gSIc5H3tZOXqH9VLSX3BMg1aP/6Q428=;
+        b=KWBuS8ymLgXMeowcI1ln8kTP/fjpRDBzRphtqoLoepiRZFzYj3a8MB16alM+Wm9SKm
+         7LoqcYo36AZKsIld/Ponzjsfal8aL6plzpvWOSWRPzYLW0Vjsnohdu6jCjrapTXIxWH7
+         D1bXMDUZZVB9ICGGcLvxjYZd/HF5kiWgrIZaja4WyvgIl+xCTLMLCb3637NoSxE59m24
+         HZQoKeyfG0+Ip7hVtf2y1hpJ+7ExCN01lqnNrC0fXhmS/EE40M/dteDvKDFgAXSbVfNm
+         8cwxlkmVc2M1z0yKGzbici/vRhXich/7BIoYvUUE+rpljKDtmrsF18Wg8Tjk8pkuBwT6
+         mu4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794641744; x=1795246544;
+        d=1e100.net; s=20260707; t=1794642612; x=1795247412;
         h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cahiVRSoQzf74nfMrEDmS6N07dyHDuJ9YLLjX1noXVU=;
-        b=kZHhdhxGiaZfmkgEMfWUZF1HqChefVOo+IrSklZn3wwJhBT9JxOaqzSrcPT1KIabUO
-         CzHu8HXe68jkUFM9BsjEo9+DZayuLtDdo5daDzz6k+k9A8tzg66+oMxlUb9wvnK+JuSL
-         ZFDJNh6eDgCG+WFUD2/Le0zN7A+dW8tuZ8SqdWUvTnl6+U5AYZjJU4bkK6uz9M3T5dLd
-         JrvTLVxZx5+VyfvYR1SWc8lixiZwniAV4jM5mQQegq9YP0TzGkNS6TWUBNWObruejmZT
-         5N0CmgD8hsYmNr9wtIMvOW8v04pLJ3czSMbtALId24KWGu0lPBCHntkn1+pnAnHWOroX
-         PQvg==
-X-Gm-Message-State: APuU4Z9303YMIyOpHWwCiyZ+iGccnbVgF/5ovgUZi/rTuE6WGvRtRwC6
-	6r5k9afXUvH52kwW6QcZ1esk7qdw8V4iJbm1MEMNCPvAcLiekwgs4uw1KDyB5XArwXY=
-X-Gm-Gg: AYBFou2xk2ew+8oCt4/e+PEl88BHFWGY/0zRBt40sjNABnV/UWMM0aT00zSGaPv6N22
-	5oDJsb+nBHaWLiBz7j5i9N2KCXv0fDxvrq3kGjHLyWVbZ8PTCbbT6CVs+Z+htCroD5s1j7pShA+
-	niS9J5ktoCfmYTZIuFqJSeAmnUWhbeQdfuBs2rorALSV7XQbX78UPh46hLbiivK2H1Q4OOTXmFq
-	3OjpqRYwPLOtdbmdCw7cyujsTw/qx7G1DjziBSnL50q0FIcI/+sqWiUpSIdqPJE8qfHpWxkBODL
-	gAqJQln5tRkIFUARDQPC/MAVfjkAlw5PDTlel+xTr+3tQXQMjLq6akLfhzgSWheKBsKCcKx9RBJ
-	rkyZAN6UJOiybUIcJaPc4EsSfkeSRMqbdnjVAyQwWVvMqAXvcJwO+GQm3RiMRz1Uw+eqK39ckj1
-	B2os6s5+lkeOG6yV9d64QS6rwhFzutRh4vRa4rc31YsoI8m6MF3OYxsMks1qTQSmW2LfbAPEcir
-	ON0XE1zkH8lP3yml+62mWtYu9OUIpIl7tKzXfG8f1+BwSgXm9s9fMZw7qMGj5BLjyYxblJNbZvp
-	FAuzUm/d+R/a1EvFyn09RGfQaWAVoaXUe/C9WO8XLtOXL5tuA2STDAIRSBvebNMp2kQaRMq++ro
-	WeezPIzc=
-X-Received: by 2002:a05:620a:a00c:b0:949:6193:acc5 with SMTP id af79cd13be357-9496193b1f6mr334016685a.74.1794641743958;
-        Fri, 13 Nov 2026 23:35:43 -0800 (PST)
+        bh=cGbHDC4e4qa3gSIc5H3tZOXqH9VLSX3BMg1aP/6Q428=;
+        b=Hj7hw9jYRHViUSxF6t1hNpRtBQBwwIpxVndPEzc9w7wcGKVutiA2JrjF8Q1G+v50PH
+         PHIX0C80fVJre7RUGDGDPYoySZuO+aLH369uDwfYmLklo1xMxGklpJ4IFOrp5bEOCaZs
+         zlikt/BtxRu/trcLgpfxkndDSM5q1jcPxywUo/NLqc+/NoZNns68xjY2rk7m1zElafWr
+         y+whUkr2bCvk3xv+LszFby+4vTugGAuhxbaN+6jaOvpsGednQ4H5PfUGaxbD61Tovlog
+         AFuBOFC57ermPmxM7bkDZK8+XLWl8KJGNGc7ver9t3D5UKJBZLDE9XicIidHPKnxkx7w
+         /E7Q==
+X-Gm-Message-State: APuU4Z8PBebJev/inILAohElENdRQHD644E5DXIEXqW6TfJ1Huz8dDML
+	HAn4dlypGH2BtGjznBwStJ46vbzK4P2iLynlmL00hi/v4DMVypM+ZBEwDu/rXc3p16I=
+X-Gm-Gg: AYBFou3LTGr7vTUtYhQuP/JF84AkgUb5rE5prJhYAFahkRhLC+k2LOgAXpD4zd45tKG
+	xJOwl2TCtFCI8OXpZhXXpQxgcTT+RSyUEGOcxCQR4FmqfUU7WqFKeuHJzRk3P4nJ7G/GMSA+OGq
+	8p1it9uFhULyx2Nx0PdsqGzMND/JvOxlGmFuiidlj3lLiGD47F1wbGSO/j7TMCISEmlmtK8MUcT
+	ix19dWsONb1clNkqgdO7iAcA4YenWdSwVld8co/m+PdK/WloLd7iUMe47B2ji8VeTYx1xAckaZD
+	P51Z0ODHSRi3WKmpsOu04XP/tIeFdwsLuSPMn9oLkf0cDMy0rdCRQeNEbD63AYsz0ZyE7xgxZ+2
+	XHx+g3T1odXxH3YMoaTEYZcELKu4BW3orEPDN5TgwvUvcd6rdxXZcv0DOtBocW9Xj6GLT1ctmLn
+	HkPUBVI527Je1zhn1LgRa06iXf5eHRpe4YtmFdbGhcckoBxwIprhIA+fipgXWJMkiUr+v2CwKD/
+	A30CXyuRb4mcDjUwRUENScPk8I/7Wjbp5STJvbQvmKBbbqmSTusI8jAhoinJuNjoNTXaPBstieV
+	oQOwHdnfqNoYRs4/OMErDMnmbRZp1KiPmgAuUgvNC+j2hXp9o4AuPpyWcoPVYVkNu9vkWQ8PN/X
+	cf3vlshQ=
+X-Received: by 2002:a05:622a:4890:b0:536:6378:c80d with SMTP id d75a77b69052e-55ac7d4f0e5mr76447071cf.32.1794642611571;
+        Fri, 13 Nov 2026 23:50:11 -0800 (PST)
 Received: from [192.168.50.231] (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9494c803ad1sm357502785a.12.2026.11.13.23.35.42
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23d445d1sm38109806d6.8.2026.11.13.23.50.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 23:35:43 -0800 (PST)
+        Fri, 13 Nov 2026 23:50:11 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -90,8 +90,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 10/22] mm/khugepaged: restrict collapse to common
- memory
+Subject: Re: [PATCH 20/22] PM: hibernate: size the image from common memory
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 To: sashiko-reviews@lists.linux.dev
 Cc: "Gregory Price (Meta)" <gourry@gourry.net>, linux-mm@kvack.org, 
@@ -112,76 +111,84 @@ Cc: "Gregory Price (Meta)" <gourry@gourry.net>, linux-mm@kvack.org,
  xu.xin@linux.dev, chengming.zhou@linux.dev, joshua.hahnjy@gmail.com, 
  rakie.kim@sk.com, ying.huang@linux.alibaba.com, matthew.brost@intel.com, 
  byungchul@sk.com, apopple@nvidia.com, rientjes@google.com
-In-Reply-To: <sashiko-outbox-214261@kernel.org>
+In-Reply-To: <sashiko-outbox-214264@kernel.org>
 References: <20261114070959.3490008-1-gourry@gourry.net>
- <20261114070959.3490008-11-gourry@gourry.net>
- <sashiko-outbox-214261@kernel.org>
-Date: Sat, 14 Nov 2026 02:35:42 -0500
-Message-Id: <179464174225.482102.14033958474429517565.b4-reply@b4>
+ <20261114070959.3490008-21-gourry@gourry.net>
+ <sashiko-outbox-214264@kernel.org>
+Date: Sat, 14 Nov 2026 02:50:09 -0500
+Message-Id: <179464260972.482102.15351839494267219366.b4-reply@b4>
 X-Mailer: b4 0.17-dev
 
-On 2026-11-14 07:21 +0000, sashiko-bot@kernel.org wrote:
-> > diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-> > index 4bbe319ef86fa..b4bd29f25c145 100644
-> > --- a/mm/khugepaged.c
-> > +++ b/mm/khugepaged.c
-> 
-> [ ... ]
-> 
-> > @@ -2741,6 +2741,12 @@ static enum scan_result collapse_scan_file(struct mm_struct *mm,
-> >  			break;
-> >  		}
+On 2026-11-14 07:34 +0000, sashiko-bot@kernel.org wrote:
+> > @@ -2011,9 +2013,10 @@ static int enough_free_mem(unsigned int nr_pages, unsigned int nr_highmem)
+> >  	struct zone *zone;
+> >  	unsigned int free = alloc_normal;
 > >  
-> > +		if (unlikely(!folio_is_common_memory(folio))) {
-> > +			result = SCAN_PAGE_NULL;
-> > +			failed_pfn = folio_pfn(folio);
-> > +			folio_put(folio);
-> > +			break;
-> > +		}
-> >  		node = folio_nid(folio);
-> >  		if (collapse_scan_abort(node, cc)) {
-> >  			result = SCAN_SCAN_ABORT;
+> > -	for_each_populated_zone(zone)
+> > +	for_each_populated_zone_state(zone, N_MEMORY_COMMON) {
+> >  		if (!is_highmem(zone))
+> >  			free += zone_page_state(zone, NR_FREE_PAGES);
+> > +	}
+> >  
+> >  	nr_pages += count_pages_for_highmem(nr_highmem);
+> >  	pr_debug("Normal pages needed: %u + %u, available pages: %u\n",
 > 
 > [Severity: Medium]
-> Should collapse_file() also check folio_is_common_memory(folio) after
-> locking each folio, matching __collapse_huge_page_isolate()?
+> Should count_free_highmem_pages() also iterate over N_MEMORY_COMMON zones?
 > 
-> collapse_scan_file() drops its folio reference on each iteration and
-> skips missing page-cache indices and swapped-out shmem entries, and
-> collapse_single_pmd() drops mmap_read_lock() before calling
-> collapse_pmd() -> collapse_file().  Folios that are faulted into holes,
-> migrated, or instantiated by shmem_get_folio() or
-> page_cache_sync_readahead() on a node outside N_MEMORY_COMMON after the
-> pre-scan will still be isolated and collapsed by collapse_file().
+> On CONFIG_HIGHMEM systems, enough_free_mem() calls count_pages_for_highmem(),
+> which calls count_free_highmem_pages():
+> 
+> kernel/power/snapshot.c:count_free_highmem_pages() {
+> 	struct zone *zone;
+> 	unsigned int cnt = 0;
+> 
+> 	for_each_populated_zone(zone)
+> 		if (is_highmem(zone))
+> 			cnt += zone_page_state(zone, NR_FREE_PAGES);
+> 
+> 	return cnt;
+> }
+> 
+> Because count_free_highmem_pages() still sums all populated zones,
+> enough_free_mem() continues to count free highmem pages on non-common nodes as
+> available room for the image, undercounting the normal pages needed to back
+> highmem copies.
+> 
+> In addition, alloc_highmem_pages() and prepare_highmem_image() use
+> count_free_highmem_pages() to bound loops that call alloc_image_page() or
+> alloc_page() with __GFP_HIGHMEM and pass the returned page directly to
+> page_to_pfn() or swsusp_page_is_free() without a NULL check, which can
+> dereference NULL when highmem on N_MEMORY_COMMON nodes is exhausted while
+> non-common nodes still have free highmem pages.
+> 
 
+HIGHMEM can't exist on a private node.  Private nodes require NUMA which
+require 64-bit.  As far as I know HIGHMEM is 32-bit only.
 
-Ah, this is technically a pre-mature report, as this is an unreachable
-condition at this state in the series.
-
-I do already have this handled in a phase 3 commit where private memory
-becomes migratable, but i suppose this check could be moved ahead just
-for cleanliness.
-
---
-
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index fac314b89a234..7a69d6e9b42bb 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2390,6 +2390,12 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
-                        goto out_unlock;
-                }
-
-+               /* Migration may have moved the folio since the scan. */
-+               if (unlikely(!folio_is_common_memory(folio))) {
-+                       result = SCAN_PAGE_NULL;
-+                       goto out_unlock;
-+               }
-+
-                if (!is_shmem && (folio_test_dirty(folio) ||
-                                  folio_test_writeback(folio))) {
-                        /*
+Trivial to update though, so for consistency i can add it. 
 
 -- 
-~Gregory
 
+--- a/kernel/power/snapshot.c
++++ b/kernel/power/snapshot.c
+@@ -1291,16 +1291,17 @@ static void mark_free_pages(struct zone *zone)
+ /**
+  * count_free_highmem_pages - Compute the total number of free highmem pages.
+  *
+- * The returned number is system-wide.
++ * Only common memory counts, since image pages come from common memory.
+  */
+ static unsigned int count_free_highmem_pages(void)
+ {
+        struct zone *zone;
+        unsigned int cnt = 0;
+
+-       for_each_populated_zone(zone)
++       for_each_populated_zone_state(zone, N_MEMORY_COMMON) {
+                if (is_highmem(zone))
+                        cnt += zone_page_state(zone, NR_FREE_PAGES);
++       }
+
+        return cnt;
+ }
