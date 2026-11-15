@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794744454;
-	b=PnxwdAzXe3z4h/m0bZsD0JtXDqSU0eU72jMqGed+G3HbcESJt2mFtWHYxQMnkUNzMiX4
-	 brmsRRRBWFFZzg3PR6yJPkAr40l0SPorCRJ7bU65H4oaKqIkmFNlRAwDCLnYBZbdWgt/C
-	 blCa5Ej8Mq0NZiCv13T/x67WUzTxw1pdAWK/h3SzHcwQ/TgpT26si34yjLKZWx7O52UR0
-	 RiMQl8Ilohexyf96mkzoANM2iiSReyCrQc9c9mgrqrUv9yEG0JLMnSWTGkheEmqs26iWS
-	 +ApwO28IPKMObvbHqh6Mi1rBK8YR0gNEkUJ65Gd4YJTCI5Yle6ft2Ja8kp/aiTPI7Bg==
+	t=1794745441;
+	b=mVVXzk3ic5jT7wY1j8ea2KqcptqxTIvFO/DqLHVd3Y3tCvR5aRlD6wgwWcoOxZ3N1/VA
+	 EW9arc737D3uLq2zS4Gze7nrFUe+SyKMaNH1hbbU7ObDtbE+tVnh8vyUH2EAIlGEKLP/D
+	 EAVsBYucrPytDRweGtldaS0A+NZuJDEb3uzfbgTChdE9DPoNSZLDZ0gJen6qku1ZGeSir
+	 yjrS8+/NzKM1asJAidk226hjNpEk1CNmD9LF1GME4AtgWhufds8Mx0al0CYu3OF0xRLLE
+	 xz+xjSmJW6WDhaxXJ+ISQ97wc+spEF6/xXAFZMPT6yinbjuHS9f5sK2sWZbBX3Q1pGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794744454;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=pAyFOMytrC+WHeplIQk/P9QT+U18pl2Kv43Ux7MJxzk=;
-	b=ZQk9wQIOzTX9TapO91Lkr53aJpUDLOgzbnsamsRN8e4ek+GNQR0N2DC3sPYwtMJ9rsJ3
-	 VfDJGMbgY8RDBB2F36MkEcungVr42+ayg+HfRBMk82OiT+agfRCkNOO3AJ5O864pmU61d
-	 1aUUfSBbKZWsnmOopCc+wsNw1K0MpH3DSvw0aDu5rBpQUfVI9NJNe29Q2NJyo2H7xN86N
-	 qEUrUU1lv1G93AkHfJgojuAfy9AVFm/XAPTLF1RuxOYtlL/OgoXHZc1FvrSDuucJL46tp
-	 ehCwKx5ZY8tkoS2qXMiye7SiuIiPTfedP9RfzaqHiuLwX8b1sTYApxesUVGhzuZFATg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794745441;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=NJ71py6i4waAq8tFr24Jq5kGVUA8O+SGz5SBTC+E7w8=;
+	b=PMyl40rAoUUQzIjmDPibGJdPOFOmw5AAAq+JGaYUzzFJnawnpJQ8PQqGAstzQZU6AQt0
+	 srCK4yCcMLFoH/azmT2hQ1Foj3YRZLMcUBUh83fcl3pFte5CzhAa0nQS0LOl2pH6rTd/W
+	 DBy8EhkZIODg4JuiFSXz6Nq3uYFf4dHVNBIf7VGnqz/S6ou8S8XLDWHAPl9BzhPmVk/A9
+	 D0L8pBprBWXF4v3KK0dCp2bAhvDZLMJ6f7K5qNNkGISJZqoFExp1XuakD/wWYEFrKznLE
+	 do7s06hXHsdAOHHRtZdweGpuQoF9T4gj/1Eb5fng4ls00k0iCPwGmLdop43fdsqiL1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QmryQVy3;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k8A4nVmI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16091606A31A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 12:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7C0606A323
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 12:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QmryQVy3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65981F000C9
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 12:07:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k8A4nVmI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA941F000C4;
+	Sun, 15 Nov 2026 12:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794744451;
-	bh=pAyFOMytrC+WHeplIQk/P9QT+U18pl2Kv43Ux7MJxzk=;
-	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc;
-	b=QmryQVy3E4N4wEuCGP5CyTEkNTyKEYCUZRKbip0gcAAbNA8XjVCONvX1P27ojkmK2
-	 7wlRSq6lkiWMj3EkWkwQgJdwRLGN7RGgtGvjP8nhcKGYuwoA7jYvt25xAHHvQj7G0+
-	 zhaffkcEJHF9LY/5rfg8kj/dyKMuUp1emC6EF0WDhzRWkh8e8ehO6K2cwPgIPToN2w
-	 y1nhTkR+Z2VIr1K7WGDrFwhGbNfmFstNZRPdMB3BL8jzHwGas9wcBEF0bxFKT6y3uc
-	 /A3bifvu+XZpGDBD9fN14pMIu81f8POg8z4RcF0j/qFeYnsE3dJmsJc176FcysyTvV
-	 rPFzIWhB+6NuQ==
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3ac97e45a79so22797301fa.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 04:07:31 -0800 (PST)
-X-Gm-Message-State: APuU4Z8HfBeYTQMSgwB0iK7w4DFnioVQ+K3ynPvMdU5ihSJT2Q0d5W7T
-	u79EXJdraUk9/umFyuLO1rxeVsfH6u1C0En5jonINsffthuG2rVSbYMdJ+VWsmXPCJn/5+Ir0rH
-	NX1k4LLOEGIhYvzqV8GtjlMqrjyvoRn4=
-X-Received: by 2002:a05:651c:b26:b0:3ab:3bf3:1606 with SMTP id
- 38308e7fff4ca-3ae2b52ecbemr25194061fa.24.1794744450062; Sun, 15 Nov 2026
- 04:07:30 -0800 (PST)
+	s=k20260515; t=1794745441;
+	bh=NJ71py6i4waAq8tFr24Jq5kGVUA8O+SGz5SBTC+E7w8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=k8A4nVmIqoi/NWmPd2U6byTM0cbL4NjprWGfkLWfObyXrqMlOPrnyd9MN2qnIZi7T
+	 +UR+9z4YpesMhoi76B4Yr2u5UZqePcDOgCCU2BFXmYWmQ4Zr4fZk2b1UqzAv03KgTE
+	 sdM/rAAym81NYGbfIqts+y85jlUJyAXXE+CNNPkEEpPP8MzmNkKLY+5+SZzyzJfo/B
+	 DPndMAI9VsTgO7l1SRzjp7m0mf/BFQvpmD6dKoELyl5iIxQFdycv5GYGeMLjWISK6S
+	 V/n7GouF6Y2sotIGr62b9yJ73VWHApvR5rL/Bfuv4G1ut+M8y3uo3zi/dspZTlUrLu
+	 e58HmdJdqOPjQ==
+Date: Sun, 15 Nov 2026 12:23:56 +0000
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	"Liam R. Howlett" <liam@infradead.org>, David Hildenbrand <david@kernel.org>, 
+	Vlastimil Babka <vbabka@kernel.org>, Jann Horn <jannh@google.com>, Mike Rapoport <rppt@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, Shuah Khan <shuah@kernel.org>, 
+	linux-mm@kvack.org, Tal Zussman <tz2294@columbia.edu>
+Subject: Re: [PATCH v2] mm/madvise: zap markers from guard regions
+Message-ID: <avmkGrQbxiu2_XYm@lucifer>
+References: <20261113-disallow-uffd-guard-install-v2-1-9d0063c70542@kernel.org>
+ <sashiko-outbox-215027@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,86 +61,89 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261115061102.229680-1-jernej.skrabec@gmail.com>
- <20261115061102.229680-3-jernej.skrabec@gmail.com> <sashiko-outbox-215249@kernel.org>
-In-Reply-To: <sashiko-outbox-215249@kernel.org>
-Reply-To: wens@kernel.org
-From: Chen-Yu Tsai <wens@kernel.org>
-Date: Sun, 15 Nov 2026 20:07:17 +0800
-X-Gmail-Original-Message-ID: <CAGb2v6544+a2Cv65u8ZCsJmP4d6DD8W2Kb3WOtvo8=Q2+snt2w@mail.gmail.com>
-X-Gm-Features: AclHuK_eMLnNxsMBol5YFdkTkMTb1ru6MI-INl_vc-Xaa50KKeV9dybfAnsle1E
-Message-ID: <CAGb2v6544+a2Cv65u8ZCsJmP4d6DD8W2Kb3WOtvo8=Q2+snt2w@mail.gmail.com>
-Subject: Re: [PATCH v3 2/8] clk: sunxi-ng: de2: Export register regmap for DE33
-To: sashiko-reviews@lists.linux.dev, Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-sunxi@lists.linux.dev, linux-clk@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-215027@kernel.org>
 
-On Sun, Nov 15, 2026 at 2:27=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
+On Sat, Nov 14, 2026 at 09:05:04PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] clk: sunxi-ng: de2: missing select REGMAP_MMIO for
->   SUN8I_DE2_CCU
-
-Added while applying.
-
+> - [Medium] mm/madvise: zap_range() reclaims PTE tables needed by
+>   madvise_guard_install()
 > --
 >
-> commit d1c006fcc75e6e1facbfb7f265581bef0d4d672a
-> Author: Jernej Skrabec <jernej.skrabec@gmail.com>
+> commit b93124c4df6f4f255fb9c4d2510c6ff4b474ec35
+> Author: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 >
-> clk: sunxi-ng: de2: Export register regmap for DE33
+> mm/madvise: zap markers from guard regions
 >
-> This commit removes the hardcoded DE33 plane mapping writes from the cloc=
-k
-> driver and exports those registers via an MMIO regmap instead.
+> This commit introduces a zap_range() helper and uses it in
+> madvise_guard_install() with ZAP_FLAG_DROP_MARKER so that existing PTE
+> markers are dropped when zapping a range prior to installing guard markers.
 >
-> > diff --git a/drivers/clk/sunxi-ng/ccu-sun8i-de2.c b/drivers/clk/sunxi-n=
-g/ccu-sun8i-de2.c
-> > index 6ec6c0dc4c261..f17570efafaae 100644
-> > --- a/drivers/clk/sunxi-ng/ccu-sun8i-de2.c
-> > +++ b/drivers/clk/sunxi-ng/ccu-sun8i-de2.c
+> > diff --git a/mm/madvise.c b/mm/madvise.c
+> > index 0214efd2a014f..4f77285832079 100644
+> > --- a/mm/madvise.c
+> > +++ b/mm/madvise.c
+> > @@ -850,6 +850,19 @@ static int madvise_free_single_vma(struct madvise_behavior *madv_behavior)
+> >  	return 0;
+> >  }
+> >
+> > +static void zap_range(struct madvise_behavior *madv_behavior,
+> > +		      zap_flags_t flags)
+> > +{
+> > +	const struct madvise_behavior_range *range = &madv_behavior->range;
+> > +	struct zap_details details = {
+> > +		.reclaim_pt = true,
+> > +		.zap_flags = flags,
+> > +	};
+> > +
+> > +	zap_vma_range_batched(madv_behavior->tlb, madv_behavior->vma,
+> > +			      range->start, range->end - range->start, &details);
+> > +}
 >
 > [ ... ]
 >
-> > @@ -336,13 +367,19 @@ static int sunxi_de2_clk_probe(struct platform_de=
-vice *pdev)
-> >       }
+> > @@ -1217,9 +1224,11 @@ static long madvise_guard_install(struct madvise_behavior *madv_behavior)
 > >
-> >       /*
-> > -      * The DE33 requires these additional (unknown) registers set
-> > +      * The DE33 requires these additional plane mapping registers set
-> >        * during initialisation.
-> >        */
-> >       if (of_device_is_compatible(pdev->dev.of_node,
-> >                                   "allwinner,sun50i-h616-de33-clk")) {
-> > -             writel(0, reg + 0x24);
-> > -             writel(0x0000a980, reg + 0x28);
-> > +             struct regmap *regmap;
-> > +
-> > +             regmap =3D devm_regmap_init_mmio(&pdev->dev, reg,
-> > +                                            &sun8i_de2_ccu_regmap_conf=
-ig);
-> > +             if (IS_ERR(regmap)) {
-> > +                     ret =3D PTR_ERR(regmap);
-> > +                     goto err_assert_reset;
-> > +             }
-> >       }
+> >  		/*
+> >  		 * OK some of the range have non-guard pages mapped, zap
+> > -		 * them. This leaves existing guard pages in place.
+> > +		 * them. This also drops any PTE markers in the range,
+> > +		 * including existing guard markers, which we reinstall on
+> > +		 * the next attempt.
+> >  		 */
+> > -		zap_vma_range(vma, range->start, range->end - range->start);
+> > +		zap_range(madv_behavior, ZAP_FLAG_DROP_MARKER);
+> >  	}
 >
 > [Severity: Medium]
-> Should SUN8I_DE2_CCU select REGMAP_MMIO in drivers/clk/sunxi-ng/Kconfig?
+> Should zap_range() avoid setting details.reclaim_pt = true when called from
+> madvise_guard_install()?
 >
-> Without it, enabling SUN8I_DE2_CCU when REGMAP_MMIO is disabled (for
-> example under COMPILE_TEST=3Dy with ARCH_SUNXI=3Dn) or built as a module =
-with
-> SUN8I_DE2_CCU=3Dy breaks compilation on sun8i_de2_ccu_regmap_config or fa=
-ils
-> to link __devm_regmap_init_mmio_clk().
+> When a guard installation range spans at least a full PMD and contains any
+> mapped page, swap entry, or non-guard marker, zap_range() with
+> ZAP_FLAG_DROP_MARKER clears every PTE in the PMD and reclaims the empty PTE
+> page table via pte_free_tlb().  On the very next iteration of the loop,
+> madvise_guard_install() walks the same range to install PTE_MARKER_GUARD
+> entries and walk_pmd_range() has to allocate a replacement PTE page table via
+> __pte_alloc() while the old table is still queued in madv_behavior->tlb.
+>
+> Besides the unnecessary page table teardown and reallocation, __pte_alloc()
+> on the retry pass can fail with -ENOMEM under tight memory or memcg limits
+> even when the PTE page tables were already allocated before the zap, leaving
+> any pre-existing guard markers in the zapped range removed.
+
+This is an edge case and doesn't matter. And fine, reallocate the PTE :) It
+allows sensible sharing with the MADV_DONTNEED bits.
+
+The ENOMEM stuff is silly, if you're going to fail there you need unreal memory
+pressure + fatal signal, so failing early is right.
+
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115061102.22=
-9680-1-jernej.skrabec@gmail.com?part=3D2
->
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261113-disallow-uffd-guard-install-v2-1-9d0063c70542@kernel.org?part=1
+
+--
+Cheers, Lorenzo
