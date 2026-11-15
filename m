@@ -1,32 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=62.210.214.84
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794772961;
-	b=mnlhc8lpwWF0eWejJRMBUJU0lUBi+AITZ9CVGH/A5TyKZRW4a7gZOHBTCFA4zjrmjQZI
-	 gKnyTZpzBWoYJV7SGKW5/8tyIWIqWMqi8ZGt+ITqePFUa4jlxoGCq1xi/2CP87Pd8bU/u
-	 jZBjhZdCBfQXxD/GSNnSacfdYYQnfouozKlTKWWYgzQxH2BgTADiEWiKU9uPTD1NFv7oY
-	 KUbMsInobp8Ose034/u7ZIMUCC6K0Z+7ca8Zl34JF/wEyvcC/Yyjp6OMyiVG5a8+I5X04
-	 GaaTJmLSimzBnkplWDW6ZIxS0grLLeWBRkYbcXjr7E5nlFJa7PHNW/JKkkjWy6w1RWQ==
+	t=1794775282;
+	b=a2A+4yUiQEwNiL0yrZph2PN0NSHnH/45wKsrgZtYyGLbXNFcp8p6iKaEFK6Ri+6189iw
+	 kWyQiXCoEezm9faIB4tCAM5B9iAeRwlpl76u3CtXiXZpmNB7T+Z3HWJxqfBMxBL6YuDFi
+	 uQhN0yC4EQJv9Q7KA4SfnoHDCWUOC8OpeU7Ed1sY5OX0foiIIQs1MFikDISNAr0qoRwVF
+	 OVxOvdsJswfA3uWnTyYTI9/nbsv93GIglshjWovKiERN1OnlNLGanJZ/CbgDoUdvE77pE
+	 towi7Lvq8bs35NGTmCmkHfexrQ23RIFqChhCHCcPvembKN/HN4UziRzzYc6Ryuf+n+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794772961;
-	h=Received:MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:
-	 From:To:Cc:In-Reply-To:References:Date:Message-Id:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=/MMBOiQw6l6mDYjl/NVChHGJRH3wA/AsBJBi6MIn/nI=;
-	b=cCWYbyyLmdoCmMIYBcNQrP6jKlO2xRhfW+Osf0A6gRTrU1wizRFj9DpQqprubejpQjNM
-	 tVC58Cnqvn8hRlNwCB13P+gvHwwrmE4v+rnss7IaCviMDji9JaJHRpTr5LJN8jpwrx+gc
-	 YEucSgCZK/FLSyMUHd3rcI/pXT42wqxrg5yECtLGoT7VsgUOgl3NaGt4kAd9ewdB94WIW
-	 Ah3nWIM56aBqTEuqIfyNi8JaDZPc1dBWRA4cz4gKmMT45CiERLpw83g9auuTYdYRYCY6H
-	 CT4nT/Kdkl2QlDlDIXceCAbaT24yt70Ae1OvN4PvH2yO9IoNAZQ5Pcyk+w6gIP3nOUQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794775282;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=j6QuVQ/V2TjNZs/GRr+VDJl+cKN+8As7oM1LWfbxkn8=;
+	b=PhsBu40wQG69djAehGb4bFvNFa3iRF4Mv+vApjFdr/FpnHjyVVbzcyS0+ZPBajOajzMH
+	 0GjY4euNm684cnd2mkIagU+4KZKzH0D5FL78rbHi9bd3F+weqEH0nAJcCzwEFVH9UiQ1c
+	 pD9XOxQBu9gIyHnciS69PyU0P6bdPTxUL/CXs6iPend4xKIdQoGiDV7Fj+Luft/4WQbGW
+	 yRu9BAMB7yWydYwOiIpDOf7KYgi56E0BCO9IuUCvWXYoIzs9RiaDzjvCZJ9t1JgkkstYm
+	 G2Inr76/XI5gRt5v8pxawS15fGV21AqXkln0IX+983xVUhGGzQMMijbiYWNn8BQwLhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=codewreck.org;
+	spf=pass smtp.mailfrom=codewreck.org;
+	dkim=pass header.d=codewreck.org header.i=@codewreck.org header.a=rsa-sha256 header.s=2 header.b=s801Uvc2;
+	arc=none smtp.remote-ip=62.210.214.84
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5130E606A335;
-	Sun, 15 Nov 2026 20:02:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651CE1F000C4;
-	Sun, 15 Nov 2026 20:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A634606A31F
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 20:41:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A634606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.a=rsa-sha256 header.s=2 header.b=s801Uvc2
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id 85ABA14C2D6;
+	Sun, 15 Nov 2026 21:41:17 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1794775278;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j6QuVQ/V2TjNZs/GRr+VDJl+cKN+8As7oM1LWfbxkn8=;
+	b=s801Uvc2OlaASbdIuKuHv01dopIOJmSEinpMlzaBoMv0NX/AhQTaWDlW5uO4A74jPrgNrG
+	tB8dv6htrpzeqw/gNtTPMM2lMd+X4aacMaYERHGxXmNsbPdGOVR4QpSP1wiWTIpWLwHjr7
+	QeJh83yTAceVRfOcdnYkzpmUADMqfMv9YmE9MfA26PNCd26fDFQR2xGTgfbikPuD59ExFH
+	KLejwFHn1QCtp/W9sMced9IeWA+SES1Fntrj7etSTJYFJgt1syZct9fczqs7gH2HgyOiwi
+	iNG31Xd8jMFbZ5s20RlWi61+n2R2t3WM0wbtO+KfMp4Lo+5dOkWY9OZFQy6XLQ==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 8b842fb1;
+	Sun, 15 Nov 2026 20:41:15 +0000 (UTC)
+Date: Mon, 16 Nov 2026 05:41:00 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH 5.10-6.18] libbpf: fix cross-endian build with newer
+ libbpf
+Message-ID: <avoY3KOmyKGifeau@codewreck.org>
+References: <20261115200505.1494710-2-asmadeus@codewreck.org>
+ <sashiko-outbox-215783@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -36,39 +69,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v4 2/3] phy: cix: Add Sky1 DP PHY driver
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Luo Liu <Luo.Liu@cixtech.com>, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
- vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com
-In-Reply-To: <sashiko-outbox-192860@kernel.org>
-References: <20261102030425.1957585-1-Luo.Liu@cixtech.com>
- <20261102030425.1957585-3-Luo.Liu@cixtech.com>
- <sashiko-outbox-192860@kernel.org>
-Date: Sun, 15 Nov 2026 12:02:35 -0800
-Message-Id: <179477295532.135135.3835475209766065939.b4-reply@b4>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=261;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=/MMBOiQw6l6mDYjl/NVChHGJRH3wA/AsBJBi6MIn/nI=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBq+g/dzI6TCUXwkOS4gQPpUvsvWnviIXO6VBbOP
- +vk0WbFNg6JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCavoP3QAKCRBVnxHm/pHO
- 9RyMB/wOQ7nLJIyuKkkwbCNioj33q2hrjNfwq9Kc7YyuXLXzep0kLVUeLkko+Ot6xQmGA6uiY4z
- 4LH1QLd+D6HURN/2Ith4fa0Ms7kfrobRn6mykL+3I5r9kBY4q5JrzXldIZqww+6LzPoPthgBnpz
- mLy3t5v3vNng3XA/BiQcoNoDSBCwxkPW9Fwc+2ZFmjUmM4DW+dajUGo0o18KAKlN6fqKPca/dBf
- LEtc+fJL1u8xJjHhpDTrtGTVOuaq2mLW0JZQOODTOD7P5JNTjSOzZ9rOzBHpuj6uA4v55YJBkhh
- yQE9CGj+SrTkE4px0wFMX7LoIzsPYl/t/5+bGF/rLfpEifuh
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-215783@kernel.org>
 
-On 2026-11-02 03:23 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] phy: cix: incomplete hardware reset and state desync in cix_dp_reset()
+sashiko-bot@kernel.org wrote on Sun, Nov 15, 2026 at 08:23:16PM +0000:
+> > Link: https://github.com/NixOS/nixpkgs/pull/570639
+> > Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+> 
+> [Severity: Low]
+> Should this include a Fixes tag for the commit that introduced the strict
+> swapped-endian header size check:
+> 
+>   Fixes: 3289959b97ca ("libbpf: Support BTF loading and raw data output in both endianness")
 
-Looks valid.
+Err, yeah, I guess that bug couldn't happen before support for
+endianness was added, but it didn't work before either so meh :)
+Feel free to add when applying if you think it helps.
 
-- Mani
+> > diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+> > index 231b07203e3d2..8f3f942eda704 100644
+> > --- a/tools/lib/bpf/btf.c
+> > +++ b/tools/lib/bpf/btf.c
+> > @@ -198,7 +198,7 @@ static int btf_parse_hdr(struct btf *btf)
+> >  
+> >  	if (hdr->magic == bswap_16(BTF_MAGIC)) {
+> >  		btf->swapped_endian = true;
+> > -		if (bswap_32(hdr->hdr_len) != sizeof(struct btf_header)) {
+> > +		if (bswap_32(hdr->hdr_len) < sizeof(struct btf_header)) {
+> >  			pr_warn("Can't load BTF with non-native endianness due to unsupported header length %u\n",
+> >  				bswap_32(hdr->hdr_len));
+> >  			return -ENOTSUP;
+> 
+> [Severity: Low]
+> Can relaxing this check cause out-of-bounds reads and writes on
+> btf->raw_data when parsing a malformed cross-endian BTF buffer with
+> hdr->hdr_len > sizeof(*hdr)?
+> 
+> Previously, requiring hdr->hdr_len == sizeof(struct btf_header) together
+> with btf->raw_size >= sizeof(struct btf_header) guaranteed hdr->hdr_len
+> fit within btf->raw_size.  btf_parse_hdr() still computes meta_left from
+> sizeof(*hdr) instead of hdr->hdr_len:
+> 
+> tools/lib/bpf/btf.c:btf_parse_hdr() {
+> 	...
+> 	meta_left = btf->raw_size - sizeof(*hdr);
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261115200505.1494710-2-asmadeus@codewreck.org?part=1
 
+sashiko apparently picked the v5.10 tag, but this bad sizeof was fixed
+in commit c825f5fee19c ("libbpf: Fix BTF header parsing checks") and
+isn't a problem as far as I can tell (that commit was backported to all
+stable kernels, and header is properly used, after endianness swap)
+
+Thanks,
+-- 
+Dominique Martinet | Asmadeus
