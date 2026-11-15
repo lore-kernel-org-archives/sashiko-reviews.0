@@ -1,87 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794756630;
-	b=3zJlF2KcmRhJX8X4kH9eVaD32hS8UNQVKATohhXpRX8Ostr9NsGjb5ZWnVHr3Qz/feh/
-	 xnyEob1xRU06cbamJpEOmHPGUkUGSTgDDAqEQP3TPLV48joZMepzG9GMJ7DKXw16Rr6LV
-	 HeD5d9XGcE3i8MROmBI7OyzN96xM7fSAtLe4oE1JHb0G3ALfY3dcfuKNQeEzbbA8ztyjO
-	 mzpQzjxScDVRJSeyJ1iZtoC4CP9/Xqo0+d3+v65KaOBQjnF/1yeimiiaByybQhENZnAIv
-	 D2hfQxTR9VtYqPbcQFdy0h6ODt+b+WkYU5Y+3LRPsD7HS9F73oFGIKpg4LgrXFhrSJA==
+	t=1794756714;
+	b=Baoo/jS7VzZp4wOmpJ3YXjjOWdtW3dFbX00Z7Ri0ZmPrskVP4Oi4UzVxvMXTWgScPmLY
+	 mBuGM4nqMzLBmcB3OuE6qRZxj272d5+QmEmQHWXxaXECX2yXJsbUwu3MsbF7FXIy3SDpj
+	 PrYcyuEMS31RbNPGbty/QcwDkKSiKv6+i6sIAhwE1TeUouSwe1c7z+1R+xjvLAM8tSKBC
+	 +D+KmjUkwv10Pigk/bOVyilfAPpA52DHu0LB8TQPWICO8xIUBZzn7Ju7xk9HXQhW0ZBeO
+	 EAp7UDqTxUudFCLO8un0/zky4jBjOiczyWrx9QvTQtOqrDfG3iv1gU1LD7dWpPwWkkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794756630;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:Received:From:To:Cc:Subject:Date:
-	 Message-ID:In-Reply-To:References:MIME-Version:X-Scanned-By:
-	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Transfer-Encoding:content-type;
-	bh=8b0NcOCbgjT502LwxuI3125LQaHRINxYB46l6CFgKcI=;
-	b=egnzF5jjC4P7jYpQkOOuHe57Doly+IUJdvAQZDb0alFrE72q0sb/kZwwiaeX3brVKwpO
-	 u74o76DCUuRiBV3C2h/ROz22d3/E6vgYqZaC7Hf/+W1PPpM5a4iDwyz40becGtkPRxahs
-	 zPjLK33R0jkPPEI4spd8QIooJEYyFpudNIUqicSAFYdX6uX6m8eiEF5vquml+keeGKk/a
-	 n3p1djR4EZqTsb252EndKjLufJviHvdC2Go4Reb8fh5J9aCpW/t4PjC+PbcCiXMm6IOV7
-	 aSHLmVOxgZpOljRFyb3e3/X6swexohHEcJzu6JXOol9dxgxQLieJF3KT9tMIlvFjwRg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794756714;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Message-ID:
+	 In-Reply-To:References:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Priority:Importance:X-Mailer:
+	 X-Originating-Client:X-Rspamd-Queue-Id;
+	bh=Dz6MG60gYh1oeLl0y4lf8u/H7dQYN/8DWkBKEQ6CwTc=;
+	b=pSoDaVadJvKLlaViIbHpyuVPJkmrzjhFG3BYc5Eic6adig7uWsRbzvCJjl5eC98ULQfe
+	 uLTveXP5fI8xJWckX2sskUj9XfC4eblu2tK2S2qib7TMqFg1u9EB+eWgVPeWjsHbTezx3
+	 naq4W5PHHeARMTGU2M6Su8zDvvZ8Te/pVO+YVmAMxwR1NKdWuPNYaVGMbXndAUBjCwm40
+	 gOQBs+ahZYve53zhNpxHk5iqxyNQ12v4mvRjUPN76dneQfEPsfhl5VguKVG9vAGEtJOEh
+	 hbiGLqhJB8JBLbPpsX7DOvKxz405xlMC8svZ0Kc/65ADBYE8ZePw/8UmOatJlnjsZFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KeWiPPk7;
-	arc=none smtp.remote-ip=170.10.129.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	dmarc=pass header.from=hsal.es;
+	spf=pass smtp.mailfrom=hsal.es;
+	dkim=pass header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=sqQTSvh+;
+	arc=none smtp.remote-ip=80.241.56.172
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBE2606A31A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 15:30:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0EBE2606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9645F606A31D
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 15:31:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9645F606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hsal.es
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KeWiPPk7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1794756629;
+	dkim=pass (2048-bit key, unprotected) header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=sqQTSvh+
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4jSFN12TSMzMlwG;
+	Sun, 15 Nov 2026 16:31:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
+	t=1794756705;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8b0NcOCbgjT502LwxuI3125LQaHRINxYB46l6CFgKcI=;
-	b=KeWiPPk7ihBhc9Hr9vurCT6Rb5q7r5/WJqGtzNFk8xMiS80Cv3GITek3GgqbWYbhSSyr+4
-	KKWLSvEN5hyseJKNlcfr9Q/G91C470wOUUlk8HbNae5fcLoWOC3DIjFCls0qL0uaT0Y3nA
-	8S/ophQN0BDApXq3wWg87bGmmwBzbVY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-yztVjPrgML-gcgHTrusa0w-1; Sun,
- 15 Nov 2026 10:30:24 -0500
-X-MC-Unique: yztVjPrgML-gcgHTrusa0w-1
-X-Mimecast-MFC-AGG-ID: yztVjPrgML-gcgHTrusa0w_1794756622
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 81E9618002FD;
-	Sun, 15 Nov 2026 15:30:21 +0000 (UTC)
-Received: from jocolema-thinkpadp1gen4i.rmtusco.csb (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
-	by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 0C49541F;
-	Sun, 15 Nov 2026 15:30:17 +0000 (UTC)
-From: "John J. Coleman" <jocolema@redhat.com>
-To: akpm@linux-foundation.org
-Cc: audra@redhat.com,
-	david@kernel.org,
-	jocolema@redhat.com,
-	liam@infradead.org,
-	linux-mm@kvack.org,
-	ljs@kernel.org,
-	mhocko@suse.com,
-	peterx@redhat.com,
-	rppt@kernel.org,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	surenb@google.com,
-	vbabka@kernel.org,
-	zenghui.yu@linux.dev
-Subject: Re: [PATCH] selftests/mm: allocate nr_pages based on pmd size for uffd pmd_move tests
-Date: Sun, 15 Nov 2026 08:30:13 -0700
-Message-ID: <20261115153013.1801047-1-jocolema@redhat.com>
-In-Reply-To: <20261114104457.6b3247d9abaff0497a9ae545@linux-foundation.org>
-References: <20261114104457.6b3247d9abaff0497a9ae545@linux-foundation.org>
+	bh=Dz6MG60gYh1oeLl0y4lf8u/H7dQYN/8DWkBKEQ6CwTc=;
+	b=sqQTSvh+xAjRqlex0bxOFYXJwzfxtpHvu1ebKWi17PaMpoEKBjksjyUchfyzV2bNTGSpmX
+	ccK/Q4vPsK8FzxxB6J0p9fjcfNjrIjLSJtXXhHZSzx/phwuuBEjlCbSKKlahpS2bcdYhtC
+	a6qmUWQyJUViEwYnNQD6A2cg51eTLVIp1P3wXna5juITUy2Obq1MJJ1DBJ2ZGKvER8Yq12
+	LgZqlMlVaeVMATvil9ZxoND8EXrNMU39vAlXxAiSD5HH0e79PPAF/ECaxQNaCWI4rmGxj+
+	WUQhyWdw95eUp+Bz33lMUvQNq5qTVxxSYjXhHLypPi1qvJtyVeo9Oqgsdd8AWA==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of hugo@hsal.es designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=hugo@hsal.es
+Date: Sun, 15 Nov 2026 15:31:44 +0000 (WET)
+From: Hugo Sales <hugo@hsal.es>
+To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+Message-ID: <159623420.13271.1794756704576@app.mailbox.org>
+In-Reply-To: <sashiko-outbox-213691@kernel.org>
+References: <20261113-abm-sysfs-commit-v2-0-5808d17a7e89@hsal.es>
+ <20261113-abm-sysfs-commit-v2-2-5808d17a7e89@hsal.es>
+ <sashiko-outbox-213691@kernel.org>
+Subject: Re: [PATCH v2 2/5] drm/amd/display: Don't force a modeset when the
+ ABM level changes
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,14 +75,41 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: GK0ywXmW8CopAiN3_o258jcnvXloufgD14n3zIZLS6w_1794756622
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v8.53.348
+X-Originating-Client: open-xchange-appsuite
+X-Rspamd-Queue-Id: 4jSFN12TSMzMlwG
 
-Hi Andrew, thank you for checking this!  And me-- for missing that MAX()
-input especially.  I reviewed your patch and ran a test with the changes 
-on my own systems as well, and it works great for me.
+> On 11/13/2026 9:07 PM WET sashiko-bot@kernel.org wrote:
+> [Severity: Medium]
+> Can a connector-only abm_level commit on a VRR-active CRTC drop active
+> overlay planes from DC?
 
+I think his is real. Before this patch, connectors_changed forced 
+a modeset, and the modeset added every plane on the CRTC. Without 
+it, an ABM-only commit on a CRTC with VRR active carries only the 
+primary plane that amdgpu_dm_crtc_helper_atomic_check() pulls in, 
+and DC's full update drops an active overlay until the next flip. 
+The -EINVAL doesn't happen, since DM's private context still holds 
+the overlay
+
+v3 adds the CRTC's planes when the level changes, similar to how
+amdgpu_dm_atomic_check() already does for color management and VRR
+changes:
+
+		if (dm_old_con_state->abm_level != dm_new_con_state->abm_level) {
+			ret = drm_atomic_add_affected_planes(state, new_con_state->crtc);
+			if (ret) {
+				drm_dbg_atomic(dev,
+					       "drm_atomic_add_affected_planes() failed: %pe\n",
+					       ERR_PTR(ret));
+				goto fail;
+			}
+		}
+
+I'll wait a bit longer for other feedback on v2 before sending v3
+
+Hugo
