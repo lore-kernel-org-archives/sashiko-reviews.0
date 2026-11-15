@@ -1,95 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794720991;
-	b=3G50E1N7EYxbnA/319j1tZ4v2kC3QE235dcCF7qCsthjCZuAvtIvDdTJy9ytp4xJhb+9
-	 iiur1tNzys7J33DohFNjYIwxk435is5vAus4rY6iO9/fXB9ybqeogSjSGdtED6bW+hsXy
-	 2DLLZUiMKob4nB/ZZNkAPpd7OjJ5EwHRBlKrwibBRCG6IZB1G48uD4kL1GFqALnpkKpYu
-	 Nw7VWfDZ3MalFU4Bzkp4VdR2/xSOGKP95zDXgD43fM+w0leGsT8nve/DJonqvQ9VxAEqq
-	 G0saFe9Mg1aZoKE6fF/Qh3YE1/jb1SU3nl5yOMPujNpTcj/RMi/m39/VlGX5rWDpXIw==
+	t=1794726207;
+	b=KfGojFzSv+nUn6pZjtj5aVdYse1G1tsIpvclYkHBrZ+mxfTVzR7/AIr0iebiiA5689LX
+	 01FLxbhgnEpJRQRgCrrGLAXdzHP/0iChn5/prjGWUClxxoDVG1jbdeHJ1d7s9exaZyMyO
+	 Pvz52T6Tl7GvPFnGvkgSjawy8tMR5YEaqqyEUd52F1Ru8y1tEqDPAX0KfMFBxJJ7KEXUK
+	 SEpedB/0OOQevw/3BVFq9a3aPgiuVKWtM26ta4Sg4YUhzJKtev76CmqJS2twnoOJLOoCy
+	 SrDTo6bO5VVf7fuiZ2cZJv69HlGv1fqNlb5JJw71S2UfNXLSJ2XTfASr1KHqa6UA6AQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794720991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794726207;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=j6VoeGe/wk8xgZpQhEIYsSv2epjnw3INGgRJlWQrTDE=;
-	b=OV3UlGzW0KFfV2EDHKr8BXql1/vBLQNCwCpxHHlB9b6YKF04mLy497yYvNALoxA29jDc
-	 q5Hx7LmnqldFDg2m0TgVXUm1/bQkeVSsFbWM+qYM6JPDNI4PNxSEMFU2W1Aa5ruvZ4WYP
-	 ReDubYbRFRbqlfc/dWSdpzqxyhNJd7BSTlJJ4PG1MKMyCa8cPFJchPouLKkKnmk1cghkF
-	 vNoogI0GofXqv3ILfsKZmcFkUAOB1BoreoLlSkZ0Xpalo94ic0uC+pKaUqOCEVcjoAK8J
-	 OCIOZAPbn3DCJPe1NzpFDWBQv7vZEF0ICV/2czjv5L181s1xXqiluW3m57ZJ1+X1m4g==
+	 From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding:Content-Type;
+	bh=a0wnVTzo2SMTqUhE+Yi1XoqVrkmPjT5CK9ef37B0JVo=;
+	b=I6GNzhUuCq1dqQAgYP4yO83jugPMbp2M64gAIk6RAi2Twb9in/WzuN+tA3lj92QleMYd
+	 1DXjltSqkvHvxvslJ9h/c7oXIqhS2QabDEOiRqEzrohwYNFn3ktNdlPo/+lLL0BavACAa
+	 /75xkFVpifcbu0zXz0ToQxC+p605BBOCPVBg5JMp4YSsDqCkCtewOC7AuxjlFRJLLZOMD
+	 uZeLx5of5Jv7Api01gaoz0vnpnxCHjrLux0UKSQA+fMmeKJaC7H3BAKdIPqE93uUJF9Sl
+	 j1bnce5pxbt3JYmal3M1zWhRMLTJU0w0YtEsRMxKUECE+W9PtbZvylSEfMTfE/B4xOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IKzGw7Xn;
-	arc=none smtp.remote-ip=74.125.82.181
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DaApTbue;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E703E606A327
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 05:36:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E703E606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861C9606A323
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 07:03:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 861C9606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IKzGw7Xn
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-37071c0f42aso3489157eec.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 21:36:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DaApTbue
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4ba013938d7so27060445e9.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 14 Nov 2026 23:03:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794720990; x=1795325790; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=j6VoeGe/wk8xgZpQhEIYsSv2epjnw3INGgRJlWQrTDE=;
-        b=IKzGw7Xn0tKGmQoxuKcsqv9GnIRzuO+gh9+r3cDL+U9aJTf8U+dLDT5o6iCvmcqr1C
-         ByjLPokUVXoq9MpPPkBd24kIJopsLCyMhWeSbnOa+S7L0e67bIqFPUIbxbVftEa47Dsh
-         1NuLxvdhxyr+95DvFpro4UiDzz3dDDlox7w2SeEEhlTcjE7fWwmH2/5ZSg/Y4io9dyyI
-         fP8lY/C1XSNmajNQbiHL+e3biVL8sIBd4iNeCmz2AFCKC+FzEtvFrJGCq16rChdQCrjF
-         NWPcrsj9J1mKvdqzT2FyJMxO0MfWSWyVyJDa/EjGKb7Zt8J5dic9/ZkAXfVyAuThgM3V
-         WIfg==
+        d=gmail.com; s=20260707; t=1794726206; x=1795331006; darn=lists.linux.dev;
+        h=content-type:content-transfer-encoding:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=a0wnVTzo2SMTqUhE+Yi1XoqVrkmPjT5CK9ef37B0JVo=;
+        b=DaApTbuePjkl6d3AXZ3LF5qfB6tw3eVJk4PG/mX2Xhvjon8j6RmPhgO3wb9Oy1yK4H
+         2j0TG0mSxRAyXW8atMD6YejwS/w9l1jWCRzmzG7qJDAto8oMc87OpcGE8vNbphbLmCuT
+         PmAXhk+PylroQs5R0wRaGAZjnfU0/JAcHGM5EtJMF/M+72LGz1IeWoIscr0VeKME12AG
+         HULIJ5aKYrTgSS2/zaLF+n+2uV4vVFQj7byqIdUAtiQdYw9GBOfDvxyk8CYhx44vW/bx
+         nISyiUj8v9Eay3wuM2ZZa9bdEIV/+cSAszzqGrojWM2XYwgUMx88y/axW5d0OMbkdgkD
+         mfHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794720990; x=1795325790;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=j6VoeGe/wk8xgZpQhEIYsSv2epjnw3INGgRJlWQrTDE=;
-        b=OAAq2RzwYtQjq6mvH3lopAqBMJMQQ66iyXtIcKMln8G5ACp8liUDQX2dWUkb/xFOF1
-         N1Ax6amu4I+Wmnr1unT/EEMUd8J9iatvWe6Sez8ZrmFAFMynnVLUe8+opBeziucFhDjV
-         gvcCLjGcHNBR92F+VApOKXB/fTKPczORXXiWvewjlqxhiLqIwvJt2go/MoNdLHE07FgA
-         FsPBWmjV8ZpdppiskYELjPFCNjmBNY/6KVxaWrAbfw2wScmVEPaCjRp2RGeONyfNUlj6
-         BI3ppElHrpyN6lQ191hk9JsAJDgJRybWTFFcs/yomQm9/Gzp3sLgwhaSh7ldOuFalrw5
-         bmOQ==
-X-Forwarded-Encrypted: i=1; AL+hErEy7pv4/X+782+wH0/w1MCB5q5SNqZfOgGnLnm+ombcxBNdL6WuylTkQEqPEMInVwH/ZgdNHEKtc7UVDvvOf+8=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/CtLxfurykWi2ahbCZNvBIfKU4X2lau9lLE7HaM9LEt//Rf3UD
-	p4doAx+bndjv6hllFamQso0tj2zXce4uBSkbjDRu4aucuEMIE6IAC+bU
-X-Gm-Gg: AYBFou2gPWZKTj+h599oBBkaIZFo+DAKDwAznVNn3Xfy8dPYmQncpKtBi/n5czXC8Zz
-	HDVGYg2mGmB8FT62fPiNWi3SMHIh10pohccWpMS7X94IXe75zqB1xF7z4UX1gYCYl7Xs9bQgP9O
-	7EMyi8iTzuUbirzCyD0bi8K2JpvYxDz4JiUIOotgvRywhDc+bSnQzVMFuEzthD859YbvTHnCrH6
-	0hjUXTmusGrzJsipax6ISoPKmIAYbw5OBq3ZWSPZ0onNGZzzlNOdU6bPA7niD+OKXWGrAJ26VVo
-	5LKlwsMXn+ZXx6rI0xyS7Un685stR6F+JxLDdxaMMRTySmjJp3GgTA4ziFJiQAbrl4v6uJPmglP
-	vTbJnyP4ppPeMv+RrpHwIeJcbGimucnM5Gx6amPop6NhW/aHLJiaKs4qKtJQbJzeIUL/psmuZf+
-	zQaEmjac02BHH/LMSbFeDH41IXONnBwxusjmUCCcb/pKxBrTSU/vHXX4JeuVfPM/tlmOBQhmobg
-	pFRewvZFfCH+BxXBoFQssXPPZRZu9l1+3NFP7TJ5EA9AUZCqHztah//Ou1cUUBWA6QuLOtRP17D
-	cEOkqcujbfixdNa1Pw4q9IdeEV0ub7lrBCOJXQYUPHlXXgeUjWqqupYXYGce
-X-Received: by 2002:a05:693c:8813:20b0:376:77e6:a66 with SMTP id 5a478bee46e88-37967315a29mr6673278eec.16.1794720989851;
-        Sat, 14 Nov 2026 21:36:29 -0800 (PST)
-Received: from arch.localdomain ([152.175.35.65])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37955332ae7sm34739887eec.8.2026.11.14.21.36.27
+        d=1e100.net; s=20260707; t=1794726206; x=1795331006;
+        h=content-type:content-transfer-encoding:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=a0wnVTzo2SMTqUhE+Yi1XoqVrkmPjT5CK9ef37B0JVo=;
+        b=VNDVVMiBrPCxm03w4h6Q9EG9TC4ZgmQknowgKlc4xE7A5pDi+4x2V2LFOzW6DulHfo
+         a6czCuwPFNu9GWjfBueo0BCzkr0svJw7nxdcI5m2TTm9y/KH5rmjw1rZfvwl8yOhh3oR
+         nCzTOgDQlW/LloVERG/NA8zWsQ0t4YNAB0vNMYsOVCHUuRICjvLFxgIShycKLsFMz2ss
+         DMVlDa1FLXDrTPNgiSE5Y5DoSVdpPvkQ4BtxTON3mGZES6NtYGRAB3iskfUQ6mMvTulC
+         +BWGiLOaQbancry5mj0yhNypmiD2MCcqddCW9noUFjLdUCRCIvaTID98ZaWz5UFqWSuS
+         F/hg==
+X-Forwarded-Encrypted: i=1; AL+hErE/6CmN+FJ1lFydyMU6RpSuOSesM5ytEFWa2D+uzRCkUV3qwKcOPm9dJ6SghB30odxVo/0gV/2VWiOJ5AJ9OdA=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8zx8WcwuDLEIwlalsljlyhmE71iABE3/Cp52ahIswcGUiuLpqy
+	/r7B0og5PlZa7FRv/HEeuLJidLdniVJ/b/le522IWrQDfPsphfY6GsMoiP1P/g==
+X-Gm-Gg: AYBFou2ZNpEpCRFA+Ndod6D3hlmSpc2GnWaUeqR+ysDxeCzJRMQrjupY9JlRGkFAXYS
+	02O0MIUQv9M9ifuXYaip/zej0J1td6EXsJLHLpe5ZjOYnTlIEOGwqtXC/PWY2w6b61T/vXZORFH
+	HozyxJ3kaKq05B8ScgHtNpnrcla3vBIi2dzWY4zFShyF9RrJx8rajZHMY5TO21JxuumnUMZt4m2
+	HiOV+K/Ja5KSKEoob54FEtLtKuK9UZp49qeXPRcgq4duNy8sQlNyTYvZzB/pEjh30svgIFQ6IiU
+	xqmCyqr3qgK3o7XvxFp+ZyDzWaOBG6huGn3KgT0M0NE9Q3l/FkFDXfyIuZW8gnr9DskNn7vIMa3
+	UH09aD89s+6IAFuORpn15oIjanPozGN1lTrEL+/Ryw5t1SdYd0Jh+JqDel5ClaDyx/PQpBF+Fo8
+	Ep7JL4c9HIQFRZZdLXm95+JSBIoYKV4A/d78PmOmjQEq9r6f7DwnNLVdWM4/nQpbxbqNljwOk1S
+	UiP1PpHS+wNy5UuncXDtn+BVzWF+rqMRWaXvy3miKQae0uLrGAP7532K6xZIvh0Y4V2fyqgj7ww
+	6GXF35rcrC2ykwBk21eFIsMxi84RMfPd8bPyOv5Sm96s51cegf1k5uBFTaux2BuCfDWSxen8Grz
+	8moTtNSkaEnFLCgq/zUaZIA4E3ZKCggndyb7S8A8pryMZoiYpK7zVljwqFZqVqXeEnKYpgfF3Ts
+	zc/Cg2u3Zzq0OkOq+591Fd3HvmaoaD0kQMLLoObEGvvLpM3iCyEty1KKMIBh1mKJ1NDoTIg1B5Y
+	JEB9e4AR6obZcKv3ta3DB7qxllq1Gje6O1HUzERVZHpAnM=
+X-Received: by 2002:a05:600c:840c:b0:49c:d019:70c5 with SMTP id 5b1f17b1804b1-4bb5599bda8mr154094045e9.0.1794726205780;
+        Sat, 14 Nov 2026 23:03:25 -0800 (PST)
+Received: from jernej-laptop.localnet ([2a00:ee2:6a02:9300:bb69:6bcf:1b11:e85b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c608d10b2sm25768458f8f.44.2026.11.14.23.03.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2026 21:36:29 -0800 (PST)
-From: Jun Yan <jerrysteve1101@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: dri-devel@lists.freedesktop.org,
-	jerrysteve1101@gmail.com,
-	sashiko-reviews@lists.linux.dev,
-	damon.ding@rock-chips.com
-Subject: Re: [PATCH v4] drm/bridge: analogix_dp: use devm_phy_optional_get() for the DP PHY
-Date: Sun, 15 Nov 2026 13:36:25 +0800
-Message-ID: <20261115053625.404795-1-jerrysteve1101@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <sashiko-outbox-215231@kernel.org>
-References: <sashiko-outbox-215231@kernel.org>
+        Sat, 14 Nov 2026 23:03:25 -0800 (PST)
+From: Jernej =?UTF-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
+To: Chen-Yu Tsai <wens@kernel.org>, Samuel Holland <samuel@sholland.org>,
+ Romain TISSERAND <romain.tisserand@gmail.com>
+Cc: Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>,
+ Jerome Brunet <jbrunet+clk@baylibre.com>, Maxime Ripard <mripard@kernel.org>,
+ Frank Oltmanns <frank@oltmanns.dev>, linux-clk@vger.kernel.org,
+ linux-sunxi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject:
+ Re: [PATCH] clk: sunxi-ng: nkm: avoid 32-bit overflow in rate calculations
+Date: Sun, 15 Nov 2026 08:03:21 +0100
+Message-ID: <TB0DvSOtTYKNXNEXzDrlwg@gmail.com>
+In-Reply-To: <20261101203336.1360239-1-romain.tisserand@gmail.com>
+References: <20261101203336.1360239-1-romain.tisserand@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,37 +105,155 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-Hi,
+Dne nedelja, 1. november 2026 ob 21:33:36 Srednjeevropski standardni =C4=8D=
+as je Romain TISSERAND napisal(a):
+> The N-K-M rate code computes parent * n * k / m in an unsigned long,
+> which wraps on 32-bit ARM as soon as parent * n * k passes 4.29 GHz.
+>=20
+> On the A33, pll-mipi (parent pll-video at 297 MHz) with N =3D 14, K =3D 2,
+> M =3D 14 runs at 594 MHz, but 297 MHz * 14 * 2 wraps around to
+> 4021032704 and the code computes 287.2 MHz. ccu_nkm_find_best() then
+> picks these factors for a 288 MHz request, and clk_get_rate() reports
+> 287.2 MHz while the PLL runs at twice that. On a PocketGo S30 (A33,
+> ILI9488 panel on one MIPI-DSI lane) the lane ended up at about
+> 594 Mbit/s instead of 288 and the picture broke up.
+>=20
+> Do the multiplications in 64 bits, saturating at ULONG_MAX, in
+> ccu_nkm_recalc_rate(), in both best-rate searches, and for the parent
+> rate request of the parent-adjusting search, where rate * m overflows
+> the same way.
+>=20
+> Without the saturation, a candidate above 4.29 GHz in the search would
+> be truncated again on return and could look like a valid low rate.
+>=20
+> 64-bit kernels are not affected. On 32-bit ones, every N-K-M clock can
+> hit it (A31, A23, A33, R40, H3, V3s and F1C100s use them), whenever the
+> parent rate times N * K goes above 2^32.
+>=20
+> Fixes: df6561e60244 ("clk: sunxi-ng: Add N-K-M Factor clock")
+> Fixes: 3492e4f6db5f ("clk: sunxi-ng: nkm: consider alternative parent rat=
+es when determining rate")
+> Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] drm/bridge: analogix_dp: inaccurate RK3288 PHY comment in
->   analogix_dp_probe()
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-> [Severity: Low]
-> Are this comment and the commit message accurate about RK3288?
->
-> In arch/arm/boot/dts/rockchip/rk3288.dtsi and
-> Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml,
-> the RK3288 eDP node defines phys = <&edp_phy> and phy-names = "dp" for its
-> rockchip,rk3288-dp-phy device, which drivers/phy/rockchip/phy-rockchip-dp.c
-> programs via GRF_SOC_CON12 when phy_power_on() and phy_power_off() are
-> called on dp->phy.
+Best regards,
+Jernej
 
-This is indeed inaccurate. Good catch. I will remove it in v5.
+> ---
+> Notes:
+> - Testing: built with W=3D1 for arm (multi_v7_defconfig with the A31, A23,
+>   A33, R40 and H3 CCUs) and arm64 (defconfig), SUNXI_CCU=3Dy and =3Dm, no
+>   warnings; on arm the 64-bit divisions go through __do_div64 (no libgcc
+>   helper). Tested on a PocketGo S30 (A33) running 6.18.54 with this
+>   change, without the ULONG_MAX saturation (same results for rates that
+>   fit, which is the only case the hardware hits): before, pll-mipi was
+>   programmed with N =3D 14, K =3D 2, M =3D 14 (594 MHz measured as a 2x l=
+ane
+>   rate) while clk_get_rate() returned 287216621; after, N =3D 15, K =3D 1,
+>   M =3D 16, 278437500 Hz in both the register and clk_get_rate(), and the
+>   panel picture is right. This version, with the saturation, then on
+>   the same board on 7.3.1: pll-mipi again programmed with N =3D 15, K =3D=
+ 1,
+>   M =3D 16 (278.4 MHz from the 297 MHz pll-video0) and the picture is
+>   right. Not tested on the other SoCs.
+> - Tool disclosure: this patch was prepared with Claude Opus 5.5
+>   (Anthropic) as a coding assistant, in an interactive session where I
+>   asked it to bring up the PocketGo S30 display. It found the mismatch
+>   between the pll-mipi register and the rate the clock framework
+>   reported, traced it to this overflow and drafted the fix and the
+>   message. I reviewed and understand the change and tested it as
+>   described above.
+>=20
+>  drivers/clk/sunxi-ng/ccu_nkm.c | 30 ++++++++++++++++++++++++++----
+>  1 file changed, 26 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/clk/sunxi-ng/ccu_nkm.c b/drivers/clk/sunxi-ng/ccu_nk=
+m.c
+> index 401fbb7524..e5a8f22d50 100644
+> --- a/drivers/clk/sunxi-ng/ccu_nkm.c
+> +++ b/drivers/clk/sunxi-ng/ccu_nkm.c
+> @@ -6,6 +6,7 @@
+> =20
+>  #include <linux/clk-provider.h>
+>  #include <linux/io.h>
+> +#include <linux/math64.h>
+> =20
+>  #include "ccu_gate.h"
+>  #include "ccu_nkm.h"
+> @@ -30,6 +31,26 @@ static bool ccu_nkm_is_valid_rate(struct ccu_common *c=
+ommon, unsigned long paren
+>  	return true;
+>  }
+> =20
+> +static unsigned long ccu_nkm_calc_rate(unsigned long parent,
+> +				       unsigned long n, unsigned long k,
+> +				       unsigned long m)
+> +{
+> +	u64 rate =3D (u64)parent * n * k;
+> +
+> +	do_div(rate, m);
+> +	return min_t(u64, rate, ULONG_MAX);
+> +}
+> +
+> +static unsigned long ccu_nkm_calc_parent_rate(unsigned long rate,
+> +					      unsigned long n, unsigned long k,
+> +					      unsigned long m)
+> +{
+> +	u64 parent =3D (u64)rate * m;
+> +
+> +	do_div(parent, n * k);
+> +	return min_t(u64, parent, ULONG_MAX);
+> +}
+> +
+>  static unsigned long ccu_nkm_find_best_with_parent_adj(struct ccu_common=
+ *common,
+>  						       struct clk_hw *parent_hw,
+>  						       unsigned long *parent, unsigned long rate,
+> @@ -44,12 +65,13 @@ static unsigned long ccu_nkm_find_best_with_parent_ad=
+j(struct ccu_common *common
+>  			for (_m =3D nkm->min_m; _m <=3D nkm->max_m; _m++) {
+>  				unsigned long tmp_rate, tmp_parent;
+> =20
+> -				tmp_parent =3D clk_hw_round_rate(parent_hw, rate * _m / (_n * _k));
+> +				tmp_parent =3D ccu_nkm_calc_parent_rate(rate, _n, _k, _m);
+> +				tmp_parent =3D clk_hw_round_rate(parent_hw, tmp_parent);
+> =20
+>  				if (!ccu_nkm_is_valid_rate(common, tmp_parent, _n, _m))
+>  					continue;
+> =20
+> -				tmp_rate =3D tmp_parent * _n * _k / _m;
+> +				tmp_rate =3D ccu_nkm_calc_rate(tmp_parent, _n, _k, _m);
+> =20
+>  				if (ccu_is_better_rate(common, rate, tmp_rate, best_rate) ||
+>  				    (tmp_parent =3D=3D *parent && tmp_rate =3D=3D best_rate)) {
+> @@ -87,7 +109,7 @@ static unsigned long ccu_nkm_find_best(unsigned long p=
+arent, unsigned long rate,
+> =20
+>  				unsigned long tmp_rate;
+> =20
+> -				tmp_rate =3D parent * _n * _k / _m;
+> +				tmp_rate =3D ccu_nkm_calc_rate(parent, _n, _k, _m);
+> =20
+>  				if (ccu_is_better_rate(common, rate, tmp_rate, best_rate)) {
+>  					best_rate =3D tmp_rate;
+> @@ -154,7 +176,7 @@ static unsigned long ccu_nkm_recalc_rate(struct clk_h=
+w *hw,
+>  	if (!m)
+>  		m++;
+> =20
+> -	rate =3D parent_rate * n  * k / m;
+> +	rate =3D ccu_nkm_calc_rate(parent_rate, n, k, m);
+> =20
+>  	if (nkm->common.features & CCU_FEATURE_FIXED_POSTDIV)
+>  		rate /=3D nkm->fixed_post_div;
+>=20
+> base-commit: 5243bd55dfe63a5f806622878f6fbdd78172fac9
+>=20
 
-Do you have any opinions on this issue, Damon?
 
-> RK3399 and RK3568 are the variants that omit the phys property and configure
-> the built-in PHY directly through the controller MMIO registers rather than
-> through a separate PHY device or GRF.
 
-Yes, you're right. RK3399 doesn't configure PHY through GRF; MMIO registers
-are the correct way. (RK3568 eDP is not supported in mainline yet.)
 
-I'll send a v5 with the comment removed and the commit message reworded.
-
-Thanks,
-Jun
