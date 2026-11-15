@@ -1,71 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=5.75.144.95
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794756735;
-	b=wT2JARuYy4oDP1QdTp8uHH82vQeCYTUVIgp7ufHusBumZ8r1VY08ogcuFm0ZM8wYjwsn
-	 AOZpMB+Tgr+7WVwTnOnedWh+P2J+CkP3waDaxfXAjA4BdVCzqo8rZeauRG7yMsWQd4qYs
-	 rHV95uJ19BKWSR4UMC+/ZtrvBH2HiYCDfI1iyR9UbKNqSoYMeSAHQN4h581Xvp9jueGcC
-	 vjuZ592jez4vfp1SiE6uh4ztFg7Is1U8YXEji6B3QWovKZwsLDPx7Wl1S8Ri0DUuFxOG7
-	 lxNWB+r6gKfyZlubaV0sWvPYp6utOiUlguBaOZSjUwXL9izyKDPH5nzoO8G+CjNSPAA==
+	t=1794759291;
+	b=kRNlbJmqGXAzUmbO5yVXbHpQlrkRksyGxiNXfrboBLdVP+dgb87t13VTZmtB9TQ4VjAf
+	 3CiePuhM4rOSRL2AVJis0ab3/VXrEcJy9x7/JpYMbbbJs03GjJ5qnEcW9ZTRG5yDvHTzr
+	 DcIlkZT6Ex9afWW2H3EQVzyBODDLd0Z/DK2TxEDbnnITNCz4rWrkAp75AzfSdVpSgbgyw
+	 ++mv4yqNEvqO4gnNDk8eaWmV1j8RCSRTKmowv/kZH5/VxwE/RxdS7ihgJ4TXDDfqa1+X3
+	 IKkk2yxev7sxccpT+2ySl9Y3JPjPq65nmPnhoMsh/PD8QwyshE0X5TZRmLDyRwM2+9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794756735;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Message-ID:
-	 In-Reply-To:References:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Priority:Importance:X-Mailer:
-	 X-Originating-Client:X-Rspamd-Queue-Id;
-	bh=1CQ75Fayc3WJJFoGR/c1sesoFpc6Olc8yaz6TvmvWC0=;
-	b=zlUfRzGUHHR2dsiwZWCuZ1W2ChG3xnsUzYrw2wlceYNZmAIlYloNoOtOUUg4ppu5uMpU
-	 sTK3lWvshUjhuRJh91j9iKfKMTqz2d2X+raguqBmO/xNOe6mGPzLTPXfaWgkxzwikqP3H
-	 XAvfrU/PVacxQ1Kea7iKgg59mqo33Xz1zahbTVVbiHKsh0pj0jdabCuMF7dRUWTxeEU/W
-	 jbdajlVTVIcsslczMbrW3RgyNKgW2fI7ZqRpYmDFn3g7EZNmjCXPXfrLKXhNeaN+lstlY
-	 ZQRSnFebTsUPESXhNV9DMbP3DihfAGPyIxzfiWJGaIlNKv9td7lEFxANOLBcWFih/eA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794759291;
+	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=VJ28sg+WpgoKr8RqyZCJ5+6VPbt7JtBzAkrOxn+KB8g=;
+	b=4BuLSBHl9H4uPMDSiAkSawT5jodhHw7SeMgCKaofnwBbSXpqBuLIx5LNkIluBHO17sc9
+	 bDLHVUXfJ6zwKHvudIEzcqxTEpBkv6mazODaG7L1xNB85F9OLfMsuf1A8ICdRQvudtocF
+	 ySSj6WnDTZPn2dbPmtci1MuQDfqEPT0jiiCp33URcEu40eiRm6w+FMMvmL141pujjXlGN
+	 wxoV1QmrVPJoKYg+kov+Byc7lyvusPmB5SWb/NIfO0LVD499WNlkGJ59AGQ30nw6Iwerj
+	 HI2MtnHNIjCDan4/A/wcwVR+wWZ0Yj4rY1R+Jd6ntnkUuO5IKcGO6/INgPiY8XgcMdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=hsal.es;
-	spf=pass smtp.mailfrom=hsal.es;
-	dkim=pass header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b="1wLh0V/J";
-	arc=none smtp.remote-ip=80.241.56.152
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	dmarc=pass header.from=mainlining.org;
+	spf=pass smtp.mailfrom=mainlining.org;
+	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=rsa-sha256 header.s=202507r header.b=nR8p81Cd;
+	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=ed25519-sha256 header.s=202507e header.b=GJc17JQB;
+	arc=none smtp.remote-ip=5.75.144.95
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9C3606A31E
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 15:32:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9C9C3606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hsal.es
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B5C606A31A
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 16:14:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86B5C606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=1wLh0V/J
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4jSFNN4BnMzKp2T;
-	Sun, 15 Nov 2026 16:32:04 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
-	t=1794756724;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1CQ75Fayc3WJJFoGR/c1sesoFpc6Olc8yaz6TvmvWC0=;
-	b=1wLh0V/Ja/vn+KnKKRfSAVy06HI62NVm/4TImiNKPw1OxGG3CLLrkIZO8OdprPUkv6k5F/
-	UOyhD65dsFcZlKzlFf+iaha6rF17hHDLfZZaNGAiFx+VhGSVUAtyNFlIX6KENbkWkIz8YZ
-	udEqvSIB5PtJGsWUX+k9J9LrMDZTG8pqMFfAczUowODli+UUcVP7G5qxKU6XXKGGNYzNev
-	Sp77T2Yn97heAYR42i+P8BSpnU25OwAQfD31bpl81vfCoDu2bMZAcNLn5cgjSasqgurMaz
-	Ht/t+VWWMtaPSBBupRFABWUOGM0PuS8lMMVTTOW/O8Xdkb63qbHwsLKXeVy2BQ==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of hugo@hsal.es designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=hugo@hsal.es
-Date: Sun, 15 Nov 2026 15:32:04 +0000 (WET)
-From: Hugo Sales <hugo@hsal.es>
-To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Message-ID: <754837949.13288.1794756724156@app.mailbox.org>
-In-Reply-To: <sashiko-outbox-213714@kernel.org>
-References: <20261113-abm-sysfs-commit-v2-0-5808d17a7e89@hsal.es>
- <20261113-abm-sysfs-commit-v2-4-5808d17a7e89@hsal.es>
- <sashiko-outbox-213714@kernel.org>
-Subject: Re: [PATCH v2 4/5] drm/amd/display: Commit panel_power_savings
- writes from the kernel
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.a=rsa-sha256 header.s=202507r header.b=nR8p81Cd;
+	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=ed25519-sha256 header.s=202507e header.b=GJc17JQB
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1794759275; bh=VJ28sg+WpgoKr8RqyZCJ5+6
+	VPbt7JtBzAkrOxn+KB8g=; b=nR8p81Cd1qsp1YVxNWWYwceUf1RQDjPtVYusszGRmuM7vSk/q8
+	g3mp3H6B47WxUbjsYx3LAyBWw2kfSGjUs9wGVW6BqF53BF46cKolAsvX8ECG77lmPePJew0/yOM
+	EXGWohpFaFwBl4X7e3j4y2u/qpdlXBR6RNYIl4z8uCLISinQ2DaGc8uU3tSWivP2ByIQQ4KC/ub
+	kXM4yd+NkVKcy2L2uGTcdR6i75XqW8dWXQyTBN9qqhH/uMBbS2Sc8Vt+hrHa+HCo6poJ4f1DPr3
+	5ctUMspbF0+x9oS44FKJ+7eP3YlaK4KzCxLkLUXwbLbiiKnCnrfNv4qdl+h4rduoGMg==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1794759275; bh=VJ28sg+WpgoKr8RqyZCJ5+6
+	VPbt7JtBzAkrOxn+KB8g=; b=GJc17JQBJ/wdznycqNltCwfBJ9CzGCmOEOdTTAiBbhhRi6vsXZ
+	NdOWMCGVWVuuofYTP+JPp7d9lRUy3WG7/wBw==;
+Message-ID: <7ac6f154-952c-412d-8ae3-b4e07a334ee1@mainlining.org>
+Date: Sun, 15 Nov 2026 19:14:34 +0300
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -75,22 +57,172 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v8.53.348
-X-Originating-Client: open-xchange-appsuite
-X-Rspamd-Queue-Id: 4jSFNN4BnMzKp2T
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Report the residue of packet
+To: sashiko-reviews@lists.linux.dev
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+References: <20261115-qcom-bam-dma-metadata-v1-1-52e4de54ffd3@mainlining.org>
+ <sashiko-outbox-215642@kernel.org>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <sashiko-outbox-215642@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> On 11/13/2026 9:28 PM WET sashiko-bot@kernel.org wrote:
+
+15.11.2026 19:08, sashiko-bot@kernel.org пишет:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] dmaengine: qcom: bam_dma: missing opening brace in
+>    bam_fifo_xfer_len()
+> - [High] dmaengine: qcom: bam_dma: undeclared metadata_ops in
+>    bam_prep_slave_sg()
+> - [Medium] dmaengine: qcom: bam_dma: missing read barrier in
+>    process_channel_irqs()
+> It also noticed 2 related pre-existing issues this patch does not
+> introduce:
+> - [Critical] dmaengine: qcom: bam_dma: ring buffer space miscalculation
+>    in bam_start_dma() [1]
+> - [High] dmaengine: qcom: bam_dma: unclocked register access in
+>    bam_dma_irq() [2]
+> --
+>
+> commit e40d68fe8bef09bdcbef42721a06c3fd7ad7197d
+> Author: Nickolay Goppen <setotau@mainlining.org>
+>
+> dmaengine: qcom: bam_dma: Report the residue of packet
+>
+> This commit calculates the number of bytes transferred from the BAM FIFO
+> descriptors and reports the transfer residue in async_desc->vd.tx_result.residue
+> upon descriptor completion.
+>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index e62e411dc8f8b..b5cfe3ce34060 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+> [ ... ]
+>
+>> @@ -447,6 +448,30 @@ static inline void __iomem *bam_addr(struct bam_device *bdev, u32 pipe,
+>>   		r.ee_mult * bdev->ee;
+>>   }
+>>   
+>> +/**
+>> + * bam_fifo_xfer_len - bytes transferred for a completed descriptor chunk
+>> + * @bchan: BAM channel the chunk was queued on
+>> + * @async_desc: BAM async descriptor owning the chunk
+>> + *
+>> + * For RX pipes the BAM overwrites the size field of the descriptor that
+>> + * ended the transfer with the number of bytes actually written to memory,
+>> + * which can be less than the buffer size (e.g. an IPA packet).  Those
+>> + * values live in the FIFO copy, not in async_desc->desc[].
+>> + */
+>> +
+>> +static u32 bam_fifo_xfer_len(struct bam_chan *bchan,
+>> +			     const struct bam_async_desc *async_desc)
+>> +	struct bam_desc_hw *fifo = PTR_ALIGN(bchan->fifo_virt,
+>> +					     sizeof(struct bam_desc_hw));
+>> +	u32 len = 0;
+>> +	unsigned int i;
+>> +
+>> +	for (i = bchan->head; i < bchan->head + async_desc->xfer_len; i++)
+>> +		len += le16_to_cpu(fifo[i % MAX_DESCRIPTORS].size);
+>> +
+>> +	return len;
+>> +}
 > [Severity: High]
-> Can this commit drop active overlay planes from DC when VRR is enabled on
-> the CRTC?
+> bam_fifo_xfer_len() is missing its opening '{' after the parameter list,
+> which breaks the build when CONFIG_QCOM_BAM_DMA is enabled.
+>
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but in bam_start_dma(), the
+> producer side of the same descriptor FIFO ring buffer miscalculates
+> available space [1] and can overwrite in-flight DMA descriptors:
+>
+> drivers/dma/qcom/bam_dma.c:bam_start_dma() {
+> 	...
+> 		avail = CIRC_SPACE(bchan->tail, bchan->head,
+> 				   MAX_DESCRIPTORS + 1);
+> 	...
+> 		bchan->tail += async_desc->xfer_len;
+> 		bchan->tail %= MAX_DESCRIPTORS;
+> }
+>
+> CIRC_SPACE() is called with MAX_DESCRIPTORS + 1 (4096), which returns 4095
+> when the ring is empty (tail == head), while bchan->tail and bchan->head
+> wrap modulo MAX_DESCRIPTORS (4095).  Enqueuing 4095 descriptors wraps
+> bchan->tail back to bchan->head, making a full ring appear empty so
+> subsequent submissions overwrite active descriptors before hardware
+> processes them.
+>
+>> @@ -732,6 +757,8 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+>>   		} while (remainder > 0);
+>>   	}
+>>   
+>> +	async_desc->vd.tx.metadata_ops = &metadata_ops;
+>> +
+>>   	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
+>>   }
+>>   
+> [Severity: High]
+> metadata_ops is not declared anywhere in this file or its included headers,
+> which causes compilation to fail.
+>
+>> @@ -881,6 +908,11 @@ static u32 process_channel_irqs(struct bam_device *bdev)
+>>   			if (avail < async_desc->xfer_len)
+>>   				break;
+>>   
+>> +			async_desc->transferred +=
+>> +				bam_fifo_xfer_len(bchan, async_desc);
+>> +			async_desc->vd.tx_result.residue =
+>> +				async_desc->length - async_desc->transferred;
+>> +
+>>   			/* manage FIFO */
+>>   			bchan->head += async_desc->xfer_len;
+>>   			bchan->head %= MAX_DESCRIPTORS;
+> [Severity: Medium]
+> Can bam_fifo_xfer_len() read stale fifo[].size values before the hardware
+> descriptor writeback is observed?
+>
+> bchan->fifo_virt is allocated with dma_alloc_wc() (Normal Non-Cacheable
+> memory on ARM/ARM64, which allows speculative loads), and earlier in
+> process_channel_irqs() BAM_P_SW_OFSTS is read with readl_relaxed():
+>
+> drivers/dma/qcom/bam_dma.c:process_channel_irqs() {
+> 	...
+> 		offset = readl_relaxed(bam_addr(bdev, i, BAM_P_SW_OFSTS)) &
+> 				       P_SW_OFSTS_MASK;
+> }
+>
+> Because readl_relaxed() has no read barrier and the address of
+> fifo[i % MAX_DESCRIPTORS].size does not depend on offset, the CPU can
+> speculatively load the initial buffer size written by bam_start_dma()
+> instead of the byte count written back by the BAM hardware, reporting the
+> wrong residue to clients.  Using readl() for BAM_P_SW_OFSTS or adding a
+> dma_rmb() before reading fifo[].size would order the reads.
+>
+> [Severity: High]
+> This problem wasn't introduced by this patch, but bam_dma_irq() calls
+> process_channel_irqs() before acquiring a runtime PM reference [2]:
+>
+> drivers/dma/qcom/bam_dma.c:bam_dma_irq() {
+> 	...
+> 	srcs |= process_channel_irqs(bdev);
+> 	...
+> 	ret = pm_runtime_get_sync(bdev->dev);
+> }
+>
+> If a shared or spurious interrupt fires while the BAM controller is
+> runtime-suspended with its clocks disabled, the readl_relaxed() of
+> BAM_IRQ_SRCS_EE at the start of process_channel_irqs() accesses an
+> unclocked register and triggers a synchronous external abort.
+>
+> [1] https://sashiko.dev/#/bug/linux-a877fd6c-244a-404b-88a7-7d77506711a9
+> [2] https://sashiko.dev/#/bug/linux-0ca05019-399c-4f9d-a7e1-d74c7ddced75
 
-This is the same bug as the one reported on 2/5. The fix there covers
-this store too, because the store changes abm_level in the new
-connector state, and v3 adds the CRTC's planes in atomic check for any
-commit that does that
+I will address the issues of the patch in next respin, but I don't know 
+what to do with issues that |
+wasn't introduced by my patch.
 
-Hugo
+-- 
+Best regards,
+Nickolay
