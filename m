@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794782562;
-	b=HRMZeERs//92rYv0Ksv8bAG0OI6/n4sEhbegBleXnP576EFvaeQnnkMjVtzBB90LEwOT
-	 eTkapAEGrIlSzDNsauVh8N6iufVNl38dCljNbjxVPhqsVrfyAt8XKdtaBYb8knwqv4rkh
-	 hcEHuC9GWzIBCj3ccoFWAAv4usZHqHCfENeBJQU2R0P8jFLzzn2Ou+Ubm5S0DYOMT7v10
-	 lt9y0wvxyLulRPnKsBzqQ11etjtRF4lng0Ht9kg6ndWeP1rIv+pXxMm8r/Qkz0p/Y/E85
-	 3KD1AZbV4Q2uswoW0lBgp8wDWmOihuJvJ1S/onWtjuB+w+yXLLto1KWvpPmCWZFkQiw==
+	t=1794782675;
+	b=4rTxhGLkksgRPb0G6DowGvOUUuS8F/iLyIUhrHvqqljR8PP2wd7cjceIqIc0XW/5xv3O
+	 W1747kEQfMFcDvKu0wMfURKwhGpGst+M+A5ORG8VAzrtkYzBJV5mYnQ1sO5jMXj4dLeOu
+	 Q1BSlGkJc27sYA/4akCNCESkc0Tqca9NSQ+3BmiwoKGRxEbCxVcXhokQM8utMPWav6NhL
+	 pWnGQR19NTvYQcDl2DNLae/or2h76R0KwCx/OVtTeuKLjiG0lScRMAx/J3LZVBeWynkd8
+	 XQTsh/wELbIWJzImwOO/o4PmQYSq4CEg4PEhecxOxJZASv3cZjMB1iQsN844gNmSbZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794782562;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794782675;
 	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:
 	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=OY/vmsGvuE6qxS/RSSUMX1YER6MAYsfGCerq4d6P+iA=;
-	b=KFSSVRSSVVKowuDzkbsyVZlterYr4bL7mfxFLDcPu+MWY0DUjjM+lDG8Uy/8hj+y0z49
-	 2o4U/Bg7yJVx/zKFo8kAEtD/KjLEGEw/WJTEXU+ZRKlyDY5xQTRJl0WAl6LqpWqTw62dd
-	 tHPd8wDwhRp/syeCnc/zFkNp6nBiLTgsjOwtTtJRfLSr8gGVCA6MHWEcjobF81q9EPPvF
-	 Y1XMjTjMVvTPPZB2ET3w223vg6k5EAv7gRx82FgB/aCXlYLK/QltvwXUEuAMUoeq9t2NI
-	 SMWiBQR0TGGmW/mIGmSSOKRihbMuMsO922MGxQuhCOPHBFXmoSno/qPRpZ3u7B4Kr6A==
+	bh=/6G/M/AT0gyJOgfB8EJx11GQl1a1nFgjs1t6sNM0uEw=;
+	b=UQoAcPJo45+Ywf0eXeoHapRaDcr4yKmRFxSt7ErTXwke6cCMg5pz338oraBq9khNLOE9
+	 7N3OsFRtJmElfSgr/k9SQ72oy0vtsFvzjB2PP0ePI4d6hXMzRBlO7fezjzRCSRuf1F8M2
+	 P/D7hRCnWH9Q1Hq+VW32UZywId23E1T/achl0PVHgG06HDvjFYrqlzrmKQ1NE1ys+XYpf
+	 nVpGskGiwMdoKAMar0OR08Dsi/WEDFrh2HNiwcIr/Q5yorwJldZDv5mVUlCwU69lUDzja
+	 S9wZfKTa7kqUK4t5GBMmSFAwafqYUTzHTnBwhvfgJ0Q+QfN5Rr8QjPce1zrRnVBldfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fj5MKpku;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WD858LjN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BEB606A331
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 22:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30069606A32C
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 22:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fj5MKpku
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF181F000C5
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 22:42:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WD858LjN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4BB1F000C5
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 22:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794782562;
-	bh=OY/vmsGvuE6qxS/RSSUMX1YER6MAYsfGCerq4d6P+iA=;
+	s=k20260515; t=1794782674;
+	bh=/6G/M/AT0gyJOgfB8EJx11GQl1a1nFgjs1t6sNM0uEw=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=Fj5MKpkusz0IiOeMG+iVIo5CPD2UqCc+4Kkvwn3ZY00ghWrkcDQtnMPIxmq2ABaWD
-	 lcFivo+8qaDZINUhu2bHOhhE9AykX7+8w6yDqjrpkBfAr03T12yhWKCeJ0MmAiw6U/
-	 32YxcSRJDUiE9eElp1w2N6JTm4DTyQB7C6/1GkWZ69PC9OJrz8DSBk7aVFoscWviXr
-	 kCgvfBmAjU8/rGtI+T4kUrLpYdOyHU/eE1pn8MYKnMzWlJ2+ec/5j3Hh9dJeFXRLmi
-	 srjeISKHwPQ2Fn1bE5V2+qIYkxYp++yuSqoaECshiYEJ5OsaEqmkZRX8qFXHhaYWs3
-	 qZY5gOXCI5xyg==
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5c102ad8420so2818725e87.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 14:42:42 -0800 (PST)
-X-Gm-Message-State: APuU4Z9+ow+zOsC8OF6kq/SX/klIyGG1p6f3AVOFgFAnB8+CEtt8jwme
-	uFEmDSzsnHlShGkkq02ujxlGLI+ofoxnLg7UmIsghNaJdhucd/k50OETlq2TYSQO8jgHcqBsjKn
-	JBZYgd53bYfiertBRfKL8ChtpQm6wX9E=
-X-Received: by 2002:a05:6512:234a:b0:5c1:445e:2807 with SMTP id
- 2adb3069b0e04-5c170b3659cmr3051929e87.39.1794782561084; Sun, 15 Nov 2026
- 14:42:41 -0800 (PST)
+	b=WD858LjNeviKlK3pSp+WCNm68NBP3MBYkBuMbCZ6zlxuftxsi+uDkoVsrUZCSmPcy
+	 VP8pkuB0guXcQH2MpRtA1PspbZ10S4SeWw4VtXx2GhP9wmIVbng64+y9ku4iFIl+2T
+	 kATA3vz717cNRjHbq5l3DPi4uJJ01NyTERCTvTH9qyNAR7Vp1Rt8xa7diOz4Cyk203
+	 f1tPmIqzEOQxWdkiVdbSPpMbBotZRT2jBPATuq/4tA8H3Sn3udyFuGTB8esnMoBG8z
+	 8zQsdCj76LmuvWVQOHJ38i9hdDB+FBScmoan2KVmnzKfb4BeA04PHQ141+DdCqvjs2
+	 g2lghZsCIJlcQ==
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3adfe77d336so29372291fa.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 14:44:34 -0800 (PST)
+X-Gm-Message-State: APuU4Z+pBKLjjVGXW9x7dI4RYcHg8lO/0XwYYFXh/64mB9KkURChSuVT
+	CDRE13uGSB37m/9umcswdX26WHdKDy7kiBh2LU1De1lH/Tr9RHC2j7Hc0vsIuaqZhH9FQiQ+wIv
+	VQBkR8BVXKlENu7gvWVwjoLArxqI1o2A=
+X-Received: by 2002:a05:651c:418f:b0:3a7:6090:e0b3 with SMTP id
+ 38308e7fff4ca-3ae2b4e69b9mr24992451fa.20.1794782673464; Sun, 15 Nov 2026
+ 14:44:33 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,39 +58,29 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261115-ux500-dma40-powerdomain-v1-1-da8b6e1a0376@kernel.org> <sashiko-outbox-215867@kernel.org>
-In-Reply-To: <sashiko-outbox-215867@kernel.org>
+References: <20261115-ux500-drm-mcde-powerdomain-v1-1-afdc326cceb7@kernel.org> <sashiko-outbox-215719@kernel.org>
+In-Reply-To: <sashiko-outbox-215719@kernel.org>
 From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 15 Nov 2026 23:42:27 +0100
-X-Gmail-Original-Message-ID: <CAD++jL=m+wQ6jTqZSppytMqNhcRWxg0-dtHHvnCtK2Q_xqOH8g@mail.gmail.com>
-X-Gm-Features: Aa3M54qCyDuSMtgjBtSX2wm5UZXOAXKnBhEik4sOlFS4i30gKXwYVz5QBM8eGoA
-Message-ID: <CAD++jL=m+wQ6jTqZSppytMqNhcRWxg0-dtHHvnCtK2Q_xqOH8g@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: ste_dma40: Use power domain for LCLA SRAM
+Date: Sun, 15 Nov 2026 23:44:21 +0100
+X-Gmail-Original-Message-ID: <CAD++jLmk3wX8jn60rgYPzbn+prWESh7DwGUmy5WRAxFsq-fdOg@mail.gmail.com>
+X-Gm-Features: Aa3M54oX1H_4B1BZ85Nc9T7LS4auKWWeLkh57cDnNi9fqT55V3hlYKnQfTuLQz0
+Message-ID: <CAD++jLmk3wX8jn60rgYPzbn+prWESh7DwGUmy5WRAxFsq-fdOg@mail.gmail.com>
+Subject: Re: [PATCH] drm/mcde: Use power domain for display power
 To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+Cc: dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Nov 15, 2026 at 10:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Sun, Nov 15, 2026 at 7:30=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] dmaengine: ste_dma40: chained dev_err_probe() in d40_probe()
->   clobbers reason
-
-Nah. Too small issue, no-one cares.
-
-> It also noticed 2 related pre-existing issues this patch does not
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
 > introduce:
-> - [Critical] dmaengine: ste_dma40: use-after-free in d40_free_dma() [1]
-> - [Critical] dmaengine: ste_dma40: DMA API bypass in d40_lcla_allocate()
->   [2]
+> - [High] drm/mcde: TOCTOU race in mcde_clk_div_recalc_rate() [1]
 
-I am happy to start working on these *IN PARALLEL*, with this
-patch as a prerequisite.
-
-Given how much perpetual churn Sashiko gives rise to I would
-prefer not to get that mixed in with this one important patch.
+I'm happy to work on this *SEPARATELY* and on top of this one
+since this functional patch is important, I don't want to build up a
+typical Sashiko-tail of patches after this one.
 
 Yours,
 Linus Walleij
