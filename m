@@ -1,72 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794749362;
-	b=BO299cS/uYapHZGiEppkSoVN0w2MJZegbMcAvQWfbgS0knMA2nIuNDRAz2qxDnQM08qD
-	 8YXK9lQqZYAVT3X0AhQWEesTLH2yFQ2XflS4kB2yGz7y4/h6/0MUKnSHuYdHACY+oz02d
-	 7VYdVLbsqzU98CsXOIlXaua+liTr69INfFidEsdsGk7+o9j75uWpkRByiqSxNewM5fhyS
-	 Jsy+h0B+00X5I/w9WhzliIbHBJhqB0huTcEhXCmgQpl8o8flcyGGAZW7WgwpEo9a4zsOt
-	 DB/DVxynn3pDUlCI7xzEU2SU3wwWpXf76zAxGWsWqjQith5L3C4nQgiol5WEtyKMNaA==
+	t=1794756630;
+	b=3zJlF2KcmRhJX8X4kH9eVaD32hS8UNQVKATohhXpRX8Ostr9NsGjb5ZWnVHr3Qz/feh/
+	 xnyEob1xRU06cbamJpEOmHPGUkUGSTgDDAqEQP3TPLV48joZMepzG9GMJ7DKXw16Rr6LV
+	 HeD5d9XGcE3i8MROmBI7OyzN96xM7fSAtLe4oE1JHb0G3ALfY3dcfuKNQeEzbbA8ztyjO
+	 mzpQzjxScDVRJSeyJ1iZtoC4CP9/Xqo0+d3+v65KaOBQjnF/1yeimiiaByybQhENZnAIv
+	 D2hfQxTR9VtYqPbcQFdy0h6ODt+b+WkYU5Y+3LRPsD7HS9F73oFGIKpg4LgrXFhrSJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794749362;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=haKBzBVUyeOg2UlQIK/o1YREIWI7nnzJdfaBt7YGCHc=;
-	b=dYSnQ2Gjwz9CwQRatmvZq5RcEqMzErTjajfUnUV3anNPyT/RkhYCdRPVAQaj3BEu1bGb
-	 cCJHV2pWfuBydYfmBPGGDSybHcGycP3V+qW4SCw+vOPXj98GsfAgQmkqpye+ieI9sB8XI
-	 56y0hQe9sUlCEmNWah1kva2ouI7Jg47RDk6EVXCpwlWufHStEZQ1o0v7IUggTMQaA6nSQ
-	 KPUsYq4wy8XfJnQes/rh9xSEZ9TRrJve/sjzbPdG7L/safa66ejthaY5Ifw555BC7Uy72
-	 DZJIDTsMYgxx37d7Nli5ClG9WPFMGEiAkPvwna9b4ZSYntPPBZJsbjKSpxrgImH9Xgg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794756630;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:Received:From:To:Cc:Subject:Date:
+	 Message-ID:In-Reply-To:References:MIME-Version:X-Scanned-By:
+	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
+	 Content-Transfer-Encoding:content-type;
+	bh=8b0NcOCbgjT502LwxuI3125LQaHRINxYB46l6CFgKcI=;
+	b=egnzF5jjC4P7jYpQkOOuHe57Doly+IUJdvAQZDb0alFrE72q0sb/kZwwiaeX3brVKwpO
+	 u74o76DCUuRiBV3C2h/ROz22d3/E6vgYqZaC7Hf/+W1PPpM5a4iDwyz40becGtkPRxahs
+	 zPjLK33R0jkPPEI4spd8QIooJEYyFpudNIUqicSAFYdX6uX6m8eiEF5vquml+keeGKk/a
+	 n3p1djR4EZqTsb252EndKjLufJviHvdC2Go4Reb8fh5J9aCpW/t4PjC+PbcCiXMm6IOV7
+	 aSHLmVOxgZpOljRFyb3e3/X6swexohHEcJzu6JXOol9dxgxQLieJF3KT9tMIlvFjwRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Rh7ng2gX;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KeWiPPk7;
+	arc=none smtp.remote-ip=170.10.129.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A1D606A31E
-	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 13:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBE2606A31A
+	for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 15:30:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0EBE2606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Rh7ng2gX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DA81F000C4;
-	Sun, 15 Nov 2026 13:29:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794749361;
-	bh=haKBzBVUyeOg2UlQIK/o1YREIWI7nnzJdfaBt7YGCHc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Rh7ng2gX6LGpoL4B/eKnAUvR9+Qv1MJLctQkDigGNoNU5XZnIkVlhmWoJnBq9GiYj
-	 rb3CkFCe1w7gNhzayJsmuSxkMrtkzWcytamvMuKwOvLx98sxzcSO/5VWGTYRrEy0mq
-	 +a22u9vhD+cvawrYoEH+Bjm9p3+5bK3AAytIxCN5h793gIJpVUiHF+wiqwIX2HUPny
-	 wjoag71LTkhTcaj6jPZrVW/cBMaacW2D8TeOYX/NvIvc48eGd6KIGI5VG/o8Tb3Mr8
-	 HfcmhVfQSohjeEISG2VM+bJuFKpFOcvCSyURQ71UC34SBtCBi9gMjFZE9N2+4scqeB
-	 QRC7Op36HeMAQ==
-Date: Sun, 15 Nov 2026 13:29:12 +0000
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, David Hildenbrand <david@kernel.org>, 
-	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Michal Hocko <mhocko@suse.com>, David Rientjes <rientjes@google.com>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, Andrew Morton <akpm@linux-foundation.org>, 
-	Jann Horn <jannh@google.com>, Pedro Falcato <pfalcato@suse.de>, 
-	Matthew Wilcox <willy@infradead.org>, Jan Kara <jack@suse.cz>, Nhat Pham <nphamcs@gmail.com>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
-	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
-	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Alistair Popple <apopple@nvidia.com>, Usama Arif <usama.arif@linux.dev>, 
-	Kairui Song <kasong@tencent.com>, Balbir Singh <balbirs@nvidia.com>, 
-	=?utf-8?B?SsOpcsO0bWU=?= Glisse <jglisse@redhat.com>, Kiryl Shutsemau <kas@kernel.org>, 
-	Yu-cheng Yu <yu-cheng.yu@intel.com>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>, 
-	Peng Fan <peng.fan@nxp.com>, Josef Bacik <jbacik@fb.com>, Chris Mason <mason@kernel.org>, 
-	linux-mm@kvack.org, Borislav Petkov <bp@alien8.de>, Mark Brown <broonie@kernel.org>, 
-	Dennis Zhou <dennisszhou@gmail.com>, Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH 10/13] mm/migrate_device: refuse to migrate shadow stacks
-Message-ID: <avmzn53l8fdCQsAP@lucifer>
-References: <avYJ-CxBEpdO1Wmu@gremlin>
- <816E22E2-C7DD-4DD1-AAC9-F51F4D1ED71C@linux.dev>
- <avdveCV9uW1zwXXd@gremlin>
- <87jymg5nw4.fsf@kernel.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KeWiPPk7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1794756629;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8b0NcOCbgjT502LwxuI3125LQaHRINxYB46l6CFgKcI=;
+	b=KeWiPPk7ihBhc9Hr9vurCT6Rb5q7r5/WJqGtzNFk8xMiS80Cv3GITek3GgqbWYbhSSyr+4
+	KKWLSvEN5hyseJKNlcfr9Q/G91C470wOUUlk8HbNae5fcLoWOC3DIjFCls0qL0uaT0Y3nA
+	8S/ophQN0BDApXq3wWg87bGmmwBzbVY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-yztVjPrgML-gcgHTrusa0w-1; Sun,
+ 15 Nov 2026 10:30:24 -0500
+X-MC-Unique: yztVjPrgML-gcgHTrusa0w-1
+X-Mimecast-MFC-AGG-ID: yztVjPrgML-gcgHTrusa0w_1794756622
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 81E9618002FD;
+	Sun, 15 Nov 2026 15:30:21 +0000 (UTC)
+Received: from jocolema-thinkpadp1gen4i.rmtusco.csb (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+	by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 0C49541F;
+	Sun, 15 Nov 2026 15:30:17 +0000 (UTC)
+From: "John J. Coleman" <jocolema@redhat.com>
+To: akpm@linux-foundation.org
+Cc: audra@redhat.com,
+	david@kernel.org,
+	jocolema@redhat.com,
+	liam@infradead.org,
+	linux-mm@kvack.org,
+	ljs@kernel.org,
+	mhocko@suse.com,
+	peterx@redhat.com,
+	rppt@kernel.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	surenb@google.com,
+	vbabka@kernel.org,
+	zenghui.yu@linux.dev
+Subject: Re: [PATCH] selftests/mm: allocate nr_pages based on pmd size for uffd pmd_move tests
+Date: Sun, 15 Nov 2026 08:30:13 -0700
+Message-ID: <20261115153013.1801047-1-jocolema@redhat.com>
+In-Reply-To: <20261114104457.6b3247d9abaff0497a9ae545@linux-foundation.org>
+References: <20261114104457.6b3247d9abaff0497a9ae545@linux-foundation.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,53 +91,14 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: GK0ywXmW8CopAiN3_o258jcnvXloufgD14n3zIZLS6w_1794756622
+X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87jymg5nw4.fsf@kernel.org>
+content-type: text/plain; charset="US-ASCII"; x-default=true
 
-On Fri, Nov 13, 2026 at 03:10:03PM -0800, Roman Gushchin wrote:
-> "Lorenzo Stoakes (ARM)" <ljs@kernel.org> writes:
->
-> > On Thu, Nov 12, 2026 at 02:53:44PM -0800, Roman Gushchin wrote:
-> >> > On Nov 12, 2026, at 11:03 AM, Lorenzo Stoakes (ARM) <ljs@kernel.org> wrote:
-> >> >
-> >> > ﻿+cc Roman
-> >> >
-> >> > Roman - see below - I was under the impression mm was not supposed to receive
-> >> > 'unrelated to this patch but' reports? Did something change?
-> >>
-> >> Yes, sashiko started reporting pre-existing bugs again, but in a better way:
-> >> strictly once (per bug)
-> >> only for the first non-rfc version
-> >> somewhat related to the proposed patch
-> >> not more than 1-2 per patch
-> >> not exposing security-sensitive stuff this way
-> >>
-> >> Obviously the goal here it to increase the chances for the problem to be fixed.
-> >> It’s global, not mm-specific.
-> >
-> > (Sorry only just saw this!)
-> >
-> > Ah, I thought it was an mm opt-out.
-> >
-> > In general they're spawning a lot of AI sloppers to go off and send ever
-> > more fixes and causing ever longer days for us, it's quite a noticeable
-> > impact unfortunately.
-> >
-> > And often they're duplicative of already-sent fixes so you can see the
-> > conundrum with this :)
-> >
-> > So ideally we'd like a way to embargo these or have a maintainers-only view
-> > of them etc. so we can figure out a way of reasonably getting to valid
-> > cases.
->
-> Disabled for mm. Maintainers-only view is available in the database.
+Hi Andrew, thank you for checking this!  And me-- for missing that MAX()
+input especially.  I reviewed your patch and ran a test with the changes 
+on my own systems as well, and it works great for me.
 
-Oh great thanks! Much appreciated :)
-
->
-> Thanks
-
---
-Cheers, Lorenzo
