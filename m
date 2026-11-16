@@ -1,99 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794825466;
-	b=fhnxD2YtyNCYfpC95tVsuQlCvbMWgQT0nHH9Nc5+h5tX3UU9+0KPDDPDGXLCQ2u0CWoV
-	 8xbArOSUeOHwBsaAotVIUM8HS3OIxp70ioLxKboWkJQIsp0yqoNdgXsizy8UBKx4mSg5g
-	 Y+J5MTCk8nvaiLAE0pKC8H69R18gS6JIwNwZ8ysDrQ3nve26kypNN+ApORFAADXUBkoX+
-	 ovmM/lI9nIkrVcdoZu63N6Da3t3GHAwnEoeo4SyTklGNuSYophoKdlNKznyzwqV4iTfQf
-	 tTmv5GIvtMHuAqdcYlvnjMedEVGlL2kQ8UJTWpU/vafNmaC0LvtT+mNshF5w6KSYOqA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794825466;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
-	b=iseEp9oYeWtVHFIS8J7UvUPot7Wcq+/WO0J1znLaGIJ5R7SDaqUtD7aTEI0JClLw0KCC
-	 OR7vBGDS1bpVAdcgijhHE6Kh+RzFGqqGg1eF8/7suAQh0JXKO+ZFVkvtc0XV4Q1RYn903
-	 ntn428uoQFma4WjP9CK/THE6paLG3LMhCp4TY5nFGIfvT2oLDYsL3O1DrsM075eAMzh2b
-	 06NP8HxoGVsJ1O0MgHUdzFfEW2xBrHFQchBASeOaY+VImPk8H7I+hLdZw1LOYBHF1xEbJ
-	 jFzBtj70/+ff5sq7bgH5pL4218UBiY31Hv82BpBx8Yny0S3XKkFxrRsiK6eGQAoGn3g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="D/8q5qCc";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794827185;
+	b=F2z7/z1Rfh479F6u8MqzXxnAp+lCsoVA73hmwKaUxLINoNlX8siaoup75GYdABCVLzkl
+	 7gdjCb1wEE4HwqJ40sVDr7AIUg5gknUXmJeThofiPzKIQsHqk5hz/1yi44B60FR//dfgJ
+	 0N/9jG5faHH9A7P3Z3zeaHO8Wg3bU9RYOmsooVlk9owF5gD98oO+FFzhfT7cg+stNpBMF
+	 zuMfRyqUtvPf4oAifuRs+YNCTeNMztjl1HIp+jt9jFepSk0h00UA+aJbaUSF5m5NZYyYs
+	 lquFGUIu+5yr/epWXyGQaWVYv/o2JTkRhHUOpXQPUPSwx5FgHK58eBS4OOSfPz/FRHw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794827185;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=bf/qERKTQweevSc8C6yvUdfbvod8V6ngryzEVo6Iqds=;
+	b=ZQNg/MSGTwryJbVUgVLkNf/1JH8YqmYccCZX8Jx8tGXdPBJXjWyRGV2/RHrTu/14wIh2
+	 Yxv7W7uE9yWcs2KZ1YlnMLQTL/gMaykyY3iXBoi6EpWCvIKy3xKuRmZuw5c3KMrrjltBQ
+	 FV7HDy5Wbj5udoWmX5I/t2LUAV0p4tTr/zH9iawNkwqNVw4LFLMCT9NgKZyNGJnpgvpXB
+	 nBgl/EYWjOHIn8F6zpcTfSwSY8+YOcVhBKJd48Fhb24qQYAhcFsx9M6B1YxLlWoWKtJk5
+	 eIPMP0FXM008ctrkKQbTygrkA3bXIvBMqfQFVYlFEtEPq0vugM6j+4WpasF7JjRdIlg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kNBUFEUe;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F179F606A33B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 10:37:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F179F606A33B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF6E606A8A7;
+	Mon, 16 Nov 2026 11:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D/8q5qCc
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-55d03bfd477so19057701cf.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 02:37:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794825465; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YdVc8edH9ONS68SOZ7cIv39GIZvNtGTXDA/9Wvc2OySJjkFeNVVB0ZeRmUk187h3t+
-         IhViPUOQNiHEy0FGCFR2HwtkwkZ0oUOCvzh+PACHjnl5zEOHQ5gc0xWw/boZgoYt24ls
-         2xRny4qdOBXyUa0c/Xy/9oALgz0rXXn00my6SQlNpwxOz2JKaTugwNONXIQJ8uxzSpCM
-         U/Jwwjh8bFvX33+Nl+xz5UjpEH/G9Kuq9WoIFDzda/oIXcztadgz1UCvj/LMJMdXxdeA
-         oR1+UxKNJQJcZihvfSqhyfyf0oWjwUB2xt6e47rS+w4px9loVI7gfa8wxzxUoPTAUcfU
-         /YnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
-        fh=5atlI6N4DqhDJ/kROOWZt6Ol/QVkwus/c/CVt4iaZ0I=;
-        b=EdM5mpcjZ2s1Ks1TrESsxt1E8fpxEKVPYpVsf4M54kPlSO2fbeVwlv2f4VVccNbhbP
-         vP0ErQxmkgJjetG3CU83hBy7bTSmMODBNrrL/8FZ8OnVb7b1Jdqbsym21tPJc32pMNp4
-         OWB97pw6HBSFNsIQVTtm+zLCEtW0CS95E2GKNDE5Q4HpD13inkKFORWNkDfPomCiu7PO
-         WQCaw/7D/knW1+2b97k/Ael6PdIh1A5xsP7VUd10Bfu0MnVpjQmY7ou6bXszPiPEAoCs
-         4owbKdQbZFH86zvjMmI+GiL0N93qTj034aRBLR8xZ+3+fmlRmpzAE6zK8buyVkbplNQr
-         2XzA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794825465; x=1795430265; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
-        b=D/8q5qCcp5MCpSlgZ4D+dTvsSc0Yb5HD4JIzP3b9R8Sm9eK1TYar8tCvSLvJURwH/N
-         hE+C1t5PGINmWLrBNfgUVce/vG2gYHbhDQiVmdTH5vRSwzpa/zPSd20Zsp1UvKDICHA4
-         lG2csVDcn0akTUP7RuvCIl69asxIt9rP0nuBIWgy2ZNo3n8jfkeO+NjxDBMFIfjG2JrO
-         aLt4UkOgZnJ3hIVbCQGUZdVj2SqvMW2C8GF2ahDypndAXlKz7Ttg/bdMGyyc2P7UrEh6
-         y6aOn6dMA4PwL5GAVhM/HMcmJpREODIRjst/1OHi4pc0MKHgWIzBvAKuIXPPcGKHmc48
-         FpcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794825465; x=1795430265;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
-        b=P/OVrnaOYnAH0CiSmTvk5g1bQZkERwT+CcvbiozHifXBwcqZtpPSyK9drdGgiccyih
-         ApmFQMwlJyBtPLjeNVrqL9dTLYgd1LWFTiHvyvs2RK0rlIR+4a9+qBVKPXu3ZUviO0/u
-         y38FG7TDNnE+2N7y7BPpkz9dgji5WHSUonldyzhIraJT1SDqDVcjZ5UZ3QpMtnkJWbkj
-         HTVoqfXuHW+zWq0jF6Wvp4+NAts/n377uMej5wzGIEvvlyrVEPOvAyUQRbvtVlEP2RtK
-         PlWhh65/mAwH3MPV99tQfHpvNb+4YrEwoTwrkafgp0v4J6L26go5UyqYHJi3Xf4FSmFR
-         aXKg==
-X-Gm-Message-State: APuU4Z9dILJjiYZ8bn/zWS+ZRli7a6db6D5HX5TKf9rcmXEp4/8aqEAT
-	+6O1cA+iMjM8Lrsw71AHtQ9zdtNVmDwayS6n8GXEParyqlMpj98OD8I0utlDUzHNnjqP9hxbzJg
-	M19kkWI0nHSdnBrP7uGbMP1VnMAC9ni+JLmYl
-X-Gm-Gg: AYBFou2J+5+KsHuY94sdRF6KqwfZxqVqBR3cULdEvcu7DwPbAT/tIi0+jHAVPLihAt1
-	zztINTh4N3n55dku44UcM/t9GwhfM51tnvkiy/LrgGVagVB0GbQgEgMX7Y95irBYR1yE2DeTzzT
-	cxgN+Scdtof6vNZpq8yh0u3dUP1qg/+A1XByT1XslLRDHK3l1U31zeauirrC3pmtdrEWH442iUi
-	hhPsPr6EZRseFSQ+a2VQsLzRLpdeOjm95yhVMI7jRJznWDffqmZirQKXMzewNmZ0WT9qwhjzOeO
-	Uc+aQfMxUxYkfbBvvsYYDtHZ3sk9osU1E0WKYK6t3DSQn2QLaPcmaKVS7jQLJJBDdYZFmOuNAOW
-	9+XtS4aNTqr9U1RsvIvKbqmDPkyIJnS9hgl9oua+ScKbdiU/u5aVwhA4ansy/LT+Kn87+5w==
-X-Received: by 2002:a05:622a:e40f:10b0:55c:6d3d:b688 with SMTP id
- d75a77b69052e-55c6d3db7eemr69199391cf.0.1794825464925; Mon, 16 Nov 2026
- 02:37:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kNBUFEUe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B991F000C5;
+	Mon, 16 Nov 2026 11:06:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794827185;
+	bh=bf/qERKTQweevSc8C6yvUdfbvod8V6ngryzEVo6Iqds=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kNBUFEUezqyzGlIN4rmtHrloqOiGw0Vsb8niqHycdaMtSmiUEHrff4PN5giC4vZKM
+	 dXm4vv+5olTThih9md+zRAhwU6ICeALF/vKeA9p56pb2tl+IUlf7TRro67DxcYSycL
+	 l0fvDFbm2GpoMD/y9PeAtcwgxCZjoFczWMEFkGHqaTqH/QjikVHKwKbvbNRB94LVU+
+	 x07He+rugp/coI5yksENdLCU1Bs0gQO7C959Yuydz2B621daNnTG3jQZRth9xbHiMD
+	 wbmMFygs/pgMgz7yex34U8cDbQ6TR0vJ5V6YX7wch57BDKF0mBbQcrH5743sFd5Mae
+	 KDDyJRu+Vs3pA==
+Date: Mon, 16 Nov 2026 13:06:20 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: Eric Davis <eric.davis@broadcom.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-rdma@vger.kernel.org,
+	Jason Gunthorpe <jgg@ziepe.ca>
+Subject: Re: [PATCH rdma-next v3 11/13] RDMA/core: extended memory
+ registration
+Message-ID: <20261116110620.GG11319@unreal>
+References: <20261109-uet-ib-core-v3-0-3e7e7ffed2e9@broadcom.com>
+ <20261109-uet-ib-core-v3-11-3e7e7ffed2e9@broadcom.com>
+ <sashiko-outbox-206354@kernel.org>
+ <CAMouMYLdU_5yphFCviPKUUieMDzo+ozVyAs+CJXTkh-0Zq0bYg@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,139 +61,33 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261112-sdhi_rzg3l-v1-0-ca30b209615d@bp.renesas.com>
- <20261112-sdhi_rzg3l-v1-2-ca30b209615d@bp.renesas.com> <sashiko-outbox-211741@kernel.org>
-In-Reply-To: <sashiko-outbox-211741@kernel.org>
-From: Biju Das <biju.das.au@gmail.com>
-Date: Mon, 16 Nov 2026 10:37:34 +0000
-X-Gm-Features: AclHuK9Eg4UhaKH1QJpvsKiOfCpTnXZRZ4Twf9MfbxpkNjE3e-ev8l8nHxuYT8M
-Message-ID: <CADT+UeApMF1yftK27r9haAr3eU2Vk=H__TMMNzvFVuURuP_XOQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] arm64: dts: renesas: rzg3l-smarc-som: Enable SD/eMMC
- on SDHI0
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
-	wsa+renesas@sang-engineering.com, linux-renesas-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMouMYLdU_5yphFCviPKUUieMDzo+ozVyAs+CJXTkh-0Zq0bYg@mail.gmail.com>
 
-On Thu, Nov 12, 2026 at 7:07=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] arm64: dts: renesas: rzg3l-smarc-som: sdhi0 pinctrl fails with
->   -EINVAL
-> - [Low] arm64: dts: renesas: rzg3l-smarc-som uses RZG2L_PORT_PINMUX for
->   SD0_CD
-> --
->
-> commit e86cb26292885aecdb37f14368a14d0f62f6aee6
-> Author: Biju Das <biju.das.jz@bp.renesas.com>
->
-> arm64: dts: renesas: rzg3l-smarc-som: Enable SD/eMMC on SDHI0
->
-> This commit enables SD card or eMMC support on SDHI0 for the RZ/G3L SMARC
-> SoM, selected via the SW_SD0_DEV_SEL macro.
->
-> > diff --git a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi b/arch/ar=
-m64/boot/dts/renesas/rzg3l-smarc-som.dtsi
-> > index 091a227233cba..f6f4eed9a2ea6 100644
-> > --- a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
-> > +++ b/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
->
-> [ ... ]
->
-> > @@ -216,7 +234,132 @@ i2c0_pins: i2c0 {
-> >               pinmux =3D <RZG3L_PORT_PINMUX(L, 2, 4)>, /* RIIC0_SCL */
-> >                        <RZG3L_PORT_PINMUX(L, 3, 4)>; /* RIIC0_SDA */
-> >       };
-> > +
-> > +     sd0-pwr-en-hog {
-> > +             gpio-hog;
-> > +             gpios =3D <RZG3L_GPIO(5, 1) GPIO_ACTIVE_HIGH>;
-> > +             output-high;
-> > +             line-name =3D "sd0_pwr_en";
-> > +     };
-> > +
-> > +     sdhi0_emmc_pins: sd0-emmc {
-> > +             sd0-clk {
-> > +                     pins =3D "SD0_CLK";
-> > +                     power-source =3D <1800>;
-> > +                     drive-strength-microamp =3D <9000>;
-> > +             };
->
-> [Severity: High]
-> Does configuring power-source on the SD0_* pins cause sdhi0 probe to fail
-> with -EINVAL?
->
+On Wed, Nov 11, 2026 at 08:46:32AM -0800, Eric Davis wrote:
+> On Mon, Nov 9, 2026 at 9:55 PM <sashiko-bot@kernel.org> wrote:
+> > Does ib_mr_init_core_refs() leave mr->dm, mr->dmah, and mr->sig_attrs
+> > uninitialized when a driver returns a non-zeroed struct ib_mr?
+> 
+> Those three are not new. The REG_MR and REG_DMABUF_MR handlers never
+> set dm or sig_attrs, and set dmah only when one is given, so core
+> already relies on a zeroed ib_mr from the driver for them. The helper
+> covers the fields this series adds, which the extended paths and rereg
+> read back. Its comment claims more than that; if there is another
+> revision, it will say what the helper clears.
 
-No. see below
+You are adding fields that should be NULL, there is no need to set them
+and sashiko is right there.
 
-> In drivers/pinctrl/renesas/pinctrl-rzg2l.c, the SD0_* entries in
-> rzg3l_dedicated_pins do not set PIN_CFG_IO_VMC_SD0 or PIN_CFG_SOFT_PS:
->
-> drivers/pinctrl/renesas/pinctrl-rzg2l.c:rzg3l_dedicated_pins[] {
->     ...
->         { "SD0_CLK", RZG2L_SINGLE_PIN_PACK(0x9, 0, PIN_CFG_IOLH_B) },
->         { "SD0_CMD", RZG2L_SINGLE_PIN_PACK(0x9, 1,
->           (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD)) },
->     ...
-> }
+Thanks
 
-{ "SD0_CLK", RZG2L_SINGLE_PIN_PACK(0x9, 0, PIN_CFG_IOLH_B |
-PIN_CFG_IO_VMC_SD0) },
-{ "SD0_CMD", RZG2L_SINGLE_PIN_PACK(0x9, 1,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_RST#", RZG2L_SINGLE_PIN_PACK(0x9, 2, PIN_CFG_IOLH_B |
-PIN_CFG_IO_VMC_SD0) },
-{ "SD0_DS", RZG2L_SINGLE_PIN_PACK(0x9, 5,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT0", RZG2L_SINGLE_PIN_PACK(0x0a, 0,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT1", RZG2L_SINGLE_PIN_PACK(0x0a, 1,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT2", RZG2L_SINGLE_PIN_PACK(0x0a, 2,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT3", RZG2L_SINGLE_PIN_PACK(0x0a, 3,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT4", RZG2L_SINGLE_PIN_PACK(0x0a, 4,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT5", RZG2L_SINGLE_PIN_PACK(0x0a, 5,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT6", RZG2L_SINGLE_PIN_PACK(0x0a, 6,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
-{ "SD0_DAT7", RZG2L_SINGLE_PIN_PACK(0x0a, 7,
- (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+> 
+> > --
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20261109-uet-ib-core-v3-0-3e7e7ffed2e9@broadcom.com?part=11
+> 
+> Thanks,
+> - eric
 
 
->
-> When sdhi0 binds its pinctrl states (sdhi0_emmc_pins, sdhi0_usd_pins, or
-> sdhi0_usd_uhs_pins), rzg2l_pinctrl_pinconf_set() -> rzg2l_set_power_sourc=
-e()
-> -> rzg2l_caps_to_pwr_reg() returns -EINVAL, preventing SDHI0 from probing=
- in
-> both eMMC and uSD modes.  (Dropping power-source from DT while keeping
-> drive-strength-microamp would instead leave the cached power_source at 0,
-> causing rzg2l_ps_to_iolh_idx(0) to return RZG2L_IOLH_IDX_MAX and read pas=
-t
-> the end of hwcfg->iolh_groupb_ua[] in rzg2l_ds_is_supported().)
-
-Drive strength it uses reset values.
-
->
-> [ ... ]
->
-> > +     sdhi0_usd_pins: sd0-usd {
-> > +             sd0-cd {
-> > +                     pinmux =3D <RZG2L_PORT_PINMUX(5, 0, 8)>; /* SD0_C=
-D */
-> > +             };
->
-> [Severity: Low]
-> This isn't a bug since RZG3L_P5 expands to 5, but sd0-cd in both
-> sdhi0_usd_pins and sdhi0_usd_uhs_pins uses RZG2L_PORT_PINMUX(5, 0, 8)
-> instead of RZG3L_PORT_PINMUX(5, 0, 8) like the rest of this file.
-
-Will fix this.
-
-Cheers,
-Biju
