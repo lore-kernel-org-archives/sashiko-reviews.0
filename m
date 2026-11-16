@@ -1,83 +1,113 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794848590;
-	b=HqOzHRHavriZu36H/nDJrsOpRgSov7ruObjwQKDHX2iV6igZkQ48IcvZf3CnZoL84+RV
-	 vESNsZTV2+h6N4fJdO8fq1PTc/QvrP/f6Ve2W5aZd3c2PgKAAvOPi0NotDoABarVH5qkj
-	 U2ZJ/NoO0JQ3LHILBp+Rozv2EPxaySsiPxN/UBLpIFTl7ykKE9WmvCiLg2r+CtbcnZ2tA
-	 iGGVxaRnKzAP5mezIALZfQ6hFjXJOLQcR/DcDNSpFNZfMGtoGK2vGWbKy453amAPq/S6q
-	 EEx3F5AyAQQfe/bEd+VOAZewUNUiqgep20vFpnXKnKQh+fwgj9sBtXwI/ZzLMwmUszw==
+	t=1794848838;
+	b=LJVZHMzDCAnbsZDbdSqY0N0T4X+gp2OLtLjtzGqHilRfVW5skwHBt3831e9BmvEUUUy9
+	 cT0pQ/hq0rz/+lZDiN+FKTl4GKFYwv+amYtsIpemBonprz9heljnU9sQXzWecp1Rvr+de
+	 3gii3Y+Li88VXRmeQJ5Kl6lmCoKzyPjhFJmg/qDba1gyQEXWXsswEjf0Z83sYIRXyUkmU
+	 j+QFYKZ3c8TLT9L2n+HyeSnKaFAooWaIoJ7peZMRFGaoW1aBQx0VJfumCQsjlZAd2UkGB
+	 NvNC3RCF7mdKL+rogawdOjgWQtiOZJ9pzIS8NfdQ+47mgMhLagIPBGuQ9Tdb+N1Vbww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794848590;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id:X-Mailer;
-	bh=dErzLNRvBxXtOvVGiON0ydSBhI6280GOhN51Vz31A/Y=;
-	b=IPxWgRj3Ff472tgzOtKgfAgKPlJqgWesrgAMW2kPTo2nY6JjTTk7ict/vWZ50TyeD318
-	 1FedSnQdQ2c1Fw0vDkWNBGJ6d260wa9Spor068UEPt1gvE3ww3te/sbT5loKLs2nl42TU
-	 wqU8ui71thn3TIOIe+Be8R6jKi6pXZ1AxBJc0kKlHc+v3e5dIJyHxoNtl6xsIBD6Od+62
-	 VTkRn4rAAKGcc0GE+kYIEuc7W6OKNlv7BuaLd2cqKE8CQ5WPt2OFiZug08iZ3EIf2kamt
-	 mCp6kBC7G41TAwAF4AZC57GnE+p0WG8KqLvqCCZ6v3poBlWk4E3ZxTcE2fiVgl3QGyA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794848838;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:X-Spam-Score;
+	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
+	b=JQAXCHnFllHdbdgXxpYpMCz7w9spyeyF0myHdnb3M5bYahpgWFl0k7r61sHt2CtLzONe
+	 PT4sMptuMTTY0MxDGTXX64Jrgjf1aKwn8ozxi/4FXFu3eOsrSewlIBKXxdiwbsGjqjIjO
+	 8UYcon36wj9OOhsiHbnHS7YZxSQQbG9EvkhK0eihHAVEDIO/6TWTNZ+KLlEMlxLGAuPKB
+	 v+GTyYSx/J6IDyA8L1j4p9MtDHgl7ieLo0r/Zu8P4Q6EFhBy848KHPqZ2cpXtYWSHpYM5
+	 285e/41sNecragwxZ/m45HfsgrQPBl3HPkWDQvhnKzuyy8xG2InxekY1rkluWwSUj1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hq64r+hS;
-	arc=none smtp.remote-ip=74.125.82.176
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=suse.cz;
+	spf=pass smtp.mailfrom=suse.cz;
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b="E05RK8Q/";
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb;
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b="E05RK8Q/";
+	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb;
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4EF606A884
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 17:03:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E4EF606A884
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59CA606A322
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 17:07:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D59CA606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hq64r+hS
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-37628596783so6166615eec.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 09:03:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794848585; x=1795453385; darn=lists.linux.dev;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=dErzLNRvBxXtOvVGiON0ydSBhI6280GOhN51Vz31A/Y=;
-        b=Hq64r+hS74ZuwqDf0vFHJoamAzx31lpuCcy203Ti0R0GHqvqYvGBIHeRahDShD2OPJ
-         0DlYtDQ1xD8DsuSltWW4iJlCcet+cBV7zaW+mlzFgzrAMbPFmWCGczKpGiyjAa4u5x06
-         6/68Gq0ZaPOeQiMUWFPOdxZghLs+SVRLaEYJ5Q+BGx2RM4sFGSPD3x4QPPLPqi+rmid3
-         fE6pFd4EcJxv7ZIfe5NeIn4D/ROtLz2YXsaDT3DfDl3je/TNzLXGM7gM3LqSHmKloghi
-         kVNPbf8Xc5VW0rk+qt2Jt/OvAfKCTyXwXjmgMzQguhpqzlJEMH8w2PLXu3izkPPNzunr
-         Sbyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794848585; x=1795453385;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dErzLNRvBxXtOvVGiON0ydSBhI6280GOhN51Vz31A/Y=;
-        b=q2qPSsA7eoyNADb+KSfaUWws4hmw5Ek+ZYKYc/d6WkSY2M/2wIPLxw9n8o7N+WX4Z/
-         J7L3sS0BZEAkEzJ6gf+h5vdgKfkyZx32jQq4P067PPvXJfkivjTCh1WsYL/ZTD1qTVUZ
-         UH0sog8toBYukPrizyVGE0uyUCflNj+1BVPuizCdKC7VOalfR5on9TckGXd85MqzhYxN
-         B9HOcmw+JIjT4MUD91Fz00jF7NzqZIgC/qDTAINyOScey6T2iby+UL8LXB0tz9G24an6
-         IZN/bkX67dk6HjF8k/vvQ1Nhibix2K1iO7JB3HxW4E51Z7BuFVsQ/gtEepQRQFASz1yB
-         P9Kw==
-X-Gm-Message-State: APuU4Z9Fh/DXQyDFYedtEjVNGW6EQ7vo3a9DEa5sDmRqFn3UYIMosEXj
-	pShlTUvVOLNrkD48qsnXCzy1aCmXQKw5Roj84v11O85G3mDcFXTja+256TpzhfcF
-X-Gm-Gg: AYBFou3bMzubTObgfKzZIKnEdlit/WLMr3tYISfwv8Bo4mdj4pEx6UkbxlI9KbrQeUB
-	Uz3mX7ghkwz3N3Mgm9ZJv66x40EXshzUOGjQGzsOnWKllqwJ9bYeMWsF6gbWNmT0K8/W12mKWka
-	TjyPP3U8GPxYMqK6ah6H9bgsSkbSMcX0k1vjZgjvRPu+rpVjF0oKz3vqEiGLUCKeWM+iue8yYFC
-	lZITvO0CMyibEbEMGU/T5Wl8hSRTx8B9AslRpNcVoj82B9IAdxIp53hBqvStg6tcTC+FZFAT2g5
-	M5ZNoz3INitD3cn+ps6dTvkRaK1T3bXalBjuiO4sPh+lxoz4ifKTfHVbMwmItZ1nnBQKddYVuo9
-	UXtsIIOj2Oa1WnQloIdW/xpetu4fzVv1AZt/4mt0EwSDUrWvaYN20lHGVgA+d/bLLvrJ7Gp+kUN
-	bWayx0VapcubW8mQ3UGRmaz6fDZPdYDSm2hTbO9GJJRBAxJS/1itV4WjA/vgQLkjX2hUDhp35iK
-	OOWkmCzgdSYIC+qtzDo4vT09gaNWhi/us9SvA1Z/ZvogDbaZAUNjldRp9iXqCQM3VUYBDGs7/5J
-	cM/7CrCYlri+uLV/MVuZztdJLwGHQSvk5Fnu
-X-Received: by 2002:a05:7300:6da8:b0:36f:14ef:ad08 with SMTP id 5a478bee46e88-37965abb5bbmr13878650eec.9.1794848585025;
-        Mon, 16 Nov 2026 09:03:05 -0800 (PST)
-Received: from [192.168.29.85] ([2405:201:8026:213e:e2c9:cd5e:3a2c:ae0])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37955a1c5c2sm36363384eec.14.2026.11.16.09.03.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 09:03:04 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=E05RK8Q/;
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb;
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=E05RK8Q/;
+	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 0FA001F7C4;
+	Mon, 16 Nov 2026 17:07:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1794848836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
+	b=E05RK8Q/R3QP6IooGK0K2uKd77pktoWZnqFNlm8lRM/SdtZ2jy/sUY5vARWvu2kuhdquPn
+	Zol4YlHokNGs8kClyWjkZY0efcL7NnEpPe6EQaxK2HcgqnGhFiPLAkxHbm8uF8lnVUOIyw
+	aMd42idReVsAtzp9qhLbFOE6giaDPvg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1794848836;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
+	b=lUfKD2fbyhCzXGVYxup9x2uUhL7w0iSLStSZifPuMMa8MmWyh80DIAaxBXh6gjIQD57bxf
+	NAxhylw92EHpdBCg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1794848836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
+	b=E05RK8Q/R3QP6IooGK0K2uKd77pktoWZnqFNlm8lRM/SdtZ2jy/sUY5vARWvu2kuhdquPn
+	Zol4YlHokNGs8kClyWjkZY0efcL7NnEpPe6EQaxK2HcgqnGhFiPLAkxHbm8uF8lnVUOIyw
+	aMd42idReVsAtzp9qhLbFOE6giaDPvg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1794848836;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
+	b=lUfKD2fbyhCzXGVYxup9x2uUhL7w0iSLStSZifPuMMa8MmWyh80DIAaxBXh6gjIQD57bxf
+	NAxhylw92EHpdBCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CAFEA13408;
+	Mon, 16 Nov 2026 17:07:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id Z9aHKUM4+2qjGQAAD6G6ig
+	(envelope-from <jack@suse.cz>); Mon, 16 Nov 2026 17:07:15 +0000
+Received: by quack.suse.cz (Postfix, from userid 1000)
+	id 5BD0524E8E; Mon, 16 Nov 2026 18:07:11 +0100 (CET)
+Date: Mon, 16 Nov 2026 18:07:11 +0100
+From: Jan Kara <jack@suse.cz>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
+	Andreas Gruenbacher <agruenba@redhat.com>, Mike Marshall <hubcap@omnibond.com>, 
+	Martin Brandenburg <martin@omnibond.com>, devel@lists.orangefs.org, Dave Kleikamp <shaggy@kernel.org>, 
+	Carlos Maiolino <cem@kernel.org>, David Howells <dhowells@redhat.com>, 
+	Marc Dionne <marc.dionne@auristor.com>, Miklos Szeredi <miklos@szeredi.hu>, Chuck Lever <cel@kernel.org>, 
+	Jeff Layton <jlayton@kernel.org>, Eric Biggers <ebiggers@kernel.org>, 
+	Jaegeuk Kim <jaegeuk@kernel.org>, linux-fscrypt@vger.kernel.org, Anna Schumaker <anna@kernel.org>
+Subject: Re: [PATCH 06/13] gfs2: Avoid racy dirtiness check in gfs2_fsync()
+Message-ID: <4jxbqdd43u7xys4l4x6yzbwpbtw3yijkxlv6x6qnp4punam5u6@mlaydzf2raal>
+References: <20261113083336.15152-1-jack@suse.cz>
+ <20261113084700.739002-19-jack@suse.cz>
+ <sashiko-outbox-212504@kernel.org>
+ <4bfypbk3wiuheb2ntltkt4colxa77fplkxrft2uzvgsjguunna@wela5zxwi2iq>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -87,59 +117,107 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] scsi: be2iscsi: Fix NULL pointer dereference in memory
- cleanup
-From: mdshahid03@gmail.com
-To: sashiko-reviews@lists.linux.dev
-Cc: mdshahid03@gmail.com, linux-scsi@vger.kernel.org
-In-Reply-To: <sashiko-outbox-202780@kernel.org>
-References: <20261107093611.42311-1-mdshahid03@gmail.com>
- <sashiko-outbox-202780@kernel.org>
-Date: Mon, 16 Nov 2026 22:32:39 +0530
-Message-Id: <179484855979.18018.6059499367901614954.b4-reply@b4>
-X-Mailer: b4 0.16.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4bfypbk3wiuheb2ntltkt4colxa77fplkxrft2uzvgsjguunna@wela5zxwi2iq>
+X-Spam-Flag: NO
+X-Spam-Level: 
+X-Spamd-Result: default: False [-12.80 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:email];
+	RCVD_COUNT_THREE(0.00)[3];
+	FROM_HAS_DN(0.00)[];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.cz:email,suse.com:email]
+X-Spam-Score: -12.80
 
-Hi ,
+On Fri 13-11-26 11:14:17, Jan Kara wrote:
+> On Fri 13-11-26 09:08:22, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential
+> > issue to consider:
+> > - [High] gfs2: gfs2_fsync() checks PAGECACHE_TAG_DIRTY after
+> >   filemap_fdatawrite_range()
+> > --
+> > 
+> > commit a74a8e373d1c581c53bf8dbda94cd97b2bf0e19f
+> > Author: Jan Kara <jack@suse.cz>
+> > 
+> > gfs2: Avoid racy dirtiness check in gfs2_fsync()
+> > 
+> > This commit replaces the unlocked I_DIRTY check in gfs2_fsync() with
+> > inode_is_dirty() and a PAGECACHE_TAG_DIRTY check on the mapping for jdata
+> > inodes.
+> > 
+> > > diff --git a/fs/gfs2/file.c b/fs/gfs2/file.c
+> > > index 1efd0679badd9..9e52f18326737 100644
+> > > --- a/fs/gfs2/file.c
+> > > +++ b/fs/gfs2/file.c
+> > > @@ -749,7 +749,6 @@ static int gfs2_fsync(struct file *file, loff_t start, loff_t end,
+> > >  {
+> > >  	struct address_space *mapping = file->f_mapping;
+> > >  	struct inode *inode = mapping->host;
+> > > -	int sync_state = inode_state_read_once(inode) & I_DIRTY;
+> > >  	struct gfs2_glock *gl = gfs2_inode_glock(inode);
+> > >  	struct gfs2_inode *ip = GFS2_I(inode);
+> > >  	int ret = 0, ret1 = 0;
+> > > @@ -760,12 +759,9 @@ static int gfs2_fsync(struct file *file, loff_t start, loff_t end,
+> > >  			return ret1;
+> > >  	}
+> > >  
+> > > -	if (!gfs2_is_jdata(ip))
+> > > -		sync_state &= ~I_DIRTY_PAGES;
+> > > -	if (datasync)
+> > > -		sync_state &= ~I_DIRTY_SYNC;
+> > > -
+> > > -	if (sync_state) {
+> > > +	if (inode_is_dirty(inode, datasync) ||
+> > > +	    (gfs2_is_jdata(ip) && mapping_tagged(inode->i_mapping,
+> > > +						 PAGECACHE_TAG_DIRTY))) {
+> > >  		ret = sync_inode_metadata(inode, 1);
+> > >  		if (ret)
+> > >  			return ret;
+> > 
+> > [Severity: High]
+> > Does checking mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY) after
+> > filemap_fdatawrite_range(mapping, start, end) miss dirty jdata pages?
+> > 
+> > Previously, sync_state was sampled before filemap_fdatawrite_range().  For a
+> > jdata inode, filemap_fdatawrite_range() runs gfs2_jdata_writepages() with
+> > WB_SYNC_ALL, which flushes the log and calls gfs2_write_cache_jdata() ->
+> > gfs2_write_jdata_batch() -> folio_clear_dirty_for_io(), clearing
+> > PAGECACHE_TAG_DIRTY on the folios in [start, end] before this check is
+> > reached.
+> 
+> So I'm aware the behavior of gfs2_fsync() is changed and on a second
+> thought I agree that the mapping_tagged() check should probably happen
+> before the filemap_fdatawrite_range() as it used to. But frankly I find the
+> code in gfs2_fsync() with multiple filemap writeouts and waits confusing so
+> I'd like some feedback from GFS2 folks about the intended behavior to be
+> sure.
 
-Could you please review and give your feedback ,when time permits.
+I've moved the dirtiness check before filemap_fdatawrite_range() now but as
+I had a closer look at gfs2_fsync() logic and I'm now pretty much convinced
+it is racy and this is just bug-to-bug compatibility. E.g. background
+writeback could have just finished by the time gfs2_fsync() is called and
+then it would behave exactly as with the dirtiness check after
+filemap_fdatawrite_range(). But this really requires someone more
+knowledgeable of GFS2 to have a look and decide.
 
-Thanks
-Shahid.
-
-On 2026-11-07 09:43 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] scsi: be2iscsi: missing Fixes trailer in commit message for
->   beiscsi_alloc_mem()
-> --
-> 
-> commit 3a59c9fd50bd58745d465b3451671b988442c55a
-> Author: Mohammad Shahid <mdshahid03@gmail.com>
-> 
-> > scsi: be2iscsi: Fix NULL pointer dereference in memory cleanup
-> >
-> > During memory allocation ,DMA memory may be allocated successfully
-> > before the descriptor array allocation fails.
-> >
-> > In this case ,mem_descr->mem_array is NULL,but cleanup path tries
-> > to access it.
-> >
-> > Use mem_arr_orig to free the DMA allocation of the current
-> > descriptor and handle previously allocated descriptors separately.
-> >
-> > Signed-off-by: Mohammad Shahid <mdshahid03@gmail.com>
-> 
-> [Severity: Low]
-> Since this fixes the error cleanup loop in beiscsi_alloc_mem() from the
-> initial driver commit, should the commit message include:
-> 
->   Fixes: 6733b39a1301 ("[SCSI] be2iscsi: add 10Gbps iSCSI - BladeEngine 2 driver")
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261107093611.42311-1-mdshahid03@gmail.com?part=1
-> 
-> 
-
-
+								Honza
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
