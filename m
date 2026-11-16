@@ -1,87 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794840377;
-	b=dPRBuQqo9CrjQCNeSOkL08Ho/jprNY/sZuOQFOPS/suiYW6IqN8JdfGOV4vazaP7EYS6
-	 PKjRb4IiFjx88lVx92U3bb/52dfC9SAl1CewaXI6ylgjF+FYvcGVEp+EEtdtE5f8A66dg
-	 Uu0QCL33ZauVMvvB+/lVVJkWwEu3NCy5h9w7Mlrd9TavzQCrqTbuby2ZYZQuBjOK8GWzz
-	 eVTMljQ87iM2LnxKJTc9W3MYk+eqBAXZkxIPGPD7nt7uxfUyEdUOcNHQNtjjG3YCgEasF
-	 ju0yPFUXHNrDEwrp5c+r+MuGng+ETiE/sBBVPTYeiVExLMxp5BiRcIeCnfUICKC9i8w==
+	t=1794841550;
+	b=b5NEc9tvk1dmRhF8QBdJ5rcTKBcEbKUwqIUtPkdcbSzHShZs89EkuDwReBSYRNKn6QUv
+	 sGm0b7aiBpUu7Jv5SasULY9q6uFZGljW8zh/5gOt8R8ktI6idM667WnFMhFuPvosP3DTn
+	 t2m11pgpHPyz20FYlF/VnE0glVVumW5PnPAMs5k58nnKNe/kKVqNQGQPu6cLSt4GyjWqA
+	 zFP9Nsg3u9ohFvzfJvETV6EWr06Rw8y+uHx7Q4NGJub+/XQrlY+5iO8ue0RYJ1mjyFDJa
+	 xlau4MG1Wlwa+d2QTZNk21Lw+691hBVMI1mnDNTsCLzsEZ5i4QjFilQQlLOHTTxFZmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794840377;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
-	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Last-TLS-Session-Version;
-	bh=FeipBFfhGUrMTKnujrvxDjavPU7yfgD2WlGNa9kNguw=;
-	b=T3QN5BXfB1LFz0VY+HMyt04wE9U2DONA4pPIWWgoQuEqWzt5BHEf3CVwIflmHKv8dNC7
-	 wKOv0w17E60BaOk2WRmydpAOmXq/bvwPlfza42g/n6wRqEate4qWqRWat1MKbDezLXicA
-	 ciCOnJKPQ1wtUEd0cUqE0NYNioFISUIOEGNuxou6FRRj71ToBIKhncm97zISkhtYVHIWJ
-	 /k7+6XoxojD4w3HNoQ235BZzku+MDQzUTmMgMS6JRQtEK85/NZjCR3OBJ4KRY9hyYrI4O
-	 SEofwc81oDtLDZngCHuHqGDNyL85K+DG0Tn10W+Ff11tJiVweeR6ognMfTKhhoqa07g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794841550;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=RWLDU4EWfngmSrcCkbKdVTyatFJ0OqjQckEYPqGngkI=;
+	b=1haaQ5ZIQcg6S7P9QpVpWe+pOghDNpGB6fnn8kdBX2Th9REOyDP8Mdpa3SkeuI0K6UKC
+	 yALZARAvdQ5QiG7ZnGTMsYFRpiofQiGhoxrp/qJbCbId1TzzEQWz96kGEU4oAc/B/Zzb+
+	 zpndczJ3gNIicSgqyuKU6Twax2c9psAdbYd/iDKam4D72e6e6IIwK6g8jlUUMVhDLuseZ
+	 3fUOvaOyWEKRSpISLbvWvFOPCcW927oPL6stJqFoKzseYzymt8dgVU6yx/rhXikxPyz8C
+	 Lh+AIxljZ7A5Xo7uJEVSh8sXHTn3ZQYb7GO2/S/IckWjWVydIcRRWKTXfmSmUFVkhqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=DnkCEYsm;
-	arc=none smtp.remote-ip=185.171.202.116
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QzEjei9C;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B33606A333;
-	Mon, 16 Nov 2026 14:46:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 13B33606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710CC606A31C;
+	Mon, 16 Nov 2026 15:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=DnkCEYsm
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 12484C4EFD7;
-	Mon, 16 Nov 2026 14:46:19 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 05A116023F;
-	Mon, 16 Nov 2026 14:46:15 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CCE0B11BC1D59;
-	Mon, 16 Nov 2026 15:45:53 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1794840372; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=FeipBFfhGUrMTKnujrvxDjavPU7yfgD2WlGNa9kNguw=;
-	b=DnkCEYsmhyrHl8FqobFTXDmDzhl/fQVyzgPFYqGeJ/pzGE8yt5iPxVrWFIUIkbforPsa4l
-	GaGpgOWSSm/5ZPK9XXRRoE3Uzk1PTzQ3/Pl07rFQN32NFyx83oX6jA8Axf1MrenlwLmqB0
-	v05puuobZikiVJ4K9QJYcQP8zzJ/6YXEJADgxLA4TEukf5FZtnlWK+OgZOm7+PXtlGzOgK
-	9EFUd0wgr/lY4Vwt2puSTRk6hqt69U3AAzfchzLqnu+ErLxLhBPQhnwVpVW2wqIAWS7wXg
-	55f1sMKf9JvHcpcRN3sG3ZMd1Zaov8cANlYB99R/KUjmp6AexywEIBlsdBsnEQ==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: Frank.Li@oss.nxp.com,  "Vignesh Raghavendra" <vigneshr@ti.com>,  "Tudor
- Ambarus" <tudor.ambarus@linaro.org>,  "Richard Weinberger"
- <richard@nod.at>,  "Kyungmin Park" <kyungmin.park@samsung.com>,  "Nicolas
- Ferre" <nicolas.ferre@microchip.com>,  "Alexandre Belloni"
- <alexandre.belloni@bootlin.com>,  "Claudiu Beznea"
- <claudiu.beznea@tuxon.dev>,  "Han Xu" <han.xu@nxp.com>,  "Keguang Zhang"
- <keguang.zhang@gmail.com>,  "Vladimir Zapolskiy" <vz@mleia.com>,  "Piotr
- Wojtaszczyk" <piotr.wojtaszczyk@timesys.com>,  "Maxime Coquelin"
- <mcoquelin.stm32@gmail.com>,  "Alexandre Torgue"
- <alexandre.torgue@foss.st.com>,  "Rosen Penev" <rosenp@gmail.com>,  "Frank
- Li" <Frank.Li@nxp.com>,  "Wentao Liang" <vulab@iscas.ac.cn>,  Rob Herring
- (Arm) <robh@kernel.org>,  "Alok Tiwari" <alok.a.tiwari@oracle.com>,  "Chen
- Ni" <nichen@iscas.ac.cn>,  "Runyu Xiao" <runyu.xiao@seu.edu.cn>,  "Hemanth
- Selam" <hemanth.selam@gmail.com>,  "Pengpeng Hou" <pengpeng@iscas.ac.cn>,
-  Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= (The Capable Hub)
- <u.kleine-koenig@baylibre.com>,
-  "Triet Hoang" <triet.hoang.dev@gmail.com>,  open list:HYPERBUS SUPPORT
- <linux-mtd@lists.infradead.org>,  open list:FREESCALE GPMI NAND DRIVER
- <imx@lists.linux.dev>,  moderated list:ARM/STM32 ARCHITECTURE
- <linux-stm32@st-md-mailman.stormreply.com>,
-  sashiko-reviews@lists.linux.dev,  vkoul@kernel.org,  Frank.Li@kernel.org
-Subject: Re: [PATCH 1/1] mtd: use dmaengine_desc_set_callback()
-In-Reply-To: <sashiko-outbox-193928@kernel.org> (sashiko-bot@kernel.org's
-	message of "Mon, 02 Nov 2026 18:21:00 +0000")
-References: <20261102181406.3994422-1-Frank.Li@oss.nxp.com>
-	<sashiko-outbox-193928@kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Mon, 16 Nov 2026 15:45:53 +0100
-Message-ID: <87wlqcrg0u.fsf@bootlin.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QzEjei9C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84921F000C5;
+	Mon, 16 Nov 2026 15:05:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794841550;
+	bh=RWLDU4EWfngmSrcCkbKdVTyatFJ0OqjQckEYPqGngkI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QzEjei9C39bx/30fiWMJo3u/F0Eq3Uvo01kc85HuJz/fp0oiWeQJN9WJmLneGSbB4
+	 JhADs6kxenLsjsEL2WN4qqLDkNZ2uvBsFHxm7xwrAc5+vhpAFHyO6TmkxjSMahmTSs
+	 SCfr491ibmKagCRmtUKAZCNPUsN8vuxLw5eWgcVnCRkRFouDn9yphQK7NheS5iCUW6
+	 cH5+DtbGmjFPqbBkltdlHReX2VhFskhdZTrFwzMwa2hreaGIhGcsoRm6qKufflW09c
+	 oLhVcGmBh9P91Ok+9cBl7ulFynGy4ShKnKgO9zfiErOyIj8FKDGBhzkaFQMljejseN
+	 YDRykM5cIFyMg==
+From: SJ Park <sj@kernel.org>
+To: Aveline Noir <jm5905938@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [RFC PATCH 14/27] mm/damon/paddr: support REPORT_MADE type probe filter
+Date: Mon, 16 Nov 2026 07:05:42 -0800
+Message-ID: <20261116150543.80514-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <179481501691.2405628.8067144236288202449.b4-reply@b4>
+References: 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,28 +63,66 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
 
-Hello Frank!
+Hi Aveline,
 
-On 02/11/2026 at 18:21:00 GMT, sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] mtd: implicit declaration of dmaengine_desc_set_callback()
-> breaks build
+On Mon, 16 Nov 2026 18:43:36 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
-Should this land after DMA core changes have been merged? I have too
-many patches in my inbox atm, so I will drop this one, please re-send it
-whenever it can be applied and I will happily take it (with the commit
-log fixed).
+> Hi SJ,
+> 
+> On Sun, 15 Nov 2026 12:28:32 -0800 SJ Park wrote:
+> 
+> > +	case DAMON_FILTER_TYPE_REPORT_MADE:
+> > +		addr_range.start = pa;
+> > +		addr_range.end = pa + 1;
+> > +		matched = damon_report_exist(filter->report_type, &addr_range,
+> > +				jiffies -
+> > +				usecs_to_jiffies(ctx->attrs.sample_interval));
+> 
+> Since the window is counted in jiffies and rounded up, how many samples
+> see a given report depends on HZ.  With the default 5 ms sampling
+> interval, the window is 2 jiffies at HZ=250, i.e. 8 to 12 ms, so a
+> report is usually seen by two consecutive samples.  At HZ=1000 the
+> window is 5 jiffies, but kdamond_usleep() sleeps via
+> schedule_timeout_idle() there, and samples end up about 6 ms apart, so
+> a report made right after a sample can fall out of the window before
+> the next one.
+> 
+> With the queue indexing fixed, user reports submitted every 50 or
+> 250 ms and covering the whole physical address range were counted
+> about 2.0 times each on an x86_64 guest at HZ=250, and about 0.84
+> times at HZ=1000.
 
-> - [Low] mtd: commit message inaccurately states change is across sound
-> drivers
+Thank you for sharing your thought and test results.
 
-:-)
+> 
+> Is this approximation intended?
 
-Cheers,
-Miqu=C3=A8l
+Kind of intended.  DAMON uses many approximations for low overhead and easy
+maintenance, as long as the results are practical.
+
+For this case, I'm not that scared about such over-counting.  Users ain't
+really care about the report counted just one more time.  I'd rather expect
+users repeatedly submit reports to make sure DAMON shows the memory as hot.
+
+Also I believe users could tune intervals, manually or using the auto-tuning
+feature.
+
+> If each report is meant to be counted
+> once, maybe we could keep a per-context report sequence cursor and
+> check only the reports enqueued since the previous probe run.  A quick
+> local hack of that counted each report once on both HZ values.  If
+> reports are rather meant to stay valid for a while, like a user saying
+> a range is hot, a validity period separate from the sampling interval
+> might fit better.
+
+If it turns out the approximation is real problem for users, we could consider
+this kind of improvements.
+
+
+Thanks,
+SJ
+
+[...]
