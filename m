@@ -1,89 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.201
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794815121;
-	b=RqDsLY5gufEBC0pcW3efR9d82SnDtgzuTR9uv3c0RWHwW+ikGlIOuPzcR6mm1WeBx8HD
-	 qrBmGasv4NeU6GCCQcgKUE3Zfl1Rv3UDaCcxp107eScCFQ7KAvN1z8D0/gwacgE5sxasn
-	 nyZnmglZF2KiZPhBzrSiTuNjQQi9K6D0SEmmRWKXQmqxWkq1yBFiI1AwsAb6xdHunqOEQ
-	 VkA5KA3rZyrBOVq7k0BzmVMwc621W35NLG1hwGHqDjZUwdPEbMGWkzxp4z8rmWWw3THwx
-	 ls+5nGk2f4/nQu59Gh2QTBOShrwbIFbtkEYb+5rF43tG+9Tw/QwejamnEykaerUB3HQ==
+	t=1794815150;
+	b=oqsElLCssIYkMvIGWQzJgYJclsCoX7QdBetsvpPKw8zccMmviDgsGsGscmYgeE1F9W7+
+	 lKK0M9cVSSqocaMwQ7YJZxwAGi0L0KO5toT6XO1RgR/jKfkTdLEnb4W4EwwkPVGZV6MRI
+	 RZyulaMGXiTYyinUdv0N52Cdc0+sklSwXM/eslU/Cm50vCkmeJypEGDKTmVLpXxbMYwiW
+	 /XOabNiKIGggsCyRYsLeYWhXLAeCWaoTTm8e1s8moUtmu5wL8JbJN26XQb3MqwBMEE8HT
+	 49oOizzmo9TT4rtYaZnV+qaO6xjUbqJo2Ga5/+EzGjyYemETHqq1Pp2TUojtMt/tjhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794815121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794815150;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
-	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=Hmm2pR6aFCenUcCKosKBbhm7/p1v3WTAnxJNhw15gtQ=;
-	b=IDm7gbEcJtL1ZGOSl0lCTODN2LLE2Xm19LETrfkIoWkaPE0iiBO/QUIbTRZxl1Axv4S8
-	 B1KS2UJ7Ahn3lTrRWCzJQNI4E/La7HYoW8Xlp5yTizUnpImdA/NEddUsgl9UbCGQnmxYT
-	 t9TsKrYB5J+Hjlhrt3n0RJvFdRiH80QaUuuydbYpgAGzap4Q7qu8tfl6iqMreywO7ffmC
-	 A1rvLk9Gc7kHqO31v5pY1KgqP8+VbMEcednNL0EeR3CVfqoq73QIyX1lQq4xz8UoLlMnO
-	 LryZ2DQm3lTF1ePq+at3wEVORmTlkMJqRDTNtDVsP54qIQYuxhV75fCzdIl+ytzKcZQ==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
+	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
+	bh=zmgK2rZQB0Zps7NPdGicEsUeC+FDAzmra5NHyyX5KYA=;
+	b=Ga8YvUucyBMI3tSpsFTy4iPsLAjOAkPeFa/F9X/SbxfQml890DoqStdzt3YXHEPB4wY5
+	 j9YgMr6oxgmtSYF5HBM3n3r8XxOqxrXIVt3da4q4dfg21DT1V5GQA3Yqhwz+IkT/lVgYV
+	 eUrmXRJejuQHGUdeVFXtWXmigS+fde3mK7cwp4pfYK+jtx0Uwfsv8waQ9gq6280EWpHqy
+	 tnopogfBU2tiF7/Lg2jzRpFzfumyMEFXZqH8UlZeieDGIU7FZbDqnPzBVHb+eET34td78
+	 7sYg3934C9qFI3ADf5wAb77QusB1hTfvF3K5wVAOn1sTHD2n7x7Ue/s+QjwMPR+dBWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=M9scUzWG;
-	arc=none smtp.remote-ip=209.85.221.44
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QvY090fS;
+	arc=none smtp.remote-ip=74.125.227.201
+Received: from mail-pi2-f9.google.com (mail-pi2-f9.google.com [74.125.227.201])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D058606A887
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:45:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D058606A887
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D83606A8A7
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:45:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65D83606A8A7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=M9scUzWG
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-491846221ffso2778235f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:45:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QvY090fS
+Received: by mail-pi2-f9.google.com with SMTP id 41be03b00d2f7-cdd9779aac8so728777a12.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794815120; x=1795419920; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Hmm2pR6aFCenUcCKosKBbhm7/p1v3WTAnxJNhw15gtQ=;
-        b=M9scUzWG1lyuH2c8a1p5nem4PbBNX0SQp6zcPLCG/zWAiCO6riUXigC+VaFPEt6+Zp
-         uilR/+1HBV5QVaB1BV2So7BnwzeTchy42H78o7cVzmG7NKmy30aWB1Gms3LufYw5Wj37
-         yWJuVsoiloSdgV/mJMso7OCnxgvNDqeRYVpoHi8agTuIw4wj0iNUtjNnuRaCUnnpPVVi
-         kHTWn0bWcNCqZ3sb2v/wTN0dGHG2DwmuoMEYqx535dmZfcW3+j9KOzItutiOrxjume8D
-         RSg2zkhbaZLvmkYMoyyYijwQVGvc1FjnFikS+9851QPWkuKv+GVDg57+sLEpA2MVX+Bx
-         SO2w==
+        d=gmail.com; s=20260707; t=1794815150; x=1795419950; darn=lists.linux.dev;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=zmgK2rZQB0Zps7NPdGicEsUeC+FDAzmra5NHyyX5KYA=;
+        b=QvY090fS04hH8XGK2B6JeDUcR4xA6JvL+haBA0olJViI7wAzkYycHlEMjIZ9aupEey
+         LnfwPaFVhMevAVJaFVKqJAX2PY7jeFkAqxNFM97ncn43/jp3823n995SR6n0Azfe3lry
+         w9LjTbO0pzaU22TSahXrTix7LjKQH3kyzDuitSPltDcXSLJpFXkSG4Ec75qyHcXtRkkm
+         OAv5CiY/rsIwnvbl4maO1MQBw2rY5nXYaUSnzh27ZyXYcgGqHpSgCnztr4bMHZPY58tE
+         a1A9Q0APf40Pjs6GADVVRFL7Qx0N2z/XcXz77GxBAFu7yT5QNOauAqrh853pxR5aC0sl
+         FRAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794815120; x=1795419920;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Hmm2pR6aFCenUcCKosKBbhm7/p1v3WTAnxJNhw15gtQ=;
-        b=Tf6yQfK45JiJ0ytose/XZ8WPLniyX2ngmax4jc8AtZlTuQ59x/qCGyOWptwU+bXyZY
-         C6h22/jxHCUeWTKNgwsYVYl0yvOhdobZsoKfvYBukVwxLVOFRQaGt4AobNaI0PyuVUMu
-         M6aNF+HLG28LFPXYNHIF8qa6AlK5mbjFQBo2CjGQ0QV4sL+QL8pOPVPnDQtGCm0CmHcU
-         q5NCA7Qexby0q1BhiIHQ+gwTTpOdMFCI/go6WTiIIpQ6weCcCZ9+L92qrag+8g9/4b6q
-         pvTR6a2jktuPeTKRD/xE+k5y34dWtDvUsDdpk9LwnUyAYhh1ALxHAIi/l+9xafhscgtH
-         QkuA==
-X-Gm-Message-State: APuU4Z/vRKv6v9Xd9ORXqC3p+nnManWK6Btg/J+N0bGw7twSKArAybnb
-	C+OsU9wpPOihOdHNXVh4bgxMsOELAxNWSpwH3AVyMuagCcM2euxxy3GRsSGVro5E51ufVAGXKG6
-	TLdVGcNc=
-X-Gm-Gg: AYBFou1eCrn0GcY2knez1vAmGvRvzg/5R30fDyWEIg/wZo4kCGvTtVkqZjnFGyyh7ZU
-	n61oNWTKLpMQJHmkv548YblShHmVCX0Kr0RqXWzr0L6kij5BQ9MKPBMtzeHc+X2dpIOaufGJIQ2
-	07mm60TxqUWTRh4JuVV/o4bv3P5SifJ4uUB11XDFiGlcCcNjQlqFMWVDBRXW5kuzDamXzmcrly2
-	s3lWvrFUufxlLTMV30f9XOuR4sICoYU8pnIMS9y+EeEoqN9G7/RrvRvZ1UQEg0zvqQHmoTh1rNl
-	fjMmLQc62TukWS9vft8MoF5gezbnLkD9OkfDdWTlB2sE50Lz+ssKzXlYXckee6NhTQZjqz0t0Mv
-	qCZ6uraQIEyPcjZaw1GA0hgdqLfNMUZg/mrNIG22dQgHj6dbgp32p8edvg/oX/d4uYG25FrO0in
-	eZYPlnWD1N3GvCac8Pf4D0R+SiGtbIBd80q0/e1EbcWx0jTMWOGSTo6NaGcNxu/EKgmSga7Twua
-	thtgQuj6OzM9ER0u8kEdcbp4gIe/ht1EmeJO2ZN6l7OFPw1wffw1hoTyxKHAptcks9qGdbGgPMd
-	EDScr3628WaT2h2fQrMBWv5Ed+/7uU3FrEee0bOIMAorEhEARtCDkpVoj/got/xJIvoYCR9viHU
-	z/b/oLMxR
-X-Received: by 2002:a05:6000:2407:b0:491:6a7:b4ac with SMTP id ffacd0b85a97d-49c73351512mr19406434f8f.56.1794815119670;
-        Sun, 15 Nov 2026 23:45:19 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:106d:1080:575d:8fcf:e30d:5aed? ([2a01:e0a:106d:1080:575d:8fcf:e30d:5aed])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c60f8d615sm21048578f8f.56.2026.11.15.23.45.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Nov 2026 23:45:19 -0800 (PST)
-Message-ID: <d27f1aa7-9765-4a22-ac78-e6dfc0c97556@linaro.org>
-Date: Mon, 16 Nov 2026 08:45:18 +0100
+        d=1e100.net; s=20260707; t=1794815150; x=1795419950;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zmgK2rZQB0Zps7NPdGicEsUeC+FDAzmra5NHyyX5KYA=;
+        b=ux0EOtjltCarZ9X93zznCzMWggJ4CwrnXIpLXyA47W5JX2YHKx3n9VMNNzBIeeGG/D
+         rxbr+kheSkefDDIf9o2FNnHuv+7inXTCOx71P5WkIbSt5yc+XkDxkz4vXsXnRgyK9sgE
+         PR62Atj0BEfSckr1JVB49N1d7/iuwdcj0oREckw/b59ZtNelmTqcSaahBUtFijgNQldW
+         Mmsp5+4Pex88LqQG8LCyd7n9mgVNptaACi7H+CKZFph8D19+r3lpqhyJfN+kjc/SwvZj
+         z2gpOitwtkwL7BWzqpyFgBMvZa63uCrmWjBOYkPKSdrR21jjCvtLTh5nHCD92GZqEHRe
+         CGww==
+X-Forwarded-Encrypted: i=1; AL+hErFMNb9GeLWdW9Al0q8gdYYBwDxeElOBx6AQWoLxarhlMyL+jH7vhTwEj2iRbpdaWVx4S8812x5IBskz+PhqkS8=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/xzLGSA4HPtB8HDBigQgfLJ4RG06R26ElWZa1U+lO/cOfH4ciH
+	nBoEgZYzvDS6oftznYg85ex31ewO92yQxZJQcRnlD1CxEmZw31EPTIgk
+X-Gm-Gg: AYBFou23g8DPcWmKT5awEDUstgidr1xwHwfsAtP8BG+n446FjvDSDG1oWF+I8X6TUmF
+	X1KqdmcAFZMzHovzbkVoLNpsRmGM+2r4/qh0BnNo80+MeIcboeC3Vof/wDg945VBwfAF8K+U/kW
+	okdZjGObuyebXWhRgMkUSlztDBPRseASiVbfIPr8QtT2V3wlcrYhMGK0Nh1OPTS4MyZoBUZQhS5
+	etoVYGGbS8O6C2dYMN62+vCp/qIxJIZl6PKWQ5URfP2PZxX+uGwWOE9LWd8paM4JmokIakSEcj4
+	x9Hc1HJprvxEpkpN6eUHBYv0e7zlLxFPyueaxVvAg62J6CdAbG3v/d1FGz5KKKXssbFTEVP93mE
+	ne2RxhNk6rGF1b/nfneqpII5B2Bj5yRT7kWp9DR7hh6O9u75I+CJF/yQZ+AF6b+b71bhHydOLpu
+	Bi3+RFi+ii+XYQgfCsfFu2lnJJRfhkIF1kH3KFnOE2WmHxzTGyyQG128ZkBre4p38FCEWvuuPYH
+	J6vNX9Hj+EQrU20AsAvlduhmPOuiT2SCAr/axcen9ixSV6plAlsiT5t+ybUNmhh7cJyWL+DtnUW
+	U9I5N2+1d3aUDjAxu4UlT7UgQS+z2KN2rjGuDxDTEnq0jDcGViTS5IvmG83AxMw58F9oNZQrwAa
+	sHsncqqa5IGIQm8yCNQLbmIeW6UsfI4lTDKteJXNM42Bj4WeT6bPCKBUZwMw/9oA=
+X-Received: by 2002:a05:6a00:181b:b0:8a0:7677:c8c9 with SMTP id d2e1a72fcca58-8beb7c21179mr8733834b3a.51.1794815149534;
+        Sun, 15 Nov 2026 23:45:49 -0800 (PST)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8bed1a6dbd9sm3244287b3a.27.2026.11.15.23.45.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Nov 2026 23:45:48 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,96 +89,54 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC 03/23] dt-bindings: pinctrl:
- qcom,sm8650-lpass-lpi-pinctrl: document clocks and power domaines when ADSP
- is not used
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20261113-topic-sm8650-el2-v1-0-5183f6aab9fc@linaro.org>
- <20261113-topic-sm8650-el2-v1-3-5183f6aab9fc@linaro.org>
- <sashiko-outbox-213493@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <sashiko-outbox-213493@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Subject: Re: [RFC PATCH 14/27] mm/damon/paddr: support REPORT_MADE type
+ probe filter
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Mon, 16 Nov 2026 18:43:36 +1100
+Message-Id: <179481501691.2405628.8067144236288202449.b4-reply@b4>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, sashiko-bot@kernel.org, 
+ sashiko-reviews@lists.linux.dev
+In-Reply-To: <20261115202849.99134-15-sj@kernel.org>
+References: <20261115202849.99134-1-sj@kernel.org>
+ <20261115202849.99134-15-sj@kernel.org>
+X-Mailer: b4 0.16.0
 
-On 11/13/26 20:02, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] dt-bindings: pinctrl: qcom,sm8650-lpass-lpi-pinctrl: redundant
->    oneOf in clocks
-> --
-> 
-> commit d8422bb265d6e088cce5d6024805eb9ced00d38a
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> dt-bindings: pinctrl: qcom,sm8650-lpass-lpi-pinctrl: document clocks and power domaines when ADSP is not used
-> 
-> This commit updates the SM8650 LPASS LPI pinctrl DT binding schema to
-> allow a single core clock and add power-domains properties for platforms
-> where the ADSP is bypassed.
-> 
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8650-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8650-lpass-lpi-pinctrl.yaml
->> index 1bf08860a4baf..4c54f873199cc 100644
->> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8650-lpass-lpi-pinctrl.yaml
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8650-lpass-lpi-pinctrl.yaml
->> @@ -29,11 +29,25 @@ properties:
->>         - description: LPASS LPI TLMM Control and Status registers
->>   
->>     clocks:
->> -    items:
->> -      - description: LPASS Core voting clock
->> -      - description: LPASS Audio voting clock
->> +    oneOf:
->> +      - items:   # for ADSP based platforms
->> +          - description: LPASS Core voting clock
->> +          - description: LPASS Audio voting clock
->> +      - items:   # for ADSP bypass based platforms
->> +          - description: LPASS Core voting clock
->>   
->>     clock-names:
->> +    oneOf:
->> +      - items:   # for ADSP based platforms
->> +          - const: core
->> +          - const: audio
->> +      - items:   # for ADSP bypass based platforms
->> +          - const: core
-> 
-> [Severity: Low]
-> Could clocks and clock-names set minItems: 1 alongside the two-entry
-> items list instead of using oneOf?  Because the single-entry ADSP bypass
-> list is a strict prefix of the two-entry list, minItems: 1 avoids
-> duplicating the first item in both properties.
-> 
+Hi SJ,
 
-Will switch to that
+On Sun, 15 Nov 2026 12:28:32 -0800 SJ Park wrote:
+
+> +	case DAMON_FILTER_TYPE_REPORT_MADE:
+> +		addr_range.start = pa;
+> +		addr_range.end = pa + 1;
+> +		matched = damon_report_exist(filter->report_type, &addr_range,
+> +				jiffies -
+> +				usecs_to_jiffies(ctx->attrs.sample_interval));
+
+Since the window is counted in jiffies and rounded up, how many samples
+see a given report depends on HZ.  With the default 5 ms sampling
+interval, the window is 2 jiffies at HZ=250, i.e. 8 to 12 ms, so a
+report is usually seen by two consecutive samples.  At HZ=1000 the
+window is 5 jiffies, but kdamond_usleep() sleeps via
+schedule_timeout_idle() there, and samples end up about 6 ms apart, so
+a report made right after a sample can fall out of the window before
+the next one.
+
+With the queue indexing fixed, user reports submitted every 50 or
+250 ms and covering the whole physical address range were counted
+about 2.0 times each on an x86_64 guest at HZ=250, and about 0.84
+times at HZ=1000.
+
+Is this approximation intended?  If each report is meant to be counted
+once, maybe we could keep a per-context report sequence cursor and
+check only the reports enqueued since the previous probe run.  A quick
+local hack of that counted each report once on both HZ values.  If
+reports are rather meant to stay valid for a while, like a user saying
+a range is hot, a validity period separate from the sampling interval
+might fit better.
+
+Thanks,
+Aveline Noir
