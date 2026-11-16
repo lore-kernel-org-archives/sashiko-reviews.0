@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794815794;
-	b=LO9aOhs+PZX1+mqBin8PZsU2uwf4XOX/Erd8CNG5cPyrQ17uYbUWAlLddLbVf1OQ6CFH
-	 QJaTeQ1q3K+M8JmK88JLcNcn5DeWNr5fp6c/p9NVfEElcr7+nLWUs+/d2Cv/VVFmQjN7R
-	 HuWlxDlV3PrbuIRj3gcjLCLlAeXElzi8Tnj7b0oQ4eK+M4R1Lu7gbP0AhPitb/GUKpYdb
-	 l49oBUJS1GElWrtdhzIvlIn2FPeU6AAOWXJBZillk2Q9sJBJebXV734Fvmej1j4ILms/T
-	 XzTvp7gVmG2wmXz/NPQP3j/u3SXwoPas00ahUpAQq5kw5THjWuVbonJ7XjEyPbT77sQ==
+	t=1794815886;
+	b=NteZOACY/cYQp2y8Xzq6x02g4HS08R41B5PXYb76DfRIzNuNfunhnsE+z8osQHr2OZW7
+	 NoCdbdCCEynvLPoTO5GNUodbEcZjR75nKv5SAICqX+Lhjrj8BAmHAUEVFhv/PweaWXKou
+	 mErki7AupyzEkF36ZZMnfXWJHvch7k+AR5Ig0zwSC465MTSttPsAaW70Ss97dsv1imLWU
+	 IjT6ViLyGVxyXGRz6OGKdTYKWaRW8RQ+bfOnfQpjO+HuVBsl9wBoLtMZDGbX4reCZzo78
+	 ooWI7bysNgH/LIFOWomZCTAbOuCPhpeJhtRdOHf++Y2p6uqrEa/ksNGLWG7AAu0ZIPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794815794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794815886;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
 	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=1czrIwBonV9DRyHujCD4XcvTMYZ+l7egFuUebdcO7VI=;
-	b=uP5oy5NTeUf1WBIV3iq5jnK/duc8nylZvOgBmOc7S6LSUKeBXw1D/zZPZpUJn9tLlHBz
-	 pJfaX0P/NNRLV6b7YNjY+hjzuUAu5uVBPaDF//zAoBrwpDSqQ+ssS26dPZIAx8W8nrhky
-	 OK+5NlsOrYJ1O4NWSgswz1pt5yvdNZDJwgm04akrjp4hBfU2fYZa8YGQGWpKjhlZnpg5O
-	 utnhGzrh8ZJ0hXzbjl8nq/cMJIi4AgP1LqiCwAo/fZTH9s3trVN+xW3PdvGTz5Y35/4bi
-	 DUfWxe4TMH9z6srKn2TbuEO6ldWQcGiFQlLySqVgHzdW33LsT+7SoNj8bwC+TDOqv5A==
+	bh=TDKWR0Bggbyju/TIs5Ee13LupgHgIQxhXl50fDo0WC4=;
+	b=B5tQ9EYR9WH2gL+Q+xu7va3u4jvZks3899gyAtmvjDR+/RwJv47FsZ5gZ/aOGZjjqd9w
+	 LJAzb5BNw0zxSd7ja5LBKvFi6VO2GttdmRVb3ymW1pEXcLNY1uL1/rOPROZpGbur+Ey4U
+	 Wmak8v24kvu3hlmqEBEq0yfNomBl57yDPXFLN9sFSqLpLd5b9KG7wom8CJfYy7QlTfJWU
+	 8mxmRKSvAGM37arE3Sc/9P1REoEmXZadDPlrAA8+8O2AH8fj0rbrPXHXXjBm09UXztxJ4
+	 JyzLMwfEG7gMrc36Tqbs8djsL5uyiYRfyUSQxIZ2pftApdP/CEJ976Wy7LIpINVehsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linaro.org;
 	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=NunKXGjI;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=z4oCzo+V;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D5F606A32A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:56:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62D5F606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55523606A32A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:58:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55523606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=NunKXGjI
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a1b07c3c5fso35058885e9.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:56:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=z4oCzo+V
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4bb64ef5a00so7903375e9.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:58:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794815791; x=1795420591; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1794815885; x=1795420685; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:organization
          :autocrypt:content-language:references:cc:to:subject:reply-to:from
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=1czrIwBonV9DRyHujCD4XcvTMYZ+l7egFuUebdcO7VI=;
-        b=NunKXGjI0vr3QIRLQXGPBwLVR3+u7Quw6F1LSMb2TwxmeCO8riiADhk6dIi1tGwQhk
-         QRoMO9y02JBXX7q3qF1DR2i96Vzhit9l+PzIOE8UzS84LT97dqYQ81Llk/JW/Vm5AMYK
-         4ZPEqJNE4cJcYm+UV1JzWEmGdAjdeglRgxy+7KAMn4Zm3fDvQZH8kfuv+aTkj+7Bhdcr
-         +zUdUwAK3XtASi4+3ZWYjuTeDTWlYzUdwMz7BtfClhhvQP2nDAaub1aoxyxAv6ODJsnA
-         WENCGhlOWR+4jLPE84YzQCM9JkkSWyEVxATv/SIx9NAU599IhSlZW1pMAEto+qIiKJHv
-         ROYw==
+        bh=TDKWR0Bggbyju/TIs5Ee13LupgHgIQxhXl50fDo0WC4=;
+        b=z4oCzo+VKEbJEVxIgpKGWZChN2rgcuxadHKYMlu0V3Ws5jGjDmPyly5wbjwbZy6fzH
+         dFApZ9/16Fa6zfqm3/7EdsROeRogNmIptv5gpGaf2geHP9bFwBWPOA5iSuoPZn4cs21E
+         8p91jo1aA6KI4AR1WPvokB+OxyQo/AmY6WV/FHbt/9/x6vEu3mch2eQ8LaK7JJG2Njf+
+         dGJ6SxEQEieB+jR72sSPADqLFANgK9WSwqFdjFBhNMoiUVkhCxjxllpVmf2bfUtD4Nzp
+         Jq3yZUibTW2FP6oWq1RR+2GlTcwdXiqO7J7OcQVXXN10imRI18zo+I72T2xV7OiDt9wE
+         THEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794815791; x=1795420591;
+        d=1e100.net; s=20260707; t=1794815885; x=1795420685;
         h=content-transfer-encoding:content-type:in-reply-to:organization
          :autocrypt:content-language:references:cc:to:subject:reply-to:from
          :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1czrIwBonV9DRyHujCD4XcvTMYZ+l7egFuUebdcO7VI=;
-        b=tSQNNCUXmnz5JG+LU5spy1GW92OZywyqDPFubKAknmDdH/K/GDZoXgjhlKUAxaao83
-         3R2vQyiTo1gYwGtLCD/f/gSrLHh9SVPywYYpK/KyKrrZ+JUJPX4jXCnmpnn9aRzENSO9
-         I+Cuupz6qBAVQBlV1MpJtx4FOAzHxkD4AqEZWBIGuIlYmSk3uuRoOw6ZKG00IwJsfjsa
-         rLSleErFSB0jMqjXeOWb34/yVRcz8F0GwnI9mTDCJnpD4OtihloKs2bfxEjNZzky2EB5
-         g2bEiJV/j/Xyfbeo2ql5KAqqJpmt/AMe1UUpUjTSfSCUfP1Haf6lB6IV8qmCMIvqqmOj
-         80hA==
-X-Gm-Message-State: APuU4Z+pFKe9NGa7srKoOh0WgwOPOM1XTntvPvp4jJJpYIP7748T5GRN
-	dLcZFIGJZbpNYHlKoAunBMpLRplQ64IhiPlX/4Xrp7JUZlbltIVv043N/cmhHmdJV6sJ8oYePFc
-	Yr5LjMzU=
-X-Gm-Gg: AYBFou0mHnv7u/lWhUbI9v4JLx2MPSjRDQtPsfBno9ERpXkWxdTCu7EfEO9aKwlH8u4
-	5qfgJQUNv/VLpI9M3jxR6i37hNC3ZGtG8rBpiBKeUOZQbkt22++dmWFF8GVdjBRJvtnHyGT9IR2
-	0HGTSgNHdHx2Oy2aYBSQ9YZ1sffY23yR+hRBaUgpm0q3QFFgTF4oMBzrlI6eb3T+QJNj48AsQEl
-	Sb0r+VOHIeyCZm2TX2l9N6wkOVE7AWyTUhtfViCqVRG09uhzd+9iRgIWw/6nsBqqck77H580+N/
-	CEeJJ4ikaWapMx6wbeugDAXYfOaKz27D30H096bcyI9/aKt9xFZZLRQurV1zlye8KEPuR8Af8WX
-	FWI10HP55cQTCFEmM3LNxoqpN7En44FrSPc8qAOpqsPplmT8FGWhR7zZ4EzhPJWlZSHaGaFgLgR
-	DPLfOc6uQmeOXz7762/OxMCpFbC8gAiQI06MudHpXvNsiGd9MByEBa3QSvkho0FIcN2ZnKLMeBk
-	rPX12cav+ArbiSL7a9FtQoa3YLSYTjR3EMeq1/PTzo2eLwTcJpfwaOkR8rc0qn9/KgfORhkg9+Y
-	X7Zc3txdUIR7zw/M0ImuvAEs14VCdbyF1/1ZZ57NzX50ccQ7PS/D89Hp4uykLIW2MzBdTFkf1b0
-	8IOqcCI+l
-X-Received: by 2002:a05:600c:3507:b0:4bb:68c4:2044 with SMTP id 5b1f17b1804b1-4bb68c4240fmr101415995e9.11.1794815791120;
-        Sun, 15 Nov 2026 23:56:31 -0800 (PST)
+        bh=TDKWR0Bggbyju/TIs5Ee13LupgHgIQxhXl50fDo0WC4=;
+        b=Mwzg1Wb3Sgf49k3ZFSlU4yW+kLdv8fcx96ZEFqiXfK0GJEWmn9B+FxkW+Sz+k5MfPo
+         LAifs5tp+NtpbXlitqSAcUyZzR7EfS0n37NJo2PwpAYl2LrWRv54NAAuTjBvw6qZvvt6
+         4MNxN/M5u79Q6VMEa/Cva1XZN925MOqJzflNAFSQn0ZS2Da2EzBj2N8Y0WQxTuPmqVOM
+         bf5P/nVIjNZ/r/eyOMgf0ZpgupW0CfSUmgzOsrUYtOHLopv57AkeDTPLRLc1HgA7j7gh
+         aUCdUNF8mb3NaGumZp9xfMiqVWnrhdWFxgKKrxJkHvHcehEfJoqSmOw7DLTJgCDj9htx
+         vp1Q==
+X-Gm-Message-State: APuU4Z+aR/SZpddV24qnZFclurNhvzI+GF/7MhM4AJmt8TkmH4fC/sn+
+	XJhDdwLBN3MqqoUirUL6TUktxQ2FZZM8EaLU9ISRJQ6ZXflondOMsJHvBvaMXaHDxV6fDViyHvx
+	tgj6gnKA=
+X-Gm-Gg: AYBFou1VASqpvDhJwIQ8DoIMUiYe0CpQ3iBs8cJ9C/9n7h1mDCQWXAiW05frQnm3EyQ
+	WKZGXjZl9cY8jjejYXltwY6Osw3t8/hGmvzh3H8FMbQDzj7XiGS0eQt+k+ekbdaa7BYNqavlssy
+	/zG1Lt7r1DkoFamjTy4hcl0VLhZFObZdx/fxTf+vxiiL6l7eo2NM6LjlO7GuirUohRA3Jmg48rF
+	CTYGnuPYHrK0BUXvdCeQ0ll8MTIFku1e3A3Poeekde8W6UbRR71iT9osRzaAHow5nonBJCuMA5O
+	FtYRlhbi+soOmsPV/1wSnthXYGSJdjHOTpTVSrXbbyTdyMulQBLgr9v9qZJjWZXSZVdUkWftpBr
+	9+EIW33jJ2/+xe5vMZElqkgcz9hKGWEU7TOT1jh2fEn+6kEVbGp+7kvZLeVmctCiV7wKFhmW9SA
+	BFMCcEPh0pru+L1LTStpfj1+RO/M6Z9XUfinmMPDBxEEcWR/fx5p50z0iybDI1ptdbVINVSe9ZH
+	X9iAnIXjQtd+Y7b5TG7MJRl6dkNe0OyWpFI5hyfw7LkvQK/dDNCsZo+bjDNNlKcJ0OGnU+5RHl2
+	bm/huCsfIU5TWQBEQVfUvt2ymEeePxb0CiLVIZJUtPddimLC5k9TXhQq4MB9HwJ+LALq+ivA9iV
+	6x8LQ8a64
+X-Received: by 2002:a05:600c:5395:b0:4ab:e27d:e241 with SMTP id 5b1f17b1804b1-4bb55a95d09mr197195635e9.15.1794815884566;
+        Sun, 15 Nov 2026 23:58:04 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:106d:1080:575d:8fcf:e30d:5aed? ([2a01:e0a:106d:1080:575d:8fcf:e30d:5aed])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb571f976esm142073925e9.3.2026.11.15.23.56.30
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c60f8e794sm19888971f8f.59.2026.11.15.23.58.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Nov 2026 23:56:30 -0800 (PST)
-Message-ID: <73036d41-bec4-4d09-891b-8a2432a08f2d@linaro.org>
-Date: Mon, 16 Nov 2026 08:56:29 +0100
+        Sun, 15 Nov 2026 23:58:04 -0800 (PST)
+Message-ID: <2cda0533-111f-41dc-aed4-7e2b72b0b927@linaro.org>
+Date: Mon, 16 Nov 2026 08:58:03 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,15 +96,15 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC 15/23] ASoC: qcom: lpass: allocate LPM buffer memory
- to DAIs
+Subject: Re: [PATCH RFC 16/23] ASoC: qcom: lpass: enable the right codec_mem
+ clock when usin LPM memory
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org, robh@kernel.org,
  conor+dt@kernel.org
 References: <20261113-topic-sm8650-el2-v1-0-5183f6aab9fc@linaro.org>
- <20261113-topic-sm8650-el2-v1-15-5183f6aab9fc@linaro.org>
- <sashiko-outbox-213524@kernel.org>
+ <20261113-topic-sm8650-el2-v1-16-5183f6aab9fc@linaro.org>
+ <sashiko-outbox-213502@kernel.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -131,304 +131,97 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <sashiko-outbox-213524@kernel.org>
+In-Reply-To: <sashiko-outbox-213502@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/13/26 20:12, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential
+On 11/13/26 20:06, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [High] ASoC: qcom: lpass: u32 underflow and OOB in
->    lpass_platform_allocate_lpm()
-> - [Medium] ASoC: qcom: lpass: uninitialized capture buffer on
->    full-duplex LPM MI2S PCM
-> - [Medium] ASoC: qcom: lpass: unconditional VA LPM reservation blocks VA
->    LPM MI2S
-> - [Medium] ASoC: qcom: lpass: missing LPM clock parsing in
->    asoc_qcom_lpass_cpu_platform_probe()
-> - [Low] ASoC: qcom: lpass: wrong LPM offset in
->    lpass_platform_prealloc_cdc_dma_buffer()
+> - [Medium] ASoC: qcom: lpass: LPM clocks not parsed when only
+>    mi2s_lpm_enable is set
+> - [Medium] ASoC: qcom: lpass: unchecked mem_clk enable and leak in
+>    startup()
 > --
 > 
-> commit 038ab20def13fb9da7aca847692783be3d4964b4
+> commit 6968d3f5a8288f5418d4e48725abed1263de22d5
 > Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> ASoC: qcom: lpass: allocate LPM buffer memory to DAIs
+> ASoC: qcom: lpass: enable the right codec_mem clock when usin LPM memory
 > 
-> This commit dynamically allocates LPASS LPM SRAM buffer offsets for Codec
-> DMA and non-core LPAIF MI2S DAIs instead of using fixed static offsets.
+> This commit adds a helper to select the codec_mem clock matching a given LPM
+> buffer offset and enables the corresponding LPM memory clock during DAI
+> startup and shutdown for Codec DMA and LPM-backed MI2S ports.
 > 
 >> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
->> index 9ebbc422c63c3..4bbcd59ebd602 100644
+>> index 4bbcd59ebd602..302c31b23090f 100644
 >> --- a/sound/soc/qcom/lpass-cpu.c
 >> +++ b/sound/soc/qcom/lpass-cpu.c
->> @@ -1258,16 +1258,6 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->>   			dev_err(dev, "failed to get cdc dma clocks %d\n", ret);
->>   			return ret;
->>   		}
->> -
->> -		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-rxtx-cdc-dma-lpm");
->> -		if (!res)
->> -			return -EINVAL;
->> -		drvdata->rxtx_cdc_dma_lpm_buf = res->start;
->> -
->> -		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-va-cdc-dma-lpm");
->> -		if (!res)
->> -			return -EINVAL;
->> -		drvdata->va_cdc_dma_lpm_buf = res->start;
->>   	}
+>> @@ -89,6 +89,17 @@ static int lpass_cpu_daiops_startup(struct snd_pcm_substream *substream,
+>>   	unsigned int port_id = mi2s_port_id(dai->driver->id);
+>>   	int ret;
 >>   
->>   	if (variant->mi2s_desc) {
->> @@ -1281,6 +1271,9 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->>   						   variant->mi2s_desc[i].reg_name);
->>   			if (ret)
->>   				return ret;
+>> +	if (is_lpm_mi2s_port(drvdata, dai->driver->id)) {
+>> +		struct clk *mem_clk = drvdata->va_mem0;
 >> +
->> +			if (variant->mi2s_desc[i].lpm_type != LPASS_LPM_NONE)
->> +				drvdata->mi2s_lpm_enable = true;
->>   		}
->>   	} else {
->>   		drvdata->num_lpaif = 1;
->> @@ -1290,6 +1283,20 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->>   			return ret;
->>   	}
->>   
->> +	if (drvdata->codec_dma_enable || drvdata->mi2s_lpm_enable) {
->> +		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-rxtx-cdc-dma-lpm");
->> +		if (!res)
->> +			return -EINVAL;
->> +		drvdata->rxtx_cdc_dma_lpm_buf = res->start;
->> +		drvdata->rxtx_cdc_dma_lpm_size = resource_size(res);
->> +
->> +		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-va-cdc-dma-lpm");
->> +		if (!res)
->> +			return -EINVAL;
->> +		drvdata->va_cdc_dma_lpm_buf = res->start;
->> +		drvdata->va_cdc_dma_lpm_size = resource_size(res);
->> +	}
+>> +		if (drvdata->mi2s_lpm[port_id] == LPASS_RXTX_CDC_LPM)
+>> +			mem_clk = lpass_cdc_dma_mem_clk(drvdata,
+>> +							drvdata->mi2s_lpm_offset[port_id]);
 > 
 > [Severity: Medium]
-> Should of_lpass_cdc_dma_clks_parse() also be called when
-> drvdata->mi2s_lpm_enable is set?
+> Can mem_clk be NULL here when a board enables LPM-backed MI2S ports without
+> any Codec DMA DAIs?
 > 
-> Because of_lpass_cdc_dma_clks_parse() remains inside the
-> if (drvdata->codec_dma_enable) block above, a board that enables LPM-backed
-> MI2S DAIs without any Codec DMA DAI leaves drvdata->codec_mem0..3 and
-> drvdata->va_mem0 as NULL.  Even with commit "ASoC: qcom: lpass: enable the
-> right codec_mem clock when usin LPM memory" later in this series,
-> lpass_cpu_daiops_startup() will pass a NULL clk pointer to
-> clk_prepare_enable(), leaving the LPM SRAM unclocked when accessed by the
-> CPU or LPAIF DMA.
-
-
-Good catch will fix
-
+> In asoc_qcom_lpass_cpu_platform_probe(), of_lpass_cdc_dma_clks_parse() is only
+> called when drvdata->codec_dma_enable is set, whereas the LPM memory resources
+> are fetched when either codec_dma_enable or mi2s_lpm_enable is set:
 > 
->> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
->> index a953db262aa00..75d2c872f5123 100644
->> --- a/sound/soc/qcom/lpass-platform.c
->> +++ b/sound/soc/qcom/lpass-platform.c
-> 
-> [ ... ]
-> 
->> @@ -1315,23 +1348,55 @@ static int lpass_platform_prealloc_cdc_dma_buffer(struct snd_soc_component *comp
->>   	switch (dai_id) {
->>   	case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->>   		buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
->> -		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf;
->> +		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + drvdata->va_lpm_offset;
->>   		break;
->>   	case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->>   		buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
->> -		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
->> +		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf +
->> +				drvdata->va_lpm_offset + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
->>   		break;
-> 
-> [Severity: Low]
-> Should these two cases use drvdata->rxtx_lpm_offset instead of
-> drvdata->va_lpm_offset?  lpass_platform_allocate_lpm() populates
-> drvdata->rxtx_lpm_offset for RXTX Codec DMA, and commit "ASoC: qcom: lpass:
-> enable the right codec_mem clock when usin LPM memory" uses
-> drvdata->rxtx_lpm_offset to select the RXTX LPM clock, so using
-> va_lpm_offset here will desynchronize the buffer address from the clock if
-> the two offsets ever differ.
-
-Good catch will fix
-
-> 
->>   	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->>   		buf->bytes = lpass_platform_va_hardware.buffer_bytes_max;
->> -		buf->addr = drvdata->va_cdc_dma_lpm_buf;
->> +		buf->addr = drvdata->va_cdc_dma_lpm_buf + drvdata->va_lpm_offset;
->>   		break;
->>   	case LPASS_CDC_DMA_WSA_RX0 ... LPASS_CDC_DMA_WSA_RX9:
->>   		buf->bytes = lpass_platform_wsa_hardware.buffer_bytes_max;
->> -		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + drvdata->wsa_lpm_offset;
->>   		break;
->>   	case LPASS_CDC_DMA_WSA_TX0 ... LPASS_CDC_DMA_WSA_TX8:
->>   		buf->bytes = lpass_platform_wsa_hardware.buffer_bytes_max;
->> -		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 3;
->> +		buf->addr = drvdata->rxtx_cdc_dma_lpm_buf +
->> +				drvdata->wsa_lpm_offset + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
->> +		break;
->> +	case MI2S_PRIMARY ... MI2S_QUINARY:
->> +	case MI2S_SENARY ... MI2S_SEPTENARY:
->> +		if (is_lpm_mi2s_port(drvdata, dai_id)) {
->> +			unsigned int port_id = mi2s_port_id(dai_id);
->> +
->> +			buf->bytes = lpass_platform_lpm_mi2s_hardware.buffer_bytes_max;
->> +			switch (drvdata->mi2s_lpm[port_id]) {
->> +			case LPASS_RXTX_CDC_LPM:
->> +				if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream)
->> +					buf->addr = drvdata->rxtx_cdc_dma_lpm_buf +
->> +						    drvdata->mi2s_lpm_offset[port_id];
->> +				else
->> +					buf->addr = drvdata->rxtx_cdc_dma_lpm_buf +
->> +						    drvdata->mi2s_lpm_offset[port_id] +
->> +						    LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
->> +				break;
->> +			case LPASS_VA_CDC_LPM:
->> +				if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream)
->> +					buf->addr = drvdata->va_cdc_dma_lpm_buf +
->> +						    drvdata->mi2s_lpm_offset[port_id];
->> +				else
->> +					buf->addr = drvdata->va_cdc_dma_lpm_buf +
->> +						    drvdata->mi2s_lpm_offset[port_id] +
->> +						    LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
->> +				break;
->> +			default:
->> +				break;
->> +			}
->> +		}
->>   		break;
->>   	default:
->>   		break;
-> 
-> [Severity: Medium]
-> Does lpass_platform_prealloc_cdc_dma_buffer() leave the capture
-> substream->dma_buffer uninitialized when an LPM MI2S PCM has both playback
-> and capture streams?
-> 
-> At the top of lpass_platform_prealloc_cdc_dma_buffer(), only one substream
-> is selected:
-> 
-> sound/soc/qcom/lpass-platform.c:lpass_platform_prealloc_cdc_dma_buffer() {
-> 	if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream)
-> 		substream = pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
-> 	else
-> 		substream = pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
-> 
-> 	buf = &substream->dma_buffer;
-> ...
+> sound/soc/qcom/lpass-cpu.c:asoc_qcom_lpass_cpu_platform_probe() {
+>      ...
+> 		ret = of_lpass_cdc_dma_clks_parse(dev, drvdata);
+> 		if (ret) {
+> 			dev_err(dev, "failed to get cdc dma clocks %d\n", ret);
+> 			return ret;
+> 		}
+> 	}
+>      ...
+> 	if (drvdata->codec_dma_enable || drvdata->mi2s_lpm_enable) {
+> 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-rxtx-cdc-dma-lpm");
+>      ...
 > }
 > 
-> Unlike Codec DMA DAIs (which have separate unidirectional RX and TX DAI
-> IDs), a single MI2S DAI can have both playback and capture substreams on
-> the same struct snd_pcm.  When both exist, only the playback dma_buffer is
-> initialized and memremapped, while the capture substream->dma_buffer stays
-> zeroed.  Opening the capture stream in lpass_platform_pcmops_open() then
-> sets runtime->dma_area to NULL via snd_pcm_set_runtime_buffer(), causing a
-> NULL pointer dereference in lpass_platform_copy().
+> When only drvdata->mi2s_lpm_enable is set, drvdata->va_mem0 and
+> drvdata->codec_mem0..3 are never populated and remain NULL.  Passing NULL to
+> clk_set_rate() and clk_prepare_enable() is a no-op, leaving the LPM SRAM
+> unclocked when the stream accesses the LPM buffer.  Calling
+> of_lpass_cdc_dma_clks_parse() under the codec_dma_enable || mi2s_lpm_enable
+> check would ensure the clocks are acquired.
 
-Good catch, will fix
+Yes since it's a no-op, it's fine getting NULL
 
 > 
-> [ ... ]
-> 
->> @@ -1464,6 +1527,64 @@ static const struct snd_soc_component_driver lpass_component_driver = {
->>   
->>   };
->>   
->> +static int lpass_platform_allocate_lpm(struct lpass_data *drvdata)
->> +{
->> +	u32 rxtx_cdc_dma_lpm_remain = drvdata->rxtx_cdc_dma_lpm_size;
->> +	u32 va_cdc_dma_lpm_remain = drvdata->va_cdc_dma_lpm_size;
->> +	u32 rxtx_cdc_dma_lpm_offset = 0;
->> +	u32 va_cdc_dma_lpm_offset = 0;
->> +	int port_id;
 >> +
->> +	if (drvdata->codec_dma_enable) {
->> +		drvdata->rxtx_lpm_offset = rxtx_cdc_dma_lpm_offset;
->> +		rxtx_cdc_dma_lpm_offset += LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +		rxtx_cdc_dma_lpm_remain -= LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +
->> +		drvdata->va_lpm_offset = va_cdc_dma_lpm_offset;
->> +		va_cdc_dma_lpm_offset += LPASS_VA_CDC_DMA_LPM_BUFF_SIZE;
->> +		va_cdc_dma_lpm_remain -= LPASS_VA_CDC_DMA_LPM_BUFF_SIZE;
->> +
->> +		if (drvdata->wsa_enable) {
->> +			drvdata->wsa_lpm_offset = rxtx_cdc_dma_lpm_offset;
->> +			rxtx_cdc_dma_lpm_offset += LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +			rxtx_cdc_dma_lpm_remain -= LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +		}
+>> +		clk_set_rate(mem_clk, LPASS_CODEC_MEM_HZ_NORMAL);
+>> +		clk_prepare_enable(mem_clk);
 >> +	}
+>> +
+>>   	ret = clk_prepare_enable(drvdata->mi2s_osr_clk[port_id]);
+>>   	if (ret) {
+>>   		dev_err(dai->dev, "error in enabling mi2s osr clk: %d\n", ret);
 > 
 > [Severity: Medium]
-> Does reserving LPASS_VA_CDC_DMA_LPM_BUFF_SIZE whenever
-> drvdata->codec_dma_enable is set prevent using LPASS_VA_CDC_LPM for MI2S
-> when only RXTX or WSA Codec DMA is enabled?
+> Does this leak the prepare and enable references on mem_clk if enabling
+> mi2s_osr_clk or preparing mi2s_bit_clk fails?
 > 
-> of_lpass_cpu_parse_dai_data() sets drvdata->codec_dma_enable = 1 for any
-> RXTX, WSA, or VA Codec DMA DAI.  Because the hardware lpass-va-cdc-dma-lpm
-> region is 12 KiB (LPASS_VA_CDC_DMA_LPM_BUFF_SIZE), subtracting
-> LPASS_VA_CDC_DMA_LPM_BUFF_SIZE here even when no VA Codec DMA DAI is in DT
-> reduces va_cdc_dma_lpm_remain to 0, causing the LPASS_VA_CDC_LPM check
-> below to always fail with -EINVAL.
-
-Good catch will add the check for VA
-
-> 
->> +
->> +	if (!drvdata->mi2s_lpm_enable)
->> +		return 0;
->> +
->> +	for (port_id = 0; port_id < LPASS_MAX_MI2S_PORTS; port_id++) {
->> +		if (!test_bit(port_id, &drvdata->lpaif_port_enable))
->> +			continue;
->> +
->> +		switch (drvdata->mi2s_lpm[port_id]) {
->> +		case LPASS_RXTX_CDC_LPM:
->> +			if (rxtx_cdc_dma_lpm_remain < LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE)
->> +				return -EINVAL;
->> +			drvdata->mi2s_lpm_offset[port_id] = rxtx_cdc_dma_lpm_offset;
->> +			rxtx_cdc_dma_lpm_offset += LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +			rxtx_cdc_dma_lpm_remain -= LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +			break;
->> +		case LPASS_VA_CDC_LPM:
->> +			/*
->> +			 * VA Codec uses 12KiB, but MI2S uses 8KiB
->> +			 * Meaning only VA _or_ a single MI2S can be enabled
->> +			 */
->> +			if (va_cdc_dma_lpm_remain < LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE)
->> +				return -EINVAL;
->> +			drvdata->mi2s_lpm_offset[port_id] = va_cdc_dma_lpm_offset;
->> +			va_cdc_dma_lpm_offset += LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +			va_cdc_dma_lpm_remain -= LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
->> +			break;
-> 
-> [Severity: High]
-> Can rxtx_cdc_dma_lpm_remain and va_cdc_dma_lpm_remain underflow and assign
-> out-of-bounds LPM buffer offsets here?
-> 
-> Both cases check for LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE (8 KiB) remaining,
-> but then advance the offset and decrement the unsigned u32 remaining
-> counter by LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2 (16 KiB).  On a 12 KiB
-> lpass-va-cdc-dma-lpm region (0x3000 bytes), enabling one MI2S port on
-> LPASS_VA_CDC_LPM passes the < 0x2000 check and subtracts 0x4000, wrapping
-> va_cdc_dma_lpm_remain to 0xfffff000:
-> 
-> 1. If a second MI2S port on LPASS_VA_CDC_LPM is enabled (such as both
->     MI2S_QUATERNARY and MI2S_QUINARY), 0xfffff000 < 0x2000 is false, so it
->     is given an offset 16 KiB past the start of the 12 KiB VA LPM region.
-> 2. Even with a single MI2S port on LPASS_VA_CDC_LPM, a capture stream in
->     lpass_platform_prealloc_cdc_dma_buffer() is placed at
->     mi2s_lpm_offset[port_id] + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE (8 KiB ..
->     16 KiB), overflowing the 12 KiB VA LPM region by 4 KiB during
->     memremap(), mmap(), and DMA.
-> 3. The same u32 underflow occurs on LPASS_RXTX_CDC_LPM whenever 8 KiB
->     remains before subtracting 16 KiB.
+> Whendai->driver->ops->startup() returns an error, snd_soc_dai_startup() does
+> not mark the DAI as active, so snd_soc_dai_shutdown() will not call
+> lpass_cpu_daiops_shutdown() to release mem_clk.  In addition, neither
+> lpass_cpu_daiops_startup() nor lpass_cdc_dma_daiops_startup() checks the
+> return values of clk_set_rate() and clk_prepare_enable() on mem_clk, which can
+> leave LPM memory unclocked and cause an unbalanced clk_disable_unprepare() on
+> shutdown.
 > 
 
-Good catch, will check for LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE*2
+It _could_ happen, I copied the cdc-dma scheme, but since it's ina new file
+I'll add the checks to avoid that
+
