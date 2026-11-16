@@ -1,68 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.70.43.166
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794802361;
-	b=p0Ha/ryaWEZz0AqmMh6TYcaHNmNgEB9jM4OkOVUWjRu9wziQNlJPU2ZgxHIoM8AfXs/i
-	 PdJjan4ypkGLDWdlNs/3zz1X7oLb2t9B/oiNi+OTlTAHcAxqfK2ARjsj+RSoQfP0wbtTZ
-	 gWlyQdWuNeEapyUXVsYVsE4auaEshxWopjb5FiMFrfhRS/Lcc4l+KYifiTAgx3yVd36pd
-	 jorM+W0fZotxrzRcWFy/z/UMQIW4qjZHIXvvi+k9GUnBDMjNS4JwEBOuqHwPY91SjossR
-	 m4lS2P95FNYF6K+Ej4p3NoPsnFPflMQoT+RE9Vv9jnvJkSS36ruJKyFgqJpU9/CM2gQ==
+	t=1794802456;
+	b=T2y2BR+L+lTQ5bRD4sqLgGSamq9D1flYrCyGTDwOBfjZMHx+F81NdejLskqdA8q9F4gG
+	 hPky2bAt5nj7S3B3uyl8r4gkxilqNEq9jXwsrLRNO5E4LNLDFZZ0F/DvoxZPcGy16YIWw
+	 N+mXMF37c9FAFaQxRYLmtGHGLnhIo4ejTpxaEbgSTPxS6k9eaDoyJD9lPGwMo70QECfFo
+	 anhn4JC4bygkYUqCtNFgEjjxe3LlnI6xTlUXFqrcNGJErbge8QZsSmCM6vhBiFFZDTsDO
+	 Sl5sSEZVMQ3OyGeoBSqxFJ48RDWc1JU1bVfAH+xMNr0ah0gpwusGHEyV8QhAxAssE/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794802361;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:X-Scanned-By:
-	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Language:Content-Type:Content-Transfer-Encoding;
-	bh=cIOXJsKkfujK8YqYmSYGtdDO2Zvyg5r7CYxfom7uGLg=;
-	b=adpFW2Ftsv5nsEMkYCCDPthYxvRP7idfVJ/28idj0KsEzhxFLhKQ7BgjWUQ8ZVda7OA3
-	 KD3A4R1UUKMocNZUCv/Zvf+cMQK16QRQ8t7mQpK6mpoVsn7vK7XCqCqiCpfAZ4DTLlbXQ
-	 s0578f1GlLIrAsQl47m5Jjr2BGs1T5RlhZd6xQTAloE+KX/YjaWVVAlXNLpaOcCBXN0xp
-	 uIYsrUFOmdBHQeAL7i0HpKvN73jZdFnkbLcSFiUsTICfWrn+GpvXaomIksUmHfPuGnFai
-	 KTTA0qvO7RGomprTesZrAir4pOa1crM4qhekiEcqV81tfpf73mOIjUurw3bK61S1kpA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794802456;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=0LlGjstB+2ad5IwCtTQnged+IDJaQNnL05vB9kghvd8=;
+	b=0a8ZVwyog0/Z6dYtvlfukT7GyNKSxQjc85WKHriN641sH8YIHnXYkcGcj9OnwppXsifp
+	 BB09fm3iEmMDYu+YpAzC/fziOM9inBTr3ULzkzlbV7EdpOyTQ5ig/Jml9xfa/UIbOZErK
+	 FS2JjWDwdMwJ+rnC42hxEyqDEUcm54NHuhkoNvSPW2G2MM4S1LzegmPYmUs28a0fdhK9B
+	 W0B4bwN7VE0qAGP0wOXrhCcfvpAoUpmHE6QKAFR0NDn6nYsijenza1oli/rnhXQqsLof2
+	 FIQTH34Jv7XmupJgUBsfQI5qxV+K8TeeJu+gBdq8zGJt1vHrAfv2cnfyN4Cq3PzUwJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HdTmAhTo;
-	arc=none smtp.remote-ip=170.10.129.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	dmarc=pass header.from=proton.me;
+	spf=pass smtp.mailfrom=proton.me;
+	arc=none smtp.remote-ip=185.70.43.166
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A695606A88F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 04:12:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7A695606A88F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HdTmAhTo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1794802359;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cIOXJsKkfujK8YqYmSYGtdDO2Zvyg5r7CYxfom7uGLg=;
-	b=HdTmAhTo4E4Dfc2no8kW5V3wK56e0GkRD5enTDbF6ARvnJb9Z9oyG6EIcBaeYjb9bVQop1
-	AJXLx0bNKvjBW56/1mYf70J9oqchhjAsbkMKot2eCdYx1YXVKlbKeE8hu4bAFgp8Ppz2sY
-	tjyBDfy/Cwu7XOjWb/F2/dABklntKHk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-vuxP6cZaNCWs9ngZZIjZeQ-1; Sun,
- 15 Nov 2026 23:12:37 -0500
-X-MC-Unique: vuxP6cZaNCWs9ngZZIjZeQ-1
-X-Mimecast-MFC-AGG-ID: vuxP6cZaNCWs9ngZZIjZeQ_1794802356
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 213F518004E7;
-	Mon, 16 Nov 2026 04:12:36 +0000 (UTC)
-Received: from [100.91.18.181] (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
-	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id CF2511956089;
-	Mon, 16 Nov 2026 04:12:34 +0000 (UTC)
-Message-ID: <18ae65fb-430a-474d-a4d7-016871010488@redhat.com>
-Date: Sun, 15 Nov 2026 23:12:33 -0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5F0606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 04:14:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F5F0606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=mw5q6vjaafcppkx4ilqk7zbk4a.protonmail2; t=1794802452;
+	x=1795061652; bh=0LlGjstB+2ad5IwCtTQnged+IDJaQNnL05vB9kghvd8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=vmizbLrkBgZ23MxxDAjB04IIqPWqhuRA3v6uuomjx5cPe8Q6SFEXdMegym9ZByDJo
+	 JpLheFz6EZLIUH+1bGVHGEa7jplEMC+krzpeN2FIeKekMfqbpen6DMsuysSw7tOmnJ
+	 iiHWjxIOIo7DU870GLM5PypcNkodgGhyrPqDK0eAC27qfmwXgcf2u9fBd3JceIEG9T
+	 pdGOQaHCEkTfWXqzSxSvs44O0JDOhqnA57syR16M8ppWl7wfZznMyKgZHLTbRkmPSV
+	 yA633BFCRx3yMdq1PpzLoIWtE2nAuXuH5lcYXW2BDoTLvohcnJTiYNaKnie5ZR3fhz
+	 VCjQ0KVlZJyCA==
+Date: Mon, 16 Nov 2026 04:14:09 +0000
+To: sashiko-reviews@lists.linux.dev
+From: Nordschamane <nordschamane1@proton.me>
+Cc: linux-sound@vger.kernel.org
+Subject: Re: [PATCH RFC v3] ALSA: pci: add analog support for ESI MAYA44e
+Message-ID: <oJOrXMsjC6A5HCyFvdJu4ZSW7NU1wSd7DMn2BX-yg_dDQ2gMG82wIGy2s-eiuxM62rX1ZMdymM-4leQcQDHFwvg5Gz-D06D5ShiwsU9MkUY=@proton.me>
+In-Reply-To: <sashiko-outbox-209306@kernel.org>
+References: <20261111-codex-alsa-maya44e-v3-1-7977fb5a1b91@proton.me> <sashiko-outbox-209306@kernel.org>
+Feedback-ID: 234176850:user:proton
+X-Pm-Message-ID: 9afdbc537186f3d49379b094c80ce1cd592b9679
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,118 +61,38 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-next v4 3/6] cgroup/cpuset: Check remote partition
- underneath before making an invalid partition valid
-To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com,
- Chen Ridong <chenridong@huaweicloud.com>
-References: <20261116012330.2271010-1-longman@redhat.com>
- <20261116012330.2271010-4-longman@redhat.com>
- <sashiko-outbox-216011@kernel.org>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <sashiko-outbox-216011@kernel.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: LCZ_K5p_5Scp084XzeJB3GH4-Sd7PVcJgz07B1MLFpk_1794802356
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 11/15/26 8:48 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] cgroup/cpuset: newmask check in
->    update_parent_effective_cpumask() misses active remote partition
-> --
->
-> commit 957838c49c66e004ba9111067a9ab3098b2792cc
-> Author: Waiman Long <longman@redhat.com>
->
-> cgroup/cpuset: Check remote partition underneath before making an invalid partition valid
->
-> This commit checks whether an invalid local partition's effective_xcpus
-> overlap subpartitions_cpus before promoting it back to a valid partition
-> root, and requires effective_xcpus to be non-empty on transition.
->
-> Link: https://sashiko.dev/#/bug/linux-47715b89-d5fb-4731-b7c9-070773c6ff75
->
->> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
->> index 7e144beae1c8e..8b6dbc8e821e3 100644
->> --- a/kernel/cgroup/cpuset.c
->> +++ b/kernel/cgroup/cpuset.c
->> @@ -2035,11 +2035,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
->>   		 * tasks_nocpu_error() with this very mask, and a failing
->>   		 * write is routed to partcmd_invalidate instead.
->>   		 */
->> -		if (is_partition_invalid(cs)) {
->> -			adding = false;
->> -			deleting = cpumask_and(tmp->delmask,
->> -					newmask, parent->effective_xcpus);
->> -		} else {
->> +		if (is_partition_valid(cs)) {
->>   			cpumask_andnot(tmp->addmask, cs->effective_xcpus, newmask);
->>   			adding = cpumask_and(tmp->addmask, tmp->addmask,
->>   					     parent->effective_xcpus);
->> @@ -2047,6 +2043,17 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
->>   			cpumask_andnot(tmp->delmask, newmask, cs->effective_xcpus);
->>   			deleting = cpumask_and(tmp->delmask, tmp->delmask,
->>   					       parent->effective_xcpus);
->> +		} else {
->> +			deleting = cpumask_and(tmp->delmask,
->> +					newmask, parent->effective_xcpus);
->> +
->> +			/* Check if a remote partition may be underneath */
->> +			if ((parent == &top_cpuset) &&
->> +			    !cpumask_empty(cs->exclusive_cpus) &&
->> +			    cpumask_intersects(tmp->delmask, subpartitions_cpus)) {
->> +				part_error = PERR_REMOTE;
->> +				deleting = false;
->> +			}
->>   		}
-> [Severity: Medium]
-> Can this check miss an active descendant remote partition when newmask is
-> disjoint from cs->effective_xcpus?
->
-> In update_exclusive_cpumask(), partition_cpus_change() calls
-> update_parent_effective_cpumask() before cs->effective_xcpus is updated and
-> before update_cpumasks_hier() updates or invalidates the subtree:
->
-> kernel/cgroup/cpuset.c:update_exclusive_cpumask() {
->      ...
-> 	partition_cpus_change(cs, trialcs, &tmp);
->
-> 	spin_lock_irq(&callback_lock);
-> 	cpumask_copy(cs->exclusive_cpus, trialcs->exclusive_cpus);
-> 	cpumask_copy(cs->effective_xcpus, trialcs->effective_xcpus);
->      ...
-> 	if (is_partition_valid(cs) || force)
-> 		update_cpumasks_hier(cs, &tmp, force);
->      ...
-> }
->
-> At the time of this check, a remote partition underneath cs is still using
-> CPUs from cs's old effective_xcpus, not from newmask (tmp->delmask).  For
-> example, if child A1 has exclusive_cpus 3-4 and is an invalid partition
-> because grandchild A2 is a remote partition using 3-4, writing 1-2 to
-> A1/cpuset.cpus.exclusive produces tmp->delmask = 1-2, which does not
-> intersect subpartitions_cpus (3-4).
->
-> update_parent_effective_cpumask() then promotes A1 to PRS_ROOT while A2 is
-> still an active remote partition underneath it.  The subsequent pre-order
-> walk in update_cpumasks_hier() visits A1 before A2 and triggers
-> WARN_ON_ONCE(is_remote_partition(child)) in
-> compute_partition_effective_cpumask() (and if A2's user_xcpus() also
-> overlaps 1-2, WARN_ON_ONCE(cpumask_intersects(tmp->addmask,
-> subpartitions_cpus)) in remote_cpus_update()).
->
-> Checking cpumask_intersects(cs->effective_xcpus, subpartitions_cpus) as
-> well when newmask is set would catch a descendant remote partition still
-> holding CPUs from cs's old effective_xcpus.
+Thanks for the review.
 
-Good point. I will add this additional check in the next version.
+> Does the Signed-off-by trailer identify a known individual contributor as
+> required by Documentation/process/submitting-patches.rst for Developer
+> Certificate of Origin certification?
 
-Cheers,
-Longman
+Nordschamane is the public identity I use for this project. The email
+in the sign-off is where I can be reached. The kernel submission guide
+calls for a known identity. RFC v4 uses Nordschamane in MODULE_AUTHOR
+as well.
 
+> Does maya_rearm() treat an all-ones MMIO read (~0U) from an inaccessible
+> PCIe device as a completed DMA reset?
+
+Fixed in v4. Playback and capture both use maya_reset_dma(), which
+checks the MMIO read before testing the completion bit. An all-ones
+read returns -ENODEV and enters the fault path. A responsive engine
+that never sets the completion bit still returns -ETIMEDOUT.
+
+> Should maya_capture_ops set .reset =3D snd_pcm_lib_reset?
+
+Fixed in v4. Both directions use maya_pcm_reset(), which calls
+snd_pcm_lib_reset() and lets the ALSA core finish rebasing the pointers
+under the stream lock. The driver also excludes ALSA buffer copies
+on linked peers during prepare and reset, returning -EBUSY if a copy
+is already active.
+
+RFC v4
+https://lore.kernel.org/r/20261116-codex-alsa-maya44e-v4-1-381358afc43a@pro=
+ton.me
+
+Nordschamane
