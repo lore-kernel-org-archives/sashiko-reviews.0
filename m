@@ -1,56 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.246.84.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794835399;
-	b=2HS/VtyNcFXYdwJDFfRpYolNVmfgA88Yp3p4M5VI7e5xdh2jITkAncQEePKw5HAWrsb7
-	 yeXM7kWlH6BIHqKDcDAcx0Hdg61fUFBtoFDYFYc142Kl2oxcV9FnVhM6Yf60SClvAnrnY
-	 a3BPo8bk0bUuVbgHKE3e4OKLeUvk3RFIrLVkeUBSeivCAXubafXtZT/a+6MaN9jNKAomW
-	 LX3jYNJtkMAM8psHBn02QHRgrebCVfDcEusjiKiKnS+9yLIg1UkwiJlVUBsibk28rxPqI
-	 sKd/uSF3cKVFw6t5IWGQYU+p9VWppqs2yg/pb27rfVkGWmt42Oa0/sgxrosxrXc6dNQ==
+	t=1794837170;
+	b=k/Hft3LU41YJU2gT40yc4xpMHHhCF7JzVMEy4a/4l6DBudbE8mZTGl3me5UH89yDx3OQ
+	 xtCe3QPN5S4i0RNlzE1xIOFAab3bZpCn/jvhMXt4nWWaot0Ew4CB6NBB9AWDlb/WQ3TZy
+	 xfGzdfEG31Zr1J45OlBzHvU9l4vlLTwiKvPFUbouNYTV8P7acj4yv/+UC5IEtjfCV/lqA
+	 vaSV+HyiN/e3DUbt6w2sj2WjciuZ6en8XiESWtoW01ib18Bt2CeOab4hOVEJAbTbSigyy
+	 /V7LU090N5rixYWqRAklhwz6ahJioNCcRCG9msY3Hl0qYkRHbYQyQmy//JHdTUVWYjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794835399;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=ugeAAa5F7S8jo7o22VRNVHZRCEghXnRG4QSs0z+gWeQ=;
-	b=JUD/V9Sg/tO5OYWxUCRtZDdAdNnTsonbh4mlQVLnR51U2vc807qECO+ZSen5OZid6VrV
-	 E6JbEERKrHM0J2bt6sb6zd0Yc+DKkWIOIL8QGRwFWrLjKmc5vJ3qOY8iT2kQdo621yqfS
-	 ZSaymC2MAT/KZnVKRd2b/HHMg8j9Dpv8fjz/c4Xqe9U3i4gzfsTPRdqPIwMapVo+IqxES
-	 Z2p0fUAseFZ2z6zerUMhhlmvAoJDuWE2NwgCJwUKWTGXuQ7/s8E0KRxPrLDTAHcb4tqMj
-	 AP2JOuQ8NG7nAy3+h8LPPP2g1WF1UcDpQJkUcRAKXrHgJpehnm9SyTombCSmD68Ergg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794837170;
+	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
+	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-Last-TLS-Session-Version;
+	bh=kItaQQWrnsLmpfYQZnmo5ZKiXXzLU/di5P/nGlEMeeU=;
+	b=niG/+3mCu/Jwt4k9Z+Q2XbU7DENNKW1UsTQzUkCxdhwRS26LkSHdtGPAChZYN/VHH0U8
+	 X+v+QCqriS7j1z9vSITCLVz9k3NNTR8VTQVjHOjZRmjgMhlM232BOcVwjSkhoDjcDNETi
+	 ZdlKCAEX/aYyKiU3ueUDETTSuXxK158i4ntleDWPFQDpE6oedVwrHBBrhPj3ch4oOGfU+
+	 iLakvOod1Z7GJtatM3BJEypSc+Aj6i54uqPDKhX9g2Gjnjbtl5hW4DnUfjq5VKk3yoRPv
+	 PXcEmne0I/3uC1WhKr/Wri8rTnhLUjSenEIL5ZrlIQlM64LoxzR0HIIf9AkMPFp03CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YVdhpRk4;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=bootlin.com;
+	spf=pass smtp.mailfrom=bootlin.com;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=p22FMlTG;
+	arc=none smtp.remote-ip=185.246.84.56
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187D1606A31C;
-	Mon, 16 Nov 2026 13:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23BB606A329;
+	Mon, 16 Nov 2026 13:52:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F23BB606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YVdhpRk4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD1F1F000C4;
-	Mon, 16 Nov 2026 13:23:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794835398;
-	bh=ugeAAa5F7S8jo7o22VRNVHZRCEghXnRG4QSs0z+gWeQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YVdhpRk49/rwmMkR2Jud38KOYWBE8eCd8fYpApx6gg7JhlrTG+NmRdk+94MetwqgH
-	 NZGwa2e8anIBp0KxnE0LOtT8/RmP6GjIZSLksjgDdD/Wwj2BtfDbH+Vz0MgPndNK7Q
-	 x9jdZYmPYLBNvm5CgAdHMugjPsk+7Pv12AtWVwAZi+19j04TzVA3F1oE6N1kNd/7tO
-	 tOhQLWtGwQ6BS8LceKUuBTeirwIN85EAfRv/JLP+ilx8md+ACPvUE0/WwefbgPgkoQ
-	 1BQQ/U8W8pdcpoRKzwoWXaA0FKUm5hVBA5xnNnD7EK7K7McdqkITK4A6oHdbmISsNt
-	 B2L5Ae5AFK0tA==
-Date: Mon, 16 Nov 2026 14:23:14 +0100
-From: Christian Brauner <brauner@kernel.org>
-To: sashiko-reviews@lists.linux.dev, Christoph Hellwig <hch@lst.de>
-Cc: linux-nvme@lists.infradead.org, linux-scsi@vger.kernel.org, 
-	target-devel@vger.kernel.org, bpf@vger.kernel.org, Chuck Lever <cel@kernel.org>, 
-	Jeff Layton <jlayton@kernel.org>, Anna Schumaker <anna@kernel.org>
-Subject: Re: [PATCH v2 02/17] fs: add kiocb_write_iter() and
- kiocb_end_write_iter()
-Message-ID: <20261116-windungen-freuden-zander-0e6ef798e54c@brauner>
-References: <20261116-work-fs-frozen_writes-v2-0-ecc4a2aac40e@kernel.org>
- <20261116-work-fs-frozen_writes-v2-2-ecc4a2aac40e@kernel.org>
- <sashiko-outbox-216937@kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=p22FMlTG
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 9FFA01A168D;
+	Mon, 16 Nov 2026 13:52:48 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 6DD936023F;
+	Mon, 16 Nov 2026 13:52:48 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4A21C11BC051A;
+	Mon, 16 Nov 2026 14:52:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1794837167; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=kItaQQWrnsLmpfYQZnmo5ZKiXXzLU/di5P/nGlEMeeU=;
+	b=p22FMlTGS83GiD4ReWdtyZdg8MKbu7uh94nYkuVts6IkcBtP2fWLcHhnSCwAXjAxfltMB+
+	DJN/G2iok11zFHQ0icO+riMgR0dtWZMMZTjCco5ac/7fB+3KfRR1WAhv1spJauE3/RSFip
+	y/p8h0El8GcLHOurQFRaw8QZwk03lZlI5DX0lQYXvylYbmZmdoIm8WNO1JrXPElG3Ovog7
+	vx2QCUOLuexHBng2MTzRVTzMZFFNH1chgnwtAvHVdNiCZoefi33/iS0sgHvJJpxRXdCTxw
+	HnO1JPIfYNBt3md2EqSf5CKZ0ZqnThr+xCy2b9bJbeuxa9gct7Mo3wlzD9VQ4A==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: "Samarth Narang" <samarth.colleges@gmail.com>,  "Han Xu"
+ <han.xu@nxp.com>,  "Vignesh Raghavendra" <vigneshr@ti.com>,
+  sashiko-reviews@lists.linux.dev,  "Richard Weinberger" <richard@nod.at>,
+  imx@lists.linux.dev,  linux-mtd@lists.infradead.org,  Frank.Li@kernel.org
+Subject: Re: [PATCH v2] mtd: rawnand: gpmi: terminate the DMA chain on
+ completion timeout
+In-Reply-To: <sashiko-outbox-191156@kernel.org> (sashiko-bot@kernel.org's
+	message of "Fri, 30 Oct 2026 15:20:32 +0000")
+References: <20261030150929.2944717-1-samarth.colleges@gmail.com>
+	<sashiko-outbox-191156@kernel.org>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Mon, 16 Nov 2026 14:52:44 +0100
+Message-ID: <87pkw4sx1v.fsf@bootlin.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,29 +76,20 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-216937@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, Nov 16, 2026 at 11:30:59AM +0000, sashiko-bot@kernel.org wrote:
-> Should kiocb_write_iter() check S_ISREG(file_inode(iocb->ki_filp)->i_mode)
-> before taking freeze protection and setting IOCB_WRITE, the way
-> file_start_write(), aio_write() and io_kiocb_start_write() do?
+On 30/10/2026 at 15:20:32 GMT, sashiko-bot@kernel.org wrote:
 
-Eeew, no. That check alone would bring the bug back for these drivers.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] mtd: rawnand: gpmi: unsynchronized DMA termination in
+> gpmi_nfc_exec_op()
 
-blkdev_write_iter() calls file_update_time() which dirties the device
-node's inode on the filesystem the node lives on. And write(2) on such a
-node modifies a frozen filesystem today for the same reason.
+Sashiko complaint looks legitimate, since you haven't actually run into
+that problem, I believe the fix is incorrect on this platform and
+therefore a DMA patch must be sent first. I will drop this patch, please
+resend once the DMA part fixed.
 
-For FIFOs we skip the time update on a frozen filesystem instead of
-blocking (cf. 7e775f46a125f ("fs/pipe.c: skip file_update_time on frozen
-fs")). If we change file_update_time() to do that for all special files
-then kiocb_write_iter() can take the S_ISREG() check.
-
-> Without an S_ISREG() check, writes to a block device node whose hosting
-> filesystem is frozen will block in sb_start_write() (or fail with -EAGAIN for
-> IOCB_NOWAIT), and will deadlock if that filesystem is mounted on or
-> flushing through the virtual block device during freeze_super().
-
-That can't happen. The node is opened when the device is set up so its
-filesystem can't be mounted on that device.
+Thanks,
+Miqu=C3=A8l
