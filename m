@@ -1,91 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.217
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794848414;
-	b=p234/dQpniRmewXJQgONuYkY65N+9wmlYd8vwF6GrdZcnMRIj3K6HRVWO2vMy00unZI2
-	 HbZRlONAYk3BdilSedgF8Try9+V+Xv+yw4kkcDyUwf9MEeI6mHPO88VBP2zNMprjpd3+F
-	 g9f1KSDdBvn55qCu8mde/LMMs+GHtklCxsbRJlw//C6ToSjEulMuzP2DBrS0YZP2fnaGm
-	 ctdf+wnoq/5uwK3VCKa+IOvdyRDDdDHjrn4V4L/ERHLoN5tXAAbutBWK6o5TComSjW9I8
-	 mLhwM3Nel0A2oBktnJxh23UF8uTQdMLylOGcEe+CGuB/gFUpUl+1pCQFbJ7xtL1kq3g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794848414;
-	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
-	b=idMpp8R0hyTnAzpSVp9BQnl6r0fBKX+02dHqcqmVcujD14uX6oEQuMrnZoCsGdf1FtUr
-	 oo968l+VWA2nphhR2JGFz1Cno0tepJoxKbm7Whjx3KlOou+gEhTzb91/6CPEmsG1lAqtf
-	 UGGtHfruzLyv/DTbREPOhq6m5UiJMNAfh0JYwZcD8rN+UGiHJdYFsiR3he+33GhKhElbv
-	 EVFyE4Rc6csOgLTbm3YC/ZdccI1exffyUwrslBM3yWZ4fs8IxOyYwv9IdLo4dbgj+Fl9U
-	 q1mIp+PDeDYuJR8m32ntdOL9k+2tkfIc3t8UAFsPM1tesdDm7iyWwNvy0P6byPKn9+g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=hartkopp.net;
-	spf=fail smtp.mailfrom=hartkopp.net;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=lVu7xIPZ;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=XtU4Vvlf;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.217
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.217])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794848590;
+	b=HqOzHRHavriZu36H/nDJrsOpRgSov7ruObjwQKDHX2iV6igZkQ48IcvZf3CnZoL84+RV
+	 vESNsZTV2+h6N4fJdO8fq1PTc/QvrP/f6Ve2W5aZd3c2PgKAAvOPi0NotDoABarVH5qkj
+	 U2ZJ/NoO0JQ3LHILBp+Rozv2EPxaySsiPxN/UBLpIFTl7ykKE9WmvCiLg2r+CtbcnZ2tA
+	 iGGVxaRnKzAP5mezIALZfQ6hFjXJOLQcR/DcDNSpFNZfMGtoGK2vGWbKy453amAPq/S6q
+	 EEx3F5AyAQQfe/bEd+VOAZewUNUiqgep20vFpnXKnKQh+fwgj9sBtXwI/ZzLMwmUszw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794848590;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id:X-Mailer;
+	bh=dErzLNRvBxXtOvVGiON0ydSBhI6280GOhN51Vz31A/Y=;
+	b=IPxWgRj3Ff472tgzOtKgfAgKPlJqgWesrgAMW2kPTo2nY6JjTTk7ict/vWZ50TyeD318
+	 1FedSnQdQ2c1Fw0vDkWNBGJ6d260wa9Spor068UEPt1gvE3ww3te/sbT5loKLs2nl42TU
+	 wqU8ui71thn3TIOIe+Be8R6jKi6pXZ1AxBJc0kKlHc+v3e5dIJyHxoNtl6xsIBD6Od+62
+	 VTkRn4rAAKGcc0GE+kYIEuc7W6OKNlv7BuaLd2cqKE8CQ5WPt2OFiZug08iZ3EIf2kamt
+	 mCp6kBC7G41TAwAF4AZC57GnE+p0WG8KqLvqCCZ6v3poBlWk4E3ZxTcE2fiVgl3QGyA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hq64r+hS;
+	arc=none smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED2D606A329
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 17:00:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BED2D606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4EF606A884
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 17:03:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E4EF606A884
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=lVu7xIPZ;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=XtU4Vvlf
-ARC-Seal: i=1; a=rsa-sha256; t=1794848393; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=fPhBdYt2L8/a/8G8mLG6pD7S4G35DfsjUI7A98FlEqI1fcr+B3WtXVgEvCPwcxH1F5
-    qxkeE0/OJreneJvRcrhWNyqsxNefWSbTD0siqsKeegZhK6EwdgyxQO3jfbkVVfSh7d22
-    yAmW06Zz5NgUHHQe+hL5Nmr2Wey9Uyz4hkgJpZLiVSTZcRCXiS5QbmJR7d44l9z5Q7p2
-    UE1A1LF6IA2U0rtUh+Hir+I2BQ+5QFKnZQYnbq8kFdtGFzu76QkQMVmiiX5gR4foLdJG
-    Q67q305LqKvj3m7jnqznzkxT8wnLLble8ZK1NFbBUpS6lPlEcgERHfs0J7YBshME7s3m
-    7KzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794848393;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
-    b=BxjH6ZjwtyybCpOUAjn8BnJSWqJuP/IRPEuVzKeXZ+j06B/YtzeLFXXz/ssd5NRHUR
-    8rPmrkYZiT5TBb46FYBJwt4Zm6y+LwhNcfthGEGsI/t5Nl0SUZ2eyuc1WS8pyMb446cn
-    qUGtBW7D8ecJu0kdeDvSQSAVhPIO4uDTnglaPC+2CK+fsSRNluVfqeSDiLnCOsbfL9OH
-    /67AtwnMA7AdleJLT3fkinZaa9SiAf8o2kRA2fQZmZx40YIu6C7PyiQOeHjn+Vld63fl
-    8zRYWJS/3Hf4TtxeKFC6ZIAq6dK5j3CezUdgfGD5YmeCTeqjzip+HaCJKrlfhLaYQHqf
-    IY5w==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794848393;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
-    b=lVu7xIPZWfo4MiM4xQNJdAFIENMsbvBgNJ8e+ZTWok2448iBvkCjEpLC2xZiACRg5M
-    q1YEEWJC7RDlwRhYLuY2ey9I925C5Lc36xGQm06Blre5Yk/fq8MkkNVm3SMzDE01bWBy
-    fPCNCZtHX1z1lzlX7eyf0xq6pSeZPCMpGdNEkXNzoM3tX7sjhgr2eOvYuHCAhhQikX5W
-    qW7qnk7sWGsFt4lSfQQ9OcN7G7Cr1icHNgBYjpkT/cKKAh6U+YLvD3roY94YmPWGHXSl
-    II7hn6oU13rU1QYC1oB1IDa2m2jCT19qeha5CniDVcC1GVuSxXxGA98B1W+ec7A1KvQU
-    Tv3A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794848393;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
-    b=XtU4VvlfhrGWDIIM0/fqsg5l6NT2A4TuFnOqZ5jUi+WkMfcwLg5De21ZJZPTdU86T4
-    6SCJs/P0d/+kwzhqLXDg==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.6.3 AUTH)
-    with ESMTPSA id Kfdf2a2AGGxqIoZ
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Mon, 16 Nov 2026 17:59:52 +0100 (CET)
-Message-ID: <df95ffcf-c6e6-4dbc-bbab-7749ce93ea86@hartkopp.net>
-Date: Mon, 16 Nov 2026 17:59:47 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hq64r+hS
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-37628596783so6166615eec.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 09:03:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794848585; x=1795453385; darn=lists.linux.dev;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=dErzLNRvBxXtOvVGiON0ydSBhI6280GOhN51Vz31A/Y=;
+        b=Hq64r+hS74ZuwqDf0vFHJoamAzx31lpuCcy203Ti0R0GHqvqYvGBIHeRahDShD2OPJ
+         0DlYtDQ1xD8DsuSltWW4iJlCcet+cBV7zaW+mlzFgzrAMbPFmWCGczKpGiyjAa4u5x06
+         6/68Gq0ZaPOeQiMUWFPOdxZghLs+SVRLaEYJ5Q+BGx2RM4sFGSPD3x4QPPLPqi+rmid3
+         fE6pFd4EcJxv7ZIfe5NeIn4D/ROtLz2YXsaDT3DfDl3je/TNzLXGM7gM3LqSHmKloghi
+         kVNPbf8Xc5VW0rk+qt2Jt/OvAfKCTyXwXjmgMzQguhpqzlJEMH8w2PLXu3izkPPNzunr
+         Sbyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794848585; x=1795453385;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dErzLNRvBxXtOvVGiON0ydSBhI6280GOhN51Vz31A/Y=;
+        b=q2qPSsA7eoyNADb+KSfaUWws4hmw5Ek+ZYKYc/d6WkSY2M/2wIPLxw9n8o7N+WX4Z/
+         J7L3sS0BZEAkEzJ6gf+h5vdgKfkyZx32jQq4P067PPvXJfkivjTCh1WsYL/ZTD1qTVUZ
+         UH0sog8toBYukPrizyVGE0uyUCflNj+1BVPuizCdKC7VOalfR5on9TckGXd85MqzhYxN
+         B9HOcmw+JIjT4MUD91Fz00jF7NzqZIgC/qDTAINyOScey6T2iby+UL8LXB0tz9G24an6
+         IZN/bkX67dk6HjF8k/vvQ1Nhibix2K1iO7JB3HxW4E51Z7BuFVsQ/gtEepQRQFASz1yB
+         P9Kw==
+X-Gm-Message-State: APuU4Z9Fh/DXQyDFYedtEjVNGW6EQ7vo3a9DEa5sDmRqFn3UYIMosEXj
+	pShlTUvVOLNrkD48qsnXCzy1aCmXQKw5Roj84v11O85G3mDcFXTja+256TpzhfcF
+X-Gm-Gg: AYBFou3bMzubTObgfKzZIKnEdlit/WLMr3tYISfwv8Bo4mdj4pEx6UkbxlI9KbrQeUB
+	Uz3mX7ghkwz3N3Mgm9ZJv66x40EXshzUOGjQGzsOnWKllqwJ9bYeMWsF6gbWNmT0K8/W12mKWka
+	TjyPP3U8GPxYMqK6ah6H9bgsSkbSMcX0k1vjZgjvRPu+rpVjF0oKz3vqEiGLUCKeWM+iue8yYFC
+	lZITvO0CMyibEbEMGU/T5Wl8hSRTx8B9AslRpNcVoj82B9IAdxIp53hBqvStg6tcTC+FZFAT2g5
+	M5ZNoz3INitD3cn+ps6dTvkRaK1T3bXalBjuiO4sPh+lxoz4ifKTfHVbMwmItZ1nnBQKddYVuo9
+	UXtsIIOj2Oa1WnQloIdW/xpetu4fzVv1AZt/4mt0EwSDUrWvaYN20lHGVgA+d/bLLvrJ7Gp+kUN
+	bWayx0VapcubW8mQ3UGRmaz6fDZPdYDSm2hTbO9GJJRBAxJS/1itV4WjA/vgQLkjX2hUDhp35iK
+	OOWkmCzgdSYIC+qtzDo4vT09gaNWhi/us9SvA1Z/ZvogDbaZAUNjldRp9iXqCQM3VUYBDGs7/5J
+	cM/7CrCYlri+uLV/MVuZztdJLwGHQSvk5Fnu
+X-Received: by 2002:a05:7300:6da8:b0:36f:14ef:ad08 with SMTP id 5a478bee46e88-37965abb5bbmr13878650eec.9.1794848585025;
+        Mon, 16 Nov 2026 09:03:05 -0800 (PST)
+Received: from [192.168.29.85] ([2405:201:8026:213e:e2c9:cd5e:3a2c:ae0])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37955a1c5c2sm36363384eec.14.2026.11.16.09.03.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Nov 2026 09:03:04 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,65 +87,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net 6/9] can: isotp: use a private mutex instead of
- lock_sock()
-To: sashiko-reviews@lists.linux.dev, Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: linux-can@vger.kernel.org, Vincent Mailhol <mailhol@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>
-References: <20261115095746.709371-1-mkl@pengutronix.de>
- <20261115095746.709371-7-mkl@pengutronix.de>
- <sashiko-outbox-216678@kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <sashiko-outbox-216678@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] scsi: be2iscsi: Fix NULL pointer dereference in memory
+ cleanup
+From: mdshahid03@gmail.com
+To: sashiko-reviews@lists.linux.dev
+Cc: mdshahid03@gmail.com, linux-scsi@vger.kernel.org
+In-Reply-To: <sashiko-outbox-202780@kernel.org>
+References: <20261107093611.42311-1-mdshahid03@gmail.com>
+ <sashiko-outbox-202780@kernel.org>
+Date: Mon, 16 Nov 2026 22:32:39 +0530
+Message-Id: <179484855979.18018.6059499367901614954.b4-reply@b4>
+X-Mailer: b4 0.16.0
 
-On 16.11.26 10:58, sashiko-bot@kernel.org wrote:
+Hi ,
 
-> This problem wasn't introduced by this patch, but can
-> isotp_setsockopt_locked() [1] modify socket options while an ISO-TP
-> transfer is still active after NETDEV_UNREGISTER?
+Could you please review and give your feedback ,when time permits.
 
-(..)
-> Should isotp_setsockopt_locked() also check that so->tx.state and
- > so->rx.state are ISOTP_IDLE?
+Thanks
+Shahid.
 
-Yes, this is a valid finding and the suggested check is the right
-approach.
-
-isotp_setsockopt_locked() only checks so->bound, which is cleared by
-isotp_notify() while a transfer may still be draining. isotp_bind()
-already rejects a new binding in this state by checking so->tx.state
-and so->rx.state for ISOTP_IDLE, and isotp_setsockopt_locked() needs
-the same check as suggested:
-
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 8229b6a69e..4644a1533a 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1721,6 +1721,14 @@ static int isotp_setsockopt_locked(struct socket 
-*sock, int optname,
-  	if (so->bound)
-  		return -EISCONN;
-
-+	/* A transmission or reception that outlived a previous binding
-+	 * (unbound by NETDEV_UNREGISTER) may still be draining and uses the
-+	 * socket options, see isotp_bind().
-+	 */
-+	if (READ_ONCE(so->tx.state) != ISOTP_IDLE ||
-+	    READ_ONCE(so->rx.state) != ISOTP_IDLE)
-+		return -EAGAIN;
-+
-
-
-As this is a pre-existing issue that is not related to the lock
-replacement in this patch, I will send it as a separate patch.
-
-Best regards,
-Oliver
-
-> [1] https://sashiko.dev/#/bug/linux-d1d3ef49-c24e-4f3a-91ce-20f8fb222684
+On 2026-11-07 09:43 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] scsi: be2iscsi: missing Fixes trailer in commit message for
+>   beiscsi_alloc_mem()
+> --
 > 
+> commit 3a59c9fd50bd58745d465b3451671b988442c55a
+> Author: Mohammad Shahid <mdshahid03@gmail.com>
+> 
+> > scsi: be2iscsi: Fix NULL pointer dereference in memory cleanup
+> >
+> > During memory allocation ,DMA memory may be allocated successfully
+> > before the descriptor array allocation fails.
+> >
+> > In this case ,mem_descr->mem_array is NULL,but cleanup path tries
+> > to access it.
+> >
+> > Use mem_arr_orig to free the DMA allocation of the current
+> > descriptor and handle previously allocated descriptors separately.
+> >
+> > Signed-off-by: Mohammad Shahid <mdshahid03@gmail.com>
+> 
+> [Severity: Low]
+> Since this fixes the error cleanup loop in beiscsi_alloc_mem() from the
+> initial driver commit, should the commit message include:
+> 
+>   Fixes: 6733b39a1301 ("[SCSI] be2iscsi: add 10Gbps iSCSI - BladeEngine 2 driver")
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261107093611.42311-1-mdshahid03@gmail.com?part=1
+> 
+> 
+
 
