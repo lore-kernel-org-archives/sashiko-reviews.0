@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794825084;
-	b=fyyyhDq0X1Y64PPD92jiTtyQrOecQ9LSl9l0tloggqjWvTB9/I6XvY0XHYnp473LqoWF
-	 013BlGYpJVV9RNtQU2kqz/reTmoRnoZ2bIRaWj9FLA8e1sWPT8RIWHFOPChZypIGVzje4
-	 zu3TIJ3iJe3ny0rPyixGbO7eCEoCVlytuHZZsbB50Dkh8+jOyVgrd6dQdfl69xpt/G0m4
-	 vIurrKJtfQx4OXR6r+4UMuUgy/6rzHA3gDa4nAZ0kj7yWZER9IGi6yDQu4hEkSQvA610p
-	 Oj2XY84dekRRDZUKCSguVBM5EN3FfuhT+BsdxxJb/znl9stfwY7vwMF1OzbN7OJM7KA==
+	t=1794825466;
+	b=fhnxD2YtyNCYfpC95tVsuQlCvbMWgQT0nHH9Nc5+h5tX3UU9+0KPDDPDGXLCQ2u0CWoV
+	 8xbArOSUeOHwBsaAotVIUM8HS3OIxp70ioLxKboWkJQIsp0yqoNdgXsizy8UBKx4mSg5g
+	 Y+J5MTCk8nvaiLAE0pKC8H69R18gS6JIwNwZ8ysDrQ3nve26kypNN+ApORFAADXUBkoX+
+	 ovmM/lI9nIkrVcdoZu63N6Da3t3GHAwnEoeo4SyTklGNuSYophoKdlNKznyzwqV4iTfQf
+	 tTmv5GIvtMHuAqdcYlvnjMedEVGlL2kQ8UJTWpU/vafNmaC0LvtT+mNshF5w6KSYOqA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794825084;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794825466;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=on1qfLbYc0jQwqPKmmXQjUDE4j0AQGRCChaGNO7XJfw=;
-	b=kHaX4c5rYBvFAYSiWUGbrDhbF33yUKoBBWVzTWtoyo90BwnMbLRs/21c23dKK9Kh7SRq
-	 01bJ6H3zFul6EDhVguVvey5HZ1qH96TrJZnbgE7D43mK+FyoX0t4ODkMbv50WYFBPom4l
-	 pb9wtfhdz6+ug3W7disjyHXBjuaNDLgd/Di1chRewvEHsJ+48epcS1d+MRFIc3+tLzu4z
-	 rDx04ePkYkHCAnrAjObhXKH5WyA1chCP1tJ6kkNlu1we/pqm2AYKcTSW38hyilHHbHfLj
-	 d4n+9YWhHoGFIZtJQcK6JzNSgutObjQcbZmir639Xns2hx4/8lHrFjWfj8HYAOm14WQ==
+	bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
+	b=iseEp9oYeWtVHFIS8J7UvUPot7Wcq+/WO0J1znLaGIJ5R7SDaqUtD7aTEI0JClLw0KCC
+	 OR7vBGDS1bpVAdcgijhHE6Kh+RzFGqqGg1eF8/7suAQh0JXKO+ZFVkvtc0XV4Q1RYn903
+	 ntn428uoQFma4WjP9CK/THE6paLG3LMhCp4TY5nFGIfvT2oLDYsL3O1DrsM075eAMzh2b
+	 06NP8HxoGVsJ1O0MgHUdzFfEW2xBrHFQchBASeOaY+VImPk8H7I+hLdZw1LOYBHF1xEbJ
+	 jFzBtj70/+ff5sq7bgH5pL4218UBiY31Hv82BpBx8Yny0S3XKkFxrRsiK6eGQAoGn3g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VU0ZIw3y;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.178
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="D/8q5qCc";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2E3606A884
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 10:31:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C2E3606A884
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F179F606A33B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 10:37:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F179F606A33B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VU0ZIw3y
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5364d86f7f0so14185811cf.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 02:31:23 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794825082; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D/8q5qCc
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-55d03bfd477so19057701cf.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 02:37:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794825465; cv=none;
         d=google.com; s=arc-20260327;
-        b=Uvkp6cbEWLd/Xzay4yFz+W/2cBUEarxkXh5OjcVHgxs/zOB7sw23tGpkmbeBxUlpRJ
-         ugkb1q/xJ9OSHiSr2SHq/Lw0NB5eIs59bSKd/wRtur/38S54hZ7bfc61FluT/pDbBn7b
-         tFoa2c2pYl/LohJBgEikneBni4XD703WniRYjYcYTrtOthv5vBtxhp+vqFRvkIkeFz65
-         kLMvNHzKtmfihpDLiFyvjRxH0DVvNDwt5L2DBbPkwjmVh1Diwix0a4Db5JVKZZ8cLRVI
-         j567vz3oi79ujO52LV+KXdl3OLhzyEtLIdtf5T4rxrtw0VHX4rhz3YEv4dj6Wg9gqWVs
-         wlTA==
+        b=YdVc8edH9ONS68SOZ7cIv39GIZvNtGTXDA/9Wvc2OySJjkFeNVVB0ZeRmUk187h3t+
+         IhViPUOQNiHEy0FGCFR2HwtkwkZ0oUOCvzh+PACHjnl5zEOHQ5gc0xWw/boZgoYt24ls
+         2xRny4qdOBXyUa0c/Xy/9oALgz0rXXn00my6SQlNpwxOz2JKaTugwNONXIQJ8uxzSpCM
+         U/Jwwjh8bFvX33+Nl+xz5UjpEH/G9Kuq9WoIFDzda/oIXcztadgz1UCvj/LMJMdXxdeA
+         oR1+UxKNJQJcZihvfSqhyfyf0oWjwUB2xt6e47rS+w4px9loVI7gfa8wxzxUoPTAUcfU
+         /YnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=on1qfLbYc0jQwqPKmmXQjUDE4j0AQGRCChaGNO7XJfw=;
+        bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
         fh=5atlI6N4DqhDJ/kROOWZt6Ol/QVkwus/c/CVt4iaZ0I=;
-        b=fkt1y5Wgz9fRbmDzfJanqcWwRf+GfhT1kXAb/pQuxGqovM3h3nNDNKFtSipsU8QcqD
-         8kI8/Rw+FVbD8dGYC3SWsgkqDcnZ3N+mJGSS5Yj7pcQ5Rp2QxP0Abvu0pYheYj+ketrX
-         wz3r8LA/LlVydRtNc6ujga/C/TgEv2iUB5aVH2US8o+bVUNfLq7F+wBYYib3qlsRqh5I
-         6Zl5xTliCVwVNJA0VzbhfmYXJ/Ea6O7TEnt2L8onoJJWEwhWjeXYabR38j8IJdd+LK8J
-         eo5NjtsLIc2qwndWHGWTRsAVRvtBE9bfJhsrWAKfiGrWmTQ0K/0449Fs9/karWiGjxD+
-         M6cg==;
+        b=EdM5mpcjZ2s1Ks1TrESsxt1E8fpxEKVPYpVsf4M54kPlSO2fbeVwlv2f4VVccNbhbP
+         vP0ErQxmkgJjetG3CU83hBy7bTSmMODBNrrL/8FZ8OnVb7b1Jdqbsym21tPJc32pMNp4
+         OWB97pw6HBSFNsIQVTtm+zLCEtW0CS95E2GKNDE5Q4HpD13inkKFORWNkDfPomCiu7PO
+         WQCaw/7D/knW1+2b97k/Ael6PdIh1A5xsP7VUd10Bfu0MnVpjQmY7ou6bXszPiPEAoCs
+         4owbKdQbZFH86zvjMmI+GiL0N93qTj034aRBLR8xZ+3+fmlRmpzAE6zK8buyVkbplNQr
+         2XzA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794825082; x=1795429882; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794825465; x=1795430265; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=on1qfLbYc0jQwqPKmmXQjUDE4j0AQGRCChaGNO7XJfw=;
-        b=VU0ZIw3y7Wbs73drioG7Epz4j38enYzJ+j1BDTUd6oGPm5JH0D9Vp/2NhxcNf5YtQc
-         8U0Gu7nW0ZXSadms/Ei7NxyvV0UnBG9UMoJaGKKm+9QVmrJi4+VyOyez4UvUONJTt1vl
-         81SjpK+q1DhyJQna9/KB89Zli9pKh4HRu9jJaTLEP9wSY+okpUf9xDbeKe3LlKFDQMwG
-         sV0pemhUIqNEE1GBmKjOUsjzPbawZc8tjXbFcGKG1NVSGqvoGXdVYyVTf5UQpuVTH/mV
-         1WaeG6nHDtBmFXasUd4bfGzXzP+9wK+LKI8KrR0PsjCeSvHl84Oug0waVwKoSf/z0abO
-         vWYw==
+        bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
+        b=D/8q5qCcp5MCpSlgZ4D+dTvsSc0Yb5HD4JIzP3b9R8Sm9eK1TYar8tCvSLvJURwH/N
+         hE+C1t5PGINmWLrBNfgUVce/vG2gYHbhDQiVmdTH5vRSwzpa/zPSd20Zsp1UvKDICHA4
+         lG2csVDcn0akTUP7RuvCIl69asxIt9rP0nuBIWgy2ZNo3n8jfkeO+NjxDBMFIfjG2JrO
+         aLt4UkOgZnJ3hIVbCQGUZdVj2SqvMW2C8GF2ahDypndAXlKz7Ttg/bdMGyyc2P7UrEh6
+         y6aOn6dMA4PwL5GAVhM/HMcmJpREODIRjst/1OHi4pc0MKHgWIzBvAKuIXPPcGKHmc48
+         FpcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794825082; x=1795429882;
+        d=1e100.net; s=20260707; t=1794825465; x=1795430265;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=on1qfLbYc0jQwqPKmmXQjUDE4j0AQGRCChaGNO7XJfw=;
-        b=E/iQFF96sBinJ8PCRM9lwgb317A6pRWBHlSSYVqigF5mohPIGT7uL8ldWWD1ElV4ub
-         4Uf1+JaIkK3dxjmuo5PffTo8m6jtvf4iTegVzaJGlElCQSychN7UQIBPSnOUenFHsg6z
-         6eQN1pmdmMhIxPHqtbqUQUKYmVPLJ0BVZfDmu8NieLBQ/NpL+Oh/M4wkzkvN2YhfL0DX
-         5Aswlhw7/idl/O8fQBStytsWCfXsBCfIGd86NlxRNtcftHmZVgzCBVGkG/+SnUZxYmjl
-         d5EVL96pGufv0XDB/I3ww0I3pqG5ugNWyK1kw0hX7lAEBJUEPIbGzJCgT8Fpb9AcOfMp
-         +HDA==
-X-Gm-Message-State: APuU4Z8+PfbKC0Y95Ktf4QRGzBC6kwMWzeXmeWLNRMMj1BvdSCEjJh+O
-	ClEjeTzxwqeroB8h3M1zf1bKL5la92fuI0jTFGfkZgsFxxpyXnQRQ4d5Ocqw7fuQhNZR2uGtd8l
-	rej4/HqHQBwvzrPfhgrwXj8JbH2trUZykkK37
-X-Gm-Gg: AYBFou2SdJ1JW5u/yp9JCBJmzZ2DEhH26aGYzUolLitoWx7LkuINZYOoCFgpDO30jMs
-	ZKpnfqih7Q+qhT9CPx1SkYYUcZQq/UEUo3zgfZQUR94uP0ern9/RRQsg3FRpTWE77LmIuC5dCPI
-	NeryrkJ5F3P2R1c1AaXESCRf21OwuVvOmmzZMzeqrxBzLQAi3RS9VxDCS7oMiR6p2e9JOAsWWoO
-	NQ0o/m3tqXx9RjrnBOAYHyFPFHEzK2EHQ0MfYQ3B9wtz0VBhIADXEA7qrqNZ/B2KY5vBuVfZOBq
-	tVqc7y3M9xe3z+I9dTf9aiu5PULNF3anRzkyVN3uDlemcvOL6+ZCGbKkhVSQ+uSgeFY1dsDOUZ+
-	xnWjj3w8usYpBoPTfpJQI2sdOG2Ebq2/QxIC0vUUnSOPaafv2ZYoFdJX57PSmwKcdqzNIfqE=
-X-Received: by 2002:a05:622a:4d99:b0:536:990e:b4c6 with SMTP id
- d75a77b69052e-55ac7b550e6mr150515241cf.35.1794825082365; Mon, 16 Nov 2026
- 02:31:22 -0800 (PST)
+        bh=vAdNdqMZpHFG+BSJ/Ajx6nPvS2zPMigzyGyeH1ja2j4=;
+        b=P/OVrnaOYnAH0CiSmTvk5g1bQZkERwT+CcvbiozHifXBwcqZtpPSyK9drdGgiccyih
+         ApmFQMwlJyBtPLjeNVrqL9dTLYgd1LWFTiHvyvs2RK0rlIR+4a9+qBVKPXu3ZUviO0/u
+         y38FG7TDNnE+2N7y7BPpkz9dgji5WHSUonldyzhIraJT1SDqDVcjZ5UZ3QpMtnkJWbkj
+         HTVoqfXuHW+zWq0jF6Wvp4+NAts/n377uMej5wzGIEvvlyrVEPOvAyUQRbvtVlEP2RtK
+         PlWhh65/mAwH3MPV99tQfHpvNb+4YrEwoTwrkafgp0v4J6L26go5UyqYHJi3Xf4FSmFR
+         aXKg==
+X-Gm-Message-State: APuU4Z9dILJjiYZ8bn/zWS+ZRli7a6db6D5HX5TKf9rcmXEp4/8aqEAT
+	+6O1cA+iMjM8Lrsw71AHtQ9zdtNVmDwayS6n8GXEParyqlMpj98OD8I0utlDUzHNnjqP9hxbzJg
+	M19kkWI0nHSdnBrP7uGbMP1VnMAC9ni+JLmYl
+X-Gm-Gg: AYBFou2J+5+KsHuY94sdRF6KqwfZxqVqBR3cULdEvcu7DwPbAT/tIi0+jHAVPLihAt1
+	zztINTh4N3n55dku44UcM/t9GwhfM51tnvkiy/LrgGVagVB0GbQgEgMX7Y95irBYR1yE2DeTzzT
+	cxgN+Scdtof6vNZpq8yh0u3dUP1qg/+A1XByT1XslLRDHK3l1U31zeauirrC3pmtdrEWH442iUi
+	hhPsPr6EZRseFSQ+a2VQsLzRLpdeOjm95yhVMI7jRJznWDffqmZirQKXMzewNmZ0WT9qwhjzOeO
+	Uc+aQfMxUxYkfbBvvsYYDtHZ3sk9osU1E0WKYK6t3DSQn2QLaPcmaKVS7jQLJJBDdYZFmOuNAOW
+	9+XtS4aNTqr9U1RsvIvKbqmDPkyIJnS9hgl9oua+ScKbdiU/u5aVwhA4ansy/LT+Kn87+5w==
+X-Received: by 2002:a05:622a:e40f:10b0:55c:6d3d:b688 with SMTP id
+ d75a77b69052e-55c6d3db7eemr69199391cf.0.1794825464925; Mon, 16 Nov 2026
+ 02:37:44 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,187 +104,138 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261112-sdhi_rzg3l-v1-0-ca30b209615d@bp.renesas.com>
- <20261112-sdhi_rzg3l-v1-3-ca30b209615d@bp.renesas.com> <sashiko-outbox-211747@kernel.org>
-In-Reply-To: <sashiko-outbox-211747@kernel.org>
+ <20261112-sdhi_rzg3l-v1-2-ca30b209615d@bp.renesas.com> <sashiko-outbox-211741@kernel.org>
+In-Reply-To: <sashiko-outbox-211741@kernel.org>
 From: Biju Das <biju.das.au@gmail.com>
-Date: Mon, 16 Nov 2026 10:31:11 +0000
-X-Gm-Features: AclHuK-69tq2_5BrwcWip5r2r2C2Neh0RQqG5aAWyws3AaOyvcwgj8fZIJcAvcI
-Message-ID: <CADT+UeCM2SEvcm8ELcFVDK_rHJuw=H4fC0=ArbJZcwBaeCQjvQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] arm64: dts: renesas: rzg3l-smarc-som: Enable SDHI2
+Date: Mon, 16 Nov 2026 10:37:34 +0000
+X-Gm-Features: AclHuK9Eg4UhaKH1QJpvsKiOfCpTnXZRZ4Twf9MfbxpkNjE3e-ev8l8nHxuYT8M
+Message-ID: <CADT+UeApMF1yftK27r9haAr3eU2Vk=H__TMMNzvFVuURuP_XOQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: renesas: rzg3l-smarc-som: Enable SD/eMMC
+ on SDHI0
 To: sashiko-reviews@lists.linux.dev
 Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
 	wsa+renesas@sang-engineering.com, linux-renesas-soc@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 12, 2026 at 7:09=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Nov 12, 2026 at 7:07=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] arm64: dts: renesas: rzg3l-smarc-som: no-op UHS pinctrl
->   switch on sdhi2
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] arm64: dts: renesas: rzg3l-smarc-som: sdhi0 pinctrl fails with
+>   -EINVAL
+> - [Low] arm64: dts: renesas: rzg3l-smarc-som uses RZG2L_PORT_PINMUX for
+>   SD0_CD
 > --
 >
-> commit fa36790e3b28d4844cd7f51756a420dcdb4538ff
+> commit e86cb26292885aecdb37f14368a14d0f62f6aee6
 > Author: Biju Das <biju.das.jz@bp.renesas.com>
 >
-> arm64: dts: renesas: rzg3l-smarc-som: Enable SDHI2
+> arm64: dts: renesas: rzg3l-smarc-som: Enable SD/eMMC on SDHI0
 >
-> This commit adds pin control and device tree nodes to enable SDHI2 on the
-> RZ/G3L SMARC EVK platform when the SW_SD2_EN macro is set.
+> This commit enables SD card or eMMC support on SDHI0 for the RZ/G3L SMARC
+> SoM, selected via the SW_SD0_DEV_SEL macro.
 >
 > > diff --git a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi b/arch/ar=
 m64/boot/dts/renesas/rzg3l-smarc-som.dtsi
-> > index f6f4eed9a2ea6..e8fc9cddf288f 100644
+> > index 091a227233cba..f6f4eed9a2ea6 100644
 > > --- a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
 > > +++ b/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
 >
 > [ ... ]
 >
-> > @@ -330,6 +331,74 @@ sd0-data {
-> >                       power-source =3D <1800>;
-> >               };
+> > @@ -216,7 +234,132 @@ i2c0_pins: i2c0 {
+> >               pinmux =3D <RZG3L_PORT_PINMUX(L, 2, 4)>, /* RIIC0_SCL */
+> >                        <RZG3L_PORT_PINMUX(L, 3, 4)>; /* RIIC0_SDA */
 > >       };
 > > +
-> > +     sdhi2_pins: sd2 {
-> > +             sd2-cd {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(K, 0, 1)>; /* SD2_C=
-D */
-> > +             };
-> > +
-> > +             sd2-clk {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(H, 0, 1)>; /* SD2_C=
-LK */
-> > +                     power-source =3D <3300>;
-> > +             };
-> > +
-> > +             sd2-cmd {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(H, 1, 1)>; /* SD2_C=
-MD */
-> > +                     input-enable;
-> > +                     power-source =3D <3300>;
-> > +             };
-> > +
-> > +             sd2-data {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(H, 2, 1)>, /* SD2_D=
-AT0 */
-> > +                              <RZG3L_PORT_PINMUX(H, 3, 1)>, /* SD2_DAT=
-1 */
-> > +                              <RZG3L_PORT_PINMUX(H, 4, 1)>, /* SD2_DAT=
-2 */
-> > +                              <RZG3L_PORT_PINMUX(H, 5, 1)>; /* SD2_DAT=
-3 */
-> > +                     input-enable;
-> > +                     power-source =3D <3300>;
-> > +             };
-> > +
-> > +             sd2-iovs {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(K, 1, 1)>; /* SD2_I=
-OVS */
-> > +             };
-> > +
-> > +             sd2-pwen {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(K, 2, 1)>; /* SD2_P=
-WEN */
-> > +             };
+> > +     sd0-pwr-en-hog {
+> > +             gpio-hog;
+> > +             gpios =3D <RZG3L_GPIO(5, 1) GPIO_ACTIVE_HIGH>;
+> > +             output-high;
+> > +             line-name =3D "sd0_pwr_en";
 > > +     };
 > > +
-> > +     sdhi2_pins_uhs: sd2-uhs {
-> > +             sd2-cd {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(K, 0, 1)>; /* SD2_C=
+> > +     sdhi0_emmc_pins: sd0-emmc {
+> > +             sd0-clk {
+> > +                     pins =3D "SD0_CLK";
+> > +                     power-source =3D <1800>;
+> > +                     drive-strength-microamp =3D <9000>;
+> > +             };
+>
+> [Severity: High]
+> Does configuring power-source on the SD0_* pins cause sdhi0 probe to fail
+> with -EINVAL?
+>
+
+No. see below
+
+> In drivers/pinctrl/renesas/pinctrl-rzg2l.c, the SD0_* entries in
+> rzg3l_dedicated_pins do not set PIN_CFG_IO_VMC_SD0 or PIN_CFG_SOFT_PS:
+>
+> drivers/pinctrl/renesas/pinctrl-rzg2l.c:rzg3l_dedicated_pins[] {
+>     ...
+>         { "SD0_CLK", RZG2L_SINGLE_PIN_PACK(0x9, 0, PIN_CFG_IOLH_B) },
+>         { "SD0_CMD", RZG2L_SINGLE_PIN_PACK(0x9, 1,
+>           (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD)) },
+>     ...
+> }
+
+{ "SD0_CLK", RZG2L_SINGLE_PIN_PACK(0x9, 0, PIN_CFG_IOLH_B |
+PIN_CFG_IO_VMC_SD0) },
+{ "SD0_CMD", RZG2L_SINGLE_PIN_PACK(0x9, 1,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_RST#", RZG2L_SINGLE_PIN_PACK(0x9, 2, PIN_CFG_IOLH_B |
+PIN_CFG_IO_VMC_SD0) },
+{ "SD0_DS", RZG2L_SINGLE_PIN_PACK(0x9, 5,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT0", RZG2L_SINGLE_PIN_PACK(0x0a, 0,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT1", RZG2L_SINGLE_PIN_PACK(0x0a, 1,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT2", RZG2L_SINGLE_PIN_PACK(0x0a, 2,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT3", RZG2L_SINGLE_PIN_PACK(0x0a, 3,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT4", RZG2L_SINGLE_PIN_PACK(0x0a, 4,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT5", RZG2L_SINGLE_PIN_PACK(0x0a, 5,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT6", RZG2L_SINGLE_PIN_PACK(0x0a, 6,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+{ "SD0_DAT7", RZG2L_SINGLE_PIN_PACK(0x0a, 7,
+ (PIN_CFG_IOLH_B | PIN_CFG_IEN | PIN_CFG_PUPD | PIN_CFG_IO_VMC_SD0)) },
+
+
+>
+> When sdhi0 binds its pinctrl states (sdhi0_emmc_pins, sdhi0_usd_pins, or
+> sdhi0_usd_uhs_pins), rzg2l_pinctrl_pinconf_set() -> rzg2l_set_power_sourc=
+e()
+> -> rzg2l_caps_to_pwr_reg() returns -EINVAL, preventing SDHI0 from probing=
+ in
+> both eMMC and uSD modes.  (Dropping power-source from DT while keeping
+> drive-strength-microamp would instead leave the cached power_source at 0,
+> causing rzg2l_ps_to_iolh_idx(0) to return RZG2L_IOLH_IDX_MAX and read pas=
+t
+> the end of hwcfg->iolh_groupb_ua[] in rzg2l_ds_is_supported().)
+
+Drive strength it uses reset values.
+
+>
+> [ ... ]
+>
+> > +     sdhi0_usd_pins: sd0-usd {
+> > +             sd0-cd {
+> > +                     pinmux =3D <RZG2L_PORT_PINMUX(5, 0, 8)>; /* SD0_C=
 D */
 > > +             };
-> > +
-> > +             sd2-clk {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(H, 0, 1)>; /* SD2_C=
-LK */
-> > +                     power-source =3D <1800>;
-> > +             };
-> > +
-> > +             sd2-cmd {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(H, 1, 1)>; /* SD2_C=
-MD */
-> > +                     input-enable;
-> > +                     power-source =3D <1800>;
-> > +             };
-> > +
-> > +             sd2-data {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(H, 2, 1)>, /* SD2_D=
-AT0 */
-> > +                              <RZG3L_PORT_PINMUX(H, 3, 1)>, /* SD2_DAT=
-1 */
-> > +                              <RZG3L_PORT_PINMUX(H, 4, 1)>, /* SD2_DAT=
-2 */
-> > +                              <RZG3L_PORT_PINMUX(H, 5, 1)>; /* SD2_DAT=
-3 */
-> > +                     input-enable;
-> > +                     power-source =3D <1800>;
-> > +             };
-> > +
-> > +             sd2-iovs {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(K, 1, 1)>; /* SD2_I=
-OVS */
-> > +             };
-> > +
-> > +             sd2-pwen {
-> > +                     pinmux =3D <RZG3L_PORT_PINMUX(K, 2, 1)>; /* SD2_P=
-WEN */
-> > +             };
-> > +     };
-> >  };
 >
-> [Severity: Medium]
-> Does switching sdhi2 between sdhi2_pins and sdhi2_pins_uhs write any hard=
-ware
-> pinctrl registers for the sd2 pins?
+> [Severity: Low]
+> This isn't a bug since RZG3L_P5 expands to 5, but sd0-cd in both
+> sdhi0_usd_pins and sdhi0_usd_uhs_pins uses RZG2L_PORT_PINMUX(5, 0, 8)
+> instead of RZG3L_PORT_PINMUX(5, 0, 8) like the rest of this file.
 
-yes, it configures POC registers and uses reset values for drive strength.
->
-> sdhi2_pins and sdhi2_pins_uhs differ only by power-source (<3300> vs <180=
-0>),
-> and neither specifies drive-strength-microamp. In r9a08g046_variable_pin_=
-cfg,
-> those pins use software power-source tracking instead of a hardware
-> power-output-control register:
->
-> drivers/pinctrl/renesas/pinctrl-rzg2l.c:r9a08g046_variable_pin_cfg[] =3D =
-{
->     ...
->         RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 0, RZG3L_MPXED_PIN_FUNCS(B)=
-),
->         RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 1, RZG3L_MPXED_PIN_FUNCS(B)=
- | PIN_CFG_IEN),
->     ...
-> };
-
- RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PG, 0, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IO_VMC_SD1),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PG, 1, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD1),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PG, 2, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD1),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PG, 3,
-RZG2L_MPXED_COMMON_PIN_FUNCS(B) | PIN_CFG_IEN |
-   PIN_CFG_IO_VMC_SD1),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PG, 4, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD1),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PG, 5, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD1),
-
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 0, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IO_VMC_SD2),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 1, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD2),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 2, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD2),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 3, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD2),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 4, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD2),
-RZG2L_VARIABLE_PIN_CFG_PACK(RZG3L_PH, 5, RZG2L_MPXED_COMMON_PIN_FUNCS(B) |
-   PIN_CFG_IEN | PIN_CFG_IO_VMC_SD2),
-
-AI reviews can be wrong. see the mismatch.
+Will fix this.
 
 Cheers,
 Biju
