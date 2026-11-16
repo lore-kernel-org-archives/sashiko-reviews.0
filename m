@@ -1,99 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794813037;
-	b=tnw64DYGkAzfPb8176HFXEkpFiMBE3Tj6OyFH/HmJXuJgfyZavYn7sqqXPPGvrfHccyl
-	 3nQpX+fiS2utS1zPxHz2f1wISU5SaYhy2NJVBjJdzCLucBHlQ/QeZpQillTmEA+bL+zYu
-	 QfTb5s/HEQwXuqOXWoo1Q78bsQccHVjOBtv6ewotqie2JFI9dqLuBqbCqGAhigRPeip+3
-	 +bkuDSRRcvFRz8k63/F0B0cp8I/O3hJm3Lar49W4gkBtHuvIiXhfNHhNoVnaPo0vUTk6F
-	 NG/XHP+EXUHVRtcM+kIrQYnuxPtih+NcnyMgekFs9/wRuTY0u2LpGTsno8rD+QhGhAQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794813037;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=1sV36HcIIaexN1B9podEt8/JDaUKlNNQEN8NLfUeS2s=;
-	b=pjwGGjgOhC4kHWfwTUKLFxoK+RMCCQdT9Ydvxz+2Hz2M5ftZRIEkD04GQfB1CFaqQ3p8
-	 mmCKPdDx/Tmd8nE7IsTGuaRtf+Q+6KtVAs6ISiP494rpRpKNnEU8gYq7H0OPuOFkJY18d
-	 xPTXTv8xsB/pRIsbeIIEOoulc7m/upk8OuS975nrQHtRdcD91u4EYDCwb2s6ujqUwcLHC
-	 B/bPSxmWysJ5UYomfXpmtAprcxkfraev5wxyU/lrfwDznUVD7gbuvd/963ERkj0DMBRxJ
-	 M2pmE7VORDYA3AvZCxzVv+AhwC+3T5uw2L4HxUQKyB+LoeH96RZzJ7dCMNUo4PCLQMw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nullptr.com;
-	spf=pass smtp.mailfrom=nullptr.com;
-	dkim=pass header.d=nullptr.com header.i=@nullptr.com header.a=rsa-sha256 header.s=google header.b=Wu4bIcys;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.146
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794813899;
+	b=bR1/k7jCoc72KyYbxST5r1PBpwPcVNefwK5P3DgVIRnLWE1emExlfVjFckERKiWRZzJx
+	 V8JBhLd4qOKxBeotM5aulfGOgkdRDo9qv3XKpMU7WogEWWO2x7mqGF1G9PMUegAV+s4k4
+	 s7gvoLbKNUIQ57OALsc4kuuzcDvbxVLXeyMGk/DRx47PRFCQUInYXVzDxWxZ6sTcCzrUd
+	 SmDMI/11IHn639z5E8ZCOZaYD4iy5hLOfjFP29aV+/Yi27Jf4niuaVL1riwVd3uFTbRsx
+	 hYLxG5LTFuaGfqfEEp/w1j2FTDYSnDluATJgmBRxNCbaYBOSsRtkFNeFw6f9O4czrKg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794813899;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=gxWuCpbv03Zc02+oBlxfrkWwPg/mIkyueML8T0AAdnc=;
+	b=yBt0Z84MjEC0SBeQd2Im6E53JZR7fojuVX9W+Z70R52gmGpciDVkcbmoicW3aAC3Puhx
+	 Fi8KxNWHYw1Wntvwf2EZycCDz94BObAqnmPFSIIQSjElLHlvIGYBi1Ifc9kbueSystYHC
+	 pHUUDr8RPJfIMZW2dHKuDICJamYoNUd/8w3tbGN7guI39EFeg+rUnTSl46tAKUlziXttK
+	 wufj3pkYiZR6t+2bjySFKBySxcQxQ8gYs62uLI3vPPGUeTz9s6k8h8KCmXFc3azXYpqO5
+	 fVJTFfz3xh0LZz3vquoTpMKPfNvWcw3wuTaLtpzFVCxp0J51DcyVHs1HbnOLxJGJPEA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=UanhZ4fi;
+	arc=none smtp.remote-ip=91.218.175.146
+Received: from mta0.migadu.com (out-146.mta0.migadu.com [91.218.175.146])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF8B606A336
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:10:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5FF8B606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nullptr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nullptr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED63606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:24:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7ED63606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nullptr.com header.i=@nullptr.com header.a=rsa-sha256 header.s=google header.b=Wu4bIcys
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-67dae7d3f7dso1004397d50.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:10:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794813033; cv=none;
-        d=google.com; s=arc-20260327;
-        b=tD4W3UcUt3NFyt814RgZTlm1eD7dSpRG2Yy9NVz7HWqNbUfPAtQwU7KPea+40DBBIH
-         QeWUQ2pfURy0GdQO2ao2Dw3pqLOT/NBhX4U1926AbqN7rxRV9bPJRj4zYZzcJ5qNRN6b
-         J49eiD7RcPBxeAil8gKxjJRJopiex1e4cz3THOvwlHUjBL0ZcsRR0lEnbjcWBgrL8XkO
-         xTpecHa51agPjTReXmU/p9x1flWbxSbbCU838QIrm9Gyyb2h0SHXcTJAuGT7BBEPTBUH
-         yLBQbXW0Qp/sGZ+4IP8LirikwdsQIqZFU6wX6/H5KrysE16Zx8K113RSsyyAhiCEQcB/
-         xu+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=1sV36HcIIaexN1B9podEt8/JDaUKlNNQEN8NLfUeS2s=;
-        fh=LrM3G6RcmBZ425pLRY8E44TM1XcCb9gU9D3viVl1X8E=;
-        b=rXM3XAzP1KYwPbebTVjIqfLvgnt7F8ew/4r8SugC0qgq9TNZDPPMebWmyZq8B7CFId
-         Rk7DFSox2kLccYOi1bymYwiQ+6/XiwWO5vKFqkEa8nv90AH6rEQiQHXrYQr4Mt1orR45
-         TdtU4/w+5x71PpgstCoEfXNnDf30GT+HmIUQtK7q24QFNnI7SSilAjpUDm/U9s9IIdCG
-         hHvPWX6hu7ORV0G9LwwI7BliGw/H9M085Pb5KA/p8+hF3V59twnKyZSjlC1J50Epr3QX
-         CMiCSGIO5Po3KKjg4z/WTWKPu5C1Nd7an7ERK/JyI5K7xlp2yo76lbjilZrF4KFzpJal
-         bJGg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nullptr.com; s=google; t=1794813033; x=1795417833; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=1sV36HcIIaexN1B9podEt8/JDaUKlNNQEN8NLfUeS2s=;
-        b=Wu4bIcysnYoO/5h1qM8D0TBwLR0MIFF9X5AHVAATkZ4+qpo5bZr4Fj5Nnj7A4Rh08g
-         8+wgqWj0phK7ZYT7ElP90fHr67rrtalknLOfC99aZVqq+4Z8+NkLah8+VufRSFexrYfz
-         qf+r5iUfYvzdL68XQpPzmAgrORmPlQG/H/fn8S8Wkk7JvIYk3ZNqN60HXryI0uGVWlIO
-         bznJq3Qv1kZAmCoMH3QeqP5aS4860+j9bailUeXTxhRL6cQNtb8kHTcF2444TU/h4Zim
-         E6hFxqi2EO5PzewiDaM16I0sU9ofqtBg6oQ/jO5BefzmWNwQoSymXvGNNVO13LGvxeWd
-         TkWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794813033; x=1795417833;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=1sV36HcIIaexN1B9podEt8/JDaUKlNNQEN8NLfUeS2s=;
-        b=F5RTHGrI1Bn2JgmfCrDRSuBdGRw/5cLJqh20XP6rGmXZLdiekk1hcr32c7R8owPBXs
-         PjDNe4Q2Bb7jLgrGXw/zM7dtnv/qo2Mhm79NhHYmaT8srkXmWENYOGCaB0IjY4yd82xD
-         gpyMXw6F0R8uJ8v0Pna7EXOHMvWH+Kz1PoLJhVwdxLHEH6tLxMIDHDKw5/P8xUIpRSyP
-         Z/U72RgKOTo+yy2UzyNU3I/YNjOZaEuYa7JLD5kOunjXDkGi1Uc+DY8o152KgQgraiDq
-         TlRmWWQ/k20OVQ6awf4f2wl/Ii86juotxw4I6yT1n24/v1CRsgDtmTj/NXfqaAsZf5RO
-         YWHw==
-X-Gm-Message-State: APuU4Z+SW8oE+2SmgWDiG6RL8qr+uG2XCCUaS6eL5txJfgYPsl+NVB9d
-	k0HGWu5gtf9I+fVzFuLJikEUrEzDzZ/8oiGri2O0/w38YMWO/r+M4axBAHV2MmyBINOMbQ6XrV0
-	JPIAD00Gn8ZegDFyJJH3cGfL9I4HehjhR3zn4bv3+MsDZzzzM6KscBQ0Gtg==
-X-Gm-Gg: AZFdTZd1pgiEvxsjON5hR7JA/wQj35bt1Ex9YoaQ1LLd7ATMxyICbZPMPx7a3RO4LxZ
-	+N3kEhwZ4FTO912AECI7fn2K6OaE2xmBkctdVio6BOzx5FcjQVZoS815Zt1Q1mvB3OeJi0zJwjr
-	zFZCF7GNfPedvV27Qtti2Lw8ANx5NrJgV1gCtSUfPV3Jb4KxlukpEz9zDtC/gGC4Oiypjv68PCp
-	gbOW+Fy0NlSlubCHHHZDRqA1JgGaxN1QNHerc8EDhxE7k9Dd9uP6vt7Qpv49pv0BZH2wxlVVA4q
-	Q/DTKS/vL3aB4rctotWd42lCfKItlc+fhUQwwjR5WUzxYNyGBJyPjyy7fDy4VydLlObrF5CSoRS
-	Y1iiJgNxVq+WDew9AcKmnc+md/ZN1t6Yvv6P7br4/fPMdMLjnccs+aBBBPmyLbCtiRo42bXipwG
-	Jgz68hhv7elXAPNXpV4fD0vOhWCK52sCnRX7pTFFb6ArFznlVglT7LvEQ=
-X-Received: by 2002:a05:690e:47da:20b0:67b:f42b:a404 with SMTP id
- 956f58d0204a3-67d89639458mr3249122d50.55.1794813032614; Sun, 15 Nov 2026
- 23:10:32 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=UanhZ4fi
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=g8ClyyMtcgLdsQ6JL3yApqtIQt0AnNXmbikE9ZqcOv0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794813896; v=1; x=1795418696;
+ b=UanhZ4fikeBcpR755ZTsXCKC47TE+RRt60Tw4BHuythe1/9smHKtSHbU9Tk0lUCaaEqx9RC+
+ 2zLQe+fnGe5QYVi66r3gCDm4Y8svM86ocMa8reNfRbNSHedMdfImX5tC0QwGAkuPfTjO1Yxfv39
+ Em3c8X+OX7l9vxmy46dF6BiA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta12.migadu.com with ESMTPS id b52167547f9f5bc8;
+	Mon, 16 Nov 2026 07:24:56 +0000
+X-Mizu-Trace-ID: b52167547f9f5bc8
+X-Migadu-Flow: FLOW_OUT
+Date: Mon, 16 Nov 2026 15:24:51 +0800
+From: Baoquan He <baoquan.he@linux.dev>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-mm@kvack.org, akpm@linux-foundation.org, david@kernel.org,
+	kasong@tencent.com, baohua@kernel.org,
+	baolin.wang@linux.alibaba.com, qi.zheng@linux.dev,
+	shakeel.butt@linux.dev, axelrasmussen@google.com,
+	yuanchu@google.com, weixugc@google.com,
+	Baoquan He <hebaoquan@kylinos.cn>
+Subject: Re: [PATCH v3 1/4] mm/mglru: add MM_WALK_EMPTY stats and tracepoint
+Message-ID: <avqvw25Ftak2Qq7E@fedora>
+References: <20261113084953.412919-1-baoquan.he@linux.dev>
+ <20261113084953.412919-2-baoquan.he@linux.dev>
+ <sashiko-outbox-214123@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,65 +70,172 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261115-xilinx-dma-work-v2-0-681ed00c15a1@nullptr.com>
- <20261115-xilinx-dma-work-v2-3-681ed00c15a1@nullptr.com> <sashiko-outbox-216160@kernel.org>
-In-Reply-To: <sashiko-outbox-216160@kernel.org>
-From: "Jeff C. Jensen" <kernel@nullptr.com>
-Date: Sun, 15 Nov 2026 23:10:19 -0800
-X-Gm-Features: AclHuK-OOF8rUc0S5lk4SEf84UXEwuciSxAHkqIc_dTegknzKLQvIqLjK7DEKzM
-Message-ID: <CAHnw2U=mQkQiSLgEGbVfPTf6suaQQiq7GavziJQEhxTV_CwyQw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] dmaengine: xilinx_dma: Allocate AXI DMA segments
- in ring order
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-214123@kernel.org>
 
-On Mon, 16 Nov 2026 04:07:02 +0000, sashiko-bot@kernel.org wrote:
+On 11/14/26 at 03:42am, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] mm/mglru: get_pte_pfn() and get_pmd_pfn() skip non-young
+>   entries in walk stats
+> - [Medium] mm/mglru: walk_pte_range() undercounts MM_LEAF_ASSOCIATED on
+>   large folios
+> - [Low] mm/mglru: mm_vmscan_lru_gen_walk tracepoint defined outside
+>   CONFIG_LRU_GEN
+
+Thanks for the review. All three points are correct. Please see the
+reply in inline paragraphs.
+
+> --
+> 
+> commit b5309c24549f959bf1eb3e88053e43540b30ee90
+> Author: Baoquan He <hebaoquan@kylinos.cn>
+> 
+> mm/mglru: add MM_WALK_EMPTY stats and tracepoint
+> 
+> This commit adds per-walk statistics and a tracepoint to track MGLRU aging
+> page-table walks that find no folios belonging to the target lruvec.
+> 
+> > diff --git a/mm/trace_vmscan.h b/mm/trace_vmscan.h
+> > index 9dafdb5bd3ce8..2b268fd0f89e8 100644
+> > --- a/mm/trace_vmscan.h
+> > +++ b/mm/trace_vmscan.h
+> > @@ -763,6 +763,34 @@ TRACE_EVENT(mm_vmscan_kswapd_clear_hopeless,
+> >  		__entry->nid,
+> >  		__print_symbolic(__entry->reason, kswapd_clear_hopeless_reason_ops))
+> >  );
+> > +TRACE_EVENT(mm_vmscan_lru_gen_walk,
+> > +
+> > +	TP_PROTO(int nid, unsigned long seq, int leaf_total,
+> > +		 int leaf_associated, bool empty),
+> 
+> [Severity: Low]
+> Should mm_vmscan_lru_gen_walk be placed inside the #ifdef CONFIG_LRU_GEN
+> block alongside mm_mglru_scan_folios and mm_mglru_aging?  Its only caller in
+> try_to_inc_max_seq() is built under CONFIG_LRU_GEN, so defining it here
+> generates unused tracepoint code and tracefs entries when CONFIG_LRU_GEN is
+> disabled.
+
+Will fix. mm_vmscan_lru_gen_walk will be put inside the same block as
+mm_mglru_scan_folios and mm_mglru_aging.
+
+> 
+> [ ... ]
+> 
+> > diff --git a/mm/vmscan.c b/mm/vmscan.c
+> > index 25a224746c36d..6034bae03dc21 100644
+> > --- a/mm/vmscan.c
+> > +++ b/mm/vmscan.c
+> > @@ -3582,6 +3582,8 @@ static bool walk_pte_range(pmd_t *pmd, unsigned long start, unsigned long end,
+> >  		if (!folio)
+> >  			continue;
+> >  
+> > +		walk->mm_stats[MM_LEAF_ASSOCIATED]++;
+> > +
+> >  		if (folio_test_large(folio)) {
+> >  			const unsigned int max_nr = (end - addr) >> PAGE_SHIFT;
+> 
 > [Severity: Medium]
-> Does the chan->err path leak desc and its reserved segments when
-> xilinx_dma_chan_reset() fails, or allow a concurrent submission to race
-> when chan->lock is dropped?
->
-> If xilinx_dma_chan_reset() returns an error, xilinx_dma_tx_submit()
-> returns without calling xilinx_dma_cancel_tx_descriptor(chan, desc),
-> leaking desc, leaving its bits set in chan->seg_used, and leaving
-> chan->seg_next advanced.
+> Does walk_pte_range() undercount MM_LEAF_ASSOCIATED when a large folio spans
+> a batch of contiguous PTEs?
 
-My read of the code seems to confirm this. It would predate this series.
-Prior to this series, a failed reset in xilinx_dma_tx_submit() returned
-without freeing the descriptor, and its segments never went back on the
-free list, which put the list out of ring order. With patch 3 the leak
-blocks the channel instead: the leaked segments stay marked in
-chan->seg_used, and once chan->seg_next wraps around to them every later
-reservation fails, so the channel accepts no more transfers until its
-resources are freed and allocated again.
+MM_LEAF_ASSOCIATED is not scaled by the batch size for large folios.
 
-Will fix in v3, which should be a small fix. A failed reset cancels the
-descriptor under chan->lock, as the busy cyclic path does, which frees
-desc, clears its bits in chan->seg_used and rewinds chan->seg_next. This
-only releases a descriptor the driver rejected; what the engine does
-after a reset timeout stays out of scope.
+Will fix. For a batched large folio we now add nr - 1 as well, so
+MM_LEAF_YOUNG can no longer be larger than MM_LEAF_ASSOCIATED.
 
-> Even when the reset succeeds, dropping chan->lock after desc has reserved
-> its ring positions lets a second caller prepare and submit a newer
-> descriptor (or set chan->cyclic) before this thread re-acquires
-> chan->lock, queuing the two descriptors in chan->pending_list out of ring
-> order:
+> 
+> When folio_test_large(folio) is true, folio_pte_batch_flags() sets nr to the
+> number of batched PTEs and adds nr - 1 to walk->mm_stats[MM_LEAF_TOTAL] and
+> nr to walk->mm_stats[MM_LEAF_YOUNG], before the loop advances by nr entries:
+> 
+> mm/vmscan.c:walk_pte_range() {
+>     ...
+> 		if (folio_test_large(folio)) {
+> 			const unsigned int max_nr = (end - addr) >> PAGE_SHIFT;
+> 
+> 			nr = folio_pte_batch_flags(folio, NULL, cur_pte, &ptent,
+> 						   max_nr, FPB_MERGE_YOUNG_DIRTY);
+> 			total += nr - 1;
+> 			walk->mm_stats[MM_LEAF_TOTAL] += nr - 1;
+> 		}
+>     ...
+> 		young += nr;
+> 		walk->mm_stats[MM_LEAF_YOUNG] += nr;
+> 	}
+> 
+> Because MM_LEAF_ASSOCIATED is only incremented by 1 before the batch size is
+> computed, the remaining nr - 1 PTEs in the batch are not counted, and
+> MM_LEAF_YOUNG can end up larger than MM_LEAF_ASSOCIATED.
+> 
+> [ ... ]
+> 
+> > @@ -4158,8 +4162,28 @@ static bool try_to_inc_max_seq(struct lruvec *lruvec, unsigned long seq,
+> >  
+> >  	do {
+> >  		success = iterate_mm_list(walk, &mm);
+> > -		if (mm)
+> > +		if (mm) {
+> > +			bool empty = false;
+> > +
+> >  			walk_mm(mm, walk);
+> > +			/*
+> > +			 * A walk that traversed page tables but found no folio
+> > +			 * belonging to this lruvec (node+memcg) is pure waste.
+> > +			 */
+> > +			if (walk->mm_stats[MM_LEAF_TOTAL]) {
+> > +				walk->mm_stats[MM_WALK_TOTAL]++;
+> > +				if (walk->mm_stats[MM_LEAF_ASSOCIATED] == 0) {
+> > +					walk->mm_stats[MM_WALK_EMPTY]++;
+> > +					walk->mm_stats[MM_LEAF_EMPTY_WALKS] +=
+> > +						walk->mm_stats[MM_LEAF_TOTAL];
+> > +					empty = true;
+> > +				}
+> > +			}
+> > +			trace_mm_vmscan_lru_gen_walk(
+> > +					lruvec_pgdat(lruvec)->node_id, walk->seq,
+> > +					walk->mm_stats[MM_LEAF_TOTAL],
+> > +					walk->mm_stats[MM_LEAF_ASSOCIATED], empty);
+> > +		}
+> >  	} while (mm);
+> 
+> [Severity: Medium]
+> Does this count a walk as empty whenever an mm has folios in this lruvec
+> whose PTEs and PMDs are all non-young?
+> 
+> In walk_pte_range() and walk_pmd_range_locked(), MM_LEAF_ASSOCIATED is
+> incremented only after get_pte_pfn() or get_pmd_pfn() succeeds, but both
+> helpers reject non-young entries up front when the mm has no MMU notifiers:
+> 
+> mm/vmscan.c:get_pte_pfn() {
+>     ...
+> 	if (!pte_young(pte) && !mm_has_notifiers(vma->vm_mm))
+> 		return -1;
+> 
+> As a result, non-young leaf entries mapping folios in this lruvec are never
+> counted in MM_LEAF_ASSOCIATED, and any walk over an mm whose mapped folios in
+> this lruvec are all cold has MM_LEAF_ASSOCIATED == 0 and is recorded in
+> MM_WALK_EMPTY, MM_LEAF_EMPTY_WALKS, and trace_mm_vmscan_lru_gen_walk() with
+> empty=1.
 
-[...]
+get_pte_pfn() / get_pmd_pfn() reject non-young entries before
+MM_LEAF_ASSOCIATED is counted, so a walk is reported as "empty" when the mm
+has folios in this lruvec but all of them are cold.
 
-I don't think this can happen, for the same reason as on v1 5/5: patch 3
-requires a descriptor to be submitted, or its rejection handled, before
-the next one is prepared on the channel, and xilinx_dma_tx_submit()
-documents it. dmaengine's client.rst already asks for prep and submit to
-be closely paired. The window isn't specific to the reset either. A
-descriptor reserves its segments in prep and is queued in submit, so a
-second preparation in between would queue out of order on any path.
-The chan->cyclic variant needs the same overlap: a cyclic descriptor
-submitted in that window would also have been prepared before desc was
-submitted. Before this series the cyclic check and the reset ran without
-chan->lock at all. The lock can't be held across the reset, since
-xilinx_dma_reset() polls for up to a second with
-readl_poll_timeout_atomic().
+Yes, that is what the code does, and the name did not say it. The
+behaviour is on purpose. The PUD filter in patch 3 carries a subtree only
+when it had young entries for this lruvec, so "nothing young" is exactly
+what we want to measure. Counting the folios before the young test would
+add a folio lookup for every cold leaf, and that is the cost this series
+tries to remove.
 
--Jeff
+So v4 will fix the naming and the comments instead: MM_LEAF_ASSOCIATED is
+"young leaf entries whose folio is in this lruvec", MM_WALK_EMPTY is
+"walks that found nothing young for this lruvec", and the comment in
+try_to_inc_max_seq() says the same.
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261113084953.412919-1-baoquan.he@linux.dev?part=1
