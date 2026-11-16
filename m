@@ -1,71 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794837170;
-	b=k/Hft3LU41YJU2gT40yc4xpMHHhCF7JzVMEy4a/4l6DBudbE8mZTGl3me5UH89yDx3OQ
-	 xtCe3QPN5S4i0RNlzE1xIOFAab3bZpCn/jvhMXt4nWWaot0Ew4CB6NBB9AWDlb/WQ3TZy
-	 xfGzdfEG31Zr1J45OlBzHvU9l4vlLTwiKvPFUbouNYTV8P7acj4yv/+UC5IEtjfCV/lqA
-	 vaSV+HyiN/e3DUbt6w2sj2WjciuZ6en8XiESWtoW01ib18Bt2CeOab4hOVEJAbTbSigyy
-	 /V7LU090N5rixYWqRAklhwz6ahJioNCcRCG9msY3Hl0qYkRHbYQyQmy//JHdTUVWYjg==
+	t=1794837234;
+	b=NIrMgJwrgnGYzZqpnzfbELhgz/uxMk/33wOLI04Uz5WR8P21TQC7Vnw8zdGiRSEMV73y
+	 PcAb1cEpC+x8JWo5pSXrwi92wVk7sEwQFxvpJlm+2oQdhHG46GEWCNUNn4gfqgaX+AXu1
+	 IMhLp9jyBOudwz9P2wZQ5VzNh0zISLZDkErcWwZ/SGQlp6mjLpshtEzXUGc1r5Bm54rHr
+	 GfIQUktFyIl9NR8dCFjwpESY/UbUGU1Z+DNfqCbrxhDtoDED7eEfys7uprDk4quzkpD+0
+	 Pl58d1uT7Gort94Er1qbNCwloSi4CvUrX3D5Plf8WC21ciPQYOJHkI+d8u70vm8cbxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794837170;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
-	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Last-TLS-Session-Version;
-	bh=kItaQQWrnsLmpfYQZnmo5ZKiXXzLU/di5P/nGlEMeeU=;
-	b=niG/+3mCu/Jwt4k9Z+Q2XbU7DENNKW1UsTQzUkCxdhwRS26LkSHdtGPAChZYN/VHH0U8
-	 X+v+QCqriS7j1z9vSITCLVz9k3NNTR8VTQVjHOjZRmjgMhlM232BOcVwjSkhoDjcDNETi
-	 ZdlKCAEX/aYyKiU3ueUDETTSuXxK158i4ntleDWPFQDpE6oedVwrHBBrhPj3ch4oOGfU+
-	 iLakvOod1Z7GJtatM3BJEypSc+Aj6i54uqPDKhX9g2Gjnjbtl5hW4DnUfjq5VKk3yoRPv
-	 PXcEmne0I/3uC1WhKr/Wri8rTnhLUjSenEIL5ZrlIQlM64LoxzR0HIIf9AkMPFp03CQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794837234;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=DDlc2ipa3lyHVuvf17z6/jobZjt8tJOUrFDDN7JBUPg=;
+	b=sD4zL/W9AtCVQf24z01hZ4KO9DZq4gj/TAOTUMan3LVXSx9dWIK0p/eWHNwGKo79PbTt
+	 yCm/b0AP6Jhz9BV+GYWqzozQz+TY4ckhHCxujJvAndwwZSexZsU2yCE4ilLTjvL6o673B
+	 ypn13rCSh1u7ipl4nksEyokmDjx4FRZqe3dS2Gvzu6WMbURVbMtVcmWmg3zC8wmESM2gh
+	 rdy3DqKf0mUKLqsYJwQzvL94yHEBfLWshereZNptyagu3uLNXWSaqhwcQ2EY3TdG0NXKg
+	 X2YYQofIIOv0iQ119MN3s4hPz1hFRyE4qak18894tYYZK8XsHl39A0qXn3e8pqmEnqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=p22FMlTG;
-	arc=none smtp.remote-ip=185.246.84.56
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=orxncKwf;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23BB606A329;
-	Mon, 16 Nov 2026 13:52:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F23BB606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3ED606A323;
+	Mon, 16 Nov 2026 13:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=p22FMlTG
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 9FFA01A168D;
-	Mon, 16 Nov 2026 13:52:48 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 6DD936023F;
-	Mon, 16 Nov 2026 13:52:48 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4A21C11BC051A;
-	Mon, 16 Nov 2026 14:52:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1794837167; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=kItaQQWrnsLmpfYQZnmo5ZKiXXzLU/di5P/nGlEMeeU=;
-	b=p22FMlTGS83GiD4ReWdtyZdg8MKbu7uh94nYkuVts6IkcBtP2fWLcHhnSCwAXjAxfltMB+
-	DJN/G2iok11zFHQ0icO+riMgR0dtWZMMZTjCco5ac/7fB+3KfRR1WAhv1spJauE3/RSFip
-	y/p8h0El8GcLHOurQFRaw8QZwk03lZlI5DX0lQYXvylYbmZmdoIm8WNO1JrXPElG3Ovog7
-	vx2QCUOLuexHBng2MTzRVTzMZFFNH1chgnwtAvHVdNiCZoefi33/iS0sgHvJJpxRXdCTxw
-	HnO1JPIfYNBt3md2EqSf5CKZ0ZqnThr+xCy2b9bJbeuxa9gct7Mo3wlzD9VQ4A==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: "Samarth Narang" <samarth.colleges@gmail.com>,  "Han Xu"
- <han.xu@nxp.com>,  "Vignesh Raghavendra" <vigneshr@ti.com>,
-  sashiko-reviews@lists.linux.dev,  "Richard Weinberger" <richard@nod.at>,
-  imx@lists.linux.dev,  linux-mtd@lists.infradead.org,  Frank.Li@kernel.org
-Subject: Re: [PATCH v2] mtd: rawnand: gpmi: terminate the DMA chain on
- completion timeout
-In-Reply-To: <sashiko-outbox-191156@kernel.org> (sashiko-bot@kernel.org's
-	message of "Fri, 30 Oct 2026 15:20:32 +0000")
-References: <20261030150929.2944717-1-samarth.colleges@gmail.com>
-	<sashiko-outbox-191156@kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Mon, 16 Nov 2026 14:52:44 +0100
-Message-ID: <87pkw4sx1v.fsf@bootlin.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=orxncKwf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFC61F000C5;
+	Mon, 16 Nov 2026 13:53:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794837234;
+	bh=DDlc2ipa3lyHVuvf17z6/jobZjt8tJOUrFDDN7JBUPg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=orxncKwfJxb1Poi7aCW5qJLpiLznZFOZgYLbZKVwjOPt4pjzKtV4/RPv17w7WVzsC
+	 pZzX6H4QbeTLyWW6bkEgohhqwdIBMQ+sorzsiImhuW3QddKTMEzankDmeMMO2sCiyw
+	 G0a+efSqS+IyJGClThreYHl6e+fhE7inB5fBdVwHyPR6Yloltlgnizjtad869qD1Cr
+	 2D0VB7omtzwxeGBcJbJpBnP6mdcIrCVjmVOl1xvHXBCvuI9fOLl3+aukiVubuUQqW8
+	 pP6hZy6c6zn6o5+1MZTY2Ycv9GY9Ii/+aYQVXkBcI9PEnfWgiRNk9qdeDfTJJ3o5OO
+	 7JFuImKAgsDCQ==
+Date: Mon, 16 Nov 2026 15:53:50 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: Abhijit Gangurde <abhijit.gangurde@amd.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-rdma@vger.kernel.org
+Subject: Re: [for-next 3/4] RDMA/ionic: allocate a PD-scoped DMA MR
+Message-ID: <20261116135350.GP11319@unreal>
+References: <20261107150249.1576835-1-abhijit.gangurde@amd.com>
+ <20261107150249.1576835-4-abhijit.gangurde@amd.com>
+ <sashiko-outbox-203825@kernel.org>
+ <2770c6d3-f595-5d6b-afec-dfa8fee30697@amd.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -75,21 +58,53 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2770c6d3-f595-5d6b-afec-dfa8fee30697@amd.com>
 
-On 30/10/2026 at 15:20:32 GMT, sashiko-bot@kernel.org wrote:
+On Mon, Nov 16, 2026 at 02:47:15PM +0530, Abhijit Gangurde wrote:
+> 
+> On 11/8/26 20:34, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential
+> > issue to consider:
+> > - [High] RDMA/ionic: build failure in ionic_fill_lif_cfg() due to
+> >    missing rdma.cap
+> > --
+> > 
+> > commit 71ee46b9e5e60e185b9553d17b2722a569d100ad
+> > Author: Gregor Dick <gregor.dick@amd.com>
+> > 
+> > RDMA/ionic: allocate a PD-scoped DMA MR
+> > 
+> > This commit allocates a PD-scoped DMA MR via CREATE_MR with
+> > IONIC_MRF_DMA_MR when the firmware advertises IONIC_GEN_CAP_DMA_MR.
+> > 
+> > [ ... ]
+> > 
+> > > diff --git a/drivers/infiniband/hw/ionic/ionic_lif_cfg.c b/drivers/infiniband/hw/ionic/ionic_lif_cfg.c
+> > > index 66cee57442e7a..dcf54856603d4 100644
+> > > --- a/drivers/infiniband/hw/ionic/ionic_lif_cfg.c
+> > > +++ b/drivers/infiniband/hw/ionic/ionic_lif_cfg.c
+> > > @@ -95,6 +95,7 @@ void ionic_fill_lif_cfg(struct ionic_lif *lif, struct ionic_lif_cfg *cfg)
+> > >   	cfg->rq_expdb =
+> > >   	    !!(lif->qtype_info[IONIC_QTYPE_RXQ].features & IONIC_QIDENT_F_EXPDB);
+> > >   	cfg->alloc_qid_cap = ident->rdma.alloc_qid_cap;
+> > > +	cfg->cap = le64_to_cpu(ident->rdma.cap);
+> > >   }
+> > [Severity: High]
+> > Does this break the build when CONFIG_INFINIBAND_IONIC is enabled?
+> > The rdma struct inside union ionic_lif_identity in
+> > drivers/net/ethernet/pensando/ionic/ionic_if.h has no cap member.
+> 
+> Patch 1/4 adds __le64 cap to ionic_lif_identity.rdma (replacing reserved
+> bytes). Patch 3/4 uses that field, so the build succeeds when the series is
+> applied in order. This appears to be a series context false positive(?)
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] mtd: rawnand: gpmi: unsynchronized DMA termination in
-> gpmi_nfc_exec_op()
+I don't know, maybe because net patch was involved.
 
-Sashiko complaint looks legitimate, since you haven't actually run into
-that problem, I believe the fix is incorrect on this platform and
-therefore a DMA patch must be sent first. I will drop this patch, please
-resend once the DMA part fixed.
+Thanks
 
-Thanks,
-Miqu=C3=A8l
+> 
+> Abhijit
+> 
+> 
