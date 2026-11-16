@@ -1,77 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.128
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794827449;
-	b=fJqFPFKA3p3LW2Jn95hdFQnQumqb6spSqDpSyNB/iUkOEsrhPsD0bcZZWx8iCoVWZpqi
-	 Ov7JoGZnQDrFfcbc95KZWfC/H01PMWaTXoKlHF1J/2xUcCwsSPkhw3+6YGTuDj1JTR5Bo
-	 pOT4OrdwPm+WsA5oTm2nx/+1OEm05iqMeDxjhserpa8G3GOqPH9qeNZT4XxOAeXphexJq
-	 7fW9u2cHlFlAzMPjVHT7LkhwE6X1DoK4g6XTYaFu1UYdx+/qY2WIU5dWEfYt8a5Pc8PnT
-	 FPheXwaSZCkMK7aZpli9ciMxccXRRKR34X84WbiklgvQ/8Nt3EiOCl/EZDwXlmayu7A==
+	t=1794828464;
+	b=4MpHPepZUYZ24NkR54Rtd9ISuXcru1fHiY3QkbQov+zKYMA+T4aiOB9jW750JpTBvRmN
+	 B5kbyX1MZixOQynIdQp70l1Begle8WEFLMH80JTvPwRHqoUex2e9NOX0C/mJqoaDsdGID
+	 1ITbAiwVfumhMfqrbs8jer9mnBiDd9odhjGZVF0WTp/qCviM1Ste2zi+ml2duZzLAM0rf
+	 9j3jU54QnSMLfUJILcvNHxmsvTZyCBA/xbhm/Oci7bfHZbiP0nj/GvpYwDKWwn0Qr/L5N
+	 8kLA5taqw6npE6D223nT4hQkQO6qBtBN/VvJCZ+w4AZOVxxY2ukwvRVEYsYJgI8pT7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794827449;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=XBZfpFOBzTN/OnczrE6SLXH24P3y5j2I/8/G6P8knkQ=;
-	b=Y3tcxa/xVWSRXiA4Co2ZuE+rf16rNtmP27uBxurUgZc1eHs/rlDalxqBf/Q4YWhQiSvs
-	 axlnNR42iYRz28+vnKeSkKzLi3e9racNL9zVWjVkBG8sXkj5d96XGMrnvPhq/0iu58xPu
-	 BMJGNIbKvSmzdc4Jr6h4lOMymEDuJxcLCTHwIX7SvrfrEvHQY2+0eKphtjnqTzwVfmFa8
-	 XsFexyD2A6//y94DaBjjmgzPzHNj2r7nHUvVLyYPBrMktU4wxVJ8G/9r6GA+inX13ClnO
-	 rl1ny8WCGV3ZzMa6rgidKjxONVNiWpZMR6vnwRRdNHLS1InZOQmhGAjhjCSemO3N1bg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794828464;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
+	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
+	bh=5BStpc8jowDmC9B6cxbOb1co1bGTg3WHKFG1Ve9+btE=;
+	b=Zj0+NJhxa4Rf0TodxJHSRIeiNKs6mISiPNIeoj8yaIwjlTIfq1NCr8hSHTySD33igoSx
+	 M5MlwzAYHJmIv/9m768mqHcrGKqrog3cIMvktvp7i8l0wMw4oHlliulluUYIb5Igv9eRX
+	 LnaVKwHt10EUVCdq6WodJz8Fo3w0hwk5V0EuQGQ0mtE636po9pcEzKF1j18YQokHgSjgU
+	 6QYQAKhUp+DaTgNDB8TCUS1gc30AJRqAP4rxfrsH8MwWcJ0xvPT4/l6bXVMiZpDBDH39V
+	 MjF9IrZIDMZ1RLf8Tdz/EUfTsLUpge4ydnk9+JPr0u8ft/CWdFmZ8pimZE0O38KH8Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mz1ZJhV9;
-	arc=none smtp.remote-ip=198.175.65.9
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wlLDTAZ6;
+	arc=none smtp.remote-ip=74.125.227.128
+Received: from mail-pj2-f0.google.com (mail-pj2-f0.google.com [74.125.227.128])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6851A60A2629
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 11:10:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6851A60A2629
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D81606A887
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 11:27:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28D81606A887
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mz1ZJhV9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794827450; x=1826363450;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=oetKBKq3OHnLCF9dOGr4kSyIr2/4Zp2CMeqquq113yk=;
-  b=mz1ZJhV9srFaGwgKXU4tTCR+/90gM4QrgSjY/lIwRhYYZp5WMIaJwryg
-   JHP0xk2FUxKbbtTIisErDE+fA26L+CDIIcYh5JovapX3wh6HsA+JpZZjM
-   INCzdSJY7wCCYUMw0MPXkoFLPc/bAeI+L/5Riq1YLyMW97TXSFiaYUUlF
-   OSKbvrqGldGeNR2JLYEl0fWdgkfDRReLQtch9mXc9TOK70PCQPkVUtZnI
-   Lgi+dMPEcv985p6oh620201Nd3pK4skMVnZCLbvgTmRGMqEf0OOLnpn/h
-   Ap/GlVj4ZqgkakbGgXhNj455IlXgTPF7gtOfaY+Y+k3qz2AHL/lG68voe
-   Q==;
-X-CSE-ConnectionGUID: VH5/mnc3RuS4urTOdPOMXA==
-X-CSE-MsgGUID: KAyVfRVDRb6BxRdT2q9ZMg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11967"; a="3413207"
-X-IronPort-AV: E=Sophos;i="6.27,216,1787036400"; 
-   d="scan'208";a="3413207"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2026 03:10:49 -0800
-X-CSE-ConnectionGUID: 7N4I0Ue5QxyRTe3+T7uCYQ==
-X-CSE-MsgGUID: 9ZAM7YV5TBivpWwcKlrOmw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,216,1787036400"; 
-   d="scan'208";a="9710302"
-Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.93])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2026 03:10:46 -0800
-Date: Mon, 16 Nov 2026 13:10:40 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, amd-gfx@lists.freedesktop.org
-Subject: Re: [PATCH 10/12] drm/i915: Complete no-op "async flips" by hand
-Message-ID: <avrksFHUYSQTfE95@intel.com>
-References: <20261116091130.13950-1-ville.syrjala@linux.intel.com>
- <20261116091130.13950-11-ville.syrjala@linux.intel.com>
- <sashiko-outbox-216616@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wlLDTAZ6
+Received: by mail-pj2-f0.google.com with SMTP id 98e67ed59e1d1-3b094d5f1b4so661021a91.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 03:27:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794828462; x=1795433262; darn=lists.linux.dev;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=5BStpc8jowDmC9B6cxbOb1co1bGTg3WHKFG1Ve9+btE=;
+        b=wlLDTAZ6dVo/IfiZperTVHwywTLaSXK9o+NPphf560iieFxXLei+3pP6TcW0WCqa5b
+         +kUciIH+0r0ZVmjwymviWYJp54Bv3jRRW2uQWRxtbAkaTMD7DfFVa5b1GkDkznJ+TODY
+         s45DkjyseCNvk0Q00YfFUkxsYejlEnlweYuLZPUy3fxxLI16zQvdvzoa7aGCY6e9fLzQ
+         bsmhdmCqy8/MwX0yIQbleKWmeB4QTZ7Tffs1OvyCKJf49UzMNN1T2lov7W2To8oksZ+W
+         9UbivHAN7tVrJV4B3z/4uiSvxv2Ml/ErwRnsYweEEkmMI9syo+PX3bOiazEe5bD/geXM
+         tKSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794828462; x=1795433262;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5BStpc8jowDmC9B6cxbOb1co1bGTg3WHKFG1Ve9+btE=;
+        b=NCjwdnJysLRQ7UhStvBcDBs81jC9Yx5jf9BWx3KGLwqrFn6n7iEzpMOdo4xZWrLaye
+         AHWbZMXiJvc+7Q+b39A/3KytDkpY5ecS4HZv9SpyrhdLshWj0IevMVOW+dADEIjVJKQN
+         2iigfBjgixojQIegZqu/DNoSKwEM9W6Vxg3oELc9G+Z7ku2N/uFtwtPgs2l4c9ML/3kr
+         HiSbHF/bP6pSpXRDJggEruRWIgbS3hceLrpkkpooE1EBp5D+TeRWUBNEk6MQaZdCREyv
+         SqgpTE5BMWYozrCToUszBRa9PUoXuGJWNO2HCIdDsKAAYjHzmEOPxofHuxltVP6yR06Z
+         atZQ==
+X-Forwarded-Encrypted: i=1; AL+hErH/48cvdBUlYLG0xPjCZfGZ2GmHwv2FuePIJ9jZnFjkeeQd4hGK5u8F2M8LDU85z3B8p3id2PfZ/JjTbOaUz+c=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/q+n0BqrkdjKRhbls2DSmIoWSPHXTqn7j5tRA0XjCHFz7iHmXZ
+	B0DOxZOW2gtu030ieRSTIyAJWI5hIjIpIGtxnnYn0W46QIEkj0FfIFvc
+X-Gm-Gg: AZFdTZcgKvR7XPeFvD3jM/RXZo4+dgd/h5JJ78P9wxT1jq+lrkO88O2axk5ViHgtIII
+	1jDXki0rW52ULKYPqwddcc+2JDC5ViGBVOOFJzTjmvWv2iN1Y9c3I8ynijSIoeMjRvG9wq8FOOd
+	aR8dJ31z/Rl8HKlcWgGz9vSYMB1sLWnOvQdnemkOGqRo+i6e7YsJXKxIVapwjsWXr0w44rALklJ
+	v36+oc6Jd4ixYhC9/3wnKrLMs3miUeVeBBo+sanAGfA48AdD4cMR2WvSDWLRU8GFpOUYJb0BgVh
+	c2xr6SCfB/DbWrlw1h3Id/P6QxSSQwufl5KUZ17n0XoXiUTGyD6Tv5EZpOty8XDXsLjeE8Uo2Og
+	y9NVMKEF2x2xW1NAiQ2G1zQpMd4x5IhDeD1UWVEYt4bKb/uYIh6KuXfKTEyeByhdPA02/0Y3qfd
+	sScixh84zoJuQTxv9PcYz1c5XGYtyV4pTLC6efvlgamwUTbupZ4kfjxn8rkuGv0wIdkYuDQc1hj
+	gyPu1Z2CGc4A3HfTeuJ9mXymyjT7NWirv9Q+99z8mgif0d20hXpSBmSLeqrdYWVHGff9xJHBLJa
+	OqG3tyfnpVARaH8HYiKsVw6uRZG2IlY+VEqSwv0HmXUWhZ4lh7XlbGdzx8Jzqu3ldvle+hFIlga
+	naOa/Zhf+Ls3tsMSCJLbxmyGBVlUN3iCqDznRr6XYlupRK6fUi3BxS/1inoDFdg==
+X-Received: by 2002:a17:90b:570f:b0:3aa:f2c4:12e9 with SMTP id 98e67ed59e1d1-3b1b0815b4amr10210516a91.3.1794828462318;
+        Mon, 16 Nov 2026 03:27:42 -0800 (PST)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1b3b110c0sm8411247a91.3.2026.11.16.03.27.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Nov 2026 03:27:41 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -81,106 +89,32 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-216616@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2 0/3] mm/damon/tests: add KUnit coverage for age_ms
+ filters
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Mon, 16 Nov 2026 22:25:52 +1100
+Message-Id: <179482835290.151538.5686597403158226303.b4-reply@b4>
+To: Jason Angelov <jasonangelov@ucla.edu>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, sashiko-bot@kernel.org, 
+ sashiko-reviews@lists.linux.dev, SJ Park <sj@kernel.org>
+In-Reply-To: <20261116-test-age-ms-filter-v2-0-3b265d59ec98@ucla.edu>
+References: <20261116-test-age-ms-filter-v2-0-3b265d59ec98@ucla.edu>
+X-Mailer: b4 0.16.0
 
-On Mon, Nov 16, 2026 at 09:28:56AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] drm/i915: unreachable noop check in
->   intel_crtc_complete_noop_async_flip()
-> - [Medium] drm/i915: intel_crtc_complete_noop_async_flip() checks
->   cleared uapi.event
-> --
-> 
-> commit 828bac38a449130d5473b2a45f7f646152241cec
-> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> 
-> drm/i915: Complete no-op "async flips" by hand
-> 
-> This commit adds helpers to manually send the vblank event for atomic
-> async flip commits when no planes are updated.
-> 
-> > diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-> > index f79caeb5a82ec..dd12929284bb8 100644
-> > --- a/drivers/gpu/drm/i915/display/intel_display.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_display.c
-> > @@ -1190,6 +1190,42 @@ static void intel_crtc_disable_flip_done(struct intel_atomic_state *state,
-> >  	}
-> >  }
-> >  
-> > +static void intel_crtc_complete_noop_async_flip(struct intel_crtc_state *crtc_state)
-> > +{
-> > +	struct intel_display *display = to_intel_display(crtc_state);
-> > +	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-> > +
-> > +	if (!crtc_state->do_async_flip)
-> > +		return;
-> > +
-> > +	/*
-> > +	 * If there are planes actually performing the async flip then
-> > +	 * the commit will be completed via the flip done interrupt
-> > +	 * handler. For a fully no-op "async flip" the commit must
-> > +	 * be completed by hand as no interrupt will be raised.
-> > +	 */
-> > +	if (crtc_state->update_planes)
-> > +		return;
-> 
-> [Severity: Medium]
-> Can crtc_state->do_async_flip ever be true when crtc_state->update_planes
-> is zero?
-> 
-> intel_crtc_duplicate_state() initializes both fields to zero/false, and the
-> only place that sets new_crtc_state->do_async_flip = true is
-> intel_plane_atomic_check_with_state() -> intel_plane_atomic_calc_changes()
-> for a visible plane, after intel_plane_atomic_check_with_state() has
-> already set BIT(plane->id) in new_crtc_state->update_planes:
-> 
-> drivers/gpu/drm/i915/display/intel_plane.c:intel_plane_atomic_check_with_state() {
-> 	...
-> 	if (new_plane_state->uapi.visible || old_plane_state->uapi.visible)
-> 		new_crtc_state->update_planes |= BIT(plane->id);
-> 	...
-> 	return intel_plane_atomic_calc_changes(old_crtc_state, new_crtc_state,
-> 					       old_plane_state, new_plane_state);
-> }
-> 
-> When no visible planes are in the atomic state, crtc_state->do_async_flip
-> remains false (unlike crtc_state->uapi.async_flip), so this function always
-> returns early on the first check and never completes a no-op async flip.
-> 
-> > +
-> > +	if (crtc_state->uapi.event) {
-> > +		spin_lock_irq(&display->drm->event_lock);
-> > +		drm_crtc_send_vblank_event(&crtc->base,
-> > +					   crtc_state->uapi.event);
-> > +		spin_unlock_irq(&display->drm->event_lock);
-> > +
-> > +		crtc_state->uapi.event = NULL;
-> > +	}
-> > +}
-> 
-> [Severity: Medium]
-> Will crtc_state->uapi.event always be NULL by the time
-> intel_crtc_complete_noop_async_flip() runs?
-> 
-> In intel_atomic_commit_tail(), commit_modeset_enables() runs before
-> intel_atomic_complete_noop_async_flips().  When new_crtc_state->do_async_flip
-> is true, intel_update_crtc() -> intel_pipe_update_start() calls
-> intel_crtc_prepare_vblank_event(new_crtc_state, &crtc->flip_done_event),
-> which moves new_crtc_state->uapi.event into crtc->flip_done_event and sets
-> new_crtc_state->uapi.event = NULL.  With update_planes == 0, no flip-done
-> interrupt will fire to consume crtc->flip_done_event, leaving the event
-> unsent and causing drm_atomic_helper_wait_for_flip_done() to time out.
+Hi Jason,
 
-Ack. Need to deal with that and not prepare the flip done
-event without a plane to send it.
+On Mon, 16 Nov 2026 03:06:20 -0800 Jason Angelov wrote:
 
--- 
-Ville Syrjälä
-Intel
+> The DAMON core tests do not cover DAMOS_FILTER_TYPE_AGE_MS. Add tests for
+> committing valid and invalid age ranges, identifying the filter as
+> core-handled, and matching ages at and outside the range boundaries.
+
+LGTM, thanks for adding these tests :)
+
+Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+
+Thanks,
+Aveline Noir
