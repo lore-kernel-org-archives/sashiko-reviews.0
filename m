@@ -1,95 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=142.132.183.134
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794871028;
-	b=HxDU3GIkHvWNJBEDxEQHwO0yswnvBAZeeD2iyr8ghgmxpqinz9Qq2kf59rUTIWV1c5mi
-	 ylmxQVUwDtatXCtpDODnNNEXzjpQLnDpB+9epTDmby/mmRzXsoJ12S/offx0PFxUBa2mG
-	 up7azf0SS2j3w/ju5IKQn7+25TKmUJgHQbtPpPiAIPBB1SoABsLiYZCDyfK/CfFPAygGp
-	 EgNaO3Q9lF/Al0EIVRq2AQ/zjsrCFSVi4zOF2pGAmkj715j5Ed5AcpH6v5qkjaN6O84bC
-	 S1hhpjEd9N9O8V8pv9VV9cyiuLxaNiNhhiBf6FNInQa79q6ub23RMKnrbfrc4d+9ZEw==
+	t=1794871083;
+	b=XvmOfq22TYoY7gh15wR3rmIV9obXpU7POP6lE4ZIRV6RkI3IH/iWVPhxIm0IdfKw08Yb
+	 tIkEw0iJzkhTvV354GIjoQP7Wab3+XiTaFqC2ZsXFr4MOn5SFVZmCAQNYKTfN6wKigVAg
+	 7vaTVCPb6TO6Q3GUt4TcHV0b3mO/3uqNJfSrwzvN6Hu8OtR/1oAWzZdaPVRORli8tXjiJ
+	 JAgBrLBUgxs+3vQUzAiGPJ32DS1/js7mAlNTSt/iJd31upQqABdk9IjDsMQng41oMcera
+	 dWisdS97/VgGB9GFP8Eui7SNPDftimlkUFzp8ZUoFWwmgSdRyxdHpwcRhHtQ9SDSr4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794871028;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=VUtXluh5oLaQga2mDElt3F7B3MTKErkoGZJ+ACHq9d4=;
-	b=KJ8QPxBpKX1Cd7JAO63wrKumaisxeXLwVVQzyy6o6LD/5s+jxCkgHyt8CwfCyG2oDFFw
-	 yOvMYKc6q5PDJTltgIqYzZnAM32No2zxIBfNrtMVjyZrmkuuCDeyqki4Di108nWSr3TbZ
-	 3/G+7kvgGpW8mgYMFbJR6HMRaJ1I8vxAt9/3uv/0jUFO2VoaxnktwOIvFjWbcJnX6ofWA
-	 n+2xJes+0UXqlry97FH2YdDwWIih/+/a0PJxR7iGnZOo2ExgGdP3+iGLxizzBkivlnoxi
-	 XycQi8wKZpVy5oYrB7A8tUVWj2K4HDkba62/KydwIzHZxtZuo2nRkfYmWFL/oeariqw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794871083;
+	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
+	 From:Autocrypt:In-Reply-To:Content-Type;
+	bh=4/nuy4QglgrM0BuUt/UjkZOK+tfyppGGlKpZpa4QVN8=;
+	b=Vwl1OBVmfB7nlSPzxlgflX1nTUI5RkckLgmcQXcitJdwK8UchZ3ftPbC/Qrm02t4PR0w
+	 h8cMjbLN/kUTuVzf8PP/bUy9tWVyxsCDsZ/lyzhUAc1uGxwLQC2Pbj6do+TPVPZTLCkHJ
+	 dToCofVywwO1fUrURpy0O5LZ48FeT+4inPTi+eDKqgG69omuCXMnSayz0MBWbKGnxszXl
+	 8HobEplqxY4tuBWU4yWIfZVGKddC2KszK22aF5TNagYDMdJ2AV4vlY5puknR69QWweUCZ
+	 LukigDy5VKIuknMqk+VVX6YgVoHwIsAb21dR20tp8V9NoYjkGteOkNvHdnkY8paCMiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=purestorage.com;
-	spf=pass smtp.mailfrom=purestorage.com;
-	dkim=pass header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=B7dUmOt5;
-	arc=none smtp.remote-ip=74.125.82.176
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=erebion.eu;
+	spf=pass smtp.mailfrom=erebion.eu;
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b="5b/oyWaa";
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=VrGFOKpP;
+	arc=none smtp.remote-ip=142.132.183.134
+Received: from erebion.eu (erebion.eu [142.132.183.134])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C24606A31C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 23:17:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67C24606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=purestorage.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=purestorage.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60395606A329
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 23:18:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60395606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=erebion.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erebion.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=B7dUmOt5
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-380b40312e2so2070659eec.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 15:17:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=purestorage.com; s=google2022; t=1794871026; x=1795475826; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=VUtXluh5oLaQga2mDElt3F7B3MTKErkoGZJ+ACHq9d4=;
-        b=B7dUmOt5tdaUgy0SkPDH71xcDNsQ/fTAbc7BJkwOmQSQLoyihhJnasS5QkYaVrCBgZ
-         TXXrN40SKPI+78JdXBGYyOJoilu1Gh6K2H2LACfNCuiDKQfjvzQmWZbUY6kAkfs43Vyw
-         fuTHFvCgYEPJ9NBfS6ERsfOtcCjYJEJBz1llgSXs07ztjZuz81HhJy3twKeOGC8XPe3F
-         TT5OUsxNeSKKKoV+ZLUp6C0f0ckZWc8crzrhTCnB9s28lmH9OoG0uX8xIymIsDd7Gkj1
-         r5OYDhDMbNhvFj/TGt7qxHv+OEW8M4pbceJykMeVUUaCkHf79pIjLBnrVQkrh+D2zIx+
-         GFiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794871026; x=1795475826;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=VUtXluh5oLaQga2mDElt3F7B3MTKErkoGZJ+ACHq9d4=;
-        b=gqtBPauS9+EGI+U1p85Nt7agxr2U7jgm8yqlq56fk4J5QeHUf+Y65g2Lz4qis4q01C
-         +Wp/8sh0FJ1mK1cNeSqgJajUAUfTph+gcV8FaEHmW91IAx6EBFsLUM2wz5ch490e3em7
-         i+HzAZTugwu1QrolzqbuXMfXhm+Z35FNZPSUgeCnD5HvxvCvcUGU9p1ceRHDacwGwnTM
-         Cpq5LRX9sRgDEQEor38qEoM2ixe+s/ysolzqqpyr09rns26EdDSywnTNyQPDhpEDaoxv
-         XK3SM4L59jPioSMn/DP9k+5aA8ybVsFiq63ZAGOZ7eFixs1K/Uhwl1lGFA7v9IE0QZ4q
-         a+kA==
-X-Gm-Message-State: APuU4Z+VVOiTJdjfGkMvaZ4iniJKl/xuZEBTD1CTfOe1QFL40dQWH/yG
-	MbcdXIRQb9DcXt/PA4thLyivt0TBtQFNHfuDGbgQW2rJedIjl9U9x50Jpv9nU1TK9nAmiLktV37
-	wwB2E1kdUO9ykomF/LUQ6H6R3z6z5z/uabiF9wTCVbc0Fa32ZfFzcVhxhtkflx643IDW1uaj5GO
-	XoHjacOU4BmxHaTPocKk2sONyvl+fd20GfQ4/u04bckUVANVuOxAvr96yNthg2
-X-Gm-Gg: AYBFou2Cl6tXStXFTpv2lzukVLP5yfXy+eGFbKtVmS1gmlCJQrkx7jMo5g05CimDyLK
-	CjwnezbfkU9haHnphlC0qcxFkXAPwmVvWuHlae8c6tLGIpQ5k9VU4Rvw0wcp+p7Gx7Z2Nn+5mNF
-	rh2tJS+J3i/s4oQeCZYv0ZcbVSzhwT6L47INSRtixoh4h4q6HzLUtsP9jZQqUYXfLIMW86EARqW
-	mOykAgXH2nsHBOlrwalRQI2mOUztW3K6WOxoX0akSNCObqQHzy6WVPFx/+ZiEifmOOxwkrCSoBY
-	FV89ajCUdzn37xmxjR4a9zYZJGaqAz+Pir+redKYHeimgH+66+ptJ4I9w9AVkcYUvtFKLOVUNm1
-	yAvnFsivsQPqo3weJDfUVt3hZ/r6eWRfi14lvGw0kE1F8J9pk7dIlrpTvZZRJY9MRXDvaq7ReZY
-	c7q5Lcd8fwz/Sw+jr/1oRAc6wiIzLN2Qdh1DnlL6nhZM5rXVt4iOv6k6RqlrKC8m14HpWlvU4ad
-	q40Btr8ARYzXaa/h0nBnWrbJa43N1pCij5+/KxrytlbYBPToyIsE4tjAVQ7Sfj8b2CqA6uHuAPx
-	GGKq2u5ZQdO9Ktr+uBZ06j8aw4X1pCun5v7c/luzSS1mcG24Lw==
-X-Received: by 2002:a05:7300:6b28:b0:376:bcc4:774b with SMTP id 5a478bee46e88-3796638ab4emr12333373eec.23.1794871025916;
-        Mon, 16 Nov 2026 15:17:05 -0800 (PST)
-Received: from medusa.lab.kspace.sh ([208.88.152.253])
-        by smtp.googlemail.com with ESMTPSA id 5a478bee46e88-380e0fdcc36sm2832887eec.25.2026.11.16.15.17.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 15:17:05 -0800 (PST)
-Date: Mon, 16 Nov 2026 15:17:03 -0800
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-Subject: Re: [PATCH v7 01/17] nvmet: Rapid Path Failure Recovery set
- controller identify fields
-Message-ID: <20261116231703.GA1670230-mkhalfella@purestorage.com>
-References: <20261114030454.2836543-1-mkhalfella@purestorage.com>
- <20261114030454.2836543-2-mkhalfella@purestorage.com>
- <sashiko-outbox-214092@kernel.org>
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=5b/oyWaa;
+	dkim=pass (2048-bit key) header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=VrGFOKpP
+DKIM-Signature: v=1; a=ed25519-sha256; s=202508e; d=erebion.eu; c=relaxed/relaxed; r=y;
+	h=From:To:Subject:Date:Message-ID; t=1794871079; bh=4/nuy4QglgrM0BuUt/UjkZO
+	K+tfyppGGlKpZpa4QVN8=; b=5b/oyWaawPhz2OCaX82yN+RXBcTgWyGG0jAnOuWkvocioJQR7P
+	18uhC0WjZ94cmF96pMajDz0eYtziJS3lOFAA==;
+DKIM-Signature: v=1; a=rsa-sha256; s=202508r; d=erebion.eu; c=relaxed/relaxed; r=y;
+	h=From:To:Subject:Date:Message-ID; t=1794871079; bh=4/nuy4QglgrM0BuUt/UjkZO
+	K+tfyppGGlKpZpa4QVN8=; b=VrGFOKpPzJ0nHAqQRcbNSfi5bIWa4IwtOSfaKlUPckV/LFUq+A
+	nlKp0AHxVBgbi9hFj3gB7xSScOnOi2QSFSgG+Rj3SrjtI+L+MZzpYgslCGRG8nksOIua5mcnj5t
+	julvVmnrHiymKrf6ZIYlVnPPWbX51R6eIsZdzJtSSxsA7gfY0wYNScedmlqlVcD5+b45QkyN8u6
+	pBcjrKG0bn47QuDIMlBkU98b67H5ybZ8rf/I3kXtzsLRtnbtJNvsBeSY7HflkC3Fgch0XBuNpJT
+	sIh8t0eLZnMtDT7gsMBCAsNsCFnUMNi6WI04mza4nuLsqk+2cQkmUzu0xFtVfnyrT1Q==;
+Message-ID: <164d15e2-0716-42b2-a0cf-24c01920c3d3@erebion.eu>
+Date: Tue, 17 Nov 2026 00:17:58 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,64 +57,84 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-214092@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/12] arm64: dts: qcom: sm6350-lena: Enable Bluetooth
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org
+References: <20261116-pdx213-upstream-3-v5-0-7318a19806eb@erebion.eu>
+ <20261116-pdx213-upstream-3-v5-5-7318a19806eb@erebion.eu>
+ <sashiko-outbox-217853@kernel.org>
+From: erebion <erebion@erebion.eu>
+Autocrypt: addr=erebion@erebion.eu; keydata=
+ xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
+ HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
+ QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
+ j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
+ qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
+ OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
+ CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
+ rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
+In-Reply-To: <sashiko-outbox-217853@kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------t6p4sJ0DekhsS7Y0qI4CcHYM"
 
-On Sat 2026-11-14 03:17:21 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] nvmet: missing TP8028 field overrides in
->   nvmet_passthru_override_id_ctrl()
-> --
-> 
-> commit b07e2fdf2211131fb02142faf21d5cf7328792da
-> Author: Mohamed Khalfella <mkhalfella@purestorage.com>
-> 
-> nvmet: Rapid Path Failure Recovery set controller identify fields
-> 
-> This commit adds the TP8028 Rapid Path Failure Recovery fields (ciu, cirn,
-> and ccrl) to struct nvme_id_ctrl, initializes ciu and cirn on controller
-> allocation and start, and populates them in the Identify Controller
-> response for non-discovery subsystems.
-> 
-> > diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-> > index f12d830986446..5710ae53eb83a 100644
-> > --- a/drivers/nvme/target/admin-cmd.c
-> > +++ b/drivers/nvme/target/admin-cmd.c
-> > @@ -702,6 +702,11 @@ static void nvmet_execute_identify_ctrl(struct nvmet_req *req)
-> >  	id->mdts = nvmet_ctrl_mdts(req);
-> >  	id->cntlid = cpu_to_le16(ctrl->cntlid);
-> >  	id->ver = cpu_to_le32(ctrl->subsys->ver);
-> > +	if (!nvmet_is_disc_subsys(ctrl->subsys)) {
-> > +		id->ciu = ctrl->ciu;
-> > +		id->cirn = cpu_to_le64(ctrl->cirn);
-> > +		id->ccrl = NVMF_CCR_LIMIT;
-> > +	}
-> 
-> [Severity: Medium]
-> Should nvmet_passthru_override_id_ctrl() also override id->ciu, id->cirn,
-> and id->ccrl?
-> 
-> On a passthrough subsystem, Identify Controller runs through
-> nvmet_passthru_execute_cmd_work() -> nvmet_passthru_override_id_ctrl(),
-> which overrides id->cntlid and id->ver but leaves id->ciu, id->cirn, and
-> id->ccrl with whatever the backend controller returned.  Every fabric
-> controller connected to the passthrough subsystem will report the backend
-> device's ciu and cirn instead of ctrl->ciu and ctrl->cirn, and if the
-> backend controller advertises a non-zero ccrl, hosts will issue
-> Cross-Controller Reset commands that nvmet_parse_passthru_admin_cmd()
-> rejects.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------t6p4sJ0DekhsS7Y0qI4CcHYM
+Content-Type: multipart/mixed; boundary="------------0tZPo4lL8CnTFVY8TU3dQkrO";
+ protected-headers="v1"; hp="clear"
+Message-ID: <164d15e2-0716-42b2-a0cf-24c01920c3d3@erebion.eu>
+Date: Tue, 17 Nov 2026 00:17:58 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/12] arm64: dts: qcom: sm6350-lena: Enable Bluetooth
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org
+References: <20261116-pdx213-upstream-3-v5-0-7318a19806eb@erebion.eu>
+ <20261116-pdx213-upstream-3-v5-5-7318a19806eb@erebion.eu>
+ <sashiko-outbox-217853@kernel.org>
+From: erebion <erebion@erebion.eu>
+Autocrypt: addr=erebion@erebion.eu; keydata=
+ xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
+ HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
+ QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
+ j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
+ qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
+ OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
+ CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
+ rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
+In-Reply-To: <sashiko-outbox-217853@kernel.org>
 
-Makes sense. Will update nvmet_passthru_override_id_ctrl() to set
-id->ciu, id->cirn, id->ccrl, and id->cqt to zero. This way a passthu
-controller exprted say over nvmet-tcp does not claim to support CCR/CQT.
+--------------0tZPo4lL8CnTFVY8TU3dQkrO
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-I will break the change into fixups to two commits
-- nvmet: Rapid Path Failure Recovery set controller identify fields
-- nvmet: Add support for CQT to nvme target
+DQpPbiAxMS8xNy8yNiAwMDoxMSwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4g
+VGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91
+bmQgMSBwb3RlbnRpYWwNCj4gaXNzdWUgdG8gY29uc2lkZXI6DQo+IC0gW0hpZ2hdIGFybTY0
+OiBkdHM6IHFjb206IFNpZ25lZC1vZmYtYnkgYW5kIEF1dGhvciB1c2UgaGFuZGxlIGluc3Rl
+YWQNCj4gICAgb2YgcmVhbCBuYW1lDQpUaGF0IHdhcyBhbHJlYWR5IGRpc2N1c3NlZCBpbiB2
+MiBvZiB0aGlzIHBhdGNoIHNlcmllcy4NCg0KLS0gDQplcmViaW9uDQoNClhNUFA6IGVyZWJp
+b25AZXJlYmlvbi5ldQ0KDQpBY2NlcHRlZCBsYW5ndWFnZXM6IEdlcm1hbiwgRW5nbGlzaCwg
+U3dlZGlzaCwgTm9yd2VnaWFuLCBEYW5pc2gNCg0K
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261114030454.2836543-1-mkhalfella@purestorage.com?part=1
+--------------0tZPo4lL8CnTFVY8TU3dQkrO--
+
+--------------t6p4sJ0DekhsS7Y0qI4CcHYM
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQScjKa1EcO/2KYx++uOr0AybgKufQUCavuPJgUDAAAAAAAKCRCOr0AybgKufZkm
+AP9tgOKyWc8RQ71BtYVkEtcfvOh48aXD5lW0M7yQ0k27bwD+K05Tukdd8+tnQNcbd7p7yYs7Ba5F
+iNgokZsJVqEfwQg=
+=uLia
+-----END PGP SIGNATURE-----
+
+--------------t6p4sJ0DekhsS7Y0qI4CcHYM--
