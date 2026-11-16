@@ -1,101 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794865052;
-	b=gD8TtWJBqL8RfYiaNPtxp6dYhb0x1QqRn1rV5ooRAbSUFnXIBavb39Xoge4h7BBFGFRA
-	 ei5oBH67b1HkAYrmO4fsAg1iNLpBADID2hqfbA9jaA9I/eSNux8hIb3vom9DaNYEfsdzO
-	 2m5VngdtkSeho7sg1oodDbM7hXLkcklY2bLHVY1HUWJEEBiCki5AZzcauRDOrno2QJEIh
-	 ndrtDYC5h3TtKAh1Isa44gnhjMjtG4JpESYFSxIRIJqJw3np9MUdbxFdRhwrDq120Taj1
-	 fRSQDLZTEQ3fZnt4R8bywK3Vfiqivl9hYlQkkY/5eCT1WikPUVGSGa4W+EHLDRrcF4A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794865052;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=V/CIlexh+3dIbJj+uNeGrZODUMiRED+GiA9HD8bfoMA=;
-	b=IGzmvQzseGSRKEv5HZKQaWdpURcKirezK26kc2fV5daYU/U+Bbd7GPjywJMEpn9+vezz
-	 VLK/MxAzid9qF7NQM5CxwUJX1QmSb39eARQMuVYFxngJrFpjg/Qpe4F/90drZ+szzz33h
-	 G/Efczdx9omJOybTKKAHFjjFdPrZvGGIbS6atEbRTfzzA75pYFABMdZ6hOODwAehs8m7z
-	 pEoCAnJEdY1yiN+cW1aMAC8qcqr1vp3/vo3w94XYAmwOOOwZLWn0OMcOlo/gKOSp4zLHL
-	 rFAW4oTaz7YHvFlj66HCJvFMBJebA/eX675uvX056rfzGS/eLcbfDHnfe1IzdYisdWQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ISpLMCmS;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.84.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794865225;
+	b=4Es2tZE61G0H2sxLmx6N/OPVxhOYDxTbFUXrb96g6iBCZR3kNjz8hegmFKrlzd9C8RzD
+	 67VBHY3sOwGckK3lE5VCpAA/0syWk/ukb7JFYiUuRZU+vtaQfz+9UxhyxO35+6AzMTQQ6
+	 apQMgozHCe4TjrVuCISUUi+RCOB68A0KnyPi+CLfjYvXbN/g3taSs3P7+Pi39F2ozdh+8
+	 NgPhhrMqmHmdJ/jWJYsSzsFLc0sM8uJb8awpertnGD5VrZxdxM7hQZT6Pw2R1hpQTV46z
+	 gPlVgQ1QUyzeAxMcbwJBNOlyPx1vvzCkIk0Rfik6NxsvCCHRo09oWu7lY37/YcBReZA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794865225;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=NEqR5F+6rhUtd1TxER1Hgq6r45/JKSGFY9+RnpfuTPY=;
+	b=nrvAL+XbxlUXHAwjZ7UV/cGsS09U/prcM2tVGh704jgw1wU3HCxj6xIYTUdaHY8rBgPD
+	 4OyZw4hKxro7SJAlH7hQbCqjKqa9uYQiGZTJcOEfVkhQpGakahQ2Q/lQ1FYGeXmPT90Ev
+	 JgFnZMHAbJueSNFejuQDfJMThR/iTtoKq5mAbvt2c7diz9VkJtc3V6Dc+1Gsy5a6EA2cu
+	 KDdSjmYFMp6ujKj7n6LD9TRrRFyhn/kTNHowhJgCYI6dFWVGGeChvktAY+hX3fX+eWyBd
+	 /a27h9+43+JQmi5tYdmODC43QLwsZYq+TOajku30IBtGdNjVeIVN5w8P/FtCe73Qngg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=CxH9QYay;
+	arc=fail smtp.remote-ip=52.101.84.46
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010046.outbound.protection.outlook.com [52.101.84.46])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF0C606A323
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 21:37:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8BF0C606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA7E606A33E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 21:40:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDA7E606A33E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ISpLMCmS
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4bb6adaf0f1so14787135e9.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 13:37:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794865051; x=1795469851; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=V/CIlexh+3dIbJj+uNeGrZODUMiRED+GiA9HD8bfoMA=;
-        b=ISpLMCmSrbVC+HntuOLCTRBKajvzV9U2kqH/dp2s37pseFBZ2/JujqBFv98TL3UVrG
-         wlSfQHctrYtYqERSh40E1i3vcIzx2T+/EJl7KE2Gi2vdG/Dee5d2JCV2sqcDJ1UikrKC
-         CwBCRZ1ZGPEMunAn3EVbKSCcreeazfSaRAMMYDo//j20wtYYwx7uTK82agb41Yu2sOaU
-         W1/moAwNsE9v/FUsTwKLVus+p4XHa4BFEvp7gUFY5zMQBbMcoQjTCGieFtm45duaoGi8
-         VAeiiL7HOBEWyjTP2c0+B7lbMX3EPVJn64dE5dHbvShA6M7UhgCTsE209Oc8TDX6+anC
-         Ffng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794865051; x=1795469851;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=V/CIlexh+3dIbJj+uNeGrZODUMiRED+GiA9HD8bfoMA=;
-        b=1L1X236hyjNrjzjhr3AP85HNm/G29E3PQI6Hi0tXxLD/nzOAKGk9O5xE+aUWH8Ifq9
-         D7I1AGVtZZfJV2XPSVLgWhcR3GD1g1IgEbeLImSDPw95G5WoBY6gT+iLs5fa0Kf0ubS0
-         fUQTBj9GhkqyrzZ/vGhR59rbL+ilE64WkCugpVlEBZ6ISZm5zhaxHc1q5FIy5CPKNv6Z
-         DUJ60W/5FYVaEGhWOEaU/cmjLKL0zb9YXxjsT+yA6s+J8GxJlnjZofIoVxNmboazCOza
-         xj0hDYAsw3HmjEGPL9wvkBcxi90NJLEDSfCxQDPlOLYMBkah4IrWHzgAlNDTPlSb8dS7
-         f7Tw==
-X-Gm-Message-State: APuU4Z9rkHmOKrTUfrvL80A52HUjFFHQjKRy0YI0dcMVsoDHS/LknmpX
-	1kqVeDbtC8+xYnlKRJXZsuuzo48kWibGeiQOLPUuDupfOq4KN9HfeR0qZ8B7179i+vuyXg==
-X-Gm-Gg: AYBFou0B0k7Ffw8v8kYpXeJMBTxahgM+JH3IXOJhFy9QQDENegtVkcFB0uRhhfM8sGk
-	G+RaO6SUR4ukxvtr+vlEIrcp5OPfgE/QrRVwPgCpbB3kQezMqP+m8UYtzOuTIbREJghE/W1nVOO
-	0EgfxEhOsLmnJ6ZAZmv5tJ9Kol9/MtQj//qy+foCnW8VEmd6DMYPvwt0Z99GLWDHpfOFNwYAM5O
-	B+NzDxin66T+ty5cob56nWeq61kMKwJK4UW1sn0pJQdlgONqZEOipA7Oloh3B6EJSeKWcXGMeaG
-	uU84/KeBoXw1zdWMiPCpwiG7hWrk4WqpEKN6Z853ZNlqrHJXyyanjkQZCpW3gzpufU/XdfwX7U8
-	iSV3C9Xt4e6V05BMc4+7SEsx39Fjq45OoENkmRhcS28/yENrjUGJSYAmv5Ay/b29mhGIuv0Vh7K
-	9sdUcRBQMyE+BT/6lYmNBbzVPUFt6BeVWn8v17gL4ViWkEb8laPjtdqgnPbCAyBjSYLN+0DLdCO
-	S4OtqVVU7QhAphNmJFluakzcBao6oqhQ/5APksdoS97PInp4IUlWpeEXy6UAreMF2g2ydz8bGHs
-	7/pCy4npzq3OurVB5wRFhHP70sFs
-X-Received: by 2002:a7b:c00d:0:b0:4a1:efba:511 with SMTP id 5b1f17b1804b1-4bb55a8a57dmr187933905e9.35.1794865050987;
-        Mon, 16 Nov 2026 13:37:30 -0800 (PST)
-Received: from flare5 ([212.58.121.92])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb675200e4sm143331635e9.0.2026.11.16.13.37.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 13:37:30 -0800 (PST)
-From: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=CxH9QYay
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=M5/rsdM6ZQQgXojrNYpTaHHXUdBx1EWz3Ew75d4PkUXrr/Wt272TD8TKj2UX7uMOchdCiGj3F/e0brJqx2w00C98hYYlajV9ycsZTdZduI3VbivJ2SWEjvFSvIraZzSAHeUmccyB2EOKM1RqHiSRZUPCN2wNTEFQVKRydqukd9BPQz/XtyxK0AaUAJ1anbZwNa8qQZl73txZG0v05xw9cy6odqtMLWtC2LpjG9QIZovUC0Hbg++RPzBjGkCZd3tqtC2xKSO+X1pdapbcdjPubOv4VFiXtO7oEaD6jdFmV3ZJaRvUnBkLIgzAMgeqzbtgvOPFhAP4/8DDBkpX6SZStQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VDZeuk87OtOt1VstirK5RKgTiukh98+GPhQZ6qo+F50=;
+ b=CtXXBq8S8KLDBQrXFVEAl1mjZ7e1ArDOzZrPczB8P/hB7IQki1whkeg8/7rNcJ3cMEUx+88Qb39/Xgku4iPRO30dTLXp1LIOv6DTkKi6mkBnU8WBzne6+k4qG5tVrAld2wpH2DJkbztJk5igWFTPezpfI4LQlShmO/Vq2gaQTxTA+AqTQh4cPkVbrkaxtJEGsm+orl1u7XlmZvTnWVBAZ3iHfY66r7azQR4UDBY/Oy0q4HVzxC0VN+ApwQFozA2c3H7d4+57IlD5CtWLCrj1vbcWeueimCW7AQIE1JDhzUnCRr0ZvJkJTN59svC8iINGRUzeEQsV7ILyYBfLIh3/GA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VDZeuk87OtOt1VstirK5RKgTiukh98+GPhQZ6qo+F50=;
+ b=CxH9QYayJEV3rKl0H7Rk5xfvbpnGV7bcSepjMC6fmDxgXerVvPZYQXcYARIWwYhuRvpHLsOdxoYYPLpa74DAC1JCuUtHOTdrIO4JruBspLK5EpGjG9nIRu0HcYIuFr11sEfRnFeF5KETwYSPERM3A3AkvRlDtUasdo5T1XmIZOyCv6KyT8nERgbU/9TokCWnco1FLBcVpU36Sk2PV/xP5T9zyMsB71QI3m6tOdWjEcUQzFVVLMP7AhCSGRe5RKrt9F8gWYebACkiCzlVKCRjkgb4CCw6kIlyOql8qE8nHJxfqj/HCdj5C7ojvJ3o+Y+jakt5sGk5frZn1ER8ATCIxA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by GV1PR04MB10378.eurprd04.prod.outlook.com (2603:10a6:150:1d4::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Mon, 16 Nov
+ 2026 21:40:22 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Mon, 16 Nov 2026
+ 21:40:22 +0000
+Date: Mon, 16 Nov 2026 15:40:13 -0600
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] cpufreq: dt-platdev: Add Halliday to blocklist
-Date: Mon, 16 Nov 2026 21:37:03 +0000
-Message-ID: <20261116213703.3774089-1-lightofmysoul@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <sashiko-outbox-217729@kernel.org>
-References: <sashiko-outbox-217729@kernel.org>
+Cc: Allen Pais <allen.lkml@gmail.com>, dmaengine@vger.kernel.org,
+	vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v4 02/33] dmaengine: back channel BH helpers with WQ_BH
+Message-ID: <avt4PU04jy8a4e_i@SMW015318>
+References: <cover.1794315350.git.allen.lkml@gmail.com>
+ <717bb0b82658f1dd800f6b1bc06b9cf283f77361.1794315350.git.allen.lkml@gmail.com>
+ <sashiko-outbox-207180@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-207180@kernel.org>
+X-ClientProxiedBy: PH8P220CA0029.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:348::13) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,14 +98,191 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|GV1PR04MB10378:EE_
+X-MS-Office365-Filtering-Correlation-Id: 69141105-4230-4548-bc0d-08df442a376e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|366016|376014|18002099003|22082099003|6133799003|11063799006|4143699003|56012099006|260925022911599003|260925021311599003|260925021911599003|261009221727099003|261026121527099003|261026140227099003|261102130727099003|261102123227099003|261022075727099003|261022105027099003|261021121427099003|261009223027099003|261028144727099003|261009223327099003|261009221227099003|261009220027099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	nzF4CwKy1AwENDmuEYCOmkx+U83sLnffeypoCwngivajsci7Ed0e2fcR6HnUO/UMh4C1/jUkYNQUo5QbFyDNBCL/Hbvghowg5+BkqNziIzESCsan0Y7CFmztAaVvUOKGsN2VyioYMeYDmBGijRrmdSI9G43tO5TzE3pw51HRvBsh0DnqYA1DgpoSJFDB/05Hn0EW+OT3xb00TKc1uE3TpXmPxJNKM1Wdr3sxcW9gHY5mzkC9XLkJjjwJWki4LFL3vEqwNEBRsXAPT+/6ZIAGjv+ZhoiyCvbZdgbYDuZ81n6HSXsRFol4QwzMYBiA/wZ4xP3Vj/YVeWtKwLZxb3i3ioihKdEsamlQNt03ZIV4+rmSOkOA4vNfrjhPLTzoXzCjsmbT6TRxv/kuxxl4dkMSVUrIquEaJPrq3OScA7pORgthrdsrDBUWtMqxOl7MoXE5hwdhavdvfWScT2Z/I5C0OqoMk3ACgWNOwqzS6X3EoYlsqQf0pSDY3GK6/BukBztGa0Hvs4cKL3r32b/SwsFafunPyvb9383uHuDXX8+eIh/2d5xjvzGCt9hKl8lNXBwRltFBcoYxSBh0KanJpJyatDYJ5t50NvaidEre0EojLhQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(6133799003)(11063799006)(4143699003)(56012099006)(260925022911599003)(260925021311599003)(260925021911599003)(261009221727099003)(261026121527099003)(261026140227099003)(261102130727099003)(261102123227099003)(261022075727099003)(261022105027099003)(261021121427099003)(261009223027099003)(261028144727099003)(261009223327099003)(261009221227099003)(261009220027099003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?ayeUYTRdbjeQukYaMR9/EkkBoiIklFh5arS+dLcSXReV+S3SgPbUVCMrdc?=
+ =?iso-8859-1?Q?M4Y5Uqej8Zd4ciVqx/8PmhlmoBLVkCEuiAYec9SFhoW7tzBiqOHWuUSCFb?=
+ =?iso-8859-1?Q?H8H3bY2hIYremqxwvfZYxUC7+BbK31knFFY6Oi3LEGeqf0LMceRacJTMur?=
+ =?iso-8859-1?Q?pmKpESe6ClhiFy8KhuDToZZxPW/1nPTKn9BLDMrPfNWRTWa6Mv5KQd6GZ4?=
+ =?iso-8859-1?Q?2QidmnWFD1QuaWlFZqyEayqkJar8eWPPwndEO4NxCuWMtNmnBpZbyNuBPy?=
+ =?iso-8859-1?Q?lJRShGbHEyLuwpLxsZCp0x3EnbeUpk9SoGPge5mI9eTMZHnmmFJg79TXqP?=
+ =?iso-8859-1?Q?lF6rGbS8TSdNWAjACSbzNguVUHTQIkS/hnSS9pd2NvBe9ie113fqi0Y5Yr?=
+ =?iso-8859-1?Q?5KvvEqvrWuE+/QcuEL58EMO4NUsuj7VveV3Ln9bFO6/+K+rZsVCOHjmKe5?=
+ =?iso-8859-1?Q?KNvJIEeO8l7RR8ETg9qG90x10U+c9hj4HT5tBJvDqwnyjr/pP+2hJNYErk?=
+ =?iso-8859-1?Q?67XJK9xcKGT5hHCFWS9SaoYslDECCHZLOZekK+QXdAYWX72JMZh+UDIOUj?=
+ =?iso-8859-1?Q?wCe3IMaPu6kgKcyDJLmZv0KCRCGNcnWZKitAIBg2L73A7tVG42otVLzo22?=
+ =?iso-8859-1?Q?QgJ48NnknLDsMNOdmyAowkIfFLew9Y4KVNAcXhTdMnZoEdYx5M2phmAqV4?=
+ =?iso-8859-1?Q?va6h8qkXRVEejbtP3zey8VBdbcTfyrebbfUBGLI28lff+pKa0MV6+o6c5D?=
+ =?iso-8859-1?Q?Oq4h9vasJ1MA5Ce0decw3T0IF/UIZedVy6yG9Ko+YGDgxd/3NbLTbp6C3W?=
+ =?iso-8859-1?Q?sPLavO4/6E/wQrC4P1VL0RkhjqBQ0b0/MirpRqtZe5LfZ+coDcWkv0rt79?=
+ =?iso-8859-1?Q?wc3YXCkTr2pe0/T3SD/VwmLXFE5pE81r+84LJGNNevKZstgdOSQ99hUnM7?=
+ =?iso-8859-1?Q?fHvZ76nvgUeYOu/pHtuYmM2LpQxerxzzho36zaQ9kbLl5VT+5FV9TElLJr?=
+ =?iso-8859-1?Q?EIZd6QnhvyhkGHJPP32D4ePC65/DILQjIOX6QDU/8Hv8Z1l2oVXgF2QQ0u?=
+ =?iso-8859-1?Q?hFsyVrhVPY7M0ElXLPzqn0ESCj8GfEpiRO+Obibu73ltW6szZCi2OgsN/k?=
+ =?iso-8859-1?Q?7xOxq3+84fL0SYYuos0QP5MzcD2YGzmAOMNdplXpozC7Nn5P+qkM5lf17b?=
+ =?iso-8859-1?Q?EmWHZqt92+eFxnsJat9tEOlr0cSM6GepUtNww/4ikll4DHInPxiuJp64xi?=
+ =?iso-8859-1?Q?3BXnHK4q3JOtgk2LnuwtG4tqu7oJRikbMHoac9R+Mk5+uxBQw6x6KFqZNN?=
+ =?iso-8859-1?Q?0hCztAPIbMNgAYRBSJCglqWmR3cYPhtCBasxixyZwOUGNBEtUvyAqPwOSC?=
+ =?iso-8859-1?Q?mFCCKEm2EabYiVBb/UK5aw66H6c+VzGVzDC4q+DUMmNKDEvCTHRQQHGzfQ?=
+ =?iso-8859-1?Q?3joRgi6Zo72W9RHV7uiHzK8WP+uas+9uyWeBJKiM7c+PBY2M9ZEVmrWYHJ?=
+ =?iso-8859-1?Q?lQens8jQpDob8epMK7oO+yLzIq1NN4oYjZSW73pYDVDvSepXdFkY7FKVmO?=
+ =?iso-8859-1?Q?S/a9Mkc8t8KytMfF12tDK7RJinToKueNZ36P9tfPXnBYI8zz/1e5+Gx8Be?=
+ =?iso-8859-1?Q?3ox+OyLVjcEZmuFhgsHv+p5tv2YL/rRA0z9VrQhKQ+s8JvpkpujB81M+oe?=
+ =?iso-8859-1?Q?m90Bh6cRV3QhhdE0q5IvajletSfZLo1qbD1BwN63AhGWG9Jyf3/YAvtWuZ?=
+ =?iso-8859-1?Q?i8HmbhONE+3bupqQ8b+qUwIi2C2jyL0vq4Sfv1SUC2xqUgRmy5WBDhENUe?=
+ =?iso-8859-1?Q?7u3fSDeMEaupt5BYpTu5vAoxrmBp90Thny9JB8NW2T94hf3ObaZv?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 69141105-4230-4548-bc0d-08df442a376e
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Nov 2026 21:40:22.1296
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NGwdY6rL6thH1bTIr8O7O/8hwIghCBqDUCl06OSaztFgcEy0MNmCNRErU2/TaykJ4HEVLB5iOb305H9tTQyj8ab8op6PMG/YxHUYk/c/w0/baZGIze/WUycA+gdW2EBZ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10378
 
-On 16/11/2026 21:32, sashiko-bot@kernel.org wrote:
-> Should "qcom,halliday" be documented in
-> Documentation/devicetree/bindings/arm/qcom.yaml before adding it to
-> blocklist[]?
+On Tue, Nov 10, 2026 at 02:15:38PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] dmaengine: dmaengine_kill_bh() returns with bh_work still
+>   queued on re-schedule
+> - [Medium] dmaengine: flush_work() in dmaengine_kill_bh() triggers flush
+>   dependency warn
+> --
+>
+> commit e183b161b65ac0da135cdea21e6916bb3483d703
+> Author: Allen Pais <allen.lkml@gmail.com>
+>
+> dmaengine: back channel BH helpers with WQ_BH
+>
+> This commit replaces the per-channel BH tasklet implementation with a
+> dedicated WQ_BH | WQ_PERCPU workqueue while keeping the dmaengine_*_bh() API
+> unchanged.
+>
+> > diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> > index f3c1283b161b6..97d8f9667ae5f 100644
+> > --- a/drivers/dma/dmaengine.c
+> > +++ b/drivers/dma/dmaengine.c
+> [ ... ]
+> > @@ -1449,9 +1451,34 @@ static void dmaengine_destroy_unmap_pool(void)
+> [ ... ]
+> > +static void dmaengine_flush_bh_work(struct work_struct *work)
+> > +{
+> > +	if (!work)
+> > +		return;
+> > +
+> > +	flush_work(work);
+> > +}
+> > +
+> > +static void dma_chan_bh_entry(struct work_struct *work)
+> > +{
+> > +	struct dma_chan *chan = container_of(work, struct dma_chan, bh_work);
+> >  	dmaengine_bh_work_fn fn = READ_ONCE(chan->bh_work_fn);
+> >
+> >  	if (fn)
+> > @@ -1467,7 +1494,7 @@ void dmaengine_init_bh(struct dma_chan *chan, dmaengine_bh_work_fn fn)
+> [ ... ]
+> > @@ -1487,7 +1513,7 @@ void dmaengine_kill_bh(struct dma_chan *chan)
+> >  	if (!chan->bh_work_initialized)
+> >  		return;
+> >
+> > -	tasklet_kill(&chan->bh_tasklet);
+> > +	dmaengine_flush_bh_work(&chan->bh_work);
+> >  }
+> >  EXPORT_SYMBOL_GPL(dmaengine_kill_bh);
+>
+> [Severity: High]
+> Can dmaengine_kill_bh() return with chan->bh_work still queued on the
+> workqueue?
+>
+> Unlike tasklet_kill(), which holds TASKLET_STATE_SCHED while waiting for a
+> running tasklet to finish so concurrent tasklet_schedule() calls cannot
+> re-queue it, process_one_work() clears WORK_STRUCT_PENDING_BIT before
+> invoking dma_chan_bh_entry().  When flush_work() runs while chan->bh_work is
+> executing, insert_wq_barrier() places the flush barrier on worker->scheduled,
+> ahead of pool->worklist:
+>
 
-It is documented in the DT series:
-https://lore.kernel.org/r/20261116-halliday-dts-v2-12-2c92438c6c46@gmail.com
+Can you check this one?
 
-Stanislav
+Frank
+
+> CPU0                                  CPU1 (bh_worker)
+>                                       process_one_work(&chan->bh_work)
+>                                         set_work_pool_and_clear_pending()
+>                                         dma_chan_bh_entry()
+> dmaengine_kill_bh(chan)
+>   flush_work(&chan->bh_work)
+>     insert_wq_barrier()
+>                                           ...
+>                                             dmaengine_schedule_bh(chan)
+>                                               queue_work(..., &chan->bh_work)
+>                                         /* dma_chan_bh_entry() returns */
+>                                       process_scheduled_works()
+>                                         /* runs barrier from
+>                                          * worker->scheduled */
+>   /* flush_work() returns */
+> kfree(chan)
+>                                       /* processes pool->worklist */
+>                                       dma_chan_bh_entry()
+>                                         chan->bh_work_fn  <-- use-after-free
+>
+> This is a regression when chan->bh_work is re-queued while
+> dma_chan_bh_entry() is running, for example when a BH callback reschedules
+> itself (such as dma_tasklet() in ste_dma40 or mv_chan_slot_cleanup() in
+> mv_xor) or when a driver calls dmaengine_kill_bh() before tearing down its
+> IRQ or timer (such as mtk_cqdma_remove() or tegra_adma_free_chan_resources()).
+> Using cancel_work_sync(&chan->bh_work) or disable_work_sync(&chan->bh_work)
+> depending on whether the channel may be used again would wait for any
+> in-flight execution while preventing or draining concurrent re-schedules.
+>
+> > @@ -1687,15 +1713,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
+> >
+> >  static int __init dma_bus_init(void)
+> >  {
+> > -	int err = dmaengine_init_unmap_pool();
+> > +	int err;
+> >
+> > +	dmaengine_bh_wq = alloc_workqueue("dmaengine_bh",
+> > +					  WQ_BH | WQ_PERCPU, 0);
+>
+> [Severity: Medium]
+> Does calling dmaengine_kill_bh() from a WQ_MEM_RECLAIM workqueue or a
+> PF_MEMALLOC task trigger a WARN_ONCE() in check_flush_dependency()?
+>
+> dmaengine_bh_wq does not have WQ_MEM_RECLAIM set (and WQ_BH workqueues cannot
+> set WQ_MEM_RECLAIM).  Because dmaengine_kill_bh() calls flush_work(), which
+> passes from_cancel = false to __flush_work() -> check_flush_dependency(),
+> flushing a pending or running chan->bh_work from a WQ_MEM_RECLAIM context
+> hits the dependency warning:
+>
+> kernel/workqueue.c:check_flush_dependency() {
+> 	if (from_cancel || target_wq->flags & WQ_MEM_RECLAIM)
+> 		return;
+>
+> 	WARN_ONCE(current->flags & PF_MEMALLOC, ...);
+> 	WARN_ONCE((worker && ((worker->current_pwq->wq->flags &
+> 			       (WQ_MEM_RECLAIM | __WQ_LEGACY)) == WQ_MEM_RECLAIM)), ...);
+> }
+>
+> For example, sdhci allocates host->complete_wq with WQ_MEM_RECLAIM and runs
+> sdhci_complete_work() -> sdhci_request_done() -> dmaengine_terminate_sync()
+> -> dmaengine_synchronize() -> vchan_synchronize() -> dmaengine_kill_bh().
+> Using cancel_work_sync() or disable_work_sync() in dmaengine_kill_bh() sets
+> from_cancel = true and avoids this warning.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1794315350.git.allen.lkml@gmail.com?part=2
