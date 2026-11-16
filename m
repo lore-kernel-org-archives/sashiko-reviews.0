@@ -1,122 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794848014;
-	b=sqNjhQ8egdiilHIO5pxbMb/UK4c+Sfrr8IvZeX8x+8tSIaZr3eBaxUIFArSEb5+KuHy4
-	 N/n9VP3qXhBcGSUORrTj5TsGLKr+2gg2e0FL23HZ5d6H0hTlU70FJwiy0WK5BtBuHmuQi
-	 UY6SRxMPMT4qDRXoI4pT9ZGSlD+pHTQWVpk7yK7co3cWqdUE1XFv6wJR1EfTTqrPNZ+0p
-	 oDBtLK8HZgq+nqjMVz/E4GDGd3z6H/VT0e19KUxcsKtElGflMVfukkvOkIcVVLsdIuYAe
-	 6/FL93IRPJ8Q8QqDE7+Gu3AK8nO6LHh06x/HaAxP+Z1ndq9c7A5tYzLUNrSzuxtTK6g==
+	t=1794848045;
+	b=GUbHVUsLRp5EgjY4ErktR5WqZD3gjmdnQ4QuQ4I3cx9b9lau/d4pNM+ftZ/GAwwnxcjK
+	 acJl/ifzfdEifBSRls1RRrsxvFlgCeYwofGlNje0qfDDu9Gpm66f4rNxi7GxJ1Tb4oyiB
+	 xkZtKYaIRrmO92c8qO+SspIjoa3N8IGoL1Z011G3F2jnVpdcCCRvV5sD7HMJvEzYyKPLt
+	 QhdFksAm6ysu5WFuDYkCptLxh2qJDPUZvQzWjQMg3pfRKH4JSd3jQzeY3uKDLx0sO1ZVY
+	 6uaiGDxZK2LslvuZnI0tFwz4pVcEnX8aqMnueCRgHIftN91OYiOcvOqhFdcvYGXxG+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794848014;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-Spamd-Result:X-Rspamd-Server:
-	 X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id;
-	bh=Gex1bYtiRcAcLEdG3dKc8nOze5cdZDbOIAuRhEws/aE=;
-	b=qELTVrufEkE3npDnutsPWykwe9iR63l0HM83XOH7Bb3e7ook6Kerojq1NJPhb0sCsO6J
-	 x7GR+HBgQVbNhgTbI2zW/2HTESpWTltxNsZ5utNObTKtZFqfB9M6EsdFAfRo3G86h/9gg
-	 QrKPzDwsndiRHL/z3BP1GPx3ckdHfnZomF1N/p/tF2dsgJA7Iz8yyI7mWKoyNcO/4U22o
-	 XBkhbs/L5xvtP1hC4fxZ+CZPHBoSLZzp8sZgaSPXuaypVABW4amBDUJ3m0tlkZidYybah
-	 3n6YmCinSDMHlcacA0VMxGUofTAG4ChMPO9dNSX9dAgUb/uvXXcnVe4yzyFnbzsMHfg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794848045;
+	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id;
+	bh=S3bxneiWF925sHRWuhmHNR2GbqcJSpHqdoFk1dfbgNk=;
+	b=vPMr5+NFu17ETQL7pZZCQaRFmK2U6Ym6xFwue8s7FYdK44AI/46+kSgIqRZzGOXJss21
+	 fQzXXr0KHcK/wXkTMbK5A8zNuWbdWKsjzdfIaQXvshXxrZj1T4Xsv2CU8nF6jp9T2YWHx
+	 ijm2bVBV40XC6Q85Wn3Qa/HERgtr3gEBj0zhjOz2j1NdR/bVhfQ8fjT+kGDyiaKRwmd1Z
+	 VDLrqg28v5np5AKq1gQEJDZdXB4JHCepr01Wu/H1E5jKocsspnE0/lshRzIynq7Bb7Jem
+	 SvPgBxxGAY5zztRy242qm3EUQ+Aq22uZGCMHq+PXA5mNcY16LnkyWTC1tSJujcmuXnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=suse.cz;
-	spf=pass smtp.mailfrom=suse.cz;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=yUbthPur;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="y2PYR/Mn";
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=yUbthPur;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="y2PYR/Mn";
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dmarc=pass header.from=pablofraile.net;
+	spf=pass smtp.mailfrom=pablofraile.net;
+	dkim=pass header.d=pablofraile.net header.i=@pablofraile.net header.a=rsa-sha256 header.s=MBO0001 header.b=QpBEdrTo;
+	arc=none smtp.remote-ip=80.241.56.171
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE11606A31C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:53:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5DE11606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12372606A322
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:54:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12372606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pablofraile.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pablofraile.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=yUbthPur;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=y2PYR/Mn;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=yUbthPur;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=y2PYR/Mn
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	dkim=pass (2048-bit key, unprotected) header.d=pablofraile.net header.i=@pablofraile.net header.a=rsa-sha256 header.s=MBO0001 header.b=QpBEdrTo
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 5ABE02227F;
-	Mon, 16 Nov 2026 16:53:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1794848011; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4jSv8S1kT6zMlkh;
+	Mon, 16 Nov 2026 17:54:00 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pablofraile.net;
+	s=MBO0001; t=1794848040;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Gex1bYtiRcAcLEdG3dKc8nOze5cdZDbOIAuRhEws/aE=;
-	b=yUbthPurRXW05FPYN+Q1isT6WzvZ36DAx2D8yYt0bYcZoIp8vShz3jLcojVRGw46u1UR2c
-	Z5KHulNH7P2njE5sXg8b/1PqYZRVbByyqnWltENT8/8Zgb26edOb4jGHMsOPMeojWnYJHH
-	3DMvBgOjOnFxoAezdZ6tlBBurrHAXpw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1794848011;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gex1bYtiRcAcLEdG3dKc8nOze5cdZDbOIAuRhEws/aE=;
-	b=y2PYR/Mnj0OC1mQxqOw3ZQboe6GJKnvexAneQohDnJfqac6G1baLvowa2V8YHuQ4VUB5YM
-	ZSHBQ+gqerC5SFCA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=yUbthPur;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b="y2PYR/Mn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1794848011; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gex1bYtiRcAcLEdG3dKc8nOze5cdZDbOIAuRhEws/aE=;
-	b=yUbthPurRXW05FPYN+Q1isT6WzvZ36DAx2D8yYt0bYcZoIp8vShz3jLcojVRGw46u1UR2c
-	Z5KHulNH7P2njE5sXg8b/1PqYZRVbByyqnWltENT8/8Zgb26edOb4jGHMsOPMeojWnYJHH
-	3DMvBgOjOnFxoAezdZ6tlBBurrHAXpw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1794848011;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gex1bYtiRcAcLEdG3dKc8nOze5cdZDbOIAuRhEws/aE=;
-	b=y2PYR/Mnj0OC1mQxqOw3ZQboe6GJKnvexAneQohDnJfqac6G1baLvowa2V8YHuQ4VUB5YM
-	ZSHBQ+gqerC5SFCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0B7351334C;
-	Mon, 16 Nov 2026 16:53:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id QiPqNAo1+2otCwAAD6G6ig
-	(envelope-from <jack@suse.cz>); Mon, 16 Nov 2026 16:53:31 +0000
-Received: by quack.suse.cz (Postfix, from userid 1000)
-	id 6FD9424E87; Mon, 16 Nov 2026 17:53:30 +0100 (CET)
-Date: Mon, 16 Nov 2026 17:53:30 +0100
-From: Jan Kara <jack@suse.cz>
-To: Mike Marshall <hubcap@omnibond.com>
-Cc: Jan Kara <jack@suse.cz>, sashiko-reviews@lists.linux.dev, 
-	Christian Brauner <brauner@kernel.org>, Andreas Gruenbacher <agruenba@redhat.com>, 
-	Martin Brandenburg <martin@omnibond.com>, devel@lists.orangefs.org, Dave Kleikamp <shaggy@kernel.org>, 
-	Carlos Maiolino <cem@kernel.org>, David Howells <dhowells@redhat.com>, 
-	Marc Dionne <marc.dionne@auristor.com>, Miklos Szeredi <miklos@szeredi.hu>, Chuck Lever <cel@kernel.org>, 
-	Jeff Layton <jlayton@kernel.org>, Eric Biggers <ebiggers@kernel.org>, 
-	Jaegeuk Kim <jaegeuk@kernel.org>, linux-fscrypt@vger.kernel.org, Anna Schumaker <anna@kernel.org>
-Subject: Re: [PATCH 03/13] orangefs: Check PAGECACHE_TAG_DIRTY instead of
- I_DIRTY_PAGES inode state
-Message-ID: <oaoejnl23mcfhcs5vezy4b32xshnqpzipiwdgndilrqh3yxdo6@kfbyeig5xved>
-References: <20261113083336.15152-1-jack@suse.cz>
- <20261113084700.739002-16-jack@suse.cz>
- <sashiko-outbox-212490@kernel.org>
- <6vifbr2gkvxhq2rer5agf6jwy3lrsjqpkxcrfdnypjqqjao4uw@j2al5rnaailb>
- <CAOg9mSQYDoH0ASc_HCgR=oZrGa1r=wy5OuS9qwX5arjd0bKP1w@mail.gmail.com>
+	bh=S3bxneiWF925sHRWuhmHNR2GbqcJSpHqdoFk1dfbgNk=;
+	b=QpBEdrToFOfl8yju8CirB4ZkETT4dw5APekHI/hflqRyCmjBxERXDdGZhNTE0IueDZl5Sa
+	QLkNINVXi4fL1IPTsuJWt38Hf4XLqrmOPab1MN0r3TUbkwms6zzrXrp0MeWrobjK0xK2bH
+	soZI7RSL0bS2cDJfGqp/KsK9obDP7cIFja4SadsCE9ngfA/dtjRenuNRPZ/s9ywJaIFjpX
+	biv4/2N70URinIbw2J/qM3Mi3P1b2E8uH6hHvfA00MMt7rbqhS0fkcjQ4Q/1rhPTp9SYVv
+	0677LUxOLqgth/kBEeEt9pMBilm3eWHw55XuZ8sLmH6t8WufJhhw/q8QGuH4nQ==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of pablo@pablofraile.net designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=pablo@pablofraile.net
+Message-ID: <83290e65-131e-4aea-ba79-e1453445e872@pablofraile.net>
+Date: Mon, 16 Nov 2026 17:53:58 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -126,236 +65,28 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOg9mSQYDoH0ASc_HCgR=oZrGa1r=wy5OuS9qwX5arjd0bKP1w@mail.gmail.com>
-X-Spamd-Result: default: False [-13.01 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_RHS_NOT_FQDN(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	ARC_NA(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.cz:email,suse.cz:dkim];
-	RCVD_COUNT_THREE(0.00)[3];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	URIBL_BLOCKED(0.00)[sashiko.dev:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:email];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[suse.cz:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -13.01
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 5ABE02227F
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] uprobes/x86: Fix bypass of two-byte opcode validation
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org
+References: <20261116-x86-uprobes-two-byte-opcode-v1-1-2b6dbabead52@pablofraile.net>
+ <sashiko-outbox-217334@kernel.org>
+From: Pablo Fraile Alonso <pablo@pablofraile.net>
+In-Reply-To: <sashiko-outbox-217334@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 4jSv8S1kT6zMlkh
 
-On Sat 14-11-26 11:02:27, Mike Marshall wrote:
-> I worked through Jan's patch and sashiko-bot's review
-> with grok build, and came up with this... If what I've
-> got here passes muster, I'm thinking Jan should still
-> be marked as Author: and Signed-off-by:  it is his patch
-> with a little change, but I wouldn't want to attribute
-> anything to him that he doesn't want attributed, so
-> let me know... My version probably won't feed through
-> "git am" since I'm using gmail. I'm not sure how to add
-> a message to a thread with "git send-email", even
-> when I add in the message-id...
 
-Thanks! I had something very similar in my tree already so I've just
-updated that to match your changes with the helper function and I've used
-your changelog. Thanks again!
+On 11/16/26 17:01, sashiko-bot@kernel.org wrote:
+> map-1 opcode against good_insns_64 (map 0) instead of good_2byte_insns,
 
-								Honza
+I checked the parent revision and confirmed that the reported REX2 behavior already exists before this patch.
 
-> 
-> 
-> PAGECACHE_TAG_DIRTY is the authoritative source of dirty folios.
-> I_DIRTY_PAGES can stay set after filemap_fdatawrite(), which is how
-> orangefs_flush() and orangefs_fsync() write the mapping, so a getattr
-> keeps serving the cached inode after the folios are clean.
-> 
-> The dirty tag alone is not enough. folio_start_writeback() clears it
-> and sets PAGECACHE_TAG_WRITEBACK before wait_for_direct_io() sends the
-> write. OrangeFS writepages does not return until that call finishes, so
-> I_DIRTY_PAGES still covers the round trip today. A getattr that looks
-> only at the dirty tag stores the server's old size while the write is
-> in flight. orangefs_writepage_locked() then reads that size and shortens
-> the write.
-> 
-> Hold the cached attributes while either tag is set.
-> 
-> 
-> ---
->  fs/orangefs/orangefs-utils.c | 22 +++++++++++++++++++---
->  1 file changed, 19 insertions(+), 3 deletions(-)
-> 
-> diff --git a/fs/orangefs/orangefs-utils.c b/fs/orangefs/orangefs-utils.c
-> index 9ab1119ebd28..72fa9865bb86 100644
-> --- a/fs/orangefs/orangefs-utils.c
-> +++ b/fs/orangefs/orangefs-utils.c
-> @@ -233,6 +233,20 @@ static int orangefs_inode_is_stale(struct inode *inode,
->   return 0;
->  }
-> 
-> +/*
-> + * Dirty and writeback tags, not I_DIRTY_PAGES. filemap_fdatawrite()
-> + * leaves that flag set after the folios are clean. folio_start_writeback()
-> + * clears the dirty tag before wait_for_direct_io() returns, so the
-> + * writeback tag is what covers the server write.
-> + */
-> +static bool orangefs_writeback_pending(struct inode *inode)
-> +{
-> + struct address_space *mapping = inode->i_mapping;
-> +
-> + return mapping_tagged(mapping, PAGECACHE_TAG_DIRTY) ||
-> +       mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK);
-> +}
-> +
->  int orangefs_inode_getattr(struct inode *inode, int flags)
->  {
->   struct orangefs_inode_s *orangefs_inode = ORANGEFS_I(inode);
-> @@ -247,7 +261,8 @@ again:
->   spin_lock(&inode->i_lock);
->   /* Must have all the attributes in the mask and be within cache time. */
->   if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)) ||
-> -    orangefs_inode->attr_valid || inode_state_read(inode) & I_DIRTY_PAGES) {
-> +    orangefs_inode->attr_valid ||
-> +    orangefs_writeback_pending(inode)) {
->   if (orangefs_inode->attr_valid) {
->   spin_unlock(&inode->i_lock);
->   write_inode_now(inode, 1);
-> @@ -281,13 +296,14 @@ again2:
->   spin_lock(&inode->i_lock);
->   /* Must have all the attributes in the mask and be within cache time. */
->   if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)) ||
-> -    orangefs_inode->attr_valid || inode_state_read(inode) & I_DIRTY_PAGES) {
-> +    orangefs_inode->attr_valid ||
-> +    orangefs_writeback_pending(inode)) {
->   if (orangefs_inode->attr_valid) {
->   spin_unlock(&inode->i_lock);
->   write_inode_now(inode, 1);
->   goto again2;
->   }
-> - if (inode_state_read(inode) & I_DIRTY_PAGES) {
-> + if (orangefs_writeback_pending(inode)) {
->   ret = 0;
->   goto out_unlock;
->   }
-> 
-> On Fri, Nov 13, 2026 at 5:34 AM Jan Kara <jack@suse.cz> wrote:
-> >
-> > On Fri 13-11-26 09:00:01, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 1 potential
-> > > issue to consider:
-> > > - [High] orangefs: stale i_size overwrite during writeback in
-> > >   orangefs_inode_getattr()
-> >
-> > ...
-> >
-> > > > diff --git a/fs/orangefs/orangefs-utils.c b/fs/orangefs/orangefs-utils.c
-> > > > index 9ab1119ebd28a..4c4036f470cdd 100644
-> > > > --- a/fs/orangefs/orangefs-utils.c
-> > > > +++ b/fs/orangefs/orangefs-utils.c
-> > > > @@ -247,7 +247,8 @@ int orangefs_inode_getattr(struct inode *inode, int flags)
-> > > >     spin_lock(&inode->i_lock);
-> > > >     /* Must have all the attributes in the mask and be within cache time. */
-> > > >     if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)) ||
-> > > > -       orangefs_inode->attr_valid || inode_state_read(inode) & I_DIRTY_PAGES) {
-> > > > +       orangefs_inode->attr_valid ||
-> > > > +       mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)) {
-> > > >             if (orangefs_inode->attr_valid) {
-> > > >                     spin_unlock(&inode->i_lock);
-> > > >                     write_inode_now(inode, 1);
-> > > > @@ -281,13 +282,14 @@ int orangefs_inode_getattr(struct inode *inode, int flags)
-> > > >     spin_lock(&inode->i_lock);
-> > > >     /* Must have all the attributes in the mask and be within cache time. */
-> > > >     if ((!flags && time_before(jiffies, orangefs_inode->getattr_time)) ||
-> > > > -       orangefs_inode->attr_valid || inode_state_read(inode) & I_DIRTY_PAGES) {
-> > > > +       orangefs_inode->attr_valid ||
-> > > > +       mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)) {
-> > > >             if (orangefs_inode->attr_valid) {
-> > > >                     spin_unlock(&inode->i_lock);
-> > > >                     write_inode_now(inode, 1);
-> > > >                     goto again2;
-> > > >             }
-> > > > -           if (inode_state_read(inode) & I_DIRTY_PAGES) {
-> > > > +           if (mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)) {
-> > > >                     ret = 0;
-> > > >                     goto out_unlock;
-> > > >             }
-> > >
-> > > [Severity: High]
-> > > Can orangefs_inode_getattr() overwrite inode->i_size with a stale size from
-> > > the server while pagecache writeback is in flight?
-> > >
-> > > When a buffered write extends a file in orangefs_write_end(), inode->i_size
-> > > is updated in memory and the folio is marked dirty, while the server only
-> > > learns the new size once the writeback RPC in wait_for_direct_io()
-> > > completes.  Previously, I_DIRTY_PAGES stayed set in
-> > > __writeback_single_inode() across the entire do_writepages() call.
-> > > However, folio_start_writeback() clears PAGECACHE_TAG_DIRTY and sets
-> > > PAGECACHE_TAG_WRITEBACK before wait_for_direct_io() sends the write to the
-> > > server:
-> > >
-> > > CPU0                                  CPU1
-> > > orangefs_writepage_locked()
-> > >   folio_start_writeback(folio)
-> > >     /* clears PAGECACHE_TAG_DIRTY,
-> > >        sets PAGECACHE_TAG_WRITEBACK */
-> > >                                       orangefs_getattr()
-> > >                                         orangefs_inode_getattr(...,
-> > >                                             ORANGEFS_GETATTR_SIZE)
-> > >                                           /* PAGECACHE_TAG_DIRTY is false */
-> > >                                           service_operation(GETATTR)
-> > >                                           inode->i_size = ...; <-- stale size
-> > >   len = i_size_read(inode);
-> > >   wait_for_direct_io(ORANGEFS_IO_WRITE, ...)
-> >
-> > Yeah, that's a good catch but I think that this is pre-existing issue. When
-> > we don't wait for writeback to complete in __writeback_single_inode()
-> > (which happens for sync(2) or for WB_SYNC_NONE writeback), we can clear
-> > I_DIRTY_PAGES before writeback completes as well. So this patch just makes
-> > the race window larger.
-> >
-> > But I agree with adding a check for PAGECACHE_TAG_WRITEBACK into the
-> > conditions as well to close the race window altogether. Another option
-> > would be to sample i_size before calling folio_start_writeback() but I find
-> > that too subtle, it would require some barriers etc., so I won't do that
-> > unless orangefs guys insist.
-> >
-> >                                                                 Honza
-> >
-> > >
-> > > As a result, any concurrent getattr with non-zero flags (such as
-> > > orangefs_getattr() or orangefs_file_llseek()) fetches the pre-write size
-> > > from the server and clobbers inode->i_size, which also causes
-> > > orangefs_writepage_locked() (or a subsequent batch in
-> > > orangefs_writepages_work()) to clamp the write length to the stale size and
-> > > truncate the buffered write.
-> > >
-> > > Should these checks also test mapping_tagged(inode->i_mapping,
-> > > PAGECACHE_TAG_WRITEBACK) (or mapping_writably_mapped() / a helper covering
-> > > both PAGECACHE_TAG_DIRTY and PAGECACHE_TAG_WRITEBACK)?
-> > >
-> > > --
-> > > Sashiko AI review · https://sashiko.dev/#/patchset/20261113083336.15152-1-jack@suse.cz?part=3
-> > --
-> > Jan Kara <jack@suse.com>
-> > SUSE Labs, CR
--- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+Previously, REX2 map-1 instructions also reached the first OPCODE1(insn) lookup against good_insns_64. The in-place opcode modification in insn_is_nop() is likewise pre-existing and unchanged. Consequently, the examples described here have the same acceptance/rejection results before and after this patch.
+
+This patch specifically addresses the validation bypass for legacy 0x0f-escaped instructions. It leaves REX2 handling unresolved, and I can make that limitation explicit in the commit message.
+
+I agree that prefixed encodings need separate attention. I was already planning a patch for some VEX/EVEX handling issues.
+
