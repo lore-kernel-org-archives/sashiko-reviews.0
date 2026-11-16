@@ -1,61 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.171
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794848045;
-	b=GUbHVUsLRp5EgjY4ErktR5WqZD3gjmdnQ4QuQ4I3cx9b9lau/d4pNM+ftZ/GAwwnxcjK
-	 acJl/ifzfdEifBSRls1RRrsxvFlgCeYwofGlNje0qfDDu9Gpm66f4rNxi7GxJ1Tb4oyiB
-	 xkZtKYaIRrmO92c8qO+SspIjoa3N8IGoL1Z011G3F2jnVpdcCCRvV5sD7HMJvEzYyKPLt
-	 QhdFksAm6ysu5WFuDYkCptLxh2qJDPUZvQzWjQMg3pfRKH4JSd3jQzeY3uKDLx0sO1ZVY
-	 6uaiGDxZK2LslvuZnI0tFwz4pVcEnX8aqMnueCRgHIftN91OYiOcvOqhFdcvYGXxG+g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794848045;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id;
-	bh=S3bxneiWF925sHRWuhmHNR2GbqcJSpHqdoFk1dfbgNk=;
-	b=vPMr5+NFu17ETQL7pZZCQaRFmK2U6Ym6xFwue8s7FYdK44AI/46+kSgIqRZzGOXJss21
-	 fQzXXr0KHcK/wXkTMbK5A8zNuWbdWKsjzdfIaQXvshXxrZj1T4Xsv2CU8nF6jp9T2YWHx
-	 ijm2bVBV40XC6Q85Wn3Qa/HERgtr3gEBj0zhjOz2j1NdR/bVhfQ8fjT+kGDyiaKRwmd1Z
-	 VDLrqg28v5np5AKq1gQEJDZdXB4JHCepr01Wu/H1E5jKocsspnE0/lshRzIynq7Bb7Jem
-	 SvPgBxxGAY5zztRy242qm3EUQ+Aq22uZGCMHq+PXA5mNcY16LnkyWTC1tSJujcmuXnw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pablofraile.net;
-	spf=pass smtp.mailfrom=pablofraile.net;
-	dkim=pass header.d=pablofraile.net header.i=@pablofraile.net header.a=rsa-sha256 header.s=MBO0001 header.b=QpBEdrTo;
-	arc=none smtp.remote-ip=80.241.56.171
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.217
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794848414;
+	b=p234/dQpniRmewXJQgONuYkY65N+9wmlYd8vwF6GrdZcnMRIj3K6HRVWO2vMy00unZI2
+	 HbZRlONAYk3BdilSedgF8Try9+V+Xv+yw4kkcDyUwf9MEeI6mHPO88VBP2zNMprjpd3+F
+	 g9f1KSDdBvn55qCu8mde/LMMs+GHtklCxsbRJlw//C6ToSjEulMuzP2DBrS0YZP2fnaGm
+	 ctdf+wnoq/5uwK3VCKa+IOvdyRDDdDHjrn4V4L/ERHLoN5tXAAbutBWK6o5TComSjW9I8
+	 mLhwM3Nel0A2oBktnJxh23UF8uTQdMLylOGcEe+CGuB/gFUpUl+1pCQFbJ7xtL1kq3g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794848414;
+	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
+	b=idMpp8R0hyTnAzpSVp9BQnl6r0fBKX+02dHqcqmVcujD14uX6oEQuMrnZoCsGdf1FtUr
+	 oo968l+VWA2nphhR2JGFz1Cno0tepJoxKbm7Whjx3KlOou+gEhTzb91/6CPEmsG1lAqtf
+	 UGGtHfruzLyv/DTbREPOhq6m5UiJMNAfh0JYwZcD8rN+UGiHJdYFsiR3he+33GhKhElbv
+	 EVFyE4Rc6csOgLTbm3YC/ZdccI1exffyUwrslBM3yWZ4fs8IxOyYwv9IdLo4dbgj+Fl9U
+	 q1mIp+PDeDYuJR8m32ntdOL9k+2tkfIc3t8UAFsPM1tesdDm7iyWwNvy0P6byPKn9+g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=hartkopp.net;
+	spf=fail smtp.mailfrom=hartkopp.net;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=lVu7xIPZ;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=XtU4Vvlf;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.217
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12372606A322
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:54:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12372606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pablofraile.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pablofraile.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED2D606A329
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 17:00:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BED2D606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pablofraile.net header.i=@pablofraile.net header.a=rsa-sha256 header.s=MBO0001 header.b=QpBEdrTo
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4jSv8S1kT6zMlkh;
-	Mon, 16 Nov 2026 17:54:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pablofraile.net;
-	s=MBO0001; t=1794848040;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=S3bxneiWF925sHRWuhmHNR2GbqcJSpHqdoFk1dfbgNk=;
-	b=QpBEdrToFOfl8yju8CirB4ZkETT4dw5APekHI/hflqRyCmjBxERXDdGZhNTE0IueDZl5Sa
-	QLkNINVXi4fL1IPTsuJWt38Hf4XLqrmOPab1MN0r3TUbkwms6zzrXrp0MeWrobjK0xK2bH
-	soZI7RSL0bS2cDJfGqp/KsK9obDP7cIFja4SadsCE9ngfA/dtjRenuNRPZ/s9ywJaIFjpX
-	biv4/2N70URinIbw2J/qM3Mi3P1b2E8uH6hHvfA00MMt7rbqhS0fkcjQ4Q/1rhPTp9SYVv
-	0677LUxOLqgth/kBEeEt9pMBilm3eWHw55XuZ8sLmH6t8WufJhhw/q8QGuH4nQ==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of pablo@pablofraile.net designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=pablo@pablofraile.net
-Message-ID: <83290e65-131e-4aea-ba79-e1453445e872@pablofraile.net>
-Date: Mon, 16 Nov 2026 17:53:58 +0100
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=lVu7xIPZ;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=XtU4Vvlf
+ARC-Seal: i=1; a=rsa-sha256; t=1794848393; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=fPhBdYt2L8/a/8G8mLG6pD7S4G35DfsjUI7A98FlEqI1fcr+B3WtXVgEvCPwcxH1F5
+    qxkeE0/OJreneJvRcrhWNyqsxNefWSbTD0siqsKeegZhK6EwdgyxQO3jfbkVVfSh7d22
+    yAmW06Zz5NgUHHQe+hL5Nmr2Wey9Uyz4hkgJpZLiVSTZcRCXiS5QbmJR7d44l9z5Q7p2
+    UE1A1LF6IA2U0rtUh+Hir+I2BQ+5QFKnZQYnbq8kFdtGFzu76QkQMVmiiX5gR4foLdJG
+    Q67q305LqKvj3m7jnqznzkxT8wnLLble8ZK1NFbBUpS6lPlEcgERHfs0J7YBshME7s3m
+    7KzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794848393;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
+    b=BxjH6ZjwtyybCpOUAjn8BnJSWqJuP/IRPEuVzKeXZ+j06B/YtzeLFXXz/ssd5NRHUR
+    8rPmrkYZiT5TBb46FYBJwt4Zm6y+LwhNcfthGEGsI/t5Nl0SUZ2eyuc1WS8pyMb446cn
+    qUGtBW7D8ecJu0kdeDvSQSAVhPIO4uDTnglaPC+2CK+fsSRNluVfqeSDiLnCOsbfL9OH
+    /67AtwnMA7AdleJLT3fkinZaa9SiAf8o2kRA2fQZmZx40YIu6C7PyiQOeHjn+Vld63fl
+    8zRYWJS/3Hf4TtxeKFC6ZIAq6dK5j3CezUdgfGD5YmeCTeqjzip+HaCJKrlfhLaYQHqf
+    IY5w==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794848393;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
+    b=lVu7xIPZWfo4MiM4xQNJdAFIENMsbvBgNJ8e+ZTWok2448iBvkCjEpLC2xZiACRg5M
+    q1YEEWJC7RDlwRhYLuY2ey9I925C5Lc36xGQm06Blre5Yk/fq8MkkNVm3SMzDE01bWBy
+    fPCNCZtHX1z1lzlX7eyf0xq6pSeZPCMpGdNEkXNzoM3tX7sjhgr2eOvYuHCAhhQikX5W
+    qW7qnk7sWGsFt4lSfQQ9OcN7G7Cr1icHNgBYjpkT/cKKAh6U+YLvD3roY94YmPWGHXSl
+    II7hn6oU13rU1QYC1oB1IDa2m2jCT19qeha5CniDVcC1GVuSxXxGA98B1W+ec7A1KvQU
+    Tv3A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794848393;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ho8Pw3OzOIO6yZIwLewwoAwZMDNCLICWc3pROsaHEQM=;
+    b=XtU4VvlfhrGWDIIM0/fqsg5l6NT2A4TuFnOqZ5jUi+WkMfcwLg5De21ZJZPTdU86T4
+    6SCJs/P0d/+kwzhqLXDg==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.3 AUTH)
+    with ESMTPSA id Kfdf2a2AGGxqIoZ
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Mon, 16 Nov 2026 17:59:52 +0100 (CET)
+Message-ID: <df95ffcf-c6e6-4dbc-bbab-7749ce93ea86@hartkopp.net>
+Date: Mon, 16 Nov 2026 17:59:47 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -66,27 +96,64 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] uprobes/x86: Fix bypass of two-byte opcode validation
+Subject: Re: [PATCH net 6/9] can: isotp: use a private mutex instead of
+ lock_sock()
+To: sashiko-reviews@lists.linux.dev, Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: linux-can@vger.kernel.org, Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
+References: <20261115095746.709371-1-mkl@pengutronix.de>
+ <20261115095746.709371-7-mkl@pengutronix.de>
+ <sashiko-outbox-216678@kernel.org>
 Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org
-References: <20261116-x86-uprobes-two-byte-opcode-v1-1-2b6dbabead52@pablofraile.net>
- <sashiko-outbox-217334@kernel.org>
-From: Pablo Fraile Alonso <pablo@pablofraile.net>
-In-Reply-To: <sashiko-outbox-217334@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <sashiko-outbox-216678@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 4jSv8S1kT6zMlkh
+
+On 16.11.26 10:58, sashiko-bot@kernel.org wrote:
+
+> This problem wasn't introduced by this patch, but can
+> isotp_setsockopt_locked() [1] modify socket options while an ISO-TP
+> transfer is still active after NETDEV_UNREGISTER?
+
+(..)
+> Should isotp_setsockopt_locked() also check that so->tx.state and
+ > so->rx.state are ISOTP_IDLE?
+
+Yes, this is a valid finding and the suggested check is the right
+approach.
+
+isotp_setsockopt_locked() only checks so->bound, which is cleared by
+isotp_notify() while a transfer may still be draining. isotp_bind()
+already rejects a new binding in this state by checking so->tx.state
+and so->rx.state for ISOTP_IDLE, and isotp_setsockopt_locked() needs
+the same check as suggested:
+
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 8229b6a69e..4644a1533a 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1721,6 +1721,14 @@ static int isotp_setsockopt_locked(struct socket 
+*sock, int optname,
+  	if (so->bound)
+  		return -EISCONN;
+
++	/* A transmission or reception that outlived a previous binding
++	 * (unbound by NETDEV_UNREGISTER) may still be draining and uses the
++	 * socket options, see isotp_bind().
++	 */
++	if (READ_ONCE(so->tx.state) != ISOTP_IDLE ||
++	    READ_ONCE(so->rx.state) != ISOTP_IDLE)
++		return -EAGAIN;
++
 
 
-On 11/16/26 17:01, sashiko-bot@kernel.org wrote:
-> map-1 opcode against good_insns_64 (map 0) instead of good_2byte_insns,
+As this is a pre-existing issue that is not related to the lock
+replacement in this patch, I will send it as a separate patch.
 
-I checked the parent revision and confirmed that the reported REX2 behavior already exists before this patch.
+Best regards,
+Oliver
 
-Previously, REX2 map-1 instructions also reached the first OPCODE1(insn) lookup against good_insns_64. The in-place opcode modification in insn_is_nop() is likewise pre-existing and unchanged. Consequently, the examples described here have the same acceptance/rejection results before and after this patch.
-
-This patch specifically addresses the validation bypass for legacy 0x0f-escaped instructions. It leaves REX2 handling unresolved, and I can make that limitation explicit in the commit message.
-
-I agree that prefixed encodings need separate attention. I was already planning a patch for some VEX/EVEX handling issues.
+> [1] https://sashiko.dev/#/bug/linux-d1d3ef49-c24e-4f3a-91ce-20f8fb222684
+> 
 
