@@ -1,55 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794799994;
-	b=mNPh8jNJY67lAuaK2T2ycx/tSDK9zVJIEI7EaeLqWIZ7tNPhCrq7EBY1qYmZbyammVep
-	 fBY4RvZ636XOnVLKE7PGS2M6IVRGXLuKz+NZggclTsnSEUlAROJ/pd3nOWw0UbWMpiKlo
-	 6QJXQtIBoh5hjGx8HcfkOZbb7PDWiYc4t+vX4IvEpmdlXs93M/4MgAhbT3FpRxTXawHJW
-	 xDWkT6OhE/Mun1S2KIkQKwbj4/yPb+4RYMMN85vRxOXn2RQXDNy4k3T6lpuk72mLJmD0x
-	 jlc86TXbruFgmkdxb32kpBCh3/FewBSRQ4Si+8Dl0EC0mh5A6Sw99XMAU5/w5U178qA==
+	t=1794801550;
+	b=qtvyF2QGtVg9qSRi3Ylfc/D8go/1jn6DW5lsn4vrxJF1WNSzkSX1UoxTrV57sTTjNXQP
+	 QczxwEMuaT6pboM2HKSDncMoHt1F9D3sBHEnxpCMwi0tIddjEJ5osA9/T6PPjF3DSUyzL
+	 /OaChTj/QW4xUzZwbA5HlsagP+s2HD3Ho6kj+EV3h+K98P7RgX64VhXDv1U255ge89G04
+	 YAWkhRfYIY+mQhW6gfNu42fpr8GxPS86SDg4E1WfTxUVYV8KWrJbNfqS6YwppCU1N3Sbw
+	 M1ElBx5QxhRQ8KLZv+7PKOJd3LHRxRN0E2RGDiXVejg9tNtMNb8I1hKoS0sbzfD9ACw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794799994;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=OPE33G7SD06+DnDSLnnFTSDvQB+tOQtgoL8bhY8tvWk=;
-	b=kTTVMifDoME4jDRtn/WqtLcGGgCwk1oXyMzMUSSoUmrygbsJgFaQDuM8lAblqcN+eP01
-	 QSfSv7MaVv3/L1O2ffo8/fRKAksVLFka+16YImyomy7PRQPAPqm9z4t4pdDzzL2bpJhpL
-	 OqFqfiWVpSF/iW+d3XqmXKEImdbM04RQWIv9rrVaI4bPiKwPEFEmLFiCL9pcP1PO+HIKB
-	 9bZulTs9aWtKHQ1dGPVK/UJY9+q5G0EagMMWERVra5U7ZO5eMQIB6I9CA4Lx2ZHk5tNGW
-	 +iMArDh6E5H/3C50Uuv9Itew5QuHFI/vtXw+FMP5qUvbiu7gnDaHInQNbuqsvhRwxCg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794801550;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-Id:
+	 In-Reply-To:References:X-Mailer:Mime-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=gQMeTciaSvtzZf1tVwUK4oeeC0M0LiTFBkf8Fh1eAgY=;
+	b=S1/Eu5N/RwI/eQdc8wgEc4Ld5IP9gxak0WdXTDiT0UBEmKVoWO+samkYB/LHxUkzOsti
+	 8Q0a4ifg0wvTQiP4fWf0jIpRwc5ZOhagJxwstRoVnO5+cfqGvJ2Mo0Jxtp1/IyROI8qG5
+	 6L3Pw5hJ3r31u4bS9PERRIJ93LLObLrUpl33iXS8VE3i37I7C+vf+35lDIXvTTVmjKxR0
+	 XYL+RZPewXPn8BpATXMmWeKftD79dq3jmpDLUdM22t/9Jzd0HRkvySol6Tdbo/JivHQP4
+	 ga7fdIvRGDZcpKb5MtxQJ0e4ILN2t+sz+5oPMXpfTvt9ULUU5JDqgw77FlXks2ei9KQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eZ7uEN9M;
+	dkim=pass header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=FiNThKXp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA72606A321;
-	Mon, 16 Nov 2026 03:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0487606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 03:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eZ7uEN9M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8051F1F000C4;
-	Mon, 16 Nov 2026 03:33:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794799994;
-	bh=OPE33G7SD06+DnDSLnnFTSDvQB+tOQtgoL8bhY8tvWk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eZ7uEN9MOKpfnFx8s84YYaOhtleet4CMC4iLiUwCaBB1dZWb4ZqsMjQpwwhpWDH0k
-	 ncD/OBASmyI3a/HR3IfueunZLhQGHkMcec5lW7F8qMAG2B3ephI+QxoGsDRQI6zo0J
-	 HFVqzbXtscM0nAoKVJ4gusbs3UpQL+n6BD3+bzVHxRn3TLlyz3nWkgOYesSBx7C04p
-	 p5qc6W0SAhCi47cYmynCPoDig1hOOe4jFaueks0zPFPBhRcMPZBcSMxAEeOejKYSfV
-	 SINgyGfOyObjhdN05qhtyOkOQ3vbfvwSKM4JFFxcMeIjXQWwBZKexi8HB7kN7d7/Rl
-	 wAwfKRRrA/vUQ==
-Date: Mon, 16 Nov 2026 03:33:11 +0000
-From: Yixun Lan <dlan@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=FiNThKXp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FA61F000C4;
+	Mon, 16 Nov 2026 03:59:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux-foundation.org; s=korg; t=1794801550;
+	bh=gQMeTciaSvtzZf1tVwUK4oeeC0M0LiTFBkf8Fh1eAgY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=FiNThKXpbOTA7jl7KFxz3LJ0sP0PgD/jW1RF4aayD70XAnPUFJ2QNrDNjB5iFIlo1
+	 M9AAsbRaBCEruyahEGesuQhgqCnzuEN8YUeZZ8vwOetkY2anSldYSYdfV9GmKPqw6+
+	 ddMzBfhLFcDnQoX8jFdcGsPrx/xbjHz0D3KgUAPI=
+Date: Sun, 15 Nov 2026 19:59:09 -0800
+From: Andrew Morton <akpm@linux-foundation.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v7 2/2] scsi: ufs: spacemit: k3: Add UFS Host Controller
- driver
-Message-ID: <20261116033311-GKD100523@kernel.org>
-References: <20261002-08-k3-ufs-support-v7-0-bb39007ff9ae@kernel.org>
- <20261002-08-k3-ufs-support-v7-2-bb39007ff9ae@kernel.org>
- <20261002091428.35D671F0089B@smtp.kernel.org>
+Cc: sashiko-bot@kernel.org, Matthew Wilcox (Oracle) <willy@infradead.org>,
+ linux-mm@kvack.org, "Shardul Bankar" <shardul.b@mpiricsoftware.com>, David
+ Hildenbrand (ARM) <david@kernel.org>, "Dev Jain" <dev.jain@arm.com>,
+ janak@mpiricsoftware.com, "Jinjiang Tu" <tujinjiang@huawei.com>
+Subject: Re: [PATCH 1/2] lib: xarray: free unused spare node in
+ xas_create_range()
+Message-Id: <20261115195909.b91edf975dee06ce566e3437@linux-foundation.org>
+In-Reply-To: <sashiko-outbox-216113@kernel.org>
+References: <2dfabfd9476542e39c7d5473a6597208.0@linux-foundation.org>
+	<2dfabfd9476542e39c7d5473a6597208.1@linux-foundation.org>
+	<sashiko-outbox-216113@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,125 +60,28 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261002091428.35D671F0089B@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-hi all,
+On Mon, 16 Nov 2026 03:17:13 +0000 sashiko-bot@kernel.org wrote:
 
-On 09:14 Fri 02 Oct     , sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] scsi: ufs: spacemit: 100ms timeout on 1-lane UFS devices during hibern8
-> - [Medium] scsi: ufs: spacemit: bRefClkGatingWaitTime violation after hibern8 enter
-> - [Medium] scsi: ufs: spacemit: simultaneous ref clock enable and reset de-assertion
-> --
-> 
-> commit efcda2c96a818b5a53e91fa2558654c937a9ba68
-> Author: Yixun Lan <dlan@kernel.org>
-> 
-> scsi: ufs: spacemit: k3: Add UFS Host Controller driver
-> 
-> This commit introduces the UFS Host Controller driver for the SpacemiT K3
-> SoC. It implements support for features compatible with JEDEC UFS 2.2, MIPI
-> UniPro v1.61, and the M-PHY v3.0 standard.
-> 
-> > diff --git a/drivers/ufs/host/ufs-spacemit.c b/drivers/ufs/host/ufs-spacemit.c
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/drivers/ufs/host/ufs-spacemit.c
-> 
-> [ ... ]
-> 
-> > +static int ufs_spacemit_check_hibern8(struct ufs_hba *hba)
-> > +{
-> > +	u32 tx_fsm_val_0 = 0;
-> > +	u32 tx_fsm_val_1 = 0;
-> > +	int retries = DIV_ROUND_UP(HBRN8_POLL_TOUT_MS * 1000, 100);
-> > +	int err = 0;
-> > +
-> > +	do {
-> > +		err = ufshcd_dme_get(hba,
-> > +				     UIC_ARG_MIB_SEL(MPHY_TX_FSM_STATE,
-> > +						     UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)),
-> > +				     &tx_fsm_val_0);
-> > +		if (err)
-> > +			break;
-> > +
-> > +		err = ufshcd_dme_get(hba,
-> > +				     UIC_ARG_MIB_SEL(MPHY_TX_FSM_STATE,
-> > +						     UIC_ARG_MPHY_TX_GEN_SEL_INDEX(1)),
-> > +				     &tx_fsm_val_1);
-> > +		if (err || (tx_fsm_val_0 == TX_FSM_HIBERN8 &&
-> > +			    tx_fsm_val_1 == TX_FSM_HIBERN8))
-> > +			break;
-> 
-> [Severity: Medium]
-> Will this loop always hit its 100ms timeout on 1-lane UFS devices?
-> 
-> It appears that on a 1-lane device, the state for lane 1 will not reach
-> TX_FSM_HIBERN8, causing the do-while condition to wait until retries run out
-> before proceeding.
-> 
-Currently, we have not seen any use case with 1-lane device,
-it seems a false report, or even people do have concern? then I
-would still prefer to address it in a separate patch..
+> [ nag nag nag ]
 
-> 
-> > +static int ufs_spacemit_device_reset(struct ufs_hba *hba)
-> > +{
-> > +	/* Disable reference clock & asserted ufs device reset */
-> > +	ufshcd_writel(hba, 0x000, UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL);
-> > +	usleep_range(10, 15);
-> > +
-> > +	/* Enable reference clock & deassert ufs device reset */
-> > +	ufshcd_writel(hba, MPHY_DEVICE_REFCLK_OE | MPHY_DEVICE_HW_RESET,
-> > +		      UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL);
-> 
-> [Severity: Medium]
-> Could toggling the reference clock output enable and device reset
-> de-assertion in a single MMIO write cause device initialization failures?
-> 
-> The UFS specification (e.g., JESD220C 5.3.1.2) typically requires the
-> reference clock to be valid and stable before RST_n is de-asserted. Writing
-> MPHY_DEVICE_REFCLK_OE and MPHY_DEVICE_HW_RESET simultaneously might violate
-> this sequential stability requirement.
-> 
-From the testing, It works so far, but I'd add a delay for safe..
+bah.
 
-> [ ... ]
-> 
-> > +static void ufs_spacemit_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	if (cmd == UIC_CMD_DME_HIBER_ENTER) {
-> > +		err = ufs_spacemit_check_hibern8(hba);
-> > +		if (err)
-> > +			dev_err(hba->dev, "ufs_spacemit_check_hibern8 error\n");
-> > +
-> > +		ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs));
-> > +
-> > +		/* Power down M-PHY */
-> > +		ufshcd_writel(hba, 0x0, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> > +
-> > +		/* Disable reference clock, keep device reset deasserted */
-> > +		ufshcd_writel(hba, MPHY_DEVICE_HW_RESET,
-> > +			      UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL);
-> > +	}
-> > +}
-> 
-> [Severity: Medium]
-> Does disabling the reference clock immediately after confirming HIBERN8
-> enter violate the device's clock gating wait time?
-> 
-> By not waiting for hba->dev_info.clk_gating_wait_us (bRefClkGatingWaitTime)
-> before disabling the clock, this could potentially cause strict UFS devices
-> to hang or fail internal state transitions during hibernation.
-> 
-bRefClkGatingWaitTime is a feature introduced after UFS 3.0, while it's
-UFS 2.2 device used in K3 platform, but I agree to add a delay.
+> [Severity: Low]
+> Is the Fixes tag pointing to the right commit?
 
--- 
-Yixun Lan (dlan)
+OK, let's make it
+
+	Fixes: 77da9389b9d5 ("mm: Convert collapse_shmem to XArray")
+
+it doesn't have cc:stable anyway, but afaik lib/ is subject to
+-stable's blanket "backport everything which has Fixes:" rule.
+
+So I'll also add
+
+	Cc: <stable+noautosel@kernel.org> # not harmful enough to bother
+
+unless people disagree?
