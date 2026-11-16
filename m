@@ -1,89 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794816303;
-	b=USU5H9psOcYE5vBV4ml+KvsFA/gFERpXIptIqT93DRVV3zsI6xeBjaHTGuo1FmQk0Q2H
-	 /b75sCz0b1Ikm37bXpO6jxLfOMw6NBG5sqbp++sFUxbH3SaLyWOvUCNxCHz4lzL6v9rf+
-	 mBJsstnn1nBxJiQJlh44c3UT42Nj2bD7KP3Xgj9D/UtCO5EWN/yTs5leew3JCzm/6M05N
-	 zdgcpj4IPJZtFutnqAthuZZ5LXmWT4uHNsh5Xt7+bHuN6QOATmFpCd+N+2FYxvLz80UhA
-	 Xv8bAvrjGHco9QWbSnLgfJYUiATfjD4Qe9vPFogMtn0z5g++IxQ28tCvCZMs1X5c84w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794816303;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
-	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=y1R2N6M3oJAu4skO9jjhh/J+EeOiDnr68oIITnSGPag=;
-	b=HIjpOgELPDdfNbaBiGPbgVQL5owj068bCBQtcXQGqXarmNgw7dZj9VEc5DNKHUvuGDsa
-	 YQvTmPy/ugag5dbL0l6m2fsPRSntV8CvCc1rFrBDCuY7MtRBNX703jhm7EzRjxXX5su8n
-	 vYYnRzbOQb0326YaVXWQREgAbA+XKSDPC0uKcqZm0rwCRuz6haZl6mLdRf5M91tKAmVnt
-	 Bpeheg+0hzA85pRjUSkpZebJkjQZUHbkiPqHPR4x6jSQIpCFkQMqPgvldIWgFsoAikWX0
-	 lGvy7rJC3h9tDLtUGvokNn4gYx87EkDxhZff7kuuXhXfT4ojwTA8Kmc8rbByDK4gr6A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IRy656cu;
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794817059;
+	b=LLb1/endT3VkNiwoiwzYJnSTToYWbBuZf4gkd9xddZGBoN2AFPpT4HMddugbLSOC4bvV
+	 VBWXox7uHpMYkK0LcjgdcQk0DPKRB1z8hIIilsMGUWZfaHT/Bb0OxA6faQ0sjo/qMVO0b
+	 vpZTt7ZgdkjG6FEJIxOiXjciQMhi7U3uV6u23e9hx6BMRGysHYcS0Fe3bY4Z2ZMdjNdVp
+	 JOFaplIHdE4XGthwcSiPY9UVtxUdbgis/aCs4nH6aFDHQ1BtJLToSpA30V+bta/wnLt2o
+	 BY8IvQr4txqDVfL3P3Qqo3nLGtgWELu5IhfTqzEFcT5k19cDWUUD4ZiDryyw8AyaMrA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794817059;
+	h=Received:DKIM-Signature:Received:From:Date:Subject:To:Cc:In-Reply-To:
+	 References:Message-ID:MIME-Version:Content-Type:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=sSXgYBkHT/oc6vNY04Q3fm3X2G3ni/aAOgRi/r/6vDE=;
+	b=Z28fwuWQtWyAdijJpMRufY4jW1pNSdkSBKzlM3uxxx46ayMmdvlCKhzCE38gPaxWcx3C
+	 RqttS9pTCpMp1wpzRkAcsmmff5Rh0OT4xlcB2l0m9Ogt+CT5pXk7/3kuMkf/lI7cnQFpL
+	 L3TdwYVCyKs4FO822xm1NGqVDQT5/DN7sjNJUjX0H+V84Qb6UK5W3o7/+UNfNkanG4ptc
+	 iLsLhlBfE+kkA+t3EnSbmBxb7bd0PI3r8CaiVKkhU9IWkl8xPW3iqlroct0mFsfPUJz+L
+	 5wILiCHypopLdLXqTFxPMWbjqT+fw5XImZ5Qs2EznIf/7rhw4qC6XjubJiVU2jj1S4Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MI4H4iOS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED30B606A323;
+	Mon, 16 Nov 2026 08:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MI4H4iOS
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1794817058;
+	b=OCeY4UnZQDql2b1LILscAzJSjSnkRlzvsYhkkhSzd3VztRTyMF380UCvzQDhiqOFLwmf
+	 e4xf7gbELFi0C9Ez2S5N3f0eelpuAvYPE7iAMv53Jc4eyKnas+sASj/VNtMNcmOx2qlbv
+	 liCQLiCFIt3eXRk9q45bUH9m9qf3gdMWkcW0KQEosu0983ktPMos2wK0P3QNQIgmArQP0
+	 Ryzg8XkvChbIeDZ1NZxjk7mOQT+DyUf41h+XcfbSopdVB84QwJgtg6EqxxTX9+RApbtfZ
+	 w27KphZSRMzMLezo4/3w+VE1I3YYA2jI5FO44I7TVHf7S+FOcUV5SMmypuwjuwhRaig==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1794817058;
+	h=DKIM-Signature:Received:From:Date:Subject:To:Cc:In-Reply-To:
+	 References:Message-ID:MIME-Version:Content-Type:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=sSXgYBkHT/oc6vNY04Q3fm3X2G3ni/aAOgRi/r/6vDE=;
+	b=vBA7+Zj30wUK1edwZ2oPQJKQPt6Wd1jWqV2i52V3T8xmFczfIpbBGlg8xAXpyWiwvCK6
+	 SZKesvJQd7VZlJHHVOG0RR8xFW+k+Lui/sGwFCismwI1dPsNYjQw9pn3ODbwBoF6P0/U2
+	 vdVs7by97CV/DmWMrnIl+E1OFVREAXz2C30Qz6SAkHgFRhbmH+7kMP+lTqCOu5ml7kT0B
+	 1b4KCKXmQYOzki+4HC6hLKmXzGqZNJjjXZz618WeS9PIljpnUExO0VOFAt3eM0uhBq+by
+	 hf0vSzlMjJzHQzRXH/2PReia7sCGUMQEAEjqv6iCnrIUd9P7NiwY9bXKrNCZMUiy+Xg==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF70606A32A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 08:05:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6AF70606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IRy656cu
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-4910b863b84so2270671f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 00:05:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794816302; x=1795421102; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=y1R2N6M3oJAu4skO9jjhh/J+EeOiDnr68oIITnSGPag=;
-        b=IRy656cuOtXh1K5U59RnkjMvJg5PdgNB5pYbibx4YmmkwKw8lUb2vLC5m19g+JoEiF
-         P22oIwpXx4Hkyap9uqFJWxtGWk70hczFxH1CaKhdUMHoUPxSynF22GZdHjDAmSijsOdQ
-         NkQs5hTEIIVCiovCoTbWmVUlE+m/O/eivLcX1+fkeFjqGIv0WUKWbCAQ4SBBYsRJ77vs
-         aovY0MeKtANf8QNbFIN4IZ7ksnkoIdlc0DLdYvKQ9tbty4OXhSpOz6J7OnOIWeOuOwiI
-         DObOwnqDauj9t2O8jl2YVo+x3xDN24NDr4/EZ/xzg8zyNhzs7J0R/eOfd1AiCwyGImJ7
-         yLlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794816302; x=1795421102;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=y1R2N6M3oJAu4skO9jjhh/J+EeOiDnr68oIITnSGPag=;
-        b=d3azJgQLwyFOEG+AxsHxnAAMTGDmlWFrJEehaZnWi+9ScYmMz+zqWsOWVgh+JYpyyH
-         /kGCQCj00T98XaRhJlq/tnzZavBlVSIsRJx68YjwI8gy4Kn/w8pE+NTEZ9sQOoQ0di2T
-         93WgbFMlwWC8f0CPCx0d7dXW9/aDRHQCOenE9eUU4QyeJhvkn6XfTfMAUTFgqWaOhyLf
-         F2LbKvDA93n/B6Mb/38CfMV/CtfJM9gCuiVWkIEkejLRWZtFT/M1yALTBpUhdNYAdDuZ
-         yMqpm3pfCEhtqlrhg1sKS+8KNymGSPY2uc/AoYruJk3C4LZYqTCuwzIVdLrT22HbYt1h
-         034A==
-X-Gm-Message-State: APuU4Z+PdfgHZazrDJY1D14XWynX8r3rYeF96U3CBz1FBAO9REMEgR11
-	GTRddCn/I6jeHm7MVxgpP9x060XCz+OfO8fVPHmRZq8txlIM0qcwnIMLvMxLAikKMQpDgZeGfCX
-	TIvHeKRc=
-X-Gm-Gg: AYBFou09rH+tDen9v19cSkeUfIaRWj9ukS2ay59+8W0rxshEldGsYdKVU8kiVIpl8BI
-	uuCNOUvNxivDqvepJoxSiDGh/VOwQzwu41es8tRjC5rbsdyv+K9NGSh+8jgy8WEeg+s99oPzo0z
-	ubiR5kJzjBxhSv1nokwjs9/7EzR0OFDj17UJV62W/ysDDhYEzo9hsRMcaTaBVcc/uJ4Pgh+S3rG
-	NAe+/J3V0Pwb9AZMzwgo94v+9wtTLT0ibzkISNjAr6uabENpTiT0vMgPKFlelgM+iwi0Tvi4e2T
-	sRb9s+ie+gMKCCuSq1DU7v/wfaHu3Ue5Gkzosw8WszftVL+mCY+eise/zLvkyDp1hf8P+7FacjU
-	dYi3pNCLzU+x1ZoWoxgL05FgN6hMj0a0KZiA1xGRLPHtwddeQ0P8/UqfOa2qgXDlHl8AmAa/60E
-	GjPbotscixRl3Yw5wuUOi6PZx6Cjh9Jgy9yQMFhmmw4ksCz8xB0PjvCEdl1avYS9jlyLh+3wVyF
-	JahHCLTHuNGoV4bjUT04D1aM9pPWvmpjFff6B/lIPwKDeCpd9nxof6+fuMbgtYEXIi5G2SrccRL
-	yMCIjgEOSVyalTDntx/ZaWsPtA28082Uyl5DxLHmpFfIG+zJhPkIpRcNw49nG4TA2E95AlQWpEd
-	isloE934FC3762jbKSywRybn5oJZO+SQ=
-X-Received: by 2002:a05:600c:4703:b0:4ba:4928:8aec with SMTP id 5b1f17b1804b1-4bb55a755b2mr211614395e9.9.1794816301471;
-        Mon, 16 Nov 2026 00:05:01 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:106d:1080:575d:8fcf:e30d:5aed? ([2a01:e0a:106d:1080:575d:8fcf:e30d:5aed])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb55acdfebsm249389925e9.7.2026.11.16.00.05.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Nov 2026 00:05:01 -0800 (PST)
-Message-ID: <931bd5ff-2bae-4835-9788-563835e6c4e7@linaro.org>
-Date: Mon, 16 Nov 2026 09:05:00 +0100
+	by smtp.kernel.org (Postfix) with ESMTPS id B3E6D1F000C4;
+	Mon, 16 Nov 2026 08:17:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794817058;
+	bh=sSXgYBkHT/oc6vNY04Q3fm3X2G3ni/aAOgRi/r/6vDE=;
+	h=From:Date:Subject:To:Cc:In-Reply-To:References:Reply-To;
+	b=MI4H4iOSdFZsTgA4mCsCdaxrHZRjYzZoCNH44TtYLIrO504n/ALhK/aZVY6LnCjHh
+	 SjAkk8j7+wmDtV7gkSHOiC/pKDWHL/mTyYxZVzmGdJelblKtAAx0qOGzS5a8jILLXg
+	 E8jg4e+jo1fn63DmuB1E1+ygRn+Y3vDt+ketccvArGzrcs6gvPSt885sf+oE8ALaPu
+	 af+8x+XPPe/cwvbsuDKP1A20OceWf5mMdMGbOjwhzLsGzpoZ8kIR+FHdmA2w4g2n6h
+	 uAwg9ao9NisSEE5mdG9Wi90t9te4zA0O3T4+Hcuc8vVr4iyiATcaBcH9efeg+Gzc7M
+	 eSygMmvvAoGuw==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id 173574A3CD;
+	Mon, 16 Nov 2026 08:17:37 +0000 (UTC)
+From: Joshua Horne via B4 Relay <devnull+hornejd.etsu.edu@kernel.org>
+Date: Mon, 16 Nov 2026 03:17:36 -0500
+Subject: [PATCH v2 4/5] drm/amd/pm: allow editing the smu8 overdrive sclk
+ table
+To: Alex Deucher <alexander.deucher@amd.com>, 
+ Kenneth Feng <kenneth.feng@amd.com>
+Cc: =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ =?utf-8?q?Timur_Krist=C3=B3f?= <timur.kristof@gmail.com>, 
+ Lijo Lazar <lijo.lazar@amd.com>, amd-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Joshua Horne <hornejd@etsu.edu>, sashiko-reviews@lists.linux.dev
+In-Reply-To: <sashiko-outbox-214116@kernel.org>
+References: <20261113-smu8-overdrive-v1-0-763f07bdfca9@etsu.edu>
+ <20261113-smu8-overdrive-v1-4-763f07bdfca9@etsu.edu>
+ <sashiko-outbox-214116@kernel.org>
+Message-ID: <179481705669.12281.9149615824591242380@etsu.edu>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,147 +96,362 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC 22/23] arm64: dts: qcom: sm8650-valve-deckard: enable
- audio
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20261113-topic-sm8650-el2-v1-0-5183f6aab9fc@linaro.org>
- <20261113-topic-sm8650-el2-v1-22-5183f6aab9fc@linaro.org>
- <sashiko-outbox-213545@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <sashiko-outbox-213545@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794817056; l=11965;
+ i=hornejd@etsu.edu; s=20261109; h=from:subject:message-id;
+ bh=Hxlr9ljtauqnWTX2eK5EXPT1Bv8cN3MCNVdWdSawep4=;
+ b=5r4PiR6Y58SuGTmVElW7aVsymX49F9H7uzIL/TKr0kc3s2fa/3+2OEhmsm60pOugR75DeiJoq
+ 9aJjCx3AqlqCaSE3LeGPmCFoA5P1nauoeigO5LnfNYLTJpuvdNb4gxB
+X-Developer-Key: i=hornejd@etsu.edu; a=ed25519;
+ pk=HNOtiwerBbrJhfhzLHLxj3GDsUH9udRXflqnaI8sQmQ=
+X-Endpoint-Received: by B4 Relay for hornejd@etsu.edu/20261109 with
+ auth_id=1469
+X-Original-From: Joshua Horne <hornejd@etsu.edu>
+Reply-To: hornejd@etsu.edu
 Content-Transfer-Encoding: 7bit
 
-On 11/13/26 20:23, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] arm64: dts: qcom: sm8650-valve-deckard: missing VA DMIC1
->    route in audio-routing
-> - [Low] arm64: dts: qcom: sm8650-valve-deckard: unused lpass_rxmacro and
->    lpass_txmacro enabled
-> --
-> 
-> commit 159b85c8d3e0dd02d73b32823f4b0aaab92103dd
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> arm64: dts: qcom: sm8650-valve-deckard: enable audio
-> 
-> This commit includes sm8650-lpass-cpu.dtsi and configures the SM8650 sound
-> card, lpass_cpu, and macro nodes to drive the speakers on Senary MI2S and
-> the DMICs on the VA macro.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650-valve-deckard.dts b/arch/arm64/boot/dts/qcom/sm8650-valve-deckard.dts
->> index a365caa28cee4..723f7911fc547 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650-valve-deckard.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8650-valve-deckard.dts
-> 
-> [ ... ]
-> 
->> @@ -160,6 +161,37 @@ framebuffer_mem: framebuffer-region@af400000 {
->>   		};
->>   	};
->>   
->> +	sound: sound {
->> +		compatible = "qcom,sm8650-sndcard", "qcom,sm8450-sndcard";
->> +		model = "VALVE-DECKARD";
->> +
->> +		audio-routing = "VA DMIC0", "vdd-micb";
-> 
-> [Severity: Medium]
-> Should audio-routing also include "VA DMIC1", "vdd-micb"?
-> 
-> lpass_vamacro uses dmic01_default and the LPASS_CDC_DMA_VA_TX0 DAI in
-> sound/soc/qcom/lpass-sm8650.c sets channels_min = 2.  In
-> sound/soc/codecs/lpass-va-macro.c, "VA DMIC0" and "VA DMIC1" are separate
-> DAPM ADC widgets, so without routing "VA DMIC1" to "vdd-micb", enabling VA
-> DMIC1 without VA DMIC0 will not power the vdd-micb regulator supply.
+From: Joshua Horne <hornejd@etsu.edu>
 
-Will investigate
+Implement the "s <level> <MHz> <mV>", "r" and "c" commands of
+pp_od_clk_voltage for Carrizo and Stoney.
 
-> 
->> +
->> +		speaker-dai-link {
->> +			link-name = "SPKR Playback";
->> +
->> +			cpu {
->> +				sound-dai = <&lpass_cpu MI2S_SENARY>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&left_spkr_i2s>, <&right_spkr_i2s>;
->> +			};
->> +		};
->> +
->> +		va-dai-link {
->> +			link-name = "VA Capture";
->> +
->> +			cpu {
->> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&lpass_vamacro 0>;
->> +			};
->> +		};
->> +	};
-> 
-> [ ... ]
-> 
->> +&lpass_rxmacro {
->> +	status = "okay";
->> +};
->> +
->> +&lpass_txmacro {
->> +	status = "okay";
->> +};
->> +
->> +&lpass_vamacro {
->> +	pinctrl-0 = <&dmic01_default>;
->> +	pinctrl-names = "default";
->> +	vdd-micb-supply = <&vreg_l10b_1p8>;
->> +	qcom,dmic-sample-rate = <2400000>;
->> +};
-> 
-> [Severity: Low]
-> Are lpass_rxmacro and lpass_txmacro intentionally enabled here?
-> 
-> The sound card only uses MI2S_SENARY and lpass_vamacro, and nothing on this
-> board consumes DAIs or clocks from lpass_rxmacro or lpass_txmacro.  Probing
-> them registers unused ASoC components and calls lpass_macro_pds_init(),
-> which holds active runtime PM references on the macro and dcodec power
-> domains for the lifetime of the drivers.
-> 
+The levels given in one write are checked against OD_RANGE and applied
+all or none. A new clock is rounded to the one the engine PLL produces,
+as reported by the ComputeMemoryEnginePLL table. OD_SCLK and OD_RANGE
+show whole MHz, so a level written back with the clock OD_SCLK shows or
+with its VBIOS clock keeps that exact clock, and the OD_RANGE maximum
+stands for the exact limit. A voltage between two VID steps is rounded
+up by convert_to_vid(). A commit is refused unless the clocks increase
+from level to level over the whole table, in which the levels that the
+SMU does not enable keep their VBIOS clocks.
 
-Good catch will remove them
+As on smu7 and vega10, a commit only marks the table as pending. The
+power state readjustment that follows it writes the clocks and VDDGFX
+voltages into the dependency tables and uploads them through
+smu8_upload_pptable_to_smu(), the path used at init and resume, so the
+settings also survive suspend. The NB voltages (GnbVid) are not
+changed. The power states refer to the levels by clock and are read by
+amdgpu_dpm_get_sclk(), so update them as well, like
+vega10_odn_update_power_state() does.
+
+smu8_update_sclk_limit() sends the display's minimum engine clock to
+the SMU as a level index, but only when that clock changes. The upload
+clears the cached clock, so the minimum is looked up again in the new
+table.
+
+The SMU accepts the new table at runtime and switches to the new clock
+and voltage of a level the next time it enters that level. No
+powerplay backend forces a level change after a commit, so this one
+does not either.
+
+Signed-off-by: Joshua Horne <hornejd@etsu.edu>
+---
+Sashiko found two real bugs in v1 4/5:
+https://lore.kernel.org/amd-gfx/sashiko-outbox-214116@kernel.org/
+
+1. smu8_update_sclk_limit() resends SclkHardMin only when the display
+   minimum clock changes, so after a commit the SMU could keep a stale
+   level index. Auto mode mostly hides this; forced and manual modes
+   show it. v2 clears the cached clock in smu8_od_upload_sclk_table().
+
+2. A clock written back as OD_SCLK or OD_RANGE shows it could be rounded
+   down by the PLL lookup. v2 keeps the exact clock for the level's VBIOS
+   clock and for the OD_RANGE maximum. My OD_RANGE limits are whole MHz,
+   so I can't hit the -EINVAL case, but the same rounding broke writing
+   back an edited level's VBIOS clock.
+
+Tested before and after the fix on an A10-8700P (Carrizo), 7.4.0-rc2
+plus this series:
+
+  - v1: "s 2 500 862" then "s 2 423 862" left level 2 at 411 MHz, and
+    committing the stock table in manual mode sent no SclkHardMin (0x14).
+  - v2: level 2 returns to 423 MHz, and the commit sends 0x14.
+  - The S3 and pp_dpm_sclk tests pass on both.
+
+Claude Code wrote the fixes, the commit message changes, this note and
+the test script; I reviewed them and ran the tests.
+
+Patches 1-3 and 5 are unchanged; this applies on top of v1 1/5-3/5.
+
+Changes in v2:
+- Clear the cached display minimum clock when uploading the table
+  (Sashiko).
+- Keep the exact clock for a level's VBIOS clock and the OD_RANGE
+  maximum (Sashiko).
+
+ .../drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c   | 228 ++++++++++++++++++
+ .../drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h   |   1 +
+ 2 files changed, 229 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
+index 93a7e7e176f3..272c85f0d163 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
+@@ -860,10 +860,92 @@ static void smu8_populate_umdpstate_clocks(struct pp_hwmgr *hwmgr)
+ 	hwmgr->pstate_mclk_peak = 0;
+ }
+ 
++static void smu8_od_update_power_state(struct pp_hwmgr *hwmgr,
++				       struct pp_power_state *ps)
++{
++	struct smu8_hwmgr *data = hwmgr->backend;
++	const struct phm_odn_clock_levels *od = &data->od_edit_sclk;
++	const struct phm_clock_voltage_dependency_table *old =
++				hwmgr->dyn_state.vddc_dependency_on_sclk;
++	struct smu8_power_state *smu8_ps;
++	struct smu8_power_level *level;
++	uint32_t i, j;
++
++	if (!ps)
++		return;
++
++	smu8_ps = cast_smu8_power_state(&ps->hardware);
++	if (!smu8_ps)
++		return;
++
++	for (i = 0; i < smu8_ps->level; i++) {
++		level = &smu8_ps->levels[i];
++		for (j = 0; j < od->num_of_pl; j++) {
++			if (level->engineClock == old->entries[j].clk) {
++				level->engineClock = od->entries[j].clock;
++				break;
++			}
++		}
++	}
++}
++
++static int smu8_od_upload_sclk_table(struct pp_hwmgr *hwmgr)
++{
++	struct smu8_hwmgr *data = hwmgr->backend;
++	const struct phm_odn_clock_levels *od = &data->od_edit_sclk;
++	struct phm_clock_voltage_dependency_table *vddc_table =
++				hwmgr->dyn_state.vddc_dependency_on_sclk;
++	struct phm_clock_voltage_dependency_table *vdd_gfx_table =
++				hwmgr->dyn_state.vdd_gfx_dependency_on_sclk;
++	struct pp_power_state *ps;
++	uint32_t i;
++
++	data->od_update_pending = false;
++
++	/* the power states refer to the levels by clock, update them first */
++	ps = hwmgr->ps;
++	for (i = 0; i < hwmgr->num_ps; i++) {
++		smu8_od_update_power_state(hwmgr, ps);
++		ps = (struct pp_power_state *)
++			((unsigned long)ps + hwmgr->ps_size);
++	}
++	smu8_od_update_power_state(hwmgr, hwmgr->current_ps);
++	smu8_od_update_power_state(hwmgr, hwmgr->request_ps);
++
++	/* the NB voltages (GnbVid) of the levels are left untouched */
++	for (i = 0; i < od->num_of_pl; i++) {
++		vddc_table->entries[i].clk = od->entries[i].clock;
++		vdd_gfx_table->entries[i].clk = od->entries[i].clock;
++		vdd_gfx_table->entries[i].v =
++			convert_to_vid(od->entries[i].vddc);
++	}
++
++	smu8_populate_umdpstate_clocks(hwmgr);
++
++	/*
++	 * The SMU gets the display minimum as a level index, which may differ
++	 * in the new table: make smu8_update_sclk_limit() send it again.
++	 */
++	data->sclk_dpm.hard_min_clk = 0;
++
++	/*
++	 * The SMU switches to the new clock and voltage of a level the next
++	 * time it enters that level.
++	 */
++	return smu8_upload_pptable_to_smu(hwmgr);
++}
++
+ static int smu8_set_power_state_tasks(struct pp_hwmgr *hwmgr, const void *input)
+ {
++	struct smu8_hwmgr *data = hwmgr->backend;
+ 	int ret = 0;
+ 
++	if (data->od_update_pending) {
++		ret = smu8_od_upload_sclk_table(hwmgr);
++		if (ret)
++			return ret;
++	}
++
+ 	smu8_update_sclk_limit(hwmgr);
+ 	smu8_set_deep_sleep_sclk_threshold(hwmgr);
+ 	smu8_set_watermark_threshold(hwmgr);
+@@ -2057,6 +2139,151 @@ static void smu8_dpm_powergate_vce(struct pp_hwmgr *hwmgr, bool bgate)
+ 	}
+ }
+ 
++/* the engine clock that the PLL produces for @clk */
++static uint32_t smu8_od_real_sclk(struct pp_hwmgr *hwmgr, uint32_t clk)
++{
++	pp_atomctrl_clock_dividers_kong dividers;
++
++	if (atomctrl_get_engine_pll_dividers_kong(hwmgr, clk, &dividers) ||
++	    !dividers.real_clock)
++		return clk;
++
++	return dividers.real_clock;
++}
++
++static int smu8_od_edit_sclk_level(struct pp_hwmgr *hwmgr,
++				   struct phm_odn_clock_levels *od,
++				   long level, long mhz, long mv)
++{
++	struct smu8_hwmgr *data = hwmgr->backend;
++	struct amdgpu_device *adev = hwmgr->adev;
++	uint32_t min_clk, max_clk, clk;
++
++	min_clk = data->od_default_sclk.entries[0].clock;
++	max_clk = hwmgr->platform_descriptor.overdriveLimit.engineClock;
++
++	if (level < 0 || level >= od->num_of_pl) {
++		dev_info(adev->dev,
++			 "OD sclk level %ld is out of range [0 - %u]\n",
++			 level, od->num_of_pl - 1);
++		return -EINVAL;
++	}
++
++	if (mhz < min_clk / 100 || mhz > max_clk / 100) {
++		dev_info(adev->dev,
++			 "OD engine clock is out of range [%u - %u] MHz\n",
++			 min_clk / 100, max_clk / 100);
++		return -EINVAL;
++	}
++
++	if (mv < data->od_min_vddc || mv > data->od_max_vddc) {
++		dev_info(adev->dev, "OD voltage is out of range [%u - %u] mV\n",
++			 data->od_min_vddc, data->od_max_vddc);
++		return -EINVAL;
++	}
++
++	/*
++	 * OD_SCLK and OD_RANGE show whole MHz. A level written back unchanged
++	 * or with its VBIOS clock keeps that exact clock, and the OD_RANGE
++	 * maximum stands for the exact limit. Otherwise use the clock the PLL
++	 * produces.
++	 */
++	clk = mhz * 100;
++	if (clk == od->entries[level].clock / 100 * 100)
++		clk = od->entries[level].clock;
++	else if (clk == data->od_default_sclk.entries[level].clock / 100 * 100)
++		clk = data->od_default_sclk.entries[level].clock;
++	else if (clk == max_clk / 100 * 100)
++		clk = smu8_od_real_sclk(hwmgr, max_clk);
++	else
++		clk = smu8_od_real_sclk(hwmgr, clk);
++
++	if (clk < min_clk || clk > max_clk) {
++		dev_info(adev->dev,
++			 "OD engine clock %u.%02u MHz is out of range\n",
++			 clk / 100, clk % 100);
++		return -EINVAL;
++	}
++
++	od->entries[level].clock = clk;
++	/* a voltage between two VID steps is rounded up */
++	od->entries[level].vddc = convert_to_vddc(convert_to_vid(mv));
++
++	return 0;
++}
++
++static int smu8_od_commit_sclk_table(struct pp_hwmgr *hwmgr)
++{
++	struct smu8_hwmgr *data = hwmgr->backend;
++	struct phm_odn_clock_levels *od = &data->od_edit_sclk;
++	struct phm_clock_voltage_dependency_table *table =
++				hwmgr->dyn_state.vddc_dependency_on_sclk;
++	struct amdgpu_device *adev = hwmgr->adev;
++	uint32_t i, clk, prev = 0;
++
++	/* the levels that the SMU does not enable keep their clocks */
++	for (i = 0; i < table->count; i++) {
++		clk = i < od->num_of_pl ? od->entries[i].clock :
++					  table->entries[i].clk;
++		if (clk <= prev) {
++			dev_info(adev->dev, "OD sclk levels must increase\n");
++			return -EINVAL;
++		}
++		prev = clk;
++	}
++
++	/* uploaded by the power state readjustment that follows a commit */
++	data->od_update_pending = true;
++
++	return 0;
++}
++
++static int smu8_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
++				   enum PP_OD_DPM_TABLE_COMMAND type,
++				   long *input, uint32_t size)
++{
++	struct smu8_hwmgr *data = hwmgr->backend;
++	struct amdgpu_device *adev = hwmgr->adev;
++	struct phm_odn_clock_levels od;
++	uint32_t i;
++	int ret;
++
++	if (!hwmgr->od_enabled) {
++		dev_info(adev->dev, "OverDrive feature not enabled\n");
++		return -EINVAL;
++	}
++
++	switch (type) {
++	case PP_OD_EDIT_SCLK_VDDC_TABLE:
++		break;
++	case PP_OD_RESTORE_DEFAULT_TABLE:
++		data->od_edit_sclk = data->od_default_sclk;
++		return 0;
++	case PP_OD_COMMIT_DPM_TABLE:
++		return smu8_od_commit_sclk_table(hwmgr);
++	default:
++		return -EINVAL;
++	}
++
++	if (!input || !size || size % 3) {
++		dev_info(adev->dev,
++			 "OD sclk input must be <level> <MHz> <mV>\n");
++		return -EINVAL;
++	}
++
++	/* apply all of the given levels or none of them */
++	od = data->od_edit_sclk;
++	for (i = 0; i < size; i += 3) {
++		ret = smu8_od_edit_sclk_level(hwmgr, &od, input[i],
++					      input[i + 1], input[i + 2]);
++		if (ret)
++			return ret;
++	}
++	data->od_edit_sclk = od;
++
++	return 0;
++}
++
+ static const struct pp_hwmgr_func smu8_hwmgr_funcs = {
+ 	.backend_init = smu8_hwmgr_backend_init,
+ 	.backend_fini = smu8_hwmgr_backend_fini,
+@@ -2087,6 +2314,7 @@ static const struct pp_hwmgr_func smu8_hwmgr_funcs = {
+ 	.dynamic_state_management_disable = smu8_disable_dpm_tasks,
+ 	.notify_cac_buffer_info = smu8_notify_cac_buffer_info,
+ 	.get_thermal_temperature_range = smu8_get_thermal_temperature_range,
++	.odn_edit_dpm_table = smu8_odn_edit_dpm_table,
+ };
+ 
+ int smu8_init_function_pointers(struct pp_hwmgr *hwmgr)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h
+index 490fcc352a8f..63ae7826a2da 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h
+@@ -313,6 +313,7 @@ struct smu8_hwmgr {
+ 	struct phm_odn_clock_levels od_edit_sclk;
+ 	uint32_t od_min_vddc;		/* in mV */
+ 	uint32_t od_max_vddc;		/* in mV */
++	bool od_update_pending;		/* committed, not uploaded yet */
+ };
+ 
+ #endif /* _SMU8_HWMGR_H_ */
+
 
