@@ -1,92 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.61.1
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794817059;
-	b=LLb1/endT3VkNiwoiwzYJnSTToYWbBuZf4gkd9xddZGBoN2AFPpT4HMddugbLSOC4bvV
-	 VBWXox7uHpMYkK0LcjgdcQk0DPKRB1z8hIIilsMGUWZfaHT/Bb0OxA6faQ0sjo/qMVO0b
-	 vpZTt7ZgdkjG6FEJIxOiXjciQMhi7U3uV6u23e9hx6BMRGysHYcS0Fe3bY4Z2ZMdjNdVp
-	 JOFaplIHdE4XGthwcSiPY9UVtxUdbgis/aCs4nH6aFDHQ1BtJLToSpA30V+bta/wnLt2o
-	 BY8IvQr4txqDVfL3P3Qqo3nLGtgWELu5IhfTqzEFcT5k19cDWUUD4ZiDryyw8AyaMrA==
+	t=1794819236;
+	b=y69H0BSHbMThdMducEYYYN3m2EblDp1Qck2iMADN56NnX4dsMJssOGLM/6wHq8XFjWK2
+	 Q8E5J84wY8sS6eD6YxTFTEF+vp3+rSwZj2mGnuAsNhzFvt7dP/P3xxrVvoG6Tw4qHyfXv
+	 AZFI3OJdvMwKjdiKm55n0mhWrcsQCmyYmf9tXVpqHfyjHMf4bw2nkihPPVz4ny16YJzKT
+	 TiOMQkbeQJdUeR7LATiBoMDyLb/qFNJIydpbN6eCCny971Zr7Uv/91AZo3unPcgmvtr+3
+	 8sZKEw5bihoLMIRqlQxJSrjJhqq5Vhw79iPMRYW9eJ4PFpX34gFHGzv35AX8bdwM6iw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794817059;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:To:Cc:In-Reply-To:
-	 References:Message-ID:MIME-Version:Content-Type:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=sSXgYBkHT/oc6vNY04Q3fm3X2G3ni/aAOgRi/r/6vDE=;
-	b=Z28fwuWQtWyAdijJpMRufY4jW1pNSdkSBKzlM3uxxx46ayMmdvlCKhzCE38gPaxWcx3C
-	 RqttS9pTCpMp1wpzRkAcsmmff5Rh0OT4xlcB2l0m9Ogt+CT5pXk7/3kuMkf/lI7cnQFpL
-	 L3TdwYVCyKs4FO822xm1NGqVDQT5/DN7sjNJUjX0H+V84Qb6UK5W3o7/+UNfNkanG4ptc
-	 iLsLhlBfE+kkA+t3EnSbmBxb7bd0PI3r8CaiVKkhU9IWkl8xPW3iqlroct0mFsfPUJz+L
-	 5wILiCHypopLdLXqTFxPMWbjqT+fw5XImZ5Qs2EznIf/7rhw4qC6XjubJiVU2jj1S4Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794819236;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 Content-Transfer-Encoding:Content-Type:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=vYfjevhDZrLyOdZirIUajDwiC49vLFzMXE7sYtqr+to=;
+	b=MuPyv0bn+gEYA+2Ce4khV+e+ZW7n7NVkQ2N1KQe/Iv+xDTtRt7uCd2Oav6WgiB+2Gd+e
+	 GecO/iXXcpsCnRfcOe1MnYZrzQAP/5Kv5QSZ1C/02k4WwnT3C4Ff3ZIbiFALEOIV+9NZq
+	 pfHdAms0nmvKRzdNqfAz0v2NTrk666r7XHdHzl/Qpkirdr82JCJT1VIprS/zLKipg5pdJ
+	 asv4eV00oJWD9Y5JFqsK4B7DTTqystNahuQMaEQukrHwUo7u90cyz5wvhU+dtl71mqrgS
+	 tnWjKmARkTquAJBEaGoiIAT1f+JRhPcU0X5v6GRdlQFNEaUeXvWSS5MxZv6yHeJoUUg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MI4H4iOS;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=pq9MOvdi;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.61.1
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010001.outbound.protection.outlook.com [52.101.61.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED30B606A323;
-	Mon, 16 Nov 2026 08:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1724606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 08:53:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E1724606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MI4H4iOS
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1794817058;
-	b=OCeY4UnZQDql2b1LILscAzJSjSnkRlzvsYhkkhSzd3VztRTyMF380UCvzQDhiqOFLwmf
-	 e4xf7gbELFi0C9Ez2S5N3f0eelpuAvYPE7iAMv53Jc4eyKnas+sASj/VNtMNcmOx2qlbv
-	 liCQLiCFIt3eXRk9q45bUH9m9qf3gdMWkcW0KQEosu0983ktPMos2wK0P3QNQIgmArQP0
-	 Ryzg8XkvChbIeDZ1NZxjk7mOQT+DyUf41h+XcfbSopdVB84QwJgtg6EqxxTX9+RApbtfZ
-	 w27KphZSRMzMLezo4/3w+VE1I3YYA2jI5FO44I7TVHf7S+FOcUV5SMmypuwjuwhRaig==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1794817058;
-	h=DKIM-Signature:Received:From:Date:Subject:To:Cc:In-Reply-To:
-	 References:Message-ID:MIME-Version:Content-Type:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=sSXgYBkHT/oc6vNY04Q3fm3X2G3ni/aAOgRi/r/6vDE=;
-	b=vBA7+Zj30wUK1edwZ2oPQJKQPt6Wd1jWqV2i52V3T8xmFczfIpbBGlg8xAXpyWiwvCK6
-	 SZKesvJQd7VZlJHHVOG0RR8xFW+k+Lui/sGwFCismwI1dPsNYjQw9pn3ODbwBoF6P0/U2
-	 vdVs7by97CV/DmWMrnIl+E1OFVREAXz2C30Qz6SAkHgFRhbmH+7kMP+lTqCOu5ml7kT0B
-	 1b4KCKXmQYOzki+4HC6hLKmXzGqZNJjjXZz618WeS9PIljpnUExO0VOFAt3eM0uhBq+by
-	 hf0vSzlMjJzHQzRXH/2PReia7sCGUMQEAEjqv6iCnrIUd9P7NiwY9bXKrNCZMUiy+Xg==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id B3E6D1F000C4;
-	Mon, 16 Nov 2026 08:17:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794817058;
-	bh=sSXgYBkHT/oc6vNY04Q3fm3X2G3ni/aAOgRi/r/6vDE=;
-	h=From:Date:Subject:To:Cc:In-Reply-To:References:Reply-To;
-	b=MI4H4iOSdFZsTgA4mCsCdaxrHZRjYzZoCNH44TtYLIrO504n/ALhK/aZVY6LnCjHh
-	 SjAkk8j7+wmDtV7gkSHOiC/pKDWHL/mTyYxZVzmGdJelblKtAAx0qOGzS5a8jILLXg
-	 E8jg4e+jo1fn63DmuB1E1+ygRn+Y3vDt+ketccvArGzrcs6gvPSt885sf+oE8ALaPu
-	 af+8x+XPPe/cwvbsuDKP1A20OceWf5mMdMGbOjwhzLsGzpoZ8kIR+FHdmA2w4g2n6h
-	 uAwg9ao9NisSEE5mdG9Wi90t9te4zA0O3T4+Hcuc8vVr4iyiATcaBcH9efeg+Gzc7M
-	 eSygMmvvAoGuw==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 173574A3CD;
-	Mon, 16 Nov 2026 08:17:37 +0000 (UTC)
-From: Joshua Horne via B4 Relay <devnull+hornejd.etsu.edu@kernel.org>
-Date: Mon, 16 Nov 2026 03:17:36 -0500
-Subject: [PATCH v2 4/5] drm/amd/pm: allow editing the smu8 overdrive sclk
- table
-To: Alex Deucher <alexander.deucher@amd.com>, 
- Kenneth Feng <kenneth.feng@amd.com>
-Cc: =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- =?utf-8?q?Timur_Krist=C3=B3f?= <timur.kristof@gmail.com>, 
- Lijo Lazar <lijo.lazar@amd.com>, amd-gfx@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Joshua Horne <hornejd@etsu.edu>, sashiko-reviews@lists.linux.dev
-In-Reply-To: <sashiko-outbox-214116@kernel.org>
-References: <20261113-smu8-overdrive-v1-0-763f07bdfca9@etsu.edu>
- <20261113-smu8-overdrive-v1-4-763f07bdfca9@etsu.edu>
- <sashiko-outbox-214116@kernel.org>
-Message-ID: <179481705669.12281.9149615824591242380@etsu.edu>
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=pq9MOvdi
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=R6YXy9tXj7r5dXwRyG2ZbmM9K2zM2vxqiEP/b6FzPCyEWTTWQJqFkh3YKCKDwQJeXeYUJZxPtPHTow0zrgq8zzvoOy7peZugsUWY1LnZ9vPmDqTrp5DGST3jwlLnrNgZZTOVEvlJP9yEETqXAjwdh+K5DRt979lom1IhmEQJJBnUvJpMNiOHU+ttlSXKRBcMETkP2xQNfeeVuDLIX6GJZtkS+n9FNkwzHZRN5Axd2T+ePQdE/9Tjd8KGfd2n6hb6q5yBsbB+Q7qg0ITJh5yVEH4nj3Q+PbJbfkE1c8zT333wBxx6r5b9gnEUihH28JyO26lIvz5zkUD8DJ4AGpDHbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vYfjevhDZrLyOdZirIUajDwiC49vLFzMXE7sYtqr+to=;
+ b=P4TQa0MuspHvpAH2K5NiJdU6zZWxQVQLpkspDMRs/m/jFSElToF4g25T6DESKLy4O6fRtF92IzbOeyZM3QlFnhgJeDxdBkqbtu0cSOz9otR83PemqatGAMytqIfZ9j7BnBSsvYeOouz+XCHjm0pAW+Z3MeWMU9bOVjDord/L0r5IuMxdR1k0xVGCtTWCdN0n+CYaSFyI0sa/Nqt2nsGIPS+ttuMgjEaTpy9VZPmuPeqQdqHpU9jU+XsnUNQHf2Je496ZcSEdtH/HHjiGX7E33duesd6d0IlyiMjs1WmBaYzqPHVTU+UvWyH9aNmnQBfGY1z+ugoiSSXmiiu4pdNL4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vYfjevhDZrLyOdZirIUajDwiC49vLFzMXE7sYtqr+to=;
+ b=pq9MOvdiWjU6d+igok3H6lh+eC3arXUdzhoHJ6P7z7XWgJKPF/UpNyn536rhYykaQRaKvSwG4agyg1irw5iQK82ovPMnYQX9CPHLY4iGKRSYkzhB3gt7Kv6EEIQgB/daSBiSCyqkE5WfBcOH8s80dOUK11Xsvi5QJ6Gz8vUpDNzrZzsvjHKjKc2GpMcLChT8cz7ZeNFksWO9Ciiki3ko8aBcsx1XwGChmzUfXl8MzIwnrmgbFcLUthSbw58HdrkP/AxtXYKC7oWEcwNYpYUy3i3bdNUz4WPT4F1EjP0Tmcqn22/dLv6Jbb/socGLPvIrNmy+9lj6cNg8tgK2EYdY3g==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5974.namprd12.prod.outlook.com (2603:10b6:510:1d9::19)
+ by MN0PR12MB6247.namprd12.prod.outlook.com (2603:10b6:208:3c1::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Mon, 16 Nov
+ 2026 08:53:25 +0000
+Received: from PH7PR12MB5974.namprd12.prod.outlook.com
+ ([fe80::f5a5:bbc3:e9da:f8a0]) by PH7PR12MB5974.namprd12.prod.outlook.com
+ ([fe80::f5a5:bbc3:e9da:f8a0%3]) with mapi id 15.21.0615.013; Mon, 16 Nov 2026
+ 08:53:25 +0000
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev,
+	linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v5 7/7] gpiolib: let the character device free its IRQs first on chip removal
+Date: Mon, 16 Nov 2026 10:53:21 +0200
+Message-ID: <20261116085320.2845766-2-aambrozewicz@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <o6i3phl3kkioptwivmiamw5n6bj7a2butqamu7huh35eulx4ta@cbigrjyy4q6o>
+References: <20261103-gpiolib-chip-removal-v5-0-aambrozewicz@nvidia.com> <20261103-gpiolib-chip-removal-v5-7-aambrozewicz@nvidia.com> <sashiko-outbox-195211@kernel.org> <qabqccchlj6rz5tki6z3h7py36btm6nepdvlcz6vgbq37enfnl@ez2jmldpo5mz> <20261104141501.15473-2-aambrozewicz@nvidia.com> <o6i3phl3kkioptwivmiamw5n6bj7a2butqamu7huh35eulx4ta@cbigrjyy4q6o>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TL2P290CA0027.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:3::11) To PH7PR12MB5974.namprd12.prod.outlook.com
+ (2603:10b6:510:1d9::19)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,362 +96,64 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794817056; l=11965;
- i=hornejd@etsu.edu; s=20261109; h=from:subject:message-id;
- bh=Hxlr9ljtauqnWTX2eK5EXPT1Bv8cN3MCNVdWdSawep4=;
- b=5r4PiR6Y58SuGTmVElW7aVsymX49F9H7uzIL/TKr0kc3s2fa/3+2OEhmsm60pOugR75DeiJoq
- 9aJjCx3AqlqCaSE3LeGPmCFoA5P1nauoeigO5LnfNYLTJpuvdNb4gxB
-X-Developer-Key: i=hornejd@etsu.edu; a=ed25519;
- pk=HNOtiwerBbrJhfhzLHLxj3GDsUH9udRXflqnaI8sQmQ=
-X-Endpoint-Received: by B4 Relay for hornejd@etsu.edu/20261109 with
- auth_id=1469
-X-Original-From: Joshua Horne <hornejd@etsu.edu>
-Reply-To: hornejd@etsu.edu
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5974:EE_|MN0PR12MB6247:EE_
+X-MS-Office365-Filtering-Correlation-Id: baf0d263-1faa-40bb-4992-08df43bf1360
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|22082099003|18002099003|11063799006|4143699003|56012099006|261026121527099003|261021123027099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	N9yXMMZMIPnRKBKs4VJ0pCLyRDTSOvtwa6kczqcs27++Ou1k9NtOq22zubU2OFE1LJdEuM5UxuMqh1udbjqDGkLOKoD4oSF91eDnU/Q2rrUulSOdNDoT3iPISDu274Jt5uUPpjJ5fLMydRXk4a5hoe3xb7z7QUDTajiKDtOAtBpLbnUEEt1XyQu37KlU3JCAlgUn+jeVvxmcpT8u8CfLcz+tYUFmD8vZ8UxQrdYt255VXVVOC5sh/oFrurB93IT6ssP26eDW8b4Pwuc4DIROKumdOpEvYuU66h9AlwPCBJseQJZuYELBXbvkbE22R7eDmbTwrwlIMzrYeS6cGT3vDsZRwc9/La3mMreqEogMUvpsIIxKaKc8G6Dt2+9XdwoNn47lLJEW4WCa9M4WfCImZLGjZ51HPC7/hj3g8CDpoPpOGM2Aztztyj+Yoqdw0Gs2bp6C+4UD7k38hY2+ZSPkDtHeVHdOx3J8N/SoOLrzc4810SoyYYu+1BSdi0akxr0vf0ZTH8unbaIR2PShntrSChTzME/JCgmYtyt6rJYkKlviDQ94LeDuVLXCSJG0uKTDmS3VCm7CvECaDhnx4/JABEwrAz/l+RzLJS4I9+RYFfCfFCYEZ9ZpNix83irYqhx6tveFfd+dMHZPap2ErJPr0lOa8CAPEsPkfDl2jeWTZNs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5974.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006)(261026121527099003)(261021123027099003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ft3DsPc6M6cGh8vyPrG6TLSHD3GV2zKLKaWdk3XZD4dVFQ+xrCPfU4rXTyUW?=
+ =?us-ascii?Q?P5dtrPr55lf5jA+eYQgpfHLnwOtURFxvK4NbJ7WEj/+9qSTj3lcjx00yo4TA?=
+ =?us-ascii?Q?V1YTwXXYw35U9wkFla24P0tNyPoYGmlRJg7sovq0d73cSjszcGx4o2TM66/C?=
+ =?us-ascii?Q?WVYfpMx4tNfbNq096EJf0aFyvofnvsZdODXAlDwjebubWLVYP5CDsUsQBT9i?=
+ =?us-ascii?Q?MrPLovg0K0kub4QBqeIaZWgig7t74VfM2cqC64sIUNPUdb87tplqjbPXNszx?=
+ =?us-ascii?Q?tolKSYxSRvolFb5+nZiLuu6bRAKvmUuWtKh/5L4OyBHr1Nie3cCYHQM0zrSI?=
+ =?us-ascii?Q?wr75B3UByh5vpnINvB0PqnpCjsb8ezGZnedPB5BSO0b/iWH8rexSH1TBWoYB?=
+ =?us-ascii?Q?xS1Q6IH5lEf+tp6tRwNBPw00OCquH2WK6oJ1TrO/IDT8m4M5ssHN0cvW5sjh?=
+ =?us-ascii?Q?ufAn3BTEAx7+Dl6FtbvykRZz8wsf2d8c2w0nQBvfmdfK23O5zRBN02BKsmzI?=
+ =?us-ascii?Q?lcDynJQoJ20zkhUJGktTCh9VobMOPSWozYeVslzMwbG9eN3Sxr5KAk+lcftZ?=
+ =?us-ascii?Q?hQueK4jqi/8J3skLnSSUQAltyewmpdGqmfy31qTKnwKuCiEhUVvudI2Wq+cG?=
+ =?us-ascii?Q?Gb4I66Diw+Prp37GuCODWrzhageYxm9Xl8DpAuUe89beUQksgFnHpBWuq13C?=
+ =?us-ascii?Q?sAZ27kk8mroYIVMaRmzlI5aevWN6m7QtBXh5swKK3jiX78pCTVxTs+TIoKoM?=
+ =?us-ascii?Q?Qe57TQiYoyu7dt26QAX2xpBrpgb7j7CA1POLxLFiF+bxwVumu4BANPIC0QaK?=
+ =?us-ascii?Q?pxAQPimV3WhTpHE7KxcCqpparMrGOWLfaVrOxoZDdxTJhglBz0cptWVEamLf?=
+ =?us-ascii?Q?jxoJpYPDDICfxFY9DHwZymfBlE+QQdRxxXSoLtExUjX+6P+b/TB/yd9SEipm?=
+ =?us-ascii?Q?2osI9evZB/mXy3VSxIo8kcXfjhob/ZDDQX4bL7mNSygI7+nkoN6qwyiPh/Jb?=
+ =?us-ascii?Q?/tgzbIJ1ViHkaZLw8GwTU4pNZcxsResDhwezDfdaJ4hm1c86i8X7iNuf0ET9?=
+ =?us-ascii?Q?dSXV0fns6+6oEI7W9f79BdTm2U714TDZJREjnmODHrqI2A8jc3Db/Wd0kPTl?=
+ =?us-ascii?Q?9VJP2G/DeJztFxMh3CArRcvmwjZpTAEHB1252a0c5aDZgJeC1kB3MHyfJtps?=
+ =?us-ascii?Q?/3LXeE6tzgarUrOcUct9E5of/m+d5KXtwSRBkaywWTo0ebEhIuA1yeTRlaOW?=
+ =?us-ascii?Q?yz1nV2BJrzdRz1nxgOlwe0ZaeoDcgwTidIetrShMSuNxkPhdcBW1svy7Z3J8?=
+ =?us-ascii?Q?JwWv2iyzEFI1nHGyFYJJcfPFF+BMNUOwJc+J7Etmpp6ieBHAgEkGYXPdYbY8?=
+ =?us-ascii?Q?2aCK8UmJHz/+eyuOzgz+0udgrvx/+AP5twP4IZFPRXFzNNraxXpteTFb8pfH?=
+ =?us-ascii?Q?Abwlqh54oIWNCodXhhZtuXFwfVIvJEbuLL8/GtMzu9oBmeJj04nbQB4IRp9T?=
+ =?us-ascii?Q?8nqMfDTwmYlT1MqqHp0kawdxCIKKlbHKcFkgXYS8qXiqxEyF/16XihFOrIVq?=
+ =?us-ascii?Q?09a+zE+YFqy8+C8aH44Y7YuUChe3Ag3EmxpcHAakLVlbUPxzYpx3vMe2HKD2?=
+ =?us-ascii?Q?aDbQXFomBrt3z3z+7zMlrGUudzndu8dvvs4U84w3ZkFEs3OueXPtyQvanAEU?=
+ =?us-ascii?Q?hpL8Dx1+UjZszZ2/nQtBEhkGcygVWrAb8GDEvqoZyXoK0jlPY3M1M114ubN/?=
+ =?us-ascii?Q?FoeBoigzsQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: baf0d263-1faa-40bb-4992-08df43bf1360
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5974.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Nov 2026 08:53:25.5399
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: EIGbLWUbVkU3tAO/So+ABY3n+m424pG5C9a48qGdcRubhTJCHKF7SwY9pVEFAEZ2r7v+I8/fkSsmrV+vSDkXQQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6247
 
-From: Joshua Horne <hornejd@etsu.edu>
+On Fri, Nov 13, 2026 at 10:49:17AM +0100, Bartosz Golaszewski wrote:
+> Hey! Do you plan to send v6 soon? I'd like to have this upstream by rc5
+> if possible.
 
-Implement the "s <level> <MHz> <mV>", "r" and "c" commands of
-pp_od_clk_voltage for Carrizo and Stoney.
-
-The levels given in one write are checked against OD_RANGE and applied
-all or none. A new clock is rounded to the one the engine PLL produces,
-as reported by the ComputeMemoryEnginePLL table. OD_SCLK and OD_RANGE
-show whole MHz, so a level written back with the clock OD_SCLK shows or
-with its VBIOS clock keeps that exact clock, and the OD_RANGE maximum
-stands for the exact limit. A voltage between two VID steps is rounded
-up by convert_to_vid(). A commit is refused unless the clocks increase
-from level to level over the whole table, in which the levels that the
-SMU does not enable keep their VBIOS clocks.
-
-As on smu7 and vega10, a commit only marks the table as pending. The
-power state readjustment that follows it writes the clocks and VDDGFX
-voltages into the dependency tables and uploads them through
-smu8_upload_pptable_to_smu(), the path used at init and resume, so the
-settings also survive suspend. The NB voltages (GnbVid) are not
-changed. The power states refer to the levels by clock and are read by
-amdgpu_dpm_get_sclk(), so update them as well, like
-vega10_odn_update_power_state() does.
-
-smu8_update_sclk_limit() sends the display's minimum engine clock to
-the SMU as a level index, but only when that clock changes. The upload
-clears the cached clock, so the minimum is looked up again in the new
-table.
-
-The SMU accepts the new table at runtime and switches to the new clock
-and voltage of a level the next time it enters that level. No
-powerplay backend forces a level change after a commit, so this one
-does not either.
-
-Signed-off-by: Joshua Horne <hornejd@etsu.edu>
----
-Sashiko found two real bugs in v1 4/5:
-https://lore.kernel.org/amd-gfx/sashiko-outbox-214116@kernel.org/
-
-1. smu8_update_sclk_limit() resends SclkHardMin only when the display
-   minimum clock changes, so after a commit the SMU could keep a stale
-   level index. Auto mode mostly hides this; forced and manual modes
-   show it. v2 clears the cached clock in smu8_od_upload_sclk_table().
-
-2. A clock written back as OD_SCLK or OD_RANGE shows it could be rounded
-   down by the PLL lookup. v2 keeps the exact clock for the level's VBIOS
-   clock and for the OD_RANGE maximum. My OD_RANGE limits are whole MHz,
-   so I can't hit the -EINVAL case, but the same rounding broke writing
-   back an edited level's VBIOS clock.
-
-Tested before and after the fix on an A10-8700P (Carrizo), 7.4.0-rc2
-plus this series:
-
-  - v1: "s 2 500 862" then "s 2 423 862" left level 2 at 411 MHz, and
-    committing the stock table in manual mode sent no SclkHardMin (0x14).
-  - v2: level 2 returns to 423 MHz, and the commit sends 0x14.
-  - The S3 and pp_dpm_sclk tests pass on both.
-
-Claude Code wrote the fixes, the commit message changes, this note and
-the test script; I reviewed them and ran the tests.
-
-Patches 1-3 and 5 are unchanged; this applies on top of v1 1/5-3/5.
-
-Changes in v2:
-- Clear the cached display minimum clock when uploading the table
-  (Sashiko).
-- Keep the exact clock for a level's VBIOS clock and the OD_RANGE
-  maximum (Sashiko).
-
- .../drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c   | 228 ++++++++++++++++++
- .../drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h   |   1 +
- 2 files changed, 229 insertions(+)
-
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-index 93a7e7e176f3..272c85f0d163 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-@@ -860,10 +860,92 @@ static void smu8_populate_umdpstate_clocks(struct pp_hwmgr *hwmgr)
- 	hwmgr->pstate_mclk_peak = 0;
- }
- 
-+static void smu8_od_update_power_state(struct pp_hwmgr *hwmgr,
-+				       struct pp_power_state *ps)
-+{
-+	struct smu8_hwmgr *data = hwmgr->backend;
-+	const struct phm_odn_clock_levels *od = &data->od_edit_sclk;
-+	const struct phm_clock_voltage_dependency_table *old =
-+				hwmgr->dyn_state.vddc_dependency_on_sclk;
-+	struct smu8_power_state *smu8_ps;
-+	struct smu8_power_level *level;
-+	uint32_t i, j;
-+
-+	if (!ps)
-+		return;
-+
-+	smu8_ps = cast_smu8_power_state(&ps->hardware);
-+	if (!smu8_ps)
-+		return;
-+
-+	for (i = 0; i < smu8_ps->level; i++) {
-+		level = &smu8_ps->levels[i];
-+		for (j = 0; j < od->num_of_pl; j++) {
-+			if (level->engineClock == old->entries[j].clk) {
-+				level->engineClock = od->entries[j].clock;
-+				break;
-+			}
-+		}
-+	}
-+}
-+
-+static int smu8_od_upload_sclk_table(struct pp_hwmgr *hwmgr)
-+{
-+	struct smu8_hwmgr *data = hwmgr->backend;
-+	const struct phm_odn_clock_levels *od = &data->od_edit_sclk;
-+	struct phm_clock_voltage_dependency_table *vddc_table =
-+				hwmgr->dyn_state.vddc_dependency_on_sclk;
-+	struct phm_clock_voltage_dependency_table *vdd_gfx_table =
-+				hwmgr->dyn_state.vdd_gfx_dependency_on_sclk;
-+	struct pp_power_state *ps;
-+	uint32_t i;
-+
-+	data->od_update_pending = false;
-+
-+	/* the power states refer to the levels by clock, update them first */
-+	ps = hwmgr->ps;
-+	for (i = 0; i < hwmgr->num_ps; i++) {
-+		smu8_od_update_power_state(hwmgr, ps);
-+		ps = (struct pp_power_state *)
-+			((unsigned long)ps + hwmgr->ps_size);
-+	}
-+	smu8_od_update_power_state(hwmgr, hwmgr->current_ps);
-+	smu8_od_update_power_state(hwmgr, hwmgr->request_ps);
-+
-+	/* the NB voltages (GnbVid) of the levels are left untouched */
-+	for (i = 0; i < od->num_of_pl; i++) {
-+		vddc_table->entries[i].clk = od->entries[i].clock;
-+		vdd_gfx_table->entries[i].clk = od->entries[i].clock;
-+		vdd_gfx_table->entries[i].v =
-+			convert_to_vid(od->entries[i].vddc);
-+	}
-+
-+	smu8_populate_umdpstate_clocks(hwmgr);
-+
-+	/*
-+	 * The SMU gets the display minimum as a level index, which may differ
-+	 * in the new table: make smu8_update_sclk_limit() send it again.
-+	 */
-+	data->sclk_dpm.hard_min_clk = 0;
-+
-+	/*
-+	 * The SMU switches to the new clock and voltage of a level the next
-+	 * time it enters that level.
-+	 */
-+	return smu8_upload_pptable_to_smu(hwmgr);
-+}
-+
- static int smu8_set_power_state_tasks(struct pp_hwmgr *hwmgr, const void *input)
- {
-+	struct smu8_hwmgr *data = hwmgr->backend;
- 	int ret = 0;
- 
-+	if (data->od_update_pending) {
-+		ret = smu8_od_upload_sclk_table(hwmgr);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	smu8_update_sclk_limit(hwmgr);
- 	smu8_set_deep_sleep_sclk_threshold(hwmgr);
- 	smu8_set_watermark_threshold(hwmgr);
-@@ -2057,6 +2139,151 @@ static void smu8_dpm_powergate_vce(struct pp_hwmgr *hwmgr, bool bgate)
- 	}
- }
- 
-+/* the engine clock that the PLL produces for @clk */
-+static uint32_t smu8_od_real_sclk(struct pp_hwmgr *hwmgr, uint32_t clk)
-+{
-+	pp_atomctrl_clock_dividers_kong dividers;
-+
-+	if (atomctrl_get_engine_pll_dividers_kong(hwmgr, clk, &dividers) ||
-+	    !dividers.real_clock)
-+		return clk;
-+
-+	return dividers.real_clock;
-+}
-+
-+static int smu8_od_edit_sclk_level(struct pp_hwmgr *hwmgr,
-+				   struct phm_odn_clock_levels *od,
-+				   long level, long mhz, long mv)
-+{
-+	struct smu8_hwmgr *data = hwmgr->backend;
-+	struct amdgpu_device *adev = hwmgr->adev;
-+	uint32_t min_clk, max_clk, clk;
-+
-+	min_clk = data->od_default_sclk.entries[0].clock;
-+	max_clk = hwmgr->platform_descriptor.overdriveLimit.engineClock;
-+
-+	if (level < 0 || level >= od->num_of_pl) {
-+		dev_info(adev->dev,
-+			 "OD sclk level %ld is out of range [0 - %u]\n",
-+			 level, od->num_of_pl - 1);
-+		return -EINVAL;
-+	}
-+
-+	if (mhz < min_clk / 100 || mhz > max_clk / 100) {
-+		dev_info(adev->dev,
-+			 "OD engine clock is out of range [%u - %u] MHz\n",
-+			 min_clk / 100, max_clk / 100);
-+		return -EINVAL;
-+	}
-+
-+	if (mv < data->od_min_vddc || mv > data->od_max_vddc) {
-+		dev_info(adev->dev, "OD voltage is out of range [%u - %u] mV\n",
-+			 data->od_min_vddc, data->od_max_vddc);
-+		return -EINVAL;
-+	}
-+
-+	/*
-+	 * OD_SCLK and OD_RANGE show whole MHz. A level written back unchanged
-+	 * or with its VBIOS clock keeps that exact clock, and the OD_RANGE
-+	 * maximum stands for the exact limit. Otherwise use the clock the PLL
-+	 * produces.
-+	 */
-+	clk = mhz * 100;
-+	if (clk == od->entries[level].clock / 100 * 100)
-+		clk = od->entries[level].clock;
-+	else if (clk == data->od_default_sclk.entries[level].clock / 100 * 100)
-+		clk = data->od_default_sclk.entries[level].clock;
-+	else if (clk == max_clk / 100 * 100)
-+		clk = smu8_od_real_sclk(hwmgr, max_clk);
-+	else
-+		clk = smu8_od_real_sclk(hwmgr, clk);
-+
-+	if (clk < min_clk || clk > max_clk) {
-+		dev_info(adev->dev,
-+			 "OD engine clock %u.%02u MHz is out of range\n",
-+			 clk / 100, clk % 100);
-+		return -EINVAL;
-+	}
-+
-+	od->entries[level].clock = clk;
-+	/* a voltage between two VID steps is rounded up */
-+	od->entries[level].vddc = convert_to_vddc(convert_to_vid(mv));
-+
-+	return 0;
-+}
-+
-+static int smu8_od_commit_sclk_table(struct pp_hwmgr *hwmgr)
-+{
-+	struct smu8_hwmgr *data = hwmgr->backend;
-+	struct phm_odn_clock_levels *od = &data->od_edit_sclk;
-+	struct phm_clock_voltage_dependency_table *table =
-+				hwmgr->dyn_state.vddc_dependency_on_sclk;
-+	struct amdgpu_device *adev = hwmgr->adev;
-+	uint32_t i, clk, prev = 0;
-+
-+	/* the levels that the SMU does not enable keep their clocks */
-+	for (i = 0; i < table->count; i++) {
-+		clk = i < od->num_of_pl ? od->entries[i].clock :
-+					  table->entries[i].clk;
-+		if (clk <= prev) {
-+			dev_info(adev->dev, "OD sclk levels must increase\n");
-+			return -EINVAL;
-+		}
-+		prev = clk;
-+	}
-+
-+	/* uploaded by the power state readjustment that follows a commit */
-+	data->od_update_pending = true;
-+
-+	return 0;
-+}
-+
-+static int smu8_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
-+				   enum PP_OD_DPM_TABLE_COMMAND type,
-+				   long *input, uint32_t size)
-+{
-+	struct smu8_hwmgr *data = hwmgr->backend;
-+	struct amdgpu_device *adev = hwmgr->adev;
-+	struct phm_odn_clock_levels od;
-+	uint32_t i;
-+	int ret;
-+
-+	if (!hwmgr->od_enabled) {
-+		dev_info(adev->dev, "OverDrive feature not enabled\n");
-+		return -EINVAL;
-+	}
-+
-+	switch (type) {
-+	case PP_OD_EDIT_SCLK_VDDC_TABLE:
-+		break;
-+	case PP_OD_RESTORE_DEFAULT_TABLE:
-+		data->od_edit_sclk = data->od_default_sclk;
-+		return 0;
-+	case PP_OD_COMMIT_DPM_TABLE:
-+		return smu8_od_commit_sclk_table(hwmgr);
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	if (!input || !size || size % 3) {
-+		dev_info(adev->dev,
-+			 "OD sclk input must be <level> <MHz> <mV>\n");
-+		return -EINVAL;
-+	}
-+
-+	/* apply all of the given levels or none of them */
-+	od = data->od_edit_sclk;
-+	for (i = 0; i < size; i += 3) {
-+		ret = smu8_od_edit_sclk_level(hwmgr, &od, input[i],
-+					      input[i + 1], input[i + 2]);
-+		if (ret)
-+			return ret;
-+	}
-+	data->od_edit_sclk = od;
-+
-+	return 0;
-+}
-+
- static const struct pp_hwmgr_func smu8_hwmgr_funcs = {
- 	.backend_init = smu8_hwmgr_backend_init,
- 	.backend_fini = smu8_hwmgr_backend_fini,
-@@ -2087,6 +2314,7 @@ static const struct pp_hwmgr_func smu8_hwmgr_funcs = {
- 	.dynamic_state_management_disable = smu8_disable_dpm_tasks,
- 	.notify_cac_buffer_info = smu8_notify_cac_buffer_info,
- 	.get_thermal_temperature_range = smu8_get_thermal_temperature_range,
-+	.odn_edit_dpm_table = smu8_odn_edit_dpm_table,
- };
- 
- int smu8_init_function_pointers(struct pp_hwmgr *hwmgr)
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h
-index 490fcc352a8f..63ae7826a2da 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.h
-@@ -313,6 +313,7 @@ struct smu8_hwmgr {
- 	struct phm_odn_clock_levels od_edit_sclk;
- 	uint32_t od_min_vddc;		/* in mV */
- 	uint32_t od_max_vddc;		/* in mV */
-+	bool od_update_pending;		/* committed, not uploaded yet */
- };
- 
- #endif /* _SMU8_HWMGR_H_ */
-
-
+Yes, sorry for the delay. I plan to send v6 this week, rebased on
+gpio/for-current, with the shared proxy fix as a separate patch.
