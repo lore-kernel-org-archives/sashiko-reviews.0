@@ -1,113 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794848838;
-	b=LJVZHMzDCAnbsZDbdSqY0N0T4X+gp2OLtLjtzGqHilRfVW5skwHBt3831e9BmvEUUUy9
-	 cT0pQ/hq0rz/+lZDiN+FKTl4GKFYwv+amYtsIpemBonprz9heljnU9sQXzWecp1Rvr+de
-	 3gii3Y+Li88VXRmeQJ5Kl6lmCoKzyPjhFJmg/qDba1gyQEXWXsswEjf0Z83sYIRXyUkmU
-	 j+QFYKZ3c8TLT9L2n+HyeSnKaFAooWaIoJ7peZMRFGaoW1aBQx0VJfumCQsjlZAd2UkGB
-	 NvNC3RCF7mdKL+rogawdOjgWQtiOZJ9pzIS8NfdQ+47mgMhLagIPBGuQ9Tdb+N1Vbww==
+	t=1794856145;
+	b=hL2RnacrPIxpjO7w/bqs7AqfoIfBJLidbjQR/sBnREPaxJ5KAa8J8WKG+Wb4j4CpmCn3
+	 0ipmcdK2lZA2jor+xL4gmYq2f0644jxA36hJozKcEYFYQz2bQbNoV0hywUDOSWTIPXvcQ
+	 BUixXpfVw4+HnEY+pLaf8GXhY+brwZ7qDr2m/fQECqIHD3Bc4We1zG85yV3HhRQwuh2H8
+	 KYKPtQ8KiHGOcyESeCJl+ONgeJ9kFptXKm89rXLRiolJVVYFI+83myP9iBtd563J/HK7+
+	 DbjdTdWY3bNBpFxqN70jm3xQh5ya1ULCuPpzkObA7stBo9mbiGLiibzj3ocjWW/MVww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794848838;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:X-Spam-Score;
-	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
-	b=JQAXCHnFllHdbdgXxpYpMCz7w9spyeyF0myHdnb3M5bYahpgWFl0k7r61sHt2CtLzONe
-	 PT4sMptuMTTY0MxDGTXX64Jrgjf1aKwn8ozxi/4FXFu3eOsrSewlIBKXxdiwbsGjqjIjO
-	 8UYcon36wj9OOhsiHbnHS7YZxSQQbG9EvkhK0eihHAVEDIO/6TWTNZ+KLlEMlxLGAuPKB
-	 v+GTyYSx/J6IDyA8L1j4p9MtDHgl7ieLo0r/Zu8P4Q6EFhBy848KHPqZ2cpXtYWSHpYM5
-	 285e/41sNecragwxZ/m45HfsgrQPBl3HPkWDQvhnKzuyy8xG2InxekY1rkluWwSUj1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794856145;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=xa5m2kQ4McS89naKgeW1MFetHUtXxopI9MUGzN5ygBU=;
+	b=VGF6aoQloK/EMRJV9A9rL6YKOUDBGeg0MI8Z7uMz7/mk9TMm9ozt9udtA2Qhl8djq71Z
+	 n0nrz5BoXLf8Fp86QZM0w2XXLg8oSAklDTuEQ0KntxDZiNeqBuw6uqt6UorPlUMiswfEl
+	 cftI7zF+rkt/S7T62KYVwFfbvn0ymVcbrp6Fy42nFT+ZEPyl4GOinOxKQmqamwfbiL8sJ
+	 b60DbVZMSNLFniCodWAz8OhM/MI+5JDnIqHv3GYYInaxbPZcP6w+QozISsPbgrx8VPIXX
+	 wkuqKmb39wII+36dvsHLXB/HSUu4OlEghN4BY5lZ3Iy+Hroko8Y9mxyZCmFRAYfrh8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=suse.cz;
-	spf=pass smtp.mailfrom=suse.cz;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b="E05RK8Q/";
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b="E05RK8Q/";
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59CA606A322
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 17:07:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D59CA606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vLbwuybu;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD115606A32A;
+	Mon, 16 Nov 2026 19:09:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AD115606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=E05RK8Q/;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=E05RK8Q/;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lUfKD2fb
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 0FA001F7C4;
-	Mon, 16 Nov 2026 17:07:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1794848836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
-	b=E05RK8Q/R3QP6IooGK0K2uKd77pktoWZnqFNlm8lRM/SdtZ2jy/sUY5vARWvu2kuhdquPn
-	Zol4YlHokNGs8kClyWjkZY0efcL7NnEpPe6EQaxK2HcgqnGhFiPLAkxHbm8uF8lnVUOIyw
-	aMd42idReVsAtzp9qhLbFOE6giaDPvg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1794848836;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
-	b=lUfKD2fbyhCzXGVYxup9x2uUhL7w0iSLStSZifPuMMa8MmWyh80DIAaxBXh6gjIQD57bxf
-	NAxhylw92EHpdBCg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1794848836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
-	b=E05RK8Q/R3QP6IooGK0K2uKd77pktoWZnqFNlm8lRM/SdtZ2jy/sUY5vARWvu2kuhdquPn
-	Zol4YlHokNGs8kClyWjkZY0efcL7NnEpPe6EQaxK2HcgqnGhFiPLAkxHbm8uF8lnVUOIyw
-	aMd42idReVsAtzp9qhLbFOE6giaDPvg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1794848836;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZNhkbFLmdWlDxBP+VbCDLBk7TECa3Ts7dDVyvIVcM6E=;
-	b=lUfKD2fbyhCzXGVYxup9x2uUhL7w0iSLStSZifPuMMa8MmWyh80DIAaxBXh6gjIQD57bxf
-	NAxhylw92EHpdBCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CAFEA13408;
-	Mon, 16 Nov 2026 17:07:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id Z9aHKUM4+2qjGQAAD6G6ig
-	(envelope-from <jack@suse.cz>); Mon, 16 Nov 2026 17:07:15 +0000
-Received: by quack.suse.cz (Postfix, from userid 1000)
-	id 5BD0524E8E; Mon, 16 Nov 2026 18:07:11 +0100 (CET)
-Date: Mon, 16 Nov 2026 18:07:11 +0100
-From: Jan Kara <jack@suse.cz>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
-	Andreas Gruenbacher <agruenba@redhat.com>, Mike Marshall <hubcap@omnibond.com>, 
-	Martin Brandenburg <martin@omnibond.com>, devel@lists.orangefs.org, Dave Kleikamp <shaggy@kernel.org>, 
-	Carlos Maiolino <cem@kernel.org>, David Howells <dhowells@redhat.com>, 
-	Marc Dionne <marc.dionne@auristor.com>, Miklos Szeredi <miklos@szeredi.hu>, Chuck Lever <cel@kernel.org>, 
-	Jeff Layton <jlayton@kernel.org>, Eric Biggers <ebiggers@kernel.org>, 
-	Jaegeuk Kim <jaegeuk@kernel.org>, linux-fscrypt@vger.kernel.org, Anna Schumaker <anna@kernel.org>
-Subject: Re: [PATCH 06/13] gfs2: Avoid racy dirtiness check in gfs2_fsync()
-Message-ID: <4jxbqdd43u7xys4l4x6yzbwpbtw3yijkxlv6x6qnp4punam5u6@mlaydzf2raal>
-References: <20261113083336.15152-1-jack@suse.cz>
- <20261113084700.739002-19-jack@suse.cz>
- <sashiko-outbox-212504@kernel.org>
- <4bfypbk3wiuheb2ntltkt4colxa77fplkxrft2uzvgsjguunna@wela5zxwi2iq>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vLbwuybu
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 920641684;
+	Mon, 16 Nov 2026 11:09:00 -0800 (PST)
+Received: from [10.57.69.37] (unknown [10.57.69.37])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9638C3F763;
+	Mon, 16 Nov 2026 11:09:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1794856143; bh=f2swxQ3wi7X4GorXhzlcfPLv2QaLk/FTXlMHUk2SH3Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=vLbwuybuJ1gnxVNNBPUef0Ug4GMpb03qX4MOQFkuIvDvKnSaA2YBECf3PHbl6Mh0S
+	 5CmTmGAzP11/8d1l6rOX4yk43dY6xvUg7SEvtmTeaHbNuJOuTmgZjUZMl+ZVE4zyYl
+	 fzz5Zk8O1bhcT12ZEDIxdCJJyZVCkD/N3LujRf1E=
+Message-ID: <5c70e40a-114d-4fe3-ad0d-506589b8e7bc@arm.com>
+Date: Mon, 16 Nov 2026 19:09:00 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -117,107 +53,123 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4bfypbk3wiuheb2ntltkt4colxa77fplkxrft2uzvgsjguunna@wela5zxwi2iq>
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-12.80 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_RHS_NOT_FQDN(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:email];
-	RCVD_COUNT_THREE(0.00)[3];
-	FROM_HAS_DN(0.00)[];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.cz:email,suse.com:email]
-X-Spam-Score: -12.80
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/11] KVM: arm64: CCA: Support runtime faulting of
+ memory
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev, Steven Price <steven.price@arm.com>,
+ kvm@vger.kernel.org, kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261116164358.142785-1-steven.price@arm.com>
+ <20261116164358.142785-10-steven.price@arm.com>
+ <sashiko-outbox-217436@kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <sashiko-outbox-217436@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri 13-11-26 11:14:17, Jan Kara wrote:
-> On Fri 13-11-26 09:08:22, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
-> > - [High] gfs2: gfs2_fsync() checks PAGECACHE_TAG_DIRTY after
-> >   filemap_fdatawrite_range()
-> > --
-> > 
-> > commit a74a8e373d1c581c53bf8dbda94cd97b2bf0e19f
-> > Author: Jan Kara <jack@suse.cz>
-> > 
-> > gfs2: Avoid racy dirtiness check in gfs2_fsync()
-> > 
-> > This commit replaces the unlocked I_DIRTY check in gfs2_fsync() with
-> > inode_is_dirty() and a PAGECACHE_TAG_DIRTY check on the mapping for jdata
-> > inodes.
-> > 
-> > > diff --git a/fs/gfs2/file.c b/fs/gfs2/file.c
-> > > index 1efd0679badd9..9e52f18326737 100644
-> > > --- a/fs/gfs2/file.c
-> > > +++ b/fs/gfs2/file.c
-> > > @@ -749,7 +749,6 @@ static int gfs2_fsync(struct file *file, loff_t start, loff_t end,
-> > >  {
-> > >  	struct address_space *mapping = file->f_mapping;
-> > >  	struct inode *inode = mapping->host;
-> > > -	int sync_state = inode_state_read_once(inode) & I_DIRTY;
-> > >  	struct gfs2_glock *gl = gfs2_inode_glock(inode);
-> > >  	struct gfs2_inode *ip = GFS2_I(inode);
-> > >  	int ret = 0, ret1 = 0;
-> > > @@ -760,12 +759,9 @@ static int gfs2_fsync(struct file *file, loff_t start, loff_t end,
-> > >  			return ret1;
-> > >  	}
-> > >  
-> > > -	if (!gfs2_is_jdata(ip))
-> > > -		sync_state &= ~I_DIRTY_PAGES;
-> > > -	if (datasync)
-> > > -		sync_state &= ~I_DIRTY_SYNC;
-> > > -
-> > > -	if (sync_state) {
-> > > +	if (inode_is_dirty(inode, datasync) ||
-> > > +	    (gfs2_is_jdata(ip) && mapping_tagged(inode->i_mapping,
-> > > +						 PAGECACHE_TAG_DIRTY))) {
-> > >  		ret = sync_inode_metadata(inode, 1);
-> > >  		if (ret)
-> > >  			return ret;
-> > 
-> > [Severity: High]
-> > Does checking mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY) after
-> > filemap_fdatawrite_range(mapping, start, end) miss dirty jdata pages?
-> > 
-> > Previously, sync_state was sampled before filemap_fdatawrite_range().  For a
-> > jdata inode, filemap_fdatawrite_range() runs gfs2_jdata_writepages() with
-> > WB_SYNC_ALL, which flushes the log and calls gfs2_write_cache_jdata() ->
-> > gfs2_write_jdata_batch() -> folio_clear_dirty_for_io(), clearing
-> > PAGECACHE_TAG_DIRTY on the folios in [start, end] before this check is
-> > reached.
+On 16/11/2026 17:31, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] KVM: arm64: KVM_CAP_PRE_FAULT_MEMORY advertised for Realm VMs
+> - [Medium] KVM: arm64: missing unmap on partial failure in
+>    realm_map_unprotected()
+> - [Low] KVM: arm64: unhandled exec fault on shared Realm IPA in
+>    gmem_abort() and user_mem_abort()
+> --
 > 
-> So I'm aware the behavior of gfs2_fsync() is changed and on a second
-> thought I agree that the mapping_tagged() check should probably happen
-> before the filemap_fdatawrite_range() as it used to. But frankly I find the
-> code in gfs2_fsync() with multiple filemap writeouts and waits confusing so
-> I'd like some feedback from GFS2 folks about the intended behavior to be
-> sure.
+> commit 5a0919ef6adc946a1afb4f6ad7cf84e5573597f3
+> Author: Steven Price <steven.price@arm.com>
+> 
+> KVM: arm64: CCA: Support runtime faulting of memory
+> 
+> This commit adds runtime stage-2 fault handling for Realm VMs, delegating
+> and mapping private guest_memfd pages in the protected IPA region and
+> mapping shared pages in the unprotected IPA region via the RMM.
+> 
+>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>> index 0db3c293fdd52..9b371159be92c 100644
+>> --- a/arch/arm64/kvm/mmu.c
+>> +++ b/arch/arm64/kvm/mmu.c
+> [ ... ]
+>> @@ -1846,6 +1882,16 @@ static int gmem_abort(const struct kvm_s2_fault_desc *s2fd,
+>>   		goto out_unlock;
+>>   	}
+>>   
+>> +	switch (kvm->arch.vm_flavor) {
+>> +	case VM_REALM:
+>> +		prot &= ~KVM_PGTABLE_PROT_X;
+>> +		ret = realm_map_ipa(kvm, s2fd->fault_ipa, s2vi.pfn,
+>> +				    PAGE_SIZE, prot, memcache);
+>> +		goto out_unlock;
+>> +	default:
+>> +		break;
+>> +	}
+>> +
+> [ ... ]
+>> @@ -2242,12 +2289,15 @@ static int kvm_s2_fault_map(const struct kvm_s2_fault_desc *s2fd,
+>>   	if (!perm_fault_granule && !s2vi->map_non_cacheable && kvm_has_mte(kvm))
+>>   		sanitise_mte_tags(kvm, pfn, mapping_size);
+>>   
+>> -	/*
+>> -	 * Under the premise of getting a FSC_PERM fault, we just need to relax
+>> -	 * permissions only if mapping_size equals perm_fault_granule. Otherwise,
+>> -	 * kvm_pgtable_stage2_map() should be called to change block size.
+>> -	 */
+>> -	if (mapping_size == perm_fault_granule) {
+>> +	if (kvm_vm_is_realm(kvm)) {
+>> +		ret = realm_map_ipa(kvm, s2fd->fault_ipa, pfn, mapping_size,
+>> +				    prot, memcache);
+> 
+> [Severity: Low]
+> This question rests on an architecture detail that could not be confirmed
+> from the kernel source: can a Realm guest instruction fetch from an
+> unprotected (shared) IPA exit to the host as a stage-2 instruction abort
+> that reaches kvm_handle_guest_abort()?
+> 
+> If so, unprotected RTT mappings only encode RMI_S2AP_DIRECT_READ and
+> RMI_S2AP_DIRECT_WRITE and cannot grant execute permission, but neither
+> gmem_abort() nor user_mem_abort() rejects kvm_s2_fault_is_exec(s2fd) with
+> -ENOEXEC to inject an instruction abort.  Instead, realm_map_unprotected()
+> installs a non-executable mapping, and on subsequent instruction permission
+> faults at the same IPA where level >= req_level, unmaps and remaps the page
+> with the same non-executable permissions and returns 0 in an endless fault
+> loop.
 
-I've moved the dirtiness check before filemap_fdatawrite_range() now but as
-I had a closer look at gfs2_fsync() logic and I'm now pretty much convinced
-it is racy and this is just bug-to-bug compatibility. E.g. background
-writeback could have just finished by the time gfs2_fsync() is called and
-then it would behave exactly as with the dirtiness check after
-filemap_fdatawrite_range(). But this really requires someone more
-knowledgeable of GFS2 to have a look and decide.
+No, this is wrong. As per RMM spec, Rule XLSKP in A5.2.7 Realm access to 
+an Unprotected IPA , version 2.0-beta3:
 
-								Honza
--- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+"Realm instruction fetch from an Unprotected IPA causes a Synchronous 
+External Abort taken to the Realm."
+
+So the execute permission fault do not come to the KVM.
+
+We could a comment here to make it clear.
+
+> 
+> [ ... ]
+> 
+>> @@ -3155,7 +3217,7 @@ pre_fault_bytes_consumed(gpa_t gpa, unsigned long granule_size,
+>>   
+>>   int kvm_arch_pre_fault_allowed(struct kvm_vcpu *vcpu)
+>>   {
+>> -	if (is_protected_kvm_enabled())
+>> +	if (is_protected_kvm_enabled() || kvm_vm_is_realm(vcpu->kvm))
+>>   		return -EOPNOTSUPP;
+>>   	if (!kvm_vcpu_initialized(vcpu))
+>>   		return -ENOEXEC;
+> 
+> [Severity: Medium]
+> Should kvm_vm_ioctl_check_extension() also report 0 for
+> KVM_CAP_PRE_FAULT_MEMORY when kvm && kvm_vm_is_realm(kvm)?
+> 
+> Currently kvm_vm_ioctl_check_extension() only gates capabilities on
+> is_protected_kvm_enabled() and otherwise unconditionally sets r = 1 for
+> KVM_CAP_PRE_FAULT_MEMORY, advertising the capability on a Realm VM file
+> descriptor even though KVM_PRE_FAULT_MEMORY always fails here with
+> -EOPNOTSUPP.
+
+This is taken care of in the later patches on the integration branch,
+where the capabilities are restricted for Realms.
+
+Suzuki
