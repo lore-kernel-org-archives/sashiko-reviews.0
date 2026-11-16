@@ -1,49 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.246.84.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794844893;
-	b=in03ox93mxIk2DuUxYP4P8dH1IXywSpL6+x162ensvoVtalhD88x2eXV5Vzz7aS5L913
-	 1MAzsfeMBO/gwT4Jz8dUyGBDOYOOYaiBfFjik4yQ0H4iIdf9Iysm+VjEeY/DBhH+SxFsj
-	 ULklX78XIy4qrBMoQ1TKuoJnivpJ4GV8QloWqe1NwXSE/FgXxRtOAJh5d3aiKtfJeil+m
-	 cp1ni3ZU64/TX3m+imzEs4XGZWD+O5O8H6sfCg7Tu2Xo1bTWIV6ufAT8j3/iHE9RjPOiJ
-	 FtTFhVgRA3xpQh2qtkQgK4jp3URHm9nbYqTLjJ8wKcRzXeFJZPbaMQ0OK8BLNUwzBhA==
+	t=1794845545;
+	b=EI0i3UGef2acYKXXmuinSqcAGiF8VzDvxJrit52gPAE9rj63B33apTUzikffolm7pbo6
+	 Ek3G27BpOfHWv+8z34vrdiHEKA11AebUhcWH2dOdaLhJ9+GK/pFJftoY6VQ608NE29k5r
+	 H6bSQ377BbFTXM5FbpknHACBtaTBIJhjS02Ddz3qFUKLlMY3DL2kEBZe4OkGT59RqeK7R
+	 9xQnxltDs9hl8z3j384+Tn9clwO4pc46M1euq+DNVVqEgFjodAVX9PWBDW8+YuaTgQNIB
+	 Iuo43noZ0MSwc7NneS2sdqr5Z5BzULoDm3UvDdprnCaNlBz0KjyLZ9484tvPEwCy2VA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794844893;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=Jgg5EKN99U8VWXl+ylwhKyqraBlgCj53d3cDuGHQiY4=;
-	b=s/JX0thVkzebq3L15f+MM6APpdZWj1SboTYx4+oFnr7E12NdzGf2l5dUM+nb6HX6sGrm
-	 ATgY7VGo0FgkRyGdZxsoiGbkZxE5BS+iotAfOLXF2n0rwRQBFsoGVRuw5AlVjdnf0G/4j
-	 LrGbGZwa6+kPrqmf41o93opGgks/dEeHScp1JbYJ13+K91cqGE3QEw1zMU1xtpBhC4gt5
-	 OtFP+xWwqrPDK2EzijGEmofETWAH2vyut8/8Tr/56e7E11YbYQu25OA55vvs/VaMToHmi
-	 yhR7FEnY6+7GLJOS6aVTMSXmmUaPvtdcsn1OyK4rY2aomMm9Sh16CsNPqP9X3TEXM2w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794845545;
+	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
+	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-Last-TLS-Session-Version;
+	bh=WL42cWBPuyCFWlEF/5Nn+QC5AN/XCgSMhpRtAl3fZBE=;
+	b=v+G5Qmq5S2qy/H7iLGNh3kv6UiGShzIwOp/1SediQcdz/3xDMR/tQgvswXbXxi5rSy5p
+	 zZVv6XfbBcTfMDhCT5EG9eiZWvI4BeifhRrAS4RAhS9i4yW/Jw/ZSxgx/Nz2fhNKyjmjb
+	 jY4y1DYWKoVQtIzgiev64lcsOFpGZIDCsKhFLEShWnGNRsqvcr2mgVcOF/qMD/VeZy0H5
+	 ffZsr29fwQesNujumMLXbUcMQ34Df0DFMOwhAHCoVknRTPQoCfUuZgdIofvC2Qy3iTyrx
+	 xCVOZiZAJPmNdOnBYdSeQ86Y+GhC62b67syRQ3YcINdu40Me0dXGaAxXVRAUnkCTNPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="ethP/+I0";
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36BE2606A322
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:01:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36BE2606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=bootlin.com;
+	spf=pass smtp.mailfrom=bootlin.com;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b="riGSXRd/";
+	arc=none smtp.remote-ip=185.246.84.56
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9181D606A333
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:12:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9181D606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=ethP/+I0
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 235B31684;
-	Mon, 16 Nov 2026 08:01:27 -0800 (PST)
-Received: from [10.57.62.118] (unknown [10.57.62.118])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F40773F763;
-	Mon, 16 Nov 2026 08:01:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794844890; bh=FbZg7NHHCz6rr+xeyl8Jzirm2hXhzTWlvIqCbcztP+o=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ethP/+I0Wt5Q7NXiFSu2kgNONXgJK6hDf8j0f5OQz/5k64NfduehJGmItzqrqLBds
-	 lrNV8tE12J8Ci7T8dcM74qRk/uBu1OZSmLhvZif4We4Gh55Xul48FXbGFwMl6G+c5C
-	 gf6IUWWMZAdXqScLocJkvtdyQHmulLn3N+yfKYGg=
-Message-ID: <21e5ddae-c115-4d30-ab5b-ea669a66c9d4@arm.com>
-Date: Mon, 16 Nov 2026 17:01:21 +0100
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=riGSXRd/
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 337F91A169A;
+	Mon, 16 Nov 2026 16:12:23 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 017136023F;
+	Mon, 16 Nov 2026 16:12:23 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 043D111BC146D;
+	Mon, 16 Nov 2026 17:12:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1794845538; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=WL42cWBPuyCFWlEF/5Nn+QC5AN/XCgSMhpRtAl3fZBE=;
+	b=riGSXRd/myHb5u8n6/BiinflJE9PCHCIQkASe3+enQEEMPlS7Ns9BC/mT0H8WJG0Wjjh1w
+	f+lviNzHVXBT0Y3e+PoiY/lYOA/3wT6CQkvrsuECFuKu0vR9uZy6Ex/ZRAd9fOCJxlfhph
+	6IjvX4jHgGcTfDtre56AbRQF1YEtTtLhNRxeh9fqdiMetaWEJ+aZMOiIbzhf3q0/Ta59Cs
+	qN+sCfUXAnfDG/obKM035JktQEN8+OYExdWfqteguehklPj4DwfQMU3W5KYJfQPUVRl/+h
+	s3eNdFnAFvuaIU4aqN5ts6KXvkmm45MfkBKEBJfOcwzNJGQN1OzX7vtpu/n2Hw==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Stefan Ghetu <stefan.ghetu@nxp.com>
+Cc: Han Xu <han.xu@nxp.com>,  "sashiko-reviews@lists.linux.dev"
+ <sashiko-reviews@lists.linux.dev>,  "richard@nod.at" <richard@nod.at>,
+  "vigneshr@ti.com" <vigneshr@ti.com>,  "s.hauer@pengutronix.de"
+ <s.hauer@pengutronix.de>,  "imx@lists.linux.dev" <imx@lists.linux.dev>,
+  Daniel Baluta <daniel.baluta@nxp.com>,  "linux-mtd@lists.infradead.org"
+ <linux-mtd@lists.infradead.org>,  "Frank.Li@kernel.org"
+ <Frank.Li@kernel.org>
+Subject: Re: [EXT] Re: [PATCH] mtd: rawnand: gpmi: Fix possible NULL pointer
+ dereference in gpmi_nfc_exec_op()
+In-Reply-To: <DB7PR04MB4474F2E3C2C31984F1A0C8299D772@DB7PR04MB4474.eurprd04.prod.outlook.com>
+	(Stefan Ghetu's message of "Thu, 5 Nov 2026 10:49:48 +0000")
+References: <20261105103410.4424-1-stefan.ghetu@nxp.com>
+	<sashiko-outbox-198870@kernel.org>
+	<DB7PR04MB4474F2E3C2C31984F1A0C8299D772@DB7PR04MB4474.eurprd04.prod.outlook.com>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Mon, 16 Nov 2026 17:12:14 +0100
+Message-ID: <87se10pxgh.fsf@bootlin.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,79 +79,36 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v10 10/22] arm64: Enable kpkeys
-To: sashiko-reviews@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
- Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
- Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
- Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
- Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
- <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- Pierre Langlois <pierre.langlois@arm.com>,
- =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
- Quentin Perret <qperret@google.com>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
- Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
- Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
- Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
- Thomas Gleixner <tglx@kernel.org>
-References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
- <20261109-kpkeys-v10-10-aa6c4d9603bc@arm.com>
- <sashiko-outbox-207324@kernel.org>
-From: Kevin Brodsky <kevin.brodsky@arm.com>
-Content-Language: en-GB
-In-Reply-To: <sashiko-outbox-207324@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
->> @@ -2334,8 +2335,10 @@ static void cpu_enable_mops(const struct arm64_cpu_capabilities *__unused)
->>  #ifdef CONFIG_ARM64_POE
->>  static void cpu_enable_poe(const struct arm64_cpu_capabilities *__unused)
->>  {
->> -	sysreg_clear_set(REG_TCR2_EL1, 0, TCR2_EL1_E0POE);
->> +	write_sysreg_s(POR_EL1_INIT, SYS_POR_EL1);
->> +	sysreg_clear_set(REG_TCR2_EL1, 0, TCR2_EL1_E0POE | TCR2_EL1_POE);
->>  	sysreg_clear_set(CPACR_EL1, 0, CPACR_EL1_E0POE);
->> +	isb();
->>  }
->>  #endif
-> [Severity: Medium]
-> Does enabling TCR2_EL1_POE here break privileged EL1 accesses to user
-> memory when S1POE is present without S1PIE (for example, in a KVM guest
-> configured with FEAT_S1POE=1 and FEAT_S1PIE=0)?
+Hi Stefan,
 
-That one is a very good point. FEAT_S1POE does not require FEAT_S1PIE,
-so it is technically possible that an implementation has POE but not
-PIE, and in that case things will go wrong as described below (confirmed
-on FVP).
+On 05/11/2026 at 10:49:48 GMT, Stefan Ghetu <stefan.ghetu@nxp.com> wrote:
 
-There are ways we could deal with this, but they are more invasive as,
-without PIE, POR_EL1 restricts all accesses via TTBR1. Without evidence
-that POE would ever be implemented without PIE, I think it is reasonable
-to remove this possibility by requiring PIE when detecting POE.
-
-- Kevin
-
-> Commit "arm64: mm: Enable overlays for all EL1 indirect permissions" relies
-> on PIR_EL1 (PIE_E1) leaving user memory types without overlay (_O) so that
-> privileged EL1 accesses to user pages (such as futex_atomic_op_inuser()
-> using uaccess_enable_privileged() when FEAT_LSUI is absent) are not checked
-> against POR_EL1.  When S1PIE is absent, stage-1 translations use direct
-> permissions and TCR2_EL1_POE applies POR_EL1 to all privileged accesses,
-> including TTBR0 user mappings.
+> Hi,
 >
-> Because POR_EL1_INIT only permits pkey 0, a user mapping with pkey 1..7
-> causes futex_atomic_op_inuser() to fault against POR_EL1 while
-> fault_in_user_writeable() succeeds with unprivileged sttr against POR_EL0,
-> resulting in an unbounded retry loop in futex_wake_op().
+> The review is right.
 >
-> Should TCR2_EL1_POE and arch_supports_kpkeys() (or ARM64_HAS_S1POE itself)
-> require S1PIE to be supported and enabled?
+> Moving the !desc check out of the loop lets the loop continue after an
+> intermediate gpmi_chain_() failure. That can submit a truncated DMA
+> chain and, once get_next_transfer() has returned NULL, index past
+> this->transfers[] both in the loop and in the unmap cleanup.
+> The original concern does not seem reachable either:
+>
+> * the continue in the NAND_OP_CMD_INSTR case only happens when the next
+>  instruction is NAND_OP_ADDR_INSTR, which sets and checks desc;
+> * a zero-length NAND_OP_DATA_IN_INSTR only breaks out of the switch, so
+>  the existing in-loop check still catches desc =3D=3D NULL;
+> * the core helpers drop zero-length data instructions (or reject them
+>  with -EINVAL), so ->exec_op() never gets an operation without
+>
+> So the Coverity report looks like a false positive and the current code
+> is correct.
+>
+> Please drop this patch.
+
+Ok, thanks a lot for the feedback.
+
+Miqu=C3=A8l
