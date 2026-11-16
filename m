@@ -1,85 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794844432;
-	b=dlLFYt5ZtukQIJ4mVekukUdHbAsTDvCYbzHMAuzR4rFSrmzZRQEd/Vfce9Kuuzbp6g4X
-	 lA5TFFJ7o47LOcW/Kn4jxx7XaTXEis9BymW+5QLpf7UGkepGtOla+4VrgoRTq0qbl7/ys
-	 /wrvCmQH4o8pGoTWH4WGLinkt6wrOPEYPJf+KvgUnh3In+rw6W9syozlSTihckfLD48Bz
-	 kxd41PYqgCwlFM15QzDRFKSblaTt6YGW/ZdqLbnzMV5MJdm0bQrtfbChrMOHHhoCARKt8
-	 Ztrwl/2w0Hgh4T4LcuCTuf/pv0uohBrc7D/pF5RvG4oijvXawXOvawYKh+zqUaNoeqQ==
+	t=1794844893;
+	b=in03ox93mxIk2DuUxYP4P8dH1IXywSpL6+x162ensvoVtalhD88x2eXV5Vzz7aS5L913
+	 1MAzsfeMBO/gwT4Jz8dUyGBDOYOOYaiBfFjik4yQ0H4iIdf9Iysm+VjEeY/DBhH+SxFsj
+	 ULklX78XIy4qrBMoQ1TKuoJnivpJ4GV8QloWqe1NwXSE/FgXxRtOAJh5d3aiKtfJeil+m
+	 cp1ni3ZU64/TX3m+imzEs4XGZWD+O5O8H6sfCg7Tu2Xo1bTWIV6ufAT8j3/iHE9RjPOiJ
+	 FtTFhVgRA3xpQh2qtkQgK4jp3URHm9nbYqTLjJ8wKcRzXeFJZPbaMQ0OK8BLNUwzBhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794844432;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
-	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
-	 MIME-Version:Content-Type:X-Last-TLS-Session-Version;
-	bh=LhVqyBGBI3lxfifcbc5k6tX9f39LY4M/qAUI7NNmN+Y=;
-	b=joESQT7tOOjePHHRnMisO3MUax9t3T8rESRJ0/0SKRF8GSkBT1Gv5UhJX3eIUHsETruS
-	 Yn2gYxO+1RvutCh2TwzxM/3UkvEXn2Fa2AoZMtiC4L7ldhoetgdigumtH5SPUDhtRn8AN
-	 QxOzBb5T2UooXfiPnqoBOXu6F8nsPHNkqrYEr2XZpEajf8sxqjaCWKpZfHohPw2OCKz/L
-	 2rdZxEjTx9cQCa2Zd/sPPjKQZGuTEEXgriBQegvQH/xGV5mDoxNt9K8w1knaJu0vwMtKA
-	 pGaNvEu6QLbnNJnu2aZ4NkMNeP9TnZ92I8iX9vXPvOJeYDIA5J3tz8clbbu62TyyCfw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794844893;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=Jgg5EKN99U8VWXl+ylwhKyqraBlgCj53d3cDuGHQiY4=;
+	b=s/JX0thVkzebq3L15f+MM6APpdZWj1SboTYx4+oFnr7E12NdzGf2l5dUM+nb6HX6sGrm
+	 ATgY7VGo0FgkRyGdZxsoiGbkZxE5BS+iotAfOLXF2n0rwRQBFsoGVRuw5AlVjdnf0G/4j
+	 LrGbGZwa6+kPrqmf41o93opGgks/dEeHScp1JbYJ13+K91cqGE3QEw1zMU1xtpBhC4gt5
+	 OtFP+xWwqrPDK2EzijGEmofETWAH2vyut8/8Tr/56e7E11YbYQu25OA55vvs/VaMToHmi
+	 yhR7FEnY6+7GLJOS6aVTMSXmmUaPvtdcsn1OyK4rY2aomMm9Sh16CsNPqP9X3TEXM2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=rMRfk8bt;
-	arc=none smtp.remote-ip=185.246.85.4
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EC4606A890;
-	Mon, 16 Nov 2026 15:53:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 71EC4606A890
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="ethP/+I0";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36BE2606A322
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:01:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36BE2606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=rMRfk8bt
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id B982E4E41601;
-	Mon, 16 Nov 2026 15:53:50 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 827E46023F;
-	Mon, 16 Nov 2026 15:53:50 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1C4E311BC0D9C;
-	Mon, 16 Nov 2026 16:53:32 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1794844428; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=LhVqyBGBI3lxfifcbc5k6tX9f39LY4M/qAUI7NNmN+Y=;
-	b=rMRfk8btuLVcUhPl7tEuJgZEz2wURlRw9ayb5gDWGKqKjx/gXe4mGGAMXr+XXlz9m5yim3
-	RKOWpSIO6bTptoz6hApVQKhwaxE7Lgrx5W3OwmeltO2LxhOHkgT/SSRWuSOf3ljZ2kBL5K
-	h8OCDHRfiXMKUZXisjmIw9CoE0bSZQu/TtDYw7qsOGBnQLwnG11Ouf/onx1jmT7PZueQf3
-	lGx2+cq4Siz5ChSzcyqJja+k5Qj4OGnivyXbqpBR973AXRVcUNdZznmK7UVkyTQiN0Uf06
-	Z5lDYaZoPwyusCyChwAc6OSX1gR6ApWnGL46elAGdLyMLESGgUTtdBj4Bfp9OQ==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-bot@kernel.org,  Vignesh Raghavendra <vigneshr@ti.com>,  Tudor
- Ambarus <tudor.ambarus@linaro.org>,  Richard Weinberger <richard@nod.at>,
-  Kyungmin Park <kyungmin.park@samsung.com>,  Nicolas Ferre
- <nicolas.ferre@microchip.com>,  Alexandre Belloni
- <alexandre.belloni@bootlin.com>,  Claudiu Beznea
- <claudiu.beznea@tuxon.dev>,  Han Xu <han.xu@nxp.com>,  Keguang Zhang
- <keguang.zhang@gmail.com>,  Vladimir Zapolskiy <vz@mleia.com>,  Piotr
- Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,  Maxime Coquelin
- <mcoquelin.stm32@gmail.com>,  Alexandre Torgue
- <alexandre.torgue@foss.st.com>,  Rosen Penev <rosenp@gmail.com>,  Frank Li
- <Frank.Li@nxp.com>,  Wentao Liang <vulab@iscas.ac.cn>,  Rob Herring
- <robh@kernel.org>,  Alok Tiwari <alok.a.tiwari@oracle.com>,  Chen Ni
- <nichen@iscas.ac.cn>,  Runyu Xiao <runyu.xiao@seu.edu.cn>,  Hemanth Selam
- <hemanth.selam@gmail.com>,  Pengpeng Hou <pengpeng@iscas.ac.cn>,  Uwe
- =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,  Triet Hoang
- <triet.hoang.dev@gmail.com>,  open list: HYPERBUS SUPPORT
- <linux-mtd@lists.infradead.org>;,  FREESCALE GPMI NAND DRIVER
- <imx@lists.linux.dev>,  moderated list: ARM/STM32 ARCHITECTURE
- <linux-stm32@st-md-mailman.stormreply.com>,
-  sashiko-reviews@lists.linux.dev,  vkoul@kernel.org,  Frank.Li@kernel.org;
-Subject: Re: [PATCH 1/1] mtd: use dmaengine_desc_set_callback()
-In-Reply-To: <avslAXoa_LSuFNrP@SMW015318> (Frank Li's message of "Mon, 16 Nov
-	2026 09:45:05 -0600")
-References: <20261102181406.3994422-1-Frank.Li@oss.nxp.com>
-	<sashiko-outbox-193928@kernel.org> <87wlqcrg0u.fsf@bootlin.com>
-	<avslAXoa_LSuFNrP@SMW015318>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Mon, 16 Nov 2026 16:53:32 +0100
-Message-ID: <874idgrcw3.fsf@bootlin.com>
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=ethP/+I0
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 235B31684;
+	Mon, 16 Nov 2026 08:01:27 -0800 (PST)
+Received: from [10.57.62.118] (unknown [10.57.62.118])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F40773F763;
+	Mon, 16 Nov 2026 08:01:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1794844890; bh=FbZg7NHHCz6rr+xeyl8Jzirm2hXhzTWlvIqCbcztP+o=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ethP/+I0Wt5Q7NXiFSu2kgNONXgJK6hDf8j0f5OQz/5k64NfduehJGmItzqrqLBds
+	 lrNV8tE12J8Ci7T8dcM74qRk/uBu1OZSmLhvZif4We4Gh55Xul48FXbGFwMl6G+c5C
+	 gf6IUWWMZAdXqScLocJkvtdyQHmulLn3N+yfKYGg=
+Message-ID: <21e5ddae-c115-4d30-ab5b-ea669a66c9d4@arm.com>
+Date: Mon, 16 Nov 2026 17:01:21 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,26 +53,79 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v10 10/22] arm64: Enable kpkeys
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
+ Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
+ Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
+ Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+ Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
+ <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ Pierre Langlois <pierre.langlois@arm.com>,
+ =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
+ Quentin Perret <qperret@google.com>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
+ Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
+ Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
+ Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>
+References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
+ <20261109-kpkeys-v10-10-aa6c4d9603bc@arm.com>
+ <sashiko-outbox-207324@kernel.org>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-207324@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 16/11/2026 at 09:45:05 -06, Frank Li <Frank.li@oss.nxp.com> wrote:
+On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
+>> @@ -2334,8 +2335,10 @@ static void cpu_enable_mops(const struct arm64_cpu_capabilities *__unused)
+>>  #ifdef CONFIG_ARM64_POE
+>>  static void cpu_enable_poe(const struct arm64_cpu_capabilities *__unused)
+>>  {
+>> -	sysreg_clear_set(REG_TCR2_EL1, 0, TCR2_EL1_E0POE);
+>> +	write_sysreg_s(POR_EL1_INIT, SYS_POR_EL1);
+>> +	sysreg_clear_set(REG_TCR2_EL1, 0, TCR2_EL1_E0POE | TCR2_EL1_POE);
+>>  	sysreg_clear_set(CPACR_EL1, 0, CPACR_EL1_E0POE);
+>> +	isb();
+>>  }
+>>  #endif
+> [Severity: Medium]
+> Does enabling TCR2_EL1_POE here break privileged EL1 accesses to user
+> memory when S1POE is present without S1PIE (for example, in a KVM guest
+> configured with FEAT_S1POE=1 and FEAT_S1PIE=0)?
 
-> On Mon, Nov 16, 2026 at 03:45:53PM +0100, Miquel Raynal wrote:
->> Hello Frank!
->>
->> On 02/11/2026 at 18:21:00 GMT, sashiko-bot@kernel.org wrote:
->>
->> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->> > - [High] mtd: implicit declaration of dmaengine_desc_set_callback()
->> > breaks build
->>
->> Should this land after DMA core changes have been merged? I have too
->> many patches in my inbox atm, so I will drop this one, please re-send it
->> whenever it can be applied and I will happily take it (with the commit
->> log fixed).
+That one is a very good point. FEAT_S1POE does not require FEAT_S1PIE,
+so it is technically possible that an implementation has POE but not
+PIE, and in that case things will go wrong as described below (confirmed
+on FVP).
+
+There are ways we could deal with this, but they are more invasive as,
+without PIE, POR_EL1 restricts all accesses via TTBR1. Without evidence
+that POE would ever be implemented without PIE, I think it is reasonable
+to remove this possibility by requiring PIE when detecting POE.
+
+- Kevin
+
+> Commit "arm64: mm: Enable overlays for all EL1 indirect permissions" relies
+> on PIR_EL1 (PIE_E1) leaving user memory types without overlay (_O) so that
+> privileged EL1 accesses to user pages (such as futex_atomic_op_inuser()
+> using uaccess_enable_privileged() when FEAT_LSUI is absent) are not checked
+> against POR_EL1.  When S1PIE is absent, stage-1 translations use direct
+> permissions and TCR2_EL1_POE applies POR_EL1 to all privileged accesses,
+> including TTBR0 user mappings.
 >
-> Sashiko should be wrong. dmaengine_desc_set_callback() already in
-> v7.4-rc1.
-
-Ok, I put it in the queue then.
+> Because POR_EL1_INIT only permits pkey 0, a user mapping with pkey 1..7
+> causes futex_atomic_op_inuser() to fault against POR_EL1 while
+> fault_in_user_writeable() succeeds with unprivileged sttr against POR_EL0,
+> resulting in an unbounded retry loop in futex_wake_op().
+>
+> Should TCR2_EL1_POE and arch_supports_kpkeys() (or ARM64_HAS_S1POE itself)
+> require S1PIE to be supported and enabled?
