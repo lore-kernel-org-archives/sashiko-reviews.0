@@ -1,66 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.108
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794820427;
-	b=BkMjEB3ECTZta6AuQkt9UiMgbaO/d6IySpySbIZiIlYzuaUURdx8tCCxowOg3LBnTGoZ
-	 3v9fjEnBazXuS9GONy5cqXMwSz/2SX2FwJ5JPzsjneK9TfNM81BSFz/le3H3cBmbEUlf/
-	 roYpPpwnz2MJXlgxrxNDpOo8jsUJBEyn5lZ5YUddIweN7sE3VvF/2q0GKWQOaSM6ea+u/
-	 wNLeaWBzMVbMecmnR/KB2u7QW3QnkarfAZq2Trh+uNduDfZI7d5M0F7M5R93e/5sDRP/b
-	 52FmRZPkDD2iJxziPRwqx6kMY2CV7E42d/EublLk+X3ycvama9E9f0PYyPt7kxGYLYA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794820427;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=uBI20GIoHIeO9nJKpZQ+Icy1CTlU696c8C2pcMHc3vs=;
-	b=QUYqLxdrBvtgJTN1AAqkPVEwlTL/Y7IvQsaqYvRZiRoxn1go+tLv/nj7ZDZe61VdAscL
-	 eY/pxadGjkbqplX5kC9Avn5UpCUHCaX5JsPRjwSp/5c8hzsBB6VDiKFbQeemiObC5S49o
-	 KdREV7FLyM5Buh93jgnoD3EbNY6yJacxSI97A+a8VyMcVfmA3VXdYz/6Cou0GtYk0URBO
-	 +AmTpCVQWHV4/7lYWPXC0B/4IsmN2+uVIjNfkBRzL8+WDj4i/yv2WrYrMdp9tZD6x0eur
-	 R5zIq5SHN0Cc60WONyY5VuLiOANE4MoJ9yZAn2J0XEBCuggpz4gBVUngElvWioS2h7g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Ry7BddNF;
-	arc=none smtp.remote-ip=95.215.58.108
-Received: from mta1.migadu.com (out-108.mta1.migadu.com [95.215.58.108])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.196.11
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794820644;
+	b=q9J6qv3iN36HCTVFqVKB6YS3Ohy21pma+uSc/Dm3C7ZnFlSmfaMyD6tJ/VbAyPO/YLHI
+	 4YhQRapcqlR+4t91Zg3o71QEgiUjF/vGAEHEp7tEPSfnTDtnWiVipf019QbWvVIQJh6Dw
+	 YiBm42aBLtI6ixGY7UEFt8hgeNLs3656DyLO91iPC7PsU03h8YOh5vHQIvhoqEAXlGpfg
+	 p3PQZxajUSTDJljfNMJkjuT0Kx4Grujf8rjnbH4KToovU3bKszEoopCgSKbEzzP9nXHud
+	 I6Ai9GnEUICTHBt7LTCHCuB99WQSgo3f0tvE24x5p134aJ/h6mI+5CpEhuiOAYukgnQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794820644;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=c4rerke3klQsxoxP1AFY8RL3RX5ZgtTkkETd1RRgqas=;
+	b=eaw9VL2nOMRIQnLMTda9+HpPpLwW9zDYdWNMfs6qCvHR+jx/Gq9Hjg48JqE0vQ47RYBp
+	 E1AoXR+43lo8r888VqxwtmwgG991QoA2LFRLQE+Fj9FQ88uEXgNln08f1Xk/uMbLYO1gX
+	 wc3+w7+6Z+wLYpc1b34h3A0fLPcNUnKTt18cZ97K/A4ZR/BpuIS29Kjaza3cMxpQoBPyV
+	 +V9qVS08ny+GCg5eP9+DQA73vCWqWNYsJBLVGF5KKeXRxidP8ca6ki3m/HgJS+wUAra77
+	 yypsdg3pkcuL4dxQVO4cawqKPq2VVzy57Sltf7/pzy+DDY+e/CHcz6+hfg6mVwy+0vQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=q342dsqZ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.196.11
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013011.outbound.protection.outlook.com [40.93.196.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2A3606A323
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 09:13:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA2A3606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41227606A31C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 09:17:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 41227606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Ry7BddNF
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=vkoE6KORQMAFzwcm5haqOvH3H10zW833YOviF5z+zOY=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794820424; v=1; x=1795425224;
- b=Ry7BddNFgm8Y2QWK1Gj/bejhBQT1hhYfcDVVFQBZygeYcWMGqLTFBGQYxdLJJu/vXqd+pl/n
- VgdKTw2X6CyMIck031myc1U6Czl7aI4nakTa9AI2uTmVGgk0niBVJpEl78lcKtBFQAyC8qWZ1Mx
- gduMQpQ4FlDWLBFGVTWBcIA0=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id 79afc9c9dc722c5a;
-	Mon, 16 Nov 2026 09:13:44 +0000
-X-Mizu-Trace-ID: 79afc9c9dc722c5a
-X-Migadu-Flow: FLOW_OUT
-Date: Mon, 16 Nov 2026 17:13:36 +0800
-From: Baoquan He <baoquan.he@linux.dev>
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=q342dsqZ
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jY9fzM4S9c+zvskBj+p+F+AqnCwpNidPkFJ87MbC2DZSbn7eTzJBDcbuZVrawiZuZH6RR5sKBql3F4zFwx9/tD+cpwph2AL8+hQHF5wtO47ud9DNLlJQXXgi5c4uqZJ8/s1yf3rKg04RVwJdVkwcc9oF14GsTGF9V0XAjnH0yp9s3F/68O2vRtCYaGc8YgiG/Q0q32Kqa9lIoFv6SqSrdB1mYymvZ7mFXwsBOxbGioKyly6IlJD3BCZySHqz2TMea5TBaZ5HtRGD3n4Ij23N06OKs5g7FLA9uoMMEMLRdJU7urDdyfXNWEHJbx4+eEEe+wNvrvjaH4VLsbfObEPijw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=c4rerke3klQsxoxP1AFY8RL3RX5ZgtTkkETd1RRgqas=;
+ b=GYba2H2Cv6/ykou6C3huIWdGbOZWtFVCFu7mr/ET1S+Ywf3f3WL+9gM1a95d0wf6/PzF6X8LrcBrPQb9H7g1W8mTYGG/ZGJDJ+TDsY47VdDQg8hhJSag/y03zAMZp2YSML0q+b80HdTwfE8YfcDki7qxp0PlN955NHoqMv0CcdZZbcyC5wNlXRwh/XcXEOAH8yj+Ymhq/HNV14f2lCKREnMPy9Yttp3WmJUia+D+XNPNxsud99sWbm1TKAn3QjDBIbsn7QYYP+XaptKxAERWJ5CsFq9TUsPO/PwuHIPte6UupVkNBCn/IgNJ2whvnYWHE0DlvJ0hyaHS6FGSQmSLkQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=c4rerke3klQsxoxP1AFY8RL3RX5ZgtTkkETd1RRgqas=;
+ b=q342dsqZ6TEcEhvU0mKCg6iHeDOvqnASSCrgOVqw81Ky+PtNg3ZelTKha6kC5qlRqOSoN3JmXyu9f2C/RHf7li/XDAFhutctf2wDN69zfNz5Im4If3zPBl88P8DR/VgkN1Gf45t0YDD8IQJZ/wz40GwU9nAv0f4ItDfcBP2lDNU=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS4PR12MB999102.namprd12.prod.outlook.com (2603:10b6:8:2fc::9)
+ by DS0PR12MB9448.namprd12.prod.outlook.com (2603:10b6:8:1bb::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Mon, 16 Nov
+ 2026 09:17:21 +0000
+Received: from DS4PR12MB999102.namprd12.prod.outlook.com
+ ([fe80::dd7a:c52c:c74c:2a25]) by DS4PR12MB999102.namprd12.prod.outlook.com
+ ([fe80::dd7a:c52c:c74c:2a25%4]) with mapi id 15.21.0615.013; Mon, 16 Nov 2026
+ 09:17:21 +0000
+Message-ID: <2770c6d3-f595-5d6b-afec-dfa8fee30697@amd.com>
+Date: Mon, 16 Nov 2026 14:47:15 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [for-next 3/4] RDMA/ionic: allocate a PD-scoped DMA MR
+Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-mm@kvack.org, akpm@linux-foundation.org, david@kernel.org,
-	kasong@tencent.com, baohua@kernel.org,
-	baolin.wang@linux.alibaba.com, qi.zheng@linux.dev,
-	shakeel.butt@linux.dev, axelrasmussen@google.com,
-	yuanchu@google.com, weixugc@google.com,
-	Baoquan He <hebaoquan@kylinos.cn>, Kairui Song <ryncsn@gmail.com>
-Subject: Re: [PATCH v3 3/4] mm/mglru: skip cold PUD subtrees during aging
-Message-ID: <avrJQIyQXf9zmeo3@fedora>
-References: <20261113084953.412919-1-baoquan.he@linux.dev>
- <20261113084953.412919-4-baoquan.he@linux.dev>
- <sashiko-outbox-214125@kernel.org>
+Cc: linux-rdma@vger.kernel.org
+References: <20261107150249.1576835-1-abhijit.gangurde@amd.com>
+ <20261107150249.1576835-4-abhijit.gangurde@amd.com>
+ <sashiko-outbox-203825@kernel.org>
+From: Abhijit Gangurde <abhijit.gangurde@amd.com>
+In-Reply-To: <sashiko-outbox-203825@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA0PR01CA0102.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:af::18) To DS4PR12MB999102.namprd12.prod.outlook.com
+ (2603:10b6:8:2fc::9)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -70,215 +98,106 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-214125@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PR12MB999102:EE_|DS0PR12MB9448:EE_
+X-MS-Office365-Filtering-Correlation-Id: f72997c5-ddb8-48a3-c664-08df43c26b2e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|18002099003|22082099003|261009223027099003|4143699003|11063799006|56012099006|261028144727099003|261026121527099003|261026140227099003|261022105027099003|261022075727099003|261021135927099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	FFxDUvla/3cMHWUHGV/wBezh+w3tFHKJrWs3Qx8hqDmM0TGXccx/rB80Kct97VBvKNP9blFbWEg+954SPXHPBtxLZ1MHQIhVuCsFCeXhACmZoQ2obRvtr9K1qDoWLmG2XiZzD4/uAmhRoFvWYXQkZ/YY10yK88uPIiWkdVdZwDyRw2BjSAQkGGp94n2+NCzvZAfx2Rgb7RXa8qoHobtyqoCkVI13rXGwpQCdtKIj+LvZcJ4Wv7wyBamZ4bD9Wz3yZE0gc8jugnZhyd4/lQOPwtgr51UIUDXq8o01q6L8rWmFCQkZwGH6FyYWj5M5VIZmgHA4axHtDlGdoRhqq3OAinh0MRk6IuuaBb/sK9ULyOhE1mSEbIwgZjljOKcCFneLsgweKofdT/Z5owQ9/xE2YDR4Cwtp9yaPZijO7ByPTkqzpSx2EPfVAHX2RZl5NR76Yqr0rzzQ1xnLk/dOtJFCv8Za+wv/hpiZG3W5nP4E8RspmxDGLcsRIulBJrHqrqelCwu6P9csVEpvC8aLaMrBfU/Spxv/ikbZqpPhY7D8HkEyUKnlNy95Vpsjyn0IfZTdznJHQ4tHJ2w0E6nRQcAcYfe/SgayOdrTHjcv/gpQPWPsQtSDtboOlHjl96ILamQm/siPKkR4e2SVDBlAhAG+dRcH+iETvojgDr5Z548YWdQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PR12MB999102.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(18002099003)(22082099003)(261009223027099003)(4143699003)(11063799006)(56012099006)(261028144727099003)(261026121527099003)(261026140227099003)(261022105027099003)(261022075727099003)(261021135927099003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bzRPMFZRVmVLaS9JQTBmc0tjTmxXZ0psVkUyQUo5OGV1c1JLM0htNnUvYzYx?=
+ =?utf-8?B?bGZtblp1V0xJMWhscXZyeGFseW1KVUlscnRTMzZJTzZZTlphRHRWcTk5RStC?=
+ =?utf-8?B?S0pLOHlKUVl2QmEvS05tMkdOV3FaNWVBcTVHL0tLZzBCZFpjNzl5b08wVi9I?=
+ =?utf-8?B?VnRyMkRaNWRUWW1qRDlqOHJCU2ZVcmlXTVBIeVd4U2diSVlRU1JvVHh3bnEz?=
+ =?utf-8?B?VkdNb09JWEx5R1lodWtZb21KTEdSdzhwN3Iydjg0UWtibmFWNHFodW1INW5h?=
+ =?utf-8?B?MWFxV0gwb3hOeWdCU1FMY3RRbXJXSUo3cHRGSnJkNGJaZStrWWRka0IvWEo3?=
+ =?utf-8?B?bGs5eExMK2FPRDhIQjhjeUNnTkJFamNRL2hUMWkzRWNVR2lMY09VdlFnS0F6?=
+ =?utf-8?B?RHEvQjdrb2cvbERzdS9yQndVSGEySnJ2Q3FiQ0N6RVdiS0ZKWjdsNGNtcEox?=
+ =?utf-8?B?eFJhU3RVVXBMV2dqYis4MnZRbThYZkZJZk4rRVFHNGxJZyt2aUpMMEY1U1lL?=
+ =?utf-8?B?OXRCU1pFcnlDaXlUTWd0WkZ4ek5TT2lXUVQvWHdtbWVnQ3RsUmcrL29ydFhp?=
+ =?utf-8?B?TnMzSnZ4cnBVRVZoaEo3OHhtN2JLcTZrL3BGUEdyaGVZVTA5NDdMYlhUWUh6?=
+ =?utf-8?B?Q1hSNWJhL3ozbUlURHpZdm5Qd2U4ZTNOcTMxdC9sVlJTSTMreTEvSnh2WVAv?=
+ =?utf-8?B?Tjl0c1FoTk40NlgyNUw2RzZIRWRueU14MWwyZURTM2NIT2Z0SHhDRXBkZi9P?=
+ =?utf-8?B?eEZpNFZlT3BxcTBibk1VMzBZR1RwREFsR1I1ZjM2ckY5Q1krZUE0emQvS3RO?=
+ =?utf-8?B?R0NENWtCNFVOeUlYcW00OW4zUStGWEhTQk5mWmR4SkR0YzdFaXRWWEh4eGh0?=
+ =?utf-8?B?QnVGd2FDeEozZm95d1A4US9NbHFMQ21EcVU1MGJicEhZYWJNbmFTamZsQW9C?=
+ =?utf-8?B?eHBUTGluczdXWVpPVnN2cUtmdFE3N2tKa0twNCtoNTlPd1ZzT2M5SUprSVhj?=
+ =?utf-8?B?bVExT1VOa3RESTQxNitrM1FxVFBuUFhpeVQ1d3Y0ZkhRRHUvQm9rUHMzVStz?=
+ =?utf-8?B?ODZmMzd6aG5WSWk0dUgvWE1hVTErcUQ5ZGo3bDVaeVNNL3ZwM1FoRWhWTWIv?=
+ =?utf-8?B?RGpuSXpzSnFVbHd3enJRNFRuUFhhS3hBdGVUejduS01ESFpFSGJMNFZrVVJR?=
+ =?utf-8?B?TndwN2J6d2lhQ3VhUmhHTm0wQmw5U1ZjNFFOS1JjR0ZoYlUxVEVQd3dwZlA3?=
+ =?utf-8?B?MXRMek8rc3FtYm00bGR5aURqaGw3WVRkbU9rMTg4Zk1KOGxtd3dzNk5sektW?=
+ =?utf-8?B?b2hLN3h5Y3A0RjJLeHY0YmpULzNaZHFQc2NjTTJZYUZFQWhscnpUaGtaL25u?=
+ =?utf-8?B?UTFWZTJubVdGY2Z4d3hwS0lHRktmVExWZTVMTDlvWUtrK21YNHM4NDdnSlNi?=
+ =?utf-8?B?bWFKK0Nqb3l0R2JNblBLcnczNUNWUk16OTdPbWErbnYxQlRrdXh1N00zYjhN?=
+ =?utf-8?B?d3VEWk0ray9IOW1hL3Z1eGk3SXFVSVl3MFZtcEJoM1I2N1NFdG1UVDlDaUpO?=
+ =?utf-8?B?QnIzeFFxbnBIMFdvaEVnSVFBdmU4eGhJTWRudkw1elhWUDZONENCZ2oxQ2ZI?=
+ =?utf-8?B?cTAwdit4ckZEOVNXajRQdm9Db3Z5Zm5oenFwVkpuOGxjaEZPMGN2SXJ4Nzhj?=
+ =?utf-8?B?Qk52WmNsbzhNYWkyZ0NmR2drOEFHTGlRWXM2ajhmVFpSbEk3OS9TOFc2TG1W?=
+ =?utf-8?B?NTFlNHUyRXdBT3NlZjY1bGhkbjBuM29KNXRCRFBXbFVVMVZsOWplYXZHcDgx?=
+ =?utf-8?B?U2ZCdVQyOVc2K090TEdJSG14OHZTblNXZ1dxaG9VbVN5TC8yNU1KQ1VQbmVI?=
+ =?utf-8?B?cjd3aXRDcnUzcmZhWXlqV3V1S3hOM0VxSFpvU2tCdWNYVVVybkdNNGtHTTJV?=
+ =?utf-8?B?dXF3WXRiVVJzZldpT2ZyeTlCaS91N2lxZExPUHM0VXFSdFljbnQxV1FtSnlu?=
+ =?utf-8?B?dDNLR04rT0llaDF1bkpoUk95UnlLRVdNam51WEJmTTdOUjdTbTc3V3U2b1Jj?=
+ =?utf-8?B?Rnp3cmdoQzVtdUV4UU50VDJ6V3Z2VHdDNEZnOU5Ia1p2UkdvZnlsL3dEWmtU?=
+ =?utf-8?B?d3lWeFJ4Sitnc1JzOWtlNWRjVTNxajd3U2ZSN1VOSnNiaGZEYnlFZmFobC9S?=
+ =?utf-8?B?VU5FdjZkdHZaL1NYUWQwVE1aRjNYaFBYcm1wRXcwM2dGeWxNeENDeXVER0R3?=
+ =?utf-8?B?NnI3Y2c2dWJEdXg0dEozQzJLbEl1azA4T1RCalI4QlVONys4Q2pwQkFOczVM?=
+ =?utf-8?B?cVp4WUY0ZjViT214cGhaQStvZFMwZTBCbTZxTUJOYkF4MkVwdWRXUT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f72997c5-ddb8-48a3-c664-08df43c26b2e
+X-MS-Exchange-CrossTenant-AuthSource: DS4PR12MB999102.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Nov 2026 09:17:21.4640
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3Udlr+02XL4KiKGfgqO54rHVwXFeFMDuYMKX8ey+AIMRrIf4URO07e6JPx4NLBwDTgiY61fp2kFM0eEjOPihow==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9448
 
-On 11/14/26 at 03:42am, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [Medium] mm/mglru: walk_pmd_range() marks PUD young on non-leaf PMD
->   accessed bit
-> - [Medium] mm/mglru: walk_pmd_range() marks PUD young for THP before
->   memcg and notifier checks
-> - [Medium] mm/mglru: PUDs with PMD-mapped THPs are suppressed
->   indefinitely once skipped
 
-Thanks for the review. All three points are real. The third one is the most
-important. Will Changes in v4. Please see the inline reply for each item.
-
+On 11/8/26 20:34, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] RDMA/ionic: build failure in ionic_fill_lif_cfg() due to
+>    missing rdma.cap
 > --
-> 
-> commit 31572808d36982038b4b945e98794001c99a5d21
-> Author: Baoquan He <hebaoquan@kylinos.cn>
-> 
-> mm/mglru: skip cold PUD subtrees during aging
-> 
-> This commit introduces a PUD-level Bloom filter keyed by (mm, PUD-aligned
-> address) to skip PUD subtrees that had no young pages in the previous
-> generation during MGLRU aging walks, and updates it from the rmap feedback
-> path in lru_gen_look_around().
-> 
-> > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index a0332586b3d83..79d533ebfd108 100644
-> > --- a/mm/vmscan.c
-> > +++ b/mm/vmscan.c
-> 
+>
+> commit 71ee46b9e5e60e185b9553d17b2722a569d100ad
+> Author: Gregor Dick <gregor.dick@amd.com>
+>
+> RDMA/ionic: allocate a PD-scoped DMA MR
+>
+> This commit allocates a PD-scoped DMA MR via CREATE_MR with
+> IONIC_MRF_DMA_MR when the firmware advertises IONIC_GEN_CAP_DMA_MR.
+>
 > [ ... ]
-> 
-> > @@ -3730,10 +3732,11 @@ static void walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area
-> >  	*first = -1;
-> >  }
-> >  
-> > -static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
-> > +static bool walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
-> >  			   struct mm_walk *args)
-> >  {
-> >  	int i;
-> > +	bool young = false;
-> >  	pmd_t *pmd;
-> >  	unsigned long next;
-> >  	unsigned long addr;
-> > @@ -3770,8 +3773,10 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
-> >  
-> >  			walk->mm_stats[MM_LEAF_TOTAL]++;
-> >  
-> > -			if (pfn != -1)
-> > +			if (pfn != -1) {
-> >  				walk_pmd_range_locked(pud, addr, vma, args, bitmap, &first);
-> > +				young = true;
-> > +			}
-> >  			continue;
-> >  		}
-> 
-> [Severity: Medium]
-> Does setting young = true as soon as get_pmd_pfn() != -1 mark the PUD young
-> before checking memcg ownership or MMU notifiers?
-> 
-> get_pmd_pfn() only checks that the PFN is on pgdat and that pmd_young() or
-> mm_has_notifiers() is true, while the memcg check in get_pfn_folio() and
-> the notifier young check in pmdp_test_and_clear_young_notify() are deferred
-> to walk_pmd_range_locked().  A PUD with PMD-mapped THPs belonging to
-> another memcg on the same node, or cold THPs in an mm with MMU notifiers,
-> will therefore be recorded in BLOOM_FILTER_PUD on every generation and
-> never skipped.
+>
+>> diff --git a/drivers/infiniband/hw/ionic/ionic_lif_cfg.c b/drivers/infiniband/hw/ionic/ionic_lif_cfg.c
+>> index 66cee57442e7a..dcf54856603d4 100644
+>> --- a/drivers/infiniband/hw/ionic/ionic_lif_cfg.c
+>> +++ b/drivers/infiniband/hw/ionic/ionic_lif_cfg.c
+>> @@ -95,6 +95,7 @@ void ionic_fill_lif_cfg(struct ionic_lif *lif, struct ionic_lif_cfg *cfg)
+>>   	cfg->rq_expdb =
+>>   	    !!(lif->qtype_info[IONIC_QTYPE_RXQ].features & IONIC_QIDENT_F_EXPDB);
+>>   	cfg->alloc_qid_cap = ident->rdma.alloc_qid_cap;
+>> +	cfg->cap = le64_to_cpu(ident->rdma.cap);
+>>   }
+> [Severity: High]
+> Does this break the build when CONFIG_INFINIBAND_IONIC is enabled?
+> The rdma struct inside union ionic_lif_identity in
+> drivers/net/ethernet/pensando/ionic/ionic_if.h has no cap member.
 
-Yes, that is too early. get_pmd_pfn() only checks that the PFN is on this
-node and that the accessed bit is set. The memcg check and the notifier
-young check happen later, inside walk_pmd_range_locked().
-  
-Will fix in v4 by making walk_pmd_range_locked() return true only when it
-found a young entry for this lruvec, and using that value here:
+Patch 1/4 adds __le64 cap to ionic_lif_identity.rdma (replacing reserved 
+bytes). Patch 3/4 uses that field, so the build succeeds when the series 
+is applied in order. This appears to be a series context false positive(?)
 
-> 
-> > @@ -3781,6 +3786,7 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
-> >  				continue;
-> >  
-> >  			walk_pmd_range_locked(pud, addr, vma, args, bitmap, &first);
-> > +			young = true;
-> >  		}
-> >  
-> >  		if (!walk->force_scan &&
-> > @@ -3793,6 +3799,7 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
-> >  			continue;
-> >  
-> >  		walk->mm_stats[MM_NONLEAF_ADDED]++;
-> > +		young = true;
-> >  
-> >  		/* carry over to the next generation */
-> >  		update_bloom_filter(mm_state, BLOOM_FILTER_PMD, walk->seq + 1, pmd + i);
-> 
-> [Severity: Medium]
-> Should young = true be omitted from the non-leaf pmd_young(val) block?
-> 
-> When should_clear_pmd_young() is true, setting young = true there happens
-> before checking BLOOM_FILTER_PMD or calling walk_pte_range().  Because CPU
-> page table walks set the accessed bit on non-leaf PMDs regardless of which
-> node or memcg owns the underlying PTEs, any accessed non-leaf PMD will
-> cause walk_pmd_range() to return true and carry the PUD into
-> BLOOM_FILTER_PUD even when every PMD in the subtree fails the PMD Bloom
-> filter or has no folios in walk->lruvec.  The young = true after
-> walk_pte_range() already handles non-leaf PMDs that pass suitable_to_scan().
+Abhijit
 
-Agreed, will remove. The accessed bit of a non-leaf PMD says nothing about which
-lruvec owns the pages, and the first walker of a generation clears it. A
-second walker (another node, or kswapd) then sees it cleared and skips the
-whole PUD, so the skip depends on walk order instead of on the lruvec.
- 
-In v4 a PUD is marked young only when walk_pte_range() reports young leaves for
-this lruvec, or when a young huge page of this lruvec is found. The batched
-flush below contributes too, because batched huge pages are processed there:
- 
-   young |= walk_pmd_range_locked(pud, -1, vma, args, bitmap, &first);
-
-> 
-> > @@ -3802,6 +3809,8 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
-> >  
-> >  	if (i < PTRS_PER_PMD && get_next_vma(PUD_MASK, PMD_SIZE, args, &start, &end))
-> >  		goto restart;
-> > +
-> > +	return young;
-> >  }
-> >  
-> >  static int walk_pud_range(p4d_t *p4d, unsigned long start, unsigned long end,
-> > @@ -3812,6 +3821,7 @@ static int walk_pud_range(p4d_t *p4d, unsigned long start, unsigned long end,
-> >  	unsigned long addr;
-> >  	unsigned long next;
-> >  	struct lru_gen_mm_walk *walk = args->private;
-> > +	struct lru_gen_mm_state *mm_state = get_mm_state(walk->lruvec);
-> >  
-> >  	VM_WARN_ON_ONCE(p4d_leaf(*p4d));
-> >  
-> > @@ -3819,13 +3829,29 @@ static int walk_pud_range(p4d_t *p4d, unsigned long start, unsigned long end,
-> >  restart:
-> >  	for (i = pud_index(start), addr = start; addr != end; i++, addr = next) {
-> >  		pud_t val = pudp_get(pud + i);
-> > +		void *pud_key;
-> >  
-> >  		next = pud_addr_end(addr, end);
-> >  
-> >  		if (!pud_present(val) || WARN_ON_ONCE(pud_leaf(val)))
-> >  			continue;
-> >  
-> > -		walk_pmd_range(pud + i, addr, next, args);
-> > +		/*
-> > +		 * Use (mm, PUD-aligned address) as the filter key instead of
-> > +		 * the page table pointer. It is stable across the aging walk
-> > +		 * and the rmap feedback path, and avoids walking the page
-> > +		 * tables in lru_gen_look_around().
-> > +		 */
-> > +		pud_key = (void *)((unsigned long)args->mm ^ (addr & PUD_MASK));
-> > +
-> > +		/* Skip a subtree that had nothing young for this lruvec last gen */
-> > +		if (!walk->force_scan &&
-> > +		    !test_bloom_filter(mm_state, BLOOM_FILTER_PUD, walk->seq, pud_key))
-> > +			continue;
-> > +
-> > +		if (walk_pmd_range(pud + i, addr, next, args))
-> > +			update_bloom_filter(mm_state, BLOOM_FILTER_PUD, walk->seq + 1,
-> > +					    pud_key);
-> 
-> [Severity: Medium]
-> Once a PUD is absent from BLOOM_FILTER_PUD, can PMD-mapped THPs inside it
-> ever be scanned by page-table aging again without force_scan?
-
-Agreed, and this is the important one. For a PMD-mapped folio
-folio_referenced_one() takes the pmdp_clear_flush_young_notify() branch and
-never calls lru_gen_look_around(), so once a PUD is skipped nothing puts its
-key back, until a forced scan or a new mm.
- 
-v4 will add the missing feedback. 
-
-> 
-> Previously, BLOOM_FILTER_PMD was checked after pmd_trans_huge() in
-> walk_pmd_range(), so PMD-mapped THPs were never gated by a Bloom filter.
-> Gating walk_pmd_range() on BLOOM_FILTER_PUD skips the entire PUD when
-> pud_key is not present, and iterate_mm_list() clears the next generation's
-> filter via reset_bloom_filter(mm_state, BLOOM_FILTER_PUD, walk->seq + 1).
-> The only rmap feedback that populates BLOOM_FILTER_PUD is
-> lru_gen_look_around(), which folio_referenced_one() only calls when
-> pvmw.pte is non-NULL:
-> 
-> mm/rmap.c:folio_referenced_one() {
->     ...
-> 		if (lru_gen_enabled() && !lru_gen_switching() && pvmw.pte &&
-> 		    pte_present(pteval)) {
-> 			if (lru_gen_look_around(&pvmw, nr))
-> 				referenced++;
-> 		} else if (pvmw.pte) {
->     ...
-> 		} else if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE)) {
-> 			if (pmdp_clear_flush_young_notify(vma, address,
-> 						pvmw.pmd))
-> 				referenced++;
->     ...
-> }
-> 
-> For PMD-mapped THPs (pvmw.pte == NULL), rmap eviction checks never update
-> BLOOM_FILTER_PUD, so any PUD that goes cold for one generation or receives
-> newly faulted or collapsed THPs after the initial force_scan will be
-> skipped by aging indefinitely.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261113084953.412919-1-baoquan.he@linux.dev?part=3
