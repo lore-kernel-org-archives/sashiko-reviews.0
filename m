@@ -1,85 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.201
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794815150;
-	b=oqsElLCssIYkMvIGWQzJgYJclsCoX7QdBetsvpPKw8zccMmviDgsGsGscmYgeE1F9W7+
-	 lKK0M9cVSSqocaMwQ7YJZxwAGi0L0KO5toT6XO1RgR/jKfkTdLEnb4W4EwwkPVGZV6MRI
-	 RZyulaMGXiTYyinUdv0N52Cdc0+sklSwXM/eslU/Cm50vCkmeJypEGDKTmVLpXxbMYwiW
-	 /XOabNiKIGggsCyRYsLeYWhXLAeCWaoTTm8e1s8moUtmu5wL8JbJN26XQb3MqwBMEE8HT
-	 49oOizzmo9TT4rtYaZnV+qaO6xjUbqJo2Ga5/+EzGjyYemETHqq1Pp2TUojtMt/tjhw==
+	t=1794815152;
+	b=YmYHAqDKaxEmyWX3lS4F5JoqPYhhs8/BNoak+8RjRCFk77nW4igRlXOgvTgsvVeyjBig
+	 cBwEQTnNMDbQPzvvHRu2S7eRwDwVPhjvR60YHaPH7l2tEnFvSueP3W/ZZjUwQeRmgoWPF
+	 zd3k/fJXr1w/HjVdYN1hQbpbTunmdpLsiDjpJrLarT/fffVfhatklidE60sdxgVa/vzs2
+	 /9fdZ0916vh6UsVy7EU2chVVfq/Q6/vd0X1g61i/zc+5xWkYsPU1z/fZ8h1tMw/w6NhhR
+	 9Lo5GjjvP/DX923IMYQGnCAz+bibchfqDvqr1GAgffqGGo3PYAoxnS04a39CYN0aTgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794815150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794815152;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
-	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
-	bh=zmgK2rZQB0Zps7NPdGicEsUeC+FDAzmra5NHyyX5KYA=;
-	b=Ga8YvUucyBMI3tSpsFTy4iPsLAjOAkPeFa/F9X/SbxfQml890DoqStdzt3YXHEPB4wY5
-	 j9YgMr6oxgmtSYF5HBM3n3r8XxOqxrXIVt3da4q4dfg21DT1V5GQA3Yqhwz+IkT/lVgYV
-	 eUrmXRJejuQHGUdeVFXtWXmigS+fde3mK7cwp4pfYK+jtx0Uwfsv8waQ9gq6280EWpHqy
-	 tnopogfBU2tiF7/Lg2jzRpFzfumyMEFXZqH8UlZeieDGIU7FZbDqnPzBVHb+eET34td78
-	 7sYg3934C9qFI3ADf5wAb77QusB1hTfvF3K5wVAOn1sTHD2n7x7Ue/s+QjwMPR+dBWA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=UnB58VtwIqHbFAiwQpoPWYvPypnxq/uodwoMm6+SFKg=;
+	b=BHxATySM+jxRoGNVBXKmeHCFNhLbSJUne6BtByZV5DRxbePvQ9FTrzun4l8af059ACNu
+	 eTz0+OwKcbQts5CybZ6A+MW9cuOWNFPESkE2Gzjnp8r7Xx25Tj7jfar5fuT7g25WNVPRY
+	 UHHMGuO6aI3MgwmHjEJn5WDLjcONSSmxyqkOO6el/mxyRZooFuJdhH/rteYQvYiGXZm4j
+	 Pl5BT4BhDyH7vQ1UjWdyv7WY8757ZpLxjZklFqmBJ3K3y/1NAnjXU6hOLMvHS7aGN5Hfx
+	 hwXAVYuJUZ0JgQgZhMzGIyT3HS7m2pvJIy9KUkSu0w/hg5xozQPKj7YsYAMWp4nYjSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QvY090fS;
-	arc=none smtp.remote-ip=74.125.227.201
-Received: from mail-pi2-f9.google.com (mail-pi2-f9.google.com [74.125.227.201])
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TyFZb78C;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D83606A8A7
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:45:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65D83606A8A7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD5C606A8AF
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:45:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9AD5C606A8AF
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QvY090fS
-Received: by mail-pi2-f9.google.com with SMTP id 41be03b00d2f7-cdd9779aac8so728777a12.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:45:50 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TyFZb78C
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a207b02a2cso16746785e9.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:45:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794815150; x=1795419950; darn=lists.linux.dev;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=zmgK2rZQB0Zps7NPdGicEsUeC+FDAzmra5NHyyX5KYA=;
-        b=QvY090fS04hH8XGK2B6JeDUcR4xA6JvL+haBA0olJViI7wAzkYycHlEMjIZ9aupEey
-         LnfwPaFVhMevAVJaFVKqJAX2PY7jeFkAqxNFM97ncn43/jp3823n995SR6n0Azfe3lry
-         w9LjTbO0pzaU22TSahXrTix7LjKQH3kyzDuitSPltDcXSLJpFXkSG4Ec75qyHcXtRkkm
-         OAv5CiY/rsIwnvbl4maO1MQBw2rY5nXYaUSnzh27ZyXYcgGqHpSgCnztr4bMHZPY58tE
-         a1A9Q0APf40Pjs6GADVVRFL7Qx0N2z/XcXz77GxBAFu7yT5QNOauAqrh853pxR5aC0sl
-         FRAw==
+        d=linaro.org; s=google; t=1794815150; x=1795419950; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=UnB58VtwIqHbFAiwQpoPWYvPypnxq/uodwoMm6+SFKg=;
+        b=TyFZb78CuOKcmyhUFqC+WYA3CuZ3oK0SLMdpoijnUHV9sBZb3slNWB/ZXeSvGIXfZt
+         678Mlf8hmYXGXuNsmZmnhUGMRgEmOlEsjMYUuVZoJCmlU60BWtsApisgkEjjRflV7BJ4
+         DbNG8vlxODeGRYSXYPAjZMvsff8m939eNvzyO2uRDHacU6QnXHJbwvUdpWxi9XM4wHhW
+         Ai/O6xR0+GnW2ys1AtohDgvMPYOWsUUO3O4VhNmt3dYIqYKRdc2JiKnZ6A8YcviDRNFm
+         OwRAl3Gyj/w0yx5H/lVlGwrRkrUeLYwhVN7+hol6IxeGblX7ADV+CW9zgKicHvNE0aLl
+         o8uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20260707; t=1794815150; x=1795419950;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zmgK2rZQB0Zps7NPdGicEsUeC+FDAzmra5NHyyX5KYA=;
-        b=ux0EOtjltCarZ9X93zznCzMWggJ4CwrnXIpLXyA47W5JX2YHKx3n9VMNNzBIeeGG/D
-         rxbr+kheSkefDDIf9o2FNnHuv+7inXTCOx71P5WkIbSt5yc+XkDxkz4vXsXnRgyK9sgE
-         PR62Atj0BEfSckr1JVB49N1d7/iuwdcj0oREckw/b59ZtNelmTqcSaahBUtFijgNQldW
-         Mmsp5+4Pex88LqQG8LCyd7n9mgVNptaACi7H+CKZFph8D19+r3lpqhyJfN+kjc/SwvZj
-         z2gpOitwtkwL7BWzqpyFgBMvZa63uCrmWjBOYkPKSdrR21jjCvtLTh5nHCD92GZqEHRe
-         CGww==
-X-Forwarded-Encrypted: i=1; AL+hErFMNb9GeLWdW9Al0q8gdYYBwDxeElOBx6AQWoLxarhlMyL+jH7vhTwEj2iRbpdaWVx4S8812x5IBskz+PhqkS8=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/xzLGSA4HPtB8HDBigQgfLJ4RG06R26ElWZa1U+lO/cOfH4ciH
-	nBoEgZYzvDS6oftznYg85ex31ewO92yQxZJQcRnlD1CxEmZw31EPTIgk
-X-Gm-Gg: AYBFou23g8DPcWmKT5awEDUstgidr1xwHwfsAtP8BG+n446FjvDSDG1oWF+I8X6TUmF
-	X1KqdmcAFZMzHovzbkVoLNpsRmGM+2r4/qh0BnNo80+MeIcboeC3Vof/wDg945VBwfAF8K+U/kW
-	okdZjGObuyebXWhRgMkUSlztDBPRseASiVbfIPr8QtT2V3wlcrYhMGK0Nh1OPTS4MyZoBUZQhS5
-	etoVYGGbS8O6C2dYMN62+vCp/qIxJIZl6PKWQ5URfP2PZxX+uGwWOE9LWd8paM4JmokIakSEcj4
-	x9Hc1HJprvxEpkpN6eUHBYv0e7zlLxFPyueaxVvAg62J6CdAbG3v/d1FGz5KKKXssbFTEVP93mE
-	ne2RxhNk6rGF1b/nfneqpII5B2Bj5yRT7kWp9DR7hh6O9u75I+CJF/yQZ+AF6b+b71bhHydOLpu
-	Bi3+RFi+ii+XYQgfCsfFu2lnJJRfhkIF1kH3KFnOE2WmHxzTGyyQG128ZkBre4p38FCEWvuuPYH
-	J6vNX9Hj+EQrU20AsAvlduhmPOuiT2SCAr/axcen9ixSV6plAlsiT5t+ybUNmhh7cJyWL+DtnUW
-	U9I5N2+1d3aUDjAxu4UlT7UgQS+z2KN2rjGuDxDTEnq0jDcGViTS5IvmG83AxMw58F9oNZQrwAa
-	sHsncqqa5IGIQm8yCNQLbmIeW6UsfI4lTDKteJXNM42Bj4WeT6bPCKBUZwMw/9oA=
-X-Received: by 2002:a05:6a00:181b:b0:8a0:7677:c8c9 with SMTP id d2e1a72fcca58-8beb7c21179mr8733834b3a.51.1794815149534;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=UnB58VtwIqHbFAiwQpoPWYvPypnxq/uodwoMm6+SFKg=;
+        b=REN5WLAfstMgN+ODqXB/Lg/lQBUYHJKsPEalXqGV2N0zSqAj8LRUUV06qaKAKjM9DJ
+         waCbifNFJtjIw/1falkgObj0O9mENLyG/wp7ReuGx3lS8D3zXWOmwaBWPRq7jea0kxvy
+         eYc5EL8eY8Qc7xMdaDCUv3qvEtiFZNJsDXFnyA3ObZHn6OP6s0y4z9aEdMCiSeBBvHb2
+         YVMd2NhH3r0NuVc7ztzA9IQmbmKi85s/jzb1soucSfUjYHQsvo/jfsqz0uh14PxNRn9y
+         2WQbIAOr7Iem/aWpAVOGoVLbp9O23LJSedV0gdI1hLHKAvGzColMhat+Uk86nyIhg+yq
+         5FcA==
+X-Gm-Message-State: APuU4Z+yiX5FWMzoeFIgj8f16AYJf/Q01QVUIJB7GNoFiyB7nToDNk61
+	WdAa3JXTswjNwpUnQ2sHgz7lfPU+YQyf70Ax2SInpZqUmlMVjCtf2ywMi0gpMCBn5F428uiZ66M
+	a3qLIZMs=
+X-Gm-Gg: AYBFou2/hqXiO5LTPDohOoYS1pjO1Og7ra3Yt7e9sF+w+LRCe/qFRjWyypXP6Rl2KlV
+	0e9FISrA1egMhoQhJQ3QZodyBUPmKZYvjHV5KfAkJxaaBDif8xIoOf3QwyZEJQNnE+j7jQqoQMm
+	GBTBmmqjhTD6FH8+DS+gc6YoxV5kuBmeSFNtUqjauSZzzNo45qS0afwvWlj3SacbZ2jsSGyFTtw
+	jkiZmLP4v8KhGktCjiEkAeK5jxsIQfXFvRCX9BKMZfKtLmd9a0sGocvEEy9MtaZ7oxb6qjA12vl
+	t8RBC9ORuKVGB3tm0L2U/Ps3Cy/ziUKPY3KorqWp3kmqgB31lMbTrvtwvAK+f91yI533HBfgXNL
+	q/NlPdEvW1bOtTN3eicIubZyDkumGhu3q4WegYXiOhi3lfVgxG90Rgg2Eu+iuQ+XrThIWo9Cilj
+	W/a5/CDuvcWUZWhokCv8qhQzFwRnszsRZ7Tmh5YYuyc5vZCCxtmoGLoWnH7UkdbkLMEaHe5bqs7
+	t5Hz+6HbW5kQcoj7Rv5+btYYPb/PA4Tqw7Dn6Pg6f8j4x9oI+usXyK7Obe/RvOixTpfiKVNzPHR
+	thIaDFMr+obth3FlGBgG0Kg1WAmVFqSRP3JWQtTt/6p5Zf0QaumxoNgrWNPhEUdKfchMTuKcRcO
+	RgyOwEmefVA==
+X-Received: by 2002:a05:600c:a44:b0:4a2:a6e:80f5 with SMTP id 5b1f17b1804b1-4bb55a45045mr214478045e9.11.1794815149872;
         Sun, 15 Nov 2026 23:45:49 -0800 (PST)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8bed1a6dbd9sm3244287b3a.27.2026.11.15.23.45.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Nov 2026 23:45:48 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:106d:1080:575d:8fcf:e30d:5aed? ([2a01:e0a:106d:1080:575d:8fcf:e30d:5aed])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb6caae30csm89916945e9.2.2026.11.15.23.45.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Nov 2026 23:45:49 -0800 (PST)
+Message-ID: <04b0fbb4-6083-4321-a907-f3b23a4c90f1@linaro.org>
+Date: Mon, 16 Nov 2026 08:45:49 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,54 +93,144 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH RFC 07/23] ASoC: dt-bindings: qcom,lpass-cpu: document the
+ SM8650 LPASS
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20261113-topic-sm8650-el2-v1-0-5183f6aab9fc@linaro.org>
+ <20261113-topic-sm8650-el2-v1-7-5183f6aab9fc@linaro.org>
+ <sashiko-outbox-213486@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <sashiko-outbox-213486@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: Re: [RFC PATCH 14/27] mm/damon/paddr: support REPORT_MADE type
- probe filter
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Mon, 16 Nov 2026 18:43:36 +1100
-Message-Id: <179481501691.2405628.8067144236288202449.b4-reply@b4>
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, sashiko-bot@kernel.org, 
- sashiko-reviews@lists.linux.dev
-In-Reply-To: <20261115202849.99134-15-sj@kernel.org>
-References: <20261115202849.99134-1-sj@kernel.org>
- <20261115202849.99134-15-sj@kernel.org>
-X-Mailer: b4 0.16.0
 
-Hi SJ,
+On 11/13/26 19:57, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] ASoC: dt-bindings: qcom,lpass-cpu: split unwieldy per-compatible
+>    schema
+> --
+> 
+> commit f17c7c8f20845c2d15f821f60a13b5f93656ae8d
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> ASoC: dt-bindings: qcom,lpass-cpu: document the SM8650 LPASS
+> 
+> This commit adds the qcom,sm8650-lpass-cpu compatible string and its
+> register, clock, and interrupt definitions to the qcom,lpass-cpu binding
+> schema.
+> 
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+>> index 3a559bd07a79b..f431173a0e880 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+>> @@ -23,32 +23,33 @@ properties:
+>>         - qcom,apq8016-lpass-cpu
+>>         - qcom,sc7180-lpass-cpu
+>>         - qcom,sc7280-lpass-cpu
+>> +      - qcom,sm8650-lpass-cpu
+>>   
+>>     reg:
+>>       minItems: 1
+>> -    maxItems: 6
+>> +    maxItems: 8
+>>       description: LPAIF core registers
+>>   
+>>     reg-names:
+>>       minItems: 1
+>> -    maxItems: 6
+>> +    maxItems: 8
+>>   
+>>     clocks:
+>>       minItems: 3
+>> -    maxItems: 10
+>> +    maxItems: 16
+>>   
+>>     clock-names:
+>>       minItems: 1
+>> -    maxItems: 10
+>> +    maxItems: 16
+>>   
+>>     interrupts:
+>>       minItems: 1
+>> -    maxItems: 4
+>> +    maxItems: 6
+>>       description: LPAIF DMA buffer interrupt
+>>   
+>>     interrupt-names:
+>>       minItems: 1
+>> -    maxItems: 4
+>> +    maxItems: 6
+>>   
+>>     qcom,adsp:
+>>       $ref: /schemas/types.yaml#/definitions/phandle
+>> @@ -59,6 +60,8 @@ properties:
+>>       maxItems: 3
+>>       description: Phandle to apps_smmu node with sid mask
+>>   
+>> +  dma-coherent: true
+>> +
+>>     power-domains:
+>>       maxItems: 1
+>>   
+>> @@ -241,6 +244,65 @@ allOf:
+>>           - iommus
+>>           - power-domains
+>>   
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            const: qcom,sm8650-lpass-cpu
+>> +
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          minItems: 16
+>> +          maxItems: 16
+> 
+> [Severity: Low]
+> Should this binding be split into separate schema files (sharing common DAI
+> definitions via a common schema ref if needed) instead of adding another
+> large per-compatible if-then block to qcom,lpass-cpu.yaml?
+> 
+> Each SoC variant here has substantially different reg, clock, and interrupt
+> counts and names.  Fitting qcom,sm8650-lpass-cpu into the same schema also
+> widens the top-level maxItems limits and enables dma-coherent at the top
+> level, which relaxes validation for older compatibles like qcom,lpass-cpu
+> and qcom,apq8016-lpass-cpu whose if-then blocks only constrain clocks and
+> clock-names.
+> 
 
-On Sun, 15 Nov 2026 12:28:32 -0800 SJ Park wrote:
-
-> +	case DAMON_FILTER_TYPE_REPORT_MADE:
-> +		addr_range.start = pa;
-> +		addr_range.end = pa + 1;
-> +		matched = damon_report_exist(filter->report_type, &addr_range,
-> +				jiffies -
-> +				usecs_to_jiffies(ctx->attrs.sample_interval));
-
-Since the window is counted in jiffies and rounded up, how many samples
-see a given report depends on HZ.  With the default 5 ms sampling
-interval, the window is 2 jiffies at HZ=250, i.e. 8 to 12 ms, so a
-report is usually seen by two consecutive samples.  At HZ=1000 the
-window is 5 jiffies, but kdamond_usleep() sleeps via
-schedule_timeout_idle() there, and samples end up about 6 ms apart, so
-a report made right after a sample can fall out of the window before
-the next one.
-
-With the queue indexing fixed, user reports submitted every 50 or
-250 ms and covering the whole physical address range were counted
-about 2.0 times each on an x86_64 guest at HZ=250, and about 0.84
-times at HZ=1000.
-
-Is this approximation intended?  If each report is meant to be counted
-once, maybe we could keep a per-context report sequence cursor and
-check only the reports enqueued since the previous probe run.  A quick
-local hack of that counted each report once on both HZ values.  If
-reports are rather meant to stay valid for a while, like a user saying
-a range is hot, a validity period separate from the sampling interval
-might fit better.
-
-Thanks,
-Aveline Noir
+Will follow maintainers preference here
