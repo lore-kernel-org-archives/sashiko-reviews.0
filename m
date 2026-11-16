@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794815453;
-	b=XA8eHMTIMRNc5SExrKwuKe0dB0qL27aTeYUpAzy5OxXnFORd1bRFG6oh5n1vb7K91Gre
-	 kLtAIFkEDqmj1XowdPF0p1sSPejqU3ABHbOmYnNI4/vOVAVQ8pIuSnR8QgctoJiWQqDxX
-	 c2DHIelQRvNDMHYGZmeT810l1tIN4Sl2TtLQR4DJkB0o/L8ghRoSOi9aNgcjVgSHDELvr
-	 IlAkpdAMI3Rzi7IMZxXbkd7kFDFHJkRzGkRYRcJJekD3Semq1FiGvpvo9ophOX0q2SwKc
-	 gL78fkPhFFkhyTmck9YQeeN0qyY2la02k37UpJyZLwJrb18ZwQKyeRnAf5xb1bMrDGw==
+	t=1794815524;
+	b=zxZJqG1zlVeDAc/2rddMlfC4JabwL26quTWrfkoz5kYQox7P5Wcs9q2KqtOEN1xK6ABO
+	 ZujJkWm+cgqdOmExOPlz1G3WAUO1iWvNuYB9mQui+xCpcNTCHF8xvdMb2LhhHxw2v82t/
+	 levmrV3Logbbhm80V01AfIPAn9nQ94TWtkzS0mXPIHhqwK1J6KDzoDqECVocpZue8xFXL
+	 2poXKttGQfCMpku619U6pMKTmIeaiEZvJWs6IuS/R4RDEl4L61PQz0dEksQA7E89i32cA
+	 JgHcGpYaPhlnbJkIIgazr/8E7MOvBXSZPS+7JoO4NriPtmi6C1s47uCoBIYa7HvgBEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794815453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794815524;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
 	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=gBevyYkB+KqpxLupXF92krJAbcbx52iOwb7rRaPzSaU=;
-	b=pCfw7Us+tn2GNRE5+Cw9icyMcGt4VROMcyzjNj/fzwnIa9dJBOId27Dgm1+b/LYwViNM
-	 1F5zgrQ9NyaLTCbLZXPIYFTEvBH1KYszW4Rld8xx/KzG000XqYU15se5DBYKi99fqxF8Z
-	 j0LEIOAPwbXojJ3vP6ddgRWrX3lKZTH+8Wbc39GGI5QALuJJ99XoFEdd6cWJopd4nGBrc
-	 kXldqNiZ4tFREO0i9wjASorX3QcVHf77Ef8n61QZtN1Ewg/+kOUHYe9QVspHhjZvO1czl
-	 /jwAUjNQIpZu7AbiqPCT6CFGDJYmSsq/zIlfiLapQslyVVwNRSoEda30FSCmWnHZvhQ==
+	bh=8hZ6vhqouVFsnxOc8QRDh5YUzqwcZIN12aUhWdhK9B4=;
+	b=Y9trALdrl5Vn4ou89AbTc9smr6im2LmvVT5wtBuw/cgwqGfLrHD+lMuJ8h+Hgw+qj6+2
+	 k+2UDOAAaibgYd7VV3xmF0BNP2b+1NSzjdLX+6NDF5sapYcuCbypVh6zrNmpZA4SOltus
+	 ZbtQWSLz3RmcFcg6vckTqMvbtyUexu/77Rcii6iHsDPqcAXK0KI3H9eyiiPJpkbev7gf3
+	 eWYsXn4jwJw03AErcuX9+/Ch+DEkK8+kChsLlPlZgLexdY9bXszAiCtxMouQhcT5ul7Gp
+	 7rk0YdHvbCytc7qpQEL3KV1oncLn3FtzQDvyBskfZahxgZ8+tuGCuyUAzXsK0i03Q1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linaro.org;
 	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XsuFGcEI;
-	arc=none smtp.remote-ip=209.85.221.54
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BxVC+x7Y;
+	arc=none smtp.remote-ip=209.85.128.42
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1729606A329
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:50:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1729606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9210606A323
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 07:52:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9210606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XsuFGcEI
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-4918c2d727fso1645594f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:50:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BxVC+x7Y
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a35ac4475dso18050645e9.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 15 Nov 2026 23:52:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794815451; x=1795420251; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1794815521; x=1795420321; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:organization
          :autocrypt:content-language:references:cc:to:subject:reply-to:from
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=gBevyYkB+KqpxLupXF92krJAbcbx52iOwb7rRaPzSaU=;
-        b=XsuFGcEIV5B4MSXeOpB3mHAbVajJqtznkFTbyDDEskyGD3mLJvBBOjTbYWiw08g6BK
-         AOcEBKOqdyh3J89qH0L5P8SWMkIurW01eTMSCSngMsWI8ivPmLq0eSQeWA6eGRhutZvT
-         XzNdm4NEH++ZOT1kgtbD5P+6Ike1ZqkLJdgyMmfXfOGj092SXmSFKjXM1/oMhcRuFtBE
-         pwv4w/Qs/INcFYXPyvb6XRRAzQu33g/p77C8DUDmqFz/m9QQPCe65NbTu+QfmQSFXpj5
-         hgrOYMhaK0POueOpItrNnmmnm0XQt/eh3hurS4dl0ojwWKqZgS1aplzQ17K6quCizQb/
-         Tx0w==
+        bh=8hZ6vhqouVFsnxOc8QRDh5YUzqwcZIN12aUhWdhK9B4=;
+        b=BxVC+x7YCTvnCdZ9tMg1QcJ+fY9sxqF3zvqb7wPFEc4lD2MmUqtGfioMv+fOpqBeoh
+         WJAx9zNoeahM94VeCkAljfcmxf8g0tpklFQP6jyMuiY/jXIzBo3BoezsfDaBgMv6S3iA
+         VTvVBeODTL/dJBKjmZFoPspNWecVzatEA7+KTLe5vrcqMzPOUJyS3N1bnpTOkT1L1uA4
+         VuvmGXqm6wYlPvLyJVpCW2WTTkzZQGsS5Hbk9gTtduxAoVWyVFvZvD6YAwT+zAWaze9G
+         stoDRLOuy0JvOJaO28gdB+v/11uPcJCjpPEkEgSYdenP/ewds5XCLRUOG0rwpp3FjL6T
+         rR3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794815451; x=1795420251;
+        d=1e100.net; s=20260707; t=1794815521; x=1795420321;
         h=content-transfer-encoding:content-type:in-reply-to:organization
          :autocrypt:content-language:references:cc:to:subject:reply-to:from
          :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=gBevyYkB+KqpxLupXF92krJAbcbx52iOwb7rRaPzSaU=;
-        b=lEO8hWVhWmMeIhEa46myx3lc8o+HweHfoHDniYX5+99yx4H/ktKmOXrt4D+W+EJpDz
-         YhsUVqC3byzVzXyC1QslK9CO5T2rss6qEJHbB06SlFNFAORdSYIEg+oRO2fLef90BW4v
-         4Gdgq5FeKr9bJf78s22GsXuL/IWTnWeoqFSWcGFzoQO5uCdAUKLI9vGBe65ahjpYMSRT
-         +CGymolaCEUVovq8khkKLpfo42NBBfK/60CU9C/8PiCLBltgXslOUglBsFLMbvJDCTpc
-         MuuhAqoS4bRn0Pjs1jzX0jJrWZaTCr8dTOHQD7Jsda9HFkrYb6dcPUujofiqFHZ3xrXV
-         cHLA==
-X-Gm-Message-State: APuU4Z8zdHqHIrANgijzhgmI2XgHKO/JnLLvuqP59xjzC9AMIjYNwZ8Z
-	GtCWIyIwCjzaSTo5kvyE9n2Gg1FUMmrAXaeQ8OPqt/ev0Qi0ft+OV9RvaBVVf7KgUYA+yI1sp2d
-	Zzn2mkNY=
-X-Gm-Gg: AYBFou1Jcj3FgdH//GUk5S+uT/OnjmSHMhYYbq8joDeOuagoO7Ve4OoX88JT7SM2TGS
-	iUbSE/quYd62yDZe44e0xP2GSR1YfjN0ioNhnk38Zn6NvACH/z/0vX5O8w9L1+O9XQDavpp9vCN
-	3d5kv60RbY/oVWSh3yJedZoPsmbo7exDYQyX6ydwPv4KAhXORMIFWqfPC1cqfGLRIhGcM/m/6nT
-	4K7U8zm/hs7mwpS15GAgOoU/7kskJglyRh5+nsWyGtIJ63gEBKlsA8o1LzxEpYGXqxGHpXf6j7l
-	gz9xpDCyNRXJiVQlzu0Ggh97e9C8Ez7HI3cjpJ/yqpLsrKf2MKgytglEBgY87kJA+8iY8MHmkwW
-	2UmJGTm/uo2whNcpvUYw6IyaxwFLFP8gqPMu075/85MhkE3HAacc/yvVFD/pwZvKED3CjF6+REG
-	RWc/lzwqnwHhKkt0jKjvzBtkvMYg9q3i4wU2vPFH6tqPDGuSigvPy9yndPHrmB2wRTniC08Uoo1
-	nquGVX/SEsdL+xWuQoQ9cJUTPxhgeKj4ma8HskutxEvwz3SmVtNrU2lU7fweYISoZRI9WKGU5K8
-	xx5LKvxsgA3RnbzeyoaIJsBgVyGirBjZiugRokUyoyFH7ifkAk9I3Kt4G40LqjEfbw4RIQycw8p
-	+Dif1pOXF
-X-Received: by 2002:a05:6000:4582:b0:48e:44c7:bf0f with SMTP id ffacd0b85a97d-49c714a352fmr16250325f8f.25.1794815450969;
-        Sun, 15 Nov 2026 23:50:50 -0800 (PST)
+        bh=8hZ6vhqouVFsnxOc8QRDh5YUzqwcZIN12aUhWdhK9B4=;
+        b=wZsV597qTvbiQH67GYuZ72RL8kkVywETHpU2eVTQ6FcyXrX0UczO2W+OQTMYG6I7H/
+         uByySOGIAWrY4T4150xmAONrNJQ22cQRShBe3ZAd3wWxw+vIMSB45uBerXGdOO7UtBV/
+         jr5gG6VhC0sDhBhjwa0DDNSqW5jUPtPx9u9zLN8oR2+zkEZsrTUjj2d4Mgcnri6I4rTZ
+         079wX+wpgxmiueKKxZzRg28uZMztB+m29jmP//ebwXngrf30c5euL/AZU62b4id1G+pb
+         fJqmgGoyN9y/eOaZgJmvvR2V1D/DFa0A2sDnP4yCpTd+g0MvLRtbxrLY4m0Y6eHqFCjq
+         BExg==
+X-Gm-Message-State: APuU4Z+VCMpexIKHOPxlgnF1ygynp87UUvVCHXfVf3JCj/1M0J+40RTO
+	7YHCPCT9tvaQZWsFlED3BPpHD9c81R+AE3CdTJuCInWXn7p6Gi8I67eGPk1odAJYOc+IQoXlAi4
+	TxB6gWi8=
+X-Gm-Gg: AYBFou3YsYmqDH7LQlKKpFk3x93tdUpkdWGTFUHLiAyJR4pr9F4x+DOhsDGqayiYhkj
+	IoUlrgJbO36iExjIQV924NhBfX1HBfT+rAD6EeKWy0jLlbhiWJ/FwNrenZ2Jdqz4SKyXSp2MTO1
+	WzKbzeCzFSOFtf1O0XYjJAs9NSJK76z0qPdTcEXS6YyiTGKcnUVNlyYp65iEFDXJQAnOj61pdVz
+	40Gs4/mR6GODGBhjisWBPS65jlYtvzka5OnQqMjqTSpeD7mynUUWee5WeuCWWXV+2COkz41FsiV
+	vTvFJ6LOIA2h39Ji7ZHpFMTD4evqAx14SvBo7wA+/WiXrlSWqAKhJMZ0NYlXBXfQhbKsm4r+o3w
+	N6YUEwyHzdP3xdCEui1v859/tB8FqgD6ECRghi8v/J1tFtHPzSoXDDEsTbQJ3zeyf9tvixH+LUO
+	3ocVbuvTVpsjgEGBjRBU7jmzOtlso7iFN0hVvpzhwF1TVvGKG6xosThAa0wcuUk0q43Y3o6seLr
+	T8ThNUjhTdc2HD7kytRrZp+0IzkuCXMJl1UbdYO53MtaRyq8BwV94cIxgy5LTkZdzOVHGflE6yE
+	IVI4DwgbE8rTeJAe9YJuHlLmwB4z74f72/cvapjepTZHyKfSCyuwK5cc9A4UpBWgw4wM0u6/thr
+	/8hq5IVjK
+X-Received: by 2002:a05:600c:3b93:b0:4bb:6f67:ca0b with SMTP id 5b1f17b1804b1-4bb6f67caf0mr75284045e9.29.1794815510779;
+        Sun, 15 Nov 2026 23:51:50 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:106d:1080:575d:8fcf:e30d:5aed? ([2a01:e0a:106d:1080:575d:8fcf:e30d:5aed])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c5f1c1797sm22775989f8f.11.2026.11.15.23.50.50
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb732a2a9csm36296965e9.3.2026.11.15.23.51.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Nov 2026 23:50:50 -0800 (PST)
-Message-ID: <402595f8-0aec-405d-bcce-eb54981fcbb9@linaro.org>
-Date: Mon, 16 Nov 2026 08:50:50 +0100
+        Sun, 15 Nov 2026 23:51:50 -0800 (PST)
+Message-ID: <56275bdd-e71a-4f59-8933-6a0752268fef@linaro.org>
+Date: Mon, 16 Nov 2026 08:51:49 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,15 +96,15 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC 10/23] ASoC: qcom: lpass-cdc-dma: add support for WSA
- codec DMA
+Subject: Re: [PATCH RFC 13/23] ASoC: qcom: lpass: support mapping I2S ports to
+ multiple LPAIFs
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org, robh@kernel.org,
  conor+dt@kernel.org
 References: <20261113-topic-sm8650-el2-v1-0-5183f6aab9fc@linaro.org>
- <20261113-topic-sm8650-el2-v1-10-5183f6aab9fc@linaro.org>
- <sashiko-outbox-213505@kernel.org>
+ <20261113-topic-sm8650-el2-v1-13-5183f6aab9fc@linaro.org>
+ <sashiko-outbox-213497@kernel.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -131,130 +131,132 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <sashiko-outbox-213505@kernel.org>
+In-Reply-To: <sashiko-outbox-213497@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/13/26 20:07, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] ASoC: qcom: missing WSA_TX4 case in
->    __lpass_get_codec_dma_intf_type()
-> - [Medium] ASoC: qcom: unchecked clk_prepare_enable() in
->    lpass_cdc_dma_daiops_startup()
+On 11/13/26 20:04, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] ASoC: qcom: lpass: NULL deref in lpass_cpu_daiops_probe() on
+>    unprobed LPAIF
 > --
 > 
-> commit fe9e37da583fba7a4cfa98118783d3ccffae7524
+> commit 4c412765d7dfc4828c0e1ec1c2ada16e697ee595
 > Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> ASoC: qcom: lpass-cdc-dma: add support for WSA codec DMA
+> ASoC: qcom: lpass: support mapping I2S ports to multiple LPAIFs
 > 
-> This commit adds WSA codec DMA interface plumbing and clock handling to
-> the LPASS codec DMA driver.
+> This commit adds an optional lpaif_mi2s_desc descriptor to struct
+> lpass_variant so MI2S ports can be mapped to and probed across multiple
+> LPAIF instances.
 > 
->> diff --git a/sound/soc/qcom/lpass-cdc-dma.c b/sound/soc/qcom/lpass-cdc-dma.c
->> index 2dc8c75c4bf08..903055e3188d8 100644
->> --- a/sound/soc/qcom/lpass-cdc-dma.c
->> +++ b/sound/soc/qcom/lpass-cdc-dma.c
-> 
-> [ ... ]
-> 
->> @@ -68,49 +76,67 @@ static int __lpass_get_codec_dma_intf_type(int dai_id)
->>   	case LPASS_CDC_DMA_RX0:
->>   	case LPASS_CDC_DMA_TX0:
->>   	case LPASS_CDC_DMA_VA_TX0:
->> +	case LPASS_CDC_DMA_WSA_TX0:
->> +	case LPASS_CDC_DMA_WSA_RX0:
->>   		ret = LPASS_CDC_DMA_INTERFACE1;
->>   		break;
->>   	case LPASS_CDC_DMA_RX1:
->>   	case LPASS_CDC_DMA_TX1:
->>   	case LPASS_CDC_DMA_VA_TX1:
->> +	case LPASS_CDC_DMA_WSA_RX1:
->> +	case LPASS_CDC_DMA_WSA_TX1:
->>   		ret = LPASS_CDC_DMA_INTERFACE2;
->>   		break;
->>   	case LPASS_CDC_DMA_RX2:
->>   	case LPASS_CDC_DMA_TX2:
->>   	case LPASS_CDC_DMA_VA_TX2:
->> +	case LPASS_CDC_DMA_WSA_RX2:
->> +	case LPASS_CDC_DMA_WSA_TX2:
->>   		ret = LPASS_CDC_DMA_INTERFACE3;
->>   		break;
->>   	case LPASS_CDC_DMA_RX3:
->>   	case LPASS_CDC_DMA_TX3:
->>   	case LPASS_CDC_DMA_VA_TX3:
->> +	case LPASS_CDC_DMA_WSA_RX3:
->> +	case LPASS_CDC_DMA_WSA_TX3:
->>   		ret = LPASS_CDC_DMA_INTERFACE4;
->>   		break;
->>   	case LPASS_CDC_DMA_RX4:
->>   	case LPASS_CDC_DMA_TX4:
->>   	case LPASS_CDC_DMA_VA_TX4:
->> +	case LPASS_CDC_DMA_WSA_RX4:
->>   		ret = LPASS_CDC_DMA_INTERFACE5;
->>   		break;
-> 
-> [Severity: Medium]
-> Should LPASS_CDC_DMA_WSA_TX4 also be included in the
-> LPASS_CDC_DMA_INTERFACE5 case?
-> 
-> __lpass_get_dmactl_handle(), lpass_cdc_dma_daiops_startup(), and
-> lpass_cdc_dma_daiops_shutdown() all handle the full
-> LPASS_CDC_DMA_WSA_TX0 ... LPASS_CDC_DMA_WSA_TX8 range, but omitting
-> LPASS_CDC_DMA_WSA_TX4 here causes __lpass_get_codec_dma_intf_type() to
-> return -EINVAL and __lpass_platform_codec_intf_init() to abort without
-> configuring or enabling the DMA interface.
-
-Typo, will fix
-
+>> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+>> index f8b9b2ec90553..411eecd9cbb93 100644
+>> --- a/sound/soc/qcom/lpass-cpu.c
+>> +++ b/sound/soc/qcom/lpass-cpu.c
+>> @@ -1079,6 +1079,8 @@ static void of_lpass_cpu_parse_dai_data(struct device *dev,
+>>   			data->mi2s_capture_sd_mode[port_id] =
+>>   				of_lpass_cpu_parse_sd_lines(dev, node,
+>>   						    "qcom,capture-sd-lines");
+>> +
+>> +			set_bit(port_id, &data->lpaif_port_enable);
+>>   		} else {
+>>   			dev_err(dev, "invalid dai id: %d\n", id);
+>>   			continue;
+>> @@ -1121,12 +1123,33 @@ static int lpass_cpu_init_lpaif(struct platform_device *pdev, int idx,
+>>   	struct regmap_config cfg = lpass_cpu_regmap_config;
+>>   	struct device *dev = &pdev->dev;
+>>   	void __iomem *base;
+>> -	int ret;
+>> +	int ret, i;
+>> +
+>> +	/* Only probe an LPAIF if one of the port is described in DT */
+>> +	if (v->mi2s_desc) {
+>> +		const struct lpaif_mi2s_desc *desc = &v->mi2s_desc[idx];
+>> +		bool enabled = false;
+>> +
+>> +		for (i = 0; i < desc->port_desc_count; ++i) {
+>> +			unsigned int port_id = mi2s_port_id(desc->port_desc[i].id);
+>> +
+>> +			if (test_bit(port_id, &drvdata->lpaif_port_enable)) {
+>> +				enabled = true;
+>> +				break;
+>> +			}
+>> +		}
+>> +
+>> +		if (!enabled)
+>> +			return 0;
+>> +	}
 > 
 > [ ... ]
 > 
->> @@ -184,6 +210,17 @@ static int lpass_cdc_dma_daiops_startup(struct snd_pcm_substream *substream,
->>   		clk_set_rate(drvdata->va_mem0, CODEC_MEM_HZ_NORMAL);
->>   		clk_prepare_enable(drvdata->va_mem0);
->>   		break;
->> +	case LPASS_CDC_DMA_WSA_RX0 ... LPASS_CDC_DMA_WSA_RX9:
->> +	case LPASS_CDC_DMA_WSA_TX0 ... LPASS_CDC_DMA_WSA_TX8:
->> +		clk_set_rate(drvdata->codec_mem0, CODEC_MEM_HZ_NORMAL);	//??
->> +		clk_set_rate(drvdata->codec_mem1, CODEC_MEM_HZ_NORMAL);	//??
->> +		clk_set_rate(drvdata->codec_mem2, CODEC_MEM_HZ_NORMAL);	//??
->> +		clk_set_rate(drvdata->codec_mem3, CODEC_MEM_HZ_NORMAL);	//??
->> +		clk_prepare_enable(drvdata->codec_mem0);		//??
->> +		clk_prepare_enable(drvdata->codec_mem1);		//??
->> +		clk_prepare_enable(drvdata->codec_mem2);		//??
->> +		clk_prepare_enable(drvdata->codec_mem3);		//??
->> +		break;
->>   	default:
->>   		dev_err(soc_runtime->dev, "%s: invalid  interface: %d\n", __func__, dai->id);
->>   		break;
->> @@ -205,6 +242,13 @@ static void lpass_cdc_dma_daiops_shutdown(struct snd_pcm_substream *substream,
->>   	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX0:
->>   		clk_disable_unprepare(drvdata->va_mem0);
->>   		break;
->> +	case LPASS_CDC_DMA_WSA_RX0 ... LPASS_CDC_DMA_WSA_RX9:
->> +	case LPASS_CDC_DMA_WSA_TX0 ... LPASS_CDC_DMA_WSA_TX8:
->> +		clk_disable_unprepare(drvdata->codec_mem3);
->> +		clk_disable_unprepare(drvdata->codec_mem2);
->> +		clk_disable_unprepare(drvdata->codec_mem1);
->> +		clk_disable_unprepare(drvdata->codec_mem0);
->> +		break;
+>> @@ -1283,8 +1320,30 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+>>   
+>>   		port_id = mi2s_port_id(variant->dai_driver[i].id);
+>>   
+>> -		drvdata->mi2s_lpaif[port_id] = &drvdata->lpaif[0];
+>> -		drvdata->mi2s_intf[port_id] = port_id;
+>> +		if (variant->mi2s_desc) {
+>> +			unsigned int lpaif_idx, lpaif_port;
+>> +			const struct lpaif_mi2s_desc *desc;
+>> +
+>> +			for (lpaif_idx = 0; lpaif_idx < variant->num_mi2s_desc; ++lpaif_idx) {
+>> +				desc = &variant->mi2s_desc[lpaif_idx];
+>> +
+>> +				for (lpaif_port = 0;
+>> +				     lpaif_port < desc->port_desc_count;
+>> +				     ++lpaif_port) {
+>> +					if (desc->port_desc[lpaif_port].id !=
+>> +							variant->dai_driver[i].id)
+>> +						continue;
+>> +
+>> +					drvdata->mi2s_lpaif[port_id] =
+>> +						&drvdata->lpaif[lpaif_idx];
+>> +					drvdata->mi2s_intf[port_id] =
+>> +						desc->port_desc[lpaif_port].intf;
+>> +				}
+>> +			}
+>> +		} else {
+>> +			drvdata->mi2s_lpaif[port_id] = &drvdata->lpaif[0];
+>> +			drvdata->mi2s_intf[port_id] = port_id;
+>> +		}
 > 
 > [Severity: Medium]
-> What happens if clk_set_rate() or clk_prepare_enable() fails in
-> lpass_cdc_dma_daiops_startup()?
+> Can this cause a NULL pointer dereference in lpass_cpu_daiops_probe() when
+> a sound card links to an MI2S DAI whose LPAIF was skipped by
+> lpass_cpu_init_lpaif()?
 > 
-> Ignoring errors here lets the stream proceed with unclocked LPM memory,
-> leaves any earlier codec_mem clocks enabled on partial failure, and
-> causes lpass_cdc_dma_daiops_shutdown() to call clk_disable_unprepare()
-> on clocks whose enable failed.  Later commit "ASoC: qcom: lpass: enable
-> the right codec_mem clock when usin LPM memory" removes the "//??"
-> comments and selects a single clock via lpass_cdc_dma_mem_clk(), but
-> still leaves clk_set_rate() and clk_prepare_enable() unchecked.
+> of_lpass_cpu_parse_dai_data() only sets lpaif_port_enable for MI2S ports
+> that have an explicit child node under the lpass-cpu DT node, while
+> leaving child nodes optional when using the default 8-channel SD line
+> configuration.  When lpass_cpu_init_lpaif() returns 0 early because
+> lpaif_port_enable is not set for any port on that LPAIF, lpaif->drvdata,
+> lpaif->map and lpaif->i2sctl remain NULL, and lpass_platform_init_lpaif()
+> likewise skips initializing lpaif->rd_dmactl and lpaif->wr_dmactl.
+> 
+> However, asoc_qcom_lpass_cpu_platform_probe() still points
+> drvdata->mi2s_lpaif[port_id] at &drvdata->lpaif[lpaif_idx] (or leaves it
+> NULL if the DAI is not listed in variant->mi2s_desc) and registers all
+> variant->dai_driver DAIs.  Unlike the platform suspend/resume paths,
+> lpass_cpu_daiops_probe() and lpass_platform_pcmops_open() do not check
+> whether the LPAIF was initialized before dereferencing lpaif and passing
+> lpaif->map to regmap_write():
+> 
+> sound/soc/qcom/lpass-cpu.c:lpass_cpu_daiops_probe() {
+> 	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> 	unsigned int port_id = mi2s_port_id(dai->driver->id);
+> 	struct lpass_lpaif *lpaif = drvdata->mi2s_lpaif[port_id];
+> 	int ret;
+> 
+> 	/* ensure audio hardware is disabled */
+> 	ret = regmap_write(lpaif->map,
+> 			LPAIF_I2SCTL_REG(drvdata->variant, drvdata->mi2s_intf[port_id]), 0);
+>      ...
+> }
+> 
+> Checking !lpaif || !lpaif->drvdata in lpass_cpu_daiops_probe() and
+> returning -ENODEV would prevent probing an uninitialized LPAIF.
 > 
 
-Will fix the comments, the code uses the same schema as RXTX and VA, not checking
-the ret. If the clcok set fail, audio won't output but it wont cause any crashes.
-
-Neil
+Will add the checks
