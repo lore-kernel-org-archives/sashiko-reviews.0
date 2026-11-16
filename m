@@ -1,94 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.225.73
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794820945;
-	b=DA6Fff2dFBjhFJKYND4UqHIzwtlw4bkeoOnFLuzUUZoyZkhQToMwaOwS4HvtX6H24x3O
-	 GHKmVa7+gJxbRGOqgoV6jefUVOtn1r+T4Z+2weBIjzo3QrnP9AO5klkFGM4XpvEgK5acI
-	 +wlt9nbe+LhDppCXzQ14TMRTvtNw9bk1jP5OCatvkX21kJ0TRcA2L8K6hqRTnyFI0cGMM
-	 ntudWF9yeuKjt84k9U7m3AnrTnQpfk5cEFbkqcfB9UygWH+C1bwsl0+3OWOQh5cIpmHXI
-	 Jp+sgjtJxhcYUk6hB0vfGnlGrVgQURlSsIyvO3ar8tizHYqIeggvX2Bv90GWUH7Lvwg==
+	t=1794820987;
+	b=uvv6t5O6roYvAC6ozLwtGKLZbvoWU9pGBIYPiwix4sB0mKFOdUzqsz3vf33GeZbvtEWu
+	 I5wI2ZpmVwPRXL6U8/e5o9CCBGo7I6j7kQEiROqu42ApEnkwgxyou6BS7rv0x85UDk4Ri
+	 A73lDQ98jLpqK805MPiAX4BRmhK55Dm07AWgIMyZE3FsD30kzUF9rxOluFWfQt0i1j3Sp
+	 g2br8qVQFYOyI0xU16NJPv+p/Hka1NhwytRHs8vkkULi7m5f8P3qLnrhvSC/i9APlM8B8
+	 L7Q6j0rR3uzPZFL5GtIeJSnglA3YJJGMcrr5l7m4pk+Nfb+ZZEz3Xvz27dz8oUONllw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794820945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794820987;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=kHdIL6Qy/M97X4vCAX1fCvBa1y4VV/EfPvmnoDmBPuA=;
-	b=E8lxXk9dJJ0Tm7PNmEiGHZVQLJ6jCp4dTt/lmYzei/jCrSn15RnT16IPQkRtwFfxJQ+B
-	 0LfD9jtkvBDCmjsOFoK78rAufTPM1wskDtvL9YCVeTolMxg5cNQQUXN0YT24tcxFGvU/d
-	 oRRtbUb6rT2c9hHn/l34tH2J7RdB7tqUQXhguEuBinhiwC6WQ37ncSC8E1mF5R0rLq9s6
-	 BgA4sMfwQ1WtAcIDwhZ0XsidNVm2R9NEiwMG11IPb+99flp/M1wmbX3QBb5QxF50FRgKU
-	 ba2EjKb9LzDxAzi7SBmGG3A5l4RzRuCpQZ6dzYV5zaQgcE6jGYJXJ9YcsMp1HRAfmzg==
+	bh=YWhHL4Z55ZERzg9tKG/xVm8foTsP3l20UZqMYcMw7LI=;
+	b=BsTdWjnpP/3eB9vcYZ1M3pzE+YSjwTpnnGh+X955Q/OdukVZLpAelYnhVRsbtDRRY/aX
+	 YYvfI4D93vYnLtv65QZ+ArA5N6/SMv4xqrdktPNheb6zRGgICW20u1Qwxp9Gw+K4tZA/v
+	 bW7C1eOrCPMflWcShI9YaAkFiIceC9X78QkQA2TkHFYa5uYhCJVp4A1T2wpf31yDet0kX
+	 DnyGw2VloUc8qOQHukrzYFr4X9aYvhcWVYxc8oG+sK55KGwsNWvMPmMPDHU6kOwO1gS4G
+	 KM11fUxUk8HmEi/IfmGmutNy0mtz+uOr3/yZAzlkbt8JrDKniFueyCGIXf1Qa4uOfmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pereq.eu;
-	spf=pass smtp.mailfrom=cryspen.com;
-	dkim=pass header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=V1mA2Rq8;
-	arc=none smtp.remote-ip=74.125.225.73
-Received: from mail-wr2-f9.google.com (mail-wr2-f9.google.com [74.125.225.73])
+	dmarc=pass header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=ebsREhQV;
+	arc=none smtp.remote-ip=209.85.128.41
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95616606A32A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 09:22:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95616606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pereq.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryspen.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F60606A885
+	for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 09:23:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B3F60606A885
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=V1mA2Rq8
-Received: by mail-wr2-f9.google.com with SMTP id ffacd0b85a97d-490ca655ba2so1265269f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 01:22:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=ebsREhQV
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4bb5b8ef642so18369675e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 01:23:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pereq.eu; s=google; t=1794820938; x=1795425738; darn=lists.linux.dev;
+        d=baylibre.com; s=google; t=1794820985; x=1795425785; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=kHdIL6Qy/M97X4vCAX1fCvBa1y4VV/EfPvmnoDmBPuA=;
-        b=V1mA2Rq8axjd5UuOqShX0+NFFajonLEnP+fODR9etuMbydXolH6adlCFGh1UCGAD11
-         yS18NWSrC1Fub0gcRXuQ85IqyZKsV9Vhwom4Ej/f7YW0xvD9QciJYrjX56BH9TdqzS8B
-         Le/2s7v/VN3mHZMJH5TCbS3ExdW7gmH6ikVzjeil9WLS3AV4wPoiW5SGul7wVwUIps0p
-         sHPKvTesXDqwQWtc0gdGxNdsv+3aIMFFTy5bIdIqgeHJJGDNdhKzeTR2XO0wjwbGBEMo
-         xK4yrb+OZN/p3QNYMANFyYDctmyJ1dWjXQeOEed2mBaaQx1B4NI7+ywt7b3mL5xCorTA
-         OMJg==
+        bh=YWhHL4Z55ZERzg9tKG/xVm8foTsP3l20UZqMYcMw7LI=;
+        b=ebsREhQVnCnp/ZqMXH/mucnonS+P9GiSHP2cfaaB242QNTa3U67u19iALc9i6vVMsE
+         XvO9n4VU7P7Eovr6yrsu+hmz7tfFolFTo4R5o+EvwP5z989UbWf3z6FvY+wpVimey/E1
+         rN7PCKoQbsndchi6QT22NWwWMykUFhlBQPimxxd3qiR7oYoGCmlvitouoOIyTTHwzWBy
+         mQcsWkziqEZp3KGszP4TvpEY6Yd+bucJwGQYIQcFetuClGKvviGjeSqBH2kH7IfJZ4uc
+         1je8SlGT8KpLrPWE8eugwI3QXYviyo0ULylcoFyb6VApParAs0IkZdjJ+dLXub+CCbAp
+         IpGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794820938; x=1795425738;
+        d=1e100.net; s=20260707; t=1794820985; x=1795425785;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kHdIL6Qy/M97X4vCAX1fCvBa1y4VV/EfPvmnoDmBPuA=;
-        b=dt4RWGFjGnTJ19GilDx9TnT70MnQFUez3OqVET9EL9381AddS/7Qwigp1M2nQesa03
-         j+FWbBQWrTyVBv9Uqh4E3l4o75Yc5kgxEqfL+NeuvipgiTXt2hGOWrUuEwDM7eqD/EkV
-         8sRmxEF8+RG56cVtMJiyB8FpuOUr7gBIszE3s26HCnHoH08BuQfltvAkIDUv/HzfIIJz
-         2jF8KLks6oxl3nZIjDJFj+ZMBG+JsaDlBhsHSRSUmXhBCCCfQGD4qcDmnbR++weKuVdA
-         zyDQyFpuWhyp/d/F9peIMdP+18dzSi2m2hQwG4tGnd5ClunbE3xeMAJ+Mcd7eHtvGbt9
-         26tg==
-X-Gm-Message-State: APuU4Z8w1neT9C1K3MNCZ9TeTledZuWniESO2C4ZehiAOH99SP7sM0x7
-	ezvWlbdYcwrH9CR8wGRAzuLZ1IoDX+OE9eTUp0VU3Qq6n1v4KmFNt5/oeatu+oht7YvyTBNQMbu
-	HgDzLgOqzvAis
-X-Gm-Gg: AZFdTZd+5GewM4oFFzFmKm/4dKUxDTUyTZF5E0lZ+SuUfRzR2jHYcNnitv1nNoofapD
-	XisImB2+UfL2qjMtRTC+u5C2CDQ4WpJeOw6OPYi4jXkuGWx4+2DcQfh0U369hegFb3N1RCUQGXt
-	UFadTnVtbxQqI70iOrcgpl6f2vNhcJzFXF00WS/7rSFlkWAcLJRGx0ivtdUXUjywZPVKLorkym4
-	Lpl0dpy/eSTEeA0FcOX0m26AVb4Y+JHVzIyhOErRgxLkRLmg9AXFbVb64InVDR+LBBySDnmE1LQ
-	Cb252uq/xYX9qgAx3diJERYI1UTIvsB0RH2mdXE5SptKNr2bgr524EkQ9QhnBemoIG1cNQq7kOU
-	XHoc2Qla3WcleguL/fVbN8u2zKwbmUk9SQ+fDZgHD+hAarQRymYS9tATVURdXQahF5BlxpcvMoT
-	553gZROMBbGucCd/33VTRRYxnj2+HDgisF4uC+9Kbn88vA291F5KQuPWKbMRIiZb+J+n+sa90XV
-	wPyiXKjc7pyhb9Q88tivb5jL/l898n5+sOTqGcpora+/+yg2m2MLU3NdvKIuXuocOXUyf4HI6yU
-	Tlxt7PweX9et6PZ91vI=
-X-Received: by 2002:a05:6000:260a:b0:48e:5e1f:9a36 with SMTP id ffacd0b85a97d-49c727cf557mr19077157f8f.42.1794820937714;
-        Mon, 16 Nov 2026 01:22:17 -0800 (PST)
-Received: from localhost ([2c0f:3d00:6be:8900:ce5e:9212:ea4b:f30])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c609c651esm21650487f8f.47.2026.11.16.01.22.16
+        bh=YWhHL4Z55ZERzg9tKG/xVm8foTsP3l20UZqMYcMw7LI=;
+        b=L1lWaLbAji1yA4DavE/XyNKliS2+Zjc3pI5itdZqTjBMrpebBaIEYm8SPvU9sBpPes
+         JLM4Waoq4SrVN/jVfaUvZIovZkMY+T28ssulHqNSqVPRV/fdTIZ6/Bs4PjwISyOLADG9
+         mafXOeoPNVWJJjlWzn7WnqYVxIEtZyjrrND6ZxotcgE4u6PWD7c39yPiYXXogxCLP5KW
+         oAbgfZF1R/m5bom9KdoZ7XGXik6oVn406xsNS0yeaFGe2S5m7oey+41BlCVXnYIPzqE7
+         OfnclGhKfYRtWnA4AyOtj7ftTdK+RD5BPv1UOLyfgBHqTw6WV9J7UouhYXbWZj2TzIs9
+         WpoQ==
+X-Gm-Message-State: APuU4Z8tbjtzn9VOwM2sZ71+L/++CWusK6ePX5bdxhgpe1AlCYDrEuix
+	P8NnIxXwt6mGu63LrcrtCeFBnxpoEz2EsS7WQFuObBI2wKcs8PapBi0NmHPvtddIHJhUsluNkoK
+	nILNB
+X-Gm-Gg: AYBFou0/GYnYvnmoxWYE1kph5o/L2mUp6bYb7gx3QymTXMpmJnAKvInSaCSnl5+27J0
+	8ecmrahbHDhIqZUMaz9plWJ4oJxWeJ9VSQEUmEZnDAENxM+BQ6OUn7fnQjSMpf/KvG6YWVewZ4l
+	sqcpOVzPJ82U4QLgt8A3/BEqwykmUBOuqnMb1vqJWMzx3TRgebrFS9Zm8eRcclbKukEMiCmDD3e
+	s99TZ3NCjJbwQMALrjdNHSjlakW72ZsHjGgGW0EN3IOi+t47AU0rjW1CBf7G4H8xOG7vymDqpnp
+	5FBAIPqjhWeZtE04le/dM1Yk/KydmWlFqK1EL5ATm1/koUXGRu41Qx+Yo5n3nSTm+kyw8m5R6tC
+	lRzFri7ZDgmFhyoznHaH0xpY5+zHHVzg7AalwXsrW6cY9g6HQC5Dp0MvKnTK2KNT0FStUbz7Ef8
+	Fg9/Lel3exqXbN8VHx75dc/06AkP80T7NuMowK7dADYfB9kpeJo0nH4TVcSQUpmbd5OhLfvyVXk
+	kcs2DQ6ptitQpzt9gw2BrJQ7cNYfnRxtBA5IDu7uRQ2MnApKx+jOONXgPK7GVTY+S96DwEm2zsv
+	8CdPu+52ajWERgIrUhTdtEwPgTmkBXRdSXCZYG4OsBoD7ZsNOJ55sgGoG8Lcxg2Mp+pElqod/Cp
+	uf0mua+QZPBpO0BXv
+X-Received: by 2002:a05:600c:8b82:b0:4bb:6814:7391 with SMTP id 5b1f17b1804b1-4bb681476a8mr117276055e9.25.1794820984666;
+        Mon, 16 Nov 2026 01:23:04 -0800 (PST)
+Received: from localhost (p200300f65f19a9042c263c0c153a4e28.dip0.t-ipconnect.de. [2003:f6:5f19:a904:2c26:3c0c:153a:4e28])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4bb69ac4e16sm101563665e9.0.2026.11.16.01.23.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 01:22:17 -0800 (PST)
-Date: Mon, 16 Nov 2026 12:22:13 +0300
-From: Dan Carpenter <dan@pereq.eu>
+        Mon, 16 Nov 2026 01:23:03 -0800 (PST)
+Date: Mon, 16 Nov 2026 10:23:02 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 1/2] KVM: arm64: nv: Fix AT emulation for TCR2_EL1
-Message-ID: <avrLRfCRUcLrc9Tp@stanley.mountain>
-References: <cover.1794808373.git.dan@pereq.eu>
- <eec50693a12e1ba34d60458ae8fe605ac198a79c.1794808373.git.dan@pereq.eu>
- <sashiko-outbox-216278@kernel.org>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org, 
+	Oliver Hartkopp <socketcan@hartkopp.net>, Vincent Mailhol <mailhol@kernel.org>, 
+	Oleksij Rempel <o.rempel@pengutronix.de>, wsa+renesas@sang-engineering.com
+Subject: Re: [PATCH can 1/4] can: c_can: c_can_plat_probe(): reject devices
+ without match data
+Message-ID: <avrJ54bCPy5K1QcJ@monoceros>
+References: <20261114-fix-device_get_match_data-v1-0-2d82025e9646@pengutronix.de>
+ <20261114-fix-device_get_match_data-v1-1-2d82025e9646@pengutronix.de>
+ <sashiko-outbox-214574@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,72 +101,76 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3pek2dbhbnp6trdu"
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-216278@kernel.org>
+In-Reply-To: <sashiko-outbox-214574@kernel.org>
 
-On Mon, Nov 16, 2026 at 06:27:41AM +0000, sashiko-bot@kernel.org wrote:
+
+--3pek2dbhbnp6trdu
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH can 1/4] can: c_can: c_can_plat_probe(): reject devices
+ without match data
+MIME-Version: 1.0
+
+On Sat, Nov 14, 2026 at 01:33:34PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] KVM: arm64: nv: unmasked PIE/POE in SYS_TCR2 in
->   __kvm_at_s1e01_fast() and __kvm_at_s1e2()
+> - [Medium] can: c_can: c_can_plat_probe() rejects c_can_id_table matches
+>   with -ENODEV
 > --
-> 
-> commit ba7c962c50af660f734650ef98aa65969755bc0a
-> Author: Dan Carpenter <dan@pereq.eu>
-> 
-> KVM: arm64: nv: Fix AT emulation for TCR2_EL1
-> 
-> This commit sanitizes hardware SYS_TCR2 during nested AT instruction
-> emulation by masking out unsupported PIE and POE bits and clearing
-> SYS_TCR2 when the guest VM does not support FEAT_TCR2.
-> 
-> > diff --git a/arch/arm64/kvm/at.c b/arch/arm64/kvm/at.c
-> > index 30d8f062b2c29..06765881a4c81 100644
-> > --- a/arch/arm64/kvm/at.c
-> > +++ b/arch/arm64/kvm/at.c
-> > @@ -1438,7 +1438,13 @@ static u64 __kvm_at_s1e01_fast(struct kvm_vcpu *vcpu, u32 op, u64 vaddr)
-> >  	write_sysreg_el1(vcpu_read_sys_reg(vcpu, TCR_EL1),	SYS_TCR);
-> >  	write_sysreg_el1(vcpu_read_sys_reg(vcpu, MAIR_EL1),	SYS_MAIR);
-> >  	if (kvm_has_tcr2(vcpu->kvm)) {
-> > -		write_sysreg_el1(vcpu_read_sys_reg(vcpu, TCR2_EL1), SYS_TCR2);
-> > +		u64 tcr2 = effective_tcr2(vcpu, TR_EL10);
-> > +
-> > +		if (!kvm_has_s1pie(vcpu->kvm))
-> > +			tcr2 &= ~TCR2_EL1_PIE;
-> > +		if (!kvm_has_s1poe(vcpu->kvm))
-> > +			tcr2 &= ~(TCR2_EL1_POE | TCR2_EL1_E0POE);
-> > +		write_sysreg_el1(tcr2, SYS_TCR2);
-> >  		if (kvm_has_s1pie(vcpu->kvm)) {
-> >  			write_sysreg_el1(vcpu_read_sys_reg(vcpu, PIR_EL1), SYS_PIR);
-> >  			write_sysreg_el1(vcpu_read_sys_reg(vcpu, PIRE0_EL1), SYS_PIRE0);
-> > @@ -1452,6 +1458,9 @@ static u64 __kvm_at_s1e01_fast(struct kvm_vcpu *vcpu, u32 op, u64 vaddr)
-> >  	__load_stage2(mmu);
-> >  
-> >  skip_mmu_switch:
-> > +	if (cpus_have_final_cap(ARM64_HAS_TCR2) && !kvm_has_tcr2(vcpu->kvm))
-> > +		write_sysreg_el1(0, SYS_TCR2);
-> > +
-> >  	/* Temporarily switch back to guest context */
-> >  	write_sysreg_hcr(vcpu->arch.hcr_el2);
-> >  	isb();
-> > @@ -1554,6 +1563,9 @@ int __kvm_at_s1e2(struct kvm_vcpu *vcpu, u32 op, u64 vaddr)
-> >  		if (!vcpu_el2_e2h_is_set(vcpu))
-> >  			val |= HCR_EL2_NV | HCR_EL2_NV1;
-> >  
-> > +		if (cpus_have_final_cap(ARM64_HAS_TCR2) && !kvm_has_tcr2(vcpu->kvm))
-> > +			write_sysreg_el1(0, SYS_TCR2);
-> 
+>=20
+> commit e910ae3e03adb41c30f60d29d9b4c11824109fe5
+> Author: Marc Kleine-Budde <mkl@pengutronix.de>
+>=20
+> can: c_can: c_can_plat_probe(): reject devices without match data
+>=20
+> This commit rejects devices in c_can_plat_probe() when
+> device_get_match_data() returns NULL.
+>=20
+> > diff --git a/drivers/net/can/c_can/c_can_platform.c b/drivers/net/can/c=
+_can/c_can_platform.c
+> > index 75607b1afd2e9..b6012cd713cee 100644
+> > --- a/drivers/net/can/c_can/c_can_platform.c
+> > +++ b/drivers/net/can/c_can/c_can_platform.c
+> > @@ -266,6 +266,8 @@ static int c_can_plat_probe(struct platform_device =
+*pdev)
+> >  	struct device_node *np =3D pdev->dev.of_node;
+> > =20
+> >  	drvdata =3D device_get_match_data(&pdev->dev);
+> > +	if (!drvdata)
+> > +		return -ENODEV;
+>=20
 > [Severity: Medium]
-> Does hardware SYS_TCR2 still retain unmasked PIE, POE, and E0POE bits in
-> __kvm_at_s1e2() and on the !mmu_cs path of __kvm_at_s1e01_fast() when
-> kvm_has_tcr2(vcpu->kvm) is true?
-> 
+> Does this reject non-fwnode platform devices matched via c_can_id_table?
 
-Yep.  Some bits are missing.  I'll need to update this one.
+It does, however there are none of these since commit 17b6e0280f31
+("ARM: OMAP2+: Drop legacy platform data for am3 and am4 dcan") from
+2019. So a useful followup cleanup is to drop c_can_id_table[].
 
-Also sorry for sending patch 2/2 before patch 1/2.  I fat fingered that.
+For now I suggest to mention that in the commit log. (Though if there
+was such a device, the patch would make the probe function return
+-ENODEV instead of dying with a null-pointer exception, so it doesn't
+break anything that worked before.)
 
-regards,
-dan carpenter
+Best regards
+Uwe
 
+--3pek2dbhbnp6trdu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmr6y3QACgkQj4D7WH0S
+/k5RWwf9Gv31XqqZPH4JwPX0KHpiAWhemgaE+bJBp8OfyB7SHjLqs+vVF4f0k9xR
+tB6TOxR2DgleZZtVTyGND0yJZBnAPUZ3dEdtpO/iPvw5cQuDpvXa6WrfPxfWXwdj
+sorQpgF3MTv+tQZPqnSgDPeiFe51IYOlBffvNgc8dt8Gz/S4r56KuU/QvgDRPITL
+137TDJ1YIEvnBZLUTSHdiuqP9P71IxU/JOqrfXjPHaxv/T4GfnzE8d+KJJ4QufF1
+zNkvP0MYgOTGc+m2sM7RtAfjmNwH1KI3twQ85DLU/eRYk16XdCAyHd5NuBKY1+tg
+AYWr48nYYZ4s9jRhPmcwSFNkjHQbrA==
+=wbMo
+-----END PGP SIGNATURE-----
+
+--3pek2dbhbnp6trdu--
