@@ -1,95 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.24
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.177
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794953431;
-	b=Pbcq9oAWCT1OqHpRErudvuHT3GfMKpA3kqiwMrwo5WIY6P2ESyLSmF37omPG9Ij2beD+
-	 VoNeQmHaqlp/vCT6qjdJjUs2cBBCywXdORxw1KmgXRMT4p+EWPskepqT/XSAc/4L6iZe6
-	 njybYD5ssRPHUIyPNsbmzLQOx+yh9eNW/+5Pj8ZwVs1aLFHHFwQdynuYepQ1amFWMn4Ks
-	 kEoxq1cJXO1zZm+yxfAEyhbJyvAS5DPoC/ahK5wL9JsXzSgzN7AaDrEmRHskHYMN3/qtD
-	 iwFn3Bn2vvymAg9/EFxRSc+sIZdUnXEe3Y6FcmvYfCb5fIBh4O/LpqqpSggQhpZ2dkw==
+	t=1794953649;
+	b=3l27thA6SqVuGsdI42CTEm07fkLMTBBjBQu64AVAKqFlYcMTc42ibtXoToEgwzHj8lTF
+	 Sq2zVblh07RqlbCzrDRVX1Z1tX0IMFcPKV4jV0coAmqazwXasqHzFPGtpFawPGd07i/87
+	 rpbD9yEWk5eKCVQhYkEIaohL4MjHpliMFWKM/18G4Eu7xoexhUmzomtvK9kcv6lytctrz
+	 3aNU+98hb7RCCnR4eMfFosu6znkZcQmRq3EheoUA0SgM8ZyvOyTNFicKLVmBRk1nBCQxX
+	 TrDnJpfsXXndVIJRaKYDnKFcNAaJQYyFCkexBIJgyOmj9T5pwDzpPO2CfKpNq742nRA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794953431;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=clLknSTugmcNLolS/Ma7g54pX3B8g0LK+fK5oV6evpY=;
-	b=N+RATQ08Df0G2ONF8XEgUHBjbnGlljgRFHf4oxxT2FEI921EHhRQoCVhxKwINua0CqCA
-	 /uH7XppTiiVfTBkqzupCmM/rg6kQ+J3aWjv2GiBH0P6yAUOlZ87CO3T5AmLstWlFWgcCC
-	 1l7JKkG+C04Gg4LQpU3pXqk/ffo9iB0XiunzuYSiOnljKj3pVJ03bvJiVO1Ot1w8ooLM0
-	 PuoGkXs7ucbaOSxtmEN8sf4LCG2fmbEMlpaEVbDo+N1Tp0w0FHSUIsYzwtcc2415dnkPJ
-	 Tso2If41scrICUK7GonYI7D2vr5sWtZGh9hOL0K+IpL3DSjNeXReSDxAdFOC/YXcdWg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794953649;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=kpd7hhfRhWWBKoEgTCNhAfk8GLYDUaewjNnHM0/FSkA=;
+	b=0V44sqnqJA5hML4shQj4wC52M4JcnSlyKSSPr/WMevh7ePGT+in0eIuvgwYexyARQkVG
+	 b1P799FPOwnk8swfbS2y/t3tK9jzLujo4+DvquZHcrbGVtlq9qhjIxZUUfBw5/8FK9EJW
+	 Fftegwu9XVwBSHrHSw2lkbJ7l5r80LgtWPvW2o7S8ZPRnuTqm/2Uvx3ELKMek3bblxTh8
+	 MEU+RDaOIX29qrJkoOPDb+sCzwVtAj4EPWzCIp869nbpsouLde2QcP0Xw4xZb5oLGZcLN
+	 CIlpWK3+EjuvuSRxBiOc03pU9G5MmBLwep/eqnC6hwJd2tsyZDxn4N19mXgJrTr/cvQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=QtgweM7V;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.24
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012024.outbound.protection.outlook.com [40.107.209.24])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=okpHtaWb;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.177
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1230606A32A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 22:10:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1230606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E21606A32F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 22:14:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 61E21606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=QtgweM7V
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tOEoGS5KkSrnaZ+ry2PqVc9cxNAjUekqNCURsgnS9jgnPDlJV2mfz9WG5GUEd8UCqionjLtOPxARU6kDmVNDL+OqkmZAuR/f6pUIpxVEFizQDnUH7J05ttOSAPvVNGUUYeqNxrGiA18GHSwBd+oOzYuWX7/vSJ4L955p+2IvYjoKjmTasPcNa5ceBSdy/C3g+UyuvdIitZn3j9/D73VNnzpd4+7+Z7jk0cZm26uhNO6aLfIeoKIAJ097Xbp95q9eSgv7E9/sSFpUHzsiFXawmupsOULB9eNeqJsW77Xtujayh8+/lcQJ8b+ImYZ2WtJ7yedyLPo9h6K606l2/aRdrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=clLknSTugmcNLolS/Ma7g54pX3B8g0LK+fK5oV6evpY=;
- b=bBto0in1AGaHYdJVP2SdHLGuqaT0MoHGQV8KWUeWFCCdTBwfx3eOWtI9r7Mkbg381OTttZzdMd9QKJ3G/m58LSr24b/Irux9w2dhpr0BQRcjvJJ0BKG3lFkt8p/Xn3Fan+GIWlSv7vmDd5/CybL6rRDYimwVpIMISd8zThDXE05qp59ORsLz2qexh73y3b5OtLaYmS+1bj0/PLhBhRFDNqZ22YfDWhq3gAVNWL9+bOHwJtD1PKj18rsRULTKooCUVT903v2at+45mCgvo643Y+Ff9r29f7L1irfGXdFtlbRmtQOUGtpGLmOFQCvLHYJsnUaROuAp5QYsxzFadsPR3Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=clLknSTugmcNLolS/Ma7g54pX3B8g0LK+fK5oV6evpY=;
- b=QtgweM7V/XDp1hV31WF8aKsftaSfOe5H+5BP1/7eHQx5yagl7qz+nD3/euU/yLXT0Bs//M139JLqzMkrg9Q0op79OcMIfyCBTYrmN0oSdklwxOGZzZKbMwv7PmlfI7DtRseGGjoWyXTNQmdL6/1HlzaCL5a1SHMX3xJBmdcHUYQ=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CHAPR12MB999249.namprd12.prod.outlook.com
- (2603:10b6:610:300::24) by DS7PR12MB5981.namprd12.prod.outlook.com
- (2603:10b6:8:7c::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
- 2026 22:10:27 +0000
-Received: from CHAPR12MB999249.namprd12.prod.outlook.com
- ([fe80::1cfd:535b:cec6:5077]) by CHAPR12MB999249.namprd12.prod.outlook.com
- ([fe80::1cfd:535b:cec6:5077%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 22:10:27 +0000
-Message-ID: <44b0ea6c-5fdf-4b78-a5d1-43b68a715cb4@amd.com>
-Date: Tue, 17 Nov 2026 16:10:24 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/25] dmaengine: sdxi: Start functions on probe, stop
- on remove
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org,
- Frank.Li@kernel.org
-References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
- <20261103-sdxi-base-v4-11-3668ccc7aab8@amd.com>
- <sashiko-outbox-196576@kernel.org>
-Content-Language: en-US
-From: "Lynch, Nathan" <nathan.lynch@amd.com>
-In-Reply-To: <sashiko-outbox-196576@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SN7PR04CA0007.namprd04.prod.outlook.com
- (2603:10b6:806:f2::12) To CHAPR12MB999249.namprd12.prod.outlook.com
- (2603:10b6:610:300::24)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=okpHtaWb
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-5058b105df7so105223b6e.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 14:14:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794953648; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WEPNVUeylC7Bk1AGtt4sV3puLRmw0M8VyDXu+QwLVe2HJ/NmY3KLH1dbXUryjfb0lj
+         uE/qaLIA+wkd6FBaKGW0iz2adOVJVHwrT83PRx5yX3CMJPrYkcJjsEqc9Yl7idMq8T3z
+         SAl+72U1vX6B7SPjZW+LLsA27JPpzwiwb7yq4EQVjO4zkDfTKHXrnDewCpbnSQ7c8Sod
+         SVwe1ycOJ4V7aLdLqYi4zdw4SnT8TnQFVnrPrmkhQFmbCPweFB+jqEAnkwbqW78hp63G
+         UD9Ga58XQkjdE4tkzo4IgP95bMinJOSjpccwlJYyG3If3SAY+6eTtIF1XEu47Z5IA8dI
+         rhwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kpd7hhfRhWWBKoEgTCNhAfk8GLYDUaewjNnHM0/FSkA=;
+        fh=nTua2UbRSZWthxUBjoxa7bgGcZH1urAvU5eGzRoVE0I=;
+        b=H8Fxr84ePQw4yA+ZIut+TOSOA12+DD3JPgdYzvE+H/o5VGbaalLK9+R+vXxkejR0NA
+         IJKSYQuqDjJ+9Az70fOjTPNpa2VbLJmQnW3GC5ysj8ltnWP+c4KM1NtzvXsBZBZMkPTz
+         NYpsQOec6Sjvr10fFOX0Z2BDUurdroUAw5mgh+aEtsa1Q24TgIADpCuRz8fsBAE2s6VC
+         PKiuM25iknzatcNZ+OLl0y0EqcqAQRRcIJcz1pCgFc+4mloIqvJNZdLQ9HWYKOxWQczh
+         bYIc082dPrWXNpZ43ejiAKfqLLj3xhyzTsXgZvaM5RnftsS76Lrk73goPZvBuj6MKyPV
+         10eg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1794953648; x=1795558448; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kpd7hhfRhWWBKoEgTCNhAfk8GLYDUaewjNnHM0/FSkA=;
+        b=okpHtaWbo95YbfwhvhECYGR1BlJWR2T5ivPaGRnf7jml7Fx3yItfL4L0dQs7jM1kxb
+         t9P3+1/IAC7ciF087DvZNS6RU0udb0nu+zXMnFqTdExzvjzTHOxIJ32Q1HyYQNhWCHzM
+         Ja1UhxMebqrfmnB7TaHv4GNj0tOYlHJoORQAuJ1vY3kmQAalYEF21I8U163iHAEKepRB
+         Tal2hH+e7PQdHOsoqJ56RvJ9Cza3vPifEC5r0D6Ft0U77h9LK7nSH3A4f4j/fW0KQ9oY
+         AHoCrEzFcArDIKKU2/f1ObNHogPjkqCRIu0SEElcCbAXkIzxP1ubukoVQvZ4C0aW1IIh
+         drPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794953648; x=1795558448;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kpd7hhfRhWWBKoEgTCNhAfk8GLYDUaewjNnHM0/FSkA=;
+        b=iHBOH4x4tEOZWJGrTsNCOhvbo9oGPy0wFl1FWEtD7YhNbUNF7ClSnDPwwRps030Rn7
+         pTbhA98et0o2fxwd7+K07Cjwh9krWdl0dyOt2QbIlHN26ysWkwzRwpj7DAsxXBT7SXhx
+         KMyaJRKKmYJd8aa0JcOKQQj4R7CRJs3B8fAhmOmFXJIgHqk6idQCcyYRS++c1R2ycpqu
+         qT2rKxsFHvDBpV1lH9bYDqpC5BEkiu29UGZ9w+MzqGYMWASJmXjbj2sG9S8BO3rwPlI1
+         oCnxeaGU5qncWQY4T5f+l2FEwEVyfRdCc9Wqyxt5oiAAE+4zn9jn+M2JqV2oAeOc6M8W
+         AD4w==
+X-Gm-Message-State: APuU4Z88L5kFq+U3pVgRs4xCXtIcGLXXMleIKPBFV8+WVXcAbzCVYL/S
+	9G4ov5gjQvhjyqblpCcTlcW6dSqZ55JDcCVGJqgW/43ZyobruKTHynCx2ywciNFl3QK24IBoDMX
+	VnVA2d1oyKFMCBwKiXa0oPfQz4lLD8yP/GX2yyyq/Y6taVM6zlHYnEsrs0waK1g==
+X-Gm-Gg: AYBFou2X7fDTaZ6y3mVvb7I+/THi62k54jQLJk7+KGGFCKIuSyxJYTR1jCqE1cFofkN
+	cDP+Pojo9l2OUNeiqDhmNmMIXC16TbJRAwOQM9cSk+2uizPgO80hGIvzTAOLW3KvUtkYbsP72w0
+	xZv+IgY4uzSDbr8OLV8cxGGHyn+YHmbLg+Z+uXmpiWXVd/r2/uT8KDZEyY+Fc52lN3TKSY7FJJM
+	WcBbcUVGRhPvIHzpbjkCWZ/RX6jhe3y/91HXenpdiC7UkUxCw6I2PYJpDDk3z5wS+oUivD7dsRA
+	+MJEgIsOFOH38PqDEMTVTpLFivlPLrJiY0H+UacbQL1cDdZOb3r7bM+fmSi2YOMG33g1Xm/w4HH
+	Z+g9TM55SpLHfRSQJzQnDKKLagHua6cnagaRSTBpljUelZ5aXomBpkHhH0mT2y7lsols=
+X-Received: by 2002:a05:6808:30a9:b0:4b9:a88b:888b with SMTP id
+ 5614622812f47-5774162054dmr1516905b6e.33.1794953647357; Tue, 17 Nov 2026
+ 14:14:07 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,120 +103,90 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHAPR12MB999249:EE_|DS7PR12MB5981:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64ce93f1-c694-4eb9-110e-08df44f795ca
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|18002099003|6133799003|22082099003|261009223027099003|4143699003|56012099006|5023799004|11063799006|261102123227099003|261028144727099003|261026140227099003|261021121427099003|261022075727099003|261022105027099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	YvKpLxiXWxlhknWj1RcoV0glfrfAFoY3z/yQ2cPULeADSgVpC4fcnIqlhV1/SClVwn93bB/Ltc4QI4A4bU8F3ohdC6t2+5TrZd/AmVsS0EMlIzndvKn5S/MMqclXeXXd4exXUIcTPLWCUuqyUM/bGdPAhaUOzVUzjfGYLhJ9L0BBpsIjuFLRJ/E1Q9bZlgsEmwUydtUZa44qWc01xoq6JNKFFC9K95uS9ps3ZTEwHm3c402zHV7zqtDoJzhWWyQZdS/IhC02KxQEGgb01Xsh7C7IfL2zXMKTGcwqYMwjy3FhAnhIBkWj0CReGM3rhWRcegCIyBO33HKyWswU1M2jmj5CnsLtu8N8xpjr84MmoGMzeppI7cjindPwxHSx1lev9w4h4tlru3JodXFoFMb9JRWjRqT7BfU0meAv9Ut/SGVqgT6tUH0XprDeOL81M2FwzZh69wM453Y4jxaRHADT8OezDScMHw5syqyqQTG1xvNqFAZzjQzvjgxOpffp1/UtSLRE8QmJVgLuCn2DSUVO6RdFPO1a71LYZq1Xb4bxPaQNjWxngVQ4MjxwNZ4vm75oeBLuntLLhlGs/U1pn2kiFrDjJov88eHgbB0bdf7CjMvMod7kKwLFa6zMOgYjibqNA9ts6RUKA2UKkRw7xcorRDPPJAvbQ9cXsYpOiRQQlN0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHAPR12MB999249.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(18002099003)(6133799003)(22082099003)(261009223027099003)(4143699003)(56012099006)(5023799004)(11063799006)(261102123227099003)(261028144727099003)(261026140227099003)(261021121427099003)(261022075727099003)(261022105027099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZGlEOEgwc1o4d1VieEdUV0JvNlAzRSs1UkxBakg5eldJdi92OGMxeVkySVBo?=
- =?utf-8?B?Vml5M3BQQnFpSXRadS9kZkhQUWxtL1RRbThQS0M4RENwZVQ4N3VNOHpGN3pj?=
- =?utf-8?B?U2t0VkcwZVpSU1hBN2RvcGNKUFlQNUhhY0hXVzMvS3I1NkU5TDErYjJaT0hN?=
- =?utf-8?B?K2JZelRDRERCeUtjTFU5MjdYTzlEdG5WOGdyNEx3djlkakp3cFFvOHovT0lq?=
- =?utf-8?B?VG9hOEJ0TmI5YkRjbXdIL3NOV1dqUGpIa3NOZVV3VTRGSXM2UlNOQlNpcG94?=
- =?utf-8?B?cWZEalM4Z2RoWEpQZEZCMzV0SzB3bWRKZWhZMWF6TnNBTUFzWFBBZmJJRVBy?=
- =?utf-8?B?Q2NUM3dHSjlpL0tvaTM3NldGZHVvSWhKR01oNkQvUXVvc3pzMytIKzRlcnVw?=
- =?utf-8?B?VjZtcXZOekxPL2NJZzBaSGJCaWQxMmUwNnVjTXFZS3NNc0dNL1Qrc1V0bEc5?=
- =?utf-8?B?RWZodFhTOWZ2SlFjZWhxaGZXbTV0S1V3YUxsTlBDNDJ0c1RqSzZjakNRNCtL?=
- =?utf-8?B?ellRci8vS2toVWFBcHUwY1g0ZVFENkdGTWx5ODdIbWhwOW5PZnlaRTNOakJI?=
- =?utf-8?B?ZTBaY3hFNlRQeGZuTnpRS2JWb3J2dE1BNjdDM0FyamQ4eUpWVG8xeGNGZTdk?=
- =?utf-8?B?NkVUZndjN0IzZlZEY1NxbDRpQ0YxV3dsdkdMYVlqWUlKQldTcFhaUDk3TXQv?=
- =?utf-8?B?Q3ZCSmtOYzVTTk4rdVB0WGFldEswdEJldGlrSlRuM3dQdXhnMCtUU3QzWUxk?=
- =?utf-8?B?ejlGUSt0c2xmWkV1cW5qdGlWeUJvM0VxYmJHdTkxdFBlQUE1T2IrcUxCWGdK?=
- =?utf-8?B?Mm1KYXZUeVFBUWJWajVrcmU2SFd4VDViRDF2VXFla1BTODRQYjl0WCtyNEhW?=
- =?utf-8?B?VUNsWm13T0E3VXlzMlN4TlBYaGphYUw4L2h0OC9jWFdtMHdWUHhsbWI5KzJI?=
- =?utf-8?B?OCt2TDBPRHRPVkNUaVEzRndkbUkxNFhUM1VIVlhDeGpsVWx1QlQyb3Z2Z1RB?=
- =?utf-8?B?ckphMUZGakZhb283b3djT1dUemwyNDJaY0hjVWVQSUlNSVRVUEgwN25saTNt?=
- =?utf-8?B?V0tyL0pDT2Qzclc0YVZNZmFpaEtESFE2RlZaRlpKMEVEUFB3SW84cDRMeDJo?=
- =?utf-8?B?T2pUVFJ5Ylc2OU5za0VHWW95V01Oc0kvc21rK09hWEdDM1owZ1Q3S0MrN1JQ?=
- =?utf-8?B?bjdPRTVncXZmaGJrMkFtdCszYnZxcGZvZzhUa2w3aVhSak8wY2ZMMXhvay9U?=
- =?utf-8?B?b29hdjd4WC9BSUMyRm5DQkV1S2NpZE1tY0Z0dFVZdzFxVlNVaUorVkxSV2tl?=
- =?utf-8?B?Q1FHbWl0UWJWZ2FQc0M0RXh0TGJVTmFXQ0JhTUE2bWNZRjc0dlRHR0tuZ0h3?=
- =?utf-8?B?NkhhRlY3cDZRWEd1MGE5Z3krVDd5TDRSTG8xWis5aUE4djZxRHorUCtFczNT?=
- =?utf-8?B?ZVJZakYwWkd6Q2Nianh2ZFFndlBJL0M1SUxIUnlibHpMb3BQcDRGZHZiRU8x?=
- =?utf-8?B?cEhBbFpvTU55b0JhV0IwL3pSck10enF2eXNtaDdhU3NnYjJwbkNJYy9Zcnhh?=
- =?utf-8?B?bktVSzFVaVBYYzQ3aFNHRDJGRFlBc3NZQ0VPY0lCQlpuTGdVTm02S1hreEcr?=
- =?utf-8?B?czdLWW5QN3FsVDZXUTEzL2xKUFVXYytQR0ttY3lOc3A3N2wvUXJOaWI3UnBw?=
- =?utf-8?B?VzlRdEpaWVNKeEpFWDJHUzE5UUx3NlZubk9lUGhaZVA3RVNqV3VMbCtPZVF5?=
- =?utf-8?B?S25vVEVOcmxocEpobmZYdy9iZzBmQkE2dGl4dVJsOGlOOWw1RU9kZTczWHIw?=
- =?utf-8?B?ckVGaUpSekxDUWxFNzhHYldCUUVydVZhUjZ4WCtXeVcxU1lPRmxhcWV5blRL?=
- =?utf-8?B?bURDRVBlbW1IeXhXKzVxUGZKK0hZb3RLZ21JT3BTZHNhdmJyTG5MSkNSWWZL?=
- =?utf-8?B?RXhHWlB0K0V5enNST0RucmJYbUhIbWcxSVhCUWh6bmdWUnA2bDZwL1hFNzZX?=
- =?utf-8?B?R2hLV0FoT1o1L2NSKzE3U2dkZVNmL21NM09iY05MOEdrcTRDeU9UZjJpVWMx?=
- =?utf-8?B?NU1HVjdXZnp5UzZPa0p3V3g4NnVVUC9mazAvbnBrRHZ0SXpvcXRmd2NNTWZR?=
- =?utf-8?B?bmVPMzhaaGUvR3BIMnFKalQ2M2Uya0s3R1hDaFY2MGZNa1NTd1cxNEdJb2Zk?=
- =?utf-8?B?OFFpazZsdzNjcXNCa1ZHR1pUZXkrMDg3RDFlRURaSzZRengrSFpFMlBkcWdn?=
- =?utf-8?B?K29uUzcyVnpTSE9ZWEJFeVZkVTlRYWFwZTZxa2Jmcmx0OTdpTTBoRmYxODha?=
- =?utf-8?Q?3AWWTahlKjcjPZRF9h?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64ce93f1-c694-4eb9-110e-08df44f795ca
-X-MS-Exchange-CrossTenant-AuthSource: CHAPR12MB999249.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 22:10:27.1563
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9Ap+fLCRVrwxCovjwcd4iM/l/VIiQsPNmvCIllkRNTYc0DSXW/y3W4l65Vs0WSD0LkPNwPsQEC7TDNvvgYePLw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5981
+References: <20261112031629.396819-1-mrungta@google.com> <20261112031629.396819-2-mrungta@google.com>
+ <sashiko-outbox-210280@kernel.org>
+In-Reply-To: <sashiko-outbox-210280@kernel.org>
+From: Mayank Rungta <mrungta@google.com>
+Date: Tue, 17 Nov 2026 14:13:55 -0800
+X-Gm-Features: AclHuK-gfyGRgfHP6b95c4djqnr6JWB02JWcunq_dlapBgDtO9GdRA_nY1E9eCw
+Message-ID: <CABz7rdC2Q1qtUdhiXDpEydbhCnSaNSuS5jzcUK+cZFdNZmULgw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/7] genirq: Synchronize in-flight handlers during NMI teardown
+To: sashiko-reviews@lists.linux.dev, Wim Van Sebroeck <wim@linux-watchdog.org>, 
+	Guenter Roeck <linux@roeck-us.net>, Thomas Gleixner <tglx@kernel.org>, Radu Rendec <radu@rendec.net>
+Cc: linux-watchdog@vger.kernel.org, Marc Zyngier <maz@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, "Kirill A . Shutemov" <kas@kernel.org>, 
+	Douglas Anderson <dianders@chromium.org>, Mayank Rungta <mrungta@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/3/2026 9:04 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] dmaengine: sdxi: PF stopped before pci_disable_sriov() in sdxi_pci_remove()
+Sashiko has found one potential issue:
+
+> [Severity: Medium]
+> Can __synchronize_nmi() return while handle_fasteoi_nmi() is still runnin=
+g
+> on another CPU because it checks desc->nmi_active before querying
+> IRQCHIP_STATE_ACTIVE?
+>
+> Unlike regular IRQ flow handlers, which acquire desc->lock before setting
+> IRQD_IRQ_INPROGRESS and calling chip->irq_eoi(), handle_fasteoi_nmi() run=
+s
+> without desc->lock.  On the NMI CPU, hardware acknowledge sets
+> IRQCHIP_STATE_ACTIVE first, then handle_fasteoi_nmi() increments
+> desc->nmi_active, then chip->irq_eoi() clears IRQCHIP_STATE_ACTIVE, and
+> finally desc->nmi_active is decremented:
+>
+> CPU0 (NMI)                        CPU1
+> <NMI acknowledged in hw>
+>   (IRQCHIP_STATE_ACTIVE =3D true)
+>                                   __synchronize_nmi()
+>                                     inprogress =3D
+>                                       atomic_read_acquire(&desc->nmi_acti=
+ve);
+>                                       -> 0
+>   handle_fasteoi_nmi()
+>     atomic_inc(&desc->nmi_active)
+>     action->handler(...)
+>     chip->irq_eoi()
+>       (IRQCHIP_STATE_ACTIVE =3D false)
+>                                     __irq_get_irqchip_state(...,
+>                                       IRQCHIP_STATE_ACTIVE, &inprogress);
+>                                       -> false
+>                                   /* __synchronize_nmi() returns */
+>                                   __cleanup_nmi()
+>                                     irq_nmi_teardown()
+>     atomic_dec(&desc->nmi_active)  <-- NMI handler still in flight
+>
+> Querying IRQCHIP_STATE_ACTIVE before reading desc->nmi_active (or
+> re-checking desc->nmi_active after observing IRQCHIP_STATE_ACTIVE is
+> false) would prevent missing the handover between hardware-active and
+> software-active states.
+>
 > --
-> 
-> commit 44d5d7973859c1db8741ba90d53413150ded9a60
-> Author: Nathan Lynch <nathan.lynch@amd.com>
-> 
-> dmaengine: sdxi: Start functions on probe, stop on remove
-> 
-> This commit activates the SDXI function during device registration by
-> setting MMIO_CTL0.fn_gsr to GSRV_ACTIVE and polling for GSV_ACTIVE or
-> GSV_ERROR, and stops the function via sdxi_unregister() on PCI removal.
-> 
->> diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
->> index 6a293db69199f..d196ab5cf6f1c 100644
->> --- a/drivers/dma/sdxi/pci.c
->> +++ b/drivers/dma/sdxi/pci.c
->> @@ -99,6 +99,7 @@ static int sdxi_pci_probe(struct pci_dev *pdev,
->>  
->>  static void sdxi_pci_remove(struct pci_dev *pdev)
->>  {
->> +	sdxi_unregister(&pdev->dev);
->>  	pci_disable_sriov(pdev);
->>  }
-> 
-> [Severity: High]
-> Should pci_disable_sriov(pdev) be called before sdxi_unregister(&pdev->dev)
-> in sdxi_pci_remove()?
-> 
-> When SR-IOV virtual functions have been enabled via sriov_configure after PF
-> registration, calling sdxi_unregister() first invokes sdxi_dev_stop() on the
-> PF while the child VFs are still active and bound to their driver instances:
-> 
-> sdxi_pci_remove()
->   sdxi_unregister()
->     sdxi_dev_stop()
->       sdxi->bus_ops->reset() -> sdxi_pci_reset()
->         pci_reset_function_locked()
-> 
-> If the native MMIO stop sequence fails or times out, sdxi_dev_stop() falls
-> back to sdxi_pci_reset() and issues a PF function-level reset (or clears bus
-> mastering). A PF FLR clears PCI_SRIOV_CTRL_VFE in hardware and resets all VFs
-> underneath their bound drivers, and pci_dev_restore() -> sriov_restore_state()
-> then re-enables PCI_SRIOV_CTRL_VFE with uninitialized post-reset VFs before
-> pci_disable_sriov(pdev) runs to unbind and remove them.
-> 
-> Calling pci_disable_sriov(pdev) before sdxi_unregister(&pdev->dev) would
-> ensure all child VFs are unbound, stopped, and disabled before the PF itself
-> is stopped or reset.
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261112031629.39=
+6819-1-mrungta@google.com?part=3D1
 
-I've looked into this and consider it valid. Will fix in v5.
+The observation is valid in theory, though practically benign for
+disable_nmi() and free_nmi():
 
+In that window, IRQD_IRQ_DISABLED is already set by __irq_disable() or
+irq_shutdown() before __synchronize_nmi() is called. If
+__synchronize_nmi() reads desc->nmi_active =3D=3D 0 after
+smp_mb__after_spinlock(), then the NMI CPU's
+atomic_inc(&desc->nmi_active) occurred after IRQD_IRQ_DISABLED was
+set, so handle_fasteoi_nmi() is guaranteed to observe
+irqd_irq_disabled() =3D=3D true and skip action->handler().
+
+By the time __synchronize_nmi() reads IRQCHIP_STATE_ACTIVE as false,
+chip->irq_eoi() has also completed, leaving only
+atomic_dec(&desc->nmi_active) in handle_fasteoi_nmi(). The IRQ mapping
+is not torn down in disable_nmi() or free_nmi(), and even if it were
+torn down immediately after free_nmi(), free_desc() frees struct
+irq_desc via call_rcu(&desc->rcu, delayed_free_desc), which cannot
+complete until the NMI CPU exits NMI context (nmi_enter() /
+ct_nmi_enter()), so no use-after-free can occur.
+
+Human review feedback on v4 as-is would still be very much
+appreciated. I plan to hold off on spinning a v5 just for this and
+will swap the check order in __synchronize_nmi() alongside any
+maintainer feedback.
