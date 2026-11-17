@@ -1,99 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.170
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794925626;
-	b=jFVsTevSI9Sqdxsg2/KMrYBKjD1b/iR3b2nMMwW2j31VxgMXr8dvPcmbOmYPd6CLUwBx
-	 XZ94MKh4YE3sJni0/CcZDtkICPOV1LtC/2XxBV64+mgLExR09mSZuLfLulNbwyuLy19jd
-	 V2a90cYmpdnNG/NzspsQXckHfDuSOIdTDL9YuziZ/zyEF0QWz3oOkvHNC4vaptrxH7oYa
-	 DIIRTqN8UuOsxGxzJfHdUOk97X4oUPtSj7Y2rKKNdA96DeYxNByHeO70OaSxckJ9JSAWv
-	 k1HzVvqykB0mgIc8k+138RscX4MxDvkFoJF7b276l8+pOrHSB8xxYz9a7UsQmEOZn/w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794925626;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=PlBEz0/R/Ef87STf82uOLT7Vkt0DOzSXLhqXXnaUz/0=;
-	b=2F3HlpdG2GCedB5Hgxg9vDsXvk99WOF2frFU3Y6j9D8taDFgo+hXkUBj4Vk7oaLs9Y+I
-	 BKZFgdzrRAscg+B5M2jn+NusDXFBpiRrwiZBHMcm4IAtOX9dubr6LD3c3HBJMGHf6pyGL
-	 GtJ4Huw9UVsrkTtMHLBHUD+dbXZ9WFQw2N8eWdTfvqO58SrTpsHArHEkl37Ul+43/gMTs
-	 0OmcSkH2sgsDgZPjxfkbF7Z+TKETyX0LQme5hZVcIyp5jPK9Lesm9lLv7wJCK6XdyFnZf
-	 BrhGbFgqsmzDTLuYI78nbm6xpH5U7S0fCLIF7IjOwQgXP0/y6Xy4O9UEg2lmfjOf9BA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EU5vQqd+;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.170
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794926841;
+	b=u37JHG8NNliufr45G19PKRnEGQ9gqwczm0rcnD8RGS2JoB3PDHusKc/DmhfM2rsYzHq5
+	 WzHH52O9iGWg0z9yaOqRDTcdc1Ii1MtIsASayNx0Qi9veWUrmqRvVCatgptw6J40KzGh8
+	 nIbAHmNYZ6EZJjyr52MBWCeI6lMdvH0UJF2X2WEWRClG4IE7ACs4bh0QtckDe2XqBAIDF
+	 uMl8QKGDGLuU8uG8yydym55br+T8MYUOYRRg2Su3KHs+zfhd4aEyTOBlHYQ9ocdUCEO7t
+	 GmmuhlZfDQgpmMnO9771tgGuQwd1OkDjE0Vl4hU3rmZY5Rqus8C+uSEsMEAtnh8UW4g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794926841;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:
+	 X-Spam-Level:X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:
+	 X-Spamd-Result:X-Spam-Score;
+	bh=7foWI0Aj9ppqfJdv5P7q2owDF56g/fZXgTipv1s+ze0=;
+	b=OiAIEH/FMAQ0u+1wNpP9TEynovWQGBAfq/CePk7cA0qpHJS6TJz4qp8I1c2ZAIRDafj7
+	 6ybMEcO/j+rNLnarmLkIZdahLeENAQJYj5RLzE0r1M6vdpJyYh7yxqNhZ0+npuz+mdsha
+	 gYLIbhoq+rfN8MxDAIUW4+qRBo3Tgj5h1GVt4VuOjCdCU37nZ1KwcSlegyHg3O4o5zSzR
+	 hg+DsxcOjGTaHBzA/fW659QITydmmPLtm0cJx1HYSXwZS2yxakYoL2DrvTMgvC1kD2zHg
+	 aY1HwEqxTvY8f4qW3Ysh009ZjoYNpIM3WTr0JMsk1f8XCOqCv8tDnrAIRWoywIDl2Dg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=qtfKcdd+;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=rrC8jDH1;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=qtfKcdd+;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=rrC8jDH1;
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782FE606A329
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 14:27:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 782FE606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1822606A32A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 14:47:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1822606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EU5vQqd+
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b4d07494b0so12241877b3.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 06:27:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794925625; cv=none;
-        d=google.com; s=arc-20260327;
-        b=EkdqNxDeUVc0uYe27KoKTAV/cAId+cIVBvv3HL1QyFCaftNcX+5N3dgRD2Mu2vtS5D
-         biSxhXHcKKtvpSFhL57xCuVRd+ebB7Z4m5pISafDUya18R9llzViM2VNBYaUCap4nPlM
-         GZvgRaqLRdNevV82uMNBvNd6/A6x7oWDBi1ylbvGSji+5DMRKiegRadyy8nFV22N6wV5
-         uEJzpO6iFpAlmQoUzF4+p8WgTSNkq/b+9NsBPgVF8NDZknKzIsy0Z1e9GLaxZlaDEz/U
-         UA9+WAMRK6TzQV2aiURB00fJKzCQoOCKW1L9McJ7E27jFTbdck/QPMXigKS+kfwYdqM7
-         UgwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=PlBEz0/R/Ef87STf82uOLT7Vkt0DOzSXLhqXXnaUz/0=;
-        fh=N6fJd9nwyHTVBviLWqin7n91Vn056emKV6TFjw1VhuE=;
-        b=YB8VtItl5vHqQpIpjLOr2mcDMWsouEM2BnxFLrprMzzX8cQnfDn4ZnrybW+vRawB0l
-         lTglO6u8F6WUosF71HgXlhpSxQlzJPp+IZZLT3gmLf/gbhS8yvo2I+ly/ERMH+CZK2KL
-         pC+7VCdau1CKHT5JVpuxB+RrrH0KAtB0le0EBFf0W3omZOfHp5YW3lzZ+/N/u4nrjDeI
-         on9xYQhHdAEravx7EfR+rVKIcM5KCpdqiSUI4Kq7K183PFAsmvIW0aruZtHarDqjnrJn
-         lfcsFNadMcKtc5hqvOIVtNfgXDoQ+QXnnlX35POXH9Dgw+I28Nnik4RIxxJdhexPcvlk
-         qiTA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794925625; x=1795530425; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=PlBEz0/R/Ef87STf82uOLT7Vkt0DOzSXLhqXXnaUz/0=;
-        b=EU5vQqd+sB2cpazV3ixpHQzq9WNqH4FKvsTguGISYHPS2jQI989ZZmWujQ3Qq2vD35
-         er5VLNPQVln+pyNoSjdZD9IqYUsNGibOm1gYUFP0H1Jcvq1ox39g6oESZkv8twl0YKyx
-         LTVgMXhwvBNbWu/j+nHGv2yzvwh4e0+70hVejI6hX1XFsQmYL4+jwbTD9s9MgId39y8L
-         foekFgFvwk3RlUu1U7iOPUslScYUSVIlCmFBrMcPKdb1uN8pNEvtLk1YdKc28hd00IcX
-         LmTrfkxpA0qWMcoQbefQozPBvBX2GgZe52cwRrJfwmHwr/zEc0dZHJAxe0osuUIDn1Hu
-         0RRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794925625; x=1795530425;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PlBEz0/R/Ef87STf82uOLT7Vkt0DOzSXLhqXXnaUz/0=;
-        b=gZV1O4Vy4kMEIHMAFmEg1kFMEn3xS3pkqSbu4aWCVwH6L90op4t80b/j1vrwHZuPBC
-         daMVVA5sCKald194XsSFzuBjeyRYjua7P+wjZ3TCT5n33wceAgBZP4+G44jt78ZXVF/J
-         JxmnQiMCEiPpnh871lCQ+j/x790n0B8L1UqVKTVYB9kOovxZtLBuouES8VKeP7z52dJz
-         DSYkync2u0XjAxbNGy83ewWAFT/UHVqiPl8XwuNt2W2tqXEGPnmkaOovB6SqJvL4/KTv
-         YSeLstSlGggBENQOwTwNuYrWp6RBbtoIfXcGTLbQp9puMfQCtZVuQgmIEdE9gyAz0eX5
-         PshA==
-X-Gm-Message-State: APuU4Z+Ffj8Ixv5g8eq+ygslRqVPcsPcQBcduiz7Q8oyWa7FxEbxeUQy
-	/EwnaTgLZbiQn/YFyXR0BwX6ChT5G4uWS51FVr3vt6e/k685UjFP5U42Bg1naejwRwq3rlOT6mV
-	cAl1CQzru5LlBekKhnyFxgrmLmjLjSvRStyoY9/s=
-X-Gm-Gg: AZFdTZdOwugpjyQVZ9UsZ4CrGzVPuAwap6Xm1I7YHv/8veNVjYan7sJTdMj73A+cD7T
-	2wsIt0euFwN0qnI/h8uFyARJfrw3vkCpCRtlBgjesywAo6Si9HEO8suFTaI8EPnXbwmut8KqRMn
-	FAIgpTse37t8fEqO30P4yhSmqLywY3tv+npvmukQYZZojK9qscc0hKyASbq2H7AzOS2GTb7Ubiz
-	0eO/SNTEPvhyHIBzarNd5axaOyiV6SasuVks8a2Pq9NCRDYynLfJikWrhjlkQrWtFJOJYHdPhsG
-	sHZqvdRLhUdGEeDdGqS8wWrAynkTdfHZMmQUy2arR3TnvS+800U2cyNxGw11axUwPQy2C9G07Zm
-	EkQjNAP0W1LuNZTCnLnrA1y6tbcLlg+8/2pkhOXCP0Z/TNq4X3z8inMCJquR7xoJbps0=
-X-Received: by 2002:a05:690c:d88:b0:8b4:caa5:b52c with SMTP id
- 00721157ae682-8b4ee2ecf97mr16817967b3.16.1794925625274; Tue, 17 Nov 2026
- 06:27:05 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=qtfKcdd+;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=rrC8jDH1;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=qtfKcdd+;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=rrC8jDH1
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 192801F747;
+	Tue, 17 Nov 2026 14:47:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1794926839; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=7foWI0Aj9ppqfJdv5P7q2owDF56g/fZXgTipv1s+ze0=;
+	b=qtfKcdd+ls2VTjclu7nZzLH3lxEIL4RwWmrNMUJDGK057WpiO+J2ozSbK8BKtIbJS6DsQw
+	W/67itJgc5nArAGU47HD1gIqw0PDjsESE59yV0j2TTHWaP8Z3zmBSudVIDTyGkcdMPTyWG
+	IQlGCxoI+f6VmofmGbCluWV1HhDu3O0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1794926839;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=7foWI0Aj9ppqfJdv5P7q2owDF56g/fZXgTipv1s+ze0=;
+	b=rrC8jDH1cGsozy0GGgcaR4ImIPrsiWoYM/SftoOvtvznfWEcisu4q54/fAVVAozWxl2fQz
+	1fGLgBnuXcdtQlBQ==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qtfKcdd+;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=rrC8jDH1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1794926839; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=7foWI0Aj9ppqfJdv5P7q2owDF56g/fZXgTipv1s+ze0=;
+	b=qtfKcdd+ls2VTjclu7nZzLH3lxEIL4RwWmrNMUJDGK057WpiO+J2ozSbK8BKtIbJS6DsQw
+	W/67itJgc5nArAGU47HD1gIqw0PDjsESE59yV0j2TTHWaP8Z3zmBSudVIDTyGkcdMPTyWG
+	IQlGCxoI+f6VmofmGbCluWV1HhDu3O0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1794926839;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=7foWI0Aj9ppqfJdv5P7q2owDF56g/fZXgTipv1s+ze0=;
+	b=rrC8jDH1cGsozy0GGgcaR4ImIPrsiWoYM/SftoOvtvznfWEcisu4q54/fAVVAozWxl2fQz
+	1fGLgBnuXcdtQlBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C55AC1334C;
+	Tue, 17 Nov 2026 14:47:18 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 4zPzHfZo/Gq4TwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 17 Nov 2026 14:47:18 +0000
+Message-ID: <007f5717-148a-4c90-8352-1fe464bf77b6@suse.de>
+Date: Tue, 17 Nov 2026 15:47:18 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,170 +108,125 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261117130848.65142-1-laoar.shao@gmail.com> <sashiko-outbox-218879@kernel.org>
-In-Reply-To: <sashiko-outbox-218879@kernel.org>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Tue, 17 Nov 2026 22:26:28 +0800
-X-Gm-Features: AclHuK_7XQx9S0WE2CpZmD-evuYnumi4dxDiypwlbCMDCB8JZKCbklSyo6UFzBU
-Message-ID: <CALOAHbCL8oJpne15Y1-Meh2u-jnrMLEB=dDR=bNuJ0i29hBg5w@mail.gmail.com>
-Subject: Re: [PATCH] livepatch: Avoid blocking tasklist_lock too long
-To: sashiko-reviews@lists.linux.dev
-Cc: jpoimboe@kernel.org, mbenes@suse.cz, pmladek@suse.com, 
-	joe.lawrence@redhat.com, song@kernel.org, live-patching@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] fbcon: Clean up glyph handling on redraws
+To: deller@gmx.de, simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20261027133646.297856-1-tzimmermann@suse.de>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20261027133646.297856-1-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 192801F747
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-13.50 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	MX_GOOD(-0.01)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.com:url];
+	FREEMAIL_TO(0.00)[gmx.de,ffwll.ch];
+	MIME_TRACE(0.00)[0:+];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FREEMAIL_ENVRCPT(0.00)[gmx.de];
+	DKIM_TRACE(0.00)[suse.de:+];
+	RCPT_COUNT_FIVE(0.00)[5];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:url,suse.de:dkim]
+X-Spam-Score: -13.50
 
-On Tue, Nov 17, 2026 at 9:29=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] livepatch: race between klp_try_complete_transition() and
->   klp_copy_process()
-> --
->
-> commit ceb01fc48f77409ab4a5313629520f441760c90c
-> Author: Yafang Shao <laoar.shao@gmail.com>
->
-> livepatch: Avoid blocking tasklist_lock too long
->
-> This commit splits the task iteration in klp_try_complete_transition() in=
-to
-> a first pass under rcu_read_lock() and a second pass under tasklist_lock =
-to
-> reduce tasklist_lock hold times during livepatch transitions.
->
-> Link: https://github.com/redis/redis [0]
-> Link: https://lore.kernel.org/all/20250227024733.16989-1-laoar.shao@gmail=
-.com/ [1]
-> Link: https://lore.kernel.org/all/Z8CRXxfI24E9_IHC@pathway.suse.cz/ [2]
-> Link: https://lore.kernel.org/all/20250213013603.i6uxtjvc3qxlsqwc@jpoimbo=
-e/ [3]
->
-> > diff --git a/kernel/livepatch/transition.c b/kernel/livepatch/transitio=
-n.c
-> > index 2351a19ac2a9e..e058d21d84b75 100644
-> > --- a/kernel/livepatch/transition.c
-> > +++ b/kernel/livepatch/transition.c
-> > @@ -444,7 +444,27 @@ void klp_try_complete_transition(void)
-> >        *
-> >        * Usually this will transition most (or all) of the tasks on a s=
-ystem
-> >        * unless the patch includes changes to a very common function.
-> > +      *
-> > +      * To avoid holding the tasklist_lock for too long, we iterate ov=
-er the
-> > +      * tasks in two passes. In the first pass, we use the lightweight=
- RCU
-> > +      * read lock to iterate through most tasks. This pass will cover =
-the
-> > +      * majority of tasks, except for some newly forked tasks which ma=
-y be
-> > +      * added into the tasklist concurrently. In the second pass, we a=
-cquire
-> > +      * the tasklist_lock to handle the tasks missed in the first pass=
-.
-> >        */
-> > +
-> > +     /* First pass: Iterate over tasks using the lightweight RCU read =
-lock. */
-> > +     rcu_read_lock();
-> > +     for_each_process_thread(g, task) {
-> > +             /* klp_check_stack() requires preemption to be disabled *=
-/
-> > +             if (task =3D=3D current)
-> > +                     continue;
-> > +
-> > +             klp_try_switch_task(task);
-> > +     }
-> > +     rcu_read_unlock();
->
-> [Severity: Medium]
-> Can this RCU pass race with klp_copy_process() on CONFIG_PREEMPT_RT kerne=
-ls
-> and leave a newly forked child with TIF_PATCH_PENDING still set when the
-> transition completes?
->
-> klp_copy_process() relies on tasklist_lock to serialize against transitio=
-n
-> updates while copying TIF_PATCH_PENDING and patch_state from current to
-> child:
->
-> kernel/livepatch/transition.c:klp_copy_process() {
->         if (test_tsk_thread_flag(current, TIF_PATCH_PENDING))
->                 set_tsk_thread_flag(child, TIF_PATCH_PENDING);
->         else
->                 clear_tsk_thread_flag(child, TIF_PATCH_PENDING);
->
->         child->patch_state =3D current->patch_state;
-> }
->
-> On CONFIG_PREEMPT_RT, write_lock_irq(&tasklist_lock) in copy_process() is=
- a
-> preemptible rtmutex lock, and unwinders such as x86_64 ORC unwind reliabl=
-y
-> across in-kernel preemption frames:
->
-> CPU0 (parent in fork)             CPU1 (klp_try_complete_transition)
-> copy_process()
->   write_lock_irq(&tasklist_lock)
->   klp_copy_process(child)
->     set_tsk_thread_flag(child,
->       TIF_PATCH_PENDING)
->     <preempted>
->                                   /* First pass under rcu_read_lock() */
->                                   klp_try_switch_task(parent)
->                                     ...
->                                     clear_tsk_thread_flag(parent,
->                                       TIF_PATCH_PENDING)
->                                     parent->patch_state =3D klp_target_st=
-ate
->     child->patch_state =3D
->       current->patch_state
->   write_unlock_irq(&tasklist_lock)
->                                   /* Second pass under tasklist_lock */
->                                   klp_try_switch_task(child)
->                                     if (task->patch_state =3D=3D klp_targ=
-et_state)
->                                       return true;
->                                   klp_complete_transition()
->                                     WARN_ON_ONCE(test_tsk_thread_flag(chi=
-ld,
->                                       TIF_PATCH_PENDING))  <-- stale flag
->
-> Because child->patch_state already matches klp_target_state, the second p=
-ass
-> under tasklist_lock returns early in klp_try_switch_task() without cleari=
-ng
-> TIF_PATCH_PENDING on child.  klp_complete_transition() then triggers
-> WARN_ON_ONCE(test_tsk_thread_flag(task, TIF_PATCH_PENDING)) and leaves th=
-e
-> flag set on the child task.
+friendly ping for a review of this series
 
-Nice catch!
+Am 27.10.26 um 14:27 schrieb Thomas Zimmermann:
+> Fbcon's drawing functions open-code much of the glyph handling. Use
+> font helpers instead. Makes fbcon more consistent and easier to
+> understand.
+>
+> Patch 1 updates fbcon to use unsigned char for glyph buffers. This
+> is consistent with the font code and font_data_t.
+>
+> Patches 2 and 3 update font rotation to return rotated glyphs as
+> font_data_t. A rotated font can now use the same interfaces as the
+> unrotated source font. Fbcon uses this to ref count the font buffer.
+>
+> Patches 4 to 6 update various parts of fbcon to use font helpers
+> instead of open-coding access to font_data_t. Having the rotated
+> font as font_data_t makes this convenient.
+>
+> Tested with fbcon on DRM's bochs driver (qemu).
+>
+> Thomas Zimmermann (6):
+>    fbcon: Use unsigned char for glyph data
+>    lib/fonts: Provide internal helpers for allocating font_data_t
+>    lib/fonts, fbcon: Use font_data_t for rotated fonts
+>    fbcon: Refactor size calculation for cursor buffers
+>    fbcon: Look up glyphs using the font interface
+>    fbcon: Handle characters with no glyph defined in a consistent way
+>
+>   drivers/video/fbdev/core/bitblit.c      | 82 +++++++++++++++----------
+>   drivers/video/fbdev/core/fbcon.c        |  3 +-
+>   drivers/video/fbdev/core/fbcon.h        |  5 +-
+>   drivers/video/fbdev/core/fbcon_ccw.c    | 56 +++++++++++------
+>   drivers/video/fbdev/core/fbcon_cw.c     | 57 ++++++++++-------
+>   drivers/video/fbdev/core/fbcon_rotate.c | 19 +++---
+>   drivers/video/fbdev/core/fbcon_ud.c     | 77 +++++++++++++++--------
+>   include/linux/font.h                    |  5 +-
+>   lib/fonts/font.h                        | 12 ++++
+>   lib/fonts/font_rotate.c                 | 32 ++++------
+>   lib/fonts/fonts.c                       | 63 ++++++++++++-------
+>   11 files changed, 254 insertions(+), 157 deletions(-)
+>
 
-Perhaps it can be resolved by explicitly disabling the preemption?
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
 
-diff --git a/kernel/livepatch/transition.c b/kernel/livepatch/transition.c
-index e058d21d84b7..81c3afa69f03 100644
---- a/kernel/livepatch/transition.c
-+++ b/kernel/livepatch/transition.c
-@@ -706,12 +706,14 @@ void klp_copy_process(struct task_struct *child)
-         * klp_update_patch_state(current) and __klp_sched_try_switch(), bu=
-t we
-         * cannot race with them because we are current.
-         */
-+       preempt_disable();
-        if (test_tsk_thread_flag(current, TIF_PATCH_PENDING))
-                set_tsk_thread_flag(child, TIF_PATCH_PENDING);
-        else
-                clear_tsk_thread_flag(child, TIF_PATCH_PENDING);
 
-        child->patch_state =3D current->patch_state;
-+       preempt_enable();
- }
-
- /*
-
---=20
-Regards
-Yafang
