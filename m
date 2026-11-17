@@ -1,54 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794940986;
-	b=yClvbLVpa6S4N41gh5OkdsT9oCcHnfCnWwj/HxXnJ68xqIqmG4vxym1njI3AlHBwvA8j
-	 7i+gNPS2TgogrjwI80Uek8xmeucae5KUDuhB6ovJbmKinkF5numjVlWUiRl/afLJ0N7Ep
-	 DCSep3jYDrAQGoH4tjQ6+Iy0mHJkXNfgJSmW1FMqpecRj2JNRx29mDiAHmcv57kpVdHuS
-	 smXJgCgpkRfoV/mtzDfoq6Pz7ABFg6faI7WZVcUHYogAq48RIur1//QFpfueHxkMP0759
-	 w9P/F2WYOA0bSBYR3xXJC8GM3h1lo7spqAwA+cbMxNzP1FPeC4ng2WjdrjcMH8oTcJw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794940986;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=zIGvUewNsRTdPr0jJVgj2QAD5kTHSSw3BLau696dnAk=;
-	b=StQ7UgKwTl6BukuUz1zTQrMSMvv0TidVBR+v3Tm6S84WoXUDcxE/F04RUdelkqi2e66z
-	 BvK84vNEe55r3crwxeqjEqjHLoH7nh3w7exRYxVz7L5jwdnJPJRtF9Xkvl2L21JpoP/GZ
-	 /pXzkxjP41f+lEeFa6f4VnAHbrzEJvZKUsRQCid5CxKNNyAvVowLKpZYwzL5+r2lt7lT+
-	 VozF1XpiVaJAzhY1aD4JW5HwSM6xkanP/0gk1+rOtRvYbxD5pWEoWcjx7hrLayLVexkl9
-	 fUJR5ecb1jpSrfxBDK0zrTaOv/OHemm0Ag27hyTOeRg3z4Nv7+FD+1ZCfRj3QZ9kGfA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VF5p8wjL;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.163
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794941919;
+	b=nUCc22q6hT5ZAtmSJoLikEpgKeRo+juOfU1oF63SW9hVzLJeliAwpSnoqsZVaUaJD8C+
+	 irLBvoGqAaoOMEYzMzZXS6UFwxrzraqec+6T1R2ARcTE8qDH/aV+XnBcalQRiGQnZwlI2
+	 NcUmTATLhn5OL4jspFF6nlBos9tR3qjNK+6BK8r6NlCfyVOPGBwD1Cl6h6uCxO0HI7kIY
+	 PxEERF1u0QOdOt4EQHDLsJmr2lK7i8Rz5JTpRFHk7WbNro+qYbmI1XxVEkp4KrRuQVybF
+	 DJFwHxtzHnNfP1NwgzH7m5BN9l2YpqMyUd19EgKXt9p9+JDAbhYYEy4U7FgM9Pw5CFA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794941919;
+	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
+	b=iGh6wMw9ZMPDpBN4B7xiUXlJYS8uDVGIZajwHDHl7S80EvlX6Xvev5uBPhSr0vD+8Rh6
+	 +wlWHOM7neoI9JVNln5PJ4gaPP/re8e06V4GHXfdKllLnkQcK+KWBgrmujlCU4XSGngWf
+	 6VKcRw4rTCarM0oNdAukTHvCdDGzZYVZ4+O2cqC5Y+OO+aVURFnoelapOjOj/+/GekVqn
+	 3yzRUo/1Nvx0Fs+wXH3EQDaozQLsjugV6Hnyw2rpG+3KkR+r3VI8h5TSFqgPAHM2QhWRW
+	 2t7xvtNzwP2EX20l7ze3fTeCWlk5akHnTTENCMyXd9HvmF0K2qFMcFTb4I6wY8Y4IdA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=hartkopp.net;
+	spf=fail smtp.mailfrom=hartkopp.net;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=kZIbDAi7;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=9hVfWJym;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.163
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D7A606A32C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 18:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2E2606A31C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 18:58:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B2E2606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VF5p8wjL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B0D1F000C6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 18:43:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794940986;
-	bh=zIGvUewNsRTdPr0jJVgj2QAD5kTHSSw3BLau696dnAk=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=VF5p8wjL7PL/JS3vl0S7ntAp2WJXS4DVnjQ5iGeuX57IRLW55+VTHQY55gkOe5SAm
-	 Vz0cKilSlQso0Lq+HiOli9QrY95s7qLVoWbcKxuENjYaEN7K23po4hzbt8YRttHuci
-	 VqGmtFQoYKK3ttjNKS0I4+C48BR2tFozew4H1L5QEKwederraqvMsJCSpuWZDMRS2a
-	 j0Iuxf2uo/5tdXINbqXNYBR7MhMWE6IeitmKG3I+iy0AC2slw0m3DLZGf42Lfvfdou
-	 ILCuwm1g21kjhUKdEH1dpwxWNFgS20PvU6TgfCNQ6KGDqW7BYUwJ6Og11/dLRlfc5c
-	 PSLXVMJdlpCfw==
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3adfe77d336so2310271fa.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 10:43:06 -0800 (PST)
-X-Gm-Message-State: APuU4Z9HJ8vNlqvu4ZwvfWIobjexIRtOrWDY7GPdn1bXJ9Bf7LCpeIrn
-	FwNeOs3QaZV9oKb5h7nEYc5Ek6yZJcZjTfZpoh99cER2mEmrcBpuBh69KoutBvm9lhQy4/oJ7Fy
-	FV+epooPmnE8yX9c1IaLb6M6d4sCsM58=
-X-Received: by 2002:a05:6512:2c09:b0:5c1:5bca:d210 with SMTP id
- 2adb3069b0e04-5c1a9f2d252mr12434e87.55.1794940985373; Tue, 17 Nov 2026
- 10:43:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=kZIbDAi7;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=9hVfWJym
+ARC-Seal: i=1; a=rsa-sha256; t=1794941891; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=MOxCghFH8qbQ4Ggu3P2kBp+RlGP0b+ZKqvqyBJ7c4rWTsszDZa2JepTFIFxloqCgAG
+    SALuqZNfPXta1QS88Mj9Q/mVI4XtqQM0jzhFBvKil0YQVdVfCKy8bUwB7CSeVbWAlXwo
+    cxY1wfGv7CvrIVaFqHDWVyWBPj7jlgtf8ljvBXqrdURb71ji8TUrC3qpGbsbvK9t8qzN
+    DQ+FQ4j+nNIuMp1iCUU/38Xs1jMZc5E7WyXk72R9CkqLJfP+HH0x2yHjyWMzCmCExCnj
+    USogbxZjDyT9zIjPdq4+OUYW1bail3JES03oaIztvjHp7zXZWLiVjfadfJ25xqKPoLYp
+    sbvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794941891;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
+    b=eqTyl4aniA2+m0fjvrW/hBtdvRQEflZ6N5L29rci3BImBNNxaABjOgbW5jarhieZb4
+    aMNQIpm/LvkxRf7m4s3nC6Ifi809CvqGFLHVI/8oDorNsl8Qje3GLqn6RNe8Q/lK7/Rj
+    KO5gfw3NoEgGqA3A+byS3pKOmM8cVym8nPSqHopDioJgpR7w4lQC+f2r261i6jLA8qIM
+    ew919WKwl4WQO1flatD4zcwqmYeoA9t+OTvfjRI1B8nk/8yrx/fScswiDC3dUcIsrvL7
+    1sGbsHLRn6s1B6AToHgRPfJaivnBISrPF8KC4MFygU0hAJdwc9oxtbRunjSjwb+vxCpn
+    nfuQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794941891;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
+    b=kZIbDAi7KZurJ3JBA6lBe4HXtG5AX8Aw7shWqcl64A8ptRsflouc0AgC+OCO7VGVRU
+    NOvBPGGKf1nfpVUDJjao4zVI8AneRVZ3rDxHpcRPuZgNukYYCocSKnadJnw2sB6zqbpL
+    tMmaVJHWScBovzuEKUkdXCE0kdLDS2av6P69bhjOFG5qfXdiMuWYlNEcucSAJ3FlBdQU
+    5/HDMs778/ANLg6iC+11u3FOGnBHl4fCG1imcpqqgNacI3byuliVJjxRylQOQ9gff9BK
+    J6aE8TlqWUNb3PBEa2EEt3mhn6m+8ldyD8n4W2DIXo4Nn7bCwCN5ogvl7AKYwrpVdcL+
+    XQOg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794941891;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
+    b=9hVfWJymeNMf73BAouQcc9bPnylxWn2auOuVeotWD0gKRFvNegei10plaFpuM2w36y
+    3BaGckiQ3WuYkWkP6CBQ==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.3 AUTH)
+    with ESMTPSA id Kfdf2a2AHIwAqxa
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 17 Nov 2026 19:58:10 +0100 (CET)
+Message-ID: <ae174988-93be-453b-a790-6f175f96ae1c@hartkopp.net>
+Date: Tue, 17 Nov 2026 19:58:05 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,30 +95,155 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261116-ux500-powerdomain-dts-v1-0-e0f4459c3ab1@kernel.org>
- <20261116-ux500-powerdomain-dts-v1-3-e0f4459c3ab1@kernel.org> <sashiko-outbox-216743@kernel.org>
-In-Reply-To: <sashiko-outbox-216743@kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Tue, 17 Nov 2026 19:42:52 +0100
-X-Gmail-Original-Message-ID: <CAD++jLkzqVLBa5fe3VvEpgnD6=x+uR3vxX_6sNkz5sCm5UcN+g@mail.gmail.com>
-X-Gm-Features: Aa3M54qKG1kvBA8YkzUjaHtAa5J5mSXGR9jjOgrpWVnYUeSb7Ffo_T-ts2cv138
-Message-ID: <CAD++jLkzqVLBa5fe3VvEpgnD6=x+uR3vxX_6sNkz5sCm5UcN+g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] ARM: dts: ux500: Remove DB8500 EPOD regulators
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 7/8] can: isotp: reject socket options while a transfer
+ is active
+To: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
+References: <20261117-can-bcmlock-memcg-v6-0-6826a6227d36@hartkopp.net>
+ <20261117-can-bcmlock-memcg-v6-7-6826a6227d36@hartkopp.net>
+ <sashiko-outbox-219222@kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <sashiko-outbox-219222@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 16, 2026 at 11:31=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-> [Severity: Low]
-> Does dropping v-ape-supply from msp0 through msp3 break dtbs_check agains=
-t
-> Documentation/devicetree/bindings/sound/stericsson,ux500-msp-i2s.yaml?
-> That schema still lists v-ape-supply under required and sets
-> unevaluatedProperties: false without documenting power-domains.
 
-Patch for this has been sent in parallel.
+On 17.11.26 18:17, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] can: isotp: race in isotp_setsockopt_locked() while rx.state
+>    is ISOTP_IDLE
+> --
+> 
+> commit 2bbcd6c26df0af71086da24b238251d946bf05f7
+> Author: Oliver Hartkopp <socketcan@hartkopp.net>
+> 
+> can: isotp: reject socket options while a transfer is active
+> 
+> This commit rejects changing CAN_ISOTP socket options in
+> isotp_setsockopt_locked() when so->tx.state or so->rx.state is not
+> ISOTP_IDLE.
+> 
+>> diff --git a/net/can/isotp.c b/net/can/isotp.c
+>> index 0293d590186c4..32c88749d75e7 100644
+>> --- a/net/can/isotp.c
+>> +++ b/net/can/isotp.c
+>> @@ -1725,6 +1725,14 @@ static int isotp_setsockopt_locked(struct socket *sock, int optname,
+>>   	if (so->bound)
+>>   		return -EISCONN;
+>>   
+>> +	/* A transmission or reception that outlived a previous binding
+>> +	 * (unbound by NETDEV_UNREGISTER) may still be draining and uses the
+>> +	 * socket options, see isotp_bind().
+>> +	 */
+>> +	if (READ_ONCE(so->tx.state) != ISOTP_IDLE ||
+>> +	    READ_ONCE(so->rx.state) != ISOTP_IDLE)
+>> +		return -EAGAIN;
+> 
+> [Severity: Medium]
+> Can isotp_setsockopt_locked() still race with an in-flight isotp_rcv()
+> handler while so->rx.state is ISOTP_IDLE?
+> 
+> isotp_notify() clears so->bound on NETDEV_UNREGISTER without waiting for
+> an RCU grace period or acquiring so->rx_lock.  Meanwhile, isotp_rcv_ff()
+> resets so->rx.state to ISOTP_IDLE before sending an overflow Flow Control
+> frame or transitioning to ISOTP_WAIT_DATA, and isotp_rcv_cf() sets
+> so->rx.state to ISOTP_IDLE before checking padding options.  Because
+> isotp_setsockopt_locked() and isotp_bind() check so->rx.state without
+> holding so->rx_lock, a concurrent setsockopt() can still modify so->ll.mtu
+> between alloc_skb() and skb_put_zero() in isotp_send_fc():
+> 
+> CPU0 (<softirq>)                  CPU1
+> isotp_rcv()
+>    spin_lock(&so->rx_lock)
+>    isotp_rcv_ff()
+>      WRITE_ONCE(so->rx.state, ISOTP_IDLE)
+>                                    isotp_notify(NETDEV_UNREGISTER)
+>                                      so->bound = 0
+>      isotp_send_fc(..., ISOTP_FC_OVFLW)
+>        alloc_skb(so->ll.mtu, ...)
+>        /* allocated with CAN_MTU (16) */
+>                                    isotp_setsockopt_locked(CAN_ISOTP_LL_OPTS)
+>                                      /* rx.state is ISOTP_IDLE */
+>                                      so->ll.mtu = CANFD_MTU (72)
+>                                    isotp_bind()
+>                                      so->ifindex = ...
+>        dev = dev_get_by_index(...)
+>        skb_put_zero(nskb, so->ll.mtu)
+>          <-- skb_over_panic (72 > 16)
+Nope.
 
-Yours,
-Linus Walleij
+The normal sequence for a CAN_ISOTP socket is setsockopt() -> bind() ->
+release(). Only an attacker would change the socket options while the
+bound CAN device vanishes. The attacker needs CAP_NET_ADMIN for the CAN
+device, e.g. a vcan device in an own user and network namespace.
+
+What the attacker gets at most, for the four (in-flight) frame types:
+
+- Single Frame: the PDU is delivered to the own socket or dropped with
+   EBADMSG, depending on partly updated padding options.
+
+- Consecutive Frame: only handled in ISOTP_WAIT_DATA state, where
+   setsockopt() is rejected with -EAGAIN. No mixed socket options.
+
+- Flow Control: only handled while a transmission waits for it, where
+   setsockopt() is rejected with -EAGAIN. No mixed socket options.
+
+- First Frame: the rx state goes to ISOTP_WAIT_DATA and the rx timeout
+   resets it with ETIMEDOUT after one second. The flow control frame is
+   not sent as so->ifindex is 0. Only with a concurrent bind() to another
+   device a single flow control frame with partly updated options is sent
+   on this device. With an increased max_pdu_size the rx buffer may be
+   allocated, which is freed on close().
+
+On unregistration the netdev core runs flush_all_backlogs() and
+synchronize_net() before calling the NETDEV_UNREGISTER notifiers, so an
+isotp_rcv() call can only be in flight for a frame from the backlog on a
+namespace change. In the First Frame case the following sequence can
+then happen:
+
+CPU0 (softirq)                      CPU1 (attacker)
+isotp_rcv()                         ip link set vcanX netns ...
+   (frame from the backlog)            NETDEV_UNREGISTER
+   spin_lock(&so->rx_lock)               isotp_notify()
+   isotp_rcv_ff()                          so->bound = 0, so->ifindex = 0
+     rx.state = ISOTP_IDLE           setsockopt(CAN_ISOTP_LL_OPTS)
+                                       rx/tx state is ISOTP_IDLE
+                                       so->ll is updated
+                                     [optional] bind() to another device
+                                       so->ifindex = new device
+     isotp_send_fc()
+       alloc_skb(old so->ll.mtu)
+       dev_get_by_index(so->ifindex)
+         ifindex 0: free skb, return
+         new device: skb_put_zero(new so->ll.mtu)
+                     send the FC frame
+
+CAN_MTU is 16 bytes and CANFD_MTU is 72 bytes. The skb_put_zero() with a
+bigger new MTU does not overflow the skb, as alloc_skb() does not limit
+skb->end to the requested size: for the GFP flags used in
+isotp_send_fc() small skb heads are taken from the skb_small_head_cache,
+which provides at least MAX_TCP_HEADER bytes. MAX_TCP_HEADER is
+L1_CACHE_ALIGN(128 + MAX_HEADER), which is at least 160 bytes in every
+configuration. __finalize_skb_around() sets skb->end to the size that
+has really been allocated, so a skb that has been allocated for CAN_MTU
+also has room for CANFD_MTU.
+
+There is no memory corruption, no persistent state and no effect on
+other sockets or on RTNL. Everything stays on the attacker's own socket
+and CAN device.
+
+TL;DR The worst case is a single flow control frame on the newly bound
+CAN device that is built with partly updated socket options. There is
+no memory corruption and the rx timeout resets the rx state afterwards.
+I do not see a reason to add more locking to the reception path for
+this attacker-only scenario.
+
+Best regards,
+Oliver
+
