@@ -1,75 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794924503;
-	b=EWa7BC+bZCdwG4ZdR18sIkCE/maVghXxar4WgCnbmbA9qh7aH9GaVNh945mNAKLw8vzP
-	 gUmQkFduT0CB6TUCFT5sDe3zT2qOZ1X7PJPtG1xMwOlkuRpONOZLu2AbI2xBF2Qj2uj0S
-	 UF6BGGnzCdT9EGRqEFU+5TYP/62nXvn9QptYZHBN+ME/zD8QDT+jyac1WKYA0zHaZQEqJ
-	 UNcycGmovdFrcfB7uoejkeB431l7EZHrg4J8U97gKmwG1WH4+/ke37Qj7RBmkBchNCaP4
-	 ugMMtRXTeVUULlp9gfPA3+M29kV7ZChESZrgVbBYfRdEBUFSyYz6e2o9Tj96jkgfbEg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794924503;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
-	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Last-TLS-Session-Version;
-	bh=NC6ZdVr8PNnbXOJqM4/9u9Fx5qy89lUhN3gY95QsORE=;
-	b=1G8fX4rymppzsjZHtDPfEOV9Mff2F8E2EKfhiF63dMRZGaRoRTWr38XTjKGAXqIasuGo
-	 7YH/mb2QQGK8QEdSAbR02d04PUr0OYiOycKkRurWYNpQGxgCoQ56I55KYvcFnGV1mrysO
-	 wLjyVBKp/kOUMZEyDcc3Pd2i2VrcZnlBBMKDM2EOQtr8sn2gJO1LYrb/nTiOWzGah/dwj
-	 Hk9UovAZkuWQ0cAzYOKi/R6irqIpYZMpylbsn6IZyoZAdCkzY8NLGXpT/yY9iOe8xEaqH
-	 KS7tH4MZ1Kw7hx2dzjlFs/E46X1Q0uu9VcK9WCwXrXs4jjeVJ/aj2pXrqDOw1xnJnng==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=np0ax1GY;
-	arc=none smtp.remote-ip=185.171.202.116
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.139
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794924893;
+	b=GJ24DXvERjdzzPFJgpTHajghE+FPK9gWdyewTzkf6HtfGr4WZNjvkSABt1ryhDU0fGQM
+	 TVVX9ozR63dBeL89pj+XF5JmJBRd94HODO1bqqdqbH/itJWFgAjeR2OoGSF9pzM0UahAH
+	 dLFIMfaTtq5m+FW8NCTtO8PwJ5C4J2XBzdHxWKdQOPJ8aekysHkqp9Mld/d0yu/3Z0mzw
+	 PoQj38d/bk7hIZR4YHgZI3KXTgUyuc/FsHGW0ydqvIkY32PGv7D+Bs9SYumJKoGU8oQD0
+	 I72p2eVobD08LWBP4/R1Lz7o6zWl4NJ589Z/Fl8zYaIhAHfjKBzvs4U6E9lxX0ollNA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794924893;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=coCo/Ks2kyomQqsIYg3JBdDbAix8IQoBtR/0WzCHQII=;
+	b=q9e+HINXRy61NV1X7X7z063XjfFKWoR7pLtuPT/gJSGVgZuib7k6T4wqqr1G58uIVOO6
+	 QZGOKZXSFOuDPPjwV0RtwXmYNNvYdsP2cxjSMPHZ6ARP/qR4Xf2g7Gh3u6cuU3OM3rSbJ
+	 BCKFFZHQGj1XcoymEvgVnLFmGEQTITfZFY+NJLcIVlxgfFsMcCR+SF3CWfLSRwkomJN/F
+	 lH5yyEL9+uzLJUOqyUZ/pj8MPPQwOHHqSFSsztQm6Jv5q3t/qGolJlh7MNO+T/sNmx6Oz
+	 qkyqq7u6AVQiIsGK14Pevwj6nsO6Z0xWd+JeFkd/wndxDZ3P+76Uxdm/EaLfKMwIf5w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=eBMvu6UR;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.139
+Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022139.outbound.protection.outlook.com [40.107.193.139])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC34606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 14:08:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFC34606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12988606BD9E;
+	Tue, 17 Nov 2026 14:14:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12988606BD9E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=np0ax1GY
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id C7183C79A9B;
-	Tue, 17 Nov 2026 14:08:25 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 5A88A5FC81;
-	Tue, 17 Nov 2026 14:08:21 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8A87611BC0024;
-	Tue, 17 Nov 2026 15:08:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1794924500; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=NC6ZdVr8PNnbXOJqM4/9u9Fx5qy89lUhN3gY95QsORE=;
-	b=np0ax1GYh8y8hX/axL4c6tX2KdsQYngA5vekITEeamJXrmg5sltJaPe9OWZkkhSkftPAXY
-	VtQFeF6swqfLZqxWNM+Um1JQfbVJkKfFRXE/ufXEel2BgG/BajJX6tYxs4pbKCMIZRKAkS
-	FdJ7tkG1tisvq2hfLpRNzJoOA6GBWwpjWkg1SryPcAKIKiZYgV5gRlW1jS9l3U5430sTvN
-	R5cH+0+dbJ43DMk+lJHGWxk+k3e0lmMF3JhPz12q+FFy0Vm1vyenAKYQeggt4VZGojRn5D
-	+c9Kseq0X3nA2m7F5EBf9DSQ+SSSBv4v+ei6j/bva7J92BEx7fGiBpHXb2uubA==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: "Samarth Narang" <samarth.colleges@gmail.com>,  "Vignesh Raghavendra"
- <vigneshr@ti.com>,  "Han Xu" <han.xu@nxp.com>,  "Manivannan Sadhasivam"
- <mani@kernel.org>,  "Maxime Coquelin" <mcoquelin.stm32@gmail.com>,
-  "Alexandre Torgue" <alexandre.torgue@foss.st.com>,
-  sashiko-reviews@lists.linux.dev,  "Richard Weinberger" <richard@nod.at>,
-  linux-mtd@lists.infradead.org,  imx@lists.linux.dev,
-  linux-stm32@st-md-mailman.stormreply.com,  Frank.Li@kernel.org
-Subject: Re: [PATCH v2 5/6] mtd: rawnand: marvell: stop DMA before unmapping
- on timeout
-In-Reply-To: <sashiko-outbox-191272@kernel.org> (sashiko-bot@kernel.org's
-	message of "Fri, 30 Oct 2026 16:38:42 +0000")
-References: <20261030162041.2998170-1-samarth.colleges@gmail.com>
-	<20261030162041.2998170-6-samarth.colleges@gmail.com>
-	<sashiko-outbox-191272@kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Tue, 17 Nov 2026 15:08:15 +0100
-Message-ID: <87h5hflfe8.fsf@bootlin.com>
+	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=eBMvu6UR
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ook/sq9owU5Bw6MkC9n5hMtEhVfz/eutDRm1DR0yF0JSu/+4SyJL23g2nyA/GyGHlqkOclvs4zKB2acahCKzU//5XHam2r/37e9Es15HpScR9cVP9vgihQs55aDv5voWxW8KKjkMlfL0ME0qrGHHtbmzzCqL7VbBWDsNjJLyL9lnodwVtjviekTpmxumzCSY0F8HV3b754eVK9ivs3U7u74/k8f/p0O8zOg5/oNA6IRHVOMLhV0qPUMASqYnQ/85+MUcy3Zu17grJrC8ptaqmtQNPqtRkKb8lZTJuIZtiYe1xoXHcWxFamssqayPc8nmlWmRPKXQDFdRN3Gxa/4OtA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=coCo/Ks2kyomQqsIYg3JBdDbAix8IQoBtR/0WzCHQII=;
+ b=L2ErK+28CXPd1GB/biwM+lSHLNdAAg5se7dzWUo2/7ML93BughHp9Q7gUCucvXgo3GpsYkTwcnLDNEZhGrg7p5Xda5f8XG1XRsl3KokYjmt7Rfzu5hzqEgYtVo9St/hDX2ofZZWr6n7jnS3udF4SUU3vmObJcCN8+DfAqRIWRZj2VjRBF0rvwCi3UZ3bVU93JljqL0cWfqaAKKketYHjSsVHFUiL2z5OmQS2EUl9FadksxUoQjjM3Zv6P2SMnrlExwyZP3wg+MQrQOm0qui+mhfgoqDWutZzp5+xYPVUHnQctJfMSs7R0XwER3NZpvj22pnXogXPymOzUkxNBthjag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
+ dkim=pass header.d=efficios.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=coCo/Ks2kyomQqsIYg3JBdDbAix8IQoBtR/0WzCHQII=;
+ b=eBMvu6URcuqordMVl3XtEsa4DOo1+vHC5EQ9IpZ4yaIp5iGbHVi/wJ7DsghNUR/SEKGz9yL0DUMZOki5SjzAylUjIBtT0OU6GBChVn6UvtW0/07wJ6Asq0C9wbg3SC43/TIIMT6EE2mQEvjICMim0qKT/79oVek/U7YMwccXT9bfm9zkCCnpq5oKqf/zEdxNvOEvvq0MsX/bdKpvLc8Ffzr3OIMEaNqbHOcHBN9+YMl1CNeFttL2D/gX5LpklTYd2ERZyufqPTQ872Y0FDY8xl7GYqjjjM14FQoaBfMwwEXEYzS8svHk+Nggt+PmTdMA+sFX4AJDu9XMmVRHXfK+bQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=efficios.com;
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10) by YT2PR01MB9777.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:de::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
+ 2026 14:14:49 +0000
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
+ 14:14:49 +0000
+Message-ID: <b975f96b-4811-4033-ab73-e819de1f4f7e@efficios.com>
+Date: Tue, 17 Nov 2026 09:14:47 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 05/37] sched/deadline: Refuse dl_server debugfs writes
+ while the rq is offline
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rt-devel@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org,
+ mkoutny@suse.com, linux-kernel@vger.kernel.org
+References: <20261116190549.230119-1-mathieu.desnoyers@efficios.com>
+ <20261116190549.230119-6-mathieu.desnoyers@efficios.com>
+ <sashiko-outbox-217565@kernel.org>
+Content-Language: en-US
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+In-Reply-To: <sashiko-outbox-217565@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YQZPR01CA0001.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:85::24) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,18 +100,101 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT2PR01MB9777:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9630c287-730e-403e-5081-08df44b523b0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|18002099003|22082099003|56012099006|4143699003|261028144727099003|10067099003|261026140227099003|261026121527099003|261022075727099003|261022105027099003;
+X-Microsoft-Antispam-Message-Info:
+	c16oloGhMYoQ3mWQWoFjawFbABRMBiwddZ924PgyAQqowylaK0m+rmb/xjErZyiFq+XjTJY06YN+gcR1kiEjYIQ4hTJu6frZMrxD0juyw+l/PepXy5zYAtg/cxqaE9O3eTOGbOFwJpgnsk3ONcXAtlyFb2ssP1NKOkCC6r7LpyY/VJZ3KYO+9WhsMhjEeN5NU8xbtw1jP0PIOYnpaSsYe/jXR2tvewl+hscsnkjgdQXUY/rx+lp5bLyATNEh8eL8ZQHakB1HKpbj4Ft6VxUpojZUsAyKurKqOdZrWj5qASIMgzYt2xXhIpJYW7CEgxzRVrDMaOquZf0yP+cz8LQC8jlLDmR7e3RH/XC69te8VgJ/+u/37ynCzNjKu9TWUvOXm68y4iuLYFF2pI0u/EjmfMalRgLUYf/tVKyRhKnSAMssxAvcNb932XawrPJUJatsUUxgQFTFBO1355gvfsVaQGx1sDBgfPtPrPsj2gBW6xF0eu7EsoraT6WvaCaIutx6ULASowTW8DYtu8uWE3WLlk6PMB7HdZKPpvqu8thGRLQALm4LVBFjL9kmMerLs4LuK8UraSkYxhtQpszKNQcoJgUsFOymi0+ITq9o+ZYVMJM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(18002099003)(22082099003)(56012099006)(4143699003)(261028144727099003)(10067099003)(261026140227099003)(261026121527099003)(261022075727099003)(261022105027099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Q1ZuK3VPaEFmMDhGRkNrMkpHVFovUlFiS2N4NUJPdTlyNkxWM0dLanhoZjhy?=
+ =?utf-8?B?NC9uYVJGdjgzUlViYXRkTktZcUJVT20yNFNPSGxHUUxHV1Z1d1RraTdFRks5?=
+ =?utf-8?B?bFFBZHlrSUZyYWpJVjhzQzQ1dVh1bWpUSGt2Z2tQOEdndURxZE5GU25Mem01?=
+ =?utf-8?B?ZmUxWFNnUU50aEt1b0oyL3d0ZXkzV0tScnZ0Z2pwUk9idnFSQzZ4eVdwTnVr?=
+ =?utf-8?B?elN1NmZmWXNFZ2IwZXhUWWhENG5jTEZBTEd2WlRkRERPN0FBSXA4amtyQUlN?=
+ =?utf-8?B?VUNkQVpXUzBPSFZhY05wWDNqc0l1M2ZwNUo5eEMxU3YvYlFzUFNlbnJJR0Vl?=
+ =?utf-8?B?cGhqSk9MNGZ4UmQrbGRYN1BudUJrTk40VUFYNXhqN3RlZlB6WW90azBPUVFI?=
+ =?utf-8?B?eDlLY2V4WjZJUUwvRU9ERGtlMk5uZEhQUzNBMlJlaGpwRVpINkFLcTdYcGZ3?=
+ =?utf-8?B?czVmLzcvc1UrbDdSSlRXY3FUekl0bnZjWTBJejFsMFhhWnQ5T05pbFJzSW5r?=
+ =?utf-8?B?MDFMSUZOdlRTYTBmQzNwZ0xMNThpZ2MrY1V6RVJjek9ycUxvVXluWHZ0Y1F6?=
+ =?utf-8?B?NXk2dWVCZnpOTVFzN2R0YXp4TVI3SnVSN2haTVdoYVJscjNVaUVoZ2dPdHVn?=
+ =?utf-8?B?VXFFWGRYRk5IVFAzd0Nzc1dQWnRSY1lEYmhuaWZmZzlXblZXd2VQREhnYzJ6?=
+ =?utf-8?B?ZEUrTWN3TDZhODUydkVIdUN3ZlJJcFdlRkoyZnpDWHhNSWJrdis2QWFpUEgy?=
+ =?utf-8?B?Y2xmR2p2ZDdQZnM5M05hd2s4YkU3VFBHbUdkbmlOOGR4eUloak1LMEx5M3Vs?=
+ =?utf-8?B?NUx1R3RvK2VVZUM4VXMwMXVUYnV4QlA2QjN6emhGWFVkbG9MY0ZucVgvK3Ir?=
+ =?utf-8?B?U3dJTkRhMDdjNkdieEtTVkJXRExaWEp0S0lmOCsvWFJabXFWSWZFb3l1K1lS?=
+ =?utf-8?B?L1NRcm1WdTRjSDVRSFpqczdYTjY3TVMrK2V0Unl4azZaM3F6dm1IRkJTY0FJ?=
+ =?utf-8?B?VGhLa05TL0phaVFxbklrU21uTDQrVHppdkU1QVhsMWNtR0F2dlBmb3R6TTlK?=
+ =?utf-8?B?dXJJUExSSVdqaDcvR3JEaUFOSXBNUUx4MGV3VTZyRmo3UkV2RmhJZmNnUld1?=
+ =?utf-8?B?c0l0RDg1YVFYbVdUUU1QTVFSaUErV09pc2JjcCtyb1haZmZtQm82WUdacmZO?=
+ =?utf-8?B?VTZ3T2lxL2grM2JIa1EzNjRidUo0bExhRjc0WE9WWWVTRGVKZTRNc1J1b2d2?=
+ =?utf-8?B?QlV0Tk5lQkpudlpHMDdtNlRpbDR2Y0ZuU2dsMVZubmN6ZnY5bUR6Nkx5MFRT?=
+ =?utf-8?B?Rml6OFRaN29LK25QbFo0RGRJUjlETGYwNFZVV3FHWU5tSzhMVzZWOU11b21N?=
+ =?utf-8?B?c0VCL2pnTFZTUEJqNjVzWXB0NmhhVEs2V2RZY1ZYcHFHQU16RVNTWC9hcXB5?=
+ =?utf-8?B?ZEhsU0VTdEY0UzJDOHRhb3ZEOWtQMG8zVFNLTFRHY0Rkd2RkNDFveHlJV3dK?=
+ =?utf-8?B?dHV2WFl0WUl2OU5DQzJXT09PWG9ZRHhpN2ExOEtwOHBtTkhnbnB2UW5DQzZ6?=
+ =?utf-8?B?U2FPSWlmZ2ZyNjAyN3hqT1pYeHpsV1FvR0dpNVcyWG5wRDdhMWgzYjlYbkIx?=
+ =?utf-8?B?SmRqaGNGcmhRblFnVXdRUU1kR1hIa3hDVXhRTnVrMitNNElxRC9DLzFtd2pa?=
+ =?utf-8?B?Mk03RE9LZHdualovbnpobE84VXN1TTBycHVyajVwSUc1bXMyek4vVlV4WVFq?=
+ =?utf-8?B?Q3VCNG1wazZHVi9FZ0lQWU41a1lpaXVFWEVpcG5lNkhBOGRpaWMwQlJETDU1?=
+ =?utf-8?B?Q0xqdDFTUHN4QllNZHdZZDVsZnZNYmE1c29CcEVJck5QYzdYb0RlRnF5eGkr?=
+ =?utf-8?B?OVZ6M1ZuLzRSYW5hOVhrNThZRHErOEpLdU80b1d0YytkR0FhRVVRUGZZOWRy?=
+ =?utf-8?B?ZHYwRXpRN2U3UHpVUy9lTE5MeTZlZGppSnJpbkQ4QlRkejUrd2tXOEd4WU5D?=
+ =?utf-8?B?VkdGOXVKZmZJZk5IT3NDQ0N6WWdwZHBqM056cXJFakFYRjQ2RUpWdTdqeUNs?=
+ =?utf-8?B?UytYZlh0UjJ3bVdHWW1GOTJSMnp5MzBDNmhXWXkyQ2dzazNwV0lnZUpqUlQz?=
+ =?utf-8?B?V2ZkYi90dUM5THlWYXRMNC9Nbm54QWpHYVhxaWxZT252aS96UlhoOERtS3A3?=
+ =?utf-8?B?SHU4UmY2OXdZR0dkTXpHUmdXZ2Y2d0Fzb2txclFDYVlDc1NuMHpsdGxuQXFV?=
+ =?utf-8?B?cmtQYkRJUU5Ma3BUOUlCZnMyOHdKajhObFNJYzlzWmd5NzFZcElRSkt5Q2lW?=
+ =?utf-8?B?ekdMenZWRVhRSngvc3lBc2ZmME9VbmJVZ0xnSTNPbzlweHJ0YUdtUVZaNGkv?=
+ =?utf-8?Q?c9SsRQh9SjwEerks=3D?=
+X-OriginatorOrg: efficios.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9630c287-730e-403e-5081-08df44b523b0
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 14:14:48.9425
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bW5mZZ0E/3+dhH3pcL46uawBGt8Qni92SFEs07X5PgnsN0SLQHii5bYL3J/Ke+DttO6j/tRuwWOBdW4xPafZg9jfPy/ne6HyO4TQedndv5E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT2PR01MB9777
 
-On 30/10/2026 at 16:38:42 GMT, sashiko-bot@kernel.org wrote:
+> Can a debugfs write still slip through during sched_cpu_deactivate() after
+> cpu_active(cpu) is cleared?
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] mtd: rawnand: marvell: sleep in atomic context in
-> marvell_nfc_xfer_data_dma()
+Yes, it can pass in that window. It leaves no wrong state, though.
 
-I'll be taking the other patches, please fix this one!
+> if other active CPUs remain, __dl_overflow() checks N servers against
+> N - 1 CPUs' capacity and __dl_sub() / __dl_add() miscalculate extra_bw
+> across N - 1 CPUs.
+
+The test against the N - 1 CPUs that remain is the safe side.
+dl_bw_deactivate() just made the same test. __dl_update() spreads
+extra_bw over the active CPUs only, so the divisor matches the CPUs it
+updates. With no active CPU left, any bandwidth above 0 is refused.
+
+The rebuild at the end of sched_cpu_deactivate() then resets total_bw
+and extra_bw. So the write lasts until the end of the same call.
+
+> dl_server_start() also re-enqueues the server on the
+> deactivating runqueue after balance_push_set(cpu, true).
+
+The rq is still online there. Any fair enqueue on that CPU starts the
+server in the same window.
+
+So the planned next version keeps the rq->online test as it is.
 
 Thanks,
-Miqu=C3=A8l
+
+Mathieu
+
+-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
