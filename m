@@ -1,81 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794951171;
-	b=cQ1gWn2/ezZdEZ73GQtgrpaSObQ0xtlyGP3YWqe6tGpI7y8X8eXF889w+Kh8bVISNwZm
-	 m10zrJQR9HNNavzhIDCdca8KbiFFLzD6pGxZsX2Z40wULEt/UVX/iSaHjJn55LRRQs5YB
-	 jj0z0PK7cRJuUTJc88D/eHoMcaf9TkXCjEbjuejwJ6PsadK1dNXuzuvYzcX7Ft9Hze8I5
-	 97zI73Hnpn53JCpg3AvxbLw7J1gwt4FubJbeaJocK7WNZrO5gFqOIT/CKLYqikNUzEGVF
-	 ZeaJzccdh/RUz0fhkGDlXrphxrVPFE5r91VdnkbyoPY4LW+3pyCvXFxO6YdB7+I7cvQ==
+	t=1794951682;
+	b=MnlSFnEWQGN5Ba63XrO8sd2JZ3w4hC1HXfE3ku07G3vKSXLn9MY6hasicj112a9xdd17
+	 6jtrUyjRZYI11AyPK/l75biEQaFymQOfn8tFCbKYrW1b+N43izS4WJQv13rxoH4vPxz3Y
+	 +SlXE4R3qv1CezOP8lucYGW9OARudA7jUlwB2eMVmxuCYx20TGsaifY0/5oxg0Onme79F
+	 /4XS3IwdMRaixhaWjDZyuBnsddInBO9oA3ISOBvMAdjOi4jX3seVJiZevOHDy44vz2rMz
+	 VNFLlNTXRRJ3jUXzE+Le9/Ie7GGUiayQ7IO/rY6SSSkH1YJ3BkrAVwENXCoTUIOmbjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794951171;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:
-	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=XmbKYn7cYCFiHw5XW9TnoudqhK+6mhBs2DWToyv4xPw=;
-	b=nnMS8aS/qVmiQvqKRNi7awK67wpgDDE5W3x4OvhpOhvJ58pptvcGh/JNY8jp5IgvBST6
-	 xUWhoakmQpDXj+kMMryqqsTi0uYnLjw7YBhLdyNvULVsdYaudzZrOU+KUOAZP2DIrWCZc
-	 9m8hdUKEmZUDL/+dct44d5TiWlUHMzl52vwvtySviaO+6mE6sXJUW9lMNstm/K4go9gDk
-	 uamMbTQWiydfo5h1A59B1c3SZp01tIO2Hi2IUSIDV1y4ZkDEVt7qfkjBY9eikTRT2RK3U
-	 tOOiWcnPTgyFLtCcdZY7ckuA++64HFTyOyebRbB5AN4HkqDe6G7Mzzbq42yQKdOzJNw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794951682;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=/GHQAMyTcVgW7kfw1l2Fy10gQWmLXDGkkGBuXSUeJAo=;
+	b=12WOGONH+dmZIwBhlMoiZGfh3tjCtZLT8QquzZrZ81y5TdITfzhdEbS4eEcwbNMJqzEK
+	 zsIW/CVI4NteI8zm9tqmUfguCvou8iz19tqX1aPF4l4Lq/pR5opI6mDOYfPv0gu5Ud4b1
+	 bbJK2pYT5TZqe7pkspDM3bop4eBd5rFrFQnboyMv8TGf5Vq+TXphGNHXql6iG7BGs+tyG
+	 8z5Myc6nb7s0tQAfCQ51hI/Oprlpd+LKri/iAKWWeKq7EO4mIg5xkeJAAHj1fEY0XCWGJ
+	 /V0/4ZMDsBBVFI3jXKUDUc9H85Pm/fXgAXYDgBarlF5pIsFmBWP++bx749HTjdJL7Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FfKpy+hy;
-	arc=none smtp.remote-ip=148.163.158.5
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=chromium.org;
+	spf=pass smtp.mailfrom=chromium.org;
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=bbVvYL3v;
+	arc=none smtp.remote-ip=74.125.82.177
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D100C606A31C;
-	Tue, 17 Nov 2026 21:32:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D100C606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769CF606A31C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 21:41:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 769CF606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FfKpy+hy
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AHJQBXY2022312;
-	Tue, 17 Nov 2026 21:32:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=XmbKYn
-	7cYCFiHw5XW9TnoudqhK+6mhBs2DWToyv4xPw=; b=FfKpy+hyv2Scn+BZMTFtfC
-	blRPWqUlawkVCYmxXHyJahNHRr+0vQgqfRQTASmRxdtmFf48RUv6cw9UvbJu8Bkk
-	sMKTQc1u011G2UwZEs9FILcXizQoIrlBXKSrc0jsniTRq/iNVsU7WywBH9+RjZEF
-	nDSQO3NGevNVRkCoX2YlRAExLr+y5ov/yFxIFFr+l9XTgv9wsCiRcNiLlG1POQYf
-	ulZZ3RLPi4imy1IdZpI32iC1YJ8Pys37dtYFBs5lFWEaHuusp158LgFt1JSoBEjS
-	YynWy7bftxGZHA3yGX6PX6ewnw0AylpTP4kjRefDz5E1/swbI2qWt7VBQX36e6wQ
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hxe2dcut8-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 17 Nov 2026 21:32:49 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AHJ6da02283202;
-	Tue, 17 Nov 2026 21:32:49 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hyxwt61n7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Nov 2026 21:32:49 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6AHLWlij27591290
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 17 Nov 2026 21:32:47 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 876885804E;
-	Tue, 17 Nov 2026 21:32:47 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A5F375803F;
-	Tue, 17 Nov 2026 21:32:46 +0000 (GMT)
-Received: from [9.61.4.73] (unknown [9.61.4.73])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 17 Nov 2026 21:32:46 +0000 (GMT)
-Message-ID: <d1b8b3a6-9172-4422-b23c-a78df596b83f@linux.ibm.com>
-Date: Tue, 17 Nov 2026 16:32:46 -0500
+	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=bbVvYL3v
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-37198ed3727so1684427eec.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 13:41:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1794951681; x=1795556481; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=/GHQAMyTcVgW7kfw1l2Fy10gQWmLXDGkkGBuXSUeJAo=;
+        b=bbVvYL3v1mnzsq+rkNCFkG28HujknQiqfgdGn6wB913XfWKmZeeQNbSG2XT7+zc3cg
+         oAa1pN9/Hz9fAWcFOtMg5pIFk38pKzShXAD13VqvDmHXj1xOQN75NDLMavhPkEpstbbH
+         9vjhfKjDWDPo889r/PTM86w/1I8D5oYZRGXiQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794951681; x=1795556481;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/GHQAMyTcVgW7kfw1l2Fy10gQWmLXDGkkGBuXSUeJAo=;
+        b=tMh8OmJ7fS85K9dpuwDG6b+5oZ/yZ8hnx86wWIWkM79geqJSkU+AiYrXwtkIxb+hZe
+         Y3/X7rF0S6lt6UE7/322XgA4MgHJAhPfzBdVetUPxmaRbe349GUPTequl9+EaVZr2Nx4
+         Ck0r3ygQs79RnK5I6OC6LMIU72GM2nRitjvXAI0ozGWJ/OB89PZC4tbKQLpi5ZLdF9mh
+         cfJQ5QlOtBiUYLd5RQpoArr4C1M3fYimpBKa95AjUUhVOc9ALRhL+uBo53xccgSN57IS
+         F3i4jj6VYXkw1szcKSbuPf6Df5/cYXzOfYME5HzZctNFkYbO134wGVb0mLlQnwOtc2Yy
+         C0Og==
+X-Forwarded-Encrypted: i=1; AL+hErEEF4DpGAp4Cq7hspCneG/0OppsJMi6Qr+Yes4rhUXt31FVdePeHQgDfWAldc92t9Qf4Lw52d+KD+s2qDd8dn4=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+1WoTRVOi+Xo2OOgFTHEzjLKIzzpfU1QUmbIC1uqqlWqrI2zEP
+	W/idOVrV6EHv52pfSTfSpPQmniTgrzBSysQKEqSeFfhIjDk8Y59lwvvwQTSOcxYNFw==
+X-Gm-Gg: AZFdTZeoCeZZNj2OK3L/2Yh2my86Ao8GAss1e1vN5CS5CQ5h4LXNUrmRFcWCXR9gSku
+	C0ep/WQDdopmqemJjwfRm5Z+ewcT/ZbLhIHePc9zTBPU3NN0lrtjKj8NSYIhuUWynIDZhMv7bUh
+	YxfM3W8R7R6qpDI7Pg+O784LTfBCzFDLgkpyM/P2DvnNJPzJFHAW5JIX8+TCtU3EmoQdfwdHUTh
+	9y+flTVyxxZ42JZjyVFVdmS6660iqnQl+TOJBCfSV51yzLRjq6wd/9lpW/aYFxGUP3HmuNkWAhu
+	KhiC4ZfqNXfxSyd5+TOCb7IAmhA6lqiZ0/H+TUnaURTDoZKdlwZ+qra1v3wuUDGIUf5eERZy5Ff
+	uX1ejpIqJ2vKv64HjPyU02M9XZk5f+YLt/eNBwv8ycsNL9+oKDk5TB0ImOsimUIGjsgueY/6jbh
+	1GCyyVe4n4I5HZ5AJYq+BytLmeRattZIASJjdTiDgbGlD9o6NPerdV/x/34/dMdQhOaEVaO6ClJ
+	oLXVuUQ4AueKlcjyNg3DrpUAsX5/5g8c5ojSFscjxtom3xhh0qwF2oGhCFJ5N4BJVOAya0Y4JM+
+	HoJZkUqVW7tCybMOaIT9injBysXMkMo1JKpThchqriE7w4kN69Zcp6kiCi6KF8pw3Eu3
+X-Received: by 2002:a05:7300:fe49:b0:382:75b5:e77 with SMTP id 5a478bee46e88-38275b516f6mr736632eec.25.1794951681348;
+        Tue, 17 Nov 2026 13:41:21 -0800 (PST)
+Received: from localhost ([2a00:79e0:2e7c:8:d92d:531b:8d97:bf51])
+        by smtp.gmail.com with UTF8SMTPSA id 5a478bee46e88-382a6fe75b5sm678252eec.15.2026.11.17.13.41.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Nov 2026 13:41:20 -0800 (PST)
+Date: Tue, 17 Nov 2026 13:41:18 -0800
+From: Brian Norris <briannorris@chromium.org>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH] tracing: 'select' GENERIC_TRACER, not 'depends'
+Message-ID: <avzJ_uvfpL2nPij7@google.com>
+References: <20261116144652.1.Iecb63200dd245f62032a3b1f60ae78cc48868094@changeid>
+ <sashiko-outbox-217828@kernel.org>
+ <20261117085552.0e4ef272@gandalf.local.home>
+ <avybp3O2zxcLozKB@google.com>
+ <20261117142203.72235895@gandalf.local.home>
+ <20261117142310.4f440b3f@gandalf.local.home>
+ <avy6nTb0ccqNNnOo@google.com>
+ <20261117161011.59101930@gandalf.local.home>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,93 +100,46 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 12/14] s390/vfio-ap: Set up for vfio-ap device
- migration
-To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
-        kvm@vger.kernel.org
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20261111192308.2585984-1-akrowiak@linux.ibm.com>
- <20261111192308.2585984-13-akrowiak@linux.ibm.com>
- <sashiko-outbox-209669@kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-209669@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA4NSBTYWx0ZWRfXyLFdMNKLyFeC
- 6lPvRHDNE93KQ5bm3Sf1fbHcN3wiU7ZNvIQDlFp4Lh7pn/fGnV6UEsnwOouv4uCyO0Zi2GhPkby
- t6taFH97UG7Nhi4WAFxukB6DHkBICFc=
-X-Proofpoint-GUID: ezvfSCkAAyaEDR3AAaw75BrJFD6ay1Ab
-X-Proofpoint-ORIG-GUID: ezvfSCkAAyaEDR3AAaw75BrJFD6ay1Ab
-X-Authority-Analysis: v=2.4 cv=IruL47/g c=1 sm=1 tr=0 ts=6afcc801 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=cpCIfTzt5PBBOTSFqewA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA4NSBTYWx0ZWRfX9hMbde+DdSmG
- w0bcsluXq9L94+gGNPgBHxocQnw2Wd36WiaBlWpLaBEadxra2Wtzbs2112yhJ8eYgc8xAhxZ5iy
- hcoBH2ig6i1KJMhKWGis3OkQdM9X8Wet0MM7O9aZiqk0XJ9iRXyQNW7N7J6WetYGbb88IT3b7NU
- eVsBNiWv+QhoDOExls+rAPfQucRNGO7kWAJJaMRjF6u3orMv3EylanyqI34aBUeqzx5DyuhPpy6
- x3cViHYdaH+s5jUC/IuEnHgpNbnBgKH/jnWBBJHd3rz4OqpiEVW5ybm3lViSVjvKRm4uF39WHDu
- agOauYehb3bkGqxO1Hky6AlT/7qYgkrPY3yhii9dhtbGxeTVRP4/IQIcsuKX2MkOrf7eV9aYjgj
- gIkRpQEfnekR30wPrVg2IlinHaqd6KSp0Gvsg3k20g5LQExH16GQZ6RZ3OQPm5NO8wgwKKx7oML
- x7oMfgAs4vuLILMd4HQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-17_04,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 suspectscore=0 bulkscore=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170085
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261117161011.59101930@gandalf.local.home>
 
+On Tue, Nov 17, 2026 at 04:10:11PM -0500, Steven Rostedt wrote:
+> On Tue, 17 Nov 2026 12:35:41 -0800
+> Brian Norris <briannorris@chromium.org> wrote:
+> 
+> > On Tue, Nov 17, 2026 at 02:23:10PM -0500, Steven Rostedt wrote:
+> > > On Tue, 17 Nov 2026 14:22:03 -0500
+> > > Steven Rostedt <rostedt@goodmis.org> wrote:
+> > > 
+> > > As it doesn't need to be visible let's still have:  
+> > 
+> > What's wrong with visible? Hiding it is part of the confusion, because
+> > it disappears when you select something else, even though it's still
+> > effectively enabled.
+> 
+> Well, one thing, it's precedence.
 
+Do you mean: because that's how you've done it previously? Or
+precedence, as in "other tracers take precedence over a visible
+EVENT_TRACING"?
 
-On 11/11/26 3:36 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] s390/vfio-ap: incomplete kernel-doc on
->    vfio_ap_setup_vfio_device_migration()
-> --
-> 
-> commit 4bbee35693e7530ca98001e694624b10c95b87d4
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> 
-> s390/vfio-ap: Set up for vfio-ap device migration
-> 
-> This commit adds vfio_ap_setup_vfio_device_migration() to populate
-> vdev.mig_ops and vdev.migration_flags for non-SE guests and calls it from
-> vfio_ap_mdev_probe() before registering the device.
-> 
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> index 4af734aeee17e..28370b1b3833e 100644
->> --- a/drivers/s390/crypto/vfio_ap_migration.c
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
->> @@ -1316,6 +1316,28 @@ static const struct vfio_migration_ops vfio_ap_migration_ops = {
->>   	.migration_get_data_size = vfio_ap_get_data_size,
->>   };
->>   
->> +/**
->> + * vfio_ap_setup_vfio_device_migration:
->> + *
->> + * Plug the object containing the function pointers to the migration callbacks
->> + * used to facilitate migration into the vfio device and set the flags
->> + * indicating migration states STOP, STOP_COPY and RESUMING are supported.
->> + *
->> + * @matrix_mdev: pointer to object containing the vfio device (vdev)
->> + */
-> 
-> [Severity: Low]
-> Does this kernel-doc block need a short description on the identifier line
-> and @matrix_mdev placed before the body description?  Without a short
-> description after the colon, running kernel-doc with -Wall (make W=2)
-> warns about a missing initial short description.
+> But another is that you can only deselect
+> it if everything else is not selected.
 
-Will be fixed in v14
+Right, but that's pretty typical of interdependent features, I think.
+And it's explicitly represented in the menu:
 
-> 
+ - the non-deselectable item loses its box, to represent that it's no
+   longer a checkbox that can be unchecked
 
+ - if one wants to drill into "why can't I uncheck?", the Help option
+   gives a good breakdown, with something like:
+
+     Selected by [y]:
+       - GENERIC_TRACER [=y]
+
+   That gives you a burn-down of what other things must be disabled if
+   you want to disable it.
+
+Brian
