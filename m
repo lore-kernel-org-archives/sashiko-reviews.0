@@ -1,99 +1,137 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.15
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=192.198.163.19
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794937331;
-	b=u3kzGs/hPa0VnZl/li/QbaJDI8z01gGXl1lRYt+5oST6fNmxT2URblGJLjX8o+hAvl5d
-	 HWSnvtsoO85llCr/aW90M80UKUq3C/oFs09se/+DPX0AizdbvwJLE0AUB5ssOwAIqUHX1
-	 AB1k+Anr/IPvFR6vtHQnhTGn6seRVDXGzerDH7sJfRzwjyA/oUu0sxpmdWeJyTf6VA0UR
-	 nJgDn0wg8esjuvQLMi6OoxKrs2zf7GTJslejiAKZYhSZvs+aQDWV8v508izdil2LrPeVt
-	 n9tJ133b/dLUVl9rsaKVsi+E5VCVgX3QtgHWPWhmgXz+i6UtnXR5DVg/RLVaw/JZ2sA==
+	t=1794937469;
+	b=UkbVTRje7D4lorH8sZONGkarxHWhjeob23p8G+gId0UaLsjWXpmisE+A/YlGH+LhEN+3
+	 ew2PZCWZSzueOfLtNN4RVFP24YZIA9qsg7Z5Xw4TtwkWKknt5q/foXtralWsK80hp0MwS
+	 Y6T0D0H85JJIDeQSHYCE2piOnekbF4B+0yNMRhKyZ+CSfE1mZpSKyESJaiU8pDtSwy4a/
+	 Hc/LlkmzQ1vguIga9N0ApMb7gnuOdUHWsqNC8VBvS3XbF9jaV4gjvGRpwUlHZYm1RfE8R
+	 OtcM414wurAwr+n5RuURJpQbL/h/ND4drQxI59DKeCpkqQdLORDKZ2qXcALEF+KFfhw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794937331;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794937469;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:DKIM-Signature:Received:Received:Date:From:To:CC:Subject:
+	 Message-ID:References:Content-Type:Content-Disposition:
 	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
 	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
 	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
 	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=YbKRE2Vsv/ZeYBynhp+udM4bS166+T+gvDCEzrzXgiE=;
-	b=PiRtADOUBnRGj0kAyBnmRtmhU5zq5tVslwNHs4cSqx4YdMtJaxsTHhjJ77NvDpGALNgG
-	 eHBV5PbFBxtyPSE8+Yjv8hM4dvFrj0s+2sgLtVsWUSBuFxmtb1xRTO54iiiuSgs5unSoU
-	 ZIM+PyfTDO+M2U1Zn8NKKvkl/zP5d7AUjGofxK1rKISKMgzL6p7LcjvX+1X8ub+y6ifCx
-	 x+Qqd7a0w1mpjLqCSwUByhVE8nGH+pMRRbjSPCglp1oDeOj8Y+tkt8dL01JF95Gr6fefj
-	 F2SmVVEza4rFJG/j4ZBq0303pR5i/3Hepq8RdkTrIAwoNuxvkYCl4nF/MfJMyBoHt7w==
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=oEvHuWbAoaiuLC0kD+A4q8tftdCpu8LL1sjdistz/ak=;
+	b=IhMxuDz5FNCHdUhHPWEfBj0WqmY0PBj2IQ1YLwst/+nzxHe1TXIDgoIrp81IsDJsiFJR
+	 6gtnUlvBy2PlP1/fL7DAGA8PSARU3H8Uo8y1QVjecumecnm6MRmrRWbkm4DLdr+ogIEfp
+	 mxL9HDU8zQ2g6gpEksON9t5qfzdnks1NyhjkJFj5ghX9k1JDxqUynvbuSbdnfvdx3IsHJ
+	 XZxP6ePdZ0odsBjhmx3Q+iyQnYTtWgDnrKbJSKgYWq71d6nPRJVd1TkLayUhKjPt7sNA8
+	 HpPTKGnXIrl8tGVyw0oE3aJm3wPMoAcxkA9csy9rPODl9PwRAnut73WjWt7xJbJIxDA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=WNLf4zZW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.15
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012015.outbound.protection.outlook.com [52.101.66.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=JYtTye0v;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b="evB/gMbt";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=192.198.163.19
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8AF606A8A9;
-	Tue, 17 Nov 2026 17:42:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AD8AF606A8A9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65D7606A33A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 17:44:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B65D7606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=WNLf4zZW
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=JYtTye0v;
+	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=evB/gMbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794937468; x=1826473468;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=wY1MaaedQRMcIlWblAMDOqJbqV0tNeJflqGoSTN2R2c=;
+  b=JYtTye0vgQTCS61w3jGDs1HL4OIvIHHir54gPrqfjRqj2UCxokPugw6r
+   3kUKEey6GaNtSiVw+Pl3jOkL1YZ/dPba/inmNv7nATgmf0duTZzoI/S9Y
+   Q4FUxdjnl+J3dSOSHcVPQMVNFlHmUnndrdNqK6NgivHMReILUVtvZBR38
+   cqW22JLxO0wz7m+4ku0vBReqnWBfg79asqSjkjE94OAmXbObvJul+0WLP
+   nSWR+uSnppp/+G4z2LAXyJYbwO9bhLbe4cnW/ag8GPLbX09PjfsYQQQDp
+   X/h/sGcqfbAoEaFFgqtRXZNNx6033R8dW8l0eHgE0pB02qK0XJ26V38s5
+   Q==;
+X-CSE-ConnectionGUID: 0+1jKPFRTSeOIOy65ggJyw==
+X-CSE-MsgGUID: CXCpiSRSST26DbvdMjoIQw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11969"; a="3824762"
+X-IronPort-AV: E=Sophos;i="6.27,218,1787036400"; 
+   d="scan'208";a="3824762"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2026 09:44:27 -0800
+X-CSE-ConnectionGUID: 9kKvxddpSNC4T0OaouRyiQ==
+X-CSE-MsgGUID: gXBo4b+FQ2eZ5R547GA59g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,218,1787036400"; 
+   d="scan'208";a="10134106"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2026 09:44:28 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Tue, 17 Nov 2026 09:44:27 -0800
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Tue, 17 Nov 2026 09:44:27 -0800
+Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.43) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Tue, 17 Nov 2026 09:44:27 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q+Ir/EQ+9ntlkGcEODI7pLEZkl7JRPxv0svKoFtqGJunoRzuvY9IfjOM5B15xpFKhlIpk4QMaGwmCctDuL6la2eXqRkj/wLmFipxSDRnyT9ht38HcUAnSSlpmNjwoK1DaUdfByfAEPpRXjejFLZkIRcElJGx/NANgX11L0xX2UqdEYxw7JNmCs7PdZqdR8MS06Wf1JnIPn8LnAnIges4xPMUJp2eWs4T/JrOv1mg7uL6y9aqVTQNuNWBvUhUOVbrtGWZ5Ngn9UAN54VYb1nCyN8bV77qkb9FCN/kUrDuCiFfs8NuLHkkLRK0Lsz6UoM314S/1MSbaTeO+VJAfVRaCw==
+ b=HytzJUT7irJlTf9JPkXzCSF4fuH4SyS6fdSeAlJBoJKtH0w8J/4mKLS/RBqYtvPipnSI+qScwLU405d2F5lU8TXmzthNryELVYRRLqsU8nON0y59bWRhlD/j/CRyhm7H7GvQrfJEmAEDnhUYmpePh4dB9JCtaZa8yepkdnVnz8pdNz1lxV/ooJQ+1GF05rME7bx8ybdtsr8iPqk+XjyWR3VeprAIK+UgGap4NgVMXwR3i7g32yMAN3vHebK//YGtdBuSCvUcMUIVGn7LOKxbXC0mLfj7W+63sa9DQy3EoPMu2yx7yDJR61/+VDr5bAhIl5YBct8gI2PWtDuduinIPQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YbKRE2Vsv/ZeYBynhp+udM4bS166+T+gvDCEzrzXgiE=;
- b=VztXGGeJWjtes2fPpE7lUjY+aEaLhVYWlY62N30fQQhiiwtoi7/5v6izeenzcx1ar99J16eBtgTgWSyfMbdnLXeDD41928wAYRt8E4Pi8BzbTWtmSdsj5AZa3O8XdM2iFO2zIGjFvR5MI8pMFnCdUw50//ixXIzi4rykLFnsFikns4UHtqHrfMepsSyprxqil9E4mOxlzS4KBD5Drp5msvoniZLseueeSGdRtMnfDZYTTmgjkImrnEhr58FMuv+i/sGvF6nZ5W11m4fZQhIpbMKVT0ge4emVNAcYwRTdRFJAKdaGNrJUHRk2+o++Z9fDpqQ3VxZN4vuR0zUJPBUMAg==
+ bh=oEvHuWbAoaiuLC0kD+A4q8tftdCpu8LL1sjdistz/ak=;
+ b=wwq5WpqQyDhZz+GGN/ReBxcMscmTY9KuEBXR1T7xwtPyGxU7EcSFf+q6HxHJzZ4dKOtblcAjnPlKQKI4ir7kbhHev3Jhdg2f8tT8wcHkLH5buzn1a7iioWYpt+bpgmQ3+BIuaOYerJsrbV/J7dEl4xpZNI1nh16TJTPbs+0h6NMyJywq48Y4EAK5vy5iCQnnGOdN/+Zc6EaOjTHsWC7wxcnHz3BJiT8U6IF5fJ1gtHf1yTbSCAl8oat/wN7UzLmz51OtYk9XTIBZMeTxOtv7gmFdZmX0lGkMti2RH9uN8cRXURXg4wUcNQ5lpWgNpifZGzikpjLOw4gQeBHOEsEhkw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YbKRE2Vsv/ZeYBynhp+udM4bS166+T+gvDCEzrzXgiE=;
- b=WNLf4zZWo8nr+4k1r29rxRY7DkRm8nlBQo/J09VJ5Duofum2QY2zKE8t0wdQr62Px6gi8vtfbsTPkMNQ+GmCZfB7zLZywpBLNz7YJllqB2zjoXzvupns9SGGRzRADuJvUKm2mGRv1FFwxJtyU0uG7+JWvKrk94sY5vy7Z052o9PiV2kcQqIxxrN1mAGvYvNtDWg0f8oYjKuV+Vm89h9/5kUk/pf7+E/lnmA1ADvsG4wvqik6dF5E83KsiFr6UfaMCy0axYeRT8jdTftbYP58Bh0VG5uN240kHQFCPT3NKeeY1R4ErXlUrHtJNE2RxhKvzhZrqdGW/wV6zYuQLD3k6g==
+ bh=oEvHuWbAoaiuLC0kD+A4q8tftdCpu8LL1sjdistz/ak=;
+ b=evB/gMbtmu5Ca2pbJI2pZawd8OD6Wrhh3pyfbzRMxa/U3sV02Y/kalf3zj5bsb4pLsv8SMYDY0eqaQh+v+xul2F9U2qO24lsy1SpKAbyPGKfD1XNH04rYMLLabgaNODXH9oa3N+HPeLIVbf1rc0HbW5e8zf0D4q3fNDxQBMQWss=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by MI7PR04MB844841.eurprd04.prod.outlook.com (2603:10a6:290:10b::6) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7408.namprd11.prod.outlook.com (2603:10b6:8:136::15)
+ by IA1PR11MB9470.namprd11.prod.outlook.com (2603:10b6:208:5af::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
- 2026 17:42:08 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 17:42:07 +0000
-Date: Tue, 17 Nov 2026 12:41:59 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Junyi Zhao <junyi.zhao@amlogic.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-i3c@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
-	Frank.Li@kernel.org, neil.armstrong@linaro.org,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: Re: [PATCH v4 2/2] i3c: master: svc: Add amlogic a9 support
-Message-ID: <avyR51ilfZ5T6tq_@lizhi-Precision-Tower-5810>
-References: <20261116-a9_i3c-v4-0-3d3222b7128d@amlogic.com>
- <20261116-a9_i3c-v4-2-3d3222b7128d@amlogic.com>
- <sashiko-outbox-216859@kernel.org>
- <avsvRS6ADfbzQkpn@SMW015318>
- <f17ef3d6-fa99-4fc8-92bc-1f588f3bf179@amlogic.com>
-Content-Type: text/plain; charset=utf-8
+ 2026 17:44:20 +0000
+Received: from DS0PR11MB7408.namprd11.prod.outlook.com
+ ([fe80::53aa:3f7a:59cd:e057]) by DS0PR11MB7408.namprd11.prod.outlook.com
+ ([fe80::53aa:3f7a:59cd:e057%6]) with mapi id 15.21.0615.012; Tue, 17 Nov 2026
+ 17:44:20 +0000
+Date: Tue, 17 Nov 2026 09:44:17 -0800
+From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH v6 5/7] drm/xe/oa: Wait for in-flight OA batches before
+ stream HW teardown
+Message-ID: <avyScYwJ5LCQC8F6@soc-5CG1426VCC.clients.intel.com>
+References: <20261116222752.3677159-9-umesh.nerlige.ramappa@intel.com>
+ <20261116222752.3677159-14-umesh.nerlige.ramappa@intel.com>
+ <sashiko-outbox-217833@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f17ef3d6-fa99-4fc8-92bc-1f588f3bf179@amlogic.com>
-X-ClientProxiedBy: PH7P221CA0066.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:328::29) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+In-Reply-To: <sashiko-outbox-217833@kernel.org>
+X-ClientProxiedBy: MW4PR03CA0093.namprd03.prod.outlook.com
+ (2603:10b6:303:b7::8) To DS0PR11MB7408.namprd11.prod.outlook.com
+ (2603:10b6:8:136::15)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,239 +142,219 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|MI7PR04MB844841:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6b1ac2ce-dab5-4d83-d9a7-08df44d219e9
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7408:EE_|IA1PR11MB9470:EE_
+X-MS-Office365-Filtering-Correlation-Id: e2475af9-29c9-4088-32a3-08df44d268bd
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|19092799006|366016|376014|7416014|261102123227099003|261022115727099003|261022075727099003|261022113327099003|261022105027099003|261028144727099003|261021121427099003|261021130227099003|261026135527099003|261021123027099003|261021133027099003|261026121527099003|261026130827099003|261026140227099003|11063799006|4143699003|56012099006|10067099003|261021135927099003|18002099003|22082099003|6133799003|261009223027099003;
-X-Microsoft-Antispam-Message-Info:
-	E365a58zrADcmfpsm2fHVh1oBnAnWRgCl9BoobNU9C8NhJIeQdPijBqsFrLbHEf3eLXtaYOLkR2FJjWBZZR8jkZqmY5j7i3qEx43OpXVvzNGFBgYu0Co5F0xcpKJfcmJnmrO6lKkOxlcdShD9/+iuyqw6h0MMdOivKe97f3S68rpaAtu4B+DZT+t1uavQ8CGFFM8dpVKFoKps0IRb4VAImyhAncJrOEoqTbXNXtRRvRndfL7lKttiKcYbqEF/4Hie+PXqdL5mou/B0XxQafiXNBKqxiLHJOjLsEfJZ2RVgnDZde4ugLlaBrtZrtAJtl1FYj/DahsIZZC/I+1yURU7q7QyBiOUfvK9dQQgYHizdNQ41CRhoVyPaoTrzYaWhnhu+EWYYfPaHLaT9pxmtHW3mQ91edssl+3V50T6ayzqzi02pEaHU05pxW9VVipUmhAGDg7tSsbQo9zgGxqwPxZcotrlGayhNV42ECAUzEhD2nHn3LXX7XB7OQxZtm/VLx3dH4rmLJM51wYn4nYHk6f2gAwmxnnG1OVRIT0sQim7lcBXL8bs5/FeG7wR+jfU0x/UtaXU3b04BtNu7HBJuezOhB7lH7GXpuh6KBTHF/YQkM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(19092799006)(366016)(376014)(7416014)(261102123227099003)(261022115727099003)(261022075727099003)(261022113327099003)(261022105027099003)(261028144727099003)(261021121427099003)(261021130227099003)(261026135527099003)(261021123027099003)(261021133027099003)(261026121527099003)(261026130827099003)(261026140227099003)(11063799006)(4143699003)(56012099006)(10067099003)(261021135927099003)(18002099003)(22082099003)(6133799003)(261009223027099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|18002099003|6133799003|22082099003|261009223027099003|4143699003|11063799006|5023799004|56012099006|261028144727099003|261022075727099003|261022105027099003|261026140227099003|261026121527099003|261021121427099003|261102123227099003|10067099003;
+X-Microsoft-Antispam-Message-Info: 90AhTWCNootk8fktV+Xjr8KNl8r5PdHWtQilSoRR4pgRyRuTCe613uxPwrqPWMZkxAB4kVwaxc1owu8sgXWcvSURcj2bD7UZb+etiqvV1zJ0uqVR2HgO7rgw1mVrBWRpOwFXIXYUQmp70GgAJsFcXNVnZ9XHxW2+iUg4ewy8Jmq2/F08t/2+/zICzNwP52cz9si/fg5OIcn2Y7vKkn+ymOwK97SVo4m3jOF/u57wi4kF5ZXJCahEKAD7D8TvYNtdDMqZmM1AxVzd40Oz309F7FYnFGrrcYYFiYObFgsQlBnTllHcegFcgCjVljF69IKdT7A6XkrxEOgfyI8XcoJ8WlHQgSqlUD8wYY9dUEe/aAw1PU8qfmTfQ6IHTDmjudQcips2vfwRB4ijFdAy5hwnOpKv71t3O0x22+Ji+R/2udsQGy+tFqk6q1yo4lDMXJwnXSFo0wte9lsGPeoyyFm+exMVC5aWKPu61wVTIXGMvDb9ps5IdliM2CXwRE8G3u4DSPWCdATQzXdN/ZjWQ+MreY8GK1f93PNwQqbo5+bzZ3OUNOWjQqAgreEQOesSz5KyQuK+xl8v8SIHyDvF+OlFKYHFFSOy/oyNxrbbvUE/6fo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7408.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(18002099003)(6133799003)(22082099003)(261009223027099003)(4143699003)(11063799006)(5023799004)(56012099006)(261028144727099003)(261022075727099003)(261022105027099003)(261026140227099003)(261026121527099003)(261021121427099003)(261102123227099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Y0RoM1JRandZQUQxRUVBL0hDWllTTkhBY0JhRk9oRTZwU0M5OTR2NDVHY29Z?=
- =?utf-8?B?ZkN3SjFydlJjNTYyV2grWTFHMnk0ckZZdlZMT2gyVEhGTXRteHZWaEljcnoy?=
- =?utf-8?B?cDZ5eWNualhUMk1oNFpPSHhqK2t4UmNrSVlFV3BHaXhVcndXYUQ0bFR4VlBV?=
- =?utf-8?B?eTZxU3ExOVI0K3pDUktKNlA5ekdIV2g5RG1PdGVybllFQ1hKcVpWNDJEMzNh?=
- =?utf-8?B?Rm1NRlY2c3dnNU9YdUw1UUJBQkJvTmZwaktTalM0K3Jwc3ZPbkp3OGJNQ3RL?=
- =?utf-8?B?RHViQ0RnUVpqL3h3bEQ2b2JUbW1vYTJKK2VHZ1hhT0FWUmdSdmppRWVCWEpi?=
- =?utf-8?B?VEh3cG1JdFk1R2ptQWI5bS85TzFQcGl3MFlyenFaWUx5aTlNTHoxb2lZK2c1?=
- =?utf-8?B?VkZwVnhwa0I0U1ZSNENsZXZUcGRGUkQ4WGhBbklURGNSN2V0ampsVm9Qdk1l?=
- =?utf-8?B?Uzl2VG91a0Iwek5aRm9STTlHN3g1bDU3bVA4RUdpT1kyOXNONDFqNFJ1RTRT?=
- =?utf-8?B?ZE91dFpoNDFPSXVlN2t5WXdsVGRVMmU2aXI3N2lyRmREbVlOc1o0ZjNNc3RH?=
- =?utf-8?B?NE5XNnpHajYyZ29IUHFsRnFSYnUvUHplU3RBTXRBZ2x2OUlmWG52bzJ5dmpv?=
- =?utf-8?B?UExiWW9ST3BHUU1GTndlQjdnajkwblpONUE1WVRxY3lXdUtRUitQbE85QUJl?=
- =?utf-8?B?cmN1NXE3YnIxV2R3d0syNTdXR29QckRwSU13WksxbHFXblFiMTh1TXI2Skcw?=
- =?utf-8?B?em1Hc0FGZ1RTM09WdFN6OWluaHRjZ2NJSCs1QUNxR2lXQk5UMmVIaCt5UkxE?=
- =?utf-8?B?bWpzbHU4VVA5azg0bG1EZGdOZ1dlY1RnWFEvYW1WTG0xYlBkd1VMVlVkOTRx?=
- =?utf-8?B?bVNnaG8yREdnS2orUHA1bjRBWVVya2pWYkU4WGxrNDM2UE1iMlhyTHZlbGw5?=
- =?utf-8?B?SC9KWlFlOE50Vms1Z001QkhUeDlQQWlxOGo2SjMyaXg4dmRNNVNadXZiNXFu?=
- =?utf-8?B?NXB6QitVY2QyamoxZUwrYnBwS2FrWUxOYnp1RkhabS9RS200Skk2NXBPM0lN?=
- =?utf-8?B?VThPV0h4UDFub0FKNzZ2K1FxZWp6N05vb1JHUlp5M3dSQ1JPbmozVzVydUxH?=
- =?utf-8?B?dFRKb0xtcXY5Z2lwaXU5ck12N3MzcUxzOUd6VWhiTzNmekhvQ2llSTVlMUlI?=
- =?utf-8?B?TGNNNTZXKzlUMU4zSWZwK3FrVTNyQVE4Rms4RG5aMHRDdlZhU250aWNHZlcw?=
- =?utf-8?B?cFhVSXRoVXZDVXppN0YyZHRTdEJISis1c2RvS3JMVENxZG1oYUhwdjRCZEc0?=
- =?utf-8?B?US9YODdxNGxhVS9pWmpnTXhtVWdrdTV6VlIxa3BNZDVLSXVPT3pRWmdrNlJj?=
- =?utf-8?B?UVd6dkpyanp3d3dodTArQ2pQUXNLbHBNUFNiTFNqZEdUS3dySGhXZE1jSTMx?=
- =?utf-8?B?Qm0vRjVZeVFibTdycnF1UXF4enRaN3o0MHYvVkFpd1Q2eGV3QUJzbU5YWFVq?=
- =?utf-8?B?am00UWt4TXp2WmQyZGFoNUFNNEduSHp6cnJBMXhCSG1TSlMwUWpFd1VIVnk0?=
- =?utf-8?B?bDRlVmROVkl0akNvR3gzbHFHTGtyd1Vlb1BnalpmdEJJYWNCNEIyNWpETHFK?=
- =?utf-8?B?Mk90bW5XdUY3WmNxVFJwQkREeE11RmQ2eGpWdVZlbnh4R3lCSkxJVXRCWVF2?=
- =?utf-8?B?ZUUrL0xkRFNtUmN3dllybHlmMnRLYmtNMEY3Nk5KL3BGN2IzUUtVZWMwb3o1?=
- =?utf-8?B?UDNvSHlDalMrYXlzR05uRW9NRURJbjZzbWtnUW9mM1c4b0dyWmRuUElMQ0dZ?=
- =?utf-8?B?M2hpV1BxbGdjRlZxNzQxTVlLa1JWQmw5MzV0Q3E0N2VVOEcxNXk3QUpiTW8w?=
- =?utf-8?B?ejNvOEM1QTlCN3YyTktQSFJWZjdacE0xODI5aUlWbWdqWkNmNHdUd2FNcFM0?=
- =?utf-8?B?dkh4Y3FLeERxVUJVYWNVNDByOFlEaUV2bkJqeHR6VXNIVCt6RkptcUZtNHd2?=
- =?utf-8?B?ajdrc3NIaVFLNHJ1SmN0dkpMdDg4UU8vZXkzTmtkVzVLUHE2dmxkTVI2ZzBZ?=
- =?utf-8?B?Y0RhRTVxVnJsZWFEVTVrNnJaWVc5ZSs5dlh6aTZ0WEJuQ1hWdGUxRmpFTDJu?=
- =?utf-8?B?TWY2bC91dDBNSk5Qc29VQm5KSWhtMjBoRDJPTzdrYmRnN3dFdGx4eEhIRGIy?=
- =?utf-8?B?ZytlUW5sN0h6cGhvWXJGK3dmMHNWWEhOUE9IN2ZxSHJSTHpkL0p3K3R5K3FB?=
- =?utf-8?B?OHpYTzM3cGFzcHZ1b0NLUjFzWDZxNnkwVFo5Wm53K1lBOXlqbG5nREF3Mlky?=
- =?utf-8?B?UUl6czB4dHFXUUlCTGprSG9qMGdJcTNOYVh3TUdSVmlSK0ZISGpxeWp1blVi?=
- =?utf-8?Q?jtwpEKWGW7wvJN635nMQWo88nKbCeqNE1NNMl?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b1ac2ce-dab5-4d83-d9a7-08df44d219e9
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WFlqLy9VdUsvSkQ3L2lqU0NOMjRiUFp6RnRZSDROMnZrdkhoNmNvUE1mdzBI?=
+ =?utf-8?B?WHF5NTFXclVQaXQxSWdiSmlKRnY2dGs5cVpNR09aWlowUzRQVnZ0SGVlNUZF?=
+ =?utf-8?B?M044T1YyUmVpaTk5QzZaRWkwT2hNc3c1TFFuS0Uyak1LTlc1Nm5DNkEyNVZ6?=
+ =?utf-8?B?Q0FMSVBLUlRyMU9IL3RRVzMvckJJNjZqbjJiN2NibmI4akxNTEpSNktYcENY?=
+ =?utf-8?B?RVVpRGhrYU5rWmdhRzJ5SW5jSVVTOVZGRWFZbjc4RFUzOTN6bkhhT1duZHlr?=
+ =?utf-8?B?cURDUVF1KzBwbTR4MDhrbDd4bWFuYVRYZFlPSFl1K2J6Zkc4djhrS1ZJQy82?=
+ =?utf-8?B?R0Y3enNrZG1CVDFtdUhDaEZ5UHRxNFAyRjdNU1JocWNTYTI0MnRUZWg1NmNL?=
+ =?utf-8?B?cW9udFpMRmZTZ2c3TjNiOXRqRnVJdnZNeWRtUjNUOEJmcThrNFRjZDZkVjlU?=
+ =?utf-8?B?Qm9tYXNLRmhza29ocjFOOWNJWm9CZzhRWjV4dGlaQzBhSzExQWhXQ3RRUE1j?=
+ =?utf-8?B?ekQvMUVGdTlJU1V3aUN6R0o3MEZIRzJWTDNzcWlIdUdDSFMzckdwL3JrSHIx?=
+ =?utf-8?B?ckdCTk5kVUFXSFFYTkR1OFJWSTBkUEt2d1h3ZjJzaUFNTTdIWllhdE04RURM?=
+ =?utf-8?B?TVpHZXR0N3BGK3dhekVjNjVVYnRUNERjcTVSTnBFL1RWbjltaWZWUjlNcDJt?=
+ =?utf-8?B?blNiM25UUDM4a2xsQ3pVRFQwZ2lUdEhTbXUvRlBLV3NQdFFqeTNRVmFndHEw?=
+ =?utf-8?B?NU5VQ01pQ1M1V080N0pWR0NhSmZ1QkUwRlV0QUJUYk4xQW9VSU9vdHpnSTJy?=
+ =?utf-8?B?MVVHK2FkajBkNFl5SzFqZ2NaQzRsNk9EQlh4c2dxeXdYekI0YWpRNk1CK0I0?=
+ =?utf-8?B?REhyNzJHR3JjRWErUjlZNzFTa1JWT0lHNWJJZ0pvODNXdXpzUGIwSHhUZGNr?=
+ =?utf-8?B?M0p6cmtMeWZDTWtiU2FjQ0gxRFNKSHlaTFV0bVZCYXFHSG9ta2t2ZGxwTzZH?=
+ =?utf-8?B?THc3bm15TEhIVE0vMFRXakoweWxpK0VKZkNHRm1URFhwYWxNT0xPcnZWKzRN?=
+ =?utf-8?B?ek9JT05ZTGd1N05lTWRCMWMvd0ptazY1enk2SXNKZkVGMGE4d0ZSa1ladUxa?=
+ =?utf-8?B?TUQ3QjFmclZFRjJSNHByeGw2V0daQlhlUGsrU2prTjlhK0JUeW8vTWxHM1Ar?=
+ =?utf-8?B?WlN5MG1TTGN2cjgzNVZhNDRVakIrZ24zTGF0MzdsRmdnangrSnVLbXNwLy9r?=
+ =?utf-8?B?Q21IOXNWR1I0SHJoMGE4VWRUMTRlYWxUL0Vja25TQTZBSS9zVXFrQ1A2cFhN?=
+ =?utf-8?B?TEJnUXRVd0VWV05QdlliRllaNWZwWnlPMHFnZmF3dXVFcnlRa0lDc0NrVDZm?=
+ =?utf-8?B?czduVVkvekFIYjRqNTNaOFNDdlJ6QjlpWHZiS1g4QWJFSW85YnRIVmNZUzVV?=
+ =?utf-8?B?NTFoSHYvclNOWTY1VU1XSnp5VXJDczBVQ3ZZbm5Wd1R3ZEVXS1pPaEMwWHFr?=
+ =?utf-8?B?dDVId1BoT05TMndXYWUxWURzTjhjWFdmKzFxcWhBdDhRVlkwdnZ6M2hZOWRJ?=
+ =?utf-8?B?emZGd2VrSnAxdUJxSUU0eE1LaS90bVA2anJvWmpSVllCbWZaVTRzVEt3Z2Fi?=
+ =?utf-8?B?aEptMjF6QjhlaFZkd1hWN21nL09aczdTdms1M0RZVnZFZ09BSXltTnhpNmpy?=
+ =?utf-8?B?aXRoZzQyb3dWZ0l6RWRDZHVDVTBaMnY3OTFvTmpyZFFGd1JVTndmTGdGVlB0?=
+ =?utf-8?B?VUk0eE1ZOTM1VCtqUGFXZ0IvbSs4QlZvQnZucTJFZk5qOEtVYU0wdENTL002?=
+ =?utf-8?B?OGl4Z0dSeU4xUnlkR05GKzBqUWdzTjNtYXB5ZTFjQjVRS3dBTTVHRWRrK3F6?=
+ =?utf-8?B?M0lLbFJsUUdvMWUzZWtGNWJ6WWVpcDdzalBKakJLamZIUjJjVjJibDUwTFd5?=
+ =?utf-8?B?Tmg4VERQVkFWNGlQdkMxTXVDeWNpcmtTQ2gvQ1ZkNk1nRGpDdUJGOWU4UE5K?=
+ =?utf-8?B?SDQ0dHRXNklsN2lFRUUzeUFGWUoxZHdGVlpzVFFCOTc2dW1QL0pDYWQ2NXRV?=
+ =?utf-8?B?a011eTR0U05ndGp5Vk9yQUpnRGdnNjhFY2UxRldNVjRIbVE0ZVQ3NU85KzRL?=
+ =?utf-8?B?ODNScDhGZWxwbVJoaFgvdTVVVi9KR3FtUFloOFVQdkdLbmN4TU9GYW5vNnFT?=
+ =?utf-8?B?TWZ3MDVKbUxnd0xxckJLSzF4Qk8vUzFvNWxBR2pQa3Z5L09zK2krUWVydUdh?=
+ =?utf-8?B?Tk5hUHFBZTVMd1NMaVEwK05meXNOa2RtWW9INXo4VGlablJNNXNNR3FwdmMz?=
+ =?utf-8?B?R0p5TGdkNUNrbGtEMWdvN3ZVdFpwdWV5U1E4OXE0KzEzanV1SHZZQVRRTXpt?=
+ =?utf-8?Q?IpVS+qIAslkbuXva2vfSWDizi/v4J1+PWQOg6?=
+X-Exchange-RoutingPolicyChecked: QZElxpZgR+b8M2ncIlPOXukkKEwL7mFkl1NXuUGF2ImQu4acWLSMNDgwmraQ0KQEvDZDh/5niXJjDBpQ4PDsveBehXYkiWqNQXqL/fKwZ1VhUBj6eIeW1bWcL5/OzfLyGOYXrUqXxZSxZ5Q67F8I1hDUF+wVTRSLMkRPvXG2vQhREjF9mxkqCHaZhcSDeXvAgB8Y+DaIc4L9ffVoP8ylti/0FgbtIVsO6s55ioAZxYhssDiWejPIU484/mpQEb6cgGSdNTZyOyQovlxeMAHvbDXsvh6WCQWLimNKyZtHiwmW8PdTg02jOedXA8NFLEtsGp113w+68ekVCweN3cTuRQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2475af9-29c9-4088-32a3-08df44d268bd
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7408.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 17:42:07.9558
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 17:44:20.3536
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /o7p5gJufrNdCgrGtoI7wsFfEjNfcmaW6m5CxDYNq2LNASaRvBK927od281ZXVBKx1jUSrxylzUVT1BDNUCKfL8HyQ/h0Q86cNgOIGfwvl51YRbiKkvVUUxNy6+SbAOL
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MI7PR04MB844841
+X-MS-Exchange-CrossTenant-UserPrincipalName: mqrUln/WPGK/kaffJiZ6Rd+wuckRbfLfJpTDbRrvyBVgCUcgeucAq70yeSR1yMulEu6FTnNT3/yl1gIxQyjlztzsoCqTQuub4DZuZot6fhM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB9470
+X-OriginatorOrg: intel.com
 
-On Tue, Nov 17, 2026 at 01:45:41PM +0800, Junyi Zhao wrote:
-> Hi frank，
->    thks for the review.
+On Mon, Nov 16, 2026 at 11:00:49PM +0000, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 2 potential
+>issues to consider:
+>- [High] drm/xe/oa: killing exec queue in xe_oa_stream_drain() leaks
+>  jobs and wedges GPU
+>- [High] drm/xe/oa: context LRI batch fence in xe_oa_load_with_lri() is
+>  never drained
+>--
 >
-> On 17/11/2026 00:28, Frank Li wrote:
-> > [ EXTERNAL EMAIL ]
-> >
-> > On Mon, Nov 16, 2026 at 11:12:37AM +0000, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 3 potential
-> > > issues to consider:
-> > > - [Medium] i3c: master: svc: NULL dereference of clks[0].id in
-> > >    aml_i3c_init()
-> > > - [Medium] i3c: master: svc: clocks left enabled in
-> > >    svc_i3c_master_remove()
-> > > - [Low] i3c: master: svc: duplicate fast_clk lookup in aml_i3c_init()
-> > > --
-> > >
-> > > commit 260aeb5a4d5c58d3bea32674062960231e4d4d2c
-> > > Author: Junyi Zhao <junyi.zhao@amlogic.com>
-> > >
-> > > i3c: master: svc: Add amlogic a9 support
-> > >
-> > > This commit adds support for the Amlogic A9 EE-domain and AO-domain Silvaco
-> > > I3C controllers, introducing a vendor_init callback to register the AO
-> > > variant's internal clock divider chain and configure the fast_clk rate.
-> > >
-> > > > diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-> > > > index e700392f0801f..0268fc713afdf 100644
-> > > > --- a/drivers/i3c/master/svc-i3c-master.c
-> > > > +++ b/drivers/i3c/master/svc-i3c-master.c
-> > >
-> > > [ ... ]
-> > >
-> > > > @@ -2163,9 +2209,215 @@ static const struct svc_i3c_drvdata npcm845_drvdata = {
-> > >
-> > > [ ... ]
-> > >
-> > > > +   /*
-> > > > +    * Keep the clk bulk state balanced for the following
-> > > > +    * clk_bulk_disable_unprepare() calls (error paths and runtime PM).
-> > > > +    */
-> > > > +   ret = clk_prepare_enable(fclk);
-> > > > +   if (ret)
-> > > > +           return dev_err_probe(dev, ret, "can't enable fast_clk\n");
-> > > > +
-> > > > +   new_clks = devm_kcalloc(dev, master->num_clks + 1, sizeof(*new_clks),
-> > > > +                           GFP_KERNEL);
-> > > > +   if (!new_clks) {
-> > > > +           clk_disable_unprepare(fclk);
-> > > > +           return -ENOMEM;
-> > > > +   }
-> > > > +
-> > > > +   memcpy(new_clks, master->clks,
-> > > > +          master->num_clks * sizeof(*master->clks));
-> > > > +   new_clks[master->num_clks].id = "fast_clk";
-> > > > +   new_clks[master->num_clks].clk = fclk;
-> > > > +   master->clks = new_clks;
-> > > > +   master->num_clks++;
-> > > > +
-> > > > +   return 0;
-> > > > +}
-> > >
-> > > [Severity: Medium]
-> > > Can unbinding the driver leave fclk and the input clocks enabled when the
-> > > device is not runtime-suspended?
-> > >
-> > > svc_i3c_master_remove() calls pm_runtime_dont_use_autosuspend() and
-> > > pm_runtime_disable(), relying on svc_i3c_runtime_suspend() to call
-> > > clk_bulk_disable_unprepare().  If CONFIG_PM is disabled, runtime PM is
-> > > forbidden via sysfs, or hotjoin is enabled (which holds a runtime PM
-> > > reference not released by i3c_master_unregister()), runtime suspend does
-> > > not run during remove.  When devres then unregisters ao->gate.hw,
-> > > ao->div.hw, and ao->div_en.hw while they are still prepared and enabled,
-> > > clk_unregister() triggers a kernel warning and leaks the prepare and
-> > > enable counts on the parent pclk.
-> >
-> > Suppose it is existing problem.
-> >
-> Ok， not introduced by this patch.
+>commit 78c0868da376abbc9e627eede4220f1019cbf62e
+>Author: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 >
-> Address it in a separate patch follow this series or create new change
-> series?
+>drm/xe/oa: Wait for in-flight OA batches before stream HW teardown
+>
+>This commit records the LRI batch fence in stream->last_fence and adds
+>xe_oa_stream_drain() to wait for stream->last_fence before hardware
+>teardown, killing the exec queue if the wait times out.
+>
+>> diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
+>> index 8ed427ad67b48..1a37312de099c 100644
+>> --- a/drivers/gpu/drm/xe/xe_oa.c
+>> +++ b/drivers/gpu/drm/xe/xe_oa.c
+>> @@ -733,6 +733,12 @@ static void xe_oa_free_configs(struct xe_oa_stream *stream)
+>>  	dma_fence_put(stream->last_fence);
+>>  }
+>>
+>> +static void xe_oa_update_last_fence(struct xe_oa_stream *stream, struct dma_fence *fence)
+>> +{
+>> +	dma_fence_put(stream->last_fence);
+>> +	stream->last_fence = dma_fence_get(fence);
+>> +}
+>> +
+>>  static int xe_oa_load_with_lri(struct xe_oa_stream *stream, struct xe_oa_reg *reg_lri, u32 count)
+>>  {
+>>  	struct dma_fence *fence;
+>> @@ -753,6 +759,7 @@ static int xe_oa_load_with_lri(struct xe_oa_stream *stream, struct xe_oa_reg *re
+>>  		goto free_bb;
+>>  	}
+>>  	xe_bb_free(bb, fence);
+>> +	xe_oa_update_last_fence(stream, fence);
+>>  	dma_fence_put(fence);
+>>
+>>  	return 0;
+>> @@ -876,6 +883,38 @@ static void xe_oa_disable_metric_set(struct xe_oa_stream *stream)
+>>  		xe_mmio_rmw32(mmio, OAM_COMPRESSION_T3_CONTROL, OAM_LAT_MEASURE_ENABLE, 0);
+>>  }
+>>
+>> +/*
+>> + * Wait for the last OA batch of the stream, so that it can't program the HW after the HW
+>> + * teardown.
+>> + */
+>> +static void xe_oa_stream_drain(struct xe_oa_stream *stream)
+>> +{
+>> +	struct xe_exec_queue *q = stream->exec_q ?: stream->k_exec_q;
+>> +	long timeout;
+>> +
+>> +	if (!stream->last_fence || dma_fence_is_signaled(stream->last_fence))
+>> +		return;
+>> +
+>> +	timeout = msecs_to_jiffies(q->sched_props.job_timeout_ms) + HZ;
+>> +	if (dma_fence_wait_timeout(stream->last_fence, false, timeout))
+>> +		return;
+>> +
+>> +	drm_err(&stream->oa->xe->drm, "Timed out waiting for OA batch, killing exec queue\n");
+>> +
+>> +	/*
+>> +	 * The batch is most likely still waiting for an input sync, which no TDR covers. Kill
+>> +	 * the exec queue, so the batch is dropped instead of run when the input sync signals.
+>> +	 * A batch already on the HW gets cleaned up by the TDR the kill triggers, give it a
+>> +	 * moment.
+>> +	 */
+>> +	if (q->vm)
+>> +		xe_exec_queue_kill(q);
+>> +	else
+>> +		q->ops->kill(q);
+>> +
+>> +	dma_fence_wait_timeout(stream->last_fence, false, HZ);
+>> +}
+>
+>[Severity: High]
+>Can killing q here wedge the GPU when q is stream->k_exec_q, and leak
+>jobs that are still waiting on an input sync?
+>
+>When stream->exec_q is NULL, q is stream->k_exec_q, which is created with
+>EXEC_QUEUE_FLAG_KERNEL.  Calling q->ops->kill(q) invokes
+>guc_exec_queue_kill(), marking the queue killed and arming immediate TDR.
+>Once the job reaches sched->pending_list, guc_exec_queue_timedout_job()
+>checks timeout_needs_gt_reset():
+>
+>drivers/gpu/drm/xe/xe_guc_submit.c:timeout_needs_gt_reset() {
+>	if (q->flags & EXEC_QUEUE_FLAG_KERNEL)
+>		return true;
+>
+>	return !skip_timeout_check && !xe_sched_job_started(job);
+>}
+>
+>Because EXEC_QUEUE_FLAG_KERNEL unconditionally returns true even when the
+>queue was killed, guc_exec_queue_timedout_job() triggers two asynchronous
+>GT resets and then fires a kernel WARN and wedges the device.
+>
+>In addition, a batch blocked on an unsignaled input sync sits in
+>q->entity->job_queue rather than sched->pending_list.
+>guc_exec_queue_kill() only schedules TDR on sched->pending_list and does
+>not call drm_sched_entity_kill(q->entity), so stream->last_fence is not
+>signaled and the second dma_fence_wait_timeout() always waits out the
+>full HZ.  Because the queued xe_sched_job holds a reference on q via
+>xe_exec_queue_get(), xe_exec_queue_put() never reaches
+>xe_sched_entity_fini(), leaking the job, exec queue, config buffer, and
+>runtime PM reference if the input sync never signals.
+>
 
-New series. Many codes can be removed because framework already support
-call pm_runtime_get() before tranfer data after simple set a flag.
+The exec queue kill is now dropped. The side effect is a bad OA config, 
+but that will just require a user retry until it is fixed in a later 
+series.
 
-Frank
+>> +
+>>  static void xe_oa_stream_hw_teardown(struct xe_oa_stream *stream)
+>>  {
+>>  	if (stream->sample)
+>> @@ -909,6 +948,7 @@ static void xe_oa_stream_destroy(struct xe_oa_stream *stream)
+>>  	/* The poll timer may still be armed if the OA disable was skipped */
+>>  	hrtimer_cancel(&stream->poll_check_timer);
+>>
+>> +	xe_oa_stream_drain(stream);
+>>  	if (!xe_wedged(stream->oa->xe))
+>>  		xe_oa_stream_hw_teardown(stream);
+>
+>[Severity: High]
+>Does xe_oa_stream_drain() ever wait for the fence recorded by
+>xe_oa_load_with_lri()?
+>
+>xe_oa_load_with_lri() is only called from xe_oa_configure_oa_context(),
+>which runs in xe_oa_enable_metric_set() and xe_oa_disable_metric_set().
+>During xe_oa_enable_metric_set(), xe_oa_emit_oa_config() runs right after
+>xe_oa_configure_oa_context(stream, true) and overwrites
+>stream->last_fence; if xe_oa_emit_oa_config() fails, xe_oa_stream_init()
+>tears down the stream via err_put_k_exec_q without calling
+>xe_oa_stream_drain().
+>
+>During xe_oa_stream_destroy(), xe_oa_stream_drain() runs before
+>xe_oa_stream_hw_teardown() -> xe_oa_disable_metric_set() ->
+>xe_oa_configure_oa_context(stream, false) submits the context-disable LRI
+>batch.  That teardown LRI batch is never waited on before
+>xe_oa_free_oa_buffer() unpins the OA buffer and xe_force_wake_put() drops
+>forcewake (and for OAC, after xe_oa_configure_oac_context() writes
+>__oa_ccs_select(stream) to OAG_OACONTROL).  Moreover, if
+>xe_oa_stream_drain() timed out and killed stream->exec_q,
+>xe_oa_configure_oa_context(stream, false) submits the disable LRI batch
+>to a killed queue that will never run it on hardware.
+
+A second drain in the disable path will be added in the next series
 
 >
-> > >
-> > > > +
-> > > > +/**
-> > > > + * aml_i3c_init - Amlogic A9 specific init, called with the clocks enabled
-> > > > + * @master: I3C master controller
-> > > > + *
-> > > > + * Register the AO variant's internal divider chain and round/set the fast
-> > > > + * clock rate for both variants.
-> > > > + *
-> > > > + * Return: 0 on success, or a negative error code.
-> > > > + */
-> > > > +static int aml_i3c_init(struct svc_i3c_master *master)
-> > > > +{
-> > > > +   struct device *dev = master->dev;
-> > > > +   struct clk *fclk;
-> > > > +   long fin_freq;
-> > > > +   int ret, i;
-> > > > +
-> > > > +   if (svc_has_quirk(master, AML_I3C_QUIRK_AO)) {
-> > > > +           /*
-> > > > +            * clk_bulk_get_all() preserves the DT order, and the
-> > > > +            * binding restricts the AO variant to exactly one clock,
-> > > > +            * which is always "pclk".  So clks[0] is the input of the
-> > > > +            * internal divider chain.
-> > > > +            */
-> > > > +           if (strcmp(master->clks[0].id, "pclk"))
-> > > > +                   return dev_err_probe(dev, -EINVAL,
-> > > > +                                        "invalid AO input clock\n");
-> > >
-> > > [Severity: Medium]
-> > > Can this trigger a NULL pointer dereference on master->clks or
-> > > master->clks[0].id?
-> > >
-> > > When a device tree node has no clocks, devm_clk_bulk_get_all() returns 0
-> > > and leaves master->clks as NULL, which passes the master->num_clks < 0
-> > > check in svc_i3c_master_probe().  Previously, the fast_clk loop in probe
-> > > ran zero iterations and returned -EINVAL, but aml_i3c_init() now runs
-> > > first and indexes master->clks[0] without checking that master->num_clks
-> > > is at least 1 (or equal to 1 as required by the AO binding).  In addition,
-> > > of_clk_bulk_get() leaves clks[i].id as NULL if clock-names is missing or
-> > > shorter than clocks, which would cause strcmp() here and in the fast_clk
-> > > loop below to dereference NULL.
-> >
-> > This one need check.
-> >
->
-> will add check.
->
-> > Frank
-> >
-> > >
-> > > > +
-> > > > +           ret = aml_ao_i3c_tail_clocks(master, master->clks[0].clk);
-> > > > +           if (ret)
-> > > > +                   return ret;
-> > > > +   }
-> > > > +
-> > > > +   for (i = 0; i < master->num_clks; i++) {
-> > > > +           if (!strcmp(master->clks[i].id, "fast_clk"))
-> > > > +                   break;
-> > > > +   }
-> > > > +
-> > > > +   if (i == master->num_clks)
-> > > > +           return dev_err_probe(dev, -EINVAL,
-> > > > +                                "can't get I3C fast clock\n");
-> > > > +
-> > > > +   fclk = master->clks[i].clk;
-> > > > +   if (IS_ERR(fclk))
-> > > > +           return PTR_ERR(fclk);
-> > >
-> > > [Severity: Low]
-> > > This isn't a bug, but this fast_clk lookup and validation duplicates the
-> > > identical loop in svc_i3c_master_probe() that runs right after
-> > > vendor_init() returns.  Could a shared helper or resolving master->fclk
-> > > once avoid repeating the lookup?
-> > >
-> Will try.
-> And guards against a NULL clks[i].id, and reused by both probe() and
-> aml_i3c_init().
->
-> > > --
-> > > Sashiko AI review · https://sashiko.dev/#/patchset/20261116-a9_i3c-v4-0-3d3222b7128d@amlogic.com?part=2
->
+>-- 
+>Sashiko AI review · https://sashiko.dev/#/patchset/20261116222752.3677159-9-umesh.nerlige.ramappa@intel.com?part=5
