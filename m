@@ -1,97 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.70.65
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794912659;
-	b=eMghuAjVZP/2sfyPiYd+Hft8K2h2SCk+iTEt9wx3EiRgmSRtwxwz7fr+uvDzXYBd1gjk
-	 F75+gGvXCmXhJCc4a+DmeX6INMsxQN+/Rux/4yNssA4RlaDiNEASIpsV1SX/VNYS9pzOH
-	 KFLHJIMQoJtTJa4dkH/GFjRCjPHFkLXtwUCUKk/iJ+MdLmiiHS9/+TkeVYytpAQS1avGe
-	 /yRy9GviyVdgjtTGAdg9Af/BfhMxmO+ndxVppQa+khsvQU5m0z07phKAmwD1quQlylWfh
-	 nZn5H310MGTenK8OZlatDJf8b1bg1v8tcoZzaNx4iloGVpMWNe+zCw+523EDka25ovA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794912659;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-Exchange-MessageSentRepresentingType:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SharedMailbox-RoutingAgent-Processed:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=4GlJH3a0k1Uv/8C3ZO7LPFWM8uVB+SDunoL0qenHnew=;
-	b=OPsFQotNQhQMlMUDTA0VjrUVExcBaPTLSwPmLIURFbmMUkz/T/Z8Pu5By21nFcNMdu6A
-	 IwCPi/Q7tfy5neymo4F7XTRaEBF2wdpzO6NcAJGUVzbkw+O0y2O0xn3Yu8rLvn11zdS2x
-	 0tfmLBn3+xS106wN4Onbvuv/i8EwC/PnCMSbnJpbkN8D9yCMBjD13HI8fdXWL9AUfGxsR
-	 uWCMf9oMVB73ZzQXEQipctvxKYptUZeIxahmknbIobjjttmNqKyWKYHUKdO1+zWLXyD+m
-	 l5aitarXd64nPeNr9fbZQ3BJ8Lv+DuF/MemJsC1SJidFzq9yrY69rUuuW3PDghpsSQQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=gieNcyT9;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.70.65
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011065.outbound.protection.outlook.com [52.101.70.65])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794913576;
+	b=IT8jcGTs5w5iFYrkFYTUrC2RuldDScnfxlrsMoGR//Gj1cYBJewDNB2PPSTiC5uLQj1I
+	 kqt5/J09UI+VyivPu0wk/Ntsn1gAlUci/WhUspHR3KnT5VnbVmN8TpH9X7hKyqj3JWLg1
+	 ofX9bRTpdVN8p9yq+lR8Ht2YnAfZhPgt23KTKlnY+vNmaiMfN2v21SrnWnssLx9dUgkBO
+	 K586UPkrefOPEuXeU6/ifM3H4ItXNTSrEalt4OSl1qv+csaj9vE6o+M+aUdPeckhgavfm
+	 6iK0ntg4ydBY9VUW/hcSyymZuSFuhjfljez/sj+PzPJGyl4UPN2i0cAyn8DFnxdF1kg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794913576;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:In-Reply-To:References:X-Mailer:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=ChkKaHHAKUklGidpwJFPREnCjwZb6wuXyqrdGtCbZ5c=;
+	b=jdfjSGszlkC4Gkp5CsO8i02YQMJtqjwC5QWz3jpQ/okMzx1QoJucrWd1Er6/hn8fNxQP
+	 HuK1OCwXSf/oo2XjxIZI4yVczaqYB6oe8ihawUMP5FV6WN4reP/ICZ0AuKxn3vVcEliK+
+	 pPIJLeCaVZHy+NWN+C2isoAGQrXhank+yEiHsbD/bM8NAhj0ullZpktsHFyZgnvhBLbHR
+	 8KuaYgb5Ei8Vq+K2F94l8NpXUVqQuKLsNB1bpb+Q9rrkXThqfMnNULUtUFYvU6T/czeeX
+	 I01NO3RZzUocNS8KlLpITFyjUkYr9X+VrM3uE4BIDzOPgvSwYU8U2Ve4V5+QTUIXNRg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FIeSbqCN;
+	arc=none smtp.remote-ip=209.85.221.54
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11019606A337
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 10:50:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 11019606A337
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3CC606A323
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 11:06:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D3CC606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=gieNcyT9
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=h2hcCt82OLr5kXS87kPBuWZJSaH9YT4t+M0tUGKC/sa9EMoLaCNXk2LlLbpqoMizunjfGiOTdvQjE2mA5MvaBjoChzINUaV493i3vNYO+R3zXqmlxU8BBYj9vr0vduiKkAOXyi07AF5CKy6zv3S79iax9AgPwxkxwm4JrWNinInyCeYVQk5tO5bRXh05xUT8EKOH1zK3HICPApyIN70IYeGMYlIJIGkMopD7ItkceWlij5xOY0+1EmxM5TkpXvSCFw7hOcLW96PM+5Qbzyh1/DSNOK0oAYh2nYlPj6rBGVtOMUj2MnvYFizPcz7n3TRKSuLZfa0d5b/8K0mxQCm9Tg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4GlJH3a0k1Uv/8C3ZO7LPFWM8uVB+SDunoL0qenHnew=;
- b=xKQEYu/9Z+aoyVSwFbKHeKKtdTmUleu4uoHaIJsy7IJKaQxfaGclV1HFqc9+fOYPAKMZCjdTMkq3BBCkVUQt6vFjfrVmrx6HaAatR/6M8yn62Q+BW4iC8z+jMYtrta5uTbO7O0WdoBps1qna+6wO4yv3XWTMkhnictTq2IW1cy/e4nnm1KUwX3L1dFRUwIyo7wML5psMaP4+RGVcK9FjbR+6BdA3wl6JX2CWeA8boS6iMqdrcOGDf3b+N/1qePfj6R+0SXSiDlyafePbsSNu67or3uPJc5ItjiysTd5OU6SsKdP+2L7g4fg2H07fZaZqsLWE3RVBn8NZUnux5QNQfg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4GlJH3a0k1Uv/8C3ZO7LPFWM8uVB+SDunoL0qenHnew=;
- b=gieNcyT9//xkhD3CrF38VUgkj+KQqeJW6teQhpnt+kkZ6kuzvfFVBzq7wyjWUFUJ3NawKwnco9W/VD9hf59A89qCI4neGvJadi995Pe37LF7G+TZa8DvZ5nlTFJ3MAw994COqkV9UvVI+RdyFpmgzOpbOa11DbIsqh8sxXuD6QwMZbSogl5YkvsdyNOMPdJqhjnP9/3QO//qw6UHxhbFj/QzGyh5xYOt0PcYSkhXVjuOAuhlbtIUoaP7vjH27IZObtEzssTAcvNW7mWitrFKqnfNCrAUyOh1JUaIQpAxg1g8TMNzVn1TGJTU3HsC/8gjIupxitjHV96NRwGvMXJ83A==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from AMBPR04MB021426.eurprd04.prod.outlook.com
- (2603:10a6:20b:78c::16) by AMDPR04MB11606.eurprd04.prod.outlook.com
- (2603:10a6:20b:71f::6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
- 2026 10:50:55 +0000
-Received: from AMBPR04MB021426.eurprd04.prod.outlook.com
- ([fe80::1cb3:7fae:cd68:6de]) by AMBPR04MB021426.eurprd04.prod.outlook.com
- ([fe80::1cb3:7fae:cd68:6de%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 10:50:55 +0000
-Message-ID: <e95a4520-b12a-42d6-a7d6-e98192b89b02@oss.nxp.com>
-Date: Tue, 17 Nov 2026 12:49:54 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] firmware: arm_scmi: clock: discover clock domains
- on first use
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-clk@vger.kernel.org
-References: <20261113-b4-scmi-clk-on-demand-v1-0-7fd162097b57@oss.nxp.com>
- <20261113-b4-scmi-clk-on-demand-v1-1-7fd162097b57@oss.nxp.com>
- <sashiko-outbox-212926@kernel.org>
-Content-Language: en-GB
-From: Ghennadi Procopciuc <ghennadi.procopciuc@oss.nxp.com>
-In-Reply-To: <sashiko-outbox-212926@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS4P189CA0029.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:5db::20) To AMBPR04MB021426.eurprd04.prod.outlook.com
- (2603:10a6:20b:78c::16)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FIeSbqCN
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-490d59c3edaso539598f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 03:06:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794913574; x=1795518374; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ChkKaHHAKUklGidpwJFPREnCjwZb6wuXyqrdGtCbZ5c=;
+        b=FIeSbqCNm93NLYXTOFeufi/I5lkzpNs69GvBqpnMiPwgO9+tXGV+3EZ2FlIl2d1xiR
+         1ghrGEDiNQBx50nN7Y63icSXNvuzH0bZ5Edd2PFlZ06I692cnzuuIMtvLB4xb7kUw3aK
+         //YmSNk4AXO6PH2VWnY/j8XmfDyrnOOp5NvjE5Y2pfJL8fD9R5wTZ4/14EO9eTbY5m7W
+         U1/95Wls5EXqwdqKK6mSRs+qAKGgOq3pk+SIg6EjqrIqjeQyjMpucklxnKTgRtogSxL3
+         ZyEsqpabLL52RACAopTHG6cQyoFULSe5ZIWXJzB2hzbbFf2ECg2TDax4yRdnDF/zn1bf
+         H+Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794913574; x=1795518374;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ChkKaHHAKUklGidpwJFPREnCjwZb6wuXyqrdGtCbZ5c=;
+        b=DvhNbBnZrtKYnMMA8ygdgGj5NUAfddOSn+U6YMdNieBX8WgI+mhBEIgFDiQjqOEyrA
+         34kvYFOezg98uqqfeOB+xXGneJStYbDcVAfzfflMu0rDr4B/WDPnq/qIsjWXd4Nprf9h
+         gt4wO6Q7S6JHLGyTItZmVQnGQ8qm5xEFjdyss/RGmvyTMImacLGLMTylOoeNnJP280R7
+         UOgts6QD+NkiO3XesE/eARKe2uzvt9uA6yH/LKpqNbSxZmeAAvOw8YZmsqA9neIlF9Bu
+         DvQ24JWu0y/6UX0Y30rOcWbR0tycMc/G0otUoWrabZSMXFRjRRwMCMThpNdI0sTaktMv
+         GrVw==
+X-Gm-Message-State: APuU4Z/V//K6VoSrb9Ue2ipfQMHSE0NewDlun02GVZrr8hP80E+PcgjV
+	GpFkxUWxBD2iyLNYtseiJJH5N2bw002C/O8DOPuqFes1H2/czuFSCXaR
+X-Gm-Gg: AZFdTZcTBNt0A3jMGVGU0FTT/aQndxXd9ob0MnpbRumnKjgTSRgs0UHlWmOl/zsALmj
+	gf0B4xrD7Kzz9bhopkAkW0JdAFOkF6JYBfpZkFVp5jUcyuwIIvh9bOyQcJ+8fXvizroWS54FQEL
+	xGEMffbmHNYkyY7fTHG3muWUizvMiDmhQBj1oc8b8cMUxKUToenN7Co7sTJqH3LNtOEapHNQDun
+	q1MKd99PRV2PiOOtaY9pawcA5ux4k9YgRMaBgG/zLKQ6fXNwzHtfxoj+q+v/VqD49OI3riYIJBx
+	ehYGiI4xpmk6JEirieFCoZqw0vrzkKJzhmQLi38TOva2rwAFkNnjMtTi/N5Xa88uEMmfTptKjst
+	yPFTHV6hWnlbnUIrh7cXeKyQvyMPCD23/wK9I1Ks1qaMNrkwhrNiZQEt7zcnOtJKgkS1QhMfX9S
+	dAl1QsxVVi5F5JeOQ5QBOiNxYwgSwilhZo3K5vTYSPiMQO0erRLp1EngwzIqMwUgrEQs8OLSFrN
+	PH7SZe+HvpNkPDKeff0LXR5fN+qYRyzJ/po3uorjCLL1b8jyIBu1cnlaDQ0AywVjt47qgEfKXNY
+	dnLLTS8F2o42JAIxrPwDdfpCjFldg5OxsMiqsH6KfiApbIuFuQZo+BYAoaCLfxsYzQ==
+X-Received: by 2002:adf:e18a:0:b0:48e:3c5f:a24e with SMTP id ffacd0b85a97d-4a3735b4249mr4831257f8f.11.1794913573701;
+        Tue, 17 Nov 2026 03:06:13 -0800 (PST)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c69406640sm27345536f8f.12.2026.11.17.03.06.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 03:06:13 -0800 (PST)
+Date: Tue, 17 Nov 2026 11:06:12 +0000
+From: David Laight <david.laight.linux@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Petr Mladek" <pmladek@suse.com>, "Kees
+ Cook" <kees@kernel.org>, linux-kbuild@vger.kernel.org, bpf@vger.kernel.org,
+ "Jim Cromie" <jim.cromie@gmail.com>, "Lorenzo Stoakes" <ljs@kernel.org>,
+ "Luis Chamberlain" <mcgrof@kernel.org>, "Andrey Grodzovsky"
+ <andrey.grodzovsky@crowdstrike.com>, "Steven Rostedt"
+ <rostedt@goodmis.org>, "Andrii Nakryiko" <andrii@kernel.org>, "Samuel Wu"
+ <wusamuel@google.com>, nathan@kernel.org, nsc@kernel.org
+Subject: Re: [PATCH v4 next 13/13] scripts/kallsyms: Reuse little-used
+ compression tokens
+Message-ID: <20261117110612.1d61025a@pumpkin>
+In-Reply-To: <sashiko-outbox-218682@kernel.org>
+References: <20261117103352.1244657-1-david.laight.linux@gmail.com>
+	<20261117103352.1244657-14-david.laight.linux@gmail.com>
+	<sashiko-outbox-218682@kernel.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,127 +105,109 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AMBPR04MB021426:EE_|AMDPR04MB11606:EE_
-X-MS-Office365-Filtering-Correlation-Id: 08753854-f0d7-4145-0979-08df4498a7a4
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|19092799006|376014|10067099003|11063799006|56012099006|4143699003|261026121527099003|261026140227099003|261028144727099003|261021121427099003|261022105027099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	jMNP0cqKFeZifmZif5Ba/MpE6kf+2EUHtlUbXMSoAz/Sy5v/QsXK8upnN4LUHCXgRGHYsaKY4Yiu6o/v1Cqa3dbNsysP9tZ3m66L1v9knhlWyfEfhhrCfCN5ugzWlzqhHCFMuOwUNvuQaabHIVtOlciN0QhDvMQw+0c9JbJ/0ZjBMlYGK4zlaTUgu5719eN4JBehAOywy6tVIe/QiBb8CHjZJY2G8zBc83AfrffrqpzE35U8R2l3JpAhoxbFoXFeLiF3/wA5ATqzJE6C/hlTVRCz53j45HnNXuhxvEHxlWuGh6DARkmQwVzvs616TdWxeDZAXLMdtdKrqma8K261DVuB8qIwx1P5LaLIyBKitSlMWq4NCG8ee+4m74ugkh5SjeG7l+x11vsZu9rL8U4L4Nl5baBtg1R2xmQQr6mo7MSYmcD2zvpgojTio8KpZ4oFCgBd9oRQwGydxROfxPAxe18xAfdMuF2AE9aWXPfyNRwjU+4ec6lUD7BB8O4Pi8vN8yGBrATTxYyZ/Njvk7ko2BUkIMa/AOSgc4PP8ImL/FVG9bV6dmCGiQ3vBZU11WBfq9E5j3EzcqfAoVc3aSJmur6mg3IhX5n7XwVzMiu2Nq8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AMBPR04MB021426.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(19092799006)(376014)(10067099003)(11063799006)(56012099006)(4143699003)(261026121527099003)(261026140227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?QWM4T2RzZXJ2UkppdXFsMWRkaVEyR0dRN1RFNzRva3ZrYi92ZUNmQ0pzNFVq?=
- =?utf-8?B?RWRHY2U5cWdxM3AxbzY4QVE4cWU0Q2l1a3Y0NkhPb2RyQjVPVjNYL2VLTTg1?=
- =?utf-8?B?THlpYkJFYUhoUVk0RFJmZ1h1N1ZKUTI3WjkrTFB3SzM0R2dUWWoyVTNlVFB0?=
- =?utf-8?B?a2Y0NVRtdXV3WXpUZmxHYVRQbGRHdGhMTnVUTnpHUCtRSkJqVS81b0ZIa0hL?=
- =?utf-8?B?K0FabXl5bVpGYmU1YWZWdEtVcTg1bjBCVWJCdUNyQnFzVWV3QmJwN3ltMktB?=
- =?utf-8?B?VE1mUnNHZTRkVkR3eWxEOW9GYVZZbkR6SU5UM0pYRUJyb2hDZFdodTc2UUcz?=
- =?utf-8?B?WmtwaHBCekpSM2orOXdJM3VJTGZIZ0NTT2ZsaVd0c3A0RFZ6bUd2eVUzcmNT?=
- =?utf-8?B?dUpkcFM4UUw0T29INkVyQ1pKeVgybWR2cWlIT2FWbGdmWmYyRzVHWjdPK2h2?=
- =?utf-8?B?dFhnUVNodGFXS1d4NGhCMThlSFdWWm8rSE9kODYwRTBabHQwOWsvUjdtdU54?=
- =?utf-8?B?MGFrLzF1eE9MdERpU3loV2JpTUFsWUhyNFlRNkJ3SDQzUUcyeEYva2ZPRlBU?=
- =?utf-8?B?ZUQ2QXpab3BiSGFNRnZvTk1aNzZFZ0NKbnhPdG1lYWlqRytYSjJkQlFMUTgr?=
- =?utf-8?B?Q0h2THkvUXhDclVWVk1ndGdETTAveVlVY2dxMnp6eklCNUppbC9hUlprODNJ?=
- =?utf-8?B?UmNnMis2VTVRTDJpaTV4ZjlpUVdDODNTZnhGQm1EeUJwN09HUGhJU2paMjhJ?=
- =?utf-8?B?ZVZnK0ZqblloMk84ekJvZForOTZ5SnVrYm9mQ0VCNUNrQnpFL2dvZDM4RW43?=
- =?utf-8?B?ZE5YdEViU1RtN0NIay9DT0ZjTDhpU0NMSFdvZ254NUtocHRNWlVwZi8wQlJt?=
- =?utf-8?B?elNoMjlraHA5b0F6eHgxc1V2YjZEWDZ3cFJkQUdQQ09XamlKd25KZWhMZGE4?=
- =?utf-8?B?WDhHaVlqUitjY3Y2aFNCV2FyOXhERy9jRU1QWFBFSTBPOVprKzFDbVZxTGpj?=
- =?utf-8?B?dFhiZE9Vd0pSRWlEZWlIL2wrdlBZRFpXM25hejdvTDZTMlpTcEtZMk1NejBq?=
- =?utf-8?B?d0ltaEcrMS9LU0ZycXBlQ2VlSnVDa0JWNHpUUCtHd0x3RVorcGh3aUM2K2Iv?=
- =?utf-8?B?NjRnRitYOW1SNUJLWllLMndwamkyT0o4OWdVelo0V0VFU2FwMW5kZUlpQW9R?=
- =?utf-8?B?M1FqK1M0S0t2eW81V2RWeEE5Z09KaEJCNnNOclNQNlhlOEJkd2ZQL3VCaTRw?=
- =?utf-8?B?MjFIREdXdENwSmJtcjFHZi80SXFkNHlWZW9DZU9mUUJjTkMrU1hKbTJvSmJI?=
- =?utf-8?B?VEVYWmZaeEJYU1BqcndZTXRreGdvUlU4QnNtZjFGNW1mcHNNSGNOaVpVQlow?=
- =?utf-8?B?MTllZzZUT3J3V0U3R0d4amFEUlVoVmtTMSt5YVZDNnZnVlpCdGpFcU9RVGNX?=
- =?utf-8?B?NWsxSjRScC9yd25QU0htRGdQWVl1MEdjbHRwaytyd0ExYmsxWjU1dkpjeE9J?=
- =?utf-8?B?bmFpeGpkaXIvZFFuZGt5cjNBdlNDVS93MnF0Rms4QzJSN3BlVHE4QW1vb2VN?=
- =?utf-8?B?WkdtYWphZXMwOVpaTUZaaXJiQXloamhjYUJUN0dzZ1ZIcVRZUHNabkYzQVpH?=
- =?utf-8?B?VW9MakxBWU1jZTZrMGdiTTZiWWhZRmxKeXVXL0dwNytPbHFDckxKbXBpd2RV?=
- =?utf-8?B?VHdIcDRBV1c0UE0xQ25ud256bW5hMnpJdWxFL3dyeU11dUhxMWZVendjQVlK?=
- =?utf-8?B?VldqRDM4QnpSZ1MxNXp2WWlXdGNYcno1S3lIL2FvN1JUMDhENWFIUUhyRENl?=
- =?utf-8?B?NHh1aFU4c1ZWbCtlY2tsZnlGM25HR0NzNHlWSW85YXQwS1lkeXZFbk5tQ1Fy?=
- =?utf-8?B?MTMvZE9nWjFaRWRxUzU4dmNheWhtWnZMTHlvZ0FxTVRDMW9RVGpjUXB5TjI1?=
- =?utf-8?B?TGVpenVIYTYvYStscXZ5T0lHU1J3elpWTERpejR6UWpMSjNGMGNzNVpuOFZl?=
- =?utf-8?B?bTNmUHc0Nkt1WWpqbHllcitLek9BQk01aHZSbHJPU3h1Z1UzSW50bEdqMWo4?=
- =?utf-8?B?ejMwYzZUNzhqYytOaWtjc3dhUDExYlUyK3hzdGE5SnVBTjVTYW0zcTJRYjIz?=
- =?utf-8?B?WEVCaXFNbDN4SEcvQlJxNkJ5SFM3cEhISVdvQnBicmRKWUdlMi95MVROS0Jo?=
- =?utf-8?B?ZE1LSG5yUys1VVhHNEVTRTRGaHNZL3ErQkkwS3VSYkFMQm54MHpWRmNUL3hr?=
- =?utf-8?B?N2Nzd3FuSGR1UXplKzBjU1FvQ21JdHRaQW9abXZPVlJ2Y0JZVWsyN1c2TXBn?=
- =?utf-8?B?Z3lIL1BSV2RMZ09odmNKV1NZQ0dLNlJ5emRmWTh4blZvKzBYNVQ0aW52SVpm?=
- =?utf-8?Q?aLK/pqWZOQ7WrfVA=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 08753854-f0d7-4145-0979-08df4498a7a4
-X-MS-Exchange-CrossTenant-AuthSource: AMBPR04MB021426.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 10:50:54.9691
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: efLDJUythdmu9y4syLhJNf5kSgyzZsTAgWIbL6l6DN2h0ECggSkSQ/PTKtW3vHhiHYyEMPzVWxxewct0OrSVC6eQq/E9RIr7qIKY/kNE4R4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMDPR04MB11606
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On 11/13/2026 3:49 PM, sashiko-bot@kernel.org wrote:
-[...]
+On Tue, 17 Nov 2026 10:57:57 +0000
+sashiko-bot@kernel.org wrote:
 
-> [Severity: Medium]
-> Can this underflow r_evt->sources[src_id] in __scmi_enable_evt() when an
-> all-sources clock notifier is unregistered?
-> 
-> Because scmi_clk_notify_supported() now returns true for every clock when
-> the protocol supports the notification command,
-> scmi_register_protocol_events() leaves r_evt->sources[src_id] at 0 instead
-> of NOTIF_UNSUPP for clocks that do not support notifications.  When an
-> event is enabled for all sources (SRC_ID_MASK), __scmi_enable_evt() gets
-> -EOPNOTSUPP from scmi_clk_set_notify_enabled() for those clocks and leaves
-> their refcount at 0, while still succeeding overall if at least one clock
-> supports the event.  When the notifier is later unregistered, the disable
-> path in __scmi_enable_evt() only skips NOTIF_UNSUPP:
-> 
-> drivers/firmware/arm/scmi/notify.c:__scmi_enable_evt() {
->         ...
->                         } else if (refcount_read(sid) == 0) {
->                                 ret = REVT_NOTIFY_ENABLE(r_evt, r_evt->evt->id,
->                                                          src_id);
->                                 if (!ret)
->                                         refcount_set(sid, 1);
->                         } else {
->                                 refcount_inc(sid);
->                         }
->                         retvals += !ret;
->                 }
->         } else {
->                 for (; num_sources; src_id++, num_sources--) {
->                         sid = &r_evt->sources[src_id];
->                         if (refcount_read(sid) == NOTIF_UNSUPP)
->                                 continue;
->                         if (refcount_dec_and_test(sid))
->                                 REVT_NOTIFY_DISABLE(r_evt,
->                                                     r_evt->evt->id, src_id);
->         ...
-> }
-> 
-> Calling refcount_dec_and_test(sid) on the clocks left at 0 triggers a
-> refcount underflow warning and saturates r_evt->sources[src_id], causing
-> subsequent enable calls on those sources to hit the refcount_inc(sid) path
-> and report success without enabling notifications.
-> 
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] scripts/kallsyms: missing syms update on split in
+>   uncompress_symbols()
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261113-b4-scmi-clk-on-demand-v1-0-7fd162097b57@oss.nxp.com?part=1
+> 
+> commit 33aea03661ccead3785f7f56d31a3c8974eb8710
+> Author: David Laight <david.laight.linux@gmail.com>
+> 
+> scripts/kallsyms: Reuse little-used compression tokens
+> 
+> This commit reuses compression tokens that have few remaining references by
+> expanding them back into their component tokens or three-character strings
+> when a more common token pair is available.
+> 
+> > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
+> > index 42a7c99585c56..976b525c4366d 100644
+> > --- a/scripts/kallsyms.c
+> > +++ b/scripts/kallsyms.c  
+> 
+> [ ... ]
+> 
+> > @@ -855,6 +954,125 @@ compress_symbols(unsigned int token_idx, int compressed_chr)
+> >  	return subs;
+> >  }
+> >  
+> > +/* Change every occurance of idx back to token_pair/triple.
+> > + * This extends all the symbol table entries but frees up a token. */
+> > +static __attribute__((noinline)) void
+> > +uncompress_symbols(unsigned int token_pair, int idx)
+> > +{
+> > +	struct best_table *bt = best_table + idx;
+> > +	unsigned int sym_idx, len;
+> > +	unsigned char *sym, *p, *end;
+> > +	unsigned int substitutions;
+> > +	unsigned int third_char;
+> > +
+> > +	third_char = token_pair >> 16;
+> > +	token_pair &= 0xffff;
+> > +
+> > +	for (int j = 0; j < bt->syms.cnt; j++) {
+> > +		sym_idx = bt->syms.sym_indexes[j];
+> > +
+> > +		sym = table[sym_idx]->sym;
+> > +		len = table[sym_idx]->len;
+> > +		end = sym + len;
+> > +
+> > +		for (p = sym; (p = memchr(p, idx, len)); p += 2) {
+> > +			len = end - p - 1;
+> > +			if (len) {
+> > +				if (third_char) {
+> > +					/* Adding three characters */
+> > +					adjust_profit(sym_idx, idx, third_char, p[1], p[1]);
+> > +					memmove(p + 3, p + 1, len);
+> > +				} else {
+> > +					adjust_profit(sym_idx, idx, token_second(token_pair), p[1], p[1]);
+> > +					memmove(p + 2, p + 1, len);
+> > +				}
+> > +			}
+> > +			if (p != sym)
+> > +				adjust_profit(sym_idx, p[-1], p[-1], idx, token_first(token_pair));
+> > +			token_add_symbol(token_pair, sym_idx);
+> > +			p[0] = token_first(token_pair);
+> > +			p[1] = token_second(token_pair);
+> > +			end++;
+> > +			if (third_char) {
+> > +				token_add_symbol(token_index(p[1], third_char), sym_idx);
+> > +				p[2] = third_char;
+> > +				end++;
+> > +				p++;
+> > +			}
+> > +		}
+> > +		/* sym_idx is already in best_table[].syms from earlier. */
+> > +		table[sym_idx]->len = end - sym;
+> > +	}  
+> 
+> [Severity: Medium]
+> Can uncompress_symbols() leave sym_idx missing from best_table[].syms for
+> token_first(token_pair) or token_second(token_pair)?
 
-Hello everyone,
+Read the comment - it is still in the list.
+Quite subtle.
 
-The points raised by Sashiko are fair. However, I would prefer to align
-on the overall direction first before addressing them, to avoid
-investing effort in an approach we may decide not to pursue.
+David
 
--- 
-Regards,
-Ghennadi
+> 
+> sym_arr_free_all() clears best_table[ch].syms.cnt when a token slot loses
+> all references or is uncompressed, while split_token() only checks that
+> first->str and second->str still concatenate to bt->str.  If a component
+> slot is freed and later reused such that first->str and second->str still
+> match bt->str (either reused for the same substring or for a different
+> length split of bt->str), its syms array only tracks symbols from the new
+> compression and no longer contains sym_idx where bt remained compressed.
+> 
+> Expanding bt back into those component tokens without adding sym_idx to
+> their best_table[].syms arrays triggers the errx() in check_best_refs(), or
+> leaves stale token bytes in table[sym_idx]->sym if that component token is
+> split again before check_tables() runs.
+> 
+
