@@ -1,91 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.163
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.173
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794941919;
-	b=nUCc22q6hT5ZAtmSJoLikEpgKeRo+juOfU1oF63SW9hVzLJeliAwpSnoqsZVaUaJD8C+
-	 irLBvoGqAaoOMEYzMzZXS6UFwxrzraqec+6T1R2ARcTE8qDH/aV+XnBcalQRiGQnZwlI2
-	 NcUmTATLhn5OL4jspFF6nlBos9tR3qjNK+6BK8r6NlCfyVOPGBwD1Cl6h6uCxO0HI7kIY
-	 PxEERF1u0QOdOt4EQHDLsJmr2lK7i8Rz5JTpRFHk7WbNro+qYbmI1XxVEkp4KrRuQVybF
-	 DJFwHxtzHnNfP1NwgzH7m5BN9l2YpqMyUd19EgKXt9p9+JDAbhYYEy4U7FgM9Pw5CFA==
+	t=1794942652;
+	b=Lo1bDyPlmFIm30BBR/gMbzdwzBWKB3fCkESrREJlZIk5q2mmf/J/Y8+0zwH8bwa8qFc6
+	 lbYZKQmUnzMdP9LJpkgbVadKr+X0VVQmmBPF4wQH99q39A333v9565YVAXJneST3h24DP
+	 NBqzJc4ZBc+8mFoIoeOKcVC3t9iupmOTyBHapNv9MqcBo1jfV7DGBdNLBRw0fMA6jDTLx
+	 lU1mS1SdXDrUU47Eg8AgjzZeJDqk9Xe3cAim3ik7Z8oIZPPX+E+gKwcF0Ym6NrL3KLIZu
+	 DoaSYi91Et4nclV9eR1Qv2fgJ7qz6MLodipVgxxCL6OnLw8th9vIL02zwijQl+CY1mw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794941919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794942652;
 	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
-	b=iGh6wMw9ZMPDpBN4B7xiUXlJYS8uDVGIZajwHDHl7S80EvlX6Xvev5uBPhSr0vD+8Rh6
-	 +wlWHOM7neoI9JVNln5PJ4gaPP/re8e06V4GHXfdKllLnkQcK+KWBgrmujlCU4XSGngWf
-	 6VKcRw4rTCarM0oNdAukTHvCdDGzZYVZ4+O2cqC5Y+OO+aVURFnoelapOjOj/+/GekVqn
-	 3yzRUo/1Nvx0Fs+wXH3EQDaozQLsjugV6Hnyw2rpG+3KkR+r3VI8h5TSFqgPAHM2QhWRW
-	 2t7xvtNzwP2EX20l7ze3fTeCWlk5akHnTTENCMyXd9HvmF0K2qFMcFTb4I6wY8Y4IdA==
+	 Received:Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Content-Transfer-Encoding:Message-Id:References:To:X-Mailer;
+	bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
+	b=Acs2SXemOE8Y2NWV994mYhrcPlm2R9R5zciR3FC0Af9Tpshy76NVOmJ8ZeoWeA79tkqZ
+	 u1dBlQBpbRHhpHROQpNIHq+3IHlT2R9Uum7IXZZN41XvJa6qDKBMRvEPrbRfWs/q6BEle
+	 fortVJfCuGyvoNwoS43RGEN8zv0Z1I3d/gLrl/WxlqLk1RukhCSp0p0rBxknk1PyGHK93
+	 l8BIGN95HghDSE7NqVe7PQb97DeEwyEBxuFYWB3wbaJVlm9ZabYLFKgg9kvm2amvVDjKO
+	 826PYvxunMBtHb7ePx14ROdPokGg3KF0bLbJtxAFYUhIOjEclLKHHwIOzEgQq/MfKRw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=hartkopp.net;
-	spf=fail smtp.mailfrom=hartkopp.net;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=kZIbDAi7;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=9hVfWJym;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.163
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
+	dmarc=pass header.from=goldelico.com;
+	spf=pass smtp.mailfrom=goldelico.com;
+	dkim=pass header.d=goldelico.com header.i=@goldelico.com header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=CpawlFgA;
+	dkim=pass header.d=goldelico.com header.i=@goldelico.com header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b="XGSZxM/U";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.173
+Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [81.169.146.173])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2E2606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 18:58:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B2E2606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F21606A32F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 19:10:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5F21606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goldelico.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=kZIbDAi7;
-	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=9hVfWJym
-ARC-Seal: i=1; a=rsa-sha256; t=1794941891; cv=none;
+	dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=CpawlFgA;
+	dkim=pass header.d=goldelico.com header.i=@goldelico.com header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=XGSZxM/U
+ARC-Seal: i=1; a=rsa-sha256; t=1794942629; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=MOxCghFH8qbQ4Ggu3P2kBp+RlGP0b+ZKqvqyBJ7c4rWTsszDZa2JepTFIFxloqCgAG
-    SALuqZNfPXta1QS88Mj9Q/mVI4XtqQM0jzhFBvKil0YQVdVfCKy8bUwB7CSeVbWAlXwo
-    cxY1wfGv7CvrIVaFqHDWVyWBPj7jlgtf8ljvBXqrdURb71ji8TUrC3qpGbsbvK9t8qzN
-    DQ+FQ4j+nNIuMp1iCUU/38Xs1jMZc5E7WyXk72R9CkqLJfP+HH0x2yHjyWMzCmCExCnj
-    USogbxZjDyT9zIjPdq4+OUYW1bail3JES03oaIztvjHp7zXZWLiVjfadfJ25xqKPoLYp
-    sbvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794941891;
+    b=HHA4yXaNh9zJAh6K/BtGZ1sJPolIBk8O99o7Bsuehway19CAVMdlBrlcJUm2vNc5Xn
+    Rdvm4tRgkQgigWKFepxviO6RHEWytZlL+E2ShA/C47zmaN0/EvsTq8u9si7RzWG+Nmre
+    8FtEVcdPQ55nXMW8BEu+sPMJdLyk5EA0tOEipVz3fA2C3r0lZFeTpOZOEblPPYhvFvaM
+    63gT0h/i0vl4d0vqGtYf63QjuIhHeM239Axz+qNDS3/HeEyy2m8p4+yUnTCJFDc8TFlc
+    yEr3aSblHkN79+nAspqh4zwGBEdlxpT7k1mZWN4+TsFICRfR4eXGUKtA9tpW0+Vz9rmH
+    Josw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794942629;
     s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
     From:Subject:Sender;
-    bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
-    b=eqTyl4aniA2+m0fjvrW/hBtdvRQEflZ6N5L29rci3BImBNNxaABjOgbW5jarhieZb4
-    aMNQIpm/LvkxRf7m4s3nC6Ifi809CvqGFLHVI/8oDorNsl8Qje3GLqn6RNe8Q/lK7/Rj
-    KO5gfw3NoEgGqA3A+byS3pKOmM8cVym8nPSqHopDioJgpR7w4lQC+f2r261i6jLA8qIM
-    ew919WKwl4WQO1flatD4zcwqmYeoA9t+OTvfjRI1B8nk/8yrx/fScswiDC3dUcIsrvL7
-    1sGbsHLRn6s1B6AToHgRPfJaivnBISrPF8KC4MFygU0hAJdwc9oxtbRunjSjwb+vxCpn
-    nfuQ==
+    bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
+    b=YT5MQiDWd+DI5BSBrFpV/V+6JMY8+LBJFQ97yKKy2UKeAvD0/SKOB4iCgM8dTg6kUB
+    KUp2e48Ni3zog5zdthwcirQLqBpUTjmRMyqY9KtcyfSfAYdx8mVjQxjPPlHecJuWUSzN
+    97eI49oJb1p67rkibrUWO3c5LHpg08cHWpdOmkWdkB157Z/W6Ux07fnWbLvKNDqXixJ3
+    b58kqJ7dkxy90otGVFIvrOwC0yQD98XeGHJw/2DR8+uiFmHHeuY1ORqdAuOucx6z1Cne
+    1N2Q9vK3InTCJEBqwnkl/ULcFCXjfrxw9qVZdE69xzUxW/fangaLnjcLxOy7mTItA2FX
+    gDEg==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794941891;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+X-RZG-CLASS-ID: mo03
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794942629;
+    s=strato-dkim-0002; d=goldelico.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
     From:Subject:Sender;
-    bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
-    b=kZIbDAi7KZurJ3JBA6lBe4HXtG5AX8Aw7shWqcl64A8ptRsflouc0AgC+OCO7VGVRU
-    NOvBPGGKf1nfpVUDJjao4zVI8AneRVZ3rDxHpcRPuZgNukYYCocSKnadJnw2sB6zqbpL
-    tMmaVJHWScBovzuEKUkdXCE0kdLDS2av6P69bhjOFG5qfXdiMuWYlNEcucSAJ3FlBdQU
-    5/HDMs778/ANLg6iC+11u3FOGnBHl4fCG1imcpqqgNacI3byuliVJjxRylQOQ9gff9BK
-    J6aE8TlqWUNb3PBEa2EEt3mhn6m+8ldyD8n4W2DIXo4Nn7bCwCN5ogvl7AKYwrpVdcL+
-    XQOg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794941891;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
+    b=CpawlFgAkegLPW09Ttyz2i5jcoD6WQvsGb1BEKqnCNbk6Z1N99/YOWWgyODAljlr2M
+    qU3CmrN/9UXjkvCxJQkisPLnTmikONgbymRSlj5lmNXn7dAy22UaiRRs+8MWmYNAwNje
+    ntRRkZQHMUAcZjIaoau8jRn8JESE5aMFNt+T9YU+Rizj3ml70tVXuRm7NqsYbyFsJnBG
+    xuSSeZip+NZVAnppdEaSLsp+wQ3dC/m8HsRG8s4qYXXuq9a4rAmbU7KFoGw152wDZDeE
+    bL5zvZ+aNS2xq19OVl18bTIrw5qQrqsBJey+QvuWrE7wtRnEoWLgV1126mlKfoiZB9/e
+    UAaA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794942629;
+    s=strato-dkim-0003; d=goldelico.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
     From:Subject:Sender;
-    bh=abeeiL8Dbe80hP0nuwbVTQJC0NDs8w3aH4HoUGnX56c=;
-    b=9hVfWJymeNMf73BAouQcc9bPnylxWn2auOuVeotWD0gKRFvNegei10plaFpuM2w36y
-    3BaGckiQ3WuYkWkP6CBQ==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
+    bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
+    b=XGSZxM/U/OSKBRigDREPvOaSeHJe2tfzZ0MeMeBqHXWlUnmAMZoTMowwheJI8biWG2
+    1TH1ODauL9VUp9SSJuDg==
+X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMhflhwDubTJ9qVpwcQVkPW4I1HrQ3ppelMiNKoEY92nD9kO01+3QZuyyF4VcrvHZ"
+Received: from smtpclient.apple
     by smtp.strato.de (RZmta 55.6.3 AUTH)
-    with ESMTPSA id Kfdf2a2AHIwAqxa
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+    with ESMTPSA id Qb56a22AHJASYjA
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
 	(Client did not present a certificate);
-    Tue, 17 Nov 2026 19:58:10 +0100 (CET)
-Message-ID: <ae174988-93be-453b-a790-6f175f96ae1c@hartkopp.net>
-Date: Tue, 17 Nov 2026 19:58:05 +0100
+    Tue, 17 Nov 2026 20:10:28 +0100 (CET)
+Content-Type: text/plain;
+	charset=us-ascii
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -94,156 +93,118 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 7/8] can: isotp: reject socket options while a transfer
- is active
-To: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
- Vincent Mailhol <mailhol@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>
-References: <20261117-can-bcmlock-memcg-v6-0-6826a6227d36@hartkopp.net>
- <20261117-can-bcmlock-memcg-v6-7-6826a6227d36@hartkopp.net>
- <sashiko-outbox-219222@kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <sashiko-outbox-219222@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.10\))
+Subject: Re: [PATCH v2 2/7] pinctrl: ingenic: Fix hardware dual-edge
+ interrupts on X1600
+From: "H. Nikolaus Schaller" <hns@goldelico.com>
+In-Reply-To: <sashiko-outbox-219369@kernel.org>
+Date: Tue, 17 Nov 2026 20:09:58 +0100
+Cc: linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org,
+ robh@kernel.org,
+ conor+dt@kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <24975DE6-A803-46E2-A975-1CA3CE935077@goldelico.com>
+References: <cover.1794940166.git.hns@goldelico.com>
+ <b87494f8bd72efe7d4c8b8c7c6a5f37686861aff.1794940167.git.hns@goldelico.com>
+ <sashiko-outbox-219369@kernel.org>
+To: sashiko-reviews@lists.linux.dev,
+ Paul Cercueil <paul@crapouillou.net>
+X-Mailer: Apple Mail (2.3826.700.81.1.10)
 
 
 
-On 17.11.26 18:17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] can: isotp: race in isotp_setsockopt_locked() while rx.state
->    is ISOTP_IDLE
+> Am 17.11.2026 um 19:38 schrieb sashiko-bot@kernel.org:
+>=20
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Low] pinctrl: ingenic: redundant checks and duplicated branch in
+>  irq_set_type()
+> - [Low] pinctrl: ingenic: missing Fixes: trailers for X2000 and X1600
+>  dual-edge IRQ
 > --
-> 
-> commit 2bbcd6c26df0af71086da24b238251d946bf05f7
-> Author: Oliver Hartkopp <socketcan@hartkopp.net>
-> 
-> can: isotp: reject socket options while a transfer is active
-> 
-> This commit rejects changing CAN_ISOTP socket options in
-> isotp_setsockopt_locked() when so->tx.state or so->rx.state is not
-> ISOTP_IDLE.
-> 
->> diff --git a/net/can/isotp.c b/net/can/isotp.c
->> index 0293d590186c4..32c88749d75e7 100644
->> --- a/net/can/isotp.c
->> +++ b/net/can/isotp.c
->> @@ -1725,6 +1725,14 @@ static int isotp_setsockopt_locked(struct socket *sock, int optname,
->>   	if (so->bound)
->>   		return -EISCONN;
->>   
->> +	/* A transmission or reception that outlived a previous binding
->> +	 * (unbound by NETDEV_UNREGISTER) may still be draining and uses the
->> +	 * socket options, see isotp_bind().
->> +	 */
->> +	if (READ_ONCE(so->tx.state) != ISOTP_IDLE ||
->> +	    READ_ONCE(so->rx.state) != ISOTP_IDLE)
->> +		return -EAGAIN;
-> 
-> [Severity: Medium]
-> Can isotp_setsockopt_locked() still race with an in-flight isotp_rcv()
-> handler while so->rx.state is ISOTP_IDLE?
-> 
-> isotp_notify() clears so->bound on NETDEV_UNREGISTER without waiting for
-> an RCU grace period or acquiring so->rx_lock.  Meanwhile, isotp_rcv_ff()
-> resets so->rx.state to ISOTP_IDLE before sending an overflow Flow Control
-> frame or transitioning to ISOTP_WAIT_DATA, and isotp_rcv_cf() sets
-> so->rx.state to ISOTP_IDLE before checking padding options.  Because
-> isotp_setsockopt_locked() and isotp_bind() check so->rx.state without
-> holding so->rx_lock, a concurrent setsockopt() can still modify so->ll.mtu
-> between alloc_skb() and skb_put_zero() in isotp_send_fc():
-> 
-> CPU0 (<softirq>)                  CPU1
-> isotp_rcv()
->    spin_lock(&so->rx_lock)
->    isotp_rcv_ff()
->      WRITE_ONCE(so->rx.state, ISOTP_IDLE)
->                                    isotp_notify(NETDEV_UNREGISTER)
->                                      so->bound = 0
->      isotp_send_fc(..., ISOTP_FC_OVFLW)
->        alloc_skb(so->ll.mtu, ...)
->        /* allocated with CAN_MTU (16) */
->                                    isotp_setsockopt_locked(CAN_ISOTP_LL_OPTS)
->                                      /* rx.state is ISOTP_IDLE */
->                                      so->ll.mtu = CANFD_MTU (72)
->                                    isotp_bind()
->                                      so->ifindex = ...
->        dev = dev_get_by_index(...)
->        skb_put_zero(nskb, so->ll.mtu)
->          <-- skb_over_panic (72 > 16)
-Nope.
+>=20
+> commit 478cc52f71c553d81f6fc71fbe29cdc01e47f147
+> Author: H. Nikolaus Schaller <hns@goldelico.com>
+>=20
+>> pinctrl: ingenic: Fix hardware dual-edge interrupts on X1600
+>>=20
+>> Use the hardware dual-edge detector on X1600 and X2000.
+>>=20
+>> Set PAT1 when configuring both edges and program EDG on X1600.
+>> Keep software edge switching for older SoCs without EDG.
+>>=20
+>> Tested on X1600 and X2000 using GPIO buttons and register readback.
+>>=20
+>> Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
+>=20
+> [Severity: Low]
+> Should this bug fix include Fixes: tags for the commits that =
+introduced X2000
+> and X1600 GPIO support?
+>=20
+>  Fixes: 943e0da15370 ("pinctrl: Ingenic: Add pinctrl driver for =
+X2000.")
+>  Fixes: 4da56f9c6f14 ("pinctrl: ingenic: add x1600 support")
+>=20
+>> diff --git a/drivers/pinctrl/pinctrl-ingenic.c =
+b/drivers/pinctrl/pinctrl-ingenic.c
+>> index 7d3f34c4fb589..f718725d84d4a 100644
+>> --- a/drivers/pinctrl/pinctrl-ingenic.c
+>> +++ b/drivers/pinctrl/pinctrl-ingenic.c
+>> @@ -3622,6 +3622,10 @@ static void irq_set_type(struct =
+ingenic_gpio_chip *jzgc,
+>> break;
+>> }
+>>=20
+>> + if (type =3D=3D IRQ_TYPE_EDGE_BOTH &&
+>> +    is_soc_or_above(jzgc->jzpc, ID_X1600))
+>> + val2 =3D true;
+>> +
+>> if (is_soc_or_above(jzgc->jzpc, ID_JZ4770)) {
+>> reg1 =3D JZ4770_GPIO_PAT1;
+>> reg2 =3D JZ4770_GPIO_PAT0;
+>> @@ -3644,6 +3648,9 @@ static void irq_set_type(struct =
+ingenic_gpio_chip *jzgc,
+>> ingenic_gpio_shadow_set_bit(jzgc, reg2, offset, val1);
+>> ingenic_gpio_shadow_set_bit(jzgc, reg1, offset, val2);
+>> ingenic_gpio_shadow_set_bit_load(jzgc);
+>> +
+>> + if (is_soc_or_above(jzgc->jzpc, ID_X1600))
+>> + ingenic_gpio_set_bit(jzgc, X2000_GPIO_EDG, offset, val3);
+>> } else {
+>> ingenic_gpio_set_bit(jzgc, reg2, offset, val1);
+>> ingenic_gpio_set_bit(jzgc, reg1, offset, val2);
+>=20
+> [Severity: Low]
+> This isn't a bug, but both callers of irq_set_type()
+> (ingenic_gpio_irq_set_type() and ingenic_gpio_irq_ack()) already =
+convert
+> IRQ_TYPE_EDGE_BOTH to level triggers when !is_soc_or_above(jzgc->jzpc,
+> ID_X1600).  Can case IRQ_TYPE_EDGE_BOTH set val2 =3D true directly =
+instead of
+> setting val2 =3D false and overriding it here?
+>=20
+> Also, with the ID_X1600 check added to the ID_X1000 branch, the =
+preceding
+> is_soc_or_above(jzgc->jzpc, ID_X2000) branch in irq_set_type() is now
+> identical and can be dropped:
+>=20
+> drivers/pinctrl/pinctrl-ingenic.c:irq_set_type() {
+>    ...
+> if (is_soc_or_above(jzgc->jzpc, ID_X2000)) {
+> ingenic_gpio_shadow_set_bit(jzgc, reg2, offset, val1);
+> ingenic_gpio_shadow_set_bit(jzgc, reg1, offset, val2);
+> ingenic_gpio_shadow_set_bit_load(jzgc);
+> ingenic_gpio_set_bit(jzgc, X2000_GPIO_EDG, offset, val3);
+> } else if (is_soc_or_above(jzgc->jzpc, ID_X1000)) {
+>    ...
+> }
+>=20
 
-The normal sequence for a CAN_ISOTP socket is setsockopt() -> bind() ->
-release(). Only an attacker would change the socket options while the
-bound CAN device vanishes. The attacker needs CAP_NET_ADMIN for the CAN
-device, e.g. a vcan device in an own user and network namespace.
+Thanks for the review. Both suggestions make sense.
+I'll simplify the shared shadow-register path, remove the
+redundant X2000 branch, and add the two Fixes trailers in
+the next revision.
 
-What the attacker gets at most, for the four (in-flight) frame types:
-
-- Single Frame: the PDU is delivered to the own socket or dropped with
-   EBADMSG, depending on partly updated padding options.
-
-- Consecutive Frame: only handled in ISOTP_WAIT_DATA state, where
-   setsockopt() is rejected with -EAGAIN. No mixed socket options.
-
-- Flow Control: only handled while a transmission waits for it, where
-   setsockopt() is rejected with -EAGAIN. No mixed socket options.
-
-- First Frame: the rx state goes to ISOTP_WAIT_DATA and the rx timeout
-   resets it with ETIMEDOUT after one second. The flow control frame is
-   not sent as so->ifindex is 0. Only with a concurrent bind() to another
-   device a single flow control frame with partly updated options is sent
-   on this device. With an increased max_pdu_size the rx buffer may be
-   allocated, which is freed on close().
-
-On unregistration the netdev core runs flush_all_backlogs() and
-synchronize_net() before calling the NETDEV_UNREGISTER notifiers, so an
-isotp_rcv() call can only be in flight for a frame from the backlog on a
-namespace change. In the First Frame case the following sequence can
-then happen:
-
-CPU0 (softirq)                      CPU1 (attacker)
-isotp_rcv()                         ip link set vcanX netns ...
-   (frame from the backlog)            NETDEV_UNREGISTER
-   spin_lock(&so->rx_lock)               isotp_notify()
-   isotp_rcv_ff()                          so->bound = 0, so->ifindex = 0
-     rx.state = ISOTP_IDLE           setsockopt(CAN_ISOTP_LL_OPTS)
-                                       rx/tx state is ISOTP_IDLE
-                                       so->ll is updated
-                                     [optional] bind() to another device
-                                       so->ifindex = new device
-     isotp_send_fc()
-       alloc_skb(old so->ll.mtu)
-       dev_get_by_index(so->ifindex)
-         ifindex 0: free skb, return
-         new device: skb_put_zero(new so->ll.mtu)
-                     send the FC frame
-
-CAN_MTU is 16 bytes and CANFD_MTU is 72 bytes. The skb_put_zero() with a
-bigger new MTU does not overflow the skb, as alloc_skb() does not limit
-skb->end to the requested size: for the GFP flags used in
-isotp_send_fc() small skb heads are taken from the skb_small_head_cache,
-which provides at least MAX_TCP_HEADER bytes. MAX_TCP_HEADER is
-L1_CACHE_ALIGN(128 + MAX_HEADER), which is at least 160 bytes in every
-configuration. __finalize_skb_around() sets skb->end to the size that
-has really been allocated, so a skb that has been allocated for CAN_MTU
-also has room for CANFD_MTU.
-
-There is no memory corruption, no persistent state and no effect on
-other sockets or on RTNL. Everything stays on the attacker's own socket
-and CAN device.
-
-TL;DR The worst case is a single flow control frame on the newly bound
-CAN device that is built with partly updated socket options. There is
-no memory corruption and the rx timeout resets the rx state afterwards.
-I do not see a reason to add more locking to the reception path for
-this attacker-only scenario.
-
-Best regards,
-Oliver
-
+Nikolaus=
