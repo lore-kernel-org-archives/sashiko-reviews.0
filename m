@@ -1,74 +1,137 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.49
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794875189;
-	b=cUj7l3NBygOoTR6I4c7OtOFAZzFDfU4rIaxx12RSIo8wrc+YVaPTvDMSV7s2WluJfSP9
-	 zjNG+Gb8TiNABWxGAqc/tkyIAi1xcLWJhWwN0K1r0PFWsDwa2XZBKXXCo3/nIq6TaU1L/
-	 AclE3r8yfqnLyUJCL4tUzTG8ur4RllWfncfiZnlNfV09SdizQXf5LGex0x0MqQmjctrru
-	 1eGcg1fh7Gl+JgHQcoi8kXzxtDEytVBuLP0wlsKrMubP949MYHqsLDUwY94oIzhjY7b57
-	 3aZRly3Pl+MycOy6r1iZZ6hMNCwcOC4iBb9frHGeKQKmPZMWUKDnvpCCTp6pRg4l9kQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794875189;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
-	 X-Gm-Gg:X-Received:Received:Received:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:X-Gmail-Original-Message-ID:
-	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
-	bh=1IF7o/AtrOMvQGCYw2joPZttg4edu/s8LsP4afvyeNo=;
-	b=gRViQLkMmDOjKCR+koPRLjtacTxSkHGzwhH+kpYuwQom2kmNZ+VsLlerUk0+1jtEkfsR
-	 aPw7ebxXz2R2k2V/kTzx0GRGPYGm6Jf4wFIx9XTADsQd17FNc0FnhU97NjPiXXh5qfPbr
-	 XxQTsFErhdsKJBx6zkAZ/SYmJD1sMBUn4aItz66TtxI6pX5IULLYfzED8UHwO2rkmY1Sg
-	 B+bkG1OssUIa5olAiP6a73MkOiDGf6Z6ft7ANrHobvVdfix+znBYwsYSqiqOdPmPGvcUI
-	 DrBUg8p922SHbj7D8z7kQVMdg6HbyzwwwqXBAgq6/LKQ8Q81AdnC19aYxhL2sfAEueg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=telaak.dev;
-	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=209.85.216.49
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.20
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794875708;
+	b=O3vktbJTTLDvgn2IcBKU50yg1tqzichVR5gBGyXo4ObgbJSuBgtZ8fiuaYluVM8tGgV5
+	 DV45YBY7e8LPpYfNYFHKkwdDRcoxWRrLTc9aH8W23z+duXlCCEjkvsXInPahdvbfmG5VK
+	 acAJuIp6d5Fxv7Wb6cL54+tBNHutmWVk1esQsRlleHndUpZtzeNy1j8YGYGjOBPXNrTuj
+	 P25x0l63b/O92x1/O+XRmyZkYvXnpreF8yH0n0Fjxo8S/Vz7wpWJYEHk5IGHpwaB8WNR+
+	 hCRcCfj2w+4wYd2aqQRrqE3Hp7Ij/n7ZD+eOHHFAvZxlKmh5fx2ivB+eCJPbAtNQbkg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794875708;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:
+	 Subject:To:References:From:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=QsfIX2B9HqqKy+oioSf2arR9bgOfC6jXkkODK4gAox8=;
+	b=G6JQTUG1xPANBgEG4qVZoj4KmfF7wbA9PDWHYGaLNLRlBnr33FiAXf/OIhJhrRb5SJX/
+	 FEyHGntM1Mx2EwO+KmnIKOlWG7nzX2cal1qASWo+I2YOCo1KlCrAXzCL7BHdqCntkLlwK
+	 EucsPRBBC6eIpIzjr9KJrKqgOra+fzqGURnVbRVXVRhFKL3VZjLM8lYCRak3cHef8E7/n
+	 EKyn1enZ1XCbuiKqGh76LYfrCCUp63ZH5KpWqKPYaImy22hcnDstr6K7XT81d/EMquZZ7
+	 uR/Pxz4i1nJdaogOoCRsPPwrHvYwJ/b10bSsyIYa3xxGjkdL03yQ/ygj6EuxS4UsLTw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mF7z3127;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=C2un4g7U;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.20
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC957606A329
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 00:26:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC957606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telaak.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-3b1535be329so3018331a91.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:26:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794875188; x=1795479988;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=1IF7o/AtrOMvQGCYw2joPZttg4edu/s8LsP4afvyeNo=;
-        b=ATgE070RiVeOFt0XszPfb8AmekKRgAOivUWevvqpnUvrGMqW3ZnXVCEgi678lPwbma
-         wA6Qi1xYW70fkp93YwLVj+P6xSFRGPHlO81zzBE4P1qKbX9DTkiCQoHMWypEGQNxYii0
-         YustHcu+X5t6TiaidLU8Onxns9f1S/dFNyrc/LJD1wqBkZpbQmw/MAWpJqL2dxn/9mQB
-         0YtkJg9Z/zq5xFOZeLeFualfn23jzfXA9859k61qlNrWf4Z1Ywn3JkejdBKaNSGyVR/L
-         GkUN9DXsinBg6mOAy0XfyTYmaY1o/gK35SlCTgcM12WsIiebWMMvGO6dNnOrfcR4O/b7
-         w0MQ==
-X-Gm-Message-State: APuU4Z8Ezd0Om7SXn89qKSPgOS0UbPB8ZShMIWAL4y7mffP14gVCKDff
-	aOQzyHv0GJPjuTV/SBkyxpRN6OApJmV619dnzbWDeoQYsHG4t2o/++2mhVBQGCE+
-X-Gm-Gg: AZFdTZePjB9mTMnwFsU0tQaJ96vuxQ/kHkIP8fsJLTAHk3mLJXN+huH+fx1A8loL9UK
-	1TLY1TpWKy4KDGzGknaCzYfiTsyE1oI2820hDbgG0BtzwqHYb0qN5ox9jhjczHU6Zm82f7Sg3iZ
-	KU7X+nSHialumy4YcBudXvqy6R7vfTzoIg6VNdFNzdS27Jn3/nxS4Cp9L4bWvu8d+VO4eVLttIK
-	Za9TunpnSXmobqB9TgomTvG+d2RZAUG2hy2fIYX5Ehr7d4rLqLnUN43yR9DO4sfxjmFam9nR3sp
-	gX/IXBMlFpPn42SwX44xSaaOY4Cga1wtGx32Vs9+Vs1zi0ngHRT81Z2ab9jUiiLcNIQwc3Bs+Wr
-	am4VF4PLYnYQwzorqUtQbkGdlcyCbxEdexitLpuGmbcDTRlI0Vy513iVxo6ypsDWfNxcX30nL0I
-	MFdfwPafDzY9vO2tPZUI4DiYYg6i2JIgL+4V8cMZNMH2fQeIYgraCF3VDp/2ri855infpNPc+mL
-	lVqhFki4HY9hGKner5QghWGidhnxOzdypyNj4VWrExJ/gVRCNsodtuMZGi7rB7kN5/QLyGHa4SA
-	2+awoYLSrtCN2SpZetw9LmjhE9cIKB0eCj6LKUOZGujUqRAQqF4h7s5M/nX+apZrBGa4eDMvXDO
-	83h8/rADzPiFnYyj07Pv+hOilc+JS/famwkwBwdIW5h8v
-X-Received: by 2002:a17:90b:4c12:b0:3ac:a1c7:20fd with SMTP id 98e67ed59e1d1-3b1b081b37fmr12119638a91.4.1794875188089;
-        Mon, 16 Nov 2026 16:26:28 -0800 (PST)
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com. [74.125.82.176])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3abd06666sm1213348a91.5.2026.11.16.16.26.26
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Nov 2026 16:26:27 -0800 (PST)
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-380b40312e2so2203805eec.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 16 Nov 2026 16:26:26 -0800 (PST)
-X-Received: by 2002:a05:693c:2804:b0:37b:7bba:8199 with SMTP id
- 5a478bee46e88-37b7bba83dbmr6574275eec.6.1794875186398; Mon, 16 Nov 2026
- 16:26:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8542606A31C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 00:35:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8542606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mF7z3127;
+	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=C2un4g7U
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794875708; x=1826411708;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=zjtnefiNRJulUEhGerH5rH4SyOP5I9UBrSco98b/KmA=;
+  b=mF7z3127w1Y8k76UxMJ48vGt3dKr0LuFqA1NDn7veBybXP+LcQk3NM/c
+   HPr1da2BTxrO9SAQ2ZLNn7dcD5ia3wTsbUakIA2sWjEOqeofowNmqZ6P0
+   9b8I0uBh73YyVyfxQ011rPH3Qd0LLj1dz8xReVjnRdacNUzbvI6mGt3d4
+   vNrEVORiRvNQCtRWOD8+zZgjaXJLCZIvGKCcitXSknpYug+qUHwMNEBhy
+   jXWL0JqNTCWBIxqmCT1XojQIBmE33124Ub8ZvKTyDSjtcvdDHZiau0Nmq
+   g4YZEfN2MLoG3dPP7BDy3cBFoIT04lnbey/TEmJCIqrULCcy7YCOw3VF4
+   A==;
+X-CSE-ConnectionGUID: yfXAqjxyTWKVhg5Dor8/Rg==
+X-CSE-MsgGUID: LEjVdVw4SYyIOY0WRvUOZw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11968"; a="3666977"
+X-IronPort-AV: E=Sophos;i="6.27,217,1787036400"; 
+   d="scan'208";a="3666977"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2026 16:35:07 -0800
+X-CSE-ConnectionGUID: dyXVO4SPTy6wmpVFuGTjjQ==
+X-CSE-MsgGUID: ckwoyx6GSyS3z/LOJoOp9Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,217,1787036400"; 
+   d="scan'208";a="9582577"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2026 16:35:08 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 16 Nov 2026 16:35:06 -0800
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Mon, 16 Nov 2026 16:35:06 -0800
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.35) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 16 Nov 2026 16:35:06 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SZ8xzRuqNKSYhotxS/mUOvDCJsWA0wpkRTFlZ6IeTIMxhC3k4Wgp83wdSyp36WNNlau5Ir9SOeCC+XF+R/XvPlENPojA5tzC7Yp221exSYQKu1XnD4fKGOII9h6QKvmlvnx3R0Iz+8b67K8uoV6THga1bt7PqJ/12Vj57hwIZfG5gLu2WVXS6CWe04KBDOMG/+eNt3og9S0kfz2LHQ6tixiSsl/HnnaAIXEAJwxNx/F2f9JKrT3yAVOrimoL0YHqZculE830iFf/oqvGI8+5f6YZ8za11+T9Rer1mZmffdBV/GVwy3AF9cmGc86poPSTylvQ80N9nvzR+E5GZ+Atiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QsfIX2B9HqqKy+oioSf2arR9bgOfC6jXkkODK4gAox8=;
+ b=LbIYtTiqkDui4/fvPNjIpmj3vNKyOlrmg8m13V3nB34Cpxv8+prTEZUi42T6+B3a7SKo+dAqMRdQzg4qBR/DsX3Xq9eXChcD5X4u8EKU7oh/e82fc9X/ngR/RcDihU9HKsjl+CGvpyraHPv+G99n8AaORsNEQwZQgXN4cfXqGuVt3PSfeRAecgYMgQywR3Fypr38IXW+cSfMHEOEWOhwApp/OgmchSb4DSgXCRyIOEXtSz2DHXKfDUCePVUJyqEOru2/A8bt+nrVkQm7r18beJn9rEVAbPit5Zhu31twIUE5M6UddwYpeCxOAw3syU+USjz3X3ucDEEPK94ZUSRodw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QsfIX2B9HqqKy+oioSf2arR9bgOfC6jXkkODK4gAox8=;
+ b=C2un4g7U/eLWoOmN8V52I2QGVXHTsRJc1Ea2ao4TAjd03fvkkx/tu3gQTpSlkXnbTLXn6/xdgteqNMeA1xYaYJ7SVNYo0OrfRjJXWudeAV0+vtvgs59Mzu1JCYmyJYgnYXsqumVPNdZyFPvVdfSGrSptuASgigLCIc0rif/ShqA=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB8451.namprd11.prod.outlook.com (2603:10b6:a03:56e::20)
+ by DM3PPF99D0888FA.namprd11.prod.outlook.com (2603:10b6:f:fc00::f3d) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
+ 2026 00:35:02 +0000
+Received: from SJ2PR11MB8451.namprd11.prod.outlook.com
+ ([fe80::7d5f:b2ba:92d4:5f3c]) by SJ2PR11MB8451.namprd11.prod.outlook.com
+ ([fe80::7d5f:b2ba:92d4:5f3c%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
+ 00:35:02 +0000
+Message-ID: <531d951d-b412-401e-b016-a2c3efb172a1@intel.com>
+Date: Mon, 16 Nov 2026 16:35:00 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH iwl-next v2 3/4] ice: store cached PHC time in ice_adapter
+To: <sashiko-reviews@lists.linux.dev>, Intel Wired LAN
+	<intel-wired-lan@lists.osuosl.org>
+References: <20261113-jk-e825-e830-timecounter-v2-0-9c357a7ed349@intel.com>
+ <20261113-jk-e825-e830-timecounter-v2-3-9c357a7ed349@intel.com>
+ <sashiko-outbox-213880@kernel.org>
+From: Jacob Keller <jacob.e.keller@intel.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-213880@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4P220CA0023.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:303:115::28) To SJ2PR11MB8451.namprd11.prod.outlook.com
+ (2603:10b6:a03:56e::20)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -78,23 +141,177 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261116-omap-mcbsp-tdm-slot-v1-0-6c9f7aa45a29@telaak.dev>
- <20261116-omap-mcbsp-tdm-slot-v1-1-6c9f7aa45a29@telaak.dev> <sashiko-outbox-217774@kernel.org>
-In-Reply-To: <sashiko-outbox-217774@kernel.org>
-From: Joseph Telaak <joseph@telaak.dev>
-Date: Mon, 16 Nov 2026 19:26:14 -0500
-X-Gmail-Original-Message-ID: <CAPY4CJ626GTu3Lvb6Fcn86BARRRV7YYg5=dcTmFt4L=QThS29Q@mail.gmail.com>
-X-Gm-Features: Aa3M54pgjWtyIXJ87iOCXvH7VHiLmPfsiy4hpiocOy5UhsnAmGKWL7LVFibdBLM
-Message-ID: <CAPY4CJ626GTu3Lvb6Fcn86BARRRV7YYg5=dcTmFt4L=QThS29Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ASoC: ti: omap-mcbsp: Use all 8 bits of CLKGDV
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB8451:EE_|DM3PPF99D0888FA:EE_
+X-MS-Office365-Filtering-Correlation-Id: 95a995d1-5133-4f73-312f-08df44429e08
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|18002099003|22082099003|6133799003|11063799006|4143699003|56012099006|10067099003|261026121527099003|261028144727099003|261021123027099003|261021121427099003|261026140227099003|261009223027099003|261102123227099003|261022105027099003;
+X-Microsoft-Antispam-Message-Info: VN8Sbb+A4+lUES+Z+dVVhaUDkrGZOeI13RuPFD6YONlUOB3o2pZvX73Xa1hy4LnQ1Pssppxe2r63JNIjBJMmweERLioNfelodnePZASXKtqW/AnUhTXDTQ8KYpKa/IxEdHG6QX39GTV2lMHM1FTYztech8fNI+4Id+0AxnA1lhj5ymhmy2soKleolPXgsr5fpxwqEnlWvm0Q9igxJPXM7LiF06yJPpwuqQvmCE+l974waCAJHXszgY4hwsE/w3cYBFuf9GIuhyNmV2pRZrngUm7BGWkTjDJcrgI4xqFhasPPkp1OUBuD3V3BfUw/9gZLEUva5hnsMHquv84w7otKyw3Ws/qFpXJdeXhHuCGpAdO6I/flPUuBvceb944g2YoZ3OfAPiNAgeJWYQqRoK+FOUCuMMvHDv3bwqI9bw0ecMC1fRZNQuKxDZmgyYaYhu44m8J9LspM/0WYQMDQdJ5U+xh2MgKOD7fJUsNLU7p3sR1mpxJjZ2cP494+Ar+qKQzaHKx0Qac6bbW40F3tUBUxSetHa1OUnJHVwQw1jAuLtMvgyZXKPM2TrkhDYqtUVK4lMGt6kdUYTwunxMim6TOL4loNnJ9x1BuOBJ4x0oiBPylPAgHYzUIjS7MtsRCEU8CcLsY+dz3dTR2c1Dkw5jiy83BGSaa5ob7DupCm6GA7jJA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8451.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(18002099003)(22082099003)(6133799003)(11063799006)(4143699003)(56012099006)(10067099003)(261026121527099003)(261028144727099003)(261021123027099003)(261021121427099003)(261026140227099003)(261009223027099003)(261102123227099003)(261022105027099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?am9HdXJEbWtXbDkvTm1EUFdoZm1MMEtwdFpKN3h4Q3lmOWNrenZlaVdBQ0h4?=
+ =?utf-8?B?L2ZFVHNtTTFxbnMrTDZBb1NaaUdaSENnY3FBS29VcG9tOWRtb0lOSmFTZEI1?=
+ =?utf-8?B?ekovNUorL1ZvOS94UE01Y3hGKzhnVmlndzFHVkZ6WmVqalhoY2hBcTFuSWJX?=
+ =?utf-8?B?MEwzUFZqNUt1TEhEbTI5Z1RVejZmTVpFdThjZGUrQkFROUJrSHpQZXNKVUo4?=
+ =?utf-8?B?WXRRSFpGWXlTYzFPZ0xndzV3YXNBeWp2UmZxb0kzSlY5Z0krakkyWkFLNlgw?=
+ =?utf-8?B?L2tGdDh0MDFKYVN0OGc0TE9YY0RPcTBhYVZnMmgzK1JDU0YweFltYzhONEhK?=
+ =?utf-8?B?aDVoYjNkQ0RGZkI1bWNacElibVFSTVBVakY3cm5SaGRYNlJiRXNLNGYzQ2pw?=
+ =?utf-8?B?ZjY5b1ZhbEhKb1R2TjJVbEdDd3V5cW1rM1ZyVlJmTFJzTmNSQUtQWE5XTFhW?=
+ =?utf-8?B?WXdXQ0t2cndZZStYMUd2dldDS29OaHhLT1I2WjIvaFZkNnBOdnNQY0MxVmMr?=
+ =?utf-8?B?VTBqMTlHbXVEY29yOEJlMnlwUVhock93SmJxdUl5UFpIOEMycERhRnhBWWVF?=
+ =?utf-8?B?SDExb1BoYllaM1dIVjFpTmwvbnowNUR1SVd4QUVLeFpydDdZWlhlQnFCc2sz?=
+ =?utf-8?B?ZXZoUVdhRXZLTTBZNjFqTHp0TEF5SmYrM0I2eUYvaCsrcFI4aTlDZnd6b3dr?=
+ =?utf-8?B?UlIrRjh0SzJkTU5McUhsVEtGK25ZdTA4NEUzL2NHS0d1MnJGbis0c2c0cDdR?=
+ =?utf-8?B?Q2o5eFEwYVRsVXpYWWhScWt3a0FLMTJmYjJ0THdCMk4wcVo2YzB0VE1SWUs0?=
+ =?utf-8?B?MktrbnJmZkhJZGxxOUxiVkU2eG9kWEpVb2ROUm80bE92a01JdnVENlJlTDZv?=
+ =?utf-8?B?QXRuRDcxdlpPSGhuVzFRNFVWVFJYYzhTMktWeGliQ0ptdjhYd0poMWVzWUZj?=
+ =?utf-8?B?TXAzWVdFOHRKNkIzUWR6MHJtSlRXMGpyaW80ZDQzcEJlQUNHR0xoNFhVczFq?=
+ =?utf-8?B?Tnp5dnF0RThNZVpTb2xFWUUyTUNYTUcxbC9nY3FzSGRUWDlXNjcrc3dHWGZo?=
+ =?utf-8?B?OUlMUzZ3aGh2eEZOYllPUDNoZHZIWDZvT0xoOGdjRjRCb3ZEMEJzT0hGSDJO?=
+ =?utf-8?B?d2hzRyt2VjRneXZIU05CK0N4WGNmeGYzcTRiVzR6VXVXODdYZERaTDZWL1I2?=
+ =?utf-8?B?eXMvQm5yVGNHNTMyMysyaEh6KzFKaFBOdVIxTmUweHJRT1ZoZTl4UGdIS090?=
+ =?utf-8?B?R09OUkNyclRaazl1VzYwNUoybCtMcXQyRlVwVmxyWi9GeHR6K1NsTWd4VGhU?=
+ =?utf-8?B?anBZWGpKWWMvSDBheUZLUS9sWkdidXBNQVhjVXAwaU1ldzBWZTB2UzVXWU5h?=
+ =?utf-8?B?b2ZGN204SVJHSGp5UzkwNVJFeVJVOGkySWVlcy9vRG5mWXpxWHowTWl2Qnoz?=
+ =?utf-8?B?dXFhdjgzOFEwNjNHRmdQcnF4d0NhVW9SMWw1ZmdpeFpuUDc3TVhhN2dpNDVW?=
+ =?utf-8?B?QnE5MSs0eTNxVVE3d0krc2VYYjRtVU96dTBMNGI2RnRMOFlPeUVqTW0rQjAr?=
+ =?utf-8?B?WFd6eDhGcThuNGtpcEh0OGd2R0NPYkd5UngxV0EwMXV4STl2NkdIRXc3VFFk?=
+ =?utf-8?B?ZStXN2hOWEgrTnZjd1B0ZWhXYkdjUWE2WTFrbTVVa0JBQlVMZ0x6VG42RlUz?=
+ =?utf-8?B?MDdkL2dPb0NCVEdhTmxyS0Vjbmc2dGhEOEtkTVQ0L2hrSHF0UzVqVEZsSFBa?=
+ =?utf-8?B?WWlvZzVNWW9GYzlXTVVlQWx2WncxaWRhekczRFFpb3RwT3JLM01sTFlNcTd3?=
+ =?utf-8?B?aUZGbTVwUmhnUk9LUVE2WEJ5UWRPTUJkYnlBZzdpQ0p6U25jUkVsS3NBQmYx?=
+ =?utf-8?B?ZGdSd1Y4T05kQW1GTWVMTWFpczV1ZVBscDJWcUszbTQybHhVVWdtcHUwQklD?=
+ =?utf-8?B?RXRvNy90dFpZNWlsbi9IdTVhcjEyVmR5bDNRSkEwTkR0WHd3bWsyaG02dWY2?=
+ =?utf-8?B?VUUrU3A3dnFoaUEvYjE4eHNqTVZ0WXpzVStYbm9pUjVNMFVkK2xIaXBGNjlq?=
+ =?utf-8?B?UGNpSnFUWGtQNTl4N2ttaFp6SlllR2FzbUdEenJLbHdSL2p4ZzQzZVJDU3JN?=
+ =?utf-8?B?bnlMVFRuRWJxK20xbHZWNEZLdE9uRUR1aGZhbVRsRW5FV2ZqanBDVnhUVWZH?=
+ =?utf-8?B?OFhsU2xLVFlxS0w0YWtsWEVsQkVLbmtDMjNVYUROZHI4ZlpJYVB5QmpWQ2lp?=
+ =?utf-8?B?NWluM3J6RGRlajdVNFpkc3NzbGFNQ1B1dzdER1NITGpDL2NyblI4OWpQeVZa?=
+ =?utf-8?B?S3J6dHFmY3dDZU4zekd1MS93VEYzMVdnSTY3bmV5WC9yckpwNm5jdz09?=
+X-Exchange-RoutingPolicyChecked: dGcbEzkQNlqlCMqlgNMUfByOSMBlK+nJzenhDBBhWFN4/nt7Y3Ki1ohxv40q48Uuj8Ea+aCY5ixMjILCroyeJw5mS2eRVyO93I5PHYCGQ3i+/+CxHETEf63sFa/ISWVpSyoczNY7d4Kt9dJt2P2V9r0u+zqgREW+Jg/4fNEvkyHpPa9C587Tumf6SczO58vfAzkDNEaK7dPvu3LAabd7LPVra1L3YMM71LiTMILsByQpQrwrSTGSP2eTVfhYiMfPYEdEbZ8KGiJSxS4acGecvnUAU+NMvd3i5UgpgJhzrZx22WWbfk2zdp/pcPonleV8SZMEEyNil/Dx0w7jUZ1GSg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95a995d1-5133-4f73-312f-08df44429e08
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8451.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 00:35:02.3789
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6m3sJ5LbOb/PqfUiwU7/JGedpUEpyDyux9rbIEIp8Jy0iYyAeDKriV/FrOSljXPsBg15B8iXLlnoe6wkN7yxcIPlpWfaVIX2yxNA+AURH80=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF99D0888FA
+X-OriginatorOrg: intel.com
 
-On Mon, Nov 16, 2026, sashiko-bot@kernel.org wrote:
-> Since this fixes the 7-bit mask introduced in 81da6a9e49b9 ("ASoC: OMAP:
-> mcbsp.h: Clean up bit definitions"), should it include a Fixes tag?
+On 11/13/2026 3:52 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] ice: stale adapter->phc cache across reset in
+>   ice_ptp_rebuild_owner()
+> --
+> 
+> commit 3e2553cade32eeca4938b383704866bc53bd38ea
+> Author: Jacob Keller <jacob.e.keller@intel.com>
+> 
+> ice: store cached PHC time in ice_adapter
+> 
+> This commit moves the cached PHC time and its update timestamp from the
+> per-PF ice_ptp and Rx ring structures into a shared struct ice_phc embedded
+> in ice_adapter, updated only by the clock owner PF.
+> 
+>> diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> index bf37c2a7ff863..a0451c1083a41 100644
+>> --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+> [ ... ]
+>> @@ -3099,24 +3056,20 @@ static void ice_ptp_periodic_work(struct kthread_work *work)
+>>  {
+>>  	struct ice_ptp *ptp = container_of(work, struct ice_ptp, work.work);
+>>  	struct ice_pf *pf = container_of(ptp, struct ice_pf, ptp);
+>> -	int err;
+>>  
+>>  	if (pf->ptp.state != ICE_PTP_READY)
+>>  		return;
+>>  
+>>  	ice_ptp_tspll_monitor(pf);
+>>  
+>> -	err = ice_ptp_update_cached_phctime(pf);
+>> +	if (ice_pf_src_tmr_owned(pf))
+>> +		ice_ptp_update_cached_phctime(pf);
+>>  
+>>  	ice_ptp_maybe_trigger_tx_interrupt(pf);
+>>  
+>> -	/* Run twice a second, or retry soon if another thread was busy
+>> -	 * updating the Rx rings. Other errors, such as a missing control PF,
+>> -	 * do not clear up on their own and must not turn the periodic worker
+>> -	 * into a busy loop.
+>> -	 */
+>> +	/* Run twice a second */
+>>  	kthread_queue_delayed_work(ptp->kworker, &ptp->work,
+>> -				   msecs_to_jiffies(err == -EAGAIN ? 10 : 500));
+>> +				   msecs_to_jiffies(500));
+>>  }
+>>  
+>>  /**
+>> @@ -3211,6 +3164,8 @@ void ice_ptp_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
+>>  
+>>  	/* Acquire PHC and system timer to restore after reset */
+>>  	ptp->reset_time = ktime_get_real_ns();
+>> +	if (ice_ptp_read_src_clk_reg(pf, NULL, &ptp->phc_reset_time))
+>> +		ptp->phc_reset_time = 0;
+>>  }
+>>  
+>>  /**
+>> @@ -3250,13 +3205,13 @@ static int ice_ptp_rebuild_owner(struct ice_pf *pf)
+>>  	if (err)
+>>  		goto err_unlock;
+>>  
+>> -	/* Write the initial Time value to PHY and LAN using the cached PHC
+>> -	 * time before the reset and time difference between stopping and
+>> -	 * starting the clock.
+>> +	/* Write the initial Time value to PHY and LAN using the PHC time
+>> +	 * before the reset and time difference between stopping and starting
+>> +	 * the clock.
+>>  	 */
+>> -	if (ptp->cached_phc_time) {
+>> +	if (ptp->phc_reset_time) {
+>>  		time_diff = ktime_get_real_ns() - ptp->reset_time;
+>> -		ts = ns_to_timespec64(ptp->cached_phc_time + time_diff);
+>> +		ts = ns_to_timespec64(ptp->phc_reset_time + time_diff);
+>>  	} else {
+>>  		ts = ktime_to_timespec64(ktime_get_real());
+>>  	}
+> 
+> [Severity: Medium]
+> Does ice_ptp_rebuild_owner() leave a stale cached_time in pf->adapter->phc
+> across a non-PFR reset?
+> 
+> When a reset such as EMPR zeroes GLTSYN_TIME before
+> ice_ptp_prepare_for_reset() reads it, ptp->phc_reset_time is 0 and
+> ice_ptp_rebuild_owner() reinitializes the hardware clock to
+> ktime_get_real() (UTC) via ice_ptp_write_init(), which can differ from a
+> pre-reset TAI PHC by 37 seconds.  Neither ice_ptp_prepare_for_reset() nor
+> ice_ptp_rebuild_owner() invalidates or refreshes pf->adapter->phc after
+> writing the new time, and non-owner PFs no longer update the cache in
+> ice_ptp_periodic_work().
+> 
 
-I left it out on purpose: the only set_clkdiv() user divides by 8, so no
-in-tree user was ever affected. Happy to add it if it should be
-backported.
+Couple of notes: We have patches to convert the driver to use
+ktime_get_tai() which we should probably include in the series.
+
+Additionally, I'm not entirely sure how to resolve this since I don't
+think checking against the cached_time is good (it could easily be up to
+0.5 seconds out of date making our reset provide a bad time. I'm not
+sure which is actually worse?
+
+> If the reset and rebuild finish within 2000 ms of the last pre-reset
+> update, ice_ptp_extend_32b_ts() still sees a fresh phc->update_jiffies and
+> extends post-reset Rx and Tx hardware timestamps against the pre-reset
+> phc->cached_time until the owner PF's kworker runs
+> ice_ptp_periodic_work().
+> 
+
+I suppose we could try to disable timestamps explicitly when we reset at
+the cost of timestamps potentially going missing? I guess resetting
+stops queues anyways...
+
+I am not sure how big a deal this is in practice.
