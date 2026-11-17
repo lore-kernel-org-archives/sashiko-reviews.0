@@ -1,90 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.173
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794942652;
-	b=Lo1bDyPlmFIm30BBR/gMbzdwzBWKB3fCkESrREJlZIk5q2mmf/J/Y8+0zwH8bwa8qFc6
-	 lbYZKQmUnzMdP9LJpkgbVadKr+X0VVQmmBPF4wQH99q39A333v9565YVAXJneST3h24DP
-	 NBqzJc4ZBc+8mFoIoeOKcVC3t9iupmOTyBHapNv9MqcBo1jfV7DGBdNLBRw0fMA6jDTLx
-	 lU1mS1SdXDrUU47Eg8AgjzZeJDqk9Xe3cAim3ik7Z8oIZPPX+E+gKwcF0Ym6NrL3KLIZu
-	 DoaSYi91Et4nclV9eR1Qv2fgJ7qz6MLodipVgxxCL6OnLw8th9vIL02zwijQl+CY1mw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794942652;
-	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
-	 Received:Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Content-Transfer-Encoding:Message-Id:References:To:X-Mailer;
-	bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
-	b=Acs2SXemOE8Y2NWV994mYhrcPlm2R9R5zciR3FC0Af9Tpshy76NVOmJ8ZeoWeA79tkqZ
-	 u1dBlQBpbRHhpHROQpNIHq+3IHlT2R9Uum7IXZZN41XvJa6qDKBMRvEPrbRfWs/q6BEle
-	 fortVJfCuGyvoNwoS43RGEN8zv0Z1I3d/gLrl/WxlqLk1RukhCSp0p0rBxknk1PyGHK93
-	 l8BIGN95HghDSE7NqVe7PQb97DeEwyEBxuFYWB3wbaJVlm9ZabYLFKgg9kvm2amvVDjKO
-	 826PYvxunMBtHb7ePx14ROdPokGg3KF0bLbJtxAFYUhIOjEclLKHHwIOzEgQq/MfKRw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goldelico.com;
-	spf=pass smtp.mailfrom=goldelico.com;
-	dkim=pass header.d=goldelico.com header.i=@goldelico.com header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=CpawlFgA;
-	dkim=pass header.d=goldelico.com header.i=@goldelico.com header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b="XGSZxM/U";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=81.169.146.173
-Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [81.169.146.173])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.16
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794943330;
+	b=pSpXLJXOhL1PYdxbWNci+iVrJ/raglCIeoEDgAF5aU2O+XfrxsrH25WljV6+LSNkM4QW
+	 8A993SpsQg9yy26Amz7xMlySZ2i6maLZj0/4guDsQbrrjgl+1vTjlSgDomgEtaa+hWJdN
+	 Vqt6+Ey/CSPx5VE96OTURnmKx+JPK0eibIZcRzsW4+fJCiu8hlq0S/CGtl358MQjpAdll
+	 CyKvAco9Nd6kZrcxUXl7QlFsdu7bvrrwvtIj7kR4o3RHoXra3pleosbVvPwKFKbB03R9R
+	 Kp1h35RYA8jivLS3hZKHOwgBPjAluM9q4XY+YxHpw8Y5i2R6oIaasfjmH7UUhEh61CA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794943330;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Spam-Status:X-Rspamd-Server:
+	 X-Stat-Signature:X-Rspamd-Queue-Id:X-Session-Marker:X-Session-ID:
+	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
+	bh=mSnaBEqU7m7cNIvU+OxFJCwKi9iAcV4LhJSJ8WZpjwA=;
+	b=qv+TFT+/kjNs/8Lisj6m5sxJ079pE98vNgC5Y6hVdOOUV8v/W7p9SSAuQiWjuJ6w8y/0
+	 7IY3aJ1rW/fHg5y7jg07Gm1jNUDexFC8LpcZuPgrnG9FrRCvAX2AKT6PsbADljOXcFDC0
+	 53V6FAGYal5HTlKB8cqqfIeLmVf2+KjhcgW2Piv3GirxYUJDKabKXG/pM2O6IDC9hpUG/
+	 CfICk4G1XUNhRA6WrEjYkfNiLNzEorSNJmX7FUqE5v0jboCZVkFL9PwCTKE0mOgby36eg
+	 TpQgJDWpiahDH4CtCgc2jGzCSR+5hSGPsHsiK+kaePc/sI+HbRWbAeFn0tEQVDHRgTA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=goodmis.org;
+	spf=pass smtp.mailfrom=goodmis.org;
+	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=Arecht6A;
+	arc=none smtp.remote-ip=216.40.44.16
+Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F21606A32F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 19:10:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5F21606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goldelico.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83446606A339
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 19:22:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 83446606A339
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=CpawlFgA;
-	dkim=pass header.d=goldelico.com header.i=@goldelico.com header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=XGSZxM/U
-ARC-Seal: i=1; a=rsa-sha256; t=1794942629; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=HHA4yXaNh9zJAh6K/BtGZ1sJPolIBk8O99o7Bsuehway19CAVMdlBrlcJUm2vNc5Xn
-    Rdvm4tRgkQgigWKFepxviO6RHEWytZlL+E2ShA/C47zmaN0/EvsTq8u9si7RzWG+Nmre
-    8FtEVcdPQ55nXMW8BEu+sPMJdLyk5EA0tOEipVz3fA2C3r0lZFeTpOZOEblPPYhvFvaM
-    63gT0h/i0vl4d0vqGtYf63QjuIhHeM239Axz+qNDS3/HeEyy2m8p4+yUnTCJFDc8TFlc
-    yEr3aSblHkN79+nAspqh4zwGBEdlxpT7k1mZWN4+TsFICRfR4eXGUKtA9tpW0+Vz9rmH
-    Josw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1794942629;
-    s=strato-dkim-0002; d=strato.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
-    b=YT5MQiDWd+DI5BSBrFpV/V+6JMY8+LBJFQ97yKKy2UKeAvD0/SKOB4iCgM8dTg6kUB
-    KUp2e48Ni3zog5zdthwcirQLqBpUTjmRMyqY9KtcyfSfAYdx8mVjQxjPPlHecJuWUSzN
-    97eI49oJb1p67rkibrUWO3c5LHpg08cHWpdOmkWdkB157Z/W6Ux07fnWbLvKNDqXixJ3
-    b58kqJ7dkxy90otGVFIvrOwC0yQD98XeGHJw/2DR8+uiFmHHeuY1ORqdAuOucx6z1Cne
-    1N2Q9vK3InTCJEBqwnkl/ULcFCXjfrxw9qVZdE69xzUxW/fangaLnjcLxOy7mTItA2FX
-    gDEg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo03
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1794942629;
-    s=strato-dkim-0002; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
-    b=CpawlFgAkegLPW09Ttyz2i5jcoD6WQvsGb1BEKqnCNbk6Z1N99/YOWWgyODAljlr2M
-    qU3CmrN/9UXjkvCxJQkisPLnTmikONgbymRSlj5lmNXn7dAy22UaiRRs+8MWmYNAwNje
-    ntRRkZQHMUAcZjIaoau8jRn8JESE5aMFNt+T9YU+Rizj3ml70tVXuRm7NqsYbyFsJnBG
-    xuSSeZip+NZVAnppdEaSLsp+wQ3dC/m8HsRG8s4qYXXuq9a4rAmbU7KFoGw152wDZDeE
-    bL5zvZ+aNS2xq19OVl18bTIrw5qQrqsBJey+QvuWrE7wtRnEoWLgV1126mlKfoiZB9/e
-    UAaA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1794942629;
-    s=strato-dkim-0003; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=EHVd5UrHjl2IgLOJFZjiPRJXW4hMjp2ffrPAnmqHhOM=;
-    b=XGSZxM/U/OSKBRigDREPvOaSeHJe2tfzZ0MeMeBqHXWlUnmAMZoTMowwheJI8biWG2
-    1TH1ODauL9VUp9SSJuDg==
-X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMhflhwDubTJ9qVpwcQVkPW4I1HrQ3ppelMiNKoEY92nD9kO01+3QZuyyF4VcrvHZ"
-Received: from smtpclient.apple
-    by smtp.strato.de (RZmta 55.6.3 AUTH)
-    with ESMTPSA id Qb56a22AHJASYjA
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
-	(Client did not present a certificate);
-    Tue, 17 Nov 2026 20:10:28 +0100 (CET)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=Arecht6A
+Received: from omf11.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay10.hostedemail.com (Postfix) with ESMTP id 24C84C0570;
+	Tue, 17 Nov 2026 19:22:08 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf11.hostedemail.com (Postfix) with ESMTPA id 5B30920029;
+	Tue, 17 Nov 2026 19:22:06 +0000 (UTC)
+Date: Tue, 17 Nov 2026 14:22:03 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Brian Norris <briannorris@chromium.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH] tracing: 'select' GENERIC_TRACER, not 'depends'
+Message-ID: <20261117142203.72235895@gandalf.local.home>
+In-Reply-To: <avybp3O2zxcLozKB@google.com>
+References: <20261116144652.1.Iecb63200dd245f62032a3b1f60ae78cc48868094@changeid>
+	<sashiko-outbox-217828@kernel.org>
+	<20261117085552.0e4ef272@gandalf.local.home>
+	<avybp3O2zxcLozKB@google.com>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,118 +61,80 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.10\))
-Subject: Re: [PATCH v2 2/7] pinctrl: ingenic: Fix hardware dual-edge
- interrupts on X1600
-From: "H. Nikolaus Schaller" <hns@goldelico.com>
-In-Reply-To: <sashiko-outbox-219369@kernel.org>
-Date: Tue, 17 Nov 2026 20:09:58 +0100
-Cc: linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org,
- robh@kernel.org,
- conor+dt@kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <24975DE6-A803-46E2-A975-1CA3CE935077@goldelico.com>
-References: <cover.1794940166.git.hns@goldelico.com>
- <b87494f8bd72efe7d4c8b8c7c6a5f37686861aff.1794940167.git.hns@goldelico.com>
- <sashiko-outbox-219369@kernel.org>
-To: sashiko-reviews@lists.linux.dev,
- Paul Cercueil <paul@crapouillou.net>
-X-Mailer: Apple Mail (2.3826.700.81.1.10)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Server: rspamout06
+X-Stat-Signature: kdjbgfd3henwxsuoooanfepm8xr3pbg3
+X-Rspamd-Queue-Id: 5B30920029
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+Ewq1CS2ih595Uko795jGOIGp3SiT6fYc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=mSnaBEqU7m7cNIvU+OxFJCwKi9iAcV4LhJSJ8WZpjwA=; b=Arecht6AVcZZo+yHETjMee17lrX6fxh0m8UK5SpffsI7bE4pY8VqSXFFp52dUyOPmFlEbMj8wHchTo0EOzBzAZLuIbolyI9SzEYtTsXHrTKNhk0zNJSpuVmGT6DSVlCnnPzW0pbL1pLPuY7e+RwZIJXczWiFO/KmdB7Um6SWQG8=
+X-HE-Tag: 1794943326-672865
+X-HE-Meta: U2FsdGVkX1/+MFLDKaske4c+kpP+T1ia0Yr73x+bfHBVlAGmFheqkHlwSPNk/AsPEyu8MGxrlRsk+7u3r56uGSNKD7hsHlee7Wf2yBX1RNuIO5Hs7Oj3HmXueqEsnnaZqfZjIJPfO3JUv2hekUo6bXCQ5B79YyeNE2kNd5Q/TSHQ/KR2OI4Kk9HZLBwtJUgniPZOKxp4KfC/2j+hmju5Kt/fetSe+lQth/vmW4qBfgj/cd1/4ZgZvXTBmbqE9I5W15EkAF3xln+rAo38CGzP7jk8dKaVuTsxCnPc4tHDY4lqVFEdLMKajrONgXhP/S/8lBNZmMPA3ZoUSS/r0Ea7Ojy3Xb2HFZkj
 
+On Tue, 17 Nov 2026 10:23:35 -0800
+Brian Norris <briannorris@chromium.org> wrote:
 
+> 
+> OK, I can respin with 'depends on TRACING'.
+> 
+> However, I think the Kconfig setup for kernel/trace/ is still a bit
+> haphazard. For example, it's reasonably common to want EVENT_TRACING but
+> not the more invasive tracing (like FUNCTION_TRACER; and therefore no
+> GENERIC_TRACER) -- this is how all Android kernels are built, for one.
+> 
+> But there's no user-configurable way to enable EVENT_TRACING. We only
+> get it implicitly if something else inadvertently selects 'FTRACE'
+> (which selects EVENT_TRACING). For Android, that's CONFIG_KPROBES and
+> CONFIG_HIST_TRIGGERS.
+> 
+> ...or is that what ENABLE_DEFAULT_TRACERS is? Its name doesn't really
+> suggest that, and it's mutually exclusive witih many other tracers, so
+> it's a bit awkward making choices, as the whole system appears much less
+> orthogonal than expected.
 
-> Am 17.11.2026 um 19:38 schrieb sashiko-bot@kernel.org:
->=20
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Low] pinctrl: ingenic: redundant checks and duplicated branch in
->  irq_set_type()
-> - [Low] pinctrl: ingenic: missing Fixes: trailers for X2000 and X1600
->  dual-edge IRQ
-> --
->=20
-> commit 478cc52f71c553d81f6fc71fbe29cdc01e47f147
-> Author: H. Nikolaus Schaller <hns@goldelico.com>
->=20
->> pinctrl: ingenic: Fix hardware dual-edge interrupts on X1600
->>=20
->> Use the hardware dual-edge detector on X1600 and X2000.
->>=20
->> Set PAT1 when configuring both edges and program EDG on X1600.
->> Keep software edge switching for older SoCs without EDG.
->>=20
->> Tested on X1600 and X2000 using GPIO buttons and register readback.
->>=20
->> Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
->=20
-> [Severity: Low]
-> Should this bug fix include Fixes: tags for the commits that =
-introduced X2000
-> and X1600 GPIO support?
->=20
->  Fixes: 943e0da15370 ("pinctrl: Ingenic: Add pinctrl driver for =
-X2000.")
->  Fixes: 4da56f9c6f14 ("pinctrl: ingenic: add x1600 support")
->=20
->> diff --git a/drivers/pinctrl/pinctrl-ingenic.c =
-b/drivers/pinctrl/pinctrl-ingenic.c
->> index 7d3f34c4fb589..f718725d84d4a 100644
->> --- a/drivers/pinctrl/pinctrl-ingenic.c
->> +++ b/drivers/pinctrl/pinctrl-ingenic.c
->> @@ -3622,6 +3622,10 @@ static void irq_set_type(struct =
-ingenic_gpio_chip *jzgc,
->> break;
->> }
->>=20
->> + if (type =3D=3D IRQ_TYPE_EDGE_BOTH &&
->> +    is_soc_or_above(jzgc->jzpc, ID_X1600))
->> + val2 =3D true;
->> +
->> if (is_soc_or_above(jzgc->jzpc, ID_JZ4770)) {
->> reg1 =3D JZ4770_GPIO_PAT1;
->> reg2 =3D JZ4770_GPIO_PAT0;
->> @@ -3644,6 +3648,9 @@ static void irq_set_type(struct =
-ingenic_gpio_chip *jzgc,
->> ingenic_gpio_shadow_set_bit(jzgc, reg2, offset, val1);
->> ingenic_gpio_shadow_set_bit(jzgc, reg1, offset, val2);
->> ingenic_gpio_shadow_set_bit_load(jzgc);
->> +
->> + if (is_soc_or_above(jzgc->jzpc, ID_X1600))
->> + ingenic_gpio_set_bit(jzgc, X2000_GPIO_EDG, offset, val3);
->> } else {
->> ingenic_gpio_set_bit(jzgc, reg2, offset, val1);
->> ingenic_gpio_set_bit(jzgc, reg1, offset, val2);
->=20
-> [Severity: Low]
-> This isn't a bug, but both callers of irq_set_type()
-> (ingenic_gpio_irq_set_type() and ingenic_gpio_irq_ack()) already =
-convert
-> IRQ_TYPE_EDGE_BOTH to level triggers when !is_soc_or_above(jzgc->jzpc,
-> ID_X1600).  Can case IRQ_TYPE_EDGE_BOTH set val2 =3D true directly =
-instead of
-> setting val2 =3D false and overriding it here?
->=20
-> Also, with the ID_X1600 check added to the ID_X1000 branch, the =
-preceding
-> is_soc_or_above(jzgc->jzpc, ID_X2000) branch in irq_set_type() is now
-> identical and can be dropped:
->=20
-> drivers/pinctrl/pinctrl-ingenic.c:irq_set_type() {
->    ...
-> if (is_soc_or_above(jzgc->jzpc, ID_X2000)) {
-> ingenic_gpio_shadow_set_bit(jzgc, reg2, offset, val1);
-> ingenic_gpio_shadow_set_bit(jzgc, reg1, offset, val2);
-> ingenic_gpio_shadow_set_bit_load(jzgc);
-> ingenic_gpio_set_bit(jzgc, X2000_GPIO_EDG, offset, val3);
-> } else if (is_soc_or_above(jzgc->jzpc, ID_X1000)) {
->    ...
-> }
->=20
+Yes, it's the ENABLE_DEFAULT_TRACERS that is what I think you want. It's a
+horrible name and should be changed as it's terminology is a left over from
+the early days of ftrace where tracers were everything and the "nop"
+(default) was the tracer that let you select events. The haphazard way that
+Kconfig is set up is due to the evolution of the tracing subsystem where
+things evolved through mutations. That Kconfig is just a nice paleontology
+case of ftrace.
 
-Thanks for the review. Both suggestions make sense.
-I'll simplify the shared shadow-register path, remove the
-redundant X2000 branch, and add the two Fixes trailers in
-the next revision.
+I think it would be good to rename that specific config, and also move it
+to the top of the Tracing menu that says:
 
-Nikolaus=
+  Enable trace events
+
+As all tracers enable events, it doesn't need to be visible when
+GENERIC_TRACER is enabled. This is the way to enable events when no tracer
+is defined.
+
+> 
+> Anyway, my point is that it's not exactly straightforward to enable the
+> features you want and get the tests you want.
+
+Yes, lets fix that.
+
+> 
+> I've appended a diff that seems a bit more user-friendly to me. It
+> makes it more explicit in the menu how event-tracing is forced-on by
+> many other tracers, but is user-configurable when it's not forced. I can
+> formally submit it (in 2 patches) if you'd like.
+
+Let's do one patch that changes the name and prompt of the
+ENABLE_DEFAULT_TRACERS.
+
+Basically:
+
+config ENABLE_EVENTS
+	bool "Enable trace events"
+	help
+	 Select this to enable trace events through out the kernel such as
+	 scheduling, irq, kmalloc that can record to the tracefs ring
+	 buffer data from within the subsystems the events exist in.
+
+or something like that.
+
+-- Steve
