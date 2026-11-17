@@ -1,99 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794917322;
-	b=WvTn+4sDVZuKVewd9wCw0TvNbmnE/UusEsNygiwys5fNm/L3n5UKr9RY6x0R8FQxxXqx
-	 lpdE4/t7iZhhRpwZBBWpQ+V6cRItodhHVvhMfZE7n8cA6zTXiSt2n0ENGgBP0Elx92RNm
-	 U5K1UO6STWtZUJJuNN+BedXzR5NvlglUcj5qSVQwLiZmg+fs5+PQWguPjyUJxOBkkp4/e
-	 j+ee+rKW0iLSg0Rz9p17Ma7kiDF3rB4ksV0R3W4GWjfZ001nCflMWRR7loaxxUdd/Oswd
-	 lOZq8cBlRsXDdcHdafzcNPahohGOVHvufJvWI2ESOUWPZdB5/BhCTskwWLjhzy0jLeg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794917322;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.97.179.56
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794917486;
+	b=bIKQ7hXiNK78ki6ryJdi3p8rZFtcm785AnkOUWliCGBxqJFGZk/oLrtW5H7qHcJrPcfR
+	 lbFtq76PqiCOIHlwKTRn7/88AdGGAHtJ6slrFqfVBHYdXroxQEYHRrDWXd/oSoPZcLZxH
+	 NhP/2iJbmXQl47QYdn1YSdfX6qSIfS2dkEKEZTGqk1TlvkFN2u7RWphnIFW0eVgB/JqTX
+	 DSpfqhBrAMskxHXfP0jO6AusLYp8EYRHGKJyJknfetk9/w/uljj+K0NfsiIAu1Wswo1j7
+	 eNzEgMHz0P4uPeb+dt4kio+5PR9MYrH2JXQVPr5bFCw8VfdEVSiPkCumGIu73QXf6+w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794917486;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=+OHBE2JjZLc89T9aDHp47BWoMn41dvghwLwUUjrkALs=;
-	b=VCBjvQp+irXbdA/0/ertFxBl0socEBwF0InJD+KowxApvIN924s1CKYsJL151t3iiCX3
-	 QZwzIstYkyrUwkvNNDe1SrjcNwHXqpgAjAeNaT6w0o1HkSZSAdl3el5DcZBPXPhN5ro29
-	 4zjxS2Z7DxuRxCJLYKz58TtOW2LKi+VA+bxJrYMNs6EPesF+h5a8W3xh0L0vDVk4xYTv/
-	 XAVy+gLloiuSfwMNDcv/jOEFh6WFFahAf05qNQ2RyFKObcukDjh32dW7mqYc0UdFyDT7P
-	 0zo3t0rHkRwgfz4yWuK/VI49enDA/5oVefZoilgdFr38VMa/aGRpLeNy0vwi28rzL9g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=flipper.net;
-	spf=pass smtp.mailfrom=flipper.net;
-	dkim=pass header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=rkWrm8tA;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	bh=kM8/1+TsiIiqOZGDw6fdukO4y7KiLnEy3WUqktZlqYA=;
+	b=U6sLQ7MuaWwxJi1lnoevVP5oKLPMH+ELFzHf9BCKgVlhMgyTblWOLxo4ymJu6pa10Te9
+	 9riht8e3J3PrLOEUlF06TXvPGsr4zPQEQQTdDlEtkPDR1rn6Wq+n6hZPxLmRn85lx0w8a
+	 0TEPsjmCjSu9wVwnLqrs9ej4anCeDdLFFeznbsSi1R7FHv1h7Fk6aXXN0sYdfyv+XdYal
+	 hzRle8EEuP2oOPKluWLKdiUj56ddOcIvfHIr+WwPxKr+zZCFAgFJwDpdzd5tq1R/Mop2V
+	 3hlA8CoGCFYrCnWmaCfWAMBO+kApBLLk62AEdrop97t0R6+gnnuUqpG17Q9Iao51DTA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=igalia.com;
+	spf=pass smtp.mailfrom=igalia.com;
+	dkim=pass header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=aOoCCTf6;
+	arc=none smtp.remote-ip=213.97.179.56
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E881A606A32C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 12:08:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E881A606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCB8606A331
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 12:11:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4DCB8606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=rkWrm8tA
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c4d21051042so274061766b.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 04:08:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794917320; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PZBefriuXy9v/51d6GIdrh3Bj9xo7t0mW9EyOKbIEBRN/lBoVnfFr5hrZFiD63wooZ
-         5zz9FfifijI7wZoAFbBW4K9ZF0WGikOQPOcUy7st1XnwMNQQDjs1MOq+8XA0ybZsQX+E
-         MFsfohJSB5cnTQIoGU3H01Xa38ehyNkRkrsgO5CDyyhfu9uljkff4utSfqNE2gZ6Won3
-         mQNKUxBqjcbJS7g7qh8E5TAZVtRlh4i8x6ItNx+1mVw+Rxyl9PPz7oelMmag7UYrNd/P
-         x04v7rM0zjVav7y2+0qQod6T5dhy/9WwEtqqJnZZw8A3pvpODVgRLH2CWfJPCWAa2olm
-         Bpnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+OHBE2JjZLc89T9aDHp47BWoMn41dvghwLwUUjrkALs=;
-        fh=/XafWwXInU6xSAMitUKTVJtcnn7zkW/jx5Qszu7SSug=;
-        b=C2d47dXHhhe1gIq4sGuxs93UxAxa3Csrgwp7xTR1NtM/i3KXR8sSbe048g4lC5Pr6n
-         QytsyOBHEhzeqQkI1ZNJ4ahEq9FjwAhBKeSYmJQ70RfZI4mZqPe5JEP2jQkZr3TL8Btd
-         GBPn3BBIkVyCVHN3ZpXA1nJ9HF4jFGrX53uHxaGc/xwhUVX8gfJjpiSTfydPsoBT7dBz
-         xcoF/K4fhZONrr2SA6zkbCwm+k9qufTGQhI4MA6mo/vz0mk9xTFEEwwQ3HvA7WfEz8Wd
-         /98v61vt6OvIcg2MiYql98z+jFeX44hj7xwgDaWdut0ner3INCq9/qHw6mzfZ7xND6cg
-         Z0+g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flipper.net; s=google; t=1794917320; x=1795522120; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+OHBE2JjZLc89T9aDHp47BWoMn41dvghwLwUUjrkALs=;
-        b=rkWrm8tAqew5CZG01j8VdTp535AP8mkWam8L0NS9m+Uzryp1jpBkXWYAvwPdens1qT
-         htRRdygh5CA+U79fCeSDRnKtKSEPYYN6eqSvXrNEZF0pBO/H40uyNBaKCevZmyijqU9S
-         dtgw4nZdr2BBoDHMTGRqFS9wL34W06sHlYvPGJDIyYZ8WwwQaDomq7Js/q9BhWD6qUQ8
-         YcS+qiYoipyuzVY0crZofP6Plft1RpR70SRPR+ImCddMkp+jQAh8If8Z1PwgYBv2YiBQ
-         cVylfuE6Y5IQnHtCJoJN2Q2LGckpG0fio41HTIyM4TSopd5pTXm0LF2EMK5P42rWEDY4
-         9gKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794917320; x=1795522120;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+OHBE2JjZLc89T9aDHp47BWoMn41dvghwLwUUjrkALs=;
-        b=yNwQCkM72uf56y2H/EtqwPPvXlNVMDT2PvWQSAwDMiV7Uxcoo/0rBUrb1cEc3LIU5z
-         ddcLjB8eI2Aqvu0421p86yDEDk6rPcPhNRw4ktOEy83My8ww8G+sqMLd2NzBmR5UVyzy
-         rguAYQ4kUH70xG8zwA7qCQfwZI79bVT3aHhs9nNM2nvCesmkddeK2zUiRGsyfo4s+S5f
-         vM+X818iSXwM4qakWZKX1HyVAIH9F6g0lcITYAXc4vyyCu8cTdE5l/cmyBB4cyFuvcx0
-         +PE7ig29thLjO0P4dN4IbdTr0wRS/mpJa4kGRicXAxsFkqOQ964P5FVt790dsNLxgJi6
-         6sjA==
-X-Gm-Message-State: APuU4Z95GfFVZXm0C1bTFdHQnSjqwRolr+iggsIrhXu/NU9BjdX5s5RI
-	l96q+KSIa8ek5zCYCQ9pArHlJ61rO2wMoBhghKDpAMIps20oF0Tm/WyHjxPb/RXwPnrI/+avEcu
-	Cbxj3CgYeZBVYM0dG+d+RTVELVUKUbp+DxBP0XtbJPj5QWJSES9SjjqA=
-X-Gm-Gg: AYBFou3uW9DgIzmnBi8FNfSb7hQxiyTMgX8bU9z3G2fK2VttWj+HkV2SRwkS1jYdBqs
-	HrtN9EQHjb40CDuxcKu5UcwA9n/6UngEK+e2RWogMVi52+kRzJfrgLFZZpL+bxO5B3/zlLDGIYK
-	fJ8s51USCe7Sc+C9kdYUnQaQsIYHVTRHN2RmNq0RtFcV6IYifRKnoRZ8qLA1j9wRzG1cdD4sopm
-	rURba5MYDsHR0VLas9krJ+XIT3eDnXuu6cOvpeq7wWvNPA9igKWygm0N4erg43rICbE0vbhycsr
-	DI3aWzkSVvoSnMqFCPuROttlD1vpn3dYILd7FouL9bCy/lSHTLZ51pN8WeSqFkgid2TSVJK28CD
-	JjIfD8XebGdn8sd64ADZgDMAYJQ/haDS9D0V0hLYjM9DKMTllDVoSzvz7L7xXpUAgTnPNnA==
-X-Received: by 2002:a17:907:9816:b0:c4d:4e5f:b138 with SMTP id
- a640c23a62f3a-c5096369186mr1083292466b.20.1794917320250; Tue, 17 Nov 2026
- 04:08:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=aOoCCTf6
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
+	MIME-Version:Date:Message-ID:From:Reply-To;
+	bh=kM8/1+TsiIiqOZGDw6fdukO4y7KiLnEy3WUqktZlqYA=; t=1794917484; x=2110277484; 
+	b=aOoCCTf6TOqIox1hpH2LZo8/ExHT9EWPzIT/fllLHXCuYBzq3Ocn8Jq4+suxCl56+mXOYyTYtwn
+	yaWDKZvZ0aQ/2QzuE2ylJ0vGPSF6LMWbfvymWz0yP61EAQNjZ28HEcunDASbLtYTFm1/v16lvKsJr
+	63bCreSHJeSWhif+59CviXenQpwF8rwz4i1upMPVL0iCE8rKiJhD29uZQW/FnfIlOVHPriQzP3KBu
+	OM1khvTFGgS4I6IvVKGtAE2uL9/mJ+KWP1LuAiYNals8pCu4Z5NIJZGQhZjoN3Ne3pXV3xeIewNQH
+	ET19BcXQzl8Ip0kDKIi0BklffqisOttg5SEA==;
+Received: from [81.79.79.1] (helo=[192.168.0.116])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1xTI1y-00000000Zws-2ZVu;
+	Tue, 17 Nov 2026 13:11:22 +0100
+Message-ID: <689e5654-2dbd-4580-88b4-75d31d853d60@igalia.com>
+Date: Tue, 17 Nov 2026 12:11:21 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,41 +58,127 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261117-tcpm-soft-reset-sop-v1-0-c7e1543828c0@flipper.net>
- <20261117-tcpm-soft-reset-sop-v1-3-c7e1543828c0@flipper.net> <sashiko-outbox-218719@kernel.org>
-In-Reply-To: <sashiko-outbox-218719@kernel.org>
-From: Alexey Charkov <alchark@flipper.net>
-Date: Tue, 17 Nov 2026 16:08:28 +0400
-X-Gm-Features: AclHuK9PeAuyPN_pcoVBmzh2_P9HC6pBnS8MlP8LThdzwdwiJeca3XY6jANi_vw
-Message-ID: <CAKTNdwGqonU2w7UhFSzoGZCXORgg41iMnefDs16rFgiCUdKGUA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] usb: typec: tcpm: Keep cable plug messages away from
- the port partner
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] drm/sched: Disallow initializing entities with
+ un-initialized schedulers
+To: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+References: <20261117100654.8593-1-tvrtko.ursulin@igalia.com>
+ <20261117100654.8593-2-tvrtko.ursulin@igalia.com>
+ <sashiko-outbox-218670@kernel.org>
+Content-Language: en-GB
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+In-Reply-To: <sashiko-outbox-218670@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 17, 2026 at 3:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] usb: typec: tcpm: SOP' VDMs in tcpm_pd_cable_msg_request()
->   affect partner
-> - [Medium] usb: typec: tcpm: SOP' PD_CTRL_REJECT in
->   tcpm_pd_ctrl_request() resets partner
 
-These look valid, I'll see how to address them in v2.
++ Christian
 
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [High] usb: typec: tcpm: infinite discovery retry loop in
->   tcpm_pd_ctrl_request() [1]
+Please see below:
 
-This was addressed separately by Xu ([1], to be applied), and I've got
-another small patch on top to go in once Xu's patch is in the tree.
+On 17/11/2026 10:46, sashiko-bot@kernel.org wrote:
 
-[1] https://lore.kernel.org/all/eqdhulaftczpqnhu37rmf3ajdpntjnlz53tx2q7ugab=
-zkrqfe2@amdz7hafys4w/
+>> @@ -192,7 +192,15 @@ void drm_sched_entity_modify_sched(struct drm_sched_entity *entity,
+>>   				    struct drm_gpu_scheduler **sched_list,
+>>   				    unsigned int num_sched_list)
+>>   {
+>> -	WARN_ON(!num_sched_list || !sched_list);
+>> +	unsigned int i;
+>> +
+>> +	if (WARN_ON(!num_sched_list || !sched_list))
+>> +		return;
+>> +
+>> +	for (i = 0; i < num_sched_list; i++) {
+>> +		if (WARN_ON(!sched_list[i] || !sched_list[i]->sched_rq))
+>> +			return;
+>> +	}
+> 
+> [Severity: Medium]
+> Can vcn_v3_0_limit_sched() hit this WARN_ON() when VCN0 decode is disabled
+> by the hypervisor under SR-IOV?
+> 
+> During vcn_v3_0_sw_init(), amdgpu_ring_init() places &inst[0].ring_dec.sched
+> into adev->gpu_sched[AMDGPU_HW_IP_VCN_DEC][AMDGPU_RING_PRIO_DEFAULT].sched[0].
+> Later, vcn_v3_0_hw_init() sets ring->no_scheduler = true when the hypervisor
+> has disabled VCN0 decode, which causes amdgpu_device_init_schedulers() to
+> skip drm_sched_init() and leave sched[0]->sched_rq NULL:
+> 
+> drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c:vcn_v3_0_hw_init() {
+>      ...
+> 			if (amdgpu_vcn_is_disabled_vcn(adev, VCN_DECODE_RING, i)) {
+> 				ring->sched.ready = false;
+> 				ring->no_scheduler = true;
+> 				dev_info(adev->dev, "ring %s is disabled by hypervisor\n", ring->name);
+> 			}
+>      ...
+> }
+> 
+> Because vcn_v3_0_early_init() sets adev->vcn.harvest_config = 0 on SR-IOV,
+> an AV1 decode submission on VCN1 reaches vcn_v3_0_limit_sched(), passes the
+> AMDGPU_VCN_HARVEST_VCN0 check, and passes that uninitialized sched[0] to
+> drm_sched_entity_modify_sched():
+> 
+> drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c:vcn_v3_0_limit_sched() {
+> 	struct drm_gpu_scheduler **scheds;
+> 
+> 	/* The create msg must be in the first IB submitted */
+> 	if (atomic_read(&job->base.entity->fence_seq))
+> 		return -EINVAL;
+> 
+> 	/* if VCN0 is harvested, we can't support AV1 */
+> 	if (p->adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0)
+> 		return -EINVAL;
+> 
+> 	scheds = p->adev->gpu_sched[AMDGPU_HW_IP_VCN_DEC]
+> 		[AMDGPU_RING_PRIO_DEFAULT].sched;
+> 	drm_sched_entity_modify_sched(job->base.entity, scheds, 1);
+> 	return 0;
+> }
+> 
+> An unprivileged guest user submitting an AV1 decode job can trigger the
+> WARN_ON(), and the early return leaves the unsupported AV1 job scheduled on
+> VCN1.
 
-Best regards,
-Alexey
+If this is true then without this patch on SR-IOV, calling 
+drm_sched_entity_modify_sched() with an un-initialized scheduler leaves 
+entity->rq as NULL which surely explodes badly. At least I cannot see 
+that it is gracefully handled anywhere.
+
+In any case perhaps we should add this to vcn 3 and 4:
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c 
+b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+index 2f7d5d562cb4..adcb94041274 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1895,6 +1895,7 @@ static const struct amdgpu_ring_funcs 
+vcn_v3_0_dec_sw_ring_vm_funcs = {
+  static int vcn_v3_0_limit_sched(struct amdgpu_cs_parser *p,
+                                 struct amdgpu_job *job)
+  {
++       struct amdgpu_ring *ring = amdgpu_job_ring(job);
+         struct drm_gpu_scheduler **scheds;
+         struct dma_fence *fence;
+
+@@ -1902,6 +1903,10 @@ static int vcn_v3_0_limit_sched(struct 
+amdgpu_cs_parser *p,
+         if (p->adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0)
+                 return -EINVAL;
+
++       /* If VCN0 is disabled we also cannot support AV1. */
++       if (ring->no_scheduler)
++               return -EINVAL;
++
+         /* wait for all jobs to finish before switching to instance 0 */
+         fence = amdgpu_ctx_get_fence(p->ctx, job->base.entity, ~0ull);
+         if (fence) {
+
+This way submission fails explicitly and -EINVAL trickles out all the 
+way to cs ioctl. Thoughts?
+
+Regards,
+
+Tvrtko
+
