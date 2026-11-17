@@ -1,59 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.46
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794902318;
-	b=kz24mCCESy7m75DIgKM4NgSWsuQaQzVS0q8WtAMHh2HlaeU8KhS2FjgknQ9DW7BX1gqx
-	 D1JfSbgNO6FBG+sGzbuTCGVdsf74e9F6ZnGxmroy7gPxQ6+97gLcKAYzhkOii5V/crE3Q
-	 OYljzrafe5wynF7Y/0HWfijOfBUzRNFMlE9kWT8Nw/hfho1j8xyBGTIGIm6l35BoCi+mL
-	 qNjYHuIvMP+3EN8ktM/9mvOzuq/V/S91W6OPBlOgEvsCE+HCIJr7VWJ9spWAVJjjGiINi
-	 Ld292KW/hvJMf1/oz5+IetVXVzBgQmhb/AFaflTksdrHG7SGIoDmppJyfDpNsY9+OBQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794902318;
-	h=DMARC-Filter:DKIM-Signature:To:From:In-Reply-To:User-Agent:Subject:
-	 Date:Message-Id:X-Lms-Return-Path:Received:Cc:Mime-Version:
-	 X-Original-From:Content-Transfer-Encoding:References:Content-Type;
-	bh=I7ec6eY4A4tNdQoPCaM8/MCWa6EmraFZtN/PsBNrDHE=;
-	b=xky5/rVCO/9258fhCv8eBKbR592e0wbKgMPvWjGgrk+VI+2z7D85G6h7byHgJJlPxzHt
-	 9kR+RPo86/dZObHRWwj2FUoSFlChrnNrE+qTK2SpG5sldwpiqj+8gm9GkALVsRdWLt7Wt
-	 DJ1y9kVuk+7tPKIa88R8+fGhHDPoHJJNLIj38B7qctVf+ez+aKAajTqellqYiMqsrWSzD
-	 G2S6eoGJLsfmeketoujN1EvluS+hdp/07/1p+Whvzpd7ewM9kiWutUpAMlCgIVZ/PoA1I
-	 klQMhC/uiLOAxwj9OEEgm+gTBGDjTH8QInZ9Y53M1D3xpNoN9WD8850UHG9uJ1juR9Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.cipunited.com;
-	spf=pass smtp.mailfrom=oss.cipunited.com;
-	dkim=pass header.d=oss.cipunited.com header.i=@oss.cipunited.com header.a=rsa-sha256 header.s=feishu2303200042 header.b=U1G7Vw0A;
-	arc=none smtp.remote-ip=209.127.231.46
-Received: from va-2-46.ptr.blmpb.com (va-2-46.ptr.blmpb.com [209.127.231.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.31
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794904334;
+	b=0kioK46Mv8dO2oO10dAdLzX+/nlZ4ta081gr2t5YXIuMNwLR5w+I0inF91hwMVV71QPR
+	 BEiCd9f3qbqlEQObz+LJif27vDub0O3+x5SPf7rUJigKeAX3BofuDrsFEzNxGxLrBkZje
+	 knVU5txDL2bqtQ9D/7gEYddZdQf22PIVDzq1cLQ5mrDVHyMZGFjlW4DmC4NkMeU4rTOKX
+	 zvJmOiVYe4xW2PHirsvZ/5atVpM4yRI3j/75++3ydzuoFks8uRstqs6Dv2e3rBNpeMDe1
+	 ZgG0zFRD2xtglaiKtg9oI+F6NBIsPoZrNBJ+gyiyfcJWmqC4O9WhEhD3/Xr2Yneak/Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794904334;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:In-Reply-To:References:Content-Transfer-Encoding:
+	 Content-Type:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:
+	 X-MS-Exchange-AntiSpam-MessageData-1:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=bsX0Na8r0LEdvtPeUJ4lupJWev6O4LS03l7GyoeweoM=;
+	b=wFliQnmb+abdPkXs6aHkgCmfh/kWNwkljiw3oUC6dyrsQZVSSkPJ6qegi/J+H/NjBIKS
+	 a+FXLiOyJ/in5HQhrRie2MnHrnphnFSJHS1nLaK2jMVFY4MgRHwOosrSmgteixOSL3m2K
+	 z8uN+EAzxR9O6XNYL9c2Ll+HMcMGWrOlG4hXgfg3pF+A0LRm/o3lDCGWpZClaAkhKFbc4
+	 37t0OGpxCanWgOfxjG54zP0AyRCHWUJCntxfNd2UboahgtGN4WLGYREcmAEfIkbRh55Mi
+	 IIFQfp1TlagYFjbAwLTGpEM2VoaCJiB0Z7KDyWxIoGhWTtp3bKmZiXabOlHl1LYEwAA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=n+k2RXK6;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.31
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010031.outbound.protection.outlook.com [52.101.85.31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D93606A329
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 07:58:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03D93606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.cipunited.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.cipunited.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E35606A889
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:32:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0E35606A889
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oss.cipunited.com header.i=@oss.cipunited.com header.a=rsa-sha256 header.s=feishu2303200042 header.b=U1G7Vw0A
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=feishu2303200042; d=oss.cipunited.com; t=1794902311;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=I7ec6eY4A4tNdQoPCaM8/MCWa6EmraFZtN/PsBNrDHE=;
- b=U1G7Vw0AFvtgCW407o7BbffGVvkibDb7886ZDQqr3QzSsQjbc5+ylMXyoyWk58828nEePr
- 2T8iSP6adsiPhQq9R3grwNMNBPGNNn/hEpqK7/zvBxpyfcS1oCoj9/fNzDQgIJvNyz4dWk
- aqHJ+KdRKQlshah+VFFxwaUdn5cFsYVVGpqvGJLNAhyRJdyc59PrintiYykWhGyKShA0LA
- HxXg0YJ3skljisarBWViem8mI2tS2aPYZFnlz0eDFeCEk7Uir8yD2gK84CNtc7J+fXAU1z
- p2Ra2a+hhdja7tq7l95fkuHmgONgTU1y9s/d3KfnvB+QGFVy988Db/fCTTAu2A==
-To: <sashiko-reviews@lists.linux.dev>
-From: "Rong Zhang" <rongrong@oss.cipunited.com>
-In-Reply-To: <sashiko-outbox-212658@kernel.org>
-User-Agent: Evolution 3.62.1-3
-Subject: Re: [PATCH v2 3/8] MIPS: Loongson64: dts: ls7a-pch: Add missing #address-cells to interrupt controllers
-Date: Tue, 17 Nov 2026 15:53:25 +0800
-Message-Id: <16dbfec04540d41d6aa9bedc4f31b8668394a455.camel@oss.cipunited.com>
-X-Lms-Return-Path: <lba+26afc0925+809bd5+lists.linux.dev+rongrong@oss.cipunited.com>
-Received: from [192.168.8.156] ([171.15.157.139]) by smtp.feishu.cn with ESMTPS; Tue, 17 Nov 2026 15:58:28 +0800
-Cc: "Rong Zhang" <i@rong.moe>, <linux-watchdog@vger.kernel.org>, 
-	<devicetree@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=n+k2RXK6
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c1QGMLhrOQYULdYR1z2mxwuoaKmvFqRZeEKli+f6e7DI2+BHFFYhEa82Qi/MwFnAovMO0ergm3LM662xDFuUylI9c6wt8IXWIFyFtchfAw7hxuwzHYEX0PrJuDl3rqONJVvQ1+AuQUjl+y9flPyR/tk4G6O341xup3HWImux7F/IpGsJMqo4QrRQniEt/lfMhmO6PQzFbbzhQnldNaTGtPmkhnPk+KSy+pfqXXWENY2/rtHdk5hTQt8a9Dorgo4wMb1e9VND84R7ES/MvPeodqPgQFI1ctUFb9n1aQtxIh3udt/LZk+cA9lQmg0WIonFPexmGUv28Vtohn7EnZckBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bsX0Na8r0LEdvtPeUJ4lupJWev6O4LS03l7GyoeweoM=;
+ b=QQ5QHpyf040v0/cq1mbo0WGTfHNBkIeA4zgcaSAhCtbl2PRBBxyBcl3u1OEiC2JN62AGxAr/q9RJhut1zJPbAZp8tYMMuCYU1J87ZYhsFeTTbqqV7oiLAgyVEPWwQ0Wc+X3HmeiEhW0oyMiDNXHKlaqWkCn+Cqifq5iCABZ9OM+M29v5E842rka20HmpkGjdq0ksHBaRXMflEab4Y7woEZv6vAMrqv6FR3FdXLiNU94KJYWoMnClZeQ41z92bHOvPQ/RT6TofRHmYXQMxG9+q1QgboBhxAFLFp8uSl4mEzxd6zvwiK/ZLBK5dLcRuk40kotMY4ezAI9QOvPTvoreSQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bsX0Na8r0LEdvtPeUJ4lupJWev6O4LS03l7GyoeweoM=;
+ b=n+k2RXK6irnJVfD1IeJpRC+cDm9XInNU1cgv5HWXI0cq3EXhxWxBOBLeHJhkVK6nhsf6frn3fu6UjUG20EvJTxcTUuNywA33fvjcczu9kGZASpZ2rYeWiPaxtnFrW/Ia+wFJxbhYeorbgrZlrc16gahIF0nWvDMduZ2qIfte7bIdi3stwfEf0Sjt8gCjs94G420jpb7U6fJeLvFojqa3VX2AyZjjyAxV1VYlTnXhDm+AFdQ1TLD9ypg4OKiY9YX65gEUPcHeNtFWZcFT8O7q+4aHZC7rG4WcBA9upAasOrF77QArUsHA0bNM2/1duO2DW8qWQnrQJpj+JccOTB1a8A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from SJ2PR12MB9161.namprd12.prod.outlook.com (2603:10b6:a03:566::20)
+ by CH4PR12MB590718.namprd12.prod.outlook.com (2603:10b6:610:50f::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
+ 2026 08:32:10 +0000
+Received: from SJ2PR12MB9161.namprd12.prod.outlook.com
+ ([fe80::d9d1:8c49:a703:b017]) by SJ2PR12MB9161.namprd12.prod.outlook.com
+ ([fe80::d9d1:8c49:a703:b017%5]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
+ 08:32:09 +0000
+From: Mikko Perttunen <mperttunen@nvidia.com>
+To: dri-devel@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
+Subject:
+ Re: [PATCH v3 10/10] iommu/tegra-smmu: Use a DMA API default domain per
+ swgroup
+Date: Tue, 17 Nov 2026 17:31:33 +0900
+Message-ID: <UQktJpp1TiatubO14BhQmg@nvidia.com>
+In-Reply-To: <sashiko-outbox-185204@kernel.org>
+References:
+ <20261026-b4-arm32-iommu-dma-cookie-v3-0-3901d74b1ff2@nvidia.com>
+ <20261026-b4-arm32-iommu-dma-cookie-v3-10-3901d74b1ff2@nvidia.com>
+ <sashiko-outbox-185204@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-ClientProxiedBy: TY6PR01CA0023.jpnprd01.prod.outlook.com
+ (2603:1096:405:3bb::6) To SJ2PR12MB9161.namprd12.prod.outlook.com
+ (2603:10b6:a03:566::20)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,56 +99,228 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-X-Original-From: Rong Zhang <rongrong@oss.cipunited.com>
-Content-Transfer-Encoding: 7bit
-References: <20261113-mips-ls7a-wdt-v2-0-e8abd6b2f77c@oss.cipunited.com> <20261113-mips-ls7a-wdt-v2-3-e8abd6b2f77c@oss.cipunited.com> <sashiko-outbox-212658@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB9161:EE_|CH4PR12MB590718:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1ba0aeeb-244a-41b4-a0c5-08df44854564
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|366016|10070799003|1800799024|5023799004|4143699003|11063799006|56012099006|261026121527099003|261026140227099003|261028144727099003|10067099003|261022075727099003|261021121427099003|261022105027099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	cPuDJgma6rYpd3sB9xzobLvcN15MSTl4NE5vIVhvLoCLpM+ykqnvsTlh1urPQIM1a8XDuK5NYAKaHbh28KOilrScwO0nGHA5yDFiie21SHbJzyR097zUUdQzZ0f07IGfixkLYu9pnXpX0xv6M7Xpk9RSmQyY6hFg/gpqWjj7g0ajJTM5qq6ZWGBwLPN30o5H0QmyA0NQuIyfBOl9lliaO4cxGJKeBUJd2fXJRZzApcqVL14GXWMcTdGxSnT4F6oQm3EaHbGqQ3b1azpExFVBCdHt4EyN77T08Lcsq9Y1Awv3GUG1xVF6Jo2o3YWj3uDAyvr69GYsPeqTq6C/Euh2W1p88STUVMZgq2//G8hq1yq9tAtKh9CrCKNsgm/vRbc/YSQ+yNBnAGM5Li9mCkebpts2qzSTdYzLap+5BFbroI/gBYAAAynqFns62R18n0jZKbSvNwHGr4uLXtD8h4EC0VQNqEnZ03MiEqquDOqUiO74ZbX3N5g9NrX9TZZFfZaq4oMm7DD0GIebR7DtP34o/q8Qyag/tpThdB1yjM0qkuME5jdq174wSpHEuIbmC5KjmL9slM3ciEZpCgo79cWly2p+FTGahPxAbQ/qz47Md3KDQKA72+ChBIRHDy2+IXxG4tSOUSCP/EzNbdrsVOvLMrnGGYcdwxyAcyHXzUR1tnU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR12MB9161.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(10070799003)(1800799024)(5023799004)(4143699003)(11063799006)(56012099006)(261026121527099003)(261026140227099003)(261028144727099003)(10067099003)(261022075727099003)(261021121427099003)(261022105027099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SmVJMDZYTERGRnI4Y1lvcEgvVUR3REpwQTRmTUY2YkhMbTYrVlhVUUFFY3Iy?=
+ =?utf-8?B?OFQvZ2dEczNUWENyVDQ1bEFQTWU1SVl0MEdOWWxXSyttR3RYSUtURGI0R2tp?=
+ =?utf-8?B?STVDL1Qzbi8zNGRTMk1PVWplcmZCaFM5MnhyTFRwc2NQRHd6cDZVZzhLRkx6?=
+ =?utf-8?B?YjFSZENZWnExMm9RM0g3c0xXR29OVjRFdVprZWY3ZW5vb0k4RGdtOE00dnBB?=
+ =?utf-8?B?cS9iNE90czFvSldMSG44eDFhNzNCNVBPRW1nWGcrRkpkSE1GMGplMStscEg0?=
+ =?utf-8?B?bHh0VXB4MTNtbGhNZ3hGREVGa1pybjVDRS9DOXZuTTgwaCtKRkl2dHBLbDJJ?=
+ =?utf-8?B?bnpVQ3UyVU9oN0M1cFJGTi9ld01lVzh1eTF3RkFmQ3N2NitGMS9JTkZFTXNX?=
+ =?utf-8?B?dlBwc095L2tWakhCUTZpRnhTWUZVUVBFazRUTExXOUs4NHRUUjlMSDlpY3RX?=
+ =?utf-8?B?WGNtbytXUXBVTEZ4dGxtQ0t1cmc4Sk1nU21oNDNzaVIzYk83SVBTamU5a1lM?=
+ =?utf-8?B?bngvQnRhRkJ5ZHE4MmRXbXNPTWN1QUh6M1N2R0pxZmxEQVBzUlU2aHI0ZWV6?=
+ =?utf-8?B?dm1tVjJkT2ZtaUpNR2pGYzZjVEFXM096dnFDV0Jjc21obHo2aFBOSmhYTmdr?=
+ =?utf-8?B?UEl4T3hGZVN6amJkYVNtYjRiNE5yVnZrTWtjK1JGYlkvN3NvTlJhVU15VHFO?=
+ =?utf-8?B?eUxaQ1VjbG5qbDdUa0c1eW9aTFFPRUluSlR4eDBDbnFadUJKbjZWdmQvdFNZ?=
+ =?utf-8?B?aUNESjN4SU5PZUROZW9pbU9OZUhxQ29jNWp4U2cyU0lTVlNWd0JHaU1xYnc2?=
+ =?utf-8?B?dnZjQTlTZFJTMjRwSWo1MndrUENQU2lBcHdmV3NJUExsUXRQZGU5U1Evcklx?=
+ =?utf-8?B?cUxzNlNzM1V1S0VDMWpxR0ZLdCtMKzF6cVlQNi9VeWU5OERCaDZtc3R0WjRl?=
+ =?utf-8?B?cXo5V3cvck1KNkkrSEdaRFZsQzBITG1SdEE0cmhRK1FDcWhpQmpmUWpiTUZt?=
+ =?utf-8?B?S0ExKzJJY2kwWXZENmhFWjI5T2FHSWx4eDlwT1lTVDIzUytzaUIxMDk2d1k1?=
+ =?utf-8?B?Um9KNTkvbW96Tlg4ckpFY3dtN0ZwS2RvSWFGRGxOdzB6UTBEdlVmSHcxQWJ0?=
+ =?utf-8?B?cXRDQU9wYTZyVk1pOVdyaUtheWdVcXFEWjZGeEREYzFYRzc0OFNLd25QMU5q?=
+ =?utf-8?B?WUJRK3VJS0NEQVNBY01kUThjbUtDM01ORmFzTjJzN2UyRnpCMk5ibDVTNXZ0?=
+ =?utf-8?B?cVdhb0xxWnJiKzZTTXE4Q25BSmdVRDZzYldQM1hUVEVUaEp3OEJXTDA0dklt?=
+ =?utf-8?B?K1VkQXQ2SVRJTmJYZWd0Y09RTVlONG5SYXd5eU4vTnZnSWVES2lPbXRlWkRZ?=
+ =?utf-8?B?Q0ZJS0xTazJEbXlTYzNDODdIMXZpOGJvYlJJaE1TUWVLc252ZWFObFdFSjJ0?=
+ =?utf-8?B?S2duMkRlV1dkZ2IyajNDb3Vqb3B1cTQ5NnAvYS84cXRZOHV2bWRIaEE4WmJy?=
+ =?utf-8?B?bjMxNDBrQ1d1ZVd0aFNPTXdRQUs0aUlMRDFXdTVqVXN5RlozU3k4eEo3dlls?=
+ =?utf-8?B?dldMV3BGTGlNODZzR0tJRGUzbHRpbFZmc2d0WFhacDA0TUNrN01IYXdocDhZ?=
+ =?utf-8?B?S2NENG9JQlJDeFpqRXF4L2JVWXVtaWFHZnNQZmNOSzlxY0ZZcTBlY0NKQW0y?=
+ =?utf-8?B?a1VwVCtpMEdreUhZT0RFc0xkUHcybEJSQnRzVlpVYXY1ZDlSbzlWc01OY2VI?=
+ =?utf-8?B?OHRqMzIvczNQOXJVVmZBemkyN0oyMUhFMFhvektleEFYcHkxbTJyRWVzVWNx?=
+ =?utf-8?B?V0VoSC9OWUtXT1BTSDBHOXdXaUFZM3dHQlFNSzRWNC9Ma2tUa05SRTgyQVlS?=
+ =?utf-8?B?U0JVV1YrZzJROEdjZVViU3dVMll0UDQrY2o0QzBlVDlHd0lZQldycE1hbitG?=
+ =?utf-8?B?eTB5RmVWWUtaRzNQcEFTWDNpRkdWVVBxNEpSRStWSnhVcWU2V2ZhdDhsK2ZY?=
+ =?utf-8?B?S1U5RUtUTFFJVVZjd2hYaVJGeE5YL1JkNll3TUVJTE1ZYjVoS0NIMnZ2L1B1?=
+ =?utf-8?B?N2JlbGdLUVYwdFFQQUZPaFREL0poK3lCMG13clhRd1psejMydzI1SEdEZUsx?=
+ =?utf-8?B?OEQ4VHlGU1JZVzA5bGZrdElSNzJ6bTd4SytuVVBybzEwSmVqd1RMVUFIWitX?=
+ =?utf-8?B?aGRYSk9wcnpZbm1aMzc5ODVzMEhrZlgvT1RvaHpLcitodEMvMkl1NDVLY1B1?=
+ =?utf-8?B?Z0dQc0I1MUZyTFBZTUpLcnFzYlJhUXBEdGM4d25hU3R5NU5JMjU2cjhDYkJ6?=
+ =?utf-8?B?RXBFZlpCVWZoSHYxWVU0ckp0UEtpeURoaW1oTlJsaStoUzRiSHpUTmZ5QnYv?=
+ =?utf-8?Q?Wz0QvJ0u8QgK3tWOnk8AHQ0DTGFr7vb7Ay3PX/UCJ/Qw/?=
+X-MS-Exchange-AntiSpam-MessageData-1: 4GXMVACozmt0QA==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ba0aeeb-244a-41b4-a0c5-08df44854564
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB9161.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 08:32:09.8177
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Ahis3L1oyZmcg5VArIzr20UsGocFdJBuyyTNvQ29p4l8V8s4TF2zYp5yx7gNxOYMSF/+h56TlAEJTC0/rNyROA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR12MB590718
 
-Hi All,
-
-On Fri, 2026-11-13 at 11:01 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] MIPS: dts: loongson: invalid #address-cells on ls7a-lpc node
+On Monday, October 26, 2026 9:24=E2=80=AFPM sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] iommu/tegra-smmu: tegra_smmu_attach_dev() leaks old paging domai=
+n resources
+> - [High] iommu/tegra-smmu: NULL dereference in tegra_smmu_identity_attach=
+() on probe failure
 > --
-> 
-> commit b3cb4b22fb7d7fa764f95bec26fd2bfb7137915e
-> Author: Rong Zhang <rongrong@oss.cipunited.com>
-> 
-> MIPS: Loongson64: dts: ls7a-pch: Add missing #address-cells to interrupt controllers
-> 
-> This commit adds #address-cells = <0> properties to the pic and lpc
-> interrupt-controller nodes in ls7a-pch.dtsi.
-> 
-> > diff --git a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
-> > index f304f99946f16..28038b8cdd146 100644
-> > --- a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
-> > +++ b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
-> 
-> [ ... ]
-> 
-> > @@ -26,6 +27,7 @@ lpc: interrupt-controller@10002000 {
-> >  			interrupt-parent = <&pic>;
-> >  			interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
-> >  			#interrupt-cells = <2>;
-> > +			#address-cells = <0>;
-> >  		};
-> >  
-> >  		ls7a_uart0: serial@10080000 {
-> 
-> [Severity: Low]
-> Does adding #address-cells to the lpc node break dtbs_check schema
-> validation?
-> 
-> Documentation/devicetree/bindings/interrupt-controller/loongson,pch-lpc.yaml
-> sets additionalProperties: false and does not define #address-cells.
-> Unlike pic, lpc is not referenced by any interrupt-map property, so dtc's
-> check_interrupt_map() does not warn about it.
+>=20
+> commit 82c4953fbede4f90881980155ea701c19e530777
+> Author: Mikko Perttunen <mperttunen@nvidia.com>
+>=20
+> iommu/tegra-smmu: Use a DMA API default domain per swgroup
+>=20
+> This commit enables IOMMU_DOMAIN_DMA default domains on a per-swgroup
+> basis via a use_dma_api flag, initially enabled for TegraDRM and Host1x
+> devices, and sets .release_domain to tegra_smmu_identity_domain.
+>=20
+> > diff --git a/drivers/iommu/tegra-smmu.c b/drivers/iommu/tegra-smmu.c
+> > index 6779528a9e7cc..73c6151db8f8c 100644
+> > --- a/drivers/iommu/tegra-smmu.c
+> > +++ b/drivers/iommu/tegra-smmu.c
+> > @@ -994,16 +994,20 @@ static int tegra_smmu_of_xlate(struct device *dev=
+,
+> > =20
+> >  static int tegra_smmu_def_domain_type(struct device *dev)
+> >  {
+> > -	/*
+> > -	 * FIXME: For now we want to run all translation in IDENTITY mode, du=
+e
+> > -	 * to some device quirks. Better would be to just quirk the troubled
+> > -	 * devices.
+> > -	 */
+> > -	return IOMMU_DOMAIN_IDENTITY;
+> > +	struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
+> > +	struct tegra_smmu *smmu =3D dev_iommu_priv_get(dev);
+> > +	const struct tegra_smmu_swgroup *swgroup;
+> > +
+> > +	swgroup =3D tegra_smmu_find_swgroup(smmu, fwspec->ids[0]);
+> > +	if (WARN_ON(!swgroup) || !swgroup->use_dma_api)
+> > +		return IOMMU_DOMAIN_IDENTITY;
+> > +
+> > +	return IOMMU_DOMAIN_DMA;
+> >  }
+>=20
+> [Severity: High]
+> Does transitioning between two paging domains leak the old domain's as->i=
+d
+> and as->pd_dma?
 
-Oops, I must have overlooked the warning in the warning sea...
+Will fix.
 
-Will resubmit soon.
+>=20
+> When tegra_smmu_def_domain_type() returns IOMMU_DOMAIN_DMA,
+> group->default_domain is a paging domain (struct tegra_smmu_as) rather th=
+an
+> tegra_smmu_identity_domain.
+>=20
+> When switching between two paging domains (for example, attaching or
+> detaching an explicit unmanaged domain or a blocking domain over the
+> IOMMU_DOMAIN_DMA default domain, or changing the default domain type via
+> sysfs), the core invokes tegra_smmu_attach_dev(domain, dev, old). However=
+,
+> tegra_smmu_attach_dev() ignores old and only prepares and enables the new
+> domain:
+>=20
+> drivers/iommu/tegra-smmu.c:tegra_smmu_attach_dev() {
+> 	...
+> 	for (index =3D 0; index < fwspec->num_ids; index++) {
+> 		err =3D tegra_smmu_as_prepare(smmu, as);
+> 		if (err)
+> 			goto disable;
+>=20
+> 		tegra_smmu_enable(smmu, fwspec->ids[index], as->id);
+> 	}
+> 	...
+> }
+>=20
+> Because tegra_smmu_as_unprepare() is only called from
+> tegra_smmu_identity_attach(), the replaced paging domain's as->use_count =
+is
+> never decremented. When that domain is later freed via
+> tegra_smmu_domain_free(), it triggers WARN_ON_ONCE(as->use_count) and
+> permanently leaks its hardware ASID in smmu->asids and its page directory
+> DMA mapping as->pd_dma.
+>=20
+> > =20
+> >  static const struct iommu_ops tegra_smmu_ops =3D {
+> >  	.identity_domain =3D &tegra_smmu_identity_domain,
+> > +	.release_domain =3D &tegra_smmu_identity_domain,
+>=20
+> [Severity: High]
+> Can setting .release_domain to tegra_smmu_identity_domain cause a NULL
+> pointer dereference in tegra_smmu_identity_attach() if attaching the
+> default domain fails during probe?
 
-Thanks,
-Rong
+Yes. I'm thinking the appropriate route here is to make attachment not=20
+fail by moving the things that can fail to domain allocation, which is=20
+now possible. However, I'll defer that patch to after the groundwork is=20
+merged not to bloat this series too much.
+
+>=20
+> During __iommu_probe_device() -> iommu_setup_default_domain(), a new
+> IOMMU_DOMAIN_DMA domain is allocated with as->smmu =3D NULL and
+> as->use_count =3D 0, and attached via:
+>=20
+>   __iommu_group_set_domain_internal(group, dom, IOMMU_SET_DOMAIN_MUST_SUC=
+CEED)
+>=20
+> If tegra_smmu_attach_dev() fails inside tegra_smmu_as_prepare() (for
+> example, if tegra_smmu_alloc_asid() returns -ENOSPC when all 4 hardware
+> ASIDs on Tegra30/Tegra114 are in use, or dma_map_single() fails), as->smm=
+u
+> remains NULL. Because IOMMU_SET_DOMAIN_MUST_SUCCEED is passed,
+> __iommu_group_set_domain_internal() still assigns group->domain =3D dom
+> before returning the error.
+>=20
+> On the error unwind path in __iommu_probe_device(), iommu_deinit_device()
+> attaches ops->release_domain while passing group->domain as old, which
+> calls tegra_smmu_identity_attach():
+>=20
+> drivers/iommu/tegra-smmu.c:tegra_smmu_identity_attach() {
+> 	...
+> 	if (old =3D=3D identity_domain || !old)
+> 		return 0;
+>=20
+> 	as =3D to_smmu_as(old);
+> 	smmu =3D as->smmu;
+> 	for (index =3D 0; index < fwspec->num_ids; index++) {
+> 		tegra_smmu_disable(smmu, fwspec->ids[index], as->id);
+> 		tegra_smmu_as_unprepare(smmu, as);
+> 	}
+> 	return 0;
+> }
+>=20
+> Here, smmu is NULL, which is then dereferenced in tegra_smmu_disable() an=
+d
+> tegra_smmu_as_unprepare(). Similarly, if a second device joining an alrea=
+dy
+> active shared group fails in __iommu_probe_device() before attaching to
+> group->domain, iommu_deinit_device() will call tegra_smmu_identity_attach=
+()
+> and unprepare the shared group->domain even though the failing device nev=
+er
+> prepared it.
+
+Likewise deferred, probably a fix in IOMMU core.
+
+Mikko
+
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261026-b4-arm32=
+-iommu-dma-cookie-v3-0-3901d74b1ff2@nvidia.com?part=3D10
+
+
+
+
