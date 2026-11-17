@@ -1,49 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.137
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794929709;
-	b=R1y/6I6RjJF+pqZ7E89NXJH8R+wuqyoh+T1m44mKMx7ywQmJCv3aYlf/YMHoINDTf9nb
-	 MusQP2b3l4gXQmxyd8hVUDeZ9UGJ1DLMwZjlGPxqd1JZ/ZIz6aoqNCIRCHChP3TNbmOm8
-	 X4ZQiE+5P4Ff4O6FdWyB/4RzS2EdwWam/BWXBUjSC/kud21pa1sruXuMzyhAdJ5e47f3q
-	 NLmrgnq2PMa/ambu4H1UvhCLVeG1eC2X0vCeelWON30T8+p8sg79kl9Vbz+ZHjVRCDSqw
-	 9cSmV7CKhQ4j3cbCXTkvYWXKvrCX6pLG2Jq6BmWy0pUnDIAWR29Uzr0xK36PIUiMA0Q==
+	t=1794931052;
+	b=Pnh6kZ/W+OmChWWPsLMjjROb5bmNgvriMz1pstQm3KocvndEtYp5jRsRc84jQp4cWZ84
+	 qyBM+KTDQK043v+4/6mjXNXuATuQg0wHU8YJd+OOStVRayQqpzK95u3BBTuhofdELg8Iy
+	 QHAAOkDNrlBguGkWbKqETy6G6HxLrZ4HVEEYza4zZP2rDALUY5LRLR4SlhooO9KpFfKIO
+	 Qgn3iEhsIWCphdhKNrjMxJHgIkhWxk6ky0YjfPX13u8wr9OQay6zTS4BEwN8uawKwCqav
+	 h2yRQ3atJVHEuN/NukQ8gIUJIv4CPpdkug6p2065RsGK6inVfAcJPq38LXw2RY+0sGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794929709;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=tK1jKo+NXSEZ02DFpKPmwfErvG5rQo62s0WEa+kB0nA=;
-	b=XeUm1Es4AYoz86nyNLFtJYWbCnGC30gRyXGHTt1yJT+VQFhXNzbTSeMr0nf67bWE2zrC
-	 h4R3uVh89B2RafMvvOfXGwUhwLKSuvhxqnQVyHFaD+HgAgudXBMOCoY+0UMr9ZLsBDjI1
-	 ebAQYoYbTvNhCMk1x2BVs6Xr5OidHDWqgZqUTOR2nwvCqpqzuaxtKLfS2KDdl1f7XesdB
-	 SVYeGxXgS6StJDohVeEIYlbUk3F+PZMWh7LKpqxEVSNotglB6FJPiCnpTo7HUhT8q0Boo
-	 d0yU70MmUQmB1czd5VY2iGV3LO/lh6kUpRD1YmI9/8E1C2hSEnnRhUX6y8hWnXmDG0A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794931052;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
+	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
+	bh=3+FyKPryUnxHupmwOSIIYdOL35FcAHgGEhz0DKQNfhY=;
+	b=b9zJZd7V7jmQaG1DO2qxQVLLxSMrAM6NyFlGsLgh2yR7lFnW7GoT/dvl1xa7Ve+hX782
+	 rrEQrR5RwxOBxG2pODbnEnmv3dIyeZtDihvL/Ze+xLCwm7pE2bDKi842GPTkjSM65LkY6
+	 Bu6YDPObGdyPE/W3FU1WcIrOmTkbjyXCfBMbIKX/kHWetutz9w0Y/9RWnCRJzlA6FC3gv
+	 ZVunYJJzsJwQbn9CRvjcaWAAj/tDbGW+sa3qDfZUJruSwP2Eqd26vVxYtJJMikCR/HptR
+	 L/QithhHmT1lkuI2WV067PTiPP7W+Zh2p7hyM7ABLsRYS+j8mhHXmCKybkHpOF9ht7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vkBqVypx;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7939606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 15:35:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A7939606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nZjB+ths;
+	arc=none smtp.remote-ip=74.125.227.137
+Received: from mail-pj2-f9.google.com (mail-pj2-f9.google.com [74.125.227.137])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E45E606A330
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 15:57:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E45E606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vkBqVypx
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 897091A00;
-	Tue, 17 Nov 2026 07:34:58 -0800 (PST)
-Received: from [10.43.16.26] (e126510-lin.lund.arm.com [10.43.16.26])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C31583F882;
-	Tue, 17 Nov 2026 07:34:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794929701; bh=rP7KiWPD0Id1yjvR0kzV0PUGClLaAk2UzopsCTR8iXY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vkBqVypxWVEK5LoZ7prlEXUs+182UcWbwJNtHajfHxyCB/ZsPtloSqMts21tJ6+14
-	 3BALBcz95wEISSjYK0axlgMbpfdE1rEPWnIt/7JN7JQVTHc/TrM7olVQxruDTfiWSI
-	 2KG/AKWkrbBf44WJNNml+uDaICPTdOACqGBdM5Lo=
-Message-ID: <bdf0cda1-049e-41cc-a2bc-161a36d269aa@arm.com>
-Date: Tue, 17 Nov 2026 16:34:52 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nZjB+ths
+Received: by mail-pj2-f9.google.com with SMTP id 98e67ed59e1d1-3b18c01238eso1530253a91.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 07:57:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794931052; x=1795535852; darn=lists.linux.dev;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=3+FyKPryUnxHupmwOSIIYdOL35FcAHgGEhz0DKQNfhY=;
+        b=nZjB+ths7eznB2UU7XZ4qPBh+nTw7rUi1WODAe7DvyunmNIVB2Hqteb1QhmCqDFjn4
+         cw9y95/wkvyFjVm4ImCXn+1XecBZSap+waJMBjp1o9EIRrV/oy/qWmFLjfhlHzwjaOkX
+         TrXTiT+yiUBUpkeEwcZy3QjMQjZhg0azn4SYNTHUQqtFtkganKl8W8Mt8xkFIgUQEpvL
+         BvECECvPGOemSqAAjbG3O71czIunQ6M1s7syjde+3CYihJvWUGWT5UL4chj3vobkiBj3
+         qfvF8GDLysk4C/oD09gj5iIAphv7iPChUKgqZ5khCMrVbIDPKxewvvTzPGM38fxu1izI
+         88hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794931052; x=1795535852;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3+FyKPryUnxHupmwOSIIYdOL35FcAHgGEhz0DKQNfhY=;
+        b=eIctKI5WJu5zDbNUDq2XfoH392DlmICAAEaN0zBXWwLBMx9N8NBByGVa71ffRyjW1g
+         nyZz+SAkiDqctkuKsY1+ePjm4ZRwo8mkfEDadZcttSPKqWIUS8J/cQVJxmKX+i1ZZ2XJ
+         zSjP3yJM9+4bsQHt7S4uOgkQ2SNfV+m4vBaLnpvb6fILsO7jQhGra47gcVUUl0yjlBQC
+         DEel/TAOFhyHk7mY7Q+/JoEgd1ncX7SDLNn8z/yhCtHRuAzTPL8bxMijcdgQQUK21dd0
+         sJ1Rzur0woNoyOmogG0DbFtTDscokYqcWbP4TtF88Mvf3+19+edNer28o2H/XqOjklKX
+         ekfQ==
+X-Forwarded-Encrypted: i=1; AL+hErHpiz4ZDxpezKFe1QAelHYwErv5DjvY4P9xdroNw7oPKApXQHS5TtrqT7H5X8B33DsZbzZvJzt9J3wnCetrVC4=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9YPd8mFCah4QMJyU/6AcSzc4P+G6JgW/N38Ys2Logc559WWn8F
+	cE0h5BpBHFeN4YpnXHm4FDRr8zyanfU/MD+tqOJsunE+ZSQmDzXE3phN
+X-Gm-Gg: AZFdTZfOQCacl1uchIPKZZhnrz6nJV1znVK5vIp/kCUlUI0NgReEuAdu308mauUyarv
+	qcwtbnOoAosA+5J42K5RXeaMEVJJncYu8GprMX/xYJZ5TYEF1UNh0+E/R3J0pZ1GqoPMRIqaa6A
+	wdRaB7xezfvhE42YsGE17Us0b0TlgMumTj1u2U9x7OwGarS81EuFVOrjs8wAPMEjfa5vqqVmQRV
+	wGb4x8t51khYjQPRFkZ+A6JN1KvgI04MlgIJ50T1ZOjS9fm732sVVbDOJf+ySGUpLiQTXJlProP
+	GMlAE4EeKmVLubJ8QIJjEM1nrbsydM36ZX+hFuZC/8AWf8PwELA+S/7zWwO8T5wfpPl/xdrXlQx
+	m1EhTBM+KxpLx8W7uDSfbSuIOSh9SISF5ZhIcVgK6KXNiptM0SL/ASiKnY52DlZvMw5BKLfDD0C
+	FvWvGyHDtPpV0ZbjkfC5gfcxIsdLfINct6DDuHU41dtrnUWIkQEfyPznIVyvJ7ITIMRqK2sMPu6
+	/CZDs0jzU7LKLCT5pHi/OSHG5nBdlqExcdUE8VRDql5BOYAxkA1LL1fYZrXSWxBxM2dtE2ajwR4
+	9UlwXuIn8CEbpWOc77jq7Aihg0/UGP7K/RfUOIFUw13rf4vbO1x1SsVbnQXhAIaWot0OUYc0u0g
+	Z9Z2vhGyXCQEX8gJavcqS5cRnu9YCHoUmOgAycwjhWo8tW0ddLjk+TizXTVo1CZAkNc5AzmrD7p
+	+cU2myVQ0=
+X-Received: by 2002:a17:90b:50d0:b0:3b3:b750:d2ed with SMTP id 98e67ed59e1d1-3b3b750d6acmr2306459a91.8.1794931051401;
+        Tue, 17 Nov 2026 07:57:31 -0800 (PST)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3ac6016c3sm4692320a91.15.2026.11.17.07.57.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 07:57:30 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,81 +90,38 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v10 20/22] arm64: kpkeys: Enable
- kpkeys_hardened_pgtables support
-To: sashiko-reviews@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Ard Biesheuvel <ardb+git@google.com>, Andy Lutomirski <luto@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>, Jann Horn <jannh@google.com>,
- Jeff Xu <jeffxu@chromium.org>, Joey Gouly <joey.gouly@arm.com>,
- Kees Cook <kees@kernel.org>, Linu Cherian <linu.cherian@arm.com>,
- Linus Walleij <linusw@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Mark Brown <broonie@kernel.org>, Matthew Wilcox <willy@infradead.org>,
- Maxwell Bland <mbland@motorola.com>, "Mike Rapoport (IBM)"
- <rppt@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- Pierre Langlois <pierre.langlois@arm.com>,
- =?UTF-8?Q?Pierre-Cl=C3=A9ment_Tosi?= <ptosi@google.com>,
- Quentin Perret <qperret@google.com>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Ryan Roberts <ryan.roberts@arm.com>, Vlastimil Babka <vbabka@kernel.org>,
- Will Deacon <will@kernel.org>, Yang Shi <yang@os.amperecomputing.com>,
- Yeoreum Yun <yeoreum.yun@arm.com>, linux-mm@kvack.org, x86@kernel.org,
- Ira Weiny <iweiny@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
- Thomas Gleixner <tglx@kernel.org>
-References: <20261109-kpkeys-v10-0-aa6c4d9603bc@arm.com>
- <20261109-kpkeys-v10-20-aa6c4d9603bc@arm.com>
- <sashiko-outbox-207334@kernel.org>
-From: Kevin Brodsky <kevin.brodsky@arm.com>
-Content-Language: en-GB
-In-Reply-To: <sashiko-outbox-207334@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] mm/damon/paddr: skip hugetlb folios as a whole in
+ pageout
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Wed, 18 Nov 2026 02:54:30 +1100
+Message-Id: <179493087012.57245.993362683540368479.b4-reply@b4>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, sashiko-bot@kernel.org, 
+ sashiko-reviews@lists.linux.dev
+In-Reply-To: <20261117143352.121497-1-sj@kernel.org>
+References: <20261117-fix-damon-hugetlb-pageout-20261117-v1-1-054ef8760a92@gmail.com>
+ <20261117143352.121497-1-sj@kernel.org>
+X-Mailer: b4 0.16.0
 
-On 10/11/2026 17:02, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Does enabling CONFIG_KPKEYS_HARDENED_PGTABLES cause hibernation resume and
-> kexec relocation to fault when writing through the transitional linear map?
+Hi SJ,
+
+On Tue, 17 Nov 2026 06:33:51 -0800 SJ Park wrote:
+
+> > +		if (folio && !folio_test_lru(folio) && folio_test_hugetlb(folio))
 >
-> When kpkeys_hardened_pgtables is active, linear-map PTEs for page table
-> pages carry KPKEYS_PKEY_PGTABLES, which is read-only under POR_EL1_INIT.
-> Both swsusp_arch_resume() and machine_kexec_post_load() call
-> trans_pgd_create_copy() to build a writable copy of the linear map so
-> swsusp_arch_suspend_exit() and arm64_relocate_new_kernel() can overwrite
-> existing kernel memory, including page tables:
->
-> arch/arm64/mm/trans_pgd.c:copy_pte() {
-> 	...
-> 		__set_pte(dst_ptep, pte_mkvalid_k(pte_mkwrite_novma(pte)));
-> 	...
-> }
->
-> Neither pte_mkwrite_novma() nor pte_mkvalid_k() clears PTE_PO_IDX_MASK, and
-> POR_EL1 remains set to POR_EL1_INIT during the copy.  Any store in
-> swsusp_arch_suspend_exit() or arm64_relocate_new_kernel() to a destination
-> page that was a page table when trans_pgd_create_copy() ran will trigger a
-> fatal synchronous EL1 Permission Overlay fault with DAIF masked.  Clearing
-> PTE_PO_IDX_MASK (or setting the default pkey) in copy_pte() would avoid
-> preserving the read-only overlay in the transitional page tables.
+> Why do we need both !folio_test_lru() and folio_test_hugetlb() here?  Could
+> hugetlb folio in lru list exist?  Could folios not in lru list be reclaimed?
 
-Confirmed that issue by getting kexec to reuse the running kernel's
-physical pages when loading the new image:
+Yeah, you're right.  Neither is possible, so the hugetlb check is
+redundant.
 
-$ kexec -l Image -c --mem-min <addr>
+> Would only !folio_test_lru() suffice?  If so, the patch subject and
+> description may also better to be updated.
 
-where <addr> is the physical address of the running kernel as reported
-by /proc/iomem. This causes a crash as some of the static page table
-pages in the kernel's data segment are remapped with POIndex 1 when
-walking early page tables (patch 13), and the transitional linear map
-inherits the POIndex, preventing writes to these pages with the default
-value of POR_EL1.
+That'll be better. Thanks for your help :) I'll fix it in v2.
 
-Agreed that clearing the POIndex in copy_pte() is the right thing to do.
-We already make all mappings present and writeable; resetting their
-POIndex is another required step to ensure the mapped memory can be
-written. Higher level tables should be handled in the same way, in case
-we protect whole blocks in the future.
-
-- Kevin
+Thanks,
+Aveline Noir
