@@ -1,107 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794905133;
-	b=yz3wc0TTS48xG8AIEVOxPA5vedZzKpJQU7Q7G8icdV1g1GraFZeeym06gWD51u4T6NW8
-	 pPLT96k8yKSAxh5iSlsb+SGGBniVB2AP2N/WE4XDpJ9JL7SeCIeTOUTcPJOgO/6XZyK+b
-	 FBsACn0vgBl+rUAKoTpAN4lu4JkMltGIho47R34grRSEu5BkHaLpdprJlBpBmxwbBSAj3
-	 tU+8pWiGp50ItuSJ28ifktb/wS5eh5n0RQHeXmv50LPYqDQjtYcrSzHWkcJIQnj0mG1B2
-	 xYMdQGqgSqiP9+2+FKFI/TKljHH+eTJ2abO6ntTm3GBxMuvjmbbhvjWkXu30MqlGiDA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794905133;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Transfer-Encoding:X-Spamd-Result:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id;
-	bh=HtQfSTCDo69KwjcGYAQjqOB4/Op9vfM277fQ3LSI5Ow=;
-	b=of1zIm5D4sIiISKPdgB/o/xtfoawYeHdLT2sGvqGsWhrrEM33d/zhpRVB9A896dgbj/y
-	 VhrCrn+4wrAF22BJydcSFl6Ibat8INnaaSz02jVnhE4mVnf3lvJHxHshD8mu5aw+4odu9
-	 AqaDQ7gj1BbM2qA3HiiXVUVz6MhPPp1bfYnpYO3ItsHHgTBunoI9nVgO74QPr/HQKwmJN
-	 vrhiFcPTL6qKzwG5yODdGTaLCWSmE2ZW6lAvNYXFXVZ8MlPfCvKj+VG9sF8bxPbQ3cW7B
-	 JPeFC3L5RqQ8ns1yf+KFkb7V+oKIqu9TLE2k4LDVTBiEoEg4rBJzCsgYRXlX7KAcxvw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="RTH1Mo2/";
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=W7mv2tzX;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="RTH1Mo2/";
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=W7mv2tzX;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.180.131
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794905144;
+	b=el/RaqtnT7z03ZKBLEXE2zcJ36DiPVNrmWUxuvfKvctYk6E790Ad2LAIfpF8BEIRC1TV
+	 t1Ja1jI4ykIlujAu9u3yMfAgRrm/eEt0K5XnnIT9Q8iZvCCPc0CxIB7bwnSQIS2sMWIbb
+	 aMHklUFHefHNl5Dy6RkQApOG1luSa+KwHzAkjyj3bNhlyb91E6Z1NvTouOMGwAqzwwzqY
+	 3p5TnPk7C6kkSN0V5qCsft/93hL2KSaptG7Eh48XKMU1GaB/jSA+9o0zy/8bRAao4S+Po
+	 bPEeATAXo539d4vO+IMh7gzfS8RiTgSVKnocqh+wz8N8AeSN5ImeB3llDB4zrPLVfow==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794905144;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type:
+	 Content-Transfer-Encoding:X-Proofpoint-Spam-Details-Enc:
+	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
+	b=GzaO9IOmtorBEzZO4R9eF6UXygKv8AGp7NsKspzJ5nGnRB9IgVu7xYMIEpnCauCTZFXv
+	 XMahq28VKhtYjmEd0pvC2X/c3R35Bgu4VT22U33IcFAWnmqMbtmowhI6g0K97U0vtQ+Ri
+	 aKfqVUZ84NTYien3UiHL2Xzr2htUa+cvZcvVxN7eRdrmT5FV+4b5vN0PlKRGaaS9J7b37
+	 9w6KCP+cZsxcOCr8nZoVHEirHIGaRp/x/wQq4fhecVUThHa6m8O0jQZkhNXIP3vFI0EdQ
+	 b3Hvkormjl+VVqaLCR2pqT4xDfPHmvfu64p0CC7Lq4yrEkZklVuvoKtCxAq9eaPG4LQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=CmBA61fa;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b="UlQy1/IB";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C960606A323
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:45:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C960606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE4C606A8A0
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:45:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EDE4C606A8A0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=RTH1Mo2/;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=W7mv2tzX;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=RTH1Mo2/;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=W7mv2tzX
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 3F1EB1F6E6;
-	Tue, 17 Nov 2026 08:45:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794905119; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HtQfSTCDo69KwjcGYAQjqOB4/Op9vfM277fQ3LSI5Ow=;
-	b=RTH1Mo2/pGsyMVQ6MZkmn8Sne7L3PSATKzVEjORb85vQE4ASWcLdtZVlJMiBn1KbpzqSON
-	EkO2cy9gnNWfiE5qYy3pi/drG3qXTVDOvziiCvavMnf2xd8ySHT+UBNmwPSqDHiCYX1/1f
-	oVSl8S1Vhl34YEp7dtcwj28Rm8F2IEA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794905119;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HtQfSTCDo69KwjcGYAQjqOB4/Op9vfM277fQ3LSI5Ow=;
-	b=W7mv2tzXxk/39zBlHT9iI910ZFYYrOnP1dYw3039aBTdW26qrLIFpRk3LI2qYJ0ivI0ov/
-	90yh40VC+HmVviAw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="RTH1Mo2/";
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=W7mv2tzX
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1794905119; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HtQfSTCDo69KwjcGYAQjqOB4/Op9vfM277fQ3LSI5Ow=;
-	b=RTH1Mo2/pGsyMVQ6MZkmn8Sne7L3PSATKzVEjORb85vQE4ASWcLdtZVlJMiBn1KbpzqSON
-	EkO2cy9gnNWfiE5qYy3pi/drG3qXTVDOvziiCvavMnf2xd8ySHT+UBNmwPSqDHiCYX1/1f
-	oVSl8S1Vhl34YEp7dtcwj28Rm8F2IEA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1794905119;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HtQfSTCDo69KwjcGYAQjqOB4/Op9vfM277fQ3LSI5Ow=;
-	b=W7mv2tzXxk/39zBlHT9iI910ZFYYrOnP1dYw3039aBTdW26qrLIFpRk3LI2qYJ0ivI0ov/
-	90yh40VC+HmVviAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D0BCC1334C;
-	Tue, 17 Nov 2026 08:45:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id jcr5JR4U/GrjUQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 17 Nov 2026 08:45:18 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: javierm@redhat.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH] firmware: sysfb: Remove CONFIG_SYSFB_SIMPLEFB
-Date: Tue, 17 Nov 2026 09:44:57 +0100
-Message-ID: <20261117084514.367399-1-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=CmBA61fa;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=UlQy1/IB
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AH441QO1699110
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:45:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=; b=CmBA61fawsfanpiI
+	qp30JZ6FCgmIO9y2S8cC516vknjh3jEWeZ0mVF+NIEw4v2BMiGLXQRCoz8OWLB81
+	SuUBqan2Mm2Mo0EZN6D0zmonZSCsRktQb/vlgOBWl6mpwBJbqbg+8uZtWjBDyODB
+	3PBMnjAmot6NRjb7RAd4KZYp9BR9ZOV6zLRd7ptB73yTFX8k4CEogkWa1xbDwS7I
+	AFRdDwcuavGtlFGzy6JFrwAyuewcv+tWmtXW11GZHek+sQd8vEgPD+J7k1lM0Phc
+	GhZEiUuXJZ43jjbHg6X69rF2N6yckBpyM2ypT+UCnHIN4Cozi7xQ2fPhISVQK5P+
+	8yp6mg==
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com [209.85.128.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0fjugyh8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:45:38 +0000 (GMT)
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-8b0d978e4faso65237547b3.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 00:45:38 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794905138; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ZtW+1kGw3+6eQ21nXndw7NA6EssqcTG6imFr8cMdWveXhaJ5+cC1iUl+AOB2sstnMi
+         MWQTlHNqpCA2QuuU/9DHGtED1Wq026afD/dMd5sFM+xpKpewHPAFVM29RlWiGSPvnmf8
+         h91AFYxpSDCFpm0WlvGL2GaoCoAIjVFEOvgaJhlOiE/s+PNwi8ooXDMKTopbt1hLQoda
+         rTI2ASleId0v5wtJ5y7/Nd9mUZ32mDc50+0BphAkjNGK28JljXdnkVufXE3VgXfqnU/a
+         R1GGcQbThWTHwMlikJtVEmPQphuhW3ZEjcX/cSFdl/3MJxm046jy3ZctYGdRteqc0CEF
+         av5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=FmCD4lD9LNyyYXbYa9xmUGtH1k13R2Yxiic3McFlpZSFpI3vIHE6Vd6bkxpsyv4EIq
+         3uT8e7ssv0zfM4BUI1GtkThB3an116IYBJUTmJosJA99cygs/qAJ5GrLOklcnYSiZ+/H
+         6XWY+zRljWCrN+XNQS/YubHT9tcEEQ4yRlqAU3HWx7fUUMY4eMsjNvDJ5TJgeuckbB6g
+         Z6ChDgUCbtdSJWJI8vBXuL4qHmcMhPEWaPXoGU5l3DM5EEGrX6t0JjEb54ozsqRNuMlR
+         0YjcafZl5hYKKXh+91IV83yHeLotZFzuqLtEft8+sB1u0+yfFVUrkRJ8diMu1/ughjh/
+         1TCw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1794905138; x=1795509938; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
+        b=UlQy1/IBZGAXUjxWuBfDO+ELJV81NG2623VtcEoZDlizeYdvMcJWRzWKp2nAvBso6H
+         LCBApq4ma8KfzaCXGq5x1FOvrQ9TrWzhP7W8iLFiRlre4UUpCU6DVnCYJSK+5c1BLyc4
+         lH8b5HGpKrVsZYgJzjyRoAX9+vDWP/fIE60oym2YPsheEWKrqCoI074dQpsgi+dGEGTO
+         QOD0DCXHHIALoVXI+jl9MOmz27oW80h6YPXkNR3gsAK3cjxtAYb68j3gBBs0bmIg61ld
+         BByU7IQtqtbEk+bOPlC2enVxICw8duZDHBkd2EDpG0tGdJnsQehdylil69iUXWRUDhND
+         qauQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794905138; x=1795509938;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
+        b=2qRBIxp88bm2sRhmj3/mcuoCtSVnvFgDlpVPtm3cZ+CnmkT+idIwinKn0d8AGQq833
+         qcetLXBothiWG2gIjLRZj8/rL8DfPWRY0c5LySRSs80oewaevhvxud6XSISlv5LBpNUy
+         RFbkMMKWcJmkcVNdHQAlPRg5gfOQGio82Fyl4/5D+aDAsQzHTpZhp/aCqghPJAlIEaDF
+         /7F6LMHnxm4XatmlJ0qrniXuwiRVs1dYRM9aq5VLh2UphZMYrkZPhR+KANl4WcmUkbN1
+         Zf8HkIJs7C2FpFz5bviwygolgT8W6LNwgVe+Dd/GXnDX8jYyWrjqXCqWsAjjXC9NmjwD
+         n7zQ==
+X-Gm-Message-State: APuU4Z/LSn0b0UpOfygwKYbNNcK33Fh/ET/dIMrovzpuEg/c0BaJtMcd
+	UOIzL14K0U9xRUwjANhld9LL/0k7kOqz2npr7VqvRCqPNvv3F1WxmQc5mDQ5YpN5RBIdsnpQref
+	dU/+euvv2GTeNze1RXYcMWLKg7yUXrtGfoj1K2HikE5sWYn4+4epHE994jdcRHW4EtZ06FkXRJh
+	F81Viiiuvnj+jZihOfvfLz/Fh1ili/951R4joEVRNgy3jycqaQaShGS0Kk
+X-Gm-Gg: AZFdTZcUTPU16k+SfsPw98tfyDNhxExFoE6RtCA94qXbPThevMuiQDvrc7R6KmfOsC9
+	DJppLGqxJ5rUqDG+ybGqeuHRpDa4fUNSS/2xin004na8+M+VCWuXVUuRC4DodtUAmbJNki5rBXs
+	XgTM0uijd19guzT08r+o9iDS+N882iJYRWKyvq5s0vX71RvPUuNsJWyIUFGQ==
+X-Received: by 2002:a05:690c:c6c3:b0:8b3:4122:f464 with SMTP id 00721157ae682-8b4aa2e6c45mr55426707b3.55.1794905137990;
+        Tue, 17 Nov 2026 00:45:37 -0800 (PST)
+X-Received: by 2002:a05:690c:c6c3:b0:8b3:4122:f464 with SMTP id
+ 00721157ae682-8b4aa2e6c45mr55426647b3.55.1794905137376; Tue, 17 Nov 2026
+ 00:45:37 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -111,378 +126,136 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-12.01 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_TO(0.00)[redhat.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim];
-	MIME_TRACE(0.00)[0:+];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	ARC_NA(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -12.01
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 3F1EB1F6E6
+References: <20261117-nvmem-byte-mask-for-split-macaddr-v3-0-c02177658f66@oss.qualcomm.com>
+ <20261117-nvmem-byte-mask-for-split-macaddr-v3-1-c02177658f66@oss.qualcomm.com>
+ <sashiko-outbox-218243@kernel.org>
+In-Reply-To: <sashiko-outbox-218243@kernel.org>
+From: Hongmei Xu <hongmei.xu@oss.qualcomm.com>
+Date: Tue, 17 Nov 2026 16:45:26 +0800
+X-Gm-Features: AclHuK-BjraxiQizuRyu_wwBk7IPkDy9t9I88yuWDIxIvdsj0i58hOgBrlEV2kQ
+Message-ID: <CAPTcHHR5-ByUxRUdifBO37PJTgLPDzeP6gyTbcdgf2k6BJhpOQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: nvmem: add byte-mask property for
+ non-contiguous byte selection
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDAzNCBTYWx0ZWRfXxzStq9SjZ3+B
+ 30ozQkHyDtCQvrtN7vj22CTFOl7g/KXmEFgRv8KujniMRosbyXEc/Tv93SYsIGBnXJgpj0Jd85i
+ TGXwKpGei77nA2BUOtGuJEXcMzy7cIkoPvlmmqzS4zZd+guBys6w23M6mcdDxPiGWQS7ofoL2BV
+ +cIaAnAKUG5hcHejwcZgJGUOCoWVZ1R8yLeULIxAcXl4uwPewf44QTkB+EJ8HKXuCj4krhr1TF3
+ LYHfEl2Vv7CoGwnLHu/fdZDsqrL1dTaEN9Q5KyFCFzUpiT+PsN7Vd7ttxjHhQU6nkaxKqPRrJOi
+ CabYq0kdwY0tb2/CtRODIkIdwe2hubIkirkVQEuqNk3MuEFrynjtt/Wn+UfvL6ax20CM1bH3hux
+ nCiKtguUeUm6klneyJ3DEsToCfAdj83Qd+/d7U9wTYoIh0ePK39SdLRaghHGHhjkNq3bpS5EIvS
+ Psah3+WFGcY7uzMfWxA==
+X-Authority-Analysis: v=2.4 cv=JfIpPkKV c=1 sm=1 tr=0 ts=6afc1432 cx=c_pps
+ a=72HoHk1woDtn7btP4rdmlg==:117 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=PCVpLA2prkgZY9I6f_AA:9 a=QEXdDO2ut3YA:10 a=kA6IBgd4cpdPkAWqgNAz:22
+X-Proofpoint-ORIG-GUID: mDsL2yMQq-ydTjW7I4TBYfwgPNNpnGGo
+X-Proofpoint-GUID: mDsL2yMQq-ydTjW7I4TBYfwgPNNpnGGo
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDAzNCBTYWx0ZWRfXyo28AraqlIK6
+ 6MAx8LBtat191gc2fxOZuuqcU7Ib5tLYgLJI2IMKbg8N3Uo4GDTL1jgNCUZPr2nBee1AXkgEuXo
+ ys3mwf4KzUCNBvvXAnZdvYXl5Wq+ygU=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-17_01,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611170034
 
-Enabling SYSFB_SIMPLEFB creates a system-framebuffer device on top of
-a firmware-provided UEFI or VESA framebuffer. It is inflexible and lacks
-support for various features, such as EDID and color LUTs. Therefore
-commit cc79eaf8ee25 ("firmware: sysfb: Mark CONFIG_SYSFB_SIMPLEFB as
-deprecated") marked CONFIG_SYSFB_SIMPLEFB as deprecated.
+On Tue, Nov 17, 2026 at 2:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] dt-bindings: nvmem: byte-mask redefines reg size and reads
+>   beyond reg
+> --
+>
+> commit c8ae5b67172a64e8cfa54543074f9aaa24c7c23a
+> Author: Hongmei Xu <hongmei.xu@oss.qualcomm.com>
+>
+> dt-bindings: nvmem: add byte-mask property for non-contiguous byte select=
+ion
+>
+> This commit adds the byte-mask property to the fixed-cell NVMEM binding
+> to allow selecting non-contiguous physical bytes within a 32-byte window.
+>
+> > diff --git a/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell=
+.yaml b/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
+> > index 38e3ad50ff4fb..46e1101ee98ae 100644
+> > --- a/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
+> > +++ b/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
+> > @@ -34,6 +34,20 @@ properties:
+> >          description:
+> >            Size in bit within the address range specified by reg.
+> >
+> > +  byte-mask:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    minimum: 1
+> > +    description: >
+> > +      Bitmask selecting which physical bytes within the NVMEM device r=
+egion
+> > +      contribute to this cell's output. Bit N set means physical byte =
+N
+> > +      relative to the cell's base offset is included; selected bytes a=
+re
+> > +      packed into the output buffer in ascending byte order. Byte posi=
+tions
+> > +      are relative to the cell's base offset and limited to a 32-byte =
+window.
+> > +      The highest set bit must not reference a byte beyond the device =
+size.
+> > +      The number of set bits must not exceed the cell's logical size g=
+iven by
+> > +      reg. Cannot be used together with bits. Cells using byte-mask ar=
+e
+> > +      read-only; write operations are not supported.
+>
+> [Severity: Medium]
+> Does byte-mask redefine the size cell of reg as the logical output size
+> instead of the physical address range spanned by the cell in the NVMEM
+> device?
+>
+> In fixed-cell.yaml (such as the bits property right above) and nvmem.yaml=
+,
+> reg =3D <offset size> specifies the physical address range in the parent
+> NVMEM device, and sub-range selection operates within that reg range.  Fo=
+r
+> any non-contiguous selection of K bytes, the highest set bit H in
+> byte-mask is at least K, spanning at least K + 1 physical bytes.
+>
+> If a DT author sets reg =3D <offset K> to match the logical size, byte-ma=
+sk
+> reads physical bytes beyond the declared [offset, offset + K) reg range,
+> hiding physical address overlaps between sibling cells from DT tooling an=
+d
+> reviewers.  Conversely, if reg =3D <offset M> covers the full physical sp=
+an
+> (M >=3D K + 1), the number of set bits is smaller than reg, which leaves =
+the
+> remaining M - K trailing bytes unspecified in the binding and causes
+> consumers expecting a K-byte cell (such as nvmem_get_mac_address() or
+> nvmem_cell_read_u32()) to fail on the larger cell size.
+>
+The choice of reg =3D <offset K> where K =3D popcount(byte_mask) is
+intentional: it exposes the logical output size directly in the binding,
+so that consumers such as nvmem_cell_read_u32() and
+nvmem_get_mac_address() see the correct cell size without any
+knowledge of byte-mask.
 
-Remove CONFIG_SYSFB_SIMPLEFB and the related code. Remaining users are
-advised to upgrade to efi-framebuffer and vesa-framebuffer with efidrm
-and vesadrm on top. Also remove the outdated comment from sysfb.c.
+The physical read window (fls(byte_mask) bytes from offset) does
+extend past the reg-declared range, and that is by design.
+nvmem_validate_byte_mask() ensures the full physical window stays
+within device bounds, so no out-of-device-bounds access occurs.
+The overlap concern between sibling cells is real, but it is not new:
+the existing framework does not enforce exclusivity between sibling
+cell reg ranges in general; DT authors are already responsible for the
+hardware layout. byte-mask does not introduce a new enforcement gap.
 
-Note that this change does not affect DeviceTree simple-framebuffer.
-The kernel still parses them and creates a simple-framebuffer device
-for each.
-
-The MIPS architecture code creates a simple-framebuffer device for the
-display output on the Nintendo N64. Removing CONFIG_SYSFB_SIMPLEFB does
-not affect this code either.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/firmware/Kconfig          |  16 ----
- drivers/firmware/Makefile         |   1 -
- drivers/firmware/sysfb.c          |  33 -------
- drivers/firmware/sysfb_simplefb.c | 140 ------------------------------
- drivers/gpu/drm/sysfb/Kconfig     |   4 +-
- include/linux/sysfb.h             |  25 ------
- 6 files changed, 2 insertions(+), 217 deletions(-)
- delete mode 100644 drivers/firmware/sysfb_simplefb.c
-
-diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-index 43e2e2a64594..ab76a6f7f0ab 100644
---- a/drivers/firmware/Kconfig
-+++ b/drivers/firmware/Kconfig
-@@ -210,22 +210,6 @@ config SYSFB
- 	select BOOT_VESA_SUPPORT
- 	select SCREEN_INFO
- 
--config SYSFB_SIMPLEFB
--	bool "Mark VGA/VBE/EFI FB as generic system framebuffer (deprecated)"
--	depends on X86 || EFI
--	select SYSFB
--	help
--	  Firmware often provides initial graphics framebuffers so the BIOS,
--	  bootloader or kernel can show basic video-output during boot for
--	  user-guidance and debugging.
--
--	  This option, if enabled, marks VBE/EFI framebuffers as system
--	  framebuffers so the generic simpledrm driver can be used.
--
--	  This option is deprecated and will be removed in the near future. If
--	  unsure, say N and select efidrm, vesadrm instead. The dedicated DRM
--	  drivers provide the same functionality plus additional features.
--
- config TH1520_AON_PROTOCOL
- 	tristate "Always-On firmware protocol"
- 	depends on ARCH_THEAD || COMPILE_TEST
-diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-index 50b338313152..6a9413454d10 100644
---- a/drivers/firmware/Makefile
-+++ b/drivers/firmware/Makefile
-@@ -19,7 +19,6 @@ obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
- obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
- obj-$(CONFIG_FW_ATTR_CLASS)	+= firmware_attributes_class.o
- obj-$(CONFIG_SYSFB)		+= sysfb.o
--obj-$(CONFIG_SYSFB_SIMPLEFB)	+= sysfb_simplefb.o
- obj-$(CONFIG_TH1520_AON_PROTOCOL) += thead,th1520-aon.o
- obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
- obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
-diff --git a/drivers/firmware/sysfb.c b/drivers/firmware/sysfb.c
-index 8833582c1883..07738b9e89c5 100644
---- a/drivers/firmware/sysfb.c
-+++ b/drivers/firmware/sysfb.c
-@@ -4,33 +4,11 @@
-  * Copyright (c) 2012-2013 David Herrmann <dh.herrmann@gmail.com>
-  */
- 
--/*
-- * Simple-Framebuffer support
-- * Create a platform-device for any available boot framebuffer. The
-- * simple-framebuffer platform device is already available on DT systems, so
-- * this module parses the global "screen_info" object and creates a suitable
-- * platform device compatible with the "simple-framebuffer" DT object. If
-- * the framebuffer is incompatible, we instead create a legacy
-- * "vesa-framebuffer", "efi-framebuffer" or "platform-framebuffer" device and
-- * pass the screen_info as platform_data. This allows legacy drivers
-- * to pick these devices up without messing with simple-framebuffer drivers.
-- * The global "screen_info" is still valid at all times.
-- *
-- * If CONFIG_SYSFB_SIMPLEFB is not selected, never register "simple-framebuffer"
-- * platform devices, but only use legacy framebuffer devices for
-- * backwards compatibility.
-- *
-- * TODO: We set the dev_id field of all platform-devices to 0. This allows
-- * other OF/DT parsers to create such devices, too. However, they must
-- * start at offset 1 for this to work.
-- */
--
- #include <linux/err.h>
- #include <linux/init.h>
- #include <linux/kernel.h>
- #include <linux/mm.h>
- #include <linux/pci.h>
--#include <linux/platform_data/simplefb.h>
- #include <linux/platform_device.h>
- #include <linux/screen_info.h>
- #include <linux/sysfb.h>
-@@ -145,9 +123,7 @@ static __init int sysfb_init(void)
- 	struct screen_info *si = &dpy->screen;
- 	struct device *parent;
- 	unsigned int type;
--	struct simplefb_platform_data mode;
- 	const char *name;
--	bool compatible;
- 	int ret = 0;
- 
- 	screen_info_apply_fixups();
-@@ -164,17 +140,8 @@ static __init int sysfb_init(void)
- 		goto unlock_mutex;
- 	}
- 
--	/* try to create a simple-framebuffer device */
--	compatible = sysfb_parse_mode(si, &mode);
--	if (compatible) {
--		pd = sysfb_create_simplefb(si, &mode, parent);
--		if (!IS_ERR(pd))
--			goto put_device;
--	}
--
- 	type = screen_info_video_type(si);
- 
--	/* if the FB is incompatible, create a legacy framebuffer device */
- 	switch (type) {
- 	case VIDEO_TYPE_EGAC:
- 		name = "ega-framebuffer";
-diff --git a/drivers/firmware/sysfb_simplefb.c b/drivers/firmware/sysfb_simplefb.c
-deleted file mode 100644
-index 71f542e37732..000000000000
---- a/drivers/firmware/sysfb_simplefb.c
-+++ /dev/null
-@@ -1,140 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-or-later
--/*
-- * Generic System Framebuffers
-- * Copyright (c) 2012-2013 David Herrmann <dh.herrmann@gmail.com>
-- */
--
--/*
-- * simple-framebuffer probing
-- * Try to convert "screen_info" into a "simple-framebuffer" compatible mode.
-- * If the mode is incompatible, we return "false" and let the caller create
-- * legacy nodes instead.
-- */
--
--#include <linux/err.h>
--#include <linux/init.h>
--#include <linux/kernel.h>
--#include <linux/mm.h>
--#include <linux/platform_data/simplefb.h>
--#include <linux/platform_device.h>
--#include <linux/screen_info.h>
--#include <linux/sysfb.h>
--
--static const char simplefb_resname[] = "BOOTFB";
--static const struct simplefb_format formats[] = SIMPLEFB_FORMATS;
--
--/* try parsing screen_info into a simple-framebuffer mode struct */
--__init bool sysfb_parse_mode(const struct screen_info *si,
--			     struct simplefb_platform_data *mode)
--{
--	__u8 type;
--	u32 bits_per_pixel;
--	unsigned int i;
--
--	type = si->orig_video_isVGA;
--	if (type != VIDEO_TYPE_VLFB && type != VIDEO_TYPE_EFI)
--		return false;
--
--	bits_per_pixel = __screen_info_lfb_bits_per_pixel(si);
--
--	for (i = 0; i < ARRAY_SIZE(formats); ++i) {
--		const struct simplefb_format *f = &formats[i];
--
--		if (f->transp.length)
--			continue; /* transparent formats are unsupported by VESA/EFI */
--
--		if (bits_per_pixel == f->bits_per_pixel &&
--		    si->red_size == f->red.length &&
--		    si->red_pos == f->red.offset &&
--		    si->green_size == f->green.length &&
--		    si->green_pos == f->green.offset &&
--		    si->blue_size == f->blue.length &&
--		    si->blue_pos == f->blue.offset) {
--			mode->format = f->name;
--			mode->width = si->lfb_width;
--			mode->height = si->lfb_height;
--			mode->stride = si->lfb_linelength;
--			return true;
--		}
--	}
--
--	return false;
--}
--
--__init struct platform_device *sysfb_create_simplefb(const struct screen_info *si,
--						     const struct simplefb_platform_data *mode,
--						     struct device *parent)
--{
--	struct platform_device *pd;
--	struct resource res;
--	u64 base, size;
--	u32 length;
--	int ret;
--
--	/*
--	 * If the 64BIT_BASE capability is set, ext_lfb_base will contain the
--	 * upper half of the base address. Assemble the address, then make sure
--	 * it is valid and we can actually access it.
--	 */
--	base = si->lfb_base;
--	if (si->capabilities & VIDEO_CAPABILITY_64BIT_BASE)
--		base |= (u64)si->ext_lfb_base << 32;
--	if (!base || (u64)(resource_size_t)base != base) {
--		printk(KERN_DEBUG "sysfb: inaccessible VRAM base\n");
--		return ERR_PTR(-EINVAL);
--	}
--
--	/*
--	 * Don't use lfb_size as IORESOURCE size, since it may contain the
--	 * entire VMEM, and thus require huge mappings. Use just the part we
--	 * need, that is, the part where the framebuffer is located. But verify
--	 * that it does not exceed the advertised VMEM.
--	 * Note that in case of VBE, the lfb_size is shifted by 16 bits for
--	 * historical reasons.
--	 */
--	size = si->lfb_size;
--	if (si->orig_video_isVGA == VIDEO_TYPE_VLFB)
--		size <<= 16;
--	length = mode->height * mode->stride;
--	if (length > size) {
--		printk(KERN_WARNING "sysfb: VRAM smaller than advertised\n");
--		return ERR_PTR(-EINVAL);
--	}
--	length = PAGE_ALIGN(length);
--
--	/* setup IORESOURCE_MEM as framebuffer memory */
--	memset(&res, 0, sizeof(res));
--	res.flags = IORESOURCE_MEM;
--	res.name = simplefb_resname;
--	res.start = base;
--	res.end = res.start + length - 1;
--	if (res.end <= res.start)
--		return ERR_PTR(-EINVAL);
--
--	pd = platform_device_alloc("simple-framebuffer", 0);
--	if (!pd)
--		return ERR_PTR(-ENOMEM);
--
--	pd->dev.parent = parent;
--
--	sysfb_set_efifb_fwnode(si, pd);
--
--	ret = platform_device_add_resources(pd, &res, 1);
--	if (ret)
--		goto err_put_device;
--
--	ret = platform_device_add_data(pd, mode, sizeof(*mode));
--	if (ret)
--		goto err_put_device;
--
--	ret = platform_device_add(pd);
--	if (ret)
--		goto err_put_device;
--
--	return pd;
--
--err_put_device:
--	platform_device_put(pd);
--
--	return ERR_PTR(ret);
--}
-diff --git a/drivers/gpu/drm/sysfb/Kconfig b/drivers/gpu/drm/sysfb/Kconfig
-index f7e48178885e..05d4b3ab4d08 100644
---- a/drivers/gpu/drm/sysfb/Kconfig
-+++ b/drivers/gpu/drm/sysfb/Kconfig
-@@ -25,7 +25,7 @@ config DRM_COREBOOTDRM
- 
- config DRM_EFIDRM
- 	tristate "EFI framebuffer driver"
--	depends on DRM && MMU && EFI && (!SYSFB_SIMPLEFB || COMPILE_TEST)
-+	depends on DRM && MMU && EFI
- 	select APERTURE_HELPERS
- 	select DRM_CLIENT_SELECTION
- 	select DRM_GEM_SHMEM_HELPER
-@@ -72,7 +72,7 @@ config DRM_SIMPLEDRM
- 
- config DRM_VESADRM
- 	tristate "VESA framebuffer driver"
--	depends on DRM && MMU && X86 && (!SYSFB_SIMPLEFB || COMPILE_TEST)
-+	depends on DRM && MMU && X86
- 	select APERTURE_HELPERS
- 	select DRM_CLIENT_SELECTION
- 	select DRM_GEM_SHMEM_HELPER
-diff --git a/include/linux/sysfb.h b/include/linux/sysfb.h
-index ed23d6516223..611c8f0d13da 100644
---- a/include/linux/sysfb.h
-+++ b/include/linux/sysfb.h
-@@ -110,29 +110,4 @@ static inline void sysfb_set_efifb_fwnode(const struct screen_info *si,
- 
- #endif /* CONFIG_EFI */
- 
--#ifdef CONFIG_SYSFB_SIMPLEFB
--
--bool sysfb_parse_mode(const struct screen_info *si,
--		      struct simplefb_platform_data *mode);
--struct platform_device *sysfb_create_simplefb(const struct screen_info *si,
--					      const struct simplefb_platform_data *mode,
--					      struct device *parent);
--
--#else /* CONFIG_SYSFB_SIMPLEFB */
--
--static inline bool sysfb_parse_mode(const struct screen_info *si,
--				    struct simplefb_platform_data *mode)
--{
--	return false;
--}
--
--static inline struct platform_device *sysfb_create_simplefb(const struct screen_info *si,
--							    const struct simplefb_platform_data *mode,
--							    struct device *parent)
--{
--	return ERR_PTR(-EINVAL);
--}
--
--#endif /* CONFIG_SYSFB_SIMPLEFB */
--
- #endif /* _LINUX_SYSFB_H */
--- 
-2.56.0
-
+Regards,
+Hongmei Xu
