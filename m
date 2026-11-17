@@ -1,122 +1,150 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.58
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794905144;
-	b=el/RaqtnT7z03ZKBLEXE2zcJ36DiPVNrmWUxuvfKvctYk6E790Ad2LAIfpF8BEIRC1TV
-	 t1Ja1jI4ykIlujAu9u3yMfAgRrm/eEt0K5XnnIT9Q8iZvCCPc0CxIB7bwnSQIS2sMWIbb
-	 aMHklUFHefHNl5Dy6RkQApOG1luSa+KwHzAkjyj3bNhlyb91E6Z1NvTouOMGwAqzwwzqY
-	 3p5TnPk7C6kkSN0V5qCsft/93hL2KSaptG7Eh48XKMU1GaB/jSA+9o0zy/8bRAao4S+Po
-	 bPEeATAXo539d4vO+IMh7gzfS8RiTgSVKnocqh+wz8N8AeSN5ImeB3llDB4zrPLVfow==
+	t=1794906494;
+	b=hkE7fgW0k/nTBEcRR6UKuDcMt16oLZCDqV7NN7r+WKSdxywy+SUMEZ6fKlUTNhVRr9zF
+	 ilQemmTYqS6jHPegYUv+Qxo8WDutaMQ1LpkOrhvdkjByd9Nn5F0SxNulImWEZS2tr6vV8
+	 tjYc0+BkFTarr9uQXbfHLcnBxum3BE687dy81fn/9z40/NRGwqucY0ciaNzmXIXkg0fRV
+	 wm5OGMgpJrVG1Z1KdokDNVY1IeJUYmUnkc6X2Ph+CIQpZIpVRE+5plT7dxhDfsfGCwBKQ
+	 7N89tQ/46lKR4NXcmwhRr2d245NbP8wdoV2OPVC78M3pYUvOVnOjnQCVzm7U/2kBgwg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794905144;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type:
-	 Content-Transfer-Encoding:X-Proofpoint-Spam-Details-Enc:
-	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
-	b=GzaO9IOmtorBEzZO4R9eF6UXygKv8AGp7NsKspzJ5nGnRB9IgVu7xYMIEpnCauCTZFXv
-	 XMahq28VKhtYjmEd0pvC2X/c3R35Bgu4VT22U33IcFAWnmqMbtmowhI6g0K97U0vtQ+Ri
-	 aKfqVUZ84NTYien3UiHL2Xzr2htUa+cvZcvVxN7eRdrmT5FV+4b5vN0PlKRGaaS9J7b37
-	 9w6KCP+cZsxcOCr8nZoVHEirHIGaRp/x/wQq4fhecVUThHa6m8O0jQZkhNXIP3vFI0EdQ
-	 b3Hvkormjl+VVqaLCR2pqT4xDfPHmvfu64p0CC7Lq4yrEkZklVuvoKtCxAq9eaPG4LQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794906494;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
+	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 msip_labels:x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
+	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=iIpYJPZimjQTGw3I5irovopL5vVDDsAT1H6lBRv7VCE=;
+	b=1Pb5+i+yxAV60r0ivFyxn8hjdEUE2xinn4mwUpLvvjfNrk4bBNHQM+RkvLD8U+Te/1k3
+	 JLZnpZSohH6qcCBj54mpyzkxw2I3D7M6MLhsaDGFI9nUAP8Sv0rVLjVYuSL7kebsXy9pc
+	 hFuq/wL/oTNY3PiF/KyV5ih3TnZsFK+aUaq4dMoSFdGa7CAEomNQQGFpyVlviuuO6FCOA
+	 FXiLVEg5I8YvvzLDGXwSnd4GliJgvYOAnp1nVnNXTIjtDOwIydJDl1q0Se1yu9Gjzixg1
+	 4KB3WytNDMEIKTzN+xg3ZtV5FWt7G8Dw1LZhgyf5/sX2PxKsozJYyAIeWm4q5/KMyZw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=CmBA61fa;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b="UlQy1/IB";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.180.131
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	dmarc=pass header.from=nxp.com;
+	spf=pass smtp.mailfrom=nxp.com;
+	dkim=pass header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector1 header.b=iKOlTySB;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.58
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013058.outbound.protection.outlook.com [40.107.162.58])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE4C606A8A0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:45:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EDE4C606A8A0
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDBF606A329;
+	Tue, 17 Nov 2026 09:08:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BDBF606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=CmBA61fa;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=UlQy1/IB
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AH441QO1699110
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:45:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=; b=CmBA61fawsfanpiI
-	qp30JZ6FCgmIO9y2S8cC516vknjh3jEWeZ0mVF+NIEw4v2BMiGLXQRCoz8OWLB81
-	SuUBqan2Mm2Mo0EZN6D0zmonZSCsRktQb/vlgOBWl6mpwBJbqbg+8uZtWjBDyODB
-	3PBMnjAmot6NRjb7RAd4KZYp9BR9ZOV6zLRd7ptB73yTFX8k4CEogkWa1xbDwS7I
-	AFRdDwcuavGtlFGzy6JFrwAyuewcv+tWmtXW11GZHek+sQd8vEgPD+J7k1lM0Phc
-	GhZEiUuXJZ43jjbHg6X69rF2N6yckBpyM2ypT+UCnHIN4Cozi7xQ2fPhISVQK5P+
-	8yp6mg==
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com [209.85.128.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0fjugyh8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 08:45:38 +0000 (GMT)
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-8b0d978e4faso65237547b3.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 00:45:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794905138; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZtW+1kGw3+6eQ21nXndw7NA6EssqcTG6imFr8cMdWveXhaJ5+cC1iUl+AOB2sstnMi
-         MWQTlHNqpCA2QuuU/9DHGtED1Wq026afD/dMd5sFM+xpKpewHPAFVM29RlWiGSPvnmf8
-         h91AFYxpSDCFpm0WlvGL2GaoCoAIjVFEOvgaJhlOiE/s+PNwi8ooXDMKTopbt1hLQoda
-         rTI2ASleId0v5wtJ5y7/Nd9mUZ32mDc50+0BphAkjNGK28JljXdnkVufXE3VgXfqnU/a
-         R1GGcQbThWTHwMlikJtVEmPQphuhW3ZEjcX/cSFdl/3MJxm046jy3ZctYGdRteqc0CEF
-         av5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
-        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
-        b=FmCD4lD9LNyyYXbYa9xmUGtH1k13R2Yxiic3McFlpZSFpI3vIHE6Vd6bkxpsyv4EIq
-         3uT8e7ssv0zfM4BUI1GtkThB3an116IYBJUTmJosJA99cygs/qAJ5GrLOklcnYSiZ+/H
-         6XWY+zRljWCrN+XNQS/YubHT9tcEEQ4yRlqAU3HWx7fUUMY4eMsjNvDJ5TJgeuckbB6g
-         Z6ChDgUCbtdSJWJI8vBXuL4qHmcMhPEWaPXoGU5l3DM5EEGrX6t0JjEb54ozsqRNuMlR
-         0YjcafZl5hYKKXh+91IV83yHeLotZFzuqLtEft8+sB1u0+yfFVUrkRJ8diMu1/ughjh/
-         1TCw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1794905138; x=1795509938; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
-        b=UlQy1/IBZGAXUjxWuBfDO+ELJV81NG2623VtcEoZDlizeYdvMcJWRzWKp2nAvBso6H
-         LCBApq4ma8KfzaCXGq5x1FOvrQ9TrWzhP7W8iLFiRlre4UUpCU6DVnCYJSK+5c1BLyc4
-         lH8b5HGpKrVsZYgJzjyRoAX9+vDWP/fIE60oym2YPsheEWKrqCoI074dQpsgi+dGEGTO
-         QOD0DCXHHIALoVXI+jl9MOmz27oW80h6YPXkNR3gsAK3cjxtAYb68j3gBBs0bmIg61ld
-         BByU7IQtqtbEk+bOPlC2enVxICw8duZDHBkd2EDpG0tGdJnsQehdylil69iUXWRUDhND
-         qauQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794905138; x=1795509938;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=cpkGlVy+88a+bdtERyVSo17D0wkYNFyDnapta8BFak0=;
-        b=2qRBIxp88bm2sRhmj3/mcuoCtSVnvFgDlpVPtm3cZ+CnmkT+idIwinKn0d8AGQq833
-         qcetLXBothiWG2gIjLRZj8/rL8DfPWRY0c5LySRSs80oewaevhvxud6XSISlv5LBpNUy
-         RFbkMMKWcJmkcVNdHQAlPRg5gfOQGio82Fyl4/5D+aDAsQzHTpZhp/aCqghPJAlIEaDF
-         /7F6LMHnxm4XatmlJ0qrniXuwiRVs1dYRM9aq5VLh2UphZMYrkZPhR+KANl4WcmUkbN1
-         Zf8HkIJs7C2FpFz5bviwygolgT8W6LNwgVe+Dd/GXnDX8jYyWrjqXCqWsAjjXC9NmjwD
-         n7zQ==
-X-Gm-Message-State: APuU4Z/LSn0b0UpOfygwKYbNNcK33Fh/ET/dIMrovzpuEg/c0BaJtMcd
-	UOIzL14K0U9xRUwjANhld9LL/0k7kOqz2npr7VqvRCqPNvv3F1WxmQc5mDQ5YpN5RBIdsnpQref
-	dU/+euvv2GTeNze1RXYcMWLKg7yUXrtGfoj1K2HikE5sWYn4+4epHE994jdcRHW4EtZ06FkXRJh
-	F81Viiiuvnj+jZihOfvfLz/Fh1ili/951R4joEVRNgy3jycqaQaShGS0Kk
-X-Gm-Gg: AZFdTZcUTPU16k+SfsPw98tfyDNhxExFoE6RtCA94qXbPThevMuiQDvrc7R6KmfOsC9
-	DJppLGqxJ5rUqDG+ybGqeuHRpDa4fUNSS/2xin004na8+M+VCWuXVUuRC4DodtUAmbJNki5rBXs
-	XgTM0uijd19guzT08r+o9iDS+N882iJYRWKyvq5s0vX71RvPUuNsJWyIUFGQ==
-X-Received: by 2002:a05:690c:c6c3:b0:8b3:4122:f464 with SMTP id 00721157ae682-8b4aa2e6c45mr55426707b3.55.1794905137990;
-        Tue, 17 Nov 2026 00:45:37 -0800 (PST)
-X-Received: by 2002:a05:690c:c6c3:b0:8b3:4122:f464 with SMTP id
- 00721157ae682-8b4aa2e6c45mr55426647b3.55.1794905137376; Tue, 17 Nov 2026
- 00:45:37 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector1 header.b=iKOlTySB
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VKdM2V7waAJT4jRjveQpxiuktwi/9b0NUDYrn5xiOh7M3XhmJb+C/OBZqMdMHMXWp1XBhH0CdUF7U8LvERluXEN3zo6NYQIndUwxdHwH0NYcHxYyDViX0ZO2tVGV2kdiPGNktPEDkXvfGNhupphOZe7C40A7wVduORSiDyY+ktmwXsieVcYim40jc9lFFZXX3otRnnXiAP45mKJBQH3QNd3yOySceynNta/JHMud/Zx0tJbsK80m42Y0UdoXjoA3Hec/q68mgIdWUoTaaQUDEvZTvMdDlhQ9tzpohVO2hXN0rJAH4UonykDMoaBJqLeRDFEeKO/GOpYkCYBYKKMoNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iIpYJPZimjQTGw3I5irovopL5vVDDsAT1H6lBRv7VCE=;
+ b=rSa6a0HRvAjIkfm7D2Wt9N9OnakuceJnIJABqznapiB6cvguiCc179iIRqBjTpMAZlZhCyLNfNDxgCV1xYhFB+vUKC+Sbtb5ousTlgqjFAkSQB45bUK/zLMpdGACmUFQ7khAisS2rc5eHKJzV/mXZ8oWV2Mh8Nf9MaaXOAkSZzt1MqbH8jH0ERXBtovCLAaGTNoye2e3XvfvHCbOi2pIMoZvVC9Nb6TLi2fFXLWyoUtfh11LbdkEd55QB8AaWDGLuEOjtLz8gphSuxH1Y6uv15L17Mv+Awq3Ps0S2P0lUJFsv3MLDHC4HMv6VoK/PfI2qWWJ/CJP2cmzXXCIkPI3cw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iIpYJPZimjQTGw3I5irovopL5vVDDsAT1H6lBRv7VCE=;
+ b=iKOlTySBwPQcMMeliGxNYoED5CRuNU4Wl0lKLoQjjwuDPzxqs4y5u1f4+MHXfQ7AJoQxqfmnpVlQU9epF0AyR9a+4+67tKz2hsuO4rn1SdvpGQPAItIdRkZCZLJO4Izoiw6w1DUnerURWm8oEpZ5WAKWTV1qchk1NN+dcUqZWtICC+aREEjxuAvH8HIrneG2Raff2LTQN8d0Rxy7ha0OIvO92H7iFunFujkwWv5dhYmzQ9HGcfX7NJDzR1GPPz+Xcnrs2AA2wKbEnxFXHVx4BC/r/d13HeGemiB61mJOq6XxBglHiQ/pvk2U7CPw9lf98u0T7biw2rNYsj+d6ZeKhg==
+Received: from GV2PR04MB11740.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cd::13) by AM9PR04MB8381.eurprd04.prod.outlook.com
+ (2603:10a6:20b:3b5::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
+ 2026 09:08:11 +0000
+Received: from GV2PR04MB11740.eurprd04.prod.outlook.com
+ ([fe80::ca5f:7e1c:a67a:a490]) by GV2PR04MB11740.eurprd04.prod.outlook.com
+ ([fe80::ca5f:7e1c:a67a:a490%6]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
+ 09:08:11 +0000
+From: Claudiu Manoil <claudiu.manoil@nxp.com>
+To: Russell King <linux@armlinux.org.uk>, "andrew@lunn.ch" <andrew@lunn.ch>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>, Vladimir Oltean
+	<vladimir.oltean@nxp.com>, Wei Fang <wei.fang@nxp.com>, Jakub Kicinski
+	<kuba@kernel.org>, Simon Horman <horms@kernel.org>
+CC: "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "robh@kernel.org" <robh@kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>, "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+Subject: RE: [PATCH net-next v4 1/6] net: enetc: Add pseudo-MAC support for
+ ENETCv4 Ports via a fixed-link node
+Thread-Topic: [PATCH net-next v4 1/6] net: enetc: Add pseudo-MAC support for
+ ENETCv4 Ports via a fixed-link node
+Thread-Index: AQHdc4nYhJFH1dmVTk6cQvCCjjel0rctr1QAgAQ9z8A=
+Date: Tue, 17 Nov 2026 09:08:11 +0000
+Message-ID:
+ <GV2PR04MB11740CF1755A54ECCB6075434967B2@GV2PR04MB11740.eurprd04.prod.outlook.com>
+References: <cover.1794581338.git.claudiu.manoil@nxp.com>
+ <4f51bfd237fa584c7d9187d7b82f36e261853ea3.1794581338.git.claudiu.manoil@nxp.com>
+ <sashiko-outbox-214685@kernel.org>
+In-Reply-To: <sashiko-outbox-214685@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2PR04MB11740:EE_|AM9PR04MB8381:EE_
+x-ms-office365-filtering-correlation-id: e536ee52-fb55-4360-ab80-08df448a4dc8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|366016|1800799024|19092799006|376014|7416014|38070700021|10067099003|11063799006|260925021311599003|260925021911599003|56012099006|260925022911599003|4143699003|261026121527099003|261026140227099003|261028144727099003|261022075727099003|261022113327099003|261021121427099003|261022105027099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003;
+x-microsoft-antispam-message-info:
+ 59+RAJjxLiUuiHpX+OgoFQL6qGoEZWo2hPAecDUOV5P5v69W9TuSjvZ1VjelQb27Q+igzC8XYg/7LyieoyHpxFAkq+bg+wpaWkzb3VnXveNXVCQWxVc4h9AP+hOkSpgCCY8wNBefheLw8BlyW4bEskr92Ywp5br87UGu5v2/WdPprtNJD6My/F0gGOUlvYFwaAvDzm7L7Ifz9B40Qsi+gaJvhMW6IQtL4JJpnwXwBm//KFFtqv2afkkpbRYGAXO+czEKBRAhMasvoP1kzCN+gjFBSGuW4Iy+RiGshqWqiYFrGZcMuLQMPVsbtOL8GSZL5CabYRPz4U8EqVvB4ubugoxUhX5Eq1p3QL0BWlAZo9qbVOITgRmtx1zVvkjPV46lxCWia/mpZB+AzInRVcC1dbZQUTVJ2KqfgFQgQQbRUyZMB83l5C87bJ4zUSkQ2VgtzNch9O9ry58Z+G1kVb7h70aEaOFa4d3da8ABQGPwZgvpkC1KSwcauTzF9hmF2tISBz/25SSWCL8Y+dyYC55NEHaBZhj6sZ+4Pt2XX2I/kY42ckQEaahdwI2wu0gd5y1ct2NKY/xgcTutnJqCAZnkhdG/5/JGyF83Lu7GXRv939EqTEa5mXXlEfK0IzADTH5xBO4ZdFrKzZGP/DEc/uFcMwLgoJtLddGVq584pmxLDi8=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11740.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(19092799006)(376014)(7416014)(38070700021)(10067099003)(11063799006)(260925021311599003)(260925021911599003)(56012099006)(260925022911599003)(4143699003)(261026121527099003)(261026140227099003)(261028144727099003)(261022075727099003)(261022113327099003)(261021121427099003)(261022105027099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?t5FM3+vBAB9GsCp0n5hV5Bz9omzptI1lnwpfCAdOpZeWDLhfN12xyLgJ0I6W?=
+ =?us-ascii?Q?n0cgaYGZEXeCd6bwAWuDUHdPY6C94wPw0Iyh7peQq9LJNBBr/H5cTVvvBB4Q?=
+ =?us-ascii?Q?2Gmp9n6dCD5ZG+FK7KQ+21s7cUKshZ7MSEO3AlNEXoFpXU2GDBpXDBxj+b+r?=
+ =?us-ascii?Q?REpYi0S/ozclEFoDpwzSZAx1FjTNTnodnL4yUqJ9vM9tf2vqHYbjx81/L7q0?=
+ =?us-ascii?Q?dPqJVyFCyoe+hHtFyRc3M1jkthf/ygQM/IBG7p0tZJ9YUy9HrQVcvln5m1PG?=
+ =?us-ascii?Q?J5tWpgBa2MSXTvTnvD0yTSmRV8vNI9skZdRIXtFTAiCxI7PbLSGV0po/DFxw?=
+ =?us-ascii?Q?s8C/0u/H+REvWq881HIyu2clwfXDerRRz/XFof3Dr1fBwoVBoJzWsaJCQwQa?=
+ =?us-ascii?Q?RKtGKANDLfq1S9cYVLsiJzptjmdBAdtdx5h8KXoFgwGB8FliwO1oxRjNDyre?=
+ =?us-ascii?Q?iuwWujkRSBUa/iY1ZZp41a5ccR0WlQ8KFGd37C6FT9se77gaGYmhc8YLqpW9?=
+ =?us-ascii?Q?hgev+F1/KINbZ6KI8OKmxnmsYJvR3BvdGneGP7wZLt4TbDR4cXx5BOH8ez4H?=
+ =?us-ascii?Q?CuAubySX9i1E4Li2LETyHQyP7PcpbUzutL6uj4pCsVz215nsGkNq3btYTUuA?=
+ =?us-ascii?Q?W3oPzQB3D5f9mFTOaIYns//qJdlkOw7BzKbkNR2+esjmKaaKbTGBDBX+d2zo?=
+ =?us-ascii?Q?+jD4OKtmgMJSx9A8ML5A0Oi5N9TLbB0IFAVHxDm37M/11KNxymDjGuHhnL3T?=
+ =?us-ascii?Q?spsxKqFDOqSwrqEolHbfXtRETjyLhC2Hl4uyG/gL8gHT3DedDQUZWvkH7UC8?=
+ =?us-ascii?Q?etHYM+B5bJlNTEpyPrqJ2Zmml1NJPdcXEiMMTIOvEwDo6SIdyZD2aAKNi59z?=
+ =?us-ascii?Q?FbXgzSbbLOvo5wC6F4hDAPqwpyM3IDan9jTLzYJsD/QYWwziy2QxSDpWQWHg?=
+ =?us-ascii?Q?3FQTZKNznU/2vZw48ByN1I3o6hxxBJ+clC0F5B0hBfM/eJ8yTQPijhzMxUvm?=
+ =?us-ascii?Q?DLLlapf+rT0BjAnBXhXAyv2abbaNm+bPMlrHK9NB8w4diUBhGQN/j4ow0Mqm?=
+ =?us-ascii?Q?TWTTr7l8jBaaUie952TZRt4ob0UM2OCE3gpjVPRRJf2ImUUUc731UfZjwpxV?=
+ =?us-ascii?Q?kDyfLZwMfC2cm6Nyn/RM544wPbOHxlfUd2wdHN/wH4Wu1nlei8dpPp1Dxasx?=
+ =?us-ascii?Q?euX6aAtOrsQrGnF1yfAYg+E9L5mHmkbr07onmiLbLsSNIkIc378JBMr4mlq8?=
+ =?us-ascii?Q?YJRd3UPAd6OY1HRmzZ/VFvwM0leIZ8i81Cc90v4X8/L6vNPsrqzcz1mdVC+x?=
+ =?us-ascii?Q?Zol02nJXa7UhCqDSFs5BnlFfzMqUPUMvWS6FE6cRgITTke1c3PS6h1gN7yY6?=
+ =?us-ascii?Q?FRvRtcdMB5193LPyekhutjLk/3wfGOSF2n4qxSFMri3v236+Vgd4Bd78AcTl?=
+ =?us-ascii?Q?D0FFskHNFSFHiAMwVA6f7/HoMWYUxTiK0jbhGNOIze5hYVmH9OdR4vN5V3GO?=
+ =?us-ascii?Q?6omSDHK4vw4f6kFCvtW1SD5hPAqnOQmahJA4b/VPEO6/RAZgLfB/xPRG888U?=
+ =?us-ascii?Q?qG8jthpD2OB+pohLS69nk/StvnK8w31vXxSlDEOcju56O5kgoZcDSx/L0efu?=
+ =?us-ascii?Q?RYHfYMHZiYDKmfUt+wKWPIHdfFhPfGyZUc3hyhATdcnXoLSzwnyWXVIT1aKt?=
+ =?us-ascii?Q?PHfvEPG0yp8WWLrKXCJJyoxJyloMRwb6SlowEsNeXnczvzdEbOLmvizKKcNY?=
+ =?us-ascii?Q?cyGBfODe4A=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -126,136 +154,115 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261117-nvmem-byte-mask-for-split-macaddr-v3-0-c02177658f66@oss.qualcomm.com>
- <20261117-nvmem-byte-mask-for-split-macaddr-v3-1-c02177658f66@oss.qualcomm.com>
- <sashiko-outbox-218243@kernel.org>
-In-Reply-To: <sashiko-outbox-218243@kernel.org>
-From: Hongmei Xu <hongmei.xu@oss.qualcomm.com>
-Date: Tue, 17 Nov 2026 16:45:26 +0800
-X-Gm-Features: AclHuK-BjraxiQizuRyu_wwBk7IPkDy9t9I88yuWDIxIvdsj0i58hOgBrlEV2kQ
-Message-ID: <CAPTcHHR5-ByUxRUdifBO37PJTgLPDzeP6gyTbcdgf2k6BJhpOQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: nvmem: add byte-mask property for
- non-contiguous byte selection
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDAzNCBTYWx0ZWRfXxzStq9SjZ3+B
- 30ozQkHyDtCQvrtN7vj22CTFOl7g/KXmEFgRv8KujniMRosbyXEc/Tv93SYsIGBnXJgpj0Jd85i
- TGXwKpGei77nA2BUOtGuJEXcMzy7cIkoPvlmmqzS4zZd+guBys6w23M6mcdDxPiGWQS7ofoL2BV
- +cIaAnAKUG5hcHejwcZgJGUOCoWVZ1R8yLeULIxAcXl4uwPewf44QTkB+EJ8HKXuCj4krhr1TF3
- LYHfEl2Vv7CoGwnLHu/fdZDsqrL1dTaEN9Q5KyFCFzUpiT+PsN7Vd7ttxjHhQU6nkaxKqPRrJOi
- CabYq0kdwY0tb2/CtRODIkIdwe2hubIkirkVQEuqNk3MuEFrynjtt/Wn+UfvL6ax20CM1bH3hux
- nCiKtguUeUm6klneyJ3DEsToCfAdj83Qd+/d7U9wTYoIh0ePK39SdLRaghHGHhjkNq3bpS5EIvS
- Psah3+WFGcY7uzMfWxA==
-X-Authority-Analysis: v=2.4 cv=JfIpPkKV c=1 sm=1 tr=0 ts=6afc1432 cx=c_pps
- a=72HoHk1woDtn7btP4rdmlg==:117 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=PCVpLA2prkgZY9I6f_AA:9 a=QEXdDO2ut3YA:10 a=kA6IBgd4cpdPkAWqgNAz:22
-X-Proofpoint-ORIG-GUID: mDsL2yMQq-ydTjW7I4TBYfwgPNNpnGGo
-X-Proofpoint-GUID: mDsL2yMQq-ydTjW7I4TBYfwgPNNpnGGo
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDAzNCBTYWx0ZWRfXyo28AraqlIK6
- 6MAx8LBtat191gc2fxOZuuqcU7Ib5tLYgLJI2IMKbg8N3Uo4GDTL1jgNCUZPr2nBee1AXkgEuXo
- ys3mwf4KzUCNBvvXAnZdvYXl5Wq+ygU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-17_01,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 clxscore=1015 suspectscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 lowpriorityscore=0 malwarescore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611170034
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11740.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e536ee52-fb55-4360-ab80-08df448a4dc8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2026 09:08:11.0428
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zrqa/CM1ogvVoWKeEmzkp9VxTq+psviQhD8H+UIxV6gIujR4BHVCdcIpCM8Kn4TkexEHE0jbE8JgtN0nbmhnjg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8381
 
-On Tue, Nov 17, 2026 at 2:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
+From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
+Sent: Saturday, November 14, 2026 5:17 PM
+> To: Claudiu Manoil <claudiu.manoil@nxp.com>
+> Cc: imx@lists.linux.dev; devicetree@vger.kernel.org; robh@kernel.org;
+> conor+dt@kernel.org; Frank.Li@kernel.org
+> Subject: Re: [PATCH net-next v4 1/6] net: enetc: Add pseudo-MAC support f=
+or
+> ENETCv4 Ports via a fixed-link node
+>=20
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] dt-bindings: nvmem: byte-mask redefines reg size and reads
->   beyond reg
+> - [Medium] net: enetc: enetc_phylink_match_pseudo_mac_speed() returns
+>   >10G fixed-link
 > --
->
-> commit c8ae5b67172a64e8cfa54543074f9aaa24c7c23a
-> Author: Hongmei Xu <hongmei.xu@oss.qualcomm.com>
->
-> dt-bindings: nvmem: add byte-mask property for non-contiguous byte select=
-ion
->
-> This commit adds the byte-mask property to the fixed-cell NVMEM binding
-> to allow selecting non-contiguous physical bytes within a 32-byte window.
->
-> > diff --git a/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell=
-.yaml b/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
-> > index 38e3ad50ff4fb..46e1101ee98ae 100644
-> > --- a/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
-> > +++ b/Documentation/devicetree/bindings/nvmem/layouts/fixed-cell.yaml
-> > @@ -34,6 +34,20 @@ properties:
-> >          description:
-> >            Size in bit within the address range specified by reg.
-> >
-> > +  byte-mask:
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
-> > +    minimum: 1
-> > +    description: >
-> > +      Bitmask selecting which physical bytes within the NVMEM device r=
-egion
-> > +      contribute to this cell's output. Bit N set means physical byte =
-N
-> > +      relative to the cell's base offset is included; selected bytes a=
-re
-> > +      packed into the output buffer in ascending byte order. Byte posi=
-tions
-> > +      are relative to the cell's base offset and limited to a 32-byte =
-window.
-> > +      The highest set bit must not reference a byte beyond the device =
-size.
-> > +      The number of set bits must not exceed the cell's logical size g=
-iven by
-> > +      reg. Cannot be used together with bits. Cells using byte-mask ar=
+>=20
+> commit 15e36db0338302292004a6cbf3727d8f9d63565f
+> Author: Claudiu Manoil <claudiu.manoil@nxp.com>
+>=20
+> net: enetc: Add pseudo-MAC support for ENETCv4 Ports via a fixed-link nod=
 e
-> > +      read-only; write operations are not supported.
->
-> [Severity: Medium]
-> Does byte-mask redefine the size cell of reg as the logical output size
-> instead of the physical address range spanned by the cell in the NVMEM
-> device?
->
-> In fixed-cell.yaml (such as the bits property right above) and nvmem.yaml=
-,
-> reg =3D <offset size> specifies the physical address range in the parent
-> NVMEM device, and sub-range selection operates within that reg range.  Fo=
-r
-> any non-contiguous selection of K bytes, the highest set bit H in
-> byte-mask is at least K, spanning at least K + 1 physical bytes.
->
-> If a DT author sets reg =3D <offset K> to match the logical size, byte-ma=
-sk
-> reads physical bytes beyond the declared [offset, offset + K) reg range,
-> hiding physical address overlaps between sibling cells from DT tooling an=
+>=20
+> This commit adds pseudo-MAC support for ENETCv4 ports lacking static DT
+> nodes by synthesizing a fixed-link DT subnode at probe time with the spee=
 d
-> reviewers.  Conversely, if reg =3D <offset M> covers the full physical sp=
-an
-> (M >=3D K + 1), the number of set bits is smaller than reg, which leaves =
-the
-> remaining M - K trailing bytes unspecified in the binding and causes
-> consumers expecting a K-byte cell (such as nvmem_get_mac_address() or
-> nvmem_cell_read_u32()) to fail on the larger cell size.
->
-The choice of reg =3D <offset K> where K =3D popcount(byte_mask) is
-intentional: it exposes the logical output size directly in the binding,
-so that consumers such as nvmem_cell_read_u32() and
-nvmem_get_mac_address() see the correct cell size without any
-knowledge of byte-mask.
+> derived from PCR[PSPEED].
+>=20
+> > diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
+> b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
+> > index 8facc8bf8693a..b032b586f07b4 100644
+> > --- a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
+> > +++ b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
+>=20
+[...]
+> [Severity: Medium]
+> Can phylink_parse_fixedlink() handle SPEED_20000 or SPEED_25000 when
+> enetc4_add_ppm_fixed_link() writes the result of
+> enetc_phylink_match_pseudo_mac_speed() into the fixed-link DT node?
+>=20
+> When PCR[PSPEED] is configured for 20 Gbps or 25 Gbps at boot,
+> enetc_phylink_match_pseudo_mac_speed() returns 20000 or 25000, but
+> phylink_fill_fixedlink_supported() only populates linkmodes up to
+> 10000baseT_Full:
+>=20
+> drivers/net/phy/phylink.c:phylink_fill_fixedlink_supported() {
+>     ...
+> 	linkmode_set_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT,
+> supported);
+> 	linkmode_set_bit(ETHTOOL_LINK_MODE_5000baseT_Full_BIT,
+> supported);
+> 	linkmode_set_bit(ETHTOOL_LINK_MODE_10000baseT_Full_BIT,
+> supported);
+> }
+>=20
+> As a result, phy_caps_lookup() in phylink_parse_fixedlink() returns NULL,
+> triggering a phylink warning ("fixed link full duplex 20000Mbps not
+> recognised") and leaving pl->supported, pl->link_config.advertising, and
+> pl->link_config.lp_advertising with no speed linkmode bits set.
+>=20
+> --
 
-The physical read window (fls(byte_mask) bytes from offset) does
-extend past the reg-declared range, and that is by design.
-nvmem_validate_byte_mask() ensures the full physical window stays
-within device bounds, so no out-of-device-bounds access occurs.
-The overlap concern between sibling cells is real, but it is not new:
-the existing framework does not enforce exclusivity between sibling
-cell reg ranges in general; DT authors are already responsible for the
-hardware layout. byte-mask does not introduce a new enforcement gap.
+Hello,
 
-Regards,
-Hongmei Xu
+This remains the only outstanding issue for this series introducing S32N79 =
+support [1],
+and I would prefer not to address this in this series, for two reasons:
+
+1. It is not specific to the ENETC pseudo-MAC support. The ENETC driver
+   already advertises MAC_20000FD and MAC_25000FD for pseudo-MAC ports
+   (see 7c9a6ae0edb2 "net: enetc: differentiate phylink capabilities
+   for pseudo-MAC and standalone MAC"), so this series does not
+   introduce the situation. It only makes it reachable through a
+   fixed-link node, which is the same mechanism any other fixed-link
+   MAC would use for these speeds.
+
+2. The limit sits in generic code and in the binding, not in this
+   driver. Besides phylink's supported mask, the "speed" property of
+   fixed-link in
+   Documentation/devicetree/bindings/net/ethernet-controller.yaml is
+   also restricted to 10, 100, 1000, 2500, 5000 and 10000. Limiting
+   fixed links to 10G looks arbitrary to me given that 20G and 25G are
+   standard speeds and are already handled by phylink's capability and
+   phy_caps tables for non-fixed-link MACs.
+
+Extending fixed-link to 20G and 25G therefore touches phylink and the
+DT binding. I think it deserves its own series, where it can be reviewed on
+its own merits by the phylink and DT maintainers, rather than being bundled
+with S32N79 enablement.
+
+This is the only outstanding issue I am aware of for this series. I'm open =
+to
+send the phylink and binding change as a separate follow-up once we agree
+on the approach, if no one else wants to do it.
+
+Does that approach work for you?
+
+Regards
+Claudiu
+
+[1] https://lore.kernel.org/netdev/cover.1794581338.git.claudiu.manoil@nxp.=
+com
