@@ -1,97 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.1
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794901630;
-	b=GbkCLLcPuVcPdbsq3IyAwcggQgLt3zzSLttBYSTGYHYwefDWyrrXZvHS6liyCh3hu1cD
-	 UjarjHdRCkhtcMId7GdxVe0+BNTC032Q3W9FatiQFn1zUijC6VQe0nzyjtZ6VoBP2goN2
-	 0Kcs92oeCKg8F5JhVa1/0I/84YwhUi1A6yZI/aazZTGdIAd08xgSjY6uru4b13YWyu88L
-	 aLsZ5GbgjJ7qdm6VpEd/GS+4AXJNbHKDWiGgIyEGzsxfqKJq3wI8S12CtZK15QLYZiIKW
-	 zfw9hC85sQmj3V+A9sk+3DgfBwqh3dwvQv2KqvaBq/8NGxx4O7XeWXK2T0HqvLHEaUQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794901630;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=c/sO5xp6XQ6ObYktzOOKQJFwNx7/Y9YcCidaCWOFrqo=;
-	b=odybhojOMQjYVmo2BrRxNGaSVcVww+Q6GzlN1UaRJLzY3Ez+X4oSwx3T+8TDXmxyzDXR
-	 vt29H3r2pGAHazXffYuaAJzEcpKK63Pyg110oyU64SYrVbTWRlQDYfVLZFyFyUh9VrdZE
-	 wHq+p5dVhDScPcyXJ7WqeA2v6M2f2l4nsT3naDl/37Ofq9NHwPmTOh4/NQeovN9nwVPQO
-	 9XcC2CgW4UEGRi0QCkS3hC1II6e5KNzEXAkaT+N736FPdx5A/fNHzDJx55V80V/uHG3p7
-	 RT8/zAuZQqGncOT5IDOz36wkT9jpX+xVtjOdO84dFld7EXUJaI8MsIKdkj9Pw7qTbSw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=wyslcYjn;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.1
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012001.outbound.protection.outlook.com [52.101.48.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.46
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794902318;
+	b=kz24mCCESy7m75DIgKM4NgSWsuQaQzVS0q8WtAMHh2HlaeU8KhS2FjgknQ9DW7BX1gqx
+	 D1JfSbgNO6FBG+sGzbuTCGVdsf74e9F6ZnGxmroy7gPxQ6+97gLcKAYzhkOii5V/crE3Q
+	 OYljzrafe5wynF7Y/0HWfijOfBUzRNFMlE9kWT8Nw/hfho1j8xyBGTIGIm6l35BoCi+mL
+	 qNjYHuIvMP+3EN8ktM/9mvOzuq/V/S91W6OPBlOgEvsCE+HCIJr7VWJ9spWAVJjjGiINi
+	 Ld292KW/hvJMf1/oz5+IetVXVzBgQmhb/AFaflTksdrHG7SGIoDmppJyfDpNsY9+OBQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794902318;
+	h=DMARC-Filter:DKIM-Signature:To:From:In-Reply-To:User-Agent:Subject:
+	 Date:Message-Id:X-Lms-Return-Path:Received:Cc:Mime-Version:
+	 X-Original-From:Content-Transfer-Encoding:References:Content-Type;
+	bh=I7ec6eY4A4tNdQoPCaM8/MCWa6EmraFZtN/PsBNrDHE=;
+	b=xky5/rVCO/9258fhCv8eBKbR592e0wbKgMPvWjGgrk+VI+2z7D85G6h7byHgJJlPxzHt
+	 9kR+RPo86/dZObHRWwj2FUoSFlChrnNrE+qTK2SpG5sldwpiqj+8gm9GkALVsRdWLt7Wt
+	 DJ1y9kVuk+7tPKIa88R8+fGhHDPoHJJNLIj38B7qctVf+ez+aKAajTqellqYiMqsrWSzD
+	 G2S6eoGJLsfmeketoujN1EvluS+hdp/07/1p+Whvzpd7ewM9kiWutUpAMlCgIVZ/PoA1I
+	 klQMhC/uiLOAxwj9OEEgm+gTBGDjTH8QInZ9Y53M1D3xpNoN9WD8850UHG9uJ1juR9Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.cipunited.com;
+	spf=pass smtp.mailfrom=oss.cipunited.com;
+	dkim=pass header.d=oss.cipunited.com header.i=@oss.cipunited.com header.a=rsa-sha256 header.s=feishu2303200042 header.b=U1G7Vw0A;
+	arc=none smtp.remote-ip=209.127.231.46
+Received: from va-2-46.ptr.blmpb.com (va-2-46.ptr.blmpb.com [209.127.231.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317B1606A329
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 07:47:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 317B1606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D93606A329
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 07:58:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03D93606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.cipunited.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.cipunited.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=wyslcYjn
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=H6MBaZyPfizHoCb60gCzLaU+FnpnTmRpfASoHXYqN0HFwDdRgjmpPjcEiJ5/tAM+To1pz3SXytXwXC1uRcEPhkjIbiXFLEUQnWu88RhACNcC15AiYdL4D3f4caooMlnT4GmxtpU+QOabX06pL/+CltfrH9xi+8876yB8usIVdAs20ohKG9c6PP30axGI3S8zJqsBBP9eKK1kosm7JGbETLquEPBSgvBS1chXaNJa5fD99wuFKy3EHUiL311cXnw0pKk8PcE1EWmsJJiT3WrJD4bQlRCapvHrcD4SWFERK/3LFlOdfQKDwmGSKZ2BZeH4pCh19RmQnCq5CPwOWtTybw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c/sO5xp6XQ6ObYktzOOKQJFwNx7/Y9YcCidaCWOFrqo=;
- b=jfDFS5CCyComVWbDTP3OgkrsN2RUmhEuxU9MsvS8LWSRBhHvcz9zauRlCOJRN8Qy+32WzUmutxe7gGXTN2BUhaVxcIV2sg04qPAaCNU1UfrRMqEG5d9ZkvQwTxqFHWYaSWRvc1ZduM8XI57mwbqrpaYvqBW/FbTsPuP9nW8lK+z6ADnB9mp7KNH1xh9TMCrFouyDdHmocI0nTsOhsfWChDG+grE+O2idYNGMzXJeIpC7ZKPt70CDtAvykN/1b4L9TO+VHqjj3K8ydwBUiSrxDjfuhg5udAjZ3908dNkeqN1kTN2ppSDRoyG2D1BuxaIp0Y4sIauk5pdV3o7CVk0WpA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c/sO5xp6XQ6ObYktzOOKQJFwNx7/Y9YcCidaCWOFrqo=;
- b=wyslcYjnpFa9kKaQHTDER/BdgjyCyJ1ftBwH1LbxU3vs1FbbiPiXPwGW4RVpqS5UAS15gacKzGTqAwEUES9MzSwAUHf1Cz5Mso3dmXwW6ydPEJKoIE2fJ9mvxxQ6DSZD6iWVmxiER9sXB3bX50eDjzPSW+TEvnPPseRNRZUBTQc=
-Received: from PH7PR10CA0007.namprd10.prod.outlook.com (2603:10b6:510:23d::7)
- by CH8PR12MB9790.namprd12.prod.outlook.com (2603:10b6:610:274::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.13; Tue, 17 Nov
- 2026 07:47:03 +0000
-Received: from SJ5PEPF000001EA.namprd05.prod.outlook.com
- (2603:10b6:510:23d:cafe::a5) by PH7PR10CA0007.outlook.office365.com
- (2603:10b6:510:23d::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.9 via Frontend Transport; Tue, 17
- Nov 2026 07:47:02 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- SJ5PEPF000001EA.mail.protection.outlook.com (10.167.242.198) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Tue, 17 Nov 2026 07:47:02 +0000
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Tue, 17 Nov
- 2026 01:46:57 -0600
-Received: from [192.168.29.217] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.57 via Frontend
- Transport; Tue, 17 Nov 2026 01:46:54 -0600
-Message-ID: <dc198cf8-beab-4db7-8ec5-0bb9c0bfa210@amd.com>
-Date: Tue, 17 Nov 2026 13:16:47 +0530
+	dkim=pass (2048-bit key) header.d=oss.cipunited.com header.i=@oss.cipunited.com header.a=rsa-sha256 header.s=feishu2303200042 header.b=U1G7Vw0A
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=feishu2303200042; d=oss.cipunited.com; t=1794902311;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=I7ec6eY4A4tNdQoPCaM8/MCWa6EmraFZtN/PsBNrDHE=;
+ b=U1G7Vw0AFvtgCW407o7BbffGVvkibDb7886ZDQqr3QzSsQjbc5+ylMXyoyWk58828nEePr
+ 2T8iSP6adsiPhQq9R3grwNMNBPGNNn/hEpqK7/zvBxpyfcS1oCoj9/fNzDQgIJvNyz4dWk
+ aqHJ+KdRKQlshah+VFFxwaUdn5cFsYVVGpqvGJLNAhyRJdyc59PrintiYykWhGyKShA0LA
+ HxXg0YJ3skljisarBWViem8mI2tS2aPYZFnlz0eDFeCEk7Uir8yD2gK84CNtc7J+fXAU1z
+ p2Ra2a+hhdja7tq7l95fkuHmgONgTU1y9s/d3KfnvB+QGFVy988Db/fCTTAu2A==
+To: <sashiko-reviews@lists.linux.dev>
+From: "Rong Zhang" <rongrong@oss.cipunited.com>
+In-Reply-To: <sashiko-outbox-212658@kernel.org>
+User-Agent: Evolution 3.62.1-3
+Subject: Re: [PATCH v2 3/8] MIPS: Loongson64: dts: ls7a-pch: Add missing #address-cells to interrupt controllers
+Date: Tue, 17 Nov 2026 15:53:25 +0800
+Message-Id: <16dbfec04540d41d6aa9bedc4f31b8668394a455.camel@oss.cipunited.com>
+X-Lms-Return-Path: <lba+26afc0925+809bd5+lists.linux.dev+rongrong@oss.cipunited.com>
+Received: from [192.168.8.156] ([171.15.157.139]) by smtp.feishu.cn with ESMTPS; Tue, 17 Nov 2026 15:58:28 +0800
+Cc: "Rong Zhang" <i@rong.moe>, <linux-watchdog@vger.kernel.org>, 
+	<devicetree@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,111 +62,56 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] KVM: SVM: Add VMCB fields for LBR v2 virtualization
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>, Shivansh Dhiman <shivansh.dhiman@amd.com>
-References: <20260724195040.630468-1-shivansh.dhiman@amd.com>
- <20260724195040.630468-2-shivansh.dhiman@amd.com>
- <20260724200819.9D22F1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Shivansh Dhiman <shivansh.dhiman@amd.com>
-In-Reply-To: <20260724200819.9D22F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+X-Original-From: Rong Zhang <rongrong@oss.cipunited.com>
 Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EA:EE_|CH8PR12MB9790:EE_
-X-MS-Office365-Filtering-Correlation-Id: 47852c57-05ae-409e-d7a3-08df447ef7b4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|82310400026|1800799024|36860700016|376014|261026140227099003|261028144727099003|261021121427099003|261022105027099003|261102123227099003|4143699003|56012099006|11063799006|10067099003|260925021311599003|260925022911599003|260925021911599003|22082099003|18002099003|261009223027099003|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	W0/Rg3T+byGEWs5XN0lt3fXrhNK2/qkJcseMzSppjzxfkZ1czHZb3NAszpVGWpcBgdX6LxFNN0Ux13em2hwB88Mk8sPq47YBro8Fnlt0HZQ3TmEeWmgKtkEV6WC1YmVPPNJH11pyBRuQAHymMnXIRRmr9uMMz6DWCv7gP0HFyD5i7ttnjzP24GrkP5c80ICT/u6VUrvF4mSPSRhAVNEBkexh1bibwSGm9aaniU9IwxN+LKbEbVr88mH6q1GIJe9GidVFQrxRQO45gBMjnleTO1ULoxizTsD1ZG5BNvMGO7S0Mb292VclL87Tq8qq2MwUph6jnri7bDRWct54DVGByDxTy9uPyzBRhNR+s2pAifhnbCy5Ukkjq0UEJoM3M/kQ0GqkophrN0sG2K0x4fIW59xKDM7FTnqWkBTkzRG+xZLcGhE9L5fUCibkQgIJk0/ErwZJaYD6SSaIgj3xM1lYFKzAGqUeMThJLCFbI5vvuQ7cRbRmjboWUVHya1F+lveUYt8cgUaO7fWcxGoN5s9jfIdL9QpO9t3ZZVCdbxDBFo94TulBICCP4k8lpX4MRbANV4Rl3Lk+uR03NnB+6JkCX07eEmktdWJNFirCSeQJceekzIBcMjlOF3f7eLBl8uIpWHfrBa1U4wy+/fnFaq6z23FiXlHqElkQl2TdQI658UU=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(1800799024)(36860700016)(376014)(261026140227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261102123227099003)(4143699003)(56012099006)(11063799006)(10067099003)(260925021311599003)(260925022911599003)(260925021911599003)(22082099003)(18002099003)(261009223027099003)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	eG875nZQq/9co4icDW+MOWcqquDmTaEuNVRwymvI8vJs+KBM9lsVK9I4jnSTwAWmrVLsariNI1z8nqFRn3L+ukKvFskdwPzU3V2KXw+ZnQdfkdlWhQy1j/Uq00ccyY9tUyZ+I4QhUSwD41TfMObX9wN828k4cVY1JKee3o389Csa0mJBDH9tmU9UzYoY4WfEafy5zC/1Q7yh0iL0rjQoRkiM5iH1NWOSrJwweEHa2D9X2J4ZoEa3z0c4gSwRTMa+xHjVqyemHE6lfhIoV4NNxVWs6fkSEXogt5t9rK73btLCMswlIuk8z3CVbYaErvFSZocAOAZB/por0PS8hXkCGWgObMvr/sFfqU84VGqEijEVcNwPFgIpoPHHMTadD3+vtgqULZ/cNg3j5Cc0ZsdZTXSS/a2zZma9eYolUhpQxpVGSYLoa78+ANQZPhaGmPB1
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 07:47:02.0928
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47852c57-05ae-409e-d7a3-08df447ef7b4
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001EA.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR12MB9790
+References: <20261113-mips-ls7a-wdt-v2-0-e8abd6b2f77c@oss.cipunited.com> <20261113-mips-ls7a-wdt-v2-3-e8abd6b2f77c@oss.cipunited.com> <sashiko-outbox-212658@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 
+Hi All,
 
-
-On 25-07-26 01:38, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The `svm_get_nested_state` function writes out-of-bounds to userspace memory if `user_data_size` is exactly `sizeof(struct kvm_nested_state)`.
+On Fri, 2026-11-13 at 11:01 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] MIPS: dts: loongson: invalid #address-cells on ls7a-lpc node
 > --
 > 
-> --- Patch [1]: [PATCH 1/7] KVM: SVM: Add VMCB fields for LBR v2 virtualization ---
-> commit 91df21ca3dd4f3f8277b9ddd8eb84059e0bca6d1
-> Author: Sandipan Das <sandipan.das@amd.com>
+> commit b3cb4b22fb7d7fa764f95bec26fd2bfb7137915e
+> Author: Rong Zhang <rongrong@oss.cipunited.com>
 > 
-> KVM: SVM: Add VMCB fields for LBR v2 virtualization
+> MIPS: Loongson64: dts: ls7a-pch: Add missing #address-cells to interrupt controllers
 > 
-> Define the new VMCB fields that will be used to save and restore the
-> state of the Last Branch Record Extension Version 2 (LbrExtV2) related
-> MSRs.
+> This commit adds #address-cells = <0> properties to the pic and lpc
+> interrupt-controller nodes in ls7a-pch.dtsi.
 > 
->> diff --git a/arch/x86/include/asm/svm.h b/arch/x86/include/asm/svm.h
->> index aa63431ba92c3..fbcf6c4dbb92a 100644
->> --- a/arch/x86/include/asm/svm.h
->> +++ b/arch/x86/include/asm/svm.h
->> @@ -552,7 +559,7 @@ struct vmcb {
->>  	};
->>  } __packed;
->>  
->> -#define EXPECTED_VMCB_SAVE_AREA_SIZE		744
->> +#define EXPECTED_VMCB_SAVE_AREA_SIZE		1912
->>  #define EXPECTED_GHCB_SAVE_AREA_SIZE		1032
->>  #define EXPECTED_SEV_ES_SAVE_AREA_SIZE		1648
+> > diff --git a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
+> > index f304f99946f16..28038b8cdd146 100644
+> > --- a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
+> > +++ b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
 > 
 > [ ... ]
 > 
-> [Severity: High]
-> This is a pre-existing issue, but can svm_get_nested_state() write
-> out-of-bounds to userspace memory if user_data_size is exactly
-> sizeof(struct kvm_nested_state)?
+> > @@ -26,6 +27,7 @@ lpc: interrupt-controller@10002000 {
+> >  			interrupt-parent = <&pic>;
+> >  			interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
+> >  			#interrupt-cells = <2>;
+> > +			#address-cells = <0>;
+> >  		};
+> >  
+> >  		ls7a_uart0: serial@10080000 {
 > 
-> When user_data_size == kvm_state.size, this initial check evaluates to false:
+> [Severity: Low]
+> Does adding #address-cells to the lpc node break dtbs_check schema
+> validation?
 > 
-> arch/x86/kvm/svm/nested.c:svm_get_nested_state() {
->     ...
-> 	if (user_data_size < kvm_state.size)
-> 		goto out;
->     ...
-> }
-> 
-> The function then proceeds, expanding kvm_state.size, but never re-checks if
-> the user-provided buffer is large enough before clearing the memory:
-> 
-> arch/x86/kvm/svm/nested.c:svm_get_nested_state() {
->     ...
-> 	if (clear_user(user_vmcb, KVM_STATE_NESTED_SVM_VMCB_SIZE))
-> 		return -EFAULT;
->     ...
-> }
-> 
-> Can this corrupt the VMM's memory by writing 4096 bytes past the end of the
-> user's 120-byte allocation if a VMM dynamically probes the required size?
-> 
+> Documentation/devicetree/bindings/interrupt-controller/loongson,pch-lpc.yaml
+> sets additionalProperties: false and does not define #address-cells.
+> Unlike pic, lpc is not referenced by any interrupt-map property, so dtc's
+> check_interrupt_map() does not warn about it.
 
-This is a reply to v1 patchset. This bug is being fixed by the following patch.
+Oops, I must have overlooked the warning in the warning sea...
 
-https://lore.kernel.org/all/75b8ccd5e278ce8f13bedeceb196f5b4ee9c5256.1794545500.git.priyankamani2100@gmail.com/
+Will resubmit soon.
 
--Shivansh
-
+Thanks,
+Rong
