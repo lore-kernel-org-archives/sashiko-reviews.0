@@ -1,92 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794939818;
-	b=M3dixMbFKx+O/4XQVQ6uK9z9wNKsKke9SWZwfBuH8o9r8nF7uJBJnyGFeezl1O3q93g/
-	 MzQDscijAc0w0nxQEA8UUvDMgtuapZlZSjeBwShVn29KrHe/f/VQRiBY7Dzk7xMmUMC8F
-	 re8m+32ZXOds3kcF0pVapFHkV6DdR6l//hUB4Z1KY2q+nJeVdBVn1KW4KNLCuw2q3S9J+
-	 r/tEghiIsJ3Enie3qe5Lw/sOI4/yO8b4eVOgO2xgsc1dGWcQ4t90riiGcLk44ZzYfjcRm
-	 KcIDu/Pv2PiJqKPdubuflhWZq2HCMkaD1Qoklj2DDdwGHj8mtOYQMj/OsQgaDigITGw==
+	t=1794940926;
+	b=Ehe1aUzpoheCbJmJiru++ayRjikfccDdY6giyr9GU5L4QYRdqzvtLy58GIS9t51w2pLJ
+	 Yc/yJZv9YzvHmyo4OV1ljXkl3v7ujlBK+rPM2ANq+byyrqupD9T9+bO6OyYn36tea+Ggs
+	 mXdmBTYU5/xZUqXFT8nhbwjP8YePvAT01GCWu17clpnfAbhDhNVXV38qqoX25qFzPvuBh
+	 SiHnzw9w3S9yORQbKnILHeA0optFMhDFbOmbEKkoeULJeKPd0M0ChA3I/nyklIa2hPy3y
+	 yqtVJbHizxS6n/FL2mCh1whArS1EiZlHglPvQOZmft1LmWMMz0Y5ouvIRZKWQwRfS2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794939818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794940926;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=HzWKenQn9WhmPU6V5OUgtiFs+SCuy+G/69gWaeerzA8=;
-	b=0EJTaTQXez4Dl1pjFFss7dqY2Hk6CFvEQwpeZd8Xw0IGm+wT94WrbSRhKUtL4QDyituP
-	 QyKKrB10HwEtjKVBxK9O+RouXvUE+KG4NMc6OLEsulYA8FmpRMN9UKmsrC/BJJaZMkjBU
-	 35QEIuN1UfdZM3EChIqLGERLbT6wzFh61Vn/onVu01JPCWsK+NLmJuJ1dx8BIIlpBiMyH
-	 ikjZvdBidpPUbmd+mTLd+6r2W4tgHhNJp2wwELlqr6sOkzsWd75/uDrawUTasewBsuTXF
-	 X3Rz/rkyxuopdWeOd344/w4yVmBPYztPbPrNH2D6ilgKivhGZ+vG8I1DW3yaVJORDFg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=q383RHQxLs3tFcWE/jVO1EkOF743huGapYVe6AV5mN8=;
+	b=ebaTlYHRrY3YqkwnXmsZa8zWrQy76iTVSe8QVeyCt5TxDhBwvTt5cvHS0bQMirb8RvUq
+	 GPLSPSGEAjZZ2IxA47trcqp1CsA9qoiRA45DKilPixCye3yeBjAikmnGsDpN3fDCGmAev
+	 vRcSRtxJU00Nsq27966S2A+J6ANveliiLOpk+pex11t6+UCCCyEcbS1E7VTQxtSt/TAAV
+	 42+1HIhKY2e8PK10nau6oN9vxbU5R1uNtOdFPiFG8gL5gQHkRohDTlN9pGbqp6Kp+ZTWC
+	 3ySx/K7wapXvqfaDzde5XDw2+yydAqbCnGwpqIuTSTi0Vhwm9PPgs0FyZCnEyUrdlaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=chromium.org;
 	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=amR3Fvo4;
-	arc=none smtp.remote-ip=74.125.82.170
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=TtOX6XgA;
+	arc=none smtp.remote-ip=74.125.82.54
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833C4606A32C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 18:23:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 833C4606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF3B606A338
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 18:42:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DEF3B606A338
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=amR3Fvo4
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-381f65e4e4bso324478eec.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 10:23:38 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=TtOX6XgA
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-1b3beeaf6f9so226947c88.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 10:42:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1794939817; x=1795544617; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1794940924; x=1795545724; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=HzWKenQn9WhmPU6V5OUgtiFs+SCuy+G/69gWaeerzA8=;
-        b=amR3Fvo4zEKP+Pi1WlHzW8rrztwhBPxBm2VZvejYBODoge+w9kfW7Olegqacye3ktK
-         Wu2P5C5vzzCdO0+T0T9mNK5DI+TZoZAKE2fwVybKGwRUQhexHiaTGZSIvL5D7NxDx5B0
-         +9mURlmzJ8wqkWRKZsRgvQBolGQ7qFqAagmnM=
+        bh=q383RHQxLs3tFcWE/jVO1EkOF743huGapYVe6AV5mN8=;
+        b=TtOX6XgAkqbKlTt6cWyInrDbkOkKuZwZKgOTf2+c7r5WCtoIjrodxsbwOSwjwusB1H
+         gYl408agCuZGsHpOEPIqWJil5Omvtl9Dz/05lRZrIkr6BZ/sNl37ckTZcE6BvYFVWFwg
+         S8qNkGE0MQvPspzj9HDTwat9pzLIU80YmsRF8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794939817; x=1795544617;
+        d=1e100.net; s=20260707; t=1794940924; x=1795545724;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HzWKenQn9WhmPU6V5OUgtiFs+SCuy+G/69gWaeerzA8=;
-        b=Z+erxero3Gu70swpKwsk4eGCmsBB4c20PiYicE6FyERCh0PcEP0dmPkdHeYkG4aXH3
-         nLsttFADkha4j1v10DoT8/R1jMxiOtBEdM1wpAvNCyQ24bSWTT1OSwwu2OtaTn6zPEcZ
-         064oD0uXOTaahZ444c+J9QndQ9jQXwqVT53Etz9gkbFot5OSdm7Rp1XZAXl7houePjG7
-         XDcPSuHKL2x4iM0Okn4Aeuhi5F0boGDcYk/6iI2h18HU2xK7WsjtMgNr18qFi/hY2Zup
-         6liXFDx4bkwWZBZVSPaldB+IdGfkcaWV2e/hAXw9Dvz44h5Inwa8HiHTMPuH1Hz/+xMd
-         ljDw==
-X-Forwarded-Encrypted: i=1; AL+hErHur6OivYeWmlqvaVoPvBNyOfkMHiPBIDErtNkcJ4GvD+N2FzTzOxnx3UUsK40v7yf57rwflOWSMoZAljo9EiU=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8xx9MnkeBCvJc2Aivys6jeQ+fi+kVi8XPZ8bkD+2aqLL4njerL
-	KnCGuSeiDYFE+1R9VkA3SFKa29NOjb95Z41rAJZagH9uBHx8Nr2dPvFJW9aXHArV7oSOZfBhmLr
-	9EKw=
-X-Gm-Gg: AZFdTZfcd/bCA4nb6qO93blHmzGrBZYnRaUS9Jb4UFZPf4l9NO6lYqmRPQBbp/wd8dO
-	OVMjAhRZcrPbDN19cJcl8wJPPZdGmvNa3Bpjl4lZ+AzxsUGRcZZin0pePbSno2Pl+MYnU9bPSBe
-	hcjPsmEE6LQgOutFebyDcfppW1S1IPYndJMabjvOcUkwq+Zx6xSkcWhdRQnaXJ8zyADIa4wz5kK
-	V9bhdRwQ1UwW2/1yfxVlRHwYuCaIJnRyC3KEtM5itGCY6p8hnQAy98SGybDEf9Ciq45VLgfyrQS
-	iAdHyyVUHEJM8yIzilojz78KhlxES/8+I20BCuZYAJunlQ1RQDqQ8aeqtJblxPLhzIouWWZhG4+
-	sBMVwCCrQj8hFFbK1RZlGxlj8kTUXiNLYRl8s2kI0QaototviPWmPCUJ7qn/vJEJegug2Sn6+ye
-	FwctIRHU++cLvuX2pkmce0Ofi3ez6BDj23WfOpqdKv/Oquirlin4VGGPqoHpOP0efNNUKLbjXBD
-	n6KOze+T2t96RxiKNKeOrtUlFLaVRVF100BhlKNTudongVoBg840j8F0PL/v2i3zxRGYBcuelch
-	KXIxkvjpT/3/RbXDvO2EjptKyuzhRapGc9dhB/qduNCs1tM+NIgXF2b4j61lSOqYSx6C
-X-Received: by 2002:a05:7300:d186:b0:36d:9900:bb92 with SMTP id 5a478bee46e88-3827fe78136mr207819eec.10.1794939817500;
-        Tue, 17 Nov 2026 10:23:37 -0800 (PST)
+        bh=q383RHQxLs3tFcWE/jVO1EkOF743huGapYVe6AV5mN8=;
+        b=doVbb1TymQWXjAOuuUJ3HvkIjW4yJXQPtgaCRTzOwksGL63bhzs0f62gFRYY+8EpQl
+         DvDxQAGV30bSU6XwDQojuakK50Gp1pXYkEWVl88+3G08p8ruenahg0veyMlMytPZEtp6
+         DaVTdId5PqIQfPvwS9GLigkLvqH+9/ektviwGhxkYROKwOHAL71V6I4ErKlwBBMX+JnI
+         L7+V1lE8MN8LFdy7bP33cBhcZJdzlxa8b0rBuMlzLULqENMaxAzQkGqgU9Tng3wokULV
+         Fqn+W8KFhtJurUQtI/v0d9ySKoaghagsl3Gh7P7OyPDqQIOBflx2AlZXCCh5wuwtIAA+
+         OGAg==
+X-Gm-Message-State: APuU4Z/55vzpTgA68uapcZbFn+i1BNaOZjLTlKwVHu92doxZqLOGpDdD
+	+MTIvNCU1CGr064dV0vVRlrBtw9qMYpZROZ4sknRZNls2TOc853NDBJG7uZcQkQQaBeBvnsDMZV
+	XhaE=
+X-Gm-Gg: AYBFou3YVkmLVWEIiVCdNjrj7UBPid9Gdg9TnjvSD6sQIcDB2xWaU3QeFPRAXarbIqg
+	hE/eF/UbpjEbDKSOtXUp5Dn5935SB7TYr/Z1S1/0BMYchu8NROWDueJ1VnxqW9lfRRG08cPhuNN
+	ZfE7cpQX1my75TyPKRgREewvkg7gF2+PJlTotpUa9snp04AmuvsKU84jrK715ptwIpX617MqgGd
+	xrLH+7yqvfhJ2/YZjDtI/zSZjfRPC/p+aUnAgn8vmBjeeslZtW/YIU2QnprTVWnui0a9IjVkipE
+	Q/KKNucJLaspLGUaejU1pPdD9YmpdN0RPJDzo/P6AxFMkgCWqpJAirCTlP9jwzbnEDpZxMLvFep
+	rFRlRKt6K7UEaztqRkftJTl1r0rPO+cLHKV2QjBrTIBiPClRoWnPjLJ9MrPIlTbutFZYZzJq2Ub
+	ik2nVzm80ym8kA72Qt8vtiKDGO6o1GeZO+TIQ3ATFzmaN6I1nSD6J1szrD91PS91B6dImNhMLu3
+	R3fXJFyzmpC8q9iQXhv/d4mjt1ZtUfuhRVdQcLmIFgtwjQddwz8mGv5r7M9l91u4iHK3hfJBS4f
+	g8ssRU8d/x9CmhtJGYV9PR16OadL+gR0F1L3Op1ii9Qc0ddowbRLcuT1ynFoMRzH5nSK
+X-Received: by 2002:a05:701a:cca2:20b0:1b5:3b83:5374 with SMTP id a92af1059eb24-1b543d29a65mr399616c88.19.1794940923953;
+        Tue, 17 Nov 2026 10:42:03 -0800 (PST)
 Received: from localhost ([2a00:79e0:2e7c:8:d92d:531b:8d97:bf51])
-        by smtp.gmail.com with UTF8SMTPSA id 5a478bee46e88-3795378c2fesm45544467eec.1.2026.11.17.10.23.36
+        by smtp.gmail.com with UTF8SMTPSA id a92af1059eb24-1b5446f954dsm131078c88.2.2026.11.17.10.42.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Nov 2026 10:23:36 -0800 (PST)
-Date: Tue, 17 Nov 2026 10:23:35 -0800
+        Tue, 17 Nov 2026 10:42:03 -0800 (PST)
+Date: Tue, 17 Nov 2026 10:42:01 -0800
 From: Brian Norris <briannorris@chromium.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
-	linux-trace-kernel@vger.kernel.org
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org
 Subject: Re: [PATCH] tracing: 'select' GENERIC_TRACER, not 'depends'
-Message-ID: <avybp3O2zxcLozKB@google.com>
+Message-ID: <avyf-arwNO74QFip@google.com>
 References: <20261116144652.1.Iecb63200dd245f62032a3b1f60ae78cc48868094@changeid>
  <sashiko-outbox-217828@kernel.org>
  <20261117085552.0e4ef272@gandalf.local.home>
+ <avybp3O2zxcLozKB@google.com>
+ <sashiko-outbox-219362@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,90 +98,27 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261117085552.0e4ef272@gandalf.local.home>
+In-Reply-To: <sashiko-outbox-219362@kernel.org>
 
-On Tue, Nov 17, 2026 at 08:55:52AM -0500, Steven Rostedt wrote:
-> On Mon, 16 Nov 2026 22:58:01 +0000
-> sashiko-bot@kernel.org wrote:
-> 
-> > [Severity: Low]
-> > Should FTRACE_STARTUP_TEST depend on TRACING (or select TRACING) instead
-> > of selecting GENERIC_TRACER?
-> > 
-> > GENERIC_TRACER is meant only for full tracer options so that
-> > ENABLE_DEFAULT_TRACERS is hidden when a full tracer is enabled:
-> > 
-> > kernel/trace/Kconfig:
-> >     # All tracer options should select GENERIC_TRACER. For those options that are
-> >     # enabled by all tracers (context switch and event tracer) they select TRACING.
-> >     ...
-> >     config ENABLE_DEFAULT_TRACERS
-> >     	bool "Trace process context switches and events"
-> >     	depends on !GENERIC_TRACER
-> >     	select TRACING
-> > 
-> > Because FTRACE_STARTUP_TEST is a test option rather than a tracer, having
-> > it select GENERIC_TRACER disables and hides ENABLE_DEFAULT_TRACERS when no
-> > full tracer is configured, and implicitly pulls in TRACING even when all
-> > tracers are disabled.
-> 
-> Actually, the selftests should depend on TRACING and not GENERIC_TRACER. It
-> may have been that the self tests were added before the trace events.
-> 
-> But it should not "select" a config. The selftest are only to be selected
-> if there is something to test.
+On Tue, Nov 17, 2026 at 06:36:09PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] tracing: missing Signed-off-by trailer and unformatted email
+>   reply changelog
+> - [Low] tracing: ENABLE_DEFAULT_TRACERS stays unselected for direct
+>   TRACING selectors
+> --
+> > Anyway, my point is that it's not exactly straightforward to enable the
+> > features you want and get the tests you want.
+> >
+> > I've appended a diff that seems a bit more user-friendly to me. It
+> > makes it more explicit in the menu how event-tracing is forced-on by
+> > many other tracers, but is user-configurable when it's not forced. I can
+> > formally submit it (in 2 patches) if you'd like.
 
-OK, I can respin with 'depends on TRACING'.
-
-However, I think the Kconfig setup for kernel/trace/ is still a bit
-haphazard. For example, it's reasonably common to want EVENT_TRACING but
-not the more invasive tracing (like FUNCTION_TRACER; and therefore no
-GENERIC_TRACER) -- this is how all Android kernels are built, for one.
-
-But there's no user-configurable way to enable EVENT_TRACING. We only
-get it implicitly if something else inadvertently selects 'FTRACE'
-(which selects EVENT_TRACING). For Android, that's CONFIG_KPROBES and
-CONFIG_HIST_TRIGGERS.
-
-...or is that what ENABLE_DEFAULT_TRACERS is? Its name doesn't really
-suggest that, and it's mutually exclusive witih many other tracers, so
-it's a bit awkward making choices, as the whole system appears much less
-orthogonal than expected.
-
-Anyway, my point is that it's not exactly straightforward to enable the
-features you want and get the tests you want.
-
-I've appended a diff that seems a bit more user-friendly to me. It
-makes it more explicit in the menu how event-tracing is forced-on by
-many other tracers, but is user-configurable when it's not forced. I can
-formally submit it (in 2 patches) if you'd like.
+Well clearly sashiko still points out issues here. But I still maintain
+that the config menu here is confusing and hard to use. I'll see if I
+can come up with a better solution, or else just accept the
+un-friendliness.
 
 Brian
-
---- a/kernel/trace/Kconfig
-+++ b/kernel/trace/Kconfig
-@@ -198,6 +198,7 @@ config TRACING
- config GENERIC_TRACER
- 	bool
- 	select TRACING
-+	select ENABLE_DEFAULT_TRACERS
- 
- #
- # Minimum requirements an architecture has to meet for us to
-@@ -595,7 +596,6 @@ config MMIOTRACE
- 
- config ENABLE_DEFAULT_TRACERS
- 	bool "Trace process context switches and events"
--	depends on !GENERIC_TRACER
- 	select TRACING
- 	help
- 	  This tracer hooks to various trace points in the kernel,
-@@ -1135,7 +1135,7 @@ config FTRACE_SELFTEST
- 
- config FTRACE_STARTUP_TEST
- 	bool "Perform a startup test on ftrace"
--	depends on GENERIC_TRACER
-+	depends on TRACING
- 	select FTRACE_SELFTEST
- 	help
- 	  This option performs a series of startup tests on ftrace. On bootup
