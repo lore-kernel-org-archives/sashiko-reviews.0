@@ -1,68 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=34.107.87.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794945819;
-	b=P94Bj+wS9QvAv7/M5nuIxtWbawm6xVAIwZnyq0Wb+HvGPYvQmpsf16AbAcT385721LPN
-	 WTTpp07/lMRsihaVps92UwE+QUr2AqQw44hPMf9Xr08zeK2xZbIojvMlKog/nBx9Pq0R8
-	 +i2Tetjb7Un0OKa6zCS6IhZ0o9wfFONnawHJF+lwqJRqwP5ziUMtvAeXxKg/YtaC6CyUP
-	 VPGaNDtndCdpkbGXRdIBdCN6P0XNV/civnTuNOSmPnWRkQXro0sCmOGQDwdg0fb8wt0Ak
-	 tQeVLPMAt3FkcYVvDhlbyqJ0hmL8EWOvQMocfzAJX4p2tEVOqsCcNqMYo2d2ASxWAWQ==
+	t=1794947757;
+	b=r2G+CDlgK89SYTMA4eMttUrF5JRFRsgmzX0sWzJ35O8XeQj/s4Y62oPTRjOjidUx+1m+
+	 diIgrPWlHBAJFDPvv81FEhCM6BePrnpgTqdmffvWxaRsYP98LN9Sg5MMErRqjfx3Al3x6
+	 XVIFDWsA1UjwTmcZXVRbegdHSIZ/XiyIya49wTUgzx+wiIUjo+HkHJX7a3nTU7DebIb7h
+	 wdcyB1f7vmlRIyRCdY8uXhGuHZOI09oE6PyzbrjNRDTg2J1jtQdRgoz5fTQQijVSM4e4e
+	 J7E2Dj6HmpVQ8sP1LnWwVG/odXLwHZvpWI/on3mLn11HuWnL7qh0/Y9YYnYSFfbbt1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794945819;
-	h=DMARC-Filter:Received:Received:Received:Received:DKIM-Filter:
-	 DKIM-Signature:X-Virus-Scanned:Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type;
-	bh=uyyTnPsw7Ii2zbJiwxPIj01iC+D/M15OetanJcm5Djg=;
-	b=0X7TLEwPKnidYauO9GsDt671FL4XUNKx8CLDmngP0nPRH3aYmqzGMt/yBjIEdbaNE8La
-	 xVPSwMMNBlkH2LVSeodQCzVGhXuHK37UxwzfqBlUH3Tx3JpWGD/klPbPy2tefjsuYTrfa
-	 /f5z+yxl9OEv9sOpXSQR+8VJa3C/GDguMADjDpwZZmjPwhJOOZMxfvk7TzOCAQQ6js2rC
-	 nhGM+uzdBz35s62zJvmo+xz4YVIQUIN1SRY5R/98XYaJ+siQ87XBFFHoXHq4zECpEJWkD
-	 updUS0nu2koet/hg9h88mgOgTO/46YXu0E6AaTIkV6VdrU/RXpAVhiHZvMoBKg4wrpg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794947757;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=qU/707wsLwghguzg9u1/2onlRZx6ZVh35wJOTps23pA=;
+	b=02zy5swBCCfrsaif/IQI9P0XHEup9WS4QmtONtRaWeEK5Qql752qGb84D2y4Dc5Yiw6S
+	 icOj0mipfUHAzLKepZ/RKKhFwQXGSJ/j7vz+W5hm5qrUCZIcNedm6XcJz8vO8zpe+PmWz
+	 o8XxzG9+8N4e0y2lVXBI/VqRXr4ji6bN7Pht2v5wCLwMHDaKMo8qA06A0K9Aj1aKyGggg
+	 qCxw+RMlJroh0UGbKH4fbHBBLFPsaEsZkoQ32OwhVXZr5UnRSLoBepNo1Qkr4vLSgltsN
+	 JCKS7rIvWQYTB4ITdlNxLgElfOpzRLjvOY4LrLXgJowWShLM+g7fuocg2adBjPXSuZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=tngtech.com;
-	spf=pass smtp.mailfrom=tngtech.com;
-	arc=none smtp.remote-ip=34.107.87.41
-Received: from mailout.tng.vnc.biz (mailout.tng.vnc.biz [34.107.87.41])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=chromium.org;
+	spf=pass smtp.mailfrom=chromium.org;
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=NOxXwOu0;
+	arc=none smtp.remote-ip=209.85.210.41
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5882B606A31C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 20:03:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5882B606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tngtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tngtech.com
-Received: from zmproxy.tng.vnc.biz (zmproxy.tng.vnc.biz [172.16.1.23])
-	by mailout.tng.vnc.biz (Postfix) with ESMTPS id 619F740625;
-	Tue, 17 Nov 2026 21:03:22 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by zmproxy.tng.vnc.biz (Postfix) with ESMTP id 44DB71FBB9B;
-	Tue, 17 Nov 2026 21:03:22 +0100 (CET)
-Received: from zmproxy.tng.vnc.biz ([127.0.0.1])
- by localhost (zmproxy.tng.vnc.biz [127.0.0.1]) (amavis, port 10032)
- with ESMTP id Mouwf1Q8IWXB; Tue, 17 Nov 2026 21:03:21 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by zmproxy.tng.vnc.biz (Postfix) with ESMTP id 9C6291FBC2C;
-	Tue, 17 Nov 2026 21:03:21 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zmproxy.tng.vnc.biz 9C6291FBC2C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tngtech.com;
-	s=B14491C6-869D-11EB-BB6C-8DD33D883B31; t=1794945801;
-	bh=uyyTnPsw7Ii2zbJiwxPIj01iC+D/M15OetanJcm5Djg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=Tpp43/QH66fHlxODqWhzxEZXmbdYeeasX8GgSxUBLZrKitXj6UGZW0qw7maqLFWik
-	 Al42hFrkC0NiUvMv23eMMCnIgNEOuOYW8x1EX7QSsEraUGekl1hbe9xvzciKILbZKl
-	 Q/eOTu5rpGr97Qs99fC4pTXbM7tvomTiQXuQp20cO8GwWEYCkHT/9R4YDvgNUTSEEy
-	 09tR3LQOg/uBFqXY8ODIemucitdVm55HyTIAXBpq4FIjPsaBvJ30Z7iqKcuXJGAR8D
-	 jDlMrIAaNcjCeP8hlN180hH4ZwVRTtbWXEsScPT2+UBCL3DWc16l4lzelkNaPyK/ep
-	 ogoyPqlMqLnYg==
-X-Virus-Scanned: amavis at zmproxy.tng.vnc.biz
-Received: from zmproxy.tng.vnc.biz ([127.0.0.1])
- by localhost (zmproxy.tng.vnc.biz [127.0.0.1]) (amavis, port 10026)
- with ESMTP id OkUBGHKpgxRN; Tue, 17 Nov 2026 21:03:21 +0100 (CET)
-Received: from [192.168.0.168] (ipservice-092-209-236-032.092.209.pools.vodafone-ip.de [92.209.236.32])
-	by zmproxy.tng.vnc.biz (Postfix) with ESMTPSA id DDAD51FBB9B;
-	Tue, 17 Nov 2026 21:03:20 +0100 (CET)
-Message-ID: <99eee19a-9761-48c0-a097-c115c4782c36@tngtech.com>
-Date: Tue, 17 Nov 2026 21:03:18 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA438606A32A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 20:35:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA438606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=NOxXwOu0
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-862b3938d98so97654a34.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 12:35:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1794947755; x=1795552555; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=qU/707wsLwghguzg9u1/2onlRZx6ZVh35wJOTps23pA=;
+        b=NOxXwOu0+aOQxTE2Q6EzG9Me/ROYbnWno52lRKAXDm1vIfdc8nOFKeTSkUgw4P44GT
+         rD+u+PDkJV0BqtagCcsNJ0zv52yv7Ric1mKJoa63X9Nra/kZ07bUOudVq5N/G0Udg4vL
+         3DctNrcuvKGVwp55dRn6h2zudPwmvSjDSPEUg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794947755; x=1795552555;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qU/707wsLwghguzg9u1/2onlRZx6ZVh35wJOTps23pA=;
+        b=1Bpvi4ngfGowloSa7V43/4dGWQGdQhkipAnTaZX+j88Bj0spLsXMckJkw+CbkDLmgY
+         S5tw7RS+pSzF6whsAyuLrZph6Fg7vD/W/LbyXSA/u1STl1laHSmmAqyedK6b+thmvVhV
+         ZgWmU7Wg9ytqlvAYdP4uES1aH3THSVfziNt8xRllSjg8kPxu+sXd9Vs9Z5xlNve2qO8U
+         7Y0GhwZ3K1RfZQ8oXql2lYWl+DUNkNQVUSoDVvoQiLoGHuiBcpPNkKZTFC1T+QUjgNY5
+         cpLLa8nPbRb8WieTuQk2yqQV5j333hqCjkxt4twyN4R2ns3uhV7akpSKpPQNcT1w2dqc
+         aEeQ==
+X-Forwarded-Encrypted: i=1; AL+hErE9ULd637AkJPxWVelWmqb/V8iya2BNrS56oTPMduH42Bcfanqwt3mfRHTC/t+P00osB32jt8eXmZ9gRQLeuSA=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+RWBv5O4nH9DDo7BRfyVSWDEq7JG6+IlljCO7MBggijrIWJjDz
+	7lPG3fAFLTULGLUhwjC+i3tdOJNRP1ZCtnSc7DSatxsxDvV4dUlLMIH5SrPM0VsIZHaB+1xzaD1
+	rVC4=
+X-Gm-Gg: AYBFou23PQ11+pWdEIOXbqyZDPnOvsFOawcFesvs7Fpw8/nJL9rDFtwhlnK5SEwYTOI
+	dHOeY/cG8cvdWfcPgTmJtpS8NtsBaM+C566bX1OUKix6kHfVoGl+Pl6+Z2s4HfMseds3g9QHNPs
+	uFGNswjnpJdz1jU0BXhDp/yk/AOKeQDAzXXLYziDO2E+UVYvDg0MGqtaKOQlwBv2Ngoutw/nfeM
+	G6HRuGggVsuKfpf1vQM+WgOXWIABoILmHcZJzruDo1to0w5VGszLsKIOw4l/QmTANqcWQ5SChrK
+	7b4R6Imi0aIGtu7OZ7JI7fw42ZJqs9aAJdHkUaB/SnaK9ZbX6wB38YCEKAH0l7aZlrnP5sQ19e4
+	/0ex9pMQfFYGXmBDIXwVt6HCEZ5/NVKbePj+kvbTdEgTOr2vGrqeRFzpflca8RuqDnGxJx7HATg
+	+S4xYJZnmjwM5h6z5t2t2BtlqsQ8s29NAze3RpAZ6ecNiJDYoDz3rWeggfeCyy6uamqArq2zbm4
+	FOxhXoBj1T38glNKAdjZYa3iGphuWAubszVvOBii+J18o51IcGaTheGtKMNIuiYS20M1QmxMEz4
+	q9gce0CPl98zJM0IjdlUZxjG5hwPindg7jOimvQc5MyDgYY14FRWUm/ebZtNc4VAPjHz
+X-Received: by 2002:a05:7022:2205:b0:1b3:a9c0:6a3e with SMTP id a92af1059eb24-1b543c26e95mr931425c88.29.1794947744502;
+        Tue, 17 Nov 2026 12:35:44 -0800 (PST)
+Received: from localhost ([2a00:79e0:2e7c:8:d92d:531b:8d97:bf51])
+        by smtp.gmail.com with UTF8SMTPSA id 5a478bee46e88-382a63059e3sm651691eec.5.2026.11.17.12.35.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Nov 2026 12:35:43 -0800 (PST)
+Date: Tue, 17 Nov 2026 12:35:41 -0800
+From: Brian Norris <briannorris@chromium.org>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+	linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH] tracing: 'select' GENERIC_TRACER, not 'depends'
+Message-ID: <avy6nTb0ccqNNnOo@google.com>
+References: <20261116144652.1.Iecb63200dd245f62032a3b1f60ae78cc48868094@changeid>
+ <sashiko-outbox-217828@kernel.org>
+ <20261117085552.0e4ef272@gandalf.local.home>
+ <avybp3O2zxcLozKB@google.com>
+ <20261117142203.72235895@gandalf.local.home>
+ <20261117142310.4f440b3f@gandalf.local.home>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,140 +99,47 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/7] kbuild: record cmd-prereqs in .cmd files
-To: sashiko-reviews@lists.linux.dev, nathan@kernel.org, nsc@kernel.org
-Cc: linux-kbuild@vger.kernel.org, akpm@linux-foundation.org,
- gregkh@linuxfoundation.org, kstewart@linuxfoundation.org,
- maximilian.huber@tngtech.com
-References: <20261116175215.1337416-1-luis.augenstein@tngtech.com>
- <20261116175215.1337416-5-luis.augenstein@tngtech.com>
- <sashiko-outbox-219281@kernel.org>
-Content-Language: en-US
-From: Luis Augenstein <luis.augenstein@tngtech.com>
-In-Reply-To: <sashiko-outbox-219281@kernel.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ifMQBf5U1i40GslSf02eGMt5"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261117142310.4f440b3f@gandalf.local.home>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------ifMQBf5U1i40GslSf02eGMt5
-Content-Type: multipart/mixed; boundary="------------C5RD8l2JFHi00i5rpxJzfEfw";
- protected-headers="v1"; hp="clear"
-Message-ID: <99eee19a-9761-48c0-a097-c115c4782c36@tngtech.com>
-Date: Tue, 17 Nov 2026 21:03:18 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/7] kbuild: record cmd-prereqs in .cmd files
-To: sashiko-reviews@lists.linux.dev, nathan@kernel.org, nsc@kernel.org
-Cc: linux-kbuild@vger.kernel.org, akpm@linux-foundation.org,
- gregkh@linuxfoundation.org, kstewart@linuxfoundation.org,
- maximilian.huber@tngtech.com
-References: <20261116175215.1337416-1-luis.augenstein@tngtech.com>
- <20261116175215.1337416-5-luis.augenstein@tngtech.com>
- <sashiko-outbox-219281@kernel.org>
-Content-Language: en-US
-From: Luis Augenstein <luis.augenstein@tngtech.com>
-In-Reply-To: <sashiko-outbox-219281@kernel.org>
+On Tue, Nov 17, 2026 at 02:23:10PM -0500, Steven Rostedt wrote:
+> On Tue, 17 Nov 2026 14:22:03 -0500
+> Steven Rostedt <rostedt@goodmis.org> wrote:
+> 
+> As it doesn't need to be visible let's still have:
 
---------------C5RD8l2JFHi00i5rpxJzfEfw
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+What's wrong with visible? Hiding it is part of the confusion, because
+it disappears when you select something else, even though it's still
+effectively enabled.
 
-DQoNCk9uIDExLzE3LzI2IDE4OjUyLCBzYXNoaWtvLWJvdEBrZXJuZWwub3JnIHdyb3RlOg0K
-PiBbU2V2ZXJpdHk6IExvd10NCj4gRG9lcyBjbWQtcHJlcmVxcyBpbmNsdWRlIHRvb2xzL29i
-anRvb2wvb2JqdG9vbCBvbiBpbmNyZW1lbnRhbCBidWlsZHMgd2hpbGUNCj4gb21pdHRpbmcg
-aXQgb24gY2xlYW4gYnVpbGRzPw0KPiANCj4gSW4gc2NyaXB0cy9NYWtlZmlsZS5saWIsIGNt
-ZF9nZW5fb2JqdG9vbGRlcCBhcHBlbmRzIGEgc3RhbmRhbG9uZSBydWxlIHRvDQo+IHRoZSAu
-Y21kIGZpbGUgYWZ0ZXIgY21kX2FuZF9maXhkZXAgb3IgY21kX2FuZF9zYXZlY21kIHJ1bnM6
-DQo+IA0KPiBzY3JpcHRzL01ha2VmaWxlLmxpYjoNCj4gY21kX2dlbl9vYmp0b29sZGVwID0g
-JChpZiAkKG9ianRvb2wtZW5hYmxlZCksIHsgZWNobyA7IGVjaG8gJyRAOiAkJCh3aWxkY2Fy
-ZCAkKG9ianRvb2wpKScgOyB9ID4+ICQoZG90LXRhcmdldCkuY21kKQ0KPiANCj4gT24gYSBj
-bGVhbiBidWlsZCwgJChkb3QtdGFyZ2V0KS5jbWQgZG9lcyBub3QgZXhpc3QgeWV0LCBzbyAk
-KHJlYWwtcHJlcmVxcykNCj4gYW5kIG1ha2VfcHJlcmVxc188dGFyZ2V0PiBkbyBub3QgaW5j
-bHVkZSAkKG9ianRvb2wpLiAgT24gYW4gaW5jcmVtZW50YWwNCj4gcmVidWlsZCwgTWFrZSBp
-bmNsdWRlcyB0aGUgcHJldmlvdXMgLmNtZCBmaWxlIGFuZCBhZGRzIHRvb2xzL29ianRvb2wv
-b2JqdG9vbA0KPiB0byAkXiBhbmQgJChyZWFsLXByZXJlcXMpLiAgQmVjYXVzZSBpdCBpcyBu
-ZWl0aGVyIGluICQoZGVwc18kQCkgbm9yIGluIHRoZQ0KPiBjb21waWxlciBkZXBmaWxlLCBu
-ZWl0aGVyIGNtZC1wcmVyZXFzIG5vciBmaXhkZXAgZmlsdGVycyBpdCBvdXQsIGxlYXZpbmcN
-Cj4gbWFrZV9wcmVyZXFzXzx0YXJnZXQ+IGluY29uc2lzdGVudCBiZXR3ZWVuIGNsZWFuIGFu
-ZCBpbmNyZW1lbnRhbCBidWlsZHMuDQoNCm1ha2VfcHJlcmVxcyBpcyB3cml0dGVuIGJlZm9y
-ZSBLYnVpbGQgYXBwZW5kcyB0aGUgb2JqdG9vbCBkZXBlbmRlbmN5DQpydWxlIHRvIHRoZSAu
-Y21kIGZpbGUuIFRoZXJlZm9yZSwgTWFrZSBkb2VzIG5vdCB5ZXQga25vdyBhYm91dA0Kb2Jq
-dG9vbCBkdXJpbmcgdGhlIGluaXRpYWwgYnVpbGQuIE9uIHRoZSBuZXh0IGJ1aWxkLCBNYWtl
-IHJlYWRzIHRoZQ0KLmNtZCBmaWxlIGFuZCBpbmNsdWRlcyB0aGUgYXBwZW5kZWQgb2JqdG9v
-bCBkZXBlbmRlbmN5IGluICReLiBJZiB0aGUNCnRhcmdldCBpcyByZWJ1aWx0LCBtYWtlX3By
-ZXJlcXMgcmVjb3JkcyBvYmp0b29sIGFzIHdlbGwuDQoNCkkgdGhpbmsgdGhpcyBiZWhhdmlv
-ciBpcyBmaW5lLiBvYmp0b29sIGJlY29tZXMgYSBNYWtlIHByZXJlcXVpc2l0ZQ0Kb25seSBh
-ZnRlciB0aGUgaW5pdGlhbCBidWlsZCwgc28gaXQgaXMgY29uc2lzdGVudCBmb3IgaXQgdG8g
-YXBwZWFyDQppbiBtYWtlX3ByZXJlcXMgb25seSBhZnRlciBhIHJlYnVpbGQuDQoNCkZvciB0
-aGUgU0JPTSB0aGlzIGlzIGlycmVsZXZhbnQgYmVjYXVzZSBvYmp0b29sIGlzDQpmaWx0ZXJl
-ZCBvdXQgYW55d2F5LiBDbGVhbiBhbmQgaW5jcmVtZW50YWwgU0JPTXMgYXJlIHRoZXJlZm9y
-ZSB0aGUNCnNhbWUuIEkgd291bGQga2VlcCB0aGlzIGJlaGF2aW9yIGFzLWlzIHJhdGhlciB0
-aGFuIGludHJvZHVjaW5nDQpzcGVjaWFsLWNhc2UgbG9naWMgZm9yIG9ianRvb2wuDQoNCj4g
-W1NldmVyaXR5OiBNZWRpdW1dDQo+IERvICcuLyctcHJlZml4ZWQgaGVhZGVyIGRlcGVuZGVu
-Y2llcyBmYWlsIHRvIG1hdGNoIGluIGJvdGggY21kLXByZXJlcXMgYW5kDQo+IHByaW50X21h
-a2VfcHJlcmVxcygpIG9uIGluY3JlbWVudGFsIGJ1aWxkcz8NCj4gDQo+IEtidWlsZCBwYXNz
-ZXMgaW5jbHVkZSBwYXRocyBiZWdpbm5pbmcgd2l0aCAnLi8nIChzdWNoIGFzIC1JLi9pbmNs
-dWRlIGFuZA0KPiAtaW5jbHVkZSAuL2luY2x1ZGUvbGludXgva2NvbmZpZy5oKSwgc28gdGhl
-IGNvbXBpbGVyIGRlcGZpbGUgYW5kDQo+IGRlcHNfPHRhcmdldD4gcmVjb3JkIHBhdGhzIHdp
-dGggYSBsZWFkaW5nICcuLycuICBXaGVuIE1ha2UgcGFyc2VzDQo+ICc8dGFyZ2V0PjogJChk
-ZXBzXzx0YXJnZXQ+KScgb24gYW4gaW5jcmVtZW50YWwgYnVpbGQsIGl0IHN0cmlwcyBsZWFk
-aW5nDQo+ICcuLycgZnJvbSB0YXJnZXQgbmFtZXMgd2hlbiBwb3B1bGF0aW5nICReIGFuZCAk
-KHJlYWwtcHJlcmVxcykuDQo+IA0KPiBBcyBhIHJlc3VsdCwgJChmaWx0ZXItb3V0ICQoZGVw
-c18kQCksICQocmVhbC1wcmVyZXFzKSkgaW4gY21kLXByZXJlcXMgYW5kDQo+IHRoZSBzZWVu
-X3ByZXJlcXNfaGFzaHRhYiBsb29rdXAgaW4gcHJpbnRfbWFrZV9wcmVyZXFzKCkgY29tcGFy
-ZSAnLi8nLXByZWZpeGVkDQo+IHN0cmluZ3MgYWdhaW5zdCBzdHJpcHBlZCB0b2tlbnMgaW4g
-cHJlcmVxcy4gIEV2ZXJ5ICcuLyctcHJlZml4ZWQgaGVhZGVyIGluDQo+IGRlcHNfPHRhcmdl
-dD4gKGluY2x1ZGluZyBoZWFkZXJzIHJlbW92ZWQgc2luY2UgdGhlIHByZXZpb3VzIGJ1aWxk
-KSB0aGVuDQo+IGxlYWtzIGludG8gbWFrZV9wcmVyZXFzXzx0YXJnZXQ+IG9uIGluY3JlbWVu
-dGFsIHJlYnVpbGRzLg0KPiANCj4gU3RyaXBwaW5nIGxlYWRpbmcgJy4vJyB3aGVuIG5vcm1h
-bGl6aW5nIGRlcHNfPHRhcmdldD4gaW4gY21kLXByZXJlcXMgYW5kDQo+IHdoZW4gaW5zZXJ0
-aW5nIG9yIGxvb2tpbmcgdXAgZW50cmllcyBpbiBwcmludF9tYWtlX3ByZXJlcXMoKSB3b3Vs
-ZCBhbGxvdw0KPiBib3RoIGZpbHRlcnMgdG8gbWF0Y2ggdGhlIHBhdGhzIGluICQocmVhbC1w
-cmVyZXFzKS4NCg0KQ29uZmlybWVkIGFuZCByZXByb2R1Y2VkIHRoaXMgaW4gYW4gaW4tdHJl
-ZSBidWlsZCBmb3INCmtlcm5lbC9raGVhZGVyc19kYXRhLnRhci54ei4gZ2VuX2toZWFkZXJz
-LnNoIHJlY29yZHMgaXRzIHNvdXJjZS1saXN0DQplbnRyaWVzIHdpdGggYSBsZWFkaW5nICIu
-LyIuIE9uIHRoZSBuZXh0IGJ1aWxkLCBNYWtlIHJlcG9ydHMgdGhvc2UNCnByZXJlcXVpc2l0
-ZXMgaW4gJF4gd2l0aG91dCB0aGUgbGVhZGluZyAiLi8iLCBzbyB0aGUgZXhpc3RpbmcgZmls
-dGVyDQpmYWlscyB0byByZW1vdmUgdGhlbSBmcm9tIGNtZC1wcmVyZXFzLg0KDQpXaXRoIENP
-TkZJR19JS0hFQURFUlM9eSwgYSBmb3JjZWQgaW5jcmVtZW50YWwgYnVpbGQgZXhwYW5kcyBt
-b3JlIHRoYW4NCjcwMDAgcGF0aHMgaW50byBtYWtlX3ByZXJlcXMuIFRoZSByZXN1bHRpbmcg
-c2hlbGwgY29tbWFuZCBleGNlZWRzIHRoZQ0KbWF4aW11bSBhcmd1bWVudCBzaXplIGFuZCBm
-YWlscyB3aXRoICJBcmd1bWVudCBsaXN0IHRvbyBsb25nIi4NCg0KVG8gZml4IHRoaXMgdGhl
-IHByZWZpeCAiLi8iIHNob3VsZCBiZSByZW1vdmVkIGJlZm9yZSBjb21wYXJpbmcNCnByZXZp
-b3VzIGRlcHNfIHdpdGggcmVhbC1wcmVyZXFzLiBJIHdpbGwgYWRkIHRoaXMgbm9ybWFsaXph
-dGlvbiBpbiB2NjoNCg0KY21kLXByZXJlcXMgPSAkKGNhbGwgZXNjc3EsIFwNCgkkKGZpbHRl
-ci1vdXQgJChwYXRzdWJzdCAuLyUsJSwkKGRlcHNfJEApKSwgJChyZWFsLXByZXJlcXMpKSkN
-Cg0KLS0gDQpMdWlzIEF1Z2Vuc3RlaW4gKiBsdWlzLmF1Z2Vuc3RlaW5AdG5ndGVjaC5jb20g
-KiArNDkxNTIyNTI3NTc2MQ0KVE5HIFRlY2hub2xvZ3kgQ29uc3VsdGluZyBHbWJILCBCZXRh
-LVN0ci4gMTMsIDg1Nzc0IFVudGVyZsO2aHJpbmcNCkdlc2Now6RmdHNmw7xocmVyOiBEci4g
-Um9iZXJ0IERhaGxrZSwgVGhvbWFzIEVuZHJlcywgTW9yaXR6IFByaW56DQpBdWZzaWNodHNy
-YXRzdm9yc2l0emVuZGVyOiBIZW5yaWsgS2xhZ2dlcw0KU2l0ejogVW50ZXJmw7ZocmluZyAq
-IFJlZ2lzdGVyZ2VyaWNodDogQW10c2dlcmljaHQgTcO8bmNoZW4gKiANCkhhbmRlbHNyZWdp
-c3Rlcm51bW1lcjogSFJCIDEzNTA4Mg0KDQo=
+Personally, I think it would be nicer if we could eliminate the separate
+ENABLE_DEFAULT_TRACERS (or ENABLE_EVENTS or whatever you want to call
+it) and make CONFIG_EVENT_TRACING:
 
---------------C5RD8l2JFHi00i5rpxJzfEfw--
+1) user-configurable and
+2) 'select'ed (or otherwise forced to =y) when something else truly
+   requires it
 
---------------ifMQBf5U1i40GslSf02eGMt5
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+That would make it clearer what's happening, IMO.
 
------BEGIN PGP SIGNATURE-----
+But I'm not sure off the top of my head what the best way to do that in
+Kconfig is, without introducing odd circular dependencies or other
+issues, and I also don't know how much more time I want to spend on it.
 
-wsF5BAABCAAjFiEEJzBrWn4qHw5a0jAXeVyKys3c+zQFAmr8swcFAwAAAAAACgkQeVyKys3c+zSn
-1A//U9t4M3B5f67cBXIo6aL8Ls7YKBx6z6L/Dz6FY5/X8r5xxyZu1FFARL8n4ttNW6pF6Ak+0SIl
-+bwcz0nSHvprk+OYv6Xi5Te1yaMu4+93jA7qhjRruh0dE7Rc8oGHS86Sn7TNmGjudNlgXoie4dSl
-BEhgXHIBjRUTYEV/E+Fjvsu+Tvpb742HxN2fNoozdtpVdTWCVkohtgjYKqEgfPtLCjld1zwSqoTd
-wYzNe7UEzmZkZzXjHvgdOCyQEaPgFv4zWkiolnI/9jCY4E2kkR4u1WQT6cvmzr5Dntsn5dSfwrGn
-EYwFQpQ/AExAXziqC9k8/MP2Is0UJxhXNilXKIJDmyqLk7Y9Uv4eBtMjAF84hDG18FaGTCZbk4k8
-U3T+Mpo0aXe3J0MsTuOZ9zXZzFvz5nMNKOeZKMJVQLdaZfncxj/icC6UqAhvhVpE1sCqmBNCb2WB
-Tpsjs0/xgKT55cFM9PUmEfyP8fxadpF/eLSypwVpKO5yY1+hHSmrknxE6nHHQk5EKu1wSvYIoh9r
-QI2p2iS6Y3NIhxCvbMC3tvBOd3DGBitdgvhzL36bYh+XKrsl+1s2SHsj/o9LOuwZGC0+Wl/14F9O
-yno6k7J9x48p29tXjD4vaII8Jy4ZJD//sQ0140ltWGImOUhr2kFhZo2GcNPpHoUjXc0V+GhJnUtq
-ll8=
-=fzPu
------END PGP SIGNATURE-----
+I'm open to ideas, or I'll let it sit/marinate until I have more time.
 
---------------ifMQBf5U1i40GslSf02eGMt5--
+Brian
+
+> 
+> > config ENABLE_EVENTS
+> > 	bool "Enable trace events"
+> 	depends on !GENERIC_TRACER
+> 	select TRACING
+> > 	help
+> > 	 Select this to enable trace events through out the kernel such as
+> > 	 scheduling, irq, kmalloc that can record to the tracefs ring
+> > 	 buffer data from within the subsystems the events exist in.
+> 
+> 
+> -- Steve
