@@ -1,103 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.138
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794983739;
-	b=HCf5Z6zEwWvELsPmKPpxtejklKiOE+rqBn/vOjiD+KcAIJj2JSZmECpmdp8gRXZuLt5f
-	 cYmmDVnpdzhtTzraiFpguHxKtpr6LhybaAaqulMZWzMLR3NGwblbRzZ7OeVO4sm1FzQbD
-	 myf4yxv3Y4nuzh1S/q4LiIq8TRanNo9G0ji+8Mgb8z3LuJyLPjBSfsWxcWlyaf0kwsZl8
-	 NkH0c+dwfVhrLLq9Q4np7lKhz3OSl6/fFnVrLoyXwic1GDvTZrQUaPOUv+1epKhc/or9O
-	 x0wojjVpWY4pZbgsWW39/IlSldt3UbENazOSnMpTY1AYO4CTTOlxkkw1SZ41Rt5z9hg==
+	t=1794984131;
+	b=4W4XUxofU6/bdO+dkOM8vzyAWsNrJylKPOYcw/fG84xvxrQ6MdVCApkQWuLK+H72fwBd
+	 hkAjAd+eKZkD4LRcio0jII9kWyUlpoMtrJdTvhKAdfbihuzSGmNxgwFjDvLPSwhYi0QLn
+	 yRstD6Tr2tL0zlq3sWdFECJuT/i4NpkXCJCC1l8MuDGAgHu7MI35LkguvMeg1maE1qzEZ
+	 yEv6d2q112jRJByQjpS/FiiPBqwermPJwCANr7JLFs9dGIZEsmbSsSl8AqIF3Ejv5p+ov
+	 wPewhtSPB1hqToC7DIofO7isTfxf1WWS9g2K7hI+URywoCCsz53kMVdRQE7SkodgCug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794983739;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=RLInY9Pas2VGdZHhoGedVfli2rsw8GnKGiuTBZLrurs=;
-	b=PfJuMqQxBWhv2GaqayewA+WXvld40MzdEfajQWXF7pSyIcKEtN/urGN0CdzzxipWAyBQ
-	 2YEq0+2ro/mjS/6nLk9D0WRlQcuKMGwoW/F4RIKLb6RU6R4lpVg2V+yiTsztZJiXwdG4P
-	 K971jn2WSPnm9wtxUi62vz8K6A7BAbcbpndHJzgQveKK47DG2xUquX4YXv0Bk6u1azKCW
-	 9ABHP84fdM8/SIy0ChcU60jAS9nX3d8rjEoOIplz6dB2H9Z2xD76r2zmDEDYai+Byg6uO
-	 yztCMfJFA0xX9WtOzmInlW78/pjxZSC6TUPcEkm1KDmsXJvneVgS7XyDCreuMUNMQHQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794984131;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=4vrUGvYBYjikigCpSRsWM3IL2SKRFIwk8YXcudEu+Vw=;
+	b=t5wy0dytcsOVqlQ/7qVTs27EbKuVIBO9cR4YqLLVr5UH8a/74iwtbxb/bIJE3sABlWLo
+	 aJ/ONg/ONuku90pJBvxG8cT5jVryhlLywkI+9wFb3d+FgS+izs+P+q4wqKmQ4zA0JIaRS
+	 FjXElT4DeVp6KjoHk2NSbZcLsEZ3kLYl+wxG4Zb5KXtPZotH7Z3l1hYiLbmfpxHqsgB+V
+	 sMGzFOZr5D0HXkeT5JyuqkDbj/GIyBJelsRHE1YrN5VwAKwbhh6I+u/CxZDYRQIZqPanm
+	 zKUHfoEMrwCDWHev/ylUiJWEVPzeT3wSEYThr0ED1NYUfqO6RIdoL3C3A4rLrTZ0nLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CswlLiiU;
-	arc=none smtp.remote-ip=209.85.128.51
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=WB2nCTXX;
+	arc=none smtp.remote-ip=95.215.58.138
+Received: from mta1.migadu.com (out-138.mta1.migadu.com [95.215.58.138])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E14606A325
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 06:35:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39E14606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453D8606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 06:42:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 453D8606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CswlLiiU
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so5403725e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 22:35:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794983737; x=1795588537; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=RLInY9Pas2VGdZHhoGedVfli2rsw8GnKGiuTBZLrurs=;
-        b=CswlLiiUKTsSdKPQh/Ff+T/BO/KS4U8SCZwEYehqEziOFSy6fc6hglBk6vtAPnbAiq
-         nUhR/JSuVOs8LU6KA7gTNTPtczOilgB6Zt/MkgNl5U6Z/XxPSZTjKkrS1GHYn9qFBShD
-         Y5gJFIWwzClPoBqw93yCydcSf+PpDHbE/YMuxu8YBKkL8R/exAOvqyE8qZcJxpZF2O85
-         0K4TpDxXTHhN5YbvRBOqxaY6u41MOc544TiOA9EAjnJhmd3+dFFY2MVg8yKvJUgjXH3C
-         BeZJTusWSyW4cx0NmM5OVVEBO/GsLFEIdsvkTq3IKa7Y7zSb3dHcQhe2ETf43sKo7bcD
-         1sOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794983737; x=1795588537;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=RLInY9Pas2VGdZHhoGedVfli2rsw8GnKGiuTBZLrurs=;
-        b=cjsOGPJa5Ju+QiEH2zcDzb0Jh6yRIdZrhBxfKr4TFCFSiTSNjgSIEACHsbxKqQfS8u
-         fnnlJk0QdF7P5QI8ZtXv4DKfrUjn3TZzuNeyWnQljLdocjQAPG1LpH5SaD42nVeOrbIj
-         M+pkTIIaOoknZ6GjCWdZ/OZAKJBAnrab4dnQBFg2XpQ8ua1eUD6nqZap8ONBUbe/LS4u
-         GvWBFR5L9LCXEymcJci/uGTtMnnOzTKeZBS9zuAy6FNLHECU+wHTIRJlDpDo9rusSz1C
-         IeO9tncZwoq90wavGYSJGR3kMxQ430ZLecBAT8U5hb5Z01px9FGMuQ1H1QruKubThyRz
-         z1bA==
-X-Gm-Message-State: APuU4Z/OTqt+xq2l8xvUA+viGFIKd1kIM5N3uvyYyXoSlo0GE3kMf8sa
-	ocSYCokDh35q8Ro4YAt0MduM7jTdIKiKmuTPel04gtzaR0Z+lTqx1octF7f3Pz0vH+U=
-X-Gm-Gg: AYBFou3bn+iFqIhdgDWP0rY9n+KXJ/sfucltQZr4HzqyNRiLg1d2ju2cX1DRSIzNodI
-	fhxYh4kddzsfAgJOYUNRIeJBtSkYkO2OldWhUMsrkx4uT/JpbNyxxHF6Bf5k7c5vWKBZXWAgDy8
-	9DV+b8twPhcjne1Q7DiWiI4kcR4rzd8ircLqVxfvSINJKWUgbSd4K849SSwYzGfGIX+WcrKFkK0
-	RN4F5HBeQzZJULpKjD07dOuqFw75AwWDmrS2jQzMyVfqhi15sWWfVJklJRp3F86duKPR/NyTk5N
-	fxe7G98Rh+uW1pYKQ7qyUw1oK9l4pD7AYUV++c6hZELHiTGeuITqUWua/4WBYyMuGxQqoHKyPbK
-	Ms770No8oPVnzekKsJqw9yJyXcKodmBeaN8AoZVvrMSfbxhsAhGcwFtdU/lfVCADPwxH0zwNY5f
-	v+5KcYEIO1m8h1WkXwxc02a9DM/NVgrQMBM3PNlPEdSeR000NsxAgHcjFNopgBZ+Y/UqbsekWjP
-	7BZPIRMh+CL61i+K2rPYhjvMB3BwRjQc2kFunVpv2EgJDxkAj3YkEaje5UQ8HdEY5yaVOZcnyE4
-	X+peVDTlL4hCeeKMQW2+YwkoUWDTgwl5OP9CSuwgh7jAZMB8ow/mfoa3RA+c2FREZprYJ4u+Lwn
-	PZcCOmJCakDc6tSCzsk50vNeIjVgqL7YHnK6xXPSN0mPHnpg=
-X-Received: by 2002:a05:600c:8b02:b0:4bb:6752:8400 with SMTP id 5b1f17b1804b1-4bb7da1b48dmr25981005e9.17.1794983737429;
-        Tue, 17 Nov 2026 22:35:37 -0800 (PST)
-Received: from center.jhjvjihww5qejoy14qwv1cc4td.frax.internal.cloudapp.net ([131.189.143.225])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4a65560ab70sm3069822f8f.30.2026.11.17.22.35.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 22:35:36 -0800 (PST)
-From: Orgad Shaneh <orgads@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=WB2nCTXX
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=FYJgjS5+nVGzEAb8n72wxlzwghj2XRvZF7p3yXiyO2M=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794984127; v=1; x=1795588927;
+ b=WB2nCTXXbH7W/R1/6oAKysqyeEqZ+HxxGD40vtPxuZKj2uBIwcqZDeCqS+frOAxEeKEyojEL
+ LUSHj1VxElrt1ZXqU4po1aayB/2kYcbweRPa13m2WuzBM0eoPZLqtuQynAvr/Wc24ZJ+pb1vScG
+ GHnQu9XU6Y4I49YuXLVbJ2zU=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta12.migadu.com with ESMTPS id fc53258ff22c9965;
+	Wed, 18 Nov 2026 06:42:07 +0000
+X-Mizu-Trace-ID: fc53258ff22c9965
+X-Migadu-Flow: FLOW_OUT
+Date: Wed, 18 Nov 2026 14:42:00 +0800
+From: Baoquan He <baoquan.he@linux.dev>
 To: sashiko-reviews@lists.linux.dev
-Cc: miquel.raynal@bootlin.com,
-	richard@nod.at,
-	vigneshr@ti.com,
-	tsbogend@alpha.franken.de,
-	linux-mtd@lists.infradead.org,
-	linusw@kernel.org,
-	kaloz@kernel.org,
-	ulli.kroll@googlemail.com,
-	john@phrozen.org,
-	nico@fluxnic.net,
-	dwmw2@infradead.org,
-	corbet@lwn.net
-Subject: Re: [PATCH v4 4/4] MIPS: Octeon: flash: use the simple map accessors without a shared eMMC
-Date: Wed, 18 Nov 2026 06:35:35 +0000
-Message-ID: <20261118063535.4001217-1-orgads@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-219726@kernel.org>
-References: <20261117214141.3826637-1-orgads@gmail.com> <20261117214141.3826637-5-orgads@gmail.com> <sashiko-outbox-219726@kernel.org>
+Cc: Zack Rusin <zack.rusin@broadcom.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Petr Mladek <pmladek@suse.com>, Mike Rapoport <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Dave Young <ruirui.yang@linux.dev>, Borislav Petkov <bp@alien8.de>,
+	Ajay Kaher <ajay.kaher@broadcom.com>,
+	Alexey Makhalov <alexey.makhalov@broadcom.com>, x86@kernel.org,
+	Joel Granados <joel.granados@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>, virtualization@lists.linux.dev,
+	bcm-kernel-feedback-list@broadcom.com,
+	John Ogness <john.ogness@linutronix.de>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Kees Cook <kees@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Bo Gan <bo.gan@broadcom.com>,
+	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>,
+	kexec@lists.infradead.org,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Stephen Brennan <stephen.s.brennan@oracle.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Eugenio Perez <eperezma@redhat.com>
+Subject: Re: [PATCH v4 3/4] x86/vmware: Add the vmware_record_panic_msg sysctl
+Message-ID: <av1IuMZ2W0SXWcNn@MiWiFi-R3L-srv>
+References: <cover.1794980455.git.zack.rusin@broadcom.com>
+ <4c5de34b10f579368b890eaa9333a2755886bad3.1794980455.git.zack.rusin@broadcom.com>
+ <sashiko-outbox-220212@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -107,14 +93,27 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-220212@kernel.org>
 
-> Does calling simple_map_init(map) break mtd_point() on little-endian
-> Octeon kernels (CONFIG_CPU_LITTLE_ENDIAN=y)?
+On 11/18/26 at 06:14am, sashiko-bot@kernel.org wrote:
+> > Allow administrators to disable host log transfer on ordinary guests or
+> > opt in on encrypted guests. Expose the boolean recording policy through
+> > kernel.vmware_record_panic_msg using proc_dobool(), as Joel suggested.
+> > Zero disables recording, nonzero integers enable it, and reads return
+> > 0 or 1.
+> > 
+> > Register the sysctl only after the logger is ready. A registration failure
+> > leaves the internal default in force. Document that the log is sent
+> > before kdump, and that disable_panic_notifiers_platform_list also skips
+> > it.
+> > 
+> > Link: https://lore.kernel.org/r/4e73yd2ofpdzl6rptzvd74no3hnyfblknoq7wzxlw7f3zjbz7c@srfabx6lsusj
+> > Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+> 
+> Sashiko has reviewed this patch and found no issues.
 
-It does. memcpy_fromio() stays correct there (unswizzled 64-bit reads,
-swizzled byte reads), but loads through a pointed address get no
-swizzle. v5 keeps the semaphore accessors on little-endian kernels.
+It might be better to turn off this message if not issues found, just
+like what LKP bot has been doing.
 
-Miquel, Richard, Vignesh: please don't apply v4; v5 with these three
-fixes follows in a few days.
