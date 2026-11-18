@@ -1,56 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=84.42.129.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024514;
-	b=OSTDcfJP+wwt6IvSB6wPDtVFCMMgnT3C8SQNtEVOrH4j67hmZIgis4bNqmLtM47wr3Z6
-	 l+uUTBNuqSwYFscUo6VPet1tOXsw8syyn/ZHL+bMsldx6MFjQhurETW5cys+2FRg4B8aw
-	 Pb9zoiMLzMlhbuv5pg3e0wijR9cSE/AD4fPAoqFS5tSlPFFfzYDskPT1q8Y+4PBWnNsZK
-	 MVlIXsR53iOszjHe8PKRlMQveoZidmeo//bT3gtaMjfecRYGGVdSXKg6E0B7mbbNpCfcc
-	 SecY3XsTtUvXLqG6yXTtk2sJMp8eiFk0gYLF3ajEsnpypzpvpd0Q44BLQKHTZXcCRbA==
+	t=1795025452;
+	b=Zd8B/8Rd3CsN8Sw1SzyDzD31naPnrOse24BzCpuG4DojJrP3cdry9e5mJB1tM0Yol/ps
+	 4/eTsT0qVthn/3AiLu2oIsMoX2pyBrkQkN9zr1ve5av0MLKiwFLEJaFWjLG5TmIKASqUd
+	 wiq1Bjcj6foB2OIh+t7uDF0l5RYOA5yDu3ufSUDIwzgW2YHHrxUTlErS0dZX5lHIm4NcV
+	 KrkkAAkIRUYSTx4DDGBM/BBByfHiHiQfzPXnzR5UNCTUaa0a3TSdRN2Yz1r097D16uXJC
+	 K6b4WyLc2fFg6U4+YTrGgga8Va7ccdF1I2GI5AutdSkSokEoCLU4ZVrzDjHZXpZj0vQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024514;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=4z408KRzKXpCsZSuJuOfiOKILNxJs3DDuvK5OrkeNME=;
-	b=rDSGS+4OvD6o8BspJxlfOXvUpEepHtv6EG9RvTmzugH7gFyoqxb5Sdb7XWfp374ZVMN4
-	 BRIDeOwqGscslCTUQ/b5TwrnagojQCOkU+QXcDq3Cr9FTKROiCONssEhZKnBi0sIvOOXT
-	 Tlxv/yP2CUCcrzeWam9WQUss50SQNyas5R6keYu/kdkQzGYYR5jYxRRNWp68MR0y86il9
-	 Wh3c8QNC9yB2WdRYrDP9oqvKBG+5bz/n2YT/aB0JkJoYMocfWpK3m7mSNgwIFZ6Sy6Kjk
-	 abcUv3LwtNG6dD9lBNxaZlzy3bQ9L7Ok15P9/Eu3dmqHbchLLlJCX/hBnRfVHrd8vsQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025452;
+	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=tVpW8yknHbEB3ad015rJhSNZ/njmV5BYW52CrtwAUXA=;
+	b=z6oXTTpQ72DK5Uvqi+CUA4OwzBa7WAmPGY3cEXyWUXbk2PGd0MyVmiigZ8IoZk9R9zWQ
+	 jIleQOPGfEv8YsEigRyhc8rSz5lb9GuNDJduLpJaorgPK2Dj3NKvIXeZc5VkxGrerzQaz
+	 V9mYPzCNfs7Nw+8+S5i6ldC0yO/g2twSOmphGtZDeWvPpCslnzUAJUq2CI8pEELeZCXm1
+	 0Lay18etdbUT2HfE8k7C5R4vG0ThFOicj3nOibuRa6UE3EHE/N/XwE6NXXbB5CjU6xtWU
+	 TNNNbghW+HVeD8mWO5S9PanVmX7T0U5a4JFPMbuonXhkGebAaIGV9TNHq9i/8fAEnng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GD7ISErN;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=ixit.cz;
+	spf=pass smtp.mailfrom=ixit.cz;
+	dkim=pass header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b="CBun/UzZ";
+	arc=none smtp.remote-ip=84.42.129.46
+Received: from ixit.cz (ixit.cz [84.42.129.46])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9107606A31C;
-	Wed, 18 Nov 2026 17:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97785606A320
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 18:10:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97785606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GD7ISErN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743E81F000C4;
-	Wed, 18 Nov 2026 17:55:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795024513;
-	bh=4z408KRzKXpCsZSuJuOfiOKILNxJs3DDuvK5OrkeNME=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=GD7ISErNiRH1kSDWD/DKK44+2FtiIZZ5C2uM+fnf3i2Ticg2DxDMcqsa25Hrwiwf3
-	 3Ox7sXw9uc6iiyMcds0kVdjVlH09vF9R3IiVzYcxXN5yO02x3aGYik8TNvMI2+sVuN
-	 XP5Pnnk2UtcwzZWJ2XAfnirLnS3W0/WRjZVIIyPF2brAU3KtbnomWoZzrWydNDxKY0
-	 Ezd71/gpGWAo35TVjU5bDMmKogzJsb7pLAZr+CxpWsCDjjL+5FJo4oXJahQn8TMBVE
-	 hzvxMRgC4ErDn4mYwwLBZ+BqGK2Jy2kbb19WKxZUVj+zapD1cGKgJJsxXtnl1cS1bz
-	 DM7/DucS65hZg==
-Date: Wed, 18 Nov 2026 17:55:10 +0000
-From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Zhanpeng Zhang <zhangzhanpeng.jasper@bytedance.com>,
-	linux-perf-users@vger.kernel.org, devicetree@vger.kernel.org,
-	robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [RFC PATCH v1 1/5] dt-bindings: riscv: Add Smpdis and Sspdis ISA
- extensions
-Message-ID: <20261118-stipulate-grumpily-7567691b396d@spud>
-References: <20261118081327.10684-7-zhangzhanpeng.jasper@bytedance.com>
- <20261118081327.10684-8-zhangzhanpeng.jasper@bytedance.com>
- <sashiko-outbox-220433@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=CBun/UzZ
+Received: from [IPV6:2a02:830a:f787:8f00:d622:eaa3:3dd6:8f5e] (unknown [IPv6:2a02:830a:f787:8f00:d622:eaa3:3dd6:8f5e])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 2FD0A53401E9;
+	Wed, 18 Nov 2026 19:10:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1795025449;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=tVpW8yknHbEB3ad015rJhSNZ/njmV5BYW52CrtwAUXA=;
+	b=CBun/UzZ9RDYgOlMwOWwtzEiRuEUxAO3ALC74b1y1zeG/zvmnlWsZb+3F4p+DNOEh+IHeD
+	5SvY+3dqwsdGlJDf3LeDoiP1NwXhG1hFEGMDnAQlT69OwdRghNLUFkNV40AMI/aI7Ch4AO
+	UPAFTMRr2o2andphmQmCD0y+un4v64o=
+Message-ID: <2d102c43-d82d-4782-af72-acfcc9c02aea@ixit.cz>
+Date: Wed, 18 Nov 2026 19:10:48 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,101 +60,108 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eGumaYRWr8p5wYX4"
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-220433@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/12] dt-bindings: regulator: qcom,usb-vbus-regulator:
+ Add pmi8998 and pm660
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261118-pmi8998-vbus-v2-0-3c77a72b280a@ixit.cz>
+ <20261118-pmi8998-vbus-v2-4-3c77a72b280a@ixit.cz>
+ <sashiko-outbox-221657@kernel.org>
+Content-Language: en-US, cs-CZ
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <sashiko-outbox-221657@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---eGumaYRWr8p5wYX4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Nov 18, 2026 at 08:23:00AM +0000, sashiko-bot@kernel.org wrote:
+On 18/11/2026 18:33, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] dt-bindings: riscv: unratified draft smpdis and sspdis
->   extensions added
+> - [Medium] dt-bindings: regulator: typo in fallback compatible for
+>    qcom,pm660-vbus-reg
 > --
->=20
-> commit 6221314245742eb097a15011dd35eda824258728
-> Author: Zhanpeng Zhang <zhangzhanpeng.jasper@bytedance.com>
->=20
-> dt-bindings: riscv: Add Smpdis and Sspdis ISA extensions
->=20
-> This commit adds devicetree binding descriptions for the draft Smpdis and
-> Sspdis RISC-V Precise Decoded Instruction Sampling extensions.
->=20
-> > diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/=
-Documentation/devicetree/bindings/riscv/extensions.yaml
-> > index 79491ef8f86a8..afda76b9c7c47 100644
-> > --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
-> > +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
-> > @@ -214,6 +214,15 @@ properties:
-> >              ratified at commit d70011dde6c2 ("Update to ratified state=
-")
-> >              of riscv-j-extension.
-> > =20
-> > +        - const: smpdis
-> > +          description: |
-> > +            The draft Smpdis machine-level extension for Precise Decod=
-ed
-> > +            Instruction Sampling, as described at commit
-> > +            2de60e18118ce78e2da82ec33296345c94d8560c of the
-> > +            riscv-performance-event-sampling specification. It defines
-> > +            instruction selection, filtering and sample collection acr=
-oss
-> > +            privilege levels. This does not imply supervisor access to=
- PDIS.
-> > +
-> >          - const: smstateen
-> >            description: |
-> >              The standard Smstateen extension for controlling access to=
- CSRs
-> > @@ -269,6 +278,16 @@ properties:
-> >              ratified at commit d70011dde6c2 ("Update to ratified state=
-")
-> >              of riscv-j-extension.
-> > =20
-> > +        - const: sspdis
-> > +          description: |
-> > +            The draft Sspdis supervisor-level extension for Precise De=
-coded
-> > +            Instruction Sampling, as described at commit
-> > +            2de60e18118ce78e2da82ec33296345c94d8560c of the
-> > +            riscv-performance-event-sampling specification. It provide=
-s the
-> > +            supervisor-visible PDIS registers and behavior, excluding =
-the
-> > +            machine-only state. Firmware must make this state accessib=
-le to
-> > +            supervisor software before reporting this extension.
-> > +
->=20
+> 
+> commit d53eae4793d2d86b3e41fd0d2b1c0495b964d938
+> Author: David Heidelberg <david@ixit.cz>
+> 
+> dt-bindings: regulator: qcom,usb-vbus-regulator: Add pmi8998 and pm660
+> 
+> This commit adds the qcom,pmi8998-vbus-reg and qcom,pm660-vbus-reg
+> compatible strings to the Qualcomm USB VBUS regulator DT binding schema.
+> 
+>> diff --git a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+>> index 024b34d0eb1a6..96f984060ce4d 100644
+>> --- a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+>> +++ b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+>> @@ -27,12 +27,17 @@ properties:
+>>         - enum:
+>>             - qcom,pm8150b-vbus-reg
+>>             - qcom,pm4125-vbus-reg
+>> +          - qcom,pmi8998-vbus-reg
+>>         - items:
+>>             - enum:
+>>                 - qcom,pm6150-vbus-reg
+>>                 - qcom,pm7250b-vbus-reg
+>>                 - qcom,pmi632-vbus-reg
+>>             - const: qcom,pm8150b-vbus-reg
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,pm660-vbus-reg
+>> +          - const: qcom,pm8998-vbus-reg
+> 
 > [Severity: Medium]
-> Should unratified, unfrozen draft specifications claim the canonical
-> smpdis and sspdis strings in riscv,isa-extensions?
->=20
-> Documentation/devicetree/bindings/riscv/extensions.yaml states that
-> standard extension properties map to their originally ratified states, and
-> Documentation/arch/riscv/patch-acceptance.rst requires RISC-V
-> specifications to be Frozen or Ratified before acceptance.  Defining
-> unversioned standard extension names for a draft without final CSR
-> allocations breaks devicetree ABI stability if the specification or CSRs
-> change before ratification.
->=20
+> Should the fallback compatible for qcom,pm660-vbus-reg be
+> qcom,pmi8998-vbus-reg instead of qcom,pm8998-vbus-reg?
+> 
+> The standalone enum above and qcom_usb_vbus_regulator_match[] in
+> drivers/regulator/qcom_usb_vbus-regulator.c both use
+> qcom,pmi8998-vbus-reg, so a PM660 node using that fallback will fail
+> dtbs_check validation against this schema.
 
-Ignore this, you;ve done the right thing by marking the series RFC.
+this one is valid, will be fixed in v3, sorry bout that.
 
---eGumaYRWr8p5wYX4
-Content-Type: application/pgp-signature; name=signature.asc
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCav3mfgAKCRB4tDGHoIJi
-0sA3AP4+euvhz3AKWQd3Hnr1swUc5gAjV8/GPc3ZTGXpRHo13gEA4wcKF/akdglg
-nxbWPJmVUrF8Zj63Rnhg8b134RMyMAk=
-=KuZu
------END PGP SIGNATURE-----
-
---eGumaYRWr8p5wYX4--
