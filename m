@@ -1,96 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.3
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795019067;
-	b=W3/p4QrnFqptAwlEu0KienzdLO1lGzUssOelO3kF95QjEMzCzO9jSclwEybnS8Z6oROt
-	 ChUIU/xOpxt9PJJ7T4NpCYkxIka7JA+s+wUSepNAJMyDyNIx7Y/qpa13bUjb99PfBQGrx
-	 NenydrKP0Qu4961muM2m8dIB0jHDT1Al1o0CpuDFnrisxWHU2dLB69ACpdrG6loeLzEPs
-	 Y7gFV2qAjMJO4/nvOwcZETs8ts7bLtotQQQp1cNEP0hTsUfi6MyH2prN+222VgaREl4K3
-	 JDp3bLIVAjXDYxPAx4Y8kky6+aTiy1kZzZySzsr934GZbUXG6eTD1mfFouARwZAmr4A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019067;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=K5+PUQVXvibepomb75g2zHyM919jvYRnt95kyCGZGE4=;
-	b=SCtls+RIEmBPzKD1W+H/znwlK2i5HZp5iW30qzHGzuG/S57e2zhz837LJZc8gzmoIeJN
-	 Ak55YD6bH96Vabl1uyvfGuJQq77LpSSQGhA2aWOeVBHSRyA+3Z031zopqasyjEhvmEKM9
-	 Sb+bKusnXbPKAIyGfyR8LrWNvc6hnUF1TmwsGVu/LR52ZRn//2yqj7e14jVvlC8Vn7mCp
-	 ozOCSeYxPiVCZOZulmZ3jQcrcbP4Z7VCyPCDE+NNfvKWPjn2E/YAO10DovwR0j+1yUqVN
-	 FwLOJ6rTpkuvaErrSb8E9G9NfPGjiM1D7Cv0/EJUdsxhOBm2clvrE5KgeVMaA4civMw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=xP5N1JJ8;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.3
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013003.outbound.protection.outlook.com [52.101.72.3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BC560A381E;
-	Wed, 18 Nov 2026 16:24:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5BC560A381E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795019941;
+	b=uKwDBJcrdmxS3H5ppB+G2DMgjsJzQxAUPZrIhoosIn2FIyR3LlPeteEkjeThbVFHWBkX
+	 KahfEjY+u84xEuwdEm2MqzqY/llVKF81uX2wb+AnTtizYAlcn/DUZiP41uKtuTQ6PAPM4
+	 6oqOazl7NbP5fU/exxZFkqHORFAKmA+TzZdbIT+KQeOH8iCLOVhmbU+vOp8iQlr5D+jHO
+	 8jrn4ABkQLmItRQLUphFSr2B14RW8AkU5bbJ4aBo+tSWGUyqW8nLMjDGJYGZCQR9uT+TQ
+	 ulU037xJ/Xd0KJgDs6o3dN+TyHeiON9kb5XNaJNRYRysTVA4oYLsq5WZhEIEWSfdkvQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019941;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=xhshAXx/HJIV9Fr5BiwP97X+f/Jy0ofjge9BLQM7/vQ=;
+	b=MCW9eXptpbklHRFKDUsmbK3reG/G+BGfigxAuKetem20AFOpYLBVIsy62zw5+Kp/ax/y
+	 dxFOsqFS6YiOzfBOnRAswT/TXjK7TJIw3+4uesL4bJLOWZmFEt+jPUmT4Rd1gl9InW95V
+	 DQoiyFetteyYyyGOryu7ZS+htJDIQJ3nFERIK+BNb9w8meM4LkakknpBhHmkSYYmTwcmR
+	 380GIP5UXDD4VpD96uklqZVCwyre5q+60msro0RcgSFjNkcbIQ+xarmOy6qUH8GrHcdzo
+	 WVOTuKIsfHGbOPFi0nYWYYb04OT8Mtq9+xDHRDW9IoHH2K1i1Im1ulitQbbv/9r/Y+A==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=O7IFJYlr;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94AB8606A330;
+	Wed, 18 Nov 2026 16:39:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 94AB8606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=xP5N1JJ8
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OX6+wGD4+/uw5aD2XTL4Hx87dexfP98Q4blGyKZ35PKBSHIltnBIBQutp3PeR9FJTZgs/HFiVMpu14PYqfqvAtlhvMPuk8a6OTImR119g1YxRKq6+zEK/eDssSBN82b99OFtxjsFaOTMBWUYHO2Vk1WqpbZond7sM4u8cNS1fG82vqwX7xA8lv0/UsT+3kEgr9J9ujx+scgmLPn/Xzet38AZIAYeBRnEu07LLf8tlS6kk6MVG3P5mkSCBXl35rVhklnKtD1xB0mvQOUJjZsHRwiBgiIoae6HNxtgKaGKd14QdhTWVyx97JQp0Qyp3vnoOAApJNf/U64l9rvsYeEiDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K5+PUQVXvibepomb75g2zHyM919jvYRnt95kyCGZGE4=;
- b=dICkIOuBZVXvCf/nQ0dM0CsLaf7ggspghlFT/OBa/MQm1gXIS/qtotpp1MYXz+kS+JLXkBJ+prXIdtG88FwklKTueaFHBALBWMsS9ETwR3oZhMTFChs0ivZjSqpfRFBDKGZRJ8Xtjsd5qYae6wcRh9MB3dM5/lQJkZFy6ZOhlFVT3HmpCYekq/Rf4IDhwpwnjBtU4F7I2ZIwCchlcuepg9j7fyRvhSo5CUHcHZRMyjGYUI/tJ3m1PgIRnSZ0Ml5XNpKanf0T6cXhYlwoOmbvJJYqPscqGYprZUx2sjXVMDuRmrAL9YV4iDsOAiNTpgRz4Y6B39wUIEZyZtaYRXE6aQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K5+PUQVXvibepomb75g2zHyM919jvYRnt95kyCGZGE4=;
- b=xP5N1JJ8KPfqKONKFDz2GjD+vqDJB5gTtOteiX5qBbkBiHPFV6iMMbSaofZzCMQjeYBQAwtonn7Wx5KwJj/0M6rVtvUPcbYcGeimOcKOge56N37DmK3Sc4izr1XBnUFhoTiWW7FPSbHtyOHXdCPCleBVlzzCP7gleUKQK0FdrnCWUjKLEZ8ujBgI/FObfoSUbebrOGV9cjIF0TrAm7yN3mkYRGp6SXCNLp4CACT+oWGO0gz9qCklaV9vOxO+H5JQtIZ1iTW54lNOyTBM65sZ0a6pYkn2zMuAY4zvZOIO9ADZ5LYF09PkfW8MeYTc881l79vv8xwNbkd67vU+NtA9VA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AMDPR04MB11679.eurprd04.prod.outlook.com (2603:10a6:20b:716::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 16:24:23 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 16:24:23 +0000
-Date: Wed, 18 Nov 2026 10:24:16 -0600
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev,
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	Frank.Li@kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: freescale: imx8q: Remove undocumented,
- unapproved aliases
-Message-ID: <av3RME_CJPOuUd60@SMW015318>
-References: <20261117133842.245262-3-krzysztof.kozlowski@oss.qualcomm.com>
- <20261117133842.245262-4-krzysztof.kozlowski@oss.qualcomm.com>
- <sashiko-outbox-218903@kernel.org>
- <c3082671-9d0d-4a29-9e05-17ae9d4ca997@oss.qualcomm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c3082671-9d0d-4a29-9e05-17ae9d4ca997@oss.qualcomm.com>
-X-ClientProxiedBy: PH8P221CA0050.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:346::11) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=O7IFJYlr
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EE248143D;
+	Wed, 18 Nov 2026 08:38:56 -0800 (PST)
+Received: from [10.57.62.206] (unknown [10.57.62.206])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 69D713F673;
+	Wed, 18 Nov 2026 08:38:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795019939; bh=QtGr9W/gG9i3RY3G1VDTPchQ3C8OnITHs2nsse5oX2U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=O7IFJYlrCnC46DDW0Xv+9KL4MUHkCr92xvtLOtqtDBARhHZj7x/YV6c/7jZq/HwUy
+	 aLIoXBBFAHzUyYt+yCUX0ZjuJ3FZcvYsQt6f6A/ActbJ+S0j7Xj5d9Nw4upUHZBXlq
+	 zN+4OJbRh9R0o7pp6i8zmJU3lRxU7IY3m7SpoVKE=
+Message-ID: <effce188-1d76-4764-90e0-fcb9d83862bc@arm.com>
+Date: Wed, 18 Nov 2026 16:38:56 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,77 +53,281 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AMDPR04MB11679:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8da141d7-5266-4712-b9b6-08df45906824
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|19092799006|366016|23010399003|56012099006|261022105027099003|4143699003|11063799006|10067099003|261026140227099003|261026121527099003|261028144727099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	nrPOrdYYcq8J1MHG2lqcmCkRczhMM1s4g8Q6SoYobzIoV+wZB+KsUNvwvJLqI3V1tUBg7dJH9ewlrFqCtjcL/pZYGL1zdx+P73a/ksB37R61xt0vXTFLUKT5lZahWQYGuyccLgsdzuqMdn06sYzij3gPsU6owF1CDUsa6DH9nOllkZv9Xc/6+pqWlTcN5c3lrOtEDOXOEN/Kh2XFd2QtqKJSyaHJCaWt1L3f/U64SsgbyAtYg8euOL/HGCHl2OLctUqS1ZpFAtZwq8OxGIShmo5jzilyVhRAI+meU/x6RP+E/HdA8uUfs05KnUNBcd4/hwdLsdKjBz+cSGKJShvBsS1U5uKi+DfdW93WXmOvsHrVhrSehra0aTztEMSAiJXLY1OtYisVWtG3i6x9sMpsI6IFK3Thy/K45tUR4ncgTBit8gPH61hWabjeQ5vEK2iAF/2WWlq/ghojJKP7Tqc76gL6TyhraKl9LWxdZV3lmgbMzrabd1vbaHzhpOxWinZoNLTxT81AcwlhonjlVDygFZJf3V1pqH7e7bKBLqHZqF+41CxWnxqoKlb+Bn0u70+XZDYcB9SmjZnqWbj0UOYghGFzYXmzkghGLidQau43ONJ70Wy286jFE5GtDV9Q6EtmRTMHSwxfFfrYuHqhSK4rPpyYbEmEvk14egqs/HCMBL4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(19092799006)(366016)(23010399003)(56012099006)(261022105027099003)(4143699003)(11063799006)(10067099003)(261026140227099003)(261026121527099003)(261028144727099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?uy7bcxF6w5F3Aul+GcJO0l9rE45R0WALqfSuQoNCILZBwLktfgHilDPAW9Bz?=
- =?us-ascii?Q?q2i3GLfNI49b5Tb64UiU5aInHJcJudT3kBYKCWJD9yaPszo1YDo+YsjomZGT?=
- =?us-ascii?Q?+0NenpInie5ywvvFFpF+5w7uZArzf6m/OPoRLRCnVJM+v/FjjBjXKFaaMJYJ?=
- =?us-ascii?Q?uz3yx8XYh0mqmN96ryU1F1bo+vfRgTKFOAnihHOPYrrvuXVrCJaarBcBitZx?=
- =?us-ascii?Q?QTsAA4iDweCdxUfBfGDoplg3qWZgDmJu54CY/P6xyydTv3dI9TFNFMKAw902?=
- =?us-ascii?Q?Z+givubWcIScl6C3qmte+OHKj9ub3QAnBkiv+a7dm6IQ+fbP7JcjF4AfUanU?=
- =?us-ascii?Q?4RVqUBcLlWLQD2SaqDgLx2Ehnjpy3350wzEsFyf7LiZ052aO3zVNMl1jVg7f?=
- =?us-ascii?Q?ricpEr3EGJiz5OVe3gNYwVCcG3v8cDEV9T2GktUgrYwfegXxMdnv6t0YKlGb?=
- =?us-ascii?Q?p9nU4MZ5T5L7TQee5R9uypMCVJurfbuijWtZUtvP6QvaPoNlcvP30umSEcOk?=
- =?us-ascii?Q?2KVYPQIIc8G05IPbq2clYZS39uZ/IXH9+5YAETWvmztVJJ/nZd7ow9/Ulcn5?=
- =?us-ascii?Q?JNvR6ESnAeBjqrI43Vh30YniyujbtdojW8XdZZC5Gm9c+5lOcTcCRUIDOjrI?=
- =?us-ascii?Q?E01T/DDVXsYlzivUqWCXhfN0R/B/2BZAA5CK7mCpXol+u54fXmtA653mtYNT?=
- =?us-ascii?Q?4IqtiFGNU5IrBpiedW5LK8ArVROwwqe+st4N3u1mRGsMO+WQWFewq5wdbw0E?=
- =?us-ascii?Q?AQUrKpQKvJeNyPImwQZYPEmJaw0Ezj9M4aBCf+Bk4luDWGtsbf1retFJeXoz?=
- =?us-ascii?Q?6C+vhLUsfKJRPQyysY1Tcg0ldrCJqGNGuaQ2uwmRYtimFQSbSdwVbWqA0uot?=
- =?us-ascii?Q?2Sk+Oy1uPQ0oDXFj9a2hHXBj5B90R91AKeDFJsoxhygKOz/wgibOtvy1ppvj?=
- =?us-ascii?Q?nTSUP6w8OQxz4h2cwNUw84TzZCQADSMifJ4S6BrwK2diLrnhxGTFf0YqUC6A?=
- =?us-ascii?Q?CU1iUWjBr+8Eowx4m7GMbvZ4xBzXKRLoxJVr51ixzXlet3JoUN1Opl0F/0JO?=
- =?us-ascii?Q?uKbm3Ryjkpbi3EK0j7JjfCwjDyzvEgJvRGaC8LxFySmbO4ed+A48TzFG3LoI?=
- =?us-ascii?Q?lZi1FngycQVNCHo1MOBuWsX8r1S+uZopjEwJMfx6r/DM8ze2hkSW3peNhcip?=
- =?us-ascii?Q?5oBDvb3SbGq2t/SO1mMKfI+iJaQ/aDwe47QpQkL87KMconLQsyLdbY6xqpM8?=
- =?us-ascii?Q?4EBudgg/wDUu23OezqYDPRfo+Bs0w68ok0lhlDU0dGYLNUP6Xy3h85IGNqtG?=
- =?us-ascii?Q?xlngXMkWMd1oQJ01pR6tcit7qOWZzl4311JUg4Kr2FAUnK8mMNv7h8FqFbUa?=
- =?us-ascii?Q?valKA15C/CKjFH++6S350IzmWQmqzoApmo0S54K4bogp2a4eYeK6lbQceMG3?=
- =?us-ascii?Q?6oHhkmEs4Bkvz/zKEO4sHOpv3gn7+Dkcy16XZGCyQL/KHhXdlpx8FwLKAydM?=
- =?us-ascii?Q?rnzzGDt2YYSsdLvMKxPwqBgqImeiibNtR5z/1JM29geX4IhaVDkPF9s9M9Ae?=
- =?us-ascii?Q?APpGSUul7lod12Y0wF7YQ3W/HQPaLVpBgmgjx9QDz6iIPqT/PLs2zI6AiBNo?=
- =?us-ascii?Q?CbipwaIEjl8jT3iJmmvELW3gtGa2VLcDkHiVRx14YwCUAfeSJDS9Hfu3guVA?=
- =?us-ascii?Q?vcH9/U5ELCeidPAgfh3u04VRQLg9zrNHq6kpntMDshCx4lwJFg+7z95b86jQ?=
- =?us-ascii?Q?h1pqYc5fGZqE6UFvoSXzJK27IhtElPm7ClgVaEp/t1GyZPP2VT56?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8da141d7-5266-4712-b9b6-08df45906824
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 16:24:23.7530
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JuRNB7bJLbIFHAKJYkfvDqWF/tI/nCUpWmqQfOVTuzkaIBGQfWML6vsUwCsZlDc9/i+9s4+t2T03/e70AOIEJQj2DHlx6L03FvDCHNXTRt+rtSFtJd/6+mrWZA0823NS
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMDPR04MB11679
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/11] KVM: arm64: CCA: Tear down RTTs
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev, Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261116164358.142785-1-steven.price@arm.com>
+ <20261116164358.142785-6-steven.price@arm.com>
+ <sashiko-outbox-217410@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-217410@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 18, 2026 at 01:10:30PM +0100, Krzysztof Kozlowski wrote:
-> On 17/11/2026 14:47, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
-> > - [High] arm64: dts: imx8q: removing vpu-core aliases breaks
-> >   vpu_core_probe()
->
-> That's intentional. Users should not add undocumented ABI and rely on that.
+On 16/11/2026 17:08, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential
+> issues to consider:
+> - [High] KVM: arm64: unclamped stage-2 levels in get_start_level() on
+>   64K pages
+> - [Medium] KVM: arm64: CCA: unlocked kvm_realm_is_created() check in
+>   kvm_uninit_stage2_mmu()
+> - [Low] KVM: arm64: mix of guard() and goto cleanup in
+>   kvm_destroy_realm()
+> - [Low] KVM: arm64: possible skipped parent retry in
+>   realm_tear_down_rtt_level()
+> --
+> 
+> commit 80a462fb8b46e04c72060d069b1296caf72d83ff
+> Author: Steven Price <steven.price@arm.com>
+> 
+> KVM: arm64: CCA: Tear down RTTs
+> 
+> This commit adds stage-2 unmapping and Realm Translation Table (RTT)
+> teardown for Arm CCA Realms during stage-2 MMU uninitialization and final
+> Realm destruction.
+> 
+>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>> index ac72db3d4505f..9baf2352d2a8f 100644
+>> --- a/arch/arm64/kvm/mmu.c
+>> +++ b/arch/arm64/kvm/mmu.c
+>> @@ -1145,9 +1145,25 @@ int kvm_init_stage2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu, unsigned long t
+>>  	return err;
+>>  }
+>>  
+>> +static void kvm_realm_uninit_stage2(struct kvm_s2_mmu *mmu)
+>> +{
+>> +	struct kvm *kvm = kvm_s2_mmu_to_kvm(mmu);
+>> +
+>> +	mutex_lock(&kvm->arch.config_lock);
+>> +	if (kvm_realm_state(kvm) == REALM_STATE_NEW ||
+>> +	    kvm_realm_state(kvm) == REALM_STATE_ACTIVE) {
+>> +		kvm_set_realm_state(kvm, REALM_STATE_DYING);
+>> +		WARN_ON(kvm_realm_teardown_stage2(kvm));
+>> +	}
+>> +	mutex_unlock(&kvm->arch.config_lock);
+>> +}
+>> +
+>>  void kvm_uninit_stage2_mmu(struct kvm *kvm)
+>>  {
+>> -	kvm_free_stage2_pgd(&kvm->arch.mmu);
+>> +	if (kvm_realm_is_created(kvm))
+>> +		kvm_realm_uninit_stage2(&kvm->arch.mmu);
+>> +	else
+>> +		kvm_free_stage2_pgd(&kvm->arch.mmu);
+>>  	kvm_mmu_free_memory_cache(&kvm->arch.mmu.split_page_cache);
+>>  }
+> 
+> [Severity: Medium]
+> Can kvm_uninit_stage2_mmu() race with Realm creation by checking
+> kvm_realm_is_created() outside kvm->arch.config_lock?
+> 
+> If kvm_mmu_notifier_release() -> kvm_arch_flush_shadow_all() runs before
+> or concurrently with Realm creation, kvm_uninit_stage2_mmu() takes the
+> else branch without holding config_lock, freeing mmu->pgt and clearing
+> mmu->pgd_phys while leaving realm.state at REALM_STATE_NONE.  Checking
+> kvm_vm_is_realm(kvm) here and handling all realm.state transitions inside
+> kvm_realm_uninit_stage2() under config_lock (including moving
+> REALM_STATE_NONE to REALM_STATE_DEAD and freeing the PGD) would avoid the
+> race.
 
-This is problem. vpu need know hardware instance ID to talk with firmware.
-What's prefer methods to fix this problem?
-- Add fsl,id ?
-- some old platform use "cell-index"
+I don't believe this race can occur. The MMU notifier release runs as
+the owning mm exits, while that mm will be help during ioctls (including
+realm creation).
 
-Frank
+>> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
+>> index 57f59b618a96e..74b89da4e8015 100644
+>> --- a/arch/arm64/kvm/rmi.c
+>> +++ b/arch/arm64/kvm/rmi.c
+>> @@ -16,22 +16,213 @@ u32 kvm_rmm_ipa_limit(void)
+>>  	return u64_get_bits(rmi_feat_reg(0), RMI_FEATURE_REGISTER_0_S2SZ);
+>>  }
+>>  
+>> +static int get_start_level(struct realm *realm)
+>> +{
+>> +	/*
+>> +	 * kvm_init_ipa_range() enforces a minimum of 32 IPA bits
+>> +	 * (ARM64_MIN_PARANGE_BITS).
+>> +	 */
+>> +	return 4 - stage2_pgtable_levels(realm->ia_bits);
+>> +}
+> 
+> [Severity: High]
+> Does get_start_level() return 3 instead of 2 for a 32-bit or 33-bit IPA
+> Realm on CONFIG_ARM64_64K_PAGES?
+> 
+> stage2_pgtable_levels(ipa) evaluates ARM64_HW_PGTABLE_LEVELS((ipa) - 4),
+> which is 1 for 32 or 33 IPA bits with 64K pages, whereas kvm_get_vtcr()
+> clamps the stage-2 levels to at least 2:
+> 
+> arch/arm64/kvm/hyp/pgtable.c:kvm_get_vtcr() {
+>     ...
+> 	lvls = stage2_pgtable_levels(phys_shift);
+> 	if (lvls < 2)
+> 		lvls = 2;
+>     ...
+> }
+> 
+> When get_start_level() returns 3, realm_tear_down_rtt_range() calls
+> realm_tear_down_rtt_level() with level = 4 (> KVM_PGTABLE_LAST_LEVEL),
+> triggering WARN_ON() and returning -EINVAL, which causes
+> kvm_destroy_realm() to abort and leak the Realm Descriptor, RTT granules
+> and stage-2 PGD pages.
+> 
+> [ ... ]
 
->
-> Best regards,
-> Krzysztof
+Hmm, I changed this based on Suzuki's argument[1] that ia_bits is at
+least 32 bits. But I think Sashiko might have a point.
+
+@Suzuki: Are we missing something? It certainly seems safer to just
+match the logic in kvm_get_vtcr() and explicitly clamp. So unless you
+can tell me what I'm missing then I'll change this back to:
+
+  return 4 - max(2, stage2_pgtable_levels(realm->ia_bits));
+
+[1] https://lore.kernel.org/r/e1690e53-70fb-47fe-bd06-4758b1e196d2@arm.com
+
+>> +static int realm_tear_down_rtt_level(struct realm *realm, int level,
+>> +				     unsigned long start, unsigned long end)
+>> +{
+>> +	ssize_t map_size;
+>> +	unsigned long addr, next_addr;
+>> +
+>> +	if (WARN_ON(level > KVM_PGTABLE_LAST_LEVEL))
+>> +		return -EINVAL;
+>> +
+>> +	map_size = kvm_granule_size(level - 1);
+>> +	if (WARN_ON(!IS_ALIGNED(start, map_size)))
+>> +		return -EINVAL;
+>> +
+>> +	for (addr = start; addr < end; addr = next_addr) {
+>> +		phys_addr_t rtt_granule;
+>> +		long ret;
+>> +		unsigned long align_addr = ALIGN(addr, map_size);
+>> +
+>> +		next_addr = ALIGN(addr + 1, map_size);
+>> +
+>> +		if (next_addr > end || align_addr != addr) {
+>> +			/*
+>> +			 * The target range is smaller than what this level
+>> +			 * covers, recurse deeper.
+>> +			 */
+>> +			ret = realm_tear_down_rtt_level(realm,
+>> +							level + 1,
+>> +							addr,
+>> +							min(next_addr, end));
+>> +			if (ret)
+>> +				return ret;
+>> +			continue;
+>> +		}
+>> +
+>> +		ret = realm_rtt_destroy(realm, addr, level,
+>> +					&rtt_granule, &next_addr);
+>> +		if (ret < 0)
+>> +			return ret;
+>> +
+>> +		switch (RMI_RESULT_STATUS(ret)) {
+>> +		case RMI_SUCCESS:
+>> +			free_rtt(rtt_granule);
+>> +			break;
+>> +		case RMI_ERROR_RTT:
+>> +			if (next_addr > addr) {
+>> +				/* Missing RTT, skip */
+>> +				break;
+>> +			}
+>> +			/*
+>> +			 * We tear down the RTT range for the full IPA
+>> +			 * space, after everything is unmapped. Also we
+>> +			 * descend down only if we cannot tear down a
+>> +			 * top level RTT. Thus RMM must be able to walk
+>> +			 * to the requested level. e.g., a block mapping
+>> +			 * exists at L1 or L2.
+>> +			 */
+>> +			if (WARN_ON(RMI_RESULT_DATA_LEVEL(ret) != level))
+>> +				return -EBUSY;
+> 
+> [Severity: Low]
+> This question rests on an Arm CCA RMM specification detail that could not
+> be confirmed from the kernel source: when SMC_RMI_RTT_DESTROY fails with
+> RMI_ERROR_RTT because the RTT at @level still has live child table
+> entries, can the RMM return out_top > addr (with addr < next_addr <
+> addr + map_size) if the initial entries in that RTT are non-live, or report
+> RMI_RESULT_DATA_LEVEL(ret) == level - 1?
+
+Nope. RMI_RTT_DESTROY will return with out_top == ipa if the target RTT
+is live. out_top > ipa describes a missing RTT.
+
+> If out_top advances to the first live entry inside the RTT at @level, the
+> if (next_addr > addr) check treats the RTT as missing and advances addr to
+> that unaligned next_addr; the next iteration then sees align_addr != addr,
+> destroys the remaining child RTTs at level + 1, and continues to the next
+> map_size boundary without retrying realm_rtt_destroy() on the parent RTT
+> at @level, leaving it live and causing rmi_realm_destroy() to fail.  If
+> instead the walk terminates at level - 1 with next_addr == addr,
+> WARN_ON(RMI_RESULT_DATA_LEVEL(ret) != level) fires and aborts teardown
+> with -EBUSY.
+> 
+> [ ... ]
+> 
+>>  void kvm_destroy_realm(struct kvm *kvm)
+>>  {
+>>  	struct realm *realm = &kvm->arch.realm;
+>>  	size_t pgd_size = kvm_pgtable_stage2_pgd_size(kvm->arch.mmu.vtcr);
+>>  
+>> +	/*
+>> +	 * Serialize final RMM teardown with Realm creation and stage-2 teardown,
+>> +	 * which also access Realm state under config_lock.
+>> +	 */
+>> +	guard(mutex)(&kvm->arch.config_lock);
+>> +
+>>  	if (!kvm_realm_is_created(kvm))
+>>  		goto out_free_sro;
+>>  
+>>  	kvm_set_realm_state(kvm, REALM_STATE_DYING);
+>>  
+>> +	/*
+>> +	 * REALM_DESTROY requires the realm to be non-live: all RECs must have
+>> +	 * been destroyed and the root RTTs must be empty. Unmap the IPA space
+>> +	 * and destroy any non-root RTTs before tearing down the RD. The root
+>> +	 * RTT pages are still owned by the RMM at this point, so keep the KVM
+>> +	 * pgtable alive until after REALM_DESTROY and undelegation.
+>> +	 */
+>> +	realm_unmap_stage2(kvm);
+>> +
+>>  	if (realm->rd_phys) {
+>>  		phys_addr_t rd_phys = realm->rd_phys;
+>>  
+>>  		if (WARN_ON(rmi_realm_terminate(rd_phys, realm->sro)))
+>>  			goto out_free_sro;
+>>  
+>> +		if (WARN_ON(realm_destroy_rtts(kvm)))
+>> +			goto out_free_sro;
+>> +
+>>  		if (WARN_ON(rmi_realm_destroy(rd_phys, realm->sro)))
+>>  			goto out_free_sro;
+>>  		rmi_free_delegated_page(rd_phys);
+>> @@ -44,6 +235,9 @@ void kvm_destroy_realm(struct kvm *kvm)
+>>  
+>>  	kvm_set_realm_state(kvm, REALM_STATE_DEAD);
+>>  
+>> +	/* Now that the realm is destroyed, free the entry-level RTTs. */
+>> +	kvm_free_stage2_pgd(&kvm->arch.mmu);
+>> +
+>>  out_free_sro:
+>>  	kfree(realm->sro);
+>>  	realm->sro = NULL;
+> 
+> [Severity: Low]
+> This isn't a bug, but kvm_destroy_realm() mixes guard(mutex) with goto
+> out_free_sro cleanup.  Using __free(kfree) for realm->sro (or explicit
+> mutex_lock() and mutex_unlock()) would avoid mixing scope-based cleanup
+> and goto unwinding in the same function.
+> 
+
+Yes I guess it's a little confusing mixing the two styles.
+
+Thanks,
+Steve
+
