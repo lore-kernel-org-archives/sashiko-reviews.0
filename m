@@ -1,88 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.133
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794987625;
-	b=sqZh4yHiS5A/Las6FP9vlyU0soexpdUWzOVYQEyB/8egmwfCSHArxB5eiuuGqr8uS6EE
-	 e/e+sn5vs4wIY33deAHMkfohZnhuL8CpZhVPSVRiLWTtG9O7V4++sS7opB2QB3b+7Atiy
-	 A4iBj4b2NDZ9CFuObJuJbebW67n1eAUnM3KhTjWJIW+MgWORyNZifSwc/pT1+HUUuWgLZ
-	 4HV4O1/46Bn4wWw34Wjfy4bLhtZTmPQNtH1ZusPixwRn3AyaINmRrCH1WggzteVXLVl65
-	 p8hKh6bMq7yyEj79UAc8EjffiHclvjrfWHTwStZVN0q15mfkkOHaE8VF/JRS4CGbItw==
+	t=1794987631;
+	b=ZWwfuxWCTZB7ZwulKF+1ZvRP9QUjj7j8CL1hwpNi9XvbLa28YfiZQp96/V+aIUhGqZ8I
+	 datTkIMssazEaQhPDDF9rgoZJYAvjvRj3FRllbbZ/pXjbtzFJwFD6dntMBUQ5PA5NdAMD
+	 pEHEQzBrc7fkDC9gNalpzMsvxNq8gZMzAgAzsDbkABC4kYitsuxZbCKbFRIA+Ii5NgQ4i
+	 borwpAX6TZkheMLXMeYAho24lkg98uHy+l/VkArD/0Dlv03Nj7wAqYW7I1ochSlZorgLz
+	 22VidROkVGw6FW3ZtB4b8aG7rT7HAF+xtbgHXcnW27WP3W77BF+XqP5nn87yCN+BMtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794987625;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=V+Q/b4oQQRcc2ev9VIFrb3ozJoPLTXTZ4ZqHagDQPao=;
-	b=u+Dr0nTqgJeK6focfbVbEjMHcD8ceiUeD/xDHBtMCjMphHtDC5Ms72BR4B+0luGsSVkO
-	 dIbaLmRNWWQ/szEhJrQazbHT82ofLqrlevrBjVZPHwcrDY+w9xDaQJaQiSBM8uRQGWKUP
-	 uICWxVXXkfFJyQntL5G6w5vqiAT5K1Fha2PCtthQPaxDYxCXWGl9UAeOpsmQnh5YpTMwT
-	 YEYzPhbNGKGNYBXhZt2ll44P47XV7XnuIkcdZ5vEqx6T6hACxkjrOWiviwoqKZgBFFlF6
-	 ed4mJy0mnxIQP5YkUAyfVVDEy4xeU+ZI1LzcUTevywn1XPxENtPvktcpYGwHNmNxnrA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794987631;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=+NO7BDo+P4bguxhOf8l6doBU3I12qHv10RKKucCA1O0=;
+	b=qv2H9lqivTONe28UdwPUd5eyC+Cdl8wccljyWe+QAXE20B1Wr1R76sqH/+QQcOOk0S4g
+	 n5xJeCjda1cLdxvlOCuggUABbgGbOwcjcaAogqppmlWYOoH9U4dBzIreV5qIRwHgebzNB
+	 PRGTa9f8kpmWztfL1vS0R92Gq0VThtM6OJ67EQeLWH0KU2vI5hId9FFZt4Vywj4G8WLuJ
+	 x8Cxltdmzk52O7KghUeS+b76vkW0qdSAsxZXYJ1h4PPeqL+SYqtx7Z9fKi6F2YT70CTof
+	 nb72Rx0KRDBOCd2lF77oAO3nVr3wdItoK2y1yt/4O30Bt5zeJbcanrhzQpZElFlVkdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aThAsX8w;
-	arc=none smtp.remote-ip=74.125.227.133
-Received: from mail-pj2-f5.google.com (mail-pj2-f5.google.com [74.125.227.133])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="BVsQQo/B";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335C0606A325
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 07:40:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 335C0606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920F9606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 07:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aThAsX8w
-Received: by mail-pj2-f5.google.com with SMTP id d9443c01a7336-2efd4a0bd68so2281815ad.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 23:40:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794987624; x=1795592424; darn=lists.linux.dev;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=V+Q/b4oQQRcc2ev9VIFrb3ozJoPLTXTZ4ZqHagDQPao=;
-        b=aThAsX8w1ErtdUAbeKp2JD60296VSEmpb3eCUM2KP+jhdww6NSHNM3LiRpzRHjbzfX
-         KRA/0UKCmVgalh8ygrY+IIOer81SPduI2PLwPnsYiXsYgLatwr4aFNugMJm0eieoKOrN
-         6C2IAJHmNwr6keBVp1n7jlI/IMI5Grvc11EJAJRLqOrYVfYhRM1uZCwICsjWjQB0JwWc
-         WjPzq5BfDI3q0vXmqsxtDJWoGm7+XW8Bj9sBESM5p9IXx8sSDXtnBXi2iffICsFxQiGB
-         ZXQSrMEJVL8RwhEc9Pdm+KMFH1KtFGUh2r9p4/EMs70UVih0ngEOsP/g9+V3J+QFjHcJ
-         UK7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794987624; x=1795592424;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=V+Q/b4oQQRcc2ev9VIFrb3ozJoPLTXTZ4ZqHagDQPao=;
-        b=OaBVMHfKwJBxZEshjrJGg2CfhQWZOht0nZ3AW9SRuP/r655nVES80v/yEA6cxQsn8u
-         POvQ9xKap7v6rmgdLeES063H63WrnqrxsPwZhzdX1+2VqadHRsVg3W9BJtxtFSQGKBTx
-         JVKQNf0GZlKTle483ks2dXcgkIbX2QRx6c0cJsOioV7/SsTnP/c1jYQTnOUF7GfBZn/k
-         /wbd0mLErprC2QpKlwnmYAmzosA/AS62VUvJnOCmbIoYPLjZfRYwuZoG6wH1jCy24rh9
-         HZdKdiJOZHxz3BJPVkO/x7ri/pgzNzmQVaJvW+JoF8cxLxCC9BkTkJst5h75KyxsPk77
-         7kvg==
-X-Forwarded-Encrypted: i=1; AL+hErGaqFW4I1+KLtwHIvbVVl8PSEgpB+RP2+1rntPnvMgCFRbYUEglIot0KnMACv/4m9MMrINyl8OiToRdPZoFnMg=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+wagjdjYLzoFR8ea16EAPnhfKcgynLFBHF7keZb40l9Pj/mwzB
-	Gv0wX4ksC2beJH/m2MhkpeqR+CI/iKN7evo0zymd1Z1x3H5rTuTmEEur
-X-Gm-Gg: AZFdTZdMFVLkNV14GETS2W6g/Gk38+Y7vu3Vgjli1CPYAPxr1gJl8tA0rSMqBDU1g1V
-	fQfpSu7Q+LQl19ghFgWtP3HzP8KB43uBuslIUGq27I9ox9h3VKX68CBpkPOW3iSU6kAv2CnMD2P
-	fq2OVzVyceR7rHr1CK9i3cUkXVckse2m1r5hiFFWJeaEXb6HvrnhjzXuz854OO/EBH/L/G0hxYd
-	let1tGECu3pdnipOiexvI0fV9e5SJfEQPIq5P9/mO4eyvhMChzAyeKhSPwi1GmyvdVkmEBPn9lO
-	ktO9haFo0NjR63SNcDNlsyWRryE57q9BQaNDQsbdrXnnM8yGluPzJXmApmRD9S2iH8k7De4OxXe
-	pv+3h/Pht1+5NHeWTfIhgj3rdCuQRfMTrdYMOGJQJ92VgCa7hE1BJ36Q+99gqe6AJ6uHnpjR+nK
-	OLHpTWRWdb3nQ1WAhMQgcVmydwI4XMAhpdJa1nR85SUErzGIpaH3j+yvYOjUHc7asrbEmRr1Nis
-	nb2hZp9KuFm7VxQVaLFlv4ueatHb/Ckoc04g2H97JvXAj/QzEdq77TC5Ssi6LDPxofgtawez6OY
-	zjeNLU6lCfG06OhiRYOQg4wtUhXUK0wfn8qznXwyOS+6WYaH43uKHIOMTD4v7e5s2NarejhEDYS
-	WIMpaIMfwORsTVXBK2KKRwPXteCS0DLuBnfwEd3bObygcLxIT6qxz0lbLiKDJig==
-X-Received: by 2002:a17:902:d505:b0:2ef:e044:290c with SMTP id d9443c01a7336-2eff75451bdmr16959655ad.25.1794987624447;
-        Tue, 17 Nov 2026 23:40:24 -0800 (PST)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eff6214565sm8667315ad.42.2026.11.17.23.40.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 23:40:23 -0800 (PST)
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Wed, 18 Nov 2026 03:24:28 +1100
-Subject: [PATCH v2] mm/damon/paddr: skip non-LRU folios as a whole in
- pageout
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BVsQQo/B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2A81F00926
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 07:40:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794987631;
+	bh=+NO7BDo+P4bguxhOf8l6doBU3I12qHv10RKKucCA1O0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=BVsQQo/BOpYlS5nuNpobghJdfS2nQvqJanM8P/SdMM8px83LV194QwEVyng2Rfjsf
+	 vSs2PB2CO/umYB8ekgGnyqsYFy9mERoY7pZ6tqAU8IYR0RV5WJCxcWL6RUysGb0Shq
+	 mJj0fc/JnKGTqTWihY5oQdwo36yck7J99Eumom8LBSa4O3B5DTAFjtWAZkvv5nzXys
+	 nimpCc9wzS1QHpTRUiARxy13Trb6E+GFcDjJlkN00mPU9/PbrAudsyprHfIe+o2I4q
+	 cW25PzbqNIkXmjvQEodQybim/XotsvSmA4AT/Sn8xeG13oA2SCearvXgvKB7ued+uG
+	 Je4HJPMmH/ojA==
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b87a240de3so927258a12.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 23:40:31 -0800 (PST)
+X-Gm-Message-State: APuU4Z9PxMj7NE+/XUGEvURk9k9Qelw7ztQEUvkm2nFuWHXA6JA0Lcfz
+	N76fL94Et5cjfNMJpfarI5puYpxURHaRgq4ygn5T5rCGssIZmNU0kdTv/1pDtDF6YarPbVRNgZz
+	cJ11Hxnrbc7v++mkEqCpM9k4K6TjwNf0=
+X-Received: by 2002:a05:6402:2707:b0:6b7:ce4a:7d0b with SMTP id
+ 4fb4d7f45d1cf-6b887e9855amr1039376a12.20.1794987629740; Tue, 17 Nov 2026
+ 23:40:29 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -92,68 +58,150 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261118-fix-damon-hugetlb-pageout-20261117-v2-1-547a65a3206e@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/z2N2w6CMBBEf4XssxsBRaO/QnzY0rWtkZb0IiaEf
- 7eVhMczmTmzQGBvOMC9WsDzxwTjbIb2UMGgySpGIzNDW7eXpmmu+DRflDQ6izopjm+BEyl2KeJ
- eoTPXJ3mTHXUCsmjynFf/k/6xcUjixUMs5tIQFBiFJzvoEm3+OLvdeRxHtDzDuv4Ap29dr7IAA
- AA=
-X-Change-ID: 20261117-fix-damon-hugetlb-pageout-20261117-a4e03d9d5a5b
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, sashiko-bot@kernel.org, 
- sashiko-reviews@lists.linux.dev
-X-Mailer: b4 0.16.0
+References: <20261115095503.2922598-1-chenhuacai@loongson.cn> <sashiko-outbox-216668@kernel.org>
+In-Reply-To: <sashiko-outbox-216668@kernel.org>
+From: Huacai Chen <chenhuacai@kernel.org>
+Date: Wed, 18 Nov 2026 15:40:20 +0800
+X-Gmail-Original-Message-ID: <CAAhV-H75pFts2FxZTzrJP+T+M3m3AFzF6pqc5WK_fR0=u-PCeg@mail.gmail.com>
+X-Gm-Features: AclHuK8Di8CaNXtvY2DxNQUZd0T7YfZm_H-Rw4Q8hcNhOtGVQFiP0BTeRQ8jeuU
+Message-ID: <CAAhV-H75pFts2FxZTzrJP+T+M3m3AFzF6pqc5WK_fR0=u-PCeg@mail.gmail.com>
+Subject: Re: [PATCH V2] lib/smp_processor_id: Don't warn if there is only one CPU
+To: sashiko-reviews@lists.linux.dev
+Cc: Huacai Chen <chenhuacai@loongson.cn>, Ingo Molnar <mingo@redhat.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, 
+	Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, 
+	Tiezhu Yang <yangtiezhu@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-damon_pa_pageout() uses damon_get_folio(), which rejects folios that are
-not on the LRU.  For a large non-LRU folio such as a hugetlb folio, the
-loop then looks up the same folio once per base page even though
-pageout cannot reclaim it.
+Hi, Sashiko,
 
-Use damon_get_monitor_folio() and skip any returned non-LRU folio as a
-whole by advancing to its end.  Do this before the filters, the
-accounting and the last_applied check, so that adjacent regions within
-the same non-LRU folio are not walked by base page either.
+On Mon, Nov 16, 2026 at 5:55=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] lib/smp_processor_id: check_preemption_disabled() skips
+>   checks on !CONFIG_SMP
+> - [Low] lib/smp_processor_id: missing Fixes trailer on stable bug-fix
+>   commit
+> --
+>
+> commit 62cd1e08e5d017184a1415887d93a1188fd3f001
+> Author: Huacai Chen <chenhuacai@kernel.org>
+>
+> > lib/smp_processor_id: Don't warn if there is only one CPU
+> >
+> > When CONFIG_DEBUG_PREEMPT is enabled on a Non-SMP (single-core) kernel,
+> > calls to smp_processor_id() in preemptible contexts trigger some false
+> > positive "BUG: using smp_processor_id() in preemptible" warnings, which
+> > are harmless noise because the process always executes on CPU 0 and CPU
+> > migration is impossible.
+> >
+> > Here are some of the trimmed log messages:
+> >
+> >   Call Trace:
+> >   [<9000000000d33e28>] show_stack+0xf8/0x1c0
+> >   [<9000000000d2fdac>] dump_stack_lvl+0x4c/0x78
+> >   [<9000000002456fc0>] check_preemption_disabled.isra.0+0x100/0x110
+> >   [<9000000002456ff8>] debug_smp_processor_id+0x18/0x40
+> >   [<9000000000d31118>] init_cache_level+0x18/0x90
+> >   [<9000000001adbe2c>] detect_cache_attributes+0x4c/0x640
+> >   [<9000000001adc44c>] cacheinfo_cpu_online+0x1c/0x310
+> >   [<9000000000d5ae04>] cpuhp_issue_call.constprop.0+0x94/0xd0
+> >   [<9000000000d5b278>] __cpuhp_setup_state_cpuslocked+0x208/0x320
+> >   [<9000000000d30148>] do_one_initcall+0x68/0x200
+> >   [<90000000024711b8>] kernel_init_freeable+0x1fc/0x294
+> >   [<900000000245824c>] kernel_init+0x20/0x134
+> >   [<9000000002455b54>] ret_from_kernel_thread+0x24/0x1d0
+> >   [<9000000000d31650>] ret_from_kernel_thread_asm+0xc/0x9c
+> >
+> > This warning only exists for the !CONFIG_SMP build. This is because for
+> > CONFIG_SMP cpuhp_issue_call() invokes callbacks in cpuhp_thread_fun()
+> > which is a percpu thread, but for !CONFIG_SMP build it invoke callbacks
+> > in the init process which is not a percpu thread. And there is such a
+> > skip condition in check_preemption_disabled():
+> >
+> >     if (is_percpu_thread())
+> >             goto out;
+> >
+> > Since there is only one CPU for the !CONFIG_SMP, we can simply skip the
+> > warning if (!IS_ENABLED(CONFIG_SMP)) in check_preemption_disabled(). Th=
+e
+> > effect is partially reverting 570a752b7a9bd03b50 ("lib/smp_processor_id=
+:
+> > Use is_percpu_thread() instead of nr_cpus_allowed"), because now in the
+> > UP case nr_cpus_allowed is 1 but PF_NO_SETAFFINITY is unset.
+> >
+> > Cc: stable@vger.kernel.org
+> > Reported-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+> > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+>
+> [Severity: Low]
+> Since this commit is tagged for stable and addresses the !CONFIG_SMP
+> behavior changed when is_percpu_thread() stopped unconditionally returnin=
+g
+> true on UP builds, should it include a Fixes: tag such as:
+>
+>   Fixes: cac5cefbade9 ("sched/smp: Make SMP unconditional")
+>   Fixes: 06ddd17521bf ("sched/smp: Always define is_percpu_thread() and s=
+cheduler_ipi()")
+>
+> > diff --git a/lib/smp_processor_id.c b/lib/smp_processor_id.c
+> > index 94b3f6b195388..be079b9085045 100644
+> > --- a/lib/smp_processor_id.c
+> > +++ b/lib/smp_processor_id.c
+> > @@ -22,6 +22,9 @@ unsigned int check_preemption_disabled(const char *wh=
+at1, const char *what2)
+> >       if (is_percpu_thread())
+> >               goto out;
+> >
+> > +     if (!IS_ENABLED(CONFIG_SMP))
+> > +             goto out;
+> > +
+> >       if (current->migration_disabled)
+> >               goto out;
+>
+> [Severity: Medium]
+> As reported by Peter Zijlstra on v1 [1], does returning early on
+> !IS_ENABLED(CONFIG_SMP) disable all CONFIG_DEBUG_PREEMPT checks in
+> check_preemption_disabled() on UP builds?
+As I said, the effect of this patch is partially reverting
+570a752b7a9bd03b50 ("lib/smp_processor_id:
+Use is_percpu_thread() instead of nr_cpus_allowed").
 
-In an x86-64 KVM pageout microbenchmark, traversal time dropped by
-about 99.7% for regions covering whole 2 MiB hugetlb folios. For
-4 KiB regions within hugetlb folios, traversal took about 1 ns more
-per region.
+I think 570a752b7a9bd03b50 is mostly optimising the checking of
+CONFIG_SMP, so partially reverting is acceptable?
 
-Signed-off-by: Aveline Noir <jm5905938@gmail.com>
----
-Tested in x86-64 KVM guests.  DAMON KUnit tests all passed.  Ordinary-page
-and THP controls passed the 3% non-inferiority bound in the microbenchmark.
+>
+> check_preemption_disabled() also backs __this_cpu_preempt_check(), which
+> guards non-atomic __this_cpu_*() read-modify-write operations that can
+> still race across same-CPU preemption on a preemptible UP kernel, and
+> suppresses warnings for smp_processor_id() callers that would be broken o=
+n
+> SMP.  Because !IS_ENABLED(CONFIG_SMP) is a compile-time constant, this
+> also turns the remainder of check_preemption_disabled(), including the
+> current->migration_disabled check made unconditional of CONFIG_SMP by
+> 2885daf47081 ("lib/smp_processor_id: Make migration check unconditional o=
+f
+> SMP"), into dead code on !CONFIG_SMP.
+>
+> In the reported trace, init_cache_level(unsigned int cpu) in
+> arch/loongarch/kernel/cacheinfo.c already receives cpu as an argument but
+> reads current_cpu_data via smp_processor_id() instead of cpu_data[cpu],
+> while cpuhp_issue_call() invokes the callback directly in preemptible tas=
+k
+> context on !CONFIG_SMP.
+Yes, cacheinfo.c is just an example and can be fixed in other ways,
+but that doesn't mean this patch is unnecessary.
 
-Changes in v2:
-- Drop the redundant hugetlb check and update the subject and description
-  as suggested by SJ.
----
- mm/damon/paddr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Huacai
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 5b773012a876..0a205fa8d468 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -268,7 +268,9 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
- 
- 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
- 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
--		folio = damon_get_folio(PHYS_PFN(addr));
-+		folio = damon_get_monitor_folio(PHYS_PFN(addr));
-+		if (folio && !folio_test_lru(folio))
-+			goto put_folio;
- 		if (damon_pa_invalid_damos_folio(folio, s)) {
- 			addr += PAGE_SIZE;
- 			continue;
-
----
-base-commit: 67f3b04b277373438f17300e056306adbd9edf7b
-change-id: 20261117-fix-damon-hugetlb-pageout-20261117-a4e03d9d5a5b
-
-Best regards,
---  
-Aveline Noir <jm5905938@gmail.com>
-
+>
+> [1] https://lore.kernel.org/r/20261111170600.GS1779021@noisy.programming.=
+kicks-ass.net
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115095503.29=
+22598-1-chenhuacai@loongson.cn?part=3D1
