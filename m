@@ -1,94 +1,137 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.18
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.19
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795031698;
-	b=rijFc7KigQaHTC0kdnshYwx/Dj6uGCibRbQwiBvH3/Q9x6e5g1TosY04PbQ+wZ3Nz6TO
-	 jViGAUUCQyJoQ/5c/hTLFgx4t1vIknF2F3Odnx0/sobfsCiS5OwZjIcbJ9cZBPNKGaQVK
-	 hUbmETbGKOG3/NlkY5Gb4RgMdxNL0QGb1pXSpxTvO+NFZsNYfISzqg6V/SKG7ow7lkcoS
-	 zvOJ9hvHm53Z3ysEfCAbvXZZosb7+tMfyl7dnZ/kViiyygGH7V0ZS9qtClXHomLSXvr+3
-	 nLPLvHa0q26KWyaYNIPqGbYFz7pNj4h54uCoUSZ2xSW5iUNWvhcUVt1ebVmEUghlqew==
+	t=1795032614;
+	b=hwN3LH39BH6BqlBmaHrfItqRCtuuX9Fznl/oLeX/W0JddBq1m/ka353a7vznqdE0Idpz
+	 pHDstUjd85KF2dMGsGY6qRXCB+yDWR4fR+ap6W8hz2BqszDiAsCAlGRxvSHWxqpLoqYDc
+	 YgiOQlDCu9l7sL+2c1En/0qA7Rq2JGIGEOt1Lzjz1lvSbJfEyel5dQ83Kir1iIO1nVcgb
+	 AlIvuU2fdnEnYd0M/h0NxxLTZ5SMAEfX+W9VyVrifSat7Nq8S3GxJm6yXudyhGxLJBqiH
+	 bS7LdnvDDwK2v5xebm/ORQzW2UdWvOLzeTDFlIzLeuvhtfDTDj3JZuMT/vRJygeOM8g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031698;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032614;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:
+	 Subject:To:References:From:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
 	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
 	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
 	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=JjMc+EGolz/MzgbY50j8q67RQZyzIjz8flmUPrsjD0w=;
-	b=aY8wfxtUbvak9NLCJ98ksB/ZRzpgHiLAW46tJ3oo+GHtajC3T64qyFaTgNsypo8h7SdD
-	 9u5GcHuTi885SizjbLOe7T318xjIkfGj25gUQI+D50yt89OGi6Bkjw8I5KPqVFGFUSjQh
-	 d1k842R9dTmZFAo14E8MDmxevY9hjhbrxlN8UtoxiwFkB0Oieoi0yyQWT7UxHrfI3c5Wv
-	 +Xd9pvfe6K6Zj0zUrgBOCWtVnX6iEm+G+gvitV1HEqCF7uayr4zZxEO65dxHsXBjk4WCn
-	 JQtWU+5fA5MuDZSuc8vbSE+CArE9Hg1PsTJxt9DqrwyVsZVGpgq18gn9ojMHQ/IJe0Q==
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=e+pdzDCRdQGrDRWNGtmtv07aoEGXAXZQQLko6GgZJ0c=;
+	b=RZLKruwu2GG/PDA17f4XIbxyPSmikXkh7Vywmek4dQ6xkNVBPVIBrwn4yVL/Qrf8OA0o
+	 2LyrkK/d4MBB3nj2YOR2sxUs36b0G4K1vuoAiFjs5H4hUxT5LXAbJ6zAy1f2AooKlcRVq
+	 ihC1lraqV3Yg1E82Nas4cBJVlCcJa1CU2l1c6fX7yAz185gaRfcHyqCQPfd+9/z3WUS9/
+	 V+V+zUNDwXP0eLqTTxljgcGer+GeujhgMeLe/VZafO9tXD8MhJv+3vyDavEUNNXEari1D
+	 7z9ycTTKrMuErvzN+Ei9fFR394CApHIBnqvv+N1Lcxkdcci4TzYAQrIwCfHc6JGQlKA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=mqZZzNoN;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.18
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011018.outbound.protection.outlook.com [52.101.65.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iAZ5kNNA;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=bdcDOfyf;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.19
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E76606A320
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 19:54:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 50E76606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A576606A332
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 20:10:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A576606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=mqZZzNoN
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iAZ5kNNA;
+	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=bdcDOfyf
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795032613; x=1826568613;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=8/9p4//TUR280DAqhFcvny1XbtWGR5CneNhRVr/N048=;
+  b=iAZ5kNNA8NbhUPbzaa9213L+YOed/rkwDJUSPlVKJ/RCsciwb5Vsa7aC
+   srBoau6CiYArIAKgXrZuOlpya+FyyJBFU41eYgp4dsdo6IvGbZJrkhvt/
+   8y441AYC00v+rw9s4ly0OkLqKy8SV4qovga/MEu/yHZNRIb4t3iTnfjQ6
+   Q3DVGxtuPbR0PQ7ub5W2JD5mWW7YccAKMaBXsDFQwJRkf1FBtBlMkq2ft
+   qvWDACPSklqDhHbU1TRSaLHTC+vGb6YmaJEjdfS5j78nLK6eo+ru1v2L4
+   mpWQQ7CROWrKZIQVsMGHFqr9cdH39VMFMgqKkhh1LqxsugehLnWYbqnVb
+   g==;
+X-CSE-ConnectionGUID: WHMsOVG0QLq2/wI6tnQpBw==
+X-CSE-MsgGUID: 68CY2ErYQXqyctinDKR0/g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11970"; a="3907419"
+X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
+   d="scan'208";a="3907419"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:10:12 -0800
+X-CSE-ConnectionGUID: wSfHJBYPQDCZAUdE+AqdZQ==
+X-CSE-MsgGUID: d9eLgcJ0Syuiy45rxM4EZA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
+   d="scan'208";a="10321653"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:10:13 -0800
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Wed, 18 Nov 2026 12:10:12 -0800
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Wed, 18 Nov 2026 12:10:12 -0800
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.24) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Wed, 18 Nov 2026 12:10:12 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fUjEP9HbLBKFTDBkAIuiV8CMKU78P4tSn26wNGPokaSUqLVDiZjdvdpPCy9r5uEUjSOmFhScMbd2pyLm/0bi18yMpBTQmcQjzeC+i0vu0u1P6nZeg3i78ykMj2aqAxmCFNOcAiEjwNlJUc2EiA1qtQhaAtu6VO3JpQ+yw/tyno+EhDnf43Z13F5xRTPSux8plfd7syHhVLvCkg4gezem0mbe3/2y4W0G5V1OtJNrH4DLSyKgc1J4iCAmPov24DRRS8bWAZVKVvtpXsPWFZR2XpZjUcunSYz2vrhtVn41zz4US6UY/WtFCLuqGJZu4UFo1OR9JbsmvPf4fXghn3NDOA==
+ b=rfhCTYMKOqLAOO68B7/+ZgouxBfCDCguXbkEpl9j8dwAeVPkaOMjRSyaQbZ60SBQWumIfwbQhW4h6Y87ITzXZ0L1FqLYS8gDQPVeh4ANK2ZL/63tZfrklHze9e+wisf7276LdSGbx+6zhuyxklp/h5ygO2kJnkXVZGUdcEsz/+JXTsXDH1H01/Y5hrjT5W4cTpgdY8yTbozj2C6uFrI1JdQZDgMn2OZVC8sA7G4W1/SXKpDvho/cLJg66+7Hw0DM4s717zqkMsTAioGh2BlUZh7FQcZ5d6Q4DThsNcO0OY5VxeLyji2CbtRWPiPwtmFYGZXUnERnqvkyIX+0/Bk/6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JjMc+EGolz/MzgbY50j8q67RQZyzIjz8flmUPrsjD0w=;
- b=LDsqGsbVt3mmjWJyrtS7Jq7BmKD6ezW/3Xf/uYIDUHqxY3E5fxfMdmeTjdmg7ARzRtw7hl/N2C2VHJDm/QH6VAWiS+KOQjSwp/SuOnJtS/0B8eYDAMlutAus+EZ9paDT8xsLUbjz8Hmwr2uASAR8UwXvsUZwNbpgGlcpt9aUTmYaUh0M8vLwLIuqJ2PMcAhvL9odkCQmUevN98Zl5BS4CVBqyoPUQoibdzqRGPXzB52CsLPqttN698ZsLbv9fEanXTgjiRWE448oxgeD2GUf6IUOuYvi0CQ1nayoFLj/IKxonywETZCr2aEOa7Lw88MdoWkwtYoJ3G+bpSdJcfWVvw==
+ bh=e+pdzDCRdQGrDRWNGtmtv07aoEGXAXZQQLko6GgZJ0c=;
+ b=DesKAAhoe292s94Ha3uLmAXyVZzBrxfoAyu2BEpaxJ2upr+hygG0cbxmw7PEnuPi/d7vZ9kNtQR9EUuVeH4DoQXcO2AjJrNtOI7aeRHgJ+A38yVqi6o7vfN43+ivDRyMwsgIwiYuDqf66AXUfo32aI/Yrf7Twa7XdBmuKy1dsBNASlXUMF60H1SY2Q0rstv2uZ6ZmnTGtuMAWewwkE1wOX30KI2zQhxz8316JBHmynicXVV79b36OxRH6J/EWRYrg30T9c4G/M7zNbYxfkXZ0yiZrjNI7Ea2zLfaKg/GrJHdu3KewdzhtbQ56S8E7y+y1pC+nnJ7tNIibUq09DHPSA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JjMc+EGolz/MzgbY50j8q67RQZyzIjz8flmUPrsjD0w=;
- b=mqZZzNoN+v6sKcHlNeHkvzJGYM+ywrByQybLrXST9R25AWsSU7TwTFMTRpwVJobwY4XtYayRlX4GWfVN92IE8c7k9BA0RHjX5GlmehxtMXEuo3z+OCI1EpiJx2wDgoSovpaHUsyQaN82hjSLf7+K4N9fe7vk+xyda2PUegDlLa/DTgVhP84uKCPZ1veaR1yXQgPtaLebLrEMNJT9K/LTYjtxNqwsHHroUm7/1X5nBmnuAMNRKeV6o7r4PXe4InCtVC3EXtysS1SsQ5j/k89PKpuFirr0e6TJ8ePDGgv3ff5fT5xoowGUZR5EZJXzUauqY02Ko1aFcSUQm6FE7a5J7A==
+ bh=e+pdzDCRdQGrDRWNGtmtv07aoEGXAXZQQLko6GgZJ0c=;
+ b=bdcDOfyfyPIFlueh5pFF12HaaZVteVxu+rtY8BGxkJG4Q5ZirisCU8l4f01tJnt+pjbn4Argf7k5Ez4FPe2qAvIXFgQjZmtdUosiEUccJUGtODEqQOmGlrv7QQ1V8cFdoDdLuWNYVwhYGp8cn8vTdCQk5kpkLXjCtNt6H02uat4=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AS8PR04MB7893.eurprd04.prod.outlook.com (2603:10a6:20b:2ab::6) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB8451.namprd11.prod.outlook.com (2603:10b6:a03:56e::20)
+ by BN9PR11MB5289.namprd11.prod.outlook.com (2603:10b6:408:136::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 19:54:42 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 19:54:42 +0000
-Date: Wed, 18 Nov 2026 13:54:34 -0600
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Nickolay Goppen <setotau@mainlining.org>
-Cc: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org,
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Report the residue of packet
-Message-ID: <av4CehTB2v1Bqp6K@SMW015318>
-References: <20261115-qcom-bam-dma-metadata-v1-1-52e4de54ffd3@mainlining.org>
- <sashiko-outbox-215642@kernel.org>
- <7ac6f154-952c-412d-8ae3-b4e07a334ee1@mainlining.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7ac6f154-952c-412d-8ae3-b4e07a334ee1@mainlining.org>
-X-ClientProxiedBy: PH7P222CA0001.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:33a::14) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+ 2026 20:10:10 +0000
+Received: from SJ2PR11MB8451.namprd11.prod.outlook.com
+ ([fe80::7d5f:b2ba:92d4:5f3c]) by SJ2PR11MB8451.namprd11.prod.outlook.com
+ ([fe80::7d5f:b2ba:92d4:5f3c%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
+ 20:10:10 +0000
+Message-ID: <80f7a5e6-03de-4ad4-9bbb-8b8460951485@intel.com>
+Date: Wed, 18 Nov 2026 12:10:07 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH iwl-next v3 3/4] ice: store cached PHC time in ice_adapter
+To: <sashiko-reviews@lists.linux.dev>, Intel Wired LAN
+	<intel-wired-lan@lists.osuosl.org>
+References: <20261117-jk-e825-e830-timecounter-v3-0-87ea4c86a249@intel.com>
+ <20261117-jk-e825-e830-timecounter-v3-3-87ea4c86a249@intel.com>
+ <sashiko-outbox-219870@kernel.org>
+From: Jacob Keller <jacob.e.keller@intel.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-219870@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0076.namprd03.prod.outlook.com
+ (2603:10b6:303:b6::21) To SJ2PR11MB8451.namprd11.prod.outlook.com
+ (2603:10b6:a03:56e::20)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,231 +142,166 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AS8PR04MB7893:EE_
-X-MS-Office365-Filtering-Correlation-Id: d260f411-e524-4de2-ba4f-08df45adc973
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB8451:EE_|BN9PR11MB5289:EE_
+X-MS-Office365-Filtering-Correlation-Id: bc8d1d51-f2d4-427c-391a-08df45aff249
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|19092799006|376014|261021135927099003|261022075727099003|10067099003|11063799006|56012099006|4143699003|261026140227099003|261028144727099003|261021121427099003|261022105027099003|261026121527099003|261102123227099003|261009223027099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	OuD4gMhXAhYBHfs5jGRgehD4K712ZyXVPdJfqw0UN793ft3eH9ayV2yrLBGg1LFvZZqPd2bYtNjngOUFvPjTVN+n1QGON9RVYTpzNfz73+UuBrfAcemko1UVWE/Rs+cJUxyd/YgCHQ+0UgNMpSng2+7TqkFpZntPv5Ymh1b4m40obuzBCT0Xrgu6+81oL8mKJm6ntOKpQEZdNoTkPJg7dG6DwssIXdxcVzmrz7SfES62q/IV3TGD/e4vbJzczuNDCO0REdkrcRqqCkz9dlv/Iobv1flauOblPQbB4lB6h+B4UQ/f+JQTLuPgpLQm3U4VFpbqEHl9Q4GWrm4T/iYEQDwO5hLv3vj5yNiNMnlFzJ0usaR18S5ciCYSj1pC13ywn+rK/hw2Pircb9clxKTZ+H+SL92McQVq9uf4dG5spoxm4A5WPSAahTcDARjHh7UEqbrHZGcUdiXIPBOkeR7YIXPZp8/WcXp/I4NI5GPIMlfSZJvHTz7HQWofXl1UEYQuwBXjHBN4d6LpcqD6Jcr/Z79Hj3fr1TZ/BzpYR4BnAHw8ZpWtncmMtBmkhpqOL03vjeSiqyiGT5UA3NW5mfU85SlnEC7LSPByVN1n05g95OM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(19092799006)(376014)(261021135927099003)(261022075727099003)(10067099003)(11063799006)(56012099006)(4143699003)(261026140227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261026121527099003)(261102123227099003)(261009223027099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|10067099003|4143699003|11063799006|56012099006|261021135927099003|261021123027099003|261022075727099003|261026121527099003|261026140227099003|261022105027099003|261028144727099003|261009223027099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: oV2KLXm0wOeVlcfA7Jx57v3l+BBNGy+g4N2Blq1yf9iE0/bnN7ORwO1KpisjshxTLINY2KX3rVa+o6piFBk0qlAyeaJvE97VSvZUcF/T/ZQG8KKmZ/jFn/yVnuu2AAj9TdX/ddf0sXuHdEeHBmM+YR8rvgX0z++k0xI5fET/wmIERspQvDL4CuX2Vrv4uSAelQDYPfIU58OpaQexAm0H1KzBwT64FFblytGAW1OFMhjjyk1uuAdRUA7WvAlsNimu3dgv9PSLHciqvjE4af+MaXZxGhz6VZYtjD7OBBTwfsPRhwxjzDNsssDKfp7kbU0srUWbmwi1mtp4OuIoQ+fyxbmMuCtBEDRZxAIs4iq65ntLNfhiyoYTWOUb+0CXaQMriBxg+OlmvUoISplXGJALLB14YtV/FzMau2X2WKQcdsQUL2jpaBqaJ6Ei5nKW2NLzjN8fAUVTdw4r0Eh/+K7LecdC3E4WM37MQPJryw6Lo/dsbvXXChjcV0/fBsiO0mVqSkZtWIhvBj9LkfSzq7Otlf+Pe6G254/6UtWjhAUBd5UepA9BYXQV2NqeFZr4p4rsbu4i0byuKx5cvCwMHOplY4Ja0v2J803w7+TkrnS8P14+5vF0/Ua+QZdeb9gcHxkunNTc9jYw1reP2bytL9L+ZIR4JQ63I8+tx524DX6wl7Y=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8451.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(10067099003)(4143699003)(11063799006)(56012099006)(261021135927099003)(261021123027099003)(261022075727099003)(261026121527099003)(261026140227099003)(261022105027099003)(261028144727099003)(261009223027099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UEZ3d3BDbmV5SUVEMjdtRENUbXAxb0gyUExSL05SeUFwNlQ1K3JlenQzSEtu?=
- =?utf-8?B?SEZKSjltZitTYmlCcFhaOHJhOHcrN2FqdHlSUjArbkRIZ0N4SWhTSUk0MWhL?=
- =?utf-8?B?eTdHVDRrcno0ZDJBTEpOUnY5VHkybnI1QTBhWjZxbUdpR3hrM0wvMHJlaDRr?=
- =?utf-8?B?L3g4R1RmN0J1SXRsTnJqZkVaVVUrcFpKWDF5aEI1Rzcvd0xiWmVZQkFsdkpv?=
- =?utf-8?B?ZDBKU0ZTYVE1TDZ5YzFpYUltOUxQUGd1OEJLUGNXQ3BkampwbytwOXg3TU42?=
- =?utf-8?B?enZQeUNJM2YyZkE2SnZMZU45YUFJbTE0NFZMVUlHaE9vODlEejhCVU4rQldl?=
- =?utf-8?B?SnhHOVBMRE5oNXZqeG9tb1BRSUM0Ym9WYS9tMUZONytDaGdSMVQ3VVFiMXgv?=
- =?utf-8?B?MU1sb0xRUU1yNVRkdEhkVXdPbnk3cGJQblF4TG9tTzJSNWVrTEFoQlFlaUN6?=
- =?utf-8?B?ZldGVXdFYmdCUE1yWTV5YUl3NXRKV0Vxem5Bc3lsUTVkS3FzOTd4aktUdDY4?=
- =?utf-8?B?QzZnWVNhRDlNZ2NEYTF3SDNLNEc1bnNrM3pLNG5NYmVKMG1Qd3c1MitwaHpn?=
- =?utf-8?B?QkVYVmdON3FwVXFMbUNQVDRxWExHcmNoNGFCcFp6WVY1UTlPZ3ZKNitSckVG?=
- =?utf-8?B?YkF5U0cvMjNoWGZYZVhMQ1VQVVVTUXFLMkszaFRWVmFaVEVjTmZEdVVrbC8y?=
- =?utf-8?B?aVlWRFFpVkRhZmp6Vm9rSVU3K0Z0blpublpVSGJEdzBHUDl0d2I4OW1FOGlh?=
- =?utf-8?B?U0xFU1BjSEVLalhLRjNXY2xqVmV5VWxlbXVQVEtQT3YzcDYrNnJIZmpVeExQ?=
- =?utf-8?B?NEZiSXhiSkVJNmNMUldUblFSeituWkpKNkdDWCtHQ2pUMVpwcEdzTWJrOFpQ?=
- =?utf-8?B?OWh3S3EyR2J4WnBob2NFOGNVTG14UGc0bUw1S2puaVM5VTRuYmFnaUVlQVdz?=
- =?utf-8?B?MStVc2d3bnNpcTRhNFhOaXd0cnF2QzFydTU2T3ZvTDY4aVFxYU5CSWJrdlkv?=
- =?utf-8?B?eEtVT2pzVXd6b2k4REpMazl6dHVJd3JRaUFmMWNFRytUVHpleXdybW5jY1hN?=
- =?utf-8?B?Y3IxRkc4OFZoU2loemRuWU44cWMyNStxLzFFVXJySkl4WHhYSFgwREltWjVn?=
- =?utf-8?B?K3NrUDA1VWh0aWEweHBGbVFJTmxrcVIzSjNLMU50OHZBY2VUVm0vVGZtOVpE?=
- =?utf-8?B?RU1uUXptQjVCWENlWjVHMW0zZWhWUHNYR3FyVFhndVVjNFJHMFhUYTl3VXJp?=
- =?utf-8?B?L0pyVFNBbzlKNzRuaGh5cTdqYUhydHliZ3JZWi9XQzJBOFRycG9aV3FySHJ3?=
- =?utf-8?B?d2NYMUk3ZndSRWVmdmpjNnEwcTlYeDJjUWM3Z0c4TnUzcHJoMFQyTjVScElW?=
- =?utf-8?B?bmZOWnBzUmp0SjVmYkFFK3NWVWdLMHF5MFhuTW5Mditsc21zOGtWcFVyM3l3?=
- =?utf-8?B?MlBLVnpuZ3ZrdzRzTVJPaGRyYmZwOU10SkRaMTZQRW1XZzRwNWM1ZGpNR3po?=
- =?utf-8?B?Nnd2SmxvM0QyQmRRWGlGa0FXZnNUSHBxRTZSRTdacm9haWFRdkxBRDgrUHhR?=
- =?utf-8?B?MGE4Q3g2WXVqZTF6VjZoWmVpa0kwc0RxVVlzQXg4OStKSSt6bkdzREhFdWpX?=
- =?utf-8?B?SGZFemwxM1JNRVg2S2F0VUVDMkJmVm5ZbXNuNVIySERxNXpIMTV3VkxzR2Jw?=
- =?utf-8?B?SnpRQXNKamQvQm9yNW9iZGVrMVdFQVhqSWNWamJuMDNTZTB6Ulo3Yi9iMGVP?=
- =?utf-8?B?c0dSY1VPYTB0bkdqeVphOEM2Um0wTjZ1OWZtcUtmQVhza29uVENQaW9lWjV6?=
- =?utf-8?B?WHZjYm5PWkJnYkpvUEtxTXpqVWc3S3pCTWVYZEszVStDTVdVeUdWZlMwRW1I?=
- =?utf-8?B?SjdMVnFzcGlDemZHZHFqLzhZL1loV0hSMFJ3YkNLNWpSWjc3TTBNSUxGVUZB?=
- =?utf-8?B?WUpmNUZHeUM3ZlZ3WFpMR2RWaGQzYlJ2QVJCSDZQUWMycFRieVlUemlGaW5P?=
- =?utf-8?B?Sm5CUjVjVS9oeGNvTFk0ZE1OTTkydjVZUkxwWlZ0SlZLdjN4NURiV1B3dkNV?=
- =?utf-8?B?Rkw0Z0VCNzdIN2FCZEVzUXZiQnNSSEpSNlZNSi9aQ2hmM3dFdW1oT3Fic1hF?=
- =?utf-8?B?TU5sU0wyNjVQcTNxNkFWeXJPRVlmUGVTUnRtMEs3OHlhaTYvT3hUUUoxbXhq?=
- =?utf-8?B?bm00ZkQ5NHE0RXVPOHVGK2ZnSDlaZWZaMVkyLzg2bU5DekJyR01pZXQwM0dV?=
- =?utf-8?B?Z0tlY2NSbk9lNHVvWXMzZ2tZVUI4dzQyUy9TVjcrUURxc1d5aXo4QWllR1Fi?=
- =?utf-8?B?S2xKcUhaL0dBSUZnVXJPc0NEV0hUcTdGNXQ2ZnVzczVRbFRjNERWSWVFRjM2?=
- =?utf-8?Q?3KafPb3VZ1nfxu1P+WUPbbsfuq4WPm1H2cSQ1?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d260f411-e524-4de2-ba4f-08df45adc973
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UjdZQVJpVG1zZHkreGt3cEVwL3VHRUpLdnpET3ZwRndEL3BxWWZ3d05udDA0?=
+ =?utf-8?B?UncwUHQ2V0RoOXA3YXBqTVIwdjhsMmFrNFhlQ0VqMVFScXZZMkgvZFJzSHBv?=
+ =?utf-8?B?YWJkdk9TMWdma2p3TUlSdnZDZVlLcHhQNFA3MnUyYmh5OGV3cmZrcG1hUmFK?=
+ =?utf-8?B?alM1V010OUpVcnRscmhxMDRUN1hNU3F3Zk5qNmc3cVVuNzNvaFlVbnFVeWk3?=
+ =?utf-8?B?QVBMcEc3Q2UxYi9zTWFsZTBKWlFCYy9FU0dwRXVJTmp1WVpxQWdXNlFRc3dY?=
+ =?utf-8?B?bFM3RkwzcWtlOERWSkJleW42SFNzQ1FUTzg4NStHaitZTm9ReG1ZYVkvM0JE?=
+ =?utf-8?B?WDN5U3J5YTA0YkFUWjAxVnJabnpCemtOMFFoSTBYdFBCaHFVYVlDdHhFT0JW?=
+ =?utf-8?B?b3FiWXAwVFFaTlpQTWxnK05jcVlLb0RSU25PM1FNUUQ3aHJXdGFRaTJnbk1i?=
+ =?utf-8?B?RkkrYlJUS2pzWHN0WUhSMkZJbEt4M0xpTW1zRkU5aW50K0hwTTZOY3ZoT3ZG?=
+ =?utf-8?B?aG1GSyt6MTBHZitlTythT2V5TWsraGk2ZlJEVFlDR0VuUEJ3OVFpTEVmSlVM?=
+ =?utf-8?B?dm5XQzh5NFRydHI4TmlwS0dQZ1RjWFRJRE9sWFd5elplM0JublIxaFhmN1U3?=
+ =?utf-8?B?T3BPOWQ3YzB3Snp4aWVuRFpaWG81Tnk5WXFKYkZkL1ZHUmtpQ0YyQU11YXBv?=
+ =?utf-8?B?dHJJVEI0dDNhT2RHUG9kVVBGeHVvZDdaWDRhOGhTWkNENU1iekZObVA1Sy9V?=
+ =?utf-8?B?WTFGeDhjZHhMbVVIaEhqalpoWTFaVms4b1U1MjVHUURTdDliU2ltTnQ4N3Q0?=
+ =?utf-8?B?ZEZRc2RxdzdHS2RsbnI5OFF3dmVOVDBTVEVPN2kwYkYweDdJWi9sNWFNYzNB?=
+ =?utf-8?B?OHp1RUllSGtyWW43bEpnL1pBN1VQVlM0Nml2V1dqQ3hsSEswSGQ4Z3JoaEMx?=
+ =?utf-8?B?M2hULzNnYXg3VGVJYll0LytPRDk2cnlob05aWHdzOFk4bHFKS0ROdjNzN2Z6?=
+ =?utf-8?B?SUx3V0NLaWErS25PTEtFeE5qUWpLbFErZUM2ZFF3N21Rc1BpQ0ZWMWttZTNQ?=
+ =?utf-8?B?SVg1NHJvcVVEUFhWL3lGRU5zOXlJZkdqL1A4SnM4R21Gd2hQcW9CU1JHUFBM?=
+ =?utf-8?B?R1lnWFdYa0tTVWpXd2VaZmJXYjN4VThEQUVnWk50alhNNW1XNjA4MWZFMXFS?=
+ =?utf-8?B?djIzUGZkUk9mUmcvRHhtUnZzZWRHczRVRElVVEVhT3dKeDJjN2tRbFhYZDBx?=
+ =?utf-8?B?dGlybU56OEkvanNzbXVySEtFaG0zNWJkOUsvd0VEUUtZYkZRTTNnKzd1L3BN?=
+ =?utf-8?B?UHFTT3ZBL1h2S0hnTmZkRDhhTjcwbEt3Q1JmSTdoWDZhNEU5eHVCNjBjVVd2?=
+ =?utf-8?B?UkdBUUtYbkZPbXRLQWZXOGlkZmhaWGhjNVU2TXoxLzlBb1dNZjEvWVhzZmFL?=
+ =?utf-8?B?bkJBa3psT001MmJISWtYckpjZzR6T1UyZ2JpL25EL3ZOK0FCV3ZZaDh6QmlO?=
+ =?utf-8?B?OVFpOEdIUnk2a2NxejVTV0pzTDRiNFY0UUsvYktLTk1wbWhPV0ROSEwxNU1C?=
+ =?utf-8?B?TjgvMHFZRzU3ZmRBUTB0eTJ5NG82U3MwQUVoQTI1RXUzSDMrL2pJSmd1Vm9R?=
+ =?utf-8?B?QWVnWHc1SHlCS3FNbHp0SU16RHJNNDZZYUc3OEVXT1ZNZldheHNhQXpzY2lP?=
+ =?utf-8?B?M3B4b2k3Y01OOU5TWXQ2OGJzY2FhTWc2T05JOVJPZVZ3NzFPaDJDSFRYbVRh?=
+ =?utf-8?B?bjgrQldyQklLSkFKMWFkYmJjTjlBc2pnRS9zMFArK1AvdzM2dGJqUlJGSGRj?=
+ =?utf-8?B?Q3I3b3JZRkFGYnJHMmRaTHRiWEtCcFZOSzJTNkZmU01yQVdqK3B3b2JrblVY?=
+ =?utf-8?B?WndMNzhYZmZ2Vnhod1J0OTJBVEJlYzJyclp1WWRwY3pTVDlDeFNtSlZjeVNP?=
+ =?utf-8?B?TUJtaUR5b0lhOWpEeVhLQmNnck1GRHFzR28yZEwzZlVBeEZGZGM4emhkZ0Yw?=
+ =?utf-8?B?b0toTERWcWVzeHJZUGMvS29wNG5VeExVZXF3eE03WGZIajVYMmZEMFpNQzNa?=
+ =?utf-8?B?dDRaOTRRVGhTbks1RU5MVTBBbVZZNmd3Q0dVMERBd3lBdDg0R21TakszVW5M?=
+ =?utf-8?B?YVZrYms4ZFNweTFOKytXd0R2TzBxd0F3Z0IvSTBqdG1jbW80WGtCZExWUUFv?=
+ =?utf-8?B?b2lESlh0eDBlenZ4dWsweVk2Z09ncUYrZHVGTDdCdDZtU1RETU5rdk40eWJH?=
+ =?utf-8?B?TWRINmJvMDE3Rml2WHZlWFVHNUF3c0Jod2ZPMGxsdXNhTzZCYmpNNDFjbjZq?=
+ =?utf-8?B?V3lXeHQwYkw1Y3VsOUZELytsL05TdjdDOWhGR3ZmTkJvVG5zdm5WR0hJa2lM?=
+ =?utf-8?Q?Gz5EYi+umgWDn088=3D?=
+X-Exchange-RoutingPolicyChecked: r4o64xTqKru1vclRupJV6ftfeRYOcxq1I7xsq/4Tfq7s14rxC5WWLY6Ymfg+7Ru7scSzF1wdU2LW6cLqOjmewn5kjN4FhdtJ3+HCJbWBuuYdaL79P590hNMCboW4nJakOeJpQXWrO6k6tmRvsmzLAaYIK7wYNbYNovrgM91pH414IZUby83lkTsx2NHP1u/DybSzRvggLwzZkv+skmM5lFsAxwseGoCJ8Ck7wYE8P1jx+UAQ9PCjEcyV5EHyCzsvG8GuKODxpLIyYY4srqgTUTrkCOmVkhilcABYSQrguAHNW0QeGaoP5tOZOGiVnKOxdDo6xoo+HXcaV5gRGPvZZw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: bc8d1d51-f2d4-427c-391a-08df45aff249
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8451.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 19:54:42.3424
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 20:10:09.8644
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eo1qxLcsjtioG7Xp80ZcFUeZNbbs6/znEgNXn9K4l05/MzAUJSK0ZddCBxtmhY615gIDI28gSeoe+DmkPvKQN3Yzg9+panZwZIefnOc8ZWYnG1vFuCBSbFaN2D/2pG3v
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7893
+X-MS-Exchange-CrossTenant-UserPrincipalName: WcwUbLtkdF4laYhO558AQyoosB10clcNQd5JTAggNt1aareY2e97op++//R4QOSfwWvob5xFA4necm6vEt0q4GWS2aMT5283KydjdI4ZhKA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5289
+X-OriginatorOrg: intel.com
 
-On Sun, Nov 15, 2026 at 07:14:34PM +0300, Nickolay Goppen wrote:
-> [Вы нечасто получаете письма от setotau@mainlining.org. Узнайте, почему это важно, по адресу https://aka.ms/LearnAboutSenderIdentification ]
->
-> 15.11.2026 19:08, sashiko-bot@kernel.org пишет:
-> > Thank you for your contribution! Sashiko AI review found 3 potential
-> > issues to consider:
-> > - [High] dmaengine: qcom: bam_dma: missing opening brace in
-> >    bam_fifo_xfer_len()
-> > - [High] dmaengine: qcom: bam_dma: undeclared metadata_ops in
-> >    bam_prep_slave_sg()
-> > - [Medium] dmaengine: qcom: bam_dma: missing read barrier in
-> >    process_channel_irqs()
-> > It also noticed 2 related pre-existing issues this patch does not
-> > introduce:
-> > - [Critical] dmaengine: qcom: bam_dma: ring buffer space miscalculation
-> >    in bam_start_dma() [1]
-> > - [High] dmaengine: qcom: bam_dma: unclocked register access in
-> >    bam_dma_irq() [2]
-> > --
-> >
-> > commit e40d68fe8bef09bdcbef42721a06c3fd7ad7197d
-> > Author: Nickolay Goppen <setotau@mainlining.org>
-> >
-> > dmaengine: qcom: bam_dma: Report the residue of packet
-> >
-> > This commit calculates the number of bytes transferred from the BAM FIFO
-> > descriptors and reports the transfer residue in async_desc->vd.tx_result.residue
-> > upon descriptor completion.
-> >
-> > > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > > index e62e411dc8f8b..b5cfe3ce34060 100644
-> > > --- a/drivers/dma/qcom/bam_dma.c
-> > > +++ b/drivers/dma/qcom/bam_dma.c
-> > [ ... ]
-> >
-> > > @@ -447,6 +448,30 @@ static inline void __iomem *bam_addr(struct bam_device *bdev, u32 pipe,
-> > >              r.ee_mult * bdev->ee;
-> > >   }
-> > >
-> > > +/**
-> > > + * bam_fifo_xfer_len - bytes transferred for a completed descriptor chunk
-> > > + * @bchan: BAM channel the chunk was queued on
-> > > + * @async_desc: BAM async descriptor owning the chunk
-> > > + *
-> > > + * For RX pipes the BAM overwrites the size field of the descriptor that
-> > > + * ended the transfer with the number of bytes actually written to memory,
-> > > + * which can be less than the buffer size (e.g. an IPA packet).  Those
-> > > + * values live in the FIFO copy, not in async_desc->desc[].
-> > > + */
-> > > +
-> > > +static u32 bam_fifo_xfer_len(struct bam_chan *bchan,
-> > > +                         const struct bam_async_desc *async_desc)
-> > > +    struct bam_desc_hw *fifo = PTR_ALIGN(bchan->fifo_virt,
-> > > +                                         sizeof(struct bam_desc_hw));
-> > > +    u32 len = 0;
-> > > +    unsigned int i;
-> > > +
-> > > +    for (i = bchan->head; i < bchan->head + async_desc->xfer_len; i++)
-> > > +            len += le16_to_cpu(fifo[i % MAX_DESCRIPTORS].size);
-> > > +
-> > > +    return len;
-> > > +}
-> > [Severity: High]
-> > bam_fifo_xfer_len() is missing its opening '{' after the parameter list,
-> > which breaks the build when CONFIG_QCOM_BAM_DMA is enabled.
-> >
-> > [Severity: Critical]
-> > This problem wasn't introduced by this patch, but in bam_start_dma(), the
-> > producer side of the same descriptor FIFO ring buffer miscalculates
-> > available space [1] and can overwrite in-flight DMA descriptors:
-> >
-> > drivers/dma/qcom/bam_dma.c:bam_start_dma() {
-> >       ...
-> >               avail = CIRC_SPACE(bchan->tail, bchan->head,
-> >                                  MAX_DESCRIPTORS + 1);
-> >       ...
-> >               bchan->tail += async_desc->xfer_len;
-> >               bchan->tail %= MAX_DESCRIPTORS;
-> > }
-> >
-> > CIRC_SPACE() is called with MAX_DESCRIPTORS + 1 (4096), which returns 4095
-> > when the ring is empty (tail == head), while bchan->tail and bchan->head
-> > wrap modulo MAX_DESCRIPTORS (4095).  Enqueuing 4095 descriptors wraps
-> > bchan->tail back to bchan->head, making a full ring appear empty so
-> > subsequent submissions overwrite active descriptors before hardware
-> > processes them.
-> >
-> > > @@ -732,6 +757,8 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
-> > >              } while (remainder > 0);
-> > >      }
-> > >
-> > > +    async_desc->vd.tx.metadata_ops = &metadata_ops;
-> > > +
-> > >      return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
-> > >   }
-> > >
-> > [Severity: High]
-> > metadata_ops is not declared anywhere in this file or its included headers,
-> > which causes compilation to fail.
-> >
-> > > @@ -881,6 +908,11 @@ static u32 process_channel_irqs(struct bam_device *bdev)
-> > >                      if (avail < async_desc->xfer_len)
-> > >                              break;
-> > >
-> > > +                    async_desc->transferred +=
-> > > +                            bam_fifo_xfer_len(bchan, async_desc);
-> > > +                    async_desc->vd.tx_result.residue =
-> > > +                            async_desc->length - async_desc->transferred;
-> > > +
-> > >                      /* manage FIFO */
-> > >                      bchan->head += async_desc->xfer_len;
-> > >                      bchan->head %= MAX_DESCRIPTORS;
-> > [Severity: Medium]
-> > Can bam_fifo_xfer_len() read stale fifo[].size values before the hardware
-> > descriptor writeback is observed?
-> >
-> > bchan->fifo_virt is allocated with dma_alloc_wc() (Normal Non-Cacheable
-> > memory on ARM/ARM64, which allows speculative loads), and earlier in
-> > process_channel_irqs() BAM_P_SW_OFSTS is read with readl_relaxed():
-> >
-> > drivers/dma/qcom/bam_dma.c:process_channel_irqs() {
-> >       ...
-> >               offset = readl_relaxed(bam_addr(bdev, i, BAM_P_SW_OFSTS)) &
-> >                                      P_SW_OFSTS_MASK;
-> > }
-> >
-> > Because readl_relaxed() has no read barrier and the address of
-> > fifo[i % MAX_DESCRIPTORS].size does not depend on offset, the CPU can
-> > speculatively load the initial buffer size written by bam_start_dma()
-> > instead of the byte count written back by the BAM hardware, reporting the
-> > wrong residue to clients.  Using readl() for BAM_P_SW_OFSTS or adding a
-> > dma_rmb() before reading fifo[].size would order the reads.
-> >
-> > [Severity: High]
-> > This problem wasn't introduced by this patch, but bam_dma_irq() calls
-> > process_channel_irqs() before acquiring a runtime PM reference [2]:
-> >
-> > drivers/dma/qcom/bam_dma.c:bam_dma_irq() {
-> >       ...
-> >       srcs |= process_channel_irqs(bdev);
-> >       ...
-> >       ret = pm_runtime_get_sync(bdev->dev);
-> > }
-> >
-> > If a shared or spurious interrupt fires while the BAM controller is
-> > runtime-suspended with its clocks disabled, the readl_relaxed() of
-> > BAM_IRQ_SRCS_EE at the start of process_channel_irqs() accesses an
-> > unclocked register and triggers a synchronous external abort.
-> >
-> > [1] https://sashiko.dev/#/bug/linux-a877fd6c-244a-404b-88a7-7d77506711a9
-> > [2] https://sashiko.dev/#/bug/linux-0ca05019-399c-4f9d-a7e1-d74c7ddced75
->
-> I will address the issues of the patch in next respin, but I don't know
-> what to do with issues that |
-> wasn't introduced by my patch.
-
-You can address existing issue later.
-
-Frank
-
->
+On 11/17/2026 4:44 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] ice: 32-bit build failure in ice_ptp_extend_32b_ts() on 64-bit
+>   update_time
 > --
-> Best regards,
-> Nickolay
+> 
+> commit a94f5b039e979b49b6aea8ea8e4275f20187401e
+> Author: Jacob Keller <jacob.e.keller@intel.com>
+> 
+> ice: store cached PHC time in ice_adapter
+> 
+> This commit moves the cached PHC time and its update timestamp from
+> per-PF and per-Rx-ring fields into a shared struct ice_phc embedded in
+> struct ice_adapter, updated by the clock-owning PF under a mutex and read
+> locklessly during timestamp extension.
+> 
+>> diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.h b/drivers/net/ethernet/intel/ice/ice_adapter.h
+>> index ce1fe08462652..ade829c05000a 100644
+>> --- a/drivers/net/ethernet/intel/ice/ice_adapter.h
+>> +++ b/drivers/net/ethernet/intel/ice/ice_adapter.h
+>> @@ -35,6 +35,25 @@ struct ice_port_list {
+>>  	struct srcu_struct srcu;
+>>  };
+>>  
+>> +/**
+>> + * struct ice_phc - PTP Hardware Clock fields
+>> + * @cached_time: Cached copy of the PHC time for timestamp extension
+>> + * @update_time: Monotonic time when PHC was laste updated
+>> + * @lock: For protecting updates to the PHC fields.
+>> + *
+>> + * Readers are lockless and rely on READ_ONCE/WRITE_ONCE for the cached_time
+>> + * and smp_acquire/smp_release for the update_time field.
+>> + *
+>> + * Writers must acquire the lock mutex to ensure that the periodic task cannot
+>> + * write back an out-of-date cached value after a clock adjustment.
+>> + */
+>> +struct ice_phc {
+>> +	u64 cached_time;
+>> +	ktime_t update_time;
+>> +	/* Serialize updates to cached_time */
+>> +	struct mutex lock;
+>> +};
+> 
+> [ ... ]
+> 
+>> diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> index bf37c2a7ff863..d07dcf619bb18 100644
+>> --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> @@ -309,13 +310,26 @@ int ice_ptp_read_src_clk_reg(struct ice_pf *pf,
+>>   * This is prevented by (a) periodically updating the cached PHC time once
+>>   * a second, and (b) discarding any Tx timestamp packet if it has waited for
+>>   * a timestamp for more than one second.
+>> + *
+>> + * Return: the extended timestamp value, or 0 if phc->update_time is stale.
+>>   */
+>> -static u64 ice_ptp_extend_32b_ts(u64 cached_phc_time, u32 in_tstamp)
+>> +static u64 ice_ptp_extend_32b_ts(struct ice_phc *phc,
+>> +				 u32 in_tstamp, bool trace_rx)
+>>  {
+>> +	u64 ns, cached_phc_time;
+>>  	u32 delta, phc_time_lo;
+>> -	u64 ns;
+>> +	ktime_t update_time;
+>>  
+>> -	/* Extract the lower 32 bits of the PHC time */
+>> +	/* Discard the timestamp if update_time hasn't been initialized */
+>> +	update_time = smp_load_acquire(&phc->update_time);
+>> +	if (!update_time)
+>> +		return 0;
+>> +
+>> +	/* Discard the hardware timestamp if the cached PHC time is too old */
+>> +	if (ktime_ms_delta(ktime_get_coarse(), update_time) > 2000)
+>> +		return 0;
+>> +
+>> +	cached_phc_time = READ_ONCE(phc->cached_time);
+> 
+> [Severity: High]
+> Does calling smp_load_acquire() and smp_store_release() (in
+> ice_ptp_update_cached_phctime()) on phc->update_time break 32-bit builds?
+> 
+> ktime_t is a 64-bit s64 on all architectures, whereas smp_load_acquire()
+> and smp_store_release() enforce compiletime_assert_atomic_type(), which
+> requires a native word size up to sizeof(long).  On 32-bit builds with
+> CONFIG_ICE and CONFIG_PTP_1588_CLOCK enabled, compilation fails with
+> "Need native word sized stores/loads for atomicity".
+> 
+> In addition, lockless READ_ONCE() and WRITE_ONCE() accesses on 64-bit
+> phc->cached_time and phc->update_time are not atomic on 32-bit
+> architectures and can tear when ice_ptp_extend_32b_ts() runs concurrently
+> with ice_ptp_update_cached_phctime().  The follow-up commit "ice: use
+> struct timecounter for E825 and E830" keeps these smp_load_acquire() and
+> smp_store_release() calls on phc->update_time.  Protecting the fields
+> with a seqcount_t or u64_stats_sync (or storing a word-sized jiffies
+> timestamp when a 64-bit read isn't needed) would avoid both the build
+> failure and 64-bit tearing.
+> 
+
+
+I'll just switch both paths over to using the seqcount_latch_t in v4. I
+think this will address both sets of complaints from this nad patch 4/4.
