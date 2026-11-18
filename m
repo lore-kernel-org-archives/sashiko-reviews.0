@@ -1,68 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794983546;
-	b=c1ic6a5hC4viCNI7TapqUt7NCIk5WAz//D5ajroj97quxzL9hjpl+mWDj2dVYZlwdaPc
-	 bCbow09h2OHsoPKizE3EFK6Db5na9iFETe33oB3J5h6TKDJ+Jl61ogPjpIzvD74TAUo3H
-	 DNtGS9C7nK2fsZkwuM3crL758cBmPoWYX+s7tmLytHrmT56elmsUTNadbF6KxqN/MvfY/
-	 qQ+7N148KElPMl9MkW+2NB975fCQf0YDL/08CH4vs4MvjD+vxFV7qpY7ge/HANyXosZnM
-	 4DDyQ76VsJ9V6+GsWGeyWDO4vpn3GegwVWBA15MUD9sVzTkOzMlwqmcAtGxP5J8uVAw==
+	t=1794983739;
+	b=HCf5Z6zEwWvELsPmKPpxtejklKiOE+rqBn/vOjiD+KcAIJj2JSZmECpmdp8gRXZuLt5f
+	 cYmmDVnpdzhtTzraiFpguHxKtpr6LhybaAaqulMZWzMLR3NGwblbRzZ7OeVO4sm1FzQbD
+	 myf4yxv3Y4nuzh1S/q4LiIq8TRanNo9G0ji+8Mgb8z3LuJyLPjBSfsWxcWlyaf0kwsZl8
+	 NkH0c+dwfVhrLLq9Q4np7lKhz3OSl6/fFnVrLoyXwic1GDvTZrQUaPOUv+1epKhc/or9O
+	 x0wojjVpWY4pZbgsWW39/IlSldt3UbENazOSnMpTY1AYO4CTTOlxkkw1SZ41Rt5z9hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794983546;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=u0IreiS+YajtenfvnX3jWr9IuLswzaeTxj+RxQ8KZRA=;
-	b=hARzWCE2QcOT7lYjAqUdbYDU5Mz9kLI/i6KF8GAlkTSsfCud5QcHSrK8ZPwXhLfqGSxK
-	 MjvQTK5FxIlW2ouzUHT/iiQ12dm9CUr8fpw/iKiP4uOedwSk86nwJL4s0hK1GRoLacbDh
-	 VuDjhqGfk3pcBWSqGX4BJN/M8D9Jkn3qY8VF5U3crQqZP7nf8Jtnih1MmQ1btOgy6ZtRB
-	 awW/zoZyxaKx6iYDcLSMnd5WdEo+tgt5df9BBySWTtBW3wYEuhPap2GF3exfHbBIHxOnE
-	 /hDS5qkkFTjhAlmr/JwZWveyffNOBJaC37zvrBCZA7CHy/un27XOZVjh5qfnB25NPYA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794983739;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=RLInY9Pas2VGdZHhoGedVfli2rsw8GnKGiuTBZLrurs=;
+	b=PfJuMqQxBWhv2GaqayewA+WXvld40MzdEfajQWXF7pSyIcKEtN/urGN0CdzzxipWAyBQ
+	 2YEq0+2ro/mjS/6nLk9D0WRlQcuKMGwoW/F4RIKLb6RU6R4lpVg2V+yiTsztZJiXwdG4P
+	 K971jn2WSPnm9wtxUi62vz8K6A7BAbcbpndHJzgQveKK47DG2xUquX4YXv0Bk6u1azKCW
+	 9ABHP84fdM8/SIy0ChcU60jAS9nX3d8rjEoOIplz6dB2H9Z2xD76r2zmDEDYai+Byg6uO
+	 yztCMfJFA0xX9WtOzmInlW78/pjxZSC6TUPcEkm1KDmsXJvneVgS7XyDCreuMUNMQHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="K1/4+19/";
-	arc=none smtp.remote-ip=192.198.163.17
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CswlLiiU;
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6073B606A325
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 06:32:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6073B606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E14606A325
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 06:35:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39E14606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=K1/4+19/
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794983546; x=1826519546;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=LbP0tBKFUG3FX5KB5829kcDSLEKKVPeE/YutxeN5JQs=;
-  b=K1/4+19/ZCSFL719UaQm0mzCd+iJJkqKWptroJe12Bi7Xymf9vIRgh5J
-   r+2jU0AK9MqvvbsypKhYEWKUdPRLAE8CZGsITVtnygGlDRnzXoUNuSEAl
-   GZbFc4QFOJwglDouVi27iCbkyTCAW7I/Jo6dLOj91TiBsfWxJiLPo/rHx
-   uAfQiNrFAvCgpeo+ZG4QkaUglaViQkNsLh/YFb3Vtq3ev+GUS70v2dIjt
-   db3Q9wD2TbsohSEPzmwWXfd+NURP2f/oUuEfrOjCEfdDfxWWbNl1J5Cq6
-   ouTnmuXHnR5JCAE3Iv9k/Tl++FFTgoYj3M5mRAbOYTQgTqSrdPzI7gIeV
-   Q==;
-X-CSE-ConnectionGUID: bS4pZNYfRRC/baxS6MtyFQ==
-X-CSE-MsgGUID: 3Q4iouduSNCuY5rdIP4keA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11969"; a="3771573"
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="3771573"
-Received: from fmviesa011.fm.intel.com ([10.60.135.151])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2026 22:32:26 -0800
-X-CSE-ConnectionGUID: tsLiP/fVTtC69hQYNuN7MQ==
-X-CSE-MsgGUID: ljy5Gv+DTpaBxMMCjIv68g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="11856171"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2026 22:32:25 -0800
-Message-ID: <f51611e9-692a-4a0f-a01e-084237814ece@linux.intel.com>
-Date: Wed, 18 Nov 2026 14:32:22 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CswlLiiU
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so5403725e9.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 22:35:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794983737; x=1795588537; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=RLInY9Pas2VGdZHhoGedVfli2rsw8GnKGiuTBZLrurs=;
+        b=CswlLiiUKTsSdKPQh/Ff+T/BO/KS4U8SCZwEYehqEziOFSy6fc6hglBk6vtAPnbAiq
+         nUhR/JSuVOs8LU6KA7gTNTPtczOilgB6Zt/MkgNl5U6Z/XxPSZTjKkrS1GHYn9qFBShD
+         Y5gJFIWwzClPoBqw93yCydcSf+PpDHbE/YMuxu8YBKkL8R/exAOvqyE8qZcJxpZF2O85
+         0K4TpDxXTHhN5YbvRBOqxaY6u41MOc544TiOA9EAjnJhmd3+dFFY2MVg8yKvJUgjXH3C
+         BeZJTusWSyW4cx0NmM5OVVEBO/GsLFEIdsvkTq3IKa7Y7zSb3dHcQhe2ETf43sKo7bcD
+         1sOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794983737; x=1795588537;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=RLInY9Pas2VGdZHhoGedVfli2rsw8GnKGiuTBZLrurs=;
+        b=cjsOGPJa5Ju+QiEH2zcDzb0Jh6yRIdZrhBxfKr4TFCFSiTSNjgSIEACHsbxKqQfS8u
+         fnnlJk0QdF7P5QI8ZtXv4DKfrUjn3TZzuNeyWnQljLdocjQAPG1LpH5SaD42nVeOrbIj
+         M+pkTIIaOoknZ6GjCWdZ/OZAKJBAnrab4dnQBFg2XpQ8ua1eUD6nqZap8ONBUbe/LS4u
+         GvWBFR5L9LCXEymcJci/uGTtMnnOzTKeZBS9zuAy6FNLHECU+wHTIRJlDpDo9rusSz1C
+         IeO9tncZwoq90wavGYSJGR3kMxQ430ZLecBAT8U5hb5Z01px9FGMuQ1H1QruKubThyRz
+         z1bA==
+X-Gm-Message-State: APuU4Z/OTqt+xq2l8xvUA+viGFIKd1kIM5N3uvyYyXoSlo0GE3kMf8sa
+	ocSYCokDh35q8Ro4YAt0MduM7jTdIKiKmuTPel04gtzaR0Z+lTqx1octF7f3Pz0vH+U=
+X-Gm-Gg: AYBFou3bn+iFqIhdgDWP0rY9n+KXJ/sfucltQZr4HzqyNRiLg1d2ju2cX1DRSIzNodI
+	fhxYh4kddzsfAgJOYUNRIeJBtSkYkO2OldWhUMsrkx4uT/JpbNyxxHF6Bf5k7c5vWKBZXWAgDy8
+	9DV+b8twPhcjne1Q7DiWiI4kcR4rzd8ircLqVxfvSINJKWUgbSd4K849SSwYzGfGIX+WcrKFkK0
+	RN4F5HBeQzZJULpKjD07dOuqFw75AwWDmrS2jQzMyVfqhi15sWWfVJklJRp3F86duKPR/NyTk5N
+	fxe7G98Rh+uW1pYKQ7qyUw1oK9l4pD7AYUV++c6hZELHiTGeuITqUWua/4WBYyMuGxQqoHKyPbK
+	Ms770No8oPVnzekKsJqw9yJyXcKodmBeaN8AoZVvrMSfbxhsAhGcwFtdU/lfVCADPwxH0zwNY5f
+	v+5KcYEIO1m8h1WkXwxc02a9DM/NVgrQMBM3PNlPEdSeR000NsxAgHcjFNopgBZ+Y/UqbsekWjP
+	7BZPIRMh+CL61i+K2rPYhjvMB3BwRjQc2kFunVpv2EgJDxkAj3YkEaje5UQ8HdEY5yaVOZcnyE4
+	X+peVDTlL4hCeeKMQW2+YwkoUWDTgwl5OP9CSuwgh7jAZMB8ow/mfoa3RA+c2FREZprYJ4u+Lwn
+	PZcCOmJCakDc6tSCzsk50vNeIjVgqL7YHnK6xXPSN0mPHnpg=
+X-Received: by 2002:a05:600c:8b02:b0:4bb:6752:8400 with SMTP id 5b1f17b1804b1-4bb7da1b48dmr25981005e9.17.1794983737429;
+        Tue, 17 Nov 2026 22:35:37 -0800 (PST)
+Received: from center.jhjvjihww5qejoy14qwv1cc4td.frax.internal.cloudapp.net ([131.189.143.225])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4a65560ab70sm3069822f8f.30.2026.11.17.22.35.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 22:35:36 -0800 (PST)
+From: Orgad Shaneh <orgads@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: miquel.raynal@bootlin.com,
+	richard@nod.at,
+	vigneshr@ti.com,
+	tsbogend@alpha.franken.de,
+	linux-mtd@lists.infradead.org,
+	linusw@kernel.org,
+	kaloz@kernel.org,
+	ulli.kroll@googlemail.com,
+	john@phrozen.org,
+	nico@fluxnic.net,
+	dwmw2@infradead.org,
+	corbet@lwn.net
+Subject: Re: [PATCH v4 4/4] MIPS: Octeon: flash: use the simple map accessors without a shared eMMC
+Date: Wed, 18 Nov 2026 06:35:35 +0000
+Message-ID: <20261118063535.4001217-1-orgads@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <sashiko-outbox-219726@kernel.org>
+References: <20261117214141.3826637-1-orgads@gmail.com> <20261117214141.3826637-5-orgads@gmail.com> <sashiko-outbox-219726@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,102 +107,14 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v7 15/24] perf/x86/intel: Set PERF_EV_CAP_SIBLING for pure
- branch counter events
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org, bpf@vger.kernel.org
-References: <20261118031453.1353625-1-dapeng1.mi@linux.intel.com>
- <20261118031453.1353625-16-dapeng1.mi@linux.intel.com>
- <sashiko-outbox-220065@kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <sashiko-outbox-220065@kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+> Does calling simple_map_init(map) break mtd_point() on little-endian
+> Octeon kernels (CONFIG_CPU_LITTLE_ENDIAN=y)?
 
-On 11/18/2026 12:05 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] perf/x86/intel: incomplete group detach handling in
->   intel_pmu_hw_config()
-> --
->
-> commit 2f6a2a62d0ff0bf2794f702072c776c06e629ff3
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
->
-> perf/x86/intel: Set PERF_EV_CAP_SIBLING for pure branch counter events
->
-> This commit sets PERF_EV_CAP_SIBLING on pure branch counter events in
-> intel_pmu_hw_config() so that the perf core schedules them out if the
-> group leader is detached.
->
->> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
->> index 84b134bb91eea..fd4de141ef281 100644
->> --- a/arch/x86/events/intel/core.c
->> +++ b/arch/x86/events/intel/core.c
->> @@ -5130,10 +5130,17 @@ static int intel_pmu_hw_config(struct perf_event *event)
->>  		 * require any branch stack setup.
->>  		 * Clear the bit to avoid unnecessary branch stack setup.
->>  		 */
->> -		if (0 == (event->attr.branch_sample_type &
->> -			  ~(PERF_SAMPLE_BRANCH_PLM_ALL |
->> -			    PERF_SAMPLE_BRANCH_COUNTERS)))
->> -			event->hw.flags  &= ~PERF_X86_EVENT_NEEDS_BRANCH_STACK;
->> +		if (!(event->attr.branch_sample_type &
->> +		      ~(PERF_SAMPLE_BRANCH_PLM_ALL | PERF_SAMPLE_BRANCH_COUNTERS))) {
->> +			event->hw.flags &= ~PERF_X86_EVENT_NEEDS_BRANCH_STACK;
->> +			/*
->> +			 * A pure branch counter event doesn't set up the LBR
->> +			 * itself. It must stay grouped with a normal branch
->> +			 * event which configures the LBR for it. Otherwise,
->> +			 * the LBR cannot be configured correctly.
->> +			 */
->> +			event->event_caps |= PERF_EV_CAP_SIBLING;
->> +		}
->>  
->>  		/*
->>  		 * Force the leader to be a LBR event. So LBRs can be reset
-> [Severity: Medium]
-> What happens on group detach when a branch counter sibling has other
-> branch_sample_type filter bits set alongside PERF_SAMPLE_BRANCH_COUNTERS?
->
-> First, a counting sibling in PERF_SAMPLE_READ mode with a branch filter
-> (such as PERF_SAMPLE_BRANCH_ANY | PERF_SAMPLE_BRANCH_COUNTERS, which
-> "perf record -e '{e1,e2}:S' -j any,counter" configures) skips setting
-> PERF_X86_EVENT_NEEDS_BRANCH_STACK earlier in intel_pmu_hw_config():
->
-> arch/x86/events/intel/core.c:intel_pmu_hw_config() {
-> 	if (needs_branch_stack(event)) {
-> 		/* Avoid branch stack setup for counting events in SAMPLE READ */
-> 		if (is_sampling_event(event) ||
-> 		    !(event->attr.sample_type & PERF_SAMPLE_READ))
-> 			event->hw.flags |= PERF_X86_EVENT_NEEDS_BRANCH_STACK;
-> 	}
-> }
->
-> Because branch_sample_type contains PERF_SAMPLE_BRANCH_ANY, the condition
-> here is false and PERF_EV_CAP_SIBLING is not set either.  If the group
-> leader is closed, perf_group_detach() promotes this sibling to a
-> standalone leader that stays scheduled with ARCH_PERFMON_EVENTSEL_BR_CNTR
-> enabled in hardware without LBR configured.
+It does. memcpy_fromio() stays correct there (unswizzled 64-bit reads,
+swizzled byte reads), but loads through a pointed address get no
+swizzle. v5 keeps the semaphore accessors on little-endian kernels.
 
-Yeah, it's an issue, but not introduced by this patchset. It needs a
-separate fix.
-
-
->
-> Second, for a sampling sibling that retains
-> PERF_X86_EVENT_NEEDS_BRANCH_STACK and has PERF_SAMPLE_BRANCH_COUNTERS set,
-> intel_pmu_hw_config() only sets PERF_X86_EVENT_BRANCH_COUNTERS on
-> leader->hw.flags and not on event->hw.flags.  When the original leader is
-> closed and perf_promote_sibling_to_leader() sets sibling->group_leader =
-> sibling, is_branch_counters_group(sibling) becomes false, so
-> intel_pmu_lbr_save_brstack() skips intel_pmu_lbr_counters_reorder() and
-> intel_pmu_lbr_del() skips intel_pmu_lbr_reset().
-
-Ditto. 
-
-
->
+Miquel, Richard, Vignesh: please don't apply v4; v5 with these three
+fixes follows in a few days.
