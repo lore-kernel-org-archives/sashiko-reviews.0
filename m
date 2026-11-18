@@ -1,60 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.189.121.228
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.126.103.232
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795006409;
-	b=hk4K98pIPVHOcN6FAwSTR1R+1UWjlDsnKl1YAErm1G+VYO+f645KaWCO+/M0pAJ/Ls/Y
-	 qnIsT1sanSIuXtHqPM/M29oYTUhChkFitNRkMHF53y6L+fyEy2FUuXh2oXxjpXXzxS7qy
-	 MljsyJ1dWfLeObndL/ut0oxZWT5u6F7NrDWFsFLGtA3GTzue+WBOMjpYA1KH1pxs6lyIq
-	 mgcGadtAhwZjVnLmmtBGhhP9ePAZJkaY4MZsvB2ZOvs3YCWWYbkFQsDgEges4/QKuXR4m
-	 jxIlVNF2rp5EDXyRHT0jm30Z3kzGfYP4P2GpzWAy/BlfSNC2D/5wSRDnBaqm6qSM8VQ==
+	t=1795007921;
+	b=dbMQNTwZXzuf1L0tFt87dXLD1BPHcJ1aKKjLh9Uzu/8Of1z2vgr2fJIZMlQUDnaEaCEY
+	 +xeoFbb3gUncy+AVaZPCKAnpdwRaKpZQ+fxkep+aRcSRYev73L3A8FbFFqJsemY1HsZ2A
+	 +R2utvmjDo6B7weOotUIzLy9rxXs9ePDsY2u0+X2P0GPg6rTt+YgeDdaFtEjvvo55II/Z
+	 gg7q8ZK/8BkO/+xbBVZpFEzzCVL61jAfU4/BHdJHIKVXoLoDqX8/nIGIAc9MjPqTGnvvp
+	 CPgRZeC16X6whyuP24s7IrD/6fbkfOOBDUEVIkeHcLSgHy4AerBP095cgMlCPvVvzHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795006409;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:Subject:From:To:Cc:Date:
-	 In-Reply-To:References:Content-Type:MIME-Version;
-	bh=KWrc5VN7yT42tqPLw7rYJmyMVxl7tUpmfInMF0IRSZY=;
-	b=S/KSkJcSl/dVs7Ki8oyfJQO5jtKjkc0qT+o7sfWykqTUY+DrLsCvlLxyTLd+1+nebur8
-	 ZvgMOm3ddSHA2rqMmkU0lsJBfLj6d9a4v4fnLMDCX93ywvv3U+ZcuNSi4gdfzbxKboN9E
-	 8UwyeFsZKeTh9u5mhizz25sg4RatY9k8lutlF4IxcaMMUeSI1cYdXAQ+DyBf1QqkY5a2o
-	 Xrwrjwjz9cSXBqipjdROfgSO4HBaWvbwd8IOtcJhJvKJ3W5rBsf0HbO+5yEDl0GrIBhJT
-	 aFEBeGCEASnaVQ+5rBroJDDxf1v2gSpSkfYtdVabZHikWMbpoBGivkFqOmYPLl6MH2g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795007921;
+	h=DMARC-Filter:X-UUID:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:X-CID-META:
+	 X-CID-BVR:X-CID-BAS:X-CID-FACTOR:X-CID-RHF:X-UUID:X-User:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=upd0IxCj2792Sd+Vd6lDIAbHvUW1f3kpvaia8Zd/3Ck=;
+	b=KXuDf4RgRuLb8rFPAeHaHPLlB5rqBbnURJWBY8g3+xU6bjsM4bUkQqBq1rvYdrhuJoEs
+	 5VnpwljVvsbQSqlRMVac/Jk9RXfpbGv2VeUFrpZTG1PaEcGmgaIVYhM+k2yf2i0QK7Tib
+	 zbtBId9ILcBI+MvCpl9ogjh+Vb8gKgUYOFrCeVw7EJqIvFtUqsOlcBCIEG9PAUTDzlM0s
+	 P3JiXaUBHrlQmRx9HNB9QhazvllayH2UQu0CavGgIG/k+FaYKnC4ck8Zm+VHAl5YILbIX
+	 lNTv20jGy2Xb9G39ZxUEw7cMtdOcIV9U2a4AQgk3e5HcnB/gwTIbihpPLDGbKXM8oGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=itx.no;
-	spf=pass smtp.mailfrom=itx.no;
-	dkim=pass header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=iMe7wvJb;
-	arc=none smtp.remote-ip=91.189.121.228
-Received: from mx.itxnorge.no (itx-kvm-14.itxnorge.no [91.189.121.228])
+	dmarc=none header.from=kylinos.cn;
+	spf=pass smtp.mailfrom=kylinos.cn;
+	arc=none smtp.remote-ip=124.126.103.232
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1DB606A334
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 12:53:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9B1DB606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=itx.no
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=iMe7wvJb
-Message-ID: <fead846b415ddff4e2a97acff37c3dc40c107d3c.camel@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
-	t=1795006401;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KWrc5VN7yT42tqPLw7rYJmyMVxl7tUpmfInMF0IRSZY=;
-	b=iMe7wvJbzhnF/FIY7scBmR2G/cEKuqtjZ24WfRS7APzoqH5Mwta4b3gvAiRkna9c+Gx2gM
-	eTyiEhOpHSDZ5YM+9yPWAqNAx0lgDgtWozrdMkCLkH6eS+bmwhKz6HriNmetZXMSuVqcrh
-	+FKwNYoV8XBA4BlVjV6NG1Drmbr3SbA=
-Subject: Re: [PATCH v2 1/2] sparc64: Stop the hwcap-list parser at an
- unterminated entry
-From: Stian Halseth <stian@itx.no>
-To: sashiko-reviews@lists.linux.dev, sparclinux@vger.kernel.org
-Cc: Andreas Larsson <andreas@gaisler.com>, "David S . Miller"
- <davem@davemloft.net>, Eric Biggers <ebiggers@kernel.org>, Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>, linux-kernel@vger.kernel.org
-Date: Wed, 18 Nov 2026 13:53:19 +0100
-In-Reply-To: <sashiko-outbox-220876@kernel.org>
-References: <20261118115537.160675-1-stian@itx.no>
-	 <20261118115537.160675-2-stian@itx.no> <sashiko-outbox-220876@kernel.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-hi747SlEPGLCVfYnjJEu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BED606A332;
+	Wed, 18 Nov 2026 13:18:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6BED606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 8c311e00e35211f19a56ed5b684f684d-20261118
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:8e9c81ca-96b8-4040-b02f-cb5bf20b073f,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:10
+X-CID-INFO: VERSION:1.3.19,REQID:8e9c81ca-96b8-4040-b02f-cb5bf20b073f,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:10
+X-CID-META: VersionHash:7db8b62,CLOUDID:590b889ced8d4f83e2e07ffedd64af85,BulkI
+	D:261118093247FQF070YS,BulkQuantity:2,SF:17|19|38|64|66|78|80|81|82|83|102
+	|127|136|153|841|865|898,TC:nil,Content:0|15|16|50|99,EDM:-3|-100,IP:-2,UR
+	L:99|1,File:nil,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1
+	,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_ULS
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 8c311e00e35211f19a56ed5b684f684d-20261118
+X-User: lienze@kylinos.cn
+Received: from [192.168.3.106] [(111.193.136.161)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 603697062; Wed, 18 Nov 2026 21:18:30 +0800
+Message-ID: <06e16d01-328b-4267-902b-1b4821139029@kylinos.cn>
+Date: Wed, 18 Nov 2026 21:18:26 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -64,43 +66,92 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon/paddr: avoid truncation warning in high-address
+ KUnit test
+To: Aveline Noir <jm5905938@gmail.com>, SJ Park <sj@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: damon@lists.linux.dev, David Hildenbrand <david@kernel.org>,
+ Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org,
+ Linux Memory Management List <linux-mm@kvack.org>,
+ kernel test robot <lkp@intel.com>, llvm@lists.linux.dev,
+ mm-commits@vger.kernel.org, Bill Wendling <morbo@google.com>,
+ Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <ndesaulniers@google.com>, oe-kbuild-all@lists.linux.dev,
+ rdunlap@infradead.org, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20261118-fix-damon-paddr-sparse-20261118-v1-1-3a0e943406d5@gmail.com>
+Content-Language: en-US
+From: Enze Li <lienze@kylinos.cn>
+In-Reply-To: <20261118-fix-damon-paddr-sparse-20261118-v1-1-3a0e943406d5@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
---=-hi747SlEPGLCVfYnjJEu
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Andreas,
+On 2026/11/18 01:04, Aveline Noir wrote:
+> Hi SJ, Andrew,
+> 
+> The kernel test robot caught this issue in my earlier addr_unit KUnit
+> patch. Feel free to fold this fix into that patch.
+> 
+> Thanks,
+> Aveline Noir
+> 
+> -- >8 --
+> When phys_addr_t is 32-bit, Sparse warns about truncating the u64 address
+> passed to damon_pa_core_addr() in damon_test_pa_addr_over_4g().  The
+> runtime kunit_skip() does not prevent Sparse from checking that
+> conversion.
+> 
+> Compile the high-address assertions only with CONFIG_PHYS_ADDR_T_64BIT,
+> and keep the test skipped otherwise.
+> 
+> Fixes: 7a983cc1b573 ("mm/damon/paddr: add KUnit tests for addr_unit conversion")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/20261117170155.fEdeuuhm-lkp@intel.com/
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 
-On Wed, 2026-11-18 at 12:07 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
->=20
-> [Severity: Low]
-> This fixes a bug in mdesc_cpu_hwcap_list().  Should this include:
->=20
->   Fixes: ac85fe8b2124 ("sparc: Sanitize cpu feature detection and reporti=
-ng.")
->=20
+Reviewed-by: Enze Li <lienze@kylinos.cn>
 
-Yes, the loop came in with that commit.
+Thanks,
+Enze
 
-Fixes: ac85fe8b2124 ("sparc: Sanitize cpu feature detection and reporting."=
-)
+> ---
+> The reported warning is gone with the original i386 config, Clang 22.1.8
+> and Sparse v0.6.5-rc1-21-g84ec0658. All executed DAMON KUnit tests passed
+> on x86_64 and i386 with and without PAE; the high-address case skips
+> without PAE.
+> ---
+>  mm/damon/tests/paddr-kunit.h | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/mm/damon/tests/paddr-kunit.h b/mm/damon/tests/paddr-kunit.h
+> index 9839cc233071..2b11f0e67a12 100644
+> --- a/mm/damon/tests/paddr-kunit.h
+> +++ b/mm/damon/tests/paddr-kunit.h
+> @@ -26,15 +26,16 @@ static void damon_test_pa_core_addr(struct kunit *test)
+>  
+>  static void damon_test_pa_addr_over_4g(struct kunit *test)
+>  {
+> +#ifdef CONFIG_PHYS_ADDR_T_64BIT
+>  	unsigned long addr = 0xffffffffUL;
+>  	unsigned long addr_unit = 0x1000;
+>  	u64 pa = 0xffffffff000ULL;
+>  
+> -	if (!IS_ENABLED(CONFIG_PHYS_ADDR_T_64BIT))
+> -		kunit_skip(test, "phys_addr_t is 32-bit");
+> -
+>  	KUNIT_EXPECT_EQ(test, damon_pa_phys_addr(addr, addr_unit), pa);
+>  	KUNIT_EXPECT_EQ(test, damon_pa_core_addr(pa, addr_unit), addr);
+> +#else
+> +	kunit_skip(test, "phys_addr_t is 32-bit");
+> +#endif
+>  }
+>  
+>  static struct kunit_case damon_paddr_test_cases[] = {
+> 
+> ---
+> base-commit: 7a983cc1b57309a875a9e07a934c9944bf3d088d
+> change-id: 20261118-fix-damon-paddr-sparse-20261118-fb08902768d7
 
-Could you add it when applying? If there is a v3, I'll fold it in.
-
-/Stian
-
---=-hi747SlEPGLCVfYnjJEu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCav2fwAAKCRDoeAEuJe36
-VutsAQDhMlTr9OgxrKTn6KDAx+emKbqBtKGJgTJcJEdBIeQbOQD/dJJ/aYUyVS/B
-W8EVbt5B/8d3nM0cuZLUK1Cnmnjs8QQ=
-=oVuM
------END PGP SIGNATURE-----
-
---=-hi747SlEPGLCVfYnjJEu--
