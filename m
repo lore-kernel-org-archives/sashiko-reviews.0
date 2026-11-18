@@ -1,72 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=188.245.196.96
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.189.121.228
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794998706;
-	b=n+cqDgZiT5QTxtme3aldPaWqF8+ER8edOSaGiQwVjfrh1o25HWcgNt8us669OfEg26df
-	 qrOB5KoEdi2Q03s4ggZ3g8C7FDpD1Y/AI7WLPG4oEwRAEV6Qx6MVFU1wjQXs56GsGF3EJ
-	 0GwlGZ/IlJ/WKfIkRBsXKZcvRTzd0KdS1OUvUzmebZEnIjjjn41d1pH/L8TS2oJVxB8ji
-	 qF62vJ7kkUd0SLMNz9hv2LZ6UhpG9Oz1PpNqO7VNnixhDQIuv/OFyKq+MUh97EqdZkn/q
-	 ER4yli9BadJMlBBxrjVbGWlKR0fY8p65Up7kNaqJcJ3SlNQZhlMWSMKi6SXcA5cDSGA==
+	t=1795000555;
+	b=XZJbN4/p62RjDii0WP2Trp5nl0uIWRRJyu6tL1PDApRfJIZbDrpEmNNBH6hphzB9ScwS
+	 Qkb0FKRAMBPwKcVdGl9cvmtlOIKFkkQW0XDKSI2OwebzL3O1fk/OW9b8MPnszsR4cwdIQ
+	 dyefnlGN2dmTF2/mIeZaH98sUHevqBh2dXq9Dvttl0/MPQBSEyhnfwnAzgDbRv+bdTPkj
+	 vgfgAXidZs3Yz+S1Ne+9lk9hPmBzSvI8PgRos0A3EhYs78ddbbdLjesl3u0v8acBFFMJ+
+	 5LafpAGDfZMBf46UjU+Rw0G2jTpF8YY97hoKsvlxK3bBGWBnJnmp3XnpxKmh8rnHtUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794998706;
-	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:From:To:Cc:Subject:
-	 Message-ID:In-Reply-To:References:Date:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=PJynymlG3cwjTCUtbWU2VLC+dEMiT0uwRnlq30YDBBI=;
-	b=URIm8f74sQiScaAz43NrKOumwqZ3nXTdO2ePJH8v5NrfhVQ+tzyzB+gpDJRVQvZOR6J4
-	 iOt0nzSt3Fmv+C5khp7WR82p7QusRt8LFX79dVOfe2GnxCY7pMlsNYT12jky9JHk9Lx88
-	 PnIYG7d+LsthFz7zi9VP0WTva7+l1lstMPuwiQ+Xc4JisePkFBwVoYkTtmhDvsgBEMF0C
-	 tsPTYxbfCkLibXOyi89HhD/lRe2Z1T6Xq14aBMtT3tw+sTaa/vICdYT9a/EQ4bvKbV2qf
-	 a9S/aFuM3V41b8v7v8J3MxPjazpyV19893NE6XQwKQ+aeM7Z5RxuSv1Kq7raTQC6pxA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795000555;
+	h=DMARC-Filter:Message-ID:DKIM-Signature:Subject:From:To:Cc:Date:
+	 In-Reply-To:References:Content-Type:MIME-Version;
+	bh=Y4hHKOCSU2CmbP8FEKSLsQJzoNedloCjuCXqEcxU9FM=;
+	b=h+uBWIkF6NRzkuWbRATdgo9TyDFiSvvlNTE+8PaYS3TRECEM5e2YEYPC8XsDvSKbbNxE
+	 8aHs6PTeiom/8fPKV4qsUOB/qmHLd5O/O2kAp+wf8I8493Qe+6hOWtKJy7ZT8bVtYDPyx
+	 stqzMYATAUk/0CoqRSYuED2gPKtJ6A8bWv6xeXC6WM0H+J1CkR2d+AJCtnbom6bsTkppg
+	 3rnaXQBtQ9Oei90nRMnqk2TI8WGhK8GqJzilg2DZK5FRaAmL31TOTw1OgBSRiexKlPLOC
+	 SgOKUor15dzDXnqCF9XfVqmV9RJwQPhgxxy5XBV5ZLhVu4r+r+twny6ZHCjN5mDHhZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nod.at;
-	spf=fail smtp.mailfrom=nod.at;
-	dkim=pass header.d=nod.at header.i=@nod.at header.a=ed25519-sha256 header.s=v1-ed25519-20260901 header.b=fdQj63iR;
-	dkim=pass header.d=nod.at header.i=@nod.at header.a=rsa-sha256 header.s=v1-rsa-20260901 header.b=MdRe7Szl;
-	arc=none smtp.remote-ip=188.245.196.96
-Received: from calculus.sigma-star.at (calculus.sigma-star.at [188.245.196.96])
+	dmarc=pass header.from=itx.no;
+	spf=pass smtp.mailfrom=itx.no;
+	dkim=pass header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=jJW1YBwm;
+	arc=none smtp.remote-ip=91.189.121.228
+Received: from mx.itxnorge.no (itx-kvm-14.itxnorge.no [91.189.121.228])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C0F606A325
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 10:45:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58C0F606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nod.at
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nod.at
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C7860A2600
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 11:15:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1C7860A2600
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=itx.no
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass header.d=nod.at header.i=@nod.at header.a=ed25519-sha256 header.s=v1-ed25519-20260901 header.b=fdQj63iR;
-	dkim=pass (2048-bit key) header.d=nod.at header.i=@nod.at header.a=rsa-sha256 header.s=v1-rsa-20260901 header.b=MdRe7Szl
-DKIM-Signature: v=1; a=ed25519-sha256; s=v1-ed25519-20260901; d=nod.at; c=relaxed/relaxed; r=y;
-	h=Date:Message-ID:Subject:To:From; t=1794998592; bh=PJynymlG3cwjTCUtbWU2VLC
-	+dEMiT0uwRnlq30YDBBI=; b=fdQj63iRkU1oWMWfBe0XDFdpP0BAnPMau5ZJaoU21EbLZnER6A
-	vIhL4On2dwD/TzFjzc/72o30iw9dTvGXeyAw==;
-DKIM-Signature: v=1; a=rsa-sha256; s=v1-rsa-20260901; d=nod.at; c=relaxed/relaxed; r=y;
-	h=Date:Message-ID:Subject:To:From; t=1794998592; bh=PJynymlG3cwjTCUtbWU2VLC
-	+dEMiT0uwRnlq30YDBBI=; b=MdRe7Szl8T2ELeiYlByW4qh54ue1HSlfwmNAWubC+sKJOPgHUS
-	/KhFc35/3ERfnqjmXE0/Kg3JC8fwSNiIjoMvB3HQpciomoefWzA+J+EXdbGrgmbgjuu9Ng5AmmK
-	jc+x4ZJ1dlC2jujt9jUGNLIIKQ4ToISx1mB5o8o4t3Xy13a5HkdUFXkd4xfP59zUHS91dWezHEa
-	iPLPcH3mv50PY/FB1xg6Oa6iokZUfxM/yvZeZoPAqhSCY+cJEaQ18uA7q0077weTCGLyDlGumgF
-	6zW6sqZvSX84JH/KSQXDVRjjgPIS90GdxRFmkCeYrAQHw7pr4xbqu+85avTbJOaLBeA==;
-From: "Richard Weinberger" <richard@nod.at>
-To: <arnd@arndb.de>, <sashiko-reviews@lists.linux.dev>, <arnd@kernel.org>,
- <linux-mm@kvack.org>
-Cc: <andreas@gaisler.com>, <akpm@linux-foundation.org>, <chleroy@kernel.org>,
- <dave.hansen@linux.intel.com>, <david@kernel.org>, <hpa@zytor.com>,
- <mingo@redhat.com>, <jgg@nvidia.com>, <linusw@kernel.org>, <ljs@kernel.org>,
- <l.stach@pengutronix.de>, <maddy@linux.ibm.com>, <malin.jonsson@est.tech>,
- <willy@infradead.org>, <mpe@ellerman.id.au>, <monstr@monstr.eu>,
- <rppt@kernel.org>, <npiggin@gmail.com>, <nm@ti.com>, <linux@armlinux.org.uk>,
- <tglx@linutronix.de>, <x86@kernel.org>, <bp@alien8.de>,
- <lorenzo.stoakes@oracle.com>, <Liam.Howlett@oracle.com>, <vbabka@suse.cz>,
- <surenb@google.com>, <mhocko@suse.com>, <david.oberhollenzer@sigma-star.at>,
- <Julian.FRIEDRICH@frequentis.com>
-Subject: AW: [PATCH v3 06/10] arch/*: increase lowmem size to avoid highmem
- use
-Message-ID: <mwlztee3.a0fc160f-3d4a-41a1-880d-7b9f8ef19767@nod.at>
-In-Reply-To: <0829a44d-fab9-439a-b80e-4791fc72ba0b@app.fastmail.com>
-References: <20261116124832.662455-1-arnd@kernel.org>
- <20261116124832.662455-7-arnd@kernel.org> <sashiko-outbox-218801@kernel.org>
- <0829a44d-fab9-439a-b80e-4791fc72ba0b@app.fastmail.com>
-Date: Wed, 18 Nov 2026 10:43:12 +0000
+	dkim=pass (1024-bit key) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=jJW1YBwm
+Message-ID: <51593f27903fb901f7c34e3c084d1c34a126e567.camel@itx.no>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
+	t=1795000552;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Y4hHKOCSU2CmbP8FEKSLsQJzoNedloCjuCXqEcxU9FM=;
+	b=jJW1YBwm3C78/3vUAUiLSB5okP4vTdUjECOQRa/X+YgAfsFTxxScUebAebdNRx2YHvcXgO
+	bC0U4bXiHqhVGbhwNoUcSAnw/ZAbAU6E646B9nm9z30+Ck6BJWxDWz4alVSQ/4sY4Su5BF
+	5s/Slsky5tEZ0eMUjECFdYqQSuOTY7E=
+Subject: Re: [PATCH] sparc64: Read qemu,hwcap-list from the OF cpu node on
+ sun4u
+From: Stian Halseth <stian@itx.no>
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, sparclinux@vger.kernel.org, Andreas
+ Larsson <andreas@gaisler.com>, "David S . Miller" <davem@davemloft.net>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ linux-kernel@vger.kernel.org
+Date: Wed, 18 Nov 2026 12:15:51 +0100
+In-Reply-To: <20261118043857.GA3400@sol>
+References: <20261117112914.2300417-1-stian@itx.no>
+	 <sashiko-outbox-218725@kernel.org>
+	 <8c0c3734b9ad1ba0072ce1fbcf895b544563798f.camel@itx.no>
+	 <20261118043857.GA3400@sol>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-siijRfQfDx5NwjZLvIFT"
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,29 +67,53 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+
+
+--=-siijRfQfDx5NwjZLvIFT
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: quoted-printable
 
-Am Wed, Nov 18, 2026, 10:36 schrieb Arnd Bergmann <arnd@arndb.de>:
-> > Because PAGE_OFFSET is now 0xb0000000 or 0x70000000 (an odd multiple of
-> > 256MiB), calc_cam_sz() caps each CAM at 256MiB even on e500v2.  When
-> > CONFIG_STRICT_KERNEL_RWX=3Dy and CONFIG_DATA_SHIFT is set below 24, map=
-ping
-> > 1GiB or 2GiB of RAM reaches index 15 and overwrites the active AS=3D1 e=
-ntry in
-> > TLB1[15] (and wraps the 4-bit MAS0[ESEL] field at index 16 onto TLB1[0]=
-),
-> > crashing during boot.
->=20
-> Ah, this would explain why Richard was able to boot using my patch
-> with 1.75GiB but not 2GiB, at least if he was using DATA_SHIFT=3D22.
-> Hopefully this should still work as expected if we force DATA_SHIFT=3D24
-> for larger lowmem sizes like.
+Hi Eric,
 
-Hmm, David and I have CONFIG_DATA_SHIFT=3D24 in our setup.
+On Tue, 2026-11-17 at 20:38 -0800, Eric Biggers wrote:
+> The following series migrates the remaining SPARC crypto opcodes
+> accelerated AES modes into lib/crypto/:
+> https://lore.kernel.org/linux-crypto/20261118041033.50014-1-ebiggers@kern=
+el.org/
 
-I'm currently fighting with a different problem in the board.
-As soon as I have more input, I'll let you know!
+Thanks, that was quick! I'll send a v2 of this patch with your
+Tested-by. It also gets a new first patch=A0that addresses the Sashiko
+finding.
 
-Thanks,
-//richard
+I've also tested directly from your branch. With +crypto, the KUnit
+tests and the full self-tests pass. To make sure the=A0library really
+uses the opcodes, I broke the AES round instruction in a local QEMU
+build. The AES tests then failed with +crypto and passed without it.
+I'll also try it on real hardware, a T4 and an M7, and reply on your
+series.
+
+> I think this is the only case where a Linux architecture has
+> restrictions on when memcpy() can be called, though.  It would be worth
+> finding a way to remove that footgun
+
+Agreed. Not a full proposition (yet), but perhaps U1memcpy and
+U3memcpy could fall back to integer copies when the FPU is in use,
+like NG4memcpy and M7memcpy do. I haven't properly looked into it,=A0
+but I might later.
+
+/Stian
+
+
+--=-siijRfQfDx5NwjZLvIFT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCav2I5wAKCRDoeAEuJe36
+VifkAQC/AxmvDhLO+ORuG8DbZsBS/uFyjlZEJpTFUiDZAQfzCgD+K/aguaFLYTg8
+r4fGVnSPHVzb+dt1eX4ggNH+QtwkKQQ=
+=jGxd
+-----END PGP SIGNATURE-----
+
+--=-siijRfQfDx5NwjZLvIFT--
