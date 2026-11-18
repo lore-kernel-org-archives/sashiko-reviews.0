@@ -1,80 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036334;
-	b=NvSmw+7qfZiggVjQO2Hc3TbnfFMdgDkhy/xxm/vLYPlfuRQxFYPAr7YwR7POB8Q7bfv7
-	 aR3i0uIl6Q1hq+UIyyNik5Nz+2G21rh+d/PaQ/gHHEJFahsZ2oX4oy4uReyTCxoEsvg4V
-	 u29qvWv0XJIckS6K0tGUzB1tvPKaaBkhVpqzZjtrUMJfg4nacYQGhi0si0543Vpvw7LPf
-	 1km2GgIlOmAmD93Tv5AdfShjK+/mJ1TE0dOFBnCT3oq/t6CsXI0/0M4y9b0WcsVL6MdXm
-	 Wo2sGdTtFvhxkHVAqTmZt/tuUoe6JmQshKTyip4pw+BLtrO7H3APz3HZqcG0e3ZTcZw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036334;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=e3wovxtp256iT9j8R80M+U7B6lq8njwUVIMdQxcI20s=;
-	b=Ppj9ga8+RTG5feprZvrRdgP/b5waAIR5f8bCqoYQSCycSPf0t5bjySrHIjuzjP49cZKj
-	 jnzIbb0/SUFE20kDvUFXQ8sijfyCrktdrif0FiNkfgF1BPvVnwRmcvB02QpgGnr0FCBvd
-	 E7lGwLodZivIU6cagFH34r7ly8JYjy/ELJcvQkYh78hKrWJSNFY9akuTeVpy5qrhBgR5q
-	 oHh4Tq6a99h2vrxwIv756tcyo29ju2LN70gWyaxT4Hzk/Ha00NwSa1OY5w1Y6gtBEJ634
-	 9QrQDMrwHPX7LJ++95CDdUlMEAEsu1jJtMGCBN5pIkEPL11XLSnlD6yDF335Zce6xEQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DTXYN49B;
-	arc=none smtp.remote-ip=192.198.163.18
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.74
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795036350;
+	b=bHhLWo6o8pvsYVNN04T7f6WdLQzZngyTZHOlMuEq9OGfy1n0DCpw9lHy1U+PEKSGNqwX
+	 Ri25ZJqmvPSvzJaVZdhp2yKS/kx8fDl6Vt+ov/EjjyL2dz+bSI7G5E0qdvQxM3dwZK6IX
+	 IGxoOMWbaE2aG9i4F4HESpsksHkDWNe1GYqfDc73Xp1EqImsPUmg9Ptq53AtwEwWV5ZCh
+	 rTXsA85j2GAibrvTajaTI6L9DoDPIIvbvA/lRtv5larsldSd8rq8WdJYyuj+O+QFA/kCW
+	 qzeuWTxChYL70zqsZ/3yw0f+74EJdnD65lOlTLKPzX+urFs7c6DH63Cq3ls8ZuEGW1Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036350;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=KDMbhx6hGhGJx9MQCzuhBDYg+LqMnV3yxux4XrkPzz8=;
+	b=2gSp/6Fg3NrmNAX+TFEpt3XNgacdol+CLA9WIRnGBS7QwgDICMKRlF/Fb7GSi6FQkqP5
+	 UwGqp7AKEHo709vOypxN8PvYUB0QpyOVE4FWGqN7nDAwTQNNydMRXrkd0NCbTW7d8npmB
+	 /TA2t5GVMwCkpK/KIyyl8wbIsR2y/rW+mvhT52F4ILT7n0f2Gzs/bnTAGm6eDqsDnQ1Q/
+	 VXjNS/+IUXjzkA54IJhwoxXJxcjdo5sc8TH4EFkBWHgBJf73RjsgctPss29a2KzkMizCy
+	 l62p6XW4vetvM0ALTUiQ/t4H48/H4pyPBh1p7fbVlT99qI/PJaHQjd2Bw6kmAUKwjdw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=dXPm9qqL;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.74
+Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022074.outbound.protection.outlook.com [40.107.193.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B05606A32A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 21:12:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0B05606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2959360A2608;
+	Wed, 18 Nov 2026 21:12:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2959360A2608
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DTXYN49B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795036333; x=1826572333;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=wth4zz1xROv/Fl0zF6nwGKAs4YQsEkSPYWH6B5/fvHw=;
-  b=DTXYN49B4dpYaIo6ellaYx6O5eogacu7djJOGrzPw+XPtN5KPiPrrmvM
-   qWtjcuAlcQF5l0Xe+6PAUCfOYrLUR88nKrsrlx2yN2UQDRapsCZ5pHR4N
-   /KE43aq2ijgqJmnHyjPjhYe1PLbEDhVR5B/xZiZPiNPRw/5aqlFZ8cDlr
-   GcjaAJMSrDo5XkuKKjTEH4ByTtDZSVQ2UtlDjdxNI32bt32mqLUYZ16Um
-   5/1xdPHgXhsIAzrdGhIXInrNzt9uthf5BOJFxAHt+nOJgz1NGaeSV9GCw
-   9IVlv3SaAsouhypdrEq4t/o2Fn+0ZBHlVauT3ll+D8SrPmoDBUndw1xFn
-   A==;
-X-CSE-ConnectionGUID: rY9T1wV9R6u3ueqkWY7wOQ==
-X-CSE-MsgGUID: t1vsWyY4Qcy3FSufwPWDeA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11970"; a="3893282"
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="3893282"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 13:12:12 -0800
-X-CSE-ConnectionGUID: NMBwDZ7eR1WcRsmtrb88kw==
-X-CSE-MsgGUID: A2Nhz6RJQpud1p7/R6REJg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="10517678"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.16])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 13:12:09 -0800
-Date: Wed, 18 Nov 2026 23:12:06 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=dXPm9qqL
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hTdDmD2Pc1vE2YkZaijQZ9LzCSyLvOJCaXFtKicz/FFZbea9HWA3g8TSZNx4Fh1CaA7Iyb7JzAKRDcB3Yz0UtWHNqP4efLsVDw91ERUA0PdSQUBm0Eihp/BnyUsc2emmqDTZc9chin0BK/Fxaag7nstgMSjuDHm1bV8x0vzLLV0RrI8gBOKjsrt/bzktuHaPM0CyeDPp7ouIVkyQ1/r73WIwBm6+53QoD6YV406x1eSqZuVW7jbqTnCos0v0R1648wdOPHUsTWd2mSU6DOVlU9bB9+rGVaBUTz63+xjqvPLTPT4gS7cVSna7+NzyemVJCo+KiZOT2tGdID+GjZkhaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KDMbhx6hGhGJx9MQCzuhBDYg+LqMnV3yxux4XrkPzz8=;
+ b=lGO2LWg1reUCQvHfBGwqHP3+/MaIAKv3dH7Poiz2HlRrYUZsaOdvaNJ55kfe1gnlik+vR5Ttg4EhH6dGjnbenMnPbbEEdFWLLqC2PZSlLMcHVl1BRlCIIK/sQuCh9FuRY4oAlZwGgB05+hr5n+u/GyqtX3xt41D/RUexlMI+NKlNfBTuHtaNgPKU569RY2gCbVv93iFWFkxu8gYCXh7/xKx2GJ9RIPGhCjk5BThKKhW5poyzBZGicbcooSKNIK5wD/47yf9qtvPPkRVJNinn/Kw9HOPc3VuzI23dMGauByQD7PldAmQ+bmqdItAA+/hvJ7wfkgXb4tS707gdviJ7mQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
+ dkim=pass header.d=efficios.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KDMbhx6hGhGJx9MQCzuhBDYg+LqMnV3yxux4XrkPzz8=;
+ b=dXPm9qqLPKM2VtDK4l3r7GUZoNjRexhj3DQzPUNpo+uiTkuvCOKZe3u8K6Tz3HD+5OPcVGdkGQayVEpUVyRRfoUofkMHg7BmwlDxsWZ9NqHSKPZs+WwzPAc3+OTHWu9PGBac6OAgFf2Voewn1CQOZH0hFHAtoBn9n3JwG4LinNOJfoiXvcWXzcx9G6KSxDebL/R+sH1jGV9877PCKR0Ru2kYzDYXP8PfnbDe5FgKQIfpddmSY0UJgYM53vm8HchxYyEz0g4mrYcGn1a4uf2YLVxAADxtYr7ozkHtIQFeK9FN0HBC6FXiGMO2LC1EcZl9IjIggMGjYzh92+sVHGqeGQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=efficios.com;
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10) by YT3PR01MB572210.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1c5::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
+ 2026 21:12:25 +0000
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
+ 21:12:25 +0000
+Message-ID: <eb414b6f-ea8f-4dd5-94ca-0915490ff37b@efficios.com>
+Date: Wed, 18 Nov 2026 16:12:24 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 16/16] selftests/sched: Add a test of SCHED_DEADLINE
+ bandwidth accounting
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Julius Werner <jwerner@chromium.org>,
-	Sean Rhodes <sean@starlabs.systems>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: Re: [PATCH] drm/sysfb: corebootdrm: Fix Kconfig dependency
-Message-ID: <av4UphaS8l0I5GCY@intel.com>
-References: <20261118205503.18924-1-ville.syrjala@linux.intel.com>
- <sashiko-outbox-221965@kernel.org>
+Cc: linux-rt-devel@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org,
+ mkoutny@suse.com, linux-kernel@vger.kernel.org
+References: <cover.1795031605.git.mathieu.desnoyers@efficios.com>
+ <92d746027d4034afb4e9c55bd1b686312a2401ab.1795031605.git.mathieu.desnoyers@efficios.com>
+ <sashiko-outbox-221967@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-221967@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YQBPR0101CA0340.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:6b::17) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -84,56 +100,135 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-221965@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT3PR01MB572210:EE_
+X-MS-Office365-Filtering-Correlation-Id: 069e1f4a-a68b-4438-e63b-08df45b8a4fd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|6133799003|22082099003|18002099003|261009223027099003|3023799007|56012099006|4143699003|261026121527099003|261102123227099003|10067099003|261028144727099003|261026140227099003|261021121427099003|261022105027099003;
+X-Microsoft-Antispam-Message-Info:
+	MZAkrqwdPgSXkMvVKSU9KOn8s2ov+aiyQ4o36w/SaBGiRZT6jQ9G7R5cOWn7y+V+v131Wjfkpp0nRLcC5A7dEtY74r9P8rD12oSgv+ep5jGfMCVhEO9Ph+VHRtbdKCoC9SK8AvZfRK4LD3VkKGFGiHRN6U4msOldicNC7rG0JGfr6yj4c79OFZfeZ3FwFNmMy5hdLvf8G5FghKFImR+ts13oIcL6bIsFd3boc7IWVkvUxvJ9x7RfM3y15gkLSRzS9GLPNj1xydiTyPNlKBF9IVtlTJCWrchRTExWsx0r1y03UWxc0ZV04mTa5dWCaHSgIILNdP1WLXJ4wDqVS1EHh9DztfmSBTiaDnnXnENN/G/rWz+hdAbpkUbsQ3wOzC3yuXx6XZgehX8tdrBmM5Qp/62YcJJWBDOkhQiV5I0+UOpOhvUnOKYhzA0jA60N81npLz/Z642o4Vxr7RQSD1HCDx/o3WbERC/y3OBeWwjAer3Yg9xy/ZJ5uUreQRprC6+GKgl0YXUYjWDjgpfYT3UzwvM6qakdHdn3gE+AWvOkJ3C/iHrXZ9Gee0Bzz/DvkOhefDsPveaKl/n2euqyWu90+/gPY1AJ7oP/cUjfvKVHXhM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(6133799003)(22082099003)(18002099003)(261009223027099003)(3023799007)(56012099006)(4143699003)(261026121527099003)(261102123227099003)(10067099003)(261028144727099003)(261026140227099003)(261021121427099003)(261022105027099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bTRaazFpV2lRUTgwMGRJam1EbDVkSFV0enZDei9NTkxqTHJoazlmSEJWb1dt?=
+ =?utf-8?B?Um9IZldnak9YY0l2eWJ5TCs3RjdLRFZHWmh3NDBpK2VYejZzMTVhSmY0TGlo?=
+ =?utf-8?B?aWIyU0JyWkEzSVk2bklwZmlIWVQrUmhsSXZVZXpIdUwzQWxTWGJuckJST2tj?=
+ =?utf-8?B?MmJEaGNCYTJHU0hnTVlsSFlBZHpIMmxpVFhxcXlnM3ZBcXdUVUhFdEQrajl1?=
+ =?utf-8?B?WERLK1dzZWpHRlczK2tDMEdlbFNPMXFkQ3hJZHJpZThjOE8xTVYxRUVLSjFU?=
+ =?utf-8?B?bGFGYS9XdFlKUGxwUU9UNGoyS1NHSEROQVZ1amVXTHZaVDdSaFRKSHNhWEpl?=
+ =?utf-8?B?UnFuQ0pPdE8vc1hjZ0pDMUdyeHFlbTNOeGIzSndQSDJoT2c2OHdHWkFtSFJH?=
+ =?utf-8?B?UlBjRmFCdktSbFBVQW11NWdwdTBBTjJzeFdDNy81aDJGMGpQc01FNXM2Qmdk?=
+ =?utf-8?B?TFlnelZJSFFyNWlnWi9rZ0JwaklTSzBSazNOYXpvL3didVlrcEJqV0hxM2xp?=
+ =?utf-8?B?aUducFNObjBUWDlYZzY0Wjl4NENGV2RSdndabTRtSXV0RjBYSEh5VHZtY1dt?=
+ =?utf-8?B?dG1VRFJyYitGNWFuYkxvRHd0bFdwdFV1YlpXUTY2WnJhcWx6NjRCZjBmMnZR?=
+ =?utf-8?B?dVlRSUtmVUpORDZxS0J1SkRld1Y1T1RtNU1ndndtalp6c2RGNmo1ek5YOEIw?=
+ =?utf-8?B?VW93SVV1MkRwME0xRnhkcFlXMGlKMVZmelkxT0JjcG9DYjZJVUxSbk83bHdM?=
+ =?utf-8?B?UTY1bS9qK2NwbmtVTWdzWWdLd3hRYmJ1VUQyU1R3Sm94eVhEQVBZWWRxbTZz?=
+ =?utf-8?B?VkQ5MGFTOEw1N2hiWER1RFRxZFRkSTVMeDh6NmwxR2YyaC92WGNYekVXZG1G?=
+ =?utf-8?B?RUgxSnc3aGtzc2hNMEF4dVp0WGtKSWlmSlp2MjRCak96eFdYalNBcTdZVk9h?=
+ =?utf-8?B?Vlp0dVA4Y1RTQ0c3ZHlPOVJnLzUxK29qb3pLd3BXQXpDQkE1RHVBWmZKRUtV?=
+ =?utf-8?B?ZVJCUWhVb2lUS1BHNzY5bUdGSXloeVJkQUFTRVQ0NlpGVVY0UG12bkFLajN4?=
+ =?utf-8?B?Q3U4N0p4L1BhYlIrR2lMY0hJRENJdDB3aU96Z0NWWVUzTmtnMUZCcVZIU2tE?=
+ =?utf-8?B?QjFIRkNvQm5LeEo4bEtXTkZQMStFazVQT0lKcUZoeGxZUHlJV1AzTnFKaWhT?=
+ =?utf-8?B?Sm5CbXBDSnJzam9tNUxoUXdGTVFkK280MFpNODh1TVFLQlRXVDlGQXJaSGpm?=
+ =?utf-8?B?VTBuVGxoTzhkcmIzSHN3U0UwUEJxYnJpbTdWQVVibEZ3dXFCRHV3UDJ6NWNt?=
+ =?utf-8?B?SDBXbklYTTVzSVFnbTlxdkNhaHZydzd2OTcraU5wMHhxTDArWmZlTDBPaVU1?=
+ =?utf-8?B?bjZEVVMwRWFmeGNkTVdubTZXZ3ZuWmN5c1l2ejdoSzlsYUJEdFU1aEx6a05y?=
+ =?utf-8?B?b3dzcVhFWjB6UGFsUVg4eGZoTUNjVm9zSHRaMkJyUHh1NkV2Sy9Za295Y2dv?=
+ =?utf-8?B?K0U5V2FkRjd3bkVDNFp3d1A3Z2pCcEk5L3l0azFtV2lsT2V6a3VrWFRhcm0x?=
+ =?utf-8?B?S0UwTm5IZ3FiYlNIY3puVi9YNWcyVG1qUTluLzF5U0RKTndiQzhmam93enRt?=
+ =?utf-8?B?Z3ZYQ1hRQms0Mk9Eek96MmhjZjV5YVVIbkRwUEpSMHR1eERyUlVFWlNwTkxX?=
+ =?utf-8?B?SVpDalBMN0g1OVAwdjl3RlMrUXYwN1lqaTBlbTIxK0NlZnUwUGNqVllLQXp3?=
+ =?utf-8?B?RlVVQVlob0FqMVlaTTJ6aE5kVithbmY4QmlUbHU2YkliNk1NYnRFTXFGa0lN?=
+ =?utf-8?B?RnV6Y1FFQU1YT1l5YUlNU3NkOThGN3Z1WmRlMHNKY0Y1UW1YZkpFZmx0TzZJ?=
+ =?utf-8?B?YXNRQXhNdnlON1QwK0VPZGE4T0tmdGppMzJzcHN1R1hKTTdVVHlXZ0dhSjlh?=
+ =?utf-8?B?YWFWRHY5RFV5NTFrK1BjTWlNMTVzZlUyVzVDUXFxbExVZzdjajFrbk9RQXkz?=
+ =?utf-8?B?Mk1kaXhTdWlkQ0FoM2tnRDgydWJxZHBJTkwvNTB5WHhhN0lQbEFsRFdYdDBy?=
+ =?utf-8?B?UVNnNEF2SE5Pcld6OERDYzVjSDNlUys4bGp1NTBsSVVWYUhiTXFwZWxUdnZq?=
+ =?utf-8?B?SUdUNUgzUU1xWnQweVR4Z0J2ekh3SzdablV2OUlvdGd5Y2h2RDRVMkZPM0NC?=
+ =?utf-8?B?L3EwT2UyZWVoWWtQbXAzWWFwRFVrai9HQTVFNFFaUWoxMHhQWVpZRGpFa0FJ?=
+ =?utf-8?B?bjhUUmFOMktZREZkUk1ZejlvcVZQdkNLQTVseWJEV2Jsc1RLUkJaRTFNcGla?=
+ =?utf-8?B?a0xwWnpOLzJmZW4yVEd3VG90M2RzWmVUYnJ2RlRtb2hPeWVlTEpMMGg5Tkpx?=
+ =?utf-8?Q?dMoMpd8x5Q6rewS4XnOzTAhay1kheKXar0Qc8?=
+X-OriginatorOrg: efficios.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 069e1f4a-a68b-4438-e63b-08df45b8a4fd
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 21:12:25.5087
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FXs9CUEFr+VJnA4rZYCD3Cnvhe2DbJ1yQvswU+2J7EgzixFyr4igk9ICRWdjggpFZ7gmZlUbsPh9Q/H52hmvZYXrR47y1jMUN8i42osDVdE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB572210
 
-On Wed, Nov 18, 2026 at 09:02:19PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] drm/sysfb: corebootdrm: Fixes trailer cites wrong introducing
->   commit
-> --
-> 
-> commit bff902d09954dd5579fb286ff3723415928aa52a
-> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> 
-> > drm/sysfb: corebootdrm: Fix Kconfig dependency
-> >
-> > DRM_COREBOOTDRM depends on GOOGLE_FRAMEBUFFER_COREBOOT, which is a
-> > transitional stub symbol that can never be enabled. This makes the
-> > driver impossible to select. Depend on the real symbol,
-> > COREBOOT_FRAMEBUFFER, instead.
-> >
-> > Fixes: a29a1f0ec8d6 ("drm/sysfb: corebootdrm: Add DRM driver for coreboot framebuffers")
-> > Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> > Cc: Javier Martinez Canillas <javierm@redhat.com>
-> > Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> 
-> [Severity: Low]
-> Should the Fixes: tag point to 44e33a5aaa2d ("firmware: Rename google
-> firmware directory to coreboot") instead?
-> 
-> When a29a1f0ec8d6 ("drm/sysfb: corebootdrm: Add DRM driver for coreboot
-> framebuffers") was added, GOOGLE_FRAMEBUFFER_COREBOOT was the active
-> symbol and COREBOOT_FRAMEBUFFER did not exist yet.  44e33a5aaa2d
-> ("firmware: Rename google firmware directory to coreboot") renamed it to
-> COREBOOT_FRAMEBUFFER and turned GOOGLE_FRAMEBUFFER_COREBOOT into a
-> promptless transitional stub without updating DRM_COREBOOTDRM, so citing
-> a29a1f0ec8d6 ("drm/sysfb: corebootdrm: Add DRM driver for coreboot
-> framebuffers") could cause stable backports onto kernels that do not yet
-> have COREBOOT_FRAMEBUFFER.
+> Does deboost_new_params_reboost() exercise reboosting after a deboost as
+> its comment describes?
 
-Mea culpa. Didn't trawl the history hard enough.
+It reaches the check it was written for. It failed on v7, before the
+split, with the bug that "sched/deadline: Check the runtime of a task
+whose parameters change" fixes. I have not checked your
+point on the deadline of 0 in the waiter node.
 
-Cc: Julius Werner <jwerner@chromium.org>
-Cc: Sean Rhodes <sean@starlabs.systems>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+> fair_tid is set in pi_init_lock2() but never read, which triggers a
+> -Wunused-but-set-variable warning under -Wall.
+
+These come from splitting the test. They serve the cases that the second
+series adds back. The test builds with no warning, as fair_tid is a
+global.
+
+> Does pi_chain_donor_leaves() fail because Z is never propagated past M to
+> O as O's donor?
+
+No. It passes in every run, in 25 guests with this series. The missed
+propagation is what pi_chain_top_moves tests. That case comes with the
+two rtmutex fixes, in the second series.
+
+> What happens in move_cancelled() when deadline_bw_test is started from a
+> non-root cgroup (such as a systemd session or service cgroup)?
+
+Right. The case assumes the root cgroup, and it turns the cpu controller
+off even if it was on before. I will fix both.
+
+> In the same loop, late.done is a plain uint64_t written by late_setter()
+> while move_cancelled() polls it in wait_for(5000, late.done), which is a
+> data race.
+
+Right. I will make it atomic, and join the thread after the reap.
+
+> Does shm_lock_init() re-initialize shm_lock without destroying it across
+> death_pi_waiter, death_pi_owner, and death_pi_deadline_owner?
+
+Yes. I will destroy the mutex and its attributes.
+
+> Can hotplug_server() pass when probe(NULL) fails and returns -1?
+
+Yes. I will check the probes in the three cases.
+
+> Should rebuild_record_taken() return KSFT_SKIP instead of KSFT_FAIL when
+> total_bw_of(a) returns -1 because /sys/kernel/debug/sched/debug is not
+> available?
+
+Yes.
+
+> Does rebuild_record_taken() fail when CPU 0 is isolated with
+> isolcpus=domain,0,1?
+
+Yes. With 7 CPUs and isolcpus=domain,0,1, it fails in 3 runs of 3:
+the task wakes on CPU 0. With the second series, it passes in 3 of 3.
+The case tests "sched/deadline: Make a rebuild count a task in the root
+domain it runs in", of the second series. It belongs there. It passed
+in our runs only because the guests with isolated CPUs had too few
+CPUs to run it. I will move it to the second series.
+
+Thanks,
+
+Mathieu
 
 -- 
-Ville Syrjälä
-Intel
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
