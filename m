@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=192.198.163.8
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795032614;
-	b=hwN3LH39BH6BqlBmaHrfItqRCtuuX9Fznl/oLeX/W0JddBq1m/ka353a7vznqdE0Idpz
-	 pHDstUjd85KF2dMGsGY6qRXCB+yDWR4fR+ap6W8hz2BqszDiAsCAlGRxvSHWxqpLoqYDc
-	 YgiOQlDCu9l7sL+2c1En/0qA7Rq2JGIGEOt1Lzjz1lvSbJfEyel5dQ83Kir1iIO1nVcgb
-	 AlIvuU2fdnEnYd0M/h0NxxLTZ5SMAEfX+W9VyVrifSat7Nq8S3GxJm6yXudyhGxLJBqiH
-	 bS7LdnvDDwK2v5xebm/ORQzW2UdWvOLzeTDFlIzLeuvhtfDTDj3JZuMT/vRJygeOM8g==
+	t=1795032742;
+	b=IDhTzkyyzoJlw2ab/9yrtkT2JgoD9I1V4c+/GF4YLj499aG2QmjMpyisWe1x22lEpbbx
+	 +hojkGbB+2d33xrgFOYYLw9+hzwXtbk5PNZfCknVD9UrioKdxLO5uELlBDhwhSl5iZtQE
+	 3NSIt4qJI3DyCCOH3nsPzJJs4pPAd/x/Xz0AvhMkOYDYIKB9mdfVy8IaAXlPu/NYSPUMa
+	 OVdGsksPPF5N95F3UU1yqDmW3Q0AXPlo2RUKN4Z/YUlbuaX4plzBNuqsuGrg05IKGHJXJ
+	 lz+JZK9bB0S27+WveihIWAm8GM40CRGw+Q05S0zICl1h0LEwSFrzkkKdznvhT6e4D4g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032742;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
@@ -27,110 +27,111 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=e+pdzDCRdQGrDRWNGtmtv07aoEGXAXZQQLko6GgZJ0c=;
-	b=RZLKruwu2GG/PDA17f4XIbxyPSmikXkh7Vywmek4dQ6xkNVBPVIBrwn4yVL/Qrf8OA0o
-	 2LyrkK/d4MBB3nj2YOR2sxUs36b0G4K1vuoAiFjs5H4hUxT5LXAbJ6zAy1f2AooKlcRVq
-	 ihC1lraqV3Yg1E82Nas4cBJVlCcJa1CU2l1c6fX7yAz185gaRfcHyqCQPfd+9/z3WUS9/
-	 V+V+zUNDwXP0eLqTTxljgcGer+GeujhgMeLe/VZafO9tXD8MhJv+3vyDavEUNNXEari1D
-	 7z9ycTTKrMuErvzN+Ei9fFR394CApHIBnqvv+N1Lcxkdcci4TzYAQrIwCfHc6JGQlKA==
+	bh=wmEFQ4VRk0CqiRMzoFadMB6wBQFIwPzenQ9GM7CjPiU=;
+	b=DvK4Hz02dHiCdq+qQPz3yVKnSBNUReYYgiSSGTkX/g5iTF5vrXsqcp0l/CK/v74qOi9Y
+	 OZBljc7LZRqDQ+E0Uvz+xdn0XchghlajHkJTksk7Kmbwk0PhbL4TKQ9gZMCt7/YdVkeje
+	 MkFJE29yHxfx+rfZvplGjnC0hSuc8A3IcjVVJKJlGdqTf4/LXAOaFszT5MoQ1nbsrOv2C
+	 YvbDyiOgINjHBCJZXV1Iral3MOxB1G9aDtvpZCRqDTyS9D7iIMvguPmsScsmXguaSIXFt
+	 Yti4CwZ19AAyVT2RBIxBEKOCKAD1R9Ef0GOBkn9+lqeCvGBBCAbbpvtXlRzmXgJJtYA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iAZ5kNNA;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=bdcDOfyf;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.19
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CTzmT7h1;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=ctfBaOfa;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=192.198.163.8
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A576606A332
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 20:10:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A576606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFAD606A332
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 20:12:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFFAD606A332
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iAZ5kNNA;
-	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=bdcDOfyf
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CTzmT7h1;
+	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=ctfBaOfa
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795032613; x=1826568613;
+  t=1795032741; x=1826568741;
   h=message-id:date:subject:to:references:from:in-reply-to:
    content-transfer-encoding:mime-version;
-  bh=8/9p4//TUR280DAqhFcvny1XbtWGR5CneNhRVr/N048=;
-  b=iAZ5kNNA8NbhUPbzaa9213L+YOed/rkwDJUSPlVKJ/RCsciwb5Vsa7aC
-   srBoau6CiYArIAKgXrZuOlpya+FyyJBFU41eYgp4dsdo6IvGbZJrkhvt/
-   8y441AYC00v+rw9s4ly0OkLqKy8SV4qovga/MEu/yHZNRIb4t3iTnfjQ6
-   Q3DVGxtuPbR0PQ7ub5W2JD5mWW7YccAKMaBXsDFQwJRkf1FBtBlMkq2ft
-   qvWDACPSklqDhHbU1TRSaLHTC+vGb6YmaJEjdfS5j78nLK6eo+ru1v2L4
-   mpWQQ7CROWrKZIQVsMGHFqr9cdH39VMFMgqKkhh1LqxsugehLnWYbqnVb
-   g==;
-X-CSE-ConnectionGUID: WHMsOVG0QLq2/wI6tnQpBw==
-X-CSE-MsgGUID: 68CY2ErYQXqyctinDKR0/g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11970"; a="3907419"
+  bh=FgNWb/6kwZPW+Fq+/+9REDQYzydtT0IJtFQa9dL1rFE=;
+  b=CTzmT7h1IyKgNP6Z+OVjg3FHi5shkM2mh6pWCzm/ovqcyV/gEp2g7NqC
+   xKAGP3qus47+t8ajJJRws7KY1PKds9rRPDqEIsBRdyvo9nzo5fRfUxRxj
+   KFtxIGSF8RUCE6PvuDxQyJ/M2pZSfWpWy69HTzXFSCShgd6u8q8tGTbBR
+   slq3RasMPYhnwb4miwiXX5xeQ0Xuja1qPAYedRdlfewjYqEFdjYEfRCoi
+   dfUUSjDo3YNyisyuCMv1N5q3efWvOfpA1QPMIAPWRZoyi3pk6w38FtOke
+   Hl9ywjS9su+xY/jEWsDEpJxbClU2ar2W6+nGh1XG4eYhpORVcxZNQOI0V
+   Q==;
+X-CSE-ConnectionGUID: Q/FAX8AhRXW3QQFtOv/t+g==
+X-CSE-MsgGUID: aEGkW0uHS6CxM9XCPnEqHA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11970"; a="3760734"
 X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="3907419"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:10:12 -0800
-X-CSE-ConnectionGUID: wSfHJBYPQDCZAUdE+AqdZQ==
-X-CSE-MsgGUID: d9eLgcJ0Syuiy45rxM4EZA==
+   d="scan'208";a="3760734"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:11:27 -0800
+X-CSE-ConnectionGUID: fxXH1BhXQ6i8UHzf6pJp0w==
+X-CSE-MsgGUID: Z2xLudH9TcODjS2uBWNU4g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="10321653"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:10:13 -0800
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+   d="scan'208";a="10168880"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:11:27 -0800
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Wed, 18 Nov 2026 12:10:12 -0800
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ 15.2.2562.56; Wed, 18 Nov 2026 12:11:26 -0800
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Wed, 18 Nov 2026 12:10:12 -0800
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.24) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ 15.2.2562.56 via Frontend Transport; Wed, 18 Nov 2026 12:11:26 -0800
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.18) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Wed, 18 Nov 2026 12:10:12 -0800
+ 15.2.2562.56; Wed, 18 Nov 2026 12:11:25 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rfhCTYMKOqLAOO68B7/+ZgouxBfCDCguXbkEpl9j8dwAeVPkaOMjRSyaQbZ60SBQWumIfwbQhW4h6Y87ITzXZ0L1FqLYS8gDQPVeh4ANK2ZL/63tZfrklHze9e+wisf7276LdSGbx+6zhuyxklp/h5ygO2kJnkXVZGUdcEsz/+JXTsXDH1H01/Y5hrjT5W4cTpgdY8yTbozj2C6uFrI1JdQZDgMn2OZVC8sA7G4W1/SXKpDvho/cLJg66+7Hw0DM4s717zqkMsTAioGh2BlUZh7FQcZ5d6Q4DThsNcO0OY5VxeLyji2CbtRWPiPwtmFYGZXUnERnqvkyIX+0/Bk/6w==
+ b=sqYWtr3y/ArY+qAfx3XFckaKF0TE6SuQV9I1PaYw8gdeRRfFNkt/9YDgmCD8LkNPNF0VRUoiYZgH0x0B0BwtuNsrJuZ0PG+ewEUvkmKyUyY7KuAbaXCCYG+mVHkN1XR6LOxrkJuhgfj105hzHJzgWrcS1RDFQdEwfRk2nRLQX5XqSRp9So7bjHbBnQSiLXFHuqYTPHDxssNVHTEtvIFjB3qjZQxt7h5c/lTXl08Gk40Vpovc/TZ0kTgzRd2iv2tiCzDsDI4K5pMT1CfgdGaEbec39q3wMu7XD1o14pd/H0ozhndoDL8jtwtHkW25gLxUzg871vvZanwdlSttisAReg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e+pdzDCRdQGrDRWNGtmtv07aoEGXAXZQQLko6GgZJ0c=;
- b=DesKAAhoe292s94Ha3uLmAXyVZzBrxfoAyu2BEpaxJ2upr+hygG0cbxmw7PEnuPi/d7vZ9kNtQR9EUuVeH4DoQXcO2AjJrNtOI7aeRHgJ+A38yVqi6o7vfN43+ivDRyMwsgIwiYuDqf66AXUfo32aI/Yrf7Twa7XdBmuKy1dsBNASlXUMF60H1SY2Q0rstv2uZ6ZmnTGtuMAWewwkE1wOX30KI2zQhxz8316JBHmynicXVV79b36OxRH6J/EWRYrg30T9c4G/M7zNbYxfkXZ0yiZrjNI7Ea2zLfaKg/GrJHdu3KewdzhtbQ56S8E7y+y1pC+nnJ7tNIibUq09DHPSA==
+ bh=wmEFQ4VRk0CqiRMzoFadMB6wBQFIwPzenQ9GM7CjPiU=;
+ b=R2+AIr2a2yiFymfcvaoCLk9ahInHOLrwX1K8/mmtcOrxv5XVcYcFtTwyArX2Rp0F+fH185U7SQB9DXFZlvs035kdvWNpIy2lO+1pWELeX+hW1Qxqd7eaHzXaPH5hH7QGwA0L0z5X1A33GS8h+3clMJSFWjODS+AliscrGDCbebXTP5Rxc/uF0U/Qch7fOfeU/UWaVpXzquzrC1AfSul0nKBIpcvQn4ev7uRoirJH8Wn8Zc00O1YLUOXue6R/RJv0Bq0NwiCJutzwoZvsrFum2M39fYbxqPh4F5B1AWNud+pyqOz2DAY2zkunYkY2cSH39tqrSOhrk1B6aGCxL1pBKg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e+pdzDCRdQGrDRWNGtmtv07aoEGXAXZQQLko6GgZJ0c=;
- b=bdcDOfyfyPIFlueh5pFF12HaaZVteVxu+rtY8BGxkJG4Q5ZirisCU8l4f01tJnt+pjbn4Argf7k5Ez4FPe2qAvIXFgQjZmtdUosiEUccJUGtODEqQOmGlrv7QQ1V8cFdoDdLuWNYVwhYGp8cn8vTdCQk5kpkLXjCtNt6H02uat4=
+ bh=wmEFQ4VRk0CqiRMzoFadMB6wBQFIwPzenQ9GM7CjPiU=;
+ b=ctfBaOfaZJkz84+WqrUpCnERIQbge+JrD+7hWvx0qL8xfO/+8CFu1rZgVEkJA7bgNg0UuDB0DDpB+njryxgV4GAw4WvFYarhzaLeVJVKPAvwmuMG1ltkWkXjTu7MjDwYMIWzm4MfO13veLbxmCd/91C/oq1iQiRwn+AVvhO3e0g=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ2PR11MB8451.namprd11.prod.outlook.com (2603:10b6:a03:56e::20)
- by BN9PR11MB5289.namprd11.prod.outlook.com (2603:10b6:408:136::10) with
+ by IA3PR11MB9015.namprd11.prod.outlook.com (2603:10b6:208:57e::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 20:10:10 +0000
+ 2026 20:11:23 +0000
 Received: from SJ2PR11MB8451.namprd11.prod.outlook.com
  ([fe80::7d5f:b2ba:92d4:5f3c]) by SJ2PR11MB8451.namprd11.prod.outlook.com
  ([fe80::7d5f:b2ba:92d4:5f3c%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 20:10:10 +0000
-Message-ID: <80f7a5e6-03de-4ad4-9bbb-8b8460951485@intel.com>
-Date: Wed, 18 Nov 2026 12:10:07 -0800
+ 20:11:23 +0000
+Message-ID: <651d5961-a310-4484-b8b8-3c0994d9e16e@intel.com>
+Date: Wed, 18 Nov 2026 12:11:21 -0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH iwl-next v3 3/4] ice: store cached PHC time in ice_adapter
+Subject: Re: [PATCH iwl-next v3 4/4] ice: use struct timecounter for E825 and
+ E830
 To: <sashiko-reviews@lists.linux.dev>, Intel Wired LAN
 	<intel-wired-lan@lists.osuosl.org>
 References: <20261117-jk-e825-e830-timecounter-v3-0-87ea4c86a249@intel.com>
- <20261117-jk-e825-e830-timecounter-v3-3-87ea4c86a249@intel.com>
- <sashiko-outbox-219870@kernel.org>
+ <20261117-jk-e825-e830-timecounter-v3-4-87ea4c86a249@intel.com>
+ <sashiko-outbox-219882@kernel.org>
 From: Jacob Keller <jacob.e.keller@intel.com>
 Content-Language: en-US
-In-Reply-To: <sashiko-outbox-219870@kernel.org>
+In-Reply-To: <sashiko-outbox-219882@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0076.namprd03.prod.outlook.com
- (2603:10b6:303:b6::21) To SJ2PR11MB8451.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR03CA0074.namprd03.prod.outlook.com
+ (2603:10b6:303:b6::19) To SJ2PR11MB8451.namprd11.prod.outlook.com
  (2603:10b6:a03:56e::20)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -142,166 +143,210 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB8451:EE_|BN9PR11MB5289:EE_
-X-MS-Office365-Filtering-Correlation-Id: bc8d1d51-f2d4-427c-391a-08df45aff249
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB8451:EE_|IA3PR11MB9015:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3890b126-7e04-4d28-5c43-08df45b01e30
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|10067099003|4143699003|11063799006|56012099006|261021135927099003|261021123027099003|261022075727099003|261026121527099003|261026140227099003|261022105027099003|261028144727099003|261009223027099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: oV2KLXm0wOeVlcfA7Jx57v3l+BBNGy+g4N2Blq1yf9iE0/bnN7ORwO1KpisjshxTLINY2KX3rVa+o6piFBk0qlAyeaJvE97VSvZUcF/T/ZQG8KKmZ/jFn/yVnuu2AAj9TdX/ddf0sXuHdEeHBmM+YR8rvgX0z++k0xI5fET/wmIERspQvDL4CuX2Vrv4uSAelQDYPfIU58OpaQexAm0H1KzBwT64FFblytGAW1OFMhjjyk1uuAdRUA7WvAlsNimu3dgv9PSLHciqvjE4af+MaXZxGhz6VZYtjD7OBBTwfsPRhwxjzDNsssDKfp7kbU0srUWbmwi1mtp4OuIoQ+fyxbmMuCtBEDRZxAIs4iq65ntLNfhiyoYTWOUb+0CXaQMriBxg+OlmvUoISplXGJALLB14YtV/FzMau2X2WKQcdsQUL2jpaBqaJ6Ei5nKW2NLzjN8fAUVTdw4r0Eh/+K7LecdC3E4WM37MQPJryw6Lo/dsbvXXChjcV0/fBsiO0mVqSkZtWIhvBj9LkfSzq7Otlf+Pe6G254/6UtWjhAUBd5UepA9BYXQV2NqeFZr4p4rsbu4i0byuKx5cvCwMHOplY4Ja0v2J803w7+TkrnS8P14+5vF0/Ua+QZdeb9gcHxkunNTc9jYw1reP2bytL9L+ZIR4JQ63I8+tx524DX6wl7Y=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8451.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(10067099003)(4143699003)(11063799006)(56012099006)(261021135927099003)(261021123027099003)(261022075727099003)(261026121527099003)(261026140227099003)(261022105027099003)(261028144727099003)(261009223027099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|261009223027099003|18002099003|22082099003|56012099006|11063799006|4143699003|261026140227099003|261102123227099003|261028144727099003|261021123027099003|261026121527099003|261022105027099003|261021121427099003|10067099003;
+X-Microsoft-Antispam-Message-Info: 2B8FCxQThsDgJi7KSr+wdq+zfvYFw6+oYO9CYC27qJpKjYE0FLGH7w2tDyHuljkLh+D7ETvrp8HY17ZzH5TGbbvdMyj0zVjVbg91JeOM97fHuYgNcES6WJrVruXsfK+t2lRZcveealutPme20Rpj/J2IxyJ0ZbtmWiSlJicDZydbhvSKLfXgVAaaBBvrs5/xuKxqLuVqhh6Kp6/qSgIOd8UQuL+chTwrfGL2Or1e4CG90BApedydodBa1iNaMIo0AudaRuv0NFQv5tGYQu9NtAWIuWmqPBEABTSic2V4/kcGYNzY01/FKbPZWDTPuQ29zsa+dn35CHSHz9LpPTi9k4jLCyfJS9Yz/6hO+2fRv4hoOFM4gIRzo3TcNpP0ZBIiKm47joJrINluMKZ8sEzVLdJfcgBZwICAvhLVplIaplDR+b5Vl6Cmys5rqpIQvFjIKZ5tPiUMe75e7g6H2bp+z9P0U10eKzula3ni2ulw1TRhJm1Wj0gxprnX649Eqb3GBn7S9oC8yQJwpQZOpMY9Z63Npmk9SThKnITaWKvHO2j4e4sAFGPzGPaa1rM/DKXfmAWoqZZ2ZDvWzN7uq0bUhKtE2O0ZOMJTyiTgQoohnwiJ+EoeX5GIxyUpBi2jBnxz9rtK9gVK7/VmJTZ8DTKewvC/tzM4CcrTT3JUXicF+lE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8451.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(261009223027099003)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003)(261026140227099003)(261102123227099003)(261028144727099003)(261021123027099003)(261026121527099003)(261022105027099003)(261021121427099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UjdZQVJpVG1zZHkreGt3cEVwL3VHRUpLdnpET3ZwRndEL3BxWWZ3d05udDA0?=
- =?utf-8?B?UncwUHQ2V0RoOXA3YXBqTVIwdjhsMmFrNFhlQ0VqMVFScXZZMkgvZFJzSHBv?=
- =?utf-8?B?YWJkdk9TMWdma2p3TUlSdnZDZVlLcHhQNFA3MnUyYmh5OGV3cmZrcG1hUmFK?=
- =?utf-8?B?alM1V010OUpVcnRscmhxMDRUN1hNU3F3Zk5qNmc3cVVuNzNvaFlVbnFVeWk3?=
- =?utf-8?B?QVBMcEc3Q2UxYi9zTWFsZTBKWlFCYy9FU0dwRXVJTmp1WVpxQWdXNlFRc3dY?=
- =?utf-8?B?bFM3RkwzcWtlOERWSkJleW42SFNzQ1FUTzg4NStHaitZTm9ReG1ZYVkvM0JE?=
- =?utf-8?B?WDN5U3J5YTA0YkFUWjAxVnJabnpCemtOMFFoSTBYdFBCaHFVYVlDdHhFT0JW?=
- =?utf-8?B?b3FiWXAwVFFaTlpQTWxnK05jcVlLb0RSU25PM1FNUUQ3aHJXdGFRaTJnbk1i?=
- =?utf-8?B?RkkrYlJUS2pzWHN0WUhSMkZJbEt4M0xpTW1zRkU5aW50K0hwTTZOY3ZoT3ZG?=
- =?utf-8?B?aG1GSyt6MTBHZitlTythT2V5TWsraGk2ZlJEVFlDR0VuUEJ3OVFpTEVmSlVM?=
- =?utf-8?B?dm5XQzh5NFRydHI4TmlwS0dQZ1RjWFRJRE9sWFd5elplM0JublIxaFhmN1U3?=
- =?utf-8?B?T3BPOWQ3YzB3Snp4aWVuRFpaWG81Tnk5WXFKYkZkL1ZHUmtpQ0YyQU11YXBv?=
- =?utf-8?B?dHJJVEI0dDNhT2RHUG9kVVBGeHVvZDdaWDRhOGhTWkNENU1iekZObVA1Sy9V?=
- =?utf-8?B?WTFGeDhjZHhMbVVIaEhqalpoWTFaVms4b1U1MjVHUURTdDliU2ltTnQ4N3Q0?=
- =?utf-8?B?ZEZRc2RxdzdHS2RsbnI5OFF3dmVOVDBTVEVPN2kwYkYweDdJWi9sNWFNYzNB?=
- =?utf-8?B?OHp1RUllSGtyWW43bEpnL1pBN1VQVlM0Nml2V1dqQ3hsSEswSGQ4Z3JoaEMx?=
- =?utf-8?B?M2hULzNnYXg3VGVJYll0LytPRDk2cnlob05aWHdzOFk4bHFKS0ROdjNzN2Z6?=
- =?utf-8?B?SUx3V0NLaWErS25PTEtFeE5qUWpLbFErZUM2ZFF3N21Rc1BpQ0ZWMWttZTNQ?=
- =?utf-8?B?SVg1NHJvcVVEUFhWL3lGRU5zOXlJZkdqL1A4SnM4R21Gd2hQcW9CU1JHUFBM?=
- =?utf-8?B?R1lnWFdYa0tTVWpXd2VaZmJXYjN4VThEQUVnWk50alhNNW1XNjA4MWZFMXFS?=
- =?utf-8?B?djIzUGZkUk9mUmcvRHhtUnZzZWRHczRVRElVVEVhT3dKeDJjN2tRbFhYZDBx?=
- =?utf-8?B?dGlybU56OEkvanNzbXVySEtFaG0zNWJkOUsvd0VEUUtZYkZRTTNnKzd1L3BN?=
- =?utf-8?B?UHFTT3ZBL1h2S0hnTmZkRDhhTjcwbEt3Q1JmSTdoWDZhNEU5eHVCNjBjVVd2?=
- =?utf-8?B?UkdBUUtYbkZPbXRLQWZXOGlkZmhaWGhjNVU2TXoxLzlBb1dNZjEvWVhzZmFL?=
- =?utf-8?B?bkJBa3psT001MmJISWtYckpjZzR6T1UyZ2JpL25EL3ZOK0FCV3ZZaDh6QmlO?=
- =?utf-8?B?OVFpOEdIUnk2a2NxejVTV0pzTDRiNFY0UUsvYktLTk1wbWhPV0ROSEwxNU1C?=
- =?utf-8?B?TjgvMHFZRzU3ZmRBUTB0eTJ5NG82U3MwQUVoQTI1RXUzSDMrL2pJSmd1Vm9R?=
- =?utf-8?B?QWVnWHc1SHlCS3FNbHp0SU16RHJNNDZZYUc3OEVXT1ZNZldheHNhQXpzY2lP?=
- =?utf-8?B?M3B4b2k3Y01OOU5TWXQ2OGJzY2FhTWc2T05JOVJPZVZ3NzFPaDJDSFRYbVRh?=
- =?utf-8?B?bjgrQldyQklLSkFKMWFkYmJjTjlBc2pnRS9zMFArK1AvdzM2dGJqUlJGSGRj?=
- =?utf-8?B?Q3I3b3JZRkFGYnJHMmRaTHRiWEtCcFZOSzJTNkZmU01yQVdqK3B3b2JrblVY?=
- =?utf-8?B?WndMNzhYZmZ2Vnhod1J0OTJBVEJlYzJyclp1WWRwY3pTVDlDeFNtSlZjeVNP?=
- =?utf-8?B?TUJtaUR5b0lhOWpEeVhLQmNnck1GRHFzR28yZEwzZlVBeEZGZGM4emhkZ0Yw?=
- =?utf-8?B?b0toTERWcWVzeHJZUGMvS29wNG5VeExVZXF3eE03WGZIajVYMmZEMFpNQzNa?=
- =?utf-8?B?dDRaOTRRVGhTbks1RU5MVTBBbVZZNmd3Q0dVMERBd3lBdDg0R21TakszVW5M?=
- =?utf-8?B?YVZrYms4ZFNweTFOKytXd0R2TzBxd0F3Z0IvSTBqdG1jbW80WGtCZExWUUFv?=
- =?utf-8?B?b2lESlh0eDBlenZ4dWsweVk2Z09ncUYrZHVGTDdCdDZtU1RETU5rdk40eWJH?=
- =?utf-8?B?TWRINmJvMDE3Rml2WHZlWFVHNUF3c0Jod2ZPMGxsdXNhTzZCYmpNNDFjbjZq?=
- =?utf-8?B?V3lXeHQwYkw1Y3VsOUZELytsL05TdjdDOWhGR3ZmTkJvVG5zdm5WR0hJa2lM?=
- =?utf-8?Q?Gz5EYi+umgWDn088=3D?=
-X-Exchange-RoutingPolicyChecked: r4o64xTqKru1vclRupJV6ftfeRYOcxq1I7xsq/4Tfq7s14rxC5WWLY6Ymfg+7Ru7scSzF1wdU2LW6cLqOjmewn5kjN4FhdtJ3+HCJbWBuuYdaL79P590hNMCboW4nJakOeJpQXWrO6k6tmRvsmzLAaYIK7wYNbYNovrgM91pH414IZUby83lkTsx2NHP1u/DybSzRvggLwzZkv+skmM5lFsAxwseGoCJ8Ck7wYE8P1jx+UAQ9PCjEcyV5EHyCzsvG8GuKODxpLIyYY4srqgTUTrkCOmVkhilcABYSQrguAHNW0QeGaoP5tOZOGiVnKOxdDo6xoo+HXcaV5gRGPvZZw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc8d1d51-f2d4-427c-391a-08df45aff249
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YmhyNHlMTUVKaVhwMytMT3FXVVdabzFldDdVODlkT1o4NURMTTNPWmE1QWZP?=
+ =?utf-8?B?TVpBMUxwRDlJdE9nUEFxanN1Y2pHS1ZBN0d5NjU1SUdzQmZJdFExdDFLTWZs?=
+ =?utf-8?B?RW9yM0FyTUo3UC85YkxsQU4zcGIvclBaai9nTkVtQXc4YlVydjM5Z3JSQmQz?=
+ =?utf-8?B?ZzNCaUdGNEx5QzJSdjBrS1pVZk00KzdmMDdtR2pWNm03V2p6MmhBUXFkMnJz?=
+ =?utf-8?B?VEJyZzVaUnVFK0lHQzA2a1NDRmpyZnNYVU9mMGFMR0hQaDRZalN4ZGI4OS90?=
+ =?utf-8?B?cko3MDZYY2dscUlJMlNyU0YrcnJrQVpwYWR6QVpzZFZNWFQ1MURqdndMQ0Nv?=
+ =?utf-8?B?SUVLazZYSEZIeXFkcXlaWjE0bzc0NG9tZTkzcmtZS1NYQytwOHhWKzJFYW9D?=
+ =?utf-8?B?V0FkMzN3eTNmd2NtZklicGVyRzRaWjhPazJ2YkNTNEtlWXRjbTdMNENJb2p5?=
+ =?utf-8?B?MU5lUWxRL0RkbVpWdzJXQzcwbXJwcUVETzhQTmNlMWhmbms3alB3NUFmRTM5?=
+ =?utf-8?B?U2htSEJOZkRJWFhrT2xnQnVRbnhYSkNNUUJCdVYvTCtwUHdFUWVNd0hmM0Vj?=
+ =?utf-8?B?K1FNY2twRWR0MytVd3ZEWTdEM0FNZjB4OElENnVveWRJUjh0MWZUZW1DakhQ?=
+ =?utf-8?B?UWZ5d1NEMnN6bUl3QlFIRDA4RElWNGkrOHM2eWMvMThBZ0xCemhuWEc2d0Z4?=
+ =?utf-8?B?ZGR3am5MaEEwaHNpTHYzaTQ3QU9qV3Z1cUExdmx5aW1MRTlTRzJ0VlhWLzF1?=
+ =?utf-8?B?OGFVWFJ2RWVQY21hU3dLblErdkNEMEZ0dGkwY0pqb0NwUC9RZ1huK1FLc0Ez?=
+ =?utf-8?B?TkRhbTFDN2tDZk5GR2s4WXNValhsM1crQzMzS3FMWE1pZ2VZc3haVEhvd3VE?=
+ =?utf-8?B?MFRQWkNaYWxpbGFOS1VkaFFGMzVoNFhkZjNtTG9Odk5CZTZCT3VFdG41Z21i?=
+ =?utf-8?B?aTlTVW54R1gwSXpwNDNkWXduYWExMGg0VkpacjZVUThzUjNWUlhzL3U4Y3RS?=
+ =?utf-8?B?K3UvcjU4WWpjNmxZeWREeTB4QTVmRndnOXBMOVVhdkhDVVhKMUF0UUtqSkgv?=
+ =?utf-8?B?L25GWXBqSG1pTE9aYnh6OFNhaGdGOW5iaXQ0ald6VzZyRUlMYzZGaW1FM3RX?=
+ =?utf-8?B?aVpnU3diSWw3YlZCUDM0aTI3QkZDMXRweUFQRzQ1OHRudGV1SkJJNGZLclBs?=
+ =?utf-8?B?RkZHYjNnYW5iYkU3RUs0WGVIM0lmRjArM1dkNzNnTVNMcmVSQlcwWHZYN2Vn?=
+ =?utf-8?B?elZoZEhiZ3JyRzBmUDU5dmk4T0EwME1RNHRjZ0hOa1dKQnZRL0VQaW1JNFBq?=
+ =?utf-8?B?UkJ3a1R5MndxaWp5WnpidFduRjdBQkpKQjJnUE1rQVFUbkZNczNHeGZFdis4?=
+ =?utf-8?B?TmYvTE5ST0ZtYnRicFAxaTlVT1pvSjFBSWpYUEhYOXhwamg3d1NpVjVlRGNi?=
+ =?utf-8?B?ZlNLby85b2xjUks4cytEbnp2MVNXcmluaHd5a2ZxQzNSdmZvTlMwd29MSjcy?=
+ =?utf-8?B?MS9ML2FoWVdycmo4QTZpQm42MGFvYnhDMSsrVENhUFA2VER5RkVkVCthV1RI?=
+ =?utf-8?B?S2YzYit5eUUxNFlaT2FxS3Q1eDA4Y0d6MHdGaXpSWXM5UVRqaGlrdDZaSFRw?=
+ =?utf-8?B?YUFXS3lEaTJnTHltKzZocFU1UG5QcDlnMkxhdndTVjg1M1c3UmlEYVg3d1By?=
+ =?utf-8?B?d0hybmZGS3Mva1JPdzVSWXllMkhTSnQ3S2VBMnF6cDlqUFpjN2J1Z0xLRWtr?=
+ =?utf-8?B?UTAwTyt2d0paK2h0b2VDRVUvY3NGQjJwWDRTLzFJT2xpSzYzMmRVSHd0Q2J0?=
+ =?utf-8?B?QUN5ZnZabzZPdnBlcGlpWS8zMVIvelRkR0xaRzdsdzJ0OWJRL0dCeXphYVAz?=
+ =?utf-8?B?cld2T2tacmFTcEJvVkp6UmloSGhpeGZiVmtrelM1L1dMWGdLNWp0NjNPaERB?=
+ =?utf-8?B?RFZ2eEpKb3llOXdZM1BRRkpQM1NtemJnNU8zeFpURmk3Q0Y5NFVXajFtMXUx?=
+ =?utf-8?B?MUhjYVNwK21BeSs3bFNudS9JVjJ2RXJFaU9XMHQyNXRobmlMQ1hUazNGdzdr?=
+ =?utf-8?B?VmZRVU5JZ3orajBEUWN5MGpkVnM4bjJraFo2NGlFVkpYUXc5cmI2YW5xWEcx?=
+ =?utf-8?B?ODA3Z2RnUjVvR09MUzBUMmpDKzBoMkhTanpzeVphQjNyNnN4dkpNWnB0REMw?=
+ =?utf-8?B?bFB5RnM3Q3hWMUQ1Rnp2NlBJZWU3UFh4eEJCNGxkZWtLVXpMZ0lmNW5hc0lR?=
+ =?utf-8?B?R0p6UUxac1RnR1RWYTdxV3NkSXhNSlBwUWVtTjVHUGVFWVFxcUd3YVVrUGwv?=
+ =?utf-8?B?ZE1henY1b3U3dGhyRFB0b1B5VzkyRjRuQzg1VENpa3p1dDlGQS9hTmtobUl4?=
+ =?utf-8?Q?CsXP9imJzXpwA3j4=3D?=
+X-Exchange-RoutingPolicyChecked: uz1jGc/p643+yCfG84KMzXdviqEQU8wjrCPj1nuYcj4jK1vwvtyEhQx/L1VFjvfBKl8taH1sLVSG816Vj8og2sQ2NafdEWf4Czw7MKaw+xCzYbUxLVpDjji7OHJsKMG7NkG7slbVgDMu5dtkDloY6fhIPlz7Dx8LpihAlo7lPtG5VWwq0e2vNg6K/Qw6qUu2Pwyf3Sbu7nXOwMnKPCHl91szA7E+ijCgDcy2Uq4OzxE+Na5yKIy/Fi1hd+Sqs7ycp/cm+gPWo2jj1VzhdHbBhY0XPdeKafmScXT3EG34KBe9YMxOdJ2iApaWRDGlj8lF8YfqqJpOSIobmVpzB5Oiqw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3890b126-7e04-4d28-5c43-08df45b01e30
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8451.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 20:10:09.8644
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 20:11:23.4751
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WcwUbLtkdF4laYhO558AQyoosB10clcNQd5JTAggNt1aareY2e97op++//R4QOSfwWvob5xFA4necm6vEt0q4GWS2aMT5283KydjdI4ZhKA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5289
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0QAmq+k/Q+8774CDIzPa0VMK/9Yprg42cF4pdiypeZpQ3nPXBZ8MebY9fFsjGvBmOlhEvQ2ttTCd3ZzVivRPRPTjXUJXcz0jjG3NOqiZmQk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR11MB9015
 X-OriginatorOrg: intel.com
 
-On 11/17/2026 4:44 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] ice: 32-bit build failure in ice_ptp_extend_32b_ts() on 64-bit
->   update_time
+On 11/17/2026 4:50 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] ice: unreleased phc->lock on error path in
+>   ice_ptp_rebuild_owner()
+> - [Medium] ice: premature phc->update_time store in
+>   ice_ptp_read_cycles()
 > --
 > 
-> commit a94f5b039e979b49b6aea8ea8e4275f20187401e
+> commit b8fa2e5442cd684f10151ff2ab484f07d9521f1c
 > Author: Jacob Keller <jacob.e.keller@intel.com>
 > 
-> ice: store cached PHC time in ice_adapter
+> ice: use struct timecounter for E825 and E830
 > 
-> This commit moves the cached PHC time and its update timestamp from
-> per-PF and per-Rx-ring fields into a shared struct ice_phc embedded in
-> struct ice_adapter, updated by the clock-owning PF under a mutex and read
-> locklessly during timestamp extension.
-> 
->> diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.h b/drivers/net/ethernet/intel/ice/ice_adapter.h
->> index ce1fe08462652..ade829c05000a 100644
->> --- a/drivers/net/ethernet/intel/ice/ice_adapter.h
->> +++ b/drivers/net/ethernet/intel/ice/ice_adapter.h
->> @@ -35,6 +35,25 @@ struct ice_port_list {
->>  	struct srcu_struct srcu;
->>  };
->>  
->> +/**
->> + * struct ice_phc - PTP Hardware Clock fields
->> + * @cached_time: Cached copy of the PHC time for timestamp extension
->> + * @update_time: Monotonic time when PHC was laste updated
->> + * @lock: For protecting updates to the PHC fields.
->> + *
->> + * Readers are lockless and rely on READ_ONCE/WRITE_ONCE for the cached_time
->> + * and smp_acquire/smp_release for the update_time field.
->> + *
->> + * Writers must acquire the lock mutex to ensure that the periodic task cannot
->> + * write back an out-of-date cached value after a clock adjustment.
->> + */
->> +struct ice_phc {
->> +	u64 cached_time;
->> +	ktime_t update_time;
->> +	/* Serialize updates to cached_time */
->> +	struct mutex lock;
->> +};
-> 
-> [ ... ]
+> This commit switches E825 and E830 devices to use a seqcount_latch-protected
+> timecounter and cyclecounter in struct ice_phc instead of directly adjusting
+> the hardware PHC timers and using the legacy timestamp extension logic.
 > 
 >> diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
->> index bf37c2a7ff863..d07dcf619bb18 100644
+>> index d07dcf619bb18..a74a2075e5f53 100644
 >> --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
 >> +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
->> @@ -309,13 +310,26 @@ int ice_ptp_read_src_clk_reg(struct ice_pf *pf,
->>   * This is prevented by (a) periodically updating the cached PHC time once
->>   * a second, and (b) discarding any Tx timestamp packet if it has waited for
->>   * a timestamp for more than one second.
->> + *
->> + * Return: the extended timestamp value, or 0 if phc->update_time is stale.
->>   */
->> -static u64 ice_ptp_extend_32b_ts(u64 cached_phc_time, u32 in_tstamp)
->> +static u64 ice_ptp_extend_32b_ts(struct ice_phc *phc,
->> +				 u32 in_tstamp, bool trace_rx)
->>  {
->> +	u64 ns, cached_phc_time;
->>  	u32 delta, phc_time_lo;
->> -	u64 ns;
->> +	ktime_t update_time;
+>> @@ -272,6 +272,202 @@ int ice_ptp_read_src_clk_reg(struct ice_pf *pf,
+>>  	return 0;
+>>  }
 >>  
->> -	/* Extract the lower 32 bits of the PHC time */
->> +	/* Discard the timestamp if update_time hasn't been initialized */
->> +	update_time = smp_load_acquire(&phc->update_time);
->> +	if (!update_time)
->> +		return 0;
+>> +/**
+>> + * ice_ptp_read_cycles - cyclecounter read() callback function
+>> + * @cc: the hardware cycle counter structure
+>> + *
+>> + * Read the PHC time via ice_ptp_read_src_clk_reg() and report it for use
+>> + * within timecounter_read() and timecounter_init().
+>> + *
+>> + * Although the cycle counter is masked to 32-bits for timestamp extension,
+>> + * this still reports the full 64-bit time to enable determining the phase
+>> + * difference between the PHC hardware value and the timecounter properly.
+>> + *
+>> + * Return: The current PHC timer value from the hardware on success.
+>> + *         Since failure cannot be meaningfully reported, return the previous
+>> + *         cycle_last value when unable to access the device.
+>> + */
+>> +u64 ice_ptp_read_cycles(struct cyclecounter *cc)
+>> +{
+>> +	struct ice_adapter *adapter;
+>> +	struct ice_phc *phc;
+>> +	struct ice_pf *pf;
+>> +	u64 time;
+>> +	int err;
 >> +
->> +	/* Discard the hardware timestamp if the cached PHC time is too old */
->> +	if (ktime_ms_delta(ktime_get_coarse(), update_time) > 2000)
->> +		return 0;
+>> +	phc = container_of(cc, struct ice_phc, cc);
+>> +	adapter = container_of(phc, struct ice_adapter, phc);
 >> +
->> +	cached_phc_time = READ_ONCE(phc->cached_time);
+>> +	scoped_guard(rcu) {
+>> +		pf = rcu_dereference(adapter->ctrl_pf);
+>> +		if (!pf)
+>> +			return phc->tc[0].cycle_last;
+>> +
+>> +		err = ice_ptp_read_src_clk_reg(pf, NULL, &time);
+>> +		if (err)
+>> +			return phc->tc[0].cycle_last;
+>> +
+>> +		/* Paired with smp_load_acquire in ice_ptp_extend_32b_ts */
+>> +		smp_store_release(&phc->update_time, ktime_get());
+>> +		return time;
+>> +	}
+>> +}
 > 
-> [Severity: High]
-> Does calling smp_load_acquire() and smp_store_release() (in
-> ice_ptp_update_cached_phctime()) on phc->update_time break 32-bit builds?
+> [Severity: Medium]
+> Can publishing phc->update_time inside ice_ptp_read_cycles() allow
+> ice_ptp_extend_32b_ts() to extend a timestamp against an uninitialized or
+> stale phc->tc[1]?
 > 
-> ktime_t is a 64-bit s64 on all architectures, whereas smp_load_acquire()
-> and smp_store_release() enforce compiletime_assert_atomic_type(), which
-> requires a native word size up to sizeof(long).  On 32-bit builds with
-> CONFIG_ICE and CONFIG_PTP_1588_CLOCK enabled, compilation fails with
-> "Need native word sized stores/loads for atomicity".
+> In ice_phc_init() and ice_phc_refresh(), write_seqcount_latch_begin() sets
+> phc->seq to an odd value (directing readers to phc->tc[1]) before calling
+> timecounter_init() or timecounter_read() on phc->tc[0]:
 > 
-> In addition, lockless READ_ONCE() and WRITE_ONCE() accesses on 64-bit
-> phc->cached_time and phc->update_time are not atomic on 32-bit
-> architectures and can tear when ice_ptp_extend_32b_ts() runs concurrently
-> with ice_ptp_update_cached_phctime().  The follow-up commit "ice: use
-> struct timecounter for E825 and E830" keeps these smp_load_acquire() and
-> smp_store_release() calls on phc->update_time.  Protecting the fields
-> with a seqcount_t or u64_stats_sync (or storing a word-sized jiffies
-> timestamp when a 64-bit read isn't needed) would avoid both the build
-> failure and 64-bit tearing.
+> CPU0                                  CPU1
+> ice_phc_init()
+>   write_seqcount_latch_begin(&phc->seq)
+>   timecounter_init(&phc->tc[0], ...)
+>     ice_ptp_read_cycles()
+>       smp_store_release(&phc->update_time, ...)
+>                                       ice_ptp_extend_32b_ts()
+>                                         smp_load_acquire(&phc->update_time)
+>                                         ice_phc_cyc2time_with_trace()
+>                                           seq = read_seqcount_latch(&phc->seq)
+>                                           /* idx == 1 */
+>                                           timecounter_cyc2time(&phc->tc[1], ...)
+>                                           <-- reads uninitialized/stale tc[1]
+>     phc->tc[0].cycle_last = ...
+>     phc->tc[0].nsec = ...
+>   write_seqcount_latch(&phc->seq)
+>   phc->tc[1].cycle_last = ...
+>   phc->tc[1].nsec = ...
+>   write_seqcount_latch_end(&phc->seq)
+> 
+> Because read_seqcount_latch_retry() succeeds while phc->seq remains at the
+> same odd value, the reader converts the hardware timestamp using the old
+> phc->tc[1] instead of discarding it or using the updated timecounter.
+> Updating phc->update_time after write_seqcount_latch_end() (or after
+> write_seqcount_latch() once phc->tc[0] is populated and latched) would avoid
+> exposing update_time before a valid timecounter snapshot is visible.
 > 
 
+I'm fixing this by making update_time also protected by the
+seqcount_latch_t instead of separately, and applying the seqcount to
+both legacy and new updates. I think the end result will be better and
+address both concerns.
 
-I'll just switch both paths over to using the seqcount_latch_t in v4. I
-think this will address both sets of complaints from this nad patch 4/4.
+> [ ... ]
+> 
+>> @@ -3207,14 +3519,24 @@ static int ice_ptp_rebuild_owner(struct ice_pf *pf)
+>>  	if (phc->update_time) {
+>>  		s64 delta = ktime_sub(ktime_get(), phc->update_time);
+>>  
+>> -		ts = ns_to_timespec64(phc->cached_time + delta);
+>> +		if (phc->use_timecounter)
+>> +			ns = phc->tc[0].nsec + delta;
+>> +		else
+>> +			ns = phc->cached_time + delta;
+>>  	} else {
+>> -		ts = ktime_to_timespec64(ktime_get_real());
+>> +		ns = ktime_get_real_ns();
+>> +	}
+>> +
+>> +	if (phc->use_timecounter) {
+>> +		ice_phc_init(phc, ns);
+>> +	} else {
+>> +		struct timespec64 ts = ns_to_timespec64(ns);
+>> +
+>> +		err = ice_ptp_write_init(pf, &ts);
+>> +		if (err)
+>> +			goto err_unlock;
+>>  	}
+>>  	mutex_unlock(&phc->lock);
+>> -	err = ice_ptp_write_init(pf, &ts);
+>> -	if (err)
+>> -		goto err_unlock;
+> 
+> [Severity: Medium]
+> Does jumping to err_unlock when ice_ptp_write_init() fails leave phc->lock
+> held?  The err_unlock path only calls ice_ptp_unlock(hw), so any subsequent
+> attempt to acquire phc->lock on a non-timecounter device will deadlock.
+> 
+
+I'll fix this.
