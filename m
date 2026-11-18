@@ -1,61 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.126.103.232
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795011077;
-	b=iy/b9gv67UZR5/8iHzFzgLttZ/jl57li7IlqiVwG8V7T2kIk71uiPAEG1Poc8fno7UAy
-	 98S6Sdeq1w44KRc4tAzMxO26rISBStmzGkmhk5yOBTRvXIUnb7rRb/0JCwbgYjum3DGHT
-	 RFi0cRCgfOg7M9tlIPnNptINFHy4AzaRBi1BEsZFQcSK5OuQYQH46/XwYakHUtuVuM1NZ
-	 1LsoCdFh7WYd1ph5gxj0ofvNbDmIuV6k49E0QJ5/FAv6jywWcPP4owFYwaSTNVVF7LWFv
-	 7mazfy3JUnV9n7mGomNK2VskHx2O1i9ZzRiP3T7YyVVOIbI281vZyYqAHjDC2pfr7/w==
+	t=1795011377;
+	b=xErg0MKERoG2ypARZslBpRBk6yDs3Gx9J3OX6dfZDc7bT1byUaX0tahtDE15AKnlcwFe
+	 3nRBLdYHLP0uoBXRYfwf2+uWxzddP0FI2PKMQb6193HE4dej/OLoN+1iuoJRG62ryCdN4
+	 yA68OXPTUr3tO3YAqYo1RI4lARAegzc59q6ZqHl9Ke8IrPwmJz6OAnMEsHaX3cS7CyoMa
+	 7BKhF5RWNr3lqs5lNGkzvbqFTSqvNyYbNavqKiiUEKNXZo4oS4klkCma477TFnH1NbOB8
+	 baV1XY6FkqH5dxx6BsJq4odHz4IR+IYMe9MCGi/fPw5NBV539IeW2bLHqsPzvgNE7Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795011077;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Rspamd-Server:X-Rspamd-Queue-Id:
-	 X-Stat-Signature:X-Spam-Status:X-Session-Marker:X-Session-ID:
-	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
-	bh=ZIcVPPdd1ul3QLvQ9/6HmRta6O+OVRN79c1UOyY9zsc=;
-	b=n4Pgq4xojyozkOZpWXpPj+g8I8ZlFQHTzmXMmHXpooP7cvGmWNCjDKMwnH6VQ/5/0nUO
-	 swsuFINfwZnb9/pOV09jesCbVsPzdDl9TOL69pWxHUz0eqsDOvo+1f+eUZazcqQtvIZQF
-	 vccTGo8Lw+Adj7EZYbkup9A7Ed0fpyQ6bNsHqHzDmvyCtqxMXicy4FxHGPaF9d0SxBccW
-	 pJ26gyFUHGV97jzrFb03BrvQPAUroKzO+92cEjQQ79i3ujOFHqT0m87SSLtrrlqr7aPNF
-	 lY/Bf4MW32IHogVfO/aSZqRQw6LQRplOLMFjPqTfyPGhWmJpMeIMNRla/AjweUOgFzQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795011377;
+	h=DMARC-Filter:X-UUID:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:X-CID-META:
+	 X-CID-BVR:X-CID-BAS:X-CID-FACTOR:X-CID-RHF:X-UUID:X-User:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=NkRayhbqFtlPnHUvyhGbsBwanQgB2ADYmADCwUGi5uw=;
+	b=BcdvAkbqdqifTsdAFItnWdukaZ+CKnkYWN7PJo/yUWJf8tZuXfuXsG8/O2jAerXaaQSq
+	 QeTts4QuN50H6VzwWY6ZB6EIyw9TWThXij8HRtECFyNK5p1b5JMoUx7ylhHJRs7HmKgnu
+	 nJSsEgiQOgojcnxqABGYAmH0JZk7k/6byhtdoTmv3D3tuwXqLfCmCcC3CmF2GRBnh/rQo
+	 HGpSek/HcitbHI8NMDxdh37PviQekOIYd368qNOgU3YP3Rb5Ni2G3ruTOaOleIydmSrJ1
+	 0rpYxY+Cg/ONjP5VDYpRI+/kgYXAIt/5HYpexygAjSee6SrEAnq94yH/FnbHIeZEFig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goodmis.org;
-	spf=pass smtp.mailfrom=goodmis.org;
-	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=w0ULYOG2;
-	arc=none smtp.remote-ip=216.40.44.11
-Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
+	dmarc=none header.from=kylinos.cn;
+	spf=pass smtp.mailfrom=kylinos.cn;
+	arc=none smtp.remote-ip=124.126.103.232
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0450F60A2606
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 14:11:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0450F60A2606
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=w0ULYOG2
-Received: from omf14.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay02.hostedemail.com (Postfix) with ESMTP id 64CA0120777;
-	Wed, 18 Nov 2026 14:11:14 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf14.hostedemail.com (Postfix) with ESMTPA id 958663B;
-	Wed, 18 Nov 2026 14:11:12 +0000 (UTC)
-Date: Wed, 18 Nov 2026 09:11:10 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Brian Norris <briannorris@chromium.org>, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH] tracing: 'select' GENERIC_TRACER, not 'depends'
-Message-ID: <20261118091110.4b7db7da@gandalf.local.home>
-In-Reply-To: <undine-1794963487554690675-818c80e274af2040@undined.local>
-References: <20261116144652.1.Iecb63200dd245f62032a3b1f60ae78cc48868094@changeid>
-	<sashiko-outbox-217828@kernel.org>
-	<20261117085552.0e4ef272@gandalf.local.home>
-	<avybp3O2zxcLozKB@google.com>
-	<20261117142203.72235895@gandalf.local.home>
-	<20261117142310.4f440b3f@gandalf.local.home>
-	<undine-1794963487554690675-818c80e274af2040@undined.local>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAD160A2602;
+	Wed, 18 Nov 2026 14:16:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4AAD160A2602
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 97239286e35a11f19a56ed5b684f684d-20261118
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:3094af1f-aa7f-44f5-84ce-86c27277b13b,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:10
+X-CID-INFO: VERSION:1.3.19,REQID:3094af1f-aa7f-44f5-84ce-86c27277b13b,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:10
+X-CID-META: VersionHash:7db8b62,CLOUDID:d61cf93fb4fdaf745f8ccd974ca04727,BulkI
+	D:2611182216074FAVQI0Y,BulkQuantity:0,SF:17|19|38|64|66|78|80|81|82|83|102
+	|127|153|841|865|898,TC:nil,Content:0|15|50|99,EDM:-3,IP:-2,URL:0,File:nil
+	,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,
+	DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 97239286e35a11f19a56ed5b684f684d-20261118
+X-User: lienze@kylinos.cn
+Received: from [192.168.3.106] [(111.193.136.161)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 821553608; Wed, 18 Nov 2026 22:16:04 +0800
+Message-ID: <bc48e456-5c1b-4479-a426-6639ef695914@kylinos.cn>
+Date: Wed, 18 Nov 2026 22:16:01 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,92 +66,79 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] mm/damon/paddr: skip non-LRU folios as a whole in
+ pageout
+To: Aveline Noir <jm5905938@gmail.com>, SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20261118-fix-damon-hugetlb-pageout-20261117-v2-1-547a65a3206e@gmail.com>
+Content-Language: en-US
+From: Enze Li <lienze@kylinos.cn>
+In-Reply-To: <20261118-fix-damon-hugetlb-pageout-20261117-v2-1-547a65a3206e@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: rspamout07
-X-Rspamd-Queue-Id: 958663B
-X-Stat-Signature: f59t838u8jo639pqxwbdu6n4f7e9kj5k
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX18JpwyJ8CSB5WMkhwY9eikviK8wuaI1678=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=ZIcVPPdd1ul3QLvQ9/6HmRta6O+OVRN79c1UOyY9zsc=; b=w0ULYOG2ZIX1Km3FvFSzv9++ZoZ07iw3qKJtjXfp8AYm2GrJiVzsI7kd5r9qJhKjfnXtFASV2vGRc2r/VRgS2qA0NAzoJETQZF05sPyuYiWpzoqR7m0dIooTTGs2Mg9thzMRR7OG7X6ZXqxgKGdojfv2wQ/dS7PsuF0UrP48Mvo=
-X-HE-Tag: 1795011072-286018
-X-HE-Meta: U2FsdGVkX19GDo1ZgRRKfMiS3Bqso7z/WGEq8EdpWz4UApNb7io3eAkJr9ojEgBck8G9g/XWGOxM/61rFGTXFM1RaevEy9s4SMBnoQRhQpzn1wJRVWRao5Q6/w6Mxmtd1RZEjMcbvzvi1qMT3IvJ9ZQkLop/Io+laoeVeg7p1uH+Wllp3oLzK9noKpEvxBWtCsya+RjoTPUmKHgCUZSLVhRzEwsMx3Y40wwPAw/ZaylzYX7fThGEIwaLulKHB3WoHn0QKldgfV4jQWFJ5kNQHzQh8dyZuuMCslSEnFXAPb39j33jIhO5h1nLU35bFhgFgagFBR9yaRU5tkHcB4uEIAS1pVExvUoNlRpAQybwVEaAJeR+3JN7w0M5I1I0uo7VKHCwgyXZA8pyCYUTvJYV/Q==
 
-On Wed, 18 Nov 2026 09:58:07 +0900
-"Masami Hiramatsu (Google)" <mhiramat@kernel.org> wrote:
-
-> On Tue, 17 Nov 2026 14:23:10 -0500, Steven Rostedt <rostedt@goodmis.org> wrote:
-> > On Tue, 17 Nov 2026 14:22:03 -0500
-> > Steven Rostedt <rostedt@goodmis.org> wrote:
-> > 
-> > As it doesn't need to be visible let's still have:
-> > 
-> >   
-> > > config ENABLE_EVENTS
-> > > 	bool "Enable trace events"  
-> > 	depends on !GENERIC_TRACER
-> > 	select TRACING  
+On 2026/11/18 00:24, Aveline Noir wrote:
+> damon_pa_pageout() uses damon_get_folio(), which rejects folios that are
+> not on the LRU.  For a large non-LRU folio such as a hugetlb folio, the
+> loop then looks up the same folio once per base page even though
+> pageout cannot reclaim it.
 > 
-> I don't like these changes. I think TRACING should be kept "depends on"
-> for this.
+> Use damon_get_monitor_folio() and skip any returned non-LRU folio as a
+> whole by advancing to its end.  Do this before the filters, the
+> accounting and the last_applied check, so that adjacent regions within
+> the same non-LRU folio are not walked by base page either.
 > 
-> If a proper hierarchical structure of dependencies is in place,
-> visibility may seem unimportant. (especially, "!GENERIC_TRACER" may
-> just hide the option instead of indicating "Trace events are enabled")
+> In an x86-64 KVM pageout microbenchmark, traversal time dropped by
+> about 99.7% for regions covering whole 2 MiB hugetlb folios. For
+> 4 KiB regions within hugetlb folios, traversal took about 1 ns more
+> per region.
 
-The GENERIC_TRACER meant everything but the "nop" tracer.
-
-That is, everything in the available_tracers:
-
- ~# cat /sys/kernel/tracing/available_tracers 
-timerlat osnoise hwlat blk mmiotrace function_graph wakeup_dl wakeup_rt wakeup preemptirqsoff preemptoff irqsoff function
-
+Good catch -- thanks for looking into this.
 
 > 
-> FTRACE ("Tracing" menu)
->  L_ FUNCTION_TRACER
->  |   L_ FUNCTION_TRACER_SELFTESTS
->  |   L_ FUNCTION_GRAPH_TRACER
->  |   ...
->  L_ TRACE_EVENTS (can be hidden)
->  |   L_ SYSCALL_EVENTS
->  |   L_ KPROBE_EVENTS
->  |   L_ HIST_TRIGGERS
->  |   ...
->  L_ GENERIC_TRACER
->  |   L_ IRQSOFF_TRACER
->  |   L_ SYSCALL_TRACER (selects TRACE_EVENTS and SYSCALL_EVENTS)
->  L_ TRACE_OPTIONS(can be hidden)
->      L_ SNAPSHOT
->      L_ ...
->      L_ 
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+
+Reviewed-by: Enze Li <lienze@kylinos.cn>
+
+Thanks,
+Enze
+
+> ---
+> Tested in x86-64 KVM guests.  DAMON KUnit tests all passed.  Ordinary-page
+> and THP controls passed the 3% non-inferiority bound in the microbenchmark.
 > 
-> Maybe something like above?
+> Changes in v2:
+> - Drop the redundant hugetlb check and update the subject and description
+>   as suggested by SJ.
+> ---
+>  mm/damon/paddr.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index 5b773012a876..0a205fa8d468 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> @@ -268,7 +268,9 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
+>  
+>  	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
+>  	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
+> -		folio = damon_get_folio(PHYS_PFN(addr));
+> +		folio = damon_get_monitor_folio(PHYS_PFN(addr));
+> +		if (folio && !folio_test_lru(folio))
+> +			goto put_folio;
+>  		if (damon_pa_invalid_damos_folio(folio, s)) {
+>  			addr += PAGE_SIZE;
+>  			continue;
+> 
+> ---
+> base-commit: 67f3b04b277373438f17300e056306adbd9edf7b
+> change-id: 20261117-fix-damon-hugetlb-pageout-20261117-a4e03d9d5a5b
+> 
+> Best regards,
+> --  
+> Aveline Noir <jm5905938@gmail.com>
+> 
 
-It would be:
-
-  FTRACE
-   L_ GENERIC_TRACER
-   |   L_ FUNCTION_TRACER
-   |   L_ FUNCTION_GRAPH_TRACER
-   |   L_ PREEMPTIRQSOFF_TRACER
-   |   L_ HWLAT_TRACER
-   |   L_ OSNOISE_TRACER
-   |   L_ MMIO_TRACER
-   |   [..]
-   |
-   L_ TRACE_EVENTS
-       L_ SYSCALL_EVENTS
-       L_ KPROBE_EVENTS
-       L_ HIST_TRIGGERS
-
-
-As the Generic tracers always enable trace events, but the trace events do
-not enable the tracers.
-
-I think we can start to separate ftrace and fgraph from the tracers too,
-but that will take more than just modifying the config files. That is,
-ftrace is the function hook mechanism and and fgraph is the return side.
-Neither are dependent on the tracers, but the tracers are dependent on them.
-
--- Steve
