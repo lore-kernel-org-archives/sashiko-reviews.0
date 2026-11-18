@@ -1,73 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024334;
-	b=ISwUeTHXzOIMKFbsmJu05jFcM1zElJdQ79c1+75jVI5iNapYDcgrOX7Iy2UHsHecRe4T
-	 RvcWYBHogsZS0bxw83ShQtOXYUYdL2aVur8+cI1PbXBiL08+gthi3J/aDXiQfQnOU+xDu
-	 E64oHa7tsxL62ro8cGEOzV1ojer1DlCgbK85+CUhgnJk6qYVojlx+ao4W7okqbgJWQcpO
-	 KiBJTk73JYUtfTrQDPoxQYVY76ToZuDHR032vzjIYpenqd16r/YOje4/Mq/FFpCvMWMI+
-	 P4rKDbmmLeJR8HALysoWOFCi0a4W/h2STXZHLwOmLCWZ5O+Sk/zlB57vBLchGRsuqdg==
+	t=1795024514;
+	b=OSTDcfJP+wwt6IvSB6wPDtVFCMMgnT3C8SQNtEVOrH4j67hmZIgis4bNqmLtM47wr3Z6
+	 l+uUTBNuqSwYFscUo6VPet1tOXsw8syyn/ZHL+bMsldx6MFjQhurETW5cys+2FRg4B8aw
+	 Pb9zoiMLzMlhbuv5pg3e0wijR9cSE/AD4fPAoqFS5tSlPFFfzYDskPT1q8Y+4PBWnNsZK
+	 MVlIXsR53iOszjHe8PKRlMQveoZidmeo//bT3gtaMjfecRYGGVdSXKg6E0B7mbbNpCfcc
+	 SecY3XsTtUvXLqG6yXTtk2sJMp8eiFk0gYLF3ajEsnpypzpvpd0Q44BLQKHTZXcCRbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024334;
-	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:
-	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=4ARnCtd3uzto/PHgfCMWuGtlnwWSM7jlXaejDo5/H8E=;
-	b=HQv/MUBd9tNDXkXDVx60ZT+sGTzLgePWioxkFfiDL6Ldf2ntcGFmVYMd3+5V+oS/NUrM
-	 AbU5KRMclcfyCzmG7jUcoxABAhLOonmH8poBfyk1Y3jWkC++JUkRizWgTqzVo9p+6mr4K
-	 0mudJpawc9e2mzbHYdckUeG0xQF3cYJIW7OAVUAmqeHTdUDFPnSqGte9mU1VIbsOF1GTr
-	 pp+bX3QnmUoTVLybr9vCyRsyDLMmTA3a54nGcmpALcFe55Um2MGgGkk/6WKai4OzmhQnf
-	 fxUh6vNcpr5WRRJIHzM+gVE84R+Yp2XTtZdDLkZEYxOzYUrvZ16Ltbz/nWRLcn8+dDQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024514;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=4z408KRzKXpCsZSuJuOfiOKILNxJs3DDuvK5OrkeNME=;
+	b=rDSGS+4OvD6o8BspJxlfOXvUpEepHtv6EG9RvTmzugH7gFyoqxb5Sdb7XWfp374ZVMN4
+	 BRIDeOwqGscslCTUQ/b5TwrnagojQCOkU+QXcDq3Cr9FTKROiCONssEhZKnBi0sIvOOXT
+	 Tlxv/yP2CUCcrzeWam9WQUss50SQNyas5R6keYu/kdkQzGYYR5jYxRRNWp68MR0y86il9
+	 Wh3c8QNC9yB2WdRYrDP9oqvKBG+5bz/n2YT/aB0JkJoYMocfWpK3m7mSNgwIFZ6Sy6Kjk
+	 abcUv3LwtNG6dD9lBNxaZlzy3bQ9L7Ok15P9/Eu3dmqHbchLLlJCX/hBnRfVHrd8vsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=InyXieSU;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GD7ISErN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2785860A2610
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 17:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9107606A31C;
+	Wed, 18 Nov 2026 17:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=InyXieSU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE3B1F0181A;
-	Wed, 18 Nov 2026 17:52:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GD7ISErN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743E81F000C4;
+	Wed, 18 Nov 2026 17:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795024334;
-	bh=4ARnCtd3uzto/PHgfCMWuGtlnwWSM7jlXaejDo5/H8E=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=InyXieSUCQl9Cv/r4RObv2pWTlQXUVlKOG+bbKUELmpoOv0GqOpoYOshh1Xce4sPC
-	 HzF6dwpByCrANYjQ6ESOe5rb+84pRjTO8DfkL/RmXE3L+c5modIsNpPnYhzoBsCYC1
-	 AClaaKnqJC74vuGCns9ydek9OMTSd2A0Q1scaFbE6YD+OapvZIYAEDwUOYGyqPaRjf
-	 F0hbF4IypWindl5xPvTnnZO+SSjJ6NdM8tr/C5b/3dYVblHzMffY6+liZpwn8bVBiN
-	 Nvrx37xTLNMck9AuMI/s+GmsR0LkNdMSzhYe/bCMG7wzWLY0b+xNAdrjbKcXofSUYl
-	 UbvoY9FBuraaA==
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfauth.ams.internal (Postfix) with ESMTP id 3BFAA198003A;
-	Wed, 18 Nov 2026 12:52:11 -0500 (EST)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Wed, 18 Nov 2026 12:52:11 -0500
-X-ME-Sender: <xms:yeX9ahl9MSfxN4sTMAroam9MjurPlx6ItgAx3JAsor09Qws2e9CVoA>
-    <xme:yeX9anqNEQOjvo3J645XUlBVetwSNdA9UPWCxhTYrolv_d1XxJ4DsU_YFR5Jz-PzU
-    pJ_MSXB7eY1QWNJyV17MUZTn34XSIZ0a6kWh6zU9TR_Qd8MSdIrfyQniA>
-X-ME-Proxy-Cause: dmFkZTGXEjOHTyRbeH7wX+barNrdVzrhxIMtHH4AQ3khzLpzp+Mqso9wSQl02IsvrfAHa3
-    W4JuqVmqapUTAs38f8bIAXgKPBDyb0SzYwWYtcCjXmbQL75fp9+bDNev+0g0FEPu+awqGa
-    D9U1fUGfB4P5Z8vSjWvX/6fmjio69h5xdkehIWGWjfF1H8A5HSoyjEjXSupIynmerSa+e8
-    /IlMY5VsIZpkoK34dANjv0z0PuMqTyDGitZ1qck+dG5ncATtKhSlF39rhg6OccX4e3/acr
-    nVpu/MBrpwkbhJNznVcsPKQ1PwjHVQeIjbxUsGABeXqUVSs9CMYy463By1FRw2vF2MEArT
-    JZBz3EmyKnUnQrtXRV37dpJ5a7H9r5/KAbvh8GQ0NP8nkU33uL/zh21pG+eazF/16NvmWx
-    Qt/hG8bBkNL2a2/Q4JSmnT+FuGGGPBrYULKZpUUxQKPcMcGwcn7WBb7lqm/ig87vZcNX9o
-    1sHHGp/R8/OVcbfBmliKsmgJnHolBW5V3+6zoJemjarNZqDBC9tWuqARhRu4A1Yf8AZcbk
-    WUuJ2djoQEg0CeCYKnsTd2jn3MmgzAdPv4XTUegiGUcsGyG45lZGV91keIVX2/iBSgfy1O
-    3/3CWWPUe5u3pViXFfa4slARg4NkXWDOzPAK0sLHKWiTJuzxEdrm7uzosRVQ
-X-ME-Proxy: <xmx:y-X9akGk7YZ1oTFw1OVjVtjaMKU9M-vNJBtF6--GTt1zDiE339q8Pw>
-    <xmx:y-X9aoR03U3DEoMg5ryracda4ucCATh8AuM1a9WAS4X4JysVCJc7VA>
-    <xmx:y-X9atKqsQ0ggRr-yZdTkuXY0YrrdRe2FTfxzcRWgn0Gj0CLs5qpig>
-    <xmx:y-X9arZrhAjC1KWsUzcP1vuh3fxe3d8zKkQiKA1W7NC6L26dAsEipA>
-    <xmx:y-X9an88M6Q6nOx-kHuKARXrjVp3JPk6d32ltQPrk3EoetZy2EGayoFw>
-Feedback-ID: i36794607:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 8B84032A0099; Wed, 18 Nov 2026 12:52:09 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=k20260515; t=1795024513;
+	bh=4z408KRzKXpCsZSuJuOfiOKILNxJs3DDuvK5OrkeNME=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=GD7ISErNiRH1kSDWD/DKK44+2FtiIZZ5C2uM+fnf3i2Ticg2DxDMcqsa25Hrwiwf3
+	 3Ox7sXw9uc6iiyMcds0kVdjVlH09vF9R3IiVzYcxXN5yO02x3aGYik8TNvMI2+sVuN
+	 XP5Pnnk2UtcwzZWJ2XAfnirLnS3W0/WRjZVIIyPF2brAU3KtbnomWoZzrWydNDxKY0
+	 Ezd71/gpGWAo35TVjU5bDMmKogzJsb7pLAZr+CxpWsCDjjL+5FJo4oXJahQn8TMBVE
+	 hzvxMRgC4ErDn4mYwwLBZ+BqGK2Jy2kbb19WKxZUVj+zapD1cGKgJJsxXtnl1cS1bz
+	 DM7/DucS65hZg==
+Date: Wed, 18 Nov 2026 17:55:10 +0000
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Zhanpeng Zhang <zhangzhanpeng.jasper@bytedance.com>,
+	linux-perf-users@vger.kernel.org, devicetree@vger.kernel.org,
+	robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [RFC PATCH v1 1/5] dt-bindings: riscv: Add Smpdis and Sspdis ISA
+ extensions
+Message-ID: <20261118-stipulate-grumpily-7567691b396d@spud>
+References: <20261118081327.10684-7-zhangzhanpeng.jasper@bytedance.com>
+ <20261118081327.10684-8-zhangzhanpeng.jasper@bytedance.com>
+ <sashiko-outbox-220433@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,306 +60,101 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AbyrFe5vH_go
-Date: Wed, 18 Nov 2026 18:51:29 +0100
-From: "Arnd Bergmann" <arnd@kernel.org>
-To: sashiko-reviews@lists.linux.dev,
- "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
-Cc: "Wolfram Sang" <wsa+renesas@sang-engineering.com>,
- "Linus Walleij" <linusw@kernel.org>,
- "Geert Uytterhoeven" <geert+renesas@glider.be>,
- "Ulf Hansson" <ulfh@kernel.org>
-Message-Id: <2236a38c-de88-4f83-8d46-2ea96c5ac915@app.fastmail.com>
-In-Reply-To: <sashiko-outbox-221162@kernel.org>
-References: <20261118134445.2909283-1-arnd@kernel.org>
- <sashiko-outbox-221162@kernel.org>
-Subject: Re: [PATCH] mmc: sh_mmcif: rework sg_miter handling
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="eGumaYRWr8p5wYX4"
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-220433@kernel.org>
+
+--eGumaYRWr8p5wYX4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 18, 2026, at 15:11, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [High] mmc: sh_mmcif: DMA transfers leave data->bytes_xfered at 0
-> - [High] mmc: sh_mmcif: blksz + 3 in sh_mmcif_read_block() and
->   sh_mmcif_write_block()
-> - [Medium] mmc: sh_mmcif: PIO leaves data->bytes_xfered non-zero on
->   transfer error
+On Wed, Nov 18, 2026 at 08:23:00AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] dt-bindings: riscv: unratified draft smpdis and sspdis
+>   extensions added
 > --
->
-> commit 6f62463df398beb43ce5f1bf65cbfc2642c791de
-> Author: Arnd Bergmann <arnd@arndb.de>
->
-> mmc: sh_mmcif: rework sg_miter handling
->
-> This commit converts the sh_mmcif PIO scatterlist iterator to use
-> SG_MITER_LOCAL by mapping and stopping the iterator within each block
-> transfer helper and tracking progress with data->bytes_xfered.
->
->> diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
->> index 51be5dc82f6e6..4583c22e8989b 100644
->> --- a/drivers/mmc/host/sh_mmcif.c
->> +++ b/drivers/mmc/host/sh_mmcif.c
->> @@ -604,7 +604,7 @@ static void sh_mmcif_single_read(struct sh_mmcif_=
-host *host,
->>  			   BLOCK_SIZE_MASK) + 3;
->> =20
->>  	sg_miter_start(&host->sg_miter, data->sg, data->sg_len,
->> -		       SG_MITER_TO_SG);
->> +		       SG_MITER_LOCAL | SG_MITER_TO_SG);
->> =20
->>  	host->wait_for =3D MMCIF_WAIT_FOR_READ;
->> =20
->> @@ -621,7 +621,6 @@ static bool sh_mmcif_read_block(struct sh_mmcif_h=
-ost *host)
->>  	int i;
->> =20
->>  	if (host->sd_error) {
->> -		sg_miter_stop(sgm);
->>  		data->error =3D sh_mmcif_error_manage(host);
->>  		dev_dbg(dev, "%s(): %d\n", __func__, data->error);
->>  		return false;
->> @@ -629,7 +628,6 @@ static bool sh_mmcif_read_block(struct sh_mmcif_h=
-ost *host)
->> =20
->>  	if (!sg_miter_next(sgm)) {
->>  		/* This should not happen on single blocks */
->> -		sg_miter_stop(sgm);
->>  		return false;
->>  	}
->> =20
->> @@ -638,6 +636,8 @@ static bool sh_mmcif_read_block(struct sh_mmcif_h=
-ost *host)
->>  	for (i =3D 0; i < host->blocksize / 4; i++)
->>  		*p++ =3D sh_mmcif_readl(host->addr, MMCIF_CE_DATA);
->> =20
->> +	data->bytes_xfered +=3D host->blocksize;
->> +	sgm->consumed =3D host->blocksize;
->>  	sg_miter_stop(&host->sg_miter);
->
-> [Severity: High]
-> Does setting sgm->consumed and data->bytes_xfered to host->blocksize h=
-ere
-> (and in sh_mmcif_write_block()) trigger WARN_ON(miter->consumed >
-> miter->length) in sg_miter_stop() and over-report data->bytes_xfered b=
-y 3
-> bytes?
->
-> sh_mmcif_single_read() and sh_mmcif_single_write() initialize
-> host->blocksize to (MMCIF_CE_BLOCK_SET & BLOCK_SIZE_MASK) + 3 to round=
- up
-> the 32-bit word loop, so host->blocksize is data->blksz + 3 while
-> sgm->length is only data->blksz.
+>=20
+> commit 6221314245742eb097a15011dd35eda824258728
+> Author: Zhanpeng Zhang <zhangzhanpeng.jasper@bytedance.com>
+>=20
+> dt-bindings: riscv: Add Smpdis and Sspdis ISA extensions
+>=20
+> This commit adds devicetree binding descriptions for the draft Smpdis and
+> Sspdis RISC-V Precise Decoded Instruction Sampling extensions.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/=
+Documentation/devicetree/bindings/riscv/extensions.yaml
+> > index 79491ef8f86a8..afda76b9c7c47 100644
+> > --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > @@ -214,6 +214,15 @@ properties:
+> >              ratified at commit d70011dde6c2 ("Update to ratified state=
+")
+> >              of riscv-j-extension.
+> > =20
+> > +        - const: smpdis
+> > +          description: |
+> > +            The draft Smpdis machine-level extension for Precise Decod=
+ed
+> > +            Instruction Sampling, as described at commit
+> > +            2de60e18118ce78e2da82ec33296345c94d8560c of the
+> > +            riscv-performance-event-sampling specification. It defines
+> > +            instruction selection, filtering and sample collection acr=
+oss
+> > +            privilege levels. This does not imply supervisor access to=
+ PDIS.
+> > +
+> >          - const: smstateen
+> >            description: |
+> >              The standard Smstateen extension for controlling access to=
+ CSRs
+> > @@ -269,6 +278,16 @@ properties:
+> >              ratified at commit d70011dde6c2 ("Update to ratified state=
+")
+> >              of riscv-j-extension.
+> > =20
+> > +        - const: sspdis
+> > +          description: |
+> > +            The draft Sspdis supervisor-level extension for Precise De=
+coded
+> > +            Instruction Sampling, as described at commit
+> > +            2de60e18118ce78e2da82ec33296345c94d8560c of the
+> > +            riscv-performance-event-sampling specification. It provide=
+s the
+> > +            supervisor-visible PDIS registers and behavior, excluding =
+the
+> > +            machine-only state. Firmware must make this state accessib=
+le to
+> > +            supervisor software before reporting this extension.
+> > +
+>=20
+> [Severity: Medium]
+> Should unratified, unfrozen draft specifications claim the canonical
+> smpdis and sspdis strings in riscv,isa-extensions?
+>=20
+> Documentation/devicetree/bindings/riscv/extensions.yaml states that
+> standard extension properties map to their originally ratified states, and
+> Documentation/arch/riscv/patch-acceptance.rst requires RISC-V
+> specifications to be Frozen or Ratified before acceptance.  Defining
+> unversioned standard extension names for a draft without final CSR
+> allocations breaks devicetree ABI stability if the specification or CSRs
+> change before ratification.
+>=20
 
-I've changed this to no longer refer to host->blocksize now:
+Ignore this, you;ve done the right thing by marking the series RFC.
 
-diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
-index 7f1818831f93..cade6ae7d44f 100644
---- a/drivers/mmc/host/sh_mmcif.c
-+++ b/drivers/mmc/host/sh_mmcif.c
-@@ -636,8 +636,8 @@ static bool sh_mmcif_read_block(struct sh_mmcif_host=
- *host)
- 	for (i =3D 0; i < host->blocksize / 4; i++)
- 		*p++ =3D sh_mmcif_readl(host->addr, MMCIF_CE_DATA);
-=20
--	data->bytes_xfered +=3D host->blocksize;
--	sgm->consumed =3D host->blocksize;
-+	data->bytes_xfered +=3D 4*i;
-+	sgm->consumed =3D 4*i;
- 	sg_miter_stop(&host->sg_miter);
-=20
- 	/* buffer read end */
-@@ -688,13 +688,13 @@ static bool sh_mmcif_mread_block(struct sh_mmcif_h=
-ost *host)
- 	for (i =3D 0; i < host->blocksize / 4; i++)
- 		*p++ =3D sh_mmcif_readl(host->addr, MMCIF_CE_DATA);
-=20
--	data->bytes_xfered +=3D host->blocksize;
--	sgm->consumed =3D host->blocksize;
-+	data->bytes_xfered +=3D 4*i;
-+	sgm->consumed =3D 4*i;
- 	sg_miter_stop(sgm);
-=20
- 	sh_mmcif_bitset(host, MMCIF_CE_INT_MASK, MASK_MBUFREN);
-=20
--	return data->bytes_xfered < host->blocksize * data->blocks;
-+	return data->bytes_xfered < data->blksz * data->blocks;
- }
-=20
- static void sh_mmcif_single_write(struct sh_mmcif_host *host,
-@@ -738,8 +738,8 @@ static bool sh_mmcif_write_block(struct sh_mmcif_hos=
-t *host)
- 	for (i =3D 0; i < host->blocksize / 4; i++)
- 		sh_mmcif_writel(host->addr, MMCIF_CE_DATA, *p++);
-=20
--	data->bytes_xfered +=3D host->blocksize;
--	sgm->consumed =3D host->blocksize;
-+	data->bytes_xfered +=3D 4 * i;
-+	sgm->consumed =3D 4 * i;
- 	sg_miter_stop(&host->sg_miter);
-=20
- 	/* buffer write end */
-@@ -790,13 +790,13 @@ static bool sh_mmcif_mwrite_block(struct sh_mmcif_=
-host *host)
- 	for (i =3D 0; i < host->blocksize / 4; i++)
- 		sh_mmcif_writel(host->addr, MMCIF_CE_DATA, *p++);
-=20
--	data->bytes_xfered +=3D host->blocksize;
--	sgm->consumed =3D host->blocksize;
-+	data->bytes_xfered +=3D 4 * i;
-+	sgm->consumed =3D 4 * i;
- 	sg_miter_stop(sgm);
-=20
- 	sh_mmcif_bitset(host, MMCIF_CE_INT_MASK, MASK_MBUFWEN);
-=20
--	return data->bytes_xfered < host->blocksize * data->blocks;
-+	return data->bytes_xfered < data->blksz * data->blocks;
- }
-=20
- static void sh_mmcif_get_response(struct sh_mmcif_host *host,
+--eGumaYRWr8p5wYX4
+Content-Type: application/pgp-signature; name=signature.asc
 
+-----BEGIN PGP SIGNATURE-----
 
->> @@ -792,27 +777,26 @@ static bool sh_mmcif_mwrite_block(struct sh_mmc=
-if_host *host)
->>  	int i;
->> =20
->>  	if (host->sd_error) {
->> -		sg_miter_stop(sgm);
->>  		data->error =3D sh_mmcif_error_manage(host);
->>  		dev_dbg(dev, "%s(): %d\n", __func__, data->error);
->>  		return false;
->>  	}
->> =20
->> +	if (!sg_miter_next(sgm))
->> +		return false;
->> +
->>  	p =3D sgm->addr;
->> =20
->>  	for (i =3D 0; i < host->blocksize / 4; i++)
->>  		sh_mmcif_writel(host->addr, MMCIF_CE_DATA, *p++);
->> =20
->> +	data->bytes_xfered +=3D host->blocksize;
->>  	sgm->consumed =3D host->blocksize;
->> -
->> -	if (!sg_miter_next(sgm)) {
->> -		sg_miter_stop(sgm);
->> -		return false;
->> -	}
->> +	sg_miter_stop(sgm);
->> =20
->>  	sh_mmcif_bitset(host, MMCIF_CE_INT_MASK, MASK_MBUFWEN);
->> =20
->> -	return true;
->> +	return data->bytes_xfered < host->blocksize * data->blocks;
->>  }
->
-> [Severity: Medium]>
-> --=20
-> Sashiko AI review =C2=B7=20
-> https://sashiko.dev/#/patchset/20261118134445.2909283-1-arnd@kernel.or=
-g?part=3D1
-> What happens if a PIO transfer encounters an error or timeout after on=
-e or
-> more blocks have been transferred to or from MMCIF_CE_DATA?
->
-> In the single-block and multi-block PIO helpers, data->bytes_xfered is
-> incremented as soon as the controller FIFO is accessed, before
-> MMCIF_WAIT_FOR_READ_END, MMCIF_WAIT_FOR_WRITE_END, or MMCIF_WAIT_FOR_S=
-TOP
-> completes.  If a later step or sh_mmcif_timeout_work() fails, data->er=
-ror
-> (or mrq->stop->error) is set while data->bytes_xfered remains non-zero,
-> which causes mmc_blk_mq_rw_recovery() and mmc_blk_mq_complete_rq() to =
-treat
-> those unconfirmed bytes as successfully transferred with BLK_STS_OK.
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCav3mfgAKCRB4tDGHoIJi
+0sA3AP4+euvhz3AKWQd3Hnr1swUc5gAjV8/GPc3ZTGXpRHo13gEA4wcKF/akdglg
+nxbWPJmVUrF8Zj63Rnhg8b134RMyMAk=
+=KuZu
+-----END PGP SIGNATURE-----
 
-Not sure what we actually want data->bytes_xfered to be in this case,
-I would guess that if the FIFO access went through, we should count it,
-but to be on the safe side I can reset the value in the error case
-and leave the behavior unchanged here:
-
-diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
-index cade6ae7d44f..6c3aff6e8c46 100644
---- a/drivers/mmc/host/sh_mmcif.c
-+++ b/drivers/mmc/host/sh_mmcif.c
-@@ -1253,6 +1253,7 @@ static irqreturn_t sh_mmcif_irqt(int irq, void *de=
-v_id)
- 		break;
- 	case MMCIF_WAIT_FOR_STOP:
- 		if (host->sd_error) {
-+			mrq->data->bytes_xferred =3D 0;
- 			mrq->stop->error =3D sh_mmcif_error_manage(host);
- 			dev_dbg(dev, "%s(): %d\n", __func__, mrq->stop->error);
- 			break;
-@@ -1263,6 +1264,7 @@ static irqreturn_t sh_mmcif_irqt(int irq, void *de=
-v_id)
- 	case MMCIF_WAIT_FOR_READ_END:
- 	case MMCIF_WAIT_FOR_WRITE_END:
- 		if (host->sd_error) {
-+			mrq->data->bytes_xferred =3D 0;
- 			mrq->data->error =3D sh_mmcif_error_manage(host);
- 			dev_dbg(dev, "%s(): %d\n", __func__, mrq->data->error);
- 		}
-@@ -1378,6 +1380,7 @@ static void sh_mmcif_timeout_work(struct work_stru=
-ct *work)
- 	case MMCIF_WAIT_FOR_WRITE:
- 	case MMCIF_WAIT_FOR_READ_END:
- 	case MMCIF_WAIT_FOR_WRITE_END:
-+		mrq->data->bytes_xferred =3D 0;
- 		mrq->data->error =3D sh_mmcif_error_manage(host);
- 		break;
- 	default:
-
->> @@ -1296,9 +1280,6 @@ static irqreturn_t sh_mmcif_irqt(int irq, void =
-*dev_id)
->> =20
->>  	if (host->wait_for !=3D MMCIF_WAIT_FOR_STOP) {
->>  		struct mmc_data *data =3D mrq->data;
->> -		if (!mrq->cmd->error && data && !data->error)
->> -			data->bytes_xfered =3D
->> -				data->blocks * data->blksz;
->> =20
->>  		if (mrq->stop && !mrq->cmd->error && (!data || !data->error)) {
->>  			sh_mmcif_stop_cmd(host, mrq);
->
-> [Severity: High]
-> Does removing this assignment leave data->bytes_xfered at 0 for all DMA
-> transfers?
->
-> When DMA is used, sh_mmcif_end_cmd() waits for host->dma_complete
-> synchronously and never calls the PIO block helpers, and only touches
-> data->bytes_xfered to zero it on error:
->
-> drivers/mmc/host/sh_mmcif.c:sh_mmcif_end_cmd() {
->     ...
-> 	if (data->error) {
-> 		data->bytes_xfered =3D 0;
-> 		/* Abort DMA */
-> 		if (data->flags & MMC_DATA_READ)
-> 			dmaengine_terminate_sync(host->chan_rx);
-> 		else
-> 			dmaengine_terminate_sync(host->chan_tx);
-> 	}
->     ...
-> }
->
-> Every successful DMA read or write will therefore complete with
-> data->bytes_xfered =3D=3D 0 and fail in the MMC block layer.
-
-I see. I could either put back the original line, or move it
-into sh_mmcif_end_cmd() for the DMA code path only:
-
-@@ -1178,6 +1178,8 @@ static bool sh_mmcif_end_cmd(struct sh_mmcif_host =
-*host)
-                        dmaengine_terminate_sync(host->chan_rx);
-                else
-                        dmaengine_terminate_sync(host->chan_tx);
-+       } else {
-+               data->bytes_xfered =3D data->blksz * data->blocks;
-        }
-=20
-        /*
-
-Let me know if you have a preference, otherwise I'll go with this one.
-
-      Arnd
+--eGumaYRWr8p5wYX4--
