@@ -1,76 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032891;
-	b=zJBoNJe/U8eDuv1xAwW6hKWfLn7wJlI9E0DS+GTNH/xZ5OkC1px7900onkYbhIq5NGPd
-	 CbI0ZnDkHQ7MdNg0m4UCyORSgFye7k80g5dR/GEHj54JfLLRIIHG6DTpqMpRXg11IJXin
-	 IDUgI2hn6jxD5btGxsRaKR2UhGuwlPwSixBejiRc4MnxbhBJap/7v75aLpNY8iTJVbqCt
-	 EAj9QSFPp00GUvE8QU4fIfNkfAUQCS653BeEH/OpS5w4QtEqnvxIBkQws7GhQU+4lfn3Y
-	 HnNded5zfC+f/d2NDw9xjyPm3xTfajBJdyPvlK7vJ8N4LTvOn1jNqVsasIkIumq9bRw==
+	t=1795032996;
+	b=jB1+kP1h+cwBLKsvN7MsV2PWToLTF9OPbDQQCjjwtRXVhY8z5Oh+Z4+7O3zNzk78w/hR
+	 n2k0TvfwpmTuqjDXmZj5QPL40C+k1ajta6Tpqe7tRYyJXyV/I3S4HL2slPcjANYyNpmR2
+	 0n3tXLuLKIw5FB5gKBWazoBSdTl9ALeYv/dO/aFfNU9eq1yhFXAEJ2k2fLRgUejyfuwMY
+	 EMAOe+sWAMIU2oYZhiiCif67ZceRGUVNiKl+FYGMTmRFrvcUuMoNJIwK6tvIpEfqiD6qR
+	 WzXOYYgXRtQjNVK14ZP5ySimExa+1mN5ugEuFcTjJDtgyOBF8wzIJtvpcxIXhhynEVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032891;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=vfJsDbkDITf6JkaA3B62RxkVzwP30G9ZEb3qTDUX7PU=;
-	b=Oryg/YL5ZHRlDW2pAtf7by3RC0meRMQDdxGqtqBOYPOZ509jZH0I32uu7Jl5cNDuGNmY
-	 9lAJdaUrPHwSzfw/EF1M2S+zZVxHkTNKDwIi148BqqbhPrTraGCBiD6zAINopbCrk8tB+
-	 lzoQNuugErk8ZX1kt9Tkrwc3UTMP6WrAVQ2V1sMuw3QBoUm6VizH2XnbpRvPNLChh8XWa
-	 tUrNdVcj2sCIu3gFpfJ8VsLXcxx0yXjnrGAujCpGSUX7Re9gONgAYHYdm6uxLQBgZ/Gz+
-	 vrqMFePrOKmiPIALY4byoT8SiIti24hqdcBtrK1NtPbd0nqb5ObWCXRYm9EiZzWg8RQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032996;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=7BbG6Ibh3KVMcdt0G6qbp+g1C+02LBnBwZSTdZVSGeQ=;
+	b=k8rkHfusDv89R98DqG9FC/yXqtTZaN2rurS3MN2MKZ/OGXQW1mp9z8keV7PsdOphGmQa
+	 mg0T9Ol507UW8AXv1fC5OUO9hniA5p9Gt6DDqytrrLqLthe3ZuBBa0h0GOAGK6OWowG1k
+	 KOb/xWdrtNVEPmSXojGL9OxeEsgJCV4/RT1az9koNsArIfFtpKctt7jsQbWxqd8StCHuH
+	 /9ZqBTmg4FW2fdyklOJhQ0yFXVi6jIBr4K/LHB0OAjtFpZBL/koLw7SoDEDj9ELEr0/zK
+	 FyaGzRk/8YQtJE4cmpYs4i7YRvt0sUiu73Ha6YfD56phFNHJgNnNYBLIttUMNQS+AUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=JtRsFGJv;
-	arc=none smtp.remote-ip=192.198.163.18
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--thaisonphan.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CvPKAfD4;
+	arc=none smtp.remote-ip=209.85.217.71
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA84A60A260B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 20:14:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA84A60A260B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1AD606A332
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 20:16:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B1AD606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--thaisonphan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=JtRsFGJv
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795032890; x=1826568890;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=RP/rxU3ZKK4+PWUMexH2Rkf1hN/LVaO2jAvDZBkGsSY=;
-  b=JtRsFGJvM7nt1X84Ypb3orfpX2HMz5Kr9jPp5TUQ3zviaySxyRDNXIHN
-   hU4jmh1Ig9vHHgPcmTm0Vv7wGJDvMkJfm0AbIGPuLLnlV4NrJou/q2fkq
-   qoQEgcEocI2X5lgYeW2SMfusEVUYRrGdcVSk6hNfdLoiynTtRYZlp4z1v
-   NcIVyLxw9HzUREpZPV5bAmwTJ/Uz32t9ox9gu3cB+Q99R5AB1XzEAWU0M
-   gIJWYrRmETkgZ23SNR4ZOIycz0oW7eMPUfWAPPQj2h1YxLH8v7mrlu1gb
-   yt7ik8r6On7ava8cVciCMTd/c9Y5cYkBlMVkJYemiQZI/zyQR8EYbuqGT
-   w==;
-X-CSE-ConnectionGUID: pKxZEh67Rc69M9R3qNssBA==
-X-CSE-MsgGUID: u1muUxK9TqC78lcJXg0jwg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11970"; a="3887572"
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="3887572"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:14:49 -0800
-X-CSE-ConnectionGUID: vrk2ifOdTFCUBhm7FNdYQw==
-X-CSE-MsgGUID: WZOH9ng3RGyX1TawEwOguQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="10455274"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.16])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 12:14:48 -0800
-Date: Wed, 18 Nov 2026 22:14:44 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Maarten Lankhorst <dev@lankhorst.se>, intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH v4 5/6] drm/xe/display: Remove duplicated code
-Message-ID: <av4HNDaMwb6UShP2@intel.com>
-References: <20261116122828.266113-8-dev@lankhorst.se>
- <20261116122828.266113-13-dev@lankhorst.se>
- <sashiko-outbox-217026@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CvPKAfD4
+Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-7d65ae19133so965446137.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 12:16:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795032995; x=1795637795; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7BbG6Ibh3KVMcdt0G6qbp+g1C+02LBnBwZSTdZVSGeQ=;
+        b=CvPKAfD4oBuN+1Q6nhupSxVGt2eQEEyWC5NyyhatjKlHWKzCW0kSnCiLHJsYeoDWy1
+         6u64zPRmr1zYVva/6JQ4/MLv+OwojDLVRLn4AzAkDgyy9IEK9UQsTAShil8ShylqCcoa
+         B2Y+nmfJTN9yy6xX3jNEavLh5K8LwZTErpBDGlZdOvwEL48EXrU7mIShNvHsE4nDxdiy
+         qWENJy+HBjHeC+0x9o9any/MsncxSQzzOZH63urYvLEXoblzmP7x+tRVQ21pyb27eCxk
+         GRJ4ulU9PHpyRxOW4oMFV+opTNTCDoaXYlOn12aN7LsKzIvP6WivoV05Pmh3kwsDn+ZM
+         fnRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795032995; x=1795637795;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=7BbG6Ibh3KVMcdt0G6qbp+g1C+02LBnBwZSTdZVSGeQ=;
+        b=ShMrLhBvRBBWVHMCaupYA0GAjEb5uAY4rN3RbfCkmKyatVtqNZ8dzZdedYv3FKkSU4
+         HZ5P+lcu7ah8hXbT++Dw555ddrBaBGY64LGfYtDo0zZs5idSfyLFqoAPv6j2dCPfmLur
+         tQK7JJ0CPnjryQQ+KUdtX7HDXH3La09fhD5wxYNYb2yxV7F7abaWd/UBeW2xM6C8bADB
+         jRW+hnPJHEIYwRt99ipivKsHPkEkJbmXjCP/mWZPuP7AVMBKQVL9v5dvlO0Qw026G/1z
+         1skDrQ/yNOQvRglHZz8ZZB8VVAi28ocLwEkym0IiqODmsV7PNRPpIETzCoDfLh0LbZ8b
+         F2/g==
+X-Gm-Message-State: APuU4Z9NuIUosU5iHVhviKYIaCEJ3F4GEq9kJKNXLIlP2VTPCZK8Lou5
+	l+gT9dCzUNyaNWURHRIrg9ZJcTMkeij2mRWhfbo3MrVuDoupR2HJNU6KRf0qWkLLH34hjKeO2Pa
+	aj7zEarfTYPb2WYWvnjsZ2dwuhULj8tt3Pb17/ammZNer+pGfjSsQO4V/7LlYaVneZr6/Tu+AZY
+	Yvr7NRXimdpeff6mwkCst7GAeBWFvrCspSuo5IedGpH8wk8okssCa3sJJCnx+TqOfz7IGuLF51c
+	fQ=
+X-Received: from vsbbd17.prod.google.com ([2002:a05:6102:1571:b0:7c3:3c65:bb6d])
+ (user=thaisonphan job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6102:149d:b0:7cc:1045:604 with SMTP id ada2fe7eead31-7d6ba4ca641mr1483449137.30.1795032994710;
+ Wed, 18 Nov 2026 12:16:34 -0800 (PST)
+Date: Wed, 18 Nov 2026 20:16:32 +0000
+In-Reply-To: <sashiko-outbox-220941@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,106 +78,48 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-217026@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+Mime-Version: 1.0
+References: <20261117124710.1338951-1-thaisonphan@google.com>
+ <20261117124710.1338951-3-thaisonphan@google.com> <sashiko-outbox-220941@kernel.org>
+X-Mailer: git-send-email 2.56.1.831.g720f3f5937-goog
+Message-ID: <20261118201632.2447530-1-thaisonphan@google.com>
+Subject: Re: [PATCH net v3 2/2] tcp: accecn: initialize AccECN fields in
+ syncookie path
+From: Thaison Phan <thaisonphan@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Thaison Phan <thaisonphan@google.com>, sashiko-bot@kernel.org, 
+	Eric Dumazet <edumazet@kernel.org>, Matthieu Baerts <matttbe@kernel.org>, 
+	Neal Cardwell <ncardwell@google.com>, Kuniyuki Iwashima <kuniyu@google.com>, 
+	"David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
+	"=?UTF-8?q?Ilpo=20J=C3=A4rvinen?=" <ij@kernel.org>, Olivier Tilmans <olivier.tilmans@nokia.com>, 
+	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>, Stan Iliev <stani@google.com>, 
+	netdev@vger.kernel.org, bpf@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Nov 16, 2026 at 12:56:13PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] drm/xe/display: spurious drm_err in initial_plane_bo() without
->   stolen memory
-> --
-> 
-> commit bab2c79797477724bcda99b81e670f98a25a3bee
-> Author: Maarten Lankhorst <dev@lankhorst.se>
-> 
-> drm/xe/display: Remove duplicated code
-> 
-> This commit moves the GGTT PTE read and local-memory bit check out of the
-> discrete and integrated branches in initial_plane_bo().
-> 
-> > diff --git a/drivers/gpu/drm/xe/display/xe_initial_plane.c b/drivers/gpu/drm/xe/display/xe_initial_plane.c
-> > index 451c24a4ed8d5..1366b68f43fc2 100644
-> > --- a/drivers/gpu/drm/xe/display/xe_initial_plane.c
-> > +++ b/drivers/gpu/drm/xe/display/xe_initial_plane.c
-> [ ... ]
-> > @@ -58,16 +58,14 @@ initial_plane_bo(struct xe_device *xe,
-> >  			page_size);
-> >  	size -= base;
-> >  
-> > -	if (IS_DGFX(xe)) {
-> > -		u64 pte = xe_ggtt_read_pte(tile0->mem.ggtt, base);
-> > -
-> > -		if (is_pte_local(pte) != need_pte_local(xe)) {
-> > -			drm_err(&xe->drm, "Initial plane PTE has bad local memory bit\n");
-> > -			return NULL;
-> > -		}
-> > -
-> > -		phys_base = pte & ~(page_size - 1);
-> > +	pte = xe_ggtt_read_pte(tile0->mem.ggtt, base);
-> > +	phys_base = pte & ~(page_size - 1);
-> > +	if (is_pte_local(pte) != need_pte_local(xe)) {
-> > +		drm_err(&xe->drm, "Initial plane PTE has bad local memory bit\n");
-> > +		return NULL;
-> > +	}
-> >  
-> > +	if (IS_DGFX(xe)) {
-> >  		flags |= XE_BO_FLAG_VRAM0;
-> >  
-> >  		/*
-> > @@ -85,24 +83,13 @@ initial_plane_bo(struct xe_device *xe,
-> >  			    "Using phys_base=%pa, based on initial plane programming\n",
-> >  			    &phys_base);
-> >  	} else {
-> > -		struct ttm_resource_manager *stolen;
-> > -		u64 pte;
-> > -
-> > -		stolen = ttm_manager_type(&xe->ttm, XE_PL_STOLEN);
-> > -		if (!stolen) {
-> > +		if (!ttm_manager_type(&xe->ttm, XE_PL_STOLEN)) {
-> >  			drm_dbg_kms(&xe->drm, "No stolen for initial FB\n");
-> >  			return NULL;
-> >  		}
-> >  
-> > -		pte = xe_ggtt_read_pte(tile0->mem.ggtt, base);
-> > -
-> > -		if (is_pte_local(pte) != need_pte_local(xe)) {
-> > -			drm_err(&xe->drm, "Initial plane PTE has bad local memory bit\n");
-> > -			return NULL;
-> > -		}
-> > -
-> > -		phys_base = (pte & ~(page_size - 1)) - xe_ttm_stolen_gpu_offset(xe);
-> >  		flags |= XE_BO_FLAG_STOLEN;
-> > +		phys_base -= xe_ttm_stolen_gpu_offset(xe);
-> 
-> [Severity: Low]
-> Can moving the PTE local-memory bit check ahead of the stolen memory manager
-> check cause a spurious drm_err() on integrated platforms without stolen
-> memory?
-> 
-> On integrated platforms with has_lmembar(xe) where XE_PL_STOLEN is
-> unavailable, firmware can place the initial framebuffer in system memory
-> without XE_GGTT_PTE_DM set.
+On Wed, Nov 18, 2026 at 12:47:28PM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Medium]
+> Does the syncookie path leave tp->saw_accecn_opt stuck at
+> TCP_ACCECN_OPT_NOT_SEEN when the peer includes an AccECN option on the
+> third ACK?
+>
+> In the normal SYN-RECV path, tcp_check_req() calls tcp_accecn_option_init()
+> on the third ACK to update treq->saw_accecn_opt and treq->accecn_fail_mode
+> before tcp_ecn_openreq_child() copies them to the child socket.  The
+> syncookie path bypasses tcp_check_req(), and when tcp_child_process() later
+> runs tcp_rcv_state_process() -> tcp_ack() on that third ACK, neither
+> FLAG_FORWARD_PROGRESS nor FLAG_TS_PROGRESS is set, so
+> __tcp_accecn_process() returns before calling tcp_accecn_process_option().
 
-Never happens. The firmware framebuffer is either in stolen or local
-memory.
+Agreed, this is a valid observation, though it is pre-existing missing
+functionality in syncookie AccECN option handling rather than something
+introduced by this patch. Per Eric's guidance on v2 [1], we will leave 3rd
+ACK AccECN option initialization for a separate follow-up patch rather than
+growing this fix series.
 
-> Previously, initial_plane_bo() checked
-> ttm_manager_type(&xe->ttm, XE_PL_STOLEN) first and returned NULL with a
-> drm_dbg_kms() message, as added in 1d2a6c96f6f7 ("drm/xe: Print a debug
-> message if we have no stolen for the initial FB").  With this change, it
-> logs "Initial plane PTE has bad local memory bit" via drm_err() before
-> reaching the stolen check.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261116122828.266113-8-dev@lankhorst.se?part=5
+Marking v3 as changes-requested as I am sending v4 to guard the syn_ect_snt
+update with !req->syncookie for the BPF custom syncookie path.
 
--- 
-Ville Syrjälä
-Intel
+[1] https://lore.kernel.org/netdev/CAL4Wiir50_Z+m00GyU9BpRdAqgXs8V-L0S8kmmES=JiYyt==gg@mail.gmail.com/
+
+pw-bot: cr
