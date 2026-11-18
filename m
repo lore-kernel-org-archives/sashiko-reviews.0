@@ -1,95 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.71.94.104
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794968990;
-	b=aF/AL5g784ea3Cgwr7UErbeDpa3+vvO167UNFVFfNmni8+xK+leIwWt2z9wIoCxbrXD0
-	 BKHWg9XXAPp/DnQI13EdA7zGLc0ifEdh7D34K9J6cyTTPFEzKj/Cb7JoarwAKx89piWZY
-	 yJb/pHFyzWQxaoo4+ApSIFr3HAM6NHOjFWN/OUgjbgI7j/PLoWtVzzkPqRKM7Fxeh0Tzz
-	 sDyNwJsvL3D1EFOtReFhsqd4rakv0rqGvR9MLsBz9FTLfAQr38KEhvFERgz4DEjBfLCCX
-	 98J/THCZ7beiJxGW2+KngEDmRO+upmi+d3b40f4wGxjFD2dpp/IAbhnE0vqsOaoZNMA==
+	t=1794970374;
+	b=UM707F3s6fGW1+9NoZafoOQKqlrIhRbY/oklLJTPYzVAtZ/arPyP60A7GZ1ZakkrfhXl
+	 6Q8UcXaqP4AeDioqyJuDK2x82Ocmkuk55SIkLnKqrOqk7UPDkJAUOQPA+320NkqUCgwzV
+	 bibPnzxq/9x5L7Q2Tw8BqWA5iPC0xa0WxgUpo54zCAplb/Dz72m3QEoAB2y5zwxqSf6Z3
+	 0ewa5ql2aYLMuZskWoBpuiMPrGXyM06peoost4VAVkAjsiap+QRnoYAzHeHCwtQqQfdA1
+	 XksEE0WQartC/nnsVN+pGa28T5B2HNJ4xLI5WGs2iB/nUMoBEITn/v+ptvvsDEcmrpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794968990;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=mshUeIONfV1AmdiMI9dxWTVYamiiHifaiVxGW+DSDUE=;
-	b=JNLGIald12bp2aia4G6kYM3coXsUkTPGEuZ/2aafb0XkOh2Fvft8bp2Cjjo18q/ExTDn
-	 dIjT92QUekS0NJcgRq28ZfeswFqYfjL/7wBmPr3R9Rb77fW25pjihtuj614XENdfmZQzi
-	 PLIXJD111Y7SRtDSPNV0mNXWvPTTYhPP/nPZF2TW12DkIB3G1vYr/97GFd+EjkMGk0T45
-	 ze7T/0vVvmE79bnS2XgV12lUV84TnZBX9CRr4s1sNtGWuk6cW5dj3WWIdxE4Fc6d2iy3b
-	 smOZq5Rnx2SfgeBt0v+QKGLGveEv7b1WK0bl1/XTvD7D0jrni8X7FKEQEB+JxXzButQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794970374;
+	h=DMARC-Filter:Received:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
+	 X-Coremail-Antispam:X-CM-SenderInfo;
+	bh=/hNxqzFaAgg276dZ4HjyFYhGhgR6UPsZj01QdReBSIc=;
+	b=KINp5yznvQlXqjrBkf79APja8UviH8FYSg0R+nI1icu4k3Rpo2acepD9SUrp24w3HQgE
+	 i1k9ui/y/NbYf1UIHlyb7AauRKXMQ3BXE3Gt/A8Cu5XrZAJQUCFLyP7+42THHbfroaCVI
+	 jMFJ5V6aL0Zpb1zrn4W7Zn3S9LAZQLyHEib0mzzhF0bszkLXYr83XKl7qII0rFBswWU2I
+	 gqTCQQr9EEtLj0wilysLWLj29IDJKUoKWiIGWN9WoZD/urLCuY6W2nLAPY6EGzj3TNK11
+	 OiIv9CG2EBLyY1EP8XesPlL6R52VKHnOVlOgF6UGbllQOUOq8+DvJOp+NfSNeIfwJAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=purestorage.com;
-	spf=pass smtp.mailfrom=purestorage.com;
-	dkim=pass header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=WaG50wgr;
-	arc=none smtp.remote-ip=74.125.82.175
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=huaweicloud.com;
+	spf=pass smtp.mailfrom=huaweicloud.com;
+	arc=none smtp.remote-ip=124.71.94.104
+Received: from dggmsgout13.his.huawei.com (dggmsgout13.his.huawei.com [124.71.94.104])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D502606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 02:29:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D502606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=purestorage.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=purestorage.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=WaG50wgr
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-382f4710a17so173595eec.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 18:29:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=purestorage.com; s=google2022; t=1794968988; x=1795573788; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mshUeIONfV1AmdiMI9dxWTVYamiiHifaiVxGW+DSDUE=;
-        b=WaG50wgr3RHEzIIGUU6eMTrLIfz1CP65KuORa03Y5sgkN7Nypk9KMOWPYjlCirSTjJ
-         KSv4PX7XacvDoIL1b4O4wUuR/cVWZvbAWxlASUxKE4ztLImvtZfvm2IdTHv06bIEbTbh
-         fNLyDwTSo8GH7CcIsFZNMPJgytfC5og7acjigBaN0oGsJpdRM1BNoDtM6PWt6vJiRBNN
-         Fb9pzpf4V3ilDEyg+uL46YAuyah1h8MehRIiS6JNxCmTKNoLt/HmZXJw9fKjiMBJnauH
-         BStqe3eRXRcLoyjc0pHcatiWUFTrS6+JQk19hk17MXkNFrPkPYI5feJq7cDnQTFpms5m
-         5IBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794968988; x=1795573788;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=mshUeIONfV1AmdiMI9dxWTVYamiiHifaiVxGW+DSDUE=;
-        b=e1WOkzo6/orKzCFnOLKgfhsDE2Fq2TtvNx1tgDI0wEcmu4l7ojw7L6fnaD2TciCfZP
-         FvaVOh4ZbANAY8L1JztmASoub0FwDdbO/OtRF5OMi6hRY3Uc/AMkHq6m5eqTN0L2SXp6
-         pG5Ghur4t75WawEEKv1SjteHLqbJiSivBXw0Nn4ZifDq9ps7GgstYB6XY/s+TNSmbNqy
-         P/ynbLrXY3F6hOxMPtKHEBRMyyL9/NPOE4dGFeL/Nx1PqjVgEnpgfhRNK02xI4TnJ1HN
-         pBZur2mFgO9roprfiiPVUozRYrAj1pf5ivyYuBtlLxtN6rFcUvD+S0MC2sjVLRlhCD13
-         3GpQ==
-X-Gm-Message-State: APuU4Z/flWfcz9uVakjq+aAEiYLNM31z3dZtfHRTNbFElHGxfOAoKwkb
-	qdEpSx72ESu/OmrtQsgbJeq5drAeDZNfm6Susdbz9IYU2Mdi1TjB+ayMINgztI8j4UYWJQV+Fq4
-	CTOSU8eUAhTO5vnSZnydxdtl+6P+VbZgmKHXBnsGBCrOoVhjU3PXYwWGyXb22Hm0AQ4zeqEK2zk
-	cWmYRL5WndJKzDWhzplURyoWimL7FCrpgVfwhA03PxGbP7j3GbFF9kwU5ZB2Y2JeM=
-X-Gm-Gg: AZFdTZcwR7eF5nqoRkczF2vO9ydbdr8mm3+K/RLXvMJ0HJpmbPKjFV8mQ/Olydky69D
-	71eHAuc54Xpy7p6Mo8177jGP112hVZAhw9KEnaMv4Tw2CsCbBLOxO7XKxe44bBCq7Ha7ktSirSk
-	BJ6VSRPaDjJD4ENhTugNqT4EUuSDV13wmPezImCs93TReTmNmDseWdu2/RDdLLMm/NPpyjj/qjZ
-	rFGhh19V+3rGqrTLELHJ3UIsVzUo4xK9xECAoKNrE1uFWmbGn+R9oQ0cDHAoJeFShzwPA+3xhIC
-	gXS0n55N9jW+CoBEHbD9Qi1bhXOs/fMH/rlwDT6xNRHv6daSY+NJUsDFs+AE0kP58vsGAK4gqz2
-	LBu/xz4dByZ1ksKwVOIJYtgqaWLCN6VNwOsggwVd/5bpcHwYcjdydjmKqSrYFyBHOziOZ56pCYs
-	BtCcAIcomxAjEf8hBMdrYJxeIJmLsOU7FL6Jqcj8bprdXx4XSubbWtwhrr8iAtGbYmQrXYRgDKa
-	yLnU4cUzGSXzgRis8knnb5uO9YkVL2iWgdoDKd/LIIeVYCsIaYC8Rjy7lq/qSjMQax5/CBP3R+2
-	5gTymPDPDK+xJeTM4jWhnEx3fRGxYc6qrkhoUnC0uoWs0reMNA==
-X-Received: by 2002:a05:7300:c7c4:b0:381:610e:4045 with SMTP id 5a478bee46e88-38280079f92mr1290757eec.8.1794968988031;
-        Tue, 17 Nov 2026 18:29:48 -0800 (PST)
-Received: from medusa.lab.kspace.sh ([208.88.152.253])
-        by smtp.googlemail.com with ESMTPSA id 5a478bee46e88-382a76d70fasm2246385eec.22.2026.11.17.18.29.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 18:29:47 -0800 (PST)
-Date: Tue, 17 Nov 2026 18:29:45 -0800
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-Subject: Re: [PATCH v7 10/17] nvme-tcp: Use CCR to recover controller that
- hits an error
-Message-ID: <20261118022945.GI1670230-mkhalfella@purestorage.com>
-References: <20261114030454.2836543-1-mkhalfella@purestorage.com>
- <20261114030454.2836543-11-mkhalfella@purestorage.com>
- <sashiko-outbox-214122@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C8F606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 02:52:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 50C8F606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggmsgout13.his.huawei.com (SkyGuard) with ESMTP id 4jTmMq1mnmz1rqW4
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 10:51:51 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.128])
+	by mail.maildlp.com (Postfix) with ESMTP id E0C9940561
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 10:52:42 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP4 (Coremail) with UTF8SMTPA id gCh0CgBnnu35Ev1qwR8lEw--.21410S2;
+	Wed, 18 Nov 2026 10:52:42 +0800 (CST)
+Message-ID: <e940e69e-f7f6-4c37-a2f9-7caeaf9fb7c4@huaweicloud.com>
+Date: Wed, 18 Nov 2026 10:52:41 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,303 +51,158 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-214122@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] perf/core: Disable context fast-swap for sigtrap
+ events
+To: sashiko-reviews@lists.linux.dev,
+ Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1794914794.git.wutengda@huaweicloud.com>
+ <cff9b939758dad9f16bb4eb0483c63b7787e62bb.1794914794.git.wutengda@huaweicloud.com>
+ <sashiko-outbox-218736@kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <sashiko-outbox-218736@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:gCh0CgBnnu35Ev1qwR8lEw--.21410S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxtw1xAF4fXw13CFyfCrW7Jwb_yoW7GFWDpr
+	W8Ars8KFWUXr12q3WYy3W293W8Xw4FqF4DJw4qkFWfAr4Ygr9xXFy7G3WYvFs8Arn7Aa4f
+	tw4q93sru34UJaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On Sat 2026-11-14 03:38:55 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential
-> issues to consider:
-> - [High] nvme-tcp: premature completion of in-flight requests in
->   nvme_tcp_try_send()
-> - [High] nvme-tcp: non-multipath I/O retry exhaustion during
->   NVME_CTRL_FENCING
-> - [High] nvme-tcp: race in nvme_tcp_fencing_work() skips err_work on
->   reset
-> - [High] nvme-tcp: race between nvme_tcp_error_recovery() and
->   nvme_tcp_stop_ctrl()
-> - [Medium] nvme-tcp: race in nvme_tcp_error_recovery() bypasses
->   controller fencing
+
+
+On 2026/11/17 19:53, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] perf/core: list_del_event() drops nr_no_switch_fast before
+>   perf_pending_task()
 > --
 > 
-> commit abb8e00ab3d00deda1ad0650e2f1521537edf566
-> Author: Mohamed Khalfella <mkhalfella@purestorage.com>
+> commit a5820a5e4b514a31e08f42157caca3b1bf8abed1
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> nvme-tcp: Use CCR to recover controller that hits an error
+> perf/core: Disable context fast-swap for sigtrap events
 > 
-> This commit transitions a live nvme-tcp controller to NVME_CTRL_FENCING on
-> error to attempt cross-controller reset via fencing_work before proceeding
-> to NVME_CTRL_RESETTING, while holding timed-out requests until fencing
-> completes.
+> This commit disables the context switch fast-swap path for contexts containing
+> sigtrap events by accounting attr->sigtrap in nr_no_switch_fast during
+> list_add_event() and list_del_event() instead of __perf_event_overflow() and
+> perf_pending_task().
 > 
-> > diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-> > index 7ecc6c007f8d4..244c6c50cf990 100644
-> > --- a/drivers/nvme/host/tcp.c
-> > +++ b/drivers/nvme/host/tcp.c
+>> diff --git a/kernel/events/core.c b/kernel/events/core.c
+>> index da86bc6e8be94..9fc8db14c6b83 100644
+>> --- a/kernel/events/core.c
+>> +++ b/kernel/events/core.c
+>> @@ -1999,7 +1999,7 @@ list_add_event(struct perf_event *event, struct perf_event_context *ctx)
+>>  		ctx->nr_user++;
+>>  	if (event->attr.inherit_stat)
+>>  		ctx->nr_stat++;
+>> -	if (has_inherit_and_sample_read(&event->attr))
+>> +	if (has_inherit_and_sample_read(&event->attr) || event->attr.sigtrap)
+>>  		local_inc(&ctx->nr_no_switch_fast);
+>>  
+>>  	if (event->state > PERF_EVENT_STATE_OFF)
+>> @@ -2225,7 +2225,7 @@ list_del_event(struct perf_event *event, struct perf_event_context *ctx)
+>>  		ctx->nr_user--;
+>>  	if (event->attr.inherit_stat)
+>>  		ctx->nr_stat--;
+>> -	if (has_inherit_and_sample_read(&event->attr))
+>> +	if (has_inherit_and_sample_read(&event->attr) || event->attr.sigtrap)
+>>  		local_dec(&ctx->nr_no_switch_fast);
+>>  
+>>  	list_del_rcu(&event->event_entry);
+> 
 > [ ... ]
-> > @@ -651,6 +652,12 @@ static void nvme_tcp_init_recv_ctx(struct nvme_tcp_queue *queue)
-> >  
-> >  static void nvme_tcp_error_recovery(struct nvme_ctrl *ctrl)
-> >  {
-> > +	if (nvme_change_ctrl_state(ctrl, NVME_CTRL_FENCING)) {
-> > +		dev_warn(ctrl->device, "starting controller fencing\n");
-> > +		queue_work(nvme_wq, &to_tcp_ctrl(ctrl)->fencing_work);
-> > +		return;
-> > +	}
 > 
-> [Severity: High]
-> Does leaving the queues unquiesced while ctrl is in NVME_CTRL_FENCING
-> cause non-multipath requests to exhaust their retries and fail
-> immediately?
-> 
-> When a request is dispatched to nvme_tcp_queue_rq() during
-> NVME_CTRL_FENCING or NVME_CTRL_FENCED, nvme_check_ready() returns false
-> and nvme_tcp_queue_rq() calls nvme_fail_nonready_command() before
-> nvme_tcp_setup_cmd_pdu():
-> 
-> drivers/nvme/host/core.c:nvme_fail_nonready_command() {
-> 	...
-> 	if (state != NVME_CTRL_DELETING_NOIO &&
-> 	    state != NVME_CTRL_DELETING &&
-> 	    state != NVME_CTRL_FENCING &&
-> 	    state != NVME_CTRL_FENCED &&
-> 	    state != NVME_CTRL_DEAD &&
-> 	    !test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ctrl->flags) &&
-> 	    !blk_noretry_request(rq) && !(rq->cmd_flags & REQ_NVME_MPATH))
-> 		return BLK_STS_RESOURCE;
-> 
-> 	if (!(rq->rq_flags & RQF_DONTPREP))
-> 		nvme_clear_nvme_request(rq);
-> 
-> 	return nvme_host_path_error(rq);
-> }
-> 
-> Because NVME_CTRL_FENCING and NVME_CTRL_FENCED are excluded from returning
-> BLK_STS_RESOURCE, a non-multipath request (without REQ_NVME_MPATH) sets
-> RQF_DONTPREP and completes with NVME_SC_HOST_PATH_ERROR.
-> nvme_decide_disposition() then chooses RETRY and nvme_retry_req() kicks
-> the requeue list with zero delay on the still-unquiesced queue.  The
-> request loops through nvme_tcp_queue_rq() five times in a tight loop until
-> retries reach nvme_max_retries, logs an uninitialized or stale command in
-> nvme_log_error(), and fails with BLK_STS_TRANSPORT instead of waiting for
-> controller recovery.
-
-NVME_CTRL_FENCING and NVME_CTRL_FENCED have been delted from
-nvme_fail_nonready_command() in review of pervious path.
-
-> 
-> > +
-> >  	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING))
-> >  		return;
+>> @@ -7758,7 +7763,6 @@ static void perf_pending_task(struct callback_head *head)
+>>  
+>>  	if (smp_load_acquire(&event->pending_work)) {
+>>  		perf_sigtrap(event);
+>> -		local_dec(&event->ctx->nr_no_switch_fast);
+>>  		/*
+>>  		 * Ensure the pending work is fully handled before allowing
+>>  		 * another overflow to queue it. See __perf_event_overflow().
+>> @@ -10935,7 +10939,6 @@ static int __perf_event_overflow(struct perf_event *event,
+>>  		 */
+>>  		if (cmpxchg_acquire(&event->pending_work, 0, pending_id) == 0) {
+>>  			if (!task_work_add(current, &event->pending_task, notify_mode)) {
+>> -				local_inc(&event->ctx->nr_no_switch_fast);
+>>  				WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
+>>  
+>>  				event->pending_addr = 0;
 > 
 > [Severity: Medium]
-> Can this fallback nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING) call
-> transition a newly NVME_CTRL_LIVE controller directly to
-> NVME_CTRL_RESETTING and bypass fencing?
+> Can ctx->nr_no_switch_fast drop to zero while event->pending_task is still
+> queued if the sigtrap event is detached before perf_pending_task() runs?
 > 
-> In nvme-tcp, ctrl->state leaves NVME_CTRL_NEW before any queues or sockets
-> exist, so NVME_CTRL_RESETTING can only be entered from NVME_CTRL_LIVE or
-> NVME_CTRL_FENCED.  If a socket callback triggers nvme_tcp_error_recovery()
-> while nvme_tcp_setup_ctrl() is finishing connection setup, the two state
-> changes can interleave:
+> Detaching an event does not cancel or flush event->pending_task; instead,
+> pending_task holds a reference to the event until the task returns to user
+> space.  When a parent event with attr.inherit and attr.sigtrap is closed while
+> a child event has pending_task queued, perf_event_release_kernel() detaches the
+> child events from their cloned contexts without uncloning them:
 > 
-> CPU0                                  CPU1
-> nvme_tcp_error_recovery()             nvme_tcp_setup_ctrl()
->   nvme_change_ctrl_state(...,
->     NVME_CTRL_FENCING) -> false
->     (state is NVME_CTRL_CONNECTING)
->                                         nvme_change_ctrl_state(...,
->                                           NVME_CTRL_LIVE) -> true
->                                           nvme_kick_requeue_lists()
->   nvme_change_ctrl_state(...,
->     NVME_CTRL_RESETTING) -> true
->   queue_work(..., &err_work)          <-- skips fencing_work
+> CPU0 (task A)                     CPU1
+> __perf_event_overflow(child_A)
+>   task_work_add(A, &child_A->pending_task)
+>                                   perf_event_release_kernel(parent)
+>                                     perf_remove_from_context(child_A, ...)
+>                                       list_del_event(child_A, ctx_A)
+>                                         local_dec(&ctx_A->nr_no_switch_fast)
+>                                     perf_remove_from_context(child_B, ...)
+>                                       list_del_event(child_B, ctx_B)
+>                                         local_dec(&ctx_B->nr_no_switch_fast)
+> schedule() (A -> B)
+>   perf_event_context_sched_out(A, B)
+>     /* context_equiv(ctx_A, ctx_B) && nr_no_switch_fast == 0 */
+>     WRITE_ONCE(ctx_A->task, B)
+> ...
+> perf_pending_task(&child_A->pending_task)
+>   perf_sigtrap(child_A)
+>     WARN_ON_ONCE(event->ctx->task != current)  <-- trips WARN, drops SIGTRAP
 > 
-> Requests dispatched as the controller became NVME_CTRL_LIVE are then
-> canceled by err_work and retried on another path without fencing the
-> controller first.  Removing the NVME_CTRL_RESETTING fallback from
-> nvme_tcp_error_recovery() avoids this race, since nvme-tcp only needs to
-> trigger error recovery from NVME_CTRL_LIVE.
+> Keeping the increment in __perf_event_overflow() and decrement in
+> perf_pending_task() alongside list_add_event() and list_del_event() would keep
+> nr_no_switch_fast elevated until pending_task completes. 
 
-Good point. Updated nvme_tcp_error_recovery() to only change the
-controller state to FENCING. This should be okay because the
-was-only-valid transition LIVE -> RESETTING is now claimed by FENCING.
+It does appear that such a scenario exists.
 
-> 
-> > @@ -2767,6 +2774,22 @@ static void nvme_tcp_reconnect_ctrl_work(struct work_struct *work)
-> >  	nvme_tcp_reconnect_or_remove(ctrl, ret);
-> >  }
-> >  
-> > +static void nvme_tcp_fencing_work(struct work_struct *work)
-> > +{
-> > +	struct nvme_tcp_ctrl *tcp_ctrl = container_of(work,
-> > +			struct nvme_tcp_ctrl, fencing_work);
-> > +	struct nvme_ctrl *ctrl = &tcp_ctrl->ctrl;
-> > +	unsigned long rem;
-> > +
-> > +	rem = nvme_fence_ctrl(ctrl);
-> > +	if (rem)
-> > +		dev_info(ctrl->device, "CCR failed, starting error recovery\n");
-> > +
-> > +	nvme_change_ctrl_state(ctrl, NVME_CTRL_FENCED);
-> > +	if (nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING))
-> > +		queue_work(nvme_reset_wq, &tcp_ctrl->err_work);
-> > +}
-> 
-> [Severity: High]
-> Can another caller claim the NVME_CTRL_FENCED to NVME_CTRL_RESETTING
-> transition between these two nvme_change_ctrl_state() calls and prevent
-> tcp_ctrl->err_work from running?
-> 
-> nvme_change_ctrl_state(ctrl, NVME_CTRL_FENCED) sets ctrl->state to
-> NVME_CTRL_FENCED, calls wake_up_all(&ctrl->state_wq), and drops ctrl->lock
-> before the second nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING) call:
-> 
-> CPU0                                  CPU1
-> nvme_tcp_fencing_work()               nvmf_subsystem_reset()
->   nvme_change_ctrl_state(...,           nvme_wait_reset(ctrl)
->     NVME_CTRL_FENCED)
->     wake_up_all(&ctrl->state_wq)
->                                           nvme_change_ctrl_state(...,
->                                             NVME_CTRL_RESETTING) -> true
->   nvme_change_ctrl_state(...,
->     NVME_CTRL_RESETTING) -> false
->   (err_work not queued)
->                                         reg_write32() -> fails on dead sock
->                                         returns error  <-- stuck in RESETTING
-> 
-> When nvmf_subsystem_reset() wins the transition, reg_write32() fails over
-> the broken transport before nvme_try_sched_reset(), leaving the controller
-> permanently wedged in NVME_CTRL_RESETTING with neither err_work nor
-> reset_work scheduled.  A concurrent nvme_reset_ctrl() (such as from
-> nvme_keep_alive_work(), nvme_anatt_timeout(), or sysfs reset_controller)
-> can likewise claim NVME_CTRL_RESETTING here and queue reset_work instead
-> of err_work, which attempts nvme_disable_ctrl() over the dead admin socket
-> and leaves the queues quiesced if nvme_tcp_setup_ctrl() fails.
+The nr_no_switch_fast refcount distinguishes two types of states:
 
-This is a pre-existing issue. nvmf_subsystem_reset() is broken today and
-can leave the controller in RESETTING state if reg_write32() fails.
-Will not address part of this patchset.
+1. Whether the SIGTRAP event still has a pending_task that has not yet been executed. (Pre-existing)
+2. Whether the SIGTRAP event is still attached to the context. (Newly added)
 
-> 
-> [ ... ]
-> 
-> > @@ -2842,6 +2865,7 @@ static void nvme_reset_ctrl_work(struct work_struct *work)
-> >  
-> >  static void nvme_tcp_stop_ctrl(struct nvme_ctrl *ctrl)
-> >  {
-> > +	flush_work(&to_tcp_ctrl(ctrl)->fencing_work);
-> >  	flush_work(&to_tcp_ctrl(ctrl)->err_work);
-> >  	cancel_delayed_work_sync(&to_tcp_ctrl(ctrl)->connect_work);
-> >  }
-> 
-> [Severity: High]
-> Can nvme_tcp_stop_ctrl() run flush_work(&to_tcp_ctrl(ctrl)->fencing_work)
-> before nvme_tcp_error_recovery() calls queue_work(), allowing fencing_work
-> to run during and after controller deletion?
-> 
-> In nvme_do_delete_ctrl(), nvme_stop_ctrl() runs before
-> ctrl->ops->delete_ctrl() stops the sockets and queues, and
-> nvme_change_ctrl_state(ctrl, NVME_CTRL_DELETING) is permitted from
-> NVME_CTRL_FENCING:
-> 
-> CPU0                                  CPU1
-> nvme_tcp_error_recovery()             nvme_do_delete_ctrl()
->   nvme_change_ctrl_state(...,
->     NVME_CTRL_FENCING) -> true
->                                         nvme_change_ctrl_state(...,
->                                           NVME_CTRL_DELETING) -> true
->                                         nvme_stop_ctrl()
->                                           nvme_tcp_stop_ctrl()
->                                             flush_work(&fencing_work)
->   dev_warn(...)
->   queue_work(nvme_wq, &fencing_work)
->                                         ...
->                                         nvme_free_ctrl()
->                                           kfree(ctrl)
-> nvme_tcp_fencing_work()
->   nvme_fence_ctrl(ctrl)               <-- use-after-free
-> 
-> Because flush_work() returns immediately when fencing_work has not been
-> queued yet, fencing_work is never flushed again before the controller is
-> freed.
+Among them:
+Type 1 covers the scenario where nr_no_switch_fast goes from 1 to 0 at the end.
+Type 2 covers the scenario where nr_no_switch_fast goes from 0 to 1 at the beginning.
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index d079ca6412a5..d83daf10f50d 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2794,6 +2788,10 @@ static void nvme_tcp_fencing_work(struct work_struct *work)
- 	struct nvme_ctrl *ctrl = &tcp_ctrl->ctrl;
- 	unsigned long rem;
+Both have windows for taking the fast path, and an nr_no_switch_fast guard is needed.
+Deleting 1 in this patch does indeed seem incorrect.
 
-+	/* Skip fencing if the controller has been deleted */
-+	if (nvme_ctrl_state(ctrl) != NVME_CTRL_FENCING)
-+		return;
-+
- 	rem = nvme_fence_ctrl(ctrl);
- 	if (!rem)
- 		goto done;
-@@ -2856,6 +2854,8 @@ static void nvme_tcp_teardown_ctrl(struct nvme_ctrl *ctrl, bool shutdown)
- static void nvme_tcp_delete_ctrl(struct nvme_ctrl *ctrl)
- {
- 	nvme_tcp_teardown_ctrl(ctrl, true);
-+	cancel_work_sync(&to_tcp_ctrl(ctrl)->fencing_work);
-+	cancel_delayed_work_sync(&to_tcp_ctrl(ctrl)->fenced_work);
- }
+Hi Sebastian, what do you think?
 
- static void nvme_reset_ctrl_work(struct work_struct *work)
+If there's no problem, I will roll back the deleted counter (i.e., the v3 version
+of this patch).
 
+Thanks,
+Tengda
 
-This is a valid point. Fixed with the change above.
+>                                                            Note that because
+> list_add_event() and list_del_event() can run on a remote CPU under ctx->lock
+> while __perf_event_overflow() or perf_pending_task() runs on ctx->task's CPU
+> without ctx->lock, nr_no_switch_fast would also need to be atomic_t rather than
+> CPU-local local_t.
+> 
 
-> 
-> [ ... ]
-> 
-> > @@ -2944,17 +2968,19 @@ static enum blk_eh_timer_return nvme_tcp_timeout(struct request *rq)
-> [ ... ]
-> >  	/*
-> >  	 * LIVE state should trigger the normal error recovery which will
-> > -	 * handle completing this request.
-> > +	 * handle completing this request. In FENCING state the request must
-> > +	 * not be completed before fencing has finished, so just rearm the
-> > +	 * timer and let the error recovery pick it up.
-> >  	 */
-> >  	nvme_tcp_error_recovery(ctrl);
-> >  	return BLK_EH_RESET_TIMER;
-> 
-> [Severity: High]
-> While nvme_tcp_timeout() holds timed-out requests during NVME_CTRL_FENCING,
-> does nvme_tcp_try_send() still complete in-flight requests immediately on
-> a socket send error before fencing finishes?
-> 
-> When a controller enters NVME_CTRL_FENCING, its queues and queue->io_work
-> remain active until fencing_work finishes and queues err_work.  If an
-> in-flight write request has already sent its command capsule (or received
-> an R2T) and sock_sendmsg() fails while sending H2C data,
-> nvme_tcp_try_send() fails and completes the request right away:
-> 
-> drivers/nvme/host/tcp.c:nvme_tcp_try_send() {
-> 	...
-> 	} else if (ret < 0) {
-> 		dev_err(queue->ctrl->ctrl.device,
-> 			"failed to send request %d\n", ret);
-> 		nvme_tcp_fail_request(queue->request);
-> 		nvme_tcp_done_send_req(queue);
-> 	}
-> 	...
-> }
-> 
-> nvme_tcp_fail_request() completes the request with
-> NVME_SC_HOST_PATH_ERROR, which triggers multipath failover while the
-> controller is still in NVME_CTRL_LIVE or NVME_CTRL_FENCING and before
-> nvme_fence_ctrl() has terminated the command on the target.
-
-This is not an issue. At this point queue->request has not been
-completely sent to the target. IOW, the target can not complete
-processing this request because it is missing data. It should be okay to
-complete the request immediately.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261114030454.2836543-1-mkhalfella@purestorage.com?part=10
