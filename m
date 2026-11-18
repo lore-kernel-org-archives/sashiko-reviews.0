@@ -1,97 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.11
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795022510;
-	b=2nxDits6raFmKYMIMvALj+3bZskiy+qcVPGFMu2K7u10p6e0E0Ho7bagV6T+qjcK37ue
-	 mQzOFc5SWNNOlGSwfA9aDtliROZc9pYwDNf2s99sqR3J2FXIkN5zJGq3x0z3oylIyvWqt
-	 AfwFkxGKnkWJxK2Vg4xHtSnAOsZ4ijNBhIjkmfrTNh7eAsPdXTsjuX5Xf4d51sC5PjDSr
-	 x/BLDT1jFfJG463f6VkPDZ8jxj1675OOKJ8QGjTwGtJ8RfrNLrVu/Naed7ysXeJINkDts
-	 DtTcfuzF01BAO3SDzM2+4Rtnr1TRgX7ndKOSnMgoQrIVfuFem4V90vPxA0BLiVFmUhw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022510;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=tOGfQ6cQ1En7nNkUe4qRk1JWp9mxMtsaCoiquidtyAw=;
-	b=gxyWuDp9mZ+mOH9OQSckTqI1AvYRykyH9KG5rj1FtDB1sxqEJXWu2prNsxjn9iWYstwx
-	 cuJ1DhiNjHz5s7gNN5PVBPkiqyhaqwiavGK0okCJ4yu+InYE0qTkVzSMtSDApmgMmaZd4
-	 zaKAVwEq6u0RbhjwayHmbLCmwwZ+CM2HH1WUnqDLO2h237weNaiSuPRTbKH/hejVNpkeH
-	 /5MzhPb46oGLKkIJSfEYniNoRxsSXYFcKowYmnpKc8icVKC+jZxexZceGlC26McSn7R1L
-	 uEdATgUM8kX6kkrQ84LdrJuX5AHpvWBbgAzgjieJ+rb+rschZC2G1E08zY5cnKptz4w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mobileye.com;
-	spf=pass smtp.mailfrom=mobileye.com;
-	dkim=pass header.d=mobileye.com header.i=@mobileye.com header.a=rsa-sha256 header.s=selector1 header.b=UqTqCcqQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.11
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010011.outbound.protection.outlook.com [52.101.69.11])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795023849;
+	b=dcVrqulDXYG3B6lLpRuYBrBPZKzFCGMjPjbiQbdCVFQVIk/x6YfC8e9Keui1rGgcmbMW
+	 RQD+yS9qUxIELWAuJtj+tZU6J2ZLV/dAEDcnWIN4POWJ7/R69Yoj4kny5LQqPDZM/DrPO
+	 eYRhC6RWyFuuD7JEpSjUc/SjAB+GmeUxLTVh8+2JjmTyerAVE6PkzqdR36R6eOvdbN4mh
+	 kVHgtXo7fgQS5Q/MOhaX1zxzdpz9Mj+RIapTtRwcGdgdZM+tLFjFmblYg9VAsgbYL2vs9
+	 lI1UczB7NvSpIixAzNZK0nv18L5+H3/spH2wwpUP0YSEpHbHrs5famMr71feJ7FL3Mg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023849;
+	h=Received:DKIM-Signature:Received:Date:Message-ID:From:To:Cc:Subject:
+	 In-Reply-To:References:User-Agent:MIME-Version:Content-Type:
+	 X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:
+	 X-SA-Exim-Scanned;
+	bh=PsjAHRo5jnkI0ALFabogwq+UwZ+2mKJujdKyho7IR70=;
+	b=XcFyVTOfWvZROJ3xLInkerMD+eTzt8N/LUWePDms//GxGSZjgTngLk+Z/WZ+teSb5Dpp
+	 VhGKZVDutmthQdQnk/9S4l15EUhelBYa5xHzWi1ob257IbcQOwhqD8+vLH9ZD41MdNBi1
+	 QOiMezXirBScl1ym2MfcWx/EcGaBsIX86SUL+mk1aaQFztumf+GTF/Qq4acIyelPOM1pK
+	 rfbhCdHjdYO2WcfybB5Dz/yad623inUEuwa9cKbodo4H2T/L104x4OO6glbN00T8Vh+4M
+	 cJk7z+dmTbvK8sz6bCYJPy6hvZ7yqhJmzLy3UtdLLdfzTOBjMRS/SyAfAitUcTSnBJQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PnJkS9nY;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537AF606A330;
-	Wed, 18 Nov 2026 17:21:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 537AF606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mobileye.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mobileye.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A4F606A330;
+	Wed, 18 Nov 2026 17:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=mobileye.com header.i=@mobileye.com header.a=rsa-sha256 header.s=selector1 header.b=UqTqCcqQ
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RFMe4eNXSIIECR+3JJ/8vWCBeBvipuL6/lEqN+iUGad4wzvfXrlTSZmBH6NSeolFHhnP2u0O13tETPm0UtFkBcmcMujVq23IoJfNXCwYIk4lCnA+a7kUEq1IW7PR9uKedT2bDLJDpIbpaPXBDGgDh6zLpUYhafKyRzU0EGFy52q43yZIHz+0VLcBwvNFkBWKfGQ1r/NkGXi3OxueMc0Q+FKC1tKkdSqgidSFVJOZutcBs2gtTA39o13j5CK6F4pTy5mP91wdC6G5kYT57q8OGjfsZkNwnq8ICXpmOgscYY3VSK19SJ/sjdHze0djhm11T1KDofiOf93ov47zVg6F7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tOGfQ6cQ1En7nNkUe4qRk1JWp9mxMtsaCoiquidtyAw=;
- b=lhn04WTLJBSxzMTdZyAuy1F94Lz5jXOUrr9uknSOdDs17JH/m92f1wO/f7D11mSFOx4nHq20tH2owgNuJpJsrJMcEP9JqwlSkdwXStu4+cp9VH1g/DSGMUi8Rh6M/PFC6sNp42jKhWYdsR4Y9saTF1oKotkfkMVPymcK5JaZGEDgdkgzUis/L8jY4zX1UxCbkeLknRCs8RoWmKofNX1kfVJhAhNbrodv79vXej4rxkrL9TJNDcfwpsWvZe28dSVvUA7zfL/NlWkG7CXxd8ota7FRyzRocrm2pLur9ce97FuEZhQAXs6Tf+yQWeCx/rJcUO64XeDzxSpcaSQ+25BiyA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mobileye.com; dmarc=pass action=none header.from=mobileye.com;
- dkim=pass header.d=mobileye.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mobileye.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tOGfQ6cQ1En7nNkUe4qRk1JWp9mxMtsaCoiquidtyAw=;
- b=UqTqCcqQWSF+mnkhYf6245frqgD8XlK+0erv85qaN7JNL4yA6fZnz+cDbYIZfmf/0+MSKufQTp3lbj/TqLXFRLDrKf/t9U7koIBfteLlptjSlDL5ycPSyD4rEoobZfpcbsf3H2Z/56vN8DkXg9wbdY8KLUBAZ6RWEpQ1yNZYeXo=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=mobileye.com;
-Received: from ZR6PR09MB889505.eurprd09.prod.outlook.com
- (2603:10a6:910:e0::22) by VI3PR09MB012160.eurprd09.prod.outlook.com
- (2603:10a6:800:37d::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 17:21:44 +0000
-Received: from ZR6PR09MB889505.eurprd09.prod.outlook.com
- ([fe80::9006:1164:b51f:23a2]) by ZR6PR09MB889505.eurprd09.prod.outlook.com
- ([fe80::9006:1164:b51f:23a2%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 17:21:44 +0000
-Message-ID: <962f81ac-2a4f-4b15-9f73-2065ed513af4@mobileye.com>
-Date: Wed, 18 Nov 2026 19:21:41 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] perf: add MIPS Coherence Manager 3 (CM3) PMU
- driver
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, devicetree@vger.kernel.org,
- linux-perf-users@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- linux-kernel@vger.kernel.org
-References: <20261112-i6500-cm3-pmu-v2-0-cd2569571819@mobileye.com>
- <20261112-i6500-cm3-pmu-v2-5-cd2569571819@mobileye.com>
- <sashiko-outbox-211133@kernel.org>
-Content-Language: en-US
-From: Vladimir Kondratiev <Vladimir.Kondratiev@mobileye.com>
-In-Reply-To: <sashiko-outbox-211133@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TLZP290CA0009.ISRP290.PROD.OUTLOOK.COM
- (2603:1096:950:9::18) To ZR6PR09MB889505.eurprd09.prod.outlook.com
- (2603:10a6:910:e0::22)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PnJkS9nY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CC41F000C7;
+	Wed, 18 Nov 2026 17:44:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795023848;
+	bh=PsjAHRo5jnkI0ALFabogwq+UwZ+2mKJujdKyho7IR70=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=PnJkS9nY8C7s9v5mncFhm84/YLzlygGH0cJ9SmDGquNicMJ3G42uSMWrM9qiWv8sZ
+	 cTakZiYy0bsrkYZCSqC3LUS57Ow7WwN3b9UuYKBw5m+NlV5y25kzwvpt30IhmRnHZP
+	 e9VY5cxGy6U7jEWEUkx+Y6OLSz6CtkZr1lqoVwKX9mdODg6FOPa/7fNaYS6d2AldVY
+	 ASslvyeTHW5JFlzxqV53RNIvjyzhmQOW3OaHhcp37jdr8GENqSbMoeGsGYMBh91F/s
+	 Br/66kA8lFJl8ch/Yp/PUX1qHcyZ7i/7Ne4hvpn5ygDMNGfxlDFbdXxJAqVbElxkkP
+	 u7l4sNVC/rTog==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1xTjhW-000000004aK-494Z;
+	Wed, 18 Nov 2026 17:44:07 +0000
+Date: Wed, 18 Nov 2026 17:44:06 +0000
+Message-ID: <86zev6yqzd.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: 	"Oliver Upton" <oupton@kernel.org>
+Cc: "Dan Carpenter" <dan@pereq.eu>,
+	kvmarm@lists.linux.dev, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2 1/2] KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
+In-Reply-To: <sashiko-outbox-221074@kernel.org>
+References: <cover.1795006659.git.dan@pereq.eu>
+	<033a2d49e0f48426281b46eb1131ae64012aba18.1795006659.git.dan@pereq.eu>
+	<sashiko-outbox-221074@kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,113 +69,138 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZR6PR09MB889505:EE_|VI3PR09MB012160:EE_
-X-MS-Office365-Filtering-Correlation-Id: 501d3b5a-a887-4203-1d74-08df45986b01
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|6133799003|22082099003|18002099003|261009223027099003|4143699003|56012099006|11063799006|261026121527099003|261102123227099003|261028144727099003|261026140227099003|261021121427099003|261022105027099003|261022075727099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	5EMB0loDHCf7uyYeEV7o+wz+OmJalBJojyPaVW3KIdRTHVD8kTrrJpKBCrrmbpjyDUhqHJEcmnlFbCPVeQlMbbhuZgntJPwu+OZj7Rah25FMAyHXvPqNhU0UeoCKcqswe0j/ytu6ku351yOStUqVMWMmh7c9gWzPJsDWNkwrjXUqsT5ppgrI+JTTMgavwFLs44sIguXXnJoVYcSg73Jjrg0Kt5sI77reDpkWrSEfH0xACRrmckcyLXzffUlU1301YH4WGZBMuuWDx+QZHrjUjEsKzvmRwTu9BzrATCdVvQA/z4ZBaEEbzneYdXxEGRx0pQpP10AcZ25lZTb9EIXUCZeXNb/X1uFgE0tKStU8jztt8Y61G3y9Noa2k/etBeMzk1wZlAdaQB/2H06qpoFUicZaSjw80ibROkgoqrVhl/emW7rKrpwOCvwtgK2n2COhOoQ+fxXFuqOWuAbX/BXajSbBcO/3Ymw3NGmiLjX+sGXwHocitj92mrLlEEu9jFI7/E/Ji7ncHZ90wU4YUD8BZdRzB7zUQVVgPbL2//bLSNqEQ/wkboB+WR0kdvJG+uwGMcVZly809jt0xHTMVTUCIOyLJSm/+J3db1HxJqGwE9cGETIYg31mE3p15NXuk/0SEz/syHZcrMLuWFROVxOxGDpC/ugLT86hNKyCdfddHIQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:ZR6PR09MB889505.eurprd09.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(6133799003)(22082099003)(18002099003)(261009223027099003)(4143699003)(56012099006)(11063799006)(261026121527099003)(261102123227099003)(261028144727099003)(261026140227099003)(261021121427099003)(261022105027099003)(261022075727099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VUViNkVVWkdRaCtLZEZHSDhtdUVzTHc0SFY2ZkJ4Y09rTnB6Rk1qZzRYTk1m?=
- =?utf-8?B?c2ttTDlhaC8vSFBXMTFNbmdTY3U0bU13blJkK1VTeHowZWo4SW13enBuV1Ni?=
- =?utf-8?B?OHdQM1ZIY08yZllLN0NWTmdWbS8zbHVrMzcxeStVR1BkTkpCYWlCcENDT1Zz?=
- =?utf-8?B?QXNqM0hLeWZ0Q1hEN3hTMmdURjBEWDQwRUtvaTlKMWdlWGlkeEdqZ2QrQ1hZ?=
- =?utf-8?B?ZnV4RXZ4SUlINDRvQTN1UzV2ZjRRakpXYUIzem1DNjREbklZemNURGFlREVQ?=
- =?utf-8?B?Y1psVzVsK1RxdU9IMmxxQURYZVQzdjVvZFY4YWQzWWJEcmttd3BBWkUxNnpm?=
- =?utf-8?B?aVFhMjNxTmJSb0E2WXlGZEgrbi81UDgwbG1yNkdLRDB2OTdiQW0zWWJJd25v?=
- =?utf-8?B?Q0ZBMW1GWlliMlcrVTk5Rys3ZGpQcDRsZVdkUTdmMHcvSnJ4bFYzRFR4dmNU?=
- =?utf-8?B?dkNBZVlpSzdXZHBsY3labk1WeXFJM3hkQ0xSVXZIb1ZyWjJtYWJFM3ExUlRM?=
- =?utf-8?B?NXo1ajVLS28zZVhxMFltUjNXbTRkUVVvZkF0QXE4U3kwNGpIdHVDRTlxSUNP?=
- =?utf-8?B?UVZQWnBuaFo4RENlUXJ4em5BS1Noa3htbW1jUDlXU0tqc2lmSWRQcFJydnRy?=
- =?utf-8?B?OS94Vmk2QjFtNllHZkJTY0hZU3JZZmcvKzRhZ0dsU0VTRTVvZFVLeGJsR1JD?=
- =?utf-8?B?M0FQSFVhNTNpelh4S2ZlbFJScGRmM2dpOCtudnRXQW16dVE0RXUrM2RYRlhT?=
- =?utf-8?B?bks4MmplRUtEMWh3bExON3M4MW43eXplNjZHc1p4cHhvaWVSc0U5c1NKbmIx?=
- =?utf-8?B?MHVvTkNlT3lDN004dFA5dTV6ekxWZ3dGWmdheFlVM0R3L2ZZdVBGWVRNMnIw?=
- =?utf-8?B?Y1Yxanh2bVBCN2JmaGxsQk5KeS9KSWVsWHJRbXkvZzJQc1k4TlV0bEN0NktE?=
- =?utf-8?B?eFpnclpraGtDVGNPZlhPV3N6cERyaTlNdWxoT2ZrbnlkdzkwZkpib1JkTlNW?=
- =?utf-8?B?Vit1UkdiVUxvUnJqMWt2QUZaOVVvRHRmLzl1M0NqUFV3N1EydGd6TU0vOEJ1?=
- =?utf-8?B?M2Y3Qnk3QytKOGxtcEhkR0NZcE8xRFdtRUM3NmhTZ2V6b3N4WG90UHIyVTRX?=
- =?utf-8?B?NGpXcUM4UUVqa1kydWZJR09IQjhVdmg3YkZMNXJpVmhKWG9oU0Izc25LTkNU?=
- =?utf-8?B?QkVDdmlTQ0hFTExNbHl6SHNrdTJvUW5TT0NvWDBid3pnK2RXdVJURkJsYlkr?=
- =?utf-8?B?UEc1YVpnR3NxOHdJUlQ1NGRTazVRcUJmbkRXdnRlaHVrRVlYcE4vcDQzV1Q1?=
- =?utf-8?B?bTdZTnF4d2FoZ0FrVS9ldkZ2MEhpRHRiVkNZK2lvYUYrcjdUekZ1QUh5RUh2?=
- =?utf-8?B?QUNNaVphdWNicXlmYjZRQkpPaFVtZFV1Q0dVaGNEZXZmMGI1bGwwNzBiMnpx?=
- =?utf-8?B?SFFRM1BwQzArV3pCMUh4a2taMnFSQVZxZHlkMncyeG5oSUh3cGlRQzhrUUU4?=
- =?utf-8?B?b2JkbWhsaWo3Qm0xM29mdC9Sc0FQa1VMRXRybDZ1MUttRXFDcTllWE5icVc2?=
- =?utf-8?B?ejEvOHVEYTlQM3F0WDhUQ092NEM1blA2cWhIdXB0WVhvOTFnSGswdFkzWFZE?=
- =?utf-8?B?dzRETzRzcTgvSUVoMUQxQlE4VE5iYTQxTlo2Y3pnbUo1VG8rVS9WK3hMNTRw?=
- =?utf-8?B?NFp4WDY1a1N0ZHVmakxIQ2w4SjEwdHRGNE9jMGU1Q3VQTWRGK0ZMQUMzWCsz?=
- =?utf-8?B?WHpwaFFGQ0JlRTI1TnBIK1BMY0ZhRVgySFRDRkUzMTM0KzNvZjZ4SElOWU43?=
- =?utf-8?B?dnhuaW1IMnVybVVwaWtRTVE0UkRYQlA0WkdqVjRQWjJyMXRJek5KQVJwSDVx?=
- =?utf-8?B?SHZBY2RPR05HQ1libWxjaFJSK2k1MkRHQnhnYnhweE9pUDlxVURMQW44L1Ez?=
- =?utf-8?B?bllqUHRKdU9TWVNWcEs1Ly9HYmNuSm54NmxNMkVqemJNRGhjdGZxTjVBL3g4?=
- =?utf-8?B?U3p1bW9kTmdWWlAxVDRjQWk0WkZFZ0NaM0hsSzl3ZmxCMVZwdFlVdEhSdXBj?=
- =?utf-8?B?N09ZbzJrYUsrUkZvSWlBZnMraU5qZ3J2U0I2ek9TMjRVT3pvNVZhcUtMNWxQ?=
- =?utf-8?B?Z1FDV0VmZnBtWURxaU9EbVFGcmpnUlRMdUJqcWE1cm5tV3B1ZXp1RjhxVko5?=
- =?utf-8?B?dmdURkY0U3FKQ0JJSXZSUytKTTlIZVorL0NZUi90cnZOend5N3FjUTdUeisz?=
- =?utf-8?B?YUQ4dlMvdHlUNGkxNEdtd0pleDdBejlJVGw1TXFpWGZWS0hENHd4MkswVHV3?=
- =?utf-8?B?QVUrS25WbnNaZ0RMVGFtQzBlN0FscjMwL01tMWhBdmU2Zi81czRvZz09?=
-X-OriginatorOrg: mobileye.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 501d3b5a-a887-4203-1d74-08df45986b01
-X-MS-Exchange-CrossTenant-AuthSource: ZR6PR09MB889505.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 17:21:44.3710
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f85ba13-6953-46a6-9c5b-7599fd80e9aa
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0jbp5EsXyQNxdyzXG+K2NghF98g5szME+1JyvMcOerI+RkvzDGB5jgrWNaGrzLN3VkggF4+DaaUFsnex3ppkPA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI3PR09MB012160
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: oupton@kernel.org, dan@pereq.eu, kvmarm@lists.linux.dev, sashiko-reviews@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On 11/12/26 15:02, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] perf: mips_cm3_pmu: counter overflow double-counting in
->   cm3_pmu_update()
-> - [Low] perf: mips_cm3_pmu: broken !MIPS_CPS / !SMP configuration
+On Wed, 18 Nov 2026 13:45:34 +0000,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] KVM: arm64: stale mmio_needed after kvm_inject_nested() in
+>   KVM_SET_VCPU_EVENTS
 > --
 > 
-> commit 272d1a9241643c479b7f4cabbd1c40edccbe1b16
-> Author: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
+> commit 178d0de7451612b8ddf14a943cb82094efbd77d1
+> Author: Dan Carpenter <dan@pereq.eu>
 > 
-> perf: add MIPS Coherence Manager 3 (CM3) PMU driver
+> KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
 > 
-> This commit adds an uncore PMU driver and documentation for the MIPS
-> Coherence Manager 3 (CM3) performance and cycle counters.
+> This commit wraps __kvm_arm_vcpu_set_events() in vcpu_load() and vcpu_put()
+> so that kvm_inject_nested() operates on a loaded vCPU during
+> KVM_SET_VCPU_EVENTS.
 > 
->> diff --git a/drivers/perf/Kconfig b/drivers/perf/Kconfig
->> index 245e7bb763b99..2dbed2fc7b030 100644
->> --- a/drivers/perf/Kconfig
->> +++ b/drivers/perf/Kconfig
->> @@ -75,6 +75,18 @@ config ARM_XSCALE_PMU
->>  	depends on ARM_PMU && CPU_XSCALE
->>  	def_bool y
->>  
->> +config MIPS_CM3_PMU
->> +	tristate "MIPS Coherence Manager 3 (CM3) PMU"
->> +	depends on MIPS_CM
-> [Severity: Low]
-> Should MIPS_CM3_PMU depend on MIPS_CPS rather than MIPS_CM?
+> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> > index 84a52e27ed859..a148e80d0aef7 100644
+> > --- a/arch/arm64/kvm/arm.c
+> > +++ b/arch/arm64/kvm/arm.c
+> > @@ -2002,7 +2002,7 @@ static int kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
+> >  static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
+> >  				   struct kvm_vcpu_events *events)
+> >  {
+> > -	int i;
+> > +	int i, ret;
+> >  
+> >  	/* check whether the reserved field is zero */
+> >  	for (i = 0; i < ARRAY_SIZE(events->reserved); i++)
+> > @@ -2014,7 +2014,11 @@ static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
+> >  		if (events->exception.pad[i])
+> >  			return -EINVAL;
+> >  
+> > -	return __kvm_arm_vcpu_set_events(vcpu, events);
+> > +	vcpu_load(vcpu);
+> > +	ret = __kvm_arm_vcpu_set_events(vcpu, events);
+> > +	vcpu_put(vcpu);
+> > +
+> > +	return ret;
+> >  }
 > 
-> MIPS_GIC selects MIPS_CM even when CONFIG_MIPS_CPS=n and CONFIG_SMP=n.
-> On a !CONFIG_SMP build, irq_set_affinity() is a stub returning -EINVAL, so
-> cm3_pmu_online_cpu() unconditionally triggers WARN_ON() when an overflow
-> IRQ is present; without CONFIG_MIPS_CPS, cps_smp_setup() also never
-> populates the cluster ID in cpu_data[].globalnumber.
+> [Severity: Medium]
+> Does vcpu->mmio_needed remain set when KVM_SET_VCPU_EVENTS injects an
+> exception from L2 that routes to L1 EL2?
+> 
+> When an L2 guest exits with KVM_EXIT_MMIO and userspace aborts the access via
+> KVM_SET_VCPU_EVENTS (for example with ext_dabt_pending = 1 while HCR_EL2.TEA
+> is set), kvm_inject_sea_dabt() -> kvm_inject_nested() commits the EL2
+> exception entry directly via __kvm_adjust_pc(), which clears
+> PENDING_EXCEPTION.  When __kvm_arm_vcpu_set_events() then calls
+> commit_pending_events(), PENDING_EXCEPTION is already clear, so it returns
+> early without clearing vcpu->mmio_needed:
+> 
+> arch/arm64/kvm/guest.c:commit_pending_events() {
+> 	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION))
+> 		return;
+> 
+> 	vcpu->mmio_needed = false;
+> 	kvm_call_hyp(__kvm_adjust_pc, vcpu);
+> }
+> 
+> On the next KVM_RUN, kvm_handle_mmio_return() sees vcpu->mmio_needed still
+> set, writes the MMIO read value into L1 EL2's destination register and
+> advances L1 EL2's exception vector PC by 4 bytes via kvm_incr_pc().
 
-This is a false negative. On a !CONFIG_SMP build:
+I think this is a separate issue, which doesn't intersect with the
+current patch. The problem is that we have multiple ways to "commit'
+the state on exception delivery, and that we miss MMIO handling in the
+EL1->EL2 path.
 
-- cm3_pmu_online_cpu() is a CPU hotplug handler, it won't be called on
-the !CONFIG_SMP build.
+Oliver, WDYT?
 
-- cpu_data[].globalnumber will stay 0, so cpu_cluster() will return 0,
-and it is true
+	M.
 
-Thanks, Vladimir
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 97332ffcb1300..33bced55ce3bb 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -1352,6 +1352,7 @@ int __kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
+ int __kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
+ 			      struct kvm_vcpu_events *events);
+ 
++void commit_pending_events(struct kvm_vcpu *vcpu);
+ void kvm_arm_halt_guest(struct kvm *kvm);
+ void kvm_arm_resume_guest(struct kvm *kvm);
+ void kvm_pause_vcpu(struct kvm_vcpu *vcpu);
+diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-nested.c
+index d04ac52034541..83272adefc4c0 100644
+--- a/arch/arm64/kvm/emulate-nested.c
++++ b/arch/arm64/kvm/emulate-nested.c
+@@ -2900,7 +2900,7 @@ static int kvm_inject_nested(struct kvm_vcpu *vcpu, u64 esr_el2,
+ 	 * We may have an exception or PC update in the EL0/EL1 context.
+ 	 * Commit it before entering EL2.
+ 	 */
+-	__kvm_adjust_pc(vcpu);
++	commit_pending_events(vcpu);
+ 
+ 	kvm_arch_vcpu_put(vcpu);
+ 
+diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
+index 878ea4500c5c5..595b23b29af89 100644
+--- a/arch/arm64/kvm/guest.c
++++ b/arch/arm64/kvm/guest.c
+@@ -770,14 +770,16 @@ int __kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
+ 	return 0;
+ }
+ 
+-static void commit_pending_events(struct kvm_vcpu *vcpu)
++void commit_pending_events(struct kvm_vcpu *vcpu)
+ {
+-	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION))
++	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION) &&
++	    !vcpu_get_flag(vcpu, INCREMENT_PC))
+ 		return;
+ 
+ 	/*
+ 	 * Reset the MMIO emulation state to avoid stepping PC after emulating
+-	 * the exception entry.
++	 * the exception entry. This also applies if for any reason, we adjust
++	 * PC while in an MMIO phase. But that's rather dodgy...
+ 	 */
+ 	vcpu->mmio_needed = false;
+ 	kvm_call_hyp(__kvm_adjust_pc, vcpu);
+
+-- 
+Without deviation from the norm, progress is not possible.
