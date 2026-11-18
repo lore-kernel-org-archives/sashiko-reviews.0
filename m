@@ -1,54 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.227
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794980366;
-	b=aAx8khAgfqdAZRDgvSftUTw6h0ij3pB9tzlkdcVTYefMfaDQR6afzGk2Mzx7qjL/DJ8J
-	 UcDpN/TOULBfNmZNAnRMm5i63zl2b9rtDs0erEovsMt7U0oUZ4f6T73e1BziCKChigN5D
-	 o0ev9yf8I8YO91wDIyOQ5Z+lXN6NbqYaPQGt5Hck/vgJJtL3KCPrqfdrPznsNAKm6cw44
-	 CDRrefq/T+cOBxGzbgcEs+pcgUcTsDfmDMs/oYEiGwAf/LBag0BD4HQwE2cDKpdVpeVvg
-	 YiRW0G6znoZUYrYo+dmSYz0RiPmPGyWQqQTLJv7pJzkx/8WM1uOCG7XSGLjwNd785sQ==
+	t=1794981091;
+	b=VPliDMJJ6tkLC9hlJkXfaqQw8k02VmWeV8VaXCmFiZE44Pooq+OrBhlUn0tjNPH/l1gq
+	 MlKezGQyqQXceZRMmt+9oFcDRfLd7J+flizO04g4AUoebmEBEF8klUYgsd/fuP132/ePy
+	 yob9D2iJfgxPKk37cHaSRKJvrdjyv+/GlZjg6vioAhFY3wiUndbsSpWJyn/x8eUtFWi9d
+	 Gm2m/ZB2m2jZAWyxrTV3nNxT38S1xCIvUX0o8fCxfenV18C9uXoWWSI99TsFfIgpBOWkL
+	 oRq73Ck40n4l9nJQOwWH3gH6lRVMSF/T7l/HZUo5HnkeiCBD3z0yiqEbcK3+KTjQIfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794980366;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
-	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
-	 To:X-Mailer;
-	bh=ivtPd5ttNuyhfy98ioQJITuu8jfayeumroo16CmslDc=;
-	b=b+CYTCVK+G+VNGxEDpB0XEB0QASve3SH4EBx++liDt5lwH8/LmSHWJJDoSfe1JU52moD
-	 68Bn5qiwGYljU/ZRQy0G6grRDUMV76kBku9ratldM73afu04Ebzcm8bGo3JkZUCDhM8GT
-	 07gSBu8MvqyKNdp7lUxVvUbO24Db9iprpjlfTTn1JXq7mFO3WVg+O2C8KcEiuoiJtKtzS
-	 IG3zg1fi0Y2m5MxhZQuRBY6cKYeqBJO6OUSeLmz+vdnDMYi+PO8u6SoKytMeueQ5sMspD
-	 Wel+k8UVsqaagyh2I7hC2Zst8o0eacHgBhNRlC7aDq06RCjnGD7gsypnlBNzC5BgT0A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794981091;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-Id:
+	 In-Reply-To:References:X-Mailer:Mime-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=PSw6ZugS96kEz4/rIAoJ19YrrOB0SWDDu8VwO1dP5m8=;
+	b=rn8V2lyniSbJcBZkCwvy0VTzZnb/3rmD//fw5MV19WLb5OheMHGR1wORxm/dvPBLRTml
+	 FD0ZuwGu3B64j3MmFgDUAoUjff3yEVtKGHHkVQF80wC7/q8vjJsA4+jSkkqbDNyIUYhzG
+	 sE0U3V33L7PttU8YcFSFLAhM54uvcnPAzGqtE8qLLdJA83wVkjA8q6qF4o2R+OnpnW4kb
+	 sLJF0jzWleXjWg7vyEzAAfynDl+jjW01VTfyrLYSBKuBFD8QCGvj2Kaq5nfSyfWBuRi8+
+	 FAHP+B6TT+u8xOXmutcR92YZK+a/SkB9sRWZW1aOhpHRBj9u1cnMN6v5KJrxHnUuZGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Cua1W+Jv;
-	arc=none smtp.remote-ip=95.215.58.227
-Received: from mta1.migadu.com (out-227.mta1.migadu.com [95.215.58.227])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=lwHpMddg;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5419C606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 05:39:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5419C606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DACD606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 05:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Cua1W+Jv
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=H/f7fxK9dSXTVO4fB0pNECpC88jXcYa6XPqhZn4b2dU=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794980363; v=1; x=1795585163;
- b=Cua1W+JvpxUG61rrVgT7xcr6R31Xd9mkZ6xfki7rUjVUofsHwhdLJ93e37hWK7VYxF/tVxGi
- hMCMYtBT7khXZ/+9kWPZ1T7uDdwixYsm35xUyh2J/MKIG0FbdwaNuS7YF/b2dqRtIJmzHpuC/B+
- HxrX2Sbtelk4WwyaxE2ksCYU=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 6c1682f25ee54883;
-	Wed, 18 Nov 2026 05:39:23 +0000
-X-Mizu-Trace-ID: 6c1682f25ee54883
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (1024-bit key, unprotected) header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=lwHpMddg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7B51F000C4;
+	Wed, 18 Nov 2026 05:51:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux-foundation.org; s=korg; t=1794981090;
+	bh=PSw6ZugS96kEz4/rIAoJ19YrrOB0SWDDu8VwO1dP5m8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=lwHpMddgeDHi6TjIDH+6VVQjeNyiAfOC814NA6PtmuFFkHkSlZfdhHAkOobfcDcPz
+	 CoNNJexbEbPdybV/yoAqdH6vgwZLBU6OWK/guFYoqQkkJKOLQNhcBtqaIPDSMGm/7Y
+	 VRPZbN0YTlrodK8wlLLu+pb7MZFXkxdLG+v26qP4=
+Date: Tue, 17 Nov 2026 21:51:29 -0800
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Muchun Song <muchun.song@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, Sashiko <sashiko-bot@kernel.org>,
+ Muchun Song <songmuchun@bytedance.com>, Alexander Potapenko
+ <glider@google.com>, Marco Elver <elver@google.com>, Dmitry Vyukov
+ <dvyukov@google.com>, Chris Down <chris@chrisdown.name>, David Hildenbrand
+ <david@kernel.org>, "Liam R . Howlett" <liam@infradead.org>, Vlastimil
+ Babka <vbabka@kernel.org>, Mike Rapoport <rppt@kernel.org>, Suren
+ Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, Johannes
+ Weiner <hannes@cmpxchg.org>, Brendan Jackman <brendan.jackman@linux.dev>,
+ Zi Yan <ziy@nvidia.com>, Joerg Roedel <joerg.roedel@amd.com>, Lu Baolu
+ <baolu.lu@linux.intel.com>, Pranjal Shrivastava <praan@google.com>, Ketan
+ <ketan.kishore@oss.qualcomm.com>, Mostafa Saleh <smostafa@google.com>,
+ Sang-Heon Jeon <ekffu200098@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap
+ <rdunlap@infradead.org>, kasan-dev@googlegroups.com, linux-mm@kvack.org
+Subject: Re: [PATCH v2 2/7] mm/page_ext: fix client data alignment
+Message-Id: <20261117215129.d7bcc7bfa060daf99828f0c0@linux-foundation.org>
+In-Reply-To: <11DE08A1-5F83-4BE2-B8C0-B426441A957A@linux.dev>
+References: <20261117120627.50601-1-songmuchun@bytedance.com>
+	<20261117120627.50601-3-songmuchun@bytedance.com>
+	<sashiko-outbox-219498@kernel.org>
+	<20261117114635.37d4c1f7f1b38cc4ce7fb886@linux-foundation.org>
+	<F4EDF1D2-D02C-4339-AA30-422D576B735A@linux.dev>
+	<20261117202136.9eb67013389f3bdefe9b3a15@linux-foundation.org>
+	<11DE08A1-5F83-4BE2-B8C0-B426441A957A@linux.dev>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,126 +73,56 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH v2 2/7] mm/page_ext: fix client data alignment
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <20261117202136.9eb67013389f3bdefe9b3a15@linux-foundation.org>
-Date: Wed, 18 Nov 2026 13:39:04 +0800
-Cc: sashiko-reviews@lists.linux.dev,
- Sashiko <sashiko-bot@kernel.org>,
- Muchun Song <songmuchun@bytedance.com>,
- Alexander Potapenko <glider@google.com>,
- Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>,
- Chris Down <chris@chrisdown.name>,
- David Hildenbrand <david@kernel.org>,
- "Liam R . Howlett" <liam@infradead.org>,
- Vlastimil Babka <vbabka@kernel.org>,
- Mike Rapoport <rppt@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>,
- Michal Hocko <mhocko@suse.com>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Brendan Jackman <brendan.jackman@linux.dev>,
- Zi Yan <ziy@nvidia.com>,
- Joerg Roedel <joerg.roedel@amd.com>,
- Lu Baolu <baolu.lu@linux.intel.com>,
- Pranjal Shrivastava <praan@google.com>,
- Ketan <ketan.kishore@oss.qualcomm.com>,
- Mostafa Saleh <smostafa@google.com>,
- Sang-Heon Jeon <ekffu200098@gmail.com>,
- Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>,
- Randy Dunlap <rdunlap@infradead.org>,
- kasan-dev@googlegroups.com,
- linux-mm@kvack.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <11DE08A1-5F83-4BE2-B8C0-B426441A957A@linux.dev>
-References: <20261117120627.50601-1-songmuchun@bytedance.com>
- <20261117120627.50601-3-songmuchun@bytedance.com>
- <sashiko-outbox-219498@kernel.org>
- <20261117114635.37d4c1f7f1b38cc4ce7fb886@linux-foundation.org>
- <F4EDF1D2-D02C-4339-AA30-422D576B735A@linux.dev>
- <20261117202136.9eb67013389f3bdefe9b3a15@linux-foundation.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
+On Wed, 18 Nov 2026 13:39:04 +0800 Muchun Song <muchun.song@linux.dev> wrote:
 
+> 
+> >> 
+> >> Something like?
+> >> 
+> >> static inline size_t page_ext_data_alignment(size_t size)
+> >> {
+> >>        /* No client data means no alignment requirement. */
+> >>        if (!size)
+> >>                return 1;
+> >> 
+> >>        /* u64 has the strictest alignment required by page_ext clients. */
+> >>        if (IS_ALIGNED(size, __alignof__(u64)))
+> >>                return __alignof__(u64);
+> >> 
+> >>        /*
+> >>         * A type's size is a multiple of its natural alignment, so its
+> >>         * lowest set bit is at least that alignment.
+> >>         */
+> >>        return 1UL << __ffs(size);
+> >> }
+> > 
+> > Well I prefer it!
+> > 
+> > The final bit-twiddle could be (size & ~size) but I'm not sure that's
+> > any clearer.
 
-> On Nov 18, 2026, at 12:21, Andrew Morton <akpm@linux-foundation.org> =
-wrote:
->=20
-> On Wed, 18 Nov 2026 11:49:58 +0800 Muchun Song <muchun.song@linux.dev> =
-wrote:
->=20
->>=20
->>=20
->>>>> +}
->>>>=20
->>>> [blah blah]
->>>>=20
->>>=20
->>> Yeah, but the whole expression is quite reader-hostile, as min/max
->>> things often are.
->>>=20
->>> How about doing
->>>=20
->>> /* comment */
->>> if (this1)
->>> return that1;
->>> /* comment */
->>> if (this2)
->>> return that2;
->>> /* comment */
->>> if (this3)
->>> return that3;
->>>=20
->>> ?
->>>=20
->>> The code generation will probably be just as good and it's =
-__init-time
->>> stuff anyway.
->>=20
->> Something like?
->>=20
->> static inline size_t page_ext_data_alignment(size_t size)
->> {
->>        /* No client data means no alignment requirement. */
->>        if (!size)
->>                return 1;
->>=20
->>        /* u64 has the strictest alignment required by page_ext =
-clients. */
->>        if (IS_ALIGNED(size, __alignof__(u64)))
->>                return __alignof__(u64);
->>=20
->>        /*
->>         * A type's size is a multiple of its natural alignment, so =
-its
->>         * lowest set bit is at least that alignment.
->>         */
->>        return 1UL << __ffs(size);
->> }
->=20
-> Well I prefer it!
->=20
-> The final bit-twiddle could be (size & ~size) but I'm not sure that's
-> any clearer.
->=20
-> We should have a handy helper for this operation but I can't find one.=20=
+err, (size & -size).
 
-> max_pow_of_two_factor() is close, but only works on uint.
+> > We should have a handy helper for this operation but I can't find one. 
+> > max_pow_of_two_factor() is close, but only works on uint.
+> 
+> How about changing the helper to
+> 
+> #define max_pow_of_two_factor(n) ({					\
+> 	typeof(n) __n = (n);						\
+> 	static_assert(__same_type(__n, 0U) || __same_type(__n, 0UL));	\
+> 	__n & -__n;							\
+> })
+> 
 
-How about changing the helper to
+Switching max_pow_of_two_factor() to take a ulong should be OK - the
+thing only has two callers.  But oh, that name!
 
-#define max_pow_of_two_factor(n) ({					=
-\
-	typeof(n) __n =3D (n);						=
-\
-	static_assert(__same_type(__n, 0U) || __same_type(__n, 0UL));	=
-\
-	__n & -__n;							=
-\
-})
+But do we really want to go there?  The drama with min/max/min_t/max_t
+and especially clamp has been endless.
 
-?
-
+Your open-coded bit-twiddle looks great ;)
