@@ -1,100 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.48
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794989634;
-	b=gcyXGwM8RLX9HHmn9tACqqvgASy9EC01kDndz8ydb/72tDn2VR9YdZ/x9Mhd0UlmQ3xs
-	 mOIympBDM5Jr42g+xCgbBzoFJnCEC5L/8SP+rX6SxQ8rdFB9miLpXfGcw2x0cfHWvtZ5y
-	 6Sv5+zorF9RjiWTmHL1iCR1Nfj/ykvh4GUCQa+fgnOe06NViTVB2S6tlFqnHnsYbN5rrU
-	 UVGlUqVe1YiLxr81jiwUSlItCo/1ZgH/bDSgcnhAuGhLBIhGSPPga3t/M0pu79nsvvCgi
-	 poyMKCiGd5z/flf69reI2jQsxszWMwM8ZagQe6KyR6qi+enuPmgG3xxYA+2eW8WuiwQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794989634;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=ff00ug9gApPN4aPXoacgE+gcCygc8x9Aqk+39n/itA0=;
-	b=PriV2udHV2nJCB88229nFl51ifEsjL+SmU3JeUMpq9z6uRCMKaUaE8GYiHNzrjMtu37X
-	 0g/mGvmRhd3Ax5ef9cWJXHASy5zLWm9RvA3681oxyIcGhikpbNTCKB+92PZBJ6VWok7qG
-	 iJFIY426rptawSG4bk1pRaJVklMezP7yQMyrPWSiLL1GdMbLf1rhADfVJV0eI+RAZmVIy
-	 eyaNKdsWAKKKAKMMat5cYCat1qh8WPISAjo33JTnFMDwYw5kYyI0kLHESP6s5MWsJSlvD
-	 NFz0mSz68uZJPTWIKBrykPblXidFQvGlIB68J1I0UgE6vQzYvO47Lseu1rBxHOm4E8w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="CLmsB/0o";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.48
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.225
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794991534;
+	b=Niog/9CwdtI/2rTUhDILUy4m2TLZlrKzQDNM02vRkEApyjWCtWPLo/siDzWqppddeL2W
+	 M40hp1fCnXcqbmsm6w1RUCtmhlJNf7GOABKjlKnKY9U3/395OVkVBMhseIh4oQ3Y8YFyo
+	 CkodVccqB3Upw9Gr0iFA2D/B0jEC8zeuMDLmYPdn+t91EC6QO/CFNnBHdzK0Zia/SdqRA
+	 dC/IH0uVd4SqNpxTp5nXCxEAOf5VJhmQk4iJRQPr2LhRfdQP/gQM1iI9eKRm5iyj52rMy
+	 q0zClGukghkn+0PjT2c2KzCJkudQU6Oh+2oL5HQe97d4zK5VHBi03gUSG9zApX+/EbQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794991534;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Originating-IP:
+	 X-ClientProxiedBy;
+	bh=CL1Kb+/j64ntc7xw8JHIyID3bJJ/doyvWUN8+vUnQ9Q=;
+	b=golutx4tpkxcb2nPdlS0wWrPaTmJFjGa0SBcp+Resc4pw93RLqNXbRYuaqq0o1o5ZqJX
+	 qgGcaYDbpi84tWQX3sPyqMQjo0Txnp2+TztJcGTEqESnXUKNmGx+O3Z4bDGCsr4gOZiiL
+	 75uP3hmyBuIAQHWU6ZyShdqbxiunFK2CcmnlNXanosmOUsP7etG5Xgkf6GmnHizkX94tE
+	 IPWWgwabWxVpJoVFaajhJ34sh6Bh7QYZb7A4apR1PAv9k8ajhZ7/nQ+87hleilOSBplAQ
+	 s76q+MthoIYCsTKrUczm+7agBvfQ2yThoQyKPL98Kdy8qamkJAa+IJCGhl2GGH7HGmQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=SUB4oc9H;
+	arc=none smtp.remote-ip=113.46.200.225
+Received: from canpmsgout10.his.huawei.com (canpmsgout10.his.huawei.com [113.46.200.225])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9387A606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 08:13:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9387A606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1000F606A31C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 08:45:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1000F606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CLmsB/0o
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4ba013938d7so6201875e9.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 00:13:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794989632; cv=none;
-        d=google.com; s=arc-20260327;
-        b=T8pHzSBffTLj1DMxqeB9u5/JvhnJqm4bVhZsE8Uenjy3WGpnYJvHyiv+9eaAU27C3f
-         YtHOm/lwKjRy8GETNNo9oCDd9lgWCeKo4LN30broswG5paSNkSpPKCfd3uAH78N4rFFj
-         SP5//NTvK+Jz7KqApvnmx4FCm33uhpcQDneFxJUDXQVmBBAl2iGiGdget3H1AWPJv3Vf
-         00jrqp01SSxKrp0F5wTFBJ9lM9Y5y87w/DrWqAf/nOKr24+OtzY512f2Z4y4yw7jtkOB
-         hOH6pnmR+w6PgSSyXT+hZKJnYHubPYBqVjEAL2dWzjMpz7XRP0GRYiCjAxrB3EmaluKZ
-         55TQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ff00ug9gApPN4aPXoacgE+gcCygc8x9Aqk+39n/itA0=;
-        fh=n9dU3i5kQPBG8KJS6aJC46h33B/C+3MB3reUNjDZq4I=;
-        b=ercTTQ5MsCNAj3FVhWM/ZwFV5MTTrHb1FYWUMrauHGKfOOZAlh4yg4EISbQ7RNQYWx
-         DPJ7grt+wpjM0sZU3ZoEhYFencP0CDM2VpO90k2r4ulEgMsBFsHGxs31+R0zlz6y/6uM
-         aStFKgnI4S6V3FpyYcWiiVg7ahMNEFAHJ8GYVMRlUYyBZgcE5OWAzJlCKT9RPs4Onw8y
-         peb9vrUuew8rs0d+QxIHdQznwpqFkQBqzUImCUL3PYQRnu7Ngkc80AulaG9lSbfpaeoT
-         +NA4jWb9BPnVNoUc5zb5P2jUpab7D89yO7A8QlWW+n+OqtQaTZtfpyoZcJPmEwF6qWSF
-         4YNQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1794989632; x=1795594432; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ff00ug9gApPN4aPXoacgE+gcCygc8x9Aqk+39n/itA0=;
-        b=CLmsB/0oWRriDMMX7P3MWeVd//JQTLhjDYZ0UMrTirOX6AqodgjIdFNgCS61TBtGds
-         TdM1DB5YW8T/D2fD0yP4XAoDsRA20inrO/+tefquJSvSBwuU22fYkKVqtCz/qK3gODmo
-         BCEFvIAsSF+e7GaY9AtEMvo1+qbrVvBYbcmLv1PJ6umCN9qbZyHVzaLdG7QRYfh1uLWu
-         efdtAYkuY4keLiafeUjHPxHcQmhKAqytPaadatdSWuAvmnWUSjYGi1MreoP5TJzaYcVU
-         CJJHhK82ePJKCeqGszV1HXUDAIPik8ApAOUKl1Q1c8QomZu6VhlRrKKhB/y7++EUMKoI
-         MBlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794989632; x=1795594432;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ff00ug9gApPN4aPXoacgE+gcCygc8x9Aqk+39n/itA0=;
-        b=MSp+LRNCZHk1v0nA3RKhdDyIKL6GIWi6y1I9A5qVqhr3+aISRNBgIOZ8nvWE80dNju
-         tSdEVxA4nGTogh7bnO8iRjtM4WJ48vk4dLhmA6myo76lpmcUE46mLp+zAIbE+Dn++27Z
-         BMfcbePBEmj/jEu96hREFMZeZl8JuP7wNkOuis4qLH+20afsMItSNf9nhLZxq97QqFvz
-         VgEuCsNbXhkBfb7R3O3Xzw6HFysdpY60TZai58TSi2fdcEAAKYUl6dSOKx9zJ2HBEHsz
-         sGRYD27Ahbz4AipMyorwYvaKLx6z55YNdJpL7c5xid21bMtGsSCsEPvoVssXBLOprzUK
-         q58g==
-X-Gm-Message-State: APuU4Z+SWRrMPBS9JXBdE854NGHkqG9dSqzx6LbHs7rd4OWBHGDUqt/4
-	lcMnAzIkOPUerLnX1ifHUpy9oX6w66zagm2hs2Bt/8KMCsuJlIhwqYkY/GkFitRQwBpIRuSefgr
-	mQSyuFbOa1oaD22WbqM7GWL3xlKQ56RaiNHMdjnXvlJOS+LY+7x0Ndxt6
-X-Gm-Gg: AYBFou0seoQScTs0bz91EA1+DWiTKzUbptBNzFx2+OrKKb5PDS+sUQV0GlTZiT0pKNy
-	FmdQd2/13jHs2ImP0peIFlkQ+Q5eAKdNsqsa4G5cw65uToMOPMpNDwwQ+X9Gd5MWweqUKt7SHFH
-	v8LrjvM+dp5ikQytk2kiiugqwMbltDBBg01eOUeNryj6b5AGmX4VHW2hexjtmnldVxseVX5oQW8
-	hN+1dSUsvEhdyi+Wl6lG/MizGBU0txXCa9di5Ep3/a5SL0uwOnkR8aOijFqJ7fxhOI0y6Jo2MCT
-	Z/5aOrxpN0ot4X66RpuGQkU6s51URaIkr5We6z+aCNRihD/WlTY6MMwA9j9e0aK1gdlugNdU5fN
-	StDKNjlMuDiLa7XZvrCZRrK2Uxj9XXNIIgtp6ccfnWgBwqA5ZVVBnwLjB2MutXe9MvaJawL0DUD
-	ll2j7T9I1W6qMc
-X-Received: by 2002:a05:600d:6011:b0:4a2:1050:aff with SMTP id
- 5b1f17b1804b1-4bb7da12dd2mr31321575e9.6.1794989631363; Wed, 18 Nov 2026
- 00:13:51 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=SUB4oc9H
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=CL1Kb+/j64ntc7xw8JHIyID3bJJ/doyvWUN8+vUnQ9Q=;
+	b=SUB4oc9HwMnPHmTzpOhpKHD7saGp4F2pDd1vz3kEEdREGmKKTeDzHrc6qPoGd7XPhmfj+NCQB
+	MXwaag+Lva7rO7gKYjNUzUAXiTNeh4WV7t4B1AeVXeDe/qUIbHv7dLRKrgQ1m180eAYpcO4vfk1
+	wtxJ3lmi6rrrwkfd8zxJHSM=
+Received: from mail.maildlp.com (unknown [172.19.163.200])
+	by canpmsgout10.his.huawei.com (SkyGuard) with ESMTPS id 4jTwCb3ddhz1K970;
+	Wed, 18 Nov 2026 16:45:15 +0800 (CST)
+Received: from kwepemr500001.china.huawei.com (unknown [7.202.194.229])
+	by mail.maildlp.com (Postfix) with ESMTPS id 21DA84056A;
+	Wed, 18 Nov 2026 16:45:29 +0800 (CST)
+Received: from [10.174.179.68] (10.174.179.68) by
+ kwepemr500001.china.huawei.com (7.202.194.229) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Wed, 18 Nov 2026 16:45:28 +0800
+Message-ID: <0ca5bbc1-2101-4a13-971d-b5a14e56e5ef@huawei.com>
+Date: Wed, 18 Nov 2026 16:45:27 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,167 +62,70 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261117-tyr-remap-2mb-v1-0-2a8efd4c8180@google.com>
- <20261117-tyr-remap-2mb-v1-3-2a8efd4c8180@google.com> <sashiko-outbox-219548@kernel.org>
-In-Reply-To: <sashiko-outbox-219548@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Wed, 18 Nov 2026 09:13:36 +0100
-X-Gm-Features: Aa3M54oJZdT7-ajHsujlEqHjejtQJ-wbRg89LRwChMZkFv84X9L5dIr8h3QO4eE
-Message-ID: <CAH5fLghi4y1623FwMeRH60zZUqAoATABEJ-bBp8uPD1goYwPFw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] drm/tyr: vm: expand sub-block unmaps to 2MB
- boundaries on remap
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, ojeda@kernel.org, gary@garyguo.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] mm: add spurious fault fixing support for huge pud
+To: <sashiko-reviews@lists.linux.dev>, <akpm@linux-foundation.org>,
+	<david@kernel.org>, <ljs@kernel.org>, <catalin.marinas@arm.com>,
+	<will@kernel.org>, <mark.rutland@arm.com>, <ryan.roberts@arm.com>,
+	<peterx@redhat.com>, <dave.jiang@intel.com>, <linux-mm@kvack.org>
+CC: <wangkefeng.wang@huawei.com>, <sunnanyong@huawei.com>
+References: <20261117020237.4037980-1-tujinjiang@huawei.com>
+ <20261117020237.4037980-4-tujinjiang@huawei.com>
+ <sashiko-outbox-219925@kernel.org>
+From: Jinjiang Tu <tujinjiang@huawei.com>
+In-Reply-To: <sashiko-outbox-219925@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ kwepemr500001.china.huawei.com (7.202.194.229)
 
-On Tue, Nov 17, 2026 at 9:02=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
+
+在 2026/11/18 10:03, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] drm/tyr: page table desync and GpuVa leak on pt_map() error
->   in sm_step_remap()
+> - [Low] arm64: mm: unaligned address in
+>    flush_tlb_fix_spurious_fault_pud() flushes 2 PUDs
 > --
 >
-> commit 890e6d1a0c182be186e5d6f90855d935bae30eda
-> Author: Sami Tolvanen <samitolvanen@google.com>
+> commit 89132c364112921acce9427dab367c258f86db04
+> Author: Jinjiang Tu <tujinjiang@huawei.com>
 >
-> drm/tyr: vm: expand sub-block unmaps to 2MB boundaries on remap
+> mm: add spurious fault fixing support for huge pud
 >
-> This commit expands sub-block unmaps in sm_step_remap() to 2MB boundaries=
- when
-> the surviving fragments are physically contiguous and remaps the survivin=
-g
-> head and tail fragments as 4KB pages.
+> This commit adds spurious page fault TLB flushing support for huge PUD
+> mappings and implements flush_tlb_fix_spurious_fault_pud() on arm64.
 >
-> > diff --git a/drivers/gpu/drm/tyr/vm.rs b/drivers/gpu/drm/tyr/vm.rs
-> > index 1dd11b2b12532..bcc864b174284 100644
-> > --- a/drivers/gpu/drm/tyr/vm.rs
-> > +++ b/drivers/gpu/drm/tyr/vm.rs
+>> diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+>> index a06b0f5c34111..3c1c000cc5dd1 100644
+>> --- a/arch/arm64/include/asm/pgtable.h
+>> +++ b/arch/arm64/include/asm/pgtable.h
+>> @@ -107,6 +107,10 @@ static inline void arch_leave_lazy_mmu_mode(void)
+>>   	__flush_tlb_range(vma, address, address + PMD_SIZE, PMD_SIZE, 2,	\
+>>   			  TLBF_NOBROADCAST | TLBF_NONOTIFY | TLBF_NOWALKCACHE)
+>>   
+>> +#define flush_tlb_fix_spurious_fault_pud(vma, address, pudp)			\
+>> +	__flush_tlb_range(vma, address, address + PUD_SIZE, PUD_SIZE, 1,	\
+>> +			  TLBF_NOBROADCAST | TLBF_NONOTIFY | TLBF_NOWALKCACHE)
+>> +
+> [Severity: Low]
+> Does flush_tlb_fix_spurious_fault_pud() flush two PUDs instead of one
+> when the fault occurs at a non-zero page offset within the huge PUD?
 >
-> [ ... ]
+> fix_spurious_fault() passes vmf->address, which is only aligned to
+> PAGE_MASK.  __flush_tlb_range() then aligns start and end to stride
+> (PUD_SIZE):
 >
-> > @@ -749,10 +780,50 @@ fn sm_step_remap<'op>(
-> >              op.va_to_unmap().addr() + op.va_to_unmap().length()
-> >          };
-> >
-> > -        let unmap_length =3D unmap_end - unmap_start;
-> > +        // The surviving fragments inherit the protection of the mappi=
-ng being
-> > +        // split.
-> > +        let prot =3D op.va_to_unmap().data_ref().prot;
-> > +
-> > +        let block =3D Alignment::SZ_2M;
-> > +        let aligned_start =3D unmap_start.align_down(block);
-> > +        let aligned_end =3D unmap_end.align_up(block).ok_or(EINVAL)?;
-> > +
-> > +        // An end may only be expanded if the fragment the expansion s=
-weeps and
-> > +        // rebuilds is fully mapped and physically contiguous, because=
- the
-> > +        // rebuild maps it linearly from a single recovered address. A=
- genuine
-> > +        // 2MB block is always contiguous, so this never misses one an=
-d the
-> > +        // partial-block unmap can never reach arm-lpae. A fragmented =
-region is
-> > +        // never expanded, so its sub-range unmap stays correct.
-> > +        let head_paddr =3D match op.prev() {
-> > +            Some(prev) if aligned_start < unmap_start && prev.addr() <=
-=3D aligned_start =3D> {
-> > +                contiguous_phys(context.pt, aligned_start..unmap_start=
-)
-> > +            }
-> > +            _ =3D> None,
-> > +        };
-> > +        let tail_paddr =3D match op.next() {
-> > +            Some(next) if aligned_end > unmap_end && next.addr() + nex=
-t.length() >=3D aligned_end =3D> {
-> > +                contiguous_phys(context.pt, unmap_end..aligned_end)
-> > +            }
-> > +            _ =3D> None,
-> > +        };
-> > +
-> > +        let region_start =3D if head_paddr.is_some() {
-> > +            aligned_start
-> > +        } else {
-> > +            unmap_start
-> > +        };
-> > +        let region_end =3D if tail_paddr.is_some() {
-> > +            aligned_end
-> > +        } else {
-> > +            unmap_end
-> > +        };
-> > +
-> > +        let prev_va =3D context.preallocated_gpuva()?;
-> > +        let next_va =3D context.preallocated_gpuva()?;
-> >
-> > -        if unmap_length > 0 {
-> > -            let region =3D unmap_start..(unmap_start + unmap_length);
-> > +        if region_end > region_start {
-> > +            let region =3D region_start..region_end;
-> > +            context.extend_lock(region.clone())?;
-> >              pt_unmap(context.dev, context.pt, region.clone()).inspect_=
-err(|e| {
-> >                  dev_err!(
-> >                      context.dev,
-> > @@ -764,14 +835,29 @@ fn sm_step_remap<'op>(
-> >              })?;
-> >          }
-> >
-> > -        let prev_va =3D context.preallocated_gpuva()?;
-> > -        let next_va =3D context.preallocated_gpuva()?;
-> > +        if let Some(head_paddr) =3D head_paddr {
-> > +            pt_map(
-> > +                context.dev,
-> > +                context.pt,
-> > +                aligned_start,
-> > +                head_paddr,
-> > +                unmap_start - aligned_start,
-> > +                prot,
-> > +            )?;
-> > +        }
-> > +        if let Some(tail_paddr) =3D tail_paddr {
-> > +            pt_map(
-> > +                context.dev,
-> > +                context.pt,
-> > +                unmap_end,
-> > +                tail_paddr,
-> > +                aligned_end - unmap_end,
-> > +                prot,
-> > +            )?;
-> > +        }
-> >
-> > -        let (op_remapped, remap_ret) =3D op.remap(
-> > -            [prev_va, next_va],
-> > -            pin_init::init_zeroed(),
-> > -            pin_init::init_zeroed(),
-> > -        );
-> > +        let (op_remapped, remap_ret) =3D
-> > +            op.remap([prev_va, next_va], GpuVaData { prot }, GpuVaData=
- { prot });
+> arch/arm64/include/asm/tlbflush.h:__flush_tlb_range() {
+>      ...
+> 	start = round_down(start, stride);
+> 	end = round_up(end, stride);
+> 	__do_flush_tlb_range(vma, start, end, stride, tlb_level, flags);
+> }
 >
-> [Severity: Medium]
-> Can a pt_map() failure here leave context.pt out of sync with GpuVm and l=
-eak
-> the GpuVa?
->
-> pt_unmap() has already torn down the expanded 2MB range in context.pt bef=
-ore
-> pt_map() allocates L3 page tables for the surviving 4KB fragments.  If ei=
-ther
-> pt_map() fails with ENOMEM, sm_step_remap() returns without restoring the
-> unmapped range in context.pt or updating the GpuVm tree via op.remap().
->
-> When Vm::kill() or Vm::unmap_range() later calls sm_step_unmap() on the
-> unsplit GpuVa, pt_unmap() hits the already-unmapped PTEs, triggers a WARN=
-_ON
-> in __arm_lpae_unmap(), and returns Err(EINVAL) before op.remove() can unl=
-ink
-> and free the GpuVa and its GEM BO references.
+> Whenever address is not PUD_SIZE-aligned, round_down(address, PUD_SIZE)
+> and round_up(address + PUD_SIZE, PUD_SIZE) span 2 * PUD_SIZE,
+> invalidating the adjacent PUD range on the local CPU as well.
 
-This is valid, but allocation failure in pt_map() is a pre-existing
-problem. It will go away once these page table entries are
-pre-allocated.
+Yes, confirmed. flush_tlb_fix_spurious_fault_pmd() has the same issue, which
+is pre-exist. I will fix both in v3.
 
-alice
