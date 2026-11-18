@@ -1,66 +1,73 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023849;
-	b=dcVrqulDXYG3B6lLpRuYBrBPZKzFCGMjPjbiQbdCVFQVIk/x6YfC8e9Keui1rGgcmbMW
-	 RQD+yS9qUxIELWAuJtj+tZU6J2ZLV/dAEDcnWIN4POWJ7/R69Yoj4kny5LQqPDZM/DrPO
-	 eYRhC6RWyFuuD7JEpSjUc/SjAB+GmeUxLTVh8+2JjmTyerAVE6PkzqdR36R6eOvdbN4mh
-	 kVHgtXo7fgQS5Q/MOhaX1zxzdpz9Mj+RIapTtRwcGdgdZM+tLFjFmblYg9VAsgbYL2vs9
-	 lI1UczB7NvSpIixAzNZK0nv18L5+H3/spH2wwpUP0YSEpHbHrs5famMr71feJ7FL3Mg==
+	t=1795024334;
+	b=ISwUeTHXzOIMKFbsmJu05jFcM1zElJdQ79c1+75jVI5iNapYDcgrOX7Iy2UHsHecRe4T
+	 RvcWYBHogsZS0bxw83ShQtOXYUYdL2aVur8+cI1PbXBiL08+gthi3J/aDXiQfQnOU+xDu
+	 E64oHa7tsxL62ro8cGEOzV1ojer1DlCgbK85+CUhgnJk6qYVojlx+ao4W7okqbgJWQcpO
+	 KiBJTk73JYUtfTrQDPoxQYVY76ToZuDHR032vzjIYpenqd16r/YOje4/Mq/FFpCvMWMI+
+	 P4rKDbmmLeJR8HALysoWOFCi0a4W/h2STXZHLwOmLCWZ5O+Sk/zlB57vBLchGRsuqdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023849;
-	h=Received:DKIM-Signature:Received:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:User-Agent:MIME-Version:Content-Type:
-	 X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:
-	 X-SA-Exim-Scanned;
-	bh=PsjAHRo5jnkI0ALFabogwq+UwZ+2mKJujdKyho7IR70=;
-	b=XcFyVTOfWvZROJ3xLInkerMD+eTzt8N/LUWePDms//GxGSZjgTngLk+Z/WZ+teSb5Dpp
-	 VhGKZVDutmthQdQnk/9S4l15EUhelBYa5xHzWi1ob257IbcQOwhqD8+vLH9ZD41MdNBi1
-	 QOiMezXirBScl1ym2MfcWx/EcGaBsIX86SUL+mk1aaQFztumf+GTF/Qq4acIyelPOM1pK
-	 rfbhCdHjdYO2WcfybB5Dz/yad623inUEuwa9cKbodo4H2T/L104x4OO6glbN00T8Vh+4M
-	 cJk7z+dmTbvK8sz6bCYJPy6hvZ7yqhJmzLy3UtdLLdfzTOBjMRS/SyAfAitUcTSnBJQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024334;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=4ARnCtd3uzto/PHgfCMWuGtlnwWSM7jlXaejDo5/H8E=;
+	b=HQv/MUBd9tNDXkXDVx60ZT+sGTzLgePWioxkFfiDL6Ldf2ntcGFmVYMd3+5V+oS/NUrM
+	 AbU5KRMclcfyCzmG7jUcoxABAhLOonmH8poBfyk1Y3jWkC++JUkRizWgTqzVo9p+6mr4K
+	 0mudJpawc9e2mzbHYdckUeG0xQF3cYJIW7OAVUAmqeHTdUDFPnSqGte9mU1VIbsOF1GTr
+	 pp+bX3QnmUoTVLybr9vCyRsyDLMmTA3a54nGcmpALcFe55Um2MGgGkk/6WKai4OzmhQnf
+	 fxUh6vNcpr5WRRJIHzM+gVE84R+Yp2XTtZdDLkZEYxOzYUrvZ16Ltbz/nWRLcn8+dDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PnJkS9nY;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=InyXieSU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A4F606A330;
-	Wed, 18 Nov 2026 17:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2785860A2610
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 17:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PnJkS9nY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CC41F000C7;
-	Wed, 18 Nov 2026 17:44:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=InyXieSU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE3B1F0181A;
+	Wed, 18 Nov 2026 17:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795023848;
-	bh=PsjAHRo5jnkI0ALFabogwq+UwZ+2mKJujdKyho7IR70=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=PnJkS9nY8C7s9v5mncFhm84/YLzlygGH0cJ9SmDGquNicMJ3G42uSMWrM9qiWv8sZ
-	 cTakZiYy0bsrkYZCSqC3LUS57Ow7WwN3b9UuYKBw5m+NlV5y25kzwvpt30IhmRnHZP
-	 e9VY5cxGy6U7jEWEUkx+Y6OLSz6CtkZr1lqoVwKX9mdODg6FOPa/7fNaYS6d2AldVY
-	 ASslvyeTHW5JFlzxqV53RNIvjyzhmQOW3OaHhcp37jdr8GENqSbMoeGsGYMBh91F/s
-	 Br/66kA8lFJl8ch/Yp/PUX1qHcyZ7i/7Ne4hvpn5ygDMNGfxlDFbdXxJAqVbElxkkP
-	 u7l4sNVC/rTog==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1xTjhW-000000004aK-494Z;
-	Wed, 18 Nov 2026 17:44:07 +0000
-Date: Wed, 18 Nov 2026 17:44:06 +0000
-Message-ID: <86zev6yqzd.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: 	"Oliver Upton" <oupton@kernel.org>
-Cc: "Dan Carpenter" <dan@pereq.eu>,
-	kvmarm@lists.linux.dev, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
-In-Reply-To: <sashiko-outbox-221074@kernel.org>
-References: <cover.1795006659.git.dan@pereq.eu>
-	<033a2d49e0f48426281b46eb1131ae64012aba18.1795006659.git.dan@pereq.eu>
-	<sashiko-outbox-221074@kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=k20260515; t=1795024334;
+	bh=4ARnCtd3uzto/PHgfCMWuGtlnwWSM7jlXaejDo5/H8E=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=InyXieSUCQl9Cv/r4RObv2pWTlQXUVlKOG+bbKUELmpoOv0GqOpoYOshh1Xce4sPC
+	 HzF6dwpByCrANYjQ6ESOe5rb+84pRjTO8DfkL/RmXE3L+c5modIsNpPnYhzoBsCYC1
+	 AClaaKnqJC74vuGCns9ydek9OMTSd2A0Q1scaFbE6YD+OapvZIYAEDwUOYGyqPaRjf
+	 F0hbF4IypWindl5xPvTnnZO+SSjJ6NdM8tr/C5b/3dYVblHzMffY6+liZpwn8bVBiN
+	 Nvrx37xTLNMck9AuMI/s+GmsR0LkNdMSzhYe/bCMG7wzWLY0b+xNAdrjbKcXofSUYl
+	 UbvoY9FBuraaA==
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 3BFAA198003A;
+	Wed, 18 Nov 2026 12:52:11 -0500 (EST)
+Received: from ams-imap-03 ([10.64.2.23])
+  by ams-compute-02.internal (MEProxy); Wed, 18 Nov 2026 12:52:11 -0500
+X-ME-Sender: <xms:yeX9ahl9MSfxN4sTMAroam9MjurPlx6ItgAx3JAsor09Qws2e9CVoA>
+    <xme:yeX9anqNEQOjvo3J645XUlBVetwSNdA9UPWCxhTYrolv_d1XxJ4DsU_YFR5Jz-PzU
+    pJ_MSXB7eY1QWNJyV17MUZTn34XSIZ0a6kWh6zU9TR_Qd8MSdIrfyQniA>
+X-ME-Proxy-Cause: dmFkZTGXEjOHTyRbeH7wX+barNrdVzrhxIMtHH4AQ3khzLpzp+Mqso9wSQl02IsvrfAHa3
+    W4JuqVmqapUTAs38f8bIAXgKPBDyb0SzYwWYtcCjXmbQL75fp9+bDNev+0g0FEPu+awqGa
+    D9U1fUGfB4P5Z8vSjWvX/6fmjio69h5xdkehIWGWjfF1H8A5HSoyjEjXSupIynmerSa+e8
+    /IlMY5VsIZpkoK34dANjv0z0PuMqTyDGitZ1qck+dG5ncATtKhSlF39rhg6OccX4e3/acr
+    nVpu/MBrpwkbhJNznVcsPKQ1PwjHVQeIjbxUsGABeXqUVSs9CMYy463By1FRw2vF2MEArT
+    JZBz3EmyKnUnQrtXRV37dpJ5a7H9r5/KAbvh8GQ0NP8nkU33uL/zh21pG+eazF/16NvmWx
+    Qt/hG8bBkNL2a2/Q4JSmnT+FuGGGPBrYULKZpUUxQKPcMcGwcn7WBb7lqm/ig87vZcNX9o
+    1sHHGp/R8/OVcbfBmliKsmgJnHolBW5V3+6zoJemjarNZqDBC9tWuqARhRu4A1Yf8AZcbk
+    WUuJ2djoQEg0CeCYKnsTd2jn3MmgzAdPv4XTUegiGUcsGyG45lZGV91keIVX2/iBSgfy1O
+    3/3CWWPUe5u3pViXFfa4slARg4NkXWDOzPAK0sLHKWiTJuzxEdrm7uzosRVQ
+X-ME-Proxy: <xmx:y-X9akGk7YZ1oTFw1OVjVtjaMKU9M-vNJBtF6--GTt1zDiE339q8Pw>
+    <xmx:y-X9aoR03U3DEoMg5ryracda4ucCATh8AuM1a9WAS4X4JysVCJc7VA>
+    <xmx:y-X9atKqsQ0ggRr-yZdTkuXY0YrrdRe2FTfxzcRWgn0Gj0CLs5qpig>
+    <xmx:y-X9arZrhAjC1KWsUzcP1vuh3fxe3d8zKkQiKA1W7NC6L26dAsEipA>
+    <xmx:y-X9an88M6Q6nOx-kHuKARXrjVp3JPk6d32ltQPrk3EoetZy2EGayoFw>
+Feedback-ID: i36794607:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 8B84032A0099; Wed, 18 Nov 2026 12:52:09 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,138 +76,307 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: oupton@kernel.org, dan@pereq.eu, kvmarm@lists.linux.dev, sashiko-reviews@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+X-ThreadId: AbyrFe5vH_go
+Date: Wed, 18 Nov 2026 18:51:29 +0100
+From: "Arnd Bergmann" <arnd@kernel.org>
+To: sashiko-reviews@lists.linux.dev,
+ "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
+Cc: "Wolfram Sang" <wsa+renesas@sang-engineering.com>,
+ "Linus Walleij" <linusw@kernel.org>,
+ "Geert Uytterhoeven" <geert+renesas@glider.be>,
+ "Ulf Hansson" <ulfh@kernel.org>
+Message-Id: <2236a38c-de88-4f83-8d46-2ea96c5ac915@app.fastmail.com>
+In-Reply-To: <sashiko-outbox-221162@kernel.org>
+References: <20261118134445.2909283-1-arnd@kernel.org>
+ <sashiko-outbox-221162@kernel.org>
+Subject: Re: [PATCH] mmc: sh_mmcif: rework sg_miter handling
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 18 Nov 2026 13:45:34 +0000,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] KVM: arm64: stale mmio_needed after kvm_inject_nested() in
->   KVM_SET_VCPU_EVENTS
+On Wed, Nov 18, 2026, at 15:11, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] mmc: sh_mmcif: DMA transfers leave data->bytes_xfered at 0
+> - [High] mmc: sh_mmcif: blksz + 3 in sh_mmcif_read_block() and
+>   sh_mmcif_write_block()
+> - [Medium] mmc: sh_mmcif: PIO leaves data->bytes_xfered non-zero on
+>   transfer error
 > --
-> 
-> commit 178d0de7451612b8ddf14a943cb82094efbd77d1
-> Author: Dan Carpenter <dan@pereq.eu>
-> 
-> KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
-> 
-> This commit wraps __kvm_arm_vcpu_set_events() in vcpu_load() and vcpu_put()
-> so that kvm_inject_nested() operates on a loaded vCPU during
-> KVM_SET_VCPU_EVENTS.
-> 
-> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> > index 84a52e27ed859..a148e80d0aef7 100644
-> > --- a/arch/arm64/kvm/arm.c
-> > +++ b/arch/arm64/kvm/arm.c
-> > @@ -2002,7 +2002,7 @@ static int kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
-> >  static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
-> >  				   struct kvm_vcpu_events *events)
-> >  {
-> > -	int i;
-> > +	int i, ret;
-> >  
-> >  	/* check whether the reserved field is zero */
-> >  	for (i = 0; i < ARRAY_SIZE(events->reserved); i++)
-> > @@ -2014,7 +2014,11 @@ static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
-> >  		if (events->exception.pad[i])
-> >  			return -EINVAL;
-> >  
-> > -	return __kvm_arm_vcpu_set_events(vcpu, events);
-> > +	vcpu_load(vcpu);
-> > +	ret = __kvm_arm_vcpu_set_events(vcpu, events);
-> > +	vcpu_put(vcpu);
-> > +
-> > +	return ret;
-> >  }
-> 
-> [Severity: Medium]
-> Does vcpu->mmio_needed remain set when KVM_SET_VCPU_EVENTS injects an
-> exception from L2 that routes to L1 EL2?
-> 
-> When an L2 guest exits with KVM_EXIT_MMIO and userspace aborts the access via
-> KVM_SET_VCPU_EVENTS (for example with ext_dabt_pending = 1 while HCR_EL2.TEA
-> is set), kvm_inject_sea_dabt() -> kvm_inject_nested() commits the EL2
-> exception entry directly via __kvm_adjust_pc(), which clears
-> PENDING_EXCEPTION.  When __kvm_arm_vcpu_set_events() then calls
-> commit_pending_events(), PENDING_EXCEPTION is already clear, so it returns
-> early without clearing vcpu->mmio_needed:
-> 
-> arch/arm64/kvm/guest.c:commit_pending_events() {
-> 	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION))
-> 		return;
-> 
-> 	vcpu->mmio_needed = false;
-> 	kvm_call_hyp(__kvm_adjust_pc, vcpu);
-> }
-> 
-> On the next KVM_RUN, kvm_handle_mmio_return() sees vcpu->mmio_needed still
-> set, writes the MMIO read value into L1 EL2's destination register and
-> advances L1 EL2's exception vector PC by 4 bytes via kvm_incr_pc().
+>
+> commit 6f62463df398beb43ce5f1bf65cbfc2642c791de
+> Author: Arnd Bergmann <arnd@arndb.de>
+>
+> mmc: sh_mmcif: rework sg_miter handling
+>
+> This commit converts the sh_mmcif PIO scatterlist iterator to use
+> SG_MITER_LOCAL by mapping and stopping the iterator within each block
+> transfer helper and tracking progress with data->bytes_xfered.
+>
+>> diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
+>> index 51be5dc82f6e6..4583c22e8989b 100644
+>> --- a/drivers/mmc/host/sh_mmcif.c
+>> +++ b/drivers/mmc/host/sh_mmcif.c
+>> @@ -604,7 +604,7 @@ static void sh_mmcif_single_read(struct sh_mmcif_=
+host *host,
+>>  			   BLOCK_SIZE_MASK) + 3;
+>> =20
+>>  	sg_miter_start(&host->sg_miter, data->sg, data->sg_len,
+>> -		       SG_MITER_TO_SG);
+>> +		       SG_MITER_LOCAL | SG_MITER_TO_SG);
+>> =20
+>>  	host->wait_for =3D MMCIF_WAIT_FOR_READ;
+>> =20
+>> @@ -621,7 +621,6 @@ static bool sh_mmcif_read_block(struct sh_mmcif_h=
+ost *host)
+>>  	int i;
+>> =20
+>>  	if (host->sd_error) {
+>> -		sg_miter_stop(sgm);
+>>  		data->error =3D sh_mmcif_error_manage(host);
+>>  		dev_dbg(dev, "%s(): %d\n", __func__, data->error);
+>>  		return false;
+>> @@ -629,7 +628,6 @@ static bool sh_mmcif_read_block(struct sh_mmcif_h=
+ost *host)
+>> =20
+>>  	if (!sg_miter_next(sgm)) {
+>>  		/* This should not happen on single blocks */
+>> -		sg_miter_stop(sgm);
+>>  		return false;
+>>  	}
+>> =20
+>> @@ -638,6 +636,8 @@ static bool sh_mmcif_read_block(struct sh_mmcif_h=
+ost *host)
+>>  	for (i =3D 0; i < host->blocksize / 4; i++)
+>>  		*p++ =3D sh_mmcif_readl(host->addr, MMCIF_CE_DATA);
+>> =20
+>> +	data->bytes_xfered +=3D host->blocksize;
+>> +	sgm->consumed =3D host->blocksize;
+>>  	sg_miter_stop(&host->sg_miter);
+>
+> [Severity: High]
+> Does setting sgm->consumed and data->bytes_xfered to host->blocksize h=
+ere
+> (and in sh_mmcif_write_block()) trigger WARN_ON(miter->consumed >
+> miter->length) in sg_miter_stop() and over-report data->bytes_xfered b=
+y 3
+> bytes?
+>
+> sh_mmcif_single_read() and sh_mmcif_single_write() initialize
+> host->blocksize to (MMCIF_CE_BLOCK_SET & BLOCK_SIZE_MASK) + 3 to round=
+ up
+> the 32-bit word loop, so host->blocksize is data->blksz + 3 while
+> sgm->length is only data->blksz.
 
-I think this is a separate issue, which doesn't intersect with the
-current patch. The problem is that we have multiple ways to "commit'
-the state on exception delivery, and that we miss MMIO handling in the
-EL1->EL2 path.
+I've changed this to no longer refer to host->blocksize now:
 
-Oliver, WDYT?
-
-	M.
-
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 97332ffcb1300..33bced55ce3bb 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -1352,6 +1352,7 @@ int __kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
- int __kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
- 			      struct kvm_vcpu_events *events);
- 
-+void commit_pending_events(struct kvm_vcpu *vcpu);
- void kvm_arm_halt_guest(struct kvm *kvm);
- void kvm_arm_resume_guest(struct kvm *kvm);
- void kvm_pause_vcpu(struct kvm_vcpu *vcpu);
-diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-nested.c
-index d04ac52034541..83272adefc4c0 100644
---- a/arch/arm64/kvm/emulate-nested.c
-+++ b/arch/arm64/kvm/emulate-nested.c
-@@ -2900,7 +2900,7 @@ static int kvm_inject_nested(struct kvm_vcpu *vcpu, u64 esr_el2,
- 	 * We may have an exception or PC update in the EL0/EL1 context.
- 	 * Commit it before entering EL2.
- 	 */
--	__kvm_adjust_pc(vcpu);
-+	commit_pending_events(vcpu);
- 
- 	kvm_arch_vcpu_put(vcpu);
- 
-diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-index 878ea4500c5c5..595b23b29af89 100644
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -770,14 +770,16 @@ int __kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
- 	return 0;
+diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
+index 7f1818831f93..cade6ae7d44f 100644
+--- a/drivers/mmc/host/sh_mmcif.c
++++ b/drivers/mmc/host/sh_mmcif.c
+@@ -636,8 +636,8 @@ static bool sh_mmcif_read_block(struct sh_mmcif_host=
+ *host)
+ 	for (i =3D 0; i < host->blocksize / 4; i++)
+ 		*p++ =3D sh_mmcif_readl(host->addr, MMCIF_CE_DATA);
+=20
+-	data->bytes_xfered +=3D host->blocksize;
+-	sgm->consumed =3D host->blocksize;
++	data->bytes_xfered +=3D 4*i;
++	sgm->consumed =3D 4*i;
+ 	sg_miter_stop(&host->sg_miter);
+=20
+ 	/* buffer read end */
+@@ -688,13 +688,13 @@ static bool sh_mmcif_mread_block(struct sh_mmcif_h=
+ost *host)
+ 	for (i =3D 0; i < host->blocksize / 4; i++)
+ 		*p++ =3D sh_mmcif_readl(host->addr, MMCIF_CE_DATA);
+=20
+-	data->bytes_xfered +=3D host->blocksize;
+-	sgm->consumed =3D host->blocksize;
++	data->bytes_xfered +=3D 4*i;
++	sgm->consumed =3D 4*i;
+ 	sg_miter_stop(sgm);
+=20
+ 	sh_mmcif_bitset(host, MMCIF_CE_INT_MASK, MASK_MBUFREN);
+=20
+-	return data->bytes_xfered < host->blocksize * data->blocks;
++	return data->bytes_xfered < data->blksz * data->blocks;
  }
- 
--static void commit_pending_events(struct kvm_vcpu *vcpu)
-+void commit_pending_events(struct kvm_vcpu *vcpu)
- {
--	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION))
-+	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION) &&
-+	    !vcpu_get_flag(vcpu, INCREMENT_PC))
- 		return;
- 
- 	/*
- 	 * Reset the MMIO emulation state to avoid stepping PC after emulating
--	 * the exception entry.
-+	 * the exception entry. This also applies if for any reason, we adjust
-+	 * PC while in an MMIO phase. But that's rather dodgy...
- 	 */
- 	vcpu->mmio_needed = false;
- 	kvm_call_hyp(__kvm_adjust_pc, vcpu);
+=20
+ static void sh_mmcif_single_write(struct sh_mmcif_host *host,
+@@ -738,8 +738,8 @@ static bool sh_mmcif_write_block(struct sh_mmcif_hos=
+t *host)
+ 	for (i =3D 0; i < host->blocksize / 4; i++)
+ 		sh_mmcif_writel(host->addr, MMCIF_CE_DATA, *p++);
+=20
+-	data->bytes_xfered +=3D host->blocksize;
+-	sgm->consumed =3D host->blocksize;
++	data->bytes_xfered +=3D 4 * i;
++	sgm->consumed =3D 4 * i;
+ 	sg_miter_stop(&host->sg_miter);
+=20
+ 	/* buffer write end */
+@@ -790,13 +790,13 @@ static bool sh_mmcif_mwrite_block(struct sh_mmcif_=
+host *host)
+ 	for (i =3D 0; i < host->blocksize / 4; i++)
+ 		sh_mmcif_writel(host->addr, MMCIF_CE_DATA, *p++);
+=20
+-	data->bytes_xfered +=3D host->blocksize;
+-	sgm->consumed =3D host->blocksize;
++	data->bytes_xfered +=3D 4 * i;
++	sgm->consumed =3D 4 * i;
+ 	sg_miter_stop(sgm);
+=20
+ 	sh_mmcif_bitset(host, MMCIF_CE_INT_MASK, MASK_MBUFWEN);
+=20
+-	return data->bytes_xfered < host->blocksize * data->blocks;
++	return data->bytes_xfered < data->blksz * data->blocks;
+ }
+=20
+ static void sh_mmcif_get_response(struct sh_mmcif_host *host,
 
--- 
-Without deviation from the norm, progress is not possible.
+
+>> @@ -792,27 +777,26 @@ static bool sh_mmcif_mwrite_block(struct sh_mmc=
+if_host *host)
+>>  	int i;
+>> =20
+>>  	if (host->sd_error) {
+>> -		sg_miter_stop(sgm);
+>>  		data->error =3D sh_mmcif_error_manage(host);
+>>  		dev_dbg(dev, "%s(): %d\n", __func__, data->error);
+>>  		return false;
+>>  	}
+>> =20
+>> +	if (!sg_miter_next(sgm))
+>> +		return false;
+>> +
+>>  	p =3D sgm->addr;
+>> =20
+>>  	for (i =3D 0; i < host->blocksize / 4; i++)
+>>  		sh_mmcif_writel(host->addr, MMCIF_CE_DATA, *p++);
+>> =20
+>> +	data->bytes_xfered +=3D host->blocksize;
+>>  	sgm->consumed =3D host->blocksize;
+>> -
+>> -	if (!sg_miter_next(sgm)) {
+>> -		sg_miter_stop(sgm);
+>> -		return false;
+>> -	}
+>> +	sg_miter_stop(sgm);
+>> =20
+>>  	sh_mmcif_bitset(host, MMCIF_CE_INT_MASK, MASK_MBUFWEN);
+>> =20
+>> -	return true;
+>> +	return data->bytes_xfered < host->blocksize * data->blocks;
+>>  }
+>
+> [Severity: Medium]>
+> --=20
+> Sashiko AI review =C2=B7=20
+> https://sashiko.dev/#/patchset/20261118134445.2909283-1-arnd@kernel.or=
+g?part=3D1
+> What happens if a PIO transfer encounters an error or timeout after on=
+e or
+> more blocks have been transferred to or from MMCIF_CE_DATA?
+>
+> In the single-block and multi-block PIO helpers, data->bytes_xfered is
+> incremented as soon as the controller FIFO is accessed, before
+> MMCIF_WAIT_FOR_READ_END, MMCIF_WAIT_FOR_WRITE_END, or MMCIF_WAIT_FOR_S=
+TOP
+> completes.  If a later step or sh_mmcif_timeout_work() fails, data->er=
+ror
+> (or mrq->stop->error) is set while data->bytes_xfered remains non-zero,
+> which causes mmc_blk_mq_rw_recovery() and mmc_blk_mq_complete_rq() to =
+treat
+> those unconfirmed bytes as successfully transferred with BLK_STS_OK.
+
+Not sure what we actually want data->bytes_xfered to be in this case,
+I would guess that if the FIFO access went through, we should count it,
+but to be on the safe side I can reset the value in the error case
+and leave the behavior unchanged here:
+
+diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
+index cade6ae7d44f..6c3aff6e8c46 100644
+--- a/drivers/mmc/host/sh_mmcif.c
++++ b/drivers/mmc/host/sh_mmcif.c
+@@ -1253,6 +1253,7 @@ static irqreturn_t sh_mmcif_irqt(int irq, void *de=
+v_id)
+ 		break;
+ 	case MMCIF_WAIT_FOR_STOP:
+ 		if (host->sd_error) {
++			mrq->data->bytes_xferred =3D 0;
+ 			mrq->stop->error =3D sh_mmcif_error_manage(host);
+ 			dev_dbg(dev, "%s(): %d\n", __func__, mrq->stop->error);
+ 			break;
+@@ -1263,6 +1264,7 @@ static irqreturn_t sh_mmcif_irqt(int irq, void *de=
+v_id)
+ 	case MMCIF_WAIT_FOR_READ_END:
+ 	case MMCIF_WAIT_FOR_WRITE_END:
+ 		if (host->sd_error) {
++			mrq->data->bytes_xferred =3D 0;
+ 			mrq->data->error =3D sh_mmcif_error_manage(host);
+ 			dev_dbg(dev, "%s(): %d\n", __func__, mrq->data->error);
+ 		}
+@@ -1378,6 +1380,7 @@ static void sh_mmcif_timeout_work(struct work_stru=
+ct *work)
+ 	case MMCIF_WAIT_FOR_WRITE:
+ 	case MMCIF_WAIT_FOR_READ_END:
+ 	case MMCIF_WAIT_FOR_WRITE_END:
++		mrq->data->bytes_xferred =3D 0;
+ 		mrq->data->error =3D sh_mmcif_error_manage(host);
+ 		break;
+ 	default:
+
+>> @@ -1296,9 +1280,6 @@ static irqreturn_t sh_mmcif_irqt(int irq, void =
+*dev_id)
+>> =20
+>>  	if (host->wait_for !=3D MMCIF_WAIT_FOR_STOP) {
+>>  		struct mmc_data *data =3D mrq->data;
+>> -		if (!mrq->cmd->error && data && !data->error)
+>> -			data->bytes_xfered =3D
+>> -				data->blocks * data->blksz;
+>> =20
+>>  		if (mrq->stop && !mrq->cmd->error && (!data || !data->error)) {
+>>  			sh_mmcif_stop_cmd(host, mrq);
+>
+> [Severity: High]
+> Does removing this assignment leave data->bytes_xfered at 0 for all DMA
+> transfers?
+>
+> When DMA is used, sh_mmcif_end_cmd() waits for host->dma_complete
+> synchronously and never calls the PIO block helpers, and only touches
+> data->bytes_xfered to zero it on error:
+>
+> drivers/mmc/host/sh_mmcif.c:sh_mmcif_end_cmd() {
+>     ...
+> 	if (data->error) {
+> 		data->bytes_xfered =3D 0;
+> 		/* Abort DMA */
+> 		if (data->flags & MMC_DATA_READ)
+> 			dmaengine_terminate_sync(host->chan_rx);
+> 		else
+> 			dmaengine_terminate_sync(host->chan_tx);
+> 	}
+>     ...
+> }
+>
+> Every successful DMA read or write will therefore complete with
+> data->bytes_xfered =3D=3D 0 and fail in the MMC block layer.
+
+I see. I could either put back the original line, or move it
+into sh_mmcif_end_cmd() for the DMA code path only:
+
+@@ -1178,6 +1178,8 @@ static bool sh_mmcif_end_cmd(struct sh_mmcif_host =
+*host)
+                        dmaengine_terminate_sync(host->chan_rx);
+                else
+                        dmaengine_terminate_sync(host->chan_tx);
++       } else {
++               data->bytes_xfered =3D data->blksz * data->blocks;
+        }
+=20
+        /*
+
+Let me know if you have a preference, otherwise I'll go with this one.
+
+      Arnd
