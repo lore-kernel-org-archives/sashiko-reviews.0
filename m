@@ -1,77 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.161
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795012620;
-	b=EM6AJKS9MOjvaPoe/No2000vbP5J9hfKRjYDAa1WdDBoLIb8AjQQeus1TNVj3u29l+jz
-	 PfdMPGplVq1md5GNiHyI+sBOsmoEihmI+9lvzOUVW6D3LPUMXQpu406xzulkA9yVmmLFU
-	 3dCNvf45P+9fcU6yXJ/C2TTim1oXqpwt0gZ9lw+l0uAy3O429JAG+zoCOs9IEpvBNl1/Q
-	 lSfzNqICgZHOgEWDUqmLGXzA3/yZprKNCwilsExUwcE5aSs8viDl5QRAgpUqWVw2zC0/P
-	 VkQq20zzMOI6zFMLjZwcavTZ9KQu4iksyQg+OBKlFlPJKAVOsKPf/JgTK6oV1zgqN7w==
+	t=1795014249;
+	b=D4LQZStdrBm4xQZDo22Vvo9Yvv6gSV0ReDP9hmryyu6/U/1eMxbmigtOzYfXYSrUF+3L
+	 7Nn3IQaQJR3KKFEbLuX71zNTYC1oCqN0TqI4xwXLw8KMv+P7+MJeBWxNOU/tFypajwPRf
+	 4OErGk1BxFO6OnpjFJsQEzye8xgHeatX5Ip2DW8EDGeIHIH6Dx/yozIzByKGP+rX5mhQ7
+	 0J5lw+oXeSitcnw4bJn/+cf0RvF6J3KiSFSq6mS7pd2yUDxrQBNozrQwBqjL0bjl2bbQr
+	 wD5piJZNJydfewj25nG1pg1yncEAnV5f2jR0HAyhvZB+y1Z/BZz+JJirGj6vSqq3Q8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795012620;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Rspamd-Server:
-	 X-Stat-Signature:X-Spam-Status:X-Session-Marker:X-Session-ID:
-	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
-	bh=5Uv1kv8Fyhvm9H5I85dSa/PbCA5mggh9KfNOAnb9QWM=;
-	b=WHaIfGkC84sn/QP+cIWHWQHfSbt+qwgwCsEqK0NWzidHPUZ07q+4Sce0m0t5VvTn7Miw
-	 w7kR/BB0W3FFf0HGKW6+O4vk4c7XdWaucu8c0jAlRHqsgGcj8dfGipqREnOFo60ILGDIO
-	 u/b24jiEsfXRZdDknq+rK8r1I/OZaTKx1wEAehXqPBmiaYzw7WAgBITZFLuyWJRvuf6cc
-	 kP7VK2XjycXI2gTYTMhUuTbaTCbtSM0xOli0NVVxp2hM/ZDktTzRYHOg3J4VM7zIVNitP
-	 RTpQvOVSH42IIocKxmKWQG551KcwV9aI9BwC10BBribs6ZDRSXM/5n/ZP3lQALYKYMw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795014249;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Yfwtmuh15e5L/fsscSO213kl0aITGy03gz7OI2vHFYU=;
+	b=cinoeunzJqQQh4lqI/z+Y8eOIBzGQgBGDQgK6ppqlu7NJkDCeWJOxCaEqgFLEcmUftgM
+	 93qKmA9oQy7ob69vJaLXGt/eJ+ef3cU/LE9G2/JZPCMBtIfcGyHmbgTKUexUdjGmdLNCt
+	 wGNQQAadq/SQKu6NHlP6TW4b5Yeb2CtbXRidGZuoDP3vCgp6AFvuZvNRbN/aTpj3H0uBi
+	 +DvEnhlU92c+mZllFZsE86jg9+EZXzNzOsxJhvVlj5XVoHEY4E7rp8PvI4eXamVCGJfve
+	 lQOiLSS6wcMU8KM+9VI7lMa0g9+sdO0XSM5tXjN2k8N2Qy7OCN0aHeRJE/3WAHSfPIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goodmis.org;
-	spf=pass smtp.mailfrom=goodmis.org;
-	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=iGfSqlI4;
-	arc=none smtp.remote-ip=216.40.44.11
-Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=SS02ieOm;
+	arc=none smtp.remote-ip=95.215.58.161
+Received: from mta1.migadu.com (out-161.mta1.migadu.com [95.215.58.161])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DB6606A320;
-	Wed, 18 Nov 2026 14:36:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 13DB6606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14990606A320
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 15:04:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 14990606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=iGfSqlI4
-Received: from omf13.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay02.hostedemail.com (Postfix) with ESMTP id 88883120785;
-	Wed, 18 Nov 2026 14:36:54 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf13.hostedemail.com (Postfix) with ESMTPA id 472A92000E;
-	Wed, 18 Nov 2026 14:36:46 +0000 (UTC)
-Date: Wed, 18 Nov 2026 09:36:44 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Baoquan He <baoquan.he@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, Zack Rusin <zack.rusin@broadcom.com>,
- Andrew Morton <akpm@linux-foundation.org>, Petr Mladek <pmladek@suse.com>,
- Mike Rapoport <rppt@kernel.org>, Pasha Tatashin
- <pasha.tatashin@soleen.com>, Pratyush Yadav <pratyush@kernel.org>, Dave
- Young <ruirui.yang@linux.dev>, Borislav Petkov <bp@alien8.de>, Ajay Kaher
- <ajay.kaher@broadcom.com>, Alexey Makhalov <alexey.makhalov@broadcom.com>,
- x86@kernel.org, Joel Granados <joel.granados@kernel.org>, Thomas Gleixner
- <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>, Dave Hansen
- <dave.hansen@linux.intel.com>, "H. Peter Anvin" <hpa@zytor.com>,
- virtualization@lists.linux.dev, bcm-kernel-feedback-list@broadcom.com, John
- Ogness <john.ogness@linutronix.de>, Sergey Senozhatsky
- <senozhatsky@chromium.org>, Kees Cook <kees@kernel.org>, Jonathan Corbet
- <corbet@lwn.net>, Bo Gan <bo.gan@broadcom.com>, Brennan Lamoreaux
- <brennan.lamoreaux@broadcom.com>, kexec@lists.infradead.org, "Guilherme G.
- Piccoli" <gpiccoli@igalia.com>, Maaz Mombasawala
- <maaz.mombasawala@broadcom.com>, Shuah Khan <skhan@linuxfoundation.org>,
- Randy Dunlap <rdunlap@infradead.org>, Stephen Brennan
- <stephen.s.brennan@oracle.com>, Michael Kelley <mhklinux@outlook.com>, Ian
- Forbes <ian.forbes@broadcom.com>, Bradley Morgan <brads@mainlining.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eugenio Perez <eperezma@redhat.com>
-Subject: Re: [PATCH v4 3/4] x86/vmware: Add the vmware_record_panic_msg
- sysctl
-Message-ID: <20261118093644.10644df9@gandalf.local.home>
-In-Reply-To: <av1IuMZ2W0SXWcNn@MiWiFi-R3L-srv>
-References: <cover.1794980455.git.zack.rusin@broadcom.com>
-	<4c5de34b10f579368b890eaa9333a2755886bad3.1794980455.git.zack.rusin@broadcom.com>
-	<sashiko-outbox-220212@kernel.org>
-	<av1IuMZ2W0SXWcNn@MiWiFi-R3L-srv>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=SS02ieOm
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=XhbjaJ8im/VrH8GwiaavZ+shVr7GKVnu9JIrbTmImk8=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795014245; v=1; x=1795619045;
+ b=SS02ieOm8mSQdZMt8RfMzTwzPVp4tvbhfgGwPXrJkqiJLrnambkdgGaltn1zYpC2oDaZuE/l
+ GMt19qiaiHln5apXEU+n4D8pM2WJ4HGSIDcs056wKodAg1ETMuJMGxhF1BEKXWA+iQFh760zj8i
+ uobwQdeyeNh1lcdGLMnGu5g4=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id bb9e3daad670b11f;
+	Wed, 18 Nov 2026 15:04:05 +0000
+X-Mizu-Trace-ID: bb9e3daad670b11f
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <45cca73c-9846-42a8-a505-65b90a7cd3c0@linux.dev>
+Date: Wed, 18 Nov 2026 23:03:48 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -81,44 +58,109 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/7] mm/page_ext: fix client data alignment
+To: Mike Rapoport <rppt@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ sashiko-reviews@lists.linux.dev, Sashiko <sashiko-bot@kernel.org>,
+ Muchun Song <songmuchun@bytedance.com>,
+ Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Chris Down <chris@chrisdown.name>,
+ David Hildenbrand <david@kernel.org>, "Liam R . Howlett"
+ <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Brendan Jackman <brendan.jackman@linux.dev>, Zi Yan <ziy@nvidia.com>,
+ Joerg Roedel <joerg.roedel@amd.com>, Lu Baolu <baolu.lu@linux.intel.com>,
+ Pranjal Shrivastava <praan@google.com>,
+ Ketan <ketan.kishore@oss.qualcomm.com>, Mostafa Saleh <smostafa@google.com>,
+ Sang-Heon Jeon <ekffu200098@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap
+ <rdunlap@infradead.org>, kasan-dev@googlegroups.com, linux-mm@kvack.org
+References: <20261117120627.50601-1-songmuchun@bytedance.com>
+ <20261117120627.50601-3-songmuchun@bytedance.com>
+ <sashiko-outbox-219498@kernel.org>
+ <20261117114635.37d4c1f7f1b38cc4ce7fb886@linux-foundation.org>
+ <F4EDF1D2-D02C-4339-AA30-422D576B735A@linux.dev>
+ <20261117202136.9eb67013389f3bdefe9b3a15@linux-foundation.org>
+ <11DE08A1-5F83-4BE2-B8C0-B426441A957A@linux.dev>
+ <av2q4RAESvKh0chV@kernel.org>
+Content-Language: en-US
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <av2q4RAESvKh0chV@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 472A92000E
-X-Rspamd-Server: rspamout08
-X-Stat-Signature: nsnhqchs79u4e17w4yf3cscerw5q6qjw
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX19ZBBweeRonAcIW3Sj8e1zyecfJ8umsG9A=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=5Uv1kv8Fyhvm9H5I85dSa/PbCA5mggh9KfNOAnb9QWM=; b=iGfSqlI4S5Jo9GiY8tlcxhyjxCE0unaS0t24fuxlAGdpNjHwyDHZj+ARmOszbO/EKCO1t2Ugca5wEWxdj+vnHq9p0zClr1EqkpIXcw0AKRzDFnMXQXE7hjS1KzJqqCKlsrgb3ii+t4Nx6MEhcyOUhiDAegNBAC6zR6uHfwR5QaI=
-X-HE-Tag: 1795012606-378161
-X-HE-Meta: U2FsdGVkX19ahj7+sR8308Zi2QXrJe1XafgKhfctr/grJYjwlB9Y8ZEh/wCDLdA3ilqVbgcd9/psAC2D02fnr5NUfybeZ8dc2HRYcO/cre8NmsHiAH7z4QB2+ChzEVX6QXqA8HfV1e1a0kC83FEElkujKiAX8EP0rmw1Qg87CIqmP4+nRaJOlE0C+GcOa6xa0zLDxZ+bzRw3rN2idlYOeuy5fAv88aSpKGahWNzLysA5buZCVrgVlj9rFtLgQarpJXo29VVm+Jp7Aruj752oLohZgu25tt6ki2pKen4lvDNRGDC+kc25u30CI0RfQ0Cbkale1qu0klm6mwdUMDphGbgdaUT81kCrCO0IFbQ5G+k0R5R+Lmk0oA==
 
-On Wed, 18 Nov 2026 14:42:00 +0800
-Baoquan He <baoquan.he@linux.dev> wrote:
 
-> On 11/18/26 at 06:14am, sashiko-bot@kernel.org wrote:
-> > > Allow administrators to disable host log transfer on ordinary guests or
-> > > opt in on encrypted guests. Expose the boolean recording policy through
-> > > kernel.vmware_record_panic_msg using proc_dobool(), as Joel suggested.
-> > > Zero disables recording, nonzero integers enable it, and reads return
-> > > 0 or 1.
-> > > 
-> > > Register the sysctl only after the logger is ready. A registration failure
-> > > leaves the internal default in force. Document that the log is sent
-> > > before kdump, and that disable_panic_notifiers_platform_list also skips
-> > > it.
-> > > 
-> > > Link: https://lore.kernel.org/r/4e73yd2ofpdzl6rptzvd74no3hnyfblknoq7wzxlw7f3zjbz7c@srfabx6lsusj
-> > > Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>  
-> > 
-> > Sashiko has reviewed this patch and found no issues.  
-> 
-> It might be better to turn off this message if not issues found, just
-> like what LKP bot has been doing.
 
-I believe that's an option per mailing list. I personally like it because
-to me it does add value. It tells me it was able to apply it and it didn't
-find anything wrong with it. This way I know sashiko didn't ignore it.
+On 2026/11/18 21:40, Mike Rapoport wrote:
+> On Wed, Nov 18, 2026 at 01:39:04PM +0800, Muchun Song wrote:
+>>
+>>> On Nov 18, 2026, at 12:21, Andrew Morton <akpm@linux-foundation.org> wrote:
+>>>
+>>> On Wed, 18 Nov 2026 11:49:58 +0800 Muchun Song <muchun.song@linux.dev> wrote:
+>>>
+>>>>
+>>>>>>> +}
+>>>>>> [blah blah]
+>>>>>>
+>>>>> Yeah, but the whole expression is quite reader-hostile, as min/max
+>>>>> things often are.
+>>>>>
+>>>>> How about doing
+>>>>>
+>>>>> /* comment */
+>>>>> if (this1)
+>>>>> return that1;
+>>>>> /* comment */
+>>>>> if (this2)
+>>>>> return that2;
+>>>>> /* comment */
+>>>>> if (this3)
+>>>>> return that3;
+>>>>>
+>>>>> ?
+>>>>>
+>>>>> The code generation will probably be just as good and it's __init-time
+>>>>> stuff anyway.
+>>>> Something like?
+>>>>
+>>>> static inline size_t page_ext_data_alignment(size_t size)
+>>>> {
+>>>>         /* No client data means no alignment requirement. */
+>>>>         if (!size)
+>>>>                 return 1;
+>>>>
+>>>>         /* u64 has the strictest alignment required by page_ext clients. */
+>>>>         if (IS_ALIGNED(size, __alignof__(u64)))
+>>>>                 return __alignof__(u64);
+> Maybe add a const local for __alignof__(u64)?
+> No strong feelings about it.
 
-But I understand others may not find that useful.
+Maybe better. I can give it a try.
 
--- Steve
+>
+>>>>         /*
+>>>>          * A type's size is a multiple of its natural alignment, so its
+>>>>          * lowest set bit is at least that alignment.
+>>>>          */
+>>>>         return 1UL << __ffs(size);
+>>>> }
+>>> Well I prefer it!
+>>>
+>>> The final bit-twiddle could be (size & ~size) but I'm not sure that's
+>>> any clearer.
+>>>
+>>> We should have a handy helper for this operation but I can't find one.
+>>> max_pow_of_two_factor() is close, but only works on uint.
+>> How about changing the helper to
+>>
+>> #define max_pow_of_two_factor(n) ({					\
+>> 	typeof(n) __n = (n);						\
+>> 	static_assert(__same_type(__n, 0U) || __same_type(__n, 0UL));	\
+>> 	__n & -__n;							\
+>> })
+>>
+>> ?
+>>
+
