@@ -1,93 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.246
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794989395;
-	b=peWCfVK79Ja+8SvsoYLfoCgNWCJ3H12xSmr7s7ztbY7fj860sRwdkdFVP3N+t96h3T1u
-	 Q4RDPYJwKwA7awAan5L/hnWKJw4CLJYuMihy2jy7Jhm8hQQctEN4tMPYTMeOkHbifX4uL
-	 yZ75WFOp3hzARdgf0lkLzRo0gyjrShVvMwRMhg1MWO7S+NlBbDN7Gn+vzWLZbArsiJxod
-	 dcfK3o3uWBRZSinltiPFsGDzu/yzIDwf4ch7K04S4lZGSjsFwLMzfdiJBJUNX5iQ9CBxY
-	 aipFiScxAaCmePVD9cN3tIULPk0IBi7+hRgGwdjGmPuwLazvRYXpBakhDmsBOW7P7Lg==
+	t=1794989531;
+	b=tAvTmGev/rrkWbAe3M8+0vw6RCABWq9YhUTK5uQPWpucnm5ISE15qXJSfpyTMxGoc9iX
+	 A7MX71M2rMLMHOxpSLtUOiG1FEogMpnGbMd/jEHsvbn+mRN53DdnUNngBOBEE14KfsLhk
+	 ifJE2NbIbkxHkZpt5zFqcayC8XjqxdtFtRLcCYgg8zVrD7/ZExqtIYseXvR7CDRPC2tdL
+	 +61ZBOKOnZuE00m1+oGZAPOzkrb7mE6YIG9cE/M5/2lJLrqqIxiuaYOY7VHfN5vEX7dvq
+	 bi5XbSHJhQumaE4xFsUYEHpMVCAOkWpvQ054ji4XYOSQuaqHNcOWbU/1ZD92ocfkrhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794989395;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=SwXqaQPeZB5UZLdDHzNsBBjVDW0/x8WGHHtcwf53iI8=;
-	b=N66yFC4ot2Zmklv4S+oCKPkCwBcLmH6JjmhI/74opkMehQpSxh+vdZmWyMpE+is+yUwK
-	 nk46NtiPM4NVgGPRFmKTLpy8UsBpHYUjm8crBm430xJLIqelp50qHWuJzR7wzr32Ovsvo
-	 +6avKddbGa9EV0lk+FFxJRJDlVfhhFlQdOx6oy232hkBLSCGzArXV5eLsh2QkHHXPbpWy
-	 i7ZJqXsg33FyyojV8e0ZJwJufwxGPvAHoU7hcxtpQyZe4qUxKnlxDbuZ8UWXQTKoIXQhi
-	 JtMfxL8c6FCJisdKx3LrMY1feTSXrOtiBZeaWdLglee+aMJBX06F3vpXOakwFTLDWag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794989531;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-Id:
+	 In-Reply-To:References:X-Mailer:Mime-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=/jA+oDJSVCbC1D4MaARjc1w8poFChMuVZsc8cn6/jQ0=;
+	b=Z83pFdj9fXXi/GREaAjuScaj/fXhnEc29cjaq6YTt87T+q7nnocb9axZFXtBis7PDpcc
+	 V90Iur/q8RkNT0/d6t2w19qRCTXCfl7y+6pvTXtdfhaNa2S9isJuzr0LjUT6XTDEILRtG
+	 NFqm+6PnZSwfgMEf8v8xENjUyYMyzfZkm+HhmgOt656As7Pa1/kftkExOh+RVx5IL/lSO
+	 FKBxIw3kbNcfGm/Yz7ZP4ag54Fst1EZuRNwueTbFpub5NvXcX0lGadDuXETCmHv4kGjHC
+	 YV9LzMhSDaaMUig0rtlny0tq/c7Z0o4FqOf99cOBnHA8WxC7n/iahkgb/Ng7Dvmx54Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MCS+dVn6;
-	arc=none smtp.remote-ip=95.215.58.246
-Received: from mta1.migadu.com (out-246.mta1.migadu.com [95.215.58.246])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=Jski2Vet;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0013E606A330
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 08:09:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0013E606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4D3606A32C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 08:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MCS+dVn6
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=tVRaJbRSr2735okO/8qcFBlkLriYOl2S/clUg7674iY=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794989392; v=1; x=1795594192;
- b=MCS+dVn6LhZvJIbfUrTB43uAcr4VjuS2YE5rSWIAh2NxhbuDBe8geqbxaiAw8kiJxfAiF75N
- zaDhoiW6u2lJSOwxwEo6FK/rbx+pjuuuvX3AowIgDFTG0fW68339FoqfS9oh7bw5rLO3B7eh447
- 48I1f5lsVu9M1MZhgrsvEuhc=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id 16c393e42b63aca1;
-	Wed, 18 Nov 2026 08:09:51 +0000
-X-Mizu-Trace-ID: 16c393e42b63aca1
-X-Migadu-Flow: FLOW_OUT
-Date: Wed, 18 Nov 2026 16:09:35 +0800
-From: Baoquan He <baoquan.he@linux.dev>
-To: Bradley Morgan <bradley.morgan@linux.dev>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	sashiko-reviews@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Petr Mladek <pmladek@suse.com>, Mike Rapoport <rppt@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Dave Young <ruirui.yang@linux.dev>, Borislav Petkov <bp@alien8.de>,
-	Ajay Kaher <ajay.kaher@broadcom.com>,
-	Alexey Makhalov <alexey.makhalov@broadcom.com>, x86@kernel.org,
-	Joel Granados <joel.granados@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, virtualization@lists.linux.dev,
-	bcm-kernel-feedback-list@broadcom.com,
-	John Ogness <john.ogness@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Kees Cook <kees@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Bo Gan <bo.gan@broadcom.com>,
-	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>,
-	kexec@lists.infradead.org,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Stephen Brennan <stephen.s.brennan@oracle.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Eugenio Perez <eperezma@redhat.com>, sashiko@lists.linux.dev
-Subject: Re: [PATCH v4 3/4] x86/vmware: Add the vmware_record_panic_msg sysctl
-Message-ID: <av1dP8iq13h-t5P6@MiWiFi-R3L-srv>
-References: <cover.1794980455.git.zack.rusin@broadcom.com>
- <4c5de34b10f579368b890eaa9333a2755886bad3.1794980455.git.zack.rusin@broadcom.com>
- <sashiko-outbox-220212@kernel.org>
- <av1IuMZ2W0SXWcNn@MiWiFi-R3L-srv>
- <20261117230201.921ec5bddf49cd459ddb8428@linux-foundation.org>
- <av1ZB3ia13M420_I@MiWiFi-R3L-srv>
- <AAB2E512-6577-4AA9-82E3-F8297A4CBDD8@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=Jski2Vet
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D041F000C6;
+	Wed, 18 Nov 2026 08:12:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux-foundation.org; s=korg; t=1794989531;
+	bh=/jA+oDJSVCbC1D4MaARjc1w8poFChMuVZsc8cn6/jQ0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=Jski2Vetfb3GPph7EA2pyQWzTuAe3AfpSXVb3sYMOMfmAIp12Tx2RaYWgcJx0DUjh
+	 bB/RZzhuHlnf0nxPso1pZ2GuJBFa+bJ25OXtTyStnzkIn3DBXDAtEGfMhy9Cx/dXel
+	 u+CREOLcs1EtGTN9F0qbSA32aXVuunQ2U+nWNDBA=
+Date: Wed, 18 Nov 2026 00:12:10 -0800
+From: Andrew Morton <akpm@linux-foundation.org>
+To: cxg <evers_chen@163.com>
+Cc: sashiko-reviews@lists.linux.dev, david@kernel.org, shuah@kernel.org,
+ ljs@kernel.org, linux-mm@kvack.org, Xionggui Chen
+ <chenxionggui@lanxincomputing.com>
+Subject: Re: [PATCH v2] selftests/mm: handle implicit read permissions in
+ madv_populate
+Message-Id: <20261118001210.582cf89e7479c9786e726486@linux-foundation.org>
+In-Reply-To: <138084c8-e177-42fb-b37d-7e8342ef309c@163.com>
+References: <20261112031811.56500-1-evers_chen@163.com>
+	<20261117070606.3752-1-evers_chen@163.com>
+	<sashiko-outbox-220290@kernel.org>
+	<138084c8-e177-42fb-b37d-7e8342ef309c@163.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,83 +60,72 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <AAB2E512-6577-4AA9-82E3-F8297A4CBDD8@linux.dev>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On 11/18/26 at 07:53am, Bradley Morgan wrote:
-> On 18 November 2026 07:51:35 GMT, Baoquan He <baoquan.he@linux.dev> wrote:
-> >On 11/17/26 at 11:02pm, Andrew Morton wrote:
-> >> On Wed, 18 Nov 2026 14:42:00 +0800 Baoquan He <baoquan.he@linux.dev>
-> >wrote:
-> >> 
-> >> > On 11/18/26 at 06:14am, sashiko-bot@kernel.org wrote:
-> >> > > > Allow administrators to disable host log transfer on ordinary
-> >guests or
-> >> > > > opt in on encrypted guests. Expose the boolean recording policy
-> >through
-> >> > > > kernel.vmware_record_panic_msg using proc_dobool(), as Joel
-> >suggested.
-> >> > > > Zero disables recording, nonzero integers enable it, and reads
-> >return
-> >> > > > 0 or 1.
-> >> > > > 
-> >> > > > Register the sysctl only after the logger is ready. A registration
-> >failure
-> >> > > > leaves the internal default in force. Document that the log is
-> >sent
-> >> > > > before kdump, and that disable_panic_notifiers_platform_list also
-> >skips
-> >> > > > it.
-> >> > > > 
-> >> > > > Link:
-> >https://lore.kernel.org/r/4e73yd2ofpdzl6rptzvd74no3hnyfblknoq7wzxlw7f3zjbz7c@srfabx6lsusj
-> >> > > > Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-> >> > > 
-> >> > > Sashiko has reviewed this patch and found no issues.
-> >> > 
-> >> > It might be better to turn off this message if not issues found, just
-> >> > like what LKP bot has been doing.
-> >> 
-> >> (+sashiko@lists.linux.dev)
-> >> 
-> >> Yes please.
-> >> 
-> >> These emails do have a little bit of value: they tell you that Sashiko
-> >> was able to apply the patch and to review it.  I guess.  Or something.
-> >
-> >In that case a message saying Sashiko can't apply the entire patchset
-> >is better.
-> 
-> yes my sashiko emails go to spam automatically (not cuz I set it, but 
-> cuz I get so much "no issues!" Emails, that it clogs up my inbox. 
-> 
-> What even is the need to have the no issues emails? If one was THAT
-> interested in sashiko, they could search for it?
+On Wed, 18 Nov 2026 16:03:38 +0800 cxg <evers_chen@163.com> wrote:
 
-Yeah, searching for it is one good way. Not sure if it's convenient for
-people like Andrew and Mike who need pick patch. They may need check
-patchset one by one if Sashiko can't apply patch while keep silent. And
-some patch authors could be new, they could mistake sashiko being silent
-as no issue. I did that before until Andrew told me in a private message.
-
-If there's a document telling people where and how to search, that's
-also good.
-
+> I noticed that the Fixes tag in the patch currently in mm-new points to 
+> the original selftest commit.
 > 
-> >
-> >> 
-> >> Me:
-> >> 
-> >> :0 D:
-> >> * ^From:[ 	]*sashiko-bot@kernel\.org[ 	]*$
-> >> * B ?? ^Sashiko has reviewed this patch and found no issues\.$
-> >> /home/akpm/.nsmail-zip/Trash
-> >> 
-> >> hp2:/home/akpm> grep "From:.*sashiko-bot" .nsmail-zip/Trash | wc -l
-> >> 1140
-> >> hp2:/home/akpm> 
-> >> 
+> Since the test failure was introduced by the RISC-V VMA permission 
+> change, the Fixes tag should instead be:
 > 
-> --- Thanks!
+> Fixes: 6c7559f22b6f ("riscv/mm: ensure PROT_WRITE leads to VM_READ | 
+> VM_WRITE")
+> 
+> Could you please update the Fixes tag in mm-new?
+
+No probs.
+
+
+From: Xionggui Chen <chenxionggui@lanxincomputing.com>
+Subject: selftests/mm: handle implicit read permissions in madv_populate
+Date: Tue, 17 Nov 2026 07:06:06 +0000
+
+The madv_populate selftest assumes that mmap(PROT_WRITE) creates a VMA
+without VM_READ and expects MADV_POPULATE_READ to fail with EINVAL.
+
+On RISC-V, commit 6c7559f22b6f ("riscv/mm: ensure PROT_WRITE leads to
+VM_READ | VM_WRITE") makes the kernel set VM_READ for mappings requested
+with PROT_WRITE.  MADV_POPULATE_READ checks this VMA permission, so it
+succeeds and the test fails incorrectly.
+
+Adjust the expected result for RISC-V using an architecture-specific
+conditional, while preserving the existing behavior on other
+architectures.
+
+On RISC-V with Linux 7.2.0, the original test fails 1 out of 16 tests,
+while the updated test passes all 16 tests.
+
+Link: https://lore.kernel.org/20261117070606.3752-1-evers_chen@163.com
+Link: https://lore.kernel.org/20261112031811.56500-1-evers_chen@163.com
+Fixes: 6c7559f22b6f ("riscv/mm: ensure PROT_WRITE leads to VM_READ | VM_WRITE")
+Signed-off-by: Xionggui Chen <chenxionggui@lanxincomputing.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+
+ tools/testing/selftests/mm/madv_populate.c |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+--- a/tools/testing/selftests/mm/madv_populate.c~selftests-mm-handle-implicit-read-permissions-in-madv_populate
++++ a/tools/testing/selftests/mm/madv_populate.c
+@@ -81,8 +81,13 @@ static void test_prot_write(void)
+ 		ksft_exit_fail_msg("mmap failed\n");
+ 
+ 	ret = madvise(addr, SIZE, MADV_POPULATE_READ);
++#ifdef __riscv
++	ksft_test_result(ret == 0,
++			 "MADV_POPULATE_READ with PROT_WRITE\n");
++#else
+ 	ksft_test_result(ret == -1 && errno == EINVAL,
+ 			 "MADV_POPULATE_READ with PROT_WRITE\n");
++#endif
+ 
+ 	ret = madvise(addr, SIZE, MADV_POPULATE_WRITE);
+ 	ksft_test_result(!ret, "MADV_POPULATE_WRITE with PROT_WRITE\n");
+_
+
