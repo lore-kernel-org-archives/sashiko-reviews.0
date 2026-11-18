@@ -1,54 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794987631;
-	b=ZWwfuxWCTZB7ZwulKF+1ZvRP9QUjj7j8CL1hwpNi9XvbLa28YfiZQp96/V+aIUhGqZ8I
-	 datTkIMssazEaQhPDDF9rgoZJYAvjvRj3FRllbbZ/pXjbtzFJwFD6dntMBUQ5PA5NdAMD
-	 pEHEQzBrc7fkDC9gNalpzMsvxNq8gZMzAgAzsDbkABC4kYitsuxZbCKbFRIA+Ii5NgQ4i
-	 borwpAX6TZkheMLXMeYAho24lkg98uHy+l/VkArD/0Dlv03Nj7wAqYW7I1ochSlZorgLz
-	 22VidROkVGw6FW3ZtB4b8aG7rT7HAF+xtbgHXcnW27WP3W77BF+XqP5nn87yCN+BMtw==
+	t=1794987869;
+	b=DNDfwWwIK3FJ9mIhTYlIsL4U7OJNFW3VV/W51zE2yLANj+O+lpsnnL3s6ALnEaXYWrnB
+	 S5JbC3DHw/hKAHLKrkyzh7gWrX5MTlqUV7PCF0i01xZ1c3VeFnQ8GQ4mKe5WbNFqjK2RV
+	 rUKrrVLxpGn8D4f5nnGDwpNQrOr3XCnlBHniGspZaY/8b6XN88FfFs7rlrlgQpY894CYV
+	 wvmTispvqaIIuISqL7POLU+Wz5CLzrEYuOtM/HvhpIN3uou+Z7eyNv4Ai8AQ9yIQUpnYZ
+	 eXlm1fojhkbzRCs6dHIYRlgUnguYiI5CetmtlAD/D9/r1efPJWnvHG7kKwOnGhINGSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794987631;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=+NO7BDo+P4bguxhOf8l6doBU3I12qHv10RKKucCA1O0=;
-	b=qv2H9lqivTONe28UdwPUd5eyC+Cdl8wccljyWe+QAXE20B1Wr1R76sqH/+QQcOOk0S4g
-	 n5xJeCjda1cLdxvlOCuggUABbgGbOwcjcaAogqppmlWYOoH9U4dBzIreV5qIRwHgebzNB
-	 PRGTa9f8kpmWztfL1vS0R92Gq0VThtM6OJ67EQeLWH0KU2vI5hId9FFZt4Vywj4G8WLuJ
-	 x8Cxltdmzk52O7KghUeS+b76vkW0qdSAsxZXYJ1h4PPeqL+SYqtx7Z9fKi6F2YT70CTof
-	 nb72Rx0KRDBOCd2lF77oAO3nVr3wdItoK2y1yt/4O30Bt5zeJbcanrhzQpZElFlVkdQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794987869;
+	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Status:
+	 X-Spam-Checker-Version;
+	bh=gX7kzTJMGEgUilvfYAhS+WHhKveX5bpbpbQGBDJ6GaE=;
+	b=wbGbeTyt1dEgG28zYVtcm0EBAKnlAmeLK/2HBqM+irmNSqwD/xoBNGtD89uj5gRYjiKx
+	 b6FtzSLSx4pa7Y01fOF7Sx4ReIv888ND03L3UnzISOwYPQeeqTe8j7LX3TNer1Kdr/krN
+	 azLbtJ0zcq8Bw0y/kguaudoX1ltAegNi277nLmWAHSNemvmbOXk+/kT1zGhE70C+Q9U+H
+	 IAls5YQ2CvXzzEy2qo/IFOHmRHz/ATbN6b6+twn9UsGdD0FVF7XABvIp5MBpN+XymOZ5P
+	 AmmyPFTwjk3f9PpA73/A2UalaJpOPK1wtdbYVwN4fklIfBMhSnKA+/i+8ThcqKGtktQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="BVsQQo/B";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920F9606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 07:40:31 +0000 (UTC)
+	dmarc=pass header.from=linux.microsoft.com;
+	spf=pass smtp.mailfrom=linux.microsoft.com;
+	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Pdgk9FT3;
+	arc=none smtp.remote-ip=13.77.154.182
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88C22606A32A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 07:44:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88C22606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BVsQQo/B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2A81F00926
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 07:40:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794987631;
-	bh=+NO7BDo+P4bguxhOf8l6doBU3I12qHv10RKKucCA1O0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=BVsQQo/BOpYlS5nuNpobghJdfS2nQvqJanM8P/SdMM8px83LV194QwEVyng2Rfjsf
-	 vSs2PB2CO/umYB8ekgGnyqsYFy9mERoY7pZ6tqAU8IYR0RV5WJCxcWL6RUysGb0Shq
-	 mJj0fc/JnKGTqTWihY5oQdwo36yck7J99Eumom8LBSa4O3B5DTAFjtWAZkvv5nzXys
-	 nimpCc9wzS1QHpTRUiARxy13Trb6E+GFcDjJlkN00mPU9/PbrAudsyprHfIe+o2I4q
-	 cW25PzbqNIkXmjvQEodQybim/XotsvSmA4AT/Sn8xeG13oA2SCearvXgvKB7ued+uG
-	 Je4HJPMmH/ojA==
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b87a240de3so927258a12.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 17 Nov 2026 23:40:31 -0800 (PST)
-X-Gm-Message-State: APuU4Z9PxMj7NE+/XUGEvURk9k9Qelw7ztQEUvkm2nFuWHXA6JA0Lcfz
-	N76fL94Et5cjfNMJpfarI5puYpxURHaRgq4ygn5T5rCGssIZmNU0kdTv/1pDtDF6YarPbVRNgZz
-	cJ11Hxnrbc7v++mkEqCpM9k4K6TjwNf0=
-X-Received: by 2002:a05:6402:2707:b0:6b7:ce4a:7d0b with SMTP id
- 4fb4d7f45d1cf-6b887e9855amr1039376a12.20.1794987629740; Tue, 17 Nov 2026
- 23:40:29 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Pdgk9FT3
+Received: from [10.26.7.43] (unknown [4.213.232.16])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 5C30920B7169;
+	Tue, 17 Nov 2026 23:44:26 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5C30920B7169
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1794987867;
+	bh=gX7kzTJMGEgUilvfYAhS+WHhKveX5bpbpbQGBDJ6GaE=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=Pdgk9FT33bNeYIK2fpQ2c6t3bvmQpYWDnMgKtelx/ESt4qrvGoOCQ086hbaAfqf9O
+	 jMb3xi/mqSf4fJJi+VyK2HqrCcPV+x8V2SAVORwYA+5fZdT/3G9ldtpjDLBrxwtA5J
+	 A6qk9AGgrRkXT15QSqtbcTw9ajvNdDN34NH/xt3I=
+Message-ID: <1b7ff0e0-a607-49e4-a14b-be95a726e0a8@linux.microsoft.com>
+Date: Wed, 18 Nov 2026 13:14:24 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,150 +53,113 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261115095503.2922598-1-chenhuacai@loongson.cn> <sashiko-outbox-216668@kernel.org>
-In-Reply-To: <sashiko-outbox-216668@kernel.org>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Wed, 18 Nov 2026 15:40:20 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H75pFts2FxZTzrJP+T+M3m3AFzF6pqc5WK_fR0=u-PCeg@mail.gmail.com>
-X-Gm-Features: AclHuK8Di8CaNXtvY2DxNQUZd0T7YfZm_H-Rw4Q8hcNhOtGVQFiP0BTeRQ8jeuU
-Message-ID: <CAAhV-H75pFts2FxZTzrJP+T+M3m3AFzF6pqc5WK_fR0=u-PCeg@mail.gmail.com>
-Subject: Re: [PATCH V2] lib/smp_processor_id: Don't warn if there is only one CPU
-To: sashiko-reviews@lists.linux.dev
-Cc: Huacai Chen <chenhuacai@loongson.cn>, Ingo Molnar <mingo@redhat.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, 
-	Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, 
-	Tiezhu Yang <yangtiezhu@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net v3] net: mana: Avoid waiting on dead HWC after device
+ reset
+To: sashiko-reviews@lists.linux.dev, linux-hyperv@vger.kernel.org,
+ linux-rdma@vger.kernel.org
+References: <20261112085226.878780-1-sahilchandna@linux.microsoft.com>
+ <sashiko-outbox-212474@kernel.org>
+Content-Language: en-US
+From: Sahil Chandna <sahilchandna@linux.microsoft.com>
+In-Reply-To: <sashiko-outbox-212474@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi, Sashiko,
-
-On Mon, Nov 16, 2026 at 5:55=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] lib/smp_processor_id: check_preemption_disabled() skips
->   checks on !CONFIG_SMP
-> - [Low] lib/smp_processor_id: missing Fixes trailer on stable bug-fix
->   commit
+On 13-11-2026 14:22, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] net: mana: premature TX NAPI deletion in
+>   mana_dealloc_queues()
 > --
->
-> commit 62cd1e08e5d017184a1415887d93a1188fd3f001
-> Author: Huacai Chen <chenhuacai@kernel.org>
->
-> > lib/smp_processor_id: Don't warn if there is only one CPU
-> >
-> > When CONFIG_DEBUG_PREEMPT is enabled on a Non-SMP (single-core) kernel,
-> > calls to smp_processor_id() in preemptible contexts trigger some false
-> > positive "BUG: using smp_processor_id() in preemptible" warnings, which
-> > are harmless noise because the process always executes on CPU 0 and CPU
-> > migration is impossible.
-> >
-> > Here are some of the trimmed log messages:
-> >
-> >   Call Trace:
-> >   [<9000000000d33e28>] show_stack+0xf8/0x1c0
-> >   [<9000000000d2fdac>] dump_stack_lvl+0x4c/0x78
-> >   [<9000000002456fc0>] check_preemption_disabled.isra.0+0x100/0x110
-> >   [<9000000002456ff8>] debug_smp_processor_id+0x18/0x40
-> >   [<9000000000d31118>] init_cache_level+0x18/0x90
-> >   [<9000000001adbe2c>] detect_cache_attributes+0x4c/0x640
-> >   [<9000000001adc44c>] cacheinfo_cpu_online+0x1c/0x310
-> >   [<9000000000d5ae04>] cpuhp_issue_call.constprop.0+0x94/0xd0
-> >   [<9000000000d5b278>] __cpuhp_setup_state_cpuslocked+0x208/0x320
-> >   [<9000000000d30148>] do_one_initcall+0x68/0x200
-> >   [<90000000024711b8>] kernel_init_freeable+0x1fc/0x294
-> >   [<900000000245824c>] kernel_init+0x20/0x134
-> >   [<9000000002455b54>] ret_from_kernel_thread+0x24/0x1d0
-> >   [<9000000000d31650>] ret_from_kernel_thread_asm+0xc/0x9c
-> >
-> > This warning only exists for the !CONFIG_SMP build. This is because for
-> > CONFIG_SMP cpuhp_issue_call() invokes callbacks in cpuhp_thread_fun()
-> > which is a percpu thread, but for !CONFIG_SMP build it invoke callbacks
-> > in the init process which is not a percpu thread. And there is such a
-> > skip condition in check_preemption_disabled():
-> >
-> >     if (is_percpu_thread())
-> >             goto out;
-> >
-> > Since there is only one CPU for the !CONFIG_SMP, we can simply skip the
-> > warning if (!IS_ENABLED(CONFIG_SMP)) in check_preemption_disabled(). Th=
-e
-> > effect is partially reverting 570a752b7a9bd03b50 ("lib/smp_processor_id=
-:
-> > Use is_percpu_thread() instead of nr_cpus_allowed"), because now in the
-> > UP case nr_cpus_allowed is 1 but PF_NO_SETAFFINITY is unset.
-> >
-> > Cc: stable@vger.kernel.org
-> > Reported-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-> > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
->
-> [Severity: Low]
-> Since this commit is tagged for stable and addresses the !CONFIG_SMP
-> behavior changed when is_percpu_thread() stopped unconditionally returnin=
-g
-> true on UP builds, should it include a Fixes: tag such as:
->
->   Fixes: cac5cefbade9 ("sched/smp: Make SMP unconditional")
->   Fixes: 06ddd17521bf ("sched/smp: Always define is_percpu_thread() and s=
-cheduler_ipi()")
->
-> > diff --git a/lib/smp_processor_id.c b/lib/smp_processor_id.c
-> > index 94b3f6b195388..be079b9085045 100644
-> > --- a/lib/smp_processor_id.c
-> > +++ b/lib/smp_processor_id.c
-> > @@ -22,6 +22,9 @@ unsigned int check_preemption_disabled(const char *wh=
-at1, const char *what2)
-> >       if (is_percpu_thread())
-> >               goto out;
-> >
-> > +     if (!IS_ENABLED(CONFIG_SMP))
-> > +             goto out;
-> > +
-> >       if (current->migration_disabled)
-> >               goto out;
->
+> 
+> commit d359cd9ade3de8d4713c17d8d3e7c311b5d6d28c
+> Author: Sahil Chandna <sahilchandna@linux.microsoft.com>
+> 
+> net: mana: Avoid waiting on dead HWC after device reset
+> 
+> This commit replaces the sleep-based TX drain in mana_dealloc_queues()
+> with synchronous CQ polling and marks the hardware channel dead after a
+> device reset so subsequent HWC commands fail fast.
+> 
+>> diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+>> index 38249e092090a..739021aa09b38 100644
+>> --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
+>> +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> 
+> [ ... ]
+> 
+>> @@ -3799,42 +3809,110 @@ static int mana_dealloc_queues(struct net_device *ndev)
+> 
+> [ ... ]
+> 
+>>  		for (i = 0; i < apc->num_queues; i++) {
+>> +			struct napi_struct *napi;
+>> +			struct mana_cq *tx_cq;
+>> +
+>> +			if (!apc->tx_qp[i])
+>> +				continue;
+>> +
+>> +			tx_cq = &apc->tx_qp[i]->tx_cq;
+>> +			napi = &tx_cq->napi;
+>> +
+>>  			txq = &apc->tx_qp[i]->txq;
+>>  			while ((skb = skb_dequeue(&txq->pending_skbs))) {
+>>  				mana_unmap_skb(skb, apc);
+>>  				dev_kfree_skb_any(skb);
+>>  			}
+>>  			atomic_set(&txq->pending_sends, 0);
+>> +
+>> +			if (txq->napi_initialized) {
+>> +				netif_napi_del_locked(napi);
+>> +				txq->napi_initialized = false;
+>> +			}
+>>  		}
+>>  	}
+> 
 > [Severity: Medium]
-> As reported by Peter Zijlstra on v1 [1], does returning early on
-> !IS_ENABLED(CONFIG_SMP) disable all CONFIG_DEBUG_PREEMPT checks in
-> check_preemption_disabled() on UP builds?
-As I said, the effect of this patch is partially reverting
-570a752b7a9bd03b50 ("lib/smp_processor_id:
-Use is_percpu_thread() instead of nr_cpus_allowed").
+> Does deleting the TX NAPI and clearing txq->napi_initialized here run too
+> early, before mana_destroy_txq() destroys the SQ object and detaches the
+> TX CQ?
+> 
+> At this point in mana_dealloc_queues(), the SQ object is still alive and
+> tx_cq.gdma_cq remains published in gc->cq_table[] and eq->eq.child_cq[]
+> while mana_disable_vport_rx(), mana_fence_rqs(), mana_destroy_rxqs() and
+> mana_destroy_wq_obj() run, so a completion or GDMA_EQE_THROTTLE event on
+> the shared EQ can still call mana_schedule_napi() on the deleted
+> napi_struct.
+> 
+> Clearing txq->napi_initialized here also causes mana_destroy_txq() to skip
+> its post-mana_destroy_wq_obj() detach block:
+> 
+> drivers/net/ethernet/microsoft/mana/mana_en.c:mana_destroy_txq() {
+>     ...
+> 		if (apc->tx_qp[i]->tx_object != INVALID_MANA_HANDLE)
+> 			mana_destroy_wq_obj(apc, GDMA_SQ, apc->tx_qp[i]->tx_object);
+> 
+> 		if (apc->tx_qp[i]->txq.napi_initialized) {
+> 			/* Detach the CQ only after the WQ object is destroyed,
+> 			 * so a completion EQE that arrives before then still
+> 			 * finds the CQ in cq_table[] rather than hitting the
+> 			 * WARN in mana_gd_process_eqe(). One grace period then
+> 			 * covers both mana_gd_intr() and NAPI users.
+> 			 */
+> 			mana_gd_detach_cq(gc, apc->tx_qp[i]->tx_cq.gdma_cq);
+> 			netif_napi_del_locked(napi);
+> 			apc->tx_qp[i]->txq.napi_initialized = false;
+> 		}
+> 
+> 		mana_deinit_cq(apc, &apc->tx_qp[i]->tx_cq);
+>     ...
+> }
+> 
+> Because mana_gd_detach_cq() is skipped there, mana_deinit_cq() ->
+> mana_gd_destroy_queue() -> mana_gd_destroy_cq() has to detach the CQ and
+> wait for a second synchronize_net() grace period for every TX queue under
+> rtnl_lock.  Leaving netif_napi_del_locked() and txq->napi_initialized =
+> false to mana_destroy_txq() (and guarding the redundant napi_disable_locked()
+> in mana_destroy_txq()) would avoid both issues.
+In v4, I have removed this and is handled in mana_destroy_txq as was
+originally.
+> 
 
-I think 570a752b7a9bd03b50 is mostly optimising the checking of
-CONFIG_SMP, so partially reverting is acceptable?
-
->
-> check_preemption_disabled() also backs __this_cpu_preempt_check(), which
-> guards non-atomic __this_cpu_*() read-modify-write operations that can
-> still race across same-CPU preemption on a preemptible UP kernel, and
-> suppresses warnings for smp_processor_id() callers that would be broken o=
-n
-> SMP.  Because !IS_ENABLED(CONFIG_SMP) is a compile-time constant, this
-> also turns the remainder of check_preemption_disabled(), including the
-> current->migration_disabled check made unconditional of CONFIG_SMP by
-> 2885daf47081 ("lib/smp_processor_id: Make migration check unconditional o=
-f
-> SMP"), into dead code on !CONFIG_SMP.
->
-> In the reported trace, init_cache_level(unsigned int cpu) in
-> arch/loongarch/kernel/cacheinfo.c already receives cpu as an argument but
-> reads current_cpu_data via smp_processor_id() instead of cpu_data[cpu],
-> while cpuhp_issue_call() invokes the callback directly in preemptible tas=
-k
-> context on !CONFIG_SMP.
-Yes, cacheinfo.c is just an example and can be fixed in other ways,
-but that doesn't mean this patch is unnecessary.
-
-Huacai
-
->
-> [1] https://lore.kernel.org/r/20261111170600.GS1779021@noisy.programming.=
-kicks-ass.net
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115095503.29=
-22598-1-chenhuacai@loongson.cn?part=3D1
