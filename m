@@ -1,95 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.222
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795076305;
-	b=EYQ2tRnR46uGt0jRcWwbgz2VQsoYI7m3y43vr0RENMsAps0CLfxAAClyFxkoiZ4U+Unx
-	 HLwNbKuXuWeTORcs92C9kLLLklgmL/GfPJDz4mPrprR/cWv9/MbOKODcQkLJmo7FyUpft
-	 Ab73JRjdEbKBDslPwPRuRHD0J+bdu30s3H6EaE+x1VEVLxaejXR5J4P4gGa2gIAwSXzgp
-	 0UtZ6EEYQWTI+MC4QJG1BffdzuhnSwYClW1Nx/U8jHmIG0v9kHymbExYWWsMZAwo2QM2c
-	 oBIGNBCL1JLCmG32SeaMf/PX9Lysf4AeQps0lCaEwOizu9g1Kf62u/fh+UyaE2qcWWw==
+	t=1795076477;
+	b=rDto36v7Cz0rx3RQ/IAoNNvDXXLlRKOUDTijZv6FB6iDXo2QmV9is4oIO7CPPu38I/PQ
+	 dKplfwtlyma9tM+ljZtcXpSzqktYB31MeQXNNGTbIUwZ/Q+MOAu/iaxMO3QRrfhws4WVG
+	 aKsFgi/fyW6bPtqSdsUa3tM1LZgMNZYSeOgZnM4LZ3UpYJO+gw9F9DWCM/GzZ9QraW/En
+	 x18BYKSb8INxdDpPXAKYtkvvHq1Jgo3PJMMvz2TkFsL88nniUB2c8IMgz6wG/6qvnTxsh
+	 gIIQeLuRJSDZo0geG87xuVbg3GexJY6iGUHU2SYyOesGR8wqdByecLNlFq/VvSNRwxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795076305;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=fN32snRSV36lEFPD1aw7PskPfU8Y7+zoH5BNPUXA4wM=;
-	b=G9RFrgNxmhbdhNNdf1E7LkBD9TSrrcfx8FbX8xvf0+wyVU+09f1OLyq7DHEtGT86ySqk
-	 3/2hIMZ7Ah5t0kKkJC1a6g6SEr8y/ppHBpHZHOSQnfA1IzbPJbn/tHyxfa7jDhCTspRhC
-	 5lTZUHavxQ4IXlf6MTLxkAxlBgR9sL/sSuZnAURUG5lCazuIcNARXwfF//+K2Td5BZ5Sc
-	 WO2seNMRdvKW5kVM/mpWB7WaXwB1r1euXzcv6DtgS0Q16kl8N1OQCxvijLmBZ7OtNyo+C
-	 h+sQXeMJmbPQtaBQrMG9UGpBkXZH6mQ2NU/LHRcVcIeJrYKE72Q45/JMjSiJx7+yd0Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795076477;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
+	bh=gqtvafE9T3fe8llMe+Ya16DLFDJTIf0qbaCAwRFcMno=;
+	b=mEPLNa5v7ot8gAJ0DloyIh9s0gx/yaujjnEpCr70K2C6L6vgDUYMXzEI2MrqiOCNom3W
+	 FSxJt/RQLCpOCuvqRVtuWnAP84AHZMqOp2Oki22hbJcZ2XAVEQb15o7k/uKMKSzOCq0OC
+	 iHMuRwbY0xwh6/rtyinnIwo5mMD+7XfoHJZvM/WGA1lZPjPNsrPsZdUlI2CUNg6Dj8gIu
+	 kQzS8L9MCeZUADwq3YwO+R2WFA9AieYhLAhkK3EMTVI8j6AjGocJ4y9/cl43BxSc4InO2
+	 pqWJeDPexIU7Amt4CEItqQs4FEmjXdM9sGMCxVzv/CLlB9jQRFH5fBcIpoH8OTF19Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pereq.eu;
-	spf=pass smtp.mailfrom=cryspen.com;
-	dkim=pass header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=DD+hejfA;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b="sBh/kIqK";
+	arc=none smtp.remote-ip=113.46.200.222
+Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5123E606A325
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:18:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5123E606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pereq.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryspen.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2C0606A325
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:21:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D2C0606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=DD+hejfA
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so20418145e9.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 00:18:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pereq.eu; s=google; t=1795076303; x=1795681103; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=fN32snRSV36lEFPD1aw7PskPfU8Y7+zoH5BNPUXA4wM=;
-        b=DD+hejfA2jGqwD9Z8nSuNcgCX0xz8MWC89+eZzM40NQ304e6j9PxBSuVMXZzJSOAru
-         6QxgIsCgcwr+/rQVSLQVGc6gJxv8kVKcsoQCAVtTj9Otsilkv3UgIRdveE2aeDSW59d0
-         e5LmcsP4bpOoTpPWKMcCNLa3llkJtelx6WHjrgknpN7+qfYJfghPo1TDMVbJsL26gA+Z
-         lL3QTj6O+ZsxXMKG6A+/g20DNMTvkbgSktzC8q/gel6gCV2OSuvRz4HeO9dk3fLf+jfW
-         V06I13cokic71XgxfC1z/ylqINGX9NKNZn4C3hrBGOMqg7ls3wxTgLAuE50Rd5+fc/wI
-         FI4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795076303; x=1795681103;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fN32snRSV36lEFPD1aw7PskPfU8Y7+zoH5BNPUXA4wM=;
-        b=EAwQ1UEACqstsTBZiC70fyPRI4DDEaniNZsv5JMSpJy9a0sUacrjRM3XcUqpzjTTMf
-         YdCgi+Y+tJMHgTNigZjE1zD5znVavLkIHwXWAlpFqsUGdC0RUzYIjqjQtT8JXwN6E5Xw
-         wIOiNVXbc1KUN8uNbB8kSdqNx0/MnuWrBy9pFqWiYfffMnU/kpojPSHzIpmxg2ehRWM9
-         tDDZsHL+I30gxKAOFaY/6C/U2eFHtvLoFd3/X3b/cvTZ9Z9Pvy+51gR62Wh+KB373gdb
-         qLq9g8/p6ASQl96sH59SGPs9+JNHdvm4XZbujMYJrkoE7gf2Kmrr6ScBDrdAajJoGJju
-         2xiQ==
-X-Forwarded-Encrypted: i=1; AL+hErHV4SPxhff8zTkBoMqBZQyzS5KcYzsA7X9d8CzOmEnk/GmrJCbxdhbdgoE819huMITaV36JY3GAKziKw579dcE=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9biPsah17F56pmQ+1Qj6AQRz+m/Bhq/NrAZ6m2uXR8o39Zu42t
-	7zI/2SK8LubFbsSyKzyXOfbyc0rOkssjuxX25Q9tMFOWMNRtGKVeIhPldqS+pvJhrok=
-X-Gm-Gg: AYBFou2oCmK2PGykyArDbYqoz2T8d8JVGEDtFA99aTRwnPsRE7Hd3kNzlBF3ziID7CW
-	IwZAKO6oQClAGT3TgxfVjxcRaUFNztb7L0NHgwwuVazrGEn9yg3N6DCL7kXdHNVwCQcVpxWMW2N
-	rQbIQVQJNGtDyb2WR9sLr6cRrH64/KdMVe5wVxPzmtgPQIbcNS2+6ggaSf4ER1FVlZOcp4PVra1
-	1iSzmMOmslc8z8/edkAIAof2dwc7thkelMwNx34ABr/Pv54sRBJlocwFVRhncbtp5ZlDAdx9Uek
-	HBK/zW26IdWLHPQapjF19NiGUzMFxL1lauIyXoTJKx270cEi8pSzqFXwlVwmsHf0dY8uBXQk7Pv
-	xPX/uNoDE4ZZnuQdxWytLW/98i0KWy0n6jlis/sFQTM931Udvk2jsnkvchZRJECeJShh3OWVvii
-	kVlMq5aIrNBO5IvNbyzwe/BQOC8MtYmFjwbTvWZy5MIhMap6UUzGxH70LpeN5rnKCDTtjdYtWL8
-	OTPyfeNQ+PcCbjKyW/7b0R1PZuUQaozjYaPdneDpv+DqTSIQCk7zSbRApX5TPn9KyNVeyiyDmxA
-	roS5AxseNnPRzleY5wbPb0YwKKmvSHEc6eR9ZF1L
-X-Received: by 2002:a05:600c:4e4d:b0:4bb:69b2:d3df with SMTP id 5b1f17b1804b1-4bb7da362e1mr102872455e9.25.1795076303220;
-        Thu, 19 Nov 2026 00:18:23 -0800 (PST)
-Received: from localhost ([2c0f:3d00:6be:8900:ce5e:9212:ea4b:f30])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb85399e2esm22139735e9.7.2026.11.19.00.18.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 00:18:22 -0800 (PST)
-Date: Thu, 19 Nov 2026 11:18:18 +0300
-From: Dan Carpenter <dan@pereq.eu>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
-Message-ID: <av6wypzwAJxIyKOU@stanley.mountain>
-References: <cover.1795006659.git.dan@pereq.eu>
- <033a2d49e0f48426281b46eb1131ae64012aba18.1795006659.git.dan@pereq.eu>
- <sashiko-outbox-221074@kernel.org>
- <86zev6yqzd.wl-maz@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=sBh/kIqK
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=gqtvafE9T3fe8llMe+Ya16DLFDJTIf0qbaCAwRFcMno=;
+	b=sBh/kIqKXXGeKc+toHcFsugHB8Iz+uTMQV2hD03gQahnJItKib8kBHXNtSTVNlyrQ8fjSmefu
+	SnQEo6TBSvTlZhydUwZ55NQll682Jm1DSjIrFDvuIZj5CyOFZsTUx6BYjMHmacN9byJu7ecuCP5
+	dqJdIhFU60utclDs5wxNjko=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4jVWcz5mS4zLlX9;
+	Thu, 19 Nov 2026 16:20:51 +0800 (CST)
+Received: from kwepemo500009.china.huawei.com (unknown [7.202.194.199])
+	by mail.maildlp.com (Postfix) with ESMTPS id F2C2840561;
+	Thu, 19 Nov 2026 16:21:11 +0800 (CST)
+Received: from [10.67.121.161] (10.67.121.161) by
+ kwepemo500009.china.huawei.com (7.202.194.199) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Thu, 19 Nov 2026 16:21:11 +0800
+Message-ID: <191f1bc2-52db-4e1a-bd03-bf5e9fd5e553@huawei.com>
+Date: Thu, 19 Nov 2026 16:21:11 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,431 +62,125 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="SiI1FD/O0lCfvQZp"
-Content-Disposition: inline
-In-Reply-To: <86zev6yqzd.wl-maz@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v21 09/13] vfio/pci: Add basic NO-ST TPH VFIO device
+ feature support
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
+References: <20261118091238.45992-1-fengchengwen@huawei.com>
+ <20261118091238.45992-10-fengchengwen@huawei.com>
+ <sashiko-outbox-220757@kernel.org>
+Content-Language: en-US
+From: fengchengwen <fengchengwen@huawei.com>
+In-Reply-To: <sashiko-outbox-220757@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ kwepemo500009.china.huawei.com (7.202.194.199)
 
---SiI1FD/O0lCfvQZp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 11/18/2026 6:51 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] vfio/pci: vfio_tph_config_write() fails when
+>   pdev->tph_enabled is already set
 
-On Wed, Nov 18, 2026 at 05:44:06PM +0000, Marc Zyngier wrote:
-> On Wed, 18 Nov 2026 13:45:34 +0000,
-> sashiko-bot@kernel.org wrote:
-> > 
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
-> > - [Medium] KVM: arm64: stale mmio_needed after kvm_inject_nested() in
-> >   KVM_SET_VCPU_EVENTS
-> > --
-> > 
-> > commit 178d0de7451612b8ddf14a943cb82094efbd77d1
-> > Author: Dan Carpenter <dan@pereq.eu>
-> > 
-> > KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
-> > 
-> > This commit wraps __kvm_arm_vcpu_set_events() in vcpu_load() and vcpu_put()
-> > so that kvm_inject_nested() operates on a loaded vCPU during
-> > KVM_SET_VCPU_EVENTS.
-> > 
-> > > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> > > index 84a52e27ed859..a148e80d0aef7 100644
-> > > --- a/arch/arm64/kvm/arm.c
-> > > +++ b/arch/arm64/kvm/arm.c
-> > > @@ -2002,7 +2002,7 @@ static int kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
-> > >  static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
-> > >  				   struct kvm_vcpu_events *events)
-> > >  {
-> > > -	int i;
-> > > +	int i, ret;
-> > >  
-> > >  	/* check whether the reserved field is zero */
-> > >  	for (i = 0; i < ARRAY_SIZE(events->reserved); i++)
-> > > @@ -2014,7 +2014,11 @@ static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
-> > >  		if (events->exception.pad[i])
-> > >  			return -EINVAL;
-> > >  
-> > > -	return __kvm_arm_vcpu_set_events(vcpu, events);
-> > > +	vcpu_load(vcpu);
-> > > +	ret = __kvm_arm_vcpu_set_events(vcpu, events);
-> > > +	vcpu_put(vcpu);
-> > > +
-> > > +	return ret;
-> > >  }
-> > 
-> > [Severity: Medium]
-> > Does vcpu->mmio_needed remain set when KVM_SET_VCPU_EVENTS injects an
-> > exception from L2 that routes to L1 EL2?
-> > 
-> > When an L2 guest exits with KVM_EXIT_MMIO and userspace aborts the access via
-> > KVM_SET_VCPU_EVENTS (for example with ext_dabt_pending = 1 while HCR_EL2.TEA
-> > is set), kvm_inject_sea_dabt() -> kvm_inject_nested() commits the EL2
-> > exception entry directly via __kvm_adjust_pc(), which clears
-> > PENDING_EXCEPTION.  When __kvm_arm_vcpu_set_events() then calls
-> > commit_pending_events(), PENDING_EXCEPTION is already clear, so it returns
-> > early without clearing vcpu->mmio_needed:
-> > 
-> > arch/arm64/kvm/guest.c:commit_pending_events() {
-> > 	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION))
-> > 		return;
-> > 
-> > 	vcpu->mmio_needed = false;
-> > 	kvm_call_hyp(__kvm_adjust_pc, vcpu);
-> > }
-> > 
-> > On the next KVM_RUN, kvm_handle_mmio_return() sees vcpu->mmio_needed still
-> > set, writes the MMIO read value into L1 EL2's destination register and
-> > advances L1 EL2's exception vector PC by 4 bytes via kvm_incr_pc().
+Fix by following:
+1. Reorder the series, moving the "reset TPH state on open/close" patch earlier.
+   This clears `tph_enabled` when VFIO gains ownership of the device and resolves
+   state split after PCI reset or across user sessions.
+2. Inside `vfio_tph_config_write()`, we check `pdev->tph_enabled` before enabling
+   a new requester mode. If TPH is already active, we call `pcie_disable_tph()`
+   first to avoid -EBUSY when userspace switches directly between TPH_ONLY and
+   EXT_TPH without an explicit DISABLE write.
+
+Thanks
+
+> --
 > 
-> I think this is a separate issue, which doesn't intersect with the
-> current patch.
-
-Yep.
-
-> The problem is that we have multiple ways to "commit'
-> the state on exception delivery, and that we miss MMIO handling in the
-> EL1->EL2 path.
+> commit e4125940aba8b4e82c51ed4d75d938a51d421022
+> Author: Chengwen Feng <fengchengwen@huawei.com>
 > 
-> Oliver, WDYT?
+> vfio/pci: Add basic NO-ST TPH VFIO device feature support
+> 
+> This commit adds VFIO PCI support for PCIe TPH in NO-ST mode, virtualizing
+> the TPH extended capability and exposing the VFIO_DEVICE_FEATURE_TPH ioctl
+> for userspace opt-in.
+> 
+>> diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
+>> index 9914f3ac69aef..3946ed2ec0cfe 100644
+>> --- a/drivers/vfio/pci/vfio_pci_config.c
+>> +++ b/drivers/vfio/pci/vfio_pci_config.c
+> [ ... ]
+>> +static int vfio_tph_config_write(struct vfio_pci_core_device *vdev, int pos,
+>> +				 int count, struct perm_bits *perm,
+>> +				 int offset, __le32 val)
+>> +{
+>> +	u16 start = vfio_find_cap_start(vdev, pos);
+>> +	struct pci_dev *pdev = vdev->pdev;
+>> +	u32 org_ctrl, new_ctrl, cap;
+>> +	u8 mode, req, org_req;
+>> +	__le32 ctrl_val = 0;
+>> +	u16 cmd;
+>> +	int ret;
+>> +
+>> +	if (!vdev->tph_opt_in || offset >= PCI_TPH_BASE_SIZEOF ||
+>> +		offset < PCI_TPH_CTRL)
+>> +		return count;
+>> +
+>> +	cmd = vfio_pci_memory_lock_and_enable(vdev);
+>> +
+>> +	/*
+>> +	 * Synchronize the CTRL value of the hardware to the virt. Otherwise,
+>> +	 * the value will be inconsistent when the device is reset.
+>> +	 */
+>> +	vfio_user_config_read(pdev, start + PCI_TPH_CTRL, &ctrl_val, 4);
+>> +	vfio_default_config_write(vdev, start + PCI_TPH_CTRL, 4, perm,
+>> +				  PCI_TPH_CTRL, ctrl_val);
+>> +	org_ctrl = le32_to_cpu(ctrl_val);
+>> +
+>> +	/* Do write operation to virt. */
+>> +	ret = vfio_default_config_write(vdev, pos, count, perm, offset, val);
+>> +	if (ret != count)
+>> +		goto out;
+>> +
+>> +	/* Reads the TPH_CTRL value after the write operation. */
+>> +	new_ctrl = le32_to_cpu(*(__le32 *)&vdev->vconfig[start + PCI_TPH_CTRL]);
+>> +	if (new_ctrl == org_ctrl)
+>> +		goto out; /* Exit because there is no change. */
+>> +
+>> +	cap = vdev->tph_vcap;
+>> +	mode = FIELD_GET(PCI_TPH_CTRL_MODE_SEL_MASK, new_ctrl);
+>> +	req = FIELD_GET(PCI_TPH_CTRL_REQ_EN_MASK, new_ctrl);
+>> +	if (mode != PCI_TPH_ST_NS_MODE || !(cap & (1u << mode)) ||
+>> +		req == 0x2 /* reserved */ ||
+>> +		(req == PCI_TPH_REQ_EXT_TPH && !(cap & PCI_TPH_CAP_EXT_TPH)))
+>> +		goto out; /* Drop invalid or unsupported write value. */
+>> +
+>> +	org_req = FIELD_GET(PCI_TPH_CTRL_REQ_EN_MASK, org_ctrl);
+>> +	if (req == org_req)
+>> +		goto out; /* Only care about requester enable. */
+>> +
+>> +	if (req == PCI_TPH_REQ_TPH_ONLY || req == PCI_TPH_REQ_EXT_TPH)
+>> +		pcie_enable_tph_ext(pdev, mode, req);
+>> +	else if (req == PCI_TPH_REQ_DISABLE)
+>> +		pcie_disable_tph(vdev->pdev);
+> 
+> [Severity: Medium]
+> Does pcie_enable_tph_ext() fail here if pdev->tph_enabled is already set?
+> 
+> pcie_enable_tph_ext() returns -EBUSY whenever pdev->tph_enabled is 1, and
+> its return value is ignored.  If userspace switches directly between
+> PCI_TPH_REQ_TPH_ONLY and PCI_TPH_REQ_EXT_TPH without an intermediate
+> PCI_TPH_REQ_DISABLE write, the hardware PCI_TPH_CTRL register is never
+> updated.
+> 
+> Similarly, if a device reset clears the hardware PCI_TPH_CTRL register to 0
+> while pdev->tph_enabled remains 1, subsequent writes of PCI_TPH_REQ_TPH_ONLY
+> or PCI_TPH_REQ_EXT_TPH fail with -EBUSY, and writing PCI_TPH_REQ_DISABLE
+> exits early at new_ctrl == org_ctrl without calling pcie_disable_tph(),
+> leaving TPH unable to be re-enabled.
+> 
+> Calling pcie_disable_tph(pdev) before pcie_enable_tph_ext() when
+> pdev->tph_enabled is set would avoid both issues.
 > 
 
-I have a reproducer for the bug Sashiko found and this patch doesn't
-work.  Attached.  Claude wanted to just set vcpu->mmio_needed = false;
-but I told it to call commit_pending_events() instead.
-
-I can send that.
-
-regards,
-dan carpenter
-
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 0614c3b3a40dfd..c75b0c62382444 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -1354,6 +1354,7 @@ int __kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
- 
- int __kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
- 			      struct kvm_vcpu_events *events);
-+void commit_pending_events(struct kvm_vcpu *vcpu);
- 
- void kvm_arm_halt_guest(struct kvm *kvm);
- void kvm_arm_resume_guest(struct kvm *kvm);
-diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-nested.c
-index 39136a89d74bb6..5a7019bb719b2a 100644
---- a/arch/arm64/kvm/emulate-nested.c
-+++ b/arch/arm64/kvm/emulate-nested.c
-@@ -2921,7 +2921,7 @@ static int kvm_inject_nested(struct kvm_vcpu *vcpu, u64 esr_el2,
- 	 * Make sure the exception actually took place before we load
- 	 * the new context.
- 	 */
--	__kvm_adjust_pc(vcpu);
-+	commit_pending_events(vcpu);
- 
- 	kvm_arch_vcpu_load(vcpu, smp_processor_id());
- 	vcpu_clear_flag(vcpu, IN_NESTED_EXCEPTION);
-diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-index ba4570c52a9162..b7d36c2abfdf9b 100644
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -770,7 +770,7 @@ int __kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
- 	return 0;
- }
- 
--static void commit_pending_events(struct kvm_vcpu *vcpu)
-+void commit_pending_events(struct kvm_vcpu *vcpu)
- {
- 	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION))
- 		return;
--- 
-2.53.0
-
---SiI1FD/O0lCfvQZp
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename=build.sh
-Content-Transfer-Encoding: quoted-printable
-
-#!/bin/sh=0A# build.sh: builds stale_mmio, a static arm64 binary, in this d=
-irectory.=0A# On an arm64 machine it uses CC (default gcc); elsewhere the c=
-ross compiler=0A# (CC, default aarch64-linux-gnu-gcc).=0Acd "$(dirname "$0"=
-)" || exit 1=0Aif [ "$(uname -m)" =3D aarch64 ]; then=0A	CC=3D${CC:-gcc}=0A=
-else=0A	CC=3D${CC:-aarch64-linux-gnu-gcc}=0Afi=0A$CC -O2 -Wall -static -o s=
-tale_mmio stale_mmio.c=0A
---SiI1FD/O0lCfvQZp
-Content-Type: text/x-csrc; charset=us-ascii
-Content-Disposition: attachment; filename=stale_mmio.c
-
-/*
- * stale_mmio: after an L2 MMIO exit, the KVM_SET_VCPU_EVENTS ioctl with
- * serror_pending routes the SError to L1 (L1's HCR_EL2.AMO is set), and
- * kvm_inject_nested() performs the exception entry straight away.  That
- * must also drop the pending MMIO emulation: otherwise the next KVM_RUN
- * completes the L2 access in L1's context, skips the first instruction of
- * L1's SError vector and, for a read, writes the MMIO data to an L1
- * register.
- *
- * The vcpu is put in L2 context with KVM_SET_ONE_REG (HCR_EL2 = E2H | RW |
- * AMO, PSTATE = EL1h) and run once: L2 does one access to an address with
- * no memslot, which exits to userspace as MMIO.  Then the SError is set
- * pending, the vcpu must be at L1's SError vector (VBAR_EL2 + 0x580), and
- * it is run again.  L1's vector is
- *
- *	+0x580	str	x0, [x3]	// MMIO at L1_MMIO: the vector ran from its start
- *	+0x584	str	x0, [x4]	// MMIO at SKIP_MMIO: its first instruction was skipped
- *
- * Usage: stale_mmio write|read
- *   write: L2 does str x0, [x2].
- *   read:  L2 does ldr x5, [x2]; userspace answers with MMIO_DATA, and x5
- *          must keep its value, as the load never completed.
- *
- * Exit 0 when L1's vector runs from its start (and x5 is untouched), 1
- * when the stale MMIO emulation shows, 2 on a set-up error or another
- * result.  Kernels without "KVM: arm64: Load the vcpu in
- * KVM_SET_VCPU_EVENTS" oops in the ioctl instead (see
- * nv-set-vcpu-events-put-load-unloaded).
- */
-#include <errno.h>
-#include <fcntl.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <linux/kvm.h>
-
-#ifndef KVM_ARM_VCPU_HAS_EL2
-#define KVM_ARM_VCPU_HAS_EL2	7
-#endif
-#ifndef KVM_CAP_ARM_EL2
-#define KVM_CAP_ARM_EL2		240
-#endif
-
-#define MEM_BASE	0x40000000UL		/* the memslot: 64K of guest memory */
-#define MEM_SIZE	0x10000UL
-#define CODE		(MEM_BASE + 0x0)	/* L2 code */
-#define VECTORS		(MEM_BASE + 0x800)	/* L1's EL2 vectors, 2K aligned */
-#define MMIO		0x10000000UL		/* no memslot here */
-#define L1_MMIO		0x10001000UL
-#define SKIP_MMIO	0x10002000UL
-#define MMIO_DATA	0x1234567876543210ULL
-#define X5_INIT		0x5555555555555555ULL
-
-#define GICD_BASE	0x08000000UL
-#define GICR_BASE	0x080a0000UL
-
-#define HCR_AMO		(1ULL << 5)
-#define HCR_RW		(1ULL << 31)
-#define HCR_E2H		(1ULL << 34)
-
-/* PSR_MODE_MASK, PSR_MODE_EL1h and PSR_MODE_EL2h come from asm/ptrace.h. */
-#define PSR_EL1h_DAIF	0x3c5ULL		/* EL1h, D, A, I and F masked */
-
-#define SERROR_LOWER_A64	0x580		/* lower EL using AArch64, SError */
-
-#define CORE_REG(name)	(KVM_REG_ARM64 | KVM_REG_SIZE_U64 | KVM_REG_ARM_CORE | \
-			 KVM_REG_ARM_CORE_REG(name))
-#define REG_HCR_EL2	ARM64_SYS_REG(3, 4, 1, 1, 0)
-#define REG_VBAR_EL2	ARM64_SYS_REG(3, 4, 12, 0, 0)
-#define REG_ESR_EL2	ARM64_SYS_REG(3, 4, 5, 2, 0)
-
-static int fail(const char *what)
-{
-	fprintf(stderr, "%s: %s\n", what, strerror(errno));
-	return 2;
-}
-
-static int set_reg(int vcpu, uint64_t id, uint64_t val)
-{
-	struct kvm_one_reg reg = { .id = id, .addr = (uint64_t)(uintptr_t)&val };
-
-	return ioctl(vcpu, KVM_SET_ONE_REG, &reg);
-}
-
-static int get_reg(int vcpu, uint64_t id, uint64_t *val)
-{
-	struct kvm_one_reg reg = { .id = id, .addr = (uint64_t)(uintptr_t)val };
-
-	return ioctl(vcpu, KVM_GET_ONE_REG, &reg);
-}
-
-static int dev_attr(int fd, uint32_t group, uint64_t attr, void *val)
-{
-	struct kvm_device_attr a = {
-		.group = group, .attr = attr, .addr = (uint64_t)(uintptr_t)val,
-	};
-
-	return ioctl(fd, KVM_SET_DEVICE_ATTR, &a);
-}
-
-int main(int argc, char **argv)
-{
-	struct kvm_userspace_memory_region region;
-	struct kvm_create_device gic = { .type = KVM_DEV_TYPE_ARM_VGIC_V3 };
-	struct kvm_vcpu_events events;
-	struct kvm_vcpu_init init;
-	struct kvm_run *run;
-	uint64_t gicd = GICD_BASE, gicr = GICR_BASE, pc, pstate, esr, x5;
-	int kvm, vm, vcpu, run_size, i, read;
-	uint32_t *code;
-	uint8_t *mem;
-
-	if (argc != 2 || (strcmp(argv[1], "write") && strcmp(argv[1], "read"))) {
-		fprintf(stderr, "usage: %s write|read\n", argv[0]);
-		return 2;
-	}
-	read = !strcmp(argv[1], "read");
-
-	kvm = open("/dev/kvm", O_RDWR);
-	if (kvm < 0)
-		return fail("/dev/kvm");
-	if (ioctl(kvm, KVM_CHECK_EXTENSION, KVM_CAP_ARM_EL2) <= 0) {
-		fprintf(stderr, "KVM_CAP_ARM_EL2 missing: boot with kvm-arm.mode=nested\n");
-		return 2;
-	}
-	vm = ioctl(kvm, KVM_CREATE_VM, 0);
-	if (vm < 0)
-		return fail("KVM_CREATE_VM");
-
-	mem = mmap(NULL, MEM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-	if (mem == MAP_FAILED)
-		return fail("mmap");
-	region = (struct kvm_userspace_memory_region) {
-		.slot = 0, .guest_phys_addr = MEM_BASE, .memory_size = MEM_SIZE,
-		.userspace_addr = (uint64_t)(uintptr_t)mem,
-	};
-	if (ioctl(vm, KVM_SET_USER_MEMORY_REGION, &region))
-		return fail("KVM_SET_USER_MEMORY_REGION");
-
-	/* L2: one access that exits as MMIO.  L1's vectors: spin, except SError. */
-	code = (uint32_t *)(mem + (CODE - MEM_BASE));
-	code[0] = read ? 0xf9400045 :	/* ldr x5, [x2] */
-			 0xf9000040;	/* str x0, [x2] */
-	code[1] = 0x14000000;		/* b . */
-	for (i = 0; i < 0x800 / 4; i++)
-		((uint32_t *)(mem + (VECTORS - MEM_BASE)))[i] = 0x14000000;
-	code = (uint32_t *)(mem + (VECTORS + SERROR_LOWER_A64 - MEM_BASE));
-	code[0] = 0xf9000060;		/* str x0, [x3] */
-	code[1] = 0xf9000080;		/* str x0, [x4] */
-
-	if (ioctl(vm, KVM_CREATE_DEVICE, &gic))
-		return fail("KVM_CREATE_DEVICE (vGICv3)");
-	if (dev_attr(gic.fd, KVM_DEV_ARM_VGIC_GRP_ADDR, KVM_VGIC_V3_ADDR_TYPE_DIST, &gicd) ||
-	    dev_attr(gic.fd, KVM_DEV_ARM_VGIC_GRP_ADDR, KVM_VGIC_V3_ADDR_TYPE_REDIST, &gicr))
-		return fail("setting the vGIC addresses");
-
-	vcpu = ioctl(vm, KVM_CREATE_VCPU, 0);
-	if (vcpu < 0)
-		return fail("KVM_CREATE_VCPU");
-	if (ioctl(vm, KVM_ARM_PREFERRED_TARGET, &init))
-		return fail("KVM_ARM_PREFERRED_TARGET");
-	init.features[0] |= 1U << KVM_ARM_VCPU_HAS_EL2;
-	if (ioctl(vcpu, KVM_ARM_VCPU_INIT, &init))
-		return fail("KVM_ARM_VCPU_INIT with KVM_ARM_VCPU_HAS_EL2");
-	if (dev_attr(gic.fd, KVM_DEV_ARM_VGIC_GRP_CTRL, KVM_DEV_ARM_VGIC_CTRL_INIT, NULL))
-		return fail("initialising the vGIC");
-
-	/* L2 context, with L1 asking for SErrors (AMO).  No stage 2 (VM=0). */
-	if (set_reg(vcpu, REG_HCR_EL2, HCR_E2H | HCR_RW | HCR_AMO) ||
-	    set_reg(vcpu, REG_VBAR_EL2, VECTORS) ||
-	    set_reg(vcpu, CORE_REG(regs.regs[2]), MMIO) ||
-	    set_reg(vcpu, CORE_REG(regs.regs[3]), L1_MMIO) ||
-	    set_reg(vcpu, CORE_REG(regs.regs[4]), SKIP_MMIO) ||
-	    set_reg(vcpu, CORE_REG(regs.regs[5]), X5_INIT) ||
-	    set_reg(vcpu, CORE_REG(regs.pc), CODE) ||
-	    set_reg(vcpu, CORE_REG(regs.pstate), PSR_EL1h_DAIF))
-		return fail("KVM_SET_ONE_REG");
-
-	run_size = ioctl(kvm, KVM_GET_VCPU_MMAP_SIZE, 0);
-	run = mmap(NULL, run_size, PROT_READ | PROT_WRITE, MAP_SHARED, vcpu, 0);
-	if (run == MAP_FAILED)
-		return fail("mmap kvm_run");
-
-	if (ioctl(vcpu, KVM_RUN, 0))
-		return fail("KVM_RUN");
-	if (run->exit_reason != KVM_EXIT_MMIO || run->mmio.phys_addr != MMIO ||
-	    run->mmio.is_write == read) {
-		fprintf(stderr, "unexpected exit: reason %u (expected an MMIO %s at 0x%lx)\n",
-			run->exit_reason, argv[1], MMIO);
-		return 2;
-	}
-	if (get_reg(vcpu, CORE_REG(regs.pstate), &pstate))
-		return fail("KVM_GET_ONE_REG PSTATE");
-	if ((pstate & PSR_MODE_MASK) != PSR_MODE_EL1h) {
-		fprintf(stderr, "after the run the vCPU is not in L2's EL1 (PSTATE 0x%llx)\n",
-			(unsigned long long)pstate);
-		return 2;
-	}
-	printf("%s: ran L2 and exited to userspace (MMIO %s at 0x%llx); now KVM_SET_VCPU_EVENTS serror_pending\n",
-	       argv[1], argv[1], (unsigned long long)run->mmio.phys_addr);
-	fflush(stdout);
-
-	memset(&events, 0, sizeof(events));
-	events.exception.serror_pending = 1;
-	if (ioctl(vcpu, KVM_SET_VCPU_EVENTS, &events))
-		return fail("KVM_SET_VCPU_EVENTS");
-
-	if (get_reg(vcpu, CORE_REG(regs.pc), &pc) ||
-	    get_reg(vcpu, CORE_REG(regs.pstate), &pstate) ||
-	    get_reg(vcpu, REG_ESR_EL2, &esr))
-		return fail("KVM_GET_ONE_REG after the injection");
-	printf("KVM_SET_VCPU_EVENTS returned: PC 0x%llx, PSTATE 0x%llx, ESR_EL2 0x%llx\n",
-	       (unsigned long long)pc, (unsigned long long)pstate, (unsigned long long)esr);
-
-	if (pc != VECTORS + SERROR_LOWER_A64 || (pstate & PSR_MODE_MASK) != PSR_MODE_EL2h) {
-		fprintf(stderr, "the ioctl returned, but the vCPU is not at L1's SError vector\n");
-		return 2;
-	}
-	printf("the SError was delivered to L1's EL2; running again\n");
-
-	/* What a VMM would hand back for the read, had it not aborted it. */
-	if (read)
-		memcpy(run->mmio.data, &(uint64_t){ MMIO_DATA }, sizeof(uint64_t));
-
-	if (ioctl(vcpu, KVM_RUN, 0))
-		return fail("second KVM_RUN");
-	if (run->exit_reason != KVM_EXIT_MMIO) {
-		fprintf(stderr, "second run: unexpected exit: reason %u (expected MMIO)\n",
-			run->exit_reason);
-		return 2;
-	}
-	if (get_reg(vcpu, CORE_REG(regs.regs[5]), &x5))
-		return fail("KVM_GET_ONE_REG x5");
-	printf("%s: second run: MMIO at 0x%llx, x5 0x%llx\n", argv[1],
-	       (unsigned long long)run->mmio.phys_addr, (unsigned long long)x5);
-
-	if (run->mmio.phys_addr == L1_MMIO && x5 == X5_INIT) {
-		printf("%s: L1's SError vector ran from its first instruction\n", argv[1]);
-		return 0;
-	}
-	if (run->mmio.phys_addr == SKIP_MMIO || (read && x5 == MMIO_DATA)) {
-		printf("%s: stale MMIO emulation: %s%s\n", argv[1],
-		       run->mmio.phys_addr == SKIP_MMIO ? "L1's first vector instruction was skipped" : "",
-		       read && x5 == MMIO_DATA ? ", x5 got the aborted read's data" : "");
-		return 1;
-	}
-	fprintf(stderr, "%s: unexpected result\n", argv[1]);
-	return 2;
-}
-
---SiI1FD/O0lCfvQZp
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename=run_on_L1.sh
-Content-Transfer-Encoding: quoted-printable
-
-#!/bin/sh=0A# run_on_L1.sh: runs stale_mmio (write and read) on an arm64 L1=
- booted with=0A# kvm-arm.mode=3Dnested (build it first with build.sh).  Nee=
-ds /dev/kvm (the=0A# kvm group) and sudo for the kernel log.  Prints "Bug r=
-eproduced." or=0A# "Unable to reproduce the bug.".=0A#=0A# The L1 kernel ne=
-eds "KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS";=0A# without it the =
-ioctl oopses first (the NULL hw_mmu bug), and the L1 should=0A# be rebooted=
-=2E=0Acd "$(dirname "$0")" || exit 1=0Auname -r=0Abefore=3D$(sudo dmesg | g=
-rep -c 'Unable to handle kernel')=0Abug=3D0=0Afor mode in write read; do=0A=
-	timeout 30 ./stale_mmio $mode=0A	rc=3D$?=0A	after=3D$(sudo dmesg | grep -c=
- 'Unable to handle kernel')=0A	if [ "$after" -gt "$before" ]; then=0A		echo=
- "The kernel oopsed: this L1 lacks the KVM_SET_VCPU_EVENTS load fix.  Reboo=
-t it."=0A		exit 2=0A	fi=0A	case $rc in=0A	0) ;;=0A	1) bug=3D1 ;;=0A	*) echo=
- "$mode: set-up error or unexpected result (exit $rc)"; exit 2 ;;=0A	esac=
-=0Adone=0Aif [ $bug -eq 1 ]; then=0A	echo "Bug reproduced."=0A	exit 0=0Afi=
-=0Aecho "Unable to reproduce the bug."=0Aexit 1=0A
---SiI1FD/O0lCfvQZp--
