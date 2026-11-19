@@ -1,120 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795098133;
-	b=tlaXwcYKS3pYcgq6+enCg/rvBu6O/l4Sco1JjAjpqhk1R0lLeebWLfnobbjnoK0+VqWI
-	 Vn5zg1zOGpMbhZicXIjNQrtRG2D0MzXBbzQKEWk6heacr92zcTWh6sOB0fOCUME67QN7D
-	 tfyeTgeg/Khu5gZrXA0M/IliQ+3nVCiThvl3CbIyaSXAdg1/hs1F9012bk4LUGztjIuaM
-	 SsmEqRZ5VHTbCYJGHSYVzELO3b0E12fu0IFacRa9tv+cHmAEBeQPxsjDfW5+AH5aGA4Qo
-	 k/P0MToP9XnuHdNvL3cw9cDOtdye39hOKd5EO+5w/Ku9FyJR2WQfcpMSU+iRdbdbXiw==
+	t=1795098321;
+	b=gxSQEcyDxN8gEk3tjNlox8fazE5vDD+jPt9Z0RW2QPoH5WygNh5X5JLsfrqmlm50dkoI
+	 AtsIqUSJW7VZcnB8/+ySIPVaWXUzJGCImSYPJ5FAGKcRA2RdW3mbzixJQkm4ztUrEauxH
+	 mL1OfPnM4tmX42uc8OIdQ349oaFxiTA9r97DkzQMndR2+JniyCkeiUhIJvgPquIp/RRMJ
+	 jDY2mFH8p/wZLz5olkaEzDE+oGRdDY7rWv8GU3SLiwZvOMWIrC+QnvnKFlaakOKTL02AA
+	 5eHKaOq78vm8yHEYClc+pc7M2F0Jhs+9p8S3XhKS7FFqVM/AZpZb8vDl/0HaxIcRpKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795098133;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=Zd36v0W7RDUUNGlk2vNLhydp34CBLuE2PR0HuI7Gx+0=;
-	b=W3TwOH9/tkvccOPmS+dHCp/nDANw2zeKJWzluri/Jl5xty6lhALJ2l9Yr7zAce2imA0P
-	 objvNUC3Bf2VRDMS8s1V88LImcjpYv+IieVSYQfybWJ6nSav+fCqwL9+U63fYk/ft8Kty
-	 yn0oZg5CqwOTsCqiK53bFU/GpYv5rBg4a114JsUnWSJwprQXb9/FJDKqrZNRi/3wahasG
-	 kImlApjcJgJyEvhS1hTAf6U3/O/Y0rIFzXBXQWB9t95k8q59gSVyTax9MclOrfO/2suMr
-	 0xZk9ObPc8BgZt+LCBdHPqgA0fPxMqdL52rzOBnwN6B3zkLP7QXpIUyRVHmv3ylPXlw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795098321;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:X-ME-Received:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=cLynK9rI6KVHHV5vynGMOLFNSB/FofZaEE0s+Moc/io=;
+	b=bJV+CPH0Zd6vygJ9FvJ3D/WM92ePOzmKTR1SzxuTfz4Q5//Ru/7tBr9Jio/Jg1NHPWfa
+	 cQ3/XvNcBqs+m4YpoKs/O4LUNRQIwq6zKNPyMQzuI1bix+wTvtGn1FG3VT76C/e6myWiM
+	 xPiwMd62U52OdLicCWacT3RJ+k54iiIJX2LFtv6hlBvjjnXyvJagl46M7swnZ0tZRRGak
+	 rUTDQZl8jm+bxSlz0qMGmalHuanvKn8qdZTE1grrq96YLtwkj5WcBaImpNuLKgMlBP6jR
+	 LEK/V8uE0OfsUed40GrpRe1mUA7/aJIipTg+OHOI4u3n/BC57MVgPKjWfB5qT9trDRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=CapQc7Of;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=B6I4W2Lx;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=CapQc7Of;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=B6I4W2Lx;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IDrod4P1;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F04C606A320
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 14:22:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F04C606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F351606A320
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 14:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=CapQc7Of;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=B6I4W2Lx;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=CapQc7Of;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=B6I4W2Lx
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 66E601FC24;
-	Thu, 19 Nov 2026 14:21:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795098084; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Zd36v0W7RDUUNGlk2vNLhydp34CBLuE2PR0HuI7Gx+0=;
-	b=CapQc7Of9y/4XAKr4J40p/uRR4MfsQNRo1Nykw4sg7XXQNjaIyPggqEkWsJ3CJgCYabIkK
-	4BLF1TFD4dt6Um/m8dPZS6UpXtoW3paHtigztXT88jeWyBWIocWxikuoTtNnxTtnQTeNrS
-	koxItTdMaXRnCgJk/S8IBpZ89x2GaAo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795098084;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Zd36v0W7RDUUNGlk2vNLhydp34CBLuE2PR0HuI7Gx+0=;
-	b=B6I4W2LxauqqU7FaGeLXS7B05xEwkapo2/M9ENwPIdJOFg2yoTxTITTVteQsTlRfjtFgSa
-	awpq42+MvnwDioCw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CapQc7Of;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=B6I4W2Lx
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795098084; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Zd36v0W7RDUUNGlk2vNLhydp34CBLuE2PR0HuI7Gx+0=;
-	b=CapQc7Of9y/4XAKr4J40p/uRR4MfsQNRo1Nykw4sg7XXQNjaIyPggqEkWsJ3CJgCYabIkK
-	4BLF1TFD4dt6Um/m8dPZS6UpXtoW3paHtigztXT88jeWyBWIocWxikuoTtNnxTtnQTeNrS
-	koxItTdMaXRnCgJk/S8IBpZ89x2GaAo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795098084;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Zd36v0W7RDUUNGlk2vNLhydp34CBLuE2PR0HuI7Gx+0=;
-	b=B6I4W2LxauqqU7FaGeLXS7B05xEwkapo2/M9ENwPIdJOFg2yoTxTITTVteQsTlRfjtFgSa
-	awpq42+MvnwDioCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F2BEF13646;
-	Thu, 19 Nov 2026 14:21:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id RynyAeAF/2rJfgAAD6G6ig:T11
-	(envelope-from <tzimmermann@suse.de>); Thu, 19 Nov 2026 14:21:23 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: airlied@redhat.com,
-	sean@poorly.run,
-	tiwai@suse.com,
-	patrik.r.jakobsson@gmail.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 10/11] drm/udl: Allocate URBs on demand
-Date: Thu, 19 Nov 2026 15:02:22 +0100
-Message-ID: <20261119142114.152052-11-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261119142114.152052-1-tzimmermann@suse.de>
-References: <20261119142114.152052-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IDrod4P1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4C41F000C5;
+	Thu, 19 Nov 2026 14:25:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795098321;
+	bh=cLynK9rI6KVHHV5vynGMOLFNSB/FofZaEE0s+Moc/io=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IDrod4P1ieJbAGPWjmPQPtOTc9X1Ng8ZRAlrI8ClM8Gu8XqsbLrPci061hx8PZF7R
+	 l7vXNnqkeF4ezcP5d/OuMPyeoKGkAacbMNCuFJFerQtPERM8637diU5JpmH+DzmNs8
+	 DkqGasvSyJFzrIQDXq4oNBHjcFtmNODTSQLzwDLDNHt8rvEehLz1rDFZK9TGG9nvPW
+	 bwudyikFhWGeBgp0AkdeCnUZRDB8ogTi+nLBPRzGto/T9s0hsKpHYGJ4P1ShYjusb/
+	 04Em6iGUTMCzVKveykBsA57kMgzV3h2SbeAC62fDK1tZ71ty2uDX7COEJYxQn+7h5z
+	 AY1vGWyN92adw==
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 1D32B198003A;
+	Thu, 19 Nov 2026 09:25:13 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Thu, 19 Nov 2026 09:25:17 -0500
+X-ME-Sender: <xms:yAb_ajYwa0xGmjjyiPwmlNXbfb6SCtKLEb-oiecfFag32tPac4cABA>
+    <xme:yAb_ag0cLW9DbNh-N-f-DLBd08eVUHCSXj7Vbvfz5GAkUBEq4srWndqBl8WC3V7MG
+    LyTucEVB2IHHZJgeX-aoZG55sg089zLao6hyxPzAw-7lIdcqGvwY8I0>
+X-ME-Received: <xmr:yAb_atEm0f78LD64EwOqi6_WMpQ9JC-RMsM3szUyFuYE6PsdZ8N-brSUPxg>
+X-ME-Proxy-Cause: dmFkZTEyNuBZcyS6whiZmxC1lPTPh98c0PDODIZIONg4xEZnvcdNcvLLf0dpDMgukyinEM
+    s374CaO9qOQkbKT5ul4KybIbKSCs4mSlOU2vpAuqjlJBQqRr5msdLH18Cvdak2ci5SUpEM
+    ojUwjagj/QtGma40bPhTC8X+i0VdnV2PGzd4p9seDzIRTajT7DvS1CV24k3z8W/9jXsf8b
+    9ocM6fiphebBwyYCSQ+tdPFlsVkRvGUdu6NL8Vdm7bf4hRLKDvILvELQxCrbr4l2kLv5Yu
+    MmQOPtr+/zORv/Wt1Z8vw1a+trobbn2CnVOsOWZc38cVITj2uZDA79nLjieJ1jy8HTqYZm
+    iRB52e+MxokyasTTed6RpxBUR8HxCpXw5hwVJoGsIY7tgX1LRnXmQb3W9tupmY/oUrOS75
+    1IzXG6PGE1nGzZ8r9xCNLd/myv1AvBjfqoWguiyAQzwky9Bgakg0En3QDuhPkcLCjBuTFk
+    AMygcvDTL2p/pD1ZB0YVG99xIZPJVvs4yCZRJiHUOpGbyIEcK7oqbjzeqJX3ACWvrilpvw
+    cmJ18yCygTmR8Au9BiEruO5qZHGGbPyh+yvmyaNESX0cDmXoeE5DMZCB2VhNvsBQS9aOZ2
+    iDExYGMi/xXicMSC37rfNA/pIM4xIYwCPJ5w4/Q76cdg3cFrbgg4PD0nYXCA
+X-ME-Proxy: <xmx:yAb_atMB1CACTuD4wZI6yL3uPxsszht7Fysx6ApWKlr_flkZs1FpTg>
+    <xmx:yAb_aiB1UD5eVFRTOEYV-ml2SpEf2HrFAyQyZwMnpK7ExEa6cWkomA>
+    <xmx:yAb_asxTnlX8gppwV5xutOLak29N1oZCEGV-DQGQOGP4Ic8PU3zVhw>
+    <xmx:yAb_aueo8VXHYGqGILL2A2II1O4BgK_eRPfMsibsWq9ZLNbM-hgG4g>
+    <xmx:yAb_akpZBu_B3tRIscAQuqOOnAtl9C25ApLOLoLngvvtG1X3gA8ASRVq>
+Feedback-ID: i10464835:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Nov 2026 09:25:11 -0500 (EST)
+Date: Thu, 19 Nov 2026 14:25:10 +0000
+From: "Kiryl Shutsemau (Meta)" <kas@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Vlastimil Babka <vbabka@kernel.org>, Johannes Weiner <hannes@cmpxchg.org>, 
+	David Hildenbrand <david@kernel.org>, Harry Yoo <harry@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Brendan Jackman <brendan.jackman@linux.dev>, Zi Yan <ziy@nvidia.com>, Lorenzo Stoakes <ljs@kernel.org>, 
+	"Liam R. Howlett" <liam@infradead.org>, Mike Rapoport <rppt@kernel.org>, Qi Zheng <qi.zheng@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Kairui Song <kasong@tencent.com>, Barry Song <baohua@kernel.org>, 
+	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, 
+	Baoquan He <baoquan.he@linux.dev>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Dev Jain <dev.jain@arm.com>, Usama Arif <usama.arif@linux.dev>, linux-mm@kvack.org, 
+	kernel-team@meta.com
+Subject: Re: [PATCH v3 2/3] mm: page_alloc: make the high-order watermark
+ check honour ALLOC_NOFRAGMENT
+Message-ID: <av8GvDahjRIKXUIa@shutemov.name>
+References: <20261116125103.2894162-1-kas@kernel.org>
+ <20261116125103.2894162-3-kas@kernel.org>
+ <sashiko-outbox-218808@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -124,264 +97,17 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 66E601FC24
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-10.51 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_TO(0.00)[redhat.com,poorly.run,suse.com,gmail.com,linux.intel.com,kernel.org,ffwll.ch];
-	RCVD_TLS_ALL(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLqtkr6cif1ebgurukgmwdm7xc)];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Score: -10.51
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-218808@kernel.org>
 
-Remove the limit on the number of URBs in flight. Allocate URBs as
-needed. Keep once-allocated URBs in a list for reuse at later frames.
-Also remove some bogus debug output from the affected code.
+On Tue, Nov 17, 2026 at 12:51:34PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mm: page_alloc: should_reclaim_retry() counts unusable
+>   migratetype pages
 
-The existing synchronization in atomic_begin() guarantees that udl
-does not send a frame over the USB before the previous frame has been
-transferred. This avoids overloading the USB. If the USB is saturated,
-page flips delay and the compositor reduces the update frequency.
+Not a regression. should_reclaim_retry() never filtered by migratetype.
 
-The allocated URBs remain in the cache until the driver is being removed
-from the device. In a later update, a regular worker or a shrinker could
-free the URB cache when needed.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/udl/udl_drv.h  |   1 -
- drivers/gpu/drm/udl/udl_main.c | 123 ++++++++++++---------------------
- 2 files changed, 44 insertions(+), 80 deletions(-)
-
-diff --git a/drivers/gpu/drm/udl/udl_drv.h b/drivers/gpu/drm/udl/udl_drv.h
-index 420166bdc4bc..68bcf0222764 100644
---- a/drivers/gpu/drm/udl/udl_drv.h
-+++ b/drivers/gpu/drm/udl/udl_drv.h
-@@ -45,7 +45,6 @@ struct urb_list {
- 	spinlock_t lock;
- 	wait_queue_head_t sleep;
- 	unsigned int in_flight;
--	int count;
- };
- 
- struct udl_device {
-diff --git a/drivers/gpu/drm/udl/udl_main.c b/drivers/gpu/drm/udl/udl_main.c
-index d0195bd4213d..adddcf4b3451 100644
---- a/drivers/gpu/drm/udl/udl_main.c
-+++ b/drivers/gpu/drm/udl/udl_main.c
-@@ -25,13 +25,10 @@
- #define NR_USB_REQUEST_CHANNEL 0x12
- 
- #define MAX_TRANSFER (PAGE_SIZE*16 - BULK_SIZE)
--#define WRITES_IN_FLIGHT (20)
- #define MAX_VENDOR_DESCRIPTOR_SIZE 256
- 
- #define UDL_SKU_PIXEL_LIMIT_DEFAULT	2080000
- 
--static struct urb *udl_get_urb_locked(struct udl_device *udl, long timeout);
--
- /*
-  * Try to make sense of whatever we parse. Therefore return @end on
-  * errors, but don't fail hard.
-@@ -216,25 +213,41 @@ static struct urb *udl_alloc_bulk_urb(struct udl_device *udl, size_t size)
- 	return ERR_PTR(ret);
- }
- 
-+static struct urb *__udl_get_cached_urb_locked(struct udl_device *udl)
-+{
-+	struct urb_node *unode;
-+
-+	assert_spin_locked(&udl->urbs.lock);
-+
-+	if (list_empty(&udl->urbs.list))
-+		return NULL;
-+
-+	unode = list_first_entry(&udl->urbs.list, struct urb_node, entry);
-+	list_del_init(&unode->entry);
-+
-+	return unode->urb;
-+}
-+
- static void udl_free_urb_list(struct udl_device *udl)
- {
-+	struct drm_device *drm = &udl->drm;
- 	struct urb *urb;
- 
--	DRM_DEBUG("Waiting for completes and freeing all render urbs\n");
-+	drm_dbg(drm, "Waiting for completes and freeing all render URBs\n");
- 
--	/* keep waiting and freeing, until we've got 'em all */
--	while (udl->urbs.count) {
--		spin_lock_irq(&udl->urbs.lock);
--		urb = udl_get_urb_locked(udl, MAX_SCHEDULE_TIMEOUT);
--		udl->urbs.count--;
--		spin_unlock_irq(&udl->urbs.lock);
--		if (WARN_ON(!urb))
--			break;
--		/* Free each separately allocated piece */
--		udl_free_bulk_urb(urb);
-+	/* keep waiting until we've got 'em all */
-+	scoped_guard(spinlock_irq, &udl->urbs.lock) {
-+		wait_event_lock_irq(udl->urbs.sleep, !udl->urbs.in_flight, udl->urbs.lock);
-+
-+		urb = __udl_get_cached_urb_locked(udl);
- 	}
- 
--	wake_up_all(&udl->urbs.sleep);
-+	while (urb) {
-+		udl_free_bulk_urb(urb);
-+
-+		scoped_guard(spinlock_irq, &udl->urbs.lock)
-+			urb = __udl_get_cached_urb_locked(udl);
-+	}
- }
- 
- static void udl_urb_list_release(void *data)
-@@ -244,71 +257,16 @@ static void udl_urb_list_release(void *data)
- 	udl_free_urb_list(udl);
- }
- 
--static int udl_alloc_urb_list(struct udl_device *udl, int count, size_t size)
-+static int udl_init_urb_list(struct udl_device *udl)
- {
- 	struct drm_device *drm = &udl->drm;
--	size_t wanted_size = count * size;
--	int ret;
- 
- 	spin_lock_init(&udl->urbs.lock);
- 	INIT_LIST_HEAD(&udl->urbs.list);
- 	init_waitqueue_head(&udl->urbs.sleep);
--	udl->urbs.count = 0;
- 	udl->urbs.in_flight = 0;
- 
--retry:
--	while (udl->urbs.count * size < wanted_size) {
--		struct urb *urb;
--		struct urb_node *unode;
--
--		urb = udl_alloc_bulk_urb(udl, size);
--		if (IS_ERR(urb)) {
--			if (PTR_ERR(urb) == -ENOBUFS && size > PAGE_SIZE) {
--				size /= 2;
--				udl_free_urb_list(udl);
--				goto retry;
--			}
--			break;
--		}
--		unode = urb->context;
--
--		list_add_tail(&unode->entry, &udl->urbs.list);
--
--		udl->urbs.count++;
--	}
--
--	if (!udl->urbs.count)
--		return -ENOMEM;
--
--	ret = devm_add_action_or_reset(drm->dev, udl_urb_list_release, udl);
--	if (ret < 0)
--		return ret;
--
--	DRM_DEBUG("allocated %d %d byte urbs\n", udl->urbs.count, (int) size);
--
--	return udl->urbs.count;
--}
--
--static struct urb *udl_get_urb_locked(struct udl_device *udl, long timeout)
--{
--	struct urb_node *unode;
--
--	assert_spin_locked(&udl->urbs.lock);
--
--	/* Wait for an in-flight buffer to complete and get re-queued */
--	if (!wait_event_lock_irq_timeout(udl->urbs.sleep,
--					 !udl->urbs.count ||
--					 !list_empty(&udl->urbs.list),
--					 udl->urbs.lock, timeout))
--		return NULL;
--
--	if (!udl->urbs.count)
--		return NULL;
--
--	unode = list_first_entry(&udl->urbs.list, struct urb_node, entry);
--	list_del_init(&unode->entry);
--
--	return unode->urb;
-+	return devm_add_action_or_reset(drm->dev, udl_urb_list_release, udl);
- }
- 
- struct urb *udl_get_urb(struct udl_device *udl)
-@@ -321,9 +279,18 @@ struct urb *udl_get_urb(struct udl_device *udl)
- 			return NULL;
- 		++udl->urbs.in_flight;
- 
--		urb = udl_get_urb_locked(udl, HZ * 2);
--		if (!urb)
--			--udl->urbs.in_flight;
-+		urb = __udl_get_cached_urb_locked(udl);
-+	}
-+
-+	if (!urb) {
-+		urb = udl_alloc_bulk_urb(udl, MAX_TRANSFER);
-+		if (IS_ERR(urb)) {
-+			scoped_guard(spinlock_irqsave, &udl->urbs.lock) {
-+				if (udl->urbs.in_flight)
-+					--udl->urbs.in_flight;
-+			}
-+			return NULL;
-+		}
- 	}
- 
- 	return urb;
-@@ -395,8 +362,6 @@ int udl_init(struct udl_device *udl)
- 	int ret = -ENOMEM;
- 	struct device *dma_dev;
- 
--	DRM_DEBUG("\n");
--
- 	dma_dev = usb_intf_get_dma_device(to_usb_interface(dev->dev));
- 	if (dma_dev) {
- 		drm_dev_set_dma_dev(dev, dma_dev);
-@@ -419,8 +384,8 @@ int udl_init(struct udl_device *udl)
- 	if (udl_select_std_channel(udl))
- 		DRM_ERROR("Selecting channel failed\n");
- 
--	ret = udl_alloc_urb_list(udl, WRITES_IN_FLIGHT, MAX_TRANSFER);
--	if (ret < 0)
-+	ret = udl_init_urb_list(udl);
-+	if (ret)
- 		return ret;
- 
- 	ret = udl_modeset_init(udl);
 -- 
-2.56.0
-
+  Kiryl Shutsemau / Kirill A. Shutemov
