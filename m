@@ -1,100 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.14
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795075643;
-	b=F6DfRZ4zlibpXL/EoB4oOe4h8Yxgv+Fna7o5zS0sHcBIaEnxOkkxclS8FCopxtqq9BW5
-	 BIYInZKqakf4EBRcmhKTx+xL0YSFxGgLNeld+C0FPavCmS2mv1oWOyzwY+FvVb2/PxMlc
-	 wBezMSxVTqj41lk5bEz8ACvCWEOrTOei+UKC2BzmSsSFhrpaCMR0WySgkBEYH5H7y9yBs
-	 GCuB4Sjr8+DjXlFRxiivMfVCdhCAEV8KN6r1ae8eZMejkyDbuiL5RiXIfXbrh5DD7y2y0
-	 dQ5TCj6IsTn2n5Q8YK7O+Teguu7dj46E2EEV+BfLsuSTrXCfkVVSxcmhoc2FOk2VM3A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795075643;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
-	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=9/R6CFg7wdOV/MvaYD30zCEsr84guM0iFeUdVlUWfmM=;
-	b=deIZQ2fNJmbpa4PA8sO5CTGwGvrCH8N1fQSByUqom6xg6bru/WHxTjoA/ym1tWczOI4q
-	 6RlFD0vM0z4V7/c4lR0IhJe07goJepd+uV4vjYoWR5hgA41UJuqqnT3tCPfflfFJC6hq8
-	 vlTIOH3wvFazUre5RXf5Bjk3fowwU8Y2j0hQ0OSMsQAfoFh4ohoImRDrCoUpr5MTa08PT
-	 5f7fJknKKFkh1b6nIJ6isTsna00z6MaRfjBLJ3iiIkevJpyiUQ5ez33UqOTIMNsf8jNt+
-	 tVP9dZNLEZRP0LMKhEKYkFOW7luQxnfXI6F3s8dxuAEhQpFpU8X/tiDhM7O4DQl/ouw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=ncGGK5dL;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.14
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013014.outbound.protection.outlook.com [40.93.201.14])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.246.85.4
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795075975;
+	b=W1duBMxbCaDKExFPhYBlUPU9b7X3oPRPndhEtbb/LpH46z7IPsvmuVNVSnc/MrfbvkPd
+	 PAWcYFfVwxR2iiXONmFKOy7xcYULaFF3AvTwbbNrtmTEsvbmiQu7qpLLjfLD5VYDN3I+d
+	 oN3zI1uX0IDyjWxd6ZYKmikHZum8QZIbuQv/Bi0G3XXiqdIO/u7wbSyacVccNdxcBtJr0
+	 zgd9sKtAcDzALgBLgrYU9UN3FjN/1SYdYd91OHxE+Cd3SKce1FiTUluBPIQ1kcFFURxY7
+	 g9MfOBAW8Utr3op5daTblUlaowS3fSNaF2/OV4NjSggJOOIuQUE0LEJUafO2nwBfreg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795075975;
+	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:Date:From:To:
+	 Cc:Subject:Message-ID:In-Reply-To:References:Organization:X-Mailer:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-Last-TLS-Session-Version;
+	bh=yOZS1psKLpnUqBLeX9ZWHNiyksEhXVQkT5Ll7miEtlg=;
+	b=43LgiEiwRHhCcvxnNoSqnjJ7uBwZOrWQ4RFPFXVSOgJqP4B5qgtKqsIOVSN9NHVqF9Q1
+	 M1l8+d+skgsDgHsnDvL1Msq05kAfLrRogT9KWfggaVr+ryJWK9xYh8EfrfxzkUN5pDH1c
+	 BKjLxlBLt8pAiljmMi9jgO5ZsybG52N/srymAnVfyhf5CgqLHUjGUQSOVpY4Xu+fhf7wk
+	 /AUXw43si/JyCWZGdEUjqcRHFvFaPzQgE9tsDQnNOwuwKdk1GYXsNIaVyrlAYVL2UhkGM
+	 g+dorSHzCtz6LjVXxkolmNLXztIyt3w4MbLZ0PV4cwagu6X6WdTl88HyX+2/tEKp9yw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=bootlin.com;
+	spf=pass smtp.mailfrom=bootlin.com;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=b8aDmKpp;
+	arc=none smtp.remote-ip=185.246.85.4
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8CA606A324
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:07:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F8CA606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A809606A32C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:12:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A809606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=ncGGK5dL
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lap8vWQi3zcNYD3PYulAP7d+/BNWrUY5HE13U0Eel59GH7cI9boTQ583NdCvLBDG3tc0/yr2gIVGeoWvd/6DF862y0gIVmksCyGS/wPrL+8Zslj83UaYeU8f1PxnGHWHboFUkFSzr4dVzMaqcmb3khdtiU7QyDb1DxSbrxFIWOWZzpTanmblP/otXX6XdvInbzfjYtyKrnImAyibeqpqLI2bxt/+T7kTbBy5QRnCGPjXOZt2x51DuePnv9Kuoymvwi5WuQFWCxdRT+vca8aU+Dly9ITNc5uN0Njtdk/y/t8O4b3jwdJbbkYSb7spSOcdMocKDc+HOW6IOfIUikjF+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9/R6CFg7wdOV/MvaYD30zCEsr84guM0iFeUdVlUWfmM=;
- b=t8el6c0nFM5aKQLLIPIDGl6DYVV+s+pvijAVPER8REU8wEBzAcrDGQj0A0C6NiCAcJlb33RlyZNnPjm+7KY/nCPxcGx4zgjDCJBiZ0zMqQEWnCvzdoSJl9+u75zH8Mm6uVMo6Z1/KQJUhuaqWXFuCaQ+jiZ26IEVccm2U6Nj1wYYvxKafQ6SenjfAltmRXcqrPtlZxbLF+viVhgSEps+r4QWQkIBgB0GxWw1A31RGFeYYdO/l5LUum/tCVfkFsnitBfRBbg2I3Fug9+ITTft+LxNv7nEBgSmwMUX8D3pmsUNnJsCDz7hUFKvwoMNMUyubEJHABzmgJriLHC9217isQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9/R6CFg7wdOV/MvaYD30zCEsr84guM0iFeUdVlUWfmM=;
- b=ncGGK5dLrVP0bLNtsPAF2DF09upptf+Upy+OiBgy7BpprL+a1PjTBwfqbcr0kCGl+KQl768wEGz3nMI0fpt+2cJ+bTiSDpIoc1W2U6ejoUzlw1jlwn7Da2jW/qliV60PJG9k3WsW3n2roFESWdExd/8BxklXeozNbVdWr+DXcQwgGs2K0SiHaqUUTr17ORV5wajXT7ZKfIwXYqef8ohHhoLOfZ0f0Jdqx3cAM6LP5ZMj0skB72iz/QtjzPIBpfz4v6qju8o3gP5XBnsmlonhleTMPKyI/PBqO024GJhi5dPwC45PkN+otIM2+GIn5Sapa6D763oZ5fbr03WsUFvvRA==
-Received: from CH0PR04CA0118.namprd04.prod.outlook.com (2603:10b6:610:75::33)
- by FT1PR12MB249006.namprd12.prod.outlook.com (2603:10b6:170:34::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.10; Thu, 19 Nov
- 2026 08:07:17 +0000
-Received: from CH01EPF000BE94B.namprd02.prod.outlook.com
- (2603:10b6:610:75:cafe::3f) by CH0PR04CA0118.outlook.office365.com
- (2603:10b6:610:75::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.13 via Frontend Transport; Thu,
- 19 Nov 2026 08:07:17 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CH01EPF000BE94B.mail.protection.outlook.com (10.167.244.200) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.639.5 via Frontend Transport; Thu, 19 Nov 2026 08:07:16 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Thu, 19 Nov
- 2026 00:07:02 -0800
-Received: from [10.125.206.246] (10.126.231.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Thu, 19 Nov
- 2026 00:07:01 -0800
-Message-ID: <fbdada8a-a6a6-4d5e-a8f6-29ee161a8fba@nvidia.com>
-Date: Thu, 19 Nov 2026 10:06:59 +0200
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=b8aDmKpp
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 9F3244E4165F;
+	Thu, 19 Nov 2026 08:12:52 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 6E23060237;
+	Thu, 19 Nov 2026 08:12:52 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8787411BC2B18;
+	Thu, 19 Nov 2026 09:12:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1795075968; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=yOZS1psKLpnUqBLeX9ZWHNiyksEhXVQkT5Ll7miEtlg=;
+	b=b8aDmKppMAmBTvcONITykmfpurHncAY3a6tQI2COA1TVPVKUlwA/JaaHEpdbKkfFcuRnwx
+	6jHCn7nHfCN35sPT8CSy1uVX0nawLxGA9BAI4M1lYBor+QwhI5JwtEpic0pCqgLgJsBf0+
+	j4m06dxbjYOCaIsWuOumon4g5Wm5RvZLKZMACmAxd/D7cnEAvt+eTivr/liR+6J425wRL9
+	Br+GLhb9xaK/LcHodj8uXW6YOUP8sz7GOAnG2OPQ7B34F1ZcWFO6iZ7/LHXZFu0t+UwUw+
+	BKdW9ba4aUZdETVBG7FWXggIhb7PzJrXffv1DjhMOfhLV3ZJzVRkoNxpyHoYAg==
+Date: Thu, 19 Nov 2026 09:12:45 +0100
+From: Herve Codina <herve.codina@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v9 4/4] bus: simple-pm-bus: Populate child nodes at
+ probe
+Message-ID: <20261119091245.2c6c6528@bootlin.com>
+In-Reply-To: <sashiko-outbox-205130@kernel.org>
+References: <20261109140916.90625-1-herve.codina@bootlin.com>
+	<20261109140916.90625-5-herve.codina@bootlin.com>
+	<sashiko-outbox-205130@kernel.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,131 +74,105 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 rdma-next 01/21] net/mlx5: Add
- mlx5_trigger_health_work_force()
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-rdma@vger.kernel.org>
-References: <20261117170914.27410-1-yishaih@nvidia.com>
- <20261117170914.27410-2-yishaih@nvidia.com>
- <sashiko-outbox-221602@kernel.org>
-Content-Language: en-US
-From: Yishai Hadas <yishaih@nvidia.com>
-In-Reply-To: <sashiko-outbox-221602@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH01EPF000BE94B:EE_|FT1PR12MB249006:EE_
-X-MS-Office365-Filtering-Correlation-Id: b84aae44-2c19-4ff1-0835-08df46142079
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|36860700016|1800799024|23010399003|82310400026|10067099003|11063799006|4143699003|56012099006|261021121427099003|261009223027099003|261102123227099003|261022075727099003|261022105027099003|261026140227099003|261028144727099003|261026121527099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	wDf+hnMo2uUae07rAiwS5RukrV9QPOH/UeM7xvaDKQ/8DCIyDh4hTfbjFidvBFHTSs49U9mn67sYQdIEQkoY0NCYmB+sIi72rw6MToax2igy186N+l4ZIpOCGDEAdZ3meNiQ0EApW+gJ7nfC5Fpcpz9zRkUztyBY2Cxiam4HFoTyqd427CwkWa3ivKw4mIyGSnP7xLseZfR9/hNfZ8hMdKPwwLo+5Le7hFZVNhuWJQR4pEnL250qvvj3Nz30AJRay7JsE2urhntH9gKOzGvV1Cz8JB1b9M5I+J4nHwqkdWLiHd5gUBATN7iktQULkRq4vocz19VHqDsvxdFX5gp7lrCBds7kjZ7EwW1GE/o/InLAu8n5vD3x4lcu4DKIVkDsk2GtNzJwqZ4B+UdiB2wK6jD+jKAQ2XPVm3HvMnrnaMNFZla1bBFrcGKBdF4+7BIhsNHHGHCb/VDxMW4UM3Y26N9dbcpP1U+QlZDZZfrUoy+iw43o60VjF0gtihkwDC3/d804fRXm6nX0vvxCNa6VEqP+3FQRTxhuXf6W3ujs6xjgcH/q7luC35P6KA1Uh6be3PeWFAew218DRj1xDBdXnKlBlfhylv/CU8m7A+zHYh2F372Y7TxUK/MFgsEfBukAWQNFpum7rOkkMk3qPegOKXHGShTDDpIyxufJQ6j9/VRD1WESWLtM/965hAkZjA7PSUYADmjrsDrRtBr5sEsOoA==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(36860700016)(1800799024)(23010399003)(82310400026)(10067099003)(11063799006)(4143699003)(56012099006)(261021121427099003)(261009223027099003)(261102123227099003)(261022075727099003)(261022105027099003)(261026140227099003)(261028144727099003)(261026121527099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	x5+YrKSxU5TKiJOrvjbiMSgI19EinOyP7nFtmndf/OQszl1g6phgp1lfZsbmhVKziWBDh+DuwL8hhJxV2K/vRtJrgc0/9CAGgOIJntynj1C7pF6Bz+P523wJyqL8sCDZR+e1Vi50ViaZwB2MHOVoXomzBrAjfrwQiM5s5zUicxmWj2cZbJX0fD08zTlpRck04+1RlleBhIEgdUJAPENnh3LhyA7+ohFTvQuWaTw0YYvcQG6X8f6X9kATB4qJK8VOUyse20954N6yg3GGrBYtu4sq+HCa6zinNh5azKGtf0PJPpI2RpeklMWsaTvXLk6lfg64WKH3WpYK0FKDVbxgz+UYuBPM/fgd/TfqiLWxFexHfJusV15FzxTU5iq9zX/c7oUawkBWFnZAN7/8I56Z+KJmnqMqtd4hFVKggpJuySn/dNhxB2B6nYPWyl2WkDZF
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2026 08:07:16.6584
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b84aae44-2c19-4ff1-0835-08df46142079
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CH01EPF000BE94B.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FT1PR12MB249006
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 18/11/2026 19:13, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] net/mlx5: uncanceled force_fatal_report_work tears down
->    recovered device
+Hi,
+
+On Mon, 09 Nov 2026 14:50:21 +0000
+sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] bus: simple-pm-bus: unpopulated grandchildren in
+>   simple_pm_bus_populate()
+> - [Medium] bus: simple-pm-bus: auxdata lookup table dropped in
+>   simple_pm_bus_probe()
+> - [Low] bus: simple-pm-bus: missing Fixes trailer for commit
+>   98e96cf80045
 > --
 > 
-> commit 8880445e0e3559ece304416ceb136dde00d937a0
-> Author: Yishai Hadas <yishaih@nvidia.com>
+> commit 7ba99d9ea04b1e1a29eebc1e1525489b300fe107
+> Author: Herve Codina <herve.codina@bootlin.com>
 > 
-> net/mlx5: Add mlx5_trigger_health_work_force()
+> bus: simple-pm-bus: Populate child nodes at probe
 > 
-> This commit adds mlx5_trigger_health_work_force() to queue a dedicated
-> health work item that stops the firmware and forces the device into the
-> internal error state even when the health sensors report no fault.
+> This commit updates simple_pm_bus_probe() to populate child devices for
+> transparent bus matches (such as simple-bus, simple-mfd, isa, and
+> arm,amba-bus) during probe, and skips runtime PM calls in
+> simple_pm_bus_depopulate() when runtime PM is not enabled.
 > 
->> diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
->> index aeeb136f5ebc7..e76351860b154 100644
->> --- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
->> +++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
->> @@ -627,18 +627,11 @@ mlx5_fw_fatal_reporter_dump(struct devlink_health_reporter *reporter,
->>   	return err;
->>   }
->>   
->> -static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
->> +static void mlx5_fw_fatal_reporter_err(struct mlx5_core_dev *dev, bool forced)
->>   {
->>   	struct mlx5_fw_reporter_ctx fw_reporter_ctx;
->> -	struct mlx5_core_health *health;
->> -	struct mlx5_core_dev *dev;
->> -	struct devlink *devlink;
->> -	struct mlx5_priv *priv;
->> -
->> -	health = container_of(work, struct mlx5_core_health, fatal_report_work);
->> -	priv = container_of(health, struct mlx5_priv, health);
->> -	dev = container_of(priv, struct mlx5_core_dev, priv);
->> -	devlink = priv_to_devlink(dev);
->> +	struct mlx5_core_health *health = &dev->priv.health;
->> +	struct devlink *devlink = priv_to_devlink(dev);
->>   
->>   	mutex_lock(&dev->intf_state_mutex);
->>   	if (test_bit(MLX5_DROP_HEALTH_WORK, &health->flags)) {
->> @@ -646,8 +639,39 @@ static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
->>   		mutex_unlock(&dev->intf_state_mutex);
->>   		return;
->>   	}
->> +	if (forced) {
->> +		int err;
->> +
->> +		/*
->> +		 * Once the interface is down, the unload already removed the
->> +		 * consumers that need the error flow. Once the cmd interface
->> +		 * is down, the path that brought it down owns the flush and
->> +		 * the recovery.
->> +		 */
->> +		if (mlx5_cmd_is_down(dev) ||
->> +		    !test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state)) {
->> +			mutex_unlock(&dev->intf_state_mutex);
->> +			return;
->> +		}
->> +		/*
->> +		 * The firmware might still be running, so stop it first. Do it
->> +		 * under intf_state_mutex, so the cmd interface is valid.
->> +		 */
->> +		mlx5_stop_health_poll(dev, false);
->> +		err = mlx5_cmd_fast_teardown_hca(dev);
->> +		if (err)
->> +			err = mlx5_cmd_force_teardown_hca(dev);
->> +		if (err)
->> +			mlx5_core_err(dev, "Failed to stop the device before forcing the error state, err %d\n",
->> +				      err);
->> +	}
+> [Severity: Low]
+> In the commit message, this patch fixes the probe behavior for bus-only
+> devices where returning 0 without populating children caused
+> device_links_driver_bound() to create wrong fw_devlinks. Should the commit
+> message include a Fixes tag for 98e96cf80045 ("drivers: bus: simple-pm-bus:
+> Add support for probing simple bus only devices")?
+
+The commit 98e96cf80045 didn't introduce the issue nor change the behavior.
+The problem is there from the beginning. For fw_devlink child devices should
+be populated by at parent (bus) probe(). bus-only devices such as simple-bus
+can populate devices recursively skipping the parent bus probe() step.
+I don't see an obvious commit to point for a Fixes tag and so I don't plan
+to add a Fixes tag on the next iteration.
+
+> 
+> [Severity: High]
+> In drivers/bus/simple-pm-bus.c, simple_pm_bus_probe() at line 104 now calls
+> simple_pm_bus_populate(), which at line 64 calls of_platform_populate() with
+> NULL for the matches table instead of calling of_platform_default_populate().
+> Does this leave grandchild devices unpopulated when a child node has a
+> device-specific compatible string followed by a fallback bus or MFD
+> compatible string (such as compatible = "vendor,syscon", "syscon",
+> "simple-mfd")?
+> 
+> When an outer of_platform_default_populate() creates an ONLY_BUS device
+> after simple_pm_bus_driver is registered, of_platform_device_create_pdata()
+> synchronously runs simple_pm_bus_probe() before the outer
+> of_platform_bus_create() reaches its child loop. Inside
+> simple_pm_bus_populate(), of_platform_populate(np, NULL, lookup, dev)
+> creates the child platform_device and sets OF_POPULATED on the child node.
+> During device_add(), simple_pm_bus_probe() rejects that child with -ENODEV
+> at line 100 because the generic bus compatible is not first, and
+> of_platform_bus_create() returns 0 at drivers/of/platform.c line 371 without
+> recursing into the child's subnodes because matches is NULL. When control
+> returns to the outer of_platform_default_populate() loop,
+> of_platform_device_create_pdata() sees OF_POPULATED already set on the child
+> and returns NULL, so the outer loop also returns 0 without populating the
+> grandchildren. Calling of_platform_default_populate(np, lookup, dev) in
+> simple_pm_bus_populate() would pass the default match table and avoid
+> skipping those grandchildren.
+
+Indeed, will switch to the of_platform_default_populate() call in the next
+iteration.
+
 > 
 > [Severity: Medium]
-> Can a queued force_fatal_report_work run right after an in-progress
-> recovery completes on health->wq and tear down the newly recovered device?
+> In drivers/bus/simple-pm-bus.c, simple_pm_bus_probe() reads lookup from
+> dev_get_platdata(dev) at line 74 and passes it to simple_pm_bus_populate()
+> at line 104. Can this drop the caller's of_dev_auxdata lookup table for
+> devices beneath a simple-bus node?
+> 
+> When a caller such as sysc_probe() in drivers/bus/ti-sysc.c (line 3243)
+> calls of_platform_populate() with a match table that includes simple-bus and
+> a non-NULL auxdata lookup table, of_platform_bus_create() only attaches
+> platform_data to the simple-bus device itself if the auxdata table has an
+> explicit entry matching the simple-bus node. Otherwise dev_get_platdata(dev)
+> on the simple-bus device is NULL, and simple_pm_bus_probe() synchronously
+> populates all child devices of the simple-bus with lookup = NULL (setting
+> OF_POPULATED on each child) before the caller's of_platform_bus_create()
+> loop can recurse with the caller's auxdata table. As a result, child devices
+> under that simple-bus lose their auxdata bus_id and platform_data overrides.
 > 
 
-The existing fatal_report_work behaves the same way. If queued before a 
-devlink reload, it runs on the reloaded device and triggers a needless 
-recovery, or an unload within the grace period.
+Indeed.
 
-In any case, a device that forges a CQE can cause a DoS anyway, which is 
-out of scope for this series.
+To fix the issue I will add a OF_DEV_AUXDATA() entry for simple-bus in the
+existing omap_auxdata_lookup table.
 
-Yishai
+A new patch for that specific modification will be added in the next
+iteration.
+
+Best regards,
+Hervé
