@@ -1,69 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795081998;
-	b=KFVlS2tmFH2AekregFKJ02UnezyS00B9493Yw7V2g4/g4IIHEvLQ281iqQseGXkHbjRO
-	 Ldsexr6flNzcUzWecDaWYMdKCZ5IEkyviBe8bqoLRVrAX6P9Hl47mIpuY/kCSlhLo0v+H
-	 JWTMsHONrwtBYpAjxvdFgzFSJwfwU1hO3g/fF4LL6SXGolRA6nqvxuH8SljYNF7yTLf1E
-	 P1U5Fl4OD3+YhEmFfXLlX98kUmTwwU2pKec1JRKOf382MUjqJwsKY1npQUMmCQUzpOL9i
-	 F2f1RsFUbGgsqmxUQfyo5ryhuj72Z1yfaYovVNb7XUBWBApJ4JklBwQys8ed7/Ib9Lw==
+	t=1795083047;
+	b=AOT4eikkRk3jP697TDcYZAWQz1avENb4caK85Az0aPH1pGZiSP/kOE5wNa99JybeClyJ
+	 47TAH4fu88K0D53uxhsCTCUaRAzBmPMPmXgeYffH8jELsaZN/Mg+a2xI4X+TGoZH8EKHe
+	 ImoDAmQ97nRLIOch8m4d6Qi4L8ebLLRsrg9P6fW9I0FzAGWiq/LXivmYnW20FDZQjT5xm
+	 CQJ23f+Khrb8C7skWkmDtbIcYIvOXDe4pjTJNSbd8LsVwP1PB+SksiZssYvoGltSthH6r
+	 Ot17g56q29LxGairVfBN+e5IP6elF3+rTSLFXrOLbbf0fm90ykCbvnTMdQ38oCMJ7rQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795081998;
-	h=Received:DKIM-Signature:Received:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:User-Agent:MIME-Version:Content-Type:
-	 X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:
-	 X-SA-Exim-Scanned;
-	bh=uw9sRkfoNYdFSz9CTJOiwcLRj7YgovINkuToV5+7kGc=;
-	b=yttuEkZUcLxmjbZOVZzCu39Tn7VLPKpmc29kelCecFfgGPe7NW/0jO8sk0LcZaKEw8ZW
-	 EH4XoTZ08K1vfMnE9iVQCo/6aw1smFdilzZNimvB+2oE0KTuD19gvnwgmqot9dbU/LiPh
-	 yupBD9iqV3hTD4XUPlSGgLH+fZnHfDXEv4FqzIYtBOOoS7QRyD5VahCE6griiBk6FQc6x
-	 izdRwQWNyoXjvPPXQPPXXzqU1qJsa7agLoigMpyeysUq+uJaDA3lsNb0bD/5oFG35lZjm
-	 WFXHMpGhmVYGth91FWiiA6+Ug/vg8pQd9qZCOrnx5ZTMGk6gQIpYv0oaXTsASejffXw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795083047;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=1Bab24GiMlEA+xnbK0D9Px3eBXQ0f26JZ1gkJ7x1+Wc=;
+	b=sVqyxdj6NADGzDmbeUe1qgMZjgA4RBPW4MUUrCt70vElvznBts20spg1s6YQJSeopa+i
+	 1p/B0TASwzrxy0OrCKKAROWIG3MfVaRYLw/raP3Sj4+ViYU+BJS3TOV/tt0GBEHiUu1/e
+	 gd2nPam1YX0SSAbs90qhird4a98Qx16SetyQ7xOhODb+s0oX8DOX1Ne00QXrMz25BAdLY
+	 NhZFGhMmp3ysHVcEcaAEMJIO7ZW3gzgFIr53itPS0Je28ySEN9v6c7VhBnDUvPbHKHsSn
+	 DpSKkvfE4t0Vg2iBCEo2+iGC9+6cTFhcuR3R7v9j704vy2OE18vAtHI3sj/H6ReiZ6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=G1AYgeOv;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k9fom4q+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C342606A324;
-	Thu, 19 Nov 2026 09:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA43606A324;
+	Thu, 19 Nov 2026 10:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=G1AYgeOv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185D91F000C5;
-	Thu, 19 Nov 2026 09:53:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k9fom4q+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBBF1F000C5;
+	Thu, 19 Nov 2026 10:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795081998;
-	bh=uw9sRkfoNYdFSz9CTJOiwcLRj7YgovINkuToV5+7kGc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=G1AYgeOvg+nwbbnhI1meZ1wYPN1z/5PbRqm5ZqSVd7+WeQEkhMeL63tDZWtqLbxE7
-	 FrlYNzl3+53uiAvojpykPofsM/Epg9a5eiwVW/sHe3crHChT2i7oAI4nomF0mRmZ7t
-	 y9xnXhXZFSBIwHj43RXMpdESV9ygE+vXe5rmP7wRCNoNS2QhBaZ0SolafqNpV8rQAW
-	 tMLD+pN0cslCjXntdWgT9L24hM26o3cKCvh5277hPR7xZQaeEkf6rvlIiEnzcjsIT1
-	 LmqES8UvSHE9u9HuhnpUQvohM0kY2Hcf+m4Lym+HeKchvblyq4wgMB1IIqZw9hLh46
-	 eVYMZWLQwuxdA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1xTypQ-00000000NfP-070Z;
-	Thu, 19 Nov 2026 09:53:16 +0000
-Date: Thu, 19 Nov 2026 09:53:15 +0000
-Message-ID: <86y0apywok.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Dan Carpenter <dan@pereq.eu>
-Cc: Oliver Upton <oupton@kernel.org>,
-	kvmarm@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
-In-Reply-To: <av6wypzwAJxIyKOU@stanley.mountain>
-References: <cover.1795006659.git.dan@pereq.eu>
-	<033a2d49e0f48426281b46eb1131ae64012aba18.1795006659.git.dan@pereq.eu>
-	<sashiko-outbox-221074@kernel.org>
-	<86zev6yqzd.wl-maz@kernel.org>
-	<av6wypzwAJxIyKOU@stanley.mountain>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=k20260515; t=1795083046;
+	bh=1Bab24GiMlEA+xnbK0D9Px3eBXQ0f26JZ1gkJ7x1+Wc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=k9fom4q+mWASByt4Hz8E+s2oKPqxDiMmIMZfYLwuWAImnMgTMd26loxYs0CXoNiYp
+	 JWJnxCRbv2JTW/o9BddyNbaXvp/kjOsT/Lh2KOehY2SIJxlSRXiSO+wWFvyo0ew6kr
+	 sXC75jHkPQ+luwRF6LOJizbBcPwYq/s8bhwZSz9QZXBwnGVZxsMCQhXZ0V6sBUfGCJ
+	 M/2qbea2XIW9DEPzCw+TWqx4Ti+vBO5Gg9Ua2AHsv55oGSloP+muUOGE1L+A4FuIsN
+	 5BzGG5C8KTM0ankP2VqnPs/YCMiDXaPfLZSKGl6IYy7cylRZAwkykEGK7dVI8/7IRO
+	 iy0bwtd0D1tKg==
+Date: Thu, 19 Nov 2026 10:10:42 +0000
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Joseph Telaak <joseph@telaak.dev>, linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v2 11/11] leds: rgb: ktd202x: Don't let a blinking LED
+ retime another one
+Message-ID: <20261119101042.GN98456@joneslee-macbookpro.roam.internal>
+References: <20261109-ktd202x-et6326-v2-0-56e97c226658@telaak.dev>
+ <20261109-ktd202x-et6326-v2-11-56e97c226658@telaak.dev>
+ <sashiko-outbox-205493@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,109 +59,186 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: dan@pereq.eu, oupton@kernel.org, kvmarm@lists.linux.dev, sashiko-reviews@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-205493@kernel.org>
 
-On Thu, 19 Nov 2026 08:18:18 +0000,
-Dan Carpenter <dan@pereq.eu> wrote:
+On Mon, 09 Nov 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] leds: rgb: ktd202x: on_timer cleared in
+>   ktd202x_brightness_set() when dimmed
+> - [Medium] leds: rgb: ktd202x: unlocked cdev->brightness race in
+>   ktd202x_blink_*_set()
+> --
+
+Please review, explain or fix the Sashiko review(s).
+
+If this is a set, this request includes the other patches too.
+
+> commit 2bb78bf782d05191c786ef675dcadd7bc9160236
+> Author: Joseph Telaak <joseph@telaak.dev>
 > 
-> On Wed, Nov 18, 2026 at 05:44:06PM +0000, Marc Zyngier wrote:
-> > On Wed, 18 Nov 2026 13:45:34 +0000,
-> > sashiko-bot@kernel.org wrote:
-> > > 
-> > > Thank you for your contribution! Sashiko AI review found 1 potential
-> > > issue to consider:
-> > > - [Medium] KVM: arm64: stale mmio_needed after kvm_inject_nested() in
-> > >   KVM_SET_VCPU_EVENTS
-> > > --
-> > > 
-> > > commit 178d0de7451612b8ddf14a943cb82094efbd77d1
-> > > Author: Dan Carpenter <dan@pereq.eu>
-> > > 
-> > > KVM: arm64: Load the vcpu in KVM_SET_VCPU_EVENTS
-> > > 
-> > > This commit wraps __kvm_arm_vcpu_set_events() in vcpu_load() and vcpu_put()
-> > > so that kvm_inject_nested() operates on a loaded vCPU during
-> > > KVM_SET_VCPU_EVENTS.
-> > > 
-> > > > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> > > > index 84a52e27ed859..a148e80d0aef7 100644
-> > > > --- a/arch/arm64/kvm/arm.c
-> > > > +++ b/arch/arm64/kvm/arm.c
-> > > > @@ -2002,7 +2002,7 @@ static int kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
-> > > >  static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
-> > > >  				   struct kvm_vcpu_events *events)
-> > > >  {
-> > > > -	int i;
-> > > > +	int i, ret;
-> > > >  
-> > > >  	/* check whether the reserved field is zero */
-> > > >  	for (i = 0; i < ARRAY_SIZE(events->reserved); i++)
-> > > > @@ -2014,7 +2014,11 @@ static int kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
-> > > >  		if (events->exception.pad[i])
-> > > >  			return -EINVAL;
-> > > >  
-> > > > -	return __kvm_arm_vcpu_set_events(vcpu, events);
-> > > > +	vcpu_load(vcpu);
-> > > > +	ret = __kvm_arm_vcpu_set_events(vcpu, events);
-> > > > +	vcpu_put(vcpu);
-> > > > +
-> > > > +	return ret;
-> > > >  }
-> > > 
-> > > [Severity: Medium]
-> > > Does vcpu->mmio_needed remain set when KVM_SET_VCPU_EVENTS injects an
-> > > exception from L2 that routes to L1 EL2?
-> > > 
-> > > When an L2 guest exits with KVM_EXIT_MMIO and userspace aborts the access via
-> > > KVM_SET_VCPU_EVENTS (for example with ext_dabt_pending = 1 while HCR_EL2.TEA
-> > > is set), kvm_inject_sea_dabt() -> kvm_inject_nested() commits the EL2
-> > > exception entry directly via __kvm_adjust_pc(), which clears
-> > > PENDING_EXCEPTION.  When __kvm_arm_vcpu_set_events() then calls
-> > > commit_pending_events(), PENDING_EXCEPTION is already clear, so it returns
-> > > early without clearing vcpu->mmio_needed:
-> > > 
-> > > arch/arm64/kvm/guest.c:commit_pending_events() {
-> > > 	if (!vcpu_get_flag(vcpu, PENDING_EXCEPTION))
-> > > 		return;
-> > > 
-> > > 	vcpu->mmio_needed = false;
-> > > 	kvm_call_hyp(__kvm_adjust_pc, vcpu);
-> > > }
-> > > 
-> > > On the next KVM_RUN, kvm_handle_mmio_return() sees vcpu->mmio_needed still
-> > > set, writes the MMIO read value into L1 EL2's destination register and
-> > > advances L1 EL2's exception vector PC by 4 bytes via kvm_incr_pc().
-> > 
-> > I think this is a separate issue, which doesn't intersect with the
-> > current patch.
+> leds: rgb: ktd202x: Don't let a blinking LED retime another one
 > 
-> Yep.
+> This commit tracks which LEDs use the shared PWM1 flash timer so that
+> starting a blink or hardware pattern on another LED with different timings
+> returns -EBUSY instead of retiming the active LEDs.
 > 
-> > The problem is that we have multiple ways to "commit'
-> > the state on exception delivery, and that we miss MMIO handling in the
-> > EL1->EL2 path.
-> > 
-> > Oliver, WDYT?
-> > 
+> > diff --git a/drivers/leds/rgb/leds-ktd202x.c b/drivers/leds/rgb/leds-ktd202x.c
+> > index 0cc2ec3f6a7f6..e2f389d8888c9 100644
+> > --- a/drivers/leds/rgb/leds-ktd202x.c
+> > +++ b/drivers/leds/rgb/leds-ktd202x.c
+> [ ... ]
+> > @@ -212,24 +227,13 @@ static int ktd202x_brightness_set(struct ktd202x_led *led,
+> >  			return ret;
+> >  	}
+> >  
+> > -	ret = regmap_read(led->chip->regmap, KTD202X_REG_CHANNEL_CTRL, &state);
+> > -	if (ret)
+> > -		return ret;
+> > -
+> > -	/*
+> > -	 * In multicolor case, assume blink mode if PWM is set for at least one
+> > -	 * channel because another channel cannot be in state ON at the same time
+> > -	 */
+> > +	/* A LED that is turned off stops blinking and leaves the timer */
+> >  	for (i = 0; i < num_channels; i++) {
+> > -		int channel_state;
+> > -
+> > -		channel = subleds[i].channel;
+> > -		channel_state = (state >> 2 * channel) & KTD202X_CHANNEL_CTRL_MASK(0);
+> > -		if (channel_state == KTD202X_CHANNEL_CTRL_OFF)
+> > -			continue;
+> > -		mode_blink = channel_state == KTD202X_CHANNEL_CTRL_PWM1(0);
+> > -		break;
+> > +		if (subleds[i].brightness)
+> > +			lit = true;
+> >  	}
+> > +	if (!lit)
+> > +		led->on_timer = false;
 > 
-> I have a reproducer for the bug Sashiko found and this patch doesn't
-> work.  Attached.  Claude wanted to just set vcpu->mmio_needed = false;
-> but I told it to call commit_pending_events() instead.
-
-Duh, yes. I had the wrong __adjust_pc()... :-( We need to replace the
-one that triggers the exception delivery, rather than the one that
-performs a previous instruction skip in the original context...
-
-Please send this, and I'll queue it immediately.
-
-Thanks a lot for making it easy to understand the issue!
-
-	M.
+> [Severity: Medium]
+> Can this clear led->on_timer while a multicolor LED's overall brightness is
+> still non-zero?
+> 
+> In __ktd202x_brightness_mc_set(), led_mc_calc_color_components() scales
+> each subled[i].brightness with DIV_ROUND_CLOSEST(value * intensity,
+> max_brightness).  When a blinking or breathing multicolor LED is dimmed to
+> a small non-zero brightness where every channel rounds down to 0, or when
+> multi_intensity is set to 0 0 0, the LED core keeps the trigger active
+> because brightness is not LED_OFF, yet !lit clears led->on_timer.  A later
+> brightness or multi_intensity increase then programs
+> KTD202X_CHANNEL_CTRL_ON instead of KTD202X_CHANNEL_CTRL_PWM1, leaving the
+> LED steadily on and letting another LED overwrite the shared timer.
+> 
+> Conversely, ktd202x_timer_set() sets led->on_timer = true even when all
+> subleds[i].brightness are 0.
+> 
+> [ ... ]
+> 
+> > @@ -424,10 +522,26 @@ static int ktd202x_blink_single_set(struct led_classdev *cdev,
+> >  	if (!*delay_on)
+> >  		return ktd202x_brightness_single_set(cdev, LED_OFF);
+> >  
+> > +	mutex_lock(&led->chip->mutex);
+> > +
+> > +	/*
+> > +	 * An unlit LED blinks at the brightness of a software blink, which may
+> > +	 * be in its off phase, or else at full brightness.
+> > +	 */
+> > +	if (!cdev->brightness) {
+> > +		ret = __ktd202x_brightness_single_set(led, cdev->blink_brightness ?:
+> > +						      cdev->max_brightness);
+> > +		if (ret)
+> > +			goto out;
+> > +	}
+> > +
+> >  	info.brightness = cdev->brightness;
+> >  	info.channel = led->index;
+> >  
+> > -	return ktd202x_blink_set(led, delay_on, delay_off, &info, 1);
+> > +	ret = ktd202x_blink_set(led, delay_on, delay_off, &info, 1);
+> > +out:
+> > +	mutex_unlock(&led->chip->mutex);
+> > +	return ret;
+> >  }
+> >  
+> >  static int ktd202x_blink_mc_set(struct led_classdev *cdev,
+> > @@ -438,12 +552,6 @@ static int ktd202x_blink_mc_set(struct led_classdev *cdev,
+> >  	struct ktd202x_led *led = container_of(mc, struct ktd202x_led, mcdev);
+> >  	int ret;
+> >  
+> > -	if (!cdev->brightness) {
+> > -		ret = ktd202x_brightness_mc_set(cdev, KTD202X_MAX_BRIGHTNESS);
+> > -		if (ret)
+> > -			return ret;
+> > -	}
+> > -
+> >  	/* If no blink specified, default to 1 Hz. */
+> >  	if (!*delay_off && !*delay_on) {
+> >  		*delay_off = 500;
+> > @@ -454,8 +562,24 @@ static int ktd202x_blink_mc_set(struct led_classdev *cdev,
+> >  	if (!*delay_on)
+> >  		return ktd202x_brightness_mc_set(cdev, LED_OFF);
+> >  
+> > -	return ktd202x_blink_set(led, delay_on, delay_off, mc->subled_info,
+> > -				 mc->num_colors);
+> > +	mutex_lock(&led->chip->mutex);
+> > +
+> > +	/*
+> > +	 * An unlit LED blinks at the brightness of a software blink, which may
+> > +	 * be in its off phase, or else at full brightness.
+> > +	 */
+> > +	if (!cdev->brightness) {
+> > +		ret = __ktd202x_brightness_mc_set(led, cdev->blink_brightness ?:
+> > +						  KTD202X_MAX_BRIGHTNESS);
+> > +		if (ret)
+> > +			goto out;
+> > +	}
+> > +
+> > +	ret = ktd202x_blink_set(led, delay_on, delay_off, mc->subled_info,
+> > +				mc->num_colors);
+> > +out:
+> > +	mutex_unlock(&led->chip->mutex);
+> > +	return ret;
+> >  }
+> 
+> [Severity: Medium]
+> Can reading cdev->brightness in ktd202x_blink_single_set() and
+> ktd202x_blink_mc_set() still race with led_set_brightness_nosleep()?
+> 
+> Because this driver uses brightness_set_blocking,
+> led_set_brightness_nosleep() updates cdev->brightness without holding
+> chip->mutex and defers the hardware update to set_brightness_work:
+> 
+> CPU0 (<softirq> / sysfs)          CPU1
+> led_set_brightness_nosleep()
+>   cdev->brightness = val
+>   queue_work(set_brightness_work)
+>                                   ktd202x_blink_mc_set()
+>                                     mutex_lock(&led->chip->mutex)
+>                                     if (!cdev->brightness) -> false
+>                                     ktd202x_blink_set()
+>                                       ktd202x_timer_set()  <-- chip disabled
+> 
+> When the LED was off in hardware (such as after the off phase of software
+> blinking), skipping __ktd202x_brightness_mc_set() or
+> __ktd202x_brightness_single_set() leaves the chip disabled when no other
+> LED is lit and leaves mc->subled_info[i].brightness at 0, so
+> ktd202x_timer_set() writes registers to a powered-down chip and leaves the
+> channels off while setting led->on_timer = true.
+> 
+> In ktd202x_blink_single_set(), cdev->brightness is also read a second time
+> for info.brightness, so a concurrent led_set_brightness_nosleep(cdev,
+> LED_OFF) can set cdev->brightness = 0 in between and pass info.brightness =
+> 0 to ktd202x_blink_set().
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261109-ktd202x-et6326-v2-0-56e97c226658@telaak.dev?part=11
 
 -- 
-Without deviation from the norm, progress is not possible.
+Lee Jones
