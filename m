@@ -1,120 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795076728;
-	b=1wuJ5Da3iGclxb6hCv2kuHlV9xMm/GSrIBdLTxZQAlGQJXHuYU2isCuhAVjIIHCNJxrT
-	 LVB6ByMhbTFDGDVtE8PsKWSgXbrGd92j3cLhRarl0l+W+fwAlCvp5f1z2yRje7Fbvlr1F
-	 rYGlAm03sQX5fqjOd8taZplFqPdXN11t6FozOwvWihLrCXGzSQyt0geXPUg6469/eNaWH
-	 nzqGiWj9datXLsF615zQ0xzYN+D4oWdjEoWWg5XTUMRjBsVj3TbOdjln05m+POQiJfhpb
-	 s6W5+yRj7rAlGaDGTexrztE5B0alqN91G9wdEsK/77Oj0D1LtOQgs8pUl8CT8Gel2nw==
+	t=1795079285;
+	b=t37TyrIBGtOewVqHnJQoljzk2QQeauCiqS/2OHFp97vpL2GALS2z/PkiS6Cx3iri+Mq8
+	 +kwSXkjXRpKgt2hu6qQbK8tlwjhYRtmYr1eEPaL2wUK6BbSGWZsy4XqSqj+uujEMBQa4I
+	 CeEO/W3S/FNHrznYSWJj9Gvq7Ijqp1wsMqKYFsMByo1LhoZFbWNOC7Whi4gOh4Jj03BG+
+	 /mVCljGjC3dFzH33ZwEUqkgtLRiFD+b916c+yPzop7I9kRtPi6YXxAM3lXw3JMHyQRZwo
+	 ywiDkF0oZveILBkdAohzG8zUHaObo1oXwAjpajVTolIX3m5RJfZk46I20zOpGT7pRFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795076728;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795079285;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-GUID:X-Proofpoint-Spam-Info:X-Authority-Analysis:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=;
-	b=Y7pji4iARGKJtgKRBuzfgSXmz5ttNM2PQHfCbb2IEPI2384/7GrfM2Uo33G12eV4TBbK
-	 s16Uh0t6aVvqS5p10+SRFI5RTJaJzJKbjXnZpFfbe/N9mUmtgQ6I4Ft+0qAWbmyuua6ms
-	 GgvzeoDNXEc17D/aqiyVK3Z4q+YGgRENb2rUjqT+WDun/NiHoN7dExwim/t6ITZyl0NKH
-	 iUyXkjrt7v3L/+kKwYlI7BT5q7OEsjjyX/4APM/2ee2NdiTvlV9LlJcVF8EzS7ZaWHCdj
-	 rWr+4hNcCumcKcIuT7IqPNQ6cHHUgbN1++8zarXYQOi4FWb5h/hIspC+8WdO+JN1PNw==
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=O9R7egJCPlZLZP73GLSxT/6A7uKiquUS5zEC8ZPt3xA=;
+	b=TTPR4AUtPweSQH+rAechUUpLKVSiM72ur8OR3gwih9DRBoxHubmkN7akA7jN0ZnPzsUG
+	 HvQPwyZfmmORdQqF2zngjpKoKE9UyOjSrpVTjVXCuDt0MgFula3aX3yTuGElhhIGBu2lj
+	 noA+lv7whQNNOEW/pdyVe484GekEijWI772H4sC6UT2ZrZS04pq7KhDJii+LOwi3xEbEv
+	 koGJ6JCDTPsUe2c3ssMPMgpm7Lflntt8/V0/Y+lGC37IlsA9o3PfffAUIhICm1WYooXHK
+	 C1RCKr/xbB1A5LS8cocucNUyow+6E/GQcn44NqSrKcZmdZC370rRWXyjCiPNVeFFxHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Om8C4zxm;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=O2VXGhdu;
-	arc=none smtp.remote-ip=205.220.180.131
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oWdcA0f0;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE8A606A334
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:25:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ADE8A606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C29606A320;
+	Thu, 19 Nov 2026 09:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Om8C4zxm;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=O2VXGhdu
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AJ6vPbr053035
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:25:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=; b=Om8C4zxm4DUUiKh6
-	l9XE9R71z/YM58bUd3iSfN/Yd97bBeT6T7F/sqedWJP7xY+XX9TsiQA8vp27Z73G
-	18/LDP7efi7tkIujuKG1LdTzlVKrT5bSookVsex29cc0cSZHRwjIgUhJePEI3rWD
-	wy1AJYu+tb2RwsPLGKj4yGSxJa0bCtvlr2EAPcEQ0X4mVzwLuL5uBF3gAYATrlf5
-	o7w6DkaVQkNA9Wz6ZXz2t1l7p1bnJGNkapAE/dH33DMqmkzVkHIhJuL2LdUIAFr5
-	pg36xPYHxvqy9QvXRb+HVTv8qJz+UtJrb84HVwgxxN5qoLIIB6laM25P31GoReVz
-	iHWAsQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1g3bbgjr-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:25:26 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-946038e22f5so37510585a.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 00:25:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1795076726; x=1795681526; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=;
-        b=O2VXGhduOGAwOlRiHnL88XwbV0RQeUoyfE+nj/NeAoGlTn3Koz4IrosKo2rRv/BQCU
-         xkQ5QkLyZzgoFniUDGXYk59hniGdO2yA2IphyhQk8w3scoC3MOLue4l8k23Fzcuytks8
-         j3bAdwzufu9gJ2F2Vczy/CDVvKmiu7cvqjDNuKynsodByr98925hhj+OiCaV6lvONDp2
-         dNCYPhxRiaqagU0nP76CoDQZXOu1n7npZBBtzyXlq7OTgxuL0LP3qswnIceZ50Butsyu
-         v3tHbKq1GBeyybTIQp3rADXNH24ntKiLfAH1mtZhic0NhOzx546DIpobSq9e3FELRITr
-         WgrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795076726; x=1795681526;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=;
-        b=lE0JqyXI3/6rrzr7dSivzmriO8dgtahpSpf8/21r7W8CfXMUDV8gsTV6XUug5GkNS3
-         +eU2Rvz2XLElWpy2MstRxyHtcOOOKG9Lc2UDDpRhRFrAt7R5rfl8KI6RZ9ZRHdHecImH
-         OGhw8jivKr7VCWAcQ6nO3eg3xATUYCCe27HWkPwBXYsQdH/7zKb25SLq2fl3QEZ25C7c
-         BlLqd0NunUoB2R/5U0YHU9n1zP3s0RzwJRo2Vce4hrV86KyKCCzp5KpW6AoUwC7BjHS9
-         8n9ERIpp+dhkWYcLTepcicTuUpRDgqhtdh+scNpkktXRpdxgT8EHLZqBWskfGgFMQnt2
-         tk1w==
-X-Gm-Message-State: APuU4Z9Prj4VuA7YGjUIMR4P4u+kK4C8BhaCB2HxSDQDZZasAzPA8pCh
-	36IVa/FViPL+aNm0wjcKOhIDwT/HePntTbXrEWl7th/PSwCECpeEz+h5r5y2KbbAfypHGxFaRmY
-	JhtCa8H2CAyFtJJ0bhiqZNmvU+mJ0TUUe2zk1n6asJkXibJcsNHBwHXIY2FfWr65P8swCV2qK6A
-	Hk2AeYEw==
-X-Gm-Gg: AYBFou3281j+9RywdjAvmdgRyxJ65aYFX0Lytfl7YmFMeU2uNyQvxN5DR7JCiZ3+zLZ
-	4YRwI+yLGw8j1Xbk77zLUMJ4XIO/DpTStJ3vVDJUM8oN+MU4A4hlAHyApb9hLNY95nCNurFVRRk
-	a8PYC1t6vd2OUfcqYiQoqxTZStaJ+1FOhGy9IpZWix/adeRt/HovBPRQIhrA5OXonEfmyoD83zl
-	5/JEisYi26kQbbwbX3iRFRq+btXCKCavGjfK7yjykz/way2JQr8luuTbzjzDoch5wjm/XVZSb00
-	38S/HQwBYPtcaKHlE1W0cIv0GWhi9OTT8DXKwHKxt/dk0ncWt9SEGR7l1feb+oggWh/Am7qXdhL
-	f7DOBr8cxlstUVj0EaP3A4JWE4KujIQCuEkMZSmniHpSRI0EDGjZWOn0xLV/GN4yggGF32dWNW3
-	yIGqydxlMw9/8JrPSRZ4FiJ8RNNH6OOHfk5Vn2tn/JCN4m/73Fmy7Td8uT+LuHsg==
-X-Received: by 2002:a05:620a:270d:b0:93f:5f83:2ca3 with SMTP id af79cd13be357-949997abec2mr858254485a.54.1795076725719;
-        Thu, 19 Nov 2026 00:25:25 -0800 (PST)
-X-Received: by 2002:a05:620a:270d:b0:93f:5f83:2ca3 with SMTP id af79cd13be357-949997abec2mr858253085a.54.1795076725213;
-        Thu, 19 Nov 2026 00:25:25 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c1aa75f046sm1234070e87.28.2026.11.19.00.25.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 00:25:23 -0800 (PST)
-Date: Thu, 19 Nov 2026 10:25:22 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
-        media-ci@linuxtv.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 2/2] drm/msm: don't tear down shared VM mappings on
- handle close
-Message-ID: <pk5k4tcrn6p2lrghqh2j3uprwaxuy3ugaewuupqg4ecky5xvse@3bwy5d5rozvb>
-References: <20260822-msm-fix-export-v1-0-917b3cbedd43@oss.qualcomm.com>
- <20260822-msm-fix-export-v1-2-917b3cbedd43@oss.qualcomm.com>
- <20260822090757.624751F000E9@smtp.kernel.org>
- <CACSVV018ggaw_V+7GxGY9ZQrfg8UEfhHfHWiS9NoVe6LJkw2Eg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oWdcA0f0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCD11F000C4;
+	Thu, 19 Nov 2026 09:08:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795079285;
+	bh=O9R7egJCPlZLZP73GLSxT/6A7uKiquUS5zEC8ZPt3xA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=oWdcA0f0pLO1l15XvAygqm6EZn0GKHryD664ghnP18cFakbX7k6edMCrDZHumecb5
+	 BRx2MKrpHujVK6qvk3CGcGXyr0RojYMzamIRdGhyBPMcN80Rt+Qnnff9p2ybqKOeDo
+	 g4R1r7VuYUfPm6wW2r7bYH7WI/PBNBoswE9R0tGak4bRsES1YDkNQEGcsTzrKxQJ2b
+	 soB/v3b40AplwbcUHqZoW4dueLsUO+kTu8g5wu2TBB/1pd1eK0UWRtH0Kwt+lxH3Ut
+	 p3trHGiWhlEwMjSVSodmq6g4m9m7DwX6zi42ko2XGZJkYl7lEL8yiWCDMFrpboQxhw
+	 IT88AORPBJejA==
+Date: Thu, 19 Nov 2026 09:08:01 +0000
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Wang Haoran <wanghr2026@mail.zgclab.edu.cn>, mfd@lists.linux.dev
+Subject: Re: [PATCH] mfd: stmpe: Disable regulators on probe failure
+Message-ID: <20261119090801.GL98456@joneslee-macbookpro.roam.internal>
+References: <1795076100902-8-fa247961@mail.zgclab.edu.cn>
+ <sashiko-outbox-222667@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -124,86 +57,133 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACSVV018ggaw_V+7GxGY9ZQrfg8UEfhHfHWiS9NoVe6LJkw2Eg@mail.gmail.com>
-X-Proofpoint-ORIG-GUID: 4X-khUHIDjiLPiO-c_TPsGMSv9qlXHfm
-X-Proofpoint-GUID: 4X-khUHIDjiLPiO-c_TPsGMSv9qlXHfm
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDAzMyBTYWx0ZWRfX3lFaDQN8z0YS
- qqDkAIHh7syrzzvWLGYjD+O6wMnZ2sRbjMm84V+5fAHiXidCjgtXJBSLdWwr9JqTBFDSXfjGxoG
- FC2IwdSPI3EpGyF0gAR72oMRUW8Mm8g=
-X-Authority-Analysis: v=2.4 cv=dZQVTnXe c=1 sm=1 tr=0 ts=6afeb276 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=bC-a23v3AAAA:8
- a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=1fJnDc9Itneyp4R58M0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=FO4_E8m0qiDe52t0p3_H:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDAzMyBTYWx0ZWRfXwiycOgOc7DMd
- zGIt7KVlSSwM0rgbEzZ7GdKyMJe/k4h6YyJy3OCzh6bgCugs9dyOkN1q5iDvS0OmXgZRRJBrDIq
- lLCbxLYvtvC3wMnZ9hQZVyFRtXrT53MRwgGoRlYPasSQ5UMSYgE5PY70npDxwsYlZlmRaeeDIQK
- /cbbEcUq9rr6jvrE1H23HC8AMF7eVV5ShXilpYNvM2BjSTHVuU+klPrX2dROzvltqA3Xwjp45Jv
- 3hgIsrGC8iKFhzB1s7AVXMumJVDCTZeQ52jLYsxyj0kgbdi//lDKTki72MHtjG82rdVa+mRrSPe
- TOq8pmKepVeASJYPUxLuCWcjKSgBE4irPEl2ioCw1AZStDrNBf+vK5Wbjn9pR6Dsqqh4grGWOSC
- Ai9lMAEGLfvr57WllxjCUIquthHpoDNKiZ1xl2tKFfc8sGdEDksN5MymSkwQxKX29IFYXNV/ASk
- 40mfPoqMW3PhVxWc2Kw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-19_02,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- impostorscore=0 bulkscore=0 clxscore=1011 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190033
+In-Reply-To: <sashiko-outbox-222667@kernel.org>
 
-On Mon, Oct 05, 2026 at 08:00:07AM -0700, Rob Clark wrote:
-> On Sat, Aug 22, 2026 at 2:08â€¯AM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] Sleeping in atomic context
-> > - [High] Deferred teardown TOCTOU race via flink name re-opening causing IOVA Use-After-Free
-> > --
-> >
-> >
-> > drivers/gpu/drm/msm/msm_gem.c:put_iova_spaces_locked() {
-> >     ...
-> >     drm_gpuvm_bo_for_each_va_safe (vma, vmatmp, vm_bo) {
-> >         msm_gem_vma_unmap(vma, reason);
-> >         if (close)
-> >             msm_gem_vma_close(vma);
-> >     }
-> > }
-> >
-> > Will this destroy Thread B's mapping while its job is running, freeing the
-> > IOVA for immediate reuse?
-> >
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but does adding these blocking
-> > calls cause a scheduling while atomic panic when tearing down a writeback
-> > connector?
-> >
-> > The drm core function drm_writeback_connector_cleanup() holds a spinlock with
-> > IRQs disabled when tearing down pending jobs:
-> >
-> > drivers/gpu/drm/drm_writeback.c:drm_writeback_connector_cleanup() {
-> >     spin_lock_irqsave(&wb_connector->job_lock, flags);
-> >     list_for_each_entry_safe(pos, n, &wb_connector->job_queue, list_entry) {
-> >         list_del(&pos->list_entry);
-> >         drm_writeback_cleanup_job(pos);
-> >     }
-> > }
+On Thu, 19 Nov 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] mfd: stmpe: double regulator_disable() on unbind with
+>   stmpe_remove()
+> - [Medium] mfd: stmpe: unbalanced regulator_disable() when
+>   regulator_enable() fails
+> - [Low] mfd: stmpe: misplaced comment above stmpe_disable_regulators()
+> It also noticed 1 related pre-existing issue this patch does not
+> introduce:
+> - [Critical] mfd: stmpe: use-after-free and virq leak in stmpe_remove()
+>   [1]
+> --
+
+Please review, explain or fix the Sashiko review(s).
+
+If this is a set, this request includes the other patches too.
+
+> commit bf0f4e286fa2ad07c0c3a3f5f83cd68ff2fe5396
+> Author: Wang Haoran <wanghr2026@mail.zgclab.edu.cn>
 > 
-> Hmm, someone should look at this.. maybe we could move to an on-stack
-> list under a lock, and then do cleanup outside of the lock?
-
-FWIW, the fix is implemented at [1]. Would it be reasonable to pick it
-together with this series?
-
-[1] https://patch.msgid.link/20261111-wb-drop-encoder-v8-0-62948ed87d13@oss.qualcomm.com
-
+> mfd: stmpe: Disable regulators on probe failure
+> 
+> This commit registers a devm action in stmpe_probe() to disable the vcc and
+> vio regulators when probing fails or the device is unbound.
+> 
+> > diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
+> > index 879124de912d8..f0924556d5c2f 100644
+> > --- a/drivers/mfd/stmpe.c
+> > +++ b/drivers/mfd/stmpe.c
+> > @@ -1363,6 +1363,16 @@ static void stmpe_of_probe(struct stmpe_platform_data *pdata,
+> >  }
+> >  
+> >  /* Called from client specific probe routines */
+> > +static void stmpe_disable_regulators(void *data)
+> 
+> [Severity: Low]
+> This isn't a bug, but inserting stmpe_disable_regulators() here separates the
+> "Called from client specific probe routines" comment from stmpe_probe().
+> 
+> > +{
+> > +	struct stmpe *stmpe = data;
+> > +
+> > +	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
+> > +		regulator_disable(stmpe->vio);
+> > +	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
+> > +		regulator_disable(stmpe->vcc);
+> > +}
+> 
+> [Severity: Medium]
+> Can this disable stmpe->vio and stmpe->vcc a second time on unbind?
+> 
+> stmpe_remove() still runs before devres release and disables both supplies:
+> 
+> drivers/mfd/stmpe.c:stmpe_remove() {
+> 	...
+> 	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
+> 		regulator_disable(stmpe->vio);
+> 	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
+> 		regulator_disable(stmpe->vcc);
+> }
+> 
+> regulator_is_enabled() queries the underlying regulator_dev state rather than
+> this consumer handle's enable_count.  If either rail stays on after
+> stmpe_remove() (for example, an always-on regulator, a shared rail, or a fixed
+> regulator without an enable GPIO), stmpe_disable_regulators() calls
+> regulator_disable() again with enable_count == 0 and triggers the unbalanced
+> disable WARN in _regulator_disable().
+> 
+> >  
+> >  int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
+> >  {
+> >  	struct stmpe_platform_data *pdata;
+> > @@ -1417,6 +1427,11 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
+> >  		if (ret)
+> >  			dev_warn(ci->dev, "failed to enable VIO supply\n");
+> >  	}
+> > +
+> > +	ret = devm_add_action_or_reset(ci->dev, stmpe_disable_regulators, stmpe);
+> > +	if (ret)
+> > +		return ret;
+> 
+> [Severity: Medium]
+> Can stmpe_disable_regulators() also call regulator_disable() on a supply whose
+> regulator_enable() failed?
+> 
+> When regulator_enable() fails for stmpe->vcc or stmpe->vio in stmpe_probe(),
+> it only logs dev_warn() and leaves a valid regulator pointer with
+> enable_count == 0.  If regulator_is_enabled() returns non-zero during error
+> unwind or unbind (for example, when another consumer keeps the rail enabled or
+> ops->is_enabled() returns a negative error code), stmpe_disable_regulators()
+> calls regulator_disable() on the unenabled handle and triggers a WARN in
+> _regulator_disable().
+> 
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but stmpe_remove() [1]
+> removes stmpe->domain and disables the regulators while stmpe->irq is still
+> active, and leaks the child virtual IRQs mapped on stmpe->domain.
+> 
+> stmpe_probe() requests stmpe->irq via devm_request_threaded_irq(), so
+> stmpe_irq() remains enabled until devres release runs after stmpe_remove()
+> returns:
+> 
+> CPU0                              CPU1
+> stmpe_remove()
+>   mfd_remove_devices(stmpe->dev)
+>   irq_domain_remove(stmpe->domain)
+>                                   stmpe_irq()
+>                                     irq_find_mapping(stmpe->domain, ...)
+>                                       <-- use-after-free
+> 
+> In addition, mfd_add_device() creates virtual IRQ mappings on stmpe->domain via
+> irq_create_mapping(), but neither mfd_remove_devices() nor stmpe_remove()
+> calls irq_dispose_mapping() before irq_domain_remove().  That leaks the
+> allocated irq_desc entries in sparse_irqs with dangling irq_data->domain and
+> irq_data->chip_data pointers to the freed irq_domain and struct stmpe.
+> 
+> [1] https://sashiko.dev/#/bug/linux-aaf90163-a755-407e-aec5-73a7ef05da1e
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/1795076100902-8-fa247961@mail.zgclab.edu.cn?part=1
 
 -- 
-With best wishes
-Dmitry
+Lee Jones
