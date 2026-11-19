@@ -1,72 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055350;
-	b=obhZP+fywkECbnJHf+3GH9C/d7ZMuq7a8bz/VZlkYwHO3tpQsTkxmUkUPh3Q78EGiGZ0
-	 689TbXVg0ntArSFSufeBX2Kmm3+zmA69fQZp6D4iUcy/fK8D2yGFplAWMyIUyTR6JM6mU
-	 F2QzZ//CTrnxJBWKmMbNC3k90hwxNSq4WidrO/8WDpi3/JYw0VhcmJo0STttnfcM3QBgJ
-	 PZt+ZAjN1Su4LLezDTW6YrQIfdMA/o+fPu7MAojrLMdb+vS8u4S104hJvhwChaWeVGGRP
-	 FhWKzpcvYSqpL00966Ym/QfXEub0YOJ8rS/yJXzy8taTZTe4VZJT8MSOcuRIZgRRPhw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055350;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=3+ZyLfB9DIP574e87+sGx0gXKXhJ54eTZPOLWu3xo5c=;
-	b=rQxxUMOxWEFiG20JwoV9o5ksjMYCKlkskCL5eg54XG6bfy+dDUfDiCItqmfuBqHW2wBz
-	 rSTJF/ry8e45N48vUKZxlXHH49DXaPbJGDGMGd9j6JmnAbxjBkXoGhE43BRX64RA+DPdZ
-	 t2QvMWj683A01gBkljM6dxdTJ32bDI7QS5JN4PGNYWQWsoXonxCPsdOx3jQf61Zxup4yn
-	 dMWeTPLhKya96dAG/M7Ry8aWWzuD5jnMZfBnjKsAj4+8rnCswbp7afxm0+Nfk5QqPuR+K
-	 jFQC45L7/bK6wsAZvM1cbbMQlATpmbuXEjF2eX98DTM9pVM597wZZYMv2bO82pt7J0w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=roeck-us.net;
-	spf=fail smtp.mailfrom=roeck-us.net;
-	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=v7ydsBi6;
-	arc=none smtp.remote-ip=44.202.169.35
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795055669;
+	b=ShogY7sPJQZ3KRCbhszFW7+psP2GEbHe4ICWKrSVR3vm2fwRcstUxYR7jWptlENcntSJ
+	 2S3RcYCIJgWHUid5PE4uUKCPA79IxW0r1LbHEOMQkhqjK9QLJWR4RngSc7h6bbuSAY1jJ
+	 l6KmW6rUnTXvfVg22zJn0Eez00EW7+GSCGpNgURzmNkLHFyIyMGvHpGSYyejX4iM+z+3r
+	 zWa4mmdYFgObLIN6xAX+bes6KNt+RI+b7Edgw+MqzLnoeTM9UOKf3JRxnPmXuWrTA3tds
+	 bjF8EeiLl0B4XbKkuB8lGD0/Ai59BKGc3HBAZKJn0tokkABro76JlHJX4nhtGinNGkw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055669;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=uM0JN8VUfPH6oC5vWX2xf2IB4+IT358j1Ch/z79GA5E=;
+	b=XH/qoIXQDnA7Lb8Js7q/J4qsHlOQRY3R/3MALRBIybi1OKp8ef9B0kW8m1uPXPmCtGLt
+	 CDoWgu3tFdKIHufcsotts3tdx/iNbLW+R/D70o1SWMxyDGMp/I923SiM3/ZxxumEq83V2
+	 eaXMPMqU9yPBce+oKnAEgEy+Adu/OwJeVLgW7yg9oEKv6piXXOIpxaivjyurKO1SXYh0t
+	 1oZqDb5y3bKruylInX8qV8hYDoeWOvgEvciPEWTGdDnbUDSBuFyuSCR/gE6RqMB5GbfUv
+	 uPuIAbT4v9xFzb2abAEXmCXUFjzeidBoFCYQEpwORI4LqBxb2ctHYBx8j9lt6VBo1pQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="VypQyj/B";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.49
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12425606A33B
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 02:29:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12425606A33B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BFF606A32F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 02:34:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9BFF606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=v7ydsBi6
-Received: from eig-obgw-5005b.ext.cloudfilter.net ([10.0.29.189])
-	by cmsmtp with ESMTPS
-	id TqhtxbaKz4vCDTrtcxd9SY; Thu, 19 Nov 2026 02:29:08 +0000
-Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
-	by cmsmtp with ESMTPS
-	id Trtbx7JFhYskhTrtbxSG9k; Thu, 19 Nov 2026 02:29:08 +0000
-X-Authority-Analysis: v=2.4 cv=CKMqXQrD c=1 sm=1 tr=0 ts=6afe5ef4
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
- a=1XWaLZrsAAAA:8 a=ekWx80A8-VE8Rzb6bgoA:9 a=QEXdDO2ut3YA:10
- a=KPbNTLLc3YvdawN95zVk:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=3+ZyLfB9DIP574e87+sGx0gXKXhJ54eTZPOLWu3xo5c=; b=v7ydsBi6HvlT
-	K3PAgeqj2AneQAYzKwAXtYfM5ro2jJzaywLJI56qzLhmX5EUP27Ar3SZUcFhYymZSydVMQebLi8oY
-	83qp6EoWlgRFX05K/LiS/DwdXz1FtcXie7LxVBYLio07dOPjosU1Z/1/yF4KjEsIb4qPZGoii199f
-	QVCgwTEZPQkTsWCupIaIW4ULLrYlfF1VcrGXjHPUSh//5wfQNnQ+KdGlZUC1OwgvdR7FligM0iBm7
-	5cwnZ2dXF6IzOE0LaE0st7l4l4URNDeleQZboHuAqkojEbnwAlexsR2OvN2PSqdWZltaQQKrDtl96
-	YI3n/p7Z5d57ImVStsKAqQ==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:42334)
-	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.100.1)
-	(envelope-from <linux@roeck-us.net>)
-	id 1xTrtb-00000001D5K-1H6p;
-	Thu, 19 Nov 2026 07:59:07 +0530
-Message-ID: <39f4b33b-cd74-493c-95b6-d1bd94cb769c@roeck-us.net>
-Date: Wed, 18 Nov 2026 18:29:06 -0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VypQyj/B
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c50a4a2132cso233098166b.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 18:34:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795055667; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LfFr5y+mBPbP02Z1Mc/EJbyUT9ILmbykDKEwXTsweHJSXF+NHwCujBObzszL3ChGnZ
+         3AcmC71Mk+6RDXQcs81EYyXd2QPPKsL1iuNMM21Dk8YN1GIKhm00Fc483s3HiK0rcSXu
+         8Pdj6Y70aD34nRa8yQhy5KMr0YT+0fZQC2fY9l/07urCFuNGT/J/jJvAJ23MP9/VhFOj
+         YZ6qdiSGhvUa/4UJ478pNCjAEX/WzHu/rAVzSPmqYl1QkxEW7LrtaTVnofgz+ItOBaf/
+         ERGK5rAdJCIEY0PcOc6XzUXJGoMQUd1acggeISX/jkZAV76xO2iTJF/kpKGe8hzffqRs
+         oDMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=uM0JN8VUfPH6oC5vWX2xf2IB4+IT358j1Ch/z79GA5E=;
+        fh=SuGro3LuLsk6byufPAfAAQQSIx1YKDKO0TNpiyde+AE=;
+        b=gg50+CfSdv9JnQog0bUwivUkQ2LPb1r8qf9KgXhGlPhM6Ox5/VPzFz8EUn6VDi8uxx
+         Er1MLLyQRap3B0zfYgi3/6730IllQAegf7NnnaEWg7KrapVSdihyciBowDOkjMKre1Po
+         I85TRuyxmNls962XiyYpvbMMl2787B96PkzkCnjE81WrIrq63wjehrGA72ZPDssVVSr/
+         EFzD9j7CdcdnaSA1xF40tgojPFKTAG0E+QI6oQtL16BhU2dAlv/KzvkAp579KFdAK1QI
+         yxkTWw7rp8yfmNQrzK6RWPMnleN+nO361wp0s+VykO98SbPf7nWLzCsEl4tDzFrTLPmp
+         d5uw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795055667; x=1795660467; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=uM0JN8VUfPH6oC5vWX2xf2IB4+IT358j1Ch/z79GA5E=;
+        b=VypQyj/BSujW868wRTkeH2QG0p5PTymOQJdYsSvzP8ZsCO1BF3Eit1iLPO7pCnwYPb
+         HdZGPBf+r+qC4nIh1YDjAm8kDrhYP4nCPrLs3DUCndUDyABCHfWFFxzFvoCQSLiqh+gk
+         8CBFUXAcjkyKMQ2aZ5MTyZh0t5PCMsKX04piKziH0mJSWpPMtApY12l9iz2VGPUHx3NP
+         nl1TP8IMUN+zLSIp0sb2uQ2QWtKjmoq3Q1lybXCFx0dJemPF5cNulFQ+05cyWxInlsmE
+         u8Wivn5ppMSxccb2evKVq27BolV3A9uWN03MCHKg9hDDYXNpmmm+KYykykztvi4jeOcq
+         odwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795055667; x=1795660467;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uM0JN8VUfPH6oC5vWX2xf2IB4+IT358j1Ch/z79GA5E=;
+        b=W7RxDQ/r+HbdcCG2M+d5nHk8fQg44MXfSRdkz1jp6EIokv9s+K4jxs4Q+JIITusOU7
+         NnP7s89SgGmUv4n8t7SfjUdAH1SnbbErJ7CRHOeHOGxVgR5bbxBcbkbiT30zAdktZ+XV
+         jD9qTtFO3Wnxtcefo2OI1uSZYgHWc+6tIHQhIRce1R3OxaSy3KHXE3Jy+cVgIUGZvlsm
+         WZKJ7ZtaBNELmXjTTytv8OiJIQ5d7MCVclVeAM8oqaYO+0ZbahjGvNEhhXdDIuHFCeNB
+         A1jrv4XawxyuiQro2zCY+rZaVHJhtOkIoH/K8n0ghSGNW2U0XNV89+KwapfYEGv0lp5O
+         VfRA==
+X-Gm-Message-State: APuU4Z8hi/Dw8eNS8L/8bkA5DUfu2keB0/KTTtjuDN+lUn0Hz5MKZwPX
+	SY7rSsKE6fw9XUdJTq5DjR8VRU44iv8WIV4VGLTGLdpQcEGaFlgovs11zrdP+GkSaYJWBjZhvYV
+	iBm5QkemcnLgK7UgnvHxL1G+LcECI9rsMSqaR2L+BXQ==
+X-Gm-Gg: AYBFou27IBwsEeGjKg9M6fx3gL06ee7a5dKHyC2U/9ggR/azjwXAtWfVc4HJ3zvS8hj
+	RYZOrvXyguICbpBIreAaEZ87f4A7phL1RUMxP46Z8SEoMhkVD4lua4Idu4FK5lk0ux3YpeWi/pJ
+	IwngJyESeBYHZ1MIUrG+l/zZhnTFeDdeOmQTSmUtybLlNpx2zQaI7rEQsQP5EuW2W9AOGRB7yrY
+	D2nshQzluWXPFpgQDZqKb5mhChIRZ5s38+V0ehphnAiX0CdrIkB5zku5cWvMCwq5ztWgtx2Nio4
+	FgGAj+CswQXa+0GdBaFjtSlbHnAQGMp/eQ3GyRv+vZx1oAQLvHH6YCr/iyMwcs0Rd91y3gAiHkY
+	MU3Txw0Gk6a5soXVZfwHp8BOZTXmn6rGF/oP4UYezeu0cvAh3McdRaWdksUUPNl3aeDKBJg==
+X-Received: by 2002:a17:906:8358:b0:c51:282b:5489 with SMTP id
+ a640c23a62f3a-c51282b56e9mr57464466b.3.1795055667022; Wed, 18 Nov 2026
+ 18:34:27 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,224 +103,94 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hwmon: (pmbus) Clear only CML invalid command fault
- during probe
-To: sashiko-reviews@lists.linux.dev, Arthur Korn <akorn@google.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20261119013208.4089480-1-akorn@google.com>
- <sashiko-outbox-222316@kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
- RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
- nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
- 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
- gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
- IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
- kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
- VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
- jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
- BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
- ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
- oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
- VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
- 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
- onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
- DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
- rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
- WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
- qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
- 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
- qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
- 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
- pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
- J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
- pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
- 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
- ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
- I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
- nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
- HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
- JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
- H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
- njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
- dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
- j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
- scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
- zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
- RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
- F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
- FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <sashiko-outbox-222316@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1xTrtb-00000001D5K-1H6p
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:42334
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 3
-X-Org: HG=direseller_whb_net_legacy;ORG=directi;
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfPpR+Gs9bU95wEPhFHQ4aUAxGGxyY5nORSExcLPSeOwnmyNMa9PxIjBJ6f+Wof4ahsECbP70vF2Q2rY/neLQp5BJ6o8KB2X19ehwbAIrtVI/K3pUzn9C
- 3j3kmePWH9AwCsCeIJtM5FAr7pkAmu7ZdqFy2eCcKLsqvlVhxtWLyOxPKSOLUj0KzufwzdLDCCWB3Y8UodEnIplZCyA6tZjG1OQDbBkJx0bkBqEmzRLVxunq
+References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
+ <20261119-mglru-fg-v5-15-9eee2fe97a2d@tencent.com> <sashiko-outbox-221996@kernel.org>
+In-Reply-To: <sashiko-outbox-221996@kernel.org>
+From: Kairui Song <ryncsn@gmail.com>
+Date: Thu, 19 Nov 2026 10:33:50 +0800
+X-Gm-Features: AclHuK9Yac_j-zeuFnMHQ2zFU_qaUoG-2sXXeJATZdyMK3cX3pLJ77pbVaVCnZE
+Message-ID: <CAMgjq7DctjL5Mo3q7qmVTRTi0JNqYxfEynDE6z1qqp6MH+RnFg@mail.gmail.com>
+Subject: Re: [PATCH v5 15/17] mm/mglru: folio LRU refs based active/inactive
+ number accounting
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
+	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
+	Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
+	Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
+	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
+	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
+	Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, Barry Song <baohua@kernel.org>, 
+	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
+	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
+	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
+	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
+	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
+	SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
+	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
+	Chen Ridong <chenridong@xiaomi.com>, Tal Zussman <tz2294@columbia.edu>, 
+	Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh <ehab.ababneh@intel.com>, 
+	Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang <lianux.mm@gmail.com>, 
+	Joanne Koong <joannelkoong@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>, 
+	Hui Zhu <hui.zhu@linux.dev>, damon@lists.linux.dev, tj@kernel.org, mkoutny@suse.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Arthur,
+On Thu, Nov 19, 2026 at 5:29=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mm/mglru: raw folio_clear_referenced() in lru_deactivate()
+>   paths
 
-On 11/18/26 18:08, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [Medium] hwmon: (pmbus) pmbus_write_smbalert_mask() clears all faults
->    on probe
-> - [Medium] hwmon: (pmbus) pmbus_clear_cml_fault() leaves INVALID_DATA
->    fault latched
-> - [Medium] hwmon: (pmbus) pmbus_clear_cml_fault() bypasses driver
->    write_byte() hooks
+This is the only issue from sashiko this time, and looks trivial,
+which is a good sign.
+
 > --
-> 
-
-Looks like Sashiko has a point, including the write_byte hook problem.
-I think Google uses MAX16601, and that is a PMBus 1.2 chip, so it may
-be affected.
-
-On a side note, it should be possible to run Sashiko locally on your
-system, or I can run it before you submit the next version if you
-have trouble setting it up. This might avoid a couple of revisions
-if/when Sashiko finds new problems.
-
-Thanks
-Guenter
-
-> commit 94d47b10140ba57df41cbee449647587f625d5f3
-> Author: Arthur Korn <akorn@google.com>
-> 
-> hwmon: (pmbus) Clear only CML invalid command fault during probe
-> 
-> This commit introduces pmbus_clear_cml_fault() and pmbus_clear_cml_faults()
-> to clear only PB_CML_FAULT_INVALID_COMMAND in PMBUS_STATUS_CML during probe
-> on PMBus 1.2+ devices instead of sending PMBUS_CLEAR_FAULTS.
-> 
->> diff --git a/drivers/hwmon/pmbus/pmbus.c b/drivers/hwmon/pmbus/pmbus.c
->> index 28889fb743b3e..e2e49fdd54841 100644
->> --- a/drivers/hwmon/pmbus/pmbus.c
->> +++ b/drivers/hwmon/pmbus/pmbus.c
->> @@ -113,7 +113,7 @@ static int pmbus_identify(struct i2c_client *client,
->>   			info->pages = 1;
->>   		}
->>   
->> -		pmbus_clear_faults(client);
->> +		pmbus_clear_cml_faults(client);
->>   	}
->>   
->>   	if (pmbus_check_byte_register(client, 0, PMBUS_VOUT_MODE)) {
-> 
-> [Severity: Medium]
-> Does pmbus_clear_cml_faults() leave PB_CML_FAULT_INVALID_DATA latched
-> after page auto-detection?
-> 
-> When PMBUS_PAGE is supported, the loop right above probes page numbers
-> with pmbus_set_page() until writing an out-of-range page index to the
-> valid PMBUS_PAGE command fails, which latches PB_CML_FAULT_INVALID_DATA
-> in PMBUS_STATUS_CML.  Because pmbus_clear_cml_fault() only writes
-> PB_CML_FAULT_INVALID_COMMAND, PB_CML_FAULT_INVALID_DATA and PB_STATUS_CML
-> remain latched after probe.
-> 
->> diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
->> index 82dac2c6c579f..74fc8d7481689 100644
->> --- a/drivers/hwmon/pmbus/pmbus_core.c
->> +++ b/drivers/hwmon/pmbus/pmbus_core.c
->> @@ -713,6 +713,26 @@ void pmbus_clear_faults(struct i2c_client *client)
->>   }
->>   EXPORT_SYMBOL_NS_GPL(pmbus_clear_faults, "PMBUS");
->>   
->> +static void pmbus_clear_cml_fault(struct i2c_client *client, int page)
->> +{
->> +	struct pmbus_data *data = i2c_get_clientdata(client);
->> +
->> +	if (data->revision < PMBUS_REV_12 ||
->> +	    _pmbus_write_byte_data(client, page, PMBUS_STATUS_CML,
->> +				   PB_CML_FAULT_INVALID_COMMAND) < 0)
->> +		pmbus_clear_fault_page(client, page);
->> +}
-> 
-> [Severity: Medium]
-> Does calling _pmbus_write_byte_data() here bypass driver info->write_byte
-> callbacks that intercept or block fault clearing?
-> 
-> Previously, probe-time fault clearing always went through
-> pmbus_clear_fault_page() -> _pmbus_write_byte(client, page,
-> PMBUS_CLEAR_FAULTS).  Several drivers hook write_byte without
-> implementing write_byte_data: for example, max16601_write_byte() routes
-> page 2 (PMBUS_PAGE_VIRTUAL) PMBUS_CLEAR_FAULTS to a separate I2C client
-> (data->vsa), so _pmbus_write_byte_data() writes PMBUS_STATUS_CML to
-> client (page 0) instead and leaves CML faults on data->vsa uncleared.
-> Similarly, delta-ahe50dc-fan and max31785 block fault-clearing writes in
-> write_byte(), and mpq8646 blocks unsupported PMBUS_STATUS_CML reads in
-> read_byte_data(), none of which implement write_byte_data().
-> 
->> +
->> +void pmbus_clear_cml_faults(struct i2c_client *client)
->> +{
->> +	struct pmbus_data *data = i2c_get_clientdata(client);
->> +	int i;
->> +
->> +	for (i = 0; i < data->info->pages; i++)
->> +		pmbus_clear_cml_fault(client, i);
->> +}
->> +EXPORT_SYMBOL_NS_GPL(pmbus_clear_cml_faults, "PMBUS");
->> +
->>   static int pmbus_check_status_cml(struct i2c_client *client)
->>   {
->>   	struct pmbus_data *data = i2c_get_clientdata(client);
-> 
+>
+> commit b8ed2e873fb1f3b844c7ba1fec4ae00c0c04fb88
+> Author: Kairui Song <kasong@tencent.com>
+>
+> mm/mglru: folio LRU refs based active/inactive number accounting
+>
+> This commit switches MGLRU active/inactive LRU size accounting from
+> generation-window tracking to per-folio reference count thresholds
+> (LRU_REFS_ACTIVATED).
+>
+> > diff --git a/mm/folio.c b/mm/folio.c
+> > index 06c9cde834f76..3b5ae5b516504 100644
+> > --- a/mm/folio.c
+> > +++ b/mm/folio.c
+>
 > [ ... ]
-> 
->> @@ -2978,9 +2998,9 @@ static int pmbus_init_common(struct i2c_client *client, struct pmbus_data *data,
->>   	}
->>   
->>   	if (data->info->pages)
->> -		pmbus_clear_faults(client);
->> +		pmbus_clear_cml_faults(client);
->>   	else
->> -		pmbus_clear_fault_page(client, -1);
->> +		pmbus_clear_cml_fault(client, -1);
-> 
+>
+> > @@ -552,10 +523,12 @@ static void lru_lazyfree(struct lruvec *lruvec, s=
+truct folio *folio)
+> >           folio_test_swapcache(folio) || folio_test_unevictable(folio))
+> >               return;
+> >
+> > -     lru_gen_clear_refs(folio);
+> >       lruvec_del_folio(lruvec, folio);
+> >       folio_clear_active(folio);
+> > -     folio_clear_referenced(folio);
+> > +     if (lru_gen_enabled())
+> > +             __folio_set_lru_refs(folio, 0);
+> > +     else
+> > +             folio_clear_referenced(folio);
+>
 > [Severity: Medium]
-> Should pmbus_write_smbalert_mask() also use pmbus_clear_cml_fault()
-> instead of pmbus_clear_fault_page()?
-> 
-> When client->irq is set, pmbus_do_probe() -> pmbus_irq_setup() calls
-> pmbus_write_smbalert_mask() across every page:
-> 
-> drivers/hwmon/pmbus/pmbus_core.c:pmbus_write_smbalert_mask() {
->      ...
-> 	ret = _pmbus_write_word_data(client, page, PMBUS_SMBALERT_MASK,
-> 				     reg | (val << 8));
-> 	/*
-> 	 * Clear fault systematically in case writing PMBUS_SMBALERT_MASK
-> 	 * is not supported by the chip.
-> 	 */
-> 	pmbus_clear_fault_page(client, page);
-> 
-> 	return ret;
-> }
-> 
-> On any IRQ-enabled PMBus device, this still sends PMBUS_CLEAR_FAULTS on
-> all pages during probe and erases the latched fault registers that this
-> patch aims to preserve.
-> 
+> Should lru_deactivate_file() and lru_deactivate() also call
+> __folio_set_lru_refs(folio, 0) when lru_gen_enabled() is true, like
+> lru_lazyfree() does here?
 
+It's very trivial, the folio passed to lru_deactivate_file should
+already have their refs cleaned befoing arriving the folio batch.
+There is a tiny time window they could get referenced again, in that
+case, keeping the new ref or dropping the new refs both make sense.
+
+Oh and since the folio is offlist, it won't cause any statistical or
+counter issues either.
+
+So it's not really a problem, it's fine either way.
