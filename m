@@ -1,58 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.222
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795076477;
-	b=rDto36v7Cz0rx3RQ/IAoNNvDXXLlRKOUDTijZv6FB6iDXo2QmV9is4oIO7CPPu38I/PQ
-	 dKplfwtlyma9tM+ljZtcXpSzqktYB31MeQXNNGTbIUwZ/Q+MOAu/iaxMO3QRrfhws4WVG
-	 aKsFgi/fyW6bPtqSdsUa3tM1LZgMNZYSeOgZnM4LZ3UpYJO+gw9F9DWCM/GzZ9QraW/En
-	 x18BYKSb8INxdDpPXAKYtkvvHq1Jgo3PJMMvz2TkFsL88nniUB2c8IMgz6wG/6qvnTxsh
-	 gIIQeLuRJSDZo0geG87xuVbg3GexJY6iGUHU2SYyOesGR8wqdByecLNlFq/VvSNRwxA==
+	t=1795076728;
+	b=1wuJ5Da3iGclxb6hCv2kuHlV9xMm/GSrIBdLTxZQAlGQJXHuYU2isCuhAVjIIHCNJxrT
+	 LVB6ByMhbTFDGDVtE8PsKWSgXbrGd92j3cLhRarl0l+W+fwAlCvp5f1z2yRje7Fbvlr1F
+	 rYGlAm03sQX5fqjOd8taZplFqPdXN11t6FozOwvWihLrCXGzSQyt0geXPUg6469/eNaWH
+	 nzqGiWj9datXLsF615zQ0xzYN+D4oWdjEoWWg5XTUMRjBsVj3TbOdjln05m+POQiJfhpb
+	 s6W5+yRj7rAlGaDGTexrztE5B0alqN91G9wdEsK/77Oj0D1LtOQgs8pUl8CT8Gel2nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795076477;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
-	bh=gqtvafE9T3fe8llMe+Ya16DLFDJTIf0qbaCAwRFcMno=;
-	b=mEPLNa5v7ot8gAJ0DloyIh9s0gx/yaujjnEpCr70K2C6L6vgDUYMXzEI2MrqiOCNom3W
-	 FSxJt/RQLCpOCuvqRVtuWnAP84AHZMqOp2Oki22hbJcZ2XAVEQb15o7k/uKMKSzOCq0OC
-	 iHMuRwbY0xwh6/rtyinnIwo5mMD+7XfoHJZvM/WGA1lZPjPNsrPsZdUlI2CUNg6Dj8gIu
-	 kQzS8L9MCeZUADwq3YwO+R2WFA9AieYhLAhkK3EMTVI8j6AjGocJ4y9/cl43BxSc4InO2
-	 pqWJeDPexIU7Amt4CEItqQs4FEmjXdM9sGMCxVzv/CLlB9jQRFH5fBcIpoH8OTF19Yw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795076728;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Spam-Info:X-Authority-Analysis:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=;
+	b=Y7pji4iARGKJtgKRBuzfgSXmz5ttNM2PQHfCbb2IEPI2384/7GrfM2Uo33G12eV4TBbK
+	 s16Uh0t6aVvqS5p10+SRFI5RTJaJzJKbjXnZpFfbe/N9mUmtgQ6I4Ft+0qAWbmyuua6ms
+	 GgvzeoDNXEc17D/aqiyVK3Z4q+YGgRENb2rUjqT+WDun/NiHoN7dExwim/t6ITZyl0NKH
+	 iUyXkjrt7v3L/+kKwYlI7BT5q7OEsjjyX/4APM/2ee2NdiTvlV9LlJcVF8EzS7ZaWHCdj
+	 rWr+4hNcCumcKcIuT7IqPNQ6cHHUgbN1++8zarXYQOi4FWb5h/hIspC+8WdO+JN1PNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b="sBh/kIqK";
-	arc=none smtp.remote-ip=113.46.200.222
-Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Om8C4zxm;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=O2VXGhdu;
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2C0606A325
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:21:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D2C0606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE8A606A334
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:25:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ADE8A606A334
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=sBh/kIqK
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=gqtvafE9T3fe8llMe+Ya16DLFDJTIf0qbaCAwRFcMno=;
-	b=sBh/kIqKXXGeKc+toHcFsugHB8Iz+uTMQV2hD03gQahnJItKib8kBHXNtSTVNlyrQ8fjSmefu
-	SnQEo6TBSvTlZhydUwZ55NQll682Jm1DSjIrFDvuIZj5CyOFZsTUx6BYjMHmacN9byJu7ecuCP5
-	dqJdIhFU60utclDs5wxNjko=
-Received: from mail.maildlp.com (unknown [172.19.163.127])
-	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4jVWcz5mS4zLlX9;
-	Thu, 19 Nov 2026 16:20:51 +0800 (CST)
-Received: from kwepemo500009.china.huawei.com (unknown [7.202.194.199])
-	by mail.maildlp.com (Postfix) with ESMTPS id F2C2840561;
-	Thu, 19 Nov 2026 16:21:11 +0800 (CST)
-Received: from [10.67.121.161] (10.67.121.161) by
- kwepemo500009.china.huawei.com (7.202.194.199) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Thu, 19 Nov 2026 16:21:11 +0800
-Message-ID: <191f1bc2-52db-4e1a-bd03-bf5e9fd5e553@huawei.com>
-Date: Thu, 19 Nov 2026 16:21:11 +0800
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Om8C4zxm;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=O2VXGhdu
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AJ6vPbr053035
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:25:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=; b=Om8C4zxm4DUUiKh6
+	l9XE9R71z/YM58bUd3iSfN/Yd97bBeT6T7F/sqedWJP7xY+XX9TsiQA8vp27Z73G
+	18/LDP7efi7tkIujuKG1LdTzlVKrT5bSookVsex29cc0cSZHRwjIgUhJePEI3rWD
+	wy1AJYu+tb2RwsPLGKj4yGSxJa0bCtvlr2EAPcEQ0X4mVzwLuL5uBF3gAYATrlf5
+	o7w6DkaVQkNA9Wz6ZXz2t1l7p1bnJGNkapAE/dH33DMqmkzVkHIhJuL2LdUIAFr5
+	pg36xPYHxvqy9QvXRb+HVTv8qJz+UtJrb84HVwgxxN5qoLIIB6laM25P31GoReVz
+	iHWAsQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1g3bbgjr-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:25:26 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-946038e22f5so37510585a.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 00:25:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1795076726; x=1795681526; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=;
+        b=O2VXGhduOGAwOlRiHnL88XwbV0RQeUoyfE+nj/NeAoGlTn3Koz4IrosKo2rRv/BQCU
+         xkQ5QkLyZzgoFniUDGXYk59hniGdO2yA2IphyhQk8w3scoC3MOLue4l8k23Fzcuytks8
+         j3bAdwzufu9gJ2F2Vczy/CDVvKmiu7cvqjDNuKynsodByr98925hhj+OiCaV6lvONDp2
+         dNCYPhxRiaqagU0nP76CoDQZXOu1n7npZBBtzyXlq7OTgxuL0LP3qswnIceZ50Butsyu
+         v3tHbKq1GBeyybTIQp3rADXNH24ntKiLfAH1mtZhic0NhOzx546DIpobSq9e3FELRITr
+         WgrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795076726; x=1795681526;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=oEE/mqi6JoKDrenw6SXjNhEhAciqo4FTpGNcngltvto=;
+        b=lE0JqyXI3/6rrzr7dSivzmriO8dgtahpSpf8/21r7W8CfXMUDV8gsTV6XUug5GkNS3
+         +eU2Rvz2XLElWpy2MstRxyHtcOOOKG9Lc2UDDpRhRFrAt7R5rfl8KI6RZ9ZRHdHecImH
+         OGhw8jivKr7VCWAcQ6nO3eg3xATUYCCe27HWkPwBXYsQdH/7zKb25SLq2fl3QEZ25C7c
+         BlLqd0NunUoB2R/5U0YHU9n1zP3s0RzwJRo2Vce4hrV86KyKCCzp5KpW6AoUwC7BjHS9
+         8n9ERIpp+dhkWYcLTepcicTuUpRDgqhtdh+scNpkktXRpdxgT8EHLZqBWskfGgFMQnt2
+         tk1w==
+X-Gm-Message-State: APuU4Z9Prj4VuA7YGjUIMR4P4u+kK4C8BhaCB2HxSDQDZZasAzPA8pCh
+	36IVa/FViPL+aNm0wjcKOhIDwT/HePntTbXrEWl7th/PSwCECpeEz+h5r5y2KbbAfypHGxFaRmY
+	JhtCa8H2CAyFtJJ0bhiqZNmvU+mJ0TUUe2zk1n6asJkXibJcsNHBwHXIY2FfWr65P8swCV2qK6A
+	Hk2AeYEw==
+X-Gm-Gg: AYBFou3281j+9RywdjAvmdgRyxJ65aYFX0Lytfl7YmFMeU2uNyQvxN5DR7JCiZ3+zLZ
+	4YRwI+yLGw8j1Xbk77zLUMJ4XIO/DpTStJ3vVDJUM8oN+MU4A4hlAHyApb9hLNY95nCNurFVRRk
+	a8PYC1t6vd2OUfcqYiQoqxTZStaJ+1FOhGy9IpZWix/adeRt/HovBPRQIhrA5OXonEfmyoD83zl
+	5/JEisYi26kQbbwbX3iRFRq+btXCKCavGjfK7yjykz/way2JQr8luuTbzjzDoch5wjm/XVZSb00
+	38S/HQwBYPtcaKHlE1W0cIv0GWhi9OTT8DXKwHKxt/dk0ncWt9SEGR7l1feb+oggWh/Am7qXdhL
+	f7DOBr8cxlstUVj0EaP3A4JWE4KujIQCuEkMZSmniHpSRI0EDGjZWOn0xLV/GN4yggGF32dWNW3
+	yIGqydxlMw9/8JrPSRZ4FiJ8RNNH6OOHfk5Vn2tn/JCN4m/73Fmy7Td8uT+LuHsg==
+X-Received: by 2002:a05:620a:270d:b0:93f:5f83:2ca3 with SMTP id af79cd13be357-949997abec2mr858254485a.54.1795076725719;
+        Thu, 19 Nov 2026 00:25:25 -0800 (PST)
+X-Received: by 2002:a05:620a:270d:b0:93f:5f83:2ca3 with SMTP id af79cd13be357-949997abec2mr858253085a.54.1795076725213;
+        Thu, 19 Nov 2026 00:25:25 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c1aa75f046sm1234070e87.28.2026.11.19.00.25.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2026 00:25:23 -0800 (PST)
+Date: Thu, 19 Nov 2026 10:25:22 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
+        media-ci@linuxtv.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 2/2] drm/msm: don't tear down shared VM mappings on
+ handle close
+Message-ID: <pk5k4tcrn6p2lrghqh2j3uprwaxuy3ugaewuupqg4ecky5xvse@3bwy5d5rozvb>
+References: <20260822-msm-fix-export-v1-0-917b3cbedd43@oss.qualcomm.com>
+ <20260822-msm-fix-export-v1-2-917b3cbedd43@oss.qualcomm.com>
+ <20260822090757.624751F000E9@smtp.kernel.org>
+ <CACSVV018ggaw_V+7GxGY9ZQrfg8UEfhHfHWiS9NoVe6LJkw2Eg@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,125 +124,86 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 09/13] vfio/pci: Add basic NO-ST TPH VFIO device
- feature support
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
-References: <20261118091238.45992-1-fengchengwen@huawei.com>
- <20261118091238.45992-10-fengchengwen@huawei.com>
- <sashiko-outbox-220757@kernel.org>
-Content-Language: en-US
-From: fengchengwen <fengchengwen@huawei.com>
-In-Reply-To: <sashiko-outbox-220757@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- kwepemo500009.china.huawei.com (7.202.194.199)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACSVV018ggaw_V+7GxGY9ZQrfg8UEfhHfHWiS9NoVe6LJkw2Eg@mail.gmail.com>
+X-Proofpoint-ORIG-GUID: 4X-khUHIDjiLPiO-c_TPsGMSv9qlXHfm
+X-Proofpoint-GUID: 4X-khUHIDjiLPiO-c_TPsGMSv9qlXHfm
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDAzMyBTYWx0ZWRfX3lFaDQN8z0YS
+ qqDkAIHh7syrzzvWLGYjD+O6wMnZ2sRbjMm84V+5fAHiXidCjgtXJBSLdWwr9JqTBFDSXfjGxoG
+ FC2IwdSPI3EpGyF0gAR72oMRUW8Mm8g=
+X-Authority-Analysis: v=2.4 cv=dZQVTnXe c=1 sm=1 tr=0 ts=6afeb276 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=bC-a23v3AAAA:8
+ a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=1fJnDc9Itneyp4R58M0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDAzMyBTYWx0ZWRfXwiycOgOc7DMd
+ zGIt7KVlSSwM0rgbEzZ7GdKyMJe/k4h6YyJy3OCzh6bgCugs9dyOkN1q5iDvS0OmXgZRRJBrDIq
+ lLCbxLYvtvC3wMnZ9hQZVyFRtXrT53MRwgGoRlYPasSQ5UMSYgE5PY70npDxwsYlZlmRaeeDIQK
+ /cbbEcUq9rr6jvrE1H23HC8AMF7eVV5ShXilpYNvM2BjSTHVuU+klPrX2dROzvltqA3Xwjp45Jv
+ 3hgIsrGC8iKFhzB1s7AVXMumJVDCTZeQ52jLYsxyj0kgbdi//lDKTki72MHtjG82rdVa+mRrSPe
+ TOq8pmKepVeASJYPUxLuCWcjKSgBE4irPEl2ioCw1AZStDrNBf+vK5Wbjn9pR6Dsqqh4grGWOSC
+ Ai9lMAEGLfvr57WllxjCUIquthHpoDNKiZ1xl2tKFfc8sGdEDksN5MymSkwQxKX29IFYXNV/ASk
+ 40mfPoqMW3PhVxWc2Kw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-19_02,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 clxscore=1011 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190033
 
-On 11/18/2026 6:51 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] vfio/pci: vfio_tph_config_write() fails when
->   pdev->tph_enabled is already set
+On Mon, Oct 05, 2026 at 08:00:07AM -0700, Rob Clark wrote:
+> On Sat, Aug 22, 2026 at 2:08 AM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> >
+> > Pre-existing issues:
+> > - [High] Sleeping in atomic context
+> > - [High] Deferred teardown TOCTOU race via flink name re-opening causing IOVA Use-After-Free
+> > --
+> >
+> >
+> > drivers/gpu/drm/msm/msm_gem.c:put_iova_spaces_locked() {
+> >     ...
+> >     drm_gpuvm_bo_for_each_va_safe (vma, vmatmp, vm_bo) {
+> >         msm_gem_vma_unmap(vma, reason);
+> >         if (close)
+> >             msm_gem_vma_close(vma);
+> >     }
+> > }
+> >
+> > Will this destroy Thread B's mapping while its job is running, freeing the
+> > IOVA for immediate reuse?
+> >
+> > [Severity: High]
+> > This isn't a bug introduced by this patch, but does adding these blocking
+> > calls cause a scheduling while atomic panic when tearing down a writeback
+> > connector?
+> >
+> > The drm core function drm_writeback_connector_cleanup() holds a spinlock with
+> > IRQs disabled when tearing down pending jobs:
+> >
+> > drivers/gpu/drm/drm_writeback.c:drm_writeback_connector_cleanup() {
+> >     spin_lock_irqsave(&wb_connector->job_lock, flags);
+> >     list_for_each_entry_safe(pos, n, &wb_connector->job_queue, list_entry) {
+> >         list_del(&pos->list_entry);
+> >         drm_writeback_cleanup_job(pos);
+> >     }
+> > }
+> 
+> Hmm, someone should look at this.. maybe we could move to an on-stack
+> list under a lock, and then do cleanup outside of the lock?
 
-Fix by following:
-1. Reorder the series, moving the "reset TPH state on open/close" patch earlier.
-   This clears `tph_enabled` when VFIO gains ownership of the device and resolves
-   state split after PCI reset or across user sessions.
-2. Inside `vfio_tph_config_write()`, we check `pdev->tph_enabled` before enabling
-   a new requester mode. If TPH is already active, we call `pcie_disable_tph()`
-   first to avoid -EBUSY when userspace switches directly between TPH_ONLY and
-   EXT_TPH without an explicit DISABLE write.
+FWIW, the fix is implemented at [1]. Would it be reasonable to pick it
+together with this series?
 
-Thanks
+[1] https://patch.msgid.link/20261111-wb-drop-encoder-v8-0-62948ed87d13@oss.qualcomm.com
 
-> --
-> 
-> commit e4125940aba8b4e82c51ed4d75d938a51d421022
-> Author: Chengwen Feng <fengchengwen@huawei.com>
-> 
-> vfio/pci: Add basic NO-ST TPH VFIO device feature support
-> 
-> This commit adds VFIO PCI support for PCIe TPH in NO-ST mode, virtualizing
-> the TPH extended capability and exposing the VFIO_DEVICE_FEATURE_TPH ioctl
-> for userspace opt-in.
-> 
->> diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
->> index 9914f3ac69aef..3946ed2ec0cfe 100644
->> --- a/drivers/vfio/pci/vfio_pci_config.c
->> +++ b/drivers/vfio/pci/vfio_pci_config.c
-> [ ... ]
->> +static int vfio_tph_config_write(struct vfio_pci_core_device *vdev, int pos,
->> +				 int count, struct perm_bits *perm,
->> +				 int offset, __le32 val)
->> +{
->> +	u16 start = vfio_find_cap_start(vdev, pos);
->> +	struct pci_dev *pdev = vdev->pdev;
->> +	u32 org_ctrl, new_ctrl, cap;
->> +	u8 mode, req, org_req;
->> +	__le32 ctrl_val = 0;
->> +	u16 cmd;
->> +	int ret;
->> +
->> +	if (!vdev->tph_opt_in || offset >= PCI_TPH_BASE_SIZEOF ||
->> +		offset < PCI_TPH_CTRL)
->> +		return count;
->> +
->> +	cmd = vfio_pci_memory_lock_and_enable(vdev);
->> +
->> +	/*
->> +	 * Synchronize the CTRL value of the hardware to the virt. Otherwise,
->> +	 * the value will be inconsistent when the device is reset.
->> +	 */
->> +	vfio_user_config_read(pdev, start + PCI_TPH_CTRL, &ctrl_val, 4);
->> +	vfio_default_config_write(vdev, start + PCI_TPH_CTRL, 4, perm,
->> +				  PCI_TPH_CTRL, ctrl_val);
->> +	org_ctrl = le32_to_cpu(ctrl_val);
->> +
->> +	/* Do write operation to virt. */
->> +	ret = vfio_default_config_write(vdev, pos, count, perm, offset, val);
->> +	if (ret != count)
->> +		goto out;
->> +
->> +	/* Reads the TPH_CTRL value after the write operation. */
->> +	new_ctrl = le32_to_cpu(*(__le32 *)&vdev->vconfig[start + PCI_TPH_CTRL]);
->> +	if (new_ctrl == org_ctrl)
->> +		goto out; /* Exit because there is no change. */
->> +
->> +	cap = vdev->tph_vcap;
->> +	mode = FIELD_GET(PCI_TPH_CTRL_MODE_SEL_MASK, new_ctrl);
->> +	req = FIELD_GET(PCI_TPH_CTRL_REQ_EN_MASK, new_ctrl);
->> +	if (mode != PCI_TPH_ST_NS_MODE || !(cap & (1u << mode)) ||
->> +		req == 0x2 /* reserved */ ||
->> +		(req == PCI_TPH_REQ_EXT_TPH && !(cap & PCI_TPH_CAP_EXT_TPH)))
->> +		goto out; /* Drop invalid or unsupported write value. */
->> +
->> +	org_req = FIELD_GET(PCI_TPH_CTRL_REQ_EN_MASK, org_ctrl);
->> +	if (req == org_req)
->> +		goto out; /* Only care about requester enable. */
->> +
->> +	if (req == PCI_TPH_REQ_TPH_ONLY || req == PCI_TPH_REQ_EXT_TPH)
->> +		pcie_enable_tph_ext(pdev, mode, req);
->> +	else if (req == PCI_TPH_REQ_DISABLE)
->> +		pcie_disable_tph(vdev->pdev);
-> 
-> [Severity: Medium]
-> Does pcie_enable_tph_ext() fail here if pdev->tph_enabled is already set?
-> 
-> pcie_enable_tph_ext() returns -EBUSY whenever pdev->tph_enabled is 1, and
-> its return value is ignored.  If userspace switches directly between
-> PCI_TPH_REQ_TPH_ONLY and PCI_TPH_REQ_EXT_TPH without an intermediate
-> PCI_TPH_REQ_DISABLE write, the hardware PCI_TPH_CTRL register is never
-> updated.
-> 
-> Similarly, if a device reset clears the hardware PCI_TPH_CTRL register to 0
-> while pdev->tph_enabled remains 1, subsequent writes of PCI_TPH_REQ_TPH_ONLY
-> or PCI_TPH_REQ_EXT_TPH fail with -EBUSY, and writing PCI_TPH_REQ_DISABLE
-> exits early at new_ctrl == org_ctrl without calling pcie_disable_tph(),
-> leaving TPH unable to be re-enabled.
-> 
-> Calling pcie_disable_tph(pdev) before pcie_enable_tph_ext() when
-> pdev->tph_enabled is set would avoid both issues.
-> 
 
+-- 
+With best wishes
+Dmitry
