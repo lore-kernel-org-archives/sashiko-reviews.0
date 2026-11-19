@@ -1,73 +1,135 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795101719;
-	b=HpYAET7ApKQk3MayNYRkbL8ICs0gcdvk9IlE3xOfCw2ttSTI/+CI+LLBGm99BYvPznGl
-	 7XL1ma6qN9cADAu3TOFKmuIMbIzGHMk0hWV+yxTOXb7La1/hf+dMbupm2c4nZVCWQGGLQ
-	 SHt0kSrRKx9vypR9CmWRnuif7HA/RePQDEdwsJDSm843xllnNiJJSmISbcJr6ubttI7LW
-	 8Z/XcE8utVm6beI05DXO9zjYHiHaz7m+RfJAl9x9+C9dojNHMH298ZOx4VLkq29wY5tC/
-	 FC9A9AZgimI9+IEfpmESqu0bBxWkUpBYHlMxnp+uTGsA7FI9aPtZ1MqHFbT9wI84ToA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795101719;
-	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:
-	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=5l8GqR1pMHHk4vhkBIQpJlp6jJQ7JDN3kxOn/4iGrAc=;
-	b=YwtjKF3jslUoEBmo0CgCRYhzyk2I1FRzqvy9XbKnEUSsU+GQx6Y2rwROfM+4sSUAR4iL
-	 AXbhC+w5Zdi85hP19fEPNlFcnzg43qTyv4m1GylFQ53qnv5mxvvCVO/1oJyH02mmTffTl
-	 fZ4iBzT6k12O+jk3odTVxUl5S+0F/035nBB1gVZ+wFjKyakwI+oVvsvcQ/N5kDgqDdC2Q
-	 +DBriFSIFjmvnH1bk2vA9ZX9gsl5vxBMLwzADTLDRLRuJq191OQyt00mRs85Z9I4VNwEc
-	 CfwyHlu1q+8WDqd/Srlzyu7jp6q8R53LE0cruwiGTM4BOA2f254ReANO6e6jATFerag==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OSetPPx1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.14
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795101862;
+	b=3VeW67Emjqoy3gIGcC3HZjjURwX83Q6lp1TEbLuWwWr0rJoHWiOYK5LINtHRgUne6n2W
+	 FZVBQLu9WzKpeRfME9Khpsb76CVCmwEh1avZQA58c9cnrDNgd45r0xK9omHbaxeu8bklV
+	 VkJFmegB+2iQfzHMh5Sh8MCAeev1ewF2wbj9O+Yyt8ZNLBmZskMVOe/mtQ2UkabwP8wfW
+	 wC9xQXI70mQHiQtYaGkn7OnA9rsn/bsUBHlhfffiULLkxNCqZQMkwKvGHLM77J1Baycqy
+	 Kx0KW9/PeoSW8jnax04pYGsAl45Ykn6LVhwHlbgZKXnkhxb1o74qLsTzYJBZaL8qs/g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795101862;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:
+	 Subject:To:References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=C99yTdzILm+ML9lS8hkGxAQdTD0Te+2UZMeQ22/mpNo=;
+	b=uwchCZlw25ACCSaxGszil6O9JiEYiJPSn/gBrL8w7ZXiSxFifuwcHIPqEzuKn1UB4vxM
+	 FT4FFM7kxBtk2DsNwjyzqMT6HW9DYPbW1sgz6BaTnwjzX3HdZgvYBVCIjsr8xeWpJ3w/s
+	 GpSFCeqDMbgr8KVkG0qPJm/fQGqetgIgj8XsnaxGCMOG4rhGBb1B4lmshfwqJWOBu7atK
+	 b7HfphgdJrpfvkOuvcklb7UW6UUXCHg6qovLAP7AC9iZEyvOahd5TErK661B4GsmFAqdJ
+	 nSnkw/Roctu+V7W1gsx86NOd3jXg4Qn8q1pXoaSGhHMlLu6lm2Rf3dI3u0tKK0zAzCA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=a0aNt8ac;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=lqT88ZZ0;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.14
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253F2606A324;
-	Thu, 19 Nov 2026 15:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA00606A324
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 15:24:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4EA00606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OSetPPx1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0352E1F000C8;
-	Thu, 19 Nov 2026 15:21:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795101718;
-	bh=5l8GqR1pMHHk4vhkBIQpJlp6jJQ7JDN3kxOn/4iGrAc=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=OSetPPx1twH283yAOInw1fVxzhw6z+BPC5Tlx5mIjAXPmRFxG4D4S2lFePMSUqLm8
-	 Gndj7p8fZcCVNUVRaWM3hlQhJJxuunUnD/wZCQ5C+kK8YJ3HOHZGl9WyT3nTY9Wpfb
-	 PQLGNJ9JEuzopCag+K0UdCoO06QGot6gcOXeEzO2Ih+t6g/Lm/+xzZ8DC/pszbG3ae
-	 naI4fex3IFeyWN7z9OW0uNUgQUnPHUnPzNiWCFvMTuMLMtT8z+iHMCqSN/p5khPqGV
-	 rKvqO5cREgOR1LojY4hIewYADGa1nUY3RNOGz05xMqDJr45GbNzbiLh7MLtXZWFq+j
-	 FHFxJ9U3clMmg==
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfauth.ams.internal (Postfix) with ESMTP id 3C64D1980070;
-	Thu, 19 Nov 2026 10:21:56 -0500 (EST)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Thu, 19 Nov 2026 10:21:56 -0500
-X-ME-Sender: <xms:EhT_apq3zDL60VDfd6TM6kuSn8gYoR-zNDdjp2ps-AepjsU8pEu6kg>
-    <xme:EhT_amdcpTc6LxFyP8eKCWJD411DbcuJxGQ0gKXaGq5H7RRCrYIdVBPGTKqC0p9f6
-    CrM2Kr6SXwTWCpSRyIDa5afdU7jyH3VMTYwOcn9KHIjS6ptXULVAQgw>
-X-ME-Proxy-Cause: dmFkZTFAW/rrkNPBzeKLhGsKQLHRswz64G63poKWKLw463QHaf+1d6xN/yc1sejtO6QZx5
-    fWiT25IhBCJ8GMWFTQTjv17SWOHq++Oevi4ctTjpcivsO2LF2xQ2wswTLOK8ph6KV4LEED
-    CQvmx85m+a3iOx/33ttWiG+PidCD8TTSn5aN6y1tEO0guG2ekBixUT53Q+TYyzKirYxiXP
-    ooQJGLYtDJvYjEGVlV6SoXrpayOMHJayUEiFc6Xx/MkhbYKJMgSXrmDgkvf7SuAGeOkPd/
-    AYTE8c+pNDG+vxK60r+h9Euncql3Rw4oB6YT/CjHquFMIQUYfAJALpcZy4OguG+Uz+3BbT
-    3XA7FpyBGa8qGgavfhjZCnvR32BMweU7Bvwi3ScjH0hTzDi8p21OAdSV/kZ0zYxokVmZbR
-    /GMjLXUJeKBSyzcNAhOfSCIIniCAK2couGCe1pWQnGF17mpgU5myXUlAqmFH4SUbbAiXk+
-    HCxPMPwFOVE3O3YEQQYsHdXlILJe2rE/F+fW/seFx5bs49ySGwOUyKPJtGomHHxW0TzTco
-    jWSs1ajdwaywdT9f8chb6Vk/NOkr/fPQPvf8ZJ/DQBH+VeGPa+2NZ5nbZCU94lePBQHSHX
-    Qy9YKhx+WJUCWg7HysG8TiORDpE389ucvtaT5lED9LHM0kGto8+pSzmCCUnw
-X-ME-Proxy: <xmx:FBT_asq5ALVgmDljti4u2jJqbZQ9SpUG35T6Du2mawnuQ4JrGSQxAw>
-    <xmx:FBT_atm1orlVR3_XkVd0_SR8mJ-SYO3Cij9LvN5Wrig8t4iCq7lTDg>
-    <xmx:FBT_agPavBnsWSlRJDN06fXXagaMJ7tLE_ARYd7BKFHIv-ihw-HdZg>
-    <xmx:FBT_apOJ2TRSsPoXzryr-AeJs_NZe7Afdx7d24RCNS7OTHljfNK6ow>
-    <xmx:FBT_apiBASsX6cjMETqXeG4ukwaVEVEJI-JyjCtrHzHjQupCxlOovebI>
-Feedback-ID: i36794607:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id B63EF32A0099; Thu, 19 Nov 2026 10:21:54 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=a0aNt8ac;
+	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=lqT88ZZ0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795101862; x=1826637862;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=Mm9owO9k7wEMAWgx/jITqRrNmwGSNi02IQyfiwSdQIk=;
+  b=a0aNt8acUif1RA1p/zqxkzG/ryKLjN+D2U/jCEnEn12Qz4krK1NZH3N6
+   xe9W0ud7ZmmdcdVpgmYRU24Llp8ePVH01U4PIMzIMOXA264pOEhWhw9VR
+   ChGBjQiqYT+wZCqFKBwJUTtWyOZ8XjSxL1d0KJhbsXRSA8um01cVDwXNS
+   nwEx6mK2RPCo0kKwSIcb0mIQ0ip/bxmDi+3Nqvy1rkAIvmTEJqke1Cpc6
+   TYhPYgOykjzOrBeTpVTObMxveaPuYKn5YycP/IK8zdd6HrHMbPzA5KQur
+   AgilPUMr+mvf8iyYjMpfNp5slPH6Hgn15RHHsB0jMJn2c/Uid4CU2RaFL
+   w==;
+X-CSE-ConnectionGUID: 99/ynwAIR92cACAAKxiMMA==
+X-CSE-MsgGUID: 7/uuHQ9iTgy14DWyf+Olhg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11971"; a="3842125"
+X-IronPort-AV: E=Sophos;i="6.27,221,1787036400"; 
+   d="scan'208";a="3842125"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 07:24:18 -0800
+X-CSE-ConnectionGUID: +aeW6FdMQoWE+KCX/aiBuA==
+X-CSE-MsgGUID: hcPL3tTYSUaFaMN6E/ycMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,221,1787036400"; 
+   d="scan'208";a="10545028"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 07:24:17 -0800
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Thu, 19 Nov 2026 07:24:16 -0800
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Thu, 19 Nov 2026 07:24:16 -0800
+Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.64) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Thu, 19 Nov 2026 07:24:16 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yyvfc1EfQmvNbtBVaywMB2z1yw3NEGkq/UzIpXmTbODz1+YmejgfKsopTVCbReTw4L2/rWvW3HDbFX0Ehc+Hkq0GuWEH/qHkI//X6oThkxU8HDw2vA/3HdSVT0lVCP6o4nAAofOq/0nrJnymGF7rXjPktca5QDPaAsTx9LpPjTpurBb5TJ8fCVH5kCVNOVRolP15i8Q7on2isDb8a0cxuoH3H/OOx5OpdFND35d2uEzc9wTugWqet1lF6WtYhJnTrUR0SwNH/lFk3/On6zbG3qqCzZ0xJIB0LUsfO8b8Saqo0ikhjJ2hctnKeWNY7m/c9Wa+xDfjwUkHkS309+s2zg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=C99yTdzILm+ML9lS8hkGxAQdTD0Te+2UZMeQ22/mpNo=;
+ b=Y3fbt+tRi3zYIPCK6Ja9h4y5Y618JXpnNIygGn/OUI6u7Pcf6NwfQILsM9/QiX/1JqzXmIUX3AvnX9e6u3+L9FaWF5lsnkDIbVNNGvIoDxtXuv0ACD6BcJFGmh2sCByrstTlBriOk4u6vLEvXRREm7vHO6vfoF1hb0mkWD5Z2KIjyM1nsOIqiIIpNfTTsv5b2mFvLC2TFapZnkDb9NevNq0IM52loAAogKqtJ99aNLNRAGMjdPJ4J6FwDmDeH8qRAL/SAeGszM+ZUP7rJKusc5SOhgs8bd9bH9ffLPwSChvobrpznNQEuIe6GwUoQfpAdQ0iEunITvcDBEgORkTt6g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=C99yTdzILm+ML9lS8hkGxAQdTD0Te+2UZMeQ22/mpNo=;
+ b=lqT88ZZ0fzE79n/htc6xtIwphbE1MDZsxBxwwMu2cZK+E9a3R+XNuQuHWTx3FuD3tgWvn1iawrcjX7amgZjniWp5a0q/W1sIRQjeXy1ETwLjP5mMVx1MpgGr4+ud4jfvbX7wVFE9p2OfmLy5zC6ZKjtA8Q4DgCvjqrhw7xZG7k4=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from FT1PR11MB960200.namprd11.prod.outlook.com
+ (2603:10b6:170:25::23) by MN0PR11MB6182.namprd11.prod.outlook.com
+ (2603:10b6:208:3c6::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Thu, 19 Nov
+ 2026 15:24:09 +0000
+Received: from FT1PR11MB960200.namprd11.prod.outlook.com
+ ([fe80::cfb1:f811:62bb:fa65]) by FT1PR11MB960200.namprd11.prod.outlook.com
+ ([fe80::cfb1:f811:62bb:fa65%5]) with mapi id 15.21.0639.010; Thu, 19 Nov 2026
+ 15:24:09 +0000
+Message-ID: <e4abd809-5246-459e-9818-fcf1c990d813@intel.com>
+Date: Thu, 19 Nov 2026 20:54:00 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/xe/hwmon: Expose powerX_cap_max
+To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
+References: <20261119104029.3066660-1-karthik.poosa@intel.com>
+ <sashiko-outbox-222985@kernel.org>
+Content-Language: en-US
+From: "Poosa, Karthik" <karthik.poosa@intel.com>
+In-Reply-To: <sashiko-outbox-222985@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5P287CA0305.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:21e::14) To FT1PR11MB960200.namprd11.prod.outlook.com
+ (2603:10b6:170:25::23)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,129 +139,128 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AXSqIyz7GwKB
-Date: Thu, 19 Nov 2026 16:21:34 +0100
-From: "Arnd Bergmann" <arnd@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "Linus Walleij" <linusw@kernel.org>,
- "Geert Uytterhoeven" <geert+renesas@glider.be>,
- "Wolfram Sang" <wsa+renesas@sang-engineering.com>,
- "Ulf Hansson" <ulfh@kernel.org>,
- "linux-mmc @ vger . kernel . org" <linux-mmc@vger.kernel.org>
-Message-Id: <169128b7-9b30-4e3a-a4b8-be46012b691c@app.fastmail.com>
-In-Reply-To: <sashiko-outbox-222892@kernel.org>
-References: <20261119093924.3508355-1-arnd@kernel.org>
- <sashiko-outbox-222892@kernel.org>
-Subject: Re: [PATCH] [v2] mmc: sh_mmcif: rework sg_miter handling
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: FT1PR11MB960200:EE_|MN0PR11MB6182:EE_
+X-MS-Office365-Filtering-Correlation-Id: dc16e643-a262-4505-41c3-08df46512801
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|261022075727099003|10067099003|56012099006|4143699003|11063799006|261026140227099003|261028144727099003|261021121427099003|261022105027099003|261026121527099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: Dl5mlxDBiwPMUgvM8I5IxFC01gwHLVF7EtOCgxF0BLQF3iMIW8qsOEXuhCxFQMe98DecW7tDZwYeid0MiCFeOT//XujPdNAsSMl8dASkV62APEWf1EaH0R5/ZqSuCDokd+jc5bB3J6JtRF7cMaigVQ2femOdIHN9ZgnbQBlHvvsJNXijQx+X01zotQHOKNwDAyJwz+mgw9+/eiQkTlTQ9NDbnvxdgBMX/D+UJJoMuaGxqwVvowcAcySJzfPWX8JOnB3f2bjVLcx2xfs0LVKxlkF8PjwQbwM8D3Z4wFc9vyJSWmfJUhR5tuY/rpaH+7nHQ5CQVHQ22HGGKDCQtIEvwPOs8NeSITg7rBwlDWXA/cNKxIbJ+zda2/I4u6CMeIzpp7peNy6T7nXi/7s8JbHlwGGtmuHCSebAukEjrrK9HEtlsJiVpyKxbqKe0Xz0Fjs03ikdYZRmrL8QhUNXbuFn1WmAw0UMAJjXWQmM3k1eb6f1xDCRY3C2EmZjCrrZnC6D8esb4oQYNezqhH2I9l9nQfYVKHAg6WJFFH/jFwdoUsCI/h5DzusendeDRZ+flEhBgyiEVn1UrpivYEsyfL5OutHIvB0vxcdFPap/vEQ4Y18=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FT1PR11MB960200.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(261022075727099003)(10067099003)(56012099006)(4143699003)(11063799006)(261026140227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261026121527099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U3ZiUkNXc3l3bDRBdFErcno3SHEydmJLOTNWaHJFWFFCaGVsTE1DM0dXV1A5?=
+ =?utf-8?B?amg4WUxYbU5BdFhwWVVPYmh1c21KTmd2M0xuek0vd2EzV3E3UzNDNmRkVmFV?=
+ =?utf-8?B?V3RETXd5VFpKNnJWYVh3dVYzeDU1MXdXSGZXTWtOdlF3Ky9zRmJyM1lwbzJK?=
+ =?utf-8?B?NUY3akU0RzhVSjBPdU90OHVsQ3ZjTGF0emJMRUVNWGZDSTRsNUtoc1pYWEp6?=
+ =?utf-8?B?OUc2L3VGcytCS3NxZ1lFZEFNOHBmbzFmREVHeXdMMkUzY1NyRkZnc2JrbGpB?=
+ =?utf-8?B?enlSODhTL09JRkNlanVNMTF4RDdycFZkSWlURnZVemlFenBpVTJFdjJkdkd6?=
+ =?utf-8?B?TmlRRXdnaUR4TnVyTWZSS2RPN2V6SG55WVZFTTN3WW9xYVhlK1NlMFZnK3hF?=
+ =?utf-8?B?WmpJTWE0eFpyZ21OZ25kZDUvZXRFZzA0Rkkza2pCMnZ1VDdGalljK283Q3hn?=
+ =?utf-8?B?RkdmeGd5UkJYN0VMZ2xsUmJBZjdmSEx4ZkxVQmdUUWJGOGFCS3hycXdmenIr?=
+ =?utf-8?B?bzNZNGFvMXpycDhEejBpOTlGWHpNRUNIdGtxb0R4N0ZYNjlUSklRT251SEU5?=
+ =?utf-8?B?NDZoMS9WRkx0TDQrcWp5NjlWaWhGNWNzMS9FdXU3ZXpaMis0S2x5YWFiL1JB?=
+ =?utf-8?B?NFRqZGI2MU1GazVreE9ldVkrTW1PQ0R0S1JFdy9aQ0VxVlB0YWtYMmtTUyts?=
+ =?utf-8?B?em1kL25Hem15RkpYWEQyM0JrVlk2ckdpWFUxWEdVMUpaU0lPYkVoVTBOK0p3?=
+ =?utf-8?B?a20wc09Va3M5bU1ucml4WjF4eVZWdDVZV2dBU1ZHcFhTODB3ZFJMUUVBNWlS?=
+ =?utf-8?B?dGpubjBqM0Y5NTNQVFNxVUdXRjRUNTFLTE5jaGh2anNaRmRTRWlTSnRYKzBG?=
+ =?utf-8?B?bVZFZ1pyanNRUGJ2K2Vnbzlnd2xUZ0x4WE1JdzZWRTlacE5oVlllSSt3ZXJS?=
+ =?utf-8?B?dXpMWEw2OW43bkF0bmJsdmxQbVpxdy94S0lwclZhQW1sS3crcktNVWFiVWlY?=
+ =?utf-8?B?YUM1MWtMaWorTGNDY0hLamY4U3pncDhHRDlUYWlxL2pta2dRQzNmUmRSTkZY?=
+ =?utf-8?B?OXFlTVV1RFV5OE1nYkNZNGtsbUdMS1I4bzRkeDVWN3BRRHV6SWtKbHB0Zjcz?=
+ =?utf-8?B?NzFWK09jcGtzU05GZFRCVTc5MlRBV3RXU205MWJsaU1DaEI3akQxdERwMXI0?=
+ =?utf-8?B?bXhBYkxqNnJRanNTcjNzNDg4WlhaTERMZVlrM0xwYkZUbnRjTDh3K3pHRS8w?=
+ =?utf-8?B?L0hTSURaVFdoMG55bWoyTkJMRmJ0MWdLdXVMK3UvMDNkWGt1WUZ4WVloWlZx?=
+ =?utf-8?B?V213eHhMRllRb014eUVSYXQ2SnhsNXhLQzhTdFdoTDc2VzFjOGQrQ0YrTWRY?=
+ =?utf-8?B?WkdkTk1zUjVQNXV1WXBLQkFxQnZ3QUtHVjVMVWFKcFNFL1JzOUc1Mnd3V0xE?=
+ =?utf-8?B?THBhZS9JRENGZjh1dngxYjFJbmttWmxxNUtVUmNYKzIvL1dwRzBoSjFWbFRV?=
+ =?utf-8?B?eWVDREEwT0gwQTJGcE5od3YwejBYZjNRUFV0blJackl0SkVqSDlFdSszNUMv?=
+ =?utf-8?B?N0g5US9RTHVPbVY4Q1JPL0VjZkZYcGtlSGcyNndlRUVoN2l0S2tITk1MeFdr?=
+ =?utf-8?B?MXpBT0xybGk4YkJjaVN4UkFMWVZvSVFmdTU0eFN2c1I2c2VjczFCOWE0NkFG?=
+ =?utf-8?B?d1VmNnFKamxGZU1yV3V3Y01CZFVtOHlQRjFKWm1TMUV6dEhSQ0E0T04wQ25W?=
+ =?utf-8?B?c0YzYTlhczQyMlBtV1ZkVFpTQ2U2WlRkWG4xL2hwOElNWUpWa2phekhxdWh2?=
+ =?utf-8?B?WUljZHUxdm9jYUtCSThTdk51T2ZoOHBzUW5GSldZbWZBaVpVYXVyblpCNzZl?=
+ =?utf-8?B?ZjdzOGhLd0hwMllCWmxaU3lIcEMxMmhUNFZTQWJ4TzNrOXBFam9sR0kyeTZW?=
+ =?utf-8?B?ZVh5K1ViVFNnOTZjTHZBZVhFZEs3R2xvQUxDU3NMM0F1SmtOK0l0MHlKamJH?=
+ =?utf-8?B?a25nK1R5OEx3enBERWovOGdlNUZVY1FHVlN5dlpoN0VjTzU4eHNiTC9HdU9s?=
+ =?utf-8?B?L2lleENPWERPKzNsTms2bjFJOHB3c3pscVNlaVI5b2VPbG15QlBqY3c4ODlG?=
+ =?utf-8?B?ZzRBYUpiU3h2YldZZmxrRWNNSndlNHNvTTVBUnFSNmdYT3ozQzl5bEN3SmVL?=
+ =?utf-8?B?VW9KR1BaSWNGMWlPZTVQcmh1dyszSTBxMkdRcVJ0b2QyNEhuT3J1RjVRYXlt?=
+ =?utf-8?B?MTZsYjRmdWloTnpVNUEyeGhmRThBMVZaeGpjeStFdGRCZmcrYVpjQS82UTl0?=
+ =?utf-8?B?QU4rc3hYS04zYmp0QWNhSDFOcTV3WWE4RGd4T1dsYytWcE1JQWVYQT09?=
+X-Exchange-RoutingPolicyChecked: yX3U72Wq4+EthVxqWv7GbKwNiTa6Z8ZO8IkFN7PcP/7kF6CI5HVIe+RIf40pbvIpQzAij601QJ4zodW9KdeokgpHsRthkBYZsSJWRRn+SBXqjMPcHelAzRT1fVqydFpOFwGzt4HXc6b7JziSe8dNUxieoa/yoNktaR9ZS0UKpECvzbrGWYu5loSZkbGAOCkdNUXHcx5VS5jymmQMrCa8qesTgHunfEkZiuuulOXNGmLsVR0Ciieg4DVccYnX6tvCFh7c0wBGTMtfzYT1KHrBbKXmncLR2zngcgqp9BhXGt1HtDslIX1rSzAY5iV3DsEU1WqtfB4GQwW8x4ivxJ8Vrg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: dc16e643-a262-4505-41c3-08df46512801
+X-MS-Exchange-CrossTenant-AuthSource: FT1PR11MB960200.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2026 15:24:09.0717
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: dI1Hg190OitD/Ev1hvm3QGCxMphrQCh33UvyZ3Vcc9dkq3u/yiy9hJWAH+HNP9BxHy05t6XGP40Bmm0Ao+qZxw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB6182
+X-OriginatorOrg: intel.com
 
-On Thu, Nov 19, 2026, at 10:59, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] mmc: sh_mmcif: data->bytes_xfered not reset on multi-block
->   PIO and stop errors
-> - [Medium] mmc: sh_mmcif: out-of-bounds sgm->consumed in
->   sh_mmcif_read_block()
+
+On 19-11-2026 16:17, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [High] drm/xe/hwmon: power limit clamped to 0 in
+>    xe_hwmon_power_max_write() [1]
 > --
 >
-> commit 65703f98092b0e4db22d64298984b4fb57add099
-> Author: Arnd Bergmann <arnd@arndb.de>
+> commit 26f9457c44502cd969a84eaf5b2ee961f51b7a3e
+> Author: Karthik Poosa <karthik.poosa@intel.com>
 >
-> mmc: sh_mmcif: rework sg_miter handling
+> drm/xe/hwmon: Expose powerX_cap_max
 >
-> This commit reworks PIO scatterlist mapping in sh_mmcif to use
-> SG_MITER_LOCAL, stopping the iterator after each block and tracking
-> completion via data->bytes_xfered.
+> This commit adds a read-only power<i>_cap_max sysfs attribute on platforms
+> with mailbox power limits to report the default PL2 (burst) power limit
+> set by firmware at boot.
 >
->> diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
->> index 51be5dc82f6e6..8a0ccab9861d5 100644
->> --- a/drivers/mmc/host/sh_mmcif.c
->> +++ b/drivers/mmc/host/sh_mmcif.c
->> @@ -604,7 +604,7 @@ static void sh_mmcif_single_read(struct sh_mmcif_host *host,
->>  			   BLOCK_SIZE_MASK) + 3;
->>  
->>  	sg_miter_start(&host->sg_miter, data->sg, data->sg_len,
->> -		       SG_MITER_TO_SG);
->> +		       SG_MITER_LOCAL | SG_MITER_TO_SG);
->>  
->>  	host->wait_for = MMCIF_WAIT_FOR_READ;
->>  
->> @@ -621,7 +621,6 @@ static bool sh_mmcif_read_block(struct sh_mmcif_host *host)
->>  	int i;
->>  
->>  	if (host->sd_error) {
->> -		sg_miter_stop(sgm);
->>  		data->error = sh_mmcif_error_manage(host);
->>  		dev_dbg(dev, "%s(): %d\n", __func__, data->error);
->>  		return false;
->> @@ -629,7 +628,6 @@ static bool sh_mmcif_read_block(struct sh_mmcif_host *host)
->>  
->>  	if (!sg_miter_next(sgm)) {
->>  		/* This should not happen on single blocks */
->> -		sg_miter_stop(sgm);
->>  		return false;
->>  	}
->>  
->> @@ -638,6 +636,8 @@ static bool sh_mmcif_read_block(struct sh_mmcif_host *host)
->>  	for (i = 0; i < host->blocksize / 4; i++)
->>  		*p++ = sh_mmcif_readl(host->addr, MMCIF_CE_DATA);
->>  
->> +	data->bytes_xfered += 4 * i;
->> +	sgm->consumed = 4 * i;
->>  	sg_miter_stop(&host->sg_miter);
+>> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
+>> index defe8aaca7c11..8e0d295aabc88 100644
+>> --- a/drivers/gpu/drm/xe/xe_hwmon.c
+>> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
+> [ ... ]
+>> @@ -1423,6 +1424,8 @@ xe_hwmon_power_is_visible(struct xe_hwmon *hwmon, u32 attr, int channel)
+>>   	struct xe_mmio *mmio = xe_root_tile_mmio(hwmon->xe);
+>>   
+>>   	switch (attr) {
+>> +	case hwmon_power_cap_max:
+>> +		return hwmon->pl2_on_boot[channel] ? 0444 : 0;
+> [Severity: High]
+> This problem wasn't introduced by this patch, but can a pcode read failure
+> during probe cause xe_hwmon_power_max_write() to clamp user power limits
+> to 0 [1]?
 >
-> [Severity: Medium]
-> Can setting sgm->consumed and data->bytes_xfered to 4 * i exceed
-> sgm->length on single-block transfers whose data->blksz is not a multiple
-> of 4?
+> If reading the initial power limits in xe_hwmon_get_preregistration_info()
+> fails, pl1_on_boot[] and pl2_on_boot[] remain zero while hwmon registration
+> still proceeds:
+>
+> drivers/gpu/drm/xe/xe_hwmon.c:xe_hwmon_get_preregistration_info() {
+> 	if (hwmon->xe->info.has_mbx_power_limits) {
+> 		if (xe_hwmon_pcode_read_power_limit(hwmon, PL1_HWMON_ATTR, CHANNEL_CARD,
+> 						    &hwmon->pl1_on_boot[CHANNEL_CARD]) |
+> 		    ...
+> 		    xe_hwmon_pcode_read_power_limit(hwmon, PL2_HWMON_ATTR, CHANNEL_PKG,
+> 						    &hwmon->pl2_on_boot[CHANNEL_PKG])) {
+> 			drm_warn(&hwmon->xe->drm,
+> 				 "Failed to read power limits, check GPU firmware !\n");
+> 		} else {
+> }
+>
+> If the subsequent pcode read in xe_hwmon_power_is_visible() succeeds, the
+> writable powerX_max and powerX_cap attributes are exposed, and any value
+> userspace writes is clamped to the zeroed pl1_on_boot[] or pl2_on_boot[]
+> entry in xe_hwmon_power_max_write(), programming a 0W power limit into
+> firmware and severely throttling the GPU.
+Power-limit reads during probe are expected to be available and pass at 
+probe time.
+If they are unavailable, we should not create the corresponding entries.
+I think we should update |xe_hwmon_power_is_visible()| to use 
+|pl1_on_boot[]| or |pl2_on_boot[]| accordingly.
 
-I've gone back to reporting data->blksz for the single transfers now,
-which I think is what we expect to transfer here. It is a bit odd that
-nothing actually compares host->blocksize and data->blksz, maybe
-there should be a check here as the loop could otherwise go long
-or short and both of those would presumably be bad.
-
-> sh_mmcif_single_read() and sh_mmcif_single_write() add 3 to
-> host->blocksize so that host->blocksize / 4 rounds up the 32-bit FIFO word
-> count.  When data->blksz is not divisible by 4, 4 * i is larger than
-> data->blksz (and sgm->length), which triggers
-> WARN_ON(miter->consumed > miter->length) in sg_miter_stop() and
-> over-reports data->bytes_xfered in both sh_mmcif_read_block() and
-> sh_mmcif_write_block().
-
-Exactly, except that host->blocksize is not even set to data->blksz
-in the first place.
-
->> @@ -1397,6 +1382,7 @@ static void sh_mmcif_timeout_work(struct work_struct *work)
->>  	case MMCIF_WAIT_FOR_WRITE:
->>  	case MMCIF_WAIT_FOR_READ_END:
->>  	case MMCIF_WAIT_FOR_WRITE_END:
->> +		mrq->data->bytes_xfered = 0;
->>  		mrq->data->error = sh_mmcif_error_manage(host);
->>  		break;
->>  	default:
 >
-> [Severity: Medium]
-> Does this leave mrq->data->bytes_xfered non-zero when a multi-block PIO
-> transfer hits host->sd_error or when MMCIF_WAIT_FOR_STOP times out?
+> [1] https://sashiko.dev/#/bug/linux-9f11cfb5-f9c5-490e-879e-791ecaae33e5
 >
-> sh_mmcif_mread_block() and sh_mmcif_mwrite_block() increment
-> data->bytes_xfered as each block is read from or written into the
-> MMCIF_CE_DATA FIFO, but their host->sd_error paths do not reset
-> data->bytes_xfered to 0 if an error interrupt arrives on a later block.
-> Likewise, case MMCIF_WAIT_FOR_STOP in sh_mmcif_timeout_work() does not
-> reset mrq->data->bytes_xfered to 0, unlike MMCIF_WAIT_FOR_STOP in
-> sh_mmcif_irqt().
->
-> When data->bytes_xfered remains non-zero on error, mmc_blk_mq_rw_recovery()
-> and mmc_blk_mq_complete_rq() can treat those unverified or aborted blocks
-> as completed with BLK_STS_OK.
-
-This was intentional on my end: if something has already been transferred
-through registers, I would count it. Since I already changed the other
-instances, I have changed this one as well now, and just unconditionally
-reset 'mrq->data->bytes_xfered = 0' in the timeout handler. No idea if
-this is actually better or worse.
-
-     Arnd
