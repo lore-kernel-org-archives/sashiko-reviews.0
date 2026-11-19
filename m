@@ -1,92 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795098084;
-	b=m7+ym0WLi+XxFd0fAfhsbILHS8DzAYmoDgV5cMLq5CTzEELNvRq/xyqWqguaVF65pTZ7
-	 c3+y6q2OP0A/xSREHDIOybulhzz8MhK0j2a0GgAkL6pMva4Uh1qs7q1O02Fz1D2HKDbsB
-	 xiYm3jomDPOlVy5q0/o3DAm85Q7oAvxdtACfvhEO3jHfNHt8KvAE4y5egO5jcrceUw4N4
-	 gvj4PsZWx/P3ADeMC8OJx2kbRypCb4VGZY7ZrEwVCDWE/+JyHHSpjyfKKfTszeIf5Ixmd
-	 tW20QI2mzRwx6bqR9cO2IRbpdcTzb0FfaNXmpzAZ0UBCQv5hUBjYYidfr7LoGE4EZLA==
+	t=1795098085;
+	b=2NDQ9gtbUjzrDMTUNaoR/Q0LUubwxWMoNld64IQid0FJlyzlKrwXDjqLeziFw0aOnw0D
+	 yd5Lg0lqnzsNJR1wgpBbD5H0NXn2TiiPvHtEyRrZj7TMq7MzpDdsnCreNMu5NJYrB418k
+	 0Dutu9ahtzytz85Ru1Yr4JhZwf3tOeyEIggrgIlJRA9LcRAx+NHHQEWqOmWknQ0P+74oC
+	 pU/MnYNcbU+J7zumUCYopYKaFci92PKeZmMGM04tqW7nyF+lXUvALpfLxPEq601vvHiJo
+	 i6iDqoupHuiLr9wtNaU2HeBOUWRXx0HSdSmBZIVypWBKo6eNP6BGvRgq0DPEDEf+Vug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795098084;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795098085;
 	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
 	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Transfer-Encoding:X-Spamd-Result:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-Spamd-Result:X-Rspamd-Server:
+	 X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
 	 X-Rspamd-Queue-Id;
-	bh=5nHBcblZLfmDaoamR9yM784n46xobwpFAZSeEMyPOqQ=;
-	b=zHbpbRRsNpxUK+giraRbzUsXbCxnLKrdpMGkOMp2EPOMr8QhuW7Jgc5bDv9p04isiQSc
-	 zJF3g3FaEg5Akz81vbGMkENq6LHRgM1IpDlD3TbijmNV/VsxS387HiKM5SJgLLSWJpoLq
-	 5K8z/qaMC6FsfZiFCRnI/XI3QGy+OMOBbbInDJt35W/rKvhmrkcwLyPBD74xCibiBW9sn
-	 W/T8E+fq0khXCGAfTlaxJ+iLTzRf7rySulW/EiE2nRSfRRcfin5Ho/7wfxLxuyCdXLdqW
-	 S18ty49hlHeyyxZ0nsWiQVi172gQMhpKC+EWka4yYJg7YsWW7B0mvGRAXoLjxWBzX9A==
+	bh=2kkYlcQYm15iaKo9GaUw4TYYSOAyWWivoUk2QLLzmW8=;
+	b=CEWdir/rOAoE70OkWRCgsp7bGUUEKAlAEptXkbTW3rxUL/wrEwUfVaphUTiDUdKWuC0f
+	 9ziFOvxWvhzRtq5arXW0lTd+TThbBDh+MqN9x0YxUHJy7fHYdCFgYijgOkyliwnq32wiw
+	 rCW+HnAcgInoANuQ2VYizelkFl08ePAMiH5vUMFtFmyqySpNAWqyB2vMXUnlqFyesYLRj
+	 +0NXCbnNcm/TLdgUmPzXjcjeebc8QMfubMZmGtlh8t0eAjG9GTIYDRsDJux3k8NcrTph7
+	 upnTMXDopwJZTnlDO6E8Yu/kRO4jUTol6/g5ewtj7HOvjoskABYy06RgStm/tr5aE2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="jR2BHt/s";
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=IdgOQfXZ;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=KqnMwaWo;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=U0IgUj3Y;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=pj0T0oN0;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=iUlRni7+;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=d80b2BeS;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=c+2LFWtN;
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD6F606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DE6606A320
 	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 14:21:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1BD6F606A325
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16DE6606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jR2BHt/s;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=IdgOQfXZ;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=KqnMwaWo;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=U0IgUj3Y
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=pj0T0oN0;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=iUlRni7+;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=d80b2BeS;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=c+2LFWtN
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id C1D101F78D;
-	Thu, 19 Nov 2026 14:21:20 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 2900A2247B;
+	Thu, 19 Nov 2026 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
 	t=1795098082; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=5nHBcblZLfmDaoamR9yM784n46xobwpFAZSeEMyPOqQ=;
-	b=jR2BHt/sb6kNNpDM4lUuwU0qKD1Z9e4v3Uqz9D/zS+wvdL5JC0QUw2shbcJ6aiPM5R3McN
-	CDxajRXYmjBI3I3aAXFdCk38qE4bm/ZwVcon6fwNhEKIR3ZVApLOvwsCBszhQIQ6vGePYO
-	1wISGN16Rc1eflHaEjlIjAftBEYmXRk=
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2kkYlcQYm15iaKo9GaUw4TYYSOAyWWivoUk2QLLzmW8=;
+	b=pj0T0oN0BVG8ikHKo/nj7BWd+EnaZqzDz25uulJQWfUyRNMWoFrIKjxceo4titXzxQOtug
+	cBCnJRwL0y7e+m8Hq6P35RNTszXz+7xYTw8sCzU3Xp1YagCE6nlYbG0M7BD6NJwOyiXHbY
+	d6AHWiYVRh+Eft486UkBqDhDWk+EbJ0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
 	s=susede2_ed25519; t=1795098082;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=5nHBcblZLfmDaoamR9yM784n46xobwpFAZSeEMyPOqQ=;
-	b=IdgOQfXZHGWXPl9soPjNTYJyCYUnAwqWr8YBKjulnFuufBb8DBNuGBwdNhX/DjgfaYzecQ
-	vxli36CZoNDcCjAw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=KqnMwaWo;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=U0IgUj3Y
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2kkYlcQYm15iaKo9GaUw4TYYSOAyWWivoUk2QLLzmW8=;
+	b=iUlRni7+dO6IWOlj0QoubQIDf/isxbJSvrTo211hcYTtfF6WCcirq7DM3qnbLWaBiBcdXL
+	WYW3MnYuKR8lGwCw==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=d80b2BeS;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=c+2LFWtN
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795098080; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=5nHBcblZLfmDaoamR9yM784n46xobwpFAZSeEMyPOqQ=;
-	b=KqnMwaWoa5jAjUhoJiiAmppsp+uZytTb7sXwhcvypBKE6hFbNEIpck6VAVB+zf/lj4HgdT
-	HdV+HNdzCphAvb3qPPhTkCr9LDbpTiQbMLjVGFVlFbikdfDRwl8FUvzIGOfJ9WTQbUszkA
-	NVV8u5S3UkUuMK524vo7yEKlTrYjCus=
+	t=1795098081; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2kkYlcQYm15iaKo9GaUw4TYYSOAyWWivoUk2QLLzmW8=;
+	b=d80b2BeSAb7iWKf3ThNqiQsScy3rNCJrKJ4uweIQZZKxaA3q4lQ1qmH+XDJEIuY/ilgAsq
+	eq907puZw3HwEaIQnteCQoDAX7ebnvEoeVcUSwMZhyBFchYquFqx4vJ0JoV06sZDuGQS38
+	zgPpaEYhFFYHim9uSVWdlTU3NxY/sjw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795098080;
+	s=susede2_ed25519; t=1795098081;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=5nHBcblZLfmDaoamR9yM784n46xobwpFAZSeEMyPOqQ=;
-	b=U0IgUj3Y7caa6xqgBgvyLOj+RXYUIqFIV8Y+bbR8JIWfsjxpGFk9/EsKGBoBmsjtxDxmVN
-	gz5qxXNz9jEiliCw==
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2kkYlcQYm15iaKo9GaUw4TYYSOAyWWivoUk2QLLzmW8=;
+	b=c+2LFWtNglM+8RXfhfd+ZGJ/mVwIbWRKOd04STCIfUmOTuhwObFO8AjRsh9+5pMvP0YDKu
+	9d4XqUihmxPpQhBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 51EBA1342D;
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A9847134F6;
 	Thu, 19 Nov 2026 14:21:20 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id RynyAeAF/2rJfgAAD6G6ig
+	id RynyAeAF/2rJfgAAD6G6ig:T2
 	(envelope-from <tzimmermann@suse.de>); Thu, 19 Nov 2026 14:21:20 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: airlied@redhat.com,
@@ -100,10 +109,12 @@ To: airlied@redhat.com,
 Cc: dri-devel@lists.freedesktop.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 00/11] drm/udl: Rework URB allocation
-Date: Thu, 19 Nov 2026 15:02:12 +0100
-Message-ID: <20261119142114.152052-1-tzimmermann@suse.de>
+Subject: [PATCH 01/11] drm/udl: Release URB in udl_put_urb()
+Date: Thu, 19 Nov 2026 15:02:13 +0100
+Message-ID: <20261119142114.152052-2-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261119142114.152052-1-tzimmermann@suse.de>
+References: <20261119142114.152052-1-tzimmermann@suse.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -134,7 +145,7 @@ X-Spamd-Result: default: False [-10.51 / 50.00];
 	DKIM_TRACE(0.00)[suse.de:+];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
 	FROM_EQ_ENVFROM(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_ALL(0.00)[];
@@ -149,60 +160,84 @@ X-Rspamd-Action: no action
 X-Spam-Flag: NO
 X-Spam-Score: -10.51
 X-Spam-Level: 
-X-Rspamd-Queue-Id: C1D101F78D
+X-Rspamd-Queue-Id: 2900A2247B
 
-Udl caches once-allocated URBs for later use. By default, it has a
-fixed number of 20 URBs in flight at most. Depending on the USB, this
-can either consume too much bandwidth or keep free bandwidth unused.
+Move URB cleanup from udl_urb_completion() to udl_put_urb().
+udl_put_urb() is the inverse of udl_get_urb(). The new helper will
+allow for further fixes.
 
-Replace the fixed-size cache with dynamic allocation of the URBs
-required. Adapt page-flip rate according to the actually available
-bandwidth on the USB.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ drivers/gpu/drm/udl/udl_drv.h  |  1 +
+ drivers/gpu/drm/udl/udl_main.c | 29 +++++++++++++++++------------
+ 2 files changed, 18 insertions(+), 12 deletions(-)
 
-Patches 1 to 6 clean up the code, fix a few minor issue and provide
-a clean interface for allocating and freeing URBs.
-
-Patch 7 switches the URB cache to managed release. As before, the
-cache collects all outstanding URBs as part of the USB device removal.
-
-Patches 8 to 11 implement dynamic allocation of URBs. The URB cache
-tracks the number of URBs in flight and allocates new ones of the cache
-has been exhausted. The udl driver now sends out as many URBs as
-necessary for the current frame without limitting itself to 20 URBs
-at a time. To avoid overloading the USB, udl waits in atomic_begin()
-for the previous frame's URBs to complete. This adapts page-flip
-rate to the bandwidth available on the USB.
-
-Patch 11 contains a minor improvement of the cache locality.
-
-Tested with superttuxkart and vkcube on weston.
-
-Note that display output might not happen faster in any way. This
-series only addresses one of many bottlenecks (e.g., message packing,
-software rendering).
-
-Thomas Zimmermann (11):
-  drm/udl: Release URB in udl_put_urb()
-  drm/udl: Do not use URB completion handler for error cleanup
-  drm/udl: Store per-URB allocation length in struct urb_node
-  drm/udl: Allocate bulk URBs in helper functions
-  drm/udl: Free bulk URBs in helper functions
-  drm/udl: Rework the error handling in udl_submit_urb()
-  drm/udl: Managed cleanup of URB cache
-  drm/udl: Track number of URBs in flight
-  drm/udl: Synchronize pending URBs on each frame
-  drm/udl: Allocate URBs on demand
-  drm/udl: Implement URB cache as LIFO stack
-
- drivers/gpu/drm/udl/udl_drv.c      |   2 -
- drivers/gpu/drm/udl/udl_drv.h      |   8 +-
- drivers/gpu/drm/udl/udl_main.c     | 280 +++++++++++++++--------------
- drivers/gpu/drm/udl/udl_modeset.c  |  20 ++-
- drivers/gpu/drm/udl/udl_transfer.c |   2 +-
- 5 files changed, 168 insertions(+), 144 deletions(-)
-
-
-base-commit: 7d502136b31169f6b5575f7f89c3da60cdf7891d
+diff --git a/drivers/gpu/drm/udl/udl_drv.h b/drivers/gpu/drm/udl/udl_drv.h
+index 145bb95ccc48..9535e9c59950 100644
+--- a/drivers/gpu/drm/udl/udl_drv.h
++++ b/drivers/gpu/drm/udl/udl_drv.h
+@@ -73,6 +73,7 @@ int udl_modeset_init(struct udl_device *udl);
+ struct drm_connector *udl_connector_init(struct drm_device *dev);
+ 
+ struct urb *udl_get_urb(struct udl_device *udl);
++void udl_put_urb(struct urb *urb);
+ 
+ int udl_submit_urb(struct udl_device *udl, struct urb *urb, size_t len);
+ void udl_sync_pending_urbs(struct udl_device *udl);
+diff --git a/drivers/gpu/drm/udl/udl_main.c b/drivers/gpu/drm/udl/udl_main.c
+index 17950fe3a0ec..936fb6565bdb 100644
+--- a/drivers/gpu/drm/udl/udl_main.c
++++ b/drivers/gpu/drm/udl/udl_main.c
+@@ -149,10 +149,6 @@ int udl_select_std_channel(struct udl_device *udl)
+ 
+ void udl_urb_completion(struct urb *urb)
+ {
+-	struct urb_node *unode = urb->context;
+-	struct udl_device *udl = unode->dev;
+-	unsigned long flags;
+-
+ 	/* sync/async unlink faults aren't errors */
+ 	if (urb->status) {
+ 		if (!(urb->status == -ENOENT ||
+@@ -164,14 +160,7 @@ void udl_urb_completion(struct urb *urb)
+ 		}
+ 	}
+ 
+-	urb->transfer_buffer_length = udl->urbs.size; /* reset to actual */
+-
+-	spin_lock_irqsave(&udl->urbs.lock, flags);
+-	list_add_tail(&unode->entry, &udl->urbs.list);
+-	udl->urbs.available++;
+-	spin_unlock_irqrestore(&udl->urbs.lock, flags);
+-
+-	wake_up(&udl->urbs.sleep);
++	udl_put_urb(urb);
+ }
+ 
+ static void udl_free_urb_list(struct udl_device *udl)
+@@ -295,6 +284,22 @@ struct urb *udl_get_urb(struct udl_device *udl)
+ 	return urb;
+ }
+ 
++void udl_put_urb(struct urb *urb)
++{
++	struct urb_node *unode = urb->context;
++	struct udl_device *udl = unode->dev;
++	unsigned long flags;
++
++	urb->transfer_buffer_length = udl->urbs.size; /* reset to actual */
++
++	spin_lock_irqsave(&udl->urbs.lock, flags);
++	list_add_tail(&unode->entry, &udl->urbs.list);
++	udl->urbs.available++;
++	spin_unlock_irqrestore(&udl->urbs.lock, flags);
++
++	wake_up(&udl->urbs.sleep);
++}
++
+ int udl_submit_urb(struct udl_device *udl, struct urb *urb, size_t len)
+ {
+ 	int ret;
 -- 
 2.56.0
 
