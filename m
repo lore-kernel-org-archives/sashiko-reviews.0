@@ -1,87 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795101031;
-	b=ZfLSW2bJkbbyRi03raKhxaXNLOjOVnEQBxCHRfPm+aBLHM6ed7r0J2rD2AlWsMZ5MWCT
-	 QtapVIig6vuCJ3nad5ZqsdTzr+bxg+ZPwJKWe53W2srMG6Xdfo27o4Oqwyyg2/G+I13bc
-	 tDZCde4zhOC0/+bPoGc4xYxSO/u9iZU+J6Su3sJFGAyK8A02UpcbLV+VGz7jJ8/OqQRh7
-	 2P/HcjCG1jRCy6sOD2IxQONmA/cqilbbgaEgzX88erodpnevIqc2uxG86kCNAcbgW7dt9
-	 uTUcacYDDjfAwjAB1XhSsz9+vnTzXxF9WlaEw8OrULccHeE1PRsk6mWiIRedogDqijA==
+	t=1795101422;
+	b=tuXbCZGUjcaqmbfu+BIQFRm6fTeJFzwq+XLnl7F91AS1hzpWduu5Phh4NCUplm1U1mjd
+	 59uAyuXkYVsQ+R6D1WEoOUALL830AFGWdA5fE1NRCqGuSXMeC2OwX3d/geA5mLjgpUxjY
+	 wMZTQ56bNRUz7+vNy67xZnuufNVvmROd+dlCYprHR8iN8+ou6p49JiBgTMXqbC1mFbcdh
+	 iBoVDqg6obmGd70F7ncD0GVB5rmED9dG7/6VqPsFRVo41RerD2UynEfEb/i/A6AuAbXMp
+	 SSdP1NRKVejCb0xbDkfIv5cbIbidg4AJRs8aKujRDscvZ+18N6Lf+A5YFueq1Ly5HnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795101031;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=2PmdBMJLldvL6rUsB8Z9mUP9W+rlN8TqadiI6ssq/LU=;
-	b=ONG/+zq5uxtm8DDrPyQQJEpPaKYZhI6DNy4Dv7GGxIhlZSUe60+0oOfoeska8nUdkHES
-	 qqFnFTY6T0C/zeBl1hiLre5OFU5LurzYOfqgjVdY/WoLQnLuPbG4Tn6GAQ/R+rSWIQ281
-	 A16N8rv2LpJR6AKAJM5B1QZ8pitGEH+K9+3rhFmKTaxvDT6lUsxxb3hYHEu1mCQr+rfzs
-	 gbksmbvh0rVh7j5O11ZCfxF/dPl6Keo+yzaAIj6ZW+J86yrWUbTg6sKvXMHg6joAaCOOJ
-	 VoaCqviLQ9DZ5xVlEhkOj8BTqqSvV4kXhEHOTNuzZTBmVYVJwNgu13XCQLAod7NNtog==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795101422;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=bBJ2aRJrCiD8keCJr4hECrY2HF8+sAi+mcLKeE2oSVA=;
+	b=sr59akrfruPA0ffNuada0N96hcJetQe50iKMB/7mNLwIetkXWKkpnE4NFuxfm8RpAGuX
+	 HitWpwEk5y3cq1GHeHcscBKMBVdTSph0eE7pOZ0BhguSnvj8D1PuCdkJb7CpRLrfc3PWe
+	 Ovgoqy27Qfeq4UDz/OnKclBHNccU7tNN5euqmA07ngUqndVz0VOyPOf+LyWo6TT/G2TJG
+	 Og6w+RxBndxkTN3hddS1JprE7imN1e6mHI4rCVZQBqqK9zoMJqHwKUs1UpYYSiXRF7Hsu
+	 Dr5tkBZaNAXjje3MN9PJKbBhOAzZ4Y2T882vFN4tlOik6F72HrKvRxlXlKNED1GL0Mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Rj6l5PFb;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eJigARas;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEF6606A325
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 15:10:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0FEF6606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD74606A325;
+	Thu, 19 Nov 2026 15:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Rj6l5PFb
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a214c5c4c0so24682315e9.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 07:10:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1795101029; x=1795705829; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2PmdBMJLldvL6rUsB8Z9mUP9W+rlN8TqadiI6ssq/LU=;
-        b=Rj6l5PFb7afmpP2cx/rjtUOdSzvRnQzhnCC17leAMz4mOvw8vTVwNfEnQEMx90Zn+O
-         og+kc9sig2f9NoK0u8U5aRjLwEJOB5jQtJBqRCPzTHOeokS23yUn3swDI0S844cnx5wi
-         p4whB5lgu+PLrtgKRCo7EHEvY1fNNMqTCQkrvncmUuXQwTwT+cxXuFl3slalxmZ8gZRA
-         ng2cBFxuIV0WDrodUzhDibkK268egAAawa7a4xjSHyOjUO8JnuLGA8m4/2DE3Eo7Lh8L
-         7qMRg+lawkJmJWq87T2mlpybxyd+ta0B97C3K6OO1nklX+RPKyYnh+ho0xYqbhCep/bw
-         ioVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795101029; x=1795705829;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2PmdBMJLldvL6rUsB8Z9mUP9W+rlN8TqadiI6ssq/LU=;
-        b=YUO7upPb795MU/NrPqV9+Bua66i6qCbtJKkUep0aS0knlc6uu+6TabzaqNotBCOPG+
-         bUCcJ6ASKOOg/HYNygUmLBZ5x/Lp3dpw49WPJcAISv3x54skD3WoxXnbx45RWCVtUNK1
-         PXnYkSWg/2ppEDdQ9YaxnLL8WigVt7wFvPAGaH03fA88xjYMsW0yUm1VWpyPiD64T9V/
-         yDKLxKJtQl5WSJK3r1bW5iVx4uGtM9J0/T3lFHGogFFN5g5tmvBOpmUuJWYCmw74gYmQ
-         4Y8w9O0T6h4XXc510HE++17XvYyuG3Et+nIcFpcXinaVIJyN+oZLy4n9KZ9mukO2XiQE
-         DJAA==
-X-Gm-Message-State: APuU4Z/Vl1/csP+rRTVq5Y1b4V/Wa6isE5otZsZrWclhPla5ea2RBnVj
-	4vVpOPPUNEgqUTMVgtN2W2urU+BNDtDKKI+G2wkBx6QsGaTipdG56eKwyLgseahyAF4DIER6DSO
-	RmfvFAkY=
-X-Gm-Gg: AYBFou2JRrBz0vYHqKLQRbn5JAcYJLXIPSI6/TCOXsOlanFoxcx9ZumQABJdWEYawlf
-	Y9vEY68hxDsIPGitL7VMCyk5N6btQsP1st6M6H0nmyh8FY2g1yPCx/REH3veOohwqAJoZSDpsZC
-	RXvsmAGKwzzkTFNM1Mi+6toCEycublEz8GB11L0337AQNoCvS2X5tmd3xJY2aJmJCCq/lDo3nN0
-	l9b6Ur9CY5XIUGS1+BOYNHHQ5X7/ku/TXymgAjztz5qsweMRbHnMIdOu6UEWKX+a4NpV1MCQ8lQ
-	A3OcHnh5hpDHpNKd6z+qnuEW/IhcX6t7jsFTfbKjUEyflh7HDTjv7L+Kt8HGvEEIA5sUl1m/uu2
-	kJzsSX8RXngkLtbKHrGBpzdvAybR3N6JIJoBR5njtVUqPlo7GTWRS9KwNTmISciQYPAp+64FAfh
-	QeNbOwSwXYl4oV00zyZl66IdwuqFWvnaMl2X6l7bugQteFy3v04VnM/7uI9HzYsCo9ZyCKWanGz
-	wtRnA61Q2Dl1uil17MKXGnfcu2Im9vBH23Yoj/qXL3eFV1ItDPtqP3EMhgZ/5tNFWnATN5D7VNa
-	+k51aHHDG1IqgASsDK/fHh5Ef/5eJhZIqDUB8zA55++MPz69ZUrba0CJIBs1z2QQ+w==
-X-Received: by 2002:a05:600c:34d2:b0:4a1:6992:f861 with SMTP id 5b1f17b1804b1-4bb7d6d1f21mr128058615e9.1.1795101028949;
-        Thu, 19 Nov 2026 07:10:28 -0800 (PST)
-Received: from ?IPV6:2a07:de40:8100:0:89a9:fd0e:583d:4a53? ([2001:af0:8000:1409:193:86:92:181])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884b7515sm4229285e9.13.2026.11.19.07.10.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Nov 2026 07:10:28 -0800 (PST)
-Message-ID: <2344f228-f6fe-4b18-9587-53063f93de50@suse.com>
-Date: Thu, 19 Nov 2026 16:10:28 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eJigARas
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7831F000C6;
+	Thu, 19 Nov 2026 15:17:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795101422;
+	bh=bBJ2aRJrCiD8keCJr4hECrY2HF8+sAi+mcLKeE2oSVA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=eJigARasediOZtfqOXkKB0/WB5dtbBxi8a3rDC+v3N6ZKwJYS7HI2WtJagdjVzRX4
+	 d3NwWEuSoLNepVCb4GUnSCCwbguD3IxAbCCGRpvcbAHGNoVfWVzx6L5gQtvXPf4vat
+	 n1XWq0wMaptXbUJPBnb/PLCoiUCx2bKrvwCVoPonTFqUXeQ44zoSNLKq2ZtZb+l5Pm
+	 no8WkCFnQzW27YnRp/26VZQ+JykNBLA7x/v8n/2d0j7xQOpf2Boeh8khyhvl45uGEL
+	 OF1sKFppBSvUWmLMngIXX7CVi08iqQatvtaO2hx3v6qlrGN9rXukdIf2G/rVQRZl+0
+	 1RmaR/l7zK79A==
+Date: Thu, 19 Nov 2026 15:16:58 +0000
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: "Rob Herring (Arm)" <robh@kernel.org>, mfd@lists.linux.dev,
+	devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH 1/9] dt-bindings: mfd: Add Marvell AP806/CP110 system
+ controller schema
+Message-ID: <20261119151658.GV98456@joneslee-macbookpro.roam.internal>
+References: <20261111-dtbs-marvell-v1-0-938788aff3ae@kernel.org>
+ <20261111-dtbs-marvell-v1-1-938788aff3ae@kernel.org>
+ <sashiko-outbox-209906@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,95 +60,84 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] module: Fix data race on mod_unload_taint::count
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-modules@vger.kernel.org
-References: <20261020-taint-unload-v1-0-d1c764889afc@suse.com>
- <20261020-taint-unload-v1-2-d1c764889afc@suse.com>
- <sashiko-outbox-179099@kernel.org>
-Content-Language: en-US
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <sashiko-outbox-179099@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-209906@kernel.org>
 
-On 10/20/26 4:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] module: data race and uninitialized read of count in try_add_tainted_module()
+On Thu, 12 Nov 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] dt-bindings: mfd: marvell,ap806-system-controller collides
+>   with legacy driver
+
+Please review, explain or fix the Sashiko review(s).
+
+If this is a set, this request includes the other patches too.
+
 > --
 > 
-> commit 742b3a34fee074246edb757213ccfc148f6e7300
-> Author: Petr Pavlu <petr.pavlu@suse.com>
+> commit 4cddea2359377a9e6ae88c719cab7c7efc9634bf
+> Author: Rob Herring (Arm) <robh@kernel.org>
 > 
-> module: Fix data race on mod_unload_taint::count
+> dt-bindings: mfd: Add Marvell AP806/CP110 system controller schema
 > 
-> This commit fixes a data race on mod_unload_taint::count between updates
-> serialized by module_mutex and concurrent RCU readers by changing the
-> field to unsigned int and using WRITE_ONCE()/READ_ONCE() accesses.
+> This commit adds a dedicated Device Tree binding schema for the Marvell
+> AP806 and CP110 system controllers and their child devices.
 > 
->> diff --git a/kernel/module/internal.h b/kernel/module/internal.h
->> index 061161cc79d90..70ef20b97c84a 100644
->> --- a/kernel/module/internal.h
->> +++ b/kernel/module/internal.h
->> @@ -257,7 +257,13 @@ struct mod_unload_taint {
->>  	struct list_head list;
->>  	char name[MODULE_NAME_LEN];
->>  	unsigned long taints;
->> -	u64 count;
->> +
->> +	/*
->> +	 * Number of times a module with this name and taint combination has
->> +	 * been unloaded. Updates are serialized by module_mutex and use
->> +	 * WRITE_ONCE(). Readers that may run concurrently use READ_ONCE().
->> +	 */
->> +	unsigned int count;
->>  };
->>  
->>  int try_add_tainted_module(struct module *mod);
->> diff --git a/kernel/module/tracking.c b/kernel/module/tracking.c
->> index 5bcd1c2701f07..873fceb305268 100644
->> --- a/kernel/module/tracking.c
->> +++ b/kernel/module/tracking.c
->> @@ -28,7 +28,10 @@ int try_add_tainted_module(struct module *mod)
->>  				lockdep_is_held(&module_mutex)) {
->>  		if (!strcmp(mod_taint->name, mod->name) &&
->>  		    mod_taint->taints == mod->taints) {
->> -			mod_taint->count++;
->> +			unsigned int count = mod_taint->count;
->> +
->> +			if (count != UINT_MAX)
->> +				WRITE_ONCE(mod_taint->count, count + 1);
->>  			goto out;
->>  		}
->>  	}
+> > diff --git a/Documentation/devicetree/bindings/mfd/marvell,ap806-cp110-system-controller.yaml b/Documentation/devicetree/bindings/mfd/marvell,ap806-cp110-system-controller.yaml
+> > new file mode 100644
+> > index 0000000000000..4c43986c2c0a3
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/mfd/marvell,ap806-cp110-system-controller.yaml
+> > @@ -0,0 +1,59 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/mfd/marvell,ap806-cp110-system-controller.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Marvell AP806 and CP110 system controller
+> > +
+> > +maintainers:
+> > +  - Andrew Lunn <andrew@lunn.ch>
+> > +  - Gregory Clement <gregory.clement@bootlin.com>
+> > +  - Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - enum:
+> > +          - marvell,ap806-system-controller
+> > +          - marvell,cp110-system-controller
+> > +      - const: syscon
+> > +      - const: simple-mfd
 > 
 > [Severity: Medium]
-> Does try_add_tainted_module() in kernel/module/tracking.c still have a
-> data race and potential uninitialized read on mod_taint->count when
-> allocating a new entry?
+> Does requiring marvell,ap806-system-controller on the parent simple-mfd
+> node cause a collision with the built-in legacy clock driver?
 > 
-> Further down in try_add_tainted_module(), a newly allocated entry is
-> published via list_add_rcu() before mod_taint->count is initialized:
+> Unlike CP110, where cp110_syscon_legacy_of_match matches
+> marvell,cp110-system-controller0, ap806_syscon_legacy_of_match matches
+> marvell,ap806-system-controller:
 > 
-> 	mod_taint = kmalloc_obj(*mod_taint);
-> 	if (unlikely(!mod_taint))
-> 		return -ENOMEM;
-> 	strscpy(mod_taint->name, mod->name, MODULE_NAME_LEN);
-> 	mod_taint->taints = mod->taints;
-> 	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
-> 	mod_taint->count = 1;
+> drivers/clk/mvebu/ap806-system-controller.c:
+> static const struct of_device_id ap806_syscon_legacy_of_match[] = {
+> 	{ .compatible = "marvell,ap806-system-controller", },
+> 	{ }
+> };
 > 
-> Because kmalloc_obj() does not zero-initialize the allocation and
-> list_add_rcu() publishes the entry to unloaded_tainted_modules first,
-> concurrent RCU readers in print_unloaded_tainted_modules() or
-> unloaded_tainted_modules_seq_show() can observe mod_taint and execute
-> READ_ONCE(mod_taint->count) while mod_taint->count still contains
-> uninitialized slab memory, or race with the plain store setting it to 1.
+> When a device tree conforms to this schema, ap806_syscon_legacy_driver
+> binds to the parent MFD platform_device at boot.
+> ap806_syscon_legacy_probe() then logs three false FW_WARN messages about a
+> legacy binding, performs an unintended regmap_read() of AP806_SAR_REG
+> (0x400) in ap806_syscon_common_probe(), and fails probe with -EINVAL and
+> "compatible not supported" because the parent node is not compatible with
+> marvell,ap806-clock or marvell,ap807-clock.
 > 
-> Should mod_taint->count = 1 be initialized before calling list_add_rcu()?
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261111-dtbs-marvell-v1-0-938788aff3ae@kernel.org?part=1
 
-This issue was addressed separately in commit 7a5c13cfdfcb ("module: Fix
-uninitialized count read of unloaded taint tracking record") [1].
-
-[1] https://git.kernel.org/torvalds/c/7a5c13cfdfcb1871050fdbe00ac223993f8925fa
+-- 
+Lee Jones
