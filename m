@@ -1,49 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=65.21.61.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795101958;
-	b=ANgTlI6Lx7+yunVY5E1czXh6VxLjNDdvFaU+SOz+dPt5WoK/l7HisE/rLpKeQw9MGuga
-	 zVzBeo9L/1CYlP7qNnsL8FVtN3iTtVivLMfK/32/ggjvMkbOyym7RlDT5nHE6YMtVi1rs
-	 F5lOOr5tXnKn6z4lcYODgt4WDpfqqdVYMAkcNysRn6iX3nd1VuxeYRTZsHblQpfRKOASS
-	 PyYMVUlJFA2ap3xRHDzxc4RExtvLrbxXHeA2GmASg7q4/qP1xRHGdzS36gXFVxBDh0+5V
-	 gU7vW+nZeJpjwJHbbAFYKXjAeTsvelyD6+Ngq7+T0p4E6PaFf+v87gYGEZbt9BrmQJg==
+	t=1795102238;
+	b=ntM/k/FIFWJ7kjA1qLzTlbZUpnX8mDHrHxHN8NA3nKJgn3kC6zfa7M1KjRhoLrZ6iggG
+	 dec9qF7FwO2ImTgiu94cn7aZA2Q5Ah8cijnVsVpwX7zoivug/i7KHL83LoJyjq6zf0Rjm
+	 ukXI8x+eRIGereFVAmLr19NOBvb40xD7AsquTRDt1p8oEbAa/DMicFsJzzJhREiFDPZ2q
+	 ofq/kHPWQGbELIHEZxgyU3lQ58GRokgVN/Xq/9higZ4QYM9x8lvJCq7FCZRGEAMF7ujXg
+	 LedAtys+CQTba3b3uLE3ybOpktU073q3FUSwUBRW4juvlmiTvT5niQ03IukDL/HxYuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795101958;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=zdB2fPtL2z7ZG6LCXpPbQvhRXPEXVT2iZIQyInkp3MU=;
-	b=ajKoU+GO8UPEEui0qdbDzErqYwvphFHv8Eg2yN8kpTFd2oE4YqrJG9SH2F3fvAxB5aAw
-	 tzx7DikzFRyfYTOTzoa9zLd7kJKSG7c0k2DwOIZEHRbNLuYKXgfv1N5NyWpfQ7LxwDVID
-	 5ju25Oo6093rR603JFKzBxFggoUYki6xtKTTXcird+jtJyPR8hPcv5ZDKvJ9axKjSJYyU
-	 cWXMO3qQqV0Cl9G9qDnSqfBXCA+AEVvoRwsC/RmJyB2s0ZXkV8rpoisSLyTnW8UzBYxAF
-	 Lrkvc4o2eSq5Jzw8ia+Tl9teBNguqZt2naaqIWkugokpx0cS6hZnCSSsH5KyQ0eMlTw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795102238;
+	h=DMARC-Filter:Message-ID:DKIM-Signature:Date:MIME-Version:User-Agent:
+	 From:Subject:To:Cc:References:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=FMi2mMXbZEaTTTJLs4nfOz4L1kEKPa7JQamE+tBPopc=;
+	b=KhCv5F6hJ6wHcjWUjvK269Xn1+2EYzcwI3GvSQoK+GateXngurIHQVRDnEsQ7DWwBZ7X
+	 WFgGFdR9nX8ENNJG0Rz4N0jZ3GtZnR7NR5wm6Iu84QeO5DgWjc60uQM+4X6rFBz2UO7Iu
+	 Ad1b3exNEviJZfszgkqgZ5ol2k0d0QVv9vIBNM702wgoJtI21WsJoE0JqKMSy4pIslK9h
+	 VXPLSGaojfUg3/7L66cRZynS00e1d92huC4nKaa6PIfMw3pPumfK7ZEDbF0AqS+N5CNsP
+	 PrMH6mq9KnFo9GCdzRWH9+AauKFlboxQZ2Dnr3lO2UWbH8d0QRmxNLi0JWgLCNjLUkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="DH8BaBb/";
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC8BA606A325;
-	Thu, 19 Nov 2026 15:25:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC8BA606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=aliel.fr;
+	spf=pass smtp.mailfrom=aliel.fr;
+	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=Nj6zi7Fo;
+	arc=none smtp.remote-ip=65.21.61.41
+Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701CC606A325
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 15:30:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 701CC606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=DH8BaBb/
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 761591575;
-	Thu, 19 Nov 2026 07:25:54 -0800 (PST)
-Received: from [10.0.129.37] (e122027.cambridge.arm.com [10.0.129.37])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AA5633F882;
-	Thu, 19 Nov 2026 07:25:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795101957; bh=L8AM1088GXZp/KUuwOmJHtuk4LM/8kxdRfiw72oFviw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DH8BaBb//yLeBr2dmfTFqY2aimtfu4bNYokOLjm0EYWZ/gI/t4YS7vcWCodD6wvw4
-	 bkUybIOFHqUe9l9oMSaiGQGxZ1UU+EayJjNDyVPfSwy87x6C9AJVSQyCuVf9MJbRsH
-	 D/m9URoICxgF1J1ZDBBUwarfFfsKqOR8wh2lNpso=
-Message-ID: <1715c8bd-3738-4d1a-9d22-0abbdd688e4c@arm.com>
-Date: Thu, 19 Nov 2026 15:25:53 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=Nj6zi7Fo
+Message-ID: <ec9c8460-a8de-460e-92bb-dc03240152bb@aliel.fr>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
+	s=courrier-s1; t=1795102234;
+	bh=3cxvdL4KfFwcHXkWK7rQriyomVokMs5MeD2OaggeClQ=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To;
+	b=Nj6zi7Fo0ca5Ps9aUATozF/jxT6gCv+7SS7P/dwLIZlh4hIVjAk7MXSsgA7JbBLy7
+	 lf+mFz55owqBoYAWIJldfRz0SSqxgdM6lEpUk0rQzL+74rNH31mts30Mc31SPIGjA+
+	 FTOPuTK24MLzcb6ip2CCC7ddL/fChzsbgAjliXNI=
+Date: Thu, 19 Nov 2026 16:30:02 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,305 +52,125 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/11] KVM: arm64: CCA: Add Realm RTT mapping and
- invalidation helpers
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261116164358.142785-1-steven.price@arm.com>
- <20261116164358.142785-7-steven.price@arm.com>
- <sashiko-outbox-217428@kernel.org>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <sashiko-outbox-217428@kernel.org>
+From: Ronald Claveau <linux-kernel-dev@aliel.fr>
+Subject: Re: [PATCH 06/10] drm/meson: dw-hdmi: Drop manual HHI clock and
+ memory PD setup
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org,
+ robh@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
+ vkoul@kernel.org, olteanv@gmail.com
+References: <20261117-meson-drm-create-hdmitx-phy-v1-0-9e0ac931381c@aliel.fr>
+ <20261117-meson-drm-create-hdmitx-phy-v1-6-9e0ac931381c@aliel.fr>
+ <sashiko-outbox-219570@kernel.org>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-219570@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/11/2026 17:21, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential
-> issues to consider:
-> - [Medium] KVM: arm64: cca: broken split-failure fallback in
->   realm_unmap_*_range()
-> - [Medium] KVM: arm64: cca: stale err_level after
->   realm_unmap_cache_topup() failure
-> - [Medium] KVM: arm64: cca: get_start_level() misses 2-level minimum on
->   64K pages
-> - [Medium] KVM: arm64: KVM_BUG_ON() on -ENOMEM in
->   realm_unmap_private_range()
-> - [Low] KVM: arm64: cca: possible RTT creation for unmapped entry in
->   realm_unmap_*()
+On 11/17/26 21:11, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] drm/meson: dw-hdmi: skipped HDMITX mem PD power-up in
+>   meson_dw_hdmi_init()
 > --
 > 
-> commit 453fd020abf481912e2fee6d2f403740b481af92
-> Author: Steven Price <steven.price@arm.com>
+> commit c8e782099f758bf635402705a20f57d7df9682a7
+> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
 > 
-> KVM: arm64: CCA: Add Realm RTT mapping and invalidation helpers
+> drm/meson: dw-hdmi: Drop manual HHI clock and memory PD setup
 > 
-> This commit adds RMI RTT creation, folding, and unmap helpers for CCA
-> Realm stage-2 shared and private address ranges.
+> This commit removes the direct HHI_HDMI_CLK_CNTL and HHI_MEM_PD_REG0
+> register writes in meson_dw_hdmi_init() and takes a runtime PM reference
+> in meson_dw_hdmi_probe() to power on the VPU power domain.
 > 
->> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
->> index 74b89da4e8015..838f95c201ada 100644
->> --- a/arch/arm64/kvm/rmi.c
->> +++ b/arch/arm64/kvm/rmi.c
-> 
+>> diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+>> index eb33c70f29c31..20a821936b3af 100644
+>> --- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
+>> +++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
 > [ ... ]
-> 
->> @@ -154,12 +291,94 @@ static int realm_tear_down_rtt_range(struct realm *realm,
->>  					 start, end);
->>  }
+>> @@ -599,12 +598,6 @@ static void meson_dw_hdmi_init(struct meson_dw_hdmi *meson_dw_hdmi)
+>>  {
+>>  	struct meson_drm *priv = meson_dw_hdmi->priv;
 >>  
->> +/*
->> + * Returns 0 on successful fold, a negative value on error, a positive value if
->> + * we were not able to fold all tables at this level.
->> + */
->> +static int realm_fold_rtt_level(struct realm *realm, int level,
->> +				unsigned long start, unsigned long end)
->> +{
->> +	int not_folded = 0;
->> +	ssize_t map_size;
->> +	unsigned long addr, next_addr;
->> +
->> +	if (WARN_ON(level > KVM_PGTABLE_LAST_LEVEL))
->> +		return -EINVAL;
-> 
-> [Severity: Medium]
-> On a CONFIG_ARM64_64K_PAGES kernel, can realm_fold_rtt_level() be called
-> with level == 4 and trigger this WARN_ON()?
-> 
-> For a 32-bit or 33-bit IPA, stage2_pgtable_levels(realm->ia_bits) returns
-> 1 on 64K pages, so get_start_level() returns 4 - 1 = 3
-> (KVM_PGTABLE_LAST_LEVEL) even though kvm_get_vtcr() clamps stage-2 tables
-> to at least 2 levels (start_level = 2).  When realm_unmap_shared_range()
-> or realm_unmap_private_range() then calls realm_fold_rtt_level(realm,
-> get_start_level(realm) + 1, start, end), level is 4, triggering the
-> warning and skipping RTT folding (and similarly in
-> realm_tear_down_rtt_range()).
-> 
-> [ ... ]
-
-Already discussed in previous email about get_start_level().
-
->> @@ -189,6 +408,208 @@ int kvm_realm_teardown_stage2(struct kvm *kvm)
+>> -	/* Enable clocks */
+>> -	regmap_update_bits(priv->hhi, HHI_HDMI_CLK_CNTL, 0xffff, 0x100);
+>> -
+>> -	/* Bring HDMITX MEM output of power down */
+>> -	regmap_update_bits(priv->hhi, HHI_MEM_PD_REG0, 0xff << 8, 0);
+>> -
+>>  	/* Reset HDMITX APB & TX & PHY */
+>>  	reset_control_reset(meson_dw_hdmi->hdmitx_apb);
+>>  	reset_control_reset(meson_dw_hdmi->hdmitx_ctrl);
+>> @@ -829,9 +822,29 @@ static int __maybe_unused meson_dw_hdmi_pm_resume(struct device *dev)
 >>  	return 0;
 >>  }
 >>  
->> +static bool realm_unmap_cache_topup(struct kvm *kvm,
->> +				    struct kvm_mmu_memory_cache *mc, int needed)
+>> +static void meson_dw_hdmi_pm_put(void *dev)
 >> +{
->> +	int ret;
->> +
->> +	if (!mc || kvm_mmu_memory_cache_nr_free_objects(mc) >= needed)
->> +		return false;
->> +
->> +	lockdep_assert_held_write(&kvm->mmu_lock);
->> +	write_unlock(&kvm->mmu_lock);
->> +	ret = __kvm_mmu_topup_memory_cache(mc, KVM_PGTABLE_LAST_LEVEL, needed);
->> +	write_lock(&kvm->mmu_lock);
->> +
->> +	return !ret;
+>> +	pm_runtime_put_sync(dev);
 >> +}
 >> +
->> +static void realm_unmap_shared_range(struct kvm *kvm,
->> +				     unsigned long start,
->> +				     unsigned long end,
->> +				     bool may_block,
->> +				     struct kvm_mmu_memory_cache *mc)
->> +{
->> +	struct realm *realm = &kvm->arch.realm;
->> +	unsigned long rd = realm->rd_phys;
->> +	unsigned long next_addr, addr;
->> +	unsigned long shared_bit = BIT(realm->ia_bits - 1);
+>>  static int meson_dw_hdmi_probe(struct platform_device *pdev)
+>>  {
+>> -	return component_add(&pdev->dev, &meson_dw_hdmi_ops);
+>> +	struct device *dev = &pdev->dev;
+>> +	int ret;
 >> +
->> +	if (start >= end)
->> +		return;
+>> +	ret = devm_pm_runtime_enable(dev);
+>> +	if (ret)
+>> +		return ret;
 >> +
->> +	/*
->> +	 * Callers may pass either an IPA range or its shared alias. Add the
->> +	 * shared bit only for the former. Use addition so an exclusive end at
->> +	 * shared_bit advances to the end of the IPA space.
->> +	 */
->> +	if (start < shared_bit) {
->> +		start += shared_bit;
->> +		end += shared_bit;
->> +	}
->> +
->> +	for (addr = start; addr < end; addr = next_addr) {
->> +		long ret;
->> +
->> +		ret = rmi_rtt_unprot_unmap(rd, addr, end, RMI_ADDR_TYPE_NONE,
->> +					   0, &next_addr, NULL, NULL);
->> +		if (WARN_ON(ret < 0))
->> +			return;
->> +
->> +		switch (RMI_RESULT_STATUS(ret)) {
->> +		case RMI_SUCCESS:
->> +			break;
->> +		case RMI_ERROR_RTT: {
->> +			int err_level = RMI_RESULT_DATA_LEVEL(ret);
->> +			int level = find_map_level(realm, addr, end);
->> +
->> +			if (WARN_ON(err_level < get_start_level(realm) ||
->> +				    err_level > KVM_PGTABLE_LAST_LEVEL))
->> +				return;
->> +
->> +			if (err_level >= level) {
->> +				/* Nothing present, so skip */
->> +				next_addr = ALIGN(addr + 1,
->> +						  kvm_granule_size(err_level));
->> +				break;
->> +			}
+>> +	ret = pm_runtime_resume_and_get(dev);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "Failed to power on HDMI TX\n");
 > 
-> [Severity: Low]
-> This question rests on an RMM architecture detail that could not be
-> confirmed from the kernel source: can SMC_RMI_RTT_UNPROT_UNMAP or
-> SMC_RMI_RTT_DATA_UNMAP return RMI_ERROR_RTT with err_level < level when
-> the RTT walk stops at an unassigned ancestor entry (where neither a child
-> RTT nor a block mapping exists), rather than advancing next_addr across
-> the unmapped ancestor and returning RMI_SUCCESS?
-
-As per the spec:
-
-IQTXJY: A Range-based memory unmapping operation skips over RTT entries
-within the target IPA range whose state is already equal to the target
-value.
-
-So no it won't stop at an unassigned entry.
-
-> If yes, unmapping a sub-block range (such as a single page where level is
-> KVM_PGTABLE_LAST_LEVEL) in an unpopulated region will fall through to
-> realm_create_rtt_levels() in both realm_unmap_shared_range() and
-> realm_unmap_private_range(), allocating and delegating intermediate RTTs
-> only to fold them again at the end of the function, and hitting
-> KVM_BUG_ON(1, kvm) in realm_unmap_private_range() if that allocation
-> fails.
+> [Severity: High]
+> Can dropping the HHI_MEM_PD_REG0 write leave the HDMITX memory powered
+> down when the bootloader turns on the top-level VPU domain without
+> enabling HDMI?
 > 
->> +
->> +			if (may_block && realm_unmap_cache_topup(kvm, mc,
->> +								 level - err_level)) {
->> +				next_addr = addr;
->> +				break;
->> +			}
->> +
->> +			ret = realm_create_rtt_levels(realm, addr, err_level,
->> +						      level, mc);
+> In the VPU power domain driver, pwrc_ee_is_powered_off() only checks the
+> top-level AO sleep bit and does not check HHI_MEM_PD_REG0[15:8].  When
+> the top-level VPU domain is already powered on at boot,
+> meson_ee_pwrc_init_domain() registers the genpd as already on without
+> calling meson_ee_pwrc_on():
 > 
-> [Severity: Medium]
-> Can realm_create_rtt_levels() run with a stale err_level if
-> __kvm_mmu_topup_memory_cache() fails inside realm_unmap_cache_topup()?
+> drivers/pmdomain/amlogic/meson-ee-pwrc.c:meson_ee_pwrc_init_domain() {
+> 	...
+> 	if (dom->num_clks && dom->desc.is_powered_off && !dom->desc.is_powered_off(dom)) {
+> 		ret = clk_bulk_prepare_enable(dom->num_clks, dom->clks);
+> 		if (ret)
+> 			return ret;
 > 
-> When the cache has fewer than needed objects and topup fails with
-> -ENOMEM, realm_unmap_cache_topup() still drops and re-acquires
-> kvm->mmu_lock before returning false.  If another thread folds or modifies
-> the RTTs while mmu_lock is dropped, continuing into
-> realm_create_rtt_levels() with the pre-unlock err_level (in both
-> realm_unmap_shared_range() and realm_unmap_private_range()) can fail with
-> RMI_ERROR_RTT at an ancestor level and trigger the WARN() in
-> realm_create_rtt_levels().
-
-I don't really get how this could sensibly be improved. In the event
-that the cache top-up fails then we're already critically low on memory.
-Looping round to have an up-to-date err_level would (most likely) put us
-back in the same situation of needing to top-up the cache (and failing).
-
-Continuing does indeed use a potentially stale err_level in the call to
-realm_create_rtt_levels(). The only issue here is if another thread had
-folded (if the RTTs had been created then we already handle that case
-gracefully). In that case we'd need even more memory so the operation
-would almost certainly fail.
-
-And if realm_create_rtt_levels() fails then we fall to unmapping the
-entire block - which isn't ideal but regains memory (which we're
-apparently very short on).
-
-There's perhaps an argument that the WARN_ON() below might be able to
-trigger, but then under these extreme memory allocation failures we
-should already have the allocator WARNing. So I don't think that's a
-real consideration either.
-
->> +			if (!ret) {
->> +				/* Retry with the RTT levels in place. */
->> +				next_addr = addr;
->> +				break;
->> +			}
->> +			WARN_ON(ret != -ENOMEM);
->> +
->> +			/* Splitting failed; unmap the entire existing block. */
->> +			next_addr = ALIGN_DOWN(addr, kvm_granule_size(err_level));
->> +			end = max(end, next_addr + kvm_granule_size(err_level));
->> +			break;
+> 		dom->base.flags = GENPD_FLAG_ALWAYS_ON;
+> 		ret = pm_genpd_init(&dom->base, NULL, false);
+> 		if (ret)
+> 			return ret;
+> 	}
+> 	...
+> }
 > 
-> [Severity: Medium]
-> If realm_create_rtt_levels() fails partway through a multi-level split
-> (for example, after creating a level-2 RTT to split a 1 GiB level-1 block,
-> then failing with -ENOMEM at level 3), doesn't this fallback use the
-> initial err_level and widen the unmap to the full 1 GiB block instead of
-> the 2 MiB block at the last level created?
-> 
-> Also, when next_addr is aligned down below start, start is not updated, so
-> the realm_fold_rtt_level() call after the loop starts at the original
-> start and skips folding RTTs in [next_addr, start).  Both issues also
-> apply to the fallback in realm_unmap_private_range().
-
-This is technically correct. But equally this is a "shouldn't happen in
-practice" situation. If we can't split then we can't unmap the requested
-range. While there are corner cases like Sashiko describes which could
-be improved on slightly, I don't see the point in unnecessarily
-complicating the code for them. Ultimately if we get here then we're
-unmapping too much - and we just have to hope that the system as a whole
-can recover at the cost of the VM.
-
-Certainly in the case of realm_unmap_private_range() the VM can't
-recover (hence KVM_BUG_ON()). For the shared memory case we can at least
-fault the memory back in if memory pressure has reduced sufficiently.
-
-> [ ... ]
-> 
->> +static void realm_unmap_private_range(struct kvm *kvm,
->> +				      unsigned long start,
->> +				      unsigned long end,
->> +				      bool may_block,
->> +				      struct kvm_mmu_memory_cache *mc)
->> +{
-> 
-> [ ... ]
-> 
->> +			ret = realm_create_rtt_levels(realm, addr, err_level,
->> +						      level, mc);
->> +			if (!ret) {
->> +				next_addr = addr;
->> +				break;
->> +			}
->> +
->> +			/* A failed split cannot leave the backing pages mapped. */\n> +			KVM_BUG_ON(1, kvm);
-> 
-> [Severity: Medium]
-> Can an RTT allocation failure (-ENOMEM) in realm_create_rtt_levels()
-> trigger a host WARN_ON_ONCE() via KVM_BUG_ON()?
-
-Yes.
-
-> Both __kvm_mmu_topup_memory_cache() and alloc_delegated_granule() use
-> __GFP_ACCOUNT, so a host VMM hitting its memcg limit or host memory
-> pressure can cause realm_create_rtt_levels() to return -ENOMEM.  Unlike
-> realm_unmap_shared_range(), which guards its warning with WARN_ON(ret !=
-> -ENOMEM), KVM_BUG_ON(1, kvm) unconditionally warns even on -ENOMEM; using
-> WARN_ON(ret != -ENOMEM) and marking the VM dead or bugged without warning
-> on allocation failure would avoid a user-triggerable kernel warning.
+> Because the genpd is initialized in the ON state with
+> GENPD_FLAG_ALWAYS_ON, pm_runtime_resume_and_get() is a no-op and
+> meson_ee_pwrc_on() never runs to clear HHI_MEM_PD_REG0[15:8], leaving
+> HDMITX memory powered down when meson_dw_hdmi_init() and dw_hdmi_probe()
+> access the controller.
 > 
 
-So the cache topup can fail (silently) due to memcg limits. However
-alloc_delegated_granule() falls back to __get_free_page(GFP_ATOMIC |
-__GFP_ZERO | __GFP_ACCOUNT) which AFAICT will not be subject to the
-memcg limit and will WARN itself before failing.
+I will add a new patch with a function to release the memories power off
+bits in v2.
 
-So unless I've misunderstood something the only path that can trigger
-the WARN_ON_ONCE in KVM_BUG_ON() is one which has already triggered a WARN.
+> In addition, power-domains and assigned-clocks are optional in the
+> amlogic,meson-dw-hdmi binding and were only added to in-tree DTs in
+> v6.11, so dropping the HHI_HDMI_CLK_CNTL and HHI_MEM_PD_REG0 writes also
+> regresses older DTBs (where meson_vclk_set() only configures
+> HHI_HDMI_CLK_CNTL later at atomic_enable time) and builds with CONFIG_PM
+> disabled.
+> 
 
-As above this isn't a case I expect to happen, and it would be good to
-be fairly noisy about it because we've just killed off the VM (most
-likely due to no fault of the VM or VMM). But I'm open to suggestions to
-improve this if anyone has them.
+I will add a depends on PM in v2.
 
-Thanks,
-Steve
+-- 
+Best regards,
+Ronald
