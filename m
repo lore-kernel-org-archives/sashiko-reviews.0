@@ -1,80 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.219
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795086463;
-	b=HcqPzhApb1YO4IILmW2rvn2BUW1deUm6xrvnZCmJXmTH1ZmvCeQnoK33t30/h0a3cF1l
-	 7THeSR93ZVV4v5VxL61a3QqtBnIsZ8Sa6G0XOpIKobGCSzDASkfjmKrGy6+vcuDElfpIX
-	 wQGKe90BZ7bLpNFGgw9b9bxHVqEWxk45WGCl7MZjf3jJvSxQ6rlrYBaTW59kdc8dZk0nm
-	 pcj18G9JSv3QcJXtYF5J524fb/p5r0feP7vN3SYPNXK6Qj01aIdudSgFNIf2C5R7RDBtn
-	 +92sCW+HM0CjfsD92HNBWLloFuHykLxVxjGq2Ry6tQEqo6ZZZSlF5tIJ8YjwZ7ngLdw==
+	t=1795087036;
+	b=No2rBV3crVpGPGWyB9Bu9F9u+jhBY7ue3Y7sAD20d1kEgthKJrpSA9uYIigG+YaZUYmj
+	 zWaiuq43A94aBnwBPf15RwoJOI+GDhrxT0mTthekIN8oRdxKSPzYOLANH+ciL+/t10gLx
+	 yhUbdPJYNcBGtHV1md+FEC8m8R6Sye1dpO2rA0HKf2yUxdl+MvJQCAxj5fYrtg/OVDtcd
+	 5YxQ8nVmcIgdrAOBNBTVSwtrBkY2GgKhaKmdahj1hSxZHo/Sw4Km/sbImdR0d4A0/e45m
+	 an+oKE3litpKw7Pz7ujjU8n7Meemn0eFMBM7yuW6Hd9vszm3fkJni/MiMS+4xGVvw2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795086463;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
-	 Date:Message-ID:User-Agent:MIME-Version:Content-Type;
-	bh=Ji/rZwxiSW0gG4Mvn53YHSbXtC5FbPqPXsT1gfczIuE=;
-	b=fdDwONaXz0EBm869ACMPd7gjBT01rqtSA/IUHvtz+JoUD6rSxPViefZMm5XtvaPuUI/U
-	 5q+OZOdNoXA5mFWZThhYP+y7CYbWi+4a/W43QytkbKAJKO3PTr2lD2AYbA6++95J3cgL6
-	 CeZt3A11NecMSWOQsgQI/fqVZ34GzYVMZA0rTj56ENkjeH8wkspH9PsU3gf/dabChCQwG
-	 DH6gfrv9Ze0R4Zv7fOIUDAe7rFI9UkmEWQ/9rCkldAlQcr0t0tpCx7WLAr1UXxHIeI9jE
-	 hDShqwAeoyL22H7TVu48IveMtW3o/PqZt5YLhu9n420e5kpbVVCskG97bcXNsYnscUw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795087036;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
+	bh=FZlWxWQOfTu8MIOnQs8tHPP8BaxZ5f7gPpwsp5HI3JE=;
+	b=X9YJBM9O7kUeKcJI2VsdU2heJjQLHzCt0UihWMyt4FVW1QDD6XT5kWpCRg3ymDQ0V8F6
+	 +4nVlG8EKRho60fqvSEridi4dmMUbyN/4nu52uIaL7b3a90vsPVkjKErQvpN9x1kZqSQ0
+	 eBhWe2LPeYnqAMsgPh0VMKpgSGg/Xft3pTjUXJ5LwfaES+DX0WGdc/Fjfv7/5K5csynQp
+	 gmv6cA/OrbOAGQjv9AG+M/Ik6cGwSYiF9fOwI38UUWXXfynAgxboiTLmRD7GjWaR3RzCn
+	 Zec3SKBh8W7LNBqp/RUv2sVDZwkLUc/QWdw8cROYumu0ozUEXwzlkqfpliwKU/gdHaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=heaEZpr7;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=H1GB+9zF;
+	arc=none smtp.remote-ip=113.46.200.219
+Received: from canpmsgout04.his.huawei.com (canpmsgout04.his.huawei.com [113.46.200.219])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2A8606A325;
-	Thu, 19 Nov 2026 11:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C74606A320
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 11:17:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 32C74606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=heaEZpr7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E331F000C9;
-	Thu, 19 Nov 2026 11:07:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795086463;
-	bh=Ji/rZwxiSW0gG4Mvn53YHSbXtC5FbPqPXsT1gfczIuE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=heaEZpr7V3NBLDI0usDA+AdsJvsPsidYzAf0n5/3kPoFzBY2XFgjITLpjvkEwUx6v
-	 R2y9WCZu5EX4VQXsjAZsMWfy/h2dyTMc2mZPxeV9xxNNmtXMIC5Zp/y28BETLSWHdx
-	 C3BdhTrYju2+scSHodr1VBT/fVjji6V5quDrsSBiGtCNBDaTmd8d8KwjRQPYzTgEkG
-	 SmAx/pPPxOeMaYhed/yV7ynQZ0+ohwDrN+X5Id55qQBAYHuS0sNbfxXQW9ON38p26o
-	 mLDttVexQMYCjqjDtfcDoMVTDf3XaCWL+oYUUdXdheTBUeGHCN9JVDjR6tzzWJxTf9
-	 trhKJ33C85/oA==
-From: Pratyush Yadav <pratyush@kernel.org>
-To: Baoquan He <baoquan.he@linux.dev>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-  sashiko-reviews@lists.linux.dev,  Zack Rusin <zack.rusin@broadcom.com>,
-  Petr Mladek <pmladek@suse.com>,  Mike Rapoport <rppt@kernel.org>,  Pasha
- Tatashin <pasha.tatashin@soleen.com>,  Pratyush Yadav
- <pratyush@kernel.org>,  Dave Young <ruirui.yang@linux.dev>,  Borislav
- Petkov <bp@alien8.de>,  Ajay Kaher <ajay.kaher@broadcom.com>,  Alexey
- Makhalov <alexey.makhalov@broadcom.com>,  x86@kernel.org,  Joel Granados
- <joel.granados@kernel.org>,  Thomas Gleixner <tglx@kernel.org>,  Ingo
- Molnar <mingo@redhat.com>,  Dave Hansen <dave.hansen@linux.intel.com>,
-  "H. Peter Anvin" <hpa@zytor.com>,  virtualization@lists.linux.dev,
-  bcm-kernel-feedback-list@broadcom.com,  John Ogness
- <john.ogness@linutronix.de>,  Steven Rostedt <rostedt@goodmis.org>,
-  Sergey Senozhatsky <senozhatsky@chromium.org>,  Kees Cook
- <kees@kernel.org>,  Jonathan Corbet <corbet@lwn.net>,  Bo Gan
- <bo.gan@broadcom.com>,  Brennan Lamoreaux
- <brennan.lamoreaux@broadcom.com>,  kexec@lists.infradead.org,  "Guilherme
- G. Piccoli" <gpiccoli@igalia.com>,  Maaz Mombasawala
- <maaz.mombasawala@broadcom.com>,  Shuah Khan <skhan@linuxfoundation.org>,
-  Randy Dunlap <rdunlap@infradead.org>,  Stephen Brennan
- <stephen.s.brennan@oracle.com>,  Michael Kelley <mhklinux@outlook.com>,
-  Ian Forbes <ian.forbes@broadcom.com>,  Bradley Morgan
- <brads@mainlining.org>,  "Michael S. Tsirkin" <mst@redhat.com>,  Eugenio
- Perez <eperezma@redhat.com>,  sashiko@lists.linux.dev
-Subject: Re: [PATCH v4 3/4] x86/vmware: Add the vmware_record_panic_msg sysctl
-In-Reply-To: <av1ZB3ia13M420_I@MiWiFi-R3L-srv> (Baoquan He's message of "Wed,
-	18 Nov 2026 15:51:35 +0800")
-References: <cover.1794980455.git.zack.rusin@broadcom.com>
-	<4c5de34b10f579368b890eaa9333a2755886bad3.1794980455.git.zack.rusin@broadcom.com>
-	<sashiko-outbox-220212@kernel.org> <av1IuMZ2W0SXWcNn@MiWiFi-R3L-srv>
-	<20261117230201.921ec5bddf49cd459ddb8428@linux-foundation.org>
-	<av1ZB3ia13M420_I@MiWiFi-R3L-srv>
-Date: Thu, 19 Nov 2026 11:07:34 +0000
-Message-ID: <2vxzzev52i6h.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=H1GB+9zF
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=FZlWxWQOfTu8MIOnQs8tHPP8BaxZ5f7gPpwsp5HI3JE=;
+	b=H1GB+9zFnW/SvJtslH91Df7ak3Dzog+aP+lyrVw1I7r6dh9GV5S+L03tSEKKGfYwlVytvhFB2
+	TODpNqzuAqKhW2Zu+equ7CxRDwUWygOGaeB5xtszGCgHTaKWQ7IgYPgk4ErJG64Tq7WbEN+lc+5
+	mOZfGxBxxMjTz1M8ZhJTYCM=
+Received: from mail.maildlp.com (unknown [172.19.163.0])
+	by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4jVbX875bQz1prM1;
+	Thu, 19 Nov 2026 19:16:56 +0800 (CST)
+Received: from kwepemo500009.china.huawei.com (unknown [7.202.194.199])
+	by mail.maildlp.com (Postfix) with ESMTPS id 8AB4640537;
+	Thu, 19 Nov 2026 19:17:10 +0800 (CST)
+Received: from [10.67.121.161] (10.67.121.161) by
+ kwepemo500009.china.huawei.com (7.202.194.199) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Thu, 19 Nov 2026 19:17:10 +0800
+Message-ID: <dba7bad1-e9d1-4a13-8045-0ea9fd739244@huawei.com>
+Date: Thu, 19 Nov 2026 19:17:09 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -84,51 +62,220 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v21 11/13] vfio/pci: Add DS-ST TPH policy and TPH_RESOLVE
+ capability
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
+References: <20261118091238.45992-1-fengchengwen@huawei.com>
+ <20261118091238.45992-12-fengchengwen@huawei.com>
+ <sashiko-outbox-220836@kernel.org>
+Content-Language: en-US
+From: fengchengwen <fengchengwen@huawei.com>
+In-Reply-To: <sashiko-outbox-220836@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ kwepemo500009.china.huawei.com (7.202.194.199)
 
-On Wed, Nov 18 2026, Baoquan He wrote:
+Thanks for the review. Here is how we fix these three issues:
 
-> On 11/17/26 at 11:02pm, Andrew Morton wrote:
->> On Wed, 18 Nov 2026 14:42:00 +0800 Baoquan He <baoquan.he@linux.dev> wrote:
->> 
->> > On 11/18/26 at 06:14am, sashiko-bot@kernel.org wrote:
->> > > > Allow administrators to disable host log transfer on ordinary guests or
->> > > > opt in on encrypted guests. Expose the boolean recording policy through
->> > > > kernel.vmware_record_panic_msg using proc_dobool(), as Joel suggested.
->> > > > Zero disables recording, nonzero integers enable it, and reads return
->> > > > 0 or 1.
->> > > > 
->> > > > Register the sysctl only after the logger is ready. A registration failure
->> > > > leaves the internal default in force. Document that the log is sent
->> > > > before kdump, and that disable_panic_notifiers_platform_list also skips
->> > > > it.
->> > > > 
->> > > > Link: https://lore.kernel.org/r/4e73yd2ofpdzl6rptzvd74no3hnyfblknoq7wzxlw7f3zjbz7c@srfabx6lsusj
->> > > > Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
->> > > 
->> > > Sashiko has reviewed this patch and found no issues.
->> > 
->> > It might be better to turn off this message if not issues found, just
->> > like what LKP bot has been doing.
->> 
->> (+sashiko@lists.linux.dev)
->> 
->> Yes please.
->> 
->> These emails do have a little bit of value: they tell you that Sashiko
->> was able to apply the patch and to review it.  I guess.  Or something.
->
-> In that case a message saying Sashiko can't apply the entire patchset
-> is better.
+On 11/18/2026 7:43 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] vfio/pci: vfio_pci_core_feature_tph_resolve() fails when
+>   !has_arch_st
 
-Yeah, sounds better.
+DS‑ST CPU steering tag resolution can work without an architected ST table.
+Currently vfio_pci_tph_get_src_mask() only enables CPU source mask when
+CAP_PROG_ST_CPU is set, which is gated on architected ST table.
+We update the mask check to accept CAP_PROG_ST_CPU *or* CAP_RESOLVE_CPU_ST.
+Pure DS‑ST devices with only resolution capability will now accept CPU source
+handles for RESOLVE.
 
-Or, perhaps Sashiko can reply to the cover with a list of patches it
-found no issues with. That should reduce the spam on big series at
-least, while still keeping the signal of "Sashiko looked at this".
+> - [Medium] vfio/pci: vfio_tph_config_write() drops ST mode and active
+>   req updates
 
-[...]
+The existing check only compares requester bits and ignores mode.
+For DS‑ST, userspace may set DS mode while requester is disabled, then enable
+requester in a separate write; the mode is lost.
+We compare both requester and mode. Any change triggers pcie_enable_tph_ext()
+to sync hardware.
+We also auto-disable TPH before enabling a new requester mode to avoid -EBUSY.
 
--- 
-Regards,
-Pratyush Yadav
+> - [Medium] vfio/pci: vfio_pci_tph_get_capability() skips
+>   pcie_tph_dsm_supported()
+
+Both CAP_PROG_ST_CPU and CAP_RESOLVE_CPU_ST require TPH ST _DSM for CPU-to-ST
+translation.
+We trim tph_vcap centrally: if _DSM is not available, clear both CPU-related
+capability bits, leaving only NO‑ST capability.
+This logic is sufficient for the current series and will be revisited when P2P
+support is added in follow-up patches.
+
+Thanks
+
+> --
+> 
+> commit 5b864ef3e267f2d34a7496c96455a9bee2cc860b
+> Author: Chengwen Feng <fengchengwen@huawei.com>
+> 
+> vfio/pci: Add DS-ST TPH policy and TPH_RESOLVE capability
+> 
+> This commit adds the DS-ST policy level to vfio-pci and introduces the
+> VFIO_DEVICE_FEATURE_TPH_RESOLVE ioctl feature for resolving CPU steering
+> tags on DS-ST capable devices.
+> 
+>> diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
+>> index 398f8db8b8ff0..8e47f84216b0d 100644
+>> --- a/drivers/vfio/pci/vfio_pci_config.c
+>> +++ b/drivers/vfio/pci/vfio_pci_config.c
+>> @@ -1218,7 +1218,7 @@ static int vfio_tph_config_write(struct vfio_pci_core_device *vdev, int pos,
+>>  	cap = vdev->tph_vcap;
+>>  	mode = FIELD_GET(PCI_TPH_CTRL_MODE_SEL_MASK, new_ctrl);
+>>  	req = FIELD_GET(PCI_TPH_CTRL_REQ_EN_MASK, new_ctrl);
+>> -	if (mode > PCI_TPH_ST_IV_MODE || !(cap & (1u << mode)) ||
+>> +	if (mode > PCI_TPH_ST_DS_MODE || !(cap & (1u << mode)) ||
+>>  		req == 0x2 /* reserved */ ||
+>>  		(req == PCI_TPH_REQ_EXT_TPH && !(cap & PCI_TPH_CAP_EXT_TPH)))
+>>  		goto out; /* Drop invalid or unsupported write value. */
+> 
+> [Severity: Medium]
+> Can vfio_tph_config_write() drop or overwrite ST Mode Select updates?
+> 
+> Right below this check, vfio_tph_config_write() still skips hardware
+> updates whenever req == org_req:
+> 
+> drivers/vfio/pci/vfio_pci_config.c:vfio_tph_config_write() {
+>     ...
+> 	vfio_user_config_read(pdev, start + PCI_TPH_CTRL, &ctrl_val, 4);
+> 	vfio_default_config_write(vdev, start + PCI_TPH_CTRL, 4, perm,
+> 				  PCI_TPH_CTRL, ctrl_val);
+>     ...
+> 	org_req = FIELD_GET(PCI_TPH_CTRL_REQ_EN_MASK, org_ctrl);
+> 	if (req == org_req)
+> 		goto out; /* Only care about requester enable. */
+> 
+> 	if (req == PCI_TPH_REQ_TPH_ONLY || req == PCI_TPH_REQ_EXT_TPH)
+> 		pcie_enable_tph_ext(pdev, mode, req);
+> 	else if (req == PCI_TPH_REQ_DISABLE)
+> 		pcie_disable_tph(vdev->pdev);
+>     ...
+> }
+> 
+> If userspace writes PCI_TPH_ST_DS_MODE while the requester is disabled
+> (req == org_req == PCI_TPH_REQ_DISABLE) before enabling it in a second
+> write, the first write is not committed to hardware and the second write
+> clobbers vconfig[start + PCI_TPH_CTRL] from hardware (where mode is still
+> 0), enabling the device in NO-ST mode.
+> 
+> Similarly, changing mode while TPH is already enabled is ignored because
+> req == org_req, disabling the requester via pcie_disable_tph() zeroes the
+> entire hardware PCI_TPH_CTRL register including ST Mode Select, and
+> switching req between PCI_TPH_REQ_TPH_ONLY and PCI_TPH_REQ_EXT_TPH while
+> enabled fails in pcie_enable_tph_ext() with -EBUSY because pdev->tph_enabled
+> is already set.
+> 
+>> diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+>> index 23ed8ea396575..049392831b35f 100644
+>> --- a/drivers/vfio/pci/vfio_pci_core.c
+>> +++ b/drivers/vfio/pci/vfio_pci_core.c
+>> @@ -1710,12 +1710,17 @@ static void vfio_pci_tph_dev_deinit(struct vfio_pci_core_device *vdev)
+>>  static u32 vfio_pci_tph_get_capability(struct vfio_pci_core_device *vdev)
+>>  {
+>>  	bool has_arch_st;
+>> +	u32 cap = 0;
+>>  
+>>  	has_arch_st = vfio_pci_tph_has_architected_st(vdev);
+>> -	if (!has_arch_st)
+>> -		return 0;
+>> +	if (has_arch_st)
+>> +		cap |= VFIO_DEVICE_TPH_CAP_PROG_ST_NONE |
+>> +		       VFIO_DEVICE_TPH_CAP_PROG_ST_CPU;
+>>  
+>> -	return VFIO_DEVICE_TPH_CAP_PROG_ST_NONE | VFIO_DEVICE_TPH_CAP_PROG_ST_CPU;
+>> +	if (vdev->tph_vcap & PCI_TPH_CAP_ST_DS)
+>> +		cap |= VFIO_DEVICE_TPH_CAP_RESOLVE_CPU_ST;
+>> +
+>> +	return cap;
+>>  }
+> 
+> [Severity: Medium]
+> Should vfio_pci_tph_get_capability() check pcie_tph_dsm_supported(vdev->pdev)
+> before advertising VFIO_DEVICE_TPH_CAP_PROG_ST_CPU and
+> VFIO_DEVICE_TPH_CAP_RESOLVE_CPU_ST?
+> 
+> Commit "PCI/TPH: Add pci_tph_dsm_supported() helper to detect device TPH
+> ST _DSM" earlier in this series added pcie_tph_dsm_supported() to check
+> whether the root port exposes the ACPI TPH _DSM method, but nothing calls
+> it.  On systems without CONFIG_ACPI or without that _DSM on the root port,
+> VFIO_DEVICE_FEATURE_TPH GET advertises CPU steering tag support that will
+> always fail when invoked.
+> 
+>> @@ -1901,6 +1906,50 @@ static int vfio_pci_core_feature_tph_program(struct vfio_pci_core_device *vdev,
+>>  	return ret;
+>>  }
+>>  
+>> +static int vfio_pci_core_feature_tph_resolve(struct vfio_pci_core_device *vdev,
+>> +			u32 flags,
+>> +			struct vfio_device_feature_tph_resolve __user *arg,
+>> +			size_t argsz)
+>> +{
+>> +	struct vfio_device_feature_tph_resolve resolve;
+>> +	u32 user_flags, src_mask;
+>> +	bool extended;
+>> +	u16 tag = 0;
+>> +	int ret;
+>> +
+>> +	if (!vdev->tph_opt_in || !(vdev->tph_vcap & PCI_TPH_CAP_ST_DS))
+>> +		return -EOPNOTSUPP;
+>> +
+>> +	ret = vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_GET,
+>> +				 sizeof(resolve));
+>> +	if (ret != 1)
+>> +		return ret;
+>> +
+>> +	if (copy_from_user(&resolve, arg, sizeof(resolve)))
+>> +		return -EFAULT;
+>> +
+>> +	user_flags = resolve.flags;
+>> +	extended = !!(user_flags & VFIO_DEVICE_TPH_EXTENDED);
+>> +	if (extended && !pcie_ext_tph_supported(vdev->pdev))
+>> +		return -EOPNOTSUPP;
+>> +	user_flags &= ~VFIO_DEVICE_TPH_EXTENDED;
+>> +
+>> +	src_mask = vfio_pci_tph_get_src_mask(vdev) & ~VFIO_DEVICE_TPH_SRC_NONE;
+>> +	if (user_flags & ~src_mask || !is_power_of_2(user_flags))
+>> +		return -EINVAL;
+> 
+> [Severity: High]
+> Does vfio_pci_core_feature_tph_resolve() always fail with -EINVAL on DS-ST
+> devices that do not also have an architected ST table?
+> 
+> vfio_pci_tph_get_src_mask() only checks VFIO_DEVICE_TPH_CAP_PROG_ST_CPU,
+> which is gated on vfio_pci_tph_has_architected_st(vdev), and ignores
+> VFIO_DEVICE_TPH_CAP_RESOLVE_CPU_ST:
+> 
+> drivers/vfio/pci/vfio_pci_core.c:vfio_pci_tph_get_src_mask() {
+> 	u32 flags = vfio_pci_tph_get_capability(vdev);
+> 	u32 src_mask = 0;
+> 
+> 	if (flags & VFIO_DEVICE_TPH_CAP_PROG_ST_NONE)
+> 		src_mask |= VFIO_DEVICE_TPH_SRC_NONE;
+> 	if (flags & VFIO_DEVICE_TPH_CAP_PROG_ST_CPU)
+> 		src_mask |= VFIO_DEVICE_TPH_SRC_CPU_VOLATILE |
+> 			    VFIO_DEVICE_TPH_SRC_CPU_PERSISTENT;
+> 
+> 	return src_mask;
+> }
+> 
+> When a DS-ST device has PCI_TPH_LOC_NONE (storing steering tags in
+> device-specific MMIO or firmware rather than an architected ST table),
+> vfio_pci_tph_get_src_mask() returns 0, so src_mask is 0 and every
+> VFIO_DEVICE_FEATURE_TPH_RESOLVE call is rejected with -EINVAL.
+> Checking (flags & (VFIO_DEVICE_TPH_CAP_PROG_ST_CPU |
+> VFIO_DEVICE_TPH_CAP_RESOLVE_CPU_ST)) in vfio_pci_tph_get_src_mask() would
+> allow CPU source resolution when only VFIO_DEVICE_TPH_CAP_RESOLVE_CPU_ST
+> is supported.
+> 
+
