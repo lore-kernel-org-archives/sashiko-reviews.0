@@ -1,183 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.9
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795116412;
-	b=aER9PulwvYuw+ccryWOy7EhK9ZgdY777dupexwf2LchnHYMVpCe1ysyhU9stxnIidND4
-	 czdgJfygOTkhK06mq8B2j44r8jU6WWqu4vmLFJHrAWy/VTjlIKUDdSRELsbMNNHQsETIr
-	 1kMTcuE+81M1RPovsTku79zBRWMM9txhe5/QAWFL20mNKr+uOQTv7MH7seS7WNH6sGdST
-	 fECIafT+pnCqCRtHTu0JuaPiAW7JlFTHHRYhK68nVA9Yl1CoJ3E9COEd8OhUtNeW8SfpO
-	 MkjGltYiOBlxqfW22+wUXxf8pAhIFb9Jmo/l5Egro8FvRfvWnQrk4B6cwPeYkcgjnYg==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.65.67
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1795117006;
+	b=hONWY6w51BbLrNKuuySIKEV/DiJKsdKvJ7R5ibnq7gqkt9A0qFSkccqv8dV3blHrUDYW
+	 zg/+PifUsXfQaIBe0JK6463f0TP6y+bN7yjAr5ToUdYRnQQMfGIY8p+OKNmyh3at0HFM5
+	 pm106z0GtJEFLF7KaWbQa3DeBnphpsOVH/awjPD3IgwqEzdUMRQTx+P2j9v2QIeuawmqo
+	 5VrPM41Qeo4YVZDXLX7Psy3T4VgZYbyKcKbxA9Tgr5beBu2T36fYiNVA4o+0vzTUTZGdk
+	 4+eTx5LFykzLlvedJ6aA4JCK/AMKD4drYLUc4CDS34dU3/h0LlUB7iOrpkTImZG5kHw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795116412;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:DKIM-Signature:Received:Received:From:To:CC:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:
-	 X-Exchange-RoutingPolicyChecked:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-AuthSource:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795117006;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=DgpsGhjQJX3Oe3J9Tba4ALmP5nv9V+ke500H/+RlTxk=;
-	b=prD2jwc0TaHE7yEfkjouDHP9MgyTiyj3w0ajfCH8IFEf//XmYO3z6g9cB6JQRuB4KFkw
-	 iCjXu2MbpnFSP57fOm6ockBDKiD4hWxBfeHrBj3eCiHK8jkiSH2IxuOtPVLJw91zLROBL
-	 pID05P/dcsVzAze6rFxG48sgZK2kXz46UF1ViZ6lwbg3C46eubcMVaZWOxNFhX2ko0Kqu
-	 SnH9/hpKxU8kC76FHcbMkcFCMNq5OP9p5s2cyeQU3d92dClhjG3f3JpsofIH40YjgYTAD
-	 OK4o9jUrDw1W+AAXq+KiZQuz9NIEK/mnzaPEPPUbupYw4mOAZEdVRR+pGB7brA3Zl3A==
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=CranEEoLWmWMxEIv1STGl+Y4fM+6BcY9fx5piGDDqwg=;
+	b=Y9J/eE3J+/26Pcx15+90NYQcFnoW7YyBjSgZgX5QhD7IGhhXSG5OuXPs6b6y2C16PUFV
+	 n3TUUKmGLE76ziezYlfmaFXqyNt4yzxDv5pTr929y3Fh8sydV3xIgI7eSyHA7enLd+dSn
+	 utlTgskXEdgMmWL43Mk4ieFqqvMcFslE5+cU5sHTGajeIeg01MuQsc1Job2TSw/GuE2Ju
+	 4/oG9kicT2D2GvHhOhYSaxHf4zj2BYQFYbGOgeEOPGl7qNE1NUYki4Q3Wgf7TsTpx0lyJ
+	 TjjQ8k2rc+v8exL2EjTJDoJrVyW0jWXffjwnr6/R26FxBrYf3CsiPIdy7L0Rh+mHzIA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QpaX9bgn;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=V8zz3NsB;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.9
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=rWs7JGBU;
+	arc=fail smtp.remote-ip=52.101.65.67
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011067.outbound.protection.outlook.com [52.101.65.67])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A899606A32A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 19:26:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A899606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AFC606A337;
+	Thu, 19 Nov 2026 19:36:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08AFC606A337
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QpaX9bgn;
-	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=V8zz3NsB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795116412; x=1826652412;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=nUhjUJ6nu2cmSoY+bIJvYLrxTctsKdkZT8qXc4fFE2U=;
-  b=QpaX9bgn7Knnf428mgfAscTWU/UvVMN8xb3mJoCUztPlYIIZ6i19jrBP
-   ycqiMq+vVkagVunt8LDsUdvh2MkP3XVEOJakf4XAfRtptFCSrnOUdSYlr
-   3eb43Gd+DeNXzL4uwzGFiEuUyM6V6H5+MUv6yeiazX4DSqnkjQBKQjV5u
-   as+uXFEo/zevy8WNwiKKPeLs7yLKfS2LwKk+MveGCn0hzl9ttidhd+Vxd
-   AywllTUlKFe+qpZRFrCN+nEEOrlZSXWVo62pPrP84xEcC1BYk8Ek5Kudb
-   sGRVJi9XawEAXbzYNoos1m0l9vEk0lWTIARM4mIOZv9a4mvBtuis/+2yC
-   A==;
-X-CSE-ConnectionGUID: JLyNxSawSM+Gd4mvShL6Pw==
-X-CSE-MsgGUID: mXZZPifQSU6jbUM8Pe7paQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11971"; a="3829098"
-X-IronPort-AV: E=Sophos;i="6.27,221,1787036400"; 
-   d="scan'208";a="3829098"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 11:26:52 -0800
-X-CSE-ConnectionGUID: 2wnrlAnYR7S4rlvdzo1MIQ==
-X-CSE-MsgGUID: +MXvPYyZTguzEDqboPIRIg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,221,1787036400"; 
-   d="scan'208";a="10770778"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 11:26:51 -0800
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 19 Nov 2026 11:26:50 -0800
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Thu, 19 Nov 2026 11:26:50 -0800
-Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.32) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 19 Nov 2026 11:26:50 -0800
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=rWs7JGBU
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mGEMYoCnCo+kDw38VDap3LoW4VZvpojGDY8o/5k4jvkZfOc3kdV3ne8N1eeuPuh7xfXay2WQ3WN8eJBGO2Sfzk+vuv7jv3bGK9GSJ2ko7Wrxaynwwkyuyumkfwhvv7wau651nfo8Njhf1edpL1nD9QSFIGUccpQtw4IykEn1+FGMZJdhQq2/lg8k40WNYolbIeloPDw44ax/xOwWSSGZUhaKd3r7jtV5OFg6Dag8WF9qcT1DufkV2V0nGqSxwJnVpojp6INHoZNlI/DP4Irq7xVZ7PEyZcsdfMS9YDK5TyhISnukdoHoEbg/P1jN6qxQx+o8YC6LAIzPP5XsLjWQ0g==
+ b=W8SOf69VqE+Ax731Re8LLfd9AA4RySdzLWaUZle2hrUL1fMYgSIzd78I0Uz+GTnvt0sSbfqWXuZq6WnNT3nQZywV4YaOUCwBWjnps4uLVECnCRFUkqxDyiNXkFDPQhX0js8gnliicvMRc1g8g7cWp0EzmcTyCnQ7xKIqfMSqts0avuBQ+qIwIG2ijPk2WXVHOecA2T80kkatSkpwBDy/BCjA7gNgysDhos/0djlL65Dww1r4Kjc6bbB2ja5TYKp9vok+fyaThPG7O5gfdat1+YQdpUCTPJi5266s/UhktAugugW8wYkms5VaNUgN3hdRBb8opHkIk+tjuby93g3V6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DgpsGhjQJX3Oe3J9Tba4ALmP5nv9V+ke500H/+RlTxk=;
- b=SqDf/ZjWXYvq50ADEeWBuDiXIjkAvvWi9sE2AKVxaFfksVX6zwAvC9V6kCGltTbHSx1lJ0dtDFJOBI5EE85T631GeJw5f7zFYUo76/lf6NBccZ/WsvIVYG8Cv+O1NMDki+O7sqko8F4qW9umjHPff2atKnv/Rsdl9xTHe+ZEYj1JlCGsUbev0wjxzCV5mnVLr1kQBptILqgFt99odXrcN/B6M0vjIV7fHMk1/xIru1cVP9GatCZVcdEoHP0N0yAZE1rRNJbTuD3jUAdtuwj1hLsTr2tjluklNELBQlSz4c977RX6Oo/zqGXj8SQ1ZKEh/SN3OLMNoTX7YHYe6/kUig==
+ bh=y3GDuXD4h+UyMkzGfn5txw1iB0qmhW8RloVNJPJUITE=;
+ b=ZTXdYB6AZdfchEez8DTyC615ksRWs5zUDDZqmY4zY1e8SJEFqH6BhVn2d2ioHucytd5mRFJahSpikgfgaHwQhufZrZlDTg6sN0Et2v6ivCb7ikYBCqw3CgMax5frqDlTVVYOgSDzyvmI5lS9NJLBTKJbzLps3/kaPAWe8IA+zmWESLPMbaZarCVIKXkEudp2qZKL1b3hsPeFqIx2TQyD2R/9qhwbrJzQ8+bQkvg+B3Ln2lfw6EA9AmIPqIHv1tmaYPDXlTquslc7iw6ZMz+bWKz3kuv1eW83bba+HGhExRtxgX9ziCzmGoBs2c8mAluCGL+1m38Yw5IRoqaeeGjJHQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
- s=selector1;
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DgpsGhjQJX3Oe3J9Tba4ALmP5nv9V+ke500H/+RlTxk=;
- b=V8zz3NsBhFHVy4Y6c8BFU4FJtqSkl9mePmi/i5NALoRjDW6hrHntCXTxpsFnIPJDux8bEb0uXWQwFxeM3rZCCsI4yASYXSXxcIlDmfe/P3l7PVOk4609Hn2jMaQl7CQHDBe6wGHOBtnGYRRBwUFw5PNrag7vBib/t//mj+7acTU=
-Received: from CH0PR11MB5395.namprd11.prod.outlook.com (2603:10b6:610:ba::6)
- by PH7PR11MB7075.namprd11.prod.outlook.com (2603:10b6:510:20e::21) with
+ bh=y3GDuXD4h+UyMkzGfn5txw1iB0qmhW8RloVNJPJUITE=;
+ b=rWs7JGBUtuCdCsJVNVvySVc5lHtdmRD0vNeIfHC8yxVFpKeAQEadz1PiLoUKiFsr5JAgoIZtmzLtKfc6/fB2O7oDO6mztQ2TSwg2z97Y/FNeo6kkA0RWhk+tU3JBpbsFzs3m6TGQu3rjW6/Q++5ep/ZjlEvUVqkxNoj7tlL2xTGWZQTCkd5g1yyzwnveqbtO3cvKfHyqgRNkChZf85mqo35NODN+1sTvyPbFliMmbywMeZ38CLOSWpa0rq7JjKqEQ0t9FO7BRSVe/mGFzPzzGe9B0prKrP03Zv38nl2RzITqSDeqEB6b7ajT+zCaDWyJv/K72ug/dbphct8zMq1I9Q==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by PA3PR04MB11225.eurprd04.prod.outlook.com (2603:10a6:102:4b1::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Thu, 19 Nov
- 2026 19:26:47 +0000
-Received: from CH0PR11MB5395.namprd11.prod.outlook.com
- ([fe80::2e5f:eb:b663:a490]) by CH0PR11MB5395.namprd11.prod.outlook.com
- ([fe80::2e5f:eb:b663:a490%5]) with mapi id 15.21.0615.013; Thu, 19 Nov 2026
- 19:26:47 +0000
-From: "Cavitt, Jonathan" <jonathan.cavitt@intel.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"Charles, Daniel" <daniel.charles@intel.com>,
-	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>
-CC: "Cavitt, Jonathan" <jonathan.cavitt@intel.com>
-Subject: RE: [PATCH v6 3/4] drm/xe: Disable scheduling early on FD close to
- avoid CAT error cascade
-Thread-Topic: [PATCH v6 3/4] drm/xe: Disable scheduling early on FD close to
- avoid CAT error cascade
-Thread-Index: AQHdeE6dUz/VeneTO0WOL5/mZiluk7c1tDwAgAAJw9A=
-Date: Thu, 19 Nov 2026 19:26:47 +0000
-Message-ID: <CH0PR11MB539510FF7827FE111C0C2869E5792@CH0PR11MB5395.namprd11.prod.outlook.com>
-References: <20261119174621.1311154-1-daniel.charles@intel.com>
- <20261119174621.1311154-4-daniel.charles@intel.com>
- <sashiko-outbox-223764@kernel.org>
-In-Reply-To: <sashiko-outbox-223764@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH0PR11MB5395:EE_|PH7PR11MB7075:EE_
-x-ms-office365-filtering-correlation-id: cef714ae-7aff-45ad-d22e-08df46730dc5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|38070700021|10067099003|261022075727099003|4143699003|11063799006|261009223027099003|261021121427099003|261102123227099003|261028144727099003|261026140227099003|261026121527099003|261022105027099003|56012099006|22082099003|18002099003|6133799003;
-x-microsoft-antispam-message-info: e6vLPkC6Ep13Vt/dNEsryMyDkU8MUr2ZznehsZRda66BI5DFX7Pwoc769UTw3UUmuuwZ0Ov2I+OTH6a/9IKyZxCNzvlOXpv/hPGNJN7KPgl3UFKyck1BLnIMMARcqNHzDC0rSS/t4ZcwBykdzQUEbnG/ArBFsU3BlWjSB3mtEbAuV/nKN/R15HLw330WrXGfG4x3DHbqjhc4o9EjSBlRuOkmiGK2C/+OnmSXM6RkEqZ8Di8oVH4y6ZS1gJcKI/Mtm2HmKGbLqT/ZoYhGyAmEjPeAdnFwrVYzUABLt8aGwTgg42uXMRQHVf0SQ16OQn47StDmXXhk42x/Ak+3QGhWwLQObrva5hXHsJLzTCZ+AAqQ6qRd9vumywtKL13Zd8fGGCVcxMuHPc7aY5KN+ZbZ/SSMeuxOWZbqPjD0PWprC6CausCktuXZU0rta7bJ9nYz3eUgY94BenJd6klYS++V1FCQBqXDGw6Ad/8fbi/l27r5dfTXY/rrXR3C5vcXdzDNPHCD6YGcBdYUcjp7Uj8oi+f4cmaQnmwPWMwxzIUOh4X1q07XzUOeNWZ9SekvIO9ci6vDfhkiKiVgMrnUdOF5YCk9ryF1Pjun8gwwN6KEt9+OTp2S5/0WAAEPyQ//qKwXI3ByHGCyfo5ZHdIFnH7EnetlwIxpXb8JU1Gsp//iKuA=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR11MB5395.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(38070700021)(10067099003)(261022075727099003)(4143699003)(11063799006)(261009223027099003)(261021121427099003)(261102123227099003)(261028144727099003)(261026140227099003)(261026121527099003)(261022105027099003)(56012099006)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?E9F0BE9RRPInA3W1VvQFDsE0cS91PChuJJpLgej7i6XSLVgAutADfNYOIR0g?=
- =?us-ascii?Q?+2f/krRoGmAlwP7n6M52Onkg1lxfYaHaB3KFFSsXEBrgdjmhrrM2y6Xo364O?=
- =?us-ascii?Q?8EsqDCIw11X3J4vKU24WBpzSCDEqIrlbdzVOv/l7+mrjjoASV2We2drapNbT?=
- =?us-ascii?Q?8kEjfINoWRJ+fKAqSUve8lKWKiZAB7do5X9b/AvO1f5uKfgHZE4Tl8LsVPvk?=
- =?us-ascii?Q?/o4kzClLxeDE2A81KsvBWwYcD/wy0mYffaBcfF8c355xIAAKgfTy7LMlNjRN?=
- =?us-ascii?Q?zGe7hBeTGvNXYp7QGtZsCMFk5sDWwHIC5UG+SeX//qcPbXVJie5S57GqOgSN?=
- =?us-ascii?Q?dD2nEgRKNmdvhUH+hmIvVnVyZ/wp3hKyi+SGXlvuVJb9lvqo6UKoctUw5pUN?=
- =?us-ascii?Q?3nYrE6U7ydp2IU0C2XFuENvs16J8WNZS0qN+tvckSyzALMpe81eqzrog5cLc?=
- =?us-ascii?Q?D+lEX39XfsPLqC7kNZIiR65oKtw4CLP3GjN7vCWRhcpc/dI7DATr8jfdUBMd?=
- =?us-ascii?Q?gDHgDDEZt2uAbVqd6k79MRqdX2B7HVrEjsUyAloFwsrnkibwiRRayv7fUhzl?=
- =?us-ascii?Q?lMKa7Mrg9TqZ5U4T1rqVrNqPBwjsFXa9KY6+ifzfkWP+RwKeV8IfHa2t1rBC?=
- =?us-ascii?Q?NZXK2w/lKcSERWq3O9aVVey8y51xHP0yA+aaHgz77g75BM/QJkKld42SLyXH?=
- =?us-ascii?Q?IrYdrKRZ70gWiQG4o6W5qSDPUwTUwrGwNtfOu/MHkvdVoZgAa5T1eJNFhjIp?=
- =?us-ascii?Q?DIRFuR9TPds9bTUYY9EYYlwosVccm1k3/MKuFHA9JcEpx3Sg3XIx6gbWfs03?=
- =?us-ascii?Q?JSYk/qAj9w9C0E9FhaEaQSI3b5MKUS8TpnNYldTlG8iZ/+HkstD3XZH6TBzT?=
- =?us-ascii?Q?YADcGNZIHDIt/fmpoa6qHj/xNotIA08TMffnjs6POgnc7NG/03rF9/CGgIuS?=
- =?us-ascii?Q?VtEVti8jKFbKhiWqfwId/3a889pdG7to8dUvzod9cqbro1LPrUEdwmziC1vu?=
- =?us-ascii?Q?JC/nAQ0J+v/+50Qb5OfwGMLyoNIAufkDoWFSD/FvIK+nUlTLU7xqHpqI7xKS?=
- =?us-ascii?Q?eGpflg2tyWXm75X1f9KYifFBgRj3KPzIoIQ/BDKnRwIL7+m1fektT6X7lmNk?=
- =?us-ascii?Q?muSIR8IyX9cSS08MHgb5e3F3H1Xh6+Qo3q5M9wXM/dlRpInr0YpCUuM0Pfd1?=
- =?us-ascii?Q?Ym0Rp/58f0E9/FI9AzaDr2lyBulm3sGDi2agEny1SW2jCp3/EAQ3qz4lvmPL?=
- =?us-ascii?Q?zuqyJBeahdUTsKRNVsVeeQioIS7QFW2Eye8fERsB5N0rrYJTVQUCjoNm/Kqe?=
- =?us-ascii?Q?c2R10ZxYOggftpQhQjzOifA1aQwgl1pPibaglRjUx3lXseiMHXOQYdarIepw?=
- =?us-ascii?Q?+XuHmY40EoGPkNI42rsrlf/ddbmndTyPI2AniDp9OzYwbU3H6pUhQw/iUYsh?=
- =?us-ascii?Q?kh/+J358nCztaTwfPdKQDLv/+DIjOuuRsDWA3BLCOUc6dTZkwEYekGIVqg6X?=
- =?us-ascii?Q?ds2gFGUO8RrrHOhEw61KFGRvr7CO+UyJSuM/8hVd804tRjmYMiBltGLSzCwU?=
- =?us-ascii?Q?Ju0Gotqo89i/p78FDRo3h9cxqumLk3y3J18mpUzpKSKURZ8saJUYx4BjkA4g?=
- =?us-ascii?Q?TU2TX4+PB3Q44mUahyE7MQ4Be782sEWqTJOI6UgFt2rhKGhLTRdwHtR9qkDy?=
- =?us-ascii?Q?KqZor+zHYCxQwk9ag3hx8hvQUooC2dBas4hV28rKyMTumRiXfV0UdqLvYEhk?=
- =?us-ascii?Q?28SNgQ0T9w=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Thu, 19 Nov
+ 2026 19:36:41 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0639.010; Thu, 19 Nov 2026
+ 19:36:40 +0000
+Date: Thu, 19 Nov 2026 13:36:33 -0600
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Nas Chung <nas.chung@chipsnmedia.com>, devicetree@vger.kernel.org,
+	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
+	Frank.Li@kernel.org, media-ci@linuxtv.org
+Subject: Re: [PATCH v8 02/11] media: chips-media: wave6: Add Wave6 control
+ driver
+Message-ID: <av9Pwfx0wjfjw36L@SMW015318>
+References: <cover.1795075577.git.nas.chung@chipsnmedia.com>
+ <6b00047b748267a2ff4e18ccbfd573ea92166d34.1795075580.git.nas.chung@chipsnmedia.com>
+ <sashiko-outbox-222830@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-222830@kernel.org>
+X-ClientProxiedBy: PH8P221CA0061.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:349::17) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -187,285 +100,416 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: jQur+x6Gz6Lwx5rN1YleW5uXU7bkemsT6DqtDdr+qgfI0PoMD/3Ij2sb1bBTorSwsA0N8iGjlD35PiCQRonnTV+6Yb4B/TJzL7nX7IEL1RiyAYaRUAu/80iXBcWHHkCPaKu6A7RdNQz4p8qXcbeD9YrKSne9vxmYc7yILPgZTv0SujH26EgwSmNLG76++yuZYXxT6QiaLqzzC0J0N1FBkpG1bgPQG7XmQswcECbUr0fiLOaqcI805BfjDOyfqQRreGDfxhlFhCSVnZclyFEz/xNZ1xyFvHKi0U3yA+O0iJuuwGAwbsPTlLsOK1HNMtFVAK7O+/8EqTVgPhaeBT6uhQ==
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PA3PR04MB11225:EE_
+X-MS-Office365-Filtering-Correlation-Id: 86714c6b-fcc7-4330-c01f-08df46746f43
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|376014|23010399003|366016|1800799024|22082099003|18002099003|6133799003|261022105027099003|11063799006|261026130827099003|261022075727099003|261021130227099003|4143699003|261026135527099003|261022115727099003|10067099003|56012099006|261026121527099003|261102123227099003|261028144727099003|261022113327099003|261026140227099003|261021133027099003|261021135927099003|261021121427099003|261009223027099003|261021123027099003|260925022911599003|260925021311599003|260925021911599003;
+X-Microsoft-Antispam-Message-Info:
+	6CDf6XgfVewTaBIVSCQxsa5rqmTz9VxuBb4Pmf0Buz1THztZNhlN6MB5924+lQ+a306Gyxu+ZmbPhSAYMP+MxQ3lSUSo5ZbM6llWbzitU4DEh5jIS6lIzFRoM3uCf3R3lTXPz60EaxydwQ/hrGr2tDyeNi84nLtyU4DdOvZZZCzuBH6wp4Lp75FKWpieVQ3cWKUEVBVGUlGO9Le9t+jNadDFdTB3sqzWqNfx9vtq3yw1vVi3Nz//4rfm987g03NS8bvMc/j3Cp0F5nRHsMYaoA6renBBpo2SDEhEEZLrlrmdFGcubdPeHtTbU+dlRIF0ztVyJzme68g9lA0NH4A8ktUa7gKAdt5xa9MuiCqDuZPuORmUmzLs1bxoUiFtjLbOvA2QNAbkfsN8+yOpNiIMA+dnE1/Z5AGkOSxwCq4vPj1s+iEmV2Nkrd8rqRrsXmei+FtikJIT4SRt5K4WiqVg8ZYoE33EipManng2RIh8uoaQWzKXBBudN6ZmfjPgJUueWfta4NLDttcUsSsv/o/lQsgokZ4LZyavQYYAyCO4yXnE2Ccq2FuhCSei2LSNKrBXymklkbXE7eg13ufEdK1uWM6DfjpkebeeikYbGTVDdjM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(23010399003)(366016)(1800799024)(22082099003)(18002099003)(6133799003)(261022105027099003)(11063799006)(261026130827099003)(261022075727099003)(261021130227099003)(4143699003)(261026135527099003)(261022115727099003)(10067099003)(56012099006)(261026121527099003)(261102123227099003)(261028144727099003)(261022113327099003)(261026140227099003)(261021133027099003)(261021135927099003)(261021121427099003)(261009223027099003)(261021123027099003)(260925022911599003)(260925021311599003)(260925021911599003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?w08FgUE4dUJm2ZVRy2C6J9LpxCv2LI5KU+Po2gVthHgqkWdg1JLdsk+lPC?=
+ =?iso-8859-1?Q?2wnDfAr6AjfqJgvPv1dCJGmBHe1mm2eWl1ucAwKiQdPteLmgDpAEglB7hV?=
+ =?iso-8859-1?Q?6TeDGLdKaZ1w9crzDGjDmHdvp2yKr+wd3ZVqg1/vId/g9YZNBKtxp397pH?=
+ =?iso-8859-1?Q?QtPyCASvESRoQPxFOkYk0WVBy7IP87LxD6tRv0jGw6Jqws58gCcE8Nxv6h?=
+ =?iso-8859-1?Q?7w054GVSm5FsRVNC24IER+4Zt++9AaArUGq0nMA1u+KqBNG7Doy+6giHAQ?=
+ =?iso-8859-1?Q?PR6Rbb57WMdbZ2gpagW0ihBCxO5kdGcHOKp1q2/BrnZUuAG4EN27sr/w94?=
+ =?iso-8859-1?Q?1/KYB74S122smWY0BLN183FA0LKmwEgpV8n5femqq+sCqPO7NZNbRYp1cl?=
+ =?iso-8859-1?Q?sn06rw9aHbuN+iqxGq0/+unrNfZaQYZMtdS0gM8H83+DTbz2RkioMI51Mn?=
+ =?iso-8859-1?Q?51QAr37MOQ6IcPhk3F6tsaD4XEOrL1VKgwl1a0joGX0snsfl4oCXM3kmUL?=
+ =?iso-8859-1?Q?qECayIfcquPfRMaYKW9AqJYIHitX69AY7wq+F5lndbjHbQ94GZbpIvPPvy?=
+ =?iso-8859-1?Q?NrwehZzgSWyjHMDy+9WxUGdhv6XOV7tEkJzMTnGgqp/h93KIu5pvTjxAPu?=
+ =?iso-8859-1?Q?c/L/+JYmuLSVkzfBLUAeX7s55cmg5NcKKzRIP7D92bowlWwbuZLZ+coMFi?=
+ =?iso-8859-1?Q?KoMn7TtMOcQo65Sv89fZQ5KWs2sMA/iC4Py12RazxFbrsmaMXBVeofFUiZ?=
+ =?iso-8859-1?Q?apdiQvINbvKQcTGoOA1kmmhsIpIESEJcN0BsnT9e0irjyyVtH2MsxBr5jz?=
+ =?iso-8859-1?Q?8m9qYaKRwpp7V4/U0ZS1SbIPHzD1X7+hdwXU7LdTat+R06wbNH6p0/NCVU?=
+ =?iso-8859-1?Q?rqw/uaKaCxd1f4JpxI3rPjGlp796igbZ/P7wNFEFgepA2PmcSiYV4/UlYN?=
+ =?iso-8859-1?Q?j8tfnUq1D9kt/DcTI6AQwQ+8T6Kk7Xpu+UuBm9gOi6RMr0AbnFQvrW+ZTd?=
+ =?iso-8859-1?Q?uy6/1tck3Hy50RupXBemEOQbjbv4iwSBYCxB/AXlaGEaEcJMIsNu5XeSbZ?=
+ =?iso-8859-1?Q?5Z2MXQy2zxjjtqMd6JacBcqoPMCIhanXdNYeHGjtaGzJXmYDWILBBPF9EE?=
+ =?iso-8859-1?Q?zrThYU/hvZdCACWhkwaTcJCpDl9dcc8KZVtik3lBpHori9ucThKswin/Sj?=
+ =?iso-8859-1?Q?C5i6n+o0hkgl2EDit343mFg+aOounrTzQK4yDJLyIKNx7rM2PrdxGAqB6W?=
+ =?iso-8859-1?Q?NXt91IEY/eN2e5eG8yWvca8t1O5+0JUJw1KeRfrTOgEibhEHihxvg8Jrtd?=
+ =?iso-8859-1?Q?UXU47bGqjQho7DTnTMChgJpfoKvD506pIEWLsQ/OgGLqUxwOQpy/HFqSYn?=
+ =?iso-8859-1?Q?+prwIZ3RGd1SYwcwQCBNeUXod3deUUxXpe9BZnNxZYAwr/De8pCRNon2JN?=
+ =?iso-8859-1?Q?v+9RgfEObz6gYS5ULPhlMOeqb+DGj18UzZ/wqZVKk/KhskrwpQSQgL7/ub?=
+ =?iso-8859-1?Q?DWcORkQ9Y899owG54kGerhDfit8GRChVD+mqD2VZmONhox+PdeDFaMvek+?=
+ =?iso-8859-1?Q?M3FhNdEYezd3wiyF1gy2wyWfDJZywdCW68Ugb2xX0mwcx8Sn4ZquQdDPyZ?=
+ =?iso-8859-1?Q?fwtVH0yOhBeNN3x5eXIofQpU1HT3w7AHXrJbfx9Q1zTKavOWi/DJA966HC?=
+ =?iso-8859-1?Q?a1Dk4FfUoCzDvyqb5AsKBWc1T++LLM1ucBJMYlz7eZ+Vt4UuhdicT/K0mw?=
+ =?iso-8859-1?Q?KTdzCzz+0UYbyulOno39yhF1svBQkrqBEV59giEzhCUlZFxA9RcdBT4KoC?=
+ =?iso-8859-1?Q?HUeNYC8wOg3I25xsWovQasaGsclmAZeow00RqPFcXFcLC6xGXMAb?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 86714c6b-fcc7-4330-c01f-08df46746f43
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR11MB5395.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cef714ae-7aff-45ad-d22e-08df46730dc5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Nov 2026 19:26:47.5535
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2026 19:36:40.9328
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KJHhqEMYwraR6b/59H8wQwko1dzAyBOvcUZZTWadSVJkfxt3DnZcBeXRU96H0Cld93sAHPDFj6Aq6zes6Dgc1/1AXx0Om+pTpW9Yu3vOxZI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB7075
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ExjrTae0l9FmSGJc48tGzTizMSGU2Q3n/n3p65eZgfYfmvmNDGUTGKPBILBsT+qko6h9j8S2oHTWIAFWcs84vaSgucsFiSbRDZFD6GQUYeTRuGrvJPl65gfRPcMb8YW6
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA3PR04MB11225
 
------Original Message-----
-From: Intel-xe <intel-xe-bounces@lists.freedesktop.org> On Behalf Of sashik=
-o-bot@kernel.org
-Sent: Thursday, November 19, 2026 10:19 AM
-To: Charles, Daniel <daniel.charles@intel.com>; intel-xe@lists.freedesktop.=
-org
-Subject: Re: [PATCH v6 3/4] drm/xe: Disable scheduling early on FD close to=
- avoid CAT error cascade
->=20
-> Thank you for your contribution! Sashiko AI review found 3 potential
+On Thu, Nov 19, 2026 at 09:26:25AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 8 potential
 > issues to consider:
-> - [High] drm/xe: guc_exec_queue_kill() on zero-ref queue in pause_abort
-> - [High] drm/xe: async kill disable_scheduling() races with
->   suspend_pending
-> - [High] drm/xe: primary kill disables multi-queue group without group
->   cleanup
+> - [High] media: wave6: vpu->lock held across core device register and
+>   unregister
+> - [High] media: wave6: data race on work_buffers_avail in
+>   wave6_vpu_require_work_buffer()
+> - [Medium] media: wave6: stuck PREPARE state on work buf error in
+>   wave6_vpu_init_vpu()
+> - [Medium] media: wave6: incompatible phys_addr_t pointer in
+>   wave6_vpu_probe()
+> - [Medium] media: wave6: wave6_vpu_probe() succeeds without required
+>   memory-region
+> - [Medium] media: wave6: wrong product code value for WAVE677_CODE
+
+Please fix above issues
+
+Frank
+
+> - [Low] media: wave6: off-by-one of_irq_get() error check in
+>   wave6_vpu_create_cores()
+> - [Low] media: wave6: mixed guard(mutex) and goto cleanup in
+>   wave6_vpu_get()
 > --
->=20
-> commit 99b38ad21631b92773b295aba24f48100578bda0
-> Author: Matthew Brost <matthew.brost@intel.com>
->=20
-> drm/xe: Disable scheduling early on FD close to avoid CAT error cascade
->=20
-> This commit adds a static KILL scheduler message queued from
-> guc_exec_queue_kill() to disable GuC context scheduling immediately
-> outside of the serialized TDR path.
->=20
-> > diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe=
-_guc_submit.c
-> > index 4087a38ad3d66..671852b562105 100644
-> > --- a/drivers/gpu/drm/xe/xe_guc_submit.c
-> > +++ b/drivers/gpu/drm/xe/xe_guc_submit.c
->=20
+>
+> commit 600333b152222fe3a820d242ccd857c34cf7d58c
+> Author: Nas Chung <nas.chung@chipsnmedia.com>
+>
+> media: chips-media: wave6: Add Wave6 control driver
+>
+> This commit adds the control driver for the Chips&Media Wave6 video codec IP
+> to manage firmware loading, shared memory resources, and child core devices.
+>
+> > diff --git a/drivers/media/platform/chips-media/wave6/wave6-vpu.c b/drivers/media/platform/chips-media/wave6/wave6-vpu.c
+> > new file mode 100644
+> > index 0000000000000..9160ce53062ce
+> > --- /dev/null
+> > +++ b/drivers/media/platform/chips-media/wave6/wave6-vpu.c
 > [ ... ]
->=20
-> > @@ -2087,12 +2093,44 @@ static void __guc_exec_queue_process_msg_cgp_sy=
-nc(struct xe_sched_msg *msg,
-> >  		guc_exec_queue_send_cgp_sync(q, 0);
-> >  }
-> > =20
-> > +static void __guc_exec_queue_process_msg_kill(struct xe_sched_msg *msg=
-,
-> > +					      bool bound)
+> > +static int wave6_vpu_init_vpu(struct wave6_vpu_device *vpu,
+> > +			      void __iomem *core_base)
 > > +{
-> > +	struct xe_exec_queue *q =3D msg->private_data;
-> > +	struct xe_guc *guc =3D exec_queue_to_guc(q);
 > > +	int ret;
 > > +
-> > +	/* At zero references, the queued CLEANUP message handles disabling. =
-*/
-> > +	if (!kref_read(&q->refcount) || !bound || exec_queue_wedged(q))
-> > +		return;
+> > +	lockdep_assert_held(&vpu->lock);
 > > +
-> > +	ret =3D wait_event_timeout(q->guc->state_wq,
-> > +				 (!exec_queue_pending_enable(q) &&
-> > +				  !exec_queue_pending_disable(q)) ||
-> > +				 xe_guc_read_stopped(guc) ||
-> > +				 vf_recovery(guc), HZ * 5);
-> > +	if (!ret && !vf_recovery(guc)) {
-> > +		xe_gt_warn(q->gt, "Pending enable/disable failed to respond on kill,=
- guc_id=3D%d\n",
-> > +			   q->guc->id);
-> > +		xe_gt_reset_async(q->gt);
-> > +		xe_sched_tdr_queue_imm(&q->guc->sched);
-> > +		return;
+> > +	/* try init directly as firmware is running */
+> > +	if (wave6_vdi_readl(core_base, W6_VPU_VCPU_CUR_PC))
+> > +		goto init_done;
+> > +
+> > +	wave6_vpu_set_state(vpu, WAVE6_VPU_STATE_PREPARE);
+> > +
+> > +	wave6_vpu_remap_code_buf(vpu);
+> > +
+> > +	wave6_vdi_writel(core_base, W6_VPU_BUSY_STATUS, BUSY_STATUS_SET);
+> > +	wave6_vdi_writel(core_base, W6_CMD_INIT_VPU_SEC_AXI_BASE_CORE0,
+> > +			 vpu->sram_buf.dma_addr);
+> > +	wave6_vdi_writel(core_base, W6_CMD_INIT_VPU_SEC_AXI_SIZE_CORE0,
+> > +			 vpu->sram_buf.size);
+> > +	wave6_vdi_writel(vpu->reg_base, W6_COMMAND_GB, W6_CMD_INIT_VPU);
+> > +	wave6_vdi_writel(vpu->reg_base, W6_VPU_REMAP_CORE_START_GB,
+> > +			 REMAP_CORE_START_ON);
+> > +
+> > +	ret = wave6_vpu_wait_busy(core_base);
+> > +	if (ret) {
+> > +		dev_err(vpu->dev, "init vpu timeout\n");
+> > +		wave6_vpu_set_state(vpu, WAVE6_VPU_STATE_OFF);
+> > +		return -EINVAL;
 > > +	}
 > > +
-> > +	if (xe_guc_read_stopped(guc) || vf_recovery(guc))
-> > +		return;
+> > +	ret = wave6_vpu_check_result(core_base);
+> > +	if (ret) {
+> > +		dev_err(vpu->dev, "init vpu fail, reason 0x%x\n", ret);
+> > +		wave6_vpu_set_state(vpu, WAVE6_VPU_STATE_OFF);
+> > +		return -EIO;
+> > +	}
 > > +
-> > +	if (exec_queue_enabled(q))
-> > +		disable_scheduling(q, true);
+> > +init_done:
+> > +	ret = wave6_vpu_init_work_buf(vpu, core_base);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	wave6_vpu_set_state(vpu, WAVE6_VPU_STATE_ON);
+> > +
+> > +	return 0;
 > > +}
->=20
-> [Severity: High]
-> Can returning immediately after disable_scheduling() here race with a
-> queued SUSPEND message and the incoming SCHED_DONE G2H?
->=20
-> guc_exec_queue_suspend() checks exec_queue_killed_or_banned_or_wedged()
-> before __guc_exec_queue_suspend() takes sched->msg_lock, and
-> guc_exec_queue_kill() sets EXEC_QUEUE_STATE_KILLED before taking
-> sched->msg_lock, so STATIC_MSG_SUSPEND can be queued right behind
-> STATIC_MSG_KILL:
->=20
-> CPU0                              work_process_msg                  ct->g=
-2h_wq
-> guc_exec_queue_suspend()
->   !killed_or_banned_or_wedged()
->   (passes)
-> CPU1: guc_exec_queue_kill()
->   set_exec_queue_killed()
->   try_add_msg(KILL)
-> __guc_exec_queue_suspend()
->   suspend_pending =3D true
->   try_add_msg(SUSPEND)
->                                   __guc_exec_queue_process_msg_kill()
->                                     disable_scheduling(q, true)
->                                       clear_exec_queue_enabled()
->                                       set_exec_queue_pending_disable()
->                                   __guc_exec_queue_process_msg_suspend()
->                                     else if (q->guc->suspend_pending)
->                                       set_exec_queue_suspended(q)
->                                                                     handl=
-e_sched_done()
->                                                                       sus=
-pend_pending &&
->                                                                       exe=
-c_queue_suspended()
->                                       suspend_fence_signal(q)         sus=
-pend_fence_signal(q)
->                                                                         <=
--- trips assert
->=20
-> Because __guc_exec_queue_process_msg_kill() does not wait for its
-> PENDING_DISABLE to finish, __guc_exec_queue_process_msg_suspend() runs
-> while KILL's disable is still in flight, enters the unlocked
-> "else if (q->guc->suspend_pending)" branch, signals the suspend fence
-> before GuC has actually preempted the context, and races with
-> handle_sched_done() on q->guc->suspend_pending (tripping
-> xe_gt_assert(guc_to_gt(guc), q->guc->suspend_pending) in
-> suspend_fence_signal()).  Also, setting EXEC_QUEUE_STATE_SUSPENDED while
-> KILL's PENDING_DISABLE is in flight causes
-> guc_exec_queue_revert_pending_state_change() during VF migration recovery
-> to misattribute the pending disable to SUSPEND and set
-> q->guc->needs_suspend =3D true after suspend_pending was already cleared.
-
-The scheduled work queue is serialized, so this cannot occur.
-
->=20
+>
+> [Severity: Medium]
+> Does returning on wave6_vpu_init_work_buf() failure leave vpu->state stuck
+> in WAVE6_VPU_STATE_PREPARE?
+>
+> Unlike the timeout and error paths above init_done, this path does not
+> reset vpu->state to WAVE6_VPU_STATE_OFF.  wave6_vpu_get() then powers down
+> the device and drops core_count to 0, and every later wave6_vpu_get() ->
+> wave6_vpu_try_boot() sees vpu->state == WAVE6_VPU_STATE_PREPARE and returns
+> 0 without booting the VPU or initializing work buffers.
+>
 > [ ... ]
->=20
-> > @@ -2262,8 +2303,21 @@ static void guc_exec_queue_reinit_kernel(struct =
-xe_exec_queue *q)
-> >  	xe_sched_reinit(&q->guc->sched);
-> >  }
-> > =20
-> > +static bool guc_exec_queue_try_add_msg(struct xe_exec_queue *q,
-> > +				       struct xe_sched_msg *msg,
-> > +				       u32 opcode);
+>
+> > +int wave6_vpu_get(struct wave6_vpu_device *vpu, void __iomem *core_base)
+> > +{
+> > +	int ret;
 > > +
-> > +#define STATIC_MSG_CLEANUP	0
-> > +#define STATIC_MSG_SUSPEND	1
-> > +#define STATIC_MSG_RESUME	2
-> > +#define STATIC_MSG_CGP_SYNC	3
-> > +#define STATIC_MSG_KILL		4
-> >  static void guc_exec_queue_kill(struct xe_exec_queue *q)
-> >  {
-> > +	struct xe_sched_msg *msg =3D q->guc->static_msgs + STATIC_MSG_KILL;
+> > +	guard(mutex)(&vpu->lock);
 > > +
-> > +	xe_gt_assert(q->gt, kref_read(&q->refcount));
->=20
+> > +	/* Only the first core executes boot; others return */
+> > +	if (atomic_inc_return(&vpu->core_count) > 1)
+> > +		return 0;
+> > +
+> > +	ret = pm_runtime_resume_and_get(vpu->dev);
+> > +	if (ret)
+> > +		goto error_pm;
+> > +
+> > +	ret = wave6_vpu_try_boot(vpu, core_base);
+> > +	if (ret)
+> > +		goto error_boot;
+> > +
+> > +	return 0;
+> > +
+> > +error_boot:
+> > +	pm_runtime_put_sync(vpu->dev);
+> > +error_pm:
+> > +	atomic_dec(&vpu->core_count);
+> > +
+> > +	return ret;
+> > +}
+>
+> [Severity: Low]
+> This isn't a bug, but wave6_vpu_get() mixes guard(mutex) with goto-based
+> error unwinding in the same function, contrary to the Cleanup API
+> conventions in include/linux/cleanup.h.
+>
+> [ ... ]
+>
+> > +void wave6_vpu_require_work_buffer(struct wave6_vpu_device *vpu,
+> > +				   void __iomem *core_base)
+> > +{
+> > +	struct vpu_buf *vb;
+> > +	u32 size;
+> > +
+> > +	size = wave6_vdi_readl(core_base, W6_CMD_SET_WORK_BUF_SIZE);
+> > +	if (!size)
+> > +		return;
+> > +
+> > +	if (WARN_ON(size > W637DEC_WORKBUF_SIZE_FOR_CQ))
+> > +		goto exit;
+> > +
+> > +	if (WARN_ON(vpu->work_buffers_avail == 0))
+> > +		goto exit;
+> > +
+> > +	vpu->work_buffers_avail--;
+> > +	vb = &vpu->work_buffers[vpu->work_buffers_avail];
+> > +
+> > +	wave6_vdi_writel(core_base, W6_CMD_SET_WORK_BUF_ADDR, vb->daddr);
+> > +
+> > +exit:
+> > +	wave6_vdi_writel(core_base, W6_CMD_SET_WORK_BUF_SIZE, SET_WORK_BUF_SIZE_ACK);
+> > +}
+>
 > [Severity: High]
-> Can xe_guc_submit_pause_abort() hit this assertion and leak a runtime PM
-> reference when a queue in exec_queue_lookup already has a zero refcount?
->=20
-> When the last reference to an exec queue is dropped,
-> guc_exec_queue_destroy() only queues STATIC_MSG_CLEANUP; the queue remain=
-s
-> in guc->submission_state.exec_queue_lookup until the async destroy worker
-> runs guc_exec_queue_fini() -> release_guc_id().  Unlike
-> xe_guc_submit_wedge(), xe_guc_submit_pause_abort() iterates
-> exec_queue_lookup and calls guc_exec_queue_kill(q) without checking
-> kref_read(&q->refcount) (for example in guc_submit_fini() right after
-> dropping the wedge reference, or during vf_post_migration_abort() and
-> xe_guc_flr_prepare()):
->=20
-> drivers/gpu/drm/xe/xe_guc_submit.c:xe_guc_submit_pause_abort() {
-> 	...
-> 	xa_for_each(&guc->submission_state.exec_queue_lookup, index, q) {
-> 		...
-> 		xe_sched_submission_start(sched);
-> 		guc_exec_queue_kill(q);
-> 	}
-> }
->=20
-> Besides tripping the new assertion, queuing STATIC_MSG_KILL on a non-wedg=
-ed
-> zero-refcount queue takes a runtime PM reference via MSG_PM_REF in
-> guc_exec_queue_add_msg().  If the already-in-flight CLEANUP / destroy_asy=
-nc
-> path reaches guc_exec_queue_fini() -> xe_sched_fini() and cancels
-> work_process_msg before STATIC_MSG_KILL is processed, that runtime PM
-> reference is never released.
-
-In guc_submit_fini(), xe_exec_queue_put() is only called if the queue is we=
-dged.  And the
-queue wedged state is only ever set by xe_guc_submit_wedge, which itself on=
-ly sets this
-state if the refcount is at least one, additionally incrementing the refcou=
-nt.  This means that
-in guc_submit_fini(), xe_exec_queue_put() can only be called if the refcoun=
-t is at least 2, so
-decrementing it cannot set it to zero here.
-
->=20
-> >  	trace_xe_exec_queue_kill(q);
-> >  	set_exec_queue_killed(q);
-> >  	/*
-> > @@ -2273,6 +2327,27 @@ static void guc_exec_queue_kill(struct xe_exec_q=
-ueue *q)
-> >  	 * stays set until the queue is torn down.
-> >  	 */
-> >  	suspend_wait_wake(q);
+> Can concurrent calls to wave6_vpu_require_work_buffer() across VPU cores
+> race on vpu->work_buffers_avail?
+>
+> In commit "media: chips-media: wave6: Add Wave6 core driver", each child
+> core device calls wave6_vpu_require_work_buffer() directly from its
+> wave6_vpu_core_irq() hardirq handler without holding any shared lock:
+>
+> CPU0 (<hardirq> core 0)           CPU1 (<hardirq> core 1)
+> wave6_vpu_core_irq()              wave6_vpu_core_irq()
+>   wave6_vpu_require_work_buffer()   wave6_vpu_require_work_buffer()
+>     if (work_buffers_avail == 0)      if (work_buffers_avail == 0)
+>     work_buffers_avail--;             work_buffers_avail--;
+>     vb = &work_buffers[avail];        vb = &work_buffers[avail];
+>                                         <-- duplicate buffer or underflow
+>
+> Two cores can be assigned the same work_buffers[] entry, or when
+> vpu->work_buffers_avail is 1, both cores can pass the zero check and
+> underflow the u32 counter to 0xffffffff, reading vpu->work_buffers[] out of
+> bounds.
+>
+> Also, when jumping to exit on error, should W6_CMD_SET_WORK_BUF_ADDR be
+> cleared before writing SET_WORK_BUF_SIZE_ACK so the firmware does not
+> consume a stale address?
+>
+> > +static int wave6_vpu_create_cores(struct wave6_vpu_device *vpu)
+> > +{
+> > +	struct device_node *child;
+> > +	int num_cores = 0;
 > > +
-> > +	/*
-> > +	 * We eagerly send a message to ourselves to disable scheduling, as t=
-he
-> > +	 * TDR is serialized (i.e., only one exec queue is processed at a tim=
-e).
-> > +	 * If an FD is closed with many exec queues, the TDR can be slower th=
-an
-> > +	 * the GuC scheduling contexts with invalid page tables, creating a
-> > +	 * cascade of CAT errors and engine resets, which is quite slow. Avoi=
-d
-> > +	 * this by immediately disabling scheduling outside of the TDR.
-> > +	 *
-> > +	 * Only the primary's own KILL may do this for a multi-queue group.
-> > +	 * Group jobs share its ordered submit workqueue and the killed prima=
-ry
-> > +	 * prevents later member jobs from submitting to GuC.
-> > +	 */
-> > +	if (!xe_exec_queue_is_multi_queue_secondary(q) && !exec_queue_wedged(=
-q)) {
-> > +		struct xe_gpu_scheduler *sched =3D &q->guc->sched;
+> > +	for_each_available_child_of_node(vpu->dev->of_node, child) {
+> > +		struct platform_device_info info = {};
+> > +		struct platform_device *pdev;
+> > +		struct resource res[2];
+> > +		int irq;
 > > +
-> > +		xe_sched_msg_lock(sched);
-> > +		guc_exec_queue_try_add_msg(q, msg, KILL);
-> > +		xe_sched_msg_unlock(sched);
+> > +		if (num_cores >= W6_VPU_MAX_NUM_CORE) {
+> > +			of_node_put(child);
+> > +			break;
+> > +		}
+> > +
+> > +		if (of_address_to_resource(child, 0, &res[0])) {
+> > +			dev_warn(vpu->dev, "%pOF: missing reg property\n", child);
+> > +			continue;
+> > +		}
+> > +
+> > +		irq = of_irq_get(child, 0);
+> > +		if (irq < 0) {
+> > +			dev_warn(vpu->dev, "%pOF: missing interrupts property\n", child);
+> > +			continue;
+> > +		}
+> > +		res[1] = DEFINE_RES_IRQ(irq);
+>
+> [Severity: Low]
+> Should the error check for of_irq_get() be "if (irq <= 0)"?
+>
+> of_irq_get() returns 0 when IRQ mapping fails, which would register the
+> child platform device with an invalid IRQ 0 resource.
+>
+> [ ... ]
+>
+> > +static void wave6_vpu_release(struct wave6_vpu_device *vpu)
+> > +{
+> > +	guard(mutex)(&vpu->lock);
+> > +
+> > +	wave6_vpu_destroy_cores(vpu);
+> > +	wave6_vpu_free_work_buffers(vpu);
+> [ ... ]
+> > +}
+> > +
+> > +static void wave6_vpu_init_firmware(struct wave6_vpu_device *vpu,
+> > +				    const struct firmware *fw)
+> > +{
+> > +	guard(mutex)(&vpu->lock);
+> > +
+> > +	if (!fw || !fw->data) {
+> > +		dev_err(vpu->dev, "No firmware.\n");
+> > +		return;
 > > +	}
 > > +
-> >  	xe_guc_exec_queue_trigger_cleanup(q);
-> >  }
->=20
+> > +	if (fw->size + W6_EXTRA_CODE_BUF_SIZE > wave6_vpu_get_code_buf_size(vpu)) {
+> > +		dev_err(vpu->dev, "firmware size (%zd > %zd) is too big\n",
+> > +			fw->size, vpu->code_buf.size);
+> > +		return;
+> > +	}
+> > +
+> > +	memcpy(vpu->code_buf.vaddr, fw->data, fw->size);
+> > +
+> > +	if (!wave6_vpu_create_cores(vpu))
+> > +		dev_err(vpu->dev, "Failed to create VPU cores\n");
+> > +}
+>
 > [Severity: High]
-> If a multi-queue primary queue is killed while secondary queues still hav=
-e
-> in-flight jobs, does disabling scheduling on the primary without triggeri=
-ng
-> group cleanup leave the secondary jobs stranded?
-
-I'm 99% certain that xe_guc_exec_queue_trigger_cleanup is what
-cleans up the secondary queues in that case.  Or, more specifically,
-the guc_exec_queue_timedout_job() that it triggers cleans up
-the secondary queues and cancels in-flight jobs.
-
--Jonathan Cavitt
-
->=20
-> Every secondary queue holds a kref on the primary queue until the
-> secondary is finalized, so when the primary is killed (e.g. userspace
-> destroys the primary queue first, or VRAM page-offline kills bo->q),
-> kref_read(&primary->refcount) is non-zero and
-> __guc_exec_queue_process_msg_kill() disables the shared GuC context for t=
-he
-> whole group.  However, guc_exec_queue_kill() only calls
-> xe_guc_exec_queue_trigger_cleanup(primary) rather than
-> xe_guc_exec_queue_group_trigger_cleanup(primary).  When the primary has n=
-o
-> pending jobs of its own, primary's TDR never runs to set group->banned or
-> schedule TDR on the secondaries: LR secondary jobs stall forever, and
-> non-LR secondary jobs eventually hit guc_exec_queue_timedout_job() with
-> skip_timeout_check =3D=3D false, logging a false GPU hang, capturing a
-> devcoredump, and triggering a full GT reset via xe_gt_reset_async() for
-> any secondary job that had not started yet.
->=20
-> --=20
-> Sashiko AI review * https://sashiko.dev/#/patchset/20261119174621.1311154=
--1-daniel.charles@intel.com?part=3D3
->=20
+> Does holding vpu->lock across wave6_vpu_create_cores() and
+> wave6_vpu_destroy_cores() invert the lock hierarchy against child core
+> device locks and runtime PM transitions?
+>
+> wave6_vpu_create_cores() -> platform_device_register_full() and
+> wave6_vpu_destroy_cores() -> platform_device_unregister() acquire the child
+> core device's device_lock (core_dev->mutex) while vpu->lock is held, and
+> platform_device_unregister() -> __device_release_driver() also runs
+> pm_runtime_get_sync(core_dev) and pm_runtime_put_sync(core_dev).  In commit
+> "media: chips-media: wave6: Add Wave6 core driver", the child's runtime PM
+> and system sleep callbacks call wave6_vpu_get() and wave6_vpu_put(), which
+> acquire vpu->lock under core_dev->mutex or during a core_dev runtime PM
+> transition:
+>
+> CPU0                              CPU1
+> ----                              ----
+> lock(&vpu->lock)
+>                                   lock(&core_dev->mutex)
+> lock(&core_dev->mutex)
+>                                   lock(&vpu->lock)
+>
+>  *** DEADLOCK ***
+>
+> CPU0: wave6_vpu_init_firmware() -> wave6_vpu_create_cores() ->
+>       platform_device_register_full()
+> CPU1: device_suspend() -> wave6_vpu_core_suspend() ->
+>       pm_runtime_force_suspend() -> wave6_vpu_core_runtime_suspend() ->
+>       wave6_vpu_put()
+>
+> During teardown, if core_dev is in RPM_RESUMING or RPM_SUSPENDING waiting
+> for vpu->lock in wave6_vpu_get() or wave6_vpu_put() when
+> wave6_vpu_release() runs, __device_release_driver()'s
+> pm_runtime_get_sync(core_dev) will also wait on core_dev->power.wait_queue
+> while holding vpu->lock.
+>
+> [ ... ]
+>
+> > +	np = of_parse_phandle(pdev->dev.of_node, "memory-region", 0);
+> > +	if (np) {
+> > +		struct resource mem;
+> > +
+> > +		ret = of_address_to_resource(np, 0, &mem);
+> > +		of_node_put(np);
+> > +		if (!ret) {
+> > +			vpu->code_buf.phys_addr = mem.start;
+> > +			vpu->code_buf.size = resource_size(&mem);
+> > +			ret = wave6_vpu_init_code_buf(vpu);
+> > +			if (ret)
+> > +				goto error_detach_pm_domains;
+> > +		} else {
+> > +			dev_warn(&pdev->dev, "memory-region is not available.\n");
+> > +		}
+> > +	}
+>
+> [Severity: Medium]
+> Should wave6_vpu_probe() fail and jump to error_detach_pm_domains when
+> "memory-region" is missing or of_address_to_resource() fails?
+>
+> Without it, vpu->code_buf.size remains 0 while wave6_vpu_probe() continues,
+> allocates 48 MiB of coherent DMA work buffers and SRAM, and returns 0, only
+> for wave6_vpu_init_firmware() to unconditionally fail its size check against
+> wave6_vpu_get_code_buf_size(vpu) and leave those resources allocated without
+> creating any core devices.
+>
+> > +	vpu->sram_pool = of_gen_pool_get(pdev->dev.of_node, "sram", 0);
+> > +	if (vpu->sram_pool) {
+> > +		vpu->sram_buf.size = vpu->res->sram_size;
+> > +		vpu->sram_buf.vaddr = gen_pool_dma_alloc(vpu->sram_pool,
+> > +							 vpu->sram_buf.size,
+> > +							 &vpu->sram_buf.phys_addr);
+>
+> [Severity: Medium]
+> Does passing &vpu->sram_buf.phys_addr to gen_pool_dma_alloc() fail to build
+> when phys_addr_t and dma_addr_t have different widths?
+>
+> struct wave6_vpu_dma_buf declares phys_addr as phys_addr_t, whereas
+> gen_pool_dma_alloc() takes a dma_addr_t * third argument, which triggers
+> -Werror=incompatible-pointer-types on configs where
+> CONFIG_PHYS_ADDR_T_64BIT and CONFIG_ARCH_DMA_ADDR_T_64BIT differ (exposed by
+> COMPILE_TEST).
+>
+> > diff --git a/drivers/media/platform/chips-media/wave6/wave6-vpuconfig.h b/drivers/media/platform/chips-media/wave6/wave6-vpuconfig.h
+> > new file mode 100644
+> > index 0000000000000..1d4e016c2a582
+> > --- /dev/null
+> > +++ b/drivers/media/platform/chips-media/wave6/wave6-vpuconfig.h
+> > @@ -0,0 +1,37 @@
+> [ ... ]
+> > +#define WAVE617_CODE	0x6170
+> > +#define WAVE627_CODE	0x6270
+> > +#define WAVE633_CODE	0x6330
+> > +#define WAVE637_CODE	0x6370
+> > +#define WAVE663_CODE	0x6630
+> > +#define WAVE677_CODE	0x6670
+>
+> [Severity: Medium]
+> Should WAVE677_CODE be 0x6770 instead of 0x6670?
+>
+> All other Wave6 product codes encode the three-digit model number in bits
+> [15:4], so wave6_is_product_w_series() in wave6_vpu_try_boot() would reject
+> a Wave677 reporting 0x6770 with -EINVAL.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1795075577.git.nas.chung@chipsnmedia.com?part=2
+>
