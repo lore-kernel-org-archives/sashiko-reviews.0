@@ -1,54 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795074670;
-	b=zaL1jlgrMErMruJt3xAzCaBh+xvdfAGNSacrYLV5ERfCV1bX7sd59bGtCSCoP+zJiL6T
-	 slC5h/fsNn7o/yE5vAx6Y+CCrudRYjpjfy6pzDpafZ8H2eiVW/cmgHThSvT+EexVeimGo
-	 slHfQOxBPWdphGMy68I24/L6QLnyNkVprgt0Et1VHqcUBV2ABEiDssFYN/mEUBg9mn9+k
-	 VWo/JI7JGxkbMCJfH1Q7ebgctxdtcSpInjD1lhZUEaaPzl75uh08rf317/2EzKWoTfPOY
-	 C8NQEdl/eJ9s0Nx577ykH/iV0zOiV6CvD07l/SufBSfLmu/CVLbRtFxU37zoDE4HcOQ==
+	t=1795075313;
+	b=EdpJXVhENZ1peapfhIryBgRBifPqtP6/PaZXhT2ahqpsAkiFChMwbb3THNyXGZ98oI9k
+	 A4m4eQ/F+/D2O6wd85uF6biqvaUJFI+HNKKJR9O39C7T81CpNkJm2ZIlM8hrTeG/NaE/F
+	 TpYFRztqSjP1DC0TDQVZWpqbamX05deBcr5LptKdITJ42pahEOgcOaJQze1uWVf/C0CDk
+	 a+IOO5LqhA88TQQKwTq4cQvqgcFjrHL3Q4SN1YpskXKu1NpMPdJBhVOer+Sjfvj+Iv1ID
+	 D2nnzcJa/zMy8MhJenmJDDniq/PRkDbwRoXS1vW7Knm8KuvX9ZN603k7Y6VTT96PJSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795074670;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=AA8EaKSyD6J0aM0Ck4haMxWs7V7GTUR80XEI81xWqug=;
-	b=n2syty5YMZjFSlhsib9TmPcL7h49ljRMGE31TFq7Yb6mkdQaFtLk/v9py/hrKcSKmQ8X
-	 QIKhKmzvjaxlw472n7d2AG110INOsStA4x7WAx/CJAi0aqXKK4F3ygcEQWQFbhIa4fbYu
-	 /XJ3tPOfq9M9xXoH1y0BTm+TF0YtBPlkDnBBEc7FS2zAzukNc9aNdq9gHWAxpu5EB8VHf
-	 SLE9zbKeXgZgnnkVp13T2dOJWR3/0+pPIE58+wTYi40h+/5ALVosTGn3nFw6AAdaAwpaI
-	 5RyRw2qpDBqXWuR1XVAl3jNS5H1luZw2QRV5wQ/RLNPWk5ETNXC2ZBlEGGeVRwflq8A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795075313;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=TD/zLF3BPhys0bLsFUd/QjGu/MrgT1KFKv1kQ2YB9rY=;
+	b=i+sZUmH7DPjwZ9eezizyofFefSKfZBIx9bKR0zDTdNOTpJIS0sP1iLTvad6JpZ0w5wKw
+	 8NNlKWPU0ElQ64eRqB1Vc/JUUN2UTBBlKkNxNWnx9q4OlHYLKfOcUIZ0ZM5gFxKSsE7aj
+	 HDxBx3cqZv2cj14UDejNb/r3nctTFny8m3OHG9hEP8gUArYwTbEZKXX275dobmQDhHBNP
+	 cCDiljVjdwsNoocaGfnYZevyjp5PrvznM4SLxqPDLHrrygnjn+vlw55CvGJE7yJ8CM/4T
+	 Gch+m/SBH+QilawKMvh4voFY8aeWQ+cqPZrp8FblMMbNDyG7MVUVb4IMWje7J/MY5Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fRRpkaok;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CSOT4J+b;
+	arc=none smtp.remote-ip=209.85.128.42
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FFA606A320;
-	Thu, 19 Nov 2026 07:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9E2606A325
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 08:01:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE9E2606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fRRpkaok
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F9D1F000C4;
-	Thu, 19 Nov 2026 07:51:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795074669;
-	bh=AA8EaKSyD6J0aM0Ck4haMxWs7V7GTUR80XEI81xWqug=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fRRpkaokMlRnqm+ceQnPDZ9mvUBUZrLCFJ6hR1JNyMEDNDlm6JuumXhb0YRIrDH+v
-	 luMgVuC7VcTG40lr9CA6K5Ck0njdG6DtVpnaj3pca2fYzzxfshRSR4LOokTq0MYzoJ
-	 933fpGRRuQVBYYPOb2e/03XL/NSlCso+mCN0exEGLbhS2YifjrkIv3OmoDxU5uIzaj
-	 ROKbhMkpmtmB4qKJiJX3F+N0I39fp62nzIV73SP2Fzno6utTx3YH1MS5KNLHV9O3uL
-	 kLsqnyf7rPlfeMwNTozAetpcLj8DNhc9P1KY1McJaKGNX/Ie69xsR0JofDml1rhxOx
-	 2eVOF/8JlTJlQ==
-Date: Wed, 18 Nov 2026 23:51:08 -0800
-From: Namhyung Kim <namhyung@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CSOT4J+b
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so20236905e9.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 00:01:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795075311; x=1795680111; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TD/zLF3BPhys0bLsFUd/QjGu/MrgT1KFKv1kQ2YB9rY=;
+        b=CSOT4J+bbSkPMjCoIGpYw2Nia4iI71uObjuQlMmoZdAYBlcjVjuj9tHVZJ56bPPvZy
+         t9eI5T8mkfgo5hsTYGB/kSpSOoFM50490g/nu15kjgt/WpVjTLagRiQNbWjJV/nmzLz+
+         xMy2TKpc4arkW8Us0XGjv4gVVMMm5pnceD+FvYPmUC7/Gk8q87LcFRsESO2ApRLiXFOx
+         szNw5NjuiHuIQzdPluU4b51NXExk799CCXuwQyV9NXFRml7c0w3RfQQgPOjB1CItnZA6
+         ZTXusWmz0NJ5v8IbQKjrmcvGIt1wqJLqItOn3A2vsYV9lPa29clSELmT5H2Cthso9t9I
+         dKbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795075311; x=1795680111;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=TD/zLF3BPhys0bLsFUd/QjGu/MrgT1KFKv1kQ2YB9rY=;
+        b=at1CF92cwTGgnFByxtG3fRdHzxTRdpWA5vf3HAFeJHQsW5PhvGWIV3U1o9RLvM7i4M
+         CUKFyOxQGPRYd/m7U0/5d4nBwLSL5BNEPP//Dfuk7wkNECdOPnKF4ljNlC3Tvfry9rlH
+         ES5TRodEiMLAibVgzsxBiW/0h83tQ5oDDswLtvnGqB7zuHZggkTPbFlaToE0Y8BbKBWm
+         hfvTrH3PhYatV6WYbyZXJzKUBsaX4Er9doqgV8z6fsrgW9o0YiFtShF4IsRhqoaxu0LS
+         6/N9F9UR5rmervLbwusw2gyAqA+LZpzXq34SgovXEbt1AKcC/SuXqbErJtmm3ikDu2t9
+         CuKQ==
+X-Gm-Message-State: APuU4Z9S4B6EE8zwldsT4okwK0PtJ+V22gqcHNoDaZETYPYoECow1Fku
+	eQE/G7hHdiqf++o/0BNe5R8yiCndEGynmoh9P4REf9Xjb/jOXYpaxPHaE5gUfSc9
+X-Gm-Gg: AYBFou31oM2OTxGKtMC5ITsT2E08uacSE8YDOKbBx/NhjSikmtz6+xR4VbJKIWhXW3I
+	8gkt+M3XNXB34imsdMLhW0EfmRWFcaCwn87weRjz/qJbAtPWkTOWlTSHsaruT/CS9U0PYV8kv6G
+	tdiF9oO7vWCIdaIgRmlgSpmZwy7+oAQwXKqQD9DDCdwIQ+ZOD7LtP7sQsYqcpkx17sNg6nu/73d
+	ynxqWZs8MCYwNJi+erI8VMekmxwMT47cZ6lteVameDh7kdCOcwWLcZDTGntHJg6bGWb8E4sICSE
+	4NzSsy3DDCTRQgakuiqZWIHTcyyDLRiyvL9sQ/W6wn6OjH/O0Wgs67BwDYWEDANLL8a9AyTGKph
+	UlenY/E4DJyXFV4S86v2C5ywGRpE1Uh1b4mA1P2weQroZPVzUnjpqwDqs/alrlAec2cGMXkT+fK
+	/gXxaVRbciq+3Lal1CSEruE9FJQCuIG8rGo4DGVPm/EwyXjtrmlbX/kgsqOSWATAFM0MWRwDIAy
+	EdLFesGchepcT9peC13n/taSzENcfgCh2QCgqPODyRqBmuFKfEdjUCGPS2nvrYhxQc4mgVhEQmX
+	qa0Qr9i9Wv+nifeiMy6RSe8khMRUjki0JhmGnLG6f4re8siuoTdT/44Bxmaqa45rIu345ud+M9G
+	w6Ew6MioQcEShMIqIvD65ILwi6BRZ1wXrC5ptpjJ/UK/f4E4=
+X-Received: by 2002:a05:600c:3b8c:b0:4b7:6942:39bf with SMTP id 5b1f17b1804b1-4bb7da3a68bmr107159555e9.28.1795075310807;
+        Thu, 19 Nov 2026 00:01:50 -0800 (PST)
+Received: from center.jhjvjihww5qejoy14qwv1cc4td.frax.internal.cloudapp.net ([131.189.143.225])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4a65560882asm9602389f8f.27.2026.11.19.00.01.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2026 00:01:50 -0800 (PST)
+From: Orgad Shaneh <orgads@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Gu Bin <gubin@cmss.chinamobile.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH] perf trace: guard free(new_filter) to avoid double-free
- on OOM
-Message-ID: <av6qbBy6Zkq1PiQ1@google.com>
-References: <20261112031810.1899-1-gubin@cmss.chinamobile.com>
- <sashiko-outbox-210269@kernel.org>
+Cc: dwmw2@infradead.org,
+	richard@nod.at,
+	miquel.raynal@bootlin.com,
+	linux-mtd@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] jffs2: reschedule between the data CRC checks of an inode
+Date: Thu, 19 Nov 2026 08:01:49 +0000
+Message-ID: <20261119080149.311902-1-orgads@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <sashiko-outbox-222025@kernel.org>
+References: <20261118214045.107562-1-orgads@gmail.com> <20261118214045.107562-2-orgads@gmail.com> <sashiko-outbox-222025@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,72 +100,16 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-210269@kernel.org>
 
-On Thu, Nov 12, 2026 at 03:25:15AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [Medium] perf trace: unhandled -ENOMEM in trace__expand_filter() [1]
-> --
-> 
-> commit e8aa93f0bab0450d21dc93c231c980b9474cb264
-> Author: Gu Bin <gubin@cmss.chinamobile.com>
-> 
-> perf trace: guard free(new_filter) to avoid double-free on OOM
-> 
-> This commit guards free(new_filter) on the asprintf() failure path in
-> trace__expand_filter() so that evsel->filter is not freed when new_filter
-> still aliases it.
-> 
-> > diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-> > index 4094141461f91..f4a67491f5be1 100644
-> > --- a/tools/perf/builtin-trace.c
-> > +++ b/tools/perf/builtin-trace.c
-> > @@ -4679,7 +4679,8 @@ static int trace__expand_filter(struct trace *trace, struct evsel *evsel)
-> >  
-> >  					if (asprintf(&n, "%.*s%s%s", expansion_offset, new_filter, expansion, right_end) < 0) {
-> >  						pr_debug(" out of memory!\n");
-> > -						free(new_filter);
-> > +						if (new_filter != evsel->filter)
-> > +							free(new_filter);
-> >  						return -1;
-> >  					}
-> >  					if (new_filter != evsel->filter)
-> 
-> [Severity: Medium]
-> This problem wasn't introduced by this patch, but at the end of
-> trace__expand_filter(), should the return value of evsel__set_filter() be
-> checked [1]?
+> Should this include: Fixes: df8e96f39103 ("[JFFS2] Improve read_inode
+> memory usage, v2.")
 
-Yep, this is a separate issue.  I think it's ok to take this patch as
-is.
+Yes. Before that commit, the loop in jffs2_do_read_inode_internal()
+called cond_resched() before each node it added to the fragtree, data
+check included; the loop that replaced it in
+jffs2_build_inode_fragtree() has none.
 
-Gu, are you willing to fix the reported problem too?
+Richard, can you add the tag when applying, or do you prefer a v2?
 
-Thanks,
-Namhyung
-
-> 
-> tools/perf/builtin-trace.c:trace__expand_filter() {
-> 	...
-> 	if (new_filter != evsel->filter) {
-> 		pr_debug("New filter for %s: %s\n", evsel->name, new_filter);
-> 		evsel__set_filter(evsel, new_filter);
-> 		free(new_filter);
-> 	}
-> 
-> 	return 0;
-> }
-> 
-> If strdup() inside evsel__set_filter() fails with -ENOMEM, the failure is
-> silently ignored and trace__expand_filter() returns 0, leaving the
-> unexpanded filter in place.
-> 
-> [1] https://sashiko.dev/#/bug/linux-cbf4bb01-a981-47dc-b440-68e5c9c3e81c
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261112031810.1899-1-gubin@cmss.chinamobile.com?part=1
+Fixes: df8e96f39103 ("[JFFS2] Improve read_inode memory usage, v2.")
