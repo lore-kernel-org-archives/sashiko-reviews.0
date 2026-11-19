@@ -1,100 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.49
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795074477;
-	b=EVlG1sCLfgo+IzIJMHO6cHIm40MZt+XnXatHUrGMrq7/sHc2yS+rZqD79LuA8LlLvyP7
-	 4jFq6PoOD69hCUE9iUEB/RjxyjrjD8fxibvqp0aWo2wrVr+Dh6DW67lBdMpyR4awlXzQn
-	 JbELiJKZfFZBbN+UN7s7v1HafFo0Es3CO0pa2ueFA3PlFafLqAAdYgWu73ia0XtYrLlV8
-	 t8YuHE0SzjwokvsIQ1yzUGbEUJEdub0vKuoiWJuXnknc9XVu2hPAhmciErRwokAegvAwI
-	 m9PwM2QsIgdB5V6+2xlR16CDyIuxkxH0HdO9Fdg6zXZcxHWUp2diowR5ntg1gy9YTqw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795074477;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
-	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=NxaDLy3kTu/T3sN/sIsjcH9V/GiOz2OxLtfG9LFDhC4=;
-	b=dhaxV2XCUU9HC8Oar2XDbftokinBgm67kUqx2ND10ty84t79S/Av900j+5QnmOrrBZAW
-	 0lrC5K15+NqyhlkoL4ZArjIuQGEFmWvKeYQYU0PenR79kqanVBSd0ZDROK4RcABZgCFwk
-	 uOI8DuUSFLrn25Ny7zRqUKc3Rb5xl8or7cGzr31JY71Kq8D9YPwxTPdZPBbKKNu3WP7X9
-	 foLHNjcwXgR5I9TTMdIRqSahIuHmVlqC6O0++iN/1sDn9/cpgBJAesFvywNH3+g5XcRkL
-	 fMFp6jd85r3+d/g+jMfNY60DuDcicF6qghSB0HUKUWMXjupyNhMK3tsO0V7i6oNhBxA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=qVuQ89w+;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.49
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012049.outbound.protection.outlook.com [40.93.195.49])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.180
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795074551;
+	b=MJ5zr5EaiJL9rqo61wGq6M0Z5xf1evyJ5oEV3SdbKJQAQoZLBUH2B4FaXp5OCYTu+igs
+	 9ZxYB59jL+zMOLGiVQqsoh4pxjSQqJsyhKcMU39xuUmgKIKK6yIayKSL1YX6PLQ8j5qfw
+	 q9dITtC1hbe5TPdH0U42Z30oxUTjMESAq8hk6Ls9uxDmKFCFTnG78+p0DOgnyqPX/MxLZ
+	 4xlLtAEdEFG0vj81flUCOaMwSfjGCcH1Lp9c+r5yNjCse672a79/CP+JbOLaH9vrvDGl8
+	 oRo7wfc2/8n4WnTHncM/q0qKzWJrFFlCrtmWfpkeFXYggcSi9fe0GwMiaLiFpn5U9Kw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795074551;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:Received:Received:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:X-Gmail-Original-Message-ID:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
+	bh=AlwETNNCgQuoL3olEu8hotUVCo0wqZYULOda47vcNrw=;
+	b=PzixAD8poOJ6GFIL7BbitHI/EHXSjeG3LRDEAvFOt3Pp6w12wIwhroZbbUqFZgCIKVuk
+	 obGGJhQMlwXde/DyZnw/Ro3s4+Yb8PI/KcbvHv4M1OPN6XQQyOMktc9nZPaM/r/yISh/t
+	 5VwxHLP4/Jhmx2jz50yHM3UkCjzjPwTiYvHHmfRTN/wjD6EZRgWmSFqIb+9MxcG7LQ5h0
+	 v/DDGPm2smi8KhAvFDrHHLpOj8RfcSIwHvxL4al+yh19UN+JpKxwodbq1g9ez3AL1ZFr0
+	 4zr2Dk5pSIov6C7CFfvPDqLdZSoSsKOzHTDho+puZaNNBQ4C347NcQ5+rnOofPJSaUQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=fail header.from=linux-m68k.org;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.221.180
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1FA606A324
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 07:47:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD1FA606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=qVuQ89w+
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nkytAd0UynQb1g76qQm/781EoYyJwPRABkQ8A9IVu0B+9Mam3igTBBoD950In0W/4ldS+WjdcxNXxMnPk7N5vbGbE19i42ZNym2ar+w1Im6QV924hpupUBxZaPd5xkBn/CRgRSNtrpQHjwlngsSZSKwlYFs4EO40cqovxzz1gaCQgtApjBId60hNJSKfzEEs9PI0+0jqjdD7QBG+4ORVfLR3Z0Tqjgtid7Xwg6wOgc82V31/yypoIGpeCM7UtpNC4/Fs/fsHcSHr5DnbS6Ql2551kntzluydVZVyA8rY4FkqUMky4pk3U8BqaeZnQk00brcjLbz6tQoDQuDisvAD1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NxaDLy3kTu/T3sN/sIsjcH9V/GiOz2OxLtfG9LFDhC4=;
- b=GIAKAKq1wtiF6XHxqDgOxjkWhTJGRSr76sOFpStWFAIvx0DB/kcCCebVrYNb1uFNqTxyNzBthpYzELIdITxLLlEDoKNlIe8h6JlBI2OMSRxTzJunxo/04VjTv0CvQcHK4vsTE4KeWT1MRC8Xwc2F7YFhirW3IGSlEohhIn3XC/oMkfzwkeysGKXXFRun3DfLpdZtq91r6nZws4IYmvXFLBN7fo+thGfk3r6U3PbRvChZ3LxHRQFt09JN6WXFSJhVA1YEuVNppHovWapG7jJBvCK9ZNx0XoTwUBNOlypraNOb09s9uKaHEpvKwoC3zkvH55NJcGwVeQ8K9lcClVVZsg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NxaDLy3kTu/T3sN/sIsjcH9V/GiOz2OxLtfG9LFDhC4=;
- b=qVuQ89w+eU1Hiyw4JESmibkc8z11in4jLBc/bE/GyJUdop9WHjJjCWozeogWTGaUuhTNhA9Rtdms7Bl7CiCl8GIZdQxJKvIIIXpFzZvKEBTc7nFtiOQlDqaJiEPO+vhBc/O0fkplrLtGtv/849ClbVO9x1oGlNn8zUvl8zKlEMxPRXsX762pXTcz300YqjG7zN+o1b1QUs3IrYymHnEXB18pca2+X+khDpmojnVePoSp/Y6lrqEFZsoHfLzasG5LyGFGkIQfCD4pBG5sMw1AOWLFwCNEPtWv+xNC04qh10OeyCJyfVKh35MVpMV1gv6+VmDMiUG8mOab3R4Z1Aa2CQ==
-Received: from CYZPR19CA0002.namprd19.prod.outlook.com (2603:10b6:930:8e::8)
- by IA1PR12MB8286.namprd12.prod.outlook.com (2603:10b6:208:3f8::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Thu, 19 Nov
- 2026 07:47:52 +0000
-Received: from EA8PEPF0000000C.namprd05.prod.outlook.com
- (2603:10b6:930:8e:cafe::64) by CYZPR19CA0002.outlook.office365.com
- (2603:10b6:930:8e::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.9 via Frontend Transport; Thu, 19
- Nov 2026 07:47:52 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.160) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- EA8PEPF0000000C.mail.protection.outlook.com (10.167.249.235) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Thu, 19 Nov 2026 07:47:51 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Wed, 18 Nov
- 2026 23:47:32 -0800
-Received: from [10.125.206.246] (10.126.230.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Wed, 18 Nov
- 2026 23:47:31 -0800
-Message-ID: <b244b29c-8a42-47a8-9fcb-e741a4f232ab@nvidia.com>
-Date: Thu, 19 Nov 2026 09:47:29 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC6B606A326
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 07:49:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1CC6B606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5edf97136aaso1109361e0c.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 23:49:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795074550; x=1795679350;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=AlwETNNCgQuoL3olEu8hotUVCo0wqZYULOda47vcNrw=;
+        b=evHIW6QHO7XsUEfwgo5muagIsBf+H2LzGy2IswbThzZ1kab5eN5rEWdZ9OpnW6jMAj
+         aJOnP5Ar0HvqMHVeQkMc6tpKljWCvXMWNNCzIhZNNTIa1FtpIeWrwmsUZ9qHusbOqBL9
+         QDXBWtacDsRSc88Xi9Td8AR347CdnOmndmuqWbhoyPRk8Fn/xmI9gF3mHIL13d96BRt8
+         cOTHK0yRJjWSaKui/VSdW7T19rs4KUoW/KfNfS+2h3BdKALQRUcsqek+bJCcEDgZcxcM
+         GKvvy1nVpqUUL3rzMpObNU7mvTLETKstoJwZJnKmrnbKiJ6xduklMrSAwhTQvcMUMH1M
+         tLPA==
+X-Gm-Message-State: APuU4Z8WNzCbukQ5MZVc8Lkz41NpyFl2tSm0+00k37Ui8K8nT+W+Tjh7
+	kGH0tn5hm74H0rgGUCyzscf+wIzv7aIHZTflULhEZ9air6sa8qewlfr3ZqAfrkak
+X-Gm-Gg: AYBFou1TAzCv7gGPq5qSoir6nlQh5baDOQSESH5IBXlLdJ2aPC6P7Eqzcw/lPdAQqVg
+	Byu31lX8XOpTNbNguY43MpD+MPuzfiJ7c+DGoFobPFsg0Plv6E8ZSBmZh/z6yL5G85ce8Cy3JAH
+	h0ibW4FUXHgQrMoFxjqq6pUgPJH0cTcqkyCh4MwLw2ffamftjalWI+dCqaPnnA4oZFE2mbQk6+t
+	jg/1dLa91nH0x6K5tcQcmcZKjwzVefwXmFNZvaomuYqFh/BvwPSNZ+vTMmOm/351Jo0x+MQEEqT
+	uYBW9qGpL8kAfKKZ1h1+8LxWHF6DH73LZ2MCmTiZz1CPeUfbAC5qmQarnllNY/Ijr1CYhxonL93
+	/ZWFaIw55FqlzFsYFC5dObrR/4xa/p9Su6glYhGF8MNQR+F1lMbdWkDTO0jCLBlDtLrbJa0Txqr
+	wDu/ad9tgKOYTqzg5vArpOUPyp28xVZQ1z2bd7KUJE8CKmqZgqbW+ThoMz0utjiNi+1uWkyklq0
+	gvMDbFl01hqC4SHJBPrF3ieugLOWw9LT+guQc5aaRWPDJeR8fkkFl52+jypLLOyTvqTQqqKyktz
+	W6FX8+SKrVf1Y4SA0AFIhwypRN3Dc08tgCRFiZo7G1ZKK+cdRE2LBFGWfkNg1aVHs0w=
+X-Received: by 2002:a05:6122:1904:b0:5ec:20e8:45ff with SMTP id 71dfb90a1353d-5ee647862d9mr2528957e0c.21.1795074550002;
+        Wed, 18 Nov 2026 23:49:10 -0800 (PST)
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5ee64ed7adesm3505961e0c.15.2026.11.18.23.49.09
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 23:49:09 -0800 (PST)
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-7d2da166818so1083366137.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 23:49:09 -0800 (PST)
+X-Received: by 2002:a05:6102:370c:b0:7d2:c903:515d with SMTP id
+ ada2fe7eead31-7d6ba3e8cc5mr2280659137.7.1795074549276; Wed, 18 Nov 2026
+ 23:49:09 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,91 +77,246 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 rdma-next 04/21] net/mlx5: Catch too low max number of
- EQs
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-rdma@vger.kernel.org>
-References: <20261117170914.27410-1-yishaih@nvidia.com>
- <20261117170914.27410-5-yishaih@nvidia.com>
- <sashiko-outbox-221605@kernel.org>
-Content-Language: en-US
-From: Yishai Hadas <yishaih@nvidia.com>
-In-Reply-To: <sashiko-outbox-221605@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: EA8PEPF0000000C:EE_|IA1PR12MB8286:EE_
-X-MS-Office365-Filtering-Correlation-Id: 389882dc-05bf-4167-3b4a-08df46116a16
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|82310400026|23010399003|376014|36860700016|22082099003|18002099003|56012099006|11063799006|261022105027099003|261026140227099003|10067099003|261028144727099003|261009223027099003|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	HqCW7yYD2aCRuLAzalfsGFbGj4DtSPU+bUoKACCWrwMH4xw5RocMFGtH033gWOSI+B6Hao7JU6Em/p9A+kZeL6HM7k77PX72JN2OlIEXyVxdmyAiusBZMQOt8BQpFQWfzESr4VFQiKuPyROu6vZvHKGK0ZF9aunxFyGjBsP0eGOd4VkyK2Ngway+wuHgli0AwSyi8dKyInG6XYJ4epptzLxYimmdjMyR966alQrAzp9sViQ54r4uGkrtP1rO31sc3UQ+I7BCNMCbDlz09ge38uwcVCH5P7z1SpZDOKVVKAIyarDaNVLqP0QM1mUU/xQGbBsiHo7MhsPn1jqkex59XFpIFzi0BxKOMIlnHmTZrXpz+Rs+X2VQzK6gRSKSLfu6JmUmA6rWNf1OEdYUzxJdOuiY/WrNYPEQFNTkd58kksw8AjVDLMb03fb+F6BopokCvr4GkzZ3Gs1qF26zLLDCs3/2xdHnwmhuLHROJhx0BTEFFk8dUyJyGG/T3gFtFktz+4Iae7eF9UlAOSRuOvDKCQT35lGHVamTQa7FtsLCSey1XRCY9IVuU6zHggZ+eBTKB/pNc9CPxS3LrsvKLmqBnPiUK6PqySXcm0OVh4Kyk0+ivTZ2f6yLbSCs6v3IepyHu9RI1+0oBWoYY26n1jYNNlrOqbqIo2+H6up3X7CRuQi4CLruBfHLkX2oQD4i6/a3KqpG0qZi2q6voJpqb3yIlg==
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(23010399003)(376014)(36860700016)(22082099003)(18002099003)(56012099006)(11063799006)(261022105027099003)(261026140227099003)(10067099003)(261028144727099003)(261009223027099003)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	bewwUQCqnEPeLYDTvaMNB93CpMRKbqa0KdbqyQQS9+bOIqAZ3VRFnlpjVFvp23XTV3yXQcl0LAn8Bv9+6vhgAm7ORzwCRyfkR/F7xO+PGajFta1GEhszW8XikkLLyNS9Czm+DN9RxLxL90yTX+3gqX8CyW0KeoiVTty7Z79IUYa8oLi53DGa225J0RqJHzuDeIHj8g9CT9/TYwV4adKaC7ZG6LBlmzlFNDHi/4zZccoAI4FjnohgN4M/yJHWyhXL4dM4mKpSG1NzBRczgcHBLxTMldwsoU15PPGiNmQ3Km4s7UFOEBm7wKOKGoNwiKoEsCEMm3eUwPma766Ds3SVqmAPVXGKkhfqo7yEMsVHddBvF+QqsbHbitKpjt52YUONrhjDhMcIG44GSQRPUvVfFglHS4K8Yi1Fr9sLIkJRY4c31xUc/Tua1ujcSh480ozH
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2026 07:47:51.6954
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 389882dc-05bf-4167-3b4a-08df46116a16
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	EA8PEPF0000000C.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8286
+References: <cover.1795029012.git.geert+renesas@glider.be> <e6816327da51f9fbeef67f13aac723b891e5042f.1795029012.git.geert+renesas@glider.be>
+ <sashiko-outbox-221928@kernel.org>
+In-Reply-To: <sashiko-outbox-221928@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 19 Nov 2026 08:48:57 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdXgOvdAAJEEydip_-Aakf8j3ORXnZAS-=NqCMBxHwrfZA@mail.gmail.com>
+X-Gm-Features: Aa3M54qMY9KEs6Xlpwbmw0a9TWCYDcZMChPHFmIneFq8gUbTr8Q3_1H7DUbenEE
+Message-ID: <CAMuHMdXgOvdAAJEEydip_-Aakf8j3ORXnZAS-=NqCMBxHwrfZA@mail.gmail.com>
+Subject: Re: [PATCH v5 14/15] pmdomain: renesas: r8a78000: Add SCMI remapping support
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org, 
+	conor+dt@kernel.org, wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 18/11/2026 19:13, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] net/mlx5: divide-by-zero in alloc_rmap() when get_num_eqs()
->    returns 0
+Hi Sashiko,
+
+On Wed, 18 Nov 2026 at 21:22, <sashiko-bot@kernel.org> wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] pmdomain: renesas: leak of exclusive reset controls in
+>   r8a78000_mdlc_probe()
+> - [Medium] pmdomain: renesas: leak of scmi_clk_np reference in
+>   r8a78000_mdlc_probe()
+> - [Low] pmdomain: renesas: mixed scoped_guard() and goto in
+>   r8a78000_mdlc_attach_dev()
 > --
-> 
-> commit 3ffd9856318c7a723d1d765cb083af29c7442990
-> Author: Dragos Tatulea <dtatulea@nvidia.com>
-> 
-> net/mlx5: Catch too low max number of EQs
-> 
-> This commit checks for a negative return value from get_num_eqs() in
-> mlx5_eq_table_create() and returns -EINVAL when firmware reports fewer EQs
-> than MLX5_MAX_ASYNC_EQS.
-> 
->> diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eq.c b/drivers/net/ethernet/mellanox/mlx5/core/eq.c
->> index d11ec263d53c9..b34670eb037cf 100644
->> --- a/drivers/net/ethernet/mellanox/mlx5/core/eq.c
->> +++ b/drivers/net/ethernet/mellanox/mlx5/core/eq.c
->> @@ -1195,9 +1195,13 @@ static int get_num_eqs(struct mlx5_core_dev *dev)
->>   int mlx5_eq_table_create(struct mlx5_core_dev *dev)
->>   {
->>   	struct mlx5_eq_table *eq_table = dev->priv.eq_table;
->> -	int err;
->> +	int err, num_eqs;
->> +
->> +	num_eqs = get_num_eqs(dev);
->> +	if (num_eqs < 0)
->> +		return -EINVAL;
->>   
->> -	eq_table->max_comp_eqs = get_num_eqs(dev);
->> +	eq_table->max_comp_eqs = num_eqs;
-> 
-> [Severity: High]
-> Can allowing num_eqs == 0 cause a divide-by-zero in alloc_rmap() on non-SF
-> devices?
-> 
-The num_eqs == 0 case is not specific to adversarial mode. A trusted 
-device can hit it as well, so it's a bug fix for net with a Fixes tag, 
-not part of this hardening series.
+>
+> commit 35d53b7b58584e545d3609ea7bb1ae4726d2bdc8
+> Author: Geert Uytterhoeven <geert+renesas@glider.be>
+>
+> pmdomain: renesas: r8a78000: Add SCMI remapping support
+>
+> This commit extends the R-Car X5H Module Controller driver to remap
+> hardware power domain, module clock, and reset IDs to SCMI power domains,
+> clocks, and resets when SCMI firmware support is available.
 
-We may send it separately, failing alloc_rmap() with -EINVAL when a 
-non-SF function has no completion EQs.
+Thanks for your review!
 
-Yishai
+> > --- a/drivers/pmdomain/renesas/r8a78000-mdlc.c
+> > +++ b/drivers/pmdomain/renesas/r8a78000-mdlc.c
+> [ ... ]
+> > @@ -178,8 +280,148 @@ static int r8a78000_mdlc_attach_dev(struct generic_pm_domain *domain,
+> >               return -ENOENT;
+> >       }
+> >
+> > -     dev_dbg(dev, "Ignoring HW module 0x%x\n", id);
+> > +     if (!priv->scmi_clk_np) {
+> > +             dev_dbg(dev, "Ignoring HW module 0x%x\n", id);
+> > +             return 0;
+> > +     }
+> > +
+> > +     entry = &priv->mod_map->entries[idx];
+> > +     dev_dbg(dev, "Mapping HW module 0x%x to SCMI clock %d fck parent %d\n",
+> > +             id, entry->fw_id, entry->fw_fck_parent);
+> > +
+> > +     clk = scmi_get_clk(dev, priv->scmi_clk_np, entry->fw_id);
+> > +     if (IS_ERR(clk))
+> > +             return PTR_ERR(clk);
+> > +
+> > +     parent = scmi_get_clk(dev, priv->scmi_clk_np, entry->fw_fck_parent);
+> > +     if (IS_ERR(parent)) {
+> > +             ret = PTR_ERR(parent);
+> > +             goto fail_put_clk;
+> > +     }
+> > +
+> > +     if (!clk && !parent) {
+> > +             /* Ignore missing SCMI clocks */
+> > +             return 0;
+> > +     }
+> > +
+> > +     ret = pm_clk_create(dev);
+> > +     if (ret)
+> > +             goto fail_put_parent;
+> > +
+> > +     if (parent) {
+> > +             ret = pm_clk_add_clk(dev, parent);
+> > +             if (ret) {
+> > +                     pm_clk_destroy(dev);
+> > +                     goto fail_put_parent;
+> > +             }
+> > +     }
+> > +     if (clk) {
+> > +             ret = pm_clk_add_clk(dev, clk);
+> > +             if (ret) {
+> > +                     pm_clk_destroy(dev);
+> > +                     goto fail_put_clk;
+> > +             }
+> > +     }
+> >       return 0;
+> > +
+> > +fail_put_parent:
+> > +     clk_put(parent);
+> > +fail_put_clk:
+> > +     clk_put(clk);
+> > +     return ret;
+> > +}
+>
+> [Severity: Low]
+> This isn't a bug, but r8a78000_mdlc_attach_dev() already uses
+> scoped_guard(mutex, &r8a78000_mdlc_lock), and adding goto-based error
+> unwinding in the same function mixes cleanup.h helpers with goto labels.
+> Factoring either the list lookup or the PM clock setup into a helper
+> would keep them separate.
+
+Not a bug, will see if I get to it...
+
+> > +static struct reset_control **get_rstcs(struct r8a78000_mdlc_priv *priv,
+> > +                                     struct fwnode_handle *scmi_reset_fwnode)
+> > +{
+> > +     const struct mod_id_map *map = priv->mod_map;
+> > +     struct fwnode_reference_args scmi_spec;
+> > +     struct reset_control **rstcs, *rstc;
+> > +     struct device *dev = priv->dev;
+> > +     s16 fw_id;
+> > +
+> > +     if (!map)
+> > +             return NULL;
+> > +
+> > +     rstcs = devm_kzalloc_objs(dev, *rstcs, map->size);
+> > +     if (!rstcs)
+> > +             return ERR_PTR(-ENOMEM);
+> > +
+> > +     for (unsigned int i = 0; i < map->size; i++) {
+> > +             fw_id = map->entries[i].fw_id;
+> > +             if (!scmi_reset_fwnode || fw_id < 0)
+> > +                     continue;
+> > +
+> > +             scmi_spec.fwnode = scmi_reset_fwnode;
+> > +             scmi_spec.nargs = 1;
+> > +             scmi_spec.args[0] = fw_id;
+> > +
+> > +             rstc = reset_control_get_from_provider_exclusive(&scmi_spec);
+> > +             if (IS_ERR(rstc)) {
+> > +                     while (i--)
+> > +                             reset_control_put(rstcs[i]);
+> > +
+> > +                     return dev_err_cast_probe(dev, rstc,
+> > +                                     "Failed to get SCMI reset %u\n", fw_id);
+> > +             }
+> > +
+> > +             rstcs[i] = rstc;
+> > +     }
+> > +
+> > +     return rstcs;
+> >  }
+>
+> [Severity: Medium]
+> Does r8a78000_mdlc_probe() leak the exclusive reset_control objects in
+> priv->rstcs if a later registration step fails?
+>
+> reset_control_get_from_provider_exclusive() returns unmanaged references,
+> and get_rstcs() only calls reset_control_put() when its own loop fails.
+> If a subsequent call in r8a78000_mdlc_probe() such as
+> of_genpd_add_provider_onecell() or devm_reset_controller_register() fails,
+> the reset controls are leaked and remain marked exclusively acquired, so a
+> later probe retry will fail with -EBUSY.  Registering a
+> devm_add_action_or_reset() callback in get_rstcs() would release them on
+> probe failure.
+
+Thanks, will do.
+
+> > @@ -249,6 +500,47 @@ static int r8a78000_mdlc_probe(struct platform_device *pdev)
+> >       priv->dev = dev;
+> >       priv->np = np;
+> >
+> > +     if (!IS_ENABLED(CONFIG_ARM_SCMI_POWER_DOMAIN) ||
+> > +         !IS_ENABLED(CONFIG_COMMON_CLK_SCMI) ||
+> > +         !IS_ENABLED(CONFIG_RESET_SCMI)) {
+> > +             dev_dbg(dev, "SCMI pmdomain/clock/reset support is disabled\n");
+> > +             goto fallback;
+> > +     }
+> > +
+> > +     scmi = of_find_compatible_node(NULL, NULL, "arm,scmi");
+> > +     if (!scmi) {
+> > +             dev_dbg(dev, "Cannot find SCMI firmware node\n");
+> > +             goto fallback;
+> > +     }
+> > +
+> > +     if (!of_device_is_available(scmi)) {
+> > +             dev_dbg(dev, "SCMI firmware node is not available\n");
+> > +             goto fallback;
+> > +     }
+> > +
+> > +     scmi_power_np = scmi_find_proto(scmi, SCMI_PROTOCOL_POWER);
+> > +     if (!scmi_power_np) {
+> > +             dev_dbg(dev,
+> > +                     "Cannot find SCMI power domain management protocol\n");
+> > +             goto fallback;
+> > +     }
+> > +
+> > +     scmi_clk_np = scmi_find_proto(scmi, SCMI_PROTOCOL_CLOCK);
+> > +     if (!scmi_clk_np) {
+> > +             dev_dbg(dev, "Cannot find SCMI clock management protocol\n");
+> > +             goto fallback;
+> > +     }
+> > +
+> > +     scmi_reset_np = scmi_find_proto(scmi, SCMI_PROTOCOL_RESET);
+> > +     if (!scmi_reset_np) {
+> > +             dev_dbg(dev, "Cannot find SCMI reset management protocol\n");
+> > +             goto fallback;
+> > +     }
+> > +
+> > +     priv->scmi_clk_np = scmi_clk_np;
+> > +     info = mdlc_data->fw_info;
+> > +
+> > +fallback:
+>
+> [ ... ]
+>
+> > @@ -295,11 +604,14 @@ static int r8a78000_mdlc_probe(struct platform_device *pdev)
+> >               return dev_err_probe(dev, ret,
+> >                                    "Failed to register reset controller\n");
+> >
+> > +     /* Retained in priv->scmi_clk_np */
+> > +     retain_and_null_ptr(scmi_clk_np);
+> > +
+> >       return 0;
+> >  }
+>
+> [Severity: Medium]
+> Does retain_and_null_ptr(scmi_clk_np) leak the scmi_clk_np device_node
+> reference when the fallback path is taken after scmi_clk_np has been
+> found?
+>
+> If scmi_find_proto(scmi, SCMI_PROTOCOL_CLOCK) succeeds but
+> scmi_find_proto(scmi, SCMI_PROTOCOL_RESET) returns NULL, probe jumps to
+> fallback before setting priv->scmi_clk_np = scmi_clk_np, and then
+> unconditionally clears scmi_clk_np via retain_and_null_ptr(scmi_clk_np)
+> at the end of r8a78000_mdlc_probe().
+
+That is correct behavior, as scmi_clk_np won't be handed to
+priv->scmi_clk_np in the fallback case.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
