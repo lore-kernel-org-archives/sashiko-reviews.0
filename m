@@ -1,58 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.216
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.71.94.104
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795087849;
-	b=LGligg3CU4lRfpEKBHxqouza2Yj8LDqFIftncyY05n3yPLlRPQffoPctOmCyoUy13wH9
-	 FvRggSHHD6XEvTX2Xd9DHjkyy3Ibluv3AuLVdKZC+BJY69Mye2z4yDxvGHpMylesgNatX
-	 NrbvMiAe1iVxLAXAjWmG7J3T4Ld3Q/gXftcHOgNid7wFE8Um+GSZzQSQN5Ym5ePSEaokA
-	 jotH8D6//plsrGAQ6R0A9eQhJ9cACj+FdAutGClp7lEEO/zNQPK/tIMagHzfxoM2W7IOi
-	 lA56Mh96DZaawk5cwdCH+2nlJyyeoPWlsS8nQAEgD3132ZQ+zNa8DWrl1i5s7Urruyw==
+	t=1795088403;
+	b=zRzuDGrPG3lHrBhP63+V36wAeHbYZ43Ua6BKK13DyIwAdZ6SlSYeGSW5h2K5v10WRA/D
+	 UFvGASDtk1dAfqMh4X3jtq8HkRFNNOBXV2TE+EiDvfgDdAQ/dgYrxFXfNFlPN8F0E5NHJ
+	 PZr07cNR5HluMtzy28EwdkHQxoAwvHomfGed7VusCcmZCHbRKSqF2DO6eWWKwhj57JzO1
+	 N5GXmo7ApvcBHqDmd0hMMexJujHMqo0gcSae9gdJBmFZa5Mi1KGcV/ahe6uO4SuYb4Z07
+	 H9TLGZCIQonWr6iswbyl4BYgkY+rKP57GdrEvO7jKrnQrxM/uNh8VcJLnEcPElxJZFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795087849;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
-	bh=z0E2lZlV2yoBMZ56bSiufGGAa3c0rIjegx9XME1SsuA=;
-	b=c38Au7ICZ64nEDEXvKTq88mtWA+T70l8D/kNRIhMqYB6mPfdaEWx8LTXeHON5OIrLMuG
-	 YJVYYwnM4qT7o+pFoJWRbaVc8Vq2MpGnIf8lFoVHViXTU8w8ffNToBSprytp4purIXNeH
-	 Rn/VtPFlXWeGPzsxcy2LqIE0u4Yxb76kuVsS0qWUC2ZuPFn8quSRuX28g8FfAIWIKLhZX
-	 8SNO+dEIRMAJaWx5KazdXYJ/Mj7C7RhQLpGFsdZ1iw+X04u9Mup5pMvlz7Rl0U7Gyw4ll
-	 vyeuOTuTxgF4nPwz51zXdS9kOG5En4YzU34Olh/D9SUWK9VKlAFk52JH+B/bdrTmeUA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795088403;
+	h=DMARC-Filter:Received:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
+	 X-Coremail-Antispam:X-CM-SenderInfo;
+	bh=nQChFNEB15AD4YGjkZsxF9JynHwfzvCzK6Q2wqWZFUI=;
+	b=jryIJBh0zPgdDjGLnH+A8oQwuCe/35o6HHLmo9eIJf6suO/GRlAjDsHB5DkAUMkve5bv
+	 KRmWPXYb93iZYoNHUoNGmBFy/nMRI9Y+Wnoi/3QIkevc4XaCv2k9iJsdDYcVeECK2E/Ug
+	 sl1JCppxgSpOPpyfiTuFy7+N5z4+8Ph43+GamLVzFL2vfy2p0ZWrw9TXA5LM6khtDutYz
+	 1KSUe5Cza9TiqLwnV0Bi0k5iQmtklWjNvtdIGHD9E+K9Z6zP9r29MV0ttNSlHKcFvn4LS
+	 nn9gdPL6/riglbPfSl5ziw8uRF0pEtwxP4kUr3hRRA/BRBfVeDzhGboEebg9gk9x2cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=FO7D36Ur;
-	arc=none smtp.remote-ip=113.46.200.216
-Received: from canpmsgout01.his.huawei.com (canpmsgout01.his.huawei.com [113.46.200.216])
+	dmarc=none header.from=huaweicloud.com;
+	spf=pass smtp.mailfrom=huaweicloud.com;
+	arc=none smtp.remote-ip=124.71.94.104
+Received: from dggmsgout13.his.huawei.com (dggmsgout13.his.huawei.com [124.71.94.104])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18A0606A324
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 11:30:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D18A0606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=FO7D36Ur
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=z0E2lZlV2yoBMZ56bSiufGGAa3c0rIjegx9XME1SsuA=;
-	b=FO7D36UrX7bZtaxDXteU563jvlJyGcPLEvuvew7jirOzcsUkDJa7r7jipCvKI8QW9Q9+GAfSX
-	OLVaxJqNUhlQrJYkx6dT67m1ValxjILRAyaHmHEePh3QnIslz3nu9q7SbRoGklcUaKb41jl5qMf
-	oqfOAoKIJ/3UbJ12SIiCmok=
-Received: from mail.maildlp.com (unknown [172.19.162.197])
-	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4jVbqG1Ywcz1T4Fp;
-	Thu, 19 Nov 2026 19:30:02 +0800 (CST)
-Received: from kwepemo500009.china.huawei.com (unknown [7.202.194.199])
-	by mail.maildlp.com (Postfix) with ESMTPS id 7759D4057D;
-	Thu, 19 Nov 2026 19:30:43 +0800 (CST)
-Received: from [10.67.121.161] (10.67.121.161) by
- kwepemo500009.china.huawei.com (7.202.194.199) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Thu, 19 Nov 2026 19:30:42 +0800
-Message-ID: <d66eb438-97d3-4f75-9d43-06b994e8edba@huawei.com>
-Date: Thu, 19 Nov 2026 19:30:42 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7F7606A325
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 11:40:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9C7F7606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggmsgout13.his.huawei.com (SkyGuard) with ESMTP id 4jVc1g6fHWz1rq9S
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 19:39:03 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.252])
+	by mail.maildlp.com (Postfix) with ESMTP id 124F14056B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 19:39:58 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP3 (Coremail) with UTF8SMTPA id _Ch0CgCHi_4M4P5qF6+VEw--.8133S2;
+	Thu, 19 Nov 2026 19:39:58 +0800 (CST)
+Message-ID: <7ad8221e-f451-4b97-bdf5-c953c0b9ac4e@huaweicloud.com>
+Date: Thu, 19 Nov 2026 19:39:56 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -63,156 +52,115 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 12/13] vfio/pci: Reset PCIe TPH state on device open
- and close
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
-References: <20261118091238.45992-1-fengchengwen@huawei.com>
- <20261118091238.45992-13-fengchengwen@huawei.com>
- <sashiko-outbox-220903@kernel.org>
+Subject: Re: [PATCH v5 2/2] perf/core: Disable context fast-swap for sigtrap
+ events
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1795053619.git.wutengda@huaweicloud.com>
+ <55b1a2845b0ad34a874a7653644e34af9eb068d3.1795053619.git.wutengda@huaweicloud.com>
+ <sashiko-outbox-222905@kernel.org>
 Content-Language: en-US
-From: fengchengwen <fengchengwen@huawei.com>
-In-Reply-To: <sashiko-outbox-220903@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <sashiko-outbox-222905@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
- kwepemo500009.china.huawei.com (7.202.194.199)
+X-CM-TRANSID:_Ch0CgCHi_4M4P5qF6+VEw--.8133S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDurW7JFWUWr43trWDArb_yoW5ZFyUpr
+	W8ur1Skry5XF10qa15Ka1Uuw1xZw4rKFWDGw4DtFW3Ar4Y9wnxWFy7Gw45ZFs8Xr12yFy8
+	K3yqvryDu34UAFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgqb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2
+	j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7x
+	kEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+	JVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67
+	kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY
+	6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
+	vEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVj
+	vjDU0xZFpf9x07UE-erUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On 11/18/2026 8:20 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [Medium] vfio/pci: pcie_disable_tph() after reset in
->   vfio_pci_core_enable()
 
-We move pcie_disable_tph() before pci_try_reset_function() in
-vfio_pci_core_enable().
-With tph_enabled cleared before reset, PCI core will not save and
-restore stale TPH_CTRL and ST table entries during reset.
-The new user session starts with a clean hardware TPH state, and the
-subsequent pci_save_state captures this clean state.
 
-> - [Medium] vfio/pci: unsafe TPH teardown order and cpuhp race in
->   vfio_pci_core_disable()
-
-The root issue is use-after-free caused by freeing tph_st_cpu before
-draining in-flight CPU hotplug offline callbacks.
-We reorder the TPH deinit to run before MSI-X teardown:
-- Call pcie_disable_tph() first to block new TPH programming;
-- Use cpuhp_state_remove_instance() instead of
-  cpuhp_state_remove_instance_nocalls(), which waits for running offline
-  handlers to complete;
-- Free tph_st_cpu only after all cpuhp callbacks finish.
-Since TPH deinit completes before MSI-X is disabled, the cpuhp offline
-handlers run while MSI-X is still valid, so the spurious -ENXIO error is
-naturally resolved without extra memory lock wrapping inside the callback.
-
-> - [Medium] vfio/pci: stale PCIe TPH state across runtime resets and
->   config writes
-
-This case is already handled by existing VFIO state restore logic. VFIO
-restores hardware registers after runtime reset, so we do not need additional
-pcie_disable_tph() calls in FLR/hot-reset/ioctl-reset paths.
-
-Thanks
-
+On 2026/11/19 18:03, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] perf/core: non-SMP-atomic local_t race on
+>   ctx->nr_no_switch_fast
 > --
 > 
-> commit 339ada87f2084ce58d1ead31609b94d5bab56bf3
-> Author: Chengwen Feng <fengchengwen@huawei.com>
+> commit 5e829db733e2fe49cdac7cb99bb9428db1c83359
+> Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> vfio/pci: Reset PCIe TPH state on device open and close
+> perf/core: Disable context fast-swap for sigtrap events
 > 
-> This commit calls pcie_disable_tph() in vfio_pci_core_enable() and
-> vfio_pci_core_disable() to reset PCIe TPH state when opening and closing
-> a VFIO PCI device.
+> This commit excludes sigtrap events from the context fast-swap path by
+> incrementing and decrementing ctx->nr_no_switch_fast when adding and
+> removing events with attr.sigtrap set.
 > 
->> diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
->> index 049392831b35f..8d3d532cd51ab 100644
->> --- a/drivers/vfio/pci/vfio_pci_core.c
->> +++ b/drivers/vfio/pci/vfio_pci_core.c
->> @@ -606,6 +606,8 @@ int vfio_pci_core_enable(struct vfio_pci_core_device *vdev)
->>  		goto out_disable_device;
+>> diff --git a/kernel/events/core.c b/kernel/events/core.c
+>> index da86bc6e8be94..483ba8704d418 100644
+>> --- a/kernel/events/core.c
+>> +++ b/kernel/events/core.c
+>> @@ -1999,7 +1999,7 @@ list_add_event(struct perf_event *event, struct perf_event_context *ctx)
+>>  		ctx->nr_user++;
+>>  	if (event->attr.inherit_stat)
+>>  		ctx->nr_stat++;
+>> -	if (has_inherit_and_sample_read(&event->attr))
+>> +	if (has_inherit_and_sample_read(&event->attr) || event->attr.sigtrap)
+>>  		local_inc(&ctx->nr_no_switch_fast);
 >>  
->>  	vdev->reset_works = !ret;
->> +	/* Reset TPH state for new user session */
->> +	pcie_disable_tph(vdev->pdev);
->>  	pci_save_state(pdev);
->>  	vdev->pci_saved_state = pci_store_saved_state(pdev);
->>  	if (!vdev->pci_saved_state)
+>>  	if (event->state > PERF_EVENT_STATE_OFF)
+>> @@ -2225,7 +2225,7 @@ list_del_event(struct perf_event *event, struct perf_event_context *ctx)
+>>  		ctx->nr_user--;
+>>  	if (event->attr.inherit_stat)
+>>  		ctx->nr_stat--;
+>> -	if (has_inherit_and_sample_read(&event->attr))
+>> +	if (has_inherit_and_sample_read(&event->attr) || event->attr.sigtrap)
+>>  		local_dec(&ctx->nr_no_switch_fast);
 > 
 > [Severity: Medium]
-> Should pcie_disable_tph() run before pci_try_reset_function() instead of
-> after it?
+> Can concurrent local_inc() and local_dec() calls on ctx->nr_no_switch_fast
+> from different CPUs race and lose updates?
 > 
-> If pdev->tph_enabled is still set when entering vfio_pci_core_enable(),
-> pci_try_reset_function() calls pci_save_tph_state() before the reset and
-> pci_restore_tph_state() after it, writing the stale PCI_TPH_CTRL and
-> capability-located Steering Tag table entries back into hardware.
-> pcie_disable_tph() then clears only PCI_TPH_CTRL and sets
-> pdev->tph_enabled = 0, leaving the restored ST table entries in hardware.
-> Because pdev->tph_enabled is now 0, the following pci_save_state() ->
-> pci_save_tph_state() returns early without updating the saved buffer, so
-> vdev->pci_saved_state retains the stale pre-disable TPH state.
+> ctx->nr_no_switch_fast is a local_t, so local_inc() and local_dec() are
+> only atomic on a single CPU (for example, unlocked inc/dec on x86).  When
+> installing a disabled sigtrap event into a non-empty task context,
+> perf_install_in_context() runs add_event_to_ctx() directly on the
+> installer CPU under ctx->lock without an IPI, while an already-active
+> sigtrap event in that context can update ctx->nr_no_switch_fast on the
+> target task's CPU without holding ctx->lock:
 > 
->> @@ -762,6 +764,9 @@ void vfio_pci_core_disable(struct vfio_pci_core_device *vdev)
->>  
->>  	vfio_pci_zdev_close_device(vdev);
->>  
->> +	/* Reset TPH state on user session exit */
->> +	pcie_disable_tph(vdev->pdev);
->> +
->>  	/*
->>  	 * If we have saved state, restore it.  If we can reset the device,
->>  	 * even better.  Resetting with current state seems better than
+> CPU0                              CPU1 (running ctx->task)
+> perf_install_in_context()
+>   raw_spin_lock(&ctx->lock)
+>   add_event_to_ctx()
+>     list_add_event()
+>       local_inc(&ctx->nr_no_switch_fast)
+>                                   __perf_event_overflow()
+>                                     local_inc(&ctx->nr_no_switch_fast)
+>                                       <-- non-SMP-atomic RMW race
+>                                   ...
+>                                   perf_pending_task()
+>                                     local_dec(&ctx->nr_no_switch_fast)
 > 
-> [Severity: Medium]
-> Is calling pcie_disable_tph() this late in vfio_pci_core_disable() safe
-> against MSI-X teardown and CPU hotplug?
+> A similar cross-CPU race is possible between list_del_event() in
+> perf_remove_from_context() (when !ctx->is_active) and perf_pending_task().
+> A lost increment allows ctx->nr_no_switch_fast to drop to 0 while a
+> sigtrap event or pending task_work is still present, re-enabling the
+> context fast-swap path and hitting WARN_ON_ONCE(event->ctx->task !=
+> current) in perf_sigtrap().
 > 
-> vfio_pci_set_irqs_ioctl() disables MSI-X and vfio_pci_tph_dev_deinit()
-> runs before pcie_disable_tph() is reached here.  Meanwhile,
-> vfio_pci_tph_dev_deinit() frees vdev->tph_st_cpu without vdev->tph_lock
-> before removing the cpuhp instance:
-> 
-> CPU0                                  CPU1
-> vfio_pci_core_disable()               vfio_pci_tph_cpuhp_offline()
->   vfio_pci_set_irqs_ioctl()
->   ...
->   vfio_pci_tph_dev_deinit()
->                                         if (vdev->tph_st_cpu == NULL)
->     kfree(vdev->tph_st_cpu);
->     vdev->tph_st_cpu = NULL;
->                                         mutex_lock(&vdev->tph_lock);
->                                         vdev->tph_st_cpu[i]
->                                           <-- use-after-free / NULL deref
->     cpuhp_state_remove_instance_nocalls()
-> 
-> In addition, if a CPU goes offline after vfio_pci_set_irqs_ioctl()
-> disables MSI-X on a PCI_TPH_LOC_MSIX device while pdev->tph_enabled is
-> still 1, vfio_pci_tph_cpuhp_offline() -> pcie_tph_set_st_entry() ->
-> pci_msix_write_tph_tag() fails with -ENXIO and logs a pci_err().
-> vfio_pci_tph_dev_init() similarly registers vdev->tph_cpuhp_node before
-> allocating and initializing vdev->tph_st_cpu to -1, and
-> vfio_pci_tph_cpuhp_offline() calls pcie_tph_set_st_entry() without
-> vfio_pci_memory_lock_and_enable().
-> 
-> [Severity: Medium]
-> What happens to pdev->tph_enabled across runtime resets during an active
-> user session?
-> 
-> This patch disables TPH on open and close, but runtime reset paths
-> (vfio_pci_ioctl_reset(), vfio_pci_dev_set_hot_reset(), and PCIe/AF FLR in
-> vfio_exp_config_write() and vfio_af_config_write()) do not call
-> pcie_disable_tph() or reset vdev->tph_st_cpu.  When pdev->tph_enabled is
-> 1 across pci_try_reset_function() or pci_reset_bus(), pci_save_tph_state()
-> and pci_restore_tph_state() restore PCI_TPH_CTRL after the reset, leaving
-> TPH enabled with wiped device-specific ST tables and causing subsequent
-> guest writes to PCI_TPH_CTRL in vfio_tph_config_write() to either drop
-> ST mode changes when req == org_req or fail in pcie_enable_tph_ext() with
-> -EBUSY.  If a reset clears hardware PCI_TPH_CTRL to 0 without restoring
-> it while pdev->tph_enabled remains 1, vfio_tph_config_write() reads
-> org_req == 0 from hardware, so enabling TPH fails with -EBUSY in
-> pcie_enable_tph_ext() while writing PCI_TPH_REQ_DISABLE exits early at
-> req == org_req without calling pcie_disable_tph().
-> 
+
+Same as this:
+
+  https://lore.kernel.org/all/b5d10cd7-e3af-4e07-a19b-44544077db59@huaweicloud.com/
+
+It is a pre-existing issue, so a separate patch will be submitted and it will not
+be fixed within this patch series.
+
+Thanks,
+Tengda
 
