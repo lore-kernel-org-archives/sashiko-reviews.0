@@ -1,47 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=65.21.61.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795102238;
-	b=ntM/k/FIFWJ7kjA1qLzTlbZUpnX8mDHrHxHN8NA3nKJgn3kC6zfa7M1KjRhoLrZ6iggG
-	 dec9qF7FwO2ImTgiu94cn7aZA2Q5Ah8cijnVsVpwX7zoivug/i7KHL83LoJyjq6zf0Rjm
-	 ukXI8x+eRIGereFVAmLr19NOBvb40xD7AsquTRDt1p8oEbAa/DMicFsJzzJhREiFDPZ2q
-	 ofq/kHPWQGbELIHEZxgyU3lQ58GRokgVN/Xq/9higZ4QYM9x8lvJCq7FCZRGEAMF7ujXg
-	 LedAtys+CQTba3b3uLE3ybOpktU073q3FUSwUBRW4juvlmiTvT5niQ03IukDL/HxYuQ==
+	t=1795102520;
+	b=2kd5FXTow9oSas9TNpzofSOMTTmSOPqk973iKb5y89FWgp0mHUwxiO2/5IjY/BpE53lB
+	 bPA6p8/9jI0/cEkxcZh/qO7LOmK+MJ7h1N6uN8OLfynqfI6m4m7IIEhZ6O2c/+528mrpQ
+	 vOie2926rG4lY5SHQmonOIzxA/9N2GTTadqwnlKDySXNVw5VFA3NwYw5TLnN/pELIsctS
+	 Y5OIA043QAwXvUeY3AsFqtoThpfq8T0m1FtfC4ooNLpA7Ccd9UEMMoyPWZZAYOrB85pru
+	 TQ2lm/MyUgKtxC7JPRMRghXEdDiKHs6tR0S9yEADsRQsRJLwl0P1CNis+EnNdRn8Byg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795102238;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:Date:MIME-Version:User-Agent:
-	 From:Subject:To:Cc:References:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=FMi2mMXbZEaTTTJLs4nfOz4L1kEKPa7JQamE+tBPopc=;
-	b=KhCv5F6hJ6wHcjWUjvK269Xn1+2EYzcwI3GvSQoK+GateXngurIHQVRDnEsQ7DWwBZ7X
-	 WFgGFdR9nX8ENNJG0Rz4N0jZ3GtZnR7NR5wm6Iu84QeO5DgWjc60uQM+4X6rFBz2UO7Iu
-	 Ad1b3exNEviJZfszgkqgZ5ol2k0d0QVv9vIBNM702wgoJtI21WsJoE0JqKMSy4pIslK9h
-	 VXPLSGaojfUg3/7L66cRZynS00e1d92huC4nKaa6PIfMw3pPumfK7ZEDbF0AqS+N5CNsP
-	 PrMH6mq9KnFo9GCdzRWH9+AauKFlboxQZ2Dnr3lO2UWbH8d0QRmxNLi0JWgLCNjLUkg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795102520;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
+	 User-Agent:Date:Message-ID:MIME-Version:Content-Type;
+	bh=5PHc8ZY0sl/OvQI4AydERp0/2Wo62tIxIPbE1l5fSsw=;
+	b=DWSf4vghVaPa/G2FjFUZ1rAM/4OzQHgS4AEERTIA7hYH6JszpxjGcpaFhMFcUeA76YUL
+	 NZhMt/ODv8AoGpBl4/Pl710V8Cd8OEEXl4PtvxS8VuWlaZ7sC7tgA7awP8LOxlVG8o2Xl
+	 aBEb4RylVrZerAQ3587Lx6FFJ3Y277MjxPhrHDlyZVL3DemMRJlj1fUr0iFxwVTEmXrro
+	 ZY5/iIuRnnA4dNwxDmyOWXMUoJG9yJ0vuRzh87eU7OO1xaWkHw7AnUJloY2PZrkGWe+3m
+	 FFXx7h3YPOGwurcpaviHp7vi7/b5Ee9b9HCjLU79HhAd4nGKnFt4oPjWQ/jtZ41Fa9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aliel.fr;
-	spf=pass smtp.mailfrom=aliel.fr;
-	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=Nj6zi7Fo;
-	arc=none smtp.remote-ip=65.21.61.41
-Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hex2NF+0;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701CC606A325
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 15:30:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 701CC606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC7660A2605;
+	Thu, 19 Nov 2026 15:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=Nj6zi7Fo
-Message-ID: <ec9c8460-a8de-460e-92bb-dc03240152bb@aliel.fr>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
-	s=courrier-s1; t=1795102234;
-	bh=3cxvdL4KfFwcHXkWK7rQriyomVokMs5MeD2OaggeClQ=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=Nj6zi7Fo0ca5Ps9aUATozF/jxT6gCv+7SS7P/dwLIZlh4hIVjAk7MXSsgA7JbBLy7
-	 lf+mFz55owqBoYAWIJldfRz0SSqxgdM6lEpUk0rQzL+74rNH31mts30Mc31SPIGjA+
-	 FTOPuTK24MLzcb6ip2CCC7ddL/fChzsbgAjliXNI=
-Date: Thu, 19 Nov 2026 16:30:02 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hex2NF+0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A101F000C6;
+	Thu, 19 Nov 2026 15:35:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795102519;
+	bh=5PHc8ZY0sl/OvQI4AydERp0/2Wo62tIxIPbE1l5fSsw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=Hex2NF+07pgiDiizKTSaTy2QiJt962Jz9neDLC7SWt0Z1pHIjDY3RVhYbNO3rUv+0
+	 7Wly4VWIb5fUVUi/d3RiLYokJt6bUnQJVtXyzkw2awLQS7P6Iffo77DyKm2BBJLmiV
+	 x8CF4xkG1AP80Oc0D/eBWKh+hGgYAqBO135x0D4cGnj29nC76rF/a4pVTUlViL2v5G
+	 1Q0dfxaDiav1aptpzp+P2KiZRNm5rxwXTEV1DiViRLzgtQ8IEVBQlmLRKFTr4qdPJw
+	 lCaH42SZVqa4mSGQWi2hScFQiRW0POGlv5gcT/QFraKN46WKK+P1Ez2GxIeHxhtI2g
+	 nljYf3/nuXM+g==
+From: Roman Gushchin <roman@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: Baoquan He <baoquan.he@linux.dev>,  sashiko-reviews@lists.linux.dev,
+  Zack Rusin <zack.rusin@broadcom.com>,  Petr Mladek <pmladek@suse.com>,
+  Mike Rapoport <rppt@kernel.org>,  Pasha Tatashin
+ <pasha.tatashin@soleen.com>,  Pratyush Yadav <pratyush@kernel.org>,  Dave
+ Young <ruirui.yang@linux.dev>,  Borislav Petkov <bp@alien8.de>,  Ajay
+ Kaher <ajay.kaher@broadcom.com>,  Alexey Makhalov
+ <alexey.makhalov@broadcom.com>,  x86@kernel.org,  Joel Granados
+ <joel.granados@kernel.org>,  Thomas Gleixner <tglx@kernel.org>,  Ingo
+ Molnar <mingo@redhat.com>,  Dave Hansen <dave.hansen@linux.intel.com>,
+  "H. Peter Anvin" <hpa@zytor.com>,  virtualization@lists.linux.dev,
+  bcm-kernel-feedback-list@broadcom.com,  John Ogness
+ <john.ogness@linutronix.de>,  Steven Rostedt <rostedt@goodmis.org>,
+  Sergey Senozhatsky <senozhatsky@chromium.org>,  Kees Cook
+ <kees@kernel.org>,  Jonathan Corbet <corbet@lwn.net>,  Bo Gan
+ <bo.gan@broadcom.com>,  Brennan Lamoreaux
+ <brennan.lamoreaux@broadcom.com>,  kexec@lists.infradead.org,  "Guilherme
+ G. Piccoli" <gpiccoli@igalia.com>,  Maaz Mombasawala
+ <maaz.mombasawala@broadcom.com>,  Shuah Khan <skhan@linuxfoundation.org>,
+  Randy Dunlap <rdunlap@infradead.org>,  Stephen Brennan
+ <stephen.s.brennan@oracle.com>,  Michael Kelley <mhklinux@outlook.com>,
+  Ian Forbes <ian.forbes@broadcom.com>,  Bradley Morgan
+ <brads@mainlining.org>,  "Michael S. Tsirkin" <mst@redhat.com>,  Eugenio
+ Perez <eperezma@redhat.com>,  sashiko@lists.linux.dev
+Subject: Re: [PATCH v4 3/4] x86/vmware: Add the vmware_record_panic_msg sysctl
+In-Reply-To: <20261117230201.921ec5bddf49cd459ddb8428@linux-foundation.org>
+	(Andrew Morton's message of "Tue, 17 Nov 2026 23:02:01 -0800")
+References: <cover.1794980455.git.zack.rusin@broadcom.com>
+	<4c5de34b10f579368b890eaa9333a2755886bad3.1794980455.git.zack.rusin@broadcom.com>
+	<sashiko-outbox-220212@kernel.org> <av1IuMZ2W0SXWcNn@MiWiFi-R3L-srv>
+	<20261117230201.921ec5bddf49cd459ddb8428@linux-foundation.org>
+User-Agent: mu4e 1.12.15; emacs 30.2
+Date: Thu, 19 Nov 2026 15:35:18 +0000
+Message-ID: <7ia41p8gx2a1.fsf@castle.c.googlers.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,126 +83,45 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Subject: Re: [PATCH 06/10] drm/meson: dw-hdmi: Drop manual HHI clock and
- memory PD setup
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org,
- robh@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
- vkoul@kernel.org, olteanv@gmail.com
-References: <20261117-meson-drm-create-hdmitx-phy-v1-0-9e0ac931381c@aliel.fr>
- <20261117-meson-drm-create-hdmitx-phy-v1-6-9e0ac931381c@aliel.fr>
- <sashiko-outbox-219570@kernel.org>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-219570@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 11/17/26 21:11, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] drm/meson: dw-hdmi: skipped HDMITX mem PD power-up in
->   meson_dw_hdmi_init()
-> --
-> 
-> commit c8e782099f758bf635402705a20f57d7df9682a7
-> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
-> 
-> drm/meson: dw-hdmi: Drop manual HHI clock and memory PD setup
-> 
-> This commit removes the direct HHI_HDMI_CLK_CNTL and HHI_MEM_PD_REG0
-> register writes in meson_dw_hdmi_init() and takes a runtime PM reference
-> in meson_dw_hdmi_probe() to power on the VPU power domain.
-> 
->> diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
->> index eb33c70f29c31..20a821936b3af 100644
->> --- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
->> +++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-> [ ... ]
->> @@ -599,12 +598,6 @@ static void meson_dw_hdmi_init(struct meson_dw_hdmi *meson_dw_hdmi)
->>  {
->>  	struct meson_drm *priv = meson_dw_hdmi->priv;
->>  
->> -	/* Enable clocks */
->> -	regmap_update_bits(priv->hhi, HHI_HDMI_CLK_CNTL, 0xffff, 0x100);
->> -
->> -	/* Bring HDMITX MEM output of power down */
->> -	regmap_update_bits(priv->hhi, HHI_MEM_PD_REG0, 0xff << 8, 0);
->> -
->>  	/* Reset HDMITX APB & TX & PHY */
->>  	reset_control_reset(meson_dw_hdmi->hdmitx_apb);
->>  	reset_control_reset(meson_dw_hdmi->hdmitx_ctrl);
->> @@ -829,9 +822,29 @@ static int __maybe_unused meson_dw_hdmi_pm_resume(struct device *dev)
->>  	return 0;
->>  }
->>  
->> +static void meson_dw_hdmi_pm_put(void *dev)
->> +{
->> +	pm_runtime_put_sync(dev);
->> +}
->> +
->>  static int meson_dw_hdmi_probe(struct platform_device *pdev)
->>  {
->> -	return component_add(&pdev->dev, &meson_dw_hdmi_ops);
->> +	struct device *dev = &pdev->dev;
->> +	int ret;
->> +
->> +	ret = devm_pm_runtime_enable(dev);
->> +	if (ret)
->> +		return ret;
->> +
->> +	ret = pm_runtime_resume_and_get(dev);
->> +	if (ret)
->> +		return dev_err_probe(dev, ret, "Failed to power on HDMI TX\n");
-> 
-> [Severity: High]
-> Can dropping the HHI_MEM_PD_REG0 write leave the HDMITX memory powered
-> down when the bootloader turns on the top-level VPU domain without
-> enabling HDMI?
-> 
-> In the VPU power domain driver, pwrc_ee_is_powered_off() only checks the
-> top-level AO sleep bit and does not check HHI_MEM_PD_REG0[15:8].  When
-> the top-level VPU domain is already powered on at boot,
-> meson_ee_pwrc_init_domain() registers the genpd as already on without
-> calling meson_ee_pwrc_on():
-> 
-> drivers/pmdomain/amlogic/meson-ee-pwrc.c:meson_ee_pwrc_init_domain() {
-> 	...
-> 	if (dom->num_clks && dom->desc.is_powered_off && !dom->desc.is_powered_off(dom)) {
-> 		ret = clk_bulk_prepare_enable(dom->num_clks, dom->clks);
-> 		if (ret)
-> 			return ret;
-> 
-> 		dom->base.flags = GENPD_FLAG_ALWAYS_ON;
-> 		ret = pm_genpd_init(&dom->base, NULL, false);
-> 		if (ret)
-> 			return ret;
-> 	}
-> 	...
-> }
-> 
-> Because the genpd is initialized in the ON state with
-> GENPD_FLAG_ALWAYS_ON, pm_runtime_resume_and_get() is a no-op and
-> meson_ee_pwrc_on() never runs to clear HHI_MEM_PD_REG0[15:8], leaving
-> HDMITX memory powered down when meson_dw_hdmi_init() and dw_hdmi_probe()
-> access the controller.
-> 
+Andrew Morton <akpm@linux-foundation.org> writes:
 
-I will add a new patch with a function to release the memories power off
-bits in v2.
+> On Wed, 18 Nov 2026 14:42:00 +0800 Baoquan He <baoquan.he@linux.dev> wrote:
+>
+>> On 11/18/26 at 06:14am, sashiko-bot@kernel.org wrote:
+>> > > Allow administrators to disable host log transfer on ordinary guests or
+>> > > opt in on encrypted guests. Expose the boolean recording policy through
+>> > > kernel.vmware_record_panic_msg using proc_dobool(), as Joel suggested.
+>> > > Zero disables recording, nonzero integers enable it, and reads return
+>> > > 0 or 1.
+>> > > 
+>> > > Register the sysctl only after the logger is ready. A registration failure
+>> > > leaves the internal default in force. Document that the log is sent
+>> > > before kdump, and that disable_panic_notifiers_platform_list also skips
+>> > > it.
+>> > > 
+>> > > Link: https://lore.kernel.org/r/4e73yd2ofpdzl6rptzvd74no3hnyfblknoq7wzxlw7f3zjbz7c@srfabx6lsusj
+>> > > Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+>> > 
+>> > Sashiko has reviewed this patch and found no issues.
+>> 
+>> It might be better to turn off this message if not issues found, just
+>> like what LKP bot has been doing.
+>
+> (+sashiko@lists.linux.dev)
+>
+> Yes please.
+>
+> These emails do have a little bit of value: they tell you that Sashiko
+> was able to apply the patch and to review it.  I guess.  Or something.
 
-> In addition, power-domains and assigned-clocks are optional in the
-> amlogic,meson-dw-hdmi binding and were only added to in-tree DTs in
-> v6.11, so dropping the HHI_HDMI_CLK_CNTL and HHI_MEM_PD_REG0 writes also
-> regresses older DTBs (where meson_vclk_set() only configures
-> HHI_HDMI_CLK_CNTL later at atomic_enable time) and builds with CONFIG_PM
-> disabled.
-> 
+They are opt-in and some maintainers asked for them, so Idk if globally
+disabling them is a good idea. Johannes suggested to send one email per
+patchset, which I like as an idea, will implement a bit later.
 
-I will add a depends on PM in v2.
+I like the idea (from the thread) to send an email if a patch(set)
+hasn't been reviewed, e.g. not applied correctly. Will implement as
+opt-in feature too.
 
--- 
-Best regards,
-Ronald
+Thanks
