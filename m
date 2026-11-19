@@ -1,93 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052707;
-	b=J/0NVObnVJklxMTQmDLBjZ9ky9FfCtQEnrM/kyeNC1YTPk6vA95A423K6h33q/g3830W
-	 vorBQaUS4lQkscgajfjjICi6X/vOiioEYbOac94UfURQWOvcYNFMX87FktlLzctTHXEL5
-	 GxYx3GN9YUKeTebTb1wp6j8b0YhGcRDA/VEakorWrrvfc/8ASBsnyKvgVoUj6f8Um9sxo
-	 pSn+1YanDz4+edNzhTbAAL9PPhaejsL6+SeANyaFjJnp6bvzamru3vKltu13ua6mPFRUm
-	 FJrQz23SFWUfInIIUGBWlZgjrCNhMHIJ7pzhmC0cn4FDVnj/plgtz/+II8lhRgv1WLA==
+	t=1795055350;
+	b=obhZP+fywkECbnJHf+3GH9C/d7ZMuq7a8bz/VZlkYwHO3tpQsTkxmUkUPh3Q78EGiGZ0
+	 689TbXVg0ntArSFSufeBX2Kmm3+zmA69fQZp6D4iUcy/fK8D2yGFplAWMyIUyTR6JM6mU
+	 F2QzZ//CTrnxJBWKmMbNC3k90hwxNSq4WidrO/8WDpi3/JYw0VhcmJo0STttnfcM3QBgJ
+	 PZt+ZAjN1Su4LLezDTW6YrQIfdMA/o+fPu7MAojrLMdb+vS8u4S104hJvhwChaWeVGGRP
+	 FhWKzpcvYSqpL00966Ym/QfXEub0YOJ8rS/yJXzy8taTZTe4VZJT8MSOcuRIZgRRPhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052707;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:Date:
-	 Message-Id:Subject:From:To:In-Reply-To:References:
-	 Content-Transfer-Encoding:MIME-Version;
-	bh=tsSPte2OHRCCjjgAaKFsJbmdFYgco+qIPW3i7HnbLCI=;
-	b=UP4nEdUH2FLt99f2mnVPtJBeVoHC5Evd6sQYFm8Pol4oX5ARNRpDvITgYNcu2Vc8X6fg
-	 nyplhzfIXcNJWV0Kyh2QkmpNVTs7O41E5kdJ1zzfZoCPdxSKKHgfkxXoth5c7K5A8LN64
-	 dJdXW+mBsV95KJOpeDsekkvT5ykGcpz3RpzbnfT9GJdhBha9AfTTIqayNcdisUXo058T5
-	 vsh4owvIp+eqI4h6NQxrQ1mX+YdSg2FyFy7ZMpyxkIhx/4o1r/KnQEmNUDBX1jSeITfCV
-	 RW9A2uBbnnfOwdd4msNLul6ytPl2N8tZn82vScLtx87tH0donFPgLnd8qydQWi5BbFQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055350;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=3+ZyLfB9DIP574e87+sGx0gXKXhJ54eTZPOLWu3xo5c=;
+	b=rQxxUMOxWEFiG20JwoV9o5ksjMYCKlkskCL5eg54XG6bfy+dDUfDiCItqmfuBqHW2wBz
+	 rSTJF/ry8e45N48vUKZxlXHH49DXaPbJGDGMGd9j6JmnAbxjBkXoGhE43BRX64RA+DPdZ
+	 t2QvMWj683A01gBkljM6dxdTJ32bDI7QS5JN4PGNYWQWsoXonxCPsdOx3jQf61Zxup4yn
+	 dMWeTPLhKya96dAG/M7Ry8aWWzuD5jnMZfBnjKsAj4+8rnCswbp7afxm0+Nfk5QqPuR+K
+	 jFQC45L7/bK6wsAZvM1cbbMQlATpmbuXEjF2eX98DTM9pVM597wZZYMv2bO82pt7J0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wx+1MUZy;
-	arc=none smtp.remote-ip=209.85.210.176
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=v7ydsBi6;
+	arc=none smtp.remote-ip=44.202.169.35
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207B5606A32F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 01:45:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 207B5606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12425606A33B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 02:29:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12425606A33B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wx+1MUZy
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8c4cc85a315so1210541b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 17:45:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795052706; x=1795657506; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:to
-         :from:subject:message-id:date:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=tsSPte2OHRCCjjgAaKFsJbmdFYgco+qIPW3i7HnbLCI=;
-        b=wx+1MUZyWGFdM/UuGXIyCbxe22A1Qmh8nvfzek4pg8uLCVxrYf0jxNkG+F3idhEAGe
-         jVEnXPgQVr+Gjpqv0fFVR0W4Qlt1Seug6Tp/RU/I+D6vAmTs9WoypG2mt1CWlWRwT0hz
-         XLJP24WCuj3vvSvXIfn1/Tr9xCXTF1dSJ+OFjBBUy5Zivz15xd1ci9cx+PMaIaPbrVR/
-         1A3w/okWaxEOtKMYRiphU0tRdobgKjmsfz3NJmjRmGFdS4bpOW3UtseYN3zslx+Q2NMh
-         5HVX/JcEb/Yi4cb+by9adioPd25IXex+0RRdSI+O5NYlR9ccvY2QU0mtv9v7JKQkn7Be
-         E8ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795052706; x=1795657506;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:to
-         :from:subject:message-id:date:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tsSPte2OHRCCjjgAaKFsJbmdFYgco+qIPW3i7HnbLCI=;
-        b=PBxPAen4kyFdDBIn5rUQJgdeSm4YO8FqkLhYzcHF5nOWEvZcjye1UMDRAUUC5zJiqg
-         GNb6s4w6isfdwiKB6uKSVJerOvBZ94nADDm8QBV8zJLxX+1zr2tv+PtKKNoLoKdHpJQX
-         ChneCQiA9vIlCcY8MHmQFotSrL68hIAf1oT8/j1qPcswkPBGA+NW7+LJT/B6g1G99UY1
-         OrWVMa4wryxknirh/UwE5Anbu6K9Mo+Gn65Gboc/ASV60YUFHcjrgqcrTmqhJpk2NI28
-         jUxT/KLHAnndtDg6WlZ5fmA42fiQ+D5MbAu/ZW9HxUkdT53kAm2CU3jebsbXGEfuNv7N
-         ldzQ==
-X-Gm-Message-State: APuU4Z8P4+ofqhtI1xKG/W4iufD41ejiSPt2pvaJUj9988Twa5uiCj2u
-	IBI6dwdBqMPDL1jH4zB4EUxEPWeehF9PC49ENXg0INghxW4CnRvwbYRRd86BHw==
-X-Gm-Gg: AYBFou3zXXq+L2l1/mjJsRNCHcPbKMs6J0jrabg1GDwbHBWO3d2WQprC8VhlBqlCD/9
-	m99a4qj4yd1AfhAuAXQjlTAeNfbUItJn2O2vSPaMblMNn0OETrobIetr+X4Ajxs4v3A3vJt/y9f
-	/GQw5k+fww18JsYYc/kI+2VA0xCPDWyvZkTktfiiA+yY5gmR1J0ki3evamIYD79E69+l0Ok5e4l
-	ANY6dS2fHy/FmKm7tzz0tJT5IV8C7eruE6lgYQFIK7NJN45O0u6NRznxXRmmVhIeJMpfWHWidBi
-	jerMtZiee1UTaIUta2r5ZYoUI2nEiUNvBK8j7RROhHQv2X0u/0nDtz/lK8C8THKBfheoaosgnyo
-	XNC5vAoCCHXznBd/j1cD7fGwbw7nygIER28BFM58Ey74D9TKze6uYXaYbneexjNsHUVzTkgnwMO
-	ALrTs/l12yy+ADbE/1wvLnKTFsWo9CQH2BFO5aKekiDhvqjU0QYPtEtW3hF+NMJ/ET+aMgwvrHs
-	5fzuZjy3unLOjbjjuXONNCNVmeI3RvOJjk/BPZMn3KbN/kGoa7ImorjQb+XJca132XTVtvZD69Y
-	h6RRTxzzw2XR9EuslBOH5AhgI6fQO12ow2Aif49afDApSK2iVEYT43XOinqNn0apewkB3ByQ/rj
-	4p1g+TXAdseW1/5rngBv0dQk/7i/Eo8bEnw==
-X-Received: by 2002:a05:6a21:8203:b0:3de:456a:6e07 with SMTP id adf61e73a8af0-3fe8a519514mr5262258637.46.1795052706175;
-        Wed, 18 Nov 2026 17:45:06 -0800 (PST)
-Received: from localhost ([153.61.198.246])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c5cad86d9fsm1940114b3a.27.2026.11.18.17.45.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Nov 2026 17:45:05 -0800 (PST)
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 19 Nov 2026 01:45:05 +0000
-Message-Id: <DMYT2SQGVA4C.2B8FUKCDOZZV3@gmail.com>
-Subject: Re: [PATCH bpf-next 3/5] bpf: Remove BPF_MAX_TRAMP_LINKS
-From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
-In-Reply-To: <sashiko-outbox-222288@kernel.org>
-References: <20261119012909.3657417-1-alexei.starovoitov@gmail.com> <20261119012909.3657417-4-alexei.starovoitov@gmail.com> <sashiko-outbox-222288@kernel.org>
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=v7ydsBi6
+Received: from eig-obgw-5005b.ext.cloudfilter.net ([10.0.29.189])
+	by cmsmtp with ESMTPS
+	id TqhtxbaKz4vCDTrtcxd9SY; Thu, 19 Nov 2026 02:29:08 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id Trtbx7JFhYskhTrtbxSG9k; Thu, 19 Nov 2026 02:29:08 +0000
+X-Authority-Analysis: v=2.4 cv=CKMqXQrD c=1 sm=1 tr=0 ts=6afe5ef4
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=1XWaLZrsAAAA:8 a=ekWx80A8-VE8Rzb6bgoA:9 a=QEXdDO2ut3YA:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=3+ZyLfB9DIP574e87+sGx0gXKXhJ54eTZPOLWu3xo5c=; b=v7ydsBi6HvlT
+	K3PAgeqj2AneQAYzKwAXtYfM5ro2jJzaywLJI56qzLhmX5EUP27Ar3SZUcFhYymZSydVMQebLi8oY
+	83qp6EoWlgRFX05K/LiS/DwdXz1FtcXie7LxVBYLio07dOPjosU1Z/1/yF4KjEsIb4qPZGoii199f
+	QVCgwTEZPQkTsWCupIaIW4ULLrYlfF1VcrGXjHPUSh//5wfQNnQ+KdGlZUC1OwgvdR7FligM0iBm7
+	5cwnZ2dXF6IzOE0LaE0st7l4l4URNDeleQZboHuAqkojEbnwAlexsR2OvN2PSqdWZltaQQKrDtl96
+	YI3n/p7Z5d57ImVStsKAqQ==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:42334)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xTrtb-00000001D5K-1H6p;
+	Thu, 19 Nov 2026 07:59:07 +0530
+Message-ID: <39f4b33b-cd74-493c-95b6-d1bd94cb769c@roeck-us.net>
+Date: Wed, 18 Nov 2026 18:29:06 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,17 +76,224 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hwmon: (pmbus) Clear only CML invalid command fault
+ during probe
+To: sashiko-reviews@lists.linux.dev, Arthur Korn <akorn@google.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20261119013208.4089480-1-akorn@google.com>
+ <sashiko-outbox-222316@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <sashiko-outbox-222316@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xTrtb-00000001D5K-1H6p
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:42334
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 3
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfPpR+Gs9bU95wEPhFHQ4aUAxGGxyY5nORSExcLPSeOwnmyNMa9PxIjBJ6f+Wof4ahsECbP70vF2Q2rY/neLQp5BJ6o8KB2X19ehwbAIrtVI/K3pUzn9C
+ 3j3kmePWH9AwCsCeIJtM5FAr7pkAmu7ZdqFy2eCcKLsqvlVhxtWLyOxPKSOLUj0KzufwzdLDCCWB3Y8UodEnIplZCyA6tZjG1OQDbBkJx0bkBqEmzRLVxunq
 
-On Wed, Nov 18, 2026 at 05:39 PM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
-> This problem wasn't introduced by this patch, but can
-> bpf_trampoline_add_prog() leave a dangling node on prog_list when
-> fsession_exit() fails [1]?
+Hi Arthur,
 
-> If a BPF_TRAMP_FSESSION program is attached with a link type other than
-> BPF_LINK_TYPE_TRACING or BPF_LINK_TYPE_TRACING_MULTI, fsession_exit()
-> returns NULL and bpf_trampoline_add_prog() returns -EINVAL without
+On 11/18/26 18:08, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] hwmon: (pmbus) pmbus_write_smbalert_mask() clears all faults
+>    on probe
+> - [Medium] hwmon: (pmbus) pmbus_clear_cml_fault() leaves INVALID_DATA
+>    fault latched
+> - [Medium] hwmon: (pmbus) pmbus_clear_cml_fault() bypasses driver
+>    write_byte() hooks
+> --
+> 
 
-Not a bug. There is no such link.
-bpf_tracing_prog_attach() always inits BPF_LINK_TYPE_TRACING.
-bpf_tracing_multi_attach() always inits BPF_LINK_TYPE_TRACING_MULTI.
-The only other caller is the cgroup shim and its prog is BPF_LSM_MAC.
+Looks like Sashiko has a point, including the write_byte hook problem.
+I think Google uses MAX16601, and that is a PMBus 1.2 chip, so it may
+be affected.
+
+On a side note, it should be possible to run Sashiko locally on your
+system, or I can run it before you submit the next version if you
+have trouble setting it up. This might avoid a couple of revisions
+if/when Sashiko finds new problems.
+
+Thanks
+Guenter
+
+> commit 94d47b10140ba57df41cbee449647587f625d5f3
+> Author: Arthur Korn <akorn@google.com>
+> 
+> hwmon: (pmbus) Clear only CML invalid command fault during probe
+> 
+> This commit introduces pmbus_clear_cml_fault() and pmbus_clear_cml_faults()
+> to clear only PB_CML_FAULT_INVALID_COMMAND in PMBUS_STATUS_CML during probe
+> on PMBus 1.2+ devices instead of sending PMBUS_CLEAR_FAULTS.
+> 
+>> diff --git a/drivers/hwmon/pmbus/pmbus.c b/drivers/hwmon/pmbus/pmbus.c
+>> index 28889fb743b3e..e2e49fdd54841 100644
+>> --- a/drivers/hwmon/pmbus/pmbus.c
+>> +++ b/drivers/hwmon/pmbus/pmbus.c
+>> @@ -113,7 +113,7 @@ static int pmbus_identify(struct i2c_client *client,
+>>   			info->pages = 1;
+>>   		}
+>>   
+>> -		pmbus_clear_faults(client);
+>> +		pmbus_clear_cml_faults(client);
+>>   	}
+>>   
+>>   	if (pmbus_check_byte_register(client, 0, PMBUS_VOUT_MODE)) {
+> 
+> [Severity: Medium]
+> Does pmbus_clear_cml_faults() leave PB_CML_FAULT_INVALID_DATA latched
+> after page auto-detection?
+> 
+> When PMBUS_PAGE is supported, the loop right above probes page numbers
+> with pmbus_set_page() until writing an out-of-range page index to the
+> valid PMBUS_PAGE command fails, which latches PB_CML_FAULT_INVALID_DATA
+> in PMBUS_STATUS_CML.  Because pmbus_clear_cml_fault() only writes
+> PB_CML_FAULT_INVALID_COMMAND, PB_CML_FAULT_INVALID_DATA and PB_STATUS_CML
+> remain latched after probe.
+> 
+>> diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+>> index 82dac2c6c579f..74fc8d7481689 100644
+>> --- a/drivers/hwmon/pmbus/pmbus_core.c
+>> +++ b/drivers/hwmon/pmbus/pmbus_core.c
+>> @@ -713,6 +713,26 @@ void pmbus_clear_faults(struct i2c_client *client)
+>>   }
+>>   EXPORT_SYMBOL_NS_GPL(pmbus_clear_faults, "PMBUS");
+>>   
+>> +static void pmbus_clear_cml_fault(struct i2c_client *client, int page)
+>> +{
+>> +	struct pmbus_data *data = i2c_get_clientdata(client);
+>> +
+>> +	if (data->revision < PMBUS_REV_12 ||
+>> +	    _pmbus_write_byte_data(client, page, PMBUS_STATUS_CML,
+>> +				   PB_CML_FAULT_INVALID_COMMAND) < 0)
+>> +		pmbus_clear_fault_page(client, page);
+>> +}
+> 
+> [Severity: Medium]
+> Does calling _pmbus_write_byte_data() here bypass driver info->write_byte
+> callbacks that intercept or block fault clearing?
+> 
+> Previously, probe-time fault clearing always went through
+> pmbus_clear_fault_page() -> _pmbus_write_byte(client, page,
+> PMBUS_CLEAR_FAULTS).  Several drivers hook write_byte without
+> implementing write_byte_data: for example, max16601_write_byte() routes
+> page 2 (PMBUS_PAGE_VIRTUAL) PMBUS_CLEAR_FAULTS to a separate I2C client
+> (data->vsa), so _pmbus_write_byte_data() writes PMBUS_STATUS_CML to
+> client (page 0) instead and leaves CML faults on data->vsa uncleared.
+> Similarly, delta-ahe50dc-fan and max31785 block fault-clearing writes in
+> write_byte(), and mpq8646 blocks unsupported PMBUS_STATUS_CML reads in
+> read_byte_data(), none of which implement write_byte_data().
+> 
+>> +
+>> +void pmbus_clear_cml_faults(struct i2c_client *client)
+>> +{
+>> +	struct pmbus_data *data = i2c_get_clientdata(client);
+>> +	int i;
+>> +
+>> +	for (i = 0; i < data->info->pages; i++)
+>> +		pmbus_clear_cml_fault(client, i);
+>> +}
+>> +EXPORT_SYMBOL_NS_GPL(pmbus_clear_cml_faults, "PMBUS");
+>> +
+>>   static int pmbus_check_status_cml(struct i2c_client *client)
+>>   {
+>>   	struct pmbus_data *data = i2c_get_clientdata(client);
+> 
+> [ ... ]
+> 
+>> @@ -2978,9 +2998,9 @@ static int pmbus_init_common(struct i2c_client *client, struct pmbus_data *data,
+>>   	}
+>>   
+>>   	if (data->info->pages)
+>> -		pmbus_clear_faults(client);
+>> +		pmbus_clear_cml_faults(client);
+>>   	else
+>> -		pmbus_clear_fault_page(client, -1);
+>> +		pmbus_clear_cml_fault(client, -1);
+> 
+> [Severity: Medium]
+> Should pmbus_write_smbalert_mask() also use pmbus_clear_cml_fault()
+> instead of pmbus_clear_fault_page()?
+> 
+> When client->irq is set, pmbus_do_probe() -> pmbus_irq_setup() calls
+> pmbus_write_smbalert_mask() across every page:
+> 
+> drivers/hwmon/pmbus/pmbus_core.c:pmbus_write_smbalert_mask() {
+>      ...
+> 	ret = _pmbus_write_word_data(client, page, PMBUS_SMBALERT_MASK,
+> 				     reg | (val << 8));
+> 	/*
+> 	 * Clear fault systematically in case writing PMBUS_SMBALERT_MASK
+> 	 * is not supported by the chip.
+> 	 */
+> 	pmbus_clear_fault_page(client, page);
+> 
+> 	return ret;
+> }
+> 
+> On any IRQ-enabled PMBus device, this still sends PMBUS_CLEAR_FAULTS on
+> all pages during probe and erases the latched fault registers that this
+> patch aims to preserve.
+> 
+
