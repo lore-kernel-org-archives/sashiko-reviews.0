@@ -1,47 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=65.21.61.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795105796;
-	b=1OfVnChf+IybkeUSKWDX7/HELxrwnDDY4jd1/sKs/K6jc1b4KzG2QS2Z+LHKgEjN4z4x
-	 qHjadOKvauCKY5GgtcarmIxFCKszL3j14aC86AvibqZbyBvLVDahKTaMwCInBctj8YiY9
-	 tmc3xwc5V9bKJs7l6cD0kftzOmvwAdqKFIcyUPEl5m59a0qRk7A9sJ89d9J+hsf9Aq47H
-	 M26KqhSPzTZlBTFmgzI5ZRiKBQR/UFb7KPH07stb8mXPAhHkhqFWeEAkXF6PbrSjwyTes
-	 6VITcNSvf2ZkTgD0da/lx/F4PxSZEJDZ7domos3w7ACPO0R3OJfzbATlLSZ68K/h4oA==
+	t=1795105826;
+	b=Sykiom4AAC2XHvrfx13/w53rQz52EENbRj1FBBj5Mh3Unorb6BSt2dZA70nqlVPDv1Tl
+	 t6gFITwxGrrqDmolPFMujGGav/vpBkEWCpTJNuB1on1EJ2O9lDb2Lo8z5NaONeRxCL7ao
+	 Bw8z7eETY8yynkIfe0LJti+KMTY1U5MQFW7S6LbM9a2mWz0lwVUQatUsmVFi8h4NDKcRR
+	 IqPUPqSiBAop6eZzA3YsMHIMoMkDvO7c24AtGoZRs9FEOOGDNz8qf25v5wn4VCcZnUp/O
+	 OjuF4vo5tp4okLmolfwPechRgNTWdx95nTJCYPyJD1VcXQUqg7C7pMnBQiUmjq43HwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795105796;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:Date:MIME-Version:User-Agent:
-	 From:Subject:To:Cc:References:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Oq9qlfDDCx/goO1BnhoQEm3ZyqRh1zAnaIDibvlfSvU=;
-	b=opXd7gMs7xGM7hwiGhvOIlGfCwsAo2Jirp3gdG+LC2DxwpWNjeyWhcfZ/ENrsyjgE0l3
-	 +705LbVymqf6oTyQY/H/GOdkkCtBBnsPGIZriXGSTOAgSg/zKATiPbM5T1GfjpNaRCNMH
-	 sBRLVKlvxGugHcxF4JZtkryRIncNuwyEllk/eieH3qBgugqWu3Ze8u0/BsdG/31ePq8GE
-	 Hccb5cQvrL4vZUryr05sFIR5wByUeRxoO06OUQK4Y50tPSXMkl/M66Rg9gh2YQFBXizHz
-	 dlzzEZrvlvNZS585rHXcX+uAbaZ+4hTZEtJMcFx+89Z9I7z2LcHXDOtTN8b1eVS+3wg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795105826;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=B7S41Zukdg+I/ZQxYfdUjeKVx5b0WM1uS5IcxJRO3Jc=;
+	b=KP4++Dmkvth+NsKBX1TzYiI2ur8P3+sjJqPAkT3y3E8M8YEub9NJr72ZrOfc6zXSKyGj
+	 0qCA/+1DvtnXn1eNeXi2RGM9iuSozOZ4tnNmTV0W5+qPX+IT1bn2iSOy8+w75P/s6JDjN
+	 YKjFLTG5GjwgajtEFYMHxizFknAzuQ6tf85qWHzanQKKkfOyHZ/Mu5ysnrVvDPjnjrVza
+	 IaQA4EuW2W6YhLXUFR0EWOgcSi/TP2+hbMo2xh3sobXbEK9fZlBcjG7CcHk9TY5j92Krj
+	 teaUy7JP1jIJ6u9UnEmptQZJtl2i2oWnF2KGrHMAWlRuk/jRi/BSAb7BOqRvo8OiYRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aliel.fr;
-	spf=pass smtp.mailfrom=aliel.fr;
-	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b="vAWBsD/e";
-	arc=none smtp.remote-ip=65.21.61.41
-Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909DD606A333
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 16:29:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 909DD606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="BfxBm/fV";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE67606A32A;
+	Thu, 19 Nov 2026 16:30:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2FE67606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=vAWBsD/e
-Message-ID: <8652ae36-7506-4fc2-b8ff-0b05a61dec63@aliel.fr>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
-	s=courrier-s1; t=1795105792;
-	bh=McqmrGGoBsWtFO9rSLDSWUOXL2yC9fScta0oWrJ5HFE=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=vAWBsD/ePEqL301DdsswEq/IJ55Q9aS6ABXHAzDCh/3C+pvw0XpvcS29dDjLwcplb
-	 hd+k7v1hm1gr9jRkQZ++5bJzAtYbEpgtsEhf/4A2PhL0xMr3fnz9iT7fogwUm0eIvh
-	 cD2c1SFpljoYu0Acms8xnIjDxltOhLszWv3MK2j8=
-Date: Thu, 19 Nov 2026 17:29:51 +0100
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=BfxBm/fV
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 297411575;
+	Thu, 19 Nov 2026 08:30:21 -0800 (PST)
+Received: from [10.0.129.37] (e122027.cambridge.arm.com [10.0.129.37])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6C63E3F673;
+	Thu, 19 Nov 2026 08:30:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795105824; bh=TfeeoY3dbjuoXmWt8STXVUxkB4zqZ4VB5GwHRYqCWgo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BfxBm/fVGNFz9TQPGkkzc/eHqs6DUHUOOipdcMQe09W7FtjjWo8/X81fI2NcVOkmO
+	 isXEDZBejSROWABKqcfkZvdE0PcqAvbehF/ZYKfFwJeWoBQRG2qjZm167goR0Ex6LO
+	 VDGTbPiWQGZx6Pz1LH64JFNH0rYtFHAcJ2ox2HrA=
+Message-ID: <2cfeaf5c-e329-4f57-ad9f-1e729f02f5c2@arm.com>
+Date: Thu, 19 Nov 2026 16:30:20 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,100 +54,196 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Subject: Re: [PATCH 04/10] phy: amlogic: Add Meson HDMI TX PHY driver
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org,
- robh@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
- vkoul@kernel.org, olteanv@gmail.com
-References: <20261117-meson-drm-create-hdmitx-phy-v1-0-9e0ac931381c@aliel.fr>
- <20261117-meson-drm-create-hdmitx-phy-v1-4-9e0ac931381c@aliel.fr>
- <sashiko-outbox-219538@kernel.org>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-219538@kernel.org>
+Subject: Re: [PATCH v3 09/11] KVM: arm64: CCA: Support runtime faulting of
+ memory
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261116164358.142785-1-steven.price@arm.com>
+ <20261116164358.142785-10-steven.price@arm.com>
+ <sashiko-outbox-217436@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-217436@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/17/26 20:58, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] phy: amlogic: broken rate and submode check in
->   meson_hdmi_phy_validate()
+On 16/11/2026 17:31, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] KVM: arm64: KVM_CAP_PRE_FAULT_MEMORY advertised for Realm VMs
+> - [Medium] KVM: arm64: missing unmap on partial failure in
+>   realm_map_unprotected()
+> - [Low] KVM: arm64: unhandled exec fault on shared Realm IPA in
+>   gmem_abort() and user_mem_abort()
 > --
 > 
-> commit 0bf49ea77c864cdcf7af96e59e1ffba5194d9636
-> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
+> commit 5a0919ef6adc946a1afb4f6ad7cf84e5573597f3
+> Author: Steven Price <steven.price@arm.com>
 > 
-> phy: amlogic: Add Meson HDMI TX PHY driver
+> KVM: arm64: CCA: Support runtime faulting of memory
 > 
-> This commit adds a generic PHY driver for the HDMI TX PHY on Amlogic GXBB,
-> GXL, GXM, and G12A SoCs, along with a legacy helper for device trees
-> lacking a "phys" property.
+> This commit adds runtime stage-2 fault handling for Realm VMs, delegating
+> and mapping private guest_memfd pages in the protected IPA region and
+> mapping shared pages in the unprotected IPA region via the RMM.
 > 
->> diff --git a/drivers/phy/amlogic/phy-meson-hdmi-tx.c b/drivers/phy/amlogic/phy-meson-hdmi-tx.c
->> new file mode 100644
->> index 0000000000000..69833a080dc35
->> --- /dev/null
->> +++ b/drivers/phy/amlogic/phy-meson-hdmi-tx.c
+>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>> index 0db3c293fdd52..9b371159be92c 100644
+>> --- a/arch/arm64/kvm/mmu.c
+>> +++ b/arch/arm64/kvm/mmu.c
 > [ ... ]
->> +/* GXBB */
->> +static const struct meson_hdmi_phy_rate gxbb_rates[] = {
->> +	/* 5.94Gbps, 3.7125Gbps */
->> +	{ 371250000, 0x33353245, 0x2100115b },
->> +	/* 2.97Gbps */
->> +	{ 297000000, 0x33634283, 0xb000115b },
->> +	/* 1.485Gbps, and below */
->> +	{ 0,         0x33632122, 0x2000115b },
->> +};
+>> @@ -1846,6 +1882,16 @@ static int gmem_abort(const struct kvm_s2_fault_desc *s2fd,
+>>  		goto out_unlock;
+>>  	}
+>>  
+>> +	switch (kvm->arch.vm_flavor) {
+>> +	case VM_REALM:
+>> +		prot &= ~KVM_PGTABLE_PROT_X;
+>> +		ret = realm_map_ipa(kvm, s2fd->fault_ipa, s2vi.pfn,
+>> +				    PAGE_SIZE, prot, memcache);
+>> +		goto out_unlock;
+>> +	default:
+>> +		break;
+>> +	}
+>> +
 > [ ... ]
->> +static const struct meson_hdmi_phy_rate *
->> +meson_hdmi_phy_find_rate(const struct meson_hdmi_phy_data *data, u64 rate)
->> +{
->> +	unsigned int i;
->> +
->> +	for (i = 0; i < data->num_rates; i++)
->> +		if (rate >= data->rates[i].min_rate)
->> +			return &data->rates[i];
->> +
->> +	return NULL;
->> +}
+>> @@ -2242,12 +2289,15 @@ static int kvm_s2_fault_map(const struct kvm_s2_fault_desc *s2fd,
+>>  	if (!perm_fault_granule && !s2vi->map_non_cacheable && kvm_has_mte(kvm))
+>>  		sanitise_mte_tags(kvm, pfn, mapping_size);
+>>  
+>> -	/*
+>> -	 * Under the premise of getting a FSC_PERM fault, we just need to relax
+>> -	 * permissions only if mapping_size equals perm_fault_granule. Otherwise,
+>> -	 * kvm_pgtable_stage2_map() should be called to change block size.
+>> -	 */
+>> -	if (mapping_size == perm_fault_granule) {
+>> +	if (kvm_vm_is_realm(kvm)) {
+>> +		ret = realm_map_ipa(kvm, s2fd->fault_ipa, pfn, mapping_size,
+>> +				    prot, memcache);
+> 
+> [Severity: Low]
+> This question rests on an architecture detail that could not be confirmed
+> from the kernel source: can a Realm guest instruction fetch from an
+> unprotected (shared) IPA exit to the host as a stage-2 instruction abort
+> that reaches kvm_handle_guest_abort()?
+> 
+> If so, unprotected RTT mappings only encode RMI_S2AP_DIRECT_READ and
+> RMI_S2AP_DIRECT_WRITE and cannot grant execute permission, but neither
+> gmem_abort() nor user_mem_abort() rejects kvm_s2_fault_is_exec(s2fd) with
+> -ENOEXEC to inject an instruction abort.  Instead, realm_map_unprotected()
+> installs a non-executable mapping, and on subsequent instruction permission
+> faults at the same IPA where level >= req_level, unmaps and remaps the page
+> with the same non-executable permissions and returns 0 in an endless fault
+> loop.
+
+Suzuki already covered this. I'll add a comment in the code.
+
 > [ ... ]
->> +static int meson_hdmi_phy_validate(struct phy *phy, enum phy_mode mode,
->> +				   int submode, union phy_configure_opts *opts)
->> +{
->> +	struct meson_hdmi_phy *priv = phy_get_drvdata(phy);
->> +
->> +	if (mode != PHY_MODE_HDMI)
->> +		return -EINVAL;
->> +
->> +	if (opts->hdmi.bpc != 8)
->> +		return -EINVAL;
->> +
->> +	if (!meson_hdmi_phy_find_rate(priv->data, opts->hdmi.tmds_char_rate))
->> +		return -EINVAL;
->> +
->> +	return 0;
->> +}
+> 
+>> @@ -3155,7 +3217,7 @@ pre_fault_bytes_consumed(gpa_t gpa, unsigned long granule_size,
+>>  
+>>  int kvm_arch_pre_fault_allowed(struct kvm_vcpu *vcpu)
+>>  {
+>> -	if (is_protected_kvm_enabled())
+>> +	if (is_protected_kvm_enabled() || kvm_vm_is_realm(vcpu->kvm))
+>>  		return -EOPNOTSUPP;
+>>  	if (!kvm_vcpu_initialized(vcpu))
+>>  		return -ENOEXEC;
 > 
 > [Severity: Medium]
-> Can meson_hdmi_phy_find_rate() ever return NULL here?
+> Should kvm_vm_ioctl_check_extension() also report 0 for
+> KVM_CAP_PRE_FAULT_MEMORY when kvm && kvm_vm_is_realm(kvm)?
 > 
-> Every per-SoC rate table ends with an entry where min_rate is 0, and rate
-> is an unsigned u64, so rate >= data->rates[i].min_rate is always true on
-> the final entry.  That makes the NULL return and the callers' NULL checks
-> in meson_hdmi_phy_validate() and meson_hdmi_phy_configure() dead code, and
-> meson_hdmi_phy_validate() accepts any tmds_char_rate value (including 0 Hz
-> or rates above the 594 MHz hardware limit).
+> Currently kvm_vm_ioctl_check_extension() only gates capabilities on
+> is_protected_kvm_enabled() and otherwise unconditionally sets r = 1 for
+> KVM_CAP_PRE_FAULT_MEMORY, advertising the capability on a Realm VM file
+> descriptor even though KVM_PRE_FAULT_MEMORY always fails here with
+> -EOPNOTSUPP.
+
+As Suzuki says, this is handled in later patches in the integration
+branch. I don't think we want to complicate matters by trying to pull it
+into this series.
+
+>> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
+>> index 838f95c201ada..4cacb9fe000f4 100644
+>> --- a/arch/arm64/kvm/rmi.c
+>> +++ b/arch/arm64/kvm/rmi.c
+> [ ... ]
+>> +static int realm_map_unprotected(struct kvm *kvm,
+>> +				 unsigned long ipa,
+>> +				 kvm_pfn_t pfn,
+>> +				 unsigned long size,
+>> +				 enum kvm_pgtable_prot prot,
+>> +				 struct kvm_mmu_memory_cache *memcache)
+>> +{
+> [ ... ]
+>> +	while (ipa < ipa_top) {
+>> +		unsigned long range_desc = addr_range_desc(realm, ipa, phys,
+>> +							   ipa_top - ipa,
+>> +							   RMI_OP_MEM_UNDELEGATED);
+>> +		unsigned long call_top = ipa + RMI_ADDR_RANGE_COUNT(range_desc) *
+>> +			rmi_addr_block_size_to_bytes(RMI_ADDR_RANGE_BLOCK_SIZE(range_desc));
+>> +		unsigned long out_top;
+>> +
+>> +		ret = rmi_rtt_unprot_map(rd, ipa, call_top, flags, range_desc,
+>> +					 &out_top);
+>> +		if (ret < 0)
+>> +			return ret;
+>> +
+>> +		if (ret) {
+>> +			/* Create missing RTTs and retry */
+>> +			int level = RMI_RESULT_DATA_LEVEL(ret);
+>> +			int req_level = KVM_PGTABLE_LAST_LEVEL -
+>> +				RMI_ADDR_RANGE_BLOCK_SIZE(range_desc);
+>> +
+>> +			if (RMI_RESULT_STATUS(ret) != RMI_ERROR_RTT ||
+>> +			    ++retries > KVM_PGTABLE_LAST_LEVEL + 2)
+>> +				return -ENXIO;
+>> +
+>> +			/* Replace an existing mapping to update its permissions. */
+>> +			if (level >= req_level) {
+>> +				realm_unmap_shared_range(kvm, ipa, ipa_top, false,
+>> +							 memcache);
+>> +				continue;
+>> +			}
+>> +
+>> +			ret = realm_create_rtt_levels(realm, ipa, level,
+>> +						      req_level,
+>> +						      memcache);
+>> +			if (ret)
+>> +				return ret;
+>> +
+>> +			continue;
+>> +		}
+>> +
+>> +		/* Retry the fault after releasing mmu_lock to service the IRQ. */
+>> +		if (out_top == ipa)
+>> +			return -EAGAIN;
+>> +		if (WARN_ON_ONCE(out_top < ipa || out_top > call_top))
+>> +			return -ENXIO;
+>> +
+>> +		phys += out_top - ipa;
+>> +		ipa = out_top;
+>> +		retries = 0;
+>> +	}
 > 
-> In addition, meson_hdmi_phy_validate() does not check that submode is
-> PHY_HDMI_MODE_TMDS before reading opts->hdmi.tmds_char_rate, which shares
-> an anonymous union with opts->hdmi.frl when submode is PHY_HDMI_MODE_FRL.
+> [Severity: Medium]
+> Can a multi-iteration call to realm_map_unprotected() leave a writable
+> prefix mapped when a later iteration fails or returns -EAGAIN?
+> 
+> For a Realm with a 32- to 34-bit IPA space on 4KB pages, get_start_level()
+> is 2, so addr_range_desc() caps rmi_size at 1 (PMD_SIZE).  When a shared
+> memslot is backed by a 1GB hugetlbfs VMA, kvm_s2_fault_map() passes
+> mapping_size = PUD_SIZE and this loop runs across multiple 2MB iterations.
+> If an iteration after the first is interrupted (out_top == ipa) or hits an
+> error, realm_map_unprotected() returns non-zero without unmapping the
+> already-installed prefix (unlike realm_map_protected()).  kvm_s2_fault_map()
+> then passes !!ret (unused = true) to kvm_release_faultin_page() and skips
+> mark_page_dirty_in_slot(), so if the faulting IPA lies in the mapped prefix,
+> the guest can write to the page without marking the host folio dirty.
 > 
 
-I will add min_rate 25175000 in table end and a check on max_rate 600MHz
-in v2.
+Valid point, I'll unmap if things fail.
 
--- 
-Best regards,
-Ronald
+Thanks,
+Steve
