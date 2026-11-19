@@ -1,102 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.3
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795111545;
-	b=yBYjtc6rtfJD+uR7dZ69InMDeXTJ05STR4gh6hmxz4/N+m+5r2FQAWRDEG+cB23YPS9S
-	 weByE/MZFRGowESmu3jVz9/w6HgKqrGtWu7SzXABudyduh/NRU5f8kYGuAlgXPWAcD+Ds
-	 YaayT06qt09dmjxQiboFQGsb+fPRqWXHs+tD+IYJ6MXFHCIwzc/qqgc7fChWwQloS8KjT
-	 bNh8OzEoI2Z5PcLUmU5yGkeW+U2nJqDixTw/SYxNuz3HJiIWt6Ur7Mq9UXEOWYTm8+m1m
-	 3fsEJVU6reyun1LxQ1hCZuH3RMEDiIC6h47/OoihoD1EXiy7IYudwO53KUTla5TNMdQ==
+	t=1795111775;
+	b=pxn5V769+zQbYrNHbaKX1/dbvGaBTPju2IEUQy8abEdUkQSkXmBzYDrky0HSMuM39uSu
+	 qm5+sc4LVW7PNMRw8DDUz09zwJowtmi0SR05g5nI+1X4jVgPEcQfhEKLD4o9Subw2fnF3
+	 GsOkNOApfB7yO07hVKWkNUSIxrpb4GW998de/7V6F4yoZN4d6GktXeUSLWkcpqZtxT1Zx
+	 0g7u38YiJP1yhyyH9DvJ7dfyU4YD3mk6HIfABDCbRLIy/EKqgNU+Ngv+aNeiW8N6MYaRT
+	 HMW9s2V+leZlCLrwTDFDz8qELgaxl2eXz9tpPnRiB9f9XQSlCXkx+nMv0mbUx9ubttQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795111545;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Flag:
-	 X-Spam-Level:X-Spamd-Result:X-Spam-Score;
-	bh=L6iBAL/Cp7ijORXvrkf1YLKI4PmA/jJA/rnBcUHXNKQ=;
-	b=nLB9hk7d5qqcQMb1pYzj7lvTtrvnjUjBvBaWJokaGHwes9zPKCFo2W/UKT6xwlg5+mFe
-	 Bn9C+teoQ9DcvOFYYY+6w0Bc0ox+zRQgp70kH8IZLkMgiRVYqRQG3oWtqNpsNewTa5RHn
-	 AEF716YcrI6AYfG0P5Ee6/Ka1toP8XaeuIPXlg3fmFe05DabmssQOye6405KNkV5+FZKs
-	 Yivx+fAzmn20Em1o9g4WbT9XEwPO0nQVzGeDyf03aF4yQTJMY/zhwNon31Xw0bATKdGHa
-	 skMZYKMfuSaW/geEY5MUekztRQnFTYSdkiDAOCnzMMrS+Jyevy5ccnwoaRN9vx/xp3Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795111775;
+	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
+	 UI-OutboundReport;
+	bh=4pzlK7APXFFNs8KRHKtFyCyPqMX2Qs7X1T3NN43GZHM=;
+	b=mY0TGSGmklxFVQ1VAqDmwQjM9wJ/iVH/xr4x/JeU2+udOOaiHRzDKPRLn0ihjxXBYrr/
+	 aZo0Bsx0Nnv8sPzzRWlPxNvnGyER+jXLOCaZd43ftrQZ3ZkjEvxABRfSQSjg75DT0bIB7
+	 dwxFfj7xYakhwQXFme1EIokfYVO0cBzctiHw67aatMrZJO8mAetLj3nprdNupJ7Shx4DO
+	 pASvfYWUfv4OxuCicHvgGm1LqIW0WCz4NcmZDfFZxVRpSlIK2qSVc4bi46Upx1UhFI5NJ
+	 l5XQU58WHIq+KFfHggaNH1v5trI++dRDz9tzm5Lkxt/yJqe5/XyZtxQTW4fa9/1/u6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=bM8xLYWq;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="KnnQkiw/";
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=bM8xLYWq;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="KnnQkiw/";
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=vmyw12Oh;
+	arc=none smtp.remote-ip=212.227.15.3
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78041606A324
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 18:05:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78041606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD1E606A32F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 18:09:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3BD1E606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=bM8xLYWq;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KnnQkiw/;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=bM8xLYWq;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KnnQkiw/
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 8A5831F851;
-	Thu, 19 Nov 2026 18:05:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795111542; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L6iBAL/Cp7ijORXvrkf1YLKI4PmA/jJA/rnBcUHXNKQ=;
-	b=bM8xLYWq6yreR3tc3bH+aOF3PCNeU1yuMXcAr6UdcRarW8aDUhoB+fwh4tvtW21+fLLXwp
-	GLGXsZDA7fFb/9yik1uf+tdJt9JdBrYfrNXYoYYoUZAbTzHVsw6a4awfZUXD3WQbJ3AgZY
-	YZJLc/5q3sRNqqVwMOrxic9Ba1B9i3Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795111542;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L6iBAL/Cp7ijORXvrkf1YLKI4PmA/jJA/rnBcUHXNKQ=;
-	b=KnnQkiw/gwAoVeWJRwPBCW3Pql7C8K9DqEdaY62yWUK7O4b2ovoBZ0uny7UtbDv8htrEQI
-	EGC8xAuJLq2P6gBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795111542; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L6iBAL/Cp7ijORXvrkf1YLKI4PmA/jJA/rnBcUHXNKQ=;
-	b=bM8xLYWq6yreR3tc3bH+aOF3PCNeU1yuMXcAr6UdcRarW8aDUhoB+fwh4tvtW21+fLLXwp
-	GLGXsZDA7fFb/9yik1uf+tdJt9JdBrYfrNXYoYYoUZAbTzHVsw6a4awfZUXD3WQbJ3AgZY
-	YZJLc/5q3sRNqqVwMOrxic9Ba1B9i3Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795111542;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L6iBAL/Cp7ijORXvrkf1YLKI4PmA/jJA/rnBcUHXNKQ=;
-	b=KnnQkiw/gwAoVeWJRwPBCW3Pql7C8K9DqEdaY62yWUK7O4b2ovoBZ0uny7UtbDv8htrEQI
-	EGC8xAuJLq2P6gBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 53BCB1334C;
-	Thu, 19 Nov 2026 18:05:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id zZ5eAXY6/2qxYwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 19 Nov 2026 18:05:42 +0000
-Message-ID: <68da11ef-02b7-4fef-b2b2-ad5a6c719d56@suse.de>
-Date: Thu, 19 Nov 2026 19:05:41 +0100
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=vmyw12Oh
+DKIM2-Signature:  i=1; m=1; t=1795111772;
+ mf=PE1hcmt1cy5FbGZyaW5nQHdlYi5kZT4=;
+ rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+ d=web.de;
+ s=s29768273:rsa-sha256:HTKnwr2RVRoGktLpll832DCSfv+x
+   jN04vQzyQASCwtN1K7vetPHGTh9bdnCTPonVNwKyp/Zq6qi0eWbyQDjgZ+N3JhaTQLsslKwGDGJ
+   l1wWoEuszXkrKTUuXQgFFRWr9Yidainip5OPYPF2Mb2OAhu7MdWHjP1/PT+LWsBE39M4KNpiD25
+   szB73gk6g4AWJbvyOn/RVx5YwWGTWVLBgbG5MqoJYeWWfj59fVL3yh6DoeKCL5Ffcd4dbTfmDl6
+   jyPfwwmAkho5aQQttvQRK9pgF7ALJSwvIQiI2UoYty3rY5Pa8eAvgjPKlRuCoJzWhfxQ6OWzvIZ
+   xcigRmLV/2VURA==;
+Message-Instance:  m=1;
+ h=sha256:
+   IJIgimPT7if0rMrwBDlAYcUqTyp7n8+zjxsRor7oyD0=:
+   fD+/ALIqYHbm0xPktAw0/uaEfNRiOdjOWoDcBJ8h55w=,
+  sha512:
+   X0I0lh8lVXaMOqxXw99Qb1NWqE+XzlHj5S3Ibh5oniOnQp0qQSiIG3HS6xrHFv8k3BS7/Pv5i4uzKCs5QDttLQ==:
+   l00xTuG4iPJDbekjLeNFE4ai8iYflAfhC6agtLhM6Wv9hYRUJWL+veX3+6L1f3zuh/mt5II2wHrMQxCFT/iayg==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1795111761; x=1795716561; i=markus.elfring@web.de;
+	bh=4pzlK7APXFFNs8KRHKtFyCyPqMX2Qs7X1T3NN43GZHM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=vmyw12OhW8beDcEMsY8/7JQB2oESku+HPHiuBZ8GqwS1jZ0KZ6SmNXj1po2nOltx
+	 gm5hHBkvuqUfdKUOKstigHOmE60zjDKw2wDZaKGQGLwTDRTlVuiQzq3zMcw4+3wy/
+	 moHPbUrQDmStArjwmD8NoGanZhZpy3VHztAwGyqeHlnjRGxjX7lJBajZt4Ucb+d7J
+	 F58K8yPDq13llV2351oC90rLQicZX03BLXq7r+zalP08N4fmql8LBqvWp+W2GlAkG
+	 rs3CqePOe181TZ6HEiHF9A3RaBCh3sJvIa1SSxtcInU/uBXww6uRn9IbGblzbYvBf
+	 Gxb80Y8mRKmDIfIfKQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MBjIG-1xHy283k6O-004vnH; Thu, 19
+ Nov 2026 19:09:20 +0100
+Message-ID: <1e2fe486-f497-4263-b759-5876f2f5bd2d@web.de>
+Date: Thu, 19 Nov 2026 19:09:19 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -107,177 +82,158 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/11] drm/udl: Allocate URBs on demand
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20261119142114.152052-1-tzimmermann@suse.de>
- <20261119142114.152052-11-tzimmermann@suse.de>
- <sashiko-outbox-223315@kernel.org>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <sashiko-outbox-223315@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: dmaengine: dw: Use devm_clk_get_optional_enabled() in dw_probe()
+To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev,
+ dmaengine@vger.kernel.org
+Cc: Frank Li <Frank.Li@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ LKML <linux-kernel@vger.kernel.org>, kernel-janitors@vger.kernel.org
+References: <8e3534b7-ae64-4c1f-819d-0ba390737b84@web.de>
+ <sashiko-outbox-223487@kernel.org> <av8pd_aQFFSSMkDg@SMW015318>
+ <216e7cd0-10b9-45a0-9eba-b53cbc6fda4f@web.de> <av804gPG5A8_8UkG@SMW015318>
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <av804gPG5A8_8UkG@SMW015318>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wfG2JC3LwFQSM/sUiAqXL8/9Fp5UEVDJLeg95C7r97BRdqMl0UB
+ 8+ljVb9cvjLbfrZkGj012hWvz0bvce0McSr2WlpMofmn4a+OKbj9YKy4N7eTyUynx0P4F06
+ IuamYEBrPcbaRTlngU2yJmnaeDEGj4ZSbMwELyYCyU95KGwKFl/g3QMEX1WqYR/t6u6yXiS
+ x15b5PnqNiXm6gX5JHOWA==
 X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-13.28 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-0.99)[-0.993];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	RCPT_COUNT_TWO(0.00)[2];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -13.28
+UI-OutboundReport: notjunk:1;M01:P0:4ERn8dNs6NM=;dImiIZh4Kbe7GU4B4Rhj9IXSzkt
+ 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
+
+>> Do you find these two function calls really not equivalent to another k=
+nown function call?
+>> https://elixir.bootlin.com/linux/v7.4-rc1/source/include/linux/clk.h#L6=
+80-L699
+>=20
+> What's your point?
+
+I wonder why the cleanup procedure would need to be different after the pr=
+oposed refactoring
+for the implementation of the function =E2=80=9Cdw_probe=E2=80=9D.
+https://elixir.bootlin.com/linux/v7.4-rc1/source/drivers/dma/dw/platform.c=
+#L24-L92
 
 
+>                    Sashiko just remind you need remove
+> clk unprepare at error path
 
-Am 19.11.26 um 15:47 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] drm/udl: missing size fallback and in-flight wait in
->    udl_get_urb()
-> --
->
-> commit 2b67449c9bc54fc48767cd1733efcaed21d924b2
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
->
-> drm/udl: Allocate URBs on demand
->
-> This commit removes the fixed upfront allocation of URBs and instead
-> allocates URBs on demand in udl_get_urb(), caching them for reuse across
-> frames.
->
->> diff --git a/drivers/gpu/drm/udl/udl_main.c b/drivers/gpu/drm/udl/udl_main.c
->> index d0195bd4213df..adddcf4b34518 100644
->> --- a/drivers/gpu/drm/udl/udl_main.c
->> +++ b/drivers/gpu/drm/udl/udl_main.c
-> [ ... ]
->> @@ -244,71 +257,16 @@ static void udl_urb_list_release(void *data)
->>   	udl_free_urb_list(udl);
->>   }
->>   
->> -static int udl_alloc_urb_list(struct udl_device *udl, int count, size_t size)
->> +static int udl_init_urb_list(struct udl_device *udl)
->>   {
->>   	struct drm_device *drm = &udl->drm;
->> -	size_t wanted_size = count * size;
->> -	int ret;
->>   
->>   	spin_lock_init(&udl->urbs.lock);
->>   	INIT_LIST_HEAD(&udl->urbs.list);
->>   	init_waitqueue_head(&udl->urbs.sleep);
->> -	udl->urbs.count = 0;
->>   	udl->urbs.in_flight = 0;
->>   
->> -retry:
->> -	while (udl->urbs.count * size < wanted_size) {
->> -		struct urb *urb;
->> -		struct urb_node *unode;
->> -
->> -		urb = udl_alloc_bulk_urb(udl, size);
->> -		if (IS_ERR(urb)) {
->> -			if (PTR_ERR(urb) == -ENOBUFS && size > PAGE_SIZE) {
->> -				size /= 2;
->> -				udl_free_urb_list(udl);
->> -				goto retry;
->> -			}
->> -			break;
->> -		}
->> -		unode = urb->context;
->> -
->> -		list_add_tail(&unode->entry, &udl->urbs.list);
->> -
->> -		udl->urbs.count++;
->> -	}
-> [ ... ]
->> @@ -321,9 +279,18 @@ struct urb *udl_get_urb(struct udl_device *udl)
->>   			return NULL;
->>   		++udl->urbs.in_flight;
->>   
->> -		urb = udl_get_urb_locked(udl, HZ * 2);
->> -		if (!urb)
->> -			--udl->urbs.in_flight;
->> +		urb = __udl_get_cached_urb_locked(udl);
->> +	}
->> +
->> +	if (!urb) {
->> +		urb = udl_alloc_bulk_urb(udl, MAX_TRANSFER);
->> +		if (IS_ERR(urb)) {
->> +			scoped_guard(spinlock_irqsave, &udl->urbs.lock) {
->> +				if (udl->urbs.in_flight)
->> +					--udl->urbs.in_flight;
->> +			}
->> +			return NULL;
->> +		}
->>   	}
->>   
->>   	return urb;
-> [Severity: Medium]
-> Should udl_get_urb() fall back to smaller allocation sizes or wait for an
-> in-flight URB when udl_alloc_bulk_urb(udl, MAX_TRANSFER) fails?
-
-The was deliberate to reduce complexity. I assume that we shouldn't run 
-that display driver if these allocations fail.   But if the removal 
-turns out to be a problem, the logic can also remain.
-
->
-> MAX_TRANSFER is PAGE_SIZE * 16 - BULK_SIZE, which requires an order-4
-> contiguous coherent DMA allocation via usb_alloc_coherent().  Previously,
-> udl_alloc_urb_list() handled -ENOBUFS by halving the buffer size down to
-> PAGE_SIZE (added in 542bb9788a1f ("udl-kms: handle allocation failure")),
-> and udl_alloc_bulk_urb() still records unode->alloc_size and returns
-> -ENOBUFS for this purpose.
->
-> Because URBs are now allocated on demand during modesets and frame updates
-> when memory may be fragmented, a single order-4 allocation failure causes
-> udl_get_urb() to return NULL immediately (even when other URBs are already
-> in flight), aborting udl_crtc_helper_atomic_enable() or udl_handle_damage()
-> and leaving the display blank or partially updated.
->
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
+It got the impression that this function call would be still relevant
+(behind the label =E2=80=9Cerr_dw_dma_probe=E2=80=9D) according to a faile=
+d statement =E2=80=9Cret =3D data->probe(chip);=E2=80=9D.
 
 
+>                             and remove() function
+
+Do you expect more functionality from a devm_clk_get_optional_enabled() ca=
+ll
+than from the combination of devm_clk_get_optional() and clk_prepare_enabl=
+e() so far?
+
+Regards,
+Markus
+
+
+>> =E2=80=A6
+>>>> --
+>>>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/8e3534b7-ae64=
+-4c1f-819d-0ba390737b84@web.de?part=3D1
