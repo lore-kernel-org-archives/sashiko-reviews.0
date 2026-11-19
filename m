@@ -1,135 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.14
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795101862;
-	b=3VeW67Emjqoy3gIGcC3HZjjURwX83Q6lp1TEbLuWwWr0rJoHWiOYK5LINtHRgUne6n2W
-	 FZVBQLu9WzKpeRfME9Khpsb76CVCmwEh1avZQA58c9cnrDNgd45r0xK9omHbaxeu8bklV
-	 VkJFmegB+2iQfzHMh5Sh8MCAeev1ewF2wbj9O+Yyt8ZNLBmZskMVOe/mtQ2UkabwP8wfW
-	 wC9xQXI70mQHiQtYaGkn7OnA9rsn/bsUBHlhfffiULLkxNCqZQMkwKvGHLM77J1Baycqy
-	 Kx0KW9/PeoSW8jnax04pYGsAl45Ykn6LVhwHlbgZKXnkhxb1o74qLsTzYJBZaL8qs/g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795101862;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:
-	 Subject:To:References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=C99yTdzILm+ML9lS8hkGxAQdTD0Te+2UZMeQ22/mpNo=;
-	b=uwchCZlw25ACCSaxGszil6O9JiEYiJPSn/gBrL8w7ZXiSxFifuwcHIPqEzuKn1UB4vxM
-	 FT4FFM7kxBtk2DsNwjyzqMT6HW9DYPbW1sgz6BaTnwjzX3HdZgvYBVCIjsr8xeWpJ3w/s
-	 GpSFCeqDMbgr8KVkG0qPJm/fQGqetgIgj8XsnaxGCMOG4rhGBb1B4lmshfwqJWOBu7atK
-	 b7HfphgdJrpfvkOuvcklb7UW6UUXCHg6qovLAP7AC9iZEyvOahd5TErK661B4GsmFAqdJ
-	 nSnkw/Roctu+V7W1gsx86NOd3jXg4Qn8q1pXoaSGhHMlLu6lm2Rf3dI3u0tKK0zAzCA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=a0aNt8ac;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=lqT88ZZ0;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.14
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA00606A324
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 15:24:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4EA00606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795101958;
+	b=ANgTlI6Lx7+yunVY5E1czXh6VxLjNDdvFaU+SOz+dPt5WoK/l7HisE/rLpKeQw9MGuga
+	 zVzBeo9L/1CYlP7qNnsL8FVtN3iTtVivLMfK/32/ggjvMkbOyym7RlDT5nHE6YMtVi1rs
+	 F5lOOr5tXnKn6z4lcYODgt4WDpfqqdVYMAkcNysRn6iX3nd1VuxeYRTZsHblQpfRKOASS
+	 PyYMVUlJFA2ap3xRHDzxc4RExtvLrbxXHeA2GmASg7q4/qP1xRHGdzS36gXFVxBDh0+5V
+	 gU7vW+nZeJpjwJHbbAFYKXjAeTsvelyD6+Ngq7+T0p4E6PaFf+v87gYGEZbt9BrmQJg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795101958;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=zdB2fPtL2z7ZG6LCXpPbQvhRXPEXVT2iZIQyInkp3MU=;
+	b=ajKoU+GO8UPEEui0qdbDzErqYwvphFHv8Eg2yN8kpTFd2oE4YqrJG9SH2F3fvAxB5aAw
+	 tzx7DikzFRyfYTOTzoa9zLd7kJKSG7c0k2DwOIZEHRbNLuYKXgfv1N5NyWpfQ7LxwDVID
+	 5ju25Oo6093rR603JFKzBxFggoUYki6xtKTTXcird+jtJyPR8hPcv5ZDKvJ9axKjSJYyU
+	 cWXMO3qQqV0Cl9G9qDnSqfBXCA+AEVvoRwsC/RmJyB2s0ZXkV8rpoisSLyTnW8UzBYxAF
+	 Lrkvc4o2eSq5Jzw8ia+Tl9teBNguqZt2naaqIWkugokpx0cS6hZnCSSsH5KyQ0eMlTw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="DH8BaBb/";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC8BA606A325;
+	Thu, 19 Nov 2026 15:25:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC8BA606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=a0aNt8ac;
-	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=lqT88ZZ0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795101862; x=1826637862;
-  h=message-id:date:subject:to:references:from:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=Mm9owO9k7wEMAWgx/jITqRrNmwGSNi02IQyfiwSdQIk=;
-  b=a0aNt8acUif1RA1p/zqxkzG/ryKLjN+D2U/jCEnEn12Qz4krK1NZH3N6
-   xe9W0ud7ZmmdcdVpgmYRU24Llp8ePVH01U4PIMzIMOXA264pOEhWhw9VR
-   ChGBjQiqYT+wZCqFKBwJUTtWyOZ8XjSxL1d0KJhbsXRSA8um01cVDwXNS
-   nwEx6mK2RPCo0kKwSIcb0mIQ0ip/bxmDi+3Nqvy1rkAIvmTEJqke1Cpc6
-   TYhPYgOykjzOrBeTpVTObMxveaPuYKn5YycP/IK8zdd6HrHMbPzA5KQur
-   AgilPUMr+mvf8iyYjMpfNp5slPH6Hgn15RHHsB0jMJn2c/Uid4CU2RaFL
-   w==;
-X-CSE-ConnectionGUID: 99/ynwAIR92cACAAKxiMMA==
-X-CSE-MsgGUID: 7/uuHQ9iTgy14DWyf+Olhg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11971"; a="3842125"
-X-IronPort-AV: E=Sophos;i="6.27,221,1787036400"; 
-   d="scan'208";a="3842125"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 07:24:18 -0800
-X-CSE-ConnectionGUID: +aeW6FdMQoWE+KCX/aiBuA==
-X-CSE-MsgGUID: hcPL3tTYSUaFaMN6E/ycMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,221,1787036400"; 
-   d="scan'208";a="10545028"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 07:24:17 -0800
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 19 Nov 2026 07:24:16 -0800
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Thu, 19 Nov 2026 07:24:16 -0800
-Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.64) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 19 Nov 2026 07:24:16 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yyvfc1EfQmvNbtBVaywMB2z1yw3NEGkq/UzIpXmTbODz1+YmejgfKsopTVCbReTw4L2/rWvW3HDbFX0Ehc+Hkq0GuWEH/qHkI//X6oThkxU8HDw2vA/3HdSVT0lVCP6o4nAAofOq/0nrJnymGF7rXjPktca5QDPaAsTx9LpPjTpurBb5TJ8fCVH5kCVNOVRolP15i8Q7on2isDb8a0cxuoH3H/OOx5OpdFND35d2uEzc9wTugWqet1lF6WtYhJnTrUR0SwNH/lFk3/On6zbG3qqCzZ0xJIB0LUsfO8b8Saqo0ikhjJ2hctnKeWNY7m/c9Wa+xDfjwUkHkS309+s2zg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C99yTdzILm+ML9lS8hkGxAQdTD0Te+2UZMeQ22/mpNo=;
- b=Y3fbt+tRi3zYIPCK6Ja9h4y5Y618JXpnNIygGn/OUI6u7Pcf6NwfQILsM9/QiX/1JqzXmIUX3AvnX9e6u3+L9FaWF5lsnkDIbVNNGvIoDxtXuv0ACD6BcJFGmh2sCByrstTlBriOk4u6vLEvXRREm7vHO6vfoF1hb0mkWD5Z2KIjyM1nsOIqiIIpNfTTsv5b2mFvLC2TFapZnkDb9NevNq0IM52loAAogKqtJ99aNLNRAGMjdPJ4J6FwDmDeH8qRAL/SAeGszM+ZUP7rJKusc5SOhgs8bd9bH9ffLPwSChvobrpznNQEuIe6GwUoQfpAdQ0iEunITvcDBEgORkTt6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C99yTdzILm+ML9lS8hkGxAQdTD0Te+2UZMeQ22/mpNo=;
- b=lqT88ZZ0fzE79n/htc6xtIwphbE1MDZsxBxwwMu2cZK+E9a3R+XNuQuHWTx3FuD3tgWvn1iawrcjX7amgZjniWp5a0q/W1sIRQjeXy1ETwLjP5mMVx1MpgGr4+ud4jfvbX7wVFE9p2OfmLy5zC6ZKjtA8Q4DgCvjqrhw7xZG7k4=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from FT1PR11MB960200.namprd11.prod.outlook.com
- (2603:10b6:170:25::23) by MN0PR11MB6182.namprd11.prod.outlook.com
- (2603:10b6:208:3c6::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Thu, 19 Nov
- 2026 15:24:09 +0000
-Received: from FT1PR11MB960200.namprd11.prod.outlook.com
- ([fe80::cfb1:f811:62bb:fa65]) by FT1PR11MB960200.namprd11.prod.outlook.com
- ([fe80::cfb1:f811:62bb:fa65%5]) with mapi id 15.21.0639.010; Thu, 19 Nov 2026
- 15:24:09 +0000
-Message-ID: <e4abd809-5246-459e-9818-fcf1c990d813@intel.com>
-Date: Thu, 19 Nov 2026 20:54:00 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/xe/hwmon: Expose powerX_cap_max
-To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
-References: <20261119104029.3066660-1-karthik.poosa@intel.com>
- <sashiko-outbox-222985@kernel.org>
-Content-Language: en-US
-From: "Poosa, Karthik" <karthik.poosa@intel.com>
-In-Reply-To: <sashiko-outbox-222985@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5P287CA0305.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:21e::14) To FT1PR11MB960200.namprd11.prod.outlook.com
- (2603:10b6:170:25::23)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=DH8BaBb/
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 761591575;
+	Thu, 19 Nov 2026 07:25:54 -0800 (PST)
+Received: from [10.0.129.37] (e122027.cambridge.arm.com [10.0.129.37])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AA5633F882;
+	Thu, 19 Nov 2026 07:25:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795101957; bh=L8AM1088GXZp/KUuwOmJHtuk4LM/8kxdRfiw72oFviw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DH8BaBb//yLeBr2dmfTFqY2aimtfu4bNYokOLjm0EYWZ/gI/t4YS7vcWCodD6wvw4
+	 bkUybIOFHqUe9l9oMSaiGQGxZ1UU+EayJjNDyVPfSwy87x6C9AJVSQyCuVf9MJbRsH
+	 D/m9URoICxgF1J1ZDBBUwarfFfsKqOR8wh2lNpso=
+Message-ID: <1715c8bd-3738-4d1a-9d22-0abbdd688e4c@arm.com>
+Date: Thu, 19 Nov 2026 15:25:53 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -139,128 +53,306 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: FT1PR11MB960200:EE_|MN0PR11MB6182:EE_
-X-MS-Office365-Filtering-Correlation-Id: dc16e643-a262-4505-41c3-08df46512801
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|261022075727099003|10067099003|56012099006|4143699003|11063799006|261026140227099003|261028144727099003|261021121427099003|261022105027099003|261026121527099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: Dl5mlxDBiwPMUgvM8I5IxFC01gwHLVF7EtOCgxF0BLQF3iMIW8qsOEXuhCxFQMe98DecW7tDZwYeid0MiCFeOT//XujPdNAsSMl8dASkV62APEWf1EaH0R5/ZqSuCDokd+jc5bB3J6JtRF7cMaigVQ2femOdIHN9ZgnbQBlHvvsJNXijQx+X01zotQHOKNwDAyJwz+mgw9+/eiQkTlTQ9NDbnvxdgBMX/D+UJJoMuaGxqwVvowcAcySJzfPWX8JOnB3f2bjVLcx2xfs0LVKxlkF8PjwQbwM8D3Z4wFc9vyJSWmfJUhR5tuY/rpaH+7nHQ5CQVHQ22HGGKDCQtIEvwPOs8NeSITg7rBwlDWXA/cNKxIbJ+zda2/I4u6CMeIzpp7peNy6T7nXi/7s8JbHlwGGtmuHCSebAukEjrrK9HEtlsJiVpyKxbqKe0Xz0Fjs03ikdYZRmrL8QhUNXbuFn1WmAw0UMAJjXWQmM3k1eb6f1xDCRY3C2EmZjCrrZnC6D8esb4oQYNezqhH2I9l9nQfYVKHAg6WJFFH/jFwdoUsCI/h5DzusendeDRZ+flEhBgyiEVn1UrpivYEsyfL5OutHIvB0vxcdFPap/vEQ4Y18=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FT1PR11MB960200.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(261022075727099003)(10067099003)(56012099006)(4143699003)(11063799006)(261026140227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261026121527099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U3ZiUkNXc3l3bDRBdFErcno3SHEydmJLOTNWaHJFWFFCaGVsTE1DM0dXV1A5?=
- =?utf-8?B?amg4WUxYbU5BdFhwWVVPYmh1c21KTmd2M0xuek0vd2EzV3E3UzNDNmRkVmFV?=
- =?utf-8?B?V3RETXd5VFpKNnJWYVh3dVYzeDU1MXdXSGZXTWtOdlF3Ky9zRmJyM1lwbzJK?=
- =?utf-8?B?NUY3akU0RzhVSjBPdU90OHVsQ3ZjTGF0emJMRUVNWGZDSTRsNUtoc1pYWEp6?=
- =?utf-8?B?OUc2L3VGcytCS3NxZ1lFZEFNOHBmbzFmREVHeXdMMkUzY1NyRkZnc2JrbGpB?=
- =?utf-8?B?enlSODhTL09JRkNlanVNMTF4RDdycFZkSWlURnZVemlFenBpVTJFdjJkdkd6?=
- =?utf-8?B?TmlRRXdnaUR4TnVyTWZSS2RPN2V6SG55WVZFTTN3WW9xYVhlK1NlMFZnK3hF?=
- =?utf-8?B?WmpJTWE0eFpyZ21OZ25kZDUvZXRFZzA0Rkkza2pCMnZ1VDdGalljK283Q3hn?=
- =?utf-8?B?RkdmeGd5UkJYN0VMZ2xsUmJBZjdmSEx4ZkxVQmdUUWJGOGFCS3hycXdmenIr?=
- =?utf-8?B?bzNZNGFvMXpycDhEejBpOTlGWHpNRUNIdGtxb0R4N0ZYNjlUSklRT251SEU5?=
- =?utf-8?B?NDZoMS9WRkx0TDQrcWp5NjlWaWhGNWNzMS9FdXU3ZXpaMis0S2x5YWFiL1JB?=
- =?utf-8?B?NFRqZGI2MU1GazVreE9ldVkrTW1PQ0R0S1JFdy9aQ0VxVlB0YWtYMmtTUyts?=
- =?utf-8?B?em1kL25Hem15RkpYWEQyM0JrVlk2ckdpWFUxWEdVMUpaU0lPYkVoVTBOK0p3?=
- =?utf-8?B?a20wc09Va3M5bU1ucml4WjF4eVZWdDVZV2dBU1ZHcFhTODB3ZFJMUUVBNWlS?=
- =?utf-8?B?dGpubjBqM0Y5NTNQVFNxVUdXRjRUNTFLTE5jaGh2anNaRmRTRWlTSnRYKzBG?=
- =?utf-8?B?bVZFZ1pyanNRUGJ2K2Vnbzlnd2xUZ0x4WE1JdzZWRTlacE5oVlllSSt3ZXJS?=
- =?utf-8?B?dXpMWEw2OW43bkF0bmJsdmxQbVpxdy94S0lwclZhQW1sS3crcktNVWFiVWlY?=
- =?utf-8?B?YUM1MWtMaWorTGNDY0hLamY4U3pncDhHRDlUYWlxL2pta2dRQzNmUmRSTkZY?=
- =?utf-8?B?OXFlTVV1RFV5OE1nYkNZNGtsbUdMS1I4bzRkeDVWN3BRRHV6SWtKbHB0Zjcz?=
- =?utf-8?B?NzFWK09jcGtzU05GZFRCVTc5MlRBV3RXU205MWJsaU1DaEI3akQxdERwMXI0?=
- =?utf-8?B?bXhBYkxqNnJRanNTcjNzNDg4WlhaTERMZVlrM0xwYkZUbnRjTDh3K3pHRS8w?=
- =?utf-8?B?L0hTSURaVFdoMG55bWoyTkJMRmJ0MWdLdXVMK3UvMDNkWGt1WUZ4WVloWlZx?=
- =?utf-8?B?V213eHhMRllRb014eUVSYXQ2SnhsNXhLQzhTdFdoTDc2VzFjOGQrQ0YrTWRY?=
- =?utf-8?B?WkdkTk1zUjVQNXV1WXBLQkFxQnZ3QUtHVjVMVWFKcFNFL1JzOUc1Mnd3V0xE?=
- =?utf-8?B?THBhZS9JRENGZjh1dngxYjFJbmttWmxxNUtVUmNYKzIvL1dwRzBoSjFWbFRV?=
- =?utf-8?B?eWVDREEwT0gwQTJGcE5od3YwejBYZjNRUFV0blJackl0SkVqSDlFdSszNUMv?=
- =?utf-8?B?N0g5US9RTHVPbVY4Q1JPL0VjZkZYcGtlSGcyNndlRUVoN2l0S2tITk1MeFdr?=
- =?utf-8?B?MXpBT0xybGk4YkJjaVN4UkFMWVZvSVFmdTU0eFN2c1I2c2VjczFCOWE0NkFG?=
- =?utf-8?B?d1VmNnFKamxGZU1yV3V3Y01CZFVtOHlQRjFKWm1TMUV6dEhSQ0E0T04wQ25W?=
- =?utf-8?B?c0YzYTlhczQyMlBtV1ZkVFpTQ2U2WlRkWG4xL2hwOElNWUpWa2phekhxdWh2?=
- =?utf-8?B?WUljZHUxdm9jYUtCSThTdk51T2ZoOHBzUW5GSldZbWZBaVpVYXVyblpCNzZl?=
- =?utf-8?B?ZjdzOGhLd0hwMllCWmxaU3lIcEMxMmhUNFZTQWJ4TzNrOXBFam9sR0kyeTZW?=
- =?utf-8?B?ZVh5K1ViVFNnOTZjTHZBZVhFZEs3R2xvQUxDU3NMM0F1SmtOK0l0MHlKamJH?=
- =?utf-8?B?a25nK1R5OEx3enBERWovOGdlNUZVY1FHVlN5dlpoN0VjTzU4eHNiTC9HdU9s?=
- =?utf-8?B?L2lleENPWERPKzNsTms2bjFJOHB3c3pscVNlaVI5b2VPbG15QlBqY3c4ODlG?=
- =?utf-8?B?ZzRBYUpiU3h2YldZZmxrRWNNSndlNHNvTTVBUnFSNmdYT3ozQzl5bEN3SmVL?=
- =?utf-8?B?VW9KR1BaSWNGMWlPZTVQcmh1dyszSTBxMkdRcVJ0b2QyNEhuT3J1RjVRYXlt?=
- =?utf-8?B?MTZsYjRmdWloTnpVNUEyeGhmRThBMVZaeGpjeStFdGRCZmcrYVpjQS82UTl0?=
- =?utf-8?B?QU4rc3hYS04zYmp0QWNhSDFOcTV3WWE4RGd4T1dsYytWcE1JQWVYQT09?=
-X-Exchange-RoutingPolicyChecked: yX3U72Wq4+EthVxqWv7GbKwNiTa6Z8ZO8IkFN7PcP/7kF6CI5HVIe+RIf40pbvIpQzAij601QJ4zodW9KdeokgpHsRthkBYZsSJWRRn+SBXqjMPcHelAzRT1fVqydFpOFwGzt4HXc6b7JziSe8dNUxieoa/yoNktaR9ZS0UKpECvzbrGWYu5loSZkbGAOCkdNUXHcx5VS5jymmQMrCa8qesTgHunfEkZiuuulOXNGmLsVR0Ciieg4DVccYnX6tvCFh7c0wBGTMtfzYT1KHrBbKXmncLR2zngcgqp9BhXGt1HtDslIX1rSzAY5iV3DsEU1WqtfB4GQwW8x4ivxJ8Vrg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc16e643-a262-4505-41c3-08df46512801
-X-MS-Exchange-CrossTenant-AuthSource: FT1PR11MB960200.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2026 15:24:09.0717
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dI1Hg190OitD/Ev1hvm3QGCxMphrQCh33UvyZ3Vcc9dkq3u/yiy9hJWAH+HNP9BxHy05t6XGP40Bmm0Ao+qZxw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB6182
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/11] KVM: arm64: CCA: Add Realm RTT mapping and
+ invalidation helpers
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261116164358.142785-1-steven.price@arm.com>
+ <20261116164358.142785-7-steven.price@arm.com>
+ <sashiko-outbox-217428@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-217428@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-On 19-11-2026 16:17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [High] drm/xe/hwmon: power limit clamped to 0 in
->    xe_hwmon_power_max_write() [1]
+On 16/11/2026 17:21, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential
+> issues to consider:
+> - [Medium] KVM: arm64: cca: broken split-failure fallback in
+>   realm_unmap_*_range()
+> - [Medium] KVM: arm64: cca: stale err_level after
+>   realm_unmap_cache_topup() failure
+> - [Medium] KVM: arm64: cca: get_start_level() misses 2-level minimum on
+>   64K pages
+> - [Medium] KVM: arm64: KVM_BUG_ON() on -ENOMEM in
+>   realm_unmap_private_range()
+> - [Low] KVM: arm64: cca: possible RTT creation for unmapped entry in
+>   realm_unmap_*()
 > --
->
-> commit 26f9457c44502cd969a84eaf5b2ee961f51b7a3e
-> Author: Karthik Poosa <karthik.poosa@intel.com>
->
-> drm/xe/hwmon: Expose powerX_cap_max
->
-> This commit adds a read-only power<i>_cap_max sysfs attribute on platforms
-> with mailbox power limits to report the default PL2 (burst) power limit
-> set by firmware at boot.
->
->> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
->> index defe8aaca7c11..8e0d295aabc88 100644
->> --- a/drivers/gpu/drm/xe/xe_hwmon.c
->> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
+> 
+> commit 453fd020abf481912e2fee6d2f403740b481af92
+> Author: Steven Price <steven.price@arm.com>
+> 
+> KVM: arm64: CCA: Add Realm RTT mapping and invalidation helpers
+> 
+> This commit adds RMI RTT creation, folding, and unmap helpers for CCA
+> Realm stage-2 shared and private address ranges.
+> 
+>> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
+>> index 74b89da4e8015..838f95c201ada 100644
+>> --- a/arch/arm64/kvm/rmi.c
+>> +++ b/arch/arm64/kvm/rmi.c
+> 
 > [ ... ]
->> @@ -1423,6 +1424,8 @@ xe_hwmon_power_is_visible(struct xe_hwmon *hwmon, u32 attr, int channel)
->>   	struct xe_mmio *mmio = xe_root_tile_mmio(hwmon->xe);
->>   
->>   	switch (attr) {
->> +	case hwmon_power_cap_max:
->> +		return hwmon->pl2_on_boot[channel] ? 0444 : 0;
-> [Severity: High]
-> This problem wasn't introduced by this patch, but can a pcode read failure
-> during probe cause xe_hwmon_power_max_write() to clamp user power limits
-> to 0 [1]?
->
-> If reading the initial power limits in xe_hwmon_get_preregistration_info()
-> fails, pl1_on_boot[] and pl2_on_boot[] remain zero while hwmon registration
-> still proceeds:
->
-> drivers/gpu/drm/xe/xe_hwmon.c:xe_hwmon_get_preregistration_info() {
-> 	if (hwmon->xe->info.has_mbx_power_limits) {
-> 		if (xe_hwmon_pcode_read_power_limit(hwmon, PL1_HWMON_ATTR, CHANNEL_CARD,
-> 						    &hwmon->pl1_on_boot[CHANNEL_CARD]) |
-> 		    ...
-> 		    xe_hwmon_pcode_read_power_limit(hwmon, PL2_HWMON_ATTR, CHANNEL_PKG,
-> 						    &hwmon->pl2_on_boot[CHANNEL_PKG])) {
-> 			drm_warn(&hwmon->xe->drm,
-> 				 "Failed to read power limits, check GPU firmware !\n");
-> 		} else {
-> }
->
-> If the subsequent pcode read in xe_hwmon_power_is_visible() succeeds, the
-> writable powerX_max and powerX_cap attributes are exposed, and any value
-> userspace writes is clamped to the zeroed pl1_on_boot[] or pl2_on_boot[]
-> entry in xe_hwmon_power_max_write(), programming a 0W power limit into
-> firmware and severely throttling the GPU.
-Power-limit reads during probe are expected to be available and pass at 
-probe time.
-If they are unavailable, we should not create the corresponding entries.
-I think we should update |xe_hwmon_power_is_visible()| to use 
-|pl1_on_boot[]| or |pl2_on_boot[]| accordingly.
+> 
+>> @@ -154,12 +291,94 @@ static int realm_tear_down_rtt_range(struct realm *realm,
+>>  					 start, end);
+>>  }
+>>  
+>> +/*
+>> + * Returns 0 on successful fold, a negative value on error, a positive value if
+>> + * we were not able to fold all tables at this level.
+>> + */
+>> +static int realm_fold_rtt_level(struct realm *realm, int level,
+>> +				unsigned long start, unsigned long end)
+>> +{
+>> +	int not_folded = 0;
+>> +	ssize_t map_size;
+>> +	unsigned long addr, next_addr;
+>> +
+>> +	if (WARN_ON(level > KVM_PGTABLE_LAST_LEVEL))
+>> +		return -EINVAL;
+> 
+> [Severity: Medium]
+> On a CONFIG_ARM64_64K_PAGES kernel, can realm_fold_rtt_level() be called
+> with level == 4 and trigger this WARN_ON()?
+> 
+> For a 32-bit or 33-bit IPA, stage2_pgtable_levels(realm->ia_bits) returns
+> 1 on 64K pages, so get_start_level() returns 4 - 1 = 3
+> (KVM_PGTABLE_LAST_LEVEL) even though kvm_get_vtcr() clamps stage-2 tables
+> to at least 2 levels (start_level = 2).  When realm_unmap_shared_range()
+> or realm_unmap_private_range() then calls realm_fold_rtt_level(realm,
+> get_start_level(realm) + 1, start, end), level is 4, triggering the
+> warning and skipping RTT folding (and similarly in
+> realm_tear_down_rtt_range()).
+> 
+> [ ... ]
 
->
-> [1] https://sashiko.dev/#/bug/linux-9f11cfb5-f9c5-490e-879e-791ecaae33e5
->
+Already discussed in previous email about get_start_level().
+
+>> @@ -189,6 +408,208 @@ int kvm_realm_teardown_stage2(struct kvm *kvm)
+>>  	return 0;
+>>  }
+>>  
+>> +static bool realm_unmap_cache_topup(struct kvm *kvm,
+>> +				    struct kvm_mmu_memory_cache *mc, int needed)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!mc || kvm_mmu_memory_cache_nr_free_objects(mc) >= needed)
+>> +		return false;
+>> +
+>> +	lockdep_assert_held_write(&kvm->mmu_lock);
+>> +	write_unlock(&kvm->mmu_lock);
+>> +	ret = __kvm_mmu_topup_memory_cache(mc, KVM_PGTABLE_LAST_LEVEL, needed);
+>> +	write_lock(&kvm->mmu_lock);
+>> +
+>> +	return !ret;
+>> +}
+>> +
+>> +static void realm_unmap_shared_range(struct kvm *kvm,
+>> +				     unsigned long start,
+>> +				     unsigned long end,
+>> +				     bool may_block,
+>> +				     struct kvm_mmu_memory_cache *mc)
+>> +{
+>> +	struct realm *realm = &kvm->arch.realm;
+>> +	unsigned long rd = realm->rd_phys;
+>> +	unsigned long next_addr, addr;
+>> +	unsigned long shared_bit = BIT(realm->ia_bits - 1);
+>> +
+>> +	if (start >= end)
+>> +		return;
+>> +
+>> +	/*
+>> +	 * Callers may pass either an IPA range or its shared alias. Add the
+>> +	 * shared bit only for the former. Use addition so an exclusive end at
+>> +	 * shared_bit advances to the end of the IPA space.
+>> +	 */
+>> +	if (start < shared_bit) {
+>> +		start += shared_bit;
+>> +		end += shared_bit;
+>> +	}
+>> +
+>> +	for (addr = start; addr < end; addr = next_addr) {
+>> +		long ret;
+>> +
+>> +		ret = rmi_rtt_unprot_unmap(rd, addr, end, RMI_ADDR_TYPE_NONE,
+>> +					   0, &next_addr, NULL, NULL);
+>> +		if (WARN_ON(ret < 0))
+>> +			return;
+>> +
+>> +		switch (RMI_RESULT_STATUS(ret)) {
+>> +		case RMI_SUCCESS:
+>> +			break;
+>> +		case RMI_ERROR_RTT: {
+>> +			int err_level = RMI_RESULT_DATA_LEVEL(ret);
+>> +			int level = find_map_level(realm, addr, end);
+>> +
+>> +			if (WARN_ON(err_level < get_start_level(realm) ||
+>> +				    err_level > KVM_PGTABLE_LAST_LEVEL))
+>> +				return;
+>> +
+>> +			if (err_level >= level) {
+>> +				/* Nothing present, so skip */
+>> +				next_addr = ALIGN(addr + 1,
+>> +						  kvm_granule_size(err_level));
+>> +				break;
+>> +			}
+> 
+> [Severity: Low]
+> This question rests on an RMM architecture detail that could not be
+> confirmed from the kernel source: can SMC_RMI_RTT_UNPROT_UNMAP or
+> SMC_RMI_RTT_DATA_UNMAP return RMI_ERROR_RTT with err_level < level when
+> the RTT walk stops at an unassigned ancestor entry (where neither a child
+> RTT nor a block mapping exists), rather than advancing next_addr across
+> the unmapped ancestor and returning RMI_SUCCESS?
+
+As per the spec:
+
+IQTXJY: A Range-based memory unmapping operation skips over RTT entries
+within the target IPA range whose state is already equal to the target
+value.
+
+So no it won't stop at an unassigned entry.
+
+> If yes, unmapping a sub-block range (such as a single page where level is
+> KVM_PGTABLE_LAST_LEVEL) in an unpopulated region will fall through to
+> realm_create_rtt_levels() in both realm_unmap_shared_range() and
+> realm_unmap_private_range(), allocating and delegating intermediate RTTs
+> only to fold them again at the end of the function, and hitting
+> KVM_BUG_ON(1, kvm) in realm_unmap_private_range() if that allocation
+> fails.
+> 
+>> +
+>> +			if (may_block && realm_unmap_cache_topup(kvm, mc,
+>> +								 level - err_level)) {
+>> +				next_addr = addr;
+>> +				break;
+>> +			}
+>> +
+>> +			ret = realm_create_rtt_levels(realm, addr, err_level,
+>> +						      level, mc);
+> 
+> [Severity: Medium]
+> Can realm_create_rtt_levels() run with a stale err_level if
+> __kvm_mmu_topup_memory_cache() fails inside realm_unmap_cache_topup()?
+> 
+> When the cache has fewer than needed objects and topup fails with
+> -ENOMEM, realm_unmap_cache_topup() still drops and re-acquires
+> kvm->mmu_lock before returning false.  If another thread folds or modifies
+> the RTTs while mmu_lock is dropped, continuing into
+> realm_create_rtt_levels() with the pre-unlock err_level (in both
+> realm_unmap_shared_range() and realm_unmap_private_range()) can fail with
+> RMI_ERROR_RTT at an ancestor level and trigger the WARN() in
+> realm_create_rtt_levels().
+
+I don't really get how this could sensibly be improved. In the event
+that the cache top-up fails then we're already critically low on memory.
+Looping round to have an up-to-date err_level would (most likely) put us
+back in the same situation of needing to top-up the cache (and failing).
+
+Continuing does indeed use a potentially stale err_level in the call to
+realm_create_rtt_levels(). The only issue here is if another thread had
+folded (if the RTTs had been created then we already handle that case
+gracefully). In that case we'd need even more memory so the operation
+would almost certainly fail.
+
+And if realm_create_rtt_levels() fails then we fall to unmapping the
+entire block - which isn't ideal but regains memory (which we're
+apparently very short on).
+
+There's perhaps an argument that the WARN_ON() below might be able to
+trigger, but then under these extreme memory allocation failures we
+should already have the allocator WARNing. So I don't think that's a
+real consideration either.
+
+>> +			if (!ret) {
+>> +				/* Retry with the RTT levels in place. */
+>> +				next_addr = addr;
+>> +				break;
+>> +			}
+>> +			WARN_ON(ret != -ENOMEM);
+>> +
+>> +			/* Splitting failed; unmap the entire existing block. */
+>> +			next_addr = ALIGN_DOWN(addr, kvm_granule_size(err_level));
+>> +			end = max(end, next_addr + kvm_granule_size(err_level));
+>> +			break;
+> 
+> [Severity: Medium]
+> If realm_create_rtt_levels() fails partway through a multi-level split
+> (for example, after creating a level-2 RTT to split a 1 GiB level-1 block,
+> then failing with -ENOMEM at level 3), doesn't this fallback use the
+> initial err_level and widen the unmap to the full 1 GiB block instead of
+> the 2 MiB block at the last level created?
+> 
+> Also, when next_addr is aligned down below start, start is not updated, so
+> the realm_fold_rtt_level() call after the loop starts at the original
+> start and skips folding RTTs in [next_addr, start).  Both issues also
+> apply to the fallback in realm_unmap_private_range().
+
+This is technically correct. But equally this is a "shouldn't happen in
+practice" situation. If we can't split then we can't unmap the requested
+range. While there are corner cases like Sashiko describes which could
+be improved on slightly, I don't see the point in unnecessarily
+complicating the code for them. Ultimately if we get here then we're
+unmapping too much - and we just have to hope that the system as a whole
+can recover at the cost of the VM.
+
+Certainly in the case of realm_unmap_private_range() the VM can't
+recover (hence KVM_BUG_ON()). For the shared memory case we can at least
+fault the memory back in if memory pressure has reduced sufficiently.
+
+> [ ... ]
+> 
+>> +static void realm_unmap_private_range(struct kvm *kvm,
+>> +				      unsigned long start,
+>> +				      unsigned long end,
+>> +				      bool may_block,
+>> +				      struct kvm_mmu_memory_cache *mc)
+>> +{
+> 
+> [ ... ]
+> 
+>> +			ret = realm_create_rtt_levels(realm, addr, err_level,
+>> +						      level, mc);
+>> +			if (!ret) {
+>> +				next_addr = addr;
+>> +				break;
+>> +			}
+>> +
+>> +			/* A failed split cannot leave the backing pages mapped. */\n> +			KVM_BUG_ON(1, kvm);
+> 
+> [Severity: Medium]
+> Can an RTT allocation failure (-ENOMEM) in realm_create_rtt_levels()
+> trigger a host WARN_ON_ONCE() via KVM_BUG_ON()?
+
+Yes.
+
+> Both __kvm_mmu_topup_memory_cache() and alloc_delegated_granule() use
+> __GFP_ACCOUNT, so a host VMM hitting its memcg limit or host memory
+> pressure can cause realm_create_rtt_levels() to return -ENOMEM.  Unlike
+> realm_unmap_shared_range(), which guards its warning with WARN_ON(ret !=
+> -ENOMEM), KVM_BUG_ON(1, kvm) unconditionally warns even on -ENOMEM; using
+> WARN_ON(ret != -ENOMEM) and marking the VM dead or bugged without warning
+> on allocation failure would avoid a user-triggerable kernel warning.
+> 
+
+So the cache topup can fail (silently) due to memcg limits. However
+alloc_delegated_granule() falls back to __get_free_page(GFP_ATOMIC |
+__GFP_ZERO | __GFP_ACCOUNT) which AFAICT will not be subject to the
+memcg limit and will WARN itself before failing.
+
+So unless I've misunderstood something the only path that can trigger
+the WARN_ON_ONCE in KVM_BUG_ON() is one which has already triggered a WARN.
+
+As above this isn't a case I expect to happen, and it would be good to
+be fairly noisy about it because we've just killed off the VM (most
+likely due to no fault of the VM or VMM). But I'm open to suggestions to
+improve this if anyone has them.
+
+Thanks,
+Steve
