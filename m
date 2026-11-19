@@ -1,47 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.71.93.99
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795090173;
-	b=z/4KnMtdEyjH8dFcgtq1bTNGRFX4GNDLLMdcgBfFudl9atAIHYFTGMILHN2nrOB0FDat
-	 twov+hnle3tllhM+R26HO8SyPWEqioGtxsAXR3geEit4PSiraGi9L81VX9ETvNa0oG83d
-	 pEprCMnr5JMJ2k6vBVL1aJ1111/3dA494u3W2lFlm8K/XOhEHKSHWqsLnkSwHrOC2Wxye
-	 paikoQICYXvN/Xr5vuCxmY2EZPYwvIDCe8vaQ1N8x/YLwol9NG+HXIbJ5jyASD1/0M2Gd
-	 ec1hDS709ouI46FmooevfDmroyYZLZE+P64msciiV+k+AaHxN9sHNETGTArqxFfLKag==
+	t=1795090362;
+	b=pcrFABdPxFuZc5aA0/PEcAEX3CtW0ptFkZr7Yqrom57Bl+uGtSkhGPOaYiximORrTJ9m
+	 KFHj7fkrz1Cnuj0uQKVqroEn/kMLcFS04mA/Lkx+XEzlsYqlQP+C7Vbz4p3RiUDqz32UI
+	 cwsD+V6ya+YqE6vmpsFmDTphHc0K2bui1uSTjpTcgBitT3JXfI4DRJ4YRJOoNPwPAkaG3
+	 9Uf74UY40fE5y1R+sLJSEPAzcYVWIseZk5lNgo6HBXTsdbRhy5PVa/MggjaYByhOJZo2C
+	 MnuqUK5LyfQejsmA2GdneCUKcsLTNPC+HiYGG8+Ef2EWNMoyGGnDw2hGy9rCfLXYOMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795090173;
-	h=DMARC-Filter:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
-	 X-Coremail-Antispam:X-CM-SenderInfo;
-	bh=13JLKby77r602NBIpRXOjznKNZZf82pMBw6OJAVlHkU=;
-	b=OLCeCoERfpY7AMMK8d81zhm/4odhs8Je+4MDKUneXjXhiPqfKlps6Lp7Dgx+ovTKzKp9
-	 spUE/hwUwA82LoLH0UEF87mWEatnlG9fj5Fp3ZcjL3DDHzD+hAcfirFwcEraLXcByqDO+
-	 6F7nUwDGGuxQq0ZsfJaB51OqvobQB/quZ987KBQx2UoSQfTbFXRdzruNPgFw5BnCcTZRc
-	 tzrvai5GJaj338jT2Qo6XmmL5YhiewzuQzEANNEsadm0pg81efmqntUZeWG4XSybLAvA+
-	 pYWJfR62kk7TKLOEQFgLqgoCuFqiNTx/0v/TgnknE/yDHw71NqGK+ffaKl9aSyNXYPQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795090362;
+	h=DMARC-Filter:Date:DKIM-Signature:DKIM-Signature:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To;
+	bh=NDEwA6/SFI+KiEa2tg/iFeO8y0XtrsHPxYeu+Qe4yok=;
+	b=ALbMoQ+14EFpButnH+XblQHZXyLnc9oW7m5XP6dTEZeuBufGCi5aFO2nT8jkICkbQpzQ
+	 ETmXUwASJjPxe0qR+zm50KFrEawuKLmjP+K25pqJVyerlaKjGPJfM0Yz+Dun+0R+rmMya
+	 O6amDV1LdD/5ACLWMWEPIBDd+kUVTjTu+O43zp8PSa6Vme08ZDM2Xznq1nc7bQLgA+dRX
+	 r/wOqZt941dQScvYHjhA+CYM2Xcj8ODml8Fx28VmgWvB/yhUYKKwtyYyeAsPDpuUGV2Yb
+	 tvVxud2mgLnk7tq7nWlBqpqEn3aQ4+1urQE1Z+J3attJlojGaxS8oTSABJgWI8qw5vQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=huaweicloud.com;
-	spf=pass smtp.mailfrom=huaweicloud.com;
-	arc=none smtp.remote-ip=124.71.93.99
-Received: from dggmsgout11.his.huawei.com (dggmsgout11.his.huawei.com [124.71.93.99])
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=xjCASOlW;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=p58rKimi;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EADC606A320
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 12:09:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2EADC606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggmsgout11.his.huawei.com (SkyGuard) with ESMTP id 4jVcgc3BN4z1c0kS
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 20:08:28 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.112])
-	by mail.maildlp.com (Postfix) with ESMTP id 1CDEE40561
-	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 20:09:23 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP1 (Coremail) with UTF8SMTPA id cCh0CgC3wNXx5v5qJcCUEw--.43601S2;
-	Thu, 19 Nov 2026 20:09:23 +0800 (CST)
-Message-ID: <cd37e569-8e6f-4b77-a87d-b97f53e3b8f8@huaweicloud.com>
-Date: Thu, 19 Nov 2026 20:09:21 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5F6606A320
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 12:12:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC5F6606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=xjCASOlW;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=p58rKimi
+Date: Thu, 19 Nov 2026 13:12:39 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1795090360;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NDEwA6/SFI+KiEa2tg/iFeO8y0XtrsHPxYeu+Qe4yok=;
+	b=xjCASOlWOwMeg/LoywkRMWcVkrkn+t/2WcNc5tTgGNgj0vHpL8BTYgKaRWC/WN1/C9Y6iT
+	suFN4yDU7iD6N2O4abEsAQ+fXs8hhvO4G6Lu/215zvorC3Xmk/XeqTOR/beb1KRFV9bQi3
+	f+WhB9XgeYzLOLARgzObN2L6QtjqDC9jY8ZuI/thPEbugwMTaYSXQRfJKNdFiCA3meTp18
+	YiI0MoG/1KN9/LxNepgwvU28qq7rfh1FEY8KmdcEI9dKN4C1WmRiI1VUxJPHvVUQTjOFXl
+	+6HRls3ly8fpfqBBTSruf8LMa8gidYenh9jQQASjWJKqnVuG2Hxp35fRUwqqqA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1795090360;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NDEwA6/SFI+KiEa2tg/iFeO8y0XtrsHPxYeu+Qe4yok=;
+	b=p58rKimi4uqlwHRlGZXQP0n947crwYZa83Pibwywd+UHV44IbWpu0CZuLbUxhPmJnzo+s7
+	TqEvpJSoaqZKKNDg==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: Tengda Wu <wutengda@huaweicloud.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] perf/core: Disable context fast-swap for sigtrap
+ events
+Message-ID: <20261119121239.WLmhQpNv@linutronix.de>
+References: <cover.1794914794.git.wutengda@huaweicloud.com>
+ <cff9b939758dad9f16bb4eb0483c63b7787e62bb.1794914794.git.wutengda@huaweicloud.com>
+ <sashiko-outbox-218736@kernel.org>
+ <e940e69e-f7f6-4c37-a2f9-7caeaf9fb7c4@huaweicloud.com>
+ <20261119114850.2dEaCmX1@linutronix.de>
+ <cd37e569-8e6f-4b77-a87d-b97f53e3b8f8@huaweicloud.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,54 +76,31 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] perf/core: Disable context fast-swap for sigtrap
- events
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-References: <cover.1794914794.git.wutengda@huaweicloud.com>
- <cff9b939758dad9f16bb4eb0483c63b7787e62bb.1794914794.git.wutengda@huaweicloud.com>
- <sashiko-outbox-218736@kernel.org>
- <e940e69e-f7f6-4c37-a2f9-7caeaf9fb7c4@huaweicloud.com>
- <20261119114850.2dEaCmX1@linutronix.de>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20261119114850.2dEaCmX1@linutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:cCh0CgC3wNXx5v5qJcCUEw--.43601S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUU5P7kC6x804xWl14x267AKxVWUJVW8JwAF
-	c2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII
-	0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xv
-	wVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjc
-	xK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVAC
-	Y4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJV
-	W8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I
-	3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxV
-	WUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAF
-	wI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcI
-	k0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j
-	6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUzsqWUUUUU
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cd37e569-8e6f-4b77-a87d-b97f53e3b8f8@huaweicloud.com>
 
-Hi Sebastian,
-
-On 2026/11/19 19:48, Sebastian Andrzej Siewior wrote:
-> On 2026-11-18 10:52:41 [+0800], Tengda Wu wrote:
->> Hi Sebastian, what do you think?
+On 2026-11-19 20:09:21 [+0800], Tengda Wu wrote:
+> Hi Sebastian,
 > 
-> The bot might has a point. I don't see how a pending event is removed. I
-> would prefer to keep this part.
+> On 2026/11/19 19:48, Sebastian Andrzej Siewior wrote:
+> > On 2026-11-18 10:52:41 [+0800], Tengda Wu wrote:
+> >> Hi Sebastian, what do you think?
+> > 
+> > The bot might has a point. I don't see how a pending event is removed. I
+> > would prefer to keep this part.
+> > 
 > 
+> I sent out v5 which restores the removal of the pending event that was
+> dropped.
+> 
+> https://lore.kernel.org/all/cover.1795053619.git.wutengda@huaweicloud.com/
+> 
+> It would be an honor to have your Reviewed-by if you find it acceptable.
 
-I sent out v5 which restores the removal of the pending event that was
-dropped.
+I just replied, I am a bit slow in the perf corner.
 
-https://lore.kernel.org/all/cover.1795053619.git.wutengda@huaweicloud.com/
+> Thanks,
+> Tengda
 
-It would be an honor to have your Reviewed-by if you find it acceptable.
-
-Thanks,
-Tengda
-
+Sebastian
