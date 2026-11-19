@@ -1,49 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795085497;
-	b=4IYPSvZY5TCRCuVKTAG6v9Gy/FAoG183viF8kfVpay/+uXPt6Xw4+anQ2u0ZQrms6Jhe
-	 am+bHqMmAk7k482UKitJhSQX+gbaFHTz+IT2M0WWS1HSSakWoFVPO6tzlyWmqSaiiEbdO
-	 wz07lRM+vK+FXT7kkyZAKgmd7WwRSSDhP3nosnJUZGvmFhE0BKnxSZiYSluRXWQCJyEfq
-	 pMRyeq//oGUIXwfJyn0uOaQ+3eVb9gJ/Lfu3yasdgGIKLwwUOTLufmRT0Aqqghc5nunBo
-	 1jom/1junwFjGl2et+jPfYLLhHoFWMDVhtRg4JPwDoqtGVVX+PS4R+DUTyLrSvtjlIg==
+	t=1795086463;
+	b=HcqPzhApb1YO4IILmW2rvn2BUW1deUm6xrvnZCmJXmTH1ZmvCeQnoK33t30/h0a3cF1l
+	 7THeSR93ZVV4v5VxL61a3QqtBnIsZ8Sa6G0XOpIKobGCSzDASkfjmKrGy6+vcuDElfpIX
+	 wQGKe90BZ7bLpNFGgw9b9bxHVqEWxk45WGCl7MZjf3jJvSxQ6rlrYBaTW59kdc8dZk0nm
+	 pcj18G9JSv3QcJXtYF5J524fb/p5r0feP7vN3SYPNXK6Qj01aIdudSgFNIf2C5R7RDBtn
+	 +92sCW+HM0CjfsD92HNBWLloFuHykLxVxjGq2Ry6tQEqo6ZZZSlF5tIJ8YjwZ7ngLdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795085497;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=3OUB5fmOU7ug3lU8YcPzZnegi9a0IaqNcDVNlCLUAos=;
-	b=dliAywbldzYDkMRP5sz0qoQXM7ciH71wdDKHVMJwFSpeBq5Byk6fpUlEfoWf7nt6oaiI
-	 ELy6f7irOv2I/IM4WL1JHecOga62s6FQ3h/HBNRc0JJcbUIrFWA/y8437aQcFPc83ZyR3
-	 EMfJF6bFSm32blgJ1+aR+qZz1Li2lImn2iH9DjmT6mnbjBn69f0Xf3GVOBkE4U45t49HV
-	 MwKZpsqnFq156iNqtRq8oKQdw44sIYwUPAfj0wx7W/qgXFOLgLOhh5UPOKwEB7JZItwQ5
-	 G2is1VtMGALuNL238jn3/smeIR1+W4waYjHGMi1ScaiIUZ0ShQkdxHjtddYcmMxMl0A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795086463;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
+	 Date:Message-ID:User-Agent:MIME-Version:Content-Type;
+	bh=Ji/rZwxiSW0gG4Mvn53YHSbXtC5FbPqPXsT1gfczIuE=;
+	b=fdDwONaXz0EBm869ACMPd7gjBT01rqtSA/IUHvtz+JoUD6rSxPViefZMm5XtvaPuUI/U
+	 5q+OZOdNoXA5mFWZThhYP+y7CYbWi+4a/W43QytkbKAJKO3PTr2lD2AYbA6++95J3cgL6
+	 CeZt3A11NecMSWOQsgQI/fqVZ34GzYVMZA0rTj56ENkjeH8wkspH9PsU3gf/dabChCQwG
+	 DH6gfrv9Ze0R4Zv7fOIUDAe7rFI9UkmEWQ/9rCkldAlQcr0t0tpCx7WLAr1UXxHIeI9jE
+	 hDShqwAeoyL22H7TVu48IveMtW3o/PqZt5YLhu9n420e5kpbVVCskG97bcXNsYnscUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=SwuMuaHn;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B8E9606A32A;
-	Thu, 19 Nov 2026 10:51:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1B8E9606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=heaEZpr7;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2A8606A325;
+	Thu, 19 Nov 2026 11:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=SwuMuaHn
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 477EC1575;
-	Thu, 19 Nov 2026 02:51:33 -0800 (PST)
-Received: from [10.0.129.3] (Suzukis-MBP.cambridge.arm.com [10.0.129.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4A3183F673;
-	Thu, 19 Nov 2026 02:51:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795085496; bh=olpUpD1ZpWuwsmESadH3KU0hnzZjwYcqGaa8xYqJ9ik=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SwuMuaHnOInliHRxHSwZYQzqKqlNqrN5COh/C9okFVbuQ49HupXE3wUsHr5EsINeg
-	 teuPp8IZ1w17tudDkcVolTOxwQBnXood/8hwOF9oxPwvsqN4OnNtWbtkW5XUbNcFhf
-	 iU1WFN0k/5AnT0rn5pIsqZwOLSWl6kANHvSnTYro=
-Message-ID: <bbd8332b-1b2a-4a87-9232-4463d5e5a904@arm.com>
-Date: Thu, 19 Nov 2026 10:51:33 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=heaEZpr7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E331F000C9;
+	Thu, 19 Nov 2026 11:07:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795086463;
+	bh=Ji/rZwxiSW0gG4Mvn53YHSbXtC5FbPqPXsT1gfczIuE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=heaEZpr7V3NBLDI0usDA+AdsJvsPsidYzAf0n5/3kPoFzBY2XFgjITLpjvkEwUx6v
+	 R2y9WCZu5EX4VQXsjAZsMWfy/h2dyTMc2mZPxeV9xxNNmtXMIC5Zp/y28BETLSWHdx
+	 C3BdhTrYju2+scSHodr1VBT/fVjji6V5quDrsSBiGtCNBDaTmd8d8KwjRQPYzTgEkG
+	 SmAx/pPPxOeMaYhed/yV7ynQZ0+ohwDrN+X5Id55qQBAYHuS0sNbfxXQW9ON38p26o
+	 mLDttVexQMYCjqjDtfcDoMVTDf3XaCWL+oYUUdXdheTBUeGHCN9JVDjR6tzzWJxTf9
+	 trhKJ33C85/oA==
+From: Pratyush Yadav <pratyush@kernel.org>
+To: Baoquan He <baoquan.he@linux.dev>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+  sashiko-reviews@lists.linux.dev,  Zack Rusin <zack.rusin@broadcom.com>,
+  Petr Mladek <pmladek@suse.com>,  Mike Rapoport <rppt@kernel.org>,  Pasha
+ Tatashin <pasha.tatashin@soleen.com>,  Pratyush Yadav
+ <pratyush@kernel.org>,  Dave Young <ruirui.yang@linux.dev>,  Borislav
+ Petkov <bp@alien8.de>,  Ajay Kaher <ajay.kaher@broadcom.com>,  Alexey
+ Makhalov <alexey.makhalov@broadcom.com>,  x86@kernel.org,  Joel Granados
+ <joel.granados@kernel.org>,  Thomas Gleixner <tglx@kernel.org>,  Ingo
+ Molnar <mingo@redhat.com>,  Dave Hansen <dave.hansen@linux.intel.com>,
+  "H. Peter Anvin" <hpa@zytor.com>,  virtualization@lists.linux.dev,
+  bcm-kernel-feedback-list@broadcom.com,  John Ogness
+ <john.ogness@linutronix.de>,  Steven Rostedt <rostedt@goodmis.org>,
+  Sergey Senozhatsky <senozhatsky@chromium.org>,  Kees Cook
+ <kees@kernel.org>,  Jonathan Corbet <corbet@lwn.net>,  Bo Gan
+ <bo.gan@broadcom.com>,  Brennan Lamoreaux
+ <brennan.lamoreaux@broadcom.com>,  kexec@lists.infradead.org,  "Guilherme
+ G. Piccoli" <gpiccoli@igalia.com>,  Maaz Mombasawala
+ <maaz.mombasawala@broadcom.com>,  Shuah Khan <skhan@linuxfoundation.org>,
+  Randy Dunlap <rdunlap@infradead.org>,  Stephen Brennan
+ <stephen.s.brennan@oracle.com>,  Michael Kelley <mhklinux@outlook.com>,
+  Ian Forbes <ian.forbes@broadcom.com>,  Bradley Morgan
+ <brads@mainlining.org>,  "Michael S. Tsirkin" <mst@redhat.com>,  Eugenio
+ Perez <eperezma@redhat.com>,  sashiko@lists.linux.dev
+Subject: Re: [PATCH v4 3/4] x86/vmware: Add the vmware_record_panic_msg sysctl
+In-Reply-To: <av1ZB3ia13M420_I@MiWiFi-R3L-srv> (Baoquan He's message of "Wed,
+	18 Nov 2026 15:51:35 +0800")
+References: <cover.1794980455.git.zack.rusin@broadcom.com>
+	<4c5de34b10f579368b890eaa9333a2755886bad3.1794980455.git.zack.rusin@broadcom.com>
+	<sashiko-outbox-220212@kernel.org> <av1IuMZ2W0SXWcNn@MiWiFi-R3L-srv>
+	<20261117230201.921ec5bddf49cd459ddb8428@linux-foundation.org>
+	<av1ZB3ia13M420_I@MiWiFi-R3L-srv>
+Date: Thu, 19 Nov 2026 11:07:34 +0000
+Message-ID: <2vxzzev52i6h.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,204 +84,51 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/11] KVM: arm64: CCA: Tear down RTTs
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev, Steven Price <steven.price@arm.com>,
- kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261116164358.142785-1-steven.price@arm.com>
- <20261116164358.142785-6-steven.price@arm.com>
- <sashiko-outbox-217410@kernel.org>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <sashiko-outbox-217410@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 16/11/2026 17:08, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [High] KVM: arm64: unclamped stage-2 levels in get_start_level() on
->    64K pages
-> - [Medium] KVM: arm64: CCA: unlocked kvm_realm_is_created() check in
->    kvm_uninit_stage2_mmu()
-> - [Low] KVM: arm64: mix of guard() and goto cleanup in
->    kvm_destroy_realm()
-> - [Low] KVM: arm64: possible skipped parent retry in
->    realm_tear_down_rtt_level()
-> --
-> 
-> commit 80a462fb8b46e04c72060d069b1296caf72d83ff
-> Author: Steven Price <steven.price@arm.com>
-> 
-> KVM: arm64: CCA: Tear down RTTs
-> 
-> This commit adds stage-2 unmapping and Realm Translation Table (RTT)
-> teardown for Arm CCA Realms during stage-2 MMU uninitialization and final
-> Realm destruction.
-> 
->> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->> index ac72db3d4505f..9baf2352d2a8f 100644
->> --- a/arch/arm64/kvm/mmu.c
->> +++ b/arch/arm64/kvm/mmu.c
->> @@ -1145,9 +1145,25 @@ int kvm_init_stage2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu, unsigned long t
->>   	return err;
->>   }
->>   
->> +static void kvm_realm_uninit_stage2(struct kvm_s2_mmu *mmu)
->> +{
->> +	struct kvm *kvm = kvm_s2_mmu_to_kvm(mmu);
->> +
->> +	mutex_lock(&kvm->arch.config_lock);
->> +	if (kvm_realm_state(kvm) == REALM_STATE_NEW ||
->> +	    kvm_realm_state(kvm) == REALM_STATE_ACTIVE) {
->> +		kvm_set_realm_state(kvm, REALM_STATE_DYING);
->> +		WARN_ON(kvm_realm_teardown_stage2(kvm));
->> +	}
->> +	mutex_unlock(&kvm->arch.config_lock);
->> +}
->> +
->>   void kvm_uninit_stage2_mmu(struct kvm *kvm)
->>   {
->> -	kvm_free_stage2_pgd(&kvm->arch.mmu);
->> +	if (kvm_realm_is_created(kvm))
->> +		kvm_realm_uninit_stage2(&kvm->arch.mmu);
->> +	else
->> +		kvm_free_stage2_pgd(&kvm->arch.mmu);
->>   	kvm_mmu_free_memory_cache(&kvm->arch.mmu.split_page_cache);
->>   }
-> 
-> [Severity: Medium]
-> Can kvm_uninit_stage2_mmu() race with Realm creation by checking
-> kvm_realm_is_created() outside kvm->arch.config_lock?
-> 
-> If kvm_mmu_notifier_release() -> kvm_arch_flush_shadow_all() runs before
-> or concurrently with Realm creation, kvm_uninit_stage2_mmu() takes the
-> else branch without holding config_lock, freeing mmu->pgt and clearing
-> mmu->pgd_phys while leaving realm.state at REALM_STATE_NONE.  Checking
-> kvm_vm_is_realm(kvm) here and handling all realm.state transitions inside
-> kvm_realm_uninit_stage2() under config_lock (including moving
-> REALM_STATE_NONE to REALM_STATE_DEAD and freeing the PGD) would avoid the
-> race.
-> 
->> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
->> index 57f59b618a96e..74b89da4e8015 100644
->> --- a/arch/arm64/kvm/rmi.c
->> +++ b/arch/arm64/kvm/rmi.c
->> @@ -16,22 +16,213 @@ u32 kvm_rmm_ipa_limit(void)
->>   	return u64_get_bits(rmi_feat_reg(0), RMI_FEATURE_REGISTER_0_S2SZ);
->>   }
->>   
->> +static int get_start_level(struct realm *realm)
->> +{
->> +	/*
->> +	 * kvm_init_ipa_range() enforces a minimum of 32 IPA bits
->> +	 * (ARM64_MIN_PARANGE_BITS).
->> +	 */
->> +	return 4 - stage2_pgtable_levels(realm->ia_bits);
->> +}
-> 
-> [Severity: High]
-> Does get_start_level() return 3 instead of 2 for a 32-bit or 33-bit IPA
-> Realm on CONFIG_ARM64_64K_PAGES?
-> 
-> stage2_pgtable_levels(ipa) evaluates ARM64_HW_PGTABLE_LEVELS((ipa) - 4),
-> which is 1 for 32 or 33 IPA bits with 64K pages, whereas kvm_get_vtcr()
-> clamps the stage-2 levels to at least 2:
-> 
-> arch/arm64/kvm/hyp/pgtable.c:kvm_get_vtcr() {
->      ...
-> 	lvls = stage2_pgtable_levels(phys_shift);
-> 	if (lvls < 2)
-> 		lvls = 2;
->      ...
-> }
-> 
-> When get_start_level() returns 3, realm_tear_down_rtt_range() calls
-> realm_tear_down_rtt_level() with level = 4 (> KVM_PGTABLE_LAST_LEVEL),
-> triggering WARN_ON() and returning -EINVAL, which causes
-> kvm_destroy_realm() to abort and leak the Realm Descriptor, RTT granules
-> and stage-2 PGD pages.
+On Wed, Nov 18 2026, Baoquan He wrote:
 
-My bad. There is already a helper, VTCR_EL2_LVLS() to convert vtcr back 
-to levels. We could as well save it in realm, as we seem to need it
-more than once.
+> On 11/17/26 at 11:02pm, Andrew Morton wrote:
+>> On Wed, 18 Nov 2026 14:42:00 +0800 Baoquan He <baoquan.he@linux.dev> wrote:
+>> 
+>> > On 11/18/26 at 06:14am, sashiko-bot@kernel.org wrote:
+>> > > > Allow administrators to disable host log transfer on ordinary guests or
+>> > > > opt in on encrypted guests. Expose the boolean recording policy through
+>> > > > kernel.vmware_record_panic_msg using proc_dobool(), as Joel suggested.
+>> > > > Zero disables recording, nonzero integers enable it, and reads return
+>> > > > 0 or 1.
+>> > > > 
+>> > > > Register the sysctl only after the logger is ready. A registration failure
+>> > > > leaves the internal default in force. Document that the log is sent
+>> > > > before kdump, and that disable_panic_notifiers_platform_list also skips
+>> > > > it.
+>> > > > 
+>> > > > Link: https://lore.kernel.org/r/4e73yd2ofpdzl6rptzvd74no3hnyfblknoq7wzxlw7f3zjbz7c@srfabx6lsusj
+>> > > > Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+>> > > 
+>> > > Sashiko has reviewed this patch and found no issues.
+>> > 
+>> > It might be better to turn off this message if not issues found, just
+>> > like what LKP bot has been doing.
+>> 
+>> (+sashiko@lists.linux.dev)
+>> 
+>> Yes please.
+>> 
+>> These emails do have a little bit of value: they tell you that Sashiko
+>> was able to apply the patch and to review it.  I guess.  Or something.
+>
+> In that case a message saying Sashiko can't apply the entire patchset
+> is better.
 
-> 
-> [ ... ]
-> 
->> +static int realm_tear_down_rtt_level(struct realm *realm, int level,
->> +				     unsigned long start, unsigned long end)
->> +{
->> +	ssize_t map_size;
->> +	unsigned long addr, next_addr;
->> +
->> +	if (WARN_ON(level > KVM_PGTABLE_LAST_LEVEL))
->> +		return -EINVAL;
->> +
->> +	map_size = kvm_granule_size(level - 1);
->> +	if (WARN_ON(!IS_ALIGNED(start, map_size)))
->> +		return -EINVAL;
->> +
->> +	for (addr = start; addr < end; addr = next_addr) {
->> +		phys_addr_t rtt_granule;
->> +		long ret;
->> +		unsigned long align_addr = ALIGN(addr, map_size);
->> +
->> +		next_addr = ALIGN(addr + 1, map_size);
->> +
->> +		if (next_addr > end || align_addr != addr) {
->> +			/*
->> +			 * The target range is smaller than what this level
->> +			 * covers, recurse deeper.
->> +			 */
->> +			ret = realm_tear_down_rtt_level(realm,
->> +							level + 1,
->> +							addr,
->> +							min(next_addr, end));
->> +			if (ret)
->> +				return ret;
->> +			continue;
->> +		}
->> +
->> +		ret = realm_rtt_destroy(realm, addr, level,
->> +					&rtt_granule, &next_addr);
->> +		if (ret < 0)
->> +			return ret;
->> +
->> +		switch (RMI_RESULT_STATUS(ret)) {
->> +		case RMI_SUCCESS:
->> +			free_rtt(rtt_granule);
->> +			break;
->> +		case RMI_ERROR_RTT:
->> +			if (next_addr > addr) {
->> +				/* Missing RTT, skip */
->> +				break;
->> +			}
->> +			/*
->> +			 * We tear down the RTT range for the full IPA
->> +			 * space, after everything is unmapped. Also we
->> +			 * descend down only if we cannot tear down a
->> +			 * top level RTT. Thus RMM must be able to walk
->> +			 * to the requested level. e.g., a block mapping
->> +			 * exists at L1 or L2.
->> +			 */
->> +			if (WARN_ON(RMI_RESULT_DATA_LEVEL(ret) != level))
->> +				return -EBUSY;
-> 
-> [Severity: Low]
-> This question rests on an Arm CCA RMM specification detail that could not
-> be confirmed from the kernel source: when SMC_RMI_RTT_DESTROY fails with
-> RMI_ERROR_RTT because the RTT at @level still has live child table
+Yeah, sounds better.
 
-If the RTT entry at @level is live, RMM returns (RMI_ERROR_RTT, level) 
-with out_top == addr.
+Or, perhaps Sashiko can reply to the cover with a list of patches it
+found no issues with. That should reduce the spam on big series at
+least, while still keeping the signal of "Sashiko looked at this".
 
+[...]
 
-> entries, can the RMM return out_top > addr (with addr < next_addr <
-> addr + map_size) if the initial entries in that RTT are non-live, or report
-> RMI_RESULT_DATA_LEVEL(ret) == level - 1?
-
-
-Suzuki
-
+-- 
+Regards,
+Pratyush Yadav
