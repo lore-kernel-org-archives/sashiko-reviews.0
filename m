@@ -1,76 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041018;
-	b=tw/8jbUyRvYiwy04cVgq55ug2xz/BNbvIezxwyVpDmsOag+jvzcfUBXQDLa9Q4iEeM8F
-	 DLuY5UKchKnS0LsMIX4Z90Ts+OqsAXfKGXo50w/ryQcYhn1OBmnjVtLbQTmz+vZBPetu4
-	 Qs7E6iV7XZLbm1HUWg9UHVLsBQ+quRLExiYro5Ys4wj8DuHVEXGUc405XXcPGwykEU4jv
-	 Q2yFKVFZOEOHtt2jvLspPkXtyd8lRTq6wGWLp6fTotxU05V6UsNsNT0TgBF343KslA80B
-	 6zqSuqCDntyMK+kzPT3hUh4JH3r654m2GHUShqCtDR7k4knKViZjoNtHZk3WEZmbEtg==
+	t=1795052707;
+	b=J/0NVObnVJklxMTQmDLBjZ9ky9FfCtQEnrM/kyeNC1YTPk6vA95A423K6h33q/g3830W
+	 vorBQaUS4lQkscgajfjjICi6X/vOiioEYbOac94UfURQWOvcYNFMX87FktlLzctTHXEL5
+	 GxYx3GN9YUKeTebTb1wp6j8b0YhGcRDA/VEakorWrrvfc/8ASBsnyKvgVoUj6f8Um9sxo
+	 pSn+1YanDz4+edNzhTbAAL9PPhaejsL6+SeANyaFjJnp6bvzamru3vKltu13ua6mPFRUm
+	 FJrQz23SFWUfInIIUGBWlZgjrCNhMHIJ7pzhmC0cn4FDVnj/plgtz/+II8lhRgv1WLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041018;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=eu8LgQe+6uxVqeBq/iLOjKSJ8VTmlFlDKtjKOiC0cQI=;
-	b=WPhgJBNSKn3lTLkHzTHXKP3stbaV/R4Ggss6rrZf/RdBwSHkSFxwEART17CsNatBdfde
-	 lzw2g+ab7fJYoN6oXUJNdJTUO1P8gYQWStVIRAVFCwHINSo7vZZvl3OPqIivddnx/n45a
-	 OPytzjibXwoqu6CWxbJx3i9mLIZslNqEmgypQJ7NwW/iSPSg3TwxyNo2/mnYhEIOnIjI8
-	 Bhjmuozuf9Cuol6IAt66sKErG4fI/1erZwsYo2hAepKePg0Ud78NYkOOAo+rQfUaUj5Ii
-	 WoxYA3KvQMLEg0P0PqDiYt/YMZXxmtrmp3tmfXoLnvS/5g/BHauD3nmUrdJKtaUrKGA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052707;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:Date:
+	 Message-Id:Subject:From:To:In-Reply-To:References:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=tsSPte2OHRCCjjgAaKFsJbmdFYgco+qIPW3i7HnbLCI=;
+	b=UP4nEdUH2FLt99f2mnVPtJBeVoHC5Evd6sQYFm8Pol4oX5ARNRpDvITgYNcu2Vc8X6fg
+	 nyplhzfIXcNJWV0Kyh2QkmpNVTs7O41E5kdJ1zzfZoCPdxSKKHgfkxXoth5c7K5A8LN64
+	 dJdXW+mBsV95KJOpeDsekkvT5ykGcpz3RpzbnfT9GJdhBha9AfTTIqayNcdisUXo058T5
+	 vsh4owvIp+eqI4h6NQxrQ1mX+YdSg2FyFy7ZMpyxkIhx/4o1r/KnQEmNUDBX1jSeITfCV
+	 RW9A2uBbnnfOwdd4msNLul6ytPl2N8tZn82vScLtx87tH0donFPgLnd8qydQWi5BbFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Vf4k2Iib;
-	arc=none smtp.remote-ip=198.175.65.14
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wx+1MUZy;
+	arc=none smtp.remote-ip=209.85.210.176
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE565606A332
-	for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 22:30:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE565606A332
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207B5606A32F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 01:45:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 207B5606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Vf4k2Iib
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795041018; x=1826577018;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=ocEOxHCjUhjEJmQBGAqGWjok2uOvMot+WMkADqoKh4c=;
-  b=Vf4k2Iibfm1e451i+/6EkrF1BI4/L9h92tTa+Xl7AXSUwu+e2R038vKW
-   H3eM6kMTYfltjBsXE/U8a0NJb03/K9+Vq1io7pIP1m/7shY8vzLWdC7MC
-   AGhf9hvYnJCptRLK3/KUaZocNy9pDA6sDuuR0QEXY0rJy9qBT6t8x2Nu1
-   bL/wr/K9GivV1eB7D3s8eoQEc7oePj5z9t9DvQ5H8q6QVpGxb/2VL57zl
-   g1WchEBd6nqImtl0mekLCDiGgrnD4btk81akloKFbq4XIv3Sy9PVnwPW7
-   Oz50Ut+DIkOvREgYO8poW9VAT2erpB5LUL4GMezl364kuBVtA4umKcwnI
-   Q==;
-X-CSE-ConnectionGUID: SUHkqo0BSM6Zn2PctH8glQ==
-X-CSE-MsgGUID: 0mWGRng3SreyGjKOpDBwiQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11970"; a="3761562"
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="3761562"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 14:30:18 -0800
-X-CSE-ConnectionGUID: R9wJBnM6QC+cEolqJxOFNw==
-X-CSE-MsgGUID: pm4VkU3BQrWx4621eXC6Xw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,219,1787036400"; 
-   d="scan'208";a="10064331"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.16])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2026 14:30:16 -0800
-Date: Thu, 19 Nov 2026 00:30:12 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v4 15/20] drm/imagination: Allow build with COMPILE_TEST=y
-Message-ID: <av4m9D2pDH9ufbcM@intel.com>
-References: <20261118214518.29317-1-ville.syrjala@linux.intel.com>
- <20261118214518.29317-16-ville.syrjala@linux.intel.com>
- <sashiko-outbox-222063@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wx+1MUZy
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8c4cc85a315so1210541b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 18 Nov 2026 17:45:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795052706; x=1795657506; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:message-id:date:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tsSPte2OHRCCjjgAaKFsJbmdFYgco+qIPW3i7HnbLCI=;
+        b=wx+1MUZyWGFdM/UuGXIyCbxe22A1Qmh8nvfzek4pg8uLCVxrYf0jxNkG+F3idhEAGe
+         jVEnXPgQVr+Gjpqv0fFVR0W4Qlt1Seug6Tp/RU/I+D6vAmTs9WoypG2mt1CWlWRwT0hz
+         XLJP24WCuj3vvSvXIfn1/Tr9xCXTF1dSJ+OFjBBUy5Zivz15xd1ci9cx+PMaIaPbrVR/
+         1A3w/okWaxEOtKMYRiphU0tRdobgKjmsfz3NJmjRmGFdS4bpOW3UtseYN3zslx+Q2NMh
+         5HVX/JcEb/Yi4cb+by9adioPd25IXex+0RRdSI+O5NYlR9ccvY2QU0mtv9v7JKQkn7Be
+         E8ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795052706; x=1795657506;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:message-id:date:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tsSPte2OHRCCjjgAaKFsJbmdFYgco+qIPW3i7HnbLCI=;
+        b=PBxPAen4kyFdDBIn5rUQJgdeSm4YO8FqkLhYzcHF5nOWEvZcjye1UMDRAUUC5zJiqg
+         GNb6s4w6isfdwiKB6uKSVJerOvBZ94nADDm8QBV8zJLxX+1zr2tv+PtKKNoLoKdHpJQX
+         ChneCQiA9vIlCcY8MHmQFotSrL68hIAf1oT8/j1qPcswkPBGA+NW7+LJT/B6g1G99UY1
+         OrWVMa4wryxknirh/UwE5Anbu6K9Mo+Gn65Gboc/ASV60YUFHcjrgqcrTmqhJpk2NI28
+         jUxT/KLHAnndtDg6WlZ5fmA42fiQ+D5MbAu/ZW9HxUkdT53kAm2CU3jebsbXGEfuNv7N
+         ldzQ==
+X-Gm-Message-State: APuU4Z8P4+ofqhtI1xKG/W4iufD41ejiSPt2pvaJUj9988Twa5uiCj2u
+	IBI6dwdBqMPDL1jH4zB4EUxEPWeehF9PC49ENXg0INghxW4CnRvwbYRRd86BHw==
+X-Gm-Gg: AYBFou3zXXq+L2l1/mjJsRNCHcPbKMs6J0jrabg1GDwbHBWO3d2WQprC8VhlBqlCD/9
+	m99a4qj4yd1AfhAuAXQjlTAeNfbUItJn2O2vSPaMblMNn0OETrobIetr+X4Ajxs4v3A3vJt/y9f
+	/GQw5k+fww18JsYYc/kI+2VA0xCPDWyvZkTktfiiA+yY5gmR1J0ki3evamIYD79E69+l0Ok5e4l
+	ANY6dS2fHy/FmKm7tzz0tJT5IV8C7eruE6lgYQFIK7NJN45O0u6NRznxXRmmVhIeJMpfWHWidBi
+	jerMtZiee1UTaIUta2r5ZYoUI2nEiUNvBK8j7RROhHQv2X0u/0nDtz/lK8C8THKBfheoaosgnyo
+	XNC5vAoCCHXznBd/j1cD7fGwbw7nygIER28BFM58Ey74D9TKze6uYXaYbneexjNsHUVzTkgnwMO
+	ALrTs/l12yy+ADbE/1wvLnKTFsWo9CQH2BFO5aKekiDhvqjU0QYPtEtW3hF+NMJ/ET+aMgwvrHs
+	5fzuZjy3unLOjbjjuXONNCNVmeI3RvOJjk/BPZMn3KbN/kGoa7ImorjQb+XJca132XTVtvZD69Y
+	h6RRTxzzw2XR9EuslBOH5AhgI6fQO12ow2Aif49afDApSK2iVEYT43XOinqNn0apewkB3ByQ/rj
+	4p1g+TXAdseW1/5rngBv0dQk/7i/Eo8bEnw==
+X-Received: by 2002:a05:6a21:8203:b0:3de:456a:6e07 with SMTP id adf61e73a8af0-3fe8a519514mr5262258637.46.1795052706175;
+        Wed, 18 Nov 2026 17:45:06 -0800 (PST)
+Received: from localhost ([153.61.198.246])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c5cad86d9fsm1940114b3a.27.2026.11.18.17.45.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 17:45:05 -0800 (PST)
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 19 Nov 2026 01:45:05 +0000
+Message-Id: <DMYT2SQGVA4C.2B8FUKCDOZZV3@gmail.com>
+Subject: Re: [PATCH bpf-next 3/5] bpf: Remove BPF_MAX_TRAMP_LINKS
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
+In-Reply-To: <sashiko-outbox-222288@kernel.org>
+References: <20261119012909.3657417-1-alexei.starovoitov@gmail.com> <20261119012909.3657417-4-alexei.starovoitov@gmail.com> <sashiko-outbox-222288@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -80,58 +97,17 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-222063@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On Wed, Nov 18, 2026 at 09:58:47PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] drm/imagination: COMPILE_TEST build failure on 64-bit
->   8KB/32KB page configs
-> --
-> 
-> commit 3a0a5d98906b6758538e2c13acfa780422a1a949
-> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> 
-> drm/imagination: Allow build with COMPILE_TEST=y
-> 
-> This commit allows DRM_POWERVR to be built on any 64-bit architecture when
-> COMPILE_TEST is enabled.
-> 
-> > diff --git a/drivers/gpu/drm/imagination/Kconfig b/drivers/gpu/drm/imagination/Kconfig
-> > index 1fd4c635c2c96..a048d3c859385 100644
-> > --- a/drivers/gpu/drm/imagination/Kconfig
-> > +++ b/drivers/gpu/drm/imagination/Kconfig
-> > @@ -3,7 +3,8 @@
-> >  
-> >  config DRM_POWERVR
-> >  	tristate "Imagination Technologies PowerVR (Series 6 and later) & IMG Graphics"
-> > -	depends on (ARM64 || RISCV && 64BIT)
-> > +	depends on ARM64 || RISCV || COMPILE_TEST
-> > +	depends on 64BIT
-> >  	depends on DRM
-> >  	depends on MMU
-> >  	depends on PM
-> 
-> [Severity: Medium]
-> Does enabling DRM_POWERVR under COMPILE_TEST && 64BIT break the build on
-> 64-bit targets with 8KiB or 32KiB pages (such as sparc64, alpha, or 64-bit
-> mips with PAGE_SIZE_8KB/PAGE_SIZE_32KB)?
-> 
-> drivers/gpu/drm/imagination/pvr_mmu.h defines PVR_DEVICE_PAGE_SIZE as
-> PAGE_SIZE, and drivers/gpu/drm/imagination/pvr_mmu.c only supports 4KiB,
-> 16KiB, 64KiB, 256KiB, 1MiB, and 2MiB pages, failing with an #error on any
-> other host page size.  Should DRM_POWERVR also depend on !PAGE_SIZE_8KB &&
-> !PAGE_SIZE_32KB (or restrict to supported page sizes)?
+On Wed, Nov 18, 2026 at 05:39 PM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
+> This problem wasn't introduced by this patch, but can
+> bpf_trampoline_add_prog() leave a dangling node on prog_list when
+> fsession_exit() fails [1]?
 
-I suppose. I might have to install a few more cross compilers and set
-Claude to work with them.
+> If a BPF_TRAMP_FSESSION program is attached with a link type other than
+> BPF_LINK_TYPE_TRACING or BPF_LINK_TYPE_TRACING_MULTI, fsession_exit()
+> returns NULL and bpf_trampoline_add_prog() returns -EINVAL without
 
--- 
-Ville Syrjälä
-Intel
+Not a bug. There is no such link.
+bpf_tracing_prog_attach() always inits BPF_LINK_TYPE_TRACING.
+bpf_tracing_multi_attach() always inits BPF_LINK_TYPE_TRACING_MULTI.
+The only other caller is the cgroup shim and its prog is BPF_LSM_MAC.
