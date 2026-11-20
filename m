@@ -1,56 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795207144;
-	b=kAKYXOY70d/wEWU6ZM4JjWgWXCy5jlC87rMKB9zw+RXsT0jdBBEo41+XQ/CU44IlVefp
-	 F2yWoGcWy5pF1PKU19AFqjTDsvUe3Zr4+/ZYNn/caBVcW2Knr4v7/xYjDUaFUrgLMyGFW
-	 XUJMX5wwXwbrKFo40jJN/RHJ9LpTfB1gDz6YC4bU3vHtTaTfXp8Ihg4HzpUJ0sWsdilH7
-	 9rR6mwMyFakolRIvJtXtr9EBUEr+HVyG5A86X6k8y8nHxgCj3rgzFw5DZHPHrKhrcL3BW
-	 xudn48y7JjjUHqws++3dT60MK5amDrPQ2FVcJ9R3Mq8VrcuXSBX66/QPLHQlTJ2yn/g==
+	t=1795207258;
+	b=Ul8PT/HZg4c6tJcm4DB0BQSxMDVzE2sk+vKrK8sTZDYZo0W/2847gkjzddkvkJdDljzf
+	 ZZApev+FL8IGOcmb02uNSQ112RP15CFKCNBcQZ3eqpL6NMgxuSVEmCb5jOlzmqazljlzO
+	 PrVlsMY/WI++K53E9LqowT8/hoVNowXI8jmQYRkK8j2Oo5owXvx7Ad1KMGschwVV9tZh8
+	 eOd5LhirRGR11fQgaEhImSIF9f7uSe1qzA1LgmOOC052F9t1e8ULRtLsOa8vJTMb7VNVf
+	 2WQNeAGT4OYUrtOktOc/wNef4281fsCyTI+xgXTYEWp5hRrR1+fvp5aZj+SPAmQEZfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795207144;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 Received:MIME-Version:From:In-Reply-To:References:X-Google-Nh-Sender:
-	 Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:
-	 Cc:Content-Type:Content-Transfer-Encoding;
-	bh=yRTiBdWC1h1WQbI/9xFmaeaUt35QSNyIqlPc2Vvqj14=;
-	b=i7KHNaPL/hRv6bKcFwotMr2X/F4dRF9aS/yZAjWhGJ/mAx9e1txn8INHLKPv1NYTGNyu
-	 WEFRYU3Kj8aLyQ/zmcoND9z/KAtoFaDzfE4uP6z0PCsEUXcZpdHUr1+a445lOsEIpxkAH
-	 k8G1Hclhr0RtFzM51FvADKTl6f1SaPF9I9NEUqaETWL1n6TGzJkdCnt8gIhHTNZbc+kPM
-	 mk5sVDFPGuSAQMzLBCqnZomy5Rl9Gk5Zsf8qMDTEHKa4NOCwS3Yj2u3yiC2xCllRqptuQ
-	 7FGE5T5ZcqPfD/HeduRAdGO4fql/zlw1u9J+gqQJTjcymSgpaotz5iWDXDSBKeK5Qlg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795207258;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 MIME-Version:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=PXzImmwMcDhGvn09GiQZkXuApv8MaadtSn2F4xSnzms=;
+	b=yAH8Gxi/bTT1ii1+F4Aw9IVNkdPKisQzL2XwGX9rRfZ6Y68npDqIwf5frKeZi8tEWWXv
+	 eBh5h67ZBIBMMFBvdRkce0DhFOWxDyzQu8pkdq36iNGfoN84oYsyQkunXOM2jmkyk+KYk
+	 InMn+jbeEXbLnhmccyd/m4rBaDtCjMkzNXerz9IsWInYlKWZuxk9jj+J+ye3mKv4E2a2g
+	 Dy20M0PUCQn5OmuC2t4OUOIyrKywUjs8puhD1MOO+LCJ6J+nYJdLz4w7zzLHlnwMJgkF5
+	 iezVT5T8pFTE5MjMWLxF7WHwpv9tU5w+CeQ7MgWpH3sTasttiD9RI5tn8/oFKk81C9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LMAF6qCV;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=fail header.from=kernel.org;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.160.181
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A77606A333
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 20:39:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LMAF6qCV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E6F1F000C4
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 20:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795207143;
-	bh=yRTiBdWC1h1WQbI/9xFmaeaUt35QSNyIqlPc2Vvqj14=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=LMAF6qCV+1CprZ7pA27/VK9zHz5uNsD9ksgsesr9oOvmCq5vlZyTab2q0eF/2LVjZ
-	 uSvPeqsutNbrnteTh0OxDgXWfuXPyCStuJ4OJoaKNJL12w3IsSVAobc7n+xtYpRZ1S
-	 nyjqLFhzibPw7Jh+C8JeGY399lfYpMpAeBIJC3Vt1/MThzx3NAgl0MotkklguiXvzv
-	 RMFvBRdCKlZt1rVjo8ynLW6cKHVMtHfZdw7ThA5qe3LOEoKHNiAoEvccqSVsDfkW3E
-	 MwzZwsWs7haB7ghA4ax9TsEQTjzem7BPmILz0q3CUxwJ7oNNttElCPUw4gi1FJA0qM
-	 5zZtb9M3wgyHA==
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-3ae81ae52ffso8898901fa.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:39:03 -0800 (PST)
-X-Gm-Message-State: APuU4Z9KkT7MXTxghdEeLNqjupqemk6EZjtFxr4UPrNrUqVyWQfks6pY
-	j6jhYm1mZUBwfiVSCR9nnkxfmCFXyDRQwOa7TV9x+Lcskjmsu6Gz59GFnEEMMVqdebFyUl4kcYy
-	Z/drTM9dElwbZXU34FsNEE+XRNW+DdFM=
-X-Received: by 2002:a2e:be8d:0:b0:3ae:31eb:fd67 with SMTP id
- 38308e7fff4ca-3ae7f9d94b3mr12988741fa.13.1795207142157; Fri, 20 Nov 2026
- 12:39:02 -0800 (PST)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Fri, 20 Nov 2026 12:39:01 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC1D606A6CE
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 20:40:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFC1D606A6CE
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-5363316fa0cso17059691cf.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:40:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795207257; x=1795812057;
+        h=content-transfer-encoding:content-type:references:in-reply-to
+         :mime-version:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PXzImmwMcDhGvn09GiQZkXuApv8MaadtSn2F4xSnzms=;
+        b=b3+AvANfNXAQELLFzxSw4PZu/dCPgyKsOUaGzewxWNFkPgmmWOB3CpOwtUoPMt89f7
+         LAyxpvvi15U5qEH+OccM2qeE2uS1geKBx/ZAHrlwLd/0YEyi50bhyCbcXNq5S+tO3LSU
+         UFv9FMWrofZ3ASP+ce0DPJqfEvyx8+N+uQgZzlzzAHElFwcURgU4ltzGJjQ2eZImADKz
+         9Zsbve+B9wt2JvXRNO+EFaz5ZpFLAQ6Nr7vH+rCK8cF32E78w6XQSSAjtLm+g3slRsTU
+         +U5cbCjU/d58YP6W3mR5iBXzsMtPPTXIpq5igSWBy3CG9QHIIA1fbajPHlhOHNvQiHRo
+         GFSA==
+X-Gm-Message-State: APuU4Z/sg0tMqDy/QbBGyIDy9hChAIHXdtCwTdi9t0FcFabz3OgyorX2
+	kzYvtn/rB/vSiGNDaIJ5eJGx8hDFBA7YGro/k3CiZU+RKJaGUlRfVMCCJ75wuQ==
+X-Gm-Gg: AYBFou3ZhGxQ0N+9hrZYSSoiWpPKETw+CWD7yKOP4t53KtJBncBBDf35Vxrue9JPMCZ
+	IaR6WmEGqbkFmpS7ZLCR8CtKNX/KhcBZiNK/CTekWnwM1SoA31/ODB9hPXLnHcnTDqwA5gTVugl
+	Otn5HzhGlB6UdmA2HA747vAh/YZel3hy/cWsovKPH57WnIVNh7+2+vrewdr12Vrg+HgayErkPfZ
+	+eMqotMne4VSmavmR6ZySKVuLNxcEicijU5+H/8p2Xz78g8kCP7noGf97fIngw33i9UnyJBFpZ/
+	0dZysBvhg5ecyHB4Z9Zw9pDE8m/HN7Z3U49pFojIauxa5pfyX4jKYSyD015PJSVuZ9Gv2x5+nz4
+	Ke2/ra4/CoUmiK8U6OGkbdcrZhvPNXDD6QRKcNaHkwDs0tQ2O2SvEFIC4B+1DcXj2RK/+16bbXe
+	TMcrHZHvcxEQ3UmimC1/jnFFVph8M4RjgPFjjsO147ET5OlxNEFJkn+QP2L1vfIxKKb4t7ygMYf
+	UpNXbuPea3VCwxGScl6o2Kw9ezc5QwCxKeAEopk4I5oRcL0YkzrLtXxrK1uWA86RpyFqu0mgxKe
+	9qvsnJIjbS19KxAA64XHbOBzFoRbH53Pvae9VftGr0X5MkhO1wYpb1Hx/zTKJl5Ztbzo2CljqOc
+	Z70nD7UIbbMxW94brHfOC0pvgZ7Ensf2VKfjpDx0YLtoGL5CL4lpU
+X-Received: by 2002:a05:622a:a05:b0:536:6586:4f82 with SMTP id d75a77b69052e-55d768a4acamr74184941cf.7.1795207256790;
+        Fri, 20 Nov 2026 12:40:56 -0800 (PST)
+Received: from localhost ([199.170.132.196])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-921347a0b79sm36079326d6.5.2026.11.20.12.40.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 12:40:56 -0800 (PST)
+From: Tamir Duberstein <tamird@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf 4/6] libbpf: ringbuf: Use compiler atomics
+Date: Fri, 20 Nov 2026 17:51:54 -0000
+Message-ID: <179519711417.18576.12732381933688672041@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,131 +79,14 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-From: tamird@kernel.org
-In-Reply-To: <20260614015716.945AF1F000E9@smtp.kernel.org>
-References: <20260613-bpf-ringbuf-fixes-v1-5-e623481cb724@kernel.org> <20260614015716.945AF1F000E9@smtp.kernel.org>
-X-Google-Nh-Sender: AW_J_UoH9GLFB9GnJcqEjZzmEuzbBxJJitxXBCTuXUlXyNZME-jzq03mt0y2cxJZ9TQADFzfEbTlI_2njnPWV3sHooP7m5aXbUT-LZe-aywUxsQhAIXqqqgSLH2c02zJbPeAR9AT0TqUZDycIRI7F2Bu6Q5bxq3g1STd5imZUSlhlsmVQFvloYDreKs91-AlACqF15NzTNjQCsikdsInvsAyhb5tfnlru19wZyXBC662e2FukOT3ycZgf2I-e8ARZnR7_Q1w0fe8kw
-Date: Fri, 20 Nov 2026 12:39:01 -0800
-X-Gmail-Original-Message-ID: <nh-959daab3-d706-4a6b-9efa-411c19f3fa35@google.com>
-X-Gm-Features: Aa3M54qV3yIpFLMnD-xFbo7WTaCTfUGstD3v3eYifclS8EBTPOeNAGn7X54RWJA
-Message-ID: <nh-959daab3-d706-4a6b-9efa-411c19f3fa35@google.com>
-Subject: Re: [PATCH bpf 5/6] libbpf: ringbuf: Prevent missed wakeups
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260614015923.3BC301F000E9@smtp.kernel.org>
+References: <20260613-bpf-ringbuf-fixes-v1-4-e623481cb724@kernel.org> <20260614015923.3BC301F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-> Early returns in `ringbuf_process_ring()` bypass the newly added StoreLoa=
-d memory barrier
+> does this write to
+> consumer_pos safely handle a 32-bit userspace application running on a
+> 64-bit kernel?
 
-Fixed in v3 by fencing before bounded and callback-error returns, and
-after publication during early iterator destruction.
-
-> [...]
-
-> Multi-line comments introduced by the patch violate the BPF subsystem com=
-ment style.
-
-Fixed in v3.
-
-
-On Sun, 14 Jun 2026 01:57:16 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Early returns in `ringbuf_process_ring()` bypass the newly added=
- StoreLoad memory barrier, leaving bounded consumers vulnerable to missed w=
-akeups.
-> - [Low] Multi-line comments introduced by the patch violate the BPF subsy=
-stem comment style.
-> --
->
-> commit 1b4f252cfd5df3b60a00d140737f0f9bc3b4ad87
-> Author: Tamir Duberstein <tamird@kernel.org>
-> Subject: libbpf: ringbuf: Prevent missed wakeups
->
-> This commit addresses missed wakeups in the BPF ring buffer by adding a f=
-ull
-> StoreLoad barrier before checking for new data. It ensures either the
-> consumer observes the producer's update, or the producer observes the
-> consumer's update and sends a notification. It also updates documentation
-> and adds a selftest.
->
-> > diff --git a/tools/lib/bpf/libbpf.h b/tools/lib/bpf/libbpf.h
-> > index 9ba6b9ad34983..a3b8f606a91d0 100644
-> > --- a/tools/lib/bpf/libbpf.h
-> > +++ b/tools/lib/bpf/libbpf.h
-> > @@ -1439,6 +1439,10 @@ struct ring_buffer;
-> >  struct ring;
-> >  struct user_ring_buffer;
-> >
-> > +/* A negative return stops consumption; non-negative values continue. =
-Stopping
-> > + * can leave records queued without a new readiness notification. Befo=
-re
-> > + * waiting for readiness again, consume until no records remain.
-> > + */
->
-> [Severity: Low]
-> This isn't a bug, but does this multi-line comment follow the BPF subsyst=
-em
-> style? The guidelines prefer the opening /* to be on its own line.
->
-> [ ... ]
->
-> > diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
-> > index 1c24a83f59d5c..ea8909fec4e98 100644
-> > --- a/tools/lib/bpf/ringbuf.c
-> > +++ b/tools/lib/bpf/ringbuf.c
-> [ ... ]
-> > @@ -267,14 +267,21 @@ static int64_t ringbuf_process_ring(struct ring *=
-r, size_t n)
-> >  	cons_pos =3D __atomic_load_n(r->consumer_pos, __ATOMIC_ACQUIRE);
-> >  	do {
-> >  		got_new_data =3D false;
-> > +		if (needs_wakeup) {
-> > +			/* Ensure either this sees a new record or its producer sees
-> > +			 * the updated consumer position and sends a notification.
-> > +			 */
->
-> [Severity: Low]
-> This isn't a bug, but should this multi-line comment have the opening /* =
-on
-> its own line to match the BPF subsystem comment style?
->
-> > +			__atomic_thread_fence(__ATOMIC_SEQ_CST);
-> > +			needs_wakeup =3D false;
-> > +		}
-> >  		prod_pos =3D __atomic_load_n(r->producer_pos, __ATOMIC_ACQUIRE);
-> >  		while (cons_pos !=3D prod_pos) {
-> [ ... ]
-> > @@ -294,6 +301,7 @@ static int64_t ringbuf_process_ring(struct ring *r,=
- size_t n)
-> >
-> >  			__atomic_store_n(r->consumer_pos, cons_pos,
-> >  					 __ATOMIC_RELEASE);
-> > +			needs_wakeup =3D true;
-> >
-> >  			if (cnt >=3D n)
-> >  				goto done;
->
-> [Severity: High]
-> If this loop terminates early by reaching the bound (cnt >=3D n) or due t=
-o a
-> negative callback return, consumer_pos is updated and the function return=
-s,
-> discarding the local needs_wakeup variable.
->
-> When ring_buffer__consume() is called again to drain the remaining record=
-s
-> before sleeping, it will initialize needs_wakeup =3D false. This causes t=
-he
-> __ATOMIC_SEQ_CST fence to be skipped prior to loading producer_pos.
->
-> Could this allow the CPU to delay the visibility of the consumer_pos stor=
-e
-> while reading a stale producer_pos, resulting in the consumer incorrectly
-> sleeping and the concurrent producer skipping the wakeup notification?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260613-bpf-ring=
-buf-fixes-v1-0-e623481cb724@kernel.org?part=3D5
+No. That requires matching counter representations, loads, and stores
+across both word sizes.
