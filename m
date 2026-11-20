@@ -1,47 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795171180;
-	b=jg0wpi/tqsYQFPVHg7yUsLkpa+qhE+EZuQgBzXLEMHeMMkiQaiI6y/f4Am0sfbQRhs0s
-	 k/DvcpVRB2MquIElTCZjzNjigDSW3W6p4GqpIx2VpoQ9LVLYDPSjukn3/W8iIwd0dXbBa
-	 QxtT3QulzqCW7t/X46k2EFxArGanpREvhb6hC+es7mPAUUnpo9terZLHF5357rRtXKicz
-	 f4vl6hvWPmvMV7tg8uxHIACqCIgB/8KmxnHEcS/lBRVOKpLU2mdH9MNw5R+bR6cwaCHpf
-	 vi3SH/1Z0BG0SGmABxAYPu52aIXtG4EcaGpD2UieBiKlqz//ZeSCPyMAQv6dkcBxyLw==
+	t=1795171327;
+	b=suBm3wOF/kznaDHdPUNwYhGxSCdUXJHAB+ioaNdNr6US6dGDKWLARsgXaBCgjV1jrPkC
+	 SSFqRHRMm7r4aLAEHR56/cz83KxZua4voK3TBeP2oZ2MdpxUZv3t8SoM+Oyu7jw6+PkH6
+	 4a0z8xsPX9thkpW2VKWAVN+cFiDXCtJibU6EInn/zDwxd4AoG3B3pO+IK48NlBn/XtInR
+	 sltj99ayjSjB9MlbAziIXDnTfEKg9m1dKJdPaTUxbu25mfuSxXa7vmZcbrnBPOTYNrwJw
+	 1hmGsgxKOod1PUbrgrEYH10WmuvKWdO2mHtwa+r4+eak3yemyyNNTSnwoJ5grUpCSAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795171180;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=vGIW9I1ju4o1yJGSu39nk3CaJ8NQdo93J8CXX8CWrdo=;
-	b=QMHvXwv3el9Z1mku7Q6kfevkUO/ibkjOfHQdVo9B6/+Dje0M4GeuwUUJcL0hd6f2KNMH
-	 YdyVcQdAuSyXtgq3DkjQWFNOWHQhu/8WqLKtYkfZ6HYRC4UYK8gaxwignNCCiPBikU8CZ
-	 AcCh0YS7IaY8wYjDBSWXSA33HmhnV36KNW+AG0ABz2Haz8Hh9c6PxQvROXwwR2Jn7CVcr
-	 W/dDchwOl0VpgkZ66A90GsPNKSNzfS786tHmP/2zmbZ8IZeXmJYAicMFD28YrAfM6qFNP
-	 RjSy5p+hG3S6z29eMlImecD4hwmr/b5GQmM7kr2yEUwRcvMRvxHUQ8QOmqU2YikCO0Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795171327;
+	h=DMARC-Filter:DKIM-Signature:Date:References:Received:Message-Id:
+	 Content-Transfer-Encoding:User-Agent:In-Reply-To:X-Original-From:
+	 Content-Type:X-Lms-Return-Path:To:From:Subject:Mime-Version:Reply-To:
+	 Cc;
+	bh=um2hLh/hHD8l3GcR5JLblt1Cnw1tyAk72z1sNQOCRRM=;
+	b=iZkOLCpOH+Hngm2n2qafbIwmAQY9P0zo0gUSJ/3VX86kyf7VOHWixSPcRsktJRE+hNYf
+	 Fv5brg+VgJpO5LOIgHCY/Hyrx9WClVTMpYNEJzGZC5JS+j5UuGrhRMWUIzKxg4QeTMLJO
+	 g/ZZdYmJ3boPV517jwSe3xAzcyInYL1FIW7DTzKEA3/k17Yoj2+v7QuJ60MEsrENZPmP1
+	 0PXnq0W0YfexZnwRa1eaAmGwzMX2Na/5ztfY+a4aQAkURLbcIlWrw44o7+MjZ0GZmzJdH
+	 FRhdF+yhKFVT1T4h1Kn+3NmjdA9Ybr2O2Szi6zR8rhy6pwzHAEIyict7lml17s0pPhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IGBGu8Pc;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=fygo.io;
+	spf=pass smtp.mailfrom=fygo.io;
+	dkim=pass header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.a=rsa-sha256 header.s=s1 header.b=YH6q1vZW;
+	arc=none smtp.remote-ip=209.127.231.41
+Received: from va-2-41.ptr.blmpb.com (va-2-41.ptr.blmpb.com [209.127.231.41])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76474606A320
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A83606A325
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:42:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1A83606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IGBGu8Pc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEB51F000C0;
-	Fri, 20 Nov 2026 10:39:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795171180;
-	bh=vGIW9I1ju4o1yJGSu39nk3CaJ8NQdo93J8CXX8CWrdo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=IGBGu8PcmiFc8kFSm5YOE+U19GwPgF+o8NDkNsg1tj9YkoyZ+5alsM8cO2U4sebtx
-	 cjGYUFaxIoh/bzAvm9ZDG932gYkLjexyJDNSkghGIrSTqkhupNHKxeeqFXKSMftGwv
-	 LacEuCexP+Mjv52VHF1yXPFWZbRIiQVXEnCENMgeIbGbjfdGgmhqUjaCkQf8hIxpat
-	 KDGdFFFNxtDeG3Aa4ExrLhy3whA/Y9d1fKtCKKmp0848c+f98nedXelZRgZ+Z8NjRw
-	 Aymihtefuu1JYhRz+1eBkq2kIuLQ/Ky2olyPPWnUWqTYjdQ13xMSLtdrkISnPjcoVE
-	 l7H/xSCOusr8g==
-Message-ID: <87218525-12f3-4259-9950-877c8e36c83e@kernel.org>
-Date: Fri, 20 Nov 2026 11:39:33 +0100
+	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.a=rsa-sha256 header.s=s1 header.b=YH6q1vZW
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1795171319;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=um2hLh/hHD8l3GcR5JLblt1Cnw1tyAk72z1sNQOCRRM=;
+ b=YH6q1vZW69WnKvnCjSNa6fEig2t9WlTdgVvEflmXW8WUAzS9txCKsEWWlNTYemezVP6pIv
+ ZByIpLEEzHxTxiP1m/6BuQBnLsQVPSt04tCuQCfKcyRidFZWIPI7+EUuT/panSv061+yc3
+ slo0tfOcFhpvzwbr1t/jWLsWka69mVeuw07TKB9TX26h+6VdFdMPvf2EpPLM21A1AVpfDJ
+ i6jsAyCAfAXq/rb0aEfuYK9YP0HK+N6s2xHZwoKKm9j/LaSBdzYyFgIar6GnQ1XYkTmzqo
+ Y1dLhY7wXE5p2zN1yvFJPOjy7w+o4VdmOnZPIDBP/DWdkplG5qbDeCzN3gRy1w==
+Date: Fri, 20 Nov 2026 18:41:53 +0800
+References: <20261112114958.2244-1-abd.masalkhi@gmail.com> <sashiko-outbox-211074@kernel.org> <m2tslm1988.fsf@gmail.com>
+Received: from [192.168.1.104] ([39.182.0.159]) by smtp.larksuite.com with ESMTPS; Fri, 20 Nov 2026 10:41:57 +0000
+Message-Id: <e0d5c880-ea38-4f25-8c1a-3bca0a4a5dcc@fygo.io>
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+In-Reply-To: <m2tslm1988.fsf@gmail.com>
+X-Original-From: yu kuai <yukuai@fygo.io>
+Content-Type: text/plain; charset=UTF-8
+X-Lms-Return-Path: <lba+26b0023f6+4d8ac8+lists.linux.dev+yukuai@fygo.io>
+To: "Abd-Alrhman Masalkhi" <abd.masalkhi@gmail.com>, 
+	<sashiko-reviews@lists.linux.dev>, "yu kuai" <yukuai@fygo.io>
+From: "yu kuai" <yukuai@fygo.io>
+Subject: Re: [PATCH] md: make mddev_get() fail until md_alloc() has finished
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -50,104 +66,167 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] [v2] mm/mempolicy: fix copy_nodes_to_user() for odd
- inputs
-To: Arnd Bergmann <arnd@arndb.de>, sashiko-reviews@lists.linux.dev,
- Arnd Bergmann <arnd@kernel.org>, Gregory Price <gourry@gourry.net>,
- Andrew Morton <akpm@linux-foundation.org>
-Cc: larips <larips950@gmail.com>, Zi Yan <ziy@nvidia.com>,
- Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
- Ying Huang <ying.huang@linux.alibaba.com>, Lorenzo Stoakes <ljs@kernel.org>,
- Brendan Jackman <brendan.jackman@linux.dev>,
- Johannes Weiner <hannes@cmpxchg.org>, Jackie Liu <liuyun01@kylinos.cn>,
- linux-mm@kvack.org
-References: <20261117211635.2472067-1-arnd@kernel.org>
- <sashiko-outbox-221983@kernel.org>
- <c420ec17-b297-469a-927a-85934a05fda4@app.fastmail.com>
- <3b00e53f-b4eb-41d4-b3e6-791660da3342@kernel.org>
- <45a71e8e-0c8c-4b5e-96c9-be6f2ad0e364@app.fastmail.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzS5EYXZpZCBIaWxk
- ZW5icmFuZCAoQ3VycmVudCkgPGRhdmlkQGtlcm5lbC5vcmc+wsGQBBMBCAA6AhsDBQkmWAik
- AgsJBBUKCQgCFgICHgUCF4AWIQQb2cqtc1xMOkYN/MpN3hD3AP+DWgUCaYJt/AIZAQAKCRBN
- 3hD3AP+DWriiD/9BLGEKG+N8L2AXhikJg6YmXom9ytRwPqDgpHpVg2xdhopoWdMRXjzOrIKD
- g4LSnFaKneQD0hZhoArEeamG5tyo32xoRsPwkbpIzL0OKSZ8G6mVbFGpjmyDLQCAxteXCLXz
- ZI0VbsuJKelYnKcXWOIndOrNRvE5eoOfTt2XfBnAapxMYY2IsV+qaUXlO63GgfIOg8RBaj7x
- 3NxkI3rV0SHhI4GU9K6jCvGghxeS1QX6L/XI9mfAYaIwGy5B68kF26piAVYv/QZDEVIpo3t7
- /fjSpxKT8plJH6rhhR0epy8dWRHk3qT5tk2P85twasdloWtkMZ7FsCJRKWscm1BLpsDn6EQ4
- jeMHECiY9kGKKi8dQpv3FRyo2QApZ49NNDbwcR0ZndK0XFo15iH708H5Qja/8TuXCwnPWAcJ
- DQoNIDFyaxe26Rx3ZwUkRALa3iPcVjE0//TrQ4KnFf+lMBSrS33xDDBfevW9+Dk6IISmDH1R
- HFq2jpkN+FX/PE8eVhV68B2DsAPZ5rUwyCKUXPTJ/irrCCmAAb5Jpv11S7hUSpqtM/6oVESC
- 3z/7CzrVtRODzLtNgV4r5EI+wAv/3PgJLlMwgJM90Fb3CB2IgbxhjvmB1WNdvXACVydx55V7
- LPPKodSTF29rlnQAf9HLgCphuuSrrPn5VQDaYZl4N/7zc2wcWM7BTQRVy5+RARAA59fefSDR
- 9nMGCb9LbMX+TFAoIQo/wgP5XPyzLYakO+94GrgfZjfhdaxPXMsl2+o8jhp/hlIzG56taNdt
- VZtPp3ih1AgbR8rHgXw1xwOpuAd5lE1qNd54ndHuADO9a9A0vPimIes78Hi1/yy+ZEEvRkHk
- /kDa6F3AtTc1m4rbbOk2fiKzzsE9YXweFjQvl9p+AMw6qd/iC4lUk9g0+FQXNdRs+o4o6Qvy
- iOQJfGQ4UcBuOy1IrkJrd8qq5jet1fcM2j4QvsW8CLDWZS1L7kZ5gT5EycMKxUWb8LuRjxzZ
- 3QY1aQH2kkzn6acigU3HLtgFyV1gBNV44ehjgvJpRY2cC8VhanTx0dZ9mj1YKIky5N+C0f21
- zvntBqcxV0+3p8MrxRRcgEtDZNav+xAoT3G0W4SahAaUTWXpsZoOecwtxi74CyneQNPTDjNg
- azHmvpdBVEfj7k3p4dmJp5i0U66Onmf6mMFpArvBRSMOKU9DlAzMi4IvhiNWjKVaIE2Se9BY
- FdKVAJaZq85P2y20ZBd08ILnKcj7XKZkLU5FkoA0udEBvQ0f9QLNyyy3DZMCQWcwRuj1m73D
- sq8DEFBdZ5eEkj1dCyx+t/ga6x2rHyc8Sl86oK1tvAkwBNsfKou3v+jP/l14a7DGBvrmlYjO
- 59o3t6inu6H7pt7OL6u6BQj7DoMAEQEAAcLBfAQYAQgAJgIbDBYhBBvZyq1zXEw6Rg38yk3e
- EPcA/4NaBQJonNqrBQkmWAihAAoJEE3eEPcA/4NaKtMQALAJ8PzprBEXbXcEXwDKQu+P/vts
- IfUb1UNMfMV76BicGa5NCZnJNQASDP/+bFg6O3gx5NbhHHPeaWz/VxlOmYHokHodOvtL0WCC
- 8A5PEP8tOk6029Z+J+xUcMrJClNVFpzVvOpb1lCbhjwAV465Hy+NUSbbUiRxdzNQtLtgZzOV
- Zw7jxUCs4UUZLQTCuBpFgb15bBxYZ/BL9MbzxPxvfUQIPbnzQMcqtpUs21CMK2PdfCh5c4gS
- sDci6D5/ZIBw94UQWmGpM/O1ilGXde2ZzzGYl64glmccD8e87OnEgKnH3FbnJnT4iJchtSvx
- yJNi1+t0+qDti4m88+/9IuPqCKb6Stl+s2dnLtJNrjXBGJtsQG/sRpqsJz5x1/2nPJSRMsx9
- 5YfqbdrJSOFXDzZ8/r82HgQEtUvlSXNaXCa95ez0UkOG7+bDm2b3s0XahBQeLVCH0mw3RAQg
- r7xDAYKIrAwfHHmMTnBQDPJwVqxJjVNr7yBic4yfzVWGCGNE4DnOW0vcIeoyhy9vnIa3w1uZ
- 3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
- CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
- qIws/H2t
-In-Reply-To: <45a71e8e-0c8c-4b5e-96c9-be6f2ad0e364@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Reply-To: yukuai@fygo.io
+Cc: <linux-raid@vger.kernel.org>
 
-On 11/20/26 11:16, Arnd Bergmann wrote:
-> On Fri, Nov 20, 2026, at 10:55, David Hildenbrand (Arm) wrote:
->> On 11/19/26 16:52, Arnd Bergmann wrote:
->>>
->>>
->>> Same as my reply for patch 2/2: no, this is fine as the size of the in-kernel
->>> buffer does not depend on the word size in userspace. Copying the extra
->>> zeroes from it is fine.
+Hi,
+
+=E5=9C=A8 2026/11/12 21:15, Abd-Alrhman Masalkhi =E5=86=99=E9=81=93:
+> Hi Kuai,
+>
+> On Thu, Nov 12, 2026 at 12:13 +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential
+>> issues to consider:
+>> - [Medium] md: premature KOBJ_ADD uevent in add_disk() while mddev_get()
+>>    fails
+>> - [Low] md: stale reconfig_mutex lock and comment in md_alloc()
+>> It also noticed 1 related pre-existing issue this patch does not
+>> introduce:
+>> - [Medium] md: kernfs_node memory leak in mddev_unlock() [1]
+>> --
 >>
->> I'm not convinced, especially given Gregory's test case. It's all a
->> confusing mess.
-> 
-> Right, I see now where I went wrong: 'maxnode' is adjusted down to
-> the nr_node_ids, not the number of bits in the bitmap. So my patch
-> was wrong, and Gregory's was correct.
-> 
->> I do wonder whether this whole function should be thinking in terms of 
->> bits to make
->> it easier to follow. A bit more churn, but at least I can understand 
->> what is happening there:
-> 
-> I like this version as well.
+>> commit 2ddaaecbff58458e8c38353164498300daf7d131
+>> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+>>
+>> md: make mddev_get() fail until md_alloc() has finished
+>>
+>> This commit adds an mddev->sysfs_live flag set under all_mddevs_lock aft=
+er
+>> kobject_add() succeeds in md_alloc(), and updates mddev_get() to fail un=
+til
+>> that flag is set.
+>>
+>> Link: https://sashiko.dev/#/patchset/20261029202209.1422567-1-abd.masalk=
+hi@gmail.com?part=3D4
+>>
+>>> diff --git a/drivers/md/md.c b/drivers/md/md.c
+>>> index 03e35386a8028..47118e9d1a656 100644
+>>> --- a/drivers/md/md.c
+>>> +++ b/drivers/md/md.c
+>>> @@ -641,7 +641,7 @@ static inline struct mddev *mddev_get(struct mddev =
+*mddev)
+>>>   {
+>>>   	lockdep_assert_held(&all_mddevs_lock);
+>>>  =20
+>>> -	if (test_bit(MD_DELETED, &mddev->flags))
+>>> +	if (test_bit(MD_DELETED, &mddev->flags) || !mddev->sysfs_live)
+>>>   		return NULL;
+>>>   	atomic_inc(&mddev->active);
+>>>   	return mddev;
+>>> @@ -6432,10 +6432,16 @@ struct mddev *md_alloc(dev_t dev, char *name)
+>>>   		return ERR_PTR(error);
+>>>   	}
+>>>  =20
+>>> -	kobject_uevent(&mddev->kobj, KOBJ_ADD);
+>>>   	mddev->sysfs_state =3D sysfs_get_dirent_safe(mddev->kobj.sd, "array_=
+state");
+>>>   	mddev->sysfs_level =3D sysfs_get_dirent_safe(mddev->kobj.sd, "level"=
+);
+>> [Severity: Medium]
+>> This problem wasn't introduced by this patch, but when
+>> legacy_async_del_gendisk is disabled, does mddev_unlock() leak
+>> mddev->sysfs_state and mddev->sysfs_level [1]?
+>>
+>> md_kobj_release() only calls sysfs_put() on mddev->sysfs_state and
+>> mddev->sysfs_level when legacy_async_del_gendisk is true, and the
+>> !legacy_async_del_gendisk teardown path in mddev_unlock() deletes
+>> mddev->kobj and mddev->gendisk without releasing those kernfs_node
+>> references:
+>>
+>> drivers/md/md.c:md_kobj_release() {
+>> 	if (legacy_async_del_gendisk) {
+>> 		if (mddev->sysfs_state)
+>> 			sysfs_put(mddev->sysfs_state);
+>> 		if (mddev->sysfs_level)
+>> 			sysfs_put(mddev->sysfs_level);
+>> 		del_gendisk(mddev->gendisk);
+>> 	}
+>> 	put_disk(mddev->gendisk);
+>> }
+>>
+>>> +
+>>> +	spin_lock(&all_mddevs_lock);
+>>> +	mddev->sysfs_live =3D true;
+>>> +	spin_unlock(&all_mddevs_lock);
+>>> +
+>>> +	kobject_uevent(&mddev->kobj, KOBJ_ADD);
+>>>   	mutex_unlock(&disks_mutex);
+>>> +
+>>>   	return mddev;
+>>>  =20
+>>>   out_put_disk:
+>> [Severity: Medium]
+>> Does making mddev_get() fail until mddev->sysfs_live is set cause a
+>> regression where udevd or concurrent openers fail with -ENODEV in md_ope=
+n()
+>> and -EBUSY on md/ sysfs attributes right after add_disk() announces the
+>> disk?
+>>
+>> kobject_uevent(&mddev->kobj, KOBJ_ADD) is dropped by dev_uevent_filter()
+>> because mddev->kobj has ktype &md_ktype rather than &device_ktype.  The
+>> KOBJ_ADD uevent that actually reaches user space is sent earlier inside
+>> add_disk() -> add_disk_final() -> disk_uevent(disk, KOBJ_ADD), right aft=
+er
+>> bdev_add() publishes the block device inode while mddev->sysfs_live is
+>> still false:
+>>
+>> CPU0                              CPU1 (udevd / opener)
+>> md_alloc()
+>>    add_disk(disk)
+>>      add_disk_final(disk)
+>>        bdev_add(...)
+>>        disk_uevent(disk, KOBJ_ADD)
+>>                                    blkdev_get_no_open()
+>>                                    md_open()
+>>                                      mddev_find()
+>>                                        mddev_get() -> NULL  <-- -ENODEV
+>>    kobject_add(&mddev->kobj, ...)
+>>    mddev->sysfs_live =3D true
+>>
+> I missed this case. Do you have a suggestion for a better fix, or should
+> I just drop this patch?
 
-Does your #2 still apply once we would have that (in a reworked form)?
+Please drop this patch, let open disk fail is not a good idea.
 
-I'd appreciate if you could resend based on my suggestion. Feel free to adjust
-what you want and just keep it to a Suggested-by (No need for Author,
-co-developed-by or any of that).
+I think you can just set a new flag to mddev if kobject_add failed, and che=
+ck
+the flag during opening, right after reconfig_mutex is grabbed.
 
--- 
-Cheers,
+>
+>> [Severity: Low]
+>> Since mddev_get() now returns NULL until mddev->sysfs_live is set after
+>> mddev_unlock(mddev), md_open() can no longer succeed while reconfig_mute=
+x
+>> is held across add_disk() and kobject_add() from commit d1472ca2ca5d ("m=
+d:
+>> don't hand out the array before md_alloc() has added mddev->kobj").
+>>
+>> drivers/md/md.c:md_alloc() {
+>> 	/*
+>> 	 * add_disk() makes the array openable before mddev->kobj exists.
+>> 	 * Hold reconfig_mutex until kobject_add() is done so that ioctls
+>> 	 * issued in between wait instead of using an uninitialised kobj.
+>> 	 */
+>> 	mddev_lock_nointr(mddev);
+>> 	error =3D add_disk(disk);
+>>      ...
+>> 	error =3D kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md=
+");
+>> 	mddev_unlock(mddev);
+>> }
+>>
+>> Does this make the comment and reconfig_mutex critical section in
+>> md_alloc() obsolete, as well as the commit message's first paragraph
+>> claiming that ioctls such as ADD_NEW_DISK can run before kobject_add()
+>> completes?
+>>
+>> [1] https://sashiko.dev/#/bug/linux-460ea5ed-96ea-49a0-8383-cfa84f28520b
+>>
+>> --=20
+>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261112114958.2=
+244-1-abd.masalkhi@gmail.com?part=3D1
 
-David
+--=20
+Thanks,
+Kuai
