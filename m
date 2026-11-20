@@ -1,96 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.32
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795171720;
-	b=Ph5Zz2er1ft0H62PBmK3rTBlc6vGA9RVdKIA34Al30cG3mSEJ4a59gdoomUyccu4FfeR
-	 db2qDZVy4fkkFOzeclQUfBB8OJg8cQYb3r3sBPC2rCKrnZzf9e0bRioGz14XXaj4mV2FL
-	 GGXGUS0LYl0wGaOX+BMvbcux/DqrAiN+fV7MpF7avCdQjzJqXcS/GS8XAECNlkr0aZuVV
-	 Bxho6/AOrWzYbEm5TngPbWwjcE90jmYTL3vmQi/qThB9mLOIlWwaBzp+Q/EavQjBie+pH
-	 DnyYsEHMjwQbvEqufq4dpqT4kcOqRgtbd9g5fogpM+CIc6rX/uSiADddkHSPqeq2EMg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795171720;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-Exchange-MessageSentRepresentingType:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SharedMailbox-RoutingAgent-Processed:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=PpIkpj45PnSBFFJR7sWSdwgY/ddfffz58HANlT3Ibbw=;
-	b=2yxprECL9lzuZxQilHSQi/V7q0PAn+DueJyUqbi8CwJzFuhYeT8qkFTVZ9eIFfSJYq7a
-	 p4m/j0/VlrDsWRCfWc1TbogWy4SJ8aji7FiWYHXmqThCjU8DyxTkD+0Z/gEZRHuGaVvbs
-	 W5eoMbAMHNytgqjS1fsI4kG6+HDioxpG7whN+5NEZrpk0Z72v1xKMKbKFvOzD+TMSlE4J
-	 rHXYYlC2CLh6w6y+9bPXDkO56Q5z4gl/kB6veFaHmx2RpeSsLLaI/Y+Bd+GpUbGotHK+A
-	 QqwcQ0dI4YQ5t3DBJT1UaBSDKix/uKdCRJR9wTTzpEMixhhB6JF3mfjvbOZUft9hIXg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b="EPprA3/u";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.32
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013032.outbound.protection.outlook.com [52.101.83.32])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795172029;
+	b=iRKiAiZ+6h6bJLcoOk8vZJ0/l6eLu7oh2vETwciPtdXOXuNC6S/HPue/VwFJJSbl7CLw
+	 gerhKtmbSOConGRqVHMqhOkwbmU/YF9kgqIQF53etjzv0X5lV0S6vYn+dNi8a6/ewnO81
+	 mN4yfV7OrEl8+P/uo5V0FAplDbJdQQVwQj0QNaiWKUBnB0upn6SHoN0RYZpbyIqso9TuY
+	 B+vcp71H+lFy/GjIq6vBPuDQYuHB8b0J+5XfE6uP5GTQV/l4i9eXkSIEofT9vC9GemoSP
+	 VtG9EK1yK7t/E4vKA1tH9dEPjm7eQgoAxZaWfY72ESWrhQMaZmPkpQBiG0GsP3wTc3w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795172029;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=FJnbzlKm4C6sIS5fK/T5q8uENf1TqxKGjsvInIZZRsw=;
+	b=iTWrx/pga1uPgyRYS2EjWz3umJ8AoRe2te32T2KnuwXTIQEgNUakd8s4yIonCNTmWnpJ
+	 CFDaUEkFD2LdMaVo1FUY8X66dUAYBYcEXyGmTuP0j/SEvkDlOyutaJ5554EamPX0k4oty
+	 OWl7Q7G22cu/ac1HyNSnUMH3Up8jHtzEqwZuPcbOffzq8kjOpNcAkBZarENj55y9JIzXY
+	 wAli5BSHQQRPCdo6Q6PZPoDtETHSS13yPOd4aJC8fpSPjyN5ts1SiXAnGj9JNPD/nhTAI
+	 bhtxap4DZSm+EzHWd2NyG4JVRJM/w8N1UWIXFsVdXooOv1TPHopBNgim8blhfrZBa1g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=I4M867wi;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1AB606A326;
-	Fri, 20 Nov 2026 10:48:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A1AB606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002DB606A325
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:53:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 002DB606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=EPprA3/u
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LRgHz2fz7mMQQuVvTgYZ2zD5NcYEH4JUrBD0LvFjHPeCoxbfzCxiwziiX6gXnZKl0Upq/1pf777SMpQVEgLkPp4V5ExwXfTEMA1yiOsu2wc3cvbYA4c1fDigAkusxbV9EfSp6Mk5uXSKDRysCHxLPtROV9VDyr9m13yeGJlKMqp3sEaZwqySfk1P7lb3MpI8HAQZqT2x63B7HyTbfUyuURE5pjQAFKParzfFjSQE6nAF/0f52PJ9KGr/lYzN+xogT/h9AVTpuWNwUv6qn+huArDaPRhjGIKEIcWguBo9ZqXFW/kiKrH60vmG1fgReZXAc+MOQuDSnlv09StvscyIZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PpIkpj45PnSBFFJR7sWSdwgY/ddfffz58HANlT3Ibbw=;
- b=v5372+UtNNQq1QjL20cm+ArJqW0q/mf+NkIJzkfsnh4GKrxOEJc7bd7fjaZRVw0soEKhyDxZ5soALRsFBreL6D1Zv2OmoxSXUWF/BfZX9sInLBqZnWDjp21agxtvUHQ5Q8xub4/s3TtnCX4gicdu3GuZyOPGTiWYxf4FjHtWWJuuJKkOJq/0lx2HG9FDjvEhcVZ5i4qtgZBkEzfPvncX7IbFyDhrNZK4CLVxoGFo8a4eabQoFJhx5oPy38JPmUORuzryBYR3xAMp+nT+gm7v/hIUyeB4xUinr1P7dlITJyvB1jkAt1AydkkCFLHzln7MFRBHkO0EPXpnpUcbdxHbYg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PpIkpj45PnSBFFJR7sWSdwgY/ddfffz58HANlT3Ibbw=;
- b=EPprA3/ui3m0JNTP466msx4xDYED9backaSzI++NN6IDIFWe0ibSsGGdsHMua976QTsjYSicJjGDh9nVjmCtwla9h1h75JUU/87zqBY2repeE3+qqe6cO8jaUh50uk9rV7l/qf+0U34c/DH98iZ8OgWdMC423IXgvnyBwrsk86R1KVRa0bsxetqltPYpCuYCMy7mCJHAedCvwp6kcONiUv9+6968r1AdMCBC4NVG5A1xf1zJew8nejiSAsVfJFBrdG300t2qAKrKEJN1SuVmXnCat1c5cDUnBit1NGRU917jZm+ByrbUCFN3ztwp2f40bCA+7JnZM4jmRk93Y+sP0A==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB12318.eurprd04.prod.outlook.com
- (2603:10a6:150:32b::19) by AS8PR04MB7638.eurprd04.prod.outlook.com
- (2603:10a6:20b:291::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
- 2026 10:48:34 +0000
-Received: from GV2PR04MB12318.eurprd04.prod.outlook.com
- ([fe80::a498:2b5a:cbdb:d6fa]) by GV2PR04MB12318.eurprd04.prod.outlook.com
- ([fe80::a498:2b5a:cbdb:d6fa%3]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
- 10:48:34 +0000
-Date: Fri, 20 Nov 2026 12:48:30 +0200
-From: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-clk@vger.kernel.org, imx@lists.linux.dev, 
-	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org, robh@kernel.org, 
-	conor+dt@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v12 2/5] drm/imx: Add support for i.MX94 DCIF
-Message-ID: <awAgaVs4LLwqVA57@vm>
-References: <20261118-dcif-upstreaming-v12-0-29b35e27a1cc@oss.nxp.com>
- <20261118-dcif-upstreaming-v12-2-29b35e27a1cc@oss.nxp.com>
- <sashiko-outbox-221406@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-221406@kernel.org>
-X-ClientProxiedBy: AM8P191CA0027.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:20b:21a::32) To GV2PR04MB12318.eurprd04.prod.outlook.com
- (2603:10a6:150:32b::19)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=I4M867wi
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4bb68c197c7so8749005e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 02:53:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1795172027; x=1795776827; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FJnbzlKm4C6sIS5fK/T5q8uENf1TqxKGjsvInIZZRsw=;
+        b=I4M867wiqkv8F5Pvuid2e2HcvzOflM+sPItcx4osOG8BtQ/n5WyZtxk4pq9q9fYvfh
+         q0IO6fSpyvvqNPkUKOY0yqu+hC+VLGLP6GDd0NB7WLxox5yK83iiHCp5kes+WbN8M10n
+         n3QD3zBbjWONsCLjMiXu3VeHe7W9Zs1q/42QSKVcJFwL5Mc6ALwfs71aC0RAibf+UpGt
+         qMRWz3TnRcFZg4ttqk3OnPxofVmOBWqFmMcY2AfgMs+T7PNmHsQDkF+ylsqC++Ozm9Px
+         krLx4b+4hXjYNJWFYgXIMQT7sFLj/NZNLjFPywjWJao40cF+vUyNn8G6nkIzDJutPiFD
+         Jehw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795172027; x=1795776827;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=FJnbzlKm4C6sIS5fK/T5q8uENf1TqxKGjsvInIZZRsw=;
+        b=uNimovjUeo79omej94frW/Pb6OSd+KbbCcXG1UisoVCWI8K8yckR/An9xveBZM9egR
+         mdDjiZN3+FZ4lOtzGmyMnHIb5yUWPukPbW7EfMDF57O9nVnVzKAiZ/+pCLkwXRds9gsA
+         VZx9umMDqg1U8fK2M9g9j1yrfrp1OnIoH8xS1xdCt9Tl51sn17P/oSilUSFmpFRg73Wo
+         /vkW9qWh07tWIIeXTlrWIlelWZuTSAW59D2rvLt9cgvR90yakRbLM/VW284xLZgDiQGF
+         sYfQuoGtZlC1/yYAdxRFKsGFJkFU6i0mXizHjmuyVGXvtdNZjyvdtEKRgKa0k8U1HYSP
+         H12g==
+X-Gm-Message-State: APuU4Z+xAK5jp+XR/2tV32MYL3uULAK9GTr/QIfK6ff/pRAxUc+zARC4
+	ec2aDLjorg74N+8WYt58rJMhxFNLsl1HUZgEwaCJc0B7Is39uJwkLt4lHkybXxwZ7v4+4QLBynr
+	4Vr6Ec/w=
+X-Gm-Gg: AYBFou3pepcqamFF5ak5h2Fc4Di9BqArV1m0Y9+iIahMtbs/h1WLA5zIzRZnixUnMpT
+	MvmlyhCTBsJDIL9SExaQN6i9EzZtLueW95OIYlIgmaeNqUCXujSdjTHYpPXE7oduayElULz/6Z3
+	7Cu3JMgFzlPQH90s8+yWTtFZeBcUnQii6G6r0Xu/1R19BXGkjepIV/RBv3OO+fii+UyR6l0aVau
+	gJdjkrLiQx9GTKGs6a6aFOhUF4PaNoKXK9cwEPJOA44oAiD8PHfnjrWTr8WOj3vOiE9qusXjGSe
+	fd0XJjdIxRhwAKj6PMt/RfmpQg7N2Q8wPDJ6lWOob2au+d0afJpKTPyJXktkxEp58WoNa3N6WBh
+	/Smx0XHILJabQ0KB8j4cI9+d1DV+eRJ0LniRGPhMYGoyjfaeKX7K/3LeRPy0XbcKVaNg0LoAPXF
+	a/hvPekwP3Dm4lpo3hWZavv+RQuMmi1lfnH0mJzRnIUirAI0y6W7YEOgv7PoS7QH+s3frEtWvW8
+	JR0Uzj9d3jYrp+u9vbrKjj9yxqaXnRMZjHcRYXwQwl9c23a/PL+4sJLBwG8NM/fn+L2JbpVl3xT
+	rBukcIVsEXlipqJPAdocIFkwsQlEfVuz3Y6A42OSAL7oK9EVPUtPkQg5lXIe5lL4ctBbjF2KVwf
+	QssBfkjrR
+X-Received: by 2002:a05:600c:1c1f:b0:4bb:6847:7943 with SMTP id 5b1f17b1804b1-4bb88814510mr66914745e9.26.1795172027028;
+        Fri, 20 Nov 2026 02:53:47 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:106d:1080:3374:165a:45ca:24fb? ([2a01:e0a:106d:1080:3374:165a:45ca:24fb])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884865b1sm74845985e9.5.2026.11.20.02.53.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Nov 2026 02:53:46 -0800 (PST)
+Message-ID: <5ebd13a7-60e3-48a9-a11c-bb55e4d081b8@linaro.org>
+Date: Fri, 20 Nov 2026 11:53:46 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,266 +93,124 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB12318:EE_|AS8PR04MB7638:EE_
-X-MS-Office365-Filtering-Correlation-Id: b03cec65-aac4-4241-afea-08df46f3d2be
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|19092799006|6133799003|261009223027099003|18092099006|22082099003|18002099003|261022075727099003|261022105027099003|261026140227099003|261026121527099003|261028144727099003|261021121427099003|261102123227099003|261021135927099003|56012099006|4143699003|10067099003|5023799004|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	LThyzbVjH5Z0K8+8JifSDWch4ObxXkAzqyDd75eTw2tBJToBwG3XK3CBHPBWezzA9UV7n8sYg943fGhHfh5cuqMCO7Hr/RU5JiEweDkWDaVKe9mAp93LjS+ruUHhc5TK167s4YLIzm82q8sZZdhigifznZv2k/qgN3Ho2HFbThIcoMHBIuUA1mEzAQBf918UzSeWphv9YUtQPLNUuZdnpG7dHTdyu6K/PDCzUUztKP6nmYSatqLp9VCcYZEOSwCVw4O+OwEyL86kEcaIiOW0iHbYP6bDx968zCPIAZYLdUUAkq9fWe28pVMPxHa23oY1hr5zNHEoObTembvCXIwJ2Utyf4GjHwpMcC8rFPjoYolij753+AL7vsw5LKm8FXMlbOXQvQcge8G5ECRRifBC5xqe74lM/02na18dQaEjBLvGfHrAJnP0eKdSd8/CJseweu86YCosSrv+IaoSgMfZvZW56IVIVjh6jDCJSyrDnjLeykttqaTNYBlN7krKIzMJQe61PuVFpouYKzrLWRScf/o7Bf1Og7c/iYKQEvGCFZJbua6zSYDMpFvc9fcyCvnO4cuBpYutRyy12EbFrTKwzvvFMccrVyV68Jk+GQMjsUGN0eJAzFkgFxncTg5eTXxP3n6L33y1f1QS+979iWd51kHAR2d03TlAwB2lVm8nMeA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12318.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(19092799006)(6133799003)(261009223027099003)(18092099006)(22082099003)(18002099003)(261022075727099003)(261022105027099003)(261026140227099003)(261026121527099003)(261028144727099003)(261021121427099003)(261102123227099003)(261021135927099003)(56012099006)(4143699003)(10067099003)(5023799004)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xwe7LpzWc1pXfBpEERjemn0UftsTCeiM/NfxxgsIfgbN/hCLMF82XQJUoINJ?=
- =?us-ascii?Q?IDubnkalGjUX139ldEX8/WAmomQkbUqWrFaPZ/iPKobvbdFE3rd02M0jXrsz?=
- =?us-ascii?Q?ogqMlrsoyjU/b1dWMa2zGYK/3aT+/09PTEWNBgEEsZmOgFf7l0xke+wMZ4EN?=
- =?us-ascii?Q?u5ud/YtpWkdV8hnT3Gk5/5C4JH1EGsn8c2+fxqsFp4UkBUPaw8jw2xc66EZd?=
- =?us-ascii?Q?Z9lwtN2DOiyYkbH+KOJ9nMnUHFqIZlZInGv39BtGMSueif4rIVkVwGs6Qu0P?=
- =?us-ascii?Q?p+ImCFiOn+tqWZdDnUgKv650EpTjYgnSv213tzCS/eD61CkRuIMfe7PeclwE?=
- =?us-ascii?Q?2u3SVbjMBwYJZ8GYTw6I4j1IGphN26cgFAWEXSl1N7SjQChNVb6T+cEg/5fw?=
- =?us-ascii?Q?2cymzy0YtPLpA1E+zgjg5vMeD3AsoNn7AmvMiU6HnWDxPQ9CjhHY5gvZY7jU?=
- =?us-ascii?Q?L/3iI1rfpeaqnL0gnvKWKAkQdjMQN6/leK7PyHjUtAY8RiTpnUYZrzYuD84o?=
- =?us-ascii?Q?VbiLCXqf+lMvlmwGD9BNGfh+4Evh+25/XkN6YHNYp9jqiY0ZfyHPv3iVKw9G?=
- =?us-ascii?Q?TbB6me/6GytqUQO3tqpKnAJ+4HAh9UHzMV4jiNGRrH8gpJkejEIQNKaO7UsK?=
- =?us-ascii?Q?CFjpLJCwSocje2c+AZaN+lc2kqn8sPO5QDkX24vmO9vQKEsMNg50z7hQ6+DF?=
- =?us-ascii?Q?LTIEGtEifuDLv7aNSA32RtOnfbYJZsTX8ozTVMuxi4gCZBkZsocwqePtoa1F?=
- =?us-ascii?Q?ysV7dmCQJjvkvSp4p10m/KSIb7Uzp1Wykk1V1UoBLLobcrFCO/PqZRqhl2PT?=
- =?us-ascii?Q?oAxvSvaIAI9RNt0++NOGKdUwcZSnH9CnJVGQQjgTW7XVh3kN/uDgKxyKFUrd?=
- =?us-ascii?Q?eE+KlHSgyTRlQZR3tdIHgWAIZ0wzR8Z6clFKGl9T0YFYiGKuzRX4bcwlYCwq?=
- =?us-ascii?Q?9K58TR5Jx/EXUXxzCt0j/SAADOdHjM4VyDz5P/yLcuGv8EDvRSqLyIANgCwF?=
- =?us-ascii?Q?+nu8zZpwl8ZmxUsPkZyIPFmOCE65REktJCgjStOcJI15pGleqFkg4ZoHRuwz?=
- =?us-ascii?Q?9iKwyRVim/2dKw++1pvUsJhzBqDM4jCTMc+uGhndXj08TZ5/xxI2uvVi8T8o?=
- =?us-ascii?Q?NoduJHfqMup8w4iSKxyaNyv22YmQDfKfuMdUE6yWnt4Tzatu0ObeOX01Gwem?=
- =?us-ascii?Q?whkEo8Sez0l7RtQbUOJSI0ReFFG93lsWl1lInHzzOlkOqPM8mo0OzpxHSazs?=
- =?us-ascii?Q?VCGY2lLsEpn9ViV23IWUsZI1p/26kBZJr3bJfjYFOjPRIt4fb5oC/UiYhaUQ?=
- =?us-ascii?Q?9WzXTuZBwaIm3/s77V3RVYCXkov6PJ/z8dQ1PVgJFcFn8KQ1V8745uhRfYmj?=
- =?us-ascii?Q?/K9RkJIq3Gn41m6V2E3pLjayjRkaX6YGmfU2g1YJ845ybmXXVe6v/TovUBOS?=
- =?us-ascii?Q?w6OG4yRZuGuiZ3RMWyXAz+7+WJbl+FU3y61OoFL7J06YJGZ37qxE6jx7aOrT?=
- =?us-ascii?Q?zEWDqLP4cLUR8UyaHdgsZLmCWft2kctAlitn8xitnPa8G2oLPdbQ4S0a4Inc?=
- =?us-ascii?Q?G4TwZIX8w6wuUj/2UUlkcXazW84gbX3undSKP/UUxOl9EjMuS/RvDeQnslcE?=
- =?us-ascii?Q?s4v9j2J9P49SuP856vuWjNagri/tDaEz8nZGRj8aYctm9KTFYcFVUzauNw7h?=
- =?us-ascii?Q?251bhxw6KucvNmQqyu/Te1fHh51XWEOo2nKMURob2zXA8zSLLa28v1stjm8K?=
- =?us-ascii?Q?19tv5TNR9Q=3D=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b03cec65-aac4-4241-afea-08df46f3d2be
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12318.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 10:48:33.8643
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 83X6a7mbucdwMNwOMzeo0hFIZgmChg6dpV2JYFtSKdg2BnYQJ8GhJj0DqTCxCQblX+FCu6cgrYDifXA+/iT/aA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7638
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 2/2] usb: typec: qcom-pmic-typec: detach the port on
+ shutdown
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-usb@vger.kernel.org
+References: <20261120-topic-tcpm-qcom-fixes-v1-0-9a152f906fba@linaro.org>
+ <20261120-topic-tcpm-qcom-fixes-v1-2-9a152f906fba@linaro.org>
+ <sashiko-outbox-224916@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <sashiko-outbox-224916@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 18, 2026 at 04:02:40PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
+On 11/20/26 11:15, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [Medium] drm/imx/dcif: unclocked MMIO access when runtime PM resume
->   fails
-> - [Medium] drm/imx: dcif: unbalanced clock disable if
->   dcif_runtime_resume() fails
-> - [Low] drm/imx/dcif: missing shadow load and trigger clear in
->   dcif_crc_source_disable()
+> - [High] usb: typec: qcom: NULL deref in qcom_pmic_typec_shutdown() when
+>    VBUS is on
+> - [Medium] usb: typec: qcom-pmic-typec: missing port_disable() in remove
+>    and probe unwind
 > --
 > 
-> commit 373caa0eccbfd7fa4334093ea8869b540640e7ab
-> Author: Sandor Yu <sandor.yu@nxp.com>
+> commit 27e120f037d3faf6c51dac7774569601de458e75
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> drm/imx: Add support for i.MX94 DCIF
+> usb: typec: qcom-pmic-typec: detach the port on shutdown
 > 
-> This commit adds a DRM/KMS driver for the NXP i.MX94 Display Control
-> Interface (DCIF), supporting primary and overlay planes, YCbCr-to-RGB CSC
-> on layer 0, and frame/ROI CRC generation.
+> This commit adds a platform driver shutdown callback that stops the port
+> and PD PHY, unregisters the TCPM port, and disables the Type-C block so
+> that a connected partner sees a detach on reboot or power off.
 > 
-> > diff --git a/drivers/gpu/drm/imx/dcif/dcif-crc.c b/drivers/gpu/drm/imx/dcif/dcif-crc.c
-> > new file mode 100644
-> > index 0000000000000..ad94b458a6c59
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/imx/dcif/dcif-crc.c
-> [ ... ]
-> > +void dcif_crc_source_enable(struct dcif_dev *dcif, enum dcif_crc_source source,
-> > +			    struct drm_rect *roi, int ncrc)
-> > +{
-> > +	int ret;
-> > +
-> > +	if (ncrc >= MAX_DCIF_CRC_NUM)
-> > +		return;
-> > +
-> > +	if (source == DCIF_CRC_SRC_NONE)
-> > +		return;
-> > +
-> > +	if (dcif->crc_is_enabled)
-> > +		return;
-> > +
-> > +	ret = drm_crtc_vblank_get(&dcif->crtc);
-> > +	if (ret) {
-> > +		drm_err(&dcif->drm, "Could not get vblank reference: %d\n", ret);
-> > +		return;
-> > +	}
-> > +
-> > +	dcif_crc_config(dcif, roi, ncrc);
-> > +
-> > +	regmap_set_bits(dcif->regmap, DCIF_CRC_CTRL,
-> > +			DCIF_CRC_CTRL_CRC_MODE | DCIF_CRC_CTRL_CRC_SHADOW_LOAD_EN |
-> > +			DCIF_CRC_CTRL_CRC_TRIG);
-> > +
-> > +	scoped_guard(spinlock_irqsave, &dcif->drm.event_lock)
-> > +		dcif->crc_is_enabled = true;
-> > +}
-> > +
-> > +void dcif_crc_source_disable(struct dcif_dev *dcif, int ncrc)
-> > +{
-> > +	if (!dcif->crc_is_enabled)
-> > +		return;
-> > +
-> > +	if (ncrc >= MAX_DCIF_CRC_NUM)
-> > +		return;
-> > +
-> > +	regmap_clear_bits(dcif->regmap, DCIF_CRC_CTRL, DCIF_CRC_CTRL_CRC_EN(ncrc));
+>> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+>> index 58d1e6aae637d..8169db478b8aa 100644
+>> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+>> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+>> @@ -134,6 +134,16 @@ static void qcom_pmic_typec_remove(struct platform_device *pdev)
+>>   	fwnode_handle_put(tcpm->tcpc.fwnode);
+>>   }
+>>   
+>> +static void qcom_pmic_typec_shutdown(struct platform_device *pdev)
+>> +{
+>> +	struct pmic_typec *tcpm = platform_get_drvdata(pdev);
+>> +
+>> +	tcpm->pdphy_stop(tcpm);
+>> +	tcpm->port_stop(tcpm);
+>> +	tcpm_unregister_port(tcpm->tcpm_port);
 > 
-> [Severity: Low]
-> Should dcif_crc_source_disable() also clear DCIF_CRC_CTRL_CRC_TRIG and set
-> DCIF_CRC_CTRL_CRC_SHADOW_LOAD_EN when disabling CRC on an active CRTC?
+> [Severity: High]
+> Can calling tcpm_unregister_port() here cause a NULL pointer dereference
+> on port->wq when shutting down with an attached sink partner powered by
+> VBUS?
 > 
-> Clearing only DCIF_CRC_CTRL_CRC_EN(ncrc) leaves the disabled state
-> unlatched, and if DCIF_CRC_CTRL_CRC_MODE, DCIF_CRC_CTRL_CRC_SHADOW_LOAD_EN
-> and DCIF_CRC_CTRL_CRC_TRIG stay set in DCIF_CRC_CTRL, a later
-> dcif_crc_source_enable() call via regmap_set_bits() will see no bit changes
-> and skip writing the register.
+> tcpm_unregister_port() destroys port->wq and sets it to NULL before
+> calling tcpm_reset_port() -> tcpm_init_vbus() ->
+> qcom_pmic_typec_port_set_vbus().  When VBUS transitions from enabled to
+> disabled, qcom_pmic_typec_port_set_vbus() calls tcpm_vbus_change(), which
+> queues work onto port->wq:
+> 
+> drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c:qcom_pmic_typec_port_set_vbus() {
+> 	...
+> 	ret = qcom_pmic_typec_port_vbus_toggle(pmic_typec_port, on);
+> 	if (ret)
+> 		goto done;
+> 
+> 	pmic_typec_port->vbus_enabled = on;
+> 	tcpm_vbus_change(tcpm->tcpm_port);
+> 	...
+> }
+> 
+> kthread_queue_work() then dereferences NULL in &worker->lock, crashing
+> before tcpm->port_disable(tcpm) is reached.
 
-It appears this one is correct. The CRC_EN(n) is shadowed and CRC_TRIG
-is not self-clearing in continuous mode. Will fix in v13.
+What's the difference with qcom_pmic_typec_remove() ? So the same regression
+occurs with qcom_pmic_typec_remove() and is not related with this change.
+
+I'll try to fix it
 
 > 
-> [ ... ]
-> 
-> > diff --git a/drivers/gpu/drm/imx/dcif/dcif-crtc.c b/drivers/gpu/drm/imx/dcif/dcif-crtc.c
-> > new file mode 100644
-> > index 0000000000000..233e149929964
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/imx/dcif/dcif-crtc.c
-> [ ... ]
-> > +static void dcif_crtc_atomic_enable(struct drm_crtc *crtc,
-> > +				    struct drm_atomic_commit *state)
-> > +{
-> > +	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
-> > +	struct dcif_crtc_state *dcif_crtc_state = to_dcif_crtc_state(crtc_state);
-> > +	struct drm_display_mode *adj = &crtc_state->adjusted_mode;
-> > +	struct dcif_dev *dcif = crtc_to_dcif_dev(crtc);
-> > +	struct drm_device *drm = crtc->dev;
-> > +	int ret;
-> > +
-> > +	dev_dbg(drm->dev, "mode " DRM_MODE_FMT "\n", DRM_MODE_ARG(adj));
-> > +
-> > +	/* enable power when we start to set mode for CRTC */
-> > +	ret = pm_runtime_resume_and_get(drm->dev);
-> > +	if (ret < 0) {
-> > +		drm_err(drm, "failed to resume DCIF, ret = %d\n", ret);
-> > +		return;
-> > +	}
-> > +	dcif->crtc_pm_enabled = true;
-> [ ... ]
-> > +static void dcif_crtc_atomic_disable(struct drm_crtc *crtc,
-> > +				     struct drm_atomic_commit *state)
-> > +{
-> > +	struct dcif_dev *dcif = crtc_to_dcif_dev(crtc);
-> > +	struct drm_device *drm = crtc->dev;
-> > +
-> > +	if (dcif->has_crc)
-> > +		dcif_crc_source_disable(dcif, 0);
-> > +
-> > +	dcif_disable_controller(dcif);
-> > +	dcif_disable_plane_panic(dcif);
-> > +
-> > +	drm_crtc_vblank_off(crtc);
-> > +
-> > +	if (dcif->crtc_pm_enabled) {
-> > +		dcif->crtc_pm_enabled = false;
-> > +		pm_runtime_put_sync(drm->dev);
-> > +	}
+>> +	tcpm->port_disable(tcpm);
+>> +}
 > 
 > [Severity: Medium]
-> Can a failure in pm_runtime_resume_and_get() lead to MMIO register accesses
-> while the DCIF clocks are disabled?
+> Should tcpm->port_disable(tcpm) also be called in qcom_pmic_typec_remove()
+> and the port_unregister error path in qcom_pmic_typec_probe()?
 > 
-> If pm_runtime_resume_and_get() fails in dcif_crtc_atomic_enable(),
-> dcif->crtc_pm_enabled remains false, but crtc_state->active is still true.
-> In the same commit tail, drm_atomic_helper_commit_planes() still calls
-> dcif_plane_atomic_update() and dcif_crtc_atomic_flush(), and a later
-> dcif_crtc_atomic_disable() calls dcif_crc_source_disable(),
-> dcif_disable_controller(), and dcif_disable_plane_panic() before checking
-> dcif->crtc_pm_enabled.  Accessing DCIF registers while the block is
-> unclocked can cause an external abort or bus hang on i.MX94.
+> Without it, unbinding the driver or failing probe after
+> tcpm_register_port() leaves TYPEC_MODE_CFG_REG presenting Rp or Rd with no
+> TCPM or PD PHY servicing the port, and a subsequent reboot or power off
+> will not invoke qcom_pmic_typec_shutdown() on the unbound device.
+> 
 
-This one is not worth fixing. First, the only thing that can fail in the
-runtime resume is clk_bulk_prepare_enable(). If that fails, the platform
-is already broken since the clocks are managed by the SCMI firmware. Second,
-adding checks dor crtc_pm_enabled in every commit path (flush, plane
-update, etc) would add a lot of unnecessary noise for something that
-will probably never happen in practice.
-
-> 
-> [ ... ]
-> 
-> > diff --git a/drivers/gpu/drm/imx/dcif/dcif-drv.c b/drivers/gpu/drm/imx/dcif/dcif-drv.c
-> > new file mode 100644
-> > index 0000000000000..80b554f1b6843
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/imx/dcif/dcif-drv.c
-> [ ... ]
-> > +static int dcif_suspend(struct device *dev)
-> > +{
-> > +	struct dcif_dev *dcif = dev_get_drvdata(dev);
-> > +	int ret;
-> > +
-> > +	ret = drm_mode_config_helper_suspend(&dcif->drm);
-> > +	if (ret < 0)
-> > +		return ret;
-> > +
-> > +	if (pm_runtime_suspended(dev))
-> > +		return 0;
-> > +
-> > +	return dcif_runtime_suspend(dev);
-> > +}
-> > +
-> > +static int dcif_resume(struct device *dev)
-> > +{
-> > +	struct dcif_dev *dcif = dev_get_drvdata(dev);
-> > +	int ret;
-> > +
-> > +	if (!pm_runtime_suspended(dev)) {
-> > +		ret = dcif_runtime_resume(dev);
-> > +		if (ret < 0)
-> > +			return ret;
-> > +	}
-> > +
-> > +	return drm_mode_config_helper_resume(&dcif->drm);
-> > +}
-> 
-> [Severity: Medium]
-> Can a failure in dcif_runtime_resume() during system resume cause an
-> unbalanced clk_bulk_disable_unprepare()?
-> 
-> When the CRTC is active entering system suspend, the PM core's
-> device_prepare() holds a runtime PM reference, so the pm_runtime_put_sync()
-> in dcif_crtc_atomic_disable() leaves the device's runtime PM status as
-> RPM_ACTIVE.  dcif_suspend() then calls dcif_runtime_suspend() directly,
-> disabling clocks without updating runtime_status.  If dcif_runtime_resume()
-> fails in dcif_resume(), clocks remain disabled while runtime_status is
-> still RPM_ACTIVE, and device_complete() -> pm_runtime_put() will invoke
-> dcif_runtime_suspend() a second time.  Using pm_runtime_force_suspend() and
-> pm_runtime_force_resume() would keep runtime_status aligned with the clock
-> state.
-
-This is related to the previous issue and also not worth fixing since
-the resume is unlikely to fail, as I explained above.
-
--- 
-Thanks,
-Laurentiu
+Ok so it should be extended by:
+- check if not in TYPEC_DISABLE_CMD on probe, and force a detach is enabled before
+- disable on remove and probe fail to have a coherent state
