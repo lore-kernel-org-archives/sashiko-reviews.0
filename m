@@ -1,151 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.84.125
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795172821;
-	b=w5qiju9ad+ZxAgU4wXUiIGVVcxyEbg1eYPzv2TnJv61bDpKT0+I/clJ4jqGeet5wfr36
-	 LuLUSNtiXi64uVn/5O+L/SZJcEn+62x+w5U4UhKTWxc4rTDY7RV9OaHMhmX3LoJtLQc3G
-	 5G2eUhgkaAnDiqtYImrj1c0/QSsbB4v3QhroQ5ImWHiet4ZtFnORN7gjMwFVDjwKK1IK5
-	 vJyAQI8Q0IAMCvgZ0jLoeH9WsTvfivB5v/YhnyRbD0JxSGk/sxYKqokEcDa9f7T8fioiX
-	 cs+9gDiPbBMJFtX4434ho3IvokSxt8Jj4Nn8SLYh+K4k6ixrhrUE7syJoHDX3te+IaQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795172821;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=57nGriXOSsNQ48dyorxma+Q+6GWFLrNYbzWx1CN/V4s=;
-	b=3ImtEt0ZZEhp2t/wrKu6zqBccd/+acLhfJ+hqA08XFVVuTBTLCw7TH7c53LXes6cFoWW
-	 hP975vGbka6SHGaId22Ayyug61i0CdyBAKCN5X75at3hE4ilAzobj9KzeQb6I6Yr8zT8x
-	 ioY+MhkpiF/dJalRfNp0RiROodOCiBMH2J5pm2cMTbAuaigCE9mZHhkYWFvSx2FPEotB5
-	 ewxy30sKkQSVRbuGPbVtlbsSv2udFJBdv4gHyw7DVINAKzVPYGbD8xNac2D0aLih12y11
-	 ZeakORdcjxThkxqWjm0ichuHbMN3kbakdbuL3GkX0TWaZFUwOOvYydIbLUzc6TzGO0Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aweta.nl;
-	spf=pass smtp.mailfrom=aweta.nl;
-	dkim=pass header.d=aweta.nl header.i=@aweta.nl header.a=rsa-sha256 header.s=selector1 header.b=MBzhQIGQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.84.125
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11020125.outbound.protection.outlook.com [52.101.84.125])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795172916;
+	b=JuLoEWTFJdqqNJZwN5e04zGx5uvCf+KjJd6jFbZdxOG9HWyzAgbgEto++4qUtNy1lq8A
+	 WkwQO/7iZNdRYgxj9Di64fySHizR1MPiXVhbKkw0vvUYoJFv5jtJ3rjvOQbT2ia/6ZLov
+	 wcQ5TSvMwxG10twiaSKFDz7FIMzvsHcB360kUVzlnDJxSnp36tLWsFZahVpcEcSt+xPkl
+	 f+awDv4UBQ3F02Xtb22/l2njg7FT7DvT+J+yYm7gC0eTyw1dFnT9RzRO2yUCLCoRE1QxU
+	 zZSXEKLalaVKmPU+fv9hT1DK3nS0jrghlYcPi7FON3Dkl/uHxERujUX0aKT1z9u2N5Q==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795172916;
+	h=DMARC-Filter:From:DKIM-Signature:DKIM-Signature:To:Cc:Subject:
+	 In-Reply-To:References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=vQHnCxumodLceV3FCZMlZjlsObg36p4OHXhw3jDQXfQ=;
+	b=LmjR+ZhH7iGJwedGsM2wkps8MitasmjJ2uzYv6T4GQmrTDqtz1cnPHNfEPusx5xjjQTW
+	 BIAs3ZWGRwqXph+fnblk9pM2tfVhxRqpXNNhT6DTDCR2aBm2JiPNPIf787I/QVujoO2+I
+	 GnlZ6PnbjUoe0qCOt/IlobYEdDLclL40QgUN0WMmJa6mURL3XfL9oubunZvekFfy9HTTY
+	 65aqsEMLWQpAHFdNYLz+5fKdIoaax2zOoVD55BIxucD3/JMGGNLwXJxP8fNqywRj71Vxl
+	 ZzBRpLF7HW++Q9peR6xTVJrHbcaIcGm5qsm04/IvYsNHlc4FrFuRMPMjjaoKL9ibiVw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=WrS3EUNm;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=unkgHDqC;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865A860A2631
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:06:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 865A860A2631
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=aweta.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aweta.nl
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDB1606A32A;
+	Fri, 20 Nov 2026 11:08:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7CDB1606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aweta.nl header.i=@aweta.nl header.a=rsa-sha256 header.s=selector1 header.b=MBzhQIGQ
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IwBILWydmNq/Ehw0xWyRTEdXkoclgSd37NYugcPjHT2oqCt6jh5LY3RTjdoehiCEZhKR4Z0oJ6/TsDa6w9N++RMmXkg19VVQvNlBMpgAt+RTcJpGogAp0yYsL1dhLjOcw1/ogUOqgs3Pn/m3KIu5r1IX9t66ooAnKTF2tikZzQZh20+auwXv//ldTObiVVtjvUW0yivRKHwXZFKAflBkuyX+y2xIYBb0ZRzPt0kfIrAqncq7NPj4usj4N5fgRtAbQ3r8FzC3vYkXuso6pB4RN2WiwShbNjPKjeXrSBpmuMPUYv2HQPQA636gFdq2t7ZJ/f+FmpILdyanfHhjnAVVPw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=57nGriXOSsNQ48dyorxma+Q+6GWFLrNYbzWx1CN/V4s=;
- b=pwS7zvspw+nQZgJTIE79o49zxIVLQDuHZ/qklhmxd6PXmgyv63cHVytIe0O9rXNOx8AntTXEQR2qqMr6JAZjkI6KpsDLTYj7HzexMMncl7QM/KgdVwGCY+3IP4ZnDoAg5R3uF4h6wPP8ODuotiBOoo+9w8ggMg9BT3y4G0HeyASbIUOafVxuf5q3yH16GOVfLUY/YuwGo94QmgD76sd/HRyp2GVqQuQwhYTpYiyIbN7EeQQXaiEH7/XzrFfoJY/TJUfqz1NiE+GC7PyUrWqhEV6jVv32X5bswTBC/3G7uFcdqIFih+CGVQpMvEGHhJ8mqIWy1DLFYdxjcNzHH4Eqbw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aweta.nl; dmarc=pass action=none header.from=aweta.nl;
- dkim=pass header.d=aweta.nl; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aweta.nl; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=57nGriXOSsNQ48dyorxma+Q+6GWFLrNYbzWx1CN/V4s=;
- b=MBzhQIGQgAFEuhntfUEhm06aaNaZG5XM8bB1TVVeWkf6Wg16T4d8Src05jk4wDAh0iF8P1BPPNydFSqOzKWcB3SsO/joza84K7BJgOpIpE2+Q0Z7V6Apu82XTkLTb4O6rAsfRlE5ke9CXRNh7UMXbpTQcDtHhcoiWniJiPRRPwlPpG24cUZI/EJdMtFHFteNfkyaSzXTu2ZkTpUSLdndDSIjCu2HdyCYnC3kKBQDJ34jws9owNN0VevjCz9pUC3c/lDuyR+AFoCQ2trty9YVgLThvDyncppeGEWMS9bLl0BqOBvvZlbHTn3pJU2mZPPPYJdYW8eYadTh02aGhns9pQ==
-Received: from AS5PR05MB11020.eurprd05.prod.outlook.com
- (2603:10a6:20b:67d::13) by MIWPR05MB401878.eurprd05.prod.outlook.com
- (2603:10a6:290:d9::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
- 2026 11:06:55 +0000
-Received: from AS5PR05MB11020.eurprd05.prod.outlook.com
- ([fe80::2dc4:6bec:d87e:3492]) by AS5PR05MB11020.eurprd05.prod.outlook.com
- ([fe80::2dc4:6bec:d87e:3492%4]) with mapi id 15.21.0639.011; Fri, 20 Nov 2026
- 11:06:54 +0000
-From: Tjerk Kusters <tkusters@aweta.nl>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "intel-wired-lan@lists.osuosl.org" <intel-wired-lan@lists.osuosl.org>,
-	"bpf@vger.kernel.org" <bpf@vger.kernel.org>
-Subject: RE: [PATCH net v6 3/3] igb: do not split AF_XDP zero-copy frames over
- several Rx buffers
-Thread-Topic: [PATCH net v6 3/3] igb: do not split AF_XDP zero-copy frames
- over several Rx buffers
-Thread-Index: AQHdcakNwPgs9FTQsEys1XYyFZRXXrcqAR6AgAzZNdA=
-Date: Fri, 20 Nov 2026 11:06:54 +0000
-Message-ID:
- <AS5PR05MB11020F54567712787EE6FF1ACB9782@AS5PR05MB11020.eurprd05.prod.outlook.com>
-References: <20261111-igb-rx-ts-fix-v6-0-ba5b9903859c@aweta.nl>
- <20261111-igb-rx-ts-fix-v6-3-ba5b9903859c@aweta.nl>
- <sashiko-outbox-210542@kernel.org>
-In-Reply-To: <sashiko-outbox-210542@kernel.org>
-Accept-Language: en-US, nl-NL
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aweta.nl;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS5PR05MB11020:EE_|MIWPR05MB401878:EE_
-x-ms-office365-filtering-correlation-id: 834067fa-5029-4358-b4c3-08df46f66309
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|6133799003|18002099003|22082099003|4143699003|5023799004|56012099006|261026140227099003|261102123227099003|261026121527099003|10067099003|261028144727099003|261021121427099003|261022105027099003|261022075727099003|38070700021;
-x-microsoft-antispam-message-info:
- ye/OqLYUyPmzb2/3PTthFLSViIV0k9cjUZQtteKL9UNWRy/LKaeN8nvKwt7Izc6A/udfyWdgVvGl7eHe8Sxv+NDHp+F2UTl0XGtyfzCNYJkRPMjDTO5IFC0XOwerIEgC0nIdVojkkF7rJC1hJ/ahgqbtfGUN3NA7jAtjcm/WDXhgakqJvh9cgdzev9NbVbYOhYhC4bgH9725RzYVnV3/Jy/rtsYVD3EqpaXwtmxoTAcyqos5SVBBwfQwjxKWCtrMt8FQ8SGUMyVj27lc4/qHdpCnR4sltsmLhPBK5aG2KpzC0Zm1gqtnEs3X8XdHUy55zuznOJU/p0UFxkXL4toErS2Dqt4LIPyNzkTh/KKGxK+uNR1Jo3ugTALidiGknhm4Zy4qx6C3beF5GJUxe9EfTB0ntGheH6EgUXlpIj+R2mKaZxtiEbGk9/iT9pidBjkX6sc+H86fWEWHXZSPE2ew+MPTLYFcCCHciBpYEnbzOuSt5fuqFmyjYq0Yp3k2UjRY2cI9xpqvURDyR1O7/ckaw+n9nyREWEZqQdtddWImrQb74oPxRfkNiFG8AtIgAFJ4djRTJIzm+J7Z8s+24Oiv/kygC0znwf/FZjlozGkrGoBdgIh1dZGNWAPeIhsi5MPwgVSD8oQH0jk6Y/CKBPCM7HpAuy37FAvX6ECOmlmGBmy0bQZXqZ6XM99EICltqhAbTLFLeKkJSSbqqEnHOxZbtQ==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS5PR05MB11020.eurprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(6133799003)(18002099003)(22082099003)(4143699003)(5023799004)(56012099006)(261026140227099003)(261102123227099003)(261026121527099003)(10067099003)(261028144727099003)(261021121427099003)(261022105027099003)(261022075727099003)(38070700021);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?VXhzT2x6TVR3b0pyZkJwejVsb29ONHplVUZiV1Niazl5ZzNtYkZWSDA3T1pW?=
- =?utf-8?B?cDlQTDR5c0R4YUtLVlpLbnNuZ0dWaHFROVJvT3I3SXFkamxsL1FsZW5ycnR3?=
- =?utf-8?B?ang2YzEwcSttU3I1Z3dJOWhrODZ2SUlmRDYzZWFXRkFmZkRhMTMxb3dUN1A0?=
- =?utf-8?B?YWtaZ3pOSEE0NjBhcGw2dndUbEpnQ1FZMkc2NmJPRlZuRTN3ZzNvRzZ3SkJz?=
- =?utf-8?B?WVN5VzhiaStYRGwvMHRCRURuRU5FQWlsQXRWbzU1Szlmcll6ZE95R1hTa2lz?=
- =?utf-8?B?ZkxZaUdkQjBwdTg1VUo0V1ZrN1RrS2VHNjVycXh6bEVaY29WdE5WSklaSUtq?=
- =?utf-8?B?cDJUMENBZit3NENxNnNRczd5MHVqdk9PZ1cwTmtEakQxVTBUYmJ3NDZiQjVP?=
- =?utf-8?B?eHc1MHMxMTA3aTVuY0RaV0M1dmhwaThpYm83YlA1TjJ3S3Q4RHFMWVZlWHYy?=
- =?utf-8?B?dWJPd2lmSDFBcXpRV2NyMmN2UDdSZmhCWGhsSU5SZlNOZnlZdXQzTGdjSXhB?=
- =?utf-8?B?cWdQdUp1eWNzNlg4SURJTmo4OFAwYXZjYzBlSGluYXgrY3lRTWMvYi8yZzBD?=
- =?utf-8?B?M0RtaVpPQy84OW4xYm9BbzVMUW5wTkwxMlNSMnRuVWI2Uis2UzhYOFJST0dQ?=
- =?utf-8?B?a0dueFI3b2dqeTFlUklpbDltYndzVDhJLzFoY3JXbnJwemdrQy9teWczTnZo?=
- =?utf-8?B?M3hYVnlKbUV4SWdtSk1IUGdzYVl6ekR3Ym1Fd0pMT2xVSm1oU3djbGZvcThr?=
- =?utf-8?B?cXhoOHF5cy9iRTFqOFlOb29LNGh6aEd3aXVGSk9aTzFsa1VFYXQxcU1iM3lM?=
- =?utf-8?B?a0NCZjVqT3h0akxVQ2pycUhaLzhCMnhGdEF3MWx0cml4ZHN0a3V4SWNPN1B3?=
- =?utf-8?B?RlpzWmNVajJ1WElka3RKTTVDM0tQeVdzZC94OVdFNWhPTVNqVFMrcmxFeGFD?=
- =?utf-8?B?cktqWEhnVXZnUlByTEUrWUdCcEdoR0FwYlZvZWFlMzJncGtPekR6TG9ZMHo3?=
- =?utf-8?B?b1oydGVJR3VURFFzMnA5ekp2eGtJT1FlT05WbWVEQ1hLTTBZdWIxbXV4eWFp?=
- =?utf-8?B?ZkE2THlrc1lBOXh0WEt3eGpDWXVveTk5a2FsM1crOFhLeHF5cVRpbkZwdThE?=
- =?utf-8?B?WFBpMUpXL2hxeGZTMUFiY0dJbEIyRURHT1F4ZkFkc1pGUTlCMEZQelZpZU5X?=
- =?utf-8?B?SDhBSHB4U0JEUWRhbXZ2SC9xV2pNL0NGZmZGdGJTRmtaeFBkcEQ0WWJjby9v?=
- =?utf-8?B?L0xUaHBPa1ordUdhc3RBV1REdllZMzVJSkRvS3dwWk1FN2o0NTdyWkhVR01N?=
- =?utf-8?B?WVNqNlU4dElIRERKeGFySElOajB1cHoySGFYaXZQNnQ3RU9OVEY2MzFIbEVl?=
- =?utf-8?B?V3RkOVJHb2VCL0hZK3g2dlczQXA5SGQ3c0l1a2ZjRTgxREJxMDU0b3RGQVAw?=
- =?utf-8?B?NDZ1UXZmS2paeWhkOEZ0cGsrU2crRTQyMjA3UGxidHZqNlFlbWNua2dFUDB6?=
- =?utf-8?B?RDBKSlA0UmZKTzhMWkxMbnZqSmRzTkYrNHBJRHhHVDZvRjczWTQ2Um1xWWNr?=
- =?utf-8?B?RXpWRnFCMFNIaFV6TW9oQ0VKQXloSVFBRzJacE9uTitZZ0xGUEp2QlVDYko1?=
- =?utf-8?B?S0d0UlBlRWFpR2syNjh4VlBFTUtsN05KajJXZkdNd3lWY3FQaXFxdjlOWWtv?=
- =?utf-8?B?ZG81NzNmY2p6R2l3MHFjSVdNWVZoWTg4UVQzQkphdTN3Ymdtc1ErekphV3Zo?=
- =?utf-8?B?ZkFNdjlqV2hzakQ1RkZwTmZsUzRjQzlSWHBMTmFxNjlNelk4NnZzUDZPcy9s?=
- =?utf-8?B?bTR2eDhiWmFPTUQ0SUxXeUhDckM4Zmc3NWozbDIwU3lPMFZqQzVVcVVORVBw?=
- =?utf-8?B?QXYyVnlQSUM3Rk90RE5qb1NQTUxlNEgxUHp2djg3dTB4KzJCem1HVkx4UG1s?=
- =?utf-8?B?SVNUNmFCd3cvWlNvNlZ6SkJSZE8yMloxbVBnZGkyREhVY0lXeE9MQmhoeWNJ?=
- =?utf-8?B?T2hxYlpVVU9OUmlEM25IenQ1UldrancwRHBpUWlqS1I5L1creXdxZWx2dG50?=
- =?utf-8?B?Nno5eldnbmtLZ3Jya2hGUEUrc0w5TFNULzdERzFIbnNDQ3Nob1IrdGhwaHI4?=
- =?utf-8?B?QmI4ZTQwTEs4N3BsTWNmOFNmQWFtUlZ4MHNETk1IRyswbWtxS1VtTklybW5F?=
- =?utf-8?B?V2JtcFowRGtRUVI0RHRHLy9vRmM3TUZQWGNkZE5CVVEwNUx4VXpWODRPb0Jz?=
- =?utf-8?B?MFp0MGo5QUltbzdtR094VU9VTTVIMHhaTkdHd3h4SktjWm1uRFVVU0N6YS91?=
- =?utf-8?Q?ZyaWuORejxTuyDOphY?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=WrS3EUNm;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=unkgHDqC
+From: John Ogness <john.ogness@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1795172911;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vQHnCxumodLceV3FCZMlZjlsObg36p4OHXhw3jDQXfQ=;
+	b=WrS3EUNmG2sMWwRLVRW1rkZfopMVF4HQl/AgnR0K0qazkozmURGdqWz8iLNRtGD9ARP4IV
+	GVghr33yVeMuzB3O/vtO7O14BrW1gwyJER7IVP8FVDzl5FTj1RqgwhuPtaGwqTWu+HitWv
+	WKFciAqDTQlmQe0UQbMfQQmQWKKXVM+OTKoXpyLvuRq8lbZpPFB4Vd8DM4JB0JMGigXdMj
+	CcqNKBofMq3DyPIPrr4ND2Pqh86Ufvbz6BV2pX7vLMD2uAa+bICo4TuaNmsruW+hVu6LNa
+	aReFSNxfV18vjQHuWTRQ/ZMjJvs9ssSgkvn9e0BE43RirsBDCZ22PRQs9fmlRA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1795172911;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vQHnCxumodLceV3FCZMlZjlsObg36p4OHXhw3jDQXfQ=;
+	b=unkgHDqCc8H/26uI4szPOP+5vgt5UtTl0ZOrU+tNxfDVTDlMNAZfXMcoTtQ9gIJYiMufiM
+	nIo1WiFSOMO8oHDw==
+To: sashiko-reviews@lists.linux.dev, Petr Mladek <pmladek@suse.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, Steven Rostedt
+ <rostedt@goodmis.org>, Ryan
+ Roberts <ryan.roberts@arm.com>, Breno Leitao <leitao@debian.org>,
+ printk@lists.linux.dev, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH printk v3 5/7] console: Support unsafe flushing for
+ panic/emergency restarts
+In-Reply-To: <sashiko-outbox-224168@kernel.org>
+References: <20261118230345.808560-1-john.ogness@linutronix.de>
+ <20261118230345.808560-6-john.ogness@linutronix.de>
+ <sashiko-outbox-224168@kernel.org>
+Date: Fri, 20 Nov 2026 12:14:31 +0106
+Message-ID: <87fqwvlpzk.fsf@jogness.linutronix.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -155,47 +77,83 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-OriginatorOrg: aweta.nl
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS5PR05MB11020.eurprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 834067fa-5029-4358-b4c3-08df46f66309
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2026 11:06:54.6958
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 6546512a-ba20-41bf-9d8d-c076dcbf6fd9
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: UduvjLjlzJD3D1yjt5RJUKBto+5oK0Yb7wmzMlqj421vytkh/Sh0DzqJDj6ON/EZadbTxgnlQwrYvg44FtkNbQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR05MB401878
+Content-Type: text/plain
 
-PiAtIFtNZWRpdW1dIGlnYjogUEYgTUFDIGZpbHRlciBjbG9iYmVyIGluIGlnYl9lbmFibGVfc3Jp
-b3YoKSBiZWZvcmUgWFNLDQo+ICAgcXVldWUgY2hlY2sNCg0KUmlnaHQuIGlnYl92Zl9jb25maWd1
-cmUoKSB3cml0ZXMgdGhlIFZGcycgZW1wdHkgTUFDIGFkZHJlc3NlcyBpbnRvIHRoZQ0KdG9wIHJl
-Y2VpdmUgYWRkcmVzcyByZWdpc3RlcnMgYmVmb3JlIHRoZSBjaGVjaywgYW5kIHRoZSAtRUJVU1kg
-cmV0dXJuDQp0aGVuIHNraXBzIHRoZSByZXNldCB0aGF0IHdvdWxkIHJlc3RvcmUgdGhlIFBGIGZp
-bHRlcnMgdGhlcmUuIFdpdGggMzENCm1hY3ZsYW5zIG9uIGFuIEkzNTAgUEYsIHR3byBvZiB0aGVt
-IHN0YXllZCBpbnZhbGlkIGFmdGVyIHRoZSByZWZ1c2VkIFZGDQplbmFibGUuIEluIHY3IGlnYl9l
-bmFibGVfc3Jpb3YoKSBjaGVja3MgZm9yIGJvdW5kIFhTSyBwb29scyBiZWZvcmUgaXQNCnNldHMg
-dXAgYW55IFZGIHN0YXRlLCBzbyBub3RoaW5nIGhhcyB0byBiZSB1bmRvbmUgb24gdGhhdCBlcnJv
-cjsgaW4gdGhlDQpzYW1lIHRlc3QgYWxsIDMxIGFkZHJlc3NlcyBzdGF5IHZhbGlkLg0KDQo+IC0g
-W01lZGl1bV0gaWdiOiBza2lwcGVkIFBGIHJlaW5pdCBpbiBpZ2JfZGlzYWJsZV9zcmlvdigpIHdo
-ZW4NCj4gICBpZ2Jfc3Jpb3ZfcmVpbml0KCkgZmFpbHMNCg0KUmlnaHQuIEluIHY3IHRoZSBjaGVj
-ayBvbmx5IHJ1bnMgd2hlbiBWRnMgYXJlIGVuYWJsZWQsIHNvIGRpc2FibGluZyBWRnMNCmlzIG5v
-dCByZWZ1c2VkLg0KDQo+IC0gW01lZGl1bV0gaWdiOiB1bmxvY2tlZCBWRiBzdGF0ZSBhbmQgZmxh
-ZyByb2xsYmFjayBpbg0KPiAgIGlnYl9lbmFibGVfc3Jpb3YoKSBvbiBlcnJvcg0KDQpSaWdodC4g
-V2l0aCB0aGUgY2hlY2sgZmlyc3QsIHRoZSAtRUJVU1kgcGF0aCBkb2VzIG5vdCB0b3VjaCB2Zl9k
-YXRhIG9yDQp0aGUgRE1BIGNvYWxlc2NpbmcgZmxhZywgYW5kIHRoZSBzYXZlIGFuZCByZXN0b3Jl
-IG9mIHRoYXQgZmxhZyBpcyBnb25lLg0KUlROTCBpcyBub3cgaGVsZCBmcm9tIHRoZSBjaGVjayB1
-bnRpbCB0aGUgUEYgcXVldWVzIGFyZSBzZXQgdXAgYWdhaW4sDQpzbyBubyBwb29sIGNhbiBiZSBi
-b3VuZCBpbiBiZXR3ZWVuLiBUaGUgb3RoZXIgZXJyb3IgcGF0aHMsIGFsbG9jYXRpb24NCmZhaWx1
-cmVzIGFuZCBwY2lfZW5hYmxlX3NyaW92KCksIGFyZSB1bmNoYW5nZWQgYW5kIG9sZGVyIHRoYW4g
-dGhpcw0Kc2VyaWVzLg0KDQo+IC0gW01lZGl1bV0gaWdiOiBzdGFsZSByZWFsIHF1ZXVlIGNvdW50
-cyBpbiBfX2lnYl9vcGVuKCkgYnJlYWsNCj4gICBpZ2JfeHNrX3Bvb2woKSBjaGVjaw0KDQpUaGF0
-IGlzIG9sZGVyIHRoYW4gdGhpcyBzZXJpZXM6IF9faWdiX29wZW4oKSBoYXMgYWx3YXlzIHNldCB1
-cCB0aGUgcmluZ3MNCmJlZm9yZSBpdCB1cGRhdGVzIHRoZSByZWFsIHF1ZXVlIGNvdW50cywgYW5k
-IGlnYl94c2tfcG9vbCgpIHVzZWQNCnhza19nZXRfcG9vbF9mcm9tX3FpZCgpIGJlZm9yZSBhcyB3
-ZWxsLiBJdCBkb2VzIG5vdCBicmVhayB0aGUgY2hlY2s6DQppZ2JfeHNrX3Bvb2woKSBvbmx5IHJl
-dHVybnMgYSBwb29sIGFmdGVyIHRoZSBmcmFtZSBzaXplIGNoZWNrLCBzbyBhIHJpbmcNCm5ldmVy
-IGdldHMgYSBwb29sIHdob3NlIGZyYW1lIGlzIHRvbyBzbWFsbC4gQSBxdWV1ZSB0aGF0IGNvbWVz
-IGJhY2sgaXMNCnVzZWQgaW4gemVyby1jb3B5IG1vZGUgYWdhaW4gZnJvbSB0aGUgbmV4dCByZWNv
-bmZpZ3VyYXRpb24uIENoYW5naW5nIHRoZQ0Kb3JkZXIgaW4gX19pZ2Jfb3BlbigpIHdvdWxkIGJl
-IGEgc2VwYXJhdGUgY2hhbmdlLg0K
+On 2026-11-19, sashiko-bot@kernel.org wrote:
+>> diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
+>> index c3307b5b2c922..daf1fe8522117 100644
+>> --- a/kernel/printk/nbcon.c
+>> +++ b/kernel/printk/nbcon.c
+>> @@ -557,10 +557,6 @@ static int nbcon_context_try_acquire_hostile(struct nbcon_context *ctxt,
+>>  	if (!ctxt->allow_unsafe_takeover)
+>>  		return -EPERM;
+>>  
+>> -	/* Ensure caller is allowed to perform unsafe hostile takeovers. */
+>> -	if (WARN_ON_ONCE(ctxt->prio != NBCON_PRIO_PANIC))
+>> -		return -EPERM;
+>> -
+>>  	/*
+>>  	 * Check that try_acquire_direct() and try_acquire_handover() returned
+>>  	 * -EBUSY in the right situation.
+>
+> [Severity: Medium]
+> Can an NBCON_PRIO_EMERGENCY hostile takeover clobber con->pbufs while the
+> interrupted NBCON_PRIO_NORMAL owner is still using it?
+
+Yes, this is not acceptable.
+
+>> @@ -1465,12 +1461,19 @@ enum nbcon_prio nbcon_get_default_prio(void)
+>>  static bool nbcon_allow_unsafe_takeover(struct console *con, enum pr_flush_reason reason)
+>>  {
+>>  	enum nbcon_prio prio = nbcon_get_default_prio();
+>> +	int unsafe_policy = con->allow_unsafe_policy;
+>>  	bool allow = false;
+>>  
+>>  	switch (reason) {
+>>  	case PR_FLUSH_RUNTIME:
+>>  		/* Never unsafe flush during runtime. */
+>>  		break;
+>> +	case PR_FLUSH_RESTART:
+>> +		if (prio == NBCON_PRIO_PANIC)
+>> +			allow = (unsafe_policy & NBCON_PANIC_RESTART_FLUSH);
+>> +		else if (prio == NBCON_PRIO_EMERGENCY)
+>> +			allow = (unsafe_policy & NBCON_EMERGENCY_RESTART_FLUSH);
+>> +		break;
+
+Yes, this is also not acceptable.
+
+The current console ownership implementation relies on panic being the
+only context that can perform hostile takeovers. This is a fundamental
+rule in the implementation and cannot be changed without significant
+rework.
+
+My idea is to reduce NBCON_EMERGENCY_RESTART_FLUSH policy to only mean
+unsafe printing and not hostile takeovers. I think this should be
+acceptable. The changes against this version:
+
+1. Restore the WARN_ON_ONCE() in nbcon_context_try_acquire_hostile().
+(And add more comments to it saying it must not be removed!)
+
+2. Rename nbcon_allow_unsafe_takeover() to nbcon_allow_unsafe_usage() to
+give it a more appropriate name. The implementation stays as it is in
+this version.
+
+3. Add an extra "&& extra panic_on_this_cpu()" when setting the
+@allow_unsafe_takeover argument because that argument is not just about
+unsafe printing, but also about hostile takeovers. So it looks like
+this:
+
+allow_unsafe_usage = nbcon_allow_unsafe_usage(con, reason);
+
+if ((flags & CON_NBCON_ATOMIC_UNSAFE) && !allow_unsafe_usage)
+	continue;
+
+nbcon_atomic_flush_pending_con(con, stop_seq,
+	allow_unsafe_usage && panic_on_this_cpu());
+
+This will allow unsafe flushing CON_NBCON_ATOMIC_UNSAFE consoles based
+on the policy while avoiding hostile takeovers in non-panic.
+
+Thoughts?
+
+John
