@@ -1,73 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795172916;
-	b=JuLoEWTFJdqqNJZwN5e04zGx5uvCf+KjJd6jFbZdxOG9HWyzAgbgEto++4qUtNy1lq8A
-	 WkwQO/7iZNdRYgxj9Di64fySHizR1MPiXVhbKkw0vvUYoJFv5jtJ3rjvOQbT2ia/6ZLov
-	 wcQ5TSvMwxG10twiaSKFDz7FIMzvsHcB360kUVzlnDJxSnp36tLWsFZahVpcEcSt+xPkl
-	 f+awDv4UBQ3F02Xtb22/l2njg7FT7DvT+J+yYm7gC0eTyw1dFnT9RzRO2yUCLCoRE1QxU
-	 zZSXEKLalaVKmPU+fv9hT1DK3nS0jrghlYcPi7FON3Dkl/uHxERujUX0aKT1z9u2N5Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795172916;
-	h=DMARC-Filter:From:DKIM-Signature:DKIM-Signature:To:Cc:Subject:
-	 In-Reply-To:References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=vQHnCxumodLceV3FCZMlZjlsObg36p4OHXhw3jDQXfQ=;
-	b=LmjR+ZhH7iGJwedGsM2wkps8MitasmjJ2uzYv6T4GQmrTDqtz1cnPHNfEPusx5xjjQTW
-	 BIAs3ZWGRwqXph+fnblk9pM2tfVhxRqpXNNhT6DTDCR2aBm2JiPNPIf787I/QVujoO2+I
-	 GnlZ6PnbjUoe0qCOt/IlobYEdDLclL40QgUN0WMmJa6mURL3XfL9oubunZvekFfy9HTTY
-	 65aqsEMLWQpAHFdNYLz+5fKdIoaax2zOoVD55BIxucD3/JMGGNLwXJxP8fNqywRj71Vxl
-	 ZzBRpLF7HW++Q9peR6xTVJrHbcaIcGm5qsm04/IvYsNHlc4FrFuRMPMjjaoKL9ibiVw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linutronix.de;
-	spf=pass smtp.mailfrom=linutronix.de;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=WrS3EUNm;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=unkgHDqC;
-	arc=none smtp.remote-ip=193.142.43.55
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795173857;
+	b=CmsnM4hd8UD144gNJBZw2MN60dFcAm237mTxaN7Wwzjyj1uXS+1iizSymoAa57VELNw2
+	 zHh8egw5Ba07D+qHddcNJmKmkqPEBLMaRMoSo5/M2uJFTlCIFEX12XLsEkzp7NFHcVeV8
+	 BWBI5JLbQ5f8b2A3cSiBM4iY/I//dSQaX0xkibt3pi0TbzKdEiffEWqP9q8QoCufScNj0
+	 xDI1OAbf5GP+DF3czBPzZ1VIOnhoMFheYJx4ykRNx/t8V8O9/YW1pLZDNUTV95Jfx7+sK
+	 6FMnVMVDYhhTbaoUfsw4CWQTv+jvMrqxa/vAlVZe2Ts7jfz5HLVjhKcZyQA+arslydA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795173857;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=a7JUc6FSH2k9zAtUwLBJoFh7SQyPXZY5+YDsTTwuAe8=;
+	b=Jh5HImZzglP4fqIWzBNuuNJutIKaurV2FC9aQWATMudZ3aPwH9MhzFdkRikVc4XtZp4t
+	 9FJV2FBGh/XcLQHjdKP+gWZcCONkT8GLb1N/+VdLWzT18Y0q0/LYmPO/+cDRzaZOzDskJ
+	 u+jBmJD+vLaEgnAkxtDmuzb650/FvICglD0FE9Cwm0Ol3H2y4zsBy50zIA+AUS6lm7lt2
+	 /wq1d8xuMrmM7eRR5c6DbvSzbDgZQgyGZ2o+nj/ntuEzFP3+fgwLnS84e5q9oWCATOeSx
+	 S6s8ce0PMGW3XEqJqCTuSvarcs6ehTj5kchWqmXa1H86xWGLiOqAB///mvKeiC7EY3w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=flipper.net;
+	spf=pass smtp.mailfrom=flipper.net;
+	dkim=pass header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=e5bRY6Lh;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDB1606A32A;
-	Fri, 20 Nov 2026 11:08:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7CDB1606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70347606A32A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:24:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70347606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=WrS3EUNm;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=unkgHDqC
-From: John Ogness <john.ogness@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1795172911;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vQHnCxumodLceV3FCZMlZjlsObg36p4OHXhw3jDQXfQ=;
-	b=WrS3EUNmG2sMWwRLVRW1rkZfopMVF4HQl/AgnR0K0qazkozmURGdqWz8iLNRtGD9ARP4IV
-	GVghr33yVeMuzB3O/vtO7O14BrW1gwyJER7IVP8FVDzl5FTj1RqgwhuPtaGwqTWu+HitWv
-	WKFciAqDTQlmQe0UQbMfQQmQWKKXVM+OTKoXpyLvuRq8lbZpPFB4Vd8DM4JB0JMGigXdMj
-	CcqNKBofMq3DyPIPrr4ND2Pqh86Ufvbz6BV2pX7vLMD2uAa+bICo4TuaNmsruW+hVu6LNa
-	aReFSNxfV18vjQHuWTRQ/ZMjJvs9ssSgkvn9e0BE43RirsBDCZ22PRQs9fmlRA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1795172911;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vQHnCxumodLceV3FCZMlZjlsObg36p4OHXhw3jDQXfQ=;
-	b=unkgHDqCc8H/26uI4szPOP+5vgt5UtTl0ZOrU+tNxfDVTDlMNAZfXMcoTtQ9gIJYiMufiM
-	nIo1WiFSOMO8oHDw==
-To: sashiko-reviews@lists.linux.dev, Petr Mladek <pmladek@suse.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, Steven Rostedt
- <rostedt@goodmis.org>, Ryan
- Roberts <ryan.roberts@arm.com>, Breno Leitao <leitao@debian.org>,
- printk@lists.linux.dev, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH printk v3 5/7] console: Support unsafe flushing for
- panic/emergency restarts
-In-Reply-To: <sashiko-outbox-224168@kernel.org>
-References: <20261118230345.808560-1-john.ogness@linutronix.de>
- <20261118230345.808560-6-john.ogness@linutronix.de>
- <sashiko-outbox-224168@kernel.org>
-Date: Fri, 20 Nov 2026 12:14:31 +0106
-Message-ID: <87fqwvlpzk.fsf@jogness.linutronix.de>
+	dkim=pass (2048-bit key, unprotected) header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=e5bRY6Lh
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c50abd5b4fcso111068966b.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 03:24:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795173856; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WbWB6wsU2MicjcRDNF7f6eCLIMxKbE1ARpDQ+58B2kX+bkhAsxqYP1Tgshm0bpSM6I
+         Wbvoq+B3qjxcKlPL0H498jvxvD+2T0B17RwmssKw2UytkDkttqS6Bv21WnWzEU/luWHK
+         MrmnBzzapRIoOlKUv1ScF2u4kmLgepKR0mFJil5J/LAb7s9I9oLlABdODixds87bioFr
+         ShmEqvDEnizcAD7lSWTaf4nPIM2VMUkP1OVdppNoOnOCTmfsSWnIMH599SD/EFKJn8+v
+         kYnsA//ygjzWQRp3s+pkv+2Lvbomz59KsDBD8xox/3mX5BIxEBCBadvpN+Ut/pWpE8/l
+         Q7zA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=a7JUc6FSH2k9zAtUwLBJoFh7SQyPXZY5+YDsTTwuAe8=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=SGYFGD519E88/KiZ4TN00le2lO5wov+zPRkXim9sEKweDzVzFdZt7V3m8SAm8kv1V3
+         xLzRy2g+/tqk4/s/06uILqO3lkTwzuLFR2Qs72J6FrFq5N/hzc6c+oEJWfpKFVsTahf3
+         otZyU3jWB5OyL0QZlzeIpPY1Y9wkMvdP2jyZyH4ALa11vBqFNpQBj3QWs1/WVovm/ync
+         ZeFMFjd0SXbhW1cQ+fos6URSV9563AASyLU/MKuNXNzRNl8ZBh1ymbunBsv4rIjXfpuT
+         ZDiYkpOnz6N2BHTlQpSK+qoRN7nXgN3JMna3Hw+bmtHSmWz0sYZJje3yJaMPA5DihwDI
+         7fFA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=flipper.net; s=google; t=1795173856; x=1795778656; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=a7JUc6FSH2k9zAtUwLBJoFh7SQyPXZY5+YDsTTwuAe8=;
+        b=e5bRY6Lh4ThWKGMNyf0LuH3Z2w1zr8mE1xSWFRsZDOK2JTxcObMGBdVC/p2Fc06ETY
+         Mp145xzg6qhm2CSNwmhX9QX3Typ/J56gDy4sj80FaCDPwU2v+3PHQ5mqkng+xT5eO/k+
+         yvLQSfKIpJlzMoSSYP/unuHHiFTBSaWpHenaApL63H9MX5vImYqV3LNBgeCaW5R7vGQv
+         pnCTMquFbnLQUXK4p1tjfOhZ9IA+z+tz74//iqcsBIMBkJ34MWHKrN/lQQ4dLDwH6rp9
+         lO9WeCrMTOlhrsPecCoujQ6LXV4gJs/JUoPxoxLWiXWuBJU767B7JQRlxGYvN/42VbGi
+         s7cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795173856; x=1795778656;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=a7JUc6FSH2k9zAtUwLBJoFh7SQyPXZY5+YDsTTwuAe8=;
+        b=J2+uPV6QYBijoeoUSGfpDFMW3hgot2nCHl3BFgbR7gdK7uyWQyTV/Q8nzd7y43g+g8
+         JtvCOEXu07Zvw3J58me8nQSE9+LX8uuwp1bNKH7OHoHEuuGEWaSichboIxm54MSPZ+xZ
+         ysjJo+TW2tFRMjV1AhNTS5c01MuYk0FKT38RLZZJ8DfSFvB/pBXwvnoheZyvLnplq0Wr
+         4ug/6WgTsSCFRUSYOVoEc2FH5eGM6gN03bn+9YiYwwjXuQZkkIm+VQgOIM/BywYoG49R
+         xy3G5oHUNE2dvB2Ix2Tmki5fcI7qVrx12IPNvuGow7Mj+j9Ufeipw1I1zgeHT88ongR2
+         ICLw==
+X-Gm-Message-State: APuU4Z/ldiMKC8+rNcZZDSzOSHU+Q4dlcKLHbSAxTAKDqT7C88Iax+h2
+	vmkM8Op8PDVlKeYBhT4kT8RQ/Ln/4F7PdBBTdUSWrFLp3IHYMGFY0faLVQ96EdnB0ifzvxhkxTJ
+	2bkBUIFvzhbcmpD7BOouawQTkZB482HWGj22LlPYBefRHlJoHA2c683kkwQ==
+X-Gm-Gg: AZFdTZcYhGY1ldg3Pjfe/huzKYwbIkIehpQbKnEJ8hW3yyE1lZVif2a4zPLhP36JRBf
+	5xEk8CDKOtcucjn4/yWGUfHruxbzdTeb3k0cpaJ7ywMOIeo7aJV40Pjs7ZoiR+fEHSXtO5DebKa
+	fRonqN90McMzPYkSVdLv15TDSg20Br71M9qbgr983chtnkcMIIh+xuZJtgYbs3llrXznMAgKjZs
+	eiVGqjxqQ6g+T6P2y70t1vkqx7RqJff4GiiucIHXZjIxyqoTyGNNzm8WOpMMsLcdSPi9qCPVyeN
+	6sK5N0+ArgAHXHq+HGtnAxcL7XwEExscV6PqDf677Ux05TZqKaTvgbx+KcSS1aG59JgxgqW18Uy
+	IrqNEGogR8wxPy8Jih4hL2eZEAK9jXv/eFdmE5ij4CcOd9BaDFhFc/vkIg6ulDDUeDYSUnA==
+X-Received: by 2002:a17:906:c104:b0:c35:3880:773b with SMTP id
+ a640c23a62f3a-c513aadb667mr274279466b.45.1795173855766; Fri, 20 Nov 2026
+ 03:24:15 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,83 +103,72 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261120-rk3576-phys-v1-0-6382cd14e3dc@flipper.net>
+ <20261120-rk3576-phys-v1-2-6382cd14e3dc@flipper.net> <sashiko-outbox-224974@kernel.org>
+In-Reply-To: <sashiko-outbox-224974@kernel.org>
+From: Alexey Charkov <alchark@flipper.net>
+Date: Fri, 20 Nov 2026 15:24:04 +0400
+X-Gm-Features: AclHuK8rLoDMmJMGUWxK18rLN7mF-KAPwHPjLrX7VCGqTp-a6L8QOHGvGVNdrK8
+Message-ID: <CAKTNdwGF7tFwiq4FK7EZ+mXXq353fRCDMhXKNzGjGDLhaZ34XA@mail.gmail.com>
+Subject: Re: [PATCH 2/7] arm64: dts: rockchip: Describe Sige5 Ethernet PHYs by
+ their ID
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026-11-19, sashiko-bot@kernel.org wrote:
->> diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
->> index c3307b5b2c922..daf1fe8522117 100644
->> --- a/kernel/printk/nbcon.c
->> +++ b/kernel/printk/nbcon.c
->> @@ -557,10 +557,6 @@ static int nbcon_context_try_acquire_hostile(struct nbcon_context *ctxt,
->>  	if (!ctxt->allow_unsafe_takeover)
->>  		return -EPERM;
->>  
->> -	/* Ensure caller is allowed to perform unsafe hostile takeovers. */
->> -	if (WARN_ON_ONCE(ctxt->prio != NBCON_PRIO_PANIC))
->> -		return -EPERM;
->> -
->>  	/*
->>  	 * Check that try_acquire_direct() and try_acquire_handover() returned
->>  	 * -EBUSY in the right situation.
+On Fri, Nov 20, 2026 at 2:56=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> [Severity: Medium]
-> Can an NBCON_PRIO_EMERGENCY hostile takeover clobber con->pbufs while the
-> interrupted NBCON_PRIO_NORMAL owner is still using it?
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] arm64: dts: rockchip: Fixes tag cites board addition instead of
+>   63136c6fecf4
+> --
+>
+> commit 5dc14b4c5e3f94d0bf427bf2ff5dad981d4f435e
+> Author: Alexey Charkov <alchark@flipper.net>
+>
+> > arm64: dts: rockchip: Describe Sige5 Ethernet PHYs by their ID
+> >
+> > Both Sige5 GMACs connect to an RTL8211F PHY (ID 0x001cc916) with its
+> > reset line in the PHY node. With only the generic C22 compatible, an OS
+> > has to read the PHY ID registers before it can bind a driver, and only
+> > that driver releases the reset line. Unless an earlier boot stage has
+> > already released it, the PHY stays in reset, never answers on MDIO, and
+> > neither Ethernet port comes up. Booting straight from U-Boot SPL in
+> > Falcon mode hits exactly that.
+> >
+> > Name the PHY by its ID, so it binds without the ID read and comes out o=
+f
+> > reset as it does. Name the node ethernet-phy@1 as well, as the Realtek
+> > PHY binding the ID compatible selects requires.
+> >
+> > Fixes: 40f742b07ab2 ("arm64: dts: rockchip: Add rk3576-armsom-sige5 boa=
+rd")
+> > Signed-off-by: Alexey Charkov <alchark@flipper.net>
+>
+> [Severity: Low]
+> In 40f742b07ab2 ("arm64: dts: rockchip: Add rk3576-armsom-sige5 board"),
+> the PHY reset lines were described via snps,reset-gpio on the gmac0 and
+> gmac1 nodes, which stmmac_mdio_reset() deasserts before probing the MDIO
+> bus for PHY IDs.  Commit 63136c6fecf4 ("arm64: dts: rockchip: Use standar=
+d
+> PHY reset properties for RK3576 ArmSoM Sige5") moved those reset lines in=
+to
+> reset-gpios on rgmii_phy0 and rgmii_phy1 while keeping the generic C22
+> compatible.
+>
+> Should the Fixes tag instead be:
+>
+>   Fixes: 63136c6fecf4 ("arm64: dts: rockchip: Use standard PHY reset prop=
+erties for RK3576 ArmSoM Sige5")
 
-Yes, this is not acceptable.
+Yes and no. The fix is about the compatible, not about the reset
+lines, and the prior behavior of the GMAC node carrying reset lines of
+a completely different device was a separate issue altogether. And not
+that it matters in practical terms: both commits are post-6.12 and
+pre-6.18, so if it gets backported the set of affected stable trees
+doesn't change.
 
->> @@ -1465,12 +1461,19 @@ enum nbcon_prio nbcon_get_default_prio(void)
->>  static bool nbcon_allow_unsafe_takeover(struct console *con, enum pr_flush_reason reason)
->>  {
->>  	enum nbcon_prio prio = nbcon_get_default_prio();
->> +	int unsafe_policy = con->allow_unsafe_policy;
->>  	bool allow = false;
->>  
->>  	switch (reason) {
->>  	case PR_FLUSH_RUNTIME:
->>  		/* Never unsafe flush during runtime. */
->>  		break;
->> +	case PR_FLUSH_RESTART:
->> +		if (prio == NBCON_PRIO_PANIC)
->> +			allow = (unsafe_policy & NBCON_PANIC_RESTART_FLUSH);
->> +		else if (prio == NBCON_PRIO_EMERGENCY)
->> +			allow = (unsafe_policy & NBCON_EMERGENCY_RESTART_FLUSH);
->> +		break;
-
-Yes, this is also not acceptable.
-
-The current console ownership implementation relies on panic being the
-only context that can perform hostile takeovers. This is a fundamental
-rule in the implementation and cannot be changed without significant
-rework.
-
-My idea is to reduce NBCON_EMERGENCY_RESTART_FLUSH policy to only mean
-unsafe printing and not hostile takeovers. I think this should be
-acceptable. The changes against this version:
-
-1. Restore the WARN_ON_ONCE() in nbcon_context_try_acquire_hostile().
-(And add more comments to it saying it must not be removed!)
-
-2. Rename nbcon_allow_unsafe_takeover() to nbcon_allow_unsafe_usage() to
-give it a more appropriate name. The implementation stays as it is in
-this version.
-
-3. Add an extra "&& extra panic_on_this_cpu()" when setting the
-@allow_unsafe_takeover argument because that argument is not just about
-unsafe printing, but also about hostile takeovers. So it looks like
-this:
-
-allow_unsafe_usage = nbcon_allow_unsafe_usage(con, reason);
-
-if ((flags & CON_NBCON_ATOMIC_UNSAFE) && !allow_unsafe_usage)
-	continue;
-
-nbcon_atomic_flush_pending_con(con, stop_seq,
-	allow_unsafe_usage && panic_on_this_cpu());
-
-This will allow unsafe flushing CON_NBCON_ATOMIC_UNSAFE consoles based
-on the policy while avoiding hostile takeovers in non-panic.
-
-Thoughts?
-
-John
+Best regards,
+Alexey
