@@ -1,120 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795170425;
-	b=h0NR9dmlGFIPOguEoKqfx03UFMOE20hPBGd8wT/WOaDArMtjbIJhz0nNEcycUwYjzmoM
-	 Y0gYp8Ox6uEvUyg2Q8A3YjyK8DSty8LDFsJVIHF5xDxzVEajFsgoWeRlQ1loHAW0Ud5OK
-	 iATN4NVJBBnw0tmPLPWtdmITxpXkz0h6CoxNTr5N/fASIC08Qc3Qt6bU884SQkIHJHS+i
-	 sea4KwP/gGO0f60soJK6cx48Ij2JCZxtXNCm8MZfl91GZy2GmVd1d+3MeRn5WHj3McBt5
-	 sELHa5npFkJ/EcDOoVHR6/vvvjweWtRQfFdf+EJEPfTLNdj+YmcmBM3Cw398Iip0J/A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795170425;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=sqtvpGfRA5LrlR7FglzvD5iPxlTRXGw7iSiBMQnMByw=;
-	b=NPinAjC4iqmPXj5chsc6Pl09jXmNPH4WjuyU/ZAD65D6eXngQ+AKPD1cwyXoExQSm2cG
-	 /fEkHNYdJ4HulZDYQVtTnIjyoyMEya9KMfJrr3+8kKqzBxBEqGvS19PnsWXIOTPYOhVWE
-	 bka762bXPhApq1SkLZn8DpONIUEfczA3LkxT6/RYoR/nmNRixJt7xgr6ICg0aQAFHtm1g
-	 d9HOKXfIUR3KOgv4XwrWZi0+0yhk/NY8+tLK92MBj0EaMhbbeHinhv2GR+Q+GVJHTz3jM
-	 ysY9dg3QTNrv2q4OT3q2H2c7suys2NY7iBDzbYHbNDwLGzHDcGyI+wxRLROgbMQoJlw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=kroah.com;
-	spf=pass smtp.mailfrom=kroah.com;
-	dkim=pass header.d=kroah.com header.i=@kroah.com header.a=rsa-sha256 header.s=fm3 header.b=ZkPJJklP;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=AwFEZEZ2;
-	arc=none smtp.remote-ip=202.12.124.156
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=209.85.215.175
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1795170551;
+	b=cGQq8dYAHX+bJM51WAy6JhWXVEAdwkhO91xnviLW0oKVMpUthtJkmXvVppZyU9p+HGPP
+	 dESueupEBNZ1vqwgg7R8M8CDhN6uhc59hKyE9IPvR9xYm1Qai+6vbGTeGIbfzw9DvO8FJ
+	 PaszsOyj8rRKPSkqfUTqnnUJAx8yTDWwU1p4EeDQi2Fyi63Gz0nYbOPgpgbFIf9kYAEwn
+	 PfiHDyA+kAyN9S973hvnJxoFX+strPdiNo7PLi9efuY1y4M3ecISmuilWsynwYNiWm91r
+	 34oiCtElhqbQTUX5bTRRUwS0d0hBzsdUYTwZuF0Dd7x1uCm+84ENOATpbYfbvFyUCCw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795170551;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=uVsgtw9AnWofNH90qnHhiYcpUjxrPNJEDFOgQ0n6Gqw=;
+	b=AvhKQXtbGlA/864C7jNhol+KsaQZs4UK+L4KddoizZL0NCtuF2a+uqIt9fPyzbowRvvo
+	 UcuIGAHBXThERtsixA6wrWFg2iIFCP80PhUqPWx4w12airzUTy8p55GBQ06BxqjOKzGVW
+	 9p2cTvcw7lf7TslDQmLpYMILeBD5mvUGLNnQG2trLhmWNCN43MWcxln6J4iYirIpukc+i
+	 QurwE63cpgaMzE+ZUXBTcEpdWbcwTZD9YCNO25nwTxJKFq8zy/Q/elPhOcFDvL4Mpi8Mn
+	 GyymwRtpWX61Vt70Kihdm7Uhi5tc/eUsj9snSxn32VppZ0zUFehTiH+a8gIa8UvBwLg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="J1Gpe/vb";
+	arc=fail smtp.remote-ip=209.85.215.175
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1234606A330
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:27:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1234606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kroah.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D38606A326
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:29:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 41D38606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kroah.com header.i=@kroah.com header.a=rsa-sha256 header.s=fm3 header.b=ZkPJJklP;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=AwFEZEZ2
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CF9C7A0380
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 05:27:04 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 20 Nov 2026 05:27:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1795170423; x=1795256823; bh=sqtvpGfRA5
-	LrlR7FglzvD5iPxlTRXGw7iSiBMQnMByw=; b=ZkPJJklPphaoemP8OHUXLCd+Zw
-	UEHwHOB3YQuNvcxe7b+xyKuOTHc1xvOk26vBwIDPGUZRDH6G6CEa3EZMPZ2BUUHi
-	F5HZd/Oz0HDkNKb+h9N0jVesrJBt4b6Jrn4nKZXwIUkNte/D5rKRnRUzMc/S2kOl
-	y73TZisPlMOjmI9Vt6NGBvpNbxe7wFg7V5x80ZHGToyePh0w5xLK3DA/b5SHfd+N
-	5Bgd55TEsIgcfr4czPe8pT39PkWDTRypxvscsidjfY+AstcS3JTvisTb4dGiSWb1
-	Y0GGnmfXA6BDkPqaGqIF9bRbEJlo7uOGVCmLmDYIIMK4GR4uoTq8w/K/F5KA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795170423; x=1795256823; bh=sqtvpGfRA5LrlR7FglzvD5iPxlTRXGw7iSi
-	BMQnMByw=; b=AwFEZEZ2LzLMm7PSFoU+fZFe+yWWW6hPiuVmNIPDP5bP4BxZkXQ
-	An6T2ZoweBG+yGIMhaQ7r08tUyRmyqacfQl40bFA5zP8Vz+isk2YkaG+pkPI381a
-	wWyinqMMaiIOwWmoek5M2vE8sUpnJKn+IhZRfUOlZpJhHXNSmOZMjjmTk2AtfaCA
-	tBozIS90t9Uq/2SCrAh6zA8ZUBBsqR/sLDezLZF+z3F7ItDyV1VXQyR5KpdwfIf1
-	lROpstTC8pPfzaraatBlU4roszp/RmaXyEzpDMop3DSxlKvwYpTD4JBy5GeA+2Fc
-	dtSai45czd6t1i4ohk1RxQbMzLFdB665nhQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=kroah.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795170423; d=kroah.com;
-	mf=PGdyZWdAa3JvYWguY29tPg==;
-	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
-	s=fm3:rsa-sha256:fAF9FzF46vTx9DcAy2VbQXC+D6G6ULgEPIpjt5fNHsFDaka
-	lgbduz6V+Jjzo5/nNImc7uF4JPK2hx84TM1SnALbyziVLKPR1g9zllMw8J5Q3F6X
-	+TUa2WQ5WKMX3azD37VnC+SgCHFGuH6Bv0IFEAjG+7NPF5phagi+4YCASPVy3G/D
-	+u25lbPCpkbOGvVpPjhwIY7ckx8hcrkI5KdAkGQ3bxidk+nOERFEpGSowXHsDGqt
-	H1JagWe6hhShJsDPAauqzG9RKMVctCQ5md1JBEBLHLCqNAWoEwEU0wS61lwahNYO
-	uL2MLd+aO2pz+XFKHID9UhsHXva+93DkKHs91+w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:BebwPQmHYVEegXjc6hjMYvUNtjWewRwBzJu8gWTOpko=:5yHZwQOF2d4XcethyBIPk1L6TpLA/kYqKZ9KunJ07iI=;
-X-ME-Sender: <xms:dyAAa6xeWuaAWGFD1JiIXCpPfHjEjX0IaX5PODum9JT4DYTcQfKFXw>
-    <xme:dyAAa4jb5rLeyll8XFksCTpB-FGFIeH-o97DF49Dp9Tkyb37C8EshR23k0X-R0cU4
-    ykL9Or_jDlep9SPzctu27xBz2NHCLXAoTEUN7bCw5StVr2-qsk>
-X-ME-Received: <xmr:dyAAa-mEK9ISi-4AalReRx1jtqE7CSeCIyz2lbk6BhCJ8H2TBQnIsUr7p0JN8ydJT2GDfqIuVn3z4U0JTJsb0z6sM5gGJNtjuYFKmzTZAVc>
-X-ME-Proxy-Cause: dmFkZTGyUuU3Ufzythcaao9OzcyT8m5XBwO/0kVQLdA/GepU7ksrYgrE0xlPHc7MHjLVI2
-    82xnpAJgLU4ucyk6yJZ7+AIXKnhBolgfQfZ9heLwg7hnKu0rSk0SNJkGFoc8TGmCoa5QtC
-    R8Y6h5Av73LH/uxNQ+RdLmp7i1H/nQpRnYfs8afy+VXBbWNdRUyccaCPoHcdi/SEaAUVlw
-    /vWB8Xs8QHCwf2IioW1FWF0DYa0ltQ2TRxZ8jb3kiFbei1ZtgiqtnagjMMyIGiZrGlXbQP
-    XhjF/Q6KEu2k0AFq53SA0TM1nW8H64YD4q0E/iC4RQz3ersMrxhtC5AYGozVknN41NAGF/
-    DrEAS/+3IAxBzZEOBg22LqOBLKDLSu0ehRKhQLPGKsogY3fcLrDwozNYjyxw7TwmxRu6Si
-    lSb+0Ir7prcA39/i7SqMcRjqbbzqt1MJyiumLoRMUvTEeVOHR89EBZDV6rWF+mmHy/YZTf
-    sCGd+SolN6mrlUSWW0oHtkF1nc2SY694NcycOUFhEH+28nWa0l4rzrQjQ0MERBmRoRgx/T
-    2kfqkQhGs5QBrwKRA5ktHCkvf9tnY/PklGSVTH/FpWVjV91xYCh0i35E7UQu6dhKDJdh0/
-    Q4iUAaVw+lWck5nFoidLp6n9QGXHBj6d0Mtx/cz3M+jIfGuuSy0fYgrxl38Q
-X-ME-Proxy: <xmx:dyAAa2hbbLkXrQbXvOhW5iK9Nev8aAHqZYEDACbTXgxXYPh1JLtU9g>
-    <xmx:dyAAa60v1wjMTqm-mHZbwgi_1gVa8I7a8MtX-nR2dgIPmgCb9-uGpw>
-    <xmx:dyAAa3IaPmQBQ77SQD7nUboFkec--XDcYod_tccrnU0kNgB93o9lvw>
-    <xmx:dyAAaywKJitlNFLDXC5lYPtt_1mXNN3uEikdghD8oC2K5RlnJQ4lsw>
-    <xmx:dyAAayybZ44Xbdev3vqSqBdPzJTjul3UlfwOcpwIRMA2WtsHBgGIpfYa>
-Feedback-ID: i787e41f1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 05:27:02 -0500 (EST)
-Date: Fri, 20 Nov 2026 11:27:00 +0100
-From: Greg KH <greg@kroah.com>
-To: Chengyu Liu <lui2012qwq@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 1/4] usb: musb: cancel irq_work after masking interrupts
- in musb_remove()
-Message-ID: <2026112046-trash-blot-dd55@gregkh>
-References: <20261112160448.41566-1-lui2012qwq@gmail.com>
- <20261112160448.41566-2-lui2012qwq@gmail.com>
- <sashiko-outbox-211493@kernel.org>
- <CAE=Q7=4PdubbUYnNwcVHg1kbChe5ukOxD_uj8ee3+J7sW5OhUg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J1Gpe/vb
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-cd6acc50b8dso399332a12.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 02:29:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795170550; cv=none;
+        d=google.com; s=arc-20260327;
+        b=rColZkrXs14Jhf/670VSCWAeK1bWgV75pig2lPtilSCVx2+hacNXKgIzEASpJXsGOy
+         /YOo0ksx0OEz4bW+4PDWN6PLGT1oJ+fKjD6FeNkmwnvrv1oNM65+UyMasOXEg1GFCbjZ
+         3IWIpnVmoXOChX5nvNq7GBhMlCIw3rvZXpAvLpLxj1+JqmnqyquzCLqh02MCCJ985J5S
+         EslylESFIu2Z8TgdAJmEieAADXFHDQT0mEk6xjdYp2dyUCq+wEAs378fRm0rzg2REUoB
+         rhxfC0Jdi9kG1bM3pVEXQOoE6cd0LBn/zZ908XJ5Ed9R2gVg2/n3Kia6OnmMVtXEB863
+         VH8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=uVsgtw9AnWofNH90qnHhiYcpUjxrPNJEDFOgQ0n6Gqw=;
+        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
+        b=WUF6dKWV3MOcJAAMmuWxMuywm2TdTX4QPUPkRBEddnNER36f5vCGmKHjFOymF+atBL
+         /O/AGWrSLij1W4bbfaAecJJ52+4726R9uQUHKIL/KVbAp4l66E5bYL+cKe6Q4zE3qV0/
+         eaX5u8Fs1iHnYYpBj13aLoHlSFi1yzcbQDE2ZZ/vsUXV8VoXnTBO1FwmWCruH2J3s2oD
+         G9cMiHHRMDMgEsiLDLI7w5q2mCcRVEFY1Qg3NG6hMAJ9r5J01yWa91eLfEUGt9E9pJxQ
+         MNf7cZ/YEVXqXwZXzac7ecLP3mIPpR0wmyOzVufU5SLKAXI1aJKIAWyhoicABV0g6Z5x
+         jkuw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795170550; x=1795775350; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uVsgtw9AnWofNH90qnHhiYcpUjxrPNJEDFOgQ0n6Gqw=;
+        b=J1Gpe/vbRdwqS7JbWX7rmzaVi//YKO0jW1Jq+zN6I9AYxx7DXUIv8mAZlY70jl8/QF
+         JgFEHhaz+bC8gBJz/BPJ/zuvJ5DxXiSUPc1gFV0LyIx1z0g0I+vgcO2n4NC0l35WU/7L
+         gZFoDbLv36il/CjLCdPnafvskezoTdVS+/LolLQigYUzveqBozY1sp2NgXF61iOdKnjo
+         r1TMelFw6kuNBpsMPQNmnZbtj2LFtFZXqv9wOiYAkv+hZ7Rui444jyI+iO6eFvB3n8LA
+         ARk34jK9rpGqVfUXRN5og9FCnzYsvcDy7mcfLPK/ik7/ajpHzzfyoAh4aP/TNefexXzP
+         YtJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795170550; x=1795775350;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=uVsgtw9AnWofNH90qnHhiYcpUjxrPNJEDFOgQ0n6Gqw=;
+        b=qsPFC8wcTwEyyt3lH7syM2/KDbg0kf7wKhwV00daHKzmKLUpFOKmUbcPx+CWRSkIF8
+         5jPtaQ6zBaGJd5+ZkuffWUHq9QD+yeFdbPAvajhNT0NZ0inbf/BxoOLH/f1ulk/Zsf1P
+         PXwkPLLUQjJ3uZchXL7gQFB8EUm4VbD2TecbGDenhT7bBAktDJ0hpyCB3rX9aZClvB1c
+         tPVdX6k3vDdV0xBW8tFeW5+tiSvKL9hjTgrwz/+8Yb8Mjn6fAbli5n3Tqig5NtWMEyL6
+         vScIB8CIMdDO8QLKeDpUKvv8NvgJobGo6iy0h9Nnn8NKQ9tWPHp5erGD8vWEYTundI1J
+         3nnQ==
+X-Gm-Message-State: APuU4Z/uxsq/K2sgY4cnQZ+pM11TDGtWzCSJ8fkPE/A80G1giieT8Maf
+	MzWxsmL1oTey730cLH6SFHEcbNv/EtF4XO1azyH6VJnmPVasi2CfcNgnRiNptPOTkqD6nwgcBi5
+	+b8UeSfhl96ohwRCXHklBx2RziyG6j7PA9ZHK
+X-Gm-Gg: AZFdTZdswZ+Ft/q4hMjpXfExZ6qG9/sRNrxmi22tMyrDUognZE2GuutE+VC6gvnJ0Io
+	jaGcF3Xbi9sfpHFCzTZE5aw6JoDUDLg65g6W0uuNSE3fka4AxYpypZdfAo4wkXDAm+t8WosMdQR
+	l4yLts0F6RWHHSXTrHZ5AQNqziOo3TZGkXeknW0FGviR3LGwcHAcSJvzXxQAMjU/FUUM8MPor7X
+	Mcmf+T7R+jHRqbOESDt2iW3XgbLABocqcIOhWWFKPc3F9zu4Mm4Fy8qCr0q8Gw8Ba0BxuaaOgmb
+	F36I25EaMS6bbc+XRidEuEmdKQr5U0QPyRxm+PWVLlfgZQw/+8C3P+De+JMlaeoUs5YK/q23l8Q
+	IZpY4/4JGP/3Eu9n+bLvqya9NErMP8iGAtcA6SjLOVDdi59wPJ/AqCWVtsLvH/IPGAZhInAUxxh
+	3soliTM7A3PAiBZFCDbZI9EYgCBGja8IejVl+M+2UUxFuiOJJD
+X-Received: by 2002:a17:90b:264d:b0:3b1:bd5d:53a9 with SMTP id
+ 98e67ed59e1d1-3b41c9825a8mr2178054a91.63.1795170550564; Fri, 20 Nov 2026
+ 02:29:10 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -124,17 +103,30 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE=Q7=4PdubbUYnNwcVHg1kbChe5ukOxD_uj8ee3+J7sW5OhUg@mail.gmail.com>
+References: <20261120100408.8053-1-phucduc.bui@gmail.com> <20261120100408.8053-2-phucduc.bui@gmail.com>
+ <sashiko-outbox-224919@kernel.org>
+In-Reply-To: <sashiko-outbox-224919@kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Fri, 20 Nov 2026 17:28:58 +0700
+X-Gm-Features: AclHuK-SrE20lDTbd7YPskSVweT1_hnxLgkilNwL0_Ve5O-b4yK8MlqO-HwVMqo
+Message-ID: <CAABR9nE8o6h59mCJuSY6RGKGm0fme6qLqCZj591OiRArRapcDA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ASoC: atmel: mchp-pdmc: Mark IMR as volatile
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Nov 13, 2026 at 12:33:48AM +0800, Chengyu Liu wrote:
-> Thanks, f730f205cc51 is the right one. I'll carry the corrected Fixes
-> tag if the series needs a respin.
-> 
+>
+> [Severity: Low]
+> In 50291652af52 ("ASoC: atmel: mchp-pdmc: add PDMC driver"),
+> mchp_pdmc_regmap_config did not enable regmap caching, so regmap_read()
+> on MCHP_PDMC_IMR always read from hardware.  Regmap caching
+> (.cache_type = REGCACHE_FLAT) was enabled in e8c8e9de4ee3 ("ASoC:
+> mchp-pdmc: use runtime pm for clock power saving") without marking
+> MCHP_PDMC_IMR volatile.
+>
+> Should the second Fixes: tag reference e8c8e9de4ee3 ("ASoC: mchp-pdmc:
+> use runtime pm for clock power saving") instead of 50291652af52 ("ASoC:
+> atmel: mchp-pdmc: add PDMC driver")?
+>
 
-Yes please fix.
-
-Also properly quote your emails, there is no context here at all.
-
-greg k-h
+Agreed. I'll update the second Fixes tag to reference `e8c8e9de4ee3`.
