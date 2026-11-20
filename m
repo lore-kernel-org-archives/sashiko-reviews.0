@@ -1,102 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795178951;
-	b=i0tXJ53AjrwqXAyfhr7AJh61QNimhfUGOs9DsM3XuQJpMbyW4JAvKW5dEu5ORLeqXz8n
-	 f+fuv1J+4FfHyh7mBvJuC7yAlfr6pIrCRdZ5p7xEm/FcvhsqvpKJk8bhClCXmo+ik5kSm
-	 aeBnwukgdANhXI2PYADHC/B5yzT02lWNLUF2pGYmSQQK3n/pL0LTF87z55Xo/xBOps58l
-	 OKq7U5p1jNDOD5NXf2pkcvqbdxpgvEnWsAYV48ndVvWYjRvKu33NlZnooWCEF4K5UTPHd
-	 ZucsNtiZv3Jq+Bvuh+BIQEfoJWnegjwwS8gz58bnDBeUJp1iVxPXUi1HDrq/ZvWJreA==
+	t=1795179125;
+	b=BcpyZOorlMvxKXRw56+fq+MKj/Em4kBdptcRpGyekMeql01uM8I7jvUwJmGaBavsNXOM
+	 0UzhxC+Abi6U0/N9qCalbBluSclivwhWo3YPubNU1B6ssf+Yv2U7AD+76XYmQWFD+bgOt
+	 uwiDsO6UQcO5Fvd07aItllXlr7MrJIcmidO6zKEf9LtxcpoKuDh5UnXdkPAo0KJYc4RPM
+	 I++djt8VsGzQF3IA/7yFGsqCUYyEC5B9MhzaMWiHCGqPJdB+YbN1B4JSoYQVIZurnaALe
+	 iwnnNiaVHgnZl7TO+g8YilkEGvq4JTK9TWSc1mEPlF2m2A78XcG3FwcCBLi0HzmfVBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795178951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795179125;
 	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
 	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Flag:
-	 X-Spam-Level:X-Spamd-Result:X-Spam-Score;
-	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
-	b=SyC5VO0C6BM+q4bga320gi076n1HydII1mdoMaKVXAu0Grbmrs0lve3FZDCQ6C7WyNw6
-	 nuBNAYbzL5STlWnHa7yubpan06qJ3INJph+gjp0tho4v6/WlJgEgEMHIftKy3Rsd46Lkd
-	 bBwj9lKlZYSoeqB0ITernt8zDRsfezxblrslybL8onj/sStLSpl1M+EcxlDBt1cFk6aep
-	 tlrZLAVByTokZGpwgP99u4A39aEX+PdXSXF0v4yvdaMrh9eCle48fq+H7G0IuG0isJ5mX
-	 z66XsLg17kfgLIMZdAaimtDTiHnh2b0cSbnDso0PcD6rovdeqIXo3Ofps7UWiO+lxlA==
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spamd-Result:
+	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
+	 X-Rspamd-Queue-Id;
+	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
+	b=38EfE5nSxt3CYsVkP2Vx+VWB/VZtlKI6tRORro82aHqsEvI0E77Cvwxgr5ronC7+/hsb
+	 THRnAqr/05TWkTuJOIRFS8wgKqdzSydfCmQm5h4DiUKUd5tqLHfoNIMD/htMmPcEqxASJ
+	 EREgSZCcCXzvwjvPgccPcsk+Gm5qJ/ry+jypafVjrfvg86Xrojzah8/rwJum3yoHW8ksN
+	 LdA6IOjzgh2qDGuEzZ+2t7/iKmMlBPBeLMKTXV8FGNdTn6PWFNb3rM765crV3xWbOntOx
+	 pC9FIqJW8aMeIlKUwJPeG2lIRcM3RjkL3HC0r4Sbir+4OjkdPPZnRLxxkpUrQsiiJdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp;
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A0C606A320
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:49:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12A0C606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62743606A325
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:52:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62743606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 1BC2B21E02;
-	Fri, 20 Nov 2026 12:49:08 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 55F1C1F458;
+	Fri, 20 Nov 2026 12:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795178948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1795179122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
-	b=Npc5gcjmN7Ap2sD/UtKCDoWzPHzf/IJnj0wcNbGyneSK/SW2Nwgq9x0qn8CMfOm8N4yUpT
-	iol/3qE/FAn9IIAWzvzddze2vxsscH0q36YQxIe2HdBMVnPXgFFRaq6jhvj2DCp8VZL1bO
-	ifok9NFq5MU+17K2mbAINm0H2H1LzgA=
+	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
+	b=TNxe8cclQCphqCkhTdQHU2i9UAsO8pDojNHi4ttUXVDPXRn7uCoRnDfqXKAIuHZJSjLWRk
+	w5IZjy1NtdBM5iKjYL1u3rCokub3dbShleclZKwxh3f3gWpzSpNc/tQYHZ0inwXMkHWjHk
+	sSHcxfjIv+luu6pDDoizrz6lgqon4SI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795178948;
+	s=susede2_ed25519; t=1795179122;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
-	b=joLw8WF6pQrF6ovz+ga9h3yhoJxlSFObb8qNzBgIVsB2he0pzOFfiqemI6G03rqyhDUZ50
-	Keag7s/Oi36jEuAQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
+	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
+	b=uhEp6QtpW0Eztl36iBwfOcOV2x2IQ1Prgk0htrkcE2279Grifq8nEs4YXNv5er6jq3818s
+	xDontyO3tMrWS5Cw==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=TNxe8ccl;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=uhEp6Qtp
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795178948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1795179122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
-	b=Npc5gcjmN7Ap2sD/UtKCDoWzPHzf/IJnj0wcNbGyneSK/SW2Nwgq9x0qn8CMfOm8N4yUpT
-	iol/3qE/FAn9IIAWzvzddze2vxsscH0q36YQxIe2HdBMVnPXgFFRaq6jhvj2DCp8VZL1bO
-	ifok9NFq5MU+17K2mbAINm0H2H1LzgA=
+	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
+	b=TNxe8cclQCphqCkhTdQHU2i9UAsO8pDojNHi4ttUXVDPXRn7uCoRnDfqXKAIuHZJSjLWRk
+	w5IZjy1NtdBM5iKjYL1u3rCokub3dbShleclZKwxh3f3gWpzSpNc/tQYHZ0inwXMkHWjHk
+	sSHcxfjIv+luu6pDDoizrz6lgqon4SI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795178948;
+	s=susede2_ed25519; t=1795179122;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
-	b=joLw8WF6pQrF6ovz+ga9h3yhoJxlSFObb8qNzBgIVsB2he0pzOFfiqemI6G03rqyhDUZ50
-	Keag7s/Oi36jEuAQ==
+	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
+	b=uhEp6QtpW0Eztl36iBwfOcOV2x2IQ1Prgk0htrkcE2279Grifq8nEs4YXNv5er6jq3818s
+	xDontyO3tMrWS5Cw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A48AF134F6;
-	Fri, 20 Nov 2026 12:49:07 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DB892134F6;
+	Fri, 20 Nov 2026 12:52:01 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id hEUPIMNBAGsSRgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Fri, 20 Nov 2026 12:49:07 +0000
-Message-ID: <9ba8634d-d714-4967-9a59-1e0ffcf2f8ca@suse.de>
-Date: Fri, 20 Nov 2026 13:49:07 +0100
+	id Dq35KnFCAGshSQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 20 Nov 2026 12:52:01 +0000
+Message-ID: <f9b56145-b479-40af-ab82-d7b15c6fc962@suse.de>
+Date: Fri, 20 Nov 2026 13:52:00 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -107,15 +109,15 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/11] drm/udl: Allocate bulk URBs in helper functions
+Subject: Re: [PATCH 09/11] drm/udl: Synchronize pending URBs on each frame
 To: Jie Feng <hjf3108@gmail.com>
 Cc: airlied@redhat.com, sean@poorly.run, tiwai@suse.com,
  patrik.r.jakobsson@gmail.com, maarten.lankhorst@linux.intel.com,
  mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch,
  dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
 References: <20261119142114.152052-1-tzimmermann@suse.de>
- <20261119142114.152052-5-tzimmermann@suse.de>
- <CABOQOSW8f2Dw7DATTB-c1jhOzyo4BBsKh4cNVnEA0VpRJ=5H8g@mail.gmail.com>
+ <20261119142114.152052-10-tzimmermann@suse.de>
+ <CABOQOSWQtK8mxAR0c9HDSc0=j_hzPz1hYHDk-XF5ERcfdgq0Ew@mail.gmail.com>
 Content-Language: en-US
 From: Thomas Zimmermann <tzimmermann@suse.de>
 Autocrypt: addr=tzimmermann@suse.de; keydata=
@@ -142,169 +144,122 @@ Autocrypt: addr=tzimmermann@suse.de; keydata=
  SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
  Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
  4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <CABOQOSW8f2Dw7DATTB-c1jhOzyo4BBsKh4cNVnEA0VpRJ=5H8g@mail.gmail.com>
+In-Reply-To: <CABOQOSWQtK8mxAR0c9HDSc0=j_hzPz1hYHDk-XF5ERcfdgq0Ew@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-11.79 / 50.00];
+X-Spamd-Result: default: False [-12.00 / 50.00];
 	SUSE_INTERNAL_BYPASS(-9.00)[];
 	BAYES_HAM(-3.00)[100.00%];
 	SUSPICIOUS_RECIPS(1.50)[];
 	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	NEURAL_HAM_SHORT(-0.20)[-1.000];
 	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
 	XM_UA_NO_VERSION(0.01)[];
 	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	ARC_NA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
 	FREEMAIL_TO(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
 	FREEMAIL_CC(0.00)[redhat.com,poorly.run,suse.com,gmail.com,linux.intel.com,kernel.org,ffwll.ch,lists.freedesktop.org,lists.linux.dev];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_TRACE(0.00)[suse.de:+];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_TWO(0.00)[2];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
 	FROM_EQ_ENVFROM(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_ALL(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo,suse.de:email]
-X-Spam-Score: -11.79
+	TAGGED_RCPT(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:url]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -12.00
+X-Spam-Level: 
+X-Rspamd-Queue-Id: 55F1C1F458
 
 Hi
 
-Am 19.11.26 um 17:38 schrieb Jie Feng:
-> On Fri, 20 Nov 2026 at 00:30, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->> Move the code for allocating an URB into a separate helper function. Use
->> the helper for initializing the URB cache.
+Am 20.11.26 um 07:50 schrieb Jie Feng:
+> On Fri, 20 Nov 2026 at 14:48, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>> Wait for in-flight URBs from the previous frame before sending out
+>> the current frame. Throttles frame rate to USB limits.
+>>
+>> PC display usually runs with a refresh rate of 60 Hz or more. Sending
+>> out URBs for each frame at this rate easily overloads the USB. This
+>> results in display lag up to several seconds. Udl currently avoids
+>> this by limiting the number of URBs to 20 at a time. This prevents
+>> overloading the USB, but also prevents udl from using all the
+>> bandwidth available.
+>>
+>> Solving this requires more flexibility in the number of in-flight
+>> URBs. The exact value depends on the framebuffer configuration and
+>> the available bandwidth on the USB.
+>>
+>> Before removing the limit on the URB count, add another means of
+>> synchronizing the frame rate to the USB. Do this in atomic_begin, so
+>> that the USB has the maximum time between sending two frames.
 >>
 >> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 >> ---
->>   drivers/gpu/drm/udl/udl_main.c | 74 +++++++++++++++++++++-------------
->>   1 file changed, 47 insertions(+), 27 deletions(-)
+>>   drivers/gpu/drm/udl/udl_modeset.c | 18 ++++++++++++++++++
+>>   1 file changed, 18 insertions(+)
 >>
->> diff --git a/drivers/gpu/drm/udl/udl_main.c b/drivers/gpu/drm/udl/udl_main.c
->> index 67da676f0f94..a799d7710a7b 100644
->> --- a/drivers/gpu/drm/udl/udl_main.c
->> +++ b/drivers/gpu/drm/udl/udl_main.c
->> @@ -163,6 +163,47 @@ static void udl_urb_completion(struct urb *urb)
->>          udl_put_urb(urb);
->>   }
+>> diff --git a/drivers/gpu/drm/udl/udl_modeset.c b/drivers/gpu/drm/udl/udl_modeset.c
+>> index bbba1dee8e4f..caa0a117e3c2 100644
+>> --- a/drivers/gpu/drm/udl/udl_modeset.c
+>> +++ b/drivers/gpu/drm/udl/udl_modeset.c
+>> @@ -329,6 +329,23 @@ static const struct drm_plane_funcs udl_primary_plane_funcs = {
+>>    * CRTC
+>>    */
 >>
->> +static struct urb *udl_alloc_bulk_urb(struct udl_device *udl, size_t size)
+>> +static void udl_crtc_helper_atomic_begin(struct drm_crtc *crtc, struct drm_atomic_commit *state)
 >> +{
->> +       struct usb_device *udev = udl_to_usb_device(udl);
->> +       struct urb_node *unode;
->> +       struct urb *urb;
->> +       char *buf;
->> +       int ret;
+>> +       struct drm_device *dev = crtc->dev;
+>> +       struct udl_device *udl = to_udl(dev);
+>> +       int idx;
 >> +
->> +       urb = usb_alloc_urb(0, GFP_KERNEL);
->> +       if (!urb)
->> +               return ERR_PTR(-ENOMEM);
+>> +       if (!drm_dev_enter(dev, &idx))
+>> +               return;
 >> +
->> +       unode = kzalloc_obj(struct urb_node);
->> +       if (!unode) {
->> +               ret = -ENOMEM;
->> +               goto err_usb_free_urb;
->> +       }
->> +       unode->dev = udl;
->> +       unode->urb = urb;
->> +
->> +       buf = usb_alloc_coherent(udev, size, GFP_KERNEL, &urb->transfer_dma);
-> usb_alloc_coherent might map uncached memory on platforms such as ARM.
-> This might be slow for moving large amounts of frame data.
-> Would using kmalloc/usb_alloc_noncoherent be better?
+>> +       /*
+>> +        * It is acceptable to briefly block in this call, but
+>> +        * having it timeout frequently indicates a problem.
+>> +        */
+>> +       udl_sync_pending_urbs(udl);
+> Using usb anchors might work better instead of the completion I suggested
+> in the other message. usb_wait_anchor_empty_timeout() could be used.
 
-It's worth a try, but i cannot say for sure. The advantage of _coherent 
-is that is makes DMA easy. And we don't read from these buffers from the 
-CPU, so caching them might not help much for performance. In any case, 
-it's a separate patch series.
+Nice, I wasn't aware of this helper. I briefly looked over it and it 
+seems useful. It would also mean that there are two lists: one for the 
+cache and one for the anchor. That might be a good thing in the longer 
+term. I'll see if I can use anchors to the benefit of this code.
 
 Best regards
 Thomas
 
->> +       if (!buf) {
->> +               ret = -ENOBUFS;
->> +               goto err_kfree;
->> +       }
->> +       unode->alloc_size = size;
->> +
->> +       /* urb->transfer_buffer_length set to actual before submit */
->> +       usb_fill_bulk_urb(urb, udev, usb_sndbulkpipe(udev, 1), buf, unode->alloc_size,
->> +                         udl_urb_completion, unode);
->> +       urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
->> +
->> +       return urb;
->> +
->> +err_kfree:
->> +       kfree(unode);
->> +err_usb_free_urb:
->> +       usb_free_urb(urb);
->> +       return ERR_PTR(ret);
+>
+>> +       drm_dev_exit(idx);
 >> +}
 >> +
->>   static void udl_free_urb_list(struct udl_device *udl)
+>>   static void udl_crtc_helper_atomic_enable(struct drm_crtc *crtc, struct drm_atomic_commit *state)
 >>   {
->>          struct urb_node *unode;
->> @@ -191,11 +232,7 @@ static void udl_free_urb_list(struct udl_device *udl)
+>>          struct drm_device *dev = crtc->dev;
+>> @@ -395,6 +412,7 @@ static void udl_crtc_helper_atomic_disable(struct drm_crtc *crtc, struct drm_ato
 >>
->>   static int udl_alloc_urb_list(struct udl_device *udl, int count, size_t size)
->>   {
->> -       struct urb *urb;
->> -       struct urb_node *unode;
->> -       char *buf;
->>          size_t wanted_size = count * size;
->> -       struct usb_device *udev = udl_to_usb_device(udl);
->>
->>          spin_lock_init(&udl->urbs.lock);
->>          INIT_LIST_HEAD(&udl->urbs.list);
->> @@ -205,36 +242,19 @@ static int udl_alloc_urb_list(struct udl_device *udl, int count, size_t size)
->>
->>   retry:
->>          while (udl->urbs.count * size < wanted_size) {
->> -               unode = kzalloc_obj(struct urb_node);
->> -               if (!unode)
->> -                       break;
->> -               unode->dev = udl;
->> +               struct urb *urb;
->> +               struct urb_node *unode;
->>
->> -               urb = usb_alloc_urb(0, GFP_KERNEL);
->> -               if (!urb) {
->> -                       kfree(unode);
->> -                       break;
->> -               }
->> -               unode->urb = urb;
->> -               unode->alloc_size = size;
->> -
->> -               buf = usb_alloc_coherent(udev, unode->alloc_size, GFP_KERNEL,
->> -                                        &urb->transfer_dma);
->> -               if (!buf) {
->> -                       kfree(unode);
->> -                       usb_free_urb(urb);
->> -                       if (size > PAGE_SIZE) {
->> +               urb = udl_alloc_bulk_urb(udl, size);
->> +               if (IS_ERR(urb)) {
->> +                       if (PTR_ERR(urb) == -ENOBUFS && size > PAGE_SIZE) {
->>                                  size /= 2;
->>                                  udl_free_urb_list(udl);
->>                                  goto retry;
->>                          }
->>                          break;
->>                  }
->> -
->> -               /* urb->transfer_buffer_length set to actual before submit */
->> -               usb_fill_bulk_urb(urb, udev, usb_sndbulkpipe(udev, 1),
->> -                                 buf, size, udl_urb_completion, unode);
->> -               urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
->> +               unode = urb->context;
->>
->>                  list_add_tail(&unode->entry, &udl->urbs.list);
->>
+>>   static const struct drm_crtc_helper_funcs udl_crtc_helper_funcs = {
+>>          .atomic_check = drm_crtc_helper_atomic_check,
+>> +       .atomic_begin = udl_crtc_helper_atomic_begin,
+>>          .atomic_enable = udl_crtc_helper_atomic_enable,
+>>          .atomic_disable = udl_crtc_helper_atomic_disable,
+>>   };
 >> --
 >> 2.56.0
 >>
