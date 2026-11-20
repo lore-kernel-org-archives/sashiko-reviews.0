@@ -1,81 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795149914;
-	b=qiL2rDq6XApVLZyyi4FAgvI/P+NrDwwyBu3vwzziq8CQ3I825rA8SCrqvrA9jGXnymG9
-	 PlebcImml4W5h9RAKrYrqJNttWW2dH9hf0ATWlvOLHxGK6rcd1ce1yn7x2wrVoETHcPZm
-	 xIZGhIU2beZqyT8v8YmEn8nGCktZVAHHsb0cAdMh2E5fXekhokqchv8l8YuYZa8tDNB0q
-	 1Pmh9FGeJpBlmDvn8y5Dz/KZqd9B3t5hh09h21j4os/wL4u4sI4GML+RzS4+V5tc/vvE7
-	 gNEVKzymDdto5N7MrHcMEqBX5TIaFI2j7tadlsrNPD98mNBWDEHM2BtR69Eg3yesKbw==
+	t=1795150812;
+	b=jgjwCEg4wSRXPzz/W4/m7hgxqUgxL/tZZ/Q+InnBPrZ7wf7cMNUEASggOSb/I+SK0ObK
+	 anrRi164h9zaOwZ0UW8FP/njTGJmzH46T77JjQOrstB1rZmIgZkS1ajWpmpHZiXpym3LK
+	 fFw7xZarvRVwaVLYonCL49CY4cQSnmza7x12E0uQm8tOsgbZp6ZOB0DOeQS4mkYvM0Tk/
+	 HnTNX1uzEhkwIL0Vh32Jg/24NImvwqedZ+nRvGx99OgH2yejV6X/6Sma3cMsr/Sk8f9NB
+	 lltXszn0/afuKDdLTB8PnLv8U/bx8Pa8b9YdiuMJqWvKt7f+hF8xpsVewPU6V16Kstg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795149914;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
-	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=v+B77fwkqptEoKN+IMmcaaDy0E8T0emPfjLkiSTP7Sk=;
-	b=gvGs6nIEQYsWgvXtg5jiHMX2/8GlEMt620hVmUYAP6YbBQVdATRN3gY90KbD/XT7oPOo
-	 bVugVU/WuuhORciK3HorY16dYR675F6UXABMB9klLNM798CYfYIod2vXz7PGzuH5Ictl+
-	 61z2/uv0v2D9/8Q/fizxZ+soPF4QhfVB0VJcm2ssFHVXwbyFa1564gUmXWKkwF5m82HYA
-	 YRaHXmmqZ5kouTBopoQkxAza+wf2fSEbLp/VMfGsd5KEkWvDARhMbnIoK6h8+hXVkvZy4
-	 hlBgH+pkdQbKnEdmg5Och7CTgXKXZHyqWSa9/lpp3eD5EMMjt5kgWqy4XFSI9bwVV2Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795150812;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:cc:
+	 Subject:In-Reply-To:Message-ID:References:MIME-Version:Content-Type;
+	bh=qcKqx/660BDgHBKgHfBMjoLNxeFlmOefa7B0L19uKZE=;
+	b=MlnDEssMF+F/gqX1C+4V4Oo+40AlLsPAIp1c9OfxfGuq5GI4DPUboFqwpTpuxFBogQTT
+	 HVZ/a5zDve34iT/zKdCj6ZhUTwoMJpe/AqDxqGjbt0eJeqJWtbFCjk57vmAwpg7RhOfcv
+	 1QwBtxej0xAnjy2TUJ34BLMb0nvyJrYdFKaa3pVWsCzjFmiqRnDolmOysEb5JS8VgvTAP
+	 BEscYHrXVZXKOLmuk6LmrrYtgDfABpVPTOrllzUNKWWGlC6nZDjvPwADP3UHWFnbLJ0mC
+	 Ja7fuGoh0rjdZMAvLS4tbcPdWm6LmK01sh5UiJhsdlnRnLqXodZ3b5EqS6NQrsM56HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b="BmjHRpV/";
-	arc=none smtp.remote-ip=148.163.156.1
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hgLK18yG;
+	arc=none smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E779606A325;
-	Fri, 20 Nov 2026 04:45:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0E779606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627E1606A32A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 05:00:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 627E1606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BmjHRpV/
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AK3ufha1982242;
-	Fri, 20 Nov 2026 04:45:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=v+B77f
-	wkqptEoKN+IMmcaaDy0E8T0emPfjLkiSTP7Sk=; b=BmjHRpV/gzb8K+Mon94K9d
-	ShVXQaDyM2DM/QlXY0OTJOkkE6LZel9KO+j3nKq2QTXOzpmg2nQRxO3qa1raiLjk
-	QWmGGPcKFQiFWHH/OzI6ad/kcxdSKpZuPW9Ika8JVNLh7FiwPz0WTzukpZH8Be1J
-	8zldysRrsQgQZW3oUpJEUGEER5znCSqRSkUNuYCvuDeJxyhtfy7X5HH5S6C5agiB
-	MF2xd+7nLMpRceznU7iXP7BL0kr5uS8BarslVhdCpFad1taXQO9DiQNnDOhKF4pF
-	GjKwN3/xOoM6vb3P3qZApV+lFdcfKlXh9olZwLBDY4ES3+cB8/NDz+Qkfx1+usOw
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105te7dn-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 20 Nov 2026 04:45:05 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AK3Z0Lk1655855;
-	Fri, 20 Nov 2026 04:45:04 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j1m3j05wc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Nov 2026 04:45:04 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6AK4j2iG45744426
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 20 Nov 2026 04:45:02 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4DDE420043;
-	Fri, 20 Nov 2026 04:45:02 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9CBE52004B;
-	Fri, 20 Nov 2026 04:45:01 +0000 (GMT)
-Received: from [9.124.218.70] (unknown [9.124.218.70])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 20 Nov 2026 04:45:01 +0000 (GMT)
-Message-ID: <538f4b23-d533-46c9-b580-c8c0f1ef14e0@linux.ibm.com>
-Date: Fri, 20 Nov 2026 10:15:00 +0530
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hgLK18yG
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-36eb1cb7aabso615135eec.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 21:00:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795150810; x=1795755610; darn=lists.linux.dev;
+        h=content-type:mime-version:references:message-id:in-reply-to:subject
+         :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qcKqx/660BDgHBKgHfBMjoLNxeFlmOefa7B0L19uKZE=;
+        b=hgLK18yGDy8546TD4I/2Y9iSQqu7GTrBrIVzuGwQUiehEhgb33ZFBbIPARUq9DH77R
+         D1Rbb2/89ktPnGV630aUpgsQpxApu3sbVDzMY0YYZFLGgOVX1fdc1t6bIaPR39XcKSGu
+         qGuHhqOikQ3l+zCxynZEdInspcu35fETftpIOAeLucp70xhwGA5HOenawzVZhf1Ck0fx
+         VyeZySigAr9hhuIzPJ5lQ8BthaX5KzgNAhO/Sp5DbT3eDTkeSC9sZE7XUENcsIDY6Zk/
+         fOGO7idrGG4m2U/LLSee/ylcsPaU0HAnG+SpCGOGgOfX1F6jK/VHZrOmQibm0Ufqmz4K
+         0VYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795150810; x=1795755610;
+        h=content-type:mime-version:references:message-id:in-reply-to:subject
+         :cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qcKqx/660BDgHBKgHfBMjoLNxeFlmOefa7B0L19uKZE=;
+        b=1IA00B3XxN1zzeIHujftOQI8KZy3fmKMsRCZHJBWGLpv5b+DIPebY0OWDEx0iCYrHL
+         Uv54voWOYBb9yyMs/tGoiLIoceBdwh79w7Sj/muosPbPmeJ1XLX9IzIyOiyGWTg4m1+G
+         4uI8a+50x5pA7VLNIUle/2O+rOswis9oL5WzQ2Fziu8XW/o5S2MqFx6pS4vDacqfVKF7
+         zjE+lwuEMPzkT8eVLZWjCzpDs01RN3FhWWeSI42qx0YuYWYy8Yx/CK7xoY+K5/yy8xpf
+         Na/PELMNUdt3e7focVtRZNJpw8IZw1tOrwubGJ3jkFffg5TnqmBGj3wOShSKodFA3/6w
+         +piA==
+X-Gm-Message-State: APuU4Z/IGEnJx6a6rK2QNU4XBkg7K9U5Tua0sJ+brfe2cAWxiuedeowr
+	5mziuKjZKHWtGU33yVCSJ7PDfcJ4Mn40xynOH9ja2LNPWX6666v+qjoLsLF1n+NBGMY=
+X-Gm-Gg: AZFdTZeNYQCTLLkXqZPgD5vJ7ViqFa3TAWJXzgvjNSLZXQKEeIlFVVb1HTumB2CC+Tw
+	8CfinDwtQWibmp8jbqqK+KVX3lJTV+TiM2ElThqhsnQXD2C4hjG6RLzmbEjKp5Bsc6W7BCIBVFT
+	ObOJ0S1AHQy4GLBK08i6Y5J7ErvTGGyVzwKttY7+BbQlu6wkkJ4KDPZFwYHhwkIVtmcdih59Gse
+	LthPyzva1DCfTEJkB4klPC80Gy51+A5Z3cXru9je1kogo/NHZvNQjP67kXoFgReICMpd5Ep9H+N
+	mRzPW7wJPv2PkXCl0pfte+6H43wxgTBxmVMYK1g90gKqn3wmKjUCwz9sr0JOCwimUJ1OvBbIddD
+	7Qg2nIOAJG7KxjojoLblLgmHnsxYV9hk9JneRE6KR9yAZnjc58MYT7R8BnL9xWseGcybnzo/nJx
+	F3gtokwWkuuhyM4TVMngdP5MvRRuv2EZutdEF0OGR4BV3eN9EXDsvHx9W04ioXrwWrw+TmPGPvz
+	naoQ/APXWh8lgQpStgdKdaruO7Vcxox2mVhEDe9eRZnPfc+yvzIvpPZxSYOh04BNFPTnGPjCYwp
+	v3dZcJsGlbCdPfR/ABXezk6tspEZNIS6H2mfWSbGgCpYM1T4VIEoXn3MAfSUk1efQcMxRoda4Cw
+	Cooy7tJjdvXE=
+X-Received: by 2002:a05:693c:88c8:10b0:385:4637:5d92 with SMTP id 5a478bee46e88-3856f65de0fmr1475681eec.11.1795150809773;
+        Thu, 19 Nov 2026 21:00:09 -0800 (PST)
+Received: from DESKTOP-7QP7L26 ([45.190.211.142])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38566cd40c5sm4409841eec.10.2026.11.19.21.00.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Nov 2026 21:00:09 -0800 (PST)
+Date: Fri, 20 Nov 2026 02:00:04 -0300 (Hora oficial do Brasil)
+From: dev12124 <joaoanandalima@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+cc: Ard Biesheuvel <ardb+git@google.com>, linux-efi@vger.kernel.org, 
+    Ard Biesheuvel <ardb@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>, 
+    Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+    Albert Ou <aou@eecs.berkeley.edu>, Huacai Chen <chenhuacai@kernel.org>
+Subject: Re: [PATCH v4 06/19] efi/libstub: arm: Size the decompressed kernel
+ allocation precisely
+In-Reply-To: <sashiko-outbox-221779@kernel.org>
+Message-ID: <0c221d69-fb50-e266-6054-7ce6360fd677@gmail.com>
+References: <20261118182105.1633603-21-ardb+git@google.com> <20261118182105.1633603-27-ardb+git@google.com> <sashiko-outbox-221779@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,166 +98,78 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/5] powerpc/pseries/eeh: Add RTAS error injection
- helpers
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20261023073642.59657-1-nnmlinux@linux.ibm.com>
- <20261023073642.59657-3-nnmlinux@linux.ibm.com>
- <sashiko-outbox-182440@kernel.org>
-Content-Language: en-US
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-182440@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=IouL47/g c=1 sm=1 tr=0 ts=6affd051 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=QyXUC8HyAAAA:8 a=VnNF1IyMAAAA:8 a=9vqKEf5Rp1BOlTc_L4UA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 5b6ws5LknsHjSdTpxe9vCohWMaBL8Tql
-X-Proofpoint-GUID: 5b6ws5LknsHjSdTpxe9vCohWMaBL8Tql
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDAxNyBTYWx0ZWRfX1Syqa4lCQtXe
- 1VfBxutd1na1qZe+cC1Pfyhzhs7Xp9VNMQCX2aSww9xBeaiN6654ldLp0/DSnJG4TxNYVRSyNa3
- 3iyvWRitfBxAwgcwp1GO4LUjaRqlRmFPhMUD8injfkjGiI8GaSf5UtidBnRXqTQL7bQRe8lWIX3
- Dy+s396Orp88YpyIOeqGnj0V7jiFAx9M6BM9IKbVxeOKVuJdJE+8MoLytjBhVxKt2j+ZVlhHq3b
- 5/GHgbzz9YVj0fSlk99Qm/OhyU4oN6W0FW2c/yFupvN6qSEET3N+WnFZEjGtNa6tMZSYwpsIutP
- lCv3FnQYAzfY0+90SzZVJDX6vP4Q6xMr5E8uIIyqZA9RlKojLcTm+AvjHQ00jMGSINzj1BFDFak
- VySVK8Fb/DwAxV0AcOD8nQqlpAw6NrzfvKvfUjyGEwd3zq2uKbMeUvDnTllSCE4IlhHM81vaRs1
- WdOkB0kaoAtX1aGYa9g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDAxNyBTYWx0ZWRfX6YvbTN2iG4Y8
- DCMFh++iDT58ARaFkL98OVicV/luyvG65wE6CkvZsa4aYgoCBLDxu+gL5/JqxTO/DnM5ogOtppZ
- 2rH7/sISnW2Mfms+IS+q/XnceLGk5hw=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-20_02,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 priorityscore=1501
- lowpriorityscore=0 suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611200017
+Content-Type: multipart/mixed; boundary="3760872-206-1795150809=:13716"
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3760872-206-1795150809=:13716
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On 23/10/26 1:19 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] powerpc/pseries/eeh: static RTAS helpers defined without callers
-> --
-> 
-> commit 8b171281b038661dc89a614c1b95db68271706f4
-> Author: Narayana Murty N <nnmlinux@linux.ibm.com>
-> 
-> powerpc/pseries/eeh: Add RTAS error injection helpers
-> 
-> This patch adds static RTAS error injection helper functions,
-> pseries_eeh_type_to_rtas() and validate_addr_mask_in_pe(), to prepare
-> the pSeries EEH backend for RTAS-based error injection.
-> 
-> Closes: https://lore.kernel.org/oe-kbuild-all/202512101130.EYUo0oZx-lkp@intel.com/
-> 
->> diff --git a/arch/powerpc/platforms/pseries/eeh_pseries.c b/arch/powerpc/platforms/pseries/eeh_pseries.c
->> index b12ef382fec70..28b1fd19e8bcd 100644
->> --- a/arch/powerpc/platforms/pseries/eeh_pseries.c
->> +++ b/arch/powerpc/platforms/pseries/eeh_pseries.c
-> 
-> [ ... ]
-> 
->> @@ -786,6 +789,137 @@ static int pseries_notify_resume(struct eeh_dev *edev)
->>   }
->>   #endif
->>   
->> +/*
->> + * RTAS firmware error-type encodings (PAPR).  These are pseries-private;
->> + * user-space sees only the generic EEH_ERR_TYPE_* values from eeh.h.
->> + * Only IOA bus-error types are supported; other PAPR encodings are not
->> + * reachable through the generic EEH_ERR_TYPE_* UAPI.
->> + */
->> +#define RTAS_ERR_TYPE_IOA_BUS_ERROR		0x07
->> +#define RTAS_ERR_TYPE_IOA_BUS_ERROR_64		0x0f
->> +
->> +/* Size of the ibm,errinjct work buffer as defined by PAPR */
->> +#define RTAS_ERRINJCT_BUF_SIZE			SZ_1K
->> +
->> +/**
->> + * pseries_eeh_type_to_rtas - Map generic EEH error type to RTAS encoding
->> + * @type: generic EEH error type (EEH_ERR_TYPE_32, EEH_ERR_TYPE_64)
->> + *
->> + * Translates the generic VFIO/EEH error type passed from userspace into
->> + * the RTAS-specific ibm,errinjct error type encoding defined by PAPR.
->> + *
->> + * Return: RTAS error type on success, -EINVAL for unknown types.
->> + */
->> +static int pseries_eeh_type_to_rtas(int type)
->> +{
->> +	switch (type) {
->> +	case EEH_ERR_TYPE_32:
->> +		return RTAS_ERR_TYPE_IOA_BUS_ERROR;
->> +	case EEH_ERR_TYPE_64:
->> +		return RTAS_ERR_TYPE_IOA_BUS_ERROR_64;
->> +	default:
->> +		return -EINVAL;
->> +	}
->> +}
->> +
->> +/**
->> + * validate_addr_mask_in_pe - Validate addr against PCI bus BAR addresses in PE
->> + * @pe:   EEH PE containing one or more PCI devices
->> + * @addr: PCI bus address to validate
->> + * @mask: address mask (passed to firmware unchanged)
->> + *
->> + * RTAS IOA bus-error injection uses PCI bus addresses.  Linux PCI resources
->> + * are CPU/resource addresses and may differ on pseries due to PHB window
->> + * translation.  Convert each BAR resource to PCI bus address space before
->> + * validating @addr.
->> + *
->> + * Zero addr and mask are accepted without BAR lookup (no-address injection).
->> + *
->> + * Return: 0 if valid, -EINVAL on invalid input.
->> + */
->> +static int validate_addr_mask_in_pe(struct eeh_pe *pe, unsigned long addr,
->> +				    unsigned long mask)
-> 
-> [Severity: Low]
-> Does defining pseries_eeh_type_to_rtas() and validate_addr_mask_in_pe() in
-> arch/powerpc/platforms/pseries/eeh_pseries.c without callers or
-> __maybe_unused cause a -Werror=unused-function build failure at this commit?
-> 
-> The commit message notes that validate_errinjct_args() and
-> prepare_errinjct_buffer() were deferred to the next patch ("powerpc/pseries/eeh:
-> Implement RTAS-based EEH error injection") and that pseries_eeh_err_inject()
-> retains its existing MMIO body here so each intermediate commit builds
-> cleanly with CONFIG_WERROR:
-> 
-> arch/powerpc/platforms/pseries/eeh_pseries.c:pseries_eeh_err_inject() {
-> 	struct	eeh_dev	*pdev;
-> 
-> 	/* Check on PCI error type */
-> 	if (type != EEH_ERR_TYPE_32 && type != EEH_ERR_TYPE_64)
-> 		return -EINVAL;
->      ...
-> }
-> 
-> However, those deferred functions and the updated pseries_eeh_err_inject() are
-> the only callers of pseries_eeh_type_to_rtas() and validate_addr_mask_in_pe().
-> When building with CONFIG_PPC_PSERIES=y and CONFIG_PPC_WERROR=y (in
-> arch/powerpc/Kbuild) or CONFIG_WERROR=y (in scripts/Makefile.warn), won't
-> this commit fail to compile with -Werror=unused-function until the follow-up
-> patch adds their callers?
+Hi Sashiko-bot, Ard,
 
-Yes, good catch.
+A few points in arm32-stub.c in your patch:
 
-Although validate_errinjct_args() and prepare_errinjct_buffer()
-were moved to the implementation patch, the remaining two static
-helpers are still introduced before their first callers.
+>> ...
+>> ...
+>> + extern u32 input_data_end[] __aligned(1);
+>> ...
+>> ...
+>> + unsigned long kernel_memsize = ...
+>> ...
 
-I'll merge patches 2/5 and 3/5 in the next revision so that all
-helpers are introduced alongside their callers, avoiding the
-unused-function warnings in the intermediate commit.
+I agree with Sashiko Bot Review. In my current tree, I verified:
 
-Regards,
-Narayana Murty.
-> 
+In vmlinux.lds.S:
 
+.piggydata : {
+    (.piggydata)
+    __piggy_size_addr = . - 4;
+}
+  ...
+  . = ALIGN(4);
+  _etext = .;
+
+In misc.c:
+
+...
+ 	ret = do_decompress(input_data, input_data_end - input_data,
+ 		            output_data, error);
+         if (ret)
+ 		error("decompressor returned an error");
+ 	else
+ 		putstr(" done, booting the kernel.\n");
+...
+
+In arm32-stub.c:
+
+...
+efi_status_t handle_kernel_image(unsigned long *image_addr,
+ 				 unsigned long *image_size,
+ 				 unsigned long *reserve_addr,
+ 				 unsigned long *reserve_size,
+ 				 efi_loaded_image_t *image,
+ 				 efi_handle_t image_handle)
+
+ 	const int slack = TEXT_OFFSET - 5 * PAGE_SIZE;
+ 	int alloc_size = MAX_UNCOMP_KERNEL_SIZE + EFI_PHYS_ALIGN;
+ 	unsigned long alloc_base, kernel_base;
+ 	efi_status_t status;
+...
+
+I. Analysis
+
+    input_data_end sits immediately after .piggydata and right before . = ALIGN(4); in vmlinux.lds.S, so its address is only 1-byte aligned.
+
+    Applying __aligned(1) to extern u32 input_data_end[] does not prevent an unaligned 32-bit word load when input_data_end[-1] decays to
+      u32 *, which can trigger an alignment fault on ARM32 during early  stub execution.
+
+II. Suggestion
+
+    Declare extern u8 input_data_end[]; (byte array, naturally 1-byte aligned without attributes) and read the uncompressed size safely
+       via get_unaligned_le32(input_data_end - 4) (from <linux/unaligned.h>).
+
+Thanks,
+João Guilherme da Silva Freitas Lima <joaoanandalima@gmail.com>
+--3760872-206-1795150809=:13716--
