@@ -1,158 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.66
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.19
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795165602;
-	b=fWTwiVWdwZdViEjCbzWteWmXWZy0ELRyKXDCQs+sJnVP7z3eT6gl9cAghuDeUCazgtBh
-	 SoINhx4ju+KH3pWNl4P8SitqblV4ZlcRAYNpkMrXYjnjgxXmbSmsl27pcQyiE/14IOJNh
-	 oKN/AbjPW16FMmDYzE8cOeSS65eglC8vXMwc9sY8H1LitQuUxYie0OLvdfXF72p8ZYrVH
-	 34hEyQFS6uhzzNyGmPFDmnApql3sAixsMU641Ftg3w3YlHyxVXPF5tPlMrGRDr9ppKStX
-	 PBzJcUphiQcJUNbSicFgBKrYXKk7v5Gg/kmh10l+LtkH7yfAfNJAfvFB+FBoaSsEaJg==
+	t=1795166493;
+	b=0jqN2st1oEcLrI7AX3ceQE672lHoXTqbwzzMwS8pv2gX+KdnOkaGhlCfQGyF0pUIBJXq
+	 wXk2K+e7KwBoVRxNjHVofG/8bm4CTEsB+Wgw1Cyrpe6QLi0lCO7YiQlhK9/jtC25OOPfx
+	 1oY8N7/HqI26zSrJvhwaFGHpO+SDk3cS6fppGI6Rj1X6Dzj1KdGWIvx1sOcjWN0YvW0s3
+	 RrGqkE9jVzlFiKRFy1WMDdgbItA3jyK8FO0XKOEnW8UhhmARgVJnizl5MHfoSr/NGatlQ
+	 K60Jlp3noLbl23YCyW+VqkTEl9arJuEznfZDmiusQoFpheoxccap5H62GnwB9FmosFA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795165602;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 user-agent:x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:
-	 x-ms-exchange-atpmessageproperties:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:
-	 x-ms-exchange-antispam-messagedata-1:Content-Type:Content-ID:
-	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795166493;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=9yEz7TC2Up3zHNT+uSXg4EJ6KRqZOH2tUaHIo69leFw=;
-	b=tQjr6jfJ/LtTxwOxwuiD1tVhXJNuKc+fZfAhsQDJ5zMj8cxuyt5NIWPmBHgk0XvQh3P6
-	 rUirQ0pFUiJ0UTiXjGxX9dh7gI6MdZuIIPHfLR3dPNmFC3bXcO5cf8IsgCas/W7+tkz8o
-	 JbUyp3QDKLmf8yfR7nKoUdwg5KP5IHHV6HY+3zXUjTA3m2dzFf59ZPBeAiwzQU6wyWWUK
-	 oWGKyIO4kesN1QwM+pv7w7MMHrV8TG8bTBABDtUQ3KCEAz9MkfnenGjg+FMmuJQlu8xmD
-	 wX9RO8ucjzxCGdPl+U+V8mJi8yaS+sezELTb6AbHljuEYp0A5j/0FEO8kv+C1p4XsSw==
+	bh=WhG8BMTdfIRSxMF8pxSc8qSh9gRDBzGpG4ML3i5B9X4=;
+	b=E5XRhPHNtGa0n6X9W9oDL9wFT/AtTWL7RuIzPflFxoJ/hN9wgt84iq8Q0/ppbpKulquy
+	 fdj3d+XwOtFwcIurBSiek95r+i6tgYlMJdZZ8I+VPPKK26Jf7EqR+doC5CcdWLfsKQwcg
+	 2w7mB53S2MJk+j93euyna8AkHrws7lkVvcrDnPGUvBEEsoFE9QyT+zK+brgappZ6VZLyw
+	 M3ilaGCG/n6uS9uyVXeEMUA3jYX6Hyg9qK6tph92RlhfhYKH7ubl+FfXkcwGVUMHi7N36
+	 Sidf6JobR5wR4Nyeqw7ZAvjUPxJbAqtDRY/L3XHZuKtP0cIGflHy/Lcan7LRkYbrWpA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=siemens.com;
-	spf=pass smtp.mailfrom=siemens.com;
-	dkim=pass header.d=siemens.com header.i=@siemens.com header.a=rsa-sha256 header.s=selector2 header.b=OidmaC1V;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.66
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011066.outbound.protection.outlook.com [40.107.130.66])
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ccaUbRwG;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.19
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011019.outbound.protection.outlook.com [40.93.194.19])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAA1606A325
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 09:06:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4DAA1606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=siemens.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=siemens.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B793606A326
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 09:21:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B793606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=siemens.com header.i=@siemens.com header.a=rsa-sha256 header.s=selector2 header.b=OidmaC1V
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ccaUbRwG
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nxr1LgF3IL6ETkksXnRtKlEg+bEdpNfSRDV1grbnrifbWrxdNO8fDawObCyGq9eYdZE95L6l3J5KwyirVcQBSIZA1gM0sGzzJfdiqgtaTxZ74aOVAyRV9uvNcUWTZChNCyejGfDgG3aEprgAwxBLpeLhNiR7Fi6y6eVWhVpzuMSdY2qmND8uUD1w02uR51Ro/5d9wyAsQ8E/RdU1DKAK84opDWablbftApHQKe/dLui/hFqGo7uDY+BErhJfrupc1QUCznNZ56utEd8ZktQQjyGW8h0zXfrUe6AUiiJuPbIRFEbHeKOvFgKdrWFMtzhCmZ4E/urZwxkmupMd0UEPfg==
+ b=PcUYJB7cZXmWJSgqnu/Wshviz42y2ZuwmNiH9RxxDWEVOf0vG3C+VFBamMOG4W+0vMAczRurKbOPc5ZBpk9waYQ5WvRW+PzJ3LNchDoB22Nk3pB5lyrh9CuaR8uNsO6YC0ntoR3v9x0+JOoDNyid+HvH55V4rz8SoFgPVVDi6bQRVDIwV+ncPPFiO07pFJU0RAE+8r62C8OUAgweTC90ZxmWCH8c4G1JmBTnaG0Wg6jSoKjxu7lUM4z8XQijIKS6MEQPHYkULRZLDB7vgQPUt8NeD9hj4NSNL+Hr2EvqviE1oeV2uXfyZb7OqkQH7Wig4Le7MA8DMZ5QFSQtPzRT+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9yEz7TC2Up3zHNT+uSXg4EJ6KRqZOH2tUaHIo69leFw=;
- b=FqvKYhuXhfSeddU+RAm4S2mT4d/EZXKSemjFvTg1dn1HgWDPanfdbha7SluoEgtTqF8Mngjms5eVJ4Olqhnm/brj5niKyr16djwdOVlSvNSOGF/sfe8WCMBTm5CLNFg9+RjZ5Gp5t4B1p47FIfBBshp0BO1IAJZe3MhDMRZs5i3s5WWMK/rzMqsVmfPDuv3g1DwNzxzv45rHCk2ZhuEJ+Z3O9upPnoIslaIDJljpS3nkvVozSfYPqHLOYSabhZvuXbal7rkHs+s/AMxCN7CcPBevcK1oiX8LgW6axLxqF01QpfFp1Cl/I/z/yyA17V2BfuFRKqqrDCgpTr0GDK/u7A==
+ bh=WhG8BMTdfIRSxMF8pxSc8qSh9gRDBzGpG4ML3i5B9X4=;
+ b=YnfsqKFCJi1EtggAZgs4ueyS0OLkg+IgHvUH5eWUDWNvfnhX3I1L2hb9UDESfJ5LlbDmaSmjvVdN57zvwCyyIQTIzhG9TTwZskO3vCQleLm9W6lT/2ipv5y8Z8awUdAbW+ipQEQly9mSeNPNG99n2mwCBIYhEVJfU3p155a3nZO9qS5zeCZJvcAI59QVn3KHXG8VvwzSNR9uLlzgLINiY+TBh+0VzdaLPJ1X4ubVscMnlTRAiiFcmxLn83a/YMsfex68BQXAkDUjBHaRXtG9JGsbGpKm0MGifKYl62AIjzwQQIwyU4JJvY5XoiwAiYFEx37JCf3m6J12vRuhxG6vrQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
- dkim=pass header.d=siemens.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
- s=selector2;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9yEz7TC2Up3zHNT+uSXg4EJ6KRqZOH2tUaHIo69leFw=;
- b=OidmaC1V7pNI/Z/Vly7gA77UuER4ck5LdgvdrUDCBbQJCt8VmjqHhCFbtEm1BwDoBM1vkc/o57JW9lOx3JXMmTm6rAWO3afbvazl8W4P6Kzi12ebBSogaLoskK9njojZUfqbMhMni/NEgi+jUqnTBkqikL07zsn2JP39okn1aWzqF2fPE/sPQFPpbMor5Hlgprf+P+8mJolW1c9JFXekLIMdBH5+n/c6TTjc+3DYZGLtMjirPvBns4afnFPGhzh0DwAQp0dY8ntHgx8wbZ9P4ANkxoknosRY8dDZgUnMnKfBvzX0VqI7H/0G6I8AgNcWWjqxiZDWRBGGrrxFxhEPCw==
-Received: from AS8PR10MB6867.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:5b6::22)
- by PA3PR10MB9230.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:4d5::16) with
+ bh=WhG8BMTdfIRSxMF8pxSc8qSh9gRDBzGpG4ML3i5B9X4=;
+ b=ccaUbRwGsNIQD6XSAm8z/rTIWJPYHyAruuR/YYjtL1q4CjRoRL3Kyx5fp4lN/mhait0LIpCMC0dEoZug/udKQT0/lHbTlcnkjZqMmCb3VC7hVizKr/NvwCtWmovO7ePTOxr1nif4mf3TLaix+d759fSg7NTlKIJqHFYG2+jiV50=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
+ by SA1PR12MB7038.namprd12.prod.outlook.com (2603:10b6:806:24d::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.1; Fri, 20 Nov
- 2026 09:06:38 +0000
-Received: from AS8PR10MB6867.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::9126:d21d:31c4:1b9f]) by AS8PR10MB6867.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::9126:d21d:31c4:1b9f%3]) with mapi id 15.21.0662.001; Fri, 20 Nov 2026
- 09:06:38 +0000
-From: "Sverdlin, Alexander" <alexander.sverdlin@siemens.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH 1/3] pinctrl: single: Also free the pinconf table of a
- duplicate function
-Thread-Topic: [PATCH 1/3] pinctrl: single: Also free the pinconf table of a
- duplicate function
-Thread-Index: AQHdeH2kxY67OBgbJ0WJxMVAj+6BXLc2Do0AgACdXIA=
-Date: Fri, 20 Nov 2026 09:06:38 +0000
-Message-ID: <157b4f4de5f96a81ee3013e224ef8ec94d5540a3.camel@siemens.com>
-References: <20261119232806.4093754-1-alexander.sverdlin@siemens.com>
-	 <20261119232806.4093754-2-alexander.sverdlin@siemens.com>
-	 <sashiko-outbox-224210@kernel.org>
-In-Reply-To: <sashiko-outbox-224210@kernel.org>
-Accept-Language: en-US
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
+ 2026 09:19:56 +0000
+Received: from CY5PR12MB6252.namprd12.prod.outlook.com
+ ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
+ ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
+ 09:19:56 +0000
+Message-ID: <9466c3c5-50f7-4566-9ff4-3d7d8aa4491f@amd.com>
+Date: Fri, 20 Nov 2026 14:52:42 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 20/23] soundwire: amd: fix interrupt gate and work
+ drain ordering in PM ops
 Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Evolution 3.58.3 (3.58.3-2.fc43) 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siemens.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS8PR10MB6867:EE_|PA3PR10MB9230:EE_
-x-ms-office365-filtering-correlation-id: d4050a82-b843-4768-6dc7-08df46e595df
-x-ms-exchange-atpmessageproperties: SA
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|10070799003|38070700021|10067099003|4143699003|11063799006|56012099006|261009223027099003|261021121427099003|261022075727099003|261022105027099003|261102123227099003|261021123027099003|261026121527099003|261028144727099003|261026140227099003|55112099003|18002099003|22082099003;
-x-microsoft-antispam-message-info:
- ovHhuTP0TyShQfC5JdfUPSR+9z9udGCFtjPeOxrs4PTEdZxG2US1KI+xTrhIdv7GDMUMkU2YKx7cylp8uQw3GB48fkH2/wb3Wd0vYIC3eFBQBMiohaOXVhYh7oyT259x0WHkznuZqXIw38pGpcVfPI8sGbZsS1WibgwAbK7lMBIukzgQzrwJVdFkOineByyzQ/M6f24pR2w1jULHM1BNSmCs1uX+VPR7AP6mCIBgWEwUEHJVjtdLTswaEHbRwqKOxmc93ZLjriyzhopvlUryKniujhcOchdhm0GAS1iuoM9/TG06mKfLjKMUFIdLfm9LXwsIRZUNDxKP/1T0TOrDXYsOsXH1QQHCkQqwfNe/9a7ooaOzRh4FhSZ5olWW7DEvenWHqcB50HAvrQXlNkCrIGP3hffH+2h5xnOy0E4bW8zDKstgJOLrCPJ3JaoF8hkG+qyg+AVWop4fO/xPC0xUza6TxFT4mviYze0rqiUz80XGi8DgXmiclmW5b3loRSB6rDzIKf6fJW7YIRabQyggq/Y3BIvNBAIrkhpBnhUKSw3CBdIe2Zlbtnf+hDczkWWBMt8INDcfgV2J269QZJCBL5xj7HNS+ov80y0GxEiu1Mmkfq9kDHswMG4aKZIwW9oZou+VLv4LbknQWRLXygTliFvlwITp4liVQTqhpP+O0JE=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR10MB6867.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10070799003)(38070700021)(10067099003)(4143699003)(11063799006)(56012099006)(261009223027099003)(261021121427099003)(261022075727099003)(261022105027099003)(261102123227099003)(261021123027099003)(261026121527099003)(261028144727099003)(261026140227099003)(55112099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?STdhQU5JeTQ5K0NnT2diVHIyNnU4d3VZekN6d2R3eCtjU0VXSU5IN1JLUlB6?=
- =?utf-8?B?YnNaN2x6d2o4Rm9GdWlPUHg2Z3lCK2p2QUN0Q2xhc3VVbHdOWUljd2x4SWkz?=
- =?utf-8?B?WFdFUUE1aWg5U3h1RVBQWWNqQ1hrWVh2eDd1RFh5VU00UTBlMk8rVkxNdStZ?=
- =?utf-8?B?L05STHVhSDQwcHlHWFhXdVloc1pySS9PQS9kQW05VytEMnFLNzEvSzVXUDZ5?=
- =?utf-8?B?NjVXclk3cjhXOHlyWWc1aTdGbE9FOHFLaEZvVHlsY0xlS2VjWGd0eHM2WDgz?=
- =?utf-8?B?RlNuT1llK1JNTW5SUFlkQkJ4R2NOWFgxN0NNWGd4V2s2cjhFbEszOXF0aERW?=
- =?utf-8?B?d1B3WlREQ056aDZFWnlqNys4TWRsMGdIQkFLak1nOW1rd2ZOdmxtamxsWFBY?=
- =?utf-8?B?M1oySnBlSDlVY3JHUmF4NzZQWFZYcmhSY0JtMU5CMXFrYm43dnJrbGJZUE5q?=
- =?utf-8?B?VEV1ZFFpRk13ZUlOT3A4TWd2a0Y0NWdaVXhRcFFnYk0yemNHRGQyNm9kTXJ0?=
- =?utf-8?B?eTNGVUVzYjFzR1kzbVY2OStoMTJVTWV0SXFMYUpwbkFYYnpXbDJJQ3RWQTFl?=
- =?utf-8?B?aDhsWnNObFR4K0EvOUxJN1hod1FUenBXS0xVOHJibkpXTzB2Q3NEMlZLS2xM?=
- =?utf-8?B?MFUvbDJLVGV2aVI4NlRRbWRsQm9DTUJ5c3lBZEUxalZjcDVBK2VrT1QzRjRF?=
- =?utf-8?B?cjhkb3NDQjd2cWJQTDAwT0NLejRweGdlaktFcHdLT09GaXQ4Wi9xYkxyUjJw?=
- =?utf-8?B?YWJ2THg1Kzk3bGdCUEQwT1R2WjRrd3dJV2U5czVVMWJlMGxqUTJ2RkVDVUFY?=
- =?utf-8?B?aTIvWHA0MlpVa2RXd2F1dldqdWw0YjFRd2ZXR3gyOTJYczV6ZnhPNG0zRDdR?=
- =?utf-8?B?TnkwOGtkRThsQzBoYkFvRkZkbGxtTXc5TXdKQ3RZWHRVU0dsZHdRMWszT2Qr?=
- =?utf-8?B?bzluQ3F6NlRpUDNEVmRFUlZoY1VoM1pORjRiZkRVMzhwUW9ZNEduSSt0ZXJX?=
- =?utf-8?B?VjlDcGU5aG5zUzRTN21wQkM4MW1JcjZiTzhYRlZwaG5DVzJHdzBGc2t6bU9J?=
- =?utf-8?B?SXpEcHZXRXhQWVJOTjJ0L0xqZUVybU9SdWIyTkdTK1pUVS9ZM3hwYmF5SE5Z?=
- =?utf-8?B?MHUxczR2c0hMSW43QXpyaFFSOE1WVHowVW1IMnBXY0pDQjBNM3M0dDV6REFF?=
- =?utf-8?B?aHVGTSswdVBMVmhnTitzQ1NVT3cwcDRYcUpsMlBDUXhxTC91TWZxN1RRNCth?=
- =?utf-8?B?N0dONVlGYUprMzg3OVhTSEoxazVyWHZhUUVBYjM1bTFQN0FENmVpcXJUWERl?=
- =?utf-8?B?QXhKcUdDanVrUmhxQUc1VkgvZllPbGpweVE3K3p5MmxGRERnTThsRGVneTVz?=
- =?utf-8?B?cmdRQldEZzZrU0pYRHBwRlBCSHpoV0NBVjBLZEkrM0pXT1lIVDJtYVJlUWJB?=
- =?utf-8?B?RlJENVRYNmFCZjdKREk1RHl5aXQwUFNmVXJ4b0hlcDFZNVJTNUtvcmFWYWRB?=
- =?utf-8?B?S2ZSaUEwcElNYWFRZHZ0VDQ5R0hEOG9YTUdCMlY0QmR5VmI1ODU3c0xJYW1k?=
- =?utf-8?B?ZGtzZys1NGVUTGtYVEFZQituSnVKU2ZoZnhRbmVVMm1xc3NvaS9VRVNEbWNU?=
- =?utf-8?B?M0pIUmlLSzRWa3dIRTJGeGpiMklaNHZkV2pBaUtqQ1RBSHpyRDdQR1N0QjZU?=
- =?utf-8?B?TmxBQ3RXU3FsMVpiNW5mY0RpUjhJUWcvc1h0TjNBbVhoQnFFS1g0MVkzOFRm?=
- =?utf-8?B?QzUrUm5VYXRnek8yaUlTaE9LR20xc2F2RENlbkExQ0ppOHkyM3FINC9GbGxQ?=
- =?utf-8?B?Ry9KT0psQ2QrUlczelN2aTk2SUJlcUx5Tnlpc01sM0g3MCtlVkRRaXZCVEFx?=
- =?utf-8?B?Tjl6SmpGR2JIbzYxNWpKYnJIWUNyclRaR3ViRTg3QmhXdCtIYzlpbDNJM2xO?=
- =?utf-8?B?RE9kOU1LYU9ockQyV0ErcDJ5eGFrV3dMd3dmaG9CN0lsejRrYzdub2Y1YSt3?=
- =?utf-8?B?QzZxdHdJMWR2bThOWUxkMFI0RVlVenYwbktWL01oQktrQTdiMWZGOCtOWmdo?=
- =?utf-8?B?Vk42UzFhSTFBSXVJVGtUVlBRQ0tRTVBQM1MyUko1VVRzbEJqbXExZElZVlln?=
- =?utf-8?B?ZE02RVdhMTh5TzlPcG94bGVZMis1Z2hUNVdBM3NVRmF5ZjFpendsVU4rOWta?=
- =?utf-8?B?U0tiZFBpNTc5a1VQVnh1MDNlZTV1K3FCd0pEbzQ2Ui9PQXBGekluMkxjMld5?=
- =?utf-8?B?bTFFUHNFWi9ZS2JlOGwzT3RXRlZPc1E2c3dwanZ4MU1zaDh0eUI4Ym9vR1M0?=
- =?utf-8?B?UFp1YnhCZlp0SDZuMUlwR2VrcWQxQUx2SVBVZDRGenN0Z043ajQyaVJnN2Nl?=
- =?utf-8?Q?A/0HPBaMglCraQPqwN7ye6I26BWPXI/Go0j4nd5fWIva9?=
-x-ms-exchange-antispam-messagedata-1:
- 5JZ+2LsLrBL8RP0YDjYZOl793HmNU87Uscycfo6CCjXTm6K7FRTD4Qbi
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <D3B067A162EFAF47B8CF60D813536EB9@EURPRD10.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+To: sashiko-reviews@lists.linux.dev, "vkoul@kernel.org" <vkoul@kernel.org>,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Cc: linux-sound@vger.kernel.org, Bard Liao <yung-chuan.liao@linux.intel.com>,
+ "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>,
+ Mario Limonciello <mario.limonciello@amd.com>,
+ Venkata prasad Potturu <venkataprasad.potturu@amd.com>,
+ Syed Saba Kareem <Syed.SabaKareem@amd.com>
+References: <20261118104353.331556-1-Vijendar.Mukunda@amd.com>
+ <20261118104353.331556-21-Vijendar.Mukunda@amd.com>
+ <sashiko-outbox-220819@kernel.org>
+From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
+In-Reply-To: <sashiko-outbox-220819@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA0PR01CA0012.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:80::11) To CY5PR12MB6252.namprd12.prod.outlook.com
+ (2603:10b6:930:20::17)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -162,64 +103,322 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-OriginatorOrg: siemens.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|SA1PR12MB7038:EE_
+X-MS-Office365-Filtering-Correlation-Id: 70f7da5c-71fc-49dc-d7c1-08df46e770f1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|10067099003|261021123027099003|4143699003|11063799006|5023799004|56012099006|261021121427099003|261022075727099003|261022105027099003|261026121527099003|261026140227099003|261102123227099003|261028144727099003|261009221227099003|261009223027099003|18002099003|6133799003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	Rg3mCiyE7LSSogvjd9vy+TTOkxa89G0zetMSaWF9n8NXpaq2xmlu9AbBFsxPZmw/XgN92b8XZkmFy2Hfdf8wBzKJMa153R7wiHnyjq4H/Teadopt7P1eBOGsosfUJtAu1DxGUN4P7N0Fp7xc2R3ilFsdXKn+WhFuLcoMwL1mTcBk5zXgdKu0IN8eKo0Ekl2lseXcsYp0qNF71okkUh3XJ0WF8tST6/GofTq/cgjgSYht2rzAnroSJ8Pr005zu/CMePi12gSXJV7TFf82iCuWAaO8c3rmaLBcnOazkX0BRAfLEK0uyys2CpozfX47VBM8CgSvLKm4HE8bAfoTe9O/5tHRWhPBluyNErgB9WYSDdxn8y/S1YsxR6uPVg3IUhceJqVs7EWrpzbzf8IwH0qVSH6spknBjHaL3eZsLXq4YbJeUZZbAAlmFjn+F2OrJUSjxw6u9xawqiwfYt5qS8Y7On9SDDhp2G05t4DhmWMAMlZRaxTgH0rm/Fv6lXmHK+oiiLBkCqGM012ykOaBVT7qWIlEdrnIbDShK7Av1uGGZn7rukTkwRjn15sGeImvHJhBCBQR+qJz828Zg5R0DZ+8lrf55X3Xcj+Ew14lCHHhAzG57PYwPaJhAiRzF0vn7FgU
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10067099003)(261021123027099003)(4143699003)(11063799006)(5023799004)(56012099006)(261021121427099003)(261022075727099003)(261022105027099003)(261026121527099003)(261026140227099003)(261102123227099003)(261028144727099003)(261009221227099003)(261009223027099003)(18002099003)(6133799003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?L2s1SE82WnM0bXpLNElFdm54ZkdGeC9Xb2pVUmV6Y2VPZlJMMWVCSnRhYTRO?=
+ =?utf-8?B?Q1Nlb1BaUldsVmE1eHp2UEt1Y1U4SE1NZjEwL05RRWpzMTg2bnRtZHNabTRt?=
+ =?utf-8?B?VzhXL3FKRnJzbUNOaTQ5U0M5ZGhEZFdUa0dYelZzd1hzVld2TUEvMzlmU3Yz?=
+ =?utf-8?B?NGRSSVFSRmxiSE1QeHhFdEtiV1dhRGJSeWU1Y2xDNDlaTVRsclloemJUc2FD?=
+ =?utf-8?B?b1Z6VnFiNVQ2NnplMEZrejFrZzJBNm9EV000SllZQS91eGxYR0ZaVXU0dTVI?=
+ =?utf-8?B?d214TUdnSHRNRzFNajMySjZNWjVjSGFtVmw2c3UreWxxMUVUbHR6OURGOTdx?=
+ =?utf-8?B?T0hScjdLZGFUZC9Ia2RZQTV4a1N6ZU5xbW1ocG8wd2hjZjVhRkFyeFlvOWxj?=
+ =?utf-8?B?cmt5dkhwUjJJdlVzcDlmaEMvU3BLUE5TQmJlcFo1MWI2QWlZaUxGUzRIKzhn?=
+ =?utf-8?B?THc1NkJxMXFONHd5eDI3OTJBNXZ3b1plVnB6a0E5Qk8xL3haK2FieUtZWU1q?=
+ =?utf-8?B?RytvRnUyNC9JR3A1NmcvV1ZIdVREdCtNbWNMblB6NnN2VFVaKzRFSkJPcXp1?=
+ =?utf-8?B?MHN0ZGV3eS9OUlBXWUxVUnliZndjZndINmRVK1RhOHdsQWpaSDVJeExETUJz?=
+ =?utf-8?B?NGU0b1I4Wlh2dVFsRFpXQnc5cC8vYnRmZXNSZXJ5OVNQMnozeDdsWS91aHV2?=
+ =?utf-8?B?cGtaeUQ1bkV5US9Rb0JxWHNZVUpKNlN1cEh5QmxsZGJyRHdscVhKTDdERER1?=
+ =?utf-8?B?UFZYdTNMeXNYUjEwTkJRTzVnaTBaMFZPak5PbGxLUDBkdDkreWFycWN4TW1F?=
+ =?utf-8?B?QmJmWDV2RE9NZjZnYi9LdEhwZ05VdWE2aUlhTnZHSm9wbEFxUVBpbEFPVHJH?=
+ =?utf-8?B?cmxZSTZvRVUyenhTQkI3eGJoenhnM3pNQllQb005L2Q1UG90Vm96NCs4QllO?=
+ =?utf-8?B?bCtJVndrOFNEa1d0c3hJcnpiejVuNGJ4dkg0QnZmQ3BvcVBjdkJvbXluKzN3?=
+ =?utf-8?B?VG5TMm9xbWsyZm9WOVcyTmpYYWhydlovN1lMYVFpQ29vMVFuOTVSQmUzdXZI?=
+ =?utf-8?B?ZWNRSlN2OVRmaXZpR1dUL2RyaFAvNjBra09LSHkyM1dGMm5aK3V5TVU5UGFV?=
+ =?utf-8?B?U0FLcWNmMUk5ekgvcW9TMGlvQWM0bmNHS3NXQkF6RjA1d0ZRTEtZYTNrNTJ0?=
+ =?utf-8?B?ODhFMmgzRnFOSDNKdUZ4endtVWhQZU5JNWhWV1NzRElHMXZFeG4zL2FPT1dy?=
+ =?utf-8?B?TjRMSkdwTU5JQnViQlJkUjgrNVZtbWQxRHViejAyeU9sZ1p5UE0wajhYaVJG?=
+ =?utf-8?B?a2NuS0JZSFlZQUZWbEFIeStmaFNiemxyV3I4cXp1bzV2RUdHVDBDODFLSlly?=
+ =?utf-8?B?TGoxUTBxVFhPeWZVRlFMM3JwUnNVbU5TR2Zwenh2RjlGQ0FUUUZTMklEdXp3?=
+ =?utf-8?B?STdLc3hlTUczN2lDdURBTG9JZVpnRGVmR3ZVcldVNW1pZDhXQ2t5RXh5elUr?=
+ =?utf-8?B?VXJFRkRNM2tRTXJJWG1wRkhRbWZLUGltSGlLSm1UYmpiWmVjWTNlellUUFN5?=
+ =?utf-8?B?cElvWnlWVDdLWG9PUEZRNVFyUWFJMnZpTlJ1YkhlRTdyNGhMMUdXZi9OZFps?=
+ =?utf-8?B?Q2dUanVaTllUVzBZR2tsWStSV0tFejdwMklrU0NBTUx5NmJ1b3djRjdEOHBH?=
+ =?utf-8?B?TmFGWlh1aUFFengzZHhhTkowd0xSM3k3OHhZbWNqejQ3eUZLZ29wckVvQndx?=
+ =?utf-8?B?T1g1c3UycUpTakd2REhzNUxhZnc5dmczMnBzSStQNmhXT05oZ1BKMEZpdktx?=
+ =?utf-8?B?SHN1UCtLbVNibTdxRWJuZ29hbWZaNjJxOVloSlovUGwrT3dDVU05WTRjMkNp?=
+ =?utf-8?B?MElTR1QxZVEvUFowZ3UyN09EVkdpeGEyYXMwWWNrbWxCZlRRc0k5RjRLOXpK?=
+ =?utf-8?B?amZIWkEvRHhoSVp6TUNXWCt5VTZzTjhhVXF0K1hKNC9TRGtrUU4rMDJ6Wjdp?=
+ =?utf-8?B?ODVSWGkrR1NkWXBmaDcrb29VWGtTTTBINlpqcDk1M0VNQ3VlL3R3NDB4UGFN?=
+ =?utf-8?B?SDlRSjBIck5PK1I0MmRXNGIzUGd3NitwOXJHQ2haSHBlVE1XQ0JUdjFENzNV?=
+ =?utf-8?B?bm5JTG9mY0IrR0hYUStBcFRKdGR2ckIwSmd6b0lCbk0zREt6MFEyTVpJU3Vu?=
+ =?utf-8?B?WWc4bmdjanhTSlh6TUduZ3dsUHNFSm9FalFYdWpWSnlFMldUQ3JLVnZPSzR3?=
+ =?utf-8?B?WGFjVUtWdFQxSzZ6MlRnMWZCU0ZPeHhsbmZVZHF1bm9hUVV4STFMQzdpZnJK?=
+ =?utf-8?B?WjE3ZktpZVI4S3B4U2hYZjBtczNPSE5jUkFqUTYwR3g1YU1adHFBZz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 70f7da5c-71fc-49dc-d7c1-08df46e770f1
+X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS8PR10MB6867.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4050a82-b843-4768-6dc7-08df46e595df
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2026 09:06:38.5059
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 09:19:55.9261
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: JyrVuWgMxZKRERW1C2TVxws1II+WyBVakvJj4Xn+qOCUXOrFgq7q9xQJXNn39TSYDcyiBL5TIWycSR2NIUnl+XtqxNs37QvJZpTNi2BBgZA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA3PR10MB9230
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jr2gfrmOi+Edn+aTaoCzrJDk7dfWH1lhEfyjf8S1hqFVIuBsxl8amuRQiWXV2gOa7x7Z61WPa3T6VyYYi3An5Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7038
 
-SGkhDQoNCk9uIFRodSwgMjAyNi0xMS0xOSBhdCAyMzo0MyArMDAwMCwgc2FzaGlrby1ib3RAa2Vy
-bmVsLm9yZyB3cm90ZToNCj4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlr
-byBBSSByZXZpZXcgZm91bmQgbm8gbmV3IGlzc3Vlcw0KPiBpbiB0aGlzIHBhdGNoLCBidXQgbm90
-aWNlZCAxIHJlbGF0ZWQgcHJlLWV4aXN0aW5nIGlzc3VlIGl0IGRvZXMgbm90DQo+IGludHJvZHVj
-ZToNCj4gLSBbQ3JpdGljYWxdIHBpbmN0cmw6IHNpbmdsZTogdXNlLWFmdGVyLWZyZWUgaW4NCj4g
-ICBwY3NfcGFyc2Vfb25lX3BpbmN0cmxfZW50cnkoKSBbMV0NCj4gLS0NCj4gDQo+IGNvbW1pdCBm
-OWE4MGI3ZDRiMWNjMDA0YWU2MzZmNWU5MWEwMzdiMGQ2YWZiYzkzDQo+IEF1dGhvcjogQWxleGFu
-ZGVyIFN2ZXJkbGluIDxhbGV4YW5kZXIuc3ZlcmRsaW5Ac2llbWVucy5jb20+DQo+IA0KPiBwaW5j
-dHJsOiBzaW5nbGU6IEFsc28gZnJlZSB0aGUgcGluY29uZiB0YWJsZSBvZiBhIGR1cGxpY2F0ZSBm
-dW5jdGlvbg0KPiANCj4gVGhpcyBjb21taXQgZnJlZXMgZnVuY3Rpb24tPmNvbmYgd2hlbiBwY3Nf
-cGFyc2Vfb25lX3BpbmN0cmxfZW50cnkoKSBkcm9wcw0KPiBhIGR1cGxpY2F0ZSBmdW5jdGlvbiBv
-biBjb25zdW1lciByZS1wcm9iZS4NCj4gDQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGluY3Ry
-bC9waW5jdHJsLXNpbmdsZS5jIGIvZHJpdmVycy9waW5jdHJsL3BpbmN0cmwtc2luZ2xlLmMNCj4g
-PiBpbmRleCA1MjczNGJkN2I3ZjA2Li45NWM4YmQzODQ1OWM4IDEwMDY0NA0KPiA+IC0tLSBhL2Ry
-aXZlcnMvcGluY3RybC9waW5jdHJsLXNpbmdsZS5jDQo+ID4gKysrIGIvZHJpdmVycy9waW5jdHJs
-L3BpbmN0cmwtc2luZ2xlLmMNCj4gPiBAQCAtMTEwMiw2ICsxMTAyLDcgQEAgc3RhdGljIGludCBw
-Y3NfcGFyc2Vfb25lX3BpbmN0cmxfZW50cnkoc3RydWN0IHBjc19kZXZpY2UgKnBjcywNCj4gPiAg
-CWlmIChwaW5tdXhfZ2VuZXJpY19nZXRfZnVuY3Rpb24ocGNzLT5wY3RsLCBmc2VsKS0+ZGF0YSAh
-PSBmdW5jdGlvbikgew0KPiA+ICAJCWRldm1fa2ZyZWUocGNzLT5kZXYsIHBpbnMpOw0KPiA+ICAJ
-CWRldm1fa2ZyZWUocGNzLT5kZXYsIHZhbHMpOw0KPiA+ICsJCWRldm1fa2ZyZWUocGNzLT5kZXYs
-IGZ1bmN0aW9uLT5jb25mKTsNCj4gPiAgCQlkZXZtX2tmcmVlKHBjcy0+ZGV2LCBmdW5jdGlvbik7
-DQo+ID4gIAkJZGV2bV9rZnJlZShwY3MtPmRldiwgcGduYW1lcyk7DQo+ID4gIAl9DQo+IA0KPiBb
-U2V2ZXJpdHk6IENyaXRpY2FsXQ0KPiBUaGlzIHByb2JsZW0gd2Fzbid0IGludHJvZHVjZWQgYnkg
-dGhpcyBwYXRjaCwgYnV0IGNhbiB0aGUgZXJyb3IgcGF0aCBpbg0KPiBwY3NfcGFyc2Vfb25lX3Bp
-bmN0cmxfZW50cnkoKSAoYW5kIHBjc19wYXJzZV9iaXRzX2luX3BpbmN0cmxfZW50cnkoKSkNCj4g
-cmVtb3ZlIGFuIGFscmVhZHkgcmVnaXN0ZXJlZCBncm91cCBhbmQgZnVuY3Rpb24gWzFdIGFuZCBj
-YXVzZSBhDQo+IHVzZS1hZnRlci1mcmVlPw0KPiANCj4gV2hlbiBhIGR1cGxpY2F0ZSBub2RlIGlz
-IHBhcnNlZCwgcGNzX2FkZF9mdW5jdGlvbigpIGFuZA0KPiBwaW5jdHJsX2dlbmVyaWNfYWRkX2dy
-b3VwKCkgcmV0dXJuIHRoZSBleGlzdGluZyBzZWxlY3RvcnMgZnNlbCBhbmQgZ3NlbC4NCj4gSWYg
-cGNzX3BhcnNlX3BpbmNvbmYoKSB0aGVuIGZhaWxzLCB0aGUgZXJyb3IgcGF0aCB1bmNvbmRpdGlv
-bmFsbHkgcmVtb3Zlcw0KPiBib3RoIHNlbGVjdG9ycyBmcm9tIHRoZSBjb3JlIHJhZGl4IHRyZWVz
-Og0KPiANCj4gZHJpdmVycy9waW5jdHJsL3BpbmN0cmwtc2luZ2xlLmM6cGNzX3BhcnNlX29uZV9w
-aW5jdHJsX2VudHJ5KCkgew0KPiAJLi4uDQo+IAlpZiAoUENTX0hBU19QSU5DT05GICYmIGZ1bmN0
-aW9uKSB7DQo+IAkJcmVzID0gcGNzX3BhcnNlX3BpbmNvbmYocGNzLCBucCwgZnVuY3Rpb24sIG1h
-cCk7DQo+IAkJaWYgKHJlcyA9PSAwKQ0KPiAJCQkqbnVtX21hcHMgPSAyOw0KPiAJCWVsc2UgaWYg
-KHJlcyA9PSAtRU5PVFNVUFApDQo+IAkJCSpudW1fbWFwcyA9IDE7DQo+IAkJZWxzZQ0KPiAJCQln
-b3RvIGZyZWVfcGluZ3JvdXBzOw0KPiAJfQ0KPiAJLi4uDQo+IGZyZWVfcGluZ3JvdXBzOg0KPiAJ
-cGluY3RybF9nZW5lcmljX3JlbW92ZV9ncm91cChwY3MtPnBjdGwsIGdzZWwpOw0KPiAJKm51bV9t
-YXBzID0gMTsNCj4gZnJlZV9mdW5jdGlvbjoNCj4gCXBpbm11eF9nZW5lcmljX3JlbW92ZV9mdW5j
-dGlvbihwY3MtPnBjdGwsIGZzZWwpOw0KPiAJLi4uDQo+IH0NCj4gDQo+IFRoaXMgZGVsZXRlcyB0
-aGUgb3JpZ2luYWwgZ3JvdXAgYW5kIGZ1bmN0aW9uIGRlc2NyaXB0b3JzIHdoaWxlIGFjdGl2ZQ0K
-PiBjb25zdW1lcnMgc3RpbGwgcmVmZXJlbmNlIHRoZW0sIGFuZCBsZWFrcyB0aGUgZHVwbGljYXRl
-IGZ1bmN0aW9uLA0KPiBwZ25hbWVzLCBhbmQgZnVuY3Rpb24tPmNvbmYgYWxsb2NhdGlvbnMuDQo+
-IA0KPiBbMV0gaHR0cHM6Ly9zYXNoaWtvLmRldi8jL2J1Zy9saW51eC0xNDZjNTc3Yy1kZWM0LTRk
-YzQtYjI4ZS04MjZjMWNjNzZhOWENCg0KWWVzLCBJIGNvbnNpZGVyZWQgdGhpcyBpc3N1ZSByZWFs
-IGFzIHdlbGwgYW5kIGFkZHJlc3NlZCBpdCBpbiBwYXRjaCBbMi8zXQ0Kb2YgbXkgc2VyaWVzLg0K
-DQpbMi8zXSBodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvMjAyNjExMTkyMzI4MDYuNDA5Mzc1
-NC0zLWFsZXhhbmRlci5zdmVyZGxpbkBzaWVtZW5zLmNvbS8NCg0KLS0gDQpBbGV4YW5kZXIgU3Zl
-cmRsaW4NClNpZW1lbnMgQUcNCnd3dy5zaWVtZW5zLmNvbQ0K
+On 18/11/26 16:51, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] soundwire: amd: runtime PM deadlock in amd_suspend_runtime()
+>   work drain
+> - [Medium] soundwire: amd: stale status bits and early IRQ enable in
+>   amd_suspend()
+> - [Medium] soundwire: amd: draining amd_sdw_work re-unmasks IRQs in
+>   POWER_OFF_MODE
+> --
+>
+> commit 51e6c84ae75bcfe935e29acd598ea807a66790ac
+> Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+>
+> soundwire: amd: fix interrupt gate and work drain ordering in PM ops
+>
+> This commit reorders interrupt masking, workqueue draining, and wake
+> configuration across the CLK_STOP_MODE and POWER_OFF_MODE paths in
+> amd_suspend() and amd_suspend_runtime().
+>
+>> diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
+>> index 57238c81997a2..220abf73cb25e 100644
+>> --- a/drivers/soundwire/amd_manager.c
+>> +++ b/drivers/soundwire/amd_manager.c
+>> @@ -1430,17 +1430,20 @@ static int __maybe_unused amd_suspend(struct device *dev)
+>>  	}
+>>  
+>>  	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
+>> +		amd_disable_sdw_interrupts(amd_manager);
+>> +		cancel_work_sync(&amd_manager->amd_sdw_irq_thread);
+>>  		cancel_work_sync(&amd_manager->amd_sdw_work);
+>> -		amd_sdw_wake_enable(amd_manager, false);
+>>  		ret = amd_sdw_host_wake_enable_by_rev(amd_manager, false);
+>>  		if (ret)
+>>  			return ret;
+>>  		ret = amd_sdw_clock_stop(amd_manager);
+>>  		if (ret)
+>>  			return ret;
+>> +		amd_enable_sdw_interrupts(amd_manager);
+> [Severity: Medium]
+> Can disabling and draining interrupts without clearing
+> ACP_SW_STATE_CHANGE_STATUS_0TO7 and ACP_SW_STATE_CHANGE_STATUS_8TO11, and
+> then calling amd_enable_sdw_interrupts() while the bus is clock-stopped,
+> cause stale pre-suspend status bits to be processed while the link is down?
+>
+> When a SoundWire interrupt fires just before amd_disable_sdw_interrupts(),
+> the ACP hard IRQ handler clears ACP_EXTERNAL_INTR_STAT and queues
+> amd_sdw_irq_thread, leaving the status bits latched in
+> ACP_SW_STATE_CHANGE_STATUS_0TO7 and ACP_SW_STATE_CHANGE_STATUS_8TO11.
+> amd_disable_sdw_interrupts() sets interrupt_enabled to false without
+> clearing those status registers, so an in-flight or cancelled
+> amd_sdw_irq_thread() exits early without clearing them either:
+>
+> drivers/soundwire/amd_manager.c:amd_sdw_irq_thread() {
+> 	if (!READ_ONCE(amd_manager->interrupt_enabled))
+> 		return;
+>
+> 	status_change_8to11 = readl(amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_8TO11);
+> 	status_change_0to7 = readl(amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_0TO7);
+> 	...
+> }
+>
+> In both amd_suspend() and amd_suspend_runtime() under
+> AMD_SDW_CLK_STOP_MODE, amd_enable_sdw_interrupts() is called immediately
+> after amd_sdw_clock_stop() (and in AMD_SDW_POWER_OFF_MODE on ACP63,
+> amd_suspend_runtime() sets interrupt_enabled back to true).  When a wake
+> interrupt later runs amd_sdw_irq_thread() during runtime suspend,
+> amd_sdw_process_wake_event() only queues an asynchronous
+> pm_request_resume(amd_manager->dev) before amd_sdw_irq_thread() falls
+> through, reads the stale status bits, and runs
+> amd_sdw_read_and_process_ping_status() and schedule_work(&amd_sdw_work)
+> while the clock is still stopped, resulting in MIPI command timeouts.
+Valid concern. Will fix in v8 by clearing
+ACP_SW_STATE_CHANGE_STATUS_8TO11 and _0TO7 at the start of
+amd_enable_sdw_interrupts(), before setting interrupt_enabled =
+true and writing the mask registers. When
+amd_enable_sdw_interrupts() is called after amd_sdw_clock_stop()
+in CLK_STOP_MODE, STATUS registers are cleared first so no
+pre-suspend bits are visible to amd_sdw_irq_thread() when
+interrupt delivery is re-opened. After amd_sdw_clock_stop()
+completes the hardware cannot assert new STATUS bits, so the
+clear loses no real events.
+>
+> In addition, amd_sdw_clock_stop() returns 0 on all failure paths while
+> leaving the SoundWire clock running, so if clock stop fails,
+> amd_enable_sdw_interrupts() re-enables state-change interrupts on an active
+> bus as the device enters D3.
+
+The timeout handling is intentional. We have observed that propagating a
+clock-stop timeout and aborting the PM sequence can result in SoundWire
+peripherals failing to re-enumerate on the subsequent resume.
+
+Propagating -ETIMEDOUT would also abort system suspend and prevent S3/S4
+entry, or abort runtime suspend and prevent S0ix entry. A transient SoundWire
+failure should not block the platform power-state transition.
+
+For S3/S0ix, the ACP tiles remain powered in CLK_STOP_MODE and the register
+context is retained. amd_sdw_clock_stop_exit() restores the SoundWire clock
+on resume. If clock stop failed, clk_stopped remains false and the clock-stop
+exit sequence is skipped.
+
+For S4, the hardware context is lost and the SoundWire bus and peripherals
+are initialized again during hibernate restore. Any failure to recover or
+re-enumerate the peripheral should be handled as an audio/bus recovery issue,
+rather than failing the platform power-state transition.
+
+A similar timeout-handling approach was discussed for CLK_RESUME_DONE:
+
+https://lore.kernel.org/all/fbaae15c-f3f7-4125-96aa-41b6bb4f174b@amd.com/#t
+
+The longer-term solution is explicit bus recovery on timeout rather than
+propagating the error to the PM framework. This remains a TODO.
+
+For this reason, I would prefer to keep amd_sdw_clock_stop() unchanged.
+
+>>  	} else if (amd_manager->power_mode_mask & AMD_SDW_POWER_OFF_MODE) {
+>> +		amd_disable_sdw_interrupts(amd_manager);
+>> +		cancel_work_sync(&amd_manager->amd_sdw_irq_thread);
+>>  		cancel_work_sync(&amd_manager->amd_sdw_work);
+>> -		amd_sdw_wake_enable(amd_manager, false);
+>>  		ret = amd_sdw_host_wake_enable_by_rev(amd_manager, false);
+>>  		if (ret)
+>>  			return ret;
+>> @@ -1451,7 +1454,6 @@ static int __maybe_unused amd_suspend(struct device *dev)
+>>  		ret = amd_sdw_clock_stop(amd_manager);
+>>  		if (ret)
+>>  			return ret;
+>> -		amd_disable_sdw_interrupts(amd_manager);
+>>  		ret = amd_disable_sdw_manager(amd_manager);
+>>  		if (ret)
+>>  			return ret;
+> [Severity: Medium]
+> In AMD_SDW_POWER_OFF_MODE (both here and in amd_suspend_runtime()), can an
+> in-flight amd_sdw_update_slave_status_work() re-unmask
+> ACP_SW_STATE_CHANGE_STATUS_MASK_0TO7 and
+> ACP_SW_STATE_CHANGE_STATUS_MASK_8TO11 after amd_disable_sdw_interrupts()
+> zeroes them?
+>
+> CPU0                                  CPU1
+> amd_suspend_runtime()                 amd_sdw_update_slave_status_work()
+>   amd_disable_sdw_interrupts()
+>     writel(0, ..._MASK_0TO7)
+>     writel(0, ..._MASK_8TO11)
+>   cancel_work_sync(&amd_sdw_work)
+>                                         sdw_handle_slave_status()
+>                                         if (status[0] == SDW_SLAVE_ATTACHED)
+>                                           writel(AMD_SDW_IRQ_MASK_0TO7, ...)
+>                                           writel(AMD_SDW_IRQ_MASK_8TO11, ...)
+>                                           <-- masks left enabled
+No change required. ACP_EXTERNAL_INTR_CNTL is the top-level
+delivery gate for all SDW interrupts on this hardware.
+amd_disable_sdw_interrupts() clears the manager's bit in
+ACP_EXTERNAL_INTR_CNTL before returning. An in-flight
+amd_sdw_update_slave_status_work() on the SDW_SLAVE_ATTACHED path
+may re-write ACP_SW_STATE_CHANGE_STATUS_MASK_0TO7 and
+_MASK_8TO11 after amd_disable_sdw_interrupts() returns, but that
+work never touches ACP_EXTERNAL_INTR_CNTL. The top-level gate
+remains closed so no interrupt can reach the CPU regardless of
+what the per-instance mask registers contain.
+>
+> Because the post-clock-stop amd_disable_sdw_interrupts() call was removed,
+> those mask registers stay set to AMD_SDW_IRQ_MASK_0TO7 and
+> AMD_SDW_IRQ_MASK_8TO11 after cancel_work_sync(&amd_manager->amd_sdw_work)
+> returns.  In amd_suspend_runtime(), amd_sdw_wake_enable(amd_manager, true)
+> then performs a read-modify-write on ACP_SW_STATE_CHANGE_STATUS_MASK_8TO11,
+> and on ACP63 with wake_en_mask set, interrupt_enabled and
+> ACP_EXTERNAL_INTR_CNTL are re-enabled with all state-change and PREQ masks
+> active while the manager is disabled.
+>
+>> @@ -1491,18 +1493,24 @@ static int __maybe_unused amd_suspend_runtime(struct device *dev)
+>>  		return 0;
+>>  	}
+>>  	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
+>> -		amd_sdw_wake_enable(amd_manager, true);
+>> +		amd_disable_sdw_interrupts(amd_manager);
+>> +		cancel_work_sync(&amd_manager->amd_sdw_irq_thread);
+>> +		cancel_work_sync(&amd_manager->amd_sdw_work);
+> [Severity: High]
+> Can calling cancel_work_sync(&amd_manager->amd_sdw_work) inside
+> amd_suspend_runtime() deadlock with amd_sdw_update_slave_status_work()?
+>
+> CPU0                                  CPU1
+> rpm_suspend(amd_manager->dev)         amd_sdw_update_slave_status_work()
+>   runtime_status = RPM_SUSPENDING
+>   amd_suspend_runtime()
+>     cancel_work_sync(&amd_sdw_work)
+>                                         sdw_handle_slave_status()
+>                                           sdw_handle_slave_alerts()
+>                                             pm_runtime_get_sync(&slave->dev)
+>                                               rpm_resume(&slave->dev, ...)
+>                                                 rpm_resume(bus->dev, 0)
+>                                                   rpm_resume(amd_manager->dev, 0)
+>                                                     waits on runtime_status
+>
+>  *** DEADLOCK ***
+The scenario is theoretically possible. However, AMD has not observed this
+deadlock in practice on any shipping platform. The window requires
+amd_sdw_update_slave_status_work() to be actively running, rather than merely
+queued, when cancel_work_sync() is called, and to have taken the
+SDW_SLAVE_ALERT path in sdw_handle_slave_status(), which calls
+pm_runtime_get_sync(&slave->dev).
+
+Intel's cdns_update_slave_status_work() follows the same pattern without any
+additional protection, so this does not appear to be specific to the AMD
+backend. 
+
+Rather, it originates from the common SoundWire bus handling.
+The potential deadlock comes from sdw_handle_slave_alerts() calling
+pm_runtime_get_sync(&slave->dev) while the parent manager is in
+RPM_SUSPENDING.
+
+One possible fix in drivers/soundwire/bus.c would be to use
+pm_runtime_get_if_active(&slave->dev, true) instead. If the device is not
+active, the alert handling can be deferred until resume rather than blocking
+on runtime PM.
+
+This would require some additional restructuring, since the current io_err:
+path calls pm_runtime_put_autosuspend() unconditionally. If
+pm_runtime_get_if_active() returns 0, no runtime PM reference has been
+acquired, so that path must be bypassed.
+
+I also considered the possible side effects of this change:
+- sdw_modify_slave_status(SDW_SLAVE_ALERT) is called before the runtime PM
+  operation, so the slave status has already been updated.
+- SDW_SCP_INT1 and INTSTAT2/3 would not be cleared in this path. Since these
+  interrupt status bits are latched, the alert can be processed after resume.
+- interrupt_callback() would not be called during the suspend window. It
+  would instead be invoked when the alert is processed after resume.
+- The RPM_ACTIVE path would remain unchanged.
+So the main behavioral change would be to defer alert processing when the
+device is not runtime active, rather than waiting for runtime PM from the
+workqueue.
+
+@Vinod, @Pierre-Louis: would you prefer that I prepare a separate patch to
+address this in the common SoundWire code, or should we keep the current
+behavior unless the issue is observed in practice?
+
+For the current AMD patch, I can leave the implementation unchanged pending
+your guidance.
+
+>
+> Each peripheral slave->dev is a child of bus->dev, which is a child of
+> amd_manager->dev, and both children are in RPM_SUSPENDED when
+> amd_manager->dev enters rpm_suspend().  If a peripheral alert schedules
+> amd_sdw_work before interrupts are disabled and
+> amd_sdw_update_slave_status_work() starts executing before
+> cancel_work_sync(&amd_manager->amd_sdw_work) cancels it,
+> pm_runtime_get_sync(&slave->dev) propagates a synchronous rpm_resume() up
+> to amd_manager->dev.  Because amd_manager->dev is in RPM_SUSPENDING,
+> rpm_resume() sleeps on amd_manager->dev->power.wait_queue waiting for
+> amd_suspend_runtime() to finish, while amd_suspend_runtime() is blocked in
+> cancel_work_sync(&amd_manager->amd_sdw_work) in both AMD_SDW_CLK_STOP_MODE
+> and AMD_SDW_POWER_OFF_MODE.
+>
+
