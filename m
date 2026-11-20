@@ -1,75 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.197
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795204858;
-	b=4zeku0v3MHAXZmZu9pdhUwxNFHuB6jJO4I/AnEYNC9wZ+BE7+aoIbFnRohYg5mgiDE/6
-	 qGlmZupORGaesKuCtKBPFg5j+iLHMpirwnoA85CRyTYk4FEqkyYAD3iiI3LExax+SCpO5
-	 VXqfNJGAXkDtow07Yjs8oW7Wq9s8lrxgLKyJx+pn/6VXhTCPQDXkkkURzUGdVuN5vR8xA
-	 pS9G8W9UiEzyFmeE9DgyEz42QHLnMefvQxyqp77SmrLImmLMybw9VRmtZxRvvWo/FaZ5x
-	 s93EktKfQt5+7C9bG/YPzGqagEYi9I3RJOfOKvaatQkKBbowRi4dCDt3UeEQNef3vxQ==
+	t=1795205412;
+	b=g6wT5svflOVY5UKj5iJ50h+Lzcuy0PZcAIdH/Ba845DtgqgpvUaq8xpp4jW9vQJ9TlhD
+	 UjMzIP9xIcdbSeFaa0mirr72ZFobCIg32F7eTLWrJuLO0wtAXQVINcbo0bqub0TIq3PX1
+	 547Py/eAY53OaEPv7v8pNzQOY/QtApAQGFth7C6o0HBCquZPiMdV4aS3hORfDwUMqRGXj
+	 Jbh8iJqmnArNovR8wvqj94ww6aJyKwKvM2SIXP2M4U8whqR3OU8LQYLvRm5/9ywbVzAbT
+	 hiCsRE6xJ41tXVd3Li4Dp3A7mdGH3zPIvOiCCMe4rqev8b9+qN93p8hyybMrOcnSx6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795204858;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
-	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
-	 Content-Type;
-	bh=v6MACD1sBfgK5beVMe+EiTqIGqdXAEDg9pQGTzuk0wA=;
-	b=FgmocLy9EcqYxyh/5+tYDcPa7ULprDJK5upgEWS3r5EeswNd6bRXOjg5dT6zjOAo/XbI
-	 EKYUysi/Sq8uxBUcjV1VuQ76En8GrY1ZbV5r5pFiGbHDjgdwPVhWxop6ZKGnMxzGnEVEB
-	 JwstPpCfOG6cCZNAnmwq2YLoLkc++eG1zsoVAsAWaTHET/JWsosJQ4H8D6OinZC1Qkb4D
-	 IXaHM7qkliL2Q0Nb4mLzG/a5BUEW5ypxfSqlcJv+Ku6edJjv30QcoUqruSfu5QdCsWUIv
-	 dK7ctcCToM4d+khFCczjJP427GF2mu1sS04amD6LBZgEhaU5JjKRDSMmPIwjlj+qeTg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795205412;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Stat-Signature:X-Rspamd-Server:
+	 X-Rspamd-Queue-Id:X-Spam-Status:X-Session-Marker:X-Session-ID:
+	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
+	bh=hosspx6aaU+k/GrFDy0XlCAJwuBQtVCG9tTxjtZLOwE=;
+	b=DYLjUOFWlWLMq/I13SotBllXRxiJMIn1mZC5NQpHeTjw76eDsWlB2K7yAltfLtIGo7Hw
+	 S5nqp4mUznwoqa0LXtXZHC+rX+6uisf1rS1eAxKlQRrdXniATQUbjm+k+IYFkFXZoWW8h
+	 1HE+53UwzzUIax8LyKo8+u0Z40ZJTFBpoonB2uQ+BEQogyEaizv2fuQdzo3j5jqnWuNmm
+	 FIEowj2+HJ9r1sYNhdbAwOMVBTUF478tWivRVf2alEQktYWhV72LvE/gWjSFSgHMRn2Za
+	 axnA0OA07xXU0zpwLT2QxzYdfK0Ygg07WR1asnNGWHEUq7PbB+r4w2yYNWLjPYhHv1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--elkin.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=mK26aFJL;
-	arc=none smtp.remote-ip=74.125.82.197
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=goodmis.org;
+	spf=pass smtp.mailfrom=goodmis.org;
+	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=kUGM3OjP;
+	arc=none smtp.remote-ip=216.40.44.12
+Received: from relay.hostedemail.com (smtprelay0012.hostedemail.com [216.40.44.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52BD606A6CF
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 20:00:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D52BD606A6CF
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--elkin.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFB4606A6E4
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 20:10:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1EFB4606A6E4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=mK26aFJL
-Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-30bcb065bfdso1377525eec.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:00:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795204856; x=1795809656; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=v6MACD1sBfgK5beVMe+EiTqIGqdXAEDg9pQGTzuk0wA=;
-        b=mK26aFJLoegCcsiMXU1VSpQ3Ihal3KtmHGf/0/nB1oBG/zY8LUolK1kVpQpNcIwPwu
-         SpNjCw0lmq2Zu4SdMHcFIRBWYb1c5qRVIqCB38JPu+afQXYOMO5jtiWuamihZHdSnSbv
-         5UvWwf/BynireZBE0mlLnCFkTMxqW9pQa8Q1vUa0pqf8owpSRkoKMrlxhr4PUWgYjVq6
-         +L0u5CUOdvV0yh4GC9+9OObLLTtst9iurMP5fRc7TCA5Ouz2s6BwysfCDdfH4FltseLx
-         NaW7bgFI4hbylhlk1bndVWEqwh7QsAdvyvAcXpR/0DQQG+GDNDB9V9MbpIDFwiNc2WZo
-         bGJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795204856; x=1795809656;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=v6MACD1sBfgK5beVMe+EiTqIGqdXAEDg9pQGTzuk0wA=;
-        b=lep/4EYmNfGOIUJFK50ICn2/exArW/yALB5X41ye2zItaTY0o0BSvUJnzJTc0gomSZ
-         bYpV/SQyP8oVijIuBmymuqaccdHoNxVEjdRzmPl+pvYuIMe14qxgx/r/Av8e2/R/Bvam
-         T3wrCy8c+WjLLLoCFgEHVlxdnop/hl+spOtTzRgP/S/GugewoC6x35hP5CWPTFVzL8YN
-         zNBcchDcRkkHlAu+PRVpZQwBtkGaIdDDRGZ0dp+9sXfI2hmOlfDxA+XgH9xW4yStK7c1
-         YIcrS3cMDqDmtonXgnpUS4qk2UmJVGHzHx4jEjCyjEbsuSHzhuwGN/rdh4OGqdm5tBMv
-         5fpA==
-X-Forwarded-Encrypted: i=1; AL+hErHf5Cq+EV6Ntd4gle066Id9CxNj6angW6lN0s4/3xfy3e+trp9DnGIURTDx3ZWU5lAXNgQjGNYgS4JahOLvSUI=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8KlCV/vnQB8Lnk3ND9HdPjkHpmbv26U8jMyMLKd+f5KwnCQCDH
-	v7bmn1sraa0lAHU4LizioS6XsoEg3FJjp6DBpVucuhH2L4Fg7zxESYT9PLceIAEHpIM5KQwCnyv
-	AAw==
-X-Received: from dycc14.prod.google.com ([2002:a05:693c:60ce:b0:380:e54c:744c])
- (user=elkin job=prod-delivery.src-stubby-dispatcher) by 2002:a05:693c:880d:10b0:36b:fca0:80b3
- with SMTP id 5a478bee46e88-3856fd5d0f0mr4234213eec.22.1795204855427; Fri, 20
- Nov 2026 12:00:55 -0800 (PST)
-Date: Fri, 20 Nov 2026 20:00:47 +0000
-In-Reply-To: <sashiko-outbox-225939@kernel.org>
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=kUGM3OjP
+Received: from omf11.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay03.hostedemail.com (Postfix) with ESMTP id 8BC5FA019E;
+	Fri, 20 Nov 2026 20:10:08 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf11.hostedemail.com (Postfix) with ESMTPA id 0BF122002F;
+	Fri, 20 Nov 2026 20:10:06 +0000 (UTC)
+Date: Fri, 20 Nov 2026 15:10:05 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Linux Trace Kernel"
+ <linux-trace-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4] tracing/probes: Zero out faulted dereferenced fields
+Message-ID: <20261120151005.7142efbe@gandalf.local.home>
+In-Reply-To: <sashiko-outbox-225971@kernel.org>
+References: <20261120143002.18b364b3@gandalf.local.home>
+	<sashiko-outbox-225971@kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -78,35 +59,43 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <sashiko-outbox-225939@kernel.org>
-X-Mailer: git-send-email 2.56.1.750.gf70dc682cf-goog
-Message-ID: <20261120200047.2917735-1-elkin@google.com>
-Subject: Re: [PATCH] serial: 8250_exar: check IS_ERR() on __xr17v35x_register_gpio()
-From: Elkin Cruz <elkin@google.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	sashiko-reviews@lists.linux.dev, llvm@lists.linux.dev, irogers@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: c8577iojcnz1jho9g7rdqadtr3cy3tkt
+X-Rspamd-Server: rspamout07
+X-Rspamd-Queue-Id: 0BF122002F
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX18uEZKSswVMbbkwjEahiYw7sm7wizjqlpI=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=hosspx6aaU+k/GrFDy0XlCAJwuBQtVCG9tTxjtZLOwE=; b=kUGM3OjPd/93C20BIkGolWShB6pw9G2o03dbOtfrg9xG78sum0l6I+EQVyg+Mwar9pAvyoPAB4k/QLHl5/ztc9WWQn4hRCXAS7RyINuzSufeVcIMI1G7g9xgbTYuCHD2DltLpCY9I6NEd+Q1Fj7aP98alhGUqeVey37XXWNzNCI=
+X-HE-Tag: 1795205406-973688
+X-HE-Meta: U2FsdGVkX1/ISfEjAldu9/skfwWLEUwDc+vWPTa66F9QRsA90OT+/RSOzi4NmKGkOBKV7943I3z86boHtgfsSgSfiRgfuDxzjxs461ZhR3lsGs5uJHNbtYhqXWpEW1IXWB81xopF4wFZ2QK2ZD2H9Nvfqz3uo9xkLkpBp3GIRSIKuoyjno7L7tLgRXnmXrZ28P03X/oN0SeFEhQ1I54/9Jfkto7X6/qbJSwAbld3RYScLwbBwwxB8/j4NU1HPwtWBWirUPeKdE2B6dsC9pspw0pktrxOBzDAZBYv/cB0RGb2d+ki7CDwkpkz2kCpg+ZpSrRfZ01bpDsDg0yjXWDbJ5zDyMqKnwst
 
-On Fri, Nov 20, 2026 at 07:40:04PM +0000, sashiko-bot@kernel.org wrote:
+On Fri, 20 Nov 2026 19:52:53 +0000
+sashiko-bot@kernel.org wrote:
 
-Please ignore this patch.
+> > -			val = lval + sizeof(char *);
+> > +			/* Only update a non NULL val */
+> > +			if (val)
+> > +				val = lval + sizeof(char *);  
+> 
+> [Severity: Medium]
+> Should this check if (lval) instead of if (val) when advancing through a
+> string pointer array?
+> 
+> For FETCH_OP_ST_STRING and FETCH_OP_ST_USTRING arrays, stage 2 saves the
+> current array slot address in lval and dereferences that slot into val.
+> If the array pointer lval is valid but element i is NULL (or reading it
+> faulted), val is 0 while lval is non-zero.  Checking if (val) leaves val
+> as 0 instead of advancing to lval + sizeof(char *), so jumping back to
+> stage2 overwrites lval with 0 and causes all remaining string elements in
+> the array to be skipped and recorded as faulted.
 
-> The error-pointer dereference in xr17v35x_unregister_gpio() mentioned in
-> the commit message was already fixed by 0353b5196588 ("serial: 8250_exar:
-> check priv->gpio properly"), which checks !IS_ERR_OR_NULL(priv->gpio).
->
-> Previously, GPIO platform-device registration failure was non-fatal so the
-> card's UART ports would still be registered.  Propagating PTR_ERR(pdev) from
-> xr17v35x_register_gpio() and iot2040_register_gpio() causes
-> pci_xr17v35x_setup() to fail on port 0, which breaks out of the port setup
-> loop in exar_pci_probe() at i == 0 and leaves the card with zero UART ports
-> registered while exar_pci_probe() still returns 0:
+Hmm, I'm not sure if it makes much of a difference. If val were to fault,
+it is very likely that lval would fault too. But perhaps it should be:
 
-Sashiko is right here - 0353b5196588 already fixed the unbind bug in
-xr17v35x_unregister_gpio(), and returning an error from
-register_gpio() would abort UART port setup in exar_pci_probe().
+	val = lval ? lval + sizeof(char *) : 0;
 
-Thanks,
-Elkin
+I'll send a v5.
+
+-- Steve
