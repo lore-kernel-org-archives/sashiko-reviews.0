@@ -1,84 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.170
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795201877;
-	b=JWc2+0bexYDaftZXyoGDER/fjAIcPp3xQT+lxOzBlXzNWjl554raMOblkeGMb1rYJ7AT
-	 JUGdGxOAWKfNpXDzOXPZ5aACjK1sWE/WugxG06lE4u01G2CWGimvsalgKjJLuLFTbVozP
-	 8RVrrREvD7R2xSfkSUcBhMMHwTKZSKjDQOuqTn0veG9ncnWju6dSQyQ1DnwTBZhKSn/hk
-	 73TLHFmPY2yFOLDQFk/Us2DLxBw+rthHqD42A9io6l0T0pd1vUgSAmfU3oLUFl6x0TbDP
-	 8+Bf3EJjFd+uwjuJeto7Tn9M5fBSmQjUqNQZd23wQ2SfMwMkx52FOTYy3JOldnCc9qQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795201877;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.171
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795202669;
+	b=FGQsovnImJeMRTMI1dkQby4jVIOR6K+71N7jYx3GAeZ7Rly800AzkXA6UPMvkVtLPQNY
+	 K6U5OpNok9ltIE1YIBuRS+ZHs02N4+8mJNQic61zE6wefs9501LTEaNn7KRR4WfaHzR+t
+	 mU0k6ZPUH6JDIeE6TZUocYIBTAvCopZYP2jjzrHboBLQlnk5BXms4koEXyr0ZtJwojbw5
+	 2i/GnIT58a+ALTiRkkfv/iSCdxq6qzUFqzn1yKAXBI+AcXxJXCiAHkMnodKHEV7beuQsq
+	 TuYY1bjgNx4ov5dRgX1t+DyvbYDpnCJsuhiarpV+2hi+zFlNYQ1FNUwVSYZR9KFI/Yw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795202669;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
-	 From:To:X-Mailer:References:In-Reply-To;
-	bh=ckLOMz2fV3kY9YEywvc/HmidWwaCPHWXqmOxBtkfgk0=;
-	b=S4/4l05z2EiRoZbFpJijTYglwPcK8EuydGEgsWkXvshYSF8lMxthgEDEvNQ+7fBjo6F9
-	 6zIxDYes0wPommQO+ZgTDlkXsfSDQ40WbBn96Su/mscY+P3gKzcDfHbp/A0Sn0AupkmqU
-	 muAaBEHsnDisXef0/Fw4xGu7KagtuVJ+y/aR00Tlx9cKT5Cfulg6waL/rVDJE7drLi2mw
-	 BhumA8Y31tGTAN0QlIt14oR4ADT2VGQB25WWh0hPFeCA3HUzyvIyTGJwJ7hqIAHlwnNMI
-	 7eLEpgjDBwo4ucQA/rD8A0jo2FA+broo70ZsGtxYaObyVDU0HUC8BsxUd2Tzr9J4qCw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="Xsypcd/v";
-	arc=none smtp.remote-ip=209.85.214.170
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=hR7xJF+eh3lU/QGj+8ASNxswZFRyXVh6Oom4tDMt+sM=;
+	b=ewW3G4yvrn9XK/seFsz2sJMi2S5c6fAbddQjhUfc1Qg6lFKY8DUVRawkWQHziJ9KB+KZ
+	 UrvkD+riQkvKxjwBanwmF/msDKlttdDbFw8hn0Dg1rIUz71UuuwoPUn9D6KWKfj7icqo4
+	 eBiojgju6SJP1pbWPNtNOy2YyeIPVHYmLQAvZel79Z3vJ630/jTzujrLp8WubSLlCjR+i
+	 S0jnUmayXisANsW4rScC7shnJxOaxwiMmCoN+4HdnJnz+C+9pZd7DB7GZDn4kvgvN9lTK
+	 zQUUAuGD3kIADUvJeyQvDu226BtFbgr80vMPVKzoGXQ3gCKSembLtU8Wwti8l0T6oDg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uXujzAsQ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.171
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8AC60A2633
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 19:11:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D8AC60A2633
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A344C606A6D8
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 19:24:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A344C606A6D8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Xsypcd/v
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2f03eeda984so6854675ad.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:11:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uXujzAsQ
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3adff684a52so10661281fa.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:24:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795202667; cv=none;
+        d=google.com; s=arc-20260327;
+        b=b+0gpu2Rn+tX8QzcC0AmELaffPgi5BbvaMR316Z2XezPBMAVuZJjoq23FseZXY1AL5
+         5f1WKIOn69tVM9KcWJz0yvzneM6RlZ5btA+m8CqoNUmlHHiMK+0KIaWcd86gB5IPQeUs
+         jrAf08z2v9IJYCLMYhWSjgDs1yXdFaBU9jMypCilggAS9ajLwtI3DZIdqMmxGKLA1H/y
+         ieEshsDevF1wiPJ/JYhTZctCFC4T3xJl4ztMToIL1v/Y4IWldgyvWTGBj2xBYtrN99b4
+         uEcbnZV1iXIc+mYMGekygP1ae0bcTlv2iA3Gs7ZnXNQLIEOgTvSu793IMYuVGt3EauiG
+         mIhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hR7xJF+eh3lU/QGj+8ASNxswZFRyXVh6Oom4tDMt+sM=;
+        fh=/pNdPGSL7ubAyatZ82+wlnjupiDTvrpwsizegktnd3M=;
+        b=XUJgtsTOOD9Deg83WHrMkUd1GH+g8OaQMLhtpFqHXPPQp/aA2l9ua5Jw5ZyUg13V1f
+         CgwHxTLbBqy0ZcxfixcApXcN9O15bacIrgQM954ulZHWN+OLNAlfJL9sJKW8vh+Fnaao
+         zLRtOIbildwPRsDJ689C8nyjxJ++uoA+9sXuK1EA5VAfeb7f9aFfAT+TwpYRsJ5HjTo4
+         zI4NpCtMuPjLwlKK1CJbJLpF48frvar1t0VCYNxwaO3uqRRAvdyuZJpy9Zwf65qiL2+o
+         BXmM2dQrto2KxNw7k37D0wYqfcAfHLVaX5uE9Lsdv73v2PhkylSFhGtBzB132EGL0nbd
+         Oz0w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795201866; x=1795806666; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ckLOMz2fV3kY9YEywvc/HmidWwaCPHWXqmOxBtkfgk0=;
-        b=Xsypcd/vk6IwcHtmrSCwKtPTEo7w8xVcMMKD+Fpu4FhcSsJj/K5DMY1XYm1DmvvHMk
-         iFe2p/NjTccLg+3qsSGko6xVzFlUhTU+0m67ZGYFapjiSoAoaJW2GG9ziXWFRT3ts3oS
-         UWq+RSZae4agf2NJYkh6nNG+UWO6XIgyxp2SQQBWnH/cYEXL8uuCKROMe6TVM9wK9o/V
-         gWP4zdCWDdv6eu7eHQylKM/1QOAy/p9xqlqlVrabvLuuAHmyKhU4sePOjHAAuwqOpgGu
-         NFxkeuOQfennsNVw97k3Dvg3m874Oft/HHsMkS21Gbp/CsgP9zLk+x5REwiTCgLjdrgq
-         Ky4g==
+        d=gmail.com; s=20260707; t=1795202667; x=1795807467; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=hR7xJF+eh3lU/QGj+8ASNxswZFRyXVh6Oom4tDMt+sM=;
+        b=uXujzAsQBd+QIJwoJZVJh83d6dNU4/fUPBA5S1I7f+vync8yDMbhIHCD2jWVhLhli0
+         rTYGZgWJvHPlMPVIZCtlMlGS53XZlsrpMWlRJfuTZon9llOmd1QoU2OhwOLXXAM5hbec
+         lqvpuXGgsRqihRpVABgLoSeHqoB9lO+Nmkqo7BdTdx1qflzwas9ndsGTtadKojT8sUBw
+         98uiFurBFmPuY5rWGjKRZwOfLd5T+GQ1tgNA5jLp2ldNFAnhFdboG75csG6ZH68J1r5x
+         oX937j0FXy++ktYnnkokSV58yT6kRjRIdnsUbe5bW3scb1HfgkBBZ8fkrdpI2tyca9/M
+         zrbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795201866; x=1795806666;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1795202667; x=1795807467;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ckLOMz2fV3kY9YEywvc/HmidWwaCPHWXqmOxBtkfgk0=;
-        b=P7+BsHxKzBL3GiDGCaqOKcS5rNYLtsAEo49dTllwsiFQkzXYxVMHFSs6CUMyX7mZP/
-         w73/9Qb9qlq69B0EgmJFKI+ec7mbNQduAL1fArid7EIsR5/MmSh3UdO6KdKBkbeZ1CTz
-         ea6GN6GuXue6Br5vf6G9a1v1LA57aCYyGsrn4lFBvuC6A6zz4JtbB71e83+vkXoIqYYK
-         xgni0wQkpj18bdHiJW5MPEfNSI8nZd+FMKQh4rx84eyQkzZOjxC/FSIR02O9fDKqgagx
-         b6AF0waISeQJzWUQkYRWP9r6TjtJnWIWGCcyCqfO2DMp2pPW0W00tL28+w5Ue9Mz39PB
-         vMMQ==
-X-Gm-Message-State: APuU4Z8DXb2wgFu+U6kKFWC+2su2MHOezsFW6mBCD6gqLPwlGosIFq7F
-	/X4r1L4Y5QBh6sTTy5nhMTvHtNX/4uEpbyctP/rH/rP4HUw1WLrFATq68gYePzH9By0oFFDuafK
-	LH3CICeOC
-X-Gm-Gg: AZFdTZc36OzULLJNLHLUKdCSNs3sKEfMelaJx05DNRGe6xmiY57lY0jFU52fD2zATpb
-	s6xDMnKVMS1b9GHEVc/PIoU4f15EpviMCFZ/ppYYcLGNAYx0fHRA7eWWz9mTnJ0sypWzxsQKm2m
-	CeLT41oKV0TMHL65tyt0XT2t71TaPExEpaBqvhby0GaYZjhLx/poSuJdip8HlOlngkHQuPMhR0d
-	nJ0zzhW6nIyCmUyjvIZXxOiaf4g4YTnH0Qa5SzBkSgLBNqDadYgVkK/pvC7ETh9WQ7i1cD3ZvEt
-	ojFr2EJZU1OxIZbKWNiA3woxz+6MlDc6xNddt0pp2Kcee2zncxB4HfJjBvkxLUSjARyB4CWMbnS
-	IsERDbJ040m5wjkVtbboV64W5Im7fM3NsTd8nPHGraaPej6RRfU6NQUatRqLLomla2twqyvYjUG
-	vrNlKWud8d+tj3zdObw4LWSfBWvuwxZK8TUrvIb0VuGTecy8gj0YUdQcfgMe0sAK/hCjEAYEiAs
-	62MSdBjoEbfawnJJhrlSefx93D10ndrEyusYQB8s+cZlRv4YeSRfROA3/wX/3OomdAJR/on+o+v
-	pZZOXWg1dczU4+zwKPydENi9R3i5CCcEe2N8WRJdTVG8vT54vyNV9SyDBJDu1KUD
-X-Received: by 2002:a17:903:3b8d:b0:2e9:5714:6079 with SMTP id d9443c01a7336-2f03f1a4a0dmr40668915ad.31.1795201865671;
-        Fri, 20 Nov 2026 11:11:05 -0800 (PST)
-Received: from localhost (33.79.127.34.bc.googleusercontent.com. [34.127.79.33])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2f03f1413f3sm17535745ad.68.2026.11.20.11.11.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Nov 2026 11:11:04 -0800 (PST)
+        bh=hR7xJF+eh3lU/QGj+8ASNxswZFRyXVh6Oom4tDMt+sM=;
+        b=SwrU/CWE6pavlGZP9jYoohZPl+fHa9x6CAiqpJjIG50jC/gUf67djQxVRMKRaFcSk4
+         qmC+peYP5d3oXY9z1IgggyYKx3pztDJPAXJEx760sth9FnAquNBC+2CbjZdfYrHHgNwR
+         KGt38HkH8qzkLz7lJU2TTJ/J77SgG3/4Oa/x3T+lk++bmdWyRwoI0Ymce/Gz2jBhwsnO
+         POKU0crAVvkqDmwGH9FGPB1HwFbkh3cBI971/v0+VMDQglU3CyAIYkaTDPlNqpxcP5CC
+         uuMWijHrJAV48Ch90HiOgRQFriRH0u6ws+UsTuEHuH7M9/kvpgZonD/Hxm+BZgsJnpyE
+         9d5g==
+X-Gm-Message-State: APuU4Z8C0Pwxf521kq+QM2Nt+v67nuOgBvYBPPIip11kiupkxGDB2h0u
+	zaZYPIimYHtcDWOpIPnfpH2ET9RDGGW7giarcRDNt2dZUrQgzArodS1BetZLPIBH6c6UyYGZjH6
+	T/cujzG2rgQJ7KvXj2E5ahJTwcK7metdebKFG
+X-Gm-Gg: AZFdTZdWc7zAu9wSV+ch+wvHVmR7Q6nRKobUzHp1MHgzdEhcwAzMFwthpWlYNDCLnSY
+	bHJMaXIcLppxszIytokez+cw96CBN2vJ3GvnRjR/qfyIlQ4IrlabxaLAHS3Ocok1mxxJwC1tgQr
+	7LCJXaniaIjZXVuAEcfVK5IvPLLR3MLuReih78iUiuZn2mk/Z98ig79WDPfwt79lhfQCjlYLQyU
+	6LMD9i/HUhDIVudm5LUMAnYWfkroDc7fiI/l3fG1zXPwooBiuVFWpi8UVWjQUZleKUCF1CDthtK
+	tMUISgd/NMZ2zwvAzl3MMv3u+WJWEzThWVFvbLcj1TMumbtP0VrBSpx7VqH6BQlHxnWMzoYO461
+	Zto6ZnCwtVFV5W2fVoPnKmpNhQRQ3VEzweSTT6wiliEKm7poMK4kOLME1J6Y=
+X-Received: by 2002:a05:651c:991:b0:3aa:f4c5:8920 with SMTP id
+ 38308e7fff4ca-3ae7fb0b5efmr9311671fa.12.1795202666436; Fri, 20 Nov 2026
+ 11:24:26 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -87,133 +102,171 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20261106072412.7909-1-kanchanapsridhar2026@gmail.com>
+ <20261106072412.7909-8-kanchanapsridhar2026@gmail.com> <sashiko-outbox-202713@kernel.org>
+In-Reply-To: <sashiko-outbox-202713@kernel.org>
+From: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Date: Fri, 20 Nov 2026 11:24:12 -0800
+X-Gm-Features: Aa3M54oUl6qJ5hZlCYYhmiDiQH5xqNAdQbMYZMdPI76DbB-hbPU55wGtY4uRrEQ
+Message-ID: <CACpmpoe44wzBDMdLX=Ryau8uuDYrfNRbGmAvuWF6p6rPc6_zbw@mail.gmail.com>
+Subject: Re: [PATCH v3 7/8] mm: zswap: Refactor and optimize
+ zswap_store_pages() batch operations.
+To: sashiko-reviews@lists.linux.dev
+Cc: hannes@cmpxchg.org, yosry@kernel.org, nphamcs@gmail.com, 
+	chengming.zhou@linux.dev, akpm@linux-foundation.org, linux-mm@kvack.org, 
+	herbert@gondor.apana.org.au, davem@davemloft.net, 
+	linux-crypto@vger.kernel.org, rientjes@google.com, willy@infradead.org, 
+	senozhatsky@chromium.org, 
+	"Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 20 Nov 2026 11:11:04 -0800
-Message-Id: <DN09Y7673R13.3GB4PTE9ZPXAE@google.com>
-Cc: "Adithya Jayachandran" <ajayachandra@nvidia.com>, "Alexander Graf"
- <graf@amazon.com>, "Alex Williamson" <alex@shazbot.org>, "Alex Williamson"
- <alex.williamson@nvidia.com>, "Bjorn Helgaas" <bhelgaas@google.com>, "Chris
- Down" <chris@chrisdown.name>, "Chris Li" <chrisl@kernel.org>, "David
- Rientjes" <rientjes@google.com>, "Jacob Pan"
- <jacob.pan@linux.microsoft.com>, "Jason Gunthorpe" <jgg@nvidia.com>,
- "Jonathan Corbet" <corbet@lwn.net>, "Josh Hilke" <jrhilke@google.com>,
- "Leon Romanovsky" <leonro@nvidia.com>, "Lukas Wunner" <lukas@wunner.de>,
- "Mike Rapoport" <rppt@kernel.org>, "Parav Pandit" <parav@nvidia.com>,
- "Pasha Tatashin" <pasha.tatashin@soleen.com>, "Pranjal Shrivastava"
- <praan@google.com>, "Pratyush Yadav" <pratyush@kernel.org>, "Randy Dunlap"
- <rdunlap@infradead.org>, "Saeed Mahameed" <saeedm@nvidia.com>, "Samiullah
- Khawaja" <skhawaja@google.com>, "Shuah Khan" <skhan@linuxfoundation.org>,
- "Vipin Sharma" <vipinsh@google.com>, "William Tu" <witu@nvidia.com>, "Yi
- Liu" <yi.l.liu@intel.com>
-Subject: Re: [PATCH v11 11/13] PCI: liveupdate: Freeze preservation status
- during shutdown
-From: "David Matlack" <dmatlack@google.com>
-To: <sashiko-reviews@lists.linux.dev>, "David Matlack"
- <dmatlack@google.com>, <kexec@lists.infradead.org>, <linux-mm@kvack.org>,
- <linux-pci@vger.kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20261118223704.3286085-1-dmatlack@google.com>
- <20261118223704.3286085-12-dmatlack@google.com>
- <sashiko-outbox-224146@kernel.org>
-In-Reply-To: <sashiko-outbox-224146@kernel.org>
 
-On Thu Nov 19, 2026 at 2:38 PM PST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] pci: liveupdate: panic on session teardown after
->   pci_liveupdate_freeze()
+On Fri, Nov 6, 2026 at 11:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] mm: zswap: missing !CONFIG_MEMCG stub for obj_cgroup_get_many()
+> - [Low] mm: zswap: unconditional incompressible page stat updates on
+>   zero delta
+> - [Low] mm: memcontrol: unused and duplicated obj_cgroup_charge_zswap()
 > --
 >
-> commit a3120ec70b92ea26f3e1d92d3bd0d1531b5a73b6
-> Author: David Matlack <dmatlack@google.com>
+> commit 55351c710f10c5fbb79d9201d80496dc658bbc19
+> Author: Kanchana P. Sridhar <kanchanapsridhar2026@gmail.com>
 >
-> PCI: liveupdate: Freeze preservation status during shutdown
+> mm: zswap: Refactor and optimize zswap_store_pages() batch operations.
 >
-> This commit freezes a PCI device's outgoing live update preservation
-> status in pci_device_shutdown() so that devices cannot be preserved or
-> unpreserved once shutdown begins.
+> This commit factors zswap_store_pages() into batch helpers
+> zswap_init_entries() and zswap_tree_stores(), and introduces
+> obj_cgroup_charge_zswap_many() to charge and account zswap batches at
+> once.
 >
->> diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
->> index a45ad86370d5d..e26d2f5c2338c 100644
->> --- a/drivers/pci/liveupdate.c
->> +++ b/drivers/pci/liveupdate.c
+> > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+> > index ac6c43ea8c5a6..ab280a448e8c4 100644
+> > --- a/mm/memcontrol.c
+> > +++ b/mm/memcontrol.c
+> > @@ -6368,6 +6368,42 @@ void obj_cgroup_charge_zswap(struct obj_cgroup *=
+objcg, size_t size)
+> >       rcu_read_unlock();
+> >  }
+> >
+> > +/**
+> > + * obj_cgroup_charge_zswap_many - bulk charge compression backend memo=
+ry
+> > + *                                from compressing a batch of pages.
+> > + * @objcg: the object cgroup
+> > + * @size: total compressed length of a batch of compressed objects
+> > + * @nr_pages: # of pages that were compressed to store in zswap
+> > + * @nr_incomp_pages: # of incompressible pages to store in zswap
+> > + *
+> > + * This forces the charge after obj_cgroup_may_zswap() allowed
+> > + * compression and storage in zswap for this cgroup to go ahead.
+> > + */
+> > +void obj_cgroup_charge_zswap_many(struct obj_cgroup *objcg, size_t siz=
+e,
+> > +                               u8 nr_pages, u8 nr_incomp_pages)
+> > +{
+> > +     struct mem_cgroup *memcg;
+> > +
+> > +     if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
+> > +             return;
+> > +
+> > +     if (obj_cgroup_is_root(objcg))
+> > +             return;
+> > +
+> > +     VM_WARN_ON_ONCE(!(current->flags & PF_MEMALLOC));
+> > +
+> > +     /* PF_MEMALLOC context, charging must succeed */
+> > +     if (obj_cgroup_charge(objcg, GFP_KERNEL, size))
+> > +             VM_WARN_ON_ONCE(1);
+> > +
+> > +     rcu_read_lock();
+> > +     memcg =3D obj_cgroup_memcg(objcg);
+> > +     mod_memcg_state(memcg, MEMCG_ZSWAP_B, size);
+> > +     mod_memcg_state(memcg, MEMCG_ZSWAPPED, nr_pages);
+> > +     mod_memcg_state(memcg, MEMCG_ZSWAP_INCOMP, nr_incomp_pages);
+> > +     rcu_read_unlock();
+> > +}
+>
+> [Severity: Low]
+> Could obj_cgroup_charge_zswap() be removed now that its only caller in
+> mm/zswap.c has switched to obj_cgroup_charge_zswap_many(), just as
+> zswap_pool_get() was replaced by zswap_pool_get_many()?  Leaving
+> obj_cgroup_charge_zswap() in mm/memcontrol.c and include/linux/memcontrol=
+.h
+> duplicates the charging logic with no remaining callers.
+
+Thanks Sashiko for the code review. I have modified
+obj_cgroup_charge_zswap() to call obj_cgroup_charge_zswap_many() to
+avoid the charging code duplication.
+
+>
+> > diff --git a/mm/zswap.c b/mm/zswap.c
+> > index 8c36344000f51..5ef1ae67e67a9 100644
+> > --- a/mm/zswap.c
+> > +++ b/mm/zswap.c
 >
 > [ ... ]
 >
->> @@ -520,6 +523,11 @@ static int pci_liveupdate_unpreserve_device(struct =
-pci_flb_outgoing *outgoing,
->>  {
->>  	struct pci_dev_ser *dev_ser =3D dev->liveupdate.outgoing;
->> =20
->> +	if (dev->liveupdate.frozen) {
->> +		pci_warn(dev, "Cannot unpreserve device after it is frozen!\n");
->> +		return -EINVAL;
->> +	}
+> > @@ -1711,17 +1702,86 @@ static bool zswap_store_pages(struct zswap_stor=
+e_context *zc,
+> >                       zswap_lru_add(entry);
+> >       }
+> >
+> > +     /*
+> > +      * Each batch entry is successfully compressed and stored in the =
+tree,
+> > +      * and further failures will be cleaned up in zswap_store().
+> > +      * Next, we do bulk accounting for the batch: grab refs to the po=
+ol and
+> > +      * objcg, charge zswap memory, increment zswap_stored_pages and
+> > +      * zswap_stored_incompressible_pages. The opposite actions will b=
+e
+> > +      * performed by zswap_entry_free() when the entry is removed from=
+ the
+> > +      * tree.
+> > +      */
+> > +     zswap_pool_get_many(pool, zc->nr_pages);
+> > +     if (objcg) {
+> > +             obj_cgroup_get_many(objcg, zc->nr_pages);
 >
 > [Severity: High]
-> Can rejecting pci_liveupdate_unpreserve_device() on a frozen device trigg=
-er a
-> panic in pci_check_all_devices_released() when a Live Update session is
-> closed during a non-kexec shutdown?
+> Does calling obj_cgroup_get_many() here break the build when CONFIG_ZSWAP=
+=3Dy
+> and CONFIG_MEMCG=3Dn?
 >
-> Unlike kernel_kexec(), which calls liveupdate_reboot() to serialize sessi=
-ons
-> before device_shutdown(), non-kexec shutdown paths (kernel_restart(),
-> kernel_halt(), and kernel_power_off()) call device_shutdown() ->
-> pci_device_shutdown() -> pci_liveupdate_freeze() without serializing Live
-> Update sessions.
+> include/linux/memcontrol.h only defines obj_cgroup_get_many() inside the
+> #ifdef CONFIG_MEMCG block, while the #else section only provides stubs fo=
+r
+> obj_cgroup_get() and obj_cgroup_put().
+
+Added a stub for obj_cgroup_get_many() in the #else section.
+
 >
-> If a task closes an open session FD with a preserved PCI device during or
-> after pci_device_shutdown(), luo_file_unpreserve_files() invokes the file
-> handler's .unpreserve() callback and then unconditionally drops the outgo=
-ing
-> FLB reference:
+> > +             obj_cgroup_charge_zswap_many(objcg, total_batch_comp_leng=
+th,
+> > +                                          zc->nr_pages, nr_incomp);
+> > +     }
+> > +     atomic_long_add(zc->nr_pages, &zswap_stored_pages);
+> > +     atomic_long_add(nr_incomp, &zswap_stored_incompressible_pages);
 >
-> kernel/liveupdate/luo_file.c:luo_file_unpreserve_files() {
->     ...
-> 		luo_file->fh->ops->unpreserve(&args);
-> 		luo_flb_file_unpreserve(luo_file->fh);
->     ...
-> }
+> [Severity: Low]
+> Should the incompressible page updates here and in
+> obj_cgroup_charge_zswap_many() be skipped when nr_incomp is 0?
 >
-> Because dev->liveupdate.frozen is set, pci_liveupdate_unpreserve_device()
-> returns -EINVAL without decrementing dev_ser->refcount or
-> outgoing->ser->nr_devices.  When luo_flb_file_unpreserve() drops the fina=
-l
-> FLB reference, pci_flb_unpreserve() calls pci_check_all_devices_released(=
-),
-> which panics because outgoing->ser->nr_devices is still non-zero.
+> In the common case where all pages in the batch are compressible,
+> atomic_long_add(0, &zswap_stored_incompressible_pages) still performs an
+> atomic read-modify-write on the shared global counter, and
+> mod_memcg_state(memcg, MEMCG_ZSWAP_INCOMP, 0) still runs get_cpu(), updat=
+es
+> per-CPU stats by 0, and fires trace_mod_memcg_state() with val =3D=3D 0.
+>
 
-Yes, this can happen, although only in a narrow window.
-kernel_restart(), kernel_halt(), and kernel_power_off() do not freeze
-userspace or serialize Live Update sessions, so a task that still holds
-a session FD when reboot(2) is called (e.g. reboot -f, which skips
-killing userspace first) can close it after its devices have been
-frozen. In v10 this only resulted in a warning, but the panic added to
-pci_flb_unpreserve() in v11 turns it into a panic during reboot.
+Good point. I have modified this such that if nr_incomp is 0, we skip
+the incompressible page updates.
 
-The freeze only matters during kexec. pci_device_shutdown() only checks
-pci_liveupdate_is_outgoing() when kexec_in_progress is set, and
-kernel_kexec() serializes all sessions via liveupdate_reboot() before
-device_shutdown(), so nothing can be unpreserved after devices are
-frozen.
 
-I will fix this in v12 by only freezing devices during kexec, so that a
-non-kexec shutdown no longer refuses to unpreserve devices:
-
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 08b768b9e905..2748ca22e9cf 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -560,7 +560,8 @@ static void pci_device_shutdown(struct device *dev)
- 	struct pci_dev *pci_dev =3D to_pci_dev(dev);
- 	struct pci_driver *drv =3D pci_dev->driver;
-=20
--	pci_liveupdate_freeze(pci_dev);
-+	if (kexec_in_progress)
-+		pci_liveupdate_freeze(pci_dev);
- 	pm_runtime_resume(dev);
-=20
- 	if (drv && drv->shutdown)
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106072412.79=
+09-1-kanchanapsridhar2026@gmail.com?part=3D7
