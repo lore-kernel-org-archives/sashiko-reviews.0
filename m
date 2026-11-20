@@ -1,68 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795186381;
-	b=rxzGZLPI252mcL0VlOLAUhFdIUk5tNCP9G5O7BHvRzgRpsuQ4dsCCfrdQkhHD8S76Osk
-	 CtcSXX39HCvNQWktkVX02OcIpY+6mw7394kyK7+tHWihJosh+06kMxt/mFpTeNXIUw3Tf
-	 ACHl4Ay40Z1RKi4InWDDCr7utapZh+Sg+Vfs9hzuDxJUSnJE3uUFVXRV0Ej0H/oXD6z+e
-	 bnsgRNu8PQmGBVb3yFl+M5JzjdB4+vDYqI43Dd92sOLklBxbNPiwIl9u2oQ+bpgVH9sHG
-	 siPBVSyyrfqoHltdUaJeY1aW4ZLAL5SMQIWWolf3ryv0yq3BNmWt72yCExcnUyEzHPg==
+	t=1795186635;
+	b=BPDT+QzqTd6foQSTuYH5xEmOV4B4JquBCw6XiQK4fzFwksk9VvTz0dzoLZDE2kcLPyHI
+	 atuQ8jOQwnOhmWfMbcWkZ47YkFu1eWwi80YZn+NQrEFw5lWdMIbsQBjeBhtmI3XNmH55D
+	 YhzY3mgapAglEUfFv6Zg6NxtArci/F0Vu6pvnbAT4cuebMMDTbBGs3VaAQMK57AmGwQ9w
+	 ZjdJIqdKDrYNXRH7Jt3aB5fxcV/0dNHXycv1i7EalUW8sND7yqOmrXK4+QI/YIIk6LYPK
+	 BgPOwVCrZhRZBp1KntMcsN0BpEUQoZZklE2VddAZ+ZvL1MGi3Pxn8Jmnuc5HG4CqHuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795186381;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=bUjK6zlUHwja5qwprJ4mgu7JgsCzPVPRgF2dRw7rBCM=;
-	b=Bg+qw+jmcbpWL797opS+YDBS8a7AYlNXlbciDyXt/3lNtpugNLU8v5Pf/zdvX7S5eKPp
-	 paSXgj9/hvAtc8PRHkILO0ibujsII0mPomd9OkGnMbtyafthdwC4s/Yu4dCX4JAntW1Pf
-	 0qeX49dH6v9SDD/4OA24BJOWrdYLftRkH6ZqUErCD5TdaxlR7+5LD1CNWiYtEi9vOsC03
-	 xMIxwpxMQ+nS6eZQBzjP0S1pt2Rqti2MCMXKVShzsn64l/DczYgYfkCXQ6NCExYJROyUm
-	 eyn0W03As3eaDgeswC1Xulv3cutEdTG+/AU7Arx52mX73nm9SfHiOkL6sGNkwO0X62A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795186635;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VigvJCRt5rXY+6Kai55nHb34XII7DZnlFQiPz+X14Z4=;
+	b=kDshSNLlnzabEPcQZHqkAYJEtxQw6ABMtxxrt35cZwntTEx3uH5cAKKXyH4dOYh7rFzq
+	 EuGDy1x3YqikYTXF0tP1tmcajkcBPoicdOwmhUHwAmYr+Z8rNngbardIHpP34nClHKh1z
+	 0kjJUDCRlOKSaQzRyfMjMss1e/BpbT523R14xA7DfH0j2LtxNEnMP30OJDMkx2uXcERUg
+	 L1aezBLl+TDI+5GCcaFryibrmFshQeqVm8dI3gUi7s1wvXst/h3vQp2qcUcZ4zu4ZKPNq
+	 yXU+04OueNNka8K5Yk0lBnL+6MsO0aMIWox1VSGgV+79IFLmXWuSCi/jPZ9AEn2wLJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ABN3X9bO;
-	arc=none smtp.remote-ip=198.175.65.18
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IWGA7uvu;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9AF606A32C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:53:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3E9AF606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1A1606A32C;
+	Fri, 20 Nov 2026 14:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ABN3X9bO
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795186380; x=1826722380;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=TT/13CTyFXsuqlMerIxRbn9FbD+oe54mqDJdH9KIuu4=;
-  b=ABN3X9bOyhGrudn8S//3urff9SiKJ5YFuhSESq9vHjWmdCaycjIrOCqW
-   +A0XjGfAvWoclbjHdhL3+/N6UfRoorhy0HLTfEGMMyy+jzX0/Jl67Hq2l
-   eE63yodKQmGMqBJCXKFEs737cP/SLyG6taQcYglZa++SFMTyVrxT2UJZK
-   ZO4C4FumP0860Vp6WEjM2cpjPUiHLn70RqtAbCjPHfzfKzbznWnsjgmtp
-   AVUSq+NIVrQiwDo0EE1D3Dow9mrWktbmEvVO9mPS6gZS/jNuGPnOtm9X3
-   P1wxWJBDqk2G+9nhkCAVYeHbEnviUCuzs9e5Embk+PgrgCTFCyrd5Yo/y
-   w==;
-X-CSE-ConnectionGUID: rT2u/9tzQJ+8n9hb51UB+g==
-X-CSE-MsgGUID: 8oAiZdoISYqWOU0AmMRLOA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11972"; a="4079935"
-X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
-   d="scan'208";a="4079935"
-Received: from fmviesa013.fm.intel.com ([10.60.135.153])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 06:53:00 -0800
-X-CSE-ConnectionGUID: TJcXCGJJQG2daIzDefhKow==
-X-CSE-MsgGUID: 3quqqe0tSq2kuewS3WoQhQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
-   d="scan'208";a="12716134"
-Received: from slindbla-desk.ger.corp.intel.com (HELO [10.245.244.23]) ([10.245.244.23])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 06:52:59 -0800
-Message-ID: <94d7ba30-8c3a-41a6-893f-f45d03a91e9e@intel.com>
-Date: Fri, 20 Nov 2026 14:52:57 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IWGA7uvu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B98C1F000C6;
+	Fri, 20 Nov 2026 14:57:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795186634;
+	bh=VigvJCRt5rXY+6Kai55nHb34XII7DZnlFQiPz+X14Z4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=IWGA7uvu2MNG1+rvnP6DxMwptyVI8Pkgsj7+Sezxf/GivzfH5F6TV+kJ0Uh4Grg5D
+	 m+Jf6nY7EKL/Ew9z/r7JgMb6+renWFEObbdwkmT6Crn+PdBvAzhnzh9GuaXB/u7yRX
+	 +xxTsjiW9bKxm9pXEYOIA5dizN9RlIecuBq00HfiqxsQowP+ZpDSjeYskl3ncXnwll
+	 5alPiJAejp3VcEbqdrhC/ED1O/H4HpjNp6Qwm1Ig8HVhTLdSVn7WiLtfUJLeCON1wn
+	 gvxFL04fVGIO7+vxD67QCUJMNe0zu2j1VZFMjcnCDjdTANnwCByyBZxxDWFLO/IuXB
+	 2s4qYPrfa1ulw==
+From: Mattijs Korpershoek <mkorpershoek@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
+ neil.armstrong@linaro.org, olteanv@gmail.com
+Subject: Re: [PATCH v5 2/2] phy: qcom-snps-femto-v2: Add support for SA8255P
+In-Reply-To: <sashiko-outbox-225334@kernel.org>
+References: <20261120-phy-qcom-snps-femto-v2-8255-v5-0-86a9880ee5a5@kernel.org>
+ <20261120-phy-qcom-snps-femto-v2-8255-v5-2-86a9880ee5a5@kernel.org>
+ <sashiko-outbox-225334@kernel.org>
+Date: Fri, 20 Nov 2026 15:57:12 +0100
+Message-ID: <xhkdbcxrzpn3r.fsf@mkorpers-koolstof.csb>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,83 +60,99 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] drm/xe/userptr: Make the repin retry loop
- non-fatal
-To: sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org
-References: <20261120-userptr-repin-v2-0-65e1f6e582ef@intel.com>
- <20261120-userptr-repin-v2-5-65e1f6e582ef@intel.com>
- <sashiko-outbox-225315@kernel.org>
-Content-Language: en-GB
-From: Matthew Auld <matthew.auld@intel.com>
-In-Reply-To: <sashiko-outbox-225315@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 20/11/2026 14:03, sashiko-bot@kernel.org wrote:
+On Fri, Nov 20, 2026 at 14:11, sashiko-bot@kernel.org wrote:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] drm/xe/userptr: stale uvma->userptr.repin causes premature
->    timeout after retry abort
+> - [Low] phy: qcom-snps-femto-v2: use devm_pm_domain_attach_list() and
+>   check ret =3D=3D 0
 > --
-> 
-> commit 90fc6239c153f6d32105ac91a7723de6506c06a9
-> Author: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-> 
-> drm/xe/userptr: Make the repin retry loop non-fatal
-> 
-> This commit converts -EBUSY from drm_gpusvm_get_pages() during userptr repin
-> into -EAGAIN until an overall repin timeout expires, discounting idle gaps
-> between retry attempts.
-> 
->> diff --git a/drivers/gpu/drm/xe/xe_userptr.h b/drivers/gpu/drm/xe/xe_userptr.h
->> index 2a3cd1b5efbb0..179f2aca26a39 100644
->> --- a/drivers/gpu/drm/xe/xe_userptr.h
->> +++ b/drivers/gpu/drm/xe/xe_userptr.h
-> 
+>
+> commit 40323ed83ee6f03c36d2767d1e91cd08ccff373b
+> Author: Sriram Dash <quic_sriramd@quicinc.com>
+>
+> phy: qcom-snps-femto-v2: Add support for SA8255P
+>
+> This commit adds support for the SA8255P USB HS PHY variant, whose power,
+> clock, and reset resources are managed by SCMI firmware through "core" and
+> "transfer" power domains.
+>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy=
+/qualcomm/phy-qcom-snps-femto-v2.c
+>> index 0dae8369671ab..0ec34bc5c26ec 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
 > [ ... ]
-> 
->> +static inline void xe_userptr_repin_begin(struct xe_userptr_repin *repin)
+>> @@ -164,8 +167,82 @@ struct qcom_snps_hsphy {
+>>  	bool phy_initialized;
+>>  	enum phy_mode mode;
+>>  	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+>> +
+>> +	struct dev_pm_domain_list *pd_list;
+>>  };
+>>=20=20
+>> +static void qcom_snps_domain_detach(void *data)
 >> +{
->> +	unsigned long now = jiffies;
+>> +	struct qcom_snps_hsphy *hsphy =3D data;
 >> +
->> +	if (!repin->start) {
->> +		repin->start = now ?: 1;
->> +		return;
->> +	}
->> +
->> +	if (repin->last &&
->> +	    time_after(now, repin->last +
->> +		       msecs_to_jiffies(XE_USERPTR_REPIN_IDLE_MS)))
->> +		repin->start = (repin->start + (now - repin->last)) ?: 1;
->> +	repin->last = 0;
+>> +	dev_pm_domain_detach_list(hsphy->pd_list);
 >> +}
-> 
-> [Severity: Medium]
-> Can an aborted retry sequence leave stale timestamps in
-> uvma->userptr.repin and cause a later repin to time out early?
-> 
-> xe_vma_userptr_pin_pages() only zeroes uvma->userptr.repin when the repin
-> completes or its timeout expires.  If the caller's retry loop aborts after
-> receiving -EAGAIN, such as when xe_exec_ioctl() returns -ERESTARTSYS on a
-> pending signal or DRM_XE_VM_BIND_OP_PREFETCH hits its outer repin timeout
-> in xe_vm_bind_ioctl(), uvma->userptr.repin keeps its non-zero start and
-> last timestamps.
-> 
-> On a separate repin of that VMA after XE_USERPTR_REPIN_IDLE_MS,
-> xe_userptr_repin_begin() treats the elapsed time as an idle pause in the
-> earlier loop and advances repin->start only by (now - repin->last).  That
-> deducts the prior attempt's accrued duration (repin->last - repin->start)
-> from the new attempt's timeout budget, which can make the next repin fail
-> with -EBUSY after a single drm_gpusvm_get_pages() call and kill the VM in
-> the rebind worker.
+>> +
+>> +static int qcom_snps_domain_attach(struct qcom_snps_hsphy *hsphy)
+>> +{
+>> +	struct dev_pm_domain_attach_data pd_data =3D {
+>> +		.pd_flags       =3D PD_FLAG_NO_DEV_LINK,
+>> +		.pd_names       =3D (const char*[]) { "core", "transfer" },
+>> +		.num_pd_names   =3D 2,
+>> +	};
+>> +	struct device *dev =3D hsphy->dev;
+>> +	int ret;
+>> +
+>> +	ret =3D dev_pm_domain_attach_list(dev, &pd_data, &hsphy->pd_list);
+>> +	if (ret < 0)
+>> +		return dev_err_probe(dev, ret, "domain attach failed\n");
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static bool qcom_snps_is_fw_managed(struct qcom_snps_hsphy *hsphy)
+>> +{
+>> +	return hsphy->pd_list !=3D NULL;
+>> +}
+>> +
+>> +static int qcom_snps_pds_enable_all(struct qcom_snps_hsphy *hsphy)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!qcom_snps_is_fw_managed(hsphy))
+>> +		return 0;
+>
+> [Severity: Low]
+> Can qcom_snps_domain_attach() succeed with hsphy->pd_list left NULL when
+> dev_pm_domain_attach_list() returns 0 (for example, when CONFIG_PM is
+> disabled)?
+>
+> If that happens, qcom_snps_pds_enable_all() returns 0 without enabling the
+> power domains, and qcom_snps_hsphy_fw_managed_init() proceeds to
+> qcom_snps_hsphy_configure() and writes PHY registers while clocks, resets,
+> and power domains are off.  Also, qcom_snps_domain_attach() and
+> qcom_snps_domain_detach() with devm_add_action_or_reset() in
+> qcom_snps_hsphy_probe() duplicate devm_pm_domain_attach_list(); calling
+> devm_pm_domain_attach_list() directly and returning -ENODEV when ret =3D=
+=3D 0
+> would avoid both issues.
 
-Yeah, I saw something like this already locally, and did play with some 
-different solutions but threw them away. IMO this is kind of by design. 
-We shouldn't just keep resetting and retrying forever on a troublesome 
-userptr, and the 30 seconds is already pretty extreme if we start 
-approaching that.
+While I agree this can indeed happen, having a kernel on an SCMI-enabled
+board such as SA8255P does not make a lot of sense. I think that other
+things will break as well. If it's not strictly necessary I'd like to
+avoid resending a v6 just to fix this.
 
-> 
+Vinod, can you please let me know if I should respin to address this?
 
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120-phy-qcom=
+-snps-femto-v2-8255-v5-0-86a9880ee5a5@kernel.org?part=3D2
