@@ -1,74 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.71
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795174506;
-	b=M/Xu31CdZYu3PmwtYS+r7FZzbEIMfX1y2j77EeTnRpwUs7TrSBNYg0+7X0P/5vpxgQK6
-	 74xquqR8KWdl0gPZi3Ku5K+LfUpKiS/ugMKnuo0LZanlx7qXEfPzARMrPeqlvtPnCNk3l
-	 OoDVQqDThWRkSIDqxBDhp/jxzExN0lfTtQWdXwUx1lBo+oJmaYjDaSX543KS3i6B5L0va
-	 ElMjYPxiCUK8dm3zQ5EJhUgAE16rMbHwN/eUsok0mRx/a0rUzP6bYy6yKJm6GjjBZg9Sf
-	 uRUMK3I6V0ChjPWPFIexhIOVfzd6LJUCPJ5DOmSLlhX9Xy2law1cnTPVU5KdhgoMXDw==
+	t=1795174875;
+	b=Mw7ingN4QuZ9VEcG1mTH4TkwY86x8ttzr33b2SlaArCbwEwiY63+4XtlXAceV72F137K
+	 PZoKtts6MrXXAyJHeaDCeSQbhxuIbciYecK3fU0l6ZAspCHRe3tvHjXDu817Q/LCZxbw8
+	 eVoUsBE//bRp2kA9a2EHcJwIoV7vOo6tJprK3ZazunI7HCMpkTzr4zqHwQwutnK+nrT/F
+	 X/9l1ciBbbIS5e2qx91a6lBjrAehPWhrwBVz6LRaLBhNkEzYGegfrkDTvMAXV1bUHPR/U
+	 FWgDlRntiaqD2RoaTzgGvM3D1nkb0tqTzhstSS6PZCH2JktUQ/zgjRUlfzdHcbQ7ZIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795174506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795174875;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=bkrqVl4fOtFiXo/UNE5/tK7V61bZnqlZiu3NzPQivMI=;
-	b=mX1sAU8oWE18NX/d/8nYC/U03yFgSIk4Iq1UAkHI5KnID+LYRwWrOj0/e+L/9M0/s9WB
-	 x5E7cF0N1s6GkGp7sANcN4V9TF4UfcayprN6o66KgN1aKfnTuVRXPNMRXP+1KptYP3IoT
-	 d+HSt502+8VPwWY5LMB9mgowVWeADzGNGYy84v+n23cN11zdOZZxZ4Ibsv2d+/ptaPFR+
-	 UrSmKsehYEmPcOJyIsTb0khORSpvtQPN+WmkpLbv6qnZchlVsGCUho8UEfUYWrtG+We1Q
-	 yTgvg5mobPaRNZJaSRY5xDRRP2Vai4MhFAzJlpOty6jUfvu78/G5eHP3fUEWSQHWjCg==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8CwPJKjV6kCIIzcblemdluBfnd2QRRX74DnK0ggRw68=;
+	b=LTg6jqnvZN54iYs6tEXUYxux1jZY3wXgLwoMN6W964CYIGcbBW94suIGtLpG86ZjmXr0
+	 XcpShLRsAo2GjijTxAvW8OQW4C8udakT1iHJcgM/R54TtBc9oUxJRtSlFIGZ0U9QjA9XL
+	 IaiGnZFECdwLMCPpWwRxUt1w81G+X2e4evN7recoTA/yWRx1jRB9yubiLPOf4dvHgpQGD
+	 MDN+1WGGuLB88gN/8LE+Qi+sIbl6Jb8Sy6MIJRCVy5JxJDLd6Klanxjv9ZV+Pxjgo2Hbb
+	 bZ/mboluYuoVs7rgjyRNU0/KcF8aYtiYwUOCQEMgHRRI4HVkAsYLPwuQtZf6cr7e8Vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--halg.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=YIMBgsjn;
-	arc=none smtp.remote-ip=209.85.218.71
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
+	dmarc=fail header.from=isslab.korea.ac.kr;
+	spf=none smtp.mailfrom=isslab.korea.ac.kr;
+	dkim=pass header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b="f/0FQlHC";
+	arc=none smtp.remote-ip=209.85.216.47
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C5B606A32A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:35:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 83C5B606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--halg.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB5F606A326
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:41:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6AB5F606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=YIMBgsjn
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-c42888c50c4so111896366b.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 03:35:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=f/0FQlHC
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3ae6b4c669fso1737156a91.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 03:41:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795174505; x=1795779305; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bkrqVl4fOtFiXo/UNE5/tK7V61bZnqlZiu3NzPQivMI=;
-        b=YIMBgsjn2mat4IMpcMLDoVnL+VrvK4ZWKpSpkGgB/bwk8+mEn+o+2m3mD1O2AhjCYG
-         UOrzoJ2SVAlyEcRmyyH9tsOsczv5Y0MYh3EL6HftrHwgW95xIo5i12cHulvcbCt/3ys4
-         9GlAUUQ34ZUuQJsu/fUuQteAvAZTfVtNAhAYZ/di4v7QFFxtOxTECkQV5pyAXESHQxGS
-         OmcmBdwnE74P/NPF3VhpPioOE+aAiHfyUCs2ZG/15r5GvDQlksVwQfO7Jc8SSzZRhP/f
-         Hmt02gdh/HtKwkFQm4fN47P0Hq0RZiC/Q7s42lncO5C3YQShazdyoGFVKGKE+DEFfE07
-         /sjg==
+        d=isslab-korea-ac-kr.20260707.gappssmtp.com; s=20260707; t=1795174875; x=1795779675; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=8CwPJKjV6kCIIzcblemdluBfnd2QRRX74DnK0ggRw68=;
+        b=f/0FQlHCd0s0hWR/JEQWQYstV04c3N6d5CVU+kPj4g8Cgu/a4Prm56oVdYpPKrPSas
+         7Vk6Af4eaR7G+0oNNYWVxLevnG8YKfCVNHVCgFNDmxp4rFhBjTWn2wRSEWDsGQtTu7Ub
+         EqwDtSHZuoxzSyFrZ8liufyWwenMDjygn7GQs7q1xNt4xNYxsRKy1oUySGoX4N+Og9IW
+         KOBMsRSryQjwuI8ojQf5jd2sogefA8J8j7qmMwsty8Qq3K0hcfEaYE08vUsk89Wjzjsp
+         eq15rTS4QrXv8uYDHAK5UrvCQh0YY5VDy15nC0/pXwIXuWSiY0Khw8phbQ9UGpYxBmMc
+         3axw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795174505; x=1795779305;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bkrqVl4fOtFiXo/UNE5/tK7V61bZnqlZiu3NzPQivMI=;
-        b=sswSy2PTIik2Hecw9mkHr/f0QltxrUiW56MkfaaS/SQUoc/I761kcmfyLgSGnAEEZj
-         9CxP1RYiJH673IAVNahIFgJLGVB8BY9YHd/vRdcoa5vUx/2vx4npPl+srxWRXBqSONu1
-         pRjcY6beOq73WJq9NcsHIQMTHsJLtX9tcmUXW88Ik4+5Kys3tz4wbz9fmU1ONpaaV8OQ
-         AxaTS7smlEqQWFH1I5Kw4TAlmZR6XOJrYZXuec6I8dkdDid5SeNQhpcu26Q/B6YvrdKm
-         OJsUn66JmMqCb6kGbMrlpGQ9xhrggmnFYoZUeqF7MxEbrQoWu+JxY279MUxCq0qwcMRV
-         kjjA==
-X-Gm-Message-State: APuU4Z/iPmEt2PNm+EWxxSzO0N99TZG2yOsGld0zxH8G8cYpG5Umk5i+
-	O9ppQEGiSzYwe/gVoR3lo1G4haxt2vcbL49bPGfI42oyYgAqhR9yDohcJes+LEqp2yFN0e2j+w4
-	MpzOCSKDEw4Pq/qPI2sRRW77ILDh/fvyHSxJKdJ0pTCJOAxCLkAnwUrrvPJxkC2gYkwHaO7PyJX
-	j+NR0QAQ8w3MfuD86I1Ouxd4D0gLxPFL1VPeskww==
-X-Received: from ejcmy22.prod.google.com ([2002:a17:906:5a56:b0:c50:5767:f11e])
- (user=halg job=prod-delivery.src-stubby-dispatcher) by 2002:a17:907:3e28:b0:c41:7e99:c6c2
- with SMTP id a640c23a62f3a-c513ac99405mr295016666b.44.1795174504655; Fri, 20
- Nov 2026 03:35:04 -0800 (PST)
-Date: Fri, 20 Nov 2026 11:35:04 +0000
-In-Reply-To: <sashiko-outbox-223014@kernel.org>
+        d=1e100.net; s=20260707; t=1795174875; x=1795779675;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8CwPJKjV6kCIIzcblemdluBfnd2QRRX74DnK0ggRw68=;
+        b=u+M5UBxSw6J9yAFjR9b3okK6Fl4a2Txm3apIYcBoELNS++N33ClatgTCn/iMddb1sA
+         0CSm0NK5A19yk+H0UUngB6j7G9gEWjeW29r6ZgVxWJSFT0bSDEqtyX1orgnTHrZBkiB4
+         nDmkT6uyS7BqhwEdS5uhLyv5JfStOdH9/wUJA0lbjj2xqubDP+1McSEMWRg1Ga9SKaIx
+         XqjGzBKKZDYEHJa7aHUn8QF36dVIV+3D9/H5K1kmr27KEvG41MLlT4pqMKSgU7EFsg8x
+         OD2sucA+JhN0XM1lZoLyMz9Owfqd1tFwivpPy2k56V1ADOTzQVXWh8X0+2lccO6s9kFI
+         Vrrw==
+X-Forwarded-Encrypted: i=1; AL+hErFConb1SgDNlVczt6QWTBwX7WZj/2cp8JbOToOVLcPIy6jkK7zckQ9TIvx1yMvVdzOqvhupPTHm2zf3nTnDbuM=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9NOAp92vqQ+lj63ZtJfveLVJiog1G4RFabE8D1O7JqECgR2vxS
+	oZjkk0nJ6VDhjQxMWuyrVMdMEst678dv9mbXXrcmN6lKngxyNk6DWCHKL3ozCaJqVAY=
+X-Gm-Gg: AZFdTZfb4PUK9/QqpMwvl7uKX+TKbdjUUeN72VM6XJu2Y6+dL1TgUZyZfyKGvt1lxiP
+	YuaraLRsF/wSyCo/3HVll3hlY3rOON0uhn70pl177b4TlolAUi46UBze+EqHbYc2SxqcslxdhFB
+	0SwG/cIQixj0Wlr9DyArqqq2z0OxD93m2qRKM7Cv+uBP4CmGkWqUvn53qgJ1mTDmFBbtJmigaHa
+	BdmAgOHeKs3TtDEeL+9nwQry167b5h1YOhDl5Kf0Zb1rV/tIWBTvgmb+DJgyADtcflZjloYdMqz
+	JwJGs7/5fYKwtQ0Ai5P9Rw3eQSKeEf1P4HnuUDGSgD6skzkgANwoPZyFh86e7jFFZJVU5N4WIx1
+	MZHfLG7PBixeraNRH834LkTrmONo4HPNgCqZxHU+EwgzgzQLRMrfKcjr27RdzVRtZy4sGaao51C
+	AbBxRSMjqBrTyZMyplemrTAlKk+xE8GSoXuoJCpCMcqEPBECR3+7BPj+VAkz3C265wmlctf4L27
+	NDgiOQD00/kNpWXjzwHapTLIY26Lvf6SunvjfiAfzIyTnzu/R93cBvCLSrSQZ1n7v/kNob4+iPf
+	mlkE1pbPROjYSNtpWZAhWSGHfSp1so57ulq7d0jYcgXhI/Zau/wbzwtwUMhN71eOl4RYSAs2k0t
+	DSiTzor4KXUF+wmSv0OBamvNWpTDNnbyJJizM
+X-Received: by 2002:a17:90b:3e48:b0:3ab:55de:e089 with SMTP id 98e67ed59e1d1-3b40a611fbfmr3110569a91.40.1795174874780;
+        Fri, 20 Nov 2026 03:41:14 -0800 (PST)
+Received: from yhlee-960QFG.Davolink ([2406:5900:1044:110c:8b25:951:ad8d:5cc1])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b41abb2076sm4125523a91.2.2026.11.20.03.41.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 03:41:14 -0800 (PST)
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+To: gregkh@linuxfoundation.org,
+	nkapron@google.com,
+	linux-usb@vger.kernel.org
+Cc: Thinh.Nguyen@synopsys.com,
+	bigeasy@linutronix.de,
+	target-devel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	lgs201920130244@gmail.com
+Subject: Re: [PATCH] usb: gadget: f_tcm: put the overlapped command's request back on ep_cmd
+Date: Fri, 20 Nov 2026 20:41:08 +0900
+Message-ID: <20261120114108.3071955-1-yhlee@isslab.korea.ac.kr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <sashiko-outbox-223285@kernel.org>
+References: <20261119140641.2768465-1-yhlee@isslab.korea.ac.kr> <sashiko-outbox-223285@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,52 +104,19 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261119104208.782900-1-halg@google.com> <20261119104208.782900-2-halg@google.com>
- <sashiko-outbox-223014@kernel.org>
-Message-ID: <awAwaJugal622uZf@google.com>
-Subject: Re: [PATCH v2 1/4] userns: introduce capability bounding set for user namespaces
-From: "Hallgrimur H. Gunnarsson" <halg@google.com>
-To: sashiko-reviews@lists.linux.dev, Christian Brauner <brauner@kernel.org>, 
-	Serge Hallyn <sergeh@kernel.org>, Andy Lutomirski <luto@kernel.org>
-Cc: Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
-	David Howells <dhowells@redhat.com>, Jarkko Sakkinen <jarkko@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
-	Randy Dunlap <rdunlap@infradead.org>, 
-	"=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=" <mic@digikod.net>, Jonathan Calmels <jcalmels@3xx0.net>, Jann Horn <jannh@google.com>, 
-	"=?utf-8?Q?G=C3=BCnther?= Noack" <gnoack@google.com>, KP Singh <kpsingh@kernel.org>, 
-	Casey Schaufler <casey@schaufler-ca.com>, linux-security-module@vger.kernel.org, 
-	keyrings@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	containers@lists.linux.dev, linux-api@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 19, 2026 at 11:11:50AM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Medium]
-> Does bounding implicit owner capabilities by userns_has_cap(ns, cap) break
-> cap_ptrace_access_check() and cap_ptrace_traceme() for a parent namespace
-> owner when CAP_SYS_PTRACE is excluded from the child namespace's cap_bset?
+Right, this is a real bug, but it needs a non-default setup.  With
+emulate_tas at its default of 1 the core sends TASK ABORTED instead of
+calling .aborted_task(), and a BOT session can't send a TMF itself.  So
+it takes a LUN RESET from a second fabric sharing the backstore, with
+emulate_tas set to 0.  It's an Oops in the target_completion worker, not
+a panic.
 
-This is working as intended. Implicit parent-owner capabilities in
-cap_capable_helper() are uniformly bounded by the owned namespace's
-cap_bset.
+Fixed in a separate patch:
+  https://lore.kernel.org/all/20261120113956.3071640-1-yhlee@isslab.korea.ac.kr/
 
-Concretely, this only prevents an unprivileged parent task from
-getting implicit CAP_SYS_PTRACE via ownership of a child userns
-where CAP_SYS_PTRACE was explicitly stripped. Holding explicit
-CAP_SYS_PTRACE in an ancestor userns (or owning an ancestor userns
-that still includes CAP_SYS_PTRACE) still allows tracing.
-
-This is also unlikely to come up in practice, since typical denylist
-configurations would only strip high-risk capabilities like
-CAP_NET_ADMIN and CAP_NET_RAW.
-
-If we wanted to make an exception for ptrace() to still allow
-same-UID owner tracing when CAP_SYS_PTRACE is stripped,
-cap_ptrace_access_check() and cap_ptrace_traceme() already allow
-same-userns tracing without CAP_SYS_PTRACE when the target's
-capabilities (and userns ceiling) are a subset of the tracer's.
-Extending that check across owned namespaces (similar to
-cred_cap_issubset()) would be straightforward, though I'd prefer
-to keep the stricter, uniform behavior in v2 unless there are
-objections.
+Best regards,
+Yehyeong Lee
