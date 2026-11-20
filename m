@@ -1,99 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.100
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795153361;
-	b=rzXFehBHrB3IYBAoJY6KmCItnTAmIQdJ8yHqg+LXFoxgPK23uOkXAK3nnYv+OtXjpi7j
-	 TuFJdPaEgXdLTPBZXtTD7i7W84WBu4V3uLV/HJN11B1TIclhTK9+TGalTsIn/9qFwV6FS
-	 W9hKXXMpY/hzou9RQn5yPnywvfFfyqN9Quxu+xN0h8WHW5O8BRA84/fre9yFjX4pATSKF
-	 98C39mlkSq+qQCFcSgUCTezjtRFAq6AinqAsIxM/7Bkz/bMDkVLagLKg0qLR874A8dVmb
-	 A1HVxk3cec8SJd1gmSgPXhbmzSy7i++WLkD8f8tFUTyiXyxKERL5l0YRT1JbGNetGOA==
+	t=1795155365;
+	b=dAjz3aCz7MBykUgtM/nfoj0ntTR41qdx7OKRAMIWG3bE31NvNrFkbPVT1FJDpg04qkAf
+	 U1R1c2NtMTY/2UCvNQwq4YAR5nslXQouNl3NR7d0v3ZT71TBurfxvqqZ/1vyajeXg1k+j
+	 GZHmlIamAjhjpjL8S58mHAC+eA+aX+mFosjf7rexwRl3YLRB4MWb1+ZUwhRTcCs6sBWDe
+	 RUsdc/CpZjLd2448AyVMgF47Q9F6azaRd0uW2giBwV2XuUJb5d2tA2XqWFXMb978mho6N
+	 93LsNpxej1rTicwBtdoKH7kv5van9IUkpCbd8qn5jSCPsZ/En9TO9XvWTH9GiGsqPzg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795153361;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
-	b=B1m51tjY25ByDQ86ppbvyPUCORbfH0klSnmalrfLq1BXHEiujd9Jn8bVRjklMRu/5gZm
-	 HmTjeWZCclFVYUIvasllalxZ7IzRQt50HQf/oWWNAYoUImAIGrcRqWz83vIXofky5Lz9b
-	 GR3HMQ/rq1QWyJ2Ptop4uEuQ8/wkcvRxyYILcAPoS9eAsuMS6FU4M4cWZz0uBSWMsc8uk
-	 uwwIJIUiWl7pZjWc/hFxOJFp+Yq39Lcd2JP2g/cGbchTMHyFEcBNZj7eWB0xXp2hekEJP
-	 zul7/DNvmGVf08a0Qj+SyUIRHWiVunNQJibctFqIaj2FZBb/u5v2fV0q5Hb/TvIVDuQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795155365;
+	h=DMARC-Filter:Received:Received:X-MS-Exchange-Authentication-Results:
+	 Received-SPF:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=m4tshxTQDRBAA6fO2TgUWOppJiliCvGjHhGeaxVNjzU=;
+	b=Qpy7jvKMQvGjfkUugGHPqpq/LRjcfrLgy7tlCIMj38FTbdV/tL2ux23gEHYqnXy/WKVi
+	 EK/sj/jq4Sl8y/TlpXqmO9hpwrsOQxMkUAoDo0NsDdMWDegK/u7v2wUeZUxBiYOzZKFmJ
+	 kQG0zqhVkprU0yV/j2IHx5FrAzkPT4ZPRR8KLRZdv5wYpvfm5qJbvB/pQ5m6gfXKpb2EL
+	 CEdCzcjPmGqbtKNP13w06tFMwvYFqTd2hKiYOCK8knge0GckF+6WFMwlmqngOG7cwT8Dy
+	 yYxEVRfECzH2fAXcb5pDnNAInkiQWPeEwlpfLnzDWKVC85/7WjbkJC3Rbuur7mpWZgQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UQ5i6YIW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.49
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=cixtech.com;
+	spf=pass smtp.mailfrom=cixtech.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.100
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023100.outbound.protection.outlook.com [40.107.44.100])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC53606A326
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 05:42:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6CC53606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UQ5i6YIW
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-3ae7626d14aso369984a91.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 19 Nov 2026 21:42:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795153361; cv=none;
-        d=google.com; s=arc-20260327;
-        b=hM8E0+h9R9q/dLj6IOo/l96U+fcbI4HHWfLKC5nKap8lWPpJ5nlFPzvDgw9n/R1O5I
-         iAqPeKggT7i1eugSisztlqZhBcRJQBv0o0ch/dahA7U9vmgttvjRWJA/fUE7WH36OG8z
-         oivCjMjB+IAVqWYCp3e5u1CIZlyhb3Vwd2m0vzqHIbyG45N0at/X52RHvO9KJFxhVw7u
-         7LD+w1d3mZKVfR58v7+jTPQCZ0ZWBVzVM8m8r8MThP3O+3peZ/8pMPUH5B6KJedChbCf
-         PnrbAUPqPSlP9PCM1Nv3j1+Bu/B39asUhlR8JmqXUKg9lkXIY6XsLdJyImkxcmWJA7Qs
-         3OJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
-        fh=IKSByBvevL+dkugA/P1WirWrrZG6Vz4cE9M3k7KrT8Y=;
-        b=ITPbfSbSXVXnT1oXC4/KK47px8w7LHdEHZLZuhBrnIYoUFQDlkSdd3qTmDluIXdsi4
-         QVGMUrF77EINv/AIGOVPlDGwM6Cc3NOb+fhCJ50vsG1qvd03C4Wg8+qEldgBVBQAMVb+
-         RY5mzDXZUT5FlvSaWTtUBxYjL3D3CM5VrZ7QGKPi6WIxv89hk80xMeGkCOuEArIHYJB5
-         LRpn2oNen8tZGjUYH8yjXP3iXcTsuZjpNaCB/ZN89BheKlHnA+BVPe6LAOQzX0NXgHPn
-         1cv2dmnnHz4Xoq9VWGIVSc1AHE64swzdsI6mTzEbEII1oFa852MXxu7uyfEoNxyQ36rN
-         gadQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795153361; x=1795758161; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
-        b=UQ5i6YIWaNpuoByus8t490Hr+yZtlntUdjq+NN9D+9eUfUI7rt7xnrPgAMOJKFh6cY
-         a1CbMTlgMoSzfuESgEJDAVbog+7Co3E+ufJ5XAJ16jy+z4KU2zv2qjzhhebiIxLrGqAz
-         hgq1xs3BaFHvyevceY7k90iYWEg11C5hW0OhbP5xN64ss9oodS4P7zZsLSwvKJpymrBC
-         IZSKC8Pq+HY1fHBqD9kjcMCN65eBATxAJALGf7bNaBzLjSzIAYyEqCX1bPwOROcgt3PL
-         laTIrwj8ltLCRXl2ELUCAgOfCyWxxzWVjZoq4/ZerR7lxyW7+Qif8do2jEY2gWRPS/W2
-         MA5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795153361; x=1795758161;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
-        b=TDy6K7Vh1JCbB2gzQ2qXMJOSuENZqAoE2VPoYcKFliXvqwMgxlQh4iHGRJH3/f3Q/z
-         HIyltp4zCfG90nIMuLXDwMYLHt2u2nBz4/443Ox33RjgiFgojtW/VztZgdIFv90AHy8a
-         CFXwmZXgqzdeR8Ft5FKxk1zqnbjbqxCnaW2DTrs38TLaYvB4WlakOhDsXmDIQWN4PImM
-         HcMO/ieVh5nIvz0RqQwoGLLLTt47ePwmb/cPB0hclD99OyAN18piNic5NsqOK5ZYH3rJ
-         xH1obm23w73ajYd1rA/Dc0ncxCUPWQpNMZ7ew24/7IttWIuyf1TD5yf0pAmVds+crO0S
-         ihgg==
-X-Gm-Message-State: APuU4Z9RoXPEVnIsGMB8oVHByQcziNhqxMgGFVrYoBO8fbdovxQZwd0D
-	9hO2IN688010CC23bGlZtJ0ciPFodtPOSABCZsQTRDc2GE9sXnoKuRYCeZg8v9ubjV7HRnJaiHb
-	5rK2cYHah+TETBjxYyFbO+UP77nDyCCgzlg==
-X-Gm-Gg: AZFdTZed2o4poYf/EfjC3z/u3oxrhiNHTMIK+EYChkjrKpfVpMjl+990Lsoh8QWpnhf
-	55kURMorwKxI+W7elIBQ0iIwEDlahlkD05v392eLqYg+6ysri3gl8tro+BWMQi30qb1Qr4EmrvF
-	nNmvgV5O6a11wLF+boy2vPZLqW5o+bwh0EVFOea7aV6SqiUosXZ/EEX4LOwPR5Ecm4HZp+C+cm9
-	W2GeBUpjd9goC9uihWRtu89/QY/fzbKnDCwqwBrTXtD/VLvu7PuyFGcTWAIMrHNPnAqkl5efnTB
-	mQNqNVmd8xn8lI+zTdC7PL1hzz2Cdwni9aId6zKvJgDOd3QTCKSVnGPDM15zWhggzq+ZGu7xzw4
-	GYjkSJT83nMe9JZRbkf7znl+p2YGAx4SPuECTmI61G2bBLwrRguiK6ccckf8r+dcARyKXvNc=
-X-Received: by 2002:a17:90b:50:b0:3b0:9e2c:9b5f with SMTP id
- 98e67ed59e1d1-3b41c7b6044mr1574916a91.2.1795153360678; Thu, 19 Nov 2026
- 21:42:40 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282C3606A513
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 06:16:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 282C3606A513
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=duNsLprkBkGoOAiimk8dmfcaOA/ie/nxmBpwGOID4Dd17r73rpCu9BWQ92ZNLWB/SwMR7mz2gT7ChEZ1Eva1zTW9328ppGdkcC/2drRTAPvk5Dv7ty8o9OhkluWeNRpeuFtwD9C8z1ONbko6TAbno0ruoYxq/avXUcPfgZX+eVp0/DfT+aXG7dsZ75I2EtS7xU6xtqljefRnY9KgNr6uN6UAQRZkb6ZT8LjE8YbryBvi8PJd23Lil0mOHcmFtTwbSSdCIm3ql31SiGW2P5/UxlO+M2Ai66TihB/uMOWoOMgj9Q0x/0C7+vAN11w/4hObXFOkXf1H+deAEOzJDwaQbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m4tshxTQDRBAA6fO2TgUWOppJiliCvGjHhGeaxVNjzU=;
+ b=LB/zZCXjNzWqSuX0DRE/TTVwjW82fi80rlTJ3WeE5RRNiWzUUW9cLY0L+YWTjR/vG4u6sj+D9X1eJlP5F/PjVRO03rdPQg0NAzV5rLFdFxMDGlzZ37Kt8Ba7AAAM518XSgTEoSURdrPlFU+c6956brywGglSrhHA7XbAM9TyS0RKpInf5CtEMQgv30ZoR2K8dGzQxnqjw9G61DlZxgmHR5ompjZb8WlJyEleE18ekZ6PRjmjbYQMDeCmD9IhR+y9P2BkRtNqUDPamzzWoBk/f3ajoymjx9B4UdeO05N6njRkxG5V2cZhgHUJT2RQnjAe81e8wEy+NdQ54lLUrEqqPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 222.71.101.198) smtp.rcpttodomain=kernel.org smtp.mailfrom=cixtech.com;
+ dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
+ not signed); arc=none (0)
+Received: from PS2PR02CA0093.apcprd02.prod.outlook.com (2603:1096:300:5c::33)
+ by KUYPR06MB8603.apcprd06.prod.outlook.com (2603:1096:d10:8f::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.2; Fri, 20 Nov
+ 2026 06:15:59 +0000
+Received: from TY2PEPF0000AB88.apcprd03.prod.outlook.com
+ (2603:1096:300:5c:cafe::69) by PS2PR02CA0093.outlook.office365.com
+ (2603:1096:300:5c::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.639.12 via Frontend Transport; Fri,
+ 20 Nov 2026 06:15:58 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 222.71.101.198) smtp.mailfrom=cixtech.com; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
+Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
+ 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
+ client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
+Received: from smtprelay.cixcomputing.com (222.71.101.198) by
+ TY2PEPF0000AB88.mail.protection.outlook.com (10.167.253.11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.639.5 via Frontend Transport; Fri, 20 Nov 2026 06:15:58 +0000
+Received: from ubuntu (unknown [172.20.64.99])
+	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 096D5427EFC3;
+	Fri, 20 Nov 2026 14:15:57 +0800 (CST)
+Date: Fri, 20 Nov 2026 14:15:55 +0800
+From: Jelly Jia <Jelly.Jia@cixtech.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, robh@kernel.org,
+	conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v7 04/10] dmaengine: arm-dma350: Serialize IRQ and
+ termination state
+Message-ID: <av/lm+np9hUJlpRm@ubuntu>
+References: <20261117094335.1393735-1-Jelly.Jia@cixtech.com>
+ <20261117094335.1393735-5-Jelly.Jia@cixtech.com>
+ <sashiko-outbox-218565@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,186 +98,64 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <cover.1794315350.git.allen.lkml@gmail.com> <717bb0b82658f1dd800f6b1bc06b9cf283f77361.1794315350.git.allen.lkml@gmail.com>
- <sashiko-outbox-207180@kernel.org> <avt4PU04jy8a4e_i@SMW015318>
-In-Reply-To: <avt4PU04jy8a4e_i@SMW015318>
-From: Allen <allen.lkml@gmail.com>
-Date: Thu, 19 Nov 2026 22:42:26 -0700
-X-Gm-Features: AclHuK9-2Bsk_aSPveBTWccQ93xL5tYOvp8iXytO_p3NzhyIMiI8TSBO85p9bjE
-Message-ID: <CAOMdWS++nM+r8G+YUj-hk48KKvYH23yv2f-4X9C5F6n+KZqJ+w@mail.gmail.com>
-Subject: Re: [PATCH v4 02/33] dmaengine: back channel BH helpers with WQ_BH
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org, 
-	vkoul@kernel.org, Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-218565@kernel.org>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB88:EE_|KUYPR06MB8603:EE_
+X-MS-Office365-Filtering-Correlation-Id: bcddbe38-cf75-40de-466b-08df46cdbe29
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|82310400026|36860700016|1800799024|376014|18002099003|22082099003|4143699003|56012099006|261028144727099003|261026121527099003|261026140227099003|261022105027099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	XBZrAiNQwOx6IfQqFouH5I/xM1GngwW8JLIwieEzKuyOGSIHpVoL3IUgeHNvO52T8f4Jgn3r9F7acAuPb2dpPbWkro3LGcyx1AnApbyqJBbtJYU9luq9GsgU068RhxAdjaSneLevKPV4naJlS3yMRBzEvsiCu3ELo6qOsfkBHOmD7+nOzfYyTNPST2KYCOvsnI1P7plvkFaQpBOzdOSTbaoGEOYezETfF2Ud7hVscZAfjYdKsJUL1HgMtXA5TL4KEDDXLIGb0AO1GLg4h0j54Uw0CqEfMBfTMLhk6T1ZhyTW2Lu1qrnitF8OguVaLFLpQQ5+DbaJUXjlWksNy8gmNjeTjSDGvAc5KxsfmYdRpaw4MecfaJ3iCjD11CQgnnbwpYH0PKt6DCNVPSpH0wVjg29LBP1agtbZjPjIECQeBK/LfZU9AuZ7KZk9fq0LFJcNp3Hb9Lvq2rkRVS7UEtKdaaziqxWT+s8Ya+AMp8dOuLL4YUfZn3lxsFOYIETde1x8M+cCzXJD/gAFtfNTz9PakUFPP7O0CcogqGm7Ct+UACq8wxPk7S1KjkMktwG4m1UVAZH7gDspqeh+WWBpnvc0vR6tbPVTTRr5ALvFSCMBjJwIRep4eQQFwNKOxCYAIoIDA/VEn3Zc3k7Mz/xdpIRuzjEhYoGhTKGXO/KSozvvSbfW5+KiYbWW/3qDPkcOI/3L7vgFfsMgV9dC6nWd4cbZ2A==
+X-Forefront-Antispam-Report:
+	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(36860700016)(1800799024)(376014)(18002099003)(22082099003)(4143699003)(56012099006)(261028144727099003)(261026121527099003)(261026140227099003)(261022105027099003)(10067099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	ZCQXPRU320bAGzXPiGBDJ/sWWu6vEzcUKJD0+13ojEGRMZlWnkPqCBTuqxJuWt4YoSJtfkpQn2joiO19zi3JJoGJEpvrEE7pCb0YrlDNn8Gn0hOQYf/QTYU9B0Z9M8NXAgQIgxkXDXSkZ/Ddr0zWi42C2+ckrHsGP8vcurtANwB2pVCigYsSuEQ7AqRQRI6VN8bcv2EXK0AWIKqPr8z/mC0blB5/uxeHF0kUcTiYQtvRSgCFsi+7OTxyfEDRy05Vwxr0yJsVaW68TbyivnqNElyVmqAn0eS6puonjZEkL5xgs17p/paTgnB6lX9+m9RNTxAtc9KJey7vaAsB3kd5vbvXfVhfFNE85OzF/v7/YtaBk5n016x8GhlJ/o3x9RBSj01dRwgKjAqxlg43gw4lJG53ImAiuuQya4pgNAaNsWky6ccyTP9W/3M19tJHQ/Vc
+X-OriginatorOrg: cixtech.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 06:15:58.0314
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bcddbe38-cf75-40de-466b-08df46cdbe29
+X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	TY2PEPF0000AB88.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUYPR06MB8603
 
-> On Tue, Nov 10, 2026 at 02:15:38PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential
-> > issues to consider:
-> > - [High] dmaengine: dmaengine_kill_bh() returns with bh_work still
-> >   queued on re-schedule
-> > - [Medium] dmaengine: flush_work() in dmaengine_kill_bh() triggers flus=
-h
-> >   dependency warn
-> > --
-> >
-> > commit e183b161b65ac0da135cdea21e6916bb3483d703
-> > Author: Allen Pais <allen.lkml@gmail.com>
-> >
-> > dmaengine: back channel BH helpers with WQ_BH
-> >
-> > This commit replaces the per-channel BH tasklet implementation with a
-> > dedicated WQ_BH | WQ_PERCPU workqueue while keeping the dmaengine_*_bh(=
-) API
-> > unchanged.
-> >
-> > > diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> > > index f3c1283b161b6..97d8f9667ae5f 100644
-> > > --- a/drivers/dma/dmaengine.c
-> > > +++ b/drivers/dma/dmaengine.c
-> > [ ... ]
-> > > @@ -1449,9 +1451,34 @@ static void dmaengine_destroy_unmap_pool(void)
-> > [ ... ]
-> > > +static void dmaengine_flush_bh_work(struct work_struct *work)
-> > > +{
-> > > +   if (!work)
-> > > +           return;
-> > > +
-> > > +   flush_work(work);
-> > > +}
-> > > +
-> > > +static void dma_chan_bh_entry(struct work_struct *work)
-> > > +{
-> > > +   struct dma_chan *chan =3D container_of(work, struct dma_chan, bh_=
-work);
-> > >     dmaengine_bh_work_fn fn =3D READ_ONCE(chan->bh_work_fn);
-> > >
-> > >     if (fn)
-> > > @@ -1467,7 +1494,7 @@ void dmaengine_init_bh(struct dma_chan *chan, d=
-maengine_bh_work_fn fn)
-> > [ ... ]
-> > > @@ -1487,7 +1513,7 @@ void dmaengine_kill_bh(struct dma_chan *chan)
-> > >     if (!chan->bh_work_initialized)
-> > >             return;
-> > >
-> > > -   tasklet_kill(&chan->bh_tasklet);
-> > > +   dmaengine_flush_bh_work(&chan->bh_work);
-> > >  }
-> > >  EXPORT_SYMBOL_GPL(dmaengine_kill_bh);
-> >
-> > [Severity: High]
-> > Can dmaengine_kill_bh() return with chan->bh_work still queued on the
-> > workqueue?
-> >
-> > Unlike tasklet_kill(), which holds TASKLET_STATE_SCHED while waiting fo=
-r a
-> > running tasklet to finish so concurrent tasklet_schedule() calls cannot
-> > re-queue it, process_one_work() clears WORK_STRUCT_PENDING_BIT before
-> > invoking dma_chan_bh_entry().  When flush_work() runs while chan->bh_wo=
-rk is
-> > executing, insert_wq_barrier() places the flush barrier on worker->sche=
-duled,
-> > ahead of pool->worklist:
-> >
->
-> Can you check this one?
+Hi,
 
-  I have a fix which I am validating, and will post it in a day.
+> Can clearing CH_INTREN before stopping the channel leave CH_STAT_DONE or
+> CH_STAT_ERR latched in CH_STATUS across channel teardown?
 
-Thanks,
-Allen
+The status bits may remain set, but I don't think they can be
+misattributed to a newly started descriptor with the current locking.
 
->
-> Frank
->
-> > CPU0                                  CPU1 (bh_worker)
-> >                                       process_one_work(&chan->bh_work)
-> >                                         set_work_pool_and_clear_pending=
-()
-> >                                         dma_chan_bh_entry()
-> > dmaengine_kill_bh(chan)
-> >   flush_work(&chan->bh_work)
-> >     insert_wq_barrier()
-> >                                           ...
-> >                                             dmaengine_schedule_bh(chan)
-> >                                               queue_work(..., &chan->bh=
-_work)
-> >                                         /* dma_chan_bh_entry() returns =
-*/
-> >                                       process_scheduled_works()
-> >                                         /* runs barrier from
-> >                                          * worker->scheduled */
-> >   /* flush_work() returns */
-> > kfree(chan)
-> >                                       /* processes pool->worklist */
-> >                                       dma_chan_bh_entry()
-> >                                         chan->bh_work_fn  <-- use-after=
--free
-> >
-> > This is a regression when chan->bh_work is re-queued while
-> > dma_chan_bh_entry() is running, for example when a BH callback reschedu=
-les
-> > itself (such as dma_tasklet() in ste_dma40 or mv_chan_slot_cleanup() in
-> > mv_xor) or when a driver calls dmaengine_kill_bh() before tearing down =
-its
-> > IRQ or timer (such as mtk_cqdma_remove() or tegra_adma_free_chan_resour=
-ces()).
-> > Using cancel_work_sync(&chan->bh_work) or disable_work_sync(&chan->bh_w=
-ork)
-> > depending on whether the channel may be used again would wait for any
-> > in-flight execution while preventing or draining concurrent re-schedule=
-s.
-> >
-> > > @@ -1687,15 +1713,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
-> > >
-> > >  static int __init dma_bus_init(void)
-> > >  {
-> > > -   int err =3D dmaengine_init_unmap_pool();
-> > > +   int err;
-> > >
-> > > +   dmaengine_bh_wq =3D alloc_workqueue("dmaengine_bh",
-> > > +                                     WQ_BH | WQ_PERCPU, 0);
-> >
-> > [Severity: Medium]
-> > Does calling dmaengine_kill_bh() from a WQ_MEM_RECLAIM workqueue or a
-> > PF_MEMALLOC task trigger a WARN_ONCE() in check_flush_dependency()?
-> >
-> > dmaengine_bh_wq does not have WQ_MEM_RECLAIM set (and WQ_BH workqueues =
-cannot
-> > set WQ_MEM_RECLAIM).  Because dmaengine_kill_bh() calls flush_work(), w=
-hich
-> > passes from_cancel =3D false to __flush_work() -> check_flush_dependenc=
-y(),
-> > flushing a pending or running chan->bh_work from a WQ_MEM_RECLAIM conte=
-xt
-> > hits the dependency warning:
-> >
-> > kernel/workqueue.c:check_flush_dependency() {
-> >       if (from_cancel || target_wq->flags & WQ_MEM_RECLAIM)
-> >               return;
-> >
-> >       WARN_ONCE(current->flags & PF_MEMALLOC, ...);
-> >       WARN_ONCE((worker && ((worker->current_pwq->wq->flags &
-> >                              (WQ_MEM_RECLAIM | __WQ_LEGACY)) =3D=3D WQ_=
-MEM_RECLAIM)), ...);
-> > }
-> >
-> > For example, sdhci allocates host->complete_wq with WQ_MEM_RECLAIM and =
-runs
-> > sdhci_complete_work() -> sdhci_request_done() -> dmaengine_terminate_sy=
-nc()
-> > -> dmaengine_synchronize() -> vchan_synchronize() -> dmaengine_kill_bh(=
-).
-> > Using cancel_work_sync() or disable_work_sync() in dmaengine_kill_bh() =
-sets
-> > from_cancel =3D true and avoids this warning.
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.179431535=
-0.git.allen.lkml@gmail.com?part=3D2
+Both d350_irq() and the call to d350_start_next() hold vc.lock.
+The IRQ handler acquires this lock before reading CH_STATUS:
 
+- If the handler runs before the new descriptor is installed,
+  dch->desc is NULL after termination. The handler acknowledges the
+  old status and returns without completing a descriptor.
 
+- If d350_start_next() runs first, it installs the new descriptor
+  and writes ENABLECMD while still holding the lock. The DMA-350
+  TRM, section 6.5.1.2, specifies that ENABLECMD automatically clears
+  STAT_DONE and STAT_ERR, which also clears the corresponding INTR
+  flags. The handler therefore cannot sample the old status against
+  the new descriptor.
 
---
-       - Allen
+Also, section 6.5.1.3 states that clearing CH_INTREN does not affect
+interrupts that are already pending, so the INTR bits do not simply
+become zero when CH_INTREN is cleared.
+
+This reasoning assumes that STOP completes successfully; STOP timeout
+recovery is a separate issue.
+
+Best regards,
+Jelly
