@@ -1,100 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795195920;
-	b=OrS6BmqAunsbMUSRE48vhG8TBAh50F1AcbHEA+J3+trKWW0lkk/21d74kSv9kj9TyAYd
-	 Cp6fO/KXXXwFKxk8zAJaEXSsfYEr9cJKu4ZAxXjmxmkSkyH4PBf77RFhpo9GBjilgiDr5
-	 bWTJfFBICH0zhuPZGpNK09kE+t+UcpynGoW4ZlDFpc0bq/ZZdgH0QjTgbOIEMNuxTl0pO
-	 pkWfrJv7iZkAZ1BXgT7z1UcecbM1x96lkYHq/NX7Ue2SEuF71Q6DCWAaeP6foSaO09KuN
-	 AGU4bJMAZ/ZaTBFVP/76S5c/2RjJjmr3tLRHvYS4+EhPRYM6nq6xVEWrDVxBEgLcVCg==
+	t=1795197051;
+	b=z80HqADJvt+YFH1nBN3IDrjxqj68L+Sy8AtDBtYMXt5zhf3xlcho8HH68hS8MUhk4+V0
+	 SLteuS+/chRrcXpOZom/DOqBJ1ngxGmdFdib1LNumqf2KblhHy6/GDwwcAVZ1YQpiy4kM
+	 6pAFojlPmzFrfTh5ooFqkvFBCc/VomJdsZONniRwXPX+seveqUq8hq8iqfVI6AzBnzIvE
+	 9YOXIvimGJfe864628ayy8SJKqsrI+JIK3KXNthFhOmkn9AhXdIoM5bj9amc1wLlZBG1t
+	 JvD8lvLOHve6RxlsUrSGQaF3sleWv2c2JASXtNLtbc0UkPgUCvC90Ie4glkGX/HNJGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795195920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795197051;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1lx0wfNVXkVLhymhPDkbH3mU8AtjMWYu6LBXWtj8f/4=;
-	b=SqDEERJqUZ3KIi6ULo+3MSKA4QYJ2oUkZFYhrkO/6nZvxdUEGYKwhtzjNc4RQm30KyUr
-	 BvaKu39GflJ+saPHvHtrP3dmCkd5zinPDjWH/f/9kJ1Pxfb80E4LRUlyZQOavTFdCTaxf
-	 8mgMD2DgFvicdtXEXgheOOkR3kmYIknR2PW+aa2/bFXFhqab/k8ZkRqnckroFghmE3GvQ
-	 J6wTuX+vzoQhTWebHCVSW9V5jrIyclYY+aiY3J96O/b9CKD6sxOB6YsLxkPI2+vWvqyio
-	 hZaDEgUkovI0DCJwERRcr1Nye2WqaRfYyk9Pgmedv++BotDwGZCe0UeRmIwJ1k5lp8w==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:Date:
+	 Message-Id:Subject:From:To:In-Reply-To:References:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=/ckA76GFethZlS9qiSTr1nMW1OVkHUs1BNcHEyirqeU=;
+	b=0EMNDl5WwBHRF+P3rY+Rg4tKAzpV6Bh1EnWlniMqeqCKOwrpSFFWJXuVDC6sO6pHoquU
+	 33rf6TuQOTvU6D7CHwfkCWvFignNOBluN1YLaiHkXzH9SmME5RLCKs4/7pejivF8yGTk6
+	 AB0ueAwbYXimD/U1R0pG/g6/n5d6RPJsXS5l9K2BbpTQ2tgI5g1lgtPIFSzLbg3N9z2sp
+	 iC3mhW+LcctrzrPCe5zjpDuj8TVAyu41LzxTz8/+gb1Zuv7nJU58pgmK9iKCSIaL/osC/
+	 3st0JEUFLnlP7GCeFUD+sp/bvS8hyI3fVbgL5CW1pBR2WDpcmx/jkIR5w9LIDO5fE+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=fail header.from=isslab.korea.ac.kr;
-	spf=none smtp.mailfrom=isslab.korea.ac.kr;
-	dkim=pass header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=IT2SSKze;
-	arc=none smtp.remote-ip=209.85.214.177
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JN7X9VJR;
+	arc=none smtp.remote-ip=209.85.216.44
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDC3606A333
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 17:31:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1BDC3606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8097A606A33E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 17:50:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8097A606A33E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=IT2SSKze
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2f01f296937so9766675ad.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 09:31:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JN7X9VJR
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3b439e37813so355041a91.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 09:50:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=isslab-korea-ac-kr.20260707.gappssmtp.com; s=20260707; t=1795195919; x=1795800719; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=1lx0wfNVXkVLhymhPDkbH3mU8AtjMWYu6LBXWtj8f/4=;
-        b=IT2SSKze01ppsrH4iqzhxTXlcHwOhDwXFyW/qMAIz5o9Fax1H2dbZitBJoUOyvDE85
-         5paNdk0Eu6GUUvR7heH8mMBzkhTwwYR76acymLbfKGCdBBfXIvo/+oHSFkREliZlR7io
-         qPVSZloHBRYi6St87oivoKnbzzdN25xqN274dAUGEuNfMCebSJfbA205ge8YjuImGqrw
-         p4y6RMYnhgQLniZqVRu9Y0DUFIcTiTrdNDB8IaY5i0mdrzHQz/bwKf3TL+S48ejjrlU7
-         Rm3H8vKKOvT6tw+TFNvfU2lKft+GWhtTTEpmVd+X613QVymAK+3M100zkI22e9nrL/iE
-         VRkA==
+        d=gmail.com; s=20260707; t=1795197049; x=1795801849; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:message-id:date:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/ckA76GFethZlS9qiSTr1nMW1OVkHUs1BNcHEyirqeU=;
+        b=JN7X9VJRJj+ORvm62As8Mm7+TuXtI8313qVZWjP4mz+xJRY5HDtHeGPA7H/4gBx6gM
+         IA9YszxsffmzPHx5KQJE+Q1R654slj50kSQVBLcGa644k3QfbtwAOr1RfPKVHW0zdDK+
+         K9ANhcV7xNEW6FtYkFvCk75/EswTzBPFz2VGvwQlLXSwn/zoqrkmTLqQasy5Cd5KT/IB
+         MLUWKv9sGQp1mmJ8AY+WhyI04M6eHGQAqZP0BHOo3B91FIPqq/04B5bu6ilDPNIcEoD4
+         1gv+LDG5NHAllZA8a3+itz9yavNVIbO1HAlwO+fJL1Vm0JPDC+Tjt1kwecm12A22YAjS
+         pF0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795195919; x=1795800719;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1795197049; x=1795801849;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:message-id:date:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1lx0wfNVXkVLhymhPDkbH3mU8AtjMWYu6LBXWtj8f/4=;
-        b=psN/2O6UezwYz9Nrft+5mZkxT0OLcKLCjvyoglhUeYlKOEEQKIIF1y//Hf2mfkRozF
-         X3UgaQLGxwt99AxXDC/MSHznPsdSISHNAs8l9jUOQPx+rWtVzpdyIFSmkzSnmsKJYo9g
-         baZSRQmfHTx+qJYXoMrh/gN2ZCjDJ1gZKkMuRP/gDTUYcZ+/Jzs4/KmzWy/Dl27wYJk8
-         LfQwRq2lTUjVAgNds44tKY3AaKwblb/IcWD4svfKWz0nkApNsvgF7OYGiwN5zrLO0H00
-         1cXf+kALlvTW5r1H5Znnb8zpnm88Ry9bRocKxVBUSAuDMoVuPoXvEDNwBhTdCFKzBTIf
-         uMbA==
-X-Forwarded-Encrypted: i=1; AL+hErEpucAIw5Wtp79aM+fiAPyIyHk/QUXLf1bC47K36BvlLO7XlZA3dp2UR8PuMrFpfhmLIcbcozfm5Pvt/g7TRAA=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8WWAOHK2oupjdODePae1Ze66+u6Mfejw/jcuTTzdutROxtAnRm
-	7GZICOvQLYy7W58MrPqaZ93mpM0UMZQYfoMIo8LH/fwUXDpWl5/aFMseToKw5z3YgmY=
-X-Gm-Gg: AZFdTZdgbfpmGd1/jIzoue9EeHcfVfHnSj3lNi6H9y43nUD106EQJf4datVpwSX9rds
-	b/kNw4HazZjuaS6tRI2482DnRYy71CBh0EcjQW26VflYE7ADVV2Nr/uJeXPFOkoZd3+MHm72Mx0
-	C1l2PM3t+AaM0A21Nr1dPgm3uaU5UJLZBiocPQaexz2WtuySdIZSVYEVAiAav03zwwTkc0E+VZ5
-	+fn+aG66vDUDIxPBcl3lUhZO9qQBDrV3+ZXFdNm0IfCCbx8U+EWjGQRDZ4haW5POnUrPXeFUaRD
-	H9GIeeXu2TeLEQNoXnUpecdO7w3ln0Xg/lokeKEMvRC3B+jVnZtoZ4P22WHh0bRBNvafLutfXDc
-	GCuUYVDYIy9V2Qz0hNBpSxcSXuko43ZVfOPxwTkW6nM2ryGMlVRsKAqJA/4aY2c09ivA/NWSwku
-	M8SiAT/5+BUNn8QW04kPjXNHUpX31QPrRdBcDRDC35b/OkDSRonhcDLMsSXc5fKaNQg1CnDShrY
-	x3kFACyBAMWOpgYyvKRCFwYBu2GPhyTGNt5/miDsBkpMoOz3gY5CIpsXc/iJ4HK3nlZKLP8BNab
-	BuTjx3h4yJVZQirVcCQw0xBBeVMlEMD7Plg2dM+HDkJU22ROO35Tt/6gEzUWxivp2RXD+5mi4L5
-	BANadzgJdlwe4yOGtbT3G3BUCDViAZHTRzN6T
-X-Received: by 2002:a17:902:f642:b0:2ef:da10:bea3 with SMTP id d9443c01a7336-2f03f1cf4c1mr41222865ad.11.1795195919434;
-        Fri, 20 Nov 2026 09:31:59 -0800 (PST)
-Received: from yhlee-960QFG.Davolink ([2406:5900:1044:110c:8b25:951:ad8d:5cc1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2f04eaffad5sm7422655ad.14.2026.11.20.09.31.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 09:31:59 -0800 (PST)
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-To: Lee Duncan <lduncan@suse.com>,
-	Chris Leech <cleech@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K . Petersen" <mkp@kernel.org>,
-	"James E . J . Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] scsi: libiscsi_tcp: hold back_lock across the copy of a Data-In
-Date: Sat, 21 Nov 2026 02:31:54 +0900
-Message-ID: <20261120173154.3286585-1-yhlee@isslab.korea.ac.kr>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-225621@kernel.org>
-References: <20261120163857.3238489-1-yhlee@isslab.korea.ac.kr> <sashiko-outbox-225621@kernel.org>
+        bh=/ckA76GFethZlS9qiSTr1nMW1OVkHUs1BNcHEyirqeU=;
+        b=1DMC2W6Rx4xOVrZHZpDPw/2mgTzqpsguwxGfgPJg1fHIth58UpwqDicho56cPD9ni0
+         OBXZI9tlHVsT59zZHgzOFLCmEVtDnCqF8Keno8E1czxUFOtXzNdNdYD0vGhx3S0N96jd
+         DXYxqrVUNAC1gxIrAsWqoDwqZsWfC974laZnB/N7wWf8Vpeie2Ut7b6/CIn0Kwchyb+N
+         siZ4htA42az4xc0NnFW+G7RDEsVtxIfc7u17JPnbTopMts1r/ia+57SeX/lR4UUAgiY9
+         Dsn7jTl5yM8+b+oDshJV5iFu6lU7arF9lhPEpmg5bhdjIHI8OmQ7pHAwsXKiOWCsSfSM
+         PCQg==
+X-Gm-Message-State: APuU4Z+rERIrPzl4ujGNvRTtAYJFmfgSAer6bYNh5Eqg/DIMWh3u9h1y
+	mSL/oRm7VkLPUd/b0+9GemALyfNlkhJotOM9UAwGDSoV46kwSVWcUr+g5n+JDA==
+X-Gm-Gg: AZFdTZf+hXa/gU3bwk2nkOnZjiUEW9LyohOL6JJrf0m82uece+Je2MNNI9j0pKD/nDy
+	UUdPtLmgyFaKF5daIpqfT8zhypIJSXCCTI38zYKu4pM/Ws5PIh2NVjoACoKRACrxFeIfWvOrOVG
+	xMo5ipi6ihOLShSqtTRdoJ9hVUO9fI2i5zhuIFTAMApFMb5j8hBbg0o3UcxEkfQ2HtwXoCLW5VE
+	gDy6nJCRoOi5EReaALPOMUgSD8Eq0dKcP0kYYjC5LOcL+Qk4BKH+hMI5KjzUrSfqiWhYkvUldHg
+	PlNhkue7vtleFCKVBpmbTEmHjZETEG7HUF9aOjJzKP439B8tg5S92pxT7ETk3OgEetsIFYAtfAt
+	ulZLffR7FJjqFXZijzXNZM4D9pa2UBPvFqk6bXO3PIQx28icHmeO2GZXqmirlLdfOjVmBudRZwI
+	K58oAGSWJE/HdXdz+y9lQV+mqi2Q8ncVTDQR+pBY2cgfVJVPDqFXs+Qi3Bq5O2089rlXn1+0fHn
+	2w2ZKiGm5qhR+jKDURu7xHCTspZ7atAccv2BWBq1j7yo90WU7P7PI1f/apQsZx3vwMdO9gBnfcm
+	kzmCJsiw0l3X2dYrk5SW1bxtAmB15GkjtF1HguOZOgOoYoaFq/YWXWA6s8KcE+oFDRUmCOBG5VH
+	uSfvpQtiW6BZHzPfulbgLHPR4gV7u5D0plQ==
+X-Received: by 2002:a17:90b:4c4e:b0:3b4:d22:85fa with SMTP id 98e67ed59e1d1-3b41c98a150mr3371920a91.14.1795197048356;
+        Fri, 20 Nov 2026 09:50:48 -0800 (PST)
+Received: from localhost ([153.61.198.241])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b409330ae8sm7924274a91.7.2026.11.20.09.50.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Nov 2026 09:50:47 -0800 (PST)
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 20 Nov 2026 17:50:47 +0000
+Message-Id: <DN088QK5C3RO.26A4S236XCPSF@gmail.com>
+Subject: Re: [PATCH bpf-next 05/49] bpf: Limit the cost and the memory of a
+ load
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
+In-Reply-To: <sashiko-outbox-224673@kernel.org>
+References: <20261120074430.2704488-1-alexei.starovoitov@gmail.com> <20261120074430.2704488-6-alexei.starovoitov@gmail.com> <sashiko-outbox-224673@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,41 +98,25 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 20, 2026 at 05:04:52PM +0000, sashiko-bot@kernel.org wrote:
-> Can iscsi_tcp_hdr_dissect() aim tcp_conn->in.datain_task and
-> tcp_conn->in.segment at a task that is not in ISCSI_TASK_RUNNING?
+On Fri, Nov 20, 2026 at 12:00 AM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
+>> @@ -22013,7 +22035,7 @@ static void free_states(struct bpf_verifier_env *env)
+>>  {
+>>  	struct bpf_verifier_stack_elem *elem;
+>>
+>> -	bpf_free_verifier_state(env->cur_state, true);
+>> +	bpf_free_verifier_state(env, env->cur_state, true);
+>>  	env->cur_state = NULL;
+>>  	while ((elem = env->head)) {
+>>  		env->head = elem->next;
 >
-> In this tree, neither iscsi_itt_to_ctask() nor iscsi_tcp_hdr_dissect()
-> checks task->state == ISCSI_TASK_RUNNING.
+> [Severity: High]
+> Does the second bpf_free_verifier_state() call in free_states() also need
+> env passed as its first argument?  Leaving it at two arguments breaks the
+> build until commit "bpf: Put a barrier where no mask fits" replaces the
+> loop later in the series:
 
-Same answer as on v1: this follows up on the v4 series, where 3/4 makes
-iscsi_itt_to_ctask() refuse ISCSI_TASK_PENDING and ISCSI_TASK_FREE and
-4/4 tests ISCSI_TASK_RUNNING in the Data-In arm.  On plain mainline the
-PENDING case predates this patch.
-
-> If the pending task on cxgbi is
-> instead aborted or failed before cxgbi_conn_alloc_pdu() sets
-> tcp_task->dd_data, cxgbi_cleanup_task() returns early without calling
-> iscsi_tcp_cleanup_task(), leaving tcp_conn->in.datain_task dangling
-
-That needs datain_task to point at a task that never went through
-cxgbi_conn_alloc_pdu().  With the series above only a running task gets
-there, and a task is marked running only after iscsi_prep_scsi_cmd_pdu()
-has called ->alloc_pdu(), so cxgbi_cleanup_task() does reach
-iscsi_tcp_cleanup_task() for it.
-
-> Can dropping session->back_lock before segment->done() let
-> iscsi_tcp_process_data_in() complete an aborted or reused task in the
-> same slot?
-
-Not something this patch changes.  iscsi_tcp_process_data_in() does not
-touch the scatterlist, digest case included, and a status that races
-with the error handler failing the same task behaves as it did before
-this patch.  Answered in more detail on v1:
-  https://lore.kernel.org/all/20261120163948.3238659-1-yhlee@isslab.korea.ac.kr/
-
-Best regards,
-Yehyeong Lee
+It's already explained in the cover letter.
+The kernel does not build after patches 3 .. 36.
+Each line of code changes in one patch only. Patch 11 moves this loop
+to free_pushed_states() and adds env there.
