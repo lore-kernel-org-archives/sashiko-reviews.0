@@ -1,49 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.119
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795163568;
-	b=pL2E3QfcFK+db38GiQi0d/jGqTMA6ZGZKoLPiY3LA0jXflwtCCGOfTNFu/lZ9qGCwEw0
-	 9CYcTGBiDS1/HSJzON7jwvkbK9JbAq4Xut0MS7jS/L0CEDqKv0IgTj7Q3oVihXpW0R+90
-	 Bvb7+6AJ/GVdqLpXD2vim9SnN4aryXmylrmpJreFZ1DpPq7zkvUg2KUqp1vPYjc5UPcA9
-	 ufrXHGLc3vPzteaYWzAly58ecCYzzmcNac2zpB1M9BMfCmy4UFz9jTypr/X1gxQHMMQAo
-	 XHlIchHLJ/rWpfYKSdtBBZyT9cj3icvX+JaGR5NSi8LLVFChgR0nsSQBkaQRDNkZwqg==
+	t=1795164969;
+	b=b1K1UAs13a8K/Z1WZDeiMUvIwslBT3HSDDI3E0UwsFcPM9Qfiuty+l9gZ4VwB0Bm5i0p
+	 d6nI/QMrJRszOS5I1AzrZm0T7DGK6u9+EgY5IWe4d5Z7a7f+6jDcktiiTSQFouBhgC0og
+	 9FSXlQiXWF15RK3A8v6wBPWZwyEA3WcOyFIZlNlchzbCH355EOBgAau1+BidPW9cA9cw2
+	 SS/QNmDtofrosFkNe1NRqDORrOheTFliJwkN0TMFwLdp+G7NgW2TeMRgmI2oBwT8hEmJl
+	 UvQ1WrhQs3zBtdqGBD1FU1Pz4yd90BEU2IERHFPZ71NnNS1/wFyVkdUfiq5H4jQxApQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795163568;
-	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=xRFhMlcn0xlxKDAyzDGD6BZdkslSLafjjRmcFObGPdM=;
-	b=SOukIBe4yPEg7bJpcUzdVzDsyUkY6yHEnh8RJlma23IXvsGzT36nw+ipEDDwLlIlMRsR
-	 hWGWDwySTywxCc39cxXMX/147nIyeygwVXKh+1EqevmK07z8ruVzvmqyomVQoFNr1SwVp
-	 fHWpkhzBTU6kU0VwqhP7y49+p26gFPeUh3UwiMpJoIKSsx9BFGGv1QhFXRoXmSWo01wvl
-	 ZiPfiYgvkxQS2rHUEZJfFj7VQOCsSygI32eq9UkdBYFCUVes578MQ9vNr6yUFpGkIqfXx
-	 EOPZ3/B33Ijc3Hj/+fSrK99VEqOkEKlCBwp0GAHUzPceJxpHJHcZwXPQRwUvGJS4dgg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795164969;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=90XhFyxRpZHtb7tM1LMctdqQWB2+XYdbnjQB7kap49Y=;
+	b=E2AW/ZPq5866noXyoO0Kvg+sFcros5enAGqolGDNk0atIF1/HdhEF1P1HB4ID+RG+AcS
+	 BDX8uzpPm3qXH6XnJD+hWCk5vU1F/Mc4HxqkoG5owh5S91zQ0utcEeGL9T5aEfFKmjnmO
+	 4HIgyAqb+LhLq0QZ1U0CD7pURFyZGees1DPeVf7giBpNjXm6ff1CEhw+fnvqZvZM9xKww
+	 coN2VrIItbS+Uv0nFNuC+WTG3VuyUWV8P8ziW/uN/UxIZj1VH5T2ZmvdbuRZvSVJDKBqs
+	 7+HYdRFX7Vo7pI4rHosxZ6Wc7huanefT4z1uuyFskLc4zCE9Dvgxto9UsfNVfA3VSlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.alibaba.com;
-	spf=pass smtp.mailfrom=linux.alibaba.com;
-	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=bmaT2pZn;
-	arc=none smtp.remote-ip=115.124.30.119
-Received: from out30-119.freemail.mail.aliyun.com (out30-119.freemail.mail.aliyun.com [115.124.30.119])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BfZ0So7Y;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02580606A320
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 08:32:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02580606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43688606A326;
+	Fri, 20 Nov 2026 08:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=bmaT2pZn
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1795163558; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=xRFhMlcn0xlxKDAyzDGD6BZdkslSLafjjRmcFObGPdM=;
-	b=bmaT2pZnHMhH7+6zae8c4d+gvIZSmmXxdbx6UGJN6U9D/MiO6B3YCkNiQgR63zoiuoD7vxKkJZGf4lndTimFh9TeNPsRBFG6kzZOaYEl97c27NpU0ChuvUwgviultUBNswRiedwTG/24AsxtANZXphJETuUuHDT1Y0B6Lr1IytI=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R371e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037033178;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=2;SR=0;TI=SMTPD_---0XF5jp19_1795163557;
-Received: from 30.178.67.37(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XF5jp19_1795163557 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Fri, 20 Nov 2026 16:32:37 +0800
-Message-ID: <f7a83440-6fdc-4b8d-aa63-3677ce4e21f7@linux.alibaba.com>
-Date: Fri, 20 Nov 2026 16:32:35 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BfZ0So7Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150821F000D0;
+	Fri, 20 Nov 2026 08:56:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795164968;
+	bh=90XhFyxRpZHtb7tM1LMctdqQWB2+XYdbnjQB7kap49Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=BfZ0So7YFGZW4PHE7hKo4jGGiwqMtyh7u7Ikir1vGEVbl+hQxNMHPC+51kiUkOmet
+	 c9LdU+m4+O16xcsAyohLjMSWAQ7svDsId8zBnQkses9npzEcUfsz6nbS0EIcDLhjNL
+	 zjn/xoCULDYxKs3fXLX5hgoEWJhhDQzQr1KOlux0fNw35bI4rx0cxsv1eDw/O+y65K
+	 2qdu+9Bd/yPmK8ELVRfmtaYQxNuQljgO82b10T5MkHz+hFd30lYYUuKJKp1eT7lzzX
+	 TIQ3MDSGgixOwUCRFZGKr/Icjqwm1XUazzxboRQTZL2TB5yFeqy3Q8V6x7qq1GjTeq
+	 UijsFkNys7d5g==
+Date: Fri, 20 Nov 2026 14:26:04 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Allen <allen.lkml@gmail.com>
+Cc: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev,
+	dmaengine@vger.kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v4 02/33] dmaengine: back channel BH helpers with WQ_BH
+Message-ID: <awALJBGCtHvZuJnh@parshuram>
+References: <cover.1794315350.git.allen.lkml@gmail.com>
+ <717bb0b82658f1dd800f6b1bc06b9cf283f77361.1794315350.git.allen.lkml@gmail.com>
+ <sashiko-outbox-207180@kernel.org>
+ <avt4PU04jy8a4e_i@SMW015318>
+ <CAOMdWS++nM+r8G+YUj-hk48KKvYH23yv2f-4X9C5F6n+KZqJ+w@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,85 +60,33 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] nvmet: don't abort the preempting host itself
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-References: <20261120080642.1179691-1-kanie@linux.alibaba.com>
- <sashiko-outbox-224708@kernel.org>
-From: Guixin Liu <kanie@linux.alibaba.com>
-In-Reply-To: <sashiko-outbox-224708@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOMdWS++nM+r8G+YUj-hk48KKvYH23yv2f-4X9C5F6n+KZqJ+w@mail.gmail.com>
+
+On 19-11-26, 22:42, Allen wrote:
+
+> > > [Severity: High]
+> > > Can dmaengine_kill_bh() return with chan->bh_work still queued on the
+> > > workqueue?
+> > >
+> > > Unlike tasklet_kill(), which holds TASKLET_STATE_SCHED while waiting for a
+> > > running tasklet to finish so concurrent tasklet_schedule() calls cannot
+> > > re-queue it, process_one_work() clears WORK_STRUCT_PENDING_BIT before
+> > > invoking dma_chan_bh_entry().  When flush_work() runs while chan->bh_work is
+> > > executing, insert_wq_barrier() places the flush barrier on worker->scheduled,
+> > > ahead of pool->worklist:
+> > >
+> >
+> > Can you check this one?
+> 
+>   I have a fix which I am validating, and will post it in a day.
+
+Thanks, I would like to pick it for this cycle...
+
+There are few more sashiko issues on drivers, can you look at these as
+well please
 
 
-
-在 2026/11/20 16:18, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] nvmet: nvmet_pr_unreg_all_host_by_prkey() skips abort on
->   false pc_ref premise
-> --
->
-> commit 07f50eedfd5f5e5d148cd9fefe65d629fc37077e
-> Author: Guixin Liu <kanie@linux.alibaba.com>
->
-> nvmet: don't abort the preempting host itself
->
-> This commit skips calling nvmet_pr_set_ctrl_to_abort() for the issuing
-> host in nvmet_pr_unreg_all_host_by_prkey() when handling a Reservation
-> Acquire command with the Preempt and Abort action.
->
->> diff --git a/drivers/nvme/target/pr.c b/drivers/nvme/target/pr.c
->> index 8c818f24815bd..ed530d7362f5b 100644
->> --- a/drivers/nvme/target/pr.c
->> +++ b/drivers/nvme/target/pr.c
->> @@ -502,7 +502,14 @@ static u16 nvmet_pr_unreg_all_host_by_prkey(struct nvmet_req *req, u64 prkey,
->>  		if (reg->rkey == prkey) {
->>  			status = NVME_SC_SUCCESS;
->>  			uuid_copy(&hostid, &reg->hostid);
->> -			if (abort)
->> +			/*
->> +			 * Aborting is best effort (NVMe Base Specification
->> +			 * section 8.1.25.7): skip the issuing host, as the
->> +			 * abort flow would otherwise wait for the preempt
->> +			 * command itself, which holds a reference on its
->> +			 * controller's per-controller ref until it completes.
->> +			 */
->> +			if (abort && !uuid_equal(&hostid, send_hostid))
->>  				nvmet_pr_set_ctrl_to_abort(req, &hostid);
->>  			nvmet_pr_unregister_one(pr, reg);
->>  			if (!uuid_equal(&hostid, send_hostid))
-> [Severity: Medium]
-> Does a Reservation Acquire command actually hold a reference on pc_ref?
->
-> In nvmet_parse_io_cmd(), nvmet_parse_pr_cmd() returns 0 for reservation
-> opcodes and returns early before reaching nvmet_pr_get_ns_pc_ref():
->
-> drivers/nvme/target/core.c:nvmet_parse_io_cmd() {
-> 	...
-> 	if (req->ns->pr.enable) {
-> 		ret = nvmet_parse_pr_cmd(req);
-> 		if (!ret)
-> 			return ret;
-> 	}
-> 	...
-> 	if (req->ns->pr.enable) {
-> 		ret = nvmet_pr_check_cmd_access(req);
-> 		if (ret)
-> 			return ret;
->
-> 		ret = nvmet_pr_get_ns_pc_ref(req);
-> 	}
-> 	...
-> }
->
-> Because that is the only caller of nvmet_pr_get_ns_pc_ref(), the preempt
-> command itself never holds a reference on pc_ref->ref and cannot cause the
-> self-deadlock described here.  Skipping nvmet_pr_set_ctrl_to_abort() for
-> send_hostid instead stops nvmet from waiting for in-flight I/O commands on
-> the newly unregistered issuing host's controllers to drain before
-> completing the Preempt and Abort command.
-Sashiko is right, Please ignore this patch.
->
-
+-- 
+~Vinod
