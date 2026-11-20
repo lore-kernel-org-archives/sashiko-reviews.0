@@ -1,63 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.41
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795171327;
-	b=suBm3wOF/kznaDHdPUNwYhGxSCdUXJHAB+ioaNdNr6US6dGDKWLARsgXaBCgjV1jrPkC
-	 SSFqRHRMm7r4aLAEHR56/cz83KxZua4voK3TBeP2oZ2MdpxUZv3t8SoM+Oyu7jw6+PkH6
-	 4a0z8xsPX9thkpW2VKWAVN+cFiDXCtJibU6EInn/zDwxd4AoG3B3pO+IK48NlBn/XtInR
-	 sltj99ayjSjB9MlbAziIXDnTfEKg9m1dKJdPaTUxbu25mfuSxXa7vmZcbrnBPOTYNrwJw
-	 1hmGsgxKOod1PUbrgrEYH10WmuvKWdO2mHtwa+r4+eak3yemyyNNTSnwoJ5grUpCSAA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795171327;
-	h=DMARC-Filter:DKIM-Signature:Date:References:Received:Message-Id:
-	 Content-Transfer-Encoding:User-Agent:In-Reply-To:X-Original-From:
-	 Content-Type:X-Lms-Return-Path:To:From:Subject:Mime-Version:Reply-To:
-	 Cc;
-	bh=um2hLh/hHD8l3GcR5JLblt1Cnw1tyAk72z1sNQOCRRM=;
-	b=iZkOLCpOH+Hngm2n2qafbIwmAQY9P0zo0gUSJ/3VX86kyf7VOHWixSPcRsktJRE+hNYf
-	 Fv5brg+VgJpO5LOIgHCY/Hyrx9WClVTMpYNEJzGZC5JS+j5UuGrhRMWUIzKxg4QeTMLJO
-	 g/ZZdYmJ3boPV517jwSe3xAzcyInYL1FIW7DTzKEA3/k17Yoj2+v7QuJ60MEsrENZPmP1
-	 0PXnq0W0YfexZnwRa1eaAmGwzMX2Na/5ztfY+a4aQAkURLbcIlWrw44o7+MjZ0GZmzJdH
-	 FRhdF+yhKFVT1T4h1Kn+3NmjdA9Ybr2O2Szi6zR8rhy6pwzHAEIyict7lml17s0pPhA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fygo.io;
-	spf=pass smtp.mailfrom=fygo.io;
-	dkim=pass header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.a=rsa-sha256 header.s=s1 header.b=YH6q1vZW;
-	arc=none smtp.remote-ip=209.127.231.41
-Received: from va-2-41.ptr.blmpb.com (va-2-41.ptr.blmpb.com [209.127.231.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.32
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795171720;
+	b=Ph5Zz2er1ft0H62PBmK3rTBlc6vGA9RVdKIA34Al30cG3mSEJ4a59gdoomUyccu4FfeR
+	 db2qDZVy4fkkFOzeclQUfBB8OJg8cQYb3r3sBPC2rCKrnZzf9e0bRioGz14XXaj4mV2FL
+	 GGXGUS0LYl0wGaOX+BMvbcux/DqrAiN+fV7MpF7avCdQjzJqXcS/GS8XAECNlkr0aZuVV
+	 Bxho6/AOrWzYbEm5TngPbWwjcE90jmYTL3vmQi/qThB9mLOIlWwaBzp+Q/EavQjBie+pH
+	 DnyYsEHMjwQbvEqufq4dpqT4kcOqRgtbd9g5fogpM+CIc6rX/uSiADddkHSPqeq2EMg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795171720;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-Exchange-MessageSentRepresentingType:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SharedMailbox-RoutingAgent-Processed:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=PpIkpj45PnSBFFJR7sWSdwgY/ddfffz58HANlT3Ibbw=;
+	b=2yxprECL9lzuZxQilHSQi/V7q0PAn+DueJyUqbi8CwJzFuhYeT8qkFTVZ9eIFfSJYq7a
+	 p4m/j0/VlrDsWRCfWc1TbogWy4SJ8aji7FiWYHXmqThCjU8DyxTkD+0Z/gEZRHuGaVvbs
+	 W5eoMbAMHNytgqjS1fsI4kG6+HDioxpG7whN+5NEZrpk0Z72v1xKMKbKFvOzD+TMSlE4J
+	 rHXYYlC2CLh6w6y+9bPXDkO56Q5z4gl/kB6veFaHmx2RpeSsLLaI/Y+Bd+GpUbGotHK+A
+	 QqwcQ0dI4YQ5t3DBJT1UaBSDKix/uKdCRJR9wTTzpEMixhhB6JF3mfjvbOZUft9hIXg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b="EPprA3/u";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.32
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013032.outbound.protection.outlook.com [52.101.83.32])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A83606A325
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:42:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1A83606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1AB606A326;
+	Fri, 20 Nov 2026 10:48:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A1AB606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.a=rsa-sha256 header.s=s1 header.b=YH6q1vZW
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1795171319;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=um2hLh/hHD8l3GcR5JLblt1Cnw1tyAk72z1sNQOCRRM=;
- b=YH6q1vZW69WnKvnCjSNa6fEig2t9WlTdgVvEflmXW8WUAzS9txCKsEWWlNTYemezVP6pIv
- ZByIpLEEzHxTxiP1m/6BuQBnLsQVPSt04tCuQCfKcyRidFZWIPI7+EUuT/panSv061+yc3
- slo0tfOcFhpvzwbr1t/jWLsWka69mVeuw07TKB9TX26h+6VdFdMPvf2EpPLM21A1AVpfDJ
- i6jsAyCAfAXq/rb0aEfuYK9YP0HK+N6s2xHZwoKKm9j/LaSBdzYyFgIar6GnQ1XYkTmzqo
- Y1dLhY7wXE5p2zN1yvFJPOjy7w+o4VdmOnZPIDBP/DWdkplG5qbDeCzN3gRy1w==
-Date: Fri, 20 Nov 2026 18:41:53 +0800
-References: <20261112114958.2244-1-abd.masalkhi@gmail.com> <sashiko-outbox-211074@kernel.org> <m2tslm1988.fsf@gmail.com>
-Received: from [192.168.1.104] ([39.182.0.159]) by smtp.larksuite.com with ESMTPS; Fri, 20 Nov 2026 10:41:57 +0000
-Message-Id: <e0d5c880-ea38-4f25-8c1a-3bca0a4a5dcc@fygo.io>
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Mozilla Thunderbird
-In-Reply-To: <m2tslm1988.fsf@gmail.com>
-X-Original-From: yu kuai <yukuai@fygo.io>
-Content-Type: text/plain; charset=UTF-8
-X-Lms-Return-Path: <lba+26b0023f6+4d8ac8+lists.linux.dev+yukuai@fygo.io>
-To: "Abd-Alrhman Masalkhi" <abd.masalkhi@gmail.com>, 
-	<sashiko-reviews@lists.linux.dev>, "yu kuai" <yukuai@fygo.io>
-From: "yu kuai" <yukuai@fygo.io>
-Subject: Re: [PATCH] md: make mddev_get() fail until md_alloc() has finished
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=EPprA3/u
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LRgHz2fz7mMQQuVvTgYZ2zD5NcYEH4JUrBD0LvFjHPeCoxbfzCxiwziiX6gXnZKl0Upq/1pf777SMpQVEgLkPp4V5ExwXfTEMA1yiOsu2wc3cvbYA4c1fDigAkusxbV9EfSp6Mk5uXSKDRysCHxLPtROV9VDyr9m13yeGJlKMqp3sEaZwqySfk1P7lb3MpI8HAQZqT2x63B7HyTbfUyuURE5pjQAFKParzfFjSQE6nAF/0f52PJ9KGr/lYzN+xogT/h9AVTpuWNwUv6qn+huArDaPRhjGIKEIcWguBo9ZqXFW/kiKrH60vmG1fgReZXAc+MOQuDSnlv09StvscyIZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PpIkpj45PnSBFFJR7sWSdwgY/ddfffz58HANlT3Ibbw=;
+ b=v5372+UtNNQq1QjL20cm+ArJqW0q/mf+NkIJzkfsnh4GKrxOEJc7bd7fjaZRVw0soEKhyDxZ5soALRsFBreL6D1Zv2OmoxSXUWF/BfZX9sInLBqZnWDjp21agxtvUHQ5Q8xub4/s3TtnCX4gicdu3GuZyOPGTiWYxf4FjHtWWJuuJKkOJq/0lx2HG9FDjvEhcVZ5i4qtgZBkEzfPvncX7IbFyDhrNZK4CLVxoGFo8a4eabQoFJhx5oPy38JPmUORuzryBYR3xAMp+nT+gm7v/hIUyeB4xUinr1P7dlITJyvB1jkAt1AydkkCFLHzln7MFRBHkO0EPXpnpUcbdxHbYg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PpIkpj45PnSBFFJR7sWSdwgY/ddfffz58HANlT3Ibbw=;
+ b=EPprA3/ui3m0JNTP466msx4xDYED9backaSzI++NN6IDIFWe0ibSsGGdsHMua976QTsjYSicJjGDh9nVjmCtwla9h1h75JUU/87zqBY2repeE3+qqe6cO8jaUh50uk9rV7l/qf+0U34c/DH98iZ8OgWdMC423IXgvnyBwrsk86R1KVRa0bsxetqltPYpCuYCMy7mCJHAedCvwp6kcONiUv9+6968r1AdMCBC4NVG5A1xf1zJew8nejiSAsVfJFBrdG300t2qAKrKEJN1SuVmXnCat1c5cDUnBit1NGRU917jZm+ByrbUCFN3ztwp2f40bCA+7JnZM4jmRk93Y+sP0A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB12318.eurprd04.prod.outlook.com
+ (2603:10a6:150:32b::19) by AS8PR04MB7638.eurprd04.prod.outlook.com
+ (2603:10a6:20b:291::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
+ 2026 10:48:34 +0000
+Received: from GV2PR04MB12318.eurprd04.prod.outlook.com
+ ([fe80::a498:2b5a:cbdb:d6fa]) by GV2PR04MB12318.eurprd04.prod.outlook.com
+ ([fe80::a498:2b5a:cbdb:d6fa%3]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
+ 10:48:34 +0000
+Date: Fri, 20 Nov 2026 12:48:30 +0200
+From: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-clk@vger.kernel.org, imx@lists.linux.dev, 
+	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org, robh@kernel.org, 
+	conor+dt@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v12 2/5] drm/imx: Add support for i.MX94 DCIF
+Message-ID: <awAgaVs4LLwqVA57@vm>
+References: <20261118-dcif-upstreaming-v12-0-29b35e27a1cc@oss.nxp.com>
+ <20261118-dcif-upstreaming-v12-2-29b35e27a1cc@oss.nxp.com>
+ <sashiko-outbox-221406@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-221406@kernel.org>
+X-ClientProxiedBy: AM8P191CA0027.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:20b:21a::32) To GV2PR04MB12318.eurprd04.prod.outlook.com
+ (2603:10a6:150:32b::19)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -66,167 +99,267 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Reply-To: yukuai@fygo.io
-Cc: <linux-raid@vger.kernel.org>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB12318:EE_|AS8PR04MB7638:EE_
+X-MS-Office365-Filtering-Correlation-Id: b03cec65-aac4-4241-afea-08df46f3d2be
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|19092799006|6133799003|261009223027099003|18092099006|22082099003|18002099003|261022075727099003|261022105027099003|261026140227099003|261026121527099003|261028144727099003|261021121427099003|261102123227099003|261021135927099003|56012099006|4143699003|10067099003|5023799004|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	LThyzbVjH5Z0K8+8JifSDWch4ObxXkAzqyDd75eTw2tBJToBwG3XK3CBHPBWezzA9UV7n8sYg943fGhHfh5cuqMCO7Hr/RU5JiEweDkWDaVKe9mAp93LjS+ruUHhc5TK167s4YLIzm82q8sZZdhigifznZv2k/qgN3Ho2HFbThIcoMHBIuUA1mEzAQBf918UzSeWphv9YUtQPLNUuZdnpG7dHTdyu6K/PDCzUUztKP6nmYSatqLp9VCcYZEOSwCVw4O+OwEyL86kEcaIiOW0iHbYP6bDx968zCPIAZYLdUUAkq9fWe28pVMPxHa23oY1hr5zNHEoObTembvCXIwJ2Utyf4GjHwpMcC8rFPjoYolij753+AL7vsw5LKm8FXMlbOXQvQcge8G5ECRRifBC5xqe74lM/02na18dQaEjBLvGfHrAJnP0eKdSd8/CJseweu86YCosSrv+IaoSgMfZvZW56IVIVjh6jDCJSyrDnjLeykttqaTNYBlN7krKIzMJQe61PuVFpouYKzrLWRScf/o7Bf1Og7c/iYKQEvGCFZJbua6zSYDMpFvc9fcyCvnO4cuBpYutRyy12EbFrTKwzvvFMccrVyV68Jk+GQMjsUGN0eJAzFkgFxncTg5eTXxP3n6L33y1f1QS+979iWd51kHAR2d03TlAwB2lVm8nMeA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12318.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(19092799006)(6133799003)(261009223027099003)(18092099006)(22082099003)(18002099003)(261022075727099003)(261022105027099003)(261026140227099003)(261026121527099003)(261028144727099003)(261021121427099003)(261102123227099003)(261021135927099003)(56012099006)(4143699003)(10067099003)(5023799004)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?xwe7LpzWc1pXfBpEERjemn0UftsTCeiM/NfxxgsIfgbN/hCLMF82XQJUoINJ?=
+ =?us-ascii?Q?IDubnkalGjUX139ldEX8/WAmomQkbUqWrFaPZ/iPKobvbdFE3rd02M0jXrsz?=
+ =?us-ascii?Q?ogqMlrsoyjU/b1dWMa2zGYK/3aT+/09PTEWNBgEEsZmOgFf7l0xke+wMZ4EN?=
+ =?us-ascii?Q?u5ud/YtpWkdV8hnT3Gk5/5C4JH1EGsn8c2+fxqsFp4UkBUPaw8jw2xc66EZd?=
+ =?us-ascii?Q?Z9lwtN2DOiyYkbH+KOJ9nMnUHFqIZlZInGv39BtGMSueif4rIVkVwGs6Qu0P?=
+ =?us-ascii?Q?p+ImCFiOn+tqWZdDnUgKv650EpTjYgnSv213tzCS/eD61CkRuIMfe7PeclwE?=
+ =?us-ascii?Q?2u3SVbjMBwYJZ8GYTw6I4j1IGphN26cgFAWEXSl1N7SjQChNVb6T+cEg/5fw?=
+ =?us-ascii?Q?2cymzy0YtPLpA1E+zgjg5vMeD3AsoNn7AmvMiU6HnWDxPQ9CjhHY5gvZY7jU?=
+ =?us-ascii?Q?L/3iI1rfpeaqnL0gnvKWKAkQdjMQN6/leK7PyHjUtAY8RiTpnUYZrzYuD84o?=
+ =?us-ascii?Q?VbiLCXqf+lMvlmwGD9BNGfh+4Evh+25/XkN6YHNYp9jqiY0ZfyHPv3iVKw9G?=
+ =?us-ascii?Q?TbB6me/6GytqUQO3tqpKnAJ+4HAh9UHzMV4jiNGRrH8gpJkejEIQNKaO7UsK?=
+ =?us-ascii?Q?CFjpLJCwSocje2c+AZaN+lc2kqn8sPO5QDkX24vmO9vQKEsMNg50z7hQ6+DF?=
+ =?us-ascii?Q?LTIEGtEifuDLv7aNSA32RtOnfbYJZsTX8ozTVMuxi4gCZBkZsocwqePtoa1F?=
+ =?us-ascii?Q?ysV7dmCQJjvkvSp4p10m/KSIb7Uzp1Wykk1V1UoBLLobcrFCO/PqZRqhl2PT?=
+ =?us-ascii?Q?oAxvSvaIAI9RNt0++NOGKdUwcZSnH9CnJVGQQjgTW7XVh3kN/uDgKxyKFUrd?=
+ =?us-ascii?Q?eE+KlHSgyTRlQZR3tdIHgWAIZ0wzR8Z6clFKGl9T0YFYiGKuzRX4bcwlYCwq?=
+ =?us-ascii?Q?9K58TR5Jx/EXUXxzCt0j/SAADOdHjM4VyDz5P/yLcuGv8EDvRSqLyIANgCwF?=
+ =?us-ascii?Q?+nu8zZpwl8ZmxUsPkZyIPFmOCE65REktJCgjStOcJI15pGleqFkg4ZoHRuwz?=
+ =?us-ascii?Q?9iKwyRVim/2dKw++1pvUsJhzBqDM4jCTMc+uGhndXj08TZ5/xxI2uvVi8T8o?=
+ =?us-ascii?Q?NoduJHfqMup8w4iSKxyaNyv22YmQDfKfuMdUE6yWnt4Tzatu0ObeOX01Gwem?=
+ =?us-ascii?Q?whkEo8Sez0l7RtQbUOJSI0ReFFG93lsWl1lInHzzOlkOqPM8mo0OzpxHSazs?=
+ =?us-ascii?Q?VCGY2lLsEpn9ViV23IWUsZI1p/26kBZJr3bJfjYFOjPRIt4fb5oC/UiYhaUQ?=
+ =?us-ascii?Q?9WzXTuZBwaIm3/s77V3RVYCXkov6PJ/z8dQ1PVgJFcFn8KQ1V8745uhRfYmj?=
+ =?us-ascii?Q?/K9RkJIq3Gn41m6V2E3pLjayjRkaX6YGmfU2g1YJ845ybmXXVe6v/TovUBOS?=
+ =?us-ascii?Q?w6OG4yRZuGuiZ3RMWyXAz+7+WJbl+FU3y61OoFL7J06YJGZ37qxE6jx7aOrT?=
+ =?us-ascii?Q?zEWDqLP4cLUR8UyaHdgsZLmCWft2kctAlitn8xitnPa8G2oLPdbQ4S0a4Inc?=
+ =?us-ascii?Q?G4TwZIX8w6wuUj/2UUlkcXazW84gbX3undSKP/UUxOl9EjMuS/RvDeQnslcE?=
+ =?us-ascii?Q?s4v9j2J9P49SuP856vuWjNagri/tDaEz8nZGRj8aYctm9KTFYcFVUzauNw7h?=
+ =?us-ascii?Q?251bhxw6KucvNmQqyu/Te1fHh51XWEOo2nKMURob2zXA8zSLLa28v1stjm8K?=
+ =?us-ascii?Q?19tv5TNR9Q=3D=3D?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b03cec65-aac4-4241-afea-08df46f3d2be
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12318.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 10:48:33.8643
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 83X6a7mbucdwMNwOMzeo0hFIZgmChg6dpV2JYFtSKdg2BnYQJ8GhJj0DqTCxCQblX+FCu6cgrYDifXA+/iT/aA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7638
 
-Hi,
+On Wed, Nov 18, 2026 at 04:02:40PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] drm/imx/dcif: unclocked MMIO access when runtime PM resume
+>   fails
+> - [Medium] drm/imx: dcif: unbalanced clock disable if
+>   dcif_runtime_resume() fails
+> - [Low] drm/imx/dcif: missing shadow load and trigger clear in
+>   dcif_crc_source_disable()
+> --
+> 
+> commit 373caa0eccbfd7fa4334093ea8869b540640e7ab
+> Author: Sandor Yu <sandor.yu@nxp.com>
+> 
+> drm/imx: Add support for i.MX94 DCIF
+> 
+> This commit adds a DRM/KMS driver for the NXP i.MX94 Display Control
+> Interface (DCIF), supporting primary and overlay planes, YCbCr-to-RGB CSC
+> on layer 0, and frame/ROI CRC generation.
+> 
+> > diff --git a/drivers/gpu/drm/imx/dcif/dcif-crc.c b/drivers/gpu/drm/imx/dcif/dcif-crc.c
+> > new file mode 100644
+> > index 0000000000000..ad94b458a6c59
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/imx/dcif/dcif-crc.c
+> [ ... ]
+> > +void dcif_crc_source_enable(struct dcif_dev *dcif, enum dcif_crc_source source,
+> > +			    struct drm_rect *roi, int ncrc)
+> > +{
+> > +	int ret;
+> > +
+> > +	if (ncrc >= MAX_DCIF_CRC_NUM)
+> > +		return;
+> > +
+> > +	if (source == DCIF_CRC_SRC_NONE)
+> > +		return;
+> > +
+> > +	if (dcif->crc_is_enabled)
+> > +		return;
+> > +
+> > +	ret = drm_crtc_vblank_get(&dcif->crtc);
+> > +	if (ret) {
+> > +		drm_err(&dcif->drm, "Could not get vblank reference: %d\n", ret);
+> > +		return;
+> > +	}
+> > +
+> > +	dcif_crc_config(dcif, roi, ncrc);
+> > +
+> > +	regmap_set_bits(dcif->regmap, DCIF_CRC_CTRL,
+> > +			DCIF_CRC_CTRL_CRC_MODE | DCIF_CRC_CTRL_CRC_SHADOW_LOAD_EN |
+> > +			DCIF_CRC_CTRL_CRC_TRIG);
+> > +
+> > +	scoped_guard(spinlock_irqsave, &dcif->drm.event_lock)
+> > +		dcif->crc_is_enabled = true;
+> > +}
+> > +
+> > +void dcif_crc_source_disable(struct dcif_dev *dcif, int ncrc)
+> > +{
+> > +	if (!dcif->crc_is_enabled)
+> > +		return;
+> > +
+> > +	if (ncrc >= MAX_DCIF_CRC_NUM)
+> > +		return;
+> > +
+> > +	regmap_clear_bits(dcif->regmap, DCIF_CRC_CTRL, DCIF_CRC_CTRL_CRC_EN(ncrc));
+> 
+> [Severity: Low]
+> Should dcif_crc_source_disable() also clear DCIF_CRC_CTRL_CRC_TRIG and set
+> DCIF_CRC_CTRL_CRC_SHADOW_LOAD_EN when disabling CRC on an active CRTC?
+> 
+> Clearing only DCIF_CRC_CTRL_CRC_EN(ncrc) leaves the disabled state
+> unlatched, and if DCIF_CRC_CTRL_CRC_MODE, DCIF_CRC_CTRL_CRC_SHADOW_LOAD_EN
+> and DCIF_CRC_CTRL_CRC_TRIG stay set in DCIF_CRC_CTRL, a later
+> dcif_crc_source_enable() call via regmap_set_bits() will see no bit changes
+> and skip writing the register.
 
-=E5=9C=A8 2026/11/12 21:15, Abd-Alrhman Masalkhi =E5=86=99=E9=81=93:
-> Hi Kuai,
->
-> On Thu, Nov 12, 2026 at 12:13 +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential
->> issues to consider:
->> - [Medium] md: premature KOBJ_ADD uevent in add_disk() while mddev_get()
->>    fails
->> - [Low] md: stale reconfig_mutex lock and comment in md_alloc()
->> It also noticed 1 related pre-existing issue this patch does not
->> introduce:
->> - [Medium] md: kernfs_node memory leak in mddev_unlock() [1]
->> --
->>
->> commit 2ddaaecbff58458e8c38353164498300daf7d131
->> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
->>
->> md: make mddev_get() fail until md_alloc() has finished
->>
->> This commit adds an mddev->sysfs_live flag set under all_mddevs_lock aft=
-er
->> kobject_add() succeeds in md_alloc(), and updates mddev_get() to fail un=
-til
->> that flag is set.
->>
->> Link: https://sashiko.dev/#/patchset/20261029202209.1422567-1-abd.masalk=
-hi@gmail.com?part=3D4
->>
->>> diff --git a/drivers/md/md.c b/drivers/md/md.c
->>> index 03e35386a8028..47118e9d1a656 100644
->>> --- a/drivers/md/md.c
->>> +++ b/drivers/md/md.c
->>> @@ -641,7 +641,7 @@ static inline struct mddev *mddev_get(struct mddev =
-*mddev)
->>>   {
->>>   	lockdep_assert_held(&all_mddevs_lock);
->>>  =20
->>> -	if (test_bit(MD_DELETED, &mddev->flags))
->>> +	if (test_bit(MD_DELETED, &mddev->flags) || !mddev->sysfs_live)
->>>   		return NULL;
->>>   	atomic_inc(&mddev->active);
->>>   	return mddev;
->>> @@ -6432,10 +6432,16 @@ struct mddev *md_alloc(dev_t dev, char *name)
->>>   		return ERR_PTR(error);
->>>   	}
->>>  =20
->>> -	kobject_uevent(&mddev->kobj, KOBJ_ADD);
->>>   	mddev->sysfs_state =3D sysfs_get_dirent_safe(mddev->kobj.sd, "array_=
-state");
->>>   	mddev->sysfs_level =3D sysfs_get_dirent_safe(mddev->kobj.sd, "level"=
-);
->> [Severity: Medium]
->> This problem wasn't introduced by this patch, but when
->> legacy_async_del_gendisk is disabled, does mddev_unlock() leak
->> mddev->sysfs_state and mddev->sysfs_level [1]?
->>
->> md_kobj_release() only calls sysfs_put() on mddev->sysfs_state and
->> mddev->sysfs_level when legacy_async_del_gendisk is true, and the
->> !legacy_async_del_gendisk teardown path in mddev_unlock() deletes
->> mddev->kobj and mddev->gendisk without releasing those kernfs_node
->> references:
->>
->> drivers/md/md.c:md_kobj_release() {
->> 	if (legacy_async_del_gendisk) {
->> 		if (mddev->sysfs_state)
->> 			sysfs_put(mddev->sysfs_state);
->> 		if (mddev->sysfs_level)
->> 			sysfs_put(mddev->sysfs_level);
->> 		del_gendisk(mddev->gendisk);
->> 	}
->> 	put_disk(mddev->gendisk);
->> }
->>
->>> +
->>> +	spin_lock(&all_mddevs_lock);
->>> +	mddev->sysfs_live =3D true;
->>> +	spin_unlock(&all_mddevs_lock);
->>> +
->>> +	kobject_uevent(&mddev->kobj, KOBJ_ADD);
->>>   	mutex_unlock(&disks_mutex);
->>> +
->>>   	return mddev;
->>>  =20
->>>   out_put_disk:
->> [Severity: Medium]
->> Does making mddev_get() fail until mddev->sysfs_live is set cause a
->> regression where udevd or concurrent openers fail with -ENODEV in md_ope=
-n()
->> and -EBUSY on md/ sysfs attributes right after add_disk() announces the
->> disk?
->>
->> kobject_uevent(&mddev->kobj, KOBJ_ADD) is dropped by dev_uevent_filter()
->> because mddev->kobj has ktype &md_ktype rather than &device_ktype.  The
->> KOBJ_ADD uevent that actually reaches user space is sent earlier inside
->> add_disk() -> add_disk_final() -> disk_uevent(disk, KOBJ_ADD), right aft=
-er
->> bdev_add() publishes the block device inode while mddev->sysfs_live is
->> still false:
->>
->> CPU0                              CPU1 (udevd / opener)
->> md_alloc()
->>    add_disk(disk)
->>      add_disk_final(disk)
->>        bdev_add(...)
->>        disk_uevent(disk, KOBJ_ADD)
->>                                    blkdev_get_no_open()
->>                                    md_open()
->>                                      mddev_find()
->>                                        mddev_get() -> NULL  <-- -ENODEV
->>    kobject_add(&mddev->kobj, ...)
->>    mddev->sysfs_live =3D true
->>
-> I missed this case. Do you have a suggestion for a better fix, or should
-> I just drop this patch?
+It appears this one is correct. The CRC_EN(n) is shadowed and CRC_TRIG
+is not self-clearing in continuous mode. Will fix in v13.
 
-Please drop this patch, let open disk fail is not a good idea.
+> 
+> [ ... ]
+> 
+> > diff --git a/drivers/gpu/drm/imx/dcif/dcif-crtc.c b/drivers/gpu/drm/imx/dcif/dcif-crtc.c
+> > new file mode 100644
+> > index 0000000000000..233e149929964
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/imx/dcif/dcif-crtc.c
+> [ ... ]
+> > +static void dcif_crtc_atomic_enable(struct drm_crtc *crtc,
+> > +				    struct drm_atomic_commit *state)
+> > +{
+> > +	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
+> > +	struct dcif_crtc_state *dcif_crtc_state = to_dcif_crtc_state(crtc_state);
+> > +	struct drm_display_mode *adj = &crtc_state->adjusted_mode;
+> > +	struct dcif_dev *dcif = crtc_to_dcif_dev(crtc);
+> > +	struct drm_device *drm = crtc->dev;
+> > +	int ret;
+> > +
+> > +	dev_dbg(drm->dev, "mode " DRM_MODE_FMT "\n", DRM_MODE_ARG(adj));
+> > +
+> > +	/* enable power when we start to set mode for CRTC */
+> > +	ret = pm_runtime_resume_and_get(drm->dev);
+> > +	if (ret < 0) {
+> > +		drm_err(drm, "failed to resume DCIF, ret = %d\n", ret);
+> > +		return;
+> > +	}
+> > +	dcif->crtc_pm_enabled = true;
+> [ ... ]
+> > +static void dcif_crtc_atomic_disable(struct drm_crtc *crtc,
+> > +				     struct drm_atomic_commit *state)
+> > +{
+> > +	struct dcif_dev *dcif = crtc_to_dcif_dev(crtc);
+> > +	struct drm_device *drm = crtc->dev;
+> > +
+> > +	if (dcif->has_crc)
+> > +		dcif_crc_source_disable(dcif, 0);
+> > +
+> > +	dcif_disable_controller(dcif);
+> > +	dcif_disable_plane_panic(dcif);
+> > +
+> > +	drm_crtc_vblank_off(crtc);
+> > +
+> > +	if (dcif->crtc_pm_enabled) {
+> > +		dcif->crtc_pm_enabled = false;
+> > +		pm_runtime_put_sync(drm->dev);
+> > +	}
+> 
+> [Severity: Medium]
+> Can a failure in pm_runtime_resume_and_get() lead to MMIO register accesses
+> while the DCIF clocks are disabled?
+> 
+> If pm_runtime_resume_and_get() fails in dcif_crtc_atomic_enable(),
+> dcif->crtc_pm_enabled remains false, but crtc_state->active is still true.
+> In the same commit tail, drm_atomic_helper_commit_planes() still calls
+> dcif_plane_atomic_update() and dcif_crtc_atomic_flush(), and a later
+> dcif_crtc_atomic_disable() calls dcif_crc_source_disable(),
+> dcif_disable_controller(), and dcif_disable_plane_panic() before checking
+> dcif->crtc_pm_enabled.  Accessing DCIF registers while the block is
+> unclocked can cause an external abort or bus hang on i.MX94.
 
-I think you can just set a new flag to mddev if kobject_add failed, and che=
-ck
-the flag during opening, right after reconfig_mutex is grabbed.
+This one is not worth fixing. First, the only thing that can fail in the
+runtime resume is clk_bulk_prepare_enable(). If that fails, the platform
+is already broken since the clocks are managed by the SCMI firmware. Second,
+adding checks dor crtc_pm_enabled in every commit path (flush, plane
+update, etc) would add a lot of unnecessary noise for something that
+will probably never happen in practice.
 
->
->> [Severity: Low]
->> Since mddev_get() now returns NULL until mddev->sysfs_live is set after
->> mddev_unlock(mddev), md_open() can no longer succeed while reconfig_mute=
-x
->> is held across add_disk() and kobject_add() from commit d1472ca2ca5d ("m=
-d:
->> don't hand out the array before md_alloc() has added mddev->kobj").
->>
->> drivers/md/md.c:md_alloc() {
->> 	/*
->> 	 * add_disk() makes the array openable before mddev->kobj exists.
->> 	 * Hold reconfig_mutex until kobject_add() is done so that ioctls
->> 	 * issued in between wait instead of using an uninitialised kobj.
->> 	 */
->> 	mddev_lock_nointr(mddev);
->> 	error =3D add_disk(disk);
->>      ...
->> 	error =3D kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md=
-");
->> 	mddev_unlock(mddev);
->> }
->>
->> Does this make the comment and reconfig_mutex critical section in
->> md_alloc() obsolete, as well as the commit message's first paragraph
->> claiming that ioctls such as ADD_NEW_DISK can run before kobject_add()
->> completes?
->>
->> [1] https://sashiko.dev/#/bug/linux-460ea5ed-96ea-49a0-8383-cfa84f28520b
->>
->> --=20
->> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261112114958.2=
-244-1-abd.masalkhi@gmail.com?part=3D1
+> 
+> [ ... ]
+> 
+> > diff --git a/drivers/gpu/drm/imx/dcif/dcif-drv.c b/drivers/gpu/drm/imx/dcif/dcif-drv.c
+> > new file mode 100644
+> > index 0000000000000..80b554f1b6843
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/imx/dcif/dcif-drv.c
+> [ ... ]
+> > +static int dcif_suspend(struct device *dev)
+> > +{
+> > +	struct dcif_dev *dcif = dev_get_drvdata(dev);
+> > +	int ret;
+> > +
+> > +	ret = drm_mode_config_helper_suspend(&dcif->drm);
+> > +	if (ret < 0)
+> > +		return ret;
+> > +
+> > +	if (pm_runtime_suspended(dev))
+> > +		return 0;
+> > +
+> > +	return dcif_runtime_suspend(dev);
+> > +}
+> > +
+> > +static int dcif_resume(struct device *dev)
+> > +{
+> > +	struct dcif_dev *dcif = dev_get_drvdata(dev);
+> > +	int ret;
+> > +
+> > +	if (!pm_runtime_suspended(dev)) {
+> > +		ret = dcif_runtime_resume(dev);
+> > +		if (ret < 0)
+> > +			return ret;
+> > +	}
+> > +
+> > +	return drm_mode_config_helper_resume(&dcif->drm);
+> > +}
+> 
+> [Severity: Medium]
+> Can a failure in dcif_runtime_resume() during system resume cause an
+> unbalanced clk_bulk_disable_unprepare()?
+> 
+> When the CRTC is active entering system suspend, the PM core's
+> device_prepare() holds a runtime PM reference, so the pm_runtime_put_sync()
+> in dcif_crtc_atomic_disable() leaves the device's runtime PM status as
+> RPM_ACTIVE.  dcif_suspend() then calls dcif_runtime_suspend() directly,
+> disabling clocks without updating runtime_status.  If dcif_runtime_resume()
+> fails in dcif_resume(), clocks remain disabled while runtime_status is
+> still RPM_ACTIVE, and device_complete() -> pm_runtime_put() will invoke
+> dcif_runtime_suspend() a second time.  Using pm_runtime_force_suspend() and
+> pm_runtime_force_resume() would keep runtime_status aligned with the clock
+> state.
 
---=20
+This is related to the previous issue and also not worth fixing since
+the resume is unlikely to fail, as I explained above.
+
+-- 
 Thanks,
-Kuai
+Laurentiu
