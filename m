@@ -1,191 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.13
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795178763;
-	b=JASqKtY4Ve60j2NSMuU9k0FET3F8cS5JsoZMClziWmL2HCHgw6dOOXQmYcO8q8wxAKM2
-	 ntQkAME+9vDO/NhzR5zn2uZ4H6EdveZqXXrCuzT5VKYTrh5jjdnxCMQ8UUSkk+A0/xhyY
-	 tJvA2wwmw8Ytn8RN/4XBR9ERvgLi1dMWcspUEPKZZRgynZ8mm7xJqYSEmGqgygip/AgP/
-	 nDB1U0cOHP/rCTLROESJHb8BjqctShvc9QZQ033vO6rYq/xqMuEq3tn8nToMsTrwaVpW2
-	 DxbUn+ZzkIO4IiS0+w/eNWDSW6dIWKKNNXFJE7XME0bkQXsLrVzHtovxYJboZg9rgfg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795178763;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:DKIM-Signature:Received:Received:From:To:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:
-	 X-Exchange-RoutingPolicyChecked:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=XMCWHvkHAB2FoNGBBURsYBS/7K5ZeMGLt8AILqwmWOw=;
-	b=KXZ8loNxI+YNP7ZE0tKJk3X0nKFZtNkzgn3Nk/lZfEePatZhHgXAFYU0X2molQI/P7Qg
-	 orHFLiVtMERpptW01UrAnosE3Ui4on6+3CeKnQ73JX2BgVe1E8jVpMqK8dyVPAUn/0C0q
-	 r0qHIJMq6+L3AREdNWVSTZJQt9WgufLW09a1vm6YhOBQdezFDh92+yNogqrCr/jwEieF3
-	 3WU44/jJw7Iyuv4nHolyMOHkh7l0/PzYuPZZFiIGqs/Ait3alY/zqRTx3lPzzcKbks9CD
-	 KayRqM01h1M1Y+pUV+fFKzGbk3nY+I6CyckMNg9y6MGbpkdIKCKp8befEBuZw1OAzHg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=V9bGIEoW;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=kGaWCZx4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.13
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795178951;
+	b=i0tXJ53AjrwqXAyfhr7AJh61QNimhfUGOs9DsM3XuQJpMbyW4JAvKW5dEu5ORLeqXz8n
+	 f+fuv1J+4FfHyh7mBvJuC7yAlfr6pIrCRdZ5p7xEm/FcvhsqvpKJk8bhClCXmo+ik5kSm
+	 aeBnwukgdANhXI2PYADHC/B5yzT02lWNLUF2pGYmSQQK3n/pL0LTF87z55Xo/xBOps58l
+	 OKq7U5p1jNDOD5NXf2pkcvqbdxpgvEnWsAYV48ndVvWYjRvKu33NlZnooWCEF4K5UTPHd
+	 ZucsNtiZv3Jq+Bvuh+BIQEfoJWnegjwwS8gz58bnDBeUJp1iVxPXUi1HDrq/ZvWJreA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795178951;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Flag:
+	 X-Spam-Level:X-Spamd-Result:X-Spam-Score;
+	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
+	b=SyC5VO0C6BM+q4bga320gi076n1HydII1mdoMaKVXAu0Grbmrs0lve3FZDCQ6C7WyNw6
+	 nuBNAYbzL5STlWnHa7yubpan06qJ3INJph+gjp0tho4v6/WlJgEgEMHIftKy3Rsd46Lkd
+	 bBwj9lKlZYSoeqB0ITernt8zDRsfezxblrslybL8onj/sStLSpl1M+EcxlDBt1cFk6aep
+	 tlrZLAVByTokZGpwgP99u4A39aEX+PdXSXF0v4yvdaMrh9eCle48fq+H7G0IuG0isJ5mX
+	 z66XsLg17kfgLIMZdAaimtDTiHnh2b0cSbnDso0PcD6rovdeqIXo3Ofps7UWiO+lxlA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6;
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B7B60A2603
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:46:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76B7B60A2603
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A0C606A320
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:49:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12A0C606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=V9bGIEoW;
-	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=kGaWCZx4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795178763; x=1826714763;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=XMCWHvkHAB2FoNGBBURsYBS/7K5ZeMGLt8AILqwmWOw=;
-  b=V9bGIEoW+6az5wRYOr2Sh8Q2kIsmHtVxZjeks+5nbzkm1OcMZL74Gpmr
-   1RW/EipRLBXkGcsbbeQ1NT68lFvf8+VSZk+q+09cTJaPQ2cVJRQpHXd/K
-   qPI2YMpJD0plcAVE6FWNvR9jlVSbMg48RaUO+vQxU4C19Qh5+3KqsVFly
-   PeuZvl1hdUPv8oiylVVrsS9aPTW2M+rpZN/iGB+vUQ0pz80LdBpKXRCE6
-   B+3u1ZofNTjsnrpD8TMu3oBlapNecPJtdhduW99/n6sjzqYvPpxGyZBU3
-   oQmF+KxhQscKuPAdiU368PsG35MOO+mlL+xJKfCY0T/r9lPCeqXdj7By9
-   g==;
-X-CSE-ConnectionGUID: YAPXpgzsT1mlbzfAI/Efbg==
-X-CSE-MsgGUID: RYqZH+xQRgCaynkCZ2Pjpg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11971"; a="3946534"
-X-IronPort-AV: E=Sophos;i="6.27,222,1787036400"; 
-   d="scan'208";a="3946534"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 04:46:02 -0800
-X-CSE-ConnectionGUID: WtqbPVGGQRyJKMzBGl9HHg==
-X-CSE-MsgGUID: fE3UMLSyT5aoxcPhTxDx9w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,222,1787036400"; 
-   d="scan'208";a="10765077"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 04:46:02 -0800
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Fri, 20 Nov 2026 04:46:01 -0800
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Fri, 20 Nov 2026 04:46:01 -0800
-Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.43) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Fri, 20 Nov 2026 04:46:01 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rK0XHRGStjawc8aKNeaFDLTKLoUjzc5gWAQNAa4jO9Lih/ZdNRGdHasasme4ApT1FgbRSfokuMtR1OIWkTi2JAyjW0SMt5T4wxhi1wnP2Pr3kmvKAFAB9XzYiKgbJPPhTRN3eUTzLjuKmrrglIjKnnSZ2uoOa/e8R/mZHVKwH8eqF4n0rB/5t+6TaWEY9YeY736NEhhnEEGapxDMakTTISvXvPKpIS8CsMZ+sEs4r14dRDz6ER0/S6o7Dlsd/NWgDswk5VyM45gNQSKxoOh1DF6XJOlU/vjipYXht6CWBp5mWKqWlFQBJuKSJ54ivAV41Rd62CX53a5B74QjAXHrqQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XMCWHvkHAB2FoNGBBURsYBS/7K5ZeMGLt8AILqwmWOw=;
- b=lkWOihbTncvwpSAbH/qVBbjI4/iTaL1bvLcwUNXVS30R3B/KgdmsnSF7Us/TnZvAHz0EMlkL5w9dwVkwuu3n3KsDSAZyJEEXAsAiM3p/XMuuzbyg8GZGrQjQ73CUDIGd0J0Afwbq02Tgxfot5i7LKdrGmSb8RlEiK1mc8CBiD3EQZTs5F4BMBI+eJemE16z4gceAjcbDu7I/wuwxAGYXV+9qVFXcf2RAcgi+bfgj09h7+92CGX6OVwl1PbYetOujGzuwplKWFWJjfUQB5KagNVhj4jFAakCj89gUf83SyvQB4/fqVlOUnO0zix6ipGNyJR6ePU4A/3HJZUM4v6AwOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XMCWHvkHAB2FoNGBBURsYBS/7K5ZeMGLt8AILqwmWOw=;
- b=kGaWCZx4ZTpHFNTSS38EzdSFQ85JyRoj+2ogJgYUrb/R9ngYSvX4Ngis8Z2rPvy66NnHhQTXt0DDcukUlrzdWbNAK87nkuUqkPafbhHAYJ5RhtW+Uec8qLYsOERMvs61EeIYm4iC+zOOhmDwd3e3cqdQwCME4mjVW/pInKN/bLU=
-Received: from DS4PR11MB131308.namprd11.prod.outlook.com (2603:10b6:8:502::7)
- by LV2PR11MB9540.namprd11.prod.outlook.com (2603:10b6:408:378::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
- 2026 12:45:59 +0000
-Received: from DS4PR11MB131308.namprd11.prod.outlook.com
- ([fe80::40c0:7a50:a98c:8920]) by DS4PR11MB131308.namprd11.prod.outlook.com
- ([fe80::40c0:7a50:a98c:8920%6]) with mapi id 15.21.0639.011; Fri, 20 Nov 2026
- 12:45:59 +0000
-From: "Tangudu, Tilak Tirumalesh" <tilak.tirumalesh.tangudu@intel.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>
-Subject: RE: [PATCH 1/4] drm/xe: Add has_sem64 bit to graphics/media IP
- descriptors
-Thread-Topic: [PATCH 1/4] drm/xe: Add has_sem64 bit to graphics/media IP
- descriptors
-Thread-Index: AQHdeOdmxP8RDIa4GUqKWyz7GXO9L7c24gAAgAAFmeA=
-Date: Fri, 20 Nov 2026 12:45:59 +0000
-Message-ID: <DS4PR11MB131308A5ACA4071B96F628206FC8782@DS4PR11MB131308.namprd11.prod.outlook.com>
-References: <20261120120231.748267-1-tilak.tirumalesh.tangudu@intel.com>
- <20261120120231.748267-2-tilak.tirumalesh.tangudu@intel.com>
- <sashiko-outbox-225139@kernel.org>
-In-Reply-To: <sashiko-outbox-225139@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS4PR11MB131308:EE_|LV2PR11MB9540:EE_
-x-ms-office365-filtering-correlation-id: 977d6300-4f59-4056-9a76-08df47043a39
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|6133799003|22082099003|18002099003|11063799006|4143699003|261022105027099003|261028144727099003|261026140227099003|56012099006|261026121527099003|10067099003|261009220027099003|261021121427099003|261009223027099003|261009221227099003|261009221727099003|261009223327099003|261022075727099003|261102123227099003|38070700021;
-x-microsoft-antispam-message-info: IDaPV/tVDC7I+oNUVIsAO8cqmw82qiylJ20IeqTQowLChRXr3u3zcTHBijFG4t5iY7aAPTobuEtd8YRMNG/zCUeZwv0XC+II1D9yJz3P6KtmfiQdxoANOcln2IfVGAWRMb/UzRh+xb2bEYuwm18MNm0GfR44QH4Zr3JqG8eAsSJ/8MAR+EylgTZ6PsZ21XZimWLmkQzpaDd7oSFYH6HSoeoIcXNx282FMOnRUwI3YoopRdfLY+PcwUPGQf7FmgPZHs36HdFZZRkFY5nPABP3bpZnX48U0HKvheYVcMzE0QmnI8koYr8RvcvCtxmlQwAYlQ4aUUZ41QeH0FbcerSfbOw5DHpIumUbYg+FJdYsay0IA1h4Qifp0+t8aoWE7ZP7cfIjKBrlIzIKQI2E4SdJ4gnxYKU9czYz7QWkouYyZ6GICW8AvVI+6XizRiJYVYvtcARHwF5SMgmKSRtHaJerkGu4ksktp2HWkBcjycpyMuxxivV+N/BK12kP9kg9vx0qvIr4KHzUrV6Ct6+HGvdAsAW2QqdGD3lthoE6v+GvMixQpdjRMla47u/5iCTYgLaJUS9K0EFHTXhVyY97zjVUsWTDZx+QD/8p46UtJiw4aqeTMiScI+9fOi5eCCNc1pgLKbzwPfIjm2FOqa41iAVJTz2j9ZC1jjUCGXj6uP8lAwA=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PR11MB131308.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(6133799003)(22082099003)(18002099003)(11063799006)(4143699003)(261022105027099003)(261028144727099003)(261026140227099003)(56012099006)(261026121527099003)(10067099003)(261009220027099003)(261021121427099003)(261009223027099003)(261009221227099003)(261009221727099003)(261009223327099003)(261022075727099003)(261102123227099003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YVFEZXRNRE9naGZJME9SSUV0a1NsaXd0M1JaeEhna0J3RE8ybmxrVnRaVCtr?=
- =?utf-8?B?RyswWlV6aEhONGxCMVp1MXlkNEFOcWpXNEg0NjA0b1Fxei84YzNmSEIvblhN?=
- =?utf-8?B?YjhnRXo5UVFTaTBuSkVHWUEwbzc3dUlMOVNacnoycEY2OU5GUHd2ZEhCc2I4?=
- =?utf-8?B?R2htZnMwOHl2NUJzaXdLTzQ4ZmhjTFdoajFwVldzTFJWZFhMYTdXNWdNWVln?=
- =?utf-8?B?WkI2SXQrVzMwc1UyTjhoN1lRSjR1dWU0MnRyVWFuV2s2UjBaN0t1K0FPbit4?=
- =?utf-8?B?WXphNVhDYTRPTmhsSEVEQ0NZM3dpRE1vekRjVVlKUmdCOE96UnNWeG1lOXpq?=
- =?utf-8?B?N1hYQnlxbjZOZkVBckJXdStHQlYvVWNBZ3dYUHU2dWh6UG5iWGJvWnJhTWRJ?=
- =?utf-8?B?RDNiYXBFdGU3TnFINm1BT3dGN2FEdHYreFZkdlZUZklSV0t0S2xkdmhYWHcz?=
- =?utf-8?B?WVh4TGE4NUFiME9TNHltcStKRHNkSG0wY0NuenBMajVhcnJUZVdvSWYyTEd5?=
- =?utf-8?B?bTYvV1NSVmVOUzBnK29wSFYyeEFzd3JLSVpPRmU0YzVuUDJLVzBGOGwwMndM?=
- =?utf-8?B?OThFWGloM3JpbmN3dVF6VTJYb2FDUGwyNnl4NDhKN0dHTk1JcmdlVC83UFBC?=
- =?utf-8?B?MGRId1VLVkNFdFZTYVRDd3QrVGJFcTJXMGpoVmJrQlhMU01lcWRtOFhBUXc0?=
- =?utf-8?B?a21VMjY2MS9MUG14NVR2VEJQMmx3cm9Kejd4VG9LMFZNSzltbmN6bmpCMFBa?=
- =?utf-8?B?ZWJQTG5DNDcrMlB5Sms3VWFXcG82TXh2bVZlL2VQOGwxbUFrZ3dsb3NMMWV1?=
- =?utf-8?B?dTlhbFY0UzJzaitXcTUrWFZWVmlOR0xaYXRvekhiNkUwMDQ3UmRKanZ0Z056?=
- =?utf-8?B?MmR2czBaR3FwTmUzbk1jZWZ5RG5HR0N2Z1FJODNIOGJ5Z21CdTJZbmNYVFZp?=
- =?utf-8?B?TkQzY2Z5L0lpUmxPSmJwaEI5Nlh3VTdPZDBFVzBZcXkydW8vS1QvUTJLZzl5?=
- =?utf-8?B?YTBzNjlSNDdmUjhXSWtoQ0NIM0hvUVBjYndENDVaMmxBTDJPOTRHVVJDajRU?=
- =?utf-8?B?bEpmT1Vmak1tZWxUMzAyemxxKzJnZG1ndDBodmF2eTNYRmpEODhtV2tYUkxI?=
- =?utf-8?B?WmNBUENOU2V4b1IvSm5sMmZJQ3gveDUwcHVUcVR1aklJZDBvOEoyNnNJVVdK?=
- =?utf-8?B?T1ZxeThGRnZPdDVNN2haZ0pGYlY3a2RQNjJrYXozVGNkZUl4dW04a09iRWQ3?=
- =?utf-8?B?Qkp5WGxvQk1WZGdtNnpYcHRiTzFBWFdZZ0lrYmNOd0JyUGhJcjZlSTVlQ1dP?=
- =?utf-8?B?OVJ6Mm9ubkZDV1BXdlRlUWZKK2hlSGRjTG5Gb3NXUmVVSFhGUGtQaW5XeVZa?=
- =?utf-8?B?dkJxdlFla1REY2tiZDVzT2VadGFEM1BLbmVKSjA3VlBFSHNGRW1SOHdFYjNt?=
- =?utf-8?B?Z0FndWs4UElWNVc5ZDBvelI1MGI1bzRNeWY0dGhrQnljejZHTzk0c1B0Wjly?=
- =?utf-8?B?U01sU0N2VDFvN3hYbXlncGdBTVViVi9pVzVidkZNdUhncG9DdG0yR0Zuc2o3?=
- =?utf-8?B?Y3NpTmg2L2RQbWdldWdVMUtpRjZxb2NGTmQ3ODhoek93Z0VYQ3lNdUU4bk93?=
- =?utf-8?B?QjlQYUxtdkFvdEhCcW5sMjZQZU83aURCUVIvaG41R2FZNFZRSjlCbFlJMkZu?=
- =?utf-8?B?ek85WW5JaU5Pby9hUFBMMkVBTUlRUENGbE04WkpEdDZnRXhYdlFITy9nOGF4?=
- =?utf-8?B?QXhBbnRYUklvbXhjb1V0eWdVVUdyL0p5TDEzN2x2SGlpZkYva21tQnY5L28x?=
- =?utf-8?B?dUFKQmlCbHFjNktRUGNISHZhS3RhSTBpQ3RlMUl6bFAyUlZWSHZIN3hGNDQ1?=
- =?utf-8?B?YlFSRXovZ2hVemNocVgvVlM0K2tyWHhFWG9wWnFXa0o3QlBCUkgzcWxnZXNw?=
- =?utf-8?B?UzhqQVV1S0lMa2lydk9PYXF4WmJNVVM4bmU1NlVCdW5yZlRLa09Bb0x4c3Rh?=
- =?utf-8?B?LzZTUU82czJTeVBuYW5BaWk1VC9yOUU4ZTNtU0l3bHhLT2Nhd2VIOGIzdE9j?=
- =?utf-8?B?eklqbE1hdHU1YVZkVmsrRUZDcnNLU1F3ZWR0S255NGlsMVYrWWR4b1FTMUNW?=
- =?utf-8?B?dExkSVdheWZ2WU1uZGRKMHdvYzhlTERlZXo1YnpWbG10bGdXTUxUZUxpQjVN?=
- =?utf-8?B?dU9XWnhPR0gvTXc2Z0dzakF4RXpCRU8rRW13SWlvbjY5eHVRbzlxYk1kZnNQ?=
- =?utf-8?B?elZBT0R0aHU1dTJjV0trZlgvYVZ5dFY0T2U5blM1SFJqeTBUS2xXUGZCaWtx?=
- =?utf-8?B?V2FZR0w5Z0MrR2Nvd3prK2o2VmhYU2QzQTFkNEFJRG5nSWFBNFhHbysyVTRZ?=
- =?utf-8?Q?R/uzUPF3JbftgDI0=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Npc5gcjm;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=joLw8WF6
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 1BC2B21E02;
+	Fri, 20 Nov 2026 12:49:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795178948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
+	b=Npc5gcjmN7Ap2sD/UtKCDoWzPHzf/IJnj0wcNbGyneSK/SW2Nwgq9x0qn8CMfOm8N4yUpT
+	iol/3qE/FAn9IIAWzvzddze2vxsscH0q36YQxIe2HdBMVnPXgFFRaq6jhvj2DCp8VZL1bO
+	ifok9NFq5MU+17K2mbAINm0H2H1LzgA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795178948;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
+	b=joLw8WF6pQrF6ovz+ga9h3yhoJxlSFObb8qNzBgIVsB2he0pzOFfiqemI6G03rqyhDUZ50
+	Keag7s/Oi36jEuAQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795178948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
+	b=Npc5gcjmN7Ap2sD/UtKCDoWzPHzf/IJnj0wcNbGyneSK/SW2Nwgq9x0qn8CMfOm8N4yUpT
+	iol/3qE/FAn9IIAWzvzddze2vxsscH0q36YQxIe2HdBMVnPXgFFRaq6jhvj2DCp8VZL1bO
+	ifok9NFq5MU+17K2mbAINm0H2H1LzgA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795178948;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=61TOeQ+/NDEuVSWfaoA1fGoRW9OTG2WC5L48/FamscM=;
+	b=joLw8WF6pQrF6ovz+ga9h3yhoJxlSFObb8qNzBgIVsB2he0pzOFfiqemI6G03rqyhDUZ50
+	Keag7s/Oi36jEuAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A48AF134F6;
+	Fri, 20 Nov 2026 12:49:07 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id hEUPIMNBAGsSRgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 20 Nov 2026 12:49:07 +0000
+Message-ID: <9ba8634d-d714-4967-9a59-1e0ffcf2f8ca@suse.de>
+Date: Fri, 20 Nov 2026 13:49:07 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -195,69 +106,218 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: n/Wc4G1CDg3Ilba3lN/pk0r3i9VOdOG2Ov7+IrSP41rsFA3UGmUEASIhZrGLf2SaDP5kLvCpyin8Yu7Cg+N8FKr+9g37RfEt7MSVOh9OLNNC7VFV63j8skeL/YKaQXTAhLbCtpyn4Xxl0ZiRfQAGtC7uhsbMS81G/FHvNlAo3nF54UME678u9JOHhkKj7M1w6N1Q9aRv5AyTTBRjyPcqS2V2gHsf8tjsydnMc/kjDia20JQkCxngP32COc1TQ46jsXOkdOh9+4ju+QcSDUox3+GXm0JFe7hn4zv7qIfWUTw52hSAk7YXoi03/+9u040j5TIP2QvZBlTEQbDVu95xgA==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS4PR11MB131308.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 977d6300-4f59-4056-9a76-08df47043a39
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2026 12:45:59.1639
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ubdnJVrygTKK1o83VA7u6X2jmKKJcqh4hArpQoic3noOyf9aHJHWPTuASEDc814EGSkOY1uuysb7NM6iJuEhCl0lLRbRCaGo8WHa7k4oWpnB91eZLxFDVwyVmbMs/nZA
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR11MB9540
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/11] drm/udl: Allocate bulk URBs in helper functions
+To: Jie Feng <hjf3108@gmail.com>
+Cc: airlied@redhat.com, sean@poorly.run, tiwai@suse.com,
+ patrik.r.jakobsson@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch,
+ dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
+References: <20261119142114.152052-1-tzimmermann@suse.de>
+ <20261119142114.152052-5-tzimmermann@suse.de>
+ <CABOQOSW8f2Dw7DATTB-c1jhOzyo4BBsKh4cNVnEA0VpRJ=5H8g@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <CABOQOSW8f2Dw7DATTB-c1jhOzyo4BBsKh4cNVnEA0VpRJ=5H8g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spam-Level: 
+X-Spamd-Result: default: False [-11.79 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[redhat.com,poorly.run,suse.com,gmail.com,linux.intel.com,kernel.org,ffwll.ch,lists.freedesktop.org,lists.linux.dev];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo,suse.de:email]
+X-Spam-Score: -11.79
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogc2FzaGlrby1ib3RAa2Vy
-bmVsLm9yZyA8c2FzaGlrby1ib3RAa2VybmVsLm9yZz4NCj4gU2VudDogMjAgTm92ZW1iZXIgMjAy
-NiAxNzo1Mw0KPiBUbzogVGFuZ3VkdSwgVGlsYWsgVGlydW1hbGVzaCA8dGlsYWsudGlydW1hbGVz
-aC50YW5ndWR1QGludGVsLmNvbT47IGludGVsLQ0KPiB4ZUBsaXN0cy5mcmVlZGVza3RvcC5vcmcN
-Cj4gU3ViamVjdDogUmU6IFtQQVRDSCAxLzRdIGRybS94ZTogQWRkIGhhc19zZW02NCBiaXQgdG8g
-Z3JhcGhpY3MvbWVkaWEgSVANCj4gZGVzY3JpcHRvcnMNCj4gDQo+IFRoYW5rIHlvdSBmb3IgeW91
-ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDEgcG90ZW50aWFsIGlzc3Vl
-IHRvDQo+IGNvbnNpZGVyOg0KPiAtIFtNZWRpdW1dIGRybS94ZTogbWlzc2luZyBoYXNfc2VtNjQg
-aW4gZ3JhcGhpY3NfeGUzcF94cGMgZGlzYWJsZXMgc2VtNjQNCj4gICBvbiAzNS4xMS8zNS4wMw0K
-PiAtLQ0KPiANCj4gY29tbWl0IGEzYjI4MTgzM2I2N2M1YTZjZTFhY2RiNGZlMTAwNWQyZGVhMGRh
-ZGQNCj4gQXV0aG9yOiBUYW5ndWR1IFRpbGFrIFRpcnVtYWxlc2ggPHRpbGFrLnRpcnVtYWxlc2gu
-dGFuZ3VkdUBpbnRlbC5jb20+DQo+IA0KPiBkcm0veGU6IEFkZCBoYXNfc2VtNjQgYml0IHRvIGdy
-YXBoaWNzL21lZGlhIElQIGRlc2NyaXB0b3JzDQo+IA0KPiBUaGlzIGNvbW1pdCBhZGRzIGEgaGFz
-X3NlbTY0IGNhcGFiaWxpdHkgZmxhZyB0byB0aGUgZ3JhcGhpY3MgYW5kIG1lZGlhIElQDQo+IGRl
-c2NyaXB0b3JzIGZvciBYZTNwIHBsYXRmb3JtcyBhbmQgcmVzb2x2ZXMgZ3QtPmluZm8uaGFzX3Nl
-bTY0IGR1cmluZyBHVA0KPiBpbml0aWFsaXphdGlvbiwgY2xlYXJpbmcgaXQgb24gYm90aCBHVHMg
-aWYgdGhlIHByaW1hcnkgYW5kIG1lZGlhIEdUcyBkaXNhZ3JlZS4NCj4gDQo+ID4gZGlmZiAtLWdp
-dCBhL2RyaXZlcnMvZ3B1L2RybS94ZS94ZV9wY2kuYyBiL2RyaXZlcnMvZ3B1L2RybS94ZS94ZV9w
-Y2kuYw0KPiA+IGluZGV4IDNiZDY4ZWQ5ZGFhODEuLmE3Y2ViNTcwZDg5YWYgMTAwNjQ0DQo+ID4g
-LS0tIGEvZHJpdmVycy9ncHUvZHJtL3hlL3hlX3BjaS5jDQo+ID4gKysrIGIvZHJpdmVycy9ncHUv
-ZHJtL3hlL3hlX3BjaS5jDQo+ID4gQEAgLTEyNyw2ICsxMjcsNyBAQCBzdGF0aWMgY29uc3Qgc3Ry
-dWN0IHhlX2dyYXBoaWNzX2Rlc2MNCj4gZ3JhcGhpY3NfeGUzcF9scGcgPSB7DQo+ID4gIAkubXVs
-dGlfcXVldWVfZW5naW5lX2NsYXNzX21hc2sgPSBCSVQoWEVfRU5HSU5FX0NMQVNTX0NPUFkpIHwN
-Cj4gQklUKFhFX0VOR0lORV9DTEFTU19DT01QVVRFKSwNCj4gPiAgCS5udW1fZ2VvbWV0cnlfeGVj
-b3JlX2Z1c2VfcmVncyA9IDMsDQo+ID4gIAkubnVtX2NvbXB1dGVfeGVjb3JlX2Z1c2VfcmVncyA9
-IDMsDQo+ID4gKwkuaGFzX3NlbTY0ID0gMSwNCj4gPiAgfTsNCj4gPg0KPiA+ICBzdGF0aWMgY29u
-c3Qgc3RydWN0IHhlX2dyYXBoaWNzX2Rlc2MgZ3JhcGhpY3NfeGUzcF94cGMgPSB7IEBAIC0xNTMs
-MTENCj4gPiArMTU0LDIwIEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgeGVfbWVkaWFfZGVzYyBtZWRp
-YV94ZWxwbXAgPSB7DQo+ID4gIAkuaHdfZW5naW5lX21hc2sgPQ0KPiA+ICAJCUdFTk1BU0soWEVf
-SFdfRU5HSU5FX1ZDUzcsIFhFX0hXX0VOR0lORV9WQ1MwKSB8DQo+ID4gIAkJR0VOTUFTSyhYRV9I
-V19FTkdJTkVfVkVDUzMsIFhFX0hXX0VOR0lORV9WRUNTMCkNCj4gfA0KPiA+IC0JCUJJVChYRV9I
-V19FTkdJTkVfR1NDQ1MwKQ0KPiA+ICsJCUJJVChYRV9IV19FTkdJTkVfR1NDQ1MwKSwNCj4gPiAr
-fTsNCj4gPiArDQo+ID4gK3N0YXRpYyBjb25zdCBzdHJ1Y3QgeGVfbWVkaWFfZGVzYyBtZWRpYV94
-ZTNwX2xwbSA9IHsNCj4gPiArCS5od19lbmdpbmVfbWFzayA9DQo+ID4gKwkJR0VOTUFTSyhYRV9I
-V19FTkdJTkVfVkNTNywgWEVfSFdfRU5HSU5FX1ZDUzApIHwNCj4gPiArCQlHRU5NQVNLKFhFX0hX
-X0VOR0lORV9WRUNTMywgWEVfSFdfRU5HSU5FX1ZFQ1MwKQ0KPiB8DQo+ID4gKwkJQklUKFhFX0hX
-X0VOR0lORV9HU0NDUzApLA0KPiA+ICsJLmhhc19zZW02NCA9IDEsDQo+ID4gIH07DQo+ID4NCj4g
-PiAgc3RhdGljIGNvbnN0IHN0cnVjdCB4ZV9tZWRpYV9kZXNjIG1lZGlhX3hlM3BfaHBtID0gew0K
-PiA+ICAJLmhhc191bmNvcnJlY3RhYmxlX2Vycm9yX3JlcG9ydGluZyA9IDEsDQo+ID4gKwkuaGFz
-X3NlbTY0ID0gMSwNCj4gDQo+IFtTZXZlcml0eTogTWVkaXVtXQ0KPiBTaG91bGQgZ3JhcGhpY3Nf
-eGUzcF94cGMgKEdyYXBoaWNzIElQIDM1LjExKSBhbHNvIHNldCAuaGFzX3NlbTY0ID0gMT8NCj4g
-DQo+IEluIGFsbG9jX3ByaW1hcnlfZ3QoKSwgdGhlIHN0ZXBwaW5nIGNoZWNrIGlzIHNjb3BlZCB0
-bw0KPiBHUkFQSElDU19WRVJ4MTAwKHhlKSA9PSAzNTEwLCBtYXRjaGluZyBNRURJQV9WRVJ4MTAw
-KHhlKSA9PSAzNTAwIGluDQo+IGFsbG9jX21lZGlhX2d0KCkuICBCZWNhdXNlIGdyYXBoaWNzX3hl
-M3BfeHBjIG9taXRzIC5oYXNfc2VtNjQgPSAxLA0KWWVzIHRoaXMgaXMgaW50ZW50aW9uYWxseSBv
-bWl0dGVkIGFzIGdyYXBoaWNzX3hlM3BfeHBjIGRvIG5vdCBzdXBwb3J0IGl0DQo+IHRpbGUtPnBy
-aW1hcnlfZ3QtPmluZm8uaGFzX3NlbTY0IGlzIGFsd2F5cyBmYWxzZSBvbiBHcmFwaGljcyBJUCAz
-NS4xMSwNCj4gdGlsZS0+YW5kDQo+IHRoZSBjcm9zcy1HVCBjaGVjayBpbiB4ZV9pbmZvX2luaXQo
-KSB0aGVuIGNsZWFycw0KPiB0aWxlLT5tZWRpYV9ndC0+aW5mby5oYXNfc2VtNjQgYmFjayB0byBm
-YWxzZSBvbiB0aGUgcGFpcmVkIE1lZGlhIElQDQo+IHRpbGUtPjM1LjAzDQo+IChtZWRpYV94ZTNw
-X2hwbSkgR1QgYXMgd2VsbC4NCj4gDQo+IC0tDQo+IFNhc2hpa28gQUkgcmV2aWV3IMK3IGh0dHBz
-Oi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC8yMDI2MTEyMDEyMDIzMS43NDgyNjctDQo+IDEtdGls
-YWsudGlydW1hbGVzaC50YW5ndWR1QGludGVsLmNvbT9wYXJ0PTENCg==
+Hi
+
+Am 19.11.26 um 17:38 schrieb Jie Feng:
+> On Fri, 20 Nov 2026 at 00:30, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>> Move the code for allocating an URB into a separate helper function. Use
+>> the helper for initializing the URB cache.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>>   drivers/gpu/drm/udl/udl_main.c | 74 +++++++++++++++++++++-------------
+>>   1 file changed, 47 insertions(+), 27 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/udl/udl_main.c b/drivers/gpu/drm/udl/udl_main.c
+>> index 67da676f0f94..a799d7710a7b 100644
+>> --- a/drivers/gpu/drm/udl/udl_main.c
+>> +++ b/drivers/gpu/drm/udl/udl_main.c
+>> @@ -163,6 +163,47 @@ static void udl_urb_completion(struct urb *urb)
+>>          udl_put_urb(urb);
+>>   }
+>>
+>> +static struct urb *udl_alloc_bulk_urb(struct udl_device *udl, size_t size)
+>> +{
+>> +       struct usb_device *udev = udl_to_usb_device(udl);
+>> +       struct urb_node *unode;
+>> +       struct urb *urb;
+>> +       char *buf;
+>> +       int ret;
+>> +
+>> +       urb = usb_alloc_urb(0, GFP_KERNEL);
+>> +       if (!urb)
+>> +               return ERR_PTR(-ENOMEM);
+>> +
+>> +       unode = kzalloc_obj(struct urb_node);
+>> +       if (!unode) {
+>> +               ret = -ENOMEM;
+>> +               goto err_usb_free_urb;
+>> +       }
+>> +       unode->dev = udl;
+>> +       unode->urb = urb;
+>> +
+>> +       buf = usb_alloc_coherent(udev, size, GFP_KERNEL, &urb->transfer_dma);
+> usb_alloc_coherent might map uncached memory on platforms such as ARM.
+> This might be slow for moving large amounts of frame data.
+> Would using kmalloc/usb_alloc_noncoherent be better?
+
+It's worth a try, but i cannot say for sure. The advantage of _coherent 
+is that is makes DMA easy. And we don't read from these buffers from the 
+CPU, so caching them might not help much for performance. In any case, 
+it's a separate patch series.
+
+Best regards
+Thomas
+
+>> +       if (!buf) {
+>> +               ret = -ENOBUFS;
+>> +               goto err_kfree;
+>> +       }
+>> +       unode->alloc_size = size;
+>> +
+>> +       /* urb->transfer_buffer_length set to actual before submit */
+>> +       usb_fill_bulk_urb(urb, udev, usb_sndbulkpipe(udev, 1), buf, unode->alloc_size,
+>> +                         udl_urb_completion, unode);
+>> +       urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
+>> +
+>> +       return urb;
+>> +
+>> +err_kfree:
+>> +       kfree(unode);
+>> +err_usb_free_urb:
+>> +       usb_free_urb(urb);
+>> +       return ERR_PTR(ret);
+>> +}
+>> +
+>>   static void udl_free_urb_list(struct udl_device *udl)
+>>   {
+>>          struct urb_node *unode;
+>> @@ -191,11 +232,7 @@ static void udl_free_urb_list(struct udl_device *udl)
+>>
+>>   static int udl_alloc_urb_list(struct udl_device *udl, int count, size_t size)
+>>   {
+>> -       struct urb *urb;
+>> -       struct urb_node *unode;
+>> -       char *buf;
+>>          size_t wanted_size = count * size;
+>> -       struct usb_device *udev = udl_to_usb_device(udl);
+>>
+>>          spin_lock_init(&udl->urbs.lock);
+>>          INIT_LIST_HEAD(&udl->urbs.list);
+>> @@ -205,36 +242,19 @@ static int udl_alloc_urb_list(struct udl_device *udl, int count, size_t size)
+>>
+>>   retry:
+>>          while (udl->urbs.count * size < wanted_size) {
+>> -               unode = kzalloc_obj(struct urb_node);
+>> -               if (!unode)
+>> -                       break;
+>> -               unode->dev = udl;
+>> +               struct urb *urb;
+>> +               struct urb_node *unode;
+>>
+>> -               urb = usb_alloc_urb(0, GFP_KERNEL);
+>> -               if (!urb) {
+>> -                       kfree(unode);
+>> -                       break;
+>> -               }
+>> -               unode->urb = urb;
+>> -               unode->alloc_size = size;
+>> -
+>> -               buf = usb_alloc_coherent(udev, unode->alloc_size, GFP_KERNEL,
+>> -                                        &urb->transfer_dma);
+>> -               if (!buf) {
+>> -                       kfree(unode);
+>> -                       usb_free_urb(urb);
+>> -                       if (size > PAGE_SIZE) {
+>> +               urb = udl_alloc_bulk_urb(udl, size);
+>> +               if (IS_ERR(urb)) {
+>> +                       if (PTR_ERR(urb) == -ENOBUFS && size > PAGE_SIZE) {
+>>                                  size /= 2;
+>>                                  udl_free_urb_list(udl);
+>>                                  goto retry;
+>>                          }
+>>                          break;
+>>                  }
+>> -
+>> -               /* urb->transfer_buffer_length set to actual before submit */
+>> -               usb_fill_bulk_urb(urb, udev, usb_sndbulkpipe(udev, 1),
+>> -                                 buf, size, udl_urb_completion, unode);
+>> -               urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
+>> +               unode = urb->context;
+>>
+>>                  list_add_tail(&unode->entry, &udl->urbs.list);
+>>
+>> --
+>> 2.56.0
+>>
+>>
+> Best regards,
+> Jie Feng
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
+
+
