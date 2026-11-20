@@ -1,96 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795214186;
-	b=wUfVdV1o3GnAvHjFjMip4R9kdrGrkRD+uMqI7M1zQCx/g2cDQtEMV5rjqR12gUUKWJms
-	 k9KyIlMPGEpciDDvBck6e4mPo/JthaBmM58mrfIVdA3Cwie8gDCcJhEmBRx4thNpHi9x0
-	 rJ7b/KQDXCpH6GuGQHynr9j5vL2YXsryw1aRD9nHPD48oaX051w0M3+L1nw8TLjXlKB5U
-	 HqoH/KlZ0xWH2EaOrN41UO7rxAhrIWM9Jk5RyhAzaKdGO0xdqGmtlMWaKDA0LOe0axaoE
-	 2kznfgQp16+eoOo5y0j+rt3gFLdiWmOoQWAaWdBy9DT7pwPmH0Iu1lBG5luHgX3Xmbg==
+	t=1795214537;
+	b=XgXaVqZ0BDIiA3Jh0jstU9VCLBR20rFS5jxB55WyAOFeBSnQrrJ8U0Trr0+k+4RLV4IQ
+	 F13oKdDF48vleFg47vAg3UFoZtUeu9xpTPIOL5szk3a4u/n1ug5ViHaj1C6LS9YoZIv2R
+	 oM8Yw2E+QogKFzac38OQbMt6Njx4C09wUfVFWmV0ZLl8oHyJwjDcI4y2gxWKEuaO7dokI
+	 /a802eAnKa02XMdH2QCJl2sLz7zzP9uVoSzxdpKznTpkQw8GYQiYTTG+q0y9bOY1UnFFJ
+	 hQmBmiJ3cCMLd3yh3Z/83HCVVeJxTXmYkt44S9HINJh4FEI85DvAubzojEyZ5J/KsEg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795214186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795214537;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=LI62TlkKF7SE72mFPwGFMzusKh7ch0L+DlHxc/4ud2I=;
-	b=dwQHrKmn3hsDKf1VxFuVucys1PXhqvRUsrjTvcSAZ2mhTMzkbQeB1vqwQJeF8lgkK7+U
-	 XsZUAD3SZwvYlnxNTOgfC54Y10jd7aTV7odttCukKETPF8oCjzb3Yg3TRUI/xS7fXazRO
-	 Abrxt7lVa1beGKmuTrATF65DC+UZISdnMfd5n4Oc+Bo4WgaSWVkfsSr/GmAXE/tsGPtnn
-	 VNASL8xhChFqJ/LPVKXi0aRf57GT3mbvEELiRe4umejXQPilCVjCjcgHFhiiamvEOE31O
-	 NhmPV38BToJPKBw7Sup2ABqOTAwI1tyDAkeuOTdvaM0LsslxMcg05kXoeo/Glcri41A==
+	bh=vQU4s0s9jpO6QmWD/0jmrJPFOrD2Wfw5sN63JkEaowU=;
+	b=dEnWMBc6h+HXDw39pUSM7sHJarRyAeeqYQi5qCVO9htg0Q51q1qaQDrjtnPY+fI0wnbR
+	 XcJ2yjdFfz20RABau4nvpR5loD5aOOcfpxbABQ7bkgD26Krya58fbxYxQdWltF+S1n9Fq
+	 B7JOkpWKv5RgK+7vYJWdbcqCNgYLXsznA4SmlkpEMWsuYbPBzyDMp2ftQwCazJPwstvzy
+	 8UXYwoFM6ROaWqcxedvEq4Q8HxNhyWwhNAbxH/v7+sH2eYgmSfepqcP/JxLTskyATzI1k
+	 sknN4JdVwOAdkfHEVPx0Kvn23vowcNOPg9lVLgM2xpPgO1ffyQBp5i9ajjzePWhcfAg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=chromium.org;
 	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b="C90u/51Q";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.170
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=hD8Lb5aF;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5BF606A690
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 22:36:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4E5BF606A690
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF06E606A6BC
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 22:42:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DF06E606A6BC
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=C90u/51Q
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b4d86f5328so10165147b3.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:36:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795214180; cv=none;
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=hD8Lb5aF
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-67be4f2f4d4so1719088d50.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:42:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795214531; cv=none;
         d=google.com; s=arc-20260327;
-        b=E3hiLKrkfuXqMOW0grqlV47X47qhjfxSG72Pt2lscnYZLISyjxbfU7ErIfoiFL0PuN
-         o0C4YpKwCvKhmAmqCQl92R552BdFI7b8e7l+VTU5da6ZY2v/mMF35XmxPRVCj3wqIUe5
-         uOAOGi+YOfm3SreACa7rL7/H4hpuvLbCJXwoVn8xwtZg3er5W2W0++JCpgf9BiGuMOkj
-         4oc5P3Dv0wILvlqFv5OEvVxSfZUT4He2hDwty7gvI03ACN3lvZ8NLNVUZYm6UR0lSXLa
-         Pq9ddXLb7PRmYLAvXGcn1sLstyQ1gKmcZHQb3z0YmpZA0FB/QooBNMB13j8g5DtC5KQI
-         vDAw==
+        b=fJOY51jqcl0qtnPbUZH5/hXBJaOHsTShYY3V44YfwEfIpGguIbEjl6++A0YPvFh1ND
+         F2HWJdelcSWfsRkDNkta+kh8CoY+VIKsSOzJsQgUazmhFq6nDApoHFlWpNKjAONp+A2V
+         BaA40y7TKyXzACRD/R48lkSBt563kqulRvazgyqcG7Y7tod/VsODhTU0I/wctU9MFAFR
+         AZvRCjheIhUcHiAR521x5ZXsUFWFDbhm/EIjKFApoCphCuc897Rzp0go4iMOzXU5bs25
+         EPaadWhf740XV7Z0ZIJ1dPPRL5upMBNwHLJIkCmjkYyVVcTUu/4Cz4HqArVcOND55GEJ
+         R7CQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=LI62TlkKF7SE72mFPwGFMzusKh7ch0L+DlHxc/4ud2I=;
+        bh=vQU4s0s9jpO6QmWD/0jmrJPFOrD2Wfw5sN63JkEaowU=;
         fh=osfj9leewLfc4MqIYaUjfG4KfpRUNqFnByXZRUnRoVs=;
-        b=GR7aicj+AVgTE/04JuMUqQZ/LV46Ha+zqk6djnO6/FRm7x+5S7FAtd2/omdwMzfz8c
-         WGWgHCbcuAMH/n7tvGhOCDq89LZ3ZeORYL73Zka+QC2lMVCFK7tMWLLDegYOzmoHAF9Z
-         HSG7FFEaTsUCQx7kCZS3bKS/kIi1+ROCMnP076qdfQ0yqU2XHGuMtojITzHmCSEQQEMF
-         31AvX5WEJQ1ohz+yO0ZkD9AtwZQCiy5n6sz/sp+ilR1mKyO6TE0TEzYfFzk3KxOFRbmE
-         FKUrfrM4XjC76rG+QMtYfaaEg5lzF1XP3fBniiXA4vr4AS4BUxBJ1OX1Rg2MuzijXMHE
-         9m1w==;
+        b=KBIANaV07b0hmGfj3pBD/akeYrecXDxuZymYIKgi1Dk1IgMlc8h+MK/BM6jr17OgTh
+         jX0ti1JsHuslrss8cVcy3fgCjCfv7CrARKkXT4xHHExh3GONE1By1objbsp9EFKYPv3c
+         ND2t3tgmrBv6fWGQIqZGbP9S1GfVoV9wZLtDza5iJkmG5Pgufq8lW4vxq79iMdgyhPM5
+         jEPNtVSVncMv1X0v8FyFrKYmet0/6Jxt69/kkabkuiiBEAs9Z2f3/joV7lka/zbBJ+8e
+         AdsNO6fbAgvvur+Jp5PEGvmQkWPPCAcnSdbJaWW+Eofdi8tRf8QUvVl7Roy50tSltYw4
+         IFow==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1795214180; x=1795818980; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1795214531; x=1795819331; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=LI62TlkKF7SE72mFPwGFMzusKh7ch0L+DlHxc/4ud2I=;
-        b=C90u/51Qhoz52bGlqnlXgorxUZ3h0m/dPQxvhZnvZmhC63JOcfSLWdKqNCY3qPve30
-         Eo5fQnFCDRPr1qyImlc5LrDaKivJ0x+ILNTUCRFbfTZ1TFtI2O133Y5bzm56RTVoUIIr
-         QgOZL92/HBQtP0A+4Qtldq1sS/sJZyrVhwnYg=
+        bh=vQU4s0s9jpO6QmWD/0jmrJPFOrD2Wfw5sN63JkEaowU=;
+        b=hD8Lb5aFkwbNJeKt8o3UFJx1J4AF35gLDePrMozP7iYel2Fww3Y6pjeSVZUKTi404M
+         83c0T5W/gV5NNtaUn+CWiyqPiPqEOmN0Sgv9k16EQ87hAsrwRf0eHXIcUpOqnqKV6DhO
+         1O3A2DiK6WALxw0FEFBANnzF38FA839OTWr0w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795214180; x=1795818980;
+        d=1e100.net; s=20260707; t=1795214531; x=1795819331;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LI62TlkKF7SE72mFPwGFMzusKh7ch0L+DlHxc/4ud2I=;
-        b=eWa0uOcJzNXxxGIE04Nmf/xGkF7SJEW5grUaUknLwesFuH4tk1WyEWdf9hJ96zwRUW
-         iWITuOUYIUCOLD3k2pI7Da0u8zzc1DNNhXIT5DVix+fSQbBaEjYZOILA6GMt0SnlW22h
-         NlDizD5is7I2t+cpBj0hkeABOGMPmDo0aGjD6iUtQKA9nWbBWYnR+9rhd5bmwlpFprXF
-         6IsPvgQQPSBsog6/RSpxYUG94+x+iaS61BSKDvmQBSTFsH18uI1I7YmH5G5lOuZ6ZGg2
-         M3dZt/ar/sDZ9383MmhZFGq2Ik1hMAm2uaSAHR8a2Vax7xdH/ya8YShfT3u/6FGXCg5b
-         ZS+A==
-X-Gm-Message-State: APuU4Z8ByldhwsntJ5PasHitVAwIqvFI9H5hku44y9nwG60snmissWAN
-	yt4JPafBHqVr1OUa7Ee9BFaHdWODFtHEdbaArAhWyunLByaG8BSEn0DAoG+xSvyYZB7KGLCST1Q
-	Twam8tcx4bILBNNqEkrt4FEtfV6SsXu4V5Z1YOfnM4Dsgi5uYHDXi2g==
-X-Gm-Gg: AZFdTZfRPDUVegX2YDKTssu17VUaqwmH522bZgKKzjL07H4dU5d2KS2k9/uwSb4wcMr
-	8Q7q3bL4rHpRDmAQkO4qBNFqiPAJFPdj1hdjwmePTyxjM2QLacSYfH13wYQgjcoer8cVKGvXSW4
-	cMPWP9XL1+1he4zmBZT0UnwffFXluQ2I6vPg5HdY9eppy6aydqfx/mOFBxyBoJX5E3mG2OxKRCQ
-	8C12fCMg1VYLEVgkIHmGKAgoPNxYx+Z6n0gX/XiLTp9oQYT593f7/L6oq7G6nb8PXcJWJbw1b3R
-	/AOkunlpxyuIZ4TzQsORQeRZQRZYV4nJ8S8COzkDS3MvrNI8JcT/qtjAKwSjVMNRuX474L2YGGR
-	zN4WuM1Q9o9mOtoRxa0//wCs1lp2F4c7MXxyZoDct5t2/2dJ3nzUEpvnUfVcAF+OWAYo=
-X-Received: by 2002:a05:690c:6b09:b0:8b3:33cf:1fd6 with SMTP id
- 00721157ae682-8b5204da8cbmr22654577b3.46.1795214180401; Fri, 20 Nov 2026
- 14:36:20 -0800 (PST)
+        bh=vQU4s0s9jpO6QmWD/0jmrJPFOrD2Wfw5sN63JkEaowU=;
+        b=vfFmErr9xT8DYufw/6CElcs/U5666IaP7qbeB5STRFbOz26v4W36qZhBAhUU4vMX9n
+         iSDot5xvKvxi3URTdSHo1G7pJ8cr8J2Me22zHRl8LBJuEs12HofGXVZ5PfmkK+7GuqfE
+         WqNGcnkvivphFtVRCziYP/jQpXGRK3zOED/gQEWwm7ug4VGEm+SrJU/gUiruDTj0VsxW
+         iCB01TEj8PEjgzEtviuXMiJjca5ZFWlooYud43os8r8X/UFXStU6Qdnx5aA9QKaLob/6
+         3q/5F9evI6c7VUStIt33kHk3XoESIBhbzayn/QGAUumr+icbnPRzZZ4zAXpgoOQ3qCko
+         77+g==
+X-Gm-Message-State: APuU4Z9rhfbv7OMIqpbaWCsh5Vq3nEKldHt2JFHsfqmmDbCoLUaXtB2P
+	nIlrqXCD+YxVzNWubFAxwFmz7X9jQRRsbszdNzwBqQ2mSfVAE0fmussDjFKyPpNNzzRh5BSeFU2
+	DachE17o67Mas7m4nafhcySBFvC1Mz2soU3S/ecD3MMeA4GKCIrESuw==
+X-Gm-Gg: AZFdTZfTZ1ogO1KEpQNmLQkTEmnhYAelEwV5EjlW/jP8vbXSQRyOO3cvCQyJMy0emqZ
+	RAKKhb+5umgb78UJGEhwq4/l+pcrZNkw1ZqazBmUyCiWcm4BhEJC2I7olBEhOkXD8a9HsjvZdC0
+	9Yx7pDkJEuATGC3tgmgo94sksfFrajM2I2mtsACEUOsOE7zDfY9vBMMv1ZO68Xh1/mE9kwuAMag
+	p5fyuXVVILvKJtMojGIZwfY2ucHXEF9Smer0Ik6RPImvi1t0Msxb6k+5/q4wIjTcviNy+qMqMmd
+	U4Cj0mavHqBHtazA9QYIHsYYNxBgtTe0g4AMXsAFAoNRO8saZmHplS2TeHNefUuxgpdaODwJBHv
+	65/7B8lnsORUmiXKiJz/LqRdSF8cLX+Apid8mQan442eoFEJ7s4IoXgPcB76wUUByOrA=
+X-Received: by 2002:a05:690e:1918:b0:67d:e4c3:d838 with SMTP id
+ 956f58d0204a3-67df440a008mr1910475d50.29.1795214531587; Fri, 20 Nov 2026
+ 14:42:11 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,13 +101,13 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261024-send-upstream-v7-0-abad13174b43@chromium.org>
- <20261024-send-upstream-v7-10-abad13174b43@chromium.org> <sashiko-outbox-183486@kernel.org>
-In-Reply-To: <sashiko-outbox-183486@kernel.org>
+ <20261024-send-upstream-v7-11-abad13174b43@chromium.org> <sashiko-outbox-183484@kernel.org>
+In-Reply-To: <sashiko-outbox-183484@kernel.org>
 From: Jingyuan Liang <jingyliang@chromium.org>
-Date: Fri, 20 Nov 2026 14:36:09 -0800
-X-Gm-Features: AclHuK-uqG9_uXU3EVhPHyRTDXChIzvp0O_bkgQvn7hhRNcrLduMWOI_Cxiv4hw
-Message-ID: <CAEe3GZGLP5PtW1HD1R_wm6+WeUf=7pVbCb3iKbihorEKy-4VkA@mail.gmail.com>
-Subject: Re: [PATCH v7 10/11] HID: spi-hid: add power management implementation
+Date: Fri, 20 Nov 2026 14:42:00 -0800
+X-Gm-Features: Aa3M54qwBjwBmrAzhDq76JOH0mkyHB45HQlbB0ykD_xKYZsQBf4Gvgfm3ggVaBs
+Message-ID: <CAEe3GZHSuQ2c2gOJPgJDu08T2+m+2RHLmcpGsE_0o+=UX96F_A@mail.gmail.com>
+Subject: Re: [PATCH v7 11/11] HID: spi-hid: add panel follower support
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-input@vger.kernel.org, linux-trace-kernel@vger.kernel.org, 
 	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
@@ -115,304 +115,256 @@ Cc: linux-input@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 23, 2026 at 6:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Oct 23, 2026 at 6:10=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] hid: spi-hid: unhandled deassert_reset() failure in spi_hid_resu=
-me()
-> - [Medium] HID: spi-hid: race and missed hid_driver_reset_resume() in spi=
-_hid_resume()
+> - [Medium] HID: spi-hid: unrecovered deassert_reset() failure in spi_hid_=
+resume()
+> - [Medium] HID: spi-hid: improper wakeup teardown for panel followers in =
+probe
 > --
 >
-> commit 9bd51942caad3c04cffc9fdd14002340e1980586
+> commit 35d9a38c1b6ffa8dbb3ab740ec9ce120c5b2e7a1
 > Author: Jingyuan Liang <jingyliang@chromium.org>
 >
-> HID: spi-hid: add power management implementation
+> HID: spi-hid: add panel follower support
 >
-> This patch adds system sleep power management callbacks to the HID over S=
-PI
-> transport driver, handling device power down, reset synchronization, and =
-wake
-> IRQ setup across suspend and resume.
+> This commit adds DRM panel follower support to spi-hid so that a follower
+> device powers up and suspends in coordination with its panel rather than
+> during initial probe and standard system PM callbacks.
 >
 > > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
 pi-hid-core.c
-> > index 4ff93d22715cd..3b8874ca0e1cc 100644
+> > index 3b8874ca0e1cc..496b33cdf3d46 100644
 > > --- a/drivers/hid/spi-hid/spi-hid-core.c
 > > +++ b/drivers/hid/spi-hid/spi-hid-core.c
 >
 > [ ... ]
 >
-> > @@ -231,6 +239,147 @@ static const char *spi_hid_power_mode_string(enum=
- hidspi_power_state power_state
+> > @@ -325,28 +328,30 @@ static int spi_hid_resume(struct spi_hid *shid)
+> >               return 0;
 > >       }
-> >  }
 > >
-> > +/*
-> > + * Wait for the device descriptor response after reset; the device the=
-n takes
-> > + * requests. Set READY here: the report descriptor check that normally=
- sets it
-> > + * needs power_lock, which callers hold.
-> > + */
-> > +static int spi_hid_wait_for_reset(struct spi_hid *shid)
-> > +{
-> > +     unsigned long timeout =3D msecs_to_jiffies(SPI_HID_RESET_TIMEOUT =
-+
-> > +                                              SPI_HID_RESP_TIMEOUT);
-> > +
-> > +     if (!wait_for_completion_timeout(&shid->reset_done, timeout)) {
-> > +             dev_warn(&shid->spi->dev,
-> > +                      "Device descriptor not received after reset\n");
-> > +             return -ETIMEDOUT;
-> > +     }
-> > +
-> > +     set_bit(SPI_HID_READY, &shid->flags);
-> > +     return 0;
-> > +}
-> > +
-> > +static int spi_hid_suspend(struct spi_hid *shid)
-> > +{
-> > +     int error;
-> > +     struct device *dev =3D &shid->spi->dev;
-> > +
+> > -     if (!device_may_wakeup(dev)) {
+> > -             if (shid->power_state =3D=3D HIDSPI_OFF) {
+> > -                     shid->ops->assert_reset(shid->ops);
 > > +     /*
-> > +      * Stop reset_work until resume; pending steps keep their flags. =
-The
-> > +      * IRQ stays on so a request in flight gets its response.
+> > +      * Check power_state, not device_may_wakeup(): power/wakeup can c=
+hange
+> > +      * while the device is off.
 > > +      */
-> > +     disable_work_sync(&shid->reset_work);
-> > +
-> > +     /* HID driver suspend may talk to the device; responses need the =
-IRQ. */
-> > +     scoped_guard(mutex, &shid->power_lock) {
-> > +             if (shid->power_state !=3D HIDSPI_OFF && shid->hid) {
-> > +                     error =3D hid_driver_suspend(shid->hid, PMSG_SUSP=
-END);
-> > +                     if (error) {
-> > +                             dev_err(dev, "%s failed to suspend hid dr=
-iver: %d\n",
-> > +                                     __func__, error);
-> > +                             enable_work(&shid->reset_work);
-> > +                             /* Redo a schedule_work() dropped while d=
-isabled. */
-> > +                             schedule_work(&shid->reset_work);
-> > +                             return error;
-> > +                     }
-> > +             }
-> > +     }
-> > +
-> > +     /* disable_irq() waits for a running IRQ thread. */
-> > +     disable_irq(shid->spi->irq);
-> > +
-> > +     guard(mutex)(&shid->power_lock);
-> > +     if (!device_may_wakeup(dev)) {
-> > +             if (shid->power_state !=3D HIDSPI_OFF) {
-> > +                     /* Device is fully reset on resume; drop stale st=
-ate. */
-> > +                     clear_bit(SPI_HID_READY, &shid->flags);
-> > +                     clear_bit(SPI_HID_RESET_RESPONSE, &shid->flags);
-> > +                     clear_bit(SPI_HID_CREATE_DEVICE, &shid->flags);
-> > +                     clear_bit(SPI_HID_ERROR, &shid->flags);
-> > +                     set_bit(SPI_HID_RESET_PENDING, &shid->flags);
-> > +
-> > +                     shid->ops->assert_reset(shid->ops);
-> > +
-> > +                     error =3D shid->ops->power_down(shid->ops);
-> > +                     if (error)
-> > +                             dev_err(dev, "%s: could not power down: %=
-d\n", __func__, error);
-> > +
-> > +                     /* Held in reset either way; resume resets it. */
-> > +                     shid->power_state =3D HIDSPI_OFF;
-> > +             }
-> > +     }
-> > +     return 0;
-> > +}
-> > +
-> > +static int spi_hid_resume(struct spi_hid *shid)
-> > +{
-> > +     int error;
-> > +     struct device *dev =3D &shid->spi->dev;
-> > +     bool was_reset =3D false;
-> > +
-> > +     guard(mutex)(&shid->power_lock);
-> > +     enable_work(&shid->reset_work);
-> > +     if (test_bit(SPI_HID_DEAD, &shid->flags)) {
-> > +             /* Stay off; only balance disable_*() in suspend. */
-> > +             enable_irq(shid->spi->irq);
-> > +             return 0;
-> > +     }
-> > +
-> > +     if (!device_may_wakeup(dev)) {
-> > +             if (shid->power_state =3D=3D HIDSPI_OFF) {
-> > +                     shid->ops->assert_reset(shid->ops);
-> > +
-> > +                     shid->ops->sleep_minimal_reset_delay(shid->ops);
-> > +
-> > +                     error =3D shid->ops->power_up(shid->ops);
-> > +                     if (error) {
-> > +                             dev_err(dev, "%s: could not power up: %d\=
+> > +     if (shid->power_state =3D=3D HIDSPI_OFF) {
+> > +             shid->ops->assert_reset(shid->ops);
+> >
+> > -                     shid->ops->sleep_minimal_reset_delay(shid->ops);
+> > +             shid->ops->sleep_minimal_reset_delay(shid->ops);
+> >
+> > -                     error =3D shid->ops->power_up(shid->ops);
+> > -                     if (error) {
+> > -                             dev_err(dev, "%s: could not power up: %d\=
 n", __func__, error);
-> > +                             /* Suspend runs next even if resume fails=
+> > -                             /* Suspend runs next even if resume fails=
 . */
-> > +                             enable_irq(shid->spi->irq);
-> > +                             return error;
-> > +                     }
-> > +                     shid->power_state =3D HIDSPI_ON;
-> > +                     reinit_completion(&shid->reset_done);
-> > +                     error =3D shid->ops->deassert_reset(shid->ops);
-> > +                     if (error)
-> > +                             dev_err(dev, "%s: failed to deassert rese=
+> > -                             enable_irq(shid->spi->irq);
+> > -                             return error;
+> > -                     }
+> > -                     shid->power_state =3D HIDSPI_ON;
+> > -                     reinit_completion(&shid->reset_done);
+> > -                     error =3D shid->ops->deassert_reset(shid->ops);
+> > -                     if (error)
+> > -                             dev_err(dev, "%s: failed to deassert rese=
 t: %d\n",
-> > +                                     __func__, error);
-> > +                     else
-> > +                             was_reset =3D true;
-> > +             }
-> > +     }
->
-> [Severity: High]
-> What happens in spi_hid_resume() if shid->ops->deassert_reset(shid->ops)
-> fails (or if was_reset is true while shid->hid is still NULL and the rese=
-t
-> times out)?
->
-> When deassert_reset() fails in spi_hid_error_handler(), the driver sets
-> SPI_HID_ERROR and schedules shid->reset_work because a device held in res=
-et
-> will not assert a reset-response IRQ:
->
-> drivers/hid/spi-hid/spi-hid-core.c:spi_hid_error_handler() {
->         ...
->         error =3D shid->ops->deassert_reset(shid->ops);
->         if (error) {
->                 dev_err(dev, "failed to deassert reset: %d\n", error);
->                 set_bit(SPI_HID_ERROR, &shid->flags);
->                 schedule_work(&shid->reset_work);
->         }
-> }
->
-> In spi_hid_resume(), however, a deassert_reset() failure only logs the er=
-ror
-> and leaves was_reset false. Because spi_hid_suspend() cleared SPI_HID_REA=
-DY,
-> SPI_HID_RESET_RESPONSE, SPI_HID_CREATE_DEVICE, and SPI_HID_ERROR before
-> powering down, shid->reset_work is not scheduled, spi_hid_wait_for_reset(=
-) is
-> skipped, and spi_hid_resume() returns 0 when !test_bit(SPI_HID_READY,
-> &shid->flags).
->
-> Similarly, because spi_hid_wait_for_reset() is gated inside if (shid->hid=
-), if
-> shid->hid was not yet created before suspend and the post-resume reset ti=
-mes
-> out, nothing sets SPI_HID_ERROR or schedules shid->reset_work.
->
-> Could this leave the device permanently held in reset with its regulator
-> enabled in HIDSPI_ON and no recovery work queued?
-
-No. The next suspend powers the device down and the following resume
-retries the reset.
-
->
-> > +
-> > +     enable_irq(shid->spi->irq);
-> > +
-> > +     /*
-> > +      * For devices that may wake up, process work that was pending wh=
-ile
-> > +      * suspend had reset_work disabled. Otherwise suspend already dro=
-pped it.
-> > +      */
-> > +     if (test_bit(SPI_HID_RESET_RESPONSE, &shid->flags) ||
-> > +         test_bit(SPI_HID_CREATE_DEVICE, &shid->flags) ||
-> > +         test_bit(SPI_HID_ERROR, &shid->flags))
-> > +             schedule_work(&shid->reset_work);
-> > +
-> > +     if (shid->hid) {
-> > +             if (was_reset && spi_hid_wait_for_reset(shid)) {
-> > +                     /* No reset response: let recovery retry. */
-> > +                     set_bit(SPI_HID_ERROR, &shid->flags);
-> > +                     schedule_work(&shid->reset_work);
-> > +                     return -ETIMEDOUT;
-> > +             }
-> > +             /* HID requests would fail while the device is not ready.=
- */
-> > +             if (!test_bit(SPI_HID_READY, &shid->flags))
-> > +                     return 0;
-> > +             error =3D hid_driver_reset_resume(shid->hid);
+> > -                                     __func__, error);
+> > -                     else
+> > -                             was_reset =3D true;
+> > +             error =3D shid->ops->power_up(shid->ops);
 > > +             if (error) {
-> > +                     dev_err(dev, "%s: failed to reset resume hid driv=
-er: %d\n",
-> > +                             __func__, error);
+> > +                     dev_err(dev, "%s: could not power up: %d\n", __fu=
+nc__, error);
+> > +                     /* Suspend runs next even if resume fails. */
+> > +                     enable_irq(shid->spi->irq);
 > > +                     return error;
-> > +             }
-> > +     }
-> > +     return 0;
-> > +}
+> >               }
+> > +             shid->power_state =3D HIDSPI_ON;
+> > +             reinit_completion(&shid->reset_done);
+> > +             error =3D shid->ops->deassert_reset(shid->ops);
+> > +             if (error)
+> > +                     dev_err(dev, "%s: failed to deassert reset: %d\n"=
+,
+> > +                             __func__, error);
+> > +             else
+> > +                     was_reset =3D true;
+> >       }
 >
 > [Severity: Medium]
-> On the wakeup path (when device_may_wakeup(dev) is true and was_reset is
-> false), how does hid_driver_reset_resume(shid->hid) interact with a pendi=
-ng
-> reset_work?
+> What happens if shid->ops->deassert_reset(shid->ops) fails in
+> spi_hid_resume()?
 >
-> When spi_hid_irq_error() sets SPI_HID_ERROR or spi_hid_process_input_repo=
-rt()
-> sets SPI_HID_RESET_RESPONSE in the IRQ thread, SPI_HID_READY is not clear=
-ed
-> immediately. Instead, SPI_HID_READY is cleared later when shid->reset_wor=
-k
-> runs spi_hid_error_handler() (which must first acquire shid->power_lock) =
-or
-> spi_hid_reset_response().
+> For non-followers, initial power-up goes through spi_hid_dev_init(), whic=
+h
+> powers down the device and returns the error when deassert_reset() fails.
+> For panel followers, spi_hid_core_probe() leaves shid->power_state as
+> HIDSPI_OFF and shid->hid as NULL, and spi_hid_panel_follower_work() relie=
+s
+> on spi_hid_resume() for the initial power-up as well as subsequent resume=
+s.
 >
-> Because spi_hid_resume() holds shid->power_lock across the entire functio=
-n,
-> scheduling shid->reset_work and immediately checking test_bit(SPI_HID_REA=
-DY,
-> &shid->flags) means:
+> When deassert_reset() fails in spi_hid_resume(), was_reset remains false
+> while shid->power_state is set to HIDSPI_ON and the IRQ is enabled with t=
+he
+> device still held in reset:
 >
-> 1. If SPI_HID_ERROR or SPI_HID_RESET_RESPONSE was set while SPI_HID_READY=
- is
-> still set, spi_hid_resume() sees SPI_HID_READY set and calls
-> hid_driver_reset_resume(shid->hid) right before shid->reset_work runs and
-> resets the device.
->
-> 2. Conversely, if SPI_HID_READY was already cleared (for example, after a=
- sync
-> request timeout or while SPI_HID_CREATE_DEVICE is pending), spi_hid_resum=
-e()
-> returns 0 early at !test_bit(SPI_HID_READY, &shid->flags). Once
-> shid->reset_work later completes in spi_hid_refresh_device():
->
-> drivers/hid/spi-hid/spi-hid-core.c:spi_hid_refresh_device() {
->         ...
->         /* Same report descriptor, so no need to create a new hid device.=
+> drivers/hid/spi-hid/spi-hid-core.c:spi_hid_resume() {
+>     ...
+>         if (shid->hid) {
+>                 if (was_reset && spi_hid_wait_for_reset(shid)) {
+>                         /* No reset response: let recovery retry. */
+>                         set_bit(SPI_HID_ERROR, &shid->flags);
+>                         schedule_work(&shid->reset_work);
+>                         return -ETIMEDOUT;
+>                 }
+>                 /* HID requests would fail while the device is not ready.=
  */
->         if (new_crc32 =3D=3D shid->report_descriptor_crc32) {
->                 shid->reset_attempts =3D 0;
->                 set_bit(SPI_HID_READY, &shid->flags);
->                 return;
->         }
+>                 if (!test_bit(SPI_HID_READY, &shid->flags))
+>                         return 0;
+>     ...
 > }
 >
-> it sets SPI_HID_READY and returns without calling
-> hid_driver_reset_resume(shid->hid), leaving the HID driver in the suspend=
-ed
-> state set by spi_hid_suspend().
+> On the first power-up of a panel follower, shid->hid is NULL, so
+> spi_hid_resume() returns 0 without scheduling shid->reset_work. On subseq=
+uent
+> resumes where shid->hid is non-NULL, was_reset is false and SPI_HID_READY=
+ was
+> cleared during spi_hid_suspend(), so spi_hid_resume() again returns 0 wit=
+hout
+> setting SPI_HID_ERROR or scheduling shid->reset_work.
 >
-> Should spi_hid_resume() coordinate with pending reset work on the wakeup =
-path
-> so hid_driver_reset_resume() runs after the reset completes?
+> Should a deassert_reset() failure in spi_hid_resume() trigger recovery (o=
+r
+> clean up and return the error) so the device is not left powered on in re=
+set
+> and permanently uninitialized?
 
-This requires an error or reset response to be pending at resume on a
-wakeup-enabled device. Waiting for reset_work here would need
-restructuring resume, since reset_work also takes power_lock. Leaving
-it as is for this series.
+Same as the 10/11 comment; the next panel prepare retries the power
+up.
+
+>
+> > @@ -1447,6 +1452,108 @@ static struct hid_ll_driver spi_hid_ll_driver =
+=3D {
+>
+> [ ... ]
+>
+> > +static int spi_hid_register_panel_follower(struct spi_hid *shid)
+> > +{
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +
+> > +     shid->panel_follower.funcs =3D &spi_hid_panel_follower_prepare_fu=
+ncs;
+> > +
+> > +     /*
+> > +      * If we're not in control of our own power up/power down then we=
+ can't
+> > +      * do the logic to manage wakeups. Give a warning if a user thoug=
+ht
+> > +      * that was possible then force the capability off.
+> > +      */
+> > +     if (device_can_wakeup(dev)) {
+> > +             dev_warn(dev, "Can't wakeup if following panel\n");
+> > +             device_set_wakeup_capable(dev, false);
+> > +     }
+> > +
+> > +     return drm_panel_add_follower(dev, &shid->panel_follower);
+> > +}
+>
+> [ ... ]
+>
+> > @@ -1523,21 +1618,19 @@ int spi_hid_core_probe(struct spi_device *spi, =
+struct spihid_ops *ops,
+> >               }
+> >       }
+> >
+> > -     error =3D shid->ops->power_up(shid->ops);
+> > -     if (error) {
+> > -             dev_err(dev, "%s: could not power up: %d\n", __func__, er=
+ror);
+> > -             return error;
+> > -     }
+> > -
+> > -     error =3D shid->ops->deassert_reset(shid->ops);
+> > -     if (error) {
+> > -             dev_err(dev, "%s: failed to deassert reset: %d\n", __func=
+__, error);
+> > -             shid->ops->power_down(shid->ops);
+> > -             return error;
+> > +     if (shid->is_panel_follower) {
+> > +             /* Like the IRQ: the first panel_prepared resume enables =
+it. */
+> > +             disable_work(&shid->reset_work);
+> > +             error =3D spi_hid_register_panel_follower(shid);
+>
+> [Severity: Medium]
+> Does calling device_set_wakeup_capable(dev, false) in
+> spi_hid_register_panel_follower() after devm_pm_set_wake_irq() in
+> spi_hid_core_probe() leave the wake IRQ configured and leak
+> dev->power.wakeup if wakeup was enabled on the device before probe?
+>
+> In spi_hid_core_probe(), if the firmware node marked the device as wakeup
+> capable (for example via acpi_bind_one()), device_can_wakeup(dev) is true=
+ and
+> devm_pm_set_wake_irq(dev, spi->irq) attaches a wake IRQ before
+> shid->is_panel_follower is checked:
+>
+> drivers/hid/spi-hid/spi-hid-core.c:spi_hid_core_probe() {
+>     ...
+>         if (device_can_wakeup(dev)) {
+>                 error =3D devm_pm_set_wake_irq(dev, spi->irq);
+>                 if (error) {
+>                         dev_err(dev, "%s: failed to set wake IRQ\n", __fu=
+nc__);
+>                         return error;
+>                 }
+>         }
+>
+>         if (shid->is_panel_follower) {
+>                 /* Like the IRQ: the first panel_prepared resume enables =
+it. */
+>                 disable_work(&shid->reset_work);
+>                 error =3D spi_hid_register_panel_follower(shid);
+>     ...
+> }
+>
+> Furthermore, if a wakeup_source was attached to dev->power.wakeup (for
+> example via sysfs power/wakeup before async or deferred probe completes),
+> calling device_set_wakeup_capable(dev, false) directly sets
+> dev->power.can_wakeup =3D false without detaching the wakeup source first=
+.
+> Subsequent calls to device_wakeup_disable(dev), including from
+> device_pm_remove() on unbind, check dev->power.can_wakeup and return earl=
+y:
+>
+> drivers/base/power/wakeup.c:device_wakeup_disable() {
+>         struct wakeup_source *ws;
+>
+>         if (!dev || !dev->power.can_wakeup)
+>                 return;
+>
+>         ws =3D device_wakeup_detach(dev);
+>         wakeup_source_unregister(ws);
+> }
+>
+> Should spi_hid_register_panel_follower() use device_init_wakeup(dev, fals=
+e)
+> (which calls device_wakeup_disable(dev) before clearing wakeup capability=
+),
+> and should spi_hid_core_probe() skip devm_pm_set_wake_irq() when
+> shid->is_panel_follower is true?
+
+This follows i2c-hid's panel follower handling. The wake IRQ is
+not armed once can_wakeup is cleared, and the SPI core doesn't
+enable wakeup before probe.
 
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261024-send-ups=
-tream-v7-0-abad13174b43@chromium.org?part=3D10
+tream-v7-0-abad13174b43@chromium.org?part=3D11
