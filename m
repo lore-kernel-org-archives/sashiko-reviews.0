@@ -1,58 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.224
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795138756;
-	b=aUVhsnzUBwRRBXqRWwJS0bqi7fbWW8ieTwDcaxXxNnuXv3S7r3GBoBZCPABoGDwX+EJI
-	 rIfHoMeam4e+amqNAQJsiGOUIuNJLTTUhKmluqKVSikUITc1iClBynHxjxEXb5dV9jInD
-	 0JsxptZyog886SwGWNJRZC5E5MWm5wybP8LD1JAuaYqFNgfy5XURG0MGwDtqRxDbe0deC
-	 e28V6Jt4bGNcmjvSrw9OeHAP/1bvpDPlcgV71Yz7pXpmumGugJnLEJeV/Uhi9Rs8rsEmF
-	 b5g+dP7O6zzU9fW0XYVyaI1yapZERndiOBU7SH6BpKopSVLFU0C1cVQTsmBJfgmyZbQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795138756;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
-	bh=+4gtkgXVA0XgvD3lHDgwF805+IW47uvAyK6BBLzsiWc=;
-	b=2KfWQKqq51O5HoNHEU6/d72ugTRBm8Nq7kw21DxfdlR6msxNhcjcNHOcSByLv8oHVa9T
-	 T02V02Oo8aMjDyI6s5I9Jnpxlf61laPFyTpbvhlsQD8o4YCx+oK4bg8tMgik2yqmPQ/qu
-	 JuhIaoOe8n+ry4h6rGaNx7JHT3NHKWWPkloSo87/YBS7jWkt0HsLCU95PF4FkMv4pIJmG
-	 IkafSgaQm/rujaqcUzr0Ikz4RJpgC44VEbOldrKAl2sbSfImsdnfSoet109m8SwN0i+38
-	 XilAgICm1mPV1Eu61pj5ks+VwNy2mFJc6U/lV4am5VSxQzo1Zz+6jCup/DX7CRyCAgg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=YEGxNLbX;
-	arc=none smtp.remote-ip=113.46.200.224
-Received: from canpmsgout09.his.huawei.com (canpmsgout09.his.huawei.com [113.46.200.224])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.95
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795145341;
+	b=rXp5ep5MunPd6QgYkPOB4WpwVa+JipFrAkuAA2mc9eRZu4GP0e9lxE/GnJvdlnK7bJbH
+	 yDep+ObaC8rUbUCX6KU/gafAcd6BUhKrX5Ylus//i5t7DCoe2O6+HQxescNOq8XQFDjTJ
+	 /LZgGVBATZSvacg1h35Ne2ZPrHJufhbZ9nw2jKEUMGIJCDA92Fuhofz1NhnxAfYn73r47
+	 5umRbx6rpCKR571uJqjKiV7n9CoDZVaHayHM9D/azFvCMNHDVuaRlARHA9znVGZxuzJ0X
+	 ZAyBJ4SmfZY8eNoknfWhhkkOED4JBKFVsjONDscXgofKH5wra68VPbQu8EJtbAxHS/w==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795145341;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=+NqJfb7q1BQednF8g+2f/VYXF3gZv1UpwOYXPT9FrCs=;
+	b=BnifFyzIwA3hPRnJNbbFLFdobSeaSjsCPGzMRNroh+6HoBce95VcpKAvyhZyVbxs5LV+
+	 VgrfsaApc5EwliFAnZp2Cl2AS9jPaXlBQi3xjzl4JP9VS8MGKqEOsFVHRrGV1sN+AOT/Z
+	 k9p9iyiqLys7D9ej9P2edAWKG5kZsmtVhIf7UZZ1Ejt5jq1j7WXXqUCRxtH9eVzVsWgfl
+	 LIpQmf1HqeAV4z1M8+U2uveMTt9hWgR4xvr9Yo1RMM3HNNPhPdye/je4P70H/74NKMHMl
+	 vX4RVmtyN1BI1e3ObpqbRUkUwOx/7kpdhK/IuUjD57Y2bgCTSaa2le2mYVkYFHe3DUA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amlogic.com;
+	spf=pass smtp.mailfrom=amlogic.com;
+	dkim=pass header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=Kk6i6Aq+;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.95
+Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11022095.outbound.protection.outlook.com [40.107.75.95])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8B0606A325
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 01:39:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D8B0606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DB6606A32C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 03:29:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37DB6606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=YEGxNLbX
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=+4gtkgXVA0XgvD3lHDgwF805+IW47uvAyK6BBLzsiWc=;
-	b=YEGxNLbXrNCRiru6LRF6hWowaGfDswvDpCmI4ThObmvLxg3n9h+I9exKU+l5G5/i11HIQ3uJ0
-	EKgxngWBrEunNgHJggfTYpohImC4YVhr0grgxR5t5j5FvCw+t8yN1kKDJ1CDgUla4OyG4clwDe9
-	5gGcuwE8gBWx+6lB+YSNYDU=
-Received: from mail.maildlp.com (unknown [172.19.163.200])
-	by canpmsgout09.his.huawei.com (SkyGuard) with ESMTPS id 4jVyfd5NJHz1cypj;
-	Fri, 20 Nov 2026 09:38:49 +0800 (CST)
-Received: from whupemo500017.china.huawei.com (unknown [7.152.184.243])
-	by mail.maildlp.com (Postfix) with ESMTPS id A18C84055B;
-	Fri, 20 Nov 2026 09:39:10 +0800 (CST)
-Received: from [10.67.108.64] (10.67.108.64) by whupemo500017.china.huawei.com
- (7.152.184.243) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 20 Nov
- 2026 09:39:09 +0800
-Message-ID: <c0880561-cc89-43d6-b305-69e6821090fa@huawei.com>
-Date: Fri, 20 Nov 2026 09:39:09 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=Kk6i6Aq+
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QBw+7FUfEs8mQIG4NY20JtRYuCo+2llskuMwkU2Mb4MKl5/nETLm/0uCCn7v+apRhjEU2SpAjSA9Z44pQoc8lPFKEaeGi4Ytf9GlpXQKBZcc5M265UjYYFh5AwvUwycK6oBIh2zypBwR8Vo9GicCGZfsi45aR/sA1TlpC/azz6CnXR4ynMmR2dmxXOT03cDEW+S547v+IcjcbB8Rrpo+wI6ossuNCAP7PKP5E/xKD6B1cBlfbopvQo5/wD0c6vJNX3uLC0hb5jr95AKNvvOThocAymwm8ydAsdUPTDWZoHo/lnOPMUuqrAUNlqH5W5ayvOo8GK5pVM/tAzupnzYB7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+NqJfb7q1BQednF8g+2f/VYXF3gZv1UpwOYXPT9FrCs=;
+ b=KZLTbKUGKV4DcNjeM8IcMRjvM+ecZOoLEsghUgL1rHVrIiuMjMLEKXPFiIZL69JKfXCJYzA4utKVYFE/YXYzCOsKohace+zBmRIDvr5ILPNUmGU1XVEW7YUPymeok2076hNPFFez7JIsfobAucGCRo3Niz0xhzph9fl16unvWfIHpdPEpGBB6ORyrZ6bZ+DnRY591gabofCnGjqV9T1A/fwc5qJdggJ0dNkm/uO9uGtNSJu4V+3ELuokjEbnMK/HQ++ivtblR144JEihBYaFBL7k1YIE+8LrEq9F48WopLYLsNDs27GHzc6bZGL99qOcOyq5wYlc+bdaQyiNQ7CW5g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
+ dkim=pass header.d=amlogic.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+NqJfb7q1BQednF8g+2f/VYXF3gZv1UpwOYXPT9FrCs=;
+ b=Kk6i6Aq+eFh9+ZTpVD/eVYt53T0SBrojUZMpF8KVo1OCVAtzpCQqWKIGfaidFFxkA8SF2JlazPsLuf00gsCzIcvcPWQjHf2mZfk7kqs+g2EKyOadp9Nl/SyX8YgENv+avI6ER8yz0iRoNCYb9NmiWNjr5R3pUpuq97ItP7Jqcs8Slu8HqqvIajl7Pfihup+5q+qx2z/pq7gzPBUUgL68MX+Jz9ONOn+dXm+dIG5CayxmQCzaNl9FwPKjPqRtF5V5suTGfXGY//O/kLDyAhhAF69EeMVnUcEDe9jgdWIzDPNoH9+krGqp8+GHCip0ENJd1qF9aw75uY+nmcpUPZGnZw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amlogic.com;
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com (2603:1096:820:ca::7)
+ by OSNPR03MB9939.apcprd03.prod.outlook.com (2603:1096:604:491::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
+ 2026 03:28:56 +0000
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506]) by KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506%3]) with mapi id 15.21.0639.011; Fri, 20 Nov 2026
+ 03:28:56 +0000
+Message-ID: <f2633593-48a9-441d-b304-eebaaa45ba0a@amlogic.com>
+Date: Fri, 20 Nov 2026 11:28:54 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC RFT v2 2/3] clk: divider: add CLK_DIVIDER_INVALID_ZERO
+ flag
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-amlogic@lists.infradead.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org, neil.armstrong@linaro.org
+References: <20261029-meson_refactor_n-v2-0-ff4ac74e527b@amlogic.com>
+ <20261029-meson_refactor_n-v2-2-ff4ac74e527b@amlogic.com>
+ <sashiko-outbox-189068@kernel.org>
+ <02476c54-d8ae-479d-898f-cd89ee2f7c24@amlogic.com>
+ <179388599696.2573818.3573650064673131943.b4-reply@b4>
+From: Jian Hu <jian.hu@amlogic.com>
+In-Reply-To: <179388599696.2573818.3573650064673131943.b4-reply@b4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI3PR03CA0010.apcprd03.prod.outlook.com
+ (2603:1096:4:297::7) To KL1PR03MB7149.apcprd03.prod.outlook.com
+ (2603:1096:820:ca::7)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,183 +102,135 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH -next 1/2] ASoC: SOF: ipc4-control: Fix out-of-bounds
- backup restore in bytes ext put
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-sound@vger.kernel.org>
-References: <20261119121446.124833-1-yeweihua4@huawei.com>
- <sashiko-outbox-223133@kernel.org>
-Content-Language: en-US
-From: Weihua Ye <yeweihua4@huawei.com>
-In-Reply-To: <sashiko-outbox-223133@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- whupemo500017.china.huawei.com (7.152.184.243)
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR03MB7149:EE_|OSNPR03MB9939:EE_
+X-MS-Office365-Filtering-Correlation-Id: 62733d9b-7c98-4e95-5eb6-08df46b6688f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|6133799003|22082099003|18002099003|4143699003|5023799004|11063799006|56012099006|10067099003|261022075727099003|261026140227099003|261028144727099003|261026121527099003|261009223027099003|261021121427099003|261102123227099003|261022105027099003;
+X-Microsoft-Antispam-Message-Info:
+	9OkoTqVj8Es+OlRTlSqJ2g/ZLtF+GSqoys0qJom//mjVks1k9Dwbdsa/9NtzX9ehgUi/HfyEkPzmuHr6nZlLl0ffOhKSeDCt00CgbtbbFltDVkJLfezIrHWiGkLt1Aa0K211x9b7vce0sIURq7OyxiXiEyk5PSa6tZxfW65n1svWRPNjNgnQlzl4SthRsMMxblaGHOL9KzpGwkKTGpvO9L07+1Zgc3icradENbEkZf7QpncQbZVl2eN2XTzm1ssKYzH27shk91vmqwD8cagu3APUgV29SBQpS4JkLeLDWH254FiT2sPma/kK7I/eSMV4L9BumNnpDuD2WUrvOFFw73t2lSUxyDGJassM+FxJ0nHaCNjnC/eddXJCos2lzBy2HtW8hTvPUVwQ6vmJhW3dbLBvLMQxvpYxkng7cmI8v07aC7QatqMwkChZqF6CZCaqvwSa6onWQFpCaI4jPQviSwDetak+FdW+dbQ5z2kwY4DKcKz3//7b4DO7bKqY+zdIzZpsVyp/pkGaIRJgxrfqC3Hqnc+ODaaGczdWy7ic0BPBy52DsKVQ7dk+957kP0wFfiULHhdAw9CwUXIE+UuhItNZigHJY1pjIHpt42S8axpG7QmgFWHk5+PLLfuvuYnUGIoTkEizRCBal4BOwFAp/Jvar3yNzToIIeexGUoqd+M=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR03MB7149.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(6133799003)(22082099003)(18002099003)(4143699003)(5023799004)(11063799006)(56012099006)(10067099003)(261022075727099003)(261026140227099003)(261028144727099003)(261026121527099003)(261009223027099003)(261021121427099003)(261102123227099003)(261022105027099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?NDVYWFJTd2Vybi96NVpsM2hHNmYvN0FqUEJxOTU1bkpOcTRNcFpWMU5tQ0ZR?=
+ =?utf-8?B?MTdqbGUxTTRSOERjY01JcUJFbnR6dHdWODBGNGNLWXZZUUVocHRBcHdTVVVZ?=
+ =?utf-8?B?Mm1TS255dmZFZnRJcXlLRjFlekRWRkt5eTFlQTgvZUtCb2NxK1c5bnZFQ0RT?=
+ =?utf-8?B?cUlHWVhMNG80L200U1pIRkpuYldtaTFRY0RETGQrTUJsQWNVenZmUUV2U2dm?=
+ =?utf-8?B?VXIwRHdXbFo0YjRRSUx3bnhtWk92T3BFcHhuSzF0UER2clJaNUp0bHVPWFFC?=
+ =?utf-8?B?em9wVzhJYzVldWUrUWloZHJqRmxPOG55T1h5K2pXU2NWZGM4VmExL0E2K2t3?=
+ =?utf-8?B?MVdnbXoxRDYxMWtlU1FXSHZZNXRDcTMvNFFvRmFyekFxaXM2RjQ4Uktmazd6?=
+ =?utf-8?B?RlFKTkVFTWhyekFITEFGQ041L3NqbEtqNjZ0Q3Eyb2NqNXU4K2lGLzIzSU5i?=
+ =?utf-8?B?anU5YXdYZWpKdVdaVXBOczdkYVRVdG16YmgzKzAydVp6Ui8yTmIrMEpmTXBh?=
+ =?utf-8?B?OGF5V0x3Q2xibUtXNW0zTS93d3FVb2k0T3N1NW1oTGVTcGNzZFRLc3JrUUtx?=
+ =?utf-8?B?MGtGbExPNXVhdVQ1R1dhRzhSV25jWXlZUDBieTJpdkhWcjBDak5oM1dTOVBP?=
+ =?utf-8?B?bE1DQy9PUERvOHQ5ekhvc1BxT3YrUWFFL1JwUVBzWS9qY3RqcERKN1M4a0pX?=
+ =?utf-8?B?cUUrbWFvaG51SnBTdzV3VTNyeU5pYTFVOS9haDFVTW9qU3BoWEM3Tkd5dklX?=
+ =?utf-8?B?aGF4bi80dFVGRHdyRXBNOUc3aWhKNGFoSEI4OEkvRGZZNUZIK092SCtaQ29q?=
+ =?utf-8?B?WTh4UDFCNktQREgvOWhkT3dpRENsVjlpTURGR2trTjI0L3duRGZmZWtiRGw3?=
+ =?utf-8?B?dWRkMVpFaEtBUmh1RklweC9tc1RSWFF3K0JGTGduL3FKM1BJNjZBUmZ1UUlh?=
+ =?utf-8?B?UWJmY1hRcGI4OWUrdmMzaUZ1d3Q1cEJJaS9LM2hRcnlFZWxXRWNpcXhVckwy?=
+ =?utf-8?B?UFRGR0YvR3FKcVJKc0FhdW9YdzNEeHBGUGpBcnJjTERoc05EaWZwbU5tMWFU?=
+ =?utf-8?B?WHJCZHp1THQ0ZEFOOC9YbkpjWm5GMExYeFh1eWU2SHhPVFhJRE5kMXdKU2F0?=
+ =?utf-8?B?U0hneXZLcUI3NlQ3aTNhT2NCejNoNU1ZWVdTWEJ6dllPMFpKZDhNeDFuVUwv?=
+ =?utf-8?B?RzNVdzYyMXdHVDNCL3Z2RHBEMWRGUG94V2lERXhWTDdMV2oyYkxsRlBCdVpn?=
+ =?utf-8?B?V29hWXZKMWZCdUxyZEliMER3RDc0cFhqTmxya213RUFPZHM3c2JNRUFlY29i?=
+ =?utf-8?B?N3plbUlZNXBwZUsremlhM29BeVhQUDlMZXhNcVBNZUM1UXN6dkptdEd4NkRO?=
+ =?utf-8?B?ZCtxbW5pZ3lYZE5ZN2ZaRlo2N0pTOWowb0VvQlNrZ3hkcTFBWEJkOFh2NU9R?=
+ =?utf-8?B?SVEvc09UbGhieS9CNFZYNndlWmNaa2RCZlF2dHovK21xd255YUQySVdOWlpv?=
+ =?utf-8?B?bHc5WTh6SjVta3VXaHR3NHRyOTNxNG0wbjBjYmpvcE82Y00xdXZrMXl6Ym5O?=
+ =?utf-8?B?REZWMlFuRDNKTkZzR3BNWGN0bUNmZENpeHE4VmJrZEt1N2k3aDNwZG9YdGZF?=
+ =?utf-8?B?UGdqcnBiRE8xbWwya0psZ3k5K0F4U3l2RHB4UExDRGhBMnN5QnpWdFJUb3Er?=
+ =?utf-8?B?UFNEUGZ0YW40OWhqbEdaR1hYcVBJa25paVZBS20xRVVLRHVzZC9JcDN3MTZn?=
+ =?utf-8?B?UCsvRmtsZDZsM0U2V3BmeE8vbkM1MDRSd2t2blpHdTZnNTg2dWhOK1kzckJE?=
+ =?utf-8?B?VnYrSjgya3B6OWlQblFVQVQ5VkgyOHhVZXVjVWZxb1Z5ZEx2Uk1JZXVuZ1Rx?=
+ =?utf-8?B?eVNqcjFWeEZ5UERwdVRWWW04dGZzRG13elpLUjNPSHFRQVkvL2JtRjhoZ0Yr?=
+ =?utf-8?B?UGFtOG1jMm5SMGw5L1NaaXIrZVM1YTZWSmRWR01TaithR2pnR24rL09VNTM2?=
+ =?utf-8?B?Wi9QSUl6VzZaUkdRTU9iakdpZ3FvYTArbVVGakVYM0JaOWJsWjQ0R2c0cnV5?=
+ =?utf-8?B?NU1nd2VJajRqcDdNMDhtTnc3ek5hc0NzMWFqUGJQVUVzd3krNmR5ZWxFd3dR?=
+ =?utf-8?B?bEordXNBRXBOdHdNV3BhQnF2SzgzRG81R0Z4L01Ua0xsSGdCSFh1YVZvNkgr?=
+ =?utf-8?B?ZnMwb1NhbE9SYm96Ti9EMGc2Ny9hVnVGRHFSeitlKys5dUppTTZyekNGb2lF?=
+ =?utf-8?B?aVN6d293S0I2OGxReENhWWZ0aGxQRzVIalFyZWNjUllBS0dhc2ZUZlJoSnl4?=
+ =?utf-8?B?VjRBK2JLbHZkbTRzMXF4S2VZdXpiN3ZPWmhQb2xYUFlYQkptMDdqUT09?=
+X-OriginatorOrg: amlogic.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62733d9b-7c98-4e95-5eb6-08df46b6688f
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR03MB7149.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 03:28:56.4106
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9amo/+jw4pigg7EFW7VZLUN7A+cH8FupgGuoTaijL636oPQRKoEE0TcDmqq8veXUOY0qFg57V4byay0E5vOawg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSNPR03MB9939
 
 
-On 2026/11/19 21:04, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [Medium] ASoC: SOF: restored scontrol->size overwritten in
->    sof_ipc4_bytes_ext_put()
-> - [Medium] ASoC: SOF: scontrol->size not restored on EFAULT in
->    sof_ipc4_bytes_ext_put()
-> - [Medium] ASoC: SOF: ipc4-control: incomplete backup restore when
->    priv_size is 0
-> - [Medium] ASoC: SOF: ipc4-control: incomplete msg restore in
->    sof_ipc4_set_get_kcontrol_data()
+On 11/5/2026 9:39 PM, Jerome Brunet wrote:
+> On 2026-11-04 17:07:10+08:00, Jian Hu wrote:
+>> On 10/29/2026 5:47 PM, sashiko-bot@kernel.org wrote:
+>>
+>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>> - [High] clk: divider: unhandled zero divisor in divider_ro_determine_rate()
+>>> --
+>>>
+>>> commit 5ec3118aee2f03855552c58a4a8533e035b565bc
+>>> Author: Jian Hu <jian.hu@amlogic.com>
+>>>
+>>> clk: divider: add CLK_DIVIDER_INVALID_ZERO flag
+>>>
+>>> This commit introduces the CLK_DIVIDER_INVALID_ZERO flag for dividers where
+>>> a zero divisor value represents an invalid hardware state rather than a
+>>> pass-through. When this flag is set and the divisor evaluates to zero,
+>>> divider_recalc_rate() returns 0 without emitting a warning.
+>>>
+>>> [Severity: High]
+>>> Should divider_ro_determine_rate() in drivers/clk/clk-divider.c also handle
+>>> a zero divisor when CLK_DIVIDER_INVALID_ZERO or CLK_DIVIDER_ALLOW_ZERO is
+>>> set?
+>>>
+>>> When a read-only divider has a register value val that maps to div == 0 via
+>>> _get_div() (for example, when CLK_DIVIDER_INVALID_ZERO is combined with
+>>> CLK_DIVIDER_ONE_BASED or an unmapped table entry alongside
+>>> CLK_DIVIDER_READ_ONLY), calling clk_round_rate() or clk_set_rate() invokes
+>>> clk_divider_determine_rate()->divider_ro_determine_rate():
+>>>
+>>> drivers/clk/clk-divider.c:divider_ro_determine_rate() {
+>>>           int div;
+>>>
+>>>           div = _get_div(table, val, flags, width);
+>>>
+>>>           /* Even a read-only clock can propagate a rate change */
+>>>           if (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT) {
+>>>                   if (!req->best_parent_hw)
+>>>                           return -EINVAL;
+>>>
+>>>                   req->best_parent_rate = clk_hw_round_rate(req->best_parent_hw,
+>>>                                                             req->rate * div);
+>>>           }
+>>>
+>>>           req->rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, div);
+>>>
+>>>           return 0;
+>>> }
+>>>
+>>> Unlike divider_recalc_rate(), divider_ro_determine_rate() does not check for
+>>> !div before calling DIV_ROUND_UP_ULL(), which will trigger a division by zero
+>>> in the kernel when div is 0.
+>> In this patch, the dividers which set CLK_DIVIDER_INVALID_ZERO use
+>> divider_determine_rate(),
+>>
+>> not divider_ro_determine_rate().
+> Yet the point raised is valid. The change must work for everyone, not just you.
+
+
+I agree with you. This new flag should apply to the entire CCF.
+
+
+--
+
+Jian
+
 > --
->
-> commit 3d54ef5fbf4ff729417838f0907d7062db9c4154
-> Author: Ye Weihua <yeweihua4@huawei.com>
->
-> ASoC: SOF: ipc4-control: Fix out-of-bounds backup restore in bytes ext put
->
-> This commit records the backup size in old_ipc_control_data_size to avoid an
-> out-of-bounds read when restoring bytes control data, restores msg->data_size
-> when replaying the backup, and moves the scontrol->size update in
-> sof_ipc4_bytes_ext_put() until after sof_ipc4_set_get_bytes_data() returns.
->
->> diff --git a/sound/soc/sof/ipc4-control.c b/sound/soc/sof/ipc4-control.c
->> index e29c8d89284af..f8b4842f39365 100644
->> --- a/sound/soc/sof/ipc4-control.c
->> +++ b/sound/soc/sof/ipc4-control.c
->> @@ -58,6 +58,8 @@ static int sof_ipc4_set_get_kcontrol_data(struct snd_sof_control *scontrol,
->>   
->>   	/* It is a set-data operation, and we have a valid backup that we can restore */
->>   	if (ret < 0) {
->> +		struct sof_ipc4_control_data *cdata = scontrol->ipc_control_data;
->> +
->>   		if (!scontrol->old_ipc_control_data)
->>   			goto unlock;
->>   		/*
->> @@ -65,9 +67,18 @@ static int sof_ipc4_set_get_kcontrol_data(struct snd_sof_control *scontrol,
->>   		 * configuration
->>   		 */
->>   		memcpy(scontrol->ipc_control_data, scontrol->old_ipc_control_data,
->> -		       scontrol->size);
->> +		       scontrol->old_ipc_control_data_size);
->> +		scontrol->size = scontrol->old_ipc_control_data_size;
->>   		kfree(scontrol->old_ipc_control_data);
->>   		scontrol->old_ipc_control_data = NULL;
->> +		scontrol->old_ipc_control_data_size = 0;
->> +		/*
->> +		 * If the message payload points into the restored buffer, its size
->> +		 * must be restored as well, otherwise the last known good
->> +		 * configuration would be sent with the size of the rejected data.
->> +		 */
->> +		if (msg->data_ptr == cdata->data->data)
->> +			msg->data_size = cdata->data->size;
->>   		/* Send the last known good configuration to firmware */
->>   		ret = iops->set_get_data(sdev, msg, msg->data_size, set);
->>   		if (ret < 0)
-> [Severity: Medium]
-> Does checking msg->data_ptr == cdata->data->data miss generic bytes controls
-> (SOF_IPC4_BYTES_CONTROL_PARAM_ID) and leave msg->extension un-restored?
->
-> When data->type == SOF_IPC4_BYTES_CONTROL_PARAM_ID,
-> sof_ipc4_set_get_bytes_data() calls sof_ipc4_set_bytes_control_data(), which
-> copies the new payload into a separate msg_data buffer and sets
-> msg.data_ptr = msg_data:
->
-> sound/soc/sof/ipc4-control.c:sof_ipc4_set_bytes_control_data() {
-> 	...
-> 	msg_data->id = cdata->index;
-> 	msg_data->num_elems = data->size;
-> 	memcpy(msg_data->data, data->data, data->size);
->
-> 	memcpy(&msg, &cdata->msg, sizeof(msg));
-> 	msg.extension = SOF_IPC4_MOD_EXT_MSG_PARAM_ID(data->type);
->
-> 	msg.data_ptr = msg_data;
-> 	msg.data_size = data_size;
->
-> 	ret = sof_ipc4_set_get_kcontrol_data(scontrol, &msg, true, lock);
-> 	...
-> }
->
-> Because msg->data_ptr points to msg_data rather than cdata->data->data, the
-> replay call re-sends the rejected msg_data buffer and size instead of the
-> restored backup.  Even when msg->data_ptr == cdata->data->data,
-> sof_ipc4_bytes_ext_put() overwrites data->type from user space before
-> sof_ipc4_set_get_bytes_data() sets msg.extension, so msg->extension is not
-> restored from the backed-up cdata->data->type either.
-Pre-existing issue, will fix in another patch.
->> @@ -630,6 +641,7 @@ static int sof_ipc4_bytes_ext_put(struct snd_sof_control *scontrol,
->>   	struct sof_abi_hdr *data = cdata->data;
->>   	struct sof_abi_hdr abi_hdr;
->>   	struct snd_ctl_tlv header;
->> +	int ret;
->>   
->>   	/*
->>   	 * The beginning of bytes data contains a header from where
->> @@ -686,21 +698,25 @@ static int sof_ipc4_bytes_ext_put(struct snd_sof_control *scontrol,
->>   							 scontrol->size, GFP_KERNEL);
->>   		if (!scontrol->old_ipc_control_data)
->>   			return -ENOMEM;
->> +		scontrol->old_ipc_control_data_size = scontrol->size;
->>   	}
-> [Severity: Medium]
-> Can backing up and restoring scontrol->size bytes leave cdata->data
-> un-restored when a bytes control has no initial topology payload?
->
-> In sof_ipc4_control_load_bytes(), scontrol->size is initialized to
-> sizeof(*control_data) + scontrol->priv_size.  When scontrol->priv_size is 0,
-> scontrol->size is only sizeof(*cdata), which stops before the flexible array
-> member cdata->data (struct sof_abi_hdr).  kmemdup() then backs up 0 bytes of
-> cdata->data, and on failure of copy_from_user() or iops->set_get_data(),
-> memcpy(..., scontrol->old_ipc_control_data_size) restores only sizeof(*cdata)
-> bytes, leaving the rejected ABI header and payload in cdata->data and
-> replaying the rejected cdata->data->size and payload to the firmware.
-Pre-existing issue, will fix in another patch.
->>   	/* Copy the whole binary data which includes the ABI header and the payload */
->>   	if (copy_from_user(data, tlvd->tlv, header.length)) {
->>   		memcpy(scontrol->ipc_control_data, scontrol->old_ipc_control_data,
->> -		       scontrol->size);
->> +		       scontrol->old_ipc_control_data_size);
->>   		kfree(scontrol->old_ipc_control_data);
->>   		scontrol->old_ipc_control_data = NULL;
->> +		scontrol->old_ipc_control_data_size = 0;
->>   		return -EFAULT;
->>   	}
-> [Severity: Medium]
-> Should this error path also restore
-> scontrol->size = scontrol->old_ipc_control_data_size, like
-> sof_ipc4_set_get_kcontrol_data() does?
->
-> Because scontrol->old_ipc_control_data is kept across successful updates
-> while later updates change scontrol->size, a copy_from_user() failure on a
-> subsequent call restores the older backup into scontrol->ipc_control_data
-> without resetting scontrol->size, causing the next sof_ipc4_bytes_ext_put()
-> to kmemdup() the wrong size.
-Pre-existing issue, will fix in another patch.
->> -	/* Update the cdata size */
->> -	scontrol->size = sizeof(*cdata) + header.length;
->> +	ret = sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
->> +	if (!ret)
->> +		/* Update the cdata size */
->> +		scontrol->size = sizeof(*cdata) + header.length;
->>   
->> -	return sof_ipc4_set_get_bytes_data(sdev, scontrol, true, true);
->> +	return ret;
->>   }
-> [Severity: Medium]
-> Does this overwrite the restored scontrol->size with the rejected payload
-> size whenever the backup replay succeeds?
->
-> When the firmware rejects the new payload in
-> sof_ipc4_set_get_kcontrol_data(), the recovery path restores
-> scontrol->size = scontrol->old_ipc_control_data_size, frees
-> scontrol->old_ipc_control_data, and calls:
->
-> 	ret = iops->set_get_data(sdev, msg, msg->data_size, set);
->
-> When replaying the backup configuration succeeds, ret becomes 0 and
-> sof_ipc4_set_get_bytes_data() returns 0.  Then if (!ret) here overwrites the
-> restored scontrol->size with sizeof(*cdata) + header.length from the rejected
-> request, so the next sof_ipc4_bytes_ext_put() backs up the wrong size.
-
-Will send v2 to fix this, thanks.
-
+> Jerome
