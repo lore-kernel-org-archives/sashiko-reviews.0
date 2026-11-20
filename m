@@ -1,94 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.34
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795183748;
-	b=TxYieYYXKSmvv4MubwyOwV5UQj+8dP+JAGDg+shd6uIVH1UzngEQFVy393vmIkiDDvoU
-	 Y0NGZBpzioohgif4VtjTvg5uLD6rGNB+FJ5eZlmnWCDscbu9qaBpZNn7OWncLLmbW7OpD
-	 vgJ7djLUT9zc6Cmyq5Q3G1HW6Am0fpokoEqDd2hU1H3nswtRjAoZ7UeSFXk8oDC137Mrp
-	 /Fe9LX18CJCw4ZAe4sfN2pP/rd2GFBTcENxPgNanxEZzY6ULKD4orzbWNwvpatYlQ3MBW
-	 F++8LkURjwQgfWZLMYK8Rfcl4P1FOoHKat3mwTJTih22POmAz8NTks+Uh9q/1wY4d4w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795183748;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=8RGM5kq56v8G/LiH88p7djfQCfPV7zCV2rhx8qjyHjs=;
-	b=I8LGFsqX4ub0GoIi3Imr96WgxFA+u47tyKxaVbgRaUbw3diewSswWJPCO6cPZ7cx1WU7
-	 CRQKtmZLnsituT662TH1hNKZ6+V72VgeP2v43Lo4lixdtME+VqvFIujVT0wMnm/4azRNj
-	 90wSB/MbXFvLwGaFsJOYytC0f18N4XTf5bQxm6ShBPMupBpt0FLMfiBNEM510ZnWZZwdl
-	 ue7+YcBCjTQBERf8hhEK54f1uV014/ctRwUBdf7FRysxTeU+fhr2f9cmz2BHrUo6nLMzN
-	 CO+dZ4kjKJbyELRajAWpwckcarVlFOMDzgtlrYQzVucfGxTvNby8K7Z5CefO+BQayTA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=gbmSe92S;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.34
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013034.outbound.protection.outlook.com [40.93.201.34])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795184114;
+	b=2XwWKj73nv3mjZmnE8HzqrXxndh/qBZXdjPUz/BK3zAzlaE/YKkb3PyR3sOg2fPafHEV
+	 yGvk6OrQNRYIkhMeheVTGNLqSy9Eu2aIz3nZ4l6nS8PCf0lq0b9x1OOeTx3cbUY3yhute
+	 Sp2knGB+vysxgirAZQHd9Qu+8eNVPaVfB+E6GQ9cnWAU7/JbA6T+bd5t8qNRQOB/MiKoJ
+	 T3Om7gkl0b5EJdc/E5O+dJhThQCLWELRlwa9keZ9JIqqjSuoOGV3SfzBwSpKCyvUhu2Ct
+	 IkNGbQJ0US6iSBcvHwlWwl9SB2x1pxZ/h3WLq+pBWOvKMALBHOuI9d4LgM8c5nh2rxQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795184114;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:
+	 X-Spamd-Result:X-Spam-Score;
+	bh=hvBmdMP4OZLKWFqaN8fW4YRLoaGUySsZ/cOOrSOBR3s=;
+	b=M7L5TWe7cBEz7LCuHavbF+6ZtVAF2bOzX9tmSjrWFZ+wbZqN0ycgPpdNoM9R9ejZTp74
+	 hxPS2p1uVH90lNJtLF+w7oS8llevhaDkT+sluVwKP371iZr+eOCYs/5fjOj2nPCuQ77CZ
+	 HxAf/1jqzVOkBSypQPZPg8FtbLvemq5uVTOv4cVi+CThvuI1QNyKc4pWQwdR/JNAc5bsM
+	 mERSuezX8q44gMf/IfQYSrqAF/UlA2uItzxh7REHTkreWwtk23b8j25+z94DDbIEgf5wv
+	 AmmpwKE9g7NKMz5lXYgn6aOEfNZGUgDgprOF/K+yLYvM9c1Q92w8vH7JANFmp5m35ZA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jSBD0nnX;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=M3KXaogI;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jSBD0nnX;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=M3KXaogI;
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7B3606A320
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:09:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F7B3606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A815B606A33F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:15:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A815B606A33F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=gbmSe92S
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k57w4U5I1bGFvmsDPTIWqUMWcsLCxPnb+SurcNbO7ktZkT80gatQgu588fRGjq1tL+hQ8ueUZSmKC5X/SR0/TU/2exBHqKqDpPQFEfRYk5Bf0iUIe1Uzv+b3AczZRM4WdpXoSOWuSFil10bPYMk0C4G9YbTikrEAWw7rNfXSmiMu13MJkUwvT9oY9d9/aJqa+O6a+g3uqPGTGguMgBG+xMDLwg1/uVSV6D1si8fkZiIsaNsk4NXESVxuSyBvOy8qy235DiFXQsq0hDolOD7CCXWqhDh7AxmA6vUpmKZNm9KB/4ALXli+rgHY47tnLZRRerRVRayosFsP04F/GQ4IBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8RGM5kq56v8G/LiH88p7djfQCfPV7zCV2rhx8qjyHjs=;
- b=CPMu+JWAAn1HflZR6+QTk5128Tk7XQL/+79dDS8EO0c7oUZ5p6gBmdLm/zfMwe/aYpCi070n/SMzRfUg5vXFuiqSFfi9H//U9Nb4DOT6r3EpKpiutIzEmYuV6uLvghJJURrvOJy5wNp80k7FDcN/K+PHZBtQZ8uAZU7ICkjhm3GB1Xkwx5+BKM/AV61d5zDiXdzMg4OUlB+dthYm+NFLoA31WPgcusy8KHpWsXWiUc/a9gyAnd/9fAMe1pQBcXFiQz1F6dl2gKK5l3vonf1e8HjU9aMueXCXVfbiC1m4iosNUoJR308Zbj5Z7bH3OeZdgt0SVlCof1SmMb+pBjRXEw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8RGM5kq56v8G/LiH88p7djfQCfPV7zCV2rhx8qjyHjs=;
- b=gbmSe92Sp0h8auhvNs1nT61bt5GeNbLi1lZBB2x7oT2fwUtEo1pi5Uj/YSZwMrIfU8tpj0BjealVaLN4niQfGTAfGCqk+tri55+He3B37diqTNkXEzqr9fgVNpDPEbosiBEBItQYIQ9djnX8gTqBfGBhDITj5IJNwMNeLYJ90no=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5805.namprd12.prod.outlook.com (2603:10b6:510:1d1::13)
- by DS7PR12MB8232.namprd12.prod.outlook.com (2603:10b6:8:e3::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.10; Fri, 20 Nov
- 2026 14:08:58 +0000
-Received: from PH7PR12MB5805.namprd12.prod.outlook.com
- ([fe80::35dc:5b7a:52da:c8f1]) by PH7PR12MB5805.namprd12.prod.outlook.com
- ([fe80::35dc:5b7a:52da:c8f1%6]) with mapi id 15.21.0615.013; Fri, 20 Nov 2026
- 14:08:58 +0000
-Message-ID: <3a26430c-c8b1-4df1-a5dc-eb699a0fdd98@amd.com>
-Date: Fri, 20 Nov 2026 09:08:54 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/7] drm/amdgpu/vm: stop using amdgpu_bo_fence
-To: sashiko-reviews@lists.linux.dev, amd-gfx@lists.freedesktop.org,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-References: <20261118190735.1863676-1-benjamin.cheng@amd.com>
- <20261119144049.2057674-1-benjamin.cheng@amd.com>
- <20261119144049.2057674-5-benjamin.cheng@amd.com>
- <sashiko-outbox-223337@kernel.org>
-Content-Language: en-US
-From: Benjamin Cheng <benjamin.cheng@amd.com>
-In-Reply-To: <sashiko-outbox-223337@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQBP288CA0004.CANP288.PROD.OUTLOOK.COM
- (2603:10b6:c01:6a::17) To PH7PR12MB5805.namprd12.prod.outlook.com
- (2603:10b6:510:1d1::13)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jSBD0nnX;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=M3KXaogI;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jSBD0nnX;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=M3KXaogI
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id D14D41F7BD;
+	Fri, 20 Nov 2026 14:15:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795184109; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hvBmdMP4OZLKWFqaN8fW4YRLoaGUySsZ/cOOrSOBR3s=;
+	b=jSBD0nnXKSsdC2Ipk/dfrHw/MQgozA8lKAkxcETTi1rVXWvO0P+hKJ/NSyANHyhkNj5iHh
+	Jk3pRIxOj8lqcGZThE4M/KoUT6xVK1XZmAxgogmxWPLwtq/ba7QWmdnll16hH+HLHD209e
+	Lyj1Uh+qSND4IbrBCfxsIxAGlAn6F2g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795184109;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hvBmdMP4OZLKWFqaN8fW4YRLoaGUySsZ/cOOrSOBR3s=;
+	b=M3KXaogIaBK9LWabtg/DtK4oPrBCmOfKzw6EYesKs19NBEZz8k8WDW5RYW/37NfnW/KbVb
+	cG1qVHdcGT0CoKDQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795184109; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hvBmdMP4OZLKWFqaN8fW4YRLoaGUySsZ/cOOrSOBR3s=;
+	b=jSBD0nnXKSsdC2Ipk/dfrHw/MQgozA8lKAkxcETTi1rVXWvO0P+hKJ/NSyANHyhkNj5iHh
+	Jk3pRIxOj8lqcGZThE4M/KoUT6xVK1XZmAxgogmxWPLwtq/ba7QWmdnll16hH+HLHD209e
+	Lyj1Uh+qSND4IbrBCfxsIxAGlAn6F2g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795184109;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hvBmdMP4OZLKWFqaN8fW4YRLoaGUySsZ/cOOrSOBR3s=;
+	b=M3KXaogIaBK9LWabtg/DtK4oPrBCmOfKzw6EYesKs19NBEZz8k8WDW5RYW/37NfnW/KbVb
+	cG1qVHdcGT0CoKDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 973D413507;
+	Fri, 20 Nov 2026 14:15:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id OXoxHO1VAGsFHwAAD6G6ig
+	(envelope-from <hare@suse.de>); Fri, 20 Nov 2026 14:15:09 +0000
+Message-ID: <f88cac4d-8059-44fd-ac38-6c80eafcea8d@suse.de>
+Date: Fri, 20 Nov 2026 15:15:09 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,147 +106,321 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5805:EE_|DS7PR12MB8232:EE_
-X-MS-Office365-Filtering-Correlation-Id: d0de30b3-53cf-4ec7-693c-08df470fd196
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|18002099003|22082099003|261009223027099003|261009221227099003|261009220027099003|261009223327099003|261009221727099003|11063799006|56012099006|4143699003|261102123227099003|261028144727099003|261026140227099003|261026121527099003|261021121427099003|261022105027099003|261021123027099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	RxrophvvZWufISk2/P4THBSWtEAhfiKwsP3A6I0ctfRVHdU3Wwh2GHj7KR9PpHU6aDP1d544iH3VQy2fj18jzJJaf791zezboLQbqHvagSckLRlYUGEZ9Rd1nrIlCOnmKNYrmhhL5CMZmFjyntpjWPOdxPD4ov+1ixIXaO2MctoYzyp47pAlhhe46EUKVy7d+BUDUl828T6xeXeErtf2mevAnALBEFOSocX5WqITTV703j/F/Bui8V49xLCOYMzK26Vrj8D6ndu/gzrjPbw2Ss3SDfu/O72wHvEWaLYIU5yBYM+u8WTAdrQrX14U4sgkeVjKskY2tmcYVQqARzMfXmJ24sPRIfQkmbmAOZc6ewcRyXnpbcHMq8KToN75lPAr9Xn1O/mX/qD0LNBK2vOu2buALS3eDaBvUwdlIRvBGnJDungfnh8yoE48VrNgGKHlSqgF/5sd+pZRh6JvzvZNxZvP+YmdelylQDJUkabYfSrRN3ZKIefRBJxmCrteFKUKow6Q1eBCDuopMm2o4JEwRyBDTWHQGxnpIx+bSUUI5yKL4PWK5HE9qkp2VN57r+v/K05sVYE+ZSygyF9UWOw97PL0Um27819GAXqyemgA24Q/FtZgVzfyPKD5RnHYSxbLJ+5hweHZdNcactSoi01WmIfeuPJ/uE+Z19bvWuB32/w=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5805.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(18002099003)(22082099003)(261009223027099003)(261009221227099003)(261009220027099003)(261009223327099003)(261009221727099003)(11063799006)(56012099006)(4143699003)(261102123227099003)(261028144727099003)(261026140227099003)(261026121527099003)(261021121427099003)(261022105027099003)(261021123027099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VmhhRDE0U0NVejIxdkpGZlI2cWk0T203b0pkNTBBRTVCdEc3VmpLYWdlMjJB?=
- =?utf-8?B?TjQxRWdueTQ5ZTVrcXROL0VvSWFHTEZUUnVzS2JWTStGUFhvaXdocEdYeTFQ?=
- =?utf-8?B?cisyWmE5VENWR1I5bXk0RUVkTzFScVVkVGdZdm96YU1oYUlWUTBkL21ua2xU?=
- =?utf-8?B?SkxkNThiWDZoVjdPclByVGxyeXZzYzY0NS94dkR1TkV4Zy92NDdsaWxtcU1Q?=
- =?utf-8?B?V1ZnZ1drbnBkalhpZythdzVWZXdqRDFNZzB0OG1HTnNtRldNRHl0UEdCc3ZJ?=
- =?utf-8?B?ZzltdUVVS04zaTNjeTFnQ3d5SUVXaytsVjNtNWN6ZnB0eW1sbUN3d2owbDBO?=
- =?utf-8?B?c3pRN0tGSGx0M2p5SWxWOENCczN4VGQ3Uzk5R2NGSW9LWnpKaHRJUWVjUjlY?=
- =?utf-8?B?Y1E5UXdxNnBRNzZKcktJTXNvc3FnSnNEWnB0ajZ3V3AxRUlLYTFCNG9aS1Np?=
- =?utf-8?B?Zm55K3hzSGpobzR3cUNwVDVkaXJNWkU4OENMS2F6ajNVczRYL2dTa21aUy9t?=
- =?utf-8?B?elVZaDQ0YmpvTDdONGZ3NjdmRFZFQlU2L1JpSDE0eTFzNUtJbHdNcGRsaG1j?=
- =?utf-8?B?ZjZZVUFUUmdZbTNWdlBhdGxmMnczbG5ENXFqWHVLekNNTm16RkMrSTZtMndt?=
- =?utf-8?B?VDhuTDhhcFVQQnIxL1Z3b0FiYmZYR3U0UTVFSlAycUlmOVFlNzE5RDV6Umg2?=
- =?utf-8?B?cG5VQ2hjcG1CdUZmWEo0Z0tnakdGZTZFWUxxOFdVcVlhMDNTSnRkNWE3azZQ?=
- =?utf-8?B?bldyK3RzUTIzTk5XS0ZHYmR6N0l4ekFIZU1JWE1FTWlkYWxSME9IdTFpcWJD?=
- =?utf-8?B?UmlpNHNTTjRyUFNOMlZIODd5NERkUTFQVC9QS3czQzFwb2s0WCtIa1N0ZDBV?=
- =?utf-8?B?Y25YV0xpZlYvcnR5YlZlakJuUVpaRVUrTXp0aC9vT2ZadGYwN2poeEdPeWM4?=
- =?utf-8?B?cWJaajhzN0taZ3V0OGVpN1lZVkx2MDJTS3BLaGFOWGlQWE5DOVZlaGkrMEg2?=
- =?utf-8?B?UHlQZmxUTTJ4R0JYMitWVU50NzBkUm4zeEVGcjl3d1c1VG9ncHQ4NGVJWnJV?=
- =?utf-8?B?eUhLVnBRZG5jb1dSWkhBWVVQUUUzbi9vYjY1cFNzN2RIOWpQTklwZHl1citU?=
- =?utf-8?B?RDM3OWROaHpWUnAxTE1hVlliM1pCckVYNzYyQ1JRUWdldExYM3pQZ1hYUEtC?=
- =?utf-8?B?SmxPSjVWV1FNUHZrTzZidWlkV1JaWjVJZW5OeGd5TFY1bWFnakVHNDV5bjgz?=
- =?utf-8?B?eTJxc09wREpwN2hvSzdYOUM0M2tJbHpuMUpuZ0hCeGY1NkVpb2gxV0Facmwz?=
- =?utf-8?B?eGYvN3hIdWQwNXJ1ZG9nWVRlQ0lSR2xNVStMS0JCMUVPOFRZUEJWbGt1T3pY?=
- =?utf-8?B?dDg5VE1ISTdlejhmYURrYjFJOG9sREYxK2paYUVJOUpBUm5QcEZPTU5OWnc0?=
- =?utf-8?B?S1JhNE5CZFUxdmlEOFN6RGhxNDBFNnRHd05keFpaVFJyNlYrRjhTWmJwUENj?=
- =?utf-8?B?cDdQME40N1dGS3lzSjRWbUpNaUM5YXJqZVNORGhHTzZkMGNIalpOSCt4RGVz?=
- =?utf-8?B?Kzd3SkFsSkNEdThnSkxPZDhYQ3ZDdjE4M2VYU1V1dGtVL2dBRUcxamZpTVpQ?=
- =?utf-8?B?aFhUUk1HY08ydjhVdEQzNWhWOVNONzBpZ01oNEt6M0tBV0ZFeU9FdHF4LzJX?=
- =?utf-8?B?L0pseGplNi81NlNJNTkvU244SnVycFl6TG1yMXN4TzU5SUV6UVNvUloyVkJt?=
- =?utf-8?B?VS9VbURjcG1zK3NtOW13WWxrKzdwZVp2UXF0aUtRY0h5dnJDeE5YbFZEUTIz?=
- =?utf-8?B?TlY2aTBJRStaeGNaOC91aXViOWRpaW5VclQ2SlhhVGVRQ2R2bUQ5dkdTekhy?=
- =?utf-8?B?SzYzNUIzd2dJSkl3NkxkTUQ1TzVlVnJ6MWVSaFU4eE5jN3JlMW9sMFNzTG5s?=
- =?utf-8?B?REpyRjFkMCtaT1hvNFNJRTBjNkcySlRPd3h5TDI0MEdVUjRLVG80WVlXMy8v?=
- =?utf-8?B?UkFJQzRaRkRtUlBzRjFSSERhUGM0aU5HemgvQW9Oem5sSVdXOVowWG51Vk9H?=
- =?utf-8?B?ZU9ZUEg3YjdzT0cvSXFXdVc1TWVabHFmRElyeHBicFRJQnlIUVVlb0xqeGs2?=
- =?utf-8?B?RUdOQ3RKRUl5dkdycTBDbEpQWG1TNnhaTFdNaTlNTThkL0JzT1VuTzg3QXdG?=
- =?utf-8?B?R2M3d0lXN0x1RkVkR1R3cG9qN0VNdGxsTXFLZmdPbXpqV1lNbFpBQmhvTHlF?=
- =?utf-8?B?d1lVMWcrYmw1Y2l1ME5icGVNRGxaYUkybi8rMTE3OUFyVnhMREJSQzJSLzhx?=
- =?utf-8?B?VTU0WkxGbytoeVhBb3R5U1pPVzRScWwrRUsvYnpZYUVYZjRTY1hKQT09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d0de30b3-53cf-4ec7-693c-08df470fd196
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5805.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 14:08:58.0872
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9NEFps9C6TJYnF2Zzc9gfi5PZJ8tFp/chzqGyt3nGS+fTcwE65nGUkPV2G7uUbreg5B4ndIvg7LyVkcG/dSLaA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8232
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/9] nvmet-auth: parse dhchap key from configfs
+ attribute
+To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
+Cc: linux-nvme@lists.infradead.org
+References: <20261120-dhchap-keyring-v4-v4-0-5f8c7d9926ee@kernel.org>
+ <20261120-dhchap-keyring-v4-v4-5-5f8c7d9926ee@kernel.org>
+ <sashiko-outbox-225043@kernel.org>
+Content-Language: en-US
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <sashiko-outbox-225043@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spam-Level: 
+X-Spamd-Result: default: False [-13.29 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-0.996];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_THREE(0.00)[3];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -13.29
 
-
-On 2026-11-19 10:04, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] drm/amdgpu/vm: unreserved fence slot usage in
->   amdgpu_vm_update_range()
+On 11/20/26 12:28 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential
+> issues to consider:
+> - [High] nvmet-auth: missing error abort and invalid status in
+>    nvmet_setup_auth()
+> - [High] nvmet-auth: missing initialization of ctrl->shash_id in
+>    nvmet_setup_auth()
+> - [High] nvmet-auth: missing length checks in nvme_dhchap_psk_preparse()
+> - [Medium] nvmet-auth: memory leak of keydata in
+>    nvmet_host_dhchap_ctrl_key_store()
+> - [Medium] nvmet-auth: empty writes rejected in configfs key store
+>    callbacks
 > --
->
-> commit 62a2ba953c5e8b9b18301c84fc57052868fd3e60
-> Author: Benjamin Cheng <benjamin.cheng@amd.com>
->
-> drm/amdgpu/vm: stop using amdgpu_bo_fence
->
-> This commit replaces the amdgpu_bo_fence() call in amdgpu_vm_update_range()
-> with a direct dma_resv_add_fence() call using DMA_RESV_USAGE_BOOKKEEP.
->
->> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
->> index a0e6bb34ae0be..d4d8cb15ffd38 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
->> @@ -1215,7 +1215,8 @@ int amdgpu_vm_update_range(struct amdgpu_device *adev, struct amdgpu_vm *vm,
->>  	if (!unlocked && !dma_fence_is_signaled(vm->last_unlocked)) {
->>  		struct dma_fence *tmp = dma_fence_get_stub();
->>  
->> -		amdgpu_bo_fence(vm->root.bo, vm->last_unlocked, true);
->> +		dma_resv_add_fence(vm->root.bo->tbo.base.resv, vm->last_unlocked,
->> +				   DMA_RESV_USAGE_BOOKKEEP);
->>  		swap(vm->last_unlocked, tmp);
->>  		dma_fence_put(tmp);
->>  	}
+> 
+> commit 4bc851b3a915dfe8fe3d7c3db8fe8c3fa58c01ca
+> Author: Hannes Reinecke <hare@kernel.org>
+> 
+> nvmet-auth: parse dhchap key from configfs attribute
+> 
+> This commit converts the nvmet configfs DH-HMAC-CHAP key handling to store
+> host and controller keys as struct key pointers rather than raw secret
+> strings.
+> 
+>> diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+>> index 26457ce4acc2a..33b45b4b202d4 100644
+>> --- a/drivers/nvme/target/auth.c
+>> +++ b/drivers/nvme/target/auth.c
+>> @@ -19,52 +19,63 @@
+> 
+> [ ... ]
+> 
+>>   int nvmet_auth_set_key(struct nvmet_host *host, const char *secret,
+>>   		       bool set_ctrl)
+>>   {
+>> -	unsigned char key_hash;
+>> -	char *dhchap_secret;
+>> -	int offset = 0;
+>> +	struct key *key;
+>> +	size_t len;
+>>   
+>>   	if (!strlen(secret)) {
+>>   		down_write(&nvmet_config_sem);
+>> -		if (set_ctrl) {
+>> -			kfree(host->dhchap_ctrl_secret);
+>> -			host->dhchap_ctrl_secret = NULL;
+>> -			host->dhchap_ctrl_key_hash = 0;
+>> -			host->dhchap_ctrl_key_offset = 0;
+>> -		} else {
+>> -			kfree(host->dhchap_secret);
+>> -			host->dhchap_secret = NULL;
+>> -			host->dhchap_key_hash = 0;
+>> -			host->dhchap_key_offset = 0;
+>> -		}
+>> +		nvmet_auth_revoke_key(host, set_ctrl);
+>>   		up_write(&nvmet_config_sem);
+>>   		return 0;
+>>   	}
+>> -	if (sscanf(secret, "DHHC-1:%hhd:%n", &key_hash, &offset) != 1 ||
+>> -	    !offset)
+>> -		return -EINVAL;
+>> -	if (key_hash > 3) {
+>> -		pr_warn("Invalid DH-HMAC-CHAP hash id %d\n",
+>> -			 key_hash);
+>> -		return -EINVAL;
+>> -	}
+>> -	dhchap_secret = kstrdup(secret, GFP_KERNEL);
+>> -	if (!dhchap_secret)
+>> -		return -ENOMEM;
+>> +	len = strcspn(secret, "\n");
+>> +	key = nvme_auth_extract_key(NULL, secret, len);
+>> +	if (IS_ERR(key)) {
+>> +		pr_debug("%s: invalid key specification\n", __func__);
+>> +		return PTR_ERR(key);
+>> +	}
+> 
 > [Severity: High]
-> Can this dma_resv_add_fence() call consume an unreserved fence slot and
-> hit BUG_ON(fobj->num_fences >= fobj->max_fences) when vm->root.bo already
-> holds a newer fence from vm->delayed?
->
-> Callers such as amdgpu_vm_lock_pd() and amdgpu_dma_buf_move_notify()
-> reserve only two fence slots for VM updates (one for vm->delayed and one
-> for the TLB flush fence), relying on vm->last_unlocked and locked SDMA
-> commits sharing the vm->delayed slot.  However, dma_resv_add_fence() only
-> replaces an unsignaled same-context slot when
-> dma_fence_is_later_or_same(fence, old) is true.
+> Can passing unvalidated configfs strings into nvme_auth_extract_key()
+> underflow datalen and ret in nvme_dhchap_psk_preparse()?
+> 
+> nvme_auth_extract_key() calls nvme_dhchap_psk_create() -> key_create() ->
+> nvme_dhchap_psk_preparse():
+> 
+> drivers/nvme/common/keyring.c:nvme_dhchap_psk_preparse() {
+> 	...
+> 	if (sscanf(prep->data, "DHHC-%01hhu:%02hhu:%*s",
+> 		   &version, &hmac) != 2) {
+> 		...
+> 		return -EINVAL;
+> 	}
+> 
+> 	/* skip header and final ':' character */
+> 	datalen -= 11;
+> 	...
+> 	ret = base64_decode(prep->data + 10, datalen, upayload->data,
+> 			    true, BASE64_STD);
+> 	if (ret < 0) {
+> 		...
+> 		return ret;
+> 	}
+> 	ret -= 4;
+> 	crc = ~crc32(~0, upayload->data, ret);
+> 	...
+> }
+> 
+> Because %02hhu matches 1 or 2 digits and %*s is not counted in sscanf()'s
+> return value, a short string such as "DHHC-1:1:" (9 bytes) returns 2 with
+> datalen < 11, so datalen -= 11 underflows size_t datalen and passes a huge
+> length to base64_decode().  Similarly, a short payload that decodes to 0..3
+> bytes (such as "DHHC-1:01:AA==:") makes ret -= 4 negative, which is then
+> converted to size_t in crc32() and reads past upayload->data.
+> 
+The parsing routines have been fixed up with updates to earlier patches.
 
-Hi Christian,
+> [ ... ]
+> 
+>> @@ -186,44 +195,74 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq, bool reset)
+>>   		goto out_unlock;
+>>   	}
+>>   
+>> -	if (!host->dhchap_secret) {
+>> +	if (!host->dhchap_key) {
+>>   		pr_debug("No authentication provided\n");
+>>   		goto out_unlock;
+>>   	}
+>>   
+>> -	host_key = nvme_auth_extract_key(NULL, host->dhchap_secret,
+>> -					 strlen(host->dhchap_secret));
+>> -	if (IS_ERR(host_key)) {
+>> -		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
+>> +	key = key_get(host->dhchap_key);
+>> +	if (!key) {
+>> +		pr_warn("%s: host key %08x not found\n",
+>> +			__func__, key_serial(host->dhchap_key));
+>>   		goto out_unlock;
+>>   	}
+>> -	if (host->dhchap_ctrl_secret) {
+>> -		ctrl_key = nvme_auth_extract_key(NULL, host->dhchap_ctrl_secret,
+>> -						 strlen(host->dhchap_ctrl_secret));
+>> -		if (IS_ERR(ctrl_key)) {
+>> -			key_put(host_key);
+>> -			ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
+>> -			goto out_unlock;
+>> +	down_read(&key->sem);
+>> +	ret = key_validate(key);
+>> +	if (!ret) {
+>> +		if (ctrl->host_key) {
+>> +			pr_debug("%s: drop host key %08x\n",
+>> +				 __func__, key_serial(ctrl->host_key));
+>> +			key_put(ctrl->host_key);
+>>   		}
+>> +		ctrl->host_key = key;
+>> +	}
+>> +	key_id = key_serial(key);
+>> +	up_read(&key->sem);
+>> +	if (ret) {
+>> +		pr_warn("host key %08x invalidated\n", key_id);
+>> +		key_put(key);
+>> +		key = ERR_PTR(-EKEYREVOKED);
+>>   	}
+> 
+> [Severity: High]
+> When key_validate(key) fails on host->dhchap_key, doesn't execution fall
+> through instead of setting ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE and
+> jumping to out_unlock?
+> 
+> If host->dhchap_ctrl_key is present and valid, the second key_validate()
+> overwrites ret with 0, so nvmet_setup_auth() returns 0 while leaving
+> ctrl->host_key NULL on initial connect, bypassing authentication because
+> nvmet_has_auth() and nvmet_check_auth_status() treat a NULL ctrl->host_key
+> as no authentication required.  If host->dhchap_ctrl_key is absent or also
+> invalid, nvmet_setup_auth() returns the negative errno from key_validate()
+> truncated to u8 instead of NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE, and if
+> key_get() returns NULL it jumps to out_unlock with ret == 0.
+> 
+Correct. Fixed up with the next version.
 
-I think this edge-case deserves to be fixed in dma_resv_add_fence() right?
+>> -	key_put(ctrl->host_key);
+>> -	ctrl->host_key = host_key;
+>> -	key_put(ctrl->ctrl_key);
+>> -	ctrl->ctrl_key = ctrl_key;
+>> -	ctrl->shash_id = host->dhchap_hash_id;
+>>   #ifdef CONFIG_NVME_TARGET_AUTH_DEBUG
+>> -	host_hash = nvme_dhchap_psk_hash(ctrl->host_key);
+>> -	pr_debug("%s: using hash %s key %u\n", __func__,
+>> -		 ctrl_hash > 0 ?
+>> -		 nvme_auth_hmac_name(ctrl_hash) : "none",
+>> -		 key_serial(ctrl->host_key));
+>> -	if (ctrl->ctrl_key) {
+>> -		ctrl_hash = nvme_dhchap_psk_hash(ctrl->ctrl_key);
+>> -		pr_debug("%s: using ctrl hash %s key %u\n", __func__,
+>> -			 ctrl_hash > 0 ?
+>> -			 nvme_auth_hmac_name(ctrl_hash) : "none",
+>> -			 key_serial(ctrl->ctrl_key));
+>> +	pr_debug("%s: using dhchap hash %s key %08x\n", __func__,
+>> +		 nvme_auth_hmac_name(ctrl->shash_id), key_id);
+>> +#endif
+> 
+> [Severity: High]
+> Does dropping ctrl->shash_id = host->dhchap_hash_id leave ctrl->shash_id at
+> 0?
+> 
+> nvmet_auth_negotiate() matches the host's proposed HMAC IDs against
+> ctrl->shash_id, so leaving it at 0 ignores the host's configured dhchap_hash
+> attribute and always falls back to fallback_hash_id (and passes 0 to
+> nvme_auth_hmac_name() in the debug prints here).
+> 
+Of course. Reverted with the next version.
 
-I don't see any reason we need to add another fence to the resv if it already has a fence from the same context that is later-or-same and same-or-stronger usage.
+>> diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+>> index 27c50fa533e70..880cf5151588a 100644
+>> --- a/drivers/nvme/target/configfs.c
+>> +++ b/drivers/nvme/target/configfs.c
+> 
+> [ ... ]
+> 
+>> @@ -2251,9 +2266,19 @@ static ssize_t nvmet_host_dhchap_key_store(struct config_item *item,
+>>   		const char *page, size_t count)
+>>   {
+>>   	struct nvmet_host *host = to_host(item);
+>> +	u8 *keydata;
+>> +	size_t len;
+>>   	int ret;
+>>   
+>> -	ret = nvmet_auth_set_key(host, page, false);
+>> +	len = strcspn(page, "\n");
+>> +	if (!len)
+>> +		return -EINVAL;
+>> +	keydata = kstrndup(page, len, GFP_KERNEL);
+>> +	if (!keydata)
+>> +		return -ENOMEM;
+>> +
+>> +	ret = nvmet_auth_set_key(host, keydata, false);
+>> +	kfree_sensitive(keydata);
+> 
+> [Severity: Medium]
+> Does returning -EINVAL when !len in nvmet_host_dhchap_key_store() and
+> nvmet_host_dhchap_ctrl_key_store() prevent clearing a configured key via
+> configfs?  An empty or newline-only write is rejected before reaching the
+> !strlen(secret) revocation branch in nvmet_auth_set_key().
+> 
+Fixed up with the next version.
 
-Thanks,
+> [ ... ]
+> 
+>> @@ -2284,9 +2323,18 @@ static ssize_t nvmet_host_dhchap_ctrl_key_store(struct config_item *item,
+>>   		const char *page, size_t count)
+>>   {
+>>   	struct nvmet_host *host = to_host(item);
+>> +	u8 *keydata;
+>> +	size_t len;
+>>   	int ret;
+>>   
+>> -	ret = nvmet_auth_set_key(host, page, true);
+>> +	len = strcspn(page, "\n");
+>> +	if (!len)
+>> +		return -EINVAL;
+>> +	keydata = kstrndup(page, len, GFP_KERNEL);
+>> +	if (!keydata)
+>> +		return -ENOMEM;
+>> +
+>> +	ret = nvmet_auth_set_key(host, keydata, true);
+>>   	/*
+>>   	 * Re-authentication is a soft state, so keep the
+>>   	 * current authentication valid until the host
+> 
+> [Severity: Medium]
+> Does nvmet_host_dhchap_ctrl_key_store() leak keydata?  Unlike
+> nvmet_host_dhchap_key_store(), it does not call kfree_sensitive(keydata)
+> after nvmet_auth_set_key().
+> 
 
-Ben
+Fixed up with the next version.
 
+Cheers,
 
-> An unlocked update on vm->delayed can leave vm->last_unlocked with a
-> seqno older than the fence already in vm->root.bo->tbo.base.resv:
->
-> CPU0 (locked update)              CPU1 (SVM MMU notifier)
-> amdgpu_vm_update_range()
->   /* checks vm->last_unlocked */
->   amdgpu_vm_ptes_update()
->     amdgpu_vm_pt_alloc()
->       amdgpu_vm_end_critical()
->                                   svm_range_unmap_from_gpu()
->                                     amdgpu_vm_update_range(unlocked=true)
->                                       /* submits seqno N on vm->delayed */
->                                       /* vm->last_unlocked = seqno N */
->       amdgpu_vm_begin_critical()
->   /* submits seqno N+1 on vm->delayed */
->   /* adds seqno N+1 to vm->root.bo */
->
-> amdgpu_vm_update_range()
->   dma_resv_add_fence(..., vm->last_unlocked, ...)
->     /* seqno N < seqno N+1: allocates a new slot */
->     BUG_ON(fobj->num_fences >= fobj->max_fences)
->
-> The same ordering can occur when an unlocked update sets
-> vm->last_unlocked before amdgpu_vm_update_pdes(), which submits on
-> vm->delayed and adds its fence to vm->root.bo without flushing
-> vm->last_unlocked.
->
+Hannes
+-- 
+Dr. Hannes Reinecke                  Kernel Storage Architect
+hare@suse.de                                +49 911 74053 688
+SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
