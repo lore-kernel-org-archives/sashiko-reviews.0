@@ -1,87 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.51
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795210437;
-	b=Lkx26crARBEIo5unfgZpXbKeIZteEvUFW1sQZ1LpWk6D47A40cETwtBQlrf0X0rgNlIg
-	 dnQES3ejvtkX0cfRGFZSuoN3SWNOTvylqsa3EhY88Dq1z5pqOflHj8vK5FHgj8TuPzC6b
-	 iOegpVJzxI1cHmNtCFxd6oLELoFyXfAD1Rn58nTuI/w6u7XZHQfMB/f5OEbpI+IL0LqGt
-	 wYjd2SXMzUwzifbCFGuzQiOR8JTdOnPO9uhh3RlR+e6xwhayEElU056bqmwzQ/rWNlhqI
-	 gEQulDpt6udC2iQhzX/j+TP5bRmn0phxQloUEuMAwKtDwb8wRRxzTeODD4mz3+L9FvQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795210437;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.52
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795213632;
+	b=A1ucT9vVmgZj7PdFI0Gmfrdn+lGd3YklLcqj1MB7UHEb6jD2P1TVJBmys8fq/S3KklcM
+	 zhnSMth+oxw4yTUs8DjBiRuLmUayTvzM8NbFgi+a2pTM+BtplQefLkT9SpnDLPtQu1ho1
+	 CT5TldHguWFAoMW0OL47hClYrNMxbzXjZMpnYWzI7L8JSTtMWb2IEf/y1jbYlnBVOuh0n
+	 PYnZDrvIy590a8PlLXgPEQzo8qDE44amnA2gliEuN6vUJwWhSCdJVFBi4KIfe3l305Vuy
+	 kA+EoZPNyVe/mm+r299DqcAZFjh/+ovQiMO6BLHk7zIjNvwa493/5Qm2ZywatxheH9A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795213632;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=NQI7dFtW45SJmVgRHVzx21Zyb7CXJ48fgy5qE9osfjQ=;
-	b=ATEp22donHHPPp/tUL6tUVmw0E8Hiik+8JunINfROE7mSY9LDC0ezRlTyWSmLu44dCFH
-	 xXXVAIaZoVBbOIp8phPTmgleVkbO08Eln0kHx9TUQn4r6Ebca5G1oW54yHBEanYrGCAon
-	 7f43pN4qSrj9MWGJ37qOwqPCPk0p/sSisXdxyO55KUIALc5KJRC+PUUZ0BMOJ+Tc6JFAR
-	 cxG0fN8yQad78Aly/xjVCCtZKzJqCDVbeDB5cfJKJ9zqycHNylQDgV5Hj6gK4DkScmoBp
-	 BuSH/kYtqtP3GWNngPXMro+aitBgkZYqI8eHo0Yfco8vaujk4h06clxLWsv738zvCYw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=riscstar.com;
-	spf=pass smtp.mailfrom=riscstar.com;
-	dkim=pass header.d=riscstar.com header.i=@riscstar.com header.a=rsa-sha256 header.s=google header.b=sgSc18+K;
-	arc=none smtp.remote-ip=209.85.160.51
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=sJC40Ryd2PolMbpdkwtiGQ16pRLfcNP+ySmcSLjXvR8=;
+	b=MNp6Tp/StMZeSnsIrf30tvJ0PcTVrAgerWC7v/cvxf6zHw4yqvT+BBiILrpsbn4Psq8N
+	 jWI2qDrVw+xjwDP3IqMZEMuuzwLndY0An4KzrcnarNzzn97pKG+R2cSKuljgZDs/Upg5s
+	 Wl5lCiyOhSBqix9tekg523D2c5es1Q9HywRjqQumY6D53Z1nmAtXhFMSC7evnhSa2JdXw
+	 J9x7acD6Ho4nn9sVKmdfvI0Ml2PMknsidrIPIVMcbrwC+TNHBpHu0XbfxpgMBUw+KPoFa
+	 dre9eLf0pXjGnBTw06R9OL190dn8zbRnI7P4Pir5IMgGXtCkOYj/W13qeIsbxt0as5w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=chromium.org;
+	spf=pass smtp.mailfrom=chromium.org;
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=Rdmb8P0I;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.52
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC89606A32C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 21:33:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8DC89606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E73606A6B6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 22:27:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 44E73606A6B6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar.com header.i=@riscstar.com header.a=rsa-sha256 header.s=google header.b=sgSc18+K
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-483d290f398so837503fac.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 13:33:54 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=Rdmb8P0I
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-67c0ffaae1dso2249413d50.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:27:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795213630; cv=none;
+        d=google.com; s=arc-20260327;
+        b=lGZT+p/0CiwxAZm9RAs8woPhxHG3OFlKxAiR1gEeUgV6Ml2LmYl1UioEbdAtlR0Bg+
+         jFzzaWY33wcNRDwEurG0LjExrZpRp7MwhdLAHImbN6uJSbnwiz1ne0FVyZB4uqJOO1jg
+         UDTaDb3EIPwEnVNd8uSvmwlYovAqF4Syb1TSOBUnwm6npvYEYqkO+yWLbXaHLV6KqxWZ
+         9gc9I4Q6ZwTl40W4ihLCOlwzMKQeynfrGH+4oU9ArbVT1V/W/ErS26BcBg1G0X/VvJx2
+         nl62pfxyS1RofXfwm8w7dlw1dNF9K44dnvy6ZhJN0qmBfA90vXZQbKFDO3v6qO28GL8T
+         zvmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=sJC40Ryd2PolMbpdkwtiGQ16pRLfcNP+ySmcSLjXvR8=;
+        fh=osfj9leewLfc4MqIYaUjfG4KfpRUNqFnByXZRUnRoVs=;
+        b=APYHt009K4r005QriAAcIUYdsrI10DXzaevaGUSNP5F+ji/S0YHDCzwT/tr4DDuWum
+         osWWliB9+YTWvJOBeMAtXloGWP/fqixPbKZY+j4vzw7AzTHvJbZzZIBszindUBN+gwY3
+         1x5vdhdyPTVXVly5pF0OsuQhBEFleBk1B0XzZnRkk1XobSE/tH3dEn04GDEo15sLPxlp
+         9F+tH+fAWDohIbSxbIHWqtwC10e3c/wAO7reGDWQK7dWn5T7AL5gs+cC657poPps/ix5
+         kgq2HkQVcHC4VbnJemSonSTwpciF5KNvChTPlIM2Fw1sfaHbxVDYo33y3boTm6Lud/D2
+         XpdA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar.com; s=google; t=1795210433; x=1795815233; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NQI7dFtW45SJmVgRHVzx21Zyb7CXJ48fgy5qE9osfjQ=;
-        b=sgSc18+KdI5L3m8xV3Ls4PnGFUlyPV43jDyCeYJrlqCyVEhKh1JCirurvzCR52WZlG
-         +8Zp3U6I58GtPGugt/t41q4tUD/1awU23V4IKDcs65s/gqjmyUHecb7YLHZxCIx8GPtI
-         4DVrQ3wgZxEXRj/rb7991uQ5s7JSKA4RUYyhLxIuIE1q6DMU48Nnx4BZ9i/nn6FZ9Ydm
-         bqThaENPsKPvZqhd2nlvsBp3cBk3TepFrHcuQ+86zFfsp2gCSh9KyALPLI5DB3bywZSj
-         MH4x2hDkQaFM+Jrr8y/o+uAQg2d2jI7b1X+4/agE3G/IgLWt7QfZrK2r9Md1D4jlDkqY
-         EiTQ==
+        d=chromium.org; s=google; t=1795213630; x=1795818430; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=sJC40Ryd2PolMbpdkwtiGQ16pRLfcNP+ySmcSLjXvR8=;
+        b=Rdmb8P0Ix4MWPdGhppW3G4SqsyhDap4GI5EqCPEM3qIwpj4BAtgzNcb+FbeVH7miE/
+         WUzD7t20f9x98CEgYhWHaD3RTF6mJ0ppw7ZwUwz+ftdNsvzsKUsoUj/mHZJVegsTzOIY
+         U4WOFZszrvnw+94K/16cd0YSr8tiozbHEGxNs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795210433; x=1795815233;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=NQI7dFtW45SJmVgRHVzx21Zyb7CXJ48fgy5qE9osfjQ=;
-        b=hXdAtM8zizGo9y7dKSN28r+lJOs1AzjPMjVoIJaXxyRoH9OROvDVkFJJNj4sHHGjit
-         jBrfgiK6K1IXKE3BRbBEDNi1JyD4l5OBkQzgdCbojotRWiACStSpBAa+f+yoGRWTbHqu
-         iF5jozsJgLo8JGemy7xEyX1DPFTEE6+3U4LMkZV5a/PXFu1Fr+BxfPCq5g2bZ/5XgrkE
-         xjnEYWNhG+hP+6CjDvDrkyMRKdIsHdnedP8Wo1h6VcYK2/yzGqll8QtIUbah4HfQDGjd
-         fudI4Q4prFDqRNHzj+HJt0ZcmVNXv4aQmtANo+VPBGuh+oMnoRyuzL52Ok+nQt6hFUgT
-         QT6g==
-X-Gm-Message-State: APuU4Z9vecvtHqdP9HjHRi7MJClaMytFs5hxGmqsNxZNuYNpFKYMC52j
-	y6JnHKPAsTA/5RJGHxTP8Kc62cEoonAgiVRVC5OPo35REASEuDnSVXuN7jTzToGmbVjIv3PxZEE
-	ClJZYprS6jQ==
-X-Gm-Gg: AZFdTZcjVOmhl/KSYkbj/UEmsX59gS530a6uWMOGi+z+EdhLqss/WMVjdqmyG18ddHu
-	0o8nGFqQmXXSyyzT8ZWGxtqmIBKogqcc7dW+aVUN8dqM76IwfbNwU8jHwon6yKzU7HPMCPOQROD
-	7SxxnpCLp8AukvmzO41pVsr6vw+PVzRsZ6XMA3bWsaMQ4rzFcWIQn/c0Zook9mgmXbRhNZEppCn
-	jl7Puu2xcyVdZ8AP2z+1c+Im022PUgVr82xS3Vj4bqbfnCRWGjkqsJXE0abhTETEsx4rwCQPyY9
-	3vPR6QQfm3QVEut5NjL5Gr2Pe4uSKpxzXZ1y64KqnTkG3ZuEHB94uW7PB5Z6jVp238T3cZKwnv/
-	p2X1AFnC3xoPx+zsR+jaVILfJSj81dooViyTwC2xtptOFiUImj/Bhw6YWSha/sfGW2ssFrDYTv5
-	e2jAD0rVuOGbOHhvH19d2TxCwCzf/PKp4eivRG6YdPU9TD5y5zkwSb/gWnkEb/Rcqaa7b6WmpWm
-	eVbqUJdhiYXlUiyVvqRN1KGa9cl8VluqmuYYobvweb7nFfAlc0JrqCGWrKwaPQwCygC2st+JnVe
-	1R3rygtuoz6DgeXUurbCXLMROwQYRdoRvw==
-X-Received: by 2002:a05:6870:3d8b:b0:483:cb42:3979 with SMTP id 586e51a60fabf-4bc8289cfbamr4568358fac.17.1795210433325;
-        Fri, 20 Nov 2026 13:33:53 -0800 (PST)
-Received: from [172.22.22.28] ([76.156.233.211])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bd3008160dsm3072987fac.16.2026.11.20.13.33.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Nov 2026 13:33:53 -0800 (PST)
-Message-ID: <51e8f08c-623f-44ad-a2ce-d7905984a6ee@riscstar.com>
-Date: Fri, 20 Nov 2026 15:33:52 -0600
+        d=1e100.net; s=20260707; t=1795213630; x=1795818430;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=sJC40Ryd2PolMbpdkwtiGQ16pRLfcNP+ySmcSLjXvR8=;
+        b=ot8EOeVK6IBWMC2Ria/enyaz5CCoOODWtEpleBzfdLrmdG6G7IHq7SrLEkMQI4XuBW
+         6Qyc583nWn2GNkYe8w8sA+FedQYKGHqL4zT2h68KYPxvhxtSMIXw4IBIOYsLYzeF/Sg7
+         b9e+Sg6iZGhjbR7GOrTNcAofb9mnrQNPLuzRLPwuL1vYE9TxV48cKjepJBvHudGb2UPp
+         jlpRCjqWMKUrfmGfbHFKuxPQ7ERapS9GzA5Cexe7mRVcVznssWbO6+4y8MFlsg9m5C7E
+         GtrV2EGXA4mgfTpEzyaowEBmIvBiJOUlU51h+QFdli8BVIG6z/i7nc2CF56RnBdl7DHD
+         BrxQ==
+X-Gm-Message-State: APuU4Z8XT5QkPwzuaYKLDQBxoWQmLvD0vxFGGamfn0jqKqoaZAkcsEjr
+	VQLokXf8LorLuYj6JpjFXhiQ0xjghzFnljUUVosVk/Mtaducdh/aZaip+DHT5Cg/LtGB7FXdwO0
+	bjhgoR9SA1XylZZe4N/e0qjSHoLF929xAHqJauWBxbP/x3mPB5X13pg==
+X-Gm-Gg: AZFdTZd7JSLSe2k6MsVA+8clyquJOFMiCb4dyq2iMBvsdHpEqHtUayGJluXar3agTRF
+	h8md4D48AInhqK0Wn5HmNKcPw1duEbRVtJ5SIf+W8+SfNUjw9lfHu+UTWokPt/iDGQkV5eJuQ2b
+	jbJ/FafGB34fxEBSO1N8KaArkgmavpP+2ozm7FpQxYl4WUeYz2T90hQsRMzU0aS21orgh6pc2GH
+	QZLG69Db7nEUarvRxEH1XVPb5wYNG2Cx0qaUsyuW1UE6u0kN9zcFfVR9lDowfRQ9//YkAZSNusY
+	9dBhXmSpSC5Qhk+TpdkiFDU20rBBvMsfanFpiISPbHkKw7adVYBY/C1JKSGZBncl1uabWMh1Kv7
+	05FWFPPzzlqnHmSpW7zSyGCoKAUrHg6jCcEaZDZChpBDQ60Mysq7vskTVD36MDIUkqrE=
+X-Received: by 2002:a05:690e:e87:b0:677:c90f:46bf with SMTP id
+ 956f58d0204a3-67dec4202b0mr2356631d50.17.1795213629927; Fri, 20 Nov 2026
+ 14:27:09 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,300 +100,264 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] clk: toshiba: introduce a TC9564 clock/reset
- driver
+References: <20261024-send-upstream-v7-0-abad13174b43@chromium.org>
+ <20261024-send-upstream-v7-5-abad13174b43@chromium.org> <sashiko-outbox-183485@kernel.org>
+In-Reply-To: <sashiko-outbox-183485@kernel.org>
+From: Jingyuan Liang <jingyliang@chromium.org>
+Date: Fri, 20 Nov 2026 14:26:58 -0800
+X-Gm-Features: Aa3M54qZWOnlCO2Ri2HHPaWV1QD3dKmEZ7zroVjs3jsWx80nUbk_TphKVz5rLYk
+Message-ID: <CAEe3GZH-+M+PJpSm7ML5AEbcz9Ti+EoFJhi7+L-=PK3L6+770w@mail.gmail.com>
+Subject: Re: [PATCH v7 05/11] HID: spi-hid: add HID SPI protocol implementation
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20261120183212.1264522-1-elder@riscstar.com>
- <20261120183212.1264522-3-elder@riscstar.com>
- <sashiko-outbox-225862@kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <sashiko-outbox-225862@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: linux-input@vger.kernel.org, linux-trace-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
+	dmitry.torokhov@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/20/26 12:42 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [Medium] clk: tc9564: unlocked register read-modify-write in
->    reset_manage()
-> - [Medium] clk: tc9564: missing select RESET_CONTROLLER in
->    COMMON_CLK_TC9564
-> - [Low] clk: tc9564: stale v1 and dt-binding text in commit message
-> - [Low] clk: tc9564: duplicate clk_gate implementation in
->    gate_register()
+On Fri, Oct 23, 2026 at 6:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [Medium] HID: spi-hid: spi_hid_reset_work() runs pre-error work before =
+SPI_HID_ERROR
+> - [Medium] HID: spi-hid: sync requests not aborted or serialized on reset=
+ in error path
+> - [Medium] HID: spi-hid: duplicate reset scheduled on timeout in spi_hid_=
+get_request()
 > --
-
-Quick summary (more below):  I will act on all of the observed
-issues mentioned here.
-
-> commit c8a057c6e9911108f130ae1447d0fae1c9ba8eff
-> Author: Alex Elder <elder@kernel.org>
-> 
-> clk: toshiba: introduce a TC9564 clock/reset driver
-> 
-> This commit adds a platform driver for the clock and reset controllers on
-> the Toshiba TC9564 SoC.
-> 
->> Define a new platform driver that manages clocks implemented by the
->> Toshiba TC9564 SoC.  There are 21 gate clocks that can be enabled
->> and disabled, but currently only the clocks that are (or will soon
->> be) used are defined to be controllable.
->>
->> Two registers manage the state of the clocks.  The registers are
->> accessed via a regmap supplied by a system controller.  Access to
->> the memory region is provided via a BAR on a PCIe endpoint function
->> embedded in the TC9564 SoC.
->>
->> Define the binding for the clock and reset controller that present in
->> the Toshiba TC9564 SoC.
-> 
-> [Severity: Low]
-> These first three paragraphs appear to be leftover text from v1 and the
-> devicetree binding patch: the driver now maps the platform MMIO resource
-> directly via devm_platform_ioremap_resource() instead of using a syscon
-> regmap, and the description restarts in the fourth paragraph.
-
-This is correct, I neglected to update the text that talked about
-regmaps.  I will fix this.
-
-I will also fix the e-mail addresses provided for Daniel and me.
-I'll use the our @kernel.org addresses, to be consistent with
-what's in the MAINTAINERS file.
-
-
-> 
->> diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
->> index 6bfa2c8fffe1b..b27807ee93863 100644
->> --- a/drivers/clk/Kconfig
->> +++ b/drivers/clk/Kconfig
->> @@ -185,6 +185,14 @@ config COMMON_CLK_CDCE706
->>   	help
->>   	  This driver supports TI CDCE706 programmable 3-PLL clock synthesizer.
->>   
->> +config COMMON_CLK_TC9564
->> +	tristate "Toshiba TC9564 clock and reset support"
->> +	depends on TC9564_PCI || COMPILE_TEST
->> +	default TC9564_PCI
->> +	help
->> +	  This enables support for the clock and reset controllers embedded
->> +	  in the Toshiba TC9564 SoC.
-> 
-> [Severity: Medium]
-> Should COMMON_CLK_TC9564 select RESET_CONTROLLER?  Because TC9564 is a
-> PCIe endpoint device, this driver can be enabled on host architectures
-> that do not select ARCH_HAS_RESET_CONTROLLER.  When
-> CONFIG_RESET_CONTROLLER is disabled, devm_reset_controller_register()
-> compiles to a no-op stub returning 0, silently omitting the reset
-> controller functionality and causing non-optional reset consumers to fail
-> with -ENOTSUPP.
-
-Yes, it should.  It passed COMPILE_TEST checks, but this
-code sits outside drivers/reset so this should be selected.
-
-> 
->> diff --git a/drivers/clk/clk-tc9564.c b/drivers/clk/clk-tc9564.c
->> new file mode 100644
->> index 0000000000000..65ed524bf2ee7
->> --- /dev/null
->> +++ b/drivers/clk/clk-tc9564.c
-> 
+>
+> commit 921e27cc043191cc71704b14d2cdca05f5da7a1c
+> Author: Jingyuan Liang <jingyliang@chromium.org>
+>
+> HID: spi-hid: add HID SPI protocol implementation
+>
+> This commit implements the HID over SPI protocol in spi-hid-core.c,
+> adding interrupt handling, input report processing, synchronous output
+> request/response tracking, and error recovery via device reset.
+>
+> > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
+pi-hid-core.c
+> > index 54c278ac8803b..cd4d763840098 100644
+> > --- a/drivers/hid/spi-hid/spi-hid-core.c
+> > +++ b/drivers/hid/spi-hid/spi-hid-core.c
 > [ ... ]
-> 
->> +static const struct reset_init reset_init[] = {
->> +	[RESET_I2C] = {
->> +		.offset = RESET0_OFFSET,
->> +		.mask = BIT(12),
->> +	},
->> +	[RESET_PCIE] = {
->> +		.offset = RESET0_OFFSET,
->> +		.mask = BIT(9),
->> +	},
->> +	[RESET_MSIGEN] = {
->> +		.offset = RESET0_OFFSET,
->> +		.mask = BIT(18),
->> +	},
->> +
->> +	[RESET_MAC0_MAC] = {
->> +		.offset = RESET0_OFFSET,
->> +		.mask = BIT(7),
->> +	},
->> +	[RESET_MAC0_PMA] = {
->> +		.offset = RESET0_OFFSET,
->> +		.mask = BIT(30),
->> +	},
->> +	[RESET_MAC0_XPCS] = {
->> +		.offset = RESET0_OFFSET,
->> +		.mask = BIT(31),
->> +	},
->> +
->> +	[RESET_MAC1_MAC] = {
->> +		.offset = RESET1_OFFSET,
->> +		.mask = BIT(7),
->> +	},
->> +	[RESET_MAC1_PMA] = {
->> +		.offset = RESET1_OFFSET,
->> +		.mask = BIT(30),
->> +	},
->> +	[RESET_MAC1_XPCS] = {
->> +		.offset = RESET1_OFFSET,
->> +		.mask = BIT(31),
->> +	},
->> +};
->> +#define RESET_COUNT	ARRAY_SIZE(reset_init)
-> 
+> > @@ -172,17 +333,96 @@ static const char *spi_hid_power_mode_string(enum=
+ hidspi_power_state power_state
 > [ ... ]
-> 
->> +static const struct gate_clock *hw_to_gate_clock(struct clk_hw *hw)
->> +{
->> +	return container_of_const(hw, struct gate_clock, hw);
->> +}
->> +
->> +static int gate_clk_manage(struct clk_hw *hw, bool enable)
->> +{
->> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(clk_hw_get_dev(hw));
->> +	const struct gate_clock *clock = hw_to_gate_clock(hw);
->> +	u32 mask = clock->init->mask;
->> +	void __iomem *ioaddr;
->> +	u32 val;
->> +
->> +	ioaddr = tc9564_clock->ioaddr + clock->init->offset;
->> +
->> +	val = readl(ioaddr);
->> +	if (enable)
->> +		val |= mask;
->> +	else
->> +		val &= ~mask;
->> +	writel(val, ioaddr);
->> +
->> +	return 0;
->> +}
->> +
->> +static int gate_clk_enable(struct clk_hw *hw)
->> +{
->> +	return gate_clk_manage(hw, true);
->> +}
->> +
->> +static void gate_clk_disable(struct clk_hw *hw)
->> +{
->> +	(void)gate_clk_manage(hw, false);
->> +}
->> +
->> +static int gate_clk_is_enabled(struct clk_hw *hw)
->> +{
->> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(clk_hw_get_dev(hw));
->> +	const struct gate_clock *clock = hw_to_gate_clock(hw);
->> +	void __iomem *ioaddr;
->> +
->> +	ioaddr = tc9564_clock->ioaddr + clock->init->offset;
->> +
->> +	return readl(ioaddr) & clock->init->mask ? 1 : 0;
->> +}
->> +
->> +static const struct clk_ops gate_clk_ops = {
->> +	.enable = gate_clk_enable,
->> +	.disable = gate_clk_disable,
->> +	.is_enabled = gate_clk_is_enabled,
->> +};
->> +
->> +static struct clk_hw *gate_register(struct device *dev, const char *name,
->> +				    const struct clock_init *init)
->> +{
->> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(dev);
->> +	struct clk_init_data clk_init = { };
->> +	const struct clk_hw *parent_hw;
->> +	struct gate_clock *clock;
->> +	int ret;
->> +
->> +	clock = devm_kzalloc_obj(dev, *clock);
->> +	if (!clock)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	parent_hw = tc9564_clock->clk_data->hws[init->parent];
->> +
->> +	clk_init.name = name;
->> +	clk_init.ops = &gate_clk_ops;
->> +	clk_init.parent_hws = &parent_hw;
->> +	clk_init.num_parents = 1;
->> +	if (init->type == CRITICAL_GATE)
->> +		clk_init.flags = CLK_IS_CRITICAL;
->> +
->> +	clock->hw.init = &clk_init;
->> +	clock->init = init;
->> +
->> +	ret = devm_clk_hw_register(dev, &clock->hw);
->> +	if (ret)
->> +		return ERR_PTR(ret);
->> +
->> +	return &clock->hw;
->> +}
-> 
-> [Severity: Low]
-> This isn't a bug, but now that the driver accesses MMIO registers directly
-> rather than through regmap, gate_register() and gate_clk_ops duplicate the
-> standard single-bit MMIO gate implementation.  Using
-> devm_clk_hw_register_gate_parent_hw() (as pll_register() and
-> fixed_register() do with the fixed-factor helpers) would allow dropping
-> struct gate_clock and the custom gate callbacks.
-
-This is a very good point.  Previously I avoided the standard
-gate clocks *because* we were using regmap.  I will review this
-but I expect to be able to use the existing code instead.
-
-> 
->> +
->> +/* Warn on requests to assert or deassert critical resets */
->> +static bool reset_is_critical(unsigned long id)
->> +{
->> +	return WARN_ON(id == RESET_I2C) || WARN_ON(id == RESET_PCIE);
->> +}
->> +
->> +static int reset_manage(struct reset_controller_dev *rcdev,
->> +			unsigned long id, bool assert)
->> +{
->> +	struct tc9564_clock *tc9564_clock = dev_get_drvdata(rcdev->dev);
->> +	const struct reset_init *reset = &reset_init[id];
->> +	u32 mask = reset->mask;
->> +	void __iomem *ioaddr;
->> +	u32 val;
->> +
->> +	if (reset_is_critical(id))
->> +		return 0;		/* Just ignore the request */
->> +
->> +	ioaddr = tc9564_clock->ioaddr + reset->offset;
->> +
->> +	val = readl(ioaddr);
->> +	if (assert)
->> +		val |= mask;
->> +	else
->> +		val &= ~mask;
->> +	writel(val, ioaddr);
->> +
->> +	return 0;
->> +}
-> 
+> > +static void spi_hid_error_handler(struct spi_hid *shid)
+> > +{
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +     int error;
+> > +
+> > +     guard(mutex)(&shid->power_lock);
+> > +     if (shid->power_state =3D=3D HIDSPI_OFF)
+> > +             return;
+> > +
+> > +     disable_irq(shid->spi->irq);
+> > +
+> > +     if (shid->reset_attempts++ >=3D SPI_HID_MAX_RESET_ATTEMPTS) {
+> > +             dev_err(dev, "unresponsive device, aborting\n");
+> > +             spi_hid_stop_hid(shid);
+> > +             shid->ops->assert_reset(shid->ops);
+> > +             error =3D shid->ops->power_down(shid->ops);
+> > +             if (error)
+> > +                     dev_err(dev, "failed to disable regulator: %d\n",=
+ error);
+> > +             shid->power_state =3D HIDSPI_OFF;
+> > +             /* Dead device: leave the IRQ permanently disabled. */
+> > +             return;
+> > +     }
+> > +
+> > +     clear_bit(SPI_HID_READY, &shid->flags);
+> > +     set_bit(SPI_HID_RESET_PENDING, &shid->flags);
+> > +
+> > +     shid->ops->assert_reset(shid->ops);
+> > +
+> > +     shid->power_state =3D HIDSPI_OFF;
+> > +
+> > +     /*
+> > +      * We want to cancel pending reset work as the device is being re=
+set
+> > +      * to recover from an error. cancel_work_sync will put us in a de=
+adlock
+> > +      * because this function is scheduled in 'reset_work' and we shou=
+ld
+> > +      * avoid waiting for itself.
+> > +      */
+> > +     cancel_work(&shid->reset_work);
+> > +
+> > +     /* Drop work requested before this reset. */
+> > +     clear_bit(SPI_HID_RESET_RESPONSE, &shid->flags);
+> > +     clear_bit(SPI_HID_CREATE_DEVICE, &shid->flags);
+> > +     clear_bit(SPI_HID_ERROR, &shid->flags);
+> > +
+> > +     shid->ops->sleep_minimal_reset_delay(shid->ops);
+> > +
+> > +     shid->power_state =3D HIDSPI_ON;
+> > +
+> > +     shid->ops->deassert_reset(shid->ops);
+> > +
+> > +     enable_irq(shid->spi->irq);
+> > +}
+>
 > [Severity: Medium]
-> Can concurrent reset operations on lines sharing RESET0_OFFSET or
-> RESET1_OFFSET race in reset_manage()?
+> What happens if a synchronous request is waiting on shid->output_done in
+> __spi_hid_sync_request() while an interrupt error in spi_hid_dev_irq() ->
+> spi_hid_irq_error() or a spontaneous RESET_RESPONSE in
+> spi_hid_process_input_report() triggers a reset?
+>
+> In __spi_hid_sync_request(), the caller holds shid->output_lock while
+> waiting in wait_for_completion_timeout(&shid->output_done, ...). However,
+> spi_hid_error_handler() only acquires shid->power_lock: it does not
+> serialize with shid->output_lock or shid->io_lock, nor does it clear
+> shid->expected_response or complete shid->output_done to abort an in-flig=
+ht
+> request.
+>
+> Because of this:
+> 1. A thread in __spi_hid_send_output_report() that already passed the
+>    test_bit(SPI_HID_READY, &shid->flags) check before acquiring
+>    shid->io_lock can perform spi_hid_output() on the SPI bus while
+>    spi_hid_error_handler() has asserted reset and set shid->power_state t=
+o
+>    HIDSPI_OFF.
+> 2. When the device finishes resetting and sends RESET_RESPONSE,
+>    spi_hid_reset_response() -> spi_hid_sync_request() blocks on
+>    shid->output_lock until the pre-reset waiter's 1000 ms timeout expires=
+.
+> 3. Once wait_for_completion_timeout() in __spi_hid_sync_request() finally
+>    times out, the pre-reset caller sets SPI_HID_ERROR and schedules
+>    shid->reset_work again, triggering a second hardware reset after the
+>    first recovery completes and incrementing shid->reset_attempts a secon=
+d
+>    time.
+>
+> Should the error and reset paths abort any in-flight request (or serializ=
+e
+> with shid->output_lock / shid->io_lock) so that pre-reset waiters do not
+> stall recovery and schedule a stale reset on timeout?
 
-I hadn't considered that, but yes, we could be exercising this
-code concurrently, so a spin lock should be used.
+The pending waiter times out and triggers one more reset, after which
+the device recovers. I'll keep the current locking here.
 
-Great review feedback!
+>
+> [ ... ]
+> > @@ -324,13 +752,206 @@ static int spi_hid_create_device(struct spi_hid =
+*shid)
+> [ ... ]
+> > +static void spi_hid_reset_work(struct work_struct *work)
+> > +{
+> > +     struct spi_hid *shid =3D
+> > +             container_of(work, struct spi_hid, reset_work);
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +     int error =3D 0;
+> > +     bool resched =3D false;
+> > +
+> > +     if (test_and_clear_bit(SPI_HID_RESET_RESPONSE, &shid->flags)) {
+> > +             spi_hid_reset_response(shid);
+> > +             resched =3D true;
+> > +     } else if (test_and_clear_bit(SPI_HID_CREATE_DEVICE, &shid->flags=
+)) {
+> > +             guard(mutex)(&shid->power_lock);
+> > +             if (shid->power_state !=3D HIDSPI_OFF) {
+> > +                     if (!shid->hid) {
+> > +                             error =3D spi_hid_create_device(shid);
+> > +                             if (error) {
+> > +                                     dev_err(dev, "%s: Failed to creat=
+e hid device: %d\n",
+> > +                                             __func__, error);
+> > +                             }
+> > +                     } else {
+> > +                             spi_hid_refresh_device(shid);
+> > +                     }
+> > +             } else {
+> > +                     dev_err(dev, "%s: Powered off, returning\n", __fu=
+nc__);
+> > +             }
+> > +             resched =3D true;
+> > +     } else if (test_and_clear_bit(SPI_HID_ERROR, &shid->flags)) {
+> > +             spi_hid_error_handler(shid);
+> > +     }
+>
+> [Severity: Medium]
+> Should spi_hid_reset_work() check SPI_HID_ERROR before
+> SPI_HID_RESET_RESPONSE and SPI_HID_CREATE_DEVICE?
+>
+> In spi_hid_error_handler(), the code clears SPI_HID_RESET_RESPONSE and
+> SPI_HID_CREATE_DEVICE with the comment:
+>
+>         /* Drop work requested before this reset. */
+>         clear_bit(SPI_HID_RESET_RESPONSE, &shid->flags);
+>         clear_bit(SPI_HID_CREATE_DEVICE, &shid->flags);
+>         clear_bit(SPI_HID_ERROR, &shid->flags);
+>
+> However, because spi_hid_error_handler() is only called from the final
+> else-if branch in spi_hid_reset_work(), it cannot run while
+> SPI_HID_RESET_RESPONSE or SPI_HID_CREATE_DEVICE is set. If an error sets
+> SPI_HID_ERROR while either of those bits is pending (for example, an IRQ
+> error in spi_hid_dev_irq() -> spi_hid_irq_error() after
+> spi_hid_dev_desc_response() sets SPI_HID_CREATE_DEVICE),
+> spi_hid_reset_work() will first execute spi_hid_reset_response() or
+> spi_hid_create_device() / spi_hid_refresh_device(), reschedule itself, an=
+d
+> only then run spi_hid_error_handler() to immediately reset the newly
+> created or refreshed HID device.
 
-					-Alex
+This results in one extra descriptor request before the reset. The
+HID device is kept since the report descriptor CRC is unchanged.
 
-> 
-> Unlike the clock framework (which holds enable_lock across enable and
-> disable callbacks), the reset controller core only acquires a
-> per-reset-control SRCU read lock in reset_control_assert() and
-> reset_control_deassert().  Two consumers asserting or deasserting
-> different resets in the same register (such as RESET_MSIGEN and
-> RESET_MAC0_MAC in RESET0_OFFSET) can perform concurrent read-modify-write
-> sequences and overwrite each other's bit changes.  A spinlock in struct
-> tc9564_clock around the readl()/writel() sequence in reset_manage() would
-> prevent this.
+>
+> [ ... ]
+> > @@ -355,6 +976,15 @@ static int spi_hid_get_request(struct spi_hid *shi=
+d, u8 content_id,
+> >               dev_err(dev,
+> >                       "Expected get request response not received! Erro=
+r %d\n",
+> >                       error);
+> > +             /*
+> > +              * -ENODEV: the device is not ready (e.g. a reset is in
+> > +              * progress), so the GET_FEATURE request was not sent.
+> > +              * Don't start another reset on top of the one already ru=
+nning.
+> > +              */
+> > +             if (error !=3D -ENODEV) {
+> > +                     set_bit(SPI_HID_ERROR, &shid->flags);
+> > +                     schedule_work(&shid->reset_work);
+> > +             }
+> >               return error;
+> >       }
+>
+> [Severity: Medium]
+> Won't a timed-out request in spi_hid_get_request() schedule a duplicate
+> reset?
+>
+> When __spi_hid_sync_request() times out waiting on shid->output_done, it
+> already sets SPI_HID_ERROR and schedules shid->reset_work before returnin=
+g
+> -ETIMEDOUT:
+>
+>         dev_err(dev, "Response timed out\n");
+>         /* The device may still answer later: resync it with a reset. */
+>         set_bit(SPI_HID_ERROR, &shid->flags);
+>         schedule_work(&shid->reset_work);
+>         return -ETIMEDOUT;
+>
+> Because spi_hid_reset_work() -> spi_hid_error_handler() does not take
+> shid->output_lock, the worker thread on another CPU can immediately begin
+> running spi_hid_reset_work() and clear SPI_HID_ERROR while
+> spi_hid_get_request() (and similarly spi_hid_report_descriptor_request()
+> and spi_hid_reset_response()) receives -ETIMEDOUT and sets SPI_HID_ERROR
+> and schedules shid->reset_work a second time. This triggers two
+> back-to-back hardware resets and increments shid->reset_attempts twice fo=
+r
+> a single timeout.
 
+__spi_hid_sync_request() already schedules the reset on timeout, so
+the second set_bit()/schedule_work() is a no-op while the work is
+pending.
+
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261024-send-ups=
+tream-v7-0-abad13174b43@chromium.org?part=3D5
