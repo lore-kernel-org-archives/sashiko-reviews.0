@@ -1,99 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.73
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795202894;
-	b=NtdEdfaBsStCjbwZDK+ls1Fvj63ZmiZ9T/I0X4Fk4USgHpUZmrTrFvuMb58zTMSZ+Lcc
-	 5Vy+hIHFkol+d6Men8NoExfHk7PGZaAHVU3bgf9syWavyjXjJBHLUNTjTIHYoNqt9bM04
-	 IcrZcGllYxSU9PgrbQhrL96qFWNVAK3QBNOr8U/gfB5dKLI7iHXdApy/EF3xCO4FISK/F
-	 lc9GsFC09meVXsSJrxLY9T9P6udnyLKW7Q4YwdklE1Qmg9TsVVT7/3UiA0/djHziu8wIu
-	 HFa0cFWjpAigc2q/l9XF7kkHXYJp3lc4Ayy3PSGSJ/C44hPynjIEWco4rozD6srB7OA==
+	t=1795203389;
+	b=XOtjRBuejb36LgT01Bjs1l26pbJfV6MBuztj1c5YsV4krJrKBKDau64c+rYwLgGAseqP
+	 AxgBPDbe3nBzLoR5O1TP8S7U4/T7yZelGO4Vrr3r67Ji1LrNcnRxBDVKAzIY2Aw1xbKtV
+	 82W52kvT7QfZ+/pj8daSzfb3q+RlIsDqHLCjMF1HTf0047ogqfXgiqMpy40Hu/W6qfhYB
+	 ShRbpSFXQll7s2CzTwZcJJ0LiNw58gsgvLf6dDv9MVEkxKAOzLQA3xv2XxEwk8GPP+DIp
+	 JkGYamYX+9BcpjOEKOm22L9/fWwStu5rttATms5Q/v25pzYvIlfigHpyFN9QimogUhQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795202894;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=gTSQmZl/zKK0zXMmK+A31LEN+NDNPEQL27tBFK3Clmw=;
-	b=O7GtJSMOqOt5J07115lvHugGB1PEb5O3ZMVCq3WnCj6Ulpe1AHVSPZ4vFzqZ6H5o52be
-	 QUPn3yafEbhGs1jXf5I3SewI3nNe0KpxML4ysVe+JvFLC/B7aBHKSLl4SF0mq+xmovkgc
-	 Q36IiGUgKSvSl7whIV3jolfcoZ7K+nvRhh+7/J3YA4RZhlzR7SGrPWErXwliV4mq+oFPs
-	 YnZZAbdMLZwj32MP9d6IQSBhzPp9Y+hyzNfbNbZATOP52KrHG4oW4utQKLDurKTOc4pi1
-	 zSNcq9iSZMHs9x1yFZMpFFs3cHIKX8fdtHwQuBosh92NCRbIrKHkbylz5bFuckP9F2g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795203389;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=k9PKnTZrhKTDzw6SghYEdOuydxnaY3+rzt9B8y07HDg=;
+	b=OWfGmWo9DfKhC03zlPFqpJ1YLwWquTJV5IVaAixaehJP180UeyYJE48Br/h2DXxU9EzE
+	 Bapr/rz1k8YHB14yMBFA8RfIBjHXIVw+6rt+ecWDsm2QAg8kEQ/Qg+uB7jQdtp7DyZ1n2
+	 OoK/ViE/pCqXozq9A90mKeHH/F+lHAmrOO6r8Ep11wo1umZV18nrQQXR8xjCL0Rkqf+Ly
+	 HTyVOHqtCoxayKmK4N6MH/zKxshM2U+PLHZ4n+spHRE5/pR3HhF49EkvTa3fgyUW3VjWA
+	 Utj3RNVpKxmbVokdmz43wpuGMv/gxVLKhSAJodyO5/tW73tRWQtOdP4Yda/1+AvSYtw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wYcy3TTO;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.51
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=jTLmM3hE;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.73
+Received: from YQZPR01CU011.outbound.protection.outlook.com (mail-canadaeastazon11020073.outbound.protection.outlook.com [52.101.191.73])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD0B606A6E0
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 19:28:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4BD0B606A6E0
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E259606A6D5;
+	Fri, 20 Nov 2026 19:36:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E259606A6D5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wYcy3TTO
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5c14f3dab66so1016610e87.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:28:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795202892; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WzbhBNsM6GVFmIK7VioOzL3RbMU0bhwnwT1mHgUrh+6MDWZBBWiZkywCIoNoR+Phzr
-         KhERTtt6joyj++u+5TtvsiF6gdv182GMQbW64lM8ASqY+XLz3b7KH2H9TZJw+LGN7f6B
-         y2wVe1t4XiMqlkN/HTNXxzu8FQKGAFwK9IMiT/XyRxg6D36xJAEXnHb6putR5nMo/Tkd
-         ZZTXufH31THVUi8rfwxQZQ2u6Wrz98rGoJ5L0tBk70rPJmQqHHN6q10OHP83tGH6X56F
-         q8zIWJje2b7//6H4jBio0fOVTauqHsTZD7F5MODaB4pvtqL1woYu1aRR3wZ9RsabCrcG
-         YpAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gTSQmZl/zKK0zXMmK+A31LEN+NDNPEQL27tBFK3Clmw=;
-        fh=/pNdPGSL7ubAyatZ82+wlnjupiDTvrpwsizegktnd3M=;
-        b=U3laGQbHXFNpNqgNyhuEGg9TBl9GlubGzckVzKKET2mQztcYzOpygfgx2iQqz4vKJS
-         Gp6Q0LPM92m40rPR37CJxP2bnd4er93QTfb+480P6YpOVoEnpsEbUoRKUteqLUhno4s9
-         3kTcgXfn2z3X2OsylZG/T6LWRY7iWkhGLou/CpjSEZcTXzhj7f5JmBVkZ8OszHO9Y6+r
-         SpNE6/vIhdvA/adj2dLEGdvrQIB9TSY+SE0un+kw7zEH14eEKA1ulq9f3te4GeexJ8hz
-         3gjvZuDbV55ZJjTOuIuQkMma5GJhQkQfCvKdXWcN8GEhLEL0ltGdyHPZCSP8pJHR8q8o
-         Pxsw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795202892; x=1795807692; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gTSQmZl/zKK0zXMmK+A31LEN+NDNPEQL27tBFK3Clmw=;
-        b=wYcy3TTO2tmhHWAjkVjy+KBnk9vbKFDKa8eOJz/Ndz8N8BRrwABQZcO2bXN1pWp9iN
-         3j/HICZA/EaOapUB4U8xDNER4p3QWHWhBI0cZN4yGTZTDJHYZt2ZhZ8Yj7l0wEBxMudY
-         MlUj23sMVS+fpEa71mtkf70MTTDsdPOlqWwZOFKNWe7QZQNH3JWRlsIiakz6GJ/MXDsC
-         r1CrAPt82Os0Nosq0Ggoq6Nj1qDsvRzhEosWIjzUmdGYpvYoZ3SQ8mBrJAUT1Nm/3nWK
-         CVMGDtJaHIVEZLV+XokJDXn0wTIryP035v1m7YQjhkTll11CqwrhAEPEiFsNsjViXhUj
-         pUNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795202892; x=1795807692;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gTSQmZl/zKK0zXMmK+A31LEN+NDNPEQL27tBFK3Clmw=;
-        b=eWEYEocPU8xM+oqOTFVWkl41cX/GNlCUcYJi4eQPLSZwAdTqZ7R8+R0ZqmOjNU+6VL
-         g+sKl/eEpdZ2UX/Z7tX58kf97Z0l3KySZdTxk7aunhnvExyCfAPPDWOhnDvXsbkcZtR3
-         Qil1uc5F4qH51Gs6g3y23RKlxACyY9KFSiP4fKkmjOuOm1LsAhjmUtZr0GNbT1KJyBHJ
-         E4WZQEGsbZjRy3B0VV4lMDxl3Lb6MGEW9UHuh0rML8q8R5l0mHviOjHmTOYI5FqRe5Dm
-         eegs7x2Aw8hE1yXhrZs81BwgycmB5ejF5TDMbNJJOx0CeARoOCHJo2/jNb7ZGY/RwFXr
-         cqkQ==
-X-Gm-Message-State: APuU4Z+3wUDPWaUOJYCI2hWqHLnv4ivtz4AAm5N90LOrRg+BrM1lEtTh
-	mOtCgESFhj0DXzdYpL0nLbzDTh3F/vtEpylFZbLOPuAW+yPXKSMAFLko9/ItUWSZno/qmVdmHk1
-	aAx0rzMLaD+g7xKi/nBwBtuWSjO+PIRHIGCXk
-X-Gm-Gg: AZFdTZd1rMupLNK4WBN4xqhYEWtl3SfCEyeMD0XRitdVU998FdljvJiKVpT2mdIo3G7
-	2ztcldnM/4rXvOcL2UgVNCjjqWHa2//+quPrkq7PfEUW6ESBBbwUHXlqw6NRR5r3BElxx2g8qEG
-	Gtdyaiue83I4C6KetvgRgobaHioYUk68fwjteb8GNFONQYBPbJMzhCjD1zNb/HxKZxmd0NGD1gD
-	0Rp8nHt4MDp7keJ86t+sJUNyDSxZfGTBoDY+/OuC3/P7iRpWZt05RQulhuS0Vk8rAj/XB2HOs4U
-	+/NqAg7J13XvnQ+5SZENME+wGrgKA6Av/7cPYO4Msx1IoZLgvGRVcT4oJgsv6m2GXAMgfTztgCR
-	QsJ2qZKJW4O6knaPVBz0DBoVAKsIAu5ARxK4W
-X-Received: by 2002:a05:6512:32c8:b0:5c1:46f8:913c with SMTP id
- 2adb3069b0e04-5c1b7c00f96mr1590361e87.20.1795202892209; Fri, 20 Nov 2026
- 11:28:12 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=jTLmM3hE
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ycCeds2gTrbcMh8oD2ga+2ZuLDDU/VJDql4KbbT9bhH2dO3DeZ6sVsaYnlha6tuooRtvWgmmHiGvJEQELNqN/cKi2RqxAp+WQWtd/BqARekafe/POfVaYwZqyNz4ilpoGB+IuGDJCqc3RObVLPIqNUUVnH9r1tyTzMGt5XUtKLqiJ9/bK+2Hv0IVWppWEhFTQwk5kEwmZPJMXVAzElhYzCeT3cLSOAKquL33VFkpIqRjUS1JvLjn6iFvViglqQ2DtIMv/OilMZlcXEs86zCEoGi9pM/UeqLY29sjrl3aEAu4UzaeuuIANeyGDt/xjihjy+QJ+pMlXlwIAvHETcl6Xw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=k9PKnTZrhKTDzw6SghYEdOuydxnaY3+rzt9B8y07HDg=;
+ b=hPwZ6DGArHhWgUkgxRaXM8nrv14h8LmQoNyrPNAB0VLrI7LHFQUFeMKXdq/8GqgMaWsFSIk6NkH0kQfAloRMOQTEqbfgyzXWtYrnf8Q8SQ9XIG0DuG45PBuyR6s9J2scwBrlVQlABmtJYGqQtIeky913XCyK/ce/KCfQ3yNb8dpYHdRakjUUrDobkAEe7hm78t0C+Vhap9dL2nQMefPB+5fNkk52F5A+HQCF5lU2RwtmHGTat+jeQuYfqzrbycqUjrBdFaRwZivrgk+enRC+WKez9i2vblzgiSqkG9d5ITASjD6AhIV7Bx07GNa62+I2MBmSaHDt6Gou6y/frqo0Nw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
+ dkim=pass header.d=efficios.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=k9PKnTZrhKTDzw6SghYEdOuydxnaY3+rzt9B8y07HDg=;
+ b=jTLmM3hEPSlHf1L1gJ6YUMkhd1isNRrlw8ZKeLm6P2BJODmwKnBbNn52Nlunf7y1px2yD7PwbFrzTcjEjbH2m82uEfZnamgVHUvKfGNnLC2bP9D+qr60e2No4kV5JaAdinB1HqD+38CGOV/Xfh1HvXZwk1kIeP0ymzWEh3PE1IFYaHZ0oUOMC7jKkjYMkOOtL1xFGfXcQ3EkkwK2ivh0oIp9cFt5KRm04KI3mz1geKAXN9WdAA5vv63Jm4E1jzaIJ7CugUhC5oOzDQcqL+32n7jykFEw6cEbQWyQIdYVhf2GERFdxMkZxjPO8moQPOHccKHlZ6DBr45BCYSwQaHRbw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=efficios.com;
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10) by YT3PR01MB5667.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:6a::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
+ 2026 19:36:23 +0000
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0639.011; Fri, 20 Nov 2026
+ 19:36:23 +0000
+Message-ID: <ddad5873-116d-4acd-b7e0-1e2a39f4056d@efficios.com>
+Date: Fri, 20 Nov 2026 14:36:21 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 15/33] sched/deadline: Keep a task in the root domain
+ that counts its bandwidth
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rt-devel@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org,
+ mkoutny@suse.com, linux-kernel@vger.kernel.org
+References: <cover.1795181240.git.mathieu.desnoyers@efficios.com>
+ <26529637dd1398d1bce1398efa83d9b71802777f.1795181240.git.mathieu.desnoyers@efficios.com>
+ <sashiko-outbox-225338@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-225338@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YQBPR0101CA0119.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:5::22) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,325 +100,88 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261106072412.7909-1-kanchanapsridhar2026@gmail.com>
- <20261106072412.7909-9-kanchanapsridhar2026@gmail.com> <sashiko-outbox-202714@kernel.org>
- <CACpmpofRbbRuRQfx0wd_xnitwz-TfWZ4_XfgR-y0HYPsN3ZFpA@mail.gmail.com>
-In-Reply-To: <CACpmpofRbbRuRQfx0wd_xnitwz-TfWZ4_XfgR-y0HYPsN3ZFpA@mail.gmail.com>
-From: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
-Date: Fri, 20 Nov 2026 11:27:59 -0800
-X-Gm-Features: Aa3M54qHyMHAs4REx3hc_QYhZyScUZM2KH4BsGOU3VT9vIU15C1WE7ikT83enGg
-Message-ID: <CACpmpof-tnHWn=mqGEm=xAGi039Ewh8Zv5=n+5QOrvLjefv3TA@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] mm: zswap: Batched zswap_compress() for storing
- large folios in batches.
-To: sashiko-reviews@lists.linux.dev
-Cc: hannes@cmpxchg.org, yosry@kernel.org, nphamcs@gmail.com, 
-	chengming.zhou@linux.dev, akpm@linux-foundation.org, linux-mm@kvack.org, 
-	herbert@gondor.apana.org.au, davem@davemloft.net, 
-	linux-crypto@vger.kernel.org, rientjes@google.com, willy@infradead.org, 
-	senozhatsky@chromium.org, 
-	"Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT3PR01MB5667:EE_
+X-MS-Office365-Filtering-Correlation-Id: a4a294d1-43c9-4187-c09f-08df473d8f12
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|18002099003|22082099003|4143699003|261026121527099003|56012099006|10067099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info:
+	gZGWfqMiTw/d59n+FFYr7E4/zgQJCAmHxXtr77JXV1xl3rBTymKBnPT6XVBIbviCnE5A42NegaUUypuvvmL7ikVBIsbxhEjwCF+MWhbKRJsaGdvVNkViIh1OfGVa5O71n9khWebNIS+uFRydxFNDp3xoW3HQEbVlIQPL8raRL2sH2oguLcjBg0zf99kIdxRRYreHLWYr5Mu/B/WIc1YAnWo7Kl1T+zkXpTijkcZsgTWKQVgP+2v9iacYoHBPKLFwQuT56GgHN/fgOw35Z75OoWgBD/7L1QVatjG1Rsu43xayBwSN6uiyiMO/X6s+iwfojrrXmOtHS47YBwxxHsf8tqUNhgLCPSGTf2ieHft76VRv6q/GOARTZlny9k4vDYqU9AUZmpY4rTDHK3gJp8TIJcBFjnVoOQiKpJJSaHgiv5eqZM9piYMGLvx4PmEWzVc5cncViQXXpeUgpg+kc1pvnJnw1aTGefPaeqtCLyiSMl1BCxEL61C+NeMZ/thLI4mGCuNDYNLHQjtxADrQ5IwJUFL/WT9lc1YWjQQGLAEwZiR7N28jQzIsVfr40pURePRfYr5pXBBeTqsxogrNNIsNhGeWJ9mgsPbFNfvJdEUGMkM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(18002099003)(22082099003)(4143699003)(261026121527099003)(56012099006)(10067099003)(261009223027099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bWdLNDdyZTRXUVZsQTgrdkVIWUFvTVFTTm54TThyYjNnUW8zcXJsZ3BRcXBI?=
+ =?utf-8?B?U2pjN2pySWticGRPWHRYTnIzL1R2ZnUzT1hVdjRoWGtEeTJaSjBFQkQ5TkFR?=
+ =?utf-8?B?RHJ6Q25xbUo5VHRCbWRmOXpON2tzYTdtWjI0Y25XU1pyaDJtaVNHSUNwYzJz?=
+ =?utf-8?B?bDJmaklURGtKaDBDUzluVW9YWUluNnNqYVV4RUNwMmQ0YUNoU3p4UUErSW9o?=
+ =?utf-8?B?M3pWaXgzc3pzMy8vNW5mSk5KbGMveW9xZXZ3QURUb1p4QWxoUE0rY3piOUcw?=
+ =?utf-8?B?cWlsb3hzOUd1a0phNnpsemg5M21OejBNcVJxUFl1MlU2UithaUg0MDc1cjA3?=
+ =?utf-8?B?UGVpMCtWNS80eVBhRDBPVlg3VFA1MlR5SW1IY0xrNHljNTlyT01EaDRpck03?=
+ =?utf-8?B?b1ZGc0c0RVRrTkExTFh5UWwzT0JqdWRsQ3I2OGxPK2VvMksvYnZzR1YzVHor?=
+ =?utf-8?B?ZnRlSG9yY2Nia1pHemtjUkM0b2V0WGF3SHJndDZYY2pyNGkrQ0hJL2ZGb3ds?=
+ =?utf-8?B?U0g5ZXgrTVlBZzMxN3B3VU45MjdHRjFsQ3hLd2FRNWJOOTNKRk9jejJFWnZY?=
+ =?utf-8?B?a2xmNkw3NmdCY2pXN0dTMkdlRGlsWlVJSVcxN2hyRUZOb01uSzRVRzRGMFRh?=
+ =?utf-8?B?WmZuRkxPZm9aZ0VjZDJNblN3d3FBL1Q5VDhibWhENElVSlRxN3oyd0Y2dzBC?=
+ =?utf-8?B?MXZZWFNxd1gxc1d4RytaSjkrN0N2ZkFuajJ2Qjg4ZTF0NEJpZHVzWUFuWjBP?=
+ =?utf-8?B?R2NLNldyQnh0ejg1SEtFbVJROG9ZNVdLR1NjQTlSYkhsWDBYYTZrY09QUk1U?=
+ =?utf-8?B?aDVzNk45NEw5dDBFVER4UzhxNEdBUFBYemRvOGxRaE9zbzBTbE9xZDNuUElE?=
+ =?utf-8?B?SzJaRFlpTTdLc29VNjBTVFlUbkhhODErSE1YblJZdHZiMy9WMW84VXRaTWE4?=
+ =?utf-8?B?bW4xWCtybUVDMkxCMThrMGFlOWNhNS9nZm9tREk0a0tFZEVZcStwOCswZ1ds?=
+ =?utf-8?B?QXpnQTdha0RxNXdPdkM3SThVL3ZqdVVKYVd4MXJyRUtLckpBakVrNWFLUmZD?=
+ =?utf-8?B?RUxyTjRIV21jdmc4L1hjVXIrcmdxcEhPRmlBWm9XQ2FvaFhENXI3Q3BuMFFD?=
+ =?utf-8?B?S2E1ME9aVUpnR3l3ajU5OWhJRE83WWFDcmRjVWtkSzRtYTlHb0VkS0ZwTEdp?=
+ =?utf-8?B?OURnRlJWb1F3MWtHN01tTml6VEt5d1dpN1Y0MURQeHJqL1FTTjNiZFpHbmdi?=
+ =?utf-8?B?Vnh4aG50elYzZ3k3ekdjZHMvR2NXYjVmb1JWbVFYOGYwQU1xMVBldyt5UkJM?=
+ =?utf-8?B?R29UMjhhQWlhMHM5QVVjb0NUOWRVMVp0eWZqU21qenZPc0tYNzZsWFlxb3c4?=
+ =?utf-8?B?WkZaQzBXUElmL3ExZDBhbWtYakx4c1BJZUlWQnZEazkzYVEzZFYvaGdUZEZY?=
+ =?utf-8?B?VTJYMGl4emc1ZVF4NmVFNlF0bUtsOVNpTVVlTi82VUJYRHA4Zy9CNjRERFBD?=
+ =?utf-8?B?cnRmNmdVZU5qRVYxQ0puVWE4d1p1Y2tQYnFGOFptNEhqRW1IM3lKbWNvTTZi?=
+ =?utf-8?B?eUVCS3kzWDhCNVRCWEllVmhZZ3ZBTzBCblhLR0IwTnRVSlVwTVBOdnhVaDVV?=
+ =?utf-8?B?clJaaElCYUFmakVWNldnUUlyekZDSWMvS3FKdkZZakxSOUcwMmxseVB6ZXc4?=
+ =?utf-8?B?SlhVdjRqUFpRZ2lNSGl6Y3ZmcXRaVUVGYWF6ODZ1OUhKS2E0THNWbzVROUZH?=
+ =?utf-8?B?MkJ3eE93TGdEQWY1b1MyNXhFTUN2S1YranBFaUZZcEloaDY3TXg2eGNRVnR1?=
+ =?utf-8?B?WXJJNU9kQXdJRFhvYUZuYTFWWWxYeCtnTk1pR3krQU9pWmJMUFNJWFp4UURE?=
+ =?utf-8?B?NjBGV2gzWkJUVFc4U1VzZFRYZzNBMGVKTHNGNUQ5b01QeGdyamRBNitad1h0?=
+ =?utf-8?B?b0cvQlY5MFd5K3dha3NwMmwzS0RWOEJhaDIvdEVGZFFJcEpRRjUyMkVxZlhy?=
+ =?utf-8?B?V1QySzJja3d5ZFJFNUQ3QWxMNGgzNVNEdS8yblRpR2lmS0s5c0RlckovYzkz?=
+ =?utf-8?B?VWpWZ3RlcXpTY1pYdlQzNE11cHcvTlBnWTF2c1VqK0FUMjVocE9NYXFSY242?=
+ =?utf-8?B?Q1NraFFBOTBFOUtpSngyWkpVQ2h3SjhDSVdFc0pxbkRQV3ZhOTVqRWFmaGQ0?=
+ =?utf-8?B?U1p1NDVtbGtSUVdJWnAxU3JTUkdvbjRtOHBYTlBQNFphc3RVQkVzeEtCVXVt?=
+ =?utf-8?B?ZjI2VUVmZUtmZGQ1QnQvVUppaXlZbjFHcGM4NkFaMjExRzZWQWxlMk44MGpp?=
+ =?utf-8?B?a2J1aDVlSnZaYUI3Qk5mNitQRVovR0tRcGRXZEFJdTZjREY1V2x6UlBqMlVq?=
+ =?utf-8?Q?F+sfidDwo28Lkyfq7SO6fpfLlryrADz/AB1Iy?=
+X-OriginatorOrg: efficios.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4a294d1-43c9-4187-c09f-08df473d8f12
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 19:36:23.2165
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4wlvxML4OGUaxWvNbFvR2MgZC59NRw3akO/Af1SqmrMHd5l8MTejU08LUvX9mW7J+6QXIHyEWS9zk01pzZ0syuxWHUWpe0IgtTOD4JoT2cI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB5667
 
-On Fri, Nov 20, 2026 at 11:24=E2=80=AFAM Kanchana P. Sridhar
-<kanchanapsridhar2026@gmail.com> wrote:
->
-> On Fri, Nov 6, 2026 at 11:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 3 potential
-> > issues to consider:
-> > - [High] mm: zswap: corrupted and unterminated dst scatterlist in
-> >   zswap_compress()
-> > - [Medium] mm: zswap: unclamped nr_batch_pages on remainder batch in
-> >   zswap_compress()
-> > - [Medium] mm: zswap: unsigned sg->length check mishandles negative
-> >   errors in zswap_compress()
-> > --
-> >
-> > commit 212f5740068394b4c82b7b1e5452b1ac6625322f
-> > Author: Kanchana P. Sridhar <kanchanapsridhar2026@gmail.com>
-> >
-> > mm: zswap: Batched zswap_compress() for storing large folios in batches=
-.
-> >
-> > This commit replaces per-page zswap_compress() calls with a batched
-> > implementation that compresses up to ZSWAP_MAX_BATCH_SIZE pages using a
-> > per-CPU scatterlist table and updates the batch entries in
-> > zswap_update_entries().
-> >
-> > > diff --git a/mm/zswap.c b/mm/zswap.c
-> > > index 5ef1ae67e67a9..45fd8dfaf916d 100644
-> > > --- a/mm/zswap.c
-> > > +++ b/mm/zswap.c
-> >
-> > [ ... ]
-> >
-> > > @@ -898,6 +914,7 @@ static int zswap_cpu_comp_prepare(unsigned int cp=
-u, struct hlist_node *node)
-> >
-> > [ ... ]
-> >
-> > > +     acomp_ctx->comp.sg_table =3D kmalloc(sizeof(*acomp_ctx->comp.sg=
-_table),
-> > > +                                        GFP_KERNEL);
-> > > +     if (!acomp_ctx->comp.sg_table) {
-> > > +             ret =3D -ENOMEM;
-> > > +             goto req_fail;
-> > > +     }
-> > > +
-> > > +     if (sg_alloc_table(acomp_ctx->comp.sg_table, ZSWAP_MAX_BATCH_SI=
-ZE,
-> > > +                        GFP_KERNEL)) {
-> > > +             ret =3D -ENOMEM;
-> > > +             goto req_fail;
-> > > +     }
-> > > +
-> > > +     /*
-> > > +      * Statically map the per-CPU destination buffers to the per-CP=
-U
-> > > +      * SG lists; crucial for performance.
-> > > +      */
-> > > +     for_each_sg(acomp_ctx->comp.sg_table->sgl, sg, ZSWAP_MAX_BATCH_=
-SIZE, i)
-> > > +             sg_set_buf(sg, acomp_ctx->comp.buffers[i], PAGE_SIZE);
-> >
-> > [ ... ]
-> >
-> > > +static bool zswap_compress(struct zswap_store_context *zc)
-> > > +{
-> > > +     u8 batch_start, comp_batch_iter;
-> > > +     struct scatterlist *sg, *dst_sg;
-> > > +     int err;
-> > >
-> > >       /*
-> > > -      * it maybe looks a little bit silly that we send an asynchrono=
-us request,
-> > > -      * then wait for its completion synchronously. This makes the p=
-rocess look
-> > > -      * synchronous in fact.
-> > > -      * Theoretically, acomp supports users send multiple acomp requ=
-ests in one
-> > > -      * acomp instance, then get those requests done simultaneously.=
- but in this
-> > > -      * case, zswap actually does store and load page by page, there=
- is no
-> > > -      * existing method to send the second page before the first pag=
-e is done
-> > > -      * in one thread doing zswap.
-> > > -      * but in different threads running on different cpu, we have d=
-ifferent
-> > > -      * acomp instance, and compression and decompression use separa=
-te
-> > > -      * requests, so multiple threads can do (de)compression in para=
-llel.
-> > > +      * @nr_batch_pages is constrained by the per-CPU comp_ctx's com=
-pressor
-> > > +      * batch size and the @zc->nr_pages in this store batch. @slen =
-indicates
-> > > +      * the total source length bytes for @nr_batch_pages.
-> > >        */
-> > > +     zc->nr_batch_pages =3D min(zc->comp_ctx->compr_batch_size, zc->=
-nr_pages);
-> > > +     zc->slen =3D zc->nr_batch_pages * PAGE_SIZE;
-> > >
-> > >       /*
-> > > +      * Compress the @nr_pages in @folio starting at index @folio_st=
-art
-> > > +      * in batches of @nr_batch_pages.
-> > >        */
-> > > +     for (batch_start =3D 0; batch_start < zc->nr_pages;
-> > > +          batch_start +=3D zc->nr_batch_pages) {
-> >
-> > [Severity: Medium]
-> > Can zc->nr_batch_pages exceed the remaining pages in the store batch on=
- the
-> > final loop iteration?
-> >
-> > zc->nr_batch_pages and zc->slen are computed once before the loop inste=
-ad
-> > of being clamped to zc->nr_pages - batch_start on each iteration.  If a
-> > compressor has a compr_batch_size that does not evenly divide zc->nr_pa=
-ges
-> > (for example, compr_batch_size =3D=3D 3 with zc->nr_pages =3D=3D 4), th=
-e final
-> > iteration reads past the end of the folio batch and walks past the SG_E=
-ND
-> > terminator of zc->comp_ctx->sg_table->sgl in for_each_sg(), causing a N=
-ULL
-> > pointer dereference when sg_next() returns NULL.
->
-> Thanks for catching this. I have resolved this and will include it
-> when I submit the next revision.
+> Should dl_task_offline_migration() also fall back to an active CPU in span
+> when p->cpus_ptr has no active CPUs left?
 
-This has been resolved in v4 submitted yesterday.
+Yes. This is the follow-up that the v9 cover letter lists. v10 will do
+it in this patch. When no CPU of the mask is active,
+dl_task_offline_migration() will take an active CPU of the span before
+the WARN. The task then runs there until cpuset gives it a new mask.
 
->
-> >
-> > > +             /*
-> > > +              * Send @nr_batch_pages to crypto_acomp for compression=
-:
-> > > +              *
-> > > +              * These pages are in @folio's range of indices in the =
-interval
-> > > +              *     [@folio_start + @batch_start,
-> > > +              *      @folio_start + @batch_start + @nr_batch_pages).
-> > > +              *
-> > > +              * The source folio pages in the batch are directly sub=
-mitted to
-> > > +              * crypto_acomp via acomp_request_set_src_folio().
-> > > +              */
-> > > +             acomp_request_set_src_folio(zc->comp_ctx->areq.req, zc-=
->folio,
-> > > +                             (zc->folio_start + batch_start) * PAGE_=
-SIZE,
-> > > +                             zc->slen);
-> > > +
-> > > +             dst_sg =3D zc->comp_ctx->sg_table->sgl + batch_start;
-> > > +             dst_sg->length =3D zc->slen;
-> > > +
-> > > +             /*
-> > > +              * The per-CPU @zc->comp_ctx->sg_table scatterlists are=
- statically
-> > > +              * mapped to the per-CPU dst @buffers at pool creation =
-time.
-> > > +              * There are ZSWAP_MAX_BATCH_SIZE per-CPU SG lists and =
-dst
-> > > +              * buffers allocated for all compressors.
-> > > +              */
-> > > +             acomp_request_set_dst_sg(zc->comp_ctx->areq.req,
-> > > +                                      dst_sg, zc->slen);
-> >
-> > [Severity: High]
-> > Does setting dst_sg->length =3D zc->slen corrupt the per-CPU scatterlis=
-t table
-> > in zc->comp_ctx->sg_table?
-> >
-> > In zswap_cpu_comp_prepare(), each entry in sg_table->sgl is mapped to a
-> > separate PAGE_SIZE buffer and only sgl[ZSWAP_MAX_BATCH_SIZE - 1] has SG=
-_END
-> > set.  During compression, each entry's sg->length is overwritten with t=
-he
-> > compressed size or a negative error code.
-> >
-> > When zc->nr_batch_pages > 1, setting dst_sg->length =3D zc->slen tells =
-the
-> > compressor that dst_sg[0]'s single PAGE_SIZE buffer is nr_batch_pages *
-> > PAGE_SIZE bytes long, while dst_sg[1 .. nr_batch_pages - 1].length are =
-never
-> > reset to PAGE_SIZE and retain stale lengths or negative error codes fro=
-m the
-> > previous batch.  If crypto_acomp_compress() fails while zc->wb_enabled =
-is
-> > true without updating every entry's sg->length, any entry still holding=
- a
-> > stale length in (0, PAGE_SIZE) bypasses the sg->length >=3D PAGE_SIZE c=
-heck
-> > and causes zswap_update_entries() to store stale data from the previous
-> > folio.
-> >
-> > In addition, because SG_END is only set on sgl[3], passing dst_sg =3D s=
-gl +
-> > batch_start leaves 4 - batch_start entries linked in req->dst.  Hardwar=
-e
-> > acomp drivers that check sg_nents(req->dst) or DMA-map every entry in t=
-he
-> > scatterlist walk past the current batch into trailing entries whose
-> > sg->length may still hold PAGE_SIZE or (unsigned int)-ENOSPC (0xffffffe=
-4)
-> > from an earlier failed compression.
->
-> Sashiko raised this in v2 code review. Please see my follow up comments i=
-n:
->
-> https://lore.kernel.org/all/CACpmpofOE797D7f4YGZEJ2jtHn08d9Jo8Ya3cdV8h9UL=
-5hUd9A@mail.gmail.com/
->
-> and let me know if this explains things better. Thanks.
->
-> >
-> > > +
-> > > +             err =3D crypto_wait_req(crypto_acomp_compress(zc->comp_=
-ctx->areq.req),
-> > > +                                   &zc->comp_ctx->areq.wait);
-> > > +
-> > > +             /*
-> > > +              * If a page cannot be compressed into a size smaller t=
-han
-> > > +              * PAGE_SIZE, save the content as is without a compress=
-ion, to
-> > > +              * keep the LRU order of writebacks.  If writeback is d=
-isabled,
-> > > +              * reject the page since it only adds metadata overhead=
-.
-> > > +              * swap_writeout() will put the page back to the active=
- LRU list
-> > > +              * in the case.
-> > > +              */
-> > > +             if (err && !zc->wb_enabled)
-> > > +                     goto compress_error;
-> > >
-> > > +             /*
-> > > +              * For each output SG list in @acomp_ctx->req->sg_table=
-->sgl,
-> > > +              * the @sg->length should be set to either the page's c=
-ompressed
-> > > +              * length (success), or it's negative value compression=
- error.
-> > > +              */
-> > > +             for_each_sg(dst_sg, sg, zc->nr_batch_pages, comp_batch_=
-iter) {
-> > > +
-> > > +                     if (sg->length <=3D 0 || sg->length >=3D PAGE_S=
-IZE) {
-> > > +                             if (!zc->wb_enabled) {
-> > > +                                     if (sg->length =3D=3D PAGE_SIZE=
-)
-> > > +                                             sg->length =3D -ENOSPC;
-> > > +                                     else if (WARN_ON_ONCE(!sg->leng=
-th || sg->length > PAGE_SIZE))
-> > > +                                             sg->length =3D -EINVAL;
-> > > +                                     goto compress_error;
-> > > +                             }
-> > > +
-> > > +                             sg->length =3D PAGE_SIZE;
-> > > +                     }
-> > > +             }
-> > >       }
-> > >
-> > > +     return zswap_update_entries(zc);
-> > >
-> > > +compress_error:
-> > > +     for_each_sg(dst_sg, sg, zc->nr_batch_pages, comp_batch_iter) {
-> > > +             if ((int)sg->length < 0) {
-> > > +                     if ((int)sg->length =3D=3D -ENOSPC)
-> > > +                             zswap_reject_compress_poor++;
-> > > +                     else
-> > > +                             zswap_reject_compress_fail++;
-> > > +             }
-> > > +     }
-> > > +
-> > > +     return false;
-> > >  }
-> >
-> > [Severity: Medium]
-> > Does checking sg->length without casting to int mishandle negative
-> > compression error codes when !zc->wb_enabled?
-> >
-> > scatterlist.length is an unsigned int, so a negative error code stored =
-in
-> > sg->length (such as -ENOSPC) is never <=3D 0 and instead triggers
-> > WARN_ON_ONCE(!sg->length || sg->length > PAGE_SIZE) and overwrites
-> > sg->length with -EINVAL before compress_error: checks for -ENOSPC.
-> > Conversely, if crypto_acomp_compress() returns an error before setting
-> > negative values in sg->length, jumping directly to compress_error: find=
-s no
-> > entries with (int)sg->length < 0 and increments neither rejection count=
-er.
->
-> Thanks. I have resolved this.
->
->
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106072412.=
-7909-1-kanchanapsridhar2026@gmail.com?part=3D8
+No case will test it. It needs the replenishment timer to fire between
+the CPU going inactive and the cpuset update. User space cannot drive
+that.
+
+Thanks,
+
+Mathieu
+
+-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
