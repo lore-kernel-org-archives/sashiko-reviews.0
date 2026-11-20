@@ -1,104 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795179125;
-	b=BcpyZOorlMvxKXRw56+fq+MKj/Em4kBdptcRpGyekMeql01uM8I7jvUwJmGaBavsNXOM
-	 0UzhxC+Abi6U0/N9qCalbBluSclivwhWo3YPubNU1B6ssf+Yv2U7AD+76XYmQWFD+bgOt
-	 uwiDsO6UQcO5Fvd07aItllXlr7MrJIcmidO6zKEf9LtxcpoKuDh5UnXdkPAo0KJYc4RPM
-	 I++djt8VsGzQF3IA/7yFGsqCUYyEC5B9MhzaMWiHCGqPJdB+YbN1B4JSoYQVIZurnaALe
-	 iwnnNiaVHgnZl7TO+g8YilkEGvq4JTK9TWSc1mEPlF2m2A78XcG3FwcCBLi0HzmfVBg==
+	t=1795179216;
+	b=HSCp7/j+AFE/31QxAs75+NXXKLKY3GL9hh+GBM2ggxT0FLXNfSV9foKz9R85twB+OghZ
+	 7ZIqJ2S81o7uiHOVB5rTR4giuBBpBuQ9i0qcABlU/430OkdMufjAhpC1lovCE4kCCir1B
+	 ikVTFtGwkq2jQ462hl1o3n+mUZiKROjPxRcxC8tq4uimdXacfFc/gW5Zz0W74i7trnhZu
+	 i99OnJXo5RlrclYPeea/YdsE4bRJX58JpfaYdFQtk2SWoO7vkRNtOC3flrv1s8ETuvXhU
+	 O1Vcz5XkxxjHzn7qD0TX5EPyX4gYBkLPNGJVVvfMgH9gDUqeBn7nIYTZyn6z02Je7Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795179125;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spamd-Result:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id;
-	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
-	b=38EfE5nSxt3CYsVkP2Vx+VWB/VZtlKI6tRORro82aHqsEvI0E77Cvwxgr5ronC7+/hsb
-	 THRnAqr/05TWkTuJOIRFS8wgKqdzSydfCmQm5h4DiUKUd5tqLHfoNIMD/htMmPcEqxASJ
-	 EREgSZCcCXzvwjvPgccPcsk+Gm5qJ/ry+jypafVjrfvg86Xrojzah8/rwJum3yoHW8ksN
-	 LdA6IOjzgh2qDGuEzZ+2t7/iKmMlBPBeLMKTXV8FGNdTn6PWFNb3rM765crV3xWbOntOx
-	 pC9FIqJW8aMeIlKUwJPeG2lIRcM3RjkL3HC0r4Sbir+4OjkdPPZnRLxxkpUrQsiiJdg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795179216;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Reply-To:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=hqAp3aogFicWpFXmWI6PTjNQ7PiDIl2sevW1eEL/NdU=;
+	b=yW4Sql1qbzARUN7QqmNuhh0E6bx3gFUQuz2xAw9xhGXPFm6tkd9Q/3LpTu9O52Qpn9OQ
+	 XYH/n9MSbdVXu8pBpz3G/xjGF9bGO2JqfUS0tHEyivXhxZQUEV9YVBttfxc8XcbYjpFT6
+	 21jv1T01cTFHOQzR2oZGY3OHqK1EB+bGwsC7KtyGVhpjGwvKAkjOKCNw2NZqSNz2D068Z
+	 HY7W5Gg+F2aze9U99hQWQ5w3yHUGgN/+Pr0aSpSudbscy4B+nnGrjaitka2D/MRgz/2Kx
+	 xGuqQ0e+mK0mLxyNVX4ud9Mkt9dcG6DSnaRy56PQ3ReU97ap3MdnNPbTF3zs66FruUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=g9CzoL72;
+	arc=none smtp.remote-ip=95.215.58.51
+Received: from mta1.migadu.com (out-51.mta1.migadu.com [95.215.58.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62743606A325
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:52:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62743606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC01A60A2602
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:53:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CC01A60A2602
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TNxe8ccl;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uhEp6Qtp
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 55F1C1F458;
-	Fri, 20 Nov 2026 12:52:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795179122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
-	b=TNxe8cclQCphqCkhTdQHU2i9UAsO8pDojNHi4ttUXVDPXRn7uCoRnDfqXKAIuHZJSjLWRk
-	w5IZjy1NtdBM5iKjYL1u3rCokub3dbShleclZKwxh3f3gWpzSpNc/tQYHZ0inwXMkHWjHk
-	sSHcxfjIv+luu6pDDoizrz6lgqon4SI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795179122;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
-	b=uhEp6QtpW0Eztl36iBwfOcOV2x2IQ1Prgk0htrkcE2279Grifq8nEs4YXNv5er6jq3818s
-	xDontyO3tMrWS5Cw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=TNxe8ccl;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=uhEp6Qtp
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795179122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
-	b=TNxe8cclQCphqCkhTdQHU2i9UAsO8pDojNHi4ttUXVDPXRn7uCoRnDfqXKAIuHZJSjLWRk
-	w5IZjy1NtdBM5iKjYL1u3rCokub3dbShleclZKwxh3f3gWpzSpNc/tQYHZ0inwXMkHWjHk
-	sSHcxfjIv+luu6pDDoizrz6lgqon4SI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795179122;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uwbSs9++k6F8pT9T11GiErRyyJNmhFR/rhllKP53k+g=;
-	b=uhEp6QtpW0Eztl36iBwfOcOV2x2IQ1Prgk0htrkcE2279Grifq8nEs4YXNv5er6jq3818s
-	xDontyO3tMrWS5Cw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DB892134F6;
-	Fri, 20 Nov 2026 12:52:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id Dq35KnFCAGshSQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Fri, 20 Nov 2026 12:52:01 +0000
-Message-ID: <f9b56145-b479-40af-ab82-d7b15c6fc962@suse.de>
-Date: Fri, 20 Nov 2026 13:52:00 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=g9CzoL72
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=bPIA0sNfCRcFRI1GyKLxje7bW0QtBZXlMKzBREPclIM=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795179214; v=1; x=1795784014;
+ b=g9CzoL72GL87X07ZDpf/309ifaOyhUVbKxZAgv4A4U1ytuHs2Xk9gA5mWlkxAaGP4OnauL6Y
+ ef2n2zB4RxRiDK4b5AoXPG+3n6Uglik3OU11BmzulTS48ZusJ/uLWw1+S2SSDrS0uMTC6/BwaLf
+ 6dCBEAcdI5n7FWYb/iuTI3dA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 78a15bc928d8e3f7;
+	Fri, 20 Nov 2026 12:53:34 +0000
+X-Mizu-Trace-ID: 78a15bc928d8e3f7
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <d2d8049d-7adc-4cfb-8e56-3af55c0abe8f@linux.dev>
+Date: Fri, 20 Nov 2026 14:53:32 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -109,170 +59,92 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] drm/udl: Synchronize pending URBs on each frame
-To: Jie Feng <hjf3108@gmail.com>
-Cc: airlied@redhat.com, sean@poorly.run, tiwai@suse.com,
- patrik.r.jakobsson@gmail.com, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch,
- dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
-References: <20261119142114.152052-1-tzimmermann@suse.de>
- <20261119142114.152052-10-tzimmermann@suse.de>
- <CABOQOSWQtK8mxAR0c9HDSc0=j_hzPz1hYHDk-XF5ERcfdgq0Ew@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <CABOQOSWQtK8mxAR0c9HDSc0=j_hzPz1hYHDk-XF5ERcfdgq0Ew@mail.gmail.com>
+Reply-To: mazziesaccount@gmail.com
+Subject: Re: [PATCH v2 3/3] iio: adc: rohm-bd79112: Support ROHM BD79111
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ Jonathan Cameron <jic23@kernel.org>, open list <linux-iio@vger.kernel.org>
+References: <cover.1795176984.git.mazziesaccount@gmail.com>
+ <4be17e339f768da93db2f42abd3cc5a21fea01ad.1795176984.git.mazziesaccount@gmail.com>
+ <sashiko-outbox-225147@kernel.org>
+Content-Language: en-US, en-AU, en-GB, en-BW
+From: Matti Vaittinen <matti.vaittinen@linux.dev>
+In-Reply-To: <sashiko-outbox-225147@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-12.00 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FREEMAIL_TO(0.00)[gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	ARC_NA(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FREEMAIL_CC(0.00)[redhat.com,poorly.run,suse.com,gmail.com,linux.intel.com,kernel.org,ffwll.ch,lists.freedesktop.org,lists.linux.dev];
-	DKIM_TRACE(0.00)[suse.de:+];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:url]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -12.00
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 55F1C1F458
+Content-Transfer-Encoding: 7bit
 
-Hi
-
-Am 20.11.26 um 07:50 schrieb Jie Feng:
-> On Fri, 20 Nov 2026 at 14:48, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->> Wait for in-flight URBs from the previous frame before sending out
->> the current frame. Throttles frame rate to USB limits.
->>
->> PC display usually runs with a refresh rate of 60 Hz or more. Sending
->> out URBs for each frame at this rate easily overloads the USB. This
->> results in display lag up to several seconds. Udl currently avoids
->> this by limiting the number of URBs to 20 at a time. This prevents
->> overloading the USB, but also prevents udl from using all the
->> bandwidth available.
->>
->> Solving this requires more flexibility in the number of in-flight
->> URBs. The exact value depends on the framebuffer configuration and
->> the available bandwidth on the USB.
->>
->> Before removing the limit on the URB count, add another means of
->> synchronizing the frame rate to the USB. Do this in atomic_begin, so
->> that the USB has the maximum time between sending two frames.
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> ---
->>   drivers/gpu/drm/udl/udl_modeset.c | 18 ++++++++++++++++++
->>   1 file changed, 18 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/udl/udl_modeset.c b/drivers/gpu/drm/udl/udl_modeset.c
->> index bbba1dee8e4f..caa0a117e3c2 100644
->> --- a/drivers/gpu/drm/udl/udl_modeset.c
->> +++ b/drivers/gpu/drm/udl/udl_modeset.c
->> @@ -329,6 +329,23 @@ static const struct drm_plane_funcs udl_primary_plane_funcs = {
->>    * CRTC
->>    */
->>
->> +static void udl_crtc_helper_atomic_begin(struct drm_crtc *crtc, struct drm_atomic_commit *state)
->> +{
->> +       struct drm_device *dev = crtc->dev;
->> +       struct udl_device *udl = to_udl(dev);
->> +       int idx;
->> +
->> +       if (!drm_dev_enter(dev, &idx))
->> +               return;
->> +
->> +       /*
->> +        * It is acceptable to briefly block in this call, but
->> +        * having it timeout frequently indicates a problem.
->> +        */
->> +       udl_sync_pending_urbs(udl);
-> Using usb anchors might work better instead of the completion I suggested
-> in the other message. usb_wait_anchor_empty_timeout() could be used.
-
-Nice, I wasn't aware of this helper. I briefly looked over it and it 
-seems useful. It would also mean that there are two lists: one for the 
-cache and one for the anchor. That might be a good thing in the longer 
-term. I'll see if I can use anchors to the benefit of this code.
-
-Best regards
-Thomas
-
->
->> +       drm_dev_exit(idx);
->> +}
->> +
->>   static void udl_crtc_helper_atomic_enable(struct drm_crtc *crtc, struct drm_atomic_commit *state)
->>   {
->>          struct drm_device *dev = crtc->dev;
->> @@ -395,6 +412,7 @@ static void udl_crtc_helper_atomic_disable(struct drm_crtc *crtc, struct drm_ato
->>
->>   static const struct drm_crtc_helper_funcs udl_crtc_helper_funcs = {
->>          .atomic_check = drm_crtc_helper_atomic_check,
->> +       .atomic_begin = udl_crtc_helper_atomic_begin,
->>          .atomic_enable = udl_crtc_helper_atomic_enable,
->>          .atomic_disable = udl_crtc_helper_atomic_disable,
+On 20/11/2026 14:34, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Low] iio: adc: rohm-bd79112: double semicolon in bd79112_probe()
+> - [Low] iio: adc: rohm-bd79112: unused BD79112_MAX_NUM_CHANNELS macro
+> --
+> 
+> commit d2b6757018d5ccee4c939ad0350d93a29d26239d
+> Author: Matti Vaittinen <mazziesaccount@gmail.com>
+> 
+> iio: adc: rohm-bd79112: Support ROHM BD79111
+> 
+> This commit adds support for the 16-channel ROHM BD79111 SAR ADC and GPIO
+> device to the rohm-bd79112 driver.
+> 
+>> diff --git a/drivers/iio/adc/rohm-bd79112.c b/drivers/iio/adc/rohm-bd79112.c
+>> index 04084e88984a5..8bbb86098ff5a 100644
+>> --- a/drivers/iio/adc/rohm-bd79112.c
+>> +++ b/drivers/iio/adc/rohm-bd79112.c
+> 
+> [ ... ]
+> 
+>> @@ -431,8 +458,17 @@ static const char * const bd79112_chan_names[] = {
+>>   	"AGIO12B", "AGIO13B", "AGIO14B", "AGIO15B",	/* 28 - 31 */
 >>   };
->> --
->> 2.56.0
->>
->>
-> Best regards,
-> Jie Feng
+>>   
+>> +static const struct bd7911x_chip_data bd79111_chip_data = {
+>> +	.name = "bd79111",
+>> +	.chan_names = bd79111_chan_names,
+>> +	.num_max_channels = 16,
+>> +	.init_disable_gpios = bd79111_disable_gpios,
+>> +};
+>> +
+>>   static const struct bd7911x_chip_data bd79112_chip_data = {
+>> +	.name = "bd79112",
+>>   	.chan_names = bd79112_chan_names,
+>> +	.num_max_channels = 32,
+>>   	.init_disable_gpios = bd79112_disable_gpios,
+>>   };
+> 
+> [Severity: Low]
+> This isn't a bug, but replacing the remaining uses of
+> BD79112_MAX_NUM_CHANNELS in bd79112_probe() with
+> data->cd->num_max_channels leaves the BD79112_MAX_NUM_CHANNELS macro
+> unused.
+> 
+> [ ... ]
+> 
+>> @@ -509,7 +545,7 @@ static int bd79112_probe(struct spi_device *spi)
+>>   		cs[i].datasheet_name = data->cd->chan_names[cs[i].channel];
+>>   
+>>   	iio_dev->info = &bd79112_info;
+>> -	iio_dev->name = "bd79112";
+>> +	iio_dev->name = data->cd->name;;
+>>   	iio_dev->modes = INDIO_DIRECT_MODE;
+> 
+> [Severity: Low]
+> This isn't a bug, but there is a double semicolon at the end of this
+> assignment.
+> 
+
+Both of the Sashiko's findings seem correct. However, I wonder why it 
+picked the device-tree folks and dropped IIO people? This particular 
+patch didn't have binding changes but driver changes. (Well I added 
+Jonathan + IIO-list here)
+
+Yours,
+   -- Matti
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
+Matti Vaittinen
+Linux kernel developer at ROHM Semiconductors
+Oulu Finland
 
-
+~~ When things go utterly wrong vim users can always type :help! ~~
