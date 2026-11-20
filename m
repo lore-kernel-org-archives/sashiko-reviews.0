@@ -1,104 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795177710;
-	b=MukPI3rkTAusFqvhHh4ZdJxhJ7HrrgpZdIJ1BB20o4iGDWNa0EH0xPUeYXc2hRRXBh4f
-	 RUNLYjGDZxOpwgQxDvpXMcAPhvushGacNtU+hFTrUmvkD0uGfIQeX4uuUkKPDgXRMQbz8
-	 /2kojzuVVGG8HXgUTe2aqrw+Fwbe+kEtRv+4H/K3w4usHisSoPUTBwRlzPRYVaACMD5vm
-	 WvnmFH/kCEcDXP+5rVQrfFoQeFrWSyjAtfX6ghzNIlHUedZ5cnT/EofkmD4m4h+qwPqwY
-	 7ehzmxyitM3Lwsxo2JQcz8Zt19brm/BQUf8p6j+C33pY94w5B6HKcAYX/5LI7XbdRZA==
+	t=1795178115;
+	b=LLYrM7hyUrZt2Jc9f4zSObo/z4R5cl1IiIrAzGuOF9Y0WMA2SrMthx2blSzGOXCAg2PR
+	 XGsIVh1a9XxskwK98I8SHq8G2wQ3i+dP+q7ApZXQDmH97sge3xv4yd3mP2tuRBlUZpuRL
+	 bTGBR8PNv486PCO1DKN/o34xJpUkLa3/y4Mlhbo6kvH84nF+ERPhS7HPZAAEuNCRGfFRc
+	 ix4yeDSQR+4V861+ujDeg+a7oGCWc5fLKOSOtasK823atio+ZTGckPXHF45aW26blcZUU
+	 FYIR+yFzNLRcXJ4Beo7zMnyvnMrPvatQgt29SubJuk9NtYFuxIyXYajHCDYjEneuWdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795177710;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795178115;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=aiHkRC4UgeGjxBc+R6wbjmW9IP2eD4lch1fFVoOUvuo=;
-	b=4alNzSYO7LXrbaL65tkkMVdAvrdG/eFbGz0K3W1oOAZt9uFyYv6hyymHv6tW6KA0g+GJ
-	 IcuSMPIkjuKPM4O7UROJwdN3umjvsx5q+tX43P60JuhGS4vz5dozQLOLk2lAsgZXOu3Ff
-	 qgmXne3Qs0lwBzuYvEmfZ60iwpmtLT28UNOX0L4qh1kCl4OU6LPcK9ZtrzCBXTJy6nKzx
-	 iLGTIZHV2AZC7ypG9FV9luwWhgEcAQZyXbS6BYCNqeBTpHCbTR7vPAcadNB0AN6QP9EvC
-	 cUIqGdqMZ/vUcIRjNRhyD956zAWimGViP89sdCKgUgCJpcA/jRiMPdFTdgE5diGv+kQ==
+	 Content-Type:Content-Transfer-Encoding:X-Authority-Analysis:
+	 X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=xedkqmjk2olSr8rF4krrKPa8xLFWwwWvaPjFM3UJPeE=;
+	b=bwFMG2xiQYHDA5XhQz0Fp8QoKCcD9yFLMRGOs92GXvb1bc3BosSJdvjmex0ax3n2VbA6
+	 o7f+PwuJrdpN7Hpoa48zY7vYmmTYy8PkCyHJlg5RL2TihywT1ZA8ibphG5/xFFg2LTSnt
+	 cMrQIdzCMOOeIJsCdtRbZ0A9G+6Ck57xQrzu/aoTpDD5/VeFjRH4RtC0P/eMNyuFsGtR9
+	 uxY/mocdn7lZCecUD+jPm3bHgFsXnEDr8zhDcdlhgfGEJWB4Nl/u9Q2/u44JchrHkgeGH
+	 /NyjXK1nUqO/2Sajq7VekS65bXjz1FEsX0QCU+BkhJN7/x5GsmrWR2dAqPcEFNTS+DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f4soC6c2;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYGOTaUi;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f4soC6c2;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYGOTaUi;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HQ4gEi8F;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b="K5h/M02N";
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05C1606A320
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:28:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F05C1606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FB2606A325
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:35:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24FB2606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f4soC6c2;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYGOTaUi;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f4soC6c2;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYGOTaUi
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id F2F53225B6;
-	Fri, 20 Nov 2026 12:28:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795177708; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=aiHkRC4UgeGjxBc+R6wbjmW9IP2eD4lch1fFVoOUvuo=;
-	b=f4soC6c26s7pl0z0zEhNKIf1tipAfR8HudAwgvnfVHQq1KwveTCNczeMR126hgkh9TqTxn
-	sAnWXIE5mdVZj05Iu2nOa/RcUdo7mMQ2gn1Q47ky37hFNZXJP4CQkJZ4DbrUXSNR/Gc3WG
-	9e3nIW1ik3PXXLSRNT4r/w5/U4EjEvg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795177708;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=aiHkRC4UgeGjxBc+R6wbjmW9IP2eD4lch1fFVoOUvuo=;
-	b=SYGOTaUiD9QMG8HBhfiMiCA+iBO2SfC9fGpn7m8X1Sak3Pd18dgqOyIZflvCewxPt7CVNu
-	53rRke5NLTzC0qBg==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=f4soC6c2;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=SYGOTaUi
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795177708; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=aiHkRC4UgeGjxBc+R6wbjmW9IP2eD4lch1fFVoOUvuo=;
-	b=f4soC6c26s7pl0z0zEhNKIf1tipAfR8HudAwgvnfVHQq1KwveTCNczeMR126hgkh9TqTxn
-	sAnWXIE5mdVZj05Iu2nOa/RcUdo7mMQ2gn1Q47ky37hFNZXJP4CQkJZ4DbrUXSNR/Gc3WG
-	9e3nIW1ik3PXXLSRNT4r/w5/U4EjEvg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795177708;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=aiHkRC4UgeGjxBc+R6wbjmW9IP2eD4lch1fFVoOUvuo=;
-	b=SYGOTaUiD9QMG8HBhfiMiCA+iBO2SfC9fGpn7m8X1Sak3Pd18dgqOyIZflvCewxPt7CVNu
-	53rRke5NLTzC0qBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C5CEC1348F;
-	Fri, 20 Nov 2026 12:28:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id ey+2Kes8AGu2MAAAD6G6ig
-	(envelope-from <hare@suse.de>); Fri, 20 Nov 2026 12:28:27 +0000
-Message-ID: <c05e876a-0f9c-4d60-8a86-829e9492e692@suse.de>
-Date: Fri, 20 Nov 2026 13:28:27 +0100
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HQ4gEi8F;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=K5h/M02N
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AKAjqq31681893
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:35:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xedkqmjk2olSr8rF4krrKPa8xLFWwwWvaPjFM3UJPeE=; b=HQ4gEi8FRZlbmoyx
+	hcFr+Dv6HlcDFzaK6V+8VR+n1LBPEJPSINGyXhsRyjpuJmsn8xbox2xYAHPRn3xf
+	QbE/OtkSWO7xwJWLKRwy/8VPSSKEc469Gs3ZBwzKtroSb896RiQ6Ab6Z9M1KZa2W
+	lPetadYyO7Rnjrp9msTNhnU0e1mQb6ZlOQS4a4F9yUIU1e26Qn+ZOrew51su5bkL
+	7qbc0hYOGR0OUGBoGQkZoFB08d8QANQGS2NqvCYBHH2CwHbwgjhLqT/tNSogjs9p
+	4xeP7MpjISousbiS/gHOcLjF2lYavGUWDNzDB12DWRzYYzR+kUwBxEzlfJRF3IcT
+	LGh3KQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j2cd1tg6g-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 12:35:14 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-386177b0516so1292020eec.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 04:35:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1795178113; x=1795782913; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=xedkqmjk2olSr8rF4krrKPa8xLFWwwWvaPjFM3UJPeE=;
+        b=K5h/M02NOvGmQeoQwpVd/ToCVWchbmi5bN915x6fosxAbuXFtswv/bKx3seFiimfQZ
+         BchBSVOmJJRiAIRx+fyV0gQPhR913dpeMIrILdEkd+ioo9YC0s+nXKkBLcba1jsbXsb6
+         PoM/88PcnIBiKEKpHDbS4YJh62MydeYtms1K71BGUSU4oCtEy93tfzsDfizBlZCz4yWC
+         bsXNhJhz17sdOq5XE4jCQVDvHaW/eSO+MNuFi87sQ+Y6PZ6J/TXVyWML4Jx9Btf8oVuo
+         950EmLoOdwFg6ORRu0j4LYQYC01uGc+nuRgoe1fUv1Uc1nc/5ojDoFRBMUjqza1LWtSj
+         hR5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795178113; x=1795782913;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=xedkqmjk2olSr8rF4krrKPa8xLFWwwWvaPjFM3UJPeE=;
+        b=Co7aGlBqBqdwt/2cH0mHc1MilSk/t+T58WCbuwxF/2nMrEehJ6FmYbCr9mvIzd8VDx
+         JW695Q3tQhkt3In15F+ZW2OTOwfmJ2hhyGr+OW3ik+y7mXuww+XTLVOvyr2j2+p/mksH
+         QWHdHzs+DO9bCA/4odRnS64fayU0wLDye5dtPz7ILZ9/mY9yCVP9LdtFomI+AB3MZjXe
+         my7GCa+BwWrvmlxMYI9qPS84+2bzQmOKnnzkvALTODU8x6+h6omdj1O4HVj9Itl9TD9d
+         CSUVeEaOIJJj2NFeiZETlxr8aKmnav3zBIXgtQUq+QutI5fWafb4un/f2j9c6pHjdwE1
+         5DDw==
+X-Gm-Message-State: APuU4Z+d7iZxuHLrFN0CG4UdOWrlynqKqzyFN2gxFpFxbNM7tHNlsVF4
+	G9UPydt7zqVgkeTuvZGCVITL3PlmvUvlRtTGnFlpdG7XORLDL+pzsrIK3xnw3UYYb3N9kj4YG49
+	W3v5Zk3BQWAjTAn3nfX9VlFUxkk5/fjNv2blaa58YRtFq09Qw8iDdneFEHWP7ak7BwREV5sxzdt
+	w+ncc=
+X-Gm-Gg: AZFdTZfXp4aIQ0KMH3cIoQ4hL5Y7r4wMvMlWwW8oub1MQCchrcDvx/2S2VSPSBm42MZ
+	pw3dDZS8NTKhOAPhtFaWMXVmyeQ5FrNHjTd3ZpDj1kWQXZr3tQ3Q6/OFrsMvegGRZP8m+bY0uVY
+	fL8fFFrNH6YXV420LzlMyL6ysBjPWaIW7XE9VL8FXegtnrUwI3v3QVtMV2wXiRdntv62RFymPyI
+	dnKACfenX8uakf2VVnmouOz2hEaBS7dGXrrhdmCjGhka37TVY2jMgaO8GBbf06P+nBVYlEWDRdV
+	VZbHmnv1tCaIoSuDN/1vId2+Xpwh0MNLAQrTGI8NMXPYT1rCmpaXeeidlXFkDIlnbHW9j8Gsdc7
+	pnfd42rGtCH3TpItlzwSxIcvrmzU1Q2jR5fH76sTrx+FG6eLe8TIbLuYYo+j2zoiAQLEbLBZ2UD
+	sX
+X-Received: by 2002:a05:7301:4606:b0:380:d1bd:ed2c with SMTP id 5a478bee46e88-3856f54aecbmr2594213eec.27.1795178113322;
+        Fri, 20 Nov 2026 04:35:13 -0800 (PST)
+X-Received: by 2002:a05:7301:4606:b0:380:d1bd:ed2c with SMTP id 5a478bee46e88-3856f54aecbmr2594181eec.27.1795178112439;
+        Fri, 20 Nov 2026 04:35:12 -0800 (PST)
+Received: from [10.218.30.203] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-385665f21aesm10442441eec.4.2026.11.20.04.35.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Nov 2026 04:35:12 -0800 (PST)
+Message-ID: <f2fd76d7-c66b-4def-8a63-91d4a3c7618f@oss.qualcomm.com>
+Date: Fri, 20 Nov 2026 18:05:09 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -109,249 +116,113 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/9] nvme-keyring: add 'dhchap' key type
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
-Cc: linux-nvme@lists.infradead.org
-References: <20261120-dhchap-keyring-v4-v4-0-5f8c7d9926ee@kernel.org>
- <20261120-dhchap-keyring-v4-v4-2-5f8c7d9926ee@kernel.org>
- <sashiko-outbox-225040@kernel.org>
+Subject: Re: [PATCH v6 4/5] arm64: dts: qcom: shikra: Add EL2 overlay for
+ remoteproc SMMU mappings
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261119-shikra-el2-v6-0-0e91a1467e79@oss.qualcomm.com>
+ <20261119-shikra-el2-v6-4-0e91a1467e79@oss.qualcomm.com>
+ <sashiko-outbox-223069@kernel.org>
 Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-225040@kernel.org>
+From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-223069@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: F2F53225B6
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	MX_GOOD(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Score: -13.50
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Dt/Da2/+ c=1 sm=1 tr=0 ts=6b003e82 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=A4kCXxDk9FfMGSrLdMwA:9 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-GUID: sVP9G0H850jSSStHmP7AHzBBhrkN8ogg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA0OSBTYWx0ZWRfX3ZlLsp318KX+
+ wgH7eWYTO8Elkk80lNWhIcYCl6Mq4O4GSuvImUQDAJV/Zywn4qrAvoMJtIVfyTs5yEdAXrIJ8BQ
+ FfdJYVHJmzjIM4YgD966pfNujSyK6/RtAis6zlcQ1/JVWv+0BAZFAatNF7Bd5MNgjxkbG6wkTyD
+ kq+iMbQqU6qsarCCf5s0PGJcZPczWXzJQzSd+WO1INKfwglLnKMjus6iLEgySQM8n0w/6N3HbI2
+ lRmboanIofllJ/8HHlIr04/2rh//UoVKtEYe8xAjDdAUA10Fm/WV+FsI3Oq7UyUFI0i2d2cBXdx
+ Q6Pe37N6407WisIqOj6jigV/Yj2RvUMRwD4XQo3bcdsjMVfJrGyJuF9hrJJU28e95M/owH+ucX9
+ 27AhUIQ/03Y/VEfy9DRgb2lgjXi9eVxxpvon/ei47rpmKmG2qGmFZX5wDmynYP/sSqBAVDsnm5t
+ /NYNa53xGgBzGel+XZA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA0OSBTYWx0ZWRfX/iDXvaH7gSSA
+ 0yEIUOKoSWAc/k+5h+PWE/wL9T+QRd6110ZEZfgXEYBTmWwY6RDAsKHptcrAPsVtYQhUxu6vMem
+ TVuNo+f1vN/1pg3ZLqbR1+hBxmcaNmI=
+X-Proofpoint-ORIG-GUID: sVP9G0H850jSSStHmP7AHzBBhrkN8ogg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-20_04,2026-11-19_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611200049
 
-On 11/20/26 12:28 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [Critical] nvme-keyring: out-of-bounds reads and underflows in
->    nvme_dhchap_psk_preparse()
-> - [High] nvme-keyring: uninitialized keylen used in
->    nvme_dhchap_psk_preparse()
-> - [Medium] nvme-keyring: unsigned error check and size mismatch in
->    nvme_dhchap_psk_read()
-> - [Medium] nvme-keyring: out-of-bounds memcmp() in
->    nvme_dhchap_psk_match()
+On 11/19/2026 5:27 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] arm64: dts: qcom: shikra-el2: q6apmdai iommus fails
+>    q6apm_dai_probe()
 > --
-> 
-> commit 329ebc74c917187a04d7c54885592dcb5f74d0dd
-> Author: Hannes Reinecke <hare@kernel.org>
-> 
-> nvme-keyring: add 'dhchap' key type
-> 
-> This commit adds a 'dhchap' key type to store DH-HMAC-CHAP secret keys with
-> a user-type compatible payload and a read callback that formats keys in their
-> base64-encoded representation.
-> 
->> diff --git a/drivers/nvme/common/keyring.c b/drivers/nvme/common/keyring.c
->> index 87cb51e1f5a7f..96561f2dd81b8 100644
->> --- a/drivers/nvme/common/keyring.c
->> +++ b/drivers/nvme/common/keyring.c
+>
+> commit 0d5069de0241cf74b87f4a2a71c79f4b11c8da67
+> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+>
+> arm64: dts: qcom: shikra: Add EL2 overlay for remoteproc SMMU mappings
+>
+> This commit adds an EL2 DeviceTree overlay for Shikra boards to describe
+> IOMMU stream mappings for remoteproc firmware and applies it to the Shikra
+> EVK DTB targets.
+>
+>> diff --git a/arch/arm64/boot/dts/qcom/shikra-el2.dtso b/arch/arm64/boot/dts/qcom/shikra-el2.dtso
+>> new file mode 100644
+>> index 0000000000000..89997ed7699ee
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/shikra-el2.dtso
+>> @@ -0,0 +1,38 @@
 > [ ... ]
->> @@ -253,6 +256,212 @@ key_serial_t nvme_tls_psk_default(struct key *keyring,
->>   }
->>   EXPORT_SYMBOL_GPL(nvme_tls_psk_default);
->>   
->> +static void nvme_dhchap_psk_describe(const struct key *key, struct seq_file *m)
->> +{
->> +	seq_puts(m, key->description);
->> +	seq_printf(m, ": %u", key->datalen);
->> +}
->> +
->> +static bool nvme_dhchap_psk_match(const struct key *key,
->> +				  const struct key_match_data *match_data)
->> +{
->> +	const char *match_id;
->> +	size_t match_len;
->> +
->> +	if (!key->description) {
->> +		pr_debug("%s: no key description\n", __func__);
->> +		return false;
->> +	}
->> +	if (!match_data->raw_data) {
->> +		pr_debug("%s: no match data\n", __func__);
->> +		return false;
->> +	}
->> +	match_id = match_data->raw_data;
->> +	match_len = strlen(match_id);
->> +	pr_debug("%s: match '%s' '%s' len %zd\n",
->> +		 __func__, match_id, key->description, match_len);
->> +
->> +	return !memcmp(key->description, match_id, match_len);
->> +}
-> 
-> [Severity: Medium]
-> Can memcmp() read past the end of key->description here?  key_alloc()
-> allocates strlen(key->description) + 1 bytes, so searching with a match_id
-> longer than key->description reads out of bounds, while a shorter match_id
-> matches any key whose description shares that prefix.
-> 
-Correct, the size for both strings should match. I'll fix it up for the
-next round.
-
-> [ ... ]
-> 
->> +static int nvme_dhchap_psk_preparse(struct key_preparsed_payload *prep)
->> +{
->> +	struct user_key_payload *upayload;
->> +	size_t datalen = prep->datalen, keylen;
->> +	int ret;
->> +	u32 crc;
->> +	u8 version, hmac;
->> +
->> +	if (!prep->data) {
->> +		pr_debug("%s: Empty data", __func__);
->> +		prep->payload.data[0] = NULL;
->> +		prep->quotalen = 0;
->> +		return -EINVAL;
->> +	}
->> +
->> +	if (sscanf(prep->data, "DHHC-%01hhu:%02hhu:%*s",
->> +		   &version, &hmac) != 2) {
->> +		pr_debug("%s: invalid key data '%s'\n", __func__,
->> +			 (char *)prep->data);
->> +		prep->payload.data[0] = NULL;
->> +		prep->quotalen = 0;
->> +		return -EINVAL;
->> +	}
->> +
->> +	/* skip header and final ':' character */
->> +	datalen -= 11;
->> +
->> +	/*
->> +	 * payload is < key | version | hmac >
->> +	 * base64 decode will always return less data
->> +	 * than the encoded data, so allocating the size
->> +	 * of the encoded data will be large enough.
->> +	 */
->> +	upayload = kzalloc(sizeof(*upayload) + datalen, GFP_KERNEL);
->> +	if (!upayload) {
->> +		prep->payload.data[0] = NULL;
->> +		prep->quotalen = 0;
->> +		return -ENOMEM;
->> +	}
->> +
->> +	/* decode the data */
->> +	prep->quotalen = keylen;
-> 
+>
+>> +&q6apmdai {
+>> +	/delete-property/ memory-region;
+>> +	iommus = <&apps_smmu 0x01cc 0x3>;
+>> +};
 > [Severity: High]
-> Isn't keylen uninitialized when assigned to prep->quotalen?
-> generic_key_instantiate() passes prep->quotalen to key_payload_reserve(),
-> corrupting per-user key quota accounting and exposing the lower 16 bits of
-> the stack value via key->datalen in /proc/keys.
-> 
-Indeed. Fixed up for the next version.
+> Does adding iommus to q6apmdai cause q6apm_dai_probe() to fail with
+> -EINVAL on Shikra EL2 builds?
+>
+> In arch/arm64/boot/dts/qcom/shikra.dtsi, the ancestor gpr node sets
+> qcom,domain = <GPR_DOMAIN_ID_MODEM>, and q6apm_dai_probe() rejects any
+> iommus property when the GPR domain is GPR_DOMAIN_ID_MODEM:
+>
+> sound/soc/qcom/qdsp6/q6apm-dai.c:q6apm_dai_probe() {
+> 	...
+> 	if (apm && apm->gdev &&
+> 	    apm->gdev->domain_id == GPR_DOMAIN_ID_MODEM) {
+> 		if (!qcom_scm_is_available())
+> 			return -EPROBE_DEFER;
+>
+> 		if (pdata->sid >= 0) {
+> 			dev_err(dev,
+> 				"iommus and mDSP SCM path are mutually exclusive\n");
+> 			return -EINVAL;
+> 		}
+> 	...
+> }
+>
+> Because iommus sets pdata->sid to 0xc, the Q6APM front-end DAI driver will
+> fail to probe and audio will not register in EL2.
 
->> +	prep->payload.data[0] = upayload;
->> +	ret = base64_decode(prep->data + 10, datalen, upayload->data,
->> +			    true, BASE64_STD);
->> +	if (ret < 0) {
->> +		pr_debug("%s: Failed to decode key %s\n",
->> +			 __func__, (char *)prep->data + 10);
->> +		return ret;
->> +	}
->> +	ret -= 4;
->> +	crc = ~crc32(~0, upayload->data, ret);
-> 
-> [Severity: Critical]
-> Can malformed or short payloads from add_key() trigger out-of-bounds reads
-> and integer underflows in nvme_dhchap_psk_preparse()?
-> 
-> add_key() copies plen bytes from userspace into prep->data without appending
-> a NUL terminator, so sscanf() and the pr_debug() %s calls can read past
-> prep->data + prep->datalen.  Because %*s is assignment-suppressed and
-> %02hhu matches one or two digits, sscanf() can also return 2 when
-> prep->datalen < 11 (for example, "DHHC-1:01"), causing datalen -= 11 to
-> underflow and wrap sizeof(*upayload) + datalen in kzalloc().
-> 
-Correct. I've updated the parsing code to the improved version in
-nvme_auth_extract_key().
+Yes, this is valid. With iommus set on q6apmdai, pdata->sid becomes
+0xc and q6apm_dai_probe() returns -EINVAL for the MODEM GPR domain, so
+audio would not register on EL2 builds.
 
-> Even when prep->datalen >= 11, if base64_decode() returns 0..3 (such as on
-> an 11-byte payload "DHHC-1:01::"), ret -= 4 becomes negative and wraps to
-> SIZE_MAX - 3 .. SIZE_MAX when passed as size_t len to crc32().  In addition,
-> base64_decode() returns -1 on error, which leaks out as -EPERM instead of
-> -EINVAL, and the decoded key length is never checked against the valid
-> DH-HMAC-CHAP sizes (32, 48, or 64 bytes).
-> 
-Ok, fixed up for the next version.
+To address this, another series has been submitted [1]. To avoid a 
+dependency on it, I will dropp q6apmdai node from shikra-el2.dtso in 
+next version.
+Will add it back once that series is settled.
 
-> [ ... ]
-> 
->> +static long nvme_dhchap_psk_read(const struct key *key,
->> +				 char *buffer, size_t buflen)
->> +{
->> +	const struct user_key_payload *upayload;
->> +	size_t datalen, keylen;
->> +	u8 version, hmac;
->> +	long ret;
->> +
->> +	upayload = user_key_payload_locked(key);
->> +	/*
->> +	 * Expected output string length:
->> +	 * strlen("DHHC-") +
->> +	 * version (= 1) +
->> +	 * ':' (= 1) +
->> +	 * hmac (= 2) +
->> +	 * ':' (= 1) +
->> +	 * encoded base64 key length +
->> +	 * CRC length (= 4) +
->> +	 * ':' (= 1)
->> +	 */
->> +	keylen = nvme_dhchap_decoded_key_size(upayload->datalen) + 15;
->> +	if (keylen < 0 || !buffer || buflen == 0)
->> +		return keylen;
->> +
->> +	if (buflen < keylen)
->> +		return -EINVAL;
-> 
-> [Severity: Medium]
-> Since keylen is an unsigned size_t, is keylen < 0 always false here?
-> Adding 15 before checking for an error also turns -EINVAL from
-> nvme_dhchap_decoded_key_size() into -7 (-E2BIG), and double-counts the
-> 4-byte CRC because nvme_dhchap_decoded_key_size() already returns the
-> encoded length of the key plus CRC (48, 72, or 92 bytes), so the total
-> formatted length is 4 bytes larger than what nvme_dhchap_psk_read()
-> actually writes (+ 11).
-> 
-Ok, fixed up for the next version.
+[1] 
+https://lore.kernel.org/all/20261119164705.1594066-5-mohit.sharma@oss.qualcomm.com/
 
-Cheers,
+Thanks
+Komal
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+
