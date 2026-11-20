@@ -1,101 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795174875;
-	b=Mw7ingN4QuZ9VEcG1mTH4TkwY86x8ttzr33b2SlaArCbwEwiY63+4XtlXAceV72F137K
-	 PZoKtts6MrXXAyJHeaDCeSQbhxuIbciYecK3fU0l6ZAspCHRe3tvHjXDu817Q/LCZxbw8
-	 eVoUsBE//bRp2kA9a2EHcJwIoV7vOo6tJprK3ZazunI7HCMpkTzr4zqHwQwutnK+nrT/F
-	 X/9l1ciBbbIS5e2qx91a6lBjrAehPWhrwBVz6LRaLBhNkEzYGegfrkDTvMAXV1bUHPR/U
-	 FWgDlRntiaqD2RoaTzgGvM3D1nkb0tqTzhstSS6PZCH2JktUQ/zgjRUlfzdHcbQ7ZIA==
+	t=1795174924;
+	b=f+zBsK5TX7vLKg0eLplppcjpVrDxH7suzVAbwfDtsXn3aCUihnLjoOZv2Mz/l3F8S5Mr
+	 q4bZkugBRHZsMclXvJ8h7WCK/iqeRSFrKVsDbELw8IJRrhq2vwzVRTvpzvZkU2SqLMlbh
+	 EyAOnWVX4lKuUkTTMrr2KkR/Tn0sflGqNP7q0U/aBx3j3OkD1lKrykCfhvMeLO3vhmNqJ
+	 3ZWhmhyeFql/z8muAkd868eD31y2UahO4skp+zYciIBLBojyklqV+1oDieIu5IDvMsg5F
+	 L/pAL6X23Lg+2HUcEFRegMiUpc7H3E3z5wDcv9jF08jpY0lPTyjqcnVr7g1Za2opEDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795174875;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=8CwPJKjV6kCIIzcblemdluBfnd2QRRX74DnK0ggRw68=;
-	b=LTg6jqnvZN54iYs6tEXUYxux1jZY3wXgLwoMN6W964CYIGcbBW94suIGtLpG86ZjmXr0
-	 XcpShLRsAo2GjijTxAvW8OQW4C8udakT1iHJcgM/R54TtBc9oUxJRtSlFIGZ0U9QjA9XL
-	 IaiGnZFECdwLMCPpWwRxUt1w81G+X2e4evN7recoTA/yWRx1jRB9yubiLPOf4dvHgpQGD
-	 MDN+1WGGuLB88gN/8LE+Qi+sIbl6Jb8Sy6MIJRCVy5JxJDLd6Klanxjv9ZV+Pxjgo2Hbb
-	 bZ/mboluYuoVs7rgjyRNU0/KcF8aYtiYwUOCQEMgHRRI4HVkAsYLPwuQtZf6cr7e8Vw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795174924;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:
+	 X-Spamd-Result:X-Spam-Score;
+	bh=0sY9jQr5X1Oxc5rgpMPkHAnGiLMn1T1cPmD9U1gC6IQ=;
+	b=Z21NT2FrAeKPmEpeZChiEGcHQoW1dpedW6mfbl4FNZ6PWVPyuiFSoPgT6xs88T3rfJ3a
+	 jdPANseuKTbQDZV6J2fn0wetZczwmlL1wn80dxrKWTRbPOMiHk8wO8kb8imMeoBo080VG
+	 Js1ZqBvVLMe3w2eFoIyVfyzc/3qIOkT8rULYOtV35n/qLiNnMEz0vcgjclrEb1VhIaqqb
+	 O/sS/0PjIEfdhSqF7ebuEKaAQ26XEFGa1cGvZHKU/3jgfRH4tHJ5OjKpc+PoOI/u6LT4l
+	 s9VXy+sY5hUPy50icdHI2Mb7jB5h1Q2TzSIunYIWgSI29LiAoryRSYTujtJERX2l42Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=fail header.from=isslab.korea.ac.kr;
-	spf=none smtp.mailfrom=isslab.korea.ac.kr;
-	dkim=pass header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b="f/0FQlHC";
-	arc=none smtp.remote-ip=209.85.216.47
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="hbkbBj/o";
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="/TmPF+in";
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="hbkbBj/o";
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="/TmPF+in";
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB5F606A326
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:41:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6AB5F606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0393F606A32A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:42:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0393F606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=f/0FQlHC
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3ae6b4c669fso1737156a91.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 03:41:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=isslab-korea-ac-kr.20260707.gappssmtp.com; s=20260707; t=1795174875; x=1795779675; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8CwPJKjV6kCIIzcblemdluBfnd2QRRX74DnK0ggRw68=;
-        b=f/0FQlHCd0s0hWR/JEQWQYstV04c3N6d5CVU+kPj4g8Cgu/a4Prm56oVdYpPKrPSas
-         7Vk6Af4eaR7G+0oNNYWVxLevnG8YKfCVNHVCgFNDmxp4rFhBjTWn2wRSEWDsGQtTu7Ub
-         EqwDtSHZuoxzSyFrZ8liufyWwenMDjygn7GQs7q1xNt4xNYxsRKy1oUySGoX4N+Og9IW
-         KOBMsRSryQjwuI8ojQf5jd2sogefA8J8j7qmMwsty8Qq3K0hcfEaYE08vUsk89Wjzjsp
-         eq15rTS4QrXv8uYDHAK5UrvCQh0YY5VDy15nC0/pXwIXuWSiY0Khw8phbQ9UGpYxBmMc
-         3axw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795174875; x=1795779675;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8CwPJKjV6kCIIzcblemdluBfnd2QRRX74DnK0ggRw68=;
-        b=u+M5UBxSw6J9yAFjR9b3okK6Fl4a2Txm3apIYcBoELNS++N33ClatgTCn/iMddb1sA
-         0CSm0NK5A19yk+H0UUngB6j7G9gEWjeW29r6ZgVxWJSFT0bSDEqtyX1orgnTHrZBkiB4
-         nDmkT6uyS7BqhwEdS5uhLyv5JfStOdH9/wUJA0lbjj2xqubDP+1McSEMWRg1Ga9SKaIx
-         XqjGzBKKZDYEHJa7aHUn8QF36dVIV+3D9/H5K1kmr27KEvG41MLlT4pqMKSgU7EFsg8x
-         OD2sucA+JhN0XM1lZoLyMz9Owfqd1tFwivpPy2k56V1ADOTzQVXWh8X0+2lccO6s9kFI
-         Vrrw==
-X-Forwarded-Encrypted: i=1; AL+hErFConb1SgDNlVczt6QWTBwX7WZj/2cp8JbOToOVLcPIy6jkK7zckQ9TIvx1yMvVdzOqvhupPTHm2zf3nTnDbuM=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9NOAp92vqQ+lj63ZtJfveLVJiog1G4RFabE8D1O7JqECgR2vxS
-	oZjkk0nJ6VDhjQxMWuyrVMdMEst678dv9mbXXrcmN6lKngxyNk6DWCHKL3ozCaJqVAY=
-X-Gm-Gg: AZFdTZfb4PUK9/QqpMwvl7uKX+TKbdjUUeN72VM6XJu2Y6+dL1TgUZyZfyKGvt1lxiP
-	YuaraLRsF/wSyCo/3HVll3hlY3rOON0uhn70pl177b4TlolAUi46UBze+EqHbYc2SxqcslxdhFB
-	0SwG/cIQixj0Wlr9DyArqqq2z0OxD93m2qRKM7Cv+uBP4CmGkWqUvn53qgJ1mTDmFBbtJmigaHa
-	BdmAgOHeKs3TtDEeL+9nwQry167b5h1YOhDl5Kf0Zb1rV/tIWBTvgmb+DJgyADtcflZjloYdMqz
-	JwJGs7/5fYKwtQ0Ai5P9Rw3eQSKeEf1P4HnuUDGSgD6skzkgANwoPZyFh86e7jFFZJVU5N4WIx1
-	MZHfLG7PBixeraNRH834LkTrmONo4HPNgCqZxHU+EwgzgzQLRMrfKcjr27RdzVRtZy4sGaao51C
-	AbBxRSMjqBrTyZMyplemrTAlKk+xE8GSoXuoJCpCMcqEPBECR3+7BPj+VAkz3C265wmlctf4L27
-	NDgiOQD00/kNpWXjzwHapTLIY26Lvf6SunvjfiAfzIyTnzu/R93cBvCLSrSQZ1n7v/kNob4+iPf
-	mlkE1pbPROjYSNtpWZAhWSGHfSp1so57ulq7d0jYcgXhI/Zau/wbzwtwUMhN71eOl4RYSAs2k0t
-	DSiTzor4KXUF+wmSv0OBamvNWpTDNnbyJJizM
-X-Received: by 2002:a17:90b:3e48:b0:3ab:55de:e089 with SMTP id 98e67ed59e1d1-3b40a611fbfmr3110569a91.40.1795174874780;
-        Fri, 20 Nov 2026 03:41:14 -0800 (PST)
-Received: from yhlee-960QFG.Davolink ([2406:5900:1044:110c:8b25:951:ad8d:5cc1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b41abb2076sm4125523a91.2.2026.11.20.03.41.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 03:41:14 -0800 (PST)
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-To: gregkh@linuxfoundation.org,
-	nkapron@google.com,
-	linux-usb@vger.kernel.org
-Cc: Thinh.Nguyen@synopsys.com,
-	bigeasy@linutronix.de,
-	target-devel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	lgs201920130244@gmail.com
-Subject: Re: [PATCH] usb: gadget: f_tcm: put the overlapped command's request back on ep_cmd
-Date: Fri, 20 Nov 2026 20:41:08 +0900
-Message-ID: <20261120114108.3071955-1-yhlee@isslab.korea.ac.kr>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-223285@kernel.org>
-References: <20261119140641.2768465-1-yhlee@isslab.korea.ac.kr> <sashiko-outbox-223285@kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=hbkbBj/o;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=/TmPF+in;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=hbkbBj/o;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=/TmPF+in
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 2C9A01F399;
+	Fri, 20 Nov 2026 11:42:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795174922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0sY9jQr5X1Oxc5rgpMPkHAnGiLMn1T1cPmD9U1gC6IQ=;
+	b=hbkbBj/oUeLIKeKzreg+oOYED+/+BBOElgcjUbyyXlzag/Ljsft5Ka/Db7s192b9LJJ7Jy
+	HgK71XifD6qL1KMZUbuAtiPdzFKEZG0Fs8MDyyC/ioRfiS3Ykg1voIWsl8eTjhyxRi6Vhs
+	xxQEdU1aludrAYY9+5dBVe97AfxnjRE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795174922;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0sY9jQr5X1Oxc5rgpMPkHAnGiLMn1T1cPmD9U1gC6IQ=;
+	b=/TmPF+inACsxNagfoEcVWQCBKyRTHgyUMQNVPxSOThgUszK5WKYXXyZD4xdDu0vD7eI3SZ
+	ttzd1If/spc32nCQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795174922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0sY9jQr5X1Oxc5rgpMPkHAnGiLMn1T1cPmD9U1gC6IQ=;
+	b=hbkbBj/oUeLIKeKzreg+oOYED+/+BBOElgcjUbyyXlzag/Ljsft5Ka/Db7s192b9LJJ7Jy
+	HgK71XifD6qL1KMZUbuAtiPdzFKEZG0Fs8MDyyC/ioRfiS3Ykg1voIWsl8eTjhyxRi6Vhs
+	xxQEdU1aludrAYY9+5dBVe97AfxnjRE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795174922;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0sY9jQr5X1Oxc5rgpMPkHAnGiLMn1T1cPmD9U1gC6IQ=;
+	b=/TmPF+inACsxNagfoEcVWQCBKyRTHgyUMQNVPxSOThgUszK5WKYXXyZD4xdDu0vD7eI3SZ
+	ttzd1If/spc32nCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 021561348F;
+	Fri, 20 Nov 2026 11:42:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 00EFMwkyAGtUAQAAD6G6ig
+	(envelope-from <hare@suse.de>); Fri, 20 Nov 2026 11:42:02 +0000
+Message-ID: <68297149-c8d3-4dee-997e-5821698b4e23@suse.de>
+Date: Fri, 20 Nov 2026 12:42:01 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,18 +106,144 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/9] nvme-auth: modify nvme_auth_transform_key() to
+ return status
+To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
+Cc: linux-nvme@lists.infradead.org
+References: <20261120-dhchap-keyring-v4-v4-0-5f8c7d9926ee@kernel.org>
+ <20261120-dhchap-keyring-v4-v4-1-5f8c7d9926ee@kernel.org>
+ <sashiko-outbox-225021@kernel.org>
+Content-Language: en-US
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <sashiko-outbox-225021@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spam-Level: 
+X-Spamd-Result: default: False [-13.28 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-0.995];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_THREE(0.00)[3];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -13.28
 
-Right, this is a real bug, but it needs a non-default setup.  With
-emulate_tas at its default of 1 the core sends TASK ABORTED instead of
-calling .aborted_task(), and a BOT session can't send a TMF itself.  So
-it takes a LUN RESET from a second fabric sharing the backstore, with
-emulate_tas set to 0.  It's an Oops in the target_completion worker, not
-a panic.
+On 11/20/26 12:19 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] nvme-auth: NULL pointer dereference in
+>    nvme_auth_transform_key()
+> - [Low] nvme-auth: unused variable transformed_data in
+>    nvme_auth_transform_key()
+> - [Low] nvme-auth: missing memzero_explicit() on error in
+>    nvme_auth_transform_key()
+> --
+> 
+> commit b03dd5c2705fd9466c887dbc6671b901be8cc15b
+> Author: Hannes Reinecke <hare@kernel.org>
+> 
+> nvme-auth: modify nvme_auth_transform_key() to return status
+> 
+> This commit changes nvme_auth_transform_key() to return the transformed key
+> length or a negative error code and pass the allocated raw secret buffer via
+> an output pointer, updating all callers in the NVMe host and target auth code.
+> 
+>> diff --git a/drivers/nvme/common/auth.c b/drivers/nvme/common/auth.c
+>> index 1fdc4e4ed0b94..569f21ad4fc7e 100644
+>> --- a/drivers/nvme/common/auth.c
+>> +++ b/drivers/nvme/common/auth.c
+>> @@ -317,37 +317,37 @@ static int nvme_auth_hash(u8 hmac_id, const u8 *data, size_t data_len, u8 *out)
+>>   	return -EINVAL;
+>>   }
+>>   
+>> -struct nvme_dhchap_key *nvme_auth_transform_key(
+>> -		const struct nvme_dhchap_key *key, const char *nqn)
+>> +int nvme_auth_transform_key(const struct nvme_dhchap_key *key, const char *nqn,
+>> +			    u8 **transformed_secret)
+>>   {
+>>   	struct nvme_auth_hmac_ctx hmac;
+>> -	struct nvme_dhchap_key *transformed_key;
+>> -	int ret, key_len;
+>> +	u8 *transformed_data;
+>> +	u8 *key_data;
+>> +	size_t transformed_len;
+>> +	int ret;
+> 
+> [Severity: Low]
+> Is transformed_data unused in this patch?  Declaring it here triggers a
+> -Wunused-variable warning until later commit "nvme-auth: switch to use
+> 'struct key'" uses it.
+> 
+Okay, will be removing it.
 
-Fixed in a separate patch:
-  https://lore.kernel.org/all/20261120113956.3071640-1-yhlee@isslab.korea.ac.kr/
+>>   
+>>   	if (!key) {
+>>   		pr_warn("No key specified\n");
+>> -		return ERR_PTR(-ENOKEY);
+>> +		return -ENOKEY;
+>>   	}
+>>   	if (key->hash == 0) {
+>> -		key_len = nvme_auth_key_struct_size(key->len);
+>> -		transformed_key = kmemdup(key, key_len, GFP_KERNEL);
+>> -		if (!transformed_key)
+>> -			return ERR_PTR(-ENOMEM);
+>> -		return transformed_key;
+>> +		key_data = kzalloc(key->len, GFP_KERNEL);
+>> +		memcpy(key_data, key->key, key->len);
+>> +		*transformed_secret = key_data;
+>> +		return key->len;
+>>   	}
+> 
+> [Severity: High]
+> Can this cause a NULL pointer dereference in memcpy() if kzalloc() fails
+> when key->hash == 0?  A later patch in the series, commit "nvme-auth: switch
+> to use 'struct key'", adds a NULL check on key_data, but intermediate
+> commits can crash here on allocation failure.
+> 
+Fixed up for the next version.
 
-Best regards,
-Yehyeong Lee
+>>   	ret = nvme_auth_hmac_init(&hmac, key->hash, key->key, key->len);
+>>   	if (ret)
+>> -		return ERR_PTR(ret);
+>> -	key_len = nvme_auth_hmac_hash_len(key->hash);
+>> -	transformed_key = nvme_auth_alloc_key(key_len, key->hash);
+>> -	if (!transformed_key) {
+>> -		memzero_explicit(&hmac, sizeof(hmac));
+>> -		return ERR_PTR(-ENOMEM);
+>> -	}
+>> +		return ret;
+>> +	transformed_len = nvme_auth_hmac_hash_len(key->hash);
+>> +	key_data = kzalloc(transformed_len, GFP_KERNEL);
+>> +	if (!key_data)
+>> +		return -ENOMEM;
+> 
+> [Severity: Low]
+> Should this error path call memzero_explicit(&hmac, sizeof(hmac)) before
+> returning -ENOMEM, as the code did prior to this patch so key-derived HMAC
+> state is not left on the stack?
+> 
+Fixed up for the next version.
+
+Cheers,
+
+Hannes
+-- 
+Dr. Hannes Reinecke                  Kernel Storage Architect
+hare@suse.de                                +49 911 74053 688
+SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
