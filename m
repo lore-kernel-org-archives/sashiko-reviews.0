@@ -1,96 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.98
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795182840;
-	b=jjLDGVnSWY5qhbNLJmzEOFKttXVKXIJ2SHgYQOHVjCNBf7sHoqWaGqAlwvNcVWJtuROU
-	 YRZSMKrNgxUZ104GILaQbeSVGwro8qpPRDW32CG29B2mCXcZ45YYycmOXlVaJC0UFSE6f
-	 LC+adcBrqtkRkcX92W1FBlvAicEBTn477vmUfE2+61CAtZO2pKXSe3ugieHz3QlYLYDmG
-	 kZz0UBuw8XM43TiENshFDCbtgvbydwF00iBazy0omMAZkoWn8ZqKDa8vn+wo3tU7gjKZN
-	 zBXQLoHkvtN5pr5DyN36FepvPXv2+mVjxCsaAbD1yvT9ziJJtLGpfgmOesG5NOhCksw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795182840;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=xfUNPdJxK5wQMmw0TKWNr+P9bsc1H00mnFmIr9+au7g=;
-	b=ZbPiKQl2i1sffYZuU1mNMoiZdFerSZn9Mfs3r4ARBgJj9aYCtWhxc7hxAU15XbZbfgTq
-	 QMIS1dgkk44YOnzCwTKsbOyJd4cEjGqYtMtNP4weDE8bXSmQFUCeRB8s8dAfZNHc1cUd5
-	 eMuBVZqCLaZinXX4HKSHa6TRLF2onP9JT4jeRw9nsjrx9dfPGEthwc0uQn3hFiZd7jCuI
-	 OYZ0w+uaKtGWhScOkOxSYLIMLcJAdxr9yYwXq0hCa/6jvhvLc06n6qpI4VV1aIx/iKqoP
-	 jLAz0Tv7Ydu2VLC8eJyKQZxc+t8TPv7Qny6+TJdwHo+ZUVAVmgpdAei4HJsKYhYAong==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=efficios.com;
-	spf=pass smtp.mailfrom=efficios.com;
-	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b="SHCCRL/R";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.98
-Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022098.outbound.protection.outlook.com [40.107.193.98])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795182912;
+	b=IqZMksSc0i7FH5LzDPP3VzFPgxCF3IEWhAkjklaeaJ5rl3rNcdbozq5qwYZv/mHIvBRz
+	 sOAB5sRbg4S/y87/wnF5aS/wVC+gDblgIhAGysKA9ddBjsCDuekmnz9wLVo617Brb0YVN
+	 jCS47jTmMOO+C4GVTlYL6rvScfK/DWWepRClOSYiON/m/IwrMR8TM2q6tjs5K8B94sMUP
+	 rLJH/Zac/3lu5T88APpdtHOK9nzC1fN95u1X33kdrlid9mj+ZyKHRKhXuGXrDkaUb1s1K
+	 teauOVnNImuhP3kvQzDwfy8/CsMyLdFgL+lOyOAqIpGvfe5KObtRd9LwEdQPwlm1DGA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795182912;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
+	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
+	 X-Spam-Score;
+	bh=/n3fTy8ng6ZYYJpewKOX6yR/aTlEnLa2I6y45l6z/UA=;
+	b=Y7l4YJJLWGBqvZGuV97iieW+Sv3x9vsV61cOZJ3G4HUna+fuq5+UhqB66niN7z7jVMpe
+	 9v7Hu7degQroEYZHBKh8b7mI+vwzDBS/yXx6RRsdgr49umpKGE5GkuE5cdBVqlLZsz1an
+	 FlVvDKIM+BnHgPANzEsrzHDHt4PQCxM6HUM2DIH2LxUg7N+cIRT0ccA7V34cKR4UUsxCk
+	 yZM18vXpq56jn5Ow8ny3g9O8AdHlZbxn8tqKxwUQ8DsbYbi5W+LNVX2Bw5rlczytXMChX
+	 BbfHDgwxKfTB2mpxbbpZhhNSGwE5YqMzZ5tXPhWLB/XgTD1yJ1RqsQG/sXGirIQdbEw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="1OhmEY/V";
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=noZbqmLQ;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="1OhmEY/V";
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=noZbqmLQ;
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A61060A2601;
-	Fri, 20 Nov 2026 13:54:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A61060A2601
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A33E606A330
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 13:55:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A33E606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=SHCCRL/R
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OCd5rvNS/WgmLsqhI4/ZuttlgJyeZyuXow/oiLqLTstZVsNJWwKxUF0E+OjerfEC8r/gxVH3TozTnaEoSflcTysrAgOzXE5UKPEuA4hrPywd37PmY064p07uIVFMX+bjaXjLR/zmUdTEhqNsQLtzXklHaT94sVo55++ArOmxZBNfXXyZYbT3sMFYYD7SKKgIat+7BDBaYb7W++72mEfhahdgK0O84DtC8Uq0QjyYh2YKuNzB1hCyeK5XYOztOwaKVHlWOs+JZTvEJtmJxDCK00eN+2tHNZsCKK8BZwNisyUppPtSnTds92r8M+1BXhyW6UtqWLfRfP5pHieq6gXM6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xfUNPdJxK5wQMmw0TKWNr+P9bsc1H00mnFmIr9+au7g=;
- b=whgn9aHxh4xuVcvnaCkBiqT6FnBGLEbLEmUtng3xpwnSi6hYIx5wKh3FJfr4rZ7PZckSHjwMkkI9/5W/3WfWQ0JUq4R0kJOfjkRl0r7gXc9frUT2w6RYKOGmtXMK109zWEfGhUqhettmdbrJRmucQ/2VFEFLS877wkipINpwdWMdLFW1IG3hy1jiKBoMFhYCtYjWZj6b1LMYiF4f9AM3i7Mrs/B3s0qN8Dy5DQ3Oh/wXnTMNmh8oMWd9Osb+oRoxSlqOx/yO8/w8csEjE9K5PeU91/En0z9v3RYXxB6b9LK8I99wKqlVBQVZA6kCD8rgrk5oqWaEfiyZQcDOD3jPHw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
- dkim=pass header.d=efficios.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xfUNPdJxK5wQMmw0TKWNr+P9bsc1H00mnFmIr9+au7g=;
- b=SHCCRL/RW6xUIYvkNO3rTAlOnV+XxzH4L2MekIhxyhb2wjNvf6nhai86bA2vIS3y0ush67X8F+dGel6e+MZg26kmqpTdolIUFJW38HeC/yuCFo2v/s+qSsiDEP8GOU7ak4ZfHnd9XMxvmzSWWFZ0ugL5YjgE6Gl5VTBmVElNDQX438S32b34jlQz7J24HtdXRiZ+i4SV5tPdNjVbehKSmOun2kkXTUy2SGi2HHfniK07cJHgTjlxHktiSPqeTGcJjebdBsA2q03PcYcVRDZr7RQU2UQi+cCj41KNYpPeXnPrLQ9UwzZaFGEhr+iHG4kPVIduQPx66d3BBPoEMqBQEw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=efficios.com;
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10) by YT3PR01MB8724.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:7d::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
- 2026 13:53:57 +0000
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0639.011; Fri, 20 Nov 2026
- 13:53:57 +0000
-Message-ID: <126ced8e-f0d0-4d1e-bd34-ebd5aca81395@efficios.com>
-Date: Fri, 20 Nov 2026 08:53:56 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 32/33] sched/deadline: Check the runtime of a task
- whose parameters change
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org,
- mkoutny@suse.com, linux-kernel@vger.kernel.org
-References: <cover.1795116790.git.mathieu.desnoyers@efficios.com>
- <efcd611a473f0da0161243c58f4af7c7ca73e2ba.1795116791.git.mathieu.desnoyers@efficios.com>
- <sashiko-outbox-224081@kernel.org>
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-224081@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQBPR0101CA0269.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:68::19) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=1OhmEY/V;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=noZbqmLQ;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=1OhmEY/V;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=noZbqmLQ
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 8E6841F458;
+	Fri, 20 Nov 2026 13:55:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795182909; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/n3fTy8ng6ZYYJpewKOX6yR/aTlEnLa2I6y45l6z/UA=;
+	b=1OhmEY/VCq8CkAfiWhxBgropxPFpmMC0vHiHCUyZ2sL/0UEpAcW428SpV0JaU8jyoN+6Tq
+	1n2212OpEBqz0SNEPqfnlx6h7oz7PckX6rczBChdjOFqcmdoN9WbCoV3IIDi3wJvldjBX9
+	3xx4Fg59YJ+54B2zUIZqgl6PyJv+QtM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795182909;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/n3fTy8ng6ZYYJpewKOX6yR/aTlEnLa2I6y45l6z/UA=;
+	b=noZbqmLQ5JiTpQpREI0+ez677JldCjJz0vyIFJculmKfR/390D6KmUNl3cljssT2bKyiyK
+	N6hcHpl2Tkc0riAg==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="1OhmEY/V";
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=noZbqmLQ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795182909; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/n3fTy8ng6ZYYJpewKOX6yR/aTlEnLa2I6y45l6z/UA=;
+	b=1OhmEY/VCq8CkAfiWhxBgropxPFpmMC0vHiHCUyZ2sL/0UEpAcW428SpV0JaU8jyoN+6Tq
+	1n2212OpEBqz0SNEPqfnlx6h7oz7PckX6rczBChdjOFqcmdoN9WbCoV3IIDi3wJvldjBX9
+	3xx4Fg59YJ+54B2zUIZqgl6PyJv+QtM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795182909;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/n3fTy8ng6ZYYJpewKOX6yR/aTlEnLa2I6y45l6z/UA=;
+	b=noZbqmLQ5JiTpQpREI0+ez677JldCjJz0vyIFJculmKfR/390D6KmUNl3cljssT2bKyiyK
+	N6hcHpl2Tkc0riAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 614831348F;
+	Fri, 20 Nov 2026 13:55:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id ht2MDj1RAGuDCgAAD6G6ig
+	(envelope-from <hare@suse.de>); Fri, 20 Nov 2026 13:55:09 +0000
+Message-ID: <d6585844-1446-45f6-8960-9c2c37c13f7c@suse.de>
+Date: Fri, 20 Nov 2026 14:55:09 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,113 +108,515 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT3PR01MB8724:EE_
-X-MS-Office365-Filtering-Correlation-Id: 05a13d0a-7ce9-4656-6292-08df470db8ae
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|4143699003|261009223027099003|56012099006|261026140227099003|261028144727099003|261022105027099003|261026121527099003|10067099003|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	+3pxLNJkW8/wNihmobLso6Fbp3LNfR3o7qc1V0HI7zesg+kuogpFP8RnvIFEIG1pITYwqS+Mluy/kVe3hI5pt0KcZoF1PNyysscpM54/YNeABI8tk0s5DATYLX8MHH6M+eyD3wvXAPSpcXyDDNeXU+2odv2u+Ou67C25WFC/YqszKqFw411BOacMPJhceAvnjCg8usP/LCA6itnVendd0rqYPot4EF0CrplRieqeHxWd6jfekhyiCo89or+M+bzk4EENGCzSUlFU2jECyLSbzfoa1Yo5F7o1ewRxX8fS4LYqmLxbHBjAfGiDsl4d0ilk2/9APEm9wG2cWzLGwcjkQFBjjkJy1RVqSE2/YzkJqFXc0ihLD9f4Lwcza1Kx2LpWj8GbQaB1ip8zouahP5TDLJcH5qIiCHsR6bpYqGf1SY7tNm87D/CE1yoLoMaFugudBCA1t4P6GcFh74qCQQOKAAfiVFFsGtUZThf5h51zBSpN6EyE2o13fsWiEyOnySgQc4/cBQtFlREURfFJleb+gGf2jal/FyB0wxMk4RZuqU8Xi7OIb/E9Gm7HJYH1p1hxJAzk38bjQu/poXhAorGgu5qp2qVIdeTA/dpIlfqITg8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(4143699003)(261009223027099003)(56012099006)(261026140227099003)(261028144727099003)(261022105027099003)(261026121527099003)(10067099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?N0NBTmpvaEJGeWxHL0wwMk8wS3Nwb0p3Ym43aktIRHlmRWpLMXdLRG1qRURt?=
- =?utf-8?B?OFM4TERHSThuOC8vcWlKQTY0N2Z0TWdjeEdoaUloQXhWbnl2WWdRRlBtWlhu?=
- =?utf-8?B?VC9yMGFjTnJoeFFuMnNkY3duNVl5R0V0ZlIvb2VNWGpZU2VvWjMrVnRvOGho?=
- =?utf-8?B?eXVWS2x5ZTlyUUU1anpnWUZEWURIbGd5WmlmZ1VSL3lybG83TEZVU0RmMGtj?=
- =?utf-8?B?MWNFVlQ0Ykh5MmhiSTVVWnNENDhoTVpmTU1rNmtpeFJLM0hUMmJRTG1qR3Vz?=
- =?utf-8?B?MHlYWVdYZndXMWMvNnUyMVFKTDAzU3lwMkowUkxzbEJpSUtWSjBEYm1VTnUv?=
- =?utf-8?B?OVFlUDZETkRORUl2V1FqRG9heDdySWdHb3hKRVVFMkxzUEVqSkVnTldxRGhO?=
- =?utf-8?B?Z2phR056MEx3QmNScEZuS0JET2xrOVJZeHlDdmp2LzU0NzBzckg2QWM2SDVU?=
- =?utf-8?B?SnJSN3lJbkNNMWZZZXNYMGpIaXhkQ1JLcm1LSy9icUtmUHlwR1lkK1p5UkJy?=
- =?utf-8?B?Y3k2ck5TelNiUmZzNkVub0F0L2xLRkRFRFZ5VzhyNXlLM3RHODNnbVNEdE5w?=
- =?utf-8?B?VmI1elF3ZjUwekkrTzBJd0g4aXFjMDBwcG56bjVRL08zeWUxWmpUQ29VV2Jh?=
- =?utf-8?B?ZVV1UWVjOWk0cEF3bWlmWHpqdXY0TlViYWRDSmFpUDVVWXliM2xzZjNaZTJi?=
- =?utf-8?B?VUYzNGtnMmF1YlBqQmIvY0w5bm5SMnBxL2tlbGwzQzBPaWppdTdwZmVqc2xm?=
- =?utf-8?B?VDR3eFprM2dLYkZBUms3c1BnVEJKVUVhNUM3bVZMdWdZWFM5bi91UGJQcTcr?=
- =?utf-8?B?L2RaVjFvUlJkcXE1YkxwVXEyaXlDMEcwRlFhQU9jV0ZqaHBHRFdPOWppdm53?=
- =?utf-8?B?cGxSQms5TUNHN2xycUJnWUlHSFc1WG5xMEk1YkQvanNxd3QzWTZPMS9TdkN3?=
- =?utf-8?B?Q3FRUXNuMS9XMXVUQWxsVWpwNU9YblJmT2Y1Tmw2NEFYU0pPSEZrZ3RRc0Ur?=
- =?utf-8?B?bDZoV00rZXpmOVhKOEtGNmtIMnVUbTErczRoeU1ZRTR1dFNlaUFad294S3Rz?=
- =?utf-8?B?dElMRUlvdkN2V2g0RVpDVmhTWEtuQmJUNzZ5Wlc4NWdNQm9yUVFCTlFTNkU5?=
- =?utf-8?B?S0R1M1d4SFFCVFdIN1pGc0sxdGVuWUdLVDBpOFg0WHBZV09TUG5ES3lNSnNH?=
- =?utf-8?B?MXlKbWkzYWMvMjJENGp2VTl4Tk91ZkRvbG5xQnJ6L0xpWW5wNnBhOGhDc0Ja?=
- =?utf-8?B?VkdqSVFSWk1ZczNDNTg2elg0SXRzaUEyOVh2WUJsRWtCWTE4QWg0Vllpamhl?=
- =?utf-8?B?YzB0bW9JTzdRWlJEUWtnYi92cWFTdlZYaDdMTER5UjNMR0ZvWTB1b2cvYkcx?=
- =?utf-8?B?K000bmd6Yk1hWW0xSlh2em1DYkxSL0RoMDdlVEFBTXkyOGl6SmU2NExKK2xi?=
- =?utf-8?B?Q3JXUld5SWNKc2h4WGdqTzM1cmZTa0QzMzE4SjI1UkNyNjdSeWR1a2llYVBv?=
- =?utf-8?B?bkxzbnVNUHdDcWMya21PQ0lZZXpCdnJzNG1ma2hkeFlETld6VE5HRzhJS0VQ?=
- =?utf-8?B?RnppV0RITVc5cmw3QUlseG45a1B0aWR4TW9jMjJqTXdCazZQWHVPRExLaFM3?=
- =?utf-8?B?T3VjTWNPZVVTSVZCb0E1QWFNZC80d2lnd09yYmxBcjNOWmpVRGViQ3FKQU8r?=
- =?utf-8?B?S3MrcmRGR3N1a1hXS0xLNXpwa1NWYkpGbGlUZmwrZUFYMTUvWTZ5RDkzWkVm?=
- =?utf-8?B?Y0h2RUcyTVFCa1JIbzVIUEIwRmpyenkvK0JGWjdpeU9UTlhIUjhVV3o4bGo3?=
- =?utf-8?B?dG00bmR4aGs5dUovaTYwZDJITjArSFJENWlKMEJaTGxXWkVtS2xMcDZwelZH?=
- =?utf-8?B?NWE1cGdVRVVtTmtMMUpKazFuSjhNWGpVRmFtL2k1bVVoem9NLzhRMDZJVWUw?=
- =?utf-8?B?YzMxL0owTGp6eFovZi9naEx6WHdqTkc2Mkk3bHRRai92TUhXaUNoZEovZ21Y?=
- =?utf-8?B?Mi9hYVRsbld5b2RGRU5JN2pMc2xlM0w4ZDJuWG5XdGhUUVp0NFM0bVkzL0pS?=
- =?utf-8?B?UUhTa3lsTjgvbm0wTi9lMlNjTWowUzkydG9NWFZiRDNrYlNKYVBnUDhhTDNH?=
- =?utf-8?B?bkkzR3JLUDMzdlFmSWR5ZTd6ekRhb2JOWFQ1Vnd0c3dDRUlNbUtxQUtJZ2ZI?=
- =?utf-8?B?MzZLREx3dFdEYkVEejhCbWRFNFNqMUk3cmNIa1FBN1pzbWxwYjl4ZzNFM3hv?=
- =?utf-8?B?T0hneXdXNVl4WTB2OUhzSnN6WGtEMmdxVjJQWW5DM3hQUThBZU5OaDQyb1lB?=
- =?utf-8?B?cTl0WWVCUklBMWRXTWRjOUxZd1pheUZPZHlJRFRlUmRsbS9VTGY2bTZ5MGN5?=
- =?utf-8?Q?cnRPsTODwA9pUaV4PKUvl90LzjkcEybYQlAza?=
-X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 05a13d0a-7ce9-4656-6292-08df470db8ae
-X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 13:53:56.9189
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ElwAYvSbzM1MhKYZxYgXCG2ZdtQ0gPF+VlZu6YNsz/g5R4KDeXBbdpKfS4bh2rayqP4XiH72+kS8DoAL2XLm7lKjJub8VKHTmWWyFaup9FE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB8724
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/9] nvme: parse dhchap keys during option parsing
+To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
+Cc: linux-nvme@lists.infradead.org
+References: <20261120-dhchap-keyring-v4-v4-0-5f8c7d9926ee@kernel.org>
+ <20261120-dhchap-keyring-v4-v4-4-5f8c7d9926ee@kernel.org>
+ <sashiko-outbox-225048@kernel.org>
+Content-Language: en-US
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <sashiko-outbox-225048@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 8E6841F458
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-13.50 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	MX_GOOD(-0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_TLS_ALL(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_THREE(0.00)[3];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Score: -13.50
 
-> Does calling update_dl_entity() directly from dl_deboost() bypass
-> dl_check_constrained_dl() and update sleeping tasks prematurely?
+On 11/20/26 12:32 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 7 potential
+> issues to consider:
+> - [High] nvme-fabrics: wrong key revoked in nvmf_free_options() for
+>    dhchap_ctrl_key
+> - [High] nvme: build failure in nvmf_parse_options() and sysfs.c without
+>    auth/keyring
+> - [High] nvme: removing secret length checks exposes underflows in key
+>    preparsing
+> - [Medium] nvme: out-of-bounds write on read error in
+>    dhchap_ctrl_secret_show()
+> - [Medium] nvme-auth: host_key ref leak and inverted check in
+>    nvme_auth_init_ctrl()
+> - [Medium] nvme: unlocked host_key and ctrl_key access in dhchap sysfs
+>    show callbacks
+> - [Low] nvme: check !ctrl->opts for dhchap_key attrs in
+>    nvme_dev_attrs_are_visible()
+> --
+> 
+> commit ddf0d4926edd9ec44ea25839b02c0ba20380f64e
+> Author: Hannes Reinecke <hare@kernel.org>
+> 
+> nvme: parse dhchap keys during option parsing
+> 
+> This commit parses DH-HMAC-CHAP secrets into struct key pointers during
+> fabric option parsing instead of storing raw secret strings in
+> nvmf_ctrl_options, and adds sysfs attributes to expose the host and
+> controller key serials.
+> 
+>> diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+>> index 0ddf3834f4ea2..c189096f825ea 100644
+>> --- a/drivers/nvme/host/auth.c
+>> +++ b/drivers/nvme/host/auth.c
+> [ ... ]
+>> @@ -1038,31 +1056,68 @@ int nvme_auth_init_ctrl(struct nvme_ctrl *ctrl)
+>>   	INIT_WORK(&ctrl->dhchap_auth_work, nvme_ctrl_auth_work);
+>>   	if (!ctrl->opts)
+>>   		return 0;
+>> -	ctrl->host_key = nvme_auth_extract_key(ctrl->opts->keyring,
+>> -				ctrl->opts->dhchap_secret,
+>> -				strlen(ctrl->opts->dhchap_secret));
+>> -	if (IS_ERR(ctrl->host_key)) {
+>> -		ret = PTR_ERR(ctrl->host_key);
+>> -		ctrl->host_key = NULL;
+>> -		return ret;
+>> +	if (!ctrl->opts->dhchap_key) {
+>> +		nvme_auth_clear_host_key(ctrl);
+>> +		nvme_auth_clear_ctrl_key(ctrl);
+>> +		return 0;
+>>   	}
+>> +	if (!ctrl->host_key)
+>> +		nvme_auth_clear_host_key(ctrl);
+>>
+>> -	ctrl->ctrl_key = nvme_auth_extract_key(ctrl->opts->keyring,
+>> -				ctrl->opts->dhchap_ctrl_secret,
+>> -				strlen(ctrl->opts->dhchap_ctrl_secret));
+>> -	if (IS_ERR(ctrl->ctrl_key)) {
+>> -		ret = PTR_ERR(ctrl->ctrl_key);
+>> -		ctrl->ctrl_key = NULL;
+>> -		goto err_free_dhchap_secret;
+>> +	ctrl->host_key = key_get(ctrl->opts->dhchap_key);
+>> +	if (!ctrl->host_key) {
+>> +		dev_warn(ctrl->device,
+>> +			 "dhchap host key %08x not present\n",
+>> +			 key_serial(ctrl->opts->dhchap_key));
+>> +		return -ENOKEY;
+>>   	}
+>> +	down_read(&ctrl->host_key->sem);
+>> +	ret = key_validate(ctrl->host_key);
+>> +	up_read(&ctrl->host_key->sem);
+>> +	if (ret) {
+>> +		dev_warn(ctrl->device,
+>> +			 "dhchap host key %08x invalidated\n",
+>> +			 key_serial(ctrl->host_key));
+>> +		key_put(ctrl->host_key);
+>> +		ctrl->host_key = NULL;
+>> +		return -ENOKEY;
+>> +	}
+>> +	dev_dbg(ctrl->device,
+>> +		"%s: using dhchap host key %08x\n",
+>> +		__func__, key_serial(ctrl->host_key));
+>>
+>> -	if (!ctrl->opts->dhchap_secret && !ctrl->opts->dhchap_ctrl_secret)
+>> -		return 0;
+>> +	if (ctrl->ctrl_key)
+>> +		nvme_auth_clear_ctrl_key(ctrl);
+>> +
+>> +	if (ctrl->opts->dhchap_ctrl_key) {
+>> +		ctrl->ctrl_key = key_get(ctrl->opts->dhchap_ctrl_key);
+>> +		if (!ctrl->ctrl_key) {
+>> +			dev_warn(ctrl->device,
+>> +				 "dhchap ctrl key %08x not present\n",
+>> +				 key_serial(ctrl->opts->dhchap_ctrl_key));
+>> +			return -ENOKEY;
+>> +		}
+>> +		down_read(&ctrl->ctrl_key->sem);
+>> +		ret = key_validate(ctrl->ctrl_key);
+>> +		up_read(&ctrl->ctrl_key->sem);
+>> +		if (ret) {
+>> +			dev_warn(ctrl->device,
+>> +				 "dhchap ctrl key %08x invalidated\n",
+>> +				 key_serial(ctrl->ctrl_key));
+>> +			key_put(ctrl->ctrl_key);
+>> +			ctrl->ctrl_key = NULL;
+>> +			return -EKEYREVOKED;
+>> +		}
+> 
+> [Severity: Medium]
+> Do the error returns in the ctrl->opts->dhchap_ctrl_key block leak the
+> ctrl->host_key reference taken earlier in nvme_auth_init_ctrl()?
+> 
+> When nvme_auth_init_ctrl() fails, nvme_init_ctrl() jumps to
+> out_release_instance before initializing ctrl->ctrl_device, so
+> nvme_auth_free() is never called on that error path.
+> 
+> Also, the check before nvme_auth_clear_host_key(ctrl) is inverted
+> (!ctrl->host_key instead of ctrl->host_key), and nvme_init_ctrl() calls
+> nvme_auth_init_ctrl() before assigning ctrl->device = &ctrl->ctrl_device,
+> so the dev_warn() and dev_dbg() calls here pass a NULL ctrl->device.
+> 
+Restructured the function to only update the ->host_key and ->ctrl_key
+values once the keys are validated.
 
-Yes for a constrained task. In v9, dl_deboost() will leave the check to
-the next enqueue when the task is past its deadline and before its next
-period. The enqueue will then throttle it, as dl_check_constrained_dl()
-does.
+>> diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+>> index 5ed91557f0706..7ed8618257ca9 100644
+>> --- a/drivers/nvme/host/fabrics.c
+>> +++ b/drivers/nvme/host/fabrics.c
+> [ ... ]
+>> @@ -1020,14 +1024,8 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+>>   				ret = -ENOMEM;
+>>   				goto out;
+>>   			}
+>> -			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+>> -				pr_err("Invalid DH-CHAP secret %s\n", p);
+>> -				kfree_sensitive(p);
+>> -				ret = -EINVAL;
+>> -				goto out;
+>> -			}
+>> -			kfree_sensitive(opts->dhchap_secret);
+>> -			opts->dhchap_secret = p;
+>> +			kfree_sensitive(host_secret);
+>> +			host_secret = p;
+>>   			break;
+>>   		case NVMF_OPT_DHCHAP_CTRL_SECRET:
+>>   			p = match_strdup(args);
+>> @@ -1035,14 +1033,8 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+>>   				ret = -ENOMEM;
+>>   				goto out;
+>>   			}
+>> -			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+>> -				pr_err("Invalid DH-CHAP secret %s\n", p);
+>> -				kfree_sensitive(p);
+>> -				ret = -EINVAL;
+>> -				goto out;
+>> -			}
+>> -			kfree_sensitive(opts->dhchap_ctrl_secret);
+>> -			opts->dhchap_ctrl_secret = p;
+>> +			kfree_sensitive(ctrl_secret);
+>> +			ctrl_secret = p;
+>>   			break;
+> 
+> [Severity: High]
+> Does removing the minimum length checks here and in dhchap_secret_store() /
+> dhchap_ctrl_secret_store() allow short secret strings to underflow datalen
+> and ret in nvme_dhchap_psk_preparse()?
+> 
+> drivers/nvme/common/keyring.c:nvme_dhchap_psk_preparse() {
+>      ...
+> 	if (sscanf(prep->data, "DHHC-%01hhu:%02hhu:%*s",
+> 		   &version, &hmac) != 2) {
+>      ...
+> 	}
+> 
+> 	/* skip header and final ':' character */
+> 	datalen -= 11;
+> }
+> 
+> Because %*s is assignment-suppressed and %02hhu matches one or two digits,
+> sscanf() returns 2 for 8- to 10-byte strings such as "DHHC-1:0:a", causing
+> unsigned datalen -= 11 to wrap around and wrap the kzalloc() size
+> calculation sizeof(*upayload) + datalen.  For 11- to 15-byte inputs such as
+> "DHHC-1:00:a" where base64_decode() returns 0..3, ret -= 4 in
+> nvme_dhchap_psk_preparse() becomes negative and is passed as an unsigned
+> length to crc32(~0, upayload->data, ret), reading out-of-bounds across
+> kernel memory.
+> 
+The parsing routines have been fixed with reworks of the previous patches.
 
-For a sleeping owner, the wakeup checks the runtime again. The early
-check gives it no more runtime.
+> [ ... ]
+> 
+>> @@ -1086,6 +1078,41 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+>>   			pr_warn("failfast tmo (%d) larger than controller loss tmo (%d)\n",
+>>   				opts->fast_io_fail_tmo, ctrl_loss_tmo);
+>>   	}
+>> +
+>> +	opts->host = nvmf_host_add(hostnqn, &hostid);
+>> +	if (IS_ERR(opts->host)) {
+>> +		ret = PTR_ERR(opts->host);
+>> +		opts->host = NULL;
+>> +		goto out;
+>> +	}
+>> +
+>> +	if (host_secret) {
+>> +		pr_debug("lookup host identity '%s'\n", host_secret);
+>> +		key = nvme_auth_extract_key(opts->keyring, host_secret,
+>> +					    strlen(host_secret));
+>> +		if (IS_ERR(key)) {
+>> +			ret = PTR_ERR(key);
+>> +			goto out;
+>> +		}
+>> +		pr_debug("using dhchap host key %08x\n", key_serial(key));
+>> +		opts->dhchap_key = key;
+>> +	}
+>> +	if (ctrl_secret) {
+>> +		if (!opts->dhchap_key) {
+>> +			ret = -EINVAL;
+>> +			goto out;
+>> +		}
+>> +		pr_debug("lookup ctrl identity '%s'\n", ctrl_secret);
+>> +		key = nvme_auth_extract_key(opts->keyring, ctrl_secret,
+>> +					    strlen(ctrl_secret));
+> 
+> [Severity: High]
+> Does calling nvme_auth_extract_key() unconditionally here break the build
+> when CONFIG_NVME_FABRICS is enabled without CONFIG_NVME_AUTH (or when
+> CONFIG_NVME_FABRICS=y and CONFIG_NVME_AUTH=m)?
+> 
+> include/linux/nvme-auth.h declares nvme_auth_extract_key() without a
+> !CONFIG_NVME_AUTH stub, and match_token() is an external call so the
+> compiler cannot dead-code-eliminate the host_secret and ctrl_secret
+> branches when CONFIG_NVME_HOST_AUTH is disabled.
+> 
+> In addition, drivers/nvme/host/sysfs.c now includes <linux/nvme-keyring.h>
+> unconditionally, which fails to compile when CONFIG_NVME_KEYRING is
+> disabled due to a stray semicolon and a non-inline function definition in
+> the fallback block:
+> 
+> include/linux/nvme-keyring.h:
+> static inline struct key *nvme_dhchap_psk_lookup(struct key *keyring,
+> 		const char *hostnqn, const char *subnqn, u8 hmac);
+> {
+> 	return ERR_PTR(-EOPNOTSUPP);
+> }
+> u8 nvme_dhchap_psk_hash(struct key *key)
+> {
+> 	return 0;
+> }
+> 
+Fixed up with the next version.
 
-> Can an unboosted SCHED_DEADLINE lock owner miss a required PI boost when
-> update_dl_entity() pushes its deadline past its top waiter's deadline?
+> [ ... ]
+> 
+>> @@ -1304,8 +1326,18 @@ void nvmf_free_options(struct nvmf_ctrl_options *opts)
+>>   	kfree(opts->subsysnqn);
+>>   	kfree(opts->host_traddr);
+>>   	kfree(opts->host_iface);
+>> -	kfree_sensitive(opts->dhchap_secret);
+>> -	kfree_sensitive(opts->dhchap_ctrl_secret);
+>> +	if (opts->dhchap_key) {
+>> +		pr_debug("revoke dhchap host key %08x\n",
+>> +			 key_serial(opts->dhchap_key));
+>> +		key_revoke(opts->dhchap_key);
+>> +		key_put(opts->dhchap_key);
+>> +	}
+>> +	if (opts->dhchap_ctrl_key) {
+>> +		pr_debug("revoke dhchap ctrl key %08x\n",
+>> +			 key_serial(opts->dhchap_ctrl_key));
+>> +		key_revoke(opts->dhchap_key);
+>> +		key_put(opts->dhchap_ctrl_key);
+>> +	}
+> 
+> [Severity: High]
+> In the opts->dhchap_ctrl_key block, should key_revoke() be passed
+> opts->dhchap_ctrl_key instead of opts->dhchap_key?  Passing
+> opts->dhchap_key dereferences the host key after key_put(opts->dhchap_key)
+> has already dropped its reference, and leaves opts->dhchap_ctrl_key
+> unrevoked.
+> 
+Of course. Fixed up with the next version.
 
-Yes, and this is older. On v7.4-rc2, a replenishment or a wakeup can
-also push the deadline of an unboosted owner past its top waiter. Only
-rt_mutex_setprio() compares them. This patch adds one more such path. I
-would rather fix all of them in a follow-up.
+>> diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
+>> index a5c1511e49ac2..1311f5e29b004 100644
+>> --- a/drivers/nvme/host/sysfs.c
+>> +++ b/drivers/nvme/host/sysfs.c
+> [ ... ]
+>> @@ -818,11 +820,23 @@ static ssize_t dhchap_secret_show(struct device *dev,
+>>   		struct device_attribute *attr, char *buf)
+>>   {
+>>   	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+>> -	struct nvmf_ctrl_options *opts = ctrl->opts;
+>> +	struct key *key = ctrl->host_key;
+>> +	ssize_t count;
+>>
+>> -	if (!opts->dhchap_secret)
+>> +	if (!key)
+>>   		return sysfs_emit(buf, "none\n");
+>> -	return sysfs_emit(buf, "%s\n", opts->dhchap_secret);
+>> +	down_read(&key->sem);
+>> +	if (key_validate(key))
+>> +		count = sysfs_emit(buf, "<invalidated>\n");
+>> +	else {
+>> +		count = key->type->read(key, buf, PAGE_SIZE);
+>> +		if (count > 0) {
+>> +			buf[count] = '\n';
+>> +			count++;
+>> +		}
+>> +	}
+>> +	up_read(&key->sem);
+>> +	return count;
+>>   }
+> [ ... ]
+>> @@ -830,36 +844,47 @@ static ssize_t dhchap_secret_store(struct device *dev,
+> [ ... ]
+>> +	mutex_lock(&ctrl->dhchap_auth_mutex);
+>> +	old_key = ctrl->host_key;
+>> +	dev_dbg(ctrl->dev, "revoke host key %08x\n",
+>> +		key_serial(old_key));
+>> +	key_revoke(old_key);
+>> +
+>> +	ctrl->host_key = key;
+>> +	mutex_unlock(&ctrl->dhchap_auth_mutex);
+>> +	key_put(old_key);
+> 
+> [Severity: Medium]
+> Can a concurrent read of dhchap_secret (or dhchap_ctrl_secret, dhchap_key,
+> or dhchap_ctrl_key) race with dhchap_secret_store() or
+> dhchap_ctrl_secret_store() and trigger a use-after-free on the old key?
+> 
+> CPU0                              CPU1
+> dhchap_secret_show()
+>    key = ctrl->host_key;
+>                                    dhchap_secret_store()
+>                                      mutex_lock(&ctrl->dhchap_auth_mutex);
+>                                      old_key = ctrl->host_key;
+>                                      key_revoke(old_key);
+>                                      ctrl->host_key = key;
+>                                      mutex_unlock(&ctrl->dhchap_auth_mutex);
+>                                      key_put(old_key);  <-- frees old_key
+>    down_read(&key->sem);  <-- use-after-free
+> 
+> None of dhchap_secret_show(), dhchap_ctrl_secret_show(), dhchap_key_show(),
+> or dhchap_ctrl_key_show() hold ctrl->dhchap_auth_mutex or take a key_get()
+> reference before dereferencing ctrl->host_key or ctrl->ctrl_key.  Once a
+> key has been replaced via sysfs store (so opts->dhchap_key no longer holds
+> a reference), ctrl->host_key holds the only reference, and key_put(old_key)
+> frees it while a concurrent show callback is using it.
+> 
+Updated the _show functions to take the dhchap_auth_mutex.
 
-> Does __setparam_dl() leave dl_new_params unset when a task leaves
-> SCHED_DEADLINE and re-enters with the same parameters while PI-boosted?
+>> @@ -873,11 +898,23 @@ static ssize_t dhchap_ctrl_secret_show(struct device *dev,
+>>   		struct device_attribute *attr, char *buf)
+>>   {
+>>   	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+>> -	struct nvmf_ctrl_options *opts = ctrl->opts;
+>> +	struct key *key = ctrl->ctrl_key;
+>> +	size_t count;
+>>
+>> -	if (!opts->dhchap_ctrl_secret)
+>> +	if (!key)
+>>   		return sysfs_emit(buf, "none\n");
+>> -	return sysfs_emit(buf, "%s\n", opts->dhchap_ctrl_secret);
+>> +	down_read(&key->sem);
+>> +	if (key_validate(key))
+>> +		count = sysfs_emit(buf, "<invalidated>");
+>> +	else {
+>> +		count = key->type->read(key, buf, PAGE_SIZE);
+>> +		if (count > 0) {
+>> +			buf[count] = '\n';
+>> +			count++;
+>> +		}
+>> +	}
+>> +	up_read(&key->sem);
+>> +	return count;
+>>   }
+> 
+> [Severity: Medium]
+> Can a negative error return from key->type->read() cause an out-of-bounds
+> write before buf in dhchap_ctrl_secret_show() and dhchap_key_show()?
+> 
+> Unlike dhchap_secret_show(), which declares ssize_t count, both
+> dhchap_ctrl_secret_show() and dhchap_key_show() declare count as unsigned
+> size_t.  If key->type->read() returns a negative error code (such as
+> -EINVAL), count wraps to a large positive value, passes count > 0, and
+> writes '\n' to buf[count] out-of-bounds.  Commit "nvme: allow to pass in
+> key description as dhchap secret" later in this series replaces
+> key->type->read() in dhchap_key_show(), but dhchap_ctrl_secret_show()
+> retains the unsigned size_t count and also omits the trailing newline on
+> "<invalidated>".
+> 
+Used 'ssize_t' here, too.
 
-Yes, by design. A task that leaves the class keeps its CBS state, so
-that changing class gives it no fresh runtime. This is the intent of
-commit a649f237db18 ("sched,dl: Fix sched class hopping CBS hole"). If
-the old deadline has passed at the deboost, the enqueue starts a new
-period. The leftover is never more than a new entry would get.
+> [ ... ]
+> 
+>> @@ -925,6 +970,41 @@ static ssize_t dhchap_ctrl_secret_store(struct device *dev,
+>>   }
+>>
+>>   static DEVICE_ATTR_ADMIN_RW(dhchap_ctrl_secret);
+>> +
+>> +static ssize_t dhchap_key_show(struct device *dev,
+>> +		struct device_attribute *attr, char *buf)
+>> +{
+>> +	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+>> +	struct key *key = ctrl->host_key;
+>> +	size_t count;
+>> +
+>> +	if (!key)
+>> +		return 0;
+>> +	down_read(&key->sem);
+>> +	if (key_validate(key))
+>> +		count = sysfs_emit(buf, "<invalidated>\n");
+>> +	else {
+>> +		count = key->type->read(key, buf, PAGE_SIZE);
+>> +		if (count > 0) {
+>> +			buf[count] = '\n';
+>> +			count++;
+>> +		}
+>> +	}
+>> +	up_read(&key->sem);
+>> +	return count;
+>> +}
+>> +static DEVICE_ATTR_ADMIN_RO(dhchap_key);
+>> +
+>> +static ssize_t dhchap_ctrl_key_show(struct device *dev,
+>> +		struct device_attribute *attr, char *buf)
+>> +{
+>> +	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+>> +
+>> +	if (!ctrl->ctrl_key)
+>> +		return 0;
+>> +	return sysfs_emit(buf, "%08x\n", key_serial(ctrl->ctrl_key));
+>> +}
+>> +static DEVICE_ATTR_ADMIN_RO(dhchap_ctrl_key);
+>>   #endif
+>>
+>>   static struct attribute *nvme_dev_attrs[] = {
+>> @@ -956,6 +1036,8 @@ static struct attribute *nvme_dev_attrs[] = {
+>>   #ifdef CONFIG_NVME_HOST_AUTH
+>>   	&dev_attr_dhchap_secret.attr,
+>>   	&dev_attr_dhchap_ctrl_secret.attr,
+>> +	&dev_attr_dhchap_key.attr,
+>> +	&dev_attr_dhchap_ctrl_key.attr,
+>>   #endif
+> 
+> [Severity: Low]
+> Should nvme_dev_attrs_are_visible() hide dev_attr_dhchap_key.attr and
+> dev_attr_dhchap_ctrl_key.attr when !ctrl->opts, the same way it hides
+> dev_attr_dhchap_secret.attr and dev_attr_dhchap_ctrl_secret.attr?  Without
+> that check, both attributes appear on non-Fabrics controllers (such as PCIe
+> controllers) when CONFIG_NVME_HOST_AUTH is enabled.
+> 
+Yes, it should. Updated for the next version.
 
-> When sched_setattr() shrinks the parameters of an unboosted task blocked
-> on an rt_mutex, does rt_mutex_adjust_pi() use a stale p->dl.deadline?
+> Also, in this patch dhchap_key_show() outputs the key payload via
+> key->type->read() instead of key_serial(key) as dhchap_ctrl_key_show() does
+> (though commit "nvme: allow to pass in key description as dhchap secret"
+> later in the series updates dhchap_key_show() to emit key_serial()).
+> 
+Fixed up with the next version.
 
-Yes. v7.4-rc2 has it too. In v9, prio_changed_dl() will check the
-runtime of a task that is blocked on an rt_mutex and not boosted.
-rt_mutex_adjust_pi() will then requeue the waiter with the result. A new
-case, setattr_blocked_new_period, fails without the fix and passes with
-it.
+Cheers,
 
-Thanks,
-
-Mathieu
-
+Hannes
 -- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+Dr. Hannes Reinecke                  Kernel Storage Architect
+hare@suse.de                                +49 911 74053 688
+SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
