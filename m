@@ -1,104 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795188458;
-	b=Nna88YcbNNTfu7G+DDG78LrGoyGJAqvLVPjkjw9P3j3zsCYYmZ0Yb5KZrH3OMEFqumuB
-	 vQ2Ks7EinlkfMeWCL6pFzYmHTeaqmi7t5JRc+z+vQBY5rt8za2dbGQGbdGkLzd2bJhYcP
-	 6YO8FaOTdVWRj0+ToWkXJUhkstTr3R4R4KQojBsH2hOuP1rBc5/XxuEPlDPrX02qGbIpn
-	 Idg6snk//3tPguPodsUN2hEBNwlDjmA/UKg2T+c7Uf464ah1od7jmQjhKpKnZMrRH1gA5
-	 iucq19bR/x5DLjNBIYUAWCAIFz6ZYgvrg38UDcesE1HfTA54fim/0FJ1px6QUbu7kug==
+	t=1795191011;
+	b=0+6/aBlAYzABJBzoqYhoazsUFm56JJx5mvQg6ePE6rkRrmENqzlrKcvV1bihuES8AUgF
+	 +WMuVVga1iumUpNsh5XpqNOi8nUmGbSknBewz/PYwY5WRrv3vj7kno/Fz+/ORWYq0oLK8
+	 OuYIOBtKKibGVMJFZaXgawTCC7CphGdxDfU+lZPPBfR5lCSQdFjCgpPpiqjKeEwosrVyE
+	 asSQa3NEVszWw2eT1pf44Fw3ba2pTjXM7f0PMVJsX5V7MTNVqe7IxGlNEKiGSrMp9i3Df
+	 7q9Oh8bES5t/j7P1RXjHXNasbt0ON2oXn+rfZXg+EhU2LXZktohMXELzuhcDPxotkPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795188458;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=RgOITjIq4jGgZj+xgRbcW8OsF69eO4G5la7I84QrRqE=;
-	b=Dfa+vzF83yL6Of3crmyLxRi1KkD4AZ4GBhMeMaT6WhAH6yooT0GHqjZoBvdUthNBNsI8
-	 W/vuMNYeN4fEoBZTeTwVa8z1vM48+eSHOlzZw+WSMbQe5Oq8OXUFftuIjfcqONumcZE94
-	 ggLNcOu/G9FqYeGWwtZWlLYfk5wMs+Bb7Lhpw9wXu3tsavE70VGSU3Hw+DWquhU9TyuPx
-	 rXYhuyJExoGzy5TU4Ce0O6h/m5jpp7U/iWe0MgSsHRbzYvMpwt72hOM4FgnmZLnqHbwcw
-	 pgfgJBZWuCJ2r89WL23XLYv/Us2RJ8xrMELdouAAkJwmNCG4Gv/ebuyTt+A5+6bOAeA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795191011;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=I19fa1T0RrJU8l7TI80wid+LKZbrQwuj8fJa7cMIqvk=;
+	b=eRVyDKNRQ3nygmv/g8wu2muOpTWraRGjR87pt7dQgyxIwWyMDTReu4D+AtZ5HdRsw6Dy
+	 qh+EQkv+qCHTOBm302LwuS5L4855ohCDgd7HCa0T8gN4O4E1qEL/h7wUWiw+hWjQawLr2
+	 5uJQVUziw07RwmS2W792tb4dg14a0jSYL6WTR0Wth3x3gs6LKJhy6kFW7kOQfsXqqVyYp
+	 MMLC2B+CvO04d4IrBEjSTuqJ56o3eIuviRFTJyi3gXr28mZxkX1iXsiyesbrkRJl86d9l
+	 TRvhrGI/OY7Kp1U4i0kZNFayCRU04GzdGyrNXmjDxsWsUtxnKkfnxsSy4EO7b0prbtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FOY6KEZE;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=OfVffPc4;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FOY6KEZE;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=OfVffPc4;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=oG7JIY1B;
+	arc=none smtp.remote-ip=198.175.65.16
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA83606A325
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 15:27:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EAA83606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D0360A2607
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 16:10:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25D0360A2607
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FOY6KEZE;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=OfVffPc4;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FOY6KEZE;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=OfVffPc4
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 100CE1F38C;
-	Fri, 20 Nov 2026 15:27:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795188456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RgOITjIq4jGgZj+xgRbcW8OsF69eO4G5la7I84QrRqE=;
-	b=FOY6KEZE5dJvM3PVCzCl9jX6HVOuWJv9NzTp2lP3k14fwZQuRAUzQmvsmFSa3MZcGoi3Fv
-	NpkUVbehxCf+XxkK+PQzOOlLATbqXN16ZSLWmRNH/btjyjsH6Yxcp2WJhlep1z9CFr6w0B
-	lLg4E41elMAO5ewYt2c/tfL2KzEO0dE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795188456;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RgOITjIq4jGgZj+xgRbcW8OsF69eO4G5la7I84QrRqE=;
-	b=OfVffPc40txtAabcUixgqHuC1r8EecraOUPe3NH2MnDhLJfum9c8Wuz1oWWMHoeSM3DzAZ
-	zWXmLUEU+39YT3AQ==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FOY6KEZE;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=OfVffPc4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795188456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RgOITjIq4jGgZj+xgRbcW8OsF69eO4G5la7I84QrRqE=;
-	b=FOY6KEZE5dJvM3PVCzCl9jX6HVOuWJv9NzTp2lP3k14fwZQuRAUzQmvsmFSa3MZcGoi3Fv
-	NpkUVbehxCf+XxkK+PQzOOlLATbqXN16ZSLWmRNH/btjyjsH6Yxcp2WJhlep1z9CFr6w0B
-	lLg4E41elMAO5ewYt2c/tfL2KzEO0dE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795188456;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RgOITjIq4jGgZj+xgRbcW8OsF69eO4G5la7I84QrRqE=;
-	b=OfVffPc40txtAabcUixgqHuC1r8EecraOUPe3NH2MnDhLJfum9c8Wuz1oWWMHoeSM3DzAZ
-	zWXmLUEU+39YT3AQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFF511342D;
-	Fri, 20 Nov 2026 15:27:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 72jWL+dmAGu+aAAAD6G6ig
-	(envelope-from <hare@suse.de>); Fri, 20 Nov 2026 15:27:35 +0000
-Message-ID: <c9383994-9a83-4133-905e-a3625fc10ece@suse.de>
-Date: Fri, 20 Nov 2026 16:27:35 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=oG7JIY1B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795191010; x=1826727010;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=/4nZzDCmQZxoUOyX8zA2Wr0ex3XpKyr80j56l/B4zxE=;
+  b=oG7JIY1BTh2cljiSbTYhLqAlrYFWN5hsFvxn618tyOpt8/ARsbtOVUru
+   uD2XtlQWo7alcX2Xs9r/jCU+A7EjnW3be3zSgR4r2D0gpKTcVPdqgFJor
+   j9Ce7+VgMnWooUeIsKaxEbgQs+synmKx/Tz7s6OJe1TRZZ7ESypEvm0IE
+   4Yk+LX6jwcY2/jdYhMl7cw2P8SgBRpIkQPHyl7IUJmw75HOrQAIEBh+es
+   x/J/5vmb1xtNuZlnfxrvSCsKCphmeT2hqvajGmceM2LfGSHMb7Q2RSCk8
+   UNlZXuN/gBUQRz5Kf6ymFzF6u12mn0sg3Ara0O9jOHFJaW9Q6kg+te+R7
+   w==;
+X-CSE-ConnectionGUID: gJ6mmerpRACV9A0o389qyQ==
+X-CSE-MsgGUID: 0/v7v+V+R76JicrvSLVzWg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11972"; a="4064627"
+X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
+   d="scan'208";a="4064627"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 08:10:09 -0800
+X-CSE-ConnectionGUID: lu37WXorTmOTPGCAL8j8bw==
+X-CSE-MsgGUID: PvTnga3zRDqFFgLgpiSkyA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
+   d="scan'208";a="11061698"
+Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.66])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 08:10:07 -0800
+Date: Fri, 20 Nov 2026 18:10:04 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yitian Shao <fighters390@qq.com>, intel-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/i915/dp: Attach HDR_OUTPUT_METADATA on eDP when TCON
+ supports HDR
+Message-ID: <awBw3DlWwFrl16Vw@intel.com>
+References: <tencent_083AD2514CBC235A9F55EE00BDF72D3B9209@qq.com>
+ <sashiko-outbox-224547@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,232 +81,168 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 9/9] nvmet: add configfs attribute 'dhchap_keyring'
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
-Cc: linux-nvme@lists.infradead.org
-References: <20261120-dhchap-keyring-v4-v4-0-5f8c7d9926ee@kernel.org>
- <20261120-dhchap-keyring-v4-v4-9-5f8c7d9926ee@kernel.org>
- <sashiko-outbox-225082@kernel.org>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-225082@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 100CE1F38C
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	MX_GOOD(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Score: -13.50
+In-Reply-To: <sashiko-outbox-224547@kernel.org>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On 11/20/26 12:39 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential
+On Fri, Nov 20, 2026 at 06:15:06AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
 > issues to consider:
-> - [High] nvmet: keyring reference leak in nvmet_host_release()
-> - [Medium] nvmet: inverted error return sign in
->    nvmet_host_dhchap_keyring_store()
-> - [Medium] nvmet: unlocked host->dhchap_keyring access in
->    nvmet_auth_set_key()
-> - [Medium] nvmet: 1-byte OOB write in nvmet_host_dhchap_keyring_show()
->    via sprintf()
+> - [High] drm/i915/dp: broken LSPCON HDR in
+>   intel_dp_compute_hdr_metadata_infoframe_sdp()
+> - [Medium] drm/i915/dp: unchecked union read of intel_cap in
+>   intel_dp_add_properties()
+> - [Medium] drm/i915/dp: fastset skips TCON HDR update when SDP
+>   computation is bypassed
 > --
 > 
-> commit 7f1bb5c7e432b0938e23615bf24751f61d823e03
-> Author: Hannes Reinecke <hare@kernel.org>
+> commit ee42402ceca82543288507d878602e90d81ac27f
+> Author: Yitian Shao <fighters390@qq.com>
 > 
-> nvmet: add configfs attribute 'dhchap_keyring'
+> drm/i915/dp: Attach HDR_OUTPUT_METADATA on eDP when TCON supports HDR
 > 
-> This commit adds a dhchap_keyring configfs attribute to the nvmet host
-> directory so userspace can specify the keyring used for DH-HMAC-CHAP key
-> lookups.
+> This commit attaches the HDR_OUTPUT_METADATA property on eDP connectors
+> whose TCON supports PQ (ST2084) decoding via the Intel AUX HDR interface,
+> and skips computing the HDR metadata infoframe SDP when the encoder does
+> not support gamut metadata DIP.
 > 
->> diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
->> index 4f2489c5d894b..d583813ef4f27 100644
->> --- a/drivers/nvme/target/auth.c
->> +++ b/drivers/nvme/target/auth.c
->> @@ -68,7 +68,7 @@ int nvmet_auth_set_key(struct nvmet_host *host, const char *secret,
->>   		return 0;
->>   	}
->>   	len = strcspn(secret, "\n");
->> -	key = nvme_auth_extract_key(NULL, secret, len, &generated);
->> +	key = nvme_auth_extract_key(host->dhchap_keyring, secret, len, &generated);
->>   	if (IS_ERR(key)) {
->>   		pr_debug("%s: invalid key specification\n", __func__);
->>   		return PTR_ERR(key);
-> 
-> [Severity: Medium]
-> Can a concurrent write to dhchap_keyring free host->dhchap_keyring while
-> nvmet_auth_set_key() is using it?
-> 
-> CPU0                                    CPU1
-> nvmet_host_dhchap_key_store()
->    nvmet_auth_set_key()
->      keyring = host->dhchap_keyring
->                                          nvmet_host_dhchap_keyring_store()
->                                            down_write(&nvmet_config_sem)
->                                            key_put(host->dhchap_keyring)
->                                            host->dhchap_keyring = new_ring
->                                            up_write(&nvmet_config_sem)
->      nvme_auth_extract_key(keyring, ...)
->        ...                               <-- use-after-free
-> 
-> nvmet_host_dhchap_keyring_store() replaces host->dhchap_keyring and drops
-> the old reference under nvmet_config_sem, whereas nvmet_auth_set_key()
-> reads and uses host->dhchap_keyring without holding nvmet_config_sem or
-> pinning it with key_get().
-> 
-Fixed with the next version.
-
->> diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
->> index 319947aa0a40f..ffe0f852e59d9 100644
->> --- a/drivers/nvme/target/configfs.c
->> +++ b/drivers/nvme/target/configfs.c
->> @@ -2347,6 +2347,62 @@ static ssize_t nvmet_host_dhchap_ctrl_key_store(struct config_item *item,
->>   
->>   CONFIGFS_ATTR(nvmet_host_, dhchap_ctrl_key);
->>   
->> +static ssize_t nvmet_host_dhchap_keyring_show(struct config_item *item,
->> +		char *page)
->> +{
->> +	struct nvmet_host *host = to_host(item);
->> +	struct key *keyring;
->> +	ssize_t ret;
->> +
->> +	down_read(&nvmet_config_sem);
->> +	keyring = key_get(host->dhchap_keyring);
->> +	if (!keyring) {
->> +		page[0] = '\0';
->> +		ret = 0;
->> +	} else {
->> +		down_read(&keyring->sem);
->> +		if (key_validate(keyring))
->> +			ret = sprintf(page, "<invalidated>\n");
->> +		else
->> +			ret = sprintf(page, "%s\n", keyring->description);
->> +		up_read(&keyring->sem);
->> +		key_put(keyring);
->> +	}
->> +	up_read(&nvmet_config_sem);
->> +	return ret;
->> +}
-> 
-> [Severity: Medium]
-> Can sprintf() write one byte past the end of page here?
-> 
-> add_key() accepts descriptions up to 4095 bytes (KEY_MAX_DESC_SIZE - 1),
-> and configfs fill_write_buffer() accepts a 4095-byte write without a
-> trailing newline.  Formatting a 4095-byte keyring->description with "%s\n"
-> writes 4097 bytes (including the NUL terminator) into the 4096-byte
-> PAGE_SIZE configfs read buffer.  Using sysfs_emit() or snprintf(page,
-> PAGE_SIZE, ...) would avoid the overflow.
-> 
->> +
->> +static ssize_t nvmet_host_dhchap_keyring_store(struct config_item *item,
->> +		const char *page, size_t count)
->> +{
->> +	struct nvmet_host *host = to_host(item);
->> +	struct key *keyring;
->> +	char *desc;
->> +	size_t len;
->> +	int ret = 0;
->> +
->> +	len = strcspn(page, "\n");
->> +	if (!len)
->> +		return -EINVAL;
->> +	desc = kstrndup(page, len, GFP_KERNEL);
->> +	if (!desc)
->> +		return -ENOMEM;
->> +	keyring = request_key(&key_type_keyring, desc, NULL);
->> +	if (IS_ERR(keyring)) {
->> +		ret = PTR_ERR(keyring);
->> +	} else {
->> +		down_write(&nvmet_config_sem);
->> +		key_put(host->dhchap_keyring);
->> +		host->dhchap_keyring = keyring;
->> +		up_write(&nvmet_config_sem);
->> +	}
->> +	kfree(desc);
->> +
->> +	return ret ? -ret : count;
->> +}
-> 
-> [Severity: Medium]
-> Does negating ret return a positive value when request_key() fails?
-> PTR_ERR(keyring) is already negative, so returning -ret causes
-> configfs_write_iter() to treat the positive errno as a successful write
-> byte count and silently ignore the failure.
-> 
-Fixed with the new version.
-
-> [ ... ]
-> 
->> @@ -2445,6 +2502,11 @@ static struct config_group *nvmet_hosts_make_group(struct config_group *group,
->>   #ifdef CONFIG_NVME_TARGET_AUTH
->>   	/* Default to SHA256 */
->>   	host->dhchap_hash_id = NVME_AUTH_HASH_SHA256;
->> +	host->dhchap_keyring = key_lookup(nvme_keyring_id());
->> +	if (IS_ERR(host->dhchap_keyring)) {
->> +		kfree(host);
->> +		return ERR_PTR(-ENOKEY);
->> +	}
->>   #endif
->>   
->>   	config_group_init_type_name(&host->group, name, &nvmet_host_type);
+> > diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+> > index 47741957935ae..3faa5ddb4c60b 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_dp.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_dp.c
+> > @@ -3239,6 +3239,9 @@ intel_dp_compute_hdr_metadata_infoframe_sdp(struct intel_dp *intel_dp,
+> >  	int ret;
+> >  	struct hdmi_drm_infoframe *drm_infoframe = &crtc_state->infoframes.drm.drm;
+> >  
+> > +	if (!intel_dp_has_gamut_metadata_dip(&dp_to_dig_port(intel_dp)->base))
+> > +		return;
+> > +
+> >  	if (!conn_state->hdr_output_metadata)
+> >  		return;
 > 
 > [Severity: High]
-> Does removing a host group leak host->dhchap_keyring?
+> Does this break HDR metadata transmission on LSPCON outputs?
 > 
-> Both key_lookup() here and request_key() in
-> nvmet_host_dhchap_keyring_store() acquire a reference on
-> host->dhchap_keyring, but nvmet_host_release() never calls
-> key_put(host->dhchap_keyring):
+> intel_dp_has_gamut_metadata_dip() unconditionally returns false when
+> intel_bios_encoder_is_lspcon(encoder->devdata) is true, because LSPCON
+> connectors defer attaching HDR_OUTPUT_METADATA until
+> intel_dp_connector_register() probes intel_lspcon_detect_hdr_capability().
+> LSPCON encoders still rely on intel_dp_compute_hdr_metadata_infoframe_sdp()
+> to populate crtc_state->infoframes.drm.drm and enable
+> HDMI_PACKET_TYPE_GAMUT_METADATA in crtc_state->infoframes.enable for
+> lspcon_write_infoframe().  With this check, HDR metadata is never computed
+> or sent on LSPCON ports, and the state checker will report an infoframe
+> mismatch if VIDEO_DIP_ENABLE_GMP_HSW was already active.
+
+Looks legit. I think the correct solution would be to drop
+the LSPCON check from has_gamut_metadata_dip() since it's
+clearly nonsense. But then intel_dp_add_properties()
+will need to do the LSPCON check itself so that it doesn't
+attache the HDR metadata to the LSPCON there.
+
+And I think for good measure we also want to add a 
+has_gamut_metadata_dip() check into
+intel_lspcon_detect_hdr_capability(), just in case someone
+has ever hooked up an on board LSPCON to a port that doesn't
+support that DIP. This should be a separate patch though
+since it's a separate pre-existing issue.
+
 > 
-> drivers/nvme/target/configfs.c:nvmet_host_release() {
-> 	struct nvmet_host *host = to_host(item);
+> [Severity: Medium]
+> When intel_dp_compute_hdr_metadata_infoframe_sdp() returns early on pre-ICL
+> port A eDP panels, can a fastset skip programming the TCON HDR parameters?
 > 
-> #ifdef CONFIG_NVME_TARGET_AUTH
-> 	nvmet_auth_revoke_key(host, false);
-> 	nvmet_auth_revoke_key(host, true);
-> #endif
-> 	kfree(host);
+> When userspace toggles HDR_OUTPUT_METADATA,
+> intel_digital_connector_atomic_check() sets crtc_state->mode_changed = true,
+> and on platforms with gamut metadata DIP the resulting change in
+> crtc_state->infoframes.enable causes intel_pipe_config_compare() to reject
+> fastset and run a full modeset.  Returning early here leaves
+> crtc_state->infoframes.enable unchanged, so commits without another pipe
+> config change are downgraded to a fastset (update_pipe).  On the fastset
+> path, intel_ddi_update_pipe_dp() calls intel_backlight_update(), which only
+> calls __intel_backlight_enable() -> intel_dp_aux_hdr_enable_backlight()
+> when !panel->backlight.enabled:
+
+This looks correct as well. And I think it highlights that our HDR
+metadata fastset support is already broken. Well, it kinda works
+for changing the metadata (except when the backlight interface is
+involved as is the case here), but not for switching between HDR
+and SDR modes.
+
+I say "kinda works" above because in general the whole .update_pipe()
+thing is a half baked hack. There is no real consideration for any
+differences in double buffering behaviour of DIPs (or a complete lack
+of double buffering as is the case for many DIPs). .update_pipe() is
+also called outside the vblank evasion critical section, so even
+the double buffered DIPs (or anything else we do there) will probably
+not sync up with the rest of the atomic commit on the CRTC.
+
+So how to fix this specific AUX backlight problem... Maybe we need
+a crtc_state->backlight_changed or something? This might in fact
+also be relevant for the recently proposed LUMINANCE connector
+property (which I've not had any time to actually consider).
+
+> 
+> drivers/gpu/drm/i915/display/intel_backlight.c:intel_backlight_update() {
+>     ...
+> 	mutex_lock(&display->backlight.lock);
+> 	if (!panel->backlight.enabled)
+> 		__intel_backlight_enable(crtc_state, conn_state);
+> 
+> 	mutex_unlock(&display->backlight.lock);
+>     ...
 > }
 > 
-> Every removed host configfs directory leaks a reference on its configured
-> keyring.
+> Because panel->backlight.enabled is already true on an active panel,
+> INTEL_EDP_HDR_GETSET_CTRL_PARAMS is never updated in the TCON.
 > 
-Fixed with the next version.
+> > @@ -7018,7 +7021,9 @@ intel_dp_add_properties(struct intel_dp *intel_dp, struct drm_connector *_connec
+> >  		intel_attach_dp_colorspace_property(&connector->base);
+> >  	}
+> >  
+> > -	if (intel_dp_has_gamut_metadata_dip(&dp_to_dig_port(intel_dp)->base))
+> > +	if (intel_dp_has_gamut_metadata_dip(&dp_to_dig_port(intel_dp)->base) ||
+> > +	    (intel_dp_is_edp(intel_dp) &&
+> > +	     connector->panel.backlight.edp.intel_cap.supports_2084_decode))
+> >  		drm_connector_attach_hdr_output_metadata_property(&connector->base);
+> >  
+> >  	if (HAS_VRR(display))
+> 
+> [Severity: Medium]
+> Can reading connector->panel.backlight.edp.intel_cap.supports_2084_decode
+> here access the wrong union member when the VESA eDP AUX backlight
+> interface is selected?
+> 
+> In struct intel_panel, panel.backlight.edp is an untagged union between
+> vesa and intel_cap:
+> 
+> drivers/gpu/drm/i915/display/intel_display_types.h:struct intel_panel {
+>     ...
+> 		union {
+> 			struct {
+> 				struct drm_edp_backlight_info info;
+> 				bool luminance_control_support;
+> 			} vesa;
+> 			struct {
+> 				bool sdr_uses_aux;
+> 				bool supports_2084_decode;
+>     ...
+> }
+> 
+> supports_2084_decode sits at byte offset 1, overlapping
+> vesa.info.pwm_freq_pre_divider in struct drm_edp_backlight_info.  If
+> intel_edp_backlight_setup() selected the VESA AUX backlight path instead of
+> the Intel HDR AUX path, drm_edp_backlight_init() populates vesa.info and a
+> non-zero pwm_freq_pre_divider will falsely attach HDR_OUTPUT_METADATA (and
+> trigger an out-of-range bool load under UBSan if the divider is >= 2).
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/tencent_083AD2514CBC235A9F55EE00BDF72D3B9209@qq.com?part=1
 
-Cheers,
-
-Hannes
 -- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 NÃ¼rnberg
-HRB 36809 (AG NÃ¼rnberg), GF: I. Totev, A. McDonald, W. Knoblich
+Ville Syrjälä
+Intel
