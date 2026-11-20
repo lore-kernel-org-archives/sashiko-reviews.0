@@ -1,104 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795186364;
-	b=cTTioA80KonwsYwLoU4VCmp0n+UB3Tk0q30UPpgrkg1+TSyn014HtdiKvL9vjr7lACFr
-	 hxCHr+/0LGjZEDV3cZe3h3MjwgUmoQP+8Zlp+bppIjZyrxDmKbIZXaZuk0/lMixxDtCEK
-	 msdVqwh49c6rucpddewdrw05tIgtVxeBHtN/1xo5dqYBpO7zdLcYcI6IPv0yCVYe5rGrx
-	 2TM80oPdlKYkmDoK5qjd8HfQ89Y8O1W2sPANzBUFs/fSsObDFoqH8n0zN8B4LvZCWTlXo
-	 R6FU1EmMlKT8wK0pUtrukI34vIZTKszOM/VNeJIUvg5a3briUB0/mWe7WFjF5EkW+MA==
+	t=1795186381;
+	b=rxzGZLPI252mcL0VlOLAUhFdIUk5tNCP9G5O7BHvRzgRpsuQ4dsCCfrdQkhHD8S76Osk
+	 CtcSXX39HCvNQWktkVX02OcIpY+6mw7394kyK7+tHWihJosh+06kMxt/mFpTeNXIUw3Tf
+	 ACHl4Ay40Z1RKi4InWDDCr7utapZh+Sg+Vfs9hzuDxJUSnJE3uUFVXRV0Ej0H/oXD6z+e
+	 bnsgRNu8PQmGBVb3yFl+M5JzjdB4+vDYqI43Dd92sOLklBxbNPiwIl9u2oQ+bpgVH9sHG
+	 siPBVSyyrfqoHltdUaJeY1aW4ZLAL5SMQIWWolf3ryv0yq3BNmWt72yCExcnUyEzHPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795186364;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Spamd-Result:X-Rspamd-Server:
-	 X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id;
-	bh=qSfkCnPPapXakwD0+Tcfs4W2tuo8CRxA3SpOZRdybsQ=;
-	b=WVv5oDKtqJyzbgJHlKX/19VwBPNnZaBEmcPEUbVgu10gBbLgu323SFZEErDwBbLlE/gY
-	 Xl+TMfHyUFCRJKeoVN4M3xa83j0KF7i7kL+gu7Bk8hfhShtV9+zau1D4whmatlFNXV0bb
-	 9niK9xCAiPruzHem4Iq6wCvlzK7nWsQhc84RAywpMrNDwRZf/TKQq6vmHty8oBRk/e83F
-	 b3WZCyXRJZFOUsbIlKgyzlyjOYpJvNuXbB1uNS8K3Q4bZTXW6xsgaf6H1e7e802KQWsld
-	 LoxzWS9MnU6+kAEgOSb+cp3uNt5MtbbTie78apg+aQQlzRizNG0WGA5vF2MtI3nIN7A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795186381;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=bUjK6zlUHwja5qwprJ4mgu7JgsCzPVPRgF2dRw7rBCM=;
+	b=Bg+qw+jmcbpWL797opS+YDBS8a7AYlNXlbciDyXt/3lNtpugNLU8v5Pf/zdvX7S5eKPp
+	 paSXgj9/hvAtc8PRHkILO0ibujsII0mPomd9OkGnMbtyafthdwC4s/Yu4dCX4JAntW1Pf
+	 0qeX49dH6v9SDD/4OA24BJOWrdYLftRkH6ZqUErCD5TdaxlR7+5LD1CNWiYtEi9vOsC03
+	 xMIxwpxMQ+nS6eZQBzjP0S1pt2Rqti2MCMXKVShzsn64l/DczYgYfkCXQ6NCExYJROyUm
+	 eyn0W03As3eaDgeswC1Xulv3cutEdTG+/AU7Arx52mX73nm9SfHiOkL6sGNkwO0X62A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=R5I6nR6s;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KBOhI7bB;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=R5I6nR6s;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KBOhI7bB;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ABN3X9bO;
+	arc=none smtp.remote-ip=198.175.65.18
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E42606A320
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:52:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A7E42606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9AF606A32C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 14:53:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3E9AF606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=R5I6nR6s;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KBOhI7bB;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=R5I6nR6s;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KBOhI7bB
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id C0BBD2224B;
-	Fri, 20 Nov 2026 14:52:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795186361; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qSfkCnPPapXakwD0+Tcfs4W2tuo8CRxA3SpOZRdybsQ=;
-	b=R5I6nR6s3/ThEIakh6eEF2RNOI0AlrVxLvyAyDhQ+C3Iqj7RxQzlx4zhuewim49wW+UOr0
-	+jW6mS7xdWlbluLJpGipoH36NehFo0gS6d+VkjObUObmestI3W4OQmTggzQaJFDqeAyjYA
-	G+firGjEPtkNhVkqharGYba8SwbgKsw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795186361;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qSfkCnPPapXakwD0+Tcfs4W2tuo8CRxA3SpOZRdybsQ=;
-	b=KBOhI7bBuip1q855/nDYN6EUAqbTJljtGRW7NpiFG3JzDFR26yRZluah/yxfOOMXQNa1B7
-	FC/o5V+rP39lPcCw==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=R5I6nR6s;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=KBOhI7bB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795186361; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qSfkCnPPapXakwD0+Tcfs4W2tuo8CRxA3SpOZRdybsQ=;
-	b=R5I6nR6s3/ThEIakh6eEF2RNOI0AlrVxLvyAyDhQ+C3Iqj7RxQzlx4zhuewim49wW+UOr0
-	+jW6mS7xdWlbluLJpGipoH36NehFo0gS6d+VkjObUObmestI3W4OQmTggzQaJFDqeAyjYA
-	G+firGjEPtkNhVkqharGYba8SwbgKsw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795186361;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qSfkCnPPapXakwD0+Tcfs4W2tuo8CRxA3SpOZRdybsQ=;
-	b=KBOhI7bBuip1q855/nDYN6EUAqbTJljtGRW7NpiFG3JzDFR26yRZluah/yxfOOMXQNa1B7
-	FC/o5V+rP39lPcCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 97EE31342D;
-	Fri, 20 Nov 2026 14:52:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id E7fLHLleAGs7RQAAD6G6ig
-	(envelope-from <hare@suse.de>); Fri, 20 Nov 2026 14:52:41 +0000
-Message-ID: <039b2f6b-c24f-4e3d-8aae-33d592d26563@suse.de>
-Date: Fri, 20 Nov 2026 15:52:41 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ABN3X9bO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795186380; x=1826722380;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TT/13CTyFXsuqlMerIxRbn9FbD+oe54mqDJdH9KIuu4=;
+  b=ABN3X9bOyhGrudn8S//3urff9SiKJ5YFuhSESq9vHjWmdCaycjIrOCqW
+   +A0XjGfAvWoclbjHdhL3+/N6UfRoorhy0HLTfEGMMyy+jzX0/Jl67Hq2l
+   eE63yodKQmGMqBJCXKFEs737cP/SLyG6taQcYglZa++SFMTyVrxT2UJZK
+   ZO4C4FumP0860Vp6WEjM2cpjPUiHLn70RqtAbCjPHfzfKzbznWnsjgmtp
+   AVUSq+NIVrQiwDo0EE1D3Dow9mrWktbmEvVO9mPS6gZS/jNuGPnOtm9X3
+   P1wxWJBDqk2G+9nhkCAVYeHbEnviUCuzs9e5Embk+PgrgCTFCyrd5Yo/y
+   w==;
+X-CSE-ConnectionGUID: rT2u/9tzQJ+8n9hb51UB+g==
+X-CSE-MsgGUID: 8oAiZdoISYqWOU0AmMRLOA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11972"; a="4079935"
+X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
+   d="scan'208";a="4079935"
+Received: from fmviesa013.fm.intel.com ([10.60.135.153])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 06:53:00 -0800
+X-CSE-ConnectionGUID: TJcXCGJJQG2daIzDefhKow==
+X-CSE-MsgGUID: 3quqqe0tSq2kuewS3WoQhQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
+   d="scan'208";a="12716134"
+Received: from slindbla-desk.ger.corp.intel.com (HELO [10.245.244.23]) ([10.245.244.23])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 06:52:59 -0800
+Message-ID: <94d7ba30-8c3a-41a6-893f-f45d03a91e9e@intel.com>
+Date: Fri, 20 Nov 2026 14:52:57 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -109,137 +73,82 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/9] nvme-auth: wait for authentication to finish when
- changing keys
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
-Cc: linux-nvme@lists.infradead.org
-References: <20261120-dhchap-keyring-v4-v4-0-5f8c7d9926ee@kernel.org>
- <20261120-dhchap-keyring-v4-v4-7-5f8c7d9926ee@kernel.org>
- <sashiko-outbox-225036@kernel.org>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-225036@kernel.org>
+Subject: Re: [PATCH v2 5/6] drm/xe/userptr: Make the repin retry loop
+ non-fatal
+To: sashiko-reviews@lists.linux.dev
+Cc: intel-xe@lists.freedesktop.org
+References: <20261120-userptr-repin-v2-0-65e1f6e582ef@intel.com>
+ <20261120-userptr-repin-v2-5-65e1f6e582ef@intel.com>
+ <sashiko-outbox-225315@kernel.org>
+Content-Language: en-GB
+From: Matthew Auld <matthew.auld@intel.com>
+In-Reply-To: <sashiko-outbox-225315@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	MX_GOOD(-0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_TLS_ALL(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_THREE(0.00)[3];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -13.50
-X-Spam-Level: 
-X-Rspamd-Queue-Id: C0BBD2224B
 
-On 11/20/26 12:26 PM, sashiko-bot@kernel.org wrote:
+On 20/11/2026 14:03, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] nvme-auth: asymmetric and undocumented removal of
->    synchronize_rcu() in sysfs
+> - [Medium] drm/xe/userptr: stale uvma->userptr.repin causes premature
+>    timeout after retry abort
 > --
 > 
-> commit 5f508c67e7480252b016c544aeba6f80edc88b85
-> Author: Hannes Reinecke <hare@kernel.org>
+> commit 90fc6239c153f6d32105ac91a7723de6506c06a9
+> Author: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 > 
-> nvme-auth: wait for authentication to finish when changing keys
+> drm/xe/userptr: Make the repin retry loop non-fatal
 > 
-> This commit flushes ctrl->dhchap_auth_work after queuing re-authentication in
-> dhchap_secret_store() and dhchap_ctrl_secret_store(), and removes two
-> synchronize_rcu() calls after key_revoke().
+> This commit converts -EBUSY from drm_gpusvm_get_pages() during userptr repin
+> into -EAGAIN until an overall repin timeout expires, discounting idle gaps
+> between retry attempts.
 > 
->> diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
->> index 47caed2ce3978..ce327a018b0d0 100644
->> --- a/drivers/nvme/host/sysfs.c
->> +++ b/drivers/nvme/host/sysfs.c
->> @@ -875,7 +875,6 @@ static ssize_t dhchap_secret_store(struct device *dev,
->>   		if (generated) {
->>   			dev_dbg(ctrl->dev, "revoke host key %08x\n", key_serial(key));
->>   			key_revoke(key);
->> -			synchronize_rcu();
->>   		}
->>   		key_put(key);
->>   		kfree_sensitive(dhchap_secret);
+>> diff --git a/drivers/gpu/drm/xe/xe_userptr.h b/drivers/gpu/drm/xe/xe_userptr.h
+>> index 2a3cd1b5efbb0..179f2aca26a39 100644
+>> --- a/drivers/gpu/drm/xe/xe_userptr.h
+>> +++ b/drivers/gpu/drm/xe/xe_userptr.h
 > 
 > [ ... ]
 > 
->> @@ -973,7 +972,6 @@ static ssize_t dhchap_ctrl_secret_store(struct device *dev,
->>   		dev_dbg(ctrl->dev, "revoke ctrl key %08x\n",
->>   			key_serial(old_key));
->>   		key_revoke(old_key);
->> -		synchronize_rcu();
->>   	}
->>   	ctrl->ctrl_key = key;
->>   	ctrl->ctrl_key_generated = generated;
+>> +static inline void xe_userptr_repin_begin(struct xe_userptr_repin *repin)
+>> +{
+>> +	unsigned long now = jiffies;
+>> +
+>> +	if (!repin->start) {
+>> +		repin->start = now ?: 1;
+>> +		return;
+>> +	}
+>> +
+>> +	if (repin->last &&
+>> +	    time_after(now, repin->last +
+>> +		       msecs_to_jiffies(XE_USERPTR_REPIN_IDLE_MS)))
+>> +		repin->start = (repin->start + (now - repin->last)) ?: 1;
+>> +	repin->last = 0;
+>> +}
 > 
-> [Severity: Low]
-> Why are synchronize_rcu() calls removed from mismatched paths in
-> dhchap_secret_store() and dhchap_ctrl_secret_store(), and without mention in
-> the commit message?
+> [Severity: Medium]
+> Can an aborted retry sequence leave stale timestamps in
+> uvma->userptr.repin and cause a later repin to time out early?
 > 
-> In dhchap_secret_store(), synchronize_rcu() is removed from the
-> key_validate() error path, but kept when revoking old_key under
-> ctrl->dhchap_auth_mutex:
+> xe_vma_userptr_pin_pages() only zeroes uvma->userptr.repin when the repin
+> completes or its timeout expires.  If the caller's retry loop aborts after
+> receiving -EAGAIN, such as when xe_exec_ioctl() returns -ERESTARTSYS on a
+> pending signal or DRM_XE_VM_BIND_OP_PREFETCH hits its outer repin timeout
+> in xe_vm_bind_ioctl(), uvma->userptr.repin keeps its non-zero start and
+> last timestamps.
 > 
-Oversight. Will be fixed up with the next version.
+> On a separate repin of that VMA after XE_USERPTR_REPIN_IDLE_MS,
+> xe_userptr_repin_begin() treats the elapsed time as an idle pause in the
+> earlier loop and advances repin->start only by (now - repin->last).  That
+> deducts the prior attempt's accrued duration (repin->last - repin->start)
+> from the new attempt's timeout budget, which can make the next repin fail
+> with -EBUSY after a single drm_gpusvm_get_pages() call and kill the VM in
+> the rebind worker.
 
-> drivers/nvme/host/sysfs.c:dhchap_secret_store() {
->      ...
-> 	if (ctrl->host_key_generated) {
-> 		dev_dbg(ctrl->dev, "revoke host key %08x\n",
-> 			key_serial(old_key));
-> 		key_revoke(old_key);
-> 		synchronize_rcu();
-> 	}
->      ...
-> }
-> 
-> In dhchap_ctrl_secret_store(), it is removed when revoking old_key, but kept
-> in the key_validate() error path:
-> 
-> drivers/nvme/host/sysfs.c:dhchap_ctrl_secret_store() {
->      ...
-> 		if (generated) {
-> 			dev_dbg(ctrl->dev, "revoke ctrl key %08x\n", key_serial(key));
-> 			key_revoke(key);
-> 			synchronize_rcu();
-> 		}
->      ...
-> }
-> 
-> Both functions handle keys of type nvme_dhchap_psk_key_type (whose
-> user_revoke() callback frees the payload via call_rcu()), so the two store
-> callbacks should handle key_revoke() symmetrically.
-> 
-Similarly. Will be fixed with the next round.
+Yeah, I saw something like this already locally, and did play with some 
+different solutions but threw them away. IMO this is kind of by design. 
+We shouldn't just keep resetting and retrying forever on a troublesome 
+userptr, and the 30 seconds is already pretty extreme if we start 
+approaching that.
 
-Cheers,
+> 
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
