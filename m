@@ -1,11 +1,11 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795175550;
-	b=HPxZ63iqAV7xNqx7KSynLVXrJ063D6PO4Kv/rRmaacNXg1CS3DYHqSp48gS0PaBKANdg
-	 lwy/7HeK8GszrOS4ZTwyi0Pbyf0nijxc+moE7IAdiFavCiMqPkBSZIpBQQBo9/WoNTVJW
-	 TTJc076JrVqUPKOkckChsc79qZ2oDRTFyeAG4PyXafeRdZ4roWnmQC6+vtyvAQ4b948sH
-	 whqLdy8WwR927wv7nGLcn16ixhNVQ925Uzz8Abd3/4kCxEuzyO+oUydeh4/5jLYcALRxO
-	 Fmifb7/6azK1IOoICTHvMc8zbxIhrcHbwMSZLPgWn+1B1VcYjc4k4l1vXa4Jly8lVMQ==
+	b=UcFAJUtwAN8RrIS50cHm/tML1M8CSGUAkAt9W7LZ4F9ZMz45RdSEyMPeqpOosgYXKg72
+	 rTECw5dNGMk6r5bE790tUWIAvJ7mxdjdP3QaA2CgVgGe6BUKpkkBJ5Bb/H3Oj/d3xF4Gw
+	 XGvChZrgodyK7yVPwnoinoCeeRuBNxYywVtSv1k8saOch/hOohFxkz+M56Ll8vN/eb6II
+	 hBdg8qbGexIuPFK68STzLbx+63hgBasaQqSNFlwA6pK0vQTN68i9Qv8wwYBuM5E5GTuET
+	 n/Jx8N5jNqkhQtyjjnH6s+WcSA9HLL1efuuT3Ch1yRvuxjm5fWmA/OB3fKsSf/FYcvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795175550;
 	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
@@ -13,88 +13,88 @@ ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:
 	 X-Spam-Score;
-	bh=WImkfxqEQGNeYfAHj0WE2CtADgBK8HXMO/5PqrE+/AA=;
-	b=5HrUmEKxo8g8aEtDghrYg6GBrIFAOHqifV8fgSkYFvD7aWkAkd7bXalHcuHttOGU0Xkm
-	 /PNeM1DFWoL8XoWuUqgQDAWys+tDWqkVw0475wC6J0MLI/93L/PcmL3ROK0ctfpHK5B9N
-	 j8VE+Fq0Rkp9A3JkHiBFzfv/nvJSnoXMikiNn+OiYRUqM3hFObYOvhW26LWyppWUr3v65
-	 kMtw/FXJFC8/mAqc1biEOOpTOglXhKuub3TJktaVN7BUt0aAUAx4iUqFC4yzTQOoIA3P4
-	 PwGTn8AextHS9g4TRROW+lWNKMi6RnhUxgL3SohH4wbaqX7Gyxw95ydn3ZyXQI3ZO/A==
+	bh=rBhR1XXDmsaBtS9I7K/8WAas372bkG5V3RmqL726cbA=;
+	b=pZIXqpamfSe6+Bb720jH4V0oQxv1cDZYK6MQjreX6px9NEWBvyKtWgIWnyJJ8WMcV2pr
+	 tgQsHGbwdgcWutoRr99nW+TztcGTV5ylpzZ1u+HjjGswh7GXKXa9YQ0yFBQbC9Kq0cCpc
+	 5rffBjq7PjVv2VIFACB7Mt6d6IlXOgsSpIN1RODcK9VU9QZRz563GSU29x/nqS15MetvC
+	 5f1k2/6lGAiQMLb+JwLo1rcFDYRZ5pzt/QJ39cBhE3+JQX57juS94EhxtnM4Bzjlp5cQr
+	 bHhqeJJUgdqhWXiCN2t6Qy2kY1i4TC+SXgOUfm3d1lgJe7oEuMF0muVs9NrIIDCYnRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=A7K8DMtF;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=DpFWRg5P;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=A7K8DMtF;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=DpFWRg5P;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=PnJ8YYEY;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zzOB4Qta;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=PnJ8YYEY;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zzOB4Qta;
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B72606A33D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:52:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8B72606A33D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA99560A2607
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 11:52:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA99560A2607
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=A7K8DMtF;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=DpFWRg5P;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=A7K8DMtF;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=DpFWRg5P
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=PnJ8YYEY;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zzOB4Qta;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=PnJ8YYEY;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zzOB4Qta
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 3269D1F457;
-	Fri, 20 Nov 2026 11:52:27 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 236232257F;
+	Fri, 20 Nov 2026 11:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795175547; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1795175548; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=WImkfxqEQGNeYfAHj0WE2CtADgBK8HXMO/5PqrE+/AA=;
-	b=A7K8DMtFQU7u5DnAjt50SjCNt1pabvKnUUIE5KwSx7QhyGekGnxttmfHcg3CLIRHL8aUMo
-	Uu6DqJgpgWn0druR4G8/ammRkL80BYXhmr/usPTUxIsRz15sy1IDy3faiiISRnDHH1S+GB
-	7FYod8ld3+dFC/pBesTx1gJ0GZKIfAI=
+	bh=rBhR1XXDmsaBtS9I7K/8WAas372bkG5V3RmqL726cbA=;
+	b=PnJ8YYEYhnEr5/cq9NInMtPbGCIL71e2NJhkK7AtyWn9adXyN92nvnyHvOc8KUkM2WgSDP
+	41YFdPKewY1PdcNmWAbprrdznmH7aEkTHomwO/2ERFtXkM6ERIvGRbuQPAbH3nMrcTxel2
+	o/pU8Vgrz2GBhrlifxmhu+PYrppT3YU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795175547;
+	s=susede2_ed25519; t=1795175548;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=WImkfxqEQGNeYfAHj0WE2CtADgBK8HXMO/5PqrE+/AA=;
-	b=DpFWRg5Plq03c+7DjW8K2KvKbeXe+6/nOf+WvMU9pIvXhA+3GNe/fa0Qux904xmWf0CVjl
-	p1D/iYEEilNyaXDA==
-Authentication-Results: smtp-out2.suse.de;
+	bh=rBhR1XXDmsaBtS9I7K/8WAas372bkG5V3RmqL726cbA=;
+	b=zzOB4QtaUaMDoZ7s7dNjDtgKvSqG2ytRlehDkzkGkqU3eUJm7wg/gG8I+YEX9Cf2yhIUyt
+	xtOPQxUxDF1zmFBg==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795175547; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1795175548; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=WImkfxqEQGNeYfAHj0WE2CtADgBK8HXMO/5PqrE+/AA=;
-	b=A7K8DMtFQU7u5DnAjt50SjCNt1pabvKnUUIE5KwSx7QhyGekGnxttmfHcg3CLIRHL8aUMo
-	Uu6DqJgpgWn0druR4G8/ammRkL80BYXhmr/usPTUxIsRz15sy1IDy3faiiISRnDHH1S+GB
-	7FYod8ld3+dFC/pBesTx1gJ0GZKIfAI=
+	bh=rBhR1XXDmsaBtS9I7K/8WAas372bkG5V3RmqL726cbA=;
+	b=PnJ8YYEYhnEr5/cq9NInMtPbGCIL71e2NJhkK7AtyWn9adXyN92nvnyHvOc8KUkM2WgSDP
+	41YFdPKewY1PdcNmWAbprrdznmH7aEkTHomwO/2ERFtXkM6ERIvGRbuQPAbH3nMrcTxel2
+	o/pU8Vgrz2GBhrlifxmhu+PYrppT3YU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795175547;
+	s=susede2_ed25519; t=1795175548;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=WImkfxqEQGNeYfAHj0WE2CtADgBK8HXMO/5PqrE+/AA=;
-	b=DpFWRg5Plq03c+7DjW8K2KvKbeXe+6/nOf+WvMU9pIvXhA+3GNe/fa0Qux904xmWf0CVjl
-	p1D/iYEEilNyaXDA==
+	bh=rBhR1XXDmsaBtS9I7K/8WAas372bkG5V3RmqL726cbA=;
+	b=zzOB4QtaUaMDoZ7s7dNjDtgKvSqG2ytRlehDkzkGkqU3eUJm7wg/gG8I+YEX9Cf2yhIUyt
+	xtOPQxUxDF1zmFBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DD23113507;
-	Fri, 20 Nov 2026 11:52:26 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CE70F134F6;
+	Fri, 20 Nov 2026 11:52:27 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id UE2UA3o0AGsbDAAAD6G6ig:T3
-	(envelope-from <tzimmermann@suse.de>); Fri, 20 Nov 2026 11:52:26 +0000
+	id UE2UA3o0AGsbDAAAD6G6ig:T7
+	(envelope-from <tzimmermann@suse.de>); Fri, 20 Nov 2026 11:52:27 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: deller@gmx.de,
 	simona@ffwll.ch
@@ -102,9 +102,9 @@ Cc: dri-devel@lists.freedesktop.org,
 	linux-fbdev@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 2/6] lib/fonts: Provide internal helpers for allocating font_data_t
-Date: Fri, 20 Nov 2026 12:49:55 +0100
-Message-ID: <20261120115215.52092-3-tzimmermann@suse.de>
+Subject: [PATCH v2 6/6] fbcon: Handle characters with no glyph defined in a consistent way
+Date: Fri, 20 Nov 2026 12:49:59 +0100
+Message-ID: <20261120115215.52092-7-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261120115215.52092-1-tzimmermann@suse.de>
 References: <20261120115215.52092-1-tzimmermann@suse.de>
@@ -145,138 +145,241 @@ X-Spamd-Result: default: False [-15.80 / 50.00];
 	FREEMAIL_ENVRCPT(0.00)[gmx.de]
 X-Spam-Score: -15.80
 
-Factor out the allocation code for font_data_t from font import in
-font_data_import(). Retrieve a writable glyph buffer from the new
-helper __font_data_wrbuf().
+Check the result of font_data_glyph_buf() for NULL when drawing the
+screen. Fall back to a default value of '\0' for undefined glpyhs. Skip
+the character if no fallback exists.
 
-Having the allocation code in separate functions makes it available
-for font rotation and maybe other font utilities. The _wrbuf() helper
-returns a writable glyph buffer. Font data is only readable in general.
+Error checking for fonts has been inconsistent or absent from fbcon.
+Most of the drawing code relies on earlier validation in the font-import
+code. Some code implements the glyph test by itself. At least all of
+fbcon should be consistent in how it handles undefined glyphs.
+
+Calls to font_data_glyph_buf() returning NULL for undefined glyphs make
+it easy to handle this special case consistently across fbcon.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- lib/fonts/font.h  | 12 +++++++++
- lib/fonts/fonts.c | 63 ++++++++++++++++++++++++++++++-----------------
- 2 files changed, 52 insertions(+), 23 deletions(-)
+ drivers/video/fbdev/core/bitblit.c   | 27 +++++++++++++++++----------
+ drivers/video/fbdev/core/fbcon_ccw.c | 12 +++++++++++-
+ drivers/video/fbdev/core/fbcon_cw.c  | 13 +++++++++++--
+ drivers/video/fbdev/core/fbcon_ud.c  | 18 +++++++++++++++++-
+ 4 files changed, 56 insertions(+), 14 deletions(-)
 
-diff --git a/lib/fonts/font.h b/lib/fonts/font.h
-index 4f1adf0b6b54..eae8c563f148 100644
---- a/lib/fonts/font.h
-+++ b/lib/fonts/font.h
-@@ -4,6 +4,7 @@
- #define _LIB_FONTS_FONT_H
- 
- #include <linux/font.h>
-+#include <linux/types.h>
- 
- /*
-  * Font data
-@@ -16,6 +17,17 @@ struct font_data {
- 	unsigned char data[];
- } __packed;
- 
-+/*
-+ * font_data_t and helpers
-+ */
-+
-+static inline unsigned char *__font_data_wrbuf(font_data_t *fd)
-+{
-+	return (unsigned char *)fd;
-+}
-+
-+font_data_t *__font_data_alloc(unsigned int size, gfp_t flags);
-+
- /*
-  * Built-in fonts
-  */
-diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
-index 4fc66722d00d..e66a5b6fc3bb 100644
---- a/lib/fonts/fonts.c
-+++ b/lib/fonts/fonts.c
-@@ -47,6 +47,39 @@ static bool font_data_is_internal(font_data_t *fd)
- 	return !REFCOUNT(fd); /* internal fonts have no reference counting */
- }
- 
-+font_data_t *__font_data_alloc(unsigned int size, gfp_t flags)
-+{
-+	unsigned int alloc_size;
-+	struct font_data *font_data;
-+	font_data_t *fd;
-+
-+	/* Check for overflow in allocation size calculation */
-+	if (check_add_overflow(sizeof(*font_data), size, &alloc_size))
-+		return ERR_PTR(-EINVAL);
-+
-+	font_data = kzalloc(alloc_size, flags);
-+	if (!font_data)
-+		return ERR_PTR(-ENOMEM);
-+
-+	fd = font_data->data;
-+	REFCOUNT(fd) = 1; /* start with reference acquired */
-+	FNTSIZE(fd) = size;
-+
-+	return fd;
-+}
-+
-+static font_data_t *font_data_alloc(unsigned int pitch, unsigned int h, unsigned int charcount)
-+{
-+	unsigned int size;
-+
-+	/* Check for integer overflow in font-size calculation */
-+	if (check_mul_overflow(h, pitch, &size) ||
-+	    check_mul_overflow(size, charcount, &size))
-+		return ERR_PTR(-EINVAL);
-+
-+	return __font_data_alloc(size, GFP_USER);
-+}
-+
- static void font_data_free(font_data_t *fd)
+diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
+index c28329466f05..cf3adc46aaa9 100644
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -81,7 +81,6 @@ static inline void bit_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 				     unsigned char *buf, u8 *dst)
  {
- 	kfree(to_font_data_struct(fd));
-@@ -75,36 +108,20 @@ font_data_t *font_data_import(const struct console_font *font, unsigned int vpit
- 	unsigned int h = font->height;
- 	unsigned int charcount = font->charcount;
- 	const unsigned char *data = font->data;
--	u32 csum = 0;
--	struct font_data *font_data;
--	int size, alloc_size;
-+	unsigned char *font_data;
- 	unsigned int i;
- 	font_data_t *fd;
+ 	u16 charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
+-	unsigned int charcnt = vc->vc_font.charcount;
+ 	u32 idx = vc->vc_font.width >> 3;
+ 	struct fbcon_par *par = info->fbcon_par;
+ 	u32 s_pitch = font_glyph_pitch(s_width);
+@@ -90,9 +89,12 @@ static inline void bit_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 	while (cnt--) {
+ 		u16 ch = scr_readw(s++) & charmask;
  
--	/* Check for integer overflow in font-size calculation */
--	if (check_mul_overflow(h, pitch, &size) ||
--	    check_mul_overflow(size, charcount, &size))
--		return ERR_PTR(-EINVAL);
+-		if (ch >= charcnt)
+-			ch = 0;
+ 		src = font_data_glyph_buf(par->p->fontdata, s_width, s_vpitch, ch);
++		if (!src) {
++			src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch, '\0');
++			if (!src)
++				goto next_char;
++		}
+ 
+ 		if (attr) {
+ 			update_attr(buf, src, attr, vc);
+@@ -105,7 +107,7 @@ static inline void bit_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 		else
+ 			fb_pad_aligned_buffer(dst, d_pitch, src, idx,
+ 					      image->height);
 -
--	/* Check for overflow in allocation size calculation */
--	if (check_add_overflow(sizeof(*font_data), size, &alloc_size))
--		return ERR_PTR(-EINVAL);
++next_char:
+ 		dst += s_pitch;
+ 	}
+ 
+@@ -120,7 +122,6 @@ static inline void bit_putcs_unaligned(struct vc_data *vc,
+ 				       unsigned char *buf, u8 *dst)
+ {
+ 	u16 charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
+-	unsigned int charcnt = vc->vc_font.charcount;
+ 	u32 shift_low = 0, mod = vc->vc_font.width % 8;
+ 	u32 shift_high = 8;
+ 	u32 idx = vc->vc_font.width >> 3;
+@@ -131,9 +132,12 @@ static inline void bit_putcs_unaligned(struct vc_data *vc,
+ 	while (cnt--) {
+ 		u16 ch = scr_readw(s++) & charmask;
+ 
+-		if (ch >= charcnt)
+-			ch = 0;
+ 		src = font_data_glyph_buf(par->p->fontdata, s_width, s_vpitch, ch);
++		if (!src) {
++			src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch, '\0');
++			if (!src)
++				goto next_char;
++		}
+ 
+ 		if (attr) {
+ 			update_attr(buf, src, attr, vc);
+@@ -143,6 +147,7 @@ static inline void bit_putcs_unaligned(struct vc_data *vc,
+ 		fb_pad_unaligned_buffer(dst, d_pitch, src, idx,
+ 					image->height, shift_high,
+ 					shift_low, mod);
++next_char:
+ 		shift_low += mod;
+ 		dst += (shift_low >= 8) ? s_pitch : s_pitch - 1;
+ 		shift_low &= 7;
+@@ -291,10 +296,12 @@ static void bit_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	attribute = get_attribute(info, c);
+ 	c &= charmask;
+ 
+-	/* Clamp to font size, same as bit_putcs_aligned() */
+-	if (c >= vc->vc_font.charcount)
+-		c = 0;
+ 	src = font_data_glyph_buf(par->p->fontdata, width, vpitch, c);
++	if (!src) {
++		src = font_data_glyph_buf(par->p->fontdata, width, vpitch, '\0');
++		if (!src)
++			return;
++	}
+ 
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
+diff --git a/drivers/video/fbdev/core/fbcon_ccw.c b/drivers/video/fbdev/core/fbcon_ccw.c
+index 9da6c0e41e7a..cbaa75fc1cc1 100644
+--- a/drivers/video/fbdev/core/fbcon_ccw.c
++++ b/drivers/video/fbdev/core/fbcon_ccw.c
+@@ -109,6 +109,11 @@ static inline void ccw_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 	while (cnt--) {
+ 		src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch,
+ 					  scr_readw(s--) & charmask);
++		if (!src) {
++			src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch, '\0');
++			if (!src)
++				goto next_char;
++		}
+ 
+ 		if (attr) {
+ 			ccw_update_attr(buf, src, attr, vc);
+@@ -121,7 +126,7 @@ static inline void ccw_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 		else
+ 			fb_pad_aligned_buffer(dst, d_pitch, src, idx,
+ 					      vc->vc_font.width);
 -
--	font_data = kmalloc(alloc_size, GFP_USER);
--	if (!font_data)
--		return ERR_PTR(-ENOMEM);
--	memset(font_data->extra, 0, sizeof(font_data->extra));
-+	fd = font_data_alloc(pitch, h, charcount);
-+	if (IS_ERR(fd))
-+		return fd;
-+	font_data = __font_data_wrbuf(fd);
++next_char:
+ 		dst += d_pitch * vc->vc_font.width;
+ 	}
  
- 	for (i = 0; i < charcount; ++i)
--		memcpy(font_data->data + i * h * pitch, data + i * vpitch * pitch, h * pitch);
-+		memcpy(font_data + i * h * pitch, data + i * vpitch * pitch, h * pitch);
+@@ -246,6 +251,11 @@ static void ccw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+  	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+ 	src = font_data_glyph_buf(par->rotated.buf, width, vpitch, c & charmask);
++	if (!src) {
++		src = font_data_glyph_buf(par->rotated.buf, width, vpitch, c & charmask);
++		if (!src)
++			return;
++	}
  
- 	if (calc_csum)
--		csum = calc_csum(0, font_data->data, size);
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
+diff --git a/drivers/video/fbdev/core/fbcon_cw.c b/drivers/video/fbdev/core/fbcon_cw.c
+index 354f40f77bb4..7606ad38c269 100644
+--- a/drivers/video/fbdev/core/fbcon_cw.c
++++ b/drivers/video/fbdev/core/fbcon_cw.c
+@@ -94,7 +94,11 @@ static inline void cw_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 	while (cnt--) {
+ 		src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch,
+ 					  scr_readw(s++) & charmask);
 -
--	fd = font_data->data;
--	REFCOUNT(fd) = 1; /* start with reference acquired */
--	FNTSIZE(fd) = size;
--	FNTSUM(fd) = csum;
-+		FNTSUM(fd) = calc_csum(0, font_data, FNTSIZE(fd));
++		if (!src) {
++			src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch, '\0');
++			if (!src)
++				goto next_char;
++		}
+ 		if (attr) {
+ 			cw_update_attr(buf, src, attr, vc);
+ 			src = buf;
+@@ -106,7 +110,7 @@ static inline void cw_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 		else
+ 			fb_pad_aligned_buffer(dst, d_pitch, src, idx,
+ 					      vc->vc_font.width);
+-
++next_char:
+ 		dst += d_pitch * vc->vc_font.width;
+ 	}
  
- 	return fd;
- }
+@@ -229,6 +233,11 @@ static void cw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+  	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+ 	src = font_data_glyph_buf(par->rotated.buf, width, vpitch, c & charmask);
++	if (!src) {
++		src = font_data_glyph_buf(par->rotated.buf, width, vpitch, '\0');
++		if (!src)
++			return;
++	}
+ 
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
+diff --git a/drivers/video/fbdev/core/fbcon_ud.c b/drivers/video/fbdev/core/fbcon_ud.c
+index 01f45eaa2013..bdba3a959d1e 100644
+--- a/drivers/video/fbdev/core/fbcon_ud.c
++++ b/drivers/video/fbdev/core/fbcon_ud.c
+@@ -96,6 +96,11 @@ static inline void ud_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 	while (cnt--) {
+ 		src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch,
+ 					  scr_readw(s--) & charmask);
++		if (!src) {
++			src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch, '\0');
++			if (!src)
++				goto next_char;
++		}
+ 
+ 		if (attr) {
+ 			ud_update_attr(buf, src, attr, vc);
+@@ -108,7 +113,7 @@ static inline void ud_putcs_aligned(struct vc_data *vc, struct fb_info *info,
+ 		else
+ 			fb_pad_aligned_buffer(dst, d_pitch, src, idx,
+ 					      image->height);
+-
++next_char:
+ 		dst += s_pitch;
+ 	}
+ 
+@@ -133,6 +138,11 @@ static inline void ud_putcs_unaligned(struct vc_data *vc,
+ 	while (cnt--) {
+ 		src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch,
+ 					  scr_readw(s--) & charmask);
++		if (!src) {
++			src = font_data_glyph_buf(par->rotated.buf, s_width, s_vpitch, '\0');
++			if (!src)
++				goto next_char;
++		}
+ 
+ 		if (attr) {
+ 			ud_update_attr(buf, src, attr, vc);
+@@ -142,6 +152,7 @@ static inline void ud_putcs_unaligned(struct vc_data *vc,
+ 		fb_pad_unaligned_buffer(dst, d_pitch, src, idx,
+ 					image->height, shift_high,
+ 					shift_low, mod);
++next_char:
+ 		shift_low += mod;
+ 		dst += (shift_low >= 8) ? s_pitch : s_pitch - 1;
+ 		shift_low &= 7;
+@@ -279,6 +290,11 @@ static void ud_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+  	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+ 	src = font_data_glyph_buf(par->rotated.buf, width, vpitch, c & charmask);
++	if (!src) {
++		src = font_data_glyph_buf(par->rotated.buf, width, vpitch, '\0');
++		if (!src)
++			return;
++	}
+ 
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
 -- 
 2.56.0
 
