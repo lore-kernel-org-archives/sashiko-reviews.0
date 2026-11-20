@@ -1,76 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795191425;
-	b=ez/7o0JLh7Z5bcZe79L/3zj+SqSgdtumNN31oDxXe/RVucRgW1hgW/X2iy27GylDwvsi
-	 vzX8Nz/qnzRF/mxr47OodPmXeRXm4Xj5NcT8GM+dpQG18Q7Iy5wzBvmCHE9Ybwh4gSgJR
-	 Lmijjm13zbI2xwdQ6Lfl4uOAXQP8lQc4g82hgBIuadhMFbiB26FaCj4C0PQlelv+UuhIt
-	 EKLJexhrY2gPuwOTU/rS56d7iAa46eaqiQFuwe9Ywa5TIkm6qf+qwLdAsijq5DaOMb0qt
-	 6ku/HLAKodb5sVYmV+TDMSDHSUl9ceO6zWyIFjJKCVGCXe90w6FBTgBPMqd433+ew2A==
+	t=1795191856;
+	b=UaLmy0f6ip2uvmRbHthK8Aw6aO71WCbcYuPUsh+XbmydfRXmLj6y2Oza6igtShqRYadp
+	 EyzZW4jKpLICEWOkQGVkAEkL2wky2/P65Z6sW4VqGiSax95UhXvTtSiHJTVfR3e49IFHU
+	 zlW1xpdk+Q8mjsiA8Cakrn3xEFwfuvM1Qk7owfxrqZzHKqCSqUM1urBnYROasR+/QOU0z
+	 3kau1r0f91rpLugw2zMFpYoWEaJYdwUid0fIVYo0YOOjkcKF8izliUKSfCStZ+fOyoLes
+	 EBmBudmQjKrlR/mGZnDFPRFHngdUMTkuem6ha3xQ7oBY0yLz5T89ARKhSt+ENltWOIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795191425;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=bLc2513g3SIaCrKt5HhKDMvQKHA697Ieb1XyQKkG8Tk=;
-	b=g8thughZGNEcmFse66fyM82azmlYIuqY/35Fxgb0XZXMPJvqx3FcA8s5P5iH3SzcO01E
-	 LJJZiw/tSIslgszickE9i1dWP4BSwRrZ7buMaktpKSJInwPO9a8WuT4o5ZMDlF6+Pqk59
-	 epWn9S5kiiiLJ+Qe6BatFboNQqmhVVeTU5ZwjcI/agl24alV/Ep5Awg6ibQ/2nx+rQtqn
-	 remedMJQS6UuG4CDOVMaF1Zz/Co+wgPt189aMuHyU/PUi/9f9B1sgu6glvPsNR+EY5Phz
-	 HvagU6nMgxlvHDPyPPRBOjtk85Wbs+Q3aVSMZgAFJG1NDiCKd8Beid83FyP0alIjSXQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795191856;
+	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
+	 Subject:In-Reply-To:References:Date:Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-Last-TLS-Session-Version;
+	bh=eXweuammQ53+bG7aA+FdCn6vhVGbnGzeBs58ATTcDoI=;
+	b=GVoar/6bjSSfomK2cC2Z5JcMEmvUk4M+zB/oILtUxLsUAzm2uja9qimk7SEs3hraMWhg
+	 7mLCXLp9k8gwWx0Qq4rS9t/7XAwgWtSh749pgf3LIokXHTXIAPAmcIkHh6et4C1kG4NjA
+	 UJKD67uogRAKXlrQ9EXKn5+RiaE2RWDGVWHIRz69aF1gPtyB5U+s8S+Zdp/g/g+M9BN3M
+	 lewkAbvgae0KMEGkkEABPLTiH3CMU/P8hvLmDQEqnh5I2VjoISPcAOIY/qHXiv1gyeWY5
+	 vMKp6SmPjqRVn9xL+tBLKHOacbqhGdRWn9rEe1iMmJcVY4N/iNaJr/BRAeS20ac4FSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="A02w0/yV";
-	arc=none smtp.remote-ip=198.175.65.16
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=bootlin.com;
+	spf=pass smtp.mailfrom=bootlin.com;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=NitsyhcT;
+	arc=none smtp.remote-ip=185.171.202.116
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C083606A32A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 16:17:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C083606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDB4606A32C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 16:24:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFDB4606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=A02w0/yV
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795191425; x=1826727425;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=rsJkdZh9qMrhyoYDJubmBzmgkJTyz5MGrGp1lbNyCTo=;
-  b=A02w0/yVGyNIfpmnZNibTNZQOnqnrYPc9BoOFmg9evnKVyOAdvBXe1fb
-   LB6jIEvC9rxotUqdy7fvHcQo/Ftk+Ti3lGjxtork5Kb3sZwlBGo7jX7lq
-   sDeJ4U5GcjKUZpeZwSnipFSXPNqHAtTdIGnmuUFCNgnbPJ8cOdEFSSj97
-   tdDdRIADWUH10J5xsYTriU5YSDYfTmSTm3eqQ+X5Ojs0rVIt+iQysZU5M
-   iQruMx/XN4w5yS6WiGlVVky5H08jB+fXLphK9cBLEVhrLLRbREGDwjteO
-   60hllxkgvMj7eJOgIX0+B1tC8CQiH6YRsjilYEbNdVzIWNlEgeViNVP6a
-   A==;
-X-CSE-ConnectionGUID: DWhNXKILRGaIEHIr4BwZmA==
-X-CSE-MsgGUID: hZsO6AwcQqqKrdNtbkStJA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11972"; a="4065308"
-X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
-   d="scan'208";a="4065308"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 08:17:05 -0800
-X-CSE-ConnectionGUID: QRQGQN7sSASUmPaw0llw3g==
-X-CSE-MsgGUID: V2hdNP5qTUCJJydkPDRPSw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
-   d="scan'208";a="10677360"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.66])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 08:17:02 -0800
-Date: Fri, 20 Nov 2026 18:16:59 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=NitsyhcT
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id ED29DC62220
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 16:24:19 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 354FB601B9;
+	Fri, 20 Nov 2026 16:24:14 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E840C11BC0459;
+	Fri, 20 Nov 2026 17:24:08 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1795191849; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=eXweuammQ53+bG7aA+FdCn6vhVGbnGzeBs58ATTcDoI=;
+	b=NitsyhcTsZo6nspRAWCOw4J46MqCWiv6Uff41OYdpHmvpBAf0ciSur6WG4NO3gXmBrEC0g
+	hXp1ZhZ5bu9uEuCUd/K5vXDJGrbDlU8usmNYSM5GvRIieitmxNwVLTfTg/tAbrzBkyiuVX
+	y2hgH1qZECTGahTK6J3DBvx7D6sBC5iWFGggRBHN2jW7GBaZaFsaUm7vrQWsK9C4KPQ5LX
+	s4ol5ipViQpcQjXwGXCdvfpbqtiZIHVehxvtHxHLopJd/GwbjcqchDqCQoERgWdcoP8qJe
+	40q7eEPdhHjzyet4NJMVuJE4VAGsGrptXPJ36MFuyyd5hlgtjBdsoeQdOMElJQ==
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH 4/6] drm/i915/de: Make mmio_debug lockless
-Message-ID: <awBye5pEqpnsrpzl@intel.com>
-References: <20261119205040.31935-1-ville.syrjala@linux.intel.com>
- <20261119205040.31935-5-ville.syrjala@linux.intel.com>
- <sashiko-outbox-224079@kernel.org>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v4 2/5] irqchip: irq-eyeq5-msi: add EyeQ5 PCIe MSI
+ controller driver
+In-Reply-To: <sashiko-outbox-217188@kernel.org>
+References: <20261116-eyeq5_msi-v4-0-2e1233b014b0@bootlin.com>
+ <20261116-eyeq5_msi-v4-2-2e1233b014b0@bootlin.com>
+ <sashiko-outbox-217188@kernel.org>
+Date: Fri, 20 Nov 2026 17:24:07 +0100
+Message-ID: <87a4n3pj2w.fsf@BLaptop.bootlin.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -80,97 +70,111 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-224079@kernel.org>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Thu, Nov 19, 2026 at 08:57:33PM +0000, sashiko-bot@kernel.org wrote:
+Hello,
+
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] drm/i915/de: intel_de_arm_unclaimed_mmio_detection() logs
->   invalid mmio_debug=Y
+> - [Medium] irqchip/eyeq5-msi: lost and unmasked interrupts in
+>   eyeq_msi_isr()
 > --
-> 
-> commit 61affa910ea8da633b71cb74783032c77e14188a
-> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> 
-> drm/i915/de: Make mmio_debug lockless
-> 
-> This commit converts the unclaimed MMIO debug tracking from lock-protected
-> read-modify-write counters to lockless booleans, while keeping the
-> mmio_debug module parameter as an int for compatibility.
-> 
-> > diff --git a/drivers/gpu/drm/i915/display/intel_de.c b/drivers/gpu/drm/i915/display/intel_de.c
-> > index 17954963ddf98..82ed1c6a55c96 100644
-> > --- a/drivers/gpu/drm/i915/display/intel_de.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_de.c
-> 
+>
+> commit ecbaf749e93a909382eba764dafb43426071620b
+> Author: Gregory CLEMENT <gregory.clement@bootlin.com>
+>
+> irqchip: irq-eyeq5-msi: add EyeQ5 PCIe MSI controller driver
+>
+> This commit adds an irqchip driver for the Mobileye EyeQ5 PCIe MSI
+> controller, supporting both root complex PCI MSI and endpoint platform MSI
+> roles.
+>
+>> diff --git a/drivers/irqchip/irq-eyeq5-msi.c b/drivers/irqchip/irq-eyeq5=
+-msi.c
+>> new file mode 100644
+>> index 0000000000000..823dfb0b00b5b
+>> --- /dev/null
+>> +++ b/drivers/irqchip/irq-eyeq5-msi.c
 > [ ... ]
-> 
-> > @@ -286,43 +287,36 @@ bool intel_de_unclaimed_mmio_detected(struct intel_display *display)
-> >  	if (!display->mmio.funcs->check_for_unclaimed_mmio)
-> >  		return false;
-> >  
-> > -	spin_lock_irq(&display->mmio.lock);
-> > -	ret = display->mmio.funcs->check_for_unclaimed_mmio(display);
-> > -	spin_unlock_irq(&display->mmio.lock);
-> > +	if (display->mmio.funcs->check_for_unclaimed_mmio_needs_lock) {
-> > +		spin_lock_irq(&display->mmio.lock);
-> > +		ret = display->mmio.funcs->check_for_unclaimed_mmio(display);
-> > +		spin_unlock_irq(&display->mmio.lock);
-> > +	} else {
-> > +		ret = display->mmio.funcs->check_for_unclaimed_mmio(display);
-> > +	}
-> >  
-> >  	return ret;
-> >  }
-> >  
-> >  bool intel_de_arm_unclaimed_mmio_detection(struct intel_display *display)
-> >  {
-> > -	bool ret = false;
-> > -
-> > -	if (!display->mmio.funcs->check_for_unclaimed_mmio)
-> > +	if (!READ_ONCE(display->mmio.unclaimed_mmio_check))
-> >  		return false;
-> >  
-> > -	spin_lock_irq(&display->mmio.lock);
-> > -
-> > -	if (display->mmio.unclaimed_mmio_check <= 0)
-> > -		goto out;
-> > -
-> > -	if (!display->mmio.funcs->check_for_unclaimed_mmio(display))
-> > -		goto out;
-> > +	if (!intel_de_unclaimed_mmio_detected(display))
-> > +		return false;
-> >  
-> > -	if (!display->params.mmio_debug) {
-> > +	if (!READ_ONCE(display->params.mmio_debug)) {
-> >  		drm_dbg_kms(display->drm,
-> >  			    "Unclaimed register detected, "
-> >  			    "enabling oneshot unclaimed register reporting. "
-> > -			    "Please use i915.mmio_debug=N for more information.\n");
-> > -		display->params.mmio_debug++;
-> > +			    "Please use i915.mmio_debug=Y for more information.\n");
-> > +		WRITE_ONCE(display->mmio.mmio_debug_oneshot, true);
-> >  	}
-> 
-> [Severity: Low]
-> Should this message suggest i915.mmio_debug=1 instead of i915.mmio_debug=Y?
+>> +static struct irq_chip eyeq_msi_irq_chip =3D {
+>> +	.name			=3D "EyeQ5-MSI",
+>> +	.irq_mask		=3D eyeq_msi_mask_irq,
+>> +	.irq_unmask		=3D eyeq_msi_unmask_irq,
+>> +	.irq_ack		=3D eyeq_msi_ack_irq,
+>> +	.irq_compose_msi_msg	=3D eyeq_msi_compose_msg,
+>> +#ifdef CONFIG_SMP
+>> +	.irq_set_affinity	=3D irq_chip_redirect_set_affinity,
+>> +#endif
+>> +};
+>> +
+>> +static void eyeq_msi_isr(struct irq_desc *desc)
+>> +{
+>> +	struct irq_chip *parent_chip =3D irq_desc_get_chip(desc);
+>> +	struct eyeq_msi *msi =3D irq_desc_get_handler_data(desc);
+>> +	void __iomem *status_reg;
+>> +	unsigned long pending;
+>> +	unsigned int bit;
+>> +
+>> +	guard_chained_irq(parent_chip, desc);
+>> +
+>> +	status_reg =3D msi->gcsr_base + GCSR_IRQSTATUS;
+>> +
+>> +	while (true) {
+>> +		pending =3D FIELD_GET(GCSR_IRQSTATUS_MASK, readw(status_reg));
+>> +		if (!pending)
+>> +			break;
+>> +
+>> +		/*
+>> +		 * Write-one-to-clear status register.
+>> +		 */
+>> +		writew(FIELD_PREP(GCSR_IRQSTATUS_MASK, pending), status_reg);
+>> +
+>> +		for_each_set_bit(bit, &pending, EYEQ_MSI_MAX_VECTORS) {
+>> +			if (!generic_handle_demux_domain_irq(msi->msi_domain, bit))
+>> +				pr_err_ratelimited("unmapped MSI interrupt %u\n", bit);
+>> +		}
+>> +	}
+>> +}
+>
+> [Severity: Medium]
+> Can eyeq_msi_isr() lose interrupts that arrive while a vector is lazily
+> disabled, and dispatch vectors that are masked in GCSR_IRQMASK?
+>
+> eyeq_msi_domain_alloc() sets handle_edge_irq without IRQ_DISABLE_UNLAZY or
+> an .irq_disable callback.  When an MSI arrives after disable_irq(),
+> eyeq_msi_isr() clears its bit in GCSR_IRQSTATUS before handle_edge_irq()
+> records IRQS_PENDING and masks GCSR_IRQMASK.  Because eyeq_msi_irq_chip
+> has no .irq_retrigger callback and neither EYEQ5_MSI nor MIPS selects
+> HARDIRQS_SW_RESEND, enable_irq() -> check_irq_resend() cannot replay
+> IRQS_PENDING and the interrupt is lost.
+>
+> In addition, eyeq_msi_isr() does not mask pending with the enabled bits in
+> GCSR_IRQMASK before clearing GCSR_IRQSTATUS and calling
+> generic_handle_demux_domain_irq().  If a masked vector latches in
+> GCSR_IRQSTATUS, a sibling vector firing will clear and dispatch the masked
+> vector (for example re-entering a masked IRQF_ONESHOT threaded handler,
+> since handle_edge_irq() checks irq_can_handle() rather than
+> irqd_irq_masked()), or repeated writes to a masked vector can keep the
+> while (true) loop spinning.
+>
 
-Ack. I forgot to undo that change when going back to the int.
+I reused my MSI test setup and added a new test: on the host, a helper
+disables one MSI-X vector, raises that MSI-X from the endpoint, then
+enables the vector again and checks its count in /proc/interrupts. This
+confirmed the lost-interrupt issue was real and let me write the fix.
 
-> 
-> Because mmio_debug remains an int module parameter, param_set_int() rejects
-> "Y" with -EINVAL and prevents the i915 module from loading when a user
-> passes i915.mmio_debug=Y on the command line.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261119205040.31935-1-ville.syrjala@linux.intel.com?part=4
+Since there was no further comment, I will send a v5 with the fix soon.
 
--- 
-Ville Syrjälä
-Intel
+Gr=C3=A9gory
+
+
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261116-eyeq5_ms=
+i-v4-0-2e1233b014b0@bootlin.com?part=3D2
+
+--=20
+Gr=C3=A9gory CLEMENT, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
