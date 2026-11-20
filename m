@@ -1,111 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795169828;
-	b=mgeRhsScUQ99obULdGPZ9udP+xsVZKGC+IYj2jo+SWR8W8kdoTmZWqaz2Knq5fQQiAml
-	 dPlsrkqpbtuTvG9YWx88KdwyTnEyoV7U9F/Vp3Kh59arvAYzxqbv7XM5+xSKJnxHd1NYj
-	 Wo7qdbTBgt49HdLuipk0ukFy3OQpk8x2y4LFNzxvHE+vyxe1VZFUYk8em3KDKF4EvsdGr
-	 c1vv3v6ijXoxDLnZkjK2ONWi5xMNBRvtKzB3NO8PmZrheUtODSeCwHOtAjUGIPCM3ToBH
-	 2e1ENK4hjJFn2pPmxUjX1mz1gNrGLPW+X/WbNIygSdfwsfFyJPfrpm5cx3OxV9DktsQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795169828;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=BuXhlSKg00a4CpooMZ1asDKzuO5wnOZJBMwl0XnHxMM=;
-	b=qh+0EjsMQCFBMDDLVh27lBlwPpgYvsnQeoihAY035TO3qngwk4VPq7gybj5nZ+ykc4ll
-	 2Eqcn8Y8Bv5YncuqE7Y6h4ftB+EDcEaqf57moz5iSutyCiIE722c/9PRkXN8NGPxB8QI3
-	 8mudYKVswOh4/5MsdAlNHy1L6qTNZX5+masvIJqkOknbYdfKHD3Ldz00/IQg5gIXPCGgl
-	 DAvXUPes2jl513heWH2sK6RkW9zDa4mUd7lTS5hreq2/oV51f9p4jW9wlkzuynOUUX1Ka
-	 MxyZYWdY538lNVTKS7jAtMbnUaSIJnYzk8ZhC5P1XS2mYPiAuAH0yjwdGL7z9oiG+LA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arndb.de;
-	spf=pass smtp.mailfrom=arndb.de;
-	dkim=pass header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=lrd65nOG;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Q8uM6mhI;
-	arc=none smtp.remote-ip=202.12.124.147
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.215.174
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795170186;
+	b=2RLk0Y0mDgmxemiJzRkYA+iee/lI8s1ENGLr4YgRjj6LbxCfPo5dF/x+V5pQYpJj0EsV
+	 JX3qkpm4+CpITzpX0OXixD8XNdjbP00DmmujayIzLX7dR16+GxMu6OdjA7Wmxyg8bpi+u
+	 bvy9Q088ACZtqpcEGl5mHUHBGL8LtMbtYaSuFzz9Im304nGcinPzszt2TfMU7M3wat2Cc
+	 UERiMGo8m8P4PWCt7PbL3erhucU54fh5/Hcexopy3d73wgTelYiP99f6s1/OrAlxDpJfa
+	 jWqhnL/bWZM8OfxqRjtUsaXQk4ZARL88rr1KvyTyD04g2lTV0Lv50i74G5EA88i69ug==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795170186;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=FllpWYEjwfBO8vIm1oM39QJeHWMzURoXLmztQvQK/YU=;
+	b=bjkoTaXIZUG+6jsm6cab/laWwmNnrd2ockKAyMCgLfXXw6Va1HEsTUykh1Q9ZPXAg5ap
+	 0H2Aq2RNQeWWdyHRSD1iEmYqdwnCIBr799Nkqc0Ww1nIOdh35EoaAyReDktO8pe6v4O/6
+	 1ehXn7etELwurAciEaG0BsLD5cQ+tSM7Ja60uWADiJ7FFvSa1hzDdqhHGnx0AKO8+SAia
+	 mX6rlkq2lWoLVqRAdwHnaH7Q6FNptA7KHYkKhTTxiy+uJaNgw37O5BYblSFMQQIExYGvV
+	 6ytLq1QQG0G26UzFzkHfH8iy5awe4+Yr2a9lG0eqFaLQ3JwNEXM/LakK28hDSQIg8Sw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=f32Bu11d;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.215.174
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCBD606A320
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:17:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DBCBD606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0461606A336
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:23:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0461606A336
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=lrd65nOG;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Q8uM6mhI
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfout.stl.internal (Postfix) with ESMTP id 86E461D003A1
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 05:17:06 -0500 (EST)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Fri, 20 Nov 2026 05:17:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1795169817;
-	 x=1795256217; bh=BuXhlSKg00a4CpooMZ1asDKzuO5wnOZJBMwl0XnHxMM=; b=
-	lrd65nOGQ9AxiKwcDko0U7X04VpVb1LuKQt1QNWwZt0YHrnppMe8HKr/arGQ5Eok
-	GJaoAyJSZjbckbedw7e1Oqclc2g1DtLaTVDhZGlfXkqste6iWwZ6jjl0M+qwOzhX
-	jGnRgCvEoMzqHu75ZG8aGjG2xm44k3ht2Ct/sxNZ33pxo0nPgPSa+ijt6OPaBafx
-	NqxpaxgqqZkUCXtLV63vB5CY5Te6TlDhOVAbI+rleV0aWuvVzMwcx/Veo6nQNQCs
-	AqGnlQeOcNNSTlMBl61Wc8t8vJojatC1pSaCnSYJpBxIgXYx89D7QileDGMTyz08
-	5IaSgJMhIzg2lqw9BD2t2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795169817; x=
-	1795256217; bh=BuXhlSKg00a4CpooMZ1asDKzuO5wnOZJBMwl0XnHxMM=; b=Q
-	8uM6mhIZ+PPM0igHpEfaxmK2pe/kQKgPu4mzjzvu15JZhYLNgPEH7gSBXoS0naLN
-	oQaMGx1HlklWuW+jNZAisHdjSQPeXnXA9qc8GNSvyqSOSYqAEnr+MTErHWkDYWa8
-	A7KrK1MybzJNtP5/1eeSu7smqdqBNE4daJLL1/1wsJBuLSzzJTXXViBZlMfitj5x
-	hE6596YuPnlR/D6pi8sQhAUXwov4eYP06gAXWiuVaCgC0KHLUHecu8QBytE1BymL
-	rkCcZNb9QRAQ7AFbkOvXisI3uBFNuHFoKMIW/d7IRcBfXCpnhVI6Gy0UuOzhWSMl
-	xxujL+gZNs3dVABK/KXjg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=arndb.de a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795169817; d=arndb.de;
-	mf=PGFybmRAYXJuZGIuZGU+;
-	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
-	s=fm2:rsa-sha256:NVJqBA7eKMFYJWmLjMIG2NPRk1XYeScCLkPmfMKw8KlSk3Z
-	az2PbWU9zkUG1iocYOGa0BGIJq4oajQxroTfvYDWkcPkEtfpwo220Z74TIdc8KXp
-	7i4LgLf21nmUaFsVlV2Gpz+DUP4TrXk3mi0wzP+YrhMcNwiQODhcB7INu3RMPxMM
-	jRzqtVw9xoh1VCYP1QcjNDvDU+Jk8uJOUXcI0mnHa7TZmbF2WxUo3Ba+MHVu2jdl
-	FD9Dv/JXxIAEClPnDZrHsoIAyH6nsRv4tMcPErNFUU7gFRVVjyrxZh1lij8amZV2
-	6QeEllqxm2bMcz/Oixo5k2d+ON8VtDVssegxkCg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:zuSsEhmCwr6Wvsb9X06BQFozbRPwmHJVyho9pvXTxSo=:mGu+cZMGELOH0bYyds92Q644h116pbc8B12xMlx7qxQ=;
-X-ME-Sender: <xms:ER4Aa7lO5umD3sr-TKj5kNGsKI8wBBtS2M0-dcWs6QtR_INEScQoog>
-    <xme:ER4Aa5qO5F1L2_61uu_MvkmwxazML4N7Mc_FqW7UZMVVmx1YZDxLOyY8OYVxafOMj
-    iVb3ctbJB9I15cT59eZjmavKzKCG0gdU7o4-3haWT49Va9jnMKoAL8EdA>
-X-ME-Proxy-Cause: dmFkZTFsqBHJi/SORwcvKmFMVQF2oUrONn+po8KdzOVlSsbWms9cCSDOyBdd56+KzfUPQU
-    2X42s5779mPNAiTMVFZUPGbqhM7epcvvR2MPGjDQwB7R37oOEK6tyVEgkAL7/q+/ahPVap
-    NeH2VcC5R7jB0RTnG1Mf2Dp3losR7T5ymz+62cELWGnddyd/9TmS2hLGCCPFOT5LJFqs3N
-    XaIpXbn0r3peZdWBHWif89mdsRbh6/6AtlmeDrI+6RoG8+ZTrrW7a7OeLDd4lvsOR9buT0
-    D74Tom2Bnx4DC4bbrg8uwpPgVgjhsMivxjn6icPGINxpGvShklwxxvQK4VaHQFSiEraZMC
-    xETAMYCZkJJQQ2961g2sx20Cgo3KT/REaHIBg93dlyvDPTYn4ur1skahcTcN0G+xo4lB5h
-    ajQycmI5rJa1jJ67KtVQhTtLu/PyG7KYa5VQdg61bRYFylTI15GsoRWoLB/X0XWajtTaPT
-    GZVkANeDrHXq5VC3N1G3W/KVvRZbcd0BX6oPQAVzlRC4virYfMcesT7+o5KWxVJiBRM9r2
-    D49vQbnnm5iL8fO+nwGExVlvRBgp7+XCG7+/D73eB/IzBx5Iw9MehaCYHZyj9FGkVt1139
-    Jbt7Gy7yFQiC6enD7KLL3y7PkgQIKWNIgd5bFoqlpGFqchPZqz9/JPpVpb6Q
-X-ME-Proxy: <xmx:FB4Aa_gaDQRwBXTEb7PnmRSAAfHySWI73uaIt3LlMbF_hgd0Sz5JYg>
-    <xmx:FB4Aa7dv1ofwPwh4m8S7HRxw00z-m5ye4xEC11hBQoYFuIX1wKaqIA>
-    <xmx:FB4AawIAi8H2OVdVYypI9jeNC4RSz49wPwT2tyNluL4HA1rxUHiLZQ>
-    <xmx:FB4AawlAszsQNztJyLAKB2253IZThabYUEdU2GIy-SBhBfVSHiV_uQ>
-    <xmx:GR4Aa_RsJ4-fSKP1fJY0RpYuvoQ3kE2ZxFN9vRS21E7SA4LIFs585KKW>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 600B132A009C; Fri, 20 Nov 2026 05:16:49 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=f32Bu11d
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-cc147d86bebso418698a12.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 02:23:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795170185; cv=none;
+        d=google.com; s=arc-20260327;
+        b=V7mYGiKvJQAx7cf52Wh6DKm2qCdfF5Z1jX6sEUxixqAKggHMlnEw3sCJB3DllPeErU
+         NCVJdUBwCdghmXLYWUypvU3P7wNiXdXTpwXDIuJ+D6yLBKUVkMjsPpB5bWIA1RY2KhhT
+         dA3NChKUy7Noxpz+4Tgnz5BP2Qp3/9fmzr3du6RusnDATxKXn4r5FV6MJGIkTW3kLmZD
+         cNL4A2mF7GJvab9GxcMgwSQ4Ini+xwuKt3K+J5cxcXECaYvuuS2DVs0e7F5wBzmaJVPm
+         oC0DE4k3w0yIRwSUbyuUwqE5TVqclaTdophD+XTldr/FKMJs/ZIBKR66xMicXG3v8Eml
+         TYvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=FllpWYEjwfBO8vIm1oM39QJeHWMzURoXLmztQvQK/YU=;
+        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
+        b=qcCrNgwx9C67P12BKcSrwPcmD+NVI4EwvePdBkyRzgJqRr0zTNgguJgaDjkuIeearZ
+         yklirHaJ91ESxI3h+5yf7IPfNcrmsml4QOTDFZZzK1vtu2vHXkkzJfe3ut0IefXE+C71
+         kQxcXljd1tA54CozWpSJ6X9YU6tb+yMbYkT2FQWNNYe+k1uE/T5ILO0Ze024749BDLtW
+         25TwieS9Zqg3zSntsWaKaliTgUveop7UGRk20gEhFMrRTmq3JXahvC8vd1xogaZ1oThl
+         NO1n5hXqng4oKma/oZlaw36XKAblEwgrqs8syxMHZLTQ9u8saSSmhOvjGm7AY1IcbVfk
+         8gXA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795170185; x=1795774985; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FllpWYEjwfBO8vIm1oM39QJeHWMzURoXLmztQvQK/YU=;
+        b=f32Bu11dR0rbh+0EIEtTvzJY3ROhRuaE4e1OOYG3ShObms+WZvwG0AA8vGLD9wgnR0
+         bgjxQ8OGcCS51G9jApp7tJ1ylrDFtMSyWweIf7MVpBi5nVpna15mfxn1betd8EQ0gKGa
+         B2D57jDOWmsfNaobzkktTcSiaUx5e6eGuCvF7L4eXIc9LVG79/6CHRuGyBug6fgOBc50
+         yqhPmJ9gLKLRyvFKtre0pJ2LbzEEtzvrhGNbuCyHpuNUkiNka+wX7s16EH0WEUWBqK2l
+         VUecOHTGzvjCfk/ij5xCPjr6htSrZL97CZrZ31EJ54WI6n9gvPi13AuitQ/33isLdttO
+         5Tvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795170185; x=1795774985;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=FllpWYEjwfBO8vIm1oM39QJeHWMzURoXLmztQvQK/YU=;
+        b=RaoL3o0xEJQlITAMLilLBv9U3oPPDSmCMuSAbM79q1MX3EAn0ZI1cFq1I5bPi9H8Vx
+         aD2SW0TMeevHQPSkKB8QqYY9uAfNX9vrOTDysfnDA/rr7doqWoZ79JhHeVBC0n53xjsk
+         0pPjlp4k7aw8P0yhxAz16y1egGd1+CbGWM3Fb25ucJ4ZsMyiD1jjkXk9MiwX7Gj//Qco
+         a3csjw2klX9bcNr+jdIGx74aUddSAV2x5mBrSBf4Bxdp09o/MBJSFv2aGjwFmqoig18J
+         cONic3PUjuMNqomK74llZjoMM2zDSjDcjM1ZvDRVt673lCHNFPb+6CdbsTjZnbvNMGZX
+         ffIQ==
+X-Gm-Message-State: APuU4Z+aj0HQLDkVjxQL38+6buxqZMGIN6kQLTnSlLQ81b0EUw9RIJUm
+	7CLApuae93i3fS/8dER2dzgK7effHSwn5LTCr9EDDRNaGdwhMu4/zsyDZjRhO3OHEJFFLMZCL06
+	1J+Z9NtUhFthGlWCL9quK5tpjky16H4L60uKW
+X-Gm-Gg: AZFdTZfmjRARhs0mtfKtIMvTl0hM2ETOmfUsLY6HPGaUjF48VsP6yvL1ZyQRimd96RP
+	gxNqoGhLaOsT27Kr2vHx0Clzw+BiqIsXGU7Fq4ZlR82k6Qxb1c7/E/KvuMJCmZ8HaRpeAA+Ye/k
+	q+bNrzUZaAZH5q5Ur2lXXm3mxV18Y+6QqwPFeGoa3nk4vX2ZnMf9hnr0uyz1AbLQ0ZwQqRIu8LD
+	1hxbc/n+P92LFI6CVr95Y1x1qv/67noEAVxlKurYvaNpX73Tn8qM5Nzhrg5CKj9IUv/B3axrDDu
+	roewTi38Sp8EyLiAyT8MSQSnrW3AvtXGVmbDqXynbrqplNuld/RwZdFSvIQhnAb5CPTTgs2IZj6
+	AnssMsOGdsVs5ENjJns2toXmmi2rI/IdLFKaUzbMy8HF880B8czW0nzeVr0pu/jnTCcKjQwxkzG
+	8Rfu21MLUE1EGKzafIDaLqFNk72hDDfmuZ3hqB3FE3zQBjK+tCXDwFC/RfnP7YaWSw0eBTRg==
+X-Received: by 2002:a17:90b:3c11:b0:3a4:7195:ecba with SMTP id
+ 98e67ed59e1d1-3b41c907eb4mr1384723a91.20.1795170184998; Fri, 20 Nov 2026
+ 02:23:04 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,68 +103,32 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AQsIS8mXxcAZ
-Date: Fri, 20 Nov 2026 11:16:09 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "David Hildenbrand (Red Hat)" <david@kernel.org>,
- sashiko-reviews@lists.linux.dev, "Arnd Bergmann" <arnd@kernel.org>,
- "Gregory Price" <gourry@gourry.net>,
- "Andrew Morton" <akpm@linux-foundation.org>
-Cc: larips <larips950@gmail.com>, "Zi Yan" <ziy@nvidia.com>,
- "Joshua Hahn" <joshua.hahnjy@gmail.com>, "Rakie Kim" <rakie.kim@sk.com>,
- "Ying Huang" <ying.huang@linux.alibaba.com>,
- "Lorenzo Stoakes" <ljs@kernel.org>,
- "Brendan Jackman" <brendan.jackman@linux.dev>,
- "Johannes Weiner" <hannes@cmpxchg.org>, "Jackie Liu" <liuyun01@kylinos.cn>,
- linux-mm@kvack.org
-Message-Id: <45a71e8e-0c8c-4b5e-96c9-be6f2ad0e364@app.fastmail.com>
-In-Reply-To: <3b00e53f-b4eb-41d4-b3e6-791660da3342@kernel.org>
-References: <20261117211635.2472067-1-arnd@kernel.org>
- <sashiko-outbox-221983@kernel.org>
- <c420ec17-b297-469a-927a-85934a05fda4@app.fastmail.com>
- <3b00e53f-b4eb-41d4-b3e6-791660da3342@kernel.org>
-Subject: Re: [PATCH 1/2] [v2] mm/mempolicy: fix copy_nodes_to_user() for odd inputs
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <20261120100408.8053-1-phucduc.bui@gmail.com> <20261120100408.8053-3-phucduc.bui@gmail.com>
+ <sashiko-outbox-224911@kernel.org>
+In-Reply-To: <sashiko-outbox-224911@kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Fri, 20 Nov 2026 17:22:52 +0700
+X-Gm-Features: AclHuK9UCmFMfooa63hk8VPfqyAB-zcUysW3gAim7LDAJQ8tCvRxpT_6QIwMMXE
+Message-ID: <CAABR9nEJ3Jgva3iTo2GVacHXRp_FVrqVxQ-VCdGg41vLbh4htQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ASoC: atmel: mchp-spdiftx: Mark interrupt registers
+ as volatile
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Nov 20, 2026, at 10:55, David Hildenbrand (Arm) wrote:
-> On 11/19/26 16:52, Arnd Bergmann wrote:
->> On Wed, Nov 18, 2026, at 22:16, sashiko-bot@kernel.org wrote:
->> 
->>>
->>> [Severity: High]
->>> Does replacing the compat nbytes assignment with the compat copy
->>> assignment leave a 4-byte gap in the userspace nodemask when
->>> BITS_TO_COMPAT_LONGS(nr_node_ids) is odd?
->>>
->>> Without the compat nbytes update, nbytes stays a multiple of sizeof(long)
->>> (e.g., 8 bytes when nr_node_ids <= 32).  When a compat caller passes a
->>> buffer with copy > nbytes, clear_user() zeroes starting at mask + nbytes
->>> and maxnode is clamped to nr_node_ids + 1, but compat_put_bitmap() aligns
->>> maxnode - 1 to BITS_PER_COMPAT_LONG and only writes
->>> BITS_TO_COMPAT_LONGS(nr_node_ids) * sizeof(compat_long_t) bytes (4 bytes),
->>> leaving the word at nbytes - sizeof(compat_long_t) untouched.  When
->>> copy == nbytes (e.g., 34 <= maxnode <= 65 with nr_node_ids <= 32),
->>> copy > nbytes is false, so maxnode is not clamped and compat_put_bitmap()
->>> copies the upper 32 bits of the kernel unsigned long instead of zeroing
->>> that word.
->> 
->> Same as my reply for patch 2/2: no, this is fine as the size of the in-kernel
->> buffer does not depend on the word size in userspace. Copying the extra
->> zeroes from it is fine.
+> [Severity: Low]
+> In commit 06ca24e98e6b ("ASoC: mchp-spdiftx: add driver for S/PDIF TX
+> Controller"), mchp_spdiftx_regmap_config left .cache_type unset
+> (REGCACHE_NONE), so regmap_read() read SPDIFTX_ISR and SPDIFTX_IMR
+> directly from hardware.  Regmap caching was enabled later in commit
+> 4bf54ca60f99 ("ASoC: mchp-spdiftx: add runtime pm support"), which added
+> .cache_type = REGCACHE_FLAT without a .volatile_reg callback.
 >
-> I'm not convinced, especially given Gregory's test case. It's all a
-> confusing mess.
+> Should the Fixes tag reference that commit instead?
+>
+>   Fixes: 4bf54ca60f99 ("ASoC: mchp-spdiftx: add runtime pm support")
 
-Right, I see now where I went wrong: 'maxnode' is adjusted down to
-the nr_node_ids, not the number of bits in the bitmap. So my patch
-was wrong, and Gregory's was correct.
-
-> I do wonder whether this whole function should be thinking in terms of 
-> bits to make
-> it easier to follow. A bit more churn, but at least I can understand 
-> what is happening there:
-
-I like this version as well.
-
-   Arnd
+Commit 06ca24e98e6b already fixes 4bf54ca60f99, so I included both
+commits in the Fixes tags.
+I don't think this is a critical issue, so I'll wait for the
+maintainer's opinion.
