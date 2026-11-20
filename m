@@ -1,56 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795186635;
-	b=BPDT+QzqTd6foQSTuYH5xEmOV4B4JquBCw6XiQK4fzFwksk9VvTz0dzoLZDE2kcLPyHI
-	 atuQ8jOQwnOhmWfMbcWkZ47YkFu1eWwi80YZn+NQrEFw5lWdMIbsQBjeBhtmI3XNmH55D
-	 YhzY3mgapAglEUfFv6Zg6NxtArci/F0Vu6pvnbAT4cuebMMDTbBGs3VaAQMK57AmGwQ9w
-	 ZjdJIqdKDrYNXRH7Jt3aB5fxcV/0dNHXycv1i7EalUW8sND7yqOmrXK4+QI/YIIk6LYPK
-	 BgPOwVCrZhRZBp1KntMcsN0BpEUQoZZklE2VddAZ+ZvL1MGi3Pxn8Jmnuc5HG4CqHuQ==
+	t=1795186920;
+	b=qTT0ZvdFn6LQFG3S7IMj75yslDcJvhibI0eQzCXtlEVKRNYsBBGUUgLWTfnAq28XVOm+
+	 A7Ke/0oR0Xqo5uAiKzxD9fAA4eR7jJMff8Ef2UjzMzHpxImMEzL6adwtjpeQDkAxP3Xo5
+	 UqQ0CK65yBeDUFWniFmfA9DLirjpURoiG+7klSInMLLyXQNpRb5w0J/t48Aj7Jv4qlnvf
+	 8RBfxt5/F+HUWe+WpiPvkMr6idRTXJayTQ9DGiK31XWpaMLkiFfouwlf41D2qNHg59LvC
+	 4HiYroj6/mRLr3SwkyVXnNRhGwts5YWJntsQjN4Y5ml4TnuhrtLBPQTgusnGbtRcGqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795186635;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
-	 Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=VigvJCRt5rXY+6Kai55nHb34XII7DZnlFQiPz+X14Z4=;
-	b=kDshSNLlnzabEPcQZHqkAYJEtxQw6ABMtxxrt35cZwntTEx3uH5cAKKXyH4dOYh7rFzq
-	 EuGDy1x3YqikYTXF0tP1tmcajkcBPoicdOwmhUHwAmYr+Z8rNngbardIHpP34nClHKh1z
-	 0kjJUDCRlOKSaQzRyfMjMss1e/BpbT523R14xA7DfH0j2LtxNEnMP30OJDMkx2uXcERUg
-	 L1aezBLl+TDI+5GCcaFryibrmFshQeqVm8dI3gUi7s1wvXst/h3vQp2qcUcZ4zu4ZKPNq
-	 yXU+04OueNNka8K5Yk0lBnL+6MsO0aMIWox1VSGgV+79IFLmXWuSCi/jPZ9AEn2wLJg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795186920;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=EQquq+i6TPhSReN9IjVRPVIB6xCEadhlzp/OpeuYVq4=;
+	b=egfsDxjmsa3DEEElgyfF+S9gDuBjXxVUozyaI9kpE9yEFfhozakPflM6Pme1txCQ0pLG
+	 ZotTACS9iPsFyAX6StJGjQ/GvetR4CEuVyYPzl+VErlCqres8k+QpxM4SZmv5hIVLlBBB
+	 8agIfA7AXxy7XrmSFd+4Gt7dvAUK7LPPadcwb9h/b9/mKnx8R4F37xCR0EqCg6FrVSKK0
+	 r3ZYL5xw6U8ZQVC0Xb/oojuFIScLMbGQkzm+oQFCVFXY1Z5KAp4ny1KR0sv+qxo2A+Czd
+	 CNJaEJRsKYIlm/TciBvYZJkDaCGI4kSd0YXuQ5Zya+e3CEKi8VjdzomNeRWK2gOvC8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IWGA7uvu;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=fail header.from=isslab.korea.ac.kr;
+	spf=none smtp.mailfrom=isslab.korea.ac.kr;
+	dkim=pass header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=qpeibsaF;
+	arc=none smtp.remote-ip=209.85.210.181
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1A1606A32C;
-	Fri, 20 Nov 2026 14:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344AC606C867
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 15:02:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 344AC606C867
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IWGA7uvu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B98C1F000C6;
-	Fri, 20 Nov 2026 14:57:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795186634;
-	bh=VigvJCRt5rXY+6Kai55nHb34XII7DZnlFQiPz+X14Z4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=IWGA7uvu2MNG1+rvnP6DxMwptyVI8Pkgsj7+Sezxf/GivzfH5F6TV+kJ0Uh4Grg5D
-	 m+Jf6nY7EKL/Ew9z/r7JgMb6+renWFEObbdwkmT6Crn+PdBvAzhnzh9GuaXB/u7yRX
-	 +xxTsjiW9bKxm9pXEYOIA5dizN9RlIecuBq00HfiqxsQowP+ZpDSjeYskl3ncXnwll
-	 5alPiJAejp3VcEbqdrhC/ED1O/H4HpjNp6Qwm1Ig8HVhTLdSVn7WiLtfUJLeCON1wn
-	 gvxFL04fVGIO7+vxD67QCUJMNe0zu2j1VZFMjcnCDjdTANnwCByyBZxxDWFLO/IuXB
-	 2s4qYPrfa1ulw==
-From: Mattijs Korpershoek <mkorpershoek@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
- neil.armstrong@linaro.org, olteanv@gmail.com
-Subject: Re: [PATCH v5 2/2] phy: qcom-snps-femto-v2: Add support for SA8255P
-In-Reply-To: <sashiko-outbox-225334@kernel.org>
-References: <20261120-phy-qcom-snps-femto-v2-8255-v5-0-86a9880ee5a5@kernel.org>
- <20261120-phy-qcom-snps-femto-v2-8255-v5-2-86a9880ee5a5@kernel.org>
- <sashiko-outbox-225334@kernel.org>
-Date: Fri, 20 Nov 2026 15:57:12 +0100
-Message-ID: <xhkdbcxrzpn3r.fsf@mkorpers-koolstof.csb>
+	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20260707.gappssmtp.com header.i=@isslab-korea-ac-kr.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=qpeibsaF
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8b4c8b51b58so634348b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 07:02:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=isslab-korea-ac-kr.20260707.gappssmtp.com; s=20260707; t=1795186920; x=1795791720; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=EQquq+i6TPhSReN9IjVRPVIB6xCEadhlzp/OpeuYVq4=;
+        b=qpeibsaF7eQ/+DgexoGATfnPZZUsGt6RUJf9MnKPt88EFMjIPP9lY+mn5JfPWXeH5R
+         A9+UzwPIqE4AZBn4L+PORD3lpOVOY32y0gnDzjViJOztefsPh7ysW64Fz2hL6Y5YnySv
+         gPE8AzcrYUUBr26Nwcri4SiXvqJEUQKDr3zyWAWdxmwHlgWXI8EgShgrDBfKlQwzOlcp
+         CfHOrwMSSlBbF0Mi+Rgx7965hXTLrybFEQZzBYokPHCHMiweEz9Jc8u3KvsFPwkoGp60
+         BFUshzsHO2+5INMob9GRzG+W6n/VXOlnPzWSRMUXVYUXwum0dct2IAlaDPZ1ge+swrRg
+         b5Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795186920; x=1795791720;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EQquq+i6TPhSReN9IjVRPVIB6xCEadhlzp/OpeuYVq4=;
+        b=wCV0qktVU3wpo2eoS7XPLUz+UH8AzlJt4K/MtG4uiu+iobuY7YsNkLZF0Xg/IW+F41
+         mvsdjUeM8bNfV9yeJ3x57zOwwo0oV2YEyiRXW1HXe1mLskb3QcAg/xBTsR+vLvaWt7v7
+         msrEEUrPLzASfYIEOLgUh2ILOpbqOkJ9NYH8h0AW125YmIOqYY24TEDXtbPjP84N3X22
+         Xb+Y/0poGgCg4AyZPAbj/f/mluFu4ouYcb2z57uLhf/dqtrtzH30+rpRASfuze+iFoTD
+         7khi5bZWYDTXAm/KjLZawtagKUEnSWntYEfDM9b/w2xbC7Wz3qeGY8GysBoClMZJAQ03
+         sszA==
+X-Forwarded-Encrypted: i=1; AL+hErEF9Sez/2OlQxULnsblsW0l/sIrkyS8T4dIEPkcZbUXUa1hA/pEeeEzhX8m8f8+fVszphoQJbt0MULxQBtt+1o=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+TqawZzQ63shcEv+ihQZJPNxaMhgXmHl4ciOUhDQZruwmtKhaK
+	UoOkfzZn84hnlvKoqemBqACgiZkL8CEynFVpDfoPXy9GeKryFx0TAcGu1bRv11U1ugg=
+X-Gm-Gg: AYBFou0tO5rbidIE9Dn1EaDZ1xfMQC6B0FxcrhhTN8RdB19lF1o7I+tb60mPVCmbyJr
+	CjuX1hBfDa3oCJpR29dX3KSETBytlCUqcye7xfD5NHlfe5YVTF0vZIv8VSze3+QaWZcUUV0Tvcp
+	FdXNg5b/qHvmC9QALS2cI+I4GDh02vydd5+7Z4HyeivScxxIaSRmek0Z6r6hDpVLA+rWNiP4Ywx
+	YFqq8OAKzZHX8Kn5vt/78zpehU24s6xoPal3fbnIbWZ0I09k02QwMQAn3HBEkv0iuIZt2RcJqry
+	81cPZCVbavOl4vZkIjcDm9OlG6wiTP+/s57l7sOnm/WyR99CjBNrzoTm0YremCEasi2IG+323EO
+	ysmn2OrPVfyeZXNZ2ZUNWDQfbauSkc3PfEOHcYaNp6XXIyveOjfMZV0096BiaVOROX3ZZkxhkas
+	eAxIbs+sO1krbcsimn1mBUYVCDbKMcoVtejr4xnjCsss/1FYXUXsf62kh2lWRK+Jh/AZiJ1guTt
+	1438R2tTZTRIohRkSxDfK1XFWnSx4bmjws7hpu+GqU1F1YLEAI0RKR/+Tp9H474JZuQ66l9LFIW
+	+3UbI1Chl0nFCmrSAKQCbnW5C9YWwzv5CqtaQkMyx0rSOxpTXIdi047UIFB8pAZaN9TIhEhuQhT
+	VAXVmUvoeumIHUW3t8Je/ueFwfR3RMJckocLYqg==
+X-Received: by 2002:a05:6a20:c887:b0:3ff:f20b:d2ec with SMTP id adf61e73a8af0-4014dd66078mr3640804637.52.1795186919522;
+        Fri, 20 Nov 2026 07:01:59 -0800 (PST)
+Received: from yhlee-960QFG.Davolink ([2406:5900:1044:110c:8b25:951:ad8d:5cc1])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde6d06503dsm1398731a12.27.2026.11.20.07.01.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 07:01:59 -0800 (PST)
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+To: gregkh@linuxfoundation.org,
+	nkapron@google.com,
+	linux-usb@vger.kernel.org
+Cc: Thinh.Nguyen@synopsys.com,
+	bigeasy@linutronix.de,
+	target-devel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	lgs201920130244@gmail.com
+Subject: Re: [PATCH] usb: gadget: f_tcm: put the overlapped command's request back on ep_cmd
+Date: Sat, 21 Nov 2026 00:01:53 +0900
+Message-ID: <20261120150153.3128458-1-yhlee@isslab.korea.ac.kr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <sashiko-outbox-223285@kernel.org>
+References: <20261119140641.2768465-1-yhlee@isslab.korea.ac.kr> <sashiko-outbox-223285@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,99 +105,27 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 20, 2026 at 14:11, sashiko-bot@kernel.org wrote:
+On Thu, Nov 19, 2026 at 02:21:37PM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but can usbg_aborted_task()
+> dereference a NULL stream->req_out pointer in Bulk-Only Transport (BOT)
+> mode [1]?
+>
+> Aborting a task in BOT mode therefore causes a NULL pointer dereference and
+> kernel panic.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] phy: qcom-snps-femto-v2: use devm_pm_domain_attach_list() and
->   check ret =3D=3D 0
-> --
->
-> commit 40323ed83ee6f03c36d2767d1e91cd08ccff373b
-> Author: Sriram Dash <quic_sriramd@quicinc.com>
->
-> phy: qcom-snps-femto-v2: Add support for SA8255P
->
-> This commit adds support for the SA8255P USB HS PHY variant, whose power,
-> clock, and reset resources are managed by SCMI firmware through "core" and
-> "transfer" power domains.
->
->> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy=
-/qualcomm/phy-qcom-snps-femto-v2.c
->> index 0dae8369671ab..0ec34bc5c26ec 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> [ ... ]
->> @@ -164,8 +167,82 @@ struct qcom_snps_hsphy {
->>  	bool phy_initialized;
->>  	enum phy_mode mode;
->>  	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
->> +
->> +	struct dev_pm_domain_list *pd_list;
->>  };
->>=20=20
->> +static void qcom_snps_domain_detach(void *data)
->> +{
->> +	struct qcom_snps_hsphy *hsphy =3D data;
->> +
->> +	dev_pm_domain_detach_list(hsphy->pd_list);
->> +}
->> +
->> +static int qcom_snps_domain_attach(struct qcom_snps_hsphy *hsphy)
->> +{
->> +	struct dev_pm_domain_attach_data pd_data =3D {
->> +		.pd_flags       =3D PD_FLAG_NO_DEV_LINK,
->> +		.pd_names       =3D (const char*[]) { "core", "transfer" },
->> +		.num_pd_names   =3D 2,
->> +	};
->> +	struct device *dev =3D hsphy->dev;
->> +	int ret;
->> +
->> +	ret =3D dev_pm_domain_attach_list(dev, &pd_data, &hsphy->pd_list);
->> +	if (ret < 0)
->> +		return dev_err_probe(dev, ret, "domain attach failed\n");
->> +
->> +	return 0;
->> +}
->> +
->> +static bool qcom_snps_is_fw_managed(struct qcom_snps_hsphy *hsphy)
->> +{
->> +	return hsphy->pd_list !=3D NULL;
->> +}
->> +
->> +static int qcom_snps_pds_enable_all(struct qcom_snps_hsphy *hsphy)
->> +{
->> +	int ret;
->> +
->> +	if (!qcom_snps_is_fw_managed(hsphy))
->> +		return 0;
->
-> [Severity: Low]
-> Can qcom_snps_domain_attach() succeed with hsphy->pd_list left NULL when
-> dev_pm_domain_attach_list() returns 0 (for example, when CONFIG_PM is
-> disabled)?
->
-> If that happens, qcom_snps_pds_enable_all() returns 0 without enabling the
-> power domains, and qcom_snps_hsphy_fw_managed_init() proceeds to
-> qcom_snps_hsphy_configure() and writes PHY registers while clocks, resets,
-> and power domains are off.  Also, qcom_snps_domain_attach() and
-> qcom_snps_domain_detach() with devm_add_action_or_reset() in
-> qcom_snps_hsphy_probe() duplicate devm_pm_domain_attach_list(); calling
-> devm_pm_domain_attach_list() directly and returning -ENODEV when ret =3D=
-=3D 0
-> would avoid both issues.
+Right, this is a real bug, but it needs a non-default setup.  With
+emulate_tas at its default of 1 the core sends TASK ABORTED instead of
+calling .aborted_task(), and a BOT session can't send a TMF itself.  So
+it takes a LUN RESET from a second fabric sharing the backstore, with
+emulate_tas set to 0.  It's an Oops in the target_completion worker, not
+a panic.
 
-While I agree this can indeed happen, having a kernel on an SCMI-enabled
-board such as SA8255P does not make a lot of sense. I think that other
-things will break as well. If it's not strictly necessary I'd like to
-avoid resending a v6 just to fix this.
+Fixed in a separate patch:
+  https://lore.kernel.org/all/20261120113956.3071640-1-yhlee@isslab.korea.ac.kr/
 
-Vinod, can you please let me know if I should respin to address this?
-
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120-phy-qcom=
--snps-femto-v2-8255-v5-0-86a9880ee5a5@kernel.org?part=3D2
+Best regards,
+Yehyeong Lee
