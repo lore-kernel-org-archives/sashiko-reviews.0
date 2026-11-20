@@ -1,89 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795169535;
-	b=sbCF+C2nF9V+BbQG6Pmw+0R4RCuE9rUjNw5YcyAeHzZGqTc5RwNTuviP3n6+NoU6fOdL
-	 BsKVhyBiB5c2oV4yT+bCnVAl8E9FAkG0kp6Y1yEsEDqgudpH0UM+5CKe/365E3QmsTcoa
-	 OLEPgqsmok6eJVCdOzGhURyuR1MFh2pcX92vQEYpl5VOLZdDz/H2CcQOXzfNlhYmI2W7P
-	 orN+AlSm0mFLs4gCIVXf3o4K7cCTt3lEdZUCLtAU+vZ6agqbM2qD9bQduH4aBTu7V+fza
-	 yylO5lZC2J5+tvarVRJFwpd+VfCpKH5CAe/BRUFvDT7WrYHgKFYffNuGm+NCwymiL0Q==
+	t=1795169828;
+	b=mgeRhsScUQ99obULdGPZ9udP+xsVZKGC+IYj2jo+SWR8W8kdoTmZWqaz2Knq5fQQiAml
+	 dPlsrkqpbtuTvG9YWx88KdwyTnEyoV7U9F/Vp3Kh59arvAYzxqbv7XM5+xSKJnxHd1NYj
+	 Wo7qdbTBgt49HdLuipk0ukFy3OQpk8x2y4LFNzxvHE+vyxe1VZFUYk8em3KDKF4EvsdGr
+	 c1vv3v6ijXoxDLnZkjK2ONWi5xMNBRvtKzB3NO8PmZrheUtODSeCwHOtAjUGIPCM3ToBH
+	 2e1ENK4hjJFn2pPmxUjX1mz1gNrGLPW+X/WbNIygSdfwsfFyJPfrpm5cx3OxV9DktsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795169535;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
-	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=1iioZKyiZ1smpGmNtr7VhCZmPi7MGt2pcm7kels3/ok=;
-	b=DS+dyuSadS2sdLqLZ8W73RpiiAvvPiqOuS9+kP6rrSTcM+f5XXfH0/JBa5Oar7N0+qo7
-	 Pf/5La2fXsAk5B5qECGK7vb+6QLHy4VUSJeTmLlNxJNXNefb6gTyBaFqoTx2g74enP0nc
-	 ivGOhTXVdngfSR2GuFc6XeTMUx96jFlrWNUy3zoDAUK2u7yej83obRJOpxlOAx5gX3xGw
-	 OdmHkpMfVQYWjtB/9LWKQkIyHD8Xv8EVPctFv9Hpz/2AiucoOdXbD5JF8AFSpmAn2oT+l
-	 P1xMT39ohF1zqrQVTZhSFQJa8kVy3TpgGPjEDGDyScVKWsAccca6Vbv9krWlxz0dzvA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795169828;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=BuXhlSKg00a4CpooMZ1asDKzuO5wnOZJBMwl0XnHxMM=;
+	b=qh+0EjsMQCFBMDDLVh27lBlwPpgYvsnQeoihAY035TO3qngwk4VPq7gybj5nZ+ykc4ll
+	 2Eqcn8Y8Bv5YncuqE7Y6h4ftB+EDcEaqf57moz5iSutyCiIE722c/9PRkXN8NGPxB8QI3
+	 8mudYKVswOh4/5MsdAlNHy1L6qTNZX5+masvIJqkOknbYdfKHD3Ldz00/IQg5gIXPCGgl
+	 DAvXUPes2jl513heWH2sK6RkW9zDa4mUd7lTS5hreq2/oV51f9p4jW9wlkzuynOUUX1Ka
+	 MxyZYWdY538lNVTKS7jAtMbnUaSIJnYzk8ZhC5P1XS2mYPiAuAH0yjwdGL7z9oiG+LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=g33zvb0M;
-	arc=none smtp.remote-ip=209.85.221.43
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=arndb.de;
+	spf=pass smtp.mailfrom=arndb.de;
+	dkim=pass header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=lrd65nOG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Q8uM6mhI;
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7472606A336
-	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:12:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C7472606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCBD606A320
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 10:17:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DBCBD606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=g33zvb0M
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-4a3e706b5dfso427732f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 02:12:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1795169533; x=1795774333; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1iioZKyiZ1smpGmNtr7VhCZmPi7MGt2pcm7kels3/ok=;
-        b=g33zvb0MepbpL8V6lM1PJ9qcjzjgLpFdW5/rN/CGxKkmxCsYHlOmBpJDCNqmBMDnJB
-         6mOTOsxRFfQWQtBKBmIO94Tr3qH0soOfw0+phcvB/rZrf5UvHt2d6LAGBuJ0CQgz4Tmf
-         NkdZRVlS6nwY5wmSJgnYcSLNgfuefepohwCdltt7xuEoyqltTnHcwNVo+HrbjHo3lMaB
-         Aw9aoO1c75yaN0OK8ChY3l91MHoihjtT9JbplFJtlSdz/jMwW2F47QUPRbE7wtw045/7
-         klM+hzGbG2h7RK6vhdx++7+sT5P3pdbrMLyXn3BApDjDuDlw9JQ+hwukvlLMm2FvkKEs
-         eO3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795169533; x=1795774333;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1iioZKyiZ1smpGmNtr7VhCZmPi7MGt2pcm7kels3/ok=;
-        b=M06urnkWRcliyPIIv4mitCwXiI0V+TdFX30uikYn+/+mh1aaH1Y47ow3O/oE2amG2V
-         RaJl832kdbUTfX8k9YuoAM+4KOYQ17Yb5HfCYZkomARZmEj3AbRrqNjP1bLdxil+qOGM
-         IedsLlQvoys/oXYU5umellaigmsocUUr7vdjCfnPwcvZjTugPCv3l8pnLN9WO5waymDE
-         K1c2dG6tHNB2Tt2MN1apX5qLDZVcr0xp0YUAQChwRVB0Q6GoRjlWUm+Rvx/YpFnwDV6f
-         8Qw7vkjaLmbHw8OCCmVNYNSQqRIZECnC1u5bvtWMwHV8DTOjrO3jmHwlvmjrg6ypgyL2
-         ho2Q==
-X-Gm-Message-State: APuU4Z99MWXIe4k8wKrcf0YTrB9gs4YA4DKersDQoVrlP8umaMEm8vOI
-	mEVyaaohieUS1DQmHQELVhYPF53yCkIxuW3i3cWl7rLSYAdjDMdFUTVBlyb7Duw8bYYjQQBBGCV
-	GHrdlptE=
-X-Gm-Gg: AZFdTZdqcLNYTi1GAorUkwLmCt71xi5sMH5EXDk3j1OuZuc1eFfEDkrxEkiDP/VlIRV
-	r/Cm/ayIfTXh9kXWVo6SYyQCmhpgK/rJJUBWhxNk/7Yc+M3ZLl1/q+Sho7j7PZ1ivRlyRN+1Lr2
-	DQlNBHBDK6LS/n52Da1jfYW86OfLcCCIX0o/cAe6G9THpq34O1Q0a42auhqmHhU7rZcg0uUi2kY
-	6VI18sNgqrqCS9lE5+q9d4fGLks4qk8wV9V200dgiA3J6RQ2RDQP98aN4t6CRKbLooQfA/scwNf
-	ISaROE9AJKf5T91GWQS6wAhTqJxc9tBdTkJFsXuYtUdZmdaIndYa+gS749O44JUvh8WTanypfUQ
-	FzpAJfh+4wEkPp9zM/4USvm+svy5O1CvVhObDnU0CziSWvqGE5FbwfGucR9Pu+QoUWsffL/4/RY
-	+zEkKHk/4Wxp5BPTKpJUc590q1OCpC6wKvI1/IOZ1ntrp9J50h4gN9oDB59NQs8eB0l+2oLUJat
-	eMzI+kYfviKMKVEzlKAm9tVEIY58c2KIaW7rjLDjHyWhnovZoPm193/+wGKHdfVphotuyDNoOzq
-	d9BoACBjEo+zW8bMCXAV8rQ6OIRafvdqw9wJgcJ9esg2WrWz9r3LNTuDprH2ckSMmxCBglm1iSd
-	s7jleK86pNA==
-X-Received: by 2002:a05:6000:40ca:b0:4a3:976e:27a2 with SMTP id ffacd0b85a97d-4abb5146238mr4771515f8f.34.1795169532973;
-        Fri, 20 Nov 2026 02:12:12 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:106d:1080:3374:165a:45ca:24fb? ([2a01:e0a:106d:1080:3374:165a:45ca:24fb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab69bf680fsm5235224f8f.14.2026.11.20.02.12.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Nov 2026 02:12:12 -0800 (PST)
-Message-ID: <09c5bd80-763d-4de5-89af-0f5b6350745f@linaro.org>
-Date: Fri, 20 Nov 2026 11:12:12 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=lrd65nOG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Q8uM6mhI
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfout.stl.internal (Postfix) with ESMTP id 86E461D003A1
+	for <sashiko-reviews@lists.linux.dev>; Fri, 20 Nov 2026 05:17:06 -0500 (EST)
+Received: from ams-imap-03 ([10.64.2.23])
+  by ams-compute-02.internal (MEProxy); Fri, 20 Nov 2026 05:17:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1795169817;
+	 x=1795256217; bh=BuXhlSKg00a4CpooMZ1asDKzuO5wnOZJBMwl0XnHxMM=; b=
+	lrd65nOGQ9AxiKwcDko0U7X04VpVb1LuKQt1QNWwZt0YHrnppMe8HKr/arGQ5Eok
+	GJaoAyJSZjbckbedw7e1Oqclc2g1DtLaTVDhZGlfXkqste6iWwZ6jjl0M+qwOzhX
+	jGnRgCvEoMzqHu75ZG8aGjG2xm44k3ht2Ct/sxNZ33pxo0nPgPSa+ijt6OPaBafx
+	NqxpaxgqqZkUCXtLV63vB5CY5Te6TlDhOVAbI+rleV0aWuvVzMwcx/Veo6nQNQCs
+	AqGnlQeOcNNSTlMBl61Wc8t8vJojatC1pSaCnSYJpBxIgXYx89D7QileDGMTyz08
+	5IaSgJMhIzg2lqw9BD2t2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795169817; x=
+	1795256217; bh=BuXhlSKg00a4CpooMZ1asDKzuO5wnOZJBMwl0XnHxMM=; b=Q
+	8uM6mhIZ+PPM0igHpEfaxmK2pe/kQKgPu4mzjzvu15JZhYLNgPEH7gSBXoS0naLN
+	oQaMGx1HlklWuW+jNZAisHdjSQPeXnXA9qc8GNSvyqSOSYqAEnr+MTErHWkDYWa8
+	A7KrK1MybzJNtP5/1eeSu7smqdqBNE4daJLL1/1wsJBuLSzzJTXXViBZlMfitj5x
+	hE6596YuPnlR/D6pi8sQhAUXwov4eYP06gAXWiuVaCgC0KHLUHecu8QBytE1BymL
+	rkCcZNb9QRAQ7AFbkOvXisI3uBFNuHFoKMIW/d7IRcBfXCpnhVI6Gy0UuOzhWSMl
+	xxujL+gZNs3dVABK/KXjg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=arndb.de a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795169817; d=arndb.de;
+	mf=PGFybmRAYXJuZGIuZGU+;
+	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+	s=fm2:rsa-sha256:NVJqBA7eKMFYJWmLjMIG2NPRk1XYeScCLkPmfMKw8KlSk3Z
+	az2PbWU9zkUG1iocYOGa0BGIJq4oajQxroTfvYDWkcPkEtfpwo220Z74TIdc8KXp
+	7i4LgLf21nmUaFsVlV2Gpz+DUP4TrXk3mi0wzP+YrhMcNwiQODhcB7INu3RMPxMM
+	jRzqtVw9xoh1VCYP1QcjNDvDU+Jk8uJOUXcI0mnHa7TZmbF2WxUo3Ba+MHVu2jdl
+	FD9Dv/JXxIAEClPnDZrHsoIAyH6nsRv4tMcPErNFUU7gFRVVjyrxZh1lij8amZV2
+	6QeEllqxm2bMcz/Oixo5k2d+ON8VtDVssegxkCg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:zuSsEhmCwr6Wvsb9X06BQFozbRPwmHJVyho9pvXTxSo=:mGu+cZMGELOH0bYyds92Q644h116pbc8B12xMlx7qxQ=;
+X-ME-Sender: <xms:ER4Aa7lO5umD3sr-TKj5kNGsKI8wBBtS2M0-dcWs6QtR_INEScQoog>
+    <xme:ER4Aa5qO5F1L2_61uu_MvkmwxazML4N7Mc_FqW7UZMVVmx1YZDxLOyY8OYVxafOMj
+    iVb3ctbJB9I15cT59eZjmavKzKCG0gdU7o4-3haWT49Va9jnMKoAL8EdA>
+X-ME-Proxy-Cause: dmFkZTFsqBHJi/SORwcvKmFMVQF2oUrONn+po8KdzOVlSsbWms9cCSDOyBdd56+KzfUPQU
+    2X42s5779mPNAiTMVFZUPGbqhM7epcvvR2MPGjDQwB7R37oOEK6tyVEgkAL7/q+/ahPVap
+    NeH2VcC5R7jB0RTnG1Mf2Dp3losR7T5ymz+62cELWGnddyd/9TmS2hLGCCPFOT5LJFqs3N
+    XaIpXbn0r3peZdWBHWif89mdsRbh6/6AtlmeDrI+6RoG8+ZTrrW7a7OeLDd4lvsOR9buT0
+    D74Tom2Bnx4DC4bbrg8uwpPgVgjhsMivxjn6icPGINxpGvShklwxxvQK4VaHQFSiEraZMC
+    xETAMYCZkJJQQ2961g2sx20Cgo3KT/REaHIBg93dlyvDPTYn4ur1skahcTcN0G+xo4lB5h
+    ajQycmI5rJa1jJ67KtVQhTtLu/PyG7KYa5VQdg61bRYFylTI15GsoRWoLB/X0XWajtTaPT
+    GZVkANeDrHXq5VC3N1G3W/KVvRZbcd0BX6oPQAVzlRC4virYfMcesT7+o5KWxVJiBRM9r2
+    D49vQbnnm5iL8fO+nwGExVlvRBgp7+XCG7+/D73eB/IzBx5Iw9MehaCYHZyj9FGkVt1139
+    Jbt7Gy7yFQiC6enD7KLL3y7PkgQIKWNIgd5bFoqlpGFqchPZqz9/JPpVpb6Q
+X-ME-Proxy: <xmx:FB4Aa_gaDQRwBXTEb7PnmRSAAfHySWI73uaIt3LlMbF_hgd0Sz5JYg>
+    <xmx:FB4Aa7dv1ofwPwh4m8S7HRxw00z-m5ye4xEC11hBQoYFuIX1wKaqIA>
+    <xmx:FB4AawIAi8H2OVdVYypI9jeNC4RSz49wPwT2tyNluL4HA1rxUHiLZQ>
+    <xmx:FB4AawlAszsQNztJyLAKB2253IZThabYUEdU2GIy-SBhBfVSHiV_uQ>
+    <xmx:GR4Aa_RsJ4-fSKP1fJY0RpYuvoQ3kE2ZxFN9vRS21E7SA4LIFs585KKW>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 600B132A009C; Fri, 20 Nov 2026 05:16:49 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,84 +115,68 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/2] usb: typec: tcpm: unregister stale partner sink
- capabilities
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-References: <20261120-topic-tcpm-core-fixes-v1-0-c753d1d286bb@linaro.org>
- <20261120-topic-tcpm-core-fixes-v1-2-c753d1d286bb@linaro.org>
- <sashiko-outbox-224904@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <sashiko-outbox-224904@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: AQsIS8mXxcAZ
+Date: Fri, 20 Nov 2026 11:16:09 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "David Hildenbrand (Red Hat)" <david@kernel.org>,
+ sashiko-reviews@lists.linux.dev, "Arnd Bergmann" <arnd@kernel.org>,
+ "Gregory Price" <gourry@gourry.net>,
+ "Andrew Morton" <akpm@linux-foundation.org>
+Cc: larips <larips950@gmail.com>, "Zi Yan" <ziy@nvidia.com>,
+ "Joshua Hahn" <joshua.hahnjy@gmail.com>, "Rakie Kim" <rakie.kim@sk.com>,
+ "Ying Huang" <ying.huang@linux.alibaba.com>,
+ "Lorenzo Stoakes" <ljs@kernel.org>,
+ "Brendan Jackman" <brendan.jackman@linux.dev>,
+ "Johannes Weiner" <hannes@cmpxchg.org>, "Jackie Liu" <liuyun01@kylinos.cn>,
+ linux-mm@kvack.org
+Message-Id: <45a71e8e-0c8c-4b5e-96c9-be6f2ad0e364@app.fastmail.com>
+In-Reply-To: <3b00e53f-b4eb-41d4-b3e6-791660da3342@kernel.org>
+References: <20261117211635.2472067-1-arnd@kernel.org>
+ <sashiko-outbox-221983@kernel.org>
+ <c420ec17-b297-469a-927a-85934a05fda4@app.fastmail.com>
+ <3b00e53f-b4eb-41d4-b3e6-791660da3342@kernel.org>
+Subject: Re: [PATCH 1/2] [v2] mm/mempolicy: fix copy_nodes_to_user() for odd inputs
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 11/20/26 11:03, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] usb: typec: tcpm: unregister after register in
->    tcpm_register_sink_caps()
-> --
-> 
-> commit bce11ccecca861664b61850ba73a6eebf8702e1e
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> usb: typec: tcpm: unregister stale partner sink capabilities
-> 
-> This commit unregisters existing partner sink capabilities in
-> tcpm_register_sink_caps() when new Sink_Capabilities are received.
-> 
->> diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
->> index 1d007e59a2bf9..c5a4c0b6da16f 100644
->> --- a/drivers/usb/typec/tcpm/tcpm.c
->> +++ b/drivers/usb/typec/tcpm.c
->> @@ -3563,6 +3563,8 @@ static int tcpm_register_sink_caps(struct tcpm_port *port)
->>   	if (IS_ERR(cap))
->>   		return PTR_ERR(cap);
->>   
->> +	if (port->partner_sink_caps)
->> +		usb_power_delivery_unregister_capabilities(port->partner_sink_caps);
->>   	port->partner_sink_caps = cap;
->>   
->>   	return 0;
-> 
-> [Severity: High]
-> Should port->partner_sink_caps be unregistered and cleared to NULL before
-> calling usb_power_delivery_register_capabilities(), as in
-> tcpm_register_source_caps()?
-> 
-> Because the old sink-capabilities child device is still registered under
-> port->partner_pd when usb_power_delivery_register_capabilities() runs,
-> device_register() fails with -EEXIST and tcpm_register_sink_caps() returns
-> early at IS_ERR(cap) before reaching the unregistration.
-> 
+On Fri, Nov 20, 2026, at 10:55, David Hildenbrand (Arm) wrote:
+> On 11/19/26 16:52, Arnd Bergmann wrote:
+>> On Wed, Nov 18, 2026, at 22:16, sashiko-bot@kernel.org wrote:
+>> 
+>>>
+>>> [Severity: High]
+>>> Does replacing the compat nbytes assignment with the compat copy
+>>> assignment leave a 4-byte gap in the userspace nodemask when
+>>> BITS_TO_COMPAT_LONGS(nr_node_ids) is odd?
+>>>
+>>> Without the compat nbytes update, nbytes stays a multiple of sizeof(long)
+>>> (e.g., 8 bytes when nr_node_ids <= 32).  When a compat caller passes a
+>>> buffer with copy > nbytes, clear_user() zeroes starting at mask + nbytes
+>>> and maxnode is clamped to nr_node_ids + 1, but compat_put_bitmap() aligns
+>>> maxnode - 1 to BITS_PER_COMPAT_LONG and only writes
+>>> BITS_TO_COMPAT_LONGS(nr_node_ids) * sizeof(compat_long_t) bytes (4 bytes),
+>>> leaving the word at nbytes - sizeof(compat_long_t) untouched.  When
+>>> copy == nbytes (e.g., 34 <= maxnode <= 65 with nr_node_ids <= 32),
+>>> copy > nbytes is false, so maxnode is not clamped and compat_put_bitmap()
+>>> copies the upper 32 bits of the kernel unsigned long instead of zeroing
+>>> that word.
+>> 
+>> Same as my reply for patch 2/2: no, this is fine as the size of the in-kernel
+>> buffer does not depend on the word size in userspace. Copying the extra
+>> zeroes from it is fine.
+>
+> I'm not convinced, especially given Gregory's test case. It's all a
+> confusing mess.
 
-Exact, will move it right before.
+Right, I see now where I went wrong: 'maxnode' is adjusted down to
+the nr_node_ids, not the number of bits in the bitmap. So my patch
+was wrong, and Gregory's was correct.
+
+> I do wonder whether this whole function should be thinking in terms of 
+> bits to make
+> it easier to follow. A bit more churn, but at least I can understand 
+> what is happening there:
+
+I like this version as well.
+
+   Arnd
