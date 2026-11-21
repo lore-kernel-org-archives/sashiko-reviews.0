@@ -1,47 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=65.21.61.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.120
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795288217;
-	b=e3a3Nq5Ud2XftqtpICQl5rMnNkuQtT6A06t6uzQt0ERrQhV+fAU4n4CLRI8OieoOU8NN
-	 kG1ymoZC2KfsrCo3JKm/ZiCdYIlEbN28N2BAg9VU8xgUvyeFZrwN7td9Yf/fjIrpvGiUQ
-	 vd58am9JFwFiEe+tY99e4J2r3C00MHG/qy7pRlCVwWB/cuCbYEaCg8Hw3Tth9uj3HTdcn
-	 n9miKm3t5vGroy3r27FNZOJp7PkuORxPfNEElRlCHUMpEJisw4Mt8aNWMcsjzFCw8VdGW
-	 uzFvt5jK+Ela0/uhrL8aikeHx07TL0zJxQq1MU6Qgm52G1UTVOhWeejnTSBbJWe+37g==
+	t=1795289663;
+	b=K0rholevPBEfVEm3s+TktzQVpBqRwP0ZEAZhkaLtrQOel3uHdeLBheeIqZ3BIyqjCzsS
+	 gSoFqI8TMbX1m2hDA9Jz9RV/Iig3wQ77MvAF/21PDMd6pwYR4tZfVM/wdvOVpLW58TxZQ
+	 l8pzFfY5guGVqWDkvjXXkvfAVWByQRWPSyXLgmYNFuZTLcd+McO+fGSQlu0mS+gi2LWQ6
+	 Hx9yZeXa0/9CPE2DWYO/7u8XfGwZITzCRbDXJkzlLLo5MBVkD4suXSUE65LlcjOJtmK0O
+	 nhNmjyMC8bdz8MVd+ri4DyxY5H3v5PNKZbRucmdKee7+tEp03RyVEjxL5UIkhOXNxVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795288217;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:Date:MIME-Version:User-Agent:
-	 From:Subject:To:Cc:References:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=mUUS34uZWnEY96z4Lqu7qa+dFbeTo5NjdrgLwu4TMy4=;
-	b=jFL/fbWx8VHocez1k3ugjGLfBGje/VuY0LzlYVdOTb2sxg1BI6d0XUnWiv2Fpye/l2un
-	 M+a9VEDcHtd5ROueM8veCFq1pC36gAlpQcgsepnZzE6zSx5uHP1ZrwaHQRtuX6J1I7AXQ
-	 bvVQqX90/uYrTrmpAGHFYtIxPqyscmXQzK4uG1mhnUdLOmp0NVwbMUZ1BNzqUJ2twu+qI
-	 M3rSZ3ExT6MeyN+7RybqdG8Of1MIPTL/6ko0GWKKAqGHatLd7t3xoUvxI4rqu4O6+Laz6
-	 0FiTKhkrfFhQRSU06mdSKrhHgb9F0aZfLi/k6g1O7cb8L5KA1lJnyiIa9ZI+D+O8PDQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795289663;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=ORTW/L5hh1DC9F6jjZky2W0T49vigeZuL6otjngyggU=;
+	b=cUu/kQSPKkx+lE+/bB9UbHOrQ9B2D8wkv4WzupNX77/cHgjnFQ1pEagaI5N0CUk0n8HF
+	 Z36Dhl/mmTxadPxT6axbxrBluMwNURBKoi/pNIiqnS1pGSk/PDubiDS55YOJFz8gT90MY
+	 XnEwX22RmTJsJut2LbFUWSZ74Zif64oDWJrcRUsBSVDDMV86wkXA0jxCGgnhiGlLJYtF7
+	 4PQZPBpHrlgWI0AhKJlE9F6kAal9HYR6RLSEoiEuUlSMUJMTKDELUe9dxUEp47evUN5ht
+	 4/T8st6I0Vpcj7t+IYsLong0k6uu3nJI3UQCDn3/NLpvqyVH+eTAyAcWGez7VgA1fAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aliel.fr;
-	spf=pass smtp.mailfrom=aliel.fr;
-	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=RohhYpvv;
-	arc=none smtp.remote-ip=65.21.61.41
-Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=DBB7aNQg;
+	arc=none smtp.remote-ip=95.215.58.120
+Received: from mta1.migadu.com (out-120.mta1.migadu.com [95.215.58.120])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6881E606A320
-	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 19:10:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6881E606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC3C606A32A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 19:34:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1CC3C606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=RohhYpvv
-Message-ID: <a2a8fefd-b589-444d-96a4-f679ab5c9946@aliel.fr>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
-	s=courrier-s1; t=1795288214;
-	bh=8y0heA0u3ZMdaEjr38+zX0yS05Hb8knX6np75X1lRvU=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=RohhYpvv9RadrymbNJo6Qxw+FczCEVwhco12YIXZkMV3lPg5fzO2zo8xhxGf+YPsD
-	 OVUJwSqBXpMk+DJZTvezI3yDG+W4zcaQbOI0m6LaftP/AwT7sjS+HKkUWWsndd05W9
-	 ZPViQuLSAYZQQ4+ajv7Y3Go0Rxh0X778e6B6n5so=
-Date: Sat, 21 Nov 2026 20:10:13 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=DBB7aNQg
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=I9C/bgiJfXHgW926J6D3HYkewXOwJxbleb9jrP9kCpY=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795289660; v=1; x=1795894460;
+ b=DBB7aNQgauNKvIny4sl0fzklqH8l1slINVYmwr4Dvt7SIpQVqC7N3fR9hj8RwL+Or0EcXEW2
+ bRX3vKqgJ4HCaHdlj7PhB7H8WKtY8x/j+g8tnWL/+TlSnLvTNUeBnXsLb/hls7uhRk3WJoRXa4J
+ pOIKgax3y+odp8A9btAkFVsQ=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 0be58bc518feca3e;
+	Sat, 21 Nov 2026 19:34:20 +0000
+X-Mizu-Trace-ID: 0be58bc518feca3e
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <3a58ba4f-fd64-4144-8635-4b99983f7640@linux.dev>
+Date: Sat, 21 Nov 2026 11:34:12 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,140 +59,116 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Subject: Re: [PATCH v2 08/11] drm/meson: dw-hdmi: Use the generic PHY
- framework for the HDMI TX PHY
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org,
- robh@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
- vkoul@kernel.org, olteanv@gmail.com
-References: <20261120-meson-drm-create-hdmitx-phy-v2-0-93d622d9bb07@aliel.fr>
- <20261120-meson-drm-create-hdmitx-phy-v2-8-93d622d9bb07@aliel.fr>
- <sashiko-outbox-225914@kernel.org>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-225914@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH rdma-next v2] RDMA/rxe: Mask the SQ producer index read
+ from user space
+To: Shuai Liu <847807867@qq.com>, linux-rdma@vger.kernel.org
+Cc: zyjzyj2000@gmail.com, jgg@ziepe.ca, leon@kernel.org,
+ rpearsonhpe@gmail.com,
+ syzbot+fef38133c495aeb48297@syzkaller.appspotmail.com,
+ syzkaller-bugs@googlegroups.com, linux-kernel@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev, "yanjun.zhu@linux.dev"
+ <yanjun.zhu@linux.dev>
+References: <tencent_5B9FB1BCC8EF36C5E2128B7D4D54B867480A@qq.com>
+ <tencent_BEE58D9BBE7109C47C2796DDF5A4B958F609@qq.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
+In-Reply-To: <tencent_BEE58D9BBE7109C47C2796DDF5A4B958F609@qq.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 11/20/26 20:20, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] drm/meson: dw-hdmi: missing PHY init in meson_dw_hdmi_init()
->   breaks CEC/ARC
-> - [Medium] drm/meson: dw-hdmi: phy_init() leak on error path in
->   dw_hdmi_phy_init()
-> --
+在 2026/11/20 19:46, Shuai Liu 写道:
+> The send queue producer index of a user space QP is stored in the
+> queue buffer which is shared with and written by user space. The
+> requester reads it without any validation in req_retry() and
+> __req_next_wqe() and compares it against its own local index which
+> is always masked.
 > 
-> commit 9c4e52bbd305f6371ee6545c479c9a84e6845324
-> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
+> The requester stops processing WQEs when its local WQE index equals
+> the producer index. If user space writes an out of range producer
+> index into the queue buffer, that comparison can never become true.
+> Once the QP is put into the error state, rxe_requester() then keeps
+> flushing WQEs forever: the flush path advances the WQE index with the
+> masked queue_next_index() but the producer index stays out of range,
+> and each pass calls rxe_qp_error() which reschedules the send task,
+> so the loop never converges. The send task holds a reference to the
+> QP for as long as this lasts, so ib_destroy_qp() waits for the QP
+> reference to drop until it times out after 50 seconds and the
+> WARN_ON(!ret) fires in __rxe_cleanup():
 > 
-> drm/meson: dw-hdmi: Use the generic PHY framework for the HDMI TX PHY
+>    WARNING: drivers/infiniband/sw/rxe/rxe_pool.c:212 at __rxe_cleanup
+>    Call Trace:
+>     __rxe_cleanup
+>     rxe_destroy_qp
+>     ...
+>    rxe0: qp#17 rxe_destroy_qp: cleanup failed, err = -110
 > 
-> This commit converts the Meson DW-HDMI driver from direct HHI register
-> programming to the generic PHY API, with a legacy fallback when the DT
-> node lacks a "phys" property.
+> Fix this by masking the producer index with q->index_mask when reading
+> it in queue_get_producer() for QUEUE_TYPE_FROM_CLIENT. This restores
+> what producer_index() did before commit ae6e843fe08d ("RDMA/rxe: Add memory
+> barriers to kernel queues") replaced it with queue_get_producer() and
+> dropped the mask, and keeps the requester, the completer and the queue
+> helpers, which all compare the difference of the two indices modulo
+> index_mask, consistent. rxe_qp_init_req() also initializes
+> qp->req.wqe_index from this value so it gets validated as well.
 > 
->> diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
->> index 20a821936b3af..1ca1ce6173563 100644
->> --- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
->> +++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-> [ ... ]
->> @@ -364,10 +276,18 @@ static int dw_hdmi_phy_init(struct dw_hdmi *hdmi, void *data,
->>  	unsigned int wr_clk =
->>  		readl_relaxed(priv->io_base + _REG(VPU_HDMI_SETTING));
->>  	bool mode_is_420 = false;
->> +	unsigned int pixel_clock = mode->clock;
->> +	union phy_configure_opts opts = {};
->> +	int ret;
->>  
->>  	DRM_DEBUG_DRIVER("\"%s\" div%d\n", mode->name,
->>  			 mode->clock > 340000 ? 40 : 10);
->>  
->> +	/* Setup PHY */
->> +	ret = phy_init(dw_hdmi->phy);
->> +	if (ret)
->> +		return ret;
->> +
->>  	if (drm_mode_is_420_only(display, mode) ||
->>  	    (!is_hdmi2_sink && drm_mode_is_420_also(display, mode)) ||
->>  	    dw_hdmi_bus_fmt_is_420(hdmi))
->> @@ -392,19 +312,22 @@ static int dw_hdmi_phy_init(struct dw_hdmi *hdmi, void *data,
->>  	dw_hdmi->data->top_write(dw_hdmi, HDMITX_TOP_TMDS_CLK_PTTN_CNTL, 0x2);
->>  
->>  	/* Setup PHY parameters */
->> -	meson_hdmi_phy_setup_mode(dw_hdmi, mode, mode_is_420);
->> -
->> -	/* Disable clock, fifo, fifo_wr */
->> -	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1, 0xf, 0);
->> +	if (mode_is_420)
->> +		pixel_clock /= 2;
->> +	opts.hdmi.tmds_char_rate = (u64)pixel_clock * 1000;
->> +	opts.hdmi.bpc = 8;
->> +	ret = phy_configure(dw_hdmi->phy, &opts);
->> +	if (ret)
->> +		return ret;
->>  
->>  	dw_hdmi_set_high_tmds_clock_ratio(hdmi, display);
->>  
->>  	msleep(100);
->>  
->>  	/* Reset PHY 3 times in a row */
->> -	meson_dw_hdmi_phy_reset(dw_hdmi);
->> -	meson_dw_hdmi_phy_reset(dw_hdmi);
->> -	meson_dw_hdmi_phy_reset(dw_hdmi);
->> +	ret = phy_power_on(dw_hdmi->phy);
->> +	if (ret)
->> +		return ret;
+> Masking the index in queue_get_producer() instead of checking it at
+> the two requester call sites was suggested by the Sashiko AI review of
+> v1 of this patch.
 > 
-> [Severity: Medium]
-> Do the error returns from phy_configure() and phy_power_on() leak a
-> dw_hdmi->phy->init_count reference?
-> 
-> When dw_hdmi_phy_init() fails, dw_hdmi_setup() leaves hdmi->phy.enabled
-> false, so dw_hdmi_poweroff() never calls dw_hdmi_phy_disable() to balance
-> phy_init() with phy_exit().  A non-VIC DMT mode with a pixel clock below
-> 25.175 MHz passes meson_encoder_hdmi_mode_valid() but is rejected with
-> -EINVAL by meson_hdmi_phy_configure() -> meson_hdmi_phy_find_rate(),
-> permanently elevating init_count so subsequent phy_init() calls skip
-> hardware initialization.
-> 
-> [ ... ]
-> 
->> @@ -623,10 +542,6 @@ static void meson_dw_hdmi_init(struct meson_dw_hdmi *meson_dw_hdmi)
->>  	/* Enable normal output to PHY */
->>  	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_BIST_CNTL, BIT(12));
->>  
->> -	/* Setup PHY */
->> -	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL1, meson_dw_hdmi->data->cntl1_init);
->> -	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL0, meson_dw_hdmi->data->cntl0_init);
->> -
->>  	/* Enable HDMI-TX Interrupt */
->>  	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_INTR_STAT_CLR,
->>  				       HDMITX_TOP_INTR_CORE);
-> 
-> [Severity: High]
-> Does removing the initial PHY setup from meson_dw_hdmi_init() leave the
-> HDMI TX PHY uninitialized whenever no HDMI video mode is active?
-> 
-> meson_dw_hdmi_init() pulses reset_control_reset(meson_dw_hdmi->hdmitx_phy)
-> at bind and system resume time, while meson_venc_init() zeroes
-> HHI_HDMI_PHY_CNTL0.  Commits 04703bfd7f99 ("drm/meson: dw-hdmi: power up
-> phy on device init") and 08001033121d ("drm/meson: dw-hdmi: add bandgap
-> setting for g12") programmed HHI_HDMI_PHY_CNTL1 and HHI_HDMI_PHY_CNTL0
-> here because CEC and the G12A ARC/eARC utility pin need the PHY
-> initialized even before the first HDMI modeset or when another display
-> interface is used.
-> 
-> With phy_init() deferred to dw_hdmi_phy_init(), which dw_hdmi_setup() only
-> calls when enabling an active HDMI display mode (and which
-> meson_dw_hdmi_pm_resume() -> dw_hdmi_resume() does not call), the PHY
-> stays in its post-reset state at boot and after resume whenever HDMI
-> video is inactive.
-> 
+> Verified with the syzbot reproducer in QEMU: without this patch every
+> destroy_qp hangs for 50 seconds and hits the WARNING above; with this
+> patch the reproducer runs cleanly.
 
-I will use v1 code and add a device link to solve suspend/resume order.
+Thanks for the patch. A couple of questions/comments on this:
 
--- 
-Best regards,
-Ronald
+The commit message mentions that this fix was verified with the syzbot 
+reproducer in QEMU, but I didn't see any corresponding verification 
+email or test report thread on the list. Could you please share the 
+link/reference to that email or provide a bit more detail on the test 
+setup and baseline kernel used for verification?
+
+In queue_get_producer(), there are also other queue types such as 
+QUEUE_TYPE_TO_CLIENT, QUEUE_TYPE_FROM_ULP, and QUEUE_TYPE_TO_ULP. Have 
+you checked whether any of those types could suffer from a similar 
+out-of-range producer index issue? If so, please let us know and include 
+any necessary fixes (either here or in a follow-up patch, as appropriate).
+
+Thanks a lot.
+Yanjun Zhu
+
+> 
+> Reported-by: syzbot+fef38133c495aeb48297@syzkaller.appspotmail.com
+> Closes: https://syzkaller.appspot.com/bug?extid=fef38133c495aeb48297
+> Fixes: ae6e843fe08d ("RDMA/rxe: Add memory barriers to kernel queues")
+> Signed-off-by: Shuai Liu <847807867@qq.com>
+> ---
+> Changes since v1:
+> - Mask the producer index in queue_get_producer() for
+>    QUEUE_TYPE_FROM_CLIENT instead of checking it at the two requester
+>    call sites, as suggested by the Sashiko AI review of v1. This also
+>    covers rxe_qp_init_req(), which initializes qp->req.wqe_index from
+>    the same value, and keeps the requester, the completer and the queue
+>    helpers consistent with each other.
+> - Point Fixes at commit ae6e843fe08d, which dropped the mask that
+>    producer_index() had, instead of commit 5bcf5a59c41e.
+> - Reword the commit message: the flush loop never converges because
+>    the WQE index is advanced with the masked queue_next_index() while
+>    the producer index stays out of range; the req_retry() reset detail
+>    in the v1 description was inaccurate.
+> - Update the subject to describe the actual mechanism.
+> 
+>   drivers/infiniband/sw/rxe/rxe_queue.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/infiniband/sw/rxe/rxe_queue.h b/drivers/infiniband/sw/rxe/rxe_queue.h
+> index c711cb98b9496..fe65aecc60464 100644
+> --- a/drivers/infiniband/sw/rxe/rxe_queue.h
+> +++ b/drivers/infiniband/sw/rxe/rxe_queue.h
+> @@ -106,6 +106,7 @@ static inline u32 queue_get_producer(const struct rxe_queue *q,
+>   	case QUEUE_TYPE_FROM_CLIENT:
+>   		/* used by rxe, client owns the index */
+>   		prod = smp_load_acquire(&q->buf->producer_index);
+> +		prod &= q->index_mask;
+>   		break;
+>   	case QUEUE_TYPE_TO_CLIENT:
+>   		/* used by rxe which owns the index */
+
