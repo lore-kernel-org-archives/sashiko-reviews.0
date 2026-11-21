@@ -1,59 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=203.205.221.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795226353;
-	b=UhAWXmT0TZlEGPIU1zd2c39cy2DbcPRww27DFnGer5XEgvUnMXkmwKyCcxshLxyholMl
-	 WOWUMdB9VP1W7xEUlyknnNtfFB/0+t1F0yOV1S7aD1qfWxpfS9GcrPIMsPOn5yowWkRxX
-	 mQFxQN8wLHgLyTlOsjVYm9WmrqSxrXPm9YQIUe+onD07Fb4te+CgqfkWZvTgGVtt22QNf
-	 zWUeG5o9pfTUl9mxBQgN1OpNGAujpyyJ0cgD/iecpdui067liBjz9kfTTlQdAVNW924EH
-	 izsHCrKD4x7oqRfkbJ+3EvUbzsQWZGkASxVWx1qvoBxD3W+LymktPqAauTQ0g168j9g==
+	t=1795232535;
+	b=FBpooKx9oYOXJBolrw26r9w8ooPGWzcXgfHnbNvNFAtP1R0inG4DVmOce8wFl7pVc297
+	 jtimqXobtAW3E6N5Tnt81u7KQqQj1dKun9zAmwo7SrHR6iIaT09EPR53c4nMuN0inzhqJ
+	 v0qqFlPt0gRaV4WcB4hfHPmv90GkPFYkdpKGbnWSCGSCXTsz6IoSjZEYGOMjaEAsJVSdM
+	 w/OWT2nrLVyjrlt7YqMpapmAgna2ic3OgQT/Wt9f7MstI7/3gQuhvhK7E91d6UnImvJq6
+	 NOXh2F7MBgEBGYbS79D/AeeGau+lClCrA2UpzWLYzOcYZQ757SWCIxxIwaO43rFVFSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795226353;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795232535;
+	h=DMARC-Filter:DKIM-Signature:Received:X-QQ-mid:Message-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:From:To:Cc:Subject:Date:X-OQ-MSGID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=NYAbhIA7c7MZwjZMstl1hm1bcmlBpCrOMTte7E59bQI=;
-	b=NOI17mSWWHuqhQXzv7LlyGjk8ykzsYdMvlKyVwGm7K5v2Rv95hlCo30vrAVU6uPggqbc
-	 CernkJUbZUTMpa9OoZFAC8OmjGW2nOXJnggAvuiUT+WwOo6iJftGHOf7L3qFftfYwAKRC
-	 brKDmSwdCRk1kxfwyzO7T3Ap1TWdWISxDttt059VqwVpVE3SyP5T1zcLkoOPBLKFvLg62
-	 KySvRWExU8BodBYEJQJywDKklpW1LdpHugXPTJ8c7COwLa404cwLhl3E0l2YfMzUp6hGE
-	 M7Sodi4OdPBwrUTBTrFY0O6HMmnNpcNo+U5wTQBwphZ/XiqlCAEyR5yxb6fbS28iRLw==
+	bh=55KLg5TPytdDc9hoRdxs/pCCWjQgeOkyFylwJEOUFYM=;
+	b=oizN2KasDAI20OPLFTWfbf8UJNimeCPEBqFfDB5bmOLg+Q7PFq5x6dBrZBzrIJF0MdbX
+	 d5bXUIZ+V4zijlNki5LyRpCQIAVcE41CP+4vpaJQwZ+eDGrY6KBLU1mJbV9cMyVI59NaF
+	 CEyu7C7btCtAtQ2Rq4Kw4RDOAALC6XG9qOhD201ilHhRnwqVMh4wd8wubhjgkGRrGyb5a
+	 QDOkepwKoik9xGx+uUOiD2cRuWdAVZNhibZMX0KJFdVt56YA4iVj9kMeGzZ/En1e7tvbr
+	 LNZC+aBWWvHbDtfKB5RM3HC5ljOZYHG4M32j3+fU/6jP2WzKXFPgoWm3uqMJDHGpDyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cRbUlSM1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=qq.com;
+	spf=pass smtp.mailfrom=qq.com;
+	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=gSBnsy61;
+	arc=none smtp.remote-ip=203.205.221.149
+Received: from out203-205-221-149.mail.qq.com (out203-205-221-149.mail.qq.com [203.205.221.149])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83069606A693;
-	Sat, 21 Nov 2026 01:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327DE606A6AB
+	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 03:42:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 327DE606A6AB
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cRbUlSM1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6DBF1F000C0;
-	Sat, 21 Nov 2026 01:59:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795226352;
-	bh=NYAbhIA7c7MZwjZMstl1hm1bcmlBpCrOMTte7E59bQI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=cRbUlSM1wNWhAEQUGPge+TTmVviFUieJH/19sVIIZjOW+4OoQDLpxQvwX+mrB+ZQ6
-	 a92MPn4xFmjQAkdF+c4ot9xNxPtdxdaHRPQrsG/JlRbadA9k0xx9er+B1v7lLuMREE
-	 Ag3PzBovsoUOs3kgWBnmH8odMRQ/A7YCvLOFUHZtdcT4JmiywNiIgm/gEkiDeDbfem
-	 B0Vecui5mhckt2DgnsLvevT3wOEL6FTGfXOxoFZw1FhYhX+yhGulf+dVyqhFbDwWV1
-	 s9j/xPjJ9wgGztWAGfnnITan11HCF7F9EEt6Gw6XUjYQ3T3BZgo2icT+nQpea/SZsE
-	 2ZxXDwD+t4T6Q==
-Date: Sat, 21 Nov 2026 01:59:04 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Matti Vaittinen <matti.vaittinen@linux.dev>
-Cc: mazziesaccount@gmail.com, sashiko-reviews@lists.linux.dev,
- devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, open list
- <linux-iio@vger.kernel.org>
-Subject: Re: [PATCH v2 3/3] iio: adc: rohm-bd79112: Support ROHM BD79111
-Message-ID: <20261121015904.15215ca8@jic23-hlaptop>
-In-Reply-To: <d2d8049d-7adc-4cfb-8e56-3af55c0abe8f@linux.dev>
-References: <cover.1795176984.git.mazziesaccount@gmail.com>
-	<4be17e339f768da93db2f42abd3cc5a21fea01ad.1795176984.git.mazziesaccount@gmail.com>
-	<sashiko-outbox-225147@kernel.org>
-	<d2d8049d-7adc-4cfb-8e56-3af55c0abe8f@linux.dev>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=gSBnsy61
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1795232527; bh=55KLg5TPytdDc9hoRdxs/pCCWjQgeOkyFylwJEOUFYM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=gSBnsy611qLxqFl1wexhgR24XXTIztko8drty2NoomMsxYsHGc3jdcA9fTTk5vatQ
+	 99v+3mBtP5jTvEaCwmgoEOVpX1pK/AvHDwftVztYy+bpejNC3qmUGPndnhYOPHpw4+
+	 1NtRbc0e3l0Zusiqrq5Z5QURALfv0BA4WbSE/6Dg=
+Received: from shuai-VMware-Virtual-Platform.. ([117.158.156.198])
+	by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
+	id A8519672; Sat, 21 Nov 2026 11:42:05 +0800
+X-QQ-mid: xmsmtpt1795232525tzzj93r6y
+Message-ID: <tencent_03B85262EE136CEE83D2012CA5F2704D2008@qq.com>
+X-QQ-XMAILINFO: M2SvzgchpLqfjYSr+5qdYkljKTTtIvN4a3FibtIAt8oLjS96ZPgz3DmVMCHhak
+	 W/pRi1TRZGfHkjI2UjU5XtoVe0iFVtzKbA1117KiF8yQPcFK3bIJtOOoW9j6U4zkC3BaafjnVvT1
+	 o7XTN6JGzdR3vOPqI1ApfMVJuZpkUw8z1LSWG11NbgxUoxe2G37SPCMLK1RVP4GUNJAuoocL8h6+
+	 tCxm0H+Ht2bZLHwfxnLtct58J/xV2LICZe9lVVHGBuubJDtaw6oS0ixb7TtPHIxlkR4+RNoucvms
+	 TgGsFOn6/nhFZYbq5iIxeCO/5a7HYoBqE/w5KV47S8fWtVW98giueoPgxadnUbP2fZxp4dqrrrBo
+	 DhBtH6aq9/uBE77Pn9rjl2CWCukpaBcWxORmduytHqeph9VTeoJ6rVPSytPXkOtlMlFj0xxqIzMB
+	 6tRCA3MTTq80uC1CylJ3kZfXns/b91C0ShJR2j5GmFoEmUOIatnOeAWse551NyKBRKxiWu+H8IyV
+	 wm0QS5dJZwFsInYq6fxmGCUb/ImYjb+Il3W8Vtrjc5EnkgDUSTwd2h8jA/IZ1+TTYg28WlqU3gTN
+	 HT0lLkI1rFyN2rSd3xWwj24DqQbDnlNyusTslYBGWyFcLWxBwKRCMw4mv389diZHOj3mQSR8LJaH
+	 6J7duQiifL4B420cFlOjq2ZlCimi5knD10OHBabzZDVs2pKHcfMrdgsQzXjdGoarPuhBMIIu0OJJ
+	 qiYqHiDkuJ6px3IsdyzU6MorYjcaDXFKYpC2p93DlrRRzKPb6sT1jpZMduRnqCn3sqU8FMNfGhoA
+	 4JEmFI2BsBaIkNZZ1mHNONDAuy8evjj8eAid8KAB2NtDJSlyp4TwVxqPRA9WosvoHz5oxLB+Sc/Z
+	 mTFRJjIBFA2/3S/Ly+KBql7Cq8mqLApTwNZWexfI6sOlfqVVf6VRNWgy3zjx67DrJ6Yvsbzu7PbT
+	 7OLJeRTIOHDMpQOhx7DDjMYrQ7Z4Rx7hTdEcTjxT7l2puCDHaiB9Zo/R+ZLlGZqGXYG5uV/6vp52
+	 kmfXjyF46JvH8a7CGNWSC0dGC068Wx/Sh34YVjW6NaK58TZiwLGBMViIHn0Ap5zkbOFJ1I2B+nvM
+	 lhYltv
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+From: Shuai Liu <847807867@qq.com>
+To: linux-rdma@vger.kernel.org
+Cc: yanjun.zhu@linux.dev,
+	zyjzyj2000@gmail.com,
+	jgg@ziepe.ca,
+	leon@kernel.org,
+	rpearsonhpe@gmail.com,
+	syzbot+fef38133c495aeb48297@syzkaller.appspotmail.com,
+	syzkaller-bugs@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: [PATCH] RDMA/rxe: Mask the SQ producer index read from user space
+Date: Sat, 21 Nov 2026 11:42:04 +0800
+X-OQ-MSGID: <20261121034204.102626-1-847807867@qq.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <tencent_5B9FB1BCC8EF36C5E2128B7D4D54B867480A@qq.com>
+References: <tencent_5B9FB1BCC8EF36C5E2128B7D4D54B867480A@qq.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -63,93 +87,85 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Fri, 20 Nov 2026 14:53:32 +0200
-Matti Vaittinen <matti.vaittinen@linux.dev> wrote:
+The send queue producer index of a user space QP is stored in the
+queue buffer which is shared with and written by user space. The
+requester reads it without any validation in req_retry() and
+__req_next_wqe() and compares it against its own local index which
+is always masked.
 
-> On 20/11/2026 14:34, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential
-> > issues to consider:
-> > - [Low] iio: adc: rohm-bd79112: double semicolon in bd79112_probe()
-> > - [Low] iio: adc: rohm-bd79112: unused BD79112_MAX_NUM_CHANNELS macro
-> > --
-> > 
-> > commit d2b6757018d5ccee4c939ad0350d93a29d26239d
-> > Author: Matti Vaittinen <mazziesaccount@gmail.com>
-> > 
-> > iio: adc: rohm-bd79112: Support ROHM BD79111
-> > 
-> > This commit adds support for the 16-channel ROHM BD79111 SAR ADC and GPIO
-> > device to the rohm-bd79112 driver.
-> >   
-> >> diff --git a/drivers/iio/adc/rohm-bd79112.c b/drivers/iio/adc/rohm-bd79112.c
-> >> index 04084e88984a5..8bbb86098ff5a 100644
-> >> --- a/drivers/iio/adc/rohm-bd79112.c
-> >> +++ b/drivers/iio/adc/rohm-bd79112.c  
-> > 
-> > [ ... ]
-> >   
-> >> @@ -431,8 +458,17 @@ static const char * const bd79112_chan_names[] = {
-> >>   	"AGIO12B", "AGIO13B", "AGIO14B", "AGIO15B",	/* 28 - 31 */
-> >>   };
-> >>   
-> >> +static const struct bd7911x_chip_data bd79111_chip_data = {
-> >> +	.name = "bd79111",
-> >> +	.chan_names = bd79111_chan_names,
-> >> +	.num_max_channels = 16,
-> >> +	.init_disable_gpios = bd79111_disable_gpios,
-> >> +};
-> >> +
-> >>   static const struct bd7911x_chip_data bd79112_chip_data = {
-> >> +	.name = "bd79112",
-> >>   	.chan_names = bd79112_chan_names,
-> >> +	.num_max_channels = 32,
-> >>   	.init_disable_gpios = bd79112_disable_gpios,
-> >>   };  
-> > 
-> > [Severity: Low]
-> > This isn't a bug, but replacing the remaining uses of
-> > BD79112_MAX_NUM_CHANNELS in bd79112_probe() with
-> > data->cd->num_max_channels leaves the BD79112_MAX_NUM_CHANNELS macro
-> > unused.
-> > 
-> > [ ... ]
-> >   
-> >> @@ -509,7 +545,7 @@ static int bd79112_probe(struct spi_device *spi)
-> >>   		cs[i].datasheet_name = data->cd->chan_names[cs[i].channel];
-> >>   
-> >>   	iio_dev->info = &bd79112_info;
-> >> -	iio_dev->name = "bd79112";
-> >> +	iio_dev->name = data->cd->name;;
-> >>   	iio_dev->modes = INDIO_DIRECT_MODE;  
-> > 
-> > [Severity: Low]
-> > This isn't a bug, but there is a double semicolon at the end of this
-> > assignment.
-> >   
-> 
-> Both of the Sashiko's findings seem correct. However, I wonder why it 
-> picked the device-tree folks and dropped IIO people? This particular 
-> patch didn't have binding changes but driver changes. (Well I added 
-> Jonathan + IIO-list here)
+The requester stops processing WQEs when its local WQE index equals
+the producer index. If user space writes an out of range producer
+index into the queue buffer, that comparison can never become true.
+Once the QP is put into the error state, rxe_requester() then keeps
+flushing WQEs forever: the flush path advances the WQE index with the
+masked queue_next_index() but the producer index stays out of range,
+and each pass calls rxe_qp_error() which reschedules the send task,
+so the loop never converges. The send task holds a reference to the
+QP for as long as this lasts, so ib_destroy_qp() waits for the QP
+reference to drop until it times out after 50 seconds and the
+WARN_ON(!ret) fires in __rxe_cleanup():
 
-Currently we haven't opted in to received emails to linux-iio but
-device tree folk have. There was some debate at LPC on what sashiko
-should do when this happens but there isn't really a right answer.
+  WARNING: drivers/infiniband/sw/rxe/rxe_pool.c:212 at __rxe_cleanup
+  Call Trace:
+   __rxe_cleanup
+   rxe_destroy_qp
+   ...
+  rxe0: qp#17 rxe_destroy_qp: cleanup failed, err = -110
 
-If things ever quieten down I'll restart the discussion of whether
-we should opt IIO in.  I'm personally in favour but want to here
-if anyone has a strong counter argument.   I think we can manage
-the false positives for newbies issue as they are getting smaller
-all the time.
+Fix this by masking the producer index with q->index_mask when reading
+it in queue_get_producer() for QUEUE_TYPE_FROM_CLIENT. This restores
+what producer_index() did before commit ae6e843fe08d ("RDMA/rxe: Add memory
+barriers to kernel queues") replaced it with queue_get_producer() and
+dropped the mask, and keeps the requester, the completer and the queue
+helpers, which all compare the difference of the two indices modulo
+index_mask, consistent. rxe_qp_init_req() also initializes
+qp->req.wqe_index from this value so it gets validated as well.
 
+Masking the index in queue_get_producer() instead of checking it at
+the two requester call sites was suggested by the Sashiko AI review of
+v1 of this patch.
 
-Jonathan
+Verified with the syzbot reproducer in QEMU: without this patch every
+destroy_qp hangs for 50 seconds and hits the WARNING above; with this
+patch the reproducer runs cleanly.
 
-> 
-> Yours,
->    -- Matti
-> 
+Reported-by: syzbot+fef38133c495aeb48297@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fef38133c495aeb48297
+Fixes: ae6e843fe08d ("RDMA/rxe: Add memory barriers to kernel queues")
+Signed-off-by: Shuai Liu <847807867@qq.com>
+---
+Changes since v1:
+- Mask the producer index in queue_get_producer() for
+  QUEUE_TYPE_FROM_CLIENT instead of checking it at the two requester
+  call sites, as suggested by the Sashiko AI review of v1. This also
+  covers rxe_qp_init_req(), which initializes qp->req.wqe_index from
+  the same value, and keeps the requester, the completer and the queue
+  helpers consistent with each other.
+- Point Fixes at commit ae6e843fe08d, which dropped the mask that
+  producer_index() had, instead of commit 5bcf5a59c41e.
+- Reword the commit message: the flush loop never converges because
+  the WQE index is advanced with the masked queue_next_index() while
+  the producer index stays out of range; the req_retry() reset detail
+  in the v1 description was inaccurate.
+- Update the subject to describe the actual mechanism.
+
+ drivers/infiniband/sw/rxe/rxe_queue.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/infiniband/sw/rxe/rxe_queue.h b/drivers/infiniband/sw/rxe/rxe_queue.h
+index c711cb98b9496..fe65aecc60464 100644
+--- a/drivers/infiniband/sw/rxe/rxe_queue.h
++++ b/drivers/infiniband/sw/rxe/rxe_queue.h
+@@ -106,6 +106,7 @@ static inline u32 queue_get_producer(const struct rxe_queue *q,
+ 	case QUEUE_TYPE_FROM_CLIENT:
+ 		/* used by rxe, client owns the index */
+ 		prod = smp_load_acquire(&q->buf->producer_index);
++		prod &= q->index_mask;
+ 		break;
+ 	case QUEUE_TYPE_TO_CLIENT:
+ 		/* used by rxe which owns the index */
+-- 
+2.43.0
 
