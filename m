@@ -1,100 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.182
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795273637;
-	b=WxvvgXOcfhoBI3RvAmnMEjUozNJd2dSPu+YMNEHDDqKGqFkUxM3sXHxjkX8c/Xo8gePq
-	 bpNGerTiSM4UZejrUXYPdQs3bJpuzMQLjb2xaipshURB/ZYVzuC+Vft4uPHYTr6GhqK5I
-	 DjXKHkGn2A0vMKuCo5ScJYbaCT/2dbajHXpacxVguaVZdR4ZL6K6D0hWjYXxCaOLSuTqr
-	 txGgcRxMRXoUG+TUUf8ilgbKtaiWWXU08hyYHDLghkV1L64A7c+WPUavAQwq+luhXPbmx
-	 GRMPuvxsXhkZd6KZaPUiLcFcbVeFQNSFXgkQOrH1eWtqmlU3qJ79J6bE7z09KH9G7uA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795273637;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=9P+LQP77QaUXhnPvf9lJxnDJFTqEEgKYM6Pv7OT70pU=;
-	b=4wkabWF5aPLxkHpwOl1fPcethet1kqfeN3vDHlWLJ2uC1A5M6A/eHppUJw6QrZ/l+Tr5
-	 vO871PRQA19G2QHH7qJxBoI3FdWdQYJdPI/3Rzw9ByMeS33Ub4ZuvotiNXN1+8ak/fN19
-	 0wJ6qzMoZ5ItNQjOeS9/6mjKzSioe5sGVLB7bfObymdG+0CKdqngI+Tnqq+RnnuewY7nZ
-	 EAqAfiJprRw4/zqiGJ/BF93D8TBWNLxAAVEbbpOFA+xK9X4xTl75vhVfWmO5fSjojoESx
-	 49p5pVYJFzNrVB4ID9IJgWQ7P/XEEGEYC0yKxVilSTsfwU6LH0kfoDay4i1d6oXLhzA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="ba+t/YR2";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.182
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.3
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795278832;
+	b=PQxS2BoehjuDeubwvDCYeu7waWoSIHYw+glBo9L+vskBYxidyYZO3w87/7Hw4xG1okIK
+	 iAhLV9Tl3k1AQ0QlfC6StpbBix5+LCVX2ULZFp/XzPJhYcXkJkgceYpx+pXGIocXA7xTn
+	 i80m66a04o44JUOLxRDsv1j3PMoXeAUsNcz05ENy6ejDNTO3bu/Nj1gWVZWZHtaRDXCFO
+	 CvM6uXOkblKDsCFIKF782IkZgcf+YXznM6aSJaGTHYHEAcC37WfW0yDLNviqO1Tw21xaq
+	 CWcwNaP6HE0kd/Vg8uwWBrx0gGYv5cypPWcWhcouIJBHOvijYkl5oOdu+InQ7Xgz8JA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795278832;
+	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
+	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Content-Language:To:From:Subject:Cc:Content-Type:
+	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
+	bh=auWbpWfPPFdjYS0sjeGkL+z83l0fOIuRwcMvAjF4Jc0=;
+	b=Z/GE75YC/CpXlBvQI0ebFj7fg5weQapO1ngdxGOku7X6lQqcJroFQ0mHlOGBx6eCi2HZ
+	 rl5xaNd24kHvQjnWI0EUiHC3AE9qtEd4iJCBF5U2xpwF5AAe0UVBG1sk0lCnWJx+V/kxW
+	 jhb+XL49oUq27dgFUaLY/b+ftV+x4ljK06EJ7prCZYoVOrzYXCPzWWvs1GYoXnf8hiRR3
+	 8g5w9G9l+XWBAkJQDR6daYy1C9aN1oGAv0X7egZjG969rVRjCeiTe4WgviVYhIZhaH0xI
+	 8XqdsXK0C3Rr/S3Bwsb7vkXr0HWvf7nUpPEKXWnRXirkvvAWUytXIVummZV6oYHAMDQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=web.de;
+	spf=pass smtp.mailfrom=web.de;
+	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=VLbnCl77;
+	arc=none smtp.remote-ip=212.227.15.3
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEFE606A320
-	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 15:07:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3BEFE606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3228606A320
+	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 16:33:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C3228606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ba+t/YR2
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2f066274caeso2662505ad.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 07:07:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795273635; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZBNSGIn7FLaV0nc8r50s8PFmhVlAWGNGof2LYG5c5ImEZEZns0Za28iXMnG0+DVTO3
-         GZQaYEgzR8cyhIx912PHKChEUduuxcfqWZrLvbSuPupGGVgfPhwZlBroVaMR3SkLCOxA
-         QtPCXPG33RpUI21t+Af0GUE3JTYtMJRGMD0BB0bMVNHVms+zVeOAtEtLwZbpeg4GHYZC
-         77OHjfWIGcx50U0zGdYA3a4kfHYZjH9E4N56Goaul6aJ1giDs/XvR+g/fqT9voiVH3Qy
-         cpQ73IMxypGlCDOFrUED6szr27KBVsNrpCz3YqvSftcO7UBFJM8Og4XQfveEWMfAmlPc
-         YmbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=9P+LQP77QaUXhnPvf9lJxnDJFTqEEgKYM6Pv7OT70pU=;
-        fh=gDE+ftcJgwqlFpaeVNXSL+OkXdzFf9WJRUioZc9sKbk=;
-        b=Lyqbtx6QMEkB+dvjc0YODbHTfueuJLGiuytD3L3uBoRjyyRoTn4+MtMGwnHzUMRHUP
-         +50gM69jAFMkd3aoeNTVSVbKMftfV98uy8/5RWwy4WfR9Rpi5raZa6zpMBYXRVz7ZicK
-         NxKeECA7FXAtZsrKrOlbwU7R50Ml//YrGzjpV0PNKwrBHCpflEtKMoco2GIVV6GxJtai
-         sNSeYGPoO4Q0g//cR0H/D5rfIAnYc2fnQWhZzeVt0TQUxB7CusW7XieWfpOXhmeqHpI9
-         nW3Q5FYF0N3xcBy+JSdj/rprhuKPc2LLmNxT1qqHhBlRoRNYaloZ7kSVnCq+r1J4FkPD
-         TUSg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795273635; x=1795878435; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9P+LQP77QaUXhnPvf9lJxnDJFTqEEgKYM6Pv7OT70pU=;
-        b=ba+t/YR2b/LB5/dur3wzAWZLBol/mlkeEgAbb5qHf10GVsXDrYD8rb9c9j92jO+sbj
-         phDK8f5kzNi5VOv66kSQS4uGiSHcfU9AcaIFjPyzLkS3ZhY83T+kpBQkzMpkwjkUZcpt
-         WxtbCABcsjeZNItxlYRadw+ci6UItOWTZbCTlYxhOe+GAYV/StYYd3SmmcBZW5Ca9fV/
-         TW33M4HPdkviqpO6+kkv4MvMYr1Aavn9UkfXqiBhUpe3Ba4gTjxOMhK42XmstExE8dp/
-         TSdOZGT0OWVIwuvEPNw6HH48Ng5Ms8cFCpKyJ9QatQLEOsrCqFb/ZG3wOskCApEcOdKJ
-         GU6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795273635; x=1795878435;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9P+LQP77QaUXhnPvf9lJxnDJFTqEEgKYM6Pv7OT70pU=;
-        b=MM8zLJRiv2XHPKZ/v0bs80A49enl9Yljf27qkXEWl99obpHcl+UcYcGg8nGpUIr14E
-         +a6o2ea3s8NOQNk++epqyC0EXx5P5NbNU+kzIO4UmTZo/Nap4YdZKoWWjVxLi0z4HsnE
-         XbV2Du3N6Q+zQn05IdriazPjPkbR77P5iyhvFTbVqBnyPxA2sMTEJK+fttCM8QLZbKBR
-         4vnzGfetuPA813UFU2khw77RwIOnvxgJ5QxDU0KUW3oiF1DCVqVOQvogfcnl9Pk4lqIr
-         Z6b02D+RIGMRvBlT4gr6AZPXKLFBdyV8OZWQlQzDhwAjw/+o8TlWtuLUTDTXKz4mSVC3
-         +/HQ==
-X-Gm-Message-State: APuU4Z/IxxpX5OdFknC1mI6qjmZTOBn08kzW4cMKbDSE7ALKOFTGPFCw
-	nRdENfzO1UXdHYcyhp4nM2I1VjMOz6vCOcwF9ULytO5yE8BNeldRgqfMQSKVPiLI63DuQxpEasc
-	8/LeJKmdtye85uZHKJd2gb3bazFzdz4hdUvfL1dfmy9to
-X-Gm-Gg: AZFdTZfEFS5zRZ+CgdDX/2KVrLOAqT4YU8xlgqJcvnNQVejGncNlMCL67+cTxitYt7l
-	hWMGs2TQ/llhlDoNRNo+934NAvJKZsh0OcHXh9vNT0EQailesTJ5BBNxdJ6nyfGvy0WnkZYd+x/
-	EJIaFrruaWT0eIlSISnz+k9q7NDHRL7/Nx0Axx3793EVv9QjSlJNn8rBIeeX9DgIeXvyDbPJ2ue
-	DbQpF2LYLOvHI5I1W4KaZ4ou+F+nRAXnLbnZjkC36EXrQesn40xLtgzN2NeJrC/W3G9nLi2wnrP
-	FPCBCCxz8aFEsurEM/qXzmGFujsfihKIIfkvzKlXEkmRt2igxAH2P5TaBp9I4QTY+LlPckAgr6t
-	Mgta2zC5Sf2Bskz9Wrpv2eossreZemxLZPCue1KPIWobxa7HVHbYm38s+cPbrhtNf+ywv1UB90e
-	+QTJN6YDegrrdMH1hAGN7VqjcG
-X-Received: by 2002:a17:903:2f4d:b0:2ea:9012:649 with SMTP id
- d9443c01a7336-2f03f1ec317mr73144255ad.57.1795273635478; Sat, 21 Nov 2026
- 07:07:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=VLbnCl77
+DKIM2-Signature:  i=1; m=1; t=1795278829;
+ mf=PE1hcmt1cy5FbGZyaW5nQHdlYi5kZT4=;
+ rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+ d=web.de;
+ s=s29768273:rsa-sha256:QHrYBP1e3q6hO2H5AjZ9tnnmJTua
+   DHQOkYqshhYkH6uSUCt6k+mciNlME9I+Kb6PRMXNUa6wDZHmx0ZO5qnq5KwVMQMZaMZ6JbwXkx+
+   d/5y57psREckJHfWxMj6t8NNS9byTEtMxM0v1Rcv1A6X7hDFw0oyZRPFL9vWSbSpKhTeTvg+Pmg
+   voAzQIJfUDy/Rbiu9thi5nGAJ2V0Qj6tjSqRagIhKH2+2ZvtNWwXDMzZ5R7hQIqQPmQlyJhqrYZ
+   /xV7iK0nrjjLY22u+yJY0iqjYmDW5ok3kH2XTBn8TUwt+mWPwXoFYZP2yR1dJ6w9K4UnoHr8wE2
+   U1DUnwG+iW4qNA==;
+Message-Instance:  m=1;
+ h=sha256:
+   +htYexGBTL2kBAPo9jTQRKIbUfRm1urwn+kdAc+VkEE=:
+   N7e3qNVbjjZchMqSISQgG5F1KkwW9NMwj1Xj5wWQ2As=,
+  sha512:
+   Sox2zYRxP8bZVGPkg7K8XJrMUgN7Mlt2fjgjmVv/5SVj7jSOITQEvnjJ0ytuImv3RGxZ1KMKpL1I2GTr10tj2A==:
+   GRrB3Lg4xoy7w2Xzuvvjt0Ly/F4OOdziDEX5aOcZPFhvNqvoqG9KR9RMFN7QoBnKc2RCBchiW+vH4YBC8th82w==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1795278790; x=1795883590; i=markus.elfring@web.de;
+	bh=auWbpWfPPFdjYS0sjeGkL+z83l0fOIuRwcMvAjF4Jc0=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
+	 Cc:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=VLbnCl77bnDCskStlab/2GGRU3BGp4yGfEqo5XUOs+j+DdrT1tErU1JDwy/jSPGt
+	 ucnSVlsmt6W8BY7wfPztJ0dPkDMmcTxdJ6yR0dLL9EGfOwELoOtwI2ZQFDB7hJrFZ
+	 24VnlpbPJILNUm02e58OjBTDtR61fTuAcWkmuJ1Lsv2RTubCwh36zu8wsegNZxkdn
+	 QPhn6j1zKTq4oHUyedcQvTlU59xZfFvv6SLv/G178GJrlmAFE+uCulyUuW6ZDdE2G
+	 l2zvWjzc9qqWC//V12NvGm+cpdIYWe9XttntcGvJXBNaA2MwI+Mnr62vdNjOJZ9u7
+	 wpCE7zkRxNQm3kI/Eg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MA4bO-1xgOcO21gA-006a4Z; Sat, 21
+ Nov 2026 17:33:10 +0100
+Message-ID: <ab46a205-d1c4-48f2-8891-4de667f8ebf1@web.de>
+Date: Sat, 21 Nov 2026 17:33:06 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,182 +79,263 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261121070804.26185-1-alfonsocvu@gmail.com> <sashiko-outbox-226770@kernel.org>
-In-Reply-To: <sashiko-outbox-226770@kernel.org>
-From: Alfonso Villalobos <alfonsocvu@gmail.com>
-Date: Sat, 21 Nov 2026 09:07:04 -0600
-X-Gm-Features: Aa3M54rGHRzfUSOp8ujaJxpTAz5H4ROSkXJLOnO3uUt3NShcUdp4Z92hpWXGRLI
-Message-ID: <CAJ=mrFowQNahOjD-NQzcuJCjPE=efvDK85kMpseRUrqYBwX3Sw@mail.gmail.com>
-Subject: Re: [PATCH] thunderbolt: Re-add host router DP IN adapters after DPRX failure
-To: sashiko-reviews@lists.linux.dev, westeri@kernel.org
-Cc: linux-usb@vger.kernel.org, andreas.noever@gmail.com, YehezkelShB@gmail.com, 
-	Alfonso Villalobos Ulate <alfonsocvu@gmail.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB, de-DE
+To: linux-usb@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Avi Fishman <avifishman70@gmail.com>, Benjamin Fair
+ <benjaminfair@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Nancy Yuen <yuenn@google.com>, Patrick Venture <venture@google.com>,
+ Peter Chen <peter.chen@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
+ Tomer Maimon <tmaimon77@gmail.com>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: [PATCH v2] usb: chipidea: Use devm_clk_get_optional_enabled() in two
+ probe functions
+Cc: sashiko-reviews@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>,
+ kernel-janitors@vger.kernel.org,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+ Florian Fainelli <f.fainelli@gmail.com>, Frank Li <Frank.Li@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:qa0Zm20PhwI+l7EB09aMt9rkzuTOEgQgcW0Iftqs/AYHOgeiq04
+ MffT33zE9VaZ7tMqgUW2F57LzyviXpi99fw+yiVdZKjUA3Ag6w237ngLe6UZ6tG0hOFI9jW
+ L0Hk+MJwQeBOlm+l5nlZ834Mu9VRrneSXxE2NLcnwkPbJ09FKwEmX3GWwS/iRz9JyuMkry2
+ PVg3BTL+wOcqkfeTMoLiw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:mWywF0oAKec=;C/OPxiawL6H4zEC53h0jGwKUNeg
+ 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
+ oY9dLsljIkh2YH3MX4pCC+h8XeeCsoAWeF57+ug=
 
-Hi Mika, hope you're having a great day.
+From: Markus Elfring <elfring@users.sourceforge.net>
+Date: Sat, 21 Nov 2026 17:06:32 +0100
 
-I'd like to check the direction with you before doing v2. After the
-Sashiko review and looking closer at how host router DP IN adapters
-are handled, I'm not sure v1 fixes this in the right place.
+* Reuse existing functionality from devm_clk_get_optional_enabled()
+  instead of keeping duplicate source code.
 
-The DPRX failure happens when the RX 9070 XT feeding 0:10 is in BACO.
-With runtime PM disabled for the GPU it always works. After the
-failure the host router never sends a hotplug for 0:10, so it stays
-unused until something triggers the re-check from v1, here me
-replugging the dock at 00:27:26:
+* Omit a clk_disable_unprepare() call on error handling paths
+  and in the implementation of two remove functions.
 
-  [00:26:36] 0:10 <-> 1:11 (DP): activating
-  [00:26:36] 0:11 <-> 1:12 (DP): activating
-  [00:26:48] 0:10 <-> 1:11 (DP): not active, tearing down
-  [00:26:48] 0:10: DP IN resource unavailable: DPRX negotiation failed
-  [00:27:26] 0:10: DP IN resource available
-  [00:27:26] 0:11 <-> 1:11 (DP): activating
-  [00:27:26] 0:10 <-> 1:12 (DP): activating
+* Delete the label =E2=80=9Cclk_err=E2=80=9D.
 
-The DP OUTs also end up swapped, so the ordering part of v1 doesn't
-work as intended either.
+This issue was detected by using the Coccinelle software.
 
-The comment in tb_dp_tunnel_active() and the redrive code both seem
-to expect a hotplug for host DP IN adapters. Is the ASM4242 supposed
-to send one once the GPU starts driving the DP IN? If this is
-ASM4242 specific I can limit the fix to it with a quirk.
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+=2D--
 
-v1 also only recovers on a new event. The alternative I had in mind
-is retrying the DP IN a few times with a delay after DPRX fails, so
-it recovers without a replug. Which is better?
+V2:
+Sashiko provided hints for further development considerations.
+https://sashiko.dev/#/patchset/6d2450cf-9bbc-47b6-9ea3-f91bc1b91371%40web.=
+de
 
-I already have fixes for the Sashiko comments (the missing
-tb_exit_redrive() and the ordering in tb_dp_resource_available()) and
-one to skip DP IN adapters that are already in a tunnel, but I'd like
-your opinion before spending more time on it.
 
-Thanks,
-Alfonso
+ drivers/usb/chipidea/ci_hdrc_npcm.c | 13 ++-----------
+ drivers/usb/chipidea/ci_hdrc_usb2.c | 15 ++-------------
+ 2 files changed, 4 insertions(+), 24 deletions(-)
 
-On Sat, Nov 21, 2026 at 1:25=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] thunderbolt: missing tb_exit_redrive() in
->   tb_add_dp_resources() leaks RPM ref
-> - [Medium] thunderbolt: list_add_tail() in tb_dp_resource_available()
->   breaks DP IN order
-> --
->
-> commit 4eedd8886dc180b45204d935f18725051dd0e6a0
-> Author: Alfonso Villalobos Ulate <alfonsocvu@gmail.com>
->
-> thunderbolt: Re-add host router DP IN adapters after DPRX failure
->
-> This commit re-checks host router DP IN adapters when a new DP OUT adapte=
-r
-> becomes available or a device router is scanned, keeping host DP IN
-> adapters ordered by adapter number on tcm->dp_resources.
->
-> > diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
-> > index 418ad0a61a5de..1f3dea836067e 100644
-> > --- a/drivers/thunderbolt/tb.c
-> > +++ b/drivers/thunderbolt/tb.c
-> > @@ -109,6 +109,29 @@ static void tb_queue_hotplug(struct tb *tb, u64 ro=
-ute, u8 port, bool unplug)
-> >
-> >  /* enumeration & hot plug handling */
-> >
-> > +/*
-> > + * Insert a host router DP IN adapter so that host DP IN adapters stay
-> > + * in adapter number order. A DP IN that is re-added after it was
-> > + * dropped (for example because DPRX negotiation failed) then gets
-> > + * paired with the same DP OUT as before, instead of swapping DP OUT
-> > + * adapters (and therefore monitors) with the other host DP IN.
-> > + */
-> > +static void tb_add_host_dp_in(struct tb_cm *tcm, struct tb_port *port)
-> > +{
-> > +     struct tb_port *p;
-> > +
-> > +     list_for_each_entry(p, &tcm->dp_resources, list) {
-> > +             if (tb_port_is_dpin(p) && !tb_route(p->sw) &&
-> > +                 p->port > port->port) {
-> > +                     /* Insert before the first higher numbered one */
-> > +                     list_add_tail(&port->list, &p->list);
-> > +                     return;
-> > +             }
-> > +     }
-> > +
-> > +     list_add_tail(&port->list, &tcm->dp_resources);
-> > +}
-> > +
-> >  static void tb_add_dp_resources(struct tb_switch *sw)
-> >  {
-> >       struct tb_cm *tcm =3D tb_priv(sw->tb);
-> > @@ -118,6 +141,9 @@ static void tb_add_dp_resources(struct tb_switch *s=
-w)
-> >               if (!tb_port_is_dpin(port))
-> >                       continue;
-> >
-> > +             if (!list_empty(&port->list))
-> > +                     continue;
-> > +
-> >               if (!tb_switch_query_dp_resource(sw, port))
-> >                       continue;
-> >
-> > @@ -130,7 +156,7 @@ static void tb_add_dp_resources(struct tb_switch *s=
-w)
-> >               if (tb_route(sw))
-> >                       list_add(&port->list, &tcm->dp_resources);
-> >               else
-> > -                     list_add_tail(&port->list, &tcm->dp_resources);
-> > +                     tb_add_host_dp_in(tcm, port);
-> >
-> >               tb_port_dbg(port, "DP IN resource available\n");
-> >       }
->
-> [Severity: Medium]
-> Does re-adding a host router DP IN port through tb_add_dp_resources() lea=
-k
-> the runtime PM reference on sw->dev when the port was in redrive mode?
->
-> On host routers with QUIRK_KEEP_POWER_IN_DP_REDRIVE, tb_enter_redrive()
-> sets port->redrive and calls pm_runtime_get(&sw->dev).  When
-> tb_add_dp_resources(tb->root_switch) now runs at runtime from
-> tb_scan_port() or tb_dp_resource_available(), it adds the host DP IN port
-> to tcm->dp_resources without calling tb_exit_redrive(port).  Any later
-> tb_dp_resource_available() call for that DP IN port then returns early
-> because the port is already on tcm->dp_resources (or already enabled by
-> tb_tunnel_dp()), leaving port->redrive set and preventing the host router
-> from suspending.
->
-> [ ... ]
->
-> > @@ -2234,6 +2272,14 @@ static void tb_dp_resource_available(struct tb *=
-tb, struct tb_port *port)
-> >       list_add_tail(&port->list, &tcm->dp_resources);
-> >       tb_exit_redrive(port);
-> >
-> > +     /*
-> > +      * Host router DP IN adapters removed because DPRX negotiation
-> > +      * failed never get a hotplug event of their own. Give them
-> > +      * another chance now that a DP OUT became available.
-> > +      */
-> > +     if (tb_port_is_dpout(port))
-> > +             tb_add_dp_resources(tb->root_switch);
-> > +
-> >       /* Look for suitable DP IN <-> DP OUT pairs now */
-> >       tb_tunnel_dp(tb);
-> >  }
->
-> [Severity: Medium]
-> Should tb_dp_resource_available() also use tb_add_host_dp_in() when addin=
-g
-> a host router DP IN port?
->
-> When a lower-numbered host DP IN port becomes available via hotplug in
-> tb_dp_resource_available() (such as when exiting redrive mode or after
-> resume) while a higher-numbered host DP IN port is already on
-> tcm->dp_resources, list_add_tail() places the lower-numbered port after
-> the higher-numbered one, breaking the adapter ordering that
-> tb_add_host_dp_in() maintains.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261121070804.26=
-185-1-alfonsocvu@gmail.com?part=3D1
+diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci=
+_hdrc_npcm.c
+index 75a0223b578a..4b608f2bb383 100644
+=2D-- a/drivers/usb/chipidea/ci_hdrc_npcm.c
++++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
+@@ -47,14 +47,10 @@ static int npcm_udc_probe(struct platform_device *pdev=
+)
+ 		return -ENOMEM;
+ 	platform_set_drvdata(pdev, ci);
+=20
+-	ci->core_clk =3D devm_clk_get_optional(dev, NULL);
++	ci->core_clk =3D devm_clk_get_optional_enabled(dev, NULL);
+ 	if (IS_ERR(ci->core_clk))
+ 		return PTR_ERR(ci->core_clk);
+=20
+-	ret =3D clk_prepare_enable(ci->core_clk);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "failed to enable the clock: %d\n", ret)=
+;
+-
+ 	ci->pdata.name =3D dev_name(dev);
+ 	ci->pdata.capoffset =3D DEF_CAPOFFSET;
+ 	ci->pdata.flags	=3D CI_HDRC_REQUIRES_ALIGNED_DMA |
+@@ -67,17 +63,13 @@ static int npcm_udc_probe(struct platform_device *pdev=
+)
+ 	if (IS_ERR(plat_ci)) {
+ 		ret =3D PTR_ERR(plat_ci);
+ 		dev_err(dev, "failed to register HDRC NPCM device: %d\n", ret);
+-		goto clk_err;
++		return ret;
+ 	}
+=20
+ 	pm_runtime_no_callbacks(dev);
+ 	pm_runtime_enable(dev);
+=20
+ 	return 0;
+-
+-clk_err:
+-	clk_disable_unprepare(ci->core_clk);
+-	return ret;
+ }
+=20
+ static void npcm_udc_remove(struct platform_device *pdev)
+@@ -86,7 +78,6 @@ static void npcm_udc_remove(struct platform_device *pdev=
+)
+=20
+ 	pm_runtime_disable(&pdev->dev);
+ 	ci_hdrc_remove_device(ci->ci);
+-	clk_disable_unprepare(ci->core_clk);
+ }
+=20
+ static const struct of_device_id npcm_udc_dt_match[] =3D {
+diff --git a/drivers/usb/chipidea/ci_hdrc_usb2.c b/drivers/usb/chipidea/ci=
+_hdrc_usb2.c
+index b0200c5937cd..0cff5486e9c0 100644
+=2D-- a/drivers/usb/chipidea/ci_hdrc_usb2.c
++++ b/drivers/usb/chipidea/ci_hdrc_usb2.c
+@@ -70,16 +70,10 @@ static int ci_hdrc_usb2_probe(struct platform_device *=
+pdev)
+ 	if (!priv)
+ 		return -ENOMEM;
+=20
+-	priv->clk =3D devm_clk_get_optional(dev, NULL);
++	priv->clk =3D devm_clk_get_optional_enabled(dev, NULL);
+ 	if (IS_ERR(priv->clk))
+ 		return PTR_ERR(priv->clk);
+=20
+-	ret =3D clk_prepare_enable(priv->clk);
+-	if (ret) {
+-		dev_err(dev, "failed to enable the clock: %d\n", ret);
+-		return ret;
+-	}
+-
+ 	ci_pdata->name =3D dev_name(dev);
+=20
+ 	priv->ci_pdev =3D ci_hdrc_add_device(dev, pdev->resource,
+@@ -90,7 +84,7 @@ static int ci_hdrc_usb2_probe(struct platform_device *pd=
+ev)
+ 			dev_err(dev,
+ 				"failed to register ci_hdrc platform device: %d\n",
+ 				ret);
+-		goto clk_err;
++		return ret;
+ 	}
+=20
+ 	platform_set_drvdata(pdev, priv);
+@@ -99,10 +93,6 @@ static int ci_hdrc_usb2_probe(struct platform_device *p=
+dev)
+ 	pm_runtime_enable(dev);
+=20
+ 	return 0;
+-
+-clk_err:
+-	clk_disable_unprepare(priv->clk);
+-	return ret;
+ }
+=20
+ static void ci_hdrc_usb2_remove(struct platform_device *pdev)
+@@ -111,7 +101,6 @@ static void ci_hdrc_usb2_remove(struct platform_device=
+ *pdev)
+=20
+ 	pm_runtime_disable(&pdev->dev);
+ 	ci_hdrc_remove_device(priv->ci_pdev);
+-	clk_disable_unprepare(priv->clk);
+ }
+=20
+ static struct platform_driver ci_hdrc_usb2_driver =3D {
+=2D-=20
+2.56.1
+
