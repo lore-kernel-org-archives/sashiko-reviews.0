@@ -1,66 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=203.205.221.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795232535;
-	b=FBpooKx9oYOXJBolrw26r9w8ooPGWzcXgfHnbNvNFAtP1R0inG4DVmOce8wFl7pVc297
-	 jtimqXobtAW3E6N5Tnt81u7KQqQj1dKun9zAmwo7SrHR6iIaT09EPR53c4nMuN0inzhqJ
-	 v0qqFlPt0gRaV4WcB4hfHPmv90GkPFYkdpKGbnWSCGSCXTsz6IoSjZEYGOMjaEAsJVSdM
-	 w/OWT2nrLVyjrlt7YqMpapmAgna2ic3OgQT/Wt9f7MstI7/3gQuhvhK7E91d6UnImvJq6
-	 NOXh2F7MBgEBGYbS79D/AeeGau+lClCrA2UpzWLYzOcYZQ757SWCIxxIwaO43rFVFSQ==
+	t=1795232829;
+	b=mUjQR/f5ArSfFjdgc6m5l5ahZQT9bD1Y62bmRBJv+FOzoBdcpSOXJO33gDqnlulkwaUi
+	 4OlWIkFkFZVQOgf3HB40NEPgzNrYHOudHcTT4rGUStCS4ICHYrUngLo6Z1JVcBjF99CKt
+	 BiWYIAFq7miqUCptkPrhx9HoDcQplmmB5L2An6vhBOWzYGd4ASC2f7H9gCj94O3LGmv9T
+	 BFtleQnGbRpthNqG6NOyVngP8F28omHYD0G3lIfa3yMg6cyWa3G3+4XurbccvJWcGu6Rj
+	 rWVYSuAqjXp+b3VWFjtua8uofNKOvpC/IUf0ceIZAMy55J3DyrRDT6ZTrsCjIrqH+1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795232535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795232829;
 	h=DMARC-Filter:DKIM-Signature:Received:X-QQ-mid:Message-ID:
 	 X-QQ-XMAILINFO:X-QQ-XMRINFO:From:To:Cc:Subject:Date:X-OQ-MSGID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
 	bh=55KLg5TPytdDc9hoRdxs/pCCWjQgeOkyFylwJEOUFYM=;
-	b=oizN2KasDAI20OPLFTWfbf8UJNimeCPEBqFfDB5bmOLg+Q7PFq5x6dBrZBzrIJF0MdbX
-	 d5bXUIZ+V4zijlNki5LyRpCQIAVcE41CP+4vpaJQwZ+eDGrY6KBLU1mJbV9cMyVI59NaF
-	 CEyu7C7btCtAtQ2Rq4Kw4RDOAALC6XG9qOhD201ilHhRnwqVMh4wd8wubhjgkGRrGyb5a
-	 QDOkepwKoik9xGx+uUOiD2cRuWdAVZNhibZMX0KJFdVt56YA4iVj9kMeGzZ/En1e7tvbr
-	 LNZC+aBWWvHbDtfKB5RM3HC5ljOZYHG4M32j3+fU/6jP2WzKXFPgoWm3uqMJDHGpDyA==
+	b=xxi0b5YKiOttpVDBn2DfoXcc/NpsqX4nDG2/AnecoxvJtVpD0BcYhyOq90bIR6fEJIqO
+	 SEQfaB3/AF5pgfsv0g3R/J8bOI+Lw8NwKg1n7SfZUJxjNVNKkLs9nGoIKleqMJHoy6p8N
+	 BGSzx6B59LShx33lbMswGjvbvjbkPDN23xjZ6+h07ivysE9nN3ijtxOacAH3JUJ0z8Dsq
+	 QGOzJRaKJ0K92f3zn+/+wYMa7g+seCjdTgXYKtnQcyHMO2URk1EerI3UDTMEu0JHDunAO
+	 rmIMb6+lGdujnfzGK1lao1/BiXSbPX9fOVjIWeliPdW0ZYE96kkxKVL1GUS9g4252KQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=qq.com;
 	spf=pass smtp.mailfrom=qq.com;
-	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=gSBnsy61;
+	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=dG2HUSdQ;
 	arc=none smtp.remote-ip=203.205.221.149
 Received: from out203-205-221-149.mail.qq.com (out203-205-221-149.mail.qq.com [203.205.221.149])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327DE606A6AB
-	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 03:42:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 327DE606A6AB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37364606A6BA
+	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 03:47:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37364606A6BA
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=gSBnsy61
+	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=dG2HUSdQ
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1795232527; bh=55KLg5TPytdDc9hoRdxs/pCCWjQgeOkyFylwJEOUFYM=;
+	t=1795232820; bh=55KLg5TPytdDc9hoRdxs/pCCWjQgeOkyFylwJEOUFYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gSBnsy611qLxqFl1wexhgR24XXTIztko8drty2NoomMsxYsHGc3jdcA9fTTk5vatQ
-	 99v+3mBtP5jTvEaCwmgoEOVpX1pK/AvHDwftVztYy+bpejNC3qmUGPndnhYOPHpw4+
-	 1NtRbc0e3l0Zusiqrq5Z5QURALfv0BA4WbSE/6Dg=
+	b=dG2HUSdQhYQ31EV1xGTKYYPlZP7ERlgt98Sp88uCoqIOKa6KXTxM6skT9dZ0Z6QPY
+	 8q9C0jSsMX0xxL/7XGhfrmfb6J1r19NTgCLbZoKSAKhFCRC6/ekcSSHBeoRVQPS0ou
+	 sjHrQ7EbUv+CSJVWqM5QQurVBp8SLbcFJE7OPATc=
 Received: from shuai-VMware-Virtual-Platform.. ([117.158.156.198])
-	by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
-	id A8519672; Sat, 21 Nov 2026 11:42:05 +0800
-X-QQ-mid: xmsmtpt1795232525tzzj93r6y
-Message-ID: <tencent_03B85262EE136CEE83D2012CA5F2704D2008@qq.com>
-X-QQ-XMAILINFO: M2SvzgchpLqfjYSr+5qdYkljKTTtIvN4a3FibtIAt8oLjS96ZPgz3DmVMCHhak
-	 W/pRi1TRZGfHkjI2UjU5XtoVe0iFVtzKbA1117KiF8yQPcFK3bIJtOOoW9j6U4zkC3BaafjnVvT1
-	 o7XTN6JGzdR3vOPqI1ApfMVJuZpkUw8z1LSWG11NbgxUoxe2G37SPCMLK1RVP4GUNJAuoocL8h6+
-	 tCxm0H+Ht2bZLHwfxnLtct58J/xV2LICZe9lVVHGBuubJDtaw6oS0ixb7TtPHIxlkR4+RNoucvms
-	 TgGsFOn6/nhFZYbq5iIxeCO/5a7HYoBqE/w5KV47S8fWtVW98giueoPgxadnUbP2fZxp4dqrrrBo
-	 DhBtH6aq9/uBE77Pn9rjl2CWCukpaBcWxORmduytHqeph9VTeoJ6rVPSytPXkOtlMlFj0xxqIzMB
-	 6tRCA3MTTq80uC1CylJ3kZfXns/b91C0ShJR2j5GmFoEmUOIatnOeAWse551NyKBRKxiWu+H8IyV
-	 wm0QS5dJZwFsInYq6fxmGCUb/ImYjb+Il3W8Vtrjc5EnkgDUSTwd2h8jA/IZ1+TTYg28WlqU3gTN
-	 HT0lLkI1rFyN2rSd3xWwj24DqQbDnlNyusTslYBGWyFcLWxBwKRCMw4mv389diZHOj3mQSR8LJaH
-	 6J7duQiifL4B420cFlOjq2ZlCimi5knD10OHBabzZDVs2pKHcfMrdgsQzXjdGoarPuhBMIIu0OJJ
-	 qiYqHiDkuJ6px3IsdyzU6MorYjcaDXFKYpC2p93DlrRRzKPb6sT1jpZMduRnqCn3sqU8FMNfGhoA
-	 4JEmFI2BsBaIkNZZ1mHNONDAuy8evjj8eAid8KAB2NtDJSlyp4TwVxqPRA9WosvoHz5oxLB+Sc/Z
-	 mTFRJjIBFA2/3S/Ly+KBql7Cq8mqLApTwNZWexfI6sOlfqVVf6VRNWgy3zjx67DrJ6Yvsbzu7PbT
-	 7OLJeRTIOHDMpQOhx7DDjMYrQ7Z4Rx7hTdEcTjxT7l2puCDHaiB9Zo/R+ZLlGZqGXYG5uV/6vp52
-	 kmfXjyF46JvH8a7CGNWSC0dGC068Wx/Sh34YVjW6NaK58TZiwLGBMViIHn0Ap5zkbOFJ1I2B+nvM
-	 lhYltv
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+	by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+	id BB907498; Sat, 21 Nov 2026 11:46:57 +0800
+X-QQ-mid: xmsmtpt1795232817tlowbldga
+Message-ID: <tencent_BEE58D9BBE7109C47C2796DDF5A4B958F609@qq.com>
+X-QQ-XMAILINFO: M7dxyDFn9MPm+gLasOjeHd6TvQMTi/jgnSlIlpHD7GcN+Qj/LAXTFLTCVvjHGD
+	 0/JIsOPDasevI4zNmiFCdqHBASY0bix5NQUnE8vPWaIsiIiQV3I3/IMWTuS1pe91xTlRCIcspRw3
+	 CrgvfPR+W59eB4pwE/SgbKzOZgBFNHtdMMZdzb6tlGRQOGEGfoO4T8wf3fehpTkjx8uU0MK+hoK/
+	 O1Y8hd4Txpl4GSBhIOx+kBqtXS9J0Kz1s92pqQckpZJdB3vW7wlMW3iWV5sfoiE1kQ9otAc7VSK+
+	 IWPSbSzK+iQE/2E7/ScxTRURW67i/19iQr+htR95gCITRr9UvWh/5/AF7cQFKLJsDCVL21kPWc5S
+	 ZaIeF8YGwUV+YAVNMNvmsbuFwSfv9IDLrucb+A5FE7FS+yYljr40LeNSaCa3ESjJVjmQGVLwrDpV
+	 Fv343QUdq6cyZKruth+nw7MIZEheTXDK5Os3XSg5ISuGkGEqlDQ0eWSmejMNLeVyz7Uk0iZXLPRV
+	 rYsSa3WczsQSgcImhHghxrZFIf8waTu42+ivBEy5/oPI7Q9+wFBrhSNbFtl5Emt1NQ1QhLrm7OPJ
+	 SschA9xn7VuJl9fOONOVhSDjwDEuOSMPxxYyyL1+CrBtDlFN9OUFqS5sb+uMcw68eIE8eKg31mFh
+	 3chk17qUIIVG3ZemJEUDUv2LGEIpfWvbh9nJzy2z539EldC44mClm9RVRXVZ6u40QY4ntXMPxysq
+	 9Ol8RslBSrZ4g7p7tRnXtzyQvG4dUL+cWucd0yumOTj81AJYt2kl7P18mfBOxgtG5W8nmRyrVkzK
+	 mRqISuY4X8ME99yu5lH/L5dQnHJRSlvXodYWg52+nPlds+pB6E8mT0RdXxyT9Y0VsHhkekC6Z9Fn
+	 Hz5a934dnEdio/rARmKiBh/nNSKgKesN0tqHgYEpNyff7LgS3DlKn99eNW50uKZPIPZ+mihciDAD
+	 CFYwd1MShJ3gacghg9L13pjFgjpVmEcTKJWGiMlyjwNg8bbqdaMvHmZsVit4NTqcI4qeJ1ejPotX
+	 EBtwUWkDQ1biSSxIIdvkifBef3bgXCBP3/uMXB8dNvIaXtUi2+DALlsuY9beRdxgvHmhiaVTBvaj
+	 s6Rwp2byc663SiKc3fZwo4r9rrfKGzljH1Jc0G
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
 From: Shuai Liu <847807867@qq.com>
 To: linux-rdma@vger.kernel.org
 Cc: yanjun.zhu@linux.dev,
@@ -72,9 +72,9 @@ Cc: yanjun.zhu@linux.dev,
 	syzkaller-bugs@googlegroups.com,
 	linux-kernel@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev
-Subject: [PATCH] RDMA/rxe: Mask the SQ producer index read from user space
-Date: Sat, 21 Nov 2026 11:42:04 +0800
-X-OQ-MSGID: <20261121034204.102626-1-847807867@qq.com>
+Subject: [PATCH rdma-next v2] RDMA/rxe: Mask the SQ producer index read from user space
+Date: Sat, 21 Nov 2026 11:46:57 +0800
+X-OQ-MSGID: <20261121034657.104531-1-847807867@qq.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <tencent_5B9FB1BCC8EF36C5E2128B7D4D54B867480A@qq.com>
 References: <tencent_5B9FB1BCC8EF36C5E2128B7D4D54B867480A@qq.com>
