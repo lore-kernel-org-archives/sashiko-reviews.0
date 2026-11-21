@@ -1,98 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.182
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795285414;
-	b=VOVdoifWjhzzP7PUIqkTXAYJSpjUQE6qBw7wMXqAsw4jz3bgeWjUdRaC3za/GGTjt1kt
-	 TT0u6O5F0TaSiDet18+NNSSNJZqpRMyoeFZdeB4VEzeQBBUxlDJVb4ebMsgFjY2XRRxkN
-	 UDu8hEAdXupv5vEn8W03v9o8J+KagE2gv/x2PzNLJo0lz3N4Y4yeLUgNYNX4PrUXW+6s3
-	 DQl1GA46APeRl/BsrtE4/hKvIey8ZQWSlycZHPf7R0HAbRcsaIHW9QdB+saau8Hxeinpd
-	 tBsvc2CO3/nicrA1rcYDMaI7O5BEO5E0cB27dlzv25nsi/1n4lBC3mgch72r3PPD5lQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795285414;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.171
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795286969;
+	b=IKsyFuff9UHpI9Bul2vVPYUwoy2usTSYqX3EueRLO+yrqJBKRTTolwMpn5W21W064aEK
+	 ZbkXci0Kq9TcL7BRKXXCoTZdIUI0CKjzN7EI4O8tZRoqWxUOr9J3Nck6mkG2Husm/ILDm
+	 LoTLwbOnPwnt8DJ3W+WmeYAQWDdpzt6ZitGGdZc6qhuLpZflELr7BNHC4IVMa4DRe8A1x
+	 h2JzRC3E3COWLgZ3UKB4aC0J/4dRzxa1FTEUHAgPRIy5fh6swMIhUUxJmtNyeCDdu0CiH
+	 zPbSClIaiNrz1akp60nD2S1HNihIn9oEFFTCJAvksZYVMEUkpftfkTTha331z0TkH8w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795286969;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=Z75xzDza/hooSCAJFqk47whifzAJZg7dX21ijDhOozU=;
-	b=twJ+AyWiaSiqDaowV1mRq+WdH5D5EZJbz2g/HSTnQSNWAqOpGHWZCqwuTPF3w8eI6Hf9
-	 G/2LWtmGq3ka8gilxacxz80L3bCZK/0HOo4kdMBWSvG4W0N0CKG6nORFH2rOt5Vj03Z6w
-	 QE4RvZ+iyy1ZsDVGCTnFPqE3AUbNBlZeKrcdZ8kXTBB51TdYumQrXh8pH2Eh4WpZ1EWwA
-	 4i8TO3tt5CSjXjpUduZ5iql3l8qoZIGVfXVnR9XA+nsuAQNhV97QWELW/t4a4okIXlHUa
-	 7++9hEUN3vl1EkVpdGb1yzII4Go+i59+rUyONOBfjyvAI1lHCIdKgxd+ggQ1PXvHAtQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eeFJ87Dj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.182
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=IOPWZ6lehbHK1L3+BbbWGiJJk09EnHKGCl9qIhtihN4=;
+	b=UZsqXzP2Dc5eXT9wL8C2MIpUNWK/loZzBAmwoLkpgfNhlsOAuk/ckOWPGgA9VaU6fxgI
+	 Mp0o3L9rINt9XQklita8kSwj5YNZaLSa3/OLfg/BToag+rxXtxtFFBUnw0rufNg12dL6V
+	 I3BP5EdkefuetYiBXJT3tTlF6/MefNhfe9nvwIouFEiOr5oemjYuiu0YF0kJBLxgHPd3G
+	 osa21j9Ln0LEeG8eHGqbdPoVnY2O8h6hL1/nSvlsubnmPPItlDOtNBiCTRVtJlXOsvY/C
+	 QtlPDEwc7gGDr6qoFHFrpBifrUKyMD9VFtrvKku36T7oDXD0UnSuro4xpELTspfk1yg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=FgNwMm5K;
+	arc=none smtp.remote-ip=209.85.214.171
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3125D606A32A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 18:23:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3125D606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2902606A320
+	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 18:49:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2902606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eeFJ87Dj
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3ad0102edd4so18135411fa.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 10:23:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795285412; cv=none;
-        d=google.com; s=arc-20260327;
-        b=CBQaGLqBzf/2qNss0rZ8+yv5unCiy3RkIgsbk9Ir5QTWS2upsW3VYdAO9RoPs1X84R
-         FeD4AXr0jH3Rng3zqFemaTOe5ZqXFGaKQQXMbceNE3EUGnMaPx1H+dz90Y9ff5/ZtC1O
-         myM5FMfBrRrVJ8ZBWSLZbJg92EQqo1PW82kQnejs4qgMChGXysxBtmFfELSPQ6pgRJ2q
-         uGq6XlET2qvdgJGEb96e/uLJzKqC1IKTtcF5+106bNcLzHfDMzY5l3XobyKdQbz3ClYB
-         u1KfiHFCqDLZU3OwcVRYaGETYuObiMiVuytYWj0Xa1c3zaWc6i+LWr2m/d53q+LBRgfE
-         afvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Z75xzDza/hooSCAJFqk47whifzAJZg7dX21ijDhOozU=;
-        fh=fM4ZI8+hWSv3Fnbj2b8tQ4LUMCJe/yK27MRsZNxqW0A=;
-        b=CGzSIO6nFCCC0wDZ5rRuuyZyatEHnrwF1bk2fNMXabkY+shNYbkNxioWDNnXfTyNht
-         2ZSBBvXfZkQ22jYe+Wh2POo1jmF5h5MtEF615/iYDRI7bPAC2GW6LDxGXVQ+iwCz0Vmd
-         +oPCQWl3FjM2CiICDQnfaaG34ZtsN+O9fDXYiJAJYSpOd+lm2Z7TXomuvEnmntHpti58
-         0g+KHXvz//tujRpKmscFR8HwEeoMwxwhncLEWgddiGft2Pu2w9wbLeQujapIo6/FTWNh
-         N119haxWlJh8SGWHWCWt0HAGNINqlgBLsCUp6ttebrK3ch9wKbmy5mjmLX22p0yu4zm3
-         uKWw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=FgNwMm5K
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2ee254f6eefso47075ad.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 10:49:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795285412; x=1795890212; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Z75xzDza/hooSCAJFqk47whifzAJZg7dX21ijDhOozU=;
-        b=eeFJ87Dj4gzRbWJ1dhzz9Ae38H1olk1PNIoc+W2O2fMNtkKGMSEsb9GYF0xOVS1eUo
-         dYw/fQwUusX+96dGoDpyI2rfr6t9wxk//m2TEh0mZ7kUb8NMTpZ6AfK1eLEQSiwystmW
-         eS4qSKfXsNY7baDYaOMBBTOA73RbTF2ZQci+1OnPjrdOxzh0SqTF2LoRWit0Xt4W3FYf
-         gsa9MbR7LR5+Sdp1n622uhQLbeqfnpkyWVwlmrFrFuFCRij68RKnEHKh3NMnyicl8r5G
-         5vPSzx8eOhFHIV3uiLmhdrZG0FTnj+KtHfObuyr4OHv4RHeyR87cgBdi0L2NywmjkBOm
-         +NrA==
+        d=google.com; s=20260707; t=1795286968; x=1795891768; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=IOPWZ6lehbHK1L3+BbbWGiJJk09EnHKGCl9qIhtihN4=;
+        b=FgNwMm5K8lKA/3kc4oDghfsA1I/TtWmU1PKRC6nnCVePW6fXedZqPVXwZ98CWeqwmA
+         aioSWjTyYwzPn5b5IUHr4hpZI0RbrfeDhVM7kF+zBBOn7/IB279DA+SGC4kQt9nUQpFa
+         mnzVGBeiQYFD9fXXfqZgke0Yl3Si5v2p5wQKFeH6qXBI5I9UF5PC0gQF7yOGZXTuRNyj
+         ZfR8P2jTZfGNRNeOq9lvJT/BTl06ggiVd4qEW+y7qECdoImesOZJilj6odrnFVSpfTdC
+         Zdjj3fC4caK8gjsP/p7Nqj5Pm0dHxlYj+rKQrEXfajyuqgh9HeP1fdbhNBY0yuxy5e5q
+         /e6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795285412; x=1795890212;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Z75xzDza/hooSCAJFqk47whifzAJZg7dX21ijDhOozU=;
-        b=WdSug7+yjmsCRWl3Ysz6w/nSgSjeFtN3K/8WidcCMvxIhMI4c6L8LdudkRuQXKE2qa
-         d9Dt9evgkjB9ZszcFzSQyU8lAek4o6i3Yfxm1dNr9t4uJylPx8CVu/ON4VSowrvevUKw
-         CHw/iyTCI0Py683uDJ90wTtZQazGrM6Qr8OtCY/czlTE6ETA+U+DhXHiCYUM2zK9M0JK
-         K4aM2L9u+Zd7K/iKy2aJCzs3eDo6gJJ4DWlC1gtOkQ4g+10dAlvSknuPDU2Elv8f1gSu
-         aRDAbbqKI7NUn2rLOOJaal1vWqEvkP7BYQ2tRLNbyXxEXvpkByrQtbjha8WKN5wI6uQK
-         DyUA==
-X-Gm-Message-State: APuU4Z9K6nQu+mjTHaX3hdi3hh5WqI2vA21NeTyQ0bb8Mj1PxvFkbtm1
-	qIGxf97wg94TehUg0wqgirEi+kmYBxcJJIz0EX8CSEHc38np+zITGXaUY1CntDlMcHe9MSsLlHl
-	YVV4QzuRgArL//NKqMwAr+lchrlVstQau+14qHkk=
-X-Gm-Gg: AZFdTZeO+EAgtfv/Pj/Ce3mBuZBWDBU0f07QfFjJN7EPmK7H49jTG0IYEpCdz90FuV6
-	3hh/hnOPfeUeojcgTqJsp7hUmr7WWFtOz6KtH1e78MUpv21SILMexxT+75clgOYaHlNxhD2GxkD
-	MC4OJ7zt1+5ReKqhB1lD0pME0QrWqpSYbyqjN/cmYtArAiogVXeSDg7S5dhxkUAtAuZnUzGbDQ5
-	RZf2oaCFHs7xb0lmiVM+AxwYiybnwjexzpWKmRXnvOc+5Rczsogx0NjjzoqcvWcN+9y3VWk3dfH
-	UvlZHDRrzDhttboKfkxZpeP14ivF8u+clkLoyoLJpB9eNbs6tokQcODUCH/z04r5m/l5sBER4Tf
-	ra9XPNoZfcatXwOU5KL343UwY2HCqudmIag==
-X-Received: by 2002:a2e:bd06:0:b0:3ac:e4cd:d824 with SMTP id
- 38308e7fff4ca-3ae7fa9d43bmr17398791fa.25.1795285412132; Sat, 21 Nov 2026
- 10:23:32 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795286968; x=1795891768;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=IOPWZ6lehbHK1L3+BbbWGiJJk09EnHKGCl9qIhtihN4=;
+        b=k4xZeTFmxyAWbsTihB5baZOi5gkYaXMTgaqXjiF+0zQsU7f5TBKFlx29fuaJ2Xy1Ig
+         NkgYL7lemd8YRUz2lWObz/3/XqLoZC+osFvxQ3htIQZ3lOvHUUJOtUbsmuIihEIYNBB2
+         uUVGvcgSzAYkdMNSs6saT5kk89XTbtT55TbJho3f7Z4pUmyVQUVbXWijHW0weK/63bQP
+         SI+XtiEUn+7xhhwwT9OosO8hKVy1Enb63Cxwp3nh/mhaw9d6E2bLj9ZPvTJGx1hcPlWf
+         YBOV2Vv6UsFKkLgli6fM1lXCaHGHiL5nM8ola0UxRcl29L0V0GkmFbyXTHt/+1TT7JdF
+         S32g==
+X-Gm-Message-State: APuU4Z83bq9w8IWh5iah2Hv8cG6N/D/FmPyBfh/Y3MQzcJhjXhtxsHTy
+	mTziwQY8PQ10gr5B100YnR9k2LEPHAMZUVy1TvYKhlkwwouoFTiSe+iHcGcnLEKlJJpAw6HDDv3
+	QfkVMUA==
+X-Gm-Gg: AZFdTZc0roXQgv89w52St5JwcuR9CUHoebEs1svHCQvx9s3DNymnqTpBTgHPSRgoTU2
+	j27C7sPF+5cGzRuwO8r9X7XYbwrxEIcfEhYYtd5m6nvW3Wsaj/Q5LL0/WREx0TSQI/UZ72WUt8J
+	7DFf5csjmlUqSMoab/w0UwtsRumSHwRRtPKpMzZvwGViYCrG2abVn0P+fteAjZgTkQSgaN1lhF5
+	q3W4RlbhPTGJm7+IPb14vHiFniPNjEThdCzKQLiyzuirtYh2tscPorec3jbJVUoeZFyom770QSq
+	xAYl1GA7z1ayYML5KZi+BFkDxifPl3UHiWlac2dnDqzMwpNxliIpPNEVE6VCLnTeUsDrYdWHIfa
+	e9tPy94trhkXKqAXDXAty/PKeY98yM76sDYgcD0HwskMKe9dkKaVzFMkYHUwnT0p1ymmHbBCUyB
+	VZP9YVVfvh+skou46YjgtiQuz1H3vfGn2UnG+Si7kRjY23FPFsthEqZgPgiCCYhX5NJ55NKLoR2
+	gMKZN7VRRZZ4RgLMhQeA/3YgcFoCIwX43onYHuKaKH0LZfjIKewbsQRKFyni2KcMrlNas1LhOpb
+	rt9E3xQpm6iofmkOjourB7luJ0nSEwiGB8IaNTgVdvXoww1CklxKckUvXtq1rUuOkJRGRnsbAUW
+	YC7TCadhGX74DLITddZ/+Sc4NyczSjfXjjuhLquoguY1dyB73097QH3z11H/fdae8SBj0+yeEiM
+	JIbd6Y/IN/voBrz0VfjfG+0d4aZQk78aw3FDWoWg0SZvw/ACdizy5R5fSvNqHzzCNJx4Ow450wX
+	ZtGBAfXrkWFROHSow==
+X-Received: by 2002:a17:903:2407:b0:2e7:e742:8bb5 with SMTP id d9443c01a7336-2f0666c00e3mr2926165ad.14.1795286967604;
+        Sat, 21 Nov 2026 10:49:27 -0800 (PST)
+Received: from google.com (130.155.125.34.bc.googleusercontent.com. [34.125.155.130])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b41aab4729sm9311009a91.0.2026.11.21.10.49.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Nov 2026 10:49:26 -0800 (PST)
+Date: Sat, 21 Nov 2026 18:49:23 +0000
+From: Carlos Llamas <cmllamas@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: ojeda@kernel.org, gary@garyguo.net
+Subject: Re: [PATCH v2] rust_binder: disallow binder fd transfers
+Message-ID: <awHnsz0JL2Igtp7u@google.com>
+References: <--in-reply-to=20261118112933.477541-1-aliceryhl@google.com>
+ <20261121182803.2600723-1-cmllamas@google.com>
+ <sashiko-outbox-227261@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,22 +100,43 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261121163915.86681-1-joshuacov@gmail.com> <sashiko-outbox-227181@kernel.org>
-In-Reply-To: <sashiko-outbox-227181@kernel.org>
-From: "Joshua C." <joshuacov@gmail.com>
-Date: Sat, 21 Nov 2026 18:23:19 +0000
-X-Gm-Features: Aa3M54oMS3zDmX2jTIQjP60yw_5F2PR36ANEnn56lHMZE1_sztKVGnLssNfJp44
-Message-ID: <CAKL7Q7p4C_Lmpa7RE=ERBVRzynNGdvhHMWzsvhe_ZC0v_0s_1A@mail.gmail.com>
-Subject: Re: [PATCH] clk: rp1: allow the clock provider to be probed again
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-227261@kernel.org>
 
-> Clearing desc->hw.core and desc->div.hw.core for all descriptors before
-> the registration loop would avoid this.
+On Sat, Nov 21, 2026 at 06:35:16PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] rust_binder: missing Fixes trailer for Allocation::info_add_fd()
+>   fix
+> --
+> 
+> commit a963eb2d22cc916873581ff387f2fed49b4fb5e1
+> Author: Carlos Llamas <cmllamas@google.com>
+> 
+> > rust_binder: disallow binder fd transfers
+> >
+> > Transferring a binder device fd via BINDER_TYPE_FD or BINDER_TYPE_FDA
+> > has no valid use case and can create direct reference cycles that
+> > prevent Process::release() from running when a queued transaction is
+> > left unread. Moreover, a binder file is bound to the opening process's
+> > task, credentials, and mmap state, so transferring it to another
+> > process breaks binder's per-process ownership model.
+> >
+> > Disallow binder device fd transfers by returning EINVAL in
+> > Allocation::info_add_fd().
+> >
+> > Signed-off-by: Carlos Llamas <cmllamas@google.com>
+> 
+> [Severity: Low]
+> Should this include a Fixes tag for the commit that introduced
+> Allocation::info_add_fd()?
+> 
+>   Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261121182803.2600723-1-cmllamas@google.com?part=1
 
-Thanks, fixed in v2:
-https://lore.kernel.org/all/20261121181650.143474-1-joshuacov@gmail.com/
-
--- 
---joshua
+This is _not_ a bug introduced by Rust binder. A 'Fixes:' tag here is
+incorrect. We are restricting a behavior that has always existed.
