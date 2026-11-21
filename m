@@ -1,54 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.120
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795289663;
-	b=K0rholevPBEfVEm3s+TktzQVpBqRwP0ZEAZhkaLtrQOel3uHdeLBheeIqZ3BIyqjCzsS
-	 gSoFqI8TMbX1m2hDA9Jz9RV/Iig3wQ77MvAF/21PDMd6pwYR4tZfVM/wdvOVpLW58TxZQ
-	 l8pzFfY5guGVqWDkvjXXkvfAVWByQRWPSyXLgmYNFuZTLcd+McO+fGSQlu0mS+gi2LWQ6
-	 Hx9yZeXa0/9CPE2DWYO/7u8XfGwZITzCRbDXJkzlLLo5MBVkD4suXSUE65LlcjOJtmK0O
-	 nhNmjyMC8bdz8MVd+ri4DyxY5H3v5PNKZbRucmdKee7+tEp03RyVEjxL5UIkhOXNxVA==
+	t=1795293783;
+	b=VmCRbs22wF0jOIO6ELkIe/jYc4suCtamu5Zg+wRbd+eos3KgZOp0EabX9HmNGfcjBAQf
+	 GMXG1j+d3oZWg61WHa41I+YecBmLIyzXdrhfcNeHmYi65//8SAsIqfzbn4V+7kca6t+To
+	 qQStzXUuRH7Vg1MuYsnxRoxpeUXniijBuCN9Q0TT/5rou30Jv8Z/IsArYCcpAgElIyAwP
+	 en9a4jJ5NgyUBpZYJfk8KsOLCW8+23Uh9s4X1IxJciSi1klNRL9LOaukumZTnhyp6CZxN
+	 LOTX3ubgku5OnTUGmecu0UwnJNdD+RT0+s+rYhtiJf457IVaDky/31rX7EGkGEViytA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795289663;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=ORTW/L5hh1DC9F6jjZky2W0T49vigeZuL6otjngyggU=;
-	b=cUu/kQSPKkx+lE+/bB9UbHOrQ9B2D8wkv4WzupNX77/cHgjnFQ1pEagaI5N0CUk0n8HF
-	 Z36Dhl/mmTxadPxT6axbxrBluMwNURBKoi/pNIiqnS1pGSk/PDubiDS55YOJFz8gT90MY
-	 XnEwX22RmTJsJut2LbFUWSZ74Zif64oDWJrcRUsBSVDDMV86wkXA0jxCGgnhiGlLJYtF7
-	 4PQZPBpHrlgWI0AhKJlE9F6kAal9HYR6RLSEoiEuUlSMUJMTKDELUe9dxUEp47evUN5ht
-	 4/T8st6I0Vpcj7t+IYsLong0k6uu3nJI3UQCDn3/NLpvqyVH+eTAyAcWGez7VgA1fAw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795293783;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=1mTz+iq1JvtnlpF25oXq0EGohNT4kPJ7oLTXbtROTFU=;
+	b=5RRJu86VX+y4gIaIXDs6nHmT7Q5LWWwEypWcmclLl5b1OuSz44fGuVA68+WPl/A4o06P
+	 9jrW0aalemk67ikoRk0t1PgaJzTTPuBG0kh/CegE71VT+7T0WrWmCakk2R3vxlET0dZdz
+	 9ecTHJxcel17siEDK9VtYXHekOTZa7dxJ7QP1h36yZ35p43HJ0DAlRqUf4ZSSrSB17Q0n
+	 BJuPRvfaBBfddMRAELTInymz2FIlN+9Tv0elG/+R3CY9hWiw+bIp4dSojlMPP99WCwbq+
+	 vwf8fDYOSEAbRDnkeYewvM65Qbvd/A+cJf7HvpPVSqv3a5vEH34yhg4jNHBNEX0yLVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=DBB7aNQg;
-	arc=none smtp.remote-ip=95.215.58.120
-Received: from mta1.migadu.com (out-120.mta1.migadu.com [95.215.58.120])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xo4Czx09;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC3C606A32A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 19:34:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1CC3C606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7FA606A32A;
+	Sat, 21 Nov 2026 20:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=DBB7aNQg
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=I9C/bgiJfXHgW926J6D3HYkewXOwJxbleb9jrP9kCpY=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795289660; v=1; x=1795894460;
- b=DBB7aNQgauNKvIny4sl0fzklqH8l1slINVYmwr4Dvt7SIpQVqC7N3fR9hj8RwL+Or0EcXEW2
- bRX3vKqgJ4HCaHdlj7PhB7H8WKtY8x/j+g8tnWL/+TlSnLvTNUeBnXsLb/hls7uhRk3WJoRXa4J
- pOIKgax3y+odp8A9btAkFVsQ=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 0be58bc518feca3e;
-	Sat, 21 Nov 2026 19:34:20 +0000
-X-Mizu-Trace-ID: 0be58bc518feca3e
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <3a58ba4f-fd64-4144-8635-4b99983f7640@linux.dev>
-Date: Sat, 21 Nov 2026 11:34:12 -0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xo4Czx09
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29521F000C4;
+	Sat, 21 Nov 2026 20:43:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795293783;
+	bh=1mTz+iq1JvtnlpF25oXq0EGohNT4kPJ7oLTXbtROTFU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Xo4Czx09VIXm73PY4EJUmTgx1okzuOhWQVl2ccsGH9q/cDCE5tGywjYHXa4BotbMa
+	 5eDkXNeaynfD4vOijAt0q9brvj4Fei6vCJhSs6U75F9IBPNX2ouHIkSeFC41/gqw32
+	 CpVyRACX/tuUSJlbAPKTSanWCw7+mqI5/R43OE4M5MHbNKYRmggRQ502Us1dCuXQO9
+	 uuOL3gzctOusFG2gz+DNxiApT/d09mjEKh2Qcuxi5QvEed9wMckuIUeBG/wpcoH0t+
+	 kTZLgoSN29Fz1wEcuf7dJpG/BFzc+56rwS//ZiWaEBoYGFwfoZZ3ACvnGei2vRAM3m
+	 F83n7RDMWPVqA==
+Date: Sat, 21 Nov 2026 21:42:59 +0100
+From: Andrey Albershteyn <aalbersh@kernel.org>
+To: Christoph Hellwig <hch@lst.de>
+Cc: sashiko-reviews@lists.linux.dev, Eric Biggers <ebiggers@kernel.org>, 
+	Carlos Maiolino <cem@kernel.org>, fsverity <fsverity@lists.linux.dev>, david@fromorbit.com, 
+	"Darrick J. Wong" <djwong@kernel.org>
+Subject: Re: [PATCH v19 01/15] xfs: introduce fsverity on-disk changes
+Message-ID: <awICI9nADM7ut-WK@aalbersh-thinkpadx1carbongen13.rmtcz.csb>
+References: <20261120155752.192025-1-aalbersh@kernel.org>
+ <20261120155752.192025-2-aalbersh@kernel.org>
+ <sashiko-outbox-225564@kernel.org>
+ <20261121002310.GA13395@lst.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,117 +60,29 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rdma-next v2] RDMA/rxe: Mask the SQ producer index read
- from user space
-To: Shuai Liu <847807867@qq.com>, linux-rdma@vger.kernel.org
-Cc: zyjzyj2000@gmail.com, jgg@ziepe.ca, leon@kernel.org,
- rpearsonhpe@gmail.com,
- syzbot+fef38133c495aeb48297@syzkaller.appspotmail.com,
- syzkaller-bugs@googlegroups.com, linux-kernel@vger.kernel.org,
- sashiko-reviews@lists.linux.dev, "yanjun.zhu@linux.dev"
- <yanjun.zhu@linux.dev>
-References: <tencent_5B9FB1BCC8EF36C5E2128B7D4D54B867480A@qq.com>
- <tencent_BEE58D9BBE7109C47C2796DDF5A4B958F609@qq.com>
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
-In-Reply-To: <tencent_BEE58D9BBE7109C47C2796DDF5A4B958F609@qq.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261121002310.GA13395@lst.de>
 
-在 2026/11/20 19:46, Shuai Liu 写道:
-> The send queue producer index of a user space QP is stored in the
-> queue buffer which is shared with and written by user space. The
-> requester reads it without any validation in req_retry() and
-> __req_next_wqe() and compares it against its own local index which
-> is always masked.
+On 2026-11-21 01:23:10, Christoph Hellwig wrote:
+> On Fri, Nov 20, 2026 at 04:26:31PM +0000, sashiko-bot@kernel.org wrote:
+> > [Severity: Medium]
+> > Does exposing FS_XFLAG_VERITY in xfs_ip2xflags() without allowing
+> > FS_VERITY_FL in xfs_fileattr_set() break FS_IOC_SETFLAGS on verity inodes?
+> > 
+> > When FS_IOC_GETFLAGS runs on a verity inode, xfs_fileattr_get() ->
+> > xfs_fill_fsxattr() -> fileattr_fill_xflags() translates FS_XFLAG_VERITY
+> > into FS_VERITY_FL in fa->flags.  When userspace such as chattr(1) modifies
+> > an unrelated flag (like FS_NOATIME_FL or FS_IMMUTABLE_FL) and writes the
+> > flags back via FS_IOC_SETFLAGS, xfs_fileattr_set() checks fa->flags against
+> > an allowlist that does not include FS_VERITY_FL:
 > 
-> The requester stops processing WQEs when its local WQE index equals
-> the producer index. If user space writes an out of range producer
-> index into the queue buffer, that comparison can never become true.
-> Once the QP is put into the error state, rxe_requester() then keeps
-> flushing WQEs forever: the flush path advances the WQE index with the
-> masked queue_next_index() but the producer index stays out of range,
-> and each pass calls rxe_qp_error() which reschedules the send task,
-> so the loop never converges. The send task holds a reference to the
-> QP for as long as this lasts, so ib_destroy_qp() waits for the QP
-> reference to drop until it times out after 50 seconds and the
-> WARN_ON(!ret) fires in __rxe_cleanup():
-> 
->    WARNING: drivers/infiniband/sw/rxe/rxe_pool.c:212 at __rxe_cleanup
->    Call Trace:
->     __rxe_cleanup
->     rxe_destroy_qp
->     ...
->    rxe0: qp#17 rxe_destroy_qp: cleanup failed, err = -110
-> 
-> Fix this by masking the producer index with q->index_mask when reading
-> it in queue_get_producer() for QUEUE_TYPE_FROM_CLIENT. This restores
-> what producer_index() did before commit ae6e843fe08d ("RDMA/rxe: Add memory
-> barriers to kernel queues") replaced it with queue_get_producer() and
-> dropped the mask, and keeps the requester, the completer and the queue
-> helpers, which all compare the difference of the two indices modulo
-> index_mask, consistent. rxe_qp_init_req() also initializes
-> qp->req.wqe_index from this value so it gets validated as well.
-> 
-> Masking the index in queue_get_producer() instead of checking it at
-> the two requester call sites was suggested by the Sashiko AI review of
-> v1 of this patch.
-> 
-> Verified with the syzbot reproducer in QEMU: without this patch every
-> destroy_qp hangs for 50 seconds and hits the WARNING above; with this
-> patch the reproducer runs cleanly.
+> Yeah.  ext4 just ignores flags like verity in fileattr_set.
+> Should we do the same here?
 
-Thanks for the patch. A couple of questions/comments on this:
+yes, fixed in the other patchset [1]
 
-The commit message mentions that this fix was verified with the syzbot 
-reproducer in QEMU, but I didn't see any corresponding verification 
-email or test report thread on the list. Could you please share the 
-link/reference to that email or provide a bit more detail on the test 
-setup and baseline kernel used for verification?
+1: https://lore.kernel.org/fsverity/20261120155032.187246-1-aalbersh@kernel.org/T/#m96800af1279dd56736b8199528c1c6238984e2f9
 
-In queue_get_producer(), there are also other queue types such as 
-QUEUE_TYPE_TO_CLIENT, QUEUE_TYPE_FROM_ULP, and QUEUE_TYPE_TO_ULP. Have 
-you checked whether any of those types could suffer from a similar 
-out-of-range producer index issue? If so, please let us know and include 
-any necessary fixes (either here or in a follow-up patch, as appropriate).
-
-Thanks a lot.
-Yanjun Zhu
-
-> 
-> Reported-by: syzbot+fef38133c495aeb48297@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?extid=fef38133c495aeb48297
-> Fixes: ae6e843fe08d ("RDMA/rxe: Add memory barriers to kernel queues")
-> Signed-off-by: Shuai Liu <847807867@qq.com>
-> ---
-> Changes since v1:
-> - Mask the producer index in queue_get_producer() for
->    QUEUE_TYPE_FROM_CLIENT instead of checking it at the two requester
->    call sites, as suggested by the Sashiko AI review of v1. This also
->    covers rxe_qp_init_req(), which initializes qp->req.wqe_index from
->    the same value, and keeps the requester, the completer and the queue
->    helpers consistent with each other.
-> - Point Fixes at commit ae6e843fe08d, which dropped the mask that
->    producer_index() had, instead of commit 5bcf5a59c41e.
-> - Reword the commit message: the flush loop never converges because
->    the WQE index is advanced with the masked queue_next_index() while
->    the producer index stays out of range; the req_retry() reset detail
->    in the v1 description was inaccurate.
-> - Update the subject to describe the actual mechanism.
-> 
->   drivers/infiniband/sw/rxe/rxe_queue.h | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/infiniband/sw/rxe/rxe_queue.h b/drivers/infiniband/sw/rxe/rxe_queue.h
-> index c711cb98b9496..fe65aecc60464 100644
-> --- a/drivers/infiniband/sw/rxe/rxe_queue.h
-> +++ b/drivers/infiniband/sw/rxe/rxe_queue.h
-> @@ -106,6 +106,7 @@ static inline u32 queue_get_producer(const struct rxe_queue *q,
->   	case QUEUE_TYPE_FROM_CLIENT:
->   		/* used by rxe, client owns the index */
->   		prod = smp_load_acquire(&q->buf->producer_index);
-> +		prod &= q->index_mask;
->   		break;
->   	case QUEUE_TYPE_TO_CLIENT:
->   		/* used by rxe which owns the index */
-
+-- 
+- Andrey
