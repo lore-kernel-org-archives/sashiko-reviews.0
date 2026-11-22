@@ -1,72 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.35
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795341837;
-	b=JyCxWO+uoYbw/3wlvkcOzGzKk0BAZZc2TX4WQLMyH7AZEXeHP6Njg9ID+FcMhQYmIvCx
-	 lxz9mb2ZeOpkdyuewdDzVibfmuMX3f08khE3Ny8c4/HPE5XY661QnNyKuWoeHixVWsdXf
-	 MlS1PboJrOcwdi0N/D3oXMsbWxVGyR0JCU0W8CG3IsfHlYR6GxvtzfS4wVR6KFtLqHkx/
-	 IfFn9lxo5GIGt6bLo7WU2c8kREzFhaM2LqisaRFAmXcyLJh8tm0SITIkIjDMHWK+f3fgE
-	 /pl49Lnng9fs3T6NxigFdx+fWjbRgtLl/sYrq/onpQH+VggiMO8YYyu9owgua+OgWcA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795341837;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=V7XgMujmDFfqPIzCrzn9gOP6ailrhUCZJdYYYDTa498=;
-	b=obRbrVsR3Ef3Owm8Nixqksep18439Z87X4K1cYtNmuh3M/sZj5YjYF4Pe/VI8eC3+Vb1
-	 8O/G0XDtwt/KtMx/981IuNYiJQa1nr6vA0w2CGNJ3OMUmRcrPdCWIQAiyw7yJgS12pRwk
-	 adblv34H0hr7koT27ttsaY8tmGaXGtzOEVC0zXiEBIbV6Rh6XPjJJqFEMlZMK0RT17ESe
-	 M9DfAQ1Qn7eKc1IyY+suCxHsrX71RDcg2BF/5/6xrn/h3QIAn+91nJzzT2EJu4frJhp7E
-	 QJLRNGsCBrYkaTsqaYX0B+k/BVl/uriIGQcTf6+dqSFh2Wkt/piwEt6FpnqP79YefsA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=roeck-us.net;
-	spf=fail smtp.mailfrom=roeck-us.net;
-	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=vaNrB82k;
-	arc=none smtp.remote-ip=35.89.44.35
-Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.35
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795344212;
+	b=ohSFwqBa2pR3jVChr0gqCFgeZZ0QDxPPPBjrYKrv3Zmaoiov9DRuBnA7kxn5IVaxdmXR
+	 JEdXhwHR/V8L6FEuGi0jsxSC/5UpKMALFIoNqHIyei5XaPXFbxX7JFibVwnssEq+OSs6d
+	 8I3qIZRuj1s25eaSNTOEow46qLd7RjRcYucgco5Ta5TA6fV+mVvf33lCTnhAccgxAjtDt
+	 50DHX5uoq8Q01xy+n8rCQGjNXhV71mS/IrNG0WoQVbvQfakOht0fCDQm53L3X/FF6yxQ/
+	 exYlBewwxPCPUpy9mPDvxpk40xAjXUmDGOl3KVQZML+lwR7kOxTXNNs/X1VstjuWV/g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795344212;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=5KM6V4B7rnW7uZvfsakaAgU3bCRPg2xeqZkPh3eAyD4=;
+	b=fV7I6vnsZ3/vbxq1t893Dv+6UHcXUIK5/0+g/AAhap1fwoO4rkfY2zxKfXR7ZMgvmZ83
+	 1NozCFDmRtMt5dMpFwltio2IicrmsFhjDxAbOsbWNzhtVA0JhOXwZdRy7sovI/M7ztwdq
+	 on6VGM8KcklKkgQ3rkmHNayu3MFWyIGymeXacSf5q6QmdrERVIXZg1T83VkMCmz+VHEDt
+	 B1u3O929HeD/2c3blooeLQXpj3/9z56Bm5DbHggGvvZDPer3WF2egU3lkopnfZHCTjxIr
+	 9YM5LoZK7zZFlyo7d4EQqoJC7EsFvnX7TaQgVlz4rYoMwSMmY/S6dIwxd6U8RziCNtg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=O4dpnG3k;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.35
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010035.outbound.protection.outlook.com [52.101.56.35])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B31606A320
-	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 10:03:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04B31606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D39606A330
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 10:43:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73D39606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=vaNrB82k
-Received: from eig-obgw-6004b.ext.cloudfilter.net ([10.0.30.210])
-	by cmsmtp with ESMTPS
-	id UxC9xp4vgRiNxV4QOxENbH; Sun, 22 Nov 2026 10:03:56 +0000
-Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
-	by cmsmtp with ESMTPS
-	id V4QNxqsJ5laNKV4QNxdGvJ; Sun, 22 Nov 2026 10:03:55 +0000
-X-Authority-Analysis: v=2.4 cv=UbpRSLSN c=1 sm=1 tr=0 ts=6b02be0b
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
- a=pGLkceISAAAA:8 a=4ONIEzdkpqhAoMONle8A:9 a=QEXdDO2ut3YA:10
- a=KPbNTLLc3YvdawN95zVk:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=V7XgMujmDFfqPIzCrzn9gOP6ailrhUCZJdYYYDTa498=; b=vaNrB82k9Meh
-	n3iK6tyKwijaFoJdIwKX1Gcr7fsh/yaC8sZWgzVaAgaU7a0OOk7y78byI5gfXAUF8pQXLnZiFvivK
-	0kkxjawJU9ZbIfyVesKF7VqcNS1yB4RNPdODrzvzHkyCgFTHvpRgXIv5/PBeIK3RP9BoN+G0jdvSo
-	B34im1mZGbl3TBgsxUJ9rxYf7PUISZ+cvrJZRb7mOfl0r73ByKF3fm0UJbJYafim2VxQlnPE8CGb7
-	/mBJFijWBq+NTMzT78aTi8iPVY3/zcFonMxgyYXVzVXErLvuzZe9jt3M2oMn3g43lLhd7gc7xhZC/
-	sCsAaq0Mz5/I27J4Nne8UQ==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:42002)
-	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.100.1)
-	(envelope-from <linux@roeck-us.net>)
-	id 1xV4QN-000000049r4-0RFW;
-	Sun, 22 Nov 2026 15:33:55 +0530
-Message-ID: <6d49b915-b9ea-432a-91a3-3743e43553bf@roeck-us.net>
-Date: Sun, 22 Nov 2026 02:03:53 -0800
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=O4dpnG3k
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tnjOo/I+6QdJlOLswLvgaLvHeueXQSslg7SQotD4byjruPTGW9ej5tRoYiU2ov0zl2zEPtzkTolUM3unyxVhKx+i1pnL7FG/LRIu1G3AjMUK/lsFXInu9bY+YAvbS77Lv/XouEMf5Az0/SOMtRFceGcY6+hi3i0dlLMS+U1XiaAsoVNsyRKtTjnxWsvjZAFTMb44vVdYLkIlUS24bjN3H3oUofvoYG0FyjrApfaOOOS5F1EIwr4/eiq6MVhAzL4NunxRHUT7NfQN2ZKhaeIy4GDqhXSuTHd//GP4gzO9dGeSmz7iTQx8gtmDAAt56Mh7dvnFFu0KvZfw3gKnI5dq1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5KM6V4B7rnW7uZvfsakaAgU3bCRPg2xeqZkPh3eAyD4=;
+ b=wYgAXVfkaNQl0iGsGL8EXde8BXcgo4hcrr7ioLGQKNCTBk/vqcEbz9PbN0KeU7asK5mldo/mdrYNuW9dsqxLY0nE25xTkdaR+aZosvVRDnd5CeoS49u831tFaMhKpxQ0Mfe4Km/th8O5qa/C+zqivlrTuhK3axAC+5Wj3ovjkJe3uX2Od8nFxtPmVYKhKlypuLkQJIO41B0ZYCFJuFNci8H7SDtLnhD/jEBLz6nWwTiVQDp/oH+Nbim0/MrYHdzYAlEbR/Aal2PDcPjk6wYP1wwx5VwcJ8+iH3MbiaOtJcmBrClVYXP4NOyY1B6NKUeb+a2dQfX7HdBwaPT0OJ6KOQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5KM6V4B7rnW7uZvfsakaAgU3bCRPg2xeqZkPh3eAyD4=;
+ b=O4dpnG3kUcv+OUzh/btpaVzZNORuDFmwaG7KFUWW7COgb0M3FpbxUXxyUQMqaoV1wBuMQlpzOSV3zSueH2MJV/BrJCnJuoa6dhpStmKSk06LlkPqxOVHL3LtB7e9rKq2uujUBXdHQbTZa4/ITBTGdFw8rC1FbFW47lwaaUOYV961EvL2SbeweBBg9YV6FdyFlopohRVNrcMYbMyZetUd+HKF/MASbRN5mtU+EJQJxsoiKNcTNegFERDpYAcgdratginTSCFlqKsjvhjQb41qp+pm42+T8NyINMQZyhlN+my00M37I7Xo8uxndztaCllwoFzAk1jPW30buKvQ0zewOQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL3PR12MB6473.namprd12.prod.outlook.com (2603:10b6:208:3b9::16)
+ by PH8PR12MB8608.namprd12.prod.outlook.com (2603:10b6:510:1bc::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Sun, 22 Nov
+ 2026 10:43:27 +0000
+Received: from BL3PR12MB6473.namprd12.prod.outlook.com
+ ([fe80::778:72e1:e792:df81]) by BL3PR12MB6473.namprd12.prod.outlook.com
+ ([fe80::778:72e1:e792:df81%6]) with mapi id 15.21.0639.012; Sun, 22 Nov 2026
+ 10:43:27 +0000
+Message-ID: <137bb7bf-a7b9-4515-88b7-1a76f20c6433@nvidia.com>
+Date: Sun, 22 Nov 2026 12:43:23 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rdma-next 01/11] RDMA/mlx5: Enforce dev/mdev naming for
+ device pointers
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rdma@vger.kernel.org
+References: <20261117-mlx5-sd-prep-v1-0-8efd124c7895@nvidia.com>
+ <20261117-mlx5-sd-prep-v1-1-8efd124c7895@nvidia.com>
+ <sashiko-outbox-221130@kernel.org>
+Content-Language: en-US
+From: Edward Srouji <edwards@nvidia.com>
+In-Reply-To: <sashiko-outbox-221130@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TL2P290CA0030.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:3::16) To BL3PR12MB6473.namprd12.prod.outlook.com
+ (2603:10b6:208:3b9::16)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,320 +99,178 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] watchdog: histb: Add HiSilicon STB watchdog driver
-To: sashiko-reviews@lists.linux.dev, David Yang <mmyangfl@gmail.com>,
- linux-watchdog@vger.kernel.org
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261122065549.3265519-1-mmyangfl@gmail.com>
- <20261122065549.3265519-3-mmyangfl@gmail.com>
- <sashiko-outbox-227780@kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <sashiko-outbox-227780@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1xV4QN-000000049r4-0RFW
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:42002
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 6
-X-Org: HG=direseller_whb_net_legacy;ORG=directi;
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfAIB/XNkAffumiTXMlPIxW3UR83BkItyhUiZV4dT/XS2NqqPSPS5+uXteNSOZ5FxwDQqsNTWcjxs6KSmraHG/hBGxDVXduKfwuT6X3nYMa15SQ4iHLCQ
- AtEs2obczW5cGqRekg+mUe85tJECOjNHSWu1m/MrFxmhYbmSx39ytWAqlaooNni5IJikbWNZqU7Agb6rXwaaFUOIKrwCDxhhFxbTQrCXg1TA1wYJtKDAMQkl
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL3PR12MB6473:EE_|PH8PR12MB8608:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1f57d1f4-7ee3-49f2-2fdc-08df488570d1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|261102123227099003|261022105027099003|261022075727099003|261021121427099003|261028144727099003|261026121527099003|261026140227099003|11063799006|4143699003|56012099006|10067099003|22082099003|18002099003|261009223027099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	l3TMHBkR2DKPTDJFaS4GkyOQWMQXOOkCzaQnOFhpr0bpd9niJUl04rFPDTqasaGIV40xndTEReuYEup1Nw45nKtde1ut+J54a9cvSlJo0dp7hMI8Uue8MlddXwhUSaNHkDxkxx3s8imEkO9RMlZdHXaadcMwbOEF97f5UJ06urBTssK6QqZZaZk6m1xqFSe6zAxnN1lgmj/lsKmvG8aybImiY6R3MZ4ag6QnedD77bHJP3kgGq3BxgXpL4qyJg3OJO6PHeiny9qZW8EVKam6e/bTk5vucKGZe3qbrOlqcOFxWuEvWy0Odt/RtR89BfHjKoUSWu8Aph7fDDVhBMG++WoJV6A3eOsEiJY3YrHYWniUuUGqjV7NeEsKcJaT0jagyueuEuR7wI9ECVzWUfLJXsZZU/JjFfCWqk+fY6LoyFQ9hphpsQofq+VlIOOQrwYc/ZlFulRBGsRHH2oAzlj0ebEPzbaM34aA4X8CLRgWjbaPNvgN0gVGsCGDN/7nOAcxgUhCv72DKKIM0dT/gflhFok3d781E9eBRwqjyLiy3ADyEhc6Qy+lVVqds/VdPuUkXKbD3R5vO/tdZe1HPFCa3H44qwz6jruRWtdLH5yWec1IEp5JsgS2V2WIB9MZ+yApI7/dDhwKFDm2wG7S6HF3BBy3gYoa0I1wa4PNfZ1T98s=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB6473.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(261102123227099003)(261022105027099003)(261022075727099003)(261021121427099003)(261028144727099003)(261026121527099003)(261026140227099003)(11063799006)(4143699003)(56012099006)(10067099003)(22082099003)(18002099003)(261009223027099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WmxkbmpIWTZQZEZHWkFqcVRqczluNVoyS0d0QUlCWUt2ZzR6V3hkd29QOG9U?=
+ =?utf-8?B?aDVoYkVWYnVVZ1JoSytvUE5jcjBvTUJrLzF4dVdNbk4wMlNtWXNGL05la2RJ?=
+ =?utf-8?B?by8wSkt0clhJeWJtSStDdzFNUmNNalY4dEZIN2VMVWlWYkcvVW44QkNDYjVz?=
+ =?utf-8?B?VkFUdFQ1ejdlOGs2WGViT3pSRHdVUE5WZlkyRjM4QVdOUlVEVWdma1dFdjJP?=
+ =?utf-8?B?Vlc1aTRpdTNKTlFFUmVlWkQ0eGc3RjlxcThlTy92bHg4Zno5eXhleWZJdWFi?=
+ =?utf-8?B?eEIzUG9Rc1ltSTNTRW12TUhlU2lrZG80UllrUm5hWFJPNkFFaTFNaDc3TW4r?=
+ =?utf-8?B?dmJLK25DME91L0RVUkRKYTA1ZjNaQkJOVXFNT2VTVHRqb0RHTFQzKzBaa0dh?=
+ =?utf-8?B?NUZkTGJ5R0x1V212aTV0Nm9KU2gzdGtqNUQ3S2lWRExvLzJwWkZmeThRaXpE?=
+ =?utf-8?B?RVV4VU9EaVlLaDRNTmt5MHpTc1g1V2xHOEsvYldZOEQxcTdDWHMvNDFXdm1m?=
+ =?utf-8?B?T1ovaUdRY2wwaXRlVDJyUUU4S2tqVHhBYitlL1pzUUhWMHdZZXA5NkhHNHAy?=
+ =?utf-8?B?ZmJ4ckFCelRLbkdseEhLMTArT1dTNTRhQVkyNGNud0ZmQ1FxenNMbGRnWVRO?=
+ =?utf-8?B?YlRmcTFHQisxQWt4OVdjcktNa2U1S1NyVTl3YWtaK3ZkWE9UckJuanpTajda?=
+ =?utf-8?B?a2l4cGN6QzlGWXBxNnRldXNSWUgzVG93WU0wSHNoejg0UXJTV2k0UlF0cUpv?=
+ =?utf-8?B?T1ZnWlh1SkNGVVJWWkJWeUREU2dRSXZGQ3NVZzNxWjc3ZzJGYWhVSE5IM2lG?=
+ =?utf-8?B?bjd1OUJjbWYyY0ZYSE0zaDcxVWlGa0QzdCtCM1hndDRzMGx2OHhTT3BYd2lm?=
+ =?utf-8?B?UDlDNENJa01mTDBkMkxFeitRczg5QnNybVpkTG16Z1FnRUNSQXFISnl2Sk1P?=
+ =?utf-8?B?b0RVc0ZLNkxmNFhLb2pHVEljWTdNTFN2TnFkVkNmK1V5QmI2czVvWU9NMy9L?=
+ =?utf-8?B?VTIxL0tpNm1GZHQrbEVLbTFCVFB6TnZBMkFIQWtDMUhXTXRwQTUvQkxhWGlO?=
+ =?utf-8?B?M2UzQXphNGF0ODdzeFRuNytvUjcvaktwbVhsYm1heUVNRE54aitZSTJrR0R0?=
+ =?utf-8?B?OGFOb3k5TG1qb1RmZDdtWXpNSmg1aTNJb0t0RXlUeit6MlF0QXc0YkxCcFNw?=
+ =?utf-8?B?ajJFeXlEd2U0WjUwSkdvZnVYUTZ5WWVPK0Y4SHppWW55TjY4K2tabXpNZllz?=
+ =?utf-8?B?a2VCZlBCVGNnT1EzaERHL2hlVEFSOW5QOHBrOWtGeEVHb3Y0L25ON3FjWkh1?=
+ =?utf-8?B?RlVkaGhqNzd1MDgyWTRPYmp1Z1pnZkdHZXduODQ1ZnNVVkY1aWZZaU1heG5N?=
+ =?utf-8?B?bTRJTFNuQ1lZWlhYNVY0dFlTVEJrZnYwZGlQOXB4aG1TRUplL0QvdDFyK3VM?=
+ =?utf-8?B?RFZ0L1ZOMjhaZ2x1d2JRcFJ6OEplRVlIOEJQL2RvNnlRZ2haRXZDaFJveHQ5?=
+ =?utf-8?B?cEZ1cithdWIvdVBpM2M3MHdyWmo4TkdhTjFzQmpZUnQreDU2ZHZocEl5STA4?=
+ =?utf-8?B?VTZ2SnZjMXVTdVdXWXpIZmZzRHVCQmRMWmdtNWgyRk12eGhIak00K2d0a2FO?=
+ =?utf-8?B?N1V0UjFYeUdoYnA0SkxZejA4bDdqb3puUW5QK29pQzNGOHVyWDVNbUxwZ2dO?=
+ =?utf-8?B?UE9pS2ZiQ1d2ejEzY0dwUzh6R3FQRHRZRk1XQkJKUVRiamRQU2dLcDl0OHZL?=
+ =?utf-8?B?S2ptdGZNb3B6WU5uWUxkdHF3dGJRaHliTm8vZE1oZ2JMTjg5TVIvZDNCRElQ?=
+ =?utf-8?B?NG5lcS9XeFZibUhlY2daNW9UK0FyMXRGSC9OQzZLYTdvRE0wV1pzV3pYTTJx?=
+ =?utf-8?B?MHBySlB1OFR0Y1VqYUZhRTFQdFh6SGdxTWZsMDBEM2VIWk9YK1Y3WWxNeWl0?=
+ =?utf-8?B?cU5yck9tWTM0enpQbzkyN1BFSlZNZnZaTWhnRFkwWUdNc0FTbzMyWjR6cVd0?=
+ =?utf-8?B?Q1dsaE11WjEyTm9rcStSRDhua0tvK1MzM2VvSXhFanF4MS9wbWd3Y2NSVFhz?=
+ =?utf-8?B?K3FNZU5EZE5xRUdDR2l6RTZrSWRGRlpCdEhja3RWN1ZzbHdXQ0t3U2I0ZU0z?=
+ =?utf-8?B?enFZVk9qV05WWXBMVnQ2Mmx6cFcrNnByNUpvWWlaaEdpSmJhYWkraHo1QUIr?=
+ =?utf-8?B?c1BHRjU4aUx4WEtKKzhsWmNiU3MzSGRqNlh6cHBJVk9hejRjdnc3SHNlbWtq?=
+ =?utf-8?B?WElkN0RFblFLOWczNnhvTlFpcXBDcXZUY0ppNUtST2xUdUFLQjl3eWNUWE1o?=
+ =?utf-8?B?VlF0NGl1WkI5a2RWUzBDQjlRbE1mZVk2em9VWTF4Uk9HM2g1dGlZUT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1f57d1f4-7ee3-49f2-2fdc-08df488570d1
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB6473.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Nov 2026 10:43:27.1634
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Rb3ujDU6l183ZRW02QEbVpy35He1ktcVFr4mNF2BanqzOztqq7M+7ZfonZaexQb2uS6K+ljFQDDkjpFQ/t1E9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB8608
 
-On 11/21/26 23:18, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential
-> issues to consider:
-> - [High] watchdog: histb: stale counter reload in histb_wdt_arm() and
->    histb_wdt_ping()
-> - [High] watchdog: histb: unclocked MMIO reads in
->    histb_wdt_get_timeleft() when stopped
-> - [Medium] watchdog: histb: missing watchdog_stop_on_unregister() in
->    histb_wdt_probe()
-> - [Medium] watchdog: histb: unchecked histb_wdt_start() error in
->    histb_wdt_resume()
-> - [Medium] watchdog: histb: deadlock and invalid wait context in
->    histb_wdt_restart()
+
+
+On 11/18/2026 4:04 PM, sashiko-bot@kernel.org wrote:
+> External email: Use caution opening links or attachments
+> 
+> 
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 2 related pre-existing issues it does not
+> introduce:
+> - [Medium] RDMA/mlx5: out-of-bounds read in devx_get_obj_id() on short
+>    commands [1]
+> - [High] RDMA/mlx5: deadlock in mlx5_poll_one() [2]
 > --
 > 
-> commit 8f21fc6b65d49db93aa95ad107c510c4d4fadce6
-> Author: David Yang <mmyangfl@gmail.com>
+> commit 3bdcdff9fe049e25d51894257ec6c6716c3a9770
+> Author: Akiva Goldberger <agoldberger@nvidia.com>
 > 
-> watchdog: histb: Add HiSilicon STB watchdog driver
+> RDMA/mlx5: Enforce dev/mdev naming for device pointers
 > 
-> This commit adds a platform watchdog driver for the watchdog controller
-> integrated on HiSilicon STB SoCs.
+> This commit renames variables, parameters, and struct fields across mlx5_ib so
+> that dev exclusively refers to struct mlx5_ib_dev pointers and mdev
+> exclusively refers to struct mlx5_core_dev pointers.
 > 
->> diff --git a/drivers/watchdog/histb_wdt.c b/drivers/watchdog/histb_wdt.c
->> new file mode 100644
->> index 0000000000000..1961981f1e5d7
->> --- /dev/null
->> +++ b/drivers/watchdog/histb_wdt.c
->> @@ -0,0 +1,287 @@
->> +// SPDX-License-Identifier: GPL-2.0+ OR MIT
->> +/*
->> + * HiSilicon STB Watchdog Driver
->> + *
->> + * The watchdog controller integrated on HiSilicon STB SoCs shares register
->> + * offsets with the ARM PrimeCell SP805, but differs in several critical
->> + * hardware behaviors:
->> + *   - The ID registers at 0xfe0..0xffc are unimplemented and read zero,
->> + *     requiring a platform device driver rather than AMBA probe;
->> + *   - Writing WDTLOCK freezes the counter instead of only blocking register
->> + *     writes, so the block must remain unlocked while running;
->> + *   - Writing WDTLOAD never reloads the running counter; only WDTINTCLR does;
+>> diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
+>> index fc6f793dcc658..7e84dd15ac1f9 100644
+>> --- a/drivers/infiniband/hw/mlx5/devx.c
+>> +++ b/drivers/infiniband/hw/mlx5/devx.c
 > 
 > [ ... ]
 > 
->> +static void histb_wdt_arm(struct histb_wdt *wdt, u32 load)
->> +{
->> +	void __iomem *base = wdt->base;
->> +
->> +	spin_lock(&wdt->lock);
->> +	writel_relaxed(HISTB_WDT_UNLOCK_KEY, base + HISTB_WDT_LOCK);
->> +	writel_relaxed(0, base + HISTB_WDT_CONTROL);
->> +	writel_relaxed(HISTB_WDT_INT_MASK, base + HISTB_WDT_INTCLR);
->> +	writel_relaxed(load, base + HISTB_WDT_LOAD);
->> +	writel_relaxed(HISTB_WDT_INT_ENABLE | HISTB_WDT_RESET_ENABLE,
->> +		       base + HISTB_WDT_CONTROL);
->> +	readl_relaxed(base + HISTB_WDT_LOCK);
->> +	spin_unlock(&wdt->lock);
->> +}
+>> @@ -1652,7 +1652,7 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_MODIFY)(
+>>                                                          MLX5_IB_ATTR_DEVX_OBJ_MODIFY_HANDLE);
+>>        struct mlx5_ib_ucontext *c = rdma_udata_to_drv_context(
+>>                &attrs->driver_udata, struct mlx5_ib_ucontext, ibucontext);
+>> -     struct mlx5_ib_dev *mdev = to_mdev(c->ibucontext.device);
+>> +     struct mlx5_ib_dev *dev = to_mdev(c->ibucontext.device);
+>>        void *cmd_out;
+>>        int err, err2;
+>>        int uid;
+>> @@ -1677,7 +1677,7 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_MODIFY)(
+>>        MLX5_SET(general_obj_in_cmd_hdr, cmd_in, uid, uid);
+>>        devx_set_umem_valid(cmd_in);
+>>
+>> -     err = mlx5_cmd_do(mdev->mdev, cmd_in,
+>> +     err = mlx5_cmd_do(dev->mdev, cmd_in,
+>>                          uverbs_attr_get_len(attrs, MLX5_IB_ATTR_DEVX_OBJ_MODIFY_CMD_IN),
+>>                          cmd_out, cmd_out_len);
+> 
+> [Severity: Medium]
+> This problem wasn't introduced by this patch, but can devx_get_obj_id() read
+> past the end of cmd_in [1] when called from
+> MLX5_IB_METHOD_DEVX_OBJ_MODIFY, MLX5_IB_METHOD_DEVX_OBJ_QUERY, or
+> MLX5_IB_METHOD_DEVX_OBJ_ASYNC_QUERY?
+> 
+> The uverbs attribute spec only enforces a 16-byte minimum
+> (general_obj_in_cmd_hdr) on cmd_in, and these handlers call
+> devx_is_valid_obj_id() -> devx_get_obj_id() without checking that the buffer
+> is large enough for the opcode-specific object ID field.  For an opcode such
+> as MLX5_CMD_OP_MODIFY_FLOW_TABLE, reading table_id in modify_flow_table_in at
+> byte offset 20 performs a 4-byte out-of-bounds read when userspace supplies a
+> 16-byte cmd_in.
+> 
+
+devx_is_valid_obj_id returns false if the obj_id doesn't match anything, 
+so a short command is simply rejected. Maybe it's still worth adding a 
+length check, but not in this series.
+
+> [ ... ]
+> 
+>> diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+>> index 65455aedd559b..1ecd79929f8cf 100644
+>> --- a/drivers/infiniband/hw/mlx5/main.c
+>> +++ b/drivers/infiniband/hw/mlx5/main.c
 > 
 > [ ... ]
 > 
->> +static int histb_wdt_ping(struct watchdog_device *wdd)
->> +{
->> +	struct histb_wdt *wdt = watchdog_get_drvdata(wdd);
->> +	void __iomem *base = wdt->base;
->> +
->> +	spin_lock(&wdt->lock);
->> +	writel_relaxed(HISTB_WDT_INT_MASK, base + HISTB_WDT_INTCLR);
->> +	writel_relaxed(wdt->load_val, base + HISTB_WDT_LOAD);
->> +	readl_relaxed(base + HISTB_WDT_LOCK);
->> +	spin_unlock(&wdt->lock);
->> +
->> +	return 0;
->> +}
+>> @@ -4483,7 +4483,7 @@ static int mlx5_ib_stage_init_init(struct mlx5_ib_dev *dev)
+>>        atomic_set(&dev->mkey_var, 0);
+>>
+>>        spin_lock_init(&dev->dm.lock);
+>> -     dev->dm.dev = mdev;
+>> +     dev->dm.mdev = mdev;
 > 
 > [Severity: High]
-> Should HISTB_WDT_LOAD be written before HISTB_WDT_INTCLR in
-> histb_wdt_arm() and histb_wdt_ping()?
+> This problem wasn't introduced by this patch, but can dev->sig_mrs deadlock
+> in mlx5_poll_one() [2] because mlx5_ib_stage_init_init() initializes
+> it with xa_init() instead of xa_init_flags(..., XA_FLAGS_LOCK_IRQ)?
 > 
-> As noted in the file header comment, writing WDTLOAD does not reload the
-> counter and only writing WDTINTCLR triggers the reload.  Writing
-> HISTB_WDT_INTCLR first reloads the counter with whatever stale value was
-> previously in HISTB_WDT_LOAD.  In particular, when histb_wdt_restart()
-> calls histb_wdt_arm(wdt, 1), the counter reloads with the old timeout (or
-> 0xffffffff if the watchdog was never started) instead of 1, so the system
-> fails to reset during the 1 ms delay.
+> Process-context callers such as mlx5_alloc_integrity_descs() and
+> __mlx5_ib_dereg_mr() take xa_lock on dev->sig_mrs via xa_store() or
+> xa_erase() with local interrupts enabled, while mlx5_poll_one() takes the
+> same xa_lock from CQ interrupt context on a MLX5_CQE_SIG_ERR completion:
 > 
-> [ ... ]
-> 
->> +static unsigned int histb_wdt_get_timeleft(struct watchdog_device *wdd)
->> +{
->> +	struct histb_wdt *wdt = watchdog_get_drvdata(wdd);
->> +	u64 value;
->> +
->> +	spin_lock(&wdt->lock);
->> +	value = readl_relaxed(wdt->base + HISTB_WDT_VALUE);
->> +	if (!(readl_relaxed(wdt->base + HISTB_WDT_RIS) & HISTB_WDT_INT_MASK))
->> +		value += (u64)wdt->load_val + 1;
->> +	spin_unlock(&wdt->lock);
->> +
->> +	return div_u64(value, wdt->rate);
->> +}
-> 
-> [Severity: High]
-> Can histb_wdt_get_timeleft() read HISTB_WDT_VALUE and HISTB_WDT_RIS while
-> wdt->clk is disabled?
-> 
-> wdt->clk is only prepared at probe time and is not enabled until
-> histb_wdt_start() is called, and histb_wdt_stop() disables it again.  The
-> watchdog core's timeleft sysfs attribute (and WDIOC_GETTIMELEFT ioctl)
-> invokes wdd->ops->get_timeleft(wdd) without checking
-> watchdog_active(wdd).  Reading /sys/class/watchdog/watchdogN/timeleft
-> while the watchdog is stopped accesses the device registers with the
-> clock gated, which can cause a synchronous external abort or bus hang.
+> mlx5_alloc_integrity_descs()
+>    xa_store(&dev->sig_mrs, ...)
+>      spin_lock(&xa->xa_lock)
+>      <hardirq>
+>        ...
+>          mlx5_poll_one()
+>            xa_lock(&dev->sig_mrs)  <-- spins forever
 > 
 
-A generic fix for this problem is pending.
+Right, there is a narrow deadlock case with softirq. This should be 
+fixed in a dedicated series/patch.
 
-https://patchwork.kernel.org/project/linux-watchdog/patch/20261121052950.287506-1-nhat.tranminhk2@gmail.com/
-
-Guenter
-
->> +static int
->> +histb_wdt_restart(struct watchdog_device *wdd, unsigned long mode, void *cmd)
->> +{
->> +	struct histb_wdt *wdt = watchdog_get_drvdata(wdd);
->> +
->> +	/*
->> +	 * For reset, we start the WDT clock and leave it running.
->> +	 * The clock was prepared at probe time; only clk_enable() is
->> +	 * safe in this atomic (restart notifier) context.
->> +	 */
->> +	clk_enable(wdt->clk);
->> +	histb_wdt_arm(wdt, 1);
->> +
->> +	mdelay(1);
->> +
->> +	return 0;
->> +}
+> [1] https://sashiko.dev/#/bug/linux-2b4a0b34-fea8-4d2a-87be-350c461b8f4f
+> [2] https://sashiko.dev/#/bug/linux-4a13b647-d8f7-45a3-8a1e-c17db57fefbb
 > 
-> [Severity: Medium]
-> Can histb_wdt_restart() deadlock on wdt->lock via histb_wdt_arm()?
-> 
-> Normal callers acquire wdt->lock with plain spin_lock() while local
-> interrupts remain enabled, whereas histb_wdt_restart() runs from the
-> restart notifier chain after smp_send_stop() or from emergency_restart()
-> in hardirq context:
-> 
-> CPU0                              CPU1
-> histb_wdt_ping()
->    spin_lock(&wdt->lock)
->                                    machine_restart()
->                                      smp_send_stop()
->    <stop IPI halts CPU0>
->                                      do_kernel_restart()
->                                        histb_wdt_restart()
->                                          histb_wdt_arm()
->                                            spin_lock(&wdt->lock)
->                                              <-- spins forever
-> 
-> An emergency_restart() triggered from a hardirq on the same CPU while
-> wdt->lock is held will likewise deadlock, and taking spinlock_t from
-> hardirq context violates lockdep wait-context nesting on PREEMPT_RT.
-> Programming the registers in histb_wdt_restart() through an unlocked
-> helper avoids taking wdt->lock during restart.
-> 
-> [ ... ]
-> 
->> +static int histb_wdt_probe(struct platform_device *pdev)
->> +{
->> +	struct device *dev = &pdev->dev;
->> +	struct histb_wdt *wdt;
->> +	int res;
->> +
->> +	wdt = devm_kzalloc_obj(dev, *wdt);
->> +	if (!wdt)
->> +		return -ENOMEM;
->> +
->> +	wdt->base = devm_platform_ioremap_resource(pdev, 0);
->> +	if (IS_ERR(wdt->base))
->> +		return PTR_ERR(wdt->base);
->> +
->> +	/*
->> +	 * Keep the clock prepared for the lifetime of the driver:
->> +	 * .restart() runs in atomic context and may only call clk_enable().
->> +	 */
->> +	wdt->clk = devm_clk_get_optional_prepared(dev, NULL);
-> 
-> [ ... ]
-> 
->> +	watchdog_stop_on_reboot(&wdt->wdd);
->> +	platform_set_drvdata(pdev, wdt);
->> +
->> +	res = devm_watchdog_register_device(dev, &wdt->wdd);
->> +	if (res)
->> +		return dev_err_probe(dev, res,
->> +				     "Failed to register watchdog device\n");
->> +
->> +	return 0;
->> +}
-> 
-> [Severity: Medium]
-> Should histb_wdt_probe() also call watchdog_stop_on_unregister(&wdt->wdd)?
-> 
-> If the device is unbound while the watchdog is active,
-> devm_watchdog_register_device() unregisters the watchdog without calling
-> histb_wdt_stop().  That leaves the hardware counter running to reset the
-> system and causes the devres cleanup for devm_clk_get_optional_prepared()
-> to call clk_unprepare() while wdt->clk is still enabled, triggering a
-> WARN in clk_core_unprepare().
-> 
->> +static int __maybe_unused histb_wdt_suspend(struct device *dev)
->> +{
->> +	struct histb_wdt *wdt = dev_get_drvdata(dev);
->> +
->> +	if (watchdog_active(&wdt->wdd))
->> +		histb_wdt_stop(&wdt->wdd);
->> +
->> +	return 0;
->> +}
->> +
->> +static int __maybe_unused histb_wdt_resume(struct device *dev)
->> +{
->> +	struct histb_wdt *wdt = dev_get_drvdata(dev);
->> +
->> +	if (watchdog_active(&wdt->wdd))
->> +		histb_wdt_start(&wdt->wdd);
->> +
->> +	return 0;
->> +}
-> 
-> [Severity: Medium]
-> Should histb_wdt_resume() propagate the return value of histb_wdt_start()?
-> 
-> If clk_enable() fails in histb_wdt_start() during resume, discarding the
-> error leaves WDOG_ACTIVE set while wdt->clk remains disabled.  Later
-> watchdog callbacks will then access unclocked MMIO registers and
-> histb_wdt_stop() will call clk_disable() on an already-disabled clock.
-> 
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261117-mlx5-sd-prep-v1-0-8efd124c7895@nvidia.com?part=1
 
