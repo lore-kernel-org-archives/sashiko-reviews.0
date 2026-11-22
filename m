@@ -1,99 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=74.125.224.54
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1795329732;
-	b=jMjQjacLtnrmOi3U0xxfDX/YYVT6xK3fzi1LlgM2u++3ezdN3UDqhfabTvE8Fmoa7KcB
-	 rvp/4rdTaggTtZiIvhZ/H/sSZEE4an7a0rpTi2z6JEpH/ZLzshUoMDmEzuEgWNpUnTpFc
-	 Qr8Of0P/rUHa0w4058ua6NWvXtRFwlEPkLgctF58Xo5Y8zDdI9doweBUKvGwShbn3isRb
-	 ie9vXC4YT9VgjQR1dCrJtBdqJgRZTk5pFL4MMa2OoGPueP1B3VN37CXe5mglK4+oeuzLN
-	 3ICmsmwPSrxqU5CTWEsiUy2Zo1aSO5TzsU5PUj8NdSUy/kWkKBkngXFzhR/NPcFqt7A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795329732;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795339694;
+	b=aMAJ5eHuwULor4qjJWt7YQxRzsCTDEQWc9RHNLu5JHqONlBUqi5rygVGOOmMlnD5h714
+	 csTsQ2GpHO/ytjSsCK25igDgcny8uXejykMlb1g9VuMzjdwTPebspbX4Man0QiJ++1dQ9
+	 qhIbfzHVtSy38uTgKqnftHyLvdJ7DLUKgGZR2YLnLpmPYCCIAXVGwQiF/63svQPaVKPr0
+	 lUnyWyI4MiZCwdlf4oFnYYIUdBzTp/h318Zl/dydYoCnvQ/fR5oCn2OaTijqbF+BTypEL
+	 OH9kO6i7KnhnO27TBlz43UbsHTrjqNo+75wd0sSNhiEQk3SCAr55MrPaqVD+6WILyBA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795339694;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=uFwt6mW+1RfJR5QBxZ88YeWE43yBZuAMkFsXG5rT/+k=;
-	b=nEcFYRwYx2fX8Tn3fltB8DKXhiFFqf/xUOfXj9DR76u0msaUadh9wHF+lZ7rgrqOuQUq
-	 M+svWHMnLbEexJWUNUT3zhpo5AaBfUivpxC05cy0fAMl5QVKVZhri55f2tjRV5qdCmdGc
-	 Nsd+i3kcmN8PuEDwqRfH/8IWIanx+bKQMW/k9Ck78Erl2Rp7h4llPKDCOkZdd1L7v6LWi
-	 L5mIP3L3Hd6M6H9g034+PleETkZ6Ke3RwrM0rgwdCsDwXpwuYjckKP7nA7mjuvdWAJACL
-	 0/47Ed7GPt6H5opIj1wBvJ0F4h8AKAjfVCWHBEFRT4Mr0Fjy3qZriu423rqsiATRO0Q==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=enser.io;
-	spf=none smtp.mailfrom=enser.io;
-	dkim=pass header.d=enser-io.20260707.gappssmtp.com header.i=@enser-io.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=iVtx4r9G;
-	arc=fail smtp.remote-ip=74.125.224.54
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type;
+	bh=+XU/L3s3AR1zRZpGx05jem8OuHu+Aq/54xxilnMM65s=;
+	b=Yaqz/hGO6aDjBdVhNsuQ0lOWCd9AEl4N15IcLyriG6/InctO9T50avbK7AtfnJgK61zN
+	 Qrus+0qNEYQ02y5yL2s91oOJDEJdr68tJrSOkdF3kyob+qbxadOAvhVWuSBhfkXFlUU9e
+	 PDyZQfeR+N5C9gmSDs3qnDQNVpm8BV6Ft6Bm/OF0UjuLfXP4oPAod+c5X7aOOkFukWEUE
+	 NgBm2BC/MiPDYvHrg2WCgUd2QnZ3rAufMIYpW63fngZxBXg/mWnwI0OMmhWtWR/rgH758
+	 jUYo0U+qUdOj7BafckmoUMDO4JMk0OaBIrUkXthlXqN+Mltujp9x7noBfOtwpb5nDWA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aUlWhNfY;
+	arc=none smtp.remote-ip=209.85.221.44
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1E2606A32A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 06:42:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E1E2606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=enser.io
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=enser.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A35C606A320
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 09:28:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A35C606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=enser-io.20260707.gappssmtp.com header.i=@enser-io.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=iVtx4r9G
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-67dc3a2a278so220060d50.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 22:42:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795329731; cv=none;
-        d=google.com; s=arc-20260327;
-        b=P9C6CA4GP8vseLRiEDSk8JVsGKHxoipOyC1dkMLaRwwmXcacI24D0o5PmTpgS2y+uG
-         dAj3bXurwhd7u7MP36PnhkJkvruSk7JyO9BFFdbu9umqvVD9dKeJmRE2qpEUCpoEnEBm
-         pvGxeR8err8rMH4XLjwhSLdWKI54VeWBVc3d4IMuZz5QjJKAiqi3CSkniqIt5+VxXcDi
-         Z4+kiLFE/Adm4cdr66S+A0SszYSHZ7FIIKtgDDGNgfN4wjSB+ubdukd7p7sqRbptcD6C
-         PKFqQTeBWuKmxb7xLpjY7aX/M/6hlpkDd0d0Td82zr7wFAT0pJ4P7UnKC33Rq9yA3ewa
-         jpzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=uFwt6mW+1RfJR5QBxZ88YeWE43yBZuAMkFsXG5rT/+k=;
-        fh=5hiyMW3zTy6f0deBmE7Hi0iLsyarFZFW/iW5KxHjKZQ=;
-        b=cwfMd6OFIjwXsFSzfV8+mGNo59toyiEKMCNWQbGW0vk6mnkn4w9Mv3hbCDMqWpeXWM
-         JvU4F7IiJd1I6eIFlA732B/JN61ZY+xGg7wA/D0PFfuhuOiRNj3G0Sd+2muAl0pWB13l
-         7meS9Tt1eeYsnnytFcCTlQC5qDOlWWOhl2fNhGuvJdRpu/hpakaqYGxWOvN9Myj776oQ
-         MwKYgil+Htxs3AaJADHz/5p9H6JSgRhmMgKqP/uh5dgzm6+B9PYfwOBq6uhAo6CRGsay
-         8Chg6Os9PxmjPrP+5BJ3MGJV/STi6T149BqYy1UdjjxDnXboImMWeX5FRmXJ/DmxqOgm
-         6liQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aUlWhNfY
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-48e3b22e971so1176570f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 01:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=enser-io.20260707.gappssmtp.com; s=20260707; t=1795329731; x=1795934531; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=uFwt6mW+1RfJR5QBxZ88YeWE43yBZuAMkFsXG5rT/+k=;
-        b=iVtx4r9G06qspkegzPeYsjK9t4EbYBEP8/vZPTGUo3XSgns/MyZpGKJJctitpdvxjt
-         UKn29Q4yQm3FROxNpzapXVfiyLwB0L78rMQxmOOl+zbHzfeImqHP/tTsUeIlfORbZqr7
-         zC6xfAb8CLDvbuqeXu+PVb/10gspkgzCsIzmizLkXsZSuMgsxO986jTbKwe4Cw1vbiwo
-         L5yFVcb18nacJ5FsLGyK7cMj8fjwDnQHA5vWR+WVEQwFypwNtU0HkJGL5fxFEROMSkgY
-         eMnTTvyxF232g83J9jz2qA5nfi5TjfIOueh855hDQmjN8EqDbiy95vZLWre5tXwky0z4
-         yGCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795329731; x=1795934531;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1795339693; x=1795944493; darn=lists.linux.dev;
+        h=content-type:mime-version:references:in-reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=uFwt6mW+1RfJR5QBxZ88YeWE43yBZuAMkFsXG5rT/+k=;
-        b=Q4U6hDrQp/GjoGXCVUdGBy39XC5H8HGraGwQzV/7HBpcvJ+U+HbAyhtz4Ld4dnz9zO
-         W0u8eAj5To52YVjTy79a7u88PnvJ6Gv+du6nlpgbOXPnA4C8fXKSoEAZnaSptOtfLF33
-         7C3s8Kg6qOqZslIP57cR0lb4OJCoC5Tf1rY61wuIqKTy8wajazOUTfn4SydjMrWqcSav
-         ODDNyyt5R55hWozcoR/LZFsdbZqEoExl7Nsg+X3AuwyFK3x296vg1293yPaf/Opf0Izr
-         qT3qoR7sL0y3eGezcOqfGCIff2bergMTm+bgEDujeAwzaw0rlP0MFOMYqcDWLj0iwRZs
-         Ls9w==
-X-Gm-Message-State: APuU4Z/tk3+jDGcyUrLTcq8pa1ofqVU2bEgeA7jjCUNL/Wd5K4ykUNLt
-	BIBNpO6lOWtX3wdXFben62l+dgbx/bgFJf8ntSmVYO6KE+/sKFZDEPm+Pj8PL5RMq1IaiQIPnpu
-	EJCC95mafvXvj5Pft+3JwaMYtbaENJCE62CS7F4Cppy+90l9HgijuNFL0Rg==
-X-Gm-Gg: AZFdTZd8yRLFfcVdTcP+ngsVsRHyBq3oFqvtEMahfSjm8+5FmCQZRXMxb79MYuJUGoW
-	vMZcILtIjRQgMzL77ju3Tt8oL7yRvuzSRFQKN9DYFY3MqhQgrixVdydpBjga8mVUg8vo4ZhDNDZ
-	UotX20c1JkU3uhrMuiCKutoiTQXvJ/qtU3ecS1Hlw9dPi3KIROUdygIQGbzuFwli0QO7dF5Wd4C
-	3MPjhrFXQ1TdJNdeuvdTo9lu1P4a7xABf73K1IInlhlSthU5uouut1CdsqYvfmqqkuKUZslPEuk
-	kfBCaDV8TeXKzYX+VVGRRenSpkxG4Fo0d3eB+SbMjmyrofYMZjO+60BeAZyi5amb1o7FEBpb8kX
-	gd8WTp4Drxv0gy+mv1tewrqf5i+AZ4boK/8wbapazRjCqr7oBOhJrRqGvEiw=
-X-Received: by 2002:a05:690e:bc5:b0:679:8c5f:3fc6 with SMTP id
- 956f58d0204a3-67df43af88fmr6006818d50.3.1795329731209; Sat, 21 Nov 2026
- 22:42:11 -0800 (PST)
+        bh=+XU/L3s3AR1zRZpGx05jem8OuHu+Aq/54xxilnMM65s=;
+        b=aUlWhNfYGVmkxRPWTEKaqfoeTYAMTQtlBC6DYKsG8YHxnlNh1oUg/9L6mNWaE/RHyo
+         qWw31neNk3o/kGxA9HRGtC2fT9BQEjCKhCMtOdjlc2a03Qrj1bqoivI7tlaATg5KtzJ1
+         4IK172lY/MNrbgGs1mxK+oFDwZ9NqgnEGwq3ZCGk7FAgjOoVNN/vLEneOEzG5AyyKNFE
+         feqNHpv/o9o1Gph3mqYUi7YhV+MgvgRy4u/J9BKnBqNWBD3lhoOMhUSfOwK0aMR33onB
+         QH572+K8gN90Urw6x151N2RjmyIxRdZCI3Q8o+t3URRGjARK/PzoyypqvyxzObDpAMKN
+         32ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795339693; x=1795944493;
+        h=content-type:mime-version:references:in-reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=+XU/L3s3AR1zRZpGx05jem8OuHu+Aq/54xxilnMM65s=;
+        b=BYUk9l0izVektjF1oPqbYec4eyHmgK6RILIuc486U87W1jJK1uStNkJ4xwD2AecYR7
+         LXGEj/H3YhNdKa/tBKMKov29RpyLjA4E5gemKhChtdJjQ9KfG7mzW3jj3eHe/qAoj52C
+         VJkHyUIFubeqFLyQyrPEfhaHJdKH8gKjb/TTPikXRdXqN9Fi8Pv7n4RPryYSH8sEnLEF
+         UYZs5V/WDMdKaZ/hJjLnC7CyQiyPIRT4HDKT9dw2j/5QjZEf/C7e2NMit70enUpXw6yr
+         APskG6MpiGgGwU6JOkb+vp7cCHsIGaD4fCOyFE5xo89+WBxh+TO7luDGFcMd/h8hVAV0
+         Jhsg==
+X-Gm-Message-State: APuU4Z9TTgLEge+eeKxtRPyWCtSJqHjbXTyndHXN18RunJmFyxFzP6QT
+	Ys//UO/dmFmq0flZFk8c+/tH+cWcNv4c20X75W7JdJAZJBGGFGqnqEKFeArJripSb+ZJgw==
+X-Gm-Gg: AZFdTZeYQx3wU34nmYvj9VdFPWh0hCdcEI7B3mxZuYs1dCqmiIGeAeZji8zEMOVGj36
+	BgfUrzlsTDsBEzk0LZM5q/fIvqkLrbVd0briG8ABOp3ImyyuX1hPoxo5BPQy7j7FuVyyXRzLTIm
+	zpwcrvJHJ/j5q0wTbTh/nqKq+nTgno7zaBsGjwqJIaOgljhfZhCC4lQR1UIAJ2c/Xc4oCrmNaZq
+	y3VAIbg8Mlj6tqa0y7K/ULHp764xb73Z3P1iucK94DE2NpnR+LJUgqGNhTiRuJVsEw5dvtQQiMH
+	YvJkdmQ6hU0oyBdrSrORfjuk2hZgVB0L1J54D81TMrg4+RZUWHqz0vObOnmEvHYBbyQ8cQrBVzV
+	mz8e3DxyEe//uYsmLbGfeMuEjr/RVvYIcYUiTKk+xCf9osOZp98txcKPIgc7PlP+snOPVUZ69YD
+	KehnakbkrG3u6G388dxgxgkp31n/9WHbVn3Cm7rQmqOeubp0NurV/vguKEg+jQPfijVGdcZZGMj
+	3BdYo4Froeb7mJsOjfMEaKr7ewvGG5FujQFzT7sv2UjTnps0AiUwgIFeYW/DcmGqbWJN19gIU80
+	4ebK5vCxvG5puSKbq/TSvIUyjwIre5U99Icq5QHT6g==
+X-Received: by 2002:a05:6000:299c:20b0:4aa:2bf2:4d98 with SMTP id ffacd0b85a97d-4abb0f3b4b0mr12062401f8f.29.1795339692451;
+        Sun, 22 Nov 2026 01:28:12 -0800 (PST)
+Received: from strix.localnet ([197.250.160.206])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ad644140b5sm12250751f8f.17.2026.11.22.01.28.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Nov 2026 01:28:11 -0800 (PST)
+From: Stefan =?UTF-8?B?RMO2c2luZ2Vy?= <stefandoesinger@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, mfd@lists.linux.dev,
+ linux-phy@lists.infradead.org, robh@kernel.org, conor+dt@kernel.org,
+ vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com,
+ lee@kernel.org
+Subject: Re: [PATCH 3/6] pmdomain: zte: Add a zx297520v3 power domain driver
+Date: Sun, 22 Nov 2026 12:27:50 +0300
+Message-ID: <pmvkAYeQQxqf6KX1o0NWJw@gmail.com>
+In-Reply-To: <sashiko-outbox-225964@kernel.org>
+References:
+ <20261120-zx29usb-v1-0-b0433258e51b@gmail.com>
+ <20261120-zx29usb-v1-3-b0433258e51b@gmail.com>
+ <sashiko-outbox-225964@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,86 +99,60 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261122-b4-rmi4-wakeup-v1-0-1b662be4a9d6@enser.io>
- <20261122-b4-rmi4-wakeup-v1-2-1b662be4a9d6@enser.io> <sashiko-outbox-227741@kernel.org>
-In-Reply-To: <sashiko-outbox-227741@kernel.org>
-From: Erik Peterson <emcp@enser.io>
-Date: Sat, 21 Nov 2026 22:42:00 -0800
-X-Gm-Features: Aa3M54o4H3dZxCmAiIO7gvw6DhWgTDlv3S5qgVksMYPQ1wzHp1Iq6bG55ke5jY4
-Message-ID: <CAOY-3nAwYxgAeu1zUPOBO_PQtswKtsEOnV6a8hfnZf312ALT6g@mail.gmail.com>
-Subject: Re: [PATCH 2/3] Input: synaptics-rmi4 - keep an I2C device that may
- wake the system powered
+Content-Type: multipart/signed; boundary="nextPart7pWE9LkGQbyJZPD4mlTCyg";
+ micalg="pgp-sha256"; protocol="application/pgp-signature"
+
+--nextPart7pWE9LkGQbyJZPD4mlTCyg
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: Stefan =?UTF-8?B?RMO2c2luZ2Vy?= <stefandoesinger@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org, dmitry.torokhov@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 3/6] pmdomain: zte: Add a zx297520v3 power domain driver
+Date: Sun, 22 Nov 2026 12:27:50 +0300
+Message-ID: <pmvkAYeQQxqf6KX1o0NWJw@gmail.com>
+In-Reply-To: <sashiko-outbox-225964@kernel.org>
+MIME-Version: 1.0
 
-=E2=8F=BA (Resending as plain text; the lists rejected my first copy.)
+Am Freitag, 20. November 2026, 22:51:31 Ostafrikanische Zeit schrieb sashiko-
+bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] pmdomain: zte: child-to-parent device link deadlock in
+>   zx29_pd_probe()
 
-  Thanks. 946c8432aab0 is where rmi_i2c_suspend() started disabling the
-  supplies after arming the wake IRQ, so the tag is right. I'll add it in
-  v2; Dmitry, if v1 is otherwise fine, could you add it when applying?
+This looks correct - the particular line shouldn't be there, it was a leftover 
+from earlier attempts to handle device unbind.
 
-  Fixes: 946c8432aab0 ("Input: synaptics-rmi4 - support regulator supplies"=
-)
+> - [High] pmdomain: zte: wrong supplier device in zx29_pd_attach_dev()
+>   device link
 
-On Sat, Nov 21, 2026 at 9:23=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] Input: synaptics-rmi4 - missing Fixes trailer for commit
->   946c8432aab0
-> --
->
-> commit 83b2656443640f5726e0dae2d6e9d52155752d68
-> Author: EMCP333 <emcp@enser.io>
->
-> > Input: synaptics-rmi4 - keep an I2C device that may wake the system pow=
-ered
-> >
-> > rmi_i2c_suspend() arms the attention interrupt for wakeup through
-> > rmi_driver_suspend(..., true) and then disables the vdd and vio supplie=
-s.
-> > Unpowered, the controller cannot report a touch, so the wakeup it has j=
-ust
-> > armed can never come from the user. Where the attention line is pulled =
-up
-> > from the switched I/O supply, cutting that supply also pulls the line
-> > low, and that falling edge ends the suspend by itself.
-> >
-> > On a OnePlus 6T (S3706B, attention on a falling-edge GPIO, vio from a
-> > GPIO-controlled fixed regulator) with the touchscreen marked as a wakeu=
-p
-> > source, every s2idle ended within 3 to 4 seconds with nobody touching t=
-he
-> > phone, with one attention interrupt per suspend.
-> >
-> > Keep the supplies on in system suspend when the device may wake the
-> > system, as edt-ft5x06 does, and skip the matching re-enable and startup
-> > delay on resume. A device that may not wake is powered down as before.
-> >
-> > Tested on a OnePlus 6T on v7.4-rc3 with 'wakeup-source' on the
-> > touchscreen node. With wakeup enabled and nothing touching the phone,
-> > "rtcwake -m freeze -s 30" slept the full 30 seconds with no attention
-> > interrupt (2 of 2), and a double-tap woke it (2 of 2, 120 second RTC
-> > fallback). With wakeup disabled the supplies are cut as before and it
-> > slept until the RTC (2 of 2).
-> >
-> > The code and this changelog were prepared with the help of an AI coding
-> > assistant. The submitter has reviewed both and takes responsibility for
-> > them.
-> >
-> > Signed-off-by: EMCP333 <emcp@enser.io>
->
-> [Severity: Low]
-> This fixes a bug introduced when regulator support was added to
-> rmi_i2c_suspend() and rmi_i2c_resume(). Should the commit message include=
-:
->
->   Fixes: 946c8432aab0 ("Input: synaptics-rmi4 - support regulator supplie=
-s")
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122-b4-rmi4-=
-wakeup-v1-0-1b662be4a9d6@enser.io?part=3D2
+This one is likely correct, but I'll have to do more reading to be sure
+
+
+--nextPart7pWE9LkGQbyJZPD4mlTCyg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEQxb0tqoFWyeVMl1sPRO8yFRPGiIFAmsCtZYbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJED0TvMhUTxoiWwUP/1zrUTig3p1zQi1yN49m
+lZsHM1mGoC+rZz8b6Gofd32dOfizYgpEF7nTr/TVadx3oSzKlKF5ayXHR/Q8Bgfo
+ke9bKibuDSpORGTL5M5S4hxiwi9xIJ9Ut6alnVApxneNS1AkYMNFW/mDbSQGaY9n
+RdRD6/yKt4miuWmJQdWJLCPaiwcM6e8AbUjCavhkMWEL8z1yxQaUGDNJKIdSrv74
+OubQcJfVPr4v6UN7JfUvg/aBCyVH4L/hYNSBaasfH5Gu+BjgB0S6j/i1FY8TRhHe
+/+LKiKGph3Bqq5Mh9Ho197e7vfKbK4R4agnxrJV5Iad52JhPtWYhiKUEdeRvduxB
+fngHWLMNa2jDLI6iie9bWLAZGAP1Hi5ZeBQrkl2BhXN+BulUPfdNWH8nNzJduDMI
+a5NNnM85VdY+jnIMl/D920QGXAii613m+nJg8R5jGg6LrGNt4lV+pcJO3tS7BhOu
+vL7UsI2tna7TUMj7bwnVdzmbLMipw8prPWpRTNUNBkP0KaSl5CnKfce7OEYFfgvY
+tLLl/eLGF+sOQ7Mx+ZQE6KE50wx23vPSrpjXfERtrFGwm5PyI9OO1fxrctm5cwdd
+j7kTk7HZcAiZQUsC+qN436NqIkBHCNR9CCm5VLlOVCRxq9yqYNH0+00P5+jKGjmb
+OkG3sJu7139jhrSQYgGPFpFC
+=7yFm
+-----END PGP SIGNATURE-----
+
+--nextPart7pWE9LkGQbyJZPD4mlTCyg--
+
+
+
