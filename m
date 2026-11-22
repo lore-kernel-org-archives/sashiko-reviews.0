@@ -1,47 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795364092;
-	b=A1b/4rku6wEyRIkZiG2Bmc3YFcsUbjOVaGLEw1+XTY0IfAJ290+1EXUgzot92U2MRpwl
-	 sOYupXk237JQXTwK4HAGtXAeyB/XmP2PdlAPUpGv3OwQ5g3qt+F4088o34Fb1KEOB53rf
-	 Rm4Uz/CJNCvlro3N7r8BFsamCkOxeoKTyHLW9PncRICMywkGW4CgKvmOMxPf4qfeFTfDp
-	 yUpQ3ippI6FpjZy5EQ9xEl3pw1o9nLyVEABxlnWB5g0mk5DptzrxYFKKEZagrHGR0IjEf
-	 AMMizD+nyKHwKhNiONi4B6JQMzLC1bDsrwD7OlAsfnvg5s6wMI+sC51KOOn5N9fKKIQ==
+	t=1795364694;
+	b=L7lEVrp4NLUXc1l6QL5zHPQmdHGLfhilH44k5nEO0D3uNOEA5JcnAZFwxB507K7qbWVg
+	 DGCsPz27K7Z71O0XsL/7mZX0l34D+9RYBsPyAkc2R0XJM8Hee/XP2OJ3e22loLkQa5G2A
+	 wtX6Givapj5lvWb1+Zg7G0FBCKQDyMjCgJkvsPk0aGlW8BQV/KV8xx+rT5hWqcPaA3A0x
+	 +mgtxG25K3dzuK/u6MNjqlCpFfxO3NGcuoMZHg4YSt9pdZ8FNcz8GxZuBa2U3+OU04okE
+	 tUxt49sYPkzGowk6JRm/Bnm5jJphK0PmvmDE9NNwH2tV6dgJmAQA/GziqyzfR8MdhFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795364092;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=M0XQPV+kx4upVZMbk4LNgSWgp4hVc8/l0NFR7dE4f7k=;
-	b=A6h/8ntdaHMSEOIr38gxJ3wkLXL+8lXUCsJeU2XJnZNsO4DAwLNDXeptzl96TM9jN1BG
-	 9IfXjWYJyoU0giiGWtZJ39I7IbpKf7XB2LPvWw0G2Ky3mMcFpxRmHFjwQh8/qLW65tUgC
-	 sWO2TOXElu6As/pl5zdj3OLsrqva23IyV0TkAHX0PYal+kJEckxToqe6/WOpUTabCwSI4
-	 Vop0Q9UDMCG4l+Q98zFurYySNzSD/CjLy8vrTOJC51p5mNR1iKLqkQROlNZkk12HP6n0a
-	 9VTGqd2r/r/tMK94uiVdzax553dmVUBh6yMTv9jUYMUTgVrxbs3Fqw5//BY0Sk/W6YA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795364694;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=e55ONnD4lN/W1mLTAULwKHmeI6PFxlZPHxsrxUS/5KQ=;
+	b=e82Ctx/ZJ1g3lWzv3Xzsoa4Z5Rx4i1ZbZcDf/yRZVEtafghveskB1Krbddv2FBfrPvKe
+	 eWSg5TT2mjj3vQdEDJ6OkiPiSrxULnULLJvtpizqvKFKXYc3445z6G858gvd0xbs5Xakc
+	 MT6RQIEn48f/N65eKuWdDmttoQPKTaKoqqR45SyhZ9cojv2lEKvz+ftvdSShu/ToyhszR
+	 L4R49ZPfyWj0a0mNYYy/mmFcKComF9ZXzeoz9+kb+pd657vkn038Mzm8+3J+dL/gZr2X/
+	 zBjwzFDOy1zXU3zaRIG+8iFAif8aFctR+ETPM19vczXvHC2shgmdXy0YDcoy91kD1nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KRsIXVOv;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=1+gp1D4j;
+	arc=none smtp.remote-ip=44.202.169.35
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D57C606A331;
-	Sun, 22 Nov 2026 16:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE813606A320
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 16:24:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE813606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KRsIXVOv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D214E1F000C0;
-	Sun, 22 Nov 2026 16:14:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795364092;
-	bh=M0XQPV+kx4upVZMbk4LNgSWgp4hVc8/l0NFR7dE4f7k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=KRsIXVOvqYXoxEwFU782dp+LyTgf1irzunY5nI4cCpkfJH6//6Zw4QWkZtB9LQAbP
-	 f904tQ0OgN+tUDsP2EcjKHiOME1qRz3Z48Ji8AfaMwxLpYvfeW6FUnS9YVwhM3YTLY
-	 XEvD7E4i6XSXX85O66ysqgSYHbqSFq4jMawhGtnvOpwnYk4+ymjzpzBpaGYTa1yVLM
-	 8pYPgk4nj5bp/xDZeh9vv70aeSEgR6te6q4iddfvTWJI5/umz1aK4q4KXIZm/M4W1U
-	 6CYdYW7AgDt2knmuVpxcA+0tHAu38O6PB19J93HAeOb5jaWyQyLiuh6DHFWbdwmI7r
-	 2JKeAsghKlt5Q==
-Message-ID: <b9569459-cb8b-48f9-a2fa-233cffe01a28@kernel.org>
-Date: Sun, 22 Nov 2026 17:14:35 +0100
+	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=1+gp1D4j
+Received: from eig-obgw-5005b.ext.cloudfilter.net ([10.0.29.189])
+	by cmsmtp with ESMTPS
+	id VA97xrlaY4vCDVAMxx3rw2; Sun, 22 Nov 2026 16:24:47 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id VAMwxUSyRYskhVAMxxbNz5; Sun, 22 Nov 2026 16:24:47 +0000
+X-Authority-Analysis: v=2.4 cv=CKMqXQrD c=1 sm=1 tr=0 ts=6b03174f
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=Ikd4Dj_1AAAA:8 a=j61DXMuQjnjkn-ayxwgA:9 a=QEXdDO2ut3YA:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=e55ONnD4lN/W1mLTAULwKHmeI6PFxlZPHxsrxUS/5KQ=; b=1+gp1D4j7mGS
+	KwoFzxKCD7Y3EigdKtinsiXynYVQAiwYXAaMYhl2N6qg7fmLhLCunf9gYcCK2oLb6FRt3Dptf/mUZ
+	1GJx+1kqcxGPsH/X6/ealfrRlHVh/pyyeynggQ94iS5IwvRXmjtP9fW/sIZxk8tqJ9K+UNohp4RyU
+	NugWzYnZA75Xq0O+GUs72wf6GviT3wDAN7tqNAvfSkv3O+i2G10tn88nIvFtnp1JjIHRWk9uLvEG3
+	B2oQBEMyILzv9R50EEH94m0OdE54t+0MKkzL7aEUn9I3EX3Wbjgx70rp9i1rjSzyGQD0lyiE0QJGB
+	Yy88jCBsCcUbJsEK/BeJoQ==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:40024)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xVAMw-00000002bU1-3FDS;
+	Sun, 22 Nov 2026 21:54:46 +0530
+Message-ID: <fc18abfd-9bcc-415f-84d4-255c16faf022@roeck-us.net>
+Date: Sun, 22 Nov 2026 08:24:46 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,87 +77,158 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] mm: make folio_walk_start()'s locking asserts
- scalable
-To: sashiko-reviews@lists.linux.dev, xu.xin@linux.dev
-Cc: acme@kernel.org, adrian.hunter@intel.com,
- Alexander Gordeev <agordeev@linux.ibm.com>, akpm@linux-foundation.org,
- alexander.shishkin@linux.intel.com, apopple@nvidia.com, baohua@kernel.org,
- baolin.wang@linux.alibaba.com,
- Christian Borntraeger <borntraeger@linux.ibm.com>, byungchul@sk.com,
- chengming.zhou@linux.dev, dev.jain@arm.com, gerald.schaefer@linux.ibm.com,
- Vasily Gorbik <gor@linux.ibm.com>, gourry@gourry.net, harry@kernel.org,
- Heiko Carstens <hca@linux.ibm.com>, irogers@google.com,
- james.clark@linaro.org, jannh@google.com, jolsa@kernel.org,
- joshua.hahnjy@gmail.com, kas@kernel.org, lance.yang@linux.dev,
- liam@infradead.org, linux-mm@kvack.org, linux-s390@vger.kernel.org,
- ljs@kernel.org, mark.rutland@arm.com, matthew.brost@intel.com,
- mhiramat@kernel.org, mhocko@suse.com, mingo@redhat.com, namhyung@kernel.org,
- nico.pache@linux.dev, oleg@redhat.com, peterz@infradead.org,
- riel@surriel.com, rppt@kernel.org, ryan.roberts@arm.com, surenb@google.com,
- svens@linux.ibm.com, usama.arif@linux.dev, vbabka@kernel.org,
- ying.huang@linux.alibaba.com, ziy@nvidia.com, xialonglong2025@163.com
-References: <20261102132416.300084-1-xu.xin@linux.dev>
- <20261102132927.301921-1-xu.xin@linux.dev> <sashiko-outbox-195353@kernel.org>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
+Subject: Re: [PATCH 1/3] hwmon: (pmbus/core) Invalidate cached page and phase
+ on failed change
+To: sashiko-reviews@lists.linux.dev, Felix Radensky <fradensky@nvidia.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20261122073322.1712843-1-fradensky@nvidia.com>
+ <20261122073322.1712843-2-fradensky@nvidia.com>
+ <sashiko-outbox-227794@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <sashiko-outbox-195353@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <sashiko-outbox-227794@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xVAMw-00000002bU1-3FDS
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:40024
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 12
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfIr2UGtY1xW8OtKXX5G+bQ60w7TvatWjB9fg1CMOGFLDESMNO9qx0hBLROBPFGt4u9DSeU1TAhsC+o84asGzP+Rt2iyb9n/4vy1eDQhEa6FTAfCh89bN
+ Jt3n4s4L6dsIssIlxLAtK+AhM0G/cNZF6JMTNnJCWZPGX9Skyy1Dwz78hA1Ywx8BUtOnhPGjUc5kIPnDsxVCZTMhgHnW66+izG1nc3KejO1x0rW8XxelTxMT
 
-On 11/3/26 14:31, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] mm: inaccurate commit message on write-locking in folio_walk_start()
-> - [Low] mm: folio_walk_start() duplicates vma_assert_stabilised() via walk_lock
-> - [Low] mm: missing kernel-doc and private placement for folio_walk::walk_lock
+Hi Felix,
 
-Can all be ignored.
+On 11/21/26 23:48, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] hwmon: (pmbus/core) pmbus_set_page() updates cache outside
+>    conditional blocks
+> --
+> 
+> commit 03751a48b86432f4503eb9a4970150b29ef4ab2c
+> Author: Felix Radensky <fradensky@nvidia.com>
+> 
+> hwmon: (pmbus/core) Invalidate cached page and phase on failed change
+> 
+> This commit resets data->currpage and data->currphase to -1 in
+> pmbus_set_page() before issuing PMBUS_PAGE and PMBUS_PHASE commands so
+> that a failed transfer forces a retry on the next access.
+> 
+>> diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+>> index 82dac2c6c579f..dae56e2e6f21f 100644
+>> --- a/drivers/hwmon/pmbus/pmbus_core.c
+>> +++ b/drivers/hwmon/pmbus/pmbus_core.c
+>> @@ -227,6 +227,9 @@ int pmbus_set_page(struct i2c_client *client, int page, int phase)
+>>   
+>>   	if (!(data->info->func[page] & PMBUS_PAGE_VIRTUAL) &&
+>>   	    data->info->pages > 1 && page != data->currpage) {
+>> +		/* A failed page change can leave the chip on any page */
+>> +		data->currpage = -1;
+>> +
+>>   		pmbus_wait(client);
+>>   		rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
+>>   		pmbus_update_ts(client, PMBUS_OP_WRITE | PMBUS_OP_PAGE_CHANGE);
+>> @@ -246,6 +249,9 @@ int pmbus_set_page(struct i2c_client *client, int page, int phase)
+>>   
+>>   	if (data->info->phases[page] && data->currphase != phase &&
+>>   	    !(data->info->func[page] & PMBUS_PHASE_VIRTUAL)) {
+>> +		/* A failed phase change can leave the chip on any phase */
+>> +		data->currphase = -1;
+>> +
+>>   		pmbus_wait(client);
+>>   		rv = i2c_smbus_write_byte_data(client, PMBUS_PHASE,
+>>   					       phase);
+> 
+> [Severity: Medium]
+> Should data->currpage = page and data->currphase = phase be moved inside
+> their respective conditional blocks?
+> 
+> Because both assignments remain outside the if blocks:
+> 
+> drivers/hwmon/pmbus/pmbus_core.c:pmbus_set_page() {
+> 	...
+> 	data->currpage = page;
+> 
+> 	if (data->info->phases[page] && data->currphase != phase &&
+> 	    !(data->info->func[page] & PMBUS_PHASE_VIRTUAL)) {
+> 		...
+> 	}
+> 	data->currphase = phase;
+> }
+> 
+> any call that skips the SMBus write still overwrites the cached value
+> (including an invalidated -1) without programming the chip.  For example,
+> on a multi-page device where page 0 has phases and page 1 has
+> info->phases[1] == 0 (such as tps53681), if a phase change to 0xff on page
+> 0 fails (leaving currphase == -1), an access to page 1 with phase 0xff
+> skips the PMBUS_PHASE write but sets currphase = 0xff.  A subsequent access
+> to page 0 with phase 0xff then sees currphase == phase and skips sending
+> PMBUS_PHASE, accessing the wrong phase on the chip.  The same happens for
+> currpage when accessing a page with PMBUS_PAGE_VIRTUAL set.
+> 
 
--- 
-Cheers,
+Sashiko has a point here. Previously it didn't matter because currpage/currphase
+was only modified after the command succeeded. Unless I am missing something,
+updating both inside the if() blocks does not have any negative impact because
+the other conditions still have to be true for a value to be written to the chip.
 
-David
+Thanks,
+Guenter
+
