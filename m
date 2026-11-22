@@ -1,62 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=207.46.229.174
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795345233;
-	b=nZ2eJLpPWNreo+SVIYg8ATGTkDzzBnVdY39gj29Q00hPxVnk8PkHtc9zsi8S+ak9kfrg
-	 RMCXxA1p1avjriKjHGHvy7VKkIaYhQVd/VgPqFyDBuxIYuowZ3qEp5K86lz1oS4Mziu9B
-	 dd/BFaF0Pi15bLdj5EXtFksTx4XeWdSWu4OnCmIEOClbACtARhrKR6JdsU8YUDUH+RMVH
-	 GgL4j4KOX5NP011ivP6SUp9k5wq1tvgb3LOEg9PxAaSSqwMsD2CV2WgkDRVFrGfXMLTA0
-	 5DSgYFO39ObXHBqijWB1s0IuNNpD18r9hXBRI854dybor3vbRSbokR2Hvu3Yiar3MMQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795345233;
-	h=DMARC-Filter:DKIM-Signature:Received:X-Originating-IP:Date:
-	 X-CM-HeaderCharset:From:To:Cc:Subject:X-Priority:X-Mailer:In-Reply-To:
-	 References:Content-Transfer-Encoding:Content-Type:MIME-Version:
-	 Message-ID:X-Coremail-Locale:X-CM-TRANSID:X-CM-SenderInfo:
-	 X-Coremail-Antispam;
-	bh=9BNziqmUZuBX/HuSToHzP1E9e4poRAdYPf2nBv7XewY=;
-	b=gCxXTYzXshFmJmhoiQY/LTCUjwUgB9KYu70qsvcLF0C8yNHm/pvivjkXC55a6Q2IYMbK
-	 7la9hmUz2e1zjTTENBH1VFdChV+h/i8LV4+pSj6c+PMoEJAkyYXOKi2PF/Haq+d/LE4hS
-	 CjILBJ4ZCxan/zdnpYsskKlS5o9ZLx5jJSzU7/7edLLOHYqo9agbwgzS/wyXybSgGaR/N
-	 myuLHaUjIulosqVktAUjpWZUzz4fPGhSQM/Br8wSSu1fHuOegFbGeqT0O9mp/pjpCBhYg
-	 xElF8IGEjd83uIeP2StxDPY+9QopNEOj3JMU16lUP5L0tFGvRnx/sv57UJj4xuNFx0A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mail.zgclab.edu.cn;
-	spf=pass smtp.mailfrom=mail.zgclab.edu.cn;
-	dkim=fail reason="signature verification failed" header.d=mail.zgclab.edu.cn header.i=@mail.zgclab.edu.cn header.a=rsa-sha256 header.s=dkim header.b=Cj53V3bP;
-	arc=none smtp.remote-ip=207.46.229.174
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [207.46.229.174])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEAD9606A320;
-	Sun, 22 Nov 2026 11:00:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CEAD9606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mail.zgclab.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.zgclab.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.1
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795350689;
+	b=pNJupWN5XiS3fTEgO/Gi+g9I93maCAL6qggkNOQ2tT4sK6uCB8IzC/t/fia0LRnGST07
+	 VXa02um9/bK9Qj04f+GBacfPcAKZjIaLtPT5nEqFOuVUdQi+g5xm94dnaF11WiF8oDPds
+	 MRUdPt91prEQf14XllyBwtDKbmvv8VlCp9ZKdK7FyPLQDATQDTPiIQBRGw6rS4caJYDK1
+	 0V8e/WRsfBjEauahOcb66x+4XqW+qPtJz0PDo966+4YnNi0dK3neZKguXrUfBJvUSZMg7
+	 Vya7WgotqGOongN79QFtOMsyYD2DJCb8nD9qWARP03zdAHa3Ns0fHzMxfP3tAfH2oHw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795350689;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=78WlRQFq7JRcyOwkYH0yCgIYQ5YiPbnkUkMBte3tVrU=;
+	b=1exqMBGRgcfkW4nOvKMIhSA1rk39jeO8tx8fghBSzaNzDNMxLDOPWQGbOLhX5QMEJJh2
+	 YJe/szKp9ftf1V8ZCu3i9maC2Vv1SLUomMBgh7fIo7wdo3/L+Wr9hB8WMj9AN25SDkBQq
+	 z9eWsylusT9jg6kGzZDZclHE21v3JG8r4/hUs+TqQuCztf7Ygspp/gP9r/WzdOUbxoF/v
+	 pArDdgcql7qsyLi0B9iCNWGfd68fPPVj0gWASut9p4l6Ah4vNpHXtxLMQGTfVuzAgPTIL
+	 AoxczzpCmPCVoFp/YakfaY0h4aHQQ2AmKKUgOdQ+rE6zfBmWmc3y6jmXD+LiSJ2byiQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=uGUEAHm+;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.1
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011001.outbound.protection.outlook.com [40.93.194.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E9F606A32A
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 12:31:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64E9F606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=mail.zgclab.edu.cn header.i=@mail.zgclab.edu.cn header.a=rsa-sha256 header.s=dkim header.b=Cj53V3bP
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=mail.zgclab.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
-	In-Reply-To:References:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:Message-ID; bh=JELtEZGTmpKOJUDTtqTHUAeMw8bpfPqCg2LT
-	Iy6ot8A=; b=Cj53V3bPqmYbIWmlYJSr+0f2kIldCp4XrMIkm/pY7PBLn9KcuNzz
-	5oAlO2Q43I6BhHYV/e5zx5OtW3ABI8LnPtucSqk6dsrjpffB1WwcxlT6d5z2aqYc
-	LgxwGm7gxJEDO25HS/OWDtiTj/3Q0JdWiLd0UhEDEnk9LK3Ll8pw6nI=
-Received: from wanghr2026$mail.zgclab.edu.cn ( [58.206.201.104] ) by
- ajax-webmail-web1 (Coremail) ; Sun, 22 Nov 2026 19:00:20 +0800 (GMT+08:00)
-Date: Sun, 22 Nov 2026 19:00:20 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?546L5rWp54S2?= <wanghr2026@mail.zgclab.edu.cn>
-To: "Lee Jones" <lee@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, mfd@lists.linux.dev
-Subject: Re: Re: [PATCH] mfd: stmpe: Disable regulators on probe failure
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT5 build
- 20261010(691d8f62) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-4df55a87-4b50-4a66-85a0-70f79cb6c8b5-tsinghua.edu.cn
-In-Reply-To: <20261119090801.GL98456@joneslee-macbookpro.roam.internal>
-References: <1795076100902-8-fa247961@mail.zgclab.edu.cn>
- <sashiko-outbox-222667@kernel.org>
- <20261119090801.GL98456@joneslee-macbookpro.roam.internal>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=uGUEAHm+
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fguPQ8eOqISVMrrzXo/ry48+iTFTSrWEe3xqugoiMZDTE59t6pezSWEQQqrJQ8MU1DOjWNpTnqQpwFmuPfvkubimm0Kk97zdfuA/IEfQyXiiDlf9KI/WC+yALm4dDWkvhIPh9PcQ7eF1bxoQ0OwbDJ1y27nMn1Rd36goiPKBNawrdUdvW7EGyyS0PJf8GVJ+OMkXkquKzKNznlEF+65+WfQS2TdoRVX28a3QB/xKUWxsOZoqMlusXiliN+/alW2gQoqQQLFalxjCmkDVOpyxWVHDnUhiXsvjP0ypz7/VQWUZUV/R45woZBLziaXS3pshqcnarKNT9eap5EOXsDJhqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=78WlRQFq7JRcyOwkYH0yCgIYQ5YiPbnkUkMBte3tVrU=;
+ b=wAuKhhb86JaewLc1T9CHLyEJWL4It/oVwzO9ALleN/Cmw4Zf+jQQXB5CPAQUoSKp+tTJMJlCbXYctJkoo0ngyV5d8ZpVrPMMZ9CpZOze/iXJr63io864s8pJny3sG18NSwJt4RmynMk19E3kFh8O1DP7ZqfYGIHU/0jz1+kenheKE0FTbItChEw9rzW8UB29NcE4wBJb/sWKMFPIPMteKen/4FyKdo2W/718db6SUr3H90tHmXMFs1BOUkB5XjEY77jP/b6wQTT8Z6zh14WSjqgd+hnuK57E801J61D/FFFSkI0SJlj8JCDbwkATnjDI501rWrGbkuvJQZYu75Ix9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=78WlRQFq7JRcyOwkYH0yCgIYQ5YiPbnkUkMBte3tVrU=;
+ b=uGUEAHm+ZS+JA7VnVBI5BItEHnP620mZuyTXzwzsWS6MKC7KW67NLewoX0p91Ad8+zVywWTabZOX5hTez6RHzdLJ44UfctESLZvoWw6ZqDx8MxkpbE1v8EB9SNfn1KUoGSVfOwP8s9ZVnZJlrFJ+X+eLu4yaL9ny6ieMEbU+7hPI8nnRxXy81qZUmm6Nvdl9EOOts0PgzHBE/GVt+cyy8CV3xUXC8vNmzUTE88gP+cT93H/uD+v93Fy5ygyyuigv/lNBhngvMdMNQxXQ9xL2lt3qWep9Ng8plOPcQq6og348PZ4jD+0U2Vrq4uiwW2WLaput75QTpRMqwuhuuephcQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL3PR12MB6473.namprd12.prod.outlook.com (2603:10b6:208:3b9::16)
+ by PH7PR12MB8015.namprd12.prod.outlook.com (2603:10b6:510:26a::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.14; Sun, 22 Nov
+ 2026 12:31:22 +0000
+Received: from BL3PR12MB6473.namprd12.prod.outlook.com
+ ([fe80::778:72e1:e792:df81]) by BL3PR12MB6473.namprd12.prod.outlook.com
+ ([fe80::778:72e1:e792:df81%6]) with mapi id 15.21.0639.012; Sun, 22 Nov 2026
+ 12:31:22 +0000
+Message-ID: <88751677-6649-437a-b221-8492c017f466@nvidia.com>
+Date: Sun, 22 Nov 2026 14:31:18 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rdma-next 04/11] RDMA/mlx5: Select the core device through
+ PD for QP commands
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rdma@vger.kernel.org
+References: <20261117-mlx5-sd-prep-v1-0-8efd124c7895@nvidia.com>
+ <20261117-mlx5-sd-prep-v1-4-8efd124c7895@nvidia.com>
+ <sashiko-outbox-221133@kernel.org>
+Content-Language: en-US
+From: Edward Srouji <edwards@nvidia.com>
+In-Reply-To: <sashiko-outbox-221133@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TL2P290CA0020.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:3::9)
+ To BL3PR12MB6473.namprd12.prod.outlook.com (2603:10b6:208:3b9::16)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -66,132 +98,198 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Message-ID: <34cbf384.326f1.1a202ea04a3.Coremail.wanghr2026@mail.zgclab.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:yAQGZQCXDj9EywJra2KqAg--.48953W
-X-CM-SenderInfo: pzdqwxbusqjlo62juzldeovvfxof0/1tbiAgEQD2r+rlqQcgAFsb
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWkKw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL3PR12MB6473:EE_|PH7PR12MB8015:EE_
+X-MS-Office365-Filtering-Correlation-Id: e7e60b0d-98ff-4327-6092-08df4894841f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|261026121527099003|261026140227099003|261022075727099003|261022105027099003|261028144727099003|261021121427099003|261102123227099003|11063799006|4143699003|56012099006|10067099003|261009223027099003|18002099003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	FFVtUCCS9wd4zSbDh4C1ZMoE9Ljgo5YAJ8PEPNoHuEXRC+wtjOX/X3b/mGXp0K1DTvTmFQQQJjlg7MjW8ZcwNbojApH/MD5nrzizJVGKrO5TYEbhpQZY5zN8paNMhAID/IrNSCd5gf3BGMY+kTL8Ua3hVI1W8IhoTJa7FVAI2yl8JXMMwBD3lwB2d2ujVj5cY0OBQr0XBrFFHEhTedg7e7JrlS+7tWmOSW8VSlpIo8vowSZeST5IhpQ+5ADdJ/ty1ya8JbG4owF8zDPWWh8Rmaev/rEegw55eFjALz/u3hqiNky9hj9oHrIZ46sWcLpn15UdfZtB3CvTqeuziEpp1anTp+OhdhVxyEgn0fzwF0zlNfhtBYMukLKxQujoJnm+fLqVWDFIjqtz7RfXGdH3QIxkX7DojtCk33VmxLA6AwrA7HytqNb2ezKMHsBAlwaP4h7s8s+8LIgxd/d+BvwUQcLvXMnp6mDqXiQeDzdd3P0Qk1zoqPN9Ln2y6hhbmGaDObrJT95L3o0Wy9JLNxf7pl+oTsQHqHXX1i5Ijz8H2QyioAbLv8o4/L1BId3r31j/ZN1wYinvTbG6nzg5QQugsYeb/DB6lTk+WNAMqpPvQjOvSjyLGLRaLvMY3ZLmLO+uLrvs7pVaLWOlgCYWRzLT4fzVc/G1cyX+97c7zhb6uTs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR12MB6473.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(261026121527099003)(261026140227099003)(261022075727099003)(261022105027099003)(261028144727099003)(261021121427099003)(261102123227099003)(11063799006)(4143699003)(56012099006)(10067099003)(261009223027099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MXVzWTFsb2FtZFpiNU5UeFVPanF6dXBMK25CZzY5VDluREpIQWd3WnREL2Jr?=
+ =?utf-8?B?MUhOZkd4ckU1emV6V2J5VjJDb2J6M0E4QnFzK1o3VERmNTc5MzZ6NDN5WFZI?=
+ =?utf-8?B?NE5RWU03ZXBQbzlqS3lpQWR5dzNvYTFQa3l2SUJib1pYdGR3clFMYi9TVVJl?=
+ =?utf-8?B?cDFlUnByRmNZZkpQVmlJQ003V2NZWm1EdWdnVGh0SVpCRit5UEZiUE92MWpx?=
+ =?utf-8?B?WkFaREczYnpVcVRVNzdZQTJqS3BUU1ZoNUg3UklpSDhwdHhsYnV5a29pL2xN?=
+ =?utf-8?B?WnVrbnFMWlhnSVRZTWM0Vldld01OYnFQTEpRNzlHWURWSkpiZll4TmJ0ZkZa?=
+ =?utf-8?B?MC9YUUd1VzEyV0FrdEFPTlNuM0swSUx4NnJXTXdxZjloZ01IRGZnMDBJTndj?=
+ =?utf-8?B?ZjJyaUo2anBCVG9lcWljbGo4anhMWjhkeTdHN2ZIRmpLb3pxY21IQktSYWgy?=
+ =?utf-8?B?UHFTcEU4d0lqcXF4cmQ3OFJCVmhnL1Q2bmx5VGtFSFZKYndPRG1DalplMlZw?=
+ =?utf-8?B?VUdqb2hTdmc0a3hKeHFvUXFsM0E2VmQrVzlEQm9yY1Z0TC95a0tHTE1XSmg2?=
+ =?utf-8?B?N29BQjBSZDVOZGRRbEhaZ1c0MDZqV254SEo1UE1uR3JrOHI4UUpYNzIrZ2FR?=
+ =?utf-8?B?NFBSQnRkVjFlZmg5TEhLaGhLb2hlOFVyMnczVDJ4c3k5Qnc2eXRVc0dFMDNB?=
+ =?utf-8?B?SnJiZHFpNGNyODQ4NnhiVFRLNk5FeThnQWRKUEExT2xrVUtuS2N0MlNDNkM5?=
+ =?utf-8?B?VWpSd2wvcXhiajVRcTBTNWNONlNLUFgvRXNLcEVLdzkvSXhBbUFZUTYyYnpR?=
+ =?utf-8?B?TGhLNk1WU2VtSlJGdEJkTmtlUFBESHNxUk01WnFrQkRFQVZHQ0kyV09wVG8w?=
+ =?utf-8?B?bjFXZGhnTmpPa1ZENE5rNXlCV0pnbHE2TEhwMVg2eTNwV2YvWDhBMjdzUmlm?=
+ =?utf-8?B?eUpVcmFQKytQQWVQUGVUdDVwM0toaFlrZVRlTjRoUTRwMUFNcDFnM1RXdS9p?=
+ =?utf-8?B?RUVvZ3cvWkFlZ0dwK2l1ZHh3SFYxb29xMG5yQ29wMXh0YXhLdlBjSEpVeFdi?=
+ =?utf-8?B?aFpla1Z0bEFZb3FVWFdRbk1Dd2tZOFZRQlFERTJyN2J1ZFhtQmZvb1N4MndR?=
+ =?utf-8?B?OE0xYkd0WUY4dFpPUnJvWlJGSmpwRndDb0JPOGdlQTQrdVlOVC9KeFlGYzQx?=
+ =?utf-8?B?S2VUMDVYemFoUHJuZXkrRU03TXlIaW9WOGZlZnZZZVZHdGNuS1F3bEJ6T1No?=
+ =?utf-8?B?aUVuM29FT1NHeWxhSWQ1LzN3QmljNUN3ekFDcHVXOTR4MnhXdGtnbXdnWm9H?=
+ =?utf-8?B?Sm91RlU4R2x3MVM1NC9Cbi9vdmxuZHpRODN1cTUvOHFNTHNVWVFSYXFUVXE4?=
+ =?utf-8?B?TkVsVWNZSEljMFdaR2xLQTZ6eUtLTWFtOUMyUHlGbUpsbEhwV3JWOXN1WU1h?=
+ =?utf-8?B?QURKVEk5Y2R0bTNSTkFiUEYwb3pqZHl6WE5uMEVpbjhTZFp5ZnlVUEx6bGpU?=
+ =?utf-8?B?ekdUU2dYVC9iamtuOTI0UHowSWdWei84Vjc1K0ExREpzRWJ3OE12eENkMnhJ?=
+ =?utf-8?B?UU01dCtuYnd3SU44THhKSWExQXBOemZpSFA0aitvZXVZcHdPSHBYWFNPYSsy?=
+ =?utf-8?B?bDBjVVJOS0hnSEdEdndQVjFMcXpidlhLQlQ0RkRvbmZ1MzlrcVZmVFpRTUxM?=
+ =?utf-8?B?aytwREpNcXloalplV2lqTXpmaGJ5aW1GazBPRDlvZUk5ajJXNG9veTJrZFRN?=
+ =?utf-8?B?ZGFsdGhpSElYNlI4dHBYUE5zZE9oUjN2VEJSNjQxMkJLWTJUalF6N3kwUVAv?=
+ =?utf-8?B?K3M3V0JXRUdnaDNzbGFPZ3U3QTlDRnpLQnFoVTIvUW5oK1lWNlh0Z0RUTjc2?=
+ =?utf-8?B?a1NEWktqcEE2Z3l2RVFFTlovc3NQcUF3TGlHSXJqYlVocEU0eEcwUzZqWDVK?=
+ =?utf-8?B?T096aXc1TzBkQ29aUWo2OVduWmVIV3BZMW5sS2NScXVQeDBRdll1eU00Z1o3?=
+ =?utf-8?B?Q3VjdHVrNVo1MzN2Z2tXVDRYTTF3YjNwK2xWTFczTXd0TWlaenVIeVZqM3Jk?=
+ =?utf-8?B?Y05zY29VMGtyMEp4V3U1bWUvMlZvT1JwVkxza3BodTBtaUtTTGFaL3l1SE1E?=
+ =?utf-8?B?TFhueG5XYVpWUm53eEM2NU9VcE1tZUhGZ1BjTlpVd0Y0QkdHeHQvMnZtN3l1?=
+ =?utf-8?B?MjNieHQyZUNLdGs0YkI4SXlVZzFuSHNPL0dKSUVJUUhOeCt1WTMvUHhNdGVv?=
+ =?utf-8?B?WHFFbnp2NnlCVDVrK1ZlT3c3RVRNOURBWEU4aG5LVzFJV1RQV2Uzek5RSUUw?=
+ =?utf-8?B?L0xaMGhOVzlsWUVpbExWMjdLUDVRUm1uVUdoWThtek1jMEJ1OUpPQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e7e60b0d-98ff-4327-6092-08df4894841f
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR12MB6473.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Nov 2026 12:31:22.0993
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xCe0MjotUXf0dtrX8azWmRWe6dWZy2a5CWn+kz2Z7G0QMx+2rKTnMGQyour9DkqT+GpaOhfm8Xv1tnqOXBW60w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8015
 
-VGhhbmtzIGZvciB0aGUgcmV2aWV3LiBBbGwgdGhyZWUgZmluZGluZ3Mgb24gdGhlIG5ldyByZWd1
-bGF0b3IKY2xlYW51cCBhcmUgcmVhbCBidWdzIGluIHYxLiB2MiBiZWxvdyBmaXhlcyB0aGVtOgoK
-CsKgKiBUaGUgIkNhbGxlZCBmcm9tIGNsaWVudCBzcGVjaWZpYyBwcm9iZSByb3V0aW5lcyIgY29t
-bWVudCBlbmRlZCB1cArCoCDCoGF0dGFjaGVkIHRvIHN0bXBlX2Rpc2FibGVfcmVndWxhdG9ycygp
-IGluc3RlYWQgb2Ygc3RtcGVfcHJvYmUoKS4KwqAgwqBJdCBpcyBtb3ZlZCBiYWNrLgoKCsKgKiBz
-dG1wZV9yZW1vdmUoKSBzdGlsbCBkaXNhYmxlZCBWSU8vVkNDIG1hbnVhbGx5LCBzbyBvbiB1bmJp
-bmQgdGhlCsKgIMKgc3VwcGxpZXMgd2VyZSBkaXNhYmxlZCB0d2ljZSAob25jZSBpbiAucmVtb3Zl
-KCksIG9uY2UgYnkgdGhlIG5ldwrCoCDCoGRldnJlcyBhY3Rpb24pLsKgIHJlZ3VsYXRvcl9pc19l
-bmFibGVkKCkgcmVwb3J0cyB0aGUgaGFyZHdhcmUgc3RhdGUsCsKgIMKgbm90IHRoaXMgY29uc3Vt
-ZXIncyBlbmFibGVfY291bnQsIHNvIHRoZSBzZWNvbmQgZGlzYWJsZSB0cmlnZ2VyZWQKwqAgwqB0
-aGUgInVuYmFsYW5jZWQgZGlzYWJsZXMiIFdBUk4gb24gc2hhcmVkIG9yIGFsd2F5cy1vbiByYWls
-cy7CoCBUaGUKwqAgwqBtYW51YWwgZGlzYWJsZSBpcyBub3cgcmVtb3ZlZCBhbmQgdGhlIHN1cHBs
-aWVzIGFyZSBkaXNhYmxlZCBleGFjdGx5CsKgIMKgb25jZSB2aWEgZGV2cmVzLgoKCsKgKiByZWd1
-bGF0b3JfZW5hYmxlKCkgZmFpbHVyZSBpcyBvbmx5IGRldl93YXJuKCllZCwgbGVhdmluZyBhIHZh
-bGlkCsKgIMKgaGFuZGxlIHdpdGggZW5hYmxlX2NvdW50ID09IDAuwqAgQmVjYXVzZSByZWd1bGF0
-b3JfaXNfZW5hYmxlZCgpCsKgIMKgcmVwb3J0cyB0aGUgaGFyZHdhcmUgc3RhdGUgcmF0aGVyIHRo
-YW4gdGhlIGVuYWJsZSBjb3VudCwgdGhlIGRpc2FibGUKwqAgwqBwYXRoIGNvdWxkIGRpc2FibGUg
-YW4gdW5lbmFibGVkIGhhbmRsZS7CoCB2MiB0cmFja3MgZW5hYmxlIHN1Y2Nlc3MKwqAgwqB3aXRo
-IGV4cGxpY2l0IHZjY19lbmFibGVkL3Zpb19lbmFibGVkIGZsYWdzIGluc3RlYWQuCgoKVGhlIGly
-cV9kb21haW5fcmVtb3ZlKCktYmVmb3JlLWZyZWVfaXJxKCkgdXNlLWFmdGVyLWZyZWUgKGFuZCB0
-aGUKbWlzc2luZyBpcnFfZGlzcG9zZV9tYXBwaW5nKCkpIGluIHN0bXBlX3JlbW92ZSgpIGlzIHBy
-ZS1leGlzdGluZyBhbmQKdW5yZWxhdGVkIHRvIHRoaXMgY2hhbmdlLsKgIEkgY2FuIHNlbmQgaXQg
-YXMgYSBzZXBhcmF0ZSBjbGVhbnVwIGlmCnlvdSdkIGxpa2UuCgoKV2FuZyBIYW9yYW4KCgo+IC0t
-LS0t5Y6f5aeL6YKu5Lu2LS0tLS0KPiDlj5Hku7bkuro6ICJMZWUgSm9uZXMiIDxsZWVAa2VybmVs
-Lm9yZz4KPiDlj5HpgIHml7bpl7Q6MjAyNi0xMS0xOSAxNzowODowMSAo5pif5pyf5ZubKQo+IOaU
-tuS7tuS6ujogc2FzaGlrby1yZXZpZXdzQGxpc3RzLmxpbnV4LmRldgo+IOaKhOmAgTogIldhbmcg
-SGFvcmFuIiA8d2FuZ2hyMjAyNkBtYWlsLnpnY2xhYi5lZHUuY24+LCBtZmRAbGlzdHMubGludXgu
-ZGV2Cj4g5Li76aKYOiBSZTogW1BBVENIXSBtZmQ6IHN0bXBlOiBEaXNhYmxlIHJlZ3VsYXRvcnMg
-b24gcHJvYmUgZmFpbHVyZQo+IAo+IE9uIFRodSwgMTkgTm92IDIwMjYsIHNhc2hpa28tYm90QGtl
-cm5lbC5vcmcgd3JvdGU6Cj4gCj4gPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBT
-YXNoaWtvIEFJIHJldmlldyBmb3VuZCAzIHBvdGVudGlhbAo+ID4gaXNzdWVzIHRvIGNvbnNpZGVy
-Ogo+ID4gLSBbTWVkaXVtXSBtZmQ6IHN0bXBlOiBkb3VibGUgcmVndWxhdG9yX2Rpc2FibGUoKSBv
-biB1bmJpbmQgd2l0aAo+ID4gICBzdG1wZV9yZW1vdmUoKQo+ID4gLSBbTWVkaXVtXSBtZmQ6IHN0
-bXBlOiB1bmJhbGFuY2VkIHJlZ3VsYXRvcl9kaXNhYmxlKCkgd2hlbgo+ID4gICByZWd1bGF0b3Jf
-ZW5hYmxlKCkgZmFpbHMKPiA+IC0gW0xvd10gbWZkOiBzdG1wZTogbWlzcGxhY2VkIGNvbW1lbnQg
-YWJvdmUgc3RtcGVfZGlzYWJsZV9yZWd1bGF0b3JzKCkKPiA+IEl0IGFsc28gbm90aWNlZCAxIHJl
-bGF0ZWQgcHJlLWV4aXN0aW5nIGlzc3VlIHRoaXMgcGF0Y2ggZG9lcyBub3QKPiA+IGludHJvZHVj
-ZToKPiA+IC0gW0NyaXRpY2FsXSBtZmQ6IHN0bXBlOiB1c2UtYWZ0ZXItZnJlZSBhbmQgdmlycSBs
-ZWFrIGluIHN0bXBlX3JlbW92ZSgpCj4gPiAgIFsxXQo+ID4gLS0KPiAKPiBQbGVhc2UgcmV2aWV3
-LCBleHBsYWluIG9yIGZpeCB0aGUgU2FzaGlrbyByZXZpZXcocykuCj4gCj4gSWYgdGhpcyBpcyBh
-IHNldCwgdGhpcyByZXF1ZXN0IGluY2x1ZGVzIHRoZSBvdGhlciBwYXRjaGVzIHRvby4KPiAKPiA+
-IGNvbW1pdCBiZjBmNGUyODZmYTJhZDA3YzBjM2EzZjVmODNjZDY4ZmYyZmU1Mzk2Cj4gPiBBdXRo
-b3I6IFdhbmcgSGFvcmFuIDx3YW5naHIyMDI2QG1haWwuemdjbGFiLmVkdS5jbj4KPiA+IAo+ID4g
-bWZkOiBzdG1wZTogRGlzYWJsZSByZWd1bGF0b3JzIG9uIHByb2JlIGZhaWx1cmUKPiA+IAo+ID4g
-VGhpcyBjb21taXQgcmVnaXN0ZXJzIGEgZGV2bSBhY3Rpb24gaW4gc3RtcGVfcHJvYmUoKSB0byBk
-aXNhYmxlIHRoZSB2Y2MgYW5kCj4gPiB2aW8gcmVndWxhdG9ycyB3aGVuIHByb2JpbmcgZmFpbHMg
-b3IgdGhlIGRldmljZSBpcyB1bmJvdW5kLgo+ID4gCj4gPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJz
-L21mZC9zdG1wZS5jIGIvZHJpdmVycy9tZmQvc3RtcGUuYwo+ID4gPiBpbmRleCA4NzkxMjRkZTkx
-MmQ4Li5mMDkyNDU1NmQ1YzJmIDEwMDY0NAo+ID4gPiAtLS0gYS9kcml2ZXJzL21mZC9zdG1wZS5j
-Cj4gPiA+ICsrKyBiL2RyaXZlcnMvbWZkL3N0bXBlLmMKPiA+ID4gQEAgLTEzNjMsNiArMTM2Mywx
-NiBAQCBzdGF0aWMgdm9pZCBzdG1wZV9vZl9wcm9iZShzdHJ1Y3Qgc3RtcGVfcGxhdGZvcm1fZGF0
-YSAqcGRhdGEsCj4gPiA+ICB9Cj4gPiA+ICAKPiA+ID4gIC8qIENhbGxlZCBmcm9tIGNsaWVudCBz
-cGVjaWZpYyBwcm9iZSByb3V0aW5lcyAqLwo+ID4gPiArc3RhdGljIHZvaWQgc3RtcGVfZGlzYWJs
-ZV9yZWd1bGF0b3JzKHZvaWQgKmRhdGEpCj4gPiAKPiA+IFtTZXZlcml0eTogTG93XQo+ID4gVGhp
-cyBpc24ndCBhIGJ1ZywgYnV0IGluc2VydGluZyBzdG1wZV9kaXNhYmxlX3JlZ3VsYXRvcnMoKSBo
-ZXJlIHNlcGFyYXRlcyB0aGUKPiA+ICJDYWxsZWQgZnJvbSBjbGllbnQgc3BlY2lmaWMgcHJvYmUg
-cm91dGluZXMiIGNvbW1lbnQgZnJvbSBzdG1wZV9wcm9iZSgpLgo+ID4gCj4gPiA+ICt7Cj4gPiA+
-ICsJc3RydWN0IHN0bXBlICpzdG1wZSA9IGRhdGE7Cj4gPiA+ICsKPiA+ID4gKwlpZiAoIUlTX0VS
-UihzdG1wZS0+dmlvKSAmJiByZWd1bGF0b3JfaXNfZW5hYmxlZChzdG1wZS0+dmlvKSkKPiA+ID4g
-KwkJcmVndWxhdG9yX2Rpc2FibGUoc3RtcGUtPnZpbyk7Cj4gPiA+ICsJaWYgKCFJU19FUlIoc3Rt
-cGUtPnZjYykgJiYgcmVndWxhdG9yX2lzX2VuYWJsZWQoc3RtcGUtPnZjYykpCj4gPiA+ICsJCXJl
-Z3VsYXRvcl9kaXNhYmxlKHN0bXBlLT52Y2MpOwo+ID4gPiArfQo+ID4gCj4gPiBbU2V2ZXJpdHk6
-IE1lZGl1bV0KPiA+IENhbiB0aGlzIGRpc2FibGUgc3RtcGUtPnZpbyBhbmQgc3RtcGUtPnZjYyBh
-IHNlY29uZCB0aW1lIG9uIHVuYmluZD8KPiA+IAo+ID4gc3RtcGVfcmVtb3ZlKCkgc3RpbGwgcnVu
-cyBiZWZvcmUgZGV2cmVzIHJlbGVhc2UgYW5kIGRpc2FibGVzIGJvdGggc3VwcGxpZXM6Cj4gPiAK
-PiA+IGRyaXZlcnMvbWZkL3N0bXBlLmM6c3RtcGVfcmVtb3ZlKCkgewo+ID4gCS4uLgo+ID4gCWlm
-ICghSVNfRVJSKHN0bXBlLT52aW8pICYmIHJlZ3VsYXRvcl9pc19lbmFibGVkKHN0bXBlLT52aW8p
-KQo+ID4gCQlyZWd1bGF0b3JfZGlzYWJsZShzdG1wZS0+dmlvKTsKPiA+IAlpZiAoIUlTX0VSUihz
-dG1wZS0+dmNjKSAmJiByZWd1bGF0b3JfaXNfZW5hYmxlZChzdG1wZS0+dmNjKSkKPiA+IAkJcmVn
-dWxhdG9yX2Rpc2FibGUoc3RtcGUtPnZjYyk7Cj4gPiB9Cj4gPiAKPiA+IHJlZ3VsYXRvcl9pc19l
-bmFibGVkKCkgcXVlcmllcyB0aGUgdW5kZXJseWluZyByZWd1bGF0b3JfZGV2IHN0YXRlIHJhdGhl
-ciB0aGFuCj4gPiB0aGlzIGNvbnN1bWVyIGhhbmRsZSdzIGVuYWJsZV9jb3VudC4gIElmIGVpdGhl
-ciByYWlsIHN0YXlzIG9uIGFmdGVyCj4gPiBzdG1wZV9yZW1vdmUoKSAoZm9yIGV4YW1wbGUsIGFu
-IGFsd2F5cy1vbiByZWd1bGF0b3IsIGEgc2hhcmVkIHJhaWwsIG9yIGEgZml4ZWQKPiA+IHJlZ3Vs
-YXRvciB3aXRob3V0IGFuIGVuYWJsZSBHUElPKSwgc3RtcGVfZGlzYWJsZV9yZWd1bGF0b3JzKCkg
-Y2FsbHMKPiA+IHJlZ3VsYXRvcl9kaXNhYmxlKCkgYWdhaW4gd2l0aCBlbmFibGVfY291bnQgPT0g
-MCBhbmQgdHJpZ2dlcnMgdGhlIHVuYmFsYW5jZWQKPiA+IGRpc2FibGUgV0FSTiBpbiBfcmVndWxh
-dG9yX2Rpc2FibGUoKS4KPiA+IAo+ID4gPiAgCj4gPiA+ICBpbnQgc3RtcGVfcHJvYmUoc3RydWN0
-IHN0bXBlX2NsaWVudF9pbmZvICpjaSwgZW51bSBzdG1wZV9wYXJ0bnVtIHBhcnRudW0pCj4gPiA+
-ICB7Cj4gPiA+ICAJc3RydWN0IHN0bXBlX3BsYXRmb3JtX2RhdGEgKnBkYXRhOwo+ID4gPiBAQCAt
-MTQxNyw2ICsxNDI3LDExIEBAIGludCBzdG1wZV9wcm9iZShzdHJ1Y3Qgc3RtcGVfY2xpZW50X2lu
-Zm8gKmNpLCBlbnVtIHN0bXBlX3BhcnRudW0gcGFydG51bSkKPiA+ID4gIAkJaWYgKHJldCkKPiA+
-ID4gIAkJCWRldl93YXJuKGNpLT5kZXYsICJmYWlsZWQgdG8gZW5hYmxlIFZJTyBzdXBwbHlcbiIp
-Owo+ID4gPiAgCX0KPiA+ID4gKwo+ID4gPiArCXJldCA9IGRldm1fYWRkX2FjdGlvbl9vcl9yZXNl
-dChjaS0+ZGV2LCBzdG1wZV9kaXNhYmxlX3JlZ3VsYXRvcnMsIHN0bXBlKTsKPiA+ID4gKwlpZiAo
-cmV0KQo+ID4gPiArCQlyZXR1cm4gcmV0Owo+ID4gCj4gPiBbU2V2ZXJpdHk6IE1lZGl1bV0KPiA+
-IENhbiBzdG1wZV9kaXNhYmxlX3JlZ3VsYXRvcnMoKSBhbHNvIGNhbGwgcmVndWxhdG9yX2Rpc2Fi
-bGUoKSBvbiBhIHN1cHBseSB3aG9zZQo+ID4gcmVndWxhdG9yX2VuYWJsZSgpIGZhaWxlZD8KPiA+
-IAo+ID4gV2hlbiByZWd1bGF0b3JfZW5hYmxlKCkgZmFpbHMgZm9yIHN0bXBlLT52Y2Mgb3Igc3Rt
-cGUtPnZpbyBpbiBzdG1wZV9wcm9iZSgpLAo+ID4gaXQgb25seSBsb2dzIGRldl93YXJuKCkgYW5k
-IGxlYXZlcyBhIHZhbGlkIHJlZ3VsYXRvciBwb2ludGVyIHdpdGgKPiA+IGVuYWJsZV9jb3VudCA9
-PSAwLiAgSWYgcmVndWxhdG9yX2lzX2VuYWJsZWQoKSByZXR1cm5zIG5vbi16ZXJvIGR1cmluZyBl
-cnJvcgo+ID4gdW53aW5kIG9yIHVuYmluZCAoZm9yIGV4YW1wbGUsIHdoZW4gYW5vdGhlciBjb25z
-dW1lciBrZWVwcyB0aGUgcmFpbCBlbmFibGVkIG9yCj4gPiBvcHMtPmlzX2VuYWJsZWQoKSByZXR1
-cm5zIGEgbmVnYXRpdmUgZXJyb3IgY29kZSksIHN0bXBlX2Rpc2FibGVfcmVndWxhdG9ycygpCj4g
-PiBjYWxscyByZWd1bGF0b3JfZGlzYWJsZSgpIG9uIHRoZSB1bmVuYWJsZWQgaGFuZGxlIGFuZCB0
-cmlnZ2VycyBhIFdBUk4gaW4KPiA+IF9yZWd1bGF0b3JfZGlzYWJsZSgpLgo+ID4gCj4gPiBbU2V2
-ZXJpdHk6IENyaXRpY2FsXQo+ID4gVGhpcyBwcm9ibGVtIHdhc24ndCBpbnRyb2R1Y2VkIGJ5IHRo
-aXMgcGF0Y2gsIGJ1dCBzdG1wZV9yZW1vdmUoKSBbMV0KPiA+IHJlbW92ZXMgc3RtcGUtPmRvbWFp
-biBhbmQgZGlzYWJsZXMgdGhlIHJlZ3VsYXRvcnMgd2hpbGUgc3RtcGUtPmlycSBpcyBzdGlsbAo+
-ID4gYWN0aXZlLCBhbmQgbGVha3MgdGhlIGNoaWxkIHZpcnR1YWwgSVJRcyBtYXBwZWQgb24gc3Rt
-cGUtPmRvbWFpbi4KPiA+IAo+ID4gc3RtcGVfcHJvYmUoKSByZXF1ZXN0cyBzdG1wZS0+aXJxIHZp
-YSBkZXZtX3JlcXVlc3RfdGhyZWFkZWRfaXJxKCksIHNvCj4gPiBzdG1wZV9pcnEoKSByZW1haW5z
-IGVuYWJsZWQgdW50aWwgZGV2cmVzIHJlbGVhc2UgcnVucyBhZnRlciBzdG1wZV9yZW1vdmUoKQo+
-ID4gcmV0dXJuczoKPiA+IAo+ID4gQ1BVMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENQ
-VTEKPiA+IHN0bXBlX3JlbW92ZSgpCj4gPiAgIG1mZF9yZW1vdmVfZGV2aWNlcyhzdG1wZS0+ZGV2
-KQo+ID4gICBpcnFfZG9tYWluX3JlbW92ZShzdG1wZS0+ZG9tYWluKQo+ID4gICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHN0bXBlX2lycSgpCj4gPiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBpcnFfZmluZF9tYXBwaW5nKHN0bXBlLT5kb21haW4sIC4uLikKPiA+
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC0tIHVzZS1hZnRlci1mcmVl
-Cj4gPiAKPiA+IEluIGFkZGl0aW9uLCBtZmRfYWRkX2RldmljZSgpIGNyZWF0ZXMgdmlydHVhbCBJ
-UlEgbWFwcGluZ3Mgb24gc3RtcGUtPmRvbWFpbiB2aWEKPiA+IGlycV9jcmVhdGVfbWFwcGluZygp
-LCBidXQgbmVpdGhlciBtZmRfcmVtb3ZlX2RldmljZXMoKSBub3Igc3RtcGVfcmVtb3ZlKCkKPiA+
-IGNhbGxzIGlycV9kaXNwb3NlX21hcHBpbmcoKSBiZWZvcmUgaXJxX2RvbWFpbl9yZW1vdmUoKS4g
-IFRoYXQgbGVha3MgdGhlCj4gPiBhbGxvY2F0ZWQgaXJxX2Rlc2MgZW50cmllcyBpbiBzcGFyc2Vf
-aXJxcyB3aXRoIGRhbmdsaW5nIGlycV9kYXRhLT5kb21haW4gYW5kCj4gPiBpcnFfZGF0YS0+Y2hp
-cF9kYXRhIHBvaW50ZXJzIHRvIHRoZSBmcmVlZCBpcnFfZG9tYWluIGFuZCBzdHJ1Y3Qgc3RtcGUu
-Cj4gPiAKPiA+IFsxXSBodHRwczovL3Nhc2hpa28uZGV2LyMvYnVnL2xpbnV4LWFhZjkwMTYzLWE3
-NTUtNDA3ZS1hZWM1LTczYTdlZjA1ZGExZQo+ID4gCj4gPiAtLSAKPiA+IFNhc2hpa28gQUkgcmV2
-aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC8xNzk1MDc2MTAwOTAyLTgtZmEy
-NDc5NjFAbWFpbC56Z2NsYWIuZWR1LmNuP3BhcnQ9MQo+IAo+IC0tIAo+IExlZSBKb25lcwo=
+
+
+On 11/18/2026 4:04 PM, sashiko-bot@kernel.org wrote:
+> External email: Use caution opening links or attachments
+> 
+> 
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 2 related pre-existing issues it does not
+> introduce:
+> - [Critical] RDMA/mlx5: unhandled error in destroy_raw_packet_qp_rq()
+>    causes use-after-free [1]
+> - [High] RDMA/mlx5: unchecked to_ib_qp_state() return in query_qp_attr()
+>    [2]
+> --
+> 
+> commit c8de8977935b4bc94238c72869a744ae61d62546
+> Author: Akiva Goldberger <agoldberger@nvidia.com>
+> 
+> RDMA/mlx5: Select the core device through PD for QP commands
+> 
+> This commit introduces qp_to_mdev() to resolve the core device from a QP's
+> associated PD and updates QP, RQ, SQ, and DCT command helpers to obtain the
+> core device from the PD or caller.
+> 
+>> diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+>> index da4e9a52d2f9b..2196e06f593e1 100644
+>> --- a/drivers/infiniband/hw/mlx5/qp.c
+>> +++ b/drivers/infiniband/hw/mlx5/qp.c
+> 
+> [ ... ]
+> 
+>> @@ -1526,17 +1525,16 @@ static int create_raw_packet_qp_rq(struct mlx5_ib_dev *dev,
+>>        pas = (__be64 *)MLX5_ADDR_OF(wq, wq, pas);
+>>        mlx5_ib_populate_pas(umem, page_size, pas, 0);
+>>
+>> -     err = mlx5_core_create_rq_tracked(dev, in, inlen, &rq->base.mqp);
+>> +     err = mlx5_core_create_rq_tracked(pd, in, inlen, &rq->base.mqp);
+>>
+>>        kvfree(in);
+>>
+>>        return err;
+>>   }
+>>
+>> -static void destroy_raw_packet_qp_rq(struct mlx5_ib_dev *dev,
+>> -                                  struct mlx5_ib_rq *rq)
+>> +static void destroy_raw_packet_qp_rq(struct ib_pd *pd, struct mlx5_ib_rq *rq)
+>>   {
+>> -     mlx5_core_destroy_rq_tracked(dev, &rq->base.mqp);
+>> +     mlx5_core_destroy_rq_tracked(pd, &rq->base.mqp);
+>>   }
+> 
+> [Severity: Critical]
+> This problem wasn't introduced by this patch, but can ignoring the return
+> value of mlx5_core_destroy_rq_tracked() in destroy_raw_packet_qp_rq()
+> [1] cause a use-after-free?
+> 
+> When the firmware DESTROY_RQ command fails, mlx5_core_destroy_rq_tracked()
+> re-enables the resource and leaves &rq->base.mqp in dev->qp_table.tree:
+> 
+> drivers/infiniband/hw/mlx5/qpc.c:mlx5_core_destroy_rq_tracked() {
+>          ...
+>          modify_resource_common_state(dev, rq, true);
+>          ret = destroy_rq_tracked(pd_to_mdev(pd), rq->qpn, rq->uid);
+>          if (ret) {
+>                  modify_resource_common_state(dev, rq, false);
+>                  return ret;
+>          }
+>          destroy_resource_common(dev, rq);
+>          return 0;
+> }
+> 
+> Because destroy_raw_packet_qp_rq() drops that error, raw packet QP teardown
+> completes and frees the enclosing mlx5_ib_qp.  If an asynchronous firmware
+> event later arrives for the undestroyed RQ, rsc_event_notifier() looks up
+> the dangling pointer in the radix tree and calls qp->event() on freed
+> memory.
+> 
+
+This needs DESTROY_RQ to fail in firmware for it to happen. I think the 
+"Critical" severity is overstated.
+Looks like it was introduced by commit 5d2ea5aebbb2 ("RDMA/mlx5: Fix 
+error flow upon firmware failure for RQ destruction"), it needs a 
+separate fix with it as Fixes line.
+
+> [ ... ]
+> 
+>> @@ -5122,8 +5123,8 @@ static int query_qp_attr(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
+>>        if (!outb)
+>>                return -ENOMEM;
+>>
+>> -     err = mlx5_core_qp_query(dev, &qp->trans_qp.base.mqp, outb, outlen,
+>> -                              false);
+>> +     err = mlx5_core_qp_query(qp_to_mdev(qp), &qp->trans_qp.base.mqp, outb,
+>> +                              outlen, false);
+>>        if (err)
+>>                goto out;
+> 
+> [Severity: High]
+> This problem wasn't introduced by this patch, but can query_qp_attr() store
+> an invalid state in qp->state [2] and cause an out-of-bounds read
+> in ib_modify_qp_is_ok()?
+> 
+> Just below this call, query_qp_attr() assigns to_ib_qp_state() directly to
+>   the u8 field qp->state:
+> 
+> drivers/infiniband/hw/mlx5/qp.c:query_qp_attr() {
+>          ...
+>          qpc = MLX5_ADDR_OF(query_qp_out, outb, qpc);
+> 
+>          qp->state = to_ib_qp_state(MLX5_GET(qpc, qpc, state));
+>          ...
+> }
+> 
+> For any hardware QPC state not handled in to_ib_qp_state() (such as
+> MLX5_QP_STATE_SUSPENDED), to_ib_qp_state() returns -1, which truncates to
+> 255 in qp->state.  A subsequent mlx5_ib_modify_qp() call without
+> IB_QP_CUR_STATE in attr_mask passes cur_state = qp->state (255) to
+> ib_modify_qp_is_ok(), indexing past the 7x7 qp_state_table[] array.
+> 
+
+Practically can't happen. to_ib_qp_state() handles every QPC state value 
+the device defines (0x0–0x7). MLX5_QP_STATE_SUSPENDED in qp.h isn't one 
+of those QPC state values. It has been there since day one and is only 
+used for a debug string.
+
+> [1] https://sashiko.dev/#/bug/linux-314256a0-4860-4700-943f-7cc6aed26289
+> [2] https://sashiko.dev/#/bug/linux-05b234dc-14ed-449f-97cf-d7b4682a7a8d
+> 
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261117-mlx5-sd-prep-v1-0-8efd124c7895@nvidia.com?part=4
+
