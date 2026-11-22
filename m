@@ -1,95 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795339694;
-	b=aMAJ5eHuwULor4qjJWt7YQxRzsCTDEQWc9RHNLu5JHqONlBUqi5rygVGOOmMlnD5h714
-	 csTsQ2GpHO/ytjSsCK25igDgcny8uXejykMlb1g9VuMzjdwTPebspbX4Man0QiJ++1dQ9
-	 qhIbfzHVtSy38uTgKqnftHyLvdJ7DLUKgGZR2YLnLpmPYCCIAXVGwQiF/63svQPaVKPr0
-	 lUnyWyI4MiZCwdlf4oFnYYIUdBzTp/h318Zl/dydYoCnvQ/fR5oCn2OaTijqbF+BTypEL
-	 OH9kO6i7KnhnO27TBlz43UbsHTrjqNo+75wd0sSNhiEQk3SCAr55MrPaqVD+6WILyBA==
+	t=1795341837;
+	b=JyCxWO+uoYbw/3wlvkcOzGzKk0BAZZc2TX4WQLMyH7AZEXeHP6Njg9ID+FcMhQYmIvCx
+	 lxz9mb2ZeOpkdyuewdDzVibfmuMX3f08khE3Ny8c4/HPE5XY661QnNyKuWoeHixVWsdXf
+	 MlS1PboJrOcwdi0N/D3oXMsbWxVGyR0JCU0W8CG3IsfHlYR6GxvtzfS4wVR6KFtLqHkx/
+	 IfFn9lxo5GIGt6bLo7WU2c8kREzFhaM2LqisaRFAmXcyLJh8tm0SITIkIjDMHWK+f3fgE
+	 /pl49Lnng9fs3T6NxigFdx+fWjbRgtLl/sYrq/onpQH+VggiMO8YYyu9owgua+OgWcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795339694;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type;
-	bh=+XU/L3s3AR1zRZpGx05jem8OuHu+Aq/54xxilnMM65s=;
-	b=Yaqz/hGO6aDjBdVhNsuQ0lOWCd9AEl4N15IcLyriG6/InctO9T50avbK7AtfnJgK61zN
-	 Qrus+0qNEYQ02y5yL2s91oOJDEJdr68tJrSOkdF3kyob+qbxadOAvhVWuSBhfkXFlUU9e
-	 PDyZQfeR+N5C9gmSDs3qnDQNVpm8BV6Ft6Bm/OF0UjuLfXP4oPAod+c5X7aOOkFukWEUE
-	 NgBm2BC/MiPDYvHrg2WCgUd2QnZ3rAufMIYpW63fngZxBXg/mWnwI0OMmhWtWR/rgH758
-	 jUYo0U+qUdOj7BafckmoUMDO4JMk0OaBIrUkXthlXqN+Mltujp9x7noBfOtwpb5nDWA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795341837;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=V7XgMujmDFfqPIzCrzn9gOP6ailrhUCZJdYYYDTa498=;
+	b=obRbrVsR3Ef3Owm8Nixqksep18439Z87X4K1cYtNmuh3M/sZj5YjYF4Pe/VI8eC3+Vb1
+	 8O/G0XDtwt/KtMx/981IuNYiJQa1nr6vA0w2CGNJ3OMUmRcrPdCWIQAiyw7yJgS12pRwk
+	 adblv34H0hr7koT27ttsaY8tmGaXGtzOEVC0zXiEBIbV6Rh6XPjJJqFEMlZMK0RT17ESe
+	 M9DfAQ1Qn7eKc1IyY+suCxHsrX71RDcg2BF/5/6xrn/h3QIAn+91nJzzT2EJu4frJhp7E
+	 QJLRNGsCBrYkaTsqaYX0B+k/BVl/uriIGQcTf6+dqSFh2Wkt/piwEt6FpnqP79YefsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aUlWhNfY;
-	arc=none smtp.remote-ip=209.85.221.44
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=vaNrB82k;
+	arc=none smtp.remote-ip=35.89.44.35
+Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A35C606A320
-	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 09:28:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A35C606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B31606A320
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 10:03:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04B31606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aUlWhNfY
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-48e3b22e971so1176570f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 01:28:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795339693; x=1795944493; darn=lists.linux.dev;
-        h=content-type:mime-version:references:in-reply-to:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+XU/L3s3AR1zRZpGx05jem8OuHu+Aq/54xxilnMM65s=;
-        b=aUlWhNfYGVmkxRPWTEKaqfoeTYAMTQtlBC6DYKsG8YHxnlNh1oUg/9L6mNWaE/RHyo
-         qWw31neNk3o/kGxA9HRGtC2fT9BQEjCKhCMtOdjlc2a03Qrj1bqoivI7tlaATg5KtzJ1
-         4IK172lY/MNrbgGs1mxK+oFDwZ9NqgnEGwq3ZCGk7FAgjOoVNN/vLEneOEzG5AyyKNFE
-         feqNHpv/o9o1Gph3mqYUi7YhV+MgvgRy4u/J9BKnBqNWBD3lhoOMhUSfOwK0aMR33onB
-         QH572+K8gN90Urw6x151N2RjmyIxRdZCI3Q8o+t3URRGjARK/PzoyypqvyxzObDpAMKN
-         32ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795339693; x=1795944493;
-        h=content-type:mime-version:references:in-reply-to:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+XU/L3s3AR1zRZpGx05jem8OuHu+Aq/54xxilnMM65s=;
-        b=BYUk9l0izVektjF1oPqbYec4eyHmgK6RILIuc486U87W1jJK1uStNkJ4xwD2AecYR7
-         LXGEj/H3YhNdKa/tBKMKov29RpyLjA4E5gemKhChtdJjQ9KfG7mzW3jj3eHe/qAoj52C
-         VJkHyUIFubeqFLyQyrPEfhaHJdKH8gKjb/TTPikXRdXqN9Fi8Pv7n4RPryYSH8sEnLEF
-         UYZs5V/WDMdKaZ/hJjLnC7CyQiyPIRT4HDKT9dw2j/5QjZEf/C7e2NMit70enUpXw6yr
-         APskG6MpiGgGwU6JOkb+vp7cCHsIGaD4fCOyFE5xo89+WBxh+TO7luDGFcMd/h8hVAV0
-         Jhsg==
-X-Gm-Message-State: APuU4Z9TTgLEge+eeKxtRPyWCtSJqHjbXTyndHXN18RunJmFyxFzP6QT
-	Ys//UO/dmFmq0flZFk8c+/tH+cWcNv4c20X75W7JdJAZJBGGFGqnqEKFeArJripSb+ZJgw==
-X-Gm-Gg: AZFdTZeYQx3wU34nmYvj9VdFPWh0hCdcEI7B3mxZuYs1dCqmiIGeAeZji8zEMOVGj36
-	BgfUrzlsTDsBEzk0LZM5q/fIvqkLrbVd0briG8ABOp3ImyyuX1hPoxo5BPQy7j7FuVyyXRzLTIm
-	zpwcrvJHJ/j5q0wTbTh/nqKq+nTgno7zaBsGjwqJIaOgljhfZhCC4lQR1UIAJ2c/Xc4oCrmNaZq
-	y3VAIbg8Mlj6tqa0y7K/ULHp764xb73Z3P1iucK94DE2NpnR+LJUgqGNhTiRuJVsEw5dvtQQiMH
-	YvJkdmQ6hU0oyBdrSrORfjuk2hZgVB0L1J54D81TMrg4+RZUWHqz0vObOnmEvHYBbyQ8cQrBVzV
-	mz8e3DxyEe//uYsmLbGfeMuEjr/RVvYIcYUiTKk+xCf9osOZp98txcKPIgc7PlP+snOPVUZ69YD
-	KehnakbkrG3u6G388dxgxgkp31n/9WHbVn3Cm7rQmqOeubp0NurV/vguKEg+jQPfijVGdcZZGMj
-	3BdYo4Froeb7mJsOjfMEaKr7ewvGG5FujQFzT7sv2UjTnps0AiUwgIFeYW/DcmGqbWJN19gIU80
-	4ebK5vCxvG5puSKbq/TSvIUyjwIre5U99Icq5QHT6g==
-X-Received: by 2002:a05:6000:299c:20b0:4aa:2bf2:4d98 with SMTP id ffacd0b85a97d-4abb0f3b4b0mr12062401f8f.29.1795339692451;
-        Sun, 22 Nov 2026 01:28:12 -0800 (PST)
-Received: from strix.localnet ([197.250.160.206])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ad644140b5sm12250751f8f.17.2026.11.22.01.28.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2026 01:28:11 -0800 (PST)
-From: Stefan =?UTF-8?B?RMO2c2luZ2Vy?= <stefandoesinger@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, mfd@lists.linux.dev,
- linux-phy@lists.infradead.org, robh@kernel.org, conor+dt@kernel.org,
- vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com,
- lee@kernel.org
-Subject: Re: [PATCH 3/6] pmdomain: zte: Add a zx297520v3 power domain driver
-Date: Sun, 22 Nov 2026 12:27:50 +0300
-Message-ID: <pmvkAYeQQxqf6KX1o0NWJw@gmail.com>
-In-Reply-To: <sashiko-outbox-225964@kernel.org>
-References:
- <20261120-zx29usb-v1-0-b0433258e51b@gmail.com>
- <20261120-zx29usb-v1-3-b0433258e51b@gmail.com>
- <sashiko-outbox-225964@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=vaNrB82k
+Received: from eig-obgw-6004b.ext.cloudfilter.net ([10.0.30.210])
+	by cmsmtp with ESMTPS
+	id UxC9xp4vgRiNxV4QOxENbH; Sun, 22 Nov 2026 10:03:56 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id V4QNxqsJ5laNKV4QNxdGvJ; Sun, 22 Nov 2026 10:03:55 +0000
+X-Authority-Analysis: v=2.4 cv=UbpRSLSN c=1 sm=1 tr=0 ts=6b02be0b
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=pGLkceISAAAA:8 a=4ONIEzdkpqhAoMONle8A:9 a=QEXdDO2ut3YA:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=V7XgMujmDFfqPIzCrzn9gOP6ailrhUCZJdYYYDTa498=; b=vaNrB82k9Meh
+	n3iK6tyKwijaFoJdIwKX1Gcr7fsh/yaC8sZWgzVaAgaU7a0OOk7y78byI5gfXAUF8pQXLnZiFvivK
+	0kkxjawJU9ZbIfyVesKF7VqcNS1yB4RNPdODrzvzHkyCgFTHvpRgXIv5/PBeIK3RP9BoN+G0jdvSo
+	B34im1mZGbl3TBgsxUJ9rxYf7PUISZ+cvrJZRb7mOfl0r73ByKF3fm0UJbJYafim2VxQlnPE8CGb7
+	/mBJFijWBq+NTMzT78aTi8iPVY3/zcFonMxgyYXVzVXErLvuzZe9jt3M2oMn3g43lLhd7gc7xhZC/
+	sCsAaq0Mz5/I27J4Nne8UQ==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:42002)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xV4QN-000000049r4-0RFW;
+	Sun, 22 Nov 2026 15:33:55 +0530
+Message-ID: <6d49b915-b9ea-432a-91a3-3743e43553bf@roeck-us.net>
+Date: Sun, 22 Nov 2026 02:03:53 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,60 +76,320 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart7pWE9LkGQbyJZPD4mlTCyg";
- micalg="pgp-sha256"; protocol="application/pgp-signature"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] watchdog: histb: Add HiSilicon STB watchdog driver
+To: sashiko-reviews@lists.linux.dev, David Yang <mmyangfl@gmail.com>,
+ linux-watchdog@vger.kernel.org
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261122065549.3265519-1-mmyangfl@gmail.com>
+ <20261122065549.3265519-3-mmyangfl@gmail.com>
+ <sashiko-outbox-227780@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <sashiko-outbox-227780@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xV4QN-000000049r4-0RFW
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:42002
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 6
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfAIB/XNkAffumiTXMlPIxW3UR83BkItyhUiZV4dT/XS2NqqPSPS5+uXteNSOZ5FxwDQqsNTWcjxs6KSmraHG/hBGxDVXduKfwuT6X3nYMa15SQ4iHLCQ
+ AtEs2obczW5cGqRekg+mUe85tJECOjNHSWu1m/MrFxmhYbmSx39ytWAqlaooNni5IJikbWNZqU7Agb6rXwaaFUOIKrwCDxhhFxbTQrCXg1TA1wYJtKDAMQkl
 
---nextPart7pWE9LkGQbyJZPD4mlTCyg
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Stefan =?UTF-8?B?RMO2c2luZ2Vy?= <stefandoesinger@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH 3/6] pmdomain: zte: Add a zx297520v3 power domain driver
-Date: Sun, 22 Nov 2026 12:27:50 +0300
-Message-ID: <pmvkAYeQQxqf6KX1o0NWJw@gmail.com>
-In-Reply-To: <sashiko-outbox-225964@kernel.org>
-MIME-Version: 1.0
-
-Am Freitag, 20. November 2026, 22:51:31 Ostafrikanische Zeit schrieb sashiko-
-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 2 potential
+On 11/21/26 23:18, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential
 > issues to consider:
-> - [High] pmdomain: zte: child-to-parent device link deadlock in
->   zx29_pd_probe()
+> - [High] watchdog: histb: stale counter reload in histb_wdt_arm() and
+>    histb_wdt_ping()
+> - [High] watchdog: histb: unclocked MMIO reads in
+>    histb_wdt_get_timeleft() when stopped
+> - [Medium] watchdog: histb: missing watchdog_stop_on_unregister() in
+>    histb_wdt_probe()
+> - [Medium] watchdog: histb: unchecked histb_wdt_start() error in
+>    histb_wdt_resume()
+> - [Medium] watchdog: histb: deadlock and invalid wait context in
+>    histb_wdt_restart()
+> --
+> 
+> commit 8f21fc6b65d49db93aa95ad107c510c4d4fadce6
+> Author: David Yang <mmyangfl@gmail.com>
+> 
+> watchdog: histb: Add HiSilicon STB watchdog driver
+> 
+> This commit adds a platform watchdog driver for the watchdog controller
+> integrated on HiSilicon STB SoCs.
+> 
+>> diff --git a/drivers/watchdog/histb_wdt.c b/drivers/watchdog/histb_wdt.c
+>> new file mode 100644
+>> index 0000000000000..1961981f1e5d7
+>> --- /dev/null
+>> +++ b/drivers/watchdog/histb_wdt.c
+>> @@ -0,0 +1,287 @@
+>> +// SPDX-License-Identifier: GPL-2.0+ OR MIT
+>> +/*
+>> + * HiSilicon STB Watchdog Driver
+>> + *
+>> + * The watchdog controller integrated on HiSilicon STB SoCs shares register
+>> + * offsets with the ARM PrimeCell SP805, but differs in several critical
+>> + * hardware behaviors:
+>> + *   - The ID registers at 0xfe0..0xffc are unimplemented and read zero,
+>> + *     requiring a platform device driver rather than AMBA probe;
+>> + *   - Writing WDTLOCK freezes the counter instead of only blocking register
+>> + *     writes, so the block must remain unlocked while running;
+>> + *   - Writing WDTLOAD never reloads the running counter; only WDTINTCLR does;
+> 
+> [ ... ]
+> 
+>> +static void histb_wdt_arm(struct histb_wdt *wdt, u32 load)
+>> +{
+>> +	void __iomem *base = wdt->base;
+>> +
+>> +	spin_lock(&wdt->lock);
+>> +	writel_relaxed(HISTB_WDT_UNLOCK_KEY, base + HISTB_WDT_LOCK);
+>> +	writel_relaxed(0, base + HISTB_WDT_CONTROL);
+>> +	writel_relaxed(HISTB_WDT_INT_MASK, base + HISTB_WDT_INTCLR);
+>> +	writel_relaxed(load, base + HISTB_WDT_LOAD);
+>> +	writel_relaxed(HISTB_WDT_INT_ENABLE | HISTB_WDT_RESET_ENABLE,
+>> +		       base + HISTB_WDT_CONTROL);
+>> +	readl_relaxed(base + HISTB_WDT_LOCK);
+>> +	spin_unlock(&wdt->lock);
+>> +}
+> 
+> [ ... ]
+> 
+>> +static int histb_wdt_ping(struct watchdog_device *wdd)
+>> +{
+>> +	struct histb_wdt *wdt = watchdog_get_drvdata(wdd);
+>> +	void __iomem *base = wdt->base;
+>> +
+>> +	spin_lock(&wdt->lock);
+>> +	writel_relaxed(HISTB_WDT_INT_MASK, base + HISTB_WDT_INTCLR);
+>> +	writel_relaxed(wdt->load_val, base + HISTB_WDT_LOAD);
+>> +	readl_relaxed(base + HISTB_WDT_LOCK);
+>> +	spin_unlock(&wdt->lock);
+>> +
+>> +	return 0;
+>> +}
+> 
+> [Severity: High]
+> Should HISTB_WDT_LOAD be written before HISTB_WDT_INTCLR in
+> histb_wdt_arm() and histb_wdt_ping()?
+> 
+> As noted in the file header comment, writing WDTLOAD does not reload the
+> counter and only writing WDTINTCLR triggers the reload.  Writing
+> HISTB_WDT_INTCLR first reloads the counter with whatever stale value was
+> previously in HISTB_WDT_LOAD.  In particular, when histb_wdt_restart()
+> calls histb_wdt_arm(wdt, 1), the counter reloads with the old timeout (or
+> 0xffffffff if the watchdog was never started) instead of 1, so the system
+> fails to reset during the 1 ms delay.
+> 
+> [ ... ]
+> 
+>> +static unsigned int histb_wdt_get_timeleft(struct watchdog_device *wdd)
+>> +{
+>> +	struct histb_wdt *wdt = watchdog_get_drvdata(wdd);
+>> +	u64 value;
+>> +
+>> +	spin_lock(&wdt->lock);
+>> +	value = readl_relaxed(wdt->base + HISTB_WDT_VALUE);
+>> +	if (!(readl_relaxed(wdt->base + HISTB_WDT_RIS) & HISTB_WDT_INT_MASK))
+>> +		value += (u64)wdt->load_val + 1;
+>> +	spin_unlock(&wdt->lock);
+>> +
+>> +	return div_u64(value, wdt->rate);
+>> +}
+> 
+> [Severity: High]
+> Can histb_wdt_get_timeleft() read HISTB_WDT_VALUE and HISTB_WDT_RIS while
+> wdt->clk is disabled?
+> 
+> wdt->clk is only prepared at probe time and is not enabled until
+> histb_wdt_start() is called, and histb_wdt_stop() disables it again.  The
+> watchdog core's timeleft sysfs attribute (and WDIOC_GETTIMELEFT ioctl)
+> invokes wdd->ops->get_timeleft(wdd) without checking
+> watchdog_active(wdd).  Reading /sys/class/watchdog/watchdogN/timeleft
+> while the watchdog is stopped accesses the device registers with the
+> clock gated, which can cause a synchronous external abort or bus hang.
+> 
 
-This looks correct - the particular line shouldn't be there, it was a leftover 
-from earlier attempts to handle device unbind.
+A generic fix for this problem is pending.
 
-> - [High] pmdomain: zte: wrong supplier device in zx29_pd_attach_dev()
->   device link
+https://patchwork.kernel.org/project/linux-watchdog/patch/20261121052950.287506-1-nhat.tranminhk2@gmail.com/
 
-This one is likely correct, but I'll have to do more reading to be sure
+Guenter
 
-
---nextPart7pWE9LkGQbyJZPD4mlTCyg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEEQxb0tqoFWyeVMl1sPRO8yFRPGiIFAmsCtZYbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJED0TvMhUTxoiWwUP/1zrUTig3p1zQi1yN49m
-lZsHM1mGoC+rZz8b6Gofd32dOfizYgpEF7nTr/TVadx3oSzKlKF5ayXHR/Q8Bgfo
-ke9bKibuDSpORGTL5M5S4hxiwi9xIJ9Ut6alnVApxneNS1AkYMNFW/mDbSQGaY9n
-RdRD6/yKt4miuWmJQdWJLCPaiwcM6e8AbUjCavhkMWEL8z1yxQaUGDNJKIdSrv74
-OubQcJfVPr4v6UN7JfUvg/aBCyVH4L/hYNSBaasfH5Gu+BjgB0S6j/i1FY8TRhHe
-/+LKiKGph3Bqq5Mh9Ho197e7vfKbK4R4agnxrJV5Iad52JhPtWYhiKUEdeRvduxB
-fngHWLMNa2jDLI6iie9bWLAZGAP1Hi5ZeBQrkl2BhXN+BulUPfdNWH8nNzJduDMI
-a5NNnM85VdY+jnIMl/D920QGXAii613m+nJg8R5jGg6LrGNt4lV+pcJO3tS7BhOu
-vL7UsI2tna7TUMj7bwnVdzmbLMipw8prPWpRTNUNBkP0KaSl5CnKfce7OEYFfgvY
-tLLl/eLGF+sOQ7Mx+ZQE6KE50wx23vPSrpjXfERtrFGwm5PyI9OO1fxrctm5cwdd
-j7kTk7HZcAiZQUsC+qN436NqIkBHCNR9CCm5VLlOVCRxq9yqYNH0+00P5+jKGjmb
-OkG3sJu7139jhrSQYgGPFpFC
-=7yFm
------END PGP SIGNATURE-----
-
---nextPart7pWE9LkGQbyJZPD4mlTCyg--
-
-
+>> +static int
+>> +histb_wdt_restart(struct watchdog_device *wdd, unsigned long mode, void *cmd)
+>> +{
+>> +	struct histb_wdt *wdt = watchdog_get_drvdata(wdd);
+>> +
+>> +	/*
+>> +	 * For reset, we start the WDT clock and leave it running.
+>> +	 * The clock was prepared at probe time; only clk_enable() is
+>> +	 * safe in this atomic (restart notifier) context.
+>> +	 */
+>> +	clk_enable(wdt->clk);
+>> +	histb_wdt_arm(wdt, 1);
+>> +
+>> +	mdelay(1);
+>> +
+>> +	return 0;
+>> +}
+> 
+> [Severity: Medium]
+> Can histb_wdt_restart() deadlock on wdt->lock via histb_wdt_arm()?
+> 
+> Normal callers acquire wdt->lock with plain spin_lock() while local
+> interrupts remain enabled, whereas histb_wdt_restart() runs from the
+> restart notifier chain after smp_send_stop() or from emergency_restart()
+> in hardirq context:
+> 
+> CPU0                              CPU1
+> histb_wdt_ping()
+>    spin_lock(&wdt->lock)
+>                                    machine_restart()
+>                                      smp_send_stop()
+>    <stop IPI halts CPU0>
+>                                      do_kernel_restart()
+>                                        histb_wdt_restart()
+>                                          histb_wdt_arm()
+>                                            spin_lock(&wdt->lock)
+>                                              <-- spins forever
+> 
+> An emergency_restart() triggered from a hardirq on the same CPU while
+> wdt->lock is held will likewise deadlock, and taking spinlock_t from
+> hardirq context violates lockdep wait-context nesting on PREEMPT_RT.
+> Programming the registers in histb_wdt_restart() through an unlocked
+> helper avoids taking wdt->lock during restart.
+> 
+> [ ... ]
+> 
+>> +static int histb_wdt_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	struct histb_wdt *wdt;
+>> +	int res;
+>> +
+>> +	wdt = devm_kzalloc_obj(dev, *wdt);
+>> +	if (!wdt)
+>> +		return -ENOMEM;
+>> +
+>> +	wdt->base = devm_platform_ioremap_resource(pdev, 0);
+>> +	if (IS_ERR(wdt->base))
+>> +		return PTR_ERR(wdt->base);
+>> +
+>> +	/*
+>> +	 * Keep the clock prepared for the lifetime of the driver:
+>> +	 * .restart() runs in atomic context and may only call clk_enable().
+>> +	 */
+>> +	wdt->clk = devm_clk_get_optional_prepared(dev, NULL);
+> 
+> [ ... ]
+> 
+>> +	watchdog_stop_on_reboot(&wdt->wdd);
+>> +	platform_set_drvdata(pdev, wdt);
+>> +
+>> +	res = devm_watchdog_register_device(dev, &wdt->wdd);
+>> +	if (res)
+>> +		return dev_err_probe(dev, res,
+>> +				     "Failed to register watchdog device\n");
+>> +
+>> +	return 0;
+>> +}
+> 
+> [Severity: Medium]
+> Should histb_wdt_probe() also call watchdog_stop_on_unregister(&wdt->wdd)?
+> 
+> If the device is unbound while the watchdog is active,
+> devm_watchdog_register_device() unregisters the watchdog without calling
+> histb_wdt_stop().  That leaves the hardware counter running to reset the
+> system and causes the devres cleanup for devm_clk_get_optional_prepared()
+> to call clk_unprepare() while wdt->clk is still enabled, triggering a
+> WARN in clk_core_unprepare().
+> 
+>> +static int __maybe_unused histb_wdt_suspend(struct device *dev)
+>> +{
+>> +	struct histb_wdt *wdt = dev_get_drvdata(dev);
+>> +
+>> +	if (watchdog_active(&wdt->wdd))
+>> +		histb_wdt_stop(&wdt->wdd);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int __maybe_unused histb_wdt_resume(struct device *dev)
+>> +{
+>> +	struct histb_wdt *wdt = dev_get_drvdata(dev);
+>> +
+>> +	if (watchdog_active(&wdt->wdd))
+>> +		histb_wdt_start(&wdt->wdd);
+>> +
+>> +	return 0;
+>> +}
+> 
+> [Severity: Medium]
+> Should histb_wdt_resume() propagate the return value of histb_wdt_start()?
+> 
+> If clk_enable() fails in histb_wdt_start() during resume, discarding the
+> error leaves WDOG_ACTIVE set while wdt->clk remains disabled.  Later
+> watchdog callbacks will then access unclocked MMIO registers and
+> histb_wdt_stop() will call clk_disable() on an already-disabled clock.
+> 
 
