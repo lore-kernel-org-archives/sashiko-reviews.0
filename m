@@ -1,81 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795322266;
-	b=kITrg76LnjFXBHZ5UDyt19ch5MoFigcIwmhSnNgHjvJeMjimp9PpyY9jqKcrbrilevdk
-	 +nKXuoePPXb0hx8D2FFFS/FdBF1XBWfnyh2mlI6ZiT9QWcdEPfEjViRnTtZqkj5ntGfhj
-	 8kQ7ZkemO/D/Sk0deJ1h+jxrI5kYLOzR0NGu8qzAdzJD5s4gdJAOEtTkEG1NXyTp+8Yb/
-	 10XXS4S0MtWB7uO36I0wp875PlCQ4S2rOTFx4QoXJdERj6/jey6Ytsjh8LjMbmPxzRl00
-	 3nq+FMCRVm+jlVAn7xgS/Q6sEDzyRs8imiiMdoeK9vV6ZMwugA9177nOjeWfH0LJvLA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795322266;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:Received:From:To:Cc:Subject:Date:
-	 Message-ID:In-Reply-To:References:MIME-Version:X-Scanned-By:
-	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Transfer-Encoding:content-type;
-	bh=uT1GKmOpOEmDr3TcXo7O2Gx87y3WQ7fIKW+zuqBtBT8=;
-	b=R1KbEE48RHmm/A+GJHkVxT8VKGns4laIykgk4YYQiCrXK44KrkZkQYG+dV++wWSrZbm2
-	 AvBWgDFeLD4snmlnv6sfLlv7xGlxCGI9KhB1EMXzkv9buV/cQYWKiTF6SWnsSEM193WmK
-	 0a1KUBT8/1PoSseDsdndkGwvaEGLoRMcpQ7Kfs5puli8s0xhHXtcLu/6h2rOuvZIyziNJ
-	 kWvfIya3n3GcopcoxY20ncs2ovJe9vRwAU9vj16F/y/DR5p/31oZi+LVnwYerP31UZIbO
-	 ziCGgKjmVQoUtUgxHBaODr4KvW2ad7d42b8TI6W+ronFCZYz5WWTvA3fqA2mhHCVGDw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=i13JYMdD;
-	arc=none smtp.remote-ip=170.10.129.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795322908;
+	b=TfbGK4XX8BB9p9B9+d7aW08feKIv/49HZ26i3q72whxzXYvgvZgTq+njhC0nxtjLzbio
+	 fve9Diq4Xlwilrs0jCeULh+oQeDO7huPoDAyjniNogJ9svN1skFiwOh4j5ZH8Vj09CGVS
+	 ufNT3IK6pfIjV0QJkWbpQEdcztZpu+ze70nmtFTq8tQxB12t6Hi6qwDTDEnwzPUfawZfZ
+	 DL0/ia6XOT+ZOPcKkFIfelg8CmATdnM6h9LycSIijeqJpFq3EMMWcGlqlbwWTm0v8hyhq
+	 aZOczhOow9LcA2gdH5sN2Wv+Mv8PnW0xykLaFn3oQJ7d5oFct5Hmac/vn41bu4Rbh0Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795322908;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=aivprEjWWyuTPpWR091yh3Xxco3ejGQmEcsBHTiq2so=;
+	b=oAr74Dbt0AaWmlLdJInLNQVVjiAH70dIf6czzhPX7d+2AHY5SAzEDKSBnZ9kEdsdpyaN
+	 0oEzKyeWHA0xaZRYCGMuIR5TIrSu5W1sMVU104bFRgQ5s76F5lyiVOkcBG+KxnHskstNh
+	 OzWy3u58EEQPHq0drLNYailti6xluxihgBUv5A59DoFa0jO34dHHXQbzOPA+B9esNHFR2
+	 WI0FtSK0fwYFwOV3VkemcLg1e6k+ds6y5KgrrId9hzwxCQ28wRTNUmhzW1EIGMZeXYCQV
+	 GOJqcsVOS5mz5RyFeB/9SPaJ41jwhyqXMEJM/H+hmWf4gVB0BJqvpp1lXzRiEwOHerA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=HnsoWpyi;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.174
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F3B606A320
-	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 04:37:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30F3B606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862D3606A320
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 04:48:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 862D3606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=i13JYMdD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1795322265;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uT1GKmOpOEmDr3TcXo7O2Gx87y3WQ7fIKW+zuqBtBT8=;
-	b=i13JYMdDihQEejfHaQGulFg9dKhyqyceVDD5JNexrsgZuH0I0Z+BPQgtdVMoyOwLhkTT/I
-	uVwwnlUFmPR8pGGuxqQju7r3R6v51h78nK3wKWYgRIUft+oik7Rhy1rAtnHopxN+GrumnU
-	tlR4lyqBQsgLp9zdJLvRzv6buEpLhoQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-1cwIQmz0N7axuHD_9XaDGg-1; Sun,
- 22 Nov 2026 04:37:41 +0000
-X-MC-Unique: 1cwIQmz0N7axuHD_9XaDGg-1
-X-Mimecast-MFC-AGG-ID: 1cwIQmz0N7axuHD_9XaDGg_1795322260
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id D56D518004F6;
-	Sun, 22 Nov 2026 04:37:39 +0000 (UTC)
-Received: from snishika-thinkpadp16vgen1.tokyo.csb (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 2B48330000E3;
-	Sun, 22 Nov 2026 04:37:35 +0000 (UTC)
-From: Seiji Nishikawa <snishika@redhat.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org,
-	Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Hannes Reinecke <hare@suse.de>,
-	Chris Leech <cleech@redhat.com>,
-	Seiji Nishikawa <snishika@redhat.com>
-Subject: Re: [RFC PATCH 1/2] nvme-tcp: remove the direct send path
-Date: Sun, 22 Nov 2026 13:37:32 +0900
-Message-ID: <20261122043732.2002424-1-snishika@redhat.com>
-In-Reply-To: <sashiko-outbox-227628@kernel.org>
-References: <sashiko-outbox-227628@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=HnsoWpyi
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-55be673e029so155771cf.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 21 Nov 2026 20:48:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795322907; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PO56CD0unhPfrAnEPHjUyYIA0TKZP24OeTWopYqFarVhJYWmrlk5dMFohhjJ1XEFwk
+         QQlD99AlwKY2UgqbMk5bsHFehq1DGajbGiJ601qscTtQ1PAfuNKzjB28EheM8a3c7PT4
+         pCypj7k/5H3pIvRNXVMj1BVYKdCp8BvvBOzVaq4oh/GS6/Fbq8LVEl2hrYlV+sXhM2Uq
+         2czOmkCMSZeA7dY/+uYsCHS51jDnfZAKo3bgmWq7v1ULnAxbksv6sojB5ncppZ2LJLer
+         xCtgt5FEnAggRwGq/kYLLaH0GjUwAHI8MMLhGNK8C6cl+CVKFIMmp3xzFgsWBZd08Uei
+         98cw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aivprEjWWyuTPpWR091yh3Xxco3ejGQmEcsBHTiq2so=;
+        fh=ZajQVXKx4og9o2V1Rn4I18ADtLjDNP2g2IqA77gF7F8=;
+        b=U8ualkHmg1Z7HzKEt0fe77z1YmcYcOU8B+sp3kprlBeyZohxK74XPZxLWstb1xpmzV
+         IeK1gDZ9lizy+8MoK41ts+8n+ackJwkmr4hEdaWl5Cqkotnd7Gf7jMXQufoala9AXP6P
+         9i1ERmQ6DdISb7xm9Wh3aSCNNipXjjxAeJ5LaIBrWcK2dagD9/zJtXB6Nx5yAAdaYIOr
+         f/MWXqqVpaCDKUQCNNAn/h1lSSeyK0Phr/4A5bsQhCaBwFd4GE0Bqf27sZNj7UR4M1ZY
+         B96ycCOAnxij4mpMUyxFgTCLbBBDRnvRjKrQeZ4DUXURxiliK6RsOfVPGSPXjiiKdfls
+         2viQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795322907; x=1795927707; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aivprEjWWyuTPpWR091yh3Xxco3ejGQmEcsBHTiq2so=;
+        b=HnsoWpyiDIzcXMfcFKAqxb4Cxynrv/HIYOu5eoCueHCBX7G1YsXuBtFw2T0Uw/otFr
+         Ad6n96dY1T9gUQ4E/kCBj6WlKh65RNYtbDosku2Z7ngtmifUxfw97cmYH1WiI72zdVkc
+         3ebPYrr4EyzQavhxKmJdJ7F64WqLAWJsSiFYqpDJi31MKpC75PlgnEgJEuEVhtesRwNy
+         DZmNmZ3Wcem5ViQH+Bcmx2z1Lg38D+UHwVPZIYUHQqXiTKuTfCSebWHkqQWXylRbWYm+
+         RdFtjRcTnN9gLVvv1gMtuAqE9bnMx1JnkJk4FCZD8jzLLN2dLs1/DQKm2yamKTAvAgXm
+         WgcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795322907; x=1795927707;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aivprEjWWyuTPpWR091yh3Xxco3ejGQmEcsBHTiq2so=;
+        b=aRrSzokIGDyd1tkszrv+F81Br91lC20KAhSAnNsKfQl3NL8Xjbmwtn8JXByPVWME44
+         S705/2kis7frKHeRQsQAgJ2O7LmVVxpkiUWBYtrKh4k6kmudEefoRWnI/Pdby1UHDwST
+         XBKYbePODRtANjwWn9/NnK3335mLiQ4ilVF/1vYUz05ptSecfn4duaP/c3qeuO2KGZAv
+         Ew6qgJwgtzsEHrxjjx5Q/d+NE8re2ZPrGSkgpmX1RMVoiZLjwd2FTsglgiQFq65S1KP6
+         c2UVdqQ+yezQhbdAsnXZKV1I8RfxDn00/TLX4uGM+BI0klF6aAZXewNaoebxiOr/o3LP
+         28pg==
+X-Gm-Message-State: APuU4Z83QY/35S4LkGGp1u8HcG6M2hrz10ZkLPiZwCKRVART1yc1+/yu
+	ZNPaqVSmITP6aqK06HtvMTSHQMMaU0oiI6G2n2n40qWAegD82qQnKY1lhwegTRYFkLz1bBJaJV7
+	BT2oN9KP6TgUYhusY5R5sKFoYfCIV+wc6soyZHd6l
+X-Gm-Gg: AZFdTZfQtvg7rNyl4Jt8+Hg/GoqcksiZdsxzMkQprDaVrWfZhQLivit/Nbiw3JXFirv
+	Kw1ljWy7TiEj6vYPqqGoDb2gE6l2CORdxvYtFKKHDZGKZVipHOGDy5HtKPdqSdEFwRhDuKiCem3
+	2U4/q0MqHWc6pxlKZx3WQtTUoGF9PaUN0iim2viKtyGciJoA7Bn1KlSzGUmGEjguJABX6lrGGFt
+	wmUBT/eP2Yx9VLUsqTf/me6576NMxnqi73uel+6IxoJm8VUQJj8h1wxiVrFTHVTbYdWc5Pu0Dwb
+	tqSN3h/mzQ77I/bKnbR3IOqXsAd4m18lrpdjgSHc2zui04j6gpKjASmOCCzeZ9D2lmuLNfY4yBK
+	TumM64wH00uugJm7NKtzNyZi+HW7LyrhNDcDiUYMJnGrmANszpZPRcpJ+zTZErNddTfCIefjrNv
+	wSqY8Pc4dfwISgXoJn
+X-Received: by 2002:a05:622a:124a:b0:535:bb33:6351 with SMTP id
+ d75a77b69052e-55d87fcff29mr19987351cf.1.1795322906822; Sat, 21 Nov 2026
+ 20:48:26 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,48 +104,95 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: J2-b4mwJ-V-fBV7zXQPIyp1ixp7hHi7_7hQF0YNBdYA_1795322260
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+References: <20261118132719.632451-2-ardb+git@google.com> <sashiko-outbox-223175@kernel.org>
+ <b7521ecf-d30a-4b47-959e-43257baaf8a9@app.fastmail.com>
+In-Reply-To: <b7521ecf-d30a-4b47-959e-43257baaf8a9@app.fastmail.com>
+From: Suren Baghdasaryan <surenb@google.com>
+Date: Sat, 21 Nov 2026 20:48:15 -0800
+X-Gm-Features: Aa3M54offAfg3834PgFby-yYoDkOuUmUfJ9HCVQYtK0CdYb7PRNW36LqxMd2aV0
+Message-ID: <CAJuCfpFH05dc+K=NproS=T_piiJqx-xJ7zvXDdNe+g1_bXF2Ow@mail.gmail.com>
+Subject: Re: [PATCH] alloc_tag: Use __ prefixed ELF section names
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, Ard Biesheuvel <ardb+git@google.com>, 
+	linux-mm@kvack.org, Kent Overstreet <kent.overstreet@linux.dev>, Hao Ge <hao.ge@linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Nov 22, 2026 at 10:49 AM <sashiko-bot@kernel.org> wrote:
-> [Severity: Medium]
-> Does removing the inline send from nvme_tcp_queue_request() break polled
-> I/O on HCTX_TYPE_POLL queues?
-[ ... ]
-> For SCHED_NORMAL tasks on queue->io_cpu, waking
-> the WQ_HIGHPRI worker sets TIF_NEED_RESCHED, causing blk_hctx_poll() and
-> io_iopoll_check() to abort polling on need_resched() or forcing two
-> context switches per polled I/O.
+On Thu, Nov 19, 2026 at 6:03=E2=80=AFAM Ard Biesheuvel <ardb@kernel.org> wr=
+ote:
+>
+>
+>
+> On Thu, 19 Nov 2026, at 14:27, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential
+> > issues to consider:
+> > - [High] alloc_tag: SECTION_START() and SECTION_STOP() fail to expand
+> >   macro argument
+> > - [Low] alloc_tag: missing Fixes: trailer for unprefixed alloc_tags
+> >   section name
+> > --
+> >
+> > commit 933587991e6a16ab600445b22347397f80335de9
+> > Author: Ard Biesheuvel <ardb@kernel.org>
+> >
+> >> alloc_tag: Use __ prefixed ELF section names
+> >>
+> >> The compiler will emit static relocations related to a section .foo in=
+to
+> >> a separate section called .rela.foo, i.e., it just appends the section
+> >> name to the string ".rela"
+> >>
+> >> When section names start with . or __, this results in relocation
+> >> section names that are correctly matched by the various pattern rules =
+in
+> >> the various linker scripts across the tree.
+> >>
+> >> Without any such leading delimiter, it may lead to spurious warnings
+> >> such as
+> >>
+> >>   >> ld: warning: orphan section `.relaalloc_tags' from `init/main.o' =
+being placed in section `.rela.dyn'
+> >>      ld: warning: dot moved backwards before `.rela.dyn'
+> >>      ld: .tmp_vmlinux1: section `.rela.dyn' can't be allocated in segm=
+ent 1
+> >>
+> >> Fix this by renaming the section to __alloc_tags. While at it, tweak t=
+he
+> >> headers so that the definition of the name appears only a single time.
+> >>
+> >> Cc: Suren Baghdasaryan <surenb@google.com>
+> >> Cc: Kent Overstreet <kent.overstreet@linux.dev>
+> >> Cc: Hao Ge <hao.ge@linux.dev>
+> >> Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+> >
+> ...
+> > Does #NAME in SECTION_START() and SECTION_STOP() stringify the macro na=
+me
+> > "ALLOC_TAG_SECTION_NAME" instead of expanding it to "__alloc_tags"?
+> >
+> > In alloc_tag_sec_init(), kallsyms_lookup_name() will look up
+> > "__start_ALLOC_TAG_SECTION_NAME" and "__stop_ALLOC_TAG_SECTION_NAME"
+> > instead of "__start___alloc_tags" and "__stop___alloc_tags", returning =
+0
+> > for both.  When compressed page allocation profiling is enabled
+> > (sysctl.vm.mem_profiling=3D1,compressed), kernel_tags.count remains 0,
+> > causing idx_to_ref() and ref_to_idx() to misclassify built-in kernel ta=
+gs
+> > as module tags and dereference an invalid module_tags.first_tag pointer=
+ on
+> > page allocation or free.
+> >
+> > Using __stringify(NAME) instead of #NAME would expand the argument firs=
+t.
+> >
+>
+> Ugh the token pasting stuff always confuses me - I'll fold this in for v2=
+.
 
-This is right. I ran the test with poll queues on the same two machines.
-The host connects with --nr-poll-queues=4, and fio runs with io_uring and
---hipri, 4k random I/O at queue depth 1, on the io_cpu of a poll queue.
-Average of 3 runs of 60 seconds, latency in usec, ctx is the number of
-context switches of fio in one run:
+With that change, feel free to add:
 
-                     IOPS   slat    clat     lat      ctx
-randread   base      5017   4.72  193.95  198.67      553
-           patched   4179   9.35  229.70  239.05  251,318
-randwrite  base      3619   5.60  269.94  275.54      542
-           patched   3621  10.62  264.53  275.16  217,806
+Acked-by: Suren Baghdasaryan <surenb@google.com>
 
-For randread, lat goes up by 40 usec (20%) and IOPS goes down by 17%.
-ctx shows why. Without the direct send path, fio is switched out for the
-io_work kworker once per I/O. With it, fio stays on the CPU and keeps
-polling. randwrite shows no difference.
+Thanks!
 
-So removing the direct send path costs about 20% for polled reads at
-queue depth 1 on this setup. One way to avoid this is to keep the direct
-send path only for poll queues. Poll queues then still have 2 senders,
-so send_mutex stays and patch 2 goes away.
-
-I will send a v2 that does this, unless the list prefers to remove the
-direct send path for all queues and take this cost.
-
-Thanks,
-Seiji
-
+>
