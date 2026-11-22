@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795383308;
-	b=b6n/O+2WFjCRvXf5J7cy/BlozzxPAbDPt4GdFxdBKVzEauY8v4YELqeMO+Wa5Kv4koeU
-	 GWcGbAGhMs4TP7IiXWly2IAouA1L666jKjyCKCF3UERYDvAmBU5t9rrwLKBRw/CapYaz3
-	 B7eu90CjsIuKvE8+0+CTIznM1tdi5+ZGl8stmEg5PlypGtw9ZiXluLGB4Gt6Ie2ST5CSF
-	 2GMioNBC/kNIgMaeV3WccF9b8ZhE6H2yKJ9eos3kszpOypX4vKJWALTlJDspuhN4XBdaN
-	 597rK8waZfiYGVWvcRyznr3G3zorohenUwQUkOVqU2dpcwoPxlfbRtpToIni1PI+TKA==
+	t=1795386469;
+	b=MGkCuTLeh7ikkltX0XJvylMyVPyoOOi9jTTq5k1D1L27ZtLQWf7d6rQe2L8puRT0sCyC
+	 YHw6wadCavLmrBN+zZWB4K3CvBS4KQ2TYgHhyRGpFSQXJXO9xyFk8QPiNpaow8n5Jhlc+
+	 eIy98sx0vul6eUppP1+wcuE+wxf5E2GLl/8z+mqa1vuzETwkU8hgw4sUB6GrMA9ua0HXD
+	 8qROVJsAlpGJIAj+g4sUTRCyfKlO7xbAT3aLbfkjY0YWrhCNrCvUo2P2O/OM0x+cn16zr
+	 VV5BAOkWG7uM2VKfSa6j9wCP/siZWBSWjR6F1n+dKwM7frtfdO6ec6ijjvMlFFy0tEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795383308;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Fvq4yWfIUhDkcsJMM/78tX6imTO2aj2ozFZmQ9fqZzU=;
-	b=1uX8DG5UYfmWwC/wf648TEH8GnO6u4A5viE+GFmxV087NAJ9izHZfh07czaZ29pwdNzt
-	 x/psbTt0ZWVvsKsnMrlPWPJQO3JtaPqmaTiQLl1ZSmiFiCEyMN5VZhLcMq+6NcnvdzIao
-	 NtQlIaHb70qJLvmNENR8a3HrgjYYIM/JrJ1NrlTPdZmcSFaAI/kKz3/wKT+PVR9yUGpBR
-	 TcDFdlx8VLfBLTpAEl01tN+EwiNLclGvTp9dtbFy5H/xhNs/TO5lrEU+fFmtjswHFP8qL
-	 dUSCcJCUDIXGJb2Q4ib+dvriXYdRrdDIJ7Yv7NLXecbNY48aoan5MJsMHGbS8rBaGmw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795386469;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=w5lzEcxKiqL3BlJi55P+ZDsd5CgUkyW/04MW4YNJirg=;
+	b=pjCIMc1izvuuLnjEbpGZG08O+j1iQy5J2CGIipijlTPUlrl0VqxcvXZu1u0jJMcYMNaO
+	 9H5yNTvuSqINLws/jmMYDrAccu3H+q3omaTo3C/IP8Hz4tThEw2xptCL4LNbPqhPoVvNJ
+	 iPy05zJzs07x1loPMuS9X9GkhYc2Ek76kaTtgVGeNjpzgcoWeHpL6SwjW9BDYT47n1zHF
+	 /hHAAvOYrld7mQ5q5DokuDv4slvzrKkFXh189E4tHd0KTcrAB1VNF3R1sbT96Qy8kISKH
+	 sTG2AI4gPctqk62SaHC8XzIbA3GduIVv6sVN5GakTphjEAZmfrjnulwcOScVOoz4kDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NumhnHiz;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OPvl8hLv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F505606A31A;
-	Sun, 22 Nov 2026 21:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B89606A31E
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 22:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NumhnHiz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63AF1F000C0;
-	Sun, 22 Nov 2026 21:35:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OPvl8hLv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0A41F000CA
+	for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 22:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795383308;
-	bh=Fvq4yWfIUhDkcsJMM/78tX6imTO2aj2ozFZmQ9fqZzU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=NumhnHiz69+z6D9lp0yMCnaDChzyLZD5COXA7zgP1CQqVQn/Xh8PqPx+mro9CuU1e
-	 HGtGVAdnP1Vg/yJPtIo/G4gQYRpBdsesLcsIEp8phHlZDqgkQXNOFjiipY/0KYv0EF
-	 0bzRb+903chrkMPw3aR9kpj+a5DA0yqhCgIgh8Ef4bqD22jh/zXPoQ5pnesBWF5tTp
-	 VmcaJskNsoltlm8deNuaYe5afl2SlcBz/FIkbO8h/VNIXJOChNVgdrQgo3e6A/qpol
-	 afVqJMK8kkR4oBmDSS6cq/dpYB+QjA/JmBq8+k5BOpZ5yuXedll+SguMGfhu0OH/Fv
-	 385IFzmhxqcaA==
-Date: Sun, 22 Nov 2026 14:35:04 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Nicolas Schier <nsc@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
-	Christian Heusel <christian@heusel.eu>,
-	linux-kbuild@vger.kernel.org,
-	=?iso-8859-1?Q?Adri=E1n_Garc=EDa?= Casado <adriangarciacasado42@gmail.com>
-Subject: Re: [PATCH] kbuild: package: Install System.map to build tree only
-Message-ID: <20261122213504.GA1454693@ax162>
-References: <20261116-package-install-system-msp-to-build-dir-v1-1-ec53d3d39146@kernel.org>
- <sashiko-outbox-219115@kernel.org>
+	s=k20260515; t=1795386469;
+	bh=w5lzEcxKiqL3BlJi55P+ZDsd5CgUkyW/04MW4YNJirg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=OPvl8hLvtrJ9LTOBEzIfEHa7NVs6FlgdJ+UxySXJn2+owzPa+Vt+9mCch0yAryTlK
+	 LiKkgt60uDzMuqGl1g+KQ2E7Kef2Z95xFZhXCWSyepJwA5mw5jkHgWBgaL+/ouNCPi
+	 5Me0XAMpJtZOkyXWRKDg50hVESo6gA3s14fPpvaML3vODe8cqYANeTW9By5ZqlvQbZ
+	 DW+O4gYiXt5DMKWYBwjgNlyOQxL5nEdqGbETlusikGuwdWedfspjl0dhUgXu2GpTS3
+	 xA9Te218tcwx8GuRMHtb97FMKihXyRGlEDeWaIPIFF6LvLCr1FLoOJjV/zkYoce/4u
+	 RKUCUZuB26tZg==
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5c14f3dab0cso1529416e87.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 14:27:49 -0800 (PST)
+X-Gm-Message-State: APuU4Z/+Jq+Ya4Bh3XlLsKaJKUc1jZqNmiNhbrod53FGH7ch5y5bYAlw
+	PQlTenYO6DXGGChBZ/vp8DBnXxt531wn/myopB/KOHO5Qsf4hAm1cQA4h4xaOp/x08c1LfXmCQK
+	qqbZ4yrnKB1vX9w/mcrOHhbumswCg5bM=
+X-Received: by 2002:a05:6512:3da4:b0:5c1:a828:499d with SMTP id
+ 2adb3069b0e04-5c1bc8a0f66mr2723779e87.45.1795386467998; Sun, 22 Nov 2026
+ 14:27:47 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,86 +58,30 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-219115@kernel.org>
+References: <20261122-xg6846b-bcmbca-xrdp-reset-v6-0-bf2104a25095@kernel.org>
+ <20261122-xg6846b-bcmbca-xrdp-reset-v6-1-bf2104a25095@kernel.org> <sashiko-outbox-228331@kernel.org>
+In-Reply-To: <sashiko-outbox-228331@kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Sun, 22 Nov 2026 23:27:35 +0100
+X-Gmail-Original-Message-ID: <CAD++jLkLv3BvUY36m+2F+48m8ZQ-uedK1wbGh=AUHNNfB_Vw=Q@mail.gmail.com>
+X-Gm-Features: Aa3M54ok4call33uc2w-wg1Lc8Py5tmJgq7aasSbEWB6j45V_SSTm-IdEboSNII
+Message-ID: <CAD++jLkLv3BvUY36m+2F+48m8ZQ-uedK1wbGh=AUHNNfB_Vw=Q@mail.gmail.com>
+Subject: Re: [PATCH v6 1/6] dt-bindings: mfd: Describe the BCM6846 PMC complex
+To: sashiko-reviews@lists.linux.dev
+Cc: mfd@lists.linux.dev, devicetree@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-hwmon@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
+	lee@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 17, 2026 at 03:53:56PM +0000, sashiko-bot@kernel.org wrote:
+On Sun, Nov 22, 2026 at 9:39=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] kbuild: package: System.map dropped from tar-pkg and dir-pkg
->   in buildtar
-> --
-> 
-> commit 4e40237f8938f58bf4db63fc401e165ccfea766e
-> Author: Nicolas Schier <nsc@kernel.org>
-> 
-> kbuild: package: Install System.map to build tree only
-> 
-> This commit removes the target-specific installation of System.map to
-> /boot and instead installs System.map into the packaged kernel build tree
-> via scripts/package/install-extmod-build.
-> 
-> > diff --git a/scripts/package/buildtar b/scripts/package/buildtar
-> > index cc87a473c01f4..057ca4fc7d71f 100755
-> > --- a/scripts/package/buildtar
-> > +++ b/scripts/package/buildtar
-> > @@ -45,7 +45,6 @@ make ARCH="${ARCH}" -f ${srctree}/Makefile INSTALL_MOD_PATH="${tmpdir}" modules_
-> >  #
-> >  # Install basic kernel files
-> >  #
-> > -cp -v -- "${objtree}/System.map" "${tmpdir}/boot/System.map-${KERNELRELEASE}"
-> >  cp -v -- "${KCONFIG_CONFIG}" "${tmpdir}/boot/config-${KERNELRELEASE}"
-> >  cp -v -- "${objtree}/vmlinux" "${tmpdir}/boot/vmlinux-${KERNELRELEASE}"
-> 
-> [Severity: Medium]
-> Does removing this copy drop System.map from the tar-pkg and dir-pkg
-> targets altogether?  Unlike PKGBUILD, builddeb, and kernel.spec, buildtar
-> does not package a kernel build tree or call
-> scripts/package/install-extmod-build, so System.map is no longer included
-> anywhere in the resulting tarball or directory.
+> - [Medium] dt-bindings: mfd: bcm6846-pmc: child nodes split PMB by Linux
+>   subsystem
 
-Seems legitimate.
+Parroting, Sashiko. This has been addressed in earlier iterations.
 
-This got me thinking a little more about this change and I am not sure
-this is actually a good direction to go in. Tying the existence of
-System.map to the external module build feels wrong to me since it may
-be useful for other tools and /boot/System.map-${KERNELRELEASE} is a
-common place for it to be. I think we should probably leave it where it
-is in the current set of packaging scripts but symlink it to the
-external module build location in the places that need it. Something
-like this maybe (completely untested):
-
-diff --git a/scripts/package/builddeb b/scripts/package/builddeb
-index ba1defc61652..4261963a901e 100755
---- a/scripts/package/builddeb
-+++ b/scripts/package/builddeb
-@@ -147,6 +147,13 @@ install_kernel_headers () {
- 		"${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
- 	fi
- 
-+	if [ "${ARCH}" = um ] ; then
-+		system_map="/usr/lib/uml/modules/${KERNELRELEASE}/System.map"
-+	else
-+		system_map="/boot/System.map-${KERNELRELEASE}"
-+	fi
-+	ln -s "${system_map}" "${pdir}/usr/src/linux-headers-${version}/System.map"
-+
- 	mkdir -p $pdir/lib/modules/$version/
- 	ln -s /usr/src/linux-headers-$version $pdir/lib/modules/$version/build
- }
-diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-index 8f0933cbbe45..3add2b2c7dd2 100644
---- a/scripts/package/kernel.spec
-+++ b/scripts/package/kernel.spec
-@@ -122,6 +122,7 @@ fi
- ln -fns /usr/src/kernels/%{KERNELRELEASE} %{buildroot}/lib/modules/%{KERNELRELEASE}/build
- %if %{with_devel}
- %{make} %{makeflags} run-command KBUILD_RUN_COMMAND='${srctree}/scripts/package/install-extmod-build %{buildroot}/usr/src/kernels/%{KERNELRELEASE}'
-+ln -fns /lib/modules/%{KERNELRELEASE}/System.map %{buildroot}/usr/src/kernels/%{KERNELRELEASE}/System.map
- %endif
- 
- {
--- 
-Cheers,
-Nathan
+Yours,
+Linus Walleij
