@@ -1,51 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795411288;
-	b=QxezrLg1/i0/WeqjA3NkqxEEDHpo29WYBEuGyrcIDZ5oDZj/a2av07E1Jxwk1gKiCCad
-	 ZNGR6B4/Yulz0JhRi0zJeA9GetuFDU5Cy2pDbZlSB+CWCxFTVZ1p3DBuj3YvPz13WouLL
-	 vHfA/8GxIXL9QX9LzSx98AjoWTy2l3XDIO0zBIbJdKCuNGiXWLnbm6dUl7Y5kggEivc5a
-	 FcD7ih2l9xaWrjjG16WYP12xqth6+Q0IXZd0fx37+WFsoo6PXgHdg5RTfe/p+JlM78r5k
-	 fYcRkDFhKSTr18HOQXYR4F6ZJuu6UeZXKzUBoTQgj5Wa7qKGggkbO7UZPNGviZenEsA==
+	t=1795411668;
+	b=fokBcSa4GeK/fOhVfrlQSwQuAAuF2f+wb2T1n/msGBp2wQvGmZG9LiPDlGka7REfJqUn
+	 kLM7TbLqKT9MSETqCxTBJfEyhiBNPMYN+bN/vEXVJieYuLoPAB234aZdNnmjRqzkeEahT
+	 xaBJ4wFPS5uyvU5+8yqjecLxUVRDmotqnECeSZ5ck3U9UPAleSod7aWimHAmN38lM47uQ
+	 9gvK8PPBNB7t/j8MrVrc005YA/2p1M9a0p5hmJS4mS71UNqloRxuNWkEDAMDfkJe0+OnX
+	 SOxh61pt1qrHpJgCUTV/AAUE2SivEhTkzhAWpyjktanVcsBnlqNsJ9Rp+OARmcq28KQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795411288;
-	h=DMARC-Filter:Received:Received:Subject:To:Cc:References:From:
-	 Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:Content-Type:
-	 Content-Language:Content-Transfer-Encoding:X-CM-TRANSID:
-	 X-CM-SenderInfo:X-Coremail-Antispam;
-	bh=MhKPy4hLEktud7DPzU2544Zryh9tYQQv+5VGX65PXXk=;
-	b=FqA/HOWg5ADHgT4+TE2J8IkpLXlQZSdkPEVCRsbYfhdasvSVnoqFd714u1TRCeU240q4
-	 oJSSY4/ja9ZneK1SsRiHXyWtq67vX4AzwRcT690MP2Tu9yjNIU5vRZjG3AmDviifrMNp7
-	 R0WWb3tJ6fRRRJDuvR4z6QTFAYx4yuwdIVgjuXCoHRDLnCuehPls2Mq4Y+QDGa57xLo1n
-	 FDom4TiTxlyFgqX7YLFgMUh0Y+yP1JJoX/USAhW6Yi4H8Z0x+QRhW0iwj5IhgNxPbM/oI
-	 ISC+ugJMyqpKA2SFP1CI4m7DZ+mpK/4DMHoizjCs6KnFC14R42qMEUu1KzlwYl/DWcw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795411668;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=DNTKVcF+kDGwUT5mkNEDzxX6VPdSRAfD0Do5dvR59q8=;
+	b=Y5j/GeZmPXtDgvLmmPhwE/aa4EkUBvBfews5lYFBdpAjWJo6npbRpvn+fbEtUGjngs5y
+	 mnz94zvy2pOsoMY3y56QpORwPVkLfa5TnTFQLXN8JZWTsMWtZ4efGlJbT5DVYtZwmqvhZ
+	 g6nWdVFqwIeqcRFHfsGCuYneQV7CXTYx5aGzdpfHM3d+dYFnPTGMImHifXQ+Rc6Cq16cO
+	 tq9GPJEjUHLMHUDMUFJV4QZbRXgX1wI7ASgf84qei4D0GTJ2tpzZfhQmxw7XN5KVMbLxJ
+	 s50fFJBS+NzslBp86jawlvbSIr7m5O7ULDxG7LwOBr762qpyg1GFGKauntzFL03puWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=loongson.cn;
-	spf=pass smtp.mailfrom=loongson.cn;
-	arc=none smtp.remote-ip=114.242.206.163
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2197606A689
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 05:21:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2197606A689
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [123.138.236.242])
-	by gateway (Coremail) with SMTP id _____8Bx69FUzQNr+x8iAA--.31703S3;
-	Mon, 23 Nov 2026 13:21:24 +0800 (CST)
-Received: from [127.0.0.1] (unknown [123.138.236.242])
-	by front1 (Coremail) with SMTP id qMiowJBxpMxSzQNrps02AA--.17317S2;
-	Mon, 23 Nov 2026 13:21:23 +0800 (CST)
-Subject: Re: [PATCH bpf-next v1 1/3] selftests/bpf: Enable instruction array
- test for LoongArch
+	dmarc=pass header.from=chromium.org;
+	spf=pass smtp.mailfrom=chromium.org;
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=BZQogTnW;
+	arc=none smtp.remote-ip=209.85.210.180
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E31D606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 05:27:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E31D606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=BZQogTnW
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8ca6a12efd9so422195b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 21:27:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1795411667; x=1796016467; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DNTKVcF+kDGwUT5mkNEDzxX6VPdSRAfD0Do5dvR59q8=;
+        b=BZQogTnWnNXWHgtsPfdNJQbxAAO6RivWpCV74YSYNQkCGV/eyjj35XzaIQCF+IBpow
+         Uj0IdGTglOHhYnalTKULjb8SK74lyuqUvNIweXTCv8bNtD9oaeaRhHgFvJd/gpiEmIsP
+         v13aGo8x6DflJTAm/llGyk7mITFA+FKrUB9S0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795411667; x=1796016467;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DNTKVcF+kDGwUT5mkNEDzxX6VPdSRAfD0Do5dvR59q8=;
+        b=LifIioAYv29NogvoluIKYHwphWFRPuy4K6ygPIsCJWNb6ZjEkcGEvWFSGVh7PmKNHc
+         R8zJKoalE38L6qZgCq1Za5ogQenozUvVTSPrRpV7sOYD9ddYFPNidYiYq4F8oHg4RC0D
+         yVRcJwx1FZnrBJf+U37XIh14fIl5HTvBSD2Y6f4LS5bTTuiFV46NPgcmojddYwKET2Xi
+         +qKGa2iplAVEC0t5GI7OlcE0Rfsp0VB7yr0sAlhcKRExrzNLtBjVHhtALc7Gls9lV8aN
+         U4hmfgFpg+v/SyrKLWL/1VZyCvdri2XWr3E5KaRW4BMp4ZO17KNEKmi1q0S4beMQW2E1
+         cEdQ==
+X-Gm-Message-State: APuU4Z/AJ261D9uvih5dFkbEp1KT97LsXGynSjYSozIdmw4AJZfcbt8A
+	DpfRgZRG417a7S5wX82sy+V8XSoAmzCnCPbudBhZXuZ4AX0UwvySU7v7CxAcWMXZ1M6CBbTl5KY
+	5b3s=
+X-Gm-Gg: AZFdTZetbfdygOTvmpjNz0fLsncXnA1JVHRJ1p72Y0iQxcoBmYQuaRqyOy83y+b0Xwe
+	79o2WC573M50BUtmQtI7887D6zBfEK1P3YDVwIP6T0KLkAgNT0kYrGi2PSOEFA6xnMTqlzHlLbW
+	6jx3zR2sg3neW8c2TxLV6iVx+lKaTBT6tWcA985eaMgEPOVwwraimThcT/Gpxy/DsUsbYYz/XOq
+	bQHpeZnekAuAYHSVQfREogpGjSoxRQXhEsrNhxb7Y5mdxDMSmVk8qJCNBvRXXuxux5yj6yzEZ8T
+	w84SHX1KF0Dl0Zc6II/p4pYcDBgq9s7m/3Gqfu6s2fv5MhSG0EygR1F3BT3DhqI4uF08hZaZ7v3
+	BYdfCc64gxYuhuPWkd0MJGBwbXea6LZD6GjVeB+sxIvozwBAoWb4osBjSQlIRYQLNzjZhiUExoj
+	BnqEOG8LcxgwZBlhgrkrLkDWrMon+CqHs2rV+f7xYnKgf+1j3eXDEe4AHLOIbpGIJ7ij+cZZ/gn
+	WJ0RuDHfBS4C0jYXa50Tj249U2mgCUfW/dy1kW4CK2ZVD0eLDAgKnNFmqjtP54E2PchgfirUkde
+	gDnnx5lKnnnZ4hkymqN9BLnaVgqSl5IhzNOCuiZ2Pkw1YH3+DrU8hYokeXUmio+Z+zEFyw==
+X-Received: by 2002:a05:6a00:1818:b0:8a0:5d8f:665d with SMTP id d2e1a72fcca58-8c87d80b3b5mr8569194b3a.58.1795411667613;
+        Sun, 22 Nov 2026 21:27:47 -0800 (PST)
+Received: from google.com ([2a00:79e0:2031:6:d8fa:c511:e415:e0d0])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87343f571sm4698086b3a.34.2026.11.22.21.27.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Nov 2026 21:27:47 -0800 (PST)
+Date: Mon, 23 Nov 2026 14:27:43 +0900
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261123045008.23691-1-yangtiezhu@loongson.cn>
- <20261123045008.23691-2-yangtiezhu@loongson.cn>
- <sashiko-outbox-228693@kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <46ffa5b6-8914-eda6-a0ee-88b2d7ecba54@loongson.cn>
-Date: Mon, 23 Nov 2026 13:21:22 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Nhat Pham <nphamcs@gmail.com>, Yosry Ahmed <yosry@kernel.org>, 
+	Hongfeng Chen <hongfengchen@xiaomi.com>, Brian Geffon <bgeffon@google.com>, 
+	Minchan Kim <minchan@kernel.org>, linux-mm@kvack.org
+Subject: Re: [PATCH 2/2] zram: keep the hot statistics per CPU
+Message-ID: <awPN3Fiwcej4_IU7@google.com>
+References: <5666c1c8c04998784c81fc8fe751e35aa40af578.1795403342.git.senozhatsky@chromium.org>
+ <8f0ec29c0e4230d10db088d29f79bba17c3ee6f0.1795403342.git.senozhatsky@chromium.org>
+ <sashiko-outbox-228621@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -55,60 +97,43 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-228693@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:qMiowJBxpMxSzQNrps02AA--.17317S2
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoWrKrWkCF4fKFWDtFWrAw1UurX_yoW8JF15p3
-	srZF1UAr4rWrWrtrnrK34fWa1Sqr1fGFZ7KF4YgrW8CFZruw4rAFWYgw4qqan8Zw4rWw10
-	qFZ5C34vq3WkAFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
-	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
-	F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
-	1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
-	4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jb
-	_-PUUUUU=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-228621@kernel.org>
 
-On 11/23/26 1:02 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-
-...
-
-> [Severity: Medium]
-> Does enabling bpf_insn_array on LoongArch depend on a prerequisite JIT
-> patch that is not in the tree yet?
+On (26/11/23 03:55), sashiko-bot@kernel.org wrote:
+> CPU0                              CPU1
+> zram_write_page()
+>   slot_lock(zram, index)
+>   zs_store(...)
+>   set_slot_size(zram, index, len)
+>   slot_unlock(zram, index)
+>   <preempted>
+>                                   zram_slot_free_notify()
+>                                     slot_trylock(zram, index)
+>                                     slot_free(zram, index)
+>                                       zram_stat_sub(..., 1)
+>                                     slot_unlock(zram, index)
+>                                   mm_stat_show()
+>                                     zram_stat_read()
+>                                       sum < 0  <-- loops until CPU0 runs
 > 
-> In arch/loongarch/net/bpf_jit.c, bpf_int_jit_compile() does not call
-> bpf_prog_update_insn_ptrs(), so insn_array->ips[] stays zeroed and
-> bpf_insn_array_ready() rejects program loading with -EFAULT.  In addition,
-> build_insn() only handles BPF_JMP | BPF_JA and BPF_JMP32 | BPF_JA, without
-> BPF_JMP | BPF_JA | BPF_X (gotox), so the gotox subtests fail to JIT with
-> -EINVAL (-ENOTSUPP).
+> While the writer on CPU0 remains preempted, the true sum across all CPUs
+> is negative, not just a transient artifact of racing with the summation
+> loop.  Any reader in mm_stat_show() will busy-loop across all possible
+> CPUs with zram->dev_lock held until the writer runs, and a higher-priority
+> SCHED_FIFO reader on the same CPU as the preempted writer will never yield
+> via cond_resched(), livelocking the CPU.
 
-This series depends on the unmerged LoongArch JIT support series:
+I high prio mm_stats reader is an unlikely scnerio, but yes, okay.
 
-LoongArch: BPF: Support instructions array, indirect jumps and calls
-https://lore.kernel.org/loongarch/20261123043907.20225-1-yangtiezhu@loongson.cn/T/#u
+> Clamping negative sums to 0 in a single pass (like
+> percpu_counter_sum_positive()) and moving zram_stat_add() before
+> slot_unlock() would avoid the unbounded loop.
 
-> Also, HAVE_EBPF_JIT on LoongArch is only selected for 64BIT, while
-> defined(__loongarch__) matches 32-bit builds as well.
-
-I will update the guard to
-(defined(__loongarch__) && __loongarch_grlen == 64)
-in v2 (along with patch 3/3) to match 64-bit LoongArch specifically,
-similar to RISC-V.
-
-Thanks,
-Tiezhu
-
+I disliked the clamping approach when I looked at it.  But thinking
+about it more, I think it is the right thing to do.  It's perfectly
+legal for zram to return 0 for those dynamic stats: no data stored,
+no incompressible pages, no same-filled pages, no slot-free, etc.
+So userspace should not be surprised to occasionally see zeroes for
+those stats.
