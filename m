@@ -1,72 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.108.3.163
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=180.181.231.80
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795424294;
-	b=Xx9jbFsq/XaJl6CowIf/33o3b1G+ZA/hpG0ox7Nk2PuR5uNW3cqGXZfwiabmM5vF1DCi
-	 GzWsv9eamHYpcbaPXvLzXpCXq2YCh4NONEjHlGVrvxN+TdDAKJ5SQH2WCYsdeihppvJVh
-	 C5DOw4/Mvc3QMdUHzIBuvmCcpYEvbk/KrqtVdvRnG3XmqbIG9g6dJ5BajM7W5ksdsls92
-	 QABYuTFVJMD1J0/iBcWfaL1KPuhv/f9KSg9QZCLQtcMHzz7wpBBoiJIdyLaG1o/HE8xeh
-	 PmK/ZqTbcWV296I23KId4Wl8+M0LsTWHH8ET9rYsxqfSZvHoenCrry8FJVjSpz6OtMg==
+	t=1795424806;
+	b=FIqnpHAaCxqV5OuMgILZf5QVbyAZDtFODsw0IkjSGV9C6hMt0ggSQH6BVnog49bGgix0
+	 ssnYFTe2+9lJ736Fuy4wBLz4uIm3o7PZeltGtmbPba+Folclf7+Z93idt19UgD7KCaNoU
+	 ZRVWRX+BBvpL2yvvIhJDNcGsnTKY7w7Rw8qms2rqRICKzFqfkFrbFjgDCYQqD9N6kHUAc
+	 LtwMua7xzRH2/pHxVmJnoh66CI589iJ9/HPwBMJwd2I1bG45ydL5IVUu57AsNq5I2HBLf
+	 v9W4ewHOpEzz0KgHmNXFndlgbwkiyncFQwQXIIlJUqS+PT7cSWTMOvREfVfPjsLKSHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795424294;
-	h=DMARC-Filter:DKIM-Signature:X-SMAIL-HELO:Received:X-Sender:X-Auth-ID:
-	 X-SMAIL-MID:X-SMAIL-UIID:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=aR0tmA1/eSKWhAkyRRrHigR/ndR4gGbRzgjxSxU95kk=;
-	b=1JJ/FnN8SHEIuMetjwDB3VjOyltxPyBiJwrX9YEPbN5Kd9yUpRW/geKvpqtxOkwJVq8P
-	 uoZ0qVVMImRXE+sSwmrdTUJCu7uVP1T0jzUl4BMxbhoooVOHGJ3kJ54uoDpPtLIiOF3tm
-	 8y61wNLMYtvCIKK/0QoKJoBCzxO2tvOIWfAqxh10Eec/YFNdSr83CxOE/acbE5uFWBquM
-	 nLugkZaa+IfxdPo0QwarymKb30+MTOlIIb3yxJJOz/2NQ0qlyI7HK0HjhZ8bw9RegOn8n
-	 rROkAmMKlP2WjNgLYuq5pjr2yAlaEblKWL7c2z0bVu0RUZv9cZos1/d1d/0LVEwyP/w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795424806;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=aszNWFm3AavU3Fw6Y6RtvpwqKpNfGOGtFmRMkuOvBq0=;
+	b=1tjnwAQoQlFrvLWblvuhPLEmOpLzWi322cmenVcHbddu9CRCI6APwV4JaXmUd2dz70Eg
+	 dtSzpHXz+j/usu7icXqSqRZwMpGSU3SXRYIuN6+yFbbx/3RlOiKQFrHzavO1srJHpFvZB
+	 GuBTpMNCMD+qDvbVbBsY+UAI+ScQzapM/tV7MvQLkzrvAn5T/OVfWvMKdtk+Rfug0FrWL
+	 q4WtuXHndZuM9Js1JNomCR4D/SlLpD9nvVh5nzMLi+yW2u/Dkhc0zVmB/WZ1Af3diNo+7
+	 wyTObtpZqApgvbnBYUPjC+Anm9sPD1BEQyZCVKPtm0C7zWRwTjUCq1lmrWY5F90y90w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=sina.com;
-	spf=pass smtp.mailfrom=sina.com;
-	dkim=pass header.d=sina.com header.i=@sina.com header.a=rsa-sha256 header.s=201208 header.b=Z3t8nNVt;
-	arc=none smtp.remote-ip=202.108.3.163
-Received: from mail3-163.sinamail.sina.com.cn (mail3-163.sinamail.sina.com.cn [202.108.3.163])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gondor.apana.org.au;
+	spf=pass smtp.mailfrom=gondor.apana.org.au;
+	dkim=pass header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=ByF24ktn;
+	arc=none smtp.remote-ip=180.181.231.80
+Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB265606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 08:58:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BB265606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D091B606A31A;
+	Mon, 23 Nov 2026 09:06:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D091B606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=sina.com header.i=@sina.com header.a=rsa-sha256 header.s=201208 header.b=Z3t8nNVt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.com; s=201208; t=1795424292;
-	bh=aR0tmA1/eSKWhAkyRRrHigR/ndR4gGbRzgjxSxU95kk=;
-	h=From:Subject:Date:Message-ID;
-	b=Z3t8nNVtWMZttQCtngZxpcOmrl5loHSoO2shopEXkKc/7l8n0nMs96s6+7AklV6hM
-	 sVxwuL8EkzewX3UVM743nknCHzOfZJ34Ki01Of0VIHhFKacNloYysTye67H5C4Jjvb
-	 oa5Ss1xRQzKNskdugg7VnB9x073yEf+qcYqq2DB0=
-X-SMAIL-HELO: lxu-pcd
-Received: from unknown (HELO lxu-pcd)([111.198.225.163])
-	by sina.com (10.54.253.34) with ESMTP
-	id 6B040016000026E2; Mon, 23 Nov 2026 16:58:00 +0800 (CST)
-X-Sender: eadavis@sina.com
-X-Auth-ID: eadavis@sina.com
-Authentication-Results: sina.com;
-	 spf=none smtp.mailfrom=eadavis@sina.com;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=eadavis@sina.com
-X-SMAIL-MID: 5481496291758
-X-SMAIL-UIID: 968F27132CE0417C82722B29A6077732-20261123-165800-1
-From: Edward Adam Davis <eadavis@sina.com>
-To: sashiko-bot@kernel.org
-Cc: eadavis@sina.com,
-	joern@lazybastard.org,
-	linux-mtd@lists.infradead.org,
-	miquel.raynal@bootlin.com,
-	richard@nod.at,
-	sashiko-reviews@lists.linux.dev,
-	syzbot+ee09ee2112d03c35f1f7@syzkaller.appspotmail.com,
-	syzkaller-bugs@googlegroups.com,
-	vigneshr@ti.com
-Subject: [PATCH v3] mtd: phram: Use I/O memory accessors when in uncached mappings
-Date: Mon, 23 Nov 2026 16:57:58 +0800
-Message-ID: <20261123085758.152229-1-eadavis@sina.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261120094434.107278-1-eadavis@sina.com>
-References: <20261120094434.107278-1-eadavis@sina.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=ByF24ktn
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
+	from:content-type:reply-to; bh=aszNWFm3AavU3Fw6Y6RtvpwqKpNfGOGtFmRMkuOvBq0=; 
+	b=ByF24ktnu3YoMJEhhcWrvct1F6WCpHNZsauPWZ667prMGxTjbliQImxa0Mt4kWN9ueGby05UztW
+	ay3SV/2JiGaTL+pLfXhSNkHR/eHB4J6gG/V1/9WlnETY7nRV/TXPAMJ2lSoetC5CoWs5tifvLbUW1
+	7504tFDwrRf4qra+0MFVcns7siFxWBtt4XzVYicUQ92t9hdi1RdkeymNZ8Mg3Us2lgEXIgupLFxJz
+	BcIVq6kaSDZahKXJykdT+815t1efSIVyde17MAJ6ATtav9IjdU1gXXjEGDDvp/fgbrZWmm1Y7ERiD
+	XPlhp+sFQZn/mmjKpZ7+QM5ooEkeJs9VdUFA==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.98.2 #2 (Debian))
+	id 1xVQ0L-00000000tqn-3uaG;
+	Mon, 23 Nov 2026 17:06:31 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Mon, 23 Nov 2026 17:06:29 +0800
+Date: Mon, 23 Nov 2026 17:06:29 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, hannes@cmpxchg.org, yosry@kernel.org,
+	nphamcs@gmail.com, chengming.zhou@linux.dev,
+	akpm@linux-foundation.org, linux-mm@kvack.org, davem@davemloft.net,
+	linux-crypto@vger.kernel.org, rientjes@google.com,
+	willy@infradead.org, senozhatsky@chromium.org
+Subject: Re: [PATCH v3 3/8] crypto: acomp - Add trivial segmentation wrapper.
+Message-ID: <awQCFZSSng2LLGnX@gondor.apana.org.au>
+References: <20261106072412.7909-1-kanchanapsridhar2026@gmail.com>
+ <20261106072412.7909-4-kanchanapsridhar2026@gmail.com>
+ <sashiko-outbox-202709@kernel.org>
+ <CACpmpodxjJ3ZQt4xOsWfWQNjgMtPzKx0oGMy+mJTU1wxVWdMUw@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,101 +70,39 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACpmpodxjJ3ZQt4xOsWfWQNjgMtPzKx0oGMy+mJTU1wxVWdMUw@mail.gmail.com>
 
-When registering a phram device via module parameter or sysfs invokes
-register_device() with pdev = NULL, which causes new->cached to be false.
-As a result, phram_map() maps the physical memory region using ioremap()
-(mapped as PROT_DEVICE_nGnRE on arm64) and forces the pointer into mtd->
-priv, yet phram_read(), phram_write(), and phram_erase() access it using
-standard memcpy() and memset() instead of I/O memory accessors (like
-memcpy_fromio()). When scanning partition headers (e.g., ftl_add_mtd()
-reading a 68-byte header via mtd_read()), arm64's memcpy implementation
-issues pair-load (ldp) instructions at unaligned offsets, which triggers
-an alignment fault (FSC = 0x21) on Device memory and crashes the kernel.
+On Fri, Nov 20, 2026 at 11:24:19AM -0800, Kanchana P. Sridhar wrote:
+>
+> > [Severity: Medium]
+> > Can acomp_reqchain_finish() corrupt the destination buffer when a request
+> > with a non-zero req->unit_size uses virtual addresses?
+> >
+> > In struct acomp_req, dst and dvirt share an anonymous union.  When
+> > acomp_do_req_chain() handles a virtual-address request
+> > (CRYPTO_ACOMP_REQ_DST_VIRT), acomp_reqchain_virt() restores the raw u8 *
+> > buffer pointer into req->dvirt before acomp_restore_req() restores
+> > req->unit_size.  Writing to req->dst->length then treats req->dvirt as a
+> > struct scatterlist * and overwrites 4 bytes inside the caller's output
+> > buffer.
+> >
+> > In addition, acomp_do_req_chain() is called for decompression (comp == false),
+> > so a decompression request with req->unit_size set will also hit the
+> > compression-only req->slen > req->unit_size check and write to
+> > req->dst->length.
+> 
+> Herbert, is it Ok if this can be addressed as a follow-on to this patch-series?
 
-phram_point() exposes a uncached pointer that obtained via ioremap() in
-mtd->priv, which leads callers to perform standard memcpy() on it.
+I think this case needs to be outlawed since our API doesn't support
+virtual addresses being used for dst.
 
-In phram_read/write/erase(), standard memory accessors are used when in
-a cached; otherwise, I/O memory accessors are used. Only register _point
-and __unpoint when cached mapping.
+IOW the code needs to abort on entry if unit_size is set and virtual
+addresses are used.
 
-Fixes: f3d45ac21e46 ("mtd: phram: Module parameters add writable permissions")
-Fixes: 285133040e6c ("arm64: Import latest memcpy()/memmove() implementation")
-Reported-by: syzbot+ee09ee2112d03c35f1f7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ee09ee2112d03c35f1f7
-Signed-off-by: Edward Adam Davis <eadavis@sina.com>
----
-v1 -> v2: use phram_mtd_list cached, add void __iomem* and write use toio
-v2 -> v3: update subject, conditionally register _point and _unpoint
-
- drivers/mtd/devices/phram.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/mtd/devices/phram.c b/drivers/mtd/devices/phram.c
-index b42cadcd76b1..d7a074a69e62 100644
---- a/drivers/mtd/devices/phram.c
-+++ b/drivers/mtd/devices/phram.c
-@@ -43,8 +43,14 @@ static LIST_HEAD(phram_list);
- static int phram_erase(struct mtd_info *mtd, struct erase_info *instr)
- {
- 	u_char *start = mtd->priv;
-+	struct phram_mtd_list *phram =
-+		container_of(mtd, struct phram_mtd_list, mtd);
- 
--	memset(start + instr->addr, 0xff, instr->len);
-+	if (phram->cached)
-+		memset(start + instr->addr, 0xff, instr->len);
-+	else
-+		memset_io((void __iomem *)start + instr->addr, 0xff,
-+			  instr->len);
- 
- 	return 0;
- }
-@@ -66,8 +72,13 @@ static int phram_read(struct mtd_info *mtd, loff_t from, size_t len,
- 		size_t *retlen, u_char *buf)
- {
- 	u_char *start = mtd->priv;
-+	struct phram_mtd_list *phram =
-+		container_of(mtd, struct phram_mtd_list, mtd);
- 
--	memcpy(buf, start + from, len);
-+	if (phram->cached)
-+		memcpy(buf, start + from, len);
-+	else
-+		memcpy_fromio(buf, (void __iomem *)start + from, len);
- 	*retlen = len;
- 	return 0;
- }
-@@ -76,8 +87,13 @@ static int phram_write(struct mtd_info *mtd, loff_t to, size_t len,
- 		size_t *retlen, const u_char *buf)
- {
- 	u_char *start = mtd->priv;
-+	struct phram_mtd_list *phram =
-+		container_of(mtd, struct phram_mtd_list, mtd);
- 
--	memcpy(start + to, buf, len);
-+	if (phram->cached)
-+		memcpy(start + to, buf, len);
-+	else
-+		memcpy_toio((void __iomem *)start + to, buf, len);
- 	*retlen = len;
- 	return 0;
- }
-@@ -147,8 +163,10 @@ static int register_device(struct platform_device *pdev, const char *name,
- 	new->mtd.size = len;
- 	new->mtd.flags = MTD_CAP_RAM;
- 	new->mtd._erase = phram_erase;
--	new->mtd._point = phram_point;
--	new->mtd._unpoint = phram_unpoint;
-+	if (new->cached) {
-+		new->mtd._point = phram_point;
-+		new->mtd._unpoint = phram_unpoint;
-+	}
- 	new->mtd._read = phram_read;
- 	new->mtd._write = phram_write;
- 	new->mtd.owner = THIS_MODULE;
+Thanks,
 -- 
-2.43.0
-
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
