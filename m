@@ -1,93 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795411668;
-	b=fokBcSa4GeK/fOhVfrlQSwQuAAuF2f+wb2T1n/msGBp2wQvGmZG9LiPDlGka7REfJqUn
-	 kLM7TbLqKT9MSETqCxTBJfEyhiBNPMYN+bN/vEXVJieYuLoPAB234aZdNnmjRqzkeEahT
-	 xaBJ4wFPS5uyvU5+8yqjecLxUVRDmotqnECeSZ5ck3U9UPAleSod7aWimHAmN38lM47uQ
-	 9gvK8PPBNB7t/j8MrVrc005YA/2p1M9a0p5hmJS4mS71UNqloRxuNWkEDAMDfkJe0+OnX
-	 SOxh61pt1qrHpJgCUTV/AAUE2SivEhTkzhAWpyjktanVcsBnlqNsJ9Rp+OARmcq28KQ==
+	t=1795412446;
+	b=ELcc5/2NmrxPsfSmkCcDbai1Bya8dGG6/qBIHDB+VnGL/XwKKejc/h/PlGI2xIgXu0jZ
+	 5yiQyenBjx3/pybjXK+0LoyFNX2dlLZSGf2WUaJ5T5kW820Hj21if+1IQ7tBB6dndzEM8
+	 cHTQGXo6+9vr/L3DdR+z4Ny+rc/t8PM3LDEgAdNneZDYXjs8xF8UVuAfoUl5FtLvk8oCd
+	 ER+kmLWuzxm9eO8z5aQSwshWzjJI88On+sYquZQ89QdOWe7lElAbaXHZst9L9GU3NqfKs
+	 3WNn98Tp7lS0cwKDr/Pkezr1pIFaAr81ixlWZANhpct9eV1f1qxJjBj8xJC0HBVTfag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795411668;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=DNTKVcF+kDGwUT5mkNEDzxX6VPdSRAfD0Do5dvR59q8=;
-	b=Y5j/GeZmPXtDgvLmmPhwE/aa4EkUBvBfews5lYFBdpAjWJo6npbRpvn+fbEtUGjngs5y
-	 mnz94zvy2pOsoMY3y56QpORwPVkLfa5TnTFQLXN8JZWTsMWtZ4efGlJbT5DVYtZwmqvhZ
-	 g6nWdVFqwIeqcRFHfsGCuYneQV7CXTYx5aGzdpfHM3d+dYFnPTGMImHifXQ+Rc6Cq16cO
-	 tq9GPJEjUHLMHUDMUFJV4QZbRXgX1wI7ASgf84qei4D0GTJ2tpzZfhQmxw7XN5KVMbLxJ
-	 s50fFJBS+NzslBp86jawlvbSIr7m5O7ULDxG7LwOBr762qpyg1GFGKauntzFL03puWQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795412446;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Date:From:To:
+	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=bbQirXyt3WS+dsPItm3jzvka/MibXeXHe6QHDVoInDo=;
+	b=PXxZ516i5DbYXcaic5cFVYNIFB40aqSssvQ/seL63m0rx24y1YNPSy1qE0VmnkQ/MLgZ
+	 S0ihPye68cCzxxXRFToo0j3WhkxSk7y4FYtEKW0/h36qgKOFsDTNQiT2vtWj9drZ5uc/n
+	 sejle5LefY2maePmo8LUHeK3D4G5Lq2jWPbUxA3Lti5x7tNylK/BvrEjzQJbWs1wq9HcH
+	 vNPuqPfHQhVhOrj/SBQzGzfXk5jUFV2VEPgmii8AZOHANvTBdrwMraDSIOybScpwbGrp0
+	 BzBZ6dSf1vYG9wDeJYKc139arRchx43EjyTrmmrKv8+DDeqW6j8PgrrBR8GpXst44Ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=chromium.org;
-	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=BZQogTnW;
-	arc=none smtp.remote-ip=209.85.210.180
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D5k4zY9E;
+	arc=none smtp.remote-ip=192.198.163.16
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E31D606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 05:27:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E31D606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26B1606A31E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 05:40:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A26B1606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=BZQogTnW
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8ca6a12efd9so422195b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 21:27:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1795411667; x=1796016467; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=DNTKVcF+kDGwUT5mkNEDzxX6VPdSRAfD0Do5dvR59q8=;
-        b=BZQogTnWnNXWHgtsPfdNJQbxAAO6RivWpCV74YSYNQkCGV/eyjj35XzaIQCF+IBpow
-         Uj0IdGTglOHhYnalTKULjb8SK74lyuqUvNIweXTCv8bNtD9oaeaRhHgFvJd/gpiEmIsP
-         v13aGo8x6DflJTAm/llGyk7mITFA+FKrUB9S0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795411667; x=1796016467;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DNTKVcF+kDGwUT5mkNEDzxX6VPdSRAfD0Do5dvR59q8=;
-        b=LifIioAYv29NogvoluIKYHwphWFRPuy4K6ygPIsCJWNb6ZjEkcGEvWFSGVh7PmKNHc
-         R8zJKoalE38L6qZgCq1Za5ogQenozUvVTSPrRpV7sOYD9ddYFPNidYiYq4F8oHg4RC0D
-         yVRcJwx1FZnrBJf+U37XIh14fIl5HTvBSD2Y6f4LS5bTTuiFV46NPgcmojddYwKET2Xi
-         +qKGa2iplAVEC0t5GI7OlcE0Rfsp0VB7yr0sAlhcKRExrzNLtBjVHhtALc7Gls9lV8aN
-         U4hmfgFpg+v/SyrKLWL/1VZyCvdri2XWr3E5KaRW4BMp4ZO17KNEKmi1q0S4beMQW2E1
-         cEdQ==
-X-Gm-Message-State: APuU4Z/AJ261D9uvih5dFkbEp1KT97LsXGynSjYSozIdmw4AJZfcbt8A
-	DpfRgZRG417a7S5wX82sy+V8XSoAmzCnCPbudBhZXuZ4AX0UwvySU7v7CxAcWMXZ1M6CBbTl5KY
-	5b3s=
-X-Gm-Gg: AZFdTZetbfdygOTvmpjNz0fLsncXnA1JVHRJ1p72Y0iQxcoBmYQuaRqyOy83y+b0Xwe
-	79o2WC573M50BUtmQtI7887D6zBfEK1P3YDVwIP6T0KLkAgNT0kYrGi2PSOEFA6xnMTqlzHlLbW
-	6jx3zR2sg3neW8c2TxLV6iVx+lKaTBT6tWcA985eaMgEPOVwwraimThcT/Gpxy/DsUsbYYz/XOq
-	bQHpeZnekAuAYHSVQfREogpGjSoxRQXhEsrNhxb7Y5mdxDMSmVk8qJCNBvRXXuxux5yj6yzEZ8T
-	w84SHX1KF0Dl0Zc6II/p4pYcDBgq9s7m/3Gqfu6s2fv5MhSG0EygR1F3BT3DhqI4uF08hZaZ7v3
-	BYdfCc64gxYuhuPWkd0MJGBwbXea6LZD6GjVeB+sxIvozwBAoWb4osBjSQlIRYQLNzjZhiUExoj
-	BnqEOG8LcxgwZBlhgrkrLkDWrMon+CqHs2rV+f7xYnKgf+1j3eXDEe4AHLOIbpGIJ7ij+cZZ/gn
-	WJ0RuDHfBS4C0jYXa50Tj249U2mgCUfW/dy1kW4CK2ZVD0eLDAgKnNFmqjtP54E2PchgfirUkde
-	gDnnx5lKnnnZ4hkymqN9BLnaVgqSl5IhzNOCuiZ2Pkw1YH3+DrU8hYokeXUmio+Z+zEFyw==
-X-Received: by 2002:a05:6a00:1818:b0:8a0:5d8f:665d with SMTP id d2e1a72fcca58-8c87d80b3b5mr8569194b3a.58.1795411667613;
-        Sun, 22 Nov 2026 21:27:47 -0800 (PST)
-Received: from google.com ([2a00:79e0:2031:6:d8fa:c511:e415:e0d0])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87343f571sm4698086b3a.34.2026.11.22.21.27.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2026 21:27:47 -0800 (PST)
-Date: Mon, 23 Nov 2026 14:27:43 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, Nhat Pham <nphamcs@gmail.com>, Yosry Ahmed <yosry@kernel.org>, 
-	Hongfeng Chen <hongfengchen@xiaomi.com>, Brian Geffon <bgeffon@google.com>, 
-	Minchan Kim <minchan@kernel.org>, linux-mm@kvack.org
-Subject: Re: [PATCH 2/2] zram: keep the hot statistics per CPU
-Message-ID: <awPN3Fiwcej4_IU7@google.com>
-References: <5666c1c8c04998784c81fc8fe751e35aa40af578.1795403342.git.senozhatsky@chromium.org>
- <8f0ec29c0e4230d10db088d29f79bba17c3ee6f0.1795403342.git.senozhatsky@chromium.org>
- <sashiko-outbox-228621@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D5k4zY9E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795412446; x=1826948446;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=zquiTe0ILvzaj8QJ4CF4afQTdL6kzqlqawTDAHqTfGY=;
+  b=D5k4zY9E9fJU4CKgJOBf4SjGqo+NMf5aGP3TpfvJk3a5bx79pYsx+OfR
+   7XzWdJzFpLz+knLEZ+lIShdOVAr9uOLYAs/+YK3fPoB3TpfmwgWKpdVmp
+   8W7RjgMRVs8lggikOWjE5IReg/Ki3nHoPhjfJETdFsP3LxvZoHaBePlq7
+   iBDn9ydxugdlCcliOd9jFN1CkgVaSkRyNs3zdabkxMMr8WTmUWfgKcC/i
+   VGDLaoDK/U2zLUsV5JcJUOnxmZ/NuUFoP6NfsXpp/KEuyXK+yUJB9ZwVB
+   42t6Q514WwgKH9KbQNo9N5UCRd9xVUNLB92EI1GiEWAL6xd4mAOys4VIF
+   A==;
+X-CSE-ConnectionGUID: bHt86eeWQU2oRXTEwoQfbw==
+X-CSE-MsgGUID: uiN4WYXyRVuhhebe/MG/8A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11974"; a="4241133"
+X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
+   d="scan'208";a="4241133"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2026 21:40:45 -0800
+X-CSE-ConnectionGUID: bezcTEWfTEqTT0NdsBe5fA==
+X-CSE-MsgGUID: S6Q1T+7HSLmmeJfyGPZuow==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
+   d="scan'208";a="13022637"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa011.fm.intel.com with ESMTP; 22 Nov 2026 21:40:43 -0800
+Received: by black.igk.intel.com (Postfix, from userid 1001)
+	id 0F74099; Mon, 23 Nov 2026 06:40:42 +0100 (CET)
+Date: Mon, 23 Nov 2026 06:40:42 +0100
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
+To: Alfonso Villalobos <alfonsocvu@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, westeri@kernel.org,
+	linux-usb@vger.kernel.org, andreas.noever@gmail.com,
+	YehezkelShB@gmail.com, stable@vger.kernel.org
+Subject: Re: [PATCH] thunderbolt: Re-add host router DP IN adapters after
+ DPRX failure
+Message-ID: <20261123054042.GL229695@black.igk.intel.com>
+References: <20261121070804.26185-1-alfonsocvu@gmail.com>
+ <sashiko-outbox-226770@kernel.org>
+ <CAJ=mrFowQNahOjD-NQzcuJCjPE=efvDK85kMpseRUrqYBwX3Sw@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,43 +84,187 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-228621@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ=mrFowQNahOjD-NQzcuJCjPE=efvDK85kMpseRUrqYBwX3Sw@mail.gmail.com>
 
-On (26/11/23 03:55), sashiko-bot@kernel.org wrote:
-> CPU0                              CPU1
-> zram_write_page()
->   slot_lock(zram, index)
->   zs_store(...)
->   set_slot_size(zram, index, len)
->   slot_unlock(zram, index)
->   <preempted>
->                                   zram_slot_free_notify()
->                                     slot_trylock(zram, index)
->                                     slot_free(zram, index)
->                                       zram_stat_sub(..., 1)
->                                     slot_unlock(zram, index)
->                                   mm_stat_show()
->                                     zram_stat_read()
->                                       sum < 0  <-- loops until CPU0 runs
+Hi,
+
+On Sat, Nov 21, 2026 at 09:07:04AM -0600, Alfonso Villalobos wrote:
+> Hi Mika, hope you're having a great day.
 > 
-> While the writer on CPU0 remains preempted, the true sum across all CPUs
-> is negative, not just a transient artifact of racing with the summation
-> loop.  Any reader in mm_stat_show() will busy-loop across all possible
-> CPUs with zram->dev_lock held until the writer runs, and a higher-priority
-> SCHED_FIFO reader on the same CPU as the preempted writer will never yield
-> via cond_resched(), livelocking the CPU.
+> I'd like to check the direction with you before doing v2. After the
+> Sashiko review and looking closer at how host router DP IN adapters
+> are handled, I'm not sure v1 fixes this in the right place.
+> 
+> The DPRX failure happens when the RX 9070 XT feeding 0:10 is in BACO.
+> With runtime PM disabled for the GPU it always works. After the
+> failure the host router never sends a hotplug for 0:10, so it stays
+> unused until something triggers the re-check from v1, here me
+> replugging the dock at 00:27:26:
+> 
+>   [00:26:36] 0:10 <-> 1:11 (DP): activating
+>   [00:26:36] 0:11 <-> 1:12 (DP): activating
+>   [00:26:48] 0:10 <-> 1:11 (DP): not active, tearing down
+>   [00:26:48] 0:10: DP IN resource unavailable: DPRX negotiation failed
+>   [00:27:26] 0:10: DP IN resource available
+>   [00:27:26] 0:11 <-> 1:11 (DP): activating
+>   [00:27:26] 0:10 <-> 1:12 (DP): activating
 
-I high prio mm_stats reader is an unlikely scnerio, but yes, okay.
+Does the RX 9070 driver poll for a new connections periodically like the
+i915/xe or it supports PME? The current DPRX timeout is pretty much
+following the i915 that has 10s polling period so simple way of working
+this around is to set thunderbolt.dprx_timeout= to match that.
 
-> Clamping negative sums to 0 in a single pass (like
-> percpu_counter_sum_positive()) and moving zram_stat_add() before
-> slot_unlock() would avoid the unbounded loop.
+> The DP OUTs also end up swapped, so the ordering part of v1 doesn't
+> work as intended either.
 
-I disliked the clamping approach when I looked at it.  But thinking
-about it more, I think it is the right thing to do.  It's perfectly
-legal for zram to return 0 for those dynamic stats: no data stored,
-no incompressible pages, no same-filled pages, no slot-free, etc.
-So userspace should not be surprised to occasionally see zeroes for
-those stats.
+At the moment tunnels are created pretty much in the order the hotplugs
+arrive.
+
+> The comment in tb_dp_tunnel_active() and the redrive code both seem
+> to expect a hotplug for host DP IN adapters. Is the ASM4242 supposed
+> to send one once the GPU starts driving the DP IN? If this is
+> ASM4242 specific I can limit the fix to it with a quirk.
+
+The hotplugs should happen when the host router is enumerated so for
+example in your case it should work so that if graphics did not do DRPX
+capability exchange in time, the DP tunnel is torn down and if conditions
+are right the domain is put to sleep. When you wake it up there should be
+new hotplugs to DP INs so the resource is added back to the list.
+
+> v1 also only recovers on a new event. The alternative I had in mind
+> is retrying the DP IN a few times with a delay after DPRX fails, so
+> it recovers without a replug. Which is better?
+
+Can you first check if drpx_timeout= helps in your case? If it does, for
+simplicity one option is that we just make the default match the "biggest"
+and some slack.
+
+> I already have fixes for the Sashiko comments (the missing
+> tb_exit_redrive() and the ordering in tb_dp_resource_available()) and
+> one to skip DP IN adapters that are already in a tunnel, but I'd like
+> your opinion before spending more time on it.
+> 
+> Thanks,
+> Alfonso
+> 
+> On Sat, Nov 21, 2026 at 1:25 AM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 2 potential
+> > issues to consider:
+> > - [Medium] thunderbolt: missing tb_exit_redrive() in
+> >   tb_add_dp_resources() leaks RPM ref
+> > - [Medium] thunderbolt: list_add_tail() in tb_dp_resource_available()
+> >   breaks DP IN order
+> > --
+> >
+> > commit 4eedd8886dc180b45204d935f18725051dd0e6a0
+> > Author: Alfonso Villalobos Ulate <alfonsocvu@gmail.com>
+> >
+> > thunderbolt: Re-add host router DP IN adapters after DPRX failure
+> >
+> > This commit re-checks host router DP IN adapters when a new DP OUT adapter
+> > becomes available or a device router is scanned, keeping host DP IN
+> > adapters ordered by adapter number on tcm->dp_resources.
+> >
+> > > diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
+> > > index 418ad0a61a5de..1f3dea836067e 100644
+> > > --- a/drivers/thunderbolt/tb.c
+> > > +++ b/drivers/thunderbolt/tb.c
+> > > @@ -109,6 +109,29 @@ static void tb_queue_hotplug(struct tb *tb, u64 route, u8 port, bool unplug)
+> > >
+> > >  /* enumeration & hot plug handling */
+> > >
+> > > +/*
+> > > + * Insert a host router DP IN adapter so that host DP IN adapters stay
+> > > + * in adapter number order. A DP IN that is re-added after it was
+> > > + * dropped (for example because DPRX negotiation failed) then gets
+> > > + * paired with the same DP OUT as before, instead of swapping DP OUT
+> > > + * adapters (and therefore monitors) with the other host DP IN.
+> > > + */
+> > > +static void tb_add_host_dp_in(struct tb_cm *tcm, struct tb_port *port)
+> > > +{
+> > > +     struct tb_port *p;
+> > > +
+> > > +     list_for_each_entry(p, &tcm->dp_resources, list) {
+> > > +             if (tb_port_is_dpin(p) && !tb_route(p->sw) &&
+> > > +                 p->port > port->port) {
+> > > +                     /* Insert before the first higher numbered one */
+> > > +                     list_add_tail(&port->list, &p->list);
+> > > +                     return;
+> > > +             }
+> > > +     }
+> > > +
+> > > +     list_add_tail(&port->list, &tcm->dp_resources);
+> > > +}
+> > > +
+> > >  static void tb_add_dp_resources(struct tb_switch *sw)
+> > >  {
+> > >       struct tb_cm *tcm = tb_priv(sw->tb);
+> > > @@ -118,6 +141,9 @@ static void tb_add_dp_resources(struct tb_switch *sw)
+> > >               if (!tb_port_is_dpin(port))
+> > >                       continue;
+> > >
+> > > +             if (!list_empty(&port->list))
+> > > +                     continue;
+> > > +
+> > >               if (!tb_switch_query_dp_resource(sw, port))
+> > >                       continue;
+> > >
+> > > @@ -130,7 +156,7 @@ static void tb_add_dp_resources(struct tb_switch *sw)
+> > >               if (tb_route(sw))
+> > >                       list_add(&port->list, &tcm->dp_resources);
+> > >               else
+> > > -                     list_add_tail(&port->list, &tcm->dp_resources);
+> > > +                     tb_add_host_dp_in(tcm, port);
+> > >
+> > >               tb_port_dbg(port, "DP IN resource available\n");
+> > >       }
+> >
+> > [Severity: Medium]
+> > Does re-adding a host router DP IN port through tb_add_dp_resources() leak
+> > the runtime PM reference on sw->dev when the port was in redrive mode?
+> >
+> > On host routers with QUIRK_KEEP_POWER_IN_DP_REDRIVE, tb_enter_redrive()
+> > sets port->redrive and calls pm_runtime_get(&sw->dev).  When
+> > tb_add_dp_resources(tb->root_switch) now runs at runtime from
+> > tb_scan_port() or tb_dp_resource_available(), it adds the host DP IN port
+> > to tcm->dp_resources without calling tb_exit_redrive(port).  Any later
+> > tb_dp_resource_available() call for that DP IN port then returns early
+> > because the port is already on tcm->dp_resources (or already enabled by
+> > tb_tunnel_dp()), leaving port->redrive set and preventing the host router
+> > from suspending.
+> >
+> > [ ... ]
+> >
+> > > @@ -2234,6 +2272,14 @@ static void tb_dp_resource_available(struct tb *tb, struct tb_port *port)
+> > >       list_add_tail(&port->list, &tcm->dp_resources);
+> > >       tb_exit_redrive(port);
+> > >
+> > > +     /*
+> > > +      * Host router DP IN adapters removed because DPRX negotiation
+> > > +      * failed never get a hotplug event of their own. Give them
+> > > +      * another chance now that a DP OUT became available.
+> > > +      */
+> > > +     if (tb_port_is_dpout(port))
+> > > +             tb_add_dp_resources(tb->root_switch);
+> > > +
+> > >       /* Look for suitable DP IN <-> DP OUT pairs now */
+> > >       tb_tunnel_dp(tb);
+> > >  }
+> >
+> > [Severity: Medium]
+> > Should tb_dp_resource_available() also use tb_add_host_dp_in() when adding
+> > a host router DP IN port?
+> >
+> > When a lower-numbered host DP IN port becomes available via hotplug in
+> > tb_dp_resource_available() (such as when exiting redrive mode or after
+> > resume) while a higher-numbered host DP IN port is already on
+> > tcm->dp_resources, list_add_tail() places the lower-numbered port after
+> > the higher-numbered one, breaking the adapter ordering that
+> > tb_add_host_dp_in() maintains.
+> >
+> > --
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20261121070804.26185-1-alfonsocvu@gmail.com?part=1
