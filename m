@@ -1,58 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.223
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795425233;
-	b=B01L5CcbtJPXjBbrinqrDPq/+yaBqWq1rr6Hw91mgwIUEHzKb7R/OIY0IdcJRpL+IyPB
-	 OcJCq3IT9fszbNiKh4L/2Rq1v6s3uvpiT83i1EX8QuOUx1ieuAHUWEanjJMhEdGJ2UWmS
-	 AQvvuHEQN9Oas+0YANRQHSqy3sg+NqC+tjU9aX9BAldbjn0rQCakQBCxP/DFqeX2gUlTA
-	 97kJ2m2viFf0uERkLWVtQxypJIHxfHoxJ4VHJNANW5rNlHYqcRbLvKwXNtpZai1xf/mv0
-	 Vg22wxTuCdikodhQT6kjmhOCHkWIGbpoqBz1eoWe8C9CnCBILSeI9knL+X44ILR6rzQ==
+	t=1795425756;
+	b=mV0zUD+IW1odUyDHqx4KNeJayr5h0sHCX9BW1c9VRCyE2eHKbn4WCbd4bLiT3DGOb972
+	 0xqbatX2VB5+sKoL9w4xSnJ/AeEqY62A8nQth0QLNBOJZu44EkKueuJ5xOIzEmw2OQaZZ
+	 yKbaTZ7kA1UYJMyMnRWDKdUEOxpVo+37u+UEKCco0GSGrCf/RQw8Um8KHRfpPEfioCqZf
+	 LvaiA/t+wp2ztMVsK/xuXCMdCeBn8nLG4QWV83YS+vcvxLTbsGjS2KARN7Hcj5M853CCW
+	 SuAALhohXBZuFoCxzzjzZ9yR/WtnCyWQphOwOKP2IbMqAkPhAOg1NnfIenWCxfsTBvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795425233;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Originating-IP:
-	 X-ClientProxiedBy;
-	bh=PNz8/jThACatQrxxgBfShzbz4pyu8AsglZobIfmyAmA=;
-	b=A1tJIx+pOJT2rIyYcpDTXTiRlQvdC+uxfW7YqvFnDAfSAKL6HEVi3p43aleHNqne4M8c
-	 +pAQhfPIe4jB9HPpbVF+o2BkGA5SRMUGwdemdAO+rvv2puuLz003KMne7PdfNsoqK13hd
-	 9FZEus34nBt/6TtfI3MusSBpslpk1XAt0km7sgRL65ENeqC7M+Q5HRg5BwZJJOwHpt0B0
-	 UQDjcctJISmC1a52ue0ybQcnhxir3cwtTtGWwy7wRZ3y17lOv1QQrewjbH3eXKvehlPPs
-	 M19eGQeLhm/7SmaCY5sO9N1DxHcXpJha+V9zO51yQQFSFqBkTZ1BoAF/JbdBMhPL2hQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795425756;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=+YqP0VPIZaqejn7zGmUTDDm9+wSwQPjiEk9xfXfIWnE=;
+	b=HVuYhuJCwfCVK0Mg5STYlYDKHOa3UZzhxMnHa3XU+89Qot5fvDMaw+EB7WwLZ2MIJuqn
+	 s5evdo6qFql6eA/Mp2gzkhujvOYzcM0ayDgfBrcaa35RxZja8PqNsFxVLy4qEe1Ygrfrp
+	 ddkupb2YLMmm8wEzNOxxXKdYGwHyTAax1tHvTwuFtdtsoOLnrtbX3hBWqlCg+hPUOMNbj
+	 GoIZ5R6u0qwuT3wTTtZXsAQ5jP10Qzx0z3pN3GXvpKWL87hjy/H1b1F9jVdaaFsLU9/ND
+	 w5SM07KIZKLkARUa/YZszVf4C+6izODFDafF9TP4IU5pZlKZMyT8/EvSYWkRGy6h6OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=SrDuu9va;
-	arc=none smtp.remote-ip=113.46.200.223
-Received: from canpmsgout08.his.huawei.com (canpmsgout08.his.huawei.com [113.46.200.223])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="N8/2hWLQ";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB435606A321;
-	Mon, 23 Nov 2026 09:13:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB435606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83015606A31F;
+	Mon, 23 Nov 2026 09:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=SrDuu9va
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=PNz8/jThACatQrxxgBfShzbz4pyu8AsglZobIfmyAmA=;
-	b=SrDuu9vaZiChaDMfB+FzRKchqdFncFCexaNYmvtoQFjyxz1BtUNyYYBaPKzsZWzyR1mpOTTOl
-	v8goqh8fqTe59eA2QvFKllDS7Lqyq4TJgMgYxOHiNsQ/LzreJ8QlacqSm9kHSsUAJLfWH5RF0R+
-	0p5yBRuUpklU9vchEGU6CUE=
-Received: from mail.maildlp.com (unknown [172.19.163.200])
-	by canpmsgout08.his.huawei.com (SkyGuard) with ESMTPS id 4jY0bn2TJQzmV7s;
-	Mon, 23 Nov 2026 17:13:25 +0800 (CST)
-Received: from kwepemr100010.china.huawei.com (unknown [7.202.195.125])
-	by mail.maildlp.com (Postfix) with ESMTPS id DDD254055B;
-	Mon, 23 Nov 2026 17:13:47 +0800 (CST)
-Received: from [10.67.120.103] (10.67.120.103) by
- kwepemr100010.china.huawei.com (7.202.195.125) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 23 Nov 2026 17:13:47 +0800
-Message-ID: <069ff131-882c-43a8-8654-006cb9942eba@huawei.com>
-Date: Mon, 23 Nov 2026 17:13:46 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N8/2hWLQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139A21F000C0;
+	Mon, 23 Nov 2026 09:22:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795425755;
+	bh=+YqP0VPIZaqejn7zGmUTDDm9+wSwQPjiEk9xfXfIWnE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=N8/2hWLQXF3Tz0DxjD59Gbri4SwGVHJ216vpug58t4irfv8+mrjF5xzBNq+C35x+P
+	 bODMqKM7CBfY9UJOKzGBGmAhn1s5xCmQ5Eh/JIAfExZ9H2K6PHWKSi+ZqodV1LQHzY
+	 3Uuj2D5YhvXpIKwr7penjZBqZ0d/cwmauzmVO1uk11l9A1yrwJ7+/WeNOCKUgkailw
+	 oNzhbBUQ46R9F+okFKligmxxuA9VJxKDAIJlV87PgplVO1G2gzg2/SxD+AQHTrR5SS
+	 /KkKsLiaRB3l5QgW2b60BRw1cQNavX2io3nFPrd+eULRwrxTzEwCKYNkZ88pkd2JJQ
+	 mTBV+JgiNTRfw==
+Date: Mon, 23 Nov 2026 11:22:31 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-sound@vger.kernel.org,
+	dmitry.torokhov@gmail.com
+Subject: Re: [PATCH v3 11/31] USB: Unwind interface claims after registration
+ or binding failure
+Message-ID: <20261123092231.GL14811@unreal>
+References: <20261118-device-trust-core-v3-0-d655875c4bfb@nvidia.com>
+ <20261118-device-trust-core-v3-11-d655875c4bfb@nvidia.com>
+ <sashiko-outbox-223897@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,265 +61,127 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/15] KVM: arm64: Document HDBSS buffer size ioctl
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvmarm@lists.linux.dev>, <kvm@vger.kernel.org>, Marc Zyngier
-	<maz@kernel.org>, Oliver Upton <oupton@kernel.org>,
-	"tangchengchang@huawei.com" <tangchengchang@huawei.com>
-References: <20260929103655.85107-1-zhengtian10@huawei.com>
- <20260929103655.85107-15-zhengtian10@huawei.com>
- <20260929110638.D19171F000FF@smtp.kernel.org>
-From: Tian Zheng <zhengtian10@huawei.com>
-In-Reply-To: <20260929110638.D19171F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- kwepemr100010.china.huawei.com (7.202.195.125)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-223897@kernel.org>
 
-
-
-On 9/29/2026 7:06 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Critical] kvm: arm64: missing vCPU kick in kvm_arch_update_hw_dirty_mode causes data corruption
-> - [High] kvm: arm64: stage2_wrprotect_walker clobbers concurrent hardware PTE updates
-> - [Medium] kvm: uapi: enabling dirty ring silently resets HDBSS buffer size
-> - [Low] kvm: uapi: KVM_CHECK_EXTENSION misused to return mutable VM state
+On Thu, Nov 19, 2026 at 07:29:29PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] USB: unbound claim missed in usb_set_configuration() when
+>   autoprobe is off
+> - [Medium] usb: core: failed interface claim unwind skips altsetting 0
+>   reset
 > --
 > 
-> commit ad3d8df658768bdca959742e1b61e3dd3914fdd8
-> Author: Tian Zheng <zhengtian10@huawei.com>
+> commit 5e9d278c3fe83635c408aabb0f7fdb4a22c1316b
+> Author: Leon Romanovsky <leon@kernel.org>
 > 
-> KVM: arm64: Document HDBSS buffer size ioctl
->      
-> Document KVM_CAP_ARM_HDBSS_BUFFER_SIZE, which lets userspace configure the
-> per-vCPU HDBSS buffer size for hardware-assisted dirty tracking during live
-> migration.
+> USB: Unwind interface claims after registration or binding failure
 > 
->> diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
->> --- a/Documentation/virt/kvm/api.rst
->> +++ b/Documentation/virt/kvm/api.rst
->> @@ -9056,6 +9056,34 @@ enabled, cmma can't be enabled anymore and pfmfi and the storage key
->>   interpretation are disabled. If cmma has already been enabled or the
->>   hpage_2g module parameter is not set to 1, -EINVAL is returned.
->>   
->> +7.48 KVM_CAP_ARM_HDBSS_BUFFER_SIZE
->> +-----------------------------------
->> +
->> +:Architectures: arm64
->> +:Target: VM
->> +:Parameters: args[0] is the per-vCPU HDBSS buffer size in bytes
->> +:Returns: 0 on success; -EINVAL if the size is invalid or vCPUs have already
->> +          been created; -EBUSY if the buffer size was already configured.
->> +
->> +This capability configures the per-vCPU HDBSS buffer size used for
->> +hardware-assisted dirty tracking during live migration.
->> +
->> +Userspace sets the size in bytes via KVM_ENABLE_CAP. KVM allocates
->> +per-vCPU HDBSS buffers of the requested size.
->> +
->> +KVM_CHECK_EXTENSION returns the maximum supported size (``SZ_2M``)
->> +when queried without a VM, or the configured per-VM size (default
->> +``PAGE_SIZE``) when queried with a VM.
+> This commit unwinds pre-claimed USB interfaces when device_add() fails or
+> driver binding does not complete during usb_set_configuration(), and releases
+> remaining unregistered interface claims in usb_disable_device().
 > 
-> [Severity: Low]
-> KVM_CHECK_EXTENSION is designed to advertise static feature support and
-> limits, not to serve as a GET interface for mutable, dynamically configured
-> VM attributes.
+> > diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
+> > index 306978caaf1ef..b2e5ed35a4a59 100644
+> > --- a/drivers/usb/core/message.c
+> > +++ b/drivers/usb/core/message.c
 > 
-> Would it be better to use a dedicated interface to read back this dynamic
-> state instead of KVM_CHECK_EXTENSION?
+> [ ... ]
 > 
->> +
->> +Constraints:
->> +
->> +- The size must be a power of two in [``PAGE_SIZE``, ``SZ_2M``].
->> +- Dirty-bitmap mode only: rejected with -EINVAL once the dirty ring
->> +  (``KVM_CAP_DIRTY_LOG_RING``) is enabled, and enabling the ring after
->> +  a size was set resets it to the default.
+> > @@ -2270,6 +2292,7 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+> >  	 */
+> >  	for (i = 0; i < nintf; ++i) {
+> >  		struct usb_interface *intf = cp->interface[i];
+> > +		struct device_driver *claimant;
+> >  		struct module *claim_owner;
+> >  
+> >  		if (intf->dev.of_node &&
+> > @@ -2285,6 +2308,7 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+> >  			intf->cur_altsetting->desc.bInterfaceNumber);
+> >  		device_enable_async_suspend(&intf->dev);
+> >  		device_lock(&intf->dev);
+> > +		claimant = intf->dev.driver;
+> >  		claim_owner = xchg(&intf->claim_owner, NULL);
+> >  		device_unlock(&intf->dev);
+> >  		ret = device_add(&intf->dev);
+> > @@ -2293,7 +2317,22 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+> >  			intf->unregistering = 1;
+> >  			device_unlock(&intf->dev);
+> >  		}
 > 
-
-You are right, we will fix this. KVM_CHECK_EXTENSION now returns the 
-maximum supported size only, matching how KVM_CAP_DIRTY_LOG_RING reports 
-the ring size limit:
-
-```
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -519,11 +519,7 @@ int kvm_vm_ioctl_check_extension(str
-        case KVM_CAP_ARM_HDBSS_BUFFER_SIZE:
--             if (!system_supports_hdbss())
--                     r = 0;
--             else if (kvm)
--                     r = kvm->arch.hdbss_buffer_size;
--             else
--                     r = KVM_ARM_HDBSS_MAX_SIZE;
-+             r = system_supports_hdbss() ? KVM_ARM_HDBSS_MAX_SIZE : 0;
-                break;
-```
-
 > [Severity: Medium]
-> The KVM guidelines mandate that new memslot and vCPU flags default to
-> immutable.
+> Does setting intf->unregistering = 1 before calling
+> usb_driver_release_refused_claim() prevent usb_unbind_interface() from
+> resetting the interface back to altsetting 0?
 > 
-> Instead of silently mutating previously configured state (which can lead to
-> unpredictable state-machine transitions that userspace is not prepared
-> for), should this incompatible capability configuration fail explicitly by
-> returning an error like -EINVAL?
-> >> +- Must be set before any vCPU is created; a second setting is rejected
->> +  with -EBUSY.
->>   
->> diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
->> --- a/arch/arm64/kvm/hyp/pgtable.c
->> +++ b/arch/arm64/kvm/hyp/pgtable.c
-> 
+> When a driver such as cdc_ncm claims a sibling data interface and switches it
+> to a non-zero alternate setting during probe(), a later device_add() failure
+> on that sibling sets intf->unregistering = 1 before
+> usb_driver_release_refused_claim() runs usb_unbind_interface().  Inside
+> usb_unbind_interface(), driver->disconnect() releases the control interface
+> and usb_set_interface() is called to restore altsetting 0, but
+> usb_set_interface() rejects the request with -ENODEV because
+> iface->unregistering is already set.  Since disconnect() released the sibling
+> claim, usb_has_claimant() returns false and the device stays configured with
+> the failed interface and its HCD bandwidth stuck on the non-zero altsetting.
 
-You were right, and the reset is gone. The ring enable never touches the 
-buffer size, and the two are now fully decoupled: any buffer size works 
-with any ring size.
+This is worth fixing, but the race is difficult to trigger, it requires
+device_add() for a sibling device to fail at just the right time.
 
-> [ ... ]
 > 
->> @@ -1285,12 +1298,47 @@ static int stage2_update_leaf_attrs(struct kvm_pgtable *pgt, u64 addr,
->>   	return 0;
->>   }
->>   
->> +static int stage2_wrprotect_walker(const struct kvm_pgtable_visit_ctx *ctx,
->> +				   enum kvm_pgtable_walk_flags visit)
->> +{
->> +	kvm_pte_t new = ctx->old & ~KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W;
->> +
->> +	/* We remove DBM on blocks so they can fault and get split */
->> +	if (ctx->level < KVM_PGTABLE_LAST_LEVEL)
->> +		new &= ~KVM_PTE_LEAF_ATTR_HI_S2_DBM;
->> +
->> +	if (kvm_pte_valid(ctx->old) && ctx->old != new &&
->> +	    (ctx->old & KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W) &&
->> +	    ctx->mm_ops->mark_page_dirty)
->> +		ctx->mm_ops->mark_page_dirty(kvm_pte_to_phys(ctx->old));
->> +
->> +	/*
->> +	 * The plain WRITE_ONCE races with hardware updates; both are
->> +	 * benign.
->> +	 *
->> +	 * AF: the update may be lost, and is set on the next access.
->> +	 *
->> +	 * Dirty state: we only rewrite entries whose old value had S2AP[1]
->> +	 * set, while hardware only promotes entries with S2AP[1] clear, so
->> +	 * the two never touch the same entry. The one overlap is DBM removal
->> +	 * on writable-clean blocks: a racing promotion is demoted back to
->> +	 * read-only, but the write is still recorded in the HDBSS buffer and
->> +	 * the folio was marked dirty at fault-in, so nothing is lost.
->> +	 */
->> +	if (kvm_pte_valid(ctx->old) && ctx->old != new)
->> +		WRITE_ONCE(*ctx->ptep, new);
+> > -		module_put(claim_owner);
+> > +		if (claimant && (ret || !intf->dev.driver) &&
+> > +		    usb_driver_release_refused_claim(intf, claimant)) {
+> > +			bool unconfigure = usb_has_claimant(dev, claimant);
+> > +
+> > +			get_device(&intf->dev);
+> > +			if (unconfigure)
+> > +				usb_set_configuration(dev, -1);
+> > +			module_put(claim_owner);
+> > +			put_device(&intf->dev);
+> > +			if (unconfigure) {
+> > +				usb_autosuspend_device(dev);
+> > +				return ret ? ret : -ENODEV;
+> > +			}
+> > +		} else {
+> > +			module_put(claim_owner);
+> > +		}
 > 
-> [Severity: High]
-> The global review guidelines strictly mandate: When KVM updates SPTE bits that
-> the hardware page-table walker also writes (Dirty/Access on leaf entries), the
-> update must not clobber a concurrent hardware update.
-> 
-> Since WRITE_ONCE unconditionally overwrites the PTE with the old masked
-> value, could this non-atomic write in stage2_wrprotect_walker() clobber
-> concurrent hardware updates to the Access Flag (AF) or Dirty Bit on leaf
-> PTEs?
-> 
+> [Severity: Medium]
+> Can checking (ret || !intf->dev.driver) without device_lock(&intf->dev) miss
+> an unbound claim when drivers_autoprobe is disabled?
 
-The AF race is real but known and harmless. stage2_attr_walker(), which 
-upstream uses for the same write-protect path, has the exact same 
-read-modify-write pattern and its own comment on it:
+This is same pre-existing issue as in patch 6.
 
-"We may race with the CPU trying to set the access flag
-here, but worst-case the access flag update gets lost and
-will be set on the next access instead."
-
-For the dirty bit the two writers are disjoint. The walker only rewrites 
-entries it read as already dirty, while hardware only promotes clean 
-entries, so they never touch the same PTE, and a leaf whose value is 
-unchanged is not written at all.
-
->> +
->> +	return 0;
->> +}
->> +
->> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->> --- a/arch/arm64/kvm/mmu.c
->> +++ b/arch/arm64/kvm/mmu.c
 > 
-> [ ... ]
+> If an unregistered sibling interface was claimed during an earlier probe() and
+> bus autoprobing is disabled before device_add() runs device_initial_probe(),
+> __device_attach() is skipped:
 > 
->> @@ -2581,6 +2629,45 @@ int __init kvm_mmu_init(u32 hyp_va_bits)
->>   	return err;
->>   }
->>   
->> +/*
->> + * The VM's hardware dirty-management mode is a derived value, a pure
->> + * function of the static capabilities and the number of logging
->> + * memslots, so recomputing it on every event cannot lose an update
->> + * and needs no locking against racing writers:
->> + *
->> + *   logging && HDBSS-capable  ->  HD|HA|HDBSS (hardware tracking)
->> + *   logging, no HDBSS         ->  off (write-protect faults)
->> + *   !logging && HAFDBS-cap.   ->  HD|HA (only written pages go dirty)
->> + */
->> +void kvm_arch_update_hw_dirty_mode(struct kvm *kvm)
->> +{
->> +	unsigned long cur, target;
->> +	bool logging = atomic_read(&kvm->nr_memslots_dirty_logging) != 0;
->> +
->> +	if (logging && kvm_supports_hdbss(kvm))
->> +		target = VTCR_EL2_HD | VTCR_EL2_HA | VTCR_EL2_HDBSS;
->> +	else if (logging || !kvm_supports_hafdbs())
->> +		target = 0;
->> +	else
->> +		target = VTCR_EL2_HD | VTCR_EL2_HA;
->> +
->> +	cur = kvm->arch.mmu.vtcr & (VTCR_EL2_HD | VTCR_EL2_HA | VTCR_EL2_HDBSS);
->> +	if (cur == target)
->> +		return;
->> +
->> +	kvm->arch.mmu.vtcr = (kvm->arch.mmu.vtcr &
->> +			      ~(VTCR_EL2_HD | VTCR_EL2_HA | VTCR_EL2_HDBSS)) |
->> +			     target;
->> +
->> +	kvm_make_all_cpus_request(kvm, KVM_REQ_RELOAD_STAGE2);
->> +
->> +	/*
->> +	 * The request only reloads VTCR_EL2; cached translations keep
->> +	 * the old permissions until invalidated.
->> +	 */
->> +	kvm_flush_remote_tlbs(kvm);
+> drivers/base/dd.c:device_initial_probe() {
+> 	if (sp->drivers_autoprobe) {
+> 		ret = __device_attach(dev, true);
+> 		if (ret == 2)
+> 			__device_attach(dev, false);
+> 	}
+> }
 > 
-> [Severity: Critical]
-> Inside kvm_arch_update_hw_dirty_mode(), kvm_make_all_cpus_request() is issued
-> with KVM_REQ_RELOAD_STAGE2, which is defined as:
+> device_add() then returns 0 with intf->dev.driver still pointing to claimant
+> while device_is_bound(&intf->dev) is false.  Because (ret ||
+> !intf->dev.driver) is false, usb_set_configuration() skips
+> usb_driver_release_refused_claim() and drops claim_owner in the else branch.
+> When usb_disable_device() later runs, device_is_registered(&interface->dev) is
+> true, so device_del() is called before usb_release_unregistered_interface()
+> and __device_release_driver() calls klist_remove(&dev->p->knode_driver) on an
+> unattached klist_node, causing a NULL pointer dereference in klist_put().
 > 
-> #define KVM_REQ_RELOAD_STAGE2 \
-> 	KVM_ARCH_REQ_FLAGS(12, KVM_REQUEST_WAIT | KVM_REQUEST_NO_WAKEUP)
+> Checking !device_is_bound(&intf->dev) under device_lock(&intf->dev) inside
+> usb_driver_release_refused_claim() instead of the unlocked !intf->dev.driver
+> check would catch this case.
 > 
-> The KVM_REQUEST_NO_WAKEUP flag prevents the request from interrupting running
-> vCPUs. The subsequent kvm_flush_remote_tlbs() executes a hardware broadcast TLBI
-> and also does not send IPIs.
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261118-device-trust-core-v3-0-d655875c4bfb@nvidia.com?part=11
 > 
-> Because running vCPUs are never kicked out of guest mode, won't they
-> continue executing with their physical VTCR_EL2 register holding the
-> stale state (HD=1)?
-> 
-> If software dirty logging is active but HDBSS is not correctly synchronized
-> on the CPU, the hardware page table walker could silently promote
-> writable-clean PTEs to writable-dirty without trapping. Since KVM never
-> sees the write, could this cause silent data loss during live migration?
-> 
->> +}
-> 
-
-They are kicked out. KVM_REQUEST_NO_WAKEUP only skips waking halted 
-vCPUs, the IPI decision in kvm_request_needs_ipi() never consults it, 
-and with KVM_REQUEST_WAIT the request IPIs every vCPU in guest mode and 
-waits for all of them to leave, the same flag pair KVM_REQ_TLB_FLUSH 
-relies on. Re-entering the guest goes through check_vcpu_requests(), 
-which calls __load_stage2() for this request, and a halted vCPU passes 
-the same check on wakeup, so no guest execution ever runs with the old VTCR.
-
-Thanks,
-Tian
