@@ -1,96 +1,133 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.66.10
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1795450553;
-	b=AzyaFb4EOf7u+0lE4IBv2h9G1hFA38c11bcArwNhsE16iqgICV/8riN/e8bz61tDM9/6
-	 r0GTGEMVaR13eQocYjvg4s7OaRRivxWtJQ5QMJeyuYlAVTF/gCNMFAtTtoOtueG7r1cy/
-	 GmuHK3z0GSFhiM1XmsK2DhIjFFKutsR4uqCbNWzV3HLmB9q821vx+eFE9k2Djs/5pVMX1
-	 2GpfnzUW8eIEn4BRBpJEzG48qm3m738Ffsn4oT1gZ8uHuzflWccCt+RH4h+vKDz4dEsEs
-	 wbQTngeHoxAy75QfddUP1iXjRpK6L7KRc4RA14p1LhtmrK+tXu9Cvc85I/n4+/AFW9g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795450553;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=Di0ZUWdTm4WyU8WUrOU/nKA5izKxnJX+0wz0RZFcGig=;
-	b=sGUEvGj5/oEmKL0IdwtLSGpoJ0mrx51XD9JHq70qGbKsDVJQCfbE17PM09dpa43A0c15
-	 Gj8odMuwh6rxdpLosN5+pVb3/3mdIupbbf8Z2tp7Oqrr8fADyGM6cQTvh6MEob9zMEwEV
-	 /BCpFSSusIQZzjBq3UvI2rLg3W37m3crSV3npIge43dR99KxKMQA9WkglV5H710jC+pqV
-	 psGwayaUzJ7VQ0THjqL6L5mExddvS3VAG+42fTUTWKyXdGkyzh7eESvmM6+RseMUOF/Vt
-	 jbimm1GofOfV+nZ/VxnoeEQIRKPF6lYLsfq14VPKGKE5X/Sjp+zXi3c8HiC53QyariA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=gS+xW9Iy;
-	arc=fail smtp.remote-ip=52.101.66.10
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012010.outbound.protection.outlook.com [52.101.66.10])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795451514;
+	b=SaTUNEILJU0DoOAbMc59LyLRwALpxINh0ldKab76U3Z2kBsJ2b4tRFdCjWZR0Vz0RqG1
+	 5ODcAYAbADTgUUJ2v1zn1FC/e3XBfs2wddSDBSaChBqjyu/FhmyMBVFwOyrdiB8sHTe05
+	 BFfKQ+YLVFEAPRT7PAcVFSFxVupbZNyYFhVaABNLP/H9V3vSQbHZXOcZFqsZRi14RK1kC
+	 ummjgGo7bs2Vugcg1bSo+HFRjUceu7P/ODP2X39g16dfP0V4dLfygcGdSHTYUfbw0o0ZO
+	 eERtUqt2Nz3D7qx7/vjv+tAs4ltovHrm9t6IHfk6xYqBi9cQzadXJPvoUXxRr6gP5Ig==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795451514;
+	h=Received:DKIM-Signature:Message-ID:Subject:From:To:Cc:Date:
+	 In-Reply-To:References:Autocrypt:Content-Type:
+	 Content-Transfer-Encoding:User-Agent:MIME-Version;
+	bh=2XFZAHG8/lZ5+XUZ37cLNWgBIJz2v/s7Nafot/IvbTE=;
+	b=roNeWKzWVwudn/04OMX4ol806b2kzVAiI4GKCBrDi/kdmHT3xd4P1cNNMQWkL86MdP4+
+	 vq7MH4AIt6UVfAWXSEMuRErE2MVFEMO/IPIQ0A+LX5wGQUa0gb00egHJFOcwTkPCJgWmE
+	 OvwrLJIu4z7YtVpNCA1A/1ptKA2Y7Jf6CR0egbIp4cgQP/fXbGAJ1siVijB8zK0mOYoBH
+	 EO2BXBZPVsHBrOkMOow3OKL3+YKsq50fSnN6m7CGDVlmpGqg2VlIMEZP/ExB2tnt/MfCi
+	 aQOAHkdr4v+dyHJak3OeLmZdhsZ2/YZaYJ6aUhwRoWOtD/fFKAWf5z2dH2I2JPsAPmQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hgy0FGoD;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0726606A321;
-	Mon, 23 Nov 2026 16:15:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0726606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A27606A32A;
+	Mon, 23 Nov 2026 16:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=gS+xW9Iy
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=r6niRYKVdHZhuUlILUsqkQkp4/4e6tBWdGGfOyapQ9g8Am26Ps6xQV4O2VhMIlnaKiunW3QeBzGLA5tLzibXhXm+wpi/B53deZftKUek7jAn+c2Dwu6HMZ36oALhLihiEoaKtABN1NgHOEyMUgYpQ/YhOJx9nXWIJvKWcIois1kVsZB0Q9zHSiQJYMWx8hOMXYIJzuV+GafVrpQzYWeMPSh4J5mqFDNXzNx/VLSpxMdDOfPYmzzXDTFLbyLrF55+ExJ5HfdOZaZo/7NOHP6jzYDpJScn7fmQy91zlBammWCGo4YLZyty1if+4wi5nJj+RGkezXf7EqzoUKFH+sDs7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OSfiXA0+vJz4XuZbXnQ3aNLS4xdz/xC4y3anU2N0Vco=;
- b=MRlXqGdnsfz/VMBmwcCrv5Ai3QJ0iu50iLAfjM2aU8CrDW4/IIYV1yJzPRtNWOhrtUXDWm3kf6yswYf9u9tmWELZIL56C9Hs0pkcc2fLr0V7nwzF9loNpRjcJD9xHQ8cDe2PhhFp7JCiPHZ3QMLJ15x+8VmWkj0kA6zQTrXwGIIzxHdu0c5C7wUb2UA9vD/E5l1DeBh9G24kqgD2ReEM/jsgRouP/iCtc0PyNn9vtRDYh4rnIB7MBQKdmAJseV5TQV2hu+m6VCGRXV62UUcfI9B8i+MROojBba8MO8wF2B3YDedBYGNy8QICQeHMZn5knaPmJo7ItRA7emh1Ne55tw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OSfiXA0+vJz4XuZbXnQ3aNLS4xdz/xC4y3anU2N0Vco=;
- b=gS+xW9IyDVSntGy6KdTmPc0yiVkgJShFCIEdDaUmbchFz0tuqn81JqsorK8aX4HH5HwjLZ6DTUkWeL7MRhwTTN6pvO5az+kr290CA7qcurO8AubLp7+WJrx1NZ+5mTVcm3ScogrG402AVCUoeEjVuzu1d61Lqj9uw0XOeeqWhprwWbEDfln3l3PtgMMV00OufGUX4q841FyDZfXR97fxbF/dCTNIiZxzAXvi95J5mzY4uNUrnFkOHu47paCtEKMTiJ8vEOdyVQtKyaXIr7IK9QbO1YZtzdulGSfHp4ajI/tiw1ru6CEDHfCulUba/Jzuelhhy5r+vnfjYHilCFJubA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AM9PR04MB8841.eurprd04.prod.outlook.com (2603:10a6:20b:408::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Mon, 23 Nov
- 2026 16:15:49 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0639.012; Mon, 23 Nov 2026
- 16:15:49 +0000
-Date: Mon, 23 Nov 2026 10:15:40 -0600
-From: Frank Li <Frank.li@oss.nxp.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hgy0FGoD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE0F1F000C6;
+	Mon, 23 Nov 2026 16:31:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795451513;
+	bh=2XFZAHG8/lZ5+XUZ37cLNWgBIJz2v/s7Nafot/IvbTE=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=Hgy0FGoD8ej25eIXvJHGtr/2Q6sOKV7FJFSBh6CupZqfVfiv9GlGd/z8vuutwD9DB
+	 54xoZ2SSYki8OGZaZnjtmBmiqnLVVIDXRdSG2CFlMvyxlpAK666h//ev336hRnWW45
+	 kCGq2wCW+8A1TLNRZLRq2siZcYUVJmElPeeL51xSXhkCLhorJeVILka/Q8mEDiQbpu
+	 /rlJXkMn7Ynvr5/GDoFTIDyf9+hILGaWMgl+JOyH4aVQnQw/X9gc0BnpwFIfvc6M2A
+	 9m1GWNpAxrWZj80jBYdZD/RD7/miLiHzw1oYyPztqFzskV2+nRJNlasBhglKYYG3te
+	 G3wl8uZFvVBuA==
+Message-ID: <e0c3e7028b10b99b6ebd416d42bfcf19b568aed7.camel@kernel.org>
+Subject: Re: [PATCH v3 01/11] scsi: mpt3sas: Don't leave requeued firmware
+ events pending at teardown
+From: Jeff Layton <jlayton@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Freimut Diener <f.diener@pengutronix.de>, devicetree@vger.kernel.org,
-	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
-	Frank.Li@kernel.org
-Subject: Re: [PATCH v2 2/5] arm64: dts: freescale: imx93-11x11-frdm-common:
- Describe PCAL6524 supply
-Message-ID: <awRmrCk8tOd_F8MG@SMW015318>
-References: <20261123-imx93-frdm-fixes-v2-0-dd97c7fca4b1@pengutronix.de>
- <20261123-imx93-frdm-fixes-v2-2-dd97c7fca4b1@pengutronix.de>
- <sashiko-outbox-229145@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-229145@kernel.org>
-X-ClientProxiedBy: PH8PR20CA0018.namprd20.prod.outlook.com
- (2603:10b6:510:23c::28) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+Cc: linux-scsi@vger.kernel.org
+Date: Mon, 23 Nov 2026 11:31:47 -0500
+In-Reply-To: <sashiko-outbox-222185@kernel.org>
+References: <20261118-sas-abba-v3-0-5562d690cf61@kernel.org>
+	 <20261118-sas-abba-v3-1-5562d690cf61@kernel.org>
+	 <sashiko-outbox-222185@kernel.org>
+Autocrypt: addr=jlayton@kernel.org; prefer-encrypt=mutual;
+ keydata=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
+ QZIQXVeAA+smfTT0tDrisj1U5x6ZB9b3nBg65kc=
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-3.fc44) 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,134 +137,143 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AM9PR04MB8841:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad9f4990-5f25-4034-de42-08df497d0977
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|376014|366016|261028144727099003|261026140227099003|261026121527099003|261022105027099003|261022113327099003|261022075727099003|11063799006|261021123027099003|4143699003|56012099006|10067099003|261009223027099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	TMKB8bikmPS02znd59RnDwfNjJiotz/U8XbvTfZWViBbte9izY5wnaeMx4N3uIyBmo/h5h/or3TK5KRL2/rkLTKDv4T1Yb5r7EBvl6FAFYV6Yg2wGYb2dEFZDPYaEM98DYkuZRSeadNZmiXB6QqIfzR8AU82O1vu6aNp/B8s0M5DsELxkk+VVR91rBkQMFuErrFvo0QZxGFDVXWRCJSVfk/oxX4EmqFRhIC/bhJtPPxIykPjNbZ2KgddsgYJiheDnP1MMzfznt89kLLHpy5Rm48WhDLnIhz4wsJepFzdx456du1qTibN2WhJpa+BrACqYESoPUIb0AMiuFO0/ijAADDaL21PDeRy0ykDBXX+au0GN8T/E2ewuz2ksVojgbVxDVe+kDLPUHPoHhAdMvjFW45DBcKP+sDIljL4STsMx2s/UElJaOkN6z6ygBaCnRizGd1Czy7EZATaGqAAE4/jKVUL0Vmr5jtsnjleO2Ddw//3TxEUIeBzR8JWmwRct7YaK4jennxK+uzJccNQaB19wXpjAcgOP4KBrgWXcubEPNIhGaAbHkKZOhRCwo8rVZC8JX8nxz2RRFwgy3dyaH5wSb5nY8o64BDbf/ipWGHPwIo=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(376014)(366016)(261028144727099003)(261026140227099003)(261026121527099003)(261022105027099003)(261022113327099003)(261022075727099003)(11063799006)(261021123027099003)(4143699003)(56012099006)(10067099003)(261009223027099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?L3tyWiciV0KLA56Fb0YTYm5StUjvIikEIVvOO+ND6FkMJRoEFFUESptKI5?=
- =?iso-8859-1?Q?W6yzhhOBZtFn4LvmGm1jO0sKBcP6MdwUBgi3auCs/mQyf55iaHIN1VLshF?=
- =?iso-8859-1?Q?8Ogod6xJzlwXa5SzvJ8N4o8BSQsbJtr/plM2CZAw2Pe5JpbTQjSqLLmu+g?=
- =?iso-8859-1?Q?6OuRglCl5lkwONrdFoLpAPs08P9zDnThS7VXCX9rlAtTDtSWZcVyH311+r?=
- =?iso-8859-1?Q?SDMloEWzMi+LsinUBZlb1rd5Ie2DWNdZ6Cn0DJYdZcV0xdG+QakXMDFZIh?=
- =?iso-8859-1?Q?7+YhuMhzkeFrBnZIvZS6FJIqlFWcqM9HhxI+AtNtT3YlJgT00ViPKMFUCL?=
- =?iso-8859-1?Q?Q+SVKFEAL/zbD/ST4PlKOqw4YVuGAQyLtmwGWnAQ4mwFqUWalY90NuERHl?=
- =?iso-8859-1?Q?fUFp4NZ0m73p+G/wT/PaNw9jkAkDFz4CqtbTQ+jWUgsc5ORFPqQzaO2scD?=
- =?iso-8859-1?Q?pMWAWxR/YP9u1QQw6kaJMlZMPd1DLLvvEvGOnzLnp37yLWjKWSgMt5WnFz?=
- =?iso-8859-1?Q?s26Cz9JaaoD/7I/F3YnTB2xkmBOisEmWa4y8gDgtQRBb/A9XkAAwrspe/f?=
- =?iso-8859-1?Q?Mq+227wxrWsvDJegkDh6W/lI9FJflcd6OHlYyW1TUzSUPrZaXRmFPXJf/Q?=
- =?iso-8859-1?Q?GrWfEVZ9czAN42n5sWlwjcOfISpJfIFdj3visuxJqiQWS5xzCIZ49/weed?=
- =?iso-8859-1?Q?H7rRG/ze+qB0iRZP6g3vaSyn271Az7wXWU5BLijexy7atC9V/6sWigmvRm?=
- =?iso-8859-1?Q?811KqUIuHpRLK6MLyI1V15TRPNnJLdFoHMTl1g9Vj2ZtCIE2S8k6EEU5lv?=
- =?iso-8859-1?Q?6Ci2Qc8wg8LCKnEBhZpLfg0+s14+xeSjuXxXImZA1rB+H+2j8tFlEJmAci?=
- =?iso-8859-1?Q?gQ+Nca5ZS8YghPM8iJn0yguFmu9+YiGOHmGwVfH3Gcb7OfpD4zO9cTkFpe?=
- =?iso-8859-1?Q?IwiSXJCl362EmU1+9zWZy0r+KtStwiseU0VApP4vo1yoVd3dwR5zoFhvaz?=
- =?iso-8859-1?Q?fmtWTOZGmCYHaoROCrqo7377asVFRHgNmvWPFKjkGCmx63HBk6NpEPW97P?=
- =?iso-8859-1?Q?/YUjY9pKk3s2WIBRz3HVYleCNXmFZsOBjiJSrrQxTTdIdnSs6H10tvI3ft?=
- =?iso-8859-1?Q?/tQQwBB4jZHawUaEX9+GJUtu5Xd7tclBEDGAZb4+k/CIIO2HvJ1A9rPrG/?=
- =?iso-8859-1?Q?3K6xOWAW2AhyhIeQqiZA6iqwC/GhVIVj33zw8tnhry406lUJRQCKw96/ua?=
- =?iso-8859-1?Q?BTerdFKsb8ffKmfFX9XkUFerMF048AuM+c4/B474FAagrn3gf8RKzXxOHc?=
- =?iso-8859-1?Q?g4qDHjWREP0nANxNpv1Rc2sRG6MXnnjsIcRGiPCsgSLOCkFgS5S+pQAK52?=
- =?iso-8859-1?Q?7xHfXRq4f7FP3weYvNs0q74LBrzpOAHm+2s7k357YHe6Lgjihi2ETRgmBg?=
- =?iso-8859-1?Q?5W/BefP8yahlJoFyZBLrgR4WxXTv9yYekS53TaEZypMvyZ4UIXRURsU8gL?=
- =?iso-8859-1?Q?3axh6PU2z5vyUAC7LTA9pq2otlued6ug6t3kKs6KpdLsfllryxDov3bhSi?=
- =?iso-8859-1?Q?9p5P270DX9DH4Bh4JBLHy2cIXvDVMpPFbQlwmcwFhI4EHPDUvLbaVntsJd?=
- =?iso-8859-1?Q?gcyn2NQKoiy+Maem+aoW84H2cu+tA4uaH+dkMjPpt8dXb+BZavohlYmYIy?=
- =?iso-8859-1?Q?+5yFUxJLdxvWTl0DveZa1khvm7PcCddvBTSIeY6ehRuoF77NEOCjnTfVnh?=
- =?iso-8859-1?Q?TboOHhewPfQegQLacjiSC3Wr/1QxpYWjoz7LvlbHpMD2Hxfo7Pw1hgQhIj?=
- =?iso-8859-1?Q?y+MPUOlXc97uNrMgzYRD+lY/kE53aS6eYmcvs9ByUnaAM489CVGB?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad9f4990-5f25-4034-de42-08df497d0977
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 16:15:49.0464
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ib0XTlpJU88D0nJSn3or1uFpTT8A8Ab32bysDOZqZfYcG1QC4tBRwzWHCo568lG5qDm7wui3BSEq5JoAbB2ggDwRECE2FCeLNPhb4h1eCnjmHTUUS236ZTBkyJOCUgrg
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8841
 
-On Mon, Nov 23, 2026 at 11:31:56AM +0000, sashiko-bot@kernel.org wrote:
+On Wed, 2026-11-18 at 23:33 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] arm64: dts: imx93-11x11-frdm-common: fake fixed regulator for
->   pcal6524 vcc-supply
+> - [High] scsi: mpt3sas: races in _scsih_fw_event_requeue() and cleanup
+>   queue
 > --
->
-> commit e42789fdf3e25ebbcd3c5baf782ad166ded4e5f4
-> Author: Freimut Diener <f.diener@pengutronix.de>
->
-> arm64: dts: freescale: imx93-11x11-frdm-common: Describe PCAL6524 supply
->
-> This commit adds a fixed 3.3 V regulator node as a proxy for PMIC BUCK4
-> and wires it to the PCAL6524 GPIO expander's vcc-supply to avoid a circular
-> probe dependency between the PMIC and its interrupt parent.
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx93-11x11-frdm-common.dtsi b/arch/arm64/boot/dts/freescale/imx93-11x11-frdm-common.dtsi
-> > index b3dfe516b1d55..e81b2342c50dc 100644
-> > --- a/arch/arm64/boot/dts/freescale/imx93-11x11-frdm-common.dtsi
-> > +++ b/arch/arm64/boot/dts/freescale/imx93-11x11-frdm-common.dtsi
-> > @@ -49,6 +49,19 @@ button-k3 {
-> >  		};
-> >  	};
-> >
+>=20
+> commit 462c12ccec856fed92f29e6abf5abd84f2b713ca
+> Author: Jeff Layton <jlayton@kernel.org>
+>=20
+> scsi: mpt3sas: Don't leave requeued firmware events pending at teardown
+>=20
+> This commit initializes fw_event->delayed_work at allocation, skips
+> requeuing events when the queue is being cleaned up or the host is being
+> removed, and cancels pending delayed_work items during queue cleanup.
+>=20
+> > diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sa=
+s/mpt3sas_scsih.c
+> > index 04255286a2a69..545913123d01f 100644
+> > --- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+> > +++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+> [ ... ]
+> > @@ -3704,20 +3712,31 @@ _scsih_fw_event_requeue(struct MPT3SAS_ADAPTER =
+*ioc, struct fw_event_work
+> >  {
+> >  	unsigned long flags;
+> > =20
+> > -	if (ioc->firmware_event_thread =3D=3D NULL)
+> > -		return;
+> > -
+> >  	spin_lock_irqsave(&ioc->fw_event_lock, flags);
 > > +	/*
-> > +	 * PCAL6524 is powered by PMIC BUCK4, but the PMIC uses PCAL6524
-> > +	 * as its interrupt controller. Model the supply with a fixed
-> > +	 * regulator to avoid a circular device dependency.
+> > +	 * Don't rearm the event while the queue is being flushed or the
+> > +	 * host is going away.  _scsih_fw_event_cleanup_queue() may already
+> > +	 * be past it, and the timer could then fire after the workqueue
+> > +	 * has been destroyed.
 > > +	 */
-> > +	reg_pcal6524_vcc: regulator-pcal6524-vcc {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "VDD_3V3_PCAL6524";
-> > +		regulator-min-microvolt = <3300000>;
-> > +		regulator-max-microvolt = <3300000>;
-> > +		regulator-always-on;
-> > +	};
-> > +
-> >  	reg_usdhc2_vmmc: regulator-usdhc2 {
-> >  		compatible = "regulator-fixed";
-> >  		off-on-delay-us = <12000>;
-> > @@ -207,8 +220,7 @@ pcal6524: gpio@22 {
-> >  		gpio-controller;
-> >  		pinctrl-0 = <&pinctrl_pcal6524>;
-> >  		pinctrl-names = "default";
-> > -		/* does not boot with supplier set, because it is the bucks interrupt parent */
-> > -		/* vcc-supply = <&buck4>; */
-> > +		vcc-supply = <&reg_pcal6524_vcc>;
-> >  	};
->
-> [Severity: Medium]
-> Should reg_pcal6524_vcc be added to the Devicetree when no separate
-> fixed regulator exists on the board?
->
-> Devicetree describes the physical hardware topology rather than encoding
-> workarounds for Linux driver probe ordering or dummy-regulator log
-> messages.  Modeling BUCK4 as a standalone always-on regulator-fixed node
-> misrepresents the board's power tree in the DT ABI and instantiates a
-> redundant platform device duplicating the regulator core's dummy
-> regulator.
->
-> In Documentation/devicetree/bindings/gpio/gpio-pca95xx.yaml, vcc-supply
-> is optional, and other i.MX91/i.MX93 boards with the same PCA9451A and
-> PCAL6524 topology (such as imx93-11x11-evk-common.dtsi and
-> imx91-11x11-frdm.dts) omit vcc-supply on pcal6524 until the cyclic
-> dependency between PMIC IRQ resolution and expander supply lookup is
-> handled in the kernel drivers.
+> > +	if (!ioc->firmware_event_thread || ioc->remove_host ||
+> > +	    ioc->fw_events_cleanup)
+> > +		goto drop;
+> > +	fw_event->delayed_work_active =3D 1;
+> > +	/*
+> > +	 * Cleanups can overlap, and one can clear fw_events_cleanup while
+> > +	 * another is cancelling, and so disabling, the delayed work.
+> > +	 */
+> > +	if (!queue_delayed_work(ioc->firmware_event_thread,
+> > +	    &fw_event->delayed_work, msecs_to_jiffies(delay)))
+> > +		goto drop;
+> >  	fw_event_work_get(fw_event);
+> >  	list_add_tail(&fw_event->list, &ioc->fw_event_list);
+> > -	if (!fw_event->delayed_work_active) {
+> > -		fw_event->delayed_work_active =3D 1;
+> > -		INIT_DELAYED_WORK(&fw_event->delayed_work,
+> > -		    _firmware_event_work_delayed);
+> > -	}
+> > -	queue_delayed_work(ioc->firmware_event_thread, &fw_event->delayed_wor=
+k,
+> > -	    msecs_to_jiffies(delay));
+> >  	spin_unlock_irqrestore(&ioc->fw_event_lock, flags);
+> > +	return;
+> > +drop:
+> > +	spin_unlock_irqrestore(&ioc->fw_event_lock, flags);
+> > +	fw_event_work_put(fw_event);
+> >  }
+> > =20
+> >   /**
+> > @@ -3869,9 +3888,17 @@ _scsih_fw_event_cleanup_queue(struct MPT3SAS_ADA=
+PTER *ioc)
+> >  		 *
+> >  		 * If it did execute, we wait for it to finish, and the put will
+> >  		 * happen from _firmware_event_work()
+> > +		 *
+> > +		 * An event requeued by _scsih_fw_event_requeue() is pending
+> > +		 * on its delayed_work instead, and its timer must not fire
+> > +		 * after the workqueue is destroyed.
+> >  		 */
+> > -		if (cancel_work_sync(&fw_event->work))
+> > +		if (fw_event->delayed_work_active) {
+> > +			if (cancel_delayed_work_sync(&fw_event->delayed_work))
+> > +				fw_event_work_put(fw_event);
+> > +		} else if (cancel_work_sync(&fw_event->work)) {
+> >  			fw_event_work_put(fw_event);
+> > +		}
+> > =20
+> >  	}
+> >  	ioc->fw_events_cleanup =3D 0;
+>=20
+> [Severity: High]
+> Can a delayed_work timer still fire after ioc->firmware_event_thread is
+> destroyed when two cleanups overlap, or can a stale topology change event
+> still requeue itself after a host reset cleanup?
+>=20
+> _scsih_fw_event_cleanup_queue() does not serialize concurrent callers and
+> does not wait for a running topology change event (it skips waiting when
+> ioc->current_event->event !=3D MPT3SAS_REMOVE_UNRESPONDING_DEVICES and
+> clears ioc->fw_events_cleanup =3D 0 as soon as the loop finishes).  If a
+> reset cleanup overlaps with teardown in scsih_remove() or scsih_shutdown(=
+):
+>=20
+> CPU0 (reset cleanup)              CPU1 (scsih_shutdown / scsih_remove)
+> _scsih_fw_event_cleanup_queue()
+>   fw_event =3D dequeue_next_fw_event()
+>                                   _scsih_fw_event_cleanup_queue()
+>                                     /* list_empty && !current_event */
+>                                     return;
+>                                   wq =3D ioc->firmware_event_thread;
+>                                   ioc->firmware_event_thread =3D NULL;
+>                                   destroy_workqueue(wq);
+>                                   /* delayed_work timer fires on wq */
+>                                     __queue_work()  <-- use-after-free
+>   cancel_delayed_work_sync()
+>=20
 
-Look like you just need remove vcc-supply property.
+True, but this is a preexisting bug and the race window is narrow. It's
+fixable, but I don't think it's worthwhile here.
 
-Frank
+> In addition, when a host reset cleanup runs while a topology change event
+> is executing, _scsih_fw_event_cleanup_queue() sets
+> ioc->current_event->ignore =3D 1, clears ioc->current_event =3D NULL, and
+> resets ioc->fw_events_cleanup =3D 0 without cancelling or disabling
+> fw_event->delayed_work.  If _scsih_add_device() or _scsih_pcie_add_device=
+()
+> fails on the final entry of the event (or an earlier entry already set
+> requeue_event =3D 1), _scsih_sas_topology_change_event() exits its loop a=
+nd
+> returns requeue_event =3D 1 without re-checking fw_event->ignore.  When
+> _mpt3sas_fw_work() then calls _scsih_fw_event_requeue(),
+> ioc->fw_events_cleanup is already 0 and ioc->remove_host is 0, and
+> _scsih_fw_event_requeue() checks neither fw_event->ignore nor
+> ioc->shost_recovery, so the stale pre-reset event still requeues itself.
 
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261123-imx93-frdm-fixes-v2-0-dd97c7fca4b1@pengutronix.de?part=2
->
+Also true, but the effect is harmless because fw_event->ignore is
+sticky: nothing in the driver ever clears it. So when the requeued
+event runs 1s later,  _scsih_sas_topology_change_event() and
+_scsih_pcie_topology_change_event() return 0 early and no device is
+touched.
+
+--=20
+Jeff Layton <jlayton@kernel.org>
