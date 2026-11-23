@@ -1,60 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.16
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795448872;
-	b=fmeHgeCwIenJQmzYEehIu6u2r2zoy3EO57zhN+Bh7Nv+CZm1UeioJ8UI6rTYJ/fQsPyu
-	 /3R8FuD0j5p4lE0zYwR2u5jmNGM3Lo/yY4pgD+uDHwQdJQvPWyHX/FVgrpbAAAsPVp4Ot
-	 ZG0EWlWG6Pl4FC5q0kDfuqqizZOmJ3g3lPNfc17DAJ5Skbt1tJpKs8acxipGCtshcJBA3
-	 3LbFqQL24rlf6c/jKwY2kBLG6jdEfRMWPAJhrfHLI917gHTZHrHlAjuFp66xm2emvhAjU
-	 5SOPOxaXp2PHe2KIF92kVj3SM2b+KdSNBc+Da34zaR15YuDPVv+9koIICq52Hou0H8w==
+	t=1795449328;
+	b=UbUotpVw4BpzjKfjVimT4FMos3fgwpIPMe2YHxG0n+1JdwdtmPAHmExb74n9D52R6TZg
+	 UlfRPgN5F4mOtGsCSsoGUVVAoLv64GdIGaOormcCevsDA9ZgRcBqC6jcReiDiR91RZ1VL
+	 27l+YaxLJQ3vfJ/eFgM2Yq7KvW3s6Eg7FogFlMXvvwf16Lh4AHJp9gOp7ReuCqY+LVRTW
+	 ABiouepM6i1XldHDh+EUqxADU1oBLyrznmoYFdQw3Q5HTlbKQ0Zfa6EfNFWk89uoyBvJC
+	 5VtecJYHKpdPbhtG4H5KKVKqTTyJ5uMA+fSFskpWKQsKx387o6qxyyCxBJqlIBVFr8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795448872;
-	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
-	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Sxme6riOmitdd/D4oIIp+QdlkQ7Ium7Vb6++P08XVEc=;
-	b=OBQwSnr1Us0vH5prX0d3CqNxzHuQjMF3Vsjl88GlwdBZkUkq3UZWvyisV11p6GjZquDK
-	 E1Pz++SLi0mUBZWZaUM+hjuWHkV03kaoSYnfNYmZTDtCkfd2I++M416kNVODK1FL+bdar
-	 aUCbS3OEQpOM+Wj/Jh57LhJX7/CJ8d0/sWWjasVUyzRwbKedrfzl/jUCOE3RHN7sciCFF
-	 c/jQMH5ybAmAV2uejLG8iCO/O6kQKsHSH9Mu0/97ixow3judRKJwUWrPoIjZF6tEbk9TP
-	 u+SCR1WnMsRmKRhoYeyFb6fuIwcEwBSkE2WwpQ1qRZgw7jXWaPsGrbOJW1N8sUt/uHg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795449328;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=GRu77aryqF5vVEWWZxA71y1DXs5B7lSaSAU/I9inw/c=;
+	b=Gq6O4fK78nzvddNN3b2p/2v7SnfL7ut73qr4kQi8j8CD1GY0QU1Rc0TbT/K8Yx5LNVML
+	 oeF+iO9I1GPeAoCjq2qFZkA/w06arcN6ckxSOeDlX/M4kBR5J4FcmcDTI6KQcfhbTBC9I
+	 KSXTeZfWycFMHi714NrqUrNpVLM83dDpevaiXX+eof56h3UMdW4jZsJk1EBsBvUSbQKAq
+	 2mgMdfypTSoKNKHtAoHgkcivSriNM7vuNzvnH0fNiGcpL5OC0IR66FwzDcYKukxlWr836
+	 1qIKxkjpm7CCAVLeMJhTPKFm6Fl3yVqq9K3cM7toFOMcaTDLW9riCdilTPqMIhwS4dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pm.me;
-	spf=pass smtp.mailfrom=pm.me;
-	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b="jPVS/347";
-	arc=none smtp.remote-ip=109.224.244.16
-Received: from mail-24416.protonmail.ch (mail-24416.protonmail.ch [109.224.244.16])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB0F606A31E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 15:47:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3CB0F606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=bvXXNaJh;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 691A2606A32C;
+	Mon, 23 Nov 2026 15:55:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 691A2606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=jPVS/347
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1795448869; x=1795708069;
-	bh=Sxme6riOmitdd/D4oIIp+QdlkQ7Ium7Vb6++P08XVEc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=jPVS/347IrIWLHKWBdXz7gUhrjzvQbtCFy95+UuGoV80C7jlrUST1sRUH+4fU8DR5
-	 uAzZpHE2ZB0YC0LxOzMbsZEoeUWof2EyZRUZxdRDgf1keoenVm5AuTmrC3qhpnH97T
-	 wtvw0/YSAwbMfdbsNBMCJKzVCa0Gm1aspboF1dmpbdpn6D268yUYEm78L84lwg+vo7
-	 FZKLgPHG2+14djl9FBjfgDH68nwPtmQtxEKL/Sad5FzpjLHUYyOGOeMd4cLSKuJrNQ
-	 v9Nwbb5Vo7cfr+T+szfZB3Wt074PZyEl5gSMeQ50QmtRhERiIeKF1QxFDmb0sG34GH
-	 7gfipNs6QEJ4w==
-Date: Mon, 23 Nov 2026 15:47:45 +0000
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=bvXXNaJh
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9A5B4143D;
+	Mon, 23 Nov 2026 07:55:24 -0800 (PST)
+Received: from e142392.arm.com (e142392.arm.com [10.2.213.23])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9F8FE3F632;
+	Mon, 23 Nov 2026 07:55:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795449327; bh=qIDUTgZPRjOyoHLV/9Mx1bnUgGWSH9B5CMYDf/w+HDE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bvXXNaJhs+yditcVabcGrX8VJiyTVfNW2IufiKxWUuj+XksExvOwZrndSo3mxT60d
+	 wbs/SHh76PGFuLny1aEMbleWmCQ3EjBdbQSCVbGkyFPSuscgxQHA38cQA6WQrujpig
+	 jQUpI+4WmOrSdKs0RHNe7GYXMdZzkDOGlWiOBf9o=
+Date: Mon, 23 Nov 2026 15:55:20 +0000
+From: Kristina =?utf-8?Q?Mart=C5=A1enko?= <kristina.martsenko@arm.com>
 To: sashiko-reviews@lists.linux.dev
-From: Erlend Jacobsen <erlendjacobsen@pm.me>
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-Subject: Re: [PATCH] HID: rdmctmzt: add RDMCTMZT keyboard battery driver
-Message-ID: <n7p9VNimdc3xx8VRUl1TSM5nXeabeiKke7akTR6m6222F0B7bbhPzUa1YI2QwFIxHoiHP7n2csrJECs1M-mT6JcQtaoh-fyevF7qgqjgpu4=@pm.me>
-In-Reply-To: <sashiko-outbox-228283@kernel.org>
-References: <20261122-b4-rdmctmzt-v1-1-d45883e1fe33@pm.me> <sashiko-outbox-228283@kernel.org>
-Feedback-ID: 128302180:user:proton
-X-Pm-Message-ID: 4a443b90599a4db757be5d5508b1a347ce8e9400
+Cc: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>, 
+	kvmarm@lists.linux.dev
+Subject: Re: [RFC 11/12] arm64: tlbid: Pass domain to TLBI instructions
+Message-ID: <kgq3yuat6i5p2qm4444ssak74e5xfy7uqftxtxukehttv46kbu@l6mcq4jhogfd>
+References: <20261001110655.461473-1-kristina.martsenko@arm.com>
+ <20261001110655.461473-12-kristina.martsenko@arm.com>
+ <20261001125453.BBD291F000FF@smtp.kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,200 +62,112 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261001125453.BBD291F000FF@smtp.kernel.org>
 
-Thank you for the review. Both points are addressed in v2.
-
-> [Severity: Medium]
-> Can a runtime USB reset stop rdm->work permanently when usb_submit_urb()
-> returns -ENODEV?
-
-I don't think a reset can produce -ENODEV here: usb_submit_urb() returns
-it only while dev->state < USB_STATE_UNAUTHENTICATED, and a reset moves
-the device through USB_STATE_DEFAULT and USB_STATE_ADDRESS, both above
-that. The only way to get there is USB_STATE_NOTATTACHED after a failed
-reset, which usb_set_device_state() never leaves, and the disconnect
-then calls rdm_remove().
-
-Still, v2 makes the rule simpler: the work now ends only on -ESHUTDOWN,
-which rdm_command() returns only when rdm->stopping is set. Any error
-from the transport, -ENODEV included, counts as a lost poll.
-
-> [Severity: Medium]
-> Does a stale rdm->fails count after the keyboard reconnects delay the nex=
-t
-> retry for RDM_POLL_MS (60 s) instead of RDM_RETRY_MS (5 s)?
-
-Yes, that is a bug. In v2, fails and silent are reset to 0 while the
-dongle reports no link; the battery is already marked not present then,
-because of the linked check. A keyboard that comes back is retried after
-RDM_RETRY_MS. Tested by switching the keyboard off and on through the
-dongle: the battery was back at the first poll after the reconnect.
-
-Erlend
-
-
-
-On Sunday, November 22nd, 2026 at 20:47, sashiko-bot@kernel.org <sashiko-bo=
-t@kernel.org> wrote:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] HID: rdmctmzt: stale fails count delays reconnect retry in
->   rdm_battery_work()
-> - [Medium] HID: rdmctmzt: battery polling stops permanently on -ENODEV
->   during USB reset
-> --
->=20
-> commit df75940f34ec97cd0e02102aba217a05fb6752a4
-> Author: Erlend Jacobsen <erlendjacobsen@pm.me>
->=20
-> HID: rdmctmzt: add RDMCTMZT keyboard battery driver
->=20
-> This commit adds a HID driver for RDMCTMZT keyboards and their 2.4 GHz
-> dongles to poll battery status over the vendor raw-HID interface and repo=
-rt
-> wireless link status.
->=20
-> > diff --git a/drivers/hid/hid-rdmctmzt.c b/drivers/hid/hid-rdmctmzt.c
-> > new file mode 100644
-> > index 0000000000000..9966025b40587
-> > --- /dev/null
-> > +++ b/drivers/hid/hid-rdmctmzt.c
-> > @@ -0,0 +1,654 @@
->=20
-> [ ... ]
->=20
-> > +/* Send one command; its answer arrives in rdm_raw_event() */
-> > +static int rdm_send(struct rdm_device *rdm, u8 cmd)
-> > +{
-> > +=09size_t raw_len =3D rdm->len + 1;
-> > +=09int ret;
-> > +
-> > +=09memset(rdm->buf, 0, raw_len);
-> > +=09rdm->buf[0] =3D 0x00; /* unnumbered report ID */
-> > +=09rdm->buf[1 + RDM_PREFIX_BYTE] =3D RDM_PREFIX;
-> > +=09rdm->buf[1 + RDM_CMD_BYTE] =3D cmd;
-> > +=09rdm->buf[1 + RDM_SIZE_BYTE] =3D rdm->len;
-> > +
-> > +=09ret =3D hid_hw_output_report(rdm->hdev, rdm->buf, raw_len);
-> > +=09/*
-> > +=09 * -ESHUTDOWN from the transport (an endpoint flushed by a USB rese=
-t)
-> > +=09 * is a lost poll; it must not end the polling like rdm->stopping d=
-oes.
-> > +=09 */
-> > +=09if (ret =3D=3D -ESHUTDOWN)
-> > +=09=09return -EIO;
-> > +=09if (ret < 0)
-> > +=09=09return ret;
-> > +=09if (ret !=3D raw_len)
-> > +=09=09return -EIO;
-> > +
-> > +=09return 0;
-> > +}
->=20
-> [ ... ]
->=20
-> > +/* The dongle's link byte, asked for now: an 0xd0 may have been missed=
- */
-> > +static int rdm_dongle_linked(struct rdm_device *rdm, bool *linked)
-> > +{
-> > +=09u8 reply[RDM_ANSWER_LEN];
-> > +=09int ret;
-> > +
-> > +=09ret =3D rdm_command(rdm, RDM_DONGLE_STATUS, reply);
-> > +=09if (ret =3D=3D -ENODEV || ret =3D=3D -ESHUTDOWN)
-> > +=09=09return ret;
->=20
-> [ ... ]
->=20
-> > +static void rdm_battery_work(struct work_struct *work)
-> > +{
-> > +=09struct rdm_device *rdm =3D container_of(to_delayed_work(work),
-> > +=09=09=09=09=09      struct rdm_device, work);
-> > +=09enum usb_wireless_status wireless =3D rdm->wireless;
-> > +=09bool linked =3D true, answered =3D false, got =3D false;
-> > +=09bool changed, present;
-> > +=09unsigned int delay;
-> > +=09u8 capacity =3D 0;
-> > +=09int status =3D 0;
-> > +
-> > +=09if (rdm->dongle && rdm_dongle_linked(rdm, &linked))
-> > +=09=09return;
-> > +
-> > +=09if (linked && rdm_poll_keyboard(rdm, &linked, &answered, &got,
-> > +=09=09=09=09=09&capacity, &status))
-> > +=09=09return;
->=20
-> [Severity: Medium]
-> Can a runtime USB reset stop rdm->work permanently when usb_submit_urb()
-> returns -ENODEV?
->=20
-> During usb_reset_and_verify_device(), usbhid runs hid_pre_reset() and
-> hid_post_reset() without calling the driver's suspend or reset_resume
-> callbacks, and hub_port_init() temporarily places udev->state in
-> USB_STATE_DEFAULT and USB_STATE_ADDRESS.  If hid_hw_output_report() runs
-> during that window, usb_submit_urb() fails with -ENODEV (while
-> dev->state < USB_STATE_CONFIGURED), causing rdm_dongle_linked() or
-> rdm_poll_keyboard() to abort rdm_battery_work() before
-> queue_delayed_work().
->=20
-> Since rdm_stop_polling() sets rdm->stopping and cancels the work on unplu=
-g
-> and suspend, should rdm_dongle_linked() and rdm_poll_keyboard() only bail
-> out on -ESHUTDOWN (or should rdm_send() also map -ENODEV to -EIO)?
->=20
-> > +
-> > +=09if (!got)
-> > +=09=09hid_dbg(rdm->hdev, "no battery status (linked %d, answered %d)\n=
-",
-> > +=09=09=09linked, answered);
-> > +
-> > +=09rdm->silent =3D answered ? 0 : min(rdm->silent + 1, RDM_MAX_FAILS);
-> > +=09rdm->fails =3D got ? 0 : min(rdm->fails + 1, RDM_MAX_FAILS);
-> > +=09if (!linked) {
-> > +=09=09rdm->fails =3D RDM_MAX_FAILS;
-> > +=09=09wireless =3D USB_WIRELESS_STATUS_DISCONNECTED;
-> > +=09} else if (answered) {
-> > +=09=09wireless =3D USB_WIRELESS_STATUS_CONNECTED;
-> > +=09} else if (rdm->silent >=3D RDM_MAX_FAILS ||
-> > +=09=09   rdm->wireless =3D=3D USB_WIRELESS_STATUS_NA) {
-> > +=09=09wireless =3D USB_WIRELESS_STATUS_DISCONNECTED;
-> > +=09}
-> > +
-> > +=09/* Without a link the dongle reports when it comes back */
-> > +=09if (got || !linked)
-> > +=09=09delay =3D RDM_POLL_MS;
-> > +=09else if (rdm->fails < RDM_MAX_FAILS)
-> > +=09=09delay =3D RDM_RETRY_MS;
-> > +=09else if (rdm->dongle && rdm->silent >=3D RDM_MAX_FAILS)
-> > +=09=09delay =3D RDM_SEARCH_MS;
-> > +=09else
-> > +=09=09delay =3D RDM_POLL_MS;
->=20
-> [Severity: Medium]
-> Does a stale rdm->fails count after the keyboard reconnects delay the nex=
-t
-> retry for RDM_POLL_MS (60 s) instead of RDM_RETRY_MS (5 s)?
->=20
-> While the keyboard is off or unlinked, rdm->fails reaches RDM_MAX_FAILS.
-> When the keyboard powers on, the dongle's 0xd0 report in rdm_raw_event()
-> queues rdm->work with delay 0 without resetting rdm->fails.  If that
-> immediate poll runs before the newly booted keyboard has measured its
-> battery, the keyboard answers RDM_CMD_START (answered =3D true) and refus=
-es
-> RDM_CMD_BATTERY with 0x0f (got =3D false): rdm->silent is reset to 0 whil=
-e
-> rdm->fails stays at RDM_MAX_FAILS, so the delay check skips both
-> RDM_RETRY_MS and RDM_SEARCH_MS and falls through to RDM_POLL_MS, leaving
-> the battery unregistered or marked not present for a full minute.  The sa=
-me
-> 60 s stall happens if one !linked poll sets rdm->fails =3D RDM_MAX_FAILS
-> while rdm->silent is 1, and the immediate poll on reconnect times out
-> (leaving rdm->silent at 2).
->=20
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122-b4-rdmct=
-mzt-v1-1-d45883e1fe33@pm.me?part=3D1
+On Thu, Oct 01, 2026 at 12:54:52PM +0000, sashiko-bot@kernel.org wrote:
+> > @@ -418,12 +437,13 @@ static inline void flush_tlb_all(void)
+> >  
+> >  static inline void flush_tlb_mm(struct mm_struct *mm)
+> >  {
+> > -	unsigned long asid;
+> > +	unsigned long arg;
+> >  
+> >  	dsb(ishst);
+> > -	asid = __TLBI_VADDR(0, ASID(mm));
+> > -	__tlbi(aside1is, asid);
+> > -	__tlbi_user(aside1is, asid);
+> > +	arg = __TLBI_VADDR(0, ASID(mm));
+> > +	arg |= get_tlbid_domain(mm);
 > 
+> [Severity: High]
+> Is this barrier sufficient to prevent subsequent MMU Loads from reordering
+> before the domain Store?
+> 
+> The implementation of TLB invalidation domain tracking relies on a Dekker-like
+> synchronization between PTE updates and CPU context switches. The dsb(ishst)
+> used here acts as a Store-Store barrier.
+> 
+> Since ARM64's weakly ordered memory model allows subsequent Loads (like reading
+> the tlbid_domains bitmap) to be reordered before preceding Stores (like the
+> PTE update), could both threads miss each other's updates?
+> 
+> This might cause a TLB invalidation to skip a CPU that subsequently caches a
+> stale page table entry, potentially leading to memory corruption or
+> use-after-free in user space. Would a Store-Load barrier like dsb(ish) be
+> required here?
+
+I think the current barrier should be sufficient, since a DSB ST is
+stronger than a Store-Store barrier. If I’ve understood correctly then
+the PTE update should be "DSB-ordered-before" the domain bitmap read.
+
+> 
+> [ ... ]
+> 
+> > @@ -626,6 +661,7 @@ static __always_inline void __do_flush_tlb_range(struct vm_area_struct *vma,
+> >  {
+> >  	struct mm_struct *mm = vma->vm_mm;
+> >  	unsigned long asid, pages;
+> > +	int domain;
+> >  
+> >  	pages = (end - start) >> PAGE_SHIFT;
+> >  
+> > @@ -634,21 +670,23 @@ static __always_inline void __do_flush_tlb_range(struct vm_area_struct *vma,
+> >  		return;
+> >  	}
+> >  
+> > -	if (!(flags & TLBF_NOBROADCAST))
+> > +	if (!(flags & TLBF_NOBROADCAST)) {
+> >  		dsb(ishst);
+> > -	else
+> > +		domain = get_tlbid_domain(mm);
+> 
+> [Severity: High]
+> Similarly, is the dsb(ishst) barrier here sufficient for range TLB
+> invalidations?
+> 
+> Just as in flush_tlb_mm(), this Store-Store barrier may fail to prevent the
+> Load of tlbid_domains from reordering before the PTE Store.
+
+Same as above.
+
+> 
+> > diff --git a/arch/arm64/mm/tlbid.c b/arch/arm64/mm/tlbid.c
+> > index b44fab2dca20d..c748e710e2ee9 100644
+> > --- a/arch/arm64/mm/tlbid.c
+> > +++ b/arch/arm64/mm/tlbid.c
+> 
+> [ ... ]
+> 
+> > @@ -31,6 +59,14 @@ void update_tlbid_domains(struct mm_struct *mm, unsigned int cpu)
+> >  
+> >  	for (int i = 0; i < BITS_TO_U64(domain_count); i++)
+> >  		atomic64_and(cpu_domains[cpu][i], &mm->context.tlbid_domains[i]);
+> > +
+> > +	/*
+> > +	 * Pairs with the DSB before reading tlbid_domains in the TLBI paths.
+> > +	 * Either a concurrent PTE update is visible to this CPU before it uses
+> > +	 * the mm, or the PTE updater observes the reduced domain bitmap and
+> > +	 * includes this CPU in its TLBI.
+> > +	 */
+> > +	dsb(ishst);
+> >  }
+> 
+> [Severity: High]
+> Is this barrier sufficient on the domain-update side of the Dekker-like
+> synchronization?
+> 
+> As with the PTE-update side, dsb(ishst) is a Store-Store barrier. Could this
+> allow subsequent Loads (like executing a speculative page table walk) to
+> reorder before the preceding domain bitmap Store?
+> 
+> If both the PTE updater and the domain updater use Store-Store barriers, the
+> Dekker-like synchronization lacks the necessary Store-Load ordering,
+> potentially leading to missed TLB invalidations.
+
+As above, I think the current barrier is sufficient, since the domain
+bitmap write is DSB-ordered-before the PTE read.
+
+Thanks,
+Kristina
