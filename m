@@ -1,60 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795452216;
-	b=OXqrYoHn2yi+gHvSO6nZ28K7PPfEwI7DdL9HmsSUuNBBTnf8sdlZ3yoXDhlBE2d+XZas
-	 GYW/fKnyDEfkOCxhwtcfqCuzVy4E8clIUkb+0NKgMJS2+OoXYHx9JxR+zxt84DWsZCx7B
-	 SbtXQyOF4TOAFDp6T/kMt3qqLSXXOkpZAQ7hMIULtccbDtP69eb6Wg/Bz3Sv/duXpp15L
-	 Jgcw3cEUCw5KO8SR9if7L3t9xQsTyAOWLR5M6f+cG1ceUxiy032p3r361VD+yHWORAOFm
-	 MMtQrz9hUgKxdQT4juaJTCnpezFlS7U/Zxlp/NcnZKmOSlYyeA2XJ5ICi3FE8UY3wjA==
+	t=1795452828;
+	b=fsRez3F8xUO/KMng0h1Es4Pe9wLPLmxXwEoF8EWQ67nE4LOAX5huwyz0w8G9RljTS8eN
+	 ENDYTOoXGb5qXf1ppcohMeOPnysRNOwfDnnxOmO8ZPI2eezvScV7P5Lq5ePLc+q+rqtYs
+	 CL/rRLJ/P/0sD9MqSEzJ6qISyyeIEV/oum/YpDN1XnRt6zlHmkYGfV+nAPvdvr1Kdd0mP
+	 EDS4TLqCSlnULCMz4JDi3PyZ22GK6uwn4j8Dphz8mn4MHhzMIWF09A7YtsnRQ6WPMoRvl
+	 IXZkWPhCYrcdj2l3gKYj3f+Cs1HibiyvRWiTPQPrWfUDqX44nF5cPLV4UV3guU2o1Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795452216;
-	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
-	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=U3bXzxE9PE+5EeuflkK/MmHPqdxGmTfaMaP+/oBWzZc=;
-	b=16VgrNes+fRDsf2rJKttDRcbOxTndlyvD2Y+DNVNBEa/2jMiaqoWI/PCN0CJ5yFihfoP
-	 EqiJej7ioO3/hnUjcwlcfbaUYEr+JRxJ7WsMDyE5CjpZpqehrZLeABiIp9BcVVgX68Acb
-	 Bx62zkd9iTKn1FZaldqj6CxtywBbZcPRSH3ldumXPQLQcr/yOnrPcvWMxau15wUvXoNmE
-	 tcBZofWsVNHIf4ksq8pL423I8+ORnQm9uPmlVqmNXG54S/J5aH148iFwTMJVzLqS6Vpgm
-	 jh+K+XbOm+4cVANgKzp813Oxncmi4wlrDviOnAAgLXfHEGPWi8g6Xx4UwlfES0oK/RA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795452828;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=HPv8LvXts+euY0KV0U6e4nJCYlvsoxCBfrj0/hwpm38=;
+	b=pUvJkngFGF72PXG1XbqOyxHVnTFejmnSlesfN5ot2IV2DhtRfPXiBTjd548WWl+Ccffx
+	 T5eQccl1UT+LFeJ8/G1qL97aO9Q0cvsnI2UYgoLgMMMuGdeqjfpc4jFWqblkqGjU87KhJ
+	 Wf3W3+LclyMQXA5fQDdARJnAx0sIZMgI4Y2SZMHzlVDlPuI0jHFMWnlR5q/uPnCs3nKKN
+	 sS4LnQV3n8fXxC8iyFPl0KsgjsM7DA0ENQZSCQOCKnYNlDW8s9f3nQijso+Wjo2LIS7H4
+	 1H4yXcLdx9R4dbxloKKKyLXCjJuLNETvlxitFt7eeZH9RcUad8EzdsT8klUwQAOHZAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pm.me;
-	spf=pass smtp.mailfrom=pm.me;
-	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=LgqU0EGt;
-	arc=none smtp.remote-ip=109.224.244.18
-Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dZuLWmsJ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D9F606A31F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 16:43:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37D9F606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id F1B00606A31F;
+	Mon, 23 Nov 2026 16:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=LgqU0EGt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1795452213; x=1795711413;
-	bh=U3bXzxE9PE+5EeuflkK/MmHPqdxGmTfaMaP+/oBWzZc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=LgqU0EGtTxPVm84NmjBCuOxtU0pT3Ya1J6e4Jq/WCcRy22KYyRJE4kXUDvNAzpmc/
-	 7vBuHSQ+HxlHDGMCo61X/zzd4augXImPxYmtkfFG+FAOot7UHIqcJBjrwNunLGqzWx
-	 XzDH0y2wtJRvDOpFPfmYhT55y4xylXhDLNXGaJarbrWXO1eVrRPQ4kDcdDGxsvg4AV
-	 LEkElHuamueRsJ/HJBfOIQeuvMYu1dAdBTvbRzilOcvO5xyit5P4LA9JQ9Ho4jFkEA
-	 TPRu3Q7+a6kY0qzVmFux5QZIbrdBruMUuBj1ZjZ7IuyVz3bdw0C/Rp64Ca5LgjR3kx
-	 vhPBw+Fu4JgwQ==
-Date: Mon, 23 Nov 2026 16:43:30 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dZuLWmsJ
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 000A61F000C4;
+	Mon, 23 Nov 2026 16:53:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795452827;
+	bh=HPv8LvXts+euY0KV0U6e4nJCYlvsoxCBfrj0/hwpm38=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=dZuLWmsJ4Ur8+E/0/lYf4+1Y0Fio9wr7Y5cy4BK0DtngtdZuj8tLFRAEL99mYg3sQ
+	 1mtOwBFLJnU3pqD/HaAjnhVsWmXaoeU2hSH5tp2f9uSihyIuMKFgUwZLS0n8MtM5sj
+	 iRA8VN4Mf3E652QB2NKzdcmSIcFPpJGXvVSTmHVvQNLkrYcn7YRCVlZLoCB8ZoPmYB
+	 4Vea51Q3IOPXYqM3xjv9cOdDrrmhMjY2U6ytGVZfFYpyA+kzJGGPvfhs3XyuDeln0U
+	 7e62tgio9UpJV5ht6VDMIHIwE1fyIoUFPfbBTnyHEch81bvPNg9CzcRfTJhR3cOuYd
+	 hIgSEQ86QPVEg==
+Date: Mon, 23 Nov 2026 17:52:35 +0100
+From: Nicolas Schier <nsc@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-From: Erlend Jacobsen <erlendjacobsen@pm.me>
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-Subject: Re: [PATCH v2] HID: rdmctmzt: add RDMCTMZT keyboard battery driver
-Message-ID: <32ixcLJs8A9rbhRwB5jUgryVZNwXWjwE5lF7zmNwREwiHEgmJRO75Oeu0jTf5ULhfvqn7L18SXFxPrvauHHdbnpD-7vGQQSl96jC5vt2E1g=@pm.me>
-In-Reply-To: <sashiko-outbox-229637@kernel.org>
-References: <20261123-b4-rdmctmzt-v2-1-8c18d7dac4bc@pm.me> <sashiko-outbox-229637@kernel.org>
-Feedback-ID: 128302180:user:proton
-X-Pm-Message-ID: 88fa773171a6e136de1fb1cb0c973705660714f3
+Cc: Vincent Mailhol <mailhol@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH 3/3] kbuild: move scripts/mod target out of single-build
+Message-ID: <awRvU8_wAUlkd1Nj@levanger>
+Mail-Followup-To: Nicolas Schier <nsc@kernel.org>,
+	sashiko-reviews@lists.linux.dev,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org
+References: <20261111-reduce-single-build-dependencies-v1-0-7196ca986a85@kernel.org>
+ <20261111-reduce-single-build-dependencies-v1-3-7196ca986a85@kernel.org>
+ <sashiko-outbox-211218@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -64,96 +63,82 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-211218@kernel.org>
 
-Thank you for the review.
-
-> When a dongle keeps linked =3D=3D true while the keyboard is silent (such=
- as
-> bcdDevice 0x0102 reporting link byte 0x00), three unanswered polls leave
-> both rdm->silent and rdm->fails at RDM_MAX_FAILS.  If the keyboard then
-> connects and answers RDM_CMD_START without returning a battery status yet
-> (for example, refusing with 0x0f before measuring the battery),
-> rdm->silent resets to 0 while rdm->fails stays at RDM_MAX_FAILS.
->
-> Does delay then fall through to RDM_POLL_MS (60 s) instead of
-> RDM_RETRY_MS (5 s) on that first answer?
-
-Yes. v3 resets rdm->fails when the keyboard answers after
-RDM_MAX_FAILS silent polls, as v2 already does while the dongle reports
-no link, so that first answer is retried after RDM_RETRY_MS.
-
-Erlend
-
-
-
-On Monday, November 23rd, 2026 at 17:03, sashiko-bot@kernel.org <sashiko-bo=
-t@kernel.org> wrote:
-
+On Thu, Nov 12, 2026 at 01:45:43PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] HID: rdmctmzt: 60s retry delay in rdm_battery_work() on first
->   answer
+> - [Low] kbuild: unordered modpost_prepare and stack_protector_prepare
+>   mutates CFLAGS
 > --
->=20
-> commit db1494c514873abbd1e68abaf2e2c2ff69742269
-> Author: Erlend Jacobsen <erlendjacobsen@pm.me>
->=20
-> HID: rdmctmzt: add RDMCTMZT keyboard battery driver
->=20
-> This commit adds a HID driver for RDMCTMZT keyboards and their 2.4 GHz
-> dongles to poll battery status over the vendor raw-HID interface and
-> report the dongle's wireless link status.
->=20
-> > diff --git a/drivers/hid/hid-rdmctmzt.c b/drivers/hid/hid-rdmctmzt.c
-> > new file mode 100644
-> > index 0000000000000..cad89c22577d4
-> > --- /dev/null
-> > +++ b/drivers/hid/hid-rdmctmzt.c
-> [ ... ]
-> > +static void rdm_battery_work(struct work_struct *work)
-> > +{
-> [ ... ]
-> > +=09if (!linked) {
-> > +=09=09/* A keyboard that comes back starts with fresh counts */
-> > +=09=09rdm->silent =3D 0;
-> > +=09=09rdm->fails =3D 0;
-> > +=09=09wireless =3D USB_WIRELESS_STATUS_DISCONNECTED;
-> > +=09} else {
-> > +=09=09rdm->silent =3D answered ? 0 : min(rdm->silent + 1, RDM_MAX_FAIL=
-S);
-> > +=09=09rdm->fails =3D got ? 0 : min(rdm->fails + 1, RDM_MAX_FAILS);
-> > +=09=09if (answered)
-> > +=09=09=09wireless =3D USB_WIRELESS_STATUS_CONNECTED;
-> > +=09=09else if (rdm->silent >=3D RDM_MAX_FAILS ||
-> > +=09=09=09 rdm->wireless =3D=3D USB_WIRELESS_STATUS_NA)
-> > +=09=09=09wireless =3D USB_WIRELESS_STATUS_DISCONNECTED;
-> > +=09}
-> > +
-> > +=09/* Without a link the dongle reports when it comes back */
-> > +=09if (got || !linked)
-> > +=09=09delay =3D RDM_POLL_MS;
-> > +=09else if (rdm->fails < RDM_MAX_FAILS)
-> > +=09=09delay =3D RDM_RETRY_MS;
-> > +=09else if (rdm->dongle && rdm->silent >=3D RDM_MAX_FAILS)
-> > +=09=09delay =3D RDM_SEARCH_MS;
-> > +=09else
-> > +=09=09delay =3D RDM_POLL_MS;
->=20
-> [Severity: Low]
-> When a dongle keeps linked =3D=3D true while the keyboard is silent (such=
- as
-> bcdDevice 0x0102 reporting link byte 0x00), three unanswered polls leave
-> both rdm->silent and rdm->fails at RDM_MAX_FAILS.  If the keyboard then
-> connects and answers RDM_CMD_START without returning a battery status yet
-> (for example, refusing with 0x0f before measuring the battery),
-> rdm->silent resets to 0 while rdm->fails stays at RDM_MAX_FAILS.
->=20
-> Does delay then fall through to RDM_POLL_MS (60 s) instead of
-> RDM_RETRY_MS (5 s) on that first answer?
->=20
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123-b4-rdmct=
-mzt-v2-1-8c18d7dac4bc@pm.me?part=3D1
 > 
+> commit 08ffc13380249741520c2ea434688d701b5d0e9b
+> Author: Vincent Mailhol <mailhol@kernel.org>
+> 
+> kbuild: move scripts/mod target out of single-build
+> 
+> This commit moves the scripts/mod build out of prepare0 into a new
+> modpost_prepare target depended on by modules_prepare and modpost.
+> 
+> > diff --git a/Makefile b/Makefile
+> > index 2c1289a44c560..93236f310f080 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1405,7 +1405,7 @@ scripts: scripts_basic scripts_dtc
+> >  # archprepare is used in arch Makefiles and when processed asm symlink,
+> >  # version.h and scripts_basic is processed / created.
+> >  
+> > -PHONY += prepare archprepare
+> > +PHONY += prepare archprepare modpost_prepare
+> >  
+> >  archprepare: outputmakefile archheaders archscripts scripts include/config/kernel.release \
+> >  	asm-generic $(version_h) include/generated/utsrelease.h \
+> > @@ -1414,6 +1414,8 @@ archprepare: outputmakefile archheaders archscripts scripts include/config/kerne
+> >  
+> >  prepare0: archprepare
+> >  	$(Q)$(MAKE) $(build)=. prepare $(if $(single-build),,prepare_checks)
+> > +
+> > +modpost_prepare: archprepare
+> >  	$(Q)$(MAKE) $(build)=scripts/mod
+> 
+> [Severity: Low]
+> Should modpost_prepare be ordered relative to stack_protector_prepare (or
+> depend on prepare)?
+> 
+> On arm, arm64, powerpc, and riscv, prepare depends on
+> stack_protector_prepare, which depends on prepare0 and mutates the
+> exported KBUILD_CFLAGS variable at recipe execution time:
+> 
+> arch/arm64/Makefile:
+> prepare: stack_protector_prepare
+> stack_protector_prepare: prepare0
+> 	$(eval KBUILD_CFLAGS += -mstack-protector-guard=sysreg		  \
+> 				-mstack-protector-guard-reg=sp_el0	  \
+> 				-mstack-protector-guard-offset=$(shell	  \
+> 			awk '{if ($$2 == "TSK_STACK_CANARY") print $$3;}' \
+> 				$(objtree)/include/generated/asm-offsets.h))
+> 
+> Previously, scripts/mod was built inside prepare0, so it always ran before
+> stack_protector_prepare modified KBUILD_CFLAGS.  With modpost_prepare
+> only depending on archprepare, a parallel build runs modpost_prepare
+> concurrently with prepare0 before stack_protector_prepare updates
+> KBUILD_CFLAGS, whereas a serial build or make modules_prepare runs
+> prepare first and passes the updated KBUILD_CFLAGS to scripts/mod.
+> 
+> Because scripts/mod/empty.o is compiled with KBUILD_CFLAGS, switching
+> between parallel and serial or single-module builds changes its recorded
+> command line, rebuilding empty.o, regenerating elfconfig.h (which uses
+> if_changed), and forcing a full rebuild of modpost.
+
+Well yes,
+
+   make scripts/mod/empty.o && make modules
+
+leads to a rebuild of empty.o and modpost triggered by 'make modules'.
+But if that is the only negative implication, this is not relevant as I
+expect no human wants to build scripts/mod/empty.o as a single-target.
+
+-- 
+Nicolas
