@@ -1,55 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795430380;
-	b=as2v1hXm9kE69DygdyiBky0M786iFyPNGD9nnKu1EqHaq+Q5v7VIFjiEpipIZQgoKEQB
-	 QjwNXnXOvuNfmfRiJ7WyOGMK8cl2tJRRTwr1SJAHMVt9w8O6W9eF2XIq6xvUrC5oWHgEK
-	 ZYeg046EF/aLIjISj6gWfQzCUDPLzmVyLd40DZR4Ml8TAc1IzIVLNRxIQ8IHPEnMreeHa
-	 S2wuP9yyt3QaV8+5kyXN00q/ddLOePtFYpi40+JLFhEFiCoVkXWqbL1n2K2T6ja2TDMW+
-	 ID/bPi+eRP9y1Z/cLKOexo1ujeWEyYOBSR63dXsBZVDsNMvn97T5cZ+MBDcC4g96+HQ==
+	t=1795432118;
+	b=RWDkbYXfS410RX73CW4PL2vMnxWNgPCabgChvz3Yx0wjIGdj9dO60rvb3CCfEvoPlh1B
+	 02FhbxM7M5slaEYg07BtG7kiTiOSme9Xf0D9PcezYjzYbDGwlsEvMM7wLTbiEonC7Ox+A
+	 lQLvcAZ31I9ihzqFHeIyysVY5frebpgr59+7c2HjSfN5dHlVn8ebhGc5H0upVUPaPim2M
+	 ePikSByvsTWZzD0qFzNvNSQe0tLvn1ej+tg9brKEXOCuM5vD4xsbCMBgH3Vhh0gJ4AVvW
+	 91izDp1nEz/CYxu3NopNMLJnxjnda+JRUTvKqTHh2vyX+982HnsFGUHOBki0F3IeJHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795430380;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=h0FT6Es5mMyx4wcsrCmmhvyIBUQTRqsrEos9y0zThvg=;
-	b=bXBZizy0vdZaatWgF9M4mjTqh1/rywtVQqWd68T7BiV8/xTTgorrF35tTc323S4uWMQu
-	 NJEuQJ5ekHYj46/9bJvoEIjLDjHHQz5pFh2HtqOUpP1UrI+jjy6J2y5MFqykwI9CRWOuv
-	 SFuBoaQ6W2s220mM5IQaRodQ+eHJiZJWqm2PKsGzgn7UJDn/KQKYRP8XO4Q50U5VQ+UIi
-	 PLKxllA0G/y0HiYsyD+W1CsmnwuuiG0DTj5UDS0JYdxvMBdoA2b2NKoVHuN/5zF91ItZ8
-	 yiOlQhK3kQrHcyxMsU9OvIygaUpyatWkPxREHaN9d19yldcTT4gGHLLHhRVwy+zFNJw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795432118;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=2ahVaClWdiwyy5fxyONnLYFCAROTD31eA1TLqeeKJiU=;
+	b=iVM31TSwA8all4Enn/oUdnUPQKJE4vywWhvuXzBBhS2FLqMCF+DQTZcWp5cKpht0G/bv
+	 2FHGj9hCYF01KogcO5DDE3riWJ5fj1/K4lrDTGvPTZbH2N6i0Am3BH63HPRYzJ9Eth9tY
+	 hCxXJtSJb3xch7hbiVg8miXRz1A73IwgVAHD0YZ+53l+aK41Otbl+VCrO60+H4IkPCq54
+	 Mmc0Hnmxb9DFHEeDNIl8peZ1drAVFqszt0SB+WS+7OZp/xL5Z3fMmlE8mVHDTA+K5i8gH
+	 pCtH7kZ/HDy66WtIoqXCYKyR4DJ2uPjhOhp0m2faR2PtgCGYQEhEdLTA78Vct+kJ/Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LEKlVDRl;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=pereq.eu;
+	spf=pass smtp.mailfrom=cryspen.com;
+	dkim=pass header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=bt2VSFp9;
+	arc=none smtp.remote-ip=209.85.221.45
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94A9606A31A;
-	Mon, 23 Nov 2026 10:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33984606A31E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 11:08:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33984606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pereq.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryspen.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LEKlVDRl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC061F000C0;
-	Mon, 23 Nov 2026 10:39:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795430379;
-	bh=h0FT6Es5mMyx4wcsrCmmhvyIBUQTRqsrEos9y0zThvg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LEKlVDRlK2BMSpzXbUaY62tUGPxT0Ic/kuRuKXoJZ91XX0K0rtsCVPzad9ADEJt3K
-	 AdxseXgsLAnOzsZOm1Yhuz1IxAxEsxIidLat70FW1WA+oKp60Amu/YM8lVf8ja8L2N
-	 lz51BiYufjASk3Ynp+onW/8XfgEssbayZaGJvw+L+5EbroV1gP4x+EcaWEcceD6eYb
-	 0UVi3PXtmboDcdUQC1YtO0kSkEhlSM2TcyKVAgq+Cybxwx5rgRi3fBLpXp2FdNdnFj
-	 6gp9qZTbcVeM/qr43WBGjiXUr22ayMZvZjwJjm5H70tZImgwFhFgHXzghJ3gqHpaAM
-	 d1laqlx8eNGTg==
-Date: Mon, 23 Nov 2026 11:39:35 +0100
-From: Andrey Albershteyn <aalbersh@kernel.org>
-To: Christoph Hellwig <hch@lst.de>
-Cc: sashiko-reviews@lists.linux.dev, Eric Biggers <ebiggers@kernel.org>, 
-	Carlos Maiolino <cem@kernel.org>, fsverity <fsverity@lists.linux.dev>, david@fromorbit.com
-Subject: Re: [PATCH v19 05/15] xfs: handle fsverity I/O in write/read path
-Message-ID: <awQVBBV4en5undcp@aalbersh-thinkpadx1carbongen13.rmtcz.csb>
-References: <20261120155752.192025-1-aalbersh@kernel.org>
- <20261120155752.192025-6-aalbersh@kernel.org>
- <sashiko-outbox-225565@kernel.org>
- <20261121002602.GB13395@lst.de>
+	dkim=pass (2048-bit key) header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=bt2VSFp9
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-4b52fcb410dso190482f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 03:08:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pereq.eu; s=google; t=1795432116; x=1796036916; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2ahVaClWdiwyy5fxyONnLYFCAROTD31eA1TLqeeKJiU=;
+        b=bt2VSFp9CIIAltQoi/VreeqHhrjZCe3/unTtCON4zB+A0oZFMGKySEjraE6MUGQN3r
+         m4ILlqbuLaSFqoTdq9ydkf4Py/apERKnFMM/F7WrnH7AhRcEdz6PSVSdiAiufobJ7J1v
+         rFLG1epRyRUkYfSD+Mtqc/Q3BSOesqzC27BSQB6IUS0c2S+Pl+66MtW5RyohXnCA50cc
+         i+ciYSdn+UiMNdFey/9xSHlpjeffIZU2QqCLK704Xf3Z72LwySNEVwY3zT6yO3r4hbg7
+         WAZ3kQVBT4fPV+och1t2W1rFpqG0xKvKvm1T31c9CX1/wUmmzFgur7omWb8fjNb3M82Y
+         sWlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795432116; x=1796036916;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=2ahVaClWdiwyy5fxyONnLYFCAROTD31eA1TLqeeKJiU=;
+        b=SICVkeZZKqOf53hnTN4FX6cpEIaDckjp0VdGeUp4UARtRJuu2Sqejzve9jvyGsa5Fc
+         djOuKheJ6wxCfAqMLS6HM6+YA3IrsmUt9QZzQfVPhuZibxpndDlLm4Y6vmVHW8TAftNd
+         ZmM6ndch6WUw24z3oxmmYlSt/z5dYURExZ7KFQLzRTabVY4A+jTNLCrLj7Q2tazfpLdv
+         kOk9gYprBwnZb1rHHHls5eaO53LiA5MU3xLwA+1Vj1qoXnyhEByV70Pi9/RFVdesFtxi
+         +KF5wVuN6Twpx1sfjIHbpGoLuGJPMkeFHeB6uB1E2EYJGC8k+/U+GkK/Q/L1psGLb+tY
+         wmcg==
+X-Gm-Message-State: APuU4Z8syfbupboLNViduNTZDs5FjV/2ZwpvCHMDOL2cy8fL9jV+gzSW
+	y3T1qcn0GKq4DK4sZP+OLFeWgTRBqWdZ9J/GJUsDqeRGs2LEf4aFQ801iF1TnrLje3WKdmJkoz7
+	wY7UksOX2sQ==
+X-Gm-Gg: AZFdTZfUoDR+OcFB7CRttzEJNhVg68tb8yTu63doGeTk+Bn/XWmc3jSlhzCHjGcikPZ
+	D0+81Ti/J1CZSZmcZFyeqHQ4uhsfnsCa25YeQWp+CHX6qdXYGTOjFW9F/FVjMLbsYvZd6pc5DGm
+	xwXl+T+rwWygLFfT/Q5WxYKfbytxZjz0d/9J4O/KUBv0nyhMEMqujoPdgv7CH5gsDwyuk6rxeLv
+	8KSVc9KyeJHA4AK2Fyw0Ny0q2eKzfuQ13Am/5V3ctfDRzpb4MM7v3JosTsmIyOHv1O9TlRxyz3R
+	GyQsPH40F+GcFoOtu/lbftclzSFJOlILWCx9oHZWlV2cW6f9Mi35fsEtaavISf5XcXHtqoqflvC
+	OOawc46JVVFIkKGW4+ykVCwJj1dXeR6GHKzcxibowqpmhH0MQVxlQMVo/nAmkcdYS1dbrExeRbA
+	SQ8VKR+VrrH0g2MHrqq92WFHti77NGXx9TZyrqSsS4hhbb/WzXfpHzq1eifxurwr23SSBFPv6Pf
+	BlEHVrJ5lBZULJKbA5nzgMqGHNatov3xVtBQXsBUjBi2585LUi/ZbvbZ8YVJglkznehT7pI1No9
+	RETUgK6YvvPJNzUufgAdotcoUhKHkMrQ153t9cJ0
+X-Received: by 2002:a05:6000:40ce:b0:488:8347:a110 with SMTP id ffacd0b85a97d-4abafd02fa0mr23222776f8f.7.1795432116203;
+        Mon, 23 Nov 2026 03:08:36 -0800 (PST)
+Received: from localhost ([2c0f:3d00:6be:8900:ce5e:9212:ea4b:f30])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4b34e9c3ffesm5162435f8f.19.2026.11.23.03.08.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2026 03:08:35 -0800 (PST)
+Date: Mon, 23 Nov 2026 14:08:32 +0300
+From: Dan Carpenter <dan@pereq.eu>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>, Karthik Bhargavan <karthik@pereq.eu>,
+	=?iso-8859-1?Q?Cl=E9ment?= Blaudeau <clement@cryspen.com>
+Subject: Re: [PATCH] KVM: arm64: nv: Re-inject a stored SError after the exit
+ is handled
+Message-ID: <awQesKJZd0gKpLJx@stanley.mountain>
+References: <20261123-double_exception-v1-1-cd82b59a232d@pereq.eu>
+ <sashiko-outbox-229065@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,229 +99,137 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20261121002602.GB13395@lst.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-229065@kernel.org>
 
-On 2026-11-21 01:26:02, Christoph Hellwig wrote:
-> On Fri, Nov 20, 2026 at 04:27:02PM +0000, sashiko-bot@kernel.org wrote:
-> > [Severity: High]
-> > Will iomap_writeback_folio() skip dirty fs-verity metadata folios before
-> > xfs_map_blocks() can set IOMAP_F_FSVERITY?
-> > 
-> > xfs_vm_writepages() zero-initializes wpc.ctx.iomap.flags (and
-> > xc.ctx.iomap.flags on zoned filesystems), and iomap_writeback_folio()
-> > calls iomap_writeback_handle_eof() before ->writeback_range() invokes
-> > xfs_map_blocks().  When a dirty fs-verity folio past i_size is reached,
-> > wpc->iomap.flags still lacks IOMAP_F_FSVERITY, so
-> > iomap_writeback_handle_eof() returns false and the folio is skipped with
-> > its dirty bit cleared and its delalloc extent unconverted.
-> > 
-> > Also, in xfs_zoned_map_blocks(), the non-hole path calls
-> > xfs_iomap_set_anon_write(), which overwrites wpc->iomap.flags with
-> > IOMAP_F_ANON_WRITE | IOMAP_F_DIRTY and drops IOMAP_F_FSVERITY.
+Yep.  These are sort of existing bugs which my patch makes worse...
+
+Claude had previously told me it would review patches to see if they
+expose any new bugs, but now it's saying that promise only extented to
+"crash fixes" and not to "warnings like this".  :P
+
+Anyway, I will send these fixes.
+
+regards,
+dan carpenter
+
+
+On Mon, Nov 23, 2026 at 10:42:10AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] KVM: arm64: nv: duplicate SError injection when
+>   NESTED_SERROR_PENDING is set
+> - [Medium] KVM: arm64: nv: premature SError re-injection in
+>   kvm_nested_flush_hwstate()
+> --
 > 
-> Yeah.  This was kinda why I wondered if an inode flag would do
-> better for this.
-
-Note, I added a guard against using fs-verity on zoned in v19 for now.
-
-Previously, I thought that zoned allocation happens in iomap_begin()
-but it's obviously not, sashiko pointed out that I don't allocate
-any space.
-
-I have a patch with added branches in write path with zone
-allocations (see below) but I decided to leave it out for follow-up
-patchset; for this patchset to get in some mergable state. And zoned
-setup probably need more testing, I just did -g verity on -r zoned.
-
+> commit a6e9a58a0688b0de9bbbb40738acfc3f5921f92e
+> Author: Dan Carpenter <dan@pereq.eu>
 > 
-> > > +xfs_iomap_is_fsverity_metadata(
-> > > +	struct xfs_inode	*ip,
-> > > +	loff_t			offset)
-> > > +{
-> > > +	return offset >= xfs_fsverity_metadata_offset(ip) &&
-> > > +	       (fsverity_is_building(VFS_I(ip)) || fsverity_active(VFS_I(ip)));
-> > > +}
-> > 
-> > [Severity: High]
-> > Does calling fsverity_is_building() here break the build?  Neither
-> > linux/fsverity.h nor xfs_verity.h declares or defines
-> > fsverity_is_building(), so compiling fs/xfs/xfs_iomap.c fails with an
-> > implicit function declaration error.
+> KVM: arm64: nv: Re-inject a stored SError after the exit is handled
 > 
-> It might make sense to include the core fs/fsverity patches in the series
-> so that human and less humane reviewers have the full context.
+> This commit defers SError re-injection for nested guests from
+> kvm_nested_sync_hwstate() to kvm_nested_flush_hwstate() so that exit
+> handlers can record their exception or PC increment before the SError is
+> re-injected, and updates kvm_arch_vcpu_runnable() to treat a deliverable
+> stored SError as a wakeup condition.
 > 
-
-sure, will do
-
--- 
-- Andrey
-
----
-
-From 67f2300133416bda2ecfa28ab3ec01ae6e67ed5b Mon Sep 17 00:00:00 2001
-From: Andrey Albershteyn <aalbersh@kernel.org>
-Date: Thu, 12 Nov 2026 17:59:42 +0100
-Subject: [PATCH] xfs: add zoned support to fsverity
-
-Zoned filesystem requires special space allocation handling before
-calling into iomap, which will write to page cache. Branch out for zoned
-inode while writing merkle tree blocks and fsverity descriptor.
-
-The descriptor goes the xfs_vn_setattr_size() case - allocating from the
-reservation pool. This is because fsverity holds iolock while ending
-enable.
-
-Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
----
- fs/xfs/xfs_fsverity.c | 87 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 78 insertions(+), 9 deletions(-)
-
-diff --git a/fs/xfs/xfs_fsverity.c b/fs/xfs/xfs_fsverity.c
-index 36520a187a2c..cd62b5687329 100644
---- a/fs/xfs/xfs_fsverity.c
-+++ b/fs/xfs/xfs_fsverity.c
-@@ -19,6 +19,7 @@
- #include "xfs_health.h"
- #include "xfs_bmap_util.h"
- #include "xfs_icache.h"
-+#include "xfs_zone_alloc.h"
- #include <linux/fsverity.h>
- #include <linux/iomap.h>
- #include <linux/pagemap.h>
-@@ -155,6 +156,49 @@ xfs_fsverity_get_descriptor(
- 	return desc_size;
- }
- 
-+static int
-+xfs_fsverity_write_descriptor_zoned(
-+	struct file			*file,
-+	const void			*desc,
-+	u32				desc_size,
-+	u64				desc_pos,
-+	u64				desc_size_pos,
-+	__be32				desc_size_disk)
-+{
-+	struct xfs_mount		*mp = XFS_I(file_inode(file))->i_mount;
-+	struct xfs_zone_alloc_ctx	ac = { };
-+	int				error;
-+
-+	/*
-+	 * TODO: this reservation runs under the IOLOCK, so it must not block on
-+	 * GC (which takes the IOLOCK itself).  Use the reserved pool without
-+	 * waiting, at the cost of a possible spurious -ENOSPC
-+	 */
-+	error = xfs_zoned_space_reserve(mp, XFS_B_TO_FSB(mp, desc_size) + 4,
-+			XFS_ZR_NOWAIT | XFS_ZR_RESERVED, &ac);
-+	if (error) {
-+		if (error == -EAGAIN)
-+			return -ENOSPC;
-+		return error;
-+	}
-+
-+	error = iomap_fsverity_write(file, desc_size_pos,
-+			sizeof(desc_size_disk),
-+			(const void *)&desc_size_disk,
-+			&xfs_buffered_write_iomap_ops,
-+			&xfs_iomap_write_ops, &ac);
-+	if (error)
-+		goto out;
-+
-+	error = iomap_fsverity_write(file, desc_pos, desc_size, desc,
-+			&xfs_buffered_write_iomap_ops,
-+			&xfs_iomap_write_ops, &ac);
-+
-+out:
-+	xfs_zoned_space_unreserve(mp, &ac);
-+	return error;
-+}
-+
- static int
- xfs_fsverity_write_descriptor(
- 	struct file		*file,
-@@ -179,16 +223,21 @@ xfs_fsverity_write_descriptor(
- 	if (desc_size_pos + sizeof(desc_size_disk) > inode->i_sb->s_maxbytes)
- 		return -EFBIG;
- 
-+	if (xfs_is_zoned_inode(ip))
-+		return xfs_fsverity_write_descriptor_zoned(file, desc,
-+				desc_size, desc_pos, desc_size_pos,
-+				desc_size_disk);
-+
- 	error = iomap_fsverity_write(file, desc_size_pos, sizeof(__be32),
- 			(const void *)&desc_size_disk,
- 			xfs_buffered_write_iomap_next,
--			&xfs_iomap_write_ops);
-+			&xfs_iomap_write_ops, NULL);
- 	if (error)
- 		return error;
- 
- 	return iomap_fsverity_write(file, desc_pos, desc_size, desc,
- 			xfs_buffered_write_iomap_next,
--			&xfs_iomap_write_ops);
-+			&xfs_iomap_write_ops, NULL);
- }
- 
- /*
-@@ -293,12 +342,6 @@ xfs_fsverity_begin_enable(
- 	if (ip->i_mount->m_sb.sb_blocksize > PAGE_SIZE)
- 		return -EOPNOTSUPP;
- 
--	/*
--	 * fs-verity doesn't work on zoned
--	 */
--	if (xfs_is_zoned_inode(ip))
--		return -EOPNOTSUPP;
--
- 	/*
- 	 * fs-verity stores the Merkle tree past EOF in units of the filesystem
- 	 * block size, so it cannot support realtime files whose allocation unit
-@@ -470,6 +513,28 @@ xfs_fsverity_is_hashes_of_zeroed_blocks(
- 	return memcmp(buf + digest_size, buf, size - digest_size) == 0;
- }
- 
-+static int
-+xfs_fsverity_write_merkle_zoned(
-+	struct file			*file,
-+	loff_t				pos,
-+	unsigned int			size,
-+	const void			*buf)
-+{
-+	struct xfs_mount		*mp = XFS_I(file_inode(file))->i_mount;
-+	struct xfs_zone_alloc_ctx	ac = { };
-+	int				error;
-+
-+	error = xfs_zoned_space_reserve(mp, XFS_B_TO_FSB(mp, size) + 2, 0, &ac);
-+	if (error)
-+		return error;
-+
-+	error = iomap_fsverity_write(file, pos, size, buf,
-+			&xfs_buffered_write_iomap_ops, &xfs_iomap_write_ops,
-+			&ac);
-+	xfs_zoned_space_unreserve(mp, &ac);
-+	return error;
-+}
-+
- /*
-  * Write a merkle tree block.
-  */
-@@ -494,9 +559,13 @@ xfs_fsverity_write_merkle(
- 						    digest_size))
- 		return 0;
- 
-+	if (xfs_is_zoned_inode(ip))
-+		return xfs_fsverity_write_merkle_zoned(file, position, size,
-+				buf);
-+
- 	return iomap_fsverity_write(file, position, size, buf,
- 			xfs_buffered_write_iomap_next,
--			&xfs_iomap_write_ops);
-+			&xfs_iomap_write_ops, NULL);
- }
- 
- const struct fsverity_operations xfs_fsverity_ops = {
--- 
-2.54.0
-
+> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+> > index 78d5b18dbd2d6..f063c01c565a0 100644
+> > --- a/arch/arm64/kvm/nested.c
+> > +++ b/arch/arm64/kvm/nested.c
+> > @@ -2213,8 +2213,11 @@ void kvm_nested_flush_hwstate(struct kvm_vcpu *vcpu)
+> >  	if (!vcpu_has_nv(vcpu))
+> >  		return;
+> >  
+> > -	if (unlikely(vcpu_test_and_clear_flag(vcpu, NESTED_SERROR_PENDING)))
+> > +	if (unlikely(vcpu_test_and_clear_flag(vcpu, NESTED_SERROR_PENDING))) {
+> > +		/* Commit the exit handler's exception first */
+> > +		__kvm_adjust_pc(vcpu);
+> >  		kvm_inject_serror_esr(vcpu, vcpu_get_vsesr(vcpu));
+> > +	}
+> >  
+> >  	vgic_v3_nested_update_mi(vcpu);
+> >  
+> 
+> [Severity: Medium]
+> Can re-injecting NESTED_SERROR_PENDING here run prematurely when guest
+> entry is subsequently aborted?
+> 
+> In kvm_arch_vcpu_ioctl_run(), kvm_nested_flush_hwstate() runs before
+> checking ret <= 0 or kvm_vcpu_exit_request(), and inside
+> kvm_nested_flush_hwstate() the SError is re-injected before
+> vgic_v3_nested_update_mi() and the KVM_REQ_GUEST_HYP_IRQ_PENDING check:
+> 
+> arch/arm64/kvm/nested.c:kvm_nested_flush_hwstate() {
+> 	...
+> 	vgic_v3_nested_update_mi(vcpu);
+> 
+> 	if (vgic_state_is_nested(vcpu) && kvm_vgic_vcpu_pending_irq(vcpu))
+> 		kvm_make_request(KVM_REQ_GUEST_HYP_IRQ_PENDING, vcpu);
+> }
+> 
+> If L2 has PSTATE.A == 1 (with HCR_EL2.AMO == 0 and HCRX_EL2.TMEA == 0) and
+> NESTED_SERROR_PENDING set while an L1 IRQ or maintenance interrupt is
+> pending, kvm_nested_flush_hwstate() clears NESTED_SERROR_PENDING, sets
+> HCR_EL2_VSE in *vcpu_hcr(vcpu), and posts KVM_REQ_GUEST_HYP_IRQ_PENDING.
+> kvm_vcpu_exit_request() then aborts guest entry without calling
+> kvm_nested_sync_hwstate(), and on the next loop iteration
+> check_nested_vcpu_requests() -> kvm_inject_nested_irq() switches the vCPU
+> to L1 vEL2 with HCR_EL2_VSE still set in vcpu->arch.hcr_el2 even when TGE
+> and AMO are clear.  Similarly, if PSTATE.A == 0 in L2 or if ret <= 0 exits
+> to userspace, pend_serror_exception() pends the SError into L2 state that
+> gets committed by __kvm_adjust_pc() even though L2 was never entered.
+> 
+> > @@ -2231,18 +2234,11 @@ void kvm_nested_sync_hwstate(struct kvm_vcpu *vcpu)
+> >  
+> >  	/*
+> >  	 * We previously decided that an SError was deliverable to the guest.
+> > -	 * Reap the pending state from HCR_EL2 and...
+> > +	 * Reap the pending state from HCR_EL2, and re-inject it from
+> > +	 * kvm_nested_flush_hwstate() once the exit has been handled.
+> >  	 */
+> >  	if (unlikely(__test_and_clear_bit(__ffs(HCR_EL2_VSE), hcr)))
+> >  		vcpu_set_flag(vcpu, NESTED_SERROR_PENDING);
+> > -
+> > -	/*
+> > -	 * Re-attempt SError injection in case the deliverability has changed,
+> > -	 * which is necessary to faithfully emulate WFI the case of a pending
+> > -	 * SError being a wakeup condition.
+> > -	 */
+> > -	if (unlikely(vcpu_test_and_clear_flag(vcpu, NESTED_SERROR_PENDING)))
+> > -		kvm_inject_serror_esr(vcpu, vcpu_get_vsesr(vcpu));
+> >  }
+> 
+> [Severity: Medium]
+> Does leaving NESTED_SERROR_PENDING set across handle_exit() and exits to
+> userspace cause a duplicate SError injection when kvm_inject_serror_esr()
+> is called before the next kvm_nested_flush_hwstate()?
+> 
+> Because kvm_inject_serror_esr() does not clear NESTED_SERROR_PENDING when
+> it delivers an SError via kvm_inject_nested_serror(),
+> pend_serror_exception(), or HCR_EL2_VSE, a KVM_GET_VCPU_EVENTS followed by
+> KVM_SET_VCPU_EVENTS in __kvm_arm_vcpu_set_events() injects and immediately
+> commits the SError via commit_pending_events() while NESTED_SERROR_PENDING
+> remains set:
+> 
+> arch/arm64/kvm/guest.c:__kvm_arm_vcpu_set_events() {
+> 	...
+> 	if (has_esr)
+> 		ret = kvm_inject_serror_esr(vcpu, esr);
+> 	else
+> 		ret = kvm_inject_serror(vcpu);
+> 
+> 	commit_pending_events(vcpu);
+> }
+> 
+> On the subsequent KVM_RUN, kvm_nested_flush_hwstate() sees
+> NESTED_SERROR_PENDING still set and injects a second SError into the
+> guest.  The same double injection happens in-kernel if handle_exit() calls
+> kvm_handle_guest_sea() -> kvm_inject_serror() while NESTED_SERROR_PENDING
+> is set.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261123-double_exception-v1-1-cd82b59a232d@pereq.eu?part=1
