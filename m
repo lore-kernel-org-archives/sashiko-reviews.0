@@ -1,104 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795422014;
-	b=zTlU8r0SmosY8+kkKi1cDYQBFlm4DhSs2O6M4643WY1E5gqcYk7ZafRyA0L8hkYduMFl
-	 QHZmo7EhrlXZaJppTfyl+ZBc6XEXARkH1Vyhxp8yOEWonP56dJs5Sifpw/8vL09e498k+
-	 l9yL6ag0IC8jZArNOEA76iBeB0MBBnvRa4PZecEJm92vH/QP0nALA3H5vxswq6ltYgMAr
-	 lX1qV/rtmv1IbCCHFpxlHh5o8DFayPaGqJl4NVN2wyhYv4A5kBtmEjbCAerNnfXTpiRf4
-	 uURy7MTzL80WFsD75w0S22aAuBxzd/FTzw3DqljTkHhne/mFqof7jzzk6egBGMDyY4Q==
+	t=1795423711;
+	b=K2ShcKP8q8smgBM3l19VZ2S6rHNb60/LLQalXlwqjBO0HgiqA/uSDYIQsoXACLON6D9I
+	 nbPbk13/l/K68dwRt+P2uZByp1xLaXZ6YcysSmakdcmdXtmCaTxS9Cd9Le/qnJz+/20aE
+	 1AiHZMp6JfzTgRJQBPKxcrfwSicV9rz9AM6Mtg7/rf4LlrEV+UzMUyeRVG4jQ0RzRR3uP
+	 lDe4FMS/nizMvx5EKjAjmMyRKSNcv2niF+8ARyCqeKfyL1UrvZCNa45yGQFO72IsK6ip6
+	 wW7Bt9KQK+rZL8IKQVG68Or5felf4s8mFv76U+CVajIWRITI36voNTlvmXObBH9g3UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795422014;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=od2QNNJaBE+eH/3c4lKMTO/ymggoTGgcp6461vHpT6I=;
-	b=3d76sGSkac70sOojLZJhIFegISVK7d6kqvTvWeRiL94Koko++X1NtXKA+DPLHRu7v+ei
-	 DHJivy/TcqPGEuNXW+giynnAG1UjeIOxlx5tee1MlcOLCC2DG4mfTL6VAxVLBph8AWIBs
-	 5Puy5ryEzSDsDKqCxbMNdDvwwzBDCZpn61zTZgZNLPS0QjWhDuWRXMLQZsq52EXEqsdan
-	 uOmcqX301IyWKTLBIM65I6apSVVTts5umaMAp8Hed5+9UXGFOVTGhOwup7k3rrimyLU3W
-	 /9dIH1zANH1EHJ1iQ/WxyfW5+ZBZoYmT+cym9/OuA+wCzgGrHWwlpKjY5X9EzWXZGdg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795423711;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=nwKJl00tpwdLLtoEZ27UPU0xq2dCJMGiy6FAFfkNDtk=;
+	b=HSK0AOq3pSTvrRchOmhfYhTICWCHry2XCcgg+F1YU5YTgEKpc8nwRTNQ1DGmWSgTUoPQ
+	 nnQ80vpmHFzqGU+ydBB7D9A2N+TuGtVwKYYRIrLS8nN9ionZHXqCFB37QqwaPc/dbKPa0
+	 V2iystWCo5xQWDIgGdUHwkXfNfvhjqbGCJNuLIJ5SPU4zE0bIQfKcij0EE8vU5hkvrST9
+	 OgpOilLgkiAcQr1BVwjfzvsXBrNVTEldxjQtNBzI4NgdtA6rBvxrec71VzZGVOtNltkCR
+	 Bnn1PLcRWIvhHgd8Tt7Pm64hFsMHbPXtsKgbMzs7QMJDutdAeLy54DhljVtuJ5R/paQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f3bqRmOH;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=d9v8vDez;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f3bqRmOH;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=d9v8vDez;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Z/hgRgEi";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAD5606A331
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 08:20:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EBAD5606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3575606A31E;
+	Mon, 23 Nov 2026 08:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f3bqRmOH;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=d9v8vDez;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=f3bqRmOH;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=d9v8vDez
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 32B522206F;
-	Mon, 23 Nov 2026 08:20:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795422011; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=od2QNNJaBE+eH/3c4lKMTO/ymggoTGgcp6461vHpT6I=;
-	b=f3bqRmOHm+UpUSqQ7Ws3mYVIc66qqYk4ZbF7dY4lrapohUcNad5tyI1sj4Dk9geREUPdtR
-	YA2zzcquryd/u3fNN7SMcoxYBRbmMqXRDacNUFmMgJxE767nAVXBC0ICywyNABIjAlI8gw
-	MZc2rFIwIaSKJolH64GsXIEmtrFjwQs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795422011;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=od2QNNJaBE+eH/3c4lKMTO/ymggoTGgcp6461vHpT6I=;
-	b=d9v8vDezd1HgGUi0sK8LwzjZS6b+gCVg+Iw9c/BAednKX6l1BR3h7uaK7Iet1Isv0vwaD7
-	E9No1eoXQ4h8nuAg==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=f3bqRmOH;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=d9v8vDez
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795422011; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=od2QNNJaBE+eH/3c4lKMTO/ymggoTGgcp6461vHpT6I=;
-	b=f3bqRmOHm+UpUSqQ7Ws3mYVIc66qqYk4ZbF7dY4lrapohUcNad5tyI1sj4Dk9geREUPdtR
-	YA2zzcquryd/u3fNN7SMcoxYBRbmMqXRDacNUFmMgJxE767nAVXBC0ICywyNABIjAlI8gw
-	MZc2rFIwIaSKJolH64GsXIEmtrFjwQs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795422011;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=od2QNNJaBE+eH/3c4lKMTO/ymggoTGgcp6461vHpT6I=;
-	b=d9v8vDezd1HgGUi0sK8LwzjZS6b+gCVg+Iw9c/BAednKX6l1BR3h7uaK7Iet1Isv0vwaD7
-	E9No1eoXQ4h8nuAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CFCF913510;
-	Mon, 23 Nov 2026 08:20:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 8jE1HTr3A2sfXAAAD6G6ig
-	(envelope-from <hare@suse.de>); Mon, 23 Nov 2026 08:20:10 +0000
-Message-ID: <91e827c1-2b79-41a8-999e-18eaa88338da@suse.de>
-Date: Mon, 23 Nov 2026 09:20:10 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Z/hgRgEi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2851F000D0;
+	Mon, 23 Nov 2026 08:48:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795423711;
+	bh=nwKJl00tpwdLLtoEZ27UPU0xq2dCJMGiy6FAFfkNDtk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Z/hgRgEiZXH+GOjsznrUlAcd6Pq3ZE9bvNHbRTtnKCtfArV9H03FPjlty2mJMcajD
+	 lZ+Kh/YIrpgPzhxkovGb5ALDef929PqUA0FN9yYlFoQfsfx6MpH2vb3Hra94LSuKDv
+	 Oc7d0+Bnj+FAKnSpmr+qeMZdWy/kcR7iG0Amyecekdaz8Z9EaVwaZzUrT1BZprNH0N
+	 JsxCafbmVxsZHsoqGJgpF4SnBvEWVd8bg+GKEBXl8NkH0vXo+ty6xBn3Z8/m30TTnh
+	 vC1NTr9+Q7HLpP63seG2GKsN0DbomgBATQ6/MmmhVSOBDlyD+BaB9/pGvJhZOvQRLj
+	 5/x8iK+NXxdlQ==
+Date: Mon, 23 Nov 2026 10:48:26 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-sound@vger.kernel.org,
+	dmitry.torokhov@gmail.com
+Subject: Re: [PATCH v3 09/31] USB: Pin modules for unregistered interface
+ claims
+Message-ID: <20261123084826.GJ14811@unreal>
+References: <20261118-device-trust-core-v3-0-d655875c4bfb@nvidia.com>
+ <20261118-device-trust-core-v3-9-d655875c4bfb@nvidia.com>
+ <sashiko-outbox-223895@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,95 +60,85 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] nvme-tcp: remove the direct send path
-To: Seiji Nishikawa <snishika@redhat.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org, Keith Busch <kbusch@kernel.org>,
- Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>,
- Sagi Grimberg <sagi@grimberg.me>, Chris Leech <cleech@redhat.com>
-References: <sashiko-outbox-227628@kernel.org>
- <20261122043732.2002424-1-snishika@redhat.com>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <20261122043732.2002424-1-snishika@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 32B522206F
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Score: -13.50
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-223895@kernel.org>
 
-On 11/22/26 5:37 AM, Seiji Nishikawa wrote:
-> On Sun, Nov 22, 2026 at 10:49 AM <sashiko-bot@kernel.org> wrote:
->> [Severity: Medium]
->> Does removing the inline send from nvme_tcp_queue_request() break polled
->> I/O on HCTX_TYPE_POLL queues?
+On Thu, Nov 19, 2026 at 07:29:27PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] usb: core: premature claim_owner release in
+>   usb_set_configuration()
+> --
+> 
+> commit afd725f56c3717b2e1f97538c7c8fdee117c4deb
+> Author: Leon Romanovsky <leon@kernel.org>
+> 
+> USB: Pin modules for unregistered interface claims
+> 
+> This commit pins the owning driver module in struct usb_interface.claim_owner
+> when an interface is claimed before registration, and releases that reference
+> upon interface registration or claim teardown.
+> 
+> > diff --git a/drivers/usb/core/driver.c b/drivers/usb/core/driver.c
+> > index 0a6fdf2e88f4e..b7bd9226d2627 100644
+> > --- a/drivers/usb/core/driver.c
+> > +++ b/drivers/usb/core/driver.c
 > [ ... ]
->> For SCHED_NORMAL tasks on queue->io_cpu, waking
->> the WQ_HIGHPRI worker sets TIF_NEED_RESCHED, causing blk_hctx_poll() and
->> io_iopoll_check() to abort polling on need_resched() or forcing two
->> context switches per polled I/O.
+> > @@ -619,6 +634,7 @@ static void usb_unbind_claim(struct usb_interface *iface)
+> >  	usb_unbind_interface(dev);
+> >  	dev_set_drvdata(dev, NULL);
+> >  	dev->driver = NULL;
+> > +	usb_put_claim_owner(iface);
+> >  }
+> >  
+> >  /**
+> > @@ -653,6 +669,7 @@ void usb_driver_release_interface(struct usb_driver *driver,
+> >  	if (device_is_bound(dev)) {
+> >  		device_unlock(dev);
+> >  		device_release_driver(dev);
+> > +		usb_put_claim_owner(iface);
+> >  		return;
+> >  	}
+> >  
+> > diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
+> > index e56079398d26e..306978caaf1ef 100644
+> > --- a/drivers/usb/core/message.c
+> > +++ b/drivers/usb/core/message.c
+> [ ... ]
+> > @@ -2269,6 +2270,7 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+> >  	 */
+> >  	for (i = 0; i < nintf; ++i) {
+> >  		struct usb_interface *intf = cp->interface[i];
+> > +		struct module *claim_owner;
+> >  
+> >  		if (intf->dev.of_node &&
+> >  		    !of_device_is_available(intf->dev.of_node)) {
+> > @@ -2282,12 +2284,16 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+> >  			dev_name(&intf->dev), configuration,
+> >  			intf->cur_altsetting->desc.bInterfaceNumber);
+> >  		device_enable_async_suspend(&intf->dev);
+> > +		device_lock(&intf->dev);
+> > +		claim_owner = xchg(&intf->claim_owner, NULL);
+> > +		device_unlock(&intf->dev);
+> >  		ret = device_add(&intf->dev);
+> >  		if (ret) {
+> >  			device_lock(&intf->dev);
+> >  			intf->unregistering = 1;
+> >  			device_unlock(&intf->dev);
+> >  		}
+> > +		module_put(claim_owner);
+> >  		if (ret != 0) {
+> >  			dev_err(&dev->dev, "device_add(%s) --> %d\n",
+> >  				dev_name(&intf->dev), ret);
 > 
-> This is right. I ran the test with poll queues on the same two machines.
-> The host connects with --nr-poll-queues=4, and fio runs with io_uring and
-> --hipri, 4k random I/O at queue depth 1, on the io_cpu of a poll queue.
-> Average of 3 runs of 60 seconds, latency in usec, ctx is the number of
-> context switches of fio in one run:
-> 
->                       IOPS   slat    clat     lat      ctx
-> randread   base      5017   4.72  193.95  198.67      553
->             patched   4179   9.35  229.70  239.05  251,318
-> randwrite  base      3619   5.60  269.94  275.54      542
->             patched   3621  10.62  264.53  275.16  217,806
-> 
-> For randread, lat goes up by 40 usec (20%) and IOPS goes down by 17%.
-> ctx shows why. Without the direct send path, fio is switched out for the
-> io_work kworker once per I/O. With it, fio stays on the CPU and keeps
-> polling. randwrite shows no difference.
-> 
-> So removing the direct send path costs about 20% for polled reads at
-> queue depth 1 on this setup. One way to avoid this is to keep the direct
-> send path only for poll queues. Poll queues then still have 2 senders,
-> so send_mutex stays and patch 2 goes away.
-> 
-> I will send a v2 that does this, unless the list prefers to remove the
-> direct send path for all queues and take this cost.
-> 
-No, that is perfectly fine, and indeed the confirmation I was looking
-for. For polling queues it makes perfect sense to keep the 'direct'
-submission path.
+> [Severity: Medium]
+> Does clearing intf->claim_owner before device_add() and calling
+> module_put(claim_owner) unconditionally drop the module reference too early
+> when device_add() leaves a pre-claimed interface unbound in the driver core
+> (!device_is_bound(&intf->dev))?
 
-Cheers,
+Yes, the complaint is valid. Triggering this race requires root
+privileges, but that's fine. Let's fix it.
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+Thanks
