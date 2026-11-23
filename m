@@ -1,55 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795434316;
-	b=08wBPBvRrnYL+TFN5ENDpL/+FMZBoNJmsaeKZ8k0DA9akUeu4QfyQzgEsk44NzssqQjK
-	 ZKWlOsvYPdu436gHE4wFbcEstiEY7AJq29UiMjCYVlyy1FnY5KKNEixnBx9hYqj5M5Kei
-	 NrcKfjHpiBkpyNoAFrGKceTlYFkI4Sl6IjoXyMsk1iDIBHhT14x1KFL1lN8EOrUmNhUf6
-	 4506nvhSoEqAe/3S2c5IEvT+fMvTZcER6RYIpgE8IkcnAceKAdFNUVtB/wbhsembmDnLc
-	 TDWuIaQzb8dOvwMOGxkB4o3/0nog2xL8YxSJhagNBSxmEiXaSpnS9dv4b72NJYwpyFQ==
+	t=1795436641;
+	b=KMlIy5RCgWUV+GDOqwubJc5bQkEZ/bxpE0xouS0B7VoMaw8rrmA3tkCWJSzzviUJvNEO
+	 0Jlwaq4CalFM6AYP+gW8SVQ/fYe4GihsmeIS36oC4KNHFFU7MvdRsq1X0KVJY54yh6Gnf
+	 SKwH9vipDqPW6Z7N6yB/7TTThxkIPoxaCi5k+mVNqftmxyxx+bS4X3D5X9zBqnb+dOVVv
+	 5YtdlVDBgf03avAVVrKhfIn9oSB+sVxSZOSvIzXm8SxhaQQ3inO99hToU8lnJs91m+gQP
+	 yMbitUsqRIoZDp58PcI1WsccUxnw7FwOZXjqeeLScjZdJUwkJmgNsqf2vZQZIAACg2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795434316;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=O/TZUP+/cDgqPVePhYbaH1kfjdT/O9h7xEGK3jFSArc=;
-	b=cJcEzR5vJ/bpiqdkFjPAiLEDGDlTLJ3puwDPHa3rf97+0sA5p+Zw7/eyNtfRtcUKYFq3
-	 rLwSWHtDxuXUbNLf2vQ2ewUjTeY+3lyvcnm2RMdfvmtgqOh7cDfy33c2YGLfBSOX2Xyko
-	 9um/kvoBtJwMgRYaQrOJz+qR2xJI9eLtzI5Lpz2RikXN/ZUcLKKJTaT2AVdjKKzTK5X6J
-	 LvfM0UR+3HEqoOmWOT/8N3JEDljNhV8gzwurmngouWufuQxvkyFILp0zgKAEO4sItR9r6
-	 GofSJSKtQX3hoysNuN02T9bLW123fMYbgrBXIn8sig9SlB0hnY6SsEvbfxp7yuhyoXg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795436641;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
+	 From:To:X-Mailer:References:In-Reply-To;
+	bh=tNjY8+hhVU4H7nudtWwRsBTQX4I5mOLQRqYzvL9iveg=;
+	b=wOU8Lh5ilvYB9cfEKvO8Q7upVM7gfE2wmUnZ6e6mTAS2uM3tqHU9pl4YWn3WVN7BId/J
+	 Yhp24gLm8a5uRzoyRiE3BF90schX+f+h+xq770P+4me3iYdGVYAjmtqmPyusloxMAcZGM
+	 TCxTC3PBWgLoe/JgoPs1EA79erg3F/HAPtt3bjrzTAr0ic03JwbMqitXtuXNLDfMNd+WG
+	 uu5NjOHmV3dvSHDZA08dJMOrGk38HQWowGIZ7hHw3ZOqxWx3SNB/113Ke51QB/SKCkx1Y
+	 BCIkfsAdIKdNWn4ssuZUaLTFiMQbJFCQxztd+uLSkQimvlzqkpIotVPKepDnMJP28tQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="M/ov9Ghm";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=g4Aw2V3r;
+	arc=none smtp.remote-ip=209.85.208.44
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E26D606A31A;
-	Mon, 23 Nov 2026 11:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91488606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 12:24:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 91488606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=M/ov9Ghm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F361F000CF;
-	Mon, 23 Nov 2026 11:45:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795434315;
-	bh=O/TZUP+/cDgqPVePhYbaH1kfjdT/O9h7xEGK3jFSArc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=M/ov9Ghmefxn9L6wBnE5kr1N83AuM7y28ejF/4o2y1S+n+51U8mODk1l8ZntYty7s
-	 yMVF2INlVFW1eEwlL9+pPsSr9yYJDkaPrfXXdakbJW34QZBcUiKJMdbmOL4cYK3EAH
-	 wx+ncGycTn3JjvthFloibrAPyry3xrdbnVkxObqS59BXUQiUQzbXsK0hElMsWBq5Mj
-	 LxBkZLnTgU9s+fl9RH1taPEHwRHmTbWR6EUxg2oq+Cpr2g2i+HkTT7luDZk/2bb4Op
-	 AuRNkfXBmEA93Obu9Jh0na9n0l+cxfW2B0IBB9vNz9/N6mQazTWfigxiTqEXg6Lnnk
-	 UA9gqyk2iEoSA==
-Date: Mon, 23 Nov 2026 11:45:12 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: sashiko-reviews@lists.linux.dev, Ulf Hansson <ulfh@kernel.org>
-Cc: linux-pm@vger.kernel.org, spacemit@lists.linux.dev,
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v5 2/2] pmdomain: spacemit: Add power domain driver
-Message-ID: <20261123114512-GKC156439@kernel.org>
-References: <20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org>
- <20261118-04-k3-pm-support-v5-2-42394acdf3e3@kernel.org>
- <sashiko-outbox-222182@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=g4Aw2V3r
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6b8c60e0d39so4060970a12.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 04:24:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795436640; x=1796041440; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=tNjY8+hhVU4H7nudtWwRsBTQX4I5mOLQRqYzvL9iveg=;
+        b=g4Aw2V3rjZr1xtpTWENPFty3HEcd+GMMK5FXdGVAUh6wQosTAQp6BTeq6v6eP34kLj
+         zHFCffnzNhNKywdME6otivVF/1DEBmoUeKZqQ55k+4IbY8dHEaOS9m0s8A2iaotIhi4T
+         8/BRvZ9iCbs2nxqJT5gCW4kZig8dNIPTkKh+bekgcmn6Jr/UpmxNG3QWKD4kGc2CcyVf
+         1GlguvIF59Ijvx3SQxamuK1CVigfsgeJBFdDoOBMoox/BFva08dpOl00KJWhZVyPxgbq
+         jpUkB31frXWQlA6TqTO/gfVSWhKBqtX/XndeW73QCx5UlrDJlHH2CoXnqxoxAPp48CiR
+         7TKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795436640; x=1796041440;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tNjY8+hhVU4H7nudtWwRsBTQX4I5mOLQRqYzvL9iveg=;
+        b=Lm/21BEvtz+xdtp+SviMUzfDvIVwM1HvpMbzCsrVxTrwihgOATAgA0eYUYQAoFGWUh
+         JLqu+5g2rFvRvJJWhFjFO0lvo/ZLpByqe0eUmCJimGlQwpWsquz05eA3YL6qI3z0ulZq
+         Ge993LBFuJanW76fvPZ9Pu3lnHMYD7lhFeeHfvaanTqFApJ+1iHqRVqDAssWsdb2EgDV
+         4NKZPn2x8sDhGZzv5IFJxyGg9I/ML6tpsDTHgTodDUrOztTvl3ix30OjvNnrhjOk+kQU
+         Kwl40V+PFTOnOpSLQ5IrUYKAjRmQCEf02cnuu9ElTeKQUFtno9Raq1qK8ahiLMBEjgxq
+         5f7A==
+X-Gm-Message-State: APuU4Z9bbryBXRi3OHmZo/OxpcHy1J2fwpgyHih5lqkY5uNgOItiZzvf
+	XZSQwtgluUoZOJ5ZGKcWcuu7lo2Hfdo9UBla4bJqE7np5ljptAds8qV1Wp6pajz0+bTfR703A6U
+	=
+X-Gm-Gg: AZFdTZeSnhzdunjZtBcv3qlX5jJFda6TjpdmIEp5fAhLcOpV7vvrSVmfxa806L/fr64
+	GbZglevODuJJLSiCvPXDo0sxl4VXLG2SyR3QVYmuUubCMA2+BnGvrT8A4msXB7UD8oENBOheIPJ
+	NrZdPj2axSRWqt1oKCS9Y+jZAv/vhUYQlk1669qilBw4rYBgx/B47KFHXTYEo1MjWwJkjseEGO3
+	wRQ1rOL1Fs/5623RqJAGl2sxTZLQW4f+GEQeoCTx0L4kMNLBrmPR9sjS6aaevXYRpPXyVIBuRxX
+	52t1tSHfsuIuZelDFRR2QuhWkPRDdLJm90utF/PeR/+L5Qz63AUw9wjR4Vgu9AFHoj424sPjTev
+	1V6Ik9JuCxmifsRSDmkpSnPVVZ7GVsjqSBA1ca9G29rnSEcuXggO9fPGx5HBSoKgCxGCVXHikVW
+	jBsMFROVU5WIN6cOqc1ItO5HsV6ps9cbVW2VG6MzK3oRa24Z7bNJxQgLgNhVMuShD0aZZ3sV4qy
+	L7xMOVG4kbOhgTzsnL7zKfH6RhwHgzpcw78B8M2WVEdta/h0iRgU60f2tjqi5A9ihGefDWew964
+	c0OAYWCBAASlFYUAWcxqi1k7bgyQ9aLuh+mjNITTIdczXRcF3Q+Po1OP
+X-Received: by 2002:a17:907:9612:b0:c2e:2baa:a642 with SMTP id a640c23a62f3a-c513a8845femr1010728466b.30.1795436639952;
+        Mon, 23 Nov 2026 04:23:59 -0800 (PST)
+Received: from localhost ([50.7.123.82])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513afc42easm391318966b.60.2026.11.23.04.23.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Nov 2026 04:23:59 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,140 +87,71 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-222182@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 23 Nov 2026 15:23:56 +0300
+Message-Id: <DN2L64B7KMAK.11FXWAFFOOFV5@gmail.com>
+Cc: <devicetree@vger.kernel.org>, <linux-serial@vger.kernel.org>,
+ <linux-input@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>,
+ <dmitry.torokhov@gmail.com>
+Subject: Re: [PATCH v3 6/7] arm64: dts: mediatek: Add MT6895 SoC
+From: "Alexander Letuchiy" <asalde.le1@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.22.0-0-gc2f86b7abde3
+References: <20261123-initial-mt6895-v3-0-95c46597e63d@gmail.com>
+ <20261123-initial-mt6895-v3-6-95c46597e63d@gmail.com>
+ <sashiko-outbox-229131@kernel.org>
+In-Reply-To: <sashiko-outbox-229131@kernel.org>
 
-Hi All,
-
-On 23:32 Wed 18 Nov     , sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] pmdomain: spacemit: devres frees active domains when
->   pm_genpd_remove() fails
-> - [Medium] pmdomain: spacemit: unpowered always-on domain in
->   spacemit_pm_add_one_domain()
+On Mon Nov 23, 2026 at 2:25 PM MSK, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] arm64: dts: mediatek: mt6895: missing EL2 virtual timer
+>   interrupt in timer node
 > --
-> 
-> commit 3dbb7292ceae5fc8cd5471f6a58e884045deb2ec
-> Author: Yixun Lan <dlan@kernel.org>
-> 
-> pmdomain: spacemit: Add power domain driver
-> 
-> This commit adds a generic PM domain driver on the auxiliary bus for
-> SpacemiT K1 and K3 SoCs, supporting software and hardware power-on/off
-> sequences.
-> 
-> > diff --git a/drivers/pmdomain/spacemit/spacemit-pm-domains.c b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
-> > new file mode 100644
-> > index 0000000000000..9d77d3f4c182b
-> > --- /dev/null
-> > +++ b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
-> > @@ -0,0 +1,422 @@
-> 
+>
+> commit 52307c1c986494baf205914bdd46826de40efb27
+> Author: Alexander Letuchiy <asalde.le1@gmail.com>
+>
+> arm64: dts: mediatek: Add MT6895 SoC
+>
+> This commit adds initial devicetree support for the MediaTek MT6895 SoC,
+> describing its Cortex-A55 and Cortex-A78 CPUs, caches, GICv3, PMUs, timer=
+s,
+> pin controller, UARTs, watchdog, and keypad.
+>
+>> diff --git a/arch/arm64/boot/dts/mediatek/mt6895.dtsi b/arch/arm64/boot/=
+dts/mediatek/mt6895.dtsi
+>> new file mode 100644
+>> index 0000000000000..62584cec0f4fc
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/mediatek/mt6895.dtsi
+>
 > [ ... ]
-> 
-> > +static int spacemit_pm_add_one_domain(struct spacemit_pmu *pmu, int id,
-> > +				      const struct spacemit_pm_domain_param *param)
-> > +{
-> > +	struct spacemit_pm_domain *pd;
-> > +	int ret;
-> > +
-> > +	pd = devm_kzalloc(pmu->dev, sizeof(*pd), GFP_KERNEL);
-> > +	if (!pd)
-> > +		return -ENOMEM;
-> > +
-> > +	pd->param           = param;
-> > +	pd->pmu             = pmu;
-> > +	pd->genpd.name      = param->name;
-> > +	pd->genpd.flags     = param->flags;
-> > +	pd->genpd.power_off = spacemit_pd_power_off;
-> > +	pd->genpd.power_on  = spacemit_pd_power_on;
-> > +
-> > +	ret = pm_genpd_init(&pd->genpd, NULL, spacemit_pm_is_off_state(pmu, pd));
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	pmu->domains[id] = &pd->genpd;
-> > +
-> > +	return 0;
-> > +}
-> 
-> [Severity: Medium]
-> Can pm_genpd_init() fail with -EINVAL for a GENPD_FLAG_ALWAYS_ON domain
-> such as K3_PMDOMAIN_AUDIO if it is powered off at boot?
-> 
+>
+>> +	timer {
+>> +		compatible =3D "arm,armv8-timer";
+>> +		interrupts =3D <GIC_PPI 13 IRQ_TYPE_LEVEL_HIGH 0>,
+>> +			     <GIC_PPI 14 IRQ_TYPE_LEVEL_HIGH 0>,
+>> +			     <GIC_PPI 11 IRQ_TYPE_LEVEL_HIGH 0>,
+>> +			     <GIC_PPI 10 IRQ_TYPE_LEVEL_HIGH 0>;
+>> +	};
+>> +};
+>
+> [Severity: Low]
+> Should this timer node also include the fifth PPI (<GIC_PPI 12
+> IRQ_TYPE_LEVEL_HIGH 0>) for the EL2 virtual timer?
+>
+> Cortex-A55 and Cortex-A78 implement FEAT_VHE, so when Linux boots at EL2 =
+in
+> VHE mode without the fifth interrupt entry, arch_timer_select_ppi() logs =
+a
+> FW_BUG warning ("VHE-capable CPU without EL2 virtual timer interrupt") an=
+d
+> falls back to the EL2 physical timer.
 
-I've checked in U-Boot which before booting Linux,
-=> md.l 0xd42828f0 1
-d42828f0: 00000008
-which shows bit[3]=1, audio power domain already in 'on' state..
-
-So, K3 SoC should have no problem on this.
-
-> pm_genpd_init() requires always-on domains to already be powered on
-> (is_off == false) and rejects them with -EINVAL otherwise, aborting
-> spacemit_pm_domain_probe().  Also, because genpd never powers an
-> always-on domain off or on after initialization, the power control
-> parameters defined on K3_PMDOMAIN_AUDIO are unused unless
-> spacemit_pm_add_one_domain() powers the domain on before calling
-> pm_genpd_init() (note that spacemit_pd_power_on() logs with &domain->dev,
-> which is not initialized until pm_genpd_init(), so pmu->dev would need to
-> be used for logging).
-> 
-> > +
-> > +static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
-> > +{
-> > +	struct spacemit_pm_domain *pd;
-> > +	int i, ret;
-> > +
-> > +	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
-> > +		if (!pmu->domains[i])
-> > +			continue;
-> > +
-> > +		pd = to_spacemit_pd(pmu->domains[i]);
-> > +		ret = pm_genpd_remove(pmu->domains[i]);
-> > +		if (ret)
-> > +			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
-> > +				pd->param->name, ret);
-> > +	}
-> > +}
-> 
-> [ ... ]
-> 
-> > +static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
-> > +{
-> > +	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
-> > +	struct device *dev = &adev->dev;
-> > +
-> > +	of_genpd_del_provider(dev->of_node);
-> > +	spacemit_pm_domain_cleanup(pmu);
-> > +}
-> 
-> [Severity: High]
-> As reported by Troy Mitchell on v3 [1], can unbinding the driver or
-> unloading the module while a consumer device is attached cause a
-> use-after-free on pd->genpd?
-> 
-I don't want to combine into this series, see cover letter or the link below
-https://lore.kernel.org/r/20261112-01-pm-device-link-v1-1-8932e0862378@kernel.org
-
-I'm trying to address in a separate patch
-
-> Because adev->dev shares the parent CCU device's of_node, fw_devlink
-> links consumers to the parent CCU platform device rather than adev->dev,
-> so unbinding spacemit_pm_domain_driver does not detach consumer devices
-> first.  When genpd->device_count > 0, pm_genpd_remove() fails with -EBUSY
-> and leaves pd->genpd linked in the global gpd_list and referenced by
-> consumers' dev->pm_domain pointers right before devres frees the
-> devm_kzalloc()-allocated struct spacemit_pm_domain.
-> 
-> [1] https://lore.kernel.org/r/DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org?part=2
-
--- 
-Yixun Lan (dlan)
+Yes, you are right, thanks. The A55/A78 cores implement FEAT_VHE, so the
+fifth PPI (EL2 virtual timer) should be there too. I will add it in the
+next version, or send a follow-up patch if the initial support is merged
+first.
