@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=65.21.61.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795433245;
-	b=u3MD7wQU+7DHIqtN8QgW1uBW9HscofcP4G8ZjI0HBpsGxRuOUxbYQOIN63DPN9NVvdvF
-	 G7B8ebhwxYE5ZbygcTjH/+oCM3cFo+WenLfgPL44F/hx0ISe0BoDJNNUnzS2Wsz2Yuzir
-	 IwGN1USMGRRihzquYYX0B78jcbfEEV9zDPQH3UCE4ObV2vCbw44/A+S5CF1yeW24T+KM1
-	 KcsnCKrDg/SVt7k8ueCmXkPmN7vqrA1AGSqgxr9DZwcasWX1cs0l54far/FLfTYRlWwfW
-	 C1/f+aqXavXKh/y2VmZMCgAtFEcyKoaelp2OlYQkmBaWz+j59NsIB8/1DBK1zQF4z4w==
+	t=1795433663;
+	b=dx5z810hPpfsRc+fFlaPbBLYMO5B6Nsmla+u9MPkSlR7p8wTOY7LB0F1IdMNL4jtYlVZ
+	 m35Tjg4cbUYnExiILHp24UqLJj3eOzloFoO6EsE4oAv9prwZc3GtFIovG+4lzkgSfhbw4
+	 IwFMkFV6Y2zLaZVhKD1uAUCfWUsOQM4M+qyAZnLspVu6t0k213pPETsceUjPyIppH0Vxu
+	 liWxgWYpezvp9xsoieO1orXwu0N5Z5AtKl1xsJsXSCFROjQoSin2csfwtwzThgbX+1N7W
+	 o/a4T2M5dVbwFfMeFpdfC7extnZjd4MMfQ1BfT3uRq9vc9c2qsSVkCaMdGSeJixw+Nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795433245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795433663;
 	h=DMARC-Filter:Message-ID:DKIM-Signature:Date:MIME-Version:User-Agent:
 	 From:Subject:To:Cc:References:Content-Language:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=7aTWWJihQ/5Gq0xlcSx6Fw5GmmFcJoOfYDykO+L+3+s=;
-	b=iYeJGXkEA4ANBetrMtEXNzdH6iNtEkc0F2hNkybof5GoZxBhZGXeTxfZXnkG28jiL+Cj
-	 ey8U0DKCeZc+OPvtgVAIYhGlrWGoRN+zCgRKUivQ6vu5Jl5trNyJoqeGqDOjdKCbLXhk0
-	 giE3WzzxBfCt1gD6QKzVc/pvXfaQFTDVe+9EkXFEg03nsuzSnQoXSxlrDJGbtcilZrcaB
-	 tBrhy/hR3nDsX/Y/+deVAncZkiCk2dRH/kdcMo9ZtPLnSlN+B/Zn6CUkUV4D9uBvsS/A5
-	 NixSIfUoYj8FWofA9pXEuUqn+Iic/e2en4Sx9zpHGZXtu9ZW4yW8jrudkFFxzv3tK+Q==
+	bh=mXK5FEY1e7FRxOAtePILYX2tLbfwL0UE9BPejme/uTk=;
+	b=4i0RmndU36tfF61ITdY9pkTmSxf9QKMy6CAODS6JMc5Xoq4QMMgUgmgmOHyDOybo3Tg4
+	 BtvBUF6k1mHfWJFVb9KYUqhGA9Z5nroGpBYPzJJNcWauIs386ojnQ/U700ZszqI1EUwe2
+	 53jaqyBBregMbk73YEjQEA8uy398lOg/jwCNHBrITkFgk54lwExKzlRBoWn1dNigwfCZV
+	 j3lhc6eZsEfmoBqhuOlrdrqwbKOpAQU1B8C7qELifza7cxeQpm5Xs8mPxg3Bwu9YSBtCK
+	 V4C/aAp3Ad6+QZTlb6ZvFx1bythPCDpYWqrPE+b/re9kgU7V4izfDhyGQwT/6hl7sIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=aliel.fr;
 	spf=pass smtp.mailfrom=aliel.fr;
-	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=SkcOpWzM;
+	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=ooeUU0hC;
 	arc=none smtp.remote-ip=65.21.61.41
 Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD4A606A31E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 11:27:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DAD4A606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D30606A31E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 11:34:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55D30606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=SkcOpWzM
-Message-ID: <e782f0e1-18d2-4772-b04b-61a35eae7a7e@aliel.fr>
+	dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=ooeUU0hC
+Message-ID: <ceda6a5e-f314-441f-b596-21a60b48486b@aliel.fr>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
-	s=courrier-s1; t=1795433241;
-	bh=DTMDp6j55x9LK3mtG0j2x1ChCBgW5h+Qm9y64YKtGGY=;
+	s=courrier-s1; t=1795433659;
+	bh=DyzVVA4BHQY1L7A1w9MoxMVnpEeVU9iMkGr1NRy0wTM=;
 	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=SkcOpWzM9F+nFBgEs90cNbVOSjOzBKhViwU9loGM7ID2CWoNMCJYxWumby4A0uIhm
-	 udronjmxzPgDL6+dDc16wzv41g+VqjNMVB3V7sezj4tsTjL6rOPgartbl0hxBt+UiD
-	 JFd+Me2B5CEAn0XbQd4Pn0QE2Kq+e1VJfjs7c4js=
-Date: Mon, 23 Nov 2026 12:27:19 +0100
+	b=ooeUU0hCpiBSpZnhoubWSJjGhz8XJVTlm1zKpLsrdNqn8bP4KrBVGhduHnCKW+ZFx
+	 chNU/CpFE7x4QPJnCUo1x32lhLS6yUx2buXH9T89JTGjvcH1lu4NFAOgMXzz6/i/CS
+	 Mra7PQ2bd3b2mcV22l/V8FGFOE5Kzk/LaAF5gIKo=
+Date: Mon, 23 Nov 2026 12:34:18 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,109 +53,194 @@ Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Subject: Re: [PATCH v3 04/11] phy: amlogic: Add Meson HDMI TX PHY driver
+Subject: Re: [PATCH v3 08/11] drm/meson: dw-hdmi: Use the generic PHY
+ framework for the HDMI TX PHY
 To: sashiko-reviews@lists.linux.dev
 Cc: devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
  linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org,
  robh@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
  vkoul@kernel.org, olteanv@gmail.com
 References: <20261121-meson-drm-create-hdmitx-phy-v3-0-f8f471788076@aliel.fr>
- <20261121-meson-drm-create-hdmitx-phy-v3-4-f8f471788076@aliel.fr>
- <sashiko-outbox-227322@kernel.org>
+ <20261121-meson-drm-create-hdmitx-phy-v3-8-f8f471788076@aliel.fr>
+ <sashiko-outbox-227314@kernel.org>
 Content-Language: en-US
-In-Reply-To: <sashiko-outbox-227322@kernel.org>
+In-Reply-To: <sashiko-outbox-227314@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/21/26 20:43, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] phy: amlogic: phy-meson-hdmi-tx: min_rate 25175000 rejects
->   valid DMT modes
+On 11/21/26 20:37, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [High] drm/meson: dw-hdmi: invalid phy_destroy() in
+>   meson_dw_hdmi_bind() error path
+> - [Medium] drm/meson: dw-hdmi: stateless device link leaked in
+>   meson_dw_hdmi_unbind()
+> - [Medium] drm/meson: dw-hdmi: meson_venc_init() clobbers PHY CNTL0 on
+>   system resume
 > --
 > 
-> commit c8d7adccab22985446c5dd65967a17a727629973
+> commit 60b745dc55898638b05c8fcafed9d3683b30dff0
 > Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
 > 
-> phy: amlogic: Add Meson HDMI TX PHY driver
+> drm/meson: dw-hdmi: Use the generic PHY framework for the HDMI TX PHY
 > 
-> This commit adds a generic PHY driver for the Amlogic Meson HDMI TX PHY on
-> GXBB, GXL, GXM, and G12A SoCs, along with a legacy creation helper for
-> device trees without a phys property.
+> This commit converts the Meson DW-HDMI glue driver to manage the HDMI TX
+> PHY through the generic PHY framework, with a legacy fallback when the
+> device tree lacks a "phys" property, and adds a stateless device link
+> between the VPU master and HDMI-TX device.
 > 
->> diff --git a/drivers/phy/amlogic/phy-meson-hdmi-tx.c b/drivers/phy/amlogic/phy-meson-hdmi-tx.c
->> new file mode 100644
->> index 0000000000000..872d244de8fb7
->> --- /dev/null
->> +++ b/drivers/phy/amlogic/phy-meson-hdmi-tx.c
+>> diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+>> index 20a821936b3af..8fdb997c28b40 100644
+>> --- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
+>> +++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+> 
 > [ ... ]
->> +/* GXBB */
->> +static const struct meson_hdmi_phy_rate gxbb_rates[] = {
->> +	/* 5.94Gbps, 3.7125Gbps */
->> +	{ 371250000, 0x33353245, 0x2100115b },
->> +	/* 2.97Gbps */
->> +	{ 297000000, 0x33634283, 0xb000115b },
->> +	/* 1.485Gbps, down to 251.75Mbps */
->> +	{ 25175000,  0x33632122, 0x2000115b },
->> +};
->> +
->> +/* GXL / GXM */
->> +static const struct meson_hdmi_phy_rate gxl_rates[] = {
->> +	/* 5.94Gbps, 3.7125Gbps */
->> +	{ 371250000, 0x333d3282, 0x2136315b },
->> +	/* 2.97Gbps */
->> +	{ 297000000, 0x33303382, 0x2036315b },
->> +	/* 1.485Gbps */
->> +	{ 148500000, 0x33303362, 0x2016315b },
->> +	/* 742.5Mbps, down to 251.75Mbps */
->> +	{ 25175000,  0x33604142, 0x0016315b },
->> +};
->> +
->> +/* G12A */
->> +static const struct meson_hdmi_phy_rate g12a_rates[] = {
->> +	/* 5.94Gbps, 3.7125Gbps */
->> +	{ 371250000, 0x37eb65c4, 0x2ab0ff3b, 0x0000080b },
->> +	/* 2.97Gbps */
->> +	{ 297000000, 0x33eb6262, 0x2ab0ff3b, 0x00000003 },
->> +	/* 1.485Gbps, down to 251.75Mbps */
->> +	{ 25175000,  0x33eb4242, 0x2ab0ff3b, 0x00000003 },
->> +};
-> [ ... ]
->> +static const struct meson_hdmi_phy_rate *
->> +meson_hdmi_phy_find_rate(const struct meson_hdmi_phy_data *data, u64 rate)
->> +{
->> +	unsigned int i;
->> +
->> +	if (rate > data->max_rate)
->> +		return NULL;
->> +
->> +	for (i = 0; i < data->num_rates; i++)
->> +		if (rate >= data->rates[i].min_rate)
->> +			return &data->rates[i];
->> +
->> +	return NULL;
->> +}
 > 
-> [Severity: Medium]
-> Does setting min_rate to 25175000 in the lowest entries of gxbb_rates[],
-> gxl_rates[], and g12a_rates[] cause a regression for valid display modes
-> below 25.175 MHz?
+>> @@ -746,7 +663,26 @@ static int meson_dw_hdmi_bind(struct device *dev, struct device *master,
+>>  		return ret;
+>>  	}
+>>  
+>> -	meson_dw_hdmi_init(meson_dw_hdmi);
+>> +	meson_dw_hdmi->phy = devm_phy_optional_get(dev, NULL);
+>> +	if (IS_ERR(meson_dw_hdmi->phy))
+>> +		return dev_err_probe(dev, PTR_ERR(meson_dw_hdmi->phy),
+>> +				     "failed to get HDMI PHY\n");
+>> +
+>> +	if (!meson_dw_hdmi->phy) {
+>> +		/* DEPRECATED: DT without "phys" */
+>> +		dev_warn(dev, "missing \"phys\", using legacy HDMI PHY\n");
+>> +		meson_dw_hdmi->phy = meson_hdmi_phy_create_legacy(dev, priv->hhi,
+>> +						meson_dw_hdmi->data->phy_soc);
+>> +		if (IS_ERR(meson_dw_hdmi->phy))
+>> +			return dev_err_probe(dev, PTR_ERR(meson_dw_hdmi->phy),
+>> +					     "failed to create legacy HDMI PHY\n");
+>> +
+>> +		meson_dw_hdmi->legacy_phy = true;
+>> +	}
+>> +
+>> +	ret = meson_dw_hdmi_init(meson_dw_hdmi);
+>> +	if (ret)
+>> +		return ret;
+>>  
+>>  	/* Bridge / Connector */
+>>  
+>> @@ -767,14 +703,26 @@ static int meson_dw_hdmi_bind(struct device *dev, struct device *master,
+>>  	platform_set_drvdata(pdev, meson_dw_hdmi);
+>>  
+>>  	meson_dw_hdmi->hdmi = dw_hdmi_probe(pdev, &meson_dw_hdmi->dw_plat_data);
+>> -	if (IS_ERR(meson_dw_hdmi->hdmi))
+>> -		return PTR_ERR(meson_dw_hdmi->hdmi);
+>> +	if (IS_ERR(meson_dw_hdmi->hdmi)) {
+>> +		ret = PTR_ERR(meson_dw_hdmi->hdmi);
+>> +		goto err_hdmi_probe;
+>> +	}
+>>  
+>>  	meson_dw_hdmi->bridge = of_drm_find_and_get_bridge(pdev->dev.of_node);
+>>  
+>> +	link = device_link_add(master, dev, DL_FLAG_STATELESS);
+>> +	if (!link)
+>> +		dev_warn(dev, "failed to link HDMI (supplier) to DRM master (consumer)\n");
+>> +
+>>  	DRM_DEBUG_DRIVER("HDMI controller initialized\n");
+>>  
+>>  	return 0;
+>> +
+>> +err_hdmi_probe:
+>> +	phy_exit(meson_dw_hdmi->phy);
+>> +	phy_destroy(meson_dw_hdmi->phy);
+>> +
+>> +	return ret;
+>>  }
 > 
-> In drivers/gpu/drm/meson/meson_dw_hdmi.c, meson_hdmi_phy_setup_mode() used
-> an unconditional else branch with no lower frequency bound for the lowest
-> band ("742.5Mbps, and below" on GXL/GXM, and "1.485Gbps, and below" on GXBB
-> and G12A).  Meanwhile, meson_encoder_hdmi_mode_valid() accepts non-VIC DMT
-> modes down to 15.9 MHz via meson_vclk_dmt_supported_freq() without calling
-> phy_validate().  Any mode between 15.9 MHz and 25.174 MHz (such as
-> 640x480@60Hz CVT reduced-blanking at 23.75 MHz, or a 640x480 EDID detailed
-> timing descriptor whose 10 kHz step encodes 25.175 MHz as 25170 kHz) passes
-> mode validation and atomic_check, then fails with -EINVAL in
-> dw_hdmi_phy_init() -> phy_configure() during atomic_enable, aborting HDMI
-> PHY power-on.
+> [Severity: High]
+> Does calling phy_destroy(meson_dw_hdmi->phy) in err_hdmi_probe cause a
+> double free or destroy the external provider's PHY when dw_hdmi_probe()
+> fails (for example with -EPROBE_DEFER)?
+> 
+> Both devm_phy_optional_get() and meson_hdmi_phy_create_legacy() (which
+> uses devm_phy_create()) are devres-managed in the component devres group
+> that component_bind() releases on bind failure.  When legacy_phy is
+> false, meson_dw_hdmi is only a consumer, so phy_destroy() unregisters
+> the external PHY provider's device while the provider remains bound.
+> When legacy_phy is true, component_bind() immediately runs
+> devm_phy_consume() -> phy_destroy() a second time on the already-freed
+> phy.
+> 
+> Dropping phy_destroy() from err_hdmi_probe and leaving the cleanup to
+> component_bind()'s devres release avoids both issues.
 > 
 
-I've tested 15.9 MHz ok on a small screen with EDID. I will change the
-minimal value accordingly.
+I will drop it.
+
+>>  
+>>  static void meson_dw_hdmi_unbind(struct device *dev, struct device *master,
+>> @@ -786,6 +734,10 @@ static void meson_dw_hdmi_unbind(struct device *dev, struct device *master,
+>>  
+>>  	devm_free_irq(dev, irq, meson_dw_hdmi);
+>>  	dw_hdmi_unbind(meson_dw_hdmi->hdmi);
+>> +
+>> +	phy_exit(meson_dw_hdmi->phy);
+>> +	if (meson_dw_hdmi->legacy_phy)
+>> +		devm_phy_destroy(dev, meson_dw_hdmi->phy);
+>>  	drm_bridge_put(meson_dw_hdmi->bridge);
+>>  }
+> 
+> [Severity: Medium]
+> Does meson_dw_hdmi_unbind() leak the DL_FLAG_STATELESS device link
+> created in meson_dw_hdmi_bind()?  Stateless device links are not removed
+> automatically by the driver core on unbind and require an explicit
+> device_link_remove(master, dev) or device_link_del().
+> 
+
+I forgot it, thanks for the reminder, I will add the device_link_remove().
+
+>> @@ -801,6 +753,8 @@ static int __maybe_unused meson_dw_hdmi_pm_suspend(struct device *dev)
+>>  	if (!meson_dw_hdmi)
+>>  		return 0;
+>>  
+>> +	phy_exit(meson_dw_hdmi->phy);
+>> +
+>>  	/* Reset TOP */
+>>  	meson_dw_hdmi->data->top_write(meson_dw_hdmi,
+>>  				       HDMITX_TOP_SW_RESET, 0);
+>> @@ -811,11 +765,14 @@ static int __maybe_unused meson_dw_hdmi_pm_suspend(struct device *dev)
+>>  static int __maybe_unused meson_dw_hdmi_pm_resume(struct device *dev)
+>>  {
+>>  	struct meson_dw_hdmi *meson_dw_hdmi = dev_get_drvdata(dev);
+>> +	int ret;
+>>  
+>>  	if (!meson_dw_hdmi)
+>>  		return 0;
+>>  
+>> -	meson_dw_hdmi_init(meson_dw_hdmi);
+>> +	ret = meson_dw_hdmi_init(meson_dw_hdmi);
+>> +	if (ret)
+>> +		return ret;
+>>  
+>>  	dw_hdmi_resume(meson_dw_hdmi->hdmi);
+> 
+> [Severity: Medium]
+> With the new device link ordering dev (supplier) to resume before master
+> (consumer), will meson_drv_pm_resume() -> meson_venc_init() clobber
+> HHI_HDMI_PHY_CNTL0 after meson_dw_hdmi_pm_resume() has initialized the
+> PHY?
+> 
+> drivers/gpu/drm/meson/meson_venc.c:meson_venc_init() {
+> 	...
+> 	/* Disable HDMI PHY */
+> 	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL0, 0);
+> 	...
+> }
+> 
+> meson_dw_hdmi_init() calls phy_init(), which programs HHI_HDMI_PHY_CNTL0
+> to cntl0_init (0x000b4242 on G12A for the bandgap).  When the consumer
+> meson_drv_pm_resume() runs next, meson_venc_init() overwrites
+> HHI_HDMI_PHY_CNTL0 with 0, leaving the G12A bandgap disabled whenever no
+> HDMI mode is active across suspend and resume.
+> 
+
+I will change the link order to the oposite, and use prepare/complete
+for the drm_mode_config_helper suspend/resume.
 
 -- 
 Best regards,
