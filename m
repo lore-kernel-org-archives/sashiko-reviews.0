@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795410822;
-	b=hb/5HGh0jWRrXrEatKbH6K7VYFPa4hUKetVHIax3Wvyg8unpk8+F0o5GHvvnWYR93lhx
-	 etTQ2ro5mF9Es1K7tZXsqxoXM2ZsmdIJyydwA8IqOgs7RHyKMGzmQePCQ6aq3FFLxW5lr
-	 e8ooSxzd6t8gt1o5gwLofrABUcFPA/uWHK09aMffviLZF36zeoGzn28BUSbLU652AtTkV
-	 W8y4LebPSVw6OVm/i3kMPKRKBJJjafTy/+uHvR7M2PShTWhe/GLuAGNjFMDcz9wDFUUS+
-	 kWbsDjzRCFVu34KE7PSpsy92JuspaPFksNr/u95uh6whVlG3HSMSYVtppLbd6wIAklQ==
+	t=1795411288;
+	b=QxezrLg1/i0/WeqjA3NkqxEEDHpo29WYBEuGyrcIDZ5oDZj/a2av07E1Jxwk1gKiCCad
+	 ZNGR6B4/Yulz0JhRi0zJeA9GetuFDU5Cy2pDbZlSB+CWCxFTVZ1p3DBuj3YvPz13WouLL
+	 vHfA/8GxIXL9QX9LzSx98AjoWTy2l3XDIO0zBIbJdKCuNGiXWLnbm6dUl7Y5kggEivc5a
+	 FcD7ih2l9xaWrjjG16WYP12xqth6+Q0IXZd0fx37+WFsoo6PXgHdg5RTfe/p+JlM78r5k
+	 fYcRkDFhKSTr18HOQXYR4F6ZJuu6UeZXKzUBoTQgj5Wa7qKGggkbO7UZPNGviZenEsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795410822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795411288;
 	h=DMARC-Filter:Received:Received:Subject:To:Cc:References:From:
 	 Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:Content-Type:
 	 Content-Language:Content-Transfer-Encoding:X-CM-TRANSID:
 	 X-CM-SenderInfo:X-Coremail-Antispam;
-	bh=tTAShwwvdJomkO2Y41443wtfMMw6Md22aE5NOqml3V0=;
-	b=WRKrIN2XcfSPTqb7WsnhKE9Vpl24vz2WsvJn3nGqmRNcWZipxoXWqY3cGWJy8NlxEnKl
-	 ESeSjdpMaBJKKogZwBODADkrkk/ASJgUJufyLAel8gfCDXiX6a1FkjfZ92cnXCXz6DbcI
-	 ONjaXcEdr7E3AxIzzmVpzU/Oam1e5/3JfyCkxSnDhicehBxRHtSzhhDsb9tt3+j70Bd3o
-	 Us6twl0xBq8wJ6ksIL/lrZsg9cnfYdv8xykIOi8l28py4mEcBWahDVVYzykRfPXJGg8+v
-	 UjbaxrcPdNUp6289rtLvLiNpkM4Q4URNNKppNq4KVeNutunfeVuZ0LKrsd+35oqRk9w==
+	bh=MhKPy4hLEktud7DPzU2544Zryh9tYQQv+5VGX65PXXk=;
+	b=FqA/HOWg5ADHgT4+TE2J8IkpLXlQZSdkPEVCRsbYfhdasvSVnoqFd714u1TRCeU240q4
+	 oJSSY4/ja9ZneK1SsRiHXyWtq67vX4AzwRcT690MP2Tu9yjNIU5vRZjG3AmDviifrMNp7
+	 R0WWb3tJ6fRRRJDuvR4z6QTFAYx4yuwdIVgjuXCoHRDLnCuehPls2Mq4Y+QDGa57xLo1n
+	 FDom4TiTxlyFgqX7YLFgMUh0Y+yP1JJoX/USAhW6Yi4H8Z0x+QRhW0iwj5IhgNxPbM/oI
+	 ISC+ugJMyqpKA2SFP1CI4m7DZ+mpK/4DMHoizjCs6KnFC14R42qMEUu1KzlwYl/DWcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=loongson.cn;
 	spf=pass smtp.mailfrom=loongson.cn;
 	arc=none smtp.remote-ip=114.242.206.163
 Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37477606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 05:13:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37477606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2197606A689
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 05:21:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2197606A689
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
 Received: from loongson.cn (unknown [123.138.236.242])
-	by gateway (Coremail) with SMTP id _____8CxPtOCywNrcB8iAA--.31793S3;
-	Mon, 23 Nov 2026 13:13:39 +0800 (CST)
+	by gateway (Coremail) with SMTP id _____8Bx69FUzQNr+x8iAA--.31703S3;
+	Mon, 23 Nov 2026 13:21:24 +0800 (CST)
 Received: from [127.0.0.1] (unknown [123.138.236.242])
-	by front1 (Coremail) with SMTP id qMiowJDxRs2BywNrGc02AA--.30881S2;
-	Mon, 23 Nov 2026 13:13:37 +0800 (CST)
-Subject: Re: [PATCH bpf-next v1 3/3] selftests/bpf: Enable callx related
- testcases for LoongArch
+	by front1 (Coremail) with SMTP id qMiowJBxpMxSzQNrps02AA--.17317S2;
+	Mon, 23 Nov 2026 13:21:23 +0800 (CST)
+Subject: Re: [PATCH bpf-next v1 1/3] selftests/bpf: Enable instruction array
+ test for LoongArch
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20261123045008.23691-1-yangtiezhu@loongson.cn>
- <20261123045008.23691-4-yangtiezhu@loongson.cn>
- <sashiko-outbox-228686@kernel.org>
+ <20261123045008.23691-2-yangtiezhu@loongson.cn>
+ <sashiko-outbox-228693@kernel.org>
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <a9f95201-5496-a844-355c-6edc6ae8f508@loongson.cn>
-Date: Mon, 23 Nov 2026 13:13:37 +0800
+Message-ID: <46ffa5b6-8914-eda6-a0ee-88b2d7ecba54@loongson.cn>
+Date: Mon, 23 Nov 2026 13:21:22 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -55,52 +55,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-228686@kernel.org>
+In-Reply-To: <sashiko-outbox-228693@kernel.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:qMiowJDxRs2BywNrGc02AA--.30881S2
+X-CM-TRANSID:qMiowJBxpMxSzQNrps02AA--.17317S2
 X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7Gr47Cw4xCr1xZFW7tFWUtrc_yoWDJrgE9F
-	yfCFy7X395Zr43J3Zaga4rtF9xArWFvFyUAr95WF1xGFyFgr18JFZ5K3sYvF1xK3yfKrZx
-	tayYq3ySyw4jvosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
-	s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
-	cSsGvfJTRUUUbIxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
-	vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
-	w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
-	WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
-	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
-	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
-	14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
-	AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
-	rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
-	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
-	67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
-	0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8oG
-	QDUUUUU==
+X-Coremail-Antispam: 1Uk129KBj93XoWrKrWkCF4fKFWDtFWrAw1UurX_yoW8JF15p3
+	srZF1UAr4rWrWrtrnrK34fWa1Sqr1fGFZ7KF4YgrW8CFZruw4rAFWYgw4qqan8Zw4rWw10
+	qFZ5C34vq3WkAFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+	F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+	1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+	xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+	4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jb
+	_-PUUUUU=
 
-On 11/23/26 12:59 PM, sashiko-bot@kernel.org wrote:
+On 11/23/26 1:02 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] selftests/bpf: callx tests fail on LoongArch due to missing
->    JIT callx support
 
 ...
 
 > [Severity: Medium]
-> Will these callx selftests fail on LoongArch because the LoongArch BPF JIT
-> does not yet implement indirect subprog calls?
+> Does enabling bpf_insn_array on LoongArch depend on a prerequisite JIT
+> patch that is not in the tree yet?
 > 
-> In this tree, arch/loongarch/net/bpf_jit.c does not override the default
-> weak bpf_jit_supports_callx() (which returns false) or handle
-> BPF_JMP | BPF_CALL | BPF_X in build_insn().  As a result,
-> require_callx_jit() rejects these programs with -EOPNOTSUPP instead of
-> letting the test suite skip them.
+> In arch/loongarch/net/bpf_jit.c, bpf_int_jit_compile() does not call
+> bpf_prog_update_insn_ptrs(), so insn_array->ips[] stays zeroed and
+> bpf_insn_array_ready() rejects program loading with -EFAULT.  In addition,
+> build_insn() only handles BPF_JMP | BPF_JA and BPF_JMP32 | BPF_JA, without
+> BPF_JMP | BPF_JA | BPF_X (gotox), so the gotox subtests fail to JIT with
+> -EINVAL (-ENOTSUPP).
 
-This series depends on the LoongArch JIT support series:
+This series depends on the unmerged LoongArch JIT support series:
 
 LoongArch: BPF: Support instructions array, indirect jumps and calls
 https://lore.kernel.org/loongarch/20261123043907.20225-1-yangtiezhu@loongson.cn/T/#u
+
+> Also, HAVE_EBPF_JIT on LoongArch is only selected for 64BIT, while
+> defined(__loongarch__) matches 32-bit builds as well.
+
+I will update the guard to
+(defined(__loongarch__) && __loongarch_grlen == 64)
+in v2 (along with patch 3/3) to match 64-bit LoongArch specifically,
+similar to RISC-V.
 
 Thanks,
 Tiezhu
