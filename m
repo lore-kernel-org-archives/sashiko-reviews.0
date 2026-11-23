@@ -1,84 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795459552;
-	b=j+7Xct7Z0+y9TrBv9zHbHTLd6w4kvl/QHN7YAQ2zaBKxQ/0VBEWI1UMQHOb5Z2xmmRXm
-	 qCY+mCyb2L4othuWurl9nEb8RdZ5NhpeEhv6i0MNERDcV88yAoojpsyaeapS9oHSONHMO
-	 LfZuzPS2MH2DZEjI0uTqpRGaFAQmX5slFauTRvE73DOKb/12zPXFXxNsxWD0i7scbQf/3
-	 t85mu/Z4r/aPnrHAqGJcXcOrujKKoWLWwt2rUpvx1JDjehQ0v5Fcfju1tc21Ava+0fQ5A
-	 mExmp2AxyKVPS4YJivLqDiXiQNkrf8/LvPR66QjhEwIOgYxD6cMD2ECgI+MGYQ0Tcug==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795459552;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 Cc:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795461790;
+	b=KjZKXF96HgXatqwZCVLlQFyDRI7qh3X+B5sq0YXHzE6+SFxoYZf9EydDh3UlDf3VImbw
+	 8LT1i9j7BzKInb7w9M2BUaenPNegScHNEPTRMHnFUmvsQmK2oF4EIM16CNFkHcjwYnF7j
+	 YlxZXUUN67bhaMeVKGT4Pw11MzLwELS+vmO5ABSE76HH3tScx9pSg2g/O/SxwVkcRT5Sm
+	 2t0R23UGXtYDIcw6/k0Y1HUTYJo6Uo0i6BAbVzX6KL4rEkzUrWs6+QS85CnyJ5bH89h2u
+	 3CDj231+qKDWMyGG+igQ3WJqweYhJ7bK3Pv1zYHK5k3EbPrhVRDP2cFnqcJmUzuFURQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795461790;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=yLz31rzEEz8B8LvaagkLUBNRVU/PkTTsvaMuzc+APJg=;
-	b=35wUzGJk+FkJHFSdlx7dn30bmQvy9FvgRJWTmb5kRzVoHlBzxxx7iwQW49aSf0GIJvBS
-	 bpVjjhJQeW3r+jKBmO1YFX0MbWGXeut/iqrMDfUxMnTXKvBiDkDMicT8lgPEWnNDUgQ5+
-	 YQV9DbWTcSCDLHpxZEBxpAu5XpL/ZswDdF3iZhr8DoNcjF25MYEUgsmDnhVnqVKFof2xe
-	 AzdevtTMJZSyNRjz2CqSKX3piEyGTxcKJ2IkIjoI7AKB/f3mLoqZzXYHWSyXPh63NQgR1
-	 DtoQYpR9EfhszraEJ6acGGzW5HcKmMlrtPuHPd/XZXoauDg35QO+dVwGIaopUsi+trA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EI1bNRSp;
-	arc=none smtp.remote-ip=170.10.129.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	bh=7Jpgt2iZSg+qW1jdf4hbWvk6weM53GPvK5N4UzQlask=;
+	b=cxXqqlHkHMaWdOAA/qZk7Pf0A9bEQLvHRD78c0TGmhh+gPN0KGcrVWEohyVihzv04FCL
+	 7sNohBjUXXf3DizQLC+1MYL1u09AyYz0p79AjzWb8xnb/ZTf6NuC8SS/U6mSSoXTf4zO2
+	 Cd5W97SdtVXtHKkrjfMs2VWm5kq9TRx+71Sb9C51GDvbVQYkzs3yaMm2Pv7j96pG5pfVB
+	 DpRQQvYVzkxROo8s7raLTJ9JS8jUfF64X3AtyIgareYPYu7A7u+RnoHwFVXxBuVQPBUgC
+	 JUwwSfq121TC8SjHHwjVFzynIsUyE6O+Tpimcpuxg//JPDoQuE8t4kQ6wb2hqwWvCoA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=O9Q5UBpV;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.45
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F43C606A321
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 18:45:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F43C606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6039606A338
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 19:23:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6039606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EI1bNRSp
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1795459550;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yLz31rzEEz8B8LvaagkLUBNRVU/PkTTsvaMuzc+APJg=;
-	b=EI1bNRSpbfBP/NRB22tzFT0EeUzNG54NGxSI4E113oTdQHoBZdBSrCh8w3gW9YyXtpWWQI
-	MxwLG892zUDZo3+P/z1xdhpRB5amLq0JXgF+V2joMDGKQ4XMkvTKJf1ceIQdCv4l2+d/8i
-	9EYJeUEfgEq+O/rQgllfe76uhesQhfc=
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-pksEKLP7MtKK6okcQv1ZJA-1; Mon, 23 Nov 2026 18:45:48 +0000
-X-MC-Unique: pksEKLP7MtKK6okcQv1ZJA-1
-X-Mimecast-MFC-AGG-ID: pksEKLP7MtKK6okcQv1ZJA_1795459548
-Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-33c35f5ca6cso5004146eec.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 10:45:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=O9Q5UBpV
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so607516066b.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 11:23:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795461788; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hZGCxTELxOQGM08zfDlPlpzu4C7mQO+nAHRnGRPf631H6lF0N8WVrbC0WhcVX9bB+4
+         1ZEHne2tWrIISne9emrYgNyavV8BQIfoGuLvYOe2Wyzm/koOkdRn2BcD4QBEZ6F5I9as
+         62xQtZsF+l/fy6dEaRPhHJ5/F4MuO9HYP15mPq/bqG+cvHJhKMUXnXkpyg6yKjwyLVMV
+         j5MF1BLDAOLWApQqBVMRpMpfs5s3QKWgrm0+/UbaduThVhY116iFi9+auAUCwZ7tSsMR
+         vzy5zVjUDSaqEYI3zIxzIkWWkre5xVd/6uMForVzAIEy4t9kvX5hDHrSVCFkdqjlxJla
+         pLng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7Jpgt2iZSg+qW1jdf4hbWvk6weM53GPvK5N4UzQlask=;
+        fh=yG0GPR0QiT6n4FwClexevtHuIFSRQ+sxjflZXF2i7Wc=;
+        b=HWHVOz7yoewzKrphrEJpQb8E+jA6YNtCGZHtu/qIGu3DaA2SmIC2TnxEaXQFbxNqCc
+         jqB2c+wEnu/h06zhGbOhlOZnfE7JyKpI0QcviNwgfsaNmoegPqiW9+HjJlyI8yW70/JC
+         OpGG3Nu+g/1Su8GYnH7rf5aE0RfM55Iwa0GNRJQIVbw5lgPaWg6gwxf78U1oOjOrn1uH
+         nEnOhLAom3AXvUC3CwUEeJyDL6PO75mk13iAXEHLZUXcO2vZJySxoEsvVSnHG+W8Hg60
+         g6unv/LpnkIbBzPnZ9yA/KMcITsbDSOv7O4TWZy4wgzIKfWYD1E97oD7UdYw4ODGC0i+
+         TrSQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795461788; x=1796066588; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=7Jpgt2iZSg+qW1jdf4hbWvk6weM53GPvK5N4UzQlask=;
+        b=O9Q5UBpVDYkGC1WOnGJFUG7FQmiWrwauUf33yXXz3fx7WKIgPs2zgLARsDYJBLB7Qa
+         InJIrU6FAqMyCefIAbsW4Qir9ucU01ZTyombRGfx8P4NRSozpGVE+2MnRmzkx08zLILd
+         x+zvFe0Z8VgSiK5XXfcRivIem0HLmGNJI33UsS04VoJRpNJ4gDPojt7mPxAylv+KVdj7
+         1g2Fpb9eMOarQUa6zaIndcl5LGPLBUxbTDcdnB6PsiPwO6FlECgsVCGaOgARS8IdMAqU
+         jSau273vONWupPz3U6LWW6sD45HWBSNxy1L0+ju5uEilWJpwQeYd9z1yjcNz4TTCt1mD
+         wfDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795459548; x=1796064348;
+        d=1e100.net; s=20260707; t=1795461788; x=1796066588;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=yLz31rzEEz8B8LvaagkLUBNRVU/PkTTsvaMuzc+APJg=;
-        b=ITBbZGt7jpuUJMy7bEYgG6gowmWvF/dt342SXGvI4gCb54iSV5x8PHWEjSk3E2fhcC
-         GwgK2w0B3wQxwGHg9r/B+BiI4neTgI5ZXbpXnVnglXRUBVjOqCzca5gXd+lF9wbA7OM+
-         Ys1YW19uPrd4o+MilccZfPfjvYUUd8fjOUPDK9tHlggk6oaizmcvIWfz9WkQEbA3C7hJ
-         2gYYyojhJeDC7osWvpxOW2ttoakTb8RVBl50EMbKnfoXvHFRYHvpLaI+IUERKEYKtdsZ
-         OhdYk22mTlw1AzuCc+SFDrod7ZHK+mXe/WteSiW/75Wju/4ohm7uycWyi1WbNV/nERzn
-         43Uw==
-X-Gm-Message-State: APuU4Z/aAmlHYH4CDvbJb+zRCZG+gru27VTymIoLuoDAQn98ui7hyx5t
-	Cjj9n9thqse2YdLANVpdF6ZsOCFqQZbImRjSbdOKK/EeW2RRzUjjpK1BG47lDtARWGk42rIuWxV
-	0aKwpBafRdqB23ER0OYITRnM9T8SmQFyeoW/33uKzMlOWb5xGOXRZGV84o7jACh/BpeBSbLybSw
-	JXxvlCi43a3E6ztI3rycioP/wIsb/Bn5iJk6MrtgNberTEWfYoNqrd
-X-Gm-Gg: AZFdTZestQ4un28BsAdPLxfJKEprS6ibrrAcVp1mkfTZPXi9eAL0HF69iaG0NW5FZcU
-	QthxoDDawXQ1Q2uMiEackqDenlBelEEUb86fe7rzDuiSTe5W0BfVCV8vbL77ngkUmU3AyWtjw81
-	HtWynI8iSU0JkRe7Qh8imgYX0KwHMgXc9MuhV3D9ec0OPfxMF9oaAP0QMe
-X-Received: by 2002:a05:7300:bf10:b0:376:b957:bfb with SMTP id 5a478bee46e88-3856f7563b1mr16030781eec.17.1795459547462;
-        Mon, 23 Nov 2026 10:45:47 -0800 (PST)
-X-Received: by 2002:a05:7300:bf10:b0:376:b957:bfb with SMTP id
- 5a478bee46e88-3856f7563b1mr16030747eec.17.1795459546910; Mon, 23 Nov 2026
- 10:45:46 -0800 (PST)
+        bh=7Jpgt2iZSg+qW1jdf4hbWvk6weM53GPvK5N4UzQlask=;
+        b=SoQGMwdurkXd+rgwQhLCT0P8e1ODUgQ0Dx3j3HIRsTZkERV8eMzSL7s6xJCVKp/rgT
+         VJ5MbGxb5PfmuB0tH1ehyW+e0Z0t2D3Ly6n7RNdFzU2+pKRtYIaf5Mum5cxaHPvThMBP
+         eYQJT/khFPAvQ4Y3XPQwE+nLOUq9FwydwAE3NjMQO8KagC+7V38vT/G8kJbgKSMrqglc
+         4DmoI7QItJQ0mQgso4wlNaDmjpKl4qhE0zjP3x+qsFa6mMoqqRDa9k+D80YKUd6Au8LM
+         mMrK7AnbOWByaiqhULhlBl20GUJH0kOBvSaJolLJgiAELywI7XvVARw5ZNRetTvZOijX
+         3Qrw==
+X-Gm-Message-State: APuU4Z8WLW7lxnXIV3jZSBNGhk9zX//6vTfh2nFISRMrFVP+m2TI6wg/
+	QhKuQlolBb+bCavM/5nSzwhfJrDk+WccrD12JsnUVeB8CgpGvTnm/RcPGOZjP0p+ZzIGvwPkN+l
+	myZv8hYdQDYvuWgItH0+T1UDlRA6mzpE0uiN1UyjPMKt2JoS+HFVqUKZS/04=
+X-Gm-Gg: AZFdTZd3XWW4v0YSZ6TIO3co8ksqs0n80NDYJXJXjpHfZgpLNTbv/thlPpTh7uCX/xq
+	2EySSWY0jzQ1MaCYKzYAjv05jd64Qjg1btFVCdVhl6Vff6Eof/wfiyPqL+9YT3QZFVRbzx7jkTW
+	SwbnAYNTN2WG85xqeJpSi2TgiLXjoUgT1cMXyrLrQs/QMRjEbEXtUVfhxO4qbr6YIZfnmWXwwH4
+	rD7ZBaavAHibTlRkbcr0b2yX5IC0qTZl/LNfMsxlvh4hpa8IQYLHk8t9OonmYPJqUxZRGyJqWme
+	Aik3cDy3x8tg17toFGdnUgYoT1MORfkO10zXE3mneNP72svanMIwzga+koWdHVA+YvmXkGIU5Ma
+	pHtHfxVUJ6BS9Th+59i/J/iCxLDtFgfVICRPUx1+eZceUNh+sYoHIOUZNq2BRqiE9oWGsPNNqHj
+	yneTokWaPdzNYZWVJEuw6ECVlSHEXC6un3rM0p6B9nKZzHPDeqnz4=
+X-Received: by 2002:a17:906:9555:b0:c50:52b5:e17 with SMTP id
+ a640c23a62f3a-c513a5e1d53mr861981366b.13.1795461787407; Mon, 23 Nov 2026
+ 11:23:07 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -88,88 +104,134 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261120200040.257152-1-aahringo@redhat.com> <20261120200040.257152-4-aahringo@redhat.com>
- <sashiko-outbox-226014@kernel.org>
-In-Reply-To: <sashiko-outbox-226014@kernel.org>
-From: Alexander Aring <aahringo@redhat.com>
-Date: Mon, 23 Nov 2026 13:45:32 -0500
-X-Gm-Features: Aa3M54q5RFylsWib9aLOt62IDwRHbAyAXpdaAKRwedV-GMP5_zeZT8TffKwDAYI
-Message-ID: <CAK-6q+gC1kjNi+toH5pJHtMVRM6hRY2u9bpYrNu_ARQ=hboV3A@mail.gmail.com>
-Subject: Re: [PATCHv2 RESEND v7.4-rc3 3/5] dlm: don't publish a lkb in
- ls_lkbxa before it has an rsb
+References: <20261122184453.2668189-1-jthoughton@google.com>
+ <20261122184453.2668189-10-jthoughton@google.com> <sashiko-outbox-228638@kernel.org>
+In-Reply-To: <sashiko-outbox-228638@kernel.org>
+From: James Houghton <jthoughton@google.com>
+Date: Mon, 23 Nov 2026 14:22:29 -0500
+X-Gm-Features: Aa3M54osq-kJxtT4Y9atQQYQnCb_YAmdhHC0kxgMwEHE4_dxYTiiSl6LpxhomO4
+Message-ID: <CADrL8HUgo0zAHe7_eF1+hfTR6jBbZ=UKB1qPpMWpksvqbNHsyw@mail.gmail.com>
+Subject: Re: [PATCH v3 09/19] arm64: Add bbm_through_af capability
 To: sashiko-reviews@lists.linux.dev
-Cc: teigland@redhat.com, gfs2@lists.linux.dev
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: sZtR2E12eNVDBXfntZtYdBFg2Zzy6WdZ-GLryAfzk8A_1795459548
-X-Mimecast-Originator: redhat.com
+Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	Andrew Morton <akpm@linux-foundation.org>, Kefeng Wang <wangkefeng.wang@huawei.com>, 
+	Nikos Nikoleris <nikos.nikoleris@arm.com>, Linu Cherian <linu.cherian@arm.com>, 
+	Mark Rutland <mark.rutland@arm.com>, David Hildenbrand <david@kernel.org>, 
+	Ryan Roberts <ryan.roberts@arm.com>, Nanyong Sun <sunnanyong@huawei.com>, 
+	Yu Zhao <yuzhao@google.com>, Frank van der Linden <fvdl@google.com>, 
+	David Rientjes <rientjes@google.com>, linux-mm@kvack.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On Fri, Nov 20, 2026 at 3:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] dlm: __put_lkb() erases active ls_lkbxa entry on find_rsb()
->   failure
+> - [High] arm64: cpufeature: has_bbm_through_af() checks BBML3 only on
+>   local CPU
 > --
 >
-> commit c68d5fa6b30984a97220ff35d349c3276a988660
-> Author: Yogesh Gaur <yogeshgaur.83@gmail.com>
+> commit 65766d54bb753e1e16346fb12f4bb107c66114eb
+> Author: James Houghton <jthoughton@google.com>
 >
-> dlm: don't publish a lkb in ls_lkbxa before it has an rsb
+> arm64: Add bbm_through_af capability
 >
-> This commit moves the allocation of lkb_id and insertion of the lkb into
-> ls_lkbxa from create_lkb() to attach_lkb() so that find_lkb() never retur=
-ns
-> an lkb with a NULL lkb_resource.
+> This commit adds the ARM64_HAS_BBM_THROUGH_AF system capability to detect
+> when all CPUs support BBM Level 3 and hardware Access Flag updates for
+> HugeTLB vmemmap optimization (HVO).
 >
-> > diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-> > index c715e171bab7e..3b3e15157f4c9 100644
-> > --- a/fs/dlm/lock.c
-> > +++ b/fs/dlm/lock.c
->
+> > diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeat=
+ure.c
+> > index c9c9a6889455c..d241638b51435 100644
+> > --- a/arch/arm64/kernel/cpufeature.c
+> > +++ b/arch/arm64/kernel/cpufeature.c
 > [ ... ]
->
-> > @@ -6300,12 +6324,14 @@ int dlm_debug_add_lkb(struct dlm_ls *ls, uint32=
-_t lkb_id, char *name, int len,
-> >       if (!lksb)
-> >               return -ENOMEM;
+> > @@ -2044,6 +2045,31 @@ static bool has_bbml3(const struct arm64_cpu_cap=
+abilities *caps, int scope)
+> >       return cpu_supports_bbml3();
+> >  }
 > >
-> > -     error =3D _create_lkb(ls, &lkb, lkb_id, lkb_id + 1);
-> > +     error =3D create_lkb(ls, &lkb);
-> >       if (error) {
-> >               kfree(lksb);
-> >               return error;
-> >       }
-> >
-> > +     lkb->lkb_id =3D lkb_id;
+> > +static bool has_bbm_through_af(const struct arm64_cpu_capabilities *ca=
+ps, int scope)
+> > +{
+> > +     /* The kernel only enables HW AF updates with CONFIG_ARM64_HW_AFD=
+BM. */
+> > +     if (!IS_ENABLED(CONFIG_ARM64_HW_AFDBM))
+> > +             return false;
 > > +
-> >       dlm_set_dflags_val(lkb, lkb_dflags);
-> >       lkb->lkb_nodeid =3D lkb_nodeid;
-> >       lkb->lkb_lksb =3D lksb;
-> > @@ -6321,7 +6347,15 @@ int dlm_debug_add_lkb(struct dlm_ls *ls, uint32_=
-t lkb_id, char *name, int len,
-> >       }
+> > +     /*
+> > +      * BBM-through-AF is only needed for HVO. If HVO is not in use, d=
+on't
+> > +      * penalize systems with mismatched support.
+> > +      */
+> > +     if (!hugetlb_vmemmap_optimize_enabled()) {
+> > +             /* Only valid if HVO cannot be enabled later via the sysc=
+tl. */
+> > +             BUILD_BUG_ON(!IS_ENABLED(CONFIG_ARCH_HUGETLB_VMEMMAP_OPTI=
+MIZATION_SYSCTL_RO));
+> > +             return false;
+> > +     }
+> > +
+> > +     /*
+> > +      * We need BBML3 to support Block -> Table transitions without ta=
+king
+> > +      * faults, and we need HW AF support to support changing the OA w=
+ithout
+> > +      * taking faults. has_cpuid_feature() checks HAFDBS >=3D AF, read=
+ing the
+> > +      * local CPU's register when verifying a late CPU.
+> > +      */
+> > +     return cpu_supports_bbml3() && has_cpuid_feature(caps, scope);
+> > +}
 >
-> [Severity: Medium]
-> Can setting lkb->lkb_id before find_rsb() cause __put_lkb() to erase an
-> existing lkb's entry in ls_lkbxa if find_rsb() fails?
->
-> attach_lkb() clears lkb->lkb_id on failure for that reason, but if
-> find_rsb() fails first (for example, with -EINVAL when len >
-> DLM_RESNAME_MAXLEN), dlm_debug_add_lkb() calls __put_lkb(ls, lkb) while
-> lkb->lkb_id still holds the caller-supplied id, and xa_erase() removes an=
+> [Severity: High]
+> As reported by Catalin Marinas on v1 [1], can has_bbm_through_af() falsel=
 y
-> live lkb already occupying that id from ls_lkbxa.  Setting lkb->lkb_id
-> right before attach_lkb() would avoid this.
+> enable ARM64_HAS_BBM_THROUGH_AF on systems with mismatched BBML3 support?
 >
+> ARM64_HAS_BBM_THROUGH_AF uses ARM64_CPUCAP_SYSTEM_FEATURE, so
+> setup_system_capabilities() evaluates has_bbm_through_af() only once unde=
+r
+> SCOPE_SYSTEM on whichever CPU happens to run smp_cpus_done().  Unlike
+> has_cpuid_feature(caps, scope), cpu_supports_bbml3() ignores scope and
+> reads the current CPU's local ID_AA64MMFR2_EL1 and MIDR_EL1 registers.
+>
+> On a heterogeneous system where all early CPUs support hardware AF update=
+s
+> but only some CPUs support BBML3, running setup_system_capabilities() on =
+a
+> BBML3-capable CPU enables ARM64_HAS_BBM_THROUGH_AF system-wide.  HVO will
+> then perform live block-to-table vmemmap PMD transitions while non-BBML3
+> CPUs are online, and re-onlining a non-BBML3 CPU via hotplug will fail
+> verify_local_cpu_caps() and call cpu_die_early().
+>
+> The later DO-NOT-MERGE commit "arm64: Drop BBML3 requirement for HVO" in
+> this series drops the cpu_supports_bbml3() call, but if the BBML3 check i=
+s
+> kept, should ARM64_HAS_BBM_THROUGH_AF use
+> ARM64_CPUCAP_EARLY_LOCAL_CPU_FEATURE (or check cpus_have_cap(ARM64_HAS_BB=
+ML3)
+> when scope =3D=3D SCOPE_SYSTEM)?
+>
+> [1] https://lore.kernel.org/r/aoRnMRZ0jE0ycwcT@arm.com
 
-although it is just a debugging feature and the user (root) needs to
-know what its doing as it can break a lot of things in a invalid
-production use case, yes it might be better to move that before
-attach_lkb().
+Argh, yes Sashiko and Catalin are right: how I am detecting support
+for BBML3 here is wrong. IIUC, cpus_have_cap() (Catalin's suggestion)
+is right, but I think I prefer Sashiko's suggestion to use
+ARM64_CPUCAP_EARLY_LOCAL_CPU_FEATURE instead.
 
-- Alex
+Leaving the new cap as a SYSTEM_FEATURE and using
+cpus_have_cap(ARM64_HAS_BBML3), late CPUs without BBML3 are rejected
+because the BBML3 cap will reject them (if BBML3 is enabled on the
+system). I think it's better for bbm_through_af not to rely on that
+and instead *itself* reject late CPUs that do not support BBML3. A
+minor thing.
 
+Sorry for missing this feedback, Catalin. I'll respin a v4 soon-ish
+(next week?).
+
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122184453.26=
+68189-1-jthoughton@google.com?part=3D9
