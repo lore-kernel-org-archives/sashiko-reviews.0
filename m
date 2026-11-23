@@ -1,57 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=84.42.129.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795449328;
-	b=UbUotpVw4BpzjKfjVimT4FMos3fgwpIPMe2YHxG0n+1JdwdtmPAHmExb74n9D52R6TZg
-	 UlfRPgN5F4mOtGsCSsoGUVVAoLv64GdIGaOormcCevsDA9ZgRcBqC6jcReiDiR91RZ1VL
-	 27l+YaxLJQ3vfJ/eFgM2Yq7KvW3s6Eg7FogFlMXvvwf16Lh4AHJp9gOp7ReuCqY+LVRTW
-	 ABiouepM6i1XldHDh+EUqxADU1oBLyrznmoYFdQw3Q5HTlbKQ0Zfa6EfNFWk89uoyBvJC
-	 5VtecJYHKpdPbhtG4H5KKVKqTTyJ5uMA+fSFskpWKQsKx387o6qxyyCxBJqlIBVFr8Q==
+	t=1795449652;
+	b=QB8x0NhV7p+xvA5dUgRZ4PYFn9DFFibbqql2GCiQRpspR/b7Us1qbyVV6+2IueQSOiop
+	 MMJhnedDyN8EzV4AQawDANoDm5S5PK2z54nIOeTz5RmREvq534g/M6GqvUJuz8ssB/Opw
+	 G+NsJIz2xqLfuvpiUgOrn+GkgZvK4s0fit6GQc6psOYascQUMYpaZBHr88qybeXy0qmtQ
+	 SUdhyICjZZp62CpA4i5JE5CvcFk5qog9Od/0Ig10dPVAI0Wsi7DradyX9BP7b5I1KOzYX
+	 g+sRZZgwyaP5ucYh7X5we5Oh6eHV+3+T2MjCfxD5ff9GCfS/4D4zP2AzpeFKp2p9vIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795449328;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=GRu77aryqF5vVEWWZxA71y1DXs5B7lSaSAU/I9inw/c=;
-	b=Gq6O4fK78nzvddNN3b2p/2v7SnfL7ut73qr4kQi8j8CD1GY0QU1Rc0TbT/K8Yx5LNVML
-	 oeF+iO9I1GPeAoCjq2qFZkA/w06arcN6ckxSOeDlX/M4kBR5J4FcmcDTI6KQcfhbTBC9I
-	 KSXTeZfWycFMHi714NrqUrNpVLM83dDpevaiXX+eof56h3UMdW4jZsJk1EBsBvUSbQKAq
-	 2mgMdfypTSoKNKHtAoHgkcivSriNM7vuNzvnH0fNiGcpL5OC0IR66FwzDcYKukxlWr836
-	 1qIKxkjpm7CCAVLeMJhTPKFm6Fl3yVqq9K3cM7toFOMcaTDLW9riCdilTPqMIhwS4dg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795449652;
+	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=4p/D3PbATuxtQeuk7eymT/zAWtBGaKRQTsY1rB5za+g=;
+	b=VXGsruz4m7jSnVa3Nb4pv9GwHvlK5deNi7+Ob0J1loQhu1ftYtxxdGyLQYkEGA3njV7f
+	 Axao2Nm0tS/ZwSmtkWCdiQWN7JbE9r90lh8qx+lklizcz8+B9buc8DyppoVMZ2J1oOxFh
+	 ZLu2R89HaiA8+6Q2M8e+ZISOYhoahdo/fasCAKnn3xKbP/+7MWfpmUQ2zvzPl+RXZBvQV
+	 0PYslUrovCyCYyfbE3E+fUuIksKkKcMw8L+U7yamYMR0KJxRdP9dZF13N2XorMYyJ8rJa
+	 0dwkmv0e+RRFsGetPreeQ0Sgl7Cy0Mk82AX4/KDU0OSEon4JeuOmQaSbaQGKbvBzGJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=bvXXNaJh;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 691A2606A32C;
-	Mon, 23 Nov 2026 15:55:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 691A2606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=ixit.cz;
+	spf=pass smtp.mailfrom=ixit.cz;
+	dkim=pass header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=gdbhM5ay;
+	arc=none smtp.remote-ip=84.42.129.46
+Received: from ixit.cz (ixit.cz [84.42.129.46])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77A0606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 16:00:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B77A0606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=bvXXNaJh
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9A5B4143D;
-	Mon, 23 Nov 2026 07:55:24 -0800 (PST)
-Received: from e142392.arm.com (e142392.arm.com [10.2.213.23])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9F8FE3F632;
-	Mon, 23 Nov 2026 07:55:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795449327; bh=qIDUTgZPRjOyoHLV/9Mx1bnUgGWSH9B5CMYDf/w+HDE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bvXXNaJhs+yditcVabcGrX8VJiyTVfNW2IufiKxWUuj+XksExvOwZrndSo3mxT60d
-	 wbs/SHh76PGFuLny1aEMbleWmCQ3EjBdbQSCVbGkyFPSuscgxQHA38cQA6WQrujpig
-	 jQUpI+4WmOrSdKs0RHNe7GYXMdZzkDOGlWiOBf9o=
-Date: Mon, 23 Nov 2026 15:55:20 +0000
-From: Kristina =?utf-8?Q?Mart=C5=A1enko?= <kristina.martsenko@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>, 
-	kvmarm@lists.linux.dev
-Subject: Re: [RFC 11/12] arm64: tlbid: Pass domain to TLBI instructions
-Message-ID: <kgq3yuat6i5p2qm4444ssak74e5xfy7uqftxtxukehttv46kbu@l6mcq4jhogfd>
-References: <20261001110655.461473-1-kristina.martsenko@arm.com>
- <20261001110655.461473-12-kristina.martsenko@arm.com>
- <20261001125453.BBD291F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=gdbhM5ay
+Received: from [IPV6:2a02:830a:f787:8f00:d622:eaa3:3dd6:8f5e] (unknown [IPv6:2a02:830a:f787:8f00:d622:eaa3:3dd6:8f5e])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 73CC0534024C;
+	Mon, 23 Nov 2026 17:00:47 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1795449647;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=4p/D3PbATuxtQeuk7eymT/zAWtBGaKRQTsY1rB5za+g=;
+	b=gdbhM5ayMVFXR4B4TwTrvfY2p3A54nTJ+ywC0oISdFZjobymhuOkS3ySMk7wmS4E709NEC
+	3h/ZXv6+NAbSdc+Oq+rHf70CAFkIVYfipt7EeDq+oenHHfmK2k/obmL/HH61sK6ebq9rrZ
+	p2TVD84ZoLJE/1zGNsHrqywRFw/Yg7s=
+Message-ID: <d67611e1-771a-4e71-8da9-1f5b8635b49d@ixit.cz>
+Date: Mon, 23 Nov 2026 17:00:47 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,113 +60,117 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261001125453.BBD291F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 1/2] arm64: dts: qcom: sdm845-google: Add dual front
+ IMX355 cameras
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261123-pixel3-camera-v11-0-d00195d180dc@ixit.cz>
+ <20261123-pixel3-camera-v11-1-d00195d180dc@ixit.cz>
+ <sashiko-outbox-229342@kernel.org>
+Content-Language: en-US, cs-CZ
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <sashiko-outbox-229342@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Oct 01, 2026 at 12:54:52PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -418,12 +437,13 @@ static inline void flush_tlb_all(void)
-> >  
-> >  static inline void flush_tlb_mm(struct mm_struct *mm)
-> >  {
-> > -	unsigned long asid;
-> > +	unsigned long arg;
-> >  
-> >  	dsb(ishst);
-> > -	asid = __TLBI_VADDR(0, ASID(mm));
-> > -	__tlbi(aside1is, asid);
-> > -	__tlbi_user(aside1is, asid);
-> > +	arg = __TLBI_VADDR(0, ASID(mm));
-> > +	arg |= get_tlbid_domain(mm);
+On 23/11/2026 14:48, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] arm64: dts: qcom: sdm845-google: shared MCLK2 pinctrl placed on
+>    camss
+> --
 > 
-> [Severity: High]
-> Is this barrier sufficient to prevent subsequent MMU Loads from reordering
-> before the domain Store?
+> commit 68e8cf5f08b67a7bed75adb265a543d6741f3995
+> Author: David Heidelberg <david@ixit.cz>
 > 
-> The implementation of TLB invalidation domain tracking relies on a Dekker-like
-> synchronization between PTE updates and CPU context switches. The dsb(ishst)
-> used here acts as a Store-Store barrier.
+> arm64: dts: qcom: sdm845-google: Add dual front IMX355 cameras
 > 
-> Since ARM64's weakly ordered memory model allows subsequent Loads (like reading
-> the tlbid_domains bitmap) to be reordered before preceding Stores (like the
-> PTE update), could both threads miss each other's updates?
+> This commit adds devicetree nodes, regulators, pinctrl states, and CAMSS
+> endpoints for the two front-facing Sony IMX355 camera sensors on Google
+> Pixel 3 devices.
 > 
-> This might cause a TLB invalidation to skip a CPU that subsequently caches a
-> stale page table entry, potentially leading to memory corruption or
-> use-after-free in user space. Would a Store-Load barrier like dsb(ish) be
-> required here?
-
-I think the current barrier should be sufficient, since a DSB ST is
-stronger than a Store-Store barrier. If I’ve understood correctly then
-the PTE update should be "DSB-ordered-before" the domain bitmap read.
-
-> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+>> index 3c9656b88b696..1c1cc036dcfe8 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
 > [ ... ]
-> 
-> > @@ -626,6 +661,7 @@ static __always_inline void __do_flush_tlb_range(struct vm_area_struct *vma,
-> >  {
-> >  	struct mm_struct *mm = vma->vm_mm;
-> >  	unsigned long asid, pages;
-> > +	int domain;
-> >  
-> >  	pages = (end - start) >> PAGE_SHIFT;
-> >  
-> > @@ -634,21 +670,23 @@ static __always_inline void __do_flush_tlb_range(struct vm_area_struct *vma,
-> >  		return;
-> >  	}
-> >  
-> > -	if (!(flags & TLBF_NOBROADCAST))
-> > +	if (!(flags & TLBF_NOBROADCAST)) {
-> >  		dsb(ishst);
-> > -	else
-> > +		domain = get_tlbid_domain(mm);
+>> @@ -351,6 +390,53 @@ vreg_s3c_0p6: smps3 {
+>>   	};
+>>   };
+>>   
+>> +&camss {
+>> +	vdda-phy-supply = <&vreg_l1a_0p875>;
+>> +	vdda-pll-supply = <&vreg_l26a_1p2>;
+>> +
+>> +	/*
+>> +	 * MCLK2 (GPIO15) is shared between both front camera sensors.
+>> +	 * The clock is generated by CAMCC, therefore the pin is
+>> +	 * configured here rather than in individual sensor nodes.
+>> +	 */
+>> +	pinctrl-0 = <&cam_mclk2_default>;
+>> +	pinctrl-1 = <&cam_mclk2_sleep>;
+>> +	pinctrl-names = "default", "sleep";
 > 
 > [Severity: High]
-> Similarly, is the dsb(ishst) barrier here sufficient for range TLB
-> invalidations?
-> 
-> Just as in flush_tlb_mm(), this Store-Store barrier may fail to prevent the
-> Load of tlbid_domains from reordering before the PTE Store.
+> Should cam_mclk2_default and cam_mclk2_sleep be placed on &clock_camcc
+> instead of &camss?
 
-Same as above.
+No need for that, works reliable as is. // just for the record.
 
 > 
-> > diff --git a/arch/arm64/mm/tlbid.c b/arch/arm64/mm/tlbid.c
-> > index b44fab2dca20d..c748e710e2ee9 100644
-> > --- a/arch/arm64/mm/tlbid.c
-> > +++ b/arch/arm64/mm/tlbid.c
+> Both front_cam and front_aux_cam consume CAM_CC_MCLK2_CLK from
+> &clock_camcc, while their only link to &camss is the bidirectional
+> remote-endpoint graph cycle that fw_devlink relaxes to
+> DL_FLAG_SYNC_STATE_ONLY.  When imx355_probe() runs before camss binds,
+> &camss has not bound its default pinctrl state yet, so GPIO15 is not muxed
+> to cam_mclk when imx355_power_on() enables MCLK2 and
+> imx355_identify_module() reads the chip ID over CCI I2C, causing both
+> front sensors to fail probe permanently.
 > 
-> [ ... ]
-> 
-> > @@ -31,6 +59,14 @@ void update_tlbid_domains(struct mm_struct *mm, unsigned int cpu)
-> >  
-> >  	for (int i = 0; i < BITS_TO_U64(domain_count); i++)
-> >  		atomic64_and(cpu_domains[cpu][i], &mm->context.tlbid_domains[i]);
-> > +
-> > +	/*
-> > +	 * Pairs with the DSB before reading tlbid_domains in the TLBI paths.
-> > +	 * Either a concurrent PTE update is visible to this CPU before it uses
-> > +	 * the mm, or the PTE updater observes the reduced domain bitmap and
-> > +	 * includes this CPU in its TLBI.
-> > +	 */
-> > +	dsb(ishst);
-> >  }
-> 
-> [Severity: High]
-> Is this barrier sufficient on the domain-update side of the Dekker-like
-> synchronization?
-> 
-> As with the PTE-update side, dsb(ishst) is a Store-Store barrier. Could this
-> allow subsequent Loads (like executing a speculative page table walk) to
-> reorder before the preceding domain bitmap Store?
-> 
-> If both the PTE updater and the domain updater use Store-Store barriers, the
-> Dekker-like synchronization lacks the necessary Store-Load ordering,
-> potentially leading to missed TLB invalidations.
 
-As above, I think the current barrier is sufficient, since the domain
-bitmap write is DSB-ordered-before the PTE read.
+No failure saw so far (using it for like 2 months).
 
-Thanks,
-Kristina
