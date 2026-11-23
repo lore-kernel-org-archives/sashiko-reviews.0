@@ -1,80 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795412446;
-	b=ELcc5/2NmrxPsfSmkCcDbai1Bya8dGG6/qBIHDB+VnGL/XwKKejc/h/PlGI2xIgXu0jZ
-	 5yiQyenBjx3/pybjXK+0LoyFNX2dlLZSGf2WUaJ5T5kW820Hj21if+1IQ7tBB6dndzEM8
-	 cHTQGXo6+9vr/L3DdR+z4Ny+rc/t8PM3LDEgAdNneZDYXjs8xF8UVuAfoUl5FtLvk8oCd
-	 ER+kmLWuzxm9eO8z5aQSwshWzjJI88On+sYquZQ89QdOWe7lElAbaXHZst9L9GU3NqfKs
-	 3WNn98Tp7lS0cwKDr/Pkezr1pIFaAr81ixlWZANhpct9eV1f1qxJjBj8xJC0HBVTfag==
+	t=1795413788;
+	b=fJo07oiPYFmMAGZUZyqgPoXLsRvv+Vh7jlfIA0YDyCcXjellx2qhVUSRA0qeEYVB2d2q
+	 7jDWqg36iKRUPdosLFEcRRUuUw8zl8sVE/1kw+SunJda7F2Ire5x1HpwsxmLIt6Jtys+y
+	 7RWEUqrWl8e3rukWiWzQlQfFOa6a8W3/uxihB8xynebGvnziqDUqUd4CZ3k7ov7LWS7br
+	 jF/j+wkVXLDAXfP9GHmjfJ6UUfZv0kOIxYv40rzzkelRHePLqjQwZGHcYtubu/LHDPkkl
+	 hN9jGFd7C3ja5dHyGuH/12CJCojuFXzyCfm9ep1Rb6CTA+8RoD7MSf0JasFXcu6hluQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795412446;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Date:From:To:
-	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=bbQirXyt3WS+dsPItm3jzvka/MibXeXHe6QHDVoInDo=;
-	b=PXxZ516i5DbYXcaic5cFVYNIFB40aqSssvQ/seL63m0rx24y1YNPSy1qE0VmnkQ/MLgZ
-	 S0ihPye68cCzxxXRFToo0j3WhkxSk7y4FYtEKW0/h36qgKOFsDTNQiT2vtWj9drZ5uc/n
-	 sejle5LefY2maePmo8LUHeK3D4G5Lq2jWPbUxA3Lti5x7tNylK/BvrEjzQJbWs1wq9HcH
-	 vNPuqPfHQhVhOrj/SBQzGzfXk5jUFV2VEPgmii8AZOHANvTBdrwMraDSIOybScpwbGrp0
-	 BzBZ6dSf1vYG9wDeJYKc139arRchx43EjyTrmmrKv8+DDeqW6j8PgrrBR8GpXst44Ow==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795413788;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=5IDgReFQA2vWDiUnvoHTagyG1mytZGfUwD0jbnlahlY=;
+	b=q5fvhPsnqOPsdgR+t0df83pSoqLgledq9XuVal0SZT7Uj0LnChPXi/8uhYNcEVh3ySQY
+	 4QR0v2PxWyhPHq8fMsf04RQlemhNypHeJYS/xG0BHCW/3OUr3dmazTwpkTr/04jfP7zpa
+	 sa0TVbuCSZU0/j9qCOFIvnnOn9NowsgZOQY/EiTsOMsDtgO9Xl8pATBavDand6+oWafnr
+	 W09d1wGEUvPLHVuJ4weKNc6wg4SS3g1b8BMokXLYBUa9+avoAKv1EUnFpMePTbSvcHAxa
+	 rB67sZWuIxSV9fgUznnkDb2eZj7JtY75Hm+UTdqnmvdDHCcTAs8QyuCgo7x3Aeaqibw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D5k4zY9E;
-	arc=none smtp.remote-ip=192.198.163.16
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b="UQH//AXu";
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=QRWvGqWg;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26B1606A31E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 05:40:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A26B1606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0FC606A31E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 06:03:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6C0FC606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D5k4zY9E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795412446; x=1826948446;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=zquiTe0ILvzaj8QJ4CF4afQTdL6kzqlqawTDAHqTfGY=;
-  b=D5k4zY9E9fJU4CKgJOBf4SjGqo+NMf5aGP3TpfvJk3a5bx79pYsx+OfR
-   7XzWdJzFpLz+knLEZ+lIShdOVAr9uOLYAs/+YK3fPoB3TpfmwgWKpdVmp
-   8W7RjgMRVs8lggikOWjE5IReg/Ki3nHoPhjfJETdFsP3LxvZoHaBePlq7
-   iBDn9ydxugdlCcliOd9jFN1CkgVaSkRyNs3zdabkxMMr8WTmUWfgKcC/i
-   VGDLaoDK/U2zLUsV5JcJUOnxmZ/NuUFoP6NfsXpp/KEuyXK+yUJB9ZwVB
-   42t6Q514WwgKH9KbQNo9N5UCRd9xVUNLB92EI1GiEWAL6xd4mAOys4VIF
-   A==;
-X-CSE-ConnectionGUID: bHt86eeWQU2oRXTEwoQfbw==
-X-CSE-MsgGUID: uiN4WYXyRVuhhebe/MG/8A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11974"; a="4241133"
-X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
-   d="scan'208";a="4241133"
-Received: from fmviesa011.fm.intel.com ([10.60.135.151])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2026 21:40:45 -0800
-X-CSE-ConnectionGUID: bezcTEWfTEqTT0NdsBe5fA==
-X-CSE-MsgGUID: S6Q1T+7HSLmmeJfyGPZuow==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
-   d="scan'208";a="13022637"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa011.fm.intel.com with ESMTP; 22 Nov 2026 21:40:43 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1001)
-	id 0F74099; Mon, 23 Nov 2026 06:40:42 +0100 (CET)
-Date: Mon, 23 Nov 2026 06:40:42 +0100
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
-To: Alfonso Villalobos <alfonsocvu@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, westeri@kernel.org,
-	linux-usb@vger.kernel.org, andreas.noever@gmail.com,
-	YehezkelShB@gmail.com, stable@vger.kernel.org
-Subject: Re: [PATCH] thunderbolt: Re-add host router DP IN adapters after
- DPRX failure
-Message-ID: <20261123054042.GL229695@black.igk.intel.com>
-References: <20261121070804.26185-1-alfonsocvu@gmail.com>
- <sashiko-outbox-226770@kernel.org>
- <CAJ=mrFowQNahOjD-NQzcuJCjPE=efvDK85kMpseRUrqYBwX3Sw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UQH//AXu;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=QRWvGqWg
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AN51Ju13780976
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 06:03:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5IDgReFQA2vWDiUnvoHTagyG1mytZGfUwD0jbnlahlY=; b=UQH//AXuHFDcMGY9
+	i+8SvVLh+VQRzl+8kTdEJIWwGVduX9zad2EuVU5FDBdCdrrSMY/BK0A+SjUCMHru
+	oS8oe/wilNUZWDskM29SCm8jtgX2Knr6SyL69UeTPdCrxrxa+23fJl/+Isp7xnm0
+	Z90jYQvL9Eo/j/s5jSj4LX6Os0ApSy8yVJWG2YQv8b0FJ9LJyH50M/2qmUYAj3n+
+	viK886wf1NfLbCdSXu2UV5opl+pQeQ2i2ytvRuso/vxrs/+irTGdoo3Y2fTB3Zv1
+	ZDXyEj97NulA6lgBDGMOvkK8m9UGSzykECT13nHVLuuEeELThN1JIgDJpZrIJvc1
+	Qn5xkw==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j34fk58dm-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 06:03:06 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cdb96533adfso1741453a12.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 22 Nov 2026 22:03:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1795413786; x=1796018586; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5IDgReFQA2vWDiUnvoHTagyG1mytZGfUwD0jbnlahlY=;
+        b=QRWvGqWgUww5SW/KCrw4PkZmADzcTS343NDJoRHFypsiQAnoz9aZ0zAta1MGIdoOip
+         LGxBAhtYOVBeAgo/gG/IpVzBRs6yyGbiVlbfs/qj6g1sdjnUWnurF2leJX9cqaws2r27
+         JcclUu71iCi0bPK50o6zgHeuBLjL59KSg46R99ANjNpBLBNXgbBWTribSy221+nK+hB6
+         RJ/0zfrwtE1bB83hwQHGJ2o/UPdXLfdCQ8pl7VrWFddDo/0PiDRQrfOZ0lPHZ9W+sF0A
+         7DLHY0hgSL7uMcoIsiCz+xZo40iEHIWqulEPuFlp6QoBw9A4qMImTS2t/HXlomkE/36J
+         iTUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795413786; x=1796018586;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5IDgReFQA2vWDiUnvoHTagyG1mytZGfUwD0jbnlahlY=;
+        b=oDosswLrpVhJgfHQPOxNATjPchM4R0k3DW2J3wCGNiZCzv45cQmfAwaS59Pbovus4R
+         WavpZZLgWc17U25UP6m2IDByryda7CoHz309cU6pXOuwJKL5avu9e0l/59dvoy3HRiOP
+         470Pu/GtrC1B/XWNx/aNk8Ew6u2TYdwY2H2D3x8Y4gNi7tWAIIpPmr15N8+au+U07FI9
+         82qJTv/YyOhqthQH2ZQpQJHoVhPEmCdsmcjOt1aadthX//TYBHbYqdew6tCbxxRvH1g0
+         GilSTl0dmTPIxmFld2i1GLQaZRzM/4nHVgFWdDop6Myh3JZahGCfdJSpDtv1mVMisUEX
+         QVzA==
+X-Gm-Message-State: APuU4Z/sd5Qn81GnWiFeARlFEU8HO/jzFkIHExk0QeM+CmT2rKVGDbl+
+	MLr0+AXD8kE94bvLgoaU+Yxg4FxXDy9n55DNP9jZDB8Se3dQpTk22LE8EKR0xgnA9O4F9tgIczH
+	j9R9gdLgz/kiXq2Ose1HRaOAMvZKvbXrW1kAausDN+RdjqiWq5IRccQDRcK7iyuH+iKxmhyd65q
+	Y9EPg=
+X-Gm-Gg: AZFdTZcmP+RRiqerONANRomn7crnQbTgSinPdo1W5u0YVGldvIbv+A7/fPD4o4WcdUZ
+	3eX4IxCL1HMXThtfC2CPdqHUMcgB3t/wZjFKOG/qZDvDY5bM7xpinmrrPOmnBJL5bokjLm5FBFx
+	EBunlNFqNFg224KX+qnf+mRixPDU+vLkcIjRtd3fzPcpRwbN12fQ464nAYyWxl6fPYcs9tT1oH5
+	4Oa6z2h7t3eXgpbeJYwOfrvgj6xW5ym3zDDmCgndB00zjIdaxjapR2lMOYCVbNoadIQc1vem+0g
+	gznCh0qPpLOUKq+M/bE4iW736hxHM2b4oHYugVaVUXJnm+Y0FjHvVvNrAs29Yavp0KsRvSmDDXH
+	QyjMO1dnRXRH4ZFpfBI9nbZHBb07+NZqRXbyLRfNBqo5rEMGNkopHHEYl4uHt/rR+grKRwdoyS2
+	ngrDJQwI8+ulcV7+wl76Z2PFX0c/CVkUMLalNxjbYalNfLU/5FH/fOenGdhv84
+X-Received: by 2002:a05:6a21:4cc1:b0:3e0:dbf5:59f1 with SMTP id adf61e73a8af0-4014e6565eemr9235077637.91.1795413785776;
+        Sun, 22 Nov 2026 22:03:05 -0800 (PST)
+X-Received: by 2002:a05:6a21:4cc1:b0:3e0:dbf5:59f1 with SMTP id adf61e73a8af0-4014e6565eemr9235061637.91.1795413785267;
+        Sun, 22 Nov 2026 22:03:05 -0800 (PST)
+Received: from [10.79.117.37] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87077babfsm4983851b3a.5.2026.11.22.22.03.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Nov 2026 22:03:04 -0800 (PST)
+Message-ID: <e2adf88a-ecf1-4f00-8ecd-db925f3189af@oss.qualcomm.com>
+Date: Mon, 23 Nov 2026 11:33:01 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -84,187 +115,172 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ=mrFowQNahOjD-NQzcuJCjPE=efvDK85kMpseRUrqYBwX3Sw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4] remoteproc: qcom: pas: Add coredump support for
+ secondary processors
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261118-oob-support-glymur-v3-0-2cbdfe208d56@oss.qualcomm.com>
+ <20261118-oob-support-glymur-v3-3-2cbdfe208d56@oss.qualcomm.com>
+ <sashiko-outbox-221408@kernel.org>
+Content-Language: en-US
+From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-221408@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: EtCBHm4P7db-bErhe1bVf90wNJ-USxZg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDAyMyBTYWx0ZWRfXw/rpusyLVVTj
+ +pXfIynvV8kiMWExQy5lGsRfZ4SQ29TZwgP5JmqKiUHwuXi9TWuuAu5XWsjquvgjiSK1Hkhprqh
+ /CL2gP1aHvgAmhaNf4TLeuly9Tb3cmvkl0QBTf1K9aoNjyAXCC0skxCvG3DjXxxPo8k8XyIXsku
+ gOkG3scVjqZ0yzNIsQZXKbWMOL6ypjeEsZOD4mNu+izLc7p0ClEGcqPW+C3MmDBS7VjQ8rPv1UD
+ cwTxgk+MRvJH0hV47rMuJcFm39YtoexC0dUpwbLSKj4XDAdK/d/UHtnBimVBITLlMmiZKPm/Oyx
+ hQMrxZ6lWmL5CMFYt6wP/UHUnO3Qk9Ef+LjMnQJGeHTDlIHw65ySuqRvbDdsuWVAVnIMy9PtdTv
+ 0p6ntdDmXKEDgkjkD6vmOrWt6nCD39LJqX2lp5lbhG2QH4BXHTRYwRc9yBOwBOpiOx5lhCx1HPb
+ Hcu9crrABp8zI9o1xdA==
+X-Authority-Analysis: v=2.4 cv=PsUG/AM3 c=1 sm=1 tr=0 ts=6b03d71a cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=F5Z3lxpYoBKdc1g0_kUA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDAyMyBTYWx0ZWRfX5/KyMzvfoWjO
+ XaKa/qdzaD4pto0NeS1vdiR1kAtBetg+pLk/kkOCw0z99YpZ+TCiZGEgANx2Rgej/YM0KWJJik/
+ 17q2gb99v7WR7K06xtTJiJPDBf05wTA=
+X-Proofpoint-GUID: EtCBHm4P7db-bErhe1bVf90wNJ-USxZg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-23_01,2026-11-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611230023
 
-Hi,
 
-On Sat, Nov 21, 2026 at 09:07:04AM -0600, Alfonso Villalobos wrote:
-> Hi Mika, hope you're having a great day.
+
+On 11/18/2026 9:33 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] remoteproc: qcom: pas: duplicate dump segments in
+>   qcom_pas_load() on recovery
+> - [Medium] remoteproc: qcom: pas: secondary coredump after masked
+>   shutdown failure
+> --
 > 
-> I'd like to check the direction with you before doing v2. After the
-> Sashiko review and looking closer at how host router DP IN adapters
-> are handled, I'm not sure v1 fixes this in the right place.
+> commit 18ab6cc078bc90d357be63c7984c43a899ef428d
+> Author: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
 > 
-> The DPRX failure happens when the RX 9070 XT feeding 0:10 is in BACO.
-> With runtime PM disabled for the GPU it always works. After the
-> failure the host router never sends a hotplug for 0:10, so it stays
-> unused until something triggers the re-check from v1, here me
-> replugging the dock at 00:27:26:
+> remoteproc: qcom: pas: Add coredump support for secondary processors
 > 
->   [00:26:36] 0:10 <-> 1:11 (DP): activating
->   [00:26:36] 0:11 <-> 1:12 (DP): activating
->   [00:26:48] 0:10 <-> 1:11 (DP): not active, tearing down
->   [00:26:48] 0:10: DP IN resource unavailable: DPRX negotiation failed
->   [00:27:26] 0:10: DP IN resource available
->   [00:27:26] 0:11 <-> 1:11 (DP): activating
->   [00:27:26] 0:10 <-> 1:12 (DP): activating
-
-Does the RX 9070 driver poll for a new connections periodically like the
-i915/xe or it supports PME? The current DPRX timeout is pretty much
-following the i915 that has 10s polling period so simple way of working
-this around is to set thunderbolt.dprx_timeout= to match that.
-
-> The DP OUTs also end up swapped, so the ordering part of v1 doesn't
-> work as intended either.
-
-At the moment tunnels are created pretty much in the order the hotplugs
-arrive.
-
-> The comment in tb_dp_tunnel_active() and the redrive code both seem
-> to expect a hotplug for host DP IN adapters. Is the ASM4242 supposed
-> to send one once the GPU starts driving the DP IN? If this is
-> ASM4242 specific I can limit the fix to it with a quirk.
-
-The hotplugs should happen when the host router is enumerated so for
-example in your case it should work so that if graphics did not do DRPX
-capability exchange in time, the DP tunnel is torn down and if conditions
-are right the domain is put to sleep. When you wake it up there should be
-new hotplugs to DP INs so the resource is added back to the list.
-
-> v1 also only recovers on a new event. The alternative I had in mind
-> is retrying the DP IN a few times with a delay after DPRX fails, so
-> it recovers without a replug. Which is better?
-
-Can you first check if drpx_timeout= helps in your case? If it does, for
-simplicity one option is that we just make the default match the "biggest"
-and some slack.
-
-> I already have fixes for the Sashiko comments (the missing
-> tb_exit_redrive() and the ordering in tb_dp_resource_available()) and
-> one to skip DP IN adapters that are already in a tunnel, but I'd like
-> your opinion before spending more time on it.
+> This commit adds coredump support for PAS remoteproc instances with a
+> secondary processor by registering dump segments for the secondary
+> firmware and mapping the secondary carveout during coredump collection.
 > 
-> Thanks,
-> Alfonso
+>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+>> index 1c8c0c22c34d1..a167bd6072c94 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> [ ... ]
+>> @@ -336,6 +342,17 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
+>>  		}
+>>  	}
+>>  
+>> +	if (pas->secondary_pas_id) {
+>> +		ret = qcom_register_dump_segments(rproc, pas->secondary_firmware);
+>> +		if (ret) {
+>> +			dev_err(pas->dev,
+>> +				"failed to register secondary dump segments: %d\n", ret);
+>> +			rproc_coredump_cleanup(rproc);
+>> +			qcom_pas_release_firmware(pas);
+>> +			return ret;
+>> +		}
+>> +	}
+>> +
+>>  	return 0;
+>>  }
 > 
-> On Sat, Nov 21, 2026 at 1:25 AM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 2 potential
-> > issues to consider:
-> > - [Medium] thunderbolt: missing tb_exit_redrive() in
-> >   tb_add_dp_resources() leaks RPM ref
-> > - [Medium] thunderbolt: list_add_tail() in tb_dp_resource_available()
-> >   breaks DP IN order
-> > --
-> >
-> > commit 4eedd8886dc180b45204d935f18725051dd0e6a0
-> > Author: Alfonso Villalobos Ulate <alfonsocvu@gmail.com>
-> >
-> > thunderbolt: Re-add host router DP IN adapters after DPRX failure
-> >
-> > This commit re-checks host router DP IN adapters when a new DP OUT adapter
-> > becomes available or a device router is scanned, keeping host DP IN
-> > adapters ordered by adapter number on tcm->dp_resources.
-> >
-> > > diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
-> > > index 418ad0a61a5de..1f3dea836067e 100644
-> > > --- a/drivers/thunderbolt/tb.c
-> > > +++ b/drivers/thunderbolt/tb.c
-> > > @@ -109,6 +109,29 @@ static void tb_queue_hotplug(struct tb *tb, u64 route, u8 port, bool unplug)
-> > >
-> > >  /* enumeration & hot plug handling */
-> > >
-> > > +/*
-> > > + * Insert a host router DP IN adapter so that host DP IN adapters stay
-> > > + * in adapter number order. A DP IN that is re-added after it was
-> > > + * dropped (for example because DPRX negotiation failed) then gets
-> > > + * paired with the same DP OUT as before, instead of swapping DP OUT
-> > > + * adapters (and therefore monitors) with the other host DP IN.
-> > > + */
-> > > +static void tb_add_host_dp_in(struct tb_cm *tcm, struct tb_port *port)
-> > > +{
-> > > +     struct tb_port *p;
-> > > +
-> > > +     list_for_each_entry(p, &tcm->dp_resources, list) {
-> > > +             if (tb_port_is_dpin(p) && !tb_route(p->sw) &&
-> > > +                 p->port > port->port) {
-> > > +                     /* Insert before the first higher numbered one */
-> > > +                     list_add_tail(&port->list, &p->list);
-> > > +                     return;
-> > > +             }
-> > > +     }
-> > > +
-> > > +     list_add_tail(&port->list, &tcm->dp_resources);
-> > > +}
-> > > +
-> > >  static void tb_add_dp_resources(struct tb_switch *sw)
-> > >  {
-> > >       struct tb_cm *tcm = tb_priv(sw->tb);
-> > > @@ -118,6 +141,9 @@ static void tb_add_dp_resources(struct tb_switch *sw)
-> > >               if (!tb_port_is_dpin(port))
-> > >                       continue;
-> > >
-> > > +             if (!list_empty(&port->list))
-> > > +                     continue;
-> > > +
-> > >               if (!tb_switch_query_dp_resource(sw, port))
-> > >                       continue;
-> > >
-> > > @@ -130,7 +156,7 @@ static void tb_add_dp_resources(struct tb_switch *sw)
-> > >               if (tb_route(sw))
-> > >                       list_add(&port->list, &tcm->dp_resources);
-> > >               else
-> > > -                     list_add_tail(&port->list, &tcm->dp_resources);
-> > > +                     tb_add_host_dp_in(tcm, port);
-> > >
-> > >               tb_port_dbg(port, "DP IN resource available\n");
-> > >       }
-> >
-> > [Severity: Medium]
-> > Does re-adding a host router DP IN port through tb_add_dp_resources() leak
-> > the runtime PM reference on sw->dev when the port was in redrive mode?
-> >
-> > On host routers with QUIRK_KEEP_POWER_IN_DP_REDRIVE, tb_enter_redrive()
-> > sets port->redrive and calls pm_runtime_get(&sw->dev).  When
-> > tb_add_dp_resources(tb->root_switch) now runs at runtime from
-> > tb_scan_port() or tb_dp_resource_available(), it adds the host DP IN port
-> > to tcm->dp_resources without calling tb_exit_redrive(port).  Any later
-> > tb_dp_resource_available() call for that DP IN port then returns early
-> > because the port is already on tcm->dp_resources (or already enabled by
-> > tb_tunnel_dp()), leaving port->redrive set and preventing the host router
-> > from suspending.
-> >
-> > [ ... ]
-> >
-> > > @@ -2234,6 +2272,14 @@ static void tb_dp_resource_available(struct tb *tb, struct tb_port *port)
-> > >       list_add_tail(&port->list, &tcm->dp_resources);
-> > >       tb_exit_redrive(port);
-> > >
-> > > +     /*
-> > > +      * Host router DP IN adapters removed because DPRX negotiation
-> > > +      * failed never get a hotplug event of their own. Give them
-> > > +      * another chance now that a DP OUT became available.
-> > > +      */
-> > > +     if (tb_port_is_dpout(port))
-> > > +             tb_add_dp_resources(tb->root_switch);
-> > > +
-> > >       /* Look for suitable DP IN <-> DP OUT pairs now */
-> > >       tb_tunnel_dp(tb);
-> > >  }
-> >
-> > [Severity: Medium]
-> > Should tb_dp_resource_available() also use tb_add_host_dp_in() when adding
-> > a host router DP IN port?
-> >
-> > When a lower-numbered host DP IN port becomes available via hotplug in
-> > tb_dp_resource_available() (such as when exiting redrive mode or after
-> > resume) while a higher-numbered host DP IN port is already on
-> > tcm->dp_resources, list_add_tail() places the lower-numbered port after
-> > the higher-numbered one, breaking the adapter ordering that
-> > tb_add_host_dp_in() maintains.
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20261121070804.26185-1-alfonsocvu@gmail.com?part=1
+> [Severity: Medium]
+> Does registering secondary dump segments in qcom_pas_load() append
+> duplicate rproc_dump_segment entries to rproc->dump_segments on every
+> crash recovery?
+> 
+> Primary dump segments are registered in qcom_pas_parse_firmware(), which
+> runs only during rproc_fw_boot().  On crash recovery,
+> rproc_boot_recovery() runs rproc->ops->coredump() and then calls
+> rproc_start() -> rproc_load_segments() -> qcom_pas_load() without
+> clearing rproc->dump_segments, so each recovery allocates and appends
+> another copy of the secondary segments and produces corrupted coredump
+> ELFs with duplicate PT_LOAD headers.  In addition, if
+> qcom_register_dump_segments() fails here during recovery,
+> rproc_coredump_cleanup(rproc) wipes the primary segments that were
+> registered at initial boot and will not be re-registered on later
+> recoveries.
+>
+
+Ack, I will register the secondary dump segments during firmware parsing
+to prevent duplicates on recovery and clean up registered segments on
+failure.
+
+> [ ... ]
+> 
+>> @@ -748,11 +787,28 @@ static void qcom_pas_coredump(struct rproc *rproc)
+>>  {
+>>  	struct qcom_pas *pas = rproc->priv;
+>>  
+>> -	pas->mem_region = qcom_pas_ctx_map(pas->pas_ctx);
+>> +	if (list_empty(&rproc->dump_segments))
+>> +		return;
+>> +
+>> +	if (!pas->mem_region)
+>> +		pas->mem_region = qcom_pas_ctx_map(pas->pas_ctx);
+>>  	if (!pas->mem_region)
+>>  		return;
+>>  
+>> +	if (qcom_pas_has_secondary(pas) && !pas->secondary_mem_region) {
+>> +		pas->secondary_mem_region =
+>> +			qcom_pas_ctx_map(pas->secondary_pas_ctx);
+>> +		if (!pas->secondary_mem_region)
+>> +			dev_err(pas->dev, "unable to map secondary memory for coredump\n");
+>> +	}
+>> +
+>>  	rproc_coredump(rproc);
+> 
+> [Severity: Medium]
+> Can rproc_coredump() read pas->secondary_mem_region while the secondary
+> carveout is still locked by TrustZone or the hypervisor if shutting down
+> pas->secondary_pas_id failed?
+> 
+> rproc_boot_recovery() only skips coredump when rproc_stop() returns an
+> error, as fixed for primary and DTB PAS IDs in commit 9db31edf92dd
+> ("remoteproc: qcom_q6v5_pas: Fix error masking in qcom_pas_stop()").
+> However, qcom_pas_stop() overwrites the return value of
+> qcom_pas_shutdown(pas->secondary_pas_id) with the subsequent shutdown
+> calls:
+> 
+> drivers/remoteproc/qcom_q6v5_pas.c:qcom_pas_stop() {
+> 	...
+> 	if (pas->secondary_pas_id) {
+> 		ret = qcom_pas_shutdown(pas->secondary_pas_id);
+> 		if (ret && pas->decrypt_shutdown)
+> 			ret = qcom_pas_shutdown_poll_decrypt(pas->secondary_pas_id);
+> 		if (ret)
+> 			dev_err(pas->dev, "failed to shutdown secondary: %d\n", ret);
+> 	...
+> 	}
+> 	...
+> 	ret = qcom_pas_shutdown(pas->pas_id);
+> }
+> 
+> If the secondary shutdown fails while the primary shutdown succeeds,
+> qcom_pas_stop() returns 0 and rproc_coredump() reads the still-protected
+> secondary carveout, triggering an XPU or stage-2 access violation.
+>
+
+Some shutdown-error masking in qcom_pas_stop() predates this series, but
+the added secondary PAS path can also lose its error. This has to be
+addressed seperately.
+
+-- 
+Best Regards,
+Anvesh
+
