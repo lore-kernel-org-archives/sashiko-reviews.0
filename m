@@ -1,54 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795453824;
-	b=nV/GFxVfs5QPQU535mDoO5OReDd8+9xgo6Pr7816H3KQcTUcXtgyuJZqgged91GG6STQ
-	 uteTflXZl6sbSJE046Cr2NrtTdawWea2Epe1Th1ZzWU21l6WsUo51IcQ7GRUduF4MZDXn
-	 Y0CpWv2g0wwZymgauY1fsn37vYIRHJSdjTQfiGf+Kg+voQt7IrPpZN/93Ovd44NnFNPxi
-	 hKVeRihDoqjxYvK9/CL9578plndoCN9ZJIBUMjZabWvnmNk4hOaRNZnKvY03Cl45AMWeE
-	 jGDGYEDC2gfeIYv6Qs4IZAn6jfTL8mr2LMreKBSjHP9qmfiu2ffkJARcLH1EdA/ipfA==
+	t=1795453853;
+	b=dnJpMIQG/yiFcV1okLiuf7E0LvTAv3bVW//QTbnpmNX8m86Oxes4I5fOlPf/qIPSMsP0
+	 Y6bNzX24Jl7uBiWcj+XFC/b6IDcr4TGifkDmtfHpCHucQJvl67hSAJpjSUL0b/kRqCIzu
+	 TZO9xQzss3s6CgAExrofrAc7VP1fVLWK5z2rk3euHBMFZRic0jMl4ulfuXZl1+WvCNF2o
+	 tdzWlOhqPpQXAnx/MGTTjWeTPJP9u+ALgwG0VOBj99oFhd06fYq6659YQXsL9hidxfXIa
+	 wzAOYJh9rmfTXLKZ9QU4o6FPC5iRmFzLXFeAi2XyyTwZF3QImJ2Awlnc4D+GQ6E8T0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795453824;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=RySVhyUKxOIkkYeUQanX9OHNKWehuVaDXaE4dthCSVE=;
-	b=LfzpQQq6mIJIlrO+s+Ss283vVXp1oIdC7os5I76NyUWTZB+rY5Fq/ocOUF/IRtbKajP5
-	 SqN3VaAhVjFr4scNpZvse94TN2DODphtJVBD3/4u1kAYN6v441FW+2Leot+DyEOHHfvKt
-	 Gb83Jz0z8zvmm/NcU8E8xuetjhmvC07qz0ea57Ef0VygfJEwtAGc2RXmFKlEXh0POcMwl
-	 /ukgwHK5xagpLvHmlqM+BhQxS8faVuwUnuTQY92Ws2OUsAn5cW+KgR8dXaDfYCage0SXx
-	 9K8VLie4RnnuSxgJIi7Z+7Ews8zj9D0498ZR6U0FshEQrsZIMtCS8RkTpdKkn0P9lAA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795453853;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-Rspamd-Queue-Id:X-Spam-Level:X-Rspamd-Server:
+	 X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:X-Spam-Score;
+	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
+	b=Zt9CSAVZhNYEGxHo44EA8yB03DM9a9U7C63FJrr4+WOdHenWVb3MXCORBEHW9rTvDYou
+	 R9t4duN+oGKJeHTJiZCFYy2vVgJbhOeXcOorq0Rt/orp5itmhSTbN3VRL8DVn6KWvhW5R
+	 x0Jj+dzXVcTNCWHg7WSCWhgndHXhUvmFmPR3FtYV3USgG8DjMC6fLCyCgxGPl/BEUMpNg
+	 AfXmY05KpS8oClzswJrtZ26sdN5YwYh/up29+HNWf+8eIuwfBfjpNI3OpwprYZvb+FmY8
+	 dam/uW42wJ546R/AX9V4ex39o5+jZCJp9tNtkM+MvhK2HtGDUa0BMqtI5kxAUH9AQzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FzvtsKQb;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=none header.from=suse.cz;
+	spf=pass smtp.mailfrom=suse.cz;
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=w6AcXesO;
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uk+7dI8H;
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b="k/9dx0+8";
+	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=VNtsusfa;
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7829606A331
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 17:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB5B606A339;
+	Mon, 23 Nov 2026 17:10:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1CB5B606A339
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FzvtsKQb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818E21F000CA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 17:10:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795453823;
-	bh=RySVhyUKxOIkkYeUQanX9OHNKWehuVaDXaE4dthCSVE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=FzvtsKQbLo1q8aCg84wdufyXbujk1cDouJajmBckUg1IpyaIua59SUtz3lYeyZc4b
-	 YpRRtsLhZCVfxw/cif3HbNB+XBQWzApUGeSnuYWNWd9rGK3QqACnW8BZscfcSDo4zb
-	 Az4GKL2vLxhzCMRJV67Kxsi9gDAcQaopKHTYtveM1GTv/r57NPTDGwGib7E0RjorVA
-	 delH5gChDKyN/NHhd0K0zQfWTl+Q1tfdY7NFcEHmEs7DzqSM/zmKLMcYVC73UUIsm+
-	 8jMt996vPsRajxaX3L/8D3ro3bZkbDsny99Q+vYsKGxCdBjNzzeV3Ofk0pVa1Pktyb
-	 ej+7jwUN+n1FA==
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6b876afbb86so4505104a12.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 09:10:23 -0800 (PST)
-X-Gm-Message-State: APuU4Z/ShvjeV3x85VoOKuA1dXrmJSJpQHaCPcz3syJx8raeTeOsIo58
-	qwAxEl6RdtVI76NyY+ULDGnFKVjkwHWocg8XP6oQEvjoQyWUayhyyFBE2cTzpJWfP7LRLDxbs9z
-	28uTsuIzzzOY4GB+DMhgUnHBkKx7fWQ==
-X-Received: by 2002:aa7:c717:0:b0:6b5:8200:5008 with SMTP id
- 4fb4d7f45d1cf-6ba37ec67b3mr6296136a12.45.1795453822178; Mon, 23 Nov 2026
- 09:10:22 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=w6AcXesO;
+	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uk+7dI8H;
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=k/9dx0+8;
+	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=VNtsusfa
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 0A18E220FE;
+	Mon, 23 Nov 2026 17:10:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1795453851; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
+	b=w6AcXesOZ5YH48nwr4/Zbb2OvihyNPpA2GaS8A7O9z2oG9GBWmJ/46kSzJKa3VCgso4cw2
+	JZ4Hnb8sCgjDmnuMc+nIKSwP7dJLbQYA5qcgFiKSaOq9rPRJG87wC5i6XEzABIsGUQJrjL
+	mGPiW62u6voVv5zLFWZVR2/IFAMZr5A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1795453851;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
+	b=uk+7dI8Hik0pNcS54lE0y3ylpW9rFqPZ/mPScz0rW6mN1wlfQSe8bME/EGxR9Ab6udLZqR
+	1XWUwDEX3tW9VtCQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b="k/9dx0+8";
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=VNtsusfa
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1795453850; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
+	b=k/9dx0+842+5FtGIhxu7+7wPqr47yYCQpQ+WNd8f8xnShoAIDvn9O0jk9JRHRvvnY8kN//
+	jiEInyq0HEZOr+uduUd4dgB4Az4HSaYE7DOWdIo/rJumfwtP4xGnueR8ctNQpcSf2n58Jt
+	XVCWDpRbwlVe9lEYdHPr6fUoiyS5SHs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1795453850;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
+	b=VNtsusfa+lQYA7pWPGu0Ny1HCtp7roepllJpMCXv8C23shYPD3duAhMPyEnc0n1KJWbwqK
+	s8LYDkt36KmCbxCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A6C1913510;
+	Mon, 23 Nov 2026 17:10:49 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id MyN8IJlzBGvvAwAAD6G6ig
+	(envelope-from <jack@suse.cz>); Mon, 23 Nov 2026 17:10:49 +0000
+Received: by quack.suse.cz (Postfix, from userid 1000)
+	id E2AEA27683; Mon, 23 Nov 2026 18:10:38 +0100 (CET)
+Date: Mon, 23 Nov 2026 18:10:38 +0100
+From: Jan Kara <jack@suse.cz>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
+	Andreas Gruenbacher <agruenba@redhat.com>, gfs2@lists.linux.dev, Mike Marshall <hubcap@omnibond.com>, 
+	Martin Brandenburg <martin@omnibond.com>, devel@lists.orangefs.org, Dave Kleikamp <shaggy@kernel.org>, 
+	Carlos Maiolino <cem@kernel.org>, David Howells <dhowells@redhat.com>, 
+	Marc Dionne <marc.dionne@auristor.com>, Miklos Szeredi <miklos@szeredi.hu>, Chuck Lever <cel@kernel.org>, 
+	Jeff Layton <jlayton@kernel.org>, Eric Biggers <ebiggers@kernel.org>, 
+	Jaegeuk Kim <jaegeuk@kernel.org>, linux-fscrypt@vger.kernel.org, Anna Schumaker <anna@kernel.org>
+Subject: Re: [PATCH v3 13/13] fs: Use inode_or_folios_dirty() in
+ __inode_lru_list_add()
+Message-ID: <mlnoenfbwzynuicu56rrmw7go5ijomamaidrsarjbmplsqrcjr@bdpui3vcohcg>
+References: <20261123085601.21199-1-jack@suse.cz>
+ <20261123090040.19006-26-jack@suse.cz>
+ <sashiko-outbox-228978@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,92 +119,88 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261120-ethosu-fixes-v5-0-52d459acdb84@kernel.org>
- <20261120-ethosu-fixes-v5-14-52d459acdb84@kernel.org> <sashiko-outbox-225427@kernel.org>
-In-Reply-To: <sashiko-outbox-225427@kernel.org>
-From: Rob Herring <robh@kernel.org>
-Date: Mon, 23 Nov 2026 11:10:08 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKLgK_Hut5d641FHCdKQJ6VCXzrMc6+6Gjmk4fYNs3Mgg@mail.gmail.com>
-X-Gm-Features: Aa3M54pgSsvJCdw8I0iETcFDtx1WDDEEUPRNbfI62x-L0NF1z7vlODvndshvKMM
-Message-ID: <CAL_JsqKLgK_Hut5d641FHCdKQJ6VCXzrMc6+6Gjmk4fYNs3Mgg@mail.gmail.com>
-Subject: Re: [PATCH v5 14/19] accel: ethosu: Validate OFM transpose
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-228978@kernel.org>
+X-Rspamd-Queue-Id: 0A18E220FE
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-13.01 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	RCVD_COUNT_THREE(0.00)[3];
+	ARC_NA(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	MISSING_XM_UA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[suse.cz:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:dkim,suse.cz:email,suse.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -13.01
 
-On Fri, Nov 20, 2026 at 9:07=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
+On Mon 23-11-26 09:30:54, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Critical] accel: ethosu: missing NHCWB16 format check when OFM
->   transpose is set
+> - [High] fs: UAF of inode->i_mapping in __inode_lru_list_add() after
+>   dev_dax teardown
 > --
->
-> commit 819bad25b9dbcbe54db35bf0c5afd5f5f47c3c99
-> Author: Rob Herring (Arm) <robh@kernel.org>
->
-> accel: ethosu: Validate OFM transpose
->
-> This commit adds validation for Ethos-U85 output feature map (OFM)
-> transpose encodings and permutes the OFM dimensions before validating
-> tile and stride accesses.
->
-> > diff --git a/drivers/accel/ethosu/ethosu_gem.c b/drivers/accel/ethosu/e=
-thosu_gem.c
-> > index 0ab73b99c458c..b8f840ab1ceed 100644
-> > --- a/drivers/accel/ethosu/ethosu_gem.c
-> > +++ b/drivers/accel/ethosu/ethosu_gem.c
->
-> [ ... ]
->
-> > @@ -1029,8 +1083,19 @@ static int ethosu_gem_cmdstream_copy_and_validat=
-e(struct drm_device *ddev,
-> >               case NPU_SET_OFM_PRECISION:
-> >                       if (((param >> 6) & 0x3) > 1)
-> >                               return -EINVAL;
-> > -                     if (!ethosu_is_u65(edev) && (param & GENMASK(13, =
-11)))
-> > -                             return -EINVAL;
-> > +                     if (!ethosu_is_u65(edev)) {
-> > +                             u32 transpose =3D FIELD_GET(NPU_OFM_TRANS=
-POSE_MASK, param);
-> > +
-> > +                             switch (transpose) {
-> > +                             case 4:
-> > +                             case 5:
-> > +                                     return -EINVAL;
-> > +                             }
-> > +                             if (transpose && ((param >> 1) & 0x3) =3D=
-=3D 3)
-> > +                                     return -EINVAL;
-> > +                             if ((param >> 14) =3D=3D 2 && transpose)
-> > +                                     return -EINVAL;
-> > +                     }
-> >                       st.ofm.precision =3D param;
-> >                       break;
-> >               case NPU_SET_OFM_REGION:
->
-> [Severity: Critical]
-> Should NPU_SET_OFM_PRECISION also reject a non-zero transpose when the
-> activation format is NHCWB16 (((param >> 6) & 0x3) =3D=3D 1)?
->
-> OFM transposition on U85 is only valid with the linear NHWC format.  If
-> NHCWB16 is combined with a non-zero transpose, feat_matrix_validate() onl=
-y
-> requires NPU_SET_OFM_STRIDE_C to be set, and feat_matrix_length() compute=
-s
-> the NHCWB16 brick offset on the coordinates already permuted by
-> feat_matrix_permute() while ignoring fm->stride_x.  That can underestimat=
-e
-> info->region_size[fm->region] and allow out-of-bounds NPU DMA writes past
-> the end of the GEM buffer.
+> 
+> commit dba191eb05adecdae3b365e1982438c7882c5c1d
+> Author: Jan Kara <jack@suse.cz>
+> 
+> fs: Use inode_or_folios_dirty() in __inode_lru_list_add()
+> 
+> This commit replaces the I_DIRTY_ALL check in __inode_lru_list_add() with a
+> call to inode_or_folios_dirty().
+> 
+> > diff --git a/fs/inode.c b/fs/inode.c
+> > index de207f2f95a98..fb759033aa965 100644
+> > --- a/fs/inode.c
+> > +++ b/fs/inode.c
+> > @@ -552,7 +552,9 @@ static void __inode_lru_list_add(struct inode *inode, bool rotate)
+> >  {
+> >  	lockdep_assert_held(&inode->i_lock);
+> >  
+> > -	if (inode_state_read(inode) & (I_DIRTY_ALL | I_SYNC | I_FREEING | I_WILL_FREE))
+> > +	if (inode_state_read(inode) & (I_SYNC | I_FREEING | I_WILL_FREE))
+> > +		return;
+> > +	if (inode_or_folios_dirty(inode))
+> >  		return;
+> 
+> [Severity: High]
+> Can inode_or_folios_dirty() cause a use-after-free on inode->i_mapping
+> when a device-dax character special file inode is added to the LRU after
+> dev_dax teardown?
+> 
+> Unlike mapping_shrinkable(&inode->i_data) below and the other LRU and
+> eviction paths in fs/inode.c, inode_or_folios_dirty() dereferences
+> inode->i_mapping via mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)
+> whenever I_DIRTY_ALL is clear.
 
-Incorrect. See U85 TRM, =C2=A73.6.5, pp. 191=E2=80=93192
-(https://documentation-service.arm.com/static/67b5ba01ce2747241fce860f#page=
-=3D192)
-explicitly supports NHCWB16 with transpose. It requires block-width
-multiples of 16 for HCW/CHW and block-height multiples of 16 for
-CWH/WCH.
+Hrm, this is right. We'd need to check inode->i_data and not
+inode->i_mapping. Christian, please just drop this patch. The code is
+correct as is (we hold i_lock) and the helper would do more harm than good
+here.
 
-Rob
+								Honza
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
