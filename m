@@ -1,49 +1,136 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795473575;
-	b=NNSq27jt45mwxB/4po6SHxN+QTD8rnOOyAe15skxM12fy6+rxoft5mJ7SaKtCLdcnsrW
-	 HXxsvIYdlsOmCnj52DEObs9OQjKY8FiKIvCFO1kLVreRV+Oah/hTXoxbrW+62zeWirNBi
-	 7OL3tWpXydowp3lYphzkuH9fsquTDrLb5H+BFEDg8S79f9G/W4gJCLNqAGtYfi6/jPTd3
-	 gfdp1VJmQ4nlCW4YFLCLzfRwkGgR/ViWH/YgeBbSFFJI4hTptwdqqG9+kY8RRvi/5TFLE
-	 qg38h1fkwNCnKY661JfG3Vttpx84Hdk9O5QH14ym5yo2XGjBOJC0hS7Eekz8GdRgmZg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795473575;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=69vJ4VVySaqZOEO8Dfc8Vx0YCV5ZJPlMxKK46hGcSm0=;
-	b=IVhQAe/2FMIaCxv6oAUmwA+4nsSMlUUyX6XijVYAiDBN6SGRjKA0gf1M+tCLbVMOOZe1
-	 n0rWSmuy3vaHFidfCpa87Y27xoI0B8hpsVKiOntO499OoG0BY44j17HlWMb4xozUbs+5Q
-	 XXCPoe6SddrZ5B+tnCPktFyIh/cijV3orDBN6EI41O7iWN/iRmC3NjNZYUWrCXdxk4rHf
-	 jlufYeGcQ6MyYPUuKiQSVU7SOHxeCwUNm26nfuF0jTPMxwK2Db8L6IbVm5d93fX8zyTTJ
-	 z0nwpqo3n6s35KPfdEb2r83UFfC8SCqt2srsh7WM7BkPNJKghV08ZfDsgqEJAq1r+Cw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=n8kwKjPY;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE7DB606A322;
-	Mon, 23 Nov 2026 22:39:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EE7DB606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1795477067;
+	b=2LHtaT9biSlweAf5uBfFBvF0gsNYAqvnxPeR9hVi+3pXWwjoXohuVc8DfEb2aotBWwLF
+	 M6frnXkgTWGAkp2MM+Z7qVqANRZuDaGNieWzXh2cGma02YK5VibizLnF+1cPrsfBTZvCt
+	 6GwC2NSkcZF9RJOacMrflt6sWN/3hmiNs/VKkZAxA+YnrNSYGXwUE2cGDkolESytfpqKJ
+	 cPP1LY61Q/OXNT0kVW/6o8PzMQDktsa7YD02igi0lsTziWLexiCGwHL7+JduJJE1p510a
+	 63Nj30S7Qsuoxe+bVVqpYlBr6MSD+1PTri8flUi9wI/BNGQJS6GUTlsratUpYbSJFYQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795477067;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:DKIM-Signature:Received:Received:Date:From:To:CC:Subject:
+	 Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=JZiqxYGpQRX0ReWaF8iy7zQY671gB8AX2BTSfqGVpL0=;
+	b=OiMdJY/t2JDHWjnVJBh+vxG8nAmt64tqKaxIIWVkXIxs/tCgvhK2medq9z0ROscNJztL
+	 q/Mw0QYZuH9a0UaugGdLBidmqezdNkNqZBkNcdIsSR2eQW7w9C9P0EgNv9870xFu4TW/r
+	 eU+5e/6g1HZ7g1CfMIBeLdANmTcZAQlcE/wG6en3T/GQna9kO/KgZAg+yWPPRHNFultdC
+	 exMZTkZAhUtisWwoNNHNdzGxZUrB4vI2y65QdwHHyxaocqk4hf3EDXTAl/INpZNJf2uCX
+	 O7zXSPIotEYJMuAWTu0nLSwDKusdlVw52+mORljdW96ziCmk4hURMYfWgVKWjFQpNnw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QH3qrkSo;
+	dkim=fail reason="signature verification failed" header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=cAARlF6e;
+	arc=fail smtp.remote-ip=192.198.163.18
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5672606A31E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 23:37:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A5672606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=n8kwKjPY
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2BC96143D;
-	Mon, 23 Nov 2026 14:39:30 -0800 (PST)
-Received: from [10.57.72.180] (unknown [10.57.72.180])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 048CB3F632;
-	Mon, 23 Nov 2026 14:39:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795473573; bh=1VpWRwHFymB8MG9HTzIuEjUcbxSYD0gNuCmb6DasP8M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=n8kwKjPYt4EosD7u/3L/3dY+QCFU4aQwFO/bWWePG+zCf3Nq6Wi9fQGz2kkZncbfM
-	 pu2vuxQY1aLLOHVYYQ7IpNYDAiZkK/FfDZ0dOaH9Z+m7j+XUCqs9HVjlV+aByW/T61
-	 Ymt7MYeV6TUvw5UWg3lknDyRLI38RQeGTnrcLYE0=
-Message-ID: <286fc7a1-bbd1-459c-b3cb-fdf96866417b@arm.com>
-Date: Mon, 23 Nov 2026 22:39:30 +0000
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QH3qrkSo;
+	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=cAARlF6e
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795477066; x=1827013066;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=FfuEzsKSPW/++u639W98ExNVdT91mVZwc6/8av6yIrs=;
+  b=QH3qrkSoK55M3ydYDFW/Y6x1yyPQYhGJ5xIFR9N0RjJT/Co630ING0W3
+   WrOHIR2QrYEPEVPtuDNXwWzXkiu6qhNERmbiRgaVaPNp2sUIvXGFQLgtL
+   jQZJeqsWjria6ZO8q5OYyEWdFutsTHItE9cSXE1Iuo4ntL8D6BVTQIHZr
+   9YXQRqET9TdDh7FVaFO9BF3MUp2bLw4qJxOC2kWcl3G2ZzjTBCAimDGIA
+   WSLTzbhZEsl43hO6DyOrPzLBPMjzzmBDuMl9GUuLV70qTCU29ENgX04LW
+   zYDZenRx+NuUzgI/1FJiv75RZi9yHLHuovQ8ch33CgOGZO/MFAcTI5qtc
+   w==;
+X-CSE-ConnectionGUID: OCH5opHJRPysoQomcnW6VQ==
+X-CSE-MsgGUID: Zyau0WosRKeWcstDHZmmWQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11975"; a="4328903"
+X-IronPort-AV: E=Sophos;i="6.27,229,1787036400"; 
+   d="scan'208";a="4328903"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2026 15:37:46 -0800
+X-CSE-ConnectionGUID: kbEaJ3NySbSNK48HgQwZJA==
+X-CSE-MsgGUID: lrKxfBHrSaaraZQX0ZH3GA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,229,1787036400"; 
+   d="scan'208";a="11762934"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2026 15:37:46 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.57; Mon, 23 Nov 2026 15:37:45 -0800
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.57 via Frontend Transport; Mon, 23 Nov 2026 15:37:45 -0800
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.39) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 23 Nov 2026 15:37:45 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dDVldBHj12FSoX475tgS+XIqMZhkqPAQ/JEFgGnKW2iOzz247x0j6gg4lhqCZPmKlOBYwOZA0rOdQoyu08vo8OuRIjrbeB65kMJiMkVFVVZG3kQqUgOh4hPlR2GpOg8o2Bdcy5mmDqN3W/Zb20OLYGJhilGqlrODJFDdZ2fhTok68AK/JuXO8XgAIZYG6m7UjgPXLMHiPQ0gvvwvJYpxz8I6SXSs5YfsTMz095zF1vd7SjBm1Xto3TFvR6s7vGPyl4/2C2KRSrGG4z0QmTICwovTxhIaB/iUi4Q2evJgdt5TdnMk8Ccf0lqbnUBLNpt+x5JB4Q+Y591xW/e6POJeAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1YfkylR1Ar2sEZkPh+bE4tNwt8nWOYJ/cQXHgvX5VSc=;
+ b=fQS2i758ch7rXBOR6ZUwOzQXtCabtdCOuK3WzWSOaqJjDYfI46PV5ZQu0aLtlM/Dj5K8GQ4Gvss6jJ6cMrNmBYSb973nslHzfueDKaoH0bh68qgve7TEd5qegL3bzW7kVnwjgUjc5h9D4V2mZQvjKI/qOwg/uPxQfnayQr+VvrtsxbToq/BK6Ox0Gd82oS0bNbnW2yvON5q8pPEBT5q7u9yq8zPoVC3MQc6rSiyTc3gb7BlivdV9z6u3Swocz3UOsFDZ7JI5eOrlVXeNe6UMNsbG2LTrUdW15y8Q4ZGn7UxdJf6kKZBd7gxZqYsSfFMKRUjEEdypbX6gzUX6uNPkRA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1YfkylR1Ar2sEZkPh+bE4tNwt8nWOYJ/cQXHgvX5VSc=;
+ b=cAARlF6eTz4r/08XP79cLyhfmQ28d51JMhDLxuFSda4xNEa2dxcB0QtLR7wW+nQlj9QkfMZT96r0EUx6GPJA7G8OtxqlG9jUZV3+guRyOcK85L3vdofLzi3GvVayY0dcUDe1WJH6YhxQ2fVWbiu03WXeWq4sKZBs/D4rWQ8jb3E=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS7PR11MB5990.namprd11.prod.outlook.com (2603:10b6:8:71::5) by
+ IA1PR11MB7173.namprd11.prod.outlook.com (2603:10b6:208:41b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Mon, 23 Nov
+ 2026 23:37:42 +0000
+Received: from DS7PR11MB5990.namprd11.prod.outlook.com
+ ([fe80::133c:5eed:3aec:b899]) by DS7PR11MB5990.namprd11.prod.outlook.com
+ ([fe80::133c:5eed:3aec:b899%3]) with mapi id 15.21.0639.011; Mon, 23 Nov 2026
+ 23:37:42 +0000
+Date: Mon, 23 Nov 2026 18:37:39 -0500
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-xe@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH 1/2] drm/ras: Add retired-pages node type
+Message-ID: <awTOQxZX0-cuXBoG@intel.com>
+References: <20261123150806.2266196-4-rodrigo.vivi@intel.com>
+ <20261123150806.2266196-5-rodrigo.vivi@intel.com>
+ <sashiko-outbox-229565@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-229565@kernel.org>
+X-ClientProxiedBy: SJ0PR05CA0194.namprd05.prod.outlook.com
+ (2603:10b6:a03:330::19) To DS7PR11MB5990.namprd11.prod.outlook.com
+ (2603:10b6:8:71::5)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,188 +140,262 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/11] KVM: arm64: CCA: Add Realm RTT mapping and
- invalidation helpers
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev, Steven Price <steven.price@arm.com>,
- kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261123104233.95710-1-steven.price@arm.com>
- <20261123104233.95710-8-steven.price@arm.com>
- <sashiko-outbox-229102@kernel.org>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <sashiko-outbox-229102@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR11MB5990:EE_|IA1PR11MB7173:EE_
+X-MS-Office365-Filtering-Correlation-Id: d4eb1157-2eba-477d-b14d-08df49bac495
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|6133799003|22082099003|18002099003|11063799006|56012099006|4143699003|261026140227099003|261102123227099003|261022105027099003|261028144727099003|261021121427099003|261022075727099003|261009223027099003|261026121527099003|10067099003;
+X-Microsoft-Antispam-Message-Info: gvv9eQEe1TamjcA2+v/sRs5gaSmppfiokYXVhB41RVLFbRukFzpzOsCXyG2hQzvg9qFDq8kEXCgzwqTTKXrTtTJ0NvfDBcPERoG9k9S5HtTQVfdZHSUwwMeU9FwB9BqhjtZlycQ6MvhE5DakqvT9u6lcv9zK5lqca4N2oaWXhjb3cm3HNrU3w4ICiBy9++NNvnKSFgcFDpz35CTuYWiyCDBLot5euG/odeV8v+0NqJDXjBFxoXn+mC9sFxkqnL8O0m1/2svBigH5A7tN4sqydLhpz9VDzearp954YQ6GTIGPMiTcz/at5QdYzuQILUIOz8mLM17SvLb0m+WOxWxZGVJHHsfI1MIItS4YijkDngnOqr66bIaAZemHOS+Sd+lnOgZYbITSOZwxMqNVEbnT2YV+wreyd185qse6Tgrlkqzkr4ITZddO+EYqzEdRUt2IVMeGoE8762lp0RsM+cxtHgYFgRn3JcVta/T9bmc1kaz//9et7EWsn+xdvOZJDps1xjUD7x7bi2VR/DqLVAI5qWvx+DpNoncX2Xqr/8yEm9rPeL+xRlYbsssUoBrzawnMiCvgMpnkl8eEqG5yaODnHHZtwMeU88ubx9lFvgV3rqw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR11MB5990.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003)(261026140227099003)(261102123227099003)(261022105027099003)(261028144727099003)(261021121427099003)(261022075727099003)(261009223027099003)(261026121527099003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?DuzMI1+3C5g83HRnsvyWjLsq41/bj9M9pemS2tcaNPY8kbMAy0AHmTwY63?=
+ =?iso-8859-1?Q?XyhY1ey1m6OPurhvLlEfUa+emU3KUyGOFt6f2MF51jxCgdsoratX+EjDw0?=
+ =?iso-8859-1?Q?HeaZ0uLcBRSFqhtb2jOTcfZusQVCsXnhd6EJeLZcnvBSc6d9WGv2DXCkkE?=
+ =?iso-8859-1?Q?r0It1OfebOehIL4EnALR257CZtW9AvkUeD5fTY/xNPYipc4vEdIIBGEU4b?=
+ =?iso-8859-1?Q?1NqfD02OYQM84bOvlqbYuMkF1jln5ECgWZV9haprFS4krrrRMWaQCdoB4/?=
+ =?iso-8859-1?Q?GeFyIffr/5i/HUeItn2eGsG28AShizOs3vI5fi/iuFwCf5CMis6mTEvIMI?=
+ =?iso-8859-1?Q?/Jcy7tqebE4/VP7ec0ldiXCKFlMgkfq/sDEbm+eBjB7TOFdZI+/0iK6NwT?=
+ =?iso-8859-1?Q?2Z2dutrQE4B2J/HZwyn9EwOHEbuYTwTLer7sl5OaMdujqrIq9ENFYJti2t?=
+ =?iso-8859-1?Q?x+xptLLldtslr3AFUoBinFx9HdF1mrVA3k2vVIUnISYYCrSo1JoEK6/KaB?=
+ =?iso-8859-1?Q?xNekfJDPOLHE0UPrgxRxi5RjePgiFccGml721XqSN624tpsr07n4uHFxYT?=
+ =?iso-8859-1?Q?6zKznGU8XGVanxrZTlGdGr0yWZYunck+sUbbMqeBCKvf29JTGjKoLNjqJ6?=
+ =?iso-8859-1?Q?ubyqBVn2CSinw4I9c5Dhu3Ycb+HLepy1Wl/YWiMtdyQceax2XOnaxIYn5Q?=
+ =?iso-8859-1?Q?z48r5xKRcM/k3LxPbjER68lbJtP8Fdrvu0IIBB79BRfkqLKwSnU1ZQILnk?=
+ =?iso-8859-1?Q?P5X+sLJLQZV9hQ5zVI3f2yYuLT69s+7Cb9JSzwU5qX+56g1Pa9r+aZJvHr?=
+ =?iso-8859-1?Q?LKdVlSCqcsXBjnq8QQREu2png3dYI/FaEovYS+wyeqB3rtRNI4o2pkMDvw?=
+ =?iso-8859-1?Q?F4A2OL9GqcVxqH/d3MH9AhRfGGx0lGvBDPuNec2uzC733vCxtJJn3u2QZD?=
+ =?iso-8859-1?Q?sPgyFlJTviNZ0sUOaoIsmsgP2CbD2eLapdAB3jmaKneRguLOm7H/P/3vRm?=
+ =?iso-8859-1?Q?BDktfVfu+H0GdLXiJzJMdl9qeXQS37TruoZmT5kZ75tbUxpuyINe41Lrc5?=
+ =?iso-8859-1?Q?ewI7Xd9aCJOppQAd0AmMQcPSPEhj+FWdgcGww2RHcN1OpaJ5UoFVhlmlmp?=
+ =?iso-8859-1?Q?qOR+mnnBrwdHs5iSkOfX50Oia4VOpOPxf50XhBQqvYnR3xwtWw3JbMS/ps?=
+ =?iso-8859-1?Q?JszWMatUWd2Fw7724bS0+yB23wt2y7+D3xwRjY6Jnux/7VhWVrhp7Sub8I?=
+ =?iso-8859-1?Q?qJJz0ZHFqkuail8W41qiSamRBD49755Z2WJsBTYVvSYQoY5FogAiiib3rY?=
+ =?iso-8859-1?Q?XQ+mjGY+8Ra/yl9s8hJtaHnivz/pUB4w/lRrA7TGJhwZj1MeHlFw7CrtbT?=
+ =?iso-8859-1?Q?va/PjzuPkPDwKZ4oAKE6EXUhZ4stYh19j32FdA81AuUR1H0SCOvJcq6Yox?=
+ =?iso-8859-1?Q?JrUmBMFH84RXEO49qNe+VRwNPyHEAZUKcQIpZ1gFOYO+Loxcf+BxKMt3HJ?=
+ =?iso-8859-1?Q?knhKDqqxzn69PXIqPkDQpsh0I05YIlxjngth3FfFxigYwbPwXqzdt9/XNE?=
+ =?iso-8859-1?Q?euNW0+KXQI1Mmoln+gy+pV39tbvrnNoXgKdntEOk+wv69cjWGebHHNzdUz?=
+ =?iso-8859-1?Q?7c6OF/ODuQYJiU/BlNvUIl/so5le1mCBo7EotHluCGLKZf8MaYOSPB9Mi7?=
+ =?iso-8859-1?Q?82mNa0nuvSVbox3GmW8Nr745i4WT8IXuBYSm1TXYCxE0fqqJKToUHqwofM?=
+ =?iso-8859-1?Q?SclLR1hOIyVZWqcvvlNwJRx6kqwDflj/NHIoxnJ7p669RMkGlRuyAmjrde?=
+ =?iso-8859-1?Q?tymImw1VPg=3D=3D?=
+X-Exchange-RoutingPolicyChecked: oz0AilLcUZS4MNeoJvin86sFd/7fr+pCYtSzOk07iiYJaIQEE6q1X5tT8aL9w3c3RxvYqC5iwpdXcKzJEbMFHNdoMAEcCkGuAiacVbGtwJlWGcaZUYdgG00o5VVpxGv26JctdXxdZf6Avoq++R1JQCux/NFGb35dWXoYdAA/EmGYoRm62eoXJunbpDP0shQiuBmEFZ88P0IyHAUIsTt50NPz9ONB5aMoke1qpblqa2etWum9zVdn0lcrHUTetCTcz/pdYcnSxMuv7gx/jxmUvGmpt0g/oXrze2pZjUGAl8So+gh0AYgtiCGq0l2ZbjMo0ai98GavY3PPNfGV2l42bg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: d4eb1157-2eba-477d-b14d-08df49bac495
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR11MB5990.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 23:37:42.2958
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: CnKnCZA2DJEDoFdFgsKdVoG7UaRFdpO1iWRcTBGQP89j+HdoM7Sp41yb0C+LaannWDPYhKY0AoqscYitRXcJTg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB7173
+X-OriginatorOrg: intel.com
 
-On 23/11/2026 11:12, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
+On Mon, Nov 23, 2026 at 03:28:53PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [Medium] KVM: arm64: cca: direct-reclaim allocation in
->    realm_unmap_cache_topup()
-> - [Medium] KVM: arm64: cca: stale err_level used after
->    realm_unmap_cache_topup() failure
-> - [Low] KVM: arm64: cca: possible RTT creation for unmapped entry in
->    realm_unmap_*()
+> - [Medium] drm/ras: lost NLM_F_DUMP_INTR in
+>   drm_ras_nl_get_retired_pages_dumpit()
+> - [Medium] drm/ras: missing node type checks in error-counter netlink
+>   handlers
+
+I have a v4 on the pipeline that solves all of these, but to get that
+right, I first need to quickly land these fixes that I found during this
+exercise:
+
+https://lore.kernel.org/dri-devel/20261123233326.2882114-5-rodrigo.vivi@intel.com/T/#t
+
+Please help with review of those and I'll send the v4 soon...
+
 > --
 > 
-> commit 4c7e030072ac67c12f0f2603fad3d39821c47426
-> Author: Steven Price <steven.price@arm.com>
+> commit 27c9afd08cd19612592b285ef905e2efcbf77cec
+> Author: Aravind Iddamsetty <aravind.iddamsetty@linux.intel.com>
 > 
-> KVM: arm64: CCA: Add Realm RTT mapping and invalidation helpers
+> drm/ras: Add retired-pages node type
 > 
-> This commit adds RMI Realm Translation Table creation, folding, and stage-2
-> unmapping helpers for CCA Realms, including filtered range unmapping for
-> shared and private memory.
+> This commit adds a retired-pages node type to drm-ras along with the
+> get-retired-pages dump operation and the get-retired-pages-info do
+> operation.
 > 
->> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
->> index 435174ac3d87f..b34f5320b50b6 100644
->> --- a/arch/arm64/kvm/rmi.c
->> +++ b/arch/arm64/kvm/rmi.c
-> 
-> [ ... ]
-> 
->> @@ -172,6 +391,208 @@ void kvm_realm_unmap_stage2_all(struct kvm *kvm)
->>   	realm->stage2_unmapped = true;
->>   }
->>   
->> +static bool realm_unmap_cache_topup(struct kvm *kvm,
->> +				    struct kvm_mmu_memory_cache *mc, int needed)
->> +{
->> +	int ret;
->> +
->> +	if (!mc || kvm_mmu_memory_cache_nr_free_objects(mc) >= needed)
->> +		return false;
->> +
->> +	lockdep_assert_held_write(&kvm->mmu_lock);
->> +	write_unlock(&kvm->mmu_lock);
->> +	ret = __kvm_mmu_topup_memory_cache(mc, KVM_PGTABLE_LAST_LEVEL, needed);
->> +	write_lock(&kvm->mmu_lock);
->> +
->> +	return !ret;
->> +}
-> 
-> [Severity: Medium]
-> When __kvm_mmu_topup_memory_cache() fails, does returning false cause
-> realm_unmap_shared_range() and realm_unmap_private_range() to pass a stale
-> err_level to realm_create_rtt_levels()?
-> 
-> Because kvm->mmu_lock was dropped and re-acquired, another thread can fold
-> the RTT at err_level before the lock is retaken.  The callers only retry
-> from addr when realm_unmap_cache_topup() returns true; on failure they fall
-> through to realm_create_rtt_levels(realm, addr, err_level, level, mc).
-> alloc_rtt() can still succeed from a partially topped-up cache or via
-> alloc_delegated_granule()'s GFP_ATOMIC fallback (which sets __GFP_HIGH and
-> force-charges memcg), causing realm_rtt_create() at err_level + 1 to fail
-> with RMI_ERROR_RTT at an ancestor level < err_level.  That triggers the
-> WARN() in realm_create_rtt_levels() and returns -ENXIO, hitting
-> WARN_ON(ret != -ENOMEM) in realm_unmap_shared_range() or KVM_BUG_ON(1, kvm)
-> in realm_unmap_private_range().
-> 
->> +static void realm_unmap_shared_range(struct kvm *kvm,
->> +				     unsigned long start,
->> +				     unsigned long end,
->> +				     bool may_block,
->> +				     struct kvm_mmu_memory_cache *mc)
->> +{
->> +	struct realm *realm = &kvm->arch.realm;
->> +	unsigned long rd = realm->rd_phys;
->> +	unsigned long next_addr, addr;
->> +	unsigned long shared_bit = BIT(realm->ia_bits - 1);
->> +
->> +	if (start >= end)
->> +		return;
->> +
->> +	/*
->> +	 * Callers may pass either an IPA range or its shared alias. Add the
->> +	 * shared bit only for the former. Use addition so an exclusive end at
->> +	 * shared_bit advances to the end of the IPA space.
->> +	 */
->> +	if (start < shared_bit) {
->> +		start += shared_bit;
->> +		end += shared_bit;
->> +	}
->> +
->> +	for (addr = start; addr < end; addr = next_addr) {
->> +		long ret;
->> +
->> +		ret = rmi_rtt_unprot_unmap(rd, addr, end, RMI_ADDR_TYPE_NONE,
->> +					   0, &next_addr, NULL, NULL);
->> +		if (WARN_ON(ret < 0))
->> +			return;
->> +
->> +		switch (RMI_RESULT_STATUS(ret)) {
->> +		case RMI_SUCCESS:
->> +			break;
->> +		case RMI_ERROR_RTT: {
->> +			int err_level = RMI_RESULT_DATA_LEVEL(ret);
->> +			int level = find_map_level(realm, addr, end);
->> +
->> +			if (WARN_ON(err_level < realm->start_level ||
->> +				    err_level > KVM_PGTABLE_LAST_LEVEL))
->> +				return;
->> +
->> +			if (err_level >= level) {
->> +				/* Nothing present, so skip */
->> +				next_addr = ALIGN(addr + 1,
->> +						  kvm_granule_size(err_level));
->> +				break;
->> +			}
-> 
-> [Severity: Low]
-> This question rests on an RMM architectural detail that could not be
-> confirmed from the kernel source: can SMC_RMI_RTT_UNPROT_UNMAP or
-> SMC_RMI_RTT_DATA_UNMAP return RMI_ERROR_RTT with err_level < level when the
-> RTT walk stops at an unassigned ancestor entry (where neither a child RTT
-> nor a block mapping is present at err_level), rather than advancing
-> next_addr and returning RMI_SUCCESS?
-> 
-> If so, when unmapping a sub-block range (such as a single page, where
-> find_map_level() returns KVM_PGTABLE_LAST_LEVEL) across an unmapped ancestor
-> entry, both realm_unmap_shared_range() and realm_unmap_private_range() only
-> skip when err_level >= level.  For err_level < level, they treat the entry
-> as a block mapping to split, allocating and delegating intermediate RTTs via
-> realm_create_rtt_levels() only to fold them back at the end of the function,
-> and if that allocation fails in realm_unmap_private_range() (for example
-> under GFP_ATOMIC when may_block is false), it hits KVM_BUG_ON(1, kvm) even
-> though nothing was mapped.
-
-Indeed, this was observed in my testing and I have raised this with the 
-RMM team to get this fixed. RMM must return RMI_SUCCESS if the entry
-at err_level is "UNASSIGNED", while also advancing the out_top to
-the next possible valid entry.
-
-
-Suzuki
-
-
+> > diff --git a/drivers/gpu/drm/drm_ras.c b/drivers/gpu/drm/drm_ras.c
+> > index b099eb67836e7..34e5dab997440 100644
+> > --- a/drivers/gpu/drm/drm_ras.c
+> > +++ b/drivers/gpu/drm/drm_ras.c
 > 
 > [ ... ]
 > 
->> +void kvm_realm_unmap_range_filter(struct kvm *kvm, unsigned long start,
->> +				  unsigned long size, bool may_block,
->> +				  enum kvm_gfn_range_filter attr_filter)
->> +{
->> +	/*
->> +	 * MMU notifier callbacks cannot take slots_lock, which protects the
->> +	 * eager split cache. Use a cache owned by this invalidation instead.
->> +	 */
->> +	struct kvm_mmu_memory_cache cache = { .gfp_zero = __GFP_ZERO };
+> > @@ -617,6 +637,145 @@ int drm_ras_nl_set_error_threshold_doit(struct sk_buff *skb, struct genl_info *i
+> >  	return set_node_error_threshold(node_id, error_id, threshold);
+> >  }
+> >  
+> > +static struct drm_ras_node *get_retired_pages_node(const struct genl_info *info)
+> > +{
+> > +	struct nlattr *attr = info->attrs[DRM_RAS_A_RETIRED_PAGE_ATTRS_NODE_ID];
+> > +	struct drm_ras_node *node;
+> > +
+> > +	node = xa_load(&drm_ras_xa, nla_get_u32(attr));
+> > +	if (!node || node->type != DRM_RAS_NODE_TYPE_RETIRED_PAGES) {
+> > +		NL_SET_BAD_ATTR(info->extack, attr);
+> > +		return NULL;
+> > +	}
+> > +
+> > +	return node;
+> > +}
+> > +
+> > +static int msg_put_retired_page(struct sk_buff *msg, u32 node_id,
+> > +				const struct drm_ras_retired_page *page)
+> > +{
+> > +	if (nla_put_u32(msg, DRM_RAS_A_RETIRED_PAGE_ATTRS_NODE_ID, node_id) ||
+> > +	    nla_put_uint(msg, DRM_RAS_A_RETIRED_PAGE_ATTRS_ADDRESS, page->address) ||
+> > +	    nla_put_uint(msg, DRM_RAS_A_RETIRED_PAGE_ATTRS_SIZE, page->size) ||
+> > +	    nla_put_u32(msg, DRM_RAS_A_RETIRED_PAGE_ATTRS_STATUS, page->status))
+> > +		return -EMSGSIZE;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +/**
+> > + * drm_ras_nl_get_retired_pages_dumpit() - Dump the retired pages of a node
+> > + * @skb: Netlink message buffer
+> > + * @cb: Callback context for multi-part dumps
+> > + *
+> > + * Appends one message per retired page, in increasing address order. The
+> > + * dump resumes from the next address after a buffer overflow, and is flagged
+> > + * with %NLM_F_DUMP_INTR if the list changed between messages.
+> > + *
+> > + * Return: 0 if all pages fit in @skb, -EMSGSIZE if the buffer filled up
+> > + *         (requires multi-part continuation), or a negative error code on
+> > + *         failure.
+> > + */
+> > +int drm_ras_nl_get_retired_pages_dumpit(struct sk_buff *skb,
+> > +					struct netlink_callback *cb)
+> > +{
+> > +	const struct genl_info *info = genl_info_dump(cb);
+> > +	struct drm_ras_ctx *ctx = (void *)cb->ctx;
+> > +	struct drm_ras_retired_page page;
+> > +	struct drm_ras_node *node;
+> > +	void *hdr;
+> > +	int ret;
+> > +
+> > +	if (!info->attrs || GENL_REQ_ATTR_CHECK(info, DRM_RAS_A_RETIRED_PAGE_ATTRS_NODE_ID))
+> > +		return -EINVAL;
+> > +
+> > +	node = get_retired_pages_node(info);
+> > +	if (!node)
+> > +		return -ENOENT;
+> > +
+> > +	for (;;) {
+> > +		ret = node->query_retired_page(node, ctx->cursor, &page);
+> > +		if (ret == -ENOENT)
+> > +			return 0;
+> > +		if (ret)
+> > +			return ret;
+> > +
+> > +		/* Never zero, so the first message is checked as well */
+> > +		cb->seq = page.generation + 1;
+> > +
+> > +		hdr = genlmsg_iput(skb, info);
+> > +		if (!hdr)
+> > +			return -EMSGSIZE;
+> > +
+> > +		genl_dump_check_consistent(cb, hdr);
+> > +
+> > +		ret = msg_put_retired_page(skb, node->id, &page);
+> > +		if (ret) {
+> > +			genlmsg_cancel(skb, hdr);
+> > +			return ret;
+> > +		}
+> > +
+> > +		genlmsg_end(skb, hdr);
+> > +		ctx->cursor = page.address + 1;
+> > +	}
+> > +}
 > 
 > [Severity: Medium]
-> Can topping up this cache from an MMU notifier callback enter direct reclaim
-> and trigger a lockdep splat on __mmu_notifier_invalidate_range_start_map?
+> Can calling genl_dump_check_consistent(cb, hdr) before
+> msg_put_retired_page() lose NLM_F_DUMP_INTR across a multi-part dump
+> boundary?
 > 
-> When mmu_notifier_invalidate_range_start() invokes
-> kvm_mmu_notifier_invalidate_range_start() -> ... ->
-> kvm_realm_unmap_range_filter() with may_block set, it holds
-> __mmu_notifier_invalidate_range_start_map.  Because cache.gfp_custom is left
-> at 0, realm_unmap_cache_topup() -> __kvm_mmu_topup_memory_cache() allocates
-> with GFP_KERNEL_ACCOUNT (__GFP_DIRECT_RECLAIM | __GFP_FS), which enters
-> fs_reclaim_acquire() and acquires __mmu_notifier_invalidate_range_start_map
-> recursively (and risks reclaim recursion deadlock under memory pressure).
-> Setting cache.gfp_custom to GFP_NOWAIT | __GFP_ACCOUNT avoids direct reclaim
-> in the notifier path.
+> genlmsg_iput() only requires 20 bytes of tailroom, while
+> msg_put_retired_page() needs another 32 to 40 bytes.  If the remaining skb
+> space falls in between when page.generation changes,
+> genl_dump_check_consistent() sets NLM_F_DUMP_INTR on hdr and updates
+> cb->prev_seq = cb->seq, after which msg_put_retired_page() fails with
+> -EMSGSIZE and genlmsg_cancel() discards hdr.  When the dump resumes at the
+> same ctx->cursor in the next skb, cb->seq already matches cb->prev_seq, so
+> userspace never receives NLM_F_DUMP_INTR.
 > 
-
+> Also, page.generation + 1 wraps to 0 in cb->seq when page.generation is
+> U32_MAX, and if all remaining pages at or above ctx->cursor are removed
+> between dump batches, query_retired_page() returns -ENOENT before cb->seq
+> is updated.  Moving genl_dump_check_consistent() after
+> msg_put_retired_page() succeeds avoids consuming the sequence change on a
+> cancelled message.
+> 
+> [ ... ]
+> 
+> > @@ -631,14 +790,18 @@ int drm_ras_node_register(struct drm_ras_node *node)
+> >  	if (!node->device_name || !node->node_name)
+> >  		return -EINVAL;
+> >  
+> > -	/* Currently, only Error Counter Endpoints are supported */
+> > -	if (node->type != DRM_RAS_NODE_TYPE_ERROR_COUNTER)
+> > -		return -EINVAL;
+> > -
+> > -	/* Mandatory entries for Error Counter Node */
+> > -	if (node->type == DRM_RAS_NODE_TYPE_ERROR_COUNTER &&
+> > -	    (!node->error_counter_range.last || !node->query_error_counter))
+> > +	switch (node->type) {
+> > +	case DRM_RAS_NODE_TYPE_ERROR_COUNTER:
+> > +		if (!node->error_counter_range.last || !node->query_error_counter)
+> > +			return -EINVAL;
+> > +		break;
+> > +	case DRM_RAS_NODE_TYPE_RETIRED_PAGES:
+> > +		if (!node->query_retired_page)
+> > +			return -EINVAL;
+> > +		break;
+> > +	default:
+> >  		return -EINVAL;
+> > +	}
+> >  
+> >  	return xa_alloc(&drm_ras_xa, &node->id, node, xa_limit_32b, GFP_KERNEL);
+> >  }
+> 
+> [Severity: Medium]
+> Now that drm_ras_node_register() inserts DRM_RAS_NODE_TYPE_RETIRED_PAGES
+> nodes into drm_ras_xa, should the error-counter netlink handlers verify
+> that node->type == DRM_RAS_NODE_TYPE_ERROR_COUNTER?
+> 
+> Without that check, passing a retired-pages node ID to the error-counter
+> operations causes get_node_error_threshold() and set_node_error_threshold()
+> to return -EOPNOTSUPP instead of -ENOENT, and causes
+> drm_ras_nl_get_error_counter_dumpit() to iterate over
+> node->error_counter_range on a non-error-counter node:
+> 
+> drivers/gpu/drm/drm_ras.c:get_node_error_threshold() {
+> 	node = xa_load(&drm_ras_xa, node_id);
+> 	if (!node)
+> 		return -ENOENT;
+> 
+> 	if (!node->query_error_threshold)
+> 		return -EOPNOTSUPP;
+>     ...
+> }
+> 
+> drivers/gpu/drm/drm_ras.c:drm_ras_nl_get_error_counter_dumpit() {
+>     ...
+> 	node = xa_load(&drm_ras_xa, node_id);
+> 	if (!node)
+> 		return -ENOENT;
+> 
+> 	for (error_id = max(node->error_counter_range.first, ctx->restart);
+> 	     error_id <= node->error_counter_range.last;
+> 	     error_id++) {
+>     ...
+> }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261123150806.2266196-4-rodrigo.vivi@intel.com?part=1
