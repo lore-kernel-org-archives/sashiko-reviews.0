@@ -1,115 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.81
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795453853;
-	b=dnJpMIQG/yiFcV1okLiuf7E0LvTAv3bVW//QTbnpmNX8m86Oxes4I5fOlPf/qIPSMsP0
-	 Y6bNzX24Jl7uBiWcj+XFC/b6IDcr4TGifkDmtfHpCHucQJvl67hSAJpjSUL0b/kRqCIzu
-	 TZO9xQzss3s6CgAExrofrAc7VP1fVLWK5z2rk3euHBMFZRic0jMl4ulfuXZl1+WvCNF2o
-	 tdzWlOhqPpQXAnx/MGTTjWeTPJP9u+ALgwG0VOBj99oFhd06fYq6659YQXsL9hidxfXIa
-	 wzAOYJh9rmfTXLKZ9QU4o6FPC5iRmFzLXFeAi2XyyTwZF3QImJ2Awlnc4D+GQ6E8T0g==
+	t=1795454163;
+	b=MsybNW57dOz+UU/puhrWEpXoByHkBpe8rv/HiL4f3/pQUhphNCvMBtxX82YOTZojzDdz
+	 AwtOHBHKbkiKdA2Gt1oDRfiLuzglGAXtNBHQoVnVr05kSD89QcdKExatDbALu/k8Cifxl
+	 fgHLO9iAKfSW1VShEssNG25PDsfcUl87q5BGePiQf1mEploRjDZU4XVQQ2HaC7l5hEQ83
+	 B1ru0SP1nVVh4qkNgxtoPgJKr9umvK2ftooywMLs+hQ2oiP9wzjySd4LqwcvMrx+NDXEf
+	 JOHYz/T9E35cIF+WRagp00o8UEmyax4TIhMACWp7mK/FpK4RkEs21Hf8XljNVtOKeCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795453853;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Rspamd-Queue-Id:X-Spam-Level:X-Rspamd-Server:
-	 X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:X-Spam-Score;
-	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
-	b=Zt9CSAVZhNYEGxHo44EA8yB03DM9a9U7C63FJrr4+WOdHenWVb3MXCORBEHW9rTvDYou
-	 R9t4duN+oGKJeHTJiZCFYy2vVgJbhOeXcOorq0Rt/orp5itmhSTbN3VRL8DVn6KWvhW5R
-	 x0Jj+dzXVcTNCWHg7WSCWhgndHXhUvmFmPR3FtYV3USgG8DjMC6fLCyCgxGPl/BEUMpNg
-	 AfXmY05KpS8oClzswJrtZ26sdN5YwYh/up29+HNWf+8eIuwfBfjpNI3OpwprYZvb+FmY8
-	 dam/uW42wJ546R/AX9V4ex39o5+jZCJp9tNtkM+MvhK2HtGDUa0BMqtI5kxAUH9AQzg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795454163;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=F/JPbpSB/rGyKRm4viwHoAGzFC9uuzP6EhjwxOibHe4=;
+	b=mDZn+KW4knhS0smjX1L5LKLXmYzSH57OS25ni4nZ8AvE6lBfm/tvxuP5bqXllFjuegR8
+	 t2vsIQaIU0KOzTn6vxyoiDoQ1BegxzwmYi1fhha5fBRqoxQ5FAgbe3G/DVybTZLwlA88m
+	 KdiSGyN+jBJU0oj4wwO+knLmBjq1mm+68eNAwwMhoSO1KpgyE6oATrM7Gi6Fyy3lgbiX1
+	 1iak7rN64PybXXiKXsfJl008QNdgWz6d840fWLUH96H+CAKKTxS5B2PGfbOD1l63+xCO4
+	 3YvvBk2N9SWCxXCDgqZCD+/2YT4phQLrlZHbxrW2qhFwLxudM/sBiWZ6B4IYN+KQzLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=suse.cz;
-	spf=pass smtp.mailfrom=suse.cz;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=w6AcXesO;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uk+7dI8H;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b="k/9dx0+8";
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=VNtsusfa;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=BFxBw55+;
+	arc=none smtp.remote-ip=91.218.175.81
+Received: from mta0.migadu.com (out-81.mta0.migadu.com [91.218.175.81])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB5B606A339;
-	Mon, 23 Nov 2026 17:10:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1CB5B606A339
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BB5606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 17:16:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1BB5606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=w6AcXesO;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=uk+7dI8H;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=k/9dx0+8;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=VNtsusfa
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 0A18E220FE;
-	Mon, 23 Nov 2026 17:10:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1795453851; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
-	b=w6AcXesOZ5YH48nwr4/Zbb2OvihyNPpA2GaS8A7O9z2oG9GBWmJ/46kSzJKa3VCgso4cw2
-	JZ4Hnb8sCgjDmnuMc+nIKSwP7dJLbQYA5qcgFiKSaOq9rPRJG87wC5i6XEzABIsGUQJrjL
-	mGPiW62u6voVv5zLFWZVR2/IFAMZr5A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1795453851;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
-	b=uk+7dI8Hik0pNcS54lE0y3ylpW9rFqPZ/mPScz0rW6mN1wlfQSe8bME/EGxR9Ab6udLZqR
-	1XWUwDEX3tW9VtCQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b="k/9dx0+8";
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=VNtsusfa
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1795453850; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
-	b=k/9dx0+842+5FtGIhxu7+7wPqr47yYCQpQ+WNd8f8xnShoAIDvn9O0jk9JRHRvvnY8kN//
-	jiEInyq0HEZOr+uduUd4dgB4Az4HSaYE7DOWdIo/rJumfwtP4xGnueR8ctNQpcSf2n58Jt
-	XVCWDpRbwlVe9lEYdHPr6fUoiyS5SHs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1795453850;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/kG84OV1svRUYxEC9cAvJgk73HRiyZOTxHBca81Xqek=;
-	b=VNtsusfa+lQYA7pWPGu0Ny1HCtp7roepllJpMCXv8C23shYPD3duAhMPyEnc0n1KJWbwqK
-	s8LYDkt36KmCbxCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A6C1913510;
-	Mon, 23 Nov 2026 17:10:49 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id MyN8IJlzBGvvAwAAD6G6ig
-	(envelope-from <jack@suse.cz>); Mon, 23 Nov 2026 17:10:49 +0000
-Received: by quack.suse.cz (Postfix, from userid 1000)
-	id E2AEA27683; Mon, 23 Nov 2026 18:10:38 +0100 (CET)
-Date: Mon, 23 Nov 2026 18:10:38 +0100
-From: Jan Kara <jack@suse.cz>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=BFxBw55+
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=ztivkPdMY2ApJwl6+OnSKU5R/Tv0oGqQG0kTiaequ14=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795454160; v=1; x=1796058960;
+ b=BFxBw55+mfjZ7cI6lHPR8s+xH+tbkiAM+Wg5qQBQrcAdQ6B32TPe1Bj94vTDEAgf5r364sOP
+ +xKp6txvZA7L2b/pEa/OauEeCimIKUugPm16AosSzwGhJYviapqv/UkNk5ht6bSwlaCaOr1oMp0
+ DJ9VbW89lr2VJTxZjQCyUukM=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 21b22ad1ae60e129;
+	Mon, 23 Nov 2026 17:16:00 +0000
+X-Mizu-Trace-ID: 21b22ad1ae60e129
+X-Migadu-Flow: FLOW_OUT
+Date: Mon, 23 Nov 2026 09:15:59 -0800
+From: Shakeel Butt <shakeel.butt@linux.dev>
 To: sashiko-reviews@lists.linux.dev
-Cc: Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
-	Andreas Gruenbacher <agruenba@redhat.com>, gfs2@lists.linux.dev, Mike Marshall <hubcap@omnibond.com>, 
-	Martin Brandenburg <martin@omnibond.com>, devel@lists.orangefs.org, Dave Kleikamp <shaggy@kernel.org>, 
-	Carlos Maiolino <cem@kernel.org>, David Howells <dhowells@redhat.com>, 
-	Marc Dionne <marc.dionne@auristor.com>, Miklos Szeredi <miklos@szeredi.hu>, Chuck Lever <cel@kernel.org>, 
-	Jeff Layton <jlayton@kernel.org>, Eric Biggers <ebiggers@kernel.org>, 
-	Jaegeuk Kim <jaegeuk@kernel.org>, linux-fscrypt@vger.kernel.org, Anna Schumaker <anna@kernel.org>
-Subject: Re: [PATCH v3 13/13] fs: Use inode_or_folios_dirty() in
- __inode_lru_list_add()
-Message-ID: <mlnoenfbwzynuicu56rrmw7go5ijomamaidrsarjbmplsqrcjr@bdpui3vcohcg>
-References: <20261123085601.21199-1-jack@suse.cz>
- <20261123090040.19006-26-jack@suse.cz>
- <sashiko-outbox-228978@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	Johannes Weiner <hannes@cmpxchg.org>, Michal Koutny <mkoutny@suse.com>, 
+	Christian Brauner <brauner@kernel.org>, Michal Hocko <mhocko@kernel.org>, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Muchun Song <muchun.song@linux.dev>, Jan Kara <jack@suse.cz>, 
+	Matthew Wilcox <willy@infradead.org>, David Hildenbrand <david@kernel.org>, 
+	Vlastimil Babka <vbabka@kernel.org>, Zi Yan <ziy@nvidia.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <nico.pache@linux.dev>, 
+	Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, 
+	Lorenzo Stoakes <ljs@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Meta kernel team <kernel-team@meta.com>, linux-mm@kvack.org, dsterba@suse.cz
+Subject: Re: [RFC PATCH 6/7] memcg: remove synchronous memory.high enforcement
+Message-ID: <awR0p0hSJWt9MlIg@linux.dev>
+References: <20261122024737.2741569-1-shakeel.butt@linux.dev>
+ <20261122024737.2741569-7-shakeel.butt@linux.dev>
+ <sashiko-outbox-227661@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -121,86 +75,14 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-228978@kernel.org>
-X-Rspamd-Queue-Id: 0A18E220FE
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-13.01 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	RCVD_COUNT_THREE(0.00)[3];
-	ARC_NA(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DKIM_TRACE(0.00)[suse.cz:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:dkim,suse.cz:email,suse.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -13.01
+In-Reply-To: <sashiko-outbox-227661@kernel.org>
 
-On Mon 23-11-26 09:30:54, sashiko-bot@kernel.org wrote:
+On Sun, Nov 22, 2026 at 03:06:06AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [High] fs: UAF of inode->i_mapping in __inode_lru_list_add() after
->   dev_dax teardown
-> --
-> 
-> commit dba191eb05adecdae3b365e1982438c7882c5c1d
-> Author: Jan Kara <jack@suse.cz>
-> 
-> fs: Use inode_or_folios_dirty() in __inode_lru_list_add()
-> 
-> This commit replaces the I_DIRTY_ALL check in __inode_lru_list_add() with a
-> call to inode_or_folios_dirty().
-> 
-> > diff --git a/fs/inode.c b/fs/inode.c
-> > index de207f2f95a98..fb759033aa965 100644
-> > --- a/fs/inode.c
-> > +++ b/fs/inode.c
-> > @@ -552,7 +552,9 @@ static void __inode_lru_list_add(struct inode *inode, bool rotate)
-> >  {
-> >  	lockdep_assert_held(&inode->i_lock);
-> >  
-> > -	if (inode_state_read(inode) & (I_DIRTY_ALL | I_SYNC | I_FREEING | I_WILL_FREE))
-> > +	if (inode_state_read(inode) & (I_SYNC | I_FREEING | I_WILL_FREE))
-> > +		return;
-> > +	if (inode_or_folios_dirty(inode))
-> >  		return;
-> 
-> [Severity: High]
-> Can inode_or_folios_dirty() cause a use-after-free on inode->i_mapping
-> when a device-dax character special file inode is added to the LRU after
-> dev_dax teardown?
-> 
-> Unlike mapping_shrinkable(&inode->i_data) below and the other LRU and
-> eviction paths in fs/inode.c, inode_or_folios_dirty() dereferences
-> inode->i_mapping via mapping_tagged(inode->i_mapping, PAGECACHE_TAG_DIRTY)
-> whenever I_DIRTY_ALL is clear.
+> - [High] memcg: memcg_enforce_high() leaves vhost_task PF_USER_WORKER
+>   threads unthrottled
 
-Hrm, this is right. We'd need to check inode->i_data and not
-inode->i_mapping. Christian, please just drop this patch. The code is
-correct as is (we hold i_lock) and the helper would do more harm than good
-here.
+Real fix already in flight. 
 
-								Honza
--- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+https://lore.kernel.org/all/AS8P251MB0001F1EACBED6E7A2AFA8A96C8692@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM/
