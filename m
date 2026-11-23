@@ -1,104 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795448313;
-	b=qKd65WEVEpS25fS0xCD4odm0vWGaMZeVPnfqRFwNul4cVG9rvLkS7kGmmmjs7G6tV2A4
-	 mjnVahEp9nIReW1uhN8rFKSzKUOxq6L5REvSeI8Uh+dmlMtmgU38EbPF2ssvZCmlEpNSW
-	 lqh4dVGWM1Ol+LoATytgA+3ovuZyNqvFZKq162xF2GREWfI3E6xdl59yFCbrrAQwMmy/5
-	 /7baBWoxLbrpJzygn23U7MRT2HsboBDT6htt61fcwna8LWYYEFMYCxyBYNsthHuAfDDLl
-	 fFbaf521pFNtk6XUIPbJ7lKUA9E29cQQMFw3AtIxw8XhqrtWy18MySeBKtG+5PawDrw==
+	t=1795448872;
+	b=fmeHgeCwIenJQmzYEehIu6u2r2zoy3EO57zhN+Bh7Nv+CZm1UeioJ8UI6rTYJ/fQsPyu
+	 /3R8FuD0j5p4lE0zYwR2u5jmNGM3Lo/yY4pgD+uDHwQdJQvPWyHX/FVgrpbAAAsPVp4Ot
+	 ZG0EWlWG6Pl4FC5q0kDfuqqizZOmJ3g3lPNfc17DAJ5Skbt1tJpKs8acxipGCtshcJBA3
+	 3LbFqQL24rlf6c/jKwY2kBLG6jdEfRMWPAJhrfHLI917gHTZHrHlAjuFp66xm2emvhAjU
+	 5SOPOxaXp2PHe2KIF92kVj3SM2b+KdSNBc+Da34zaR15YuDPVv+9koIICq52Hou0H8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795448313;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Spamd-Result:X-Rspamd-Server:
-	 X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id;
-	bh=A3PkSOCe7exa6vD5VedDuqzXSgVCnaD+BSal1yaiBLs=;
-	b=dTR77u6+ToH2dKZtx5Pjel9E3h/iu1t5/Cxqan2kxnRneACUdvwcJvqij0RMAk6PFSOq
-	 g+OLqf6HCFQVKszia1iCDyt0ZYRPBM0aSa2q/HNKF+C+a+Aje4A1hBW4qKrOpvmHr3LLx
-	 15Tj2zPYEjQgxff4IuWe+GPbaxVM1+MQrN3EADDBQHxU+z4R0EMVWG4fkunltxXydYzZU
-	 zEGV6NjZ3/n8AaXjbpLLP51s16lmQcGX2hU4c+9P5G9CjmZVBs1JCrMQGvCYZfWR2HtKG
-	 cJxVuP6kqP8q2kz2hOb4BqpAB9MmCJvcuKowDHI46uZkEapsNXPJ6IIv78QNVI+Dgpw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795448872;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Sxme6riOmitdd/D4oIIp+QdlkQ7Ium7Vb6++P08XVEc=;
+	b=OBQwSnr1Us0vH5prX0d3CqNxzHuQjMF3Vsjl88GlwdBZkUkq3UZWvyisV11p6GjZquDK
+	 E1Pz++SLi0mUBZWZaUM+hjuWHkV03kaoSYnfNYmZTDtCkfd2I++M416kNVODK1FL+bdar
+	 aUCbS3OEQpOM+Wj/Jh57LhJX7/CJ8d0/sWWjasVUyzRwbKedrfzl/jUCOE3RHN7sciCFF
+	 c/jQMH5ybAmAV2uejLG8iCO/O6kQKsHSH9Mu0/97ixow3judRKJwUWrPoIjZF6tEbk9TP
+	 u+SCR1WnMsRmKRhoYeyFb6fuIwcEwBSkE2WwpQ1qRZgw7jXWaPsGrbOJW1N8sUt/uHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="SfhQ2ec/";
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=2vI4RPDc;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="SfhQ2ec/";
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=2vI4RPDc;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	dmarc=pass header.from=pm.me;
+	spf=pass smtp.mailfrom=pm.me;
+	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b="jPVS/347";
+	arc=none smtp.remote-ip=109.224.244.16
+Received: from mail-24416.protonmail.ch (mail-24416.protonmail.ch [109.224.244.16])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CC2606A31E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 15:38:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 61CC2606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB0F606A31E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 15:47:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3CB0F606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=SfhQ2ec/;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=2vI4RPDc;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=SfhQ2ec/;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=2vI4RPDc
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 8BE7A1F850;
-	Mon, 23 Nov 2026 15:38:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795448310; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=A3PkSOCe7exa6vD5VedDuqzXSgVCnaD+BSal1yaiBLs=;
-	b=SfhQ2ec/Qs9bdSWWkM4tPOOyCmv+oua6YHMdxqFmdV9dlx+b8zkUs9l5Ofg0oDI8pgVpx0
-	SaQCcAx+r1GYjFCXZVBjCzYdvLZmxSZzgRrYyP5FvMXMk6JOhx9d1Bk2kf4H2yM9En140N
-	EyMTbVfK5lEcwrgzXV9536VwSuk72RE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795448310;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=A3PkSOCe7exa6vD5VedDuqzXSgVCnaD+BSal1yaiBLs=;
-	b=2vI4RPDceQba6eiKKCh8GyBaSY+phiqkegB5BEjqpD52BankMJMNr/+0CMeHA/LEJxR7PZ
-	ROfGAWLekEnN2wDg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="SfhQ2ec/";
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=2vI4RPDc
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795448310; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=A3PkSOCe7exa6vD5VedDuqzXSgVCnaD+BSal1yaiBLs=;
-	b=SfhQ2ec/Qs9bdSWWkM4tPOOyCmv+oua6YHMdxqFmdV9dlx+b8zkUs9l5Ofg0oDI8pgVpx0
-	SaQCcAx+r1GYjFCXZVBjCzYdvLZmxSZzgRrYyP5FvMXMk6JOhx9d1Bk2kf4H2yM9En140N
-	EyMTbVfK5lEcwrgzXV9536VwSuk72RE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795448310;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=A3PkSOCe7exa6vD5VedDuqzXSgVCnaD+BSal1yaiBLs=;
-	b=2vI4RPDceQba6eiKKCh8GyBaSY+phiqkegB5BEjqpD52BankMJMNr/+0CMeHA/LEJxR7PZ
-	ROfGAWLekEnN2wDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5829713510;
-	Mon, 23 Nov 2026 15:38:30 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id adNkC/ZdBGu2IwAAD6G6ig
-	(envelope-from <hare@suse.de>); Mon, 23 Nov 2026 15:38:30 +0000
-Message-ID: <bb31f7cf-a23b-4f19-9fcc-bac4a4163831@suse.de>
-Date: Mon, 23 Nov 2026 16:38:29 +0100
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=jPVS/347
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1795448869; x=1795708069;
+	bh=Sxme6riOmitdd/D4oIIp+QdlkQ7Ium7Vb6++P08XVEc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=jPVS/347IrIWLHKWBdXz7gUhrjzvQbtCFy95+UuGoV80C7jlrUST1sRUH+4fU8DR5
+	 uAzZpHE2ZB0YC0LxOzMbsZEoeUWof2EyZRUZxdRDgf1keoenVm5AuTmrC3qhpnH97T
+	 wtvw0/YSAwbMfdbsNBMCJKzVCa0Gm1aspboF1dmpbdpn6D268yUYEm78L84lwg+vo7
+	 FZKLgPHG2+14djl9FBjfgDH68nwPtmQtxEKL/Sad5FzpjLHUYyOGOeMd4cLSKuJrNQ
+	 v9Nwbb5Vo7cfr+T+szfZB3Wt074PZyEl5gSMeQ50QmtRhERiIeKF1QxFDmb0sG34GH
+	 7gfipNs6QEJ4w==
+Date: Mon, 23 Nov 2026 15:47:45 +0000
+To: sashiko-reviews@lists.linux.dev
+From: Erlend Jacobsen <erlendjacobsen@pm.me>
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+Subject: Re: [PATCH] HID: rdmctmzt: add RDMCTMZT keyboard battery driver
+Message-ID: <n7p9VNimdc3xx8VRUl1TSM5nXeabeiKke7akTR6m6222F0B7bbhPzUa1YI2QwFIxHoiHP7n2csrJECs1M-mT6JcQtaoh-fyevF7qgqjgpu4=@pm.me>
+In-Reply-To: <sashiko-outbox-228283@kernel.org>
+References: <20261122-b4-rdmctmzt-v1-1-d45883e1fe33@pm.me> <sashiko-outbox-228283@kernel.org>
+Feedback-ID: 128302180:user:proton
+X-Pm-Message-ID: 4a443b90599a4db757be5d5508b1a347ce8e9400
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,232 +64,201 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 9/9] nvmet: add configfs attribute 'dhchap_keyring'
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
-Cc: linux-nvme@lists.infradead.org
-References: <20261123-dhchap-keyring-v4-v5-0-81eefb4c0724@kernel.org>
- <20261123-dhchap-keyring-v4-v5-9-81eefb4c0724@kernel.org>
- <sashiko-outbox-229228@kernel.org>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-229228@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	TO_DN_SOME(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCPT_COUNT_THREE(0.00)[3];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -13.50
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 8BE7A1F850
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 11/23/26 1:35 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
+Thank you for the review. Both points are addressed in v2.
+
+> [Severity: Medium]
+> Can a runtime USB reset stop rdm->work permanently when usb_submit_urb()
+> returns -ENODEV?
+
+I don't think a reset can produce -ENODEV here: usb_submit_urb() returns
+it only while dev->state < USB_STATE_UNAUTHENTICATED, and a reset moves
+the device through USB_STATE_DEFAULT and USB_STATE_ADDRESS, both above
+that. The only way to get there is USB_STATE_NOTATTACHED after a failed
+reset, which usb_set_device_state() never leaves, and the disconnect
+then calls rdm_remove().
+
+Still, v2 makes the rule simpler: the work now ends only on -ESHUTDOWN,
+which rdm_command() returns only when rdm->stopping is set. Any error
+from the transport, -ENODEV included, counts as a lost poll.
+
+> [Severity: Medium]
+> Does a stale rdm->fails count after the keyboard reconnects delay the nex=
+t
+> retry for RDM_POLL_MS (60 s) instead of RDM_RETRY_MS (5 s)?
+
+Yes, that is a bug. In v2, fails and silent are reset to 0 while the
+dongle reports no link; the battery is already marked not present then,
+because of the linked check. A keyboard that comes back is retried after
+RDM_RETRY_MS. Tested by switching the keyboard off and on through the
+dongle: the battery was back at the first poll after the reconnect.
+
+Erlend
+
+
+
+On Sunday, November 22nd, 2026 at 20:47, sashiko-bot@kernel.org <sashiko-bo=
+t@kernel.org> wrote:
+
+> Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [High] nvmet: NULL pointer dereference in nvmet_auth_set_key() when
->    clearing key
-> - [Medium] nvmet: cannot write or reset .nvme in
->    nvmet_host_dhchap_keyring_store()
-> - [Medium] nvmet: 1-byte OOB write in nvmet_host_dhchap_keyring_show()
->    via sprintf()
+> - [Medium] HID: rdmctmzt: stale fails count delays reconnect retry in
+>   rdm_battery_work()
+> - [Medium] HID: rdmctmzt: battery polling stops permanently on -ENODEV
+>   during USB reset
 > --
-> 
-> commit 1e868858e36190db74c6e7c75fe1ba260a535d71
-> Author: Hannes Reinecke <hare@kernel.org>
-> 
-> nvmet: add configfs attribute 'dhchap_keyring'
-> 
-> This commit adds a dhchap_keyring configfs attribute to the nvmet host
-> group so userspace can select which keyring is used to look up DH-HMAC-CHAP
-> keys.
-> 
->> diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
->> index 7204ace149565..84091803af300 100644
->> --- a/drivers/nvme/target/auth.c
->> +++ b/drivers/nvme/target/auth.c
->> @@ -68,7 +68,9 @@ int nvmet_auth_set_key(struct nvmet_host *host, const char *secret,
->>   		return 0;
->>   	}
->>   	len = strcspn(secret, "\n");
->> -	key = nvme_auth_extract_key(NULL, secret, len, &generated);
->> +	down_read(&nvmet_config_sem);
->> +	key = nvme_auth_extract_key(host->dhchap_keyring, secret, len, &generated);
->> +	up_read(&nvmet_config_sem);
->>   	if (IS_ERR(key)) {
->>   		pr_debug("%s: invalid key specification\n", __func__);
->>   		return PTR_ERR(key);
-> 
-> [Severity: High]
-> Does nvmet_auth_set_key() dereference a NULL secret when clearing a key via
-> configfs?
-> 
-> Earlier in this series, commit "nvmet-auth: parse dhchap key from configfs
-> attribute" updated nvmet_host_dhchap_key_store() and
-> nvmet_host_dhchap_ctrl_key_store() to leave keydata as NULL when an empty
-> line is written:
-> 
-> drivers/nvme/target/configfs.c:nvmet_host_dhchap_key_store() {
-> 	...
-> 	len = strcspn(page, "\n");
-> 	if (len) {
-> 		keydata = kstrndup(page, len, GFP_KERNEL);
-> 		if (!keydata)
-> 			return -ENOMEM;
-> 	}
-> 
-> 	ret = nvmet_auth_set_key(host, keydata, false);
-> 	...
-> }
-> 
-> nvmet_auth_set_key() then checks if (!strlen(secret)) without testing
-> !secret first, triggering a NULL pointer dereference whenever an empty
-> string or newline is written to dhchap_key or dhchap_ctrl_key to revoke a
-> configured key.
-> 
-
-Fixed with the next version.
-
->> diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
->> index bc46d760aaa4a..eb20599cf372d 100644
->> --- a/drivers/nvme/target/configfs.c
->> +++ b/drivers/nvme/target/configfs.c
->> @@ -2348,6 +2348,62 @@ static ssize_t nvmet_host_dhchap_ctrl_key_store(struct config_item *item,
->>   
->>   CONFIGFS_ATTR(nvmet_host_, dhchap_ctrl_key);
->>   
->> +static ssize_t nvmet_host_dhchap_keyring_show(struct config_item *item,
->> +		char *page)
->> +{
->> +	struct nvmet_host *host = to_host(item);
->> +	struct key *keyring;
->> +	ssize_t ret;
->> +
->> +	down_read(&nvmet_config_sem);
->> +	keyring = key_get(host->dhchap_keyring);
->> +	if (!keyring) {
->> +		page[0] = '\0';
->> +		ret = 0;
->> +	} else {
->> +		down_read(&keyring->sem);
->> +		if (key_validate(keyring))
->> +			ret = sprintf(page, "<invalidated>\n");
->> +		else
->> +			ret = sprintf(page, "%s\n", keyring->description);
->> +		up_read(&keyring->sem);
->> +		key_put(keyring);
->> +	}
->> +	up_read(&nvmet_config_sem);
->> +	return ret;
->> +}
-> 
-> [Severity: Medium]
-> Can sprintf(page, "%s\n", keyring->description) write one byte past the end
-> of the PAGE_SIZE configfs read buffer?
-> 
-> add_key() allows keyring descriptions of up to KEY_MAX_DESC_SIZE - 1 (4095)
-> bytes, and writing a 4095-byte description without a trailing newline to
-> dhchap_keyring succeeds in nvmet_host_dhchap_keyring_store().  Reading
-> dhchap_keyring afterwards writes 4095 description bytes, a newline, and a
-> NUL terminator at page[4096], overflowing the 4096-byte buffer by one byte.
-> Using snprintf(page, PAGE_SIZE, ...) avoids the out-of-bounds write.
-> 
-
-Fixed with the next version.
-
->> +
->> +static ssize_t nvmet_host_dhchap_keyring_store(struct config_item *item,
->> +		const char *page, size_t count)
->> +{
->> +	struct nvmet_host *host = to_host(item);
->> +	struct key *keyring;
->> +	char *desc;
->> +	size_t len;
->> +	int ret = 0;
->> +
->> +	len = strcspn(page, "\n");
->> +	if (!len)
->> +		return -EINVAL;
->> +	desc = kstrndup(page, len, GFP_KERNEL);
->> +	if (!desc)
->> +		return -ENOMEM;
->> +	keyring = request_key(&key_type_keyring, desc, NULL);
->> +	if (IS_ERR(keyring)) {
->> +		ret = PTR_ERR(keyring);
->> +	} else {
->> +		down_write(&nvmet_config_sem);
->> +		key_put(host->dhchap_keyring);
->> +		host->dhchap_keyring = keyring;
->> +		up_write(&nvmet_config_sem);
->> +	}
->> +	kfree(desc);
->> +
->> +	return ret < 0 ? ret : count;
->> +}
-> 
+>=20
+> commit df75940f34ec97cd0e02102aba217a05fb6752a4
+> Author: Erlend Jacobsen <erlendjacobsen@pm.me>
+>=20
+> HID: rdmctmzt: add RDMCTMZT keyboard battery driver
+>=20
+> This commit adds a HID driver for RDMCTMZT keyboards and their 2.4 GHz
+> dongles to poll battery status over the vendor raw-HID interface and repo=
+rt
+> wireless link status.
+>=20
+> > diff --git a/drivers/hid/hid-rdmctmzt.c b/drivers/hid/hid-rdmctmzt.c
+> > new file mode 100644
+> > index 0000000000000..9966025b40587
+> > --- /dev/null
+> > +++ b/drivers/hid/hid-rdmctmzt.c
+> > @@ -0,0 +1,654 @@
+>=20
 > [ ... ]
-> 
->> @@ -2446,6 +2504,11 @@ static struct config_group *nvmet_hosts_make_group(struct config_group *group,
->>   #ifdef CONFIG_NVME_TARGET_AUTH
->>   	/* Default to SHA256 */
->>   	host->dhchap_hash_id = NVME_AUTH_HASH_SHA256;
->> +	host->dhchap_keyring = key_lookup(nvme_keyring_id());
->> +	if (IS_ERR(host->dhchap_keyring)) {
->> +		kfree(host);
->> +		return ERR_PTR(-ENOKEY);
->> +	}
->>   #endif
-> 
+>=20
+> > +/* Send one command; its answer arrives in rdm_raw_event() */
+> > +static int rdm_send(struct rdm_device *rdm, u8 cmd)
+> > +{
+> > +=09size_t raw_len =3D rdm->len + 1;
+> > +=09int ret;
+> > +
+> > +=09memset(rdm->buf, 0, raw_len);
+> > +=09rdm->buf[0] =3D 0x00; /* unnumbered report ID */
+> > +=09rdm->buf[1 + RDM_PREFIX_BYTE] =3D RDM_PREFIX;
+> > +=09rdm->buf[1 + RDM_CMD_BYTE] =3D cmd;
+> > +=09rdm->buf[1 + RDM_SIZE_BYTE] =3D rdm->len;
+> > +
+> > +=09ret =3D hid_hw_output_report(rdm->hdev, rdm->buf, raw_len);
+> > +=09/*
+> > +=09 * -ESHUTDOWN from the transport (an endpoint flushed by a USB rese=
+t)
+> > +=09 * is a lost poll; it must not end the polling like rdm->stopping d=
+oes.
+> > +=09 */
+> > +=09if (ret =3D=3D -ESHUTDOWN)
+> > +=09=09return -EIO;
+> > +=09if (ret < 0)
+> > +=09=09return ret;
+> > +=09if (ret !=3D raw_len)
+> > +=09=09return -EIO;
+> > +
+> > +=09return 0;
+> > +}
+>=20
+> [ ... ]
+>=20
+> > +/* The dongle's link byte, asked for now: an 0xd0 may have been missed=
+ */
+> > +static int rdm_dongle_linked(struct rdm_device *rdm, bool *linked)
+> > +{
+> > +=09u8 reply[RDM_ANSWER_LEN];
+> > +=09int ret;
+> > +
+> > +=09ret =3D rdm_command(rdm, RDM_DONGLE_STATUS, reply);
+> > +=09if (ret =3D=3D -ENODEV || ret =3D=3D -ESHUTDOWN)
+> > +=09=09return ret;
+>=20
+> [ ... ]
+>=20
+> > +static void rdm_battery_work(struct work_struct *work)
+> > +{
+> > +=09struct rdm_device *rdm =3D container_of(to_delayed_work(work),
+> > +=09=09=09=09=09      struct rdm_device, work);
+> > +=09enum usb_wireless_status wireless =3D rdm->wireless;
+> > +=09bool linked =3D true, answered =3D false, got =3D false;
+> > +=09bool changed, present;
+> > +=09unsigned int delay;
+> > +=09u8 capacity =3D 0;
+> > +=09int status =3D 0;
+> > +
+> > +=09if (rdm->dongle && rdm_dongle_linked(rdm, &linked))
+> > +=09=09return;
+> > +
+> > +=09if (linked && rdm_poll_keyboard(rdm, &linked, &answered, &got,
+> > +=09=09=09=09=09&capacity, &status))
+> > +=09=09return;
+>=20
 > [Severity: Medium]
-> Can userspace restore or reset dhchap_keyring back to the default .nvme
-> keyring through nvmet_host_dhchap_keyring_store()?
+> Can a runtime USB reset stop rdm->work permanently when usb_submit_urb()
+> returns -ENODEV?
+>=20
+> During usb_reset_and_verify_device(), usbhid runs hid_pre_reset() and
+> hid_post_reset() without calling the driver's suspend or reset_resume
+> callbacks, and hub_port_init() temporarily places udev->state in
+> USB_STATE_DEFAULT and USB_STATE_ADDRESS.  If hid_hw_output_report() runs
+> during that window, usb_submit_urb() fails with -ENODEV (while
+> dev->state < USB_STATE_CONFIGURED), causing rdm_dongle_linked() or
+> rdm_poll_keyboard() to abort rdm_battery_work() before
+> queue_delayed_work().
+>=20
+> Since rdm_stop_polling() sets rdm->stopping and cancels the work on unplu=
+g
+> and suspend, should rdm_dongle_linked() and rdm_poll_keyboard() only bail
+> out on -ESHUTDOWN (or should rdm_send() also map -ENODEV to -EIO)?
+>=20
+> > +
+> > +=09if (!got)
+> > +=09=09hid_dbg(rdm->hdev, "no battery status (linked %d, answered %d)\n=
+",
+> > +=09=09=09linked, answered);
+> > +
+> > +=09rdm->silent =3D answered ? 0 : min(rdm->silent + 1, RDM_MAX_FAILS);
+> > +=09rdm->fails =3D got ? 0 : min(rdm->fails + 1, RDM_MAX_FAILS);
+> > +=09if (!linked) {
+> > +=09=09rdm->fails =3D RDM_MAX_FAILS;
+> > +=09=09wireless =3D USB_WIRELESS_STATUS_DISCONNECTED;
+> > +=09} else if (answered) {
+> > +=09=09wireless =3D USB_WIRELESS_STATUS_CONNECTED;
+> > +=09} else if (rdm->silent >=3D RDM_MAX_FAILS ||
+> > +=09=09   rdm->wireless =3D=3D USB_WIRELESS_STATUS_NA) {
+> > +=09=09wireless =3D USB_WIRELESS_STATUS_DISCONNECTED;
+> > +=09}
+> > +
+> > +=09/* Without a link the dongle reports when it comes back */
+> > +=09if (got || !linked)
+> > +=09=09delay =3D RDM_POLL_MS;
+> > +=09else if (rdm->fails < RDM_MAX_FAILS)
+> > +=09=09delay =3D RDM_RETRY_MS;
+> > +=09else if (rdm->dongle && rdm->silent >=3D RDM_MAX_FAILS)
+> > +=09=09delay =3D RDM_SEARCH_MS;
+> > +=09else
+> > +=09=09delay =3D RDM_POLL_MS;
+>=20
+> [Severity: Medium]
+> Does a stale rdm->fails count after the keyboard reconnects delay the nex=
+t
+> retry for RDM_POLL_MS (60 s) instead of RDM_RETRY_MS (5 s)?
+>=20
+> While the keyboard is off or unlinked, rdm->fails reaches RDM_MAX_FAILS.
+> When the keyboard powers on, the dongle's 0xd0 report in rdm_raw_event()
+> queues rdm->work with delay 0 without resetting rdm->fails.  If that
+> immediate poll runs before the newly booted keyboard has measured its
+> battery, the keyboard answers RDM_CMD_START (answered =3D true) and refus=
+es
+> RDM_CMD_BATTERY with 0x0f (got =3D false): rdm->silent is reset to 0 whil=
+e
+> rdm->fails stays at RDM_MAX_FAILS, so the delay check skips both
+> RDM_RETRY_MS and RDM_SEARCH_MS and falls through to RDM_POLL_MS, leaving
+> the battery unregistered or marked not present for a full minute.  The sa=
+me
+> 60 s stall happens if one !linked poll sets rdm->fails =3D RDM_MAX_FAILS
+> while rdm->silent is 1, and the immediate poll on reconnect times out
+> (leaving rdm->silent at 2).
+>=20
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122-b4-rdmct=
+mzt-v1-1-d45883e1fe33@pm.me?part=3D1
 > 
-> nvmet_hosts_make_group() initializes host->dhchap_keyring to the .nvme
-> keyring via key_lookup(nvme_keyring_id()), so reading dhchap_keyring shows
-> ".nvme" (and the !keyring branch in nvmet_host_dhchap_keyring_show() is
-> unreachable).  However, nvme_keyring_init() allocates .nvme without linking
-> it into any process keyring, while nvmet_host_dhchap_keyring_store() looks
-> up desc via request_key(&key_type_keyring, desc, NULL), which only searches
-> the calling process's keyrings and rejects empty writes with -EINVAL.
-> 
-> As a result, tools such as nvmetcli that save and restore configfs
-> attributes fail with -ENOKEY when writing ".nvme" back unless .nvme was
-> manually linked into the caller's session keyring, and writing an empty
-> value to reset dhchap_keyring to the default fails with -EINVAL.
-> 
-Fixed with the next version.
-
-Cheers,
-
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
