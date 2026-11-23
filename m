@@ -1,91 +1,100 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795442762;
-	b=DJwe5VWJG4zzbS2AS384T03C+0xzDGNdoX/xYLzAE7nPGE3zrzG80rbRGLXfdYtaLnxi
-	 XDD45D31bZgCQuhymVCYshIe6WcrfKE06Sn/w8AEk2CqD4ABgFKv3xWzbKTT7l+PlfT7g
-	 JKRUUxeWnHs3rUyEdV6IIx7rzRRLo88oSAeodeOJWBf/oAOQjvAcsj7yByX7+nyObkHOl
-	 xquePqImt+5s/pYm+EBvz/pLgRm9VMGya7VPwPfU2YzOeUi2dV6/nBeFt2WP7FB+1Sp6a
-	 wftGg94huyKT9goBOJODG2bUI5tSBz/vS+tyhaSVT0RMPpSfRa5QmN044fRV1G6oCDA==
+	b=gPVaWXpRK2N6swKA57NV79VjqwBwWRVPDbrb3nXPeFgZ34ir8bk4IndtPEFpN3Gi8jce
+	 5waxrEz3r5rdqgdirqCSYx/c0iLp5O/iAwH/7TZdKu6stch+XD3od5BhR4lG+Kd38yj+b
+	 oIt7GijWpABF/vFqV4cPISXKwyEgTQ7P9iQADcYVyLYchIq5vG0E57YB00uioYBvxuDsO
+	 KL7lLY4TxYfYRoWcuTZOLfv1A/K+IShCLgoVcFytAF7r16krnsxWa1uysNDUf2DszWmai
+	 ft4VKRtEPxc+Ku5l1awIzGLJVloRnNhkRlKvJNLYkHNtbToDfD7ZXIRAohFDIWZi63A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795442762;
 	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
 	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Transfer-Encoding:X-Spamd-Result:
-	 X-Spam-Score:X-Spam-Level:X-Spam-Flag;
-	bh=81TNR2PIfjb8PK1jMan1kn9wiEmEn2lhPF/V4DpuXFc=;
-	b=uQbqtG7+645VyYpxFd3KB1zsFgATChpJYw0mXNde/rzhi7QrKgIqXW0ZB1lxUeQFe5RS
-	 bDNOcf0kPChqOvQ+6WrmAIHkJt3evR4sdyuPbbkt6fethdE0v+k+MmE3vLIDq+OeTE038
-	 5Him9jVmxjuVfbcNuOrpKCDEgUCKGqyBb00nmCBl7qSlGJ7NUVZkL0nP/JYfyxMRs9rVl
-	 VJqDJHiy4ng0cKYw1cJrenA9QDisl/+g8mU0+3smXJMNS7XO9ZltrgARZHStrL2t7OWSp
-	 AC0ee8ivTXwfXhIXEWe2MyHPDL8/+Z16Gl0+/5nzsV3vrIVCAWvGHdpEzSYfDCRkb9A==
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:
+	 X-Spam-Score;
+	bh=96eYVx1R1idjewa0QOQy/qzWTBFar/8EbpF5K9szVXM=;
+	b=JiUFizAm0h15rYY0EE2Q+Rv9bsSvPLeyIBNWlwoaINPWTjorsu/ZLW43KXdbBJ6wlZZ9
+	 zGznr1oB/iaOgxQt+fTKXpW1XvZFsIaloIHHw7AdLvQjlXKQjRehCeFm33bfS8sQnq6Ya
+	 A7GK9LVOmNdjG0Hyua0LnGLvyLkCzgS0C0RJ1cJ6xRkS+ugMUQNBBlyzqZr7vbkO2sj1g
+	 68Zb8ktdGHLbPZOIqkKTbysFqwsxE9UqIqw8Sv+dg2ufxh1vTTtcR1G3y23bcGUN0bS22
+	 fUbNsF+5Ig9FxwMBN2JijvG02tuvWUlxqTyM/+iOCoAoArQ+JcEqf6PwOFgqwEqoNVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="aJ/Fi+qB";
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=JgOj70n6;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="aJ/Fi+qB";
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=JgOj70n6;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="IM5aE/PY";
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=0j9sS75Y;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b="IM5aE/PY";
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=0j9sS75Y;
 	arc=none smtp.remote-ip=195.135.223.130
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FAB606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB37C606A31A
 	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 14:06:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57FAB606A31E
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB37C606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=aJ/Fi+qB;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=JgOj70n6;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=aJ/Fi+qB;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=JgOj70n6
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IM5aE/PY;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=0j9sS75Y;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IM5aE/PY;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=0j9sS75Y
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 7389F21EC2;
-	Mon, 23 Nov 2026 14:05:59 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 54A2A220B1;
+	Mon, 23 Nov 2026 14:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795442759; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=81TNR2PIfjb8PK1jMan1kn9wiEmEn2lhPF/V4DpuXFc=;
-	b=aJ/Fi+qB1Edwbj7toycTJ8oeR8L1/0B5BbS/GbfTw1hlQcajrFeokNs68FBUPGfwAu5rpS
-	nEPWG3sK/vW/NnJK7GV99M/uhiZ8BaRDU+PvIZGMBndlgfgk5YZtYes4cj2Y4OkjPS3tem
-	oqfhLVEot7h2qSw1F7maj7V2zVa2LG0=
+	t=1795442760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=96eYVx1R1idjewa0QOQy/qzWTBFar/8EbpF5K9szVXM=;
+	b=IM5aE/PY5H/3t1FS6WFcDTSHGoBWS87DOa938lKDdhosbOkGAhCqpRzwWUStPe8zWuzJon
+	9Q4FzAgZfJRbFeAnN223FDhA2YwJar78RY2POxyZa0ZSEZi6wrZWJ3n+/zqeHWS13UGQ3N
+	IEt+Z1yhQbtQ9qlZyHM3Y2JQsuCF1XQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795442759;
+	s=susede2_ed25519; t=1795442760;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=81TNR2PIfjb8PK1jMan1kn9wiEmEn2lhPF/V4DpuXFc=;
-	b=JgOj70n6vrU/plWrLNue3tLUHTfUEKeCMNpREeQ7woc6mTJwweD1hMdc+l7M00bs519OeS
-	d098JE+EweSgOFDQ==
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=96eYVx1R1idjewa0QOQy/qzWTBFar/8EbpF5K9szVXM=;
+	b=0j9sS75Y7B6cbwOHesBbbh1kc7F8hfUHAaDXyI/Font+I9VMpcOmwzur9mMmRMg+aewb2X
+	3wo/nhDVSIUsGJCw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795442759; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=81TNR2PIfjb8PK1jMan1kn9wiEmEn2lhPF/V4DpuXFc=;
-	b=aJ/Fi+qB1Edwbj7toycTJ8oeR8L1/0B5BbS/GbfTw1hlQcajrFeokNs68FBUPGfwAu5rpS
-	nEPWG3sK/vW/NnJK7GV99M/uhiZ8BaRDU+PvIZGMBndlgfgk5YZtYes4cj2Y4OkjPS3tem
-	oqfhLVEot7h2qSw1F7maj7V2zVa2LG0=
+	t=1795442760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=96eYVx1R1idjewa0QOQy/qzWTBFar/8EbpF5K9szVXM=;
+	b=IM5aE/PY5H/3t1FS6WFcDTSHGoBWS87DOa938lKDdhosbOkGAhCqpRzwWUStPe8zWuzJon
+	9Q4FzAgZfJRbFeAnN223FDhA2YwJar78RY2POxyZa0ZSEZi6wrZWJ3n+/zqeHWS13UGQ3N
+	IEt+Z1yhQbtQ9qlZyHM3Y2JQsuCF1XQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795442759;
+	s=susede2_ed25519; t=1795442760;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=81TNR2PIfjb8PK1jMan1kn9wiEmEn2lhPF/V4DpuXFc=;
-	b=JgOj70n6vrU/plWrLNue3tLUHTfUEKeCMNpREeQ7woc6mTJwweD1hMdc+l7M00bs519OeS
-	d098JE+EweSgOFDQ==
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=96eYVx1R1idjewa0QOQy/qzWTBFar/8EbpF5K9szVXM=;
+	b=0j9sS75Y7B6cbwOHesBbbh1kc7F8hfUHAaDXyI/Font+I9VMpcOmwzur9mMmRMg+aewb2X
+	3wo/nhDVSIUsGJCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 237231352B;
-	Mon, 23 Nov 2026 14:05:59 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0D98013532;
+	Mon, 23 Nov 2026 14:06:00 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id oQeBOkZIBGvqQwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 23 Nov 2026 14:05:59 +0000
+	id oQeBOkZIBGvqQwAAD6G6ig:T5
+	(envelope-from <tzimmermann@suse.de>); Mon, 23 Nov 2026 14:06:00 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: deller@gmx.de,
 	simona@ffwll.ch
@@ -93,10 +102,12 @@ Cc: dri-devel@lists.freedesktop.org,
 	linux-fbdev@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3 0/6] fbcon: Clean up glyph handling on redraws
-Date: Mon, 23 Nov 2026 15:03:33 +0100
-Message-ID: <20261123140554.1129792-1-tzimmermann@suse.de>
+Subject: [PATCH v3 4/6] fbcon: Refactor size calculation for cursor buffers
+Date: Mon, 23 Nov 2026 15:03:37 +0100
+Message-ID: <20261123140554.1129792-5-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261123140554.1129792-1-tzimmermann@suse.de>
+References: <20261123140554.1129792-1-tzimmermann@suse.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -107,85 +118,210 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-11.80 / 50.00];
+X-Spam-Flag: NO
+X-Spam-Level: 
+X-Spamd-Result: default: False [-15.80 / 50.00];
 	SUSE_INTERNAL_BYPASS(-9.00)[];
+	REPLY(-4.00)[];
 	BAYES_HAM(-3.00)[100.00%];
 	NEURAL_HAM_LONG(-1.00)[-1.000];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	NEURAL_HAM_SHORT(-0.20)[-1.000];
 	MIME_GOOD(-0.10)[text/plain];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
 	ARC_NA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
 	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
 	FREEMAIL_TO(0.00)[gmx.de,ffwll.ch];
 	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCVD_TLS_ALL(0.00)[];
 	RCPT_COUNT_FIVE(0.00)[6];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
 	FREEMAIL_ENVRCPT(0.00)[gmx.de]
-X-Spam-Score: -11.80
-X-Spam-Level: 
-X-Spam-Flag: NO
+X-Spam-Score: -15.80
 
-Fbcon's drawing functions open-code much of the glyph handling. Use
-font helpers instead. Makes fbcon more consistent and easier to
-understand.
+Replace open-coded size calculation for cursor glyph buffers with
+font helpers. Use it for glyph lookup and buffer allocation.
 
-Patch 1 updates fbcon to use unsigned char for glyph buffers. This
-is consistent with the font code and font_data_t.
+Treat glyph width as bits per scanline instead of bytes. This is
+consistent with font helpers.
 
-Patches 2 and 3 update font rotation to return rotated glyphs as
-font_data_t. A rotated font can now use the same interfaces as the
-unrotated source font. Fbcon uses this to ref count the rotated
-font's buffer.
+Note that with screen rotation enabled, width and height swap places
+for CW and CCW implementations.
 
-Patches 4 to 6 update various parts of fbcon to use font helpers
-instead of open-coding access to font_data_t. Having the rotated
-font as font_data_t makes this convenient.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ drivers/video/fbdev/core/bitblit.c   |  9 ++++++---
+ drivers/video/fbdev/core/fbcon_ccw.c | 10 ++++++----
+ drivers/video/fbdev/core/fbcon_cw.c  | 10 ++++++----
+ drivers/video/fbdev/core/fbcon_ud.c  | 10 ++++++----
+ 4 files changed, 24 insertions(+), 15 deletions(-)
 
-Tested with fbcon on DRM's bochs driver (qemu).
-
-v3:
-- replace remaining instances of kfree() with font_data_put()
-- upcast vc_font.data to font_data_t for glyph lookup
-- fix fallback in ccw_cursor()
-v2:
-- resolve merge conflicts in fbcon
-- fix typos in commit descriptions
-
-Thomas Zimmermann (6):
-  fbcon: Use unsigned char for glyph data
-  lib/fonts: Provide internal helpers for allocating font_data_t
-  lib/fonts, fbcon: Use font_data_t for rotated fonts
-  fbcon: Refactor size calculation for cursor buffers
-  fbcon: Look up glyphs using the font interface
-  fbcon: Handle characters with no glyph defined in a consistent way
-
- drivers/video/fbdev/core/bitblit.c      | 83 +++++++++++++++----------
- drivers/video/fbdev/core/fbcon.c        | 12 ++--
- drivers/video/fbdev/core/fbcon.h        |  5 +-
- drivers/video/fbdev/core/fbcon_ccw.c    | 56 +++++++++++------
- drivers/video/fbdev/core/fbcon_cw.c     | 57 ++++++++++-------
- drivers/video/fbdev/core/fbcon_rotate.c | 19 +++---
- drivers/video/fbdev/core/fbcon_ud.c     | 77 +++++++++++++++--------
- include/linux/font.h                    |  5 +-
- lib/fonts/font.h                        | 12 ++++
- lib/fonts/font_rotate.c                 | 39 +++++-------
- lib/fonts/fonts.c                       | 63 ++++++++++++-------
- 11 files changed, 263 insertions(+), 165 deletions(-)
-
-
-base-commit: 579369fbe7227f6b00acc883ac90606a5266932a
-prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
-prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
-prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
+diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
+index 5cdd70f32c28..1cbfbe50bebf 100644
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -268,7 +268,10 @@ static void bit_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	struct fb_cursor cursor;
+ 	struct fbcon_par *par = info->fbcon_par;
+ 	unsigned short charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
+-	int w = DIV_ROUND_UP(vc->vc_font.width, 8), c;
++	int width = vc->vc_font.width;
++	int vpitch = vc->vc_font.height;
++	int cellsize = font_glyph_size(width, vpitch);
++	int c;
+ 	int y = real_y(par->p, vc->state.y);
+ 	int attribute, use_sw = vc->vc_cursor_type & CUR_SW;
+ 	int err = 1;
+@@ -286,7 +289,7 @@ static void bit_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	/* Clamp to font size, same as bit_putcs_aligned() */
+ 	if (c >= vc->vc_font.charcount)
+ 		c = 0;
+-	src = vc->vc_font.data + (c * (w * vc->vc_font.height));
++	src = vc->vc_font.data + (c * cellsize);
+ 
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
+@@ -297,7 +300,7 @@ static void bit_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	if (attribute) {
+ 		unsigned char *dst;
+ 
+-		dst = kmalloc_array(w, vc->vc_font.height, GFP_ATOMIC);
++		dst = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!dst)
+ 			return;
+ 		kfree(par->cursor_data);
+diff --git a/drivers/video/fbdev/core/fbcon_ccw.c b/drivers/video/fbdev/core/fbcon_ccw.c
+index de4a58d3385e..589291caed32 100644
+--- a/drivers/video/fbdev/core/fbcon_ccw.c
++++ b/drivers/video/fbdev/core/fbcon_ccw.c
+@@ -226,7 +226,9 @@ static void ccw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	struct fb_cursor cursor;
+ 	struct fbcon_par *par = info->fbcon_par;
+ 	unsigned short charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
+-	int w = font_glyph_pitch(vc->vc_font.height);
++	int width = vc->vc_font.height;
++	int vpitch = vc->vc_font.width;
++	int cellsize = font_glyph_size(width, vpitch);
+ 	int c;
+ 	int y = real_y(par->p, vc->state.y);
+ 	int attribute, use_sw = vc->vc_cursor_type & CUR_SW;
+@@ -241,7 +243,7 @@ static void ccw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 
+  	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+-	src = par->rotated.buf + ((c & charmask) * (w * vc->vc_font.width));
++	src = par->rotated.buf + ((c & charmask) * cellsize);
+ 
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
+@@ -252,7 +254,7 @@ static void ccw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	if (attribute) {
+ 		unsigned char *dst;
+ 
+-		dst = kmalloc_array(w, vc->vc_font.width, GFP_ATOMIC);
++		dst = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!dst)
+ 			return;
+ 		kfree(par->cursor_data);
+@@ -304,7 +306,7 @@ static void ccw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 		if (!tmp)
+ 			return;
+ 
+-		mask = kmalloc_array(vc->vc_font.width, w, GFP_ATOMIC);
++		mask = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!mask) {
+ 			kfree(tmp);
+ 			return;
+diff --git a/drivers/video/fbdev/core/fbcon_cw.c b/drivers/video/fbdev/core/fbcon_cw.c
+index 4e82199082f1..87e9dd666953 100644
+--- a/drivers/video/fbdev/core/fbcon_cw.c
++++ b/drivers/video/fbdev/core/fbcon_cw.c
+@@ -209,7 +209,9 @@ static void cw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	struct fb_cursor cursor;
+ 	struct fbcon_par *par = info->fbcon_par;
+ 	unsigned short charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
+-	int w = font_glyph_pitch(vc->vc_font.height);
++	int width = vc->vc_font.height;
++	int vpitch = vc->vc_font.width;
++	int cellsize = font_glyph_size(width, vpitch);
+ 	int c;
+ 	int y = real_y(par->p, vc->state.y);
+ 	int attribute, use_sw = vc->vc_cursor_type & CUR_SW;
+@@ -224,7 +226,7 @@ static void cw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 
+  	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+-	src = par->rotated.buf + ((c & charmask) * (w * vc->vc_font.width));
++	src = par->rotated.buf + ((c & charmask) * (cellsize));
+ 
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
+@@ -235,7 +237,7 @@ static void cw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	if (attribute) {
+ 		unsigned char *dst;
+ 
+-		dst = kmalloc_array(w, vc->vc_font.width, GFP_ATOMIC);
++		dst = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!dst)
+ 			return;
+ 		kfree(par->cursor_data);
+@@ -287,7 +289,7 @@ static void cw_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 		if (!tmp)
+ 			return;
+ 
+-		mask = kmalloc_array(vc->vc_font.width, w, GFP_ATOMIC);
++		mask = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!mask) {
+ 			kfree(tmp);
+ 			return;
+diff --git a/drivers/video/fbdev/core/fbcon_ud.c b/drivers/video/fbdev/core/fbcon_ud.c
+index dc48e19513a1..a610af1023de 100644
+--- a/drivers/video/fbdev/core/fbcon_ud.c
++++ b/drivers/video/fbdev/core/fbcon_ud.c
+@@ -255,7 +255,9 @@ static void ud_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	struct fb_cursor cursor;
+ 	struct fbcon_par *par = info->fbcon_par;
+ 	unsigned short charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
+-	int w = font_glyph_pitch(vc->vc_font.width);
++	int width = vc->vc_font.width;
++	int vpitch = vc->vc_font.height;
++	int cellsize = font_glyph_size(width, vpitch);
+ 	int c;
+ 	int y = real_y(par->p, vc->state.y);
+ 	int attribute, use_sw = vc->vc_cursor_type & CUR_SW;
+@@ -271,7 +273,7 @@ static void ud_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 
+  	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+-	src = par->rotated.buf + ((c & charmask) * (w * vc->vc_font.height));
++	src = par->rotated.buf + ((c & charmask) * cellsize);
+ 
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
+@@ -282,7 +284,7 @@ static void ud_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 	if (attribute) {
+ 		unsigned char *dst;
+ 
+-		dst = kmalloc_array(w, vc->vc_font.height, GFP_ATOMIC);
++		dst = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!dst)
+ 			return;
+ 		kfree(par->cursor_data);
+@@ -334,7 +336,7 @@ static void ud_cursor(struct vc_data *vc, struct fb_info *info, bool enable,
+ 		if (!tmp)
+ 			return;
+ 
+-		mask = kmalloc_array(vc->vc_font.height, w, GFP_ATOMIC);
++		mask = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!mask) {
+ 			kfree(tmp);
+ 			return;
 -- 
 2.56.1
 
