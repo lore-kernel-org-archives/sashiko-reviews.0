@@ -1,104 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795443024;
-	b=IF8zApZMNaeu9daujZzXy6svpHmzAMmNNNu8Y6IZf3BrbN7dTdJ63I4UPTvzZQXHXjkA
-	 LiAfpJmeUxwrp+T22yHVymtqy9To7De/0eTlgdRBRrIT0OBxbAt9uoefvkAAmKNaetQmw
-	 aVZbOYtpBWMGUUmKNnnXcVolXo9uNVEfsDNx39Wkx3GXbxLTEpMNwxWgWPo6XjgVQZ0jt
-	 Ko7fdHrgB8Z9JyIOph66aVKmjS8YOdLIjXahqw22XRWH/LOMlE0ZmucIDfUDGtYaT3OWk
-	 0E56J6lhaB8buMcaRdfsc1/efxehFxfDqxIkH/NJ02oLIzoRjDhhYXd7RnXyTKLGYnQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795443024;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=UBqlN+jYii1FPW1nDcFyMzeOguDSwtc6pw41o2k2sHE=;
-	b=NdCLphlAZKef7uHUi5XqvzuLj8bxs0ZMIY993lu4j8vfhvxBvZkfFfTewEgUQjju/iAP
-	 VtmAKf8G8bJo2csYz+0Vrvwl446UKBCUQaR1SEn6HrmGwqVSiZvruLtQ8RoWsSnXY54eg
-	 LG+y56otmBLYgLDuLy++JHoiedPLJ1+BG0MJxDhwUvC1iFub67FQfGtxpgOacfQ+XZQ/G
-	 d8PtLKtE7t9GKDCFxOw9CmeRzd4SlZt1Fp5DknMFQTb4dZbYPVYghixZq0qoRbpHAUkO0
-	 VsRrvqwJ36oAKl2vmDs5PkfBhLJzxwJ7zc8Aj6r9rW1Lym8NtfCZLsyGCTgbO1W+b9A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lrUTxkr3;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=IvEnOuT2;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lrUTxkr3;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=IvEnOuT2;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795445569;
+	b=LzmuLbEFUvwcVyZ/LKVmkFkSr/nsmXfo9N4NiNRF5ZT57ZuYozNyOEw+8nb1XEkrCkwy
+	 Et96w7TfcDVrvYJQUPIfSQFfoAxdnjm8oD4FdnYzmZX1VKKWrrH5ifpQRL4Z915+KErhg
+	 J6CSi+yaZf6orXjSGmBx53lP99CsKfeKstF7A6LAhPyKg7XrC16wn5m8laWX+C081QYYb
+	 T5YhMge8DnxToW29c0r1DKmiVIbG2vSQ80SJUdXhgS80P0P+g35DhtN3CIEOzyjtprYI9
+	 yFlVEuC8g7w63UDG3SDb1GImCrBe84M9CZo3ab/ZkIJcGb/lbY8oDCdq7sUYhPuPeZQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795445569;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=YR35Dp1NLw39mTcwi+476hcYYIrY3mzPrCnM7jI11Vw=;
+	b=V1995dp/eRxQP43Ruk8OW2oTS2Gt4BYeBcygUcp0BMhomBhS41JawSLftFqdDHEk72zL
+	 tYFgYMt89tzeTHb6MBXmy9Mxlaqcn/pGCxR/WT7Rk/Pr3zU/gr6HUa+2NhmVSIPBIWXME
+	 CSZiwFllJ+OxZqE4Ykdvhmp/22OtXZWhupgIVywFWNPdQttHggkkfmhVNcEcD/BoFnp5K
+	 qRjh0KuaPnyzXfnVFpf/ltxhsEGfv76u013AdJf0i/WzwgFhxcT4B5cAz2IQKPcD/D4Ze
+	 wzEyfwYfMiPNTinhvHy+caq7J3WHT2nfOVRd1Uvc/p7lVqRwBF9GtPWkwA1ir9iZhVw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=stellman-greene.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=stellman-greene-com.20260707.gappssmtp.com header.i=@stellman-greene-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b="gU/lVzXp";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18709606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 14:10:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 18709606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446A9606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 14:52:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 446A9606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stellman-greene.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lrUTxkr3;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=IvEnOuT2;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=lrUTxkr3;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=IvEnOuT2
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 48C1B1F452;
-	Mon, 23 Nov 2026 14:10:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795443022; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UBqlN+jYii1FPW1nDcFyMzeOguDSwtc6pw41o2k2sHE=;
-	b=lrUTxkr35l6iFvZo3bSAICf7+WysAw7q5kh5t2ksIukRX20LF0ZGNjFVoIs3TlftAf92am
-	IOm9duPdQllzmCWrv1LrmamFakEYuZgzsHQGdPgE6v7MT1XJSZWNRvUJrzzrVgp62rTrPh
-	LoC19ZRrvZKFh+JXWxABVVmCL4BR4iE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795443022;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UBqlN+jYii1FPW1nDcFyMzeOguDSwtc6pw41o2k2sHE=;
-	b=IvEnOuT2QPC7jioOkJyE7lhulo25QVZSSkFmFmrFxWqoSzEo6sM58VqPOJ4m7I/VuPQFSp
-	v+D4A5OeXmT3XMBQ==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lrUTxkr3;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=IvEnOuT2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795443022; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UBqlN+jYii1FPW1nDcFyMzeOguDSwtc6pw41o2k2sHE=;
-	b=lrUTxkr35l6iFvZo3bSAICf7+WysAw7q5kh5t2ksIukRX20LF0ZGNjFVoIs3TlftAf92am
-	IOm9duPdQllzmCWrv1LrmamFakEYuZgzsHQGdPgE6v7MT1XJSZWNRvUJrzzrVgp62rTrPh
-	LoC19ZRrvZKFh+JXWxABVVmCL4BR4iE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795443022;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UBqlN+jYii1FPW1nDcFyMzeOguDSwtc6pw41o2k2sHE=;
-	b=IvEnOuT2QPC7jioOkJyE7lhulo25QVZSSkFmFmrFxWqoSzEo6sM58VqPOJ4m7I/VuPQFSp
-	v+D4A5OeXmT3XMBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 22AF61352B;
-	Mon, 23 Nov 2026 14:10:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id AxpiO01JBGtcSAAAD6G6ig
-	(envelope-from <hare@suse.de>); Mon, 23 Nov 2026 14:10:22 +0000
-Message-ID: <28c4e3f3-a54c-421a-8ac3-6fd233812aac@suse.de>
-Date: Mon, 23 Nov 2026 15:10:21 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=stellman-greene-com.20260707.gappssmtp.com header.i=@stellman-greene-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=gU/lVzXp
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-921375f52b8so36939516d6.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 06:52:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795445568; cv=none;
+        d=google.com; s=arc-20260327;
+        b=KBE92vxxGftevdJg+6te+z4416VjOSOzV3msO3TwcC3XaEzlBfCU6VQKa+GrRC7oop
+         yvcUCYWHF2WIRBdeIUV6BOyuwEAA27r0VZ6Ay/hYrlKBwBuAe+/ZHtis0uyvGebVkI58
+         Ftobsf6RWI2beRwWd8zwrEYUKr0o9yZmY3oaLsHSxbnIbjxQRR6i2ejpiIoHYR/ueVBy
+         1awPBj9xT4dip95IpNmqcWde5NWUc2rfQaQ4kKH6jbfILxBD2QwcWIH0DKuNWZLHfJMi
+         u5mfbbuoRGe+Z2EvrPm4UAS5S0nGd/QOrFO1Z6UOfVCGTdi9H6qIY+cZBFgmd+uQtsTU
+         yHjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YR35Dp1NLw39mTcwi+476hcYYIrY3mzPrCnM7jI11Vw=;
+        fh=Je+XfjZZELYMeUFG782y9M4oZFPTVtwBgMoamcbwTg0=;
+        b=GcTsg+o3ZjnLpjNL18DA4RQSpRX//uSEvzOqq3mcVH7M6olHEKGHznQMPZ3Q0nOfmA
+         fPuBSGmoQLL6hEkRx4iEhITBZ/wFjvmpIqxmoD38xVvbdFjwy2m24lDcACswWJIWiJfv
+         G8L4Ytt4AMeuZ/UQqtfZLnIgkApbl24gCncpJjtuymkqQPFh3Ix7BbT0JhalA7w0TxJg
+         J3+IWOrD9I6dizxc24cDNVS4rSZ+ENcNVRUSf2ZGw8UuekOMJ+ZpP7RjKbT0MjCI1198
+         ag6pGvV2xcHCci027Z0wgECQZ9P2M/4fAawMpG21Ufj6qm1X7L3kkEXb9G+84bM/82Dh
+         ZWSg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=stellman-greene-com.20260707.gappssmtp.com; s=20260707; t=1795445568; x=1796050368; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=YR35Dp1NLw39mTcwi+476hcYYIrY3mzPrCnM7jI11Vw=;
+        b=gU/lVzXph8RQA2/42bWjChc3t2LKBPG4BVc3vqo1HzdarWRTtk8ceGrrpM1LK1GbCR
+         +zhsbZ420xMyj2pL2vTpyyQ8NJHD6qoh+ou4V59Jx4z3Eo4S5A+HzzB1weQUYgEIiuUT
+         qK+nGEcFYB93jAi1TAdkp9EOhAv5Zx9CcUPkWVgeSeZYvn4gyZypuoPY3IGtYr+CEQbn
+         xTCshWcQ/8i1a46JvcaC0H6jdbnFcUr/cr6weBf+SlkD3w5dKgZEDMy8VR60uX7HDZsO
+         aD0toPuF5F9lNlwbXHGA8Ntkf2pmEmXhWIm2rOR/xENeb+I8Zphzg/rWRC3j+0koCfxw
+         YxDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795445568; x=1796050368;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YR35Dp1NLw39mTcwi+476hcYYIrY3mzPrCnM7jI11Vw=;
+        b=mU9HqA0qDgSSDkUab2dIReLUCUSsxiYHiW8OEE4EsENe7hu+4EKZdZ6qKvryHcVfdc
+         AqLeb5DgTxzVqKXlwpjWSdi00MYUwGz2Qb9U7kPKR9xbQJNUnoaFoTa+NTGPaP+XnPGs
+         k8BDrsdYCUqJ4EhecqaLlzLY5uRQZp2+vZBBDzSmg/gGITXqA3WOuXpNXFojbB86m2XJ
+         ozr9EHgCwUXFr+lCqYCcbAcfw/y8ElY0JSHc+dvTOIW98Hz3ec7QGHQC27/Hqu5BkuKZ
+         HM1DRw/aSZ5V5KUcNPVjgc0IR2k7iDktzRY8oj0jZX5hLHmK5kO+EIrxlzL3vzc+tkdx
+         BJIw==
+X-Gm-Message-State: APuU4Z9uagfhEwQGmaFlg/idLskOp55T6Kl/0TD4yUivJIO28q0eAgJX
+	c5wQ4naDVNt3hxyz1eWKoUuzHgKY0HZExPyWmwW2wGQa619e7ZIr9w0gm1sNyMIGQhHjcGq6ACu
+	HrieJUiVUben5M1IfgIoCHCY4eRTRscFfqZA15XPIWA==
+X-Gm-Gg: AZFdTZcyuIVQexAmfN99zPROAXufJk9B8K91V6EHh5oV+3gwXbfteIPHpJ6/a9emBFx
+	K/suAme/97sfaZW14+UG+GMPw8c0o7FywCHn/Z/nUc0HZwXJmvTcc+0E3i2Y9eucH5V69huB/JO
+	LGEj3ml6NWU0ASI90z2LPdrDAzKujYlQED2A1lUuZJIF6pcIMIK785tD/IeQBNe8SC0B4YIhB/r
+	sX6get1iPrJ52phBS2PBTOAy+32jiknvNR4AxatnMMdsg/xG1nbB2wBhQTIVtAf3ojRxysZdGPa
+	ANPqToKiBR2pbIzJSo7k8R8BVl7huqtIDevHJ6NH4w447jm5KGRlmiNkNQ6ZmK78P0vcTyIv84m
+	7yWSMltxxVAXIDQ/9KwUYEqsNn/lUsIyBZxtZc3mq0NfcaxbAvGDESzl9daRoqV3IgtKSSyqhaQ
+	VbgNT084w4iZeSSHf5S4q1nyCbZuu8gJns4+c1LR8dIL9IQOUP4M8FSER8gekThuNq4RMAsG9ji
+	xxnj00owxsAIIiR
+X-Received: by 2002:a05:6214:ac3:b0:921:3a0b:673f with SMTP id
+ 6a1803df08f44-9213a0b67admr182677736d6.7.1795445567858; Mon, 23 Nov 2026
+ 06:52:47 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,308 +105,82 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/9] nvme: parse dhchap keys during option parsing
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
-Cc: linux-nvme@lists.infradead.org
-References: <20261123-dhchap-keyring-v4-v5-0-81eefb4c0724@kernel.org>
- <20261123-dhchap-keyring-v4-v5-4-81eefb4c0724@kernel.org>
- <sashiko-outbox-229226@kernel.org>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-229226@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 48C1B1F452
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	MX_GOOD(-0.01)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	TO_DN_SOME(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Score: -13.50
+References: <20261123140625.64448-1-astellman@stellman-greene.com> <sashiko-outbox-229387@kernel.org>
+In-Reply-To: <sashiko-outbox-229387@kernel.org>
+From: Andrew Stellman <astellman@stellman-greene.com>
+Date: Mon, 23 Nov 2026 09:52:36 -0500
+X-Gm-Features: Aa3M54rc4F-5TClUKcb827X9bXMXUA4uNEqDeOxn3kfSSV6VCDKaILTKwoAOCSU
+Message-ID: <CAChPuV_NicbAdP74Zej1ko656Uqh2tuTrTP8P8-48DJE74nmzA@mail.gmail.com>
+Subject: Re: [PATCH rdma-rc] RDMA/rxe: Fail ATOMIC_WRITE WQEs whose length is
+ not 8 bytes
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rdma@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/23/26 1:34 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential
-> issues to consider:
-> - [High] nvme: build failure in sysfs.c when CONFIG_NVME_KEYRING is
->    disabled
-> - [Low] nvme-auth: log of unassigned keys and NULL device in
->    nvme_auth_init_ctrl()
-> - [Low] nvme-fabrics: dead !CONFIG_NVME_HOST_AUTH branches in
->    nvmf_parse_options()
-> - [Low] nvme: missing trailing newline in dhchap_ctrl_secret_show() on
->    invalid key
-> - [Low] nvme: wrong device pointer logged in dhchap_secret_store() and
->    ctrl store
-> - [Low] nvme: undocumented dhchap_key sysfs attrs and inaccurate
->    changelog
+Thanks. This is already handled by a668a8564748 ("RDMA/rxe: copy send
+WQE to kernel buffer before processing") in the rdma tree, which
+clamps the ATOMIC_WRITE resid to 8 bytes in req_next_wqe(), so please
+drop this patch.
+
+On Mon, Nov 23, 2026 at 9:19=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] RDMA/rxe: unreachable atomic write length check in
+>   rxe_requester()
 > --
-> 
-> commit 8a46b5c132a1f37ed808c2b1576c3ace8af7cf7f
-> Author: Hannes Reinecke <hare@kernel.org>
-> 
-> nvme: parse dhchap keys during option parsing
-> 
-> This commit extracts DH-HMAC-CHAP secrets into key objects during fabrics
-> option parsing and exposes the active keys and their serial numbers via
-> controller sysfs attributes.
-> 
->> diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
->> index 0ddf3834f4ea2..535cc433dd35d 100644
->> --- a/drivers/nvme/host/auth.c
->> +++ b/drivers/nvme/host/auth.c
-> [ ... ]
->> @@ -1029,40 +1024,106 @@ static void nvme_ctrl_auth_work(struct work_struct *work)
-> [ ... ]
->> +	dev_dbg(ctrl->device,
->> +		"%s: using dhchap host key %08x\n",
->> +		__func__, key_serial(ctrl->host_key));
->> +	if (ctrl->host_key)
->> +		nvme_auth_clear_host_key(ctrl);
->> +	ctrl->host_key = host_key;
->> +
->> +	if (ctrl->ctrl_key)
->> +		nvme_auth_clear_ctrl_key(ctrl);
->> +	if (ctrl_key) {
->> +		dev_dbg(ctrl->device,
->> +			"%s: using dhchap ctrl key %08x\n",
->> +			__func__, key_serial(ctrl->ctrl_key));
->> +		ctrl->ctrl_key = ctrl_key;
->> +	}
-> 
-> [Severity: Low]
-> Do these two dev_dbg() calls pass ctrl->host_key and ctrl->ctrl_key to
-> key_serial() before assigning host_key and ctrl_key, always logging key
-> serial 00000000?
-> 
-> Also, nvme_init_ctrl() calls nvme_auth_init_ctrl() before setting
-> ctrl->device = &ctrl->ctrl_device, so ctrl->device is NULL for all
-> dev_warn() and dev_dbg() calls in nvme_auth_init_ctrl().
-> 
-Fixed with the next version.
-
->> diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
->> index 5ed91557f0706..0c09888be31f7 100644
->> --- a/drivers/nvme/host/fabrics.c
->> +++ b/drivers/nvme/host/fabrics.c
-> [ ... ]
->> @@ -1086,6 +1078,53 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
->>   			pr_warn("failfast tmo (%d) larger than controller loss tmo (%d)\n",
->>   				opts->fast_io_fail_tmo, ctrl_loss_tmo);
->>   	}
->> +
->> +	opts->host = nvmf_host_add(hostnqn, &hostid);
->> +	if (IS_ERR(opts->host)) {
->> +		ret = PTR_ERR(opts->host);
->> +		opts->host = NULL;
->> +		goto out;
->> +	}
->> +
->> +	if (host_secret) {
->> +#ifdef CONFIG_NVME_HOST_AUTH
->> +		pr_debug("lookup host identity '%s'\n", host_secret);
->> +		key = nvme_auth_extract_key(opts->keyring, host_secret,
->> +					    strlen(host_secret));
->> +		if (IS_ERR(key)) {
->> +			ret = PTR_ERR(key);
->> +			goto out;
->> +		}
->> +		pr_debug("using dhchap host key %08x\n", key_serial(key));
->> +		opts->dhchap_key = key;
->> +#else
->> +		pr_warn("nvme authentication is disabled\n");
->> +		ret = -EINVAL;
->> +		goto out;
->> +#endif
->> +	}
->> +	if (ctrl_secret) {
->> +#ifdef CONFIG_NVME_HOST_AUTH
->> +		if (!opts->dhchap_key) {
->> +			ret = -EINVAL;
->> +			goto out;
->> +		}
->> +		pr_debug("lookup ctrl identity '%s'\n", ctrl_secret);
->> +		key = nvme_auth_extract_key(opts->keyring, ctrl_secret,
->> +					    strlen(ctrl_secret));
->> +		if (IS_ERR(key)) {
->> +			ret = PTR_ERR(key);
->> +			goto out;
->> +		}
->> +		pr_debug("using dhchap ctrl key %08x\n", key_serial(key));
->> +		opts->dhchap_ctrl_key = key;
->> +#else
->> +		pr_warn("nvme authentication is disabled\n");
->> +		ret = -EINVAL;
->> +		goto out;
->> +#endif
->> +	}
-> 
-> [Severity: Low]
-> Can the !CONFIG_NVME_HOST_AUTH branches under if (host_secret) and
-> if (ctrl_secret) ever be reached?
-> 
-> NVMF_OPT_DHCHAP_SECRET and NVMF_OPT_DHCHAP_CTRL_SECRET in opt_tokens are
-> guarded by #ifdef CONFIG_NVME_HOST_AUTH, so when CONFIG_NVME_HOST_AUTH is
-> disabled, match_token() rejects dhchap_secret and dhchap_ctrl_secret as
-> unknown parameters and jumps to out while host_secret and ctrl_secret are
-> still NULL.
-> 
-Removed the '#else' branches for the next version.
-
->> diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
->> index a5c1511e49ac2..e73c3ad89adc0 100644
->> --- a/drivers/nvme/host/sysfs.c
->> +++ b/drivers/nvme/host/sysfs.c
->> @@ -6,6 +6,8 @@
->>    */
->>   
->>   #include <linux/nvme-auth.h>
->> +#include <linux/nvme-keyring.h>
->> +#include <linux/key-type.h>
->>   #include <linux/blkdev.h>
-> 
-> [Severity: High]
-> Does including linux/nvme-keyring.h unconditionally in sysfs.c break the
-> build when CONFIG_NVME_CORE is enabled and CONFIG_NVME_KEYRING is
-> disabled?
-> 
-> In the !IS_ENABLED(CONFIG_NVME_KEYRING) block of
-> include/linux/nvme-keyring.h (updated earlier in commit "nvme-auth: switch
-> to use 'struct key'"), nvme_tls_psk_refresh() has a malformed parameter
-> list and nvme_dhchap_psk_hash() is defined without static inline:
-> 
-> include/linux/nvme-keyring.h:
->      static inline struct key *nvme_tls_psk_refresh(struct key *keyring,
-> 		const char *hostnqn, const char *subnqn, *data, u8 hmac_id,
-> 		u8 *data, size_t data_len, const char *digest)
->      ...
->      u8 nvme_dhchap_psk_hash(struct key *key)
->      {
-> 	return 0;
->      }
-> 
-> Since sysfs.c is built for any CONFIG_NVME_CORE configuration and does not
-> use any symbols from linux/nvme-keyring.h, compiling with
-> CONFIG_NVME_KEYRING=n fails with syntax and multiple-definition errors.
-> 
-Fixed wit the next version.
-
->> @@ -830,36 +850,47 @@ static ssize_t dhchap_secret_store(struct device *dev,
-> [ ... ]
->> +	down_read(&key->sem);
->> +	ret = key_validate(key);
->> +	up_read(&key->sem);
->> +	if (ret) {
->> +		dev_warn(ctrl->dev, "key %08x invalidated\n", key_serial(key));
->> +		dev_dbg(ctrl->dev, "revoke host key %08x\n", key_serial(key));
->> +		key_revoke(key);
->> +		key_put(key);
->> +		kfree_sensitive(dhchap_secret);
->> +		return ret;
->> +	}
->> +	mutex_lock(&ctrl->dhchap_auth_mutex);
->> +	old_key = ctrl->host_key;
->> +	dev_dbg(ctrl->dev, "revoke host key %08x\n",
->> +		key_serial(old_key));
->> +	key_revoke(old_key);
-> 
-> [Severity: Low]
-> Should these dev_warn() and dev_dbg() calls in dhchap_secret_store() and
-> dhchap_ctrl_secret_store() use ctrl->device instead of ctrl->dev?
-> 
-> ctrl->dev is the parent transport device (such as the shared
-> /sys/class/nvme-fabrics/ctl device), whereas ctrl->device is the nvmeX
-> controller device used by the rest of the function.
-> 
-Fixed with the next version.
-
->> @@ -873,11 +904,28 @@ static ssize_t dhchap_ctrl_secret_show(struct device *dev,
->>   		struct device_attribute *attr, char *buf)
->>   {
->>   	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
->> -	struct nvmf_ctrl_options *opts = ctrl->opts;
->> +	struct key *key;
->> +	ssize_t count;
->>   
->> -	if (!opts->dhchap_ctrl_secret)
->> +	mutex_lock(&ctrl->dhchap_auth_mutex);
->> +	key = ctrl->ctrl_key;
->> +	if (!key) {
->> +		mutex_unlock(&ctrl->dhchap_auth_mutex);
->>   		return sysfs_emit(buf, "none\n");
->> -	return sysfs_emit(buf, "%s\n", opts->dhchap_ctrl_secret);
->> +	}
->> +	down_read(&key->sem);
->> +	if (key_validate(key))
->> +		count = sysfs_emit(buf, "<invalidated>");
-> 
-> [Severity: Low]
-> Is a trailing newline missing from "<invalidated>" in
-> dhchap_ctrl_secret_show()?  dhchap_secret_show(), dhchap_key_show(), and
-> dhchap_ctrl_key_show() all emit "<invalidated>\n".
-> 
-Fixed with the next version.
-
-> [ ... ]
-> 
->> @@ -925,6 +981,52 @@ static ssize_t dhchap_ctrl_secret_store(struct device *dev,
->>   }
->>   
->>   static DEVICE_ATTR_ADMIN_RW(dhchap_ctrl_secret);
->> +
->> +static ssize_t dhchap_key_show(struct device *dev,
->> +		struct device_attribute *attr, char *buf)
->> +{
-> [ ... ]
->> +}
->> +static DEVICE_ATTR_ADMIN_RO(dhchap_key);
->> +
->> +static ssize_t dhchap_ctrl_key_show(struct device *dev,
->> +		struct device_attribute *attr, char *buf)
->> +{
-> [ ... ]
->> +}
->> +static DEVICE_ATTR_ADMIN_RO(dhchap_ctrl_key);
-> 
-> [Severity: Low]
-> This isn't a bug, but the new dhchap_key and dhchap_ctrl_key sysfs
-> attributes are not mentioned in the commit message or documented in
-> Documentation/ABI/stable/sysfs-nvme.  Also, the commit message says the
-> key serial is stored in struct nvmf_ctrl_options, whereas opts stores
-> struct key pointers (dhchap_key and dhchap_ctrl_key).
-> 
-Updated for the next version.
-
-Cheers,
-
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+>
+> commit 53a7ca51888beabddbfd557ad8447b0102b0d59e
+> Author: Andrew Stellman <astellman@stellman-greene.com>
+>
+> RDMA/rxe: Fail ATOMIC_WRITE WQEs whose length is not 8 bytes
+>
+> This commit adds a check in rxe_requester() to fail IB_WR_ATOMIC_WRITE
+> WQEs with IB_WC_LOC_QP_OP_ERR when the payload length is not sizeof(u64).
+>
+> > diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/s=
+w/rxe/rxe_req.c
+> > index 6e01fb18893bf..962aef824ccc2 100644
+> > --- a/drivers/infiniband/sw/rxe/rxe_req.c
+> > +++ b/drivers/infiniband/sw/rxe/rxe_req.c
+> > @@ -824,6 +824,11 @@ int rxe_requester(struct rxe_qp *qp)
+> >       mtu =3D get_mtu(qp);
+> >       payload =3D (mask & (RXE_WRITE_OR_SEND_MASK | RXE_ATOMIC_WRITE_MA=
+SK)) ?
+> >                       wqe->dma.resid : 0;
+> > +     /* use the local copies: a user QP's WQE can change under us */
+> > +     if ((mask & RXE_ATOMIC_WRITE_MASK) && payload !=3D sizeof(u64)) {
+> > +             wqe->status =3D IB_WC_LOC_QP_OP_ERR;
+> > +             goto err;
+> > +     }
+>
+> [Severity: Medium]
+> Can payload ever differ from sizeof(u64) here when RXE_ATOMIC_WRITE_MASK
+> is set?
+>
+> Earlier in rxe_requester(), req_next_wqe() copies the WQE into the
+> kernel-private buffer qp->req.send_wqe.wqe and forces wqe->dma.resid to
+> sizeof(u64) for atomic writes (added in a668a8564748 ("RDMA/rxe: copy
+> send WQE to kernel buffer before processing")):
+>
+> drivers/infiniband/sw/rxe/rxe_req.c:req_next_wqe() {
+>     ...
+>         if (unlikely((wqe->mask & WR_ATOMIC_WRITE_MASK) &&
+>                      wqe->dma.resid !=3D sizeof(u64)))
+>                 wqe->dma.resid =3D sizeof(u64);
+>         return wqe;
+> }
+>
+> As a result, this new check is unreachable, and an IB_WR_ATOMIC_WRITE WQE
+> with wqe->dma.resid !=3D sizeof(u64) will still be clamped and sent as an
+> 8-byte atomic write instead of failing with IB_WC_LOC_QP_OP_ERR.
+>
+> Also, because this check runs after check_init_depth(), if the clamping i=
+n
+> req_next_wqe() is removed, a malformed atomic write WQE would consume or
+> stall on rd_atomic credits before failing.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123140625.64=
+448-1-astellman@stellman-greene.com?part=3D1
