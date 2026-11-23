@@ -1,47 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=65.21.61.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795429283;
-	b=h86EDkplcAXkMXSRbch6jR/ySVkU/DxU24DJ0OaPZeAd74Wuc3wGK1gE8jfrBOjqyccv
-	 y8mJM6ZeonTjq5Vj+pArwKMLQ1wCug2CTdjzzXN/kC41n4zZp1LMylSuLxZJ02LA7ZJyn
-	 9kjwCRc4kmCWrsBQ15KzLlPcluLWq67APyNMUObn8id/wyEFeFwMuQAlWVHi1IY8vmjp+
-	 NDtnRjOB0K4WziUdrx+r30rTbzv6b28b56jRjEGVelpDe3upn3Sgit1lCykgFHtYgDcJR
-	 S+iARb8Be8PyKlk3pSsPQz9gr0w5nwFR/y5dKkwjSOWL4ONezKNOYXtgkkUBfCeZS4Q==
+	t=1795429471;
+	b=IXnlBXh/7UsZQLXJnlJRpufOkwlsQMkl/kjpfbExr+65YkpvifVkKl9jEFbcupJlMRVZ
+	 gnECOdGjDC9EFV76ZT/OqawMvZJ4TMliiePGVkbJUdM2m+Ioi8vLjv/P/30yXUbudu96S
+	 sc1zyvUJnNbEIAXHDlIXMTVftps00g/zgeLGHwYPNQ3/IMOCcCYfXPTpXICyehQqXudLX
+	 3hSXW2Qyve4+dFZySJ+QyKoxgEnaSkfB4qoPngPv2uNL/6RGSq/5yjmn96k2iuXtqW4VT
+	 G9yoYHCTPTcKnlBv8W12sUZSHRKwHqGEQx7iP9SZOtH0sgklgpgmFXSOWC1omrXIrQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795429283;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:Date:MIME-Version:User-Agent:
-	 From:Subject:To:Cc:References:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=If2uBTwUtcsfMKQK/sfG9dFMf3mJdJUXPWloTYU+JZ8=;
-	b=jVz3u2gzroyHINhJ5+Cv0tT+XDam/eIiInLPBxVDvqi70g89VI7irbSCtfxmKqnCYuRw
-	 ZydFU7LyLtCN1yHu9+7m0P7Zi68umo5KnHbi9LCesNrRyCSQ0QCYo+PUT8749vCV2UXgP
-	 5mGzxi3sHo1swSlviiXbFwmgMk8XDflODWZdK6hRVLIcApG77FBW8HANBn+GnQqEnW8Su
-	 4BPz0KUO+EuFlkMMfMfQeFBHUYNWbo+ULI8C21kWrj+vvgrgfNbYckuki8232UMaUEKco
-	 AOE7auzudjAslNRba5akeVflto/gJaoxgklXvM72web5FPWKpLVL5d4EV7fQ6hUK/bg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795429471;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=uYAy1KKejtoC3PQ6bu4U2sqzEKebRSdeZpLxFbRxc44=;
+	b=aAbjQCBLxMwPFirLUdng0CkhJ+11yTp9hOQHs36cz2lcAta2OWn0LtlvR/8gt8mr2XFs
+	 V6v6UkTEx+bFJ7yXybwisD+znTIUEPZWH5+M9D5VcL8p/8RRzkVo62GQKXkne6sYCjdmG
+	 1nBUguWIKu+Xp9MrVmGY6MM7QxhO9KR3IEW2vwPwbxlOoXmqCt7vHlpqFPV8F1Gs0BCGd
+	 DyvZyMKDd0xkM4Gl9heJSnrQ9kKV5m4NSy76cm7OHBbnSBsMFqKnNRmh+gCuJzga2+jwL
+	 JNYVBsBixStthjHaSymxl8W6Xl+elnO0aBWxawWJVc03TFYHshhgEpCjObFopw8h0Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aliel.fr;
-	spf=pass smtp.mailfrom=aliel.fr;
-	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=C2WNYsX2;
-	arc=none smtp.remote-ip=65.21.61.41
-Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=SEdzguaJ;
+	arc=none smtp.remote-ip=192.198.163.16
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C4F606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 10:21:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19C4F606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE32606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 10:24:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8EE32606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=C2WNYsX2
-Message-ID: <54fb42e5-42cc-40d2-9e6b-de88c170484a@aliel.fr>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
-	s=courrier-s1; t=1795429273;
-	bh=5ugiLH8lIxJwk2DYuuNikhUFR3FPn+L3PzjLMFkEA3U=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=C2WNYsX2VUK9ubAkdBA8l0eMLilWAxyZlFEc2Qvs2xDobxtWLrufuX3r313vblNTE
-	 eXjlth2bTiE2z/VpKnFsjdzX9O+zQ1LxfA3k3i4FSURIvPLl2qiLg0qZL3ces7qJ2o
-	 HtKSU5feeEJZ5SFK19lakycAhR7lcjrhR43sDd8E=
-Date: Mon, 23 Nov 2026 11:20:42 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=SEdzguaJ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795429470; x=1826965470;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=TqNoA060W2lRmNnqBpL5QXrmHquA1gM//0fflBCC4nc=;
+  b=SEdzguaJNKGl231AIq2TsYmpJQR8IzHVVSPQT1I9czbb1m+fbyw+SlPK
+   /ch2ZZgAA2m2pTM7Q6GOGNg2BzovQ4NLPYO4BDo/flkLWnsG7aEGgM+oQ
+   klPxIQ1E2SZu67OMwCDb+rUwbsi9XqAdZ2a5RO0gg4SV9RScOPYVxkJfU
+   zupZUtu/EQ/Dulriz3rE413GGIlSC/WVqm6Ndy6NFFJ2GoDsC46dXuccT
+   dxH5GDX6NxViUsAStVY/A2fMsM5ILORwOqDaZcW82bPwQbwUvbYuaBI5j
+   5HFzDc+qvLWfItSWEjjPzgLVZlf3PwDTRds81QzvPv81sFqPLmFY3L/Pj
+   g==;
+X-CSE-ConnectionGUID: 6IP3WpCASECAOM2GW+uXaQ==
+X-CSE-MsgGUID: x//f4rsKSduSkAjisnSYRg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11974"; a="4266613"
+X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
+   d="scan'208";a="4266613"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2026 02:24:30 -0800
+X-CSE-ConnectionGUID: uZQv6RrqQvatVCkeaSP3Ng==
+X-CSE-MsgGUID: bSK2vtM3Qhu0kMYutWNIWQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
+   d="scan'208";a="11162801"
+Received: from soc-pf6038af.clients.intel.com (HELO [10.217.180.38]) ([10.217.180.38])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2026 02:24:29 -0800
+Message-ID: <1e8f647b-c294-447e-82c3-93b3d577b197@linux.intel.com>
+Date: Mon, 23 Nov 2026 11:24:26 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,53 +73,46 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Subject: Re: [PATCH v3 02/11] dt-bindings: phy: amlogic: Add Meson HDMI TX PHY
- binding
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org,
- robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, olteanv@gmail.com,
- sashiko-reviews@lists.linux.dev
-References: <20261121-meson-drm-create-hdmitx-phy-v3-0-f8f471788076@aliel.fr>
- <20261121-meson-drm-create-hdmitx-phy-v3-2-f8f471788076@aliel.fr>
- <sashiko-outbox-227302@kernel.org>
- <2d8dd4ba-26ec-4b01-8361-09e6dfcfa5ed@linaro.org>
+Subject: Re: [PATCH] accel/ivpu: Allocate a scatterlist per userptr dma-buf
+ mapping
+To: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org
+References: <20261123085935.623564-1-karol.wachowski@linux.intel.com>
+ <sashiko-outbox-228935@kernel.org>
 Content-Language: en-US
-In-Reply-To: <2d8dd4ba-26ec-4b01-8361-09e6dfcfa5ed@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Karol Wachowski <karol.wachowski@linux.intel.com>
+In-Reply-To: <sashiko-outbox-228935@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 11/23/26 09:06, neil.armstrong@linaro.org wrote:
-> On 11/21/26 20:26, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential
->> issue to consider:
->> - [Low] dt-bindings: phy: amlogic: redundant word binding in commit
->>    subject
->> -- 
->>
->> commit fbd4563b5cd10db3f75db052197f808e3b36bc55
->> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
->>
->> dt-bindings: phy: amlogic: Add Meson HDMI TX PHY binding
->>
->> This commit adds a Device Tree binding schema for the HDMI TX PHY
->> found on
->> Amlogic Meson GXBB, GXL, and G12A SoCs.
->>
->>> dt-bindings: phy: amlogic: Add Meson HDMI TX PHY binding
->>
->> [Severity: Low]
->> The dt-bindings: prefix already indicates that this patch adds a binding,
->> so repeating "binding" at the end of the subject is redundant ("dt-
->> bindings:
->> phy: amlogic: Add Meson HDMI TX PHY").
->>
+On 23-Nov-26 10:06, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] accel/ivpu: invalid commit SHA c0b3fef87069 in Fixes trailer
+> --
 > 
-> Use the "dt-bindings: phy: amlogic: document the Amlogic Meson HDMI TX PHY"
+> commit 4be7b1f71890e3b0656af1c546014270a1bde777
+> Author: Karol Wachowski <karol.wachowski@linux.intel.com>
+> 
+>> accel/ivpu: Allocate a scatterlist per userptr dma-buf mapping
+>>
+>> The userptr dma-buf DMA maps the same sg_table on every map_dma_buf(),
+>> so a second mapping would overwrite the DMA addresses of the first one.
+>> It only works today because ivpu is the only importer.
+>>
+>> Build a new sg_table from the pinned pages on each map instead.
+>>
+>> Fixes: c0b3fef87069 ("accel/ivpu: Add support for userptr buffer objects")
+>> Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+> 
+> [Severity: Low]
+> The commit referenced in the Fixes tag, c0b3fef87069 ("accel/ivpu: Add
+> support for userptr buffer objects"), does not exist in mainline git
+> history.  In mainline, that commit is 57557964b582 ("accel/ivpu: Add
+> support for userptr buffer objects"), so the tag should be:
+> 
+>    Fixes: 57557964b582 ("accel/ivpu: Add support for userptr buffer objects")
+> 
 
-Thanks, I will do that.
+I will send v2 with the fix.
 
--- 
-Best regards,
-Ronald
+Karol
