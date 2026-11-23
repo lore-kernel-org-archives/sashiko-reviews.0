@@ -1,113 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795442763;
-	b=QL3Q2850SMjaBK1yD3EPL/cWhzlAvxjM2nB31hjnV+LznMUyoxtDSQogEKDbiyS8A+Rh
-	 fRQsRPZJ1EviBJn6uTyfKJ/ZffBZfXrK1QJjP7Apk1kcTvQgh63xmgMMvEdgDVHdW0W54
-	 LYC0dVwwI6MrTl56LAqDsqO0zg5/xsMQM1wCllXhN4FP9GNddsdxSKn4kSiZBjdJnIALX
-	 P55bxQRRRmSO7UH92hBtFdUtfkaEBPKh7yn+DstwNZ03F6qf/d/0LIn7/+D/Zv/wyda36
-	 hA/zRb+jNmisGSBWd4J/BNNwoJfCCnEUparVrpnyXgCk8pQJyy80LMHxwg2dpHmI02Q==
+	t=1795442918;
+	b=AZozz+SS3RY+zN/vnASbjxXuQkfCSbFxq8q50qqtwhxLiVhzVo7ypW8JCjYmUKFnmpY5
+	 9VZTawY9OG8JZFlBR3J6us9XJ/LTgVwn223xpKtrVZsqO5N1qVybWxUfKnfQyjObpQ9Bk
+	 UC6HiyCWcAYXcPVuaKKTwJG+7rQwJV9xVoCsJAwKx8vTXFqj1YJMRLq2EjN5loDwhkqoP
+	 /nUbv2jJQXwhqln9Gtpz2n33vIkdbUA2U+5ZoAY+IUm390PbU5aFiZXLPIISzTtddA8YA
+	 bwk+2JGtj9B1KM98axFpVoI1RPivnVVIHkBjvmwb15gch3Uh3tO04pzVw7D53E9agYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795442763;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=akifXYVY/5AXDWKkCXFIRC9bawAVd4VrBG0rlaR+urA=;
-	b=HMBAjPPgpdJWsfVZLgPnWtPLnf8dqyy+0Bnj9Q3QHRe8GvqeOxgGPLTkxCsKmtkulv8y
-	 CP+I0szkABuCkSjdqc2oJlHB28OejetbMLnRipoRQ0jMmJhUFA5mceNXjrM64A/ipkiUz
-	 Dp/6WErbhHhwQDFQcUvQd5A/fVigfstKAYnGbCrxwJ16iwZkwCTkws+rPfgLomf9oo8i8
-	 2KWimS3Ht+9MJqXvA1rGtryyqbOm9vIccrgl/McuU4MKMhsSMsQn1YSXNOR09qLEqbU6a
-	 FaD1q+4mxVPEx7FEwFaU1Jgtv3sJLFbBpKNbJIGn7VLRdO6IKHLBsuhKxW7A7IssgrA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795442918;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=cIjP56CWq1uSih/XHWmZxfycsoSnaUHygNNyREh/BjU=;
+	b=l7VTvVS9ChLqdnstpJIlb19Ml3vVSn/UVr+SBVrHz0sjMWYEeTh8XSk/xwQaOprqZkvn
+	 MaTJ7f1TbamhjVbOKsUmlOxQ0H7rwuL6n8PI9Ubdj7OqqpZcJRhks2z102bcvZREedwbj
+	 lcGZ9IuRMWaNq6U6TJ+8Kk6HVNedigSSpA65w2xueqRPfl2WQzjvb+R/qnHj3ySJl8TJt
+	 ZP7Lf5bY1oZR53BZm+85qKUdf3nro++3UOuzy1MFf2KMdQ8j0BRICRr4jlnif28e/aXkO
+	 w32cmv0xtoVB0PgqNQQ4St4ZEfaUO87Pkkb5ggDCnZGtZlFhY0zqpYcvmR3r8kNCK1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Sat7IODW;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=ZGkQsKWk;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Sat7IODW;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=ZGkQsKWk;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=suse.com;
+	spf=pass smtp.mailfrom=suse.com;
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=cVYeReaJ;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4560E606A331
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 14:06:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4560E606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8E1606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 14:08:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E8E1606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Sat7IODW;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=ZGkQsKWk;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Sat7IODW;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=ZGkQsKWk
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 227C11F452;
-	Mon, 23 Nov 2026 14:06:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795442760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=akifXYVY/5AXDWKkCXFIRC9bawAVd4VrBG0rlaR+urA=;
-	b=Sat7IODWbuK74kFpWfabqYz3jJxm4hnxfPzBSup60i9R0+XAssDQEt8Yg4qAFbHX+Lq4kk
-	VraQ4nFJTV/7picEGq7uU7YYV8QEckmFQh5/FRAureozDV1IaAJvGs21WTGUwaCLUelC+n
-	5BLjLAfuYZAQELShjy2QpW1AqTOwuT4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795442760;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=akifXYVY/5AXDWKkCXFIRC9bawAVd4VrBG0rlaR+urA=;
-	b=ZGkQsKWklvSWr072u9cTWnD67uGrttwS/pQa8OMZOZXkI2ETBIM0WiYLXkQ7hX4bznu6f+
-	rfAfEw6QHEwXMoAQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795442760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=akifXYVY/5AXDWKkCXFIRC9bawAVd4VrBG0rlaR+urA=;
-	b=Sat7IODWbuK74kFpWfabqYz3jJxm4hnxfPzBSup60i9R0+XAssDQEt8Yg4qAFbHX+Lq4kk
-	VraQ4nFJTV/7picEGq7uU7YYV8QEckmFQh5/FRAureozDV1IaAJvGs21WTGUwaCLUelC+n
-	5BLjLAfuYZAQELShjy2QpW1AqTOwuT4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795442760;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=akifXYVY/5AXDWKkCXFIRC9bawAVd4VrBG0rlaR+urA=;
-	b=ZGkQsKWklvSWr072u9cTWnD67uGrttwS/pQa8OMZOZXkI2ETBIM0WiYLXkQ7hX4bznu6f+
-	rfAfEw6QHEwXMoAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C973B1352B;
-	Mon, 23 Nov 2026 14:05:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id oQeBOkZIBGvqQwAAD6G6ig:T4
-	(envelope-from <tzimmermann@suse.de>); Mon, 23 Nov 2026 14:05:59 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: deller@gmx.de,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3 3/6] lib/fonts, fbcon: Use font_data_t for rotated fonts
-Date: Mon, 23 Nov 2026 15:03:36 +0100
-Message-ID: <20261123140554.1129792-4-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261123140554.1129792-1-tzimmermann@suse.de>
-References: <20261123140554.1129792-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=cVYeReaJ
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4ac95761c85so25712945e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 06:08:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1795442915; x=1796047715; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=cIjP56CWq1uSih/XHWmZxfycsoSnaUHygNNyREh/BjU=;
+        b=cVYeReaJCOGZoJ5vIqK6SQgIWbJpU2uTjQAGPK8k1ylhXj1cnyCZCPqUU1GJpS4u8U
+         b8MpHuuVKlT6thuJj9bGSwH3Zg0HcNwta5PLCtaymtopS4kJY+ExMfwGZMs59nJXVoEh
+         PL0RQvdxwqmLVQmS9ge1GWstSgpYsBlRbD9KOgLcn2GsrwfTc9H3uXkK57JfovOT819S
+         5CxycHRS4b/z/B1/Jfn9kVaHNW9zJgQxSri4fr86FRtFwF2Md8kc4QgGUW5w74DrUz1i
+         4cbGDtfekN62DqO4yEU5bUXaRCFTz1z+ScCdVwKOr4UueBKQe4mKtlMCB1Z/GPdreEtq
+         sD6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795442915; x=1796047715;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cIjP56CWq1uSih/XHWmZxfycsoSnaUHygNNyREh/BjU=;
+        b=uvfBjZfAZK8cSQie40dUBjIkCEiB8KK13O+gL5OmG5s4DTA8leextNTo5GpDElOLXH
+         jgxpq8jwdvF9VgErfUp81dwaYS/0nqld5qqmmNAWORJQNhq1Nn6uIBSpQEUyDzXWls4T
+         9Y8ErHq9/ZWNEXhPmYFwR+ROy0B+wXLaG3KG0mRyoBPOKLdD7vUCfN3OY2b/m6TiTFnT
+         DwA04PYZSy5H7QHWqZ32D9QNo0iQG7EMrAeDfFeBSvnUp/iiTfFcaZ+NHXvpHZOUCHZY
+         r5j850gzCgKhzc57yv8Ue1sJPWoJsTGuCn2EqfVO14EZdQoi9MpLisLyLKM3So5+IjJp
+         iH1w==
+X-Gm-Message-State: APuU4Z9Gp20q0aMbYlXyjIkSMQTkRQIXgjY+QrjS4oX6dONEB2MTP8RI
+	aTxOfu9hRj5el+U083hAe583mbM9B13xlNOurPJhSRw7UNVVxOO7shKRzgjT2UifmSdMs8Jg5L8
+	UOJa8nbw=
+X-Gm-Gg: AZFdTZfmj+ZtORf5OhWxS4hHEXV2P92NHn3l6YHT3+5zJQ2x/JHos69LlDuEs2C0Xd5
+	zVG1E9GYu0TIVhBQmXx5q70dms9fm8xgUs3C93FUaCFQhU1srG1n/Mkp8oPXal4L3+4ZLWR969S
+	qQLNIhqlPfNtEnRZNxVChIKQDd0h47BNhYBBwp8BnUZprrBldptksQW+zqeYs92KbRRjwVpbN07
+	PiCNbqUMYukhpXcxAkXgRL3vbTBQg6o2hd/4aZ0tPcGiv0DgzEerGLH4mhkLBrod+qgVNr9PvG5
+	MqpCw37ixdeKzd8pBGzhlnr3Rbh41ApdbN+joYtjVvC8nHxybbZ205wDYu+6pCReFNY9Iayx76u
+	db4ng7fvyhr+8Yddt+fiAaU8ruVNvCoYgvdg9bFPz99M910x/kEKagQWwykYPzaCUViAmD3/k2n
+	R/+3jUMpiOc2gBRK3nozoSFozZ5ioM0zXR3jtz0taVxdbt7iBsCEDhY55npXsdJKJZnRoIgMaU5
+	ME+Pt9jK1cLDs4f17mVJFQ7Bl5nzJGo0S8Gl4AlJoL4gUoIr9bA5LQwuIdRzT4JznnGe1fkdCLo
+	XjLegmUU4dMeHNScjsgaMkNHzsg8+wE=
+X-Received: by 2002:a05:600c:1546:b0:4a1:fc98:1cb1 with SMTP id 5b1f17b1804b1-4bb887c2cb0mr263882625e9.2.1795442915456;
+        Mon, 23 Nov 2026 06:08:35 -0800 (PST)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb895eec06sm136102075e9.2.2026.11.23.06.08.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2026 06:08:34 -0800 (PST)
+Date: Mon, 23 Nov 2026 15:08:32 +0100
+From: Petr Mladek <pmladek@suse.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Sasha Levin <sashal@kernel.org>, Josh Poimboeuf <jpoimboe@kernel.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Joe Lawrence <joe.lawrence@redhat.com>, Song Liu <song@kernel.org>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Yafang Shao <laoar.shao@gmail.com>, Shuah Khan <shuah@kernel.org>,
+	live-patching@vger.kernel.org
+Subject: Re: [PATCH v4 3/4] selftests/livepatch: build the test modules
+ against the kernel in O=
+Message-ID: <awRI4PbBHGtnNijI@pathway.suse.cz>
+References: <20261110161050.2451750-1-sashal@kernel.org>
+ <20261110161050.2451750-4-sashal@kernel.org>
+ <sashiko-outbox-207425@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -117,241 +104,73 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-16.30 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmx.de,ffwll.ch];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -16.30
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-207425@kernel.org>
 
-Return rotated font data as font_data_t instead of unsigned char*.
-Release the data with font_data_put() in fbcon.
+On Tue 2026-11-10 16:53:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] selftests/livepatch: KDIR fallback ignores builds without
+>   Module.symvers
+> --
+> 
+> commit 62f70537bbca33262ec62f1273becbdf534f58fc
+> Author: Sasha Levin <sashal@kernel.org>
+> 
+> selftests/livepatch: build the test modules against the kernel in O=
+> 
+> This commit selects KDIR from O= or KBUILD_OUTPUT (or the kernel source
+> tree) before falling back to the running kernel's build directory, and
+> strips O= and KBUILD_OUTPUT when invoking the kernel Makefile for the
+> livepatch test modules.
+> 
+> > diff --git a/tools/testing/selftests/livepatch/Makefile b/tools/testing/selftests/livepatch/Makefile
+> > index a080eb54a215d..97478ef90945c 100644
+> > --- a/tools/testing/selftests/livepatch/Makefile
+> > +++ b/tools/testing/selftests/livepatch/Makefile
+> > @@ -1,5 +1,31 @@
+> >  # SPDX-License-Identifier: GPL-2.0
+> >  
+> > +# The test modules are built against the kernel in KDIR. When KDIR is not
+> > +# set, use the output directory given with O= or KBUILD_OUTPUT if a kernel
+> > +# was built there, as with
+> > +#   make O=/tmp/kselftest TARGETS=livepatch kselftest
+> > +# otherwise the kernel source tree if the kernel was built in it, as with
+> > +#   cd tools/testing/selftests/livepatch; make
+> > +# and otherwise the build directory of the running kernel, which its
+> > +# devel files provide. A kernel was built in a directory if it has a
+> > +# Module.symvers.
+> > +ifndef KDIR
+> > +KBUILD_DIR := $(firstword $(O) $(KBUILD_OUTPUT))
+> > +ifneq ($(and $(KBUILD_DIR),$(wildcard $(KBUILD_DIR)/Module.symvers)),)
+> > +KDIR := $(KBUILD_DIR)
+> > +else ifneq ($(wildcard ../../../../Module.symvers),)
+> > +KDIR := ../../../..
+> > +else
+> > +KDIR := /lib/modules/$(shell uname -r)/build
+> > +endif
+> > +endif
+> 
+> [Severity: Medium]
+> Does checking only for Module.symvers cause KDIR to fall back to the host's
+> /lib/modules/$(uname -r)/build when the target kernel in O= or the source
+> tree was built with CONFIG_MODULES=n or an image-only target (which
+> produces vmlinux.symvers instead of Module.symvers)?
+> 
+> When that happens and the host has kernel headers with CONFIG_LIVEPATCH=y,
+> test_modules/Makefile reads the host's include/config/auto.conf and builds
+> the test modules against the running host kernel instead of skipping them
+> for the target kernel, which breaks cross-compiled builds or builds where
+> the in-tree test modules use newer kernel APIs than the host.
 
-It is still possible to use preallocated font buffers for the rotated
-font data. The font data tracks the buffer size and reference count to
-do so; font_data_rotate() invokes __font_data_alloc() to allocate a
-new font-data buffer if necessary.
+The problem looks real. But I would consider it a corner case.
+IMHO, there are only few users using CONFIG_MODULES=n. They
+might use SKIP_TARGETS="livepatch".
 
-Returning rotated font data as font_data_t further allows for using
-regular font-data helpers on it. Fbcon now manages buffer life time
-with the font data's reference counting. Removes the plain kfree().
+By other words, we could fix hit later when there is a demand.
+You would not block this patch because of this. It fixes
+some scenarios and goes in the right direction...
 
-v3:
-- replace remaining instances of kfree() with font_data_put()
-- fix documentation of font_data_rotate
-v2:
-- fix typo in commit description
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/video/fbdev/core/fbcon.c        | 12 +++++---
- drivers/video/fbdev/core/fbcon.h        |  3 +-
- drivers/video/fbdev/core/fbcon_rotate.c | 19 ++++++------
- include/linux/font.h                    |  5 ++--
- lib/fonts/font_rotate.c                 | 39 ++++++++++---------------
- 5 files changed, 36 insertions(+), 42 deletions(-)
-
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 7720dfc80c16..5ccfc772dc7c 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -770,7 +770,8 @@ static void fbcon_release(struct fb_info *info)
- 		kfree(par->cursor_data);
- 		kfree(par->cursor_src);
- #ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
--		kfree(par->rotated.buf);
-+		if (par->rotated.buf)
-+			font_data_put(par->rotated.buf);
- #endif
- 		kfree(info->fbcon_par);
- 		info->fbcon_par = NULL;
-@@ -2470,8 +2471,10 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 	}
- 
- #ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
--	if (rotated_saved)
--		kfree(saved_rotated.buf);
-+	if (rotated_saved) {
-+		if (saved_rotated.buf)
-+			font_data_put(saved_rotated.buf);
-+	}
- #endif
- 	if (old_fontdata)
- 		font_data_put(old_fontdata);
-@@ -2485,7 +2488,8 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 	 * state.
- 	 */
- 	if (rotated_saved) {
--		kfree(par->rotated.buf);
-+		if (par->rotated.buf)
-+			font_data_put(par->rotated.buf);
- 		par->rotated = saved_rotated;
- 	}
- #endif
-diff --git a/drivers/video/fbdev/core/fbcon.h b/drivers/video/fbdev/core/fbcon.h
-index 289a3d18f917..28111c706e34 100644
---- a/drivers/video/fbdev/core/fbcon.h
-+++ b/drivers/video/fbdev/core/fbcon.h
-@@ -75,8 +75,7 @@ struct fbcon_bitops {
- #ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
- struct fbcon_rotated {
- 	font_data_t *fontdata;       /* source font */
--	unsigned char *buf;          /* rotated glyphs */
--	size_t bufsize;
-+	font_data_t *buf;            /* rotated font */
- 	int buf_rotate;              /* rotation of buf */
- 	unsigned int buf_width;      /* geometry of source font */
- 	unsigned int buf_height;
-diff --git a/drivers/video/fbdev/core/fbcon_rotate.c b/drivers/video/fbdev/core/fbcon_rotate.c
-index 7afd63dcee7b..3fe6ac3c6d6c 100644
---- a/drivers/video/fbdev/core/fbcon_rotate.c
-+++ b/drivers/video/fbdev/core/fbcon_rotate.c
-@@ -18,7 +18,7 @@
- int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
- {
- 	struct fbcon_par *par = info->fbcon_par;
--	unsigned char *buf;
-+	font_data_t *buf;
- 	int ret;
- 
- 	if (par->p->fontdata == par->rotated.fontdata &&
-@@ -40,21 +40,22 @@ int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
- 
- 	buf = font_data_rotate(par->rotated.fontdata, vc->vc_font.width,
- 			       vc->vc_font.height, vc->vc_font.charcount,
--			       par->rotated.buf_rotate, par->rotated.buf,
--			       &par->rotated.bufsize);
-+			       par->rotated.buf_rotate, par->rotated.buf);
- 	if (IS_ERR(buf)) {
- 		ret = PTR_ERR(buf);
--		goto err_kfree;
-+		goto err_font_data_put;
- 	}
- 
-+	if (par->rotated.buf)
-+		font_data_put(par->rotated.buf);
- 	par->rotated.buf = buf;
- 
- 	return 0;
- 
--err_kfree:
--	kfree(par->rotated.buf);
--	par->rotated.buf = NULL; /* clear here to avoid output */
--	par->rotated.bufsize = 0;
--
-+err_font_data_put:
-+	if (par->rotated.buf) {
-+		font_data_put(par->rotated.buf);
-+		par->rotated.buf = NULL; /* clear here to avoid output */
-+	}
- 	return ret;
- }
-diff --git a/include/linux/font.h b/include/linux/font.h
-index be1a26ff8ae9..2d7e2ca3db0f 100644
---- a/include/linux/font.h
-+++ b/include/linux/font.h
-@@ -120,9 +120,8 @@ void font_glyph_rotate_180(const unsigned char *glyph, unsigned int width, unsig
- 			   unsigned char *out);
- void font_glyph_rotate_270(const unsigned char *glyph, unsigned int width, unsigned int height,
- 			   unsigned char *out);
--unsigned char *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
--				unsigned int charcount, unsigned int steps,
--				unsigned char *buf, size_t *bufsize);
-+font_data_t *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
-+			      unsigned int charcount, unsigned int steps, font_data_t *buf);
- 
- /*
-  * Font description
-diff --git a/lib/fonts/font_rotate.c b/lib/fonts/font_rotate.c
-index 275406008823..ee9605b9b55c 100644
---- a/lib/fonts/font_rotate.c
-+++ b/lib/fonts/font_rotate.c
-@@ -181,29 +181,23 @@ EXPORT_SYMBOL_GPL(font_glyph_rotate_270);
-  * @height: The number of scanlines in the glyph
-  * @charcount: The number of glyphs in the font
-  * @steps: Number of rotation steps of 90°
-- * @buf: Preallocated output buffer; can be NULL
-- * @bufsize: The size of @buf in bytes; can be NULL
-+ * @buf: Preallocated font data; can be NULL
-  *
-  * The parameters @width and @height refer to the visible number of pixels
-  * and scanlines in a single glyph. The number of glyphs is given in @charcount.
-  * Rotation happens in steps of 90°. The @steps parameter can have any value,
-  * but only 0 to 3 produce distinct results. With 4 or higher, a full rotation
-  * has been performed. You can pass any value for @steps and the helper will
-- * perform the appropriate rotation. Note that the returned buffer is not
-- * compatible with font_data_t. It only contains glyph data in the same format
-- * as returned by font_data_buf(). Callers are responsible to free the returned
-- * buffer with kfree(). Font rotation typically happens when displays get
-- * re-oriented. To avoid unnecessary re-allocation of the memory buffer, the
-- * caller can pass in an earlier result buffer in @buf for reuse. The old and
-- * new buffer sizes are given and retrieved by the caller in @bufsize. The
-- * allocation semantics are compatible with krealloc().
-+ * perform the appropriate rotation. Font rotation typically happens when
-+ * displays get re-oriented. To avoid unnecessary re-allocation of the memory
-+ * buffer, the caller can pass in an earlier result in @buf for reuse. The
-+ * returned font data should be released with font_data_put().
-  *
-  * Returns:
-- * A buffer with rotated glyphs on success, or an error pointer otherwise
-+ * Font data with rotated glyphs on success, or an error pointer otherwise
-  */
--unsigned char *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
--				unsigned int charcount, unsigned int steps,
--				unsigned char *buf, size_t *bufsize)
-+font_data_t *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
-+			      unsigned int charcount, unsigned int steps, font_data_t *buf)
- {
- 	const unsigned char *src = font_data_buf(fd);
- 	unsigned int s_cellsize = font_glyph_size(width, height);
-@@ -227,19 +221,16 @@ unsigned char *font_data_rotate(font_data_t *fd, unsigned int width, unsigned in
- 	if (check_mul_overflow(charcount, d_cellsize, &size))
- 		return ERR_PTR(-EINVAL);
- 
--	if (!buf || !bufsize || size > *bufsize) {
--		dst = kmalloc_array(charcount, d_cellsize, GFP_KERNEL);
--		if (!dst)
--			return ERR_PTR(-ENOMEM);
--
--		kfree(buf);
--		buf = dst;
--		if (bufsize)
--			*bufsize = size;
-+	if (!buf || size > font_data_size(buf)) {
-+		buf = __font_data_alloc(size, GFP_KERNEL);
-+		if (IS_ERR(buf))
-+			return buf;
- 	} else {
--		dst = buf;
-+		font_data_get(buf);
- 	}
- 
-+	dst = __font_data_wrbuf(buf);
-+
- 	switch (steps) {
- 	case 0:
- 		memcpy(dst, src, size);
--- 
-2.56.1
-
+Best Regards,
+Petr
