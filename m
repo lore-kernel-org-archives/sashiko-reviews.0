@@ -1,84 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795466342;
-	b=vCwy9prwtPa0ROdSfGeRNKPzCDjXBDn4qgvlONu1AKFcjnMAF2zDpiLfyQEqIddTM3JO
-	 zlpyLWBJwNDUTzi0iOHoIfHwZFGSpOj/dhRQ6B8DwjIP72xugAPz6G4t+jjLu9VGNDMuy
-	 nPB39KkgdRErSgbO1nxtBjqI+0KVX0LemweI4SnTbVGrpAQZF1c3Bki5UJQ0WsIojClH8
-	 pLbI7capJ8ZKcrf2c80difaAiB+B5hP8OyJ7pVteKcbwfA8q7rDQ3MDIC8AlbstAp6jTe
-	 Ubia/sYGQI1f4BLDUL0fhEtGZdToKuxJRlh5Yu1Cg0sKLj+ur9FWEuD/ACKcF/Boa9A==
+	t=1795466386;
+	b=05O0K+N0U9mmcS9I4RDAKC3QI7j1qbDShPpqhUQ361Xw9EtGwluko8iUtj6qqOWcXKji
+	 r1uBuCSYlILIzHq2X/QuJvx1SPGG+/tmo3rpcDwVluIkJh9/17HZEW2L46/6kIwwmAyIq
+	 CpIAXV/dRcq3knEXz7jcJuy14V+F6GfZwCVozuPM90UzCy2pzRVR1+qCiMhnKKr+UZwzs
+	 FeTQYXvt8hyk37TQqkZELoj24YQwbMCfVJhJ3NvtekVAjfSQjgak5wCqig1c+A/OzLuTk
+	 OWYNRdq9Cbjj6xOGsJ1mbq3m4AhlOCNj5mSDj8rSvqO3fyuaf9Y6kqWmr7gDoJsMnIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795466342;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 Cc:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=LFLVokrBsb7TBY4fGinZW7FsteZvqVhuj4Pzl3hc1RE=;
-	b=ibd2CAn8qOH143+ueYeroTUwvUj9OTXUA4acw3rMA7udIbsI5IB+2DJX+hB1dmtnrAXX
-	 IzMcIbWOou6WyWWE0HMdF9txu7JUsFtZnNN09HA3XBiPWyb2vij/CAIx30SFjbENiFWCq
-	 9c2WhPUzYzhBCNUMLC631zZY91bjfpXpJXyYy8jnUTFtOr8otJ5T59zRbPTHypo1moOr5
-	 LSDO7jw1i6Ia0ZUCsOTTSYQMt+stB+13L9VFWeVRU8UYpFsR4PLjKSlifbY/Fx36KjTi0
-	 fMaiPdk5vF42Yzwab9WIK6Y0R7i21E7sQPtDpmjOSlVXUJXJMxL9o/fl92rREmO2T2A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795466386;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Authority-Analysis:X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=BTgZDhQmpiOfvJh/U5FMsjjeNKUBRVaNNccXn4V5Uew=;
+	b=JFjfqRlwce6sCpm76ImFkQj6vMEyiTfKkz9WpAR0GzXv+vazJrVn7qfEVEiuGWqzwuc3
+	 ZUHIQbko8eKhJ7tOHe3AbP9ub+Ecg4E2o0N/8YpeSd9iFLnl30yWAbMqNjSHsatpjSBtq
+	 VhfUMReSmATJcfS15NwET4zfDHO7eqDgPj5s/b0KHTnTJmS/oW6UW8Fs6gl+NQZS0wO5c
+	 dEx3dBxnHIL24nVCoypDiO643mIitlkxb2wt60OE4jVkKf0/JurcdXiQao98yojWMZmyj
+	 cTwUlhWqnHMg2j85Nug8VbVuSg+lD2ndtiz3eTGWVUCcbTA2SFVbI9bQu2Gq4GxuyGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=H7o8zX1j;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FayhAM+A;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XL2gCJZ2;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B08606A31E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 20:39:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 13B08606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E628606A321
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 20:39:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0E628606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=H7o8zX1j
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1795466341;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LFLVokrBsb7TBY4fGinZW7FsteZvqVhuj4Pzl3hc1RE=;
-	b=H7o8zX1j0rA90kn5jQxA9iKnkUG1CQhIKiZ/XUA5nBHy3PAJfaIV4wBQQY5DwzPpi+JkFD
-	F4F+ewtweqAO4T7RUW4AcLBd3IP7T8lb+tlookHKG7DKd0FmX9t6yfNhbr95F8Qma7WteK
-	9a7MB8BA/QR3XFlYzeTomTozYOxeHbw=
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-4TKLs7zHNWaM8-QKmuHd3Q-1; Mon, 23 Nov 2026 20:38:58 +0000
-X-MC-Unique: 4TKLs7zHNWaM8-QKmuHd3Q-1
-X-Mimecast-MFC-AGG-ID: 4TKLs7zHNWaM8-QKmuHd3Q_1795466337
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-384c78aa0dbso5211837eec.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 12:38:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795466337; x=1796071137;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FayhAM+A;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XL2gCJZ2
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ANJuOfh2349990
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 20:39:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BTgZDhQmpiOfvJh/U5FMsjjeNKUBRVaNNccXn4V5Uew=; b=FayhAM+AHNEAkIR3
+	b8N9FmOqGz50xqkCk3OxEjpXss7cnSc+hkWsGqMr5+5F+exNlH6zrJmRTf13PDBl
+	S+Tdz8zo5FIavg5QxQT/LE5mP/6UVBuJ4i8e+Trvikfj9oz7hUOfeUXnHlg0FrKC
+	5ZUqYnbBtxMkB1Y5aVmTYgJL6zMAwjZhFNqYd1ElIdCIsIj3jahFnKpD+hHMit7Y
+	iplugmpv7hd355++o2C9Qsne7X4Qe/19c+1DnQn90n88YMIB0X30I5J+rzN9M01B
+	ig09kUJg8ijwhrrJoFCb/qSbAREJbe4LkuJYxc+dQsldu5RztJOzS71BBoYiIpqH
+	Q16kQQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4g9a3b9d-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 20:39:44 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-386a7af8b94so1762601eec.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 12:39:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1795466383; x=1796071183; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LFLVokrBsb7TBY4fGinZW7FsteZvqVhuj4Pzl3hc1RE=;
-        b=2noi2ooTy0nhcOlkCMufbjP9fZ/01p2XX4RJiRxsriyze4ad7S94qP2Jtse3HgJ6J9
-         eio0PdwIf6ZMy1g2B0dKLhhSnJbaoLi7Lqt68XC/RVALJxihV4QjJiIqYjsMj5Mje0N3
-         8wtC32g3n5FLm4u17SO8lMQ67CFeyCbr8zYKBwhuOE1aJCH/My+I3SkzOCvYZxHu3mFZ
-         eJk6XHBSPhmEz8kpXuYUsW/USSKJQW0OiEh9LL2xQD4otZUjfVl+FvoVZL42vT1AtCo2
-         8e+E3P472IkV2Y4R/byvY9+v0478LNVfm0jXdHLlEZvrRTjYDE8nhwreJuUfiVl6xOgD
-         b0ZQ==
-X-Gm-Message-State: APuU4Z9mSHhXV6SRkkczua2lJuinaJUPpfd3MQIwDJSscx9NdBaTIG1Z
-	9Y1cLUNBaoLjErwpKcDcx2GuaKV3TFRcSMnJuO1t8qPJXDlXMA/6mNBT8kEnZk23ua7fXh+6XlV
-	RNAiiWoO1p0VtkdDCrshI8SZ2I4bJOhh8Ztd2AtrMGdZRiz6OCrkBVK3kiXW3SpoCVmk0b6bG+W
-	V3eNwxf/Ve4l4JhskXrvBGxvJjBDoTw7+QoznhENRkNF4x0IfdP7YtNxo=
-X-Gm-Gg: AZFdTZcFAmRmkVnVPUmhcJTI+V1csUUAiecxu5UESg9bHQcsoPE6pNV7P7wCoSRXLSQ
-	i6CeYNczjt5D/bmBBTCYzrEhBE8BmaycFl0CI+lnX3MDC2tvxDLUqkMc+/oyYGe72FW5IanVWBD
-	Uz6xz/Omle3VKox72lwpfeXluH4+K6Abz3LXJ/VNuVbkWfWDk/0uDk1sfj
-X-Received: by 2002:a05:7301:1501:b0:385:1e1c:9ab5 with SMTP id 5a478bee46e88-385701527f3mr12378479eec.20.1795466337097;
-        Mon, 23 Nov 2026 12:38:57 -0800 (PST)
-X-Received: by 2002:a05:7301:1501:b0:385:1e1c:9ab5 with SMTP id
- 5a478bee46e88-385701527f3mr12378458eec.20.1795466336504; Mon, 23 Nov 2026
- 12:38:56 -0800 (PST)
+        bh=BTgZDhQmpiOfvJh/U5FMsjjeNKUBRVaNNccXn4V5Uew=;
+        b=XL2gCJZ2EKFoJSOM+GHb4DUEL3zzYFX0oQhn8wvHrtKiJreksNLzQXXadUPJGTWCJJ
+         8q5tOKpTUrCRxz2EBEBWq3GHw4WSnQFQEJFmYFMyWub3cmOFJdwAlcPdHJV03LDT/GfE
+         4q2t/l0tMatef4YcdEixCwxDMwVt8z3M3SOuSiiuMx62z2WcKsCXEm4+DIEAhX1CacP7
+         0DfX1nN5knjMiikYJkdB/X/V91MNQa09/qToDSrNsa8S751JaIXVW9Snwvg92pog84n0
+         bTW46DyG0KHs8c4D4ULYZ3XGweKNWOCwIxRt8yVZE8Hjc5gPmT7B/IhCN4N5GtJRwmA/
+         Ah6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795466383; x=1796071183;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=BTgZDhQmpiOfvJh/U5FMsjjeNKUBRVaNNccXn4V5Uew=;
+        b=zN9HhtUEGjcZ7gHqGruPnO1P1GenQri2Qi1l9DkZiUqpKwEsb9bZi9OLJFpmPtwfu/
+         Am3re8h6A0s/sZ0zIZdrGberkrOf3U0pkHanyu3bNbzN8dnUO4AzYaF3pE7iR2962uAz
+         jakGeuPloczCyNvNmzWufktWK05DMzPklfI436LzNCHHpfibIh3Wwea/TR+vQIN7eDxN
+         8rjqcdZdgxhYJ8A5pKhabJvQvi72oksiCPflGrNoRvCOoeKVbCRthB20S5OaIZduLhQi
+         yos3MoltA1Xps89XhBQyH0SdD6fuBZKdnCf+siKZoMg9Z9cLS9wC076ANJPelcIhmSKt
+         otWg==
+X-Gm-Message-State: APuU4Z9lHbMgddJK8Ku+KhibJCbA+wQcXfiaefu80mcjvX0lI/1GzzIb
+	A0xjelRR42MT7f9yuGU5NRrwuhTQpib3w4h1v9//t6wD/XQm3Df/y41XGS4YTAXSt6jAr1MXxJB
+	8+mja07w1NnJdvLX2ooEe9yqE8D2qjlfhQaiqjkZaTtTxqyKsqRjjA/ymw/AJ1FnfehTu41uaK/
+	1CgmE=
+X-Gm-Gg: AZFdTZdG/mi4qnS3sxMrJSapHu5YJpHwDcU88r9SAob4l+HZVHA//vleHsCkCiI5q6U
+	dUtAeGWXgD7tIyrwxLpD2GNEjHHS75lw5WjYclOGqyYfEaqfsI8ExYXp99OZSnZKHbgfylCWR7F
+	GeqZFPpKquVB4Ie3fJQnALZmpp5qyWEjadCyUvB7PHpcNL5nyKglFpZwwodE54R5f3BD/BSkTvM
+	EdeyQZB3E7d1N/vwwTwO6uNsoDO07UgcZPujIxPTp8fwAJx44V+I5hkw85TzT37tHECwIiop8yO
+	nM8bx5j5VTIIYy7niKsUiCAtp0EWVjF9Q4ksHL5K9Rr6aFyBFYOB958YjZjTxjQP0AaYnqh6MSD
+	ZFu6mDAF2Zlho7+Dzi+spgaseOmfXZD0bxcnPpIX2axqhGsP2vlvLDSQ/8NJI/9/GAyBvfKqw5p
+	OijRc=
+X-Received: by 2002:a05:7300:ae04:b0:384:7a8f:3bc1 with SMTP id 5a478bee46e88-386a8562bb4mr6348378eec.17.1795466383303;
+        Mon, 23 Nov 2026 12:39:43 -0800 (PST)
+X-Received: by 2002:a05:7300:ae04:b0:384:7a8f:3bc1 with SMTP id 5a478bee46e88-386a8562bb4mr6348357eec.17.1795466382794;
+        Mon, 23 Nov 2026 12:39:42 -0800 (PST)
+Received: from [192.168.1.136] ([172.88.17.160])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-385672ce402sm35843638eec.16.2026.11.23.12.39.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Nov 2026 12:39:42 -0800 (PST)
+Message-ID: <e4059318-2301-4362-b308-ba915ca8310a@oss.qualcomm.com>
+Date: Mon, 23 Nov 2026 12:39:41 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -88,191 +115,101 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261120200040.257152-1-aahringo@redhat.com> <20261120200040.257152-2-aahringo@redhat.com>
- <sashiko-outbox-226084@kernel.org>
-In-Reply-To: <sashiko-outbox-226084@kernel.org>
-From: Alexander Aring <aahringo@redhat.com>
-Date: Mon, 23 Nov 2026 15:38:44 -0500
-X-Gm-Features: Aa3M54ojJQmMrjkk6bT0MGL_Bud8_Tprawe3tZZkWm05hYL-HKiNnnV7OASLkAU
-Message-ID: <CAK-6q+iQSn2S68FgHNNT5+vB7zTGnNN5Duujk6zU9HPP5ckgMg@mail.gmail.com>
-Subject: Re: [PATCHv2 RESEND v7.4-rc3 1/5] dlm: fix socket hang on send buffer
- limitation with socket error
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 3/7] usb: misc: qcom_eud: add per-path High-Speed PHY
+ control
 To: sashiko-reviews@lists.linux.dev
-Cc: teigland@redhat.com, gfs2@lists.linux.dev
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: ItticuzWGZXLRO8lzXzH9IPNEvlxyEbPtFm8L4n0gqI_1795466337
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: devicetree@vger.kernel.org, linux-usb@vger.kernel.org, robh@kernel.org,
+        conor+dt@kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20261123182847.143892-1-elson.serrao@oss.qualcomm.com>
+ <20261123182847.143892-4-elson.serrao@oss.qualcomm.com>
+ <sashiko-outbox-229871@kernel.org>
+Content-Language: en-US
+From: Elson Serrao <elson.serrao@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-229871@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA4MiBTYWx0ZWRfX880wLviAhdMr
+ e8h5YM0VQGfY2Us2XdHFLMvD6oR9+oZUQNJH8S+YrnT9Q13qINToju7RGJkfnzEf9SV3AOzacDa
+ ZjtVJ8jy8omIqiUTYU8tdbgRrW0gcr0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA4MiBTYWx0ZWRfX/CfNIpC/IjAo
+ YTTQr5TptxI8GSe7Q2onVocBRrpzfkmChMOgSlr/nqk5wWDIsYa/aVYrya25iAv4MsH4SGdqQw2
+ 5hwBWkn9TZCEYDFWZ/OYBGq551ZT5FwwzmSqcCxPTVQEPpov2/NFJ587j59eG9LCPNwTV1Dkyig
+ 3y6NI1sUUUNBN2Wbj9e5FrKxokq/G7KE1xrf8voorHXN+TxUjy1Ejhzu1ETZ7WtNYaLkf9pL4cQ
+ +ug20VQmmmOW7wycK3bfzsqNBFnHSBV9/lLSKrlkC20FZcyrvZm8c5LLVYsMS7tisjsdD6lBna0
+ cuDDLvVYbtFvX4TomfldsrqeeDmsuCduyehFj+W1GKWQ1afeSk39CAKoilKPbhpyDGIDu5+Il6T
+ R0aA0amNUHzLjaeeIpTpjQGf3/waVkszcZYBo/aINmFRvFLN/IU95ePY/WsgBNey1HmjsW6pCqY
+ qSD5HHk/HrtUwaSsOyw==
+X-Proofpoint-ORIG-GUID: 07ZA8ojENipG-8acdyGxza2ma6vbn9vt
+X-Authority-Analysis: v=2.4 cv=cYJHPXDM c=1 sm=1 tr=0 ts=6b04a490 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=p3NwzfejtmCMKWTc25r7/Q==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=PwTwPomv82BVMpG07ZAA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: 07ZA8ojENipG-8acdyGxza2ma6vbn9vt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-23_05,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 malwarescore=0 spamscore=0 bulkscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611230082
 
-Hi,
 
-On Fri, Nov 20, 2026 at 3:40=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [High] dlm: missing CF_APP_LIMITED clear in lowcomms_error_report()
->   hangs send queue
-> - [High] dlm: unconditional swork queue in lowcomms_error_report()
->   breaks invariants
-> - [Medium] dlm: race in send_to_sock() sets CF_APP_LIMITED after socket
->   error
-> - [Low] dlm: missing Fixes trailer in commit message
+
+On 11/23/2026 10:48 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] usb: misc: qcom_eud: eud_probe() fails when secondary path is
+>   disabled in DT
 > --
->
-> commit 796bee147607d968d752eb2e6e9611c521fe108f
-> Author: Alexander Aring <aahringo@redhat.com>
->
-> > dlm: fix socket hang on send buffer limitation with socket error
-> >
-> > As Sashiko AI bot mentioned [0], a socket connection can get stuck when
-> > the send buffer limitation is reached and a socket error simultaneously
-> > occurs.
-> >
-> > This issue can be reproduced with the following setup:
-> > 1. Set sk_sndbuf to SOCK_MIN_SNDBUF.
-> > 2. Slow down DLM connections using netem.
-> > 3. Use tcpkill to randomly send TCP resets to DLM connections.
-> >
-> > I instrumented debug printouts to confirm that the sk_write_space()
-> > notifier callbacks were being executed, using step 3 to trigger random
-> > socket errors.
-> >
-> > With these changes, I can no longer reproduce the hang.
-> >
-> > Changes included:
-> > - Removed sk_write_pending counting, as this should not be modified
-> >   at the socket application layer (or is at least unnecessary).
-> > - Moved clearing the CF_SEND_PENDING bit=E2=80=94which allows re-queuin=
-g
-> >   swork (send worker for sendmsg())=E2=80=94to the sk_write_space() cal=
-lback,
-> >   since this callback notifies us that the underlying socket is no long=
-er
-> >   constrained by its send buffer.
-> > - Handled the race condition between sendmsg() and evaluating
-> >   SOCK_NOSPACE after sendmsg(), where sk_write_space() could be called
-> >   in between, using CF_APP_LIMITED:
-> >   - In sk_write_space(), queue swork again if CF_APP_LIMITED is set.
-> >   - If CF_APP_LIMITED is not set, do nothing as send_to_sock() will han=
-dle
-> >     it, confirming the race occurred.
-> > - Introduced new handling in lowcomms_error_report() when a socket erro=
-r
-> >   occurs during send buffer limitation. If CF_APP_LIMITED is set, swork
-> >   will be re-queued, which will fail and trigger a reconnect.
-> > - Added various comments explaining the interaction with CF_APP_LIMITED=
-.
-> >
-> > [0] https://lore.kernel.org/netdev/179090395863.434549.3668493667259120=
-759@kernel.org/
-> >
-> > Signed-off-by: Alexander Aring <aahringo@redhat.com>
->
-> [Severity: Low]
-> Should this bug fix include a Fixes: tag for the commit that gated
-> lowcomms_queue_swork() on CF_APP_LIMITED?
->
->   Fixes: dbb751ffab0b ("fs: dlm: parallelize lowcomms socket handling")
->
+> 
+> commit e2fd91a7c0ed5f3452a494a0a91ef1ddd34b1c26
+> Author: Elson Serrao <elson.serrao@oss.qualcomm.com>
+> 
+> usb: misc: qcom_eud: add per-path High-Speed PHY control
+> 
+> This commit adds per-path High-Speed PHY management to the Qualcomm EUD
+> driver so that the PHY associated with the selected UTMI path is
+> initialized and powered when EUD is enabled.
+> 
+>> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
 
-This is not the right fixes tag, that a socket error comes in when the
-sending buffer is limited was not handled in the commit that was
-introducing CF_APP_LIMITED b36930dd508e ("dlm: Handle application
-limited situations properly.") so far I can see.
+[...]
+>>  
+>> +	for_each_child_of_node_scoped(np, child) {
+>> +		ret = eud_init_path(chip, child);
+>> +		if (ret)
+>> +			return ret;
+>> +	}
+>> +
+>> +	/* Primary path is mandatory. Secondary is optional */
+>> +	if (!chip->paths[0])
+>> +		return dev_err_probe(chip->dev, -ENODEV, "primary path not found\n");
+> 
+> [Severity: Medium]
+> Does eud_probe() fail on dual-path SoCs when a board disables the secondary
+> path or its USB controller/PHY in Devicetree?
+> 
+> for_each_child_of_node_scoped() visits child nodes even when they are
+> marked status = "disabled" (unlike
+> for_each_available_child_of_node_scoped()).  In Addition, on dual-path SoCs
+> where the SoC dtsi defines both eud-path@0 and eud-path@1, if a board leaves
+> the secondary USB controller disabled then of_graph_get_remote_node()
+> returns NULL (failing probe with -ENODEV), and if the secondary High-Speed
+> PHY is disabled then devm_of_phy_get_by_index() returns -EPROBE_DEFER
+> indefinitely, preventing EUD from probing even for the primary port.
+> 
+The binding defines both paths as required for dual-path SoCs (e.g.
+SM8350). The eud-path nodes represent the UTMI topology between the
+connector and the corresponding USB controller, not independently
+optional hardware resources. Therefore, disabling an eud-path node or
+the resources required by it is not a valid configuration for a
+dual-path topology. Probe failure or probe deferral is the
+expected outcome in such cases.
 
-> > diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
-> > index 3929b164dc0d4..6c972f1b412ca 100644
-> > --- a/fs/dlm/lowcomms.c
-> > +++ b/fs/dlm/lowcomms.c
->
-> [ ... ]
->
-> > @@ -623,6 +631,20 @@ static void lowcomms_error_report(struct sock *sk)
-> >               break;
-> >       }
-> >
-> > +     /* if waiting on sk_write_space() and an sk_err occurs, the callb=
-ack
-> > +      * won't fire. Clear CF_SEND_PENDING so resend tasks can re-queue
-> > +      * swork, triggering a sendmsg() failure to initiate reconnection=
-.
-> > +      */
-> > +     spin_lock_bh(&con->writequeue_lock);
-> > +     clear_bit(CF_SEND_PENDING, &con->flags);
-> > +     /* dlm_midcomms_unack_msg_resend() does not always
-> > +      * trigger lowcomms_queue_swork() as it tries to
-> > +      * avoid to put pending messages into the lowcomms
-> > +      * sending buffer. Force it here again.
-> > +      */
-> > +     lowcomms_queue_swork(con);
-> > +     spin_unlock_bh(&con->writequeue_lock);
-> > +
-> >       dlm_midcomms_unack_msg_resend(con->nodeid);
-> >
-> >       listen_sock.sk_error_report(sk);
->
-> [Severity: High]
-> Does lowcomms_error_report() also need to clear CF_APP_LIMITED before
-> calling lowcomms_queue_swork(con)?
->
-> lowcomms_queue_swork() refuses to schedule con->swork while CF_APP_LIMITE=
-D
-> is set:
->
-> fs/dlm/lowcomms.c:lowcomms_queue_swork() {
->         if (!test_bit(CF_IO_STOP, &con->flags) &&
->             !test_bit(CF_APP_LIMITED, &con->flags) &&
->             !test_and_set_bit(CF_SEND_PENDING, &con->flags))
->                 queue_work(io_workqueue, &con->swork);
-> }
->
-> When a socket error arrives while CF_APP_LIMITED is set, sk_write_space()
-> will not fire, so leaving CF_APP_LIMITED set here causes every
-> lowcomms_queue_swork(con) call to be a no-op and leaves the connection
-> permanently hung.
-
-Yes that makes sense and I had this in a previous version [0]. However
-I wanted to drop the "test_bit()" check.
-
->
-> [Severity: High]
-> Should lowcomms_error_report() only clear CF_SEND_PENDING and queue
-> con->swork when test_and_clear_bit(CF_APP_LIMITED, &con->flags) succeeds,
-> matching lowcomms_write_space()?
->
-> Accepting a crossover connection in accept_from_sock() attaches the socke=
-t
-> to othercon (which has CF_IS_OTHERCON set) via add_sock(), installing
-> lowcomms_error_report() as sk_error_report.  Because othercon is
-> receive-only, unconditionally queuing con->swork on a socket error
-> schedules process_send_sockets() on othercon, triggering
-> WARN_ON_ONCE(test_bit(CF_IS_OTHERCON, &con->flags)) and entering an
-> infinite reconnect loop calling dlm_connect(othercon) once othercon->sock
-> is closed.
->
-> On a primary connection where CF_APP_LIMITED is not set, unconditionally
-> clearing CF_SEND_PENDING also breaks swork serialization on the unbound
-> io_workqueue by allowing a second con->swork to be queued while
-> process_send_sockets() is already running.
-
-From what I see in the context of the othercon, that second connection
-"othercon" will never queue swork as the primary connection is used
-for connection "lookup". The "othercon" logic is a mess and we should
-have removed it long ago, as I am sure it causes other problems. I
-added a TODO a long time ago regarding how an othercon could be
-introduced using a global DLM pre-known rule where a higher nodeid
-makes the connection and the other node waits for accept (though the
-other node can still request a reconnection). [1]
-
-I experimented with that, but I was never able to create a
-backward-compatible mode that still works. I think if we fix this, we
-should add an option to opt-in and later make it the default.
-
-- Alex
-
-[0] https://lore.kernel.org/gfs2/20261002232107.1578646-3-aahringo@redhat.c=
-om/
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree=
-/fs/dlm/lowcomms.c?h=3Dv7.4-rc4#n91
-
+Thanks,
+Elson
