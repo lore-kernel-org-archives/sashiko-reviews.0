@@ -1,54 +1,41 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795502680;
-	b=eAYv+6BXJAL/t5N7v19H/9aolpBEU8+YyB88DlUCb0Hbg09Ai6IFg8SlYIF5xtye5vIh
-	 VD/Tuk0ewg6KYoXioCIRpenjoubEyLYpT+6k1GCS8NHaiXsoMJuu2SiA+TTRm2imCj/wb
-	 LN2cX5ck3HUY5psvUIIpmb1G18Q0xJr6iFv6lJ6mIfvH8VsMSs+d79oJ6X6y8fplgV5kx
-	 meop+B9qh4wPZNIzTUB/YSU8F1t6doI3efs+SRbeNDFnDPTh4HOdAMk7h30epZfJ0PSvN
-	 YCJjzqIXGvFYz6Z+GEx4nw0qVBRdDUGSN8jwi9luY6LfRpktrDv5Uzwl5rZph1oA0/A==
+	t=1795503539;
+	b=X3wbc+hUh5tGrer1z6+yQ3T3W1DVK/bOKFWgLu5zpNMANGABZ42kKXqAaGBmFJKCSYzz
+	 nGic/YCy4cZFoTChrsxVi+pL7FvQwutLrw/GqBnWTkcm3qg539x26F5hSki4bWNVPO2zJ
+	 5dFjO+fzG4e5jtT/s3BfXqC5jASEWZnS+nhNFtEFZ22ZDDh2ph8v+HQAWQTOBKPzVbfoI
+	 lvZntdHxcpYV9r8VBX5MUxcoWRefC1L67arKxv6sTTUIDibC6Gw5euNm5z90DEj0WYYwO
+	 UXbFvEaxMwMwh1Zi6VgUfAN0BKarJ/cUKzX22xjHrLLs9jpO7VTAlIZQY/qWii2Klgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795502680;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=ZxZjeyzDUCPuBziPwBQouparBL6NVZFSLDryV/eFVHM=;
-	b=2cXEaA3mtLon072u4Ccbu+DV6+LknVeQTh+N+pgU/e7MoF2DGwhbR95t6EfL+AFHMO+c
-	 +DZ6MC+0ZcKreJRw7O11pN25WsEJQa/iqFYiqHwM3Q7O/Wyx+U+2A+Qi3UPq6cXEN43KC
-	 X2gw3YngvrzC/5uP5nkoXN3tC3XkKvUNWqAs7HVRXviQg8qagHYfGaJfpqWKCfKNKWmAs
-	 twz0xKlf5XgA7ndVw5xBqWxeCSRFoKUZhX5WEwLSc6l9GIbnveRflEpcliiv/viLXEN4+
-	 7K9qmO/+PJ4ffsQsnlF3JNhZctNFST3zlx+fOWdGSQhKC+uYztmSdxsnVy/knJRIKLA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795503539;
+	h=DMARC-Filter:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-CM-TRANSID:X-CM-SenderInfo:
+	 X-Coremail-Antispam;
+	bh=0c/o13VUmTtvta2hEpnHq2PWiO16Lv/Z0jbNybTWp4M=;
+	b=p9jwRQ35zzhclj/D+pFhIPA9GBUnE1PoboafJE6mPxhjo/iA4e5hZ6AC84JDDyEG167M
+	 VLToDzx25H8yRUCTVvNvyck4ojIoUqH2C74Q3QeCTnxKVDZjY1TVOOdJGjFo1+GWsbYUM
+	 Ld54DQU3ZeE7tHVKJ9gWkhvsiTnSMtZz6oid4fBmfqyGKwQctjjn9n/IQX5wELwKAKL5s
+	 CMlRNDlLfW4CEMm44M+PucALyaes0ASLUhaaVmjrPyolm/EyJcylK4Mzudzz4kokBBMs6
+	 XbbhWroPaLKSvH1cbC3dh0Nc0qiR2btv4cQGOe9j9dm4e928EaiE6ILrg65jZh33nUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=KVgylERz;
-	arc=none smtp.remote-ip=95.215.58.4
-Received: from mta1.migadu.com (out-4.mta1.migadu.com [95.215.58.4])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08942606A327
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 06:44:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08942606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=KVgylERz
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=eL5pZ5rp2p7r1Xu8Bzzhclg/JXgXV6fM1d0JqyHaPHM=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795502676; v=1; x=1796107476;
- b=KVgylERzDG5J/KRgFgoeC4RgoGP9RyLDZ66Gsnr6+dggU5SL/l/eDSerZJV2aSed7ql4gG6E
- 94cg5dajjRBOVFJixh0nNdRKkmWcdKRxlVu2Gq0GeSyP7xEa6qAIESpKVxZbPHfENwrW7KGGIRO
- DToxAYPlae60rkVCex5EWb8Q=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 865bb19f8eb4368b;
-	Tue, 24 Nov 2026 06:44:36 +0000
-X-Mizu-Trace-ID: 865bb19f8eb4368b
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <e5a6139e-814d-4aca-bf44-58871af549a5@linux.dev>
-Date: Tue, 24 Nov 2026 14:44:30 +0800
+	dmarc=none header.from=loongson.cn;
+	spf=pass smtp.mailfrom=loongson.cn;
+	arc=none smtp.remote-ip=114.242.206.163
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E82B6606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 06:58:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E82B6606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.69.66])
+	by gateway (Coremail) with SMTP id _____8DxytGpNQVrynoiAA--.32226S3;
+	Tue, 24 Nov 2026 14:58:49 +0800 (CST)
+Received: from [127.0.0.1] (unknown [223.64.69.66])
+	by front1 (Coremail) with SMTP id qMiowJDxRs2gNQVrtgI3AA--.31052S2;
+	Tue, 24 Nov 2026 14:58:41 +0800 (CST)
+Message-ID: <0009e3c5-dfff-4254-a06f-13c8664a1543@loongson.cn>
+Date: Tue, 24 Nov 2026 14:58:40 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,130 +46,121 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf 1/2] bpf, lsm: fix bpf_setsockopt() on a half set up
- child in inet_csk_clone
-To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org,
- Alexei Starovoitov <ast@kernel.org>, matt@bobrowski.net,
- KP Singh <kpsingh@kernel.org>
-References: <20261124061544.254586-1-jiayuan.chen@linux.dev>
- <sashiko-outbox-230603@kernel.org>
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <sashiko-outbox-230603@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 2/3] dt-bindings: serial: 8250: Add dedicated
+ Loongson-2K3000 UART compatible
+To: Rob Herring <robh@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-serial@vger.kernel.org,
+ conor+dt@kernel.org, Binbin Zhou <zhoubb.aaron@gmail.com>
+References: <cover.1793776192.git.zhoubinbin@loongson.cn>
+ <c194b5248184779da500476281fd411fc80a98d6.1793776192.git.zhoubinbin@loongson.cn>
+ <sashiko-outbox-196836@kernel.org> <20261119214532.GA757146-robh@kernel.org>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+In-Reply-To: <20261119214532.GA757146-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qMiowJDxRs2gNQVrtgI3AA--.31052S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAgEBCGsFAH8DMQAAsp
+X-Coremail-Antispam: 1Uk129KBj93XoWxZry5uw15CF1DtFW8Zw18JFc_yoW5Ary5pF
+	ZxCa97KF1jqFnrW34vv3W8Aa18XrWDAF12kr4UGr12yF95J3yftrW3Ka1YqF4xAFy8JFW8
+	XFy0gFW8GasruwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUyEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwI
+	xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
+	Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
+	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
+	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
+	AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUUUUU==
+
+Hi Rob:
+
+Sorry for the late reply.
+
+On 2026/11/20 05:45, Rob Herring wrote:
+> On Wed, Nov 04, 2026 at 07:52:04AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Low] dt-bindings: serial: 8250: duplicate ns16550a fallback block for ls2k3000
+>> --
+>>
+>> commit 71974153fe22bc00d365059be9198364c9cfaa86
+>> Author: Binbin Zhou <zhoubinbin@loongson.cn>
+>>
+>> dt-bindings: serial: 8250: Add dedicated Loongson-2K3000 UART compatible
+>>
+>> This commit documents the loongson,ls2k3000-uart compatible string with
+>> ns16550a as a fallback so the driver can distinguish the Loongson-2K3000 UART
+>> from earlier Loongson UARTs that require MCR/MSR signal inversion.
+>>
+>>> diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
+>>> index 01abd39509a7a..33c13c48ed56e 100644
+>>> --- a/Documentation/devicetree/bindings/serial/8250.yaml
+>>> +++ b/Documentation/devicetree/bindings/serial/8250.yaml
+>>> @@ -196,6 +196,9 @@ properties:
+>>>                 - loongson,ls2k2000-uart
+>>>             - const: loongson,ls2k1500-uart
+>>>             - const: ns16550a
+>>> +      - items:
+>>> +          - const: loongson,ls2k3000-uart
+>>> +          - const: ns16550a
+>>
+>> [Severity: Low]
+>> This isn't a bug, but properties:compatible in
+>> Documentation/devicetree/bindings/serial/8250.yaml already has a two-item
+>> block with const: ns16550a as the fallback that includes the other base
+>> Loongson UART compatibles:
+>>
+>>        - items:
+>>            - enum:
+>>                ...
+>>                - loongson,ls2k0500-uart
+>>                - loongson,ls2k1500-uart
+>>            - const: ns16550a
+>>
+>> Could loongson,ls2k3000-uart be added to that existing enum instead of adding
+>> a separate two-item block?
+
+Let me briefly explain why Loongson UART `compatible` is necessary at 
+this time.
+First, as described in the driver, each `compatible` type defines 
+different driver data:
+struct loongson_uart_ddata {
+         bool has_frac;
+         u8 mcr_invert;
+         u8 msr_invert;
+};
+Since the Loongson-2k3000 has already fixed the hardware issues with 
+mcr/msr, we need a new `compatible` to correspond to the updated 
+`driver_data`.
+
+static const struct loongson_uart_ddata ls2k3000_uart_data = {
+         .has_frac = true,
+         .mcr_invert = 0,
+         .msr_invert = 0,
+};
+
+As for why a fallback to `ns16550a` is required in all cases, the DTS 
+files for the Loongson-2K1000 and similar devices were merged into the 
+repository before `8250_loongson.c`, and this approach was used at the 
+time to maintain compatibility[1].
 
 
+[1]: 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=13532b5186a7aa4dfd9885355c6af7562b75dd7f
+> 
+> Sashiko is correct. Please address this comment.
+> 
+> And please answer sashiko comments before the maintainers have to.
 
-On 11/24/26 2:34 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [High] bpf: NULL deref in bpf_sk_clone_setsockopt() via MPTCP
->   subflow_write_space()
-> - [Medium] bpf: unnecessary rejection of IPV6_AUTOFLOWLABEL in
->   bpf_sk_clone_setsockopt()
-> - [Low] bpf: multi-line comment style violation in bpf_lsm.c and
->   filter.c
-> --
+Okay, I'll keep that in mind next time.
 > 
-> commit 9470b8f4e13b2c8be2cf5cc10f852d869dbb6f7c
-> Author: Jiayuan Chen <jiayuan.chen@linux.dev>
-> 
-> bpf, lsm: fix bpf_setsockopt() on a half set up child in inet_csk_clone
-> 
-> This commit introduces a dedicated bpf_setsockopt() helper for the
-> bpf_lsm_inet_csk_clone hook that rejects socket options unsafe to set on
-> a partially initialized cloned child socket.
-> 
->> diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
->> index ae23511fd811b..fa71f52a055c5 100644
->> --- a/kernel/bpf/bpf_lsm.c
->> +++ b/kernel/bpf/bpf_lsm.c
->> @@ -79,6 +79,15 @@ BTF_ID(func, bpf_lsm_inet_conn_established)
->>  #endif
->>  BTF_SET_END(bpf_lsm_locked_sockopt_hooks)
->>  
->> +/* List of LSM hooks that trigger on a locked child socket which is not
->> + * set up yet, bpf_setsockopt is restricted there.
->> + */
-> 
-> [Severity: Low]
-> This isn't a bug, but BPF multi-line comments place the opening /* on
-> its own line (here and above bpf_sk_clone_setsockopt() in
-> net/core/filter.c).
-> 
-> [ ... ]
-> 
->> diff --git a/net/core/filter.c b/net/core/filter.c
->> index 53c042b267ab6..77abc4cb9db51 100644
->> --- a/net/core/filter.c
->> +++ b/net/core/filter.c
->> @@ -5938,6 +5938,43 @@ const struct bpf_func_proto bpf_sk_setsockopt_proto = {
->>  	.arg5_type	= ARG_MEM_SIZE,
->>  };
->>  
->> +/* security_inet_csk_clone() runs at the end of inet_csk_clone_lock(), the
->> + * child is locked but not set up yet: its timers are not initialized, it
->> + * holds no reference on icsk_ca_ops and an IPv6 child still points to the
->> + * ipv6_pinfo of the listener.
->> + */
->> +BPF_CALL_5(bpf_sk_clone_setsockopt, struct sock *, sk, int, level,
->> +	   int, optname, char *, optval, int, optlen)
->> +{
->> +	switch (level) {
->> +	case SOL_SOCKET:
->> +		if (optname == SO_KEEPALIVE)
->> +			return -EOPNOTSUPP;
->> +		break;
->> +	case SOL_TCP:
->> +		if (optname == TCP_KEEPIDLE || optname == TCP_CONGESTION)
->> +			return -EOPNOTSUPP;
->> +		break;
-> 
-> [Severity: High]
-> Should bpf_sk_clone_setsockopt() also reject SO_SNDBUF and
-> TCP_NOTSENT_LOWAT?
-> 
-> When an incoming MPTCP subflow is cloned in inet_csk_clone_lock(),
-> inet_clone_ulp() -> subflow_ulp_clone() allocates a new
-> mptcp_subflow_context with new_ctx->conn still NULL while newsk inherits
-> sk_write_space = subflow_write_space (new_ctx->conn is only populated
-> later in subflow_syn_recv_sock()).  Both SO_SNDBUF in sk_setsockopt()
-> and TCP_NOTSENT_LOWAT in do_tcp_setsockopt() invoke
-> sk->sk_write_space(sk):
-> 
-> net/mptcp/subflow.c:subflow_write_space() {
-> 	struct sock *sk = mptcp_subflow_ctx(ssk)->conn;
-> 
-> 	mptcp_propagate_sndbuf(sk, ssk);
-> 	mptcp_write_space(sk);
-> }
-> 
-> Passing sk == NULL into mptcp_write_space() ->
-> mptcp_stream_memory_free() causes a NULL pointer dereference.
+> Rob
 
-
-
-It's true.
-
-I can add these two. But I am not sure the list will ever be
-complete, the child is only half set up at this point and each option
-needs a look. Or we just don't allow bpf_setsockopt() in this hook at
-all?
-
-> 
->> +	case SOL_IPV6:
->> +		if (optname == IPV6_TCLASS || optname == IPV6_AUTOFLOWLABEL)
->> +			return -EOPNOTSUPP;
->> +		break;
-> 
-> [Severity: Medium]
-> Does IPV6_AUTOFLOWLABEL need to be rejected here?
-> 
-> Since commit 5121516b0c47 ("ipv6: lockless IPV6_AUTOFLOWLABEL
-> implementation"), do_ipv6_setsockopt() handles IPV6_AUTOFLOWLABEL via
-> inet6_assign_bit(AUTOFLOWLABEL, sk, valbool) and
-> inet6_set_bit(AUTOFLOWLABEL_SET, sk), which modify
-> inet_sk(sk)->inet_flags on the child socket rather than the listener's
-> ipv6_pinfo.
-> 
+-- 
+Thanks.
+Binbin
 
