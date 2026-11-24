@@ -1,100 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.37
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795514905;
-	b=a2p9vggUvNqQ0selNtKzzfbN8W9La/2ey0miHYAhQNfz9uWoWLvrOsjeh31HC55C5djN
-	 jV2w+Fa9c8DG3CsMGKddErdEfq0JN60mE2+C1axiuKQXPr6R48lJXFiQUUoLF9TopjK3r
-	 ill01M5UZstr+bxwVSk9sRuXfMc7LlqENmGQzltNUFHQ9T+rkyfbs+iU+4NGVSIQG/SJg
-	 kTnmCojhqzMl+R1ISMaQNYxpXWAnw7pLtb1Hy5X8Ls81/gyjHRro4phEmLOOfcrS0c2y6
-	 ssqQQSfSmHeHQ4HCS8xc+3kh4RjcwmRHsrC8MZt8Pu3N0KH3bRDyZsefCgzGl9QP1Mg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795514905;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=ydAkCzQVW3vxcVNGFXdG1l7FB0M6jVcB3e6F3muEVnE=;
-	b=TOjZb6+rjxify29czALbFOzWpFd0EdUtxG8abD9nNgl49vq8b+b8XTgLaIBQpuTiGWh1
-	 UbgOnQNq1oOBi9ResycWNex0l8gMCP9xxWWEKgYs9aOK/ycngP6JZb92Azz3330PZk3X5
-	 cIGg65dVMNaWVAuU+tU+e3qqSVh51te/sCGPBrI5fCnM3QF6xV1aUMFupyqk4360Ndry7
-	 Ief2rw1yn6U9axdNSxS4lne2jSKew5SSrc6UNoTkxicTJg1AQuJaJcgUyJUmrPUrtp+Jp
-	 MasMDFcsRRw3h6OvXkbCE0aNaR26tMScuViye7wwDAho1HSTMdmSsRpMSq9WVnPAaUg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=Qa0Ctc6m;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.37
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010037.outbound.protection.outlook.com [52.101.56.37])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795515047;
+	b=l9GivH8IolW7+pA/B59uJHII/ggu//rRnJx2qJwgjdlNJRFeNKruX3KCeqrkV2DpGLvG
+	 0plk0Bo+oCyyyEakddFs4UWy4xSbsux9z05DIWKncWac9KPDAPCjyo6ytpJdrIf9tNGgb
+	 5dR8RpsxWjRch2OwCbD3lf7eCarJ47PbKwaYDW85vXtpsPuXH/IPJMB6+fO+LzIOSIg6i
+	 C6G15nxt6BnDDy1cgW5xX/dNxkgbJgu5Js3ccSG86KOThsyDueAuJCE/jpems2pMQJ2G/
+	 4U6bdl6aTGI8gO+sRE3HZUbNU7cS6Je2zZK4I/o2Bn0Ah7Vcri/8bT/VlhjbxDtt9iw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795515047;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Authority-Analysis:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=N8fOsILZEnkS42kQGRdkOwT2s6KzeYLd7+z7MxZ/MAU=;
+	b=FfRndeOuort5q1O6pBZbktskNrZqbOqLmi2cRyBU2WKd/Gm8tppNZLH0OF8nKZgNYR6R
+	 bOc80mlYdDe5Yw/5S7NqmPNFtj/ekO9rbflIUM0gEzkyOzuIJzMNOmtQW6fHJvOOHi1Lr
+	 v+zlmsiD6x0m8kTg12+060uvCtVIBYia0/tF8/GWgBQIRz+DLBwwdblaJq8UlobyeUNDe
+	 TRrtENOj5bhsd+QwTaX1tiq2+Oq/Nw0s3VT6wUwOmlqiLARVKFFZgHOvENm3Os9Q/1wYc
+	 Q/H1p82z1npvLFWVW1mbi05tAHQnJjyyLcJ79a/9AtMWnc+RnR+2G7yeIsPQBA5+Biw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gGTTAVfh;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bBgpUGlP;
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A88606A33F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:08:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9A88606A33F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481B5606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:10:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 481B5606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=Qa0Ctc6m
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FJtpmm4CYt09D4+xobH9r4muL/1tiarn5U5wKsbk2oCqJFkmxx4HSe7oREkJZl4Ro2hEOg17sHdiZEGv0AM18gs3/Ke4QvBK15A2EiXWFgdPhfQU+wGTb/HI+RIB3z1KlyVr6rYIOfk5s78dEtuKvso+HBVIoWhIF3p8yMroXRMvxW+tqlA066Ir3ffrg9ND1jW3tFiTSgTUdg5rdk9oHFTkt8UiwEYXS/aGMqTiFa+CXMIBXzwfP+RuXw8DHxnqyBohBlmUeBhFQ0f61x8g0bEn+Uk/ajBa9Xmi5xZKn8n0IL3bKlbgvWR5GKA+Zx6hRnP7LcnUKn9E0qiGJn/nvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ydAkCzQVW3vxcVNGFXdG1l7FB0M6jVcB3e6F3muEVnE=;
- b=FIFm44bh1srzma4Z2uyDggt8AX1X9drF+G6tao/PibRcKA4b+hRmYqpXZB+XLYM0kkyVLuN/V3GFAOx4Wf+/TlXzkgdiLktVcSxRYJrYQ/XdbQPjGPBQ1N/gfw+B3JFOVQnQDc6egzWoijRXh++zauoT2og5OPS2cg0xL8iO06yheJyVUvvuTdlKted62FqvUdWLzf5VX1j0XF4OQ1CoSFxxTigijEN847lV4lYfeb3jpi2e/9fmp+19HEqgJ1f+++xG8yxMgM2fouvyrDLvbv4vwsgQSgDkHehwrQSZu8h5Qp+As0CUJ9wqsEHCwq9qLOTxZUiClr/8vp0PaeXzVg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ydAkCzQVW3vxcVNGFXdG1l7FB0M6jVcB3e6F3muEVnE=;
- b=Qa0Ctc6m4XCySk+x/533J1PMPeQBAhLgjCk0hxjKwukMf6DwzJ/qjvt99LnW27zGDh6UoEyQFbNlR8MclRnxVc1ObUMVBo0SdlOQQaqAXDG48InQldGaVmTPf26lDDcszssgJUSNctBoU/uFN0q2xoQvK6O4YO//Ie83lphBepM=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
- by LV2PR12MB5752.namprd12.prod.outlook.com (2603:10b6:408:177::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Tue, 24 Nov
- 2026 10:08:18 +0000
-Received: from CY5PR12MB6252.namprd12.prod.outlook.com
- ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
- ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0639.012; Tue, 24 Nov 2026
- 10:08:17 +0000
-Message-ID: <ed163b17-37c4-4dbc-9f1b-40fde4192206@amd.com>
-Date: Tue, 24 Nov 2026 15:41:11 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 16/24] soundwire: amd: fix *sdw_ctx leak when
- sdw_amd_startup() fails
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org, "vkoul@kernel.org" <vkoul@kernel.org>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
- "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>,
- Bard Liao <yung-chuan.liao@linux.intel.com>,
- Mario Limonciello <mario.limonciello@amd.com>,
- Venkata prasad Potturu <venkataprasad.potturu@amd.com>,
- Syed Saba Kareem <Syed.SabaKareem@amd.com>, Poojitha.N@amd.com
-References: <20261124085033.682755-1-Vijendar.Mukunda@amd.com>
- <20261124085033.682755-17-Vijendar.Mukunda@amd.com>
- <sashiko-outbox-230792@kernel.org>
-From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
-In-Reply-To: <sashiko-outbox-230792@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5PR01CA0285.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:21b::6) To CY5PR12MB6252.namprd12.prod.outlook.com
- (2603:10b6:930:20::17)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gGTTAVfh;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bBgpUGlP
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AO8bnqU646316
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:10:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	N8fOsILZEnkS42kQGRdkOwT2s6KzeYLd7+z7MxZ/MAU=; b=gGTTAVfhkE2/7bab
+	8/3BbUtguMN50ajxW+idpsmL6mypl+jX6F1Y1G0V5NreQuWatfHQ68Q3yksoFKk4
+	j75I4gLvLNiLNLKTinwNFy64pQoTaEHamLYHZHpFuWlYpC9ZiTL/fkTvsARDT0gd
+	1f6c0ys7H2ZFAkQjJenu2xWjdyQXXLwXE6ZjUQK8Apmt7n1DPReVMPFzutqYUpUW
+	JTJ+en5Z2lzcTXzyPgtkoeaLnxPBTR+7nkf7Ah7FkirShj19JnEQZc0e7DjMaDVe
+	so6jEy06uDJJ8x+8iU/6W1oXNW+sil/7it0vQPJkQtXWhlaLuvPbr+Jsm0ArvkB5
+	mN/rsQ==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4yvd252x-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:10:45 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3b4232374d6so5973118a91.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 02:10:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1795515045; x=1796119845; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=N8fOsILZEnkS42kQGRdkOwT2s6KzeYLd7+z7MxZ/MAU=;
+        b=bBgpUGlPWWvhXZoxibMD96qTmvbZoxugM3Lu7lkMLUcsSlS0M3O5fNTryFEcFhF5DU
+         l+RC9PD/QzJFbJVByVSbPGd1gC8n6UETCQxRHbvYU4ffSzH8usnU9j1Ii2IkTM9iVqMN
+         Ru8f0nykhmZRRIiUWl496rLvH02xx04xgYsgrT1kgTKTZLgkMpUOvPiGcPzDBiSmT0W+
+         yDrrAaLXKuso6t45+U9FxY/In5nISoyCT+p6tHq//wVaJ+pi64XIQfFcDKRQsMjUJuv1
+         tQ/PmGpo2GDHLkW0f8Zjg0vMBiBCOwY10Rkh0IsSQQJjqd6EvX06PCPKmF+joOjS1rQQ
+         5qZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795515045; x=1796119845;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=N8fOsILZEnkS42kQGRdkOwT2s6KzeYLd7+z7MxZ/MAU=;
+        b=ezbUnnu1TiwQz37pQ/g+PeWQ9/7ONT7CPBNhzz65zjMpgf5HlySLPu/c7bTSROrhrT
+         voIIla9HbUNEXDTeWhgw1vRJDR9FZjsrFAZPXo+fiot/nWIgLX+9x7uNibTW/IZzug05
+         skdsCuOjJ8c9LlB9QTnUIrEfQFhRnUVP/7Qxa89QBQr8JTDF0zbCle2FU0ND6zPEcjGd
+         G2gTh6XeVV7fkH9/1XZIKV44PHqu14AtMRO1dMRZp/pU5AQYM8PyXTMucBuJoSPZcZhx
+         k+a+FDNGFfuuYgt/J3zxIwOCspW6d7bbXs5Hv1rzwI13UWItJ7vy9nqbLZcjpnnK5Nz6
+         Gmpw==
+X-Gm-Message-State: APuU4Z+RI4RzpymSpm+nv4ntNXDFEXYbA+MFpbYHwa1A+BNS3EhvrN3a
+	8tsFIK0opJwcuVbnHA/q1QAMOawpVet/mK6BcZaLPdO6bOTZLyq3lxbHnyonEH1BUMV+4QnIiqn
+	DToqbAYMZe9Cz/0eNYAzfcW6oV2vPO8qevLW0Z3nGXpK/YY59OdY9m2SFMIyDz0uq9LS6c0Amzq
+	g6m2/6zg==
+X-Gm-Gg: AZFdTZcJsUFDSI4gBzTYYi+jg8R+14Ui5lQW5KC7FPAZ27HtOj3kSPoJWSCZbkFB6+W
+	EeesWP8kMenArIWKnr36CeMBsl2UaF89/QcxQ/mXRGBs4MfcO32HPbBiv1ngl2Q5qWty4+UriXw
+	g86qSqRkbvo7rK3CHBCYMRDl2TdWeJ5rG1c3wzntzgPrOZwr/cdlyacAsoGRQk8PkkhSM+6wBPE
+	f/1uQ1icJutZY8FQc84c5tWp6Zp3vxgwM3NYnuBTitPJny2aDzBcijQmrHQtXUL/ezYGtlPl3dC
+	bL2Q+pB8Wex6rZ5Ag52Ek1T/0jscUDINYV7Xf1O37FD57MZeeOoDvWjAnLuugVvoBwNkjB+HYda
+	HFKs0CXJVH97L5vLdgYvsKRREaXq6O/CbBJ1RVRR72rwpeNbMErzPgS3xi5HwFl3SA7hgPb01rr
+	d4BdGnvjf1HuiiiCmrdfeMKhfbhsFaCLq2uxGl784=
+X-Received: by 2002:a17:90b:17cd:b0:3ab:884b:65a8 with SMTP id 98e67ed59e1d1-3b41c9032bfmr12380532a91.26.1795515044862;
+        Tue, 24 Nov 2026 02:10:44 -0800 (PST)
+X-Received: by 2002:a17:90b:17cd:b0:3ab:884b:65a8 with SMTP id 98e67ed59e1d1-3b41c9032bfmr12380515a91.26.1795515044360;
+        Tue, 24 Nov 2026 02:10:44 -0800 (PST)
+Received: from [10.133.33.142] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde6cfc6130sm6882899a12.7.2026.11.24.02.10.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Nov 2026 02:10:43 -0800 (PST)
+Message-ID: <1c9786f0-913c-4f89-bf46-b51e1b6cc69b@oss.qualcomm.com>
+Date: Tue, 24 Nov 2026 18:10:41 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,174 +115,223 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|LV2PR12MB5752:EE_
-X-MS-Office365-Filtering-Correlation-Id: ffe866ab-2de2-4fb4-47ae-08df4a12dc37
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|10067099003|261021121427099003|261026121527099003|4143699003|11063799006|56012099006|261022105027099003|261022075727099003|261026140227099003|261102123227099003|261028144727099003|261102130727099003|261009223027099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	FSEiJSohr4iMVAJdDARkOfhrAu/rhye3JIa4xXFD0UkJf7rI4Acj6FmXg94WB+9tH2we+tFFSXeZYIjSLB2NB95oozTt8+9Qz5AOPcXQ+AEwnIiMsWaWfGg2Dqqzedc3u6acnlbmyJU73qCA/gJzdbSTIaOy1z2bPlBSaYzLn+HzAGHsW2XKRPaA5MiWCfrZiO8U1hJ/2Z+HcsITokJ7W+pSHIycFhd61zvc+pLP40w5ifm/vWXYmzCdIMXyrvOwoS+yg3nYOHiB780uAEKyxB6MGR3AsDzYrh4jFYRvwnlPLa4qsqr770YYqmpHZXYTAyQXvclSV6piy32bDSBOozbJ/xIb4boBjPA2c01rO9ZTzypEtiLmvAUdAdTxwVm9mdf/cXHhQZBFqPUGeTe37f+zG+yRlXxUF+eZfy95WY8Hn0MNXgbvuXFO05vlCIESXW63jNzpeh5uilzwXqfdtMLcjDRFBQJwXCs4DNaxrNpyhx2PFzLvflZ5hufvxNwG7jvQSABzWzS91WSqBxf0L6rogMf+UZvsPzmUudMk7L9BZWttrg0UIS9TBhZBdu6l9AlSttCzH9QZ0m7//RNNE+YtxE7s+ilBm8EO1krEExGNSLTVMvALOW2oxxcB9Kgs/cud0XScO15D+p4wpYQxrEU/DwIsqQ+qJZcUfLjbebU=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10067099003)(261021121427099003)(261026121527099003)(4143699003)(11063799006)(56012099006)(261022105027099003)(261022075727099003)(261026140227099003)(261102123227099003)(261028144727099003)(261102130727099003)(261009223027099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?K0tQQnJGNzZZM2VSWHhVMnhJWXUzaHZ6L2FQYXRNQUoydm9RK2xyZkQ2ZVRQ?=
- =?utf-8?B?bUo0QVZDYjQwUllJY05wTStDWUZoZHFGZHhWTWJreTVPZjBtcExJR1hjbVBE?=
- =?utf-8?B?UUJ0c1J5NHJudEhjTCtQbEZoRWpPcS9HbW5OdFd4Y3JVS0diMFZnN2VOWEI2?=
- =?utf-8?B?N2VyVS9sUExUVnhRTzJUZmZmYTF2d3JiZVBzNTI2WGJUSEYvU0lSVXRXZDBi?=
- =?utf-8?B?dlBOSkkwWFJqMVVPZ29XeURnS0k3S0xHL2VxSThVUGVqRG9UcjJtenhVMXpv?=
- =?utf-8?B?M2ZRSlNXNExvS25Jb1VHLzN5MEY0WHh2L3F5aUwxdFRRdFNXOUxjc2xoZ1Nr?=
- =?utf-8?B?aEpmODlSMC9FOXZlYUswUjlJazdreFF6aTIyRHhST0I2V2VaTHJWRjRhYUVP?=
- =?utf-8?B?bjVwRTVCTm9wL3kvUFJDQitNdTZ2MFN2WkFNZkVzZGV0eTFmRUd1eEV4N1JM?=
- =?utf-8?B?VzFqdFFpUThqb0FKTEw4L2V0YlB5UWFBR1I0cWhEc2xCYVZXMk9SUEhjaGhX?=
- =?utf-8?B?Z0Q5RW9KQ3JiRUNSa3BLZ2xuT085Rmt5c05HSHBTWDJEVlRLaGF6bm1xL3ND?=
- =?utf-8?B?dDArUTAyYmpSdk1rRVdYaDlKZlZVZzN5RkhUN2FPa2FHOE50dGVralRaMWJu?=
- =?utf-8?B?d0pRcUk2aGJHQUN0ZnlKYXNPOVBLQ0tjRFJKRkY5QVE2M01RS09zcnllNURx?=
- =?utf-8?B?eDNkUGJTSks3K1RiaU95VHNxV0RHdDh2Y3BsOGJyaVVNeForMVdiNUUyM1V3?=
- =?utf-8?B?QkpHZkZuY0xrVVZkR1RTTDcwamF4N1EvZHAwNUVKN0NiUFU4SWl1MDhPT0dU?=
- =?utf-8?B?b2o2Z3RFeXJJNGtyUlF1OEpJbS9WNzZmVm44bm1PbXFLT3ZiNXl3Z0kxYlJ2?=
- =?utf-8?B?WmwvZUNHNVhmblkxelRYYVdLV1JrTWtXbEpjR1JMbnkrY1dubWt1bDdjZXRT?=
- =?utf-8?B?K2FPWENFN2JGcUY1RHF0VGo3eTF6K3VkK2ZHNkZmUkF3NEJaUE94cWFJSW5Q?=
- =?utf-8?B?NFJYaG44a0ZKaVdXK01INWN6bERYRUljN1d5VkcrTW15eE4xMngvNlJvVGR0?=
- =?utf-8?B?eFN5WXVRajBKamp1NmUvcWJXQTdYUHlPM2hCOEEwVmhhaVArYmNqMkl4WXEz?=
- =?utf-8?B?ZWs4bkMzYmo3T0FBSkNSTTJxTzhTWjEvUWlpYkV1aWkrVWdwbVFiLzZVYWF2?=
- =?utf-8?B?M21ZRm1NdFZONTlSRUJDeVZ6eitOS3Jpb2sva0xXQ1dqVlFEZHBSQ0VTOFdp?=
- =?utf-8?B?WWRaWmlCcVF0aGg4U1hVTGFVZVVMWkpkQUZ6akcwMlp3cVNmc0QyRzMwRWJN?=
- =?utf-8?B?YXg2bEEyZHgzZWp1aTFDbVBuVE96WU5MdVFxV1dHV0tYUk5ZeHY5S1dGZVJh?=
- =?utf-8?B?anBqR1pXcXFrNUtoTVBqOEJDR1FEYXFaamxaSHhLSXdtc0s4ajViN0JiWmdp?=
- =?utf-8?B?NkkzUVNSVStaRlFXam1tM1JQd05tMHhjYUFXR0F2UzFhcjhNLy9BU2xEWXp0?=
- =?utf-8?B?eDhYTjBxemc3R1FhbEJCaGVnRWJ6czNncngySFhyU25aaEZBLys1UDVhQ0VX?=
- =?utf-8?B?MkdnMkJrN1VpQkphN1lrSms4d2tFdmM5WmZ4aUY3M3hqWmp6V3FtRzlERTRP?=
- =?utf-8?B?NnIxYWwzMEtRZmVEcXFtcnU2RElpWmUyWFB3YjRxV2hrRGZ3R1ovVDZONWhU?=
- =?utf-8?B?clpKdUc0d2QyQmtvVW5KR0pEdkFFRVQ0ZFZLVnV5Rzh4enkzUG5CY01XTHM3?=
- =?utf-8?B?S2VBZVhCU3BMWkF1N3BNbllpeEZJSHpLdlBHV2F3ZnYrY3A0RjkrQkdMVTJ3?=
- =?utf-8?B?N3FrS1pVc3hVZmozNjdzbytNNGlCK2p5QzZNS0M5U1ZBY1VQeFpCVHZwa0Jp?=
- =?utf-8?B?YnZ5elJwbWQ0NktxUXM1V29oQUdnQTZkUXNnRGY1b0NTVmlLOG52U3hra0Ir?=
- =?utf-8?B?eXZHYmNld0FHbStPUGZjczV5ZFI1YmthTEtGRFZYakF6cXlWeGNFUUFaejBP?=
- =?utf-8?B?cWlqS3E4SkRQQVB5eWJHM1VtWUdaeFlzSGJWOWk1KysvSEFjWVd6UFlsNWpF?=
- =?utf-8?B?cXEweVZ0R21hYmNKNnFuTjlWRkJTbWw5SlB3MldsbUUyWkFxN2JFek9NRU00?=
- =?utf-8?B?THYwLzZDWEttN2tWejB3Q0w2MVBrelk2RWw1SzhnVkVCQ3JUYW9yNkNPV20y?=
- =?utf-8?B?dHI0Z2hVR0hGRTI2MnZodDNxODUyVHVncmtXQTVtLzFrQ0cvUnpoaEY2TTFI?=
- =?utf-8?B?QUxma3BtcUswT0R5WkNvbEkvQndFdXo3ZGNPek0yWXF5Q2dPemZjUVZoNTRN?=
- =?utf-8?B?a0tuaEpyZUVMdzhIZGl6MFk0K0lhK1hmU2E4ejV0Q2NFbllad0I0UT09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ffe866ab-2de2-4fb4-47ae-08df4a12dc37
-X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2026 10:08:17.8475
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vQyJFyrDk1QNb1KHj4JciDxrnjstBlVyPC1z2TnuyOIpFBZwBN9VEbvng16HvCBAcUhtDM5v9SxBZLL3MLgmww==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5752
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: eliza: Add CoreSight debug nodes
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261124-add-coresight-nodes-for-eliza-v1-0-e1679ce78547@oss.qualcomm.com>
+ <20261124-add-coresight-nodes-for-eliza-v1-2-e1679ce78547@oss.qualcomm.com>
+ <sashiko-outbox-230893@kernel.org>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-230893@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=ZYeIpcVA c=1 sm=1 tr=0 ts=6b0562a5 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NOqMHipF7Z7UA0BjjVMA:9 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfXxz0D9sEhJysB
+ J3rt72qbm0ndblPHOboHjQ/j+MlvxHP2ud2FL8DxMZggOMYVZlIgqxtkTj1DwFqH7klhste42Gv
+ JQm7XbDE0U7f1KdMKR6//41oBjhr43TYaMJES2o7AH0FRKEMNxxKmonu0TXINLp1qHKvB2WgnKe
+ uLKRrNHG3CRJJKj+tvn12Jm5FkmBPHGENz84mgB4UlNdnXAvRyTUBrP/7Swp4kf+EWe1Pcx/1yC
+ AZa18V8XoNtr46pwgR8SU7X/prjXVcMr7+naVX6rHHXoJJpNKBwlqxV7wOZuruF8or97OJPMsd3
+ ej6J2xkqQlMeli1rg+S20NgEzCFpaaoZRJr28X/pxKNA0+ne51bY8/EstFVSzgOQaI9cstIYUJE
+ oneyEMhF/ednzsq2KsXPn7iqAjEi7EF2tIEuNEyMvAbi99PKsFvlUTL3a16HAkUMpJ9WFq0p3qn
+ 5vFaVwk8dIcymPx87VQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfXw66jasR8ykHL
+ RTykfmXYz0mIGb28N1UxdORGqVNIaP2KGgxO3v2AodWnjFD6aSaTI014f6nfPoWI5GssngPZl/O
+ 2WlrAuqm0ZLcJtBgrn48knDFnTf4bcs=
+X-Proofpoint-ORIG-GUID: Lbmf8rcFpSJCi-p9lQzLbu-tNq066oGJ
+X-Proofpoint-GUID: Lbmf8rcFpSJCi-p9lQzLbu-tNq066oGJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240039
 
-On 24/11/26 14:41, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] soundwire: amd: race with hardirq handlers on
->   sdw_amd_startup() failure
+
+
+On 11/24/2026 5:56 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] arm64: dts: qcom: eliza: missing element-bits on static TPDM
+>    nodes
+> - [Low] arm64: dts: qcom: eliza: wpss-replicator port@2 violates DT
+>    binding schema
 > --
->
-> commit fb658db6de398fb5ff736ed8e17029fdf853a4c4
-> Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
->
-> soundwire: amd: fix *sdw_ctx leak when sdw_amd_startup() fails
->
-> This commit cleans up the allocated SoundWire context and resets *sdw_ctx
-> to NULL if sdw_amd_startup() fails during sdw_amd_probe().
->
->> diff --git a/drivers/soundwire/amd_init.c b/drivers/soundwire/amd_init.c
->> index 8019a4faeae5b..50e487e409a9b 100644
->> --- a/drivers/soundwire/amd_init.c
->> +++ b/drivers/soundwire/amd_init.c
->> @@ -182,11 +182,21 @@ static int sdw_amd_startup(struct sdw_amd_ctx *ctx)
->>  
->>  int sdw_amd_probe(struct sdw_amd_res *res, struct sdw_amd_ctx **sdw_ctx)
->>  {
->> -	*sdw_ctx = sdw_amd_probe_controller(res);
->> -	if (!*sdw_ctx)
->> +	struct sdw_amd_ctx *ctx;
->> +	int ret;
+> 
+> commit 54f1938fd654d770e58cbcb66d2760184479af8c
+> Author: Jie Gan <jie.gan@oss.qualcomm.com>
+> 
+> arm64: dts: qcom: eliza: Add CoreSight debug nodes
+> 
+> This commit adds Devicetree nodes for the CoreSight debug and trace
+> subsystem on the Qualcomm Eliza SoC.
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/qcom/eliza.dtsi
+>> index 4a125ef386c02..7bf58daace9c9 100644
+>> --- a/arch/arm64/boot/dts/qcom/eliza.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
+> 
+> [ ... ]
+> 
+>> @@ -5430,4 +7484,127 @@ timer {
+>>   			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+>>   			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+>>   	};
 >> +
->> +	ctx = sdw_amd_probe_controller(res);
->> +	if (!ctx)
->>  		return -ENODEV;
->>  
->> -	return sdw_amd_startup(*sdw_ctx);
->> +	*sdw_ctx = ctx;
->> +	ret = sdw_amd_startup(ctx);
->> +	if (ret) {
->> +		*sdw_ctx = NULL;
->> +		sdw_amd_exit(ctx);
->> +		return ret;
->> +	}
->> +	return 0;
->>  }
->>  EXPORT_SYMBOL_NS(sdw_amd_probe, "SOUNDWIRE_AMD_INIT");
+>> +	tpdm-ddr-lpicc {
+>> +		compatible = "arm,coresight-dummy-source";
+>> +		label = "tpdm_ddr_lpicc";
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				tpdm_ddr_lpicc_out: endpoint {
+>> +					remote-endpoint = <&funnel_aoss_in3>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	tpdm-lpass-lpi {
+>> +		compatible = "arm,coresight-dummy-source";
+>> +		label = "tpdm_lpass_lpi";
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				tpdm_lpass_lpi_out: endpoint {
+>> +					remote-endpoint = <&funnel_lpass_lpi_1_in1>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	tpdm-lpass-rscc {
+>> +		compatible = "arm,coresight-dummy-source";
+>> +		label = "tpdm_lpass_rscc";
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				tpdm_lpass_rscc_out: endpoint {
+>> +					remote-endpoint = <&funnel_lpass_lpi_1_in4>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	tpdm-modem-rscc {
+>> +		compatible = "qcom,coresight-static-tpdm";
+>> +		label = "tpdm_modem_rscc";
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				tpdm_modem_rscc_out: endpoint {
+>> +					remote-endpoint = <&tpda_modem_crm_in0>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	tpdm-modem1 {
+>> +		compatible = "qcom,coresight-static-tpdm";
+>> +		label = "tpdm_modem_1";
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				tpdm_modem_1_out: endpoint {
+>> +					remote-endpoint = <&tpda_modem_in1>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+> 
 > [Severity: Medium]
-> Can clearing *sdw_ctx and tearing down ctx here race with the parent ACP
-> hardirq handler?
-No code change required; marking as false positive.
-The specific NULL pointer dereference concern — acp_irq_handler()
-(sound/soc/sof/amd/acp.c) accessing adata->sdw->pdev[i]->dev when
-adata->sdw is NULL — is directly addressed by companion patches already
-merged in Mark Brown's ASoC tree:
-  34ea81a7f284 ("ASoC: SOF: amd: guard adata->sdw dereferences with
-                 NULL check in IRQ handler")
-  41e06aaef9c0 ("ASoC: amd: ps: guard adata->sdw dereferences with
-                 NULL check in IRQ handler")
-These patches add a NULL check for adata->sdw in acp_irq_handler()
-before accessing ->pdev[0]->dev and ->pdev[1]->dev. The interrupt
-status register write (snd_sof_dsp_write() clearing ACP_SDW0_IRQ_MASK
-in ACP_EXTERNAL_INTR_STAT) is moved outside the guard, so the ACP
-interrupt bit is always acknowledged regardless of adata->sdw state.
-This prevents the hardware from re-asserting the interrupt when
-adata->sdw is NULL.
-This patch sets *sdw_ctx = NULL before calling
-sdw_amd_exit(ctx). After *sdw_ctx = NULL, acp_irq_handler() sees
-adata->sdw == NULL, acknowledges the IRQ, and returns without
-scheduling any work. sdw_amd_exit() then frees ctx safely because
-no IRQ handler can access it after the NULL check.
-The STATUS-register pre-clear argument applies to the sub-case where
-acp_enable_sdw_manager() itself fails: STATUS was cleared at gate-open,
-the manager hardware never started, no PING frames were sent, and no
-peripheral can set STATUS bits. The companion patches cover the case
-where manager 0 fully started before manager 1 failed.
->
-> The callers of sdw_amd_probe() register their PCI IRQ handler before
-> probing SoundWire, and amd_sdw_manager_start() unmasks manager interrupts
-> in hardware via amd_enable_sdw_interrupts() before
-> amd_enable_sdw_manager() and before subsequent managers in
-> sdw_amd_startup() are started.  If startup fails after interrupts are
-> unmasked on a manager, the IRQ handler can fire while sdw_amd_probe()
-> clears *sdw_ctx (adata->sdw) and runs sdw_amd_exit():
->
-> CPU0                                  CPU1 (<hardirq>)
-> sdw_amd_probe()
->   *sdw_ctx = ctx
->   sdw_amd_startup(ctx)
->     amd_sdw_manager_start()
->       amd_enable_sdw_interrupts()
->       /* startup fails */
->                                       acp7x_irq_handler()
->                                         if (adata->sdw)
->                                           sof_acp7x_handle_sdw_manager_irq()
->                                             snd_sof_dsp_write(...)
->   *sdw_ctx = NULL
->                                             if (!adata->sdw->pdev[instance])
->                                               <-- NULL pointer dereference
->
-> If the hardirq handler instead loads adata->sdw->pdev[instance] right
-> before *sdw_ctx = NULL, it runs unsynchronized with sdw_amd_exit(ctx),
-> which unregisters the platform devices (freeing amd_manager without
-> waiting for in-flight hardirqs) and frees ctx, allowing a use-after-free
-> or scheduling amd_sdw_irq_thread after cancel_work_sync().  In addition,
-> because *sdw_ctx is cleared before amd_sdw_manager_remove() calls
-> amd_disable_sdw_interrupts(), any SoundWire interrupt arriving on ACP7x
-> in that window sees adata->sdw == NULL and returns IRQ_NONE without
-> acknowledging the status registers.
->
+> Should tpdm-modem-rscc and tpdm-modem1 specify qcom,dsb-element-bits or
+> qcom,cmb-element-bits?
+> 
+> In static_tpdm_datasets_setup(), drvdata->dsb and drvdata->cmb are only
+> allocated when the corresponding element-bits property is present.  Without
+> either property, enabling a trace path through their connected TPDAs
+> (tpda@1080e000 and tpda@10803000) fails with -EINVAL in tpda_enable_port()
+> -> tpda_get_element_size() -> tpdm_read_element_size().
+
+Valid comment, needs to be addressed.
+
+Thanks,
+Jie
+
+> 
+>> +
+>> +	wpss_etm0: wpss-etm0 {
+>> +		compatible = "arm,coresight-dummy-source";
+>> +		label = "wpss_etm0";
+>> +		arm,static-trace-id = <44>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				wpss_etm0_out: endpoint {
+>> +					remote-endpoint = <&funnel_wpss_in2>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	wpss-replicator {
+>> +		compatible = "arm,coresight-static-replicator";
+>> +
+>> +		in-ports {
+>> +			port {
+>> +				rep_wpss_in: endpoint {
+>> +					remote-endpoint = <&funnel_wpss_out>;
+>> +				};
+>> +			};
+>> +		};
+>> +
+>> +		out-ports {
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +
+>> +			port@0 {
+>> +				reg = <0>;
+>> +
+>> +				rep_wpss_out0: endpoint {
+>> +					remote-endpoint = <&tpda_dlct_in5>;
+>> +					filter-source = <&tpdm_wpss_dsb>;
+>> +				};
+>> +			};
+>> +
+>> +			port@1 {
+>> +				reg = <1>;
+>> +
+>> +				rep_wpss_out1: endpoint {
+>> +					remote-endpoint = <&tpda_dlct_in6>;
+>> +					filter-source = <&tpdm_wpss_cmb>;
+>> +				};
+>> +			};
+>> +
+>> +			port@2 {
+>> +				reg = <2>;
+>> +
+>> +				rep_wpss_out2: endpoint {
+>> +					remote-endpoint = <&funnel_dlct_in4>;
+>> +					filter-source = <&wpss_etm0>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+> 
+> [Severity: Low]
+> Does port@2 in wpss-replicator pass dtbs_check?
+> 
+> Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+> only matches '^port@[01]$' under out-ports for endpoints that carry
+> filter-source, so port@2 falls back to the base graph schema where
+> unevaluatedProperties: false rejects filter-source.
+> 
 
