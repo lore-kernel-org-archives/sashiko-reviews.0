@@ -1,100 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.181
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795517015;
-	b=Jgq1pt/z+B9guSRqVOh072R1d3p5vu1LvNbHxX5HncyWORYh45f7B3+KQwLTIvlc2/TG
-	 p/rsaE+faseFUYpvqSPNMKD2wSHNGFCEWDyUTQYtEy70iTp1amAsRcbGwiEvMB4p2dW2/
-	 wzfm5kwtL6A/SVq0uB+QIMg+r1xk4jMg1cNJUyeYxJcYomyYZogsc9RNyEd48XDir5BIF
-	 AbA6lM6TEBhKQgfhr9COApzrk/j+QfJrGS3Ez2Y3Ko4/NPbZjHB3wluWD8LJmN3P3x3ZY
-	 hPlBFv661pL+NyTSByXD+KpeeKURKC2SK57IGBYYPsGWpyRj546tfO27QrBag7mKvAw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795517015;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=zw8MhdrCRw4Anjf2J55DnBkyqIRRMXumfxb086Ftrkk=;
-	b=MYpRqrNNCxybbOb7wlLgFJDM2GeG1baUGRm2Yjz1W2nUOJQLJ/WjWWcJCLSDSqeqFrvl
-	 pUJ6Bw0c+A2SnWRLAQ2vkgjI4XhiZ21A/kSLjNmBZfpLgvJGyRwKyZQ4nX3ZvzNVRJcQ3
-	 senmyhTmtU/tHTFURYG0McJ0LHVG0ImXYI+USQ1b1b7iWUgo88ogU0Ilus81a/qEEn4Mo
-	 fKD0X2/bzgC9rX3YDFDiS504+/5dClEupSqGaltVmelsZ+I0gy+LBDjB2yy/dLGSBtasG
-	 AURgRgDB/nvQD+rQFR4RYM6bQp5VqQ9V98aCwIOMuA557dwdDdBQrjTIWuOySjUn/YQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qvaBVVae;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.181
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.238
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795519114;
+	b=ojdZCUgBcy4Rv5mDvKl24rjweHR/C/bZcec+tRHtH/q+GPKDW8YJw8PFvmGpeuIXmdgs
+	 WkgpPuNnSVxaj1BQWqou4QYjpooJnienEX7aqu31Z0ymvLAkr2TC5/tBbsBtEhQZDRLU0
+	 7/BnNWyTl9YZptSnntPhMW2XrzWZHj2TEmFSyhchYMcD41ZvS2QjMGTjZ/GJlwP9jMhAn
+	 jnPONXprxtu4Wc9CfsTVIA+r1cd5S62X4tyh7fA4avKFLKnUcC3Ck5OwZ4QKEaVgx6wQx
+	 XWjLwrN6dsRgIUr+gdAGi5+zGOfyLTi5QGdjEDiMbd40gEyWWx9nnXkdK1RmH1WOwxA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795519114;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=EFTAQXzJPmG7VROXVdiQ9pfVfbpHSsS1PwNgCR+b54w=;
+	b=rhjliSqbfDStnFboATIIovW3sxf4vOvIix25E1P4EAPC1/5eD3CZ7fuvN8LmI6fQFg1+
+	 vfNgAeqTazPFCd1ce5/C8iT/d485KGk93bmA9RJDou6brJMO3YFSAjNg33JPdDklugjm1
+	 FoXu30k/GaJ4zCel/WtuZslfR++9+v4eyPPrWzz6rfzNrrGMHywiCkvEtRbgvGDtla7A+
+	 4JI0tqIYNHByFlmHdKi0tExl54jXW0mPef0nZXf3ixxFusmm/HQBZwrpm4V2nEob6oyNb
+	 BOAGtijdCoiwHvim2BsHyyx7/L/tAo3/MznJAqu9XbSU+kCd5Ge7WepIEx6rD9GXvjw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Oa+csrF1;
+	arc=none smtp.remote-ip=95.215.58.238
+Received: from mta1.migadu.com (out-238.mta1.migadu.com [95.215.58.238])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF7D606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:43:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2DF7D606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBB4606A689
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 11:18:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DEBB4606A689
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qvaBVVae
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8a052aff9e9so3171179b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 02:43:35 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795517014; cv=none;
-        d=google.com; s=arc-20260327;
-        b=czbQHQ5FsAelL8paGpyq9t778b9MEhIzt/I/5hng1j6EkoJPrcgQ1B4RglwKiH89eh
-         v/BDm9/eT/N7TMD2uqYAUtPhtXybGfWVal68uRK406AYA046r2lGS1YFwwfBjhqeYjWr
-         3fEMrjG1aWTbLWsRmK/VDOvxUID2Li6v9y3Fab6mffaaLtPvbFFU3FG/bydNjEBSW/sH
-         hjwOl7brfeT+HVp2+XjCgKpLj0SS2yrdCnA4vMppldOWsXWN5FS2GqmqJl4b3TzbM00H
-         h6bwI2yc8D1D1Yfr/wf/hI9e+a60xF6T+fHTlbi/eMJwdacMlb5wFaaEKLaily2P5Y3+
-         yKHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zw8MhdrCRw4Anjf2J55DnBkyqIRRMXumfxb086Ftrkk=;
-        fh=uNrDyZ4Z0PwcDlJzyXftuy6IP6LYjoQtMYJ2TsASHpo=;
-        b=JHj+VueSvYFLEOzqkT+YvJo2+vbPdIv3XrRSDFyiODXw5Khhe2o9ZaZII5F2kw/Nqo
-         6BebZ+RvSSrjhVvr1t3a/ofjVbl8ao5O753Xqm89JSDTwtHaSIJZDL023yRitTCVXOzB
-         pIsDa2hU7u3hoGWE7nQ5G94X5qp7V1QzG6Cj4HDD1DJSPxPUghMS6ux7JVFKvGJ5sFBz
-         K6Q4kpLRJRjbtwCBB3bB1l4G/q/Btz4xdXbwcayth/0IQAkbyFGNZDoRaKcndIvMFlOX
-         4XMFPyTQpRyDfjbWYetugMmpCmLD16LtyPTwIcAzBP2C9z2OZ5bnuUdW5gonN7a8ZPfK
-         pOOQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795517014; x=1796121814; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zw8MhdrCRw4Anjf2J55DnBkyqIRRMXumfxb086Ftrkk=;
-        b=qvaBVVaenrfF1FBnQLCnvAVcgTKo/1RNBi/aYdwaQz0HIDLKsDD3HvRrdedxOXrTZe
-         Gex6mKOvarKYvoEYtH/+t3+uqdosuiJ3XtMZNhYuZkIvHL5VfYOYQpjQEfMAW2Gz0UZl
-         sbRgrrzLfoxhX5SYi/Ae3bWNi1uLzaE0y+zOmQfIi+7kKM6vufYi0MFIWLfhk43nb0o4
-         /oLHcsE1f0C6eu5pryxwwfjLxTgN5/jpPb4v6MHmq8iRl12THP5x20pHz6+BxaSWXoh8
-         YEuEAgEP0aKJP61k6EXsk+Y4otTAgSuMdU5NdykimPPxwvqYjNWlXpx2s9QyTOxi8s2F
-         puKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795517014; x=1796121814;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zw8MhdrCRw4Anjf2J55DnBkyqIRRMXumfxb086Ftrkk=;
-        b=lu7h6ZEDuaUmOh2XCfAyaOKUUq+/5EncI3g4KjuMlk5SVkYUeLpacRVGPmHhosgq25
-         9m0rujwBjw/yimuQ3XqIyt/JtBxRnibyEHqs2wgKASK6VCivrbM4DnJioF4sDXv3n/Xi
-         kWzJ2s7xJfIB3PsjhGsw60Yk8o5AGYaGEwl1vo+B/CPQlzqUcbqmk4NVwBZEgWMjYwUY
-         dl976pNt4+EmOc26s273inCHvDNW5PjyExu1M+EBjvIa49PsUFcNhj3xWo41KD5TeY2y
-         UR1/jAiDdK22eoPgncYLfakK21u5fLA4xWbnAzZxAhsz8Gm6aZAuHEgjHqEHzsw4BVzl
-         IlFQ==
-X-Gm-Message-State: APuU4Z/GE3/Tjuddh+tchRTMXkwNFlHfOos1lMxDld4ev4y6vnzzUoxN
-	qpQi81nL37Vzlklnqn0n3pMrRmuvSPubwswRH8XpCXCrei1a4azxV9VYzA6UL/e6IZUYQnOLBIo
-	0dmEqZkZ4EIkhuvshxEyGIBw7PJqz/vBKg5/sy18=
-X-Gm-Gg: AZFdTZfjVbW8N94dyL/nEvvCRvVjx5BQyMz1XSXF8SnOLhs/Qe4pOp5+QOXwERTUizW
-	RyRXb2uZqEgS5QsKtKA29QQhHB8qbJaD/9eXwddtUdaS1M2a+pj/Yv3mt4rPKHuw3LJB/6NI+pE
-	oJMIVMHYUlXNqRWWH3E0hMHiDIVJzMQFcNzCcyWcxLZpKXXltE6qOKJTn5VjsutZd9rH6gRt7YE
-	wl/r/4Po98I9br+RgjLDZNPn2+r3lXfOzTHLFJUFrypxi7+HvaBNH6k50//RB0qPnb5LyneF51G
-	2NjE2iZGxxtVgS1ZHdwKpKk51KGbSKxHDyG0ZDILNBsJx8VMBqeXqldbxR+8nGFC4L03vaFj1Fw
-	LONvkS9aduTkbb4a98wIXQh9HSStw9yDWvsEeLmcf77YrfL9Exe+Xm/sOfQNw/fjh91meH4ROjS
-	pMYyszeHBrBG0rGkGDvl6NguH4
-X-Received: by 2002:a05:6300:6bdc:b0:3e2:86b6:9beb with SMTP id
- adf61e73a8af0-4014e06961emr11677858637.74.1795517014565; Tue, 24 Nov 2026
- 02:43:34 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Oa+csrF1
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=y42ceMjaFxWiqxybsUmhWAVQHVb2z+bt3IKEjNc/dFs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795519105; v=1; x=1796123905;
+ b=Oa+csrF1n5Yyh8f3PsL9glw9oeBdqz/+gmbzMwXcj5YwEIlM3ahV9L3N2ChYCfP30juPcwBS
+ v+6NlgcPXebs4IZjwpzJ5lbawEHW7mVuT3cfg/bMHkyB/V25+af4c+An2QrKMG7PKD3AsMUYiU0
+ j8sqmwNIWG2e9YnYoTzTq/YM=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 2c945a36ab831988;
+	Tue, 24 Nov 2026 11:18:25 +0000
+X-Mizu-Trace-ID: 2c945a36ab831988
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,85 +57,83 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <cover.1795482456.git.arisa.snowbell@gmail.com>
- <2ba4e27796fb1777481bd91d8467439a85542a42.1795482456.git.arisa.snowbell@gmail.com>
- <sashiko-outbox-230755@kernel.org>
-In-Reply-To: <sashiko-outbox-230755@kernel.org>
-From: Arisa Snowbell <arisa.snowbell@gmail.com>
-Date: Tue, 24 Nov 2026 11:43:23 +0100
-X-Gm-Features: Aa3M54qP-NAC3_Km_uflhMRaAjWtVrFKLmGDZhabjv91y7rOlkT9jOilb95geBc
-Message-ID: <CABpa4MCdAqTFmThGHjcDt+7RuJuH=iTJ-ccUvNEfjCNoY6NyoA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] drm/amdgpu/userq: don't restore user queues during
- system sleep
-To: sashiko-reviews@lists.linux.dev
-Cc: amd-gfx@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH 1/6] mm/hugetlb_vmemmap: remove the vmemmap savings boot
+ message
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <sashiko-outbox-231028@kernel.org>
+Date: Tue, 24 Nov 2026 19:18:09 +0800
+Cc: Muchun Song <muchun.song@linux.dev>,
+ Muchun Song <songmuchun@bytedance.com>,
+ Oscar Salvador <osalvador@suse.de>,
+ Mike Rapoport <rppt@kernel.org>,
+ David Hildenbrand <david@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Lance Yang <lance.yang@linux.dev>,
+ Qi Zheng <qi.zheng@linux.dev>,
+ linux-mm@kvack.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <72671D69-0C65-4C1F-A685-2DEFEE1E9FC5@linux.dev>
+References: <20261124110530.3004071-1-songmuchun@bytedance.com>
+ <20261124110530.3004071-2-songmuchun@bytedance.com>
+ <sashiko-outbox-231028@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
-It needs ensure_ev_fence() to return an error to its ioctl callers. I
-can look at it as a separate patch.
 
-On Tue, Nov 24, 2026 at 9:56=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [High] drm/amdgpu: infinite retry loop in
->   amdgpu_userq_ensure_ev_fence() [1]
+
+> On Nov 24, 2026, at 19:16, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mm: missing const in !CONFIG_HUGETLB_PAGE huge_page_order()
+>  stub
 > --
->
-> commit 1073e972cefe081a3547954bcb099da6f1184516
-> Author: Arisa Snowbell <arisa.snowbell@gmail.com>
->
-> drm/amdgpu/userq: don't restore user queues during system sleep
->
-> This commit blocks user queue restore work from being scheduled during
-> system sleep preparation and moves the restore worker to
-> system_freezable_wq so restores do not race with VRAM eviction.
->
-> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/dr=
-m/amd/amdgpu/amdgpu_userq.c
-> > index ed6f3b67e8720..7960341f7f84f 100644
-> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
->
-> [ ... ]
->
-> > @@ -453,7 +464,7 @@ amdgpu_userq_ensure_ev_fence(struct amdgpu_userq_mg=
-r *uq_mgr,
-> >                * Looks like there was no pending resume work,
-> >                * add one now to create a valid eviction fence
-> >                */
-> > -             schedule_delayed_work(&uq_mgr->resume_work, 0);
-> > +             amdgpu_userq_queue_restore(uq_mgr);
-> >               goto retry;
->
-> [Severity: High]
-> This problem wasn't introduced by this patch, but can
-> amdgpu_userq_ensure_ev_fence() loop forever [1] if
-> amdgpu_userq_restore_worker() fails to install a new eviction fence?
->
-> When amdgpu_userq_vm_validate_and_restore_queue() fails (for example
-> with -ENOMEM), amdgpu_userq_restore_worker() exits without replacing
-> the signaled eviction fence:
->
-> drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c:amdgpu_userq_restore_worker() {
->     ...
->         ret =3D amdgpu_userq_vm_validate_and_restore_queue(uq_mgr);
->         if (ret) {
->                 drm_file_err(uq_mgr->file, "Failed to validate BOs to res=
-tore ret=3D%d\n", ret);
->                 goto put_fence;
->         }
->     ...
-> }
->
-> amdgpu_userq_ensure_ev_fence() then sees the same signaled fence on the
-> next iteration and re-queues resume_work in an unkillable loop.
->
-> [1] https://sashiko.dev/#/bug/linux-d9fc724f-ccb0-417c-8973-b83fdfc48280
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1795482456.=
-git.arisa.snowbell@gmail.com?part=3D1
+>=20
+> commit 852c6ee3c3138346a4a6991f35b8658e23f3cb65
+> Author: Muchun Song <muchun.song@linux.dev>
+>=20
+> mm/hugetlb_vmemmap: remove the vmemmap savings boot message
+>=20
+> This commit removes the boot message reporting potential HugeTLB =
+vmemmap
+> savings along with hugetlb_vmemmap_optimizable_size(), and updates
+> hugetlb_vmemmap_optimizable() to check vmemmap_optimizable_order() via
+> huge_page_order().
+>=20
+>> diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+>> index 0d5414392d870..b5b877ed5b92c 100644
+>> --- a/include/linux/hugetlb.h
+>> +++ b/include/linux/hugetlb.h
+>> @@ -812,7 +812,7 @@ static inline unsigned long huge_page_mask(struct =
+hstate *h)
+>> 	return h->mask;
+>> }
+>>=20
+>> -static inline unsigned int huge_page_order(struct hstate *h)
+>> +static inline unsigned int huge_page_order(const struct hstate *h)
+>> {
+>> 	return h->order;
+>> }
+>=20
+> [Severity: Medium]
+> Should the !CONFIG_HUGETLB_PAGE stub of huge_page_order() in
+> include/linux/hugetlb.h also take a const struct hstate *h?
+
+Yes, and easy to fix.
+
+>=20
+> hugetlb_vmemmap_optimizable(const struct hstate *h) is defined outside
+> #ifdef CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP and now passes h to
+> huge_page_order(h) behind an IS_ENABLED() check.  When a file such as
+> mm/memory-failure.c includes mm/hugetlb_vmemmap.h with
+> CONFIG_MEMORY_FAILURE=3Dy and CONFIG_HUGETLB_PAGE=3Dn, calling the =
+non-const
+> stub triggers a -Wdiscarded-qualifiers warning (or build failure with
+> CONFIG_WERROR=3Dy).
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261124110530.3004071-1-songmuchun@bytedan=
+ce.com?part=3D1
+
