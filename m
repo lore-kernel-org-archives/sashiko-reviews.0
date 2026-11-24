@@ -1,100 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795500573;
-	b=DUV9jFejp9DLIaR4uYV5nON3VqJYknxl3MdOKumJ4G4JSpw6IhfTpz5QAygH/BBv3GNQ
-	 eabDA07e0troqgTS8dJI79JMoZuQQckzHp5fuUiaFlZHJXQOCMyEo+OEO/Pkg/91oeJFL
-	 N5TIeZFCr8mSvwfGYrO2WXdgm6yc46hZiiuWVZrDCi8Ma9tcXJ0XtIgNa0pivbxDdKvFV
-	 tSsXPszfBq2Vkek0+064LU/eZIFSU/K0QXijjzIvXyVM014OMgk54XoxmtpH+KVOCSOTd
-	 xyKCe3mE4s5oLX/UQHfdSDS0FYkpWjqBO0PR4clILZ8v9UXKwZ3P8jyJ1nWSC+PCQCA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795500573;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.16
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795500714;
+	b=zJW5FUqVkWAZVQOmFkuSIGtI7GXXpkEnq3ZNNdHpOHt0D+gDrJWOBLgTBV3qDJooy6RJ
+	 ZW2ZxdCtG4FAR9zyVHPB/DqdKiwLpofhmE2CmwxlHCkgKi62jQ2OXR3zu+C0cNCTlIZf7
+	 xdieOIf4WMXTC/DGArN1YQ47ws5FhbYRJxpTo2eB1ShJeW/UH+n+wT6K1Ht+S1PHBBRhz
+	 +qH8oBkUGGfFv0bhTXGm0TN7LTxXBa76kXh0MsQML6bS4MEBBccUxD6hDbw1i6mmzIDH3
+	 r7hSYsxIJ75ixMH5QC291ZQoN8c16qR3CHvK7ElkkXKaevnUma51bLv9cGfiVa4NhmA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795500714;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=Unmz5fGYEvX56+imjPXFeVnLj491/aA9h3Sgmra885A=;
-	b=MGUA1k8NOc9F7FA59CiMZMVERHhvCHb5hHbYPTdpLAqGXJo1d9evE2U9O134I0vSMU0s
-	 Zr2AgD9XE6rgFfEL/dNaqCZ+uf26k84QhXJXuJDfzzHciYdwoTNIX/6pDIbTclx1N8Ww0
-	 4hLcSYsLfYC66ARSVsHoYjJ9reAds6azb7u/a/oK3ZIZzy0mtTG8Y0I6+KFOYAK29OPKN
-	 PYXe3ATWkiijvwiFVcyvBTVNk4Ky+YmPTsJudAcIYJAM+TVH0IzzDEnSAqYXeWXn8fAap
-	 /dN8ZcglFyIH0F2fTZK0fF+bCWi0RrJb6mPy4yYBAKbwj5eEIwMSIJKHPfjN3QUKWZw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hwvOVU3p;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.45
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	bh=qDNdpUL/8B/XXersHG/IyeaDG2C757klasspkhAuRZQ=;
+	b=LO0cp2iLDkkU2q5kJyVZSpQBZmwmKSrayMS9c2vlZE9L6kq1nQOWHJ3fcYOZGbmyGdJJ
+	 f4bv6WQJZjUUHP/J6zdKnWxEz2/QXDcmJPuMUNsrCHq4F0a3KIk3na9VTdIlWRbRar2AZ
+	 MowDhgiWmUVTLGlX/c4kg752VRjVqy2WrwbR2TnoczwGuQET9dUTcQ06W9t+m5+tYSCRf
+	 rBWEQNc8T3mkbwHpcyFjT50fRcG8ZI730X20jZfNw6yWdrT/zFti5H3N8snQXY3821Zac
+	 Z01D476n9Mm4/yydzuE81c4DPinvQqyM5XfNDZWcPCs+yKkjgEnHrwTuGEcbxWn4u6w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pm.me;
+	spf=pass smtp.mailfrom=pm.me;
+	dkim=pass header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=QBUndeGG;
+	arc=none smtp.remote-ip=109.224.244.16
+Received: from mail-24416.protonmail.ch (mail-24416.protonmail.ch [109.224.244.16])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409CB606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 06:09:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 409CB606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B14B606A322
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 06:11:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B14B606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hwvOVU3p
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-4ac109a8a12so2340144f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 23 Nov 2026 22:09:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795500571; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jy/6fNsDwOMpEIemmzfF5Yw0xeN3IfmH8aZUFkDTocdUXur8KXvVKhLIY/Sbm6TuOp
-         j4QNzAvBkZH57Knc6DTdAknovL91czksWVSElymDgLhHn69N8FugU2LoTrX70NJOQNT9
-         85/CZFFSWPOu1AC9ndlCCZZdUd/gtZElTPhezAv8y27war59PKkzizWsO9uypJkWokK4
-         jfx/VT2fWxH4n6CQGXh+Xufy3cBjV2p/CizY0AZV3cf9AmZn15JOx040cdyAcZIPUnvO
-         ElZUZTSYQByCygyCUL2LiXlyjPufTjBgXSf34j+rIx9yhrjobPqT1rqYjGSELZyo845c
-         3tbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Unmz5fGYEvX56+imjPXFeVnLj491/aA9h3Sgmra885A=;
-        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
-        b=edtc2H4PCsxw1bUZxknbzXf6tM6M9dZLyUiZOHPYvEOcUDYe83/AHB3xrFiA92aIog
-         QY7FU0m7oZWRVEKl4wejs+2MpUqN5lgl/JG5MUUr9oKZ0lMxhdinExdEX70JpKbjdHMX
-         40ypLnvzxKig7vd1kkOiQr9TgPzdg0z6IVhi1r7YiujoToG8Xa9Bzq/TsHgJXoko5Jlb
-         ceaRlgtfFUy1+HpV+3HDycsSL/qdmUtR6c8+SzhKS0HHEq97IhXM/4GzUDra7HLk6jR+
-         PswoyUqfBevyVyyHMI7a9IXls1b+GlTFcilxGOcknaUf+dSlPHSNYIshT5v6acVFk3hY
-         Fzkw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795500571; x=1796105371; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Unmz5fGYEvX56+imjPXFeVnLj491/aA9h3Sgmra885A=;
-        b=hwvOVU3ppMoxz0BXTN0rtm2MIAF9PWGyduir6dBnn4Ro0JQyGgMRh/jn5Z4P+W3JG3
-         a8GeuPfO15GlvMIQcfXpHjVHDtdbYfI3bXZtMh2RIKpnQ7TF8D5vcU8UZQ9fvfmraWfi
-         QvXEIE9Ce7gGSQtd2Zf4BV0eBe9Bm+6WUJedFNpdfxnE5rU1KQ3nSlWxvJcOWM7xWTP8
-         Uy7HKV74jC1tdrcdhaarRboTCNDWNiXFuR1IKRL5oYhD2mGFSbfmtO45lkqqahhqtOMi
-         LwahDVG/F8uSP/yBy2c/iRM727hqAwUw7nVgAGJni2ChKQs+ndgBIducKkGunfhLj9GG
-         6hIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795500571; x=1796105371;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Unmz5fGYEvX56+imjPXFeVnLj491/aA9h3Sgmra885A=;
-        b=1WIdpJYDsxvLre/6gTNBNJUZBDwXI2/MlOGiznnhywqGr9KzWJOlGD+RpFp4p0thuC
-         jC19N6tJgMhnD1Ow7fpJkcy/7qbiwxK4EbquHcbRj2rmbbH0Aoty+VBV18of9peuqdM6
-         iaKpUfbdNAjpslW/5j9gmf+Zl7eYp5E2wSUa7ulp1s9z5zxkGm7NjfbSdBABPgJR0xWb
-         /ry5O8kFQ4HR3T6vekw63Iig52NMW6RFMuW4OCwyyLiXAZSk0Is9NJynaRW3yqDgGc2o
-         34hL/iFaFWNM/W85X3YUyLRSH4NI1B5oHHOpjzH8p4Nz5JpaK28GV7JKhb7Bhq3sV2Oo
-         OWew==
-X-Gm-Message-State: APuU4Z/baPxjR6utdqj1wWhdNx0pJmoJsfcu1rmh5Fh+Aqtf3dc2l0ym
-	hefo6qXiJKmgxJc/EPxptSVua1LMe290w7mD8toOibg98Klilqs9fBtRYndpqe3RPUEuOL4+UIF
-	e0QtW3et5GN+JpkkaLADIHT5xpGYPRMdtV5Cq/y8wLQ==
-X-Gm-Gg: AZFdTZfzOATJJdv+QJSvpxbndMjb+LjOyMyOsQvICHNlEkEGNohflqD3PHER32cMm5f
-	2nUhfQ05ct8AtM0rdzpuTUi82MIIs7a5RoubzEUopLktqfBsyU2jPKLjt5IpqsJLwYzNK1c+Fsv
-	r64MnmT3PL3ckvriA4ysvCz6wCpAIlQ43ANtpkpjZtD3Bh/BGO+1Sjs0aGSmxbUcbY4usYKrjDi
-	xyAX63L7RW+smB/pcqmp2M3CnqKu+ZAVWGA9NNePMZje/ZbnXVqIQS9Oyj/Iou08u20bjvfGbna
-	iMJHjod+jtsGqaIzXiyjqXc2lp0Zv+hluLDkDGIrM3t0UGA7+3hpiSgfRAqDD0DM71u/uSbFfYK
-	OwzBt2Ms9Fn+QGZ7Mhb4D7nG5gi/Ax8+7h8r5Zv0aILgFMvEGfEci+6tbopf84ufTNK7S1qZVAL
-	WAom4ZQHkk7HMGmrnz/8pk01Y+cT1az5WbZwZTfImOVd0VAPyF0jmC
-X-Received: by 2002:a05:6000:2c04:b0:4ad:2699:74ec with SMTP id
- ffacd0b85a97d-4ad269975e8mr26924185f8f.39.1795500571241; Mon, 23 Nov 2026
- 22:09:31 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pm.me header.i=@pm.me header.a=rsa-sha256 header.s=protonmail3 header.b=QBUndeGG
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1795500711; x=1795759911;
+	bh=qDNdpUL/8B/XXersHG/IyeaDG2C757klasspkhAuRZQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=QBUndeGGmas5wSmiinNp9dsBwUMkQJr2zm9tP3FzKoyuhCYE6txDMO7xbJxzKMwee
+	 3Ispx9EeHfM9wzs4PjvlK0111EDJzNshxk+etrdjx5pXd091X7NMjFBJ77uiC9kyDY
+	 WcEMiuwrjMM6kzpC5eL9quoQyfXyQYAS8CvWsLsztvkayQX5HrowMjYRZdrhzkLGve
+	 NHi7x23pi01TYH0Pfq6/vyCtCRAGaYwgvJN+mTh/lT+/h/lt5sYWTaG9q4ZsD4IgY/
+	 0Ft6scPlCLHvwDwAfNV9aOOoSLicksBHU8t7bHWJL61RIM7CbRs/L0klEC1pjYyiID
+	 2tcuqdz4jRSWQ==
+Date: Tue, 24 Nov 2026 06:11:46 +0000
+To: sashiko-reviews@lists.linux.dev
+From: Erlend Jacobsen <erlendjacobsen@pm.me>
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+Subject: Re: [PATCH v3] HID: rdmctmzt: add RDMCTMZT keyboard battery driver
+Message-ID: <7xZrYaTeVw_39BwDhdCjoTvQZqOyrX6ndWt9U8FIXv00PkSpubYb2cSKiRCIU27c0lwc0RaRDKysqWJRedox90ahVd1yg-gp00yWAEj-mH8=@pm.me>
+In-Reply-To: <sashiko-outbox-229783@kernel.org>
+References: <20261123-b4-rdmctmzt-v3-1-5ce2359df0aa@pm.me> <sashiko-outbox-229783@kernel.org>
+Feedback-ID: 128302180:user:proton
+X-Pm-Message-ID: 3b902867fdbf0bafdf0fb36c27930c38c244b490
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,168 +64,139 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261124-arizona-jack-remove-v1-1-11d8ec426a41@gmail.com> <sashiko-outbox-230548@kernel.org>
-In-Reply-To: <sashiko-outbox-230548@kernel.org>
-From: Wong Steve <shyckless@gmail.com>
-Date: Tue, 24 Nov 2026 14:09:19 +0800
-X-Gm-Features: Aa3M54qpM4MPvk0QbJ2lKAWT8ovgFTxZNio6uwGbDoyWApLaveGT2J3sZlXU4gY
-Message-ID: <CA+X8SdjnZLuJs4LK=o_XsEBD_TaPiYX-gn-Jip8hV7iretWspA@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: arizona: Disable jack detection when the component
- is removed
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-> - [Medium] ASoC: arizona: GPIO UAF in arizona_jack_codec_dev_remove() on
->   codec unbind
-> - [Medium] ASoC: arizona: stale jack and HPDET state in
->   arizona_jack_disable_jack_detect()
+Thank you for the review.
 
-Thanks, both are right. On codec unbind the platform remove callback
-runs before the component is removed, and disabling jack detection
-during a headphone measurement or before a rebind leaves state behind.
+> [quote the paragraph about rdm_dongle_linked() storing the link byte
+>  after rdm_command() returns]
 
-I'll send a v2 that also disables jack detection in
-arizona_jack_codec_dev_remove() before the GPIOs are put, and makes
-arizona_jack_disable_jack_detect() finish a running measurement and
-reset the detection state. Mark, please don't pick up v1.
+Yes, that race was real. In v4 rdm_raw_event() stores every link byte
+from the dongle under the lock, whether it was asked for or not, and
+schedules a poll when it changed and was not the awaited answer.
+rdm_dongle_linked() now only reads rdm->link, so a reply can no longer
+overwrite a newer unsolicited status.
 
-Thanks,
-Suyuan
+Erlend
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B411=E6=9C=8824=E6=97=A5=E5=91=
-=A8=E4=BA=8C 13:17=E5=86=99=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] ASoC: arizona: GPIO UAF in arizona_jack_codec_dev_remove() on
->   codec unbind
-> - [Medium] ASoC: arizona: stale jack and HPDET state in
->   arizona_jack_disable_jack_detect()
+
+
+On Monday, November 23rd, 2026 at 18:49, sashiko-bot@kernel.org <sashiko-bo=
+t@kernel.org> wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] HID: rdmctmzt: split-lock rdm->link update in
+>   rdm_dongle_linked()
 > --
->
-> commit 64c10974d73769b43875985100c8e416d589c894
-> Author: Suyuan Wang <stevewong@hust.edu.cn>
->
-> ASoC: arizona: Disable jack detection when the component is removed
->
-> This commit calls arizona_jack_set_jack(component, NULL, NULL) in the
-> component_remove callbacks of the wm5102, wm5110, wm8997, and wm8998
-> codec drivers to disable jack detection on teardown.
->
-> > diff --git a/sound/soc/codecs/wm5102.c b/sound/soc/codecs/wm5102.c
-> > index 762e81979cb8d..43df7cb46b599 100644
-> > --- a/sound/soc/codecs/wm5102.c
-> > +++ b/sound/soc/codecs/wm5102.c
-> > @@ -1982,6 +1982,8 @@ static void wm5102_component_remove(struct snd_so=
-c_component *component)
-> >  {
-> >       struct wm5102_priv *priv =3D snd_soc_component_get_drvdata(compon=
-ent);
-> >
-> > +     arizona_jack_set_jack(component, NULL, NULL);
+>=20
+> commit 6c486e725a5b70b38d74595b3572ef11e0c655ce
+> Author: Erlend Jacobsen <erlendjacobsen@pm.me>
+>=20
+> HID: rdmctmzt: add RDMCTMZT keyboard battery driver
+>=20
+> This commit adds a HID driver for RDMCTMZT keyboards and their 2.4 GHz
+> dongles to poll battery status over the vendor HID interface and report
+> wireless link status.
+>=20
+> > diff --git a/drivers/hid/hid-rdmctmzt.c b/drivers/hid/hid-rdmctmzt.c
+> > new file mode 100644
+> > index 0000000000000..fc740c7a4e482
+> > --- /dev/null
+> > +++ b/drivers/hid/hid-rdmctmzt.c
+> [ ... ]
+> > +/* The dongle's link byte, asked for now: an 0xd0 may have been missed=
+ */
+> > +static int rdm_dongle_linked(struct rdm_device *rdm, bool *linked)
+> > +{
+> > +=09u8 reply[RDM_ANSWER_LEN];
+> > +=09int ret;
 > > +
-> >       wm_adsp2_component_remove(&priv->core.adsp[0], component);
-> >
-> >       priv->core.arizona->dapm =3D NULL;
-> > diff --git a/sound/soc/codecs/wm5110.c b/sound/soc/codecs/wm5110.c
-> > index faa85d88a489b..c772f4380ae7d 100644
-> > --- a/sound/soc/codecs/wm5110.c
-> > +++ b/sound/soc/codecs/wm5110.c
-> > @@ -2340,6 +2340,8 @@ static void wm5110_component_remove(struct snd_so=
-c_component *component)
-> >       struct wm5110_priv *priv =3D snd_soc_component_get_drvdata(compon=
-ent);
-> >       int i;
-> >
-> > +     arizona_jack_set_jack(component, NULL, NULL);
+> > +=09ret =3D rdm_command(rdm, RDM_DONGLE_STATUS, reply);
+> > +=09if (ret =3D=3D -ESHUTDOWN)
+> > +=09=09return ret;
 > > +
-> >       for (i =3D 0; i < WM5110_NUM_ADSP; ++i)
-> >               wm_adsp2_component_remove(&priv->core.adsp[i], component)=
-;
-> >
-> > diff --git a/sound/soc/codecs/wm8997.c b/sound/soc/codecs/wm8997.c
-> > index f041dfc905a42..aa9f23ddd9975 100644
-> > --- a/sound/soc/codecs/wm8997.c
-> > +++ b/sound/soc/codecs/wm8997.c
-> > @@ -1077,6 +1077,8 @@ static void wm8997_component_remove(struct snd_so=
-c_component *component)
-> >  {
-> >       struct wm8997_priv *priv =3D snd_soc_component_get_drvdata(compon=
-ent);
-> >
-> > +     arizona_jack_set_jack(component, NULL, NULL);
+> > +=09scoped_guard(spinlock_irqsave, &rdm->lock) {
+> > +=09=09if (!ret)
+> > +=09=09=09rdm->link =3D reply[RDM_LINK_BYTE];
+> > +=09=09*linked =3D rdm_link_may_be_up(rdm->link);
+> > +=09}
+> > +=09if (ret)
+> > +=09=09hid_dbg(rdm->hdev, "no link status: %d\n", ret);
+> > +=09return 0;
+> > +}
+> [ ... ]
+> > +static int rdm_raw_event(struct hid_device *hdev, struct hid_report *r=
+eport,
+> > +=09=09=09 u8 *data, int size)
+> > +{
+> > +=09struct rdm_device *rdm =3D hid_get_drvdata(hdev);
 > > +
-> >       priv->core.arizona->dapm =3D NULL;
-> >  }
-> >
-> > diff --git a/sound/soc/codecs/wm8998.c b/sound/soc/codecs/wm8998.c
-> > index 1158e9ca40a13..47adbcd80e077 100644
-> > --- a/sound/soc/codecs/wm8998.c
-> > +++ b/sound/soc/codecs/wm8998.c
-> > @@ -1301,6 +1301,8 @@ static void wm8998_component_remove(struct snd_so=
-c_component *component)
-> >  {
-> >       struct wm8998_priv *priv =3D snd_soc_component_get_drvdata(compon=
-ent);
-> >
-> > +     arizona_jack_set_jack(component, NULL, NULL);
+> > +=09if (!rdm || size < RDM_ANSWER_LEN || data[RDM_PREFIX_BYTE] !=3D RDM=
+_PREFIX)
+> > +=09=09return 0;
 > > +
-> >       priv->core.arizona->dapm =3D NULL;
-> >  }
->
+> > +=09guard(spinlock_irqsave)(&rdm->lock);
+> > +=09if (rdm->expect && data[RDM_CMD_BYTE] =3D=3D rdm->expect) {
+> > +=09=09memcpy(rdm->answer, data, RDM_ANSWER_LEN);
+> > +=09=09rdm->expect =3D 0;
+> > +=09=09complete(&rdm->done);
+> > +=09} else if (data[RDM_CMD_BYTE] =3D=3D RDM_DONGLE_STATUS && rdm->dong=
+le &&
+> > +=09=09   data[RDM_LINK_BYTE] !=3D rdm->link) {
+> > +=09=09/* The link to the keyboard came or went: ask now */
+> > +=09=09rdm->link =3D data[RDM_LINK_BYTE];
+> > +=09=09if (rdm->expect && !rdm_link_may_be_up(rdm->link)) {
+> > +=09=09=09rdm->expect =3D 0;
+> > +=09=09=09complete(&rdm->done);
+> > +=09=09}
+> > +=09=09if (!rdm->stopping)
+> > +=09=09=09mod_delayed_work(system_dfl_wq, &rdm->work, 0);
+> > +=09}
+> > +=09return 0;
+> > +}
+>=20
 > [Severity: Medium]
-> When a codec platform device is unbound while a card is bound, can a jack
-> IRQ or delayed work use info->micd_pol_gpio or info->hpdet_id_gpio after
-> they have been freed?
->
-> The codec drivers register their ASoC components with
-> devm_snd_soc_register_component(), whereas their platform_driver.remove
-> callbacks call arizona_jack_codec_dev_remove() directly.  Because
-> snd_soc_card_bind() creates a stateless device link, unbinding the codec
-> runs platform_driver.remove before devres_release_all() unregisters the
-> component and invokes component_remove:
->
-> CPU0                              CPU1
-> wm5102_remove()
->   arizona_jack_codec_dev_remove()
->     gpiod_put(info->micd_pol_gpio)
->     gpiod_put(info->hpdet_id_gpio)
->                                   arizona_hpdet_irq()
->                                     gpiod_set_value_cansleep(
->                                       info->hpdet_id_gpio, 0)
->                                       <-- use-after-free
-> devres_release_all()
->   ...
->     wm5102_component_remove()
->       arizona_jack_set_jack(..., NULL, NULL)
->
-> Calling arizona_jack_disable_jack_detect() inside
-> arizona_jack_codec_dev_remove() before dropping the GPIO descriptors
-> (while keeping the call in component_remove for card unbind) would close
-> this window.
->
-> [Severity: Medium]
-> If the card is unbound and bound again while a jack is plugged in, does
-> stale state in struct arizona_priv prevent the newly bound card from
-> detecting the jack?
->
-> info->last_jackdet is only initialized in arizona_jack_codec_dev_probe(),
-> and neither arizona_jack_disable_jack_detect() nor
-> arizona_jack_enable_jack_detect() resets info->last_jackdet or
-> info->hpdet_done.  When the card is rebound and sets a new snd_soc_jack,
-> arizona_jackdet() sees val =3D=3D info->last_jackdet and suppresses the e=
-vent
-> instead of reporting the inserted jack, and stale info->hpdet_done causes
-> arizona_identify_headphone() to skip headphone detection.
->
-> In addition, if arizona_jack_disable_jack_detect() runs while an HPDET
-> measurement is in flight (info->hpdet_active is true), freeing
-> ARIZONA_IRQ_HPDET prevents arizona_hpdet_irq() from clearing
-> arizona->hpdet_clamp and dropping the pm_runtime_get_sync() reference
-> taken when starting HPDET.
->
+> Can rdm_dongle_linked() overwrite a newer rdm->link update or cause
+> rdm_raw_event() to drop an unsolicited link-change event?
+>=20
+> When rdm_dongle_linked() requests RDM_DONGLE_STATUS, rdm_raw_event() take=
+s
+> the rdm->expect branch and completes rdm->done without updating rdm->link=
+.
+> If the dongle sends an unsolicited RDM_DONGLE_STATUS report before the
+> worker updates rdm->link in rdm_dongle_linked(), the two updates race:
+>=20
+> kworker                           <hardirq>
+> rdm_dongle_linked()
+>   rdm_command(RDM_DONGLE_STATUS)
+>     rdm->expect =3D 0xd0
+>                                   rdm_raw_event() [reply: link =3D 0x02]
+>                                     memcpy(rdm->answer, data, ...)
+>                                     rdm->expect =3D 0
+>                                     complete(&rdm->done)
+>                                   rdm_raw_event() [event: link =3D 0x00]
+>                                     data[13] !=3D rdm->link (0x00 =3D=3D =
+0x00)
+>                                     /* reconnect event ignored */
+>   rdm->link =3D reply[13] (0x02)
+>   *linked =3D false                 <-- stale link state kept
+>=20
+> Because rdm->link still held 0x00 when the unsolicited reconnect report
+> arrived, rdm_raw_event() did not reschedule rdm->work, and
+> rdm_dongle_linked() then stores the older RDM_LINK_NONE (0x02) reply,
+> leaving the reconnected keyboard unpolled for RDM_POLL_MS (60 s).  In the
+> opposite transition (reply 0x00 followed by unsolicited 0x02),
+> rdm_dongle_linked() overwrites the newer 0x02 in rdm->link with the stale
+> 0x00 from reply[].
+>=20
+> Updating rdm->link inside rdm_raw_event() whenever a valid
+> RDM_DONGLE_STATUS report arrives (and having rdm_dongle_linked() only rea=
+d
+> rdm->link under rdm->lock) would avoid this race.
+>=20
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261124-arizona-=
-jack-remove-v1-1-11d8ec426a41@gmail.com?part=3D1
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123-b4-rdmct=
+mzt-v3-1-5ce2359df0aa@pm.me?part=3D1
+> 
