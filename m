@@ -1,102 +1,113 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795543231;
-	b=e2ppAC86qfDw1tx7Drs0BYaOVGpRutvsx0NjvPUBJaL7KfJVi70hOLvf87EVa/CjByco
-	 FrnEp0u04i0bfw3P3lz2fhT8QjTAOkWilvMkGKg5MljPH96jOZR6fRi3BpwrOfM+KN3C9
-	 OvpTiXHYLXfkLAokDZYjRUzs5Org3kcE93qqhLHjUS92dVEEHVXehPcq7z2qiAELsL8Qw
-	 pTjKNBDWk7W5pMwSi+wX/zTksVKL166pcCP1SNso1JVO2ZGW+e97Uopwtxky+AQwBQVGU
-	 ttZlBMXR6MpWJQb6bqeX5l9Zjwq5C7dHwjUYx666D5b4n5pQmi5Vs8FpeVjIpzWT4aA==
+	t=1795546719;
+	b=QKU3SZvCCQ9zSpymzdWETkn4fajWM8BlF+H7trScbk+lfO/A7wgwGp6ZCjJMXsVleSIl
+	 J0R9lHKdbV4qj55A4Q5uhW3j9ew8x4wBRJjb0pRIQ0TtqVtozf5e/jNpNLylz01yvLIJ3
+	 CVHcekPno/MqZN+CrMgHTSSaQIbrvKIe/OSPhXy4Se0uAyw6bGSE0KHC/M/Qxq7k59G4U
+	 Ok+RXaxusTLrrtjYjiunvsFNy1bL41RYHbCch+sn7BDv97e7/nqC1qgB9t/aU5g8WpluE
+	 qhgUled9aFeE4VHiswxRi1bpX72YsaGYEG6p1u393zmaEqDVTd5gdu916wplKhaKv/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795543231;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
-	 Subject:From:To:Date:In-Reply-To:References:User-Agent:MIME-Version:
-	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=DGteh9A13SwKf9DoOFbIVit9+Yy0hw7e/jraHRWTsv8=;
-	b=yLhNBdwMRZhEGu7jL+3rPTS62t8vlkruoU49F3QqVu/NmV3kizyfd/pJbJ7Qfn+9XmWn
-	 zQ4g7dAJ4p7oJ6iuh8gQF98JCatxB2yB3LFIE3F94RJXyRwehThLTqWZNckxc5/X8hRga
-	 5E0C5O1aGSd8MImd98Iv3yRG8+B1ONltNjQIbIjWJNZa2Xz29YfPhY0j0yku0vygJ5lqS
-	 xV4BQ8jnYNYh8yADblm7pVpbfdK7lWmA1SoQEiiWChoBkEyZ8ocYxLKxxAO5pOK4KhRsC
-	 RycUIvXDGKe1lMm6XLWYoQFPOUy3IfrOxDhCRx/JywX/ETFXmynxz2aw2j/9pjixT1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795546719;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=rKVd0WB9GKER5oLiGhqXKhoz1U/fSQCfKOepi4KUjiM=;
+	b=rWlLMvw9muTu1Wv2DfgBwbbuLBve4T1R2IsGiWUx+pf0lsqKOoGTaKHTVWiwZ0Usw1oj
+	 E/e3Qq/oL2N4QQ2t23C57nDywlkiGv28NLLIIlUR+kUt5hTRyx3qk7esLFwx06AE+7mfG
+	 SKwmDuUrInm60VKAfmm4LEbVfNgBLCPkPz2VNFyq//hE8WYmPXyW6NcemtBuhx+XukGdF
+	 V+Pcyr1e8VK+bH1+MMYZq4Eb4JJ5nlPb+ee60ZFuxJtY21mt43kKfzUBAcnFvdkJnhmgz
+	 +m/IIMaSfZYHq2WtqNQevbHzNmXvFa/o6WUfrqOMnB7nz8tXOeh9mpyjfrjk3vW+eWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eue4h8U0;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=chromium.org;
+	spf=pass smtp.mailfrom=chromium.org;
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=fHg+aG4X;
+	arc=none smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BC4606A326
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 18:00:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38BC4606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1218E606A338
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 18:58:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1218E606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eue4h8U0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1795543230;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=DGteh9A13SwKf9DoOFbIVit9+Yy0hw7e/jraHRWTsv8=;
-	b=eue4h8U0ri+r9myUdKxeLY1bUJFRwJLykfSDTGYqjb2gCK2peHmShutpsU7NqAMpOPI3rr
-	6eIImM/D8a0Y1t0OjEAry9BsuJ3YNbTmuhOxToD4OxUsP/ReUzdmrqAqtsB9+DdaxPMaFI
-	gR0VNLFU4WrT9K1EYeBji17tPC0zdVg=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-86-mhOeT5bAO7ebaOGCtjwBZw-1; Tue, 24 Nov 2026 18:00:27 +0000
-X-MC-Unique: mhOeT5bAO7ebaOGCtjwBZw-1
-X-Mimecast-MFC-AGG-ID: mhOeT5bAO7ebaOGCtjwBZw_1795543227
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-949b0d3232fso695950385a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:00:27 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=fHg+aG4X
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4bb666304fdso52631235e9.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:58:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1795546716; x=1796151516; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=rKVd0WB9GKER5oLiGhqXKhoz1U/fSQCfKOepi4KUjiM=;
+        b=fHg+aG4X2P1ATKa/cPZRAMvwj8sfd2vGn/69eGznevPqBP98ydgqfydgjAWn+YvD+Z
+         +STpRBFGyGiXgv0tQr0+QrZmFfbzpow8CP4EEhgv452HYBoNycFdBK69IzwOYlznIHL1
+         lVz6vgu55/1XmNMRaxBRrHifqpWvqzTwE2muk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795543227; x=1796148027;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:to:from:subject:message-id:x-gm-gg
+        d=1e100.net; s=20260707; t=1795546716; x=1796151516;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=aBPFZif7OQNjM5QKYDwZZgIncRfMVh/lXXAldLLFMNQ=;
-        b=xd6305qce7U/OsKgzJAAF1978OOTFWhPwwe+TH+X36e191Zvak53Kla3sDazNH2BI6
-         3ErGO3Roe/69+0KmhHf05O+8TWUqLRP/bCKH+c/1nTKIx7Z3iL42VM7jeHIB5WmGI2Cb
-         pCuK70NPtWJnbA/wtJ6ObcnYlV0NGtNbgymZseypXO/RLv3ZQ+FN1o5IpiSxzXAXtFE1
-         mBZYUl3sv45JkRE3w7w0g+lcqE7rrC6Dop+hq9EptlX89c30CREN4rcCA94emh7TCqdb
-         NVgPqjrDX5yhv75G9+LPzVPmC6GDLtwAymbtTEzL5p/bqzQX5oFUnA5F79+RPnIjYHw/
-         kf4Q==
-X-Gm-Message-State: APuU4Z+RcNOezQpg8AIXbgQoRHE1CigywFxy2xQ9hDMjXRaC4gWontV2
-	GLXXFzejvBgfQs98wDu3vYgGIgGL6blOyAU/EDs2UwEcTLyqDAWjPx4zksbnYpnF3RI6A3fRbuh
-	Jiets5Sjkq12wVs8kTmew2Q8mNNrFhD9AfZhsp33JpMJgyNk5VXEo/RHOhynjH+T3hSBOjV3L3z
-	f3SEo0NP+WCLa1gttFMVQ5iiY25HlNinosk7iE5vY5+2kjFEWam9HdvQ==
-X-Gm-Gg: AZFdTZe9mYDUuMj6kMmpNzpuY8NUzH7QGUKV8cBUeo3sNHu9HBokeXCx0XBXYc1qYNU
-	MuhlHZ+d1jZy2MBUnoFikEAIllpIYlqtdhAgEQ6DeTYe6djyn0MxewTFSbeCEFRyS4chtwUSVfG
-	Nh653kwsJDTTj9NMvA4/fys/HVHTIXQv+ERCoLVswZ97mbV1KVCW8v1hc2pOvfGNeXtlbMEwGZf
-	0o8CBzy9nHpwhn8H7M+mGdmxSibw+/MN8CNMjq04r8vEDlResU8ZNwyYMS1kkVnwyvYnAgnTtGI
-	n5AHwSgQvc+P3yzkhmJ1PUoOLfaaCnXNZO3PCp/NRBIsdNKq9zVkOzfnmigdBNQmk7DCwqiMYyQ
-	qtKlnYHv8lxVZU/x9otWum8RDuxWUH8njzUoit4bddDVrezHqPgRaCZO8utk+RAMOm954xJVk4g
-	RdmxAHo5M=
-X-Received: by 2002:a05:620a:371d:b0:93f:3e39:efa1 with SMTP id af79cd13be357-949ba9c6d0fmr2938816585a.23.1795543225791;
-        Tue, 24 Nov 2026 10:00:25 -0800 (PST)
-X-Received: by 2002:a05:620a:371d:b0:93f:3e39:efa1 with SMTP id af79cd13be357-949ba9c6d0fmr2938776385a.23.1795543224025;
-        Tue, 24 Nov 2026 10:00:24 -0800 (PST)
-Received: from mlevitsk-thinkpadt14gen3.ibmmarkh.csb ([209.103.33.216])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb427388sm1088866085a.42.2026.11.24.10.00.23
+        bh=rKVd0WB9GKER5oLiGhqXKhoz1U/fSQCfKOepi4KUjiM=;
+        b=11TtcnMpnTjqnp/sBV5SD19PVxqoKEXxcJunH2+8mYrlSjBXeLJ0EQB3deUETmTsWE
+         iVrhppYRrCI9OwMh9mqD62O6ZQTwjjzJByAON+2i9xlMN5jyAn6kCx7hKj4WVYGkXz18
+         Y/boEwSse+4aKIfviakH+GGVfEhvgoXzAWTsgAruKpQ++cm5Wmh/4AlwAQKeqnUzdvkY
+         lW03i8/dfcwNvc+ahixf4WEtSZzTPT/iXnEEtDBC8Nwuy4gzI50B467vkxPAGvCaiVaj
+         4Bab+SVJh1TPVMfeWtr/Vq0f5bTtVuMIE24HxZXJ9VJLc9rSvbiCZkAHo0lOx0oMTfhP
+         pwbg==
+X-Gm-Message-State: APuU4Z8BOFJcZwjUm4WUBHw9PskXnkwBLRxgfaxnGqiak8ctu6UTu+xO
+	hyvh26Oggd3S+MD7oP/kzZQBU3MszO4YQdRpb/ap36IpJ3GyaTLm5Fm6zf9vrpEpf4PyCd4b8J6
+	Y4v3EZA==
+X-Gm-Gg: AZFdTZc4MqqxBzotxyERYumUmc/jU9nTIa6kxaiwE/0Ktw0bpgukPeUUSd3KoVKteHW
+	OgaD5zrFmkmIIz7OMwadxYqEuLz0xeTDkroD7kElGmLbFWb8ChGM6zvQD9C6+HysewkIZcEEKsB
+	uMQWRxHHkoT4OdGJmtLChTanF2igaB5WPcpdgQ+rz4pN6rq3A+8lP6g4kupaN6KSkbWOk6+Klr9
+	MSsn8u9F/uGWSmsX5iA2pu59F7ueJX7c7R1acoDsnphh35WFLZS0J7chgHQPlz5Zho5e6DmNsOx
+	d5n5bc+xOVqlnlZ6j68jfTRL+pJsQWZBV/iZh9p/Ifo7lOiDSceqX92FrBeflr8Bk0FH82UI3vG
+	k+ld8O6HN0IYZwg7qTVUb5CMfsLJoWrHY5cCQ+P1nsTV41lP6WSFkCQjMF1dYf+36EnScgYWE5l
+	Qp7f/FVon5ZGp/onbetjPvAjkXuX+2uKGCo5WL1dTPCmYWATx21SffMsmhfzzyMn2nxHf1HIdxq
+	ffQ89zK4273DZQcJmOYpqqqS84WSvk2ABg3UhETZTbEqfhR9sdOwnT00AW93GelvgQgeMFZeV5j
+	5o9jFnfV5a1ZzIvX/0w5HdNbrBHYtsa8MCQldbSIpXYqOAr6bpXncQ1Yqnt2rJuJ
+X-Received: by 2002:a05:600c:4585:b0:4a1:c6f5:2450 with SMTP id 5b1f17b1804b1-4bb8881b8e4mr321879025e9.17.1795546716413;
+        Tue, 24 Nov 2026 10:58:36 -0800 (PST)
+Received: from google.com ([2a00:79e0:285b:8:af0c:c5f1:ee8a:b81f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb853ca452sm445870355e9.15.2026.11.24.10.58.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 10:00:23 -0800 (PST)
-Message-ID: <d699e5865a19a199d9044d815d3428a74c46f6c8.camel@redhat.com>
-Subject: Re: [PATCH v3 5/5] KVM: x86: nVMX: fix races in delivery of nested
- posted interrupts
-From: "mlevitsk@redhat.com" <mlevitsk@redhat.com>
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Date: Tue, 24 Nov 2026 13:00:22 -0500
-In-Reply-To: <sashiko-outbox-229799@kernel.org>
-References: <20261123175512.80438-1-mlevitsk@redhat.com>
-	 <20261123175512.80438-6-mlevitsk@redhat.com>
-	 <sashiko-outbox-229799@kernel.org>
-User-Agent: Evolution 3.60.2 (3.60.2-3.fc44)
+        Tue, 24 Nov 2026 10:58:35 -0800 (PST)
+Date: Tue, 24 Nov 2026 19:58:31 +0100
+From: Dmytro Maluka <dmaluka@chromium.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Dmitry Torokhov <dtor@google.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Bjorn Helgaas <helgaas@kernel.org>, iommu@lists.linux.dev,
+	Jean-Philippe Brucker <jpb@kernel.org>,
+	Joerg Roedel <joro@8bytes.org>, Joshua Peraza <jperaza@google.com>,
+	Jesse Barnes <jsbarnes@google.com>, Len Brown <lenb@kernel.org>,
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Oliver O'Halloran <oohall@gmail.com>,
+	Pavel Machek <pavel@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Rajat Jain <rajatja@google.com>, Rajat Jain <rajatxjain@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Vineeth Pillai <vineeth@bitbyteword.org>,
+	Aashish Sharma <aashish@aashishsharma.net>,
+	Grzegorz Jaszczyk <jaszczyk@chromium.org>,
+	Tomasz Nowicki <tnowicki@google.com>,
+	Dmytro Maluka <dmaluka@chromium.org>
+Subject: Re: [PATCH v11 1/2] PCI/ACPI: Support Microsoft's "DmaProperty"
+Message-ID: <awXeV5Jo4WTjLc8c@google.com>
+References: <20261123235845.564027-1-dmaluka@chromium.org>
+ <20261123235845.564027-2-dmaluka@chromium.org>
+ <sashiko-outbox-230247@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -106,122 +117,119 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: s_b5YED1Lw_JfNni1C9SflJWl7rtaiCBOiAeG-c10ak_1795543227
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-230247@kernel.org>
 
-On Mon, 2026-11-23 at 18:19 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] KVM: nVMX: unhandled error and unmapped state in
-> =C2=A0 __nested_vmx_vmexit() PI completion
+On Tue, Nov 24, 2026 at 12:15:46AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] PCI/ACPI: platform_optin_force_iommu() ignores DmaProperty
+>   devices
+> - [Medium] PCI: SR-IOV VFs do not inherit untrusted flag from
+>   DmaProperty PF
 > --
->=20
-> commit daa28df8cd412bbb1c1a76b22827fb7d30241474
-> Author: Maxim Levitsky <mlevitsk@redhat.com>
->=20
-> KVM: x86: nVMX: fix races in delivery of nested posted interrupts
->=20
-> This commit synchronizes nested posted interrupt delivery with nested
-> VM-Exit using atomic operations on vcpu->arch.nested_guest_state and
-> processes pending nested posted interrupts in __nested_vmx_vmexit().
->=20
-> > diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-> > index 61f50175ecb79..845825c018bf5 100644
-> > --- a/arch/x86/kvm/vmx/nested.c
-> > +++ b/arch/x86/kvm/vmx/nested.c
-> [ ... ]
-> > @@ -5122,7 +5128,13 @@ void __nested_vmx_vmexit(struct kvm_vcpu *vcpu, =
-u32 vm_exit_reason,
-> > =C2=A0=09if (enable_ept && is_pae_paging(vcpu))
-> > =C2=A0=09=09vmx_ept_load_pdptrs(vcpu);
-> > =C2=A0
-> > -=09leave_guest_mode(vcpu);
-> > +=09old_nested_state =3D leave_guest_mode(vcpu);
+> 
+> commit 534ec8c0dc4ebcebaa88d905d9760f867ca5b38f
+> Author: Rajat Jain <rajatja@google.com>
+> 
+> PCI/ACPI: Support Microsoft's "DmaProperty"
+> 
+> This commit adds support for the Microsoft ACPI _DSD "DmaProperty" to mark
+> PCI devices as untrusted when the property is set to 1.
+> 
+> Link: [1] https://docs.microsoft.com/en-us/windows-hardware/drivers/pci/dsd-for-pcie-root-ports#identifying-internal-pcie-ports-accessible-to-users-and-requiring-dma-protection
+> Link: [2] https://docs.microsoft.com/en-us/windows/security/information-protection/kernel-dma-protection-for-thunderbolt
+> 
+> > diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
+> > index 1150f2fbabf41..5971ffc2a375a 100644
+> > --- a/drivers/pci/pci-acpi.c
+> > +++ b/drivers/pci/pci-acpi.c
+> > @@ -1427,12 +1427,34 @@ static void pci_acpi_set_external_facing(struct pci_dev *dev)
+> >  		dev->external_facing = 1;
+> >  }
+> >  
+> > +static int pci_dev_has_dma_property(struct pci_dev *dev)
+> > +{
+> > +	struct acpi_device *adev;
+> > +	const union acpi_object *obj;
 > > +
-> > +=09/* pairs with implicit memory barrier in vmx_deliver_nested_posted_=
-interrupt */
-> > +=09smp_mb__after_atomic();
+> > +	adev = ACPI_COMPANION(&dev->dev);
+> > +	if (!adev)
+> > +		return 0;
 > > +
-> > +=09if (old_nested_state & KVM_NESTED_PI_PENDING)
-> > +=09=09__vmx_complete_nested_posted_interrupt(vcpu);
-> > =C2=A0
-> > =C2=A0=09if (nested_cpu_has_preemption_timer(vmcs12))
-> > =C2=A0=09=09hrtimer_cancel(&to_vmx(vcpu)->nested.preemption_timer);
->=20
-> [Severity: High]
-> What happens when __vmx_complete_nested_posted_interrupt() fails or runs
-> before vmcs12 pages are mapped?
->=20
-> If L1 configures an unbacked or MMIO GPA for posted_intr_desc_addr or
-> virtual_apic_page_addr, vmx->nested.pi_desc or virtual_apic_map.hva is NU=
-LL.
-> __vmx_complete_nested_posted_interrupt() then calls
-> kvm_handle_memory_failure(), setting vcpu->run->exit_reason to
-> KVM_EXIT_INTERNAL_ERROR and returning -ENXIO.=C2=A0 Because __nested_vmx_=
-vmexit()
-> ignores the return value, callers such as nested_vmx_reflect_vmexit() and
-> vmx_check_nested_events() continue running L1 in-kernel instead of exitin=
-g
-> to userspace, while non-KVM_RUN callers via vmx_leave_nested() clobber
-> vcpu->run->exit_reason.
->=20
-> In addition, when entering L2 with from_vmentry =3D=3D false (KVM_SET_NES=
-TED_STATE
-> or RSM), nested_vmx_enter_non_root_mode() defers nested_get_vmcs12_pages(=
-)
-> via KVM_REQ_GET_NESTED_STATE_PAGES while publishing KVM_NESTED_PI_ACTIVE =
-in
-> vcpu->arch.nested_guest_state.=C2=A0 If a nested posted interrupt arrives=
- and an
-> L2->L1 exit happens before the first L2 entry, __nested_vmx_vmexit() clea=
-rs
-> KVM_REQ_GET_NESTED_STATE_PAGES without mapping pi_desc, so
-> __vmx_complete_nested_posted_interrupt() drops the interrupt and triggers=
- a
-> spurious KVM_EXIT_INTERNAL_ERROR.
->=20
-> Finally, running __vmx_complete_nested_posted_interrupt() when vmx->fail =
-is
-> true clears pi_desc->on and writes max_irr into vmcs02 GUEST_INTR_STATUS,
-> which is then lost because sync_vmcs02_to_vmcs12() is skipped on vmx->fai=
-l.
+> > +	/*
+> > +	 * Property used by Microsoft Windows to enforce IOMMU DMA
+> > +	 * protection from any device, that the system may not fully trust;
+> > +	 * we'll honour it the same way.
+> > +	 */
+> > +	if (!acpi_dev_get_property(adev, "DmaProperty", ACPI_TYPE_INTEGER,
+> > +				   &obj) && obj->integer.value == 1)
+> > +		return 1;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  void pci_acpi_setup(struct device *dev, struct acpi_device *adev)
+> >  {
+> >  	struct pci_dev *pci_dev = to_pci_dev(dev);
+> >  
+> >  	pci_acpi_optimize_delay(pci_dev, adev->handle);
+> >  	pci_acpi_set_external_facing(pci_dev);
+> > +	pci_dev->untrusted |= pci_dev_has_dma_property(pci_dev);
+> 
+> [Severity: Medium]
+> Should platform_optin_force_iommu() also check for devices marked via
+> DmaProperty?
+> 
+> In drivers/iommu/intel/iommu.c, platform_optin_force_iommu() only checks
+> has_external_pci(), which tests pdev->external_facing:
+> 
+> drivers/iommu/intel/iommu.c:has_external_pci() {
+> 	...
+> 	for_each_pci_dev(pdev)
+> 		if (pdev->external_facing) {
+> 			pci_dev_put(pdev);
+> 			return true;
+> 		}
+> 	return false;
+> }
+> 
+> On systems with CONFIG_INTEL_IOMMU_DEFAULT_ON=n where firmware sets the
+> DMAR platform opt-in flag and marks internal ports or devices with
+> DmaProperty instead of ExternalFacingPort, has_external_pci() returns
+> false.  platform_optin_force_iommu() then returns early without enabling
+> DMAR_FORCE_ON, and intel_iommu_init() disables the IOMMU, leaving those
+> devices without DMA remapping protection.
 
+Makes sense to me. As I understand, prior to this patch,
+platform_optin_force_iommu() was technically not buggy, since
+pdev->untrusted was only set for devices downstream of external-facing
+ports; whereas with this patch, internal (e.g. SoC-integrated) devices
+may also be marked as untrusted i.e. requiring DMA protection, thus
+platform_optin_force_iommu() should check pdev->untrusted along with
+checking pdev->external_facing.
 
-Technically KVM doesn't have to fail when nested PIR and/or nested APICv pa=
-ge are MMIO, as stated here:
+Baolu, do you agree?
 
-KVM: nVMX: Fail on MMIO completion for nested posted interrupts
+> [Severity: Medium]
+> Do SR-IOV Virtual Functions inherit pci_dev->untrusted when DmaProperty is
+> placed directly on an endpoint Physical Function?
+> 
+> When VFs are created via pci_iov_add_virtfn() -> pci_iov_scan_device() ->
+> pci_setup_device(), set_pcie_untrusted() checks pci_upstream_bridge(dev).
+> Because pci_upstream_bridge() resolves pci_physfn(dev) first and returns
+> the bridge upstream of the PF (or NULL on a root bus) rather than the PF
+> itself, and VFs do not share the PF's ACPI companion, virtfn->untrusted
+> remains 0.  IOMMU and DMA paths then treat the VFs of an untrusted PF as
+> trusted.
 
-When the kernel has no mapping for the vmcs02 virtual APIC page,
-userspace MMIO completion is necessary to process nested posted
-interrupts. This is not a configuration that KVM supports. Rather than
-silently ignoring the problem, try to exit to userspace with
-KVM_INTERNAL_ERROR.
+Yeah, similarly agree. Looks like pci_iov_add_virtfn() is implicitly
+relying on an assumption that pdev->untrusted is *only* true for PFs
+downstream of external-facing ports, which happens to be the case
+without this patch, but is no longer the case with this patch.
 
-Note that the event that triggers this error is consumed as a
-side-effect of a call to kvm_check_nested_events. On some paths
-(notably through kvm_vcpu_check_block), the error is dropped. In any
-case, this is an incremental improvement over always ignoring the
-error.
-
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Message-Id: <20210604172611.281819-7-jmattson@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-
-
-To avoid the complexity of bubbling up this error from __nested_vmx_vmexit,=
- I will move the kvm_handle_memory_failure
-to vmx_complete_nested_posted_interrupt, and only note the error with the r=
-eturn value in the __vmx_complete_nested_posted_interrupt,
-which __vmx_complete_nested_posted_interrupt will continue to ignore.
-
-If the guest setup one of the structures in the MMIO, it will fail sooner o=
-r later anyway.
-
-Best regards,
-=09Maxim Levitsky
-
+...Although, independently of this series, looks like
+set_pcie_untrusted() is completely buggy on non-x86 since v6.13, since
+it solely relies on arch_pci_dev_is_removable(). I've just reported that
+at https://lore.kernel.org/all/awXXSfrhLHK7TNbp@google.com/
