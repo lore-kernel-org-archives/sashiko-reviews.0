@@ -1,54 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795529713;
-	b=kuB+pgyxGP+Re0Js0LjtLLDpm6fjb+dKeGw523rrFMaG216Nc39etmtfHT+mVn6EO9wQ
-	 vWWBD6JY/khAd170s6TcmVluh5xqqukpEsznySBb/Gjep9CqUjj/FVGaNOTeYtO4fJrnR
-	 2RwChrqTevxjMMZrwZgqH/jnqP9ZvEqRhyI0WLGpifv83rxLaJ3Z7KMFS99IrxudxKq/p
-	 PxGuqpMHqIjwusPHa2NgYu9OjJxQJceIN7nQ0ydwv7QbYp43dkQGDJgq+bEljmsl2uImx
-	 yzfwefI+aXfi00I3N3PYfdsX4JmuP+xGuvVbsSj/3yTKjE3ODKQJzoh5rE+9vRFBErg==
+	t=1795530052;
+	b=Y2stRY8jZlcN7A1Sk4i+sE+ZoeYzanfdXo0zrNGk7TD6w53w6M1VqQh//XbgfWVyTwSa
+	 K+HNuZQN8V9AYeS7zwEpiefJ88ggn5oOOZeQtjpzVsh8FAmTeuOjPz/4Pd/PIJBuL7H5v
+	 qegSjbJtQIjrDO9pvcFxGZAaiJCp1wACgWvG62cEqLtJCFMk71Td4R91qfGIPTzrZoou+
+	 fbjd8xuca3y6hdvdyqibrONJKJknetcVrYmrtNY2atKkJpEgE4IsZJAyHga91PfECSNsG
+	 cqnLc5kJjJoM7Y4cU/V46hZQbUJordhx14Y3+4B0KPwiAiTv4LnYLT4jsfJcxdMZtzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795529713;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=pafrI7EWUMbzwRHzUxm0rlPjN0PkFRkoUHe/ZBWtmUY=;
-	b=T8J3Wga5jW775kHuxX/c0WV/JDNmEA/W5+0dT8lqZywCAyY52SCnbLA0QzYzRy5HcWgI
-	 JQCqbOrlFTAXql6psCqNpWjhEEwJ4Z147npbzO01XGsPevvjsgU2boXZhqSkii8H8H398
-	 rJVq3YhXG0RvMkzrnMeOJhvY+WX5Urt/4y1ffHYNW+1Z2XxNB+vULBXAQ17KdZ/0hESJ/
-	 FyS+Ceut/SWu6ykFPoLxg0OR7BufqMMPtC9zJBWARiqNfdWxm6yVKNeb1kP7e3OY60zUI
-	 dL89UF/2Ux6ZJW3Ei90kRDKwILJcow9MFHVXYRSfLPczBycn9Oc+QpNMdg0sSku/QLw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795530052;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=u3j6+1vDkkUdepekjgVOAW7Wo6iXb2x00XUTpjNkTgk=;
+	b=jQZT9CgyVVewO2DcCo8HqxLcxCg9ahZFvlmnzIXmEesXXFUtO4MRGqui1SvqnXL9dz8x
+	 P/B9FLRj1hc4GInJtt5lEdM7hph8DEvrTYVwCXbXrWM95p8SuEsbz4lSvOrZM38Qj8u1w
+	 GyA2yy11/e+5igYOVFasyByzG+Eov5cu/hAfmIpTOdEsjZfgVMfcBM1vbTHGa1g1CGsSF
+	 c5N9mtfYKp2gdSpwy7p0c8poBCcq2RTPbx8j/pdLH2t3FpNXIQvJWC5Yt+gZnpMH++PuF
+	 l4NAJgqIjijGw+PFFLqyWI1gStHHUKsUU5DsO5ykAx8imrbt8Nw6YbXbv2d1ojdio9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ki36KBgN;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=arndb.de;
+	spf=pass smtp.mailfrom=arndb.de;
+	dkim=pass header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=PVorD37Z;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UtwWEvoZ;
+	arc=none smtp.remote-ip=103.168.172.152
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E82606A327;
-	Tue, 24 Nov 2026 14:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E35606A331
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 14:20:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27E35606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ki36KBgN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527ED1F000C4;
-	Tue, 24 Nov 2026 14:15:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795529713;
-	bh=pafrI7EWUMbzwRHzUxm0rlPjN0PkFRkoUHe/ZBWtmUY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ki36KBgNt354Jd8iC91MH11OITEzhVajYjxJkr4I0kqqhq8nyaEB/DFDt232QYYcH
-	 yJrbkxywNxzMpiShTuH14SPxGufca8ye18oXR1H0+ljK52vtavlFENTaWzG7Vs/jOB
-	 n+BPQjbDciMzH4/u9Az5l7cU87zLKfklG8tElu8dJxBzovjXfCfajMd/xWOA9wS/9w
-	 yuJugYLplsZ7afMzdhyyVH6XTkd+lC2KWiJL+U5ISSpD1SvayQJx8BjWDnK5yVjiZT
-	 qUVw/3qv93jFpzDeDOqHGoGKibxYXBUuvOPGTNV4Ggz2U8J8siX4Wt5Q4fdQ0iA2AH
-	 SvzU44bn7FbFw==
-From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, "Linux Trace Kernel" <linux-trace-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7] tracing/probes: Zero out faulted dereferenced fields
-Date: Tue, 24 Nov 2026 23:15:10 +0900
-Message-ID: <undine-1795529710371793698-f2bd67810f91497f@undined.local>
-X-Mailer: UndineD 0.1
-In-Reply-To: <20261124090849.7fe8d45f@gandalf.local.home>
-References: <20261123213246.00440bfc@gandalf.local.home> <sashiko-outbox-230424@kernel.org> <20261124090849.7fe8d45f@gandalf.local.home>
+	dkim=pass (2048-bit key, unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=PVorD37Z;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UtwWEvoZ
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DC72A14002F0
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 09:20:50 -0500 (EST)
+Received: from ams-imap-03 ([10.64.2.23])
+  by ams-compute-02.internal (MEProxy); Tue, 24 Nov 2026 09:20:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1795530047;
+	 x=1795616447; bh=u3j6+1vDkkUdepekjgVOAW7Wo6iXb2x00XUTpjNkTgk=; b=
+	PVorD37Z9jDNNC1k6/oiHqSM9Vf6vAHLVrm073XtVk2Sqijo6xNw1XCQ74urOwyU
+	wp32RSngykH2l0sDAh2UeJQ/0NqUEJ0cSg2UiTmsikF7UxKL0FDGs54oGa/uKUR/
+	Y5HCPegh230snV9Oe6SsSD0k/vP77CspXv9Kcj0/1rKXCWu6X8QK+sdN8FDt5B9V
+	B4aVxaDPKqXsjV7HtNdaeYBjoNmaJGZw0u04abomRKWieufOV1PL7rXmCmrDB/xW
+	9Ltg7R30nDDMXYz7Ay1Ju38Egdi8kFVJFF19IGZkriACuav3qGT/9Iacb8qfOBuo
+	pGMp+1s9iCq7Klb9lHrCyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795530047; x=
+	1795616447; bh=u3j6+1vDkkUdepekjgVOAW7Wo6iXb2x00XUTpjNkTgk=; b=U
+	twWEvoZRg5cdcif8ONh/tL3K+fVsXGM2+q1a2BkmIZ4q2edlu5335tSuhRjETho1
+	/jgu+dstWjejJTtO1W/dn0UgmzlVnSFzBMntGGNYZ+4rJS26X/x0PnVSsf8kH9OQ
+	Br/okPX4lzQcGusHYKPJVBf54q8QkRDLPKot7zSIU0dQcy2qpHqWtAD56SFZMgXM
+	5Qr1iqNyakiw1VwjEOKycG1yxLjBGj7JnzPZkO9WB8dL8MIOeQKJoGlMv7SlbBOT
+	FHrDzvFcu6TotkHxHzxbd9TvcjVy0m8dvXI/y52rmlnul1r5g9mgIoRKZDr0tQv7
+	qaslpR8HS3W9rRhYb5e7Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=arndb.de a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795530047; d=arndb.de;
+	mf=PGFybmRAYXJuZGIuZGU+;
+	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+	s=fm2:rsa-sha256:X6XJBLxH7YbLbEeji4N6rzHpn2+VDsRgALoXgSEmFowZ0Q5
+	uAjfLcMKnIq7qOJ/KQgNWWuhuUphcvTdWqRrIskuQ1chxp7DmZczGbvY4AWZ30Ud
+	yiHkDRHOqRs01w9GDnBmvfRDOOmukUveMpbzHITC80DLgOGu1CDhwHPQ5GPwCvFc
+	+PnTA/8g/I/a/OC7I6+ZtRQTckJInUU0BOWr05Ie94wG9U1tJH5BVJJ5wZoKcbl+
+	AplfftNdQB0wMPPfY/rg8p9uTLaUiBs5Y6lwqwLxErxt7Q65asojkmj09t9vsEae
+	8KbcoVJ8G9HnqYsoHLn4Z06kYnXcH+d1g7ueq+A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:QWI2uJx9uKHNEkI5ArHbcx6fT0KmIPMlK1h+9jS7NII=:1r9tw/j/3peIDWcTRzPnQcmEJg6r6Mi5hMfjZtJnzRU=;
+X-ME-Sender: <xms:O50Fa4H5xcml6H14agoXxF_92vPFDiJwsMdeCK35Mhc8jWjY2vwySg>
+    <xme:O50Fa8L174MX3mda9fHYCSd24ThdkkBuj_YqyfUXradE-itBeqF1bAmEvjlEk5jR_
+    z8AnK8IKZ0PNsfjPgI_vSaTlCqL7x0bNwFODdxLV5CjbYk2xelLP_E>
+X-ME-Proxy-Cause: dmFkZTEzcLHzUbygVSoohLJKupEtfEaADKNynBPP+A79ygbUcaBEdyY3/dAANqKmhrkblO
+    Jrae/KV3GLY+RywD9rqxWs2jej9mhDb2TWInKeQNn+yEiA4oO7214aCWGh1pWRuSHLG4lz
+    TdoLSFYKLGnO5oj5ojEc5oqP6D1a7M2XWTfL1XsEmO58G94E7SVDAZz/i6TAwTuQMjP1/F
+    5TPW0GY754A7e2ys/CGoidT/VBp7upqptqyunqjvfPBeie53CuSfAlSGwR8bN5F1FaHKno
+    AL0ThjRjo5RR2bV/aqsZJpIOYawl2HGcD5gns0fAQQl7C8bRBC9pk5vmzfbmO4suSI0JLC
+    Lpnyz46cCf9anYpgPOg04vL5NcAu6B+CbaR2p64ylCE9OtchHxU2/sFYPcab5dF9SQic1T
+    BtTBN/n3FXbeW+YhdOtF2TiqcVWW+UCyKEwYNr0+0wID7jJERGyGaBXfVxI6mN4AgiYtE2
+    JVmX/mSt4BfYY9CVVhhTpiBQDd1fQ4eIcmYyJAqYjSizSp5IOLOxbulU+HP7chDG4+IgQx
+    tLfqzihdnyFfP/VLwltW+V7URcNCtlCG7nXuYoJ37Nl2M7LxoSQSNJMUHDFEjvJ6qhcJM4
+    aLxrpi/j53kJgPy7MYlmKNBhlU8/wRwzhf4dPLTZksm211Bypt/ItkogSTYw
+X-ME-Proxy: <xmx:PJ0Fa7oXw8zeiTB6BEkz_IJr2ffUf9voVAf6yWLsKISNXdWNaYrCYQ>
+    <xmx:PJ0Fa3NziNSlPzrCjYnUdLQrWercCpl38axITNNSqTwnWDtmvi-lDQ>
+    <xmx:PJ0Fa3cQYYQmZXBYGTHLHk9XzsuScY7a3-S3oPDnnjeV1DXc1ZsURA>
+    <xmx:PJ0Fa1W-0RzqLaNULftEzcNXQaRtqI2WYpcneTTueorUeu18kw4qMQ>
+    <xmx:P50Fa9OGGACUrFWX6Voa9pbaKsrtI08gEVmULLqFPTSsI5WRDzPWvBMs>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id E4BE132A009E; Tue, 24 Nov 2026 09:20:42 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,49 +115,41 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+X-ThreadId: A-w96cgpwkaV
+Date: Tue, 24 Nov 2026 15:20:22 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: sashiko-reviews@lists.linux.dev, "Kees Cook" <kees@kernel.org>,
+ linux-mm@kvack.org, linux-s390@vger.kernel.org, sparclinux@vger.kernel.org,
+ "Heiko Carstens" <hca@linux.ibm.com>, "Vasily Gorbik" <gor@linux.ibm.com>,
+ "Alexander Gordeev" <agordeev@linux.ibm.com>,
+ "Christian Borntraeger" <borntraeger@linux.ibm.com>
+Message-Id: <5de01709-19e6-4664-b91e-7cf35b843d77@app.fastmail.com>
+In-Reply-To: 
+ <20261124145907-12f830e3-70ab-4e58-a330-2fa974be1a25@linutronix.de>
+References: <20261123-at-vector-size-arch-v3-0-d342dae9e843@linutronix.de>
+ <20261123-at-vector-size-arch-v3-3-d342dae9e843@linutronix.de>
+ <sashiko-outbox-230870@kernel.org>
+ <20261124145907-12f830e3-70ab-4e58-a330-2fa974be1a25@linutronix.de>
+Subject: Re: [PATCH v3 03/15] asm-generic: add an in-kernel auxvec.h header
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 24 Nov 2026 09:08:49 -0500, Steven Rostedt <rostedt@goodmis.org> wrote:
-> On Tue, 24 Nov 2026 02:51:12 +0000
-> sashiko-bot@kernel.org wrote:
-> 
-> > > @@ -193,27 +256,30 @@ process_fetch_insn_bottom(struct fetch_insn *code, unsigned long val,
-> > >  		}
-> > >  	}
-> > >  
-> > > +	/* When val is NULL, so should the val + offset */
-> > > +	offset = val ? code->offset : 0;
-> > > +
-> > >  	switch (code->op) {
-> > >  	case FETCH_OP_ST_RAW:
-> > >  		fetch_store_raw(val, code, dest);
-> > >  		break;
-> > >  	case FETCH_OP_ST_MEM:
-> > > -		probe_mem_read(dest, (void *)val + code->offset, code->size);
-> > > +		do_probe_mem_read(dest, (void *)val + offset, code->size);
-> > >  		break;
-> > >  	case FETCH_OP_ST_UMEM:
-> > > -		probe_mem_read_user(dest, (void *)val + code->offset, code->size);
-> > > +		do_probe_mem_read_user(dest, (void *)val + offset, code->size);
-> > >  		break;  
-> > 
-> > [Severity: Medium]
-> > Should do_probe_mem_read() and do_probe_mem_read_user() check for a NULL
-> > src before calling probe_mem_read() and probe_mem_read_user()?
-> 
-> No, but I guess I should add that as we probably shouldn't be dereferencing
-> zero when something fails.
-
-Maybe we should make it rejecting dereference if IS_ERR_OR_NULL(ptr).
-
-Thanks,
-
-> 
-> -- Steve
-> 
+On Tue, Nov 24, 2026, at 15:03, Thomas Wei=C3=9Fschuh wrote:
+> On Tue, Nov 24, 2026 at 09:49:24AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential
+>> issue to consider:
+>> - [High] asm-generic: auxvec.h unconditionally redefines
+>>   AT_VECTOR_SIZE_ARCH to 0
 >
+> This is indeed an issue. Not sure, how I missed this, especially as I =
+thought
+> to have sent this through 0day.
+>
+> @Arnd: Could you drop the patches?
+>
+> I'll prepare a fixed version, probably for the next cycle.
 
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Ok, done,
 
+     Arnd
