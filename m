@@ -1,118 +1,118 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795524691;
-	b=DOl1C8W64OvgDOkeNawWIWbDo/IZCPplNlQK8IgvebcCSu/j+H8j8QDotNAcZoYRqUWE
-	 SWcJOvGyRj2iS45UmvadcsIz95QVPDZSl/3dXKuVkA9/933z5vCLTJB7i/PSGRhsjR6jP
-	 V9ZUjgB5Lnul4GCPd1FMC5vEn/7/aGrrP/qz9obTpaFZ+wSv0WQKvR3KnEhyeKtsp+5In
-	 For2jRNurm3c+i8K7d8/aCTHQFTP+9u0GW06gNrLebmNn5NV+HUM94ErOlOfvsyI2Qe6z
-	 ebIAqyVo9WyiVVZnkLnChSKKNWV9M/aK+s/ua8kBSvN1auUBT3A8jWPttqxilaA1gbA==
+	t=1795524817;
+	b=fjPMbkGYKpsTwRCLHVpao40IwakziGCY/zhKKLM2ZGC3ip7bd4R13cO3Q2ogqz3H/CnO
+	 XwEWzWyqRhrrVMzE8zXg18eXgcjLa4VYT3t2GsPM8JX1wPB/optGiy4RzPaRcJh36cstJ
+	 oxBP6kCTRUrv1emdI9BJ/agmH5arb+j77uI5H7RD1pqsp/1S5tebO+trp7KNXwA4mWFud
+	 GxFkSJq2jAaWlqiSIF/otc3WR0Pp3J3vqhe3ZJzGcSG7xJdZ2yDbjHiMVRmCKRI7ZPSbD
+	 B6s2Qjp8Qg2fmsvId6ORybsMM0EidHggoEJJwdfqVtzV9gaHLmUNUVvJD8m+wzBUfuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795524691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795524817;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
 	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
 	 X-Received:X-Received:Received:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-Authority-Analysis:
-	 X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=ibJhgbs8/LooGaGNxFqStf7aw570tanCnoATpq0oEzg=;
-	b=RZZTxLxDEgu+V91/Gm5Kqpjvl8INJIhvEx/a3s3eJNQE2iZwIKQl8BQv+nQ2wlqjWGks
-	 6gIoFN5AT9INNrC9dVGbd3R4DArhAE0LyyxhzCSVz7sqRmKI3C9kES6YEiFKT4mmprMsd
-	 SoSwAEQxGFNKXBvGKO4eYOGVQYuf+90Oe2np0E0/Q9/0pov+1G+giCvF3lJ7iClJq/gaV
-	 LRLqzt9bkIQKzmfA2ReBGe3AOKwbBwFHjT/AyRTkYRoIVjv8Gyr97wZS4KgKaCPW/e1oY
-	 UIvKR9qJ8F0w5TGYQ05uD/cAbXEotcjQBhcK/RtxjpVGfQLuKwCJJ/C3NehwajoGRBQ==
+	 Content-Transfer-Encoding:In-Reply-To:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=;
+	b=Ha1JMshGDtyT1/vOSnZn1TpdaANMuxxR9x9U5SrWUclJoI+3jFeCTgqNoY/41HggfEe6
+	 vt5HC3fvmDakGk5PaEXlqCIzvWVRRxIl1/Jg4T75NFBtwNRI3v14vjv8xVGttxOhbyHZA
+	 gP6tIR/jXVC/2cqA7aNzett+VsJvBbcCxJX2Oa9Le9XOupBxHtiDZtBsmo4fomJ9INiw+
+	 xe1nbF0Tzd1xkCs0faRDdUZnjUhu1MIV8HEdmCLLKpIVCmCySz3HLil/kS2ZBEm/2WfYn
+	 nrB9eakjvYUy+B8uJC6kpeolMM4ObzdS0taZNud7wBzkB2mr2Iybc08OOdzLlRKZnAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.qualcomm.com;
 	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=T8s0O8oa;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b="Cthgp/nk";
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UlOUlC7i;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jXiBu9xx;
 	arc=none smtp.remote-ip=205.220.168.131
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2C8606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:51:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE2C8606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED5606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:53:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1AED5606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=T8s0O8oa;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Cthgp/nk
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AOAuh65601603
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:51:30 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UlOUlC7i;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jXiBu9xx
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AOAuaf01991518
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:53:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ibJhgbs8/LooGaGNxFqStf7aw570tanCnoATpq0oEzg=; b=T8s0O8oai12DBKf/
-	c6wBIfydU0YYgm5yfki3odjZT5fr1w+ee4GFuopg2XEDBarVa7ow3vdvkswIRkf0
-	77GkTq7/82eruwfufnVMiXvuyA2bkdsy2jZ2ZPMd9czm0qjo6M9y2pJjSDBnF4XZ
-	aJXLuHntIlrJouKU7EOQ9fbyftrWWYM99Ab3LGQzLeCkKPPptnrdnzVl++fJ9Gnm
-	o0bFNBsRz0xlzIsMIvIthD2LKQ7qD8X6Sg4wVcKwIxiv1ykLhxXzG9i5Ca9tFf2d
-	i1nD7QOSPHgFIxjxZcEoNi+i0UvlqHrcoNdbfMk3Zz3lI5IUMsczB/1/v8MtrKdh
-	TFXudw==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j50ky2mt8-1
+	MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=; b=UlOUlC7i0kZZlrrz
+	i4lBtntLwsPdXBH+TJ7Qz+SG0hLX5LWFKmgjV+OPTYjxMRHW0CfuBiLSm3sZ+vyp
+	wgZ+OPMQqIOuDzBcwCvIa21Yz7BZZZHPIRS/LK24t8Va2lQHeiKnskUtCVXmvOlu
+	HhbPCs2uvIjOfVOWt5BjjfpHLcdH/hRptwTIv0TVJe5x/ZZDnloXWpsE4CgdBwWN
+	Jfq8fQSvROerrRuMdtDsQC8dce/axCO0VACrt5ViLoGQOLcI8MqOOHJZr/4O3/JW
+	FWSMOgkRUcra4ObMgE+A/qGgZ70q2D8s/y2OI2oGXbW08XdwcFQLiTuLGUTbCmQB
+	WoI1Ew==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4w6subxn-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:51:29 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id a92af1059eb24-1b3b45597c7so5495401c88.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 04:51:29 -0800 (PST)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:53:36 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-386ad819860so2131188eec.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 04:53:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1795524689; x=1796129489; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1795524815; x=1796129615; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ibJhgbs8/LooGaGNxFqStf7aw570tanCnoATpq0oEzg=;
-        b=Cthgp/nkwWxPyvry1ytIv7lKVeIEmHJvJFTXpXkbZKydFzuaGQcjxLB31R40YUPWaX
-         URORbB9l5zgWpZnGN7PKzuckNRyR10LTj46vKrUTaCwzPkjEz1eSCB+Q6a+K9/QpiU9L
-         1OBQK2n29IZyLFqgbKecx7YjyXnl4Z7JoVzU7RiwY1dLfxjzaSIDOGzyvlS1PqkSZ5AM
-         FsJ8M4AkyxkMV2TjaUnrmTEFMAWc4R5WqhI6GOCUvPEQ9qU4gabLJqX6Wz/zQLIgzYRu
-         5gBp9oL9WPamobfm3T4c3HR4VaP56SWtyxba83IyWe2q5m2koWBIRNNJPR9ZBGLvpTUK
-         Jdzg==
+        bh=MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=;
+        b=jXiBu9xx/cpxDh+4KcsyNOgYam4awbqKMAI0Wlw6NG9rmmVLVuK9stdFLQCXw78jgW
+         VhDKeHf3QoYPKjYT+4UFQUSpppWo+cbA1sPSVc3E77H/nY+DC54cnp+kfcyWlTqP3m5N
+         GyKr5HBU4MvaFrbrc/BTS4WZpOiQIHJdg7p0jdTN+wfN1jqfqF0QEG5xmuRvsMEeNG2w
+         wxquSmeG1lwtxZyFw/0LDNobq4b8wDGQX5F/q26J1S9OdwR5I+h1fVSN1YQYUXybtVQP
+         rGLhxpuxnqYjI0MN2PY+5DHh7RCzX2qRXccm5JPvMtPm/74OXK3z2aIlYBr0plmzzn4C
+         HTqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795524689; x=1796129489;
+        d=1e100.net; s=20260707; t=1795524815; x=1796129615;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=ibJhgbs8/LooGaGNxFqStf7aw570tanCnoATpq0oEzg=;
-        b=rX8FcOSZ0KAdDH78BEXORo8BsOwK/w/Rs7BDF5vL1teemzH1hsyyzUqZn9av3ypAG9
-         O1bpV5rqLNRjwTL2ptUonh7JqBpTYg3+dsatbsFb88yykEJuRZvIdnpPCTOIzIdGusSY
-         XLhklyw4oh5KitPP9+0POmNDH2lcyzO5mmDS4vp0FXCT1Qzz4HDih5Y0oKzWiFLrJyTX
-         sPLJTVFmEgQWhAnhqJbjeMZD9H/VNPBuNE1k0XJMa87+ILE6qxSzuUjxv0Kc9AGaJTWN
-         0pR8pSQ74G6atSpDKbe4fWxbdU7ptOJmTF6kTurWP5SiUgekiBzX7G2t5KntDtAwlH9g
-         JJfw==
-X-Gm-Message-State: APuU4Z+RcPrA5WKnDbYY0raQnjH4tuzBP6E1zK2+PTa4XwirO5oeUxMW
-	mNJY/QL/txzYzBXyzeP+3FrACMxo0nBmkSLCnKgCm8eGhGFLy23PxbgDREw4bJ5YLGZUUifS9bS
-	za5zGMVgg4IxaTDnyJ0+fjg9HyIFwaMAe7exjdBM/y/lyb4J+Yv+xMMw1ktq92N6iJ0h0PiB2CH
-	JCyvk=
-X-Gm-Gg: AZFdTZfXvJJ34yFtBDKHLt24pQQ/ysX0B/6dOf96IdU8U9nDWlGbnKoa/NCu1Ke750r
-	1Wk40lYyWL7QE3d+lDF3iw09lp7UQ7kkOhtLiwjYicGTtRv2SPTVbUWrAaZejwqslCZlczR2BaX
-	AkNY4Qg1iNJ2svmLn74yMjcqEU3T3DkjdHbiipJFfMWnbbMnnrvdX6ms8PZ7H+q+N8SfbnMC5Qo
-	qz+3RLsLtNW7EFfIxo0AJ+oAuxTILKpyw1hp7EhthL1uqCvLQSGJrBqHlMTtRZb7kaLUjIT8Oiv
-	Dj5/1Vj4AlEnM8hcHSMFCxlIfd6Oijs+SHZq9sT+9IWdLQWGH9B3kxELC0XHw9+Lsyqido8uSnE
-	jfe/xulLLmLwbcdxq1EcpFW2RitwRS4UJVQW1RvofBQqaUuKfGoiRvsqCTYNPOwddEzR5uWmGd4
-	ff
-X-Received: by 2002:a05:7022:b051:20b0:1b4:e533:ff50 with SMTP id a92af1059eb24-1b556912ca9mr16371243c88.40.1795524688634;
-        Tue, 24 Nov 2026 04:51:28 -0800 (PST)
-X-Received: by 2002:a05:7022:b051:20b0:1b4:e533:ff50 with SMTP id a92af1059eb24-1b556912ca9mr16371218c88.40.1795524687943;
-        Tue, 24 Nov 2026 04:51:27 -0800 (PST)
+        bh=MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=;
+        b=IzkSfMJmRdxqh69Ceqb2VMomMb4UstCKGj0bi+b/+YapACPBCb+Ccc669V0slT31pq
+         hcIHnk/HuXEqNjGFUKrLonaT8waSnN62BSqaQyGIrhDYeiFDRqcS1a4SP3I1c7fwAWTR
+         eAz+wNag9cJ9OL0/GOHVGsYf2SzQjjcxkuQY/RyLwg7cCeeVmKXT93s02sdCuSQi9sKY
+         8SCACgwVy1eT9v165H5J/F3gDA1KWZFqFsnFfI4kTzDM2CXjE2vVGMfJDtTREdGXG7cH
+         qZmYKesdIHlfqnG0CIsc99pfmwzv+SuzmTRWI8bfvr1zLMdUrWOm2pfBXKjMUl0Ju+fy
+         npdA==
+X-Gm-Message-State: APuU4Z8eOlMRYESOqNZS2iC4xCn+CfpZRJb6Fl59pSNJjehT89MAL4YM
+	F6Lsg3RsqhgCUBhedQgS0EHsnYc9ER0oKTXeGAKSsWHVD/IGsB9FmRo6Ph+HKTpukZf7/byVA4n
+	kaIVXRdy7G5P9NY9U3EY/6i8lwjbdqqg7R5c9nGjJs5FuB9wT4nhUqt9VSNHSIm8o3yVuUnNSSa
+	t+xx0=
+X-Gm-Gg: AZFdTZc1q7by/Fz331x9tWBIKpAvkJdnyzTm1Bl4m5JZpjeOkg5Ai/sGIYYBv0xBMPu
+	IZEBiq2iffiPW5rjBhIQi1bq306sfP43Ys8pl1o2CYnLuVmgpY8DUthqjXREpxWUXWUFGdAhPYb
+	KeWQv6Lif5KCtqcGL4nwgD662kW/I0fbKM8IgttO+0T/+GNSNoWQCOB38QsTV8Wqm/J5xMv+p7V
+	Z0eMv8X3gHNvxIMwEDyibv6P7L2NoZUs51IEM3Q3MYNCX6lxL1LyXhghAKu4QLG3pQvhpHk3mdd
+	c4sF7j1VuBW+pfE8hePC/qgPCi61U7fpk9zydsRYrzfpVHPzOzQxgzsvlEa3JyAS40Gh7cGyQpw
+	WLxkBd/oEyDJL8nWymfHEN1KDTFMG2HOZuK/zGDlWensdL8wUm2fatMvtkSaOODXOJCNRqpMF3t
+	vx
+X-Received: by 2002:a05:701b:450b:10b0:1b2:4e2e:d95a with SMTP id a92af1059eb24-1b55e06c4d7mr13012998c88.2.1795524815023;
+        Tue, 24 Nov 2026 04:53:35 -0800 (PST)
+X-Received: by 2002:a05:701b:450b:10b0:1b2:4e2e:d95a with SMTP id a92af1059eb24-1b55e06c4d7mr13012974c88.2.1795524814348;
+        Tue, 24 Nov 2026 04:53:34 -0800 (PST)
 Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b5568592adsm34495458c88.15.2026.11.24.04.51.26
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b562a82b3fsm39113721c88.5.2026.11.24.04.53.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 04:51:27 -0800 (PST)
-Date: Tue, 24 Nov 2026 18:21:22 +0530
+        Tue, 24 Nov 2026 04:53:33 -0800 (PST)
+Date: Tue, 24 Nov 2026 18:23:29 +0530
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-Subject: Re: [PATCH v3 6/9] net: ipa: migrate firmware loading to
+Subject: Re: [PATCH v3 7/9] wifi: ath12k: migrate firmware loading to
  qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset()
-Message-ID: <20261124125122.dvdl5y4lky7zffql@hu-mojha-hyd.qualcomm.com>
+Message-ID: <20261124125329.7ppdthiyk3qj5azh@hu-mojha-hyd.qualcomm.com>
 References: <20261116162148.2864501-1-mukesh.ojha@oss.qualcomm.com>
- <20261116162148.2864501-7-mukesh.ojha@oss.qualcomm.com>
- <sashiko-outbox-219165@kernel.org>
+ <20261116162148.2864501-8-mukesh.ojha@oss.qualcomm.com>
+ <sashiko-outbox-219166@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -125,122 +125,161 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-219165@kernel.org>
-X-Authority-Analysis: v=2.4 cv=Y+ptIReN c=1 sm=1 tr=0 ts=6b058851 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+In-Reply-To: <sashiko-outbox-219166@kernel.org>
+X-Proofpoint-GUID: h1KZwEJCvVh8loKJt3DpRplR7Cls4v8w
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA1MCBTYWx0ZWRfX3Dj+tGPkFtqz
+ Rg/bAaFT1In8utK5BeNadnsWOLXO40f1An8de0bZwgZ+QXEOihrzan5yRC+vbGwzybgSx8BJEYk
+ SlAC3icDJLWe1Db+18iI2b02PKJ02J0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA1MCBTYWx0ZWRfX/P6w4Pyiwdh9
+ hkEwHpwE7PanVp5nKkUIfgFkjS7g2q2NosAwSjBeY7ZNbaDWkLBLj0Bn3iVnf/uOt/Rs8JHmaWd
+ qIpvwo0QT5Crk3C/S9+TcsSqdLLsB1uDq78ZTJm6EglUhA3mOCA6LjcCvf5sZdSLbMz7cQLyKfo
+ BXvcOfX+oGHIaxdAxGIMNta72st3UjIUmtufkedo09VzYSMvNJE6roPnXpZ5Pxu6J87RZhRqyQk
+ riVYkE08qE+TsI8aXkMV/CvqaJy2lMpxsw8pnBcDUab08yNG0EyShhW4U+2UDvxa6Sna3pUVdeE
+ OLVODF7Lcc1QPlU1qmksXWbIanLhk4RzsyoBEXfiwMc7ZxtQdmWsauvZkBEUAf6xukaQeUwvTD5
+ onMYm/pQtQT9JCkPJU/Zexs+uVUNjIla+WuU6RNjKfA/9aqScwb2nz1C+ndcmqYgU9JhU1UqDyf
+ a29hORk0Eb9ofqs/OIA==
+X-Proofpoint-ORIG-GUID: h1KZwEJCvVh8loKJt3DpRplR7Cls4v8w
+X-Authority-Analysis: v=2.4 cv=V8DoQuni c=1 sm=1 tr=0 ts=6b0588d0 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=8nJEP1OIZ-IA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=c92rfblmAAAA:8 a=SDal4quw-ZMABC504UwA:9
- a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=vr4QvYf-bLy2KjpDp97w:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=c92rfblmAAAA:8 a=nHrPeFJmhnP_XD_Sg_IA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=bBxd6f-gb0O0v-kibOvt:22
  a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-GUID: ai80BXMWqYJRtnhhgKllqBW6rpQRv0RF
-X-Proofpoint-ORIG-GUID: ai80BXMWqYJRtnhhgKllqBW6rpQRv0RF
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA1MCBTYWx0ZWRfX5bCFl0UojMfe
- Fw3WTpPblwGGkwt4P8z+z6UsaLzW5FmJTsAv3Qh2k7HwuN4X5FzGN0AwazOZp2WgJrJUqp2dlxX
- s32LZNmdiC/tEzU87BxKIdR8b/Y4iPM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA1MCBTYWx0ZWRfX5olWUJYWlecN
- Bm8mjjNsgfyVn4OTBsCE8vL4QOWw3kZdEkl+a96MYqcEmfUqC49L2IaYEIO9V3jpXbO4hWGvrct
- eMaSXKNDiRBRz/eoXPYk8Dl4EyvkpN56miJQkDW+8hsCkWHv71KO26d+zZjA4uShANp6cd9Q13w
- 8DBj0VG5T85Cr7yRpUKbCAZg2Xi7gL766q0ekwY6vi/sHPXQk3memAQYj1XkseDV9Ay1z3x1r/f
- r/+4LI4OaqE8kFdBvxMujm67vea8a0eAiHCSelXBGV6f7m+PP1deNfaLV5YdZd3MivOTsXZQRlU
- cosg4/kvXQAWeq5fWIJmIwra88v7TcyrTWI2+635MSnqVjdWy6Hah+sBetz6nxOsvhRxhWdcg3m
- sI2X3vrfUz8yy5FaCsCipTu1Z3ME78aMMoAjBlVhpeY30RCE19vTsBL+nvNRnysyq7WkhmR+77F
- y82MJOpnKxgDKv7HvYA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-24_02,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240050
+ clxscore=1015 suspectscore=0 bulkscore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611240050
 
 On Tue, Nov 17, 2026 at 04:24:12PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] net: ipa: leak of PAS metadata buffer in ipa_firmware_load()
+> - [High] wifi: ath12k: PAS metadata leak in ath12k_ahb_power_up() and
+>   shared FW load
 > --
 > 
-> commit e29d8ec88fcd553654746e0eff27a3767cbabafc
+> commit dad01e3cbb75f83eee2677fffc757868fad930d0
 > Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > 
-> net: ipa: migrate firmware loading to qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset()
+> wifi: ath12k: migrate firmware loading to qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset()
 > 
-> This commit replaces the open-coded memremap(), qcom_mdt_load(), and
-> qcom_pas_auth_and_reset() sequence in ipa_firmware_load() with
+> This commit replaces qcom_mdt_load() and qcom_pas_auth_and_reset() in
+> ath12k_ahb_power_up() and ath12k_ahb_load_auth_shared_fw() with
 > qcom_pas_context_init(), qcom_mdt_pas_load(), and
 > qcom_pas_prepare_and_auth_reset().
 > 
-> > diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-> > index 14ac2d2faf7c2..0a37741c22858 100644
-> > --- a/drivers/net/ipa/ipa_main.c
-> > +++ b/drivers/net/ipa/ipa_main.c
-> > @@ -585,12 +585,11 @@ static void ipa_deconfig(struct ipa *ipa)
+> > diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
+> > index 2c55aae06dd06..355f1f5509975 100644
+> > --- a/drivers/net/wireless/ath/ath12k/ahb.c
+> > +++ b/drivers/net/wireless/ath/ath12k/ahb.c
+> > @@ -411,6 +411,7 @@ static int ath12k_ahb_power_up(struct ath12k_base *ab)
+> >  	struct ath12k_ahb_rproc_info *rproc_info = ab_ahb->rproc_info;
+> >  	char fw_name[ATH12K_USERPD_FW_NAME_LEN];
+> >  	char fw2_name[ATH12K_USERPD_FW_NAME_LEN];
+> > +	struct qcom_pas_context ctx;
+> >  	struct device *dev = ab->dev;
+> >  	const struct firmware *fw, *fw2;
+> >  	unsigned long time_left;
+> > @@ -444,14 +445,15 @@ static int ath12k_ahb_power_up(struct ath12k_base *ab)
+> >  		ATH12K_AHB_UPD_SWID;
 > >  
-> >  static int ipa_firmware_load(struct device *dev)
+> >  	/* Load FW image to a reserved memory location */
+> > -	if (ab_ahb->scm_auth_enabled)
+> > -		ret = qcom_mdt_load(dev, fw, fw_name, pasid, rproc_info->mem_region,
+> > -				    rproc_info->mem_phys, rproc_info->mem_size,
+> > -				    NULL);
+> > -	else
+> > +	if (ab_ahb->scm_auth_enabled) {
+> > +		qcom_pas_context_init(&ctx, dev, pasid,
+> > +				      rproc_info->mem_phys, rproc_info->mem_size);
+> > +		ret = qcom_mdt_pas_load(&ctx, fw, fw_name, NULL);
+> > +	} else {
+> >  		ret = qcom_mdt_load_no_init(dev, fw, fw_name, rproc_info->mem_region,
+> >  					    rproc_info->mem_phys, rproc_info->mem_size,
+> >  					    NULL);
+> > +	}
+> >  	if (ret) {
+> >  		ath12k_err(ab, "Failed to load MDT segments: %d\n", ret);
+> >  		goto err_fw;
+> > @@ -485,7 +487,7 @@ static int ath12k_ahb_power_up(struct ath12k_base *ab)
+> >  
+> >  	if (ab_ahb->scm_auth_enabled) {
+> >  		/* Authenticate FW image using peripheral ID */
+> > -		ret = qcom_pas_auth_and_reset(pasid);
+> > +		ret = qcom_pas_prepare_and_auth_reset(&ctx);
+> >  		if (ret) {
+> >  			ath12k_err(ab, "failed to boot the remote processor %d\n", ret);
+> >  			goto err_fw2;
+> > @@ -1023,6 +1025,7 @@ static int ath12k_ahb_load_auth_shared_fw(struct ath12k_base *ab,
+> >  					  struct ath12k_ahb_rproc_info *rproc_info,
+> >  					  const char *fw_name, u32 pasid)
 > >  {
 > > +	struct qcom_pas_context ctx;
-> >  	const struct firmware *fw;
-> >  	struct resource res;
-> >  	phys_addr_t phys;
-> >  	const char *path;
-> > -	ssize_t size;
-> > -	void *virt;
 > >  	int ret;
 > >  
-> >  	ret = of_reserved_mem_region_to_resource(dev->of_node, 0, &res);
-> > @@ -615,24 +614,18 @@ static int ipa_firmware_load(struct device *dev)
-> >  	}
+> >  	const struct firmware *fw __free(firmware) = NULL;
+> > @@ -1041,14 +1044,16 @@ static int ath12k_ahb_load_auth_shared_fw(struct ath12k_base *ab,
+> >  	ath12k_dbg(ab, ATH12K_DBG_AHB, "loading firmware %s, size %zd\n", fw_name,
+> >  		   fw->size);
 > >  
-> >  	phys = res.start;
-> > -	size = (size_t)resource_size(&res);
-> > -	virt = memremap(phys, size, MEMREMAP_WC);
-> > -	if (!virt) {
-> > -		dev_err(dev, "unable to remap firmware memory\n");
-> > -		ret = -ENOMEM;
-> > -		goto out_release_firmware;
-> > -	}
-> > +	qcom_pas_context_init(&ctx, dev, IPA_PAS_ID, phys, resource_size(&res));
-> >  
-> > -	ret = qcom_mdt_load(dev, fw, path, IPA_PAS_ID, virt, phys, size, NULL);
-> > +	ret = qcom_mdt_pas_load(&ctx, fw, path, NULL);
-> >  	if (ret) {
-> >  		dev_err(dev, "error %d loading \"%s\"\n", ret, path);
-> > -	} else {
-> > -		ret = qcom_pas_auth_and_reset(IPA_PAS_ID);
-> > -		if (ret)
-> > -			dev_err(dev, "error %d authenticating \"%s\"\n", ret, path);
-> > +		goto out_release_firmware;
-> >  	}
-> >  
-> > -	memunmap(virt);
-> > +	ret = qcom_pas_prepare_and_auth_reset(&ctx);
-> > +	if (ret)
-> > +		dev_err(dev, "error %d authenticating \"%s\"\n", ret, path);
+> > -	ret = qcom_mdt_load(ab->dev, fw, fw_name, pasid, rproc_info->mem_region,
+> > -			    rproc_info->mem_phys, rproc_info->mem_size, NULL);
+> > +	qcom_pas_context_init(&ctx, ab->dev, pasid,
+> > +			      rproc_info->mem_phys, rproc_info->mem_size);
 > > +
-> >  out_release_firmware:
-> >  	release_firmware(fw);
+> > +	ret = qcom_mdt_pas_load(&ctx, fw, fw_name, NULL);
+> >  	if (ret) {
+> >  		ath12k_err(ab, "failed to load RO firmware %s: %d\n", fw_name, ret);
+> >  		return ret;
+> >  	}
+> >  
+> > -	ret = qcom_pas_auth_and_reset(pasid);
+> > +	ret = qcom_pas_prepare_and_auth_reset(&ctx);
+> >  	if (ret)
+> >  		ath12k_err(ab, "failed to authenticate and boot shared firmware: %d\n",
+> >  			   ret);
 > 
-> [Severity: Medium]
-> Does this leak the metadata buffer stored in ctx.ptr when
-> ipa_firmware_load() returns?
+> [Severity: High]
+> Does this leak the PAS metadata buffer stored in ctx.ptr in both
+> ath12k_ahb_power_up() and ath12k_ahb_load_auth_shared_fw()?
 > 
-> Previously, qcom_mdt_load() passed a NULL context to
-> __qcom_mdt_pas_init(), so qcom_pas_init_image() freed the metadata buffer
-> immediately.  qcom_mdt_pas_load() instead passes &ctx to
-> __qcom_mdt_pas_init() -> qcom_pas_init_image(), which retains the coherent
-> DMA or TEE shared-memory allocation in ctx.ptr until
-> qcom_pas_metadata_release(&ctx) is called.  Because ipa_firmware_load()
-> never calls qcom_pas_metadata_release(&ctx), the metadata buffer is leaked
-> on both the normal path and if qcom_mdt_pas_load() fails after
-> qcom_pas_init_image() succeeds.
+> Previously, qcom_mdt_load() passed a NULL context pointer to
+> __qcom_mdt_pas_init() -> qcom_pas_init_image(), which caused the backend
+> to free the metadata buffer immediately.  qcom_mdt_pas_load() instead
+> passes &ctx to qcom_pas_init_image(), which retains the allocated
+> metadata buffer in ctx.ptr:
+> 
+> drivers/firmware/qcom/qcom_scm.c:qcom_scm_pas_init_image() {
+>     ...
+> 	if (ret < 0 || !ctx) {
+> 		dma_free_coherent(dev, size, mdata_buf, mdata_phys);
+> 	} else if (ctx) {
+> 		ctx->ptr = mdata_buf;
+> 		ctx->phys = mdata_phys;
+> 		ctx->size = size;
+> 	}
+>     ...
+> }
+> 
+> Neither qcom_mdt_pas_load() nor qcom_pas_prepare_and_auth_reset() frees
+> this allocation, so ctx goes out of scope and leaks the metadata memory
+> on every firmware load and error unwind path unless
+> qcom_pas_metadata_release(&ctx) is called.
 
-Change https://lore.kernel.org/all/20260925165231.10722-1-mukesh.ojha@oss.qualcomm.com/
-is present in linux-next which takes care of this.
+
+change https://lore.kernel.org/all/20260925165231.10722-1-mukesh.ojha@oss.qualcomm.com/
+takes care of this is present in linux-next.
+Please check the commit before trying to raise this point.
+
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261116162148.2864501-1-mukesh.ojha@oss.qualcomm.com?part=6
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261116162148.2864501-1-mukesh.ojha@oss.qualcomm.com?part=7
 
 -- 
 -Mukesh Ojha
