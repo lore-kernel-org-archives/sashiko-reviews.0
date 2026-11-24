@@ -1,118 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.65
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795524817;
-	b=fjPMbkGYKpsTwRCLHVpao40IwakziGCY/zhKKLM2ZGC3ip7bd4R13cO3Q2ogqz3H/CnO
-	 XwEWzWyqRhrrVMzE8zXg18eXgcjLa4VYT3t2GsPM8JX1wPB/optGiy4RzPaRcJh36cstJ
-	 oxBP6kCTRUrv1emdI9BJ/agmH5arb+j77uI5H7RD1pqsp/1S5tebO+trp7KNXwA4mWFud
-	 GxFkSJq2jAaWlqiSIF/otc3WR0Pp3J3vqhe3ZJzGcSG7xJdZ2yDbjHiMVRmCKRI7ZPSbD
-	 B6s2Qjp8Qg2fmsvId6ORybsMM0EidHggoEJJwdfqVtzV9gaHLmUNUVvJD8m+wzBUfuw==
+	t=1795525637;
+	b=C1oi9FA8pQnnjFFhvLpsfyWDSjrU2azFgrZ2V7LiOONxT9DUQAlD4P0C3Ih98B2y6F5E
+	 2MZ+JJBB04zLqTpqe2tvzLnGYx8t3k8gMWQQQKFwDwcFqkouP8joeIMjSBb7oIcy5T/IG
+	 5WOfpa9T7/U0L1GtpOhk0Q77fIdE1QWmUUos0qdxwjLCUmetV7DKfKRRFp1AnRY2GywYb
+	 yhQYlrHAYsAHgl+/cnjSx9c+i1mQScgDvC/YOXqhS9KidG8u9b5PhCXSFLot+wVLRzYev
+	 uEKYNgZUVhShvmcMn8mM0WFZ911tnLmodDm2Jf20jFftKlF68PVtNApKj+/5T7z5T+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795524817;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=;
-	b=Ha1JMshGDtyT1/vOSnZn1TpdaANMuxxR9x9U5SrWUclJoI+3jFeCTgqNoY/41HggfEe6
-	 vt5HC3fvmDakGk5PaEXlqCIzvWVRRxIl1/Jg4T75NFBtwNRI3v14vjv8xVGttxOhbyHZA
-	 gP6tIR/jXVC/2cqA7aNzett+VsJvBbcCxJX2Oa9Le9XOupBxHtiDZtBsmo4fomJ9INiw+
-	 xe1nbF0Tzd1xkCs0faRDdUZnjUhu1MIV8HEdmCLLKpIVCmCySz3HLil/kS2ZBEm/2WfYn
-	 nrB9eakjvYUy+B8uJC6kpeolMM4ObzdS0taZNud7wBzkB2mr2Iybc08OOdzLlRKZnAw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795525637;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Cc:Subject:To:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=OGZXgnfgRgczMbRxdKzz5YNMHRIhhkydTMZM2uhd6is=;
+	b=eZGSpJbWPLMojs07QwvC2R07wU4ySlwRcMCe3oEEbup+eoVu3cej+I7CMG7+RFPHReii
+	 YWDrACDU5ACemE/jYnsjWwwA1+o0y/ZM09vahXGAZIWXtAi0d1LKKFpyj0NpxEDQnlxxL
+	 DXWUuJB1l2ttRcpEENgzWRb9KjyitOnXIjD3jJ96prhK2aTkk7AhH+WJyVIq5QvrHCSf5
+	 MeHlTrC+u0E9GSYYjzvIzJqjl4YXfwPHA0O3/2KQSViWTTatK9OopYTMvtnJiogGh7Jcd
+	 dIaxpddHAF6Kgc4RfXFGCcHqUPgVlDST5RpP+90FHFhGRmvU4oLVzGW2R/IwDoQq1Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UlOUlC7i;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jXiBu9xx;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=A18EvcUC;
+	arc=none smtp.remote-ip=91.218.175.65
+Received: from mta0.migadu.com (out-65.mta0.migadu.com [91.218.175.65])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED5606A321
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:53:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1AED5606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27164606A31E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 13:07:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27164606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UlOUlC7i;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jXiBu9xx
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AOAuaf01991518
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:53:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=; b=UlOUlC7i0kZZlrrz
-	i4lBtntLwsPdXBH+TJ7Qz+SG0hLX5LWFKmgjV+OPTYjxMRHW0CfuBiLSm3sZ+vyp
-	wgZ+OPMQqIOuDzBcwCvIa21Yz7BZZZHPIRS/LK24t8Va2lQHeiKnskUtCVXmvOlu
-	HhbPCs2uvIjOfVOWt5BjjfpHLcdH/hRptwTIv0TVJe5x/ZZDnloXWpsE4CgdBwWN
-	Jfq8fQSvROerrRuMdtDsQC8dce/axCO0VACrt5ViLoGQOLcI8MqOOHJZr/4O3/JW
-	FWSMOgkRUcra4ObMgE+A/qGgZ70q2D8s/y2OI2oGXbW08XdwcFQLiTuLGUTbCmQB
-	WoI1Ew==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4w6subxn-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 12:53:36 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-386ad819860so2131188eec.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 04:53:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1795524815; x=1796129615; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=;
-        b=jXiBu9xx/cpxDh+4KcsyNOgYam4awbqKMAI0Wlw6NG9rmmVLVuK9stdFLQCXw78jgW
-         VhDKeHf3QoYPKjYT+4UFQUSpppWo+cbA1sPSVc3E77H/nY+DC54cnp+kfcyWlTqP3m5N
-         GyKr5HBU4MvaFrbrc/BTS4WZpOiQIHJdg7p0jdTN+wfN1jqfqF0QEG5xmuRvsMEeNG2w
-         wxquSmeG1lwtxZyFw/0LDNobq4b8wDGQX5F/q26J1S9OdwR5I+h1fVSN1YQYUXybtVQP
-         rGLhxpuxnqYjI0MN2PY+5DHh7RCzX2qRXccm5JPvMtPm/74OXK3z2aIlYBr0plmzzn4C
-         HTqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795524815; x=1796129615;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=MPxO224nq+KvKykF/wWrxYrFxgOetNz/Mb64w5OfDr8=;
-        b=IzkSfMJmRdxqh69Ceqb2VMomMb4UstCKGj0bi+b/+YapACPBCb+Ccc669V0slT31pq
-         hcIHnk/HuXEqNjGFUKrLonaT8waSnN62BSqaQyGIrhDYeiFDRqcS1a4SP3I1c7fwAWTR
-         eAz+wNag9cJ9OL0/GOHVGsYf2SzQjjcxkuQY/RyLwg7cCeeVmKXT93s02sdCuSQi9sKY
-         8SCACgwVy1eT9v165H5J/F3gDA1KWZFqFsnFfI4kTzDM2CXjE2vVGMfJDtTREdGXG7cH
-         qZmYKesdIHlfqnG0CIsc99pfmwzv+SuzmTRWI8bfvr1zLMdUrWOm2pfBXKjMUl0Ju+fy
-         npdA==
-X-Gm-Message-State: APuU4Z8eOlMRYESOqNZS2iC4xCn+CfpZRJb6Fl59pSNJjehT89MAL4YM
-	F6Lsg3RsqhgCUBhedQgS0EHsnYc9ER0oKTXeGAKSsWHVD/IGsB9FmRo6Ph+HKTpukZf7/byVA4n
-	kaIVXRdy7G5P9NY9U3EY/6i8lwjbdqqg7R5c9nGjJs5FuB9wT4nhUqt9VSNHSIm8o3yVuUnNSSa
-	t+xx0=
-X-Gm-Gg: AZFdTZc1q7by/Fz331x9tWBIKpAvkJdnyzTm1Bl4m5JZpjeOkg5Ai/sGIYYBv0xBMPu
-	IZEBiq2iffiPW5rjBhIQi1bq306sfP43Ys8pl1o2CYnLuVmgpY8DUthqjXREpxWUXWUFGdAhPYb
-	KeWQv6Lif5KCtqcGL4nwgD662kW/I0fbKM8IgttO+0T/+GNSNoWQCOB38QsTV8Wqm/J5xMv+p7V
-	Z0eMv8X3gHNvxIMwEDyibv6P7L2NoZUs51IEM3Q3MYNCX6lxL1LyXhghAKu4QLG3pQvhpHk3mdd
-	c4sF7j1VuBW+pfE8hePC/qgPCi61U7fpk9zydsRYrzfpVHPzOzQxgzsvlEa3JyAS40Gh7cGyQpw
-	WLxkBd/oEyDJL8nWymfHEN1KDTFMG2HOZuK/zGDlWensdL8wUm2fatMvtkSaOODXOJCNRqpMF3t
-	vx
-X-Received: by 2002:a05:701b:450b:10b0:1b2:4e2e:d95a with SMTP id a92af1059eb24-1b55e06c4d7mr13012998c88.2.1795524815023;
-        Tue, 24 Nov 2026 04:53:35 -0800 (PST)
-X-Received: by 2002:a05:701b:450b:10b0:1b2:4e2e:d95a with SMTP id a92af1059eb24-1b55e06c4d7mr13012974c88.2.1795524814348;
-        Tue, 24 Nov 2026 04:53:34 -0800 (PST)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b562a82b3fsm39113721c88.5.2026.11.24.04.53.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 04:53:33 -0800 (PST)
-Date: Tue, 24 Nov 2026 18:23:29 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-Subject: Re: [PATCH v3 7/9] wifi: ath12k: migrate firmware loading to
- qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset()
-Message-ID: <20261124125329.7ppdthiyk3qj5azh@hu-mojha-hyd.qualcomm.com>
-References: <20261116162148.2864501-1-mukesh.ojha@oss.qualcomm.com>
- <20261116162148.2864501-8-mukesh.ojha@oss.qualcomm.com>
- <sashiko-outbox-219166@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=A18EvcUC
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=n3QCrIbcPMvCGHu60XljvMPoh4Nl+HXMssIukfe4cX0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795525635; v=1; x=1796130435;
+ b=A18EvcUCcAsc5b5sW8FrRWkWIUwnhlal65rFjgyFiT9VRRcoJvhqrd/f6KOo0kun2erkrP7c
+ jGU6GEBzq7E4aZHHHSrhw2+g4caOUnyLiEdYEvp9nxpLejjQIuBR5Mig6IpPStIXa6Z3VC/Ny0L
+ fjF2t+ro9ShF6ottCDZvxIPs=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 8ce8cdb92deed85a;
+	Tue, 24 Nov 2026 13:07:15 +0000
+X-Mizu-Trace-ID: 8ce8cdb92deed85a
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <e0df6f55-aae9-4abd-8434-f6b75e42a972@linux.dev>
+Date: Tue, 24 Nov 2026 21:06:56 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -122,164 +58,180 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, bpf@vger.kernel.org, tj@kernel.org,
+ hannes@cmpxchg.org, mkoutny@suse.com
+Subject: Re: [RFC PATCH v14 3/4] selftests/bpf: add iocost cost model test
+To: sashiko-reviews@lists.linux.dev
+References: <20261118131029.797007-1-cui.tao@linux.dev>
+ <20261118131029.797007-4-cui.tao@linux.dev>
+ <sashiko-outbox-221050@kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <sashiko-outbox-221050@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-219166@kernel.org>
-X-Proofpoint-GUID: h1KZwEJCvVh8loKJt3DpRplR7Cls4v8w
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA1MCBTYWx0ZWRfX3Dj+tGPkFtqz
- Rg/bAaFT1In8utK5BeNadnsWOLXO40f1An8de0bZwgZ+QXEOihrzan5yRC+vbGwzybgSx8BJEYk
- SlAC3icDJLWe1Db+18iI2b02PKJ02J0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA1MCBTYWx0ZWRfX/P6w4Pyiwdh9
- hkEwHpwE7PanVp5nKkUIfgFkjS7g2q2NosAwSjBeY7ZNbaDWkLBLj0Bn3iVnf/uOt/Rs8JHmaWd
- qIpvwo0QT5Crk3C/S9+TcsSqdLLsB1uDq78ZTJm6EglUhA3mOCA6LjcCvf5sZdSLbMz7cQLyKfo
- BXvcOfX+oGHIaxdAxGIMNta72st3UjIUmtufkedo09VzYSMvNJE6roPnXpZ5Pxu6J87RZhRqyQk
- riVYkE08qE+TsI8aXkMV/CvqaJy2lMpxsw8pnBcDUab08yNG0EyShhW4U+2UDvxa6Sna3pUVdeE
- OLVODF7Lcc1QPlU1qmksXWbIanLhk4RzsyoBEXfiwMc7ZxtQdmWsauvZkBEUAf6xukaQeUwvTD5
- onMYm/pQtQT9JCkPJU/Zexs+uVUNjIla+WuU6RNjKfA/9aqScwb2nz1C+ndcmqYgU9JhU1UqDyf
- a29hORk0Eb9ofqs/OIA==
-X-Proofpoint-ORIG-GUID: h1KZwEJCvVh8loKJt3DpRplR7Cls4v8w
-X-Authority-Analysis: v=2.4 cv=V8DoQuni c=1 sm=1 tr=0 ts=6b0588d0 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=8nJEP1OIZ-IA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=c92rfblmAAAA:8 a=nHrPeFJmhnP_XD_Sg_IA:9
- a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=bBxd6f-gb0O0v-kibOvt:22
- a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_02,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 bulkscore=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611240050
 
-On Tue, Nov 17, 2026 at 04:24:12PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] wifi: ath12k: PAS metadata leak in ath12k_ahb_power_up() and
->   shared FW load
+Hello,
+
+在 2026/11/18 21:41, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] selftests/bpf: iocost_test_env() hardcodes /sys/fs/cgroup
+>   without mounting
+Right, the tests access /sys/fs/cgroup without mounting anything there,
+so they depend on the host's mount state and would see the tmpfs that
+setup_classid_environment() leaves behind.  The next posting mounts
+cgroup2 at /sys/fs/cgroup inside the private mount namespace that
+iocost_test_env() creates, tolerating EBUSY, and skips the tests when
+the mount fails.
+> - [Low] selftests/bpf: open_nullb_dev() callers check -errno instead of
+>   fd
+That's a real gap.  open_nullb_dev() can return -1 with errno unset,
+and the callers then pass 0 to ASSERT_OK() and keep using fd -1.  The
+next posting returns a proper negative error code from the helper and
+checks the fd itself with ASSERT_GE(devfd, 0).
+
+And another one:
+bpf-ci points this, the setns() unwind on the skip path may reset test_progs' cwd to "/"
+
+Right, mntns_install() sets the pwd to the root of the new namespace on
+the way back, so a skip moves the process to "/".  The next posting
+saves the cwd before unshare() and fchdir()s back to it after setns().
+
+Thanks,
+Tao
+
 > --
 > 
-> commit dad01e3cbb75f83eee2677fffc757868fad930d0
-> Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> commit 7c8a11566574f6e4224eb8a8a97b22da0b3eb991
+> Author: Tao Cui <cuitao@kylinos.cn>
 > 
-> wifi: ath12k: migrate firmware loading to qcom_mdt_pas_load() and qcom_pas_prepare_and_auth_reset()
+> selftests/bpf: add iocost cost model test
 > 
-> This commit replaces qcom_mdt_load() and qcom_pas_auth_and_reset() in
-> ath12k_ahb_power_up() and ath12k_ahb_load_auth_shared_fw() with
-> qcom_pas_context_init(), qcom_mdt_pas_load(), and
-> qcom_pas_prepare_and_auth_reset().
+> This commit adds two BPF struct_ops iocost cost models and selftests that
+> attach them to a configfs-created null_blk device and verify model
+> selection, IO pricing, tracepoint firing, and device removal.
 > 
-> > diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
-> > index 2c55aae06dd06..355f1f5509975 100644
-> > --- a/drivers/net/wireless/ath/ath12k/ahb.c
-> > +++ b/drivers/net/wireless/ath/ath12k/ahb.c
-> > @@ -411,6 +411,7 @@ static int ath12k_ahb_power_up(struct ath12k_base *ab)
-> >  	struct ath12k_ahb_rproc_info *rproc_info = ab_ahb->rproc_info;
-> >  	char fw_name[ATH12K_USERPD_FW_NAME_LEN];
-> >  	char fw2_name[ATH12K_USERPD_FW_NAME_LEN];
-> > +	struct qcom_pas_context ctx;
-> >  	struct device *dev = ab->dev;
-> >  	const struct firmware *fw, *fw2;
-> >  	unsigned long time_left;
-> > @@ -444,14 +445,15 @@ static int ath12k_ahb_power_up(struct ath12k_base *ab)
-> >  		ATH12K_AHB_UPD_SWID;
-> >  
-> >  	/* Load FW image to a reserved memory location */
-> > -	if (ab_ahb->scm_auth_enabled)
-> > -		ret = qcom_mdt_load(dev, fw, fw_name, pasid, rproc_info->mem_region,
-> > -				    rproc_info->mem_phys, rproc_info->mem_size,
-> > -				    NULL);
-> > -	else
-> > +	if (ab_ahb->scm_auth_enabled) {
-> > +		qcom_pas_context_init(&ctx, dev, pasid,
-> > +				      rproc_info->mem_phys, rproc_info->mem_size);
-> > +		ret = qcom_mdt_pas_load(&ctx, fw, fw_name, NULL);
-> > +	} else {
-> >  		ret = qcom_mdt_load_no_init(dev, fw, fw_name, rproc_info->mem_region,
-> >  					    rproc_info->mem_phys, rproc_info->mem_size,
-> >  					    NULL);
-> > +	}
-> >  	if (ret) {
-> >  		ath12k_err(ab, "Failed to load MDT segments: %d\n", ret);
-> >  		goto err_fw;
-> > @@ -485,7 +487,7 @@ static int ath12k_ahb_power_up(struct ath12k_base *ab)
-> >  
-> >  	if (ab_ahb->scm_auth_enabled) {
-> >  		/* Authenticate FW image using peripheral ID */
-> > -		ret = qcom_pas_auth_and_reset(pasid);
-> > +		ret = qcom_pas_prepare_and_auth_reset(&ctx);
-> >  		if (ret) {
-> >  			ath12k_err(ab, "failed to boot the remote processor %d\n", ret);
-> >  			goto err_fw2;
-> > @@ -1023,6 +1025,7 @@ static int ath12k_ahb_load_auth_shared_fw(struct ath12k_base *ab,
-> >  					  struct ath12k_ahb_rproc_info *rproc_info,
-> >  					  const char *fw_name, u32 pasid)
-> >  {
-> > +	struct qcom_pas_context ctx;
-> >  	int ret;
-> >  
-> >  	const struct firmware *fw __free(firmware) = NULL;
-> > @@ -1041,14 +1044,16 @@ static int ath12k_ahb_load_auth_shared_fw(struct ath12k_base *ab,
-> >  	ath12k_dbg(ab, ATH12K_DBG_AHB, "loading firmware %s, size %zd\n", fw_name,
-> >  		   fw->size);
-> >  
-> > -	ret = qcom_mdt_load(ab->dev, fw, fw_name, pasid, rproc_info->mem_region,
-> > -			    rproc_info->mem_phys, rproc_info->mem_size, NULL);
-> > +	qcom_pas_context_init(&ctx, ab->dev, pasid,
-> > +			      rproc_info->mem_phys, rproc_info->mem_size);
-> > +
-> > +	ret = qcom_mdt_pas_load(&ctx, fw, fw_name, NULL);
-> >  	if (ret) {
-> >  		ath12k_err(ab, "failed to load RO firmware %s: %d\n", fw_name, ret);
-> >  		return ret;
-> >  	}
-> >  
-> > -	ret = qcom_pas_auth_and_reset(pasid);
-> > +	ret = qcom_pas_prepare_and_auth_reset(&ctx);
-> >  	if (ret)
-> >  		ath12k_err(ab, "failed to authenticate and boot shared firmware: %d\n",
-> >  			   ret);
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/iocost_model.c b/tools/testing/selftests/bpf/prog_tests/iocost_model.c
+>> new file mode 100644
+>> index 0000000000000..0fbaeb7c5b7ef
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/bpf/prog_tests/iocost_model.c
+> [ ... ]
+>> +/* open the nullb device node, creating it manually when udev hasn't */
+>> +static int open_nullb_dev(const char *name, int flags)
+>> +{
+>> +	char path[32], syspath[64], devtok[32];
+>> +	unsigned int maj, min;
+>> +	dev_t dev;
+>> +	struct stat st;
+>> +	int fd;
+>> +
+>> +	snprintf(syspath, sizeof(syspath), "/sys/block/%s/dev", name);
+>> +	if (read_file_token(syspath, devtok, sizeof(devtok)) ||
+>> +	    sscanf(devtok, "%u:%u", &maj, &min) != 2)
+>> +		return -1;
+>> +	dev = makedev(maj, min);
+>> +
+>> +	snprintf(path, sizeof(path), "/dev/%s", name);
+>> +	fd = open(path, flags);
+>> +	if (fd >= 0 && fstat(fd, &st) == 0 && S_ISBLK(st.st_mode) &&
+>> +	    st.st_rdev == dev)
+>> +		return fd;
+>> +	if (fd >= 0) {
+>> +		/* a stale node from a previous run, drop and recreate */
+>> +		close(fd);
+>> +		fd = -1;
+>> +	}
+>> +	if (unlink(path) && errno != ENOENT)
+>> +		return -1;
+>> +	if (mknod(path, S_IFBLK | 0600, dev))
+>> +		return -1;
+>> +	fd = open(path, flags);
+>> +	if (fd < 0)
+>> +		unlink(path);
+>> +	return fd;
+>> +}
 > 
-> [Severity: High]
-> Does this leak the PAS metadata buffer stored in ctx.ptr in both
-> ath12k_ahb_power_up() and ath12k_ahb_load_auth_shared_fw()?
+> [Severity: Low]
+> Can ASSERT_OK(devfd < 0 ? -errno : 0, ...) in serial_test_iocost_model()
+> and serial_test_iocost_model_streams() pass when open_nullb_dev() fails?
 > 
-> Previously, qcom_mdt_load() passed a NULL context pointer to
-> __qcom_mdt_pas_init() -> qcom_pas_init_image(), which caused the backend
-> to free the metadata buffer immediately.  qcom_mdt_pas_load() instead
-> passes &ctx to qcom_pas_init_image(), which retains the allocated
-> metadata buffer in ctx.ptr:
+> If read_file_token() hits EOF without setting errno, sscanf() fails to
+> match two tokens, or unlink(path) succeeds and leaves errno at 0 after
+> the second open() fails, open_nullb_dev() returns -1 with errno == 0.
+> The callers then pass 0 to ASSERT_OK() and proceed to call
+> posix_fadvise(), read(), pread(), and close() on fd -1.  Using
+> ASSERT_OK_FD(devfd, ...) in the callers (or returning a negative error
+> code from open_nullb_dev()) would catch any failure directly.
 > 
-> drivers/firmware/qcom/qcom_scm.c:qcom_scm_pas_init_image() {
->     ...
-> 	if (ret < 0 || !ctx) {
-> 		dma_free_coherent(dev, size, mdata_buf, mdata_phys);
-> 	} else if (ctx) {
-> 		ctx->ptr = mdata_buf;
-> 		ctx->phys = mdata_phys;
-> 		ctx->size = size;
+> [ ... ]
+>> +static bool iocost_test_env(void)
+>> +{
+>> +	static bool ready;
+>> +	struct statfs sf;
+>> +	int orig_ns = -1, supported;
+>> +	bool ok = false;
+>> +
+>> +	if (geteuid() != 0) {
+>> +		printf("%s:SKIP:needs root\n", __func__);
+>> +		test__skip();
+>> +		return false;
+>> +	}
+>> +
+>> +	if (statfs("/sys/fs/cgroup", &sf) ||
+>> +	    sf.f_type != CGROUP2_SUPER_MAGIC) {
+>> +		printf("%s:SKIP:needs cgroup v2 at /sys/fs/cgroup\n",
+>> +		       __func__);
+>> +		test__skip();
+>> +		return false;
+>> +	}
+> [ ... ]
+>> +	/*
+>> +	 * Isolate the configfs and cgroup mounts from the host. A
+>> +	 * failed setup unwinds the namespace so that a later retry does
+>> +	 * not stack private namespaces.
+>> +	 */
+>> +	orig_ns = open("/proc/self/ns/mnt", O_RDONLY);
+>> +	if (unshare(CLONE_NEWNS) ||
+>> +	    mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL)) {
+>> +		printf("%s:SKIP:cannot make mounts private: %s\n",
+>> +		       __func__, strerror(errno));
+>> +		test__skip();
+>> +		goto out;
+>> +	}
+>> +	mkdir("/sys/kernel/config", 0755);
+>> +	(void)mount("none", "/sys/kernel/config", "configfs", 0, NULL);
+> 
+> [Severity: Medium]
+> Will all three iocost tests skip when /sys/fs/cgroup is not already a
+> cgroup2 mount or after an earlier cgroup v1 test runs in the same
+> test_progs process?
+> 
+> iocost_test_env(), cgroupfs_has_controller(), readback_model(),
+> write_cost_model(), and the io.cost.qos writes all access /sys/fs/cgroup
+> directly without mounting cgroup2 there, while cgroup_setup_and_join() in
+> tools/testing/selftests/bpf/cgroup_helpers.c mounts cgroup2 at /mnt
+> (CGROUP_MOUNT_PATH).  In addition, setup_classid_environment() in
+> cgroup_helpers.c mounts tmpfs at /sys/fs/cgroup (CGROUP_MOUNT_DFLT) and
+> cleanup_classid_environment() leaves that tmpfs mounted:
+> 
+> tools/testing/selftests/bpf/cgroup_helpers.c:setup_classid_environment() {
+> 	...
+> 	if (mount("tmpfs", CGROUP_MOUNT_DFLT, "tmpfs", 0, NULL) &&
+> 	    errno != EBUSY) {
+> 		log_err("mount cgroup base");
+> 		return 1;
 > 	}
->     ...
+> 	...
 > }
 > 
-> Neither qcom_mdt_pas_load() nor qcom_pas_prepare_and_auth_reset() frees
-> this allocation, so ctx goes out of scope and leaks the metadata memory
-> on every firmware load and error unwind path unless
-> qcom_pas_metadata_release(&ctx) is called.
-
-
-change https://lore.kernel.org/all/20260925165231.10722-1-mukesh.ojha@oss.qualcomm.com/
-takes care of this is present in linux-next.
-Please check the commit before trying to raise this point.
-
-
+> When a test using setup_classid_environment() runs before
+> serial_test_iocost_model*, statfs("/sys/fs/cgroup", &sf) sees TMPFS_MAGIC
+> instead of CGROUP2_SUPER_MAGIC and skips the tests.  Using the cgroup2
+> mount managed by cgroup_helpers.c (via get_root_cgroup() or
+> write_cgroup_file("", ...) / read_cgroup_file("", ...)), or mounting
+> cgroup2 inside the private mount namespace created by iocost_test_env(),
+> would avoid relying on the host's /sys/fs/cgroup mount state.
 > 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20261116162148.2864501-1-mukesh.ojha@oss.qualcomm.com?part=7
 
--- 
--Mukesh Ojha
