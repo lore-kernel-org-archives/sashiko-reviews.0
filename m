@@ -1,76 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.197
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795539320;
-	b=qfT7XGDJzSESMONyUakUKcMvsy5cKC35+L6xVPENlatWPuGNDx0c7jcecgYUjeUFPgxW
-	 FsL2+Pnqjyk4+8DEVq3RjQow9r0wiKPzJFHNwqWgxzHIvON6z7L92SHh3ZF+pIj1BDWZC
-	 2i6oLNNI6f533lyVHxRxat7m9tIMijULdO1EIFp33Tt0+/k1IZBhMw2Yf0EFKf7G069/D
-	 iy6kJtbXqBbAwC4NqB+J7cc4FdsUtixLC1gqeSqtFkcOJ0L/yU+ZkJ8TygbIh+C2PbzSD
-	 CZnEOn1oGA+BRgXY8w6DKGPi/iaNwQaSmjR129WNUYNR1C0ewkMq6kD4rFeJCzWwZig==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795539320;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
-	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=xZloecugQSPG+AdwTqsdlH4NBljJ9G+FtiQW0vi3A98=;
-	b=Pxc3saKLvT3V6f3abwiGbHhPaYBwADr62kXg0C0gpvitE014A9zponadTP4uS1ootNCV
-	 o28Fy9zl8a4JfdtxBfmhTdpSlLp0EiKxSzww1cNDApXM29BGzd17TLYlQGCP91YDyHKoz
-	 wTZ8+DfR6rz1NnhX2gN9peskTVThyeXOJ4HHh9/Jk7jlVoxbGLl5E1rZ/FqY2tZbHlcKB
-	 qUrP535kZVerNIsmbccYegjx62dueHivN7FXCpzRwBDkv/XoDuXPpxrsPFnBpK5lHdqG1
-	 ZTxFBFOhc33V1c2zDGWjvaR2gAB0YQHmhkdb/pnoOCJXzfgzaNgEwl7b7qqZ+ljBKjw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--jthoughton.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=k08hG38n;
-	arc=none smtp.remote-ip=209.85.214.197
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.112
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795540358;
+	b=nd72dyv1NRV5dbG/Sp7uflcfxUonquYO3mIQWk3SDXcTPTRr3ArwHxXa5RaO2ecgtI/j
+	 lViiY1I7G24qwkqDlgADBCHnnnAotG+Ao41VeBP7ib/ZXRlTzMlkOspjfdV6q0SChjm/Y
+	 HPhHWpaZvN69pINBT2YOGLxPOuBF2Y8Vad4ogNdjYuyP9jDo35H+WYWS9v6Dv5WNsZ55Z
+	 mFU8xWquzkRGc4bU7cVlW0d5is6Q3cAmoogSFfvbOtIgEJN8AfaL4rMKBQ1SMwvJXdnqC
+	 Ey0Qtx4o5mmOXrw8YmrFAT8Fi/bBtwNnJlDxRhFO2K9IKIi6zG4/qfVb3D2Vcks+IxA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795540358;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date:
+	 MIME-Version:User-Agent:X-ZohoMailClient;
+	bh=SLOOv/u5txnHgUHzcfRtK3xy/OPHT+Ffq5I0G4nIvqc=;
+	b=IKSJynWCedb7oW6gpDWCx5s0YK57qvPeupDSCWgvDvudS7e074Y8LFJLkEjwpCBjSrMr
+	 U4r1zXCyv0CvthM/NLUUXCXXuk5K6eDTbKpp2oc7P5YDV5sgzHGhP0IAWWL4XDmnUmoLY
+	 9cpmduJy9F/mbunUhTJ1iOU4Mzih9/hEz8GfmNc1gfCzhisGxJymOHmhWSPbqF/3bPyUO
+	 oWqyKTpkkyKuYP2NSuPIb1dorz89+V7F5MUwm0CZt49G2Khwwvj20llccyKKgoUav/SB7
+	 Vq1iTtPFncxfcUabFxdPTbgq07O7wrNxfVT37K6BwoBi7viNUP6M8GeI5Y0RtHqp6XQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=rong.moe;
+	spf=pass smtp.mailfrom=rong.moe;
+	dkim=pass header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=jw0hIujl;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.112
+Received: from sender6-pp-f112.zoho.com (sender6-pp-f112.zoho.com [165.173.180.112])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9E9606A33F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 16:55:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D9E9606A33F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jthoughton.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C28606A326
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 17:12:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24C28606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rong.moe
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=k08hG38n
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2f040056fd0so26275235ad.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 08:55:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795539318; x=1796144118; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=xZloecugQSPG+AdwTqsdlH4NBljJ9G+FtiQW0vi3A98=;
-        b=k08hG38nvWlw8rY0vpI+m+v5Maq5tuAk0k1Ijht3wRYUxygDJ5y1yvhr8tDBg9YXme
-         HTyVXbxgXg7erCv3KPSIwpuSxYl+niCZDOgrvNHp85SYinOzO/0d+XIMPJ49hCGU7r8K
-         EyRHLtiLXg25ggjSLC8uq8ZXZ4O9SAznCxQ8CFmio67RWyPYALiHTVHrVEqWD7MRb54F
-         OgePu0BR4pcAQqbnZLO6p1VIu6Pg7kWDl4TeU/wDwugrGXMisDyMzVEY2/Qcw64jB2w5
-         Gj4TpLIDxYCqbu75W8mXPGowC/54asAK56Bn27II87pGiPZCiz0WngQhUj/EjgeA4kR5
-         cgWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795539318; x=1796144118;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xZloecugQSPG+AdwTqsdlH4NBljJ9G+FtiQW0vi3A98=;
-        b=hzM/+xbKUXVKpTNEvX8Gfy21oO5Lmgq2/82SMhgQfrCmrqJgiwMLlmN6Y3v9ldpnc6
-         VeTGtDpLL4JLsQsop5Eyeb17SKhI/lWJEqUxAxfzFT/c6u1CKpcTtIlU2jnChE4Zrt4t
-         qdeRjYoA5xKs9eGrLAj68PfH/tSR3ErA96lr9tN5sVrFhxnJj5jnrh/luv9IQP6wNn+E
-         vmAqvN9nCaG56Qe1hJyFjSeV7JccKJCHvRRxm+E+R5ELVtH54iD8p0h8TxUa10ttk4Io
-         POjll/JOFgQGL/u2SrCHXpVL0S7rGgB1bQQLJDG3DMFbC8ldHt4YNv5Z9MSBCqemnA4+
-         jT3g==
-X-Forwarded-Encrypted: i=1; AL+hErEIyklDzVlXqb4h8c2h5tJ+kEFn5atQXj6bE0MtoxCOLss8vEu3MhxS+PkIZT9maop1LveDBXGDx4kWss2ICsg=@lists.linux.dev
-X-Gm-Message-State: APuU4Z90TD5wfop+d4vTNNBBJzEWuqga56xIILOWNga/xBj7t/PXxpNq
-	CABPpWPmBPQThu2O76spddMUUIAoVTbEM5Rtqn6kdglng9njPL/QqAxfCevSZ3dujW4LwDd0xTX
-	Y0mOnvDR7s+5Y62Uqj1Dxfw==
-X-Received: from plri16.prod.google.com ([2002:a17:903:32d0:b0:2ed:de1d:fc13])
- (user=jthoughton job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:ec8b:b0:2ed:662:e485 with SMTP id d9443c01a7336-2f03efa420fmr100600525ad.2.1795539317356;
- Tue, 24 Nov 2026 08:55:17 -0800 (PST)
-Date: Tue, 24 Nov 2026 16:55:15 +0000
-In-Reply-To: <sashiko-outbox-228635@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=jw0hIujl
+ARC-Seal: i=1; a=rsa-sha256; t=1795540355; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=DckYbAUcVMO4Mirjnj5sJ31Gd0MH3Xw2aQiqHOzMzyEcoyNCswe7oKTpTPnAqAGoR5V0Q1YERNcVvwlMgq7++YjYQKe+Wt1j17Wi/g4JM24ARBRU/JWDU0eWh91bEBDAldPnjR7HN6FDva0ya8itXl0UsysbHvFSebIqy4/Y+IU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1795540355; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=SLOOv/u5txnHgUHzcfRtK3xy/OPHT+Ffq5I0G4nIvqc=; 
+	b=bSfd2Mw3MW07WKS7CRLjv8SEoKTlftlQUfRC385MyqGSB0bIKdFbBfidgNzuo5fRpK98uz5HV4ayXZeRQRKFIuhTFXXoUJaHNEmlZKx1RZozf9c0toa7mmpBuk7ydnAqWMcl8yxsceGCXMgrapPVYvylozF3YL7BWmKvcaESkBA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=rong.moe;
+	spf=pass  smtp.mailfrom=i@rong.moe;
+	dmarc=pass header.from=<i@rong.moe>
+DKIM-Signature: a=rsa-sha256; b=jw0hIujl1+9LcqnwUPYivulIviZKYL/TdvhG1jshMVyoczmC0oaeleQJ9OrJ9YWOmis3WEhSTGJFv8My+Rp+NFX0+BlR/QX+u4wmriAzrdqDOANqeVEc5md64ziRqY0yPAo5Pq+EejBMIHgjxdvNZVTg7O+DSu9JPZ/5268yGqQaKcw1yPup8sftxD1nq5Gv4jkYErJMGm1NwnWt2Qh1VbMIS6PveuSYFWFZaRBehu4fQwp1j2tVW4EZ9HWwuTNCqJF8KvhGrAQpB7uO5yqLpGU4KaT3U4OMd4qumwKAC9MFud6N0stU1Ceog8Qi/G5uwYtiChQil51oMwoYsuFiXw==; c=relaxed/relaxed; s=zmail2048; d=rong.moe; v=1; bh=SLOOv/u5txnHgUHzcfRtK3xy/OPHT+Ffq5I0G4nIvqc=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1795540352703268.87578966460944;
+	Tue, 24 Nov 2026 09:12:32 -0800 (PST)
+Message-ID: <e7b9f2600bb42e1ed514d02f59ec905757de7ae8.camel@rong.moe>
+Subject: Re: [PATCH v4 1/9] HID: haptic: Get rid of input_ff_destroy() in
+ error paths
+From: Rong Zhang <i@rong.moe>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+In-Reply-To: <sashiko-outbox-231650@kernel.org>
+References: <20261125-hid-haptic-kmod-v4-0-03713a89f656@rong.moe>
+	 <20261125-hid-haptic-kmod-v4-1-03713a89f656@rong.moe>
+	 <sashiko-outbox-231650@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 25 Nov 2026 01:07:26 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,138 +68,67 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <sashiko-outbox-228635@kernel.org>
-X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
-Message-ID: <20261124165516.1182390-1-jthoughton@google.com>
-Subject: Re: [PATCH v3 06/19] hugetlb: Optimize bootmem folios that were not pre-HVOed
-From: James Houghton <jthoughton@google.com>
-To: sashiko-bot@kernel.org
-Cc: akpm@linux-foundation.org, catalin.marinas@arm.com, david@kernel.org, 
-	fvdl@google.com, jthoughton@google.com, linu.cherian@arm.com, 
-	linux-mm@kvack.org, mark.rutland@arm.com, muchun.song@linux.dev, 
-	nikos.nikoleris@arm.com, osalvador@suse.de, rientjes@google.com, 
-	ryan.roberts@arm.com, sashiko-reviews@lists.linux.dev, sunnanyong@huawei.com, 
-	wangkefeng.wang@huawei.com, will@kernel.org, yuzhao@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Evolution 3.62.1-4 
+X-ZohoMailClient: External
 
-On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
+Hi All,
+
+On Tue, 2026-11-24 at 17:04 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] mm/hugetlb: avoidable TLB flushes in
->   hugetlb_vmemmap_optimize_folios()
+> - [Low] HID: haptic: inaccurate Fixes trailer in hid_haptic_init() fix
 > --
->
-> commit 5763c0ece0fd843280e0e8e1b6561cb66598d64b
-> Author: James Houghton <jthoughton@google.com>
->
-> hugetlb: Optimize bootmem folios that were not pre-HVOed
->
-> This commit restores calling hugetlb_vmemmap_optimize_folios() in
-> prep_and_add_bootmem_folios() so that architectures disabling
-> section-based vmemmap optimization can still optimize bootmem folios
-> once HVO support is determined.
->
-> > diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-> > index 72839e98f998e..8756c0206922a 100644
-> > --- a/mm/hugetlb.c
-> > +++ b/mm/hugetlb.c
-> > @@ -3325,6 +3325,17 @@ static void __init prep_and_add_bootmem_folios(s=
-truct hstate *h,
-> >       unsigned long flags;
-> >       struct folio *folio, *tmp_f;
-> >
-> > +     /*
-> > +      * Bootmem folios are normally pre-HVOed through the section-base=
-d
-> > +      * vmemmap optimization. However, an architecture that can only
-> > +      * determine whether it supports HVO after bootmem allocation dis=
-ables
-> > +      * the section-based optimization (see
-> > +      * section_vmemmap_optimization_disable()), in which case the fol=
-ios
-> > +      * were not pre-HVOed and must be optimized now. Pre-HVOed folios=
- are
-> > +      * skipped.
-> > +      */
-> > +     hugetlb_vmemmap_optimize_folios(h, folio_list);
-> > +
-> >       list_for_each_entry_safe(folio, tmp_f, folio_list, lru) {
-> >               /* Subdivide locks to achieve better parallel performance=
- */
-> >               spin_lock_irqsave(&hugetlb_lock, flags);
->
-> [Severity: Medium]
-> Does calling hugetlb_vmemmap_optimize_folios() here cause avoidable
-> vmemmap_remap_rwsem contention and two global flush_tlb_all() broadcasts
-> per NUMA node when all folios on folio_list were already pre-HVOed (or
-> when HVO is disabled)?
->
-> When 629d87ed65ef ("mm/hugetlb: drop boot-time HVO handling for gigantic
-> folios") removed the call from prep_and_add_bootmem_folios(), it also
-> removed the nr_to_optimize tracking and early return from
-> hugetlb_vmemmap_optimize_folios().  On architectures where
-> gather_bootmem_prealloc_node() already marks every bootmem folio with
-> folio_set_hugetlb_vmemmap_optimized(), each node worker in
-> hugetlb_bootmem_struct_page_init() now serializes on
-> down_write(&vmemmap_remap_rwsem), walks folio_list twice, and runs two
-> unconditional flush_tlb_all() shootdowns without modifying any page
-> tables.
->
-> Restoring the early return in hugetlb_vmemmap_optimize_folios() when no
-> folios on folio_list satisfy vmemmap_should_optimize_folio() would avoid
-> the extra walk and TLB flushes.
+>=20
+> commit e6d3c5552e5a0755862fb250069c54d74d75f7cb
+> Author: Rong Zhang <i@rong.moe>
+>=20
+> > HID: haptic: Get rid of input_ff_destroy() in error paths
+> >=20
+> > It's painful to have error paths after calling input_ff_create(),
+> > because input_ff_destroy() frees too much things but does not restore
+> > some other things. For example, every error path calling
+> > input_ff_destroy() frees ff->private, while the others don't. This
+> > divergence has caused quite a lot of trouble.
+> >=20
+> > Additionally, the driver's get_device() bail-out path calls module_put(=
+)
+> > right before hid_haptic_destroy() calling it again, causing refcount
+> > underflow.
+> >=20
+> > Since commit 2ae35f090d02 ("Input: destroy force-feedback device on
+> > input unregistration"), the HID device is now guaranteed to have a
+> > longer lifetime than the FF device, making get_device()/put_device()
+> > unnecessary.
+> >=20
+> > Due to the driver being unable to build as a module since commit
+> > 083a4f3f3cc7 ("HID: Kconfig: Fix build error from CONFIG_HID_HAPTIC"),
+> > try_module_get()/module_put() is needless, too.
+> >=20
+> > Remove the said calls, so that there is no error path after
+> > input_ff_create(), eliminating the call to input_ff_destroy(). In this
+> > manner, we don't need to restore dev->flush and dev->event either.
+> >=20
+> > Fixes: 083a4f3f3cc7 ("HID: Kconfig: Fix build error from CONFIG_HID_HAP=
+TIC")
+> > Cc: stable@vger.kernel.org
+> > Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> > Link: https://msgid.link/f44447354f28c295e79a025bbcab7a4e@gmail.com
+> > Signed-off-by: Rong Zhang <i@rong.moe>
+>=20
+> [Severity: Low]
+> 083a4f3f3cc7 ("HID: Kconfig: Fix build error from CONFIG_HID_HAPTIC") onl=
+y
+> changed CONFIG_HID_HAPTIC from tristate to bool in drivers/hid/Kconfig.
+> The broken input_free error path and double module_put() in
+> hid_haptic_init() were introduced in 344ff3584957 ("HID: haptic:
+> initialize haptic device").
+>=20
+> Should the Fixes: tag point to 344ff3584957 ("HID: haptic: initialize
+> haptic device") instead?
 
-It is questionable if this needs fixing, but ok, I've applied the following=
- diff
-to v4. It essentially puts back the early return path that was removed from
-[1].
+No. This commit removes try_module_get()/module_put(), and thus depends
+on the current Fixes: commit.
 
-[1] https://lore.kernel.org/linux-mm/20261120100856.16929-6-songmuchun@byte=
-dance.com/
-
-diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
-index 8ec80f450123..df145776aa6b 100644
---- a/mm/hugetlb_vmemmap.c
-+++ b/mm/hugetlb_vmemmap.c
-@@ -610,6 +610,7 @@ static int hugetlb_vmemmap_pteify_folio(const struct hs=
-tate *h, struct folio *fo
- void hugetlb_vmemmap_optimize_folios(struct hstate *h, struct list_head *f=
-olio_list)
- {
- 	struct folio *folio;
-+	unsigned long nr_to_optimize =3D 0;
- 	LIST_HEAD(vmemmap_pages);
- 	unsigned long flags =3D VMEMMAP_DEFER_TLB_FLUSH;
-=20
-@@ -618,7 +619,14 @@ void hugetlb_vmemmap_optimize_folios(struct hstate *h,=
- struct list_head *folio_l
-=20
- 	down_write(&vmemmap_remap_rwsem);
- 	list_for_each_entry(folio, folio_list, lru) {
--		int ret =3D hugetlb_vmemmap_pteify_folio(h, folio, flags);
-+		int ret;
-+
-+		if (!vmemmap_should_optimize_folio(h, folio))
-+			continue;
-+
-+		nr_to_optimize++;
-+
-+		ret =3D hugetlb_vmemmap_pteify_folio(h, folio, flags);
-=20
- 		/*
- 		 * Splitting the PMD requires allocating a page, thus let's fail
-@@ -630,6 +638,11 @@ void hugetlb_vmemmap_optimize_folios(struct hstate *h,=
- struct list_head *folio_l
- 			break;
- 	}
-=20
-+	if (!nr_to_optimize) {
-+		up_write(&vmemmap_remap_rwsem);
-+		return;
-+	}
-+
- 	flush_tlb_all();
- 	downgrade_write(&vmemmap_remap_rwsem);
+Thanks,
+Rong
