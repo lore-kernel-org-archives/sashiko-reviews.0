@@ -1,114 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.197
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795538867;
-	b=YKbh5GTZt/o02C/bYX6vc1fslrXFaG+FsWZtkVleQX70Lfey8RMChZdleWqHJr7WTFha
-	 vzmvnf+JQEzMVmhgnHgzPav1HptGGAu0vwcg2mJQ4YdrC5tPNMq9hdGjAwAEh+Y4oMvl3
-	 FVuJjj+YVjo054y8TBkhd/0VpWg4uMGHomQ+gQBDG4Fo+HtZI/SEwvPiG6BTahb39Qykd
-	 gXm2c8ENJn+Om+HsCp0oGL7x0u2EKcfEUTdIiELsr2LPlyTzgWdx9PvAV4Z8yq3XgtY0g
-	 6Fe7luYGOeckGra3Jvn/M2jPjUCSBS1/ylsDwnNG+bpOMMRrvNFRgox3SSuJARqs/RQ==
+	t=1795539320;
+	b=qfT7XGDJzSESMONyUakUKcMvsy5cKC35+L6xVPENlatWPuGNDx0c7jcecgYUjeUFPgxW
+	 FsL2+Pnqjyk4+8DEVq3RjQow9r0wiKPzJFHNwqWgxzHIvON6z7L92SHh3ZF+pIj1BDWZC
+	 2i6oLNNI6f533lyVHxRxat7m9tIMijULdO1EIFp33Tt0+/k1IZBhMw2Yf0EFKf7G069/D
+	 iy6kJtbXqBbAwC4NqB+J7cc4FdsUtixLC1gqeSqtFkcOJ0L/yU+ZkJ8TygbIh+C2PbzSD
+	 CZnEOn1oGA+BRgXY8w6DKGPi/iaNwQaSmjR129WNUYNR1C0ewkMq6kD4rFeJCzWwZig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795538867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795539320;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=gJF0lTJAQJ039BwujcWG7eT8CFSLQY2LIYRtsZwL2wI=;
-	b=vuX27tPS3c/8xxpzKT2dCY/JIlvSCFxQD+mSDjTlER3nSrU9O8Zae23XQ/7dmym5LYRt
-	 YTY9+YiFijVLerSDZdqAAS1Qkb5zsboyVGm4rHScgq8q/qtiGpTmSzv1tpcCxg/BJk1aQ
-	 NTi50ySZNfscseSG6ztlhio9SvKN1PEVq+Wb1RPYea132w7AOH33llFhwskgjpSt9thLk
-	 HnyMtXTpBFPkEWuDtz2eXr9YPBhsJlDXcdyTmD3LmPMRj9sxFYZ2A0cgFwaP/PsrBCqWd
-	 CHvERe/o5IOqsj3tliyxKTvMfihs4rqltTCAeLvhiumeHLqvIWsnQogd2mfl2skeGGQ==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=xZloecugQSPG+AdwTqsdlH4NBljJ9G+FtiQW0vi3A98=;
+	b=Pxc3saKLvT3V6f3abwiGbHhPaYBwADr62kXg0C0gpvitE014A9zponadTP4uS1ootNCV
+	 o28Fy9zl8a4JfdtxBfmhTdpSlLp0EiKxSzww1cNDApXM29BGzd17TLYlQGCP91YDyHKoz
+	 wTZ8+DfR6rz1NnhX2gN9peskTVThyeXOJ4HHh9/Jk7jlVoxbGLl5E1rZ/FqY2tZbHlcKB
+	 qUrP535kZVerNIsmbccYegjx62dueHivN7FXCpzRwBDkv/XoDuXPpxrsPFnBpK5lHdqG1
+	 ZTxFBFOhc33V1c2zDGWjvaR2gAB0YQHmhkdb/pnoOCJXzfgzaNgEwl7b7qqZ+ljBKjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aKiexYw8;
-	arc=none smtp.remote-ip=209.85.216.41
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--jthoughton.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=k08hG38n;
+	arc=none smtp.remote-ip=209.85.214.197
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A394D606A327
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 16:47:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A394D606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9E9606A33F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 16:55:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D9E9606A33F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jthoughton.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aKiexYw8
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3ac9f49b984so2769988a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 08:47:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=k08hG38n
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2f040056fd0so26275235ad.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 08:55:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795538859; x=1796143659; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=gJF0lTJAQJ039BwujcWG7eT8CFSLQY2LIYRtsZwL2wI=;
-        b=aKiexYw87iYIFlHLVc3w7xtS6hMSanIDXYPQm4dZq5x5qKBCPby3bd1kfaRy6Tv7kq
-         6XWONsD9R+/t1af3ANKdTh52c0Y4kaqKnqWLS2WRFJXADVzKM6Zw4WcLj5Lp3mR/iIaA
-         mledz3DR7MmC1MQr+WSrlTlz3eUWKKtkt0+4Z44KvFRnPOInnrNkohVh1pBccDR0KplL
-         ed7o9EKhV/grkYOUwEWlzzNLv983/WvYZ+jphg0Sx/3/naBeInjfNbdGBXKEqInnTCP1
-         T76gRaERCI26HFga8snipec+z3lY8+cvPJfdM8xMayt6CvR7jAAV3OXZPKSofiBPa+Rn
-         0W2Q==
+        d=google.com; s=20260707; t=1795539318; x=1796144118; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=xZloecugQSPG+AdwTqsdlH4NBljJ9G+FtiQW0vi3A98=;
+        b=k08hG38nvWlw8rY0vpI+m+v5Maq5tuAk0k1Ijht3wRYUxygDJ5y1yvhr8tDBg9YXme
+         HTyVXbxgXg7erCv3KPSIwpuSxYl+niCZDOgrvNHp85SYinOzO/0d+XIMPJ49hCGU7r8K
+         EyRHLtiLXg25ggjSLC8uq8ZXZ4O9SAznCxQ8CFmio67RWyPYALiHTVHrVEqWD7MRb54F
+         OgePu0BR4pcAQqbnZLO6p1VIu6Pg7kWDl4TeU/wDwugrGXMisDyMzVEY2/Qcw64jB2w5
+         Gj4TpLIDxYCqbu75W8mXPGowC/54asAK56Bn27II87pGiPZCiz0WngQhUj/EjgeA4kR5
+         cgWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795538859; x=1796143659;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=gJF0lTJAQJ039BwujcWG7eT8CFSLQY2LIYRtsZwL2wI=;
-        b=B9HWR59ByDunVlPmL9c18NsXfuas/8PNsVBG/TXrvlGJvgWzCvsFilE+1Ailk7OVxA
-         BtfhQWOTrKEREhJ6ujzcVs8SXsBHi6ZSyZsglap7w+IBaQG9nLZ+HyRhxh5qx7IMEgVV
-         1RLjTBxXqeIC221CD8jnYKNaKeatYWOHrveGAZ7QxPGIizlM2NpO2BMKykTAHSs1iNhI
-         dyxkTKpTJmCT4Jfupbe4hAqIOfuAjGioAWIYBkJ/n/fXiFsl/Ip3M+x02pJTJ60g9KX+
-         aF4GwaaFwlEdrbepjlkALqC203PSsx3CmYWrEJPMNbHJZlKZs9eMOqVlv3r9i/rBxYPG
-         aRtg==
-X-Gm-Message-State: APuU4Z8ixP6bJgf3nRDHtuYdgqJngKLp04S/ntWic0OKQJHaSCXWcu3F
-	5NxiWiTIvr10fiZQSCI1UgnIfnNLrNpwH1r7kL3hkAT/XHGbVi5kbi9LlUCPKQ==
-X-Gm-Gg: AZFdTZcl0wglDw94EmWgE6WMRkI0UcGE+7Sklhafqe1jj7BJb7ht+uDEaKQri0Hi0H7
-	nWBlmxgnb7tn1hj9nsffUoGYZG0cAtypXrQwZghXc9XjABjyb21Bk2DR3rVR+iJoRGkc9lzlPQe
-	raObGOx1PByI34mJAyQ/dzOxNDH5loX/W7sLNc8/iYN1C4vWFN/AOPO94hKTSgtLeL2G1xYPPtZ
-	125fkHbKiQlh0sSsTRhCID8ShYvfSz1gCdorJpGC+TgrUZG7lK66mpx57EsDFBrzt9FrTBvnFv6
-	itbxMbwvxiyPRTFoVL4qz4WSP8KkNEwTnUs1NPTlZeJb2+U11/zoqUpIJP2rWUmqOkZGuP8CiDj
-	Ke+tnq2QUpXPvXHTOZcaE9DZkWmdsXSulH44Ick3DE/3zwAo3ZP7lUP3lhaVulTiWDKgo2d08OY
-	7oHQH2xawLVIN2LeZOYeD9DS8CzOeomoGEDkJRoUDExslTCvEiVLc10SNlCmxgRjnqiJ+KJS5TB
-	wQ6lezGaG2EAFoXNX1GOog3fimyizYspxdd5oiOmMBmegjI6GLLe05fRLXuoHCjYoxbOGzM+A/0
-	ZdGjJIk2wvgPGlSt2fKLau+tvPjTQoBKo0CRG7M+KOuQ0Nm5Jab45FCsyB6yxKSX/IyWpg==
-X-Received: by 2002:a17:90b:4a4f:b0:3a0:cca0:4a8c with SMTP id 98e67ed59e1d1-3b41c8e0c68mr9566976a91.7.1795538858850;
-        Tue, 24 Nov 2026 08:47:38 -0800 (PST)
-Received: from KASONG-MC4 ([101.32.222.185])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b41adcafe0sm25206556a91.16.2026.11.24.08.47.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 08:47:38 -0800 (PST)
-Date: Wed, 25 Nov 2026 00:47:22 +0800
-From: Kairui Song <ryncsn@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Kairui Song <kasong@tencent.com>, linux-mm@kvack.org, 
-	Andrew Morton <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Muchun Song <muchun.song@linux.dev>, Qi Zheng <qi.zheng@linux.dev>, 
-	Ying Huang <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
-	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
-	Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
-	Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, 
-	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
-	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, 
-	Hugh Dickins <hughd@google.com>, SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, 
-	Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>, 
-	Zicheng Wang <wangzicheng@honor.com>, Tal Zussman <tz2294@columbia.edu>, 
-	Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh <ehab.ababneh@intel.com>, 
-	Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang <lianux.mm@gmail.com>, 
-	Joanne Koong <joannelkoong@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>, 
-	Maxim Muzafarov <maxmuzaf@gmail.com>, damon@lists.linux.dev, Tianyi Chen <hi@tychen.cc>, 
-	Ridong Chen <ridong.chen@linux.dev>, tj@kernel.org, mkoutny@suse.com
-Subject: Re: [PATCH v6 17/18] mm/mglru: folio LRU refs based active/inactive
- number accounting
-Message-ID: <awWvabJGg2A_rS_s@KASONG-MC4>
-References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
- <20261124-mglru-fg-v6-17-8ffea39934a6@tencent.com>
- <sashiko-outbox-229933@kernel.org>
+        d=1e100.net; s=20260707; t=1795539318; x=1796144118;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=xZloecugQSPG+AdwTqsdlH4NBljJ9G+FtiQW0vi3A98=;
+        b=hzM/+xbKUXVKpTNEvX8Gfy21oO5Lmgq2/82SMhgQfrCmrqJgiwMLlmN6Y3v9ldpnc6
+         VeTGtDpLL4JLsQsop5Eyeb17SKhI/lWJEqUxAxfzFT/c6u1CKpcTtIlU2jnChE4Zrt4t
+         qdeRjYoA5xKs9eGrLAj68PfH/tSR3ErA96lr9tN5sVrFhxnJj5jnrh/luv9IQP6wNn+E
+         vmAqvN9nCaG56Qe1hJyFjSeV7JccKJCHvRRxm+E+R5ELVtH54iD8p0h8TxUa10ttk4Io
+         POjll/JOFgQGL/u2SrCHXpVL0S7rGgB1bQQLJDG3DMFbC8ldHt4YNv5Z9MSBCqemnA4+
+         jT3g==
+X-Forwarded-Encrypted: i=1; AL+hErEIyklDzVlXqb4h8c2h5tJ+kEFn5atQXj6bE0MtoxCOLss8vEu3MhxS+PkIZT9maop1LveDBXGDx4kWss2ICsg=@lists.linux.dev
+X-Gm-Message-State: APuU4Z90TD5wfop+d4vTNNBBJzEWuqga56xIILOWNga/xBj7t/PXxpNq
+	CABPpWPmBPQThu2O76spddMUUIAoVTbEM5Rtqn6kdglng9njPL/QqAxfCevSZ3dujW4LwDd0xTX
+	Y0mOnvDR7s+5Y62Uqj1Dxfw==
+X-Received: from plri16.prod.google.com ([2002:a17:903:32d0:b0:2ed:de1d:fc13])
+ (user=jthoughton job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:902:ec8b:b0:2ed:662:e485 with SMTP id d9443c01a7336-2f03efa420fmr100600525ad.2.1795539317356;
+ Tue, 24 Nov 2026 08:55:17 -0800 (PST)
+Date: Tue, 24 Nov 2026 16:55:15 +0000
+In-Reply-To: <sashiko-outbox-228635@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -117,150 +79,138 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-229933@kernel.org>
+Mime-Version: 1.0
+References: <sashiko-outbox-228635@kernel.org>
+X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
+Message-ID: <20261124165516.1182390-1-jthoughton@google.com>
+Subject: Re: [PATCH v3 06/19] hugetlb: Optimize bootmem folios that were not pre-HVOed
+From: James Houghton <jthoughton@google.com>
+To: sashiko-bot@kernel.org
+Cc: akpm@linux-foundation.org, catalin.marinas@arm.com, david@kernel.org, 
+	fvdl@google.com, jthoughton@google.com, linu.cherian@arm.com, 
+	linux-mm@kvack.org, mark.rutland@arm.com, muchun.song@linux.dev, 
+	nikos.nikoleris@arm.com, osalvador@suse.de, rientjes@google.com, 
+	ryan.roberts@arm.com, sashiko-reviews@lists.linux.dev, sunnanyong@huawei.com, 
+	wangkefeng.wang@huawei.com, will@kernel.org, yuzhao@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 23, 2026 at 07:28:02PM +0800, sashiko-bot@kernel.org wrote:
+On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] mm/mglru: extra atomic RMWs on folio->flags in
->   lru_gen_del_folio()
+> - [Medium] mm/hugetlb: avoidable TLB flushes in
+>   hugetlb_vmemmap_optimize_folios()
 > --
-> 
-> commit c2fa4ccd879e2b2e8e7542ec52e0fe26798b936c
-> Author: Kairui Song <kasong@tencent.com>
-> 
-> mm/mglru: folio LRU refs based active/inactive number accounting
-> 
-> This commit switches MGLRU active and inactive LRU size accounting from
-> the generation window to per-folio LRU reference counts based on the
-> LRU_REFS_ACTIVATED threshold.
-> 
-> > diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-> > index a4daf366e6aa7..b0f062e3a1905 100644
-> > --- a/include/linux/mm_inline.h
-> > +++ b/include/linux/mm_inline.h
-> 
-> [ ... ]
-> 
-> > @@ -440,24 +445,33 @@ static inline bool lru_gen_add_rejected_folio(struct lruvec *lruvec, struct foli
-> >  static inline bool lru_gen_del_folio(struct lruvec *lruvec, struct folio *folio, bool reclaiming)
-> >  {
-> >  	unsigned long flags;
-> > -	int gen = folio_lru_gen(folio);
-> > +	unsigned int refs;
-> > +	int gen;
-> >  	int zone = folio_zonenum(folio);
-> >  	int delta = folio_nr_pages(folio);
-> >  	enum lru_list lru = folio_is_file_lru(folio) * LRU_INACTIVE_FILE;
-> > +	unsigned long max_seq = READ_ONCE(lruvec->lrugen.max_seq);
-> >  
-> > +	/* Keep LRU_REFS_FLAGS: refs carry access history across isolation */
-> > +	flags = set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK, 0);
-> > +	gen = lru_get_gen_flags(flags);
-> > +	refs = lru_get_refs_flags(flags);
-> >  	if (gen < 0)
-> >  		return false;
-> >  
-> >  	VM_WARN_ON_ONCE_FOLIO(folio_test_active(folio), folio);
-> >  	VM_WARN_ON_ONCE_FOLIO(folio_test_unevictable(folio), folio);
-> >  
-> > -	/* for folio_migrate_flags() */
-> > -	flags = !reclaiming && lru_gen_is_active(lruvec, gen) ? BIT(PG_active) : 0;
-> > -	flags = set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK, flags);
-> > -	gen = ((flags & LRU_GEN_MASK) >> LRU_GEN_PGOFF) - 1;
-> > +	/*
-> > +	 * See the comment in lru_gen_folio_seq.  For migration, compaction,
-> > +	 * or any other isolation of a hot folio, try best to retain its gen
-> > +	 * info. Ideally we would keep the full gen info.
-> > +	 */
-> > +	if (!reclaiming && ((max_seq - gen) % MAX_NR_GENS) < MIN_NR_GENS)
-> > +		folio_set_active(folio);
-> 
+>
+> commit 5763c0ece0fd843280e0e8e1b6561cb66598d64b
+> Author: James Houghton <jthoughton@google.com>
+>
+> hugetlb: Optimize bootmem folios that were not pre-HVOed
+>
+> This commit restores calling hugetlb_vmemmap_optimize_folios() in
+> prep_and_add_bootmem_folios() so that architectures disabling
+> section-based vmemmap optimization can still optimize bootmem folios
+> once HVO support is determined.
+>
+> > diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+> > index 72839e98f998e..8756c0206922a 100644
+> > --- a/mm/hugetlb.c
+> > +++ b/mm/hugetlb.c
+> > @@ -3325,6 +3325,17 @@ static void __init prep_and_add_bootmem_folios(s=
+truct hstate *h,
+> >       unsigned long flags;
+> >       struct folio *folio, *tmp_f;
+> >
+> > +     /*
+> > +      * Bootmem folios are normally pre-HVOed through the section-base=
+d
+> > +      * vmemmap optimization. However, an architecture that can only
+> > +      * determine whether it supports HVO after bootmem allocation dis=
+ables
+> > +      * the section-based optimization (see
+> > +      * section_vmemmap_optimization_disable()), in which case the fol=
+ios
+> > +      * were not pre-HVOed and must be optimized now. Pre-HVOed folios=
+ are
+> > +      * skipped.
+> > +      */
+> > +     hugetlb_vmemmap_optimize_folios(h, folio_list);
+> > +
+> >       list_for_each_entry_safe(folio, tmp_f, folio_list, lru) {
+> >               /* Subdivide locks to achieve better parallel performance=
+ */
+> >               spin_lock_irqsave(&hugetlb_lock, flags);
+>
 > [Severity: Medium]
-> Does moving set_mask_bits() before the gen < 0 check and splitting out
-> folio_set_active() add unnecessary atomic RMWs on folio->flags in
-> lru_gen_del_folio()?
-> 
-> set_mask_bits() unconditionally runs a try_cmpxchg() loop even when the
-> masked bits are already zero, so every lruvec_del_folio() call when MGLRU
-> is disabled at runtime (or on unevictable folios) now performs an atomic
-> RMW instead of returning after a READ_ONCE() check.  When MGLRU is enabled,
-> non-reclaim deletions of folios in the two youngest generations (such as
-> __page_cache_release() in folios_put_refs(), which immediately clears
-> PG_active via __folio_clear_lru_flags()) also execute two atomic RMWs
-> (set_mask_bits() followed by folio_set_active()) instead of combining
-> clearing LRU_GEN_MASK and setting PG_active into a single try_cmpxchg()
-> loop after checking gen < 0.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com?part=17
+> Does calling hugetlb_vmemmap_optimize_folios() here cause avoidable
+> vmemmap_remap_rwsem contention and two global flush_tlb_all() broadcasts
+> per NUMA node when all folios on folio_list were already pre-HVOed (or
+> when HVO is disabled)?
+>
+> When 629d87ed65ef ("mm/hugetlb: drop boot-time HVO handling for gigantic
+> folios") removed the call from prep_and_add_bootmem_folios(), it also
+> removed the nr_to_optimize tracking and early return from
+> hugetlb_vmemmap_optimize_folios().  On architectures where
+> gather_bootmem_prealloc_node() already marks every bootmem folio with
+> folio_set_hugetlb_vmemmap_optimized(), each node worker in
+> hugetlb_bootmem_struct_page_init() now serializes on
+> down_write(&vmemmap_remap_rwsem), walks folio_list twice, and runs two
+> unconditional flush_tlb_all() shootdowns without modifying any page
+> tables.
+>
+> Restoring the early return in hugetlb_vmemmap_optimize_folios() when no
+> folios on folio_list satisfy vmemmap_should_optimize_folio() would avoid
+> the extra walk and TLB flushes.
 
-Yeah it's true, but the overhead is really trivial, far below the noise floor
-for folio operations.
+It is questionable if this needs fixing, but ok, I've applied the following=
+ diff
+to v4. It essentially puts back the early return path that was removed from
+[1].
 
-I did a few vm-scalability tests on this with MGLRU disabled, and faulting
-shmem folios, overall, the performance seems about ~0.07% slower while the
-noise floor is about 3%.  In theory we do have maybe dozens cycles per
-folio overhead though.
+[1] https://lore.kernel.org/linux-mm/20261120100856.16929-6-songmuchun@byte=
+dance.com/
 
-But well, I can apply a few micro optimizations here, they are easy to do
-and will avoid the unnecessary overhead in the first place, good for
-both MGLRU and CLRU.
-
-Let me just wait a bit more for other reviews and maybe send a v7 with
-following changes squashed into it if needed:
-
-diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-index b0f062e3a190..f30ff9af2506 100644
---- a/include/linux/mm_inline.h
-+++ b/include/linux/mm_inline.h
-@@ -444,7 +444,7 @@ static inline bool lru_gen_add_rejected_folio(struct lruvec *lruvec, struct foli
- 
- static inline bool lru_gen_del_folio(struct lruvec *lruvec, struct folio *folio, bool reclaiming)
+diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
+index 8ec80f450123..df145776aa6b 100644
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -610,6 +610,7 @@ static int hugetlb_vmemmap_pteify_folio(const struct hs=
+tate *h, struct folio *fo
+ void hugetlb_vmemmap_optimize_folios(struct hstate *h, struct list_head *f=
+olio_list)
  {
--	unsigned long flags;
-+	unsigned long flags = READ_ONCE(*folio_flags(folio, 0)), new_flags;
- 	unsigned int refs;
- 	int gen;
- 	int zone = folio_zonenum(folio);
-@@ -452,23 +452,26 @@ static inline bool lru_gen_del_folio(struct lruvec *lruvec, struct folio *folio,
- 	enum lru_list lru = folio_is_file_lru(folio) * LRU_INACTIVE_FILE;
- 	unsigned long max_seq = READ_ONCE(lruvec->lrugen.max_seq);
- 
--	/* Keep LRU_REFS_FLAGS: refs carry access history across isolation */
--	flags = set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK, 0);
--	gen = lru_get_gen_flags(flags);
--	refs = lru_get_refs_flags(flags);
--	if (gen < 0)
-+	if (lru_get_gen_flags(flags) < 0)
- 		return false;
- 
- 	VM_WARN_ON_ONCE_FOLIO(folio_test_active(folio), folio);
- 	VM_WARN_ON_ONCE_FOLIO(folio_test_unevictable(folio), folio);
- 
- 	/*
--	 * See the comment in lru_gen_folio_seq.  For migration, compaction,
--	 * or any other isolation of a hot folio, try best to retain its gen
--	 * info. Ideally we would keep the full gen info.
-+	 * Clear the gen and set PG_active, try best to retain its hotness
-+	 * info while isolated.  The gen is the on-list marker, so setting or
-+	 * clearing it needs the lruvec lock; a lazy promotion only moves it
-+	 * between gens and can race with us here.  Refs must come from the
-+	 * same snapshot, as they feed the accounting below.
- 	 */
--	if (!reclaiming && ((max_seq - gen) % MAX_NR_GENS) < MIN_NR_GENS)
--		folio_set_active(folio);
-+	do {
-+		gen = lru_get_gen_flags(flags);
-+		refs = lru_get_refs_flags(flags);
-+		new_flags = flags & ~LRU_GEN_MASK;
-+		if (!reclaiming && ((max_seq - gen) % MAX_NR_GENS) < MIN_NR_GENS)
-+			new_flags |= BIT(PG_active);
-+	} while (!try_cmpxchg(folio_flags(folio, 0), &flags, new_flags));
- 
- 	lru_gen_update_size(lruvec, folio, gen, -1);
- 	if (lru_refs_is_active(refs))
+ 	struct folio *folio;
++	unsigned long nr_to_optimize =3D 0;
+ 	LIST_HEAD(vmemmap_pages);
+ 	unsigned long flags =3D VMEMMAP_DEFER_TLB_FLUSH;
+=20
+@@ -618,7 +619,14 @@ void hugetlb_vmemmap_optimize_folios(struct hstate *h,=
+ struct list_head *folio_l
+=20
+ 	down_write(&vmemmap_remap_rwsem);
+ 	list_for_each_entry(folio, folio_list, lru) {
+-		int ret =3D hugetlb_vmemmap_pteify_folio(h, folio, flags);
++		int ret;
++
++		if (!vmemmap_should_optimize_folio(h, folio))
++			continue;
++
++		nr_to_optimize++;
++
++		ret =3D hugetlb_vmemmap_pteify_folio(h, folio, flags);
+=20
+ 		/*
+ 		 * Splitting the PMD requires allocating a page, thus let's fail
+@@ -630,6 +638,11 @@ void hugetlb_vmemmap_optimize_folios(struct hstate *h,=
+ struct list_head *folio_l
+ 			break;
+ 	}
+=20
++	if (!nr_to_optimize) {
++		up_write(&vmemmap_remap_rwsem);
++		return;
++	}
++
+ 	flush_tlb_all();
+ 	downgrade_write(&vmemmap_remap_rwsem);
