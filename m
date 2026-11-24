@@ -1,102 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795506932;
-	b=XRw9YUx0kQjjnhGqdSHQQUIB3sQGcaIXKw4kAqutHGsz0J4k+Z+ZAZ8aX8KWAuo3Wr+n
-	 1AfUcjOv4Rc6oSbTc+lN6iJ9KLzO5Z41g9bb/bgWOd75NbDzZTUwsPg0pMmNFSOnsO8VH
-	 51fkpN1alyHPwCCALyd6xg42YNm8s1pTptrxQo4teA8mWWZ0r3pAotSIS9zDRdcy2HRqF
-	 KtM1MhmwvsLo2HjscQy8GD65799fPCOG/iQCgotKWfEg4A1Fj88qBeASw1IkiRhXM87xD
-	 EYq27SDeqwsQpx+wqNrpJw0JZlRLlrJTOA+kD5T2+rdR8xyFMUNOg08Ec5HMN3RfRJg==
+	t=1795507965;
+	b=jhqbNoAEuEuWoNlFY9UNDBRFZJwOz2VCCT99OX3r+LEcp//MvfOhueq9TVAcsEbYGrA6
+	 KwSRRj7SCq+KHvajLolzib1wPtniFfWGcdt7KyaNtvILDInqRRabTM2PZ+3qKhfBlZqgK
+	 BQKxeYU5bPugKvishOTgZBB4u85B45YQuQCE6od1Mmc/GFFcIOwrn1QmUZ/fSP2EVlxtt
+	 zlIIj6D5YEmX6bp/XUY2JvFUk3rJLq0pIrkht6hGhacx4XVHC1VtDRxFqklFle29snpcJ
+	 A+MaTuMUbbjB7KZx9kwTMBdez7JBjW8Xkymigz8Cy4w1/NDuAJdjS4/3i8ICE4c6ziQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795506932;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:
-	 X-Spamd-Result:X-Spam-Score;
-	bh=ylG3MbG7GnLFGRWEWi1SyH1cSeYiha97TTv92nQwSMY=;
-	b=vBnpYTH1Cg27Xs7HWf24Yu/ijhXpfjioH0jzkfFVUEoWnw6U6kfQThw7igoSbjhlMnpO
-	 iK9Xx8HQoAPvtR5BCPb9SWTIhi3QCPSg8PF2ck8j5M1EoaG9h4tZqByllbpkpfTaZB7KF
-	 iaFBnoR3eYA1h42L0v3bcFuJ//i16IGCfYiUjrbl5nzWSupvjDX4K3kNuigNksjsDBVfM
-	 4ZUSFmcC7/pokpyi1uTvRFZE5G6wb/Cgq90O6FLTmbQuf1wmiVUURxs07XTi11WEB1pN2
-	 N877JfIUJMco7fYLWNEYlnYlRuQHSORS3qMxAhron2mVVk7NLSG2UMGroL6atg/+PUg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795507965;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=9v/aquPA29KXdA96PEW/4XyKP1194pH+JbPW+CE9BhA=;
+	b=O9TDbrJohykH5HeVDDQ391NMOOaRHVOwG10A3kyMfezCX26HJ/y4H1K5FrKWyndf5qug
+	 eW5VNZPFWTv03GB3309jCsTNK+jmicsTEDN+k16wcdfNE2ANwqHWXfVzXoVVNbUpPLdj0
+	 Hukceufr2Tei6BXs7/7DghejAUKy9S7F8gaLOUHBK51P/Gyf5s/Iz97K6iyISB0XSitYi
+	 gzrMVWRngz2LuG3b/Am0OpK4oNcTXK4NlfHHj9MkV/kdBjnLi+s0W7paM0ez9cTR+qfZh
+	 b3ySobSN4As8QJTNjOdOqHO37KcyaHdpPqhHKiRlrH45iQINpEfmzbkndHdcLNif0zQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Bmy5EudU;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYv7VJJR;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Bmy5EudU;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYv7VJJR;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=LBnu8YYw;
+	arc=none smtp.remote-ip=95.215.58.15
+Received: from mta1.migadu.com (out-15.mta1.migadu.com [95.215.58.15])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F546606A322
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 07:55:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7F546606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7916F606A31E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 08:12:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7916F606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Bmy5EudU;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYv7VJJR;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Bmy5EudU;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=SYv7VJJR
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id C276722263;
-	Tue, 24 Nov 2026 07:55:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795506929; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ylG3MbG7GnLFGRWEWi1SyH1cSeYiha97TTv92nQwSMY=;
-	b=Bmy5EudUa6q+RXSGXVShulWZWdGjxu9SKZLRxUVRa+w3mq31sBo5uBGXyY7BHQRpFZmaFq
-	ypgEsQlNWOMAeMNlyAy/U+izta5mc3kEG5rg2LbcchdYja5eiN6b3uopSb3z/IEW8dByK/
-	P6n+a2DF3l3wcNVJvN+YCFGuHAXgXGs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795506929;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ylG3MbG7GnLFGRWEWi1SyH1cSeYiha97TTv92nQwSMY=;
-	b=SYv7VJJR9JLtb4sB880cqf/5t1R/1FkI2PP5vZusuKRLrdo3HI4GzrDcy19+HgGLvTOX6g
-	Y2cQi4EffArl2QCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795506929; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ylG3MbG7GnLFGRWEWi1SyH1cSeYiha97TTv92nQwSMY=;
-	b=Bmy5EudUa6q+RXSGXVShulWZWdGjxu9SKZLRxUVRa+w3mq31sBo5uBGXyY7BHQRpFZmaFq
-	ypgEsQlNWOMAeMNlyAy/U+izta5mc3kEG5rg2LbcchdYja5eiN6b3uopSb3z/IEW8dByK/
-	P6n+a2DF3l3wcNVJvN+YCFGuHAXgXGs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795506929;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ylG3MbG7GnLFGRWEWi1SyH1cSeYiha97TTv92nQwSMY=;
-	b=SYv7VJJR9JLtb4sB880cqf/5t1R/1FkI2PP5vZusuKRLrdo3HI4GzrDcy19+HgGLvTOX6g
-	Y2cQi4EffArl2QCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 843411339F;
-	Tue, 24 Nov 2026 07:55:29 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id dkL8FvFCBWt4aQAAD6G6ig
-	(envelope-from <hare@suse.de>); Tue, 24 Nov 2026 07:55:29 +0000
-Message-ID: <c429a65b-d027-4612-85d6-3a42a37900b3@suse.de>
-Date: Tue, 24 Nov 2026 08:55:24 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=LBnu8YYw
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=kfJ4WtKy7pZ4fGs2zEWka3cP1XCH3IaMwALqV+AeTpM=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795507962; v=1; x=1796112762;
+ b=LBnu8YYweN6gPg5w0MqZtOQi34gJYQE1f/pekFwWo68fLWZOAM9TeO4o6kJlgpjazZqEi+NZ
+ 5UTJxwZ0uav+MeXz6HYDTqVyguceNx6jEBp1SWik+MtBtOIZ7CO7CCkcH34i/ca3lZ0syAQFyoL
+ xYrLTEq+pOjpNKZ5HWfPBR+s=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta10.migadu.com with ESMTPS id 6c42f0ddf956d8ce;
+	Tue, 24 Nov 2026 08:12:42 +0000
+X-Mizu-Trace-ID: 6c42f0ddf956d8ce
+X-Migadu-Flow: FLOW_OUT
+Date: Tue, 24 Nov 2026 16:12:30 +0800
+From: Baoquan He <baoquan.he@linux.dev>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-mm@kvack.org, akpm@linux-foundation.org, david@kernel.org,
+	kasong@tencent.com, baohua@kernel.org, qi.zheng@linux.dev,
+	shakeel.butt@linux.dev, axelrasmussen@google.com,
+	yuanchu@google.com, weixugc@google.com,
+	baolin.wang@linux.alibaba.com, Baoquan He <hebaoquan@kylinos.cn>,
+	Kairui Song <ryncsn@gmail.com>
+Subject: Re: [PATCH 3/4] mm/mglru: skip cold PUD subtrees during aging
+Message-ID: <awVGycKHzXzW5OF1@bogon>
+References: <20261120085806.781225-1-baoquan.he@linux.dev>
+ <20261120085806.781225-4-baoquan.he@linux.dev>
+ <sashiko-outbox-226850@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -106,131 +70,125 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/9] nvmet-auth: parse dhchap key from configfs
- attribute
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>
-Cc: linux-nvme@lists.infradead.org
-References: <20261123-dhchap-keyring-v4-v6-0-5082a49715ab@kernel.org>
- <20261123-dhchap-keyring-v4-v6-5-5082a49715ab@kernel.org>
- <sashiko-outbox-229749@kernel.org>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-229749@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-13.29 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-0.995];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
-X-Spam-Score: -13.29
+In-Reply-To: <sashiko-outbox-226850@kernel.org>
 
-On 11/23/26 6:30 PM, sashiko-bot@kernel.org wrote:
+On 11/21/26 at 08:59am, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] nvmet-auth: host_key reference leak in nvmet_setup_auth() on
->    ctrl_key error
+> - [Medium] mm/mglru: walk_pmd_range() drops young status of THPs flushed
+>   at non-leaf PMD
 > --
 > 
-> commit 0056af1c2f2c7d56f3cbd59406150e77070f9ffe
-> Author: Hannes Reinecke <hare@kernel.org>
+> commit 807f1bc14298f872f3bf880156eb7f9c34a7f570
+> Author: Baoquan He <hebaoquan@kylinos.cn>
 > 
-> nvmet-auth: parse dhchap key from configfs attribute
+> mm/mglru: skip cold PUD subtrees during aging
 > 
-> This commit converts the nvmet configfs DH-HMAC-CHAP key handling to
-> parse and store keys as struct key references on struct nvmet_host
-> instead of raw secret strings.
+> This commit introduces a PUD-level Bloom filter to MGLRU page table aging
+> to skip 1 GiB PUD subtrees that had no young pages in the previous
+> generation, while updating the filter from the page table walk and rmap
+> feedback paths.
 > 
->> diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
->> index 26457ce4acc2a..6348c810bd168 100644
->> --- a/drivers/nvme/target/auth.c
->> +++ b/drivers/nvme/target/auth.c
-> 
+> > diff --git a/mm/vmscan.c b/mm/vmscan.c
+> > index a4c64a1903912..2cd3f28f74288 100644
+> > --- a/mm/vmscan.c
+> > +++ b/mm/vmscan.c
 > [ ... ]
-> 
->> @@ -186,22 +195,43 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq, bool reset)
->>   		goto out_unlock;
->>   	}
->>   
->> -	if (!host->dhchap_secret) {
->> +	if (!host->dhchap_key) {
->>   		pr_debug("No authentication provided\n");
->>   		goto out_unlock;
->>   	}
->>   
->> -	host_key = nvme_auth_extract_key(NULL, host->dhchap_secret,
->> -					 strlen(host->dhchap_secret));
->> -	if (IS_ERR(host_key)) {
->> +	host_key = key_get(host->dhchap_key);
->> +	if (!host_key) {
->> +		pr_warn("%s: host key %08x not found\n",
->> +			__func__, key_serial(host->dhchap_key));
->>   		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
->>   		goto out_unlock;
->>   	}
->> -	if (host->dhchap_ctrl_secret) {
->> -		ctrl_key = nvme_auth_extract_key(NULL, host->dhchap_ctrl_secret,
->> -						 strlen(host->dhchap_ctrl_secret));
->> -		if (IS_ERR(ctrl_key)) {
->> -			key_put(host_key);
->> +	down_read(&host_key->sem);
->> +	ret = key_validate(host_key);
->> +	key_id = key_serial(host_key);
->> +	up_read(&host_key->sem);
->> +	if (ret) {
->> +		pr_warn("host key %08x invalidated\n", key_id);
->> +		key_put(host_key);
->> +		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
->> +		goto out_unlock;
->> +	}
->> +	if (host->dhchap_ctrl_key) {
->> +		ctrl_key = key_get(host->dhchap_ctrl_key);
->> +		if (!ctrl_key) {
->> +			pr_warn("%s: ctrl key %08x not found\n",
->> +				__func__, key_serial(host->dhchap_ctrl_key));
->> +			ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
->> +			goto out_unlock;
->> +		}
->> +		down_read(&ctrl_key->sem);
->> +		ret = key_validate(ctrl_key);
->> +		key_id = key_serial(ctrl_key);
->> +		up_read(&ctrl_key->sem);
->> +		if (ret) {
->> +			pr_warn("ctrl key %08x invalidated\n", key_id);
->> +			key_put(ctrl_key);
->>   			ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
->>   			goto out_unlock;
->>   		}
+> > @@ -3626,11 +3637,12 @@ static bool walk_pte_range(pmd_t *pmd, unsigned long start, unsigned long end,
+> >  	return suitable_to_scan(total, young);
+> >  }
+> >  
+> > -static void walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area_struct *vma,
+> > +static bool walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area_struct *vma,
+> >  				  struct mm_walk *args, unsigned long *bitmap, unsigned long *first)
+> >  {
+> >  	int i;
+> >  	bool dirty;
+> > +	bool young = false;
+> >  	pmd_t *pmd;
+> >  	spinlock_t *ptl;
+> >  	struct folio *last = NULL;
+> > @@ -3644,13 +3656,13 @@ static void walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area
+> >  	if (*first == -1) {
+> >  		*first = addr;
+> >  		bitmap_zero(bitmap, MIN_LRU_BATCH);
+> > -		return;
+> > +		return false;
+> >  	}
+> >  
+> >  	i = addr == -1 ? 0 : pmd_index(addr) - pmd_index(*first);
+> >  	if (i && i <= MIN_LRU_BATCH) {
+> >  		__set_bit(i - 1, bitmap);
+> > -		return;
+> > +		return false;
+> >  	}
+> [ ... ]
+> > @@ -3755,7 +3771,8 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
+> >  			walk->mm_stats[MM_LEAF_TOTAL]++;
+> >  
+> >  			if (pfn != -1)
+> > -				walk_pmd_range_locked(pud, addr, vma, args, bitmap, &first);
+> > +				young |= walk_pmd_range_locked(pud, addr, vma, args,
+> > +							       bitmap, &first);
+> >  			continue;
+> >  		}
+> >  
+> > @@ -3777,15 +3794,18 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
+> >  			continue;
+> >  
+> >  		walk->mm_stats[MM_NONLEAF_ADDED]++;
+> > +		young = true;
+> >  
+> >  		/* carry over to the next generation */
+> >  		update_bloom_filter(mm_state, BLOOM_FILTER_PMD, walk->seq + 1, pmd + i);
+> >  	}
+> >  
+> > -	walk_pmd_range_locked(pud, -1, vma, args, bitmap, &first);
+> > +	young |= walk_pmd_range_locked(pud, -1, vma, args, bitmap, &first);
 > 
 > [Severity: Medium]
-> Do both error paths under if (host->dhchap_ctrl_key) leak host_key by
-> jumping to out_unlock without calling key_put(host_key)?
+> Can walk_pmd_range() drop the young return value when batched transparent
+> huge pages are flushed at a non-leaf PMD?
+
+This is a real issue even though very corner case. I thought it won't
+happen when making v5, but I was wrong. It happens when all below three
+conditions are met:
+
+1. at least one huge page whose folio is in this lruvec is queued in the
+   batch, and it is young;
+2. the call that crosses the MIN_LRU_BATCH boundary comes from the
+   non-leaf branch, i.e. the PMD 64+ entries after *first is a page table
+   with its accessed bit set;
+3. no other PMD of this PUD sets young on its own, neither before nor
+   after that PMD.
+
+Fix is quite simple, take the returned value to assign to you too for
+non-leaf PMD. This will be done in the coming v6.
+
 > 
-Fixed with the next version.
-
-Cheers,
-
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+> mm/vmscan.c:walk_pmd_range() {
+>     ...
+> 		if (!walk->force_scan && should_clear_pmd_young() &&
+> 		    !mm_has_notifiers(args->mm)) {
+> 			if (!pmd_young(val))
+> 				continue;
+> 
+> 			walk_pmd_range_locked(pud, addr, vma, args, bitmap, &first);
+> 		}
+>     ...
+> }
+> 
+> walk_pmd_range_locked() buffers up to 1 + MIN_LRU_BATCH entries in first
+> and bitmap across loop iterations, returning false while buffering.  If
+> earlier iterations queued PMD-mapped THPs and this non-leaf PMD call lies
+> more than MIN_LRU_BATCH entries past first, it flushes those THPs and
+> resets first to -1, but its return value is ignored.  If no later PMD in
+> the PUD sets young, walk_pmd_range() returns false and walk_pud_range()
+> leaves the PUD out of BLOOM_FILTER_PUD, skipping the 1 GiB subtree on the
+> next aging pass.
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20261120085806.781225-1-baoquan.he@linux.dev?part=3
