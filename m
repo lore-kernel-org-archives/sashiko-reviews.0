@@ -1,58 +1,50 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=160.236.52.245
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795527850;
-	b=bLZf6c5Nmg2lQtfWRJC6K9QzQu7CQxukLZLIY5pu38+sKj8nsf4du5hLKYyCmdmyKqIr
-	 EWxR29DUO/V9oXL2mrmsCjAihMLWWd54yENaFw08E5xzv9XBojQmaHCeM9fKNJX0mL9pr
-	 Ox6VR7zSl4IubgsS5496xiliG19SZ8+jMprmttP99Lves4HQPfQ7rAWioQLqvYMCznL41
-	 YsdiQUJNIeALRU41skVR/4WT/dIvx/I19c9sav2keRXDFJERz/U+uZ0vqbuYyUapnA5+A
-	 KuKvJngnKWn7yBc/Q9q+1kfvaa0TSmtA9NuLqh1/Jvrf8d/c2Af9XXE8PoyUw6EC+FQ==
+	t=1795528988;
+	b=KRl64d22mUD+mMWp1jdB+mH2Y9iO4YGp1WnU4PGMT5GsdxnnnHb3m23MaVqJY438uVww
+	 +0TRcwQet+zeaHc3WAjlLebEMgpNP8qah2+8ig1EhRU0eS5UVTbkxcZ2GmHoDuTfecx6E
+	 vsVWmNXP3nqao6LEqU/lVoc5aUavOWALWfMcBE1jNfXAjgwO71fMPXKHYz7ahQadK/D4w
+	 9thZWsP2fJtZ5JsE9VUx6HXGT5oFrtVwF0EHM7xO8SN+P7n7bJno08RqMmwxoet9Ilq6S
+	 jV87drj1lDAsGg6YlQvZHgfiT2zCy48fcoxMTgif2tFWumvpEQ+WYZqHnGUqcSU69Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795527850;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=VCAQg3UxYZNeau7J2CKEJUMFRL+RaFjODA4ITuoDI0E=;
-	b=nBGxm59EXjlByT8l1RZD0V/DyQDbZpb9vp7LRAmLdVgWEDxk3bVtp67SB0VH+Zt+L5TH
-	 Nltg4iFirWaEbG/XaRH4Rs1aeZ718dYjfWKXMVivh/m9k3Rmh/EwnwBHFTKPsnw8d3PJg
-	 lyiiCEYVZ6Z+Wl1Bk/6P1gdVr0X1VBfqBYaYYrg1gVM2uHPWEY9CN5LEWEIu+6V9JDQ3h
-	 Ve8FGTnvzlZHH7MZ15jddjJ0Vb5ZO1GFpRp4HE518lpVI0exOllmC07UrpLLjd0cRNVWA
-	 1gLojqkj23BpKn3eKd6bVW0ooo6fq3OGh179v6CeAoP9FNqeMQAOdYYHfdQh5qB65KA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795528988;
+	h=DMARC-Filter:Content-Type:Content-Transfer-Encoding:Message-ID:To:Cc:
+	 Subject:X-Priority:X-Mailer:X-Originating-IP:In-Reply-To:References:
+	 MIME-Version:Received:From:Date:X-HM-Tid:X-HM-MType:X-HM-NTES-SC:
+	 X-HM-Spam-Status:DKIM-Signature;
+	bh=jjn1cdAPwAEjID7Klfns1nWE1xV9tdTDdrkxDgPtTXM=;
+	b=ll2maiFJiaMoAWMRVrwRCrDZR2zmtj6MrbivuxHjkwxb5K+Js1iqh31NbfM0kEq2LfMG
+	 OvM8TrpVxy9x2MhRyqffwHk5mTjyCdPiT068rv6T1H1nHVMKdWxF38yi3PhrhGZ+yEs9W
+	 rXLYGYBGJKJ/hfOYc6qXIVl4bP5kFf+iPEEUXxPWP31tshSqYoAO47IcfcbbqShp3f4a0
+	 BCj1e4KU6K9l2ZBQBO3tp4D9Z2Q5usei2raZ4itMFGDjEjvYGqEmveRrBGSVM8F5lVRR9
+	 CQK9Tzn4/PWxqWBnc6pHfGkFZUU2f2a/GDbR/0wMUakXZSsW399xAOXPhHiAYc9RhQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kD08IbV4;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=mail.sdu.edu.cn;
+	spf=pass smtp.mailfrom=mail.sdu.edu.cn;
+	dkim=pass header.d=mail.sdu.edu.cn header.i=@mail.sdu.edu.cn header.a=rsa-sha256 header.s=default header.b=cuMVp4LP;
+	arc=none smtp.remote-ip=160.236.52.245
+Received: from mail-m16023652245.xmail.ntesmail.com (mail-m16023652245.xmail.ntesmail.com [160.236.52.245])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0C7606A321;
-	Tue, 24 Nov 2026 13:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB72606A685;
+	Tue, 24 Nov 2026 14:03:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EFB72606A685
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mail.sdu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.sdu.edu.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kD08IbV4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA2E1F000D0;
-	Tue, 24 Nov 2026 13:44:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795527849;
-	bh=VCAQg3UxYZNeau7J2CKEJUMFRL+RaFjODA4ITuoDI0E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kD08IbV4sPP6wimci9DX0lIlUPXWYZKoNRo87fPcvWuRRQVESpbutF1+imZyrsBb1
-	 HbIRCzo1Fyhfuc2/95jfJIhxpkQibRsB0C/7dyFJSv9cMXrC3NOvb5XVz36NSH4Z6T
-	 enogkVgJbQfmP1oj9TmjDyS3hraXXlULEINIOVZZePtgp/SbcUY0dDAizRyIayCcJ5
-	 gCLq8AP+cZrq5ieQtheqW8g/Zh89BTZYYJrfFBuW2y/HRrkQDncDQqk5+B7x9Tz41d
-	 7eaWFlp8/GFo6uQGLzXaZ+++/aY04vzcU4b/LtC7OFoDQkUOYJS76Ys07SL6PZhgRd
-	 4EGeZJuQLNYEg==
-Date: Tue, 24 Nov 2026 07:44:07 -0600
-From: Rob Herring <robh@kernel.org>
-To: Binbin Zhou <zhoubinbin@loongson.cn>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-serial@vger.kernel.org, conor+dt@kernel.org,
-	Binbin Zhou <zhoubb.aaron@gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: serial: 8250: Add dedicated
- Loongson-2K3000 UART compatible
-Message-ID: <20261124134407.GC3404231-robh@kernel.org>
-References: <cover.1793776192.git.zhoubinbin@loongson.cn>
- <c194b5248184779da500476281fd411fc80a98d6.1793776192.git.zhoubinbin@loongson.cn>
- <sashiko-outbox-196836@kernel.org>
- <20261119214532.GA757146-robh@kernel.org>
- <0009e3c5-dfff-4254-a06f-13c8664a1543@loongson.cn>
+	dkim=pass (1024-bit key) header.d=mail.sdu.edu.cn header.i=@mail.sdu.edu.cn header.a=rsa-sha256 header.s=default header.b=cuMVp4LP
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+Message-ID: <AOMAxwC3LEPQzPaWcDJ2aaq2.3.1795528977046.Hmail.202321181@mail.sdu.edu.cn>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev, Frank.Li@kernel.org, 
+	media-ci@linuxtv.org
+Subject: =?UTF-8?B?UmU6UmU6IFtQQVRDSF0gbWVkaWE6IGNvZGE6IEZpeCBwb3RlbnRpYWwgdXNlLWFmdGVyLWZyZWUgYWZ0ZXIgVkRPQSByZW1vdmFs?=
+X-Priority: 3
+X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com web
+In-Reply-To: <av9lA75EmTaC9OVD@lizhi-Precision-Tower-5810>
+References: <20261107-0d0c29e10a-media-coda-1@mail.sdu.edu.cn> <sashiko-outbox-202680@kernel.org> <av9lA75EmTaC9OVD@lizhi-Precision-Tower-5810>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,98 +54,105 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0009e3c5-dfff-4254-a06f-13c8664a1543@loongson.cn>
+Received: from 202321181@mail.sdu.edu.cn( [101.76.249.61] ) by ajax-webmail ( [127.0.0.1] ) ; Tue, 24 Nov 2026 22:02:57 +0800 (GMT+08:00)
+From: =?UTF-8?B?5p2O5bm/56GV?= <liguangshuo@mail.sdu.edu.cn>
+Date: Tue, 24 Nov 2026 22:02:57 +0800 (GMT+08:00)
+X-HM-Tid: 0aa20ddd8d72d0cdkusy9fc12731248c6
+X-HM-MType: 1
+X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMVHpP02bZAKsMEiErRSAekjx+ys+KNZNl0PLwl
+	f2MeqR5lbiqKsoq8sm3hZVy9q3VetZ+Wq0Te/EdHEVk+2W3XygE0t2b+veD5v+x2w+urvHVBazrP
+	h+FlfaheJ8AroyFyEW0FlbrUAg2H/VtR4IXQM=
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCHh8fVh9CSkhMGh5PHklJT1YVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlKS0pVTE1VSU9CVU1KWVdZFhoPEhUdFFlBWU9LSFVKS0
+	lCTUtKVUpLS1VLWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=cuMVp4LPU/+j6ZbMocMAyrPkL9S6iWtXDupDASgBqf+c5kgpcuy1kFnrhFxGw4GuE5LKVmiVkA7+skv66R9a7M3BnwCj8Ew0/d0Uk1OtB5vLFZyQS8KKyINzZj0fykImGuSxq+o7SN/m6p3v/+9fQnczSVcgHOm1j3ERS2ibL/k=; c=relaxed/relaxed; s=default; d=mail.sdu.edu.cn; v=1;
+	bh=jjn1cdAPwAEjID7Klfns1nWE1xV9tdTDdrkxDgPtTXM=;
+	h=date:mime-version:subject:message-id:from;
 
-On Tue, Nov 24, 2026 at 02:58:40PM +0800, Binbin Zhou wrote:
-> Hi Rob:
-> 
-> Sorry for the late reply.
-> 
-> On 2026/11/20 05:45, Rob Herring wrote:
-> > On Wed, Nov 04, 2026 at 07:52:04AM +0000, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > - [Low] dt-bindings: serial: 8250: duplicate ns16550a fallback block for ls2k3000
-> > > --
-> > > 
-> > > commit 71974153fe22bc00d365059be9198364c9cfaa86
-> > > Author: Binbin Zhou <zhoubinbin@loongson.cn>
-> > > 
-> > > dt-bindings: serial: 8250: Add dedicated Loongson-2K3000 UART compatible
-> > > 
-> > > This commit documents the loongson,ls2k3000-uart compatible string with
-> > > ns16550a as a fallback so the driver can distinguish the Loongson-2K3000 UART
-> > > from earlier Loongson UARTs that require MCR/MSR signal inversion.
-> > > 
-> > > > diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
-> > > > index 01abd39509a7a..33c13c48ed56e 100644
-> > > > --- a/Documentation/devicetree/bindings/serial/8250.yaml
-> > > > +++ b/Documentation/devicetree/bindings/serial/8250.yaml
-> > > > @@ -196,6 +196,9 @@ properties:
-> > > >                 - loongson,ls2k2000-uart
-> > > >             - const: loongson,ls2k1500-uart
-> > > >             - const: ns16550a
-> > > > +      - items:
-> > > > +          - const: loongson,ls2k3000-uart
-> > > > +          - const: ns16550a
-> > > 
-> > > [Severity: Low]
-> > > This isn't a bug, but properties:compatible in
-> > > Documentation/devicetree/bindings/serial/8250.yaml already has a two-item
-> > > block with const: ns16550a as the fallback that includes the other base
-> > > Loongson UART compatibles:
-> > > 
-> > >        - items:
-> > >            - enum:
-> > >                ...
-> > >                - loongson,ls2k0500-uart
-> > >                - loongson,ls2k1500-uart
-> > >            - const: ns16550a
-> > > 
-> > > Could loongson,ls2k3000-uart be added to that existing enum instead of adding
-> > > a separate two-item block?
-> 
-> Let me briefly explain why Loongson UART `compatible` is necessary at this
-> time.
-> First, as described in the driver, each `compatible` type defines different
-> driver data:
-> struct loongson_uart_ddata {
->         bool has_frac;
->         u8 mcr_invert;
->         u8 msr_invert;
-> };
-> Since the Loongson-2k3000 has already fixed the hardware issues with
-> mcr/msr, we need a new `compatible` to correspond to the updated
-> `driver_data`.
-> 
-> static const struct loongson_uart_ddata ls2k3000_uart_data = {
->         .has_frac = true,
->         .mcr_invert = 0,
->         .msr_invert = 0,
-> };
-> 
-> As for why a fallback to `ns16550a` is required in all cases, the DTS files
-> for the Loongson-2K1000 and similar devices were merged into the repository
-> before `8250_loongson.c`, and this approach was used at the time to maintain
-> compatibility[1].
-
-No one is questioning what the compatibles are, just where you add the 
-new schema entry. Use the existing one with the ns16550a fallback 
-instead of a new oneOf entry:
-
-      - items:
-          - enum:
-              - altr,16550-FIFO32
-              - altr,16550-FIFO64
-              - altr,16550-FIFO128
-              - fsl,16550-FIFO64
-              - andestech,uart16550
-              - nxp,lpc1850-uart
-              - opencores,uart16550-rtlsvn105
-              - ti,da830-uart
-              - loongson,ls2k0500-uart
-              - loongson,ls2k1500-uart
-          - const: ns16550a
-
-Rob
+SGkgRnJhbmssCgpUaGFua3MgZm9yIHRoZSByZXZpZXcuCgpGcm9tOiBGcmFuayBMaSA8RnJhbmsu
+bGlAb3NzLm54cC5jb20+CkRhdGU6IDIwMjYtMTEtMjAgMDU6MDc6MTUKVG86ICBzYXNoaWtvLXJl
+dmlld3NAbGlzdHMubGludXguZGV2CkNjOiAgR3VhbmdzaHVvIExpIDxsaWd1YW5nc2h1b0BtYWls
+LnNkdS5lZHUuY24+LGlteEBsaXN0cy5saW51eC5kZXYsRnJhbmsuTGlAa2VybmVsLm9yZyxtZWRp
+YS1jaUBsaW51eHR2Lm9yZwpTdWJqZWN0OiBSZTogW1BBVENIXSBtZWRpYTogY29kYTogRml4IHBv
+dGVudGlhbCB1c2UtYWZ0ZXItZnJlZSBhZnRlciBWRE9BIHJlbW92YWw+T24gU2F0LCBOb3YgMDcs
+IDIwMjYgYXQgMDc6MTQ6MzZBTSArMDAwMCwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToK
+Pj4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91
+bmQgMSBwb3RlbnRpYWwKPj4gaXNzdWUgdG8gY29uc2lkZXI6Cj4+IC0gW01lZGl1bV0gbWVkaWE6
+IGNvZGE6IHVuc3RvcHBlZCBETUEgYW5kIGpvYiBkZXN5bmMgb24gdGltZW91dCBpbgo+PiAgIHZk
+b2Ffc3RvcCgpCj4KPlBsZWFzZSBjaGVjayB0aGlzIGlzc3VlLgo+Cj5GcmFuawo+Cj4KPj4gSXQg
+YWxzbyBub3RpY2VkIDEgcmVsYXRlZCBwcmUtZXhpc3RpbmcgaXNzdWUgdGhpcyBwYXRjaCBkb2Vz
+IG5vdAo+PiBpbnRyb2R1Y2U6Cj4+IC0gW01lZGl1bV0gbWVkaWE6IGNvZGE6IHJlc291cmNlIGxl
+YWtzIGluIGNvZGFfb3BlbigpIGVycm9yIHBhdGhzIFsxXQo+PiAtLQo+Pgo+PiBjb21taXQgNjQx
+ZWFmYzI4NDcyOTA1MzhjYTMyOGExNzgzYTYzNWEwYzQ0OWFhMQo+PiBBdXRob3I6IEd1YW5nc2h1
+byBMaSA8bGlndWFuZ3NodW9AbWFpbC5zZHUuZWR1LmNuPgo+Pgo+PiBtZWRpYTogY29kYTogRml4
+IHBvdGVudGlhbCB1c2UtYWZ0ZXItZnJlZSBhZnRlciBWRE9BIHJlbW92YWwKPj4KPj4gVGhpcyBj
+b21taXQgcmVmZXJlbmNlLWNvdW50cyBWRE9BIGRyaXZlciBkYXRhIGFjcm9zcyBDT0RBIGNvbnN1
+bWVycyBhbmQKPj4gY29udGV4dHMsIHNlcmlhbGl6ZXMgVkRPQSBoYXJkd2FyZSBvcGVyYXRpb25z
+IGFnYWluc3QgZHJpdmVyIHJlbW92YWwsIGFuZAo+PiBkZXN0cm95cyB0aGUgVkRPQSBjb250ZXh0
+IGlmIGNvZGFfb3BlbigpIGZhaWxzLgo+Pgo+PiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL21lZGlh
+L3BsYXRmb3JtL2NoaXBzLW1lZGlhL2NvZGEvY29kYS1jb21tb24uYyBiL2RyaXZlcnMvbWVkaWEv
+cGxhdGZvcm0vY2hpcHMtbWVkaWEvY29kYS9jb2RhLWNvbW1vbi5jCj4+ID4gaW5kZXggYmUzN2Vh
+NTY4YmZlNS4uYjUxOWNmODU0MWRlZCAxMDA2NDQKPj4gPiAtLS0gYS9kcml2ZXJzL21lZGlhL3Bs
+YXRmb3JtL2NoaXBzLW1lZGlhL2NvZGEvY29kYS1jb21tb24uYwo+PiA+ICsrKyBiL2RyaXZlcnMv
+bWVkaWEvcGxhdGZvcm0vY2hpcHMtbWVkaWEvY29kYS9jb2RhLWNvbW1vbi5jCj4+Cj4+IFsgLi4u
+IF0KPj4KPj4gPiBAQCAtMjcyMSw2ICsyNzE5LDggQEAgc3RhdGljIGludCBjb2RhX29wZW4oc3Ry
+dWN0IGZpbGUgKmZpbGUpCj4+ID4gIGVycl9jbGtfZW5hYmxlOgo+PiA+ICAJcG1fcnVudGltZV9w
+dXRfc3luYyhkZXYtPmRldik7Cj4+ID4gIGVycl9wbV9nZXQ6Cj4+ID4gKwlpZiAoY3R4LT52ZG9h
+KQo+PiA+ICsJCXZkb2FfY29udGV4dF9kZXN0cm95KGN0eC0+dmRvYSk7Cj4+ID4gIAl2NGwyX2Zo
+X2RlbCgmY3R4LT5maCwgZmlsZSk7Cj4+ID4gIAl2NGwyX2ZoX2V4aXQoJmN0eC0+ZmgpOwo+PiA+
+ICBlcnJfY29kYV9uYW1lX2luaXQ6Cj4+Cj4+IFtTZXZlcml0eTogTWVkaXVtXQo+PiBUaGlzIHBy
+b2JsZW0gd2Fzbid0IGludHJvZHVjZWQgYnkgdGhpcyBwYXRjaCwgYnV0IGRvZXMgdGhpcyBlcnJv
+ciBwYXRoCj4+IHN0aWxsIGxlYWsgY3R4LT5kZWJ1Z2ZzX2VudHJ5IGFuZCBjdHgtPmN0cmxzIFsx
+XT8KPj4KPj4gY29kYV9vcGVuKCkgY3JlYXRlcyBjdHgtPmRlYnVnZnNfZW50cnkgd2l0aCBkZWJ1
+Z2ZzX2NyZWF0ZV9kaXIoKSBiZWZvcmUKPj4gdjRsMl9maF9pbml0KCkgYW5kIGluaXRpYWxpemVz
+IGN0eC0+Y3RybHMgaW4gY29kYV9jdHJsc19zZXR1cCgpLCBidXQKPj4gbmVpdGhlciBkZWJ1Z2Zz
+X3JlbW92ZSgpIG5vciB2NGwyX2N0cmxfaGFuZGxlcl9mcmVlKCkgaXMgY2FsbGVkIGR1cmluZwo+
+PiBlcnJvciB1bndpbmQsIGxlYXZpbmcgc3RhbGUgZGVidWdmcyBkaXJlY3RvcmllcyBhbmQgbGVh
+a2VkIGNvbnRyb2wgaGFuZGxlcgo+PiBtZW1vcnkgd2hlbiBvcGVuaW5nIHRoZSBkZXZpY2UgZmFp
+bHMuCj4+Cj4+IFsgLi4uIF0KPj4KPj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9tZWRpYS9wbGF0
+Zm9ybS9jaGlwcy1tZWRpYS9jb2RhL2lteC12ZG9hLmMgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3Jt
+L2NoaXBzLW1lZGlhL2NvZGEvaW14LXZkb2EuYwo+PiA+IGluZGV4IGNkMDg1YzFjNzNmNDIuLmQ5
+MjQ5Yzk0M2RmYTIgMTAwNjQ0Cj4+ID4gLS0tIGEvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9jaGlw
+cy1tZWRpYS9jb2RhL2lteC12ZG9hLmMKPj4gPiArKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3Jt
+L2NoaXBzLW1lZGlhL2NvZGEvaW14LXZkb2EuYwo+Pgo+PiBbIC4uLiBdCj4+Cj4+ID4gQEAgLTE0
+MiwxNyArMTUwLDQzIEBAIGludCB2ZG9hX3dhaXRfZm9yX2NvbXBsZXRpb24oc3RydWN0IHZkb2Ff
+Y3R4ICpjdHgpCj4+ID4KPj4gPiAgCXJldHVybiAwOwo+PiA+ICB9Cj4+ID4gKwo+PiA+ICtpbnQg
+dmRvYV93YWl0X2Zvcl9jb21wbGV0aW9uKHN0cnVjdCB2ZG9hX2N0eCAqY3R4KQo+PiA+ICt7Cj4+
+ID4gKwlzdHJ1Y3QgdmRvYV9kYXRhICp2ZG9hID0gY3R4LT52ZG9hOwo+PiA+ICsJaW50IHJldDsK
+Pj4gPiArCj4+ID4gKwltdXRleF9sb2NrKCZ2ZG9hLT5sb2NrKTsKPj4gPiArCXJldCA9IHZkb2Et
+PnJlbW92ZWQgPyAtRU5PREVWIDogdmRvYV93YWl0KGN0eCk7Cj4+ID4gKwltdXRleF91bmxvY2so
+JnZkb2EtPmxvY2spOwo+PiA+ICsKPj4gPiArCXJldHVybiByZXQ7Cj4+ID4gK30KPj4gPiAgRVhQ
+T1JUX1NZTUJPTCh2ZG9hX3dhaXRfZm9yX2NvbXBsZXRpb24pOwo+PiA+Cj4+ID4gK3N0YXRpYyB2
+b2lkIHZkb2Ffc3RvcChzdHJ1Y3QgdmRvYV9kYXRhICp2ZG9hKQo+PiA+ICt7Cj4+ID4gKwlpZiAo
+IXZkb2EtPmN1cnJfY3R4KQo+PiA+ICsJCXJldHVybjsKPj4gPiArCj4+ID4gKwlpZiAodmRvYV93
+YWl0KHZkb2EtPmN1cnJfY3R4KSkKPj4gPiArCQl3cml0ZWwoVkRPQVNSUl9TV1JTVCwgdmRvYS0+
+cmVncyArIFZET0FTUlIpOwo+PiA+ICsJd3JpdGVsKDAsIHZkb2EtPnJlZ3MgKyBWRE9BSUUpOwo+
+PiA+ICsJc3luY2hyb25pemVfaXJxKHZkb2EtPmlycSk7Cj4+ID4gKwl2ZG9hLT5jdXJyX2N0eCA9
+IE5VTEw7Cj4+ID4gK30KPj4KPj4gW1NldmVyaXR5OiBNZWRpdW1dCj4+IFdoZW4gYSB0cmFuc2Zl
+ciB0aW1lcyBvdXQgaW4gdmRvYV93YWl0KCksIGRvZXMgdmRvYV93YWl0X2Zvcl9jb21wbGV0aW9u
+KCkKPj4gbGVhdmUgRE1BIHJ1bm5pbmcgd2hpbGUgdmRvYV9zdG9wKCkgbGVhdmVzIHN1Ym1pdHRl
+ZF9qb2IgYW5kIGNvbXBsZXRlZF9qb2IKPj4gcGVybWFuZW50bHkgb3V0IG9mIHN5bmM/Cj4+Cj4+
+IFdoZW4gdmRvYV93YWl0X2Zvcl9jb21wbGV0aW9uKCkgcmV0dXJucyAtRVRJTUVET1VUIHRvIGNv
+ZGFfZmluaXNoX2RlY29kZSgpLAo+PiB0aGUgY2FsbGVyIGltbWVkaWF0ZWx5IHJlbGVhc2VzIHRo
+ZSBpbnRlcm5hbCBzb3VyY2UgZnJhbWUgYW5kIHJldHVybnMKPj4gZHN0X2J1ZiB0byB2aWRlb2J1
+ZjIgd2l0aG91dCBWRE9BU1JSX1NXUlNUIG9yIFZET0FJRSBiZWluZyB3cml0dGVuLCBzbwo+PiBW
+RE9BIERNQSBjYW4gc3RpbGwgd3JpdGUgdG8gdGhlIHJldHVybmVkIGJ1ZmZlci4gIEZ1cnRoZXJt
+b3JlLCBiZWNhdXNlCj4+IHZkb2EtPmN1cnJfY3R4IGlzIHN0aWxsIHNldCBhbmQgY29tcGxldGVk
+X2pvYiBpcyBuZXZlciB1cGRhdGVkIHRvIG1hdGNoCj4+IHN1Ym1pdHRlZF9qb2Igd2hlbiByZXNl
+dHRpbmcgdGhlIGhhcmR3YXJlIGluIHZkb2Ffc3RvcCgpLCB0aGUgbmV4dAo+PiB2ZG9hX3N0b3Ao
+KSBjYWxsIHdhaXRzIGFub3RoZXIgMzAwbXMgb24gdGhlIHNhbWUgdGltZWQtb3V0IHRyYW5zZmVy
+LCBhbmQKPj4gZXZlcnkgc3Vic2VxdWVudCBqb2Igb24gdGhhdCBjb250ZXh0IHNlZXMgc3VibWl0
+dGVkX2pvYiAhPSBjb21wbGV0ZWRfam9iCj4+IGFmdGVyIGNvbXBsZXRpb24gYW5kIHN0YWxscyBm
+b3IgMzAwbXMgYmVmb3JlIHJlc2V0dGluZyB0aGUgaGFyZHdhcmUuCj4+Cj4+IFsxXSBodHRwczov
+L3Nhc2hpa28uZGV2LyMvYnVnL2xpbnV4LTI4YTM3NTVkLTg4MDAtNDJhZC04NDUxLTdmNzQyMWRi
+NDk1NQo+Pgo+PiAtLQo+PiBTYXNoaWtvIEFJIHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2
+LyMvcGF0Y2hzZXQvMjAyNjExMDctMGQwYzI5ZTEwYS1tZWRpYS1jb2RhLTFAbWFpbC5zZHUuZWR1
+LmNuP3BhcnQ9MQo+CgpNeSB1bmRlcnN0YW5kaW5nIGlzIHRoYXQgYSB0aW1lb3V0IG11c3Qgc3Rv
+cCB0aGUgdHJhbnNmZXIgYmVmb3JlIENPREEKcmV0dXJucyBpdHMgYnVmZmVycywgYW5kIGEgcmVz
+ZXQgbXVzdCBhbHNvIHJldGlyZSB0aGUgcGVuZGluZyBqb2IuClRoZSBleGlzdGluZyB0aW1lb3V0
+IHBhdGggZG9lcyBub3Qgc3RvcCB0aGUgdHJhbnNmZXIsIHdoaWxlIHRoZSBzdG9wCnBhdGggYWRk
+ZWQgaW4gdjEgYWxzbyBuZWVkcyBjb25zaXN0ZW50IGhhbmRsaW5nIG9mIHRoYXQgam9iIHN0YXRl
+LgoKV291bGQgeW91IHByZWZlciBhIHNlcGFyYXRlIHRpbWVvdXQgZml4IGFsb25nc2lkZSB0aGUg
+bGlmZXRpbWUgcmV2aXNpb24/CgpUaGFua3MsCkd1YW5nc2h1bwo=
