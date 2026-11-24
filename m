@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.47
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795541755;
-	b=MccWroAW4ZR9yH6QsOfWJuuQaqu2Hi8Wk3/t7fqflcLP+IYTZbU9CMqYv2Oz7nQLmmlZ
-	 pPsCqm/aEWIxWQImxawuyjGg2EKe3L1O3iR8vrskS6XQfeN8I7NyztE3UxMuceyKTHCgW
-	 kPS4OmWOG/ntaE1tGdFWdgFEcesdaJjMFWnqmy3XZMaCe2n5VcAmw3Co0NIoxeosfqMtR
-	 MhNhlRhWZO3JvmL7zjJThrrAlcN6sxQGwSwJz7ICJ+xjz+6zisVP4BhKlGBbEZVbFoldc
-	 A9GlycErcDwj3JnqjK57r/yCXC9a0ACHYHdnh/9vS800rvjX3Y25b1//05cb/HPTKjw==
+	t=1795541885;
+	b=CgdGx2XpYWjy6cEeYZp4s7FcQCiIUVEKgqR7nYDiW3p1s9K1Px3gLPakK/dE2mGrBNXl
+	 /HP0rppZbLwt7lanwKqW4fKfLreUEzhnoOXWFMUr4DBIHMBMQyDKmuf/2DCYjUyRiPBcd
+	 bAaUW9G6Uy1HS6GUypDNPGS0OmfGNiGLq8XcxL035soJ8zG6U2ZqfNfQ+xOUAvSaLH4Fk
+	 PJslMoL1d+I9u6MZOPMjyxvqb0rO1eOb6zRMYOw3Kfs6UjTPubmovZoI/NalA571Mtf56
+	 erbVIcBBf5RLDFKVL+bXsYdu5T0P48h5YwtVGVXNxpqFkoB+ThnsO09Q7v3EPtrNQjQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795541755;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795541885;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=/wAkO2VIXgEXGO/81/dkTBjdiCoL5B7xqkyttC27AeQ=;
-	b=cdeboSByB0VDkMLbSdX0xkWr7rTrbVjM083UNtO+OCyCO9UOsODfIvjmoNOh/dduHtVR
-	 IBO4kS6KKLSWkniYLpOo0iqsDfpDt/cM8QBTcHyUJ3ar2LwB+2lPFCfmf1Aca3TxNqgm2
-	 sUkeIhR+0OxawcOniIRhaOP+IVnOLUNmq1+CSXCzrbMaTL49AgaA2+/cGx6MO4eRxmo5g
-	 9KdKWhUTGtFriQZ8vdi5i95x3C8BCiiDGiK5sIaVki8swYELxfRmErtzynpu4/KOBtc/Y
-	 LXy6M2kq4IHZSyHsQDj/cyGQH/jYCcqieL5wPewpfT3qok/FN6kWd3OEfcPHzvdjdSg==
+	bh=27zYXXgABty8CUqGukpLM4c2xVBftF9tF/4zdE571W4=;
+	b=pCAOuDRX+pJWzGSYxndnIqGyco6Fp3f8474dhvdAMTxpnxKVz8+Xa2qjgHQtggdv5AXj
+	 EHY7NPCeYuDWlnXuYbFm0WgTES/6BOKlndoUAVMYm3J9UHbnyvArSwngsTYsW6up41fFp
+	 rSHWwRg/6zyEwROLItLAwzNRlpz9jXp6mvQ8uJr75SHRFRZ43OsPau410tAOWIbPszaC0
+	 OJWHsRgR2q++Haa5ZJBNZx4NoH2xzxyFglmJfCpgvIXl0xHtNa6aje/fTBA1l/48fMgG3
+	 klbsAsV+iCNHuIuuycbnK24G+fLxR25VAIPHodl/tNVhjK+qMuPhzhjLNrI+e27HPDw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=NkZPg74i;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=nkXZh4Bb;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.47
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A52606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 17:35:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62A52606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989FB606A31E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 17:38:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 989FB606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=NkZPg74i
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c4d28f75d62so802614766b.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 09:35:55 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795541754; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=nkXZh4Bb
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c5133831027so691429566b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 09:38:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795541882; cv=none;
         d=google.com; s=arc-20260327;
-        b=AWAcHJaS3SBZhij960i0Vb4A6EhharZpyw8VTlUFEGLsrgH93Q5GVR3Mybw/iOUmzD
-         /ZOn3YO+b+2qxCQuwtGqSGDWM6NQ+de/YWoCJuSkMO5YiwQmBMt+3Z2D/Pk9s7E3LZrd
-         HCkXzrz604kk9131RM4IJB/SJHXUT79vR0aDyrHe6G+mT7nLrjSXbW9DJl8JDyd/IgbW
-         GeQ+C7OXDquVjMHTAFvjUCplWxEPQi6CZrvYfyEkwBGN4iPMRmRRPSCmVmsXervzRKC1
-         oxkOGA0hLipJGYtcKQhw/FeIGZKVXnuy76+WJSIlfy7pY2dH1vaSNiqjUVLQmCcgIPsR
-         RINQ==
+        b=sKCq54vr4voOvnNTwa6hKDNbzLj3CpgZpQ/ie5/vXLIt6EyuekL1+2G0F7ts6MHbVF
+         fgQijaEBTOlPTalIZpMh00dVpjLuTaGLk6NJ8QAGQf/DV1vBxOvyZ3yRZzU6qki/B7rd
+         wolHhjF60U1AAMLlbUCC38QctPa7TbirVTiN7p8tTprixTXF7pmpD1Zh/m9YdLU9Xj1d
+         OBtES7P6FJMWq2TErbqfsTGyWBUAS3GI9W3S5uBdp7rv9jhvkwEBS7jVqXWt7QoBHysa
+         uTlOwz48Vm1D+AoVc+ft7sZir3juUmmy7c5dz2Ue9kwFzK4pWJXjIBVebiZsZBR207px
+         H5yA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=/wAkO2VIXgEXGO/81/dkTBjdiCoL5B7xqkyttC27AeQ=;
+        bh=27zYXXgABty8CUqGukpLM4c2xVBftF9tF/4zdE571W4=;
         fh=yG0GPR0QiT6n4FwClexevtHuIFSRQ+sxjflZXF2i7Wc=;
-        b=Z7C9jqbMW+Qcr7mWghKoALDzjgv+GZW5HF4/CUwZjRz8qhYzdzeH3PldtxiXPpR6qP
-         7cLXKZvnEyNorQl/UJPCQnlcvtpzghaX7Gq4QvAQtnvcypddBiB0boj1ZZEMvNFtr/Jb
-         ojTdHAmrA9nSQs3xaVlb44+M8Jgl+CCLSnFl2V/y6M60I2U2yJPRegJXxdct3XdqTaSK
-         KmZSx0cvSP0DbhQ6EbVuRW24yThBynRYOhmdNVzh0NCd3xu8l0mieGu4G65ToKHLY6Fa
-         QAAedZfo8PbQMI7NgYFWUz6XhQFDm1C0t8R5Y40gH+guGvz9jPrW7LtYyCPx21mPSGM0
-         I3JA==;
+        b=nBUCqhbPBM+ydNomY55bYYVYrJQ6RTjsMW4cmrpFZ796moPD9I86zMi0pqQXRqT4WY
+         Ymnf5tAuzUf4CPZOFhRv56oIGXSy6oX8w7kY7zl/meNaVhf1IV1jSyHQyZjoaYVlcQTl
+         2f1eTmgV4pnQ1yaOCqRJeiqrb96patrU9XhoWU0EJaqju86GEAIO6P+XfVCbMMmI2VPi
+         DqQsL/ANG1y8Qe7jmDSOJSjyR6d5whdI8+WHRqkWFCzIuw2thfzgGa0w4JTeg92A7ugq
+         c2ojCVXgC7d27z57VXugTofYpezCIQbcxP+zXq0y6GMmx0nPuarewKRe5kNf1I8OwLWC
+         j2og==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795541754; x=1796146554; darn=lists.linux.dev;
+        d=google.com; s=20260707; t=1795541882; x=1796146682; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=/wAkO2VIXgEXGO/81/dkTBjdiCoL5B7xqkyttC27AeQ=;
-        b=NkZPg74iVNOeqCu0avdQAbX+fAzj/CjP1of/h4bR2WjkCUbtPv/sVo8OdlkpddBLeV
-         YjaAH9xhBWl3N3Rq2FG9k/V0BUcPmzm5G6BKSJR5L7RXo/84rWaXOhQsxocKj77yRSGp
-         0cKbtiGI8wYqQqbd5/T9FqsyHJjiWQYdiqc02L/ZCN4wPDuaDPI7sjqMo6izpZ5c2moq
-         S1D3i+V3oLuViiHWpbSF9UrFoxdzFWHKbGUuUF+1xMBBhv/gAs0EP3jJbD+iDCt8E0u/
-         yKubjEsoUPWQeUFvIXnxMZS5QIhp1ti9Kw+gyekWJXOV5AR34DrMgXSqhRcQ72onKC15
-         hwJQ==
+        bh=27zYXXgABty8CUqGukpLM4c2xVBftF9tF/4zdE571W4=;
+        b=nkXZh4Bbk1I5qCbXylB8/55GBwNDkoPyT8NB0Lxbyi0UEGSFVnhSXVSKUnQok2BvSX
+         NRlPxR4nHXu2U0LQwo4MXbrHLkz0nm8yQ0mEm3B2DmjbgzjyUTsxLni7EAtfDHOX+kGP
+         guKWZgcyHTX5X3/EciM+h7/54sq9rgui6d/93CN5VKkX/SHbtpmHMWvvMcGzB8tjJIyj
+         VA55N6mh3m1yFIhwXZP45YARnenIaF6JgfUXF4xEJIGldHZ2f8AKlzHC5WBMzvK2Zv6s
+         26hHgVrw+2Md2IK/HjVvYlsIdECB6K2RgtuI8C6R82Q9JuVaUCuD5GJS1vpUowl4U7Yz
+         oOkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795541754; x=1796146554;
+        d=1e100.net; s=20260707; t=1795541882; x=1796146682;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/wAkO2VIXgEXGO/81/dkTBjdiCoL5B7xqkyttC27AeQ=;
-        b=ci1/MI9g5m3m4xOLrN72D++5MVcStU80knmF9p7qRfaNfb4LC2pv2z1YzRTY4C2RL6
-         J2hjAGA54KZpa29vdDbbgsdtQkhpq/r2B9ZzdeolqBWHoX7AZubN80zzSTusO4F3FDl6
-         H2k9L8rOH6v4dAUEkcR+FgAsfVvp6tEZUGme3DbE48h9jTxarmFf8+qa5XyDEb/CjuGo
-         hiPI4y5zR3baPdH1bTED4Wv9lOz2nfGYaL/O3/RJ2gl6AdPUe4cD/MwJTSWtFcQw/TAN
-         dZryhsbf+OyZJAKNW/n/fdkLdVSA4Gc3eRmoibdo1kZ/IgdViB+mTXjrb/2SlDSt88bf
-         eSDg==
-X-Gm-Message-State: APuU4Z8fskdmHs8YdrtVIunlp/mVJnn9yMUBXDw/LhsKb8cWuV+WMyIw
-	SWmRivjJ+nBHo3oJXgcnhA1TTwKuetIcltuKuZQY96R/99T4YvQa0TYZ15C8Crj6gjTGQClWPvu
-	ZOua66pXHoQGPNy6xI4KN5BOozem4iJNgswyKqSNaw/KQll3I0rZUCmsazF8=
-X-Gm-Gg: AZFdTZdch8MwAbCuGhzMNaon4mkwMYBeTZij90KuvF8UyFEV3HFyJc5WPL7Dk23JDHf
-	yzNlaCv573z0d0gnT2rnwRxvSIZ+pGbmEmpQiUrdPudB4cltY0/YnSv9RUSjl7I1aoeVaUrAo/X
-	QXYd1lfw9pLEXHcxqpviBD3OXrainhROWg9r9FDUZmmq48ubGd9Vf51kCrOkppoQpC6/Hcvi9F0
-	3VrclA48qJQLj8yXjh+VA7wGrNS8H9XH/sMkqLvApchHwOEWEFH7dsv0rvMaoeTbnBKHl1Ly53x
-	UpO9ZoKN51827pjw5bD3h6mubJCgMlo4dl8nbCEuQZ9CM/X+9+S3w3qDIRTVOhS1bz5hm5K3Dc6
-	Hb0iIgkOTn3doG5kDWIzTOdystHlgI/ysL0dA84RJ2amagssJkh/8KEoAymx5Tg/NOv9V5uUqCB
-	JSnDbE2HXNhqmUERXxFkMo0Y7C98vmm5kBeUCVIdrkp7NCfY7x1Ec=
-X-Received: by 2002:a17:907:80c:b0:c31:7495:e57 with SMTP id
- a640c23a62f3a-c513acc24abmr1257134866b.44.1795541753145; Tue, 24 Nov 2026
- 09:35:53 -0800 (PST)
+        bh=27zYXXgABty8CUqGukpLM4c2xVBftF9tF/4zdE571W4=;
+        b=y9fC6ol/Xi6XXspQITCzNbQ0/jlr6IC8Vtnh0ygWhf6FVLICydyNdlIQTL67EOEGH0
+         jI094QOPCN05Wgv16IkAf5T1746S3u/B7sG4egfZVzPA6Lgg+cRQw+vUiGvo7tOUERtE
+         5BAmliwH9/1QVDRNjOwvWI/caY3C9DEbi5tA2is7cZJ/c790S3MMHPyR4K2ni5xiWBJS
+         MmBBtmKC6W/actobiT2RP9fWmcW0mPzco55KHTEVHzeJZiObTb7Pw5RU5YTsrO7KgnQ6
+         7G33u1xUVsBQC57Sr3yMHYEg0u3Zk81UJIZQRhRYuMs0UmRk2YyaoRhabCRoy+Xm6Yo+
+         9A7Q==
+X-Gm-Message-State: APuU4Z+oFDgM+dtbcoAll7+/R57m6YPu8xjCIL3ofGUpF2aFrx/TMKI2
+	dX3FDKmGQUqmDExO4ndKV3rpGHfSAVyHlkmNdj+eOmDUb0kXN0Yo3o0dV0hpYW2MqS/BklKQNEg
+	WxjaSTOG9VP5ghp1GW4ADVzIkvHYiQdn1uV8Q0ouJrCq9xROnfT6f91AGKJY=
+X-Gm-Gg: AZFdTZdAr+VGATuwBEPm/tAbPFf9N/FoVlkSIogygJ5b2u8zpWa9yXsAjB+026fhTrB
+	pWAGh8E3nSPnnm9XCANtiQNVW1to8b04u07GeROTJXWNY9f75aIvnXZQzX2fEIxbDFOPwOqfIzk
+	3f0waoWnBmfs7nhZHi7zYbx9RAJRO3cJjHoygdurIU7ThPaOeMAiVMYTiTprt8kdAZD+rUwmvlB
+	VIyUEW6+fZUC1L/0CAmQ2u1J9d8ia2NtlBtRl24OnakP2QqKwrp/bhoJbhATPBV6l4DFiLDFAGp
+	CmiZqLpaVN78rNnQqxF5AjDe5IqI0zjx50JKzc/HsbJfbAsdvNri8nLQ23liIvwUNiJaB7SddEx
+	6upIphl4dW/QjyiFZcq6DLgcI98tiWo4Ajw5s/a7IiK+us7Sp5GP09VwM/UaI3pXg0GKoOtDVcZ
+	xml4gpgI7H00O04hSW3Jb2s3MH5ZqS4+KUi92plZrp3ISGI4ktJgCg9+EewV/kZ/J/gcTHgSiZ
+X-Received: by 2002:a17:906:1b45:b0:c4c:f85f:aa2b with SMTP id
+ a640c23a62f3a-c513a817fc7mr933423266b.24.1795541882037; Tue, 24 Nov 2026
+ 09:38:02 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,13 +105,14 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261122184453.2668189-1-jthoughton@google.com>
- <20261122184453.2668189-13-jthoughton@google.com> <sashiko-outbox-228641@kernel.org>
-In-Reply-To: <sashiko-outbox-228641@kernel.org>
+ <20261122184453.2668189-15-jthoughton@google.com> <sashiko-outbox-228643@kernel.org>
+In-Reply-To: <sashiko-outbox-228643@kernel.org>
 From: James Houghton <jthoughton@google.com>
-Date: Tue, 24 Nov 2026 12:35:15 -0500
-X-Gm-Features: Aa3M54qM2bzzQR-P_rcwCCOMyq5mZyshNYBv8SLMy30_0cDsEPQ8yIqkgAXCpq8
-Message-ID: <CADrL8HVaMx9r0kjm3LngCG61kNmK6OekexiUAvayoqO_fdykhA@mail.gmail.com>
-Subject: Re: [PATCH v3 12/19] arm64: Support hugetlb vmemmap optimization
+Date: Tue, 24 Nov 2026 12:37:25 -0500
+X-Gm-Features: Aa3M54pJqG_uJJ6nSsmIk2hsh8SZo2wXqFjyOnO5jM3lVaei5N6Moc8ra8UgiVo
+Message-ID: <CADrL8HUHT5aSwXHg2z4hFqn7gaKNFavKOzKW974T84BapHXYUg@mail.gmail.com>
+Subject: Re: [PATCH v3 14/19] selftests/mm: Add HugeTLB vmemmap optimization
+ stress test
 To: sashiko-reviews@lists.linux.dev
 Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
 	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
@@ -126,70 +127,149 @@ Content-Transfer-Encoding: quoted-printable
 
 On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] arm64/mm: arch_support_vmemmap_remap() only checks BBML3 on
->   boot CPU
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Medium] selftests/mm: offlined memory blocks not re-onlined in
+>   stress_phase()
+> - [Low] selftests/mm: unchecked mktemp failure in
+>   hugetlb_vmemmap_stress.sh
 > --
 >
-> commit d9205a2d3f06bed3d56fccb15aefe364db523337
+> commit 15090370906fbd4c082668bfc18a1ce3c873bcb2
 > Author: James Houghton <jthoughton@google.com>
 >
-> arm64: Support hugetlb vmemmap optimization
+> selftests/mm: Add HugeTLB vmemmap optimization stress test
 >
-> This commit enables HugeTLB vmemmap optimization (HVO) on arm64 systems
-> that support hardware access flag updates and BBML3, disabling early
-> section-based vmemmap optimization in vmemmap_populate().
+> This commit adds a kselftest script that stresses HugeTLB vmemmap
+> optimization (HVO) across accounting, concurrent access, and fault-inject=
+ion
+> phases.
 >
-> > diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/=
-pgtable.h
-> > index 7421c0a048ffe..5dadaac54bef5 100644
-> > --- a/arch/arm64/include/asm/pgtable.h
-> > +++ b/arch/arm64/include/asm/pgtable.h
-> > @@ -1931,6 +1931,12 @@ static inline void clear_young_dirty_ptes(struct=
- vm_area_struct *vma,
-> >
-> >  #endif /* CONFIG_ARM64_CONTPTE */
-> >
-> > +#define arch_support_vmemmap_remap arch_support_vmemmap_remap
-> > +static inline bool arch_support_vmemmap_remap(void)
-> > +{
-> > +     return system_supports_bbm_through_af();
-> > +}
+> > diff --git a/tools/testing/selftests/mm/hugetlb_vmemmap_stress.sh b/too=
+ls/testing/selftests/mm/hugetlb_vmemmap_stress.sh
+> > new file mode 100755
+> > index 0000000000000..b64fdb3ed7614
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/mm/hugetlb_vmemmap_stress.sh
+> [ ... ]
+> > +orig_nr=3D$(cat "$hp_dir/nr_hugepages")
+> > +target_nr=3D$(( orig_nr + nr ))
+> > +marker=3D"hvo-stress-$$-$(date +%s)"
+> > +tmpdir=3D$(mktemp -d)
+> > +pids=3D()
+>
+> [Severity: Low]
+> What happens if mktemp -d fails here?  Because only set -u is active,
+> tmpdir becomes empty and hotplugger() appends to /hotplug in the root
+> directory (which cleanup() does not remove).
+
+I will fail the test if mktemp -d fails, thanks!
+
+> [ ... ]
+>
+> > +hotplugger() {
+> > +     local blk state removable
 > > +
-> >  static inline int try_update_vmemmap_pte(unsigned long addr, pte_t *pt=
-ep,
-> >                                        const pte_t pte)
-> >  {
+> > +     while :; do
+> > +             for blk in /sys/devices/system/memory/memory*; do
+> > +                     state=3D$(cat "$blk/state" 2>/dev/null)
+> > +                     removable=3D$(cat "$blk/removable" 2>/dev/null ||=
+ echo 1)
+> > +                     [ "$state" =3D online ] || continue
+> > +                     [ "$removable" =3D 1 ] || continue
+> > +                     echo "$blk" >> "$tmpdir/hotplug"
+> > +                     # A signal aborts a pending offline_pages(). Use
+> > +                     # --foreground so that the writer stays in the wo=
+rker's
+> > +                     # process group and is killed by stop_workers().
+> > +                     timeout --foreground 10 \
+> > +                             sh -c "echo offline > $blk/state" 2>/dev/=
+null
+> > +                     echo online > "$blk/state" 2>/dev/null
+> > +                     sleep 1
+> > +             done
+> > +     done
+> > +}
+> [ ... ]
+> > +cleanup() {
+> > +     local blk t
+> > +
+> > +     stop_workers
+> > +     for t in fail_hugetlb_vmemmap_pte; do
+> > +             [ -d "$(fa_dir $t)" ] && fa_disable $t > /dev/null
+> > +     done
+> > +     if [ -f "$tmpdir/hotplug" ]; then
+> > +             sort -u "$tmpdir/hotplug" | while read -r blk; do
+> > +                     [ "$(cat "$blk/state")" =3D online ] ||
+> > +                             echo online > "$blk/state" 2>/dev/null
+> > +             done
+> > +     fi
+> > +     # drain() also frees free surplus pages left by failed restores.
+> > +     drain > /dev/null
+> > +     rm -rf "$tmpdir"
+> > +}
+> > +trap cleanup EXIT
+> > +trap 'exit $KSFT_FAIL' INT TERM
+> > +
+> > +# Run a stress phase. $1: name, $2: fault attr to enable ("" for none)=
+.
+> > +stress_phase() {
+> > +     local name=3D$1 fa=3D$2 base after injected
+> > +
+> > +     if [ -n "$fa" ] && [ ! -d "$(fa_dir "$fa")" ]; then
+> > +             echo "SKIP: $name (no $(fa_dir "$fa"))"
+> > +             return
+> > +     fi
+> > +
+> > +     log "phase $name: ${duration}s"
+> > +     base=3D$(memmap_total)
+> > +     [ -n "$fa" ] && fa_enable "$fa"
+> > +     start_workers
+> > +     sleep "$duration"
+> > +     stop_workers
+> > +     if [ -n "$fa" ]; then
+> > +             injected=3D$(fa_disable "$fa")
+> > +             log "$name: injected $injected failures"
+> > +             [ "$injected" -gt 0 ] ||
+> > +                     log "WARNING: $name: no failures injected"
+> > +     fi
+> > +
+> > +     drain || return
+> > +     after=3D$(memmap_total)
+> > +     if [ "$after" -ne "$base" ]; then
+> > +             fail "$name: memmap pages $after after drain, expected $b=
+ase"
+> > +     else
+> > +             pass "$name"
+> > +     fi
+> > +}
 >
-> [Severity: High]
-> Can arch_support_vmemmap_remap() return true on heterogeneous systems
-> where the boot CPU supports BBML3 but secondary CPUs do not?
+> [Severity: Medium]
+> Should memory blocks recorded in $tmpdir/hotplug be re-onlined at the end
+> of each stress_phase() (or in stop_workers()) rather than only in
+> cleanup() on script exit?
 >
-> ARM64_HAS_BBM_THROUGH_AF (added in commit "arm64: Add bbm_through_af
-> capability") is registered as ARM64_CPUCAP_SYSTEM_FEATURE, so
-> has_bbm_through_af() is evaluated once with SCOPE_SYSTEM during
-> setup_system_capabilities():
+> If SIGTERM from stop_workers() terminates hotplugger() after offlining a
+> block and before "echo online > $blk/state" runs, that block stays offlin=
+e
+> during drain(), the post-phase memmap_total() check, and any subsequent
+> phase.  When page_ext is active (such as with -o and -m together),
+> offlining a block frees its section page_ext table and decrements
+> nr_memmap_pages until the block is re-onlined:
 >
-> arch/arm64/kernel/cpufeature.c:has_bbm_through_af() {
+> mm/page_ext.c:free_page_ext() {
 >     ...
->         return cpu_supports_bbml3() && has_cpuid_feature(caps, scope);
+>         table_size =3D page_ext_size * PAGES_PER_SECTION;
+>         memmap_pages_add(-1L * (DIV_ROUND_UP(table_size, PAGE_SIZE)));
+>     ...
 > }
 >
-> While has_cpuid_feature() checks the system-wide sanitised
-> ID_AA64MMFR1_EL1 value for SCOPE_SYSTEM, cpu_supports_bbml3() only checks
-> ID_AA64MMFR2_EL1 and MIDR_EL1 on the local CPU running
-> setup_system_capabilities() rather than checking
-> cpus_have_cap(ARM64_HAS_BBML3) across all early CPUs. If a secondary CPU
-> lacks BBML3, vmemmap_split_pmd() can still perform live in-place PMD
-> block-to-table transitions via pmd_populate_kernel() without
-> break-before-make, risking TLB conflict aborts on the vmemmap region.
-> (Note that commit "arm64: Drop BBML3 requirement for HVO" later in this
-> series removes the cpu_supports_bbml3() check, though that part of the
-> series is marked DO-NOT-MERGE.)
+> As a result, stress_phase() reads a lower memmap_total() than base and
+> reports a false accounting failure.
 
-This is the same issue as in patch 9. Please see my reply[1]. This
-will be fixed in v4.
+I will re-online the memory blocks after stop_workers() in each phase in v4=
+.
 
-[1] https://lore.kernel.org/linux-mm/CADrL8HUgo0zAHe7_eF1+hfTR6jBbZ=3DUKB1q=
-PpMWpksvqbNHsyw@mail.gmail.com/
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122184453.26=
+68189-1-jthoughton@google.com?part=3D14
