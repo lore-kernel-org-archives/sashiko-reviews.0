@@ -1,65 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.112
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795542406;
-	b=XlBJhG9+NRadQ6pd5fG8LZ3oJRQWpuI5p3DAr09EyfQv8YUJSsHjuqfWvvsKdDbFAbvM
-	 2g3newezt9zm7Ms0X+GeWLvPGYtv6l2bWKofIHzUqhV69Mo3mXttc4+A4NGUSON38gfTD
-	 tsZzqObYe4BZXbs+0RfYDiu6Pnb/zdAHa+9ZmaydHy76b3eQHC/DGbaojNcXB21EbzucD
-	 lhZ9TUt0gfUyPEm+14P/bPdhdwqR5Uxxv3CqM8q388gqsIRPb/gbrZ2bnAD3MU5b0dc0d
-	 gq/RvmCU4kqt3HHEuQRfVLTik5pKDgUUlrOVBa22MvVtjIoOFyQb1MNRVVLsGvJAO0w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795542406;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date:
-	 MIME-Version:User-Agent:X-ZohoMailClient;
-	bh=H2f5l5LeTXDL7+v9Qv97t5mgH+JUfpOtVYF84J+Zklw=;
-	b=FgNdonXyPaWQwSf0BqZLaxmfQY21aqTKzlR9ECNts2BBdbor3oPtANpcW4sOPAaVXLlK
-	 yzbx+OE/DTOZI/Hwjdkp0y4WVFcvMI4Z+tA+9k2uGAjVeUrWnpFnF6wqkLdqzHREQtnKU
-	 s2Y2ZRmEJcVRNcyMgzSIhcYdd5u//6mbN/BNtc4Bca4zqkpx25snI5YRtEkiMR6O5w5xW
-	 tn+o/7CWxhE2UGjr4o7zD79uOY47XeCFbFX0KMf4OeGSQhAmvB2f0cfnNNVcqrfAwfu5R
-	 u3AxYOqNW8+h5webzGZF+nswuTnEzZGjYXDl9hEiTx8yCbZcA8JaoRMRsK+tJe9Qxkw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=rong.moe;
-	spf=pass smtp.mailfrom=rong.moe;
-	dkim=pass header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=nmfYG8Ns;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.112
-Received: from sender5-pp-f112.zoho.com (sender5-pp-f112.zoho.com [165.173.182.112])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795543231;
+	b=e2ppAC86qfDw1tx7Drs0BYaOVGpRutvsx0NjvPUBJaL7KfJVi70hOLvf87EVa/CjByco
+	 FrnEp0u04i0bfw3P3lz2fhT8QjTAOkWilvMkGKg5MljPH96jOZR6fRi3BpwrOfM+KN3C9
+	 OvpTiXHYLXfkLAokDZYjRUzs5Org3kcE93qqhLHjUS92dVEEHVXehPcq7z2qiAELsL8Qw
+	 pTjKNBDWk7W5pMwSi+wX/zTksVKL166pcCP1SNso1JVO2ZGW+e97Uopwtxky+AQwBQVGU
+	 ttZlBMXR6MpWJQb6bqeX5l9Zjwq5C7dHwjUYx666D5b4n5pQmi5Vs8FpeVjIpzWT4aA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795543231;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
+	 Subject:From:To:Date:In-Reply-To:References:User-Agent:MIME-Version:
+	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=DGteh9A13SwKf9DoOFbIVit9+Yy0hw7e/jraHRWTsv8=;
+	b=yLhNBdwMRZhEGu7jL+3rPTS62t8vlkruoU49F3QqVu/NmV3kizyfd/pJbJ7Qfn+9XmWn
+	 zQ4g7dAJ4p7oJ6iuh8gQF98JCatxB2yB3LFIE3F94RJXyRwehThLTqWZNckxc5/X8hRga
+	 5E0C5O1aGSd8MImd98Iv3yRG8+B1ONltNjQIbIjWJNZa2Xz29YfPhY0j0yku0vygJ5lqS
+	 xV4BQ8jnYNYh8yADblm7pVpbfdK7lWmA1SoQEiiWChoBkEyZ8ocYxLKxxAO5pOK4KhRsC
+	 RycUIvXDGKe1lMm6XLWYoQFPOUy3IfrOxDhCRx/JywX/ETFXmynxz2aw2j/9pjixT1Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eue4h8U0;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3306606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 17:46:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C3306606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BC4606A326
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 18:00:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38BC4606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=nmfYG8Ns
-ARC-Seal: i=1; a=rsa-sha256; t=1795542402; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=gFy7vilkW5CIKvHUSrqsA/yVXOxUG2ZkVe1E8peh/nBLgxYM/c+7hmo0Hy95t3tSaFJGQhqm9itGoiJLSoBTEplPgkXdssPouCJmCEhn/0iENVJ2u2Jde3O7WnC6wNxxke5VESCF3GlQo3wqcJTJGVP4osvPLCw3syaLS+RH4O0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1795542402; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=H2f5l5LeTXDL7+v9Qv97t5mgH+JUfpOtVYF84J+Zklw=; 
-	b=ikrZCCqYQspV9FqOHX5CGOSX9ZE3EB7GXFg5r4HfOXk5PhP8poo6h3V19HLHKDCDisGL3MX4oHAWo3llpO6u86aysgGmkxdk1NNE/drPXuHd3vqQrlLL8gkmFTm4yxnQDseFkQQie/LDhwwhQhbpTR7ql+ifNjwu/Kvl+EXho1U=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: a=rsa-sha256; b=nmfYG8Ns7ExuWzLY/GKNqEe50d4a8lSyS2nI2Mhopzu0gUpKU9GHvMK/vhl2v3JF5JW+zIrOpHsUojvS8VdaRKyVLFi8iWegC3tc7oLKGuDyMwp+zJ/r9b/L8VQ7VPFFgNA07YQ/orcM8TZMNDupoY30bSRMfOIXM+MCDZ6gUX4pknJd2PSmLhZm3pk1KTLrRH+AbDt8X8oAVXAaGuSf2O2grQGu79lp2bJvemCKoA1ehl05nZ6F5DqkZU2o8kjoq+C2ncvgs2Gq+qGRb5PS8EAl7c+ZF77+dTBF6X3cL+OJpR8OfPT1ju5gqHrTQoAByrh9oYClFsBMf7tY9ccicA==; c=relaxed/relaxed; s=zmail2048; d=rong.moe; v=1; bh=H2f5l5LeTXDL7+v9Qv97t5mgH+JUfpOtVYF84J+Zklw=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1795542401014413.03002637860595;
-	Tue, 24 Nov 2026 09:46:41 -0800 (PST)
-Message-ID: <1d4a4165214fc54a1325ba2298e937751d61f5fb.camel@rong.moe>
-Subject: Re: [PATCH v4 8/9] HID: haptic: Convert into a loadable plugin
- module
-From: Rong Zhang <i@rong.moe>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-In-Reply-To: <sashiko-outbox-231651@kernel.org>
-References: <20261125-hid-haptic-kmod-v4-0-03713a89f656@rong.moe>
-	 <20261125-hid-haptic-kmod-v4-8-03713a89f656@rong.moe>
-	 <sashiko-outbox-231651@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 25 Nov 2026 01:41:34 +0800
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eue4h8U0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1795543230;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DGteh9A13SwKf9DoOFbIVit9+Yy0hw7e/jraHRWTsv8=;
+	b=eue4h8U0ri+r9myUdKxeLY1bUJFRwJLykfSDTGYqjb2gCK2peHmShutpsU7NqAMpOPI3rr
+	6eIImM/D8a0Y1t0OjEAry9BsuJ3YNbTmuhOxToD4OxUsP/ReUzdmrqAqtsB9+DdaxPMaFI
+	gR0VNLFU4WrT9K1EYeBji17tPC0zdVg=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-mhOeT5bAO7ebaOGCtjwBZw-1; Tue, 24 Nov 2026 18:00:27 +0000
+X-MC-Unique: mhOeT5bAO7ebaOGCtjwBZw-1
+X-Mimecast-MFC-AGG-ID: mhOeT5bAO7ebaOGCtjwBZw_1795543227
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-949b0d3232fso695950385a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 10:00:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795543227; x=1796148027;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aBPFZif7OQNjM5QKYDwZZgIncRfMVh/lXXAldLLFMNQ=;
+        b=xd6305qce7U/OsKgzJAAF1978OOTFWhPwwe+TH+X36e191Zvak53Kla3sDazNH2BI6
+         3ErGO3Roe/69+0KmhHf05O+8TWUqLRP/bCKH+c/1nTKIx7Z3iL42VM7jeHIB5WmGI2Cb
+         pCuK70NPtWJnbA/wtJ6ObcnYlV0NGtNbgymZseypXO/RLv3ZQ+FN1o5IpiSxzXAXtFE1
+         mBZYUl3sv45JkRE3w7w0g+lcqE7rrC6Dop+hq9EptlX89c30CREN4rcCA94emh7TCqdb
+         NVgPqjrDX5yhv75G9+LPzVPmC6GDLtwAymbtTEzL5p/bqzQX5oFUnA5F79+RPnIjYHw/
+         kf4Q==
+X-Gm-Message-State: APuU4Z+RcNOezQpg8AIXbgQoRHE1CigywFxy2xQ9hDMjXRaC4gWontV2
+	GLXXFzejvBgfQs98wDu3vYgGIgGL6blOyAU/EDs2UwEcTLyqDAWjPx4zksbnYpnF3RI6A3fRbuh
+	Jiets5Sjkq12wVs8kTmew2Q8mNNrFhD9AfZhsp33JpMJgyNk5VXEo/RHOhynjH+T3hSBOjV3L3z
+	f3SEo0NP+WCLa1gttFMVQ5iiY25HlNinosk7iE5vY5+2kjFEWam9HdvQ==
+X-Gm-Gg: AZFdTZe9mYDUuMj6kMmpNzpuY8NUzH7QGUKV8cBUeo3sNHu9HBokeXCx0XBXYc1qYNU
+	MuhlHZ+d1jZy2MBUnoFikEAIllpIYlqtdhAgEQ6DeTYe6djyn0MxewTFSbeCEFRyS4chtwUSVfG
+	Nh653kwsJDTTj9NMvA4/fys/HVHTIXQv+ERCoLVswZ97mbV1KVCW8v1hc2pOvfGNeXtlbMEwGZf
+	0o8CBzy9nHpwhn8H7M+mGdmxSibw+/MN8CNMjq04r8vEDlResU8ZNwyYMS1kkVnwyvYnAgnTtGI
+	n5AHwSgQvc+P3yzkhmJ1PUoOLfaaCnXNZO3PCp/NRBIsdNKq9zVkOzfnmigdBNQmk7DCwqiMYyQ
+	qtKlnYHv8lxVZU/x9otWum8RDuxWUH8njzUoit4bddDVrezHqPgRaCZO8utk+RAMOm954xJVk4g
+	RdmxAHo5M=
+X-Received: by 2002:a05:620a:371d:b0:93f:3e39:efa1 with SMTP id af79cd13be357-949ba9c6d0fmr2938816585a.23.1795543225791;
+        Tue, 24 Nov 2026 10:00:25 -0800 (PST)
+X-Received: by 2002:a05:620a:371d:b0:93f:3e39:efa1 with SMTP id af79cd13be357-949ba9c6d0fmr2938776385a.23.1795543224025;
+        Tue, 24 Nov 2026 10:00:24 -0800 (PST)
+Received: from mlevitsk-thinkpadt14gen3.ibmmarkh.csb ([209.103.33.216])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb427388sm1088866085a.42.2026.11.24.10.00.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2026 10:00:23 -0800 (PST)
+Message-ID: <d699e5865a19a199d9044d815d3428a74c46f6c8.camel@redhat.com>
+Subject: Re: [PATCH v3 5/5] KVM: x86: nVMX: fix races in delivery of nested
+ posted interrupts
+From: "mlevitsk@redhat.com" <mlevitsk@redhat.com>
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Date: Tue, 24 Nov 2026 13:00:22 -0500
+In-Reply-To: <sashiko-outbox-229799@kernel.org>
+References: <20261123175512.80438-1-mlevitsk@redhat.com>
+	 <20261123175512.80438-6-mlevitsk@redhat.com>
+	 <sashiko-outbox-229799@kernel.org>
+User-Agent: Evolution 3.60.2 (3.60.2-3.fc44)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,100 +106,122 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Evolution 3.62.1-4 
-X-ZohoMailClient: External
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: s_b5YED1Lw_JfNni1C9SflJWl7rtaiCBOiAeG-c10ak_1795543227
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi All,
-
-On Tue, 2026-11-24 at 17:04 +0000, sashiko-bot@kernel.org wrote:
+On Mon, 2026-11-23 at 18:19 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] HID: haptic: module unload race via hid_plugin_put() in
->   hid-haptic.ko
+> - [High] KVM: nVMX: unhandled error and unmapped state in
+> =C2=A0 __nested_vmx_vmexit() PI completion
 > --
 >=20
-> commit 36f36535430850c43124dc68d1bb0a9b639c5f30
-> Author: Rong Zhang <i@rong.moe>
+> commit daa28df8cd412bbb1c1a76b22827fb7d30241474
+> Author: Maxim Levitsky <mlevitsk@redhat.com>
 >=20
-> HID: haptic: Convert into a loadable plugin module
+> KVM: x86: nVMX: fix races in delivery of nested posted interrupts
 >=20
-> This commit converts hid-haptic into a loadable module using the
-> hid-plugin framework so that hid-multitouch can load it on demand.
+> This commit synchronizes nested posted interrupt delivery with nested
+> VM-Exit using atomic operations on vcpu->arch.nested_guest_state and
+> processes pending nested posted interrupts in __nested_vmx_vmexit().
 >=20
-> Link: https://lore.kernel.org/linux-input/auypydfkhx2eg7vp764way4batdilzc=
-35inqda3exwzs3tk3ff@oagat6g46zto/
->=20
-> > diff --git a/drivers/hid/hid-haptic.c b/drivers/hid/hid-haptic.c
-> > index cbe834a77fd47..50d6673c7c211 100644
-> > --- a/drivers/hid/hid-haptic.c
-> > +++ b/drivers/hid/hid-haptic.c
-> > @@ -310,11 +310,12 @@ static void hid_haptic_destroy(struct ff_device *=
-ff)
-> > =20
-> >  =09kfree(haptic->hid_usage_map);
-> >  =09haptic->hid_usage_map =3D NULL;
+> > diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+> > index 61f50175ecb79..845825c018bf5 100644
+> > --- a/arch/x86/kvm/vmx/nested.c
+> > +++ b/arch/x86/kvm/vmx/nested.c
+> [ ... ]
+> > @@ -5122,7 +5128,13 @@ void __nested_vmx_vmexit(struct kvm_vcpu *vcpu, =
+u32 vm_exit_reason,
+> > =C2=A0=09if (enable_ept && is_pae_paging(vcpu))
+> > =C2=A0=09=09vmx_ept_load_pdptrs(vcpu);
+> > =C2=A0
+> > -=09leave_guest_mode(vcpu);
+> > +=09old_nested_state =3D leave_guest_mode(vcpu);
 > > +
-> > +=09hid_plugin_put(HID_PLUGIN_HAPTIC, &haptic->self_plugin->hp);
-> >  }
-> > =20
-> > -int hid_haptic_init(struct hid_device *hdev,
-> > -=09=09    struct hid_haptic_device *haptic,
-> > -=09=09    struct input_dev *dev)
-> > +static int __hid_haptic_init(struct hid_device *hdev, struct hid_hapti=
-c_device *haptic,
-> > +=09=09=09     struct input_dev *dev)
-> >  {
-> >  =09struct ff_device *ff;
-> >  =09int ret =3D 0, r;
-> > @@ -436,6 +437,20 @@ int hid_haptic_init(struct hid_device *hdev,
-> >  =09haptic->hid_usage_map =3D NULL;
-> >  exit:
-> >  =09dev_warn(&hdev->dev, "Cannot allocate haptic for %s: %d\n", hdev->n=
-ame, ret);
-> > +=09hid_plugin_put(HID_PLUGIN_HAPTIC, &haptic->self_plugin->hp);
-> >  =09return ret;
-> >  }
+> > +=09/* pairs with implicit memory barrier in vmx_deliver_nested_posted_=
+interrupt */
+> > +=09smp_mb__after_atomic();
+> > +
+> > +=09if (old_nested_state & KVM_NESTED_PI_PENDING)
+> > +=09=09__vmx_complete_nested_posted_interrupt(vcpu);
+> > =C2=A0
+> > =C2=A0=09if (nested_cpu_has_preemption_timer(vmcs12))
+> > =C2=A0=09=09hrtimer_cancel(&to_vmx(vcpu)->nested.preemption_timer);
 >=20
-> [Severity: Medium]
-> Can calling hid_plugin_put() from inside hid_haptic_destroy() and
-> __hid_haptic_init() allow hid-haptic.ko to be unmapped while a CPU is
-> still executing inside it?
+> [Severity: High]
+> What happens when __vmx_complete_nested_posted_interrupt() fails or runs
+> before vmcs12 pages are mapped?
 >=20
-> hid_plugin_put() is an inline helper that calls module_put(plugin->owner)=
-,
-> where plugin->owner is THIS_MODULE (hid-haptic.ko).  Because
-> hid-multitouch holds no direct symbol dependency on hid-haptic.ko, the
-> module refcount acquired by hid_plugin_get() is the only thing keeping th=
-e
-> module loaded:
+> If L1 configures an unbacked or MMIO GPA for posted_intr_desc_addr or
+> virtual_apic_page_addr, vmx->nested.pi_desc or virtual_apic_map.hva is NU=
+LL.
+> __vmx_complete_nested_posted_interrupt() then calls
+> kvm_handle_memory_failure(), setting vcpu->run->exit_reason to
+> KVM_EXIT_INTERNAL_ERROR and returning -ENXIO.=C2=A0 Because __nested_vmx_=
+vmexit()
+> ignores the return value, callers such as nested_vmx_reflect_vmexit() and
+> vmx_check_nested_events() continue running L1 in-kernel instead of exitin=
+g
+> to userspace, while non-KVM_RUN callers via vmx_leave_nested() clobber
+> vcpu->run->exit_reason.
 >=20
-> CPU0                                  CPU1
-> input_ff_destroy()
->   ff->destroy() [hid_haptic_destroy]
->     hid_plugin_put()
->       module_put(THIS_MODULE)
->         atomic_dec_if_positive()
->                                       delete_module("hid_haptic")
->                                         try_stop_module()
->                                         mod->exit()
->                                         free_module()
->         trace_module_put()
->     return;  <-- page fault on unmapped hid-haptic.ko text
+> In addition, when entering L2 with from_vmentry =3D=3D false (KVM_SET_NES=
+TED_STATE
+> or RSM), nested_vmx_enter_non_root_mode() defers nested_get_vmcs12_pages(=
+)
+> via KVM_REQ_GET_NESTED_STATE_PAGES while publishing KVM_NESTED_PI_ACTIVE =
+in
+> vcpu->arch.nested_guest_state.=C2=A0 If a nested posted interrupt arrives=
+ and an
+> L2->L1 exit happens before the first L2 entry, __nested_vmx_vmexit() clea=
+rs
+> KVM_REQ_GET_NESTED_STATE_PAGES without mapping pi_desc, so
+> __vmx_complete_nested_posted_interrupt() drops the interrupt and triggers=
+ a
+> spurious KVM_EXIT_INTERNAL_ERROR.
 >=20
-> The same race exists on the error path of __hid_haptic_init().  To avoid
-> executing module text after dropping the last reference, the caller
-> outside hid-haptic.ko should call hid_plugin_put() after
-> self_plugin->init() fails or after the destroy callback returns.
+> Finally, running __vmx_complete_nested_posted_interrupt() when vmx->fail =
+is
+> true clears pi_desc->on and writes max_irr into vmcs02 GUEST_INTR_STATUS,
+> which is then lost because sync_vmcs02_to_vmcs12() is skipped on vmx->fai=
+l.
 
-Due to how the FF core is designed, I haven't figure out an approach to
-move the ff->destroy() callback outside hid-haptic.
 
-I originally planned to prepare another series to make hid-haptic generic
-by attaching it to hid-input after this series is applied (because I
-bought a Logitech MX Master 4 two weeks ago), but haven't started working
-on it. If the delete_module() race is a concern, I think it would be
-better to implement the plan in v5, so that we can defer hid_plugin_put()
-to hid-input or hid-core.
+Technically KVM doesn't have to fail when nested PIR and/or nested APICv pa=
+ge are MMIO, as stated here:
 
-Thanks,
-Rong
+KVM: nVMX: Fail on MMIO completion for nested posted interrupts
+
+When the kernel has no mapping for the vmcs02 virtual APIC page,
+userspace MMIO completion is necessary to process nested posted
+interrupts. This is not a configuration that KVM supports. Rather than
+silently ignoring the problem, try to exit to userspace with
+KVM_INTERNAL_ERROR.
+
+Note that the event that triggers this error is consumed as a
+side-effect of a call to kvm_check_nested_events. On some paths
+(notably through kvm_vcpu_check_block), the error is dropped. In any
+case, this is an incremental improvement over always ignoring the
+error.
+
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Message-Id: <20210604172611.281819-7-jmattson@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+
+
+To avoid the complexity of bubbling up this error from __nested_vmx_vmexit,=
+ I will move the kvm_handle_memory_failure
+to vmx_complete_nested_posted_interrupt, and only note the error with the r=
+eturn value in the __vmx_complete_nested_posted_interrupt,
+which __vmx_complete_nested_posted_interrupt will continue to ignore.
+
+If the guest setup one of the structures in the MMIO, it will fail sooner o=
+r later anyway.
+
+Best regards,
+=09Maxim Levitsky
+
