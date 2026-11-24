@@ -1,99 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795519674;
-	b=ETJGMSo1AegBmW+067Ts0rJ/v/ZMqbr+zmDwW838XYGmHKgoShahiT0Wp3i1wMMyK3VI
-	 eLpAsmDls6058XFl0R0cyII2GWMUv3Qt6K5BLbcMy6SNan1sDuMp2kcSzKrQLIoQK079v
-	 eppOghwWw6A7Y6uG71b7B+DEk3mPDDO1z1DhaYceANXnlfb/RCZObN2L1pD/RGhhFnXMx
-	 UBzUXtr0FyyEK/uWNUEpmZQ8N/xu5t94TZLAfSUHRW5baiKb7kE6N8xj64erfkN0Mp7yx
-	 roLrF617MHIEwXcY/C+GgWmdLJCtSg6QOTvTGvQhezunPaEF5j0Rqe+11xDgsLkNfAQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795519674;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
-	b=m2l7N8hEC6fAuc5J27k78IMis62FTXmlKbZ/Md/3jOR8e40/K7g5ibr8vd1caqO+W/qj
-	 cR8U6SKz9FtkdNxfbHVVQoDamT6g/yEuBku9eEI07qp2Ro9hzh9Dr6j27NKuFtKcAdjyC
-	 tW6m2xZK7Cotq8GTWVnLBA4O5qTiMr8gO1bknveNOUs3DLhSd2bPYPTDHi7VkHr5AbEN3
-	 Sa2cP65qh+HzyvGnI4LhHN8zRpBqZNT8NVcNoHtXR+j9dS64Q07XQCOT6k2HqmD9Dvqom
-	 /VZsOPWJ9zOkmv2o4y5eoqwyA+GasLArRcdfVaKWbYmTQkRhUF7Gc2UeAsRM9P01meg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lHFD8eSd;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795521850;
+	b=pV4d/SIpwEmEN/kuvbXL5ktNFDE/j+m+C1FMJEePhr/iF7a0l3URLQCv9G1J2A8EKXhn
+	 8KrRvI59VFDrNR+6VVP6geW8gYe+00dLkSTWpGTiMu8SHVvKt5SEwl0H6cT6lNrZSl7Lt
+	 K7AKNTzQ0p2bVMs0siyvKNibIEQk5DbPxreoEkXfMPwGoLGmGDw/Vzr467Ar9xOlNKkEJ
+	 QyGNvpf9fOa/oeJkeQ1wyFB4nKPr0syAJr2fAh7X3SGi8Mi8ZOjxJbGVF0AboojbGYdl8
+	 jNxolRumjI1rn5sD8EuZRpu4bvKsqbKwQztfW/NqUaadxRSqL3k3sVGejH6y4Mz3K4A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795521850;
+	h=DMARC-Filter:Message-ID:DKIM-Signature:DKIM-Signature:Subject:From:
+	 To:Cc:Date:In-Reply-To:References:Organization:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=dOtQLZCrhUQO5+77tG8G7mFA+K9A/7D/ufirbjE1Ndc=;
+	b=nER9vm64czgubwPBWpmwRn9AubgLUJXu3w124Bo/SCMeazZxzPD94LU7zQTzyGEoduIE
+	 FEjpbU2+2Bnwu/5kmr7rQiEHcPPYgkFX/FHFJpamqHnCav5/I7K5BydUNtrKUOR7Ek8hO
+	 WQexs3kyLPdozPR3Xoyg3e5nb1UFrDfS21mUIqikT8ARXLzuZXbByS87wzeH1/pUx6Hq4
+	 knYJpjUqIGxnIw6QffPv3hB3k9eXeZswvAP6Tfwzh+sMM31dntsJfMQCFfc/hbsgiXj78
+	 gyfYQaOrhWNMRvfvzlToVIL4wlRwjqX9jZaZo/5eCNzCihVxQ+Jf8EZLa+4/e64s48A==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=0RIDOwA3;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=kDmbdYqP;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DAE606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 11:27:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98DAE606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625C1606A33A;
+	Tue, 24 Nov 2026 12:04:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 625C1606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lHFD8eSd
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-5363316fa0cso47909521cf.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 03:27:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795519672; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MNUfW80l8SoIp5+RBLPhc42LnaqcEkl+tcTkjAl/FiHicS4Vbp2eDoTVDx2TgIsiDb
-         ayCg2eQZUfPIZzRePDs8tYFGAuDO2zJrppYKS/AnwST338uQSy7/lLnHrr09CPWxXWGM
-         7OSVGl7xzOb92s2x4gK7kK/7m8faTE3v+6rA1y7HeMVhlSy42zS19w0+kMVaWQ0r2/XR
-         qK68MEwmNmD4FRXqYtDptvkcdBZoKkbdrJOcnj4ImBb1XtJUSjaVm9JvmlFnh0leWpML
-         LypGtvy4JlVC7kwrfi5PEbKm2MXJezxNo36KE6kEiL301HQj4SYUCF2ZSZQRiPt8ajp6
-         VD7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
-        fh=RU8nSI2EijC2y8B6rypEW77WbkjZMPjN4LQs4UIPXKo=;
-        b=AjIr2M4dBfJ23u7yWE2as0J2Mb02xMt86l7AJ5cCmvsFvaYrvBctsN2lL5MoRaNLb/
-         KbIlADKWaMj0Unz379/FdRGUtEwny3PNW5uS36gFbcRah1Qm4UNM1yVNzYoJB0JPWHxr
-         aZBOprpVPfFoTUTzS9ePG1Q61JVEvJFNdAkWqVpZb5HtyWtqld2S3u5cKNGfEzezAWJS
-         G9Tz1POwgRKL32J966T9CNF/cUhGpC+JoVMbVvTcRi2Kdm/tHnYKEKGHXP9sut6W2pc+
-         dVcvdnCPxs6VywwKReZbQ2QoWxQJ9ZDMe4VXvJ74iTzNwHI+L3dlXNq5zNJKXw1fws5L
-         M6LQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795519672; x=1796124472; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
-        b=lHFD8eSdvGC2VgIGP+BwpsInYjfl6hAgGd9716d/w1CoJ12TZ54sNpmC1jYdhvh1rT
-         EEwHeysowpYC6+bumcuZyLajgJVriMSmiAnR/Bns4UsmAtThlC21w1jta+/aXHt3yLao
-         jGHU4fLTzFwQEzbCPnTcgDH8Z5w69StImI38CW16FaKGMBxJhg9bmUBKLhSrUoBCxmRo
-         uej6mF5pvPnvT4y9q0DRzwBWs7X4XBN+Ul6t13n0YdqVwdJ+wtV1Jv0XITCwtSe3D44D
-         RqGv0fnCJ+LoHXQ3ha709LEyabnAA/HEsOFr9BlVJah17zKD+SGEQLyTFgBqj1DNPtS9
-         +Ftg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795519672; x=1796124472;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
-        b=IFEEd07EAqG+ULHRN3IKW47mKrw8BlHX2Czk+p/dBkj2s6s7Tm4deg8ee5pR2lFSJ/
-         PkGmg6EaipCu1kSdNN3H5mB6XfY6uYQoj7L5ZJWsfjKp8JvBp7c8fCZnv4BUktYvwVY/
-         dTHXJIrTC1Fb1bJpiH9s/5pkvB7jraokDqBRCsnCbjQmg/TDZKsCicbuK6ukDV+BDKVP
-         kXM2LwR2KycbNL/MSusHj53e96bFwYOb4SgxSjLz8zNN+t7rRNssaKXe3dU50XozTni4
-         z/PisznGMHl3kcjAOLQGrWtDMhbKH/W3vqmrJvyPp30g+7Bjwfn1dlnU2VZDiMnaQrNV
-         51MA==
-X-Gm-Message-State: APuU4Z91B8bi/lSEfJJSrcXwjXSWmg5Jx0YShRrN1x8AWkILrtBIfiYI
-	UjdtfC5Ux8CyXwCimAEtUNiehcNx5TGnDQm3JqvHFhg2+MEI8okPMjyMsZmA8ad2BHrgT/e/WJH
-	hq693PHRLxZZyAr6I1oeEyvhQlhHtxhTreg==
-X-Gm-Gg: AZFdTZev7EHapUMl5kgxSKGdxXRgEfByDvh2ZQr/z9noHsztCCxI51ATiMkGNtuHXVb
-	vKHT05gVtdSbdBjHGaxGc8p/hnAhn5lW0bzR1jv1kwBH4At3d6QN4KXgsoBtuazEmF73BWdDD64
-	kQrx3O5nQW3Sr/YzKJXR8cWnhVHsvgLdRQyVkJtWqWGaX9WXYVU5yY+fmDrP/RMgBzDP/Uihqga
-	kCfxyAynrYA8syuRWyOO0/leFVFCv4t0HrVzfv37IWSeMNIJ/0dpnTqSZmRmja8QYwtodyG47bt
-	p+c0gbp3lgFzlY3mNMPG2yHyR/U/JRmN84+9q98hbl5SpPTboKbDLZ83ddm7CTCj7v4ZmlNq/Xg
-	uD6rPHx8wpW9JRhwJkVzUSIuP5GxwXz9qMFAmmURxGig1b10jxNwzUmj3Nfu1w9VMYkFMjw==
-X-Received: by 2002:ac8:6906:0:b0:535:2283:20a3 with SMTP id
- d75a77b69052e-55d76a1f731mr241074461cf.33.1795519672518; Tue, 24 Nov 2026
- 03:27:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=0RIDOwA3;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=kDmbdYqP
+Message-ID: <2914e08473cb0827bff626e17c9bcaeba93720c9.camel@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1795521847;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dOtQLZCrhUQO5+77tG8G7mFA+K9A/7D/ufirbjE1Ndc=;
+	b=0RIDOwA3IRp+6mtG2XAbHpHG1LG4Drv4w4QJpDvVCmFAQYdbAhXbtRn6wZOXbAZfFanRAE
+	Csq8cQH3IGtQmKsoePL+OxYJoDz0e6ltPfkrEZP3wR5gzlYdqnFdM0jAaBbRobwB1EFdeJ
+	kdOUGE3MbEEKpnWJPIDrDdRdkkklYAzBxFLmW/8OvGeqIoGyBC5BEWOCMsutahjyiR7YoE
+	dVrNnnKuik83Y4WQEqNtq5onoz01/ShIbre2MZb5xq4A2xUX24OimAowyOWGR9RIT3V0VD
+	psQ9HL6XWvf1mKSCKIdkeHwXe1on/wacTpmohD+wUyVbi4qoILcHbBqtO7OrSg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1795521847;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dOtQLZCrhUQO5+77tG8G7mFA+K9A/7D/ufirbjE1Ndc=;
+	b=kDmbdYqPhCxpxPelHe40FjJ5MfVh7rjlk4AxUvLpjfZDFFPgXYlTgvV0mSOxvwhuATdmu4
+	cldDa+pgcxafB9CQ==
+Subject: Re: [PATCH net-next v5 2/9] dt-bindings: net: Add SoC-e SWIP MDIO
+ controller
+From: Vasilij Strassheim <v.strassheim@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, mfd@lists.linux.dev, robh@kernel.org, 
+	conor+dt@kernel.org, lee@kernel.org, linux-kernel@vger.kernel.org, 
+	netdev@vger.kernel.org
+Date: Tue, 24 Nov 2026 13:04:05 +0100
+In-Reply-To: <sashiko-outbox-227106@kernel.org>
+References: 
+	<20261120-devel-vstrassheim-soce-dsa-ml-v5-0-5de9225715e6@linutronix.de>
+	 <20261120-devel-vstrassheim-soce-dsa-ml-v5-2-5de9225715e6@linutronix.de>
+	 <sashiko-outbox-227106@kernel.org>
+Organization: Linutronix GmbH
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,120 +82,110 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261123-sdhi_rzg3l-v2-0-bad3a6358849@bp.renesas.com>
- <20261123-sdhi_rzg3l-v2-2-bad3a6358849@bp.renesas.com> <sashiko-outbox-229391@kernel.org>
-In-Reply-To: <sashiko-outbox-229391@kernel.org>
-From: Biju Das <biju.das.au@gmail.com>
-Date: Tue, 24 Nov 2026 11:27:41 +0000
-X-Gm-Features: Aa3M54ppbsJLM4wVbJ_c7D0B6fZzE35d4EIHnXGoFNEoMK2kWDjqihyiCCRU6Sk
-Message-ID: <CADT+UeBih2phy7qy_DeUtCdhj0QJQjfRco8AKWZn9NbRWPgM=Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] arm64: dts: renesas: rzg3l-smarc-som: Enable
- SD/eMMC on SDHI0
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
-	wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 23, 2026 at 2:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Low] arm64: dts: renesas: non-generic node name vqmmc-sd0-pvdd for
->   GPIO regulator
-> - [Low] arm64: dts: renesas: misplaced closing brace in #if
->   RZ_BOOT_MODE3 around &sdhi1
+On Sat, 2026-11-21 at 14:53 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] dt-bindings: net: soce,swip-mdio splits contiguous register
+>   block and 32-bit control register
 > --
->
-> commit ef8324be968fe270658aa5eec8f4516a9acb1022
-> Author: Biju Das <biju.das.jz@bp.renesas.com>
->
-> arm64: dts: renesas: rzg3l-smarc-som: Enable SD/eMMC on SDHI0
->
-> This commit adds pin control, regulator, and SDHI0 device tree nodes to
-> support either eMMC or an SD card on the RZ/G3L SMARC SoM depending on th=
+>=20
+> commit 9edcf12a958c9e727ec0bdb9d997f3a5d2655e08
+> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
+>=20
+> dt-bindings: net: Add SoC-e SWIP MDIO controller
+>=20
+> This commit adds a Device Tree binding schema for the MDIO controller
+> integrated into SoC-e SWIP Ethernet switch IP cores.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/net/soce,swip-mdio.yaml =
+b/Documentation/devicetree/bindings/net/soce,swip-mdio.yaml
+> > new file mode 100644
+> > index 0000000000000..7a0b8bd3ab71b
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/net/soce,swip-mdio.yaml
+> > @@ -0,0 +1,47 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/net/soce,swip-mdio.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: SoC-e SWIP FPGA MDIO controller
+> > +
+> > +maintainers:
+> > +  - Vasilij Strassheim <v.strassheim@linutronix.de>
+> > +
+> > +description:
+> > +  MDIO controller integrated into the SoC-e Switch IP (SWIP) FPGA core=
+.
+> > +  External MDIO buses are selected through a sibling MMIO MDIO mux.
+> > +
+> > +$ref: mdio.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: soce,swip-mdio
+> > +
+> > +  reg:
+> > +    items:
+> > +      - description: MDIO parameter, write data, and read data registe=
+rs
+> > +      - description: Lower 16-bit half of the MDIO transaction control=
+ register
+> > +
+> > +  reg-names:
+> > +    items:
+> > +      - const: data
+> > +      - const: control
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - reg-names
+> > +
+> > +unevaluatedProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    mdio@204 {
+> > +        compatible =3D "soce,swip-mdio";
+> > +        reg =3D <0x204 0xc>, <0x200 0x2>;
+> > +        reg-names =3D "data", "control";
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <0>;
+> > +    };
+>=20
+> [Severity: Medium]
+> As reported by Andrew Lunn on v3 [1], should this binding describe the
+> controller's contiguous 16-byte register block at <0x200 0x10> instead of
+> splitting it into out-of-order sub-ranges (<0x204 0xc> and <0x200 0x2>) a=
+nd
+> slicing the 32-bit control register at 0x200 across two DT nodes?
+>=20
+> In hardware, the 32-bit control register at 0x200 holds both the MDIO
+> transaction control bits and the external bus selector bits, followed by =
+the
+> three data registers at 0x204..0x20f.  Partitioning that single 32-bit
+> register into 16-bit halves so a sibling mdio-mux-mmioreg node can claim
+> <0x202 0x2> encodes Linux driver details, little-endian byte offsets, 16-=
+bit
+> MMIO access assumptions, and an artificial mdio@204 unit address into the=
+ DT
+> binding ABI.  Describing reg =3D <0x200 0x10> on mdio@200 and modeling th=
 e
-> SW_SD0_DEV_SEL macro.
->
-> > diff --git a/arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts b/arch/=
-arm64/boot/dts/renesas/r9a08g046l48-smarc.dts
-> > index e9b7b3280615c..3699712d8bf1d 100644
-> > --- a/arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts
-> > +++ b/arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts
-> > @@ -9,6 +9,7 @@
-> >
-> >  /* Switch selection settings */
-> >  #define RZ_BOOT_MODE3                1
-> > +#define SW_SD0_DEV_SEL               0
-> >  #define SW_SD2_EN            0
-> >  #define SW_DPI_EN            0
-> >  #define SW_GPIO4             1
->
-> [Severity: Low]
-> In commit "arm64: dts: renesas: r9a08g046: Add SDHI nodes for RZ/G3L SoC =
-and
-> SDHI1 pincontrol on SMARC EVK" earlier in this series, does closing &sdhi=
-1
-> before #else break DT compilation when RZ_BOOT_MODE3 is set to 0?
->
-> arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts:
-> #if RZ_BOOT_MODE3
-> &sdhi1 {
->         pinctrl-0 =3D <&sdhi1_pins>;
->         pinctrl-1 =3D <&sdhi1_uhs_pins>;
->         pinctrl-names =3D "default", "state_uhs";
->
->         vmmc-supply =3D <&reg_3p3v>;
->         vqmmc-supply =3D <&vqmmc_sd1_pvdd>;
-> };
-> #else
->         status =3D "disabled";
-> #endif
->
-> When RZ_BOOT_MODE3 is 0, status =3D "disabled"; is emitted at top-level f=
-ile
-> scope outside any node, causing a DTC syntax error instead of overriding
-> status =3D "okay"; from renesas-smarc2.dtsi.  &sdhi1 { ... }; should encl=
-ose
-> the #if RZ_BOOT_MODE3 / #else / #endif block.
->
-> > diff --git a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi b/arch/ar=
-m64/boot/dts/renesas/rzg3l-smarc-som.dtsi
-> > index 91b2d0d431045..e64a611aebecd 100644
-> > --- a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
-> > +++ b/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
->
-> [ ... ]
->
-> > @@ -78,6 +83,19 @@ reg_3p3v: regulator-3p3v {
-> >               regulator-always-on;
-> >       };
-> >
-> > +#if SW_SD0_DEV_SEL
-> > +     vqmmc_sd0_pvdd: vqmmc-sd0-pvdd {
-> > +             compatible =3D "regulator-gpio";
-> > +             regulator-name =3D "SD0_PVDD";
-> > +             regulator-min-microvolt =3D <1800000>;
-> > +             regulator-max-microvolt =3D <3300000>;
-> > +             gpios =3D <&pinctrl RZG3L_GPIO(L, 4) GPIO_ACTIVE_HIGH>;
-> > +             gpios-states =3D <0>;
-> > +             states =3D <3300000 0>, <1800000 1>;
-> > +             regulator-ramp-delay =3D <1200>;
-> > +     };
-> > +#endif
->
-> [Severity: Low]
-> Should vqmmc_sd0_pvdd use the generic regulator-vqmmc-sd0-pvdd node name
-> instead of vqmmc-sd0-pvdd to match the Devicetree generic node naming rul=
-es
-> and vqmmc_sd1_pvdd: regulator-vqmmc-sd1-pvdd in r9a08g046l48-smarc.dts?
+> integrated bus mux directly in the controller binding would match the
+> hardware layout.
+>=20
+> [1] https://lore.kernel.org/r/e5aa5cd8-e805-47d3-a105-07bf1b9eb9b8@lunn.c=
+h
 
-Will fix this.
+The comment in [1] was based on an error in a previous version of the
+example.
 
-Cheers,
-Biju
+A separate discussion led me to use mdio-mux-mmioreg.
+The two 16-bit halves can be accessed independently by the controller
+and mux. I would prefer to represent those ranges separately in this
+binding.
 
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123-sdhi_rzg=
-3l-v2-0-bad3a6358849@bp.renesas.com?part=3D2
+
