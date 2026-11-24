@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795538280;
-	b=aFxpCJC1kOr6BI4Xk9Gz9LzLjLYGVmynqLRbTr/qB91bK3P04XNGWjeYf4tNcT1Cd+RU
-	 NcTHYABvLztdafxGfdtBIEtle1bvaDjLX8Zj+cXSVtbiY/HG7K4By2Rx8lIj08SxRcsDm
-	 wDgDy976VHd7jCSzlTn9J5vHivjS293y4TP2v0p7HmglAj0CHkI3sd6cL+Pf2CA1o6h1C
-	 JZ+C3msSZM4p/c8nPAeNK6uSbaHem42I+wexXwtHp0ctCz4uJXJIPGKTP4ioLXM1lnf+j
-	 ogdHVjscGeu+cZLtSKRnspoU9tiDOZ+aKfWnJOCD5DUEDqa2Pku4BHsTUaZy1mwjhxg==
+	t=1795538422;
+	b=xjLrOs3DfNpfCLccScrs2DcEcVTZpkM8KIig4EHtqc1oyL5m4HPQR+a4EgyYl+B8x3eU
+	 xL+MDSCeSahBDt7gr/JqlLXoTSx2xsW61Em3lLB8I5f3lC81Cgx90baHtEXOPYnZe+vrZ
+	 GkVfMj/k6HJ8g72KiQIzw4oe1DNvx5CoV7/PCFSVWeyIUCgdlV3WUoFp2cfxyNdrgdZTU
+	 KrUDh8qLIcwHdjvqDCWkI1B2Tc4igY57qtwsso3rVGamo5ODrV/GWL7W6ies/30Ks2ONC
+	 UVp1/LXQgQKXbl4WpPgsTcPdaXFDqczpALZVg7MwjND5mlgFjRK2zxDJSVW4vKgSOkg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795538280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795538422;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=3lrjCyd3ylni+VlZA6CzA7gna3TSOAbXroD0aGLUJ3s=;
-	b=g8LV5T5ejkzHoQMqAj0bmQG9Ordrnf60F3OfeWe0vH4ElHOVU/xKZT3LYLY5w+sIzN4V
-	 3l0ucD3gaDUYPOCG3XSp3O+NmqMRqwu25uIj8ohNNCLcospj8by/0nfQCX6N8/RyNbhWc
-	 gKzpoL+IQJ7BZIR3+x95yVi8LjZUKP9NIYPHzcUsxp7opcsU9tNtBx2vAsD6hQFVDXmKo
-	 sWs3hb46ykW5LBlxhLD1IcHdps+YQepP00SGOWmwrY6V2HnhTDbxCdcFiu4A06KPmGzK2
-	 SuSp/vOwbFAHtTvOI0vZib+Xqp8qk3iRh+NWL1CB0b+Nf4g8u0bxZ/mkUriYFGcLehA==
+	bh=3wWnkq31yEF0IxUL8QXEbwU3zdf+25LYM4lO1Igg8kk=;
+	b=k37glv1GTxDvTbCNjHc6vNVksmEvgTf2601lZigLKzRJ3k7ViExItWKrVc1V7iYyK58o
+	 0DcIXqTQopRL5AbrdHILFALmF5j+oXjf6e1Wc3QbL2T1jzkajjFlpI4uiYO7kW2qyM/k0
+	 3k6Ts+ChIIRiedRncPKVVOY5cX8aNuLEyhBT9616DIiMAGNXrAYHOHX63ESRjo+04DSmg
+	 1zyCuqlNQqSAioYyAMjkT4BcYT0LNrZ7Spo8Bi5rD15h7CCdiQymb94P9GsHKvURggKtu
+	 oupt1b5k4h7N6X9aXg+QTQolZAxRVPq2hdROwLr+lMjsjk6F7Qr/tkH47e3xwgbNwSA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="P0Lc/2Ae";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=TREW8CXR;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B02606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 16:37:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0B02606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273B4606A31E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 16:40:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 273B4606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=P0Lc/2Ae
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c4d21051042so767737266b.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 08:37:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795538278; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=TREW8CXR
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c51a02ad3acso58558666b.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 08:40:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795538420; cv=none;
         d=google.com; s=arc-20260327;
-        b=sJf6vWSuLy6gM/wp8rFugoQvuVQQWceIp6wxRWDYrZgtFOGaMuMRYD+tpvM14u7DWI
-         WrvhU/LtK9WqQqPheYjURPPS1u+rswbGjIaoWpSTCXNcF8gC/FlWHU9zBaeoQL8buPFp
-         /t96Ms5aMXcU50izPGICRDHn8TeJ4+PwE61A7gRuTInahgHxI1NT5COyWHBmAQwfQ1oN
-         tOAgiP1Xpk6PrE+rzvxnU1nQlMzdWn1I/gMwtBXLvRGkoVb59PQjZiU1q0+QEqO6S0cy
-         2SIlH5Ha74IwfKExNghbhYeq/myEA3s959vKWEB4n6zmcxFnyt72GROkBzLOZwARXZoE
-         WpZw==
+        b=PTJurR9E2T9KDUIeri/M0pTsyv2MmpTnxtUXwGTap2pbr7v6+qPHLUv69caGGsEEeC
+         d2Ro37vYnO0nCEPw6+p0gZZzvLk8J8dzWoQG94MpiluheAb6xhGoZO0dVGQTS8vYS7em
+         Ac1mAV9dmOqFNzt3rJinRQR8ZJy8a3VDoTp5brf7elxdJx1QU9AIL4+KBG7WmYv2lUgu
+         wzCZayJZnRzdt+CgOTbya9VThWU7lq4nKEZvXYQml+SeiBqE/kmGJx7ZTsS1ZfiGN5Uq
+         M7Egg7cbo0Z7Q39Cz6RuCfOlri3AyQ81GB4FGIZY+ECoWSPf41L9vGZ4qTsWWBufVYfZ
+         UZew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=3lrjCyd3ylni+VlZA6CzA7gna3TSOAbXroD0aGLUJ3s=;
+        bh=3wWnkq31yEF0IxUL8QXEbwU3zdf+25LYM4lO1Igg8kk=;
         fh=yG0GPR0QiT6n4FwClexevtHuIFSRQ+sxjflZXF2i7Wc=;
-        b=Mb+HlGhmJXcGfnx4yk6jz8Lkm1bIIQoaJ0PP3V5f/WAYe7nxrTx/JWJhV79eZbXjxW
-         X1NFiaEitPtmW+GPsTF1nqYbI3iRhl1ihEr+gbmq3IHJVIsn12LzVw8jUMUBJITbP4J4
-         Zn3lg6T53By+6EUoMRapncIcADcIDSJbW7iUKtJMKRnIZZgzDPIyO9bYdIBgORFjY5of
-         Q7MDgUjbdWo0p0I+820qWkTi7WLpj83DYRJ+uJIjEG9IaI/jRZYgJG+23PymCXQ8pUTz
-         S/JVHRSbO8m+wZP8nRB/YGNrFDvA0sYZ+6KSKS7yZTJLAjJpKnCK7O6ccRgO+PFLQocZ
-         C4Iw==;
+        b=OUi6pJ+rPvBHMO5GNNtDdCMh2iKtzlzC52jyUyDfBkTC8mJUkOR4vutZh2ceC4s6JU
+         qYHa5aBJpi7zeGnaIaGWuV9Loy0rcGK0XuT4mJtwRUFVhQcSNfbIlCukfSiX1llcilH5
+         /DFUZxE99YWVwcy5j4tGsnG/x+5eOSyhFAdRhU/nKj0p2cu8tXNEe52xIi1TgnUfAwuk
+         6pMDrVo+GLkVrtLiIiveHApHmy3Z7tgV5MvQcdqK/Vs1t+7kSAzWlJakzTnC7Qp7C5nq
+         2LECW+1UF4Aep3f1mJSbxSzQLzed1nGBBhqGSm25L660aI8xe3FBwAq12Bb6RgJcwnSA
+         yxBQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795538278; x=1796143078; darn=lists.linux.dev;
+        d=google.com; s=20260707; t=1795538420; x=1796143220; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=3lrjCyd3ylni+VlZA6CzA7gna3TSOAbXroD0aGLUJ3s=;
-        b=P0Lc/2AeybOEkDCG1nXoLwiknY4hnRHHMN4Jfo3PGs5AfKeVAD2sl0NQ7UofQKZL3f
-         izMDg0GJBnqEOwxEBGGBjPHI3PROQYKMn+22mOnqr5d2ZwcXOkvebhj2cNj7uIxZUZyk
-         lfOpYqHJpjZ6VK06kIoseRr2CMGfRYzyfXzw1hvNYdw4HF7nJFsLQJ0ubcHhYFC7zJqz
-         12lMrx3OPJO2PgpI4P6T0DuyegA1ZcMFvIuqwoms7wIdZHFKBSMeMDkGYjxZiXU7vbbF
-         j4SFDgNvXF2MaG5iWpcxOGJSFDyG36IcOtJ8rc391uPssHglCT6OgAYEvZGE++Y80IB1
-         qbiQ==
+        bh=3wWnkq31yEF0IxUL8QXEbwU3zdf+25LYM4lO1Igg8kk=;
+        b=TREW8CXR0muPij8RgtwJIEVoKZ3/rpGIj1WgekCYk+8SA1nOso+puT35sXfwgrnd+6
+         9hmSHW7TKXAzQ88QlcG/+zLWLMKoTTjczPJiVesPxgJlDY0+u11ePQ4AvUbdBiT7nTME
+         36gMWCHDiTcHjRznu3F8lBHwCRY6s8M1Mxvr/BQ5IXZM8KX5nVytIXacwXpNX3KuuQBj
+         EK7FBZ9f4dQyQhiYzhaTM+JczSW4WpoIzhiAiU/xXBx1q7oqO3zN0IXN1UlPKjGdGxw6
+         injpdYgZJpBI5L+vqEmAOBzEPLDRFUI+OfFE5u/oErs1Gp6xe9HH57iYepED33TYEJTD
+         Di8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795538278; x=1796143078;
+        d=1e100.net; s=20260707; t=1795538420; x=1796143220;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=3lrjCyd3ylni+VlZA6CzA7gna3TSOAbXroD0aGLUJ3s=;
-        b=SBrQknE3i4yfQkWFcA2Jjww1YAfCHY19eVM2N0aERhTCtOiM+kA0WwtuCqgxwgzNpo
-         UBNCSvx3Sk2uFYQlfP1KcsIgKBnBCfKi//fqi7FDAsn1iMjWfSzx8GNGEHUG8uoATS0L
-         CZq3+poWhGeOsaDxuwmcCuHAqSi7lcZj7A3Q8R8c6LMPckTcMvMkayL/Z4o31xOLo/DB
-         k07fOrVbrjaG4GBDveknjWFvU0S3dILWCxGL2elWj/4YbSvSt9aBUAqygKbsiz8pOw9x
-         mLbGJFA9/qxoHKXcv0Wn4IEw82f1dQ50vy99NVwEvokI8CSSse5YwIrTTxYYbhVM29Yv
-         6Veg==
-X-Gm-Message-State: APuU4Z+VJUhTEp2+Ir9BfJ5RFqfj8dccJDm0on4nTzrKlt3mTnApKyDh
-	TYwRzoPQX5JzBv9LB1fv64tkfSxzcxXIR+VOafRSYOhj/jIoU+Zh9hDKCzaczQAihmz0KpwsDYr
-	HKcQEuz3JGzl54Esjg4PY2euREZycjxBBvbCk7PjnN0RYVKZne4uIsQ3l
-X-Gm-Gg: AZFdTZeAiEHuNCrbGLzZQ6r+4NetImou06lIGHri60MQ/LljqvogELUSJarHH60ZumC
-	UEwKnts24Ma0+I6EnKwXzhyoPSFgj4nS+KuRhdfbPGqWGj02AdTuW5Qfszi6gEdgqdeWKaF8G73
-	6SI1dFdY/S52GNBEDzhhbx29WuToarTxo8L5WgyYG6iKel5XcUgCxgkrj8+xOq89cPqGZ7zqSXA
-	HnxB/vJeaAL1dPoSTKQMmIl9cCP2bqjSNP5TiU4SWcqPeIxuxWOR8gjKbf1Wc65jnwvJSa0Jpn/
-	OwonFIoSKvknTJR+sFA5qfaKTEJjrqhnK3ImTIaZyUpmM674URdBaG17Lf4F7LKTbxTiD3gBmW8
-	E6KTO6qqMvOv8lmnL5luRRK41DxV2vp/j6NHh5cjelGvodE7MsAePq8uaOBA8GPT4rdLVpD6tjG
-	Hy7iosDumZBIGPtUzIFRJ8a7MagWifuiU27saD/Sv9an07cQRbFX0=
-X-Received: by 2002:a17:906:da0e:b0:c50:5186:6dc2 with SMTP id
- a640c23a62f3a-c513a84a4b7mr889148966b.24.1795538277335; Tue, 24 Nov 2026
- 08:37:57 -0800 (PST)
+        bh=3wWnkq31yEF0IxUL8QXEbwU3zdf+25LYM4lO1Igg8kk=;
+        b=NgqoiDUQ249FP4J6IqQ23hdQ9ufiQo7CbPFEMMe0DDmQ+oV+V1lHZaEbV8urVaplpj
+         S3OxkRTe3+DMtNe1qnrcI3nsky7gJrJOnIQ8g/L4ytjaDQpshfeqNVaKr65xqLYFEe59
+         arA42MdX4cUayB/9YeMaH7WQCwLKy4OhpLmQ2zOlCvdoN9nhLwXW6YTMyr2IQjLpyUze
+         5ZCHy7RKwVS9HhubEWRUiraI1uljQuH5fDF6ueb0ZCJ4pIanQdS/PEiKKprGTlICQllv
+         ykK+W39uZYb0Qen/y4FacHGO+fhxTAJenulgNbYmtCMgCzseHOdNE1nnqVtvwxNWRw+C
+         N9Vw==
+X-Gm-Message-State: APuU4Z/KHuMdRMfc67w7lnW7fxufSolhAE5JAUm/x1asHe568DlatRl1
+	PAvt9mMP8JQao1xneOXF6vh3cyF5EwpJsoeKz24nN7VF+2LSaPMBT5vsdVJW5fiU2XJSDOg4QJE
+	u9pUkgstLcs6heLOf9O1gCr32+V+0HgzfACHYw/Ez09OYg0nqjdpuiVC+2QY=
+X-Gm-Gg: AZFdTZftVizHwE3smuhtXNOtsPXJIQ6jFnyUmyppqFhGG78WfJHq2ycNFd2EfeyuIcU
+	keTwUteRUWn6l6/WvCho7x/g2yrBDtOdw/kA0XXrokVObCUo5tD6aLkNbb/6nELzjhN4I4QZyEC
+	o0RHAO6cTIoVKYRh5ut6c1GCqpgTnZx2kq6HqTjZR3oyjQc6VTjfbWX5hHxpQ7r+WikyPVmdziX
+	2lCx4GTUZ4x2iewHNnBCyDkDuyDi42q4V41ACglRhcwqeJISGU57mv6XPzemuvDXtHO1YGyb1Xe
+	+DSjUiHPBBEU06RfTKf9mC36D8zQWru2PWdv4FZtQEqBOsiOkyGtI/RtWHjXCtXNQGTsel4rLp9
+	zI5p5L1I1sgh+5TY2+wo0+Fng1HL62tYGffwelR1R6GoXziRPsbJ1VatHQzxua5LT3458TvpPv0
+	oqTt5RsYUcI8uarLELWxAAIk2HI1JF0JUG/WnAX02snNgo6g+LY6s=
+X-Received: by 2002:a17:906:7d91:b0:c49:a539:aa45 with SMTP id
+ a640c23a62f3a-c513aad1ab4mr1075079466b.42.1795538420109; Tue, 24 Nov 2026
+ 08:40:20 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,14 +105,14 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261122184453.2668189-1-jthoughton@google.com>
- <20261122184453.2668189-3-jthoughton@google.com> <sashiko-outbox-228631@kernel.org>
-In-Reply-To: <sashiko-outbox-228631@kernel.org>
+ <20261122184453.2668189-5-jthoughton@google.com> <sashiko-outbox-228633@kernel.org>
+In-Reply-To: <sashiko-outbox-228633@kernel.org>
 From: James Houghton <jthoughton@google.com>
-Date: Tue, 24 Nov 2026 11:37:20 -0500
-X-Gm-Features: Aa3M54perRENbQqBcvqMB0T0l__zpVfhY9WhyMOK84YMmPr-DpW-cRt3dY1naHw
-Message-ID: <CADrL8HV0artLopXqsRyEfxRd5FrAKKXnSotwrTYV+7Wcd=D9mg@mail.gmail.com>
-Subject: Re: [PATCH v3 02/19] hugetlb_vmemmap: Always flush TLB if needed upon
- PTE remapping
+Date: Tue, 24 Nov 2026 11:39:41 -0500
+X-Gm-Features: Aa3M54oepgUn4X8OBlBmCHpzq7qyxHfiRu28mAUeA1WpcH_3XcJmtKTuvSjLHXI
+Message-ID: <CADrL8HVxnyNniotcEG+CMBAs4EVLihuU4bcqr5rLZWT9dUxNCw@mail.gmail.com>
+Subject: Re: [PATCH v3 04/19] hugetlb_vmemmap: Use try_update_vmemmap_pte to
+ update in-use PTEs
 To: sashiko-reviews@lists.linux.dev
 Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
 	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
@@ -127,73 +127,76 @@ Content-Transfer-Encoding: quoted-printable
 
 On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [Medium] mm/hugetlb_vmemmap: unnecessary TLB flush in
->   vmemmap_remap_range() on error
-> - [Medium] mm/hugetlb_vmemmap: partial HVO state retained in
->   vmemmap_remap_range()
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mm/hugetlb_vmemmap: missing TLB flush on partial
+>   vmemmap_restore_pte() failure
 > --
 >
-> commit ec5d75eb023f87eb7c8518a7fd62d721c52bb9db
+> commit 8b77f3aefb06415df030fdd341c5e065dabec71c
 > Author: James Houghton <jthoughton@google.com>
 >
-> hugetlb_vmemmap: Always flush TLB if needed upon PTE remapping
+> hugetlb_vmemmap: Use try_update_vmemmap_pte to update in-use PTEs
 >
-> This commit removes the early return on error in vmemmap_remap_range() so
-> that flush_tlb_kernel_range() still runs when walk_kernel_page_table_rang=
-e_lockless()
-> returns a non-zero error code.
+> This commit introduces try_update_vmemmap_pte() and uses it in place of
+> set_pte_at() when remapping in-use vmemmap PTEs during hugetlb vmemmap
+> optimization and restoration.
 >
 > > diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
-> > index 09b9fd83c1985..7be08c68c2f18 100644
+> > index 2e9cf8d39c892..b4d0311bcc4a2 100644
 > > --- a/mm/hugetlb_vmemmap.c
 > > +++ b/mm/hugetlb_vmemmap.c
-> > @@ -163,13 +163,11 @@ static int vmemmap_remap_range(unsigned long star=
-t, unsigned long end,
+> [ ... ]
+> > @@ -291,7 +309,11 @@ static int vmemmap_restore_pte(pte_t *pte, unsigne=
+d long addr,
+> >               return 0;
 > >
-> >       ret =3D walk_kernel_page_table_range_lockless(start, end, &vmemma=
-p_remap_ops,
-> >                                                   NULL, walk);
-> > -     if (ret)
-> > -             return ret;
+> >       dst =3D vmemmap_dup_page_from_list(src, walk->vmemmap_pages);
+> > -     set_pte_at(&init_mm, addr, pte, mk_pte(dst, PAGE_KERNEL));
+> > +     ret =3D try_update_vmemmap_pte(addr, pte, mk_pte(dst, PAGE_KERNEL=
+));
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     list_del(&dst->lru);
 > >
-> >       if (walk->remap_pte && !(walk->flags & VMEMMAP_DEFER_TLB_FLUSH))
-> >               flush_tlb_kernel_range(start, end);
-> >
-> > -     return 0;
-> > +     return ret;
+> >       return 0;
 > >  }
 >
 > [Severity: Medium]
-> Does this issue an unnecessary broadcast TLB flush across [start, end)
-> when walk_kernel_page_table_range_lockless() fails with walk->nr_walked =
-=3D=3D 0?
+> Can a partial failure in vmemmap_restore_pte() skip the TLB flush for
+> PTEs that were already remapped?
 >
-> With memory_hotplug.memmap_on_memory enabled, every runtime single-folio
-> allocation via alloc_fresh_hugetlb_folio() -> hugetlb_vmemmap_optimize_fo=
-lio()
-> hits PageVmemmapSelfHosted() in vmemmap_pmd_entry() and returns -ENOTSUPP
-> on the first PMD with walk.nr_walked =3D=3D 0, triggering a full
-> flush_tlb_kernel_range(start, end) despite modifying no PTEs.  When a wal=
-k
-> fails partway through with walk->nr_walked > 0, this also flushes the ful=
-l
-> [start, end) range rather than [start, start + walk->nr_walked * PAGE_SIZ=
-E),
-> and vmemmap_optimize_folio() immediately flushes that prefix a second tim=
-e
-> via vmemmap_restore_range().
+> Previously, __hugetlb_vmemmap_restore_folio() could only fail in
+> alloc_vmemmap_page_list() before modifying any PTEs.  Now,
+> try_update_vmemmap_pte() can fail after earlier vmemmap PTEs of the same
+> folio have been remapped to new writable pages.
 >
-> Should the flush be gated on walk->nr_walked > 0 and bounded to
-> start + walk->nr_walked * PAGE_SIZE?
-
-Yes, I will do this in v4. Thanks!
-
+> When called from hugetlb_vmemmap_restore_folios(), VMEMMAP_DEFER_TLB_FLUS=
+H
+> causes vmemmap_remap_range() to defer the flush to its caller, which only
+> flushes when at least one folio was fully restored:
 >
-> [Severity: Medium]
-> As reported by Muchun Song on v2 [1], does this change and the follow-up
-> patches in the series still retain partially optimized vmemmap states
-> instead of preserving all-or-nothing HVO semantics?
+> mm/hugetlb_vmemmap.c:hugetlb_vmemmap_restore_folios() {
+>         ...
+>                 if (folio_test_hugetlb_vmemmap_optimized(folio)) {
+>                         ret =3D __hugetlb_vmemmap_restore_folio(h, folio,=
+ flags);
+>                         if (ret)
+>                                 break;
+>                         restored++;
+>                 }
+>         ...
+>         if (restored)
+>                 flush_tlb_all();
+> }
+>
+> If the first optimized folio fails midway through vmemmap_restore_pte(),
+> the loop breaks with restored =3D=3D 0 and skips flush_tlb_all(), leaving
+> stale TLB entries pointing to the old shared tail page for the already
+> remapped vmemmap PTEs when the partially restored folio is returned to
+> the hugetlb pool.
 
-Yes, this is intended.
+Yes, this is accurate, thank you! For v4,
+hugetlb_vmemmap_restore_folios() will flush when
+__hugetlb_vmemmap_restore_folio() fails.
