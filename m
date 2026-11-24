@@ -1,56 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.10
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795504542;
-	b=loKHqbGJdfn4bpWCUlIbIT/CLJtWYDad2BR4RMnHzvM+jDKEZLUEYdCz68ZNAsX6756p
-	 4GQnm74Oj+qdkszyjC4HGu75DgfT5kRJGBgRNHXLKQayTyxDX9IG0Dawd/e9/8GDh+7mb
-	 giMcKQpD8Aak1RXJD4wayEKldlT2Kl71BQ2GA4V2kAV3ZtBu6MDA1fr1SIEuYWl0evQla
-	 6ww396tRuY48Ygvlq16QRNv0EXFkz0AEmzvywz3BpbIwkkUMFVJA5ozM+lNOcrCW+KaXF
-	 BvqK2XdRcMe9gcOlpDYVGM9bWTdjP2F0nKgDjTlNgYCn6r5ey+mm8HhRh7X5HaoZ5Nw==
+	t=1795504882;
+	b=oMC22lu+WUvV/EmRuX4jAZEg0qCgvEo8A98nHaoPUqMpGm9LADxqmhcKf64gWs8C4R4o
+	 sVgjt6VqkupiqlnFjY/q0BQjlaF+YRbxvAfWwQLKmHzHbYqZ+HQnm/l4zU2CjnULy3AlL
+	 kUydGRpGOiWKw6NxfXxtXiBLGzO9BkBcMz71uXU3xOfkwXYUDKWPTdxMLBomNfu2ybQmr
+	 9WBzHOOIWZCSZCA6CAsrrATV8i6eHcIjh0LG7+Lvt5pJ/544MSPMkgLdS+WUaS6C4+lH1
+	 1j8cU00UNs4Efwdgmo6K7B2ohDnYSi2lmivEM0Q07Tij1GIzSvNp5tcah71L2s8TziQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795504542;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795504882;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:
 	 Content-Transfer-Encoding:In-Reply-To;
-	bh=/bzHgQhN+yFXipG+x/f4PXim0QXiuDvsgUduqFPkHKo=;
-	b=0+0B8IWAhZhq+P6A4NFfmKrLZmAcVz4fR7mYW3Ehff3v/oZlMkDzYfcHwi4l/tfbnK/U
-	 TFoBMbo5qmtCbiygWp6ZXDVQQnu+I/YMiHcl2/Of9j9SsogMSQrGA5gxj/PV5lEVPat3G
-	 5d0dkxBi6hXPjdqTROTgNKU83wNhXV3IUpnKufed30K2FLS2yD5NMmtNOfGrgyk8M4pVr
-	 Dmw3TwPU1hIn18j/DeEnc7hIsQ6Q+G3XxcMthZgHuE03E7/jJrsUAjT48oIhrA7HWjwB1
-	 TZ2SrfgP2qbs8nSX3qSResrmbU5Z7cBwlBQxSAT/8FBpJuDPhl4cfaPNf9YtZxTGNTw==
+	bh=fuY33GUF0eUP0SwseynPFkH435CSn9417a8iUr7BK7k=;
+	b=krGkRqv9PqIrpfPHngayQaFhUubWkRyirQevIhgrAilewrXRCb1m/vYGyenot5uE/rGU
+	 /4FKUS8pQRDt7fjxV4q50Xli37yJAgpiLpJDFsi2Q6huSo9ebXjq/rGmbW7vJfqTQs48L
+	 uUtibJ7ToUq0Fb2qfEAgRioWgoGlgrMhBwzlkdo8ivz6gmyslyh9X5l8z8FL1wCF12oEy
+	 xZACV4Z5HZP396OJEdrNeMCelp1W6o0/qWK8MdYbAxw5Io58ZiAKk5RLuS0idV98xoA4M
+	 gPpkVcAicnEVFh0SPOQ+RDiUhWJRNg3ABHMlEwmE/Kg6RvB1rqZDRDd7o2jorR+kFCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SCyeSVdW;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=EtRK0xDX;
+	arc=none smtp.remote-ip=95.215.58.10
+Received: from mta1.migadu.com (out-10.mta1.migadu.com [95.215.58.10])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02ADC606A32A;
-	Tue, 24 Nov 2026 07:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758A3606A31E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 07:21:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 758A3606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SCyeSVdW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5661F000CA;
-	Tue, 24 Nov 2026 07:15:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795504541;
-	bh=/bzHgQhN+yFXipG+x/f4PXim0QXiuDvsgUduqFPkHKo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=SCyeSVdWntK6tSALDO3GKU2KnHXkYMM8jGUnbnPiRC+2teekj7kZ8CeXIAU38RlSZ
-	 QWXbmT6AhQWyflEUqbKMmqq3l10IiyoWAQZ7pAQa8SeOHbHHlRj7BleHR8gY69kqFy
-	 GCktsNsDCfaNItd0DMGZmQOJF4EarrUuRdXS3QYTpsn6bkhN/ip/E3seyWRUDVZ7r7
-	 1KdsGCtbjJW0Sy0doN0gvbePM5P/6UC3/iftgi89VN4SCI+1AEDDcTpB8bW63J/Gr6
-	 6fjG8vko4f5euKo7AOyKdl03FemstqddPILxjaOG2pBwQBvKKuPzikc8TOA1EgMlgI
-	 dXUC9x9Pincdw==
-Date: Tue, 24 Nov 2026 09:15:37 +0200
-From: Mika Westerberg <westeri@kernel.org>
-To: Chunfeng Yun =?utf-8?B?KOS6keaYpeWzsCk=?= <Chunfeng.Yun@mediatek.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>
-Subject: Re: [PATCH v3 5/8] thunderbolt: Add platform NHI driver
-Message-ID: <20261124071537.GB953598@thinkpad>
-References: <20261123113705.2297329-1-chunfeng.yun@mediatek.com>
- <20261123113705.2297329-6-chunfeng.yun@mediatek.com>
- <sashiko-outbox-229175@kernel.org>
- <059072e15558d6aa74eb046e4d9b260baae09200.camel@mediatek.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=EtRK0xDX
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=dsrRPagJG7IpTBUtHaN37ZSV+UIhydva5xu3fPf5Il8=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795504878; v=1; x=1796109678;
+ b=EtRK0xDX48aYVGns5qZl8sf1U4gRqygL/LQNdOk6NK/48fwI9CtxppbezuodiaNUOk9Jdh2o
+ 1+9FffH7K8rFvsxYYcCiY5q5PDTn/a/vV7ThX65V3Ye76zWWzqH4EPEcKxGw1vxQav1W7ak4O4H
+ 6QiNWSga/nNj4sHyQ/epgPcU=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta10.migadu.com with ESMTPS id bb0ec5bee1dfc514;
+	Tue, 24 Nov 2026 07:21:18 +0000
+X-Mizu-Trace-ID: bb0ec5bee1dfc514
+X-Migadu-Flow: FLOW_OUT
+Date: Tue, 24 Nov 2026 15:21:08 +0800
+From: Baoquan He <baoquan.he@linux.dev>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-mm@kvack.org, akpm@linux-foundation.org, david@kernel.org,
+	kasong@tencent.com, baohua@kernel.org, qi.zheng@linux.dev,
+	shakeel.butt@linux.dev, axelrasmussen@google.com,
+	yuanchu@google.com, weixugc@google.com,
+	baolin.wang@linux.alibaba.com, Baoquan He <hebaoquan@kylinos.cn>
+Subject: Re: [PATCH 1/4] mm/mglru: add MM_WALK_EMPTY stats and tracepoint
+Message-ID: <awU65FQ4XGGdwMpG@bogon>
+References: <20261120085806.781225-1-baoquan.he@linux.dev>
+ <20261120085806.781225-2-baoquan.he@linux.dev>
+ <sashiko-outbox-226848@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,56 +69,64 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <059072e15558d6aa74eb046e4d9b260baae09200.camel@mediatek.com>
+In-Reply-To: <sashiko-outbox-226848@kernel.org>
 
-Hi,
-
-On Tue, Nov 24, 2026 at 06:37:40AM +0000, Chunfeng Yun (云春峰) wrote:
-> On 一, 2026-11-23 at 11:54 +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential
-> > issue to consider:
-> > - [Low] thunderbolt: invalid SPDX license identifier GPL in
-> > platform.c
-> > --
-> > 
-> > commit 69e07d737f3ccaa08c0332e46cb3614ab51f29be
-> > Author: Chunfeng Yun <chunfeng.yun@mediatek.com>
-> > 
-> > thunderbolt: Add platform NHI driver
-> > 
-> > This commit adds a platform driver for Thunderbolt/USB4 Native Host
-> > Interface controllers enumerated via ACPI (ACPI0015), along with
-> > support
-> > for an optional dedicated wakeup interrupt.
-> > 
-> > > diff --git a/drivers/thunderbolt/platform.c
-> > > b/drivers/thunderbolt/platform.c
-> > > new file mode 100644
-> > > index 0000000000000..05dd858ac8342
-> > > --- /dev/null
-> > > +++ b/drivers/thunderbolt/platform.c
-> > > @@ -0,0 +1,170 @@
-> > > +// SPDX-License-Identifier: GPL
-> > 
-> > [Severity: Low]
-> > Should this SPDX-License-Identifier be GPL-2.0-only (or GPL-2.0)
-> > instead
-> > of GPL?  Bare "GPL" is a MODULE_LICENSE() string rather than a valid
-> > SPDX
-> > license identifier in LICENSES/preferred/GPL-2.0, so
-> > scripts/spdxcheck.py
-> > and scripts/checkpatch.pl will reject it.
-> > 
-> Hi Mika, 
+On 11/21/26 at 08:59am, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mm/mglru: inconsistent MM_LEAF_ASSOCIATED accounting across
+>   mm_has_notifiers()
+> --
 > 
-> do you prefer to use which one? the checkpatch.pl prefer GPL according
-> to the patch:
-> bf7fbeeae6db module: Cure the MODULE_LICENSE "GPL" vs. "GPL v2"
-> bogosity
+...snip...
+> > @@ -3682,6 +3685,8 @@ static void walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area
+> >  		if (!folio)
+> >  			goto next;
+> >  
+> > +		walk->mm_stats[MM_LEAF_ASSOCIATED]++;
+> > +
+> >  		if (!pmdp_test_and_clear_young_notify(vma, addr, pmd + i))
+> >  			goto next;
+> >  
+> 
+> [Severity: Medium]
+> Does MM_LEAF_ASSOCIATED count all leaf entries belonging to the target
+> lruvec (as described in the commit message), or only young leaf entries
+> in the target lruvec (as described in the header comments)?
 
-I prefer what we have now:
+Agreed, and the counter is not worth keeping. MM_LEAF_YOUNG already
+counts the leaves we care about: it is incremented after get_pfn_folio()
+confirms the folio belongs to this lruvec. So v5 drops MM_LEAF_ASSOCIATED.
 
-// SPDX-License-Identifier: GPL-2.0
+> 
+> In walk_pte_range() and walk_pmd_range_locked(), get_pte_pfn() and
+> get_pmd_pfn() filter out non-young entries before get_pfn_folio() is
+> reached whenever !mm_has_notifiers(vma->vm_mm):
+> 
+> mm/vmscan.c:get_pte_pfn() {
+> 	...
+> 	if (!pte_young(pte) && !mm_has_notifiers(vma->vm_mm))
+> 		return -1;
+> 	...
+> }
+> 
+> When !mm_has_notifiers(vma->vm_mm), every entry that reaches
+> get_pfn_folio(pfn, memcg, pgdat) is already young, so MM_LEAF_ASSOCIATED
+> is identical to MM_LEAF_YOUNG (which also only counts young entries after
+> get_pfn_folio() verifies the folio belongs to this lruvec), and an mm
+> with old folios in the lruvec is still counted as MM_WALK_EMPTY.
+> 
+> Conversely, when mm_has_notifiers(vma->vm_mm) is true (such as KVM
+> guests), get_pte_pfn() and get_pmd_pfn() let non-young entries through so
+> secondary MMU notifiers can be checked by
+> test_and_clear_young_ptes_notify() and pmdp_test_and_clear_young_notify().
+> Because MM_LEAF_ASSOCIATED is incremented before those notify calls, it
+> counts both old and young entries when mm_has_notifiers(vma->vm_mm) is
+> true, giving MM_LEAF_ASSOCIATED and MM_WALK_EMPTY different meanings
+> depending on whether the mm has MMU notifiers registered.
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20261120085806.781225-1-baoquan.he@linux.dev?part=1
