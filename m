@@ -1,100 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.208.71
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795519522;
-	b=lgvCAbYnsv3g3r9lD7z1732Xd58HkpQ3imJ7xebPlULykwdM0MBp2/CcHhL1djwFLB6j
-	 WMM/0K7yeOei9lEl5CBY1pLsT1vJ6tA4tUXz6/3ZJQOl1iBEt7GCQMstRn34gFUAo0zmw
-	 7/e2GPjAGrY6jM35seFA9J/PfP7xNH+sQs0dlKped4OMOjUFGJs4+sf+fv2DMuhaLNuMV
-	 Zkk/Clj9qrVAkIA1G21O0Y1oRDK+g2KOHIqvuyLhiF1u4Px57UAaDC1aos4aJUXdsciU/
-	 z0VBYm9IKvvtzEBjiidmkBq9az86CAlY0tjdbHtMcr8zGdrdKIALORwrTahR3qiqn5w==
+	t=1795519674;
+	b=ETJGMSo1AegBmW+067Ts0rJ/v/ZMqbr+zmDwW838XYGmHKgoShahiT0Wp3i1wMMyK3VI
+	 eLpAsmDls6058XFl0R0cyII2GWMUv3Qt6K5BLbcMy6SNan1sDuMp2kcSzKrQLIoQK079v
+	 eppOghwWw6A7Y6uG71b7B+DEk3mPDDO1z1DhaYceANXnlfb/RCZObN2L1pD/RGhhFnXMx
+	 UBzUXtr0FyyEK/uWNUEpmZQ8N/xu5t94TZLAfSUHRW5baiKb7kE6N8xj64erfkN0Mp7yx
+	 roLrF617MHIEwXcY/C+GgWmdLJCtSg6QOTvTGvQhezunPaEF5j0Rqe+11xDgsLkNfAQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795519522;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=vdav095i/FB+YC1sm59CMpB1weu0102gk62ioHm56N0=;
-	b=00dt1pAdlhk0QaWXxQjVcZdiVA1JbTKTflgb1BPOm6erhCt1gGMrQTqm7cRcz2TX8Smm
-	 ZFmxrN8YU4XFyCyFv+vqHHbaaHe0pofX3k8ID0m7RYpC4wgGofHayxtKvqGXWx8+9LsIb
-	 kwDXTTNjR15akh00NyNSaPjz9DBCqUCKMbAAL7McI9CMidVmjKnCNKEgkN99FSYY3siKz
-	 98Bz9l/HB4Om5In8DXON1RFL/CBJmr3kN0AnIOX19tMYGbu/Cclf+A3gc2VAAGeYOTSnl
-	 7VTEmzmSypmhfzNPiys1izVvDy6zsUIfTEz4WZCtIU4FBCPRs4eKxYYvwqq5MIKcexg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795519674;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
+	b=m2l7N8hEC6fAuc5J27k78IMis62FTXmlKbZ/Md/3jOR8e40/K7g5ibr8vd1caqO+W/qj
+	 cR8U6SKz9FtkdNxfbHVVQoDamT6g/yEuBku9eEI07qp2Ro9hzh9Dr6j27NKuFtKcAdjyC
+	 tW6m2xZK7Cotq8GTWVnLBA4O5qTiMr8gO1bknveNOUs3DLhSd2bPYPTDHi7VkHr5AbEN3
+	 Sa2cP65qh+HzyvGnI4LhHN8zRpBqZNT8NVcNoHtXR+j9dS64Q07XQCOT6k2HqmD9Dvqom
+	 /VZsOPWJ9zOkmv2o4y5eoqwyA+GasLArRcdfVaKWbYmTQkRhUF7Gc2UeAsRM9P01meg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=hbg0Yf7n;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.208.71
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011071.outbound.protection.outlook.com [40.107.208.71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lHFD8eSd;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.173
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F5E606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 11:25:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 89F5E606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DAE606A31E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 11:27:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98DAE606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=hbg0Yf7n
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XrbCjzHj/VGE/Ik9CQ0CQeeoT5UIP0ua5SZSsqvPYB0b+gZP7ECRo/P9HQm/2sWE64MI8xJBPn3giHX1C/BJSNEIjpwrlKmffM4LMgZqXXWiwc6BcT3mQncot+xVs+1lSB1Vz1E8B4strcD3kLp7+RVfMGy0uKO9GTMgsyLlf9ACElADFoIc8LsETBmiiaxhRTiHAgcCjUa3oiK5OREB37Xpo7HB1jA0AFVEc1eACyEaNZ/Zz2nKeyKOXd+FhFNf91s0hT/4nzITMMgPACY7h+icNu51sEqLkWafNgpB7SP5uSNu4UOh/BEAHbhMiiRRHKT26e60pozds8BLRiDcEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vdav095i/FB+YC1sm59CMpB1weu0102gk62ioHm56N0=;
- b=H9rPkot5JNnVCnSB3s/tz/a7hKNK6pB06lJmpnBRARmPAS0pRIZYsDDr5VythLB5n1YnZU2zP+b7ZXfJwSNN+xDBWI67SVlfeKeAWLmHDxvS7yTCYTbqvHS5RbOzYG50lWXAUlTGpqAxPxkF3ck2GVyf2V0Tjzd+PqxQnRVbNBn+8gWNycm01Y8PuxJPivcwfPX1Ce94Thw5XYtiB6Tjlg9IDcNhTcaga/xLuOWYJIkvaAHjdo307LyaXRLCZSAzqmowZKJ27q0+WpyfgHpAOWTkvsm8WmteZ4wwpj6AEDBQlxJ5j0Hq8wNAcybB3EzPdw20V48pBQNDzKBhL3hG1w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vdav095i/FB+YC1sm59CMpB1weu0102gk62ioHm56N0=;
- b=hbg0Yf7nztTdKz1fAWUkLkm3ezrqTQQu2DVmdO/nwFf4ONMYlMEEb+AYcrhRkppoy4xNt8ms1MnP/WVxP/aCU2SmPmQ9cJ2HKyx0VBD+o6i58ALIjRu6vFJm50jaLKYMEflgUbPuJlrecimEUhVo/0/XJZrVklcIb4XsHEIpBgg=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
- by CY8PR12MB8316.namprd12.prod.outlook.com (2603:10b6:930:7a::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Tue, 24 Nov
- 2026 11:25:17 +0000
-Received: from CY5PR12MB6252.namprd12.prod.outlook.com
- ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
- ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0639.012; Tue, 24 Nov 2026
- 11:25:17 +0000
-Message-ID: <76a41227-d450-49a0-919f-156da89c43d1@amd.com>
-Date: Tue, 24 Nov 2026 16:58:11 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 15/24] soundwire: amd: guard IRQ work with
- interrupt_enabled and clear STATUS
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org, "vkoul@kernel.org" <vkoul@kernel.org>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
- Mario Limonciello <mario.limonciello@amd.com>,
- "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>,
- Venkata prasad Potturu <venkataprasad.potturu@amd.com>,
- Syed Saba Kareem <Syed.SabaKareem@amd.com>, Poojitha.N@amd.com,
- Bard Liao <yung-chuan.liao@linux.intel.com>
-References: <20261124085033.682755-1-Vijendar.Mukunda@amd.com>
- <20261124085033.682755-16-Vijendar.Mukunda@amd.com>
- <sashiko-outbox-230818@kernel.org>
-From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
-In-Reply-To: <sashiko-outbox-230818@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5PR01CA0266.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:21c::13) To CY5PR12MB6252.namprd12.prod.outlook.com
- (2603:10b6:930:20::17)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lHFD8eSd
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-5363316fa0cso47909521cf.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 03:27:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795519672; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MNUfW80l8SoIp5+RBLPhc42LnaqcEkl+tcTkjAl/FiHicS4Vbp2eDoTVDx2TgIsiDb
+         ayCg2eQZUfPIZzRePDs8tYFGAuDO2zJrppYKS/AnwST338uQSy7/lLnHrr09CPWxXWGM
+         7OSVGl7xzOb92s2x4gK7kK/7m8faTE3v+6rA1y7HeMVhlSy42zS19w0+kMVaWQ0r2/XR
+         qK68MEwmNmD4FRXqYtDptvkcdBZoKkbdrJOcnj4ImBb1XtJUSjaVm9JvmlFnh0leWpML
+         LypGtvy4JlVC7kwrfi5PEbKm2MXJezxNo36KE6kEiL301HQj4SYUCF2ZSZQRiPt8ajp6
+         VD7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
+        fh=RU8nSI2EijC2y8B6rypEW77WbkjZMPjN4LQs4UIPXKo=;
+        b=AjIr2M4dBfJ23u7yWE2as0J2Mb02xMt86l7AJ5cCmvsFvaYrvBctsN2lL5MoRaNLb/
+         KbIlADKWaMj0Unz379/FdRGUtEwny3PNW5uS36gFbcRah1Qm4UNM1yVNzYoJB0JPWHxr
+         aZBOprpVPfFoTUTzS9ePG1Q61JVEvJFNdAkWqVpZb5HtyWtqld2S3u5cKNGfEzezAWJS
+         G9Tz1POwgRKL32J966T9CNF/cUhGpC+JoVMbVvTcRi2Kdm/tHnYKEKGHXP9sut6W2pc+
+         dVcvdnCPxs6VywwKReZbQ2QoWxQJ9ZDMe4VXvJ74iTzNwHI+L3dlXNq5zNJKXw1fws5L
+         M6LQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795519672; x=1796124472; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
+        b=lHFD8eSdvGC2VgIGP+BwpsInYjfl6hAgGd9716d/w1CoJ12TZ54sNpmC1jYdhvh1rT
+         EEwHeysowpYC6+bumcuZyLajgJVriMSmiAnR/Bns4UsmAtThlC21w1jta+/aXHt3yLao
+         jGHU4fLTzFwQEzbCPnTcgDH8Z5w69StImI38CW16FaKGMBxJhg9bmUBKLhSrUoBCxmRo
+         uej6mF5pvPnvT4y9q0DRzwBWs7X4XBN+Ul6t13n0YdqVwdJ+wtV1Jv0XITCwtSe3D44D
+         RqGv0fnCJ+LoHXQ3ha709LEyabnAA/HEsOFr9BlVJah17zKD+SGEQLyTFgBqj1DNPtS9
+         +Ftg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795519672; x=1796124472;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=xXCcl+kw2rM9Ke0wegquMdzWVHFbfKtLcutpVWvmQvM=;
+        b=IFEEd07EAqG+ULHRN3IKW47mKrw8BlHX2Czk+p/dBkj2s6s7Tm4deg8ee5pR2lFSJ/
+         PkGmg6EaipCu1kSdNN3H5mB6XfY6uYQoj7L5ZJWsfjKp8JvBp7c8fCZnv4BUktYvwVY/
+         dTHXJIrTC1Fb1bJpiH9s/5pkvB7jraokDqBRCsnCbjQmg/TDZKsCicbuK6ukDV+BDKVP
+         kXM2LwR2KycbNL/MSusHj53e96bFwYOb4SgxSjLz8zNN+t7rRNssaKXe3dU50XozTni4
+         z/PisznGMHl3kcjAOLQGrWtDMhbKH/W3vqmrJvyPp30g+7Bjwfn1dlnU2VZDiMnaQrNV
+         51MA==
+X-Gm-Message-State: APuU4Z91B8bi/lSEfJJSrcXwjXSWmg5Jx0YShRrN1x8AWkILrtBIfiYI
+	UjdtfC5Ux8CyXwCimAEtUNiehcNx5TGnDQm3JqvHFhg2+MEI8okPMjyMsZmA8ad2BHrgT/e/WJH
+	hq693PHRLxZZyAr6I1oeEyvhQlhHtxhTreg==
+X-Gm-Gg: AZFdTZev7EHapUMl5kgxSKGdxXRgEfByDvh2ZQr/z9noHsztCCxI51ATiMkGNtuHXVb
+	vKHT05gVtdSbdBjHGaxGc8p/hnAhn5lW0bzR1jv1kwBH4At3d6QN4KXgsoBtuazEmF73BWdDD64
+	kQrx3O5nQW3Sr/YzKJXR8cWnhVHsvgLdRQyVkJtWqWGaX9WXYVU5yY+fmDrP/RMgBzDP/Uihqga
+	kCfxyAynrYA8syuRWyOO0/leFVFCv4t0HrVzfv37IWSeMNIJ/0dpnTqSZmRmja8QYwtodyG47bt
+	p+c0gbp3lgFzlY3mNMPG2yHyR/U/JRmN84+9q98hbl5SpPTboKbDLZ83ddm7CTCj7v4ZmlNq/Xg
+	uD6rPHx8wpW9JRhwJkVzUSIuP5GxwXz9qMFAmmURxGig1b10jxNwzUmj3Nfu1w9VMYkFMjw==
+X-Received: by 2002:ac8:6906:0:b0:535:2283:20a3 with SMTP id
+ d75a77b69052e-55d76a1f731mr241074461cf.33.1795519672518; Tue, 24 Nov 2026
+ 03:27:52 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,210 +103,120 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|CY8PR12MB8316:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7b016d69-d646-4316-f126-08df4a1d9dda
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|261022075727099003|261102123227099003|261022105027099003|261026140227099003|261028144727099003|261021121427099003|261021123027099003|10067099003|11063799006|4143699003|56012099006|261009223027099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	g7daNURjwAGO/D4Dup437+kjWKg2sVb7Ejelr8krFCEGaUZzCjAVE6WOBklnETwm7qZko6VhNte3vJW+NRX2jg8nNMTOCp2tZeMG6f/7Xcy6sbovSfYoqjyVoUt91mpg5hal6vEPKa+OY30kIpu5Rn2mBQJ2XLCoNGpPqOhS/rUr7rxuCL0Zrs6Z0w8TqjOqzfSSllgFh//HcISO1Y+1XRFnF14x3ytOBt/Txz1xWc0z/P5EEygO5+SVBOfHc+fvkQrjEOx9ZWCd92Antp1ugNbRRdolWvFGQY9N91hHXzkAl5UfVfneMrtoLgci8rTJjGyO+xYZVvx5aKMdyHUO/csuWJZdnoYJL3sOhmJpwGkIrM48teUZ+yvSAjr24dFmPkcP1FWJX6OhxeZpeLzNl9LRu1zqhKz/qfbDbnUyropWo7IET8//a1dDaKRqZ8zzjDSGJlujEHXAkBLCQPpCsuWPnhhbWBpCnfBC3ipQunDRSFsdTZxVSlu+EyHw8O92KKEh/5SXSee6Po21aflibm+jenVnUt7ynEhELXySiHzBLmPrCrAOb6i7wmp8deCpOjtCRz2s0qfqK113AcjP5Nzy2DIzfMcT+zS5uBX4KfCyvD3ZQX6cVMBk4DRCe/pH/ryjmUrxSKRQ3ftbNbjY8jTGQPyPzF9tJr8ZeakiK1s=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(261022075727099003)(261102123227099003)(261022105027099003)(261026140227099003)(261028144727099003)(261021121427099003)(261021123027099003)(10067099003)(11063799006)(4143699003)(56012099006)(261009223027099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?b1l0MjlYak15dk9YNVhyaDJsNHZ4RUFyM290RmFFVkdPTWk4QlJ3Zm9VODh6?=
- =?utf-8?B?eTNSOG1yZkJUc1FEYnN1MG9lRXR4eFl1Wkcwa0k4QlI3ZmNqMm8xRUQ2cXFq?=
- =?utf-8?B?dnZLdXhaa1Z0cGR2bmFmc3FFTFVvMHFlelEweStvZlZJSThwZVNrSVNTQWVM?=
- =?utf-8?B?TnBnZ1EvWko4aGIzeFlXSXIvYkxUN24zamxRMGw4c1I0VWhkcVVybkl5TkUx?=
- =?utf-8?B?RVF0QTFLeWxaWkVuVFcyeTR2c2g5VmFDRi9GKzB6MzVuWjVpejltcm9CYUhP?=
- =?utf-8?B?UFdvOGdzQTF5SkpUT0tQeGd2WVVhaUx0MHpkVEsxeTlzZDNwNDFPZGlleExB?=
- =?utf-8?B?MnpKU1B5KzlicFR2WTFlZCt3aEdTYlpkWjBNdVkrOStqMmZOOTZFcmdNNE1N?=
- =?utf-8?B?QlBRRjRiSC9GOTMxNkJMWUZybGcyUmJLcllwNzJvSXRHV0JLWFZnM0J2OEQ2?=
- =?utf-8?B?TlUvV0s4YXh5UzlBSHJiSGRmZHh2L00xbXgzZFE5aGROTmtiVm5IUHFSNXhZ?=
- =?utf-8?B?Q3NCYXlncVZQaGVrRGlOc3loclpxekZNbFJKNUtab0dhclo1NVlpYW1pVnl6?=
- =?utf-8?B?U05Za3NXczBiejZzSVFNNW0yZEMzOENRSzcwTVpHaGUrNGRod0JJcFFRUGx3?=
- =?utf-8?B?T0ZOVlBFODZtM01ENThDZURVM2JKM29JcEpFSHUwNjNDd3Ura3JWdmpLL1ZR?=
- =?utf-8?B?d0dYZHRRQ3hiNk84VHNPR3g1TncrTkcwZzlwZFZKRVoxaXhYQ0ZQbnFuZ3da?=
- =?utf-8?B?Mzd5cDhCSmhITy9Ka1hwV0x2VEdKeEQ5LzdwcEU5WjByTFJha2hKaHdSRlI0?=
- =?utf-8?B?UlZrblZlWEhDNnBZaFNHL3Jyc2ljQWwxWENpT3dmUWo1aDdHcWRhdEV6VlRj?=
- =?utf-8?B?QVhZSDJIbStDUy9VZGJTWVBEY0JVeWN2dWR6V2hTYmJmZERNd0x3OUtyRVVk?=
- =?utf-8?B?Y1Q2NDVQYXBLSDJSZCtTbWQ3VzlrTW8zSDNaQzFVTVk5ZzFaMC9XZU9CNHFo?=
- =?utf-8?B?N0JFQ1hoOUYwQjlmVW0rUTZScUp4VXRlNk44KytwUXYvWThQZit5TStnamVq?=
- =?utf-8?B?dTB5Ujh0cFRKU2hkTHNRejU3UUF3NU9xS1ZBQ0E5MlJlUVRVbFc4azVHZUdE?=
- =?utf-8?B?THIwOWZwSHhwMldkc3BWcWxUS3NwWi8vcnBJMjNSS3pON2pZWWlpemFxVVBa?=
- =?utf-8?B?TWI3VE9PaVVEcGRnS1pLVmJHL0lDcGUvN1lKanZlTksxUjJGVTVaakVvcGRO?=
- =?utf-8?B?MFkza29URDBiWWtSMjdFLzJwT3BlY0VIcFQ2NDJOMTdnaGxvOFUvRUpzNURp?=
- =?utf-8?B?NFgxdEtZSld0Z0RiQ2pmUk9tMzJsNXFDNHI2RS9xUHJUMDNpVURyRFhNMEJS?=
- =?utf-8?B?UysyZ3ZZbU1ValFjSXFudG9JR0xqRVBvOCtoSG5kUUJUUm5Bbml4ZzZjN3N5?=
- =?utf-8?B?MzNZNjlnNk10R25RM2NDcG5maHp1Z25KUnpaRnoxMU9GT0NqNVR5aEtqZVcr?=
- =?utf-8?B?dHVyZjIrMG5jQ1VBNmltaXJXeHFNTFU4TTZVMzF5ejYxSFcvb2lNYXdWTVl0?=
- =?utf-8?B?RzJabXhxZnozZDNIajR1MEp0ajRaaGxJVldVZXp2Qnk0TDhlb004TTRNdCtm?=
- =?utf-8?B?MmdadXp0RVBiWFo4VEFPSHBOSWRJQUFHM1p4MmVhOFRzSk9jRGVaTkpFQm1r?=
- =?utf-8?B?SVZWSUNzMlYwNUZCeVF6eis4T3NNMXNUUVYwcFF1WFRESzVTN0pvQXJWWWIw?=
- =?utf-8?B?eUQ5NnBtZFhXY2xzNTM0M011SjlVQU96c0ZOTHVnaHNQaTZ4SEU0OThPelJ4?=
- =?utf-8?B?KzhBVnJBazdDTGRzTWtJSExMRFJ3QXdkdWRpWk92VVh5TGxOVTVCZkVZV01W?=
- =?utf-8?B?aytTV0JaUUwrSWxXZEp4L1JhQTgrZzdJN3hacENST0pHa2JVUWJiSkNYUTdv?=
- =?utf-8?B?M3NWS2thVjJMNUlFYkFrd3UvMlRTVUdoSVNjUnNUaG1OUEhEQXo4TVFGNTNM?=
- =?utf-8?B?TGxIdGozL2ZwOFkxdFBhUnJYRGNaUFdpSW5QR042dVcyQ3h1NEU2YW9UNEs0?=
- =?utf-8?B?b0VFOFl5SjBqRFpqR2ZYaDlqOUZyemJBcGg0ejlWQVdZQStRRGFtYzM5TUcv?=
- =?utf-8?B?WmhnV2dJSDZ0TVBaZVhROEw0a2cwbU0xV1NUMHpYdklBZzFXNisxNEFNaU9j?=
- =?utf-8?B?Q0gweE9BQWljN082b2FvQ3lQMUhjQ2FUSDlWZFlqYTUyekdtSGxoWVJTejZ2?=
- =?utf-8?B?c2gwV05JT0RzRk9lTGhYODJvb2FGUWhjbWR1aWp3aGxmbjlVWm8xektWUkFG?=
- =?utf-8?B?aVVnRTRTVU50VWRQeDBWL2tOdWFHcUxkbWJ0WkNzczZMeW8wZUd1dz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b016d69-d646-4316-f126-08df4a1d9dda
-X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2026 11:25:17.6523
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: g72GTwcDHTwrEl2PbqwEUIY54mx0BF4IO7gii4KrmB1f/aKH7oTU/XCVc6lhbTGLskfw7kuYGu+iLijxaWBZgw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8316
+References: <20261123-sdhi_rzg3l-v2-0-bad3a6358849@bp.renesas.com>
+ <20261123-sdhi_rzg3l-v2-2-bad3a6358849@bp.renesas.com> <sashiko-outbox-229391@kernel.org>
+In-Reply-To: <sashiko-outbox-229391@kernel.org>
+From: Biju Das <biju.das.au@gmail.com>
+Date: Tue, 24 Nov 2026 11:27:41 +0000
+X-Gm-Features: Aa3M54ppbsJLM4wVbJ_c7D0B6fZzE35d4EIHnXGoFNEoMK2kWDjqihyiCCRU6Sk
+Message-ID: <CADT+UeBih2phy7qy_DeUtCdhj0QJQjfRco8AKWZn9NbRWPgM=Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] arm64: dts: renesas: rzg3l-smarc-som: Enable
+ SD/eMMC on SDHI0
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
+	wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 24/11/26 14:48, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] soundwire: amd: race re-enabling IRQ masks in
->   amd_disable_sdw_interrupts()
+On Mon, Nov 23, 2026 at 2:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [Low] arm64: dts: renesas: non-generic node name vqmmc-sd0-pvdd for
+>   GPIO regulator
+> - [Low] arm64: dts: renesas: misplaced closing brace in #if
+>   RZ_BOOT_MODE3 around &sdhi1
 > --
 >
-> commit 4a620e80f932c593cc068162973ef08fa381e1c4
-> Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+> commit ef8324be968fe270658aa5eec8f4516a9acb1022
+> Author: Biju Das <biju.das.jz@bp.renesas.com>
 >
-> soundwire: amd: guard IRQ work with interrupt_enabled and clear STATUS
+> arm64: dts: renesas: rzg3l-smarc-som: Enable SD/eMMC on SDHI0
 >
-> This commit adds an interrupt_enabled flag to struct amd_sdw_manager to
-> prevent queued IRQ work from executing while interrupts are being disabled,
-> and clears stale status registers before enabling interrupts or re-arming
-> ACP6.3 wake delivery.
+> This commit adds pin control, regulator, and SDHI0 device tree nodes to
+> support either eMMC or an SD card on the RZ/G3L SMARC SoM depending on th=
+e
+> SW_SD0_DEV_SEL macro.
 >
->> diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
->> index f3e9614b9ac82..9f6b3366abbed 100644
->> --- a/drivers/soundwire/amd_manager.c
->> +++ b/drivers/soundwire/amd_manager.c
+> > diff --git a/arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts b/arch/=
+arm64/boot/dts/renesas/r9a08g046l48-smarc.dts
+> > index e9b7b3280615c..3699712d8bf1d 100644
+> > --- a/arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts
+> > +++ b/arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts
+> > @@ -9,6 +9,7 @@
+> >
+> >  /* Switch selection settings */
+> >  #define RZ_BOOT_MODE3                1
+> > +#define SW_SD0_DEV_SEL               0
+> >  #define SW_SD2_EN            0
+> >  #define SW_DPI_EN            0
+> >  #define SW_GPIO4             1
+>
+> [Severity: Low]
+> In commit "arm64: dts: renesas: r9a08g046: Add SDHI nodes for RZ/G3L SoC =
+and
+> SDHI1 pincontrol on SMARC EVK" earlier in this series, does closing &sdhi=
+1
+> before #else break DT compilation when RZ_BOOT_MODE3 is set to 0?
+>
+> arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts:
+> #if RZ_BOOT_MODE3
+> &sdhi1 {
+>         pinctrl-0 =3D <&sdhi1_pins>;
+>         pinctrl-1 =3D <&sdhi1_uhs_pins>;
+>         pinctrl-names =3D "default", "state_uhs";
+>
+>         vmmc-supply =3D <&reg_3p3v>;
+>         vqmmc-supply =3D <&vqmmc_sd1_pvdd>;
+> };
+> #else
+>         status =3D "disabled";
+> #endif
+>
+> When RZ_BOOT_MODE3 is 0, status =3D "disabled"; is emitted at top-level f=
+ile
+> scope outside any node, causing a DTC syntax error instead of overriding
+> status =3D "okay"; from renesas-smarc2.dtsi.  &sdhi1 { ... }; should encl=
+ose
+> the #if RZ_BOOT_MODE3 / #else / #endif block.
+>
+> > diff --git a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi b/arch/ar=
+m64/boot/dts/renesas/rzg3l-smarc-som.dtsi
+> > index 91b2d0d431045..e64a611aebecd 100644
+> > --- a/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
+> > +++ b/arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
+>
 > [ ... ]
->> @@ -135,6 +138,26 @@ static void amd_disable_sdw_interrupts(struct amd_sdw_manager *amd_manager)
->>  {
->>  	u32 irq_mask;
->>  
->> +	/*
->> +	 * Clear the flag before updating hardware masks. Work items already
->> +	 * queued but not yet started will see the flag false at entry and
->> +	 * return early; work items already running will complete their current
->> +	 * invocation. Callers that need to ensure no instance of
->> +	 * amd_sdw_irq_thread() is executing on return must follow this call
->> +	 * with cancel_work_sync(&amd_manager->amd_sdw_irq_thread). Once the
->> +	 * mask registers are written, the ACP hardware will not assert any new
->> +	 * SDW interrupt.
->> +	 *
->> +	 * ACP_EXTERNAL_INTR_CNTL is the top-level gate: clearing it here
->> +	 * stops interrupt delivery to the CPU. An in-flight
->> +	 * amd_sdw_update_slave_status_work() on the SDW_SLAVE_ATTACHED path
->> +	 * may re-write ACP_SW_STATE_CHANGE_STATUS_MASK_0TO7 and _MASK_8TO11
->> +	 * after this function returns, but that work never touches
->> +	 * ACP_EXTERNAL_INTR_CNTL, so the gate remains closed and no interrupt
->> +	 * can reach the CPU.
->> +	 */
->> +	WRITE_ONCE(amd_manager->interrupt_enabled, false);
->> +
->>  	mutex_lock(amd_manager->acp_sdw_lock);
->>  	irq_mask = sdw_manager_reg_mask_array[amd_manager->instance];
->>  	amd_updatel(amd_manager->acp_mmio, ACP_EXTERNAL_INTR_CNTL(amd_manager->instance),
-> [ ... ]
->> @@ -1481,6 +1516,9 @@ static int __maybe_unused amd_suspend_runtime(struct device *dev)
->>  				return ret;
->>  		} else if ((amd_manager->acp_rev == ACP63_PCI_REV_ID) &&
->>  			   amd_manager->wake_en_mask) {
->> +			writel(0x00, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_8TO11);
->> +			writel(0x00, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_0TO7);
->> +			WRITE_ONCE(amd_manager->interrupt_enabled, true);
->>  			mutex_lock(amd_manager->acp_sdw_lock);
->>  			val = sdw_manager_reg_mask_array[amd_manager->instance];
->>  			amd_updatel(amd_manager->acp_mmio,
-> [Severity: Medium]
-> Can an in-flight amd_sdw_update_slave_status_work() re-enable
-> ACP_SW_STATE_CHANGE_STATUS_MASK_0TO7 and _MASK_8TO11 right before
-> amd_suspend_runtime() re-opens ACP_EXTERNAL_INTR_CNTL for ACP6.3 wake?
+>
+> > @@ -78,6 +83,19 @@ reg_3p3v: regulator-3p3v {
+> >               regulator-always-on;
+> >       };
+> >
+> > +#if SW_SD0_DEV_SEL
+> > +     vqmmc_sd0_pvdd: vqmmc-sd0-pvdd {
+> > +             compatible =3D "regulator-gpio";
+> > +             regulator-name =3D "SD0_PVDD";
+> > +             regulator-min-microvolt =3D <1800000>;
+> > +             regulator-max-microvolt =3D <3300000>;
+> > +             gpios =3D <&pinctrl RZG3L_GPIO(L, 4) GPIO_ACTIVE_HIGH>;
+> > +             gpios-states =3D <0>;
+> > +             states =3D <3300000 0>, <1800000 1>;
+> > +             regulator-ramp-delay =3D <1200>;
+> > +     };
+> > +#endif
+>
+> [Severity: Low]
+> Should vqmmc_sd0_pvdd use the generic regulator-vqmmc-sd0-pvdd node name
+> instead of vqmmc-sd0-pvdd to match the Devicetree generic node naming rul=
+es
+> and vqmmc_sd1_pvdd: regulator-vqmmc-sd1-pvdd in r9a08g046l48-smarc.dts?
 
-No code change required; marking as false positive.
+Will fix this.
 
-The amd_deinit_sdw_manager() call shown in the reviewer's trace is
-removed by patch 18 of this series ("soundwire: amd: drop
-amd_deinit_sdw_manager() in POWER_OFF suspend"). With the full series
-applied, the AMD_SDW_POWER_OFF_MODE path in
-amd_acp63_sdw_suspend_runtime() is:
-
-acp_disable_sdw_interrupts(amd_manager);               // close gate, MASK = 0
-cancel_work_sync(&amd_manager->amd_sdw_irq_thread);   // drain irq_thread
-cancel_work_sync(&amd_manager->amd_sdw_work);          // drain sdw_work
-amd_sdw_clock_stop(amd_manager);                       // stop clock
-acp_disable_sdw_manager(amd_manager);
-acp_sdw_wake_enable(amd_manager, true);                // set wake bit only
- ...
- /* ACP6.3 wake reopen: */
- writel(0x00, STATUS_8TO11);
- writel(0x00, STATUS_0TO7);
- WRITE_ONCE(interrupt_enabled, true);
- ACP_EXTERNAL_INTR_CNTL |= mask;
-
-cancel_work_sync(&amd_sdw_work) at line 1466 waits for any running
-amd_sdw_update_slave_status_work() to complete and cancels any pending
-instance. After it returns, no kworker can overwrite the MASK registers.
-The two-step drain (irq_thread first, then sdw_work) also covers the
-chain case where a running irq_thread schedules amd_sdw_work just before
-completing.
-
-When the gate reopens, MASK_0TO7 = 0 and MASK_8TO11 = AMD_SDW_WAKE_INTR_MASK
-only (set by acp_sdw_wake_enable()). The clock is stopped before gate-open
-so no STATUS bits can be set by hardware, and STATUS registers are
-explicitly cleared to zero immediately before gate-open.
-
-As additional defenses: the SoundWire clock is stopped before the
-gate reopens, so no PING frames are sent and STATUS bits cannot be
-set by hardware after gate-open; and STATUS_0TO7 and STATUS_8TO11
-are explicitly cleared to zero immediately before the gate reopens,
-removing any stale bits from before the suspend.
+Cheers,
+Biju
 
 >
-> The comment in amd_disable_sdw_interrupts() notes that an in-flight
-> amd_sdw_update_slave_status_work() on the SDW_SLAVE_ATTACHED path may
-> overwrite ACP_SW_STATE_CHANGE_STATUS_MASK_0TO7 and _MASK_8TO11 after
-> amd_disable_sdw_interrupts() clears them, and relies on
-> ACP_EXTERNAL_INTR_CNTL staying closed.  However, in AMD_SDW_POWER_OFF_MODE
-> on ACP6.3 with wake_en_mask set, amd_suspend_runtime() then preserves
-> those mask bits and re-opens the top-level gate:
->
-> CPU0                                  kworker
-> amd_suspend_runtime()
->   ...
->   amd_deinit_sdw_manager()
->     amd_disable_sdw_interrupts()
->       interrupt_enabled = false
->       ACP_EXTERNAL_INTR_CNTL &= ~mask
->       MASK_0TO7 = 0
->       MASK_8TO11 = 0
->                                       amd_sdw_update_slave_status_work()
->                                         MASK_0TO7 = AMD_SDW_IRQ_MASK_0TO7
->                                         MASK_8TO11 = AMD_SDW_IRQ_MASK_8TO11
->   amd_sdw_wake_enable(..., true)
->     MASK_8TO11 |= AMD_SDW_WAKE_INTR_MASK
->   interrupt_enabled = true
->   ACP_EXTERNAL_INTR_CNTL |= mask  <-- non-wake IRQs unmasked while suspended
->
-> Because amd_sdw_wake_enable() performs a read-modify-write on
-> ACP_SW_STATE_CHANGE_STATUS_MASK_8TO11, the non-wake state-change and PREQ
-> interrupt masks written by the worker remain enabled once
-> amd_suspend_runtime() sets interrupt_enabled back to true and re-enables
-> ACP_EXTERNAL_INTR_CNTL, allowing amd_sdw_irq_thread() to process non-wake
-> interrupts while the manager is disabled and clock-stopped.
->
-> Checking READ_ONCE(amd_manager->interrupt_enabled) in
-> amd_sdw_update_slave_status_work() before unmasking, or draining
-> amd_sdw_work before clearing the mask registers in
-> amd_disable_sdw_interrupts(), would avoid this race.
->
-
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123-sdhi_rzg=
+3l-v2-0-bad3a6358849@bp.renesas.com?part=3D2
