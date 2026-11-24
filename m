@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795527613;
-	b=hhEE/OvgkJZ315CMsoY3lDI2fg0Msp29KHLdwgYmsPKAC5tBsqf5le0xBkvlGFBuN1L4
-	 /UIM6kqo/bwfcHScWkyyEmRHVS9zvI/wIlwUbZMkP3weWtoYExnaoirU9jBHp0lc+btcx
-	 XOXSPQFcMmR3m1TuTiyu15lPoxJYuTXS8XxJzzXbzJqD2j7P3lnL/xgBsSR2gHqSgrH6X
-	 gKunKvQDi6K0N+EHETKX5j6S6er5aXutVMN9mPn97reL3c2/YcyE1dcWHn1iy/CW/v+Ov
-	 HQJicPgysFbl6AABaG2a2DK+pASFnBqbFtedesgIVIHs40j2ydRC21Pkz4Iq9DUgTmA==
+	t=1795527850;
+	b=bLZf6c5Nmg2lQtfWRJC6K9QzQu7CQxukLZLIY5pu38+sKj8nsf4du5hLKYyCmdmyKqIr
+	 EWxR29DUO/V9oXL2mrmsCjAihMLWWd54yENaFw08E5xzv9XBojQmaHCeM9fKNJX0mL9pr
+	 Ox6VR7zSl4IubgsS5496xiliG19SZ8+jMprmttP99Lves4HQPfQ7rAWioQLqvYMCznL41
+	 YsdiQUJNIeALRU41skVR/4WT/dIvx/I19c9sav2keRXDFJERz/U+uZ0vqbuYyUapnA5+A
+	 KuKvJngnKWn7yBc/Q9q+1kfvaa0TSmtA9NuLqh1/Jvrf8d/c2Af9XXE8PoyUw6EC+FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795527613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795527850;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=LXiFx+L5CCwKVruNwA9sXl2NhTIyj3jvkEbySanPels=;
-	b=ZOVvkVLihVAp59sguoN1tV8IwHNeimrosL9vT+5FWkEOrY2YAooQytD7gkEtI9WfKVKL
-	 6Mf7J07/5NU1D88IlqvLuxzcrqyw5ZRHujYnXjH014M8ASQT/YpYabupqXLCD9snQW3ro
-	 3hXC3gX0PNoxSob6jNN7vJhW5n2wtN0AxrPYkfhi+//3wKMVSGP7Txhz0b0unt6lXnxUJ
-	 KyszoRcfY9h10li8Zd2lBIvlMhvLMZ4ityJJPeQeNPt54PfTxh8zVyf8+Iftlin24ArPf
-	 PbHs5BR8FiEXtxqBgAVPudA0hmYWWlgev7p8gTQqWrJ/uuQzJZ4Dtb6m76vvEREEJNA==
+	bh=VCAQg3UxYZNeau7J2CKEJUMFRL+RaFjODA4ITuoDI0E=;
+	b=nBGxm59EXjlByT8l1RZD0V/DyQDbZpb9vp7LRAmLdVgWEDxk3bVtp67SB0VH+Zt+L5TH
+	 Nltg4iFirWaEbG/XaRH4Rs1aeZ718dYjfWKXMVivh/m9k3Rmh/EwnwBHFTKPsnw8d3PJg
+	 lyiiCEYVZ6Z+Wl1Bk/6P1gdVr0X1VBfqBYaYYrg1gVM2uHPWEY9CN5LEWEIu+6V9JDQ3h
+	 Ve8FGTnvzlZHH7MZ15jddjJ0Vb5ZO1GFpRp4HE518lpVI0exOllmC07UrpLLjd0cRNVWA
+	 1gLojqkj23BpKn3eKd6bVW0ooo6fq3OGh179v6CeAoP9FNqeMQAOdYYHfdQh5qB65KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BhmZVsm1;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kD08IbV4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E99606A31E;
-	Tue, 24 Nov 2026 13:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0C7606A321;
+	Tue, 24 Nov 2026 13:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BhmZVsm1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791031F000CA;
-	Tue, 24 Nov 2026 13:40:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kD08IbV4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA2E1F000D0;
+	Tue, 24 Nov 2026 13:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795527612;
-	bh=LXiFx+L5CCwKVruNwA9sXl2NhTIyj3jvkEbySanPels=;
+	s=k20260515; t=1795527849;
+	bh=VCAQg3UxYZNeau7J2CKEJUMFRL+RaFjODA4ITuoDI0E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BhmZVsm1F03k1gQhR42vPYWI3yvM5KqUr5TzQXRw69br9dDrzS24ACF0CW0cWStRv
-	 nhKYE5mMbiV3T0C0P2suHiRK1UxBghW8geD2ZwEdC+Bn5QnjyZwO8yABHU4x68W4+d
-	 Qkgzn/NMNWWuG+VM8hzD6q2X5loLeFUE6JKU+/VBu3Fvm3WFNY/wQLESZnWRvp1c6z
-	 sb9dHgjUZ9PYK4q8Vua/64XIVO6yl12N7xmwdf9HBqGBeJkKCmNL74J5/f8NjyJYdj
-	 VcZU3nKP5JWCkgoWZUUEwoneTHW2xF12oB56sa7R+p3llx6MG3LtW7wGvIQEqDRsAs
-	 Y4u96/vQvkDmQ==
-Date: Tue, 24 Nov 2026 07:40:09 -0600
+	b=kD08IbV4sPP6wimci9DX0lIlUPXWYZKoNRo87fPcvWuRRQVESpbutF1+imZyrsBb1
+	 HbIRCzo1Fyhfuc2/95jfJIhxpkQibRsB0C/7dyFJSv9cMXrC3NOvb5XVz36NSH4Z6T
+	 enogkVgJbQfmP1oj9TmjDyS3hraXXlULEINIOVZZePtgp/SbcUY0dDAizRyIayCcJ5
+	 gCLq8AP+cZrq5ieQtheqW8g/Zh89BTZYYJrfFBuW2y/HRrkQDncDQqk5+B7x9Tz41d
+	 7eaWFlp8/GFo6uQGLzXaZ+++/aY04vzcU4b/LtC7OFoDQkUOYJS76Ys07SL6PZhgRd
+	 4EGeZJuQLNYEg==
+Date: Tue, 24 Nov 2026 07:44:07 -0600
 From: Rob Herring <robh@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: "H. Nikolaus Schaller" <hns@goldelico.com>, linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-leds@vger.kernel.org, linux-sound@vger.kernel.org,
-	conor+dt@kernel.org, lee@kernel.org
-Subject: Re: [PATCH v2 06/20] dt-bindings: sound: Document OpenPandora sound
- card
-Message-ID: <20261124134009.GA43712-robh@kernel.org>
-References: <cover.1795505160.git.hns@goldelico.com>
- <5c6f7deca16f70f1f19cb40c57d70e30068d6000.1795505160.git.hns@goldelico.com>
- <sashiko-outbox-230655@kernel.org>
+To: Binbin Zhou <zhoubinbin@loongson.cn>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
+	linux-serial@vger.kernel.org, conor+dt@kernel.org,
+	Binbin Zhou <zhoubb.aaron@gmail.com>
+Subject: Re: [PATCH 2/3] dt-bindings: serial: 8250: Add dedicated
+ Loongson-2K3000 UART compatible
+Message-ID: <20261124134407.GC3404231-robh@kernel.org>
+References: <cover.1793776192.git.zhoubinbin@loongson.cn>
+ <c194b5248184779da500476281fd411fc80a98d6.1793776192.git.zhoubinbin@loongson.cn>
+ <sashiko-outbox-196836@kernel.org>
+ <20261119214532.GA757146-robh@kernel.org>
+ <0009e3c5-dfff-4254-a06f-13c8664a1543@loongson.cn>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -63,79 +64,96 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-230655@kernel.org>
+In-Reply-To: <0009e3c5-dfff-4254-a06f-13c8664a1543@loongson.cn>
 
-On Tue, Nov 24, 2026 at 07:40:31AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [Medium] dt-bindings: sound: openpandora sound-dai omits mcbsp4 and
->   twl4030 DAIs
-> - [Low] dt-bindings: sound: openpandora sound-dai lacks per-entry items
->   list
-> - [Low] dt-bindings: sound: openpandora example has status property and
->   wrong order
-> --
+On Tue, Nov 24, 2026 at 02:58:40PM +0800, Binbin Zhou wrote:
+> Hi Rob:
 > 
-> commit a7d9248344c1d8736a83ed4cfd8b21aad87db0cb
-> Author: H. Nikolaus Schaller <hns@goldelico.com>
+> Sorry for the late reply.
 > 
-> dt-bindings: sound: Document OpenPandora sound card
+> On 2026/11/20 05:45, Rob Herring wrote:
+> > On Wed, Nov 04, 2026 at 07:52:04AM +0000, sashiko-bot@kernel.org wrote:
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > - [Low] dt-bindings: serial: 8250: duplicate ns16550a fallback block for ls2k3000
+> > > --
+> > > 
+> > > commit 71974153fe22bc00d365059be9198364c9cfaa86
+> > > Author: Binbin Zhou <zhoubinbin@loongson.cn>
+> > > 
+> > > dt-bindings: serial: 8250: Add dedicated Loongson-2K3000 UART compatible
+> > > 
+> > > This commit documents the loongson,ls2k3000-uart compatible string with
+> > > ns16550a as a fallback so the driver can distinguish the Loongson-2K3000 UART
+> > > from earlier Loongson UARTs that require MCR/MSR signal inversion.
+> > > 
+> > > > diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
+> > > > index 01abd39509a7a..33c13c48ed56e 100644
+> > > > --- a/Documentation/devicetree/bindings/serial/8250.yaml
+> > > > +++ b/Documentation/devicetree/bindings/serial/8250.yaml
+> > > > @@ -196,6 +196,9 @@ properties:
+> > > >                 - loongson,ls2k2000-uart
+> > > >             - const: loongson,ls2k1500-uart
+> > > >             - const: ns16550a
+> > > > +      - items:
+> > > > +          - const: loongson,ls2k3000-uart
+> > > > +          - const: ns16550a
+> > > 
+> > > [Severity: Low]
+> > > This isn't a bug, but properties:compatible in
+> > > Documentation/devicetree/bindings/serial/8250.yaml already has a two-item
+> > > block with const: ns16550a as the fallback that includes the other base
+> > > Loongson UART compatibles:
+> > > 
+> > >        - items:
+> > >            - enum:
+> > >                ...
+> > >                - loongson,ls2k0500-uart
+> > >                - loongson,ls2k1500-uart
+> > >            - const: ns16550a
+> > > 
+> > > Could loongson,ls2k3000-uart be added to that existing enum instead of adding
+> > > a separate two-item block?
 > 
-> This commit adds a Device Tree binding schema for the OpenPandora OMAP3
-> audio subsystem connecting OMAP3 McBSP, the PCM1773 DAC, and the TWL4030
-> codec.
+> Let me briefly explain why Loongson UART `compatible` is necessary at this
+> time.
+> First, as described in the driver, each `compatible` type defines different
+> driver data:
+> struct loongson_uart_ddata {
+>         bool has_frac;
+>         u8 mcr_invert;
+>         u8 msr_invert;
+> };
+> Since the Loongson-2k3000 has already fixed the hardware issues with
+> mcr/msr, we need a new `compatible` to correspond to the updated
+> `driver_data`.
 > 
-> > diff --git a/Documentation/devicetree/bindings/sound/openpandora,omap3pandora-sound.yaml b/Documentation/devicetree/bindings/sound/openpandora,omap3pandora-sound.yaml
-> > new file mode 100644
-> > index 0000000000000..6c4d69ffc1c50
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/sound/openpandora,omap3pandora-sound.yaml
+> static const struct loongson_uart_ddata ls2k3000_uart_data = {
+>         .has_frac = true,
+>         .mcr_invert = 0,
+>         .msr_invert = 0,
+> };
 > 
-> [ ... ]
-> 
-> > +  sound-dai:
-> > +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> > +    minItems: 2
-> > +    maxItems: 2
-> > +    description:
-> > +      Phandles to the audio CPU DAI (OMAP3 McBSP) and the codec DAI.
-> 
-> [Severity: Low]
-> Should sound-dai define an items list with a per-entry description for
-> each phandle instead of using minItems/maxItems with a free-form
-> description?
+> As for why a fallback to `ns16550a` is required in all cases, the DTS files
+> for the Loongson-2K1000 and similar devices were merged into the repository
+> before `8250_loongson.c`, and this approach was used at the time to maintain
+> compatibility[1].
 
-This would be why you broke everyone else. sound-dai already has a type.
+No one is questioning what the compatibles are, just where you add the 
+new schema entry. Use the existing one with the ns16550a fallback 
+instead of a new oneOf entry:
 
-> 
-> [ ... ]
-> 
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/gpio/gpio.h>
-> > +
-> > +    sound {
-> > +        compatible = "openpandora,omap3pandora-sound";
-> > +        status = "okay";
-> > +
-> > +        label = "OpenPandora";
-> > +
-> > +        amp-gpios = <&gpio1 14 GPIO_ACTIVE_HIGH>;
-> > +        amp-supply = <&aux_5v>;
-> > +
-> > +        widgets =
-> > +            "Line", "Line Out",
-> > +            "Line", "Line In",
-> > +            "Headphone", "Headphone Jack",
-> > +            "Microphone", "Mic (internal)",
-> > +            "Microphone", "Mic (external)";
-> 
-> [Severity: Low]
-> DT binding examples normally omit status = "okay", and the property
-> order in the example node (widgets, routing, sound-dai) does not match
-> the order declared under properties: in the schema (sound-dai, routing,
-> widgets).
-
-Also correct comments.
+      - items:
+          - enum:
+              - altr,16550-FIFO32
+              - altr,16550-FIFO64
+              - altr,16550-FIFO128
+              - fsl,16550-FIFO64
+              - andestech,uart16550
+              - nxp,lpc1850-uart
+              - opencores,uart16550-rtlsvn105
+              - ti,da830-uart
+              - loongson,ls2k0500-uart
+              - loongson,ls2k1500-uart
+          - const: ns16550a
 
 Rob
