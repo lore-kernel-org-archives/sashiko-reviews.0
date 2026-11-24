@@ -1,58 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795489409;
-	b=gSjxsVBhBlOuApgdhxUKrMEHCkW0bcbYKuJTk2M0zZRBByJhm411nW69M5sOrmc2H2rQ
-	 5LL13s8NqSi31EjDpWy7y/ZjsZU+FKozV1I1BCln3E0NOB+3q/1kT8/ZN10PEGG7D7cst
-	 vK0ohzGPM1NS0RR/u9440aBrJdurSyDqVKYfOHDJXtcph4uqP9TQEehNDQknEpq+yQvMj
-	 aT+Pcy5oPtXjFTvwPf7iNQtFf60eGeHhzrQQwefoQxSlwI6KqQ9KQfQAmQx2xlL12xMzk
-	 SeiwKzZdR+ef64hquwKL3Xgwf5ubS0wpistJj5NxCTG/qgPwq/76MfKrJvm8tfVB1IQ==
+	t=1795490604;
+	b=sz8+jtt/C5/IfYCMThD+ZxUVDBuhII3lq0sLJ2WzzPm8EcMLhTFe6LheG2AAcXmUBZxS
+	 uDf3y8C9cGQPQIG4xvm3XNipQA36sIwh10utIHXFKH6alr0pfAez3VGGE9v5JGUlxZNro
+	 JJ9kP+Gm6aZ/u4sMdHLtNvf3L1lGIusOPDYLYtOU7SJjsKGUC3qkbtOAzeSVWjhVdcYFY
+	 RP9VXzPUDCzYLUkpxqbPRkBMOX7w1sLhQo75UFRteb3EJOUsrdSpep3j3ZZ5RhXyOT5P9
+	 nbdZ2carIGBK4LZgcA52NThs/tvAgbXq8neIVTev2SNo1hjM4MxhFrnEntaBcYhs2pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795489409;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=U71fuT0AOwlbjkzcDhiaqPhe344VAjXFS0XIiFa4Hn0=;
-	b=0nrydi4xrg/kiCjuTbfuXgD0NommI4msh0svIitGjeLDrMtfqL8djepilzHaF38F+TVG
-	 /eW9YY3k4KYYxd1nHYnj3qA18a7EYoUof2wYBwYrPZrLKZk1T6lxeMA6hIfR32aFf93Ir
-	 9uYf2rxtYmm12rTiY6AfHpYEXWDcRkiZHSb54yhldRKsJFJ7Wv3kBKvA9p9Z/oKrKgIjE
-	 i+jznbvwhF1CbC5kpKKcKw/6+/H5AaVlwArI3VUpMEE5vI47eigjVjE/lJjXG6FoWS3mn
-	 9XrzAXTvW3Ckzwu97BpvBBilSsNB5qvZlhJ1YAwLWd3mToDS/gO3PWG8xGnsvEAFqaQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795490604;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=g2xYc13uIcoTxx1PIDsQUia73qmoO0NEeZoyYDssKHA=;
+	b=w7APVmpuJ09dbLzt+a5s6TE4NWEVNvY40agH5bXDfyaF6RP08Y9GLgOJJ6MlSjUc5wHR
+	 SUNIbR1rX/zDg55iCQfeM3EtAftFYunGp5iXHhpbRk/CZ4EWbp+ffAbQr1WRpZhiVQ8Mk
+	 GUzL79LO+RPkfRhpfrKAf11CMYZx4p0+ESbzRrvJXO+d13W6+EJjyBl9eHYG1a5CCoj2n
+	 SWso0HYpfKr7hk+hssje6V85OOFqfpQ2zWf7IGC3VtP6IoD/NLsT7VpQLcniTH9bsO/ui
+	 hj6XK9EPJSOiGbk5ouHoB6CWcGw+gRpb/SRaPm0ERLisG46S8+kK4euGl3kDqRmbG4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kucAM0BC;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N4dN2K+o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A36606A31E;
-	Tue, 24 Nov 2026 03:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FD5606A31E;
+	Tue, 24 Nov 2026 03:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kucAM0BC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A795A1F000C6;
-	Tue, 24 Nov 2026 03:03:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N4dN2K+o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538951F000CA;
+	Tue, 24 Nov 2026 03:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795489408;
-	bh=U71fuT0AOwlbjkzcDhiaqPhe344VAjXFS0XIiFa4Hn0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kucAM0BChNxQkOo9X+Q/ZmLqlgQq1hfmOvR+a6c48cZlIu9s498xVi34k3X34Lo44
-	 ukUgbxPzFPm7/jvQEG3Wk46dbbXgeCZxh+neAQ8zZfBjHlZDIxLyvIVibHAZIx2JJx
-	 pr+5Vpsv94Z/mSOfO06M8kgONqQl1HkMMNHrnuiJrvZ2vdDYCFfN7FVW3lyCeK2BH1
-	 //H/KR1IH8A6by1BBKr/Z0yuKBqousyCGUE138yjOC6dEuFdRNg/ZGzQ6Uy/4n2z35
-	 fCtlkFZaCyoAENiY7CZOcJzC9++WcSv2Su2uFyCqgzpBLI5Wtn1SL5bg6bGxM1axFZ
-	 lfl2l+1V0fPPg==
-Date: Mon, 23 Nov 2026 20:03:24 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Nicolas Schier <nsc@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
-	Christian Heusel <christian@heusel.eu>,
-	linux-kbuild@vger.kernel.org,
-	=?iso-8859-1?Q?Adri=E1n_Garc=EDa?= Casado <adriangarciacasado42@gmail.com>
-Subject: Re: [PATCH] kbuild: package: Install System.map to build tree only
-Message-ID: <20261124030324.GA2247258@ax162>
-References: <20261116-package-install-system-msp-to-build-dir-v1-1-ec53d3d39146@kernel.org>
- <sashiko-outbox-219115@kernel.org>
- <20261122213504.GA1454693@ax162>
- <awRijCPFYK4J5L6C@levanger>
+	s=k20260515; t=1795490604;
+	bh=g2xYc13uIcoTxx1PIDsQUia73qmoO0NEeZoyYDssKHA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=N4dN2K+oBMBLLRXtv/Nna9pSI/7QxrnjcmVbNUeHNe1OjRuXffrz3jgEekV6W/lje
+	 wKqH5WTlXM9Iy7BDcSPIPLHxKzb/r3As+JnOObfHuwGwwVeemiccxNL+74pSRNtoUE
+	 i149VYCLNhfx9V+lpjPJxudR/zmViitE0CdY2OQp4R6jy4wbE2Hg/GBRK5gxgWP+yh
+	 /hvYUhc5AGcOwe1pqKc8ikHjCe9+9a/e++JCf3j1F6Y1+4tt/wGOPVaqF+vHewaAei
+	 EDwmRBFylglsHeTsqEpnkRUFQ+OSxZ1hXdHBq0Kn8du+78+e3RfH80nisszaAAuus+
+	 WNKQfW902mUqw==
+From: SJ Park <sj@kernel.org>
+To: Aveline Noir <jm5905938@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 14/27] mm/damon/paddr: support REPORT_MADE type probe filter
+Date: Mon, 23 Nov 2026 19:23:15 -0800
+Message-ID: <20261124032317.10738-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CANOyQmFCkqfgQLda1EUADP2fVx_o6g+w8RuTAV5ugJ_sP3OkyA@mail.gmail.com>
+References: 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,86 +64,24 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <awRijCPFYK4J5L6C@levanger>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 23, 2026 at 04:58:04PM +0100, Nicolas Schier wrote:
-> As Distros are moving everything to /usr/ -- but I haven't seen
-> /usr/boot/ anywhere -- I'd prefer to move it away from /boot.  The
-> kmod build tree looks like the native location to me (as per
-> scripts/depmod.sh) and from what I can find, most debugging tools use
-> vmlinux or /proc/kallsyms rather than System.map; but I have never ever
-> tried to debug a Linux without the full source + build tree at hand.
+On Tue, 24 Nov 2026 13:04:44 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
-I guess we could try it and see who complains about the new location.
-
-I am just not sure that we should treat scripts/depmod.sh expecting
-System.map in the build folder as anything more than "external modules
-won't have dependencies generated properly" (which is more of a missing
-feature than a true bug) than "System.map does not belong in /boot" but
-I don't have a really strong opinion here.
-
-> Does System.map still help with regular debugging with CONFIG_KASLR
-> enabled?
-
-I think for debugging, you would want KASLR off?
-
-> If it wasn't for 'depmod -e' I'd like to put System.map to the
-> linux-image-${KVER}-dbg_*.deb, as Debian does.
+> HI SJ,
 > 
+> On Tue, Nov 24, 2026 at 12:05 PM SJ Park <sj@kernel.org> wrote:
+> aid if that will add something that we need to maintain long term,
+> > without clear use case.  I think we could revisit after we get such realistic
+> > use cases.
 > 
-> > Something
-> > like this maybe (completely untested):
-> > 
-> > diff --git a/scripts/package/builddeb b/scripts/package/builddeb
-> > index ba1defc61652..4261963a901e 100755
-> > --- a/scripts/package/builddeb
-> > +++ b/scripts/package/builddeb
-> > @@ -147,6 +147,13 @@ install_kernel_headers () {
-> >  		"${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
-> >  	fi
-> >  
-> > +	if [ "${ARCH}" = um ] ; then
-> > +		system_map="/usr/lib/uml/modules/${KERNELRELEASE}/System.map"
-> > +	else
-> > +		system_map="/boot/System.map-${KERNELRELEASE}"
-> > +	fi
-> > +	ln -s "${system_map}" "${pdir}/usr/src/linux-headers-${version}/System.map"
-> > +
-> 
-> What about doing it the other way round?  We could provide the symlink
-> in the old /boot/ location for now and move System.map to the module
-> build tree?
+> Sure. That makes sense :)
 
-We would have to make sure that this location was available without
-CONFIG_MODULES but that wouldn't be a bad option either.
+Thank you for confirming, Aveline.
 
-> >  	mkdir -p $pdir/lib/modules/$version/
-> >  	ln -s /usr/src/linux-headers-$version $pdir/lib/modules/$version/build
-> >  }
-> > diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-> > index 8f0933cbbe45..3add2b2c7dd2 100644
-> > --- a/scripts/package/kernel.spec
-> > +++ b/scripts/package/kernel.spec
-> > @@ -122,6 +122,7 @@ fi
-> >  ln -fns /usr/src/kernels/%{KERNELRELEASE} %{buildroot}/lib/modules/%{KERNELRELEASE}/build
-> >  %if %{with_devel}
-> >  %{make} %{makeflags} run-command KBUILD_RUN_COMMAND='${srctree}/scripts/package/install-extmod-build %{buildroot}/usr/src/kernels/%{KERNELRELEASE}'
-> > +ln -fns /lib/modules/%{KERNELRELEASE}/System.map %{buildroot}/usr/src/kernels/%{KERNELRELEASE}/System.map
-> 
-> Looking at line 122 (start of hunk), /lib/modules/%{KERNELRELEASE} seems to be a symlink to
-> /lib/modules/%{KERNELRELEASE}/build/, thus that line will would create a
-> funny symlink. ;)
 
-/lib/modules/%{KERNELRELEASE} is a folder created at the beginning of
-the %install stage. /lib/modules/%{KERNELRELEASE}/System.map is where it
-is installed during this stage, so symlinking it to
-/usr/src/kernels/%{KERNELRELEASE}/System.map should make it appear at
-/lib/modules/%{KERNELRELEASE}/build/System.map as expected.
+Thanks,
+SJ
 
-But as I mentioned above, I am totally fine with going the other way.
-
--- 
-Cheers,
-Nathan
+[...]
