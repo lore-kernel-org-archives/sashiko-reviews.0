@@ -1,111 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.14
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795530052;
-	b=Y2stRY8jZlcN7A1Sk4i+sE+ZoeYzanfdXo0zrNGk7TD6w53w6M1VqQh//XbgfWVyTwSa
-	 K+HNuZQN8V9AYeS7zwEpiefJ88ggn5oOOZeQtjpzVsh8FAmTeuOjPz/4Pd/PIJBuL7H5v
-	 qegSjbJtQIjrDO9pvcFxGZAaiJCp1wACgWvG62cEqLtJCFMk71Td4R91qfGIPTzrZoou+
-	 fbjd8xuca3y6hdvdyqibrONJKJknetcVrYmrtNY2atKkJpEgE4IsZJAyHga91PfECSNsG
-	 cqnLc5kJjJoM7Y4cU/V46hZQbUJordhx14Y3+4B0KPwiAiTv4LnYLT4jsfJcxdMZtzg==
+	t=1795531224;
+	b=j0E9Fi//94rMehjDV3xErxeI6M4rPZ/dJI/gAwDNsDim00/9MifY5WRjTe5sZYNcvjIf
+	 3aqbYVdvgHVG4fbFzrNb2mYgyHWavjpj9eZikFjo7Szuww4BZs48ME7F5nYBYWSxh9+Qf
+	 n7rLi/c/jnuRD3eOHSYIxaucaKs0GjOw5ekdp0JllV/6hhYIV9ymwyP3b98lGC25mjMU9
+	 i74XU+YewKWZQu2dZBYJh1/TEyxHXZyOGDarrLzj8yGXqz0OKFl7GF6ooNLcYSEQvZaO4
+	 hZUY3IrjKfCMR+F9zV9hCRSFpR5ieb9/LwjZgaQ1XP87X1rJcJAk8Nrj2geJH7MNGFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795530052;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=u3j6+1vDkkUdepekjgVOAW7Wo6iXb2x00XUTpjNkTgk=;
-	b=jQZT9CgyVVewO2DcCo8HqxLcxCg9ahZFvlmnzIXmEesXXFUtO4MRGqui1SvqnXL9dz8x
-	 P/B9FLRj1hc4GInJtt5lEdM7hph8DEvrTYVwCXbXrWM95p8SuEsbz4lSvOrZM38Qj8u1w
-	 GyA2yy11/e+5igYOVFasyByzG+Eov5cu/hAfmIpTOdEsjZfgVMfcBM1vbTHGa1g1CGsSF
-	 c5N9mtfYKp2gdSpwy7p0c8poBCcq2RTPbx8j/pdLH2t3FpNXIQvJWC5Yt+gZnpMH++PuF
-	 l4NAJgqIjijGw+PFFLqyWI1gStHHUKsUU5DsO5ykAx8imrbt8Nw6YbXbv2d1ojdio9g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795531224;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Stat-Signature:X-Spam-Status:
+	 X-Rspamd-Server:X-Rspamd-Queue-Id:X-Session-Marker:X-Session-ID:
+	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
+	bh=SL3PL1m8jHiSOf5zx037rsGIS1n82PCpE57ofB5Ribc=;
+	b=2Hh0FfTtCqKrIAa2BwZSUbVX/olE73Q1EsM45uSvA8kOO+8GoDa9mbllQbXvwqoJtBW5
+	 v4XNyYu/7jdR02AqvMgj+QMueum6VZ9fyXvwgPYK9wOSF5qyUEylCApX2CD6Jj9B1Zvte
+	 k8aZQFTl7nMboSbxvj3dYa6kF3sGOhje7taQkF/7qZtfw8E7MZRjLQVpDYn+V5Zl9nG+S
+	 DV3A5FAypJ6lZ8NdF1v+oGkgQi6L7nQ2k/Snh8Fu6mk1jBRVYhi3gFvaheeqCQ5S5jicb
+	 hJVR/Szzaji63nPGWfKHDus714UlrNUj2Hvk3rxAthTcXhURswmHqmKXoA8VGSH3vNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arndb.de;
-	spf=pass smtp.mailfrom=arndb.de;
-	dkim=pass header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=PVorD37Z;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UtwWEvoZ;
-	arc=none smtp.remote-ip=103.168.172.152
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	dmarc=pass header.from=goodmis.org;
+	spf=pass smtp.mailfrom=goodmis.org;
+	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=lcHe+SfT;
+	arc=none smtp.remote-ip=216.40.44.14
+Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E35606A331
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 14:20:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27E35606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181F4606A321
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 14:40:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 181F4606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=PVorD37Z;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UtwWEvoZ
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DC72A14002F0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 09:20:50 -0500 (EST)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Tue, 24 Nov 2026 09:20:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1795530047;
-	 x=1795616447; bh=u3j6+1vDkkUdepekjgVOAW7Wo6iXb2x00XUTpjNkTgk=; b=
-	PVorD37Z9jDNNC1k6/oiHqSM9Vf6vAHLVrm073XtVk2Sqijo6xNw1XCQ74urOwyU
-	wp32RSngykH2l0sDAh2UeJQ/0NqUEJ0cSg2UiTmsikF7UxKL0FDGs54oGa/uKUR/
-	Y5HCPegh230snV9Oe6SsSD0k/vP77CspXv9Kcj0/1rKXCWu6X8QK+sdN8FDt5B9V
-	B4aVxaDPKqXsjV7HtNdaeYBjoNmaJGZw0u04abomRKWieufOV1PL7rXmCmrDB/xW
-	9Ltg7R30nDDMXYz7Ay1Ju38Egdi8kFVJFF19IGZkriACuav3qGT/9Iacb8qfOBuo
-	pGMp+1s9iCq7Klb9lHrCyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795530047; x=
-	1795616447; bh=u3j6+1vDkkUdepekjgVOAW7Wo6iXb2x00XUTpjNkTgk=; b=U
-	twWEvoZRg5cdcif8ONh/tL3K+fVsXGM2+q1a2BkmIZ4q2edlu5335tSuhRjETho1
-	/jgu+dstWjejJTtO1W/dn0UgmzlVnSFzBMntGGNYZ+4rJS26X/x0PnVSsf8kH9OQ
-	Br/okPX4lzQcGusHYKPJVBf54q8QkRDLPKot7zSIU0dQcy2qpHqWtAD56SFZMgXM
-	5Qr1iqNyakiw1VwjEOKycG1yxLjBGj7JnzPZkO9WB8dL8MIOeQKJoGlMv7SlbBOT
-	FHrDzvFcu6TotkHxHzxbd9TvcjVy0m8dvXI/y52rmlnul1r5g9mgIoRKZDr0tQv7
-	qaslpR8HS3W9rRhYb5e7Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=arndb.de a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795530047; d=arndb.de;
-	mf=PGFybmRAYXJuZGIuZGU+;
-	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
-	s=fm2:rsa-sha256:X6XJBLxH7YbLbEeji4N6rzHpn2+VDsRgALoXgSEmFowZ0Q5
-	uAjfLcMKnIq7qOJ/KQgNWWuhuUphcvTdWqRrIskuQ1chxp7DmZczGbvY4AWZ30Ud
-	yiHkDRHOqRs01w9GDnBmvfRDOOmukUveMpbzHITC80DLgOGu1CDhwHPQ5GPwCvFc
-	+PnTA/8g/I/a/OC7I6+ZtRQTckJInUU0BOWr05Ie94wG9U1tJH5BVJJ5wZoKcbl+
-	AplfftNdQB0wMPPfY/rg8p9uTLaUiBs5Y6lwqwLxErxt7Q65asojkmj09t9vsEae
-	8KbcoVJ8G9HnqYsoHLn4Z06kYnXcH+d1g7ueq+A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:QWI2uJx9uKHNEkI5ArHbcx6fT0KmIPMlK1h+9jS7NII=:1r9tw/j/3peIDWcTRzPnQcmEJg6r6Mi5hMfjZtJnzRU=;
-X-ME-Sender: <xms:O50Fa4H5xcml6H14agoXxF_92vPFDiJwsMdeCK35Mhc8jWjY2vwySg>
-    <xme:O50Fa8L174MX3mda9fHYCSd24ThdkkBuj_YqyfUXradE-itBeqF1bAmEvjlEk5jR_
-    z8AnK8IKZ0PNsfjPgI_vSaTlCqL7x0bNwFODdxLV5CjbYk2xelLP_E>
-X-ME-Proxy-Cause: dmFkZTEzcLHzUbygVSoohLJKupEtfEaADKNynBPP+A79ygbUcaBEdyY3/dAANqKmhrkblO
-    Jrae/KV3GLY+RywD9rqxWs2jej9mhDb2TWInKeQNn+yEiA4oO7214aCWGh1pWRuSHLG4lz
-    TdoLSFYKLGnO5oj5ojEc5oqP6D1a7M2XWTfL1XsEmO58G94E7SVDAZz/i6TAwTuQMjP1/F
-    5TPW0GY754A7e2ys/CGoidT/VBp7upqptqyunqjvfPBeie53CuSfAlSGwR8bN5F1FaHKno
-    AL0ThjRjo5RR2bV/aqsZJpIOYawl2HGcD5gns0fAQQl7C8bRBC9pk5vmzfbmO4suSI0JLC
-    Lpnyz46cCf9anYpgPOg04vL5NcAu6B+CbaR2p64ylCE9OtchHxU2/sFYPcab5dF9SQic1T
-    BtTBN/n3FXbeW+YhdOtF2TiqcVWW+UCyKEwYNr0+0wID7jJERGyGaBXfVxI6mN4AgiYtE2
-    JVmX/mSt4BfYY9CVVhhTpiBQDd1fQ4eIcmYyJAqYjSizSp5IOLOxbulU+HP7chDG4+IgQx
-    tLfqzihdnyFfP/VLwltW+V7URcNCtlCG7nXuYoJ37Nl2M7LxoSQSNJMUHDFEjvJ6qhcJM4
-    aLxrpi/j53kJgPy7MYlmKNBhlU8/wRwzhf4dPLTZksm211Bypt/ItkogSTYw
-X-ME-Proxy: <xmx:PJ0Fa7oXw8zeiTB6BEkz_IJr2ffUf9voVAf6yWLsKISNXdWNaYrCYQ>
-    <xmx:PJ0Fa3NziNSlPzrCjYnUdLQrWercCpl38axITNNSqTwnWDtmvi-lDQ>
-    <xmx:PJ0Fa3cQYYQmZXBYGTHLHk9XzsuScY7a3-S3oPDnnjeV1DXc1ZsURA>
-    <xmx:PJ0Fa1W-0RzqLaNULftEzcNXQaRtqI2WYpcneTTueorUeu18kw4qMQ>
-    <xmx:P50Fa9OGGACUrFWX6Voa9pbaKsrtI08gEVmULLqFPTSsI5WRDzPWvBMs>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id E4BE132A009E; Tue, 24 Nov 2026 09:20:42 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=lcHe+SfT
+Received: from omf02.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay08.hostedemail.com (Postfix) with ESMTP id BE27B1401F9;
+	Tue, 24 Nov 2026 14:40:22 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf02.hostedemail.com (Postfix) with ESMTPA id 16F3D8000E;
+	Tue, 24 Nov 2026 14:40:20 +0000 (UTC)
+Date: Tue, 24 Nov 2026 09:40:19 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, "Linux Trace
+ Kernel" <linux-trace-kernel@vger.kernel.org>
+Subject: Re: [PATCH v7] tracing/probes: Zero out faulted dereferenced fields
+Message-ID: <20261124094019.75f52b60@gandalf.local.home>
+In-Reply-To: <undine-1795529710371793698-f2bd67810f91497f@undined.local>
+References: <20261123213246.00440bfc@gandalf.local.home>
+	<sashiko-outbox-230424@kernel.org>
+	<20261124090849.7fe8d45f@gandalf.local.home>
+	<undine-1795529710371793698-f2bd67810f91497f@undined.local>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,41 +62,41 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: A-w96cgpwkaV
-Date: Tue, 24 Nov 2026 15:20:22 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-Cc: sashiko-reviews@lists.linux.dev, "Kees Cook" <kees@kernel.org>,
- linux-mm@kvack.org, linux-s390@vger.kernel.org, sparclinux@vger.kernel.org,
- "Heiko Carstens" <hca@linux.ibm.com>, "Vasily Gorbik" <gor@linux.ibm.com>,
- "Alexander Gordeev" <agordeev@linux.ibm.com>,
- "Christian Borntraeger" <borntraeger@linux.ibm.com>
-Message-Id: <5de01709-19e6-4664-b91e-7cf35b843d77@app.fastmail.com>
-In-Reply-To: 
- <20261124145907-12f830e3-70ab-4e58-a330-2fa974be1a25@linutronix.de>
-References: <20261123-at-vector-size-arch-v3-0-d342dae9e843@linutronix.de>
- <20261123-at-vector-size-arch-v3-3-d342dae9e843@linutronix.de>
- <sashiko-outbox-230870@kernel.org>
- <20261124145907-12f830e3-70ab-4e58-a330-2fa974be1a25@linutronix.de>
-Subject: Re: [PATCH v3 03/15] asm-generic: add an in-kernel auxvec.h header
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: 13oqkotsj4gyqyy97c9bjaucspyrhoxo
+X-Rspamd-Server: rspamout03
+X-Rspamd-Queue-Id: 16F3D8000E
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX19p4us7pEBmSioedkxxyrh0wu4Qkrky7W4=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=SL3PL1m8jHiSOf5zx037rsGIS1n82PCpE57ofB5Ribc=; b=lcHe+SfT7xaQDB+kGlkAfMmmVDrNIxm/KljeIU9gAnUm2eA7ATIOY+Qwn0+YenE3/oLuOetlIGBnK+Jb2DLyWM7fnO5BMMqeskZboLF3rav9yY/sceLy8d7hEbm1Q7sM6Uy7HtihMu9khfBRhbbWv6b1V5B5/fIxMEQeRWlVd24=
+X-HE-Tag: 1795531220-365516
+X-HE-Meta: U2FsdGVkX1/ociYjPQuHesWAJ8W79GNT6vIP70TulAk43OTqp9EHZAuziuroqHRx09P0scwr0r1QKb4nX7KV+AG+069B3q4riRoIwiIUhyqCvswgssFvSsdKuefpsfaRU5XkNIevpiIgCuJk+PVpBD8pdDowhAEpAPQIlPybuzB6uKr6YEe7GtdVQOSqoS+Yrt2hI2XKZhnRuivIT1+4cBW2Fx/eF4WHKd/I4Tpew4UtUOHwr6zqxG/uX5IjRG/ynt1c6jfft0VqzZjfcp8H+qdM8tQFZ6SJ3bS3sGpLWnv+2lv0x6C8cNWgXQ939EUtASl63uTzd6JtKprFMDqFXMaexcFpUWsTMFEQqaDJE1CprJqgwjPFEg==
 
-On Tue, Nov 24, 2026, at 15:03, Thomas Wei=C3=9Fschuh wrote:
-> On Tue, Nov 24, 2026 at 09:49:24AM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential
->> issue to consider:
->> - [High] asm-generic: auxvec.h unconditionally redefines
->>   AT_VECTOR_SIZE_ARCH to 0
->
-> This is indeed an issue. Not sure, how I missed this, especially as I =
-thought
-> to have sent this through 0day.
->
-> @Arnd: Could you drop the patches?
->
-> I'll prepare a fixed version, probably for the next cycle.
+On Tue, 24 Nov 2026 23:15:10 +0900
+"Masami Hiramatsu (Google)" <mhiramat@kernel.org> wrote:
 
-Ok, done,
+> > > [Severity: Medium]
+> > > Should do_probe_mem_read() and do_probe_mem_read_user() check for a NULL
+> > > src before calling probe_mem_read() and probe_mem_read_user()?  
+> > 
+> > No, but I guess I should add that as we probably shouldn't be dereferencing
+> > zero when something fails.  
+> 
+> Maybe we should make it rejecting dereference if IS_ERR_OR_NULL(ptr).
 
-     Arnd
+Do any of these things return ERR? When one of the functions return an
+error, the val (or current pointer) gets set to zero. Then that zero
+continues to propagate.
+
+The original problem was that if we had multiple dereferences, once one
+failed it would exit the loop. If it didn't fail on the final dereference,
+it didn't do anything which meant that it left whatever was in the ring
+buffer unmodified. This caused the output to show garbage.
+
+The goal here is to set the pointer to NULL as soon as an error is detected
+but then let the processing continue. All processing would see the NULL (or
+zero) as a fault and continue but would eventually zero out the destination
+on the ring buffer.
+
+-- Steve
