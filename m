@@ -1,65 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.10
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795504882;
-	b=oMC22lu+WUvV/EmRuX4jAZEg0qCgvEo8A98nHaoPUqMpGm9LADxqmhcKf64gWs8C4R4o
-	 sVgjt6VqkupiqlnFjY/q0BQjlaF+YRbxvAfWwQLKmHzHbYqZ+HQnm/l4zU2CjnULy3AlL
-	 kUydGRpGOiWKw6NxfXxtXiBLGzO9BkBcMz71uXU3xOfkwXYUDKWPTdxMLBomNfu2ybQmr
-	 9WBzHOOIWZCSZCA6CAsrrATV8i6eHcIjh0LG7+Lvt5pJ/544MSPMkgLdS+WUaS6C4+lH1
-	 1j8cU00UNs4Efwdgmo6K7B2ohDnYSi2lmivEM0Q07Tij1GIzSvNp5tcah71L2s8TziQ==
+	t=1795505094;
+	b=gzO48HMjADLlgC2k3L9txbWx3IAe4mnlbW8j0KhvJ7+9r0h8w+GxiOwqF7BTsLGFyV5p
+	 r/53KOfSmd+RZffQECaAlmyWDh01cbSSskqdtGrWSO2mvjLjs6GNlH2sd65QZGIUzhcuD
+	 di/5O+VcAET4bymV3sNJjp1JB+SG/uHoezySIthQzMiAZoXdkeo0By5x10+jMW/NFKB48
+	 99JaaexfUxARUadxjnvzyBUNgnT0bXznH9QcbdBuDV9+1ohkM/GU/AeDGulMDP4UCJHa4
+	 0YAYQthOSE26PZjMIJQfcRYncpJjrkiScQfFL/x51ghhQKONB+Rs9/A6XRAOeFyUyEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795504882;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=fuY33GUF0eUP0SwseynPFkH435CSn9417a8iUr7BK7k=;
-	b=krGkRqv9PqIrpfPHngayQaFhUubWkRyirQevIhgrAilewrXRCb1m/vYGyenot5uE/rGU
-	 /4FKUS8pQRDt7fjxV4q50Xli37yJAgpiLpJDFsi2Q6huSo9ebXjq/rGmbW7vJfqTQs48L
-	 uUtibJ7ToUq0Fb2qfEAgRioWgoGlgrMhBwzlkdo8ivz6gmyslyh9X5l8z8FL1wCF12oEy
-	 xZACV4Z5HZP396OJEdrNeMCelp1W6o0/qWK8MdYbAxw5Io58ZiAKk5RLuS0idV98xoA4M
-	 gPpkVcAicnEVFh0SPOQ+RDiUhWJRNg3ABHMlEwmE/Kg6RvB1rqZDRDd7o2jorR+kFCg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795505094;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:References:From:Content-Language:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=rPpDfKVH7+4ZQFZ2BNSiTKNzv7DLDlFf+/IJ01jJcyY=;
+	b=YJQwJXCvfqc9l6kh1vnkIe0J7lHcR6t/PxqpHUZVVM9YKrjW1K8+FgE0rG5s8DMImpuX
+	 7YgTAB6EjB+ECJV+s8qUXMX4OwBPAS1d6IJbM5emT6opkxvIXFBGkbRiIaZyMk1rxh1ob
+	 tmRwxwm12/7r/CPAokLP00JwDE3rMVSSWppe5gp+6t6GmCHApmM8TWlINO11vaBicksY2
+	 MmWQr74VkqX+Xq0YKKitWcgLsFvLnU9YDyEymO8G6W+quwy6jdKBhaEIi3M2exwQ9qKDx
+	 Zf+qc8I8ie2YOwaY2dAGVENKuLO1Z6aQiR9BOeUQA9g6crIZyH8KmG91TeeSP5RGQDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=EtRK0xDX;
-	arc=none smtp.remote-ip=95.215.58.10
-Received: from mta1.migadu.com (out-10.mta1.migadu.com [95.215.58.10])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="kVf/QRdo";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758A3606A31E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 07:21:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 758A3606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DD9606A321;
+	Tue, 24 Nov 2026 07:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=EtRK0xDX
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=dsrRPagJG7IpTBUtHaN37ZSV+UIhydva5xu3fPf5Il8=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795504878; v=1; x=1796109678;
- b=EtRK0xDX48aYVGns5qZl8sf1U4gRqygL/LQNdOk6NK/48fwI9CtxppbezuodiaNUOk9Jdh2o
- 1+9FffH7K8rFvsxYYcCiY5q5PDTn/a/vV7ThX65V3Ye76zWWzqH4EPEcKxGw1vxQav1W7ak4O4H
- 6QiNWSga/nNj4sHyQ/epgPcU=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id bb0ec5bee1dfc514;
-	Tue, 24 Nov 2026 07:21:18 +0000
-X-Mizu-Trace-ID: bb0ec5bee1dfc514
-X-Migadu-Flow: FLOW_OUT
-Date: Tue, 24 Nov 2026 15:21:08 +0800
-From: Baoquan He <baoquan.he@linux.dev>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-mm@kvack.org, akpm@linux-foundation.org, david@kernel.org,
-	kasong@tencent.com, baohua@kernel.org, qi.zheng@linux.dev,
-	shakeel.butt@linux.dev, axelrasmussen@google.com,
-	yuanchu@google.com, weixugc@google.com,
-	baolin.wang@linux.alibaba.com, Baoquan He <hebaoquan@kylinos.cn>
-Subject: Re: [PATCH 1/4] mm/mglru: add MM_WALK_EMPTY stats and tracepoint
-Message-ID: <awU65FQ4XGGdwMpG@bogon>
-References: <20261120085806.781225-1-baoquan.he@linux.dev>
- <20261120085806.781225-2-baoquan.he@linux.dev>
- <sashiko-outbox-226848@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kVf/QRdo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E876C1F000CA;
+	Tue, 24 Nov 2026 07:24:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795505093;
+	bh=rPpDfKVH7+4ZQFZ2BNSiTKNzv7DLDlFf+/IJ01jJcyY=;
+	h=Date:Subject:To:References:From:In-Reply-To;
+	b=kVf/QRdoDMHTMQbb2xejPdPpk0Z/3tBHz3TRXLcL97jOMZ6jrw0oCU07bKWKJwXlK
+	 VcQlQ1C7KpM1p7216MNHedVcG89nKawR4GOt39uM6ZMCKY8EtfJ9Fsm/h3/F7Nr5m6
+	 +4ADEzqwmt05bb0zw1Qza6SUtR3RNW3BfO8mMshf+eG+ibGHni8NCiKr7CTjCVh6f+
+	 Z10sZHRx/JXvyC98ixvR1FAVDVMywuGUuKiOfpm6CpSkhPpGVgVu6YbnEatTbyOd5J
+	 Pdl2DwhF0gGaDKz0nS7qvRC9mU01g8rjbb3uMMiFCtOn8JSf9/nygamzjEv+hHJ/E6
+	 5eHnXyL5kskMw==
+Message-ID: <ad506392-9010-4955-8251-602bf79c2286@kernel.org>
+Date: Tue, 24 Nov 2026 08:24:50 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,64 +51,123 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-226848@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] kbuild: move scripts/mod target out of single-build
+To: Nicolas Schier <nsc@kernel.org>, sashiko-reviews@lists.linux.dev,
+ Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org
+References: <20261111-reduce-single-build-dependencies-v1-0-7196ca986a85@kernel.org>
+ <20261111-reduce-single-build-dependencies-v1-3-7196ca986a85@kernel.org>
+ <sashiko-outbox-211218@kernel.org> <awRvU8_wAUlkd1Nj@levanger>
+From: Vincent Mailhol <mailhol@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=mailhol@kernel.org; keydata=
+ xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
+ JFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbEBrZXJuZWwub3JnPsKZBBMWCgBBAhsDBQsJCAcC
+ AiICBhUKCQgLAgQWAgMBAh4HAheAFiEE7Y9wBXTmfyDldOjiq1/riG27mcIFAmrTM8wFCR1O
+ HxcACgkQq1/riG27mcJ2KAEAhG19xBSkjiA9dtatvq2WJnGaes4SUmY+LSn7dh1Lf7YBAIwB
+ lsMMmigMTk3Qgwymg1nT+Z8z1Owc/TGtRlo4ZcwMzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrb
+ YZzu0JG5w8gxE6EtQe6LmxKMqP6EyR33sA+BR9pLAwEIB8J+BBgWCgAmAhsMFiEE7Y9wBXTm
+ fyDldOjiq1/riG27mcIFAmrTNKcFCRUFdT0ACgkQq1/riG27mcLEVwD/VmnQtTf6yhowaIFj
+ AjUtwiyQz9ja4NRu9GOvz/pb2L8A/3QcADR0dcxADGsmOiBpN2M9KI7nqdNIq3VPM/3/5fcB
+In-Reply-To: <awRvU8_wAUlkd1Nj@levanger>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 11/21/26 at 08:59am, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] mm/mglru: inconsistent MM_LEAF_ASSOCIATED accounting across
->   mm_has_notifiers()
-> --
-> 
-...snip...
-> > @@ -3682,6 +3685,8 @@ static void walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area
-> >  		if (!folio)
-> >  			goto next;
-> >  
-> > +		walk->mm_stats[MM_LEAF_ASSOCIATED]++;
-> > +
-> >  		if (!pmdp_test_and_clear_young_notify(vma, addr, pmd + i))
-> >  			goto next;
-> >  
-> 
-> [Severity: Medium]
-> Does MM_LEAF_ASSOCIATED count all leaf entries belonging to the target
-> lruvec (as described in the commit message), or only young leaf entries
-> in the target lruvec (as described in the header comments)?
+Hi Nicolas,
 
-Agreed, and the counter is not worth keeping. MM_LEAF_YOUNG already
-counts the leaves we care about: it is incremented after get_pfn_folio()
-confirms the folio belongs to this lruvec. So v5 drops MM_LEAF_ASSOCIATED.
+Thanks for the review!
 
+On 23/11/2026 at 17:52, Nicolas Schier wrote:
+> On Thu, Nov 12, 2026 at 01:45:43PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential
+>> issue to consider:
+>> - [Low] kbuild: unordered modpost_prepare and stack_protector_prepare
+>>   mutates CFLAGS
+>> --
+>>
+>> commit 08ffc13380249741520c2ea434688d701b5d0e9b
+>> Author: Vincent Mailhol <mailhol@kernel.org>
+>>
+>> kbuild: move scripts/mod target out of single-build
+>>
+>> This commit moves the scripts/mod build out of prepare0 into a new
+>> modpost_prepare target depended on by modules_prepare and modpost.
+>>
+>>> diff --git a/Makefile b/Makefile
+>>> index 2c1289a44c560..93236f310f080 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -1405,7 +1405,7 @@ scripts: scripts_basic scripts_dtc
+>>>  # archprepare is used in arch Makefiles and when processed asm symlink,
+>>>  # version.h and scripts_basic is processed / created.
+>>>  
+>>> -PHONY += prepare archprepare
+>>> +PHONY += prepare archprepare modpost_prepare
+>>>  
+>>>  archprepare: outputmakefile archheaders archscripts scripts include/config/kernel.release \
+>>>  	asm-generic $(version_h) include/generated/utsrelease.h \
+>>> @@ -1414,6 +1414,8 @@ archprepare: outputmakefile archheaders archscripts scripts include/config/kerne
+>>>  
+>>>  prepare0: archprepare
+>>>  	$(Q)$(MAKE) $(build)=. prepare $(if $(single-build),,prepare_checks)
+>>> +
+>>> +modpost_prepare: archprepare
+>>>  	$(Q)$(MAKE) $(build)=scripts/mod
+>>
+>> [Severity: Low]
+>> Should modpost_prepare be ordered relative to stack_protector_prepare (or
+>> depend on prepare)?
+>>
+>> On arm, arm64, powerpc, and riscv, prepare depends on
+>> stack_protector_prepare, which depends on prepare0 and mutates the
+>> exported KBUILD_CFLAGS variable at recipe execution time:
+>>
+>> arch/arm64/Makefile:
+>> prepare: stack_protector_prepare
+>> stack_protector_prepare: prepare0
+>> 	$(eval KBUILD_CFLAGS += -mstack-protector-guard=sysreg		  \
+>> 				-mstack-protector-guard-reg=sp_el0	  \
+>> 				-mstack-protector-guard-offset=$(shell	  \
+>> 			awk '{if ($$2 == "TSK_STACK_CANARY") print $$3;}' \
+>> 				$(objtree)/include/generated/asm-offsets.h))
+>>
+>> Previously, scripts/mod was built inside prepare0, so it always ran before
+>> stack_protector_prepare modified KBUILD_CFLAGS.  With modpost_prepare
+>> only depending on archprepare, a parallel build runs modpost_prepare
+>> concurrently with prepare0 before stack_protector_prepare updates
+>> KBUILD_CFLAGS, whereas a serial build or make modules_prepare runs
+>> prepare first and passes the updated KBUILD_CFLAGS to scripts/mod.
+>>
+>> Because scripts/mod/empty.o is compiled with KBUILD_CFLAGS, switching
+>> between parallel and serial or single-module builds changes its recorded
+>> command line, rebuilding empty.o, regenerating elfconfig.h (which uses
+>> if_changed), and forcing a full rebuild of modpost.
 > 
-> In walk_pte_range() and walk_pmd_range_locked(), get_pte_pfn() and
-> get_pmd_pfn() filter out non-young entries before get_pfn_folio() is
-> reached whenever !mm_has_notifiers(vma->vm_mm):
+> Well yes,
 > 
-> mm/vmscan.c:get_pte_pfn() {
-> 	...
-> 	if (!pte_young(pte) && !mm_has_notifiers(vma->vm_mm))
-> 		return -1;
-> 	...
-> }
+>    make scripts/mod/empty.o && make modules
 > 
-> When !mm_has_notifiers(vma->vm_mm), every entry that reaches
-> get_pfn_folio(pfn, memcg, pgdat) is already young, so MM_LEAF_ASSOCIATED
-> is identical to MM_LEAF_YOUNG (which also only counts young entries after
-> get_pfn_folio() verifies the folio belongs to this lruvec), and an mm
-> with old folios in the lruvec is still counted as MM_WALK_EMPTY.
-> 
-> Conversely, when mm_has_notifiers(vma->vm_mm) is true (such as KVM
-> guests), get_pte_pfn() and get_pmd_pfn() let non-young entries through so
-> secondary MMU notifiers can be checked by
-> test_and_clear_young_ptes_notify() and pmdp_test_and_clear_young_notify().
-> Because MM_LEAF_ASSOCIATED is incremented before those notify calls, it
-> counts both old and young entries when mm_has_notifiers(vma->vm_mm) is
-> true, giving MM_LEAF_ASSOCIATED and MM_WALK_EMPTY different meanings
-> depending on whether the mm has MMU notifiers registered.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261120085806.781225-1-baoquan.he@linux.dev?part=1
+> leads to a rebuild of empty.o and modpost triggered by 'make modules'.
+> But if that is the only negative implication, this is not relevant as I
+> expect no human wants to build scripts/mod/empty.o as a single-target.
+
+This is indeed a low priority report, but regardless, after thinking a
+bit about it, I came up with a v2 which I found a bit more elegant:
+
+https://lore.kernel.org/all/20261113-reduce-single-build-dependencies-v2-0-93ba1f6c4e46@kernel.org/
+
+The dependencies goes from v1:
+
+  modpost_prepare: archprepare
+  modules_prepare: prepare modpost_prepare
+
+to v2:
+
+  modpost_prepare: prepare
+  modules_prepare: modpost_prepare
+
+It both resolves the issue and read more naturally.
+
+
+Yours sincerely,
+Vincent Mailhol
