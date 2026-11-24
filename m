@@ -1,50 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=160.236.52.245
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795528988;
-	b=KRl64d22mUD+mMWp1jdB+mH2Y9iO4YGp1WnU4PGMT5GsdxnnnHb3m23MaVqJY438uVww
-	 +0TRcwQet+zeaHc3WAjlLebEMgpNP8qah2+8ig1EhRU0eS5UVTbkxcZ2GmHoDuTfecx6E
-	 vsVWmNXP3nqao6LEqU/lVoc5aUavOWALWfMcBE1jNfXAjgwO71fMPXKHYz7ahQadK/D4w
-	 9thZWsP2fJtZ5JsE9VUx6HXGT5oFrtVwF0EHM7xO8SN+P7n7bJno08RqMmwxoet9Ilq6S
-	 jV87drj1lDAsGg6YlQvZHgfiT2zCy48fcoxMTgif2tFWumvpEQ+WYZqHnGUqcSU69Kg==
+	t=1795528994;
+	b=rmZX8Yq4+GEUWXJhpQTHUCQJyMJGYj2ejOVlJJlNt9w95pg29cgJOF8zAPQ4C7aQeCHM
+	 a/KmFK0sCtr64PWry+IouAUqGDswvfDxe6pfhEO3hcTIREmQj/J8cNgonaEZzuFIex58/
+	 NrD3SgJL8UvUct1iMDhERAKIAipF5VhnHyiMSdYVG6G5rBp6qMj0uZ4r/ANsk4wL9yysO
+	 N1oZP66UyV92TkMOGVyv8774dcjL05LTfaSgudHiw2gWsfPpZ9cPfgXZ4b5t/VJcoix35
+	 +vg92RP42Wo13+dikU0J3sCN2ZqvfSgt35G4gA2nVaMOA5YxSryMPfLyHqLvnBWvp6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795528988;
-	h=DMARC-Filter:Content-Type:Content-Transfer-Encoding:Message-ID:To:Cc:
-	 Subject:X-Priority:X-Mailer:X-Originating-IP:In-Reply-To:References:
-	 MIME-Version:Received:From:Date:X-HM-Tid:X-HM-MType:X-HM-NTES-SC:
-	 X-HM-Spam-Status:DKIM-Signature;
-	bh=jjn1cdAPwAEjID7Klfns1nWE1xV9tdTDdrkxDgPtTXM=;
-	b=ll2maiFJiaMoAWMRVrwRCrDZR2zmtj6MrbivuxHjkwxb5K+Js1iqh31NbfM0kEq2LfMG
-	 OvM8TrpVxy9x2MhRyqffwHk5mTjyCdPiT068rv6T1H1nHVMKdWxF38yi3PhrhGZ+yEs9W
-	 rXLYGYBGJKJ/hfOYc6qXIVl4bP5kFf+iPEEUXxPWP31tshSqYoAO47IcfcbbqShp3f4a0
-	 BCj1e4KU6K9l2ZBQBO3tp4D9Z2Q5usei2raZ4itMFGDjEjvYGqEmveRrBGSVM8F5lVRR9
-	 CQK9Tzn4/PWxqWBnc6pHfGkFZUU2f2a/GDbR/0wMUakXZSsW399xAOXPhHiAYc9RhQg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795528994;
+	h=DMARC-Filter:Date:DKIM-Signature:DKIM-Signature:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=JVwSuPPW9LnMTHGbyC/LWwKgzpeuxTVxDYf7431PF50=;
+	b=rYgGX6gBIu3fGHZthPG+yvcvb6Ecam1OojVrMdd23Q1NWB/mSW26wWNCZ8YlPwaHxJTs
+	 4/JcC2fesEiXxBby6UhvrqQdftk1pHxz8kc6I18v1I/orjTO3Z5SI8J9TVJTK+8dqi+4A
+	 If4L4PwFHH5vThDepkbC9igZ6+la6AIgJSiCVO0DOAmZBzLOEycEqSuutHR9sfLSxFwbP
+	 LAuaDEjvuMiW8PVmkozFJlFOCIGCArZV64gL5lCSx/amZhF6sw2h56jwjcp2BcTA0vRn2
+	 SHEJCsYWGt7SZhJXLtuPpMVeYoUPFQjbwS1Gq0z5DPy13sObsnTw6y10hjMs/i1Rtrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mail.sdu.edu.cn;
-	spf=pass smtp.mailfrom=mail.sdu.edu.cn;
-	dkim=pass header.d=mail.sdu.edu.cn header.i=@mail.sdu.edu.cn header.a=rsa-sha256 header.s=default header.b=cuMVp4LP;
-	arc=none smtp.remote-ip=160.236.52.245
-Received: from mail-m16023652245.xmail.ntesmail.com (mail-m16023652245.xmail.ntesmail.com [160.236.52.245])
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=TsFM2UqX;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b="xAU2/Slp";
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB72606A685;
-	Tue, 24 Nov 2026 14:03:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EFB72606A685
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mail.sdu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.sdu.edu.cn
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA6D606A68E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 14:03:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7AA6D606A68E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mail.sdu.edu.cn header.i=@mail.sdu.edu.cn header.a=rsa-sha256 header.s=default header.b=cuMVp4LP
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-Message-ID: <AOMAxwC3LEPQzPaWcDJ2aaq2.3.1795528977046.Hmail.202321181@mail.sdu.edu.cn>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, imx@lists.linux.dev, Frank.Li@kernel.org, 
-	media-ci@linuxtv.org
-Subject: =?UTF-8?B?UmU6UmU6IFtQQVRDSF0gbWVkaWE6IGNvZGE6IEZpeCBwb3RlbnRpYWwgdXNlLWFmdGVyLWZyZWUgYWZ0ZXIgVkRPQSByZW1vdmFs?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com web
-In-Reply-To: <av9lA75EmTaC9OVD@lizhi-Precision-Tower-5810>
-References: <20261107-0d0c29e10a-media-coda-1@mail.sdu.edu.cn> <sashiko-outbox-202680@kernel.org> <av9lA75EmTaC9OVD@lizhi-Precision-Tower-5810>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=TsFM2UqX;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=xAU2/Slp
+Date: Tue, 24 Nov 2026 15:03:06 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1795528991;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JVwSuPPW9LnMTHGbyC/LWwKgzpeuxTVxDYf7431PF50=;
+	b=TsFM2UqXj5b+V3/3KG4PfYS0lJNbWBi4ZtJFudmyjLsy5pNIYarTh0tMz5+qpiSEDIi1xS
+	HyrxXGzCQXJampyFbYOhVPHNR0EzLY86FTeFG6FZD0w4bIGAwEvr4CnvR2tBqmvfdP0Jqj
+	ABrv9AM+Zl1RRFdb2qAqPrxpTtptABWGfulBb7/sSoDC3yo156pcTW9t6JksZHLYhIImiO
+	FE7G5/5+goHgIN5sgm+L5r/zBFNwItCrE75jN4VU2ZTDRzJkY4OIKz1kICZEQgNgvFoNQg
+	lCD+QeV82ITKpmTIMtDIReW4yGPGAIAylgjo7X3eIFqpkmxR300nw4Cyd2ZCcQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1795528991;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JVwSuPPW9LnMTHGbyC/LWwKgzpeuxTVxDYf7431PF50=;
+	b=xAU2/SlpVCQkMOYGKKQKfVe4HuUQTiCOuOagdD2hmbXtwhmh0KbeBZnsCI/iY1oyjBa7XN
+	Is50/oIaDKTJS6Aw==
+From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: sashiko-reviews@lists.linux.dev, Kees Cook <kees@kernel.org>, 
+	linux-mm@kvack.org, linux-s390@vger.kernel.org, sparclinux@vger.kernel.org, 
+	Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, 
+	Alexander Gordeev <agordeev@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH v3 03/15] asm-generic: add an in-kernel auxvec.h header
+Message-ID: <20261124145907-12f830e3-70ab-4e58-a330-2fa974be1a25@linutronix.de>
+References: <20261123-at-vector-size-arch-v3-0-d342dae9e843@linutronix.de>
+ <20261123-at-vector-size-arch-v3-3-d342dae9e843@linutronix.de>
+ <sashiko-outbox-230870@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,105 +77,86 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Received: from 202321181@mail.sdu.edu.cn( [101.76.249.61] ) by ajax-webmail ( [127.0.0.1] ) ; Tue, 24 Nov 2026 22:02:57 +0800 (GMT+08:00)
-From: =?UTF-8?B?5p2O5bm/56GV?= <liguangshuo@mail.sdu.edu.cn>
-Date: Tue, 24 Nov 2026 22:02:57 +0800 (GMT+08:00)
-X-HM-Tid: 0aa20ddd8d72d0cdkusy9fc12731248c6
-X-HM-MType: 1
-X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMVHpP02bZAKsMEiErRSAekjx+ys+KNZNl0PLwl
-	f2MeqR5lbiqKsoq8sm3hZVy9q3VetZ+Wq0Te/EdHEVk+2W3XygE0t2b+veD5v+x2w+urvHVBazrP
-	h+FlfaheJ8AroyFyEW0FlbrUAg2H/VtR4IXQM=
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCHh8fVh9CSkhMGh5PHklJT1YVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlKS0pVTE1VSU9CVU1KWVdZFhoPEhUdFFlBWU9LSFVKS0
-	lCTUtKVUpLS1VLWQY+
-DKIM-Signature: a=rsa-sha256;
-	b=cuMVp4LPU/+j6ZbMocMAyrPkL9S6iWtXDupDASgBqf+c5kgpcuy1kFnrhFxGw4GuE5LKVmiVkA7+skv66R9a7M3BnwCj8Ew0/d0Uk1OtB5vLFZyQS8KKyINzZj0fykImGuSxq+o7SN/m6p3v/+9fQnczSVcgHOm1j3ERS2ibL/k=; c=relaxed/relaxed; s=default; d=mail.sdu.edu.cn; v=1;
-	bh=jjn1cdAPwAEjID7Klfns1nWE1xV9tdTDdrkxDgPtTXM=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-230870@kernel.org>
 
-SGkgRnJhbmssCgpUaGFua3MgZm9yIHRoZSByZXZpZXcuCgpGcm9tOiBGcmFuayBMaSA8RnJhbmsu
-bGlAb3NzLm54cC5jb20+CkRhdGU6IDIwMjYtMTEtMjAgMDU6MDc6MTUKVG86ICBzYXNoaWtvLXJl
-dmlld3NAbGlzdHMubGludXguZGV2CkNjOiAgR3VhbmdzaHVvIExpIDxsaWd1YW5nc2h1b0BtYWls
-LnNkdS5lZHUuY24+LGlteEBsaXN0cy5saW51eC5kZXYsRnJhbmsuTGlAa2VybmVsLm9yZyxtZWRp
-YS1jaUBsaW51eHR2Lm9yZwpTdWJqZWN0OiBSZTogW1BBVENIXSBtZWRpYTogY29kYTogRml4IHBv
-dGVudGlhbCB1c2UtYWZ0ZXItZnJlZSBhZnRlciBWRE9BIHJlbW92YWw+T24gU2F0LCBOb3YgMDcs
-IDIwMjYgYXQgMDc6MTQ6MzZBTSArMDAwMCwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToK
-Pj4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91
-bmQgMSBwb3RlbnRpYWwKPj4gaXNzdWUgdG8gY29uc2lkZXI6Cj4+IC0gW01lZGl1bV0gbWVkaWE6
-IGNvZGE6IHVuc3RvcHBlZCBETUEgYW5kIGpvYiBkZXN5bmMgb24gdGltZW91dCBpbgo+PiAgIHZk
-b2Ffc3RvcCgpCj4KPlBsZWFzZSBjaGVjayB0aGlzIGlzc3VlLgo+Cj5GcmFuawo+Cj4KPj4gSXQg
-YWxzbyBub3RpY2VkIDEgcmVsYXRlZCBwcmUtZXhpc3RpbmcgaXNzdWUgdGhpcyBwYXRjaCBkb2Vz
-IG5vdAo+PiBpbnRyb2R1Y2U6Cj4+IC0gW01lZGl1bV0gbWVkaWE6IGNvZGE6IHJlc291cmNlIGxl
-YWtzIGluIGNvZGFfb3BlbigpIGVycm9yIHBhdGhzIFsxXQo+PiAtLQo+Pgo+PiBjb21taXQgNjQx
-ZWFmYzI4NDcyOTA1MzhjYTMyOGExNzgzYTYzNWEwYzQ0OWFhMQo+PiBBdXRob3I6IEd1YW5nc2h1
-byBMaSA8bGlndWFuZ3NodW9AbWFpbC5zZHUuZWR1LmNuPgo+Pgo+PiBtZWRpYTogY29kYTogRml4
-IHBvdGVudGlhbCB1c2UtYWZ0ZXItZnJlZSBhZnRlciBWRE9BIHJlbW92YWwKPj4KPj4gVGhpcyBj
-b21taXQgcmVmZXJlbmNlLWNvdW50cyBWRE9BIGRyaXZlciBkYXRhIGFjcm9zcyBDT0RBIGNvbnN1
-bWVycyBhbmQKPj4gY29udGV4dHMsIHNlcmlhbGl6ZXMgVkRPQSBoYXJkd2FyZSBvcGVyYXRpb25z
-IGFnYWluc3QgZHJpdmVyIHJlbW92YWwsIGFuZAo+PiBkZXN0cm95cyB0aGUgVkRPQSBjb250ZXh0
-IGlmIGNvZGFfb3BlbigpIGZhaWxzLgo+Pgo+PiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL21lZGlh
-L3BsYXRmb3JtL2NoaXBzLW1lZGlhL2NvZGEvY29kYS1jb21tb24uYyBiL2RyaXZlcnMvbWVkaWEv
-cGxhdGZvcm0vY2hpcHMtbWVkaWEvY29kYS9jb2RhLWNvbW1vbi5jCj4+ID4gaW5kZXggYmUzN2Vh
-NTY4YmZlNS4uYjUxOWNmODU0MWRlZCAxMDA2NDQKPj4gPiAtLS0gYS9kcml2ZXJzL21lZGlhL3Bs
-YXRmb3JtL2NoaXBzLW1lZGlhL2NvZGEvY29kYS1jb21tb24uYwo+PiA+ICsrKyBiL2RyaXZlcnMv
-bWVkaWEvcGxhdGZvcm0vY2hpcHMtbWVkaWEvY29kYS9jb2RhLWNvbW1vbi5jCj4+Cj4+IFsgLi4u
-IF0KPj4KPj4gPiBAQCAtMjcyMSw2ICsyNzE5LDggQEAgc3RhdGljIGludCBjb2RhX29wZW4oc3Ry
-dWN0IGZpbGUgKmZpbGUpCj4+ID4gIGVycl9jbGtfZW5hYmxlOgo+PiA+ICAJcG1fcnVudGltZV9w
-dXRfc3luYyhkZXYtPmRldik7Cj4+ID4gIGVycl9wbV9nZXQ6Cj4+ID4gKwlpZiAoY3R4LT52ZG9h
-KQo+PiA+ICsJCXZkb2FfY29udGV4dF9kZXN0cm95KGN0eC0+dmRvYSk7Cj4+ID4gIAl2NGwyX2Zo
-X2RlbCgmY3R4LT5maCwgZmlsZSk7Cj4+ID4gIAl2NGwyX2ZoX2V4aXQoJmN0eC0+ZmgpOwo+PiA+
-ICBlcnJfY29kYV9uYW1lX2luaXQ6Cj4+Cj4+IFtTZXZlcml0eTogTWVkaXVtXQo+PiBUaGlzIHBy
-b2JsZW0gd2Fzbid0IGludHJvZHVjZWQgYnkgdGhpcyBwYXRjaCwgYnV0IGRvZXMgdGhpcyBlcnJv
-ciBwYXRoCj4+IHN0aWxsIGxlYWsgY3R4LT5kZWJ1Z2ZzX2VudHJ5IGFuZCBjdHgtPmN0cmxzIFsx
-XT8KPj4KPj4gY29kYV9vcGVuKCkgY3JlYXRlcyBjdHgtPmRlYnVnZnNfZW50cnkgd2l0aCBkZWJ1
-Z2ZzX2NyZWF0ZV9kaXIoKSBiZWZvcmUKPj4gdjRsMl9maF9pbml0KCkgYW5kIGluaXRpYWxpemVz
-IGN0eC0+Y3RybHMgaW4gY29kYV9jdHJsc19zZXR1cCgpLCBidXQKPj4gbmVpdGhlciBkZWJ1Z2Zz
-X3JlbW92ZSgpIG5vciB2NGwyX2N0cmxfaGFuZGxlcl9mcmVlKCkgaXMgY2FsbGVkIGR1cmluZwo+
-PiBlcnJvciB1bndpbmQsIGxlYXZpbmcgc3RhbGUgZGVidWdmcyBkaXJlY3RvcmllcyBhbmQgbGVh
-a2VkIGNvbnRyb2wgaGFuZGxlcgo+PiBtZW1vcnkgd2hlbiBvcGVuaW5nIHRoZSBkZXZpY2UgZmFp
-bHMuCj4+Cj4+IFsgLi4uIF0KPj4KPj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9tZWRpYS9wbGF0
-Zm9ybS9jaGlwcy1tZWRpYS9jb2RhL2lteC12ZG9hLmMgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3Jt
-L2NoaXBzLW1lZGlhL2NvZGEvaW14LXZkb2EuYwo+PiA+IGluZGV4IGNkMDg1YzFjNzNmNDIuLmQ5
-MjQ5Yzk0M2RmYTIgMTAwNjQ0Cj4+ID4gLS0tIGEvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9jaGlw
-cy1tZWRpYS9jb2RhL2lteC12ZG9hLmMKPj4gPiArKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3Jt
-L2NoaXBzLW1lZGlhL2NvZGEvaW14LXZkb2EuYwo+Pgo+PiBbIC4uLiBdCj4+Cj4+ID4gQEAgLTE0
-MiwxNyArMTUwLDQzIEBAIGludCB2ZG9hX3dhaXRfZm9yX2NvbXBsZXRpb24oc3RydWN0IHZkb2Ff
-Y3R4ICpjdHgpCj4+ID4KPj4gPiAgCXJldHVybiAwOwo+PiA+ICB9Cj4+ID4gKwo+PiA+ICtpbnQg
-dmRvYV93YWl0X2Zvcl9jb21wbGV0aW9uKHN0cnVjdCB2ZG9hX2N0eCAqY3R4KQo+PiA+ICt7Cj4+
-ID4gKwlzdHJ1Y3QgdmRvYV9kYXRhICp2ZG9hID0gY3R4LT52ZG9hOwo+PiA+ICsJaW50IHJldDsK
-Pj4gPiArCj4+ID4gKwltdXRleF9sb2NrKCZ2ZG9hLT5sb2NrKTsKPj4gPiArCXJldCA9IHZkb2Et
-PnJlbW92ZWQgPyAtRU5PREVWIDogdmRvYV93YWl0KGN0eCk7Cj4+ID4gKwltdXRleF91bmxvY2so
-JnZkb2EtPmxvY2spOwo+PiA+ICsKPj4gPiArCXJldHVybiByZXQ7Cj4+ID4gK30KPj4gPiAgRVhQ
-T1JUX1NZTUJPTCh2ZG9hX3dhaXRfZm9yX2NvbXBsZXRpb24pOwo+PiA+Cj4+ID4gK3N0YXRpYyB2
-b2lkIHZkb2Ffc3RvcChzdHJ1Y3QgdmRvYV9kYXRhICp2ZG9hKQo+PiA+ICt7Cj4+ID4gKwlpZiAo
-IXZkb2EtPmN1cnJfY3R4KQo+PiA+ICsJCXJldHVybjsKPj4gPiArCj4+ID4gKwlpZiAodmRvYV93
-YWl0KHZkb2EtPmN1cnJfY3R4KSkKPj4gPiArCQl3cml0ZWwoVkRPQVNSUl9TV1JTVCwgdmRvYS0+
-cmVncyArIFZET0FTUlIpOwo+PiA+ICsJd3JpdGVsKDAsIHZkb2EtPnJlZ3MgKyBWRE9BSUUpOwo+
-PiA+ICsJc3luY2hyb25pemVfaXJxKHZkb2EtPmlycSk7Cj4+ID4gKwl2ZG9hLT5jdXJyX2N0eCA9
-IE5VTEw7Cj4+ID4gK30KPj4KPj4gW1NldmVyaXR5OiBNZWRpdW1dCj4+IFdoZW4gYSB0cmFuc2Zl
-ciB0aW1lcyBvdXQgaW4gdmRvYV93YWl0KCksIGRvZXMgdmRvYV93YWl0X2Zvcl9jb21wbGV0aW9u
-KCkKPj4gbGVhdmUgRE1BIHJ1bm5pbmcgd2hpbGUgdmRvYV9zdG9wKCkgbGVhdmVzIHN1Ym1pdHRl
-ZF9qb2IgYW5kIGNvbXBsZXRlZF9qb2IKPj4gcGVybWFuZW50bHkgb3V0IG9mIHN5bmM/Cj4+Cj4+
-IFdoZW4gdmRvYV93YWl0X2Zvcl9jb21wbGV0aW9uKCkgcmV0dXJucyAtRVRJTUVET1VUIHRvIGNv
-ZGFfZmluaXNoX2RlY29kZSgpLAo+PiB0aGUgY2FsbGVyIGltbWVkaWF0ZWx5IHJlbGVhc2VzIHRo
-ZSBpbnRlcm5hbCBzb3VyY2UgZnJhbWUgYW5kIHJldHVybnMKPj4gZHN0X2J1ZiB0byB2aWRlb2J1
-ZjIgd2l0aG91dCBWRE9BU1JSX1NXUlNUIG9yIFZET0FJRSBiZWluZyB3cml0dGVuLCBzbwo+PiBW
-RE9BIERNQSBjYW4gc3RpbGwgd3JpdGUgdG8gdGhlIHJldHVybmVkIGJ1ZmZlci4gIEZ1cnRoZXJt
-b3JlLCBiZWNhdXNlCj4+IHZkb2EtPmN1cnJfY3R4IGlzIHN0aWxsIHNldCBhbmQgY29tcGxldGVk
-X2pvYiBpcyBuZXZlciB1cGRhdGVkIHRvIG1hdGNoCj4+IHN1Ym1pdHRlZF9qb2Igd2hlbiByZXNl
-dHRpbmcgdGhlIGhhcmR3YXJlIGluIHZkb2Ffc3RvcCgpLCB0aGUgbmV4dAo+PiB2ZG9hX3N0b3Ao
-KSBjYWxsIHdhaXRzIGFub3RoZXIgMzAwbXMgb24gdGhlIHNhbWUgdGltZWQtb3V0IHRyYW5zZmVy
-LCBhbmQKPj4gZXZlcnkgc3Vic2VxdWVudCBqb2Igb24gdGhhdCBjb250ZXh0IHNlZXMgc3VibWl0
-dGVkX2pvYiAhPSBjb21wbGV0ZWRfam9iCj4+IGFmdGVyIGNvbXBsZXRpb24gYW5kIHN0YWxscyBm
-b3IgMzAwbXMgYmVmb3JlIHJlc2V0dGluZyB0aGUgaGFyZHdhcmUuCj4+Cj4+IFsxXSBodHRwczov
-L3Nhc2hpa28uZGV2LyMvYnVnL2xpbnV4LTI4YTM3NTVkLTg4MDAtNDJhZC04NDUxLTdmNzQyMWRi
-NDk1NQo+Pgo+PiAtLQo+PiBTYXNoaWtvIEFJIHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2
-LyMvcGF0Y2hzZXQvMjAyNjExMDctMGQwYzI5ZTEwYS1tZWRpYS1jb2RhLTFAbWFpbC5zZHUuZWR1
-LmNuP3BhcnQ9MQo+CgpNeSB1bmRlcnN0YW5kaW5nIGlzIHRoYXQgYSB0aW1lb3V0IG11c3Qgc3Rv
-cCB0aGUgdHJhbnNmZXIgYmVmb3JlIENPREEKcmV0dXJucyBpdHMgYnVmZmVycywgYW5kIGEgcmVz
-ZXQgbXVzdCBhbHNvIHJldGlyZSB0aGUgcGVuZGluZyBqb2IuClRoZSBleGlzdGluZyB0aW1lb3V0
-IHBhdGggZG9lcyBub3Qgc3RvcCB0aGUgdHJhbnNmZXIsIHdoaWxlIHRoZSBzdG9wCnBhdGggYWRk
-ZWQgaW4gdjEgYWxzbyBuZWVkcyBjb25zaXN0ZW50IGhhbmRsaW5nIG9mIHRoYXQgam9iIHN0YXRl
-LgoKV291bGQgeW91IHByZWZlciBhIHNlcGFyYXRlIHRpbWVvdXQgZml4IGFsb25nc2lkZSB0aGUg
-bGlmZXRpbWUgcmV2aXNpb24/CgpUaGFua3MsCkd1YW5nc2h1bwo=
+On Tue, Nov 24, 2026 at 09:49:24AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] asm-generic: auxvec.h unconditionally redefines
+>   AT_VECTOR_SIZE_ARCH to 0
+
+This is indeed an issue. Not sure, how I missed this, especially as I thought
+to have sent this through 0day.
+
+@Arnd: Could you drop the patches?
+
+I'll prepare a fixed version, probably for the next cycle.
+
+
+Thomas
+
+> --
+> 
+> commit 0c922d7a496b0d1a5af6ec9787042de6d54ad285
+> Author: Thomas Weiﬂschuh <thomas.weissschuh@linutronix.de>
+> 
+> asm-generic: add an in-kernel auxvec.h header
+> 
+> This commit adds an asm-generic/auxvec.h fallback header as mandatory-y
+> and includes uapi/asm/auxvec.h and asm/auxvec.h from linux/auxvec.h.
+> 
+> > diff --git a/include/asm-generic/auxvec.h b/include/asm-generic/auxvec.h
+> > new file mode 100644
+> > index 0000000000000..b5f73f35e21ce
+> > --- /dev/null
+> > +++ b/include/asm-generic/auxvec.h
+> > @@ -0,0 +1,7 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +#ifndef __ASM_GENERIC_AUXVEC_H__
+> > +#define __ASM_GENERIC_AUXVEC_H__
+> > +
+> > +#define AT_VECTOR_SIZE_ARCH 0
+> > +
+> > +#endif /* __ASM_GENERIC_AUXVEC_H__ */
+> > diff --git a/include/linux/auxvec.h b/include/linux/auxvec.h
+> > index 4b364e639f080..de1c33c4a2560 100644
+> > --- a/include/linux/auxvec.h
+> > +++ b/include/linux/auxvec.h
+> > @@ -2,7 +2,9 @@
+> >  #ifndef _LINUX_AUXVEC_H
+> >  #define _LINUX_AUXVEC_H
+> >  
+> > +#include <uapi/asm/auxvec.h>
+> >  #include <uapi/linux/auxvec.h>
+> > +#include <asm/auxvec.h>
+> >  
+> >  #define AT_VECTOR_SIZE_BASE 24 /* NEW_AUX_ENT entries in auxiliary table */
+> >    /* number of "#define AT_.*" above, minus {AT_NULL, AT_IGNORE, AT_NOTELF} */
+> 
+> [Severity: High]
+> Does defining AT_VECTOR_SIZE_ARCH unconditionally in asm-generic/auxvec.h
+> redefine and clobber AT_VECTOR_SIZE_ARCH on architectures that still
+> define it in uapi/asm/auxvec.h?
+> 
+> For any architecture that does not yet provide its own asm/auxvec.h
+> (such as x86, arm64, riscv, powerpc, s390, mips, loongarch, sparc, sh,
+> and alpha at this point in the series), mandatory-y generates an
+> asm/auxvec.h wrapper around asm-generic/auxvec.h.  When linux/auxvec.h
+> includes uapi/asm/auxvec.h followed by asm/auxvec.h, AT_VECTOR_SIZE_ARCH
+> is redefined to 0, breaking the build under CONFIG_WERROR=y and shrinking
+> AT_VECTOR_SIZE and mm->saved_auxv[] when built with CONFIG_WERROR=n
+> (which causes create_elf_tables() to write past the end of
+> mm->saved_auxv).
+> 
+> Later patches in the series migrate those architectures out of
+> uapi/asm/auxvec.h one by one, leaving intermediate commits broken for
+> bisection.  Since linux/auxvec.h already provides an #ifndef
+> AT_VECTOR_SIZE_ARCH fallback to 0, could asm-generic/auxvec.h omit the
+> AT_VECTOR_SIZE_ARCH definition or guard it with #ifndef
+> AT_VECTOR_SIZE_ARCH?
+> 
+> -- 
+> Sashiko AI review ∑ https://sashiko.dev/#/patchset/20261123-at-vector-size-arch-v3-0-d342dae9e843@linutronix.de?part=3
