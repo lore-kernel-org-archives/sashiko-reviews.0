@@ -1,72 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.33
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795532871;
-	b=3kxJtQedYjkJM/jdfsT2OTzUfYavsLMis8SbRw1nxsDBsgvcjYsXWCsEgZtO3TljAeS6
-	 d/iZZMhDGFX01oi+UNWl2J++5qYSpkVXVBkmlV7nuX813IoXcGZ9PzgR2nN4vjjArqPUW
-	 G9sWuzibWb7Iu2XtXUfiKbSk7sHGd4Ge7YULkQKTWwhI5LYWTdBXcyx2DEcA9VxhMJ7IF
-	 7vTYm5WJ2sbt9FuysNPtOcSQrs1iraWmCv8OMP3iu1BQoe60/8+pn2AyrruZnhE0qkDTv
-	 PhRMgYaCBb/U8WvmtKPOU1ulzY3dCiJuCyucdu5VS+qVX94ZQ4oSaMZrFTNiSCvKHfg==
+	t=1795532963;
+	b=MTT5tTv0rrRVeW4dOXB8E7LgPBa6PVxoN5Y0DpDOVpSDRJ+oN9pR/HsehJbPKHZuoCcf
+	 RVBdwFIcOBqe4NOQ3EEN3mkbN8OHAqo0/PuLxxs3idu0B5Rl2CR97jfp6Rh43fVyED3u9
+	 3Q11jP41NX/vJZFgI9Lp2cGU0mSOXQsdVDKV2pv0oiqTiUZGmrh0oigJZLsA/pBPcPoOO
+	 AWpP+AG3iqQzhRml1hCzJpZD0H1Rv+TPRfnwe1XOfsH016DcSmqUpqiTCq08z5XpXQ04O
+	 g+HqFE48BuYvoxMUmyZaDeW3AMhwHmhe8WXSg0dfroOecZ/BqCQ4Tk83j6y7vGPMeJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795532871;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=G7Hg0gt668orwU2HO5Iwx97Bb7gVHA6V0wHbzGAHiEU=;
-	b=BUE4335RVT+svNMZ8ReJiJ2ZOPEJJIS/N0JQYVYk3Sg29+byHO8Bckgc7oIrTX8j3RrC
-	 JmqgevaHch2E20yeGqPt0SwHYxfTr1w6mKdPfH+qNGkq0xmiDo49M5fgy9tRuq9rzYk8b
-	 mIP8ybcfZTujwfaqKN6x8CImUabPk/wxEPbKeXue+rSVvyMELgwJjO2v0jfeQGRxf9c9I
-	 hAqGAFZHSQV2dBflnLe3lzi5PARNKBtGwlnvX4s+xRrn5RTEshrBaju658rKrBPNJi2vJ
-	 7WvrY4/cvhvjGCsBRLq2iT3TKQ+gXQLmaECYMKjz/7An9UK81l9arjDzKDcQtJwg7fg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795532963;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=K+IekPDE+jkqEoJ25TetgowrP8a4LUWhHnBuiLXn8A8=;
+	b=D/ZQuH8RJb5ohZPVopFV6q1o+rlMLEWwXsjgY8PPSBC8YQsnnNthgHkBgZH1xymVO5+A
+	 wOQsYEuDGfsnNZH4IkQVO/D8QRQOZ2FR/tm4AsmfByjRyjSxf5XUAd6S2qSAtdh9au5dO
+	 L4H62+JNEH1T9yFam9BFtnOx16uKOELHA2oxAZTLAp0lMTmR0Rdmwd3px0rEQ7iSUdXZ1
+	 pjtkslSLI6cxtgSIfswPF/xNH7BhNe3kf7Flds3VmRePn5jtKtZfLnZPoziHOaoJbktHG
+	 c0ku1P5TgENr6lt/Mit5V1beeCjoF219CVN6SM3P2yjm5eUHpwiM+A8Fxt+LVbLz53g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=roeck-us.net;
-	spf=fail smtp.mailfrom=roeck-us.net;
-	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=YrkMIerM;
-	arc=none smtp.remote-ip=35.89.44.33
-Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AxiV7WZS;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25557606A33A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 15:07:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25557606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id 3ED24606A321;
+	Tue, 24 Nov 2026 15:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=YrkMIerM
-Received: from eig-obgw-6007b.ext.cloudfilter.net ([10.0.30.166])
-	by cmsmtp with ESMTPS
-	id Vq69xYIczAR1iVs7axibHe; Tue, 24 Nov 2026 15:07:50 +0000
-Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
-	by cmsmtp with ESMTPS
-	id Vs7Yx261N3nNNVs7YxtvJM; Tue, 24 Nov 2026 15:07:48 +0000
-X-Authority-Analysis: v=2.4 cv=TuLmhCXh c=1 sm=1 tr=0 ts=6b05a846
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=BOHXnwOiB0Zir2JbBRsA:9 a=QEXdDO2ut3YA:10
- a=KPbNTLLc3YvdawN95zVk:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=G7Hg0gt668orwU2HO5Iwx97Bb7gVHA6V0wHbzGAHiEU=; b=YrkMIerM6e9D
-	UE1bgvvfVEvE/eVN1bC+wKms0MJUP/hyKmAHWcrs4jjTYmzPLi876wk1L7hoO0BzpF76cxUjzfYFM
-	2PcIdBx3ClJoaqnsZgpKHQGR/FlRLc4a+nkMvaHtGGIUX5jqBj/DUUMc4SJUYBSq3mp7qD1RcxwkU
-	6ROOU40JGNpsM5KgvpimqjRjCfO5P44OL5S5s068CHW9jwCIDxNtMkjjtlzP0phdhLPw2Vvvw0wG2
-	dR8lSErO+u33+aOKXhymS1S8OtxpHfRfT3W0cZvpKEDffBDTwZjxwGb5ilFX2cYT4ZiYGZ2g9HaFE
-	wf57MHsXKCB6qEGZB/O2qg==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:41580)
-	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.100.1)
-	(envelope-from <linux@roeck-us.net>)
-	id 1xVs7Y-00000001Ab4-02SJ;
-	Tue, 24 Nov 2026 20:37:48 +0530
-Message-ID: <8046641a-3e9d-434b-b0db-58190257b38a@roeck-us.net>
-Date: Tue, 24 Nov 2026 07:07:46 -0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AxiV7WZS
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 36FD81F000D4;
+	Tue, 24 Nov 2026 15:09:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795532962;
+	bh=K+IekPDE+jkqEoJ25TetgowrP8a4LUWhHnBuiLXn8A8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=AxiV7WZSd4PJ6njfHxHjci8C4W3rlHZiStM2FsIJxUt9/7C+Ank9ouOae768ogJKt
+	 +S54ua88UepNEkPBO6qjzgCWCZWeSY7Nr1RNSJqOcNds+Ygoe+HJyxY11VPr0ZLXxk
+	 iaYHYERsCjcwthMRREuWi033qD+cFkVBdv3YAl5YuA6D6WGV+a3YtT6hT9u5hLYoA8
+	 02P71nq4V8c8pfqRkWRA5AXuZdmYn/SbEgClf0uNzk3s1IfiIu7l0hhXIe/KlG+hbA
+	 Oj+FZwYYVRWGv5aCyggVQaFSCQHBF64t+o1e+Quhe9huy6dUrx1Rwf5Cj1zg3Ygmba
+	 3b0AD2lJpQAyg==
+Date: Tue, 24 Nov 2026 17:09:18 +0200
+From: Jarkko Sakkinen <jarkko@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: keyrings@vger.kernel.org, dm-devel@lists.linux.dev,
+	linux-crypto@vger.kernel.org, linux-security-module@vger.kernel.org,
+	Alasdair Kergon <agk@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ignat Korchagin <ignat@linux.win>,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	James Morris <jmorris@namei.org>, Jason Gunthorpe <jgg@ziepe.ca>,
+	Jonathan Corbet <corbet@lwn.net>, Lukas Wunner <lukas@wunner.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mimi Zohar <zohar@linux.ibm.com>, Paul Moore <paul@paul-moore.com>,
+	Peter Huewe <peterhuewe@gmx.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	James Prestwood <prestwoj@gmail.com>
+Subject: Re: [PATCH 9/9] KEYS: trusted: Add asymmetric key support for TPM2
+Message-ID: <awWonunbfilZrzQV@kernel.org>
+References: <20261124120044.1481752-1-jarkko@kernel.org>
+ <20261124120044.1481752-10-jarkko@kernel.org>
+ <sashiko-outbox-231131@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,281 +77,26 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/12] hwmon: Add Qualcomm PMIC BCL driver
-To: sashiko-reviews@lists.linux.dev,
- Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- mfd@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org, lee@kernel.org
-References: <20261124-qcom-bcl-hwmon-v5-0-747d5383d538@oss.qualcomm.com>
- <20261124-qcom-bcl-hwmon-v5-2-747d5383d538@oss.qualcomm.com>
- <sashiko-outbox-230063@kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <sashiko-outbox-230063@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1xVs7Y-00000001Ab4-02SJ
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:41580
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 8
-X-Org: HG=direseller_whb_net_legacy;ORG=directi;
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfM9dRwPeAd9NUKFwLouhRj+RJy99wf+YIsdY8gDEYZo5CZolaHUDiajZn+VNrpJJp44ZTIF8DZhRmF8XqPuNR3TLyvBIUGwdMTSGJ2WlXRp5lq4+o3Mp
- jSiMgrT5ocRjPz6VKSKzdkaRBap6cvLGX+mGytTT7HElzotJSkHXhnq0+nN84OH0tnHXkgaWAisXQwKFFqGj5GtgazHiG+t2EbB9ZRzryBdlBjzo9PsC99RH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-231131@kernel.org>
 
-On 11/23/26 13:11, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential
+On Tue, Nov 24, 2026 at 12:25:44PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
 > issues to consider:
-> - [Medium] hwmon: qcom-bcl: infinite poll loop in
->    bcl_alarm_enable_poll() on reassertion
-> - [Medium] hwmon: qcom-bcl: max_mu exceeds 6-bit L1/L2 field in
->    bcl_thresh_write()
-> - [Medium] hwmon: qcom-bcl: unlocked enable_irq_wake() race in
->    bcl_alarm_irq_init()
-> - [Low] hwmon: qcom-bcl: 32-bit jiffies wraparound in
->    bcl_curr_input_read() cache
-> - [Low] hwmon: qcom-bcl: redundant private mutex bcl->lock duplicating
->    hwmon_lock()
-> --
-> 
-> commit ad4e95352ce7aa5ad76440eaf33e8bd9c53a0538
-> Author: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-> 
-> hwmon: Add Qualcomm PMIC BCL driver
-> 
-> This commit adds a hwmon driver for the Qualcomm SPMI PMIC Battery Current
-> Limiting (BCL) peripheral to monitor battery voltage and current and report
-> threshold alarms.
-> 
->> diff --git a/drivers/hwmon/qcom-bcl-hwmon.c b/drivers/hwmon/qcom-bcl-hwmon.c
->> new file mode 100644
->> index 0000000000000..a5a3a59484571
->> --- /dev/null
->> +++ b/drivers/hwmon/qcom-bcl-hwmon.c
-> 
-> [ ... ]
-> 
->> +struct bcl_device {
->> +	struct device		*dev;
->> +	struct regmap		*regmap;
->> +	u32			base;
->> +	struct regmap_field	*fields[F_MAX_FIELDS];
->> +	struct bcl_alarm_data	bcl_alarms[BCL_LIMIT_ALARM_MAX];
->> +	/* Protects hardware register access and device state */
->> +	struct mutex		lock;
-> 
-> [Severity: Low]
-> This isn't a bug, but the hwmon core already serializes .read and .write
-> callbacks under the hwmon device lock, and regmap serializes individual
-> register accesses.  Could this use hwmon_lock() and hwmon_unlock() instead
-> of a driver-private mutex?
-> 
+> - [Medium] KEYS: trusted: 32-bit param_size overflow in
+>   tpm2_asym_rsa_decrypt()
 
-Please use the subsystem lock.
+I've now learned that sometimes people expect you to fix these before
+they will review, or they get upset if you fix them and iterate the
+series. Someone will be rip their trousers whatever you do.
 
->> +	u32			last_in_input;
->> +	s32			last_curr_input;
->> +	unsigned long		last_in_updated;
->> +	unsigned long		last_curr_updated;
-> 
-> [ ... ]
-> 
->> +static const struct reg_field bcl_smb2360_reg_fields[] = {
->> +	[F_V_MAJOR]	= REG_FIELD(REVISION2, 0, 7),
->> +	[F_V_MINOR]	= REG_FIELD(REVISION1, 0, 7),
->> +	[F_CTL_EN]	= REG_FIELD(EN_CTL1, 7, 7),
->> +	[F_LVL0_ALARM]	= REG_FIELD(STATUS, 0, 0),
->> +	[F_LVL1_ALARM]	= REG_FIELD(STATUS, 1, 1),
->> +	[F_LVL2_ALARM]	= REG_FIELD(STATUS, 2, 2),
->> +	[F_IN_L0_THR]	= REG_FIELD(VADC_L0_THR, 0, 7),
->> +	[F_IN_L1_THR]	= REG_FIELD(VCMP_L1_THR, 0, 5),
->> +	[F_IN_L2_THR]	= REG_FIELD(VCMP_L2_THR, 0, 5),
->> +	[F_IN_INPUT]	= REG_FIELD(VADC_DATA1, 0, 7),
->> +	[F_CURR_H0_THR]	= REG_FIELD(IADC_H0_THR, 0, 7),
->> +	[F_CURR_H1_THR]	= REG_FIELD(IADC_H1_THR_GEN3, 0, 7),
->> +	[F_CURR_INPUT]	= REG_FIELD(IADC_DATA1, 0, 7),
->> +};
->> +
->> +static const struct reg_field bcl_smb2370_reg_fields[] = {
->> +	[F_V_MAJOR]	= REG_FIELD(REVISION2, 0, 7),
->> +	[F_V_MINOR]	= REG_FIELD(REVISION1, 0, 7),
->> +	[F_CTL_EN]	= REG_FIELD(EN_CTL1, 7, 7),
->> +	[F_LVL0_ALARM]	= REG_FIELD(STATUS, 0, 0),
->> +	[F_LVL1_ALARM]	= REG_FIELD(STATUS, 1, 1),
->> +	[F_LVL2_ALARM]	= REG_FIELD(STATUS, 2, 2),
->> +	[F_IN_L0_THR]	= REG_FIELD(VADC_L0_THR, 0, 7),
->> +	[F_IN_L1_THR]	= REG_FIELD(VCMP_L1_THR, 0, 5),
->> +	[F_IN_L2_THR]	= REG_FIELD(VCMP_L2_THR, 0, 5),
-> 
-> [ ... ]
-> 
->> +/* Register 0x2a50 mapping: 0 -> 2S, 1 -> 3S */
->> +static const struct bcl_desc smb2360_data = {
->> +	.reg_fields = bcl_smb2360_reg_fields,
->> +	.num_reg_fields = F_CURR_INPUT + 1,
->> +	.data_field_bits_size = 8,
->> +	.thresh_field_bits_size = 8,
->> +	.battery_config_field = REG_FIELD(0x2a50, 0, 1),
->> +	.features = BCL_IN_MON | BCL_IN_INPUT | BCL_CURR_MON,
->> +	.channel_cfg[BCL_BATT_2S][CHANNEL_IN] = {
->> +		.base_mu = 4500,
->> +		.max_mu = 8400,
->> +		.step_mu = 50,
->> +		.default_scale_nu = 432918,
->> +		.thresh_type = {THRESH_TYPE_ADC, THRESH_TYPE_INDEX, THRESH_TYPE_INDEX},
->> +	},
->> +	.channel_cfg[BCL_BATT_2S][CHANNEL_CURR] = {
->> +		.max_mu = 17575,
->> +		.default_scale_nu = 540679,
->> +		.thresh_type = {THRESH_TYPE_ADC, THRESH_TYPE_ADC},
->> +	},
->> +	.channel_cfg[BCL_BATT_3S][CHANNEL_IN] = {
->> +		.base_mu = 6750,
->> +		.max_mu = 12600,
->> +		.step_mu = 75,
->> +		.default_scale_nu = 648790,
->> +		.thresh_type = {THRESH_TYPE_ADC, THRESH_TYPE_INDEX, THRESH_TYPE_INDEX},
->> +	},
-> 
-> [ ... ]
-> 
->> +static int bcl_thresh_write(struct bcl_device *bcl, long value, enum bcl_limit_alarm lvl,
->> +			    enum bcl_channel channel)
->> +{
->> +	const struct bcl_desc *desc = bcl->desc;
->> +	const struct bcl_channel_cfg *cfg = &desc->channel_cfg[bcl->batt_config][channel];
->> +	enum bcl_fields base_field = channel == CHANNEL_IN ? F_IN_L0_THR : F_CURR_H0_THR;
->> +	struct regmap_field *field;
->> +	long thresh = clamp_val(value, cfg->base_mu, cfg->max_mu);
->> +	u32 raw_val;
->> +	int ret;
->> +
->> +	if (WARN_ON(channel == CHANNEL_CURR && lvl >= BCL_LIMIT_ALARM_LVL2))
->> +		return -EINVAL;
->> +
+Or then, some gets pissed when some random bot gives feedback pm
+the next day.
 
-The above should not be needed. In general, I am not in favor of unnecessary
-checks against programming errors, much less associated warning tracebacks.
-The above should be covered by the is-Visible function. If not, that is a bug
-which needs to be fixed, not carried into production code. Same for everywhere
-else where similar checks are made.
+Since this is the worst of the worst I'll mark it down and let's
+consider it addressed.
 
-To clarify: I am not going to accept this driver with all the WARN_ON() spread
-through it. That suggest that you don't trust your code, which in turn means
-that I don't trust it either.
+I like Sashiko but don't know how to dance the dance.
 
->> +	field = bcl->fields[base_field + lvl];
->> +
->> +	if (cfg->thresh_type[lvl] == THRESH_TYPE_ADC)
->> +		raw_val = bcl_convert_milliunit_to_raw(bcl, thresh, channel,
->> +						       desc->thresh_field_bits_size);
->> +	else
->> +		raw_val = bcl_convert_milliunit_to_index(bcl, thresh, channel);
->> +
->> +	ret = bcl_validate_threshold_fits(bcl, &desc->reg_fields[base_field + lvl],
->> +					  raw_val, thresh, channel == CHANNEL_IN ? "mV" : "mA");
->> +	if (ret)
->> +		return ret;
-> 
-> [Severity: Medium]
-> As reported by Daniel Lezcano on v4 [1], can bcl_thresh_write() reject
-> valid clamped thresholds on SMB2360 and SMB2370?
-> 
-> For both chips, F_IN_L1_THR and F_IN_L2_THR are 6-bit fields (max index
-> 63, which corresponds to 7650 mV on 2S and 11475 mV on 3S), whereas
-> channel_cfg sets max_mu to 8400 mV on 2S and 12600 mV on 3S (index 78).
-> Writing a value >= 7675 mV on 2S or >= 11513 mV on 3S to in0_lcrit or
-> in0_lemergency clamps to at most index 78, causing
-> bcl_validate_threshold_fits() to log a dev_err() and fail with -EINVAL
-> instead of clamping to the hardware limit.
-> 
-
-Hardware monitoring drivers are expected to clamp limits, not to reject
-out-of-range values.
-
-> [ ... ]
-> 
->> +static int bcl_curr_input_read(struct bcl_device *bcl, long *out)
->> +{
->> +	int ret;
->> +	u32 raw_val = 0;
->> +	s32 signed_val;
->> +	const struct bcl_desc *desc = bcl->desc;
->> +
->> +	/* Return cached value if read too soon after last update */
->> +	if (bcl->last_curr_updated &&
->> +	    time_before(jiffies, bcl->last_curr_updated + HZ)) {
->> +		*out = bcl->last_curr_input;
->> +		return 0;
->> +	}
-> 
-> [Severity: Low]
-> On 32-bit platforms, can time_before(jiffies, bcl->last_curr_updated + HZ)
-> wrap around if curr1_input (or in0_input in bcl_in_input_read()) is not
-> read for more than LONG_MAX jiffies (~24.8 days at HZ=1000)?  During the
-> following ~24.8 days, time_before() evaluates to true and returns the
-> stale cached reading without updating last_curr_updated.  Using u64
-> timestamps with get_jiffies_64() and time_before64() would avoid the wrap.
-> 
-
-Either don't cache, or use 64-bit time functions.
-
-Thanks,
-Guenter
-
+Br, Jarkko
