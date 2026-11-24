@@ -1,65 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.112
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795540358;
-	b=nd72dyv1NRV5dbG/Sp7uflcfxUonquYO3mIQWk3SDXcTPTRr3ArwHxXa5RaO2ecgtI/j
-	 lViiY1I7G24qwkqDlgADBCHnnnAotG+Ao41VeBP7ib/ZXRlTzMlkOspjfdV6q0SChjm/Y
-	 HPhHWpaZvN69pINBT2YOGLxPOuBF2Y8Vad4ogNdjYuyP9jDo35H+WYWS9v6Dv5WNsZ55Z
-	 mFU8xWquzkRGc4bU7cVlW0d5is6Q3cAmoogSFfvbOtIgEJN8AfaL4rMKBQ1SMwvJXdnqC
-	 Ey0Qtx4o5mmOXrw8YmrFAT8Fi/bBtwNnJlDxRhFO2K9IKIi6zG4/qfVb3D2Vcks+IxA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795540358;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date:
-	 MIME-Version:User-Agent:X-ZohoMailClient;
-	bh=SLOOv/u5txnHgUHzcfRtK3xy/OPHT+Ffq5I0G4nIvqc=;
-	b=IKSJynWCedb7oW6gpDWCx5s0YK57qvPeupDSCWgvDvudS7e074Y8LFJLkEjwpCBjSrMr
-	 U4r1zXCyv0CvthM/NLUUXCXXuk5K6eDTbKpp2oc7P5YDV5sgzHGhP0IAWWL4XDmnUmoLY
-	 9cpmduJy9F/mbunUhTJ1iOU4Mzih9/hEz8GfmNc1gfCzhisGxJymOHmhWSPbqF/3bPyUO
-	 oWqyKTpkkyKuYP2NSuPIb1dorz89+V7F5MUwm0CZt49G2Khwwvj20llccyKKgoUav/SB7
-	 Vq1iTtPFncxfcUabFxdPTbgq07O7wrNxfVT37K6BwoBi7viNUP6M8GeI5Y0RtHqp6XQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=rong.moe;
-	spf=pass smtp.mailfrom=rong.moe;
-	dkim=pass header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=jw0hIujl;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.112
-Received: from sender6-pp-f112.zoho.com (sender6-pp-f112.zoho.com [165.173.180.112])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=23.88.97.239
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795540449;
+	b=qPDitGMFqACgpWqzJPYqspC3k9v5qm6j5BxgE4H3snMIoYjOwtfnfRdAXvG9tnDGWgA4
+	 NBS8+lHRzpgX/ETqTuWE4JYZ5tDkUafnOzl6f9eVXLcGEVsxBhfGQd7Saxy+SJLJUYn1o
+	 AHXPJTPoxQXpI5QuFeypHF+wtlQi8QEGYydF+WL/JCZUSv1R39XuwGMlych4+wPfT5P2D
+	 nWh56PSMIKM7mRYvBN0VdelTCTLVVpHZkq/LO70Lc5PDc/NaFLLqbUzSLetuK4HO/f8/a
+	 1BJLqp+CwNEJ64i3RA39dukBKDm/EPVQrQXpgAkNolb66mnB+XOEVzRBu0VpzN4L/1Q==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795540449;
+	h=DMARC-Filter:DKIM-Signature:Received:X-Spam-Checker-Version:
+	 X-Spam-Level:X-Spam-Status:DKIM-Signature:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=xBUgoBwiCo/I8dngiw0+NDPru7g85bUah1y5hMNGY4g=;
+	b=oOhKe7QjNstS9+XSBHeXAT98D0dE7lYZs6bN3EYBQlC7rvTNMk8fWDnfpp/Kco/qcmLz
+	 GZo5QnYtXmWagj+JQdiy00/NUQTelzfPwyQGY3QXwvmf12IIi5HZ1mcmHWdoIHuWEaLT7
+	 g6a0UHYlmSSk9f/1Uf0pttOhJ6NXHhz0pltHJhmg2El6RgdYZ5v6NNYj4KKNZL3x9wPkv
+	 NJjQLx+c/qG4qenaZAx+0vYIUDSrqxvO8DcYUYSw6YRs3d8bkNAowy/lQW4g0JhYPFvy4
+	 asIIk2vGPRvb1t/TCCZNBymMeWWSws6tt+N1aaHMiiRd/S5kZkgSQ4nyRWf/e8thTMw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=birger-koblitz.de;
+	spf=pass smtp.mailfrom=birger-koblitz.de;
+	dkim=pass header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=rwD7HPtM;
+	dkim=pass header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=rwD7HPtM;
+	arc=none smtp.remote-ip=23.88.97.239
+Received: from bkemail.birger-koblitz.de (bkemail.birger-koblitz.de [23.88.97.239])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C28606A326
-	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 17:12:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24C28606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE7E606A31E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 17:14:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9AE7E606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=birger-koblitz.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=birger-koblitz.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=rong.moe header.i=@rong.moe header.a=rsa-sha256 header.s=zmail2048 header.b=jw0hIujl
-ARC-Seal: i=1; a=rsa-sha256; t=1795540355; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=DckYbAUcVMO4Mirjnj5sJ31Gd0MH3Xw2aQiqHOzMzyEcoyNCswe7oKTpTPnAqAGoR5V0Q1YERNcVvwlMgq7++YjYQKe+Wt1j17Wi/g4JM24ARBRU/JWDU0eWh91bEBDAldPnjR7HN6FDva0ya8itXl0UsysbHvFSebIqy4/Y+IU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1795540355; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=SLOOv/u5txnHgUHzcfRtK3xy/OPHT+Ffq5I0G4nIvqc=; 
-	b=bSfd2Mw3MW07WKS7CRLjv8SEoKTlftlQUfRC385MyqGSB0bIKdFbBfidgNzuo5fRpK98uz5HV4ayXZeRQRKFIuhTFXXoUJaHNEmlZKx1RZozf9c0toa7mmpBuk7ydnAqWMcl8yxsceGCXMgrapPVYvylozF3YL7BWmKvcaESkBA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: a=rsa-sha256; b=jw0hIujl1+9LcqnwUPYivulIviZKYL/TdvhG1jshMVyoczmC0oaeleQJ9OrJ9YWOmis3WEhSTGJFv8My+Rp+NFX0+BlR/QX+u4wmriAzrdqDOANqeVEc5md64ziRqY0yPAo5Pq+EejBMIHgjxdvNZVTg7O+DSu9JPZ/5268yGqQaKcw1yPup8sftxD1nq5Gv4jkYErJMGm1NwnWt2Qh1VbMIS6PveuSYFWFZaRBehu4fQwp1j2tVW4EZ9HWwuTNCqJF8KvhGrAQpB7uO5yqLpGU4KaT3U4OMd4qumwKAC9MFud6N0stU1Ceog8Qi/G5uwYtiChQil51oMwoYsuFiXw==; c=relaxed/relaxed; s=zmail2048; d=rong.moe; v=1; bh=SLOOv/u5txnHgUHzcfRtK3xy/OPHT+Ffq5I0G4nIvqc=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1795540352703268.87578966460944;
-	Tue, 24 Nov 2026 09:12:32 -0800 (PST)
-Message-ID: <e7b9f2600bb42e1ed514d02f59ec905757de7ae8.camel@rong.moe>
-Subject: Re: [PATCH v4 1/9] HID: haptic: Get rid of input_ff_destroy() in
- error paths
-From: Rong Zhang <i@rong.moe>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-In-Reply-To: <sashiko-outbox-231650@kernel.org>
-References: <20261125-hid-haptic-kmod-v4-0-03713a89f656@rong.moe>
-	 <20261125-hid-haptic-kmod-v4-1-03713a89f656@rong.moe>
-	 <sashiko-outbox-231650@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 25 Nov 2026 01:07:26 +0800
+	dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=rwD7HPtM;
+	dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=rwD7HPtM
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
+	s=default; t=1795540440;
+	bh=lyYhJk/nsWiXYh0fWBAr2VZpmntRWGWBvDtb+aYHIT4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rwD7HPtM7SH7rkO1/epTjwtXW2afcfLxLnnsPohG05TgNM1twaiQgC1u6hsaYt6Rm
+	 A93hQxdSO2hyB2AT9Nt1/cb5g4uU6bI2jBVbUM5OE7PHp3RpxeR/x3TeG8BhescspZ
+	 V2o965Efug1lNhiPRoNhPoPS5sJvIhMTylE+3+ds8WkTqfEYkAXdCj0D2fD1thKUT3
+	 JZJNqWtsNiuqPCDW7ropG1P5SRfdBQWELdiiwcDBnLiGJr9tU5WYm79k7OxyXsUvTv
+	 DmQGiFtLTEhV1VsPsZPgdEMe78VnVSNUvywM+fXqulBlm30YvhHRFqNmgj5704upXh
+	 tbEB2/mFy3V1A==
+Received: by bkemail.birger-koblitz.de (Postfix, from userid 109)
+	id CBBC9495E5; Tue, 24 Nov 2026 17:14:00 +0000 (UTC)
+X-Spam-Level: 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
+	s=default; t=1795540440;
+	bh=lyYhJk/nsWiXYh0fWBAr2VZpmntRWGWBvDtb+aYHIT4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rwD7HPtM7SH7rkO1/epTjwtXW2afcfLxLnnsPohG05TgNM1twaiQgC1u6hsaYt6Rm
+	 A93hQxdSO2hyB2AT9Nt1/cb5g4uU6bI2jBVbUM5OE7PHp3RpxeR/x3TeG8BhescspZ
+	 V2o965Efug1lNhiPRoNhPoPS5sJvIhMTylE+3+ds8WkTqfEYkAXdCj0D2fD1thKUT3
+	 JZJNqWtsNiuqPCDW7ropG1P5SRfdBQWELdiiwcDBnLiGJr9tU5WYm79k7OxyXsUvTv
+	 DmQGiFtLTEhV1VsPsZPgdEMe78VnVSNUvywM+fXqulBlm30YvhHRFqNmgj5704upXh
+	 tbEB2/mFy3V1A==
+Received: from [IPV6:2a00:6020:47a3:e800:271c:c6c5:9fde:77cb] (unknown [IPv6:2a00:6020:47a3:e800:271c:c6c5:9fde:77cb])
+	by bkemail.birger-koblitz.de (Postfix) with ESMTPSA id 5AF5E495E2;
+	Tue, 24 Nov 2026 17:14:00 +0000 (UTC)
+Message-ID: <fee1ad7f-298e-4233-8e76-fbd104175aee@birger-koblitz.de>
+Date: Tue, 24 Nov 2026 18:14:01 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,66 +73,73 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Evolution 3.62.1-4 
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v2] aqc111: Fix rx/tx_fixup issues
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-usb@vger.kernel.org
+References: <20261122-aqc111-v2-1-52d5ddb17a37@birger-koblitz.de>
+ <sashiko-outbox-229100@kernel.org>
+From: Birger Koblitz <mail@birger-koblitz.de>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-229100@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi All,
-
-On Tue, 2026-11-24 at 17:04 +0000, sashiko-bot@kernel.org wrote:
+On 23/11/2026 12:10 pm, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] HID: haptic: inaccurate Fixes trailer in hid_haptic_init() fix
+> - [Medium] net: usb: aqc111: unnecessary skb_copy_expand() in
+>    aqc111_tx_fixup()
 > --
->=20
-> commit e6d3c5552e5a0755862fb250069c54d74d75f7cb
-> Author: Rong Zhang <i@rong.moe>
->=20
-> > HID: haptic: Get rid of input_ff_destroy() in error paths
-> >=20
-> > It's painful to have error paths after calling input_ff_create(),
-> > because input_ff_destroy() frees too much things but does not restore
-> > some other things. For example, every error path calling
-> > input_ff_destroy() frees ff->private, while the others don't. This
-> > divergence has caused quite a lot of trouble.
-> >=20
-> > Additionally, the driver's get_device() bail-out path calls module_put(=
-)
-> > right before hid_haptic_destroy() calling it again, causing refcount
-> > underflow.
-> >=20
-> > Since commit 2ae35f090d02 ("Input: destroy force-feedback device on
-> > input unregistration"), the HID device is now guaranteed to have a
-> > longer lifetime than the FF device, making get_device()/put_device()
-> > unnecessary.
-> >=20
-> > Due to the driver being unable to build as a module since commit
-> > 083a4f3f3cc7 ("HID: Kconfig: Fix build error from CONFIG_HID_HAPTIC"),
-> > try_module_get()/module_put() is needless, too.
-> >=20
-> > Remove the said calls, so that there is no error path after
-> > input_ff_create(), eliminating the call to input_ff_destroy(). In this
-> > manner, we don't need to restore dev->flush and dev->event either.
-> >=20
-> > Fixes: 083a4f3f3cc7 ("HID: Kconfig: Fix build error from CONFIG_HID_HAP=
-TIC")
-> > Cc: stable@vger.kernel.org
-> > Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> > Link: https://msgid.link/f44447354f28c295e79a025bbcab7a4e@gmail.com
-> > Signed-off-by: Rong Zhang <i@rong.moe>
->=20
-> [Severity: Low]
-> 083a4f3f3cc7 ("HID: Kconfig: Fix build error from CONFIG_HID_HAPTIC") onl=
-y
-> changed CONFIG_HID_HAPTIC from tristate to bool in drivers/hid/Kconfig.
-> The broken input_free error path and double module_put() in
-> hid_haptic_init() were introduced in 344ff3584957 ("HID: haptic:
-> initialize haptic device").
->=20
-> Should the Fixes: tag point to 344ff3584957 ("HID: haptic: initialize
-> haptic device") instead?
+> 
+> commit 72c72c17e1d18f31f018cbdd222d6325ba34956e
+> Author: Birger Koblitz <mail@birger-koblitz.de>
+> 
+> aqc111: Fix rx/tx_fixup issues
+> 
+> This commit uses unaligned little-endian helpers for RX and TX descriptors,
+> checks for cloned skbs in aqc111_tx_fixup(), and validates minimum packet
+> length in aqc111_rx_fixup().
+> 
+>> diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+>> index 12a99df77f0d3..ee7c8bb858458 100644
+>> --- a/drivers/net/usb/aqc111.c
+>> +++ b/drivers/net/usb/aqc111.c
+> [ ... ]
+>> @@ -1224,7 +1225,8 @@ static struct sk_buff *aqc111_tx_fixup(struct usbnet *dev, struct sk_buff *skb,
+>>   	headroom = skb_headroom(skb);
+>>   	tailroom = skb_tailroom(skb);
+>>   
+>> -	if (!(headroom >= sizeof(tx_desc) && tailroom >= padding_size)) {
+>> +	if (skb_cloned(skb) ||
+>> +	    !(headroom >= sizeof(tx_desc) && tailroom >= padding_size)) {
+>>   		new_skb = skb_copy_expand(skb, sizeof(tx_desc),
+>>   					  padding_size, flags);
+>>   		dev_kfree_skb_any(skb);
+>> @@ -1236,7 +1238,7 @@ static struct sk_buff *aqc111_tx_fixup(struct usbnet *dev, struct sk_buff *skb,
+>>   		skb_put_zero(skb, padding_size);
+>>   	/* Copy TX header */
+>>   	tx_desc_ptr = skb_push(skb, sizeof(tx_desc));
+>> -	*tx_desc_ptr = cpu_to_le64(tx_desc);
+>> +	put_unaligned_le64(tx_desc, tx_desc_ptr);
+> 
+> [Severity: Medium]
+> Does checking skb_cloned(skb) unconditionally force skb_copy_expand() on
+> every TCP packet even when padding_size == 0?
+> 
+> Outgoing TCP skbs arrive cloned from __tcp_transmit_skb(), but
+> tcp_skb_entail() calls __skb_header_release(), so skb_header_cloned(skb)
+> is false and the headroom reserved via needed_headroom is unshared.  When
+> padding_size == 0, aqc111_tx_fixup() only pushes tx_desc into headroom and
+> never touches the tail, yet this check now copies and linearizes all such
+> TCP packets (including nonlinear SG/TSO packets when dev->can_dma_sg is
+> set) under GFP_ATOMIC instead of transmitting their fragments via
+> build_dma_sg().
+> 
+> Should this check skb_header_cloned(skb) || (padding_size &&
+> skb_cloned(skb)), matching asix_tx_fixup()?
+> 
 
-No. This commit removes try_module_get()/module_put(), and thus depends
-on the current Fixes: commit.
+I will change the check to be finer-grained as suggested.
 
-Thanks,
-Rong
+Birger
