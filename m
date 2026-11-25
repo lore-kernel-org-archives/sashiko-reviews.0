@@ -1,102 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620494;
-	b=EHfVFsOz2BzvnAgEX8D0549hbTW3/fw/tHPqrVi3QaA5/e6tO6251D5TVVU7zImSHD3B
-	 cKByl/AqRkeFL7NwQelC5m5LavDNyfGSPm25tQZ9cpvCje4lrRRZNCErMxjM3n+RnA0Ck
-	 2oYuunwAb+yjMWqjg4dXBfqPUfthYjr3hJUosD6hY3JzoURHbIpTcl1txquJYhJwDIGMO
-	 E68iJCztpXmKzFx4vXWuIqmJ2y2N0iDRcizrkX3USU1x1kYHjuGeQoE1FrPlqaTDqQtHb
-	 yOY59I4E/58XsFKaYY1UTxdYJUgN0RTTzjX2yV+/NDIV00a9/bA5ES0my1sX3CzA3yA==
+	t=1795621214;
+	b=qsd6cb0H2rNVEotjOidTopSBGH+egIeKoo1FMZhirOrDhh0q4HZnMfvqaR0m7OwIB/Mu
+	 bKBUPVTJjEIiXsjBO/A4pCHgCjxLHcKWb/B8Y2tFDII9PsMuzuk0aeDXRM7je17hG2jSF
+	 EoUhNxdQnh/pLL/IP/tl/T+2VtgPomEIuv7fKQ2q231WaOM8xnb2lMswYkXRG/wvIDrWc
+	 Dr5i8s4puhyLzkC+9T/L+ExzIk947Qjq/joeOfWn47QiOyXsAF8FBGHMAIx9TdjC6fr/P
+	 y6irIcMQwNlY1AxBsIxfYxFjePBr7FbS4S7OQXP9w6vkagmwS8uGVWK42eIdQ55BKEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620494;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
-	 Subject:From:To:Date:In-Reply-To:References:User-Agent:MIME-Version:
-	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=6e0kgqYoRnp3cMC7OFOQzuO7jlerZmpYB1GLjuhaqkY=;
-	b=qGYVJ9fO8tFzDeekfGnC75rUKMmIn088UFICtjmfheTAXAz0jyJezwn35KH7rHXvJpSB
-	 GJQ8dnbNzsf2eZvqGqIqCGyFu5jSmfn21jxJobsYw3h4iilE/ansUHx6I4iqjD+br9J+c
-	 CwB1Pm9wOF92vp92HFtWzazIRk3D0cPvOq4uDY43rhTExbIHJ4k4Mw9ubBfddt6qeD6BK
-	 RkStoOQUx0QBIh+nfcABzqlnaT00zqnaSmOKolpHBkoeWWOqTD6lFW54ZLGEfoYFkSUH7
-	 Ruzs6iLEfzYQ+lqkd+AG591ycibGjWGYzo7Ex/OWPsef5JJ/QtyU1feqXSP527PnMKQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621214;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=8tZOjDzIzRQ+YNPH/G14KBjcMmO9tjDHEX30WObku84=;
+	b=1J0OeD5Q3LXAgDoABaBr+SWL7G9Q2+s7KNwOY6cjwpLG7BzOumM8L1G2Z9aOAUs1qhSz
+	 Rh0hBkn1xYAzjVwSYCXS8FQBGGzdxJLNIJGsgwYGkUb+lARxVxQGPpcczolpzprMcSRWp
+	 x82fv8M54R15MRwX/2wkt+WP0K3QaPVzhMMm8r37Y4teW8dYDwtVRgzUoCGvd6vvpOr9v
+	 n8mrqMe81TUhdTh2IKWnUhMLgDD3QNaA91//YCs2R1LoxHM8G29oWqyoVVuJUoCJ6SMhi
+	 kktI8FhVinYpJ2iKyNOBF2FJh0V1+yBo/Lcfyahc/P/8/vguLzpww7XNBenbpV/6uzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Mad84X+m;
-	arc=none smtp.remote-ip=170.10.129.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=suse.com;
+	spf=pass smtp.mailfrom=suse.com;
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Kt4ae4T7;
+	arc=none smtp.remote-ip=209.85.218.49
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E90D606A329
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 15:28:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E90D606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E74B60A5BEA
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 15:40:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E74B60A5BEA
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Mad84X+m
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1795620492;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6e0kgqYoRnp3cMC7OFOQzuO7jlerZmpYB1GLjuhaqkY=;
-	b=Mad84X+msdGtJBS14+FtqNKzerqprnnBKK3S5EYRRiaLLSpckphn7PlvCJrWoNHqbR+e/d
-	ICWXfCPDEAzBTKSl6nUd/fCM1pmxTd+fh+FKczGvwHbnKAxIK8O1OiHpRgOGQu45OWHyay
-	KMHxnxglkBctXkTg5t78+tn4oFTrtKA=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-yQNt8_58MgSisWX_d39_Mg-1; Wed, 25 Nov 2026 15:28:08 +0000
-X-MC-Unique: yQNt8_58MgSisWX_d39_Mg-1
-X-Mimecast-MFC-AGG-ID: yQNt8_58MgSisWX_d39_Mg_1795620487
-Received: by mail-ed1-f69.google.com with SMTP id 4fb4d7f45d1cf-6bb067d094fso2232019a12.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 07:28:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Kt4ae4T7
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c50537f731eso84216466b.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 07:40:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1795621212; x=1796226012; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=8tZOjDzIzRQ+YNPH/G14KBjcMmO9tjDHEX30WObku84=;
+        b=Kt4ae4T7Pqjo+Z4CM0GB3t/lkgvBxayf6UbtOG/iPFInz752uToLFvYB0s1dwLnPrK
+         L2Iw+vl5JsLSKos36Smxm+h8zyQEdFzGDGZXhoI31Wh6D3beubKxbEDJrKTUB78lBWL9
+         OQcy2hPu6Kakklh+kVIOZcgZM7QsHw9vUnQeD3KwdDJJQMgMrmXrL4ZKZs9imLr59zG/
+         Tkvyk0su/ORiD63wm9efy6WrVjLdvG+c7cL3sEYsf32q1814jT4nvDsgcHnG8QHHchiI
+         ZBkRfIfO/9OVPAAGhmTePheUEy+chEjjtKIz0V+xbnREQEsNlWxibMfxfsbaEVypjkAd
+         Gpew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795620487; x=1796225287;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=lgIANs+qLIIOzj/H2zLJZm2Lmsm8CkjE/+alsxp6LU0=;
-        b=XXKtkBkheAPPLVC6ZgP49Ez5i6/sINnxHNHgu+o/3orJjSBshMP32TZxXq3/OLzkd3
-         KI7hnxENwscLSDlzUlMMeQHBwX3/s2V2pVCb20iY0kOFy4aUv9ABJ8j5qmXx0vqrxW79
-         k3qetegtU6xLqA8UM8p6+6Ba61CclOh0eOiZAylI7p8FrPBvpmh7OqkTEeZfV45J5WF/
-         nsGmAkTannx/AjAJOkmsP/3qjsQOCEsYN/Eb4OvBjXFrJ0LB1lHoJSO98dPZ44Fg55Zo
-         qhclAB6xxjSX5M38PQqbHJW9r6JZ4KlANjZopxGoJvZE8Hv7xho+y5HKEe+JgPYndXmc
-         XQdQ==
-X-Gm-Message-State: APuU4Z/rswhzznuiXcs+HXm7DA8hRTxkrptWaHmObWKcYP72VqBFNnJi
-	YBBKZNAgU1u3pRFlFVsO2m6+b29EuR4HcLUP4cR0gFd3dFSOCcGK7q0vVq9gKFDVAabTNV0Kx1Z
-	BSZnMnbfpHOI6dKq/438tzA9MxQwzs2U2bvvIvJt3jqB+T8UI6Wh3BBwtpoS/did+YbGHZTKme3
-	O3v+mbXVQAOlnk3ReI0b2KuPgXuuiyQhQHICk9mVApou3QETjAzQPyAA==
-X-Gm-Gg: AZFdTZfwDL/OXf8Moy22j5/w+a8UnFe4To/lxdsZJU4iRG+rvR5GnhI5MNX9mexa8/f
-	zBNBj3E5hiVXYG6afN37xX44X1IoxpAvKE4gAHKViOYXpJvICiSk0+KvG53pyP9TAIuK4Q21nuF
-	azQOSs8gv7MPqyznj9JiJ65NQeXSQhvuyoU1LUs9VyYSNWJLzRiSkiDl27ssT0l5EMLlXmhoL+2
-	SzzR7VUtNjz+KEtU4KFqhdWoGWMURLjT6vcFvHpSNAaUnaSGReZy2ZAP3De9xpKgGPTNt154PNt
-	ujp2Q1o8Stev4OJfxUH46XvOPHmKuad5N8uvJokvfzVoDSVcyrrUsHKQOwoWYCthS7X7Iv+6Pvf
-	R6U5SGVY82e+rPjDzkvPz6/8/iTjPIeZGqohUTjMvVoTNVEK2yg6Xs685Nj5guCrdv4eZImqq4W
-	U3U4pGiLk=
-X-Received: by 2002:a05:6402:3212:b0:6ba:31be:edc3 with SMTP id 4fb4d7f45d1cf-6ba31beee34mr13288293a12.6.1795620486667;
-        Wed, 25 Nov 2026 07:28:06 -0800 (PST)
-X-Received: by 2002:a05:6402:3212:b0:6ba:31be:edc3 with SMTP id 4fb4d7f45d1cf-6ba31beee34mr13288273a12.6.1795620486165;
-        Wed, 25 Nov 2026 07:28:06 -0800 (PST)
-Received: from mlevitsk-thinkpadt14gen3.ibmmarkh.csb ([209.103.33.216])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6bb1d49d992sm1496168a12.26.2026.11.25.07.28.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 07:28:05 -0800 (PST)
-Message-ID: <19aa03249ef85403c23a8d0287c9324fb02ab00f.camel@redhat.com>
-Subject: Re: [PATCH v4 5/5] KVM: x86: nVMX: fix races in delivery of nested
- posted interrupts
-From: "mlevitsk@redhat.com" <mlevitsk@redhat.com>
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Date: Wed, 25 Nov 2026 10:28:03 -0500
-In-Reply-To: <sashiko-outbox-232632@kernel.org>
-References: <20261125052139.362046-1-mlevitsk@redhat.com>
-	 <20261125052139.362046-6-mlevitsk@redhat.com>
-	 <sashiko-outbox-232632@kernel.org>
-User-Agent: Evolution 3.60.2 (3.60.2-3.fc44)
+        d=1e100.net; s=20260707; t=1795621212; x=1796226012;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8tZOjDzIzRQ+YNPH/G14KBjcMmO9tjDHEX30WObku84=;
+        b=xKeWKPBU/iBo37xA90tKzN/BcGeq5pZEqvlF9i6iqHMLvXQUsQEoAjSTxDymUfZ5ix
+         Zc78oDVdcDNrVTwElD96a0PVS/ulwzEaa6BeLYCC6lwPi9+a+w491X7f3O0hnkN1Fsmr
+         6i8HcrCwWLMnQUsQNHUCWUPYB4Q6GHtVysrqdYgIbVENiw2FTMd1l8GdcFyKANocy75B
+         RyjkOb2cMc9m6z1078TSE6JIUPsiBi/edtlUaz9mAi2K4ewtVzqAQW/Zhm2qSnMYvkn7
+         VyDTCFb/KAWFlt/GgcayEpsbptNzJYJBq+hro4S75HFmELolRaei/PYwzlj4l1uLTh37
+         J9ZQ==
+X-Forwarded-Encrypted: i=1; AL+hErEwnPdtAC4AowdmizZ4jbkEVyUDdb3SNwqwQC7gh1DfF+7/7eUmIYdywq7Wk8JmBonVbcpJG1yd164XI359jMU=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9cKFFkiaLAC6JvAO1WRQYFc6eb8Y65SB29B+jCN2vYVkKxrtdv
+	81DFILUrZ3WoWGEWMZ9/rwKQpwL4bX/BK37VGHR9GAS6/cPd6rhpTj10Wbv634XKYJ4=
+X-Gm-Gg: AZFdTZep9rAlIpkBEqQE2R4C9N4pwHkkCbLWGiE0qNy29CB+xzQv3mwFrFnx/sqyEJ9
+	47xMBnyqPL/+xeV/cgoi+sacAZh2WT3grEW/I0Y+bJfyLqREmygrFX/evrTZr8nX2wkuue2nynM
+	vqS3QsD8V/BU6cdrBAOcFlDGfG4FRSvbDcCTr+TJAQyuA0ZPDe6uL7Brn+smUDoWwc9Lxg60DZD
+	/Twwjw7ViPucui5I8eStDkJsmbhhMARvyJmkgcpRTu8q3aTwDZQHI6SJ4CkWEl5fxxWsq6lTnKV
+	ATLVsaFRiIeDs4gi5oDe6zABnbaDDdAIC4EVdsDkKq+bAb+3LNgryaS5H53BhgrAfFVmiu5M1HH
+	I5iWK/2rY/x6w6szq0+3JXZ/xvI6sL+93Vt4Jba40QNxlQnCy2yPJ+dn/GuechhyKK2QS/2V8Q/
+	cXCpKSffvm7z2+v5xfkUgh+wQZJJxpAwNntkSfOY1TtO+3iT0BD/xtkWdMu8ieGXbPSQ+cN6fUK
+	Ox8B3oPyRKaIBIuQOYCsbCddxk+hlDA1RqlbMYNhBOaKd5fYJs7ntq+naMOhUhchwQHITX+ye3o
+	e6WrPa5E4FGJkNL4rchrDhuOqxGFsk6dBg8=
+X-Received: by 2002:a17:906:811:b0:c51:356c:2657 with SMTP id a640c23a62f3a-c513a567c14mr1470360766b.3.1795621211677;
+        Wed, 25 Nov 2026 07:40:11 -0800 (PST)
+Received: from [10.202.112.30] ([202.127.77.110])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde6d026d6fsm9107078a12.19.2026.11.25.07.40.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Nov 2026 07:40:10 -0800 (PST)
+Message-ID: <68eb76a8-338e-4894-8695-437bfa09888f@suse.com>
+Date: Wed, 25 Nov 2026 23:40:05 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -106,249 +90,562 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 2x1Pyw22-JePA0Im7Vd2Nq9pPfguZmzUyOD6ymhmQJ8_1795620487
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v11 3/3] ocfs2: switch dio write path from buffer_head
+ to iomap
+To: Joseph Qi <joseph.qi@linux.alibaba.com>, sashiko-reviews@lists.linux.dev
+Cc: Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ "ocfs2-devel@lists.linux.dev" <ocfs2-devel@lists.linux.dev>
+References: <20261124152623.7838-1-heming.zhao@suse.com>
+ <20261124152623.7838-4-heming.zhao@suse.com>
+ <sashiko-outbox-231534@kernel.org>
+ <7cf75ca9-ff9e-4cca-a043-8881706bee98@linux.alibaba.com>
+From: Heming Zhao <heming.zhao@suse.com>
+Content-Language: en-US
+In-Reply-To: <7cf75ca9-ff9e-4cca-a043-8881706bee98@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, 2026-11-25 at 05:52 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [High] KVM: nVMX: delayed KVM_NESTED_PI_ACTIVE misdelivers PI to
-> =C2=A0 halted/restored L2
-> - [High] KVM: nVMX: gating KVM_NESTED_PI_ACTIVE on pi_desc breaks
-> =C2=A0 deferred error exit
-> - [Medium] KVM: nVMX: __nested_vmx_vmexit() processes nested PI on
-> =C2=A0 failed VM-Entry
-> --
->=20
-> commit aef7be5a3f3ba4f7dee7a4841c7b946e8a11d349
-> Author: Maxim Levitsky <mlevitsk@redhat.com>
->=20
-> KVM: x86: nVMX: fix races in delivery of nested posted interrupts
->=20
-> This commit serializes nested posted interrupt delivery against nested VM
-> exit using atomic operations on vcpu->arch.nested_guest_state and delays
-> enabling nested posted interrupts until vmcs12 pages are mapped.
->=20
-> > diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-> > index eb33528619c2f..a5ef9a15e7e9c 100644
-> > --- a/arch/x86/kvm/vmx/nested.c
-> > +++ b/arch/x86/kvm/vmx/nested.c
-> > @@ -3440,7 +3440,18 @@ static bool nested_get_evmcs_page(struct kvm_vcp=
-u *vcpu)
-> > =C2=A0}
-> > =C2=A0#endif
-> > =C2=A0
-> > -static bool nested_get_vmcs12_pages(struct kvm_vcpu *vcpu)
-> > +static void nested_vmx_enable_posted_interrupts(struct kvm_vcpu *vcpu)
-> > +{
-> > +=09struct vmcs12 *vmcs12 =3D get_vmcs12(vcpu);
-> > +
-> > +=09WARN_ON_ONCE(vmcs12->posted_intr_nv & ~KVM_NESTED_PI_VECTOR_MASK);
-> > +
-> > +=09atomic_or(KVM_NESTED_PI_ACTIVE |
-> > +=09=09 (vmcs12->posted_intr_nv & KVM_NESTED_PI_VECTOR_MASK),
-> > +=09=09=C2=A0 &vcpu->arch.nested_guest_state);
-> > +}
-> > +
-> > +static bool nested_get_vmcs12_pages(struct kvm_vcpu *vcpu, bool from_v=
-mentry)
-> > =C2=A0{
-> > =C2=A0=09struct vmcs12 *vmcs12 =3D get_vmcs12(vcpu);
-> > =C2=A0=09struct vcpu_vmx *vmx =3D to_vmx(vcpu);
-> > @@ -3505,6 +3516,9 @@ static bool nested_get_vmcs12_pages(struct kvm_vc=
-pu *vcpu)
-> > =C2=A0=09=09=09=09offset_in_page(vmcs12->posted_intr_desc_addr));
-> > =C2=A0=09=09=09vmcs_write64(POSTED_INTR_DESC_ADDR,
-> > =C2=A0=09=09=09=09=C2=A0=C2=A0=C2=A0=C2=A0 pfn_to_hpa(map->pfn) + offse=
-t_in_page(vmcs12->posted_intr_desc_addr));
-> > +
-> > +=09=09=09if (!from_vmentry)
-> > +=09=09=09=09nested_vmx_enable_posted_interrupts(vcpu);
-> > =C2=A0=09=09} else {
-> > =C2=A0=09=09=09/*
-> > =C2=A0=09=09=09 * Defer the KVM_INTERNAL_EXIT until KVM tries to
-> > @@ -3540,7 +3554,7 @@ static bool vmx_get_nested_state_pages(struct kvm=
-_vcpu *vcpu)
-> > =C2=A0=09}
-> > =C2=A0#endif
-> > =C2=A0
-> > -=09if (is_guest_mode(vcpu) && !nested_get_vmcs12_pages(vcpu))
-> > +=09if (is_guest_mode(vcpu) && !nested_get_vmcs12_pages(vcpu, false))
-> > =C2=A0=09=09return false;
-> > =C2=A0
-> > =C2=A0=09return true;
-> > @@ -3671,7 +3685,7 @@ enum nvmx_vmentry_status nested_vmx_enter_non_roo=
-t_mode(struct kvm_vcpu *vcpu,
-> > =C2=A0=09prepare_vmcs02_early(vmx, &vmx->vmcs01, vmcs12);
-> > =C2=A0
-> > =C2=A0=09if (from_vmentry) {
-> > -=09=09if (unlikely(!nested_get_vmcs12_pages(vcpu))) {
-> > +=09=09if (unlikely(!nested_get_vmcs12_pages(vcpu, true))) {
-> > =C2=A0=09=09=09vmx_switch_vmcs(vcpu, &vmx->vmcs01);
-> > =C2=A0=09=09=09return NVMX_VMENTRY_KVM_INTERNAL_ERROR;
-> > =C2=A0=09=09}
-> > @@ -3701,6 +3715,9 @@ enum nvmx_vmentry_status nested_vmx_enter_non_roo=
-t_mode(struct kvm_vcpu *vcpu,
-> > =C2=A0=09=09=09vmcs12->exit_qualification =3D failed_index;
-> > =C2=A0=09=09=09goto vmentry_fail_vmexit_guest_mode;
-> > =C2=A0=09=09}
-> > +
-> > +=09=09if (nested_cpu_has_posted_intr(vmcs12) && vmx->nested.pi_desc)
-> > +=09=09=09nested_vmx_enable_posted_interrupts(vcpu);
->=20
-> [Severity: High]
-> Does gating nested_vmx_enable_posted_interrupts() on mapping
-> vmx->nested.pi_desc break the deferred KVM_EXIT_INTERNAL_ERROR when
-> posted_intr_desc_addr cannot be mapped?
+On 11/25/26 19:01, Joseph Qi wrote:
+> Hi,
+> 
+> On 11/25/26 12:11 AM, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 7 potential
+>> issues to consider:
+>> - [High] ocfs2: missing IOMAP_F_DIRTY in ocfs2_iomap_begin() skips
+>>    O_DSYNC JBD2 commit
+>> - [High] ocfs2: partial DIO failure in ocfs2_dio_end_io() skips
+>>    unwritten conversion
+>> - [High] ocfs2: buffered and mmap writes do not wait in
+>>    ocfs2_unwritten_check()
+>> - [High] ocfs2: orphan entry and block leak on failed or short DIO write
+>> - [Medium] ocfs2: preallocated extents truncated in
+>>    ocfs2_dio_clear_orphan_locked()
+>> - [Medium] ocfs2: per-cluster kvcalloc and ip_lock scan in
+>>    ocfs2_alloc_write_ctxt()
+>> - [Medium] ocfs2: ocfs2_should_use_dio() forces buffered I/O for
+>>    sub-page DIO overwrites
+> 
+> Seems the above Sashiko review comments are mostly new. > 
+>> --
+>>
+>> commit b5b57d5ded817baa5742865c157d167ab85796b4
+>> Author: Heming Zhao <heming.zhao@suse.com>
+>>
+>> ocfs2: switch dio write path from buffer_head to iomap
+>>
+>> This commit converts the OCFS2 direct I/O write path from the legacy
+>> buffer_head infrastructure to the iomap framework, mapping multi-cluster
+>> extents in ocfs2_dio_wr_map_blocks() and handling unwritten extent
+>> conversion and i_size updates in ocfs2_dio_end_io().
+>>
+>>> diff --git a/fs/ocfs2/aops.c b/fs/ocfs2/aops.c
+>>> index 21cdc5c29331d..7a0778914d69b 100644
+>>> --- a/fs/ocfs2/aops.c
+>>> +++ b/fs/ocfs2/aops.c
+>>
+>> [ ... ]
+>>
+>>> @@ -914,10 +967,46 @@ static int ocfs2_alloc_write_ctxt(struct ocfs2_write_ctxt **wcp,
+>>>   	if (!wc)
+>>>   		return -ENOMEM;
+>>>   
+>>> +	wc->w_desc = wc->w_desc_inline;
+>>> +	wc->w_folios = wc->w_folios_inline;
+>>> +	wc->w_owner = owner;
+>>>   	wc->w_cpos = pos >> osb->s_clustersize_bits;
+>>>   	wc->w_first_new_cpos = UINT_MAX;
+>>>   	cend = (pos + len - 1) >> osb->s_clustersize_bits;
+>>>   	wc->w_clen = cend - wc->w_cpos + 1;
+>>> +
+>>> +	/*
+>>> +	 * Only a direct write can span more clusters than fit in a page.
+>>> +	 * It needs the folios of the first and of the last cluster at most,
+>>> +	 * see ocfs2_grab_folios_for_write().
+>>> +	 */
+>>> +	if (wc->w_clen > ARRAY_SIZE(wc->w_desc_inline)) {
+>>> +		if (WARN_ON_ONCE(type != OCFS2_WRITE_DIRECT)) {
+>>> +			ocfs2_release_write_ctxt(wc);
+>>> +			return -EINVAL;
+>>> +		}
+>>> +		wc->w_desc = kvcalloc(wc->w_clen, sizeof(*wc->w_desc),
+>>> +				      GFP_NOFS);
+>>> +		if (!wc->w_desc) {
+>>> +			wc->w_desc = wc->w_desc_inline;
+>>> +			ocfs2_release_write_ctxt(wc);
+>>> +			return -ENOMEM;
+>>> +		}
+>>> +	}
+>>
+>> [Severity: Medium]
+>> Does a direct write need to allocate one ocfs2_write_cluster_desc per
+>> cluster in wc->w_desc and call ocfs2_unwritten_check() on every cluster?
+>>
+>> Before calling ocfs2_write_begin_nolock(), ocfs2_dio_wr_map_blocks()
+>> already clamps map->len with ocfs2_map_blocks() to a single contiguous
+>> extent record or hole.  With 4KB clusters and a 16MB mapping
+>> (OCFS2_DIO_MAX_MAP_BYTES), wc->w_clen is 4096, so every mapping call
+>> allocates and frees a 96KB (order-5) array under ocfs2_inode_lock() and
+>> ip_alloc_sem, and ocfs2_populate_write_desc() takes oi->ip_lock 4096 times
+>> to scan oi->ip_unwritten_list (even for holes where c_new is 1).
+>>
 
-Yes, I made this check to be consistent with KVM_GET_NESTED_STATE, but this=
- was wrong,
-KVM_NESTED_PI_ACTIVE carries more weight that I thought.
-To still be consistent, I'll activate PI regardless of mapping failure in b=
-oth=20
-nested_vmx_enter_non_root_mode and in nested_get_vmcs12_pages.
+This is performance issue. The fio results show that the patched code achieves
+the same speed/bandwidth as the original code.
+Let's do it in another patch set.
 
->=20
-> When kvm_vcpu_map() fails in nested_get_vmcs12_pages(), KVM sets
-> vmx->nested.pi_desc =3D NULL to defer the internal error exit until
-> __vmx_complete_nested_posted_interrupt() tries to access the descriptor.
-> Because KVM_NESTED_PI_ACTIVE is now left unset when pi_desc is NULL,
-> neither vmx_deliver_nested_posted_interrupt() nor
-> vmx_check_nested_events() recognizes vmcs12->posted_intr_nv as L2's
-> posted interrupt notification vector:
->=20
-> arch/x86/kvm/vmx/nested.c:vmx_check_nested_events() {
-> =C2=A0=C2=A0=C2=A0 ...
-> =09=09if ((nested_state & KVM_NESTED_PI_ACTIVE) &&
-> =09=09=09((nested_state & KVM_NESTED_PI_VECTOR_MASK) =3D=3D irq)) {
-> =09=09=09vmx_complete_nested_posted_interrupt(vcpu);
-> =09=09=09goto no_vmexit;
-> =09=09}
-> =09=09nested_vmx_vmexit(vcpu, EXIT_REASON_EXTERNAL_INTERRUPT,
-> =09=09=09=09=C2=A0 INTR_INFO_VALID_MASK | INTR_TYPE_EXT_INTR | irq, 0);
-> =C2=A0=C2=A0=C2=A0 ...
-> }
->=20
-> Instead of setting KVM_NESTED_PI_PENDING and exiting to userspace with
-> KVM_EXIT_INTERNAL_ERROR via __vmx_complete_nested_posted_interrupt(), KVM
-> injects a bogus EXIT_REASON_EXTERNAL_INTERRUPT VM-Exit into L1, and the
-> !vmx->nested.pi_desc check in __vmx_complete_nested_posted_interrupt()
-> becomes unreachable.
-This should be fixed.
+>> [ ... ]
+>>
+>>> +static void ocfs2_unwritten_check(struct inode *inode,
+>>> +				  struct ocfs2_write_ctxt *wc,
+>>> +				  struct ocfs2_write_cluster_desc *desc)
+>>>   {
+>>> +	struct ocfs2_inode_info *oi = OCFS2_I(inode);
+>>> +	struct ocfs2_unwritten_extent *ue;
+>>> +
+>>> +	if (!desc->c_needs_zero)
+>>> +		return;
+>>> +
+>>> +	spin_lock(&oi->ip_lock);
+>>> +	ue = ocfs2_find_unwritten(oi, desc->c_cpos);
+>>> +	/* A hole (c_new is 1) can not be on the list, don't trust it if it is. */
+>>> +	if (ue && !WARN_ON_ONCE(desc->c_new)) {
+>>>   		/*
+>>> +		 * Needs not to zero no matter buffer or direct. The one who is
+>>> +		 * zero the cluster is doing zero. And he will clear unwritten
+>>> +		 * after all cluster io finished.
+>>>   		 */
+>>> +		desc->c_needs_zero = 0;
+>>> +		desc->c_clear_unwritten = 0;
+>>> +		/* match its own entry */
+>>> +		if (wc->w_type == OCFS2_WRITE_DIRECT && wc->w_owner &&
+>>> +		    ue->ue_owner == wc->w_owner)
+>>> +			desc->c_dio_unwritten = 1;
+>>> +		else
+>>> +			/*
+>>> +			 * Not ours. A direct write never gets here, it waits
+>>> +			 * for the entries of the other dios before it maps,
+>>> +			 * see ocfs2_dio_wr_map_blocks().
+>>> +			 */
+>>> +			WARN_ON_ONCE(wc->w_type == OCFS2_WRITE_DIRECT);
+>>> +	} else if (wc->w_type == OCFS2_WRITE_DIRECT) {
+>>> +		/* This direct write will doing zero. */
+>>> +		desc->c_clear_unwritten = 0;
+>>>   	}
+>>>   	spin_unlock(&oi->ip_lock);
+>>> +}
+>>
+>> [Severity: High]
+>> What happens when a buffered write or mmap page_mkwrite fault hits a
+>> cluster that an in-flight direct write has placed on
+>> oi->ip_unwritten_list?
+>>
+>> Unlike ocfs2_dio_wr_map_blocks(), which waits on oi->ip_unwritten_wq for
+>> foreign unwritten entries to finish, buffered and mmap writes clear
+>> desc->c_needs_zero and desc->c_clear_unwritten here and proceed assuming
+>> the direct write has zeroed the cluster and will convert it to written:
+>>
+>> 1. If the in-flight direct write later fails (for example with -EFAULT on
+>>     a subsequent mapping) or ends short before this cluster,
+>>     ocfs2_dio_end_io() skips conversion of that cluster, while
+>>     ocfs2_write_cluster() also skipped ocfs2_mark_extent_written() because
+>>     c_clear_unwritten was 0.  Once the dirty page cache folio is written
+>>     back and evicted, the cluster remains marked OCFS2_EXT_UNWRITTEN on
+>>     disk and subsequent reads return zeroes instead of the written data.
+>>
+>> 2. When cluster_size > PAGE_SIZE, ocfs2_grab_folios_direct() only zeroes
+>>     folios outside the direct write's [target_index, end_index] up to
+>>     max(user_pos + user_len, i_size).  If a concurrent buffered write
+>>     extends i_size further within the same unwritten cluster, or does a
+>>     partial-page write inside [target_index, end_index] where new = 0
+>>     causes ocfs2_map_folio_blocks() to issue bh_read_nowait() on the
+>>     unwritten block, unzeroed disk blocks are exposed once the direct write
+>>     marks the cluster written.
+>>
 
->=20
-> > =C2=A0=09} else {
-> > =C2=A0=09=09/*
-> > =C2=A0=09=09 * The MMU is not initialized to point at the right entitie=
-s yet and
-> > @@ -3712,9 +3729,6 @@ enum nvmx_vmentry_status nested_vmx_enter_non_roo=
-t_mode(struct kvm_vcpu *vcpu,
-> > =C2=A0=09=09kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
-> > =C2=A0=09}
-> > =C2=A0
-> > -=09if (nested_cpu_has_posted_intr(vmcs12))
-> > -=09=09atomic_or(KVM_NESTED_PI_ACTIVE | vmcs12->posted_intr_nv,
-> > -=09=09=09=C2=A0 &vcpu->arch.nested_guest_state);
->=20
-> [Severity: High]
-> Does deferring nested_vmx_enable_posted_interrupts() until
-> KVM_REQ_GET_NESTED_STATE_PAGES misdeliver nested posted interrupts when L=
-2
-> is restored in KVM_MP_STATE_HALTED?
->=20
-> After nested_vmx_enter_non_root_mode(vcpu, false) during
-> KVM_SET_NESTED_STATE (or vmx_leave_smm()), a halted L2 vCPU enters
-> vcpu_block() rather than vcpu_enter_guest(), so
-> KVM_REQ_GET_NESTED_STATE_PAGES is not serviced while blocked.=C2=A0 When
-> another vCPU sends vmcs12->posted_intr_nv to wake L2,
-> vmx_deliver_nested_posted_interrupt() sees KVM_NESTED_PI_ACTIVE =3D=3D 0 =
-and
-> queues the vector into L1's LAPIC IRR.=C2=A0 vcpu_block() then runs
-> kvm_check_nested_events() -> vmx_check_nested_events() while
-> KVM_NESTED_PI_ACTIVE is still unset, failing to morph the notification
-> vector and instead reflecting a spurious EXIT_REASON_EXTERNAL_INTERRUPT
-> VM-Exit to L1.
->=20
-> > @@ -4025,22 +4039,15 @@ static void vmcs12_save_pending_event(struct kv=
-m_vcpu *vcpu,
-> > =C2=A0=09}
-> > =C2=A0}
-> > =C2=A0
-> > -static int vmx_complete_nested_posted_interrupt(struct kvm_vcpu *vcpu)
-> > +static int __vmx_complete_nested_posted_interrupt(struct kvm_vcpu *vcp=
-u)
-> > =C2=A0{
-> > =C2=A0=09struct vcpu_vmx *vmx =3D to_vmx(vcpu);
-> > =C2=A0=09int max_irr;
-> > =C2=A0=09void *vapic_page;
-> > =C2=A0=09u16 status;
-> > =C2=A0
-> > -=09int nested_state =3D atomic_read(&vcpu->arch.nested_guest_state);
-> > -
-> > -=09if (!(nested_state & KVM_NESTED_PI_PENDING))
-> > -=09=09return 0;
-> > -
-> > =C2=A0=09if (!vmx->nested.pi_desc)
-> > -=09=09goto mmio_needed;
-> > -
-> > -=09atomic_andnot(KVM_NESTED_PI_PENDING, &vcpu->arch.nested_guest_state=
-);
-> > +=09=09return -ENXIO;
-> > =C2=A0
-> > =C2=A0=09/*
-> > =C2=A0=09 * Don't test the value of PID.ON.
-> > @@ -4057,7 +4064,7 @@ static int vmx_complete_nested_posted_interrupt(s=
-truct kvm_vcpu *vcpu)
-> > =C2=A0=09if (max_irr > 0) {
-> > =C2=A0=09=09vapic_page =3D vmx->nested.virtual_apic_map.hva;
-> > =C2=A0=09=09if (!vapic_page)
-> > -=09=09=09goto mmio_needed;
-> > +=09=09=09return -ENXIO;
-> > =C2=A0
-> > =C2=A0=09=09__kvm_apic_update_irr(vmx->nested.pi_desc->pir,
-> > =C2=A0=09=09=09vapic_page, &max_irr);
->=20
-> [ ... ]
->=20
-> > @@ -5121,7 +5141,10 @@ void __nested_vmx_vmexit(struct kvm_vcpu *vcpu, =
-u32 vm_exit_reason,
-> > =C2=A0=09if (enable_ept && is_pae_paging(vcpu))
-> > =C2=A0=09=09vmx_ept_load_pdptrs(vcpu);
-> > =C2=A0
-> > -=09leave_guest_mode(vcpu);
-> > +=09old_nested_state =3D leave_guest_mode(vcpu);
-> > +
-> > +=09if (old_nested_state & KVM_NESTED_PI_PENDING)
-> > +=09=09__vmx_complete_nested_posted_interrupt(vcpu);
->=20
-> [Severity: Medium]
-> Can calling __vmx_complete_nested_posted_interrupt() unconditionally in
-> __nested_vmx_vmexit() lose posted interrupts when vmx->fail is set or
-> virtual_apic_map is unmapped?
->=20
-> When a hardware VM-Entry of vmcs02 fails (vmx->fail =3D=3D 1),
-> __nested_vmx_vmexit() skips sync_vmcs02_to_vmcs12().=C2=A0 Running
-> __vmx_complete_nested_posted_interrupt() before checking !vmx->fail
-> clears PID.ON and harvests PID.PIR into the virtual APIC page, but writes
-> the updated GUEST_INTR_STATUS.RVI to vmcs02 where it is discarded without
-> being synced to vmcs12.
->=20
-> Also, if virtual_apic_page_addr could not be mapped (which forces a
-> vmcs02 VM-Entry failure while leaving pi_desc mapped),
-> __vmx_complete_nested_posted_interrupt() clears PID.ON in guest memory
-> before checking !vapic_page and returns -ENXIO without harvesting PIR or
-> marking pi_desc_map dirty, while __nested_vmx_vmexit() ignores the return
-> value.
+I will ignore above issue.
+This issue predates this patch and is left unfixed. Additionally, triggering
+it would require concurrent DIO and buffered I/O or mmap writes on the same
+inode, which is not a realistic scenario in production env.
 
-While not optimal, this is not a issue, as posted interrupt is not really l=
-ost,
-and since it only happens once per migration, I don't think that this is a =
-problem.
+>> [ ... ]
+>>
+>>> +static void ocfs2_dio_clear_orphan_locked(struct inode *inode,
+>>> +				   struct buffer_head *di_bh)
+>>> +{
+>>> +	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
+>>> +	struct ocfs2_inode_info *oi = OCFS2_I(inode);
+>>> +	struct ocfs2_dinode *di = (struct ocfs2_dinode *)di_bh->b_data;
+>>> +	loff_t end = READ_ONCE(oi->ip_dio_orphan_end);
+>>> +	int ret = 0;
+>>> +
+>>> +	/*
+>>> +	 * The write has not reached the end it asked for. Free whatever it
+>>> +	 * allocated beyond i_size before the orphan entry.
+>>> +	 */
+>>> +	if (i_size_read(inode) < end)
+>>> +		ret = ocfs2_truncate_file(inode, di_bh, i_size_read(inode));
+>>
+>> [Severity: Medium]
+>> As noted in the TODO comment above this function, if a file has unwritten
+>> extents preallocated beyond i_size via fallocate(FALLOC_FL_KEEP_SIZE),
+>> won't any extending direct write that ends short, fails before submitting
+>> I/O, or bounces to buffered I/O and writes short truncate away all
+>> pre-existing preallocated clusters beyond i_size?
+>>
+>> In addition, because ocfs2_file_write_iter() checks
+>> ocfs2_clusters_for_bytes(..., iocb->ki_pos + count) against i_size_read()
+>> rather than against the inode's allocated clusters, every extending direct
+>> write into space already preallocated with FALLOC_FL_KEEP_SIZE
+>> unnecessarily adds and removes the inode in the slot's global orphan
+>> directory.
+
+I already added a "TODO" tag in the comments and will ignore this issue.
+btw, this issue already existed before this patch set.
+
+>>
+>> [ ... ]
+>>
+>>> @@ -2567,10 +3311,11 @@ static int ocfs2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+>>>   	map.flags = 0;
+>>>   
+>>>   	if (flags & IOMAP_WRITE) {
+>>> -		return -EOPNOTSUPP;
+>>> +		ret = ocfs2_dio_wr_map_blocks(inode, &map, flags, owner);
+>>> +	} else {
+>>> +		ret = ocfs2_lock_map_blocks(inode, &map, 0, flags & IOMAP_NOWAIT);
+>>>   	}
+>>
+>> [ ... ]
+>>
+>>>   	if (map.flags & OCFS2_MAP_NEW)
+>>>   		iomap->flags |= IOMAP_F_NEW;
+>>>   
+>>>   	return 0;
+>>>   }
+>>
+>> [Severity: High]
+>> Should ocfs2_iomap_begin() set IOMAP_F_DIRTY when the write extends i_size
+>> or when the inode has uncommitted metadata transactions in JBD2?
+>>
+>> For O_DSYNC / RWF_DSYNC direct writes, ocfs2_file_write_iter() skips its
+>> post-write jbd2_journal_force_commit() when use_dio is true and relies on
+>> iomap.  When ocfs2_dio_wr_map_blocks() returns an already-allocated extent
+>> (IOMAP_MAPPED without IOMAP_F_NEW)—for example when extending an unaligned
+>> i_size within an already-allocated tail block (lblk < eof_blk), or after
+>> ocfs2_prepare_inode_for_write() performed refcount CoW—and the block
+>> device supports REQ_FUA, iomap sees neither IOMAP_F_NEW nor IOMAP_F_DIRTY,
+>> issues a REQ_FUA bio, clears IOMAP_DIO_NEED_SYNC, and skips
+>> generic_write_sync() (ocfs2_sync_file()).  The write then returns success
+>> to userspace while the JBD2 transaction updating i_size or extent metadata
+>> is still uncommitted.
+>>
+> 
+> Seems we have to do it like:
+> 
+> 	if ((flags & IOMAP_WRITE) && offset + length > i_size_read(inode))
+> 	        iomap->flags |= IOMAP_F_DIRTY;
+> 
+
+My fix (copied from xfs and ext4):
+
+@@ -3311,6 +3311,15 @@ static int ocfs2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+         map.flags = 0;
+  
+         if (flags & IOMAP_WRITE) {
++               /*
++                * Writes that span EOF might trigger an IO size update on
++                * completion, so consider them to be dirty for the purposes
++                * of O_DSYNC even if there is no other metadata changes
++                * pending or have been made here.
++                */
++               if (offset + length > i_size_read(inode))
++                       iomap->flags |= IOMAP_F_DIRTY;
++
+                 ret = ocfs2_dio_wr_map_blocks(inode, &map, flags, owner);
+         } else {
+                 ret = ocfs2_lock_map_blocks(inode, &map, 0, flags & IOMAP_NOWAIT);
 
 
-Best regards,
-=09Maxim Levitsky
+>> [ ... ]
+>>
+>>> +static int ocfs2_dio_end_io(struct kiocb *iocb, ssize_t size,
+>>> +			int error, unsigned int flags, int level)
+>>> +{
+>>> +	struct inode *inode = file_inode(iocb->ki_filp);
+>>> +	loff_t offset = iocb->ki_pos;
+>>> +	bool recorded = error || (flags & IOMAP_DIO_UNWRITTEN);
+>>> +	LIST_HEAD(unwritten);
+>>> +	int ret = 0;
+>>> +
+>>> +	if (recorded)
+>>> +		ocfs2_dio_collect_unwritten(inode, iocb, &unwritten);
+>>> +
+>>> +	if (error)
+>>> +		mlog_ratelimited(ML_ERROR, "Direct IO failed, bytes = %lld errno:%d",
+>>> +				 (long long)size, error);
+>>> +
+>>> +	/* bounced back to buffered I/O, leave the rw_lock held */
+>>> +	if (size == 0 && error == 0) {
+>>> +		ocfs2_free_unwritten_list(inode, &unwritten);
+>>> +		return 0;
+>>> +	}
+>>> +
+>>> +	if (size && error == 0 &&
+>>> +	    (!list_empty(&unwritten) ||
+>>> +	     (offset + size > i_size_read(inode)))) {
+>>> +		ret = ocfs2_dio_end_io_write(inode, offset, size, &unwritten);
+>>> +		if (ret < 0)
+>>> +			mlog_errno(ret);
+>>> +	}
+>>> +
+>>> +	ocfs2_free_unwritten_list(inode, &unwritten);
+>>
+>> [Severity: High]
+>> What happens if a multi-mapping direct write to unwritten or newly
+>> allocated clusters completes some I/O (size > 0) and then fails on a later
+>> mapping or bio (error != 0), for example with -ENOSPC in
+>> ocfs2_dio_wr_map_blocks() or -EFAULT in bio_iov_iter_get_pages()?
+>>
+>> During ocfs2_dio_wr_map_blocks(), any unaligned head or tail folios in the
+>> page cache for the first and last clusters of the earlier mapping were
+>> already zeroed, mapped to the cluster's physical blocks, and marked dirty
+>> and uptodate via block_commit_write().  Because error != 0,
+>> ocfs2_dio_end_io() skips ocfs2_dio_end_io_write() and discards the
+>> unwritten list, and iomap_dio_complete() skips
+>> kiocb_invalidate_post_direct_write().  That leaves dirty, mapped page
+>> cache buffers pointing at an extent that is still marked
+>> OCFS2_EXT_UNWRITTEN on disk.
 
+I will try to fix this issue in next version.
+the idea is to first write back the dirty cache pages to disk, then
+invalidate/drop the clean (written-back) pages.
+
+btw, this issue is also existing in buffer_head path.
+the old ocfs2_dio_end_io() just calls ocfs2_dio_free_write_ctx() when
+"bytes <= 0", which also doesn't release the dirty pages.
+
+>>
+>>> diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+>>> index 3d717200d53a4..18aee5372eebe 100644
+>>> --- a/fs/ocfs2/file.c
+>>> +++ b/fs/ocfs2/file.c
+>>
+>> [ ... ]
+>>
+>>> @@ -2417,9 +2426,52 @@ static bool ocfs2_should_use_dio(struct kiocb *iocb, struct iov_iter *iter,
+>>>   	    !ocfs2_supports_append_dio(osb))
+>>>   		return false;
+>>>   
+>>> +	/*
+>>> +	 * A direct write which does not cover whole pages leaves the rest of
+>>> +	 * the page untouched. iomap only zeroes the padding up to the file
+>>> +	 * system block size, so on a file system with a block size smaller
+>>> +	 * than the page size the untouched blocks would expose stale data
+>>> +	 * once the cluster is marked written. Let buffered I/O handle it.
+>>> +	 *
+>>> +	 * TODO: Avoid unnecessarily demoting in-place sub-page overwrites
+>>> +	 * to buffered I/O when i_blocksize(inode) < PAGE_SIZE.
+>>> +	 */
+>>> +	if (iov_iter_rw(iter) == WRITE && i_blocksize(inode) < PAGE_SIZE &&
+>>> +	    (!IS_ALIGNED(iocb->ki_pos, PAGE_SIZE) ||
+>>> +	     !IS_ALIGNED(iocb->ki_pos + iter->count, PAGE_SIZE)))
+>>> +		return false;
+>>> +
+>>>   	return true;
+>>>   }
+>>
+>> [Severity: Medium]
+>> When i_blocksize(inode) < PAGE_SIZE (including all OCFS2 filesystems on
+>> 16KB or 64KB PAGE_SIZE kernels), doesn't checking page alignment in
+>> ocfs2_should_use_dio() demote all sub-page O_DIRECT overwrites of
+>> already-written blocks to synchronous buffered I/O?
+>>
+>> Because use_dio becomes false before block mapping is checked, pure
+>> in-place overwrites take an exclusive EX cluster rw_lock instead of a
+>> shared PR lock under coherency=buffered, reject IOCB_NOWAIT writes with
+>> -EAGAIN, and fall back to generic_perform_write() and page-cache
+>> writeback/invalidation.  Returning -ENOTBLK from ocfs2_dio_wr_map_blocks()
+>> only when the fast-path overwrite check misses would keep in-place
+>> sub-page overwrites on the direct I/O path.
+>>
+
+I already added a "TODO" tag in the comments and will ignore this issue.
+
+>> [ ... ]
+>>
+>>> +	if (use_dio) {
+>>> +		if (!IS_ALIGNED(iocb->ki_pos | iov_iter_alignment(from),
+>>> +				dio_align)) {
+>>> +			ret = -EINVAL;
+>>> +			goto out;
+>>> +		}
+>>>   
+>>> +		/*
+>>> +		 * Extending the file requires cluster locks and
+>>> +		 * transactions, which IOCB_NOWAIT forbids.
+>>> +		 */
+>>> +		if (nowait &&
+>>> +		    ((iocb->ki_pos + count) > i_size_read(inode))) {
+>>> +			ret = -EAGAIN;
+>>> +			goto out;
+>>> +		}
+>>> +
+>>> +		if (iocb->ki_pos > i_size_read(inode) &&
+>>> +		    fault_in_iov_iter_readable(from, count)) {
+>>> +			ret = -EFAULT;
+>>> +			goto out;
+>>> +		}
+>>> +
+>>> +		if ((iocb->ki_pos + count) > i_size_read(inode)) {
+>>> +			/*
+>>> +			 * Complete before i_rwsem is dropped: i_size is only
+>>> +			 * updated by ->end_io(), and the next writer would
+>>> +			 * zero the gap between the size it still sees and its
+>>> +			 * own write, over the data this one has just written.
+>>> +			 */
+>>> +			dio_flags |= IOMAP_DIO_FORCE_WAIT;
+>>> +
+>>> +			if (ocfs2_clusters_for_bytes(inode->i_sb,
+>>> +						     iocb->ki_pos + count) >
+>>> +			    ocfs2_clusters_for_bytes(inode->i_sb,
+>>> +						     i_size_read(inode))) {
+>>> +				/*
+>>> +				 * when we are going to alloc extents beyond file
+>>> +				 * size, add the inode to orphan dir, so we can
+>>> +				 * recall those spaces when system crashed during
+>>> +				 * write.
+>>> +				 */
+>>> +				ret = ocfs2_add_inode_to_orphan(osb, inode);
+>>> +				if (ret < 0) {
+>>> +					mlog_errno(ret);
+>>> +					goto out;
+>>> +				}
+>>> +				WRITE_ONCE(OCFS2_I(inode)->ip_dio_orphan_pid,
+>>> +					   task_pid_nr(current));
+>>> +				WRITE_ONCE(OCFS2_I(inode)->ip_dio_orphan_end,
+>>> +					   iocb->ki_pos + count);
+>>> +			}
+>>> +		}
+>>> +
+>>> +		ret = ocfs2_dio_zero_eof(inode, iocb->ki_pos, count);
+>>> +		if (ret < 0)
+>>> +			goto out;
+>>> +
+>>> +		const struct iomap_dio_ops *dops = rw_level ?
+>>> +			&ocfs2_iomap_dio_ops_w_ex : &ocfs2_iomap_dio_ops_w_pr;
+>>> +		struct iomap_dio *dio;
+>>> +
+>>> +		/*
+>>> +		 * The kiocb is the owner of the unwritten clusters which
+>>> +		 * ->iomap_begin() records for ->end_io() to convert, see
+>>> +		 * ocfs2_iomap_next().
+>>> +		 */
+>>> +		dio = __iomap_dio_rw(iocb, from, ocfs2_iomap_next,
+>>> +				     dops, dio_flags, iocb, 0);
+>>> +		if (dio == NULL) {
+>>> +			/* No I/O issued; rw_lock still held. */
+>>> +			written = 0;
+>>> +		} else if (IS_ERR(dio)) {
+>>> +			written = PTR_ERR(dio);
+>>> +			/*
+>>> +			 * -EIOCBQUEUED: async I/O; end_io will drop the lock on
+>>> +			 * completion. Any other error means no I/O started and
+>>> +			 * end_io was not called, so the cleanup path below drops
+>>> +			 * the lock.
+>>> +			 */
+>>> +			if (written == -EIOCBQUEUED)
+>>> +				rw_level = -1;
+>>> +		} else {
+>>> +			/*
+>>> +			 * Synchronous completion. iomap_dio_complete() runs
+>>> +			 * end_io, which drops the lock unless the mapping
+>>> +			 * bounced us back to buffered I/O (returns 0, lock
+>>> +			 * retained).
+>>> +			 */
+>>> +			written = iomap_dio_complete(dio);
+>>> +			if (written != 0)
+>>> +				rw_level = -1;
+>>> +		}
+>>
+>> [ ... ]
+>>
+>>>   out:
+>>> +	/*
+>>> +	 * IOMAP_DIO_FORCE_WAIT made an extending dio complete synchronously,
+>>> +	 * so its end_io has already updated i_size.
+>>> +	 */
+>>>   	if (saved_ki_complete)
+>>>   		xchg(&iocb->ki_complete, saved_ki_complete);
+>>>   
+>>> -	if (rw_level != -1)
+>>> +	if (rw_level != -1) {
+>>> +		/*
+>>> +		 * The orphan entry this write added is still there when no io
+>>> +		 * was issued at all, or when the write bailed out before
+>>> +		 * submitting it. The conversion in ocfs2_dio_end_io_write()
+>>> +		 * has removed it on the success path; a failed io is left to
+>>> +		 * the recovery. Remove it here for the former, while the
+>>> +		 * rw_lock is still held
+>>> +		 */
+>>> +		ocfs2_dio_clear_orphan(inode);
+>>>   		ocfs2_rw_unlock(inode, rw_level);
+>>> +	}
+>>> +
+>>> +	/* The marker must not outlive this write. */
+>>> +	if (READ_ONCE(OCFS2_I(inode)->ip_dio_orphan_pid) ==
+>>> +	    task_pid_nr(current))
+>>> +		WRITE_ONCE(OCFS2_I(inode)->ip_dio_orphan_pid, 0);
+>>
+>> [Severity: High]
+>> Does an extending direct write that fails inside __iomap_dio_rw() after
+>> inode_dio_begin() (or ends short at or below i_size without unwritten
+>> extents) leave the inode orphaned and any newly allocated clusters beyond
+>> i_size leaked?
+>>
+>> For example, when appending at ki_pos == i_size with an unmapped user
+>> buffer, fault_in_iov_iter_readable() is skipped because ki_pos > i_size is
+>> false.  ocfs2_add_inode_to_orphan() adds the dio- orphan entry and sets
+>> OCFS2_DIO_ORPHANED_FL on disk, and inside __iomap_dio_rw(),
+>> ocfs2_dio_wr_map_blocks() allocates unwritten clusters before
+>> bio_iov_iter_get_pages() fails with -EFAULT.  Because
+>> IOMAP_DIO_FORCE_WAIT is set, __iomap_dio_rw() returns the dio pointer and
+>> iomap_dio_complete() runs ocfs2_dio_end_io(), which skips
+>> ocfs2_dio_end_io_write() on error, unlocks rw_lock, and returns -EFAULT.
+>> ocfs2_file_write_iter() then sets rw_level = -1, so at out: it skips
+>> ocfs2_dio_clear_orphan() and resets ip_dio_orphan_pid to 0.
+>>
+>> The same happens if an extending write starting below i_size on an
+>> already-written prefix stops short at or before i_size (where
+>> list_empty(&unwritten) and offset + size <= i_size_read(inode), so
+>> ocfs2_dio_end_io() skips ocfs2_dio_end_io_write()).  With
+>> OCFS2_DIO_ORPHANED_FL left set on the dinode, subsequent unlink cannot
+>> wipe the inode in ocfs2_delete_inode():
+>>
+>> fs/ocfs2/inode.c:ocfs2_delete_inode() {
+>>      ...
+>> 	if (unlikely(di->i_flags & cpu_to_le32(OCFS2_DIO_ORPHANED_FL))) {
+>> 		ocfs2_cleanup_delete_inode(inode, 0);
+>> 		goto bail_unlock_inode;
+>> 	}
+>>      ...
+>> }
+>>
+>> Because background and clean-mount orphan scans skip dio- entries
+>> (ORPHAN_NO_NEED_TRUNCATE), the unlinked inode, its orphan entry, and the
+>> clusters allocated beyond i_size remain on disk until an unclean recovery
+>> or another extending direct write on the same inode triggers orphan
+>> cleanup.
+>>
+> 
+
+Don't agree. For above scenario, the patch keeps old logic.
+There are two additional places where the orphaned inode is removed:
+- On the next write to the inode, ocfs2_add_inode_to_orphan() will check
+   OCFS2_DIO_ORPHANED_FL and remove the orphaned entry.
+- The recovery path will call ocfs2_recover_orphans() to do the removal.
+
+
+Thanks,
+Heming
