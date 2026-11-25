@@ -1,57 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795616088;
-	b=KpNA7Y7bSiRUZyBfnbbjkGFzuB9XHRprcpqwZwq9shjYN1Cbr+ZgfN0SsDB7O+YhrNHk
-	 kc9a2ogjB3GyzbvI0yIHMbk8mzybx62Ho1Sa7qzfUZFt8MwbQ+Fq0N1xaQryNnuuH8WCM
-	 o1+bl4iG5/4sixqEXP8wyDpc/glhHHJ2+nL9tZK91NOqP/GtblcKXhCwKxOngjmp+VrG4
-	 w3NKhC5qLpGM190PUu6L5GmphwP3J0msx2c1f4P/45a5crDAJIScAJpklXVT6vaqrn4wv
-	 PSe3SUPL6dXhSmBTFbpABZr2C1V9IDVLdy6okf0rWDPhw8cpMMS1VvdSZcRvDvmqKNw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795616088;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=Kv+akDX9Fsnwxn65LfxO/JR/K22GBsqiPUJfMBr0TqE=;
-	b=Ja6woCd3zL5rphMXwB1Wftw2yTENdkp4pi1VsDpQT7rHLa7zRy8Y3Mw7fdWyR8vJUNKC
-	 5reUJyO4JwwvYS+TC91Qg/OY7EWR07GlNFZbtBLui0hd/lMriojFgQl09rQqXGwdNw5zG
-	 Hf3CsPOl98YYnN/2pY5uwxAvoaeadEF6B3RJZVFGZKQ1ILSy8kxAlOtTvmPGIaAWA8Q9C
-	 ffYtiHEccJEjQV9PBd1HJj0liITXY16aHdCwf+JVwRDX522W80nzG2KLJn3pBNvSDZ4GR
-	 h1Vu+DfhRTIYjP8P3FO1go3GTiZu0Fmi1PGHdOQmCkimKoBij+t7hjv8Am+JOWYxzcw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E7Os5AEC;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795616254;
+	b=nG8jysCPPoNz+YLQVcsVwFyx9XEoO69gTf1GGyPQoT0GoBGvulT2KcWEGYCTdhvfBbV7
+	 jI3ztaPV4Xjwa14AnnPxuh//FbiG/zGlH+96v5JqjXQ+IrK4jH/duBdn7eUVeU8KYNvVt
+	 A1wuEBN8m8E/H5YXGbAdElf1LY/AN4pg8RxrpaAqqGHGYU07JBn+Cfod0GpA+0qv4omyg
+	 gp+48vMa13R2GGPUO8fZG/wil/4StgisMI/uuqIxGqrJDq42y25OCPBguVJzY/nyfno4k
+	 1DDnlHFboJIrmeOyP9K8e47qcwdLX3MVdUiA1RG3Gt5NWM9IFIFaeVvrC4SF0IMst8Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795616254;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=vBumzuwbB1cqhsQzbzZed9p920xHeV1nGuMIbxgs7y8=;
+	b=wmHSlHNg5Nu//+34qjB0SSveY7h0YVewXZDqnmcuUGvCXrEq3d+8ofWJQDZ7TUKqVv0C
+	 IRLR+enf8bwPmFe0to06gtx7CknYA4ya5ALPfW+CkGRceZtY6GrqYZRU2FYNJxFK4p6NN
+	 jYEqIimJkNYyophY1YGaJtQkHrX0PP442uYOO1p8cn5+WUkM1Fscf01w0zLhLWWFIHuH8
+	 nVHwVZd0hMYViQ+P9WX+eClHUvyhjQKtpn9BCd2NWMXnt4M7PFSQkVCSACIoMEDMAftbR
+	 s6OfEi29OEzGquovJYbCvRRSJ54KIan+LRaw6e5znRDoaXxqZk0ITpLSsmywgc0tOpw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SAr4zx1O;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B161F606A31E;
-	Wed, 25 Nov 2026 14:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C32E606A333
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 14:17:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9C32E606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E7Os5AEC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD1A1F000C6;
-	Wed, 25 Nov 2026 14:14:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795616087;
-	bh=Kv+akDX9Fsnwxn65LfxO/JR/K22GBsqiPUJfMBr0TqE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=E7Os5AECGG/U0qU64nJiAP8nVuovNGts1h0W5oAZsSju8o/FVsoNHT93syGMV6/Kq
-	 ZnFp4nYV37o1wK0h7iJwjcIPuN91C5XWMvgYWdgVfYGCamanAslUxELbgz7a/KpUSW
-	 CxmW4Q8UAAHeFiyL+iNDKb36RZ0LC0MySIgcqBoy17BB/rUvvFemVYfiGTq7dZohUw
-	 1DveJxOL9WtgvVvqWng7Zhv9FSaD0zgSqK3CYuxyYDV+n+t5VbGrd99biDrPEuzOk0
-	 fmR01BrSuVLVqgwj5VHLUpjw6/MvRuFxXiqUpN/ifzSmKaWNApEYmw6irp7/YtSjcC
-	 6sBxr9Y7w0+xQ==
-Date: Wed, 25 Nov 2026 16:14:42 +0200
-From: Leon Romanovsky <leon@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-sound@vger.kernel.org,
-	dmitry.torokhov@gmail.com
-Subject: Re: [PATCH v4 06/33] USB: Reject usbfs connect requests for
- unregistered interfaces
-Message-ID: <20261125141442.GD14811@unreal>
-References: <20261124-device-trust-core-v4-0-037eb0d17b1f@nvidia.com>
- <20261124-device-trust-core-v4-6-037eb0d17b1f@nvidia.com>
- <sashiko-outbox-233043@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SAr4zx1O
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a9a8d6cea8so75240995e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 06:17:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795616252; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fCj8ebi3yT5vOW2RkplhKYmaIe9EHU0/zTMFvZkkoVF1NwPWMYmvZ5Wbphqpw0jz/0
+         aSDtL9n68lQHc/urehAx6CA/roDG9Ps0sD1ixNGdycjLYwsat3iDkwuRvRfvE49UWqMu
+         9IOa/O3Nlejk1xTa/PgChzIKJ+tprgxhtAIH79iM03810Ch5FueSkWkKy13Vu/awN1Gc
+         3lelVjcXkU4HTFKkK5vGwLfwY20ixSoK6ZOKkKQ+Tvp6PZ2yvtfsbz3Rmah71f+PbAr/
+         X27mM/tuL7la5JZjJLO0XLCNQdvAsgBxCsMy2hcJ7oZinEDTEMJkmlrP4ltalmrp3AMs
+         ZfWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vBumzuwbB1cqhsQzbzZed9p920xHeV1nGuMIbxgs7y8=;
+        fh=/O09ik/iraSYs4k63bdb2Ne7wESQNzsfaMQ8DncXGf4=;
+        b=DgWPaX4hbgFAvlu4AaCCKuUWOdVcxDDixfpvGuF8Si+1+jWwNvQ3epe19N2e8tTli4
+         19lzCugYQBnfMeRlxrHXRr4U39+q4fffyrPOFI3adwzn0/dwPC1uVPXmWJjYS7TnAP3d
+         YEAdZ0HcnXhMeUhCPLb/E+HKhPFaUWUYZT/IEYaU/8EcC1YyC31gkCdXe2pkH7Yio4Na
+         k3BzaXZFsI3XV21gL4EkjQ0ynUxih2sFU+0+mv9Qq4ZKbI1BNvbZE/TdPGECQWsqzK1f
+         dPf4MY6RfYhSnyWxGLmSgLUNdAeYDOEIw/VgBqtBIKEzZMBxL5HokYYADq3AW6A9ktUx
+         STPw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795616252; x=1796221052; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=vBumzuwbB1cqhsQzbzZed9p920xHeV1nGuMIbxgs7y8=;
+        b=SAr4zx1OYPhXcnurm3bU7jQjDMOXzox7vSdALbLAat4pCiTfq55WXvdLCEUIzv8sUw
+         KySNjoK9APub3xZFJTiRnu8+140rYZiFZ6ESN548qG9dYjHBetkpLiwvLRYANRcTMNSl
+         3SdfxIu8T0YXWP2SUJWpXCM+ymwfxZ5msRJf+IfO6imaptkRTyW1t5gbdPR3pCnFzXVj
+         OCLLqNbhO0Ky2aXsEpbaKjswP8cwxtlbPmrvhTRIB0aSe2xaNyTyKCs+vEO6T1N1iAj0
+         TctnL5boCEsw0g8VoDRsCV/stfG6t2KdUoduxBrBsMaWsJrh1PY2n2Mw8QreIyorDM+k
+         Y3Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795616252; x=1796221052;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=vBumzuwbB1cqhsQzbzZed9p920xHeV1nGuMIbxgs7y8=;
+        b=HHy8IfSZyjOh+9nASdsvFCLpaL3UVqkeFxTSTn0WTt0wTsgkZ+vH7gZxG5+aD/K+PO
+         V/V1eWCf0t40Fq2L4KyZ1mmpotmijxbFuGYT6G+zqbubnCMEjd7sOQ2rfFXRGiotMoTW
+         +xr1m8G7SyvhI/iBcHJCFtOdNIqUXcs7KHcM+1x/NxKrdodxRO3ODzZJXcJ417X+y4zf
+         RbIJBDt660EkrYW6b3Ucab1UMFGiW1Tkq2cb/w/z6N5zcrYbqOl9SVQzgtQNakHiLChO
+         X939RL4WFEqSuHGxGnOyvPwz15nMDFxU94brp+e4toZ2xB4JN8TQFWxy8efU8SpJB8Pt
+         jZiw==
+X-Gm-Message-State: APuU4Z+gcZoQQ1lQAZDHs4VRZpeVFn0gkpGiwIi9IasBQXw52kuJB0XJ
+	N+YvVcG/4ilGirsDhvIvpYhi2UPZkz2k1tXy0Cqk/V15wL7ea8+Y36WZKGBpKJw58v+dXHPEgwX
+	7eh5bubyXtQQFeYXej470rZ+Y6H4kdjm+8JJrnL064w==
+X-Gm-Gg: AZFdTZcuuWLzEhRySP5jIsWzDbBsBCiQKyOLKWIpJ6KW4iUtmKnEiEHzMEQMgyVi/rD
+	bHJUaw6r5Sa1lTLR5lTrLU+qE6HPo8aaxwe9X1zLgz1Pcoxkw0xx9Rkz1gOHgoSA7XaC26z2VcW
+	a1+WLyHaGU2cYT2IRrUun0QaACTpXsaC+SWgdkl/O6vjXlGcs+97M0VENlaKNp2sLxjfM45ALZ6
+	/jXuj4Y5/kcmPnBeBIE619S2kGr8goo1Ab8Ba5kfLtiXjh1Qg5No90zlYSUNglkn5dZiTn7hIpf
+	tlbD3/AqXldnhorvh/ggJIvI5cITQMOGvK1G+87YPl9GgZrAyD7/6T5eh9MarT2W0cJC1uJZp2D
+	l9NjUnkCdoY3PAjWbBRytDlABnly+nYc6ljeH9d4dyFQkBT2Zr3UpV1Odv0UazCl08VJvgBSgiq
+	X5BVJzfISDl/8b66Lj/VhBrFD4DJtQDS/FbtKXwO7YZBnNtAdWP/klibkE+9t/+Ns2POZldh+aV
+	Dpz18RNXGK9LRVSacOaZ1c3ZzCu+hh1OOVBAJoYfg==
+X-Received: by 2002:a05:600c:37c6:b0:4a1:88df:8a2a with SMTP id
+ 5b1f17b1804b1-4bb88812a84mr362088125e9.13.1795616251699; Wed, 25 Nov 2026
+ 06:17:31 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,60 +105,58 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-233043@kernel.org>
+References: <20261125121448.180847-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20261125121448.180847-3-prabhakar.mahadev-lad.rj@bp.renesas.com> <sashiko-outbox-233356@kernel.org>
+In-Reply-To: <sashiko-outbox-233356@kernel.org>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Wed, 25 Nov 2026 14:17:05 +0000
+X-Gm-Features: Aa3M54r8YU1j3ibEMvD5V77dNghGpt-QUE7O5ouYpNUXFMRABVP1zEURrzSkPig
+Message-ID: <CA+V-a8vcfrTckn+8e-OW2E6L3+FUgJ222Yz0q_S2rYK-XbF40Q@mail.gmail.com>
+Subject: Re: [PATCH 2/6] arm64: dts: renesas: r9a08g046: Drop GBETH filter properties
+To: sashiko-reviews@lists.linux.dev
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>, devicetree@vger.kernel.org, robh@kernel.org, 
+	conor+dt@kernel.org, wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 25, 2026 at 09:46:41AM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Nov 25, 2026 at 12:21=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] usb: core: devio: incorrect Fixes trailer in commit message
+> - [Low] arm64: dts: renesas: r9a08g046: commit message cites dwmac-5.20
+>   instead of 5.30a
 > --
-> 
-> commit ef85167342ae0257c27f5a71e468b1906042fdf9
-> Author: Leon Romanovsky <leon@kernel.org>
-> 
-> > USB: Reject usbfs connect requests for unregistered interfaces
-> >
-> > USB core does not register DT-disabled interfaces, and an interface whose
-> > registration failed stays in the active configuration. USBDEVFS_CONNECT
-> > still asks driver core to attach a driver to such an interface:
-> >
-> > proc_ioctl()
-> >   device_attach()
-> >     __device_attach()
-> >
-> > The interface has no driver-core private data, so the request
-> > dereferences a NULL pointer.
-> >
-> > Return -ENODEV for an unregistered interface. An interface claimed by a
-> > sibling driver keeps reporting -EBUSY.
-> >
-> > Fixes: ef0ff68351be ("driver core: Probe devices asynchronously instead of the driver")
-> > Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-> 
+>
+> commit 820f5e22ff857b9ee742d15a64ef6dac9b4c7ea8
+> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> arm64: dts: renesas: r9a08g046: Drop GBETH filter properties
+>
+> This commit drops the snps,multicast-filter-bins and
+> snps,perfect-filter-entries properties from the eth0 and eth1 GBETH
+> nodes in r9a08g046.dtsi.
+>
+> >     Both 'snps,perfect-filter-entries' and 'snps,multicast-filter-bins'=
+ are
+> >     discoverable from the MAC hardware feature registers. The stmmac dr=
+iver
+> >     does not parse these properties for "snps,dwmac-5.20", and derives =
+the
+> >     number of perfect filter entries and hash table bins from the hardw=
+are
+> >     feature registers instead.
+>
 > [Severity: Low]
-> Is the Fixes tag accurate?
-> 
-> Commit ef0ff68351be ("driver core: Probe devices asynchronously instead of
-> the driver") only changed bus_add_driver() and __driver_attach(), which
-> iterate over already-registered devices on bus->p->klist_devices.  At that
-> point, __device_attach() on an unregistered device with dev->driver == NULL
-> did not dereference dev->p and instead reached driver_probe_device(), which
-> returned -ENODEV on !device_is_registered(dev).
-> 
-> The unconditional dev->p->dead dereference at the top of __device_attach()
-> was added later by commit 654888327e9f ("driver core: Avoid binding drivers
-> to dead devices"), while skipping registration for DT-disabled USB
-> interfaces was introduced by commit 01fdf179f4b0 ("usb: core: skip
-> interfaces disabled in devicetree").
+> Should the commit message refer to "snps,dwmac-5.30a" instead of
+> "snps,dwmac-5.20"?  Both eth0 and eth1 in r9a08g046.dtsi use
+> compatible =3D "renesas,r9a08g046-gbeth", "snps,dwmac-5.30a".
+>
+Agreed it should have been snps,dwmac-5.30a, I'll fix the commit
+message and send a v2.
 
-I don't mind, whatever Sashiko says.
+Cheers,
+Prabhakar
 
-Thanks
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261124-device-trust-core-v4-0-037eb0d17b1f@nvidia.com?part=6
-> 
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261125121448.18=
+0847-1-prabhakar.mahadev-lad.rj@bp.renesas.com?part=3D2
