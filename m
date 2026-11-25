@@ -1,49 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.215
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795606265;
-	b=4L99RwO20xxYcV+DatqDhnkNOWq4pCkGWkB/mXWWovekrqdgSpbKoGp24fz5MSkwYDmB
-	 q8/pzYa6IvgS1RY0aQSg9qbVytHQdXC0aa5c8vmhqVXteookl895mB97mlJy3Mrg8jq+/
-	 /tgPgHyOuAe3KR/0EAcHI2BKKmU/Z4I/aRhk4BwPwrcr3F2E83WL5IL1xWXMpN/s6bR1+
-	 xibjfxp0rB4J7ZWyvSLYcZ+JoZU4TZtIusUa+YYLzDLaP+/PmGTJTUKJVbICMoSXOsA6G
-	 fEFef62YSpb7iQgAOjyavDEoTliTlI+RBswFVa6e6ysoiEmbjsSAU1QdJwu3ozR0WNg==
+	t=1795606379;
+	b=acwLrCoN/FfYBxTZj7JhQLaCsAIQWuEFzQrvsabuIxSSyHOycMEFba4vXkEY5slkr6lT
+	 EPO+0iq5xeICTFkzN6+yeI739l5lkUoNsXafEef7Af1IxWwb7OiPMEJEUX2CdjX5CBEtL
+	 VVA7uMoKShv8bnqLO3/6fVAY/DFwJ0FQh98e0rGl/y7FI0wbp+5pxH6BFbOibR6mCNMhb
+	 rnBb30DOc3zdKmEmXENbcOVUlVAyEkCr+hPdtuwUkyhOHVcAsn37KcLmjGbp5aODKgckU
+	 oBc7Y6nduFuHyhmMrmB1csFYW4NTZNj9fNS8NoDFvGXPyLssaHj6tpyx1YdQ+7eIHWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795606265;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=HetvVdDBuZv6qCUq12I/7l3z/I27Ld6RsejP9SDDZaI=;
-	b=WWoSXCYyBrbvNdv30nP7IHAMUsWki1i4SHmHodjz5Xw7i4JaTlxPPlu1Ki8ziqhwWtZ2
-	 tCWRm2mz9XdixlpqJzivm1w/lvQDi/bzEUW00j3BazMJxFDOB4UkEU16fr8YDY/zqLdD5
-	 4zI8eOasoWxxn46S8EUtsvarWsMoEZo3APr2REKtTUVYc2xulUI8hTM+yYqkLcEM9c/qB
-	 35Nnzhq2AO5sf7pWTJ8Gp+EfW6MoKTrVir1YRXjbPEOFO8n4V5jCVCnt/VsgV/eQ1uYSF
-	 JOHD3PmB/X0sBxmr/2MkKz54uW2/ufHyrDuFDwH3lFR74nvMep8y2ZV82YEudUgwRjw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795606379;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=0V6f85LpMW4xwrS3x6+t74PKgkFqxH39qfpnircqYfU=;
+	b=Lt/JBd6cOgQJDBWZnOOZVssHbZBQm6TE5Nl9X9FRTi+zBHbLlWCTArIyAso9DuFb8rhk
+	 zrc/4thja9uGPytovB02GWFuUnFQNtv4Y7FBGCGl24gqrPXaXSID6H/d424f6l07yvoLw
+	 FqX1zCz0QG6VTB1UoeasGr3nibW0YfkgAOxbyJrUN2CErZSOsbsKSjwxAC9pCNYk5Mctp
+	 1oBoL61cKCS2Nsl2VMbfKpcxSwX/kjV1PfQC5Dy64xKNTPgHuVZ4lto/YpAepiHwZC2f/
+	 9rXyydc4NBLAG9Y4ZzZJW92ekzRScbqiFYadAa/KQ2ThkLBNRUTr1dwveA+MFMhZVqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="HDgERNk/";
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75774606A321;
-	Wed, 25 Nov 2026 11:31:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75774606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Dwjp75Wa;
+	arc=none smtp.remote-ip=95.215.58.215
+Received: from mta1.migadu.com (out-215.mta1.migadu.com [95.215.58.215])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350E9606A33D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 11:32:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 350E9606A33D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=HDgERNk/
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BDCB2339;
-	Wed, 25 Nov 2026 03:31:00 -0800 (PST)
-Received: from [10.57.32.107] (unknown [10.57.32.107])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4696E3FA32;
-	Wed, 25 Nov 2026 03:31:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795606263; bh=eVwyG6uWjY55RVZo1vPdDd3h3+Zf4SnysFgvq49w8pg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HDgERNk/7JacD8Jmz50wjI2dmunJipQkBs8Z/zZ20zL1bo75wy3ziWEuLrI+mSFhq
-	 IMOQ1D3GfIz0NlU9J07b51Y2Jb97GwTR5klNr+o4AGtAydfunr0mixFc3/mXywVImM
-	 YMkkP/fBNRwXT2Z+QDSH8MPNGAwXvuKeN14BUlZk=
-Message-ID: <10b37dd6-a32b-46bb-8629-347805edb9d3@arm.com>
-Date: Wed, 25 Nov 2026 11:31:00 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Dwjp75Wa
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=DeSjNojkk4MD/tKsHkRDT7b8MjIXbSU/jX7LSyciBWI=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795606376; v=1; x=1796211176;
+ b=Dwjp75WaPQLe2GefeA80kr6niIOaCdkb8YzS1evkZiW/zoA/ncTRFFzSlMJtn+YbTNEPRe6j
+ SpeTFw+wyiOQxcTg0NyAOu3DzKLpbREWLtDtZRsubcVBMVg2KI6SGKjWHy/04avRnknTZpqQ2n+
+ orEqGU+oOWBeu8RPeqWpSxP8=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 92cb8adb5f7c7ac6;
+	Wed, 25 Nov 2026 11:32:55 +0000
+X-Mizu-Trace-ID: 92cb8adb5f7c7ac6
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,126 +57,188 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/11] KVM: arm64: guest_memfd: Check mmap support when
- preparing memslot
-To: Ackerley Tng <ackerleytng@google.com>, sashiko-reviews@lists.linux.dev,
- kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261123104233.95710-1-steven.price@arm.com>
- <20261123104233.95710-2-steven.price@arm.com>
- <sashiko-outbox-229096@kernel.org>
- <CAEvNRgGU+z609edF+Mw8xQ0NDUDKn9jjxJjJWTyUqJ0N2BGEHQ@mail.gmail.com>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <CAEvNRgGU+z609edF+Mw8xQ0NDUDKn9jjxJjJWTyUqJ0N2BGEHQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH v3 16/19 DO-NOT-MERGE] arm64: Implement
+ try_populate_vmemmap_pmd using AF trick
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <CADrL8HWNAByKifcNgre_YAX3M+bwAW0BgMrfPmWHubOEs+AfDQ@mail.gmail.com>
+Date: Wed, 25 Nov 2026 19:32:37 +0800
+Cc: Muchun Song <muchun.song@linux.dev>,
+ sashiko-reviews@lists.linux.dev,
+ Will Deacon <will@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Oscar Salvador <osalvador@suse.de>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Kefeng Wang <wangkefeng.wang@huawei.com>,
+ Nikos Nikoleris <nikos.nikoleris@arm.com>,
+ Linu Cherian <linu.cherian@arm.com>,
+ Mark Rutland <mark.rutland@arm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Ryan Roberts <ryan.roberts@arm.com>,
+ Nanyong Sun <sunnanyong@huawei.com>,
+ Yu Zhao <yuzhao@google.com>,
+ Frank van der Linden <fvdl@google.com>,
+ David Rientjes <rientjes@google.com>,
+ linux-mm@kvack.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5028917F-EFF3-488C-903E-9E19E5DDA3D1@linux.dev>
+References: <20261122184453.2668189-1-jthoughton@google.com>
+ <20261122184453.2668189-17-jthoughton@google.com>
+ <sashiko-outbox-228645@kernel.org>
+ <CADrL8HWNAByKifcNgre_YAX3M+bwAW0BgMrfPmWHubOEs+AfDQ@mail.gmail.com>
+To: James Houghton <jthoughton@google.com>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
-On 24/11/2026 23:30, Ackerley Tng wrote:
-> sashiko-bot@kernel.org writes:
-> 
->> Thank you for your contribution! Sashiko AI review found 1 potential
->> issue to consider:
->> - [Medium] KVM: arm64: kvm_arch_prepare_memory_region() rejects non-mmap
->>   guest_memfd
+
+
+> On Nov 25, 2026, at 01:39, James Houghton <jthoughton@google.com> =
+wrote:
+>=20
+> On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> =
+wrote:
+>>=20
+>> Thank you for your contribution! Sashiko AI review found 2 potential
+>> issues to consider:
+>> - [Medium] arm64/mm: over-broad TLB flush in =
+try_populate_vmemmap_pmd()
+>> - [Low] arm64: direct AF=3D0 block-to-table transition in
+>>  try_populate_vmemmap_pmd()
 >> --
->>
->> commit a0665f8dc612d05686ef019cc8462841573fe88c
->> Author: Steven Price <steven.price@arm.com>
->>
->> KVM: arm64: guest_memfd: Check mmap support when preparing memslot
->>
->> This commit introduces kvm_gmem_slot_supports_mmap() and uses it in
->> kvm_arch_prepare_memory_region() to require that all guest_memfd-backed
->> memslots on arm64 come from files created with GUEST_MEMFD_FLAG_MMAP.
->>
->>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->>> index 1db10d8d6db73..2825fccd2a197 100644
->>> --- a/arch/arm64/kvm/mmu.c
->>> +++ b/arch/arm64/kvm/mmu.c
->>> @@ -2839,10 +2839,10 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
->>>  		return -EFAULT;
->>>
->>>  	/*
->>> -	 * Only support guest_memfd backed memslots with mappable memory, since
->>> -	 * there aren't any CoCo VMs that support only private memory on arm64.
->>> +	 * All VMs need mappable guest_memfd memory, as the memslot's HVA may be
->>> +	 * used to access shared memory even if guest faults use guest_memfd.
->>>  	 */
->>> -	if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
->>> +	if (kvm_slot_has_gmem(new) && !kvm_gmem_slot_supports_mmap(new))
->>>  		return -EINVAL;
->>>
->>>  	/* guest_memfd is incompatible with MTE. */
->>
+>>=20
+>> commit 1319c4a7862ad5f3b810c4beca866ee98bd48fd7
+>> Author: James Houghton <jthoughton@google.com>
+>>=20
+>> arm64: Implement try_populate_vmemmap_pmd using AF trick
+>>=20
+>> This commit implements try_populate_vmemmap_pmd() on arm64 to replace
+>> in-use leaf vmemmap PMD block entries with table entries by clearing =
+the
+>> access flag instead of using a break-before-make sequence when BBML3 =
+is
+>> not supported.
+>>=20
+>>> diff --git a/arch/arm64/include/asm/pgalloc.h =
+b/arch/arm64/include/asm/pgalloc.h
+>>> index 0263329fb7b30..7e304f01ce6d5 100644
+>>> --- a/arch/arm64/include/asm/pgalloc.h
+>>> +++ b/arch/arm64/include/asm/pgalloc.h
+>>> @@ -124,9 +124,54 @@ pmd_populate(struct mm_struct *mm, pmd_t *pmdp, =
+pgtable_t ptep)
+>>> static inline int try_populate_vmemmap_pmd(unsigned long addr, pmd_t =
+*pmdp,
+>>>                                         pte_t *pgtable)
+>>> {
+>>> -     /* BBLM3 is required. Its presence has been checked. */
+>>> -     pmd_populate_kernel(&init_mm, pmdp, pgtable);
+>>> -     return 0;
+>>> +     const int max_attempts =3D 16;
+>>> +     int attempts =3D 0;
+>>> +     pmd_t old_pmd, new_pmd;
+>>> +
+>>> +     if (!system_supports_bbm_through_af())
+>>> +             return -EOPNOTSUPP;
+>>> +
+>>> +     if (system_supports_bbml3()) {
+>>> +             /*
+>>> +              * BBML3 allows block->table transitions if the PTEs =
+underneath
+>>> +              * do not conflict with existing, potentially cached
+>>> +              * translations.
+>>> +              */
+>>> +             pmd_populate_kernel(&init_mm, pmdp, pgtable);
+>>> +             return 0;
+>>> +     }
+>>> +
+>>> +     new_pmd =3D __pmd(__phys_to_pmd_val(__pa(pgtable)) |
+>>> +                     PMD_TYPE_TABLE | PMD_TABLE_AF | =
+PMD_TABLE_UXN);
+>>> +
+>>> +     old_pmd =3D pmdp_get(pmdp);
+>>> +
+>>> +     do {
+>>> +             if (WARN_ON_ONCE(!pmd_valid(old_pmd)))
+>>> +                     return -EINVAL;
+>>> +
+>>> +             if (WARN_ON_ONCE(!pmd_leaf(old_pmd)))
+>>> +                     return -EINVAL;
+>>> +
+>>> +             /* We should never get a contiguous PMD here. */
+>>> +             if (WARN_ON_ONCE(pmd_cont(old_pmd)))
+>>> +                     return -EINVAL;
+>>> +
+>>> +             if (pmd_young(old_pmd)) {
+>>> +                     /* __ptep_clear_young() returns the =
+overwritten PTE */
+>>> +                     old_pmd =3D =
+pte_pmd(pte_mkold(__ptep_clear_young((pte_t *)pmdp)));
+>>> +
+>>> +                     flush_tlb_kernel_range(addr, addr + PMD_SIZE);
+>>> +             }
+>>=20
 >> [Severity: Medium]
->> As reported by Suzuki K Poulose on v2 [1], should
->> kvm_arch_prepare_memory_region() drop this guest_memfd check altogether
->> rather than rejecting memslots backed by a guest_memfd created without
->> GUEST_MEMFD_FLAG_MMAP?
->>
->> Both gmem_abort() and realm_gmem_abort() fault in guest_memfd pages via
->> kvm_gmem_get_pfn() without using new->userspace_addr, and
->> kvm_arch_prepare_memory_region() does not verify that new->userspace_addr
->> maps the guest_memfd or any valid VMA.  Requiring GUEST_MEMFD_FLAG_MMAP
->> here fails KVM_SET_USER_MEMORY_REGION2 with -EINVAL for VMs (such as
->> Realms) that bind private-only guest_memfd instances without allowing host
->> userspace mmap, and on v3 the guest_memfd maintainer noted that this check
->> is unnecessary and should be removed rather than exposing
->> kvm_gmem_slot_supports_mmap().
->>
-> 
-> I agree with Sashiko here. I traced the history of this check:
-> 
->     if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
->         return -EINVAL;
-> 
-> In [1], Arm64 guest_memfd enablement, !kvm_memslot_is_gmem_only(new)
-> meant "this guest_memfd does not support mmap()". Arm64 had no CoCo
-> private-memory VMs yet, so guest_memfd was only usable for shared memory
-> where the host VMM needed mmap() to access guest RAM. Rejecting
-> non-mappable guest_memfd slots prevented unusable private-only memslots.
-> 
-> In [2], pKVM support was added. The v1 of [2], [3], says pKVM uses
-> anonymous memory. pKVM doesn't really specifically use gmem, so there's
-> actually no change, this check doesn't really affect pKVM.
-> 
-> Conversions [4] made stage 2 faults (mostly on x86), always get memory
-> from gmem. On arm, as long as it is a gmem memslot, it already always
-> got memory from gmem.
-> 
-> Now that ARM CCA supports private memory, we should drop this check
-> completely, I think David noted that right when it was added [5], and
-> that's what Sean means too [6].
-> 
-> If userspace sets up gmem with a memslot and doesn't set up mmap,
-> userspace probably won't be able to set up a running ARM CCA VM, but
-> that's userspace's bug imo.
-> 
-> Imo even back in [1] perhaps the check didn't need to be added, it's
-> just a userspace bug to try and set up a memslot with gmem that can't
-> really be used.
+>> Should this pass addr + PAGE_SIZE instead of addr + PMD_SIZE to
+>> flush_tlb_kernel_range()?
+>>=20
+>> Invalidating a single non-contiguous PMD block entry only needs one
+>> overlapping page-granular TLB invalidation, as in
+>> unmap_hotplug_pmd_range().  With a range of PMD_SIZE and stride of
+>> PAGE_SIZE, pages equals PTRS_PER_PTE (MAX_DVM_OPS), so
+>> __flush_tlb_range_limit_excess() returns true on CPUs without
+>> FEAT_TLBIRANGE and escalates the flush to flush_tlb_all().
+>=20
+> Oh! I didn't know that!
+>=20
+> I will change it to PAGE_SIZE instead of PMD_SIZE in v4. Neat!
+>=20
+>>=20
+>>> +     /*
+>>> +      * Translations without AF cannot be cached, so we can replace
+>>> +      * them without BBM.
+>>> +      */
+>>> +     } while (!try_cmpxchg_relaxed(&pmd_val(*pmdp), =
+&pmd_val(old_pmd),
+>>> +                                   pmd_val(new_pmd)) &&
+>>> +              ++attempts < max_attempts);
+>>=20
+>> [Severity: Low]
+>> As reported by Catalin Marinas on v1 [1], this rests on an =
+architecture
+>> detail the review could not confirm from the kernel source: can a CPU
+>> walk cache or TLB retain information from a valid leaf block PMD
+>> descriptor when AF=3D0, or is a TLB invalidation and =
+break-before-make
+>> sequence still required before converting a valid AF=3D0 block =
+descriptor
+>> into a table descriptor without BBML3?
+>>=20
+>> If it can, skipping flush_tlb_kernel_range() when pmd_young(old_pmd) =
+is
+>> already false or directly overwriting the valid AF=3D0 block =
+descriptor
+>> with new_pmd leaves stale walk-cache or TLB state active while a =
+table
+>> entry is installed.
+>>=20
+>> [1] https://lore.kernel.org/r/aoSJcAFMNJ1nPl2H@arm.com
+>=20
+> Yeah, this is why these final 5 patches are marked as DO-NOT-MERGE.
 
-Ok, thanks for digging through the history. I'm fine with just dropping
-the check altogether. I had been trying to avoid changing the behaviour
-of non-realm VMs but if we're agreed that the behaviour can be loosened
-to allow buggy VMMs to shoot themselves in the foot then that's clearly
-much easier to maintain.
+If we aren't sure about the hardware behavior here, why don't we just =
+drop
+these patches? Once the initial support of HVO for arm64 is merged into =
+the
+community, we can bring up this uncertain part for discussion. Wouldn't =
+that
+be simpler for this series?
 
 Thanks,
-Steve
+Muchun
 
-> [1] https://lore.kernel.org/all/20250729225455.670324-21-seanjc@google.com/
-> [2] https://lore.kernel.org/all/20260330144841.26181-1-will@kernel.org/
-> [3] https://lore.kernel.org/all/20260105154939.11041-1-will@kernel.org/
-> [4] https://lore.kernel.org/all/20260910-gmem-inplace-conversion-v13-12-dd6fbf94f4e1@google.com/
-> [5] https://lore.kernel.org/all/2195c01b-3a17-46c5-a013-66922e8509bd@redhat.com/
-> [6] https://lore.kernel.org/all/av8No1rvJLXwciId@seanjc-mac.roam.internal/
-> 
->> [1] https://lore.kernel.org/r/26a29420-8d27-4069-bbd5-28692c9e8542@arm.com
->>
+>=20
+>>=20
 >> --
->> Sashiko AI review · https://sashiko.dev/#/patchset/20261123104233.95710-1-steven.price@arm.com?part=1
+>> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261122184453.2668189-1-jthoughton@google.=
+com?part=3D16
+
 
