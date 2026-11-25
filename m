@@ -1,70 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795609259;
-	b=m1zapvR5tLVdHp/8OuhsaEspYHK8mpTipJdTb+ZIn1ctOVdvvxCTOrmV8GswpV8aQhFS
-	 O4PllyDoHWD+pnIfxESa587aebP68VgQTx2VjJQ8+Qca0qcJ9eYHQ2916lwTfq0OCc6ZY
-	 Z1YdbUIUGQnrkG864K6yC7yAeAgtW1PBQlV0p0o8j0T/iqmw2eUZpQVQThFxGehtIq93B
-	 WkM7DFGCizNwESxPUKlnQPJ/kiu2HeBfuPngDl0wFUjaErmm8q8NqO0FYDv/BS4wKRn07
-	 3fPM7GGgeUt15OFEBW9oetFUkZgyQ3NQgaRDejCvSbcLufbqPRy3/cPDRGvG82ipCTg==
+	t=1795611483;
+	b=B90zqbt1xXE/rqlhT3HEKmQ4QlsMmmPxpZcVxqYkxyEa1zjLF/BlLnCtJ3Yeg9SjKtJo
+	 CcJgdKOW2rMM9sEX4/Fz9xrET/L+Rhb9WsVQGIzG2F+K4YEzwfuDT+Z+4DcWR8QtaXFIT
+	 Dqs1kLgw+iDuHlVcpY1IWTK/s0A+EOkrKlBRvpx6FitT0STn/oEZxD4REksuJfSAjap40
+	 a4gqsvDdaNbVNLqjUoXrlO/oypfvs52cN60NxAX88ol2SYqDOiB1TlqL4UjRYU8DJNprx
+	 86yuunj3O+f28Ohrs4d+pFx+GGcbKGYUtCQZk6KmMsRvj8Y4ruJ8XntddiElbFWKZ6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795609259;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
-	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Last-TLS-Session-Version;
-	bh=fHDkq205OHWCz9XPh90+pVUtgDQFIwSe/rx4XfXAeLM=;
-	b=qZ+xrnIqAtILbECMT3hTnajKBqRAfR+/h3yDLWhUkhfF3mFuPO4dzjSLAKEHAboZtvQ9
-	 guzoTDwlLccpcgUBaGUsmA9LGD6vQd2y9seZkOPxzJoYgZfVSv+QSbGkcusorYEl9psXe
-	 Bs7Gk/aG7NTd9NNLNAT2bfz6WhJpSoamEomLLKUnDq6tnnte/E8fDvzOfGr9cIUN92g6b
-	 J0olSBP4QDHwbULFEcPVu8E41GbLxwgwC3wpZPB6rCb7QpF3932jtis383ZikViPYY0kh
-	 POvF+5uGBm5ZujeQpUypCAuJG3wjGQWvCnq5YL1NctBD0oxhuJ/3G8zHdS+FXikn27g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795611483;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=FOKGiPhLWzMZA6RUtm5hBEIHlhphW7VCRIG+uLWfOxs=;
+	b=Ihonjx6MQI2gcNN3W+LbnmtEBQiwEXF9e+EaGTcqAzAVoad6VXdd/3MqyAEa9ciIKX6E
+	 DCIjMfZrJduRGw0eEqYgdYLsaTjp4j/9bxmSdofb9wSphPpA66ZTWkbH7g36ujVD9ZIpR
+	 JMJwMv/S9nUQHBqEldKcT0oGQaJ0SN7R9b7dVuxSPeubXhccs5wQCMRAe1Y/YYR5NdC8M
+	 6ufMcRBZxRTuc9GTTldquzMldvFFSKWF0YS7GqP9UfqZSjLu13tCx9mzQqCGmdRNtbdq8
+	 9Q/qmSnA/w3cQds7h/xMSFgGqbliU6JBS65VWPWatthhXStBU000safLkp0xxg7pTaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=Di0hGqCL;
-	arc=none smtp.remote-ip=185.246.85.4
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=pereq.eu;
+	spf=pass smtp.mailfrom=cryspen.com;
+	dkim=pass header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=HsXeaPU8;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862AC606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 12:20:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 862AC606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED28606A31E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 12:58:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AED28606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pereq.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryspen.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=Di0hGqCL
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 99D0F4E41776;
-	Wed, 25 Nov 2026 12:20:55 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 54E3060480;
-	Wed, 25 Nov 2026 12:20:55 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5709011E69019;
-	Wed, 25 Nov 2026 13:20:48 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1795609250; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=fHDkq205OHWCz9XPh90+pVUtgDQFIwSe/rx4XfXAeLM=;
-	b=Di0hGqCLyEBCNCPaWWq5He8ykZWAJB+id9zm6OKUZUBDUAi6oKDvMa9Lh2FOYY9LR144Dy
-	861YSbs4//UkVVxJF8oo+Ni9xUuZXbGQWjWy+GGvogqPWhh1ZZOShUqqX9wFkkdEkUKZWp
-	Or5jsO9J3fl84XZRleNfEbx+63PHsVgnWIFvBbKA9GFA9w4hJvdbr1duD2PRz0Hf746D8c
-	KgTuKPXh5nWM/Z+XZ2DVm4pikKjBOSa40ej26NKemIBbyc+D8K46SffencMhu8Mx2KOwx+
-	ukcY+FNjWYHhbsIqY7hYZ5H46WAcNpULhtdQEJnlAzzmF0ND9aTcpdBydX354A==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: "Ping Li" <leeonion.muyu@gmail.com>,  richard@nod.at,  vigneshr@ti.com,
-  sashiko-reviews@lists.linux.dev,  linux-mtd@lists.infradead.org
-Subject: Re: [PATCH v4 3/3] mtd: rawnand: r852: declare NAND_USES_DMA
-In-Reply-To: <sashiko-outbox-233336@kernel.org> (sashiko-bot@kernel.org's
-	message of "Wed, 25 Nov 2026 12:10:29 +0000")
-References: <20261125092538.1938516-1-leeonion.muyu@gmail.com>
-	<20261125115108.4147741-1-leeonion.muyu@gmail.com>
-	<20261125115108.4147741-4-leeonion.muyu@gmail.com>
-	<sashiko-outbox-233336@kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Wed, 25 Nov 2026 13:20:47 +0100
-Message-ID: <87ik1lyue8.fsf@bootlin.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pereq.eu header.i=@pereq.eu header.a=rsa-sha256 header.s=google header.b=HsXeaPU8
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4bb702a7548so50776225e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 04:58:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pereq.eu; s=google; t=1795611481; x=1796216281; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=FOKGiPhLWzMZA6RUtm5hBEIHlhphW7VCRIG+uLWfOxs=;
+        b=HsXeaPU8Z0lAOtEkoozbrMhS+WDvdN7odg4AKVsLv7ioOIvbVbOD9qAeY+DiHkdTUA
+         jYHYH/VnIXMCR1uozN0DzNG5do4GDG8TZoFY+CqdGBMEqVwtJqJ1u3qE37rxAhGzUwR/
+         1MZWyUp20wDAai4J5ByWbmdSf4iDS4k6A6V0RtQQwuhaVXSKOw1SVe4a2T1/2boJulOD
+         9tMUPqG4PZ2/jBoWZoGT11QuujrFCy57bjX/yvYKEJq9m4pgvK1xvgv5jR33Vp5JYyVf
+         fmSGLor1ecBy42Rky4i5mEAzxV2hNBwjOBySaRh/moUjUGS32QYqI1h6xPzQ6NL7rAZK
+         lI8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795611481; x=1796216281;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FOKGiPhLWzMZA6RUtm5hBEIHlhphW7VCRIG+uLWfOxs=;
+        b=k8wtkh7ef9kGSPbeoXuSEa7wmkseIwrcNr03nlyj/Hs/p+PSzcb4SzqIskx5sRrKHM
+         dhc/BZn9igxkGWyTolxFOeOUlQNlnjfzqY2G45i6so+f5WvwsbubKJY1MwjefZ2bRXkn
+         vZb45EiMHYpbdaJ609CCGa173p3PsdYRaZuLmJLiDLl+Xnv2xhX9hUMUh6Cavj/nyBfo
+         pw7Drdvk3pn3v1UjCi3tq12DoH2C6g35QXiWfe9rSEzMD3PW0mpCY7Ueh+XIraX2kmP0
+         jTP2MJf4/GJ3ddNG/tYi/87+ujaOg17DDsPd1UczhXlUth+Cvs7o8XYyP8A/bpytCVRx
+         mpEg==
+X-Gm-Message-State: APuU4Z/Mrpe2vZ/hcjPYBCbHj2YY7mmBZBpRehiSzU+3gZgGsJuL270K
+	i41MopZaGnf5FxOwXaHZTJJbDNvCUmdJKXFz+5+AorOlJ65FeLN6N17+oBBBdSO4zSG93iGi+Ek
+	1NbA16Tk=
+X-Gm-Gg: AZFdTZdgzxiNuHpfHgBZFDN0mErpIIPX5RpVbhavtCOVi5nmNbNcc3iKNgxm+nXyr9w
+	NKcNd76yDfA9sgHbsnnN8QdO/uBaqs/n2SroXPZ+P7h11E93PPthsEgq4UZZBZrIC+m0Q8+OjKh
+	eZPj0RsjitIAnPdkAe/N5Cl9g2Wgp8TU3P81bWJamAVDA3ZIGpnILqMrGXHTHEgfiFM4ZjTRwis
+	OzB6In5vUsbmcpAiSD2USSSUejYFCCLodjlLhiy9PRCxOx76ffwwWv/gMIQtXmsiEjyYjA1jzAZ
+	Zd10wuEjopnoEmoNaqgYTzVhVfhQUB1iI3S0Ak+ZuBou+b/YFnJB426eR2yurmHsYj5zA2HhD/a
+	KEjZ8IdLgLWoB2cxetq0jgwVmnHZVWkx7u8wm2e9qaiTv6c77rgsqngS7AERM/0YnbBCVrjmdPg
+	GM6vCJjHyhaEyOiArddiWuhzS21/oFpBo7KRHQlMy5F7Zt2hEtxvrWjTW0BIf53pH2HmqS6NPPx
+	L9CTdHbaJr/mPxCZwLEF7WSmjU+0A9HzunwuCXHdE7o5dkMTczPImX1dmLpRWezRlIOz8YT4qty
+	DlQBbHMTQTtcR/qf3Ks=
+X-Received: by 2002:a05:600c:6290:b0:4a3:59c9:a743 with SMTP id 5b1f17b1804b1-4bb8882a21amr347767215e9.27.1795611480907;
+        Wed, 25 Nov 2026 04:58:00 -0800 (PST)
+Received: from localhost ([2c0f:3d00:6be:8900:ce5e:9212:ea4b:f30])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884b7515sm711211175e9.13.2026.11.25.04.57.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Nov 2026 04:58:00 -0800 (PST)
+Date: Wed, 25 Nov 2026 15:57:57 +0300
+From: Dan Carpenter <dan@pereq.eu>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH] KVM: arm64: Drop a pending MMIO access when injecting an
+ unmasked SError
+Message-ID: <awbbVSeRRxHjvFYx@stanley.mountain>
+References: <20261125-serror-drop-mmio-v1-1-48076f59608c@pereq.eu>
+ <sashiko-outbox-233383@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -74,19 +98,20 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-233383@kernel.org>
 
-On 25/11/2026 at 12:10:29 GMT, sashiko-bot@kernel.org wrote:
+On Wed, Nov 25, 2026 at 12:40:53PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found no new issues
+> in this patch, but noticed 1 related pre-existing issue it does not
+> introduce:
+> - [High] KVM: arm64: nv: sleep in atomic in kvm_pmu_nested_transition()
+>   during KVM_RUN [1]
+> --
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] mtd: rawnand: r852: unconditional NAND_USES_DMA in
->   r852_register_nand_device()
+Already discussed.  I'll send the patch for this later.
 
-Correct.
+regards,
+dan carpenter
 
-Please be a little bit more cautious with your AI submissions.
-
-Miqu=C3=A8l
