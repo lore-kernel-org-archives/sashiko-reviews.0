@@ -1,56 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=84.42.129.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.33
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795631242;
-	b=hfz/KYjCkVqe9K/qfKLibBN2YtcU/cxL8F/pA8XNxl5Otxb4I7k2skIF+kJg0+helKwI
-	 rOsYBbABAeAQNpfER8RFyLKXSw0nBvDMnYkLGxZ55jRPqJah6bPBc12uxDc/n8fNVHLvV
-	 8tbk9k5xU1VQEn5eC3YYXsDSuGjzV6TRlK3BODZCUNXQOoBqh8v/9qvwOzUCoGxjtO393
-	 EC9vYeAPMf0PNuQ+7StiO7IYWeItXcCW+oWD+HwLv36qmPx4W5OxRNw1Pr+OCbECPNF5K
-	 O8U5ra3+l/wEGNHqDc9I59tkbew30RYUuRJalRQD0UuMiZbm06cJyOq6YtTyNywsC1A==
+	t=1795631581;
+	b=EDmtDMrLXv4gz+Jx5PT256cGZxDsSs+1uvprr87OmJ0aCQvuBywYMzdMuMtQQxbnDV5y
+	 8TipVESRngNX/m60dn4+gWXYAGR9mc0v94RwzCaaAPKwzWB82FATPPwIMM/POWUYOxI86
+	 dk4+PTYm2+AaquJZ7Iu1DvD4aUrA4OrjcEL1FwRfNXZ+PMkkEzKcyGV2OrHyGwKAYQ19A
+	 DR8NYfxiIaQbt4BDKJNHZu1OxSZrPntNsu7bI7kchX4Lm2n9Sz/up1/v3gdogfkOz2lnO
+	 f4a7MwMabA8IrEQlmg7G2r2VfZRgA1u0a08SGOIowKuipS8W7zJZbRUOIFusNjGXtWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795631242;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=Q/Ht4mTVsZ8VXLHmxE/9TQE6M9RVX4AerJ+ZRy/407k=;
-	b=2ZzOszPzFdHl5dGIRm3Dwxg3H9g89+DxNAlGPNMcNDkHjst1bK/GZHMW1J8ZBkvaRMhD
-	 478zaoCphyQ+wBychwulZD6JNNMHo4ypli6bKjtUeThcY6JpTLc3qjFoEB2E27udblS5O
-	 5KFxFezA8ozwZeMHugTG0AVPy48NRNd/gaYKj9jzx/vr5HwKiIrSA1GtoCZG+LZdByMzs
-	 OOQRXaho+neuXeLsgF5GvKzuouJoco4RvP/Dz5CPOFbAEIMdqNwOjDWCBr7mOem5CtKO+
-	 bc8Rlvk8iY4yTyS+xMLrZMOypoYTuXdrM7K8sbC3XSPWlIGwBPIdNir/RwDwiqNFixA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795631581;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=5mHk7bA7fJZcRuMh0Ntdn1XHRhPyZLdUBBZi//Lv1IE=;
+	b=tqMmE/MZ+TbrY2DfsdBDJrncK/OIOBdKhNB0Pug3LlVrW8F0vSV1H+auPR1n+CjM5L54
+	 zo0ixmNzt5fXdGA1khI/sVSWLq5hoDZtusvuuLoqTrfEUUNaffRhF2cyE3t4jJ/AfMxFb
+	 nw5CajUKzeWD0V59+31jwBemK4n8324QX66BFZmndFVB6LxjDeQ/OWNK82K7cVmAP/Rdp
+	 aDUmAlo9uKf+nVN77NfG9kdjpjukBjD9McpNZYVOQeWfyn5pv4dfgYgewqFbsBlkAd5UE
+	 lYtiEt6HQF2zLywO3rs0SMRfUIQeyfLTnyJsJ/eofhEzzyXQShDVEGiFlc5hhVWZPgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=ixit.cz;
-	spf=pass smtp.mailfrom=ixit.cz;
-	dkim=pass header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=YyQbI+96;
-	arc=none smtp.remote-ip=84.42.129.46
-Received: from ixit.cz (ixit.cz [84.42.129.46])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=fUyG2xZk;
+	arc=none smtp.remote-ip=35.89.44.33
+Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790FC606A331
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:27:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 790FC606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3683B606A326
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:33:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3683B606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=YyQbI+96
-Received: from [IPV6:2a02:830a:f787:8f00:f33c:cbcd:417b:d2b9] (unknown [IPv6:2a02:830a:f787:8f00:f33c:cbcd:417b:d2b9])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 3185553401F6;
-	Wed, 25 Nov 2026 19:27:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1795631239;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Q/Ht4mTVsZ8VXLHmxE/9TQE6M9RVX4AerJ+ZRy/407k=;
-	b=YyQbI+96AQykSTN2+2red/GURWvIOEle1Nwbrx80ac2UEOe6m4DXx70HBcxxZcsdHsnvJ6
-	xQa+Q492OWqpzUMAu2wf9dZUhGNXkDW75kyziM7eEjwFMModDY0JanP6/nN/86/qC00Kq8
-	uondbQah5GuEKvk+YXhQAAt8ZBWkU30=
-Message-ID: <91d61e88-f9f7-464a-9151-4b2f2216411c@ixit.cz>
-Date: Wed, 25 Nov 2026 19:27:18 +0100
+	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=fUyG2xZk
+Received: from eig-obgw-6004b.ext.cloudfilter.net ([10.0.30.210])
+	by cmsmtp with ESMTPS
+	id WBiyxdJzwAR1iWHnbxvEEW; Wed, 25 Nov 2026 18:32:55 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id WHnQx64OYlaNKWHnQxewWM; Wed, 25 Nov 2026 18:32:44 +0000
+X-Authority-Analysis: v=2.4 cv=UbpRSLSN c=1 sm=1 tr=0 ts=6b0729d7
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10
+ a=8qKcZclOD3o5y2XDi9oA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=5mHk7bA7fJZcRuMh0Ntdn1XHRhPyZLdUBBZi//Lv1IE=; b=fUyG2xZkvnSz
+	5N/jAMpsBIOdZKWOCIYIal6mck7d3fi4wNnBzEIiW7hIha+hN9AVpEeuW/8DkLLLa6fudEIlH7+10
+	qvwR9tHuOsdJi4HZoOQ71Hf42NF8tv71o0/pxKXiS57rU89h8gKpRhuMESTc/tsfzbVhD04jMEBXO
+	gDYvFRpJUb2eOlbRcU4QB7mpTXLT5uOypYcQ7MWgVZmzE8eWLlG1S9F2FxeJe5VA4ZzavHViybL57
+	ISjiQKqGJKfQRGuGPOdYa/+yONW0NnGy1GC5lSEhnOFnJV3MVdNZjRFASo/zQUT7Y+FoLlk4iEG7P
+	+kNZLYhPX5np8zPhHkbj2A==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:47950)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xWHnQ-00000000g0O-15fG;
+	Thu, 26 Nov 2026 00:02:44 +0530
+Message-ID: <ff368c3c-e4b5-4151-a084-c40f26063fc5@roeck-us.net>
+Date: Wed, 25 Nov 2026 10:32:43 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,124 +77,91 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 8/9] arm64: dts: qcom: sdm845-samsung-starqltechn:
- Update panel compatible
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org
-References: <20261125-crosshatch-panel-v4-0-120adc58e737@ixit.cz>
- <20261125-crosshatch-panel-v4-8-120adc58e737@ixit.cz>
- <sashiko-outbox-233966@kernel.org>
-Content-Language: en-US, cs-CZ
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <sashiko-outbox-233966@kernel.org>
+Subject: Re: [PATCH] hwmon: (pmbus) Fall back to CLEAR_FAULTS when STATUS_CML
+ is read-only
+To: Arthur Korn <akorn@google.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
+References: <20261125053711.3098007-1-akorn@google.com>
+ <sashiko-outbox-232631@kernel.org>
+ <b5910c74-7e29-4138-9dd4-030c95c78ec3@roeck-us.net>
+ <CAJ5cSJE1_zxkS861BT-8-+pxMnp3ONiJkGYjk1jnLQG57EZxmQ@mail.gmail.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <CAJ5cSJE1_zxkS861BT-8-+pxMnp3ONiJkGYjk1jnLQG57EZxmQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xWHnQ-00000000g0O-15fG
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:47950
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 2
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfL76QKvwaYya9obILLrWjghrylrXVgubsvYD6+mnDM2O5SYbDRzJnSssfvFUUPxoZ8DZOLAkYX3flU+ebIOr49AFIhQzB0cvSrJuccZ2lVTVnG6vVcal
+ NTvUyh5OioCQj06XT6LYS7eloUiO/PkxRL8sLA8yPkS7WSebAuIdsp2+o5VxS2mGNwPvVjF54L51RjE1vqr/YT5u62gE47RkDCgD9oD23n+nXRrRVW6qf0Ph
 
-On 25/11/2026 19:20, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] arm64: dts: qcom: incompatible panel@0 compatible and
->    reset-gpios change
-> --
+On 11/25/26 08:53, Arthur Korn wrote:
+> What are virtual pages even? PMBus spec 1.3.1 part II doesn't mention them.
 > 
-> commit fd433e980a7d2d9c4e491b9e6c72d47eb49cfd5c
-> Author: David Heidelberg <david@ixit.cz>
-> 
-> arm64: dts: qcom: sdm845-samsung-starqltechn: Update panel compatible
-> 
-> This commit replaces the panel@0 compatible string with
-> "samsung,s6e3ha8-amb577px01" and changes its reset-gpios polarity to
-> GPIO_ACTIVE_LOW on Samsung Galaxy S9 (starqltechn).
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
->> index bd59f1dcd96dc..c156ed3733b4e 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
->> @@ -267,13 +267,13 @@ &mdss_dsi0 {
->>   	status = "okay";
->>   
->>   	panel@0 {
->> -		compatible = "samsung,s6e3ha8";
->> +		compatible = "samsung,s6e3ha8-amb577px01";
->>   		reg = <0>;
->>   		vci-supply = <&s2dos05_ldo4>;
->>   		vddr-supply = <&s2dos05_buck>;
->>   		vdd3-supply = <&s2dos05_ldo1>;
->>   		te-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
->> -		reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
->> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
->>   		pinctrl-0 = <&dsi_default &dsi_te>;
->>   		pinctrl-1 = <&dsi_suspend &dsi_te>;
->>   		pinctrl-names = "default", "suspend";
-> 
-> [Severity: High]
-> As reported by Krzysztof Kozlowski on v2 [1], does replacing the
-> "samsung,s6e3ha8" compatible string without a fallback and inverting
-> reset-gpios to GPIO_ACTIVE_LOW break DTB compatibility for existing
-> kernels and DTB consumers?
 
-The only consumer here is Samsung S9 (Korea version), all known distributions 
-building kernels together with DTB, thus in this scenario it doesn't matter.
+Implementation specific, mapping of device internals into PMBus functions.
+For example, the max16601 driver uses a virtual page to access the
+vsa client (which is at another i2C address and requires a dummy I2C
+device).
 
-When old DT will be booted, the new kernel is able to handle it too with old 
-compatible and workaround for reversing polarity inside the driver.
-
-For booting old kernel with new DTBs, display will not bind (since the new 
-compatible), but that's not going to happen with current usage pattern.
-
-> 
-> Any kernel or consumer that only matches "samsung,s6e3ha8" and expects
-> GPIO_ACTIVE_HIGH (established in 70005c18c9f7 ("arm64: dts: qcom:
-> sdm845-starqltechn: add graphics support")) will fail to bind or reset the
-> panel when booted with this DTB.  Earlier patches in this series already
-> handle the legacy "samsung,s6e3ha8" compatible and inverted reset polarity
-> in drivers/gpu/drm/panel/panel-samsung-s6e3ha8.c via
-> broken_reset_polarity.
-> 
-> [1] https://lore.kernel.org/r/20260929-spirited-umber-hedgehog-300ebd@quoll
-> 
+Guenter
 
