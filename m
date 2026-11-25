@@ -1,57 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.13
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795573218;
-	b=JpBw7ILiy4xvEPgi2DWn/u8IWXI45TtQFULECEiJKzTab77Ht+TgwYReF0L2twNOodZO
-	 oqeqXrikDdlyiCeWhDXWqUkRBEZPfH8qWF+rjB2jJn74V6DmTJ8c0tGMpaOv0pv2yXQkb
-	 kGRBP3i7n6ZIPk2GF3PZK8k0vhJdwJZ+iSPjQCBugmU+IyPGQniEdE5CE/bqRMOrKcwf/
-	 OWDVhnJ8cxfDdL6gZztyEW9sIsf2HExT+aCnlvTv8vepX1ffUPGHfHkmaqJ8Yk768PumM
-	 pMlH3opO3v9i0KnJkIxrrYI9Rg8Sd+QwNUt0d/DpXrT2q/H9Kz5NmHgJN4LmcQDKX4Q==
+	t=1795573265;
+	b=vudoxAzQ8mwuZ0uc3D4nVtbkw/IMH8lNdLJV/IFqwtYQH9jEQ7bjN6yrIwzu0RrjGafH
+	 kBr3cGhB642Z90bLKO59LgXHWvIUVJaJyGPEvO0KFIvrytrsuO4Jyni09yseU4nCUL64o
+	 oxaU/lG7RDtcGpb5bJqjQ0UtoWgnww64JmqI6vGEX61TSI9goYAX2kTgQwW2LA/YeAP+F
+	 IOrcaW+1nmLTc3rO7Z4sQcU+Gv5g2ZcNDpHlShdr+aJofLvrJWfnMzkbQdrR6g6wlPG8t
+	 DCJ7oDDVq28kO+E7jkGzBy0ZMGfJu0S9EvIAAIcoguKVAc1wIAyqtcGWx/aXOMm+H7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795573218;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Stat-Signature:X-Rspamd-Server:
-	 X-Rspamd-Queue-Id:X-Spam-Status:X-Session-Marker:X-Session-ID:
-	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
-	bh=enKPMmqaMAv6kvmuMKSozHDoIEDFjVm3+Lzr77Y2kYY=;
-	b=Gh3p7iOwFAMfvyn1PHFnybUGoGMaHrrb2eubROzK05cS/AhY4sJE1E0QDi0ZpiXqvfl9
-	 imz6HVRPC8aZ9GnT1QPZV5XpkSXxb9wdpZDBqJzhZ7bgBe+eiqM1ACulRxX4enKr1NKVG
-	 JiB5ia3YT89D2ScVnpfbeEiWTUzC+rdwSPJGu2RqB2AcQTvuF5kXSVrzx731JAkRnwICC
-	 /2RebqWyAeZ+b3WkDF+ThXQ/5OlI2cJJZ7eqId918UhAjrBTGrn7Yhl0GqeWoVTHJVBSD
-	 8EXae555joWiLIC1htlmljREUw83V7g5OwY0jIpd+5YddkYTPhWQbkXllXdRAP7z4pQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795573265;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=QF5/RGbnB3uL9g0t8XxmYvir5OZryV7dSCn4MoFaEOI=;
+	b=UjBUwzOxz8WmZWcYzJ/Jaddf5U/8huObi6nOvUmYqT0Zi0zB+nJrvKjJssE+M74IvHAO
+	 ecSvadCpL3KP48c4uj8xThjMYj1C7nykHXYjxPfX1+z2ZOUuAbekQsx53OXfSqiUsich+
+	 dju2RtevyVAHEc0ITQtiGwI5hkgs64Jlsa4IydFszcgNQgJ0RMlQWyAIkHZ38kh2lVV35
+	 g1q69LPSrqwovxO9pfbi7NP4e2M+Cua00FN9ZydV0Gt9IC6rQvwc6z4ugTaCGikf7dvos
+	 etbbcPwCUwu65D66N3VUYyYOoBUo4gEAfLcu2CojfD6wuj5nAd3UCrDnd/F8GVg5Z3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goodmis.org;
-	spf=pass smtp.mailfrom=goodmis.org;
-	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b="a/QGKTCi";
-	arc=none smtp.remote-ip=216.40.44.13
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="DJIvbgF/";
+	arc=none smtp.remote-ip=91.218.175.179
+Received: from mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4308D606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 02:20:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4308D606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1CB606A31E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 02:21:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E1CB606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=a/QGKTCi
-Received: from omf16.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay05.hostedemail.com (Postfix) with ESMTP id E002E40DA9;
-	Wed, 25 Nov 2026 02:20:15 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf16.hostedemail.com (Postfix) with ESMTPA id 329842000F;
-	Wed, 25 Nov 2026 02:20:14 +0000 (UTC)
-Date: Tue, 24 Nov 2026 21:20:11 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, "Wenwu Hou" <hwenwur@gmail.com>,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH] tracing/hwlat: Bind the sampler kthread instead of
- setting its affinity
-Message-ID: <20261124212011.5862dca6@robin>
-In-Reply-To: <sashiko-outbox-208125@kernel.org>
-References: <20261111020755.1422284-1-hwenwur@gmail.com>
-	<sashiko-outbox-208125@kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=DJIvbgF/
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=/sb51Ln2/DAI8sXzQH621GIGu1e1U5fVvk32++uJAWs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795573261; v=1; x=1796178061;
+ b=DJIvbgF/lkI1c0D9mGRcGoR4nDYwZYyFt7Ye+ecDYC6JI7mORUgKkFVbI33ibpa19z9NJDnu
+ rqAqTYmY5PFJMzheBtcubGqzq0POAYBivK0hL0VOVBu7+sWqkPJb10s9e1PMtlfTnrY9g5xoVgG
+ BXBiBXJ3fwPgQGnCTIJPgbmY=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta12.migadu.com with ESMTPS id 51e415cf3d358a92;
+	Wed, 25 Nov 2026 02:21:01 +0000
+X-Mizu-Trace-ID: 51e415cf3d358a92
+X-Migadu-Flow: FLOW_OUT
+Date: Wed, 25 Nov 2026 10:20:57 +0800
+From: Baoquan He <baoquan.he@linux.dev>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-mm@kvack.org, david@kernel.org, akpm@linux-foundation.org,
+	kasong@tencent.com, baohua@kernel.org, qi.zheng@linux.dev,
+	shakeel.butt@linux.dev, axelrasmussen@google.com,
+	yuanchu@google.com, weixugc@google.com,
+	baolin.wang@linux.alibaba.com, Baoquan He <hebaoquan@kylinos.cn>,
+	Kairui Song <ryncsn@gmail.com>
+Subject: Re: [PATCH v5 3/4] mm/mglru: skip cold PUD subtrees during aging
+Message-ID: <awZGCeFosH5myoXM@bogon>
+References: <20261123085800.981256-1-baoquan.he@linux.dev>
+ <20261123085800.981256-4-baoquan.he@linux.dev>
+ <sashiko-outbox-230766@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,49 +70,77 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Stat-Signature: 9aymca8cnk8gmc8nqkwpauuw7b3ak6w4
-X-Rspamd-Server: rspamout03
-X-Rspamd-Queue-Id: 329842000F
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+w4dfy2t6tdovpNuDHUYW978Ct6dRYiis=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=enKPMmqaMAv6kvmuMKSozHDoIEDFjVm3+Lzr77Y2kYY=; b=a/QGKTCi/eEncmcduv7rYyuzdEN0a+tTmIztCPy7qJcfukQguLSwlVm+8DbtLa9snfYlLzIMjKuJUnJnAWWxeFcQZzx8YtKJBQzX0wBy1CoZiRQwIEULO1ArN99HwX2WbxHvbmhK4yt6AHeudcOcFe2H1gOxIzF3XmCclyYs8aw=
-X-HE-Tag: 1795573214-240266
-X-HE-Meta: U2FsdGVkX19Di/CUmryauWIiw3uK/QJ52CfoIVYe5LCfrqBceTm5jXLRC/OR6Qrk+7NEgyyvoWcJ0jlP/E5glsBW8UdtCMT0kP9HKANLoY7uAuWWIW0tckt7F8BsMrKQUBHlZucTB11JL7YVQZ1jMbRfYnQzHT4hLE0hBVfx14H4UV+FufGwb9ZXeiVhy1KMDYtwDG9loCsNbNnwS/PckLUMWixWdw9y7otEHX/cSc8Gl6VGTol+3lnJ6SYNisHMFp6Fu7AoVU8KoRS0i2QOhguG81cBlY0OCNcG4PkHCSEaNhKhfp4Hgc5je+b13YNw5frbYBpP10SITxWXo5jWVYNQi3l3RIwN
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-230766@kernel.org>
 
-On Wed, 11 Nov 2026 02:54:09 +0000
-sashiko-bot@kernel.org wrote:
-
+On 11/24/26 at 08:59am, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] mm/mglru: lost young status in walk_pmd_range() when flushing
+>   THP batch
+> --
+> 
+> commit a67d5ce39733f49dd06a525e19b6621ddfe22558
+> Author: Baoquan He <hebaoquan@kylinos.cn>
+> 
+> mm/mglru: skip cold PUD subtrees during aging
+> 
+> This commit introduces a PUD-level Bloom filter keyed by (mm, PUD-aligned
+> address) to skip PUD subtrees that held no young entries during the previous
+> MGLRU aging generation, and updates it from both the page table aging walk and
+> the rmap feedback path.
+> 
+> > diff --git a/mm/vmscan.c b/mm/vmscan.c
+> > index 7d20ee1b6c10a..517f5fbecdbf7 100644
+> > --- a/mm/vmscan.c
+> > +++ b/mm/vmscan.c
+> [ ... ]
+> > @@ -3750,7 +3766,8 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
+> >  			walk->mm_stats[MM_LEAF_TOTAL]++;
+> >  
+> >  			if (pfn != -1)
+> > -				walk_pmd_range_locked(pud, addr, vma, args, bitmap, &first);
+> > +				young |= walk_pmd_range_locked(pud, addr, vma, args,
+> > +							       bitmap, &first);
+> >  			continue;
+> >  		}
+> 
 > [Severity: Medium]
-> Does leaving PF_NO_SETAFFINITY set on hwlatd prevent userspace from
-> changing its CPU affinity or moving it into a cgroup?
+> Does walk_pmd_range() lose the young return value when a queued THP batch
+> is flushed by the second walk_pmd_range_locked() call on a non-leaf PMD?
 > 
-> kthread_bind_mask() sets PF_NO_SETAFFINITY, which kthread() only checks on
-> initial wake-up before calling kthread_fn().  Because kthread_fn() never
-> clears the flag, sched_setaffinity() and cgroup_attach_permissions()
-> reject hwlatd with -EINVAL in both round-robin and none modes.  That also
-> makes the user-affinity override check in move_to_next_cpu() unreachable
-> from sched_setaffinity():
+> mm/vmscan.c:walk_pmd_range() {
+>     ...
+> 		if (!walk->force_scan && should_clear_pmd_young() &&
+> 		    !mm_has_notifiers(args->mm)) {
+> 			if (!pmd_young(val))
+> 				continue;
 > 
-> kernel/trace/trace_hwlat.c:move_to_next_cpu() {
-> 	/*
-> 	 * If for some reason the user modifies the CPU affinity
-> 	 * of this thread, then stop migrating for the duration
-> 	 * of the current test.
-> 	 */
-> 	if (!cpumask_equal(current_mask, current->cpus_ptr))
-> 		goto change_mode;
+> 			walk_pmd_range_locked(pud, addr, vma, args, bitmap, &first);
+
+Yes, this is a corner case and could happen to lose the PMD-mapped young
+leaf count. The detailed analysis has been replied to v4 patch 3:
+
+https://lore.kernel.org/all/awVGycKHzXzW5OF1@bogon/T/#u
+
+This will be fixed in v6.
+
+
+> 		}
 >     ...
 > }
 > 
-> Clearing PF_NO_SETAFFINITY in kthread_fn() once the thread has started, as
-> done in 4998e7fda149 ("tracing/osnoise: Switch from PF_NO_SETAFFINITY to
-> migrate_disable"), would avoid this regression while still skipping
-> kthread_affine_node() on the initial wake-up.
-
-I agree with Sashiko. Please update and send a new version.
-
-Thanks,
-
--- Steve
+> Both PMD-mapped THPs and young non-leaf PMDs share the same (first, bitmap)
+> batch.  walk_pmd_range_locked() queues entries within MIN_LRU_BATCH of
+> *first and returns false, only scanning the queued entries and returning
+> whether any THP was young when a later call exceeds MIN_LRU_BATCH (or passes
+> addr == -1).  If a young THP is queued first and a young non-leaf PMD more
+> than MIN_LRU_BATCH entries later flushes that batch, the non-leaf call
+> discards the return value; if no later PMD in the PUD sets young,
+> walk_pmd_range() returns false and walk_pud_range() leaves the PUD out of
+> BLOOM_FILTER_PUD for the next generation.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261123085800.981256-1-baoquan.he@linux.dev?part=3
