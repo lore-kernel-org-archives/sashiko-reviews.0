@@ -1,61 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.203
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622361;
-	b=F3+r1wX1YhGvHU8NaC7z7ZSOknKCvChuid1YJxBqh+gtXmflZEKhnCSWMa8KYh1o3qt7
-	 Fqqzgus2dL+0HI5BApWgpevYhzFCl9MYDOovpIWaGfWslDHzHItGDBZU12Vf5noFANkh2
-	 ihJlEZJ6dN3OV0FdJGQAhNv3+PeiQh9BAkjRbPjgfBAX39kq4+sHfYUV/jNBer185gmNa
-	 nRv4ANTZX9KA8a39TW6r2HLG/T1dwVrSR4CzfprWlyzIh5Z6GTR2DLstnUZk5XWc/6Fcc
-	 MIP3YabssfulVhSZintMtPqVY51EuN+OaRgHFmv7De+dL/cyD0pANAsOemES5jMjEXg==
+	t=1795622821;
+	b=e9k/NrgQhB6Clv5aRqVMNxFaDfTQFyhRKVpsGHY/LJtB4SHknKThxTQYG1+YEqOj0lVR
+	 2v1eBVY5o7w6HbCybOVoIBIZZ01QKcBm/ONccPfe/xc/EaMh2mNQzca8asKO3ZrvTpeFb
+	 tSe4oYUbzB/1G9lmp0ZlVc1om2wwCIlHHD3yxrIUe0lB0HVw/INncAm59+HmeEvL7tYbR
+	 K+NLgnL7jNBoi7ojzsI2EtBiQ1on68s4mlV8dGr7RTmAQEDoWHHmuG8uOaHtrOCVMxCf0
+	 DIFoFU6C8QZsoBZ0820l5MYFJBniZJQrrbO6d8A6zwUWzzxUNyMKttXmlp25WnBMMvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622361;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=cvTi/nNYHR2TYIOUf2vi5rClYm97tIxKBSXMmmYFqlY=;
-	b=pRQX2HZMgoHfTm+s1gB6X2lG253E+kyj6M4mqGNl7Afu42ViSdNaX0qWa4TTCeFeObSF
-	 IvdYjj1vDIKqosJNlz96+mWToES5aKixXCodm4qJIFJO/JfknOOOHlxlpMlAxGyDeiUOX
-	 G2wwPP/wQmDnkFXPQFEeCsgnEBqZmnJzs/N3HDO7VdBirp2XVIM7SMzBR4Swg/jxUrB5K
-	 gz12DfFlAr8aY+FCzEGU4PKOfpPc9+dOQiQ9EFyKJ+B7wLCcHN6sjwscXq0WOTLLySWEK
-	 IOrXIXmXR0ptS8g129ks8v40OWclCw95c+DqhdX8xir2pOfPocw/qX3qd+VjKuA2X4A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622821;
+	h=DMARC-Filter:Message-ID:DKIM-Signature:DKIM-Signature:Subject:From:
+	 To:Cc:Date:In-Reply-To:References:Disposition-Notification-To:
+	 Organization:Content-Type:Content-Transfer-Encoding:MIME-Version;
+	bh=S3FuZwbrAhjaM6kTBlafii6bM4GnE5BBZTC//slK6X0=;
+	b=enQmnZvhFNFUdh3xXzcLvgVIG1Lpq5SnyvuExPFeCUSOdQP3o0nZKrUhjL47W8RVpkMM
+	 Z4n/0xkELSNtomeDqX3XVt2OXCS1I2B4y9oSKMamzUrAbSTV0X+avJs+fqlXKPP/iJy0N
+	 SWaMybUwAGBeZJvWNDpyU0j/xVk990N2fsPsW5X4VppR/GOnaYguE5N8VRrLp4OvKmbO5
+	 dhqeJGBGADtceENHs0rgio6X7ul+u0fnz++Z8xnsFLjqDf996FZzFqhQxUn2iZmD0Tmro
+	 Ibh+pQQr9cy/TFYqkriQrB+K9/lyrtF0+keiKmGbuv2GAKN/YFJ/CQhJHH6+BiWptAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="Z3Ubng/b";
-	arc=none smtp.remote-ip=95.215.58.203
-Received: from mta1.migadu.com (out-203.mta1.migadu.com [95.215.58.203])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=ppI+mJfi;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=kI7IykWa;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420CE606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 15:59:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 420CE606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B1E606A681;
+	Wed, 25 Nov 2026 16:06:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6B1E606A681
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Z3Ubng/b
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=/XkNz3r9eFnmSbOvrGYUn0rZ+WAp3AeHIjYmS1q0RGE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795622359; v=1; x=1796227159;
- b=Z3Ubng/b3bzRAvV5aDdv/E3OWysTvCe7sg+njVUlTaeIoQBJhvPRE+BMKvaxP7S14pFP//ji
- e4owx4aM5kvnK88exQuey7xaCFCd5DCSOes6wY6KaGM6jhbYTQM4fpqOeAVPjxsyoB1q4/eDbCp
- FFOwu/5YfyDHAMwZTRz9cbq8=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 8c636a633ece42f2;
-	Wed, 25 Nov 2026 15:59:19 +0000
-X-Mizu-Trace-ID: 8c636a633ece42f2
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5c14bc5a743so37298e87.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 07:59:14 -0800 (PST)
-X-Gm-Message-State: APuU4Z9Zz14J52bBwDYVAaU3OE39xoO41G2YLwIXF0S6LfUM4orHDQBz
-	zaK7lsF/ajaeTNk50TfBEALVChPs1Kpey8inmug2ElQ3cEorn31NOzs4YfwCuTEnCAZjuwvqOPj
-	t/MA05wJQ/dpaLO1ffAPkQ24A2MyVqFaDXfBuFJfK
-X-Received: by 2002:a05:6512:10c7:b0:5bf:f84f:1d74 with SMTP id
- 2adb3069b0e04-5c21a27810amr593536e87.13.1795622354030; Wed, 25 Nov 2026
- 07:59:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=ppI+mJfi;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=kI7IykWa
+Message-ID: <bd31f8cd5121429a3b181ba70ffd53475aec8704.camel@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1795622813;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=S3FuZwbrAhjaM6kTBlafii6bM4GnE5BBZTC//slK6X0=;
+	b=ppI+mJfiNu64lB4cP9r+efKp90B6RxvjvO1EYM2GYO0XNKA7U4fuZH9+bdhujgZewVnKML
+	epcRVSZwW8Cdn7NUW9lcwfaOIssIN+xJOGJ8rq1ZBi2y/311PMwAxaTuJ+oHdIQxNjvjsR
+	0MzVEv+feRxWpAlRE4FgEWjj7uVwqmb6WekA2M/8re6hO3HIfrqt6nqANGUc1IjmBbBEjd
+	shz24YD5tIt3+1tHW1Y1z+UIa/INyEi0DJ353aP5q8kJh3rExQhFjDgLWYDI3sbBGSsJLA
+	clT34JhJxOFBR/bpf9e+L/bActooeqdlNiD9wy57A3vx4+OgZ1HeVg0PDe6/3w==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1795622813;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=S3FuZwbrAhjaM6kTBlafii6bM4GnE5BBZTC//slK6X0=;
+	b=kI7IykWaiatQvtUYlHM+qgl3ONjmikyiQQiOdaoshgxC4hg2CF3o731Q9pqk8WCy2oVo7e
+	tHgmexuzGmJ3pfDw==
+Subject: Re: [PATCH net-next v5 5/9] net: dsa: Add tag handling for SoC-e
+ switches
+From: Vasilij Strassheim <v.strassheim@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, mfd@lists.linux.dev, robh@kernel.org, 
+	conor+dt@kernel.org, lee@kernel.org, netdev@vger.kernel.org
+Date: Wed, 25 Nov 2026 17:06:51 +0100
+In-Reply-To: <sashiko-outbox-227109@kernel.org>
+References: 
+	<20261120-devel-vstrassheim-soce-dsa-ml-v5-0-5de9225715e6@linutronix.de>
+	 <20261120-devel-vstrassheim-soce-dsa-ml-v5-5-5de9225715e6@linutronix.de>
+	 <sashiko-outbox-227109@kernel.org>
+Organization: Linutronix GmbH
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,38 +81,57 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261125153911.106793-1-fuad.tabba@linux.dev> <20261125153911.106793-10-fuad.tabba@linux.dev>
- <sashiko-outbox-233684@kernel.org>
-In-Reply-To: <sashiko-outbox-233684@kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Wed, 25 Nov 2026 15:58:37 +0000
-X-Gmail-Original-Message-ID: <CA+EHjTz1SuYC9GnMRH2Fe71jxKm1QvoE5tEopBe6k_gFNdbwHQ@mail.gmail.com>
-X-Gm-Features: Aa3M54qU1hrnXAD2dBM1Uj3GqNjkJxsnaGRBLC-c83EOnBK74LQNPnC0lvVf4bs
-Message-ID: <CA+EHjTz1SuYC9GnMRH2Fe71jxKm1QvoE5tEopBe6k_gFNdbwHQ@mail.gmail.com>
-Subject: Re: [PATCH v2 09/20] KVM: arm64: Report an incomplete feature map
- with WARN_ON()
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, kvm@vger.kernel.org, 
-	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 25 Nov 2026 at 15:55, <sashiko-bot@kernel.org> wrote:
->
+On Sat, 2026-11-21 at 14:53 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] KVM: arm64: unused str parameter and name field in
->   check_feat_map()
-[...]
-> [Severity: Low]
-> Does replacing kvm_err() with WARN_ON() leave the str parameter of
-> check_feat_map() and struct reg_feat_map_desc::name unused?
+> - [Medium] net: dsa: broken flow dissection in sdsa due to inflated
+>   needed_headroom
+> --
+>=20
+> commit ff03e408d05d4a91db8a81df7f6cead0f9e1dc6f
+> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
+>=20
+> net: dsa: Add tag handling for SoC-e switches
+>=20
+> This commit adds a DSA tag driver for SoC-e switches using the 8-byte
+> EtherType SDSA header.
+>=20
+> > diff --git a/net/dsa/tag_sdsa.c b/net/dsa/tag_sdsa.c
+> > new file mode 100644
+> > index 0000000000000..c5a9f61edf405
+> > --- /dev/null
+> > +++ b/net/dsa/tag_sdsa.c
+> [ ... ]
+> > +static const struct dsa_device_ops sdsa_netdev_ops =3D {
+> > +	.name =3D SDSA_NAME,
+> > +	.proto =3D DSA_TAG_PROTO_SDSA,
+> > +	.xmit =3D sdsa_xmit,
+> > +	.rcv =3D sdsa_rcv,
+> > +	/* Include room for an accelerated non-802.1Q tag pushed in-band. */
+> > +	.needed_headroom =3D SDSA_HLEN + VLAN_HLEN,
+> > +};
+>=20
+> [Severity: Medium]
+> Does setting .needed_headroom to SDSA_HLEN + VLAN_HLEN without a
+> .flow_dissect callback break flow dissection on the conduit?
+>=20
+> When ops->flow_dissect is NULL, __skb_flow_dissect() falls back to
+> dsa_tag_generic_flow_dissect(), which uses ops->needed_headroom as the RX
+> tag length:
+>=20
+> include/net/dsa.h:dsa_tag_generic_flow_dissect() {
+> 	const struct dsa_device_ops *ops =3D skb->dev->dsa_ptr->tag_ops;
+> 	int tag_len =3D ops->needed_headroom;
+>=20
+> 	*offset =3D tag_len;
+> 	*proto =3D ((__be16 *)skb->data)[(tag_len / 2) - 1];
+> }
+>=20
+> Because received frames only carry an 8-byte SDSA header (SDSA_HLEN),
+> dsa_tag_generic_flow_dissect() reads the encapsulated EtherType 4 bytes
+> past its actual offset and advances nhoff by 12 bytes instead of 8.
+>=20
 
-
-Deliberate. The #ifdef was removed at Oliver's request [1], and the
-warning doesn't print the register's name or the bits, as discussed
-there. The str parameter and the name field are kept so that this
-patch only changes how the check reports an incomplete feature map.
-
-/fuad
-
-[1] https://lore.kernel.org/all/avyZH2g3rrIVm-Fl@kernel.org/
+Yes, there is a problem. I will fix that with an SDSA-specific
+.flow_dissect() callback
