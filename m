@@ -1,79 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795637677;
-	b=TZcCrVSuKXiuiJmde84LNX2rMJzsfUU5EbQnOb8z3uk1G4jwv3Oilw6EwvxpcAI/vCSU
-	 u4PBRib9qyeD30FdyomTAdDg2RrsbFv8J5EM2gkRSwDH7ZVnX5KG1ZCUyNut4tdHgKmhr
-	 2wcm0EesMP9ZdpG1g/RazViwZpqf3Q6Swrc0AsxLqMcXwVGBvdn06kxpCaLkdUTIGGHnZ
-	 iu9Z4M+V9TLxVRfLruIr1eX4w7wqlqSjizeER+rfTJEujm2gYSSSHxl/xCc5t4wsz+z6C
-	 /o7ncy7hEeKqpGmH5mfQW9GIlxKeKVLlgyjc0XjWswup8NQmZOF7kubfjea4NB3tT2A==
+	t=1795638524;
+	b=3cchPmwK4ZzZi7G30PxrTuLO3pTJOugKWwhFQuz3zppJM9rq+wmeshvJhBtxNTw9R7LC
+	 sMMRn+rMdJutlUlBYWPQ73XSoOKQyORF9kjrt4txecewPIyBEiWykHi5CqddunbBnkBbl
+	 YNjZHK2ycUmzfznnxFHGFTWGCFKBV1bnQ11n+db6k80LdRrgrleMR57eZTnRnNtvNDMfo
+	 Ac4GT+wWTIGNQCJU5DpBPEa8gBlFzLlR4pNNPezLe6iyMwRsra8oonyawtH1thKQI/1Cl
+	 UCxwAtLafrQfSYchKPHVtYTLlK3ZgQZhn5VdpaoPnaaVvN2EAfQ0lW0LvtyWqRv/d3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795637677;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=QmQfwt6Ao0oG0qFdwA911c4z+gOEP8sH0/exU2tcrOE=;
-	b=csIGagLTeTiwKtOIkfbOKPOMU5z17+ZjqCj4C2Y6NjbtVS31vwxySQviYhk96yhl/RF5
-	 Vq8T1fJSaYouRvmrL7cYveSenZBE9TcoNyWSCYaYFVWg8VT7FKVetbN8AhW3E1+UMQ161
-	 ABGq3Y9pH73z+36Uyg2GKF64+hRwZwRI1knMc9QW6aZXNYo1u6Rx6CFsRQJI9nhRpKAR+
-	 i18AJuZjzgKgekHm70fTjeoSH/xIVnJcRTQBRPooTBG+rpfKyMxmCh2oSPAhYgKj/Z/4f
-	 5ZV5RLJYkvRyBXxNvclNE7IrubLkC5SdeVdv3dWdzYOAeEDz/gmBjBco9mT41NtKCgA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795638524;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=o/4Kw0hVdKhHsWDnKlzuS79CL309pvCOCNbsvIIHjL0=;
+	b=Irz+2KpSWiKqaXrPMXgsYZWAKCXl6gibSmhXllkxIarL8BqRrP42NpcScvHWa3hofK6w
+	 XxJWML//koWryDZAp+eKy86Ene3WQgMjyNcDxdU+2B/keve/bnLoOLvXVrmYWqL6g7Qd5
+	 T9lK7XxmImvn25k+KZ0+fHRSdrvWXYbDWn4UxyjWGqi2VmquDvTCwqP4EDBSwi/t9zcap
+	 H9hnwBs49VU5gxJHuPaQlFHzhg4gd/lK3x3k6Snr+1YpWtAuG5hZyr281EVfD1XcngmOh
+	 b6FIDInTtYsd7PbOWM+GuEXU/1WMnnvJT/u631wHkGmTCnVgfm+aXHtnHtYHLBs7ECw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FII90fcL;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=kLtQrhgY;
+	arc=none smtp.remote-ip=44.202.169.35
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id EA79F606A31E;
-	Wed, 25 Nov 2026 20:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E180606A321
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 20:28:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E180606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FII90fcL
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id D4FDF1F000C6;
-	Wed, 25 Nov 2026 20:14:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795637676;
-	bh=QmQfwt6Ao0oG0qFdwA911c4z+gOEP8sH0/exU2tcrOE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FII90fcLVF6+25/KHTpjKsEXg7XMRoWzVdYNoZjz7uXXy8m+fUEPO6mY4cUxCt8YD
-	 Y/ua0rQf+PLUDD3/PuHRZGDOL7G+hkCSXN7YT+V77Gyf+4MWyKl/chIrrSbdOeiiSP
-	 1+Y2LHu+YPB7DBOJtWctj9EJ4jh/CQzev3Bgw8o3/bSYgX7CfUijHyxSlTVWpFVIdL
-	 tebRpkjzIDDxdZ7FygCi/EHK91196ZiPcu5yo+JpeZkuHvgQBGS+QUtLwSLaPQcLps
-	 sRW8g+JBhQr59ZL4CR55XtZnBTeOHJngegBYKIeMnw9doaoppfAgh9h35IH/dL4VJw
-	 KHuIhYLAZPKAg==
-Date: Wed, 25 Nov 2026 22:14:32 +0200
-From: Jarkko Sakkinen <jarkko@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: keyrings@vger.kernel.org, dm-devel@lists.linux.dev,
-	linux-crypto@vger.kernel.org, linux-security-module@vger.kernel.org,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Alasdair Kergon <agk@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	David Gstir <david@sigma-star.at>,
-	David Howells <dhowells@redhat.com>,
-	David Laight <david.laight.linux@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Ignat Korchagin <ignat@linux.win>,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	James Morris <jmorris@namei.org>,
-	James Prestwood <prestwoj@gmail.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Jonathan Corbet <corbet@lwn.net>,
-	Lukas Wunner <lukas@wunner.de>, Mike Snitzer <snitzer@kernel.org>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mimi Zohar <zohar@linux.ibm.com>, Paul Moore <paul@paul-moore.com>,
-	Peter Huewe <peterhuewe@gmx.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sumit Garg <sumit.garg@kernel.org>
-Subject: Re: [PATCH v3 8/9] KEYS: trusted: Factor out TPM2 blob loading
-Message-ID: <awdBqM-gTfnsRKyL@kernel.org>
-References: <20261125180616.1854753-1-jarkko@kernel.org>
- <20261125180616.1854753-9-jarkko@kernel.org>
- <sashiko-outbox-233944@kernel.org>
- <awcxDq7TrNmzFxjl@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=kLtQrhgY
+Received: from eig-obgw-5003b.ext.cloudfilter.net ([10.0.29.155])
+	by cmsmtp with ESMTPS
+	id WJMbx7Q4l4vCDWJbexYUZP; Wed, 25 Nov 2026 20:28:42 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id WJbdxicCPSgq1WJbexTfHz; Wed, 25 Nov 2026 20:28:42 +0000
+X-Authority-Analysis: v=2.4 cv=c8KrQQ9l c=1 sm=1 tr=0 ts=6b0744fa
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=P3qOQgCt6vrQHFSYsfwA:9 a=QEXdDO2ut3YA:10 a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=o/4Kw0hVdKhHsWDnKlzuS79CL309pvCOCNbsvIIHjL0=; b=kLtQrhgYcTIv
+	uZMzpnu0rYGzzGa8NDNlZT55qp+gtf3HfKp0jbd8q2aAadq/LyShIuAgpozbSv3QbKqBp3Y22JDKg
+	52tUfLjNQjvJfG527eLLWwMZca0G+P8g1Ic7eXW4nMJDntH64oD1t6eF6pHahWAJpeVPKzDxnw4qS
+	E0R0NxHP+PnBRtC6j66rQ70n5EfqNjq5ev/hD2QKMaVZW0S9txjTcIWwkzBYgOr00oPm/2ltfjLSs
+	maCDXm+0W5P+s4vdCa+rrDh9Ye/02UkXuolleTXrVRjCBGHiVPuaBt4lLpsRLVMusI7wCNZQ0FFNK
+	86UN9qjnUyRrH7aVtENPxA==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:41250)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xWJbd-00000001T2u-2P6l;
+	Thu, 26 Nov 2026 01:58:41 +0530
+Message-ID: <0bfd1c00-0fc3-472d-9c98-976838f8906d@roeck-us.net>
+Date: Wed, 25 Nov 2026 12:28:40 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -83,134 +75,129 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="h+DSvvEnG69Dw/wf"
-Content-Disposition: inline
-In-Reply-To: <awcxDq7TrNmzFxjl@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hwmon: (pmbus) Fall back to CLEAR_FAULTS when STATUS_CML
+ is read-only
+To: Arthur Korn <akorn@google.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
+References: <20261125053711.3098007-1-akorn@google.com>
+ <sashiko-outbox-232631@kernel.org>
+ <b5910c74-7e29-4138-9dd4-030c95c78ec3@roeck-us.net>
+ <20261125181605.3299785-1-akorn@google.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
+ oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
+ VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
+ 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
+ onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
+ DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
+ rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
+ WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
+ qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
+ 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
+ qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
+ H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
+ njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
+ dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
+ j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
+ scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
+ zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
+ RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
+ F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
+ FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20261125181605.3299785-1-akorn@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xWJbd-00000001T2u-2P6l
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:41250
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 2
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfJSVANvcsc2oyDRD/X9gtpnWfL5wg9CFb/PIheeCBC5CXyh1OIQSsuEecyAOdkwFAB5/aZ1EXRDpAd+KPvHsCcuNSB3x7ENYzFIwMQXqBJ3VBqopmnjC
+ /BI7s+vWKzOn7o9IEXWDSBEyhONFw4rmIUKN4wgVpeUKypiCDVUPuItrTs1nY1PoKtbt/5hkEQYIm7Sq3Mrx26Z7fKA3LKO1Go+en3pc/Sh2EsrbUt/izOFT
 
-
---h+DSvvEnG69Dw/wf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Nov 25, 2026 at 09:03:46PM +0200, Jarkko Sakkinen wrote:
-> On Wed, Nov 25, 2026 at 06:16:23PM +0000, sashiko-bot@kernel.org wrote:
-> > [Severity: Low]
-> > This isn't a bug, but the commit message only mentions factoring out
-> > tpm2_key_decode(), tpm2_load_blob(), and tpm2_buf_append_key_auth(),
-> > without explaining why this refactoring is needed (to prepare for
-> > asymmetric key support in the following patch).  It also omits adding
-> > payload->private and trusted_payload_free() in the core trusted keys code,
-> > as well as the new public_len < 8 bounds check before reading pub + 4 in
-> > tpm2_load_cmd().
+On 11/25/26 10:15, Arthur Korn wrote:
+> On 11/25/26 07:53, Guenter Roeck wrote:
+>> On 11/24/26 21:49, sashiko-bot@kernel.org wrote:
+>>> [Severity: Medium]
+>>> Does clearing data->has_status_cml on any negative return value from
+>>> _pmbus_write_byte_data() disable STATUS_CML write-1-to-clear across the
+>>> whole device when a driver exposes a read-only virtual page?
+> ...
+>> Seems real. Arthur, what do you think ?
+>>
+>> [ PMBus is really annoying :-( ]
 > 
-> I agree with this and his has higher severity than "low" because patch
-> needs to be split as a consequence.
+> Confirmed -- Sashiko's finding is real.
+> 
+> I tested on a system with 30x MAX16600B.04 VRs driven by max16601 (which
+> sets PMBUS_PAGE_VIRTUAL on all 3 pages because the chip NACKs PMBUS_PAGE
+> 0x00 and latches INVALID_COMMAND):
+> 
+>    - Page 0 (VCORE at addr) and Page 2 (VSA dummy client at addr + 1)
+>      both implement writable STATUS_CML (0x7e): writing 0xc0 clears
+>      latched INVALID_COMMAND | INVALID_DATA cleanly to 0x00 on both I2C
+>      addresses while preserving other STATUS_CML bits.
+>    - Page 1 is a software-only virtual page exposing vendor registers
+>      0xf1/0xf2 (IIN_SENSOR / TOTAL_INPUT_POWER); max16601_write_byte_data()
+>      and max16601_write_byte() both return -EOPNOTSUPP for page == 1.
+> 
+> With v1, pmbus_clear_cml_faults() hit -EOPNOTSUPP on page 1 and set
+> data->has_status_cml = false for the whole device, causing page 2 and
+> subsequent register checks on page 0 to fall back to CLEAR_FAULTS.
+> 
+> In v2, I moved data->has_status_cml = false inside the readback check so
+> it is only cleared when _pmbus_write_byte_data() succeeds and the readback
+> still shows PB_CML_FAULT_CLEAR_MASK set (the read-only STATUS_CML case).
+> When _pmbus_write_byte_data() returns an error (such as -EOPNOTSUPP on a
+> virtual page), only that call falls back to pmbus_clear_fault_page(),
+> preserving the existing behavior from d9d30e1cb9ca.
+> 
+> (Side note noticed on the live MAX16600B.04 system: untouched devices boot
+> with status2 = 0x0002 / status2_cml = 0x80 latched on VSA because
+> pmbus_check_register() and pmbus_check_status_register() pass page = -1 to
+> pmbus_clear_cml_fault() / pmbus_check_status_cml(), which targets the
+> primary client 0x69 instead of data->vsa 0x6a when probing page 2. Happy
+> to look at that separately if useful.)
+> Sure, that would be great.
 
-I.e.,  this is the split change.
+Thanks,
+Guenter
 
-Br, Jarkko
-
---h+DSvvEnG69Dw/wf
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment;
-	filename="0001-KEYS-trusted-Add-private-backend-data-to-trusted_key.patch"
-
-From 38d63947966fce0d3f6cc3274c4720b07fd5e791 Mon Sep 17 00:00:00 2001
-From: Jarkko Sakkinen <jarkko@kernel.org>
-Date: Tue, 24 Nov 2026 13:03:29 +0200
-Subject: [PATCH] KEYS: trusted: Add private backend data to
- trusted_key_payload
-
-Add a backend-private pointer to struct trusted_key_payload and free it
-sensitively via trusted_payload_free() on teardown and error paths. This
-prepares for asymmetric TPM2 keys, which retain backend key metadata
-across runtime pkey operations instead of unsealing a raw key at load
-time.
-
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
----
- include/keys/trusted-type.h               |  1 +
- security/keys/trusted-keys/trusted_core.c | 18 +++++++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/include/keys/trusted-type.h b/include/keys/trusted-type.h
-index 3db61b57cf73..790ffabb0d18 100644
---- a/include/keys/trusted-type.h
-+++ b/include/keys/trusted-type.h
-@@ -33,6 +33,7 @@ struct trusted_key_payload {
- 	unsigned int blob_len;
- 	unsigned char migratable;
- 	unsigned char old_format;
-+	void *private;
- 	unsigned char key[MAX_KEY_SIZE + 1];
- 	unsigned char blob[MAX_BLOB_SIZE];
- };
-diff --git a/security/keys/trusted-keys/trusted_core.c b/security/keys/trusted-keys/trusted_core.c
-index 3721980ed83a..b8f980da606d 100644
---- a/security/keys/trusted-keys/trusted_core.c
-+++ b/security/keys/trusted-keys/trusted_core.c
-@@ -149,6 +149,14 @@ static struct trusted_key_payload *trusted_payload_alloc(struct key *key)
- 	return p;
- }
- 
-+static void trusted_payload_free(struct trusted_key_payload *p)
-+{
-+	if (!p)
-+		return;
-+	kfree_sensitive(p->private);
-+	kfree_sensitive(p);
-+}
-+
- /*
-  * trusted_instantiate - create a new trusted key
-  *
-@@ -223,7 +231,7 @@ static int trusted_instantiate(struct key *key,
- 	if (!ret)
- 		rcu_assign_keypointer(key, payload);
- 	else
--		kfree_sensitive(payload);
-+		trusted_payload_free(payload);
- 	return ret;
- }
- 
-@@ -232,7 +240,7 @@ static void trusted_rcu_free(struct rcu_head *rcu)
- 	struct trusted_key_payload *p;
- 
- 	p = container_of(rcu, struct trusted_key_payload, rcu);
--	kfree_sensitive(p);
-+	trusted_payload_free(p);
- }
- 
- /*
-@@ -269,7 +277,7 @@ static int trusted_update(struct key *key, struct key_preparsed_payload *prep)
- 	ret = datablob_parse(&datablob, new_p);
- 	if (ret != Opt_update) {
- 		ret = -EINVAL;
--		kfree_sensitive(new_p);
-+		trusted_payload_free(new_p);
- 		goto out;
- 	}
- 
-@@ -283,7 +291,7 @@ static int trusted_update(struct key *key, struct key_preparsed_payload *prep)
- 	ret = static_call(trusted_key_seal)(new_p, datablob);
- 	if (ret < 0) {
- 		pr_info("key_seal failed (%d)\n", ret);
--		kfree_sensitive(new_p);
-+		trusted_payload_free(new_p);
- 		goto out;
- 	}
- 
-@@ -322,7 +330,7 @@ static long trusted_read(const struct key *key, char *buffer,
-  */
- static void trusted_destroy(struct key *key)
- {
--	kfree_sensitive(key->payload.data[0]);
-+	trusted_payload_free(key->payload.data[0]);
- }
- 
- struct key_type key_type_trusted = {
--- 
-2.47.3
-
-
---h+DSvvEnG69Dw/wf--
