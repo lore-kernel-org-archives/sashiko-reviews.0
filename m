@@ -1,84 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=193.142.43.55
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623258;
-	b=ar5BCYo6eYz5JnVN6K9hinM8u1ajMogHGZabYHGWbn6FrARH1ZqDElOvdjr1IPRfNzjx
-	 JV8C7gRYpnimTMvyt9dH/fEU72qcOeWHAzBjZBeezkFmxDO5JghfzFJu9bgapwUTokBSy
-	 l7oMBxsULbZYQb++nhz3YFBovG9diQv28bxraNrGeLM9gqL4PMisN6ocX83vYv0m2TKFO
-	 39kosRQlzl1d1w0LHglkLgVwfMLOg4RZbJ0gjQ8Rbd1glPDjA3q+qS4xvV8/fGh+7JbUC
-	 1W2D+2IWKcyvHC+8Ul/Z0NCQHW8S6/qumcsFi+CLirM6jA5KF7X1pyiaogct+Bz3cog==
+	t=1795623557;
+	b=aJniErdh952vfhjxDqURC5c8Ci4WKUuhJ9LgWYaFZz1ij8b/NvCgj9XzxwT3LU911pZN
+	 HJXaG1BXpGQG31fQhPSxoxwzy8iaPsWcbwrDSsGF6TtEtVMoA64r5VZiQALuxbIAu/Omr
+	 PNJ01m/Gjv+Eppt4nxXuWv16+ujlzTlZW/Hw1T5tBcIASimUT+etqxgk4C1nh7ss4SJsd
+	 kNs+tGnEh3coU4+e3ahJQ2NVLm+y4iMbzK2upFo5pqHIpvG1tWnakte9UutWq2hIYC4jb
+	 C9p3hxV77AhA7YYBN7+m0msGx0OZXI6RlfYNpR0oEFLn2JTloAJiLr33l8T9O2uEQtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623258;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 Cc:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=LdER2mkFO0wbjr2+rc/aRUmp4/Sc5QyLtaG22Ye9JSE=;
-	b=Wof2fmBcUQGB6bYQzHG8QjGnyKaFYIksW3TR6RZhOwezjvCzbISieHs7hA+Srm9ARlMO
-	 LXkf6n3CJmX/k9yFJWcPKTswonTEGrG5rSTg8L8N0yr5Pi/aNvBpemkD0QKTpgjGWROWr
-	 F158Eo0gw8J/MZTZ9TrIvSW2JXDa5Taz1oyx9F2vLmG72cPS5bG2EyYvl6cct0eujIPTk
-	 2Xbdfhv7Fv4BfLHDOF3dKxKXfgjqod6rojkxZtoHTgVYqZjZ1i58LuC++Yv53HbFhIahp
-	 m+YA3p/fJSTaleJA60YLLPipJnXjGcCaRAfY9CBBaGgWioZ5lo8u1wMExfh0XPyWi0w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623557;
+	h=DMARC-Filter:Message-ID:DKIM-Signature:DKIM-Signature:Subject:From:
+	 To:Date:In-Reply-To:References:Organization:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=1WbB1tMgALW3NqGumxVzVAHgBE1rM7IvVsTXuL9ngTc=;
+	b=EGb0MXJfDfsQadnx5xCGHTrcAjTkCOgacOG2CbROkKwcljjj9OBdGkx2uLb/2Ju4EsfD
+	 YUxHaxBHuOepnHsuaqkLlRhXdVsHTlzJBPFc6LfSp5B8hmJQLXpld64Cz/RPpcq2UhD8O
+	 0VNSu6xR7XqohZHKjSVvGdvleES1iIrWvXr9IxLIJGsglohu5Dt10VDQnCU2Z2h2pfyzf
+	 YLZAT8DialTCYQWorlbtEdXIEHCmzcG4LX/SyTHYi+QimX1x27HavuVfEgEGevGYFFgED
+	 2o2nlNZajTYm53e4cmF3okJhLRJs3r/3MHXdFDU+LYxp2tpC5oJyhndL0zGK42DF1pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UtOFRBsC;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	dmarc=pass header.from=linutronix.de;
+	spf=pass smtp.mailfrom=linutronix.de;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=gPKSimfY;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=Jh0KswrB;
+	arc=none smtp.remote-ip=193.142.43.55
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFA9606A32A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 16:14:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AEFA9606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D39606A329
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 16:19:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77D39606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UtOFRBsC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1795623256;
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=gPKSimfY;
+	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=Jh0KswrB
+Message-ID: <306495dafd14bfa6842d745a893bd86db24675da.camel@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1795623554;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=LdER2mkFO0wbjr2+rc/aRUmp4/Sc5QyLtaG22Ye9JSE=;
-	b=UtOFRBsCKAK3E8Bsu3A8rziiu4/aqAhE/qioSN+enl9xu6asu7MYmZxBpWnwgM6JAJ10eH
-	GeuaMt0x+rQF7dmkSzy8byorSs4CqhqwSkdzDKJ4NU36OhlMRXg42v6WqTsD7ri9JlJGwU
-	zmrSWBx/pnkzJtxscC6RhgstvSiYf98=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-176-My8TviqvPEOubRpE0BH-pw-1; Wed, 25 Nov 2026 16:14:14 +0000
-X-MC-Unique: My8TviqvPEOubRpE0BH-pw-1
-X-Mimecast-MFC-AGG-ID: My8TviqvPEOubRpE0BH-pw_1795623254
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-492f39f29c4so6266126fac.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:14:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795623253; x=1796228053;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LdER2mkFO0wbjr2+rc/aRUmp4/Sc5QyLtaG22Ye9JSE=;
-        b=lzCvPmV/JLPeO4WS04VzvyYmzUEN20ps32mG660YIb1wimO84pOhErp2NIhEKQtN7o
-         2jClgxZJ5dlbaBM+W+NNSFRdtjBlw+6apzpPiNcX7d1gQVVM7mb5n5VPfmbSO+P4ngCO
-         Tp97gx4J0tZH0gbEEiJ49lDT6s0yNgO19crsFQ2P06wDwlWocKWuabWWX0jxM6STzHhE
-         8KDA+UI6NFYGJlNtok8UFvYyJvQpeFdhASOGZNt37TVh3yq+p0Ow8HG/DMR8a3WM906J
-         qjUBn+vX/kVFvxkc2ukWcoQzmNCLAuvUXaZVpipgRcqLGjKhXIpFUgvjPkCXvsu2uZ+Z
-         E5gg==
-X-Gm-Message-State: APuU4Z8nigt/RjEn2dEEFHZ8DZ4SETVSJXBKtuNSL43MpcST5EnJ806I
-	/bWA44hddAYuDIkeMgeP9axfhEobuUWnvnFx2HQgxk0kTa30crcQehAiRS5ibUcwFuh+OOGCNLf
-	REaexmq97ARokuvweZxUoVu5WsrYiOfZSXZ+B8FaDNwZKRRC/IGWZgbxSgRmRXBYCqW486Wet1Z
-	fhhIT25C/C2tk9Eghcpu+c0kDkmlW5KhnT5uSquln0OJZuHXjhe4PX
-X-Gm-Gg: AZFdTZe+vggVVn96m5Qs/pjSqBPnaDqCDcT2NskljFaNZTNsZ326xf2HzK2jDZYgbBZ
-	wxK3/sNtJtRHfmaXWgQ4QIBxz7//wLM119orm5VHrGwhweMOslU9cdKe6x16fNYeuagQYmNovBO
-	xxsdLGLY2UeshknuF7l9r2IcGO18xetzb7ukJsiRj9x3cVEw9mgga0tdKo
-X-Received: by 2002:a05:6808:c3cb:b0:577:2888:47b3 with SMTP id 5614622812f47-57a0ac33d63mr20058866b6e.44.1795623253413;
-        Wed, 25 Nov 2026 08:14:13 -0800 (PST)
-X-Received: by 2002:a05:6808:c3cb:b0:577:2888:47b3 with SMTP id
- 5614622812f47-57a0ac33d63mr20058815b6e.44.1795623252854; Wed, 25 Nov 2026
- 08:14:12 -0800 (PST)
+	bh=1WbB1tMgALW3NqGumxVzVAHgBE1rM7IvVsTXuL9ngTc=;
+	b=gPKSimfY2zmuhc0hzinN9krUjlZuKRx24kAobsXIXRJpf6HTBMvR5FKmLxvhPpedKKHwI1
+	W/dgSuDo0F+Fzx9bG/cZtc/0nkF4Wp08hE71oA3odyvUSK7S6DOFy2HauaScNf7ROt9hIE
+	R2VwkLxCzJq8J1V8He4f2dDb0vynh2G3acSazLXVyn4qSTpT2cMuFiPYeikcw7tKB7Zq+5
+	UDrYfNlc32KaRUxzL9xnJQgSw9QgYTV2WZoWgcH3N4OHpoeA44fkgt4wfLX6yRqsnP+9D9
+	W2mQJ+yzxUW9l5Z+IMf5Ev56/It9efX1voPXGaE4B7IYQzRgW9AxA+l2roicDg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1795623554;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1WbB1tMgALW3NqGumxVzVAHgBE1rM7IvVsTXuL9ngTc=;
+	b=Jh0KswrB6g6QB8dI7eoG0QCKBr+2YnuZsM6MFiz7fZE2OToyegdllZDhz/K7eDzJErhDF/
+	5jkUErbQmsckJMBg==
+Subject: Re: [PATCH net-next v5 4/9] dt-bindings: mfd: Add SoC-e SWIP parent
+From: Vasilij Strassheim <v.strassheim@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Date: Wed, 25 Nov 2026 17:19:13 +0100
+In-Reply-To: <sashiko-outbox-227108@kernel.org>
+References: 
+	<20261120-devel-vstrassheim-soce-dsa-ml-v5-0-5de9225715e6@linutronix.de>
+	 <20261120-devel-vstrassheim-soce-dsa-ml-v5-4-5de9225715e6@linutronix.de>
+	 <sashiko-outbox-227108@kernel.org>
+Organization: Linutronix GmbH
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -88,149 +78,104 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261124-v2_20230123_tjmercier_google_com-v6-0-dce12fa03ad6@redhat.com>
- <20261124-v2_20230123_tjmercier_google_com-v6-2-dce12fa03ad6@redhat.com> <sashiko-outbox-233444@kernel.org>
-In-Reply-To: <sashiko-outbox-233444@kernel.org>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Wed, 25 Nov 2026 17:13:58 +0100
-X-Gm-Features: Aa3M54qC4BhV46Zvi5xNNVUyWvQwOqnECHDuj67-iKiUZ4P0AUQ6JhGMrN001Kw
-Message-ID: <CADSE00KEAYZ+saAoTY81VNhNyevsWFD_nSDNgsPVfvvLBsE5vQ@mail.gmail.com>
-Subject: Re: [PATCH v6 2/7] dma-heap: charge dma-buf memory via explicit memcg
-To: sashiko-reviews@lists.linux.dev
-Cc: Tejun Heo <tj@kernel.org>, Johannes Weiner <hannes@cmpxchg.org>, 
-	=?UTF-8?Q?Michal_Koutn=C3=BD?= <mkoutny@suse.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, Muchun Song <muchun.song@linux.dev>, 
-	Andrew Morton <akpm@linux-foundation.org>, 
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>, Brian Starkey <Brian.Starkey@arm.com>, 
-	John Stultz <jstultz@google.com>, "T.J. Mercier" <tjmercier@google.com>, 
-	Christian Brauner <brauner@kernel.org>, Paul Moore <paul@paul-moore.com>, 
-	James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
-	Stephen Smalley <stephen.smalley.work@gmail.com>, Shuah Khan <shuah@kernel.org>, 
-	Randy Dunlap <rdunlap@infradead.org>, =?UTF-8?B?T25kcmVqIE1vc27DocSNZWs=?= <omosnacek@gmail.com>, 
-	Jens Wiklander <jenswi@kernel.org>, Sumit Garg <sumit.garg@kernel.org>, 
-	Philipp Stanner <phasta@kernel.org>, airlied@gmail.com, dri-devel@lists.freedesktop.org, 
-	linux-mm@kvack.org, linux-security-module@vger.kernel.org, 
-	selinux@vger.kernel.org, op-tee@lists.trustedfirmware.org, 
-	echanude@redhat.com, mripard@kernel.org, media-ci@linuxtv.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: z1Y8jfvWtvEjvyT8kwoDDDPKffuXAbFWgBCU6nE_4WU_1795623254
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 25, 2026 at 2:05=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
+On Sat, 2026-11-21 at 14:53 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] mm: memcontrol: task_css() race with migration in
->   get_obj_cgroup_from_fd()
+> - [Medium] dt-bindings: mfd: soce,swip: overlapping switch child and
+>   split MDIO reg
 > --
->
-> commit 62e5304eba9bb9d84f6229eddf1a9273649483b8
-> Author: Albert Esteve <aesteve@redhat.com>
->
-> dma-heap: charge dma-buf memory via explicit memcg
->
-> This commit adds a charge_fd field to struct dma_heap_allocation_data so
-> DMA_HEAP_IOCTL_ALLOC can resolve a target cgroupfd or pidfd via
-> get_obj_cgroup_from_fd() and charge system heap allocations to that
-> cgroup.
->
-> > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-> > index e4a9af2fdaa3b..7826bc21bea9e 100644
-> > --- a/mm/memcontrol.c
-> > +++ b/mm/memcontrol.c
+>=20
+> commit beb83bca6b797666b59f03629a91afa93df57a6e
+> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
+>=20
+> dt-bindings: mfd: Add SoC-e SWIP parent
+>=20
+> This commit adds a Device Tree binding schema for the SoC-e SWIP
+> multifunction Ethernet switch FPGA IP core and its child nodes.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/mfd/soce,swip.yaml b/Doc=
+umentation/devicetree/bindings/mfd/soce,swip.yaml
+> > new file mode 100644
+> > index 0000000000000..69bb9eae379f8
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/mfd/soce,swip.yaml
+> > @@ -0,0 +1,138 @@
 > [ ... ]
-> > @@ -3171,6 +3172,88 @@ struct obj_cgroup *get_obj_cgroup_from_folio(con=
-st struct folio *folio)
-> >       return objcg;
-> >  }
-> >
+> > +  ranges: true
+> > +
+> > +  ethernet-switch@0:
+> > +    $ref: /schemas/net/dsa/soce,swip-switch.yaml#
+> > +    unevaluatedProperties: false
+> > +
+> > +  mdio-mux@202:
+> > +    $ref: /schemas/net/mdio-mux-mmioreg.yaml#
+> > +    unevaluatedProperties: false
+> > +
+> > +  mdio@204:
+> > +    $ref: /schemas/net/soce,swip-mdio.yaml#
+> > +    unevaluatedProperties: false
 > [ ... ]
-> > +struct obj_cgroup *get_obj_cgroup_from_fd(int fd)
-> > +{
-> > +     struct cgroup_subsys_state *css;
-> > +     struct obj_cgroup *objcg;
-> > +     struct mem_cgroup *memcg;
-> > +     struct task_struct *task;
-> > +     unsigned int pidfd_flags;
+> > +examples:
+> > +  - |
+> > +    ip-core@80020000 {
+> > +        compatible =3D "soce,swip";
+> > +        reg =3D <0x80020000 0x10000>;
+> > +        ranges =3D <0x0 0x80020000 0x10000>;
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <1>;
 > > +
-> > +     if (mem_cgroup_disabled())
-> > +             return ERR_PTR(-EOPNOTSUPP);
-> > +
-> > +     CLASS(fd_raw, f)(fd);
-> > +     if (fd_empty(f))
-> > +             return ERR_PTR(-EBADF);
-> > +
-> > +     css =3D css_tryget_online_from_dir(fd_file(f)->f_path.dentry,
-> > +                                      &memory_cgrp_subsys);
-> > +     if (!IS_ERR(css) && !cgroup_on_dfl(css->cgroup)) {
-> > +             css_put(css);
-> > +             css =3D ERR_PTR(-EBADF);
-> > +     }
-> > +
-> > +     if (IS_ERR(css)) {
-> > +             if (PTR_ERR(css) !=3D -EBADF)
-> > +                     return ERR_CAST(css);
-> > +
-> > +             /* fd is a pidfd */
-> > +             task =3D pidfd_get_task(fd, &pidfd_flags);
-> > +             if (IS_ERR(task))
-> > +                     return ERR_CAST(task);
-> > +
-> > +             rcu_read_lock();
-> > +             css =3D task_css(task, memory_cgrp_id);
-> > +             put_task_struct(task);
-> > +             if (!css || !css_tryget_online(css)) {
-> > +                     rcu_read_unlock();
-> > +                     return ERR_PTR(-ENOENT);
-> > +             }
-> > +             rcu_read_unlock();
-> > +     }
->
-> [Severity: Low]
-> Can the pidfd lookup in get_obj_cgroup_from_fd() spuriously fail with
-> -ENOENT when the target task is concurrently migrated or has an exited
-> thread-group leader?
->
-> Between task_css() and css_tryget_online(), the task can be migrated to
-> another cgroup and its previous cgroup offlined, causing the one-shot
-> css_tryget_online() on the stale css to fail.  Also, pidfd_get_task() on
-> a process pidfd returns the thread-group leader, which in a
-> multi-threaded process may already have PF_EXITING set and remain
-> attached to an offline css even while its obj_cgroup has been reparented
-> to an online ancestor that get_obj_cgroup_from_memcg() walks up to:
->
-> include/linux/cgroup.h:task_get_css() {
->         rcu_read_lock();
->         while (true) {
->                 css =3D task_css(task, subsys_id);
->                 /*
->                  * Can't use css_tryget_online() here.  A task which has
->                  * PF_EXITING set may stay associated with an offline css=
-.
->                  * If such task calls this function, css_tryget_online()
->                  * will keep failing.
->                  */
->                 if (likely(css_tryget(css)))
->                         break;
->                 cpu_relax();
->         }
->         rcu_read_unlock();
->         return css;
-> }
+> > +        ethernet-switch@0 {
+> > +            compatible =3D "soce,swip-switch-00-04-0c-10";
+> > +            reg =3D <0x0 0x10000>;
+> [ ... ]
+> > +        mdio-mux@202 {
+> > +            compatible =3D "mdio-mux-mmioreg", "mdio-mux";
+> > +            reg =3D <0x202 0x2>;
+> > +            mux-mask =3D <0x07ff>;
+> > +            mdio-parent-bus =3D <&mdio_parent>;
+> > +            #address-cells =3D <1>;
+> > +            #size-cells =3D <0>;
+> [ ... ]
+> > +        mdio_parent: mdio@204 {
+> > +            compatible =3D "soce,swip-mdio";
+> > +            reg =3D <0x204 0xc>, <0x200 0x2>;
+> > +            reg-names =3D "data", "control";
+> > +            #address-cells =3D <1>;
+> > +            #size-cells =3D <0>;
+> > +        };
+> > +    };
+>=20
+> [Severity: Medium]
+> As reported by Krzysztof Kozlowski on v4 [1], should the parent IP core
+> and ethernet-switch@0 be combined into the ethernet-switch node instead o=
+f
+> using an MFD wrapper where the switch child claims the entire 0x0..0x1000=
+0
+> parent MMIO range?
+>=20
+> Here ethernet-switch@0 claims reg =3D <0x0 0x10000>, which overlaps both =
+the
+> parent register at offset 0x0 and the sibling MDIO registers at
+> 0x200..0x20f.
+>=20
+> In addition, mdio@204 (reg =3D <0x200 0x2>) and mdio-mux@202 (reg =3D <0x=
+202
+> 0x2>) split a single 32-bit MDIO control register at offset 0x200 into tw=
+o
+> 16-bit halfwords across two sibling nodes.  Handling the mux selector bit=
+s
+> directly in the MDIO controller node and driver avoids splitting one
+> 32-bit hardware register across mdio-mux-mmioreg and soce,swip-mdio, and
+> allows the MDIO driver to check that the controller is idle before
+> changing the selected bus.
+>=20
+> [1] https://lore.kernel.org/r/20261106-judicious-penguin-of-enhancement-b=
+28c8b@quoll
+>=20
 
-Valid. I will apply this for the next version.
+This was already reported and addressed there [2].
 
->
-> Using task_get_css(task, memory_cgrp_id) before put_task_struct(task)
-> would avoid both failure modes.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261124-v2_20230=
-123_tjmercier_google_com-v6-0-dce12fa03ad6@redhat.com?part=3D2
->
-
+[2]
+https://lore.kernel.org/netdev/20261120-devel-vstrassheim-soce-dsa-ml-v5-0-=
+5de9225715e6@linutronix.de/T/#m7f14bf95fba3715d2e4e7be5ebc5ff865d270a79
