@@ -1,100 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795624567;
-	b=ZTmeBTQ4whVDjBh5mqZz0f3HEJqazLwUo48RUBryTt2Q6c6EDaQNpMdN5GC7LdN89emU
-	 giqyUhwUZDJE/qxLmrQZpPdAgVZ3S4PySR8fEknYO38vOjYR9FJqIdrGVBFviYaMMJO4r
-	 F8zOKsYT7MCFvN272nTHccA6idUv4AQ055I2l+GpDeMk6EN6oFW9xXvzRndWhIoitmNao
-	 eacidCno5JkwFEUqAJ67USm6xvlZ9VyMLTg7nESMTnYi1QEWmWYJzRe58bkwwYeY6WZa6
-	 vW0Jz7RMNZhLJSbooER6YvQv/4mrvkRVq7PXJe/2p5NAFxDy73V+BNFA2XaPkq99rtw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624567;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=uhIE02AGyFlDGJY9YH7/2qCR3QQs0Kiq9oYiZ1U/+5o=;
-	b=Ocf6sDINR+zybdN8hwC7JWBvD2n3AO/ALgamyGHbT3OHBPxSU7PeKsc3Z3E/NDbrlM0a
-	 YXp5hP7tKtNNHi1JPvXy0qVLx4WkAufmw6dRNOQuNeuJPJxmz4pBVgg/HBt1Z6+FDaM53
-	 t6rTyYZTMEC5fPfB11+rXYadVgTn3zIwGXCak1SUEzNziRjYG8iStWiiNrERkpmuyP/m4
-	 dxEAN1M5fV+KED85klY+BkCJI5kZ55fVc2ispS4CBF+eXCehGRWm1kVjHzQdBTVmOBs0I
-	 AICHr6YLXCycRwPwGOYQTNXX8R1G8vMk60RxQDqmbLV/d1b1b3MrHvLFA3tIiADo/Ug==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=DbjHeece;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63685606A336
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 16:36:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63685606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795625190;
+	b=G/+qoBdL0BNwPpNrqTQe+wyTCt/krc6D3K9VlYIWb3vSxxTr3D0DYuacFdV7eo5TLILu
+	 t9zEo7WKfBf1M5vz1MECmVSEORaWDN1qhMoGNxeYzPfuEPomJaMs1k8oIdFjVvEVeFQuS
+	 AfdmtfaCCOznZK/PfkM7ITjlMZABzQgsUGC8LxuiM9N/b6agDMb2Y+NmSMAc1ajnYbMV7
+	 yGG/6AiA4pTnzns0T5QHI+VtKGPbjeL3BM9CD4Pz0Nkz1gXPtezbOV5RLxJp0l+tSi+XS
+	 YpwJ5tZBb2VkCI5DuCV72qmN8FquPTTXmWmxIju7coMFqEt5meVUsm6XUsC5H61iiSQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625190;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=KjZjsUyQFxsQPQHTHpl//Z+vqIh/wjMAMwg9CITWqr4=;
+	b=qdoR/4IohYPXjAO/m16Bv6ByVlHzPEXDLRNhrk6eIi++uCCwb/aDKuN371rxDwuLNUPK
+	 Ywv5EmbHsh1bu6342UxC+wFI07BInoIRTqZHt+M4Ao+2CGyvVBv7p2zAY72zS1LEDOAT9
+	 BhFh6BhCK7dndMN8ODCyMJ3EX8KERx4B75quoEQFkyUFx2F2KmdcJFod3WABBMpKMQwcS
+	 iMb/ivC8G29hdGxyyvuYoXIJOAEXEICmyhq7fwqMWlOuclWV16apfIw9vNxyC+O6AwynC
+	 tWLbUpZDKhTRMABdNpdiOXUekzlYDZC0Dfg1FMLuUBgU1IkTiFhYWOrUTbqxtID0eEQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Z8oFofyY;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BFA2606A31E;
+	Wed, 25 Nov 2026 16:46:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2BFA2606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=DbjHeece
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so1002297366b.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:36:07 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795624566; cv=none;
-        d=google.com; s=arc-20260327;
-        b=aarPlRc+2p50qTfvts1yNnuaGjATvSY+nlNz5PU2+ggzWJn6ETC1stlIRQzgEyGudM
-         dPAUieCHdNRqUbByhq+k4CSLb45AOpUgzahUfo3e+Vg0FrLf/Hg22PGcbQJnmh6opATz
-         w43R/9IsrwZZ1BwO2g9Wv+KbBC/FKLNjVm9hwyPRoZB61aSp/LB9K7JvC+5QwhpRRi9n
-         yb7vCleOoJ/TyWYbZayh8DCzbBi6DbUVkTQ1usvA3KrWTG2ia3A3pARJEKBCwaYmWKe+
-         ErAiaEu0M99VWYR0FHOZ0YoBlkGHh2GsOseLli2ZhCBTn8w1lzJzGDZ9JIWfXgk55Enf
-         133w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=uhIE02AGyFlDGJY9YH7/2qCR3QQs0Kiq9oYiZ1U/+5o=;
-        fh=yyWxi04RUo9+5b08HavMWN4XnnIHFhnk8gDcQpgpkr8=;
-        b=jfrzxxhWQSTLlm6kpzzqG0T0xGm98zXjdZ0heACVzzuXlc2fEVMLSk6lIkWPyMWox3
-         YW7HJAkRBwoGjfeqU6g3LsZpoajd48P+I1PfjsUnW1QtF/0uFpMMXQRe5KD9B8Yt+plq
-         1LIrzbwwdkZbe/Jww5Z735b0udRTx6tTPoG6xMct3Lg7WZyWZd5u05pRBsR45eNmPBYm
-         HFM7bnTRTnXSTX4CKmzETCSgI2XSI72wpLV5u0pOjovCfij89dSryyo9c+FppW92bpNk
-         M586YNE6eKtkaFcVPbk9kjZiNBlDeaGSwb/eyHMRwxhURp8KRC9LpxeWwCUgApLQeHHL
-         Z/+g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795624566; x=1796229366; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=uhIE02AGyFlDGJY9YH7/2qCR3QQs0Kiq9oYiZ1U/+5o=;
-        b=DbjHeecex7WM2aYf3CGcuSD/R1A9lKfYH5ELKvag1N9m3Jdw8ZnGnTt41r0DCex+XT
-         TMgLWDxH07my6OfkHSgBCmFod5JN4ZpXGixvZSLz2cYM60uchp4JkjpnFNQRgTOVfYHP
-         fbCgUSLKbCJNOFr1vKcM7S4YBvt97LNUecWrqy1KBrmY38BnDOdq3eqPYsxcxqq0n2bS
-         /OMZe4jMvcJt2BzNg7UZXyALXbm1/fp+JZw4mbsqzRZHE/MgikCs1HWmDAfoiM5FXKIB
-         cSR1VMO45pwfbdXzmyu/jaZePwvwZcRjh7WqrSgNmKN5senUWxpfMGPxmjIA5yh+ct4R
-         CtjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795624566; x=1796229366;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uhIE02AGyFlDGJY9YH7/2qCR3QQs0Kiq9oYiZ1U/+5o=;
-        b=aLVB44nPnTI7b/j8Ss1G4+4vsoEMEFQhHQz+vAcuN3wV0FfvSi7zV5/ImwLrQlZcUE
-         q+Stn7ObMx8F9vxMtdYWoN20mV9UsQiRan5lqPBgX5hTe+stdbkmn5e90s3k9gIIQfzO
-         9xQEa7mW8UCjejDyYC+E7mqYdOlOFh/ywhEuBvQHIFJ94hF2BO/kojSRTWj+aVPdTbrN
-         tTEliRitGWxKhDU+wbJIb8I2rCwvdC4DnDy5OHRavs+VzjowE8on32PRXoCnQ1M6X0Fd
-         hiThQWLB9sISmoAA9USjdRDQho5cOPq1FQzPbXpRLzLiMx6QYhCt3Lk7eTD+kjDWsvj6
-         u+nw==
-X-Gm-Message-State: APuU4Z97AGhaOa9fMYNei8w5rSYVP1tPj2C09tMbFcTMfkjqwnyEHKMk
-	808q3sX4Q/rd6D+usbzfMX7ObTCkSQ0eGU6kMQHn+B0zTFlHZ5ecKgiqPA9+eNkthR5PwhzE5mC
-	RDcGHUDArj5ZexjthxcvVc+JFGVzdKLpR4HTLLjFWRT+u4vjA9MBLLSV4W/M=
-X-Gm-Gg: AZFdTZen4RQ1msnbg1IRO4dQ5CptKlYoU3SF9Kk3kbHKDgWxMkNke8rKCJuBaJPyMnE
-	Qv20C1w8oNIzGdnYcu02uvVaIILXILb0ZFYSMEKOe+0BgNZ8DTMezF08GMN7RQlaDjxk6fS6wW+
-	/xu9FPU1WQ4G44GE5SBRBahwiECJMvBi+8ahHkxsNAibjUfJY9LBcRjPZbqDKS51PbiD1IVC5uZ
-	dYJrIkeo9wfVkmY6Ckpbp8cX49CL1AJkwyjhMjbautZb9+tBj59yU8/CAZ/XXp5oi/ikcX85LI/
-	zLr8bMXHdsC4ePvhO3nNlekSv1stOMuasibQwOmx6a854qZAVCgyY22gX6Qfh4tvSo7oI3VxT+Q
-	ZRe6gqg+k1BtZKYcLfke+iz9kYEksbr+Pg7mHJOPXa+SR/F+yXft14/cn54edEi9qNDmHKULsaQ
-	PNH/P2Wbp2Gzru3PntcRYOO+HmF9aGMyVca7poT15R844G/xMQ+Ks=
-X-Received: by 2002:a17:906:a408:b0:c49:901c:d9f with SMTP id
- a640c23a62f3a-c513aaff7dfmr1242424166b.49.1795624565163; Wed, 25 Nov 2026
- 08:36:05 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Z8oFofyY
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A20D62F;
+	Wed, 25 Nov 2026 08:46:25 -0800 (PST)
+Received: from [10.57.32.107] (unknown [10.57.32.107])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 20FF43F632;
+	Wed, 25 Nov 2026 08:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795625188; bh=0V2D5frrfjhwHE0XTZXrjncSxje69gb1mbxFSvIW8Xc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Z8oFofyYEh6F687QC/inqQz6EufsmT79XE/zqyznkNonMgsPdVs0MXG1/5JXezaL3
+	 AXcacMGW+QTBh0EEq/tVAt9oYNuEZ/x2dSgNdo04S+pR6Gk8Vj4vuvgjRv8YgIJHto
+	 RH09EEGj3FWGlFpS+CIv3zxZzRumCkfIHOoYKQzY=
+Message-ID: <23d35fa6-721c-44c9-b092-099dbd005b96@arm.com>
+Date: Wed, 25 Nov 2026 16:46:24 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,181 +53,189 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261122184453.2668189-1-jthoughton@google.com>
- <20261122184453.2668189-17-jthoughton@google.com> <sashiko-outbox-228645@kernel.org>
- <CADrL8HWNAByKifcNgre_YAX3M+bwAW0BgMrfPmWHubOEs+AfDQ@mail.gmail.com> <5028917F-EFF3-488C-903E-9E19E5DDA3D1@linux.dev>
-In-Reply-To: <5028917F-EFF3-488C-903E-9E19E5DDA3D1@linux.dev>
-From: James Houghton <jthoughton@google.com>
-Date: Wed, 25 Nov 2026 11:35:27 -0500
-X-Gm-Features: Aa3M54rufHLyzy98JyZmpwMFKUD2VIgSM3pNxMhAoaY6IhoB1clLOE7jnDE3xSw
-Message-ID: <CADrL8HXtwnZ4P7E4OhMKs03b2zgzfxnmAHMw4mknjivAk+FVKQ@mail.gmail.com>
-Subject: Re: [PATCH v3 16/19 DO-NOT-MERGE] arm64: Implement
- try_populate_vmemmap_pmd using AF trick
-To: Muchun Song <muchun.song@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, Will Deacon <will@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Oscar Salvador <osalvador@suse.de>, 
-	Andrew Morton <akpm@linux-foundation.org>, Kefeng Wang <wangkefeng.wang@huawei.com>, 
-	Nikos Nikoleris <nikos.nikoleris@arm.com>, Linu Cherian <linu.cherian@arm.com>, 
-	Mark Rutland <mark.rutland@arm.com>, David Hildenbrand <david@kernel.org>, 
-	Ryan Roberts <ryan.roberts@arm.com>, Nanyong Sun <sunnanyong@huawei.com>, 
-	Yu Zhao <yuzhao@google.com>, Frank van der Linden <fvdl@google.com>, 
-	David Rientjes <rientjes@google.com>, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/11] KVM: arm64: CCA: Add Realm RTT mapping and
+ invalidation helpers
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261123104233.95710-1-steven.price@arm.com>
+ <20261123104233.95710-8-steven.price@arm.com>
+ <sashiko-outbox-229102@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-229102@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 25, 2026 at 6:32=E2=80=AFAM Muchun Song <muchun.song@linux.dev>=
- wrote:
->
->
->
-> > On Nov 25, 2026, at 01:39, James Houghton <jthoughton@google.com> wrote=
-:
-> >
-> > On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote=
-:
-> >>
-> >> Thank you for your contribution! Sashiko AI review found 2 potential
-> >> issues to consider:
-> >> - [Medium] arm64/mm: over-broad TLB flush in try_populate_vmemmap_pmd(=
-)
-> >> - [Low] arm64: direct AF=3D0 block-to-table transition in
-> >>  try_populate_vmemmap_pmd()
-> >> --
-> >>
-> >> commit 1319c4a7862ad5f3b810c4beca866ee98bd48fd7
-> >> Author: James Houghton <jthoughton@google.com>
-> >>
-> >> arm64: Implement try_populate_vmemmap_pmd using AF trick
-> >>
-> >> This commit implements try_populate_vmemmap_pmd() on arm64 to replace
-> >> in-use leaf vmemmap PMD block entries with table entries by clearing t=
-he
-> >> access flag instead of using a break-before-make sequence when BBML3 i=
-s
-> >> not supported.
-> >>
-> >>> diff --git a/arch/arm64/include/asm/pgalloc.h b/arch/arm64/include/as=
-m/pgalloc.h
-> >>> index 0263329fb7b30..7e304f01ce6d5 100644
-> >>> --- a/arch/arm64/include/asm/pgalloc.h
-> >>> +++ b/arch/arm64/include/asm/pgalloc.h
-> >>> @@ -124,9 +124,54 @@ pmd_populate(struct mm_struct *mm, pmd_t *pmdp, =
-pgtable_t ptep)
-> >>> static inline int try_populate_vmemmap_pmd(unsigned long addr, pmd_t =
-*pmdp,
-> >>>                                         pte_t *pgtable)
-> >>> {
-> >>> -     /* BBLM3 is required. Its presence has been checked. */
-> >>> -     pmd_populate_kernel(&init_mm, pmdp, pgtable);
-> >>> -     return 0;
-> >>> +     const int max_attempts =3D 16;
-> >>> +     int attempts =3D 0;
-> >>> +     pmd_t old_pmd, new_pmd;
-> >>> +
-> >>> +     if (!system_supports_bbm_through_af())
-> >>> +             return -EOPNOTSUPP;
-> >>> +
-> >>> +     if (system_supports_bbml3()) {
-> >>> +             /*
-> >>> +              * BBML3 allows block->table transitions if the PTEs un=
-derneath
-> >>> +              * do not conflict with existing, potentially cached
-> >>> +              * translations.
-> >>> +              */
-> >>> +             pmd_populate_kernel(&init_mm, pmdp, pgtable);
-> >>> +             return 0;
-> >>> +     }
-> >>> +
-> >>> +     new_pmd =3D __pmd(__phys_to_pmd_val(__pa(pgtable)) |
-> >>> +                     PMD_TYPE_TABLE | PMD_TABLE_AF | PMD_TABLE_UXN);
-> >>> +
-> >>> +     old_pmd =3D pmdp_get(pmdp);
-> >>> +
-> >>> +     do {
-> >>> +             if (WARN_ON_ONCE(!pmd_valid(old_pmd)))
-> >>> +                     return -EINVAL;
-> >>> +
-> >>> +             if (WARN_ON_ONCE(!pmd_leaf(old_pmd)))
-> >>> +                     return -EINVAL;
-> >>> +
-> >>> +             /* We should never get a contiguous PMD here. */
-> >>> +             if (WARN_ON_ONCE(pmd_cont(old_pmd)))
-> >>> +                     return -EINVAL;
-> >>> +
-> >>> +             if (pmd_young(old_pmd)) {
-> >>> +                     /* __ptep_clear_young() returns the overwritten=
- PTE */
-> >>> +                     old_pmd =3D pte_pmd(pte_mkold(__ptep_clear_youn=
-g((pte_t *)pmdp)));
-> >>> +
-> >>> +                     flush_tlb_kernel_range(addr, addr + PMD_SIZE);
-> >>> +             }
-> >>
-> >> [Severity: Medium]
-> >> Should this pass addr + PAGE_SIZE instead of addr + PMD_SIZE to
-> >> flush_tlb_kernel_range()?
-> >>
-> >> Invalidating a single non-contiguous PMD block entry only needs one
-> >> overlapping page-granular TLB invalidation, as in
-> >> unmap_hotplug_pmd_range().  With a range of PMD_SIZE and stride of
-> >> PAGE_SIZE, pages equals PTRS_PER_PTE (MAX_DVM_OPS), so
-> >> __flush_tlb_range_limit_excess() returns true on CPUs without
-> >> FEAT_TLBIRANGE and escalates the flush to flush_tlb_all().
-> >
-> > Oh! I didn't know that!
-> >
-> > I will change it to PAGE_SIZE instead of PMD_SIZE in v4. Neat!
-> >
-> >>
-> >>> +     /*
-> >>> +      * Translations without AF cannot be cached, so we can replace
-> >>> +      * them without BBM.
-> >>> +      */
-> >>> +     } while (!try_cmpxchg_relaxed(&pmd_val(*pmdp), &pmd_val(old_pmd=
-),
-> >>> +                                   pmd_val(new_pmd)) &&
-> >>> +              ++attempts < max_attempts);
-> >>
-> >> [Severity: Low]
-> >> As reported by Catalin Marinas on v1 [1], this rests on an architectur=
-e
-> >> detail the review could not confirm from the kernel source: can a CPU
-> >> walk cache or TLB retain information from a valid leaf block PMD
-> >> descriptor when AF=3D0, or is a TLB invalidation and break-before-make
-> >> sequence still required before converting a valid AF=3D0 block descrip=
-tor
-> >> into a table descriptor without BBML3?
-> >>
-> >> If it can, skipping flush_tlb_kernel_range() when pmd_young(old_pmd) i=
-s
-> >> already false or directly overwriting the valid AF=3D0 block descripto=
-r
-> >> with new_pmd leaves stale walk-cache or TLB state active while a table
-> >> entry is installed.
-> >>
-> >> [1] https://lore.kernel.org/r/aoSJcAFMNJ1nPl2H@arm.com
-> >
-> > Yeah, this is why these final 5 patches are marked as DO-NOT-MERGE.
->
-> If we aren't sure about the hardware behavior here, why don't we just dro=
-p
-> these patches? Once the initial support of HVO for arm64 is merged into t=
-he
-> community, we can bring up this uncertain part for discussion. Wouldn't t=
-hat
-> be simpler for this series?
+On 23/11/2026 11:12, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] KVM: arm64: cca: direct-reclaim allocation in
+>   realm_unmap_cache_topup()
+> - [Medium] KVM: arm64: cca: stale err_level used after
+>   realm_unmap_cache_topup() failure
+> - [Low] KVM: arm64: cca: possible RTT creation for unmapped entry in
+>   realm_unmap_*()
+> --
+> 
+> commit 4c7e030072ac67c12f0f2603fad3d39821c47426
+> Author: Steven Price <steven.price@arm.com>
+> 
+> KVM: arm64: CCA: Add Realm RTT mapping and invalidation helpers
+> 
+> This commit adds RMI Realm Translation Table creation, folding, and stage-2
+> unmapping helpers for CCA Realms, including filtered range unmapping for
+> shared and private memory.
+> 
+>> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
+>> index 435174ac3d87f..b34f5320b50b6 100644
+>> --- a/arch/arm64/kvm/rmi.c
+>> +++ b/arch/arm64/kvm/rmi.c
+> 
+> [ ... ]
+> 
+>> @@ -172,6 +391,208 @@ void kvm_realm_unmap_stage2_all(struct kvm *kvm)
+>>  	realm->stage2_unmapped = true;
+>>  }
+>>  
+>> +static bool realm_unmap_cache_topup(struct kvm *kvm,
+>> +				    struct kvm_mmu_memory_cache *mc, int needed)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!mc || kvm_mmu_memory_cache_nr_free_objects(mc) >= needed)
+>> +		return false;
+>> +
+>> +	lockdep_assert_held_write(&kvm->mmu_lock);
+>> +	write_unlock(&kvm->mmu_lock);
+>> +	ret = __kvm_mmu_topup_memory_cache(mc, KVM_PGTABLE_LAST_LEVEL, needed);
+>> +	write_lock(&kvm->mmu_lock);
+>> +
+>> +	return !ret;
+>> +}
+> 
+> [Severity: Medium]
+> When __kvm_mmu_topup_memory_cache() fails, does returning false cause
+> realm_unmap_shared_range() and realm_unmap_private_range() to pass a stale
+> err_level to realm_create_rtt_levels()?
+> 
+> Because kvm->mmu_lock was dropped and re-acquired, another thread can fold
+> the RTT at err_level before the lock is retaken.  The callers only retry
+> from addr when realm_unmap_cache_topup() returns true; on failure they fall
+> through to realm_create_rtt_levels(realm, addr, err_level, level, mc).
+> alloc_rtt() can still succeed from a partially topped-up cache or via
+> alloc_delegated_granule()'s GFP_ATOMIC fallback (which sets __GFP_HIGH and
+> force-charges memcg), causing realm_rtt_create() at err_level + 1 to fail
+> with RMI_ERROR_RTT at an ancestor level < err_level.  That triggers the
+> WARN() in realm_create_rtt_levels() and returns -ENXIO, hitting
+> WARN_ON(ret != -ENOMEM) in realm_unmap_shared_range() or KVM_BUG_ON(1, kvm)
+> in realm_unmap_private_range().
+> 
+>> +static void realm_unmap_shared_range(struct kvm *kvm,
+>> +				     unsigned long start,
+>> +				     unsigned long end,
+>> +				     bool may_block,
+>> +				     struct kvm_mmu_memory_cache *mc)
+>> +{
+>> +	struct realm *realm = &kvm->arch.realm;
+>> +	unsigned long rd = realm->rd_phys;
+>> +	unsigned long next_addr, addr;
+>> +	unsigned long shared_bit = BIT(realm->ia_bits - 1);
+>> +
+>> +	if (start >= end)
+>> +		return;
+>> +
+>> +	/*
+>> +	 * Callers may pass either an IPA range or its shared alias. Add the
+>> +	 * shared bit only for the former. Use addition so an exclusive end at
+>> +	 * shared_bit advances to the end of the IPA space.
+>> +	 */
+>> +	if (start < shared_bit) {
+>> +		start += shared_bit;
+>> +		end += shared_bit;
+>> +	}
+>> +
+>> +	for (addr = start; addr < end; addr = next_addr) {
+>> +		long ret;
+>> +
+>> +		ret = rmi_rtt_unprot_unmap(rd, addr, end, RMI_ADDR_TYPE_NONE,
+>> +					   0, &next_addr, NULL, NULL);
+>> +		if (WARN_ON(ret < 0))
+>> +			return;
+>> +
+>> +		switch (RMI_RESULT_STATUS(ret)) {
+>> +		case RMI_SUCCESS:
+>> +			break;
+>> +		case RMI_ERROR_RTT: {
+>> +			int err_level = RMI_RESULT_DATA_LEVEL(ret);
+>> +			int level = find_map_level(realm, addr, end);
+>> +
+>> +			if (WARN_ON(err_level < realm->start_level ||
+>> +				    err_level > KVM_PGTABLE_LAST_LEVEL))
+>> +				return;
+>> +
+>> +			if (err_level >= level) {
+>> +				/* Nothing present, so skip */
+>> +				next_addr = ALIGN(addr + 1,
+>> +						  kvm_granule_size(err_level));
+>> +				break;
+>> +			}
+> 
+> [Severity: Low]
+> This question rests on an RMM architectural detail that could not be
+> confirmed from the kernel source: can SMC_RMI_RTT_UNPROT_UNMAP or
+> SMC_RMI_RTT_DATA_UNMAP return RMI_ERROR_RTT with err_level < level when the
+> RTT walk stops at an unassigned ancestor entry (where neither a child RTT
+> nor a block mapping is present at err_level), rather than advancing
+> next_addr and returning RMI_SUCCESS?
+> 
+> If so, when unmapping a sub-block range (such as a single page, where
+> find_map_level() returns KVM_PGTABLE_LAST_LEVEL) across an unmapped ancestor
+> entry, both realm_unmap_shared_range() and realm_unmap_private_range() only
+> skip when err_level >= level.  For err_level < level, they treat the entry
+> as a block mapping to split, allocating and delegating intermediate RTTs via
+> realm_create_rtt_levels() only to fold them back at the end of the function,
+> and if that allocation fails in realm_unmap_private_range() (for example
+> under GFP_ATOMIC when may_block is false), it hits KVM_BUG_ON(1, kvm) even
+> though nothing was mapped.
+> 
+> [ ... ]
+> 
+>> +void kvm_realm_unmap_range_filter(struct kvm *kvm, unsigned long start,
+>> +				  unsigned long size, bool may_block,
+>> +				  enum kvm_gfn_range_filter attr_filter)
+>> +{
+>> +	/*
+>> +	 * MMU notifier callbacks cannot take slots_lock, which protects the
+>> +	 * eager split cache. Use a cache owned by this invalidation instead.
+>> +	 */
+>> +	struct kvm_mmu_memory_cache cache = { .gfp_zero = __GFP_ZERO };
+> 
+> [Severity: Medium]
+> Can topping up this cache from an MMU notifier callback enter direct reclaim
+> and trigger a lockdep splat on __mmu_notifier_invalidate_range_start_map?
+> 
+> When mmu_notifier_invalidate_range_start() invokes
+> kvm_mmu_notifier_invalidate_range_start() -> ... ->
+> kvm_realm_unmap_range_filter() with may_block set, it holds
+> __mmu_notifier_invalidate_range_start_map.  Because cache.gfp_custom is left
+> at 0, realm_unmap_cache_topup() -> __kvm_mmu_topup_memory_cache() allocates
+> with GFP_KERNEL_ACCOUNT (__GFP_DIRECT_RECLAIM | __GFP_FS), which enters
+> fs_reclaim_acquire() and acquires __mmu_notifier_invalidate_range_start_map
+> recursively (and risks reclaim recursion deadlock under memory pressure).
+> Setting cache.gfp_custom to GFP_NOWAIT | __GFP_ACCOUNT avoids direct reclaim
+> in the notifier path.
+> 
 
-I'm including them for three reasons:
-1. I want HVO to be supported on as many systems as possible. At
-Google, we have systems that we want to enable HVO for that do not
-have BBML3.
-2. I want to provide the Linux code to potentially facilitate memory
-model discussions regarding the AF trick.
-3. My interpretation of the Arm ARM is that the AF trick can be used
-like this, so that the final 5 patches are in fact correct.
+Using GFP_NOWAIT doesn't sound a great idea. But this is actually only
+an issue for the shared mappings. Protected mappings shouldn't be
+triggering the mmu_notifiers because the memory is from the guest memfd.
+For shared memory we can always fall back on unmapping too much, so
+there's no real need to deal with the memcache.
 
-The series can always be partially applied.
+I'll try to rework this for the next revision.
 
-I am happy to drop these if they really ought to be sent separately or
-if they are genuinely incorrect. I hope some of the arm64 experts can
-chime in. :)
+Thanks,
+Steve
+
