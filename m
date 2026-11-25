@@ -1,89 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.240.27.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795596411;
-	b=Yv0pJrnR6/i7Bw7PxnzIoMalAx0cJz/QXtwc8M2wT/zBD5/QX6zuSLlQhBtey8mCZI5/
-	 J5NZP626mz2E6LjBcS5Vf8dUS77aFKbdILEUwysM8V7YTifBNI09NsrBsW47vdUidore8
-	 t27fJxotWJ/8Fe6WMIN0lsL8+g34N+x9wEBjPeOFYGQr+lY9YDbrG147OgsSLRI2f5ssZ
-	 VvNEJXCImj4ZzgwWENvDx2Isr0Qq6JK89Bmc0Ep2YvTTXLTCxV65dFjYjTDkcOIsMd86+
-	 cSiAvpieYIhPmAioqMfqYfqjdBylBgAfbz/A+4ipJ8zDhj4RCbMPbHj0pEalHHCc1LQ==
+	t=1795596471;
+	b=oInmNJrRBTvZ9Jyn2SafD5bGC0PE4LONITBzPSSlLvjOh6DWw+81fF1lwnpu4u+LD7BM
+	 IDsKW0ZeXAXefgGzOLJdd4YuxJI6X5iK1zhSq1qds3P8p487h9sbpB2mHQLD6S9N3T+sm
+	 n9OnBLQYLABQfOWLMyO6oXczVcLSUIjkS1EvkHuFX442Dz7NjJLAVdahWiZlMZnFMe4OR
+	 GfuOH9XuT3rzRYmD0GMcERmR8Z0Z1VyiBjpkKSXAMZY30Z5g5XqW2YLsBuVTs0D//u7Mc
+	 tRf2k/fE53ZcbkNSRfciu9+qP4jiAGyLwEOueXYUDSzvIqzpwybQV8FuU/GJeCnQENQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795596411;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
-	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=yxb7EQsbpqO3H4nS3rf4UMq78ALObXEsUz180cnLRB4=;
-	b=nS4Wtx+4e4LHAL5oe/Rr6hNRtINrdbws/9w2o6ZuIVhUT9A+FA2UqXaOJc6snwWj0vUZ
-	 hYZLupm+B66PHj85ARIIA1uMi5ieQ3OCTfwq1D6rZkVu+EREmnw3i63JYp9R82R7vXNKF
-	 nHR3sryG4hh7UBIG9qxKyE8vRT4DV2Pb5GUCfjoFQx5KJQ8P+ha80v6yIbFpWUbPeH4L0
-	 ddu6Cew/yPsGvHIpI6D07hlFM60EV8i0VsIbXVD+Ew5AobIbeB6wIykHiB4Pbgowxp4+Z
-	 XPlqPhNxcl/BwENU3dfGgvtvEP40F1FgzuCeWxiBr61QqyCZVEKBCFIASzw8dWdXbIw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795596471;
+	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 X-Virus-Scanned:MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:
+	 References:User-Agent:Message-ID:X-Sender:Content-Type:
+	 Content-Transfer-Encoding:Feedback-ID:X-SES-Outgoing;
+	bh=yxLIuGBihVeEzQJjlkm1JeQmw+UYZy0BSMqt6H8/K+8=;
+	b=mo5w09w7q+pZY1csw/0H0SyF7lP2bbZ7GwB3Iek936XgqbU2vS6y9881gvbWCcOJzEB/
+	 FhZGrUlhxdU2HKrTvQ7sNw6RBQJt6jJFDP1SuVctWzvuV+XB4Q3ITO9RQ+sEmAYFB18dh
+	 xwf+HyWkOplvgUUifmrpDITsovARwx5CdqPOwt8AoHohhrK5RBJTT7UEuCFZvJC5yNvlL
+	 2U6Ujfaf5z1ECMrQQPcEfvAqsb8Z/Xp2rCixmPZmXTlPGAjCKZ6OvwrLOSoY7g+vUhs9A
+	 ayW3KBosZYa0MHMD86Qn3WFSnb5/ntor8bnkNpyI6N7bgbqYEAabCxPdW/kkzQcskwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=QU3JZomh;
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	dmarc=pass header.from=retsim.com;
+	spf=pass smtp.mailfrom=us-west-2.amazonses.com;
+	dkim=pass header.d=retsim.com header.i=@retsim.com header.a=rsa-sha256 header.s=abaygg6onarqet2uti4t4yyiczbpngnf header.b=UX0B47an;
+	dkim=pass header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=hsbnp7p3ensaochzwyq5wwmceodymuwv header.b=edMscYTI;
+	dkim=temperror header.d=retsim.com header.i=@retsim.com header.a=rsa-sha256 header.s=dkim header.b=DQqf6kmE;
+	arc=none smtp.remote-ip=54.240.27.35
+Received: from a27-35.smtp-out.us-west-2.amazonses.com (a27-35.smtp-out.us-west-2.amazonses.com [54.240.27.35])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F838606A323
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:46:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F838606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3DD606A31E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:47:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB3DD606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=retsim.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=us-west-2.amazonses.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=QU3JZomh
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-4a358881793so2810260f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 00:46:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1795596409; x=1796201209; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yxb7EQsbpqO3H4nS3rf4UMq78ALObXEsUz180cnLRB4=;
-        b=QU3JZomhyUF1qSWJvujggq3SVX3rSji4ky5CchoSJ0N7cEUTaKojeJwCzFZgD30xoI
-         lNQwGA1fO/Jd9L3MqDeO6J5omY8VBXma4CDZhbYi38Gnms5JSJfG7WLJnFyT8j89KUEn
-         iR2N4GqC3+xvE1lUjDHBMkICWrNvV8o6Sga2jmE8Nc9T3RySIEZYWBRQyZ7m7fGXsbQM
-         WIwbHVl7PQkgTPbWtcgV7vRQep2uqqW74PCtP1DYUScQw999WJHXrhGQqPRpXiD72YPh
-         Om5TUfroWBPeLK5LX87S5eLFD8tmrlCdvQdvaeES3kXklvFHLblLziDdPYPQtATKh9QY
-         7Hdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795596409; x=1796201209;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yxb7EQsbpqO3H4nS3rf4UMq78ALObXEsUz180cnLRB4=;
-        b=gcbbNwRYpvOqQO7GbwaZ6lhEK5+OdMrlG8rk7q3MJ3vumiJ2rcFb90VsXO5z/467Xz
-         tnpyLFtdE+aZTxgSbxkkAktjZ9XS11j+Hsi3xNpIDj1LSHEwJf07MScczjcpLc9O/8Sp
-         Ce23/zwYAEXLm/OZr+mBlk9t6NnQI5W8kzFI1l8gU1Cp+AW5h094lw5n/ocS2udWY/up
-         aHiyHJkGq3iFelTiVMFtiHIcNtRKti9JQ0v0lbhjudqs6yjOIildasbW/v2xPuXD3Mmv
-         8DeZFsLGax9vRdgY+Q5WJl6cjBKply6n5ZfTorgvhBU+1Eo8ffxPCuOizJO/aSbMa+hB
-         oiZA==
-X-Gm-Message-State: APuU4Z/uwF8V2gSJASPs0/Rk2fu9D57AuEkw46CAw3shWf1UlLEEwUbv
-	lFHArWDQJjR5WA8ImSxFzrhnu6TdVA6st06kTZ9OJVgTxJVLK17f7D3uLrpMjpyk3aqXp7JVQw4
-	7puDilUTecw==
-X-Gm-Gg: AZFdTZdgr40kdJhbDJAc0CBp2ZXEdP9SnOfM9B15vl+nCce1r980s95tXwbuijKvGVf
-	OmjgVnXn84BGNaXIVh2mBQPtnmUzpOqYWeehdSLody54yhLEizUEdPEbLVOAWMFeZb2m4qkZ4gI
-	NvicFvDqIbeHRN3aKj7kH6+/GytWPtI+GorlpkpApphbAg8iWLzXTAGwDktSvBVYHtfEyt9n3tD
-	/VFGYk9EA4HSlZd4LB4dGpbplGRBU9PKHm6OAiyrSCcvUSxLnrNEs7hjn7DAq8EZklHHqEI2Gwn
-	jY0j/2jrwRG2P1eJu5dp3n2AurPRLR2oC1iTf6uvinX9gxiyMHo8AQ9uyk5TOzVTHDDwhK8ySxX
-	y53c31US+OcQiW2oCTOwxQq0ZtPuH6LrSj5Dg20X310lXahDEiqabFcQFjshlJR+my3bho87Y5k
-	IIWtoWNYT/hf4v70N/Xut79q21ZTVe/XEvOFJoJ1TsiPMeZmpHPKdDvbCYG+H2TefPJS2ANZJcT
-	nRxPIl8sLeBa8+AcMWwHztfWByus25DeEyeKGgMM6FzJJTtLZ66beOPv17bbQSmo7WmZ1rcadzT
-	lwDLd5rhHwlpOx0A403P3cLpRE8ZoaPNlAYe+6VI38SFQ5dGS7nH4LXrTDbAyzTXssfgDC1smh+
-	umor44QB8
-X-Received: by 2002:a05:6000:2586:b0:4b7:760c:70db with SMTP id ffacd0b85a97d-4b7760c713cmr8367241f8f.4.1795596409091;
-        Wed, 25 Nov 2026 00:46:49 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:106d:1080:f368:ae2e:e717:e970? ([2a01:e0a:106d:1080:f368:ae2e:e717:e970])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4b3415763f7sm12637052f8f.9.2026.11.25.00.46.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Nov 2026 00:46:48 -0800 (PST)
-Message-ID: <59b8701a-22b5-42e9-b94a-4ed3af6f346f@linaro.org>
-Date: Wed, 25 Nov 2026 09:46:48 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=retsim.com header.i=@retsim.com header.a=rsa-sha256 header.s=abaygg6onarqet2uti4t4yyiczbpngnf header.b=UX0B47an;
+	dkim=pass (1024-bit key, unprotected) header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=hsbnp7p3ensaochzwyq5wwmceodymuwv header.b=edMscYTI;
+	dkim=temperror header.d=retsim.com header.i=@retsim.com header.a=rsa-sha256 header.s=dkim header.b=DQqf6kmE
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=abaygg6onarqet2uti4t4yyiczbpngnf; d=retsim.com; t=1795596470;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Content-Type:Content-Transfer-Encoding;
+	bh=d/yl+vck61lXSmVP41IN7VueHC4X7NY9GxB6VsCVKOQ=;
+	b=UX0B47an3adqnf1UfE7LyXj6+yl+bQmf/GZgDF1lIGqjzlDeQz5vEOYSbWyov/Yw
+	gHkv8Z0mgk1YfLjx1K2ANb/HcwAsstXppmqCIff9r/vw0OmywBrdKf86bvRBpTT89JB
+	srkA30oMSIjJtpTmzyQM62oAf3vcVwbXYp54mjJc=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1795596470;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Content-Type:Content-Transfer-Encoding:Feedback-ID;
+	bh=d/yl+vck61lXSmVP41IN7VueHC4X7NY9GxB6VsCVKOQ=;
+	b=edMscYTIUUmR4NhB4V1iqytYjqqx1CuJcwlxD72oRRZB01Cvc336XIUIllvaJXqX
+	LRLpi3skkkBdkaSp+H9y4DACTrn25uOHNQtM37vT/U7lIm8FG5zHxdiENrqsfDJhE/q
+	zTHj9ku1KgITlY1wScInOEEVPQv/5P1tI4aq7lRE=
+Authentication-Results: mailserver.retsim.com (amavis); dkim=pass
+ reason="pass (just generated, assumed good)" header.d=retsim.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=retsim.com; h=
+	content-transfer-encoding:content-type:message-id:user-agent
+	:references:in-reply-to:subject:to:from:date:mime-version; s=
+	dkim; t=1795596466; x=1798188467; bh=d/yl+vck61lXSmVP41IN7VueHC4
+	X7NY9GxB6VsCVKOQ=; b=DQqf6kmE2u5TgsWdtSrRjS6VsksRTlC+EC1CnNrNKCt
+	Cu8g3Nx24eayB0Dxr6zUiDYfGzA81pOpndZzHmq8OpiBhXwQ+grBLbLdw9YDFs59
+	q7KW04GCHp7W97IhM/u4vravxNvmyUAyP8Gd68aQN6WJjyq96UQh5kWdCcRlIpF4
+	+CQ6cfWrmdlgtR1WOseuTH07kgr8Q0ioi9uqLfsL4rT0L8fdfSRBrwWDcd8wW4bF
+	YwExgAV5isqEH9VYdIXnzl2B75mok0kJZS3kCRmoiiMYBMMz1iIfoHsWJS1tfHU3
+	Vn2f6RBPHTAj3PGueuOOdvOO4Ml+zb9wNPgcHBE2GiQ==
+X-Virus-Scanned: Debian amavis at 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,163 +74,105 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 19/19] ASoC: qcom: sc8280xp: allow using the sc8280xp
- card with lpass-cpu
+Date: Wed, 25 Nov 2026 08:47:50 +0000
+From: lewis@retsim.com
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20261124-topic-sm8650-el2-v2-0-174e159f0f69@linaro.org>
- <20261124-topic-sm8650-el2-v2-19-174e159f0f69@linaro.org>
- <sashiko-outbox-231759@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <sashiko-outbox-231759@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 1/2] drm/imagination: guard fence release against device
+ removal
+In-Reply-To: <sashiko-outbox-232926@kernel.org>
+References: <20261125082637.2839673-1-lewis@retsim.com>
+ <010101a211d07983-72e5379a-adfd-4134-b23d-3e2b1422bc2e-000000@us-west-2.amazonses.com>
+ <sashiko-outbox-232926@kernel.org>
+User-Agent: Roundcube Webmail
+Message-ID: <010101a211e3c71d-84cf5be0-7b5c-494e-8652-59d9b556a110-000000@us-west-2.amazonses.com>
+X-Sender: lewis@retsim.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Feedback-ID: ::1.us-west-2.jZ+gdeR9TqNTaB6Dq50UPG8S0IjuYZETsFsi7SlhF6Q=:AmazonSES
+X-SES-Outgoing: 2026.11.25-54.240.27.35
 
-On 11/24/26 18:56, sashiko-bot@kernel.org wrote:
+Yes, that leak (including the drm_gpuvm -> drm_dev_put() reference on
+pvr_dev, and on pvr_device_lost() as well as pvr_remove()) is
+intentional here.
+
+pvr_queue_fence_release() runs under rcu_read_lock(), and
+pvr_context_release() tears down FW objects against kernel_vm_ctx and
+fw_mm, which pvr_remove() -> pvr_device_fini() destroys after
+drm_dev_unplug().  Avoiding the leak cleanly requires moving device
+teardown to drmm_ / refcounted lifetime (noted in [PATCH 0/2]), which
+was left out so these use-after-free fixes remain minimal and
+backportable.
+
+On 2026-11-25 19:42, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] ASoC: qcom: sc8280xp: missing jack cleanup and link exit on
->    DSP Bypass links
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [High] ASoC: qcom: sc8280xp: missing WCD jack cleanup in
->    sc8280xp_snd_exit() [1]
+> - [High] drm/imagination: context and drm_device leak in
+>   pvr_queue_fence_release()
 > --
 > 
-> commit 30357a271c5bc6a19f163b41e5ab561af21084a8
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
+> commit 98562e29f0071aecadfba68150e688168073f7c8
+> Author: Lewis Lakerink <lewis@retsim.com>
 > 
-> ASoC: qcom: sc8280xp: allow using the sc8280xp card with lpass-cpu
+> drm/imagination: guard fence release against device removal
 > 
-> This commit adds init and ops callbacks for DSP Bypass DAI links in the
-> sc8280xp machine driver and attaches the WCD jack to LPASS CPU TX codec DMA
-> DAIs in qcom_snd_wcd_jack_setup().
+> This commit guards work queueing in pvr_queue_fence_release() with
+> drm_dev_enter(), freeing the fence directly and skipping 
+> pvr_context_put()
+> when the device is unplugged.
 > 
->> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
->> index ac4dfb2c2182c..4fcccf7ec4965 100644
->> --- a/sound/soc/qcom/sc8280xp.c
->> +++ b/sound/soc/qcom/sc8280xp.c
-> 
+>> diff --git a/drivers/gpu/drm/imagination/pvr_queue.c 
+>> b/drivers/gpu/drm/imagination/pvr_queue.c
+>> index 34b826381aa2b..2a6bfb090fadd 100644
+>> --- a/drivers/gpu/drm/imagination/pvr_queue.c
+>> +++ b/drivers/gpu/drm/imagination/pvr_queue.c
 > [ ... ]
-> 
->> @@ -377,6 +378,37 @@ static int nord_snd_init(struct snd_soc_pcm_runtime *rtd)
->>   	return 0;
->>   }
->>   
->> +static int sc8280xp_lpass_snd_init(struct snd_soc_pcm_runtime *rtd)
->> +{
->> +	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
->> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
->> +	struct snd_soc_card *card = rtd->card;
->> +
->> +	switch (cpu_dai->id) {
->> +	case LPASS_CDC_DMA_WSA_RX0:
->> +	case LPASS_CDC_DMA_WSA_RX1:
->> +		/*
->> +		 * Set limit of -3 dB on Digital Volume and 0 dB on PA Volume
->> +		 * to reduce the risk of speaker damage until we have active
->> +		 * speaker protection in place.
->> +		 */
->> +		snd_soc_limit_volume(card, "WSA_RX0 Digital Volume", 81);
->> +		snd_soc_limit_volume(card, "WSA_RX1 Digital Volume", 81);
->> +		snd_soc_limit_volume(card, "SpkrLeft PA Volume", 17);
->> +		snd_soc_limit_volume(card, "SpkrRight PA Volume", 17);
->> +		break;
->> +	case LPASS_DP_RX:
->> +		return qcom_snd_dp_jack_setup(rtd, &data->dp_jack[0], 0);
->> +	default:
->> +		break;
+>> @@ -122,8 +123,19 @@ static void pvr_queue_fence_release(struct 
+>> dma_fence *f)
+>>  {
+>>  	struct pvr_queue_fence *fence = container_of(f, struct 
+>> pvr_queue_fence, base);
+>>  	struct pvr_device *pvr_dev = fence->queue->ctx->pvr_dev;
+>> +	int idx;
+>> 
+>> -	queue_work(pvr_dev->sched_wq, &fence->release_work);
+>> +	/*
+>> +	 * Fences held by drm_syncobj are released in drm_file_free() before
+>> +	 * postclose. After unplug, sched_wq and kernel_vm_ctx may already 
+>> be
+>> +	 * torn down; free the fence directly and leak the context 
+>> reference.
+>> +	 */
+>> +	if (drm_dev_enter(from_pvr_device(pvr_dev), &idx)) {
+>> +		queue_work(pvr_dev->sched_wq, &fence->release_work);
+>> +		drm_dev_exit(idx);
+>> +	} else {
+>> +		dma_fence_free(&fence->base);
 >> +	}
->> +
->> +	if (data->priv->wcd_jack)
->> +		return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
->> +
->> +	return 0;
->> +}
+>>  }
 > 
 > [Severity: High]
-> This problem wasn't introduced by this patch, but sc8280xp_snd_exit() skips
-> headset jack cleanup for WCD jack configurations [1].
+> Does leaking the fence->queue->ctx reference here also permanently leak
+> pvr_dev and trigger teardown warnings?
 > 
-> Both sc8280xp_snd_init() and sc8280xp_lpass_snd_init() initialize data->jack
-> and set data->jack_setup = true for WCD jack configurations, whereas
-> sc8280xp_snd_exit() only calls qcom_snd_headset_jack_cleanup() and clears
-> data->jack_setup when dai_data->jack_setup is SC8280XP_JACK_SETUP_CODEC:
+> drm_dev_unplug() is called not only during pvr_remove(), but also at
+> runtime when a GPU reset or MMU flush fails:
 > 
-> sound/soc/qcom/sc8280xp.c:sc8280xp_snd_exit() {
-> 	...
-> 	dai_data = sc8280xp_get_dai_data(data->priv, cpu_dai->id);
-> 	if (dai_data && dai_data->jack_setup == SC8280XP_JACK_SETUP_CODEC) {
-> 		qcom_snd_headset_jack_cleanup(rtd);
-> 		data->jack_setup = false;
+> drivers/gpu/drm/imagination/pvr_power.c:pvr_device_lost() {
+> 	if (!pvr_dev->lost) {
+> 		pvr_dev->lost = true;
+> 		drm_dev_unplug(from_pvr_device(pvr_dev));
 > 	}
 > }
 > 
-> When a card with a WCD jack unbinds, snd_card_free() frees data->jack.jack
-> while codec components retain &data->jack and data->jack_setup remains true.
-> On rebind, qcom_snd_headset_jack_init() skips creating a new jack and
-> re-registers the dangling data->jack with the codec components, causing a
-> use-after-free on the next headset jack event.
-
-This will deserve a fix in a separate serie.
-
-> 
-> [ ... ]
-> 
->> @@ -549,6 +633,10 @@ static void sc8280xp_add_be_ops(struct snd_soc_card *card)
->>   			link->exit = sc8280xp_snd_exit;
->>   			link->be_hw_params_fixup = sc8280xp_be_hw_params_fixup;
->>   			link->ops = &sc8280xp_be_ops;
->> +		} else if (!link->dynamic) {
->> +			/* DSP Bypass link, neither a DPCM frontend nor a backend */
->> +			link->init = sc8280xp_lpass_snd_init;
->> +			link->ops = &sc8280xp_lpass_ops;
->>   		}
->>   	}
->>   }
-> 
-> [Severity: Medium]
-> Should DSP Bypass links also wire a link->exit callback to call
-> qcom_snd_headset_jack_cleanup() and reset data->jack_setup = false?
-> 
-> Without an exit callback to pair with sc8280xp_lpass_snd_init(), unbinding and
-> rebinding a component on a DSP Bypass card with data->priv->wcd_jack set leaves
-> data->jack_setup true after snd_card_free() frees data->jack.jack, leading to
-> a use-after-free in snd_soc_jack_report() when a jack event is reported.
-
-The current code doesn't clean the jack on exit, this should be fixed globally
-in a separate serie.
-
-> 
-> [1] https://sashiko.dev/#/bug/linux-70cecd60-74fd-40f1-95c8-8dc260e646ac
-> 
-
+> Once unplugged, dropping the context reference in the else branch 
+> prevents
+> pvr_context_release() from ever running. That leaves the context in
+> pvr_dev->ctx_ids and its firmware objects in fw_objs.list and 
+> fw_dev->fw_mm
+> (triggering WARN_ONs in pvr_fw_fini() and pvr_context_device_fini()), 
+> and
+> never drops ctx->vm_ctx, whose drm_gpuvm manager and GEM objects hold
+> drm_device references that prevent drm_dev_release() from freeing 
+> pvr_dev.
