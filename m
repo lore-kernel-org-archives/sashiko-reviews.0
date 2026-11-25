@@ -1,54 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.215
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795606379;
-	b=acwLrCoN/FfYBxTZj7JhQLaCsAIQWuEFzQrvsabuIxSSyHOycMEFba4vXkEY5slkr6lT
-	 EPO+0iq5xeICTFkzN6+yeI739l5lkUoNsXafEef7Af1IxWwb7OiPMEJEUX2CdjX5CBEtL
-	 VVA7uMoKShv8bnqLO3/6fVAY/DFwJ0FQh98e0rGl/y7FI0wbp+5pxH6BFbOibR6mCNMhb
-	 rnBb30DOc3zdKmEmXENbcOVUlVAyEkCr+hPdtuwUkyhOHVcAsn37KcLmjGbp5aODKgckU
-	 oBc7Y6nduFuHyhmMrmB1csFYW4NTZNj9fNS8NoDFvGXPyLssaHj6tpyx1YdQ+7eIHWA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795606379;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
-	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
-	 To:X-Mailer;
-	bh=0V6f85LpMW4xwrS3x6+t74PKgkFqxH39qfpnircqYfU=;
-	b=Lt/JBd6cOgQJDBWZnOOZVssHbZBQm6TE5Nl9X9FRTi+zBHbLlWCTArIyAso9DuFb8rhk
-	 zrc/4thja9uGPytovB02GWFuUnFQNtv4Y7FBGCGl24gqrPXaXSID6H/d424f6l07yvoLw
-	 FqX1zCz0QG6VTB1UoeasGr3nibW0YfkgAOxbyJrUN2CErZSOsbsKSjwxAC9pCNYk5Mctp
-	 1oBoL61cKCS2Nsl2VMbfKpcxSwX/kjV1PfQC5Dy64xKNTPgHuVZ4lto/YpAepiHwZC2f/
-	 9rXyydc4NBLAG9Y4ZzZJW92ekzRScbqiFYadAa/KQ2ThkLBNRUTr1dwveA+MFMhZVqA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Dwjp75Wa;
-	arc=none smtp.remote-ip=95.215.58.215
-Received: from mta1.migadu.com (out-215.mta1.migadu.com [95.215.58.215])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.33
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795606568;
+	b=BZFQkE8vQ4nH9nePJiiwz4/ijysXzFuGh0+qL3mcKty05RKneqZwSFjQZoljAIksgR4b
+	 z0CaBPL2mwwMw1r7k/+np4Z8Y/5lfDhwUZDN4un59wvAWL/5/4aYZ9CFsNiqUWlJd2PIL
+	 d3zKr0tJEruHkBKm/bo4t4rs68ubAMmY/Z5TPc+PrYoG6UnmplztmvNkQIgNM17NaStuN
+	 IZ/K+xHRBkq5Dpno7snWEjL13b518rZJWa5+ji3vfd3cgIo+1N7aTLJQwi1PkSj5a8Jf1
+	 +RzsyRDdNu4dpoWwuN5vj2a8U/GlyJ9RoBt3BHdruiGGQTN2NnqYvNTAC/MVKQULUdA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795606568;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=Rn7WF5V0XmrPEdEfp0KmYRhoDRsEpNRZyRFYdBwhAXc=;
+	b=nq9nTZbNq3Ip6QxUFqr69V6uuEWk2uhR1Vefwk7AHS7M9tlyt1CapCTWSDbC2uRJn7Oy
+	 eGWqqIeGet3Jog05iqGP/MocNFWwoaOdN+v6a+BBbyKQeVLXvR65+Yv4nLLB9be0it3OD
+	 fzgY2T4+7ghyf+WkI1xS+mhtOVF65pVBk0eQTE1tYk6BAhey6UbJMf1NEx4F/u6ktWu9n
+	 Jy/+VLoU7ySWlxfDP8GKm8Vh+HMsGDnHuqeT8yCEgWnV9csSPydFC/xad+aZu7tzAMw17
+	 PoXbO56b+u3q9GeYZ4rNyVws5rcY2/rjZj/OcvYEmh2wVh2wUMrQ4gYcEGMnjF2zsWA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=kgpK2fAO;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.33
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010033.outbound.protection.outlook.com [52.101.46.33])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350E9606A33D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 11:32:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 350E9606A33D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581F1606A323
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 11:36:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 581F1606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Dwjp75Wa
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=DeSjNojkk4MD/tKsHkRDT7b8MjIXbSU/jX7LSyciBWI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795606376; v=1; x=1796211176;
- b=Dwjp75WaPQLe2GefeA80kr6niIOaCdkb8YzS1evkZiW/zoA/ncTRFFzSlMJtn+YbTNEPRe6j
- SpeTFw+wyiOQxcTg0NyAOu3DzKLpbREWLtDtZRsubcVBMVg2KI6SGKjWHy/04avRnknTZpqQ2n+
- orEqGU+oOWBeu8RPeqWpSxP8=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 92cb8adb5f7c7ac6;
-	Wed, 25 Nov 2026 11:32:55 +0000
-X-Mizu-Trace-ID: 92cb8adb5f7c7ac6
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=kgpK2fAO
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=p/zqclK1bYRV6bc3B3zAtiztLaeFVBY6LwPOU/YpXjV2dELlUFVBFOrFez5FcOIJF/19byT4QkRRIvdYTcNycew7qpci40oko2nrhjeeg4pPAb0ru40JVyNAhtX7u3HWsq5Tul+JGhMeImRFLpRKLPkS6YuSmq2neUUJttIjpxZYowyzuMOmSKXhJQkYcHSAQvzPs3CKU3e1ndhumVc8IYbuhlxESZCQx2jHom/exHvgJ7rkIdveRP0m/SHYRTvrKXIDM+U2JOvY2NtXcFacODeLlTvdnmqzw0gbOymvxblwssxEuQEKwiHzepENKQsizoH903QTF4FSUYTG5cqYyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Rn7WF5V0XmrPEdEfp0KmYRhoDRsEpNRZyRFYdBwhAXc=;
+ b=lIvaHfUH9y1gTknR+t4F8Vq/FMXmXtIHTuUicCPAHbTXm4Al+XPKfX0IITcbqLoIIepELoRpwsPV6gtnuOVp2rkSXnq/XVgefZudxtYxyae8YTc96hF8x3v3av0alTybz8Yc3Qq3JOkwi1J1QGN8fZ2kFSbD7cD3ybeK8wkxqBxJkAOfSFEx2GpwQ/H4hqah9+0mBds2P0PKR7hBM2C5iCX9upah1gWPdI5GrsMxFwuaqDpEQXZZqhlO5E5X9HkZQj0X81tM6Mq1l2b5dJs8MzPVdTHB9ksSXMd1WQ+EVmw5D6NR9uYT/gVgogJggjiJsRjnf725sZf4qZzeh/izcQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Rn7WF5V0XmrPEdEfp0KmYRhoDRsEpNRZyRFYdBwhAXc=;
+ b=kgpK2fAOiRPJYJX4IgMDY3Vk9LwQjlKH3OEuhMWwYiDQZyNocaH87J4EAzTXDhXsidx2bOg/k1cRsBfhM093OMlcqzLmsv/A+9052L0c1kdcHYXkMkYigTrXidYoYGXIKGnB6xBlENQAnzSC1gd4ZWZDihnc0P2dGfbA4qrF5Eg=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
+ by SJ2PR12MB9211.namprd12.prod.outlook.com (2603:10b6:a03:55e::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.14; Wed, 25 Nov
+ 2026 11:36:05 +0000
+Received: from CY5PR12MB6252.namprd12.prod.outlook.com
+ ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
+ ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0662.004; Wed, 25 Nov 2026
+ 11:36:05 +0000
+Message-ID: <ad695146-f273-463a-96aa-6e06b2a754ed@amd.com>
+Date: Wed, 25 Nov 2026 17:04:56 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 24/24] soundwire: bus: use pm_runtime_get_if_active()
+ in sdw_handle_slave_alerts()
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+ Mario Limonciello <Mario.Limonciello@amd.com>,
+ "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>,
+ Syed Saba Kareem <syed.sabakareem@amd.com>, "N, Poojitha"
+ <Poojitha.N@amd.com>, "Prasad, Prasad" <venkataprasad.potturu@amd.com>
+References: <20261124085033.682755-1-Vijendar.Mukunda@amd.com>
+ <20261124085033.682755-25-Vijendar.Mukunda@amd.com>
+ <sashiko-outbox-230836@kernel.org>
+Content-Language: en-US
+From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
+In-Reply-To: <sashiko-outbox-230836@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5P287CA0053.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1d3::18) To CY5PR12MB6252.namprd12.prod.outlook.com
+ (2603:10b6:930:20::17)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,188 +102,197 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH v3 16/19 DO-NOT-MERGE] arm64: Implement
- try_populate_vmemmap_pmd using AF trick
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <CADrL8HWNAByKifcNgre_YAX3M+bwAW0BgMrfPmWHubOEs+AfDQ@mail.gmail.com>
-Date: Wed, 25 Nov 2026 19:32:37 +0800
-Cc: Muchun Song <muchun.song@linux.dev>,
- sashiko-reviews@lists.linux.dev,
- Will Deacon <will@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Oscar Salvador <osalvador@suse.de>,
- Andrew Morton <akpm@linux-foundation.org>,
- Kefeng Wang <wangkefeng.wang@huawei.com>,
- Nikos Nikoleris <nikos.nikoleris@arm.com>,
- Linu Cherian <linu.cherian@arm.com>,
- Mark Rutland <mark.rutland@arm.com>,
- David Hildenbrand <david@kernel.org>,
- Ryan Roberts <ryan.roberts@arm.com>,
- Nanyong Sun <sunnanyong@huawei.com>,
- Yu Zhao <yuzhao@google.com>,
- Frank van der Linden <fvdl@google.com>,
- David Rientjes <rientjes@google.com>,
- linux-mm@kvack.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5028917F-EFF3-488C-903E-9E19E5DDA3D1@linux.dev>
-References: <20261122184453.2668189-1-jthoughton@google.com>
- <20261122184453.2668189-17-jthoughton@google.com>
- <sashiko-outbox-228645@kernel.org>
- <CADrL8HWNAByKifcNgre_YAX3M+bwAW0BgMrfPmWHubOEs+AfDQ@mail.gmail.com>
-To: James Houghton <jthoughton@google.com>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|SJ2PR12MB9211:EE_
+X-MS-Office365-Filtering-Correlation-Id: 808303e5-a133-4fa6-e781-08df4ae84a21
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|6133799003|18002099003|261009223027099003|22082099003|261021133027099003|261022115727099003|261022105027099003|261022113327099003|261022075727099003|261021123027099003|261021135927099003|261021121427099003|261026140227099003|261026121527099003|261026130827099003|261026135527099003|261028144727099003|261021130227099003|56012099006|4143699003|10067099003|261102123227099003|11063799006|5023799004;
+X-Microsoft-Antispam-Message-Info:
+	okDIOBpKDx1me1llm1v4UkRCnUv+hNHBbdq4mVrM0t+Hwp6AnAva/Y8sdg01ieBSXvgFzMfsuloYptfbzjHMkErB/9G9zI0ua8OmPfYQmTYKMOMkLtJs/AyTaUi4qrv91x2Gt3V2HFPtBJP+BCBo2yA5DzFX6/Z76rRx/gSr9e86FltSFntQoglLkMXOg7rd4Xaezjnjr2nUh6et+g/WzwbHthBTK897tG5S64BAlKsNkGmqEqGr8Pk3dr1c7XWFXMLuV6sQNQpCXcWjj1lx8BBx/uYpZTwwZtRZtPv6pzvabp6qRxnQMT0xAclcrtbZy38ARTIanattJQdUsBTv3xBXyip+9gm/05b3GGV0AerHcKc2cJ1P+vN4dADLl1NmJbfUw3+k6BTwJ9cYQjbh75mgwMzRc1oT2sgLFaLAmktm/DWbDhzmo/m678nPmbii4jiV/Qssaqg+shw6BxY2K0gBuiZu2v7Q0xfMaE33iT6FsPH6kqnrmzQMMy2iRCXbkCKEKgYuhD3bMRZrlbLUlsbfbV0kXpFUugclgdj15b0qm1Kd612O6wb/TqhEvPc2HDPyMGIoBowyZQqdwUW5pF3RLnIQxXhy0awldllSzOYO5+PI2T4intKVa0YVKJ9DYzNGjNP1cL8GVbn+godkFCHCsrt5fM+yR6vFyBbvPls=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(6133799003)(18002099003)(261009223027099003)(22082099003)(261021133027099003)(261022115727099003)(261022105027099003)(261022113327099003)(261022075727099003)(261021123027099003)(261021135927099003)(261021121427099003)(261026140227099003)(261026121527099003)(261026130827099003)(261026135527099003)(261028144727099003)(261021130227099003)(56012099006)(4143699003)(10067099003)(261102123227099003)(11063799006)(5023799004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?STdYa0RaOFJSQW5TMXpscjY1MU1xaTA1STU3bVZkS1VlYXJObkd6bWVFbFk0?=
+ =?utf-8?B?N2M0WnUxbko5ellydk5Wcjd6UlJlNVYyVzlBNTJIcUdTY0wxWlFOOWlOQ0h3?=
+ =?utf-8?B?bmRZbjdJNkJ1ZEZmaDJ6MGJpcGZjYkRXUkdxVXo0WGk3T1hsUW93NHIza3R2?=
+ =?utf-8?B?cjJIU0lDSDIrVkRLa3BabkhnWElldjY0akVmY0pGc2MwMTlkd1lqRVJFWUZ2?=
+ =?utf-8?B?K0lrRVRIWlk2ZDJZdU5QbTlReFQzdnBodGhZUDlWbXFmZG9ZZ2M1U1J6MG95?=
+ =?utf-8?B?YUx1bFQ1dzZ0bld5SHpuTDRBUW5QS0VSczlqUnZXS2ZLSVFtLys4V1g1TXJH?=
+ =?utf-8?B?RUNyWTVFcEc2ODFwYVpXV0dENlFLOVFDV0xjR3Vnd01qbXl5Q3lpNUxicWl3?=
+ =?utf-8?B?ZTJCMm9JS3lxMndjMjMxYWZtY2hzaWJIMjh4RzBRSHZmY3FieG01ZjBLVytL?=
+ =?utf-8?B?S3ZPZ1ozWWZYNmowU1BLeHZwWUlNQUo4ZGNBUG95b0xBK3BFWnV6Rnl5eXZa?=
+ =?utf-8?B?RHMrWkZVWlFvZTY3R2llMW5GRlFraFdSRG1uUVI0WnRJWWIyNklkdDVvbnZj?=
+ =?utf-8?B?NjZTaHBENTUwelF2M3ZLMVBxNmxxWjNjRytxaHdRMjF2QTg0L21GSTAwRFVU?=
+ =?utf-8?B?dUYwU0FKbEQxTHZPQUd5ZFk4c0FkUDdqZi9YdnZyNzdEVUM0bStEN1VodTlo?=
+ =?utf-8?B?K1g1RUlCZUk5TG1veDR6VWdXT3dpTC9ZZ1Q1cVZVSVhRZlRPUHl5SDlNOVBN?=
+ =?utf-8?B?TWpHYWh6aGtncUhCZHlWQ2UwUUxrM1NmUmt5M3JJc2FUOXVpbTIveEhDeTdp?=
+ =?utf-8?B?bVBKNFNVc2RyblpSZVJnMGp4amhjcHl5VTFReU5Zdk1EeURqRGJwZURSd2ZO?=
+ =?utf-8?B?Zk11YUUvRDJxbVZNeEI4eXFMN3YwRURuaENBT09LOHArcTVqUjEzLy9IRWVv?=
+ =?utf-8?B?OTVSRU1wNzBkQm9tSG9SNTFkWkpmTml3NTZXenprL0VNUEhtWnFibVBVM3hx?=
+ =?utf-8?B?OVhiYUpCQU5iS2l1MUlCYkswOTU2amZRQmZCd0JPUnFqTDhOZ0FaS0lzUUNo?=
+ =?utf-8?B?QkhUR1MyZm9sNXZQa0N1WURUeFVQcHFacGE4YVVHVmFqY0NiQlZ5MElCeFhV?=
+ =?utf-8?B?Q0VVY2VEeHNJR1BaelNHQlMzT3dKSHZTMHdBSFYxNnE4MFNGUXdzajFFN1o2?=
+ =?utf-8?B?NzVzUkNxU3I2aGZWc2JkYTVSQXYzYmV6ZWlBOGxHZWYxTjE2R2VtUnc2aDNv?=
+ =?utf-8?B?MnFSVHNjbysxaEZPa3BkaVNteU5yalpEZ1praGNWcnUrZmo3eURqcDYvV2Vj?=
+ =?utf-8?B?Mml3WUdnbk1NWnFUUFV0SjNuUHhIOEkzUkk3cGpiU1kwcGUzc2pOb3Zobldq?=
+ =?utf-8?B?YjJBUWw0WXRGUW9lcUlQbTlGSE5WWVF2SkZ1aWswVGlFSWd5VlNnbkxpMkpm?=
+ =?utf-8?B?L2lMR01lby9RWGNIaXVVdzhrSHpFb2F5UWlsYkxZRW9wL3BQaFBadzhsNzk1?=
+ =?utf-8?B?aExzaEJ4czBnTDMvQk9pYzdLZ2ZMTTlRc3FsL3BSc0VybVYvbFZYbnpaTkFV?=
+ =?utf-8?B?bHNZbG9uZHVCbjh4b0YydG5DRTZLSVk5aEtGOFBNWVVaTlBzNGhhUjE5VEM3?=
+ =?utf-8?B?Y1lmL0xycDVZclNYbk8vdnl0OWtxL0dCeEZsRHpjb1F2S2R4U1BaWlNsekc5?=
+ =?utf-8?B?ZE5jc2x4YU9XREtWZ09FRHR5cDZDK2Zvbml6OWhieVRNRnowN3htWmo2L24y?=
+ =?utf-8?B?TTcra3d0ZG9PQk15OGtmNTFqZlhxWTlHMlpYSVV3WUQ0L0RidWNrand4bGhG?=
+ =?utf-8?B?YWtBNmdEN2N1Y00wS3JIMHVXSjhNOTJvZWRTNy9tSjVBclI1T1dRTXcxSWpC?=
+ =?utf-8?B?S1BLRTd1a3JFVDBFSnBOYnVSQXJJVHAxQ3FwaEFHWEdDWXdOQndERHNnbnJY?=
+ =?utf-8?B?MFpJNjVCWk12QVNZN0NIU3MwZkU5T0M5M0IyeU5RZnpOVWN1cGswOGRUdVMz?=
+ =?utf-8?B?cTB2eHppZGVyYk5DQWJqUFpWcFN5NnFocHNTL3RsNUQwL1N3cVBxS0pnN0Iy?=
+ =?utf-8?B?OTE1R0JQYXQyWXhLcytVVEVpT1lFajhOYmVNelBWRUVmbGIwNnBMN0pxRkxJ?=
+ =?utf-8?B?b2dvbWIra2lQOG14cklBWWxTaU5wZlAwY1ZSZnJ4bmd2alI0Q21ZVXBqNHVj?=
+ =?utf-8?B?T3JVUE5oQ0VtTEllOENmekpYV2x2Z2ZGYkloNVgrRFlJVVNiL0Z1UzZUNElm?=
+ =?utf-8?B?akx0b0QrWU4veEFsMkdMM0hhcVlGNG9HTnY4cVVRaUxzYld6YmZMSmU3UlZh?=
+ =?utf-8?B?UnBzTVY3Qzd6OHdwam5rZXdRR2swOXpVeWhqQnNHWmdlNEs1QnlSQT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 808303e5-a133-4fa6-e781-08df4ae84a21
+X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2026 11:36:05.2062
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BpzoVN8qa4+7oUYRwr7Koyke29W0Uj3VeNuUmgrQNB+E6OBFW6Vw+T9LQG1dM9XkWQaXfQETsc/gG2moSHupxw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9211
 
 
 
-> On Nov 25, 2026, at 01:39, James Houghton <jthoughton@google.com> =
-wrote:
->=20
-> On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> =
-wrote:
->>=20
->> Thank you for your contribution! Sashiko AI review found 2 potential
->> issues to consider:
->> - [Medium] arm64/mm: over-broad TLB flush in =
-try_populate_vmemmap_pmd()
->> - [Low] arm64: direct AF=3D0 block-to-table transition in
->>  try_populate_vmemmap_pmd()
->> --
->>=20
->> commit 1319c4a7862ad5f3b810c4beca866ee98bd48fd7
->> Author: James Houghton <jthoughton@google.com>
->>=20
->> arm64: Implement try_populate_vmemmap_pmd using AF trick
->>=20
->> This commit implements try_populate_vmemmap_pmd() on arm64 to replace
->> in-use leaf vmemmap PMD block entries with table entries by clearing =
-the
->> access flag instead of using a break-before-make sequence when BBML3 =
-is
->> not supported.
->>=20
->>> diff --git a/arch/arm64/include/asm/pgalloc.h =
-b/arch/arm64/include/asm/pgalloc.h
->>> index 0263329fb7b30..7e304f01ce6d5 100644
->>> --- a/arch/arm64/include/asm/pgalloc.h
->>> +++ b/arch/arm64/include/asm/pgalloc.h
->>> @@ -124,9 +124,54 @@ pmd_populate(struct mm_struct *mm, pmd_t *pmdp, =
-pgtable_t ptep)
->>> static inline int try_populate_vmemmap_pmd(unsigned long addr, pmd_t =
-*pmdp,
->>>                                         pte_t *pgtable)
->>> {
->>> -     /* BBLM3 is required. Its presence has been checked. */
->>> -     pmd_populate_kernel(&init_mm, pmdp, pgtable);
->>> -     return 0;
->>> +     const int max_attempts =3D 16;
->>> +     int attempts =3D 0;
->>> +     pmd_t old_pmd, new_pmd;
->>> +
->>> +     if (!system_supports_bbm_through_af())
->>> +             return -EOPNOTSUPP;
->>> +
->>> +     if (system_supports_bbml3()) {
->>> +             /*
->>> +              * BBML3 allows block->table transitions if the PTEs =
-underneath
->>> +              * do not conflict with existing, potentially cached
->>> +              * translations.
->>> +              */
->>> +             pmd_populate_kernel(&init_mm, pmdp, pgtable);
->>> +             return 0;
->>> +     }
->>> +
->>> +     new_pmd =3D __pmd(__phys_to_pmd_val(__pa(pgtable)) |
->>> +                     PMD_TYPE_TABLE | PMD_TABLE_AF | =
-PMD_TABLE_UXN);
->>> +
->>> +     old_pmd =3D pmdp_get(pmdp);
->>> +
->>> +     do {
->>> +             if (WARN_ON_ONCE(!pmd_valid(old_pmd)))
->>> +                     return -EINVAL;
->>> +
->>> +             if (WARN_ON_ONCE(!pmd_leaf(old_pmd)))
->>> +                     return -EINVAL;
->>> +
->>> +             /* We should never get a contiguous PMD here. */
->>> +             if (WARN_ON_ONCE(pmd_cont(old_pmd)))
->>> +                     return -EINVAL;
->>> +
->>> +             if (pmd_young(old_pmd)) {
->>> +                     /* __ptep_clear_young() returns the =
-overwritten PTE */
->>> +                     old_pmd =3D =
-pte_pmd(pte_mkold(__ptep_clear_young((pte_t *)pmdp)));
->>> +
->>> +                     flush_tlb_kernel_range(addr, addr + PMD_SIZE);
->>> +             }
->>=20
->> [Severity: Medium]
->> Should this pass addr + PAGE_SIZE instead of addr + PMD_SIZE to
->> flush_tlb_kernel_range()?
->>=20
->> Invalidating a single non-contiguous PMD block entry only needs one
->> overlapping page-granular TLB invalidation, as in
->> unmap_hotplug_pmd_range().  With a range of PMD_SIZE and stride of
->> PAGE_SIZE, pages equals PTRS_PER_PTE (MAX_DVM_OPS), so
->> __flush_tlb_range_limit_excess() returns true on CPUs without
->> FEAT_TLBIRANGE and escalates the flush to flush_tlb_all().
->=20
-> Oh! I didn't know that!
->=20
-> I will change it to PAGE_SIZE instead of PMD_SIZE in v4. Neat!
->=20
->>=20
->>> +     /*
->>> +      * Translations without AF cannot be cached, so we can replace
->>> +      * them without BBM.
->>> +      */
->>> +     } while (!try_cmpxchg_relaxed(&pmd_val(*pmdp), =
-&pmd_val(old_pmd),
->>> +                                   pmd_val(new_pmd)) &&
->>> +              ++attempts < max_attempts);
->>=20
->> [Severity: Low]
->> As reported by Catalin Marinas on v1 [1], this rests on an =
-architecture
->> detail the review could not confirm from the kernel source: can a CPU
->> walk cache or TLB retain information from a valid leaf block PMD
->> descriptor when AF=3D0, or is a TLB invalidation and =
-break-before-make
->> sequence still required before converting a valid AF=3D0 block =
-descriptor
->> into a table descriptor without BBML3?
->>=20
->> If it can, skipping flush_tlb_kernel_range() when pmd_young(old_pmd) =
-is
->> already false or directly overwriting the valid AF=3D0 block =
-descriptor
->> with new_pmd leaves stale walk-cache or TLB state active while a =
-table
->> entry is installed.
->>=20
->> [1] https://lore.kernel.org/r/aoSJcAFMNJ1nPl2H@arm.com
->=20
-> Yeah, this is why these final 5 patches are marked as DO-NOT-MERGE.
-
-If we aren't sure about the hardware behavior here, why don't we just =
-drop
-these patches? Once the initial support of HVO for arm64 is merged into =
-the
-community, we can bring up this uncertain part for discussion. Wouldn't =
-that
-be simpler for this series?
-
-Thanks,
-Muchun
-
->=20
->>=20
->> --
->> Sashiko AI review =C2=B7 =
-https://sashiko.dev/#/patchset/20261122184453.2668189-1-jthoughton@google.=
-com?part=3D16
-
+On 11/24/26 14:57, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] soundwire: bus: sdw_handle_slave_alerts() drops alerts during
+>    manager resume
+> - [Medium] soundwire: bus: unserviced alert in sdw_handle_slave_alerts()
+>    on suspend race
+> --
+>
+> commit ce0ecb1363ee793ca8d8a1d1cf6efec9d612e28a
+> Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+>
+> soundwire: bus: use pm_runtime_get_if_active() in sdw_handle_slave_alerts()
+>
+> This commit uses pm_runtime_get_if_active() on the parent manager device in
+> sdw_handle_slave_alerts() before calling pm_runtime_resume_and_get() on the
+> slave device to avoid a runtime PM deadlock with the manager's
+> runtime_suspend callback.
+>
+>> diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
+>> index aeaae5a57c89d..0f8d634779270 100644
+>> --- a/drivers/soundwire/bus.c
+>> +++ b/drivers/soundwire/bus.c
+>> @@ -1667,15 +1667,52 @@ static int sdw_handle_slave_alerts(struct sdw_slave *slave)
+>>   	u8 buf, buf2[2];
+>>   	bool parity_check;
+>>   	bool parity_quirk;
+>> +	bool have_pm_ref = false;
+>> +	bool have_mgr_ref = false;
+>> +	struct device *mgr_dev = slave->bus->dev->parent;
+>>   
+>>   	sdw_modify_slave_status(slave, SDW_SLAVE_ALERT);
+>>   
+>> -	ret = pm_runtime_get_sync(&slave->dev);
+>> +	ret = pm_runtime_get_if_active(mgr_dev);
+>> +	if (ret == 0) {
+>> +		/*
+>> +		 * Manager is not RPM_ACTIVE; slave is already RPM_SUSPENDED
+>> +		 * by PM ordering. Return early to avoid I/O on inaccessible
+>> +		 * hardware and to prevent a deadlock: if the manager is in
+>> +		 * RPM_SUSPENDING, its runtime_suspend callback may be blocked
+>> +		 * in cancel_work_sync() waiting for this work, while this work
+>> +		 * would block in pm_runtime_resume_and_get() waiting for the
+>> +		 * manager to complete its suspend.
+>> +		 *
+>> +		 * When the SoundWire link enters clock-stop mode, the MIPI
+>> +		 * SoundWire spec guarantees the peripheral re-asserts the
+>> +		 * alert after clock resume, so the interrupt is deferred
+>> +		 * rather than dropped. When the link fully powers off
+>> +		 * (e.g. D3 or equivalent), the peripheral loses power and
+>> +		 * its alert state does not survive; the early return is
+>> +		 * harmless.
+>> +		 */
+>> +		dev_dbg(&slave->dev, "Alert deferred: manager not active\n");
+>> +		return 0;
+>> +	}
+> [Severity: High]
+> Can this early return drop peripheral alerts when mgr_dev is in
+> RPM_RESUMING?
+Agreed. The commit comment's assumption "slave is already RPM_SUSPENDED
+by PM ordering" does not hold when mgr_dev is in RPM_RESUMING — the
+manager's runtime_resume callback has already restarted the clock and
+enabled interrupts at that point, so the peripheral can assert an alert.
+The early return must be restricted to RPM_SUSPENDED and RPM_SUSPENDING
+only. When mgr_dev is in RPM_RESUMING the clock is running and the alert
+should be serviced. Will fix it and respin the series.
+>
+> pm_runtime_get_if_active(mgr_dev) returns 0 whenever
+> mgr_dev->power.runtime_status != RPM_ACTIVE, including when mgr_dev is in
+> RPM_RESUMING.  All in-tree manager drivers restart the SoundWire clock and
+> enable peripheral interrupts inside their runtime_resume callbacks while
+> mgr_dev is still in RPM_RESUMING (for example,
+> intel_start_bus_after_clock_stop() restarts the clock, calls
+> sdw_cdns_enable_interrupt(), and then sleeps in
+> sdw_cdns_check_self_clearing_bits()).
+>
+> CPU0                                    CPU1 (kworker)
+> rpm_resume(mgr_dev)
+>    mgr_dev->power.runtime_status = RPM_RESUMING
+>    intel_resume_runtime()
+>      intel_start_bus_after_clock_stop()
+>        sdw_cdns_clock_restart()
+>        sdw_cdns_enable_interrupt()
+>        <peripheral alert IRQ>
+>                                          cdns_update_slave_status_work()
+>                                            clear CDNS_MCP_SLAVE_INTSTAT0/1
+>                                            sdw_handle_slave_status()
+>                                              sdw_handle_slave_alerts()
+>                                                pm_runtime_get_if_active(...)
+>                                                return 0  <-- alert not cleared
+>        sdw_cdns_check_self_clearing_bits()
+>    mgr_dev->power.runtime_status = RPM_ACTIVE
+>
+> Similarly, in amd_sdw_irq_thread(), a wake event and a peripheral status
+> change arriving together queue an asynchronous pm_request_resume(mgr_dev),
+> schedule amd_sdw_work, and clear ACP_SW_STATE_CHANGE_STATUS_0TO7/8TO11 while
+> mgr_dev is still RPM_SUSPENDED or RPM_RESUMING.
+>
+> Because the manager status-change interrupt registers have already been
+> cleared and the clock is running, returning without clearing SDW_SCP_INT1
+> leaves the peripheral continuously reporting SDW_SLAVE_ALERT in PING frames
+> with no new ATTACHED-to-ALERT edge to re-trigger the manager interrupt once
+> mgr_dev reaches RPM_ACTIVE.
+>
+> [Severity: Medium]
+> When mgr_dev is in RPM_SUSPENDING and sdw_handle_slave_alerts() returns 0
+> here to avoid the cancel_work_sync() deadlock, what will resume the manager
+> to service the deferred alert?
+Agreed. For CLK_STOP_MODE without bus reset the peripheral retains its
+SCP state across the clock stop, and without pm_request_resume(&slave->dev)
+a non-wake-capable peripheral has no path to trigger a resume and the
+deferred alert goes unserviced. Already addressed in the fixup:
+pm_request_resume(&slave->dev) is added before the early return.
+will fix it.
+>
+> Without calling pm_request_resume(mgr_dev) (or pm_request_resume(&slave->dev))
+> before returning, mgr_dev->power.deferred_resume remains false in
+> rpm_suspend().  Once cancel_work_sync() finishes, the manager stops the
+> SoundWire clock and enters RPM_SUSPENDED.  A peripheral can only re-assert
+> its alert in PING frames after the clock resumes, so if nothing triggers a
+> runtime resume (for example, on a non-wake-capable peripheral), the manager
+> stays suspended and the alert goes unserviced; in AMD_SDW_POWER_OFF_MODE or
+> SDW_INTEL_CLK_STOP_BUS_RESET, only the manager controller powers down while
+> external codec peripherals remain powered, and the later bus reset on
+> manager resume clears the peripheral's SCP interrupt state.
+>
 
