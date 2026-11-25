@@ -1,61 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622013;
-	b=Xm22xd90L/aZOvIXt/h8uwtAjHLaEiLB+D8ikU458GQwdTSZSvEmp4JWxAHxeBxNw75x
-	 6bzYN+oMlyzaUTp2XXGYyBF9rTQ/PYtmvba3H51riuW3Ja9WtJWEuJCN3a/PzUbwdXZ70
-	 AzVyDIyul4ABc30lhXu3EmrDgMoPl09SiG0fHaOy9eczP+A/X8UdTgZZc9vcjDZMYgx92
-	 TVHPYZ5Y7wxhXTVSb7RceZZApV8y5eKBqqBGZ7hID95A3PFld8WPw5w1FvYufB64cX3I5
-	 ZR7VVWK5df+udYg+hdb3381Gk0U1G0pYG05308UWwVq5czjauP75JLuNm3osSNNu7gQ==
+	t=1795622017;
+	b=iiaUS5oVMSJrlz7uIk5DetNQVfCM/QcupPtymI6lAyrPs71cK0/AKIEyJgp4fwoHdJqJ
+	 GrI9JFoZbAaqW80gl3M8jKss0BKim0mWhCM908sv8YIBJJZ6UnWebXBDL6urZ9cW5D0ep
+	 H6aTQD5a1q7o5sxsoOt499TGsBZ1Y7DFCOvwR99Vx/U930XTHV8lQLCmH/2/cFg1tOVFj
+	 amoznqJKwgZV3PHpQLY9hyJPxtHu5KZ/bXL1M2rr8C1YFBWY9jtHL/mbDWwWktIwqKIhK
+	 xPQuIich2A65wIwSLq2WcoCLUeIK9Pm0bt2iTvTz6AU7J+e3DvP8Q7snMZMxxajGCig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622013;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=604SFvy4+RgSkLOg62spOBToZb/ngKE9hV/JFGFCqjU=;
-	b=YKWWzlV5w0Y/iOdLT4drl0EHAxeNaJgC++UwqFxg9jQhWb6ILItRiSkjqoFOAyDBFSL6
-	 oJC1b9tPdYZi0LPtMgAmxCbc3VrNvzLp8CRRgKseviZ1JJxuNsFeNe5tRFPWPCJIKZY/p
-	 WXmZupwUC/w7G7teAF3TfsAiZCA0zufP3jq6QU9RPhtMbFAIzOQMC1Z5YOW7SQmjAmXF3
-	 gM6hCpbnmJsgVj+Y7MphTUaLC/5jFRgvOieThqM7L9P61/sm2VwGfXySHAlQhn2Y37T/l
-	 fvuLO+LazVn7gIFXBh5juKSjQZJeYRoW4QTW+0UyZl9OeXohQJiKVQkv2TLyxGrfh/g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622017;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=ofjZuNiDg7ilWnJJWScuyrFmHX53hQiX68aQ47o3Xlo=;
+	b=ivu++ZAj9dWqGsWjbFGjbB/4qWN7u4H/i3DeWjSAluh+6EMhRrTwS752rehsF+sODFIk
+	 lFIijrUqTtVm9rTuO7JMah/cOysi8tRBbM7HaspqCkOBTPuxHOhP8Dr6rM7Wx/0cEzsmw
+	 +L5N9TuXZvnpgqt6t+msF11x46ReUoHYi05iS3mStNj8dtNXam4DyhPyeNzd2sS6I3mHE
+	 5FMhdEwR01SWxMUuszunXfDIxQiZU//AUEoy2Ag7If9U0v/riJ6oXSxfJqKJJZ5ncF7ZM
+	 pvAN4ZWo9L2wLcZz3v3LKMXTJtmCEr8I6Syq5FFO14xYDZxuOLXqiXtDn7N4pS8kLTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=QvhOu6Ym;
-	arc=none smtp.remote-ip=91.218.175.154
-Received: from mta0.migadu.com (out-154.mta0.migadu.com [91.218.175.154])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=smlvMA8J;
+	arc=none smtp.remote-ip=44.202.169.35
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51175606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 15:53:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51175606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62667606A321
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 15:53:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 62667606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=QvhOu6Ym
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=zzi6AwEaVyS7KWiqQ9UFdMnPQT3SvBIYY8OV76VYzEI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795622010; v=1; x=1796226810;
- b=QvhOu6Ym4A+j7dkVWbIShIGB9vv9ovAl9tIZykwrx+hdesdTnRIyQqOh9E5EMr5V38R/eaee
- 8oDIpQrTYeBstkODTVgMrAxHznCm93luADxXdKGpXi7cnG1gUuVaXtVoRXACQNuwnU882apP7Vp
- PmCgsjGlPRRW3fjo7uj+KrKI=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 758f7d991fe6f229;
-	Wed, 25 Nov 2026 15:53:30 +0000
-X-Mizu-Trace-ID: 758f7d991fe6f229
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5c14bc5a743so37148e87.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 07:53:26 -0800 (PST)
-X-Gm-Message-State: APuU4Z8L/B1ogP1C9f7Rn1giuKoUqu/MzPWp6HmJMmXxqeGnH4D+9ynB
-	1eTuu0WGL11ITlod6KzKmRXIBO28iQuqNCOEgLM4gIKEC6YNHIDY78ZELz76aSDJuw7WNlLDmBi
-	sAnWTBjyzOfa3i0sRBZeLbiVHHFlR2XcEGpzkn55q
-X-Received: by 2002:a05:6512:2249:b0:5c1:ac5e:ee43 with SMTP id
- 2adb3069b0e04-5c212394558mr542334e87.3.1795622005333; Wed, 25 Nov 2026
- 07:53:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=smlvMA8J
+Received: from eig-obgw-6001b.ext.cloudfilter.net ([10.0.30.143])
+	by cmsmtp with ESMTPS
+	id W8rEx4acw4vCDWFJQxVpYy; Wed, 25 Nov 2026 15:53:36 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id WFJNx1uzhdRrRWFJNxWGMF; Wed, 25 Nov 2026 15:53:33 +0000
+X-Authority-Analysis: v=2.4 cv=LOhmQIW9 c=1 sm=1 tr=0 ts=6b07047f
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=1XWaLZrsAAAA:8 a=JOhP0RYFjyS_x4KktD4A:9 a=QEXdDO2ut3YA:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=ofjZuNiDg7ilWnJJWScuyrFmHX53hQiX68aQ47o3Xlo=; b=smlvMA8JkyqX
+	tNKKmQH00I1aKOjVLxS4XURyfaSeecngyr3fhnL6mrsy8mAe0aBp/BEr9Z/tWB29h8bWquTsQbkFo
+	BU7dk81TbKyUM2RmXVSGJiWfdzubfrujVR6Xh2VFQ3oqoWKjCmD0BxBehEYwRN1u0/a3D3lmxlgtw
+	rnWtglbLPhEuesznnL98Tkm9LK/IzVPjUG5r35YPhAR6PrB8+l4VOIOs0lBPK9ddY8b5jSL5SouSz
+	MKFwxI9rCTAbu7sKHnHLUs6iR82tDc2oF564/gD8tJyg9sfgVBYe9ubwoxeq9CcnCISCdGvShTJda
+	C5CvQfbzdst3NDX0n9vOBw==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:45574)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xWFJM-00000003nVg-42wd;
+	Wed, 25 Nov 2026 21:23:33 +0530
+Message-ID: <b5910c74-7e29-4138-9dd4-030c95c78ec3@roeck-us.net>
+Date: Wed, 25 Nov 2026 07:53:32 -0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,35 +76,169 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261125153911.106793-1-fuad.tabba@linux.dev> <20261125153911.106793-3-fuad.tabba@linux.dev>
- <sashiko-outbox-233677@kernel.org>
-In-Reply-To: <sashiko-outbox-233677@kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Wed, 25 Nov 2026 15:52:49 +0000
-X-Gmail-Original-Message-ID: <CA+EHjTxB4VBRFrwS5LVo2TrmwxLG8=Oyf9JTBWeCaXDfp7X_NA@mail.gmail.com>
-X-Gm-Features: Aa3M54p_f3WBy9239pNU7mXjKEDGd8rPn5mPXG1-qpZx9rKsY0g4RHXqEgP4sNA
-Message-ID: <CA+EHjTxB4VBRFrwS5LVo2TrmwxLG8=Oyf9JTBWeCaXDfp7X_NA@mail.gmail.com>
-Subject: Re: [PATCH v2 02/20] KVM: arm64: Don't advertise the host's MTE_frac
- to protected VMs
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, kvm@vger.kernel.org, 
-	Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hwmon: (pmbus) Fall back to CLEAR_FAULTS when STATUS_CML
+ is read-only
+To: sashiko-reviews@lists.linux.dev, Arthur Korn <akorn@google.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20261125053711.3098007-1-akorn@google.com>
+ <sashiko-outbox-232631@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <sashiko-outbox-232631@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xWFJM-00000003nVg-42wd
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:45574
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 13
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfFTVqHDaCnVEhisd0k6bLd1xtkkyxjNvELkt8StZ/E4LCYaYzrmv1q5r0TqGyWKIEbV+Ezll2CVNRrNZLV2AWs9KFP/rYFkYBMSO37aHbBIuGvNJjasR
+ YzXVeU8d5m3+Q1+l0eGrqiPQXNSxyjomm4MMIlmEcPoZxEVGVw2+qsx5xWKkw+1tCr615PF+baT7ePKYAIr07UkKOlcUjOOVsr8X9VSjSSMsNIfMMKJqXK+7
 
-On Wed, 25 Nov 2026 at 15:49, <sashiko-bot@kernel.org> wrote:
->
+On 11/24/26 21:49, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] KVM: arm64: missing Fixes trailer for commit 3d7ff00700d1
-[...]
-> [Severity: Low]
-> Should this include a Fixes tag for the commit that added the MTE_frac
-> entry to pvmid_aa64pfr1[]?
->
->   Fixes: 3d7ff00700d1 ("KVM: arm64: Rework specifying restricted features for protected VMs")
+> - [Medium] hwmon: (pmbus) pmbus_clear_cml_fault() disables W1C on
+>    virtual pages
+> --
+> 
+> commit 55aa274a3350ffb5857e7b698b066e9435f264ba
+> Author: Arthur Korn <akorn@google.com>
+> 
+> hwmon: (pmbus) Fall back to CLEAR_FAULTS when STATUS_CML is read-only
+> 
+> This commit reads back PMBUS_STATUS_CML after attempting to clear CML
+> faults on non-write-protected devices, disabling STATUS_CML write-1-to-clear
+> and falling back to CLEAR_FAULTS if the fault bits remain set.
+> 
+>> diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+>> index db5c5f533eb97..af8f589b328df 100644
+>> --- a/drivers/hwmon/pmbus/pmbus_core.c
+>> +++ b/drivers/hwmon/pmbus/pmbus_core.c
+>> @@ -728,15 +728,31 @@ void pmbus_clear_faults(struct i2c_client *client)
+>>   }
+>>   EXPORT_SYMBOL_NS_GPL(pmbus_clear_faults, "PMBUS");
+>>   
+>> -static void pmbus_clear_cml_fault(struct i2c_client *client, int page)
+>> +#define PB_CML_FAULT_CLEAR_MASK	(PB_CML_FAULT_INVALID_COMMAND | \
+>> +				 PB_CML_FAULT_INVALID_DATA)
+>> +
+>> +static void pmbus_clear_cml_fault(struct i2c_client *client, int page,
+>> +				  bool verify)
+>>   {
+>>   	struct pmbus_data *data = i2c_get_clientdata(client);
+>> +	int ret;
+>> +
+>> +	if (data->has_status_cml) {
+>> +		ret = _pmbus_write_byte_data(client, page, PMBUS_STATUS_CML,
+>> +					     PB_CML_FAULT_CLEAR_MASK);
+>> +		if (ret >= 0 && verify &&
+>> +		    !(data->flags & PMBUS_WRITE_PROTECTED)) {
+>> +			ret = _pmbus_read_byte_data(client, page,
+>> +						    PMBUS_STATUS_CML);
+>> +			if (ret >= 0 && (ret & PB_CML_FAULT_CLEAR_MASK))
+>> +				ret = -EIO;
+>> +		}
+>> +		if (ret >= 0)
+>> +			return;
+>> +		data->has_status_cml = false;
+>> +	}
+>>   
+>> -	if (!data->has_status_cml ||
+>> -	    _pmbus_write_byte_data(client, page, PMBUS_STATUS_CML,
+>> -				   PB_CML_FAULT_INVALID_COMMAND |
+>> -				   PB_CML_FAULT_INVALID_DATA) < 0)
+>> -		pmbus_clear_fault_page(client, page);
+>> +	pmbus_clear_fault_page(client, page);
+>>   }
+> 
+> [Severity: Medium]
+> Does clearing data->has_status_cml on any negative return value from
+> _pmbus_write_byte_data() disable STATUS_CML write-1-to-clear across the
+> whole device when a driver exposes a read-only virtual page?
+> 
+> During pmbus_init_common(), pmbus_clear_cml_faults() iterates over all
+> pages.  On multi-page devices such as max16601, virtual page 1 is
+> read-only while pages 0 (VCORE) and 2 (VSA) support byte writes:
+> 
+> drivers/hwmon/pmbus/max16601.c:max16601_write_byte_data() {
+> 	...
+> 	if (page > 0) {
+> 		if (page == 2)	/* VSA */
+> 			return i2c_smbus_write_byte_data(data->vsa, reg, value);
+> 		return -EOPNOTSUPP;
+> 	}
+> 	return -ENODATA;
+> }
+> 
+> When pmbus_clear_cml_faults() reaches page 1, _pmbus_write_byte_data()
+> returns -EOPNOTSUPP and sets data->has_status_cml = false.  Unlike before,
+> where only page 1 fell back to pmbus_clear_fault_page(), this regression
+> disables STATUS_CML write-1-to-clear for page 2 and for all subsequent
+> register probes on page 0, sending PMBUS_CLEAR_FAULTS and wiping latched
+> faults on both rails.
+> 
 
-No. A protected VM doesn't have MTE, so the field isn't read, and the
-wrong value doesn't cause a failure. The commit that added the entry
-is in the commit message.
+Seems real. Arthur, what do you think ?
 
-/fuad
+[ PMBus is really annoying :-( ]
+
+Guenter
+
