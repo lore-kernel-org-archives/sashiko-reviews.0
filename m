@@ -1,78 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.189.121.228
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795607314;
-	b=e7cCKdIWRK2WNZVRg5raNrRAaqWKTAhyj9FOZwLXfQDWlNhg3GZG9fszW0M8tLVOkAFP
-	 LZMkM7cDb1dpwNS45uIiZemXI9V4MVxqjeORB1FLeAiafiwnA7WSgVAQqUtZDZ1JfEMzz
-	 poew/RlqArokvSMso+Olr6r6B+YrTID5ZvpUokkegi7I8uiHGZ8h46OCUaAP+qY+5kcpJ
-	 JMcAwX7AonSYGQ1JMGtlDtHzIZ5ZKAoO9+ADkC/vIOKGXdlPwtaOeUI1QEtt1uvzIzOTg
-	 QYmGmh7M3yDAn3RDne6+cUdb1iYYdzAezkBWVYZh+LTQXx3YdnG5qLlYRDJ0a6/6X+A==
+	t=1795608438;
+	b=ngKsdyL49mAPPcUtK2GDlBAkLBXAgYriLIhFthDQMIPa/0pwYAa/jSP+Txs+TQLPZLrW
+	 0o4i8b3OPuhGoOTP6wwGtNNNspRd4+SUrk1/oZ0S3WKR3GbqcR10LWvACHtofIZaCTCz9
+	 2MePHaX5p/J4OHtagzqsAqBc1VT0Iqa6etLayETgkXHTtuLRieVH7qv3M5YkvSFJDsq1g
+	 YewIbmWP3eIrPk6KCBPvFy3ZOM6/3p3m8FV535Y0AhkogUOtGzh24QLjjBK1pIMBK/6uz
+	 EvMzp3yVhmcC0xL9K6w5RRJhqIC6ZnRoyMUsOzkt/0d2R5iN6ncpAElE2OQKN90LopQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795607314;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Subject:
-	 In-Reply-To:Organization:References:Date:Message-ID:MIME-Version:
-	 Content-Type;
-	bh=AKj2uIfUWbn3cT9A3TMD/Ml+gMTm1DckZDYuMo0ZI2g=;
-	b=H2FZEvDbVKl3+tVeN5WtmiyJln6yIP0nPG612lFJ9tDSjJLj++KSiIZ6tEwK6pHxbjW9
-	 rZHihwxfd0MKiWUbDoaNxnzk2IUmESPnJKtjchdWC4cmMh09RDOhyNNcfeLJwV8DWa24S
-	 8gEsQ6cLTi8qbQwoziKRenRP+MqNArdi3QQ2OIJQwL1fN4ssbiKHHnx0j4yhayVJb01WS
-	 p0m4onHN+RMiWX11Pb4Zq9KX3sw+zh0WZ/h3rFkYRqrg47b3IY43u4hxSeMwAqeXJe0Gd
-	 PQ7T9aiEXyb0KBaTgmEuDwxJInVFmtXtd8Wo4J9q+OqeMAwrjR0K1u3Rbh7AxVXKshA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795608438;
+	h=DMARC-Filter:Message-ID:DKIM-Signature:Subject:From:To:Cc:Date:
+	 In-Reply-To:References:Content-Type:MIME-Version;
+	bh=IVjYGPjhmv5sTTW5j25dSP5lfl0OsGKTOoj4SnRtwE4=;
+	b=BIrUguBflrxRVJisgcYTOBNSgo83NGFxhf6LF/16Y5S00APGF7CkA638HpDc28R8bLPj
+	 KjrdY4G6/AHnGv5X1nW1EMJK7x+leUImVuV5jpArQ5BSwhuxDDyOgT9/ijaRiGz694nCB
+	 Do8ql2AXWDDb3FW0exSRd2PvkLLBmJ5Evlu3WLuprbcLJA2H098pxMp9x2Q1mCQ7VT/aR
+	 LppprQ3vhLUkDqzZmoiGb+CeU5xLkYKhLR70MzOlIWEgUWyafdiLIfTVD+kFIWh63GW1H
+	 gJoAl2lXtLfON7XwnXK6ilEW2Eb6VtcwYyNtZ5Lxz24wmfcLJ4TvN3WjTa6pdwsNBKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kz4ReoG2;
-	arc=none smtp.remote-ip=192.198.163.10
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=itx.no;
+	spf=pass smtp.mailfrom=itx.no;
+	dkim=pass header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=G21FPXV0;
+	arc=none smtp.remote-ip=91.189.121.228
+Received: from mx.itxnorge.no (itx-kvm-14.itxnorge.no [91.189.121.228])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626E3606A323
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 11:48:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 626E3606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3D9606A321
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 12:07:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE3D9606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=itx.no
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kz4ReoG2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795607314; x=1827143314;
-  h=from:to:subject:in-reply-to:references:date:message-id:
-   mime-version;
-  bh=SlAJNOZ8GH42CB5OxxCuaE69BzuEFOQuIRpLzKBMgPU=;
-  b=kz4ReoG2gw+/7v5dq/8sLeaqPiT/2pf+MbhGTOnTaqmoYua+FwByRs1X
-   3N8p0u4hXUJSydwRGyuXxzthfnLEUhCKiKGTJjn9yiQTFPi9Pk7x3dnUN
-   ZUukRo2+D1A3r+0vCUviOG8/WBAi3jiFS7rEodInNN17ueNEAV1ARvhLJ
-   Y34nmlaufamTnUE8G+Wq+7NH19/lMalrzIq65vpsyjwxOE1n7myvltk4J
-   dwfW0aVIwzYRwFdg+Gvaj4KTe5PdMh44uACjKkI1UMFeY9GC9Wn/W2Qtk
-   2EKIQG1a68tvqYYtVMLdx7ZVVRPGyQitrBpEwytmgIQndi9nxK1JrTFif
-   w==;
-X-CSE-ConnectionGUID: I+RiEJdBQ7S2tKrcalncbg==
-X-CSE-MsgGUID: wwR4RmYNSqiSHjxAzI6qkg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11976"; a="4369350"
-X-IronPort-AV: E=Sophos;i="6.27,232,1787036400"; 
-   d="scan'208";a="4369350"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 03:48:33 -0800
-X-CSE-ConnectionGUID: 21w86H2gSvm1ifVn+5oXXA==
-X-CSE-MsgGUID: AUxD5cJ/QlSA9qpmwx68Fw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,232,1787036400"; 
-   d="scan'208";a="11864946"
-Received: from mkosciow-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.40])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 03:48:32 -0800
-From: Jani Nikula <jani.nikula@intel.com>
-To: sashiko-reviews@lists.linux.dev, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH 1/2] drm/i915/display: don't be cute about printing
- enabling/disabling
-In-Reply-To: <sashiko-outbox-231335@kernel.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
- 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
-References: <20261124141146.1560208-1-jani.nikula@intel.com>
- <sashiko-outbox-231335@kernel.org>
-Date: Wed, 25 Nov 2026 13:48:29 +0200
-Message-ID: <5c89a1a8b185633112990fa4201c92e8de0740c6@intel.com>
+	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=G21FPXV0
+Message-ID: <2f525cda544581acee89ee67ead7281ec1918bd0.camel@itx.no>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
+	t=1795608435;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IVjYGPjhmv5sTTW5j25dSP5lfl0OsGKTOoj4SnRtwE4=;
+	b=G21FPXV0V2GqZd2pEMvb5Dv2TVQIL7eWHaT8ij2I6QMDR0mHdyqkvs075XNGn8i4DQrh3g
+	QEZ0SLYcM3Kua5v1z4hiVtpSPOFzZhDeVQsjK3qbXcULmhUzylERDbLCINYldjkjzsZNAW
+	esrADqNiZsjd+AKjf8P2iQ7p2enPXZg=
+Subject: Re: [PATCH] sparc64: Report the fault address when a user window
+ cannot be saved
+From: Stian Halseth <stian@itx.no>
+To: sashiko-reviews@lists.linux.dev
+Cc: sparclinux@vger.kernel.org
+Date: Wed, 25 Nov 2026 13:07:14 +0100
+In-Reply-To: <sashiko-outbox-233087@kernel.org>
+References: <20261125094446.537502-1-stian@itx.no>
+	 <sashiko-outbox-233087@kernel.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-nSYwDIwz8ecVshBALNqc"
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -82,67 +62,162 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
 
-On Tue, 24 Nov 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] drm/i915/display: intel_force_bit_banging_write() missed in
->   %sabling cleanup
+
+--=-nSYwDIwz8ecVshBALNqc
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+Sashiko tested the patch against Linux 5.12-rc2, davem/sparc.git.
+vma_lookup() was added later, and force_sig_fault() no longer has the
+trapno argument.
+
+Agree with the Fixes tag:
+Fixes: 5b4fc3882a64 ("sparc64: Make corrupted user stacks more debuggable."=
+)
+
+Andreas, can you add the tag if you apply the patch, or do you want a v2?
+
+On the final low finding:
+The straddling window case needs sp just below an unmapped or read-only
+page. A stack overflow always faults at sp itself, so I kept it to the
+window address.
+
+/Stian
+
+On Wed, 2026-11-25 at 10:07 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential
+> issues to consider:
+> - [High] sparc64: call to undeclared vma_lookup() in
+>   fault_in_user_windows()
+> - [High] sparc64: missing trapno argument to force_sig_fault() in
+>   process_64.c
+> - [Low] sparc64: missing Fixes trailer in commit message for
+>   fault_in_user_windows()
+> - [Low] sparc64: fault_in_user_windows() uses base sp on page-straddling
+>   fault
 > --
->
-> commit a6f91eb39a4003adc548629cfa79fbc4fb32b5bb
-> Author: Jani Nikula <jani.nikula@intel.com>
->
-> drm/i915/display: don't be cute about printing enabling/disabling
->
-> This commit replaces "%sabling", enable ? "en" : "dis" debug logging
-> patterns in i915 display code with str_enable_disable().
->
-> [ ... ]
->
->> diff --git a/drivers/gpu/drm/i915/display/intel_gmbus.c b/drivers/gpu/drm/i915/display/intel_gmbus.c
->> index d43c81d362e6c..d68521588d54b 100644
->> --- a/drivers/gpu/drm/i915/display/intel_gmbus.c
->> +++ b/drivers/gpu/drm/i915/display/intel_gmbus.c
->> @@ -1107,9 +1107,8 @@ void intel_gmbus_force_bit(struct i2c_adapter *adapter, bool force_bit)
->>  	mutex_lock(&display->gmbus.mutex);
->>  
->>  	bus->force_bit += force_bit ? 1 : -1;
->> -	drm_dbg_kms(display->drm,
->> -		    "%sabling bit-banging on %s. force bit now %d\n",
->> -		    force_bit ? "en" : "dis", adapter->name,
->> +	drm_dbg_kms(display->drm, "%s bit-banging on %s. force bit now %d\n",
->> +		    str_enable_disable(force_bit), adapter->name,
->>  		    bus->force_bit);
->>  
->>  	mutex_unlock(&display->gmbus.mutex);
->
+>=20
+> commit ee3413b56ca2f61248a64fe34c40cdf99b9dde0c
+> Author: Stian Halseth <stian@itx.no>
+>=20
+> > sparc64: Report the fault address when a user window cannot be saved
+> >=20
+> > When the kernel spills a user register window and the store faults,
+> > the window is kept in the thread's window buffer. On the way back to
+> > user space fault_in_user_windows() writes it to the stack. If that
+> > write fails as well, it sends SIGSEGV with force_sig(). The handler
+> > gets SI_KERNEL and si_addr =3D=3D 0.
+> >=20
+> > When a thread overflows its stack, the first store into the guard page
+> > can be a window spill. If the kernel does that spill, for example
+> > during a system call, the window goes through this path. Stack
+> > overflow handlers compare si_addr with the guard page. With
+> > si_addr =3D=3D 0 they cannot tell that the stack overflowed. The Rust
+> > runtime then resets the handler, and the process dies with SIGSEGV
+> > instead of reporting the overflow. Rust's
+> > tests/ui/runtime/out-of-stack.rs fails this way:
+> >=20
+> >   ferris[157185]: bad register window fault: SP fff800010f60bf90 (orig_=
+sp fff800010f60b791) TPC fff800010f3a2db0 O7 00000100016039e4
+> >=20
+> > Pass the address of the window to the signal, as stack_unaligned()
+> > does for SIGBUS in the same file. Look up the VMA to choose the
+> > si_code, as process_fpemu_return() does on MIPS. A spill into a
+> > PROT_NONE guard page then reports SEGV_ACCERR, whether the hardware or
+> > the kernel did the spill.
+> >=20
+> > Closes: https://github.com/sparclinux/issues/issues/132
+> > Signed-off-by: Stian Halseth <stian@itx.no>
+>=20
 > [Severity: Low]
-> Should intel_force_bit_banging_write() in this same file also be converted
-> to str_enable_disable()?  It logs the identical bit-banging message using
-> the old "%sabling" pattern:
-
-Gah, a dupe of that shouldn't have been added in the first place. :/
-
-Deduplication at [1].
-
-
-BR,
-Jani.
-
-
-[1] https://lore.kernel.org/r/cover.1795607055.git.jani.nikula@intel.com
-
->
-> drivers/gpu/drm/i915/display/intel_gmbus.c:intel_force_bit_banging_write() {
+> Should this include a Fixes tag for the commit that introduced
+> force_sig(SIGSEGV) in fault_in_user_windows():
+>=20
+>   Fixes: 5b4fc3882a64 ("sparc64: Make corrupted user stacks more debuggab=
+le.")
+>=20
+> > diff --git a/arch/sparc/kernel/process_64.c b/arch/sparc/kernel/process=
+_64.c
+> > index 7afd0a859a78c..af8d2efc0dd43 100644
+> > --- a/arch/sparc/kernel/process_64.c
+> > +++ b/arch/sparc/kernel/process_64.c
+> > @@ -530,6 +530,8 @@ void fault_in_user_windows(struct pt_regs *regs)
+> >  {
+> >  	struct thread_info *t =3D current_thread_info();
+> >  	unsigned long window;
+> > +	unsigned long sp;
+> > +	int si_code;
+> > =20
+> >  	flush_user_windows();
+> >  	window =3D get_thread_wsaved();
+> > @@ -539,7 +541,7 @@ void fault_in_user_windows(struct pt_regs *regs)
+> >  		do {
+> >  			struct reg_window *rwin =3D &t->reg_window[window];
+> >  			int winsize =3D sizeof(struct reg_window);
+> > -			unsigned long sp, orig_sp;
+> > +			unsigned long orig_sp;
+> > =20
+> >  			orig_sp =3D sp =3D t->rwbuf_stkptrs[window];
+> > =20
+> > @@ -569,7 +571,13 @@ void fault_in_user_windows(struct pt_regs *regs)
+> > =20
+> >  barf:
+> >  	set_thread_wsaved(window + 1);
+> > -	force_sig(SIGSEGV);
+> > +	mmap_read_lock(current->mm);
+> > +	if (vma_lookup(current->mm, sp))
+>=20
+> [Severity: High]
+> Does this fail to build because vma_lookup() is not declared in this tree=
+?
+> process_fpemu_return() in arch/mips/kernel/traps.c uses find_vma() and
+> checks vma && vma->vm_start <=3D addr instead.
+>=20
+> > +		si_code =3D SEGV_ACCERR;
+> > +	else
+> > +		si_code =3D SEGV_MAPERR;
+> > +	mmap_read_unlock(current->mm);
+> > +	force_sig_fault(SIGSEGV, si_code, (void __user *) sp);
+>=20
+> [Severity: High]
+> Does force_sig_fault() fail to compile on SPARC without the fourth trapno
+> argument?  SPARC defines __ARCH_SI_TRAPNO, so force_sig_fault() requires =
+a
+> trapno parameter as in stack_unaligned() just above:
+>=20
+> arch/sparc/kernel/process_64.c:stack_unaligned() {
 >     ...
-> 		drm_dbg_kms(display->drm,
-> 			    "%sabling bit-banging on %s. force bit now %d\n",
-> 			    force_bit_banging ? "en" : "dis",
-> 			    connector->base.ddc->name, force_bit);
->     ...
+> 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *) sp, 0);
 > }
+>=20
+> [Severity: Low]
+> Can looking up and reporting sp report the wrong fault address and si_cod=
+e
+> when the register window straddles a page boundary?
+>=20
+> If sp lies near the top of a writable page and [sp, sp + winsize) crosses
+> into an unmapped or non-writable upper page, copy_to_user() faults in the
+> upper page and returns the uncopied byte count rem, but the VMA lookup an=
+d
+> force_sig_fault() use sp in the writable lower page.  Computing the fault
+> address from the uncopied byte count (sp + winsize - rem) would report th=
+e
+> faulting page.
+>=20
 
--- 
-Jani Nikula, Intel
+--=-nSYwDIwz8ecVshBALNqc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCawbPcgAKCRDoeAEuJe36
+Vk41APwIVZtYAk2eq8ccobBV4d7VnzsfbjX1ri9Ha7lIVV0kUAEAumxE3+eNHdN1
+kraQOM+DrDRCs32Rhs7R3ouBkT8qKQs=
+=vwuX
+-----END PGP SIGNATURE-----
+
+--=-nSYwDIwz8ecVshBALNqc--
