@@ -1,56 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=84.42.129.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.42.244.94
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622939;
-	b=cmDRD4mxAPl6QHLgyp3UkXkyQvXoCNjbng+qRf0wtvPEF7K4YXjSLEL1itGtrCIpqDo8
-	 QcvfmNEECzVI9NFe+wVwXJptk0mmSkPD04YVseasnLYJBCLE0PRjznX6k1ClkdNenmcdp
-	 mAt9vi0szM5hYFxuyIbv27myc6Trkp8kZjCslBoqWpa5Pw/ydQUarVdyb5BDHWtUKAZcx
-	 7DmG6eOKE6BWGaHv89vQ7o/sdos1y15Q1GvFYSAfUtwxEaxbAyGlbUOMyD0pD23zCQdB5
-	 SIpeIwUkOZcnJQWMUdP+qGgHCd95zrGIExzc/456NThxeQdiRgBgNJBd95wVilaDe8A==
+	t=1795622984;
+	b=uJ2N74qwmMDaShewJ1gxbpXUaXp+vhkupsmKNrHwlVhs0tDA8lfdQx1foL6xXmfg/1eJ
+	 KYq749SlYz85CYSUMR/J8skMb/xw8uj3311rmU6qbBNmSnEEPlPR3ekKNuxncRbLbCMw4
+	 +XNU0oJj/BlMwmxDgInamrAkSvYlLqXNuyunLtLG3P7XqSWK6AmRZLyKwplGALeOcL9TJ
+	 6QOysS/LLWARWkKnWGvihtXBIVP2RpuID03zxe3iUME6VmepRkr4bi3XlW4S5KCE+6IK3
+	 fjl8+PuOp6fGg6GsBF4HOwgiKltQAFzuY+mYh+dVnhxp22g82MG9WlNrMxLXXB/AB8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622939;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:From:Subject:To:Cc:References:Content-Language:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=s8H6OjEScw2/UnJ66l4jZ9QFseiSJ3MQbPOUTwgxZlA=;
-	b=mh4TqpNgzw3wL6OSvwiNVXdf3wgHSCZ6WQUKeDJF53F8S3cKCOeCZN8rsB4K7OkgJmP5
-	 OFn1A7NmHVhzw6p9YNzwbzGDDZMSPnxuEZzRqCpbYn5/uokUx+PGg/xqSPhUlR+6wIyxi
-	 LF3k0UHdjclXmqNb4qmvMITqeRpyNd9mioU/YWsEQ0cgCBmqx6oNcqi/WxpzNrnT0t0Zz
-	 8Sshhcv85aDeR51J0y51fpNhGLMV2EpheSkhHVM8V4qROBNa7s3sG8fEtxzHoOdWw31ub
-	 0bBxV21ANLZIihpobm2QEJV807MpjiVI87gGC7BVGWEcd0qtuzUQYrSyY5R5BuLlBdg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622984;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:Organization:x-ms-reactions:
+	 X-purgate-ID:X-purgate-type:X-purgate-size:X-Notice:X-purgate:
+	 X-purgate:X-pfmilter;
+	bh=h87IU5ETAr92o0NDzYh3Y5hYItUDXx2Nc2p6yBWTFDk=;
+	b=f+jzOfEmyzDNPCwP1qC0oAek69ZDnGYs4HgFQzWwsALZdq/XO44s/ywlfypqlJJHEYg2
+	 ToT8n9oKi00ZeBp/dNmZI9MxU2sszI2AGeobRKvfLlVugNZVebbXPBM6CBTO84INsBZ6z
+	 VRFm0D4qKZTL5qSfVwpP8HS6lCAd7cv87wf0u1yDTKHx1M1imNkvMvbYxJwwh0RVXV0RD
+	 PBYJtTnfg4eTXrOs+/tnKq92q1iEQpL0P2It45XXcPyJz0/Onc0KZ0hVKRREwU0NUYX6z
+	 7eRRwA5IP8akEFP9uFsGpf1KMPEJI4WLcQc/IcWC8RojeTIDDGEcKYYtvq6mEvzUUzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=ixit.cz;
-	spf=pass smtp.mailfrom=ixit.cz;
-	dkim=pass header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b="Wk/h1RG0";
-	arc=none smtp.remote-ip=84.42.129.46
-Received: from ixit.cz (ixit.cz [84.42.129.46])
+	dmarc=pass header.from=fritz.com;
+	spf=pass smtp.mailfrom=fritz.com;
+	dkim=pass header.d=fritz.com header.i=@fritz.com header.a=rsa-sha256 header.s=mail header.b=IAlypTa5;
+	arc=none smtp.remote-ip=212.42.244.94
+Received: from mail.avm.de (mail.avm.de [212.42.244.94])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17963606A31E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 16:08:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17963606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30E4606A321
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 16:09:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B30E4606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fritz.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fritz.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=Wk/h1RG0
-Received: from [IPV6:2a02:830a:f787:8f00:8bb2:f125:24d:78cd] (unknown [IPv6:2a02:830a:f787:8f00:8bb2:f125:24d:78cd])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 3B17A53401EE;
-	Wed, 25 Nov 2026 17:08:50 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1795622930;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=s8H6OjEScw2/UnJ66l4jZ9QFseiSJ3MQbPOUTwgxZlA=;
-	b=Wk/h1RG01OiNNupU83XZOUL48WOiSysR0meJcne66vP/yq/Lki7DfFfkr1r0y8MAar7RxB
-	XkvD8znIQKWUg24UebS3dQ42JiaPfOMBMegKbOyu5/5Kq+ZIccRy1WE+3s357YBkkKP46V
-	tDhNeqLgRwGASFNke9p03fzXa8keD3E=
-Message-ID: <b57b90a8-27e1-4290-889d-a05fba75f831@ixit.cz>
-Date: Wed, 25 Nov 2026 17:08:49 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=fritz.com header.i=@fritz.com header.a=rsa-sha256 header.s=mail header.b=IAlypTa5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fritz.com; s=mail;
+	t=1795622974; bh=kkOxP4Y4DHTYTBqjoAVvMOI6fQgUQ/6viYIQ9Su5IWc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IAlypTa5GHgR1HXRhP2YhXPF5ZfnkL+hL14ya1nZbn+tGPoqfX6nTAipKe0YRZNmz
+	 BnS9Gezy3dYjFMW7SEBM5CpiZ1N4h9IvvYeZ+8ooJ3EXuAfsMkNmmigoIDNKIeewfQ
+	 tGffWpE83+sphJ7rSQkALc8Yz69i7eypXLabDchaLtg0nEFXNWpH6YEoIQEkoFPazC
+	 hvTza4XSGG7g9cmPH5dX+J7sCM+g60YqBIPR4Udqz/CFkEBetlyZYAriOEE7ZoV8Xc
+	 kDcb4vQkMMyEsYjqz0EgNuQJLqqqmD1gr8DMQY04z1BGrO0u7867JJ9wj67IvHgGmb
+	 WDziJOaUhwnrw==
+Received: from [212.42.244.78] (helo=mail.avm.de)
+	by mail.avm.de with ESMTP (eXpurgate 4.57.1)
+	(envelope-from <n.schier@fritz.com>)
+	id 6b07083e-072e-7f0000032729-7f0000019bde-1
+	for <multiple-recipients>; Wed, 25 Nov 2026 17:09:34 +0100
+Received: from mail-auth.fritz.com (unknown [212.42.244.78])
+	by mail.avm.de (Postfix) with ESMTPS;
+	Wed, 25 Nov 2026 17:09:34 +0100 (CET)
+Date: Wed, 25 Nov 2026 17:09:32 +0100
+From: Nicolas Schier <n.schier@fritz.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev,
+	Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Christian Heusel <christian@heusel.eu>,
+	linux-kbuild@vger.kernel.org,
+	=?utf-8?B?QWRyacOhbiBHYXJjw61h?= Casado <adriangarciacasado42@gmail.com>,
+	Nicolas Schier <nsc@kernel.org>
+Subject: Re: [PATCH] kbuild: package: Install System.map to build tree only
+Message-ID: <20261125-mouflon-of-uncanny-ampleness-b7d019@l-nschier-z2>
+References: <20261116-package-install-system-msp-to-build-dir-v1-1-ec53d3d39146@kernel.org>
+ <sashiko-outbox-219115@kernel.org>
+ <20261122213504.GA1454693@ax162>
+ <awRijCPFYK4J5L6C@levanger>
+ <20261124030324.GA2247258@ax162>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,100 +77,107 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH v3 4/5] drm/panel: lg-sw43408: keep VPNL paired with VDDI
- and reset deasserted
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
- robh@kernel.org, conor+dt@kernel.org
-References: <20261125-fix-blueline-panel-v3-0-914b4a30b73e@ixit.cz>
- <20261125-fix-blueline-panel-v3-4-914b4a30b73e@ixit.cz>
- <sashiko-outbox-233481@kernel.org>
-Content-Language: en-US, cs-CZ
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <sashiko-outbox-233481@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261124030324.GA2247258@ax162>
+Organization: FRITZ! Technology GmbH
+x-ms-reactions: disallow
+X-purgate-ID: 149429::1795622974-71D89A2B-D3593F8E/0/0
+X-purgate-type: clean
+X-purgate-size: 4027
+X-Notice: Whitelisted
+X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
+X-purgate: clean
+X-pfmilter: host: postfix-mx-03  mail-id: 253A2A25D4  external: no
 
-On 25/11/2026 14:19, sashiko-bot@kernel.org wrote:
-
-[...]
-
->> +static const struct dev_pm_ops sw43408_pm_ops = {
->> +	LATE_SYSTEM_SLEEP_PM_OPS(sw43408_suspend_late, NULL)
->> +};
+On Mon, Nov 23, 2026 at 08:03:24PM -0700, Nathan Chancellor wrote:
+> On Mon, Nov 23, 2026 at 04:58:04PM +0100, Nicolas Schier wrote:
+> > As Distros are moving everything to /usr/ -- but I haven't seen
+> > /usr/boot/ anywhere -- I'd prefer to move it away from /boot.  The
+> > kmod build tree looks like the native location to me (as per
+> > scripts/depmod.sh) and from what I can find, most debugging tools use
+> > vmlinux or /proc/kallsyms rather than System.map; but I have never ever
+> > tried to debug a Linux without the full source + build tree at hand.
 > 
-> [Severity: High]
-> Does sw43408_pm_ops also need an early resume callback to re-enable vpnl
-> when vddi turns back on during system resume?
+> I guess we could try it and see who complains about the new location.
 > 
-> During system suspend, DRM unprepares the panel in .prepare
-> (dpu_pm_ops.prepare -> msm_kms_pm_prepare()), stmfts_suspend() drops the
-> touchscreen's vddi vote in .suspend, and sw43408_suspend_late() then sees
-> regulator_is_enabled(vddi) == 0 and disables vpnl.
+> I am just not sure that we should treat scripts/depmod.sh expecting
+> System.map in the build folder as anything more than "external modules
+> won't have dependencies generated properly" (which is more of a missing
+> feature than a true bug) than "System.map does not belong in /boot" but
+> I don't have a really strong opinion here.
 > 
-> On resume, stmfts_resume() unconditionally re-enables vddi during the
-> .resume phase, while DRM does not resume the panel until .complete (or not
-> at all during resume if the display was blanked before suspend).  That
-> leaves the panel in the vddi-on, vpnl-off state across .resume, and when
-> sw43408_prepare() later runs, vddi is already held enabled by stmfts so
-> regulator_enable(vddi) does not power-cycle vddi to recover the DDIC.
+> > Does System.map still help with regular debugging with CONFIG_KASLR
+> > enabled?
 > 
+> I think for debugging, you would want KASLR off?
 
-Since I noticed you reviewing this series, I'm looking at the Sashiko right now, 
-it's little bit harder to comprehend, but trying to figure out best solution.
+Yeah, but I guess when switching of KASLR Linux is rebuilt, thus usually 
+there are more valuable sources for debugging are available than 
+System.map.
 
- From the actual testing the configuration works well as is, but LLM offers some 
-solutions which I'm not understanding fully yet:
+> 
+> > If it wasn't for 'depmod -e' I'd like to put System.map to the
+> > linux-image-${KVER}-dbg_*.deb, as Debian does.
+> > 
+> > 
+> > > Something
+> > > like this maybe (completely untested):
+> > > 
+> > > diff --git a/scripts/package/builddeb b/scripts/package/builddeb
+> > > index ba1defc61652..4261963a901e 100755
+> > > --- a/scripts/package/builddeb
+> > > +++ b/scripts/package/builddeb
+> > > @@ -147,6 +147,13 @@ install_kernel_headers () {
+> > >  		"${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
+> > >  	fi
+> > >  
+> > > +	if [ "${ARCH}" = um ] ; then
+> > > +		system_map="/usr/lib/uml/modules/${KERNELRELEASE}/System.map"
+> > > +	else
+> > > +		system_map="/boot/System.map-${KERNELRELEASE}"
+> > > +	fi
+> > > +	ln -s "${system_map}" "${pdir}/usr/src/linux-headers-${version}/System.map"
+> > > +
+> > 
+> > What about doing it the other way round?  We could provide the symlink
+> > in the old /boot/ location for now and move System.map to the module
+> > build tree?
+> 
+> We would have to make sure that this location was available without
+> CONFIG_MODULES but that wouldn't be a bad option either.
 
-  1. Track vddi via devm_regulator_register_notifier() + work_struct
-  2. Add .complete callback
-  3. it's harmless, ignore it.
+Ack, thanks.
 
- From my testing I don't see any problems, so I would love to easily say it's 
-harmless (e.g. 3.), but I'll try to figure out if 1. or 2. would be more sense.
+> 
+> > >  	mkdir -p $pdir/lib/modules/$version/
+> > >  	ln -s /usr/src/linux-headers-$version $pdir/lib/modules/$version/build
+> > >  }
+> > > diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
+> > > index 8f0933cbbe45..3add2b2c7dd2 100644
+> > > --- a/scripts/package/kernel.spec
+> > > +++ b/scripts/package/kernel.spec
+> > > @@ -122,6 +122,7 @@ fi
+> > >  ln -fns /usr/src/kernels/%{KERNELRELEASE} %{buildroot}/lib/modules/%{KERNELRELEASE}/build
+> > >  %if %{with_devel}
+> > >  %{make} %{makeflags} run-command KBUILD_RUN_COMMAND='${srctree}/scripts/package/install-extmod-build %{buildroot}/usr/src/kernels/%{KERNELRELEASE}'
+> > > +ln -fns /lib/modules/%{KERNELRELEASE}/System.map %{buildroot}/usr/src/kernels/%{KERNELRELEASE}/System.map
+> > 
+> > Looking at line 122 (start of hunk), /lib/modules/%{KERNELRELEASE} seems to be a symlink to
+> > /lib/modules/%{KERNELRELEASE}/build/, thus that line will would create a
+> > funny symlink. ;)
+> 
+> /lib/modules/%{KERNELRELEASE} is a folder created at the beginning of
+> the %install stage. /lib/modules/%{KERNELRELEASE}/System.map is where it
+> is installed during this stage, so symlinking it to
+> /usr/src/kernels/%{KERNELRELEASE}/System.map should make it appear at
+> /lib/modules/%{KERNELRELEASE}/build/System.map as expected.
 
-David
+gosh, sorry. I mis-read the diff and wrote even more nonsense.
+
+> But as I mentioned above, I am totally fine with going the other way.
+
+Thanks, then I am going to update the patch accordingly.
+
+-- 
+Nicolas
