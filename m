@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795630058;
-	b=nS7jdPy5ZoUdUwoUMFdFzWBxPT5448g++5sSAsERJkJhNJ3QA9AGaFBmsh0YB7MosMWT
-	 SyqF497s2KufvKItQmWBtZ9HBdbU1BMPbzhpeSQEPSnNEg3FQFn7NKJkFheLIe5b8nbVf
-	 R04xstuNHazUZo1260UrZbJClIKYO5gphdmMM+0OwF1EpS3QolzNGLdJSOlIbCYMaiMvP
-	 +1CTnr0ozqLymz7cF5a/1xlQCN2vicemlSPTyw06jivQdr5DYdOWZuioRmP90FFDHTRQL
-	 i6+8emIpJ68VGmwO+Yz3e1nAOkmC7orlqZaN+O+pUOAj9DGWSQH2UPBd+4C0Rr+j/Wg==
+	t=1795630440;
+	b=huz9N/7pJfZsnWWwRc2JmIEcjmKoF7MUJz451wk/6xpFRQsMGqRyRQTXYzu0Alqtxt6n
+	 fDyHqhM2Ka6Smw0oc//cplt9pG8Bk2xKl4+ixaIFwJ8P5XAC7HpVbOnDJEpOA8DLys0Zv
+	 BmQ8b6ZRlJElzAHs+jsQqzysu6yB0v9++Vt2slSHx79GdZWHmGutFFjosCcCu9eBvKqXn
+	 lC/BOb/4OkwBFwwIjKrG21OhyuW1qIsTl6EUGtcyE2kAn0oX7y16bKj1vvLRzoQip7erS
+	 x+FrgYHpj80nL7WKxhIQUDlBcS96BmysmZlY6AmVUXG2W+UKpfuMmy181618FoRJlmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795630058;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795630440;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=7S9L2bVkaRL0hV4UwLogPIAmhUfhkxStMxKaA9DQzpM=;
-	b=T4cFaxLacMoNBe/13QavLkaOe9agOYj1AOqdICm+vXfHFNhgwjtIT4QErRUEFy+s8I1n
-	 XW6g3IwFfTPTd6GRXfzn7+oN9xJumFaeICUg2xmsMnjgvysXJojhtbEB2bVgENRmrOnAW
-	 y0h0i+OgloAgUjpiVI3rTGIfXuhY1VWIM8d4UXEWiJ+F6I1ltDh1zneKe+JDNtEpZ+dkF
-	 wYYRNPnspmhUoFdeYpSYs7QaZX3BGvZO+fSR5Qw8yK6KD8x4fqX0Ovnpo2HwETfvm3or7
-	 iEiUobsWm/0MhYKUtPNCv91mnhTHKdyD/omJzV5Re3uu3s3ngavDbWkHailMycLGIWw==
+	bh=Ax+PmbQ+lxqw6w647x+xJJMnRtT8Y9WCbO3rG/ztvrk=;
+	b=k3dZtUKY9NdETZCR7c9VB0QYxIHiFPjxIH5oT7PUbxbKZlaUGVyYJ/hxM+Tnrru/4dBi
+	 13u+U/sQJ/Oqz4yRXiwWof+oKSRdoEXpi4IGBSGH2ItyEbaivGBOzXgXi+F2J3i1eGGIq
+	 yejcOYTljy9TEXWpcnv2JwTKBvp1Wlg+Ir4BU7Zac1+moGj4lmUYAOW8+21lYp/cQ9QRO
+	 m9KA4D/136odLakZExvyM/ZmiHXDQnulbxwVF8l3g7CUnalxXuFQnyuOX2FKQVc6oKUbY
+	 8Bd5HiMxIKwrPcJohNbfRRLqGIJb5MtEZao4ckm+nCvRMDFWq0qAFhFumDtPFRc0Rkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GU2faQD0;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=la3WHWNd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF787606A31E;
-	Wed, 25 Nov 2026 18:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423A5606A327
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GU2faQD0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6F71F000D0;
-	Wed, 25 Nov 2026 18:07:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=la3WHWNd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691281F000CA;
+	Wed, 25 Nov 2026 18:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795630058;
-	bh=7S9L2bVkaRL0hV4UwLogPIAmhUfhkxStMxKaA9DQzpM=;
+	s=k20260515; t=1795630440;
+	bh=Ax+PmbQ+lxqw6w647x+xJJMnRtT8Y9WCbO3rG/ztvrk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=GU2faQD0C3C3QHmZvfIZn6uGYgk/K2DzEGXeZnGJRKWYKEZFgx4lDFYq1U1YnIMFm
-	 mJSeky3yhAM0AM3lPh3HAZEKZYKk73gQI06V084q3VYZeO4wMQwu/dvS+884t7TDWg
-	 kICFYd6g0yNMvxwAdhljLowinJr2fjAsxdNe0504a35BXFxF4MkEklnymmuuo6dZLL
-	 v0umaGv32j5CcFNpREGmeOvfyEn0G1vGR+0bpKY8p522I8chm0GkKbrMFqgueKQwX0
-	 iNYZ7VwvCStdnpFW+yvf58G+dYK3FcjbcFl1/UBpyz6fqZVLw5R8U0+ESzbA3PTmaA
-	 Tj1AoRSlWJCNQ==
-Date: Wed, 25 Nov 2026 20:07:34 +0200
-From: Leon Romanovsky <leon@kernel.org>
+	b=la3WHWNdRDjU5VhX6f88ox8If/wOGWzBlfWdQ3dRibqpB92JI2KgwJdAqfChNm8r6
+	 VOxZXygFAItcgtec6yPQ/GUox8M55l5/LZw13uLvc4PtisQsLppzxq82N26FzF61Hl
+	 ezwScfLxcAYVoRyoUz55Cuj40NhNOa9W/yKv//ot7L9Yc2Dk28+5k0U6Te1XVCNuAN
+	 /esNiJn0ov3iBznyuCxdx0uFWsfUNIDkADgmhT+B/iWcBKrX0ZFzsDOOG9S4A7ojvi
+	 kh6mALqw2/sRNKmD2lMFOGz9jiiXy11g8P2Za+VVEpj8koj61d/B+i8QbeoF6YRNdB
+	 vHOnexNB7dOfA==
+Date: Wed, 25 Nov 2026 19:13:55 +0100
+From: Alejandro Colomar <alx@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-sound@vger.kernel.org,
-	dmitry.torokhov@gmail.com
-Subject: Re: [PATCH v4 28/33] PCI: Use device trust for platform restrictions
-Message-ID: <20261125180734.GG14811@unreal>
-References: <20261124-device-trust-core-v4-0-037eb0d17b1f@nvidia.com>
- <20261124-device-trust-core-v4-28-037eb0d17b1f@nvidia.com>
- <sashiko-outbox-233065@kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/habanalabs: Add missing const
+Message-ID: <awclDHG2G41VpszR@devuan>
+References: <a284672589d00aa039a8c53ccf43bd1a5fd8e8f9.1795628340.git.alx@kernel.org>
+ <sashiko-outbox-233859@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,54 +56,100 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jq3uupjizjh2pfm7"
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-233065@kernel.org>
+In-Reply-To: <sashiko-outbox-233859@kernel.org>
 
-On Wed, Nov 25, 2026 at 09:46:45AM +0000, sashiko-bot@kernel.org wrote:
+
+--jq3uupjizjh2pfm7
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/habanalabs: Add missing const
+Message-ID: <awclDHG2G41VpszR@devuan>
+References: <a284672589d00aa039a8c53ccf43bd1a5fd8e8f9.1795628340.git.alx@kernel.org>
+ <sashiko-outbox-233859@kernel.org>
+MIME-Version: 1.0
+In-Reply-To: <sashiko-outbox-233859@kernel.org>
+
+> Date: 2026-11-25 17:47:57+0000
+> From: sashiko-bot@kernel.org
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] PCI: of_create_pci_dev() runs pci_ats_init() before
->   device_trust_init()
+> - [Low] accel/habanalabs: missing const on ch in
+>   extract_u32_until_given_char()
 > --
-> 
-> commit a65ec3ba4c9db1ced18be2126bf20a6e9f67645c
-> Author: Leon Romanovsky <leon@kernel.org>
-> 
-> PCI: Use device trust for platform restrictions
-> 
-> This commit maps PCI topology untrusted device classification into the
-> device trust policy and checks pci_dev_default_is_restricted() when
-> configuring ATS and ACS translation blocking at discovery time.
-> 
-> > diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
-> > index 9cb23780093dd..c8c96acc26343 100644
-> > --- a/drivers/pci/ats.c
-> > +++ b/drivers/pci/ats.c
-> > @@ -21,7 +21,7 @@ void pci_ats_init(struct pci_dev *dev)
-> >  {
-> >  	int pos;
-> >  
-> > -	if (pci_ats_disabled())
-> > +	if (pci_ats_disabled() || pci_dev_default_is_restricted(dev))
-> >  		return;
-> >  
-> >  	pos = pci_find_ext_capability(dev, PCI_EXT_CAP_ID_ATS);
-> > @@ -40,7 +40,7 @@ void pci_ats_init(struct pci_dev *dev)
+>=20
+> commit fd205b9061bdb9d6cd798164f715276c74b998b2
+> Author: Alejandro Colomar <alx@kernel.org>
+>=20
+> accel/habanalabs: Add missing const
+>=20
+> This commit adds const qualifiers to firmware version string pointers
+> derived from const char * inputs in firmware_if.c.
+>=20
+> > diff --git a/drivers/accel/habanalabs/common/firmware_if.c b/drivers/ac=
+cel/habanalabs/common/firmware_if.c
+> > index 29f5652d60433..69d39a8789d4c 100644
+> > --- a/drivers/accel/habanalabs/common/firmware_if.c
+> > +++ b/drivers/accel/habanalabs/common/firmware_if.c
+> [ ... ]
+> > @@ -112,7 +113,7 @@ static char *extract_fw_ver_from_str(const char *fw=
+_str)
+> >   *
+> >   * Return: Upon success, return a pointer to the given_char in the str=
+ing. Upon failure, return NULL
 > >   */
-> >  bool pci_ats_supported(struct pci_dev *dev)
+> > -static char *extract_u32_until_given_char(char *str, u32 *ver_num, cha=
+r given_char)
+> > +static const char *extract_u32_until_given_char(const char *str, u32 *=
+ver_num, char given_char)
 > >  {
-> > -	if (!dev->ats_cap || dev->untrusted)
-> > +	if (!dev->ats_cap)
-> >  		return false;
-> >  
-> >  	if (dev->is_virtfn)
-> 
-> [Severity: Medium]
-> Can pci_ats_init() run before device_trust_init() populates
-> dev->dev.trust_policy on OpenFirmware PCI enumeration paths?
+> >  	char num_str[8] =3D {}, *ch;
+>=20
+> [Severity: Low]
+> Should ch also be declared as const char *?  It receives the result of
+> strchrnul(str, given_char) on the now-const str and is returned directly,
+> so leaving it non-const will trigger a -Wdiscarded-qualifiers warning once
+> strchrnul() preserves const.
 
-Changes to IOMMU/ATS will be sent in a follow-up series, as this series is
-already large enough.
+I haven't yet changed strchrnul(3) to preserve const, because I need to
+discuss some stuff with GCC maintainers (it has some issues with the
+existing builtins in GCC), so I'll do that in a future patch.
 
-Thanks
+For now, let's ignore that.
+
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/a284672589d00aa03=
+9a8c53ccf43bd1a5fd8e8f9.1795628340.git.alx@kernel.org?part=3D1
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--jq3uupjizjh2pfm7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmsHJWMACgkQ64mZXMKQ
+wqni0A//fNoxJUmP43xHKoVBuaJx+zJp10m1UBS9Qtt0quJ3jTmZg4j0msz6ICJk
+uVEH4UYqe7ddBBSicVRQGZUXv6M6kJdOx8pg5HUToRvyt0LJP+pkEh2eUZydb+Bn
+04N+eVkYnbUTlRj98CWY2UEGQoksTkh8P3r0zGZm4tBL+WBThimpBpCvzdQdDzbN
+OB7GYZMtq/PTIfpifBKcj+pnc3qV5ik0Ef4WJD/acZ37DtfR6r4VBz3Zlbphuyin
+QYQgQHhDy1HC+cG70ZruUrAkqWhiRl5NjMvmcAw1yRKrd1ZrfP+j5bgCRXGGJ54O
+MNg4jWbZd3M5IlIAXSs56haZsaD/y7iikzFN2fU615WLo+SpRjax3RA7pp38XyGV
+dPrTlOjAc6vkjQa8UJzt6KHPV6UZynrGMwRZgJg7kNFTQSta6JVDowH82B+rzLVs
+wwti+Uy4VIrh80tPjo/ccQoFm+xWEX72Rj+plYYjYMeI1KJETQpiBAJP29M+GHSq
+Z1xY4bapn/CJ6dTEzBQS8jSFqQ6RHCgKGQPl5DOriy8nmaEkOiVSGBI7gWmckMen
+FhtNWUfan5QGrSjEV2ulZFHtHVHF2N2DDMgDEUjYBp6EvZmV9yuUthi8EyIxeGYz
+JNPwh0TRJIechXW3poA97t9gbdp9N4mmoYYjp/W/x1b9mhUyYb4=
+=fWvK
+-----END PGP SIGNATURE-----
+
+--jq3uupjizjh2pfm7--
