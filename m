@@ -1,87 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795643510;
-	b=kRi9vl6LVXi/5awPrhksvzz7+0HWS6rDAnAkhgf9yklnePcdP3RtpldYvRy7XXSvqlAS
-	 egIKZIoWT9pqEVZn0027jgxwo/yWyGQ+l4OzJj+cxmGHBUDwI/qQKOE+CmqXYuBnyedJ8
-	 qdGYufy+iw6AW4vm05q0+3as88uoq/GtNeHn8toyGowvPe3jMtqmooPNUQkt041JmW0WW
-	 SjqWRe1vRXKDpYtHDRzx3DCnQzKvakgI13uA+GwZH3XgsOuMlwQe86kFjfZUVEdBO4C/X
-	 1l6BhWkh+KgLTiJZD39s769b1mjALDesjb+wUXQt0vFiPJ3DYb1DCcF6gzQXTA1xfsA==
+	t=1795645551;
+	b=rVsThWztF8Eb+K0oaMmHzXHdaFHMUYp5E3AfOBUQh+RGLG+93S6f1Cp+K7TAMM3nPsj6
+	 434SREiZZ9TQnqnXURHsJ60kCuPoOH7YdUmD5lxxeRXYL99O1qWJ+kjMdkicoZg0Cbk/g
+	 zdqAWAxp6B9z3liBpNeTVF9S/jZOPzNzcEOJC3sBAS9HfkTKKBWuoCdufSwJVjgIQNEyZ
+	 K2Xndre3HPdoRxzvza4PHWnOq9BHdG5pft4vXdJYcjruxRSCxJ+A23fLnaXlEUuLZJ9tu
+	 od6g7/LyHg1/wDsXBPAJzmYvoXOLBL6eZtArr4N8ASt01Z40N2r+u3dnidjo7WcHBEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795643510;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=rbSy8/naK9NpKBKilS5D0FxnjU7qPGsjWJMaC5SsXmI=;
-	b=GYC6eMhdfd/OY6lGJasTUzDvM+pl+zLnOkQjVBRxYRz6JQp67LMc/HxBZHJHQ9N83Muf
-	 6lfDpILBIOnL3uzFLzQIerjOMti7RXm+oxwtMPqOIkS+JYsMbLJzDSxihGUXnbADhzVVE
-	 4pA40XAublRE+GS2TuTZbtaHEjYNWktGznzd3iwRnD/zEOUXxoCFVRdsDXfXD6u3u+88Z
-	 7wxbC7J+4OnWW3DehgkA6l7PWiGvCjmsjHAjbXwwt5MUySDemYtVsBFy1dtAMh4Ptjx+9
-	 Uxl7epJ7nP6DIR71gR62m+PDYSvKXmtcYQcjrTVaBaqTvUaeFIj9D42l1rR0ZZ3FT7A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795645551;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=Ad4P++K9bZno9nuh/iuXN/ynLGwKsplQDt7xu5Ult50=;
+	b=QADR46oSEPD04XE1E1QFKPKHnFKkLyTWm0IRN086BZf0yHsLirpKom9d3cdrfu5ih0gc
+	 iQsC1yIvvFifSljwcgQ5J982gZVfyStM6GVuZgQ0RyFnVZbD7pyDFUknIM5LfmARXPqLT
+	 3ELGcRzZ85EC6pzGEq24MhBgdzkhMtCtVBDbLw2vccvyE7IgWKAnQwPf2flJBu+0Dy8pp
+	 nrDjNTimlgpw90khc+ht2nHHnwUe2W5fqF84HCR3a+sfMUjDbeYG4X85kJn5S8PTbVuym
+	 UmBbCVnoSzle7R+narKzeCPxhUapXGbei0ZYX3op9faER3ePx31cR/W68RQf8DR/FtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=riscstar.com;
-	spf=pass smtp.mailfrom=riscstar.com;
-	dkim=pass header.d=riscstar.com header.i=@riscstar.com header.a=rsa-sha256 header.s=google header.b=bJBt59kW;
-	arc=none smtp.remote-ip=209.85.161.47
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fdKAVexZ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7F5606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 21:51:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4B7F5606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD44606A68F;
+	Wed, 25 Nov 2026 22:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar.com header.i=@riscstar.com header.a=rsa-sha256 header.s=google header.b=bJBt59kW
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-716b58a4365so3579223eaf.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 13:51:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar.com; s=google; t=1795643508; x=1796248308; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rbSy8/naK9NpKBKilS5D0FxnjU7qPGsjWJMaC5SsXmI=;
-        b=bJBt59kW5whYQ6qXqrvf7id3Toy2uQaDiUvUUUwLTCjRmiOauJ9bMH5VhtWqWDEkG/
-         18o5uZxmdy3WlCDzHYKvAjZgB5HfMebx5NwplaZBG7e4SbkjwEih/v+94/DVi6I4EO2m
-         e9hAU7iP253XXPhxae672K+xylgau5iFz7qZUK6tg5P7mFdhivXdCPZvvHeQl/URY5cW
-         L9wlpQvuu5bR03/MJlGo5zeBAbVy0+OylPKFXUoXvtspD6eY8LKS0/J2b4iJk+GcZ1J8
-         /22tICh4Q/ugRyyc2K0k9OwZldm2cLxOClR7FEc7qxaf6+8mwxM92W4JJNo6SyjloEUL
-         ro0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795643508; x=1796248308;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=rbSy8/naK9NpKBKilS5D0FxnjU7qPGsjWJMaC5SsXmI=;
-        b=s3zmvcFRRtnrKnY0iu9HZ0QuIZWet6WCC8G4A3Ezwc7TALbsBEpYEXq/4EJxzxFHqZ
-         CEZBVHY+kFkI/n/P3/yQbL1NZjw3/qQpTREJn2M9zjtxWYzu1ZYpiqDRGHfJrnDxVUOS
-         xThU2XL13i5K67pKsCFk0nVGKh3V2TrbwEVFCMPrWi+b32Bs0GREKNAFKplJBn3JNEsA
-         0IZ5SaSyqm38WRO34kCzYUYwWjiQC6A8/YTNZ0H1qBLNQG+ih0LzAEcHC2Fld96aDCsM
-         CT14y/eDByTeGQ6hHc4EDGkTr/7i2a58Ou8KeLR/k87EojJNQi91pLJPq+XzUjX3ONdF
-         giwA==
-X-Gm-Message-State: APuU4Z/1NfxSyflYzb+yX/0wrKbBNy8UG3qLfk/FhJLySwuucGfFY3yp
-	J6ZCwOQs2XfQcQdznhwz3gtEbl7n9DYgCBm19MmsHCycxaYQmtKLZAmUaboCu1fBxZQizgUoy7K
-	vD+a/4fo41A==
-X-Gm-Gg: AZFdTZed+ImDVTdIOPndj94cm7VVxAcFf6/RFWdCop9HUXV+5fn/IDWi6HBE0ahvKum
-	fFxmq8Kbk/YoQvm/9hAYK8ViknEDSgrL19wI279eRsXHK+PXAC0VjlZx4/P41VYjssF9eMknbhR
-	ARkvZ+W8fagrvCGbDur5bLMeBCHMooUZuWz/F7sP2kIHn7Y/ajYhlochzgBQm89LSMnKuObIzKT
-	ycNBH8gkQhpi4H+n2fReTpqYF89NgLU3LjwVT4ArM7IRusQy3H57VbDdmCt9h5brbS8rZBZUHJU
-	S4Be/F8wCw2E3yP4ojFcknmdRphRMLAoo9BEUO+UFg01ctz7EGnlrSM/9Rd+PKViR6XcTu+NoqA
-	jsEDcPKHmDKQYHZa1/AImAoAgRG2ujK0IdALrzEGW199kwbO148GaRBtNRyJxmP8vAvdhoeacqs
-	8boA3G7o5acuOLTCrF/m8dwv3UMrzb/KU2q7Br3FxgyEsIJnz+p9NNK+PAdW5ODBLFlCJ8sr3Vt
-	v103pd5LinmqTY1dZm3+nhB2562BaTTOFiJKF9qpDjnAFBLdsYp/tmmY6e6bG82+9LL10HMcR4l
-	AdHmJCUgb0RbHnyALbTEx0QdnT9Dz+0y
-X-Received: by 2002:a05:6820:1391:b0:71b:8969:9d1d with SMTP id 006d021491bc7-71b8969a594mr465740eaf.31.1795643508188;
-        Wed, 25 Nov 2026 13:51:48 -0800 (PST)
-Received: from [172.22.22.28] ([76.156.233.211])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-71b38015c46sm12670866eaf.4.2026.11.25.13.51.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Nov 2026 13:51:47 -0800 (PST)
-Message-ID: <d5abcbbb-e533-4a44-a26a-1ca17e37d7f6@riscstar.com>
-Date: Wed, 25 Nov 2026 15:51:47 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fdKAVexZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1401F000CF;
+	Wed, 25 Nov 2026 22:25:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795645550;
+	bh=Ad4P++K9bZno9nuh/iuXN/ynLGwKsplQDt7xu5Ult50=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fdKAVexZQ0L7i4VMtZNnbZj0u9gLORGix1gaqorQIvmRy1rjiX7Z2zqyhst270ycP
+	 +kVnz+oR6vsY3X6xmm1aUNOHbNHqaaPLXsMUsyagpUcV9LzYyGEAMLQAfyjwlJyMEM
+	 ENDm6Vs8gPe15wRhgZSBWMIcEgespAFjnuf2TrAODE2EwLY3dTRlRp9NvSQpaZyc4S
+	 CtsH3x0xJ9+eWIDCsv72z/RtwlA8wlPT9actG3zumikecnZRKKEBP8dHWm55HjGoyq
+	 9qU2LU7isgW1TnSQvuKuiuD067cj5kmO3lkv1QO0P7jIo01+wKnYmcpHL+2Qa4uCek
+	 CwDdBt6Fexc9w==
+Date: Wed, 25 Nov 2026 23:25:47 +0100
+From: Alejandro Colomar <alx+linux-hardening@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Alejandro Colomar <alx@kernel.org>, devicetree@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v7 2/4] string: Add strprefix()
+Message-ID: <awdf5dYKbpkbjSif@devuan>
+References: <cover.1795639368.git.alx@kernel.org>
+ <b32d70163fb454fee2667548c63c4d4d3b19d7bb.1795639368.git.alx@kernel.org>
+ <sashiko-outbox-234163@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,113 +58,110 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: qcs6490-rb3gen2: add TC9564
- clock node
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20261125202141.1288493-1-elder@riscstar.com>
- <20261125202141.1288493-4-elder@riscstar.com>
- <sashiko-outbox-234134@kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <sashiko-outbox-234134@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6gr5d72eivgopjii"
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-234163@kernel.org>
 
-On 11/25/26 2:28 PM, sashiko-bot@kernel.org wrote:
+
+--6gr5d72eivgopjii
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx+linux-hardening@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Alejandro Colomar <alx@kernel.org>, devicetree@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v7 2/4] string: Add strprefix()
+Message-ID: <awdf5dYKbpkbjSif@devuan>
+References: <cover.1795639368.git.alx@kernel.org>
+ <b32d70163fb454fee2667548c63c4d4d3b19d7bb.1795639368.git.alx@kernel.org>
+ <sashiko-outbox-234163@kernel.org>
+MIME-Version: 1.0
+In-Reply-To: <sashiko-outbox-234163@kernel.org>
+
+> Date: 2026-11-25 21:11:26+0000
+> From: sashiko-bot@kernel.org
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [High] arm64: dts: qcom: clock-25000000 under pcie@0,0 shifts tc9563
->    port indexing
+> - [Low] string: kernel-doc parse failure on strprefix() due to
+>   __nonnull_args()
 > --
+>=20
+> commit d8e472e1906ee21263f127c3c8452f752cbf8121
+> Author: Alejandro Colomar <alx@kernel.org>
+>=20
+> string: Add strprefix()
+>=20
+> This commit introduces strprefix() to return a pointer after a matched
+> prefix or NULL on mismatch, and adds KUnit tests for it.
+>=20
+> > diff --git a/include/linux/string.h b/include/linux/string.h
+> > index 9b3e578d9aca1..a6a1953c52e35 100644
+> > --- a/include/linux/string.h
+> > +++ b/include/linux/string.h
+> > @@ -557,16 +557,34 @@ void memcpy_and_pad(void *dest, size_t dest_len, =
+const void *src, size_t count,
+> >  	       sizeof(*(obj)) - offsetof(typeof(*(obj)), member));	\
+> >  })
+> > =20
+> > +/**
+> > + * strprefix - string prefix
+> > + * @s: The string to be tested
+> > + * @prefix: The string to see if @s starts with
+> > + *
+> > + * This function determines whether the string pointed to by @s
+> > + * starts with the sequence of characters
+> > + * (excluding the terminating null character)
+> > + * in the string pointed to by @prefix.
+> > + *
+> > + * Returns:
+> > + * *  @s + strlen(@prefix) if @s starts with @prefix
+> > + * *  NULL if @s does not start with @prefix
+> > + */
+> > +__nonnull_args(1, 2)
+> > +static inline char *strprefix(const char *s, const char *prefix)
+> > +{
+> > +	size_t len =3D strlen(prefix);
+> > +	return strncmp(s, prefix, len) =3D=3D 0 ? (char *) s + len : NULL;
+> > +}
+>=20
+> [Severity: Low]
+> Does __nonnull_args(1, 2) cause kernel-doc to fail when parsing
+> strprefix()?
+>=20
+> CTransforms.function_xforms in tools/lib/python/kdoc/xforms_lists.py does
+> not strip __nonnull_args, so running scripts/kernel-doc on
+> include/linux/string.h (included by Documentation/core-api/kernel-api.rst)
+> treats __nonnull_args as the function identifier, emits prototype mismatch
+> warnings, and omits strprefix() from the generated documentation.  Either
+> __nonnull_args could be added to CTransforms.function_xforms or
+> __attribute__((nonnull(1, 2))) could be used as in strends() below.
 
-This was a great catch on a seemingly unrelated problem.
+What should I do?
 
-I will consider how to address it.  Off hand I can think
-of two options, but I'm sure there are others:
-- Move the tc9564_xo_board *after* the downstream ports
-   (after the end of the pcie@3,0 node).  In this case I
-   would add a clear comment in the DTS file explaining
-   why this is necessary.
-- Make the logic in "pci-pwrctrl-tc9563.c" more robust,
-   possibly by skipping nodes that aren't of type "pci"
-   (or possibly "pciex"?).
-I think the second option is better, but I'm open to
-other suggestions.
+--=20
+<https://www.alejandro-colomar.es>
 
-However, at the very end of this message there is another
-observation that might make the above moot.  I think this
-clock node should probably be defined closer to the root
-of the tree.  I'll verify that and will fix it.
+--6gr5d72eivgopjii
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> commit c4e2dd0c5c7aea169ea475dfdf59cb2e475d33be
-> Author: Alex Elder <elder@kernel.org>
-> 
-> arm64: dts: qcom: qcs6490-rb3gen2: add TC9564 clock node
-> 
-> This commit adds a devicetree node for the Toshiba TC9564 clock and reset
-> controller along with a 25 MHz fixed-clock node supplying it.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> index 682bcbc0b466b..b327f64885ef2 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> @@ -890,6 +890,13 @@ pcie@0,0 {
->>   		pinctrl-0 = <&tc9563_resx_n>;
->>   		pinctrl-names = "default";
->>   
->> +		tc9564_xo_board: clock-25000000 {
->> +			compatible = "fixed-clock";
->> +			#clock-cells = <0>;
->> +			clock-frequency = <25000000>;
->> +			clock-output-names = "tc9564_xo_board";
->> +		};
->> +
->>   		pcie1_switch0_dsp1: pcie@1,0 {
->>   			reg = <0x20800 0x0 0x0 0x0 0x0>;
->>   			#address-cells = <3>;
-> 
-> [Severity: High]
-> Does placing clock-25000000 as the first child of pcie@0,0 shift the
-> downstream port indexing in the tc9563 power control driver?
+-----BEGIN PGP SIGNATURE-----
 
-I think it currently does.
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmsHYGsACgkQ64mZXMKQ
+wqlpKg/9Eg0tDNXXExM29Z6o0EEbgZkPiV8zGzA+W2gFStSX2ytVV5p/W0iWfitx
+rYaH++VwGTz1qUip3YjGMhVUtAC6sFpVCoEO/dMUuP45kcAKOdsxQwoFnFI2ABRz
+lNdQO1Cq3sgRH6IHf33aOEyo3HXRdhFHccoM68forOp6eH18j8ZU7Wa0eOEiiqXM
+e8zsso5oTGGssXsd69kxXCrZ23Nba1UmYmKNg38lbDdwYAVjZQmB9p/2lO/gCKK1
+E5gqbonvrJNcW7uIz5t9iIWZkH8+mzbrt6gMW2SXnoC24hh2nFOh6zBK5uZrCwdB
+x10XKPa6VwJrG2l7vwHynwFocImWWXsdrTZ+xsFnPOXncoT0WLdA3zjEAApPkiSO
+JOU2GLjfttDsJ+7FsIsCEflTq1U6TjCOXk1qeGydizVm6PXl9V0Qq/h2SVklxQb5
+j/eOyevhRvR4gZ81bhqk0hsYw1xgNbMoN//5jH58h5nHt9AglfBVNqDV5RReYqwN
+kPwS936GvfyHY9PWLZC78gtlLWcesv1y3DYaHMezHAGU4V48mKWtvDCYZx2ZFSr5
+qJHHlt+5nsf0wm50OlkLwK+IdG1f2U/XQVfIxg1sdsh/BpqTFBUOjc96ZjvB7fiu
++uAdetRMOsvgJsy1HkMp8v+zSaN4dfQGmFvjnbl5T4z/nozwLdQ=
+=lbBO
+-----END PGP SIGNATURE-----
 
-> Both tc9563_pwrctrl_probe() and tc9563_pwrctrl_parse_reset_line() map the
-> direct children of the pci1179,0623 node positionally to TC9563_DSP1,
-> TC9563_DSP2, and TC9563_VDSP:
-> 
-> drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c:tc9563_pwrctrl_probe() {
-> 	...
-> 	port = TC9563_USP;
-> 	for_each_child_of_node_scoped(node, child) {
-> 		if (++port >= TC9563_MAX)
-> 			break;
-
-If the second option above is chosen, this function
-should be updated the same way.
-
-> 		ret = tc9563_pwrctrl_parse_device_dt(child, &tc9563->cfg[port]);
-> 	...
-> }
-> 
-> With clock-25000000 ahead of pcie@1,0, pcie@2,0, and pcie@3,0, the driver
-> treats clock-25000000 as TC9563_DSP1, shifts pcie@1,0 and pcie@2,0 into
-> TC9563_DSP2 and TC9563_VDSP (misassociating per-port settings, reset
-> GPIOs, and the integrated Ethernet endpoint), and stops before reaching
-> pcie@3,0.  It also violates Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml,
-> which only permits pcie@[1-2],0 and pcie@[3],0 child nodes.  Should
-> tc9564_xo_board live under the root /clocks node instead?
-
-The 25 MHz oscillator comes from *outside* the TC9564 chip,
-not under the upstream PCIe switch port.
-
-For this reason, it should be defined somewhere on the board,
-not within the TC9564 chip.
-
-I will investigate the right way to represent this and will
-correct it.
-
-					-Alex
+--6gr5d72eivgopjii--
