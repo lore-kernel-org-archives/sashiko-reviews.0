@@ -1,66 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.54.195.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795613672;
-	b=RDia0jmXVzkszuI40wF1CHXNuL2q57tppYDgR/ghtTPoQH5PigZYO0FMd/hGfv0UxT2N
-	 Fx7UGXfdT9OIL5LeFly5hG/N/cL0pRd44sHpKr/60LRG0FnVGffaQ1h6XHDdcYxpAIbW9
-	 70YlaM38cCgqCdZckXm+o82u7PblK+2/GpqAp+agrckp48JGRZBg67FmHFtJaWrKRxwlW
-	 vO4Ens5u3cgiw83Ooi1xuH12dbx5i9njkZ0SCht30R4TV8K6ljKawmKWuPXngcCLamPkk
-	 L0wX6yG7QMahpnwKM4fXQwpfKG9jG4HUdDETQWdijfesFk/kkMMPY45aWl/9eUJP0mA==
+	t=1795616088;
+	b=KpNA7Y7bSiRUZyBfnbbjkGFzuB9XHRprcpqwZwq9shjYN1Cbr+ZgfN0SsDB7O+YhrNHk
+	 kc9a2ogjB3GyzbvI0yIHMbk8mzybx62Ho1Sa7qzfUZFt8MwbQ+Fq0N1xaQryNnuuH8WCM
+	 o1+bl4iG5/4sixqEXP8wyDpc/glhHHJ2+nL9tZK91NOqP/GtblcKXhCwKxOngjmp+VrG4
+	 w3NKhC5qLpGM190PUu6L5GmphwP3J0msx2c1f4P/45a5crDAJIScAJpklXVT6vaqrn4wv
+	 PSe3SUPL6dXhSmBTFbpABZr2C1V9IDVLdy6okf0rWDPhw8cpMMS1VvdSZcRvDvmqKNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795613672;
-	h=DMARC-Filter:Received:Received:Received:From:To:CC:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-originating-ip:Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=IKttxwfU1cPFPc+pKOZprKTBrYP4THBJ4bLbMoqn0uw=;
-	b=qE7UtqomAmFyBftHvqrh6QP5RRRZywbkbnshw/vf/xzUvfUzZ7afyfwxqFJ2W/BdHFUV
-	 jr0OfuzMIQziqH03wtZNFIWCi3TeIfXnkEbL38PTvj2lm9ptPF1ZtmnuFxtYSFdYVw8gS
-	 pkchTt+vTYSXMNua/bOzW6geuxvLPk8F1CYb7CxoaDRl4LbhjVzdw1gx71dk6uBTHJmdf
-	 F8iMqTcKSxEsjrpE6z/EILhC3O8Xj5okn/zD4I1cOUv8Kx1gXUfxKUPXxLpUJubO/eFi+
-	 44MgfNJg6KH4OnUqIgHrby47ddXEZ6U1diYAfZARWh22g3zif6UdwSbKHKqJ/DlGR6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795616088;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=Kv+akDX9Fsnwxn65LfxO/JR/K22GBsqiPUJfMBr0TqE=;
+	b=Ja6woCd3zL5rphMXwB1Wftw2yTENdkp4pi1VsDpQT7rHLa7zRy8Y3Mw7fdWyR8vJUNKC
+	 5reUJyO4JwwvYS+TC91Qg/OY7EWR07GlNFZbtBLui0hd/lMriojFgQl09rQqXGwdNw5zG
+	 Hf3CsPOl98YYnN/2pY5uwxAvoaeadEF6B3RJZVFGZKQ1ILSy8kxAlOtTvmPGIaAWA8Q9C
+	 ffYtiHEccJEjQV9PBd1HJj0liITXY16aHdCwf+JVwRDX522W80nzG2KLJn3pBNvSDZ4GR
+	 h1Vu+DfhRTIYjP8P3FO1go3GTiZu0Fmi1PGHdOQmCkimKoBij+t7hjv8Am+JOWYxzcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=fintech.ru;
-	spf=pass smtp.mailfrom=fintech.ru;
-	arc=none smtp.remote-ip=195.54.195.159
-Received: from exchange.fintech.ru (exchange.fintech.ru [195.54.195.159])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E7Os5AEC;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445EF606A31E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 13:34:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 445EF606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fintech.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fintech.ru
-Received: from Ex16-01.fintech.ru (10.0.10.18) by exchange.fintech.ru
- (195.54.195.169) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 25 Nov
- 2026 16:34:27 +0300
-Received: from Ex16-01.fintech.ru (10.0.10.18) by Ex16-01.fintech.ru
- (10.0.10.18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Wed, 25 Nov
- 2026 16:34:27 +0300
-Received: from Ex16-01.fintech.ru ([fe80::2534:7600:5275:d3f9]) by
- Ex16-01.fintech.ru ([fe80::2534:7600:5275:d3f9%7]) with mapi id
- 15.01.2242.004; Wed, 25 Nov 2026 16:34:27 +0300
-From: =?utf-8?B?0JbQsNC90LTQsNGA0L7QstC40Ycg0J3QuNC60LjRgtCwINCY0LPQvtGA0LU=?=
- =?utf-8?B?0LLQuNGH?= <n.zhandarovich@fintech.ru>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
-Subject: RE: [PATCH 3/3] drm/bridge: analogix_dp: Propagate errors from
- runtime resume
-Thread-Topic: [PATCH 3/3] drm/bridge: analogix_dp: Propagate errors from
- runtime resume
-Thread-Index: AQHdfNI7GvIH+9ZIRkeo25IR7ipSjLc+fd+AgABLF3A=
-Date: Wed, 25 Nov 2026 13:34:27 +0000
-Message-ID: <7a4034f42afb42699b274225f9e27163@fintech.ru>
-References: <20261125114319.1089186-1-n.zhandarovich@fintech.ru>
- <20261125114319.1089186-4-n.zhandarovich@fintech.ru>
- <sashiko-outbox-233327@kernel.org>
-In-Reply-To: <sashiko-outbox-233327@kernel.org>
-Accept-Language: en-US, ru-RU
-Content-Language: ru-RU
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B161F606A31E;
+	Wed, 25 Nov 2026 14:14:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E7Os5AEC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD1A1F000C6;
+	Wed, 25 Nov 2026 14:14:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795616087;
+	bh=Kv+akDX9Fsnwxn65LfxO/JR/K22GBsqiPUJfMBr0TqE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=E7Os5AECGG/U0qU64nJiAP8nVuovNGts1h0W5oAZsSju8o/FVsoNHT93syGMV6/Kq
+	 ZnFp4nYV37o1wK0h7iJwjcIPuN91C5XWMvgYWdgVfYGCamanAslUxELbgz7a/KpUSW
+	 CxmW4Q8UAAHeFiyL+iNDKb36RZ0LC0MySIgcqBoy17BB/rUvvFemVYfiGTq7dZohUw
+	 1DveJxOL9WtgvVvqWng7Zhv9FSaD0zgSqK3CYuxyYDV+n+t5VbGrd99biDrPEuzOk0
+	 fmR01BrSuVLVqgwj5VHLUpjw6/MvRuFxXiqUpN/ifzSmKaWNApEYmw6irp7/YtSjcC
+	 6sBxr9Y7w0+xQ==
+Date: Wed, 25 Nov 2026 16:14:42 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-sound@vger.kernel.org,
+	dmitry.torokhov@gmail.com
+Subject: Re: [PATCH v4 06/33] USB: Reject usbfs connect requests for
+ unregistered interfaces
+Message-ID: <20261125141442.GD14811@unreal>
+References: <20261124-device-trust-core-v4-0-037eb0d17b1f@nvidia.com>
+ <20261124-device-trust-core-v4-6-037eb0d17b1f@nvidia.com>
+ <sashiko-outbox-233043@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -70,86 +61,60 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-233043@kernel.org>
 
-VGhhbmsgeW91IGZvciB0aGUgcmV2aWV3Lg0KDQpBZ3JlZWQgb24gdGhlIEZpeGVzIHRyYWlsZXIu
-IEkgd2lsbCByZXBsYWNlIDM0MjRlM2E0Zjg0NCB3aXRoDQo3M2Y2MTM5MDhlYjEsIHdoaWNoIG1v
-dmVkIHRoZSB1bmNoZWNrZWQgcGxhdGZvcm0gYW5kIFBIWSBwb3dlci1vbg0KY2FsbHMgaW50byBh
-bmFsb2dpeF9kcF9yZXN1bWUoKS4gSSdsbCBzdGFydCBwcmVwYXJpbmcgdjIgc2VyaWVzLg0KDQpU
-aGUgRXh5bm9zIGlzc3VlIGlzIHRoZSByZWFzb24gdGhpcyBwYXRjaCBkZXBlbmRzIG9uIHRoZSBw
-aXBlLWNsb2NrDQpjb252ZXJzaW9uIG1lbnRpb25lZCBpbiB0aGUgY292ZXIgbGV0dGVyIGFuZCBi
-ZWxvdyB0aGUgLS0tIHNlcGFyYXRvci4NCkVpdGhlciBBbGV4YW5kcmUgTWFycXVldCdzIGNvbnZl
-cnNpb24gWzFdIG9yIE1hcmVrIFN6eXByb3dza2kncyBhbHRlcm5hdGl2ZQ0KWzJdIG11c3QgYmUg
-YXBwbGllZCBmaXJzdC4gVGhpcyBwYXRjaCBtdXN0IG5vdCBiZSBhcHBsaWVkIHdpdGhvdXQgdGhh
-dA0KcHJlcmVxdWlzaXRlLg0KDQpUaGUgc2VyaWVzIHdhcyBkZXZlbG9wZWQgYW5kIGJ1aWxkLXRl
-c3RlZCB3aXRoIE1hcnF1ZXQncyBjb252ZXJzaW9uDQphcHBsaWVkLg0KDQpbMV0gaHR0cHM6Ly9s
-b3JlLmtlcm5lbC5vcmcvYWxsLzIwMjYxMDI3LWRybS1taXNjLW5leHQtbWFudGEtYXV4YnVzLXYx
-LTItM2E0NWMzY2Y1MzFkQGEtbWFycXVldC5mci8NClsyXSBodHRwczovL2xvcmUua2VybmVsLm9y
-Zy9hbGwvMjAyNjExMTkyMjM4NDMuMzY5NDMwNy0xLW0uc3p5cHJvd3NraUBzYW1zdW5nLmNvbS8N
-Cg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJu
-ZWwub3JnIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPg0KPiBTZW50OiBXZWRuZXNkYXksIE5vdmVt
-YmVyIDI1LCAyMDI2IDM6MDMgUE0NCj4gVG86INCW0LDQvdC00LDRgNC+0LLQuNGHINCd0LjQutC4
-0YLQsCDQmNCz0L7RgNC10LLQuNGHIDxuLnpoYW5kYXJvdmljaEBmaW50ZWNoLnJ1Pg0KPiBDYzog
-ZHJpLWRldmVsQGxpc3RzLmZyZWVkZXNrdG9wLm9yZw0KPiBTdWJqZWN0OiBSZTogW1BBVENIIDMv
-M10gZHJtL2JyaWRnZTogYW5hbG9naXhfZHA6IFByb3BhZ2F0ZSBlcnJvcnMgZnJvbQ0KPiBydW50
-aW1lIHJlc3VtZQ0KPiANCj4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlr
-byBBSSByZXZpZXcgZm91bmQgMiBwb3RlbnRpYWwNCj4gaXNzdWVzIHRvIGNvbnNpZGVyOg0KPiAt
-IFtIaWdoXSBkcm0vYnJpZGdlOiBhbmFsb2dpeF9kcDogcG93ZXJfb24oKSBlcnJvciBjaGVjayBi
-cmVha3MgRXh5bm9zDQo+ICAgRFAgQVVYDQo+IC0gW0xvd10gZHJtL2JyaWRnZTogYW5hbG9naXhf
-ZHA6IHdyb25nIEZpeGVzIHRyYWlsZXIgZm9yDQo+ICAgYW5hbG9naXhfZHBfcmVzdW1lKCkNCj4g
-LS0NCj4gDQo+IGNvbW1pdCAwNzA2YWM2YmQ3YzY4NjQyY2NkMGM5ZTZmNGU3Y2NjMzZlNmJjNDhi
-DQo+IEF1dGhvcjogTmlraXRhIFpoYW5kYXJvdmljaCA8bi56aGFuZGFyb3ZpY2hAZmludGVjaC5y
-dT4NCj4gDQo+ID4gZHJtL2JyaWRnZTogYW5hbG9naXhfZHA6IFByb3BhZ2F0ZSBlcnJvcnMgZnJv
-bSBydW50aW1lIHJlc3VtZQ0KPiA+DQo+ID4gU3RvcCBjb250cm9sbGVyIGluaXRpYWxpemF0aW9u
-IHdoZW4gcGxhdGZvcm0gb3IgUEhZIHBvd2VyLW9uIGZhaWxzIGFuZA0KPiA+IHJldHVybiB0aGUg
-b3JpZ2luYWwgZXJyb3IgdG8gdGhlIHJlc3VtZSBjYWxsZXIuIFVud2luZCB0aGUgcGxhdGZvcm0N
-Cj4gPiBwb3dlciBjYWxsYmFjayBvbmx5IGFmdGVyIGl0IGhhcyBjb21wbGV0ZWQgc3VjY2Vzc2Z1
-bGx5LCB0aGVuIHJlbGVhc2UNCj4gPiB0aGUgY29udHJvbGxlciBjbG9jay4gRG8gbm90IGNhbGwg
-cGh5X3Bvd2VyX29mZigpIGFmdGVyIGEgZmFpbGVkDQo+ID4gcGh5X3Bvd2VyX29uKCksIHNpbmNl
-IG5vIHN1Y2Nlc3NmdWwgUEhZIHBvd2VyIHJlZmVyZW5jZSB3YXMgYWNxdWlyZWQuDQo+ID4NCj4g
-PiBBbHNvIHN0b3AgYW5kIHVud2luZCBwbGF0Zm9ybSBwb3dlciBpZiBzZXR0aW5nIHRoZSBQSFkg
-bW9kZSBmYWlscy4NCj4gPg0KPiA+IEZpeGVzOiAzNDI0ZTNhNGY4NDQgKCJkcm06IGJyaWRnZTog
-YW5hbG9naXgvZHA6IHNwbGl0IGV4eW5vcyBkcCBkcml2ZXIgdG8NCj4gYnJpZGdlIGRpcmVjdG9y
-eSIpDQo+ID4gRml4ZXM6IDJjMDg4MzQ1OWVkNiAoImRybS9icmlkZ2U6IGFuYWxvZ2l4X2RwOiBB
-ZGQgc3VwcG9ydCBmb3IgcGh5DQo+IGNvbmZpZ3VyYXRpb24uIikNCj4gPiBTaWduZWQtb2ZmLWJ5
-OiBOaWtpdGEgWmhhbmRhcm92aWNoIDxuLnpoYW5kYXJvdmljaEBmaW50ZWNoLnJ1Pg0KPiANCj4g
-W1NldmVyaXR5OiBMb3ddDQo+IEluIDM0MjRlM2E0Zjg0NCAoImRybTogYnJpZGdlOiBhbmFsb2dp
-eC9kcDogc3BsaXQgZXh5bm9zIGRwIGRyaXZlciB0bw0KPiBicmlkZ2UgZGlyZWN0b3J5IiksIGFu
-YWxvZ2l4X2RwX3Jlc3VtZSgpIG9ubHkgY2FsbGVkIGNsa19wcmVwYXJlX2VuYWJsZSgpDQo+IGFu
-ZCBhbHJlYWR5IGNoZWNrZWQgYW5kIHByb3BhZ2F0ZWQgaXRzIGVycm9yLiAgVGhlIHVuY2hlY2tl
-ZA0KPiBkcC0+cGxhdF9kYXRhLT5wb3dlcl9vbigpIGFuZCBwaHlfcG93ZXJfb24oKSBjYWxscyBp
-bg0KPiBhbmFsb2dpeF9kcF9yZXN1bWUoKQ0KPiB3ZXJlIGFkZGVkIGxhdGVyIGJ5IDczZjYxMzkw
-OGViMSAoImRybS9icmlkZ2U6IGFuYWxvZ2l4X2RwOiBtb3ZlDQo+IHBsYXRmb3JtDQo+IGFuZCBQ
-SFkgcG93ZXIgaGFuZGxpbmcgaW50byBydW50aW1lIFBNIikuICBTaG91bGQgdGhlIGZpcnN0IEZp
-eGVzIHRhZw0KPiByZWZlcmVuY2UgNzNmNjEzOTA4ZWIxICgiZHJtL2JyaWRnZTogYW5hbG9naXhf
-ZHA6IG1vdmUgcGxhdGZvcm0gYW5kIFBIWQ0KPiBwb3dlciBoYW5kbGluZyBpbnRvIHJ1bnRpbWUg
-UE0iKSBpbnN0ZWFkPw0KPiANCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL2JyaWRn
-ZS9hbmFsb2dpeC9hbmFsb2dpeF9kcF9jb3JlLmMNCj4gYi9kcml2ZXJzL2dwdS9kcm0vYnJpZGdl
-L2FuYWxvZ2l4L2FuYWxvZ2l4X2RwX2NvcmUuYw0KPiA+IGluZGV4IDRkM2Q3MjQ3NmRkOTUuLjky
-Mjg2NTU4OTNhMGIgMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL2JyaWRnZS9hbmFs
-b2dpeC9hbmFsb2dpeF9kcF9jb3JlLmMNCj4gPiArKysgYi9kcml2ZXJzL2dwdS9kcm0vYnJpZGdl
-L2FuYWxvZ2l4L2FuYWxvZ2l4X2RwX2NvcmUuYw0KPiA+IEBAIC0xNTM5LDE1ICsxNTM5LDMwIEBA
-IGludCBhbmFsb2dpeF9kcF9yZXN1bWUoc3RydWN0DQo+IGFuYWxvZ2l4X2RwX2RldmljZSAqZHAp
-DQo+ID4gIAkJcmV0dXJuIHJldDsNCj4gPiAgCX0NCj4gPg0KPiA+IC0JaWYgKGRwLT5wbGF0X2Rh
-dGEtPnBvd2VyX29uKQ0KPiA+IC0JCWRwLT5wbGF0X2RhdGEtPnBvd2VyX29uKGRwLT5wbGF0X2Rh
-dGEpOw0KPiA+ICsJaWYgKGRwLT5wbGF0X2RhdGEtPnBvd2VyX29uKSB7DQo+ID4gKwkJcmV0ID0g
-ZHAtPnBsYXRfZGF0YS0+cG93ZXJfb24oZHAtPnBsYXRfZGF0YSk7DQo+ID4gKwkJaWYgKHJldCkN
-Cj4gPiArCQkJZ290byBlcnJfZGlzYWJsZV9jbGs7DQo+ID4gKwl9DQo+IA0KPiBbU2V2ZXJpdHk6
-IEhpZ2hdDQo+IERvZXMgYWJvcnRpbmcgYW5hbG9naXhfZHBfcmVzdW1lKCkgb24gZHAtPnBsYXRf
-ZGF0YS0+cG93ZXJfb24oKQ0KPiBmYWlsdXJlDQo+IGJyZWFrIERQIEFVWCB0cmFuc2ZlcnMgb24g
-RXh5bm9zIHdoZW4gbm8gQ1JUQyBpcyBib3VuZCB0byB0aGUgZW5jb2Rlcj8NCj4gDQo+IEluIHRo
-aXMgdHJlZSwgdGhlIHByZXJlcXVpc2l0ZSBFeHlub3MgcGlwZS1jbG9jayBjb252ZXJzaW9uIG5v
-dGVkIGJlbG93IHRoZQ0KPiAtLS0gc2VwYXJhdG9yIGlzIG5vdCBwcmVzZW50LCBzbyBleHlub3Nf
-ZHBfcG93ZXJvbigpIHN0aWxsIGZhaWxzIHdoZW5ldmVyDQo+IGVuY29kZXItPmNydGMgaXMgTlVM
-TDoNCj4gDQo+IGRyaXZlcnMvZ3B1L2RybS9leHlub3MvZXh5bm9zX2RwLmM6ZXh5bm9zX2RwX2Ny
-dGNfY2xvY2tfZW5hYmxlKCkgew0KPiAJc3RydWN0IGV4eW5vc19kcF9kZXZpY2UgKmRwID0gdG9f
-ZHAocGxhdF9kYXRhKTsNCj4gCXN0cnVjdCBkcm1fZW5jb2RlciAqZW5jb2RlciA9ICZkcC0+ZW5j
-b2RlcjsNCj4gDQo+IAlpZiAoIWVuY29kZXItPmNydGMpDQo+IAkJcmV0dXJuIC1FUEVSTTsNCj4g
-DQo+IFdoZW4gYW5hbG9naXhfZHBhdXhfdHJhbnNmZXIoKSBjYWxscyBwbV9ydW50aW1lX3Jlc3Vt
-ZV9hbmRfZ2V0KCkNCj4gYmVmb3JlIGENCj4gbW9kZXNldCBhdHRhY2hlcyBhIENSVEMgKGZvciBl
-eGFtcGxlIGR1cmluZw0KPiBkZXZtX29mX2RwX2F1eF9wb3B1bGF0ZV9idXMoKQ0KPiBhdCBwcm9i
-ZSB0aW1lIG9yIHByZS1tb2Rlc2V0IEVESUQgcmVhZHMgaW4NCj4gYW5hbG9naXhfZHBfYnJpZGdl
-X2VkaWRfcmVhZCgpKSwNCj4gYW5hbG9naXhfZHBfcmVzdW1lKCkgbm93IGFib3J0cyB3aXRoIC1F
-UEVSTSBiZWZvcmUgcG93ZXJpbmcgb24gdGhlDQo+IFBIWSBvcg0KPiBpbml0aWFsaXppbmcgdGhl
-IERQIGNvbnRyb2xsZXIuDQo+IA0KPiAtLQ0KPiBTYXNoaWtvIEFJIHJldmlldyDCtw0KPiBodHRw
-czovL3Nhc2hpa28uZGV2LyMvcGF0Y2hzZXQvMjAyNjExMjUxMTQzMTkuMTA4OTE4Ni0xLQ0KPiBu
-LnpoYW5kYXJvdmljaEBmaW50ZWNoLnJ1P3BhcnQ9Mw0K
+On Wed, Nov 25, 2026 at 09:46:41AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] usb: core: devio: incorrect Fixes trailer in commit message
+> --
+> 
+> commit ef85167342ae0257c27f5a71e468b1906042fdf9
+> Author: Leon Romanovsky <leon@kernel.org>
+> 
+> > USB: Reject usbfs connect requests for unregistered interfaces
+> >
+> > USB core does not register DT-disabled interfaces, and an interface whose
+> > registration failed stays in the active configuration. USBDEVFS_CONNECT
+> > still asks driver core to attach a driver to such an interface:
+> >
+> > proc_ioctl()
+> >   device_attach()
+> >     __device_attach()
+> >
+> > The interface has no driver-core private data, so the request
+> > dereferences a NULL pointer.
+> >
+> > Return -ENODEV for an unregistered interface. An interface claimed by a
+> > sibling driver keeps reporting -EBUSY.
+> >
+> > Fixes: ef0ff68351be ("driver core: Probe devices asynchronously instead of the driver")
+> > Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+> 
+> [Severity: Low]
+> Is the Fixes tag accurate?
+> 
+> Commit ef0ff68351be ("driver core: Probe devices asynchronously instead of
+> the driver") only changed bus_add_driver() and __driver_attach(), which
+> iterate over already-registered devices on bus->p->klist_devices.  At that
+> point, __device_attach() on an unregistered device with dev->driver == NULL
+> did not dereference dev->p and instead reached driver_probe_device(), which
+> returned -ENODEV on !device_is_registered(dev).
+> 
+> The unconditional dev->p->dead dereference at the top of __device_attach()
+> was added later by commit 654888327e9f ("driver core: Avoid binding drivers
+> to dead devices"), while skipping registration for DT-disabled USB
+> interfaces was introduced by commit 01fdf179f4b0 ("usb: core: skip
+> interfaces disabled in devicetree").
+
+I don't mind, whatever Sashiko says.
+
+Thanks
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261124-device-trust-core-v4-0-037eb0d17b1f@nvidia.com?part=6
+> 
