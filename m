@@ -1,52 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795630440;
-	b=huz9N/7pJfZsnWWwRc2JmIEcjmKoF7MUJz451wk/6xpFRQsMGqRyRQTXYzu0Alqtxt6n
-	 fDyHqhM2Ka6Smw0oc//cplt9pG8Bk2xKl4+ixaIFwJ8P5XAC7HpVbOnDJEpOA8DLys0Zv
-	 BmQ8b6ZRlJElzAHs+jsQqzysu6yB0v9++Vt2slSHx79GdZWHmGutFFjosCcCu9eBvKqXn
-	 lC/BOb/4OkwBFwwIjKrG21OhyuW1qIsTl6EUGtcyE2kAn0oX7y16bKj1vvLRzoQip7erS
-	 x+FrgYHpj80nL7WKxhIQUDlBcS96BmysmZlY6AmVUXG2W+UKpfuMmy181618FoRJlmw==
+	t=1795630594;
+	b=dGiww/wTWzNpMPU7RkZv6sr2TNZg6yeWBLDT8e7minoWLqeKPujct8gQkHfYFj8HgU5I
+	 6x1zL+e/MLVF8S6PMjvCGkNu22L8WJOersI85pU1UqAWILX5luXE1YiuGtJuv6johTDWM
+	 3XJCAFO4z0rq38PZfxM2MjhMvWNwD7WFxOTrO1vxJmcSYbXsscRkvqWBVKjWOFhyXKSwx
+	 lWVQJt/hUIMfGyzNkZCQdLtqEAtQTlAKbP5kJanXVA4BjyOawFCS6rSeUncw+bYrKcZwo
+	 0XVoVG023ox3ovJ+rHDOLFz272zeOtt6tymmlz2YLxKUSwLsNEetfAmD6IlszyaxnBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795630440;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Ax+PmbQ+lxqw6w647x+xJJMnRtT8Y9WCbO3rG/ztvrk=;
-	b=k3dZtUKY9NdETZCR7c9VB0QYxIHiFPjxIH5oT7PUbxbKZlaUGVyYJ/hxM+Tnrru/4dBi
-	 13u+U/sQJ/Oqz4yRXiwWof+oKSRdoEXpi4IGBSGH2ItyEbaivGBOzXgXi+F2J3i1eGGIq
-	 yejcOYTljy9TEXWpcnv2JwTKBvp1Wlg+Ir4BU7Zac1+moGj4lmUYAOW8+21lYp/cQ9QRO
-	 m9KA4D/136odLakZExvyM/ZmiHXDQnulbxwVF8l3g7CUnalxXuFQnyuOX2FKQVc6oKUbY
-	 8Bd5HiMxIKwrPcJohNbfRRLqGIJb5MtEZao4ckm+nCvRMDFWq0qAFhFumDtPFRc0Rkg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795630594;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=CjWm5/UHo+r5udk/y7h+H88lRIb30cpagGaa9Im8Ykc=;
+	b=5j7ig0niQc0OzmJo6W5RHjU94nETkKLdve6AARg1bnzg2/8f7pP2EJd59jZSnBfVd/H6
+	 WhPjUQW7xvJfM5pYTHZWGL04oK8IHdXizg8UE2649wgQjEtYLoc+k7HQGfgv8Kohn42wC
+	 tnQ0/rlMD8GHjd8F0O5OXGCtkdHqLM7sLJihQMY6eGcnk7+8tEGOCt1pBn140y7HZ2oam
+	 7BVxgu0YEEiZ8urART84EgLuRVH3iOJpG5DruIMhLWGOgK8gaJzEoAK7yM4dn5o9ZgodR
+	 yWTnIyVk4DkDmi/WiZPxb+8vL4GM2uc/sczlrFG6ELmdLGTZM40g2tnXU+E4dgklKEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=la3WHWNd;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--akorn.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=D1G1feGI;
+	arc=none smtp.remote-ip=209.85.216.71
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423A5606A327
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868B8606A33B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:16:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 868B8606A33B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--akorn.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=la3WHWNd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691281F000CA;
-	Wed, 25 Nov 2026 18:13:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795630440;
-	bh=Ax+PmbQ+lxqw6w647x+xJJMnRtT8Y9WCbO3rG/ztvrk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=la3WHWNdRDjU5VhX6f88ox8If/wOGWzBlfWdQ3dRibqpB92JI2KgwJdAqfChNm8r6
-	 VOxZXygFAItcgtec6yPQ/GUox8M55l5/LZw13uLvc4PtisQsLppzxq82N26FzF61Hl
-	 ezwScfLxcAYVoRyoUz55Cuj40NhNOa9W/yKv//ot7L9Yc2Dk28+5k0U6Te1XVCNuAN
-	 /esNiJn0ov3iBznyuCxdx0uFWsfUNIDkADgmhT+B/iWcBKrX0ZFzsDOOG9S4A7ojvi
-	 kh6mALqw2/sRNKmD2lMFOGz9jiiXy11g8P2Za+VVEpj8koj61d/B+i8QbeoF6YRNdB
-	 vHOnexNB7dOfA==
-Date: Wed, 25 Nov 2026 19:13:55 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] accel/habanalabs: Add missing const
-Message-ID: <awclDHG2G41VpszR@devuan>
-References: <a284672589d00aa039a8c53ccf43bd1a5fd8e8f9.1795628340.git.alx@kernel.org>
- <sashiko-outbox-233859@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=D1G1feGI
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3b0c7ab2427so4632577a91.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 10:16:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795630594; x=1796235394; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=CjWm5/UHo+r5udk/y7h+H88lRIb30cpagGaa9Im8Ykc=;
+        b=D1G1feGI4qOfZRpiInNwb0vPg3pEahiPHY9t/MnQ2O3CivfWXZi11uzcTp69dwiAqi
+         4HsWJYYyAVkjP+OYMO+qxE74hVSaQ4heai1WqRdPdy5TspXvU4MsB++bUdvVxQCWa+GC
+         ZFfoMHfjxUfAvDxZXhic9/oyJCw9NhuTGTmxyYKxMODW/0NJDzp9yKUFsPQSDu1cbCDU
+         KFnoaDl76Dq3FgWqipxTkGv24gHlAaXt2E9lTeUaCasRiUofltQg//hqTjp1iXwCHYPk
+         ZLRDLwQfSJKfiAicyVdu5bE7ka46QGf9fNKSdigC7hq+L3MDOzQ/lqKGicOX2iITwa4T
+         E+Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795630594; x=1796235394;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CjWm5/UHo+r5udk/y7h+H88lRIb30cpagGaa9Im8Ykc=;
+        b=acJYPPEwRMyN3th0xv5S1iskxGfP9l/jTIC3faEt9j0dQZFCS6DxEGm8h19Gm8EuEH
+         XXZ1ix4tSbHTakL6/IMIhW45YhQCV66eDQBg5oK8VTjmZrce0Za3KiMMMNdLoHxrGdF2
+         QymgLKtYCjFj11qaYhNHUnNwW0qNSHKFKWIem4t9KdU464ErdpGDbZR2WMacLbPUyQaf
+         5Tys75af56sn3JQZsRVBKDeRssbKHeWL6KhbOeO6BOC+3SQTQm2Gb4TCSXUlyCrg1VYV
+         pwkc+UEFbiNmyla5lylnsfq5gnkmr7zSkWgOZmFY5Q/xjkpe5rvABe1eOAQDpjULTim0
+         phqQ==
+X-Forwarded-Encrypted: i=1; AL+hErHEqKxFtL+jZeHy6gXI3TSv1PtWRwg39PhgFptvWDC9wWkt/al4XV6vI4+3CVc1bgVyT0m94Tytnox9L1pwhY4=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/xl6M1m6hx4h+Mt2eVHR8NBp0GOU45OUMMZdx/apfEbJk9mEap
+	MpF7iPVJGKq4jX8Xzbt0pWQ9F53vktAgm/3/vdy8zUh7W1TlaOBzIixZUyvm+hhvi2qdFF7IVe+
+	3hg==
+X-Received: from pjyf11.prod.google.com ([2002:a17:90a:ec8b:b0:3b4:3d61:7517])
+ (user=akorn job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:17cd:b0:3b0:99f8:eba8
+ with SMTP id 98e67ed59e1d1-3b41c97c45emr17900418a91.66.1795630593453; Wed, 25
+ Nov 2026 10:16:33 -0800 (PST)
+Date: Wed, 25 Nov 2026 18:15:44 +0000
+In-Reply-To: <b5910c74-7e29-4138-9dd4-030c95c78ec3@roeck-us.net>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -55,101 +78,63 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jq3uupjizjh2pfm7"
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-233859@kernel.org>
+Mime-Version: 1.0
+References: <20261125053711.3098007-1-akorn@google.com> <sashiko-outbox-232631@kernel.org>
+ <b5910c74-7e29-4138-9dd4-030c95c78ec3@roeck-us.net>
+X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
+Message-ID: <20261125181605.3299785-1-akorn@google.com>
+Subject: Re: [PATCH] hwmon: (pmbus) Fall back to CLEAR_FAULTS when STATUS_CML
+ is read-only
+From: Arthur Korn <akorn@google.com>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Arthur Korn <akorn@google.com>, sashiko-reviews@lists.linux.dev, 
+	linux-hwmon@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-
---jq3uupjizjh2pfm7
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] accel/habanalabs: Add missing const
-Message-ID: <awclDHG2G41VpszR@devuan>
-References: <a284672589d00aa039a8c53ccf43bd1a5fd8e8f9.1795628340.git.alx@kernel.org>
- <sashiko-outbox-233859@kernel.org>
-MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-233859@kernel.org>
-
-> Date: 2026-11-25 17:47:57+0000
-> From: sashiko-bot@kernel.org
+On 11/25/26 07:53, Guenter Roeck wrote:
+> On 11/24/26 21:49, sashiko-bot@kernel.org wrote:
+>> [Severity: Medium]
+>> Does clearing data->has_status_cml on any negative return value from
+>> _pmbus_write_byte_data() disable STATUS_CML write-1-to-clear across the
+>> whole device when a driver exposes a read-only virtual page?
+...
+> Seems real. Arthur, what do you think ?
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] accel/habanalabs: missing const on ch in
->   extract_u32_until_given_char()
-> --
->=20
-> commit fd205b9061bdb9d6cd798164f715276c74b998b2
-> Author: Alejandro Colomar <alx@kernel.org>
->=20
-> accel/habanalabs: Add missing const
->=20
-> This commit adds const qualifiers to firmware version string pointers
-> derived from const char * inputs in firmware_if.c.
->=20
-> > diff --git a/drivers/accel/habanalabs/common/firmware_if.c b/drivers/ac=
-cel/habanalabs/common/firmware_if.c
-> > index 29f5652d60433..69d39a8789d4c 100644
-> > --- a/drivers/accel/habanalabs/common/firmware_if.c
-> > +++ b/drivers/accel/habanalabs/common/firmware_if.c
-> [ ... ]
-> > @@ -112,7 +113,7 @@ static char *extract_fw_ver_from_str(const char *fw=
-_str)
-> >   *
-> >   * Return: Upon success, return a pointer to the given_char in the str=
-ing. Upon failure, return NULL
-> >   */
-> > -static char *extract_u32_until_given_char(char *str, u32 *ver_num, cha=
-r given_char)
-> > +static const char *extract_u32_until_given_char(const char *str, u32 *=
-ver_num, char given_char)
-> >  {
-> >  	char num_str[8] =3D {}, *ch;
->=20
-> [Severity: Low]
-> Should ch also be declared as const char *?  It receives the result of
-> strchrnul(str, given_char) on the now-const str and is returned directly,
-> so leaving it non-const will trigger a -Wdiscarded-qualifiers warning once
-> strchrnul() preserves const.
+> [ PMBus is really annoying :-( ]
 
-I haven't yet changed strchrnul(3) to preserve const, because I need to
-discuss some stuff with GCC maintainers (it has some issues with the
-existing builtins in GCC), so I'll do that in a future patch.
+Confirmed -- Sashiko's finding is real.
 
-For now, let's ignore that.
+I tested on a system with 30x MAX16600B.04 VRs driven by max16601 (which
+sets PMBUS_PAGE_VIRTUAL on all 3 pages because the chip NACKs PMBUS_PAGE
+0x00 and latches INVALID_COMMAND):
 
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/a284672589d00aa03=
-9a8c53ccf43bd1a5fd8e8f9.1795628340.git.alx@kernel.org?part=3D1
+  - Page 0 (VCORE at addr) and Page 2 (VSA dummy client at addr + 1)
+    both implement writable STATUS_CML (0x7e): writing 0xc0 clears
+    latched INVALID_COMMAND | INVALID_DATA cleanly to 0x00 on both I2C
+    addresses while preserving other STATUS_CML bits.
+  - Page 1 is a software-only virtual page exposing vendor registers
+    0xf1/0xf2 (IIN_SENSOR / TOTAL_INPUT_POWER); max16601_write_byte_data()
+    and max16601_write_byte() both return -EOPNOTSUPP for page == 1.
 
---=20
-<https://www.alejandro-colomar.es>
+With v1, pmbus_clear_cml_faults() hit -EOPNOTSUPP on page 1 and set
+data->has_status_cml = false for the whole device, causing page 2 and
+subsequent register checks on page 0 to fall back to CLEAR_FAULTS.
 
---jq3uupjizjh2pfm7
-Content-Type: application/pgp-signature; name="signature.asc"
+In v2, I moved data->has_status_cml = false inside the readback check so
+it is only cleared when _pmbus_write_byte_data() succeeds and the readback
+still shows PB_CML_FAULT_CLEAR_MASK set (the read-only STATUS_CML case).
+When _pmbus_write_byte_data() returns an error (such as -EOPNOTSUPP on a
+virtual page), only that call falls back to pmbus_clear_fault_page(),
+preserving the existing behavior from d9d30e1cb9ca.
 
------BEGIN PGP SIGNATURE-----
+(Side note noticed on the live MAX16600B.04 system: untouched devices boot
+with status2 = 0x0002 / status2_cml = 0x80 latched on VSA because
+pmbus_check_register() and pmbus_check_status_register() pass page = -1 to
+pmbus_clear_cml_fault() / pmbus_check_status_cml(), which targets the
+primary client 0x69 instead of data->vsa 0x6a when probing page 2. Happy
+to look at that separately if useful.)
 
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmsHJWMACgkQ64mZXMKQ
-wqni0A//fNoxJUmP43xHKoVBuaJx+zJp10m1UBS9Qtt0quJ3jTmZg4j0msz6ICJk
-uVEH4UYqe7ddBBSicVRQGZUXv6M6kJdOx8pg5HUToRvyt0LJP+pkEh2eUZydb+Bn
-04N+eVkYnbUTlRj98CWY2UEGQoksTkh8P3r0zGZm4tBL+WBThimpBpCvzdQdDzbN
-OB7GYZMtq/PTIfpifBKcj+pnc3qV5ik0Ef4WJD/acZ37DtfR6r4VBz3Zlbphuyin
-QYQgQHhDy1HC+cG70ZruUrAkqWhiRl5NjMvmcAw1yRKrd1ZrfP+j5bgCRXGGJ54O
-MNg4jWbZd3M5IlIAXSs56haZsaD/y7iikzFN2fU615WLo+SpRjax3RA7pp38XyGV
-dPrTlOjAc6vkjQa8UJzt6KHPV6UZynrGMwRZgJg7kNFTQSta6JVDowH82B+rzLVs
-wwti+Uy4VIrh80tPjo/ccQoFm+xWEX72Rj+plYYjYMeI1KJETQpiBAJP29M+GHSq
-Z1xY4bapn/CJ6dTEzBQS8jSFqQ6RHCgKGQPl5DOriy8nmaEkOiVSGBI7gWmckMen
-FhtNWUfan5QGrSjEV2ulZFHtHVHF2N2DDMgDEUjYBp6EvZmV9yuUthi8EyIxeGYz
-JNPwh0TRJIechXW3poA97t9gbdp9N4mmoYYjp/W/x1b9mhUyYb4=
-=fWvK
------END PGP SIGNATURE-----
+Sending [PATCH v2] shortly.
 
---jq3uupjizjh2pfm7--
+Thanks,
+Arthur
