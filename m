@@ -1,75 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.71
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=84.42.129.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795630594;
-	b=dGiww/wTWzNpMPU7RkZv6sr2TNZg6yeWBLDT8e7minoWLqeKPujct8gQkHfYFj8HgU5I
-	 6x1zL+e/MLVF8S6PMjvCGkNu22L8WJOersI85pU1UqAWILX5luXE1YiuGtJuv6johTDWM
-	 3XJCAFO4z0rq38PZfxM2MjhMvWNwD7WFxOTrO1vxJmcSYbXsscRkvqWBVKjWOFhyXKSwx
-	 lWVQJt/hUIMfGyzNkZCQdLtqEAtQTlAKbP5kJanXVA4BjyOawFCS6rSeUncw+bYrKcZwo
-	 0XVoVG023ox3ovJ+rHDOLFz272zeOtt6tymmlz2YLxKUSwLsNEetfAmD6IlszyaxnBQ==
+	t=1795631242;
+	b=hfz/KYjCkVqe9K/qfKLibBN2YtcU/cxL8F/pA8XNxl5Otxb4I7k2skIF+kJg0+helKwI
+	 rOsYBbABAeAQNpfER8RFyLKXSw0nBvDMnYkLGxZ55jRPqJah6bPBc12uxDc/n8fNVHLvV
+	 8tbk9k5xU1VQEn5eC3YYXsDSuGjzV6TRlK3BODZCUNXQOoBqh8v/9qvwOzUCoGxjtO393
+	 EC9vYeAPMf0PNuQ+7StiO7IYWeItXcCW+oWD+HwLv36qmPx4W5OxRNw1Pr+OCbECPNF5K
+	 O8U5ra3+l/wEGNHqDc9I59tkbew30RYUuRJalRQD0UuMiZbm06cJyOq6YtTyNywsC1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795630594;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
-	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
-	 Content-Type;
-	bh=CjWm5/UHo+r5udk/y7h+H88lRIb30cpagGaa9Im8Ykc=;
-	b=5j7ig0niQc0OzmJo6W5RHjU94nETkKLdve6AARg1bnzg2/8f7pP2EJd59jZSnBfVd/H6
-	 WhPjUQW7xvJfM5pYTHZWGL04oK8IHdXizg8UE2649wgQjEtYLoc+k7HQGfgv8Kohn42wC
-	 tnQ0/rlMD8GHjd8F0O5OXGCtkdHqLM7sLJihQMY6eGcnk7+8tEGOCt1pBn140y7HZ2oam
-	 7BVxgu0YEEiZ8urART84EgLuRVH3iOJpG5DruIMhLWGOgK8gaJzEoAK7yM4dn5o9ZgodR
-	 yWTnIyVk4DkDmi/WiZPxb+8vL4GM2uc/sczlrFG6ELmdLGTZM40g2tnXU+E4dgklKEg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795631242;
+	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=Q/Ht4mTVsZ8VXLHmxE/9TQE6M9RVX4AerJ+ZRy/407k=;
+	b=2ZzOszPzFdHl5dGIRm3Dwxg3H9g89+DxNAlGPNMcNDkHjst1bK/GZHMW1J8ZBkvaRMhD
+	 478zaoCphyQ+wBychwulZD6JNNMHo4ypli6bKjtUeThcY6JpTLc3qjFoEB2E27udblS5O
+	 5KFxFezA8ozwZeMHugTG0AVPy48NRNd/gaYKj9jzx/vr5HwKiIrSA1GtoCZG+LZdByMzs
+	 OOQRXaho+neuXeLsgF5GvKzuouJoco4RvP/Dz5CPOFbAEIMdqNwOjDWCBr7mOem5CtKO+
+	 bc8Rlvk8iY4yTyS+xMLrZMOypoYTuXdrM7K8sbC3XSPWlIGwBPIdNir/RwDwiqNFixA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--akorn.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=D1G1feGI;
-	arc=none smtp.remote-ip=209.85.216.71
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=ixit.cz;
+	spf=pass smtp.mailfrom=ixit.cz;
+	dkim=pass header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=YyQbI+96;
+	arc=none smtp.remote-ip=84.42.129.46
+Received: from ixit.cz (ixit.cz [84.42.129.46])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868B8606A33B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:16:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 868B8606A33B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--akorn.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790FC606A331
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:27:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 790FC606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=D1G1feGI
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3b0c7ab2427so4632577a91.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 10:16:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795630594; x=1796235394; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CjWm5/UHo+r5udk/y7h+H88lRIb30cpagGaa9Im8Ykc=;
-        b=D1G1feGI4qOfZRpiInNwb0vPg3pEahiPHY9t/MnQ2O3CivfWXZi11uzcTp69dwiAqi
-         4HsWJYYyAVkjP+OYMO+qxE74hVSaQ4heai1WqRdPdy5TspXvU4MsB++bUdvVxQCWa+GC
-         ZFfoMHfjxUfAvDxZXhic9/oyJCw9NhuTGTmxyYKxMODW/0NJDzp9yKUFsPQSDu1cbCDU
-         KFnoaDl76Dq3FgWqipxTkGv24gHlAaXt2E9lTeUaCasRiUofltQg//hqTjp1iXwCHYPk
-         ZLRDLwQfSJKfiAicyVdu5bE7ka46QGf9fNKSdigC7hq+L3MDOzQ/lqKGicOX2iITwa4T
-         E+Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795630594; x=1796235394;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CjWm5/UHo+r5udk/y7h+H88lRIb30cpagGaa9Im8Ykc=;
-        b=acJYPPEwRMyN3th0xv5S1iskxGfP9l/jTIC3faEt9j0dQZFCS6DxEGm8h19Gm8EuEH
-         XXZ1ix4tSbHTakL6/IMIhW45YhQCV66eDQBg5oK8VTjmZrce0Za3KiMMMNdLoHxrGdF2
-         QymgLKtYCjFj11qaYhNHUnNwW0qNSHKFKWIem4t9KdU464ErdpGDbZR2WMacLbPUyQaf
-         5Tys75af56sn3JQZsRVBKDeRssbKHeWL6KhbOeO6BOC+3SQTQm2Gb4TCSXUlyCrg1VYV
-         pwkc+UEFbiNmyla5lylnsfq5gnkmr7zSkWgOZmFY5Q/xjkpe5rvABe1eOAQDpjULTim0
-         phqQ==
-X-Forwarded-Encrypted: i=1; AL+hErHEqKxFtL+jZeHy6gXI3TSv1PtWRwg39PhgFptvWDC9wWkt/al4XV6vI4+3CVc1bgVyT0m94Tytnox9L1pwhY4=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/xl6M1m6hx4h+Mt2eVHR8NBp0GOU45OUMMZdx/apfEbJk9mEap
-	MpF7iPVJGKq4jX8Xzbt0pWQ9F53vktAgm/3/vdy8zUh7W1TlaOBzIixZUyvm+hhvi2qdFF7IVe+
-	3hg==
-X-Received: from pjyf11.prod.google.com ([2002:a17:90a:ec8b:b0:3b4:3d61:7517])
- (user=akorn job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:17cd:b0:3b0:99f8:eba8
- with SMTP id 98e67ed59e1d1-3b41c97c45emr17900418a91.66.1795630593453; Wed, 25
- Nov 2026 10:16:33 -0800 (PST)
-Date: Wed, 25 Nov 2026 18:15:44 +0000
-In-Reply-To: <b5910c74-7e29-4138-9dd4-030c95c78ec3@roeck-us.net>
+	dkim=pass (1024-bit key, unprotected) header.d=ixit.cz header.i=@ixit.cz header.a=rsa-sha256 header.s=dkim header.b=YyQbI+96
+Received: from [IPV6:2a02:830a:f787:8f00:f33c:cbcd:417b:d2b9] (unknown [IPv6:2a02:830a:f787:8f00:f33c:cbcd:417b:d2b9])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 3185553401F6;
+	Wed, 25 Nov 2026 19:27:19 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1795631239;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Q/Ht4mTVsZ8VXLHmxE/9TQE6M9RVX4AerJ+ZRy/407k=;
+	b=YyQbI+96AQykSTN2+2red/GURWvIOEle1Nwbrx80ac2UEOe6m4DXx70HBcxxZcsdHsnvJ6
+	xQa+Q492OWqpzUMAu2wf9dZUhGNXkDW75kyziM7eEjwFMModDY0JanP6/nN/86/qC00Kq8
+	uondbQah5GuEKvk+YXhQAAt8ZBWkU30=
+Message-ID: <91d61e88-f9f7-464a-9151-4b2f2216411c@ixit.cz>
+Date: Wed, 25 Nov 2026 19:27:18 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -78,63 +59,126 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261125053711.3098007-1-akorn@google.com> <sashiko-outbox-232631@kernel.org>
- <b5910c74-7e29-4138-9dd4-030c95c78ec3@roeck-us.net>
-X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261125181605.3299785-1-akorn@google.com>
-Subject: Re: [PATCH] hwmon: (pmbus) Fall back to CLEAR_FAULTS when STATUS_CML
- is read-only
-From: Arthur Korn <akorn@google.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Arthur Korn <akorn@google.com>, sashiko-reviews@lists.linux.dev, 
-	linux-hwmon@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 8/9] arm64: dts: qcom: sdm845-samsung-starqltechn:
+ Update panel compatible
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org
+References: <20261125-crosshatch-panel-v4-0-120adc58e737@ixit.cz>
+ <20261125-crosshatch-panel-v4-8-120adc58e737@ixit.cz>
+ <sashiko-outbox-233966@kernel.org>
+Content-Language: en-US, cs-CZ
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <sashiko-outbox-233966@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 11/25/26 07:53, Guenter Roeck wrote:
-> On 11/24/26 21:49, sashiko-bot@kernel.org wrote:
->> [Severity: Medium]
->> Does clearing data->has_status_cml on any negative return value from
->> _pmbus_write_byte_data() disable STATUS_CML write-1-to-clear across the
->> whole device when a driver exposes a read-only virtual page?
-...
-> Seems real. Arthur, what do you think ?
->
-> [ PMBus is really annoying :-( ]
+On 25/11/2026 19:20, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [High] arm64: dts: qcom: incompatible panel@0 compatible and
+>    reset-gpios change
+> --
+> 
+> commit fd433e980a7d2d9c4e491b9e6c72d47eb49cfd5c
+> Author: David Heidelberg <david@ixit.cz>
+> 
+> arm64: dts: qcom: sdm845-samsung-starqltechn: Update panel compatible
+> 
+> This commit replaces the panel@0 compatible string with
+> "samsung,s6e3ha8-amb577px01" and changes its reset-gpios polarity to
+> GPIO_ACTIVE_LOW on Samsung Galaxy S9 (starqltechn).
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+>> index bd59f1dcd96dc..c156ed3733b4e 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+>> @@ -267,13 +267,13 @@ &mdss_dsi0 {
+>>   	status = "okay";
+>>   
+>>   	panel@0 {
+>> -		compatible = "samsung,s6e3ha8";
+>> +		compatible = "samsung,s6e3ha8-amb577px01";
+>>   		reg = <0>;
+>>   		vci-supply = <&s2dos05_ldo4>;
+>>   		vddr-supply = <&s2dos05_buck>;
+>>   		vdd3-supply = <&s2dos05_ldo1>;
+>>   		te-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
+>> -		reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+>> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+>>   		pinctrl-0 = <&dsi_default &dsi_te>;
+>>   		pinctrl-1 = <&dsi_suspend &dsi_te>;
+>>   		pinctrl-names = "default", "suspend";
+> 
+> [Severity: High]
+> As reported by Krzysztof Kozlowski on v2 [1], does replacing the
+> "samsung,s6e3ha8" compatible string without a fallback and inverting
+> reset-gpios to GPIO_ACTIVE_LOW break DTB compatibility for existing
+> kernels and DTB consumers?
 
-Confirmed -- Sashiko's finding is real.
+The only consumer here is Samsung S9 (Korea version), all known distributions 
+building kernels together with DTB, thus in this scenario it doesn't matter.
 
-I tested on a system with 30x MAX16600B.04 VRs driven by max16601 (which
-sets PMBUS_PAGE_VIRTUAL on all 3 pages because the chip NACKs PMBUS_PAGE
-0x00 and latches INVALID_COMMAND):
+When old DT will be booted, the new kernel is able to handle it too with old 
+compatible and workaround for reversing polarity inside the driver.
 
-  - Page 0 (VCORE at addr) and Page 2 (VSA dummy client at addr + 1)
-    both implement writable STATUS_CML (0x7e): writing 0xc0 clears
-    latched INVALID_COMMAND | INVALID_DATA cleanly to 0x00 on both I2C
-    addresses while preserving other STATUS_CML bits.
-  - Page 1 is a software-only virtual page exposing vendor registers
-    0xf1/0xf2 (IIN_SENSOR / TOTAL_INPUT_POWER); max16601_write_byte_data()
-    and max16601_write_byte() both return -EOPNOTSUPP for page == 1.
+For booting old kernel with new DTBs, display will not bind (since the new 
+compatible), but that's not going to happen with current usage pattern.
 
-With v1, pmbus_clear_cml_faults() hit -EOPNOTSUPP on page 1 and set
-data->has_status_cml = false for the whole device, causing page 2 and
-subsequent register checks on page 0 to fall back to CLEAR_FAULTS.
+> 
+> Any kernel or consumer that only matches "samsung,s6e3ha8" and expects
+> GPIO_ACTIVE_HIGH (established in 70005c18c9f7 ("arm64: dts: qcom:
+> sdm845-starqltechn: add graphics support")) will fail to bind or reset the
+> panel when booted with this DTB.  Earlier patches in this series already
+> handle the legacy "samsung,s6e3ha8" compatible and inverted reset polarity
+> in drivers/gpu/drm/panel/panel-samsung-s6e3ha8.c via
+> broken_reset_polarity.
+> 
+> [1] https://lore.kernel.org/r/20260929-spirited-umber-hedgehog-300ebd@quoll
+> 
 
-In v2, I moved data->has_status_cml = false inside the readback check so
-it is only cleared when _pmbus_write_byte_data() succeeds and the readback
-still shows PB_CML_FAULT_CLEAR_MASK set (the read-only STATUS_CML case).
-When _pmbus_write_byte_data() returns an error (such as -EOPNOTSUPP on a
-virtual page), only that call falls back to pmbus_clear_fault_page(),
-preserving the existing behavior from d9d30e1cb9ca.
-
-(Side note noticed on the live MAX16600B.04 system: untouched devices boot
-with status2 = 0x0002 / status2_cml = 0x80 latched on VSA because
-pmbus_check_register() and pmbus_check_status_register() pass page = -1 to
-pmbus_clear_cml_fault() / pmbus_check_status_cml(), which targets the
-primary client 0x69 instead of data->vsa 0x6a when probing page 2. Happy
-to look at that separately if useful.)
-
-Sending [PATCH v2] shortly.
-
-Thanks,
-Arthur
