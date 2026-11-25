@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.2
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795596248;
-	b=iU55CKFqDg1o6eOFWuZb73Dq0DM1tuAay5teQQ/5x8Xg4x1pjJ51/d9UYxWGKOf6nCR8
-	 MO4zeCQkUbC/xv3iZBDi75+peDhNiIhsx+sSknG+Mq09imeBX7j8qyJKJ4pAquLfRget2
-	 CM+BtBmFrVqM8i1OiCbHn5yPn3VC4nPP7s292FOpgiulJ9WXGAItp++9zxrxdsdWJbV2M
-	 7IK2ZdVheztwSxRy62XmOmDPBRe2k+41pF/UgcLqxshtaV2UaHnlKhUeZGLpTfaAHGS35
-	 yBDpeKEMFrGo5ogw8DZiLDKTqhMTyt6p80/cx7sJzr6kyY715zy4u36XUYod1XPZrUA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795596248;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-TrafficTypeDiagnostic:
-	 X-MS-PublicTrafficType:client-request-id:request-id:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=6AUI5AE+XZ/zx5sU0PvnDKe1B6rl19cjUkLQDcn8bQw=;
-	b=MRf2ASKkrmLXF2xuNc72SV7Le2SLsDiB5PmUni/1JGLtGsfbLoK+AzHrjx7yQPvhzbx2
-	 RX14yQ+IkERCE4GCVKeuaVNytLcNA9P942/0g71uXfhD5lj8rD5QyXZU3E3ur26i5ZAIA
-	 k+py6/bLbLwdMR7Ud35QMr6rRkOpZwFpqw4YFZzK7Zi4ynvqGUJSwvdrIw7kqlWfm0Xr9
-	 UFrPmUUatTYtcRn95PzI6XAQojXwG58ehZIC8/ZjLdQkTikUKsNlb+iTi2ZYhYlXDUuVL
-	 aj/NyKejwVh4ufRFkE40N7SZ8m9HX7M3FnYCbjM9/DLotRcz6mOrD90lYBCCbH9mU/g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=moxa.com;
-	spf=pass smtp.mailfrom=moxa.com;
-	dkim=pass header.d=moxa.com header.i=@moxa.com header.a=rsa-sha256 header.s=selector1 header.b=LZdE7uh5;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.2
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11012002.outbound.protection.outlook.com [40.107.75.2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795596283;
+	b=G98MkquMseg6GQK+NSefH9eqxH3ykBEsIWT2hYEoqzCx5p3GMLOVbiCehczCtjhuIGLi
+	 vIFgABXfaPlHdVHRjUhsLX6MkMbkHIu/jT8XJXOANPiAwzUVTZS+9dMY/AKtNo/yFvfIT
+	 Ejdh9mVPpncOfp7gYrXvyz+tHFGYkbnND1u0aIzcg7oTHMiaw7MEvccVKAedGPls80zPJ
+	 D6x7+gcBu3tHJ/0iFvvZrfGahRiunW0XpDRD8sQJpoosXWIUbqbQlpzhitY9zNI/kEv5W
+	 4pnJAX0InXtR/aXAi9hrUQB2NWjD8t3fpz/nFh5u4F27TvHYfnsII3r1oUZLQi1yHPA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795596283;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=MbRhh51PuVGNX5wjFYK/oLTg7cjuPf/owXDadBTQZjc=;
+	b=lsVuRZaHDSo7coPVJvd5krH61uh1AJ8I6QGO2iZgfDyUtbTOG7/V46LbmJwjaOc2bJx+
+	 7rpWQZMJw/ShGixoW8gZ/rzU2y6dZ+Dta/5izZ/vSGyxHTqpe8gU/uPMJHqvARQEJh+A3
+	 GMazyoUMS6++QhfrRebjOtcZxv3YsUzk7f9kiBjtCKBjxdBC/vVUk4du8eEPDh5ElmJrs
+	 tW/M+T98NSEZfyElGQx0igl/m/TqcrXIMydk8HL134k5r5A/8dLYTv0IFsxBTNyMdKpKU
+	 MgNqjUDEVfyAqme50LJY0v1ohwCZDVOlh+E73JGpLwWytlntGgDX8Y2iqfTiJH2hs2w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tQh2tB3u;
+	arc=none smtp.remote-ip=209.85.128.49
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D099606A32A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:44:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D099606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=moxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=moxa.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE75606A323
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:44:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8EE75606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=moxa.com header.i=@moxa.com header.a=rsa-sha256 header.s=selector1 header.b=LZdE7uh5
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=M6SqsvYqpjvfxA57yb8i0gNPm55cLUMVU1O2d+IDzYbdAjYotWU+WQNHUUmb4fyFKdpkR8B6emCTg2w4sI73BJEcAhwJb6ZnCivU1VJq1JUwT05V+ZyaeM70k1tTsQWAvDXDFT7LVP1aQxp9eHXHvM9S8RynGPymCar8BwWUuf1dSBI/2hXsz40NJfROjz0wz3WlIh54C1QrO9QCHHtUmYufute8uHjcJcrErcJSgchzhvVZFMOWxmGflVGZQOu8rWt1HFbrUIDGh74XqkNr+WZTOk5b+OdEh9MVO4tmx+heu5XuMztwJ1cdh2wpLs98WtZRVg243aLGt4+6ck/S8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6AUI5AE+XZ/zx5sU0PvnDKe1B6rl19cjUkLQDcn8bQw=;
- b=tr3L/BbClp6xYG696srvdp1CGiU2p38BmXTgbIwUMxW0/27RCqX0WWM9JBhwAVo3OyJ2lysbAM6RVDeIFmRTxXelOvMIzwGVRyznYq1aegrXT5scG+7kfQAtZFIE4NrxlAJTjqZUIg9zulfhPV8dCl8oMl4LmxUN4CumRrex1Ftt37p2BaN8dU9uXM31QuVYc+uPGAjs0dq+unxQtU319qvvW153wl+nOPGP+SsfipnMaB3VgbZtj737E7kWuDqIg3K80ghxk8jA+HOIQQi+Y/hn6/IR1croHJUjvfqXDhi9vXJbiTAeWscceY7dfrqS5fWXo+50QkfTlKslwPti6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=moxa.com; dmarc=pass action=none header.from=moxa.com;
- dkim=pass header.d=moxa.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=moxa.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6AUI5AE+XZ/zx5sU0PvnDKe1B6rl19cjUkLQDcn8bQw=;
- b=LZdE7uh5TOZSd+TTcwEbfFZj1KeXx4U0A4K1SCtBUxfH3afz4Ev9Ms/bsBnCntvg2e3HmSV6NPMh4M0QtCYtgq67NjRWRqSS1zhNHuN2G2NwMJso9Dn/Z7635+bj7kcPfYeWI7Vft5wdx95LE8oakVh1Gd12vDIDPG8lFrF6Q6Y=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=moxa.com;
-Received: from SEZPR01MB7265.apcprd01.prod.exchangelabs.com
- (2603:1096:101:2a6::8) by TY1PPF30E681ADF.apcprd01.prod.exchangelabs.com with
- HTTP via P2P; Wed, 25 Nov 2026 08:44:03 +0000
-Received: from SEZPR01MB7265.apcprd01.prod.exchangelabs.com
- ([fe80::9fb0:b4b4:bb57:e95f]) by SEZPR01MB7265.apcprd01.prod.exchangelabs.com
- ([fe80::9fb0:b4b4:bb57:e95f%5]) with mapi id 15.21.0639.012; Wed, 25 Nov 2026
- 08:44:03 +0000
-Date: Wed, 25 Nov 2026 16:42:51 +0800
-From: Crescent Hsieh <crescentcy.hsieh@moxa.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-Subject: Re: [PATCH 5/6] USB: serial: mxuport: handle TCFLSH buffer purge
-Message-ID: <awafi1yxlHg9Va9r@moxa-ThinkCentre-M90t>
-References: <20261016100351.681390-1-crescentcy.hsieh@moxa.com>
- <20261016100351.681390-6-crescentcy.hsieh@moxa.com>
- <sashiko-outbox-174156@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-174156@kernel.org>
-X-ClientProxiedBy: TPYP295CA0046.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:7d0:8::17) To SEZPR01MB7265.apcprd01.prod.exchangelabs.com
- (2603:1096:101:2a6::8)
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tQh2tB3u
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4b467581b98so52828275e9.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 00:44:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1795596281; x=1796201081; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=MbRhh51PuVGNX5wjFYK/oLTg7cjuPf/owXDadBTQZjc=;
+        b=tQh2tB3udVA5x1jP0d1D1qblwBbJzGeAcLNJToXrWRiK1vnTQSYNn9jUq6O3K6ilHG
+         MhMd2jR8Aw3+FBogCWO5ETK5ISXw+JK7/2O26a3aC7F6cl4J34f6vUbmKA/AhF4eAJv6
+         F1G9aYv74b7fdjolE5ZjUMMWHg9Px39AjvmchMOwMohEKi3fmkUCSlxltzD1ZReeZca9
+         P/YhQIksZq8AsAtGt/Hb9D898q06hF1dls0vkucYK9EDe2eMeRqDpnWzyVaDG8kUm9zF
+         6/d+Pc1qEZnN0oZsAc4NTY5ECp7Xc/xx8T0G6mwJMuD/YBcrvCmCimrr/mIDjTvVGyJz
+         PATQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795596281; x=1796201081;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=MbRhh51PuVGNX5wjFYK/oLTg7cjuPf/owXDadBTQZjc=;
+        b=FywlCRICsvaT/nlBJ3otUp2r90wSEVaFrNcwykqbtsCneQdh3gGMVQu2LasuJ8DZeo
+         zazVZG5Z5l2iK6rlenZouGyrgKrgo2mJoxYK0FG+7TqB1IdIjyCUihKGx+XyTjDYRarP
+         5/y+E6FlM3pT4WpGwbfcHLTaRJdyL1IwBcXoVjOngK540PHuvOd6NTmvRt+4PX2Vaq69
+         LSwmbDDDw6t7W3SxHAJZGi/6kh2Qr9deBUeQs0XSMjIME4svOivBhj+vsXYF1hKaxMH5
+         SbYIDp+R2fYAj8W9gQpH1V1daNonsQcwOSI2nj6vb1oWGqfrBii27k3h/fKynCWk7U0b
+         g5rw==
+X-Gm-Message-State: APuU4Z+jkYqpJPXGYnOT3VdghP0i5fsASc680SObw3CwlIoIa++mm8l0
+	lBO9A78jyU9gS+wB0eCdyHI/mFIQUZ4A9FmCvMfjkklGqoLP9Xlci5RiEOh9by+r3EVbvjydtrR
+	UTavwa0ysXg==
+X-Gm-Gg: AZFdTZdhcaddWPFAw8U2R3BfNQx/ZC/TojqPBcT9SGp6XjcotF5K78EmfhHTnWCI2T4
+	PwfERRS2qw6hPeITuN22zjXfi/eNkOzVYya1RA7bmcqAJmBxtAdZhlBwqnlY8//lU5dbspfC7s4
+	tnE48SehRczkvwnRFg+9HJlqJVc4vpOO3LXzTS5Ju7PVeDT6GS30ifWwr07FVDG9twcvYSARQDJ
+	Ub20JmfCMP+cw0hY5TG3hYzy7jc+XsU7YTuh+PF5OsrfVv+S6qeWeogZk0qRJ+wjpKPvbhVcSsj
+	vBAbB/CKXcf+7xRjsnc9tzLqY2S5x7vIi8XKMp5yadd/GXv9NOBXuGf9DQUmz3hjtBiNKBTSUle
+	EP8vRuDJYFMCQDIin8nEkZDkrMBF3wTd1DhiFQgXEEA/9gUwjcnvFZQpAtO8XF+pqH+LeWicaNH
+	jQXT50wTRV6p9bTJqO4wbpwrusqT6Zho64DR63nl7G7P3GE45jHzVX+lFi6DUs+fyNMAyCTykR/
+	B57QPqsbpaEikWOv2hScc/Nz7p6ki9m0wPm8Kwftvv1uw2l3nyy8n6EhIj+te+K/HtUt+l/jI1u
+	tTk8fSuhI3h30Lhuy71mIJeTdwhcSIfe0NDa37G6CJI+yvDI8OBfuTYpKt93dSRUV3vJ5blp8Ho
+	aAB6dsd2RIw==
+X-Received: by 2002:a05:600c:820d:b0:4bb:7b4d:6396 with SMTP id 5b1f17b1804b1-4bb887e21c6mr307761695e9.3.1795596280722;
+        Wed, 25 Nov 2026 00:44:40 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:106d:1080:f368:ae2e:e717:e970? ([2a01:e0a:106d:1080:f368:ae2e:e717:e970])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884911e3sm604901685e9.6.2026.11.25.00.44.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Nov 2026 00:44:40 -0800 (PST)
+Message-ID: <c3b5f4ec-5535-4a55-9774-f166d2ea6e7a@linaro.org>
+Date: Wed, 25 Nov 2026 09:44:39 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,183 +93,301 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic: SEZPR01MB7265:EE_|TY1PPF30E681ADF:EE_
-X-MS-PublicTrafficType: Email
-client-request-id: a01d4a8b-d4b8-40b2-87e8-b1649e58ac43
-request-id: dac46269-6d15-414a-50dd-08df4ad041ee
-X-MS-Office365-Filtering-Correlation-Id: dac46269-6d15-414a-50dd-08df4ad041ee
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|52116014|23010399003|376014|366016|22082099003|18002099003|261009223027099003|3023799007|56012099006|4143699003|261028144727099003|261022105027099003|261021121427099003|261102123227099003|261022075727099003|261021123027099003|261026121527099003|261026140227099003|38350700014|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	rwJdH4bVf+5SYc5hsjaJMIoxHTDGDPxpw95s21oix78AZwQzSTK7x38vyHrwhTbtZ48GVCPnw5Yhvx9QRzcZtapk2EEsm+egfQ0RL15n0UxN3aWihInLGqNrzyTtbPyYRfTyx3dkHPKM5BpeCebtxRmbn0ZUb4givgzJdlIH0TVfIXwLNl981OSqewtqHzL6gFvGGTW/hFa39xljW3oBXgEb8D8xcmXEzmNSnk3LRS7ibTD/vvFard+dpT6Z/BcBHIjgC/uMWWwt4lkfTUkdvr0S2rnLq8qxmlIJphXpCdqLdPkxhoh11eXC6n4ufwzSKvpXPB/UsxWKNbZXr8pM+96QgDs1fazvwgZ7G0uHZh81vEwVuX2vtOh0LZHSsB1oPPEHrS7yeee+GmfTKDFR0+nQJZidOy86U/qVj5lbWXzQMp8O0O4m8a6RMTeAeW2Uya+FLYgjvhHN9XzlSCplIZCemuVEKllmJuFfO4r2mUNQyR2HZR4VQXMsfpsFbLw5B+eOpIEVfyfDnFG3SyI3ZT8L65fxLymTtiLQaWKfrbvbyW0decRot2auqOkvclLLRm4uErzHthgHeGtlRtw62cxreHuv7j3c6+9M5HkCzuCZ0wt4WtMiTESFDxc5filpWqRmNFPPKmgdMijvSTzHB1FIf68pYX3JjzIpiTO+QU3Qv07zMmpHlDKkFm2A9JasgE3+k7SIsGmTLNgtjWadxNQVLZG4zvW2mSfIL9AsCyo=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(52116014)(23010399003)(376014)(366016)(22082099003)(18002099003)(261009223027099003)(3023799007)(56012099006)(4143699003)(261028144727099003)(261022105027099003)(261021121427099003)(261102123227099003)(261022075727099003)(261021123027099003)(261026121527099003)(261026140227099003)(38350700014)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?p6BlAIvQWOgpxBKRl2l0fD51JNTDqkpdCWfzCwlNw2HrcRCrtWcOsCWRU4ru?=
- =?us-ascii?Q?PgVOj0N4LC+j0Vqlfpt13ovuec12H/DG5FyPuk5Pv9Eqxg0fVZ0ZS55LTPrc?=
- =?us-ascii?Q?oX8QIMVutAbHaZp62ioBXbgo4ogtB25HmSRXb91RYm/K8j354qRfg991bn3/?=
- =?us-ascii?Q?JVnizhisFsOcmn2PmfOyAHLQb8+ArAo9Rb+lLhPoHbFgaY0NqlVUqea87h0m?=
- =?us-ascii?Q?LSMovohrGFIyZ0OnfGCW2h6iZ+Con5tonAD90+KHDu9NmAfpuIV45+0cctfV?=
- =?us-ascii?Q?Em/Qf7b6Rn0vJTSE/wjGr+c+9IjXezq/+QYx4DYSKyIfRWAkZkJ303KNUl1K?=
- =?us-ascii?Q?mQ2CKO5E1bHfF6PyfsNvuus5QBl6Gu0MRlNTLNWxiX2/xuLOMdOohIwVx6RR?=
- =?us-ascii?Q?4tQllIVAUU52qmW3zru+pqlQmzUAS0YpeW9QUOKqsSeb2MVBr3tw2gf4fagO?=
- =?us-ascii?Q?rL3RNRvoygi94ASdJQGcpa7Ttcg/2hv3AoWruNqeOeOmdH5gWLkXRrUEakWt?=
- =?us-ascii?Q?iLOAzj8I5z8GyonEq7QT3z6QR6G3RZfZ2mAye6RI0Bw3+neM8/QoOZj64A7Y?=
- =?us-ascii?Q?ipclO3WiIZxjDGVyQb4gD/kW/aatOqcFA5X/s4Vxf0+OTNd5wNV+Lc2H6pEr?=
- =?us-ascii?Q?iv9g62gsnnooZwJFb0PXbegMaxzMcnUWYkmi9SYfXrCYEuae7DxVpGNSrKji?=
- =?us-ascii?Q?IH0oVYy1kHuLnz6AyGEmj9kY2ilIYR7L2N/fn0s7aB4lNTLvehw2OOEwvFmV?=
- =?us-ascii?Q?Wyq0vCfNcVlkUYaaWYHZ4sogYixAEqQYKCAcloqt8SwVoZiCKphQqcD3CF99?=
- =?us-ascii?Q?if+cItXppJwvHIBH4+1LX4S+Y33WpaY7Qa46XADqrfZ6EtdAJBEgtcBGuPc7?=
- =?us-ascii?Q?n4U0VW4xOe03iM7IdnlhpPFafFRD4F8QH7lWnjeefSKnAXzQwEid831kXCEY?=
- =?us-ascii?Q?AfHm4bZZMRRPz5wQJqxGDtE3i2l5sqnvTuMD6w1WFCIRnj+GvSUIZuW3uKEc?=
- =?us-ascii?Q?Cz4b+8lQ5P5dOuvdLE7spu5tMumJRXCer/2XoK24lK6cgM/m/TkKiye46/jZ?=
- =?us-ascii?Q?83au8MQk7ApJX4HkIjScXW6y1sF6Mh6U1obEByVPyHS8cHvILxEuwv/LsI+e?=
- =?us-ascii?Q?hLPpArZ7fhgPwS9zEW58GHEbu1qh2aqdYgxe8Vgc/oxlk8HsE1NJwV1nPZi8?=
- =?us-ascii?Q?i98/7fCAH0hIkIdgvOIfyt1t1sUEUqPXQ1BNBpRHZB4kDsKjdgOZv09tV8Kh?=
- =?us-ascii?Q?avMTgKq4AmgbOYcwfC6j8Ro58ZGp6Ah4MOn73vKuq6+gazEbOFjo0yy3LR+9?=
- =?us-ascii?Q?S0+gz0Z6Ppdud/wNSDxg3tsfASKFiLD9huzRz97ukZLa8XvbkrSDWxqKioEG?=
- =?us-ascii?Q?l81tpYcawEwatNRjA1pkKJVRyzatLh471VbhMnU9ab1tKs3vs0TGpXiNWnw2?=
- =?us-ascii?Q?c1hoV5JRJ2eOPuNfpIOo5AlRF4xyEEcNM1frrBoREB/uzclAqLJi63NEWc5B?=
- =?us-ascii?Q?XTih8188LokKInNc9W/MrOyNY8expuqPDN6EChCAD3e795pMPLUEYMaC2aWn?=
- =?us-ascii?Q?Lyme6ikrJiPN9HygW5XiSPtwzthjTQl3YnVO4iSHHOfKHCWobLolmj3hv7Dj?=
- =?us-ascii?Q?tFgwroYKjpNF5SQ58F5hXNYHqIFA/Uqwato4/x5FEgpDisoF3OLFv3RfajPE?=
- =?us-ascii?Q?7xU94hWJZeE5zm8jjCyt9+j1xoT33hkFHyX8ACPTgpFX17AEJF12MQSfRPMJ?=
- =?us-ascii?Q?qqDev1qBCpdDZaAwRI2ncU4xDHNEwAY=3D?=
-X-OriginatorOrg: moxa.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dac46269-6d15-414a-50dd-08df4ad041ee
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR01MB7265.apcprd01.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2026 08:44:03.0742
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 5571c7d4-286b-47f6-9dd5-0aa688773c8e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 82EjkESXgyqeT7UIotRcxRlHKnbeD8sQ6IrTZiNlcw0fOzuKyf0395D3xQaPET0unsstLZ0/NsJdzWb/ZAz4P5IL1e2GROXpqBqklv88kKg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPF30E681ADF
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 15/19] ASoC: qcom: lpass: allocate LPM buffer memory to
+ DAIs
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20261124-topic-sm8650-el2-v2-0-174e159f0f69@linaro.org>
+ <20261124-topic-sm8650-el2-v2-15-174e159f0f69@linaro.org>
+ <sashiko-outbox-231761@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <sashiko-outbox-231761@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 16, 2026 at 10:23:23AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] tty: mxuport: TCFLSH interception causes AB-BA deadlock and job control bypass
-> - [Medium] usb: serial: mxuport: sent_payload accounting desynchronized by in-flight bulk URBs during purge
+On 11/24/26 19:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential
+> issues to consider:
+> - [High] ASoC: qcom: lpass: unchecked memremap() and invalid free of LPM
+>    MI2S buffer
+> - [High] ASoC: qcom: lpass: VA and RXTX LPAIF resources not gated when
+>    used for MI2S
+> - [High] ASoC: qcom: lpass: unchecked memremap() and missing pcm_free
+>    memunmap()
+> - [Medium] ASoC: qcom: lpass: mi2s_lpm_enable set for disabled LPM
+>    LPAIFs in probe
+> - [Medium] ASoC: qcom: lpass: LPM buffer offset 0 collision in
+>    lpass_platform_allocate_lpm()
 > --
 > 
-> commit 50a2e5dd5f4f9804e6a3238f55deca09791f0018
-> Author: Crescent Hsieh <crescentcy.hsieh@moxa.com>
+> commit 4c2b83ff038eba299bfce68560d0b64cb7efc8a7
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> USB: serial: mxuport: handle TCFLSH buffer purge
+> ASoC: qcom: lpass: allocate LPM buffer memory to DAIs
 > 
-> Generic tty flush handling does not purge the receive and transmit
-> buffers in mxuport firmware or clear the USB serial write FIFO. This
-> commit handles input, output, and combined flush requests by issuing
-> the corresponding firmware purge request.
+> This commit dynamically assigns LPM SRAM buffer offsets for Codec DMA and
+> LPM-backed MI2S DAIs and preallocates LPM DMA buffers for MI2S ports that
+> cannot access DDR.
 > 
-> > diff --git a/drivers/usb/serial/mxuport.c b/drivers/usb/serial/mxuport.c
-> > index 326a5ce18c6a0..9d304fb3aa02f 100644
-> > --- a/drivers/usb/serial/mxuport.c
-> > +++ b/drivers/usb/serial/mxuport.c
-> [ ... ]
-> > @@ -952,6 +958,70 @@ static int mxuport_set_rs485_config(struct usb_serial_port *port,
-> >  	return 0;
-> >  }
-> >  
-> > +static void mxuport_tx_flush_start(struct usb_serial_port *port)
-> > +{
-> > +	struct mxuport_port *mxport = usb_get_serial_port_data(port);
-> > +	unsigned long flags;
-> > +
-> > +	spin_lock_irqsave(&port->lock, flags);
-> > +	mxport->hold_reason |= MX_WAIT_FOR_PURGE;
-> > +	kfifo_reset_out(&port->write_fifo);
-> > +	spin_unlock_irqrestore(&port->lock, flags);
-> > +}
-> > +
-> > +static void mxuport_tx_flush_done(struct usb_serial_port *port, bool purged)
-> > +{
-> > +	struct mxuport_port *mxport = usb_get_serial_port_data(port);
-> > +	unsigned long flags;
-> > +
-> > +	spin_lock_irqsave(&port->lock, flags);
-> > +	if (purged) {
-> > +		mxport->sent_payload = 0;
-> > +		mxport->hold_reason &= ~MX_WAIT_FOR_SEND_NEXT;
-> > +	}
-> 
-> [Severity: Medium]
-> Since kfifo_reset_out() empties the software FIFO but does not unlink or
-> kill already-submitted URBs, is it possible for a late-arriving bulk URB to
-> be received by the device after the device has processed the RQ_VENDOR_PURGE
-> control message?
-
-Yes, an outstanding bulk-out URB can still reach the device after the
-purge. I plan to block new TX submissions and use usb_kill_urb() to
-cancel outstanding bulk-out URBs before issuing the TX purge.
-
-> 
-> If the host controller schedules the bulk and control transfers such that an
-> in-flight bulk URB arrives post-purge, resetting sent_payload to 0 here
-> could permanently desynchronize the driver's flow control accounting. Could
-> this lead to miscalculating the UPORT_REQUEST_SEND_NEXT threshold, resulting
-> in over-transmission and an overflow of the device's internal RX buffer?
-> 
-> > +	mxport->hold_reason &= ~MX_WAIT_FOR_PURGE;
-> > +	spin_unlock_irqrestore(&port->lock, flags);
-> > +
-> > +	usb_serial_generic_write_start(port, GFP_KERNEL);
-> > +}
-> > +
-> > +static int mxuport_flush_buffer(struct tty_struct *tty,
-> > +				unsigned long arg)
-> > +{
-> > +	struct usb_serial_port *port = tty->driver_data;
-> > +	int err, ret;
-> > +	u16 mask;
-> > +
-> > +	switch (arg) {
-> > +	case TCIFLUSH:
-> > +		mask = MX_PURGE_RX;
-> > +		break;
-> > +	case TCOFLUSH:
-> > +		mask = MX_PURGE_TX;
-> > +		break;
-> > +	case TCIOFLUSH:
-> > +		mask = MX_PURGE_RX | MX_PURGE_TX;
-> > +		break;
-> > +	default:
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	if (mask & MX_PURGE_TX)
-> > +		mxuport_tx_flush_start(port);
-> > +
-> > +	err = mxuport_send_ctrl_urb(port->serial, RQ_VENDOR_PURGE, mask,
-> > +				    port->port_number);
-> > +	ret = tty_perform_flush(tty, arg);
+>> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+>> index a83507c2cd557..8b005a87d4088 100644
+>> --- a/sound/soc/qcom/lpass-cpu.c
+>> +++ b/sound/soc/qcom/lpass-cpu.c
+>> @@ -1169,6 +1169,8 @@ static void of_lpass_cpu_parse_dai_data(struct device *dev,
+>>   			data->codec_dma_enable = 1;
+>>   			if (is_wsa_cdc_dma_port(id))
+>>   				data->wsa_enable = 1;
+>> +			else if (!is_rxtx_cdc_dma_port(id))
+>> +				data->va_enable = 1;
+>>   		} else if (is_mi2s_port_id(id)) {
+>>   			unsigned int port_id = mi2s_port_id(id);
 > 
 > [Severity: High]
-> Does calling tty_perform_flush() from within this driver's ioctl handler
-> create an AB-BA deadlock between tport->mutex and ldisc_sem?
+> Should drvdata->va_enable (and an equivalent rxtx_enable flag) also gate
+> claiming the VA and RXTX LPAIF MMIO and IRQ resources when Codec DMA is
+> enabled?
 > 
-> When ioctl(TCFLSH) is called, tty_ioctl() delegates to serial_ioctl() which
-> acquires tport->mutex, and then calls mxuport_ioctl() and eventually this
-> function. tty_perform_flush() acquires ldisc_sem (read).
+> When a board uses RXTX or WSA Codec DMA alongside an MI2S port on
+> lpass-va-lpaif (with va_enable == 0), asoc_qcom_lpass_cpu_platform_probe()
+> still unconditionally claims "lpass-va-lpaif" via
+> devm_platform_ioremap_resource_byname() under if (drvdata->codec_dma_enable),
+> causing lpass_cpu_init_lpaif() for that MI2S LPAIF to fail with -EBUSY
+> (and asoc_qcom_lpass_platform_register() similarly requests
+> "lpass-irq-vaif" unconditionally).  Conversely, without an rxtx_enable
+> flag, enabling only VA or WSA Codec DMA unconditionally claims
+> "lpass-rxtx-lpaif" and reserves 2 * LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE of
+> rxtx_cdc_dma_lpm in lpass_platform_allocate_lpm().
 > 
-> Concurrently, another thread could call a TCSETS ioctl, which acquires
-> ldisc_sem (read) in tty_mode_ioctl() and then tries to acquire tport->mutex
-> via serial_set_termios(). If a writer (like tty_set_ldisc) is waiting for
-> ldisc_sem, the read lock will block, completing the deadlock.
-> 
-> Additionally, because the hardware buffer is purged here before
-> tty_perform_flush() calls tty_check_change(), does this bypass POSIX job
-> control, allowing background processes to evade SIGTTOU restrictions?
 
-I'll focus on TX flushing in v2 and move the purge to the USB-serial
-.flush_buffer() callback. For TCFLSH, the TTY layer will check job
-control before invoking the callback. The driver's ioctl handler will
-no longer call tty_perform_flush() while holding the port mutex.
+The registers are expected to be present ber bindings, so it's a possible
+optimization to not claim the registers but not a bug.
 
----
-Thanks,
-Crescent Hsieh
+> [ ... ]
+> 
+>> @@ -1380,6 +1366,9 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+>>   						   variant->mi2s_desc[i].reg_name);
+>>   			if (ret)
+>>   				return ret;
+>> +
+>> +			if (variant->mi2s_desc[i].lpm_type != LPASS_LPM_NONE)
+>> +				drvdata->mi2s_lpm_enable = true;
+>>   		}
+>>   	} else {
+> 
+> [Severity: Medium]
+> Does this set drvdata->mi2s_lpm_enable even when the LPM-backed LPAIF has
+> no ports enabled in DT?
+> 
+> When no port on variant->mi2s_desc[i] is set in drvdata->lpaif_port_enable,
+> lpass_cpu_init_lpaif() returns 0 early with drvdata->lpaif[i].drvdata left
+> NULL.  Checking variant->mi2s_desc[i].lpm_type without checking
+> drvdata->lpaif[i].drvdata sets mi2s_lpm_enable to true on every variant
+> whose static mi2s_desc table contains an LPM LPAIF, forcing probe to
+> require the Codec DMA LPM clocks and LPM memory resources even when only
+> core-LPAIF MI2S or HDMI/DP DAIs are used.
+
+The mi2s_desc is suposed to be correct, and this doesn't cause any fatal
+errors.
+
+> 
+>> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+>> index 16a964e1aec1f..855f1ee193946 100644
+>> --- a/sound/soc/qcom/lpass-platform.c
+>> +++ b/sound/soc/qcom/lpass-platform.c
+> 
+> [ ... ]
+> 
+>> @@ -1288,6 +1321,41 @@ static irqreturn_t lpass_platform_wsaif_irq(int irq, void *data)
+>>   	return IRQ_HANDLED;
+>>   }
+>>   
+>> +static int lpass_platform_prealloc_lpm_mi2s_buffer(struct snd_soc_component *component,
+>> +						    struct snd_pcm *pcm, int dai_id)
+>> +{
+>> +	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+>> +	unsigned int port_id = mi2s_port_id(dai_id);
+>> +	struct snd_pcm_substream *substream;
+>> +	struct snd_dma_buffer *buf;
+>> +	u32 addr;
+>> +	int dir;
+>> +
+>> +	if (drvdata->mi2s_lpm[port_id] == LPASS_VA_CDC_LPM)
+>> +		addr = drvdata->va_cdc_dma_lpm_buf;
+>> +	else
+>> +		addr = drvdata->rxtx_cdc_dma_lpm_buf;
+>> +	addr += drvdata->mi2s_lpm_offset[port_id];
+>> +
+>> +	/* Playback and capture buffers are allocated one after the other */
+>> +	for (dir = SNDRV_PCM_STREAM_PLAYBACK; dir <= SNDRV_PCM_STREAM_CAPTURE; dir++) {
+>> +		substream = pcm->streams[dir].substream;
+>> +		if (!substream)
+>> +			continue;
+>> +
+>> +		buf = &substream->dma_buffer;
+>> +		buf->dev.dev = pcm->card->dev;
+>> +		buf->dev.type = SNDRV_DMA_TYPE_CONTINUOUS;
+>> +		buf->private_data = NULL;
+>> +		buf->bytes = lpass_platform_lpm_mi2s_hardware.buffer_bytes_max;
+>> +		buf->addr = addr + dir * LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
+>> +		buf->area = (unsigned char * __force)memremap(buf->addr, buf->bytes,
+>> +							      MEMREMAP_WC);
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+> 
+> [Severity: High]
+> What happens on PCM teardown or if memremap() returns NULL here?
+> 
+> Because buf->dev.type is set to SNDRV_DMA_TYPE_CONTINUOUS and
+> lpass_component_driver has no .pcm_free callback to memunmap(buf->area) and
+> clear buf->area, PCM teardown in snd_pcm_free() ->
+> snd_pcm_lib_preallocate_free_for_all() -> do_free_pages() passes the
+> memremap() I/O virtual address to snd_dma_continuous_free() ->
+> free_pages_exact() and leaks the mapping.  In addition, if memremap()
+> returns NULL, lpass_platform_prealloc_lpm_mi2s_buffer() still returns 0
+> (leaking the playback mapping if capture fails), and a subsequent transfer
+> in lpass_platform_copy() dereferences a NULL runtime->dma_area.
+
+The code is copied from actual implementation, it deserves a proper fix in a separate
+serie for the whole implementation.
+
+> 
+>> @@ -1412,6 +1482,7 @@ static int lpass_platform_copy(struct snd_soc_component *component,
+>>   			       unsigned long pos, struct iov_iter *buf,
+>>   			       unsigned long bytes)
+>>   {
+>> +	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+>>   	struct snd_pcm_runtime *rt = substream->runtime;
+>>   	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
+>>   	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
+>> @@ -1422,7 +1493,7 @@ static int lpass_platform_copy(struct snd_soc_component *component,
+>>   				channel * (rt->dma_bytes / rt->channels));
+>>   
+>>   	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+>> -		if (is_cdc_dma_port(dai_id)) {
+>> +		if (is_cdc_dma_port(dai_id) || is_lpm_mi2s_port(drvdata, dai_id)) {
+>>   			if (copy_from_iter_toio(dma_buf, bytes, buf) != bytes)
+>>   				ret = -EFAULT;
+>>   		} else {
+>> @@ -1430,7 +1501,7 @@ static int lpass_platform_copy(struct snd_soc_component *component,
+>>   				ret = -EFAULT;
+>>   		}
+>>   	} else if (substream->stream == SNDRV_PCM_STREAM_CAPTURE) {
+>> -		if (is_cdc_dma_port(dai_id)) {
+>> +		if (is_cdc_dma_port(dai_id) || is_lpm_mi2s_port(drvdata, dai_id)) {
+>>   			if (copy_to_iter_fromio(dma_buf, bytes, buf) != bytes)
+>>   				ret = -EFAULT;
+>>   		} else {
+> 
+> [Severity: High]
+> Should both lpass_platform_prealloc_lpm_mi2s_buffer() and
+> lpass_platform_prealloc_cdc_dma_buffer() return -ENOMEM if memremap()
+> fails, and should lpass_component_driver provide a .pcm_free callback to
+> memunmap() and zero substream->dma_buffer.area so that lpass_platform_copy()
+> cannot hit a NULL rt->dma_area and snd_pcm_free() does not call
+> free_pages_exact() on the remapped LPM pointer?
+
+The code is copied from actual implementation, it deserves a proper fix in a separate
+serie for the whole implementation.
+
+> 
+>> @@ -1459,6 +1530,66 @@ static const struct snd_soc_component_driver lpass_component_driver = {
+>>   
+>>   };
+>>   
+>> +static int lpass_platform_allocate_lpm(struct lpass_data *drvdata)
+>> +{
+>> +	u32 rxtx_cdc_dma_lpm_remain = drvdata->rxtx_cdc_dma_lpm_size;
+>> +	u32 va_cdc_dma_lpm_remain = drvdata->va_cdc_dma_lpm_size;
+>> +	u32 rxtx_cdc_dma_lpm_offset = 0;
+>> +	u32 va_cdc_dma_lpm_offset = 0;
+>> +	int port_id;
+>> +
+>> +	if (drvdata->codec_dma_enable) {
+>> +		drvdata->rxtx_lpm_offset = rxtx_cdc_dma_lpm_offset;
+>> +		rxtx_cdc_dma_lpm_offset += LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
+>> +		rxtx_cdc_dma_lpm_remain -= LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
+>> +
+>> +		if (drvdata->va_enable) {
+>> +			drvdata->va_lpm_offset = va_cdc_dma_lpm_offset;
+>> +			va_cdc_dma_lpm_offset += LPASS_VA_CDC_DMA_LPM_BUFF_SIZE;
+>> +			va_cdc_dma_lpm_remain -= LPASS_VA_CDC_DMA_LPM_BUFF_SIZE;
+>> +		}
+>> +
+>> +		if (drvdata->wsa_enable) {
+>> +			drvdata->wsa_lpm_offset = rxtx_cdc_dma_lpm_offset;
+>> +			rxtx_cdc_dma_lpm_offset += LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
+>> +			rxtx_cdc_dma_lpm_remain -= LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE * 2;
+>> +		}
+>> +	}
+>> +
+>> +	if (!drvdata->mi2s_lpm_enable)
+>> +		return 0;
+>> +
+>> +	for (port_id = 0; port_id < LPASS_MAX_MI2S_PORTS; port_id++) {
+>> +		if (!test_bit(port_id, &drvdata->lpaif_port_enable))
+>> +			continue;
+>> +
+>> +		switch (drvdata->mi2s_lpm[port_id]) {
+> 
+> [Severity: Medium]
+> Can an MI2S port on an enabled multi-port LPM LPAIF collide at LPM offset 0
+> if that port has no child node in DT?
+> 
+> of_lpass_cpu_parse_dai_data() sets a default 8-channel SD-line mode for all
+> MI2S ports and only sets drvdata->lpaif_port_enable for ports with an
+> explicit child node, while asoc_qcom_lpass_cpu_platform_probe() populates
+> drvdata->mi2s_lpaif[port_id] and drvdata->mi2s_lpm[port_id] for all MI2S
+> DAIs and lpass_cpu_daiops_probe() only checks that the port's LPAIF was
+> initialized:
+> 
+> sound/soc/qcom/lpass-cpu.c:lpass_cpu_daiops_probe() {
+>      ...
+> 	/* The LPAIF is only initialized if one of its ports is described in DT */
+> 	if (!lpaif || !lpaif->drvdata) {
+> 		dev_err(dai->dev, "LPAIF of this port is not enabled\n");
+> 		return -ENODEV;
+> 	}
+>      ...
+> }
+> 
+> If one port on a multi-port LPM LPAIF (such as lpass-aud-lpaif) is listed
+> in DT and a sibling port on the same LPAIF relies on the default SD-line
+> configuration without a child node, the sibling port still probes and
+> is_lpm_mi2s_port() returns true, but lpass_platform_allocate_lpm() skips it
+> and leaves drvdata->mi2s_lpm_offset[port_id] at 0, aliasing the buffer of
+> whichever DAI was allocated at offset 0.
+> 
+
+This will never happen since to have the SD line configuration you need
+to have an MI2S subnode, which will enable the LPAIF and the MI2S.
