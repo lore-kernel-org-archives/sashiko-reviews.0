@@ -1,49 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.132
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795595290;
-	b=xAoEzzVIXRMllwj2gNbB0Ptua4bXc863tGfReX0tx+LcG4+NyqsR8XPkF+5g07A8tain
-	 EgPDTO4SwYb4ICrTzzJpbXrK6SAgtAIb3E4oOPVQB0LpcOw4QXoHLD5cekq9EGiFTR8gr
-	 kAvnCkIa8yY6+HXw5ufvO55pgFmNZK2azpzbi7R4+DtGE9h0QUTMVSYI2xN4n5vTgz0nr
-	 CG6lOZ1x6G6j6ZopDYIocTF36Ca6J3sKhypPWC9SJsC1CKIF34T1fSPQXJrgkp8mlEouh
-	 D4GPyp2ydUtKgjasDb4+KZyYRLvyFjTGDI8ddsk0lS/4yOntgQNJ21EsFDuGF1tJzUg==
+	t=1795595563;
+	b=zmTP45sexrytqIMvL2uzHGPVGC7fO4lj0O/KUtvBcMeleS4wZPKqDO4xVJybGOsS8lOb
+	 D/p9zWNf4h3pnEOc+USEaKSiJdNnfRFlXqfGXuno1Tz+NnDczUy5viKy8Gw9u8dnzFgM3
+	 yUc2h1XfSUOM0+qst3oMvxrU7jcrE+xNOpKJ/LpjAF5nsJ5iF+3ZPA31tM0OJqTROocAF
+	 rQddqzwjX/NKFLVFF8TfD7tX7zbzPtiZEqmbslNrH7rjb3kAz5PkCilplSjWQHaHd8lsw
+	 76+fAnxwsqwc3Y1PgcLhfaNEOWMONuAAhXnbxhupCWsdJPpXZt7JpEZ/CSayxCkjONA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795595290;
-	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=O1qqSd7P6LsE224LlEnYuLdDv6qfc2LEAQW7Kqr7xu4=;
-	b=OSdqwWSKx9EdhiGnivI+OWUgNnDH522qCrXiO7PDp1/neXoofg1ZE4008lAuj0IynRF1
-	 WgatYpClEhLZrOWe7afdV9UBrNpxMvgfG1Leurw5vrg21I19etZrFphnfjWYTyebn7rLX
-	 2Qpc6sZGMZ+F6g+4z6+Thy6bcWv1Tb0jf7Q87qWN8UCSohf9elAeIIUsB/ALv3JC7mvAL
-	 OLWS0A4qPj89AM7YdulNe5Xc18vpvrwQrj/llLF5e6rEcZ2P/ZzRpRh1Ze5xV+6aQC+Pb
-	 uMoOgfijqFWhjlOea1n+VEtux+KS/7Mr4kEysBXeBFl9tgutAZynaifW0ZLFo0L7a+A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795595563;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
+	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=Z7nVlkXNx7FQmO9ItasInEpMKvgYG91F7qwPmFbmBqU=;
+	b=tbYAt8MayXCQNV/8OuGZx+5HLrjWOQP8DjXBV+MFtnkEFWPhUotmJ1pzSEi5YUErSgSp
+	 KN6vFqn7XOg6o4bpD95Dv1i8ztENbDyF1BsK4z86RazfWlV8TG2r3O8cgTSy/NfauKP8S
+	 MD1G+iZ2nIdR9WyQnXJ+cMWcZgyyaw/O3tYh8cAVB25lSF9RdgUIDkSjy3pqGQzT7KCFp
+	 gR8NeUi0NekWDu2m7z9ZtVaAjcC/e3Djsa0Wovy+UpUCJqW2YRQ5wLTZYDUr/GnVK2owA
+	 /u4zS6ACU9MsAwVD+2nskA5JpGnEllw3WY2Lje3Y5Me+EfiLREL52JgzjrtXB91Es7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.alibaba.com;
-	spf=pass smtp.mailfrom=linux.alibaba.com;
-	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b="re/+bKpo";
-	arc=none smtp.remote-ip=115.124.30.132
-Received: from out30-132.freemail.mail.aliyun.com (out30-132.freemail.mail.aliyun.com [115.124.30.132])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=WGWBwvsw;
+	arc=none smtp.remote-ip=209.85.128.49
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28336606A31E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:28:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28336606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A471606A31E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:32:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A471606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=re/+bKpo
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1795595284; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=O1qqSd7P6LsE224LlEnYuLdDv6qfc2LEAQW7Kqr7xu4=;
-	b=re/+bKpo0cMhs1Pid9bYuuB4ZlHNxMgk8B1TViTUXgGr24mIJPtW64wIelRQqSQz///K3AuYDqIOnzHmUsOPPHctdGiH+wqjrRvV3/x7GWl5nYFsJCcPwjEv8JWOgXDaaWzhR9ciln7/n5bI/rSCPfmGuF2Y7UIizuOjwwSO1cY=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R211e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045098064;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=5;SR=0;TI=SMTPD_---0XFQvStO_1795595283;
-Received: from 30.74.144.130(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0XFQvStO_1795595283 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Wed, 25 Nov 2026 16:28:03 +0800
-Message-ID: <f298cdb0-f328-4715-8b9f-e8e1c6ffc854@linux.alibaba.com>
-Date: Wed, 25 Nov 2026 16:28:02 +0800
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=WGWBwvsw
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so31239755e9.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 00:32:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1795595560; x=1796200360; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Z7nVlkXNx7FQmO9ItasInEpMKvgYG91F7qwPmFbmBqU=;
+        b=WGWBwvswThHrGlGbDeNcDchjiP43hpfWWsvsdHHNSOoC6oX0/46eSsR8pEXoJJ4xni
+         T2lPjkooQfcbAaM4sT8WKemJh0caKxDLUuk6r6Ckgc1X7SGNgGGiGXqzxmPdphyewPad
+         lKIfAfX/ZbAU1THaRi2XAGxPrwaaBhpKKxnsTxLaxRPqhJv6Fm4mBFj1nZZT3IrC+6GJ
+         yJ3Y9lI5jlSVIIxXws0HpUJDQn+t6ciz0UVR9gkopZJAT1Uh+g73sn+91yFVlwSvj/dB
+         nuvcL7+YFtAbWuFgcpt7x+KHkq4otRICQz8009DY+5leyNDDrXRQtD5gDp27Vrbno4Rq
+         ZnmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795595560; x=1796200360;
+        h=content-transfer-encoding:content-type:in-reply-to:organization
+         :autocrypt:content-language:references:cc:to:subject:reply-to:from
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Z7nVlkXNx7FQmO9ItasInEpMKvgYG91F7qwPmFbmBqU=;
+        b=v8g32ShCihFeBEertJg8Xj8vTNOU2dl8CLutgqCKeZtnaEidBb0fMhVtBLucBlCgJV
+         dPzD1cr3O7JCwGEA5JHUilLTFyKUUD9v/g8o8D8wG9C6xvg8JSk6r3tQtXmz6zjiwP3f
+         fg7C/7KK7cNy9DVYMY6DfDR12nHgjAYLLpPdFnMUbQee91QQsEJbq5e9xoQWeIpxiltf
+         kEt/vRLIgJBP9XWpscjqcB2bt9UA2OzF8Rm8Fl9dkcjU5NmjC3Izk6SAWSjCkDss7dGi
+         HJY5eytAJ8ez/fkjcVqzRiC9LoFxEoYi07O4X/YHJKu2ISrcPL9Ms0BB8+IhtDUV5KIZ
+         T5aA==
+X-Gm-Message-State: APuU4Z9E2WXDb2v6fRqxI7UliIN8MP4AqkwapWB0eM1l3D0nTApVYd3v
+	kUqN0zaCSp1qq4DZqEG+4blxm+saB5QupRK80hJ6AuAfhhlBdPHUx8gsZG+mHhc3XM6LL9MLgBI
+	I+d2ikkf5sg==
+X-Gm-Gg: AZFdTZc4EewxGwJnYVn0EVI24SI9Lqt/YE5eofDu08lL8vbKzBNrWQQ6Y3biobrKxGP
+	FoVN07eBPhrbI0Cc8EA4medRB58WqZEzHZsv4Q8pQ+bJem3y4Za9UYmL8y/SVMeUsQqkGCRyQyI
+	gSqs2+TqRzwmgJAqoDr9Jaiu+oQ20gLNV8FJGK1W3qZsHebUoy5xt0szRGRlBoVy6eNxMaMpagt
+	NnBvQdGYfxpx7eroMSRATlCuPM1WLSeg6NUAQaf51Kevciq0TzruD0Yiz86LWYZZsxf3XSykG0G
+	zyo6htNBQQ4wd00ibnMC/r+vkdzAIRtY12050Er3vl6m/S4BGj5iwJjwl3EvnFgJI7Ur6pz8dXT
+	pU6E6w7U6qLB78AVMn/Ci4T78Jkdr0tFkQCycszuQDdBsTV1K1DzlfFfQfxf2qUZa24f3oPDx8e
+	3OS4xi+g2rMPiffOgqNPSoTHyk83e0CxskOEwZuJyv2GXg6RkQD5GQ6YP4lNIpHZKi1EGkNVPK5
+	mmB+sBKNGmO1i8eYw60w1aZvPYzsyBHKhjjrFqxEkDO2nBD38qCBOgmZpegInLbehiQQizB1XEk
+	dzRD2d8ovon4szfZxTWqvFqPzWynrIY49jN3k80IgGUuLcbcLPhN6nGXTfwH3SuLY9eUh61Yl77
+	q74Bh313ZHmF9lP7Bv+pOHrXzRuaLcw==
+X-Received: by 2002:a05:600c:530f:b0:4bb:781f:6067 with SMTP id 5b1f17b1804b1-4bb887e21e4mr334917245e9.1.1795595560293;
+        Wed, 25 Nov 2026 00:32:40 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:106d:1080:f368:ae2e:e717:e970? ([2a01:e0a:106d:1080:f368:ae2e:e717:e970])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884c3063sm502783405e9.15.2026.11.25.00.32.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Nov 2026 00:32:40 -0800 (PST)
+Message-ID: <5ffffee4-15f2-477b-b7d1-67649605b412@linaro.org>
+Date: Wed, 25 Nov 2026 09:32:39 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,275 +94,294 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] mm: shmem: fix discarded data left intact after
- truncation or hole punching
-To: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org,
- david@kernel.org, hughd@google.com
-Cc: linux-mm@kvack.org
-References: <6fcc15c466667f6943c34e130212b891b7471c83.1795436423.git.baolin.wang@linux.alibaba.com>
- <sashiko-outbox-231134@kernel.org>
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
-In-Reply-To: <sashiko-outbox-231134@kernel.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 2/2] clk: qcom: add SM8650 LPASS core & audio clock
+ controllers
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+ conor+dt@kernel.org
+References: <20261124-topic-sm8650-el2-clks-v2-0-8086440e2c09@linaro.org>
+ <20261124-topic-sm8650-el2-clks-v2-2-8086440e2c09@linaro.org>
+ <sashiko-outbox-231728@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <sashiko-outbox-231728@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 11/24/26 8:26 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
+On 11/24/26 18:40, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential
 > issues to consider:
-> - [High] mm: shmem: shmem_get_partial_folio() swaps in whole
->    non-straddling entries
-> - [High] mm: shmem: missing boundary zeroing when hole is faulted in
->    during truncate
+> - [High] clk: qcom: unclocked GDSC MMIO access in lpass_aon_cc on SM8650
+> - [Medium] clk: qcom: MND freq_tbl used on non-MND
+>    lpass_aon_cc_main_rcg_clk_src
+> - [Medium] clk: qcom: MCLK branches parented to 2X RCGs instead of CDIV
+>    dividers
+> - [Low] clk: qcom: stale LPASS HM iface clock description in commit
+>    message
 > --
 > 
-> commit 44fc5f1a0ce8be88e4d2e1f2173306d27462ff3d
-> Author: Baolin Wang <baolin.wang@linux.alibaba.com>
+> commit 5b9d49ed39635aa6cd0df792f0d843cc860ce478
+> Author: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> mm: shmem: fix discarded data left intact after truncation or hole punching
+> clk: qcom: add SM8650 LPASS core & audio clock controllers
 > 
-> This commit swaps in and locks boundary folios before updating i_size or
-> unmapping the range during truncation and hole punching, propagating swapin
-> errors to the syscall callers and passing the locked boundary folios to
-> shmem_undo_range().
+> This commit adds drivers for the SM8650 LPASS HM, core, audio, and AON
+> clock controllers so Linux can manage LPASS clocks and GDSCs without ADSP
+> firmware.
 > 
->> diff --git a/mm/shmem.c b/mm/shmem.c
->> index 2b2b78dd24975..1e1d741e50dc2 100644
->> --- a/mm/shmem.c
->> +++ b/mm/shmem.c
->> @@ -1306,6 +1306,7 @@ static struct folio *shmem_get_partial_folio(struct inode *inode, pgoff_t index)
->>   {
->>   	const gfp_t gfp = mapping_gfp_mask(inode->i_mapping);
->>   	struct folio *folio;
->> +	int error;
->>   
->>   retry:
->>   	folio = filemap_get_entry(inode->i_mapping, index);
->> @@ -1324,17 +1325,22 @@ static struct folio *shmem_get_partial_folio(struct inode *inode, pgoff_t index)
->>   	 * Truncation can look up a large swap entry at or beyond i_size.
->>   	 * Swap it in directly to bypass the size check in shmem_get_folio().
->>   	 */
->> -	if (shmem_swapin_folio(inode, index, &folio, SGP_READ, gfp, NULL, NULL) == -EEXIST)
->> +	error = shmem_swapin_folio(inode, index, &folio, SGP_READ, gfp, NULL, NULL);
->> +	if (error == -EEXIST)
->>   		goto retry;
->> +	if (error)
->> +		return ERR_PTR(error);
->>   	return folio;
->>   }
->>   
->>   /*
->>    * Remove range of pages and swap entries from page cache, and free them.
->>    * If !unfalloc, truncate or punch hole; if unfalloc, undo failed fallocate.
->> + * Boundary folios are locked and referenced. Zero them, split large ones,
->> + * then unlock and put them. NULL means there is no boundary folio.
->>    */
->>   static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
->> -								 bool unfalloc)
->> +		struct folio *start_folio, struct folio *end_folio, bool unfalloc)
->>   {
->>   	struct address_space *mapping = inode->i_mapping;
->>   	struct shmem_inode_info *info = SHMEM_I(inode);
->> @@ -1392,25 +1398,19 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
->>   	if (unfalloc)
->>   		goto whole_folios;
->>   
->> -	same_folio = (lstart >> PAGE_SHIFT) == (lend >> PAGE_SHIFT);
->> -	folio = shmem_get_partial_folio(inode, lstart >> PAGE_SHIFT);
->> -	if (folio) {
->> -		same_folio = lend < folio_next_pos(folio);
->> -		folio_mark_dirty(folio);
->> -		truncate_inode_partial_folio(folio, lstart, lend, &start,
->> +	if (start_folio) {
->> +		same_folio = lend < folio_next_pos(start_folio);
->> +		folio_mark_dirty(start_folio);
->> +		truncate_inode_partial_folio(start_folio, lstart, lend, &start,
->>   					     same_folio ? &end : NULL);
->> -		folio_unlock(folio);
->> -		folio_put(folio);
->> -		folio = NULL;
->> +		folio_unlock(start_folio);
->> +		folio_put(start_folio);
->>   	}
->> -
->> -	if (!same_folio)
->> -		folio = shmem_get_partial_folio(inode, lend >> PAGE_SHIFT);
->> -	if (folio) {
->> -		folio_mark_dirty(folio);
->> -		truncate_inode_partial_folio(folio, lstart, lend, NULL, &end);
->> -		folio_unlock(folio);
->> -		folio_put(folio);
->> +	if (end_folio && end_folio != start_folio) {
->> +		folio_mark_dirty(end_folio);
->> +		truncate_inode_partial_folio(end_folio, lstart, lend, NULL, &end);
->> +		folio_unlock(end_folio);
->> +		folio_put(end_folio);
->>   	}
->>   
->>   whole_folios:
->> @@ -1513,12 +1513,39 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
->>   	shmem_recalc_inode(inode, 0, -nr_swaps_freed);
->>   }
->>   
->> -void shmem_truncate_range(struct inode *inode, loff_t lstart, uoff_t lend)
->> +/* Check whether the end page of [lstart, lend] lies in the start folio. */
->> +static bool is_same_boundary_folio(struct folio *start_folio,
->> +		loff_t lstart, uoff_t lend)
->>   {
->> -	shmem_undo_range(inode, lstart, lend, false);
->> +	if (start_folio)
->> +		return folio_next_index(start_folio) > lend >> PAGE_SHIFT;
->> +	return (lstart >> PAGE_SHIFT) == (lend >> PAGE_SHIFT);
->> +}
->> +
->> +static void shmem_truncate_range_partial(struct inode *inode, loff_t lstart, loff_t lend,
->> +		struct folio *start_folio, struct folio *end_folio)
->> +{
->> +	shmem_undo_range(inode, lstart, lend, start_folio, end_folio, false);
->>   	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
->>   	inode_inc_iversion(inode);
->>   }
->> +
->> +void shmem_truncate_range(struct inode *inode, loff_t lstart, uoff_t lend)
->> +{
->> +	struct folio *start_folio = NULL, *end_folio = NULL;
->> +
->> +	/* This void interface retains best-effort handling of boundary errors. */
->> +	start_folio = shmem_get_partial_folio(inode, lstart >> PAGE_SHIFT);
->> +	if (IS_ERR(start_folio))
->> +		start_folio = NULL;
->> +
->> +	if (lend != -1 && !is_same_boundary_folio(start_folio, lstart, lend)) {
->> +		end_folio = shmem_get_partial_folio(inode, lend >> PAGE_SHIFT);
->> +		if (IS_ERR(end_folio))
->> +			end_folio = NULL;
->> +	}
->> +	shmem_truncate_range_partial(inode, lstart, lend, start_folio, end_folio);
->> +}
->>   EXPORT_SYMBOL_GPL(shmem_truncate_range);
->>   
->>   static int shmem_getattr(const struct mnt_idmap *idmap,
->> @@ -1578,19 +1605,30 @@ static int shmem_setattr(const struct mnt_idmap *idmap,
->>   	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
->>   		loff_t oldsize = inode->i_size;
->>   		loff_t newsize = attr->ia_size;
->> +		struct folio *folio = NULL;
->>   
->>   		/* protected by i_rwsem */
->>   		if ((newsize < oldsize && (info->seals & F_SEAL_SHRINK)) ||
->>   		    (newsize > oldsize && (info->seals & F_SEAL_GROW)))
->>   			return -EPERM;
->>   
->> +		if (newsize != oldsize && (info->flags & SHMEM_F_MAPPING_FROZEN))
->> +			return -EPERM;
->> +		if (newsize <= oldsize) {
->> +			folio = shmem_get_partial_folio(inode, newsize >> PAGE_SHIFT);
->> +			if (IS_ERR(folio))
->> +				return PTR_ERR(folio);
->> +		}
+>> Add drivers for the SM8650 LPASS HM, core, audio and AON clock
+>> controllers, the HM, audio and AON controllers keeping their iface clock
+>> enabled while in use, LPASS HM's being the GCC LPASS config NoC clock.
 > 
-> [Severity: High]
-> Does calling shmem_get_partial_folio() before shmem_undo_range() swap in
-> whole swap entries at lstart >> PAGE_SHIFT and lend >> PAGE_SHIFT even when
-> they do not straddle the range boundaries?
-> 
-> Previously, shmem_get_partial_folio() ran after the first
-> find_lock_entries() pass in shmem_undo_range(), which had already freed
-> non-straddling swap entries in [start, end - 1] via shmem_free_swap().
-> Looking up the boundary indices upfront means a page-aligned truncate (such
-> as ftruncate(fd, 0)), page-aligned hole punch, or shmem_truncate_range()
-> swaps in the entry at the boundary index only for
-> truncate_inode_partial_folio() to immediately discard the entire folio.
-> 
-> As a result, page-aligned ftruncate() and fallocate(FALLOC_FL_PUNCH_HOLE)
-> fail with -ENOMEM when a cgroup at its memory limit tries to free
-> swapped-out pages, and fail with -EIO if the boundary index holds a
-> swapin-error poison marker (regressing 59511d630a69 ("mm/shmem: fix
-> truncation of files containing only swapin-error markers")).
+> [Severity: Low]
+> Is the commit message description of LPASS HM's iface clock still
+> accurate?  Only the audio and AON drivers acquire and manage an "iface"
+> clock via pm_clk_add(); lpass_hm_core_probe() calls qcom_cc_probe()
+> directly without setting up pm_clk.
 
-Yes, this is intended. Even for a page-aligned truncate or hole punch, 
-without swapping in and locking the boundary folio upfront, the 
-page-aligned swap entry could be swapped-in/swap-out by a concurrent 
-thread and turn into a large swap entry crossing the boundary, which 
-would still leave discarded data intact.
+Will fix
 
-For poison markers, though, there is no need to return an error to 
-users, since no old data can be observed. I will fix this in the next 
-version.
+> 
+>> diff --git a/drivers/clk/qcom/lpassaudiocc-sm8650.c b/drivers/clk/qcom/lpassaudiocc-sm8650.c
+>> new file mode 100644
+>> index 0000000000000..abd0258d9e72f
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/lpassaudiocc-sm8650.c
+> [ ... ]
+>> +/* XO only for now: the ADSP plan feeds these from the audio CC DIG PLL */
+>> +static const struct freq_tbl ftbl_lpass_cc_ext_clk_src[] = {
+>> +	F(1536000, P_BI_TCXO, 1, 2, 25),
+>> +	F(2304000, P_BI_TCXO, 1, 3, 25),
+>> +	F(3072000, P_BI_TCXO, 1, 4, 25),
+>> +	F(9600000, P_BI_TCXO, 2, 0, 0),
+>> +	F(19200000, P_BI_TCXO, 1, 0, 0),
+>> +	{ }
+>> +};
+> [ ... ]
+>> +static struct clk_rcg2 lpass_aon_cc_main_rcg_clk_src = {
+>> +	.cmd_rcgr = 0x19000,
+>> +	.mnd_width = 0,
+>> +	.hid_width = 5,
+>> +	.parent_map = lpass_aon_cc_parent_map_0,
+>> +	.freq_tbl = ftbl_lpass_cc_ext_clk_src,
+>> +	.clkr.hw.init = &(const struct clk_init_data){
+>> +		.name = "lpass_aon_cc_main_rcg_clk_src",
+>> +		.parent_data = lpass_aon_cc_parent_data_0,
+>> +		.num_parents = ARRAY_SIZE(lpass_aon_cc_parent_data_0),
+>> +		.ops = &clk_rcg2_ops,
+>> +	},
+>> +};
+> 
+> [Severity: Medium]
+> Should lpass_aon_cc_main_rcg_clk_src use a frequency table without MND
+> entries (such as ftbl_lpass_mclk_clk_src) since its .mnd_width is 0?
+> 
+> Because __clk_rcg2_configure_mnd() only programs M, N, and D when
+> rcg->mnd_width is non-zero, requesting 1.536 MHz, 2.304 MHz, or 3.072 MHz
+> on lpass_aon_cc_main_rcg_clk_src (or via its CLK_SET_RATE_PARENT child
+> branches) matches the fractional M/N entries in ftbl_lpass_cc_ext_clk_src
+> during rate determination, but programs only pre_div = 1 in hardware,
+> leaving the clock running at 19.2 MHz.
 
+Will add a table with only 19.2MHz
+
+> 
 > [ ... ]
 > 
->> @@ -3911,7 +3949,9 @@ static long shmem_fallocate(struct file *file, int mode, loff_t offset,
->>   		struct address_space *mapping = file->f_mapping;
->>   		loff_t unmap_start = round_up(offset, PAGE_SIZE);
->>   		loff_t unmap_end = round_down(offset + len, PAGE_SIZE);
->> +		loff_t lend = offset + len - 1;
->>   		DECLARE_WAIT_QUEUE_HEAD_ONSTACK(shmem_falloc_waitq);
->> +		struct folio *start_folio = NULL, *end_folio = NULL;
->>   
->>   		/* protected by i_rwsem */
->>   		if (info->seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE)) {
->> @@ -3919,6 +3959,23 @@ static long shmem_fallocate(struct file *file, int mode, loff_t offset,
->>   			goto out;
->>   		}
->>   
->> +		start_folio = shmem_get_partial_folio(inode, offset >> PAGE_SHIFT);
->> +		if (IS_ERR(start_folio)) {
->> +			error = PTR_ERR(start_folio);
->> +			goto out;
->> +		}
->> +		if (!is_same_boundary_folio(start_folio, offset, lend)) {
->> +			end_folio = shmem_get_partial_folio(inode, lend >> PAGE_SHIFT);
->> +			if (IS_ERR(end_folio)) {
->> +				error = PTR_ERR(end_folio);
->> +				if (start_folio) {
->> +					folio_unlock(start_folio);
->> +					folio_put(start_folio);
->> +				}
->> +				goto out;
->> +			}
->> +		}
+>> +/* MCLK = RCG / CDIV (reset value: divide by 2), the 2X clocks are the RCG */
+>> +static struct clk_regmap_div lpass_audio_cc_cdiv_rx_mclk_div_clk_src = {
+> [ ... ]
+>> +static struct clk_branch lpass_audio_cc_wsa_mclk_clk = {
+>> +	.halt_reg = 0x2a0d4,
+>> +	.halt_check = BRANCH_HALT,
+>> +	.clkr = {
+>> +		.enable_reg = 0x2a0d4,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(const struct clk_init_data){
+>> +			.name = "lpass_audio_cc_wsa_mclk_clk",
+>> +			.parent_hws = (const struct clk_hw*[]){
+>> +				&lpass_audio_cc_cdiv_wsa_mclk_div_clk_src.clkr.hw,
+>> +			},
+>> +			.num_parents = 1,
+>> +			.flags = CLK_SET_RATE_PARENT,
+>> +			.ops = &clk_branch2_ops,
+>> +		},
+>> +	},
+>> +};
 >> +
->>   		shmem_falloc.waitq = &shmem_falloc_waitq;
->>   		shmem_falloc.start = (u64)unmap_start >> PAGE_SHIFT;
->>   		shmem_falloc.next = unmap_end >> PAGE_SHIFT;
->> @@ -3929,7 +3986,8 @@ static long shmem_fallocate(struct file *file, int mode, loff_t offset,
->>   		if ((u64)unmap_end > (u64)unmap_start)
->>   			unmap_mapping_range(mapping, unmap_start,
->>   					    unmap_end - unmap_start, 0);
->> -		shmem_truncate_range(inode, offset, offset + len - 1);
->> +		shmem_truncate_range_partial(inode, offset, lend,
->> +					     start_folio, end_folio);
+>> +static struct clk_branch lpass_audio_cc_wsa2_mclk_clk = {
+>> +	.halt_reg = 0x2d004,
+>> +	.halt_check = BRANCH_HALT,
+>> +	.clkr = {
+>> +		.enable_reg = 0x2d004,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(const struct clk_init_data){
+>> +			.name = "lpass_audio_cc_wsa2_mclk_clk",
+>> +			.parent_hws = (const struct clk_hw*[]){
+>> +				&lpass_audio_cc_wsa_mclk_clk_src.clkr.hw,
+>> +			},
+>> +			.num_parents = 1,
+>> +			.flags = CLK_SET_RATE_PARENT,
+>> +			.ops = &clk_branch2_ops,
+>> +		},
+>> +	},
+>> +};
+>> +
+>> +static struct clk_branch lpass_audio_cc_tx_mclk_wsa_clk = {
+>> +	.halt_reg = 0x2a0f4,
+>> +	.halt_check = BRANCH_HALT,
+>> +	.clkr = {
+>> +		.enable_reg = 0x2a0f4,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(const struct clk_init_data){
+>> +			.name = "lpass_audio_cc_tx_mclk_wsa_clk",
+>> +			.parent_hws = (const struct clk_hw*[]){
+>> +				&lpass_aon_cc_tx_mclk_clk_src.clkr.hw,
+>> +			},
+>> +			.num_parents = 1,
+>> +			.flags = CLK_SET_RATE_PARENT,
+>> +			.ops = &clk_branch2_ops,
+>> +		},
+>> +	},
+>> +};
+>> +
+>> +static struct clk_branch lpass_audio_cc_tx_mclk_rx_clk = {
+>> +	.halt_reg = 0x2c0e0,
+>> +	.halt_check = BRANCH_HALT,
+>> +	.clkr = {
+>> +		.enable_reg = 0x2c0e0,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(const struct clk_init_data){
+>> +			.name = "lpass_audio_cc_tx_mclk_rx_clk",
+>> +			.parent_hws = (const struct clk_hw*[]){
+>> +				&lpass_aon_cc_tx_mclk_clk_src.clkr.hw,
+>> +			},
+>> +			.num_parents = 1,
+>> +			.flags = CLK_SET_RATE_PARENT,
+>> +			.ops = &clk_branch2_ops,
+>> +		},
+>> +	},
+>> +};
+>> +
+>> +static struct clk_branch lpass_audio_cc_tx_mclk_wsa2_clk = {
+>> +	.halt_reg = 0x2d00c,
+>> +	.halt_check = BRANCH_HALT,
+>> +	.clkr = {
+>> +		.enable_reg = 0x2d00c,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(const struct clk_init_data){
+>> +			.name = "lpass_audio_cc_tx_mclk_wsa2_clk",
+>> +			.parent_hws = (const struct clk_hw*[]){
+>> +				&lpass_aon_cc_tx_mclk_clk_src.clkr.hw,
+>> +			},
+>> +			.num_parents = 1,
+>> +			.flags = CLK_SET_RATE_PARENT,
+>> +			.ops = &clk_branch2_ops,
+>> +		},
+>> +	},
+>> +};
+> 
+> [Severity: Medium]
+> Should lpass_audio_cc_wsa2_mclk_clk and the three lpass_audio_cc_tx_mclk_*
+> branches be parented to their CDIV divider clocks rather than directly to
+> the 2X RCG clock sources?
+> 
+> As noted in the CDIV comment above, 1X MCLK branches are divided by CDIV
+> (divide by 2 at reset), which is how lpass_audio_cc_rx_mclk_clk,
+> lpass_audio_cc_wsa_mclk_clk, and lpass_aon_cc_tx_mclk_clk are wired.
+> Parenting lpass_audio_cc_wsa2_mclk_clk directly to
+> lpass_audio_cc_wsa_mclk_clk_src and lpass_audio_cc_tx_mclk_{wsa,rx,wsa2}_clk
+> directly to lpass_aon_cc_tx_mclk_clk_src with CLK_SET_RATE_PARENT causes a
+> 2x rate mismatch in clk_get_rate() and conflicts with sibling 1X MCLK
+> branches sharing those RCGs when clk_set_rate() is called.
+
+Will check
+
+> 
+> [ ... ]
+> 
+>> +static struct gdsc lpass_aon_cc_lpass_audio_hm_gdsc = {
+>> +	.gdscr = 0x11090,
+>> +	.pd = {
+>> +		.name = "lpass_aon_cc_lpass_audio_hm_gdsc",
+>> +	},
+>> +	.pwrsts = PWRSTS_OFF_ON,
+>> +	.flags = RETAIN_FF_ENABLE,
+>> +};
+> [ ... ]
+>> +static int lpass_cc_sm8650_probe(struct platform_device *pdev,
+>> +				 const struct qcom_cc_desc *desc)
+>> +{
+>> +	int ret;
+>> +
+>> +	ret = devm_pm_runtime_enable(&pdev->dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = devm_pm_clk_create(&pdev->dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = pm_clk_add(&pdev->dev, "iface");
+>> +	if (ret < 0) {
+>> +		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+>> +		return ret;
+>> +	}
+>> +
+>> +	ret = pm_runtime_resume_and_get(&pdev->dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = qcom_cc_probe(pdev, desc);
+>> +
+>> +	pm_runtime_put_sync(&pdev->dev);
+>> +
+>> +	return ret;
+>> +}
 > 
 > [Severity: High]
-> Can a concurrent page fault populate an initially empty boundary page after
-> shmem_get_partial_folio() returns NULL, causing shmem_undo_range() to skip
-> zeroing it?
+> Can gdsc_enable() or gdsc_disable() access
+> lpass_aon_cc_lpass_audio_hm_gdsc (offset 0x11090) while lpass_aon_cc is
+> runtime-suspended and its iface clock is disabled?
 > 
-> CPU0                                    CPU1
-> shmem_setattr() / shmem_fallocate()
->    start_folio = shmem_get_partial_folio()
->      -> NULL (hole)
->                                          shmem_fault()
->                                            allocates and maps folio at
->                                            boundary index, writes data
->    i_size_write() / unmap_mapping_range()
->    shmem_undo_range(..., NULL, ...)
->      find_lock_entries(mapping, start, ...)
->      if (start_folio) -> skipped         <-- unaligned boundary not zeroed
+> At the end of lpass_cc_sm8650_probe(), pm_runtime_put_sync() suspends
+> lpass_aon_cc and disables its iface clock (LPASS_CORE_CC_CORE_CLK), which
+> also allows lpass_core_cc to runtime-suspend and power off
+> LPASS_CORE_HM_GDSC.  Because gdsc_enable() and gdsc_disable() do not
+> runtime-resume the GDSC provider device, any genpd power transition that
+> runs while lpass_aon_cc is suspended performs unclocked MMIO on 0x11090
+> and triggers a bus hang or SError.  For example, genpd_power_off_unused()
+> at late_initcall_sync, asynchronous genpd_power_off_work_fn() after a
+> consumer drops its runtime PM supplier link, or system suspend/resume of a
+> virtual genpd device attached via dev_pm_domain_attach_by_name() in
+> lpass_macro_pds_init() can all toggle this GDSC while lpass_aon_cc is
+> runtime-suspended.
 > 
-> When the boundary index starts as a hole, start_folio (or end_folio) is
-> NULL and no folio lock is held across the subsequent swapin of end_folio,
-> i_size_write(), unmap_mapping_range(), or the first find_lock_entries()
-> loop in shmem_undo_range().  Because both loops in shmem_undo_range() scan
-> only [start, end - 1] (where start = (lstart + PAGE_SIZE - 1) >> PAGE_SHIFT
-> and end = (lend + 1) >> PAGE_SHIFT) and shmem_undo_range() no longer
-> re-checks the boundary indices when start_folio or end_folio is NULL, a
-> folio faulted into an unaligned boundary page during that window is left
-> with non-zero bytes in the truncated tail or punched hole.
 
-No. This is invalid. The race itself is possible, but it also exists 
-without the patch. Unsynchronized concurrent mmap writes are not 
-guaranteed to be serialized with truncation or hole punching. So 
-userspace must coordinate them for deterministic results.
+It's probably fine, register access doesn't depend on the iface clk
