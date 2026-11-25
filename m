@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795645551;
-	b=rVsThWztF8Eb+K0oaMmHzXHdaFHMUYp5E3AfOBUQh+RGLG+93S6f1Cp+K7TAMM3nPsj6
-	 434SREiZZ9TQnqnXURHsJ60kCuPoOH7YdUmD5lxxeRXYL99O1qWJ+kjMdkicoZg0Cbk/g
-	 zdqAWAxp6B9z3liBpNeTVF9S/jZOPzNzcEOJC3sBAS9HfkTKKBWuoCdufSwJVjgIQNEyZ
-	 K2Xndre3HPdoRxzvza4PHWnOq9BHdG5pft4vXdJYcjruxRSCxJ+A23fLnaXlEUuLZJ9tu
-	 od6g7/LyHg1/wDsXBPAJzmYvoXOLBL6eZtArr4N8ASt01Z40N2r+u3dnidjo7WcHBEQ==
+	t=1795646722;
+	b=xEJfJC4CH1O66wBtOC4VPlKpaQFDe9Em8Ye8JecNQgp/Feq706Djnd7A0D3t7KgE4WRV
+	 WF4hqeJYhooAXi/yUzuEdXSPDcyLwifI3v9eYbd50bjDXYx0XnkoDd+E34WGZwHlJZb4z
+	 JryNxSw9g3MhwrXIBO1qVBUsgk/gehcQapiU4yJmy706LIS2lkbmyPPSAn/5HgeXIK2ct
+	 LbtsOvfmqfEnM+pY8G/xJh4S5pnSJ3Z5IsqT4no3Jz1Hx8sFJ6nNhT7oFbMku7erjbEQ7
+	 qYOFMR/IiChPPnrZ7KY+rfmdSNBZ4lNOT+YHBUJdKOzpfI7CR4j8wQ5aujvFwgXYrsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795645551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795646722;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Ad4P++K9bZno9nuh/iuXN/ynLGwKsplQDt7xu5Ult50=;
-	b=QADR46oSEPD04XE1E1QFKPKHnFKkLyTWm0IRN086BZf0yHsLirpKom9d3cdrfu5ih0gc
-	 iQsC1yIvvFifSljwcgQ5J982gZVfyStM6GVuZgQ0RyFnVZbD7pyDFUknIM5LfmARXPqLT
-	 3ELGcRzZ85EC6pzGEq24MhBgdzkhMtCtVBDbLw2vccvyE7IgWKAnQwPf2flJBu+0Dy8pp
-	 nrDjNTimlgpw90khc+ht2nHHnwUe2W5fqF84HCR3a+sfMUjDbeYG4X85kJn5S8PTbVuym
-	 UmBbCVnoSzle7R+narKzeCPxhUapXGbei0ZYX3op9faER3ePx31cR/W68RQf8DR/FtQ==
+	bh=VGH3sFmcU42qquXDtYciNX5LxGHJPncSwjL+hwrb5v8=;
+	b=BJsm8g3e0CNh1kP0MC1HyFhVLuafxwbytL98seT+rsIAaZAXLzFywh6RRfvvQlUoUrUB
+	 hHu5QZ3DTZES20HMXVhRNfAVZXOp+rIsmyxkzq9turkpbyPAVQir/JiALjbZIAD6mXMuk
+	 XdYC4aio/nZ0lfuF23DITSGy7ZqWl09SFdcNLEhkT0iXa8MtFS9zGnxJPywIqM2DQcNFm
+	 oK510arAWCe1D+qJr6bslBm9qrz20IVdrPCLCOP7fFLJxZ2sFQZNO/Ruazqz6YiugHB3U
+	 wmkImCiXvAxsQ8J5sSEJLnKZV9nfkvbPidU+YoxtR8xhPwEAorwDWoMo2iOB22Y6LcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fdKAVexZ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VhTfE57Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD44606A68F;
-	Wed, 25 Nov 2026 22:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id 916B1606A31E;
+	Wed, 25 Nov 2026 22:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fdKAVexZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1401F000CF;
-	Wed, 25 Nov 2026 22:25:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VhTfE57Z
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 9194B1F000C0;
+	Wed, 25 Nov 2026 22:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795645550;
-	bh=Ad4P++K9bZno9nuh/iuXN/ynLGwKsplQDt7xu5Ult50=;
+	s=k20260515; t=1795646722;
+	bh=VGH3sFmcU42qquXDtYciNX5LxGHJPncSwjL+hwrb5v8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fdKAVexZQ0L7i4VMtZNnbZj0u9gLORGix1gaqorQIvmRy1rjiX7Z2zqyhst270ycP
-	 +kVnz+oR6vsY3X6xmm1aUNOHbNHqaaPLXsMUsyagpUcV9LzYyGEAMLQAfyjwlJyMEM
-	 ENDm6Vs8gPe15wRhgZSBWMIcEgespAFjnuf2TrAODE2EwLY3dTRlRp9NvSQpaZyc4S
-	 CtsH3x0xJ9+eWIDCsv72z/RtwlA8wlPT9actG3zumikecnZRKKEBP8dHWm55HjGoyq
-	 9qU2LU7isgW1TnSQvuKuiuD067cj5kmO3lkv1QO0P7jIo01+wKnYmcpHL+2Qa4uCek
-	 CwDdBt6Fexc9w==
-Date: Wed, 25 Nov 2026 23:25:47 +0100
-From: Alejandro Colomar <alx+linux-hardening@kernel.org>
+	b=VhTfE57ZcqtNqq5+pKkkGtrrjM29O8jJ8C1zbOwwMxjnO2tEdcIIcWTiWk1mI7HkF
+	 geG90xVYhlg+5RG5VlV+n5MQ/7uU2P1PssH6pZCfjRnNrfq+y59cG6FkRu9ytoSBVP
+	 8s42EfZf7L3KjSdKA4I27plmGH2fiJmoF2916/GPWUZNO6fTXq3fMY30Bj/QGMCzDA
+	 IX+KbmJFskcvq42919LLXe+U/gKP/NfkJod2sKtgtq5OcaoYUNVUqP476ZRSo9R+ES
+	 R13SP9PEiVdpfcYbN8TiERoRTyhZRtbxVi/GvVCWCZE633xj/zsd2UVmAIWU2t8s2L
+	 WffMwhIz/0qTw==
+Date: Thu, 26 Nov 2026 00:45:18 +0200
+From: Jarkko Sakkinen <jarkko@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Alejandro Colomar <alx@kernel.org>, devicetree@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v7 2/4] string: Add strprefix()
-Message-ID: <awdf5dYKbpkbjSif@devuan>
-References: <cover.1795639368.git.alx@kernel.org>
- <b32d70163fb454fee2667548c63c4d4d3b19d7bb.1795639368.git.alx@kernel.org>
- <sashiko-outbox-234163@kernel.org>
+Cc: Guicai Ma <maguicai@kylinos.cn>, David Howells <dhowells@redhat.com>,
+	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+	"Serge E . Hallyn" <serge@hallyn.com>, keyrings@vger.kernel.org,
+	linux-security-module@vger.kernel.org
+Subject: Re: [PATCH v3] KEYS: Protect key instantiation and rejection against
+ type removal
+Message-ID: <awdk_qvF3eAjhSFb@kernel.org>
+References: <20261124091243.1019217-1-maguicai@kylinos.cn>
+ <20261125032605.1327954-1-maguicai@kylinos.cn>
+ <sashiko-outbox-232506@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,110 +61,36 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6gr5d72eivgopjii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-234163@kernel.org>
+In-Reply-To: <sashiko-outbox-232506@kernel.org>
 
-
---6gr5d72eivgopjii
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx+linux-hardening@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Alejandro Colomar <alx@kernel.org>, devicetree@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v7 2/4] string: Add strprefix()
-Message-ID: <awdf5dYKbpkbjSif@devuan>
-References: <cover.1795639368.git.alx@kernel.org>
- <b32d70163fb454fee2667548c63c4d4d3b19d7bb.1795639368.git.alx@kernel.org>
- <sashiko-outbox-234163@kernel.org>
-MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-234163@kernel.org>
-
-> Date: 2026-11-25 21:11:26+0000
-> From: sashiko-bot@kernel.org
->
+On Wed, Nov 25, 2026 at 03:48:12AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Low] string: kernel-doc parse failure on strprefix() due to
->   __nonnull_args()
+> - [Medium] KEYS: key_reject_and_link() locks key->sem with freed modular
+>   lockdep class
 > --
->=20
-> commit d8e472e1906ee21263f127c3c8452f752cbf8121
-> Author: Alejandro Colomar <alx@kernel.org>
->=20
-> string: Add strprefix()
->=20
-> This commit introduces strprefix() to return a pointer after a matched
-> prefix or NULL on mismatch, and adds KUnit tests for it.
->=20
-> > diff --git a/include/linux/string.h b/include/linux/string.h
-> > index 9b3e578d9aca1..a6a1953c52e35 100644
-> > --- a/include/linux/string.h
-> > +++ b/include/linux/string.h
-> > @@ -557,16 +557,34 @@ void memcpy_and_pad(void *dest, size_t dest_len, =
-const void *src, size_t count,
-> >  	       sizeof(*(obj)) - offsetof(typeof(*(obj)), member));	\
-> >  })
-> > =20
-> > +/**
-> > + * strprefix - string prefix
-> > + * @s: The string to be tested
-> > + * @prefix: The string to see if @s starts with
-> > + *
-> > + * This function determines whether the string pointed to by @s
-> > + * starts with the sequence of characters
-> > + * (excluding the terminating null character)
-> > + * in the string pointed to by @prefix.
-> > + *
-> > + * Returns:
-> > + * *  @s + strlen(@prefix) if @s starts with @prefix
-> > + * *  NULL if @s does not start with @prefix
-> > + */
-> > +__nonnull_args(1, 2)
-> > +static inline char *strprefix(const char *s, const char *prefix)
-> > +{
-> > +	size_t len =3D strlen(prefix);
-> > +	return strncmp(s, prefix, len) =3D=3D 0 ? (char *) s + len : NULL;
-> > +}
->=20
-> [Severity: Low]
-> Does __nonnull_args(1, 2) cause kernel-doc to fail when parsing
-> strprefix()?
->=20
-> CTransforms.function_xforms in tools/lib/python/kdoc/xforms_lists.py does
-> not strip __nonnull_args, so running scripts/kernel-doc on
-> include/linux/string.h (included by Documentation/core-api/kernel-api.rst)
-> treats __nonnull_args as the function identifier, emits prototype mismatch
-> warnings, and omits strprefix() from the generated documentation.  Either
-> __nonnull_args could be added to CTransforms.function_xforms or
-> __attribute__((nonnull(1, 2))) could be used as in strends() below.
+> 
+> commit c70f356b6ccdc592f27c6c5e32e3b0a02a265eb1
+> Author: Guicai Ma <maguicai@kylinos.cn>
+> 
+> KEYS: Protect key instantiation and rejection against type removal
+> 
+> This commit guards key_instantiate_and_link() and key_reject_and_link()
+> with key_type_srcu and a KEY_FLAG_DEAD check, and waits with
+> synchronize_srcu(&key_type_srcu) after pass 1 of key_garbage_collector()
+> marks dead keys.
 
-What should I do?
 
---=20
-<https://www.alejandro-colomar.es>
+Please rebase v4 onto linux-next, or my master.
 
---6gr5d72eivgopjii
-Content-Type: application/pgp-signature; name="signature.asc"
+When 'dead' is true in key_reject_and_link() under
+key_construction_mutex alone, clear KEY_FLAG_USER_CONSTRUCT (and wake
+waiters), and invalidate authkey while leaving key->state as
+KEY_IS_UNINSTANTIATED.
 
------BEGIN PGP SIGNATURE-----
+wait_for_key_construction() will then return -EKEYREVOKED via
+key_validate().
 
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmsHYGsACgkQ64mZXMKQ
-wqlpKg/9Eg0tDNXXExM29Z6o0EEbgZkPiV8zGzA+W2gFStSX2ytVV5p/W0iWfitx
-rYaH++VwGTz1qUip3YjGMhVUtAC6sFpVCoEO/dMUuP45kcAKOdsxQwoFnFI2ABRz
-lNdQO1Cq3sgRH6IHf33aOEyo3HXRdhFHccoM68forOp6eH18j8ZU7Wa0eOEiiqXM
-e8zsso5oTGGssXsd69kxXCrZ23Nba1UmYmKNg38lbDdwYAVjZQmB9p/2lO/gCKK1
-E5gqbonvrJNcW7uIz5t9iIWZkH8+mzbrt6gMW2SXnoC24hh2nFOh6zBK5uZrCwdB
-x10XKPa6VwJrG2l7vwHynwFocImWWXsdrTZ+xsFnPOXncoT0WLdA3zjEAApPkiSO
-JOU2GLjfttDsJ+7FsIsCEflTq1U6TjCOXk1qeGydizVm6PXl9V0Qq/h2SVklxQb5
-j/eOyevhRvR4gZ81bhqk0hsYw1xgNbMoN//5jH58h5nHt9AglfBVNqDV5RReYqwN
-kPwS936GvfyHY9PWLZC78gtlLWcesv1y3DYaHMezHAGU4V48mKWtvDCYZx2ZFSr5
-qJHHlt+5nsf0wm50OlkLwK+IdG1f2U/XQVfIxg1sdsh/BpqTFBUOjc96ZjvB7fiu
-+uAdetRMOsvgJsy1HkMp8v+zSaN4dfQGmFvjnbl5T4z/nozwLdQ=
-=lbBO
------END PGP SIGNATURE-----
-
---6gr5d72eivgopjii--
+Br, Jarkko
