@@ -1,73 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.42.244.94
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622984;
-	b=uJ2N74qwmMDaShewJ1gxbpXUaXp+vhkupsmKNrHwlVhs0tDA8lfdQx1foL6xXmfg/1eJ
-	 KYq749SlYz85CYSUMR/J8skMb/xw8uj3311rmU6qbBNmSnEEPlPR3ekKNuxncRbLbCMw4
-	 +XNU0oJj/BlMwmxDgInamrAkSvYlLqXNuyunLtLG3P7XqSWK6AmRZLyKwplGALeOcL9TJ
-	 6QOysS/LLWARWkKnWGvihtXBIVP2RpuID03zxe3iUME6VmepRkr4bi3XlW4S5KCE+6IK3
-	 fjl8+PuOp6fGg6GsBF4HOwgiKltQAFzuY+mYh+dVnhxp22g82MG9WlNrMxLXXB/AB8A==
+	t=1795623258;
+	b=ar5BCYo6eYz5JnVN6K9hinM8u1ajMogHGZabYHGWbn6FrARH1ZqDElOvdjr1IPRfNzjx
+	 JV8C7gRYpnimTMvyt9dH/fEU72qcOeWHAzBjZBeezkFmxDO5JghfzFJu9bgapwUTokBSy
+	 l7oMBxsULbZYQb++nhz3YFBovG9diQv28bxraNrGeLM9gqL4PMisN6ocX83vYv0m2TKFO
+	 39kosRQlzl1d1w0LHglkLgVwfMLOg4RZbJ0gjQ8Rbd1glPDjA3q+qS4xvV8/fGh+7JbUC
+	 1W2D+2IWKcyvHC+8Ul/Z0NCQHW8S6/qumcsFi+CLirM6jA5KF7X1pyiaogct+Bz3cog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622984;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:Organization:x-ms-reactions:
-	 X-purgate-ID:X-purgate-type:X-purgate-size:X-Notice:X-purgate:
-	 X-purgate:X-pfmilter;
-	bh=h87IU5ETAr92o0NDzYh3Y5hYItUDXx2Nc2p6yBWTFDk=;
-	b=f+jzOfEmyzDNPCwP1qC0oAek69ZDnGYs4HgFQzWwsALZdq/XO44s/ywlfypqlJJHEYg2
-	 ToT8n9oKi00ZeBp/dNmZI9MxU2sszI2AGeobRKvfLlVugNZVebbXPBM6CBTO84INsBZ6z
-	 VRFm0D4qKZTL5qSfVwpP8HS6lCAd7cv87wf0u1yDTKHx1M1imNkvMvbYxJwwh0RVXV0RD
-	 PBYJtTnfg4eTXrOs+/tnKq92q1iEQpL0P2It45XXcPyJz0/Onc0KZ0hVKRREwU0NUYX6z
-	 7eRRwA5IP8akEFP9uFsGpf1KMPEJI4WLcQc/IcWC8RojeTIDDGEcKYYtvq6mEvzUUzQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623258;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
+	 Cc:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=LdER2mkFO0wbjr2+rc/aRUmp4/Sc5QyLtaG22Ye9JSE=;
+	b=Wof2fmBcUQGB6bYQzHG8QjGnyKaFYIksW3TR6RZhOwezjvCzbISieHs7hA+Srm9ARlMO
+	 LXkf6n3CJmX/k9yFJWcPKTswonTEGrG5rSTg8L8N0yr5Pi/aNvBpemkD0QKTpgjGWROWr
+	 F158Eo0gw8J/MZTZ9TrIvSW2JXDa5Taz1oyx9F2vLmG72cPS5bG2EyYvl6cct0eujIPTk
+	 2Xbdfhv7Fv4BfLHDOF3dKxKXfgjqod6rojkxZtoHTgVYqZjZ1i58LuC++Yv53HbFhIahp
+	 m+YA3p/fJSTaleJA60YLLPipJnXjGcCaRAfY9CBBaGgWioZ5lo8u1wMExfh0XPyWi0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fritz.com;
-	spf=pass smtp.mailfrom=fritz.com;
-	dkim=pass header.d=fritz.com header.i=@fritz.com header.a=rsa-sha256 header.s=mail header.b=IAlypTa5;
-	arc=none smtp.remote-ip=212.42.244.94
-Received: from mail.avm.de (mail.avm.de [212.42.244.94])
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UtOFRBsC;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30E4606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 16:09:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B30E4606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fritz.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fritz.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFA9606A32A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 16:14:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AEFA9606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fritz.com header.i=@fritz.com header.a=rsa-sha256 header.s=mail header.b=IAlypTa5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fritz.com; s=mail;
-	t=1795622974; bh=kkOxP4Y4DHTYTBqjoAVvMOI6fQgUQ/6viYIQ9Su5IWc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IAlypTa5GHgR1HXRhP2YhXPF5ZfnkL+hL14ya1nZbn+tGPoqfX6nTAipKe0YRZNmz
-	 BnS9Gezy3dYjFMW7SEBM5CpiZ1N4h9IvvYeZ+8ooJ3EXuAfsMkNmmigoIDNKIeewfQ
-	 tGffWpE83+sphJ7rSQkALc8Yz69i7eypXLabDchaLtg0nEFXNWpH6YEoIQEkoFPazC
-	 hvTza4XSGG7g9cmPH5dX+J7sCM+g60YqBIPR4Udqz/CFkEBetlyZYAriOEE7ZoV8Xc
-	 kDcb4vQkMMyEsYjqz0EgNuQJLqqqmD1gr8DMQY04z1BGrO0u7867JJ9wj67IvHgGmb
-	 WDziJOaUhwnrw==
-Received: from [212.42.244.78] (helo=mail.avm.de)
-	by mail.avm.de with ESMTP (eXpurgate 4.57.1)
-	(envelope-from <n.schier@fritz.com>)
-	id 6b07083e-072e-7f0000032729-7f0000019bde-1
-	for <multiple-recipients>; Wed, 25 Nov 2026 17:09:34 +0100
-Received: from mail-auth.fritz.com (unknown [212.42.244.78])
-	by mail.avm.de (Postfix) with ESMTPS;
-	Wed, 25 Nov 2026 17:09:34 +0100 (CET)
-Date: Wed, 25 Nov 2026 17:09:32 +0100
-From: Nicolas Schier <n.schier@fritz.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev,
-	Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Christian Heusel <christian@heusel.eu>,
-	linux-kbuild@vger.kernel.org,
-	=?utf-8?B?QWRyacOhbiBHYXJjw61h?= Casado <adriangarciacasado42@gmail.com>,
-	Nicolas Schier <nsc@kernel.org>
-Subject: Re: [PATCH] kbuild: package: Install System.map to build tree only
-Message-ID: <20261125-mouflon-of-uncanny-ampleness-b7d019@l-nschier-z2>
-References: <20261116-package-install-system-msp-to-build-dir-v1-1-ec53d3d39146@kernel.org>
- <sashiko-outbox-219115@kernel.org>
- <20261122213504.GA1454693@ax162>
- <awRijCPFYK4J5L6C@levanger>
- <20261124030324.GA2247258@ax162>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UtOFRBsC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1795623256;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LdER2mkFO0wbjr2+rc/aRUmp4/Sc5QyLtaG22Ye9JSE=;
+	b=UtOFRBsCKAK3E8Bsu3A8rziiu4/aqAhE/qioSN+enl9xu6asu7MYmZxBpWnwgM6JAJ10eH
+	GeuaMt0x+rQF7dmkSzy8byorSs4CqhqwSkdzDKJ4NU36OhlMRXg42v6WqTsD7ri9JlJGwU
+	zmrSWBx/pnkzJtxscC6RhgstvSiYf98=
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-176-My8TviqvPEOubRpE0BH-pw-1; Wed, 25 Nov 2026 16:14:14 +0000
+X-MC-Unique: My8TviqvPEOubRpE0BH-pw-1
+X-Mimecast-MFC-AGG-ID: My8TviqvPEOubRpE0BH-pw_1795623254
+Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-492f39f29c4so6266126fac.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 08:14:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795623253; x=1796228053;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LdER2mkFO0wbjr2+rc/aRUmp4/Sc5QyLtaG22Ye9JSE=;
+        b=lzCvPmV/JLPeO4WS04VzvyYmzUEN20ps32mG660YIb1wimO84pOhErp2NIhEKQtN7o
+         2jClgxZJ5dlbaBM+W+NNSFRdtjBlw+6apzpPiNcX7d1gQVVM7mb5n5VPfmbSO+P4ngCO
+         Tp97gx4J0tZH0gbEEiJ49lDT6s0yNgO19crsFQ2P06wDwlWocKWuabWWX0jxM6STzHhE
+         8KDA+UI6NFYGJlNtok8UFvYyJvQpeFdhASOGZNt37TVh3yq+p0Ow8HG/DMR8a3WM906J
+         qjUBn+vX/kVFvxkc2ukWcoQzmNCLAuvUXaZVpipgRcqLGjKhXIpFUgvjPkCXvsu2uZ+Z
+         E5gg==
+X-Gm-Message-State: APuU4Z8nigt/RjEn2dEEFHZ8DZ4SETVSJXBKtuNSL43MpcST5EnJ806I
+	/bWA44hddAYuDIkeMgeP9axfhEobuUWnvnFx2HQgxk0kTa30crcQehAiRS5ibUcwFuh+OOGCNLf
+	REaexmq97ARokuvweZxUoVu5WsrYiOfZSXZ+B8FaDNwZKRRC/IGWZgbxSgRmRXBYCqW486Wet1Z
+	fhhIT25C/C2tk9Eghcpu+c0kDkmlW5KhnT5uSquln0OJZuHXjhe4PX
+X-Gm-Gg: AZFdTZe+vggVVn96m5Qs/pjSqBPnaDqCDcT2NskljFaNZTNsZ326xf2HzK2jDZYgbBZ
+	wxK3/sNtJtRHfmaXWgQ4QIBxz7//wLM119orm5VHrGwhweMOslU9cdKe6x16fNYeuagQYmNovBO
+	xxsdLGLY2UeshknuF7l9r2IcGO18xetzb7ukJsiRj9x3cVEw9mgga0tdKo
+X-Received: by 2002:a05:6808:c3cb:b0:577:2888:47b3 with SMTP id 5614622812f47-57a0ac33d63mr20058866b6e.44.1795623253413;
+        Wed, 25 Nov 2026 08:14:13 -0800 (PST)
+X-Received: by 2002:a05:6808:c3cb:b0:577:2888:47b3 with SMTP id
+ 5614622812f47-57a0ac33d63mr20058815b6e.44.1795623252854; Wed, 25 Nov 2026
+ 08:14:12 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,107 +88,149 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261124030324.GA2247258@ax162>
-Organization: FRITZ! Technology GmbH
-x-ms-reactions: disallow
-X-purgate-ID: 149429::1795622974-71D89A2B-D3593F8E/0/0
-X-purgate-type: clean
-X-purgate-size: 4027
-X-Notice: Whitelisted
-X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
-X-purgate: clean
-X-pfmilter: host: postfix-mx-03  mail-id: 253A2A25D4  external: no
+References: <20261124-v2_20230123_tjmercier_google_com-v6-0-dce12fa03ad6@redhat.com>
+ <20261124-v2_20230123_tjmercier_google_com-v6-2-dce12fa03ad6@redhat.com> <sashiko-outbox-233444@kernel.org>
+In-Reply-To: <sashiko-outbox-233444@kernel.org>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Wed, 25 Nov 2026 17:13:58 +0100
+X-Gm-Features: Aa3M54qC4BhV46Zvi5xNNVUyWvQwOqnECHDuj67-iKiUZ4P0AUQ6JhGMrN001Kw
+Message-ID: <CADSE00KEAYZ+saAoTY81VNhNyevsWFD_nSDNgsPVfvvLBsE5vQ@mail.gmail.com>
+Subject: Re: [PATCH v6 2/7] dma-heap: charge dma-buf memory via explicit memcg
+To: sashiko-reviews@lists.linux.dev
+Cc: Tejun Heo <tj@kernel.org>, Johannes Weiner <hannes@cmpxchg.org>, 
+	=?UTF-8?Q?Michal_Koutn=C3=BD?= <mkoutny@suse.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Muchun Song <muchun.song@linux.dev>, 
+	Andrew Morton <akpm@linux-foundation.org>, 
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>, Brian Starkey <Brian.Starkey@arm.com>, 
+	John Stultz <jstultz@google.com>, "T.J. Mercier" <tjmercier@google.com>, 
+	Christian Brauner <brauner@kernel.org>, Paul Moore <paul@paul-moore.com>, 
+	James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
+	Stephen Smalley <stephen.smalley.work@gmail.com>, Shuah Khan <shuah@kernel.org>, 
+	Randy Dunlap <rdunlap@infradead.org>, =?UTF-8?B?T25kcmVqIE1vc27DocSNZWs=?= <omosnacek@gmail.com>, 
+	Jens Wiklander <jenswi@kernel.org>, Sumit Garg <sumit.garg@kernel.org>, 
+	Philipp Stanner <phasta@kernel.org>, airlied@gmail.com, dri-devel@lists.freedesktop.org, 
+	linux-mm@kvack.org, linux-security-module@vger.kernel.org, 
+	selinux@vger.kernel.org, op-tee@lists.trustedfirmware.org, 
+	echanude@redhat.com, mripard@kernel.org, media-ci@linuxtv.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: z1Y8jfvWtvEjvyT8kwoDDDPKffuXAbFWgBCU6nE_4WU_1795623254
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 23, 2026 at 08:03:24PM -0700, Nathan Chancellor wrote:
-> On Mon, Nov 23, 2026 at 04:58:04PM +0100, Nicolas Schier wrote:
-> > As Distros are moving everything to /usr/ -- but I haven't seen
-> > /usr/boot/ anywhere -- I'd prefer to move it away from /boot.  The
-> > kmod build tree looks like the native location to me (as per
-> > scripts/depmod.sh) and from what I can find, most debugging tools use
-> > vmlinux or /proc/kallsyms rather than System.map; but I have never ever
-> > tried to debug a Linux without the full source + build tree at hand.
-> 
-> I guess we could try it and see who complains about the new location.
-> 
-> I am just not sure that we should treat scripts/depmod.sh expecting
-> System.map in the build folder as anything more than "external modules
-> won't have dependencies generated properly" (which is more of a missing
-> feature than a true bug) than "System.map does not belong in /boot" but
-> I don't have a really strong opinion here.
-> 
-> > Does System.map still help with regular debugging with CONFIG_KASLR
-> > enabled?
-> 
-> I think for debugging, you would want KASLR off?
+On Wed, Nov 25, 2026 at 2:05=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] mm: memcontrol: task_css() race with migration in
+>   get_obj_cgroup_from_fd()
+> --
+>
+> commit 62e5304eba9bb9d84f6229eddf1a9273649483b8
+> Author: Albert Esteve <aesteve@redhat.com>
+>
+> dma-heap: charge dma-buf memory via explicit memcg
+>
+> This commit adds a charge_fd field to struct dma_heap_allocation_data so
+> DMA_HEAP_IOCTL_ALLOC can resolve a target cgroupfd or pidfd via
+> get_obj_cgroup_from_fd() and charge system heap allocations to that
+> cgroup.
+>
+> > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+> > index e4a9af2fdaa3b..7826bc21bea9e 100644
+> > --- a/mm/memcontrol.c
+> > +++ b/mm/memcontrol.c
+> [ ... ]
+> > @@ -3171,6 +3172,88 @@ struct obj_cgroup *get_obj_cgroup_from_folio(con=
+st struct folio *folio)
+> >       return objcg;
+> >  }
+> >
+> [ ... ]
+> > +struct obj_cgroup *get_obj_cgroup_from_fd(int fd)
+> > +{
+> > +     struct cgroup_subsys_state *css;
+> > +     struct obj_cgroup *objcg;
+> > +     struct mem_cgroup *memcg;
+> > +     struct task_struct *task;
+> > +     unsigned int pidfd_flags;
+> > +
+> > +     if (mem_cgroup_disabled())
+> > +             return ERR_PTR(-EOPNOTSUPP);
+> > +
+> > +     CLASS(fd_raw, f)(fd);
+> > +     if (fd_empty(f))
+> > +             return ERR_PTR(-EBADF);
+> > +
+> > +     css =3D css_tryget_online_from_dir(fd_file(f)->f_path.dentry,
+> > +                                      &memory_cgrp_subsys);
+> > +     if (!IS_ERR(css) && !cgroup_on_dfl(css->cgroup)) {
+> > +             css_put(css);
+> > +             css =3D ERR_PTR(-EBADF);
+> > +     }
+> > +
+> > +     if (IS_ERR(css)) {
+> > +             if (PTR_ERR(css) !=3D -EBADF)
+> > +                     return ERR_CAST(css);
+> > +
+> > +             /* fd is a pidfd */
+> > +             task =3D pidfd_get_task(fd, &pidfd_flags);
+> > +             if (IS_ERR(task))
+> > +                     return ERR_CAST(task);
+> > +
+> > +             rcu_read_lock();
+> > +             css =3D task_css(task, memory_cgrp_id);
+> > +             put_task_struct(task);
+> > +             if (!css || !css_tryget_online(css)) {
+> > +                     rcu_read_unlock();
+> > +                     return ERR_PTR(-ENOENT);
+> > +             }
+> > +             rcu_read_unlock();
+> > +     }
+>
+> [Severity: Low]
+> Can the pidfd lookup in get_obj_cgroup_from_fd() spuriously fail with
+> -ENOENT when the target task is concurrently migrated or has an exited
+> thread-group leader?
+>
+> Between task_css() and css_tryget_online(), the task can be migrated to
+> another cgroup and its previous cgroup offlined, causing the one-shot
+> css_tryget_online() on the stale css to fail.  Also, pidfd_get_task() on
+> a process pidfd returns the thread-group leader, which in a
+> multi-threaded process may already have PF_EXITING set and remain
+> attached to an offline css even while its obj_cgroup has been reparented
+> to an online ancestor that get_obj_cgroup_from_memcg() walks up to:
+>
+> include/linux/cgroup.h:task_get_css() {
+>         rcu_read_lock();
+>         while (true) {
+>                 css =3D task_css(task, subsys_id);
+>                 /*
+>                  * Can't use css_tryget_online() here.  A task which has
+>                  * PF_EXITING set may stay associated with an offline css=
+.
+>                  * If such task calls this function, css_tryget_online()
+>                  * will keep failing.
+>                  */
+>                 if (likely(css_tryget(css)))
+>                         break;
+>                 cpu_relax();
+>         }
+>         rcu_read_unlock();
+>         return css;
+> }
 
-Yeah, but I guess when switching of KASLR Linux is rebuilt, thus usually 
-there are more valuable sources for debugging are available than 
-System.map.
+Valid. I will apply this for the next version.
 
-> 
-> > If it wasn't for 'depmod -e' I'd like to put System.map to the
-> > linux-image-${KVER}-dbg_*.deb, as Debian does.
-> > 
-> > 
-> > > Something
-> > > like this maybe (completely untested):
-> > > 
-> > > diff --git a/scripts/package/builddeb b/scripts/package/builddeb
-> > > index ba1defc61652..4261963a901e 100755
-> > > --- a/scripts/package/builddeb
-> > > +++ b/scripts/package/builddeb
-> > > @@ -147,6 +147,13 @@ install_kernel_headers () {
-> > >  		"${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
-> > >  	fi
-> > >  
-> > > +	if [ "${ARCH}" = um ] ; then
-> > > +		system_map="/usr/lib/uml/modules/${KERNELRELEASE}/System.map"
-> > > +	else
-> > > +		system_map="/boot/System.map-${KERNELRELEASE}"
-> > > +	fi
-> > > +	ln -s "${system_map}" "${pdir}/usr/src/linux-headers-${version}/System.map"
-> > > +
-> > 
-> > What about doing it the other way round?  We could provide the symlink
-> > in the old /boot/ location for now and move System.map to the module
-> > build tree?
-> 
-> We would have to make sure that this location was available without
-> CONFIG_MODULES but that wouldn't be a bad option either.
+>
+> Using task_get_css(task, memory_cgrp_id) before put_task_struct(task)
+> would avoid both failure modes.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261124-v2_20230=
+123_tjmercier_google_com-v6-0-dce12fa03ad6@redhat.com?part=3D2
+>
 
-Ack, thanks.
-
-> 
-> > >  	mkdir -p $pdir/lib/modules/$version/
-> > >  	ln -s /usr/src/linux-headers-$version $pdir/lib/modules/$version/build
-> > >  }
-> > > diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-> > > index 8f0933cbbe45..3add2b2c7dd2 100644
-> > > --- a/scripts/package/kernel.spec
-> > > +++ b/scripts/package/kernel.spec
-> > > @@ -122,6 +122,7 @@ fi
-> > >  ln -fns /usr/src/kernels/%{KERNELRELEASE} %{buildroot}/lib/modules/%{KERNELRELEASE}/build
-> > >  %if %{with_devel}
-> > >  %{make} %{makeflags} run-command KBUILD_RUN_COMMAND='${srctree}/scripts/package/install-extmod-build %{buildroot}/usr/src/kernels/%{KERNELRELEASE}'
-> > > +ln -fns /lib/modules/%{KERNELRELEASE}/System.map %{buildroot}/usr/src/kernels/%{KERNELRELEASE}/System.map
-> > 
-> > Looking at line 122 (start of hunk), /lib/modules/%{KERNELRELEASE} seems to be a symlink to
-> > /lib/modules/%{KERNELRELEASE}/build/, thus that line will would create a
-> > funny symlink. ;)
-> 
-> /lib/modules/%{KERNELRELEASE} is a folder created at the beginning of
-> the %install stage. /lib/modules/%{KERNELRELEASE}/System.map is where it
-> is installed during this stage, so symlinking it to
-> /usr/src/kernels/%{KERNELRELEASE}/System.map should make it appear at
-> /lib/modules/%{KERNELRELEASE}/build/System.map as expected.
-
-gosh, sorry. I mis-read the diff and wrote even more nonsense.
-
-> But as I mentioned above, I am totally fine with going the other way.
-
-Thanks, then I am going to update the patch accordingly.
-
--- 
-Nicolas
