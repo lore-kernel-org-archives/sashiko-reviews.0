@@ -1,49 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.100
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795588449;
-	b=1oOJOhuxhGPYQHoiJXMHxKXFl9T3DAc+mK+agcc8wmvrQfcYCay5R0CNe215k9MQ+Bi6
-	 jcJ1LIQLh6WTCWT3XKvyBrLJBn/cokDxbES/bbU3KpjGIvlO7L7JK52vfN8D9nBitCq5B
-	 oGVFnFRH4u9r07nAOR8eywP3HQDNFlDx3gfcczNvUE9VBRrEk+tAht0OspvKSQfJHgLfT
-	 E2KtRonDFcxnOI2AkwJJ3Ezv9KnSqw9ZOcjcKEDYIkfGb5tD9Rvt+oCil2yOJujmCSQqo
-	 ee7LNixDr/oiocHU8UKSIFcgWVu4w4gAQO9lmqOmwm5+rgPxVgbas5dAUBTsoSGKJJA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795588449;
-	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=Ht/4Zv8vReTWNzwe8U7mP97/jA/SA5fhwbA7wkWleFo=;
-	b=LDM2stE7gqOM2y5dZPzpOBQDu4gMZnPDPRpORvbSKM7B4pb3EzPRU0oVwEHA5P73SoDB
-	 QOyBYqdTMMxTxWYiMkcEn36iJIGAiK2ir9TkxlhCwV1xJXrmVdBCzP53faxHi4TD1swRW
-	 sqTvPkeZQBL80lWASSTCZHlqU6venQ+nOnpHTQz+Oz6FsmoJMcdP3QoAxM6s8jF05uAvB
-	 B/ULYKj0LWvUpwF6IngpBX/vtTz8UXKc05ErOzpW+C3W1E4NIJApPVh1r4atL6ckrHK6m
-	 AwEH9GEQ9wJMg/yrCarK2ZNjuCgKCXMI3LPU3tqru2HDDDHniOK4k36e/qMRgflN88Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.alibaba.com;
-	spf=pass smtp.mailfrom=linux.alibaba.com;
-	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=tUooAsZZ;
-	arc=none smtp.remote-ip=115.124.30.100
-Received: from out30-100.freemail.mail.aliyun.com (out30-100.freemail.mail.aliyun.com [115.124.30.100])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795588773;
+	b=Ktx2dEPkkmNnMsnyMeG17s5fLdiPdsC2oPSyAyUpCbaAzFv2gwVM/S0djROzaxQAyYvE
+	 UHeilXpI7dwWZ4LmmRtUZ6FAY/SmlkZkPyHjgRnJPtmYOORs0oZVXGRSQlaYMFxzWteLb
+	 86W2Cv/bjflZxDpHfL02WNSIKu1vYycGs6cPo+F9SBOBgcL1TskVFUBgV/J2QTYN80gPG
+	 xTLu9lQW/7pMQvli3YipWl3PS5g1d7AYmfdgXCSS7NWQ2QPU3vAJJFWqxPghhcQwrr29u
+	 b+PewwtORE1+n4aqc+LtHueUaoa4I5GF/SdmCBW0yubapV4FgLcoAvJ7VVz3nsR1VOw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795588773;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=2N0HpHcM8mF9ugP713fWJ2a14UxLxacvTfc17W7cvH4=;
+	b=VZrrAhsvkxXvv+lttRKlh5lCHuHiTnmu5qJUodDk21QuZw3ljChsySXUfUMr2h2mjscl
+	 eyJpffvveS6xLHCdjV8GwTH8MONy0ElQ47Tsk1kIoLsbwueWqE1lJlfNUHrtZhvkLaozn
+	 uIhq4ndiAVcMMdt+y6gD0ZTzABdkfDOlPKDDyELtsSK5okbHQ2QabfPCKYWrErOm1ItKM
+	 srkfS6jNs6CqWTT2IlaynvvNIuqZwBhfZA2KimSBQLxufneCGoH+mEbJfUL3aLrGbwY5P
+	 5+Egc9fM9RiPfkCenPrJJOSsHct+1ZoJhHVpNU/NspoeU6PKMHXaTwcljke+WUrnLqg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="EsgmQ+K/";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E22606A31E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 06:34:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29E22606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2D0606A323
+	for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 06:39:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6C2D0606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=tUooAsZZ
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1795588436; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=Ht/4Zv8vReTWNzwe8U7mP97/jA/SA5fhwbA7wkWleFo=;
-	b=tUooAsZZN1i2J8YC6EbzxWQS4fFd7IW4afqr/XbUKDcIjpOxyaKVEZ+Pu/eBO/KOdLK9eIJv9YMBvlZfyg1HyGPKxTky0Mz6Qn+I/ajgvQ2q0i2Jh3KcbN40L0vzmvvahRlFKfaeL2W7vme+mucKXP8x8MZ3YcFkoN0BdFIBU0g=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R101e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037033178;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=2;SR=0;TI=SMTPD_---0XFQbHol_1795588435;
-Received: from 30.178.67.246(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XFQbHol_1795588435 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Wed, 25 Nov 2026 14:33:56 +0800
-Message-ID: <317af3d9-9055-42ff-adc7-4f1f0e37a210@linux.alibaba.com>
-Date: Wed, 25 Nov 2026 14:33:54 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EsgmQ+K/
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c51a02ad3acso18397866b.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 24 Nov 2026 22:39:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795588772; cv=none;
+        d=google.com; s=arc-20260327;
+        b=V7MyxRlItF6DJWvzQlrWfRNhJicZYbJyp4ZOc69OAS+/E3kC5VtdCMErI3os2O7spG
+         V2LUJtSuE3HrpV30jckxMq2vtRvdRnaWykmluKAy1/BmiuulFUxvS0qLgO2Jhgv6PeqG
+         aGfvaUzIqCHgMsQ5pn+6Qv3BjiS/+bZGoG3ES5RaPZau3O28RNyazurrpFCQT8HYUVed
+         qBOYK+YTbd4QtzFmsfwky4nEGkBsOF4RcjU6T7y41viHcVxW8tPzKLJrpIDZQesb13yG
+         fGb54JQhUmK09xFRiRriuNunfHeHMqhMC8r+KIANR+hhY+LLXqIG6qslIJrszx0wxQgS
+         3BbA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2N0HpHcM8mF9ugP713fWJ2a14UxLxacvTfc17W7cvH4=;
+        fh=c7V8DuPoDlAJfEK0Lr109q+NnWd99uKgMhZkW5586zU=;
+        b=R/tuBJIsUunPj0P0c6AN1RssmlwzIoImsMlFH0zW3C2IEeaatF7ZX6GswXruaP4JWo
+         ZpN7VHpGLsRA5NOtnym7D1TCMoDgEKYg3eOsg60nVe5XebHqdGLI6MSVwTN2rH2MIVDj
+         7B1QGMqjm4LDnXW60aveD7qKS2POsXEU1E6ppzjOfFdBYB37rVcpLvRHRVbNYtYK2jYv
+         avaDRyy8ltaMFKHsrBwDZoAdUTheLPNuD9UPw3uyQAZL7bg8tlD/uKdVR+B0uf9ddqqV
+         4UCPj4qo5shc1BtPbZcgrhTwgb18hght7lhE3+jWYCtHWGnBKHOsFzsUbVuqQvEIZsQY
+         Znxw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795588772; x=1796193572; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=2N0HpHcM8mF9ugP713fWJ2a14UxLxacvTfc17W7cvH4=;
+        b=EsgmQ+K/GQoS4BFytOvWtxJeCK6Uf6W+HgjsRUwpUXwFdgPA7oOZHm796dzrj/Ml0g
+         7bYejUbY5HqEldxkJX2pNlAT9JdgTf1Xyikl/8hb5fY2Ow7s8BnDZwmkVivjjWWwQkQ1
+         1HKRejNRmSmsw8GHnELiV8+eBmCJv2ItJp+MtapsdtSeYJzG0ST+lCTNYLyX3mdtrlf6
+         MJzHT6bD3yUdSYuFJ3Q6RCGS/ZKsvjmcAboVDIDtD7ei/Tz2XrCfQba/xNONBE4RlbJI
+         /1afIOBdFJfuWE+T+n+TQlJVMLm/QhKMEToLF0bHjZhQspRP5NZRFz89tTQRB0HwmHNL
+         3L2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795588772; x=1796193572;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2N0HpHcM8mF9ugP713fWJ2a14UxLxacvTfc17W7cvH4=;
+        b=W/nF1/fPOFzw8SpvTZH5MmcCf9GxhfAAhNJzmw2CsBOCDfy1OUE3r4DMdzpSbM1dix
+         C1jTdXA4mWcRGFdN2RBdNY6ChBqJYDK80ooAoinqJj5Vk1sON9IeqCg8UxnCnUGKSX8+
+         vxV+ly36i+taoYNY80faLbE5wePSjLyAC4qG6fqkikiNCUjv9AOZ4IO+4IbmxNSNt1rj
+         MTpp7j8AIGvqEPa5RBlPOWqxDRzyBwyo6BeriQnIn2qWKYuly9K6Q+mG1Yx8bGv9Rglk
+         7fZp6bR3ep98QU2kxbHLiLtjktsJBV4EA6ij7CVoEjEAnG7oE1oAzVwQJlqUXx8TLM9X
+         zzRQ==
+X-Forwarded-Encrypted: i=1; AL+hErHc5qw5wxwKHu+7QjJCNgoCc9GOrBof9DJhCFOtYHpSsqM2xTPO6te2jIykd7Q+qbbBlTTF9x43+/EJEpBXp3o=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/56KAq/WLbCPyCtfbgxU2aIP6jcnCE4upJiUvqkYOk0hxDWv87
+	fjWJ3rW6GNoTDm/UwtBd06bdijn1Xj3s1W0O+fH0cvwEChOfmIAQit6x8C7lGpdNnTpRxr68WhJ
+	LcH9S7zqpIZHpTQkduYU9Ya9p3/bVzTI=
+X-Gm-Gg: AZFdTZemnEtjcHFm9TgE5skwrFQ9/C2arIA8lVVLGYnk4+YvyZwQRVb5eGlcXO79nmn
+	uDRH6V9pMD4PRUkT/o2KyQZPFmLUrvBju+KVscbdBzJ6/PDbHqPTlDJweGvsZLVRSGgTHs3CGVJ
+	X4HbNuXeDK5CBhGdPsug1KGitB0XFfZAM6uANQQ3fsupfcYOjSK7JSD6DT6VeBqmuorqPxyuJHW
+	mAagplnqz5TwTzue/Mslk/tJaS5CoweGl+t4Tr2yUVXDqzmEBj8X+b1okeKa2sTQmLaKv/Xv1Y1
+	uqgnIMl9pbcwO71tFLBIhytKoGXXTF6t7huTDiDAD+ALZ6x01lq/3hqG/wGAIWzLjFyOX6TzmSx
+	36B32DlMy/XvJceW/F1rRLEbtEDU9ByT1MBGC
+X-Received: by 2002:a17:907:a890:b0:c4d:31c5:e30 with SMTP id
+ a640c23a62f3a-c513ab12652mr1505328766b.49.1795588771543; Tue, 24 Nov 2026
+ 22:39:31 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,91 +104,144 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] nvme-multipath: protect ana_log_buf teardown with
- ana_lock
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-References: <20261125060153.206699-1-kanie@linux.alibaba.com>
- <sashiko-outbox-232646@kernel.org>
-From: Guixin Liu <kanie@linux.alibaba.com>
-In-Reply-To: <sashiko-outbox-232646@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1793776192.git.zhoubinbin@loongson.cn> <c194b5248184779da500476281fd411fc80a98d6.1793776192.git.zhoubinbin@loongson.cn>
+ <sashiko-outbox-196836@kernel.org> <20261119214532.GA757146-robh@kernel.org>
+ <0009e3c5-dfff-4254-a06f-13c8664a1543@loongson.cn> <20261124134407.GC3404231-robh@kernel.org>
+In-Reply-To: <20261124134407.GC3404231-robh@kernel.org>
+From: Binbin Zhou <zhoubb.aaron@gmail.com>
+Date: Wed, 25 Nov 2026 14:39:19 +0800
+X-Gm-Features: Aa3M54rdaSaGyr7l6GQ5KvPJFYaTr3GJRENcNxHkmOtej3JVVHPOUUammhE2TCc
+Message-ID: <CAMpQs4KRnVuZBZGtormXFK3X8n4KP_3bEr=OhwA-mHN72JRsgg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] dt-bindings: serial: 8250: Add dedicated
+ Loongson-2K3000 UART compatible
+To: Rob Herring <robh@kernel.org>
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>, sashiko-reviews@lists.linux.dev, 
+	devicetree@vger.kernel.org, linux-serial@vger.kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Rob:
+
+On Tue, Nov 24, 2026 at 9:44=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
+:
+>
+> On Tue, Nov 24, 2026 at 02:58:40PM +0800, Binbin Zhou wrote:
+> > Hi Rob:
+> >
+> > Sorry for the late reply.
+> >
+> > On 2026/11/20 05:45, Rob Herring wrote:
+> > > On Wed, Nov 04, 2026 at 07:52:04AM +0000, sashiko-bot@kernel.org wrot=
+e:
+> > > > Thank you for your contribution! Sashiko AI review found 1 potentia=
+l issue(s) to consider:
+> > > > - [Low] dt-bindings: serial: 8250: duplicate ns16550a fallback bloc=
+k for ls2k3000
+> > > > --
+> > > >
+> > > > commit 71974153fe22bc00d365059be9198364c9cfaa86
+> > > > Author: Binbin Zhou <zhoubinbin@loongson.cn>
+> > > >
+> > > > dt-bindings: serial: 8250: Add dedicated Loongson-2K3000 UART compa=
+tible
+> > > >
+> > > > This commit documents the loongson,ls2k3000-uart compatible string =
+with
+> > > > ns16550a as a fallback so the driver can distinguish the Loongson-2=
+K3000 UART
+> > > > from earlier Loongson UARTs that require MCR/MSR signal inversion.
+> > > >
+> > > > > diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b=
+/Documentation/devicetree/bindings/serial/8250.yaml
+> > > > > index 01abd39509a7a..33c13c48ed56e 100644
+> > > > > --- a/Documentation/devicetree/bindings/serial/8250.yaml
+> > > > > +++ b/Documentation/devicetree/bindings/serial/8250.yaml
+> > > > > @@ -196,6 +196,9 @@ properties:
+> > > > >                 - loongson,ls2k2000-uart
+> > > > >             - const: loongson,ls2k1500-uart
+> > > > >             - const: ns16550a
+> > > > > +      - items:
+> > > > > +          - const: loongson,ls2k3000-uart
+> > > > > +          - const: ns16550a
+> > > >
+> > > > [Severity: Low]
+> > > > This isn't a bug, but properties:compatible in
+> > > > Documentation/devicetree/bindings/serial/8250.yaml already has a tw=
+o-item
+> > > > block with const: ns16550a as the fallback that includes the other =
+base
+> > > > Loongson UART compatibles:
+> > > >
+> > > >        - items:
+> > > >            - enum:
+> > > >                ...
+> > > >                - loongson,ls2k0500-uart
+> > > >                - loongson,ls2k1500-uart
+> > > >            - const: ns16550a
+> > > >
+> > > > Could loongson,ls2k3000-uart be added to that existing enum instead=
+ of adding
+> > > > a separate two-item block?
+> >
+> > Let me briefly explain why Loongson UART `compatible` is necessary at t=
+his
+> > time.
+> > First, as described in the driver, each `compatible` type defines diffe=
+rent
+> > driver data:
+> > struct loongson_uart_ddata {
+> >         bool has_frac;
+> >         u8 mcr_invert;
+> >         u8 msr_invert;
+> > };
+> > Since the Loongson-2k3000 has already fixed the hardware issues with
+> > mcr/msr, we need a new `compatible` to correspond to the updated
+> > `driver_data`.
+> >
+> > static const struct loongson_uart_ddata ls2k3000_uart_data =3D {
+> >         .has_frac =3D true,
+> >         .mcr_invert =3D 0,
+> >         .msr_invert =3D 0,
+> > };
+> >
+> > As for why a fallback to `ns16550a` is required in all cases, the DTS f=
+iles
+> > for the Loongson-2K1000 and similar devices were merged into the reposi=
+tory
+> > before `8250_loongson.c`, and this approach was used at the time to mai=
+ntain
+> > compatibility[1].
+>
+> No one is questioning what the compatibles are, just where you add the
+> new schema entry. Use the existing one with the ns16550a fallback
+> instead of a new oneOf entry:
+>
+>       - items:
+>           - enum:
+>               - altr,16550-FIFO32
+>               - altr,16550-FIFO64
+>               - altr,16550-FIFO128
+>               - fsl,16550-FIFO64
+>               - andestech,uart16550
+>               - nxp,lpc1850-uart
+>               - opencores,uart16550-rtlsvn105
+>               - ti,da830-uart
+>               - loongson,ls2k0500-uart
+>               - loongson,ls2k1500-uart
+>           - const: ns16550a
+
+I=E2=80=99m very sorry; I misunderstood earlier. Also, after further
+discussion with the hardware engineers, I discovered that the
+Loongson-2K0300 should fallback to the Loongson-2K3000.
+
+I will revise the patch.
+
+
+>
+> Rob
 
 
 
-在 2026/11/25 14:10, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] nvme-multipath: NULL deref and uninit read in
->   nvme_parse_ana_log()
-> --
->
-> commit d312e34ea57a3e103965fa1cad1dd210a8ca3b3a
-> Author: Guixin Liu <kanie@linux.alibaba.com>
->
-> nvme-multipath: protect ana_log_buf teardown with ana_lock
->
-> This commit acquires ctrl->ana_lock around freeing and clearing
-> ctrl->ana_log_buf in nvme_mpath_uninit() to serialize against concurrent
-> ANA log parsers.
->
->> diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
->> index 27facdbb3d4c0..bc0abd1f30274 100644
->> --- a/drivers/nvme/host/multipath.c
->> +++ b/drivers/nvme/host/multipath.c
->> @@ -1615,7 +1615,9 @@ void nvme_mpath_uninit(struct nvme_ctrl *ctrl)
->>  	 */
->>  	cancel_work_sync(&ctrl->ana_work);
->>  
->> +	mutex_lock(&ctrl->ana_lock);
->>  	kvfree(ctrl->ana_log_buf);
->>  	ctrl->ana_log_buf = NULL;
->>  	ctrl->ana_log_size = 0;
->> +	mutex_unlock(&ctrl->ana_lock);
->>  }
-> [Severity: High]
-> Can a concurrent parser in nvme_mpath_add_disk() still hit a NULL pointer
-> dereference or read uninitialized memory in nvme_parse_ana_log() when
-> nvme_mpath_uninit() unlocks ctrl->ana_lock?
->
-> In the concurrent nvme_mpath_init_identify() and nvme_mpath_add_disk()
-> path, nvme_mpath_add_disk() checks nvme_ctrl_use_ana() (which tests
-> ctrl->ana_log_buf != NULL) before acquiring ctrl->ana_lock, and
-> nvme_parse_ana_log() unconditionally dereferences
-> ctrl->ana_log_buf->ngrps:
->
-> CPU0                                  CPU1
-> nvme_mpath_init_identify()            nvme_mpath_add_disk()
->                                         if (nvme_ctrl_use_ana(ctrl))
->   nvme_mpath_uninit()
->     mutex_lock(&ctrl->ana_lock)
->     kvfree(ctrl->ana_log_buf)
->     ctrl->ana_log_buf = NULL
->     mutex_unlock(&ctrl->ana_lock)
->                                         mutex_lock(&ctrl->ana_lock)
->                                         nvme_parse_ana_log()
->                                           ctrl->ana_log_buf->ngrps
->                                             <-- NULL pointer dereference
->   ctrl->ana_log_buf = kvmalloc(...)
->   nvme_read_ana_log()
->
-> Even if CPU1 acquires ctrl->ana_lock after kvmalloc() runs in
-> nvme_mpath_init_identify(), ctrl->ana_log_buf and ctrl->ana_log_size are
-> assigned before nvme_read_ana_log() retakes ctrl->ana_lock to populate the
-> buffer, so nvme_parse_ana_log() can parse uninitialized memory from
-> kvmalloc().  In addition, while ctrl->ana_log_buf is NULL between
-> nvme_mpath_uninit() and kvmalloc(), concurrent callers of
-> nvme_ctrl_use_ana() transiently observe the controller as non-ANA.
-Oh, Sashiko is right, I didn't fix all race condition.
-
-1. We should check NULL under lock to prevent NULL reference.
-2. Should use kvzalloc instead kvmalloc.
-
-Changed in v2.
-
-Best Regards,
-Guixin Liu
->
-
+--=20
+Thanks.
+Binbin
