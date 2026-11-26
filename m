@@ -1,54 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.45
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795657668;
-	b=oYYVzUBfPhka5b5pandjLUnordbBCuBcgc5EghlPyGLhsCvPFgjFTrXNjGY3paYBOyyr
-	 mFEcd8wxh39FY66+PUUnP0S43Jof7CA4u+yEXktaQfOcc/loGDJeeviotmT7csqHtjL5D
-	 5cipXLmQ+LtFl9uNW9fALD0Xj2GfwTSQuUGdYMZeIRuhxEJ8UNbRr8dH0B4YemRMpQGE1
-	 l6zBWjqdbrqTUrBks/14awpqDWQ27SpdmB/bFNN+QsuAH1RIgLNr+KBDfNLR2rlONhiNi
-	 ixUQ3C1fulAVqr5E/zHaGBNtV69TVzDdgPDvv85Xola8C9UYoBL4gbnpCOavYW/qasg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795657668;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
-	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
-	 To:X-Mailer;
-	bh=mb15UcfveKlfqCEVgqDRD0tZugI6epRX52mAuCN9OyU=;
-	b=WFFSVDhjGsGhwokcUdGP/Y6tRnQciN4OkKsaCbT1a0H7RVr8CZxz6ZvCUVs93BC4iQ75
-	 wIO97Z+4WLAmyLaiYb1p+Z95zjeaKgKjeKBaWOR10NoF05jWD/SAfCxDIKvSntEILQ6qn
-	 Chh9U4A3IB9+3NMYooHFprBqEf93l/fUxzQQr4jNKyfUrCYs1R/Z2Ig2LnLEUl7B13J3I
-	 qx/O5K79/ttLFI3J8mEv/3YIk937swBxsDspQyJa+eJuxFrEZnu7S0x7TUwarjZhxLuYm
-	 Qq+sd463oxDrdNEVuaiUHVvXgbAB6yU4v/RN2lJ7XmDCV4uRDRIH3mh1ztF6EanieUQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="evm/S/UF";
-	arc=none smtp.remote-ip=95.215.58.45
-Received: from mta1.migadu.com (out-45.mta1.migadu.com [95.215.58.45])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.176
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795660664;
+	b=XCT8YYGaG10ZV0+30Uy+F0NeoCKPO5Hk+2xPLfoz+ZRoA9RlCGXmSZNj8naAgm/daEL4
+	 oLl0pK8P9nQPeISaka08aBuxKgkA+nG/y/MUxWnlmGyYX7Hc7iFLfvNC8QAnNFv1E44bm
+	 BAdsYWRIAECEL05B2U7+xp16k2m/qYK/619xEWTVvZDk/d5JsA0B+wbyzS5TUy9V/e1S2
+	 RTwbIb6BWiNgerVEZ6m2dDtk1xyS/oaFsEJzu5VRpDrjPduqqnwXZcmKHf03D3pBBQMP6
+	 gpqMsI7MljEvRaEXW2tfB2dV8WQMXEgS2gtT7LEmCw4rZdmkzSoAUb9nvnlfI4s7N0g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795660664;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=RZCvtCpBQTwzTPj93Oiy8qbxhXrLbrBIt1jl3I4qtj4=;
+	b=GQx0d6tU1sKYzUyNEzYH2HRxs7ykopkxeWC43lG+dpZ90ruVZ6ReAder3qKZLHQT7Txg
+	 iGC2U9fyUdjdp4ol+idm9MJtCKZ1pq9l4xSNrGkIYN4SiakOnuhmqdbdBuaKUUwxREPtW
+	 JPu0WmaZUop8btFpImjCvmjOE3lqfjc917Fj2y2U+036iXMndFxq5kB9MlL69AzUYpndV
+	 LA35jhXeng/2iNXngVr2dRtUzcXtdX/KLSMfXccRTzQyvk34iyg3CzNZm3WfrEPBMGHdO
+	 txMAwCX3JbtZJ07DDYcWNnSYmKY1WJoBy/W/l+pOmSA/p7mKZCPplKKD5NE60QquHlQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WhmYFZPy;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.176
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E56C606A31E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 01:47:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E56C606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E196A606A323
+	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 02:37:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E196A606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=evm/S/UF
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=I7u+gRQ+y6tZqnBiz/yfcLTETEoXo+FFQlNVsHLgCm0=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795657665; v=1; x=1796262465;
- b=evm/S/UFpM+/sktJBfNHf00wjaiSoIaOYa8G3Z9pFgIKmrW60gqUrppfJw6xFMwah30aopi+
- V4+Yl6oG3tCHCiRqaeAk8WHK12SF6hc5MDd+1STO9XCIMKsr5PdiGf6lQjn/QS57DYaWo1O0UGK
- Bxi5hnKlGXdDSw/qiVZ1r8iI=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 0d3f34471a6ddac6;
-	Thu, 26 Nov 2026 01:47:44 +0000
-X-Mizu-Trace-ID: 0d3f34471a6ddac6
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WhmYFZPy
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-8b531cd9bbaso55861447b3.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 18:37:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795660663; cv=none;
+        d=google.com; s=arc-20260327;
+        b=aGvRHfpV9l0bPr81VWPYnRQbGC2HrqnbWUmILwMp+erVEvn6s+OnweO6wk4IW02QBr
+         vJ6Q1xP3duw94LK//zRQJCse57r6pAcM7H+SUIoHjN+FB/A0tIPLL5fNhQbChivN1mxT
+         uIWfZJ3zlTVXQPKKVNwrqnFe5+I9bHqDzARzKNKxB7NkBBmfk87xxR4L0dlJ5FmsEejx
+         Xjs+ezD50gUztZ4Q2wGi0aKPeOc0plhgVKszqZbQ+uLWVr7MeKAoovsG3x3+Qw6H7Pg9
+         ldiVziH18FFSxBcDXCbeORiENIzMC9XyYzJKcNp0AntB0eYes0J4qbemGkDb40j0kX2E
+         KvXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=RZCvtCpBQTwzTPj93Oiy8qbxhXrLbrBIt1jl3I4qtj4=;
+        fh=cu1mrLmRqZ7GT07/GOzDHESE+JVEAIKq0yGJUF/W7XQ=;
+        b=aHbSRBH2oFj90BMsEpjwT9VtiISzZC3xDbnoRO77BKDqOBi8/y9CiFjHuseX/W7und
+         ARxL3hNbJQ6qRd9ldCslqN9i5PZgLLLhymzqxp0X6lMo6Afde4ABkFFgnlo8WJDPa/cZ
+         DBR0IYgb0sB0DQYDy0d3P8PWquj9Zu+8P5DrowIkwUMJzvuMVvRfK84KynqTTE/RdssM
+         OAwRhzb6lB4S2wW4ag0yMJxhdVHJ2EIymeHVLpXKG5D4XJ6JV2QBGcZn1rhZSunlOxHv
+         ym68TrBOtlfyiAunJRwZgr5Xt1y+f+r5iJQaKRQU6CnOqTCEIE60tPbsUSIk1k6yJOSe
+         HuFQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795660663; x=1796265463; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=RZCvtCpBQTwzTPj93Oiy8qbxhXrLbrBIt1jl3I4qtj4=;
+        b=WhmYFZPycvYCmutqWYjw6fNsinp9EpcZlhUHIIL594PtSybvsdSBJVJt8araySp0rk
+         Q0kMMd4ZR1l/wXaCS/CDZtWxKuZKxi9WSFdlV5JDbCqnAEGSi0ZDwqcVp7bKcY2Dwev5
+         s3GV4RAL5cguNroEy3+r8OrNV61F4L9RRytirhk8y4oT9fYu2DePndhQ16jKOMcuSRsd
+         cu34QquoBhg9Pu3hEHnFLO1nKnpGLDpM8Rwtodc0oiR7GO9k6oICn1NA52sL92N2nT8o
+         aeG82pwc4xfsBQeQ929apiIB9VjnKtOAgPu/h3IDOsKq9Ij8Pte/s1NcnFhSN28Mugp3
+         9MRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795660663; x=1796265463;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=RZCvtCpBQTwzTPj93Oiy8qbxhXrLbrBIt1jl3I4qtj4=;
+        b=vl+ZIi5oeyzHsKn835mE5NMRqC763dRUuq/pwXe/T4Kw3V7iKRglvATlVZdX2ZPscu
+         WwQ5KHCP7sNdYYQhEJpdGCq1SuIgGhcDpH3iKU/e+POTYpASCBVJ/z4JxK9joV0KJH4d
+         vBLO5/tgo0IXXNjXy7x/aR39zQGMg5UpD6XjVqgcqi1bRVK90TDEXNm7b99D3J4LBMzY
+         XuqPFvCGDLrOxWz5lRfEk7s4SQUplSpHU39l2tAgmzQXcAVv2Q4TQ/Xd2Vq+QwcgzHzr
+         vGk7PC0IPcsBmrWWl6lK1YwlCu0t44D++5h7tgOeGlGCuTTxG24aAeOQ5Q5vua5p9C8y
+         oHWg==
+X-Gm-Message-State: APuU4Z+48wejuFSfFAhGc9l+QOhh8+KI2KJRL/Wx3KwVVLB8NOTvXs3n
+	uEX0wLs9X3NBUV8HQJBk3j8eWAnfrE/F0XR0PRDOsF9MF3HERdg3BxBwphK957qZ2YQlxuEPdgH
+	WN7eO9uuBvMrQ8az6EUWwxf1zXx48tlO4Zkus
+X-Gm-Gg: AZFdTZc4kkfcwFDh1kLYkpzxCukr2S/5c1shsD991/+dTrFlThgKQCfT1euRrM7u513
+	mDYvwNC5lnPyRVR0PvxlfESGTpFO+7JS6G7uXDRjcbPo9ndZbdGqqbqDnwX5xeDwsi+fQt37ura
+	GWIcgBPjRPXNzZGghM7EKdXnnlwp/ICD4FrHYFnhu5tSXszp6bkX9SOzJP6ullJ1noqZusEzMip
+	FA4a2WZMPSZqU+KzgEcxjJjej99aQOj00FLimb5+PCNvkrR/8W08yMq6sL0YyHyQG7+pq+UfBtn
+	d6muzlPjyf3kJ0qle5ddJJswWM+pClWZw/ks+4uueNhfijl5vNPQDEX4JjUVmQJXS6FEol4RJxU
+	7OL5BGE5RdpjGcrwZRFooADGASLmuw3lRYVIWm+Se4+pTNJxpsoqrSdZxSAjI6QLHdIIIBSD33G
+	ew/srhhZl1mMEO6bavm7H+q3nkPZvS1AIGkLGm2AtvORM=
+X-Received: by 2002:a05:690e:150a:b0:67d:ba55:4be2 with SMTP id
+ 956f58d0204a3-67df448c8acmr8960272d50.84.1795660662739; Wed, 25 Nov 2026
+ 18:37:42 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,217 +103,237 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH v3 16/19 DO-NOT-MERGE] arm64: Implement
- try_populate_vmemmap_pmd using AF trick
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <CADrL8HXtwnZ4P7E4OhMKs03b2zgzfxnmAHMw4mknjivAk+FVKQ@mail.gmail.com>
-Date: Thu, 26 Nov 2026 09:47:30 +0800
-Cc: Muchun Song <muchun.song@linux.dev>,
- sashiko-reviews@lists.linux.dev,
- Will Deacon <will@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Oscar Salvador <osalvador@suse.de>,
- Andrew Morton <akpm@linux-foundation.org>,
- Kefeng Wang <wangkefeng.wang@huawei.com>,
- Nikos Nikoleris <nikos.nikoleris@arm.com>,
- Linu Cherian <linu.cherian@arm.com>,
- Mark Rutland <mark.rutland@arm.com>,
- David Hildenbrand <david@kernel.org>,
- Ryan Roberts <ryan.roberts@arm.com>,
- Nanyong Sun <sunnanyong@huawei.com>,
- Yu Zhao <yuzhao@google.com>,
- Frank van der Linden <fvdl@google.com>,
- David Rientjes <rientjes@google.com>,
- linux-mm@kvack.org
+MIME-Version: 1.0
+References: <20261126020123.655988-1-ronniesahlberg@gmail.com> <sashiko-outbox-234635@kernel.org>
+In-Reply-To: <sashiko-outbox-234635@kernel.org>
+From: ronnie sahlberg <ronniesahlberg@gmail.com>
+Date: Thu, 26 Nov 2026 12:37:31 +1000
+X-Gm-Features: Aa3M54qk46md5Z6HrozKy32RlJWNl0cqkuhMLD8lZQhCJJGxSrEU8bgQtIxG7Gc
+Message-ID: <CAN05THQffU=vr5EGWJbkM4XxyrK1tnbE1T-vPSPwTmYdXAzuVw@mail.gmail.com>
+Subject: Re: [PATCH] dm era: read the metadata again at the first resume
+To: sashiko-reviews@lists.linux.dev
+Cc: dm-devel@lists.linux.dev, agk@redhat.com, snitzer@kernel.org, 
+	mpatocka@redhat.com, bmarzins@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <F29037A6-A177-4DFD-9864-285E9566D7B8@linux.dev>
-References: <20261122184453.2668189-1-jthoughton@google.com>
- <20261122184453.2668189-17-jthoughton@google.com>
- <sashiko-outbox-228645@kernel.org>
- <CADrL8HWNAByKifcNgre_YAX3M+bwAW0BgMrfPmWHubOEs+AfDQ@mail.gmail.com>
- <5028917F-EFF3-488C-903E-9E19E5DDA3D1@linux.dev>
- <CADrL8HXtwnZ4P7E4OhMKs03b2zgzfxnmAHMw4mknjivAk+FVKQ@mail.gmail.com>
-To: James Houghton <jthoughton@google.com>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
+Please disregard this version.  The Sashiko review is right about the
+space map index being lost when freshly formatted metadata is reopened,
+and the patch overlaps with Denis V. Lunev's series "dm era: a metadata
+device that never comes back".  I will send a v2 based on top of that
+series.
 
-
-> On Nov 26, 2026, at 00:35, James Houghton <jthoughton@google.com> =
-wrote:
->=20
-> On Wed, Nov 25, 2026 at 6:32=E2=80=AFAM Muchun Song =
-<muchun.song@linux.dev> wrote:
->>=20
->>=20
->>=20
->>> On Nov 25, 2026, at 01:39, James Houghton <jthoughton@google.com> =
-wrote:
->>>=20
->>> On Sun, Nov 22, 2026 at 11:08=E2=80=AFPM <sashiko-bot@kernel.org> =
-wrote:
->>>>=20
->>>> Thank you for your contribution! Sashiko AI review found 2 =
-potential
->>>> issues to consider:
->>>> - [Medium] arm64/mm: over-broad TLB flush in =
-try_populate_vmemmap_pmd()
->>>> - [Low] arm64: direct AF=3D0 block-to-table transition in
->>>> try_populate_vmemmap_pmd()
->>>> --
->>>>=20
->>>> commit 1319c4a7862ad5f3b810c4beca866ee98bd48fd7
->>>> Author: James Houghton <jthoughton@google.com>
->>>>=20
->>>> arm64: Implement try_populate_vmemmap_pmd using AF trick
->>>>=20
->>>> This commit implements try_populate_vmemmap_pmd() on arm64 to =
-replace
->>>> in-use leaf vmemmap PMD block entries with table entries by =
-clearing the
->>>> access flag instead of using a break-before-make sequence when =
-BBML3 is
->>>> not supported.
->>>>=20
->>>>> diff --git a/arch/arm64/include/asm/pgalloc.h =
-b/arch/arm64/include/asm/pgalloc.h
->>>>> index 0263329fb7b30..7e304f01ce6d5 100644
->>>>> --- a/arch/arm64/include/asm/pgalloc.h
->>>>> +++ b/arch/arm64/include/asm/pgalloc.h
->>>>> @@ -124,9 +124,54 @@ pmd_populate(struct mm_struct *mm, pmd_t =
-*pmdp, pgtable_t ptep)
->>>>> static inline int try_populate_vmemmap_pmd(unsigned long addr, =
-pmd_t *pmdp,
->>>>>                                        pte_t *pgtable)
->>>>> {
->>>>> -     /* BBLM3 is required. Its presence has been checked. */
->>>>> -     pmd_populate_kernel(&init_mm, pmdp, pgtable);
->>>>> -     return 0;
->>>>> +     const int max_attempts =3D 16;
->>>>> +     int attempts =3D 0;
->>>>> +     pmd_t old_pmd, new_pmd;
->>>>> +
->>>>> +     if (!system_supports_bbm_through_af())
->>>>> +             return -EOPNOTSUPP;
->>>>> +
->>>>> +     if (system_supports_bbml3()) {
->>>>> +             /*
->>>>> +              * BBML3 allows block->table transitions if the PTEs =
-underneath
->>>>> +              * do not conflict with existing, potentially cached
->>>>> +              * translations.
->>>>> +              */
->>>>> +             pmd_populate_kernel(&init_mm, pmdp, pgtable);
->>>>> +             return 0;
->>>>> +     }
->>>>> +
->>>>> +     new_pmd =3D __pmd(__phys_to_pmd_val(__pa(pgtable)) |
->>>>> +                     PMD_TYPE_TABLE | PMD_TABLE_AF | =
-PMD_TABLE_UXN);
->>>>> +
->>>>> +     old_pmd =3D pmdp_get(pmdp);
->>>>> +
->>>>> +     do {
->>>>> +             if (WARN_ON_ONCE(!pmd_valid(old_pmd)))
->>>>> +                     return -EINVAL;
->>>>> +
->>>>> +             if (WARN_ON_ONCE(!pmd_leaf(old_pmd)))
->>>>> +                     return -EINVAL;
->>>>> +
->>>>> +             /* We should never get a contiguous PMD here. */
->>>>> +             if (WARN_ON_ONCE(pmd_cont(old_pmd)))
->>>>> +                     return -EINVAL;
->>>>> +
->>>>> +             if (pmd_young(old_pmd)) {
->>>>> +                     /* __ptep_clear_young() returns the =
-overwritten PTE */
->>>>> +                     old_pmd =3D =
-pte_pmd(pte_mkold(__ptep_clear_young((pte_t *)pmdp)));
->>>>> +
->>>>> +                     flush_tlb_kernel_range(addr, addr + =
-PMD_SIZE);
->>>>> +             }
->>>>=20
->>>> [Severity: Medium]
->>>> Should this pass addr + PAGE_SIZE instead of addr + PMD_SIZE to
->>>> flush_tlb_kernel_range()?
->>>>=20
->>>> Invalidating a single non-contiguous PMD block entry only needs one
->>>> overlapping page-granular TLB invalidation, as in
->>>> unmap_hotplug_pmd_range().  With a range of PMD_SIZE and stride of
->>>> PAGE_SIZE, pages equals PTRS_PER_PTE (MAX_DVM_OPS), so
->>>> __flush_tlb_range_limit_excess() returns true on CPUs without
->>>> FEAT_TLBIRANGE and escalates the flush to flush_tlb_all().
->>>=20
->>> Oh! I didn't know that!
->>>=20
->>> I will change it to PAGE_SIZE instead of PMD_SIZE in v4. Neat!
->>>=20
->>>>=20
->>>>> +     /*
->>>>> +      * Translations without AF cannot be cached, so we can =
-replace
->>>>> +      * them without BBM.
->>>>> +      */
->>>>> +     } while (!try_cmpxchg_relaxed(&pmd_val(*pmdp), =
-&pmd_val(old_pmd),
->>>>> +                                   pmd_val(new_pmd)) &&
->>>>> +              ++attempts < max_attempts);
->>>>=20
->>>> [Severity: Low]
->>>> As reported by Catalin Marinas on v1 [1], this rests on an =
-architecture
->>>> detail the review could not confirm from the kernel source: can a =
-CPU
->>>> walk cache or TLB retain information from a valid leaf block PMD
->>>> descriptor when AF=3D0, or is a TLB invalidation and =
-break-before-make
->>>> sequence still required before converting a valid AF=3D0 block =
-descriptor
->>>> into a table descriptor without BBML3?
->>>>=20
->>>> If it can, skipping flush_tlb_kernel_range() when =
-pmd_young(old_pmd) is
->>>> already false or directly overwriting the valid AF=3D0 block =
-descriptor
->>>> with new_pmd leaves stale walk-cache or TLB state active while a =
-table
->>>> entry is installed.
->>>>=20
->>>> [1] https://lore.kernel.org/r/aoSJcAFMNJ1nPl2H@arm.com
->>>=20
->>> Yeah, this is why these final 5 patches are marked as DO-NOT-MERGE.
->>=20
->> If we aren't sure about the hardware behavior here, why don't we just =
-drop
->> these patches? Once the initial support of HVO for arm64 is merged =
-into the
->> community, we can bring up this uncertain part for discussion. =
-Wouldn't that
->> be simpler for this series?
->=20
-> I'm including them for three reasons:
-> 1. I want HVO to be supported on as many systems as possible. At
-> Google, we have systems that we want to enable HVO for that do not
-> have BBML3.
-> 2. I want to provide the Linux code to potentially facilitate memory
-> model discussions regarding the AF trick.
-> 3. My interpretation of the Arm ARM is that the AF trick can be used
-> like this, so that the final 5 patches are in fact correct.
->=20
-> The series can always be partially applied.
->=20
-> I am happy to drop these if they really ought to be sent separately or
-> if they are genuinely incorrect. I hope some of the arm64 experts can
-> chime in. :)
-
-I'm just wondering: once we merge the deterministic patches, would it be
-better to submit the second half separately as an RFC series?
-
-I'm not an ARM expert, so until I'm certain this behavior is correct, I
-won't review this part of the series.
-
-Thanks,
-Muchun
-
-
+On Thu, 26 Nov 2026 at 12:22, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 4 potential
+> issues to consider:
+> - [High] dm era: missing activation check in era_message() causes NULL
+>   deref
+> - [High] dm era: era_activate() reopen loses uncommitted space map index
+> - [Medium] dm era: era_preresume() starts digest before rollover and
+>   leaks worker
+> - [Low] dm era: unused nr_blocks field in struct era after activation
+>   refactor
+> --
+>
+> commit a2950a4dea8dcd63e94b69dde9b3323092c96aec
+> Author: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+>
+> dm era: read the metadata again at the first resume
+>
+> This commit re-reads and resizes the era metadata in the worker at the
+> first preresume, and suppresses metadata writes and writeset digestion
+> until the target has been activated.
+>
+> > diff --git a/drivers/md/dm-era-target.c b/drivers/md/dm-era-target.c
+> > index ea499adca4ce2..801ca632581b4 100644
+> > --- a/drivers/md/dm-era-target.c
+> > +++ b/drivers/md/dm-era-target.c
+> [ ... ]
+> > @@ -1611,30 +1618,64 @@ static void era_postsuspend(struct dm_target *t=
+i)
+> >       }
+> >  }
+> >
+> > -static int era_preresume(struct dm_target *ti)
+> > +/*
+> > + * The metadata was opened by the constructor, but if this table repla=
+ces
+> > + * another one then that table kept changing the metadata until it was
+> > + * suspended.  So read it again now that we are the only user.
+> > + *
+> > + * Runs in the worker, and commits by itself so that nothing is writte=
+n if
+> > + * the metadata can't be read.
+> > + */
+> > +static int era_activate(struct era *era)
+> >  {
+> >       int r;
+> > -     struct era *era =3D ti->private;
+> > +     struct era_metadata *md;
+> >       dm_block_t new_size =3D calc_nr_blocks(era);
+> >
+> > -     if (era->nr_blocks !=3D new_size) {
+> > -             r =3D metadata_resize(era->md, &new_size);
+> > -             if (r) {
+> > -                     DMERR("%s: metadata_resize failed", __func__);
+> > -                     return r;
+> > -             }
+> > +     md =3D metadata_open(era->metadata_dev->bdev, era->sectors_per_bl=
+ock,
+> > +                        false);
+> > +     if (IS_ERR(md)) {
+> > +             DMERR("%s: couldn't reopen metadata", __func__);
+> > +             return PTR_ERR(md);
+> > +     }
+> >
+> > -             r =3D metadata_commit(era->md);
+> > -             if (r) {
+> > -                     DMERR("%s: metadata_commit failed", __func__);
+> > -                     return r;
+> > -             }
+> > +     metadata_close(era->md);
+> > +     era->md =3D md;
+>
+> [Severity: High]
+> When a fresh metadata device is formatted during era_ctr(), does closing
+> era->md and reopening it from disk here discard uncommitted in-memory
+> space map index updates?
+>
+> In create_fresh_metadata(), dm_tm_create_with_sm() commits the initial
+> space map, and then dm_btree_empty() and dm_array_empty() allocate two
+> blocks for writeset_tree_root and era_array_root.  Those allocations
+> update smm->ll.mi_le.index[0] in memory, but write_superblock() calls
+> save_sm_root() and dm_tm_commit() without calling dm_tm_pre_commit() firs=
+t:
+>
+> drivers/md/dm-era-target.c:create_fresh_metadata() {
+>         ...
+>         r =3D dm_btree_empty(&md->writeset_tree_info, &md->writeset_tree_=
+root);
+>         ...
+>         r =3D dm_array_empty(&md->era_array_info, &md->era_array_root);
+>         ...
+>         r =3D write_superblock(md);
+> }
+>
+> Because dm_tm_pre_commit() was not called, sm_metadata_commit() never
+> wrote the updated smm->ll.mi_le to the on-disk bitmap_root block.
+> Previously the first metadata_commit() in preresume flushed the in-memory
+> era->md created by era_ctr(); now metadata_close(era->md) discards it and
+> metadata_open() loads the stale bitmap_root from disk, leaving index[0]'s
+> nr_free count permanently off by 2 blocks.
+>
+> > +     memset(&era->digest, 0, sizeof(era->digest));
+> > +
+> > +     r =3D metadata_resize(md, &new_size);
+> > +     if (r) {
+> > +             DMERR("%s: metadata_resize failed", __func__);
+> > +             return r;
+> > +     }
+> >
+> > -             era->nr_blocks =3D new_size;
+> > +     r =3D metadata_commit(md);
+> > +     if (r) {
+> > +             DMERR("%s: metadata_commit failed", __func__);
+> > +             return r;
+> >       }
+> >
+> > +     era->nr_blocks =3D new_size;
+>
+> [Severity: Low]
+> With the era->nr_blocks !=3D new_size check removed from era_preresume(),
+> era->nr_blocks is now only ever written to and never read (all other
+> places use era->md->nr_blocks).  Can nr_blocks be removed from struct era=
+?
+>
+> > +     WRITE_ONCE(era->activated, true);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int era_preresume(struct dm_target *ti)
+> > +{
+> > +     int r;
+> > +     struct era *era =3D ti->private;
+> > +
+> >       start_worker(era);
+> >
+> > +     if (!era->activated) {
+> > +             struct rpc rpc =3D { .fn_era =3D era_activate, .no_commit=
+ =3D true };
+> > +
+> > +             r =3D perform_rpc(era, &rpc);
+> > +             if (r)
+> > +                     return r;
+> > +     }
+> > +
+> >       r =3D in_worker0(era, metadata_era_rollover);
+> >       if (r) {
+> >               DMERR("%s: metadata_era_rollover failed", __func__);
+> >               return r;
+> >       }
+>
+> [Severity: Medium]
+> If in_worker0(era, metadata_era_rollover) fails here (or a later target i=
+n
+> the table fails preresume), does era_preresume() leave the worker running
+> and digesting writesets on a still-suspended device?
+>
+> era_activate() sets era->activated =3D true before the rollover RPC is
+> queued, and open_metadata() sets md->archived_writesets =3D true.  When
+> in_worker0() wakes do_work() for the rollover RPC, do_work() sees
+> era->activated =3D=3D true and runs kick_off_digest() and process_old_era=
+s()
+> before process_rpc_calls(), which re-queues era->worker via wake_worker()=
+.
+> Because the error paths in era_preresume() do not call stop_worker(era),
+> the worker continues running and mutating era->md in the background while
+> the device remains suspended, and era_dtr() can later destroy the failed
+> table without era_postsuspend() having stopped the worker.
+>
+> >
+> >       return 0;
+> >  }
+> > @@ -1658,10 +1699,16 @@ static void era_status(struct dm_target *ti, st=
+atus_type_t type,
+> >       ssize_t sz =3D 0;
+> >       struct metadata_stats stats;
+> >       char buf[BDEVNAME_SIZE];
+> > +     struct rpc rpc =3D { .fn1 =3D metadata_get_stats, .arg =3D &stats=
+ };
+> >
+> >       switch (type) {
+> >       case STATUSTYPE_INFO:
+> > -             r =3D in_worker1(era, metadata_get_stats, &stats);
+> > +             /*
+> > +              * Before the first resume our view of the metadata may b=
+e
+> > +              * stale and must not be written.
+> > +              */
+> > +             rpc.no_commit =3D !READ_ONCE(era->activated);
+> > +             r =3D perform_rpc(era, &rpc);
+> >               if (r)
+> >                       goto err;
+>
+> [Severity: High]
+> Should era_message() also reject messages while !READ_ONCE(era->activated=
+)?
+>
+> In do_resume(), dm_swap_table() installs the new table as live and drops
+> md->suspend_lock before dm_resume() calls era_preresume().  If
+> era_activate() fails (or a message arrives after dm_swap_table() before
+> era_activate() completes), the table is live with era->activated =3D=3D f=
+alse,
+> era->suspended =3D=3D 0, and era->md->writesets[0..1].bits =3D=3D NULL (s=
+ince
+> writeset bitmaps are only allocated by metadata_resize() in
+> era_activate()).  A "checkpoint" or "take_metadata_snap" message then run=
+s
+> metadata_new_era() -> writeset_init() in the worker and dereferences a
+> NULL ws->bits pointer when md->nr_blocks > 0, while "drop_metadata_snap"
+> commits the stale era->md to disk via in_worker0().
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261126020123.65=
+5988-1-ronniesahlberg@gmail.com?part=3D1
