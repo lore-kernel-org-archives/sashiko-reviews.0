@@ -1,54 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795712771;
-	b=OnzzBdv67RkkyKIpjKarZRZSWKcPfFlj3XJQvizuzNuVjQgnTVhbwuZxSSR4kFTY4L05
-	 22wAfytNaFM5aBeHrE/sYmOwoTL3ZRbq9WBXCY1Mj1bgjaEkDwN6WB3/y6G4SbxtImhts
-	 yhUu/sGCffGHZhn1Xgv3fbR2RQ2C9LRX/LYAcFKQxpBUZDWkTi6wmVbP9PUf//21vpjHB
-	 3uyw2bDNOqRgN3PedweYoUvZYmRKYMr7IHoWVrlqV7jmnvCbJFnIxeSe/e2GxeHAlPxgu
-	 bhH4UdguWZIIk1v/jPL7+imED+LjGr/RBC41AgSmUTcW7TZivgIUI7uPQybeSBJWUNQ==
+	t=1795714144;
+	b=hrmFsGNasKouFXk3mVPkdVMJ6AgoQ9s1vI7AxlyVt/Mqcpf3EvJg7fgUOD1OUVJpwN1Y
+	 uuuDu1K9sxDr0scbZGno7L7M/NgLdhqMxCjahGU30RYJsl5KnfVxGT/oa1qwfaSMlIH/c
+	 xKyn1Q/htrWfjkDE81adLm+bC2x1tAoa8weBXWFJwk6yoTAmosBl3ZaT8nPwcUeT05iyH
+	 EYDMayJt+XgmRlHyVhw7iyadNLuTEzz3X57nqrwb5Zn82AFk/y8Tn6P+I9ly7NeZHdpVs
+	 p1pY/cXvMuY93PFPDjIHw5/JdgEBE7AKkCZlEoiVPZq7mLa89aKn+Z8YIAWi/IXItQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795712771;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=jmtK+g0faZpXqjAUl3o5P09s+C6Pl8sPmpskva0JaUI=;
-	b=x9j5Ao6RRF17duLLInPgSLRaByr+u8ioaDO/S+bRhyR7jMncqLI3nVsVUhJp40fW4eAc
-	 lYLDXgFtPcVLpIOGJv3YpD/yeprxfxiMvpFZ2SR6N9axPSCijifZjABy5LyaaIebzci12
-	 pw8t0xCyX3MPC993I/3BFR4kFkIIMUSrfwlAzBSGOGmue+G5RFtjTjTM4p3RCKMOBfDa3
-	 54ktGDSv204Vl6F4Wvbqt87aq7RxyEafLl5iBm4dQMLGcYNRtBu1kFy04wlICzQABRzew
-	 ChEX4M5qn/c6d0w6fJiwztY5Bnug7zapiRsAuiLVPCrBvfgaWK2qlOum5K05N844nqA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795714144;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:Date:
+	 Message-Id:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-TM-AS-GCONF:X-Authority-Analysis:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=TX7Nii9x5yTysf9/AmcLYyyr6SmHK8dLBkxO2v0O1E0=;
+	b=bXMeadw3N1Sb7XpwRGqaZbkmbIKwCgmpcrSA8Tzbu+hLeWLBt2cwrt+eiS64WWIPUuTV
+	 HuwYinMydrvvOPK7aJS/RGU6y3nSu9haTKUn1DCztbQxSqIFOIn2Dl5kjkqsys4jQmCs0
+	 1fP6FBtPa1CqQabs1IJO6LrHigohoZ3O/ZL5foilnZ+EDVaOgaI0MnT2UOM0eJXUKkF5I
+	 qzsqBkd+vYDA66xXKLMKk8XmzomzcwnIWjThAUlNOJ1D0OcWLeqYcgiyU25oFyx+pGgnj
+	 Ih1ZDjWs5UyHbIY2npv3don1xcRDJghnzDFq/cxsYqm3i+08FcukX6Np39Eoj62dcNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=igalia.com;
-	spf=pass smtp.mailfrom=igalia.com;
-	dkim=pass header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=c+pXFr2Y;
-	arc=none smtp.remote-ip=213.97.179.56
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FJgpSUsU;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D24D606A31E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 17:06:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D24D606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21906606A31C;
+	Thu, 26 Nov 2026 17:29:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21906606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=c+pXFr2Y
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
-	MIME-Version:Date:Message-ID:From:Reply-To;
-	bh=jmtK+g0faZpXqjAUl3o5P09s+C6Pl8sPmpskva0JaUI=; t=1795712770; x=2111072770; 
-	b=c+pXFr2YEZS7fhyH1KjbqIXBILjboqANcG1peUo87Jbkyx41TM/Yzz0+hFgIRtLJxrMt6Sj3Z7o
-	ErPWRZtlXj4fDykD3d465UlzYrtcVHTWhW2YO+wRvMn4YE/uqAAjmp2qd3AjUlrLlK2AGxgd5O0XI
-	9FWYpg2eE0Bc5vkz/XYGgmVueL68TxmVFVvwFreDIFx6HGzyBy8qH4p7jfEfTEXUvtyA+Yd3xaux5
-	0Q3ze9+AWp2rcVyXYkeGrQ9gZX4JYwBm071WBzijBhDk4IoTScs4gk53evDEcM61cMIPRI1Zjk9S2
-	2WfdtukXXP/9Lt++z3WxDQ+GHZ/kuyc7QVxw==;
-Received: from [81.79.79.1] (helo=[192.168.0.116])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1xWcv9-00000004UZq-3VBj;
-	Thu, 26 Nov 2026 18:06:07 +0100
-Message-ID: <1a1ef50a-8ae3-43bc-830c-c34793837f25@igalia.com>
-Date: Thu, 26 Nov 2026 17:06:07 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FJgpSUsU
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AQG4nh3587142;
+	Thu, 26 Nov 2026 17:29:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=pp1; bh=TX7Nii9x5yTysf9/AmcLYyyr6SmHK8dLBkxO2v0O1
+	E0=; b=FJgpSUsUUVUXEXLZmmyKIOyo/7kCH+tCrOYcFkpBLBhuPJy4Rj20eZN2F
+	DAW7RulfvdmoHC4edB3Mo7Ma7JLFuVJ4RE3nw3TNB4fJRZKefys2YSoyB1dJjxuz
+	Zm+1y1UaC61zRws/GnRiNouCNV5QQbRIcWjBxEC9MKzy9dnqc/IXYtoGWs02A70a
+	wz+y1whTaVowfELN/RPzMLrfrmk+rkEAEMWBdcig9xGPxhfU8qmWgyRq1xLv9OB+
+	7hBxU5RiG9vxX0iOxXWMAkblJK7pm3N8BcXOQscsHWsd+CaYFDTEpJVpUFIaF/sL
+	EAgRsJazjEh4oGmtLalWJRC8A2xqg==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34gvhv2j-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 26 Nov 2026 17:29:02 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AQG4VHT1833805;
+	Thu, 26 Nov 2026 17:29:02 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j5uxx5qu6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Nov 2026 17:29:02 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6AQHSwYV38535500
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 26 Nov 2026 17:28:58 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4875720043;
+	Thu, 26 Nov 2026 17:28:58 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9F75420040;
+	Thu, 26 Nov 2026 17:28:56 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.124.213.230])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 26 Nov 2026 17:28:56 +0000 (GMT)
+From: M Nikhil <nikh1092@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Cc: niharp@linux.ibm.com, pasic@linux.ibm.com, bblock@linux.ibm.com
+Subject: [PATCH v15 0/2] zfcp: Use DMA streaming API to map I/O
+Date: Thu, 26 Nov 2026 22:58:49 +0530
+Message-Id: <20261126172851.8688-1-nikh1092@linux.ibm.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,168 +90,86 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] drm/sched: Track sched fence scheduled and finished time
- directly
-To: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org
-Cc: amd-gfx@lists.freedesktop.org
-References: <20261126154200.71180-1-tvrtko.ursulin@igalia.com>
- <sashiko-outbox-235869@kernel.org>
-Content-Language: en-GB
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-In-Reply-To: <sashiko-outbox-235869@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=CYCdd7rl c=1 sm=1 tr=0 ts=6b086c5e cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=Wd4ccqAm3J3WqkYLFQkA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA2NyBTYWx0ZWRfX6GPNY9BILA4O
+ pI7hEAUlGOC203rlqeIKb62xrC/K9GpFiYhk0lO9PFF2LntiO6dybUT8wBP13Tu8QS7a7eB6/ui
+ 6PjNswoxFb+gpk/kl5gPsi/bea5u8Fg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA2NyBTYWx0ZWRfX9q8dVfw1wkfl
+ w4r2dwuyBNQDhyUFyfFV1HtgwgSAELlBmNinKzAuzGl3gEazBTFaUgqInFpgqOuyqnK6jtqfcpM
+ BPrCbGc1I7DIyT728MutQNGlqEwXQRwn4vQ4BiyQnYEzmrTk1gPZyx565kMrjvwm3UNDOxj84i1
+ cBAWNxGQt9AeyZnnbWheQfYtcy0+ZQUtqrk+5pVFI/mMXw4eldAhf42EO8MUtkE4PiirT1Wzqwl
+ IAvPQsdSORyzgMGrxfOCAMQB8YTcV+u2/6fkiTc15PacJIRYAJvmZIUx3Eh+XJ4jY5+yTPgjlAa
+ 6Rays4iS/izSQtCO/SRcVODkhFVIuLeP4lt/8YfSiWr5eYyb2FffDDxA+2kYG5o1wu+Oy32tf8U
+ p6BsNKoEnudnOQ22oTS5tOAMjio/Iy/9nDstrW5iYUz6uxwgjgKSJ8LcLzqfquE2YlUlB9yuEfK
+ m9ryBLRMlxdEDcBi8BA==
+X-Proofpoint-ORIG-GUID: gMTLZQsoy8nP3jYElMW8RWrJ6hYh6obJ
+X-Proofpoint-GUID: gMTLZQsoy8nP3jYElMW8RWrJ6hYh6obJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-26_04,2026-11-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 spamscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611260067
 
+In the existing zFCP driver, virtual addresses are translated directly
+into bus (physical addresses) for DMA operations on all I/O buffers
+passing from zFCP driver to the device.
 
-On 26/11/2026 16:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issues to consider:
-> - [Medium] drm/sched: drm_sched_fence_advance_start_time() advances
->    start_ts past end
-> - [Medium] drm/sched: race in drm_sched_fence_scheduled() drops start_ts
->    advancement
-> - [Low] drm/sched: wrong kernel-doc comment on
->    drm_sched_fence_finished_time()
-> --
-> 
-> commit 410c845aad37c46edfe8c0d12fc45e44b4afc986
-> Author: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-> 
-> drm/sched: Track sched fence scheduled and finished time directly
-> 
-> This commit records scheduled and finished timestamps directly in struct
-> drm_sched_fence under a dedicated spinlock instead of reading and
-> overwriting dma_fence.timestamp.
-> 
->> diff --git a/drivers/gpu/drm/scheduler/sched_fence.c b/drivers/gpu/drm/scheduler/sched_fence.c
->> index 94ba0cf4fe027..5fecd3ebfffbb 100644
->> --- a/drivers/gpu/drm/scheduler/sched_fence.c
->> +++ b/drivers/gpu/drm/scheduler/sched_fence.c
->> @@ -65,6 +65,9 @@ static void drm_sched_fence_set_parent(struct drm_sched_fence *s_fence,
->>   void drm_sched_fence_scheduled(struct drm_sched_fence *fence,
->>   			       struct dma_fence *parent)
->>   {
->> +	ktime_t now = ktime_get();
->> +	unsigned long flags;
->> +
->>   	/* Set the parent before signaling the scheduled fence, such that,
->>   	 * any waiter expecting the parent to be filled after the job has
->>   	 * been scheduled (which is the case for drivers delegating waits
->> @@ -74,14 +77,26 @@ void drm_sched_fence_scheduled(struct drm_sched_fence *fence,
->>   	if (!IS_ERR_OR_NULL(parent))
->>   		drm_sched_fence_set_parent(fence, parent);
->>   
->> -	dma_fence_signal(&fence->scheduled);
->> +	spin_lock_irqsave(&fence->ts_lock, flags);
->> +	fence->start_ts = now;
->> +	spin_unlock_irqrestore(&fence->ts_lock, flags);
->> +
->> +	dma_fence_signal_timestamp(&fence->scheduled, now);
->>   }
-> 
-> [Severity: Medium]
-> Can drm_sched_fence_scheduled() overwrite a start_ts advancement on an
-> unordered submit_wq?
-> 
-> drm_sched_run_job_work() adds the job to sched->pending_list in
-> drm_sched_job_begin() before calling run_job() and
-> drm_sched_fence_scheduled().  If the previous head job finishes while
-> this job is between drm_sched_job_begin() and acquiring fence->ts_lock:
-> 
-> work_run_job (next)               work_free_job (prev)
-> drm_sched_job_begin(next)
->    list_add_tail(..., pending_list)
-> fence = run_job(next)
-> drm_sched_fence_scheduled()
->    now = ktime_get()
->                                    drm_sched_get_finished_job()
->                                      ts = ...finished_time(prev)
->                                      drm_sched_fence_advance_start_time()
->                                        /* start_ts == 0, no-op */
->    spin_lock(&fence->ts_lock)
->    fence->start_ts = now;  <-- older than prev's finished_ts
-> 
-> The advancement to prev's finish timestamp is lost and next->s_fence
-> keeps the earlier timestamp, overaccounting GPU time.
+Need for using DMA-API in zFCP driver:
 
-I thought this wouldn't be a big deal since the delta amounts to the 
-lock contention period and this new lock has a super tiny scope.
+In a Secure Execution environment, the host must ensure that device DMA
+accesses are restricted to non-guest-private, page-sized memory blocks.
+This prevents I/O failures that can occur when a device attempts to
+access guest-private memory. Therefore, guest memory pages must be
+prepared by the hypervisor before they become accessible to an I/O
+device.
 
-Nevertheless it is easy to fix by taking the current time once the lock 
-is obtained.
+To support this requirement, the host Linux kernel must be reliably
+informed whenever a memory region becomes eligible for device DMA access
+and when that access must be revoked. This information must be
+maintained correctly at least at page size granularity. To satisfy these
+requirements, all I/O buffers used by the zFCP driver should be mapped
+through the DMA API.
 
-> 
-> [ ... ]
-> 
->> diff --git a/drivers/gpu/drm/scheduler/sched_internal.h b/drivers/gpu/drm/scheduler/sched_internal.h
->> index 32d3ddb820be6..be90e55af9470 100644
->> --- a/drivers/gpu/drm/scheduler/sched_internal.h
->> +++ b/drivers/gpu/drm/scheduler/sched_internal.h
->> @@ -67,6 +67,47 @@ void drm_sched_fence_scheduled(struct drm_sched_fence *fence,
->>   			       struct dma_fence *parent);
->>   void drm_sched_fence_finished(struct drm_sched_fence *fence, int result);
->>   
->> +/**
->> + * drm_sched_fence_advance_start_time - Advance scheduler fence scheduled timestamp
->> + * @fence: scheduler fence
->> + * @t: time to advance to
->> + *
->> + * Advances the scheduler fence scheduled time to @t if the fence has already
->> + * been scheduled with an older timestamp.
->> + */
->> +static inline void
->> +drm_sched_fence_advance_start_time(struct drm_sched_fence *fence, ktime_t t)
->> +{
->> +	unsigned long flags;
->> +
->> +	spin_lock_irqsave(&fence->ts_lock, flags);
->> +	if (fence->start_ts && ktime_after(t, fence->start_ts))
->> +		fence->start_ts = t;
->> +	spin_unlock_irqrestore(&fence->ts_lock, flags);
->> +}
-> 
-> [Severity: Medium]
-> Can drm_sched_fence_advance_start_time() advance fence->start_ts past an
-> already recorded fence->finished_ts?
-> 
-> If a later job on sched->pending_list finishes before the head job (for
-> example, when run_job() returns an error or NULL for a canceled job so
-> drm_sched_run_job_work() immediately calls drm_sched_job_done(), or when
-> parent fences signal out of order), next->s_fence->finished_ts is set to
-> T1 while next remains queued behind the head job.  When the head job
-> later completes at T2 > T1, drm_sched_get_finished_job() advances
-> next->s_fence->start_ts to T2 because drm_sched_fence_advance_start_time()
-> does not check fence->finished_ts.
+DMA API Integration in zFCP:
 
-I did not consider errors from run_job() and cancelled jobs. Let me 
-think about that and see if there are any pre-existing bugs in this area 
-too.
+The zFCP driver is updated to use the DMA streaming API's to map all the
+I/O buffers which will be passed to the device.
+All zFCP I/O buffers (QTCB, SRB, CT/ELS and SCSI I/O) are represented as
+scatter-gather lists and mapped through DMA API using dma_map_sgtable().
+Once the DMA transfer is complete, the corresponding mappings are
+released using dma_unmap_sgtable().
 
-> 
-> ktime_sub(end, start) then yields a negative duration in
-> drm_sched_entity_stats_job_add_gpu_time() and amdgpu_ctx_fence_time(),
-> subtracting from accumulated runtime and passing a negative value cast to
-> unsigned long into ewma_drm_sched_avgtime_add(), which wraps
-> stats->avg_job_us and sched->avg_job_us near ULONG_MAX.
-> 
->> +
->> +/**
->> + * drm_sched_fence_finished_time - Queries the scheduler fence finished timestamp
->> + * @fence: scheduler fence
->> + *
->> + * Advances the scheduler fence scheduled time to @t if the fence has already
->> + * been scheduled with an older timestamp.
->> + *
->> + * Returns: Scheduler fence finished timestamp.
->> + */
-> 
-> [Severity: Low]
-> This kernel-doc body looks copy-pasted from
-> drm_sched_fence_advance_start_time() and refers to @t, which
-> drm_sched_fence_finished_time() does not take.
+By routing all device-visible memory through the DMA mapping layer, the
+driver ensures that:
+1. DMA access is properly authorized before use.
+2. DMA is revoked after use.
+3. Secure Execution memory restrictions are honored.
 
-Mea culpa.
+M Nikhil (2):
+  zfcp: Replace sg-list with sg_table in zfcp_fsf_ct_els structure
+  zfcp: Use DMA streaming API to map I/O
 
-Tvrtko
+ drivers/s390/scsi/zfcp_aux.c  |  15 ++
+ drivers/s390/scsi/zfcp_dbf.c  |  16 +-
+ drivers/s390/scsi/zfcp_def.h  |  17 ++
+ drivers/s390/scsi/zfcp_ext.h  |  14 +-
+ drivers/s390/scsi/zfcp_fc.c   |  46 +++--
+ drivers/s390/scsi/zfcp_fsf.c  | 338 +++++++++++++++++++++++++++++-----
+ drivers/s390/scsi/zfcp_fsf.h  |   9 +-
+ drivers/s390/scsi/zfcp_qdio.c |  45 +++--
+ drivers/s390/scsi/zfcp_qdio.h |  27 +--
+ drivers/s390/scsi/zfcp_scsi.c | 146 +++++++++++++--
+ 10 files changed, 561 insertions(+), 112 deletions(-)
+
+-- 
+2.39.5 (Apple Git-154)
 
