@@ -1,100 +1,44 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.180
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795662785;
-	b=RL70JsXvt4NkVqmAgKfSprVz/OMKP06LILEpJe1pteM0RWsmL2AYZJtD9SmP4FXiXu+n
-	 hFFMaJKbbbawh+/qDYLwLoKejICuKv05Z8yb7QGb2z4fm4W6iKxkv9l22LfxbWAq4HUUA
-	 3fh8cf2fw7VkUcE7PSQK7EcX8jszb8Ob0ta6u1d4BufFtFLhgJTFsoZVfNOO0axH9OHNs
-	 wNyd7TEcHKIDyd8gpv/8XVVpXJAUiaO2Z01PyemE2pUPp3DpRH+wAFwx8ZRaylxnsylvd
-	 5ZaO3uWDNn3c1bRMkj/6CrXN8sGIwiTH8e5QMmyYVLGpnp3eRWmNwJJUo+dZDINBApA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795662785;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=0u2teU5+DNhXHRl/MB1LD7h44EF6lJ6g1dkNyrP5OEA=;
-	b=LF6Uby+XswJXb2RqpYCxnT8x2ZuX/ZCjnJk54IYVNYC/UFtqm5crEdsB3aAfvIG+J9o8
-	 rLpoyhXPZwJeEI+BFnQXt3HO+TaFlVTpe27oW9mGuu5AZUGjIO5hdQIEVI6ll4uWcTkyJ
-	 35/SVm4CdzmVbFxl3K3tdtUlITrIFgFcWjTzTykxqgvsKIGB+gkvoSTVXjpfVrS9bmsMc
-	 rdbDA6gDe5rGAttHoeBJSHK106PGUjqPyJGaoLml549L1O7CMqa3CbTlE8F5SYo6ZEZcc
-	 liSPwxhEKulZufMz6hdBiT9ojF4F8WlLkZrG6o89I1z7JTIHEIQr6jDNkNACDANyyKw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MXu5o35a;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.180
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=156.224.83.231
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795665547;
+	b=oePh1WI4jjvspR+/ZzeHlEQ4YoVsAyLT8Pw6iAMon9oji6MdumPSSxHE1pyBJIZEI4G/
+	 7tXyvXi4igHLAm8MOuTPm88cID/lV0qAEDyRzJSZGmD0VgLn41E/SAX+NMwwvOn/Xd1i3
+	 7riMplQqjXgOdqy1dHLIZGVPjIwsHth/FX/No7Ce4nngVcM97+NSRutCDPM1EIQveaGBH
+	 NCAtErDgyJb4TyHP150yRX3ISZPXETFCL/JHKkTwAD3r90WJzeIWJNhIvOE9UHe+vPftY
+	 Fl9Hap4c2p3s1o4TRB5kVaXG6lMN3OCcQeUfO0CKMyVu0zGeLUGjSWxyAuLTMItKydg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795665547;
+	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-HM-Tid:X-HM-MType:
+	 X-HM-Spam-Status:DKIM-Signature;
+	bh=uJT5ZJ2aqCKLT9VFawMyFHtg0E9dRYKMg2nTwqyS14Q=;
+	b=h2NlaPzA7LGoi0MFGsVXn0H57/MKECymCAz+xIj+qVWMKrgpgs4TA7gGHOvaZLQty8bp
+	 E81uUDys1lgETklbrAbWsxHlMO0dutKZiDe4tuARsj9eQ2MOx2hbgYYBaaFB/uSmFevgZ
+	 oL3s/RdWzp/b9a0Rvp9ppPWzRsO2MtYBRpbwBZagO5MVeT2HI7iaaiudiAxjTuLC0cmgY
+	 4fqd/TAazNOB6g+Hr4iW3lX0/l7uKaga2TnqikmpfdeNCTT+vzMSj9+fkoRnxSpCdqOv5
+	 S4i3EGzuCKhY/rCIjB7W79GiQMqTJVyxWeuUUaCIQL6YcfsNzp9tg2GiXO3KUfxkFuw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=rock-chips.com;
+	spf=pass smtp.mailfrom=rock-chips.com;
+	dkim=pass header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=ic4H5hye;
+	arc=none smtp.remote-ip=156.224.83.231
+Received: from mail-m83231.xmail.ntesmail.com (mail-m83231.xmail.ntesmail.com [156.224.83.231])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C2B606A323
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 03:13:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C9C2B606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E39606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 03:59:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B9E39606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MXu5o35a
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-8b4fb5d96b3so101387737b3.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 25 Nov 2026 19:13:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795662784; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PROHlp+uffHmBZVnNe1Gtk7A7o+iur3s/LovTJv90p8AhxpzYow+TancVN+q8Na9v2
-         StI0V9Y+8nu8BsDxEjgozqlxjrwX76qOw6nRcMBzmY7woU19+36fsRaE0EH6KMqsdwRW
-         UtAw6mQXTJUQyzalXXwUncl2wQWS8RofCfcMxYlhM8KKJjS3ohI0xJp4Fnwg014V44L8
-         Iv5cf7sCrwxSDhtJNZBjz9gvpJHjhGJqYGnQqU8WamqEJtZ062eHMNQ9B40jfV1/mnJw
-         tV6XDyh+MuoXRmFX7tS4+QqPusWiM/9qk2OiNlaaZ/8RK+Cr/dJ4fd7ClD3NEXI3G7rI
-         LtSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=0u2teU5+DNhXHRl/MB1LD7h44EF6lJ6g1dkNyrP5OEA=;
-        fh=9VcpeNusHCTiWtgyr/As4WZF95cNBZ5GayoBakNmij4=;
-        b=fv6Uha7l9ZX9Amg4Jnay4Zb4SisGCWiTNVJ1uw6TMTpxprR5ViRbeyqKA9sIx5fLhS
-         W6R3dpL8z+iXywn22i4exfMpq23xqMR4CJM3LYfqnkJe/3QzGHYN+v5192TRiyz+lnn2
-         X6p1VO/jBGW/4jxFRHhmqGiSihn4Z1+o3sZi/Af6+GPcNau2szF5/6smNsCXxoR6Rkbq
-         WdyCduxeMXHzxZDzUrtWvv0FXMjkLsw0LELykEpllBd4bEUmZweRk4CgfFHcLiMRTpun
-         Esw1P+JPY6R+OzO8RRBJU2I1TllmRbfRUSzZ7nmMCBCp0xn8eyTsL1lllNYb33+gCaOp
-         S8Ag==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795662784; x=1796267584; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=0u2teU5+DNhXHRl/MB1LD7h44EF6lJ6g1dkNyrP5OEA=;
-        b=MXu5o35a1vOEzAtZuY6OXo+yhaOFFlUfzlRC2Gfc+xFzLS19Ews5P9lvp+ZLbCdouC
-         O2hdl4lhtSJSDDfrx8iKW2elwzL2HdZd3XbbGbQm1GNJJ9M4adLRDjNfcmQwusFg+q9o
-         uKPXLl4P9n3NBcq4Ok+UMo72KDezGtfokuoGh4w/YW5z/MTMa+t3CBta8jccALcarJ6O
-         IdXJueSfeXFmGfFXWSBSAbzYQQ7g281oEsaVX+edtKJzcUa9ZHuCfTH4B/O3pqFMfszA
-         aX5ztYBE62d4qGahpITv+SyLkZzPGwbEJXKl/t+Lovdek2+WmRbqesYJez2zl2HxeuBV
-         Y3/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795662784; x=1796267584;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0u2teU5+DNhXHRl/MB1LD7h44EF6lJ6g1dkNyrP5OEA=;
-        b=GV6JyzdDxDI1P2zQDtWxFUo4ERJdOdRBqwTvlu5ZXHscvDaRcGzdTzlMJH8qheczuw
-         g5nu3AD4QIP5xLFdoU5iJVijrGLt6SjEfEy0L2JJsX5D/Tyoxgpx6RDILjYzJBOUIFzQ
-         OgcfYRZzRSXNszoGrLQSGNIVcts/144X0Wv2VL5zODu+87jYbwO6WJoVGb3EqGtqajzF
-         CF5pZqHd97XIvDgfNI5GgATxfGOSa6XABRSHW939vb4UG6x5ovavzIXAWgVgPg09k4Ks
-         Eq9FCUSxL3l+3f3rCXZg8E1YnXtg+O7XpiSEnA4XEOKE//1STutRAta4jF9abAi4JhJo
-         jpyA==
-X-Forwarded-Encrypted: i=1; AL+hErGNTU4KL7cFRyJZ1XfGSaremggU2WJMl+2XDNVoaO2s+9pk2CTHkB8svhEBNLF2opkh5DrxyMfkkliufUj6Jv0=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/JG8+kTXwhKILhcbpV4wLI7Iq8Vx65b+B1AVScs+VD662wL4DJ
-	Q8GxHZbE4JZCsr8ycfyXt7f1sgTjaYw+xUDtkelqLapIjoDjUz6FTAQKFurNli0NqF/3TSUM7lp
-	t+5dTt7vt0kV80GCyX+Tf+bNbIB4kLmsurLbp
-X-Gm-Gg: AZFdTZcglPHFv1/9M9Q+wSuUVXwPUMehAee2QDRjiyNfmpNM74TTcROVONwDsj74uu3
-	9m/tT/NLnZKVt2iYQxlMIugTsSpRk31okLUxqk3y17H6andh4Oy7yKRnKAGPd5qupF6wpezX3nJ
-	r6hY01eosjc7WEwkYvyG5yyYpgKJoJEhlC96SdbTQ0yU/PIZZzQwjY54Zf6e87ORsK+BtNOZf3+
-	q+SHqFDdbmZaL1tj9y+R+au14e6BzRG/crbd0FGCb5fy8ZRsuiLY5rEurOZ5rFO0ih/2vSZ8TWu
-	PExkXYStQSq+heXDXafXdxO6RNP7cfplT8/tJi3iYaAtrczQb9lpKGVNXMq30i3Xsi1AlewgbN5
-	eb/EkVtiOCB2yran1R+nmwm/oPtdg1QnBMkofK+JBQlhfZYx4zxEu3xEr0vEttnAYTBU=
-X-Received: by 2002:a05:690c:6d83:b0:8b1:6c4d:6b83 with SMTP id
- 00721157ae682-8b518f1cf54mr82200347b3.24.1795662783714; Wed, 25 Nov 2026
- 19:13:03 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=ic4H5hye
+Received: from [172.16.12.74] (unknown [61.154.14.86])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 560db9b8b;
+	Thu, 26 Nov 2026 11:58:55 +0800 (GMT+08:00)
+Message-ID: <7b0fe53d-5bfb-41c1-a163-5bbb14123d86@rock-chips.com>
+Date: Thu, 26 Nov 2026 11:58:55 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,56 +48,198 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261125-klp-series-v3-v3-0-b1e0f79af331@vt.edu>
- <20261125-klp-series-v3-v3-2-b1e0f79af331@vt.edu> <sashiko-outbox-234405@kernel.org>
- <DM6PR05MB4137C0B5BB4D88A9D5847EBAD1432@DM6PR05MB4137.namprd05.prod.outlook.com>
-In-Reply-To: <DM6PR05MB4137C0B5BB4D88A9D5847EBAD1432@DM6PR05MB4137.namprd05.prod.outlook.com>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Thu, 26 Nov 2026 11:12:27 +0800
-X-Gm-Features: Aa3M54r9bQyCNEtl8vDg0fA8BgkRlMLeLZFLbV6lOjC0bsXV0kG9vz91uifhxJo
-Message-ID: <CALOAHbAQuYG__4b054bRobVRyT+v143wBcVAN26T_PtiO-oqmA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] livepatch: Include exiting tasks in the transition
-To: "Ravindran, Binoy" <binoy@vt.edu>, "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Frederic Weisbecker <frederic@kernel.org>, Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, 
-	Joel Fernandes <joelagnelf@nvidia.com>, Josh Triplett <josh@joshtriplett.org>, 
-	Boqun Feng <boqun@kernel.org>, Uladzislau Rezki <urezki@gmail.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
-	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang@linux.dev>, 
-	Josh Poimboeuf <jpoimboe@kernel.org>, Miroslav Benes <mbenes@suse.cz>, Petr Mladek <pmladek@suse.com>, 
-	Joe Lawrence <joe.lawrence@redhat.com>, Song Liu <song@kernel.org>, 
-	Ingo Molnar <mingo@kernel.org>, Jiri Kosina <jikos@kernel.org>, 
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
-	"live-patching@vger.kernel.org" <live-patching@vger.kernel.org>, "Shastri, Jaidev" <jaidevshastri@vt.edu>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "rcu@vger.kernel.org" <rcu@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 17/20] drm/bridge: analogix_dp: Manage pm runtime and
+ IRQ for native HPD pin detection
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20261125112141.1434903-1-damon.ding@rock-chips.com>
+ <20261125112141.1434903-18-damon.ding@rock-chips.com>
+ <sashiko-outbox-233271@kernel.org>
+Content-Language: en-US
+From: Damon Ding <damon.ding@rock-chips.com>
+In-Reply-To: <sashiko-outbox-233271@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-HM-Tid: 0aa21601a37903a8kunm786c9b6c7d5bda
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDHktMVkNMGktPQ09OHklCH1YVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUJCSU
+	5KVUpLS1VKQktCWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=ic4H5hyeR0/U+v/oyMGC6uPoQxIa74ov6GVyc1Dm+9Y6/RLlIFNAwDjHe0RXqUvZfGIVs6nh4ZLO8LynZkgW3Nm9HORdx3K80mnAs8Mv968WbqQR+ivDtZBf/0hD7cmQluiakQtMa6bdgkM6gHGq0myvNJXgshEAokhCddRKO1o=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=uJT5ZJ2aqCKLT9VFawMyFHtg0E9dRYKMg2nTwqyS14Q=;
+	h=date:mime-version:subject:message-id:from;
 
-On Thu, Nov 26, 2026 at 8:58=E2=80=AFAM Ravindran, Binoy <binoy@vt.edu> wro=
-te:
->
->
-> Thanks, this is right. A dying task reports its quiescent state in
-> rcu_note_context_switch(), early in __schedule(), and then still runs
-> traceable code, such as update_rq_clock() and pick_next_task(), until
-> switch_to(). RCU does not promise to wait for code after that point, and
-> with expedited grace periods the quiescent state is reported right
-> there, so synchronize_rcu() can return too early.
-> klp_synchronize_transition(), which v2 used, does not have this
-> problem: schedule_on_each_cpu() completes only after the work item has
-> run on every CPU, which on the dying task's CPU happens only after
-> switch_to().
->
-> v4 goes back to klp_synchronize_transition() for both waits and keeps
-> klp_try_switch_exiting_tasks() from v3. I will send it after rerunning
-> the tests.
->
-> Yafang, this reverses your second suggestion; I hope the reason above
-> makes sense. It also brings back the v2 transition times.
+On 11/25/2026 7:41 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] drm/bridge: analogix_dp: premature IRQ enable in
+>    analogix_dp_resume()
+> - [Medium] drm/bridge: analogix_dp: deadlock between
+>    analogix_dp_suspend() and IRQ
+> --
+> 
+> commit 2148ea987a79afc2769bfb9bcea363df9810b9e9
+> Author: Damon Ding <damon.ding@rock-chips.com>
+> 
+> drm/bridge: analogix_dp: Manage pm runtime and IRQ for native HPD pin detection
+> 
+> This commit holds a runtime PM reference across bind and unbind on RK3576
+> and RK3588 for native hotplug detection, and gates the hotplug IRQ on
+> hotplug support and runtime PM transitions.
+> 
+>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> index 46433ea73d678..cda6e4c5cbc8d 100644
+>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> @@ -42,6 +42,33 @@
+>>   
+>>   static const bool verify_fast_training;
+>>   
+>> +/*
+>> + * The hotplug events are reported either through the optional GPIO HPD
+>> + * pin or through the native controller interrupt, which is confirmed
+>> + * to work only on the RK3576 and RK3588 platforms.
+>> + */
+>> +static bool analogix_dp_supports_hpd(struct analogix_dp_device *dp)
+>> +{
+>> +	if (dp->force_connected_mode || dp->force_hpd)
+>> +		return false;
+>> +
+>> +	if (dp->hpd_gpiod)
+>> +		return true;
+>> +
+>> +	return dp->plat_data->dev_type == RK3576_EDP || dp->plat_data->dev_type == RK3588_EDP;
+>> +}
+>> +
+>> +/*
+>> + * The native HPD interrupt relies on the controller staying powered
+>> + * and clocked to report the hotplug events, so a runtime PM reference
+>> + * is held for it.  The GPIO HPD mode needs no such reference, as it
+>> + * reads the GPIO level directly.
+>> + */
+>> +static bool analogix_dp_require_pm_for_hpd_irq(struct analogix_dp_device *dp)
+>> +{
+>> +	return analogix_dp_supports_hpd(dp) && !dp->hpd_gpiod;
+>> +}
+>> +
+>>   static void analogix_dp_init_dp(struct analogix_dp_device *dp)
+>>   {
+>>   	analogix_dp_reset(dp);
+>> @@ -1547,6 +1574,11 @@ EXPORT_SYMBOL_GPL(analogix_dp_probe);
+>>   
+>>   int analogix_dp_suspend(struct analogix_dp_device *dp)
+>>   {
+>> +	if (analogix_dp_require_pm_for_hpd_irq(dp) && dp->hpd_irq_enabled) {
+>> +		disable_irq(dp->irq);
+>> +		dp->hpd_irq_enabled = false;
+>> +	}
+>> +
+> 
+> [Severity: Medium]
+> Can calling disable_irq(dp->irq) inside the runtime_suspend callback cause an
+> ABBA deadlock with analogix_dp_irq_thread()?
+> 
+> If dp->dev is runtime-resumed while no persistent runtime PM reference is
+> held (for example, during pre-bind AUX transfers in
+> analogix_dp_finish_probe(), or after analogix_dp_unbind()),
+> analogix_dp_resume() enables dp->irq.  When the autosuspend timer later fires
+> and an HPD interrupt arrives at the same time:
+> 
+> CPU0 (pm_wq)                      CPU1 (irq/analogix-dp)
+> ------------                      ----------------------
+> rpm_suspend(dp->dev)
+>    runtime_status = RPM_SUSPENDING
+>    ...
+>    analogix_dp_suspend(dp)
+>                                    analogix_dp_irq_thread()
+>                                      pm_runtime_resume_and_get(dp->dev)
+>                                        rpm_resume(dp->dev, RPM_GET_PUT)
+>                                        /* waits for RPM_SUSPENDING */
+>      disable_irq(dp->irq)
+>        synchronize_irq(dp->irq)
+>        /* waits for IRQ thread */
+> 
+>   *** DEADLOCK ***
+> 
+>>   	phy_power_off(dp->phy);
+>>   
+>>   	if (dp->plat_data->power_off)
+>> @@ -1576,6 +1608,11 @@ int analogix_dp_resume(struct analogix_dp_device *dp)
+>>   
+>>   	analogix_dp_init_dp(dp);
+>>   
+>> +	if (analogix_dp_require_pm_for_hpd_irq(dp) && !dp->hpd_irq_enabled) {
+>> +		enable_irq(dp->irq);
+>> +		dp->hpd_irq_enabled = true;
+>> +	}
+>> +
+>>   	return 0;
+>>   }
+>>   EXPORT_SYMBOL_GPL(analogix_dp_resume);
+> 
+> [Severity: High]
+> Does enabling dp->irq in analogix_dp_resume() leave the HPD IRQ permanently
+> enabled across runtime suspend on RK3576 and RK3588 boards with an eDP panel
+> on the DP AUX bus?
+> 
+> dp->force_connected_mode is not initialized in analogix_dp_probe(); it is set
+> later during analogix_dp_bind() -> drm_bridge_attach() ->
+> analogix_dp_bridge_attach():
+> 
+> drivers/gpu/drm/bridge/analogix/analogix_dp_core.c:analogix_dp_bridge_attach() {
+> 	...
+> 	if (dp->bridge.next_bridge) {
+> 		...
+> 		dp->force_connected_mode = analogix_dp_bridge_force_connected(dp);
+> 	}
+> }
+> 
+> Before analogix_dp_bind() runs, analogix_dp_finish_probe() populates the DP
+> AUX bus.  Probing the panel child runtime-resumes dp->dev while
+> dp->force_connected_mode is still false, so
+> analogix_dp_require_pm_for_hpd_irq(dp) returns true and analogix_dp_resume()
+> enables dp->irq.
+> 
+> Once analogix_dp_bridge_attach() sets dp->force_connected_mode = true,
+> analogix_dp_require_pm_for_hpd_irq(dp) becomes false.  When the 100 ms
+> autosuspend delay expires, analogix_dp_suspend() skips disable_irq(dp->irq)
+> and leaves dp->irq enabled while the PHY, power and clock are turned off.
+> 
+> In addition, because analogix_dp_resume() does not check whether the bridge
+> is bound, any runtime resume during or after analogix_dp_unbind() (such as
+> during drm_dp_aux_unregister(&dp->aux)) re-enables dp->irq while unbound,
+> allowing analogix_dp_irq_thread() to use a stale dp->drm_dev.
+> 
 
-Agreed. I missed the point that the quiescent state is reported early
-in __schedule(), and that the code from there until switch_to() is not
-covered by synchronize_rcu(). Thanks for pointing that out.
+Looking back at the v6 review, I think I got bogged down in this and
+made it much more complicated than it needs to be.
 
---=20
-Regards
-Yafang
+I will remove all the IRQ operations from analogix_dp_suspend() and
+analogix_dp_resume(), and go back to the clean version where the IRQ
+is enabled in bind and disabled in unbind, based on
+analogix_dp_supports_hpd():
+
+   analogix_dp_bind():
+           if (analogix_dp_supports_hpd(dp))
+                   enable_irq(dp->irq);
+
+   analogix_dp_unbind():
+           if (analogix_dp_supports_hpd(dp))
+                   disable_irq(dp->irq);
+
+So the IRQ lifetime follows the bridge lifetime, and neither the
+pre-bind AUX transfers nor the post-unbind path touch dp->irq anymore.
+There is also no disable_irq() in the runtime suspend callback, so the
+deadlock with the IRQ thread is gone.
+
+The only case left is a HPD edge at the very same moment the system
+goes to sleep. I think that window is basically impossible to hit and
+acceptable. Also, on Rockchip platforms, the unclocked MMIO access of
+the eDP controller returns an invalid value but does not crash.
+
+Best regards,
+Damon
+
