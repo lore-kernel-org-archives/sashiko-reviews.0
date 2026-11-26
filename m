@@ -1,59 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=45.145.95.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795722258;
-	b=5kZe1mTqGEcCGoS3oeacCjnI6dW7HpgjCwM74onLFzMIVn7UA0buTRmv1H1NIyeakuy8
-	 o8FnzcjXHXVQteOnHwScukvjoaJ2jq7s2tFvC/NUwlgvnTErz61e8o35JRPuge1p6dFJ1
-	 lEw+1/CEzaQajxc1dpZw99QSU/AoBLBrEAFTNMbGu7YK0V84Z1mX/7XZERr5XPbzQgfoT
-	 H/knaR5zKTa9P4RBny31XKPuFU4N0RRRN1J+w0pzYWA+g2P361QoiaSwjCoPmYlgQiDCn
-	 wKQ37jpufgGKOvGY7g+dpSrED0LzzR/boJcjDh0SXONOYCr+64/oSRIRn2rgOsmnT2A==
+	t=1795726886;
+	b=1SK9yoOFmC6uYg3dE60+/t7UZ5yFJfS5xpddTLHECrQ4YS/8mF+7DhfRFJwk72alvkwM
+	 0bX4wKOgtl4KiUTj2UEYxVz9WG6bQoJ0EUIrZIRIE1sJkXizablKpIAADVdF7O9cP4ROi
+	 gLTyf/ES/jFlG5lGOS0X9mu4gNAOW9bvQaljoIgmzU7uYZn1DxJXV8p3plz2exWlxgbK7
+	 GGUTUnpGy1hnNCnQD1SHPRrAcdF7AHUIzXSCe3mctMGqcgEx3pzgtUXhrQ6YOvpPoiUS2
+	 uHF4Uubu0yGp1HCBl7V3/uHjYaX9WT0zfW5HezDXdKR/36hoPP1eV0SZ2njeeJCuZmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795722258;
-	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:X-Clacks-Overhead:Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=/VeOoM8IZ9NB9AVZCDWfFjLfcEOJ01bHy1/Epj3tsYg=;
-	b=G+QN/tb8oDMP3kQv/ggpT4XtyTyvg6y7oLmnpU6d9bvuSduW6ABnqUurOJ+N0OgiGf3r
-	 OCt4XENNEv4U1bGE5miEjxjB4NkW+J4XzZR1H5Dj7F1RlVOiTVaQKHmey5/8UazutCdLw
-	 I4+W956r3fFSVV3VwUvogXg40nqbHsaUXlUx3/4duhX4c9JJxQityF3nIrvs9bQlQ+4Ks
-	 ASTA8AGeIVpBPUAMoSSeVaaJRE4WAYTl2QJYhQc9evK1a1MNo7lW9X9yATov4CmkLyCCd
-	 7Ee6AINWYRm1UemoUVIB/KNze/MSKeLRc7A5tNNt6VSJIw89tTdo2wPhFZkQvL5D2Ag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795726886;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=2PDYyeUwnj6Av3J+sN96MY6jXwEzqAUTZ4EhuMvBT3Y=;
+	b=1PZjhINB2abpgibqjXwr8JCk/w4v4m3qbEwv5nn9wHkakmCLym4Tw4Yo7cnZLJeRBkwt
+	 Dcp5KEF1ELFiRp13FTwDMjH6mkcSGn/hgOq8d1zpobM0OJSO1Q3SVGhx+7hGaPFFEiZjP
+	 CrWKiALzp4WKBxfzw0R8mrh7kHD/Sw4YK54LgmtVi4kUqXnRJMRxCjrAb/6VlLSB6sXK2
+	 H6sUz8CTk3h+EH/7B2VcxGyBQewoGJlygw/7HAoVOhEARVa8LbcKuvrN0n9Uf643MmkT1
+	 6xBlS87/bAhjfsBfe5zOipk5XPYmKFu+X9ZIpxorlaz4cyw677izBjgAbSqxE915scQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=toke.dk;
-	spf=pass smtp.mailfrom=toke.dk;
-	dkim=pass header.d=toke.dk header.i=@toke.dk header.a=rsa-sha256 header.s=20161023 header.b=iXVnNu51;
-	arc=none smtp.remote-ip=45.145.95.4
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jilE55Yv;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71F4606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 19:44:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A71F4606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=toke.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toke.dk
+	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id EA619606A31C;
+	Thu, 26 Nov 2026 21:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.a=rsa-sha256 header.s=20161023 header.b=iXVnNu51
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
-	t=1795722249; bh=6xV19XvlsF8HGzU8uN77Yoe6D0bj/rvFMFUKDzicMZM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=iXVnNu51COf3M2AKI9Nn8dgD5emID8e25ziY0mVMbZhBO1TOQzcDucL0Iv1RPkrtF
-	 fNnLa005tbbYYHIrK3iZaOk6w/o7fjtbqg81HrRXhj67sNPYGVuRTlrUKJq1JnheK2
-	 H6+8bHBwyy+TXEXliow8yJw2I/HJW0WEtiPlcgwWjmK28/3wEeKSpX9tuJQaTo0gWN
-	 qpkGFXb8+kmlYs6T1Rld9c6I6iQKBGWU4cRKkRNOfXSJZBkn2ElOszQZ3vG7nsVLf/
-	 bmtqagEId9yWS8GknnyHM8AlHTjwaXVasWqyUQ9afuW+qYrPd2qGZAKWgAvlXhGUD6
-	 XScpq+5oERydw==
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jilE55Yv
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 14D411F000C1;
+	Thu, 26 Nov 2026 21:01:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795726885;
+	bh=2PDYyeUwnj6Av3J+sN96MY6jXwEzqAUTZ4EhuMvBT3Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jilE55YvAq1XkaWp4+W4IKFMT21gKHPEvPdTNFmeG+NtyavadMFUJZ1VP3s4ENUZM
+	 MPDfFArKRmVfNOXieX8Jg/5Ar9hYRh52Vhej+/INgPjOMtY1DnlmjMLrNV8HU0n6aU
+	 ZiAqOrQe53k9wRXZX56CP3S3Ohc6Mkozu/QubIrRhqsZAjjsXPwesRXXEY+OOMXHwK
+	 IhsTC+jynF++RzSJ49BPFBtx63EJxNnS4BCM45KT7IbMjAsFnEZxNz9MLptvktSKFS
+	 HfS/5Vg7HrLRx8tPYXS4P/z1HtRoFMdJk6EaT3fQW9gmrd/yMsC7MLdctlv032foe2
+	 gJ+a9nLHDeWJg==
+Date: Thu, 26 Nov 2026 23:01:21 +0200
+From: Jarkko Sakkinen <jarkko@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next v3 4/7] libbpf: Move bpf_object_prepare_token()
- to object creation
-In-Reply-To: <sashiko-outbox-235780@kernel.org>
-References: <20261126-bpf-relax-get-next-id-v3-0-338e1d3077e7@toke.dk>
- <20261126-bpf-relax-get-next-id-v3-4-338e1d3077e7@toke.dk>
- <sashiko-outbox-235780@kernel.org>
-Date: Thu, 26 Nov 2026 20:44:07 +0100
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <87pkvrcr94.fsf@toke.dk>
+Cc: keyrings@vger.kernel.org, dm-devel@lists.linux.dev,
+	linux-crypto@vger.kernel.org, linux-security-module@vger.kernel.org,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Alasdair Kergon <agk@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	David Gstir <david@sigma-star.at>,
+	David Howells <dhowells@redhat.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ignat Korchagin <ignat@linux.win>,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	James Morris <jmorris@namei.org>,
+	James Prestwood <prestwoj@gmail.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Jonathan Corbet <corbet@lwn.net>,
+	Lukas Wunner <lukas@wunner.de>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mimi Zohar <zohar@linux.ibm.com>, Paul Moore <paul@paul-moore.com>,
+	Peter Huewe <peterhuewe@gmx.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sumit Garg <sumit.garg@kernel.org>
+Subject: Re: [PATCH v4 03/11] KEYS: trusted: Validate public_len before
+ reading key attributes
+Message-ID: <awieIblDHu4iF4Wl@kernel.org>
+References: <20261126205021.2200819-1-jarkko@kernel.org>
+ <20261126205021.2200819-4-jarkko@kernel.org>
+ <sashiko-outbox-236180@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -63,83 +85,26 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-236180@kernel.org>
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] libbpf: dead gen_loader check and host token probe in
->   bpf_object_open()
-> --
->
-> commit bfc72a1132d0b5606c8e46c132afab5bec32d57f
-> Author: Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk>
->
-> libbpf: Move bpf_object_prepare_token() to object creation
->
-> This commit moves bpf_object_prepare_token() from bpf_object_prepare() to
-> bpf_object_open() and closes any acquired token fd in
-> bpf_object__gen_loader().
->
->> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
->> index 540daf7752b45..1f1569a35f92a 100644
->> --- a/tools/lib/bpf/libbpf.c
->> +++ b/tools/lib/bpf/libbpf.c
->> @@ -9281,6 +9281,7 @@ static struct bpf_object *bpf_object_open(const ch=
-ar *path, const void *obj_buf,
->>  	err =3D err ? : bpf_object__init_maps(obj, opts);
->>  	err =3D err ? : bpf_object_init_progs(obj, opts);
->>  	err =3D err ? : bpf_object__collect_relos(obj);
->> +	err =3D err ? : bpf_object_prepare_token(obj);
->>  	if (err)
->>  		goto out;
->>=20=20
->> @@ -9873,7 +9874,6 @@ static int bpf_object_prepare(struct bpf_object *o=
-bj, const char *target_btf_pat
->>  	}
->>=20=20
->>  	err =3D bpf_object_check_gen_loader(obj);
->> -	err =3D err ? : bpf_object_prepare_token(obj);
->>  	err =3D err ? : bpf_object__probe_loading(obj);
->>  	err =3D err ? : bpf_object__load_vmlinux_btf(obj, false);
->>  	err =3D err ? : bpf_object__resolve_externs(obj, obj->kconfig);
->> @@ -10543,6 +10543,11 @@ int bpf_object__gen_loader(struct bpf_object *o=
-bj, struct gen_loader_opts *opts)
->>  	gen->opts =3D opts;
->>  	gen->swapped_endian =3D !is_native_endianness(obj);
->>  	obj->gen_loader =3D gen;
->> +	if (obj->token_fd) {
->> +		close(obj->token_fd);
->> +		obj->token_fd =3D 0;
->> +		obj->feat_cache->token_fd =3D 0;
->> +	}
->>  	return 0;
->>  }
->
+> > KEYS: trusted: Validate public_len before reading key attributes
+> >
+> > tpm2_load_cmd() reads the 32-bit objectAttributes field at pub + 4
+> > without checking that public_len is at least 8 bytes. Reject blobs with
+> > public_len < 8 before dereferencing pub + 4.
+> >
+> > Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+> 
 > [Severity: Low]
-> Does moving bpf_object_prepare_token() into bpf_object_open() make the
-> obj->gen_loader check in bpf_object_prepare_token() unreachable and
-> reintroduce host bpffs probing during offline loader generation?
->
-> Commit d92defe04ad5 ("libbpf: Skip BPF token preparation when generating
-> loader") added an early return on obj->gen_loader to
-> bpf_object_prepare_token() so that offline loader generation (such as
-> bpftool gen skeleton -L) would not probe /sys/fs/bpf or honor
-> LIBBPF_BPF_TOKEN_PATH on the build host.  Because bpf_object_open() now
-> calls bpf_object_prepare_token() before returning obj to the caller,
-> bpf_object__gen_loader() cannot have been called yet and obj->gen_loader =
-is
-> always NULL there.  If LIBBPF_BPF_TOKEN_PATH or opts.bpf_token_path is set
-> to a non-empty path that cannot be opened or does not allow token creation
-> on the host, bpf_object_open() fails before bpf_object__gen_loader() can =
-be
-> reached.
+> The unvalidated get_unaligned_be32(pub + 4) read in tpm2_load_cmd() was
+> introduced by commit e5fb5d2c5a03 ("security: keys: trusted: Make sealed
+> key properly interoperable").  Should the commit message include:
+> 
+>   Fixes: e5fb5d2c5a03 ("security: keys: trusted: Make sealed key properly interoperable")
 
-I can remove the dead check for obj->gen_loader, but I don't think the
-other issue is worth fixing; if someone explicitly sets a token path
-during skeleton build and that makes the build fail, they can just...
-not do that?
+Yeah, I think so, and it can be detached from the patch set, if it
+receives reviewed-by tag.
 
--Toke
+Br, Jarkko
