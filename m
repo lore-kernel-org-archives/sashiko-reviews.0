@@ -1,44 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=156.224.83.231
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=180.181.231.80
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795665547;
-	b=oePh1WI4jjvspR+/ZzeHlEQ4YoVsAyLT8Pw6iAMon9oji6MdumPSSxHE1pyBJIZEI4G/
-	 7tXyvXi4igHLAm8MOuTPm88cID/lV0qAEDyRzJSZGmD0VgLn41E/SAX+NMwwvOn/Xd1i3
-	 7riMplQqjXgOdqy1dHLIZGVPjIwsHth/FX/No7Ce4nngVcM97+NSRutCDPM1EIQveaGBH
-	 NCAtErDgyJb4TyHP150yRX3ISZPXETFCL/JHKkTwAD3r90WJzeIWJNhIvOE9UHe+vPftY
-	 Fl9Hap4c2p3s1o4TRB5kVaXG6lMN3OCcQeUfO0CKMyVu0zGeLUGjSWxyAuLTMItKydg==
+	t=1795671687;
+	b=pQ3TQSFdR0xV0I7uAfjZ9ZLYXjIrbUlczAMN/jcFAAXDMFXrJMlODGqZ+5QjvwXzR48R
+	 za/bee1uUK7spNHNPZb7x9waRjgNcJoModTxBeQM/WTnAvAuWR3ix0ybD0SfKsFmxhEBq
+	 9ZqGweRlCYGaxixQlqf4vu97m5GaGG/48UOUt6F4kq2EiwMNCv1+oxjwyE0dXPXEb/76X
+	 CKFKGGYXrcFIbkhZATRH92HTkJstxt/wRXyojlJQK8y7sbux68es0MpBtNoksgEfpk/XS
+	 RfyEL+eikfTGLfXIeIsFJRQADnaK3eL/lN6z4i3ef5ndQcv5VE2m2s1wttnAhR3Mlag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795665547;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-HM-Tid:X-HM-MType:
-	 X-HM-Spam-Status:DKIM-Signature;
-	bh=uJT5ZJ2aqCKLT9VFawMyFHtg0E9dRYKMg2nTwqyS14Q=;
-	b=h2NlaPzA7LGoi0MFGsVXn0H57/MKECymCAz+xIj+qVWMKrgpgs4TA7gGHOvaZLQty8bp
-	 E81uUDys1lgETklbrAbWsxHlMO0dutKZiDe4tuARsj9eQ2MOx2hbgYYBaaFB/uSmFevgZ
-	 oL3s/RdWzp/b9a0Rvp9ppPWzRsO2MtYBRpbwBZagO5MVeT2HI7iaaiudiAxjTuLC0cmgY
-	 4fqd/TAazNOB6g+Hr4iW3lX0/l7uKaga2TnqikmpfdeNCTT+vzMSj9+fkoRnxSpCdqOv5
-	 S4i3EGzuCKhY/rCIjB7W79GiQMqTJVyxWeuUUaCIQL6YcfsNzp9tg2GiXO3KUfxkFuw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795671687;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=lB5Z2jAXM1MCahZXaWDYMLFa+FaZwYx21kct5EFKyxs=;
+	b=UjIM+1dNa0hw8eFQNU4w4EimRbgFlwV03SeM3GxCvWtGv3RFEMgrGoYN8RR4w/67UrT/
+	 /Vg63goTyBc1SPfwt/GsBGxXqIyYd4b1gxS8uPTEiGq55jzjOmvDFauU3nMiorEAbrQbK
+	 /CQ0okw4TjrGJ+Df2FZqxwIsR4LpkSsiIbHCiIH0FZ3M3EfYNv0g6A8BUw1F06tfKs1zw
+	 pwE3CG2ALOQtyROhvq2ZL58IiHCBr4glhOcnn+jVFZfijwkmQmaWgd8WiYwpjZXLVqQLn
+	 kmQnTo7dcAfFFIeh61oahhDj8KyBOfwiFl34zDgHtxUeOFuZ769CmCqpq2+jkP+DmdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=rock-chips.com;
-	spf=pass smtp.mailfrom=rock-chips.com;
-	dkim=pass header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=ic4H5hye;
-	arc=none smtp.remote-ip=156.224.83.231
-Received: from mail-m83231.xmail.ntesmail.com (mail-m83231.xmail.ntesmail.com [156.224.83.231])
+	dmarc=pass header.from=gondor.apana.org.au;
+	spf=pass smtp.mailfrom=gondor.apana.org.au;
+	dkim=pass header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=IG6kP8Z7;
+	arc=none smtp.remote-ip=180.181.231.80
+Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E39606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 03:59:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B9E39606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A137D606A323;
+	Thu, 26 Nov 2026 05:41:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A137D606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=ic4H5hye
-Received: from [172.16.12.74] (unknown [61.154.14.86])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 560db9b8b;
-	Thu, 26 Nov 2026 11:58:55 +0800 (GMT+08:00)
-Message-ID: <7b0fe53d-5bfb-41c1-a163-5bbb14123d86@rock-chips.com>
-Date: Thu, 26 Nov 2026 11:58:55 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=IG6kP8Z7
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
+	from:content-type:reply-to; bh=lB5Z2jAXM1MCahZXaWDYMLFa+FaZwYx21kct5EFKyxs=; 
+	b=IG6kP8Z78B1+GAs3HdVj0OF7xN4BFXwTmMwOoZcez01WeFEZrA/tC5S6hHti9gLbezGKIBVG3rh
+	cjAjMgwZ6UQi+6LcVu54fAAj5TOVTlN0TaeHvc3HaSFPFCSEHcU8DxsBne9pH6bVJBnVpLi5Q7EG7
+	XosjJVl6tpkFHAR3DWL6yMSzrWQYZlf6Wa9YWeeoJluJNuck52OmcXzm/gee0+69R8qo5C2n2YlRE
+	WyHtFm5yaTaEl+EMM1LI98g6wpdjLWBLcWQiUQkOOpIyVvh6qREeXna87cgGs+O3b4saRMJoso9cB
+	somkNjo75RQeIyP7bTDkZY85jL2HTOh07+7Q==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.98.2 #2 (Debian))
+	id 1xWSEQ-000000029BE-1eI1;
+	Thu, 26 Nov 2026 13:41:19 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Thu, 26 Nov 2026 13:41:18 +0800
+Date: Thu, 26 Nov 2026 13:41:18 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, hannes@cmpxchg.org, yosry@kernel.org,
+	nphamcs@gmail.com, chengming.zhou@linux.dev,
+	akpm@linux-foundation.org, linux-mm@kvack.org, davem@davemloft.net,
+	linux-crypto@vger.kernel.org, rientjes@google.com,
+	willy@infradead.org, senozhatsky@chromium.org
+Subject: Re: [PATCH v3 3/8] crypto: acomp - Add trivial segmentation wrapper.
+Message-ID: <awfGfqMK8FfrMNvz@gondor.apana.org.au>
+References: <20261106072412.7909-1-kanchanapsridhar2026@gmail.com>
+ <20261106072412.7909-4-kanchanapsridhar2026@gmail.com>
+ <sashiko-outbox-202709@kernel.org>
+ <CACpmpodxjJ3ZQt4xOsWfWQNjgMtPzKx0oGMy+mJTU1wxVWdMUw@mail.gmail.com>
+ <awQCFZSSng2LLGnX@gondor.apana.org.au>
+ <CACpmpocCqenTNv62dGoeSLP2zs-AXJYhXM-tj2cytm4zQTj1cA@mail.gmail.com>
+ <awafBxDtUoIQW9iR@gondor.apana.org.au>
+ <CACpmpocWW7pWGYiF==DupmZDB0-jETu32C3-9NYY8nssKcDm-g@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -48,198 +74,30 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 17/20] drm/bridge: analogix_dp: Manage pm runtime and
- IRQ for native HPD pin detection
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20261125112141.1434903-1-damon.ding@rock-chips.com>
- <20261125112141.1434903-18-damon.ding@rock-chips.com>
- <sashiko-outbox-233271@kernel.org>
-Content-Language: en-US
-From: Damon Ding <damon.ding@rock-chips.com>
-In-Reply-To: <sashiko-outbox-233271@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-HM-Tid: 0aa21601a37903a8kunm786c9b6c7d5bda
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDHktMVkNMGktPQ09OHklCH1YVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUJCSU
-	5KVUpLS1VKQktCWQY+
-DKIM-Signature: a=rsa-sha256;
-	b=ic4H5hyeR0/U+v/oyMGC6uPoQxIa74ov6GVyc1Dm+9Y6/RLlIFNAwDjHe0RXqUvZfGIVs6nh4ZLO8LynZkgW3Nm9HORdx3K80mnAs8Mv968WbqQR+ivDtZBf/0hD7cmQluiakQtMa6bdgkM6gHGq0myvNJXgshEAokhCddRKO1o=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
-	bh=uJT5ZJ2aqCKLT9VFawMyFHtg0E9dRYKMg2nTwqyS14Q=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACpmpocWW7pWGYiF==DupmZDB0-jETu32C3-9NYY8nssKcDm-g@mail.gmail.com>
 
-On 11/25/2026 7:41 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] drm/bridge: analogix_dp: premature IRQ enable in
->    analogix_dp_resume()
-> - [Medium] drm/bridge: analogix_dp: deadlock between
->    analogix_dp_suspend() and IRQ
-> --
-> 
-> commit 2148ea987a79afc2769bfb9bcea363df9810b9e9
-> Author: Damon Ding <damon.ding@rock-chips.com>
-> 
-> drm/bridge: analogix_dp: Manage pm runtime and IRQ for native HPD pin detection
-> 
-> This commit holds a runtime PM reference across bind and unbind on RK3576
-> and RK3588 for native hotplug detection, and gates the hotplug IRQ on
-> hotplug support and runtime PM transitions.
-> 
->> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
->> index 46433ea73d678..cda6e4c5cbc8d 100644
->> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
->> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
->> @@ -42,6 +42,33 @@
->>   
->>   static const bool verify_fast_training;
->>   
->> +/*
->> + * The hotplug events are reported either through the optional GPIO HPD
->> + * pin or through the native controller interrupt, which is confirmed
->> + * to work only on the RK3576 and RK3588 platforms.
->> + */
->> +static bool analogix_dp_supports_hpd(struct analogix_dp_device *dp)
->> +{
->> +	if (dp->force_connected_mode || dp->force_hpd)
->> +		return false;
->> +
->> +	if (dp->hpd_gpiod)
->> +		return true;
->> +
->> +	return dp->plat_data->dev_type == RK3576_EDP || dp->plat_data->dev_type == RK3588_EDP;
->> +}
->> +
->> +/*
->> + * The native HPD interrupt relies on the controller staying powered
->> + * and clocked to report the hotplug events, so a runtime PM reference
->> + * is held for it.  The GPIO HPD mode needs no such reference, as it
->> + * reads the GPIO level directly.
->> + */
->> +static bool analogix_dp_require_pm_for_hpd_irq(struct analogix_dp_device *dp)
->> +{
->> +	return analogix_dp_supports_hpd(dp) && !dp->hpd_gpiod;
->> +}
->> +
->>   static void analogix_dp_init_dp(struct analogix_dp_device *dp)
->>   {
->>   	analogix_dp_reset(dp);
->> @@ -1547,6 +1574,11 @@ EXPORT_SYMBOL_GPL(analogix_dp_probe);
->>   
->>   int analogix_dp_suspend(struct analogix_dp_device *dp)
->>   {
->> +	if (analogix_dp_require_pm_for_hpd_irq(dp) && dp->hpd_irq_enabled) {
->> +		disable_irq(dp->irq);
->> +		dp->hpd_irq_enabled = false;
->> +	}
->> +
-> 
-> [Severity: Medium]
-> Can calling disable_irq(dp->irq) inside the runtime_suspend callback cause an
-> ABBA deadlock with analogix_dp_irq_thread()?
-> 
-> If dp->dev is runtime-resumed while no persistent runtime PM reference is
-> held (for example, during pre-bind AUX transfers in
-> analogix_dp_finish_probe(), or after analogix_dp_unbind()),
-> analogix_dp_resume() enables dp->irq.  When the autosuspend timer later fires
-> and an HPD interrupt arrives at the same time:
-> 
-> CPU0 (pm_wq)                      CPU1 (irq/analogix-dp)
-> ------------                      ----------------------
-> rpm_suspend(dp->dev)
->    runtime_status = RPM_SUSPENDING
->    ...
->    analogix_dp_suspend(dp)
->                                    analogix_dp_irq_thread()
->                                      pm_runtime_resume_and_get(dp->dev)
->                                        rpm_resume(dp->dev, RPM_GET_PUT)
->                                        /* waits for RPM_SUSPENDING */
->      disable_irq(dp->irq)
->        synchronize_irq(dp->irq)
->        /* waits for IRQ thread */
-> 
->   *** DEADLOCK ***
-> 
->>   	phy_power_off(dp->phy);
->>   
->>   	if (dp->plat_data->power_off)
->> @@ -1576,6 +1608,11 @@ int analogix_dp_resume(struct analogix_dp_device *dp)
->>   
->>   	analogix_dp_init_dp(dp);
->>   
->> +	if (analogix_dp_require_pm_for_hpd_irq(dp) && !dp->hpd_irq_enabled) {
->> +		enable_irq(dp->irq);
->> +		dp->hpd_irq_enabled = true;
->> +	}
->> +
->>   	return 0;
->>   }
->>   EXPORT_SYMBOL_GPL(analogix_dp_resume);
-> 
-> [Severity: High]
-> Does enabling dp->irq in analogix_dp_resume() leave the HPD IRQ permanently
-> enabled across runtime suspend on RK3576 and RK3588 boards with an eDP panel
-> on the DP AUX bus?
-> 
-> dp->force_connected_mode is not initialized in analogix_dp_probe(); it is set
-> later during analogix_dp_bind() -> drm_bridge_attach() ->
-> analogix_dp_bridge_attach():
-> 
-> drivers/gpu/drm/bridge/analogix/analogix_dp_core.c:analogix_dp_bridge_attach() {
-> 	...
-> 	if (dp->bridge.next_bridge) {
-> 		...
-> 		dp->force_connected_mode = analogix_dp_bridge_force_connected(dp);
-> 	}
-> }
-> 
-> Before analogix_dp_bind() runs, analogix_dp_finish_probe() populates the DP
-> AUX bus.  Probing the panel child runtime-resumes dp->dev while
-> dp->force_connected_mode is still false, so
-> analogix_dp_require_pm_for_hpd_irq(dp) returns true and analogix_dp_resume()
-> enables dp->irq.
-> 
-> Once analogix_dp_bridge_attach() sets dp->force_connected_mode = true,
-> analogix_dp_require_pm_for_hpd_irq(dp) becomes false.  When the 100 ms
-> autosuspend delay expires, analogix_dp_suspend() skips disable_irq(dp->irq)
-> and leaves dp->irq enabled while the PHY, power and clock are turned off.
-> 
-> In addition, because analogix_dp_resume() does not check whether the bridge
-> is bound, any runtime resume during or after analogix_dp_unbind() (such as
-> during drm_dp_aux_unregister(&dp->aux)) re-enables dp->irq while unbound,
-> allowing analogix_dp_irq_thread() to use a stale dp->drm_dev.
-> 
+On Wed, Nov 25, 2026 at 11:08:20AM -0800, Kanchana P. Sridhar wrote:
+>
+> -       if (unlikely(req->unit_size && req->slen > req->unit_size))
+> +       if (unlikely(req->unit_size && acomp_request_dst_isvirt(req)))
+> +               return -EINVAL;
 
-Looking back at the v6 review, I think I got bogged down in this and
-made it much more complicated than it needs to be.
+This looks good.
 
-I will remove all the IRQ operations from analogix_dp_suspend() and
-analogix_dp_resume(), and go back to the clean version where the IRQ
-is enabled in bind and disabled in unbind, based on
-analogix_dp_supports_hpd():
+> +       if (unlikely(req->unit_size &&
+> +                       ((comp && req->slen > req->unit_size) ||
+> +                        (!comp && req->dlen > req->unit_size))))
 
-   analogix_dp_bind():
-           if (analogix_dp_supports_hpd(dp))
-                   enable_irq(dp->irq);
+For decompression, shouldn't it just fail unconditionally since
+we do not support batching for it?
 
-   analogix_dp_unbind():
-           if (analogix_dp_supports_hpd(dp))
-                   disable_irq(dp->irq);
+Also how about moving these API guards into the top-level compression
+and decompression functions instead of in the shared path.
 
-So the IRQ lifetime follows the bridge lifetime, and neither the
-pre-bind AUX transfers nor the post-unbind path touch dp->irq anymore.
-There is also no disable_irq() in the runtime suspend callback, so the
-deadlock with the IRQ thread is gone.
-
-The only case left is a HPD edge at the very same moment the system
-goes to sleep. I think that window is basically impossible to hit and
-acceptable. Also, on Rockchip platforms, the unclocked MMIO access of
-the eDP controller returns an invalid value but does not crash.
-
-Best regards,
-Damon
-
+Thanks,
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
