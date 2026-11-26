@@ -1,58 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=45.145.95.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795720491;
-	b=iHoQ/TH/ZVkrrlP/hcB6CfQlXsh13IUjzDWhSz8UJX0xcP5ZEEYGXgHdRrswU0JvAIuu
-	 3SUk/pbYm/BwPjDvIiqAlXA9esGOFPaPjK8VYIkUyMFaVE5QEXvPoSkqT0N6CA7bDxWYH
-	 XqDfUtCoe/6cLgHLufHw3+pklJHePfXEpvst0WDqVwc/UMEjEacv0cMSiezC2Gvhv5KQa
-	 IMRs6JbNsmrWjC7UVh+HNiGVbjFIEL9uVPk4JnGe28zNgZ5ZskxmHhNMOpoNx6PwciWKG
-	 0IK+maXALakmpGYU9YI4DzXzlH8T2NKrm5jilEBt+chxmLdjEGne402WlRgTC8aPmnw==
+	t=1795722258;
+	b=5kZe1mTqGEcCGoS3oeacCjnI6dW7HpgjCwM74onLFzMIVn7UA0buTRmv1H1NIyeakuy8
+	 o8FnzcjXHXVQteOnHwScukvjoaJ2jq7s2tFvC/NUwlgvnTErz61e8o35JRPuge1p6dFJ1
+	 lEw+1/CEzaQajxc1dpZw99QSU/AoBLBrEAFTNMbGu7YK0V84Z1mX/7XZERr5XPbzQgfoT
+	 H/knaR5zKTa9P4RBny31XKPuFU4N0RRRN1J+w0pzYWA+g2P361QoiaSwjCoPmYlgQiDCn
+	 wKQ37jpufgGKOvGY7g+dpSrED0LzzR/boJcjDh0SXONOYCr+64/oSRIRn2rgOsmnT2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795720491;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:References:
-	 Date:Message-ID:User-Agent:MIME-Version:Content-Type;
-	bh=CuVLv2i2GOptfnACX7l3LiPUxZvYfKOmSODmwPhhkPw=;
-	b=OecRL0cVZRUfuhnZemxW5/pjpg0fG7ZHB4t1WW58H/iUhehMOUeD/xEfJrTnSxSc5hBH
-	 9pMD52dILynNciccXRu59GNbp/ODibGrE8NIZ+e+d+82Ap6YbI1rvPwO+NEdBQ/NE9Iru
-	 ZmJsBvrTExOFi1PUn3vMsy3JaNmpKjiTllCzDhCzfe8JAfa7lwuur9HPy39wSIePRCiqB
-	 8JLSDjwMeHmU9lds2SH+hB3nVWR4z7RG1RcAfdSbKK7gJFxJG6r7tpjZM4nlvvEDSJARX
-	 L9BjK/NUxnxn0Q5vUEvMiN6aL+x1pdQPbKkBnFW7+6Vs32B4lN8mGgIxcVerpf+pSsg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795722258;
+	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:X-Clacks-Overhead:Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=/VeOoM8IZ9NB9AVZCDWfFjLfcEOJ01bHy1/Epj3tsYg=;
+	b=G+QN/tb8oDMP3kQv/ggpT4XtyTyvg6y7oLmnpU6d9bvuSduW6ABnqUurOJ+N0OgiGf3r
+	 OCt4XENNEv4U1bGE5miEjxjB4NkW+J4XzZR1H5Dj7F1RlVOiTVaQKHmey5/8UazutCdLw
+	 I4+W956r3fFSVV3VwUvogXg40nqbHsaUXlUx3/4duhX4c9JJxQityF3nIrvs9bQlQ+4Ks
+	 ASTA8AGeIVpBPUAMoSSeVaaJRE4WAYTl2QJYhQc9evK1a1MNo7lW9X9yATov4CmkLyCCd
+	 7Ee6AINWYRm1UemoUVIB/KNze/MSKeLRc7A5tNNt6VSJIw89tTdo2wPhFZkQvL5D2Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mC7UtwFI;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=toke.dk;
+	spf=pass smtp.mailfrom=toke.dk;
+	dkim=pass header.d=toke.dk header.i=@toke.dk header.a=rsa-sha256 header.s=20161023 header.b=iXVnNu51;
+	arc=none smtp.remote-ip=45.145.95.4
+Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1AB606A326
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 19:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71F4606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 19:44:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A71F4606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=toke.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toke.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mC7UtwFI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B11D1F000C4;
-	Thu, 26 Nov 2026 19:14:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795720491;
-	bh=CuVLv2i2GOptfnACX7l3LiPUxZvYfKOmSODmwPhhkPw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=mC7UtwFIZfgl362g4XVFFQa/G8viDzYK9zciLeNK4vN3HA19avPzi/zfmTg9BbGIU
-	 dgelNbTa7s4yMuoGmp8foEhEPgNckZ0kOOxjjZzmt6CBra5rShY0LwesOtWrGrviCT
-	 BXQwqJfB3mNv/WrPnyop1ygoMYYseBWl1YAbDtlasemS/PkApEcvJLQwZ6e3eGygqI
-	 Z3OXnQlvYs/Yo8WSSjFWvSEvKBPp5MXU4m+OUQkmI7PKHw5pZhjyTruSefXYjiNpzB
-	 VjRtOH2rC9Q8ru9ADi02DdfamuJWXQkm/qynGSBxdwbpRo+RVi6rEgIwh1Zb8voVhL
-	 ocZCZs24Dg2eQ==
-From: Pratyush Yadav <pratyush@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: "Pratyush Yadav" <pratyush@kernel.org>,  "Pasha Tatashin"
- <pasha.tatashin@soleen.com>,  "Mike Rapoport" <rppt@kernel.org>,  "Andrew
- Morton" <akpm@linux-foundation.org>,  sashiko-reviews@lists.linux.dev,
-  kexec@lists.infradead.org,  linux-mm@kvack.org
-Subject: Re: [PATCH v4] mm/memfd_luo: don't use memfd_pin_folios()
-In-Reply-To: <sashiko-outbox-234004@kernel.org> (sashiko-bot@kernel.org's
-	message of "Wed, 25 Nov 2026 18:40:57 +0000")
-References: <20261124184042.1823277-1-pratyush@kernel.org>
-	<sashiko-outbox-234004@kernel.org>
-Date: Thu, 26 Nov 2026 19:14:47 +0000
-Message-ID: <2vxzzeuvv1zs.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.a=rsa-sha256 header.s=20161023 header.b=iXVnNu51
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+	t=1795722249; bh=6xV19XvlsF8HGzU8uN77Yoe6D0bj/rvFMFUKDzicMZM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=iXVnNu51COf3M2AKI9Nn8dgD5emID8e25ziY0mVMbZhBO1TOQzcDucL0Iv1RPkrtF
+	 fNnLa005tbbYYHIrK3iZaOk6w/o7fjtbqg81HrRXhj67sNPYGVuRTlrUKJq1JnheK2
+	 H6+8bHBwyy+TXEXliow8yJw2I/HJW0WEtiPlcgwWjmK28/3wEeKSpX9tuJQaTo0gWN
+	 qpkGFXb8+kmlYs6T1Rld9c6I6iQKBGWU4cRKkRNOfXSJZBkn2ElOszQZ3vG7nsVLf/
+	 bmtqagEId9yWS8GknnyHM8AlHTjwaXVasWqyUQ9afuW+qYrPd2qGZAKWgAvlXhGUD6
+	 XScpq+5oERydw==
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next v3 4/7] libbpf: Move bpf_object_prepare_token()
+ to object creation
+In-Reply-To: <sashiko-outbox-235780@kernel.org>
+References: <20261126-bpf-relax-get-next-id-v3-0-338e1d3077e7@toke.dk>
+ <20261126-bpf-relax-get-next-id-v3-4-338e1d3077e7@toke.dk>
+ <sashiko-outbox-235780@kernel.org>
+Date: Thu, 26 Nov 2026 20:44:07 +0100
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87pkvrcr94.fsf@toke.dk>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,87 +63,83 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 25 2026, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] mm/memfd_luo: unbatched migration and LRU drain in
->   memfd_luo_migrate_folio()
+> - [Low] libbpf: dead gen_loader check and host token probe in
+>   bpf_object_open()
 > --
 >
-> commit 36bee618bf022031606488c041334f6b85cc82a9
-> Author: Pratyush Yadav (Google) <pratyush@kernel.org>
+> commit bfc72a1132d0b5606c8e46c132afab5bec32d57f
+> Author: Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk>
 >
-> mm/memfd_luo: don't use memfd_pin_folios()
+> libbpf: Move bpf_object_prepare_token() to object creation
 >
-> This commit replaces memfd_pin_folios() with a direct page cache walk
-> using shmem_get_folio() and migrates folios out of movable or CMA
-> pageblocks individually via memfd_luo_migrate_folio().
+> This commit moves bpf_object_prepare_token() from bpf_object_prepare() to
+> bpf_object_open() and closes any acquired token fd in
+> bpf_object__gen_loader().
 >
->> diff --git a/mm/memfd_luo.c b/mm/memfd_luo.c
->> index 6b68220275ebe..38584ecfa70be 100644
->> --- a/mm/memfd_luo.c
->> +++ b/mm/memfd_luo.c
->> @@ -77,26 +77,168 @@
->
-> [ ... ]
->
->> +static int memfd_luo_migrate_folio(struct folio *folio)
->> +{
->> +	struct migration_target_control mtc = {
->> +		.nid = NUMA_NO_NODE,
->> +		/* Not movable, so the target is neither in ZONE_MOVABLE nor CMA. */
->> +		.gfp_mask = GFP_USER | __GFP_NOWARN,
->> +		.reason = MR_LONGTERM_PIN,
->> +	};
->> +	LIST_HEAD(source);
->> +	bool isolated;
->> +
->> +	/* Flush per-CPU LRU batches holding the folio so isolation works. */
->> +	lru_cache_drain_for_folio(folio, 1, NULL);
->> +	isolated = isolate_folio_to_list(folio, &source);
->> +	/* Isolation holds its own reference. */
->> +	folio_put(folio);
->> +	if (!isolated)
->> +		return -EBUSY;
->> +
->> +	if (migrate_pages(&source, alloc_migration_target, NULL,
->> +			  (unsigned long)&mtc, MIGRATE_SYNC, MR_LONGTERM_PIN,
->> +			  NULL)) {
->> +		putback_movable_pages(&source);
->> +		return -ENOMEM;
+>> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+>> index 540daf7752b45..1f1569a35f92a 100644
+>> --- a/tools/lib/bpf/libbpf.c
+>> +++ b/tools/lib/bpf/libbpf.c
+>> @@ -9281,6 +9281,7 @@ static struct bpf_object *bpf_object_open(const ch=
+ar *path, const void *obj_buf,
+>>  	err =3D err ? : bpf_object__init_maps(obj, opts);
+>>  	err =3D err ? : bpf_object_init_progs(obj, opts);
+>>  	err =3D err ? : bpf_object__collect_relos(obj);
+>> +	err =3D err ? : bpf_object_prepare_token(obj);
+>>  	if (err)
+>>  		goto out;
+>>=20=20
+>> @@ -9873,7 +9874,6 @@ static int bpf_object_prepare(struct bpf_object *o=
+bj, const char *target_btf_pat
+>>  	}
+>>=20=20
+>>  	err =3D bpf_object_check_gen_loader(obj);
+>> -	err =3D err ? : bpf_object_prepare_token(obj);
+>>  	err =3D err ? : bpf_object__probe_loading(obj);
+>>  	err =3D err ? : bpf_object__load_vmlinux_btf(obj, false);
+>>  	err =3D err ? : bpf_object__resolve_externs(obj, obj->kconfig);
+>> @@ -10543,6 +10543,11 @@ int bpf_object__gen_loader(struct bpf_object *o=
+bj, struct gen_loader_opts *opts)
+>>  	gen->opts =3D opts;
+>>  	gen->swapped_endian =3D !is_native_endianness(obj);
+>>  	obj->gen_loader =3D gen;
+>> +	if (obj->token_fd) {
+>> +		close(obj->token_fd);
+>> +		obj->token_fd =3D 0;
+>> +		obj->feat_cache->token_fd =3D 0;
 >> +	}
->> +
->> +	return 0;
->> +}
+>>  	return 0;
+>>  }
 >
-> [Severity: Medium]
-> Does migrating one folio at a time here regress preservation latency when
-> folios in the memfd already reside in ZONE_MOVABLE or MIGRATE_CMA
-> pageblocks?
+> [Severity: Low]
+> Does moving bpf_object_prepare_token() into bpf_object_open() make the
+> obj->gen_loader check in bpf_object_prepare_token() unreachable and
+> reintroduce host bpffs probing during offline loader generation?
 >
-> Previously, memfd_pin_folios() called check_and_migrate_movable_folios(),
-> which shared a single enum lru_cache_drained state across the scan so
-> lru_add_drain() and lru_add_drain_all() ran at most once, and passed all
-> movable folios to a single migrate_pages() call so migrate_pages_batch()
-> could batch TLB shootdowns across up to NR_MAX_BATCHED_MIGRATION (512)
-> unmapped pages.
->
-> Calling memfd_luo_migrate_folio() per folio passes NULL for the drained
-> state to lru_cache_drain_for_folio(), which can trigger repeated local and
-> all-CPU LRU cache drains, and invokes migrate_pages() on a single-folio
-> list, forcing a cross-CPU TLB shootdown IPI for every mapped folio that
-> needs migration.
+> Commit d92defe04ad5 ("libbpf: Skip BPF token preparation when generating
+> loader") added an early return on obj->gen_loader to
+> bpf_object_prepare_token() so that offline loader generation (such as
+> bpftool gen skeleton -L) would not probe /sys/fs/bpf or honor
+> LIBBPF_BPF_TOKEN_PATH on the build host.  Because bpf_object_open() now
+> calls bpf_object_prepare_token() before returning obj to the caller,
+> bpf_object__gen_loader() cannot have been called yet and obj->gen_loader =
+is
+> always NULL there.  If LIBBPF_BPF_TOKEN_PATH or opts.bpf_token_path is set
+> to a non-empty path that cannot be opened or does not allow token creation
+> on the host, bpf_object_open() fails before bpf_object__gen_loader() can =
+be
+> reached.
 
-I measured the performance before and after this patch with
-movablecore=75%, and it found that with 4k pages, performance does
-indeed drop, but the difference is quite small. Only 5-8% slower. THPs
-stay about the same.
+I can remove the dead check for obj->gen_loader, but I don't think the
+other issue is worth fixing; if someone explicitly sets a token path
+during skeleton build and that makes the build fail, they can just...
+not do that?
 
-So I think the slowdown is small enough to not matter.
-
--- 
-Regards,
-Pratyush Yadav
+-Toke
