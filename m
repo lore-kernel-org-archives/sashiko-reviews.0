@@ -1,102 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705729;
-	b=ldOOsH48L2AoKs7X3vC9S8Tu6nPlAzNjxGvYX2YJuoLnZlt0wLStfojt4AbXbXPFgcYX
-	 v/zxUsStH1LqddVaFHoi4S3QZsDBngGx1ru+cgLsHW2g18iRCoLWBNBbV6l/E5TCgvEwO
-	 Qev9/TRLO/aTBr2XGJzHU3BHUNQdnm0th/fvEGrzvWWtjNtyMHefoD3O8/2v8TSYiPlnb
-	 AIX9TybUoSTCrCpqO1OTaV89DUTht3iXwCDO2N362JXZQNaAnmGYn+8o2G+yxwCz4ZShi
-	 11aqWYtjeGJCxToagHuM8MWrHppGy1GUpbywLiC+cW5qzgJnler/ZSVRzkJ98Ebfgfw==
+	t=1795705745;
+	b=lQl64d+BwNABXHhfb+HHluFLCVV4dEjOT/YKEYhmej0ZvrCnwz3i0cuOhK9g94/LMeyO
+	 qKiIchzTh6O0SWfOxGxDO74BjBgcALvnIKbLkc6jvMiMPy5K8uIDC6rdapP0hnQEV36ou
+	 cefGRYlrLyaMSHwbjts4VCS6jfdUHN9rzUkFHCrc9M3jjIPMjuDapPaZ1drxc7vbCq2Z6
+	 WkpJQATb8p9gjpQBL8uVtoPVXn0WcGauuk8ksVCVUpzRx6M2Twk48YqI4zMJokbdd1ywh
+	 3uSofaJqRBjjah8e32IZvoJ7M8MrsiTIEZ2tQgDz7BmeXuMztFJpHHD57ohgBseNcWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705729;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Spamd-Result:X-Spam-Score:
-	 X-Spam-Level:X-Spam-Flag;
-	bh=MYvlyPAzdLKxqcVB5WYrSd9FfMGIgTIGE8B18oKA6EM=;
-	b=ZqM30bEl+UooYp7xhwuf5+IDEK4UR5CjiMT4MnY1CjfzLNnQyv0N5sJ40TLYLyQ39WmX
-	 aH+GJAOfBzG1TiJfQtAbNM81nWMjvyLGt6q0FCSd8rrTlsSpny5HEWL34kVTMiSIO/0ma
-	 Bdz0FCGHTIKwL++pLK/Wk6jT3EMpH8y3WvJuQ6VKQwZPGC0m2K8NwsT3NszAIs/xZtbj2
-	 FzbwYVzI6jWQTYPOFhuvV3sP6F/BqpbFRi5N8hODq6bbL89sY8/AOsrCDNx4OrlHTGU/H
-	 U0T78vMoqE/9RX+qKG6xD7XR8c/ojla3+oGwfTnH5kBKF3XO3zfq0uDAuLz9ZtgJgMA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705745;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qa1Fr1ic+7dw5K+GkYsqx2aXPhAv1AnGBqdarsMvPfQ=;
+	b=rAMo0oHsIwr1qfecxB8C7UDhaJrvfpT/XppHkIm3qGAywHp7OAJLL73tFp7Gy81K+hd+
+	 M+oyeovfOL6m2aJSSqlzoy1nzKSTW5J3rzluXc8vLwFag7LTr3KVz+3DcLeC1qPaRl4IT
+	 F5643varu4qsH7eLunOyiDbJLiGWtwBbgDIRS11nqCKJj7r1KAwI+96/XwJONYHlAKowT
+	 ekgycDoE8bzwEnRs/txfR2jzbj8epKzuxfi6yqkyP46jZuG0mfC22LgLPRkbB/Tqxkz9X
+	 69ZYM+3T7Z4GTKsjTZmmyS0ZYtLT07CYH28kOJWT+tvbjlCRXHli3N9THmsw+3ztM2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B93VLq0v;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Dga5WfSu;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B93VLq0v;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Dga5WfSu;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=none header.from=iiitd.ac.in;
+	spf=pass smtp.mailfrom=iiitd.ac.in;
+	dkim=pass header.d=iiitd.ac.in header.i=@iiitd.ac.in header.a=rsa-sha256 header.s=google header.b="VapDIUV/";
+	arc=none smtp.remote-ip=209.85.215.169
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B59606A32E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 15:08:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 94B59606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646E8606A338
+	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 15:09:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 646E8606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iiitd.ac.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iiitd.ac.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B93VLq0v;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Dga5WfSu;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=B93VLq0v;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Dga5WfSu
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id B770022325;
-	Thu, 26 Nov 2026 15:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795705726; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MYvlyPAzdLKxqcVB5WYrSd9FfMGIgTIGE8B18oKA6EM=;
-	b=B93VLq0vZbgPYzYmTsuTjLaHgNcy4FLJxyTzmM0LKmUtMpalSAjEz/uIlsuZEP9d2QM2s5
-	nofI8MrKhW+o8x7RuBRXeei/ckZX2IsyXX8b4tQelpUN32RaUJKGnBTSOyGIsWzWAF1zlW
-	dlmwCbamZLNwyQmLTyf+n1CzcI1rCYo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795705726;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MYvlyPAzdLKxqcVB5WYrSd9FfMGIgTIGE8B18oKA6EM=;
-	b=Dga5WfSullacnGq4Q9XliNzLuVCbb10xL6hD8bJpbYTfzNipu7HOTLZRXG/c2oorW3msKD
-	GE6hsrRBKBT3ppAg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795705726; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MYvlyPAzdLKxqcVB5WYrSd9FfMGIgTIGE8B18oKA6EM=;
-	b=B93VLq0vZbgPYzYmTsuTjLaHgNcy4FLJxyTzmM0LKmUtMpalSAjEz/uIlsuZEP9d2QM2s5
-	nofI8MrKhW+o8x7RuBRXeei/ckZX2IsyXX8b4tQelpUN32RaUJKGnBTSOyGIsWzWAF1zlW
-	dlmwCbamZLNwyQmLTyf+n1CzcI1rCYo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795705726;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MYvlyPAzdLKxqcVB5WYrSd9FfMGIgTIGE8B18oKA6EM=;
-	b=Dga5WfSullacnGq4Q9XliNzLuVCbb10xL6hD8bJpbYTfzNipu7HOTLZRXG/c2oorW3msKD
-	GE6hsrRBKBT3ppAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 769F013432;
-	Thu, 26 Nov 2026 15:08:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 45tuFH5LCGtjTgAAD6G6ig
-	(envelope-from <hare@suse.de>); Thu, 26 Nov 2026 15:08:46 +0000
-Message-ID: <e56a0523-240c-460b-815b-16dde093e978@suse.de>
-Date: Thu, 26 Nov 2026 16:08:45 +0100
+	dkim=pass (1024-bit key) header.d=iiitd.ac.in header.i=@iiitd.ac.in header.a=rsa-sha256 header.s=google header.b=VapDIUV/
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-ccca948203aso5155062a12.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 07:09:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=iiitd.ac.in; s=google; t=1795705744; x=1796310544; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qa1Fr1ic+7dw5K+GkYsqx2aXPhAv1AnGBqdarsMvPfQ=;
+        b=VapDIUV/LUmd0VBaN+NS9s425RiCps3WWFEbGBPA6HZGto6B5wAEvhqaZyfVMjFoeA
+         ZXWMH6dPmljX6D7QiYw1Po1Np7Dt6YkdFbXqtUIf0NASM71b5gXz8xY60SQoCztsPkmb
+         rNdDEAsWrMVm+5UBsfWH5qrU3uefPCv1XDeLw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795705744; x=1796310544;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qa1Fr1ic+7dw5K+GkYsqx2aXPhAv1AnGBqdarsMvPfQ=;
+        b=JyFo37vPNBA8TMMAs8wOo6TyQDQuvHL8vuwtfyNJn/2LqltEaBrFyx+pOnAHfG4ORO
+         KEdSuqbCX6UeJoox1GmgcJI6/xjT5oNJD3RkrC1/R/9VjsNZ8yaDS36CCPM/q8DBDntJ
+         qLLQFnF7bY0QVf78LzAeflKKg7f7G1f+nWu6j+DmmroMF8pAQGqqBisIDA2QWFe2ghD0
+         n52W5PNsb+Hcz2LKw6jEyXfD7MTjo1eRparYALnrmolMsPmUQl7DRcYzL0hbr2I2S1NE
+         KecAAqqToDa333gIMnlrUjgpPfNbydJmyg7b+TQtpnGmcdgpc//G7EHilhsOT5WhpP+U
+         xmvA==
+X-Forwarded-Encrypted: i=1; AL+hErFke9dMg1ZwgfrtYiUPDpl6COJoDz3EPPB2RY0ovNI1oBvkGFJo05o1dXhrs8WR6uQ3xhWNVFgDUERMO+1nGxM=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/ZdswO3viCyI5etJS9UitP+/kggx4pmuJcr8gUx3kPA6TYvQ5U
+	G1Xmr7XCqMVuTDm/eMmt5KK7c+xtfClokdSAH+ZdCHqc4dTnGnQuidW6V2xtGY3IbNI=
+X-Gm-Gg: AZFdTZc1xY6QMGvjgLPKy3NSiRpKELDKBEsqUtbNS3pectyd20YehRMPpi0d/EdSHLV
+	HhwHXHOBIy+LQRYaKkjOutx7Gz64yGYUsLCf7p83UshCL98EHjgoOxS101YK3Vyul7f0u23F669
+	8lYJLtcCq3mGkCK5Km9CA/rak3piM10wPws89TZ8VaMdi4kS/SMOAOUJsp3cwblb3ry8/AX22Px
+	l9yVJMKYBTj6//NVI9ew5ZexRQZTOACYGFEmoxxbEV4kKR2d8cAtZNxizyAyd3bsirjfqe0+KkM
+	65gRUMZVnGRJD9FkcKWXIvTI+U/iIJy5f9k8NET+KkO2LECMb71Q3yrphz20iEzvB8u3xSawuse
+	irhMuIc/R3V6W1Hl2Defpe9ynHY4e4V4/+JZEVuXQnMz6IwurYMg9hbVUqvoBb3TALD1LowSpaV
+	UYCo5as0c44IJgvRHzETCACWNVowVk2bEb9Uw3pe0iXH5wwYwAc4RnUhmpYd+KGtKv+XtwQllHz
+	oWlCQks+rFW5ssbHE2Vxya9Gt1wvC7asoqdBzh2zL20j77WpzWq5Hl1TCGeAMy6dUW7FwQQbGqB
+	93cDe4fhby5H1BhOOawTd12kzF3/D8KNZdAUTC5yNPSmylmiqFQQq7bY04Efdzzlyy21BxaV+t5
+	JUWapZO92ZHXQQmhm5Gkg0AG1wsqY3NWLgJ46qjeg64XVLnhBKUi/sQhYzfLLbOLkqKMn9vtGqc
+	7Pf/kr2j+Rvw==
+X-Received: by 2002:a17:90b:2792:b0:3a4:ca46:840f with SMTP id 98e67ed59e1d1-3b41c8e172amr19036608a91.8.1795705743643;
+        Thu, 26 Nov 2026 07:09:03 -0800 (PST)
+Received: from iiitd-S2600STB.iiitd.edu.in ([103.25.231.160])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b41abb1b66sm34512681a91.1.2026.11.26.07.08.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2026 07:09:03 -0800 (PST)
+From: Piyus Kedia <piyus@iiitd.ac.in>
+To: wenjia@linux.ibm.com,
+	jaka@linux.ibm.com,
+	alibuda@linux.alibaba.com,
+	tonylu@linux.alibaba.com,
+	guwen@linux.alibaba.com
+Cc: netdev@vger.kernel.org,
+	linux-s390@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	horms@kernel.org,
+	kapil@presceralabs.ai,
+	stable@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH net v3] net/smc: drop the connection when the peer's failover cursor is impossible
+Date: Thu, 26 Nov 2026 20:38:56 +0530
+Message-Id: <20261126150856.2116458-1-piyus@iiitd.ac.in>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <sashiko-outbox-233843@kernel.org>
+References: <sashiko-outbox-233843@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -106,309 +109,58 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 02/14] nvme-keyring: add 'dhchap' key type
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>,
- Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
- Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
- Chaitanya Kulkarni <kch@nvidia.com>, Eric Biggers <ebiggers@kernel.org>,
- David Howells <dhowells@redhat.com>, Jarkko Sakkinen <jarkko@kernel.org>,
- Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
- Randy Dunlap <rdunlap@infradead.org>, Kees Cook <kees@kernel.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-nvme@lists.infradead.org, keyrings@vger.kernel.org
-References: <20261126-dhchap-keyring-v4-v7-0-ee438ffea527@kernel.org>
- <20261126-dhchap-keyring-v4-v7-2-ee438ffea527@kernel.org>
- <sashiko-outbox-235714@kernel.org>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-235714@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-13.29 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-0.999];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
-X-Spam-Score: -13.29
-X-Spam-Level: 
-X-Spam-Flag: NO
 
-On 11/26/26 3:32 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential
-> issues to consider:
-> - [Critical] nvme-keyring: out-of-bounds read in
->    nvme_dhchap_psk_preparse() via sscanf()
-> - [Medium] nvme-keyring: nvme_dhchap_psk_read() returns -EINVAL when
->    buflen < keylen
-> - [Medium] nvme-keyring: missing .update callback in
->    nvme_dhchap_psk_key_type
-> - [Low] nvme-keyring: inverted kernel-doc for
->    nvme_dhchap_encoded_key_size()
-> - [Low] nvme-keyring: unbounded kzalloc() in nvme_dhchap_psk_preparse()
-> --
-> 
-> commit 96ec6bac915bae99bd1eb311a1d2b97cd0c724f7
-> Author: Hannes Reinecke <hare@kernel.org>
-> 
-> nvme-keyring: add 'dhchap' key type
-> 
-> This commit registers a new dhchap key type to store DH-HMAC-CHAP secret
-> keys with a user-type compatible payload and base64 read formatting.
-> 
->> diff --git a/drivers/nvme/common/keyring.c b/drivers/nvme/common/keyring.c
->> index 87cb51e1f5a7f..de8dab10fa105 100644
->> --- a/drivers/nvme/common/keyring.c
->> +++ b/drivers/nvme/common/keyring.c
-> [ ... ]
->> @@ -253,6 +256,205 @@ key_serial_t nvme_tls_psk_default(struct key *keyring,
->>   }
->>   EXPORT_SYMBOL_GPL(nvme_tls_psk_default);
->>   
->> +static void nvme_dhchap_psk_describe(const struct key *key, struct seq_file *m)
->> +{
->> +	seq_puts(m, key->description);
->> +	seq_printf(m, ": %u", key->datalen);
->> +}
->> +
->> +/**
->> + * nvme_dhchap_psk_preparse - prepare DH-HMAC-CHAP key data
->> + * @prep: preparsed payload of the key data
->> + *
->> + * Decode the DH-HMAC-CHAP key data passed in @prep and
->> + * store the resulting binary data. The binary data includes
->> + * space for the CRC, the version, and the hmac identifier,
->> + * but the data length is just the key data without the CRC.
->> + * This allows the user to read the key data via the
->> + * 'user_read()' function. The additional 'version' ahd 'hmac'
->> + * data is used in the ->read() callback to generate the
->> + * base64 encoded key.
->> + */
->> +static int nvme_dhchap_psk_preparse(struct key_preparsed_payload *prep)
->> +{
->> +	struct user_key_payload *upayload;
->> +	size_t datalen = prep->datalen;
->> +	int ret = -EINVAL, offset = 0;
->> +	char *p;
->> +	u32 crc;
->> +	u8 version, hmac;
->> +
->> +	if (!prep->data || prep->datalen < 10) {
->> +		pr_debug("%s: Invalid key data", __func__);
->> +		goto out_err;
->> +	}
->> +	if (sscanf(prep->data, "DHHC-%01hhu:%02hhu:%n",
->> +		   &version, &hmac, &offset) != 2 || offset != 10) {
->> +		pr_debug("%s: invalid key header\n", __func__);
->> +		goto out_err;
->> +	}
-> 
-> [Severity: Critical]
-> As reported by Martin Belanger on v5 [1], can sscanf() read past the end
-> of prep->data?
-> 
-> add_key() copies plen bytes from userspace into prep->data without
-> appending a NUL terminator:
-> 
-> security/keys/keyctl.c:SYSCALL_DEFINE5(add_key) {
->      ...
-> 		payload = kvmalloc(plen, GFP_KERNEL);
-> 		if (!payload)
-> 			goto error2;
-> 
-> 		ret = -EFAULT;
-> 		if (copy_from_user(payload, _payload, plen) != 0)
-> 			goto error3;
->      ...
-> }
-> 
-> Inside vsscanf(), each integer conversion calls skip_spaces() before
-> parsing digits, which scans until a NUL byte and ignores prep->datalen.
-> A non-NUL-terminated payload of 10 or more bytes starting with "DHHC-"
-> or "DHHC-1:" followed by whitespace causes an out-of-bounds kernel memory
-> read before the offset check runs.
-> 
-Fixed by allocating a temporary, NULL-terminated buffer.
+Thank you - all three findings are right, and each mechanism was read in
+the tree before acting on it.  v4 is posted separately.
 
->> +
->> +	if (version != 1 || hmac > 3) {
->> +		pr_debug("%s: invalid key version\n", __func__);
->> +		goto out_err;
->> +	}
->> +
->> +	/* skip header and final ':' character */
->> +	if (offset > prep->datalen) {
->> +		pr_debug("%s: invalid key data\n", __func__);
->> +		goto out_err;
->> +	}
->> +	datalen = prep->datalen - offset;
->> +	p = memchr(prep->data + offset, ':', datalen);
->> +	if (p) {
->> +		datalen = (p - (char *)prep->data);
->> +		datalen -= offset;
->> +	}
->> +
->> +	/*
->> +	 * payload is < key | version | hmac >
->> +	 * base64 decode will always return less data
->> +	 * than the encoded data, so allocating the size
->> +	 * of the encoded data will be large enough.
->> +	 */
->> +	upayload = kzalloc(sizeof(*upayload) + datalen, GFP_KERNEL);
->> +	if (!upayload) {
->> +		ret = -ENOMEM;
->> +		goto out_err;
->> +	}
->> +
->> +	/* decode the data */
->> +	prep->payload.data[0] = upayload;
->> +	ret = base64_decode(prep->data + offset, datalen, upayload->data,
->> +			    true, BASE64_STD);
->> +	if (ret < 0) {
->> +		pr_debug("%s: Failed to decode key\n", __func__);
->> +		ret = -EINVAL;
->> +		goto out_free;
->> +	}
->> +	if (ret != 36 && ret != 52 && ret != 68) {
-> 
-> [Severity: Low]
-> Should datalen be checked against the valid base64-encoded key lengths
-> (48, 72, or 92 bytes) before calling kzalloc() and base64_decode()?
-> 
-> Because add_key() allows payloads up to almost 1 MiB, an oversized
-> payload without an early trailing colon triggers a large physically
-> contiguous GFP_KERNEL allocation and decodes the entire buffer before
-> being rejected by the decoded length check.
-> 
-Added a check at the start to catch overly long keys.
+[High] premature cursor rewind before abort check
 
-> [ ... ]
-> 
->> +/**
->> + * nvme_dhchap_encoded_key_size - Size of the base64-encoded key
->> + * @size: size of the encoded key
->> + *
->> + * Returns the expected size of the key after base64 decoding
->> + * include 4 bytes of CRC.
->> + */
->> +static inline int nvme_dhchap_encoded_key_size(int size)
-> 
-> [Severity: Low]
-> This isn't a bug, but the kernel-doc for nvme_dhchap_encoded_key_size()
-> has the input and return value reversed: @size is the raw decoded key
-> length (32, 48, or 64 bytes, excluding the 4-byte CRC), and the return
-> value is the base64-encoded length including the 4-byte CRC.  Also,
-> nvme_dhchap_psk_describe() above is identical to nvme_tls_psk_describe()
-> in the same file (and to user_describe()).
-> 
-Fixed with the next version.
+Correct, and this is the one that mattered most.  v3 ran the check inside
+the fix-up block and returned 0 from there, by which point
 
-> [ ... ]
-> 
->> +static long nvme_dhchap_psk_read(const struct key *key,
->> +				 char *buffer, size_t buflen)
->> +{
->> +	const struct user_key_payload *upayload;
->> +	size_t datalen, keylen;
->> +	u8 version, hmac;
->> +	long ret;
->> +
->> +	upayload = user_key_payload_locked(key);
->> +	/*
->> +	 * Expected output string length:
->> +	 * strlen("DHHC-") +
->> +	 * version (= 1) +
->> +	 * ':' (= 1) +
->> +	 * hmac (= 2) +
->> +	 * ':' (= 1) +
->> +	 * encoded base64 key length +
->> +	 * ':' (= 1)
->> +	 */
->> +	ret = nvme_dhchap_encoded_key_size(upayload->datalen);
->> +	if (ret < 0)
->> +		return ret;
->> +	keylen = ret + 11;
->> +	if (!buffer || !buflen)
->> +		return keylen;
->> +	else if (buflen < keylen)
->> +		return -EINVAL;
-> 
-> [Severity: Medium]
-> Should nvme_dhchap_psk_read() return keylen instead of -EINVAL when
-> buflen < keylen?
-> 
-> The key_type->read() contract and keyctl_read_key() expect ->read() to
-> return the required size without copying whenever the caller's buffer is
-> too small, so returning -EINVAL breaks keyctl(KEYCTL_READ) callers that
-> probe the key size with a small non-NULL buffer.
-> 
-Fixed with the next version.
+	smc_curs_copy(&conn->tx_curs_sent, &conn->tx_curs_fin, conn);
+	smc_curs_copy(&conn->local_tx_ctrl.prod, &fin, conn);
 
->> +
->> +	memset(buffer, 0, buflen);
->> +	version = upayload->data[upayload->datalen + 4];
->> +	hmac = upayload->data[upayload->datalen + 5];
->> +	ret = sprintf(buffer, "DHHC-%01hhu:%02hhu:", version, hmac);
->> +	if (ret < 0)
->> +		return -ENOKEY;
->> +	/* Include the trailing CRC */
->> +	datalen = upayload->datalen + 4;
->> +	ret += base64_encode(upayload->data, datalen, buffer + ret,
->> +			     true, BASE64_STD);
->> +	buffer[ret] = ':';
->> +	ret++;
->> +	return ret;
->> +}
->> +
->> +static struct key_type nvme_dhchap_psk_key_type = {
->> +	.name           = "dhchap",
->> +	.flags          = KEY_TYPE_NET_DOMAIN,
->> +	.preparse       = nvme_dhchap_psk_preparse,
->> +	.free_preparse  = user_free_preparse,
->> +	.instantiate    = generic_key_instantiate,
->> +	.revoke         = user_revoke,
->> +	.destroy        = user_destroy,
->> +	.describe       = nvme_dhchap_psk_describe,
->> +	.read           = nvme_dhchap_psk_read,
->> +};
-> 
-> [Severity: Medium]
-> As reported by Martin Belanger on v6 [2], should nvme_dhchap_psk_key_type
-> define .update = user_update?
-> 
-> Without .update, keyctl(KEYCTL_UPDATE) fails with -EOPNOTSUPP and
-> add_key() allocates a new key with a different serial number instead of
-> updating an existing dhchap key in place, breaking key rotation for
-> controllers referencing a pre-provisioned key by serial number.  The
-> later commit "nvme-auth: allow to update pre-provisioned keys" in this
-> series mentions adding .update to the dhchap key type, but adds
-> .update = user_update to nvme_tls_psk_key_type instead.
-> 
-> [1] https://lore.kernel.org/r/463a55e8-c2ef-4d83-94ff-7599c7d931e6@gmail.com
-> [2] https://lore.kernel.org/r/a71a3d9f-0f19-45f4-bc98-a5663ad537b2@gmail.com
-> 
-Fixed with the next version.
+had already run, so the connection was left with prod behind
+local_rx_ctrl.cons and peer_rmbe_space still holding the credit the forged
+message produced - the atomic_set() that recalculates it is below the
+block I returned from.  And the tx path tests conn->killed and
+local_rx_ctrl.conn_state_flags.peer_conn_abort, not out_of_sync or the
+local_tx_ctrl flag v3 set, so a send under lock_sock() could reach
+smc_tx_rdma_writes() before abort_work got the socket lock.
 
-Cheers,
+v4 validates before anything is rewound and drops the connection with the
+cursors as it found them.
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+[High] incomplete peer consumer cursor validation
+
+Right on all three counts.
+
+The bound is now the bytes that were SENT and not yet confirmed - the
+distance between snapshots of tx_curs_fin and tx_curs_sent - rather than
+sndbuf_desc->len - sndbuf_space.  As you say, that counter covers the
+PREPARED bytes, so v3 would have advanced the cursors over data still
+sitting in sndbuf.
+
+cons.count and the difference are both bounded by peer_rmbe_size now.  v3
+left that to smc_curs_add()'s single subtraction, which is exactly as much
+as you describe: with sndbuf_desc->len larger than peer_rmbe_size, a
+difference in between passed and left prod.count outside the RMBE.  Below
+peer_rmbe_size the repair is exact - prod starts at fin and the difference
+is their distance, so prod lands on cons rather than behind it, which also
+closes the "halts sending" case in your third point.
+
+[Medium] false-positive abort racing tx completion
+
+Right, and it is the same line that caused it.  smc_cdc_tx_handler()
+credits sndbuf_space before updating local_tx_ctrl_fin, and
+smc_switch_cursor() holds only send_lock, so an honest completion between
+the two reads gave a diff computed from the pre-completion cursor and an
+unconfirmed from the post-completion counter.  Comparing two cursor
+differences removes the mismatch: both come from snapshots taken together,
+and neither is an atomic counter the other path updates first.
+
+Tested on 7.3.1 with KASAN; net/smc/smc_core.o builds clean.
+
+pw-bot: cr
