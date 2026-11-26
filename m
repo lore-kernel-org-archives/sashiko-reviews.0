@@ -1,113 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.65
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795710716;
-	b=ObWeKD4H58N9LmpruxCWwM1jXNTkHj33mUjRjvbWemiLKEY8Wtm/LcjeP0/0cVG+s3bp
-	 2c3N9v2k0NPUyYZiST/M9FalRWz4gADv63YnfYTIiuueWAl94h1JsZ1M4YhvIEcebYG6F
-	 WU01SMse5BVnIZ2fBP1EheumDNLNYsZWmN1JD0z3cGc6htFKNogIl3m4mkzf6LfiOOKgk
-	 1EemeK/VfYkLpayRqONIXTujRHrD1v2j3mULWCXMBVHea3Cd4bLMsnOKqcgeiDVFFRuED
-	 K2Q9ZnA0TLwiHHeyDTlx+pwzzA6pIPCy4Au2u33yTqMdHoIC+gDn9ywlgvuaxnSUZNw==
+	t=1795711783;
+	b=sVfnDCgnmBW9rGEXaKD+Gv9Acn+IOsX/jizL4Qnbu+MT/rlpheNoPeHZfLwplIozzYe9
+	 H5qZQoW59SuKmtHKpaEHLz8DMtD79Cxfhv/L5567BI8AgsEmr2hJY0+6IxwNfiYPiIYk+
+	 stVUNkYJVV7+KZTenVy5TGAPT5krz3MvxGOmZNywBxxnRctj/j5HveGNA3PYI3h/p/YrA
+	 Uff0XBAVsLhr7zT566MsTlen+X1mzlpB919UpxbZm2tDDy0pOTxrXVVYhviFZe8SIvbEi
+	 B3DFwoAiE010485z/CK51X3t/EIn7Qdk8W3AV0uOppdp3tPg/Nykz/m1Ki/hvMPoXEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795710716;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=pOJ/fNe9TGkQu8O/yDVaqAATqQ7AjargAEnACec+OTE=;
-	b=X6LDNuC3r5D8WBNBt8L3wi198sDKB86MJzpGZNShhy86bkA/6BUMfCeJYSYKFCvZdCFW
-	 q7qThi2Yb3lA0G3Hb/6WzT7LgHgbNCpDlXbVVhK5jWhIkz+JgJb24PSfLkz+jmclYnB6t
-	 W4h7txR/rRM9SKgslODsewxPM2YyMA5tzXl0L51UQarh4CiCVb0vnjFM6ZUb/Y9O+q+9N
-	 OtEekb1qaThFNvAE78y+orvS/4M/fHwDCy7Wat7b3EeHuN06FvCyrIFZmj2h4aR+/nODC
-	 u2S9odXi7QQD/ITJaK3IN/15DZbYCsct5Ysawu4uuEjeIq04i73AwKDq/QAunprYtmA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795711783;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=Xn3AbwEHXU3sQNg1nNqXcaifYswIT1oFNQRvMaw2t3k=;
+	b=MnN+npMx1/fOMyMHLOo+dM8vqTY961AfHk0Q9fNcEh3gMLiciDtNpaMeUCSz2KZt4VDi
+	 zAqdlX2VMu3isyzCM6TOoTNGkpD3aJhzfSCgMUX0jXCg+65GkITBxsq9pYen6MCNtHGo6
+	 Y7+igdmzoj/8toZOKF+WbBoLJgBWUM1IufUzxNswOZuym/5652j7QW6zn3H1U8bg1OfKU
+	 2SE3Lr0Q6a48hhB/smaHQmB1NR1tF8QHv54ANw/xNSKMlkLVB9R8oaCrDQQVjCdfsV3ZM
+	 gdAH+qNAaQ1qlJctWMHw3ZbqQYZs1N/HGXiSjlM3oeMfR9sp+kZ0JUO05RlDPKiwKsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=NJuAlJ0J;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=saPQeAIZ;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=NJuAlJ0J;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=saPQeAIZ;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WK7cwJEa;
+	arc=none smtp.remote-ip=74.125.224.65
+Received: from mail-yx1-f65.google.com (mail-yx1-f65.google.com [74.125.224.65])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C6160A3808
-	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 16:31:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B6C6160A3808
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43009606A31E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 16:49:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 43009606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=NJuAlJ0J;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=saPQeAIZ;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=NJuAlJ0J;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=saPQeAIZ
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 240CE21F9B;
-	Thu, 26 Nov 2026 16:31:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795710714; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pOJ/fNe9TGkQu8O/yDVaqAATqQ7AjargAEnACec+OTE=;
-	b=NJuAlJ0J2BD6NIVyduIGZVnFuFkKC2SDznar8bKGnUOusKpAWIF3PLc+xZwv2Q9BHgXU3M
-	tqf6GBPXWz97VE59Q2XfkVNDJUe7Uyo5EVorDQ1ZbcSeZY3fUyr16LU8Xf5QG4JHPxL2J3
-	4U3YeftEHBirpwViPbT824vBpMbMlN0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795710714;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pOJ/fNe9TGkQu8O/yDVaqAATqQ7AjargAEnACec+OTE=;
-	b=saPQeAIZg9P2W/QLc21Eo4ld1FqiKoKs4LydEn2zqBoxjZTO2KF4+T6dD2gfbirwiMR/os
-	gBkQEgxsPznpFxBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795710714; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pOJ/fNe9TGkQu8O/yDVaqAATqQ7AjargAEnACec+OTE=;
-	b=NJuAlJ0J2BD6NIVyduIGZVnFuFkKC2SDznar8bKGnUOusKpAWIF3PLc+xZwv2Q9BHgXU3M
-	tqf6GBPXWz97VE59Q2XfkVNDJUe7Uyo5EVorDQ1ZbcSeZY3fUyr16LU8Xf5QG4JHPxL2J3
-	4U3YeftEHBirpwViPbT824vBpMbMlN0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795710714;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pOJ/fNe9TGkQu8O/yDVaqAATqQ7AjargAEnACec+OTE=;
-	b=saPQeAIZg9P2W/QLc21Eo4ld1FqiKoKs4LydEn2zqBoxjZTO2KF4+T6dD2gfbirwiMR/os
-	gBkQEgxsPznpFxBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C4883134E8;
-	Thu, 26 Nov 2026 16:31:53 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id vrCcCfleCGvnJgAAD6G6ig:T3
-	(envelope-from <tzimmermann@suse.de>); Thu, 26 Nov 2026 16:31:53 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: deller@gmx.de,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 2/2] fbcon: Provide a single implementation of fbcon_set_rotation()
-Date: Thu, 26 Nov 2026 17:23:11 +0100
-Message-ID: <20261126163150.91355-3-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261126163150.91355-1-tzimmermann@suse.de>
-References: <20261126163150.91355-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WK7cwJEa
+Received: by mail-yx1-f65.google.com with SMTP id 956f58d0204a3-67da7d18f2fso8100287d50.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 08:49:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795711782; x=1796316582; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Xn3AbwEHXU3sQNg1nNqXcaifYswIT1oFNQRvMaw2t3k=;
+        b=WK7cwJEaW2j68ZLCs4NH1xptC+ha3+IkfiWHQ3+0algtFoph0I3GUZn/RQTzgu06Of
+         ZHtr0dBbHh1SjuloWGgWtQzqnHGHbu1uz3LTvKWGd0L1MPjMLAwqpCm4kIV5KaV79k7o
+         nOwlDFRNkpWbqKffTMq1eV1JxiR9cZvSU34X9fUOF0MFT6Ut4XJdWUOKSdSX3MxR3yqS
+         TMsl9hjy0QPzgthQkZjNuFfH1K9zNPzItnyJ59yl6iufoB+queUPJ8sFM2oooAEPoAjG
+         BuoLsQrrYAlkF9jvlB/f02bYFk2S88/zQisVkw6V8HsTmxIkZKO8CH7JGZ0jlFrGfW9b
+         wZEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795711782; x=1796316582;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Xn3AbwEHXU3sQNg1nNqXcaifYswIT1oFNQRvMaw2t3k=;
+        b=Nr2+NIImAt6SoyOJGJ4Kozfz1J/0ek0fACnsoWAIYhABaDg1e1FDDEmQhYTdeCVxz2
+         7sx1ZqG7APHbIkrvKYOuxMxCQ1BJW87wZdKS6hPlqTqHgdNcoMwgxAMN5zdsA//1CZ6X
+         dXx012mI6iu9eLJS2C26UuyzEODm6mlU/8jx8QEQ3HeK6u6FA/cBtHqf8PdBVFLL+lOt
+         iKwFJWs6O98BffdZmb377UtnaeVGkawzEGPNcyetC2Yj0Mkp762b+ebEaNkdY1132zVb
+         vHXTtAdvTZfmMMPCk49j3HZgcTWIgQZgHl94Ydf1YvGAxA0rUUG/A3uqaQ/H5xRBivsA
+         D30A==
+X-Gm-Message-State: APuU4Z+IyRocY15m3fBGVNuBZMHBSFwxSFOWUVb7e2kbq+EDLqZIekjN
+	E6u+BBp4/2/PyY3x/OIIdMVgYmdd5dup39iH6b3tu/1xZwic53ZTFjtbjs/QjX6v
+X-Gm-Gg: AZFdTZeKbVeaG5JjMSNE7ZlUBwhEo+5yUJPt59P3UW2qVACaw0c3zs0/Doo9HVXxzpT
+	ellzsoeA1qvqHp7FKd4LiBcq4V1AJy4s6znt+5BS+0HRVkjUey7l6w360YVQGNoLpw0mp74XTO2
+	h09g31P30DFNUWgn5X0Z4dNGVdMMbI8arKBsHyl/rnqREF/fyyn2GPgIoN06BRmSmxbRw7fXsD2
+	cYTR/AiSfxVZoyuJOUnjwwg09o34w/poiAdP0tlYpSAOHBjb8R7nHpqe5WUq8dtWtQM8mlcb78S
+	x5PrExuAdyM8BwQW/j0XXmPY4ixINtPQeXcuvtJR6ONBWzjBwkcmk0KjIt+Hgo/hTzuUw/F3C2O
+	xHX1gYWuZkVcjobO2m3wMgDOu/XXcEGXVQdGG32a4rJHuO+aWfltWPOUm4OFcRlGvSr7thKnD3R
+	toIg/Q7eqOqnhMmMqjGzuYO+jareXlN9BTAikhnjxK1xacq1niAQddUiDXb3Iz1xdLjMRLlAwZ0
+	OxBrg7YcE2VYbt91ECsWAVsJcS/YSi0ACZ3GqQTnYjD97XauC1I9RRndNR4DZ/hdW+ROh6iQAzv
+	AWCawg15hfChRlH+T25sYNqUBIsPeq5NH8+R
+X-Received: by 2002:a53:ac93:0:b0:679:b8fe:a6f6 with SMTP id 956f58d0204a3-67dec48f5cemr8552044d50.33.1795711782318;
+        Thu, 26 Nov 2026 08:49:42 -0800 (PST)
+Received: from [10.0.0.48] ([71.69.222.122])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67df330bfb1sm10473400d50.6.2026.11.26.08.49.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Nov 2026 08:49:42 -0800 (PST)
+Message-ID: <45f16f1a-66f7-4300-bffb-3d279b6c4bfb@gmail.com>
+Date: Thu, 26 Nov 2026 11:49:40 -0500
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -117,89 +90,54 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-11.80 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_TO(0.00)[gmx.de,ffwll.ch];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCPT_COUNT_FIVE(0.00)[6];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de]
-X-Spam-Score: -11.80
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 13/14] nvme-auth: link pre-provisioned keys into .nvme
+ keyring
+To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>,
+ Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+ Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
+ Hannes Reinecke <hare@suse.de>, Chaitanya Kulkarni <kch@nvidia.com>,
+ Eric Biggers <ebiggers@kernel.org>, David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap
+ <rdunlap@infradead.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: linux-nvme@lists.infradead.org, keyrings@vger.kernel.org
+References: <20261126-dhchap-keyring-v4-v7-0-ee438ffea527@kernel.org>
+ <20261126-dhchap-keyring-v4-v7-13-ee438ffea527@kernel.org>
+ <sashiko-outbox-235710@kernel.org>
+Content-Language: en-US
+From: Martin Belanger <martin.nvme.dev@gmail.com>
+In-Reply-To: <sashiko-outbox-235710@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Merge both implmentations of fbcon_set_rotation() into one. In the
-case of CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=n, fbcon_display_rotation()
-returns FB_ROTATE_UR. So the new code is equivalent to the existing
-code.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/video/fbdev/core/fbcon.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 7e39c40abe88..08712611e333 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -206,13 +206,6 @@ static int fbcon_display_rotation(const struct fb_info *info, const struct fbcon
- 	return FB_ROTATE_UR;
- }
- 
--static inline void fbcon_set_rotation(struct fb_info *info)
--{
--	struct fbcon_par *par = info->fbcon_par;
--
--	par->rotate = fbcon_display_rotation(info, par->p);
--}
--
- static void fbcon_rotate(struct fb_info *info, u32 rotate)
- {
- 	struct fbcon_par *par = info->fbcon_par;
-@@ -263,13 +256,6 @@ static int fbcon_display_rotation(const struct fb_info *info, const struct fbcon
- 	return FB_ROTATE_UR;
- }
- 
--static inline void fbcon_set_rotation(struct fb_info *info)
--{
--	struct fbcon_par *par = info->fbcon_par;
--
--	par->rotate = FB_ROTATE_UR;
--}
--
- static void fbcon_rotate(struct fb_info *info, u32 rotate)
- {
- 	return;
-@@ -281,6 +267,13 @@ static void fbcon_rotate_all(struct fb_info *info, u32 rotate)
- }
- #endif /* CONFIG_FRAMEBUFFER_CONSOLE_ROTATION */
- 
-+static void fbcon_set_rotation(struct fb_info *info)
-+{
-+	struct fbcon_par *par = info->fbcon_par;
-+
-+	par->rotate = fbcon_display_rotation(info, par->p);
-+}
-+
- static void fbcon_set_bitops(struct fbcon_par *par)
- {
- 	switch (par->rotate) {
--- 
-2.56.1
+On 11/26/26 09:30, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> Does nvme_keyring_unlink() remove a pre-provisioned key that originally
+> lived in the .nvme keyring or is shared across multiple controllers?
 
+Hi Hannes,
+
+I can confirm this one with a test. nvme-keysd adds the dhchap keys to
+the .nvme keyring. After the first disconnect, or a failed connect,
+the keys are gone from the keyring, and the next connect fails.
+
+I think the kernel should not add keys to a keyring or remove them.
+A pre-provisioned key is either in the keyring or it is not. If it is
+not, the connect fails, and it is up to the user or the key manager to
+fix that. While a controller uses the key, the reference it holds
+(ctrl->host_key) keeps the key alive. So I do not think
+nvme_keyring_link() and nvme_keyring_unlink() are needed for
+pre-provisioned keys.
+
+Otherwise the design works for nvme-keysd: each authentication reads
+the key again, so a key the key manager updates in place reaches the
+next authentication.
+
+I will re-run the test on v8.
+
+Thanks,
+Martin
