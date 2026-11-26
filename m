@@ -1,97 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=45.145.95.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795700282;
-	b=NRY+9EnjEyUtuL/mR1oIk5xukBfxvAkx2YGWwpGeRKkNL+MuggGQxZUhqH+aCCVulBTC
-	 5OSZ3xwNlcIwuooQciAHtgIHcSCGua0jgDdwzWRpBfdDBPN7F4oMmsK0wMENNxaeBAbs1
-	 +yW1yEcd37BtvAZp5fa9Ki7JTg0qOsUegFMcfrgTtsNjHrkY2adGvLXPwEhNMHLh00Cvt
-	 MWghsGESG6a48Ur7DxNB8yyuKW6OkqoOUidMExs+wqirJoG2pre5ILESn9U+Hif1WzElb
-	 IsXcxyiUBX4HTrUsgnaxU5kS5PT85mXxTXBjgnhEodiBPliWU9ZoESpasYz4iR/xZJw==
+	t=1795701156;
+	b=SOxWt8xznvBLXmjwx/S2Bkwcs0apRHMD2S46sTN6LyreOhybxeq8TGO1Th1gIFegnaQG
+	 TqiKNRSqN/WTpovZ7BlysFUYFMTLYvwwbC2yGq4Z94Tfqmok52Kopd+alfUGNVw0vO1Al
+	 yrArQe2R87q5M7XF2RKPbmjA4p0zyMdfv3uGArRIP1GFGciMfxJkGmCdbsodScPkxNpH/
+	 a+l7CRhNHhE4Hy5Yl9wIi+gfVPnh+f2goZDjFYEcPbsOxpT4S5HKXJOXJBlWDCfl83vpa
+	 SUHWcWGuJtKojCedmAEsRvKgwhGGZL9BwApC2tOPYAPQYESHEksLrWvkqSIm4ZC4j7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795700282;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-TM-AS-GCONF:X-Authority-Analysis:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=02BGqLoy5W4EZR++kJaOBR7XvPnZihslZauH69lTdO4=;
-	b=IbV4uP1k1Elx6MM8VvaC+LbiP0pgEPxH6DAXw5Oby4KuRI+QRrRJdWq3B77ukjJ2DSsP
-	 LDB1zHSyzK9PbmJ+0XyoaROGDtBJGdYbWNOngkpVkezbAaOxCOhEE6MpvMc6G6+pog/EE
-	 FFLuNJEFlGnhbJ09K9Eg9vlFjFTk0SVLTSbobI5v1WGreSU0/CAc87zUoJE3nSVJNnLUz
-	 thrUIX98qsNKwVi6aTUQfyJAka4D2lYAlNYW5nWwl185X4d0Z+GdOvZAbaej6r33ket2X
-	 47vqjA1agsVQNAl0ld46S4BFBjHBWZHkMzCMwo7D1EpS4bmvzgtE6KzGNu7NcPujKJQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795701156;
+	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:X-Clacks-Overhead:Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=PnIJQAG9PVP5cW6nxOZMTWBL/H9qDNzUatre97N764I=;
+	b=N2SyLl8tc4MHdKpRmQCH57ZptgLXptrVeR6m9hyCgLRUfHmT60qGzA8YdYRK0NROm2vT
+	 Q8uTB1w5GMA81WLdgT1eu43YOuFA1efbHKnfrADVO3WGASmqPi0h5s8BoNA2LLIxXR7aP
+	 uQdXCpTJ6GRfcWal2oXikCLQgGio9SwdKhnqKeBzbETMOua5XUAFTehqgvKzJUVxLxsV6
+	 7W2/6Yd9bySFp13OYWvEb5kTNCGdeUjMBb7tzGOCSSWti1yDBcRUKeBD7BAvXcMgr9CEn
+	 UGxGmy1wrFc+ISrC6JBCMjc1fAtEp3uhCLCalHDba8VSD9bAwK6Tbh2QYIDL+TH1lpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=KOls12L7;
-	arc=none smtp.remote-ip=148.163.158.5
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	dmarc=pass header.from=toke.dk;
+	spf=pass smtp.mailfrom=toke.dk;
+	dkim=pass header.d=toke.dk header.i=@toke.dk header.a=rsa-sha256 header.s=20161023 header.b="nqs+hz/c";
+	arc=none smtp.remote-ip=45.145.95.4
+Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDDC606A31C;
-	Thu, 26 Nov 2026 13:38:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DEDDC606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761FD606A31E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 26 Nov 2026 13:52:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 761FD606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=toke.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toke.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=KOls12L7
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AQBYimN4167477;
-	Thu, 26 Nov 2026 13:37:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=02BGqLoy5W4EZR++kJaOBR7XvPnZih
-	slZauH69lTdO4=; b=KOls12L72vnnjXrTjUWBLWgjFhoKFMKnBVXBRAGkcL2Djt
-	F84Yb17spq3+bZpFQ2wuf0Dcao9/PBpsE+Ji/Qsko+/z0ea0RgYQPIuvQ0KmTSk6
-	jD89jMBb8Rr1Hl4jxQnQYVG86ldhJrSFL5QZzkC9Or/pg+4Dnu5SSZ/Wa+AcqhY3
-	73n8tZrXM5kIk954acvwAbs1xkwH44CPf6bhc/jRo7s0FT2jLUnOC9xdjKP2tFz0
-	Wp1FFOjKaxzZylPsocMJf1VVVWgsHo6ClWoPZAY0O4DM+Uf0rmR601nV6ZMDPBtq
-	T53noGrUPWBTzmmcaoL2PUpT2nan/YjXKVspxHTQ==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34gvgy5y-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 26 Nov 2026 13:37:50 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AQBYJ1s1111383;
-	Thu, 26 Nov 2026 13:37:49 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j5kfa6bth-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Nov 2026 13:37:49 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6AQDbjgH45482330
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 26 Nov 2026 13:37:45 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id ACD2C2004D;
-	Thu, 26 Nov 2026 13:37:45 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8027B20043;
-	Thu, 26 Nov 2026 13:37:45 +0000 (GMT)
-Received: from osiris (unknown [9.68.29.29])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu, 26 Nov 2026 13:37:45 +0000 (GMT)
-Date: Thu, 26 Nov 2026 14:37:44 +0100
-From: Steffen Eiden <seiden@linux.ibm.com>
-To: Dan Carpenter <dan@pereq.eu>
-Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
-        kvm@vger.kernel.org, Oliver Upton <oupton@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, linux-s390@vger.kernel.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Janosch Frank <frankja@linux.ibm.com>,
-        Claudio Imbrenda <imbrenda@linux.ibm.com>,
-        Karthik Bhargavan <karthik@pereq.eu>,
-        =?iso-8859-1?Q?Cl=E9ment?= Blaudeau <clement@cryspen.com>
-Subject: Re: [PATCH v2 2/8] KVM: arm64: Reset SP_EL1, ELR_EL1 and SPSR_EL1
- when resetting a vcpu
-Message-ID: <20261126133744.219929-A-seiden@linux.ibm.com>
-References: <20261125-double_exception-v2-0-224689d8a764@pereq.eu>
- <20261125-double_exception-v2-2-224689d8a764@pereq.eu>
- <sashiko-outbox-232760@kernel.org>
- <awam4std0Zifdn9k@stanley.mountain>
- <awan8mSx5cbzXzJ7@stanley.mountain>
+	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.a=rsa-sha256 header.s=20161023 header.b=nqs+hz/c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+	t=1795701153; bh=RrNdxFyecXMWMdkm8aO9a1YP9s2Izo+Q+WVzcDak2JI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=nqs+hz/c2i4kdiWxnxNT+MUX2LeNqxfcJ7NAmd39uKR26CKWQKk8S2u5075m8EUlu
+	 XS2uo/Pqdeb51QlcZRBG9qE8AaNFA1t9Z2gRiXcmgOO1D/M2CgC+Z63h8utmCmjxtH
+	 UO0eRN/mh/F/Z9pt0SpIFT2+0x4Hg1gW8MOOvDOAW3cVqDEsvkZg4OES2ytSP/BB89
+	 87LdA5kloFJE+Q0at2Oba06POaR+Ev10KlEa6WnfJt2N4hycTegH1BlSsS7Uziz4Z6
+	 NClqhPTawixwzVzjV8tHHwbGrPM8die1DC4t0aQylo8IY+J7ovcqY5UCsh/zq671P/
+	 4eMJZNbTl6sdQ==
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next v2 4/7] libbpf: Move bpf_object_prepare_token()
+ to object creation
+In-Reply-To: <sashiko-outbox-235632@kernel.org>
+References: <20261126-bpf-relax-get-next-id-v2-0-039e92757f9c@toke.dk>
+ <20261126-bpf-relax-get-next-id-v2-4-039e92757f9c@toke.dk>
+ <sashiko-outbox-235632@kernel.org>
+Date: Thu, 26 Nov 2026 14:52:32 +0100
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87wlpzd7j3.fsf@toke.dk>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,87 +63,69 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <awan8mSx5cbzXzJ7@stanley.mountain>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=CYCdd7rl c=1 sm=1 tr=0 ts=6b08362e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=tATfSOZSwkvfaf42cScA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA1MyBTYWx0ZWRfX0nYfkJib8H2e
- C5yHfAPDBViPSMaBWZemZJHITHp196Efv9d9lDY2D4QGRrBtNWXV5QylAghC5+n/C0pzn1CmzVY
- qvjr/n3MrMw2bBxhZHzBtATb/ZVAYiU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA1MyBTYWx0ZWRfX8GlYiN7T4QMa
- 09eTnuy+v8pDrTupsl1oO0OqWjqvbe3jHCD8CZv4xatonKxI6cOHvo232QfKTodwESNhbhyXSEJ
- D7itvXKPXSZ8Fqd7UrADUCL+WX8JRx4LI/ziYU0lUSQzq08RDiLeQqGIhvpzFY1mFrBr882Ts6p
- W/D21RUTR2H4FJGQAoh6Y4SdffEXEMfKw9KWDGZa+KQ2etQ0Qa03cd0WbD46KCnK1DrvtUnGXmm
- b9APgYjB671qGYz2F03i7L+SrJFsh/9915QBN+h8wSsKEJRkMder+PssfJ+f3X2qU44ND30WVff
- y5Ipy3rld/r0qscIrEWSD7RobcjH9bphpOehs+KlGEPZ8CTp9vWaDsr6oCYDNUA7OoF1X3YjMQ2
- J1HbUzf/iGDLV6kEQ5oAMk+6NekXF4aAqK82ZNhT3TkEnViiI9VMq2sfKbnyZZAchtrCxqkKK/7
- PRcIu11prvhlGzYKwxQ==
-X-Proofpoint-ORIG-GUID: IOCH92TSPRg1nO84vXqoe5hpnwcJ5ANo
-X-Proofpoint-GUID: IOCH92TSPRg1nO84vXqoe5hpnwcJ5ANo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-26_03,2026-11-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1011 spamscore=0 bulkscore=0 impostorscore=0 adultscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611260053
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 25, 2026 at 12:18:42PM +0300, Dan Carpenter wrote:
-> On Wed, Nov 25, 2026 at 12:14:10PM +0300, Dan Carpenter wrote:
-> > Let me add the s390 maintainers to the CC list.
-> > 
-> > I considered doing it the way Sashiko suggests but s390 doesn't have the
-> > __vcpu_assign_sys_reg() helpers so it broke the build.  The registers are
-> > not the same so, either way, some of this is going to be specific to
-> > arm64.  But Sashiko is correct that s390 probably keeps a stale SP_EL1
-> > across a reset.  The s390 maintainers could probably take the selftest in
-> > patch 8 and modify it for s390.  :)
-> > 
+sashiko-bot@kernel.org writes:
 
-FYI: the arm on s390 KVM in the current upstream state has no idea what
-SP_EL1 is :) 
-
-> 
-> Actually, never mind.  This can be done in kvm_reset_vcpu_core() like
-> Suzuki Poulose suggests.
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Medium] libbpf: bpf_object_open() runs bpf_object_prepare_token()
+>   before gen_loader
+> --
 >
+> commit c11c45202857082e826eb4bc3551463d49a2d5fa
+> Author: Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk>
+>
+> libbpf: Move bpf_object_prepare_token() to object creation
+>
+> This commit moves bpf_object_prepare_token() from bpf_object_prepare() to
+> bpf_object_open() so that the BPF token is available before loading the
+> object, such as during BTF access in bpf_program__set_attach_target().
+>
+>> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+>> index 540daf7752b45..6d0e71aff3e14 100644
+>> --- a/tools/lib/bpf/libbpf.c
+>> +++ b/tools/lib/bpf/libbpf.c
+>> @@ -9281,6 +9281,7 @@ static struct bpf_object *bpf_object_open(const ch=
+ar *path, const void *obj_buf,
+>>  	err =3D err ? : bpf_object__init_maps(obj, opts);
+>>  	err =3D err ? : bpf_object_init_progs(obj, opts);
+>>  	err =3D err ? : bpf_object__collect_relos(obj);
+>> +	err =3D err ? : bpf_object_prepare_token(obj);
+>>  	if (err)
+>>  		goto out;
+>>=20=20
+>
+> [Severity: Medium]
+> Does calling bpf_object_prepare_token() during bpf_object_open() bypass t=
+he
+> obj->gen_loader check added in d92defe04ad5 ("libbpf: Skip BPF token
+> preparation when generating loader")?
+>
+> obj->gen_loader is only set when the caller invokes bpf_object__gen_loade=
+r()
+> on the already-opened object, so it is always NULL inside bpf_object_open=
+():
+>
+> tools/lib/bpf/libbpf.c:bpf_object_prepare_token() {
+> 	...
+> 	if (obj->gen_loader)
+> 		return 0;
+> 	...
+> }
+>
+> If the host has a token-delegated bpffs mounted at /sys/fs/bpf (or
+> LIBBPF_BPF_TOKEN_PATH set), bpf_object_open() populates obj->token_fd and
+> bpf_object__gen_loader() does not clear it.  Subsequent calls to
+> bpf_object__create_map() and bpf_object_load_prog() then set BPF_F_TOKEN_=
+FD
+> in the generated loader program's map_flags and prog_flags without a
+> runtime token_fd, causing the generated loader to fail at runtime.
 
-We share kvm_reset_vcpu_core() as well :) 
+Ah, I had not noticed that gen_loader was set in a separate call. I'll
+add clearing of the token_fd to bpf_object__gen_loader() and respin.
 
-I assume this fix series should go into 7.4. right?
+-Toke
 
-I have a series posted adding the required functions and infrastructure
-for s390 [1]. This will likely go to 7.5.
-
-For 7.4: Add a patch just providing a stub that does nothing for the
-required helper (untested):
-
-diff --git a/arch/s390/include/asm/kvm_host_arm64.h b/arch/s390/include/asm/kvm_host_arm64.h
-index 3e69724f17c9..bdca7ebf6405 100644
---- a/arch/s390/include/asm/kvm_host_arm64.h
-+++ b/arch/s390/include/asm/kvm_host_arm64.h
-@@ -206,4 +206,6 @@ static inline void kvm_arch_async_page_present_queued(struct kvm_vcpu *vcpu)
-
- #define kvm_supports_32bit_el0() false
-
-+#define __vcpu_assign_sys_reg(__vcpu, __reg, __val) (void)
-+
- #endif /* ASM_KVM_HOST_ARM64_H */
-
-
-If this does goes to 7.5 queuing that after the corresponding s390
-patches would be the simpler approach.
-
-Thanks for fixing the bugs 
-
-	Steffen
-
-
-[1] https://lore.kernel.org/all/20261106-sysreg-v3-0-75e95980fb10@linux.ibm.com
+pw-bot: cr
