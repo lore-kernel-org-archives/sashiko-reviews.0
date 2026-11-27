@@ -1,104 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=220.197.31.7
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795765212;
-	b=GAlIrnMfLA6s0/aeqaf96fsD56MniHemeULa4m6HB/gEC2VG1UbEpnvAe3voO5r3/hhH
-	 Zby2MGSdpY3H7h+LMR6pO3KhqjSQ3fUyJxvIG055luox2HACd5F78Sj4JZCRN9AOV1So9
-	 8YtLW309B2sw5STvhsAxMEaSkVyYFhcf3cUmi4YfNDdKCNXXKCdre2tN/Mh6vjy864AHE
-	 RuXlap9OS+caSZnT1VoNj48AQzlDCBWzMZm6tTFM/b1bXyv3eyehs0RJmIweXvJGDKM2U
-	 0Nce0KzBtoa9Hhvahp+EwBE59NHF5CyKoyzpu+fhv6hqEYoXpIMDL3Zlx7aDdCe4yvg==
+	t=1795767014;
+	b=4cI47Y5UTr9wFq+45HXHq5eOx/p1GnABO67jMUFi9eCd64XkDWav8+7P06mjhMSblrfB
+	 tiSiE0LaV6J2weyk9JFv6FVdAXHXcMKFLyYJghfPssXzWxmfZD3eUHgtfLlwlfQravrki
+	 Xy6OIRlG02lB6Go6fdYGB1c+veiiCVYdf3oGdCNeAIHbXAtobYWQh/T+Luiu8A50gryrZ
+	 lKaKRNXHKrpQAY0J8rGrhiPJwsYfri2wMAuLeeiQX5G4VUybIPRnPVEdCMEX7XVYQmwh9
+	 yMWgT+jVRI5b+ZTOGfC9CPkgH+H1fANOBl6fatlWdqNqJO7uM3UIV5n/O8J4MU9vKNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795765212;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=Seaj0QlYAAGKFYCPwjvkTKuTijkUp2U+E5U19NldKYg=;
-	b=RENGxK644P9FQLn9UzjsbDyeyObGCYwKWXckbVhLli8sdsX2M8q1uCJO/wXQRTBYA+AB
-	 MYpc0Zm/B3tuuoNUsdQStnVTyoGbdggvKXEijwfiDFda68sbdIc11a6EVS/ySSrQoQ8Ad
-	 ySWo8con03hU6SfEjiGkWgQKz4gFFpFUZt2G1IAhj+v9DlI4F5IZw1JRZpGICwCCFpwgg
-	 /nOq6GdwYqvR+rBxyPPu4Lmu237Y5hIcPsEmVD3V5P5oOfFZznnZa6bTZIdfQQwR9IPi9
-	 O2+fvInRO5MthftLctzwvUHlHnLXg4baJUbBB+12O2r4X0m6kYHS2Jj1DVTOH2+rUxg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795767014;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-CM-TRANSID:X-Coremail-Antispam:Sender:
+	 X-CM-SenderInfo;
+	bh=z2WPS4JyLBQjVa8az6zNUmfoJeGYnzi48maeQui2YGk=;
+	b=aKnxSt6H3g1YQxA655JwZoCEUbqJdSb1GDBNb6xiYE4V96loDJWT4WWKLE21gsgKGUkk
+	 8CayfMm9B70r+vW7NZ7ZvVJUzWsDPbz5EvifwOTsOngFnl/32UEIE4P+VwTTZ7UTWwOKX
+	 NL5Jm0pQWy6PvACCF+oG6UB68r4cjFJD1KB65rCL1emHieRKuqvY4p6abTxXwv8n8hUsN
+	 UjLnFzi91AMs4jMs/NimAOC4LFH92kfMFZc3L/tQmhGYMzJdnt7V0NK7It0S4aN+YROKs
+	 5rFHbpIf1uVvTRAXeRVjzgOcObvoa9fK9HRLIhMKW3w9835pYw5ItCBjH+fVEv5pu0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ECgggU4n;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lojZlJUN;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ECgggU4n;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lojZlJUN;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dmarc=fail header.from=xiaomi.com;
+	spf=pass smtp.mailfrom=126.com;
+	dkim=pass header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=V4DWH0yz;
+	arc=none smtp.remote-ip=220.197.31.7
+Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.7])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DE5606A31E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 07:40:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35DE5606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F8D606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:10:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04F8D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=xiaomi.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ECgggU4n;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lojZlJUN;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ECgggU4n;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=lojZlJUN
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 0112422730;
-	Fri, 27 Nov 2026 07:40:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795765210; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Seaj0QlYAAGKFYCPwjvkTKuTijkUp2U+E5U19NldKYg=;
-	b=ECgggU4nl9i3bvBsUBxSL/BP/CP9EiDhq4CHetH50PmsSNTt/Ijf6doVLrtOXtbQoKUjqO
-	yxKRwFgT4yX777PxlYOSAtJY94pAevPde2c13Ox07vGs5QoE9njNDwvN3Tjh8b4QzhDMtJ
-	HIf38hm5/uMlzkaspqLAB10J4w/swN0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795765210;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Seaj0QlYAAGKFYCPwjvkTKuTijkUp2U+E5U19NldKYg=;
-	b=lojZlJUNUug0DXDEtJ1/TXChzeN7otMLnlvWmQ5djZ05I4b34NawMERk2AzmxIJ6fKMmtf
-	T+vW+vhkfje6s+AA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ECgggU4n;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lojZlJUN
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795765210; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Seaj0QlYAAGKFYCPwjvkTKuTijkUp2U+E5U19NldKYg=;
-	b=ECgggU4nl9i3bvBsUBxSL/BP/CP9EiDhq4CHetH50PmsSNTt/Ijf6doVLrtOXtbQoKUjqO
-	yxKRwFgT4yX777PxlYOSAtJY94pAevPde2c13Ox07vGs5QoE9njNDwvN3Tjh8b4QzhDMtJ
-	HIf38hm5/uMlzkaspqLAB10J4w/swN0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795765210;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Seaj0QlYAAGKFYCPwjvkTKuTijkUp2U+E5U19NldKYg=;
-	b=lojZlJUNUug0DXDEtJ1/TXChzeN7otMLnlvWmQ5djZ05I4b34NawMERk2AzmxIJ6fKMmtf
-	T+vW+vhkfje6s+AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6539C13432;
-	Fri, 27 Nov 2026 07:40:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id SXQCEdkzCWtZLQAAD6G6ig
-	(envelope-from <hare@suse.de>); Fri, 27 Nov 2026 07:40:09 +0000
-Message-ID: <1485af79-af07-4b6f-82dc-f2f442cd9686@suse.de>
-Date: Fri, 27 Nov 2026 08:40:00 +0100
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=V4DWH0yz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=z2
+	WPS4JyLBQjVa8az6zNUmfoJeGYnzi48maeQui2YGk=; b=V4DWH0yz4Hxc2E44OV
+	3qnKP624PPmfYc2UKZj/j4RHu4IvoUIlpmO4VdqRjF/UWsiC6ipP9NCGzYEstCXs
+	HCFGgJBFVTQQZc0ZdJmp4U6pUC/wM8d+QVCuYrTD8zDZT+VZwOIZN47swrwxwiTp
+	PQuOVlTqiJeXWHPT0Ss5MOh1Y=
+Received: from nzzhao-ThinkCentre-M760t.mioffice.cn (unknown [])
+	by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wD3Pwd_OglrliZsEA--.60259S2;
+	Fri, 27 Nov 2026 16:08:33 +0800 (CST)
+From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
+To: sashiko-bot@kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Tangquan Zheng <zhengtangquan@oppo.com>,
+	linux-mm@kvack.org,
+	linux-block@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Jens Axboe <axboe@kernel.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Usama Arif <usama.arif@linux.dev>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Chris Li <chrisl@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Ying Huang <ying.huang@intel.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Kanchana P Sridhar <kanchana.p.sridhar@intel.com>,
+	Wajdi K Feghali <wajdi.k.feghali@intel.com>,
+	Bala Seshasayee <bala.seshasayee@linux.intel.com>,
+	Nick Terrell <terrelln@fb.com>,
+	Barry Song <baohua@kernel.org>,
+	Bo Zhang <zhangbo56@xiaomi.com>,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [RFC PATCH v4 1/4] mm: zsmalloc: support objects compressed based on multiple pages
+Date: Fri, 27 Nov 2026 16:08:22 +0800
+Message-ID: <20261127080831.3599864-1-zhaonanzhe@xiaomi.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <sashiko-outbox-216088@kernel.org>
+References: <20261115024455.1465726-1-zhaonanzhe@xiaomi.com> <20261115024455.1465726-2-zhaonanzhe@xiaomi.com> <sashiko-outbox-216088@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -108,177 +86,177 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 09/14] nvme: allow to pass in key description as dhchap
- secret
-To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>,
- Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
- Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
- Chaitanya Kulkarni <kch@nvidia.com>, Eric Biggers <ebiggers@kernel.org>,
- David Howells <dhowells@redhat.com>, Jarkko Sakkinen <jarkko@kernel.org>,
- Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
- Randy Dunlap <rdunlap@infradead.org>, Kees Cook <kees@kernel.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-nvme@lists.infradead.org, keyrings@vger.kernel.org
-References: <20261126-dhchap-keyring-v4-v7-0-ee438ffea527@kernel.org>
- <20261126-dhchap-keyring-v4-v7-9-ee438ffea527@kernel.org>
- <sashiko-outbox-235701@kernel.org>
-Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-235701@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 0112422730
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-13.50 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_TLS_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Score: -13.50
+X-CM-TRANSID:_____wD3Pwd_OglrliZsEA--.60259S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxuFykWr4rXFyxtrykWr47CFg_yoWxXFWDp3
+	WxCanrAr4rXFy8J3y7Ar4kAanIywsxKF48KayrurWfuFWrJ3s2gFy7Kry3XF48ArsrA3yx
+	Xws2yw43Aa1rCw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U9XocUUUUU=
+Sender: nzzhao@126.com
+X-CM-SenderInfo: xq22xtbr6rjloofrz/xtbBowHLm2sJOoG5ZwAA31
 
-On 11/26/26 3:27 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] nvme-auth: ERR_PTR dereference after key_lookup() in show and
->    init helpers
-> - [Medium] nvmet-auth: wrong generated flag updated in
->    nvmet_auth_update_key()
-> --
-> 
-> commit 23f2a5a7beef9101cd52fed1a3096af44469d991
-> Author: Hannes Reinecke <hare@kernel.org>
-> 
-> nvme: allow to pass in key description as dhchap secret
-> 
-> This commit updates nvme_auth_extract_key() to look up pre-populated
-> keys by description in addition to generating keys from raw secret data,
-> and tracks whether keys were auto-generated so pre-populated keys are
-> not revoked on teardown.
-> 
->> diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
->> index ff0e8569d7067..54e79c8a7cae6 100644
->> --- a/drivers/nvme/target/auth.c
->> +++ b/drivers/nvme/target/auth.c
->> @@ -20,31 +20,38 @@
->>   #include "nvmet.h"
->>   
->>   static void nvmet_auth_update_key(struct nvmet_host *host, bool set_ctrl,
->> -				  struct key *new_key)
->> +				  struct key *new_key, bool new_generated)
->>   {
->>   	key_serial_t old_key_id = 0, new_key_id = key_serial(new_key);
->>   	struct key *key = NULL;
->> +	bool generated = false;
->>   
->>   	if (set_ctrl) {
->>   		if (host->dhchap_ctrl_key) {
->>   			if (host->dhchap_ctrl_key == new_key_id) {
->> -				if (new_key)
->> +				if (new_key && new_generated)
->>   					key_revoke(new_key);
->>   				return;
->>   			}
->>   			old_key_id = host->dhchap_ctrl_key;
->> +			generated = host->dhchap_ctrl_key_generated;
->> +			host->dhchap_ctrl_key_generated = false;
->>   		}
->>   		host->dhchap_ctrl_key = new_key_id;
->> +		host->dhchap_key_generated = new_generated;
-> 
-> [Severity: Medium]
-> Should the set_ctrl branch update host->dhchap_ctrl_key_generated instead
-> of host->dhchap_key_generated?
-> 
-> As written, host->dhchap_ctrl_key_generated remains false, so
-> nvmet_host_dhchap_ctrl_key_show() prints the internal UUID description
-> instead of the secret for auto-generated controller keys and replacing or
-> clearing the controller key never revokes it.  At the same time, setting
-> or clearing the controller key overwrites host->dhchap_key_generated,
-> which can cause a pre-populated host key to be revoked or an
-> auto-generated host key to be leaked.
-> 
-Fixed with the next version.
-
-> [ ... ]
-> 
->> diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
->> index f6bfda757f076..3defa3f948497 100644
->> --- a/drivers/nvme/target/configfs.c
->> +++ b/drivers/nvme/target/configfs.c
->> @@ -2248,13 +2248,15 @@ static ssize_t nvmet_host_dhchap_key_show(struct config_item *item,
->>   		down_read(&key->sem);
->>   		if (key_validate(key))
->>   			ret = sprintf(page, "<invalidated>\n");
->> -		else {
->> +		else if (host->dhchap_key_generated) {
->>   			ret = key->type->read(key, page, PAGE_SIZE);
->>   			if (ret > 0) {
->>   				page[ret] = '\n';
->>   				ret++;
->>   			}
->> -		}
->> +		} else
->> +			ret = scnprintf(page, PAGE_SIZE,
->> +					"%s\n", key->description);
->>   		up_read(&key->sem);
->>   		key_put(key);
->>   	}
-> 
 > [Severity: High]
-> Can nvmet_host_dhchap_key_show() and nvmet_host_dhchap_ctrl_key_show()
-> dereference an error pointer when the key is unset or has been unlinked?
-> 
-> drivers/nvme/target/configfs.c:nvmet_host_dhchap_key_show() {
-> 	down_read(&nvmet_config_sem);
-> 	key = key_lookup(host->dhchap_key);
-> 	if (!key) {
-> 		page[0] = '\0';
-> 		ret = 0;
-> 	} else {
-> 		down_read(&key->sem);
-> ...
-> }
-> 
-> key_lookup() returns ERR_PTR(-ENOKEY) rather than NULL when a key serial
-> is not found (including when host->dhchap_key is 0), so the !key check
-> falls through to the else branch and dereferences ERR_PTR(-ENOKEY) in
-> down_read(&key->sem).  nvme_auth_init_ctrl() and nvmet_setup_auth() also
-> check !host_key and !ctrl_key instead of IS_ERR() after key_lookup(),
-> which can similarly oops if a pre-populated key was unlinked after option
-> or configfs parsing dropped its reference.
-> 
-Already fixed with updates to the previous patch.
+> Does this break compilation at this commit?
+>
+> obj_allocated() only takes two arguments (zpdesc and obj) and returns the
+> handle pointer, so passing &handle fails to build until commit "zram: support
+> compression at the granularity of multi-pages" reverts this line back to the
+> two-argument call.
 
-Cheers,
+Yes, patch 1 breaks compilation on its own. I will fold the mm/zsmalloc.c
+change from patch 2 into patch 1 to keep bisectability intact:
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1698,2 +1698,3 @@ static struct zs_handle *find_alloced_obj(struct size_class *class,
+-		if (obj_allocated(zpdesc, addr + offset, &handle))
++		handle = obj_allocated(zpdesc, addr + offset);
++		if (handle)
+ 			break;
+
+> [Severity: High]
+> Does calling memcpy_to_page() here trigger VM_BUG_ON(offset + len > PAGE_SIZE)
+> when writing a multi-page object that spans two zpdescs?
+>
+> For a multi-page class, page_size is larger than PAGE_SIZE, so off + sizes[0]
+> equals page_size and exceeds PAGE_SIZE in the first memcpy_to_page() call
+> (and sizes[1] can also exceed PAGE_SIZE in the second call).
+
+Agreed. I will replace it with kmap_local_zpdesc() and memcpy():
+
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1270,16 +1270,18 @@ static void obj_write(struct size_class *class, struct zspage *zspage,
+ 	} else {
+ 		/* this object spans two pages */
+ 		size_t sizes[2];
++		void *dst;
+ 
+ 		sizes[0] = page_size - off;
+ 		sizes[1] = size - sizes[0];
+ 
+-		memcpy_to_page(zpdesc_page(zpdesc), off, src, sizes[0]);
++		dst = kmap_local_zpdesc(zpdesc);
++		memcpy(dst + off, src, sizes[0]);
++		kunmap_local(dst);
+ 		zpdesc = get_next_zpdesc(zpdesc);
+-		memcpy_to_page(zpdesc_page(zpdesc), 0, src + sizes[0], sizes[1]);
++		dst = kmap_local_zpdesc(zpdesc);
++		memcpy(dst, src + sizes[0], sizes[1]);
++		kunmap_local(dst);
+ 	}
+
+> [Severity: Medium]
+> Should these helpers use zone_stat_add_folio() and zone_stat_sub_folio()
+> instead of the double-underscore variants?
+>
+> __zone_stat_add_folio() and __zone_stat_sub_folio() require preemption or
+> interrupts to be disabled, whereas alloc_zspage(), zs_free() ->
+> __free_zspage_lockless(), and zs_page_migrate() call these helpers in
+> preemptible context with no locks held, triggering preemption-disabled
+> assertions and racy per-CPU vmstat updates.
+
+Agreed. I will switch to the non-preemption-disabled variants:
+
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -345,4 +345,4 @@ static inline void zpdesc_inc_zone_page_state(struct zpdesc *zpdesc)
+ {
+-	__zone_stat_add_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
++	zone_stat_add_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
+ }
+
+ static inline void zpdesc_dec_zone_page_state(struct zpdesc *zpdesc)
+ {
+-	__zone_stat_sub_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
++	zone_stat_sub_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
+ }
+
+> [Severity: Medium]
+> Can ZSMALLOC_MULTI_PAGES_ORDER=9 overflow the 24-bit first_obj_offset field
+> on 64 KiB page systems?
+>
+> With 64 KiB pages, order 9 gives a 32 MiB zpdesc, while
+> set_first_obj_offset() masks offsets with FIRST_OBJ_PAGE_TYPE_MASK (16 MiB)
+> and only checks BUILD_BUG_ON(PAGE_SIZE > SZ_16M):
+
+Agreed. I will check ZS_MAX_ALLOC_SIZE instead of PAGE_SIZE:
+
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -551,3 +551,3 @@ static void set_first_obj_offset(struct zpdesc *zpdesc, unsigned int offset)
+ {
+ 	/* With 24 bits available, we can support offsets into 16 MiB pages. */
+-	BUILD_BUG_ON(PAGE_SIZE > SZ_16M);
++	BUILD_BUG_ON(ZS_MAX_ALLOC_SIZE > SZ_16M);
+
+> [Severity: High]
+> Can the last base-page size class exceed PAGE_SIZE when
+> CONFIG_ZSMALLOC_MULTI_PAGES is enabled?
+>
+> Previously, ZS_MAX_ALLOC_SIZE was PAGE_SIZE, which clamped class
+> ZS_PAGE_SIZE_CLASSES - 1 to PAGE_SIZE when PAGE_SIZE - ZS_MIN_ALLOC_SIZE was
+> not a multiple of ZS_SIZE_CLASS_DELTA (such as on 16 KiB and 64 KiB page
+> kernels). With ZS_MAX_ALLOC_SIZE raised to ZSMALLOC_MULTI_PAGES_SIZE, class
+> ZS_PAGE_SIZE_CLASSES - 1 gets size == PAGE_SIZE + 32 on 16 KiB and 64 KiB
+> page systems...
+>
+> Should sizes for i < ZS_PAGE_SIZE_CLASSES be clamped to PAGE_SIZE, and should
+> the multi-page classes start at i - ZS_PAGE_SIZE_CLASSES + 1?
+
+Yes. I will clamp base size classes to PAGE_SIZE, start multi-page classes
+at i - ZS_PAGE_SIZE_CLASSES + 1, and adjust get_size_class_index() accordingly:
+
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -211,4 +211,4 @@
+ #define ZS_MULTI_PAGES_SIZE_CLASS_DELTA	(ZSMALLOC_MULTI_PAGES_SIZE >> (CLASS_BITS - 1))
+ #define ZS_MULTI_PAGES_SIZE_CLASSES	(DIV_ROUND_UP(ZS_MAX_ALLOC_SIZE - PAGE_SIZE, \
+-					      ZS_MULTI_PAGES_SIZE_CLASS_DELTA) + 1)
++					      ZS_MULTI_PAGES_SIZE_CLASS_DELTA))
+ #define ZS_SIZE_CLASSES		(ZS_PAGE_SIZE_CLASSES + ZS_MULTI_PAGES_SIZE_CLASSES)
+
+@@ -586,5 +586,5 @@ static int get_size_class_index(int size)
+ 		idx = ZS_PAGE_SIZE_CLASSES;
+-		idx += DIV_ROUND_UP(size - PAGE_SIZE,
+-				    ZS_MULTI_PAGES_SIZE_CLASS_DELTA);
++		idx += DIV_ROUND_UP(size - PAGE_SIZE,
++				    ZS_MULTI_PAGES_SIZE_CLASS_DELTA) - 1;
+ 		return min_t(int, ZS_SIZE_CLASSES - 1, idx);
+ 	}
+
+@@ -2305,4 +2305,4 @@ struct zs_pool *zs_create_pool(const char *name)
+ 		if (i < ZS_PAGE_SIZE_CLASSES)
+-			size = ZS_MIN_ALLOC_SIZE + i * ZS_SIZE_CLASS_DELTA;
++			size = min_t(int, ZS_MIN_ALLOC_SIZE + i * ZS_SIZE_CLASS_DELTA, PAGE_SIZE);
+ #ifdef CONFIG_ZSMALLOC_MULTI_PAGES
+ 		if (i >= ZS_PAGE_SIZE_CLASSES)
+-			size = PAGE_SIZE + (i - ZS_PAGE_SIZE_CLASSES) *
++			size = PAGE_SIZE + (i - ZS_PAGE_SIZE_CLASSES + 1) *
+ 			       ZS_MULTI_PAGES_SIZE_CLASS_DELTA;
+
+> [Severity: Low]
+> Does the format string need a trailing space after the third "%5u" to match
+> the header and Total lines? Without it, all subsequent columns in each
+> class row are shifted left by one character.
+
+Agreed. I will add the trailing space:
+
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -670,2 +670,2 @@ static int zs_stats_size_show(struct seq_file *s, void *v)
+-		seq_printf(s, " %5u %5u %5u", i, class->size,
++		seq_printf(s, " %5u %5u %5u ", i, class->size,
+
+> [Severity: Low]
+> The kernel-doc comment above zs_huge_class_size() is missing an @type entry
+> for the new parameter.
+
+Agreed. I will document @type:
+
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1292,2 +1292,3 @@
+  * @pool: zsmalloc pool to use
++ * @type: zsmalloc type (base page or multi-page)
+
