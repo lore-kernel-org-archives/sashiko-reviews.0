@@ -1,110 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795769219;
-	b=4SqgzcMskxw7dTMDRzP6Yd6oCarHrETpzvwjOCQvkymybnUrLg//YcDSyOiOB1hDIdzf
-	 HuXFFQ8wRsd1ank03+7mZRRvD17Oj0bpIwXbvZArgrPwPL1ldBYSJvFMgLmxynHvGCBJm
-	 NnbOp8il+mHvkUZJy8lFjIaGz9O44KfDSOYNCWxw0G9STOtAHyUUyvzwkGkD+U8HB83oY
-	 LcPNylaH2CCmm4kyIdBRr8A/Ja+VMVH7rcUQKDnPdqQJij6g8zOEVfXvKEkQ/bMBL4lVj
-	 oV4kDdqWLg26d8rHEN4xNijwWVK/OEkBPBVY+Auxsa9u9FoB/dUGFCEumk4qlajsdcA==
+	t=1795769256;
+	b=1Gz/t15WLdIRfJrE90ke1c37IwduM6lkzNyz18zpfG7POH9odDWMqbk2VAWy8aKxQs88
+	 72Aqw889CRRPTPEoZbhDhSGckxkET+OreSsNjy3lpK57tX+2CuV9Z01ZsBWj0I5ksTTRJ
+	 E6fWpHnRTZenSR2hm6bJFIX2tgMcii6HxohSHuQbLZBTLvSM9cfcQCLMQp+KF7AZ/Sqmg
+	 4gKoSkgL5YDnsP00FAeURgX964006DBpEip7h6APh3m8i78Xfio/bbNGbgHjl7wID0cLk
+	 pFIvQzse4NdvlLobQx0YLrKimOppTpEh0V7ajRPIQJoiqDqqKy22lFaI+DcCwMb7cbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795769219;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:X-Authority-Analysis:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=OTHCsXSFBjLFbCqTrojc+ejUH1qFAVGfv0/urI9zmIM=;
-	b=ZOGUXjVqMUbXyQwb6TlBeQQiaijWox1f2NanTNOUeoZuOYTBlQ0WJ5ZYrfvbWaUrHoEz
-	 urgVoC5KLNrqTspIKWZ7sClSaKXwLZkWh7Xuu35SZ1c4XN4cSz0Tb+K+oWg4N+uvBcyyv
-	 E0n7MbHUQSid8pG1WuM5CjgpAp7JSFFsHgqS0/ZDAKU0JA21YudQhVZADefAFJf3f3SVv
-	 PVDKGABhJF5NRtXburLZd5fDVh8/ZjZGQa1RnVK82LuY9epzOZK/+KgIQT5O/C1KkY5Sa
-	 KmOpN4XuN8LYvOx3VEqB/txDgYV9xDtiP89NiZ+hL9ktkZgp9u73dWnxcuba2VNRR3w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795769256;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=hFWAeWghUobS1SNh2HR/z8yfcl8Q4/5YjOR9+nLiaM8=;
+	b=hLEFrocIPD64IOZqEcGyaXjL5AuD+2CblU4rHGGfFOTfX7EPt/aHQ4YVGRBWu6u1MVve
+	 Ci1bNIGnM0ZgtKjCIv72kS/jiESr1hkdPOPPj7RZCQs9aT/I6nhOjR5cORHSlPLV1Btls
+	 VnyYxjD3MoM0J/Zlmi2olFIk02WFM6LnayHNPubkYlG8DZg2+Z/dU3KQAjV3mJ793oahQ
+	 wwLJdAXD2//vi1g5MDJ4ha5qOOIY22A3uBroR6VShUL/t2B/tUySsKHhRwQ3Y66xVjBJN
+	 50YE4SUdoJDemrY/cC0vtvSE5hKsm/chAAyiPiJnzwozw56coXWaS0JxgJ5LV+K/iJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mrV7kvBP;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b="L/5Rvf08";
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=icK5eoNv;
+	arc=none smtp.remote-ip=209.85.128.45
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C8D606A31E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:46:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3C8D606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8CF606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:47:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D8CF606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mrV7kvBP;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=L/5Rvf08
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AR7Ggbx1475308
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:46:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OTHCsXSFBjLFbCqTrojc+ejUH1qFAVGfv0/urI9zmIM=; b=mrV7kvBP9w1hd477
-	3ATRoGsHdZgQo8zRAkW1QXkLcKfPktsCUShcN5r/iPdqAYH8H3GDhHmNlW68bDg5
-	iVDtbjXbjVtySFsziNBdLro8A0WyvfTlZfrnXio9uOohgmHcbJANNvP2nJiHEEHb
-	E6n2WMpEHfT4HLH0WKF4KUqeaBfXHhqerOUn/pfaNyDv9ySDd8wiPsFA6sPMBSD8
-	txc96KEp8IZ1CFefkFb4AsGek2fw2shp8VmPkJr+jmxzS08NHSTdKJZJb8RwJsCJ
-	rH2ROxsfEIOQ8UVG/MdUawvu8yErnHyEB92J6JzMOU62v3rRH3SoROGiuH3paPmZ
-	0bQIvw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6u4ht50g-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:46:57 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-94960bd17b5so1228036385a.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 00:46:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=icK5eoNv
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4bb70074ab2so82956445e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 00:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1795769217; x=1796374017; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=OTHCsXSFBjLFbCqTrojc+ejUH1qFAVGfv0/urI9zmIM=;
-        b=L/5Rvf08r7u27WU7nirlWyhOeS9ToM1RSH364QCR4+G9KjXdmndSCyImCQUTnHk9CS
-         VzXWGvpjc8LNCOJy9g35DxKoDDuzV+F2MbBYp8b6agYvE2ZQhfpLai3ebWJXvdRnabwl
-         EoIkvyUAu+GCsLd7jYuctHr4mD030/VFeK6sONmypTr67JQ7PWPq94ryG/97WE2CMMom
-         oKG1n/r/ZDHOuJ+fCevReAikA3sWpq0fuaHpNNKo9pSP31oJFdPrhZARRkwvlru6kR0q
-         VAKKbRN9WTdPIDo8OF6TBhbi4Gs235E7+Q3zRLW71Gef+TirCMt6eIFn6f3cE8N6vZdD
-         4VvA==
+        d=baylibre.com; s=google; t=1795769255; x=1796374055; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=hFWAeWghUobS1SNh2HR/z8yfcl8Q4/5YjOR9+nLiaM8=;
+        b=icK5eoNvIW93ZiAYSC/tfRamK+jw1gY0h6s5zno1ZC7ds3M8reGOZ3uozN5/r8y4l9
+         Sht6o7Erah1vzmcVHfe/QjGS4r+k14pIQo0LQ0y2lq5y4dDzHif9qq+fwxOENNBv/IYG
+         pVtVzvSZAjU5Ri7Tn2hVE3zDtdZGynqgPIZEJ4UtgnLEHCJPBhc2D5AMPxPINVpBKJJk
+         hcY0fnBOxJMWO9FLuX62fVsXlmR7k55iF99e/jvMdYRlHeg9lU1STXaJKElCqtTW2sp2
+         4OgOb9LRu7QZwzALmby9ZUOZSYysSgEBwcOI4/GYpCZXS+TEH9WFMGzgSD/aL+dN5TWf
+         zVOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795769217; x=1796374017;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=OTHCsXSFBjLFbCqTrojc+ejUH1qFAVGfv0/urI9zmIM=;
-        b=heSCgjpxBEesma1j9BSA5eb/kSnI+IDDp2xAtb1Vg26SeWqPAmM5kLITMv/laPwKzu
-         v3g0BltgbFeSeHIDRSFwpvbcKTLzL7y2a3zxLIQ8cBSbxWbTGfvF43Whw/75Altv4L9R
-         72XqWI07dLS3GUZCm8AEI9ySbYnsB5QlaDHmCREEqqEBBjCA755kVo65pQilQshmd3zO
-         iYCzLTXfXFPdwSFUj/xBFkwlfbWHk/sOrfK7bqcfFu3QExycvLTSS1hZp/UejiaU2+cO
-         /nimfGamB4FFC/5zJSCqHDlh6I/FFqgCLpGdWMYtyTEY4y0F8iYIKA0GrG6aqStm1CXV
-         pClQ==
-X-Gm-Message-State: APuU4Z+YpGU1pp/Injq7kdj4C5cSJuMglzHBJz9xUbPAv+NtwVsvp3l5
-	529gfv6XiqMXuAhclnvPiHbSKbwZhkd8WcV/rNHCD9+SBiyZx3MD0dWSdNG5SyROCmMurubETLx
-	duCxCGf7Nd7kz3CrlSmkrDBSeswMuMHgK23ilO7ebnT24uLAs5FFgm4TvTuboWQ1cMsKNvqBsmB
-	PuUnU=
-X-Gm-Gg: AZFdTZfG+ceG23muC3sawjnUDCog3cJRn/33Ccu7dAi22KugomfCKnmv/mPJbpjYDs/
-	84+82k+PYTbidWxxSl9RzQ6aLqqD6gnOMtZFH0oZiTpGpbU/D7y58KD+h54oKGuny933kticzgQ
-	Jh0UIda+TeRmA39g9w1SBArak04Fjzl5OIzzoIiUItQFaXEZRg7czLLB1UtLF+LyIzkEFWNseec
-	/UcNTxWxLtQ3Yv6ZMpCNNUj1GQOl9oyWiTRrGJtRMDX3AaU/XLlW+9Ksdg9gm512u8yNQgWVPE5
-	0V6ujRAkomxio0dk2KfFLnvG8lfHl5hXD2ouMSRyHlPU9AMmS37eFYBTyI40MqEis4nARKoJrvX
-	504r6tiY3ltDXD3wlFJKblb23mCpRlXw9cUhSZU3Ys/3CTNaM83GtHeP6IO62Q2YarNO9CyTMM1
-	Y0/Q==
-X-Received: by 2002:a05:620a:6f0d:b0:939:6dea:374d with SMTP id af79cd13be357-949ba9d1fa6mr4060254885a.49.1795769216915;
-        Fri, 27 Nov 2026 00:46:56 -0800 (PST)
-X-Received: by 2002:a05:620a:6f0d:b0:939:6dea:374d with SMTP id af79cd13be357-949ba9d1fa6mr4060252985a.49.1795769216378;
-        Fri, 27 Nov 2026 00:46:56 -0800 (PST)
-Received: from [192.168.68.120] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-4abbd84e661sm42897480f8f.18.2026.11.27.00.46.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Nov 2026 00:46:55 -0800 (PST)
-Message-ID: <1f55126a-10c2-4ab8-a7d2-0511d9385733@oss.qualcomm.com>
-Date: Fri, 27 Nov 2026 08:46:54 +0000
+        d=1e100.net; s=20260707; t=1795769255; x=1796374055;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hFWAeWghUobS1SNh2HR/z8yfcl8Q4/5YjOR9+nLiaM8=;
+        b=qEukTqoeI7cjjCzJV4C4i6SvWJHL3I60lBjeSb+4NcyUy/vzmqtIYMCILLloCrm/Rz
+         71Tzzh/ILbM6U9madBgN31QdxhUIaxZtVoGEWleY2H+uyN5AbHDQ6yQV5BrwlMXkJCIb
+         FfscOHoxHJROjILAU3A0flCK9elnypLpsa139/zijG5excTTfd6DuWa7WxMautVT7sm1
+         GjWr7vda6dwetIKXvSFBh4/2rMwgjMSD90uyryszfOYVzD6YTbMMBcM6Iv0/yVr6p4Et
+         FKDg5VHaxbtRGyZ/XQIHIO/ITYfApHfeXxG5JJKI+EQBMIlX3Uh2TGVNAT1ZvGkPq3SC
+         12Sw==
+X-Forwarded-Encrypted: i=1; AL+hErERvtWN6Ni4xAe27Leotkvgi4edRQQm+AxWrobVHdSTshgSEliqz/CC1IbSbD6jATUJ0fqqmr7v5yvPsqOsTVU=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+/R4cv9U716yB3+IjvAoLqVYqtXSUdj8yKBLO9LxlEsv9doBZy
+	eKRXhMH7Hw7WGjnEEskKLfTfCoMGIUSFr41qvqydL1a/z6rD0iKvMhNDrfk1mNG32Vw=
+X-Gm-Gg: AZFdTZfBQVcN8FR3K3hw+fU8vDMI2w7WxNfPVeDYs6htHQj8+09mhg0TPhUIzW+z54X
+	wra0TdT7IUVAOD/eFCjn0PdDHBsskSaNnj1cDwwUk6OHst1OFhKXrUcjNgrf/OaNz0AWtAeeMXO
+	u6dUy/8YwRGSD6IVzGuLEgnXkJMrYK0w7JIkApv8WuFd/uDZdSepBHLjCRYJRWgxLfDLvVOckZN
+	KYKxmbj6d70cjHgBiW/h1VcEajF+9OFqOCnv8i/vjanlG4yrhMoWVriQubx+BoLyfFxP1tF79zK
+	Myu4B+KhFDZtKadtZZQ3LpdtL4OIjhiDF+xkAYMNpK09FMnw9P2W/A6sczXFQNV77obGAoct1nc
+	KbxN554jF1sB7e5DfCuy7o2srwkwYEk5Qcfy6/Lp9+jG+38ZGzGtuMaaXCPbUris02UCLfK5417
+	0lycLHSVMXT7tBFiK8nOOkiCUTXnFpicwzdLB3HmnaZgWAxvlm1Fpmssa1dYOCudePlRimVgRto
+	xJoIhsZyVi4q5aYBqd7VM7quWYPBpz+A+c4KaUH8sZy8J/NQh4c9D5ujLyJvS75w59F2QYkug/6
+	Zi4a7p5ufIdWSIBOAu56taZxt6f3zDf3zpfszkOQLaWjKxkUGXlK3o6oXsCjimoleOVhUrbUBcZ
+	80UtxSg78nRC5mKVv
+X-Received: by 2002:a05:600c:4e0d:b0:4a5:e6fd:65e5 with SMTP id 5b1f17b1804b1-4bb88922a67mr460696165e9.31.1795769254732;
+        Fri, 27 Nov 2026 00:47:34 -0800 (PST)
+Received: from localhost (p200300f65f19a90496f529fbcf0b312d.dip0.t-ipconnect.de. [2003:f6:5f19:a904:96f5:29fb:cf0b:312d])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4bb884a3a3dsm662489995e9.10.2026.11.27.00.47.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 00:47:33 -0800 (PST)
+Date: Fri, 27 Nov 2026 09:47:32 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Romain TISSERAND <romain.tisserand@gmail.com>
+Cc: Jonathan Cameron <jic23@kernel.org>, 
+	David Lechner <dlechner@baylibre.com>, Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>, 
+	Andy Shevchenko <andy@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-iio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 2/4] iio: adc: Add the Miyoo A30 analog stick MCU
+Message-ID: <awlCneo6rrSJPgky@monoceros>
+References: <20261127012612.1589039-1-romain.tisserand@gmail.com>
+ <20261127012612.1589039-3-romain.tisserand@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -114,231 +102,51 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] arm64: dts: qcom: glymur: add LPASS macros and RX/TX
- SoundWire
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-sound@vger.kernel.org, robh@kernel.org,
-        conor+dt@kernel.org
-References: <20261126183806.172485-1-srinivas.kandagatla@oss.qualcomm.com>
- <20261126183806.172485-2-srinivas.kandagatla@oss.qualcomm.com>
- <sashiko-outbox-236036@kernel.org>
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-236036@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDAzNCBTYWx0ZWRfXwJzmwTRf9yxL
- H7CcyhwiK7UQ97HYQV54rqrxOQKvDcpwLgic8ZmGwHQI4HptAiPlkRdcyNEebaS0lvFWpzsS03l
- M0KgmH3ZGEIzOCwANPh+HH+ajOH/iFg=
-X-Proofpoint-GUID: QqQoIKRcQEA655G7dSpQao7OFLo5MVEY
-X-Proofpoint-ORIG-GUID: QqQoIKRcQEA655G7dSpQao7OFLo5MVEY
-X-Authority-Analysis: v=2.4 cv=M9fYuCws c=1 sm=1 tr=0 ts=6b094382 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=C1eMqFb1E5RMPDysGHcA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDAzNCBTYWx0ZWRfXwiTNTjg+3dSL
- wpjqvdpW5ACQtR0RibsCFd6AhXEe92Kim3DVY3RHck32aIfyUCUYLKZZYayYujo+WI5GE4oDiiZ
- rfFdDOgudG6PDsSkYPRXrn/x4jshrc77cbyOvpw6JV2UadYqG95eVW1V9z4rO9K6OuPKd8kTUkQ
- VpVBNE/Hxy5Gf1hrXYRgp5kpS1M/doThruszK9PKNYHd/BG6pDFNioA7LmIsB/1X3+CD1jLBHz1
- gRehFd8475wd/vb9+jiAwvbexHAPiZ4ikBax2HvclOjrns12guuvurK9zItT4SCcNec8MUi4gyJ
- pOXCN7U2dyxUDbpCJNassUiGJY7PcJ7FzRQM0lBpSRrCjrBAiv3kynFu89GsKtLMsh4hBp/hm7b
- 3bW+Scd6EjsRmxD+gyaPkImA9fI6Aw2IsYfIj++0AGfgNZENuypZFJQFgzIlnr0SMntHVexscU+
- ppEYefKl1KOEF6joGFw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-27_01,2026-11-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611270034
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="kmxikfi6vr3vqamf"
+Content-Disposition: inline
+In-Reply-To: <20261127012612.1589039-3-romain.tisserand@gmail.com>
 
-On 11/26/26 6:53 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issues to consider:
-> - [High] arm64: dts: qcom: glymur: missing qcom,glymur-lpasscc.h breaks
->   DTB build
-> - [High] arm64: dts: qcom: glymur: unmatched lpasscc compatibles defer
->   swr1/swr2
-> - [Low] arm64: dts: qcom: glymur: invalid qcom,ports-ch-mask property on
->   swr2
-> - [Low] arm64: dts: qcom: glymur: undocumented macro compatibles and
->   node order
-> --
-> 
-> commit b4bcd1d941eb74e432e52172d9eb6873d424ecc0
-> Author: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: glymur: add LPASS macros and RX/TX SoundWire
-> 
-> This commit adds the LPASS RX/TX macro codecs, LPASS audio clock
-> controllers, and RX/TX SoundWire controller nodes to glymur.dtsi.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
->> index 165dfa11f17f5..e3bba14bf36c7 100644
->> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
->> @@ -9,6 +9,7 @@
->>  #include <dt-bindings/clock/qcom,glymur-gcc.h>
->>  #include <dt-bindings/clock/qcom,glymur-gpucc.h>
->>  #include <dt-bindings/clock/qcom,glymur-tcsr.h>
->> +#include <dt-bindings/clock/qcom,glymur-lpasscc.h>
-> 
-> [Severity: High]
-> Does dt-bindings/clock/qcom,glymur-lpasscc.h exist in the tree?  That
-> header is missing (LPASS_AUDIO_SWR_RX_CGCR and LPASS_AUDIO_SWR_TX_CGCR are
-> defined in dt-bindings/clock/qcom,sc8280xp-lpasscc.h), which breaks the
-> DTB build for all Glymur and Mahua boards.  Also, this #include is placed
 
-There is a dependeny of
-https://lore.kernel.org/all/20261125131757.1163466-1-srinivas.kandagatla@oss.qualcomm.com/
-patches that are acked, I will add that explicity in next version.
+--kmxikfi6vr3vqamf
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH 2/4] iio: adc: Add the Miyoo A30 analog stick MCU
+MIME-Version: 1.0
 
-> out of alphabetical order after qcom,glymur-tcsr.h.
-> 
->> @@ -4669,6 +4670,73 @@ q6prmcc: clock-controller {
->>  			};
->>  		};
->>  
->> +		lpass_rxmacro: codec@6a70000 {
->> +			compatible = "qcom,glymur-lpass-rx-macro", "qcom,sm8550-lpass-rx-macro";
->> +			reg = <0 0x06a70000 0 0x1000>;
->> +			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&lpass_vamacro>;
->> +			clock-names = "mclk",
->> +				      "macro",
->> +				      "dcodec",
->> +				      "fsgen";
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "mclk";
->> +			#sound-dai-cells = <1>;
->> +		};
->> +
->> +		swr1: soundwire@6a80000 {
->> +			compatible = "qcom,soundwire-v3.1.0";
->> +			reg = <0 0x06a80000 0 0x10000>;
->> +			clocks = <&lpass_rxmacro>;
->> +			clock-names = "iface";
->> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
->> +			label = "RX";
->> +
->> +			pinctrl-0 = <&rx_swr_active>;
->> +			pinctrl-names = "default";
->> +
->> +			resets = <&lpass_audiocc LPASS_AUDIO_SWR_RX_CGCR>;
->> +			reset-names = "swr_audio_cgcr";
->> +
->> +			#address-cells = <2>;
->> +			#size-cells = <0>;
->> +			status = "disabled";
->> +		};
->> +
->> +		lpass_txmacro: codec@6a90000 {
->> +			compatible = "qcom,glymur-lpass-tx-macro", "qcom,sm8550-lpass-tx-macro";
->> +			reg = <0 0x06a90000 0 0x1000>;
->> +			clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&lpass_vamacro>;
->> +			clock-names = "mclk",
->> +				      "macro",
->> +				      "dcodec",
->> +				      "fsgen";
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "mclk";
->> +			#sound-dai-cells = <1>;
->> +		};
->> +
->> +		lpass_audiocc: clock-controller@6a94000 {
->> +			compatible = "qcom,glymur-lpassaudiocc";
->> +			reg = <0 0x06a94000 0 0x1000>;
->> +			#clock-cells = <1>;
->> +			#reset-cells = <1>;
->> +		};
->> +
->> +		lpasscc: clock-controller@7680000 {
->> +			compatible = "qcom,glymur-lpasscc";
->> +			reg = <0 0x07680000 0 0x10000>;
->> +			#clock-cells = <1>;
->> +			#reset-cells = <1>;
->> +		};
-> 
-> [Severity: High]
-> Will lpass_audiocc and lpasscc ever bind to a driver without fallback
-> compatibles such as "qcom,sc8280xp-lpassaudiocc" and
-> "qcom,sc8280xp-lpasscc"?
-> 
-> Neither "qcom,glymur-lpassaudiocc" nor "qcom,glymur-lpasscc" is matched by
-> drivers/clk/qcom/lpasscc-sc8280xp.c (or documented in
-> Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml), so no
-> reset controller is registered for either node.  When swr1 and swr2 probe
-> with "qcom,soundwire-v3.1.0" (where sw_clk_gate_required is true),
-> qcom_swrm_probe() calls devm_reset_control_get_optional_exclusive(dev,
-> "swr_audio_cgcr"), and __fwnode_reset_control_get() returns -EPROBE_DEFER
-> indefinitely because the resets phandles resolve to unbound provider
-> nodes.
-> 
->> @@ -4787,6 +4855,38 @@ lpass_vamacro: codec@7660000 {
->>  			#sound-dai-cells = <1>;
->>  		};
->>  
->> +		swr2: soundwire@7630000 {
->> +			compatible = "qcom,soundwire-v3.1.0";
->> +			reg = <0 0x07630000 0 0x10000>;
->> +			interrupts = <GIC_SPI 761 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&lpass_txmacro>;
->> +			clock-names = "iface";
->> +			label = "TX";
->> +
->> +			resets = <&lpasscc LPASS_AUDIO_SWR_TX_CGCR>;
->> +			reset-names = "swr_audio_cgcr";
->> +
->> +			pinctrl-0 = <&tx_swr_active>;
->> +			pinctrl-names = "default";
->> +
->> +			qcom,ports-sinterval-low =	/bits/ 8 <0x00 0x01 0x03 0x03 0x00 0x03 0x1f 0x1f 0 0 0 0 0 0>;
->> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x01 0x02 0x00 0x00 0x00 0x00 0x0b 0 0 0 0 0 0>;
->> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00 0x00 0xff 0x00 0x00 0x0b 0 0 0 0 0 0>;
->> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0x00 0x00 0x00 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-hstop =		/bits/ 8 <0xff 0x0f 0xff 0xff 0xff 0x0f 0x0f 0x0f 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0x01 0x07 0x04 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x00 0x01 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0x01 0x00 0x01 0xff 0x03 0x02 0x02 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-ch-mask =		/bits/ 8 <0xff 0x01 0xff 0xff 0xff 0x03 0x01 0x03 0xff 0xff 0xff 0xff 0xff 0xff>;
-> 
-> [Severity: Low]
-> Is qcom,ports-ch-mask a valid property for qcom,soundwire-v3.1.0?  It is
-> not defined in Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-nope, we should remove it, will fix that in next spin.
+Hello Romain,
 
---srini
-> (which sets unevaluatedProperties: false) and is never parsed by
+On Fri, Nov 27, 2026 at 02:26:10AM +0100, Romain TISSERAND wrote:
+> +#include <linux/mod_devicetable.h>
+> [...]
+> +#include <linux/serdev.h>
 
-> drivers/soundwire/qcom.c.
-> 
->> +
->> +			#address-cells = <2>;
->> +			#size-cells = <0>;
->> +			#sound-dai-cells = <1>;
->> +
->> +			status = "disabled";
->> +		};
-> 
-> [Severity: Low]
-> Are "qcom,glymur-lpass-rx-macro" and "qcom,glymur-lpass-tx-macro"
-> documented in Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-> and qcom,lpass-tx-macro.yaml?  Neither compatible is in the bindings yet,
-> which causes dtbs_check warnings.  Also, under /soc@0, lpasscc
-> (clock-controller@7680000) is placed before soundwire@6c80000 and swr2
-> (soundwire@7630000) is placed after codec@7660000, out of ascending
-> unit-address order.
-> 
+Please rely on <linux/serdev.h> to provide struct of_device_id and drop
+the include for <linux/mod_devicetable.h>. The latter pulls in several
+more header files that are not needed and that introduce build
+dependencies that are not needed.
 
+Same for patch #4 with <linux/i2c.h> providing i2c_device_id and
+of_device_id.
+
+There is no need to Cc: me for new revisions of this patch set.
+
+Best regards
+Uwe
+
+--kmxikfi6vr3vqamf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmsJQ6EACgkQj4D7WH0S
+/k7MsQgAmXkeM4wMAFcot67XUVVbBIBHe14nNZchUfh2WmvpAi0XpKPNzsTIHhjj
+/GUImj+kXS7eSvVQxGljXF5pczIDQsuen39afEPHvvhSyg6oxGFTEXp7SfEeuHAD
+vg+2SwwGvurRKj5+owpBWNRDeCDTZnwZratfLSZdfT9kL4xjk49xBptg1K/Ev1GK
+oz7iX7B2LJSQr71EV4/vWigA10VXxR6nsgBwhKbQmBLv3jBGoiU6UQdZ/O/BewLM
+kvwT7M6MH34lt3X1gC97PXjO4XwqYOdg4tQG9eDWqJ4kh4TUCIKB03AzOEGJ8n82
+VMq7sXMm64yM6YZAUq6tCbzxKjFNag==
+=yo0y
+-----END PGP SIGNATURE-----
+
+--kmxikfi6vr3vqamf--
