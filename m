@@ -1,99 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795807532;
-	b=3Km7qm+wCfFv52ahxIJDmYb+FACich+B8g/DeGaZpUXZFFwHsKNpm9AIp1oMcJKUk7nt
-	 qFypSYxZdRU1uw4at67CewOfDKY6Ut+32E8psfhoaK+ZisorvuvtBavHRpFo/Y9QjBPZj
-	 95LMji5QiDGFFN8pAy8p1nq5iCKwUy8iWFxW1LwQyd5m7PRv/gWsyNGDfNIrasx66x5Bc
-	 FED+11bgP3VlpwX43+uH7pYO//4OD2GY0cAy6z8YxnAPnoUhsBiGi3iIzwnQvpiLyL1I9
-	 6eyF+dPbSULv1L9igNvssImoyhaZ2uL1oNzMXfkwhPFjjqj17WMPm+JYaPdUb/pVh9g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795807532;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=XH9gWDCllqbYGijR6SSDBIRKOHxF1ZqXOL/NGtJepT4=;
-	b=du4DrSqlsvOuHatfUTzKzYJih7PgML74gjuORQDlwwT6H4Fg3XG9dd7ErWsKrXOIMe/N
-	 keMuny5AwYN1Fd1tZcnT12ZMWLcE8oYfWQTYRMVlinWQakENfJuvFqytCTsdi1teJY5zB
-	 Japg3msTjMqA+rmfBuOtGroV5PTfv8LNg3C/iptZ2sfJNNL7+mglkf3q3LyMKOy+CQP9o
-	 ZC5+PLLRqzXTI3iSc1dBAqzukpSDkbP7plrEMcnAMqnGSB2Np1sm2RY/apsnJceQLsK7O
-	 LRjB++FfceV5tXWLYdTASELQhJUchOVKw6rkzN8ou3Vvdlnzs5R7je0deYAxZHgeKCw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=awrtJwRL;
-	arc=none smtp.remote-ip=209.85.128.51
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.125
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795807646;
+	b=25FKozomK0A8U+zd7dtrNLGOUwek+h81bgjvXUNjVHXOo2quVeF8qyZeaZdJkzGlW7M5
+	 TPKeJG/73Vlp6Z2dmlS6x7Mu/vVa4/X/bcBlZ6nEJ97ULFs2Vw06cxPRTXImLJeqnpsZb
+	 u9e2K8NTLc6FdSplUuzbTnv/OSLsos2gQm0RHJgRZQpgxkI0hIzImh1iPr4w4m4GcLpJN
+	 CiZ/P7HlD4YdjbBA71+S9LDqRuX1wqD6xWrL892XFaX/Uyn+g9spqfzLhguvJRdQzEYlH
+	 8G4kFPozJRKExJq9pwzJ4yG57rsUZ8dDO15jNPviEbGAjKaXNHCC9A1sbC9xoO9wsBA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795807646;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=uUJ872aGb9W/Gr73OddDdFkGiYcOSklaX+SEQXaAUIA=;
+	b=wSAsYUZqzEE6lrJxeoV618WZqQEsocbq3EjBO78uaxpaGTLuh6mYdkzyYpXCJOWV74L6
+	 FSsVeGI2lFm2FmnE1b17JJZkpGNnzoc2tmJ1FcbqPn6zld6OF6420V9X4gj9jPWcnz+HW
+	 GnLGclja/SgvMt4PdGIZp2SfWvTToo78twuAOEsfOlvUEgfG2TkQSHXzsf3baye1k8X27
+	 kITv4IxpzM2bPblTeoUGQ0I5vS5IgBhX6G85arVAl6dzdfnMK1YtQfRe/kcT5SOyvcrOG
+	 CiPazrvX6hn5R42cen0r/ETgKDUfLRsjXhCG8WR6tSx8bNKjxbVOll7mTPIRiRM6Szw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=qwuXiVOj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.125
+Received: from YQZPR01CU011.outbound.protection.outlook.com (mail-canadaeastazon11020125.outbound.protection.outlook.com [52.101.191.125])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E34606A31F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:25:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 05E34606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055AF606A335
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:27:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 055AF606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=awrtJwRL
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a35a60499eso65372005e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 11:25:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795807530; x=1796412330; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=XH9gWDCllqbYGijR6SSDBIRKOHxF1ZqXOL/NGtJepT4=;
-        b=awrtJwRLbO49ktUPgdA9diZNobDyWYg33D/nR23oUW/l6D8wYPqEjRGbizv+h/bBH4
-         RAuvGl6WQvkOU0i04n8UmJB0r19z/V/bXwSWlYnYPMtwqGMy1ggLJJ8fucEC1Z0mHPn9
-         eDik5CBVpcpoQ2j/1G0nsSwTkVpTwq5RCm6prLuN9OSrTCVWhSCUrBjT8z9vVDQRg33q
-         ybfcB6bl6DLPDITeIQnS6eLWTUuG2HkKWjhq2C0PJDESJk/jX6Mf6CIVoGocMw1+wdoo
-         cw+wEVChSXu7/9bPmkLdpu/lpb6bQxmvW9qJEszsJTRcXQMwfhVctK7ym/538QXeAl4X
-         7YBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795807530; x=1796412330;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XH9gWDCllqbYGijR6SSDBIRKOHxF1ZqXOL/NGtJepT4=;
-        b=c63PRUiNHAWfIfSDBkVSgAQwKPG2mahbGDAojFzkXsbuXvoTmNeu1AttDFN5q/GUrb
-         JBX0r4mHnDItvijuxn1xb87ZWQ66zLrGLLXntexkE/eD9gUf8gDwA03oaEf1rwZajbOU
-         t29sYPKq95YqEJNrXsqkVJvX+2F/B431ka70S+D+vfMZGVSYXEpjxWmNJdagWKitsfNm
-         87pevl61+nM0tGkigrUt4Rd/q4M/SJiqgwJyKG6VSg2yyPFAh72AnqDgU6Fb0NCkvqmi
-         bjiOkKFlPAaU9vlGXecyVhpcXAXKm03IpQTRy1B8TZQOcKuc96+YuY1RBE4RnDeE14tV
-         9NoQ==
-X-Forwarded-Encrypted: i=1; AL+hErFkg4+zgM1ubQsunL0bHBUICyxepEPkhObzkEjcdRpaHjwGSB8wRqjGF7cA27zqSCPDsf1YCkLtyoxAZ83pf+Q=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/32lU8UGww21ShsmDS2s7QQujENjdLtSjaIpKj45OXanDR7Hbs
-	mTy8orbqS4gvo2NpwUDywTfmfEKQ4akUjiB9eFO348QsN0ikVbs9IA5/
-X-Gm-Gg: AZFdTZdbu0NhlHVePFSLRaWL/bwqYAM70NppPvDHaPRmayuDGVG6zZANDkJ9tuF7CX2
-	OeHhMH1EJBNh3F3x6PVs42kFp8bAxKFoApASUlth3ZE5RNzLBwR1BjhWAJNVjMOlPxqyL4xY9ML
-	qbAIXZ0DmPxngm2ChhlDo7E7CNdaHC+972x/nl5NrTlrw45yFEm5MsQU+2PgBvmRS+kL+WhzKDa
-	v6nNb5xGPZL5avWhj2odZSS2eeNL34SByVYEwydWm1W5FkNOoksWeBNMDJfgsQeHxLykcZ1DVWo
-	VGun80Zs7+JoEGoLBJkcBFp+Z4ZrM7j/L5RaNvFwmSh0sqL2GL33xAybm4HzfJqEikzpuih5GEi
-	L3nNbMsjbUnm4zoc/K/koiht++PxjvM2PiWTF3gBhmYmTFO93kH0s0bb4RbV9JjvPJv8lbLmBMr
-	W65IAKNt6uGSiCpfK0di4FSSCPqwajoqsGzDXxEdLdqrMWPCiUwNASb00YBOfdcCtWuGaNPGLwZ
-	xNZMAFWFQjsPCjtM6R7wsvcBmti1cxp5f94n20L7H1AdRejATRNwwIM399OVrGox6a3VugNiWC2
-	bveD7hN3OD6JvtMC17hDeqrusQx6UWHl1CpEyDxC2aPb/LTtPTuyn+Hqqnm2VwcUrjJEGk4ZDkc
-	jo++cDWuf
-X-Received: by 2002:a05:600d:1c:b0:4a4:fc8c:cfd9 with SMTP id 5b1f17b1804b1-4bb9de0d5ffmr266662415e9.25.1795807530110;
-        Fri, 27 Nov 2026 11:25:30 -0800 (PST)
-Received: from localhost (bl20-90-91.dsl.telepac.pt. [2.81.90.91])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb853368d3sm700412425e9.1.2026.11.27.11.25.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 11:25:29 -0800 (PST)
-From: =?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
-To: linux-serial@vger.kernel.org
-Cc: gregkh@linuxfoundation.org,
-	jirislaby@kernel.org,
-	linux-riscv@lists.infradead.org,
-	sashiko-reviews@lists.linux.dev,
-	=?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
-Subject: [PATCH RFC 2/2] serial: esp32: Report active-low CTS correctly on ESP32-S3 and ESP32-P4
-Date: Fri, 27 Nov 2026 19:25:11 +0000
-Message-ID: <20261127192514.174468-2-vitorhg20080@gmail.com>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261127192514.174468-1-vitorhg20080@gmail.com>
-References: <20261125233020.1380594-11-vitorhg20080@gmail.com>
- <20261127192514.174468-1-vitorhg20080@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=qwuXiVOj
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ME+3iYcX1TJtO7O2PLqqMbXSuyzjRSPksKxjeoheS6ZraeEL6fTc8+lJypYmtyZzQA/dt00Fp2IB2eHecNmkzsVKeBSU5PYc84aVWCaMrDRwS1gM9skER6Pm+vCAP6cLcOua2mGhbcXyaM4esUA3buMEmnbTcPXwh6v7hTtXfQQL2bYa8UWjfkX11AKHMvwhJQLtjmLnGI0Aa71b7ZZlPwq0tQRnse+9i3Unuhp2qDgY0f4UBCnKVQ3l1DEr/3mCC8xOJVIbg/wEsmetibMw3pvRdzHL0i2j/PX8fvY+xCLvAZmyZ3ZPZVAO4T5rkbagsNlMw+KOdQ2bNFcYAsSp7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uUJ872aGb9W/Gr73OddDdFkGiYcOSklaX+SEQXaAUIA=;
+ b=Ghsg3s9dZCD0GxU8yLs6I64EGAk/542BQQlA2PLNRnPAOQQtFEc1aSa9zKbkwK5iZMSq5fpNP5c6AZLMoE40Ap9zeB5XSQrh1Bwd6Yutsysxk+CC1RM96HATENQBkkdJTu67j6x0tsDiDLuk6OCHT0JUhxuhUAVX+/HnNMcOUYAVKw2xpvdVmKjE5ZDJ2fAXZsFLgvQQ9M1NMG5DkwuHm9x4j0944yu8OhuuG2ONz0qLB2syRGwZH4YemziAUzb3ebonv/+a4xp8OK8v015x6SVBj/cO/zSjaedTAcqqznp3hhxXwMBCtvHDQVWVLdxKDxXq47UI/1YBqk39oRHj9Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
+ dkim=pass header.d=efficios.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uUJ872aGb9W/Gr73OddDdFkGiYcOSklaX+SEQXaAUIA=;
+ b=qwuXiVOjp5hhrhhnZJP6IKQBH+p/CU6ORcFXYtwKm7DdwU9SdEDqiUqEeRS5yFdgzqfN6xETBk8wexLiLb5q5ekFoSDnp55YM0A3Reo9ckUNXM0yhF9jOjqf8QnqaAe40CGR+VUv+oArLgyI+f+748YVaJZHV9Yn4MKONEyTEXgEE7UeWk9/lqG8Dn0yiAAz5Mu4VVP+30ls4kCehnX09l+Xppj7sm9ODxsNGNTCAaalKcwmQweCI7OE7mb4u9wIJp9rXPbDrqh2isgaBUvQdVFrz88NG8tgQfcmX/359uZ8hIAK6lG3CKBYWg/15ZnZVX54cFmTwYs6vBf5omiSzw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=efficios.com;
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10) by YT4PR01MB9767.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:e7::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.10; Fri, 27 Nov
+ 2026 19:27:18 +0000
+Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0662.007; Fri, 27 Nov 2026
+ 19:27:18 +0000
+Message-ID: <51c3bb03-c712-4982-9d02-e21206c7ece9@efficios.com>
+Date: Fri, 27 Nov 2026 14:27:17 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/16] selftests/membarrier: Check the memory barriers
+ of each thread
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org
+References: <20261127185822.158216-1-mathieu.desnoyers@efficios.com>
+ <20261127185822.158216-16-mathieu.desnoyers@efficios.com>
+ <sashiko-outbox-238151@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-238151@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YT4PR01CA0170.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:110::10) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1d0::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,72 +99,114 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT4PR01MB9767:EE_
+X-MS-Office365-Filtering-Correlation-Id: 37742cdc-b54a-44b1-e865-08df4cbc735d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|22082099003|18002099003|6133799003|261009223027099003|10067099003|261026140227099003|261026121527099003|261021121427099003|261102123227099003|261028144727099003|261022105027099003|261022075727099003|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	QBu6VlewcrsxVkS7uoRdisetqPhXAFaWS1mWG3eS1NCJizHKh9y+8yZ2jb4c0M+1SL5jeYuyfh4q0+uRG7jFHmhn4vD9cQK4pMlMpHHg/vzs6FuRGs3NW/qkj5qf3HpRTCuhG15J0ha8ErIGJ9G0w47uRDrvdwheeXrgKtpCNuLm6ZWVReOqV/x0KtKAYsdcwntwrzHDrGzbpjZtlkuP3Li3NumHOkViWjQdkTOxNJbECCSf0NuAt85U50S3hcdvN6h2BEoZwI0duCm+yErZzH8iW6aHH916E1XTZgpm/1JDN64UmiMsRykQQeVLACVGWeMrS5uD8uOtG3zx1gL9EWTXzVnUgqn2hlM7eHypJcbrFCsdVbwBJjcNUyry4pJRnX2186W6az0afLjUZJo5D2iO6/magFpZLVWlLlOJ9xKGLBPwhIKEX99U5HeNFLHHtnOPSBDhFpiCcfYkpELZF2fDle76iaF5m+TmzqUi20ZCkNZ/nCM3K+CfOriJ1TEw/a4sstMMxBvLNW4ZZyka+u+r7EEzSXxIO1CI3p26ViuqEf0UFMSqYUAVis4DKraJ3oj325eoCqdm7bcF6sO/u8UcXNuzeQW4Dfox15SJ4cs=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(22082099003)(18002099003)(6133799003)(261009223027099003)(10067099003)(261026140227099003)(261026121527099003)(261021121427099003)(261102123227099003)(261028144727099003)(261022105027099003)(261022075727099003)(4143699003)(56012099006);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cjFxYnliakpUTmQrWEt6dDVucjIwZEM1WTJtbWZvbFNTWXdJS2xQb2pJaDlR?=
+ =?utf-8?B?OWJjMno5dVJjMzlGdmRteTlUK3hKL3BQVjZITklVUk9wcnZTUVM1T3dlWXR0?=
+ =?utf-8?B?Z3NqblYwYnM4aVNSbDFHUERhZUFuclN5VEdqQnB5S2k0N2l3R3lYQkpjRm5t?=
+ =?utf-8?B?Yk9IRG5VbWdSWEZwdDN1ditlUkdMTkFOL0JjTXFxYjNEVFhZcUxTcnN5YVk5?=
+ =?utf-8?B?c1lVVnk1bEpaUE9hSE5Fb1RqdERreUUxY2tSQUIvNmxzWll0dXp4VUlmRHAr?=
+ =?utf-8?B?OXo5VUtwRnYyMnFnZ05EQi9VUHZFalVJTkpUaGYvMWZvOFJlb0x0eGJwOU8w?=
+ =?utf-8?B?VE9mbXZEMjZtbnpuL3MvWCtVbmxTWmRQNWFDTHJOK3J1QStkTmtWUjloYlNJ?=
+ =?utf-8?B?R3hvZ3JrM2JqOG9tL3dtYnd0Z2FHdFVrZGVKdWI4akQ0Tk1hNjZ5Wm85OEd0?=
+ =?utf-8?B?T1k1a0NhYlplTkNmc1VwOU5kTC96TDZQSWx3RkJrS2Q1d1FZeTVyQ3BxN0dy?=
+ =?utf-8?B?QW83dFkrYzh6VUR2djNhYWp4Y0tPSTYyTEtiaXpKeG9iREVqTFJrYVlKMWF1?=
+ =?utf-8?B?VWJoeEQyekhRbWs1ODBpSUduT0xHU1BvUEI5RHl3dE5jNnlheVJaTjhldGJy?=
+ =?utf-8?B?SWlkd2gwQUtjNU0vSDhjVVJpa21MOXBGUk1nNjFFaDJPajlrMW5mcWNhdU1M?=
+ =?utf-8?B?aHhVcFJtM20vYmpGNUhJUFZmV1ExdGtSWXpoOXNDMjJJTnY4cEwxcFNsL1VN?=
+ =?utf-8?B?T1E0TFczbGtxYmp0TVBweHUrcUplSEgxSGdrVi9ZTExILytxZyt0V1dtei9S?=
+ =?utf-8?B?ei91cFNkT05vV1lvaHR6SnVOaHpJWllDNTltZGVsWityMVp3YjNCMksrb2xH?=
+ =?utf-8?B?c0ZLMTFkcWxkSmRsRGR6cjJiM0xTKytJNlQySy9NQ2ZwdzZZZjFsdGY3Yzll?=
+ =?utf-8?B?endHdCsvbEt6THhsTmR6QnhsYUxiMTN2bENMbCswbUFZOXhYTDcrZG92VE9R?=
+ =?utf-8?B?WjBseS9BQ3hJVVRnVitKZWNIUHNxK29GQzZxY01HVDY4bng4R3BxMGxBSUl2?=
+ =?utf-8?B?cVhPQWhFZlRVVEQzcmFCc2p6c3pLYU5GOFF3dTc5UFd4REJSRFVwRmpkOCtZ?=
+ =?utf-8?B?M3NPOE5MR0ZEV1hEaE1HdFh0NG9IUTlBeTFDc3k3aE1XcEhmcTFFZlJheVlp?=
+ =?utf-8?B?ZkRNTEJaeGZBUU1YYXlJN3lJRGt1TGYrMjA0SndJR25JVEg0SUtvTnBrajdp?=
+ =?utf-8?B?alJwaTVRSFVUVWMxOHYvSVNmNzJta014MkFYMXI4dTZwaDZvYkp3VW14cDdy?=
+ =?utf-8?B?SXMzNUc1c3NKREsyM09aZ2lmQm1SdFNHQ2VHL3NpK2J1enZKaWYra1pmQ0sz?=
+ =?utf-8?B?dzFuYzg1cTJSaG1CRVo0U1lrK1puTjROc0tEL2FhZ3FYdDdCYXBIZkN3VmhQ?=
+ =?utf-8?B?M05aOUxmYU8ya2UrK3FLR0lzVzRIaXFrTXEwelo5SWRZVGVqOVk2c0tpazhM?=
+ =?utf-8?B?NFYvMjlaVzgzd0drY0hJY2FobFMwR1BweWhMUVpFclgvOHppTVUySHBCY0pq?=
+ =?utf-8?B?cElPWTN5TUxXTXZma0pkZVMvd3B3cllzTDNiakdGMGRqSkdDRFZSYkJnYlpB?=
+ =?utf-8?B?ajU0L1NRTytodDIycDJJNUViZmxxV3JmRHhHYWVvUTk4Wm9aZ2VMK1BzU1Zo?=
+ =?utf-8?B?bzRNd1F2NkNMY0ZnaUNPbDk1d3RKMjlESkN4WDh2Y3ZDOHhKT2ZVK09ac1FR?=
+ =?utf-8?B?Zi9qNEZ1OFFTaXFUNzhZaE9ESGhNanFhZWFEeUNobXBlT2FuYzJNY3MrN3hQ?=
+ =?utf-8?B?VmN0N0kySnJYTm1xU0VkOS9ldmVmaVdGTVJnU2F1R1RBWUtoSXlIQ3Q4dzZU?=
+ =?utf-8?B?b3g4Zmc0RWo0VHZiQUlCb3c3MmRvOWNwS3JHWjl3R21GQ1B1Z0VYR0laQ0Rq?=
+ =?utf-8?B?VGpENmVpck5jbndsaUlacnVBMTJIZWw2T2ZnV0FVNFpnK2tVWDlQSkZ3ZlNP?=
+ =?utf-8?B?WmloVEttWEZoS2FuUWJMK2FkUUJHWFBTQlU5REUwWUk0RkNzQVFZbUR0WGxs?=
+ =?utf-8?B?a0xuMzRUWGlycEJOSTU5THl0ZGUwR3JLd3NJSmNuMEVqb05zeTlsOFpNWXpO?=
+ =?utf-8?B?a0VjMTlaWk5wNjM3OTFqQjlTV0dpbHpUQWxNMEhaRlR2c01wRVRyR3JEeVVZ?=
+ =?utf-8?B?d3gyS0VWNHhGNVNYb25GdlllQlRNazM3ZnhoVlpnNVV6aFZGQmhlOUFtVWh3?=
+ =?utf-8?B?UzMwQ2VjV3FLL0tLVU10QmtqQ0p1L0ZSZ0xjaEtXZUNoTmh4SHVYSzlTOWNY?=
+ =?utf-8?B?VnRwOUtZc3JBMFNuSnpXbHpNb0xyemRvMmhMbXlsWmZtaXQ0VGFqeTVlTmw4?=
+ =?utf-8?Q?9ftLBtopxufQB3xcXTrThy1tYToyXL0mM66UY?=
+X-OriginatorOrg: efficios.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 37742cdc-b54a-44b1-e865-08df4cbc735d
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2026 19:27:18.3838
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bP64CbyxdxPCeLzSYOdBKAEkeI7sb8qtHqTfRAcW/YvMvHiqyAK76kbHhHEdHZ8vz+tplSOZ2Dt+wBs43dOmXPf7mgIER2tkE2Hr7WjNuRo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT4PR01MB9767
 
-The ESP32-S3 and ESP32-P4 UARTs permit transmission when CTS is low.
-The driver currently reports the raw CTS level as TIOCM_CTS, so
-TIOCMGET reports CTS asserted while transmission is blocked.
+> [Severity: Medium]
+> Can run_target() read MBT_SCHED_IN_MISSED before the target thread has
+> scheduled out to flush state->owed?
 
-Record the CTS polarity per variant and report the logical CTS state.
-Use the existing polarity for the original ESP32.
+[...]
 
-On the Waveshare ESP32-P4-Module-DEV-KIT, UART1 internal loopback
-verified that TIOCMGET reports CTS deasserted while transmission is
-blocked and asserted when transmission resumes.
+> If the child is not preempted during that round, the schedule-out on
+> cpus[1] only happens at _exit(0) after run_target() has already recorded
+> stats->sched_in_missed, so a missing scheduler barrier on that switch-in
+> will go undetected.
 
-ESP32-S3 hardware testing is pending.
+Yes. The BPF program counts a missed barrier only when the CPU leaves
+the thread. So the last switch-in of a target is never checked. This
+holds for every test case, not only for the lazy TLB one.
 
-AI assisted with driver development and the loopback test.
-Signed-off-by: Vítor Hugo Silva <vitorhg20080@gmail.com>
----
- drivers/tty/serial/esp32_uart.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+I checked it with a variant of the test which does not probe the
+barriers of a switch-in. Each switch-in then counts as a missed
+barrier. global_expedited_lazy_tlb ran about 47 rounds. Before the fix,
+it counted 48 missed barriers. After the fix, it counted 95, so one more
+per round.
 
-diff --git a/drivers/tty/serial/esp32_uart.c b/drivers/tty/serial/esp32_uart.c
-index 7d58a41..ab0f739 100644
---- a/drivers/tty/serial/esp32_uart.c
-+++ b/drivers/tty/serial/esp32_uart.c
-@@ -140,6 +140,7 @@ struct esp32_uart_variant {
- 	const char *type;
- 	bool has_clkconf;
- 	bool needs_reg_update;
-+	bool cts_active_low;
- };
- 
- static const struct esp32_uart_variant esp32_variant = {
-@@ -172,6 +173,7 @@ static const struct esp32_uart_variant esp32s3_variant = {
- 	.rx_flow_thresh_mask = ESP32S3_UART_RX_FLOW_THRHD,
- 	.type = "ESP32S3 UART",
- 	.has_clkconf = true,
-+	.cts_active_low = true,
- 	.loopback_mask = UART_LOOPBACK,
- 	.sw_rts_mask = UART_SW_RTS,
- 	.sw_dtr_reg = UART_CONF0_REG,
-@@ -191,6 +193,7 @@ static const struct esp32_uart_variant esp32p4_variant = {
- 	.rx_flow_thresh_mask = ESP32P4_UART_RX_FLOW_THRHD,
- 	.type = "ESP32-P4 UART",
- 	.needs_reg_update = true,
-+	.cts_active_low = true,
- 	.loopback_mask = ESP32P4_UART_LOOPBACK,
- 	.sw_rts_mask = ESP32P4_UART_SW_RTS,
- 	.sw_dtr_reg = UART_CONF1_REG,
-@@ -332,12 +335,14 @@ static void esp32_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
- 
- static unsigned int esp32_uart_get_mctrl(struct uart_port *port)
- {
-+	const struct esp32_uart_variant *variant = port_variant(port);
- 	u32 status = esp32_uart_read(port, UART_STATUS_REG);
-+	bool ctsn = status & UART_CTSN;
- 	unsigned int ret = TIOCM_CAR;
- 
- 	if (status & UART_DSRN)
- 		ret |= TIOCM_DSR;
--	if (status & UART_CTSN)
-+	if (ctsn != variant->cts_active_low)
- 		ret |= TIOCM_CTS;
- 
- 	return ret;
+Planned fix for the next round: run_target() waits until the CPU leaves
+the target before it reads MBT_SCHED_IN_MISSED. It sleeps until the BPF
+program has counted a schedule-out.
+
+> Also, sampling first_sched_in after pin_to_cpu(target->cpu) subtracts out
+> the MBT_SCHED_IN increment from that initial migration onto target->cpu
+> when computing stats->sched_in.  Should first_sched_in be read before
+> pin_to_cpu(), and should run_target() force a schedule-out (e.g. via
+> sched_yield() or migrating off target->cpu) before reading
+> MBT_SCHED_IN_MISSED?
+
+No change planned for first_sched_in. Only EXPECT_NO_IPI uses
+stats->sched_in. It allows one IPI for each switch-in, and run_target()
+starts counting both at the same point. The switch-in onto target->cpu
+happens before the caller starts, so no IPI can follow it.
+
+Thanks,
+
+Mathieu
+
+
 -- 
-2.56.1
-
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
