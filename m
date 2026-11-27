@@ -1,74 +1,45 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795780387;
-	b=0uB+A2EfhL5EiuQgUqjKbXucFcWp3jMI4/jOzudEbrEZnZL1mDMAjtgrqQPSDfqX5VCX
-	 PVonscpnvCAHJCI1kEMLFKDkcP1WPCOP4/adhUwE1OnNwLhLeZi2RywquFepeywpjG6ol
-	 CmnMwvtpEL5iJxEbbCttbqluVOJdSFOugZ+Jawb/gSFXTIMSX3VVlkd8OfyFFcLjMYgLR
-	 snbh5GPAVbcOyi1Wvx4KTw7cU3Zx51zelfcAB8JVHh63C7OBCcPXpl1a3xh95shTzsHqR
-	 7M8R8GyTjIkSr8rhEhtA9wuaiCBUB0XjLHqhbYMojUces/mTZoLXWD1Ob3Gi++RSOrA==
+	t=1795782391;
+	b=3tNDAsmdj02o181ZH5svURy5w+LA+g+Lcjp4nd/gqXSgM60hTMe3KU4WA0F5IzikT7kt
+	 +lXzo+7XwFuS+n0t9d9N1nnfXyrgqlMZOCGGnvTp7uAeSbYbFj34tcUVZOxQvZ7PmXhME
+	 Rj2g6XX3M/Pu/Fb/K6ssI6WF/kqpZcNvC2NtkD1Q+tK8ugWw4udhKrxZxlTlQs0OufI0j
+	 Nw8nUUSDVqrCKaxtPX4dyzicp4Bl4a1xqm4TmQr2CcVofwAgxwNmysrerV+/bB/EdNbM4
+	 gYzSfc2gCA6jNfBPzotvWVZA3+0M1rGQbXLFo/lNOZMLjy3nuSnfUz3OrP+vI/IIjtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795780387;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=RL39unA4d3ZI3cXLW7yNerOshSBsEQH4w6tvhOAE1Tw=;
-	b=BunVLCCSrFgKavhbT1R9Yg+CkTxauJ4A1kiECzEWpLO/8UgddHY1Ug7GGYfqQp8vs6ax
-	 6k4HIuhTCantR4JNgUnpv3VYfGkL21W0KD9Rbm73egQgZySAJeQEJ2jahM045grRybpaw
-	 skso+zspwHRib7zVlMzt7seTGy3ecLC04a8mMyPHa9gT5GEcdJU0nJI2bV8VId8aslpBy
-	 IXyjwOlpL2C+41+IYd8ctw8xV3PfBp6LQlGGSgV2mwP2VWdVcHOhs0Qb2zjVmoIjwWdPR
-	 aYMm2RoqGz4WWkjx3P2MGDcWI4i1nFaSiudlbvwXwYPm3z9iR0LnJcjZGrdlxGGF5CA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795782391;
+	h=Received:DKIM-Signature:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
+	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=1YACHt856w6M0a4jo14ZmbPRV5xm/2QHd8y3Uh+V8Gk=;
+	b=rm+AKUz/HHWtppp1r/P+E/pZC3qZiK84Q/t8JzqOOJPkjonb83nZ3Hgss5GmiJ6xgN9l
+	 CYfUWC5aUPYgiGV2eGI4HCtNlU9vKsaf07/gNQnml44e8Hecs5AF0mUFFshrwvLwMRCG8
+	 A3YzCy6uH5qigK2KlwtzY2uKxA6fJGCCAFk6FyO9+3vTxtv3oQYsyEPTr/YqfTv128bUH
+	 aT6vLPsN3V/u12izKHxDgAPYBqnHUi5SbPIF9c9esmEfSODlHs3WPMSzd27lduKizwVV1
+	 xL+K5GRW0J0OendE1XL9iMzRJbvMT5TLAnKrModBASdUXhlXmtFFsR+h1O5+6m2eRZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=SZ4SZkkF;
-	arc=none smtp.remote-ip=209.85.128.72
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZO7Xi66x;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F10B606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 11:53:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1F10B606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37EC606A31F;
+	Fri, 27 Nov 2026 12:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=SZ4SZkkF
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4ba078abd78so53805945e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 03:53:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795780385; x=1796385185; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RL39unA4d3ZI3cXLW7yNerOshSBsEQH4w6tvhOAE1Tw=;
-        b=SZ4SZkkF5hROJgIhsYutrekz3xtPybmqB2V0POoyZz+JX0jHtCLPGFnnaDNyHA93zu
-         Zt7gJdWsy3wNx1GiGoyePbEy6SiJlITTgjTtvOQVkD4hQIkbPTVa7eGOUQGQkeBJC3fV
-         YiGZQRsP2OUdbdj2A+0zH111NWgC6JPuvUlNzmPUQtMmh12IrPCgo7V3EGUOgK2yQFyZ
-         vA/D+rvKVl/zGShgQ+xT7SqAh0tgxCO7G4jiSxrt7Us01M/NxuuRqne9bnxv878u8siI
-         nRhTzes8QTf+bIyPg/UpWHfzVwR0uPjRi5ZDMgu09rbg7tbh7ynuWYD6uOdYgl9UHOBH
-         03zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795780385; x=1796385185;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=RL39unA4d3ZI3cXLW7yNerOshSBsEQH4w6tvhOAE1Tw=;
-        b=vl++DQ3DQg7aYheNZR4UjB5aZJc2jiy9McbhbSZ5Xy4rqrn9yieGmge9uO5MfzHMoz
-         qncGS9TXOiK8edQx3mTW5U3PGDfm+VP/EX0+nYzBywZ5AREoWzku7XcmEOCmfObIFesd
-         Oldqazei5pBVfD31IO4eOwIxbLV09K449lTN3UjEkywCVAYb+rn+uzp1Fugu7TIZPDHj
-         ZjOHJ82miHkETxUYkEhZL4h6Ew+DouKGvaVbsmFoneU1yJ88kEbvsi7iDVsLN6UbXpOc
-         E4KJj5nAmmJCHbrKvj2lEswUeiXmaLcDO/mRTlTCj5H7V6jFpl+ct3VDEmvZim6+8WHK
-         Gp/w==
-X-Gm-Message-State: APuU4Z96C43TxwuZLI7AkbDisPZbisOqKUr3klTsXLbdPcrQI7CJJTlR
-	VzOgfRrVoZFzQG9Za/xjlNNZC8lzmYi5tU9qo9j6tCZXYa+Lj3U6uOYbs7ZwpmknKZKyIM/jyMP
-	S1in1zQ+rEz8w64GzT0oWMoWLrfQSaYiZvq6LcI7R/nnwv/ZBMmfqUYNQSy1I3NRv/9AQM5TN6y
-	io+ERsTNpAVPlhR3Wghogd6okEVj8sk9ZYLVbO2VJjFxEL0vjr4V3xsHwZOnMZRZ0m
-X-Received: from wmxt6-n1.prod.google.com ([2002:a05:600d:8646:10b0:4bb:6c3d:a4ef])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:c168:b0:4bb:81b2:c801 with SMTP id 5b1f17b1804b1-4bb889238f1mr480110875e9.20.1795780385227;
- Fri, 27 Nov 2026 03:53:05 -0800 (PST)
-Date: Fri, 27 Nov 2026 11:53:03 +0000
-In-Reply-To: <sashiko-outbox-237242@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZO7Xi66x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421111F00893;
+	Fri, 27 Nov 2026 12:26:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795782390;
+	bh=1YACHt856w6M0a4jo14ZmbPRV5xm/2QHd8y3Uh+V8Gk=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=ZO7Xi66xJ5eiZwNXBLa6BLoDGR5aSVF6bLsPgtU5erQWnMtBt1g7CPJSLW1lJgTk3
+	 h184At0WELaNy1wZNHiNuIBarbC16ljGPUZOdDLz2XXn4+t2HkJ72WMvyr7ZMNW5H6
+	 n/xS4GyVTHOcuvBxZxERz4s3qigBh859Eux+ovEvbj+g87ePU2cuIvmqkGJG3M+vxr
+	 0wbB117JpOIKUF4SjaaoNUEaZ/znTcqpPHrsMdoFYJb25m0jJlqchEAF7ayWVmfnWI
+	 uiDG2RJT9U/o2WODwEFHqCfXep6FaJ4ZADm+v2ljSrfOrSAgkVRFac52JJHKJc0a5t
+	 hfVfNY117NhBQ==
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,26 +48,58 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261127-condvar-doc-interruptible-v1-1-d61a13fb0c36@google.com> <sashiko-outbox-237242@kernel.org>
-X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261127115304.1602646-1-aliceryhl@google.com>
-Subject: Re: [PATCH] rust: sync: condvar: show interruptible wait in CondVar
- doc example
-From: Alice Ryhl <aliceryhl@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 2/2] phy: qcom: qusb2: Add charger detection support
+From: Manivannan Sadhasivam <mani@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org, gary@garyguo.net
-Content-Type: text/plain; charset="UTF-8"
+Cc: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, robh@kernel.org, 
+ conor+dt@kernel.org, vkoul@kernel.org, neil.armstrong@linaro.org, 
+ olteanv@gmail.com
+In-Reply-To: <sashiko-outbox-209554@kernel.org>
+References: <20261111-shikra-qusb2-charger-det-v1-0-5a9d919c66b5@oss.qualcomm.com>
+ <20261111-shikra-qusb2-charger-det-v1-2-5a9d919c66b5@oss.qualcomm.com>
+ <sashiko-outbox-209554@kernel.org>
+Date: Fri, 27 Nov 2026 17:56:23 +0530
+Message-Id: <179578238331.13164.6583098975209053616.b4-reply@b4>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1067; i=mani@kernel.org;
+ h=from:subject:message-id; bh=VYxpysZXxFobWWtLDUihdSzI2UlztsyVeKhdK5npJRk=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBrCXby9x1ZaO4NWT9P4PUsywKWTFXs45JOc+QdI
+ An/QvY+HWCJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCawl28gAKCRBVnxHm/pHO
+ 9TVVB/0Y+Vq4sa42sXamq1cMKzbxZ8UlW709+zGCKiJ/HruoDc75IYPtg7vUEUu38Oit5DhL2SW
+ acL8lNzP8Akcg05LiZTObO/lKcBr+aC2y0hw0cQQmDiNzaLNEduWJEZY8bJ47V/2RKohmK26lq5
+ E2IRpV0/pV/6c5Ih/1s6xDOxn41JcsnoNlqt6fR62pjcsevAd5zJ3hBLxGfYkDG52OVyTJo93c8
+ 63WJEmD++XkAdWDD4YiUjIQynBtTJCMjmRO5JUU72r/2VTuis8Vqx1I1jd+nuET+TZF/VGQGktS
+ bYTyqfqGyakGCEA+w8ta3MTpekN8Qfr4g5c0VHqaYPaqJ3ms
+X-Developer-Key: i=mani@kernel.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On Fri, Nov 27, 2026 at 11:34:05AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found no new issues
-> in this patch, but noticed 1 related pre-existing issue it does not
-> introduce:
-> - [High] rust: sync: lost wakeup in CondVar::wait_internal() [1]
-> ...
-> [1] https://sashiko.dev/#/bug/linux-1aaf85f4-21a8-45d1-b9bc-cb3fda3360df
+On 2026-11-11 19:23 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 10 potential
+> issues to consider:
+> - [High] phy: qcom: qusb2: unbalanced ref_clk accounting in
+>   qusb2_phy_init()
+> - [High] phy: qcom: qusb2: charger detection disables initialized PHY
+> - [High] phy: qcom: qusb2: PHY left enabled on USB_ROLE_NONE disconnect
+> - [High] phy: qcom: qusb2: missing teardown of work and role switches on
+>   unbind
+> - [High] phy: qcom: qusb2: missing Kconfig dependency on USB_ROLE_SWITCH
+> - [Medium] phy: qcom: qusb2: clock and regulator leak in
+>   qusb2_phy_init()
+> - [Medium] phy: qcom: qusb2: race between qusb2_role_switch_set() and
+>   work
+> - [Medium] phy: qcom: qusb2: mismatched register writes in
+>   qusb_phy_drive_dp_pulse()
+> - [Low] phy: qcom: qusb2: undocumented new members in struct qusb2_phy
+>   kernel-doc
+> - [Low] phy: qcom: qusb2: hardcoded charger name in
+>   qusb_phy_notify_charger()
 
-Indeed! Please see my previous patch:
-https://lore.kernel.org/r/20261126-condvar-finish-wait-v1-1-296b5a05045b@google.com
+Please take a look at these and also drop the spammy dev_dbg() logs.
 
-Alice
+- Mani
+
+
