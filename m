@@ -1,97 +1,116 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.3
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795791741;
-	b=pJNpgScgVw5NUrwTFeplNwCAF6LOibdiNvSPuQXkgwOwTkSRP1Q9IsC3enJ1q+kQIqEa
-	 qN/hNoXw9cGZflCX/n58XdPt4JlB7JmUzxdMOPIj1+8ANe1NRc1yGa7Bcf9cBTNB+d+Fl
-	 0stde1nh5GFMMsI0DPfevpqTia3lTcXTEc7i+E67BWTicgJqk3Nf6gEc8X5ry/be94AJ0
-	 MBIjY3dXeAFTWy6huNWcNrasVCuVcM58GkaVeDaQmGHLlcaemd8x0Ao0EZXaGpC8u1x85
-	 pTJrxwR+zavvQPATsO4CEZHR9BjxKfcGGZ08bniDGw309dtwjLYRo05hVOFXue7DTZw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795791741;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-Exchange-MessageSentRepresentingType:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SharedMailbox-RoutingAgent-Processed:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=mWQ5aUCFyKmT8bbsYZ+SJ9ICTyPX2VTS+DHCB69oNTo=;
-	b=o31Ui3b2RTtDq++4OQN9NCTXqznH/q8b5zKDgOM7qcVKaoLrfuXxBdpa28K0wU+RzRTv
-	 /KPh1FlMy1+elA5U8cCdIG+chNQtJzoR3rSfBf+k/QRHcBnIdIwu16NE7UJ1GcPsZN1rv
-	 UWWUSetFQMlK131J8UyPzjGzRu5cayEYEA2P5yMg4QDPppm6vwxBVdPp1zcd8rMGKw6rg
-	 X+6D5fOisfHSh7VfmKh2bf29LyPvCJBBxW8pSMkfTrk8YuYa2OlcPFw5MjXftktmgtrwX
-	 NFmSMy5RLwzhIwnzIMDikyn9Ui4UCDJkvDvvvctQ2JJKtT9Z4J93sTHYWNJVHbAufbA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=UFnTTPVo;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.3
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013003.outbound.protection.outlook.com [40.107.159.3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795792217;
+	b=oSr+wSrqUXf1LHpwsCFz8slTxG3cUd7woXOFPcxczJJzgB8Q5jPmdIfDLqgxJft2SeNR
+	 q8/Qw5bO8NTEpWX7xkSJYWD27fzdZ/Z1Skzvb8oztlPWTc2RwODVb4CCCGEOiFSq8ZHW6
+	 VeNktJ95xAIS+ZpSL69GHMKAlcatMd98J99nx+A/wz034bv+TaCvm4P7SU0OoUVJsn8Ju
+	 uOGNE6AS+aCFFfGPcbZbEBKTbKRFvRUQo7/2J7sklD3iZddWqoZ+SosVYcRRdEZSQgCg+
+	 lIDpJGTtiQRAkgaWwzy4BGIoVomNRBxnnPXVyFZxSfUyTZBg31wKpl0kBwGXhydcu0w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795792217;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:Content-Transfer-Encoding:
+	 In-Reply-To;
+	bh=dB3Mu1p4rL6bAO330MA2e6OIkjqTQSd8YGpfYYCrr/0=;
+	b=sLkdLkc9pa6OtG0VKIG6sLtUxGR6/Hv+noW9ZiKq/eFgdoqohwMQcdgluq4wnOp3Blw3
+	 kmQfuERQXj7Nj1uv+2zDfhr2d2tt1QkvUQZfLtuRrrLTsevX8js5BkyMAynHWuJr7tIsM
+	 u1UopbNfLQqe8ubaY/QB7BxsBAZlb2JDTalnp13yCS7VSFReb2YMwPcsL37nSp8/uTT0R
+	 B7shk7ctXdmwhBPp3k55CZ+u4fHDGjyqgHpLb2qaFCYzihZArE8rAmJ1h3rBwdduS8bLk
+	 wXIj79xO0UA82WcYc2m+BG1sc8u0S1H0oWI8I0B4uRSgtAIT6QnjKvHHlBbjT1nh1Rg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=suse.com;
+	spf=pass smtp.mailfrom=suse.com;
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=GSwPLlz3;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CDB606A31C;
-	Fri, 27 Nov 2026 15:02:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1CDB606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E140606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 15:10:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E140606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=UFnTTPVo
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gW5SrznZeUo6321EGDwCk39ldFECqZF6JNdWrfA1bCkR831r3lXv8u/ticPsJCd54BiJLOZF6rznwlYB2YDMweiiqvkPz4RQKbVQM+GLySx/ZqcjwMOG3teCpBve44MKG2z7FkDR7awdENf5vcQpSUKIbGgiUSgi7quU+w1SwJE/Nt8c8VOkw00jH+JcHlDLerMmIoqFWFmvK7qzk4CVvTC+roQ2uGBtlb7/3xPMeJFB4f35NiPZWg+s3IX/NNDxCNbWj4+WkfYYpsKQOe5iaghxRk9JyYO8mVvhtHYg0bil3saeAiQpT8ite9UsM6zCb585CTxZWw3BzwIZRQ/4TQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mWQ5aUCFyKmT8bbsYZ+SJ9ICTyPX2VTS+DHCB69oNTo=;
- b=vRnSqZnP30UKF5kPplvvGItcWiNfHIVDPLcRCUtWOOtreGbXZbWbYNGUMaWo9tr8r3nr8PMry9xOY74/dH0INqrioVPUFX9x8zxmN3KOa6ViunvfVYAkyLeeuCgIkRHvcAZAVeTEALP7RO1FEcCcV6nBfr/9Kbkqk72QCPqOb2KnLAPcy8J35lJ2/+3BJ7HlS+kqF91zMPLQc6MaukxkaONdqr5gixnyJtusThNJQHcU7L6VS9YK3b4XdEkiuRg4O0cJM9Nwf9ynTbDySOYnGXnjz4Vbn2tDGeTt/TfprZ/c6+qmLq+33rCBEESrAYpcJYhnsp7I9f3d+2Yb9fxJ+A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mWQ5aUCFyKmT8bbsYZ+SJ9ICTyPX2VTS+DHCB69oNTo=;
- b=UFnTTPVoFxy+bvduGrzEfzXiHC0txIdYVpZTi4BQqgjM2+CAObXAVgG9N6qx5OtzI/zPO+t3IDVKwUKgzGhHjSVxVr0OMAfvQLH8ve7p9gWXSE2C5tikBZ8mVHoztdtk8RYCSm5z1Kqq1zTuwIs9dZEACJL/yl/oNWISoan627wPSu10j2AGRZkrJ/1+oLQ81OlJvlQmT/J6IY0nV26LbxsHGMDu7fzMugdAfpophU0XyavWHGEqM6nkpRxKWHPM7eMASoImVBCI+kbdpJhMmv8cPwsHcwnuc2usiPcGw9fr4Xp6kgrXxoRLVIciU5FwEcQiV2SZseTva4antr0PNQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GVXPR04MB12316.eurprd04.prod.outlook.com (2603:10a6:150:2c6::8)
- by PA2PR04MB10186.eurprd04.prod.outlook.com (2603:10a6:102:404::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.9; Fri, 27 Nov
- 2026 15:02:13 +0000
-Received: from GVXPR04MB12316.eurprd04.prod.outlook.com
- ([fe80::fc6e:ca22:f065:def4]) by GVXPR04MB12316.eurprd04.prod.outlook.com
- ([fe80::fc6e:ca22:f065:def4%5]) with mapi id 15.21.0662.004; Fri, 27 Nov 2026
- 15:02:13 +0000
-Message-ID: <d693bd71-f83d-4b6c-9257-3c4033ade261@oss.nxp.com>
-Date: Fri, 27 Nov 2026 17:05:55 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: imx8qm-mek: configure ENET0 pad compensation
- for fec1
-To: sashiko-reviews@lists.linux.dev, Daniel Baluta <daniel.baluta@nxp.com>
-Cc: devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
- conor+dt@kernel.org, Frank.Li@kernel.org
-References: <20261127135237.2153934-1-daniel.baluta@nxp.com>
- <sashiko-outbox-237525@kernel.org>
-Content-Language: en-US
-From: Daniel Baluta <daniel.baluta@oss.nxp.com>
-In-Reply-To: <sashiko-outbox-237525@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AS4P251CA0007.EURP251.PROD.OUTLOOK.COM
- (2603:10a6:20b:5d2::11) To GVXPR04MB12316.eurprd04.prod.outlook.com
- (2603:10a6:150:2c6::8)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=GSwPLlz3
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4b467581b98so79228265e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 07:10:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1795792216; x=1796397016; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dB3Mu1p4rL6bAO330MA2e6OIkjqTQSd8YGpfYYCrr/0=;
+        b=GSwPLlz32RpmBU3p6ZcE7kinFsNnVcFi6MpqnRc5KQiOwwKqGMQ4eTeBIp4FUdVTkq
+         aSQKPSj+cC6DQviD8zCUEofXI3BtbOkB8Bu4BglKSxJeq5izspLZWNlBXGbSx5TWOp5H
+         58S3QMWmlEQG15cl4k1N1wCIumP5ubtu5ldhe0MUV5S195yabXNDsmOjJpkgUyqzNJ3S
+         pv35vYMQiHnaYfyrZgrf2jaY9NOux3xyejj2fdCkzt2cIw0G2nWkwesPwN7T3irptF/k
+         YMF3A0uWL2Q+v/o0X0FjzCRD0QX+qE7+UIiQ4rxdGzFIsn4TGH6/wIRBC8cZdmQp8K/I
+         Nw6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795792216; x=1796397016;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=dB3Mu1p4rL6bAO330MA2e6OIkjqTQSd8YGpfYYCrr/0=;
+        b=tBTlB1lbKwD0fJ7BpgzptVoxOrOc0MROPH1lonZNJKuS01UX4v6+NQavDqGg7kSUq9
+         U1ZruzrqDMoLDgDiAhKuxF9ISWaBQQMawozyWc3CgX/2NTIZUJjx2coAIS20Z0u6I0jt
+         ktbVw/gA7byHDV0jVCk0XjCiArlmD74GSzc1LgzjHf2Njy7pCR84aEJVwIl0wR40J469
+         1KsxMVg0wGm9HfBXW3J1SfQKChvi6NQ3d4yex87L6xmpLudX17GhAzVfGEqFs5piPFgn
+         6ToCU7v0JhzxzGcQn2IkpzJVToQ1hfMNVgjIQtCX8KaqxS6Jo69DTmDHGlCX4E+6KjPg
+         qQug==
+X-Forwarded-Encrypted: i=1; AL+hErH5/8sKOgI3kC2IRRQJrDjwMU9Rw1qTAiUrMrARQst9AvMZfjoweVQGIEqsnlaKpW15LLweEup9it0svaw/kdY=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/9D/h8kAkLxyZkkI4+W5F1+uEL0yqhX9bBTGZyAjnsAILNE8ri
+	f0+UqutKwmRmcF/MFliH+bohAp09xndleiQEYhWeZeaRHyc0SQCVTxz927WiX0cSXLU=
+X-Gm-Gg: AZFdTZfR4yZz3wHa8wCmFYOAQDhcf5R4jgRpOxstSFcOxNj459HZKzfhwafKpiH8OMb
+	GJ63pk0/Mqoel7TFbNal19XDE6Tvz06TRqOOx+kN9TxiTapKLyyNeJIyaCfQemLiv8AOkg/v9kI
+	lmMLVvIKvRXdL2ao6JveDux9U4hwYB9/hYJCKjE4i7fn/V0jparsJhYqDkrEdv+N+qZwqZstTVo
+	9+A//G1v90GaG91zj0uiPIOj2BRZ18+UCqUJ/Xi7m+NtJKV24mAeHuP8/dgEd/bjAz2/6FdZMQ1
+	tP1wNdPBWz3naooynEhrqCxAb+edDgAW+J0S1OwsrH8b5aItNXMFEuSlFmMcDuOYZ3kUmgZUvSr
+	IDaYEXkMF/MozoDjyAOUPprh+TqttuANNwUjEdjM5Ngp6gl4WVBwj5MzkuWrKz/YpKM43xCwQyr
+	/m1AXgG9fihJFITv7G61s550LR7Nxwto6Ei4fReQQyoUmrYbqewiiBktZQkSe7kMA1PDdKts3Yl
+	DGT49jq013fkF70vIPamqUloNv2OlA9RbXGA2Y0hEGmYFMDekh+HPONRdB+d059mthN1OYfJhpO
+	09fGeKAo5KRIdDsubrRaj8j/CL5YTIpin1909JS3liU6a7Pq6hxO
+X-Received: by 2002:a05:600c:468c:b0:4bb:6d61:af7c with SMTP id 5b1f17b1804b1-4bb88944bf5mr493578005e9.35.1795792215604;
+        Fri, 27 Nov 2026 07:10:15 -0800 (PST)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb853a12acsm729529545e9.8.2026.11.27.07.10.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 07:10:15 -0800 (PST)
+Date: Fri, 27 Nov 2026 16:10:12 +0100
+From: Petr Mladek <pmladek@suse.com>
+To: Yafang Shao <laoar.shao@gmail.com>
+Cc: "Ravindran, Binoy" <binoy@vt.edu>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Boqun Feng <boqun@kernel.org>, Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Joe Lawrence <joe.lawrence@redhat.com>, Song Liu <song@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"live-patching@vger.kernel.org" <live-patching@vger.kernel.org>,
+	"Shastri, Jaidev" <jaidevshastri@vt.edu>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"rcu@vger.kernel.org" <rcu@vger.kernel.org>
+Subject: Re: [PATCH v3 2/3] livepatch: Include exiting tasks in the transition
+Message-ID: <awmdVLfnwgrS9VfS@pathway.suse.cz>
+References: <20261125-klp-series-v3-v3-0-b1e0f79af331@vt.edu>
+ <20261125-klp-series-v3-v3-2-b1e0f79af331@vt.edu>
+ <sashiko-outbox-234405@kernel.org>
+ <DM6PR05MB4137C0B5BB4D88A9D5847EBAD1432@DM6PR05MB4137.namprd05.prod.outlook.com>
+ <CALOAHbAQuYG__4b054bRobVRyT+v143wBcVAN26T_PtiO-oqmA@mail.gmail.com>
+ <awmWExtIJGM805__@pathway.suse.cz>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,109 +120,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GVXPR04MB12316:EE_|PA2PR04MB10186:EE_
-X-MS-Office365-Filtering-Correlation-Id: ff255d2d-efa5-4ead-018e-08df4c976b19
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|1800799024|366016|376014|23010399003|4143699003|6133799003|22082099003|18002099003|3023799007|11063799006|10067099003|56012099006|261102123227099003|261028144727099003|261021121427099003|261022075727099003|261022105027099003|261009223027099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info:
-	6rpX2eHExV3BB1kup4S0U7u6upqIYQRQjSBgOqT+1NvGZ8i6v0U1SbF2fyP/uYMaxIKyqNFcr+n1+Md5NYjqeRdD4ocfzrSKqaSKwDkp9YsV2RuMSvHYLluMJih6cfMexWuhn6sS/T/9qE2y+uUeDk+LHnRIZBPI/PSuTjdN4K7c9pVURbdYyBniQoPhVqC86fNf4IpZJMOVPGEe6eBRWKZIuEZYtvneVpvOqQTyKGmoz7gu0TmLxGZFPb6MBuY5YxJLQ96gpLkgrkfzJ/fJLOr4xIhamNBvcq+QfcbCSudmP74Blm1N7JMt8E47W48nZjAj8/XuhAUX4v8jZMwFvg+/OuCvdwGLEQtTst3nNp1cg7QzFqtG6TSKFmqK7nP6GfGOaBwfCP7YW4+/eUyIWB7x43CgsNRRwiO6rkZuEmCCOkqXRoufEfgbE1Ej0tqkx1bwvplHSurVgoFvRYVSLGrCXtpmT5Qwd6yDKstvyOI6yqw+v8dFRo+DQd1XBzRcaEewBaseBUDSsg3fWND4pLl9pfr8HTxkobHxhhwSE1NF3dlmC7imHHdSXT2EsDggZK2lSzJ/nb7W9K0AR4O5YUQrjPsxhFMmJUxPBY/19Wy1vfZSMQczit3f6D7I8BuXM1O38DURWoXKRBLYkkeA+L0jct+kSh2wt7ZyGwN4u+8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GVXPR04MB12316.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(366016)(376014)(23010399003)(4143699003)(6133799003)(22082099003)(18002099003)(3023799007)(11063799006)(10067099003)(56012099006)(261102123227099003)(261028144727099003)(261021121427099003)(261022075727099003)(261022105027099003)(261009223027099003)(261026140227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?L0Q5cXlNNVY5Rml6b05zQ2dXOG80RDJyei9lNTBIR0tBYzJoaHhtbU5nOVJn?=
- =?utf-8?B?TUlrSW1vVThwTER0a1FFN3lsUWYxNTZBanQrU3UyeGZtdGpCV2ZnY0xBYlg3?=
- =?utf-8?B?UHk3dXEwdlE4NzlBV09WZmNBc0hFTUsrZlY0c2paNG9idVpRMzYzTU83Ynpl?=
- =?utf-8?B?L05ROFowQW1IQTVQMjM3QSt5SWRjemVvOVc4VjlOSUljQS8zSkdRZERvVnVS?=
- =?utf-8?B?YUFUVlMxWkFPZWpjZjdxVWlQT2FKQ2NlN0R0N2dKWVRWNFk3UyttWmI5WHJj?=
- =?utf-8?B?MXpmYWN0SnFhT1RobWxwVUlZZUpMQ1Vxb0tOZnZJR0EvZWtPeGVoUVFJTStE?=
- =?utf-8?B?ckRtQXNaWTBrRDAzZkdaUEpyci8vRFBOMXd6S0FscXBwRlZrTUFqZzlpenRD?=
- =?utf-8?B?amhrTmcrQWZZVFMvcHAwejhpUWlpVm5jb2g5aytSZGRhSzhMQVdid3k2aEds?=
- =?utf-8?B?K01WbjdDSWhFYkJiSkNoRkt1b0plQm5aR3NHclFja3ZpNlU1dGg2RDlkbm10?=
- =?utf-8?B?VnUvSmt0N3VMNVpvM010T0RmM3R2YVdrSHFEZVd2YUNmc1ZNV2VqRTRJV28w?=
- =?utf-8?B?Q2puQ2NDZUJXRkpJUlFjUTVHZWFVWlFmaWdnK2hqVU5lb3dzUVExVjg1MG5B?=
- =?utf-8?B?d2F2WXpGUG1xRzFDVklta21MbFJ6dE9VWXdJZnFVZWFtbU1kZFd5cEM1Q09F?=
- =?utf-8?B?NWRIRFBWbXU3WUxoRHltYm9CWE8wK21KU1htTGg2SHRXd3htNldXcVFNRlh4?=
- =?utf-8?B?cTcyKzRwMUs0UlZ5SWxURjAvVHBYM081VFRCS0RZVXFLY3RGNktUK1hXTXEy?=
- =?utf-8?B?NFRrcDVtQUJERGhDdjIwTVNHZ0dVSFBwNENHL3JTWDZFcVZ3MkNaT2lMZzRO?=
- =?utf-8?B?MUFvN1BNMHd3WDBiR2N5ZXlkWTRrSUNweTBLNVRZbE1IY1A1K24xUHlkMWIw?=
- =?utf-8?B?QXdleDVDdStzSUFCNGt2eldwcE4yN0JPRjJWUGdxV0k4SmhQNnVUUDZWVlNU?=
- =?utf-8?B?bEtUL0FHdjBuSHQ1b3RnUzBsaW5BUTRaM0FUREEwRk4vQStnMXVUdkIza2xK?=
- =?utf-8?B?dyszZ1FISExqcTBoNGhNbk5rT0dWT2VlVTVmWFpXYzVubGw5VldMYjVMY1oy?=
- =?utf-8?B?VkM1QUxMVERnSGJ1UTk5enZxTDJuL1dXNVFGV3F0WktXLzg2MjhPc3VRVlhW?=
- =?utf-8?B?ckl3UFlIbUZjWmFIZ0R1SDh1QjNyUUlReTJYV0dkdElxcVFoN1JkRTBnWHFW?=
- =?utf-8?B?SHBuWk95QlhWeC80cjZESXlNMHVCSGJVTUtyMm4xMlBqR08rZmMyL0xyNnRO?=
- =?utf-8?B?MThKcWkzTEkxR1VOd05XMldOVkVJcm9KZVB0UVN2alVuandyQzJ2aXRJM2Yy?=
- =?utf-8?B?LzN6cWljeW8yU3h0Z2M5OGcxZ1d3aGNtakdkcEdZOW8yRThWdkwzcHBVZzlX?=
- =?utf-8?B?alVSeis2MGM3dEl2eW5Ba3E3a01VczNGdld5VlMxSHRxcFFyN1k5YzVyQis2?=
- =?utf-8?B?em0rZ2ttVVpDa3dpQzhLeFF1emhiV2twM21wd09YaEFySVkydDZ5NnlYdFBy?=
- =?utf-8?B?elZVaGJFbTBlUFU4YkJjTEE3V0VPMUZxYkFVZllZUTdWVXJXT2lyblZxbTJW?=
- =?utf-8?B?Tk9OVFZDZCt3VGhiVnlkbUpzSWc0Z0pnTTZOL2ZDRDZObkVKelpqUTdGazhZ?=
- =?utf-8?B?b1IyL2ZYSzUzV2JMRjNocTFQZTQzSUZGdExFWGlJeEd5cjRiUzNONzltZERs?=
- =?utf-8?B?N0c0U0NrVzhyd3hiSGtIRU0rYkhJYUs4a21GdVVZb09DMGdLRWlSR3B0Mk5w?=
- =?utf-8?B?U1RDamUwVkV0bnYvMWd2S2hZYzRnN0x6OVFqa2pURG5pVEJ5eUZqMkxHc0tw?=
- =?utf-8?B?WGF0OWJwdmdGeXExYk9TaldIbDd2V0lHSnd1SHRSQ2gxSHR1aEl6RWVWZmRY?=
- =?utf-8?B?T1ppekVhWk5jN1JxQy9vTHcxZyt6ZFlZSFAveVhDSUR1c2V1cVRqMEh2Zm5u?=
- =?utf-8?B?N1cybnA2ckcwZDYyVkgwUGNyWTBqdDlzYzlFS3R2SGt5ZFpHQVR2TVJORjQw?=
- =?utf-8?B?MEVsTGpOeEJtWlVBbG9EMkZIdHNSWlh2TVg2QXNaWU5DSHpVR0ZaeFlDdlkr?=
- =?utf-8?B?b25ydnY1MGFJVUpXZkhwWEs5d2dxQnROLzMrVC9pUWppSzhtQ0R1UCtMNlpS?=
- =?utf-8?B?UXR3L01GdVY2VTVCZGxaRE5wbEUrcEdpOU1VN3d0cldmMGovNGVXYVBZZHdB?=
- =?utf-8?B?dDVnMTNkQm5hQVBOVTVNTEdRSmNMVnpVN0pjRjAzbmRZTjlMQklsaElMVGRH?=
- =?utf-8?B?YzdLNDVZd1ArdGlpclM2aUx5ZklQL1NLbW42dXRKTUtXVjduRjNNUT09?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff255d2d-efa5-4ead-018e-08df4c976b19
-X-MS-Exchange-CrossTenant-AuthSource: GVXPR04MB12316.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2026 15:02:13.2352
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OWl+fKp40Wrm+ggJvORCCYaEdNvSPkep98BK2fWl5ofWVCPRhRMRa7Ult/8IyG2jW1yPvnbjyNHI6iKhkCu7PQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA2PR04MB10186
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <awmWExtIJGM805__@pathway.suse.cz>
 
-On 11/27/26 15:56, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] arm64: dts: imx8qm-mek: missing Fixes trailer for fec1 pad
->   compensation fix
-> --
+On Fri 2026-11-27 15:39:15, Petr Mladek wrote:
+> On Thu 2026-11-26 11:12:27, Yafang Shao wrote:
+> > On Thu, Nov 26, 2026 at 8:58 AM Ravindran, Binoy <binoy@vt.edu> wrote:
+> > >
+> > >
+> > > Thanks, this is right. A dying task reports its quiescent state in
+> > > rcu_note_context_switch(), early in __schedule(), and then still runs
+> > > traceable code, such as update_rq_clock() and pick_next_task(), until
+> > > switch_to(). RCU does not promise to wait for code after that point, and
+> > > with expedited grace periods the quiescent state is reported right
+> > > there, so synchronize_rcu() can return too early.
+> > > klp_synchronize_transition(), which v2 used, does not have this
+> > > problem: schedule_on_each_cpu() completes only after the work item has
+> > > run on every CPU, which on the dying task's CPU happens only after
+> > > switch_to().
+> > >
+> > > v4 goes back to klp_synchronize_transition() for both waits and keeps
+> > > klp_try_switch_exiting_tasks() from v3. I will send it after rerunning
+> > > the tests.
+> > >
+> > > Yafang, this reverses your second suggestion; I hope the reason above
+> > > makes sense. It also brings back the v2 transition times.
+> > 
+> > Agreed. I missed the point that the quiescent state is reported early
+> > in __schedule(), and that the code from there until switch_to() is not
+> > covered by synchronize_rcu(). Thanks for pointing that out.
+> 
+> Honestly, I think that synchronize_srcu() should work. Otherwise,
+> the comment in rcu_tasks_postgp() would be wrong.
+> 
+> IMHO, the trick is that there are two interlacing rcu_read() periods
+> in do_exit() and synchronize_rcu(), see the comment in
+> rcu_tasks_postscan() and the commit e4e1e8089c5fd9 ("rcu-tasks:
+> Improve comments explaining tasks_rcu_exit_srcu purpose").
 
-Frank should we really add a fixes tag to this? fec1 works today because
-we get a working pad configuration from uboot and it was never a problem.
+Wait! I might be wrong. I think that it does not work because
+the 1st rcu_read section ends in exit_rcu() which is called
+before exit_tasks_rcu_finish() where the task is removed
+from rcu_tasks_exit_list.
 
-This patch only makes the configuration explicit and aligns it with fec2.
+By other words, the task is removed from the rcu_tasks_exit_list
+in the later 2nd RCU period. So, if synchronize_rcu() is going
+to wait for this 2nd period then it might end prematurely because
+the quiescent state is reported by rcu_note_context_switch()
+early in __schedule().
 
-> 
-> commit 16a1be06255fa85636ee660e513ea61881c625f2
-> Author: Fugang Duan <fugang.duan@nxp.com>
-> 
->> arm64: dts: imx8qm-mek: configure ENET0 pad compensation for fec1
->>
->> The i.MX8QM ENET0 pads used by fec1 support 1.8V or 3.3V operation,
->> and their compensation control pad (COMP_CTL_GPIO_1V8_3V3_ENET_ENETB)
->> must match the I/O supply. For 1.8V or 3.3V the datasheet requires
->> PSW_OVR = 0 and COMP = 0b000.
->>
->> The fec1 pinctrl group never configures this pad, so its state depends
->> on the boot firmware. fec2 already sets the equivalent ENETA pad to
->> 0x000014a0, which programs COMP = 0b000 with no override bits set.
->>
->> On the MEK, the ENET0 pads are supplied from VCC_ENET0_1V8, so use the
->> same value for fec1 to configure the pad group explicitly.
->>
->> Signed-off-by: Fugang Duan <fugang.duan@nxp.com>
->> Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
-> 
-> [Severity: Low]
-> This fixes a missing pad configuration in pinctrl_fec1.  Should this
-> include:
-> 
->   Fixes: 307fd14d4b14 ("arm64: dts: imx: add imx8qm mek support")
-> 
+But I might miss something. I am not sure which period
+synchronize_rcu() is waiting for.
 
+Best Regards,
+Petr
