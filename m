@@ -1,59 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.125
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795762475;
-	b=gngQtlHNKu3du0qRcjdOs/767H9i5xZ4zuNgDQGEdyeIX2aGPgtJ/h9kH4svTI34FOAG
-	 ab/zeEIiGccN/1PW4tKlj/JilXVGL8ZJpwHYQKwtTy3X814mJ9z/iPV5TXJw8Carqclua
-	 O9lXUNdUFu5qYDLfCAOdUKYRCQpN65ssXEMJn63jlgU7PZTwTii5CWSMNguTpx14lb57Y
-	 5SXQAJu7mIr5r2M0iPgrK6/ZrvBeZAK2uqqy0Qt27IpwL2TYAdEXjCg1KWsP6d8ljhPNO
-	 9rycFloWrwe8Nm5qMl64knwYMWh9hCKfGPPH1VzZQlzPvnMwuPlKQf+UIJmP+/f/8vw==
+	t=1795764195;
+	b=CMUHFgmQy59hc0FpKgI4dMUdJ73LZpkP3PdbiOJHZsJ0hevUUjJyaoFVl25k63IRyp3H
+	 oxh8n9XHS1tOEqTRutyvcp33FhdCw25bNf5iU8CNeot9WyTYQ+LGwhsBSuQuUX9IDuTkH
+	 7r6mYT/hZvK7C2hA7smrKvJ+5J0a78HpEs9n3tJ319zGrBrGex2HfXOuQkeGC6DHsp2EI
+	 4XTeAUNAOBI62yS+unzvTWtCLLXaXruFeVp39S5eNuammBYgIeMTMS6OxY2bSmYyZaXtk
+	 5bwbRDHseuf5RTinrJA2FME/bBp8OqaoCVd/QkQQajyDs5t2RFGplaUzkONV3FWP6tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795762475;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=ldgBYXNws0SrExrvq7eT+4NnxJR8sVTNBuuXZq814K4=;
-	b=FnJCoESX/ExbL55UvprmpTjriEhWGHnQG+4YLcuwZlFaOsCeB/WtzD81YwCzy90lVPiJ
-	 udKjjbWhjTPw6d9wi+kvGD9ECk0TOjP0FDueRsKGdnmP1/tU7kc6Am5LeQpaLmAmdkg3D
-	 BNV7jOzAkVJ7GIVEiEQN/Nhz23C3yIdma1AFRu7bNNsMc+zRPX167TzEROAfsup967W5b
-	 s9KZKSKBDEymft8UcZ2S0pscgg9tDxLuIPtzEXW2wh0I7w3eznQE3KK76XJ0Ieyq9Qvds
-	 HHravsoaimtMknVnxA9m4LUAPP6AkD3UZRlFJ5bBBnwLFeU/El7XK34KYcHlVr4JsOw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795764195;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Spamd-Result:X-Rspamd-Server:
+	 X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
+	 X-Rspamd-Queue-Id;
+	bh=fBmjhE/V6C68f89gyfKTLhS6msoc6WeCZ60pd1YokEk=;
+	b=M1pd9CJaBCIUCcGGEXFhJg4fyCMEULSW7hy3fEuRZ2P8QbrAn6cyUwMkKTLofxJwUECr
+	 qBbnz70JJQ/UpmsRBFHe/i3XnloPjRYOzmwBQSdbiNauS+xofZTX9l9WbUwBrTFBDzUeb
+	 IkCjFDiJ9zJDkMfarydQj5R0PnneSLICtwypTqrCaiklW95VaQoW262pKDd61PmBqtY58
+	 ShYOYMKrsp2Yo6T9Nyy0W91TrVyI5X9Lr77YrBJqYttja6qp+s/9HV5glfuSYP52R+1hD
+	 KlsP9xNjcKIEQTdVFsVSoq1Z/kegA7XyZ07o59QjIyRmctNVDFi2Wo99RhI2WH/9PDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=srHIPuTm;
-	arc=none smtp.remote-ip=95.215.58.125
-Received: from mta1.migadu.com (out-125.mta1.migadu.com [95.215.58.125])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=KHcsXrjD;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=NoNGpXVH;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Bc4Q+dkg;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=U0ALdJHp;
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8D5606A326
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 06:54:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7F8D5606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A389606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 07:23:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1A389606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=srHIPuTm
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=h5rar8UUerAtpvggvfcIKvDaE3+p/9NaedNCkZ6XPI4=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795762472; v=1; x=1796367272;
- b=srHIPuTmAbozvAb76f9ZODMlxakRy9BKzVtH6BdUOSiPl6TMVnEIsMPAMHyeJJ11m5UcbiH9
- 5eqYr4WJJQGOLP8O7E81eowjttOhEtB13JwE/FLs+CIf0BfoRhmasmaCneJxOmFzfGoXxuJgzbE
- b9Tm9zHcLFX2jfJk5OUbNIDw=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id 5fb339c859fca4ae;
-	Fri, 27 Nov 2026 06:54:32 +0000
-X-Mizu-Trace-ID: 5fb339c859fca4ae
-X-Migadu-Flow: FLOW_OUT
-Date: Fri, 27 Nov 2026 14:54:21 +0800
-From: Hangbin Liu <hangbin.liu@linux.dev>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH net-next] bonding: undo enslave state when XDP setup fails
-Message-ID: <awkpHepMHPoNNYf0@fedora>
-References: <20261125-bond_xdp_rollback-v1-1-35dddaa337ba@kylinos.cn>
- <sashiko-outbox-235667@kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=KHcsXrjD;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=NoNGpXVH;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Bc4Q+dkg;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=U0ALdJHp
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id DE9FA1F390;
+	Fri, 27 Nov 2026 07:23:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795764193; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fBmjhE/V6C68f89gyfKTLhS6msoc6WeCZ60pd1YokEk=;
+	b=KHcsXrjDV7Sfc6aOYOxnSjXBi2OJQFP28VWxbIt+TxEd/huEW/6BA49reutfy9k4Dbxrn9
+	/bw62EcnnfU8BSJdDTnrkYbxuGik2CZQ59YPabE7PDn4Ad9py04LHYGhK3FhGAapJ4af2B
+	f8+ZJk+X9JTL8FInyd3jXG/ACRI1KLA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795764193;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fBmjhE/V6C68f89gyfKTLhS6msoc6WeCZ60pd1YokEk=;
+	b=NoNGpXVHcI9a0YymeTk0pde8SfbD2qizAf7sKa7yLqm6j5NhR5qwM0fjSC5uPI+sdz6gKh
+	WCjW7Fg/wYNZNkCg==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Bc4Q+dkg;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=U0ALdJHp
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795764191; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fBmjhE/V6C68f89gyfKTLhS6msoc6WeCZ60pd1YokEk=;
+	b=Bc4Q+dkgSncJ32lEP5eNAKIOhNGfOcklLhxHBjiTHENBhS4N/cBHg79fF2MpNzm3oL7nQ0
+	okkkdBdqTvIP59hAhwvBR/LxghpnX9FwFTrVxtEFKmSRjJX6hYtkNmh8p+bf1P84hXQrKD
+	IZSqtI24uFAw08/lpIOzluD76IwGzQU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795764191;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fBmjhE/V6C68f89gyfKTLhS6msoc6WeCZ60pd1YokEk=;
+	b=U0ALdJHpstQjhOi4j072EhKMclxdHQQQQthPRNPT2sqjCpIUjTpNOyL58RfBqU4FQrcYCh
+	5sdEXMuQo0tcTEBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1F29A13432;
+	Fri, 27 Nov 2026 07:23:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id yQLJOd4vCWtYHAAAD6G6ig
+	(envelope-from <hare@suse.de>); Fri, 27 Nov 2026 07:23:11 +0000
+Message-ID: <6cb250d6-b566-4ea1-b586-5731ed148c04@suse.de>
+Date: Fri, 27 Nov 2026 08:23:06 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -63,27 +108,140 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-235667@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 06/14] nvme-auth: switch to use 'struct key'
+To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>,
+ Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+ Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
+ Chaitanya Kulkarni <kch@nvidia.com>, Eric Biggers <ebiggers@kernel.org>,
+ David Howells <dhowells@redhat.com>, Jarkko Sakkinen <jarkko@kernel.org>,
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+ Randy Dunlap <rdunlap@infradead.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: linux-nvme@lists.infradead.org, keyrings@vger.kernel.org
+References: <20261126-dhchap-keyring-v4-v7-0-ee438ffea527@kernel.org>
+ <20261126-dhchap-keyring-v4-v7-6-ee438ffea527@kernel.org>
+ <sashiko-outbox-235725@kernel.org>
+Content-Language: en-US
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <sashiko-outbox-235725@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-13.50 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	XM_UA_NO_VERSION(0.01)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DKIM_TRACE(0.00)[suse.de:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -13.50
+X-Spam-Level: 
+X-Rspamd-Queue-Id: DE9FA1F390
 
-Hi,
-On Thu, Nov 26, 2026 at 02:00:05PM +0000, sashiko-bot@kernel.org wrote:
+On 11/26/26 3:33 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] bonding: unbalanced bond_slave_ns_maddrs_del() calls in
->   bond_enslave()
+> - [Medium] nvme-keyring: nvme_dhchap_psk_create() overwrites
+>    key_create() error codes
+> --
+> 
+> commit d2027ac3b70964c8a70b1644b2224565f8d1e622
+> Author: Hannes Reinecke <hare@kernel.org>
+> 
+> nvme-auth: switch to use 'struct key'
+> 
+> This commit replaces struct nvme_dhchap_key with the kernel keyring's
+> struct key using the "dhchap" key type for storing and transforming
+> DH-HMAC-CHAP keys.
+> 
+>> diff --git a/drivers/nvme/common/keyring.c b/drivers/nvme/common/keyring.c
+>> index 0fc6b4825c2dd..dc0a4fb9296f1 100644
+>> --- a/drivers/nvme/common/keyring.c
+>> +++ b/drivers/nvme/common/keyring.c
+>> @@ -464,6 +464,91 @@ static struct key_type nvme_dhchap_psk_key_type = {
+>>   	.read           = nvme_dhchap_psk_read,
+>>   };
+>>   
+>> +/**
+>> + * nvme_dhchap_psk_create - Create DH-HMAC-CHAP key
+>> + * @data: Key data
+>> + * @data_len: Length of @data
+>> + *
+>> + * Creates a new DH-HMAC-CHAP key with a random UUID as the key identity.
+>> + * Returns the new key or an error pointer on failure.
+>> + */
+>> +struct key *nvme_dhchap_psk_create(const char *data, size_t data_len)
+>> +{
+>> +	key_perm_t keyperm =
+>> +		KEY_POS_SEARCH | KEY_POS_VIEW | KEY_POS_READ |
+>> +		KEY_POS_WRITE | KEY_POS_LINK | KEY_POS_SETATTR |
+>> +		KEY_USR_SEARCH | KEY_USR_VIEW | KEY_USR_READ;
+>> +	char *identity;
+>> +	key_ref_t keyref;
+>> +	struct key *key;
+>> +	uuid_t key_uuid;
+>> +
+>> +	if (data == NULL || !data_len)
+>> +		return ERR_PTR(-EINVAL);
+>> +
+>> +	generate_random_uuid(key_uuid.b);
+>> +	identity = kasprintf(GFP_KERNEL, "%pU", &key_uuid);
+>> +	if (!identity)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>> +	pr_debug("generate dhchap psk '%s'\n", identity);
+>> +	keyref = key_create(make_key_ref(nvme_keyring, true),
+>> +			    "dhchap", identity, data, data_len,
+>> +			    keyperm, KEY_ALLOC_NOT_IN_QUOTA |
+>> +			    KEY_ALLOC_BUILT_IN |
+>> +			    KEY_ALLOC_BYPASS_RESTRICTION);
+>> +	if (IS_ERR(keyref)) {
+>> +		pr_warn("refresh dhchap psk '%s' failed, error %ld\n",
+>> +			identity, PTR_ERR(keyref));
+>> +		kfree(identity);
+>> +		return ERR_PTR(-ENOKEY);
+>> +	}
+> 
+> [Severity: Medium]
+> Should this return ERR_CAST(keyref) instead of ERR_PTR(-ENOKEY)?
+> 
+> When key_create() fails in nvme_dhchap_psk_preparse(), such as returning
+> -EINVAL for a malformed secret or -EKEYREJECTED for a CRC mismatch,
+> discarding PTR_ERR(keyref) causes nvme_auth_extract_key() callers like
+> dhchap_secret_store() to report -ENOKEY to userspace instead of the
+> underlying error code.
+> 
 
-Ack, I will remove the call in err_close.
+Fixed with the next version.
 
-> It also noticed 1 related pre-existing issue this patch does not
-> introduce:
-> - [Critical] bonding: missing cleanup and 3ad unbind on XDP error in
->   bond_enslave() [1]
+Cheers,
 
-This will be addressed in another patch.
-
-Thanks
-Hangbin
----
-pw-bot: cr
+Hannes
+-- 
+Dr. Hannes Reinecke                  Kernel Storage Architect
+hare@suse.de                                +49 911 74053 688
+SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
