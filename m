@@ -1,99 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795808369;
-	b=rNUu018BtP9WLtcWzX08JMrRQ8XZndKr+1vpi+kN4E5i4/fBFQ2xWJmqA8SJdVXmxJhj
-	 8ocF5vG6okDhS6yA7l99mgmaiuAhvO7A+CwN/hNDozoT4JhFlKWVKn9RylBXh6QsYVb4Q
-	 yTpjR0aXHh7Nxjz7D4EsK49wm1FxnnkhJp/K7v0u1Zk6YgN+OKt+bLsFMUzcOwSikA7V4
-	 ySNKA2QLnZbLPsu+V+k2eOu1Tx6p/n/lGovhooUnVPsVLX3xn4Jq5uInMAkMkranWQEFO
-	 wwquyB6Y4IRVHURU9R4nGIi6UlZrRUZs7xyukFrX/eNrwDx+4zVGsWTzlkjf9MS9SAw==
+	t=1795808505;
+	b=K4AVqTA4wQvLQb09QV6//jsbDrTm1uLnVWJilaAF5rFsWLW+EsAuup8k88a+3QIeD6qw
+	 ZQ+4m0ML57hzYL5sJccD4NHIfQT5THzilziNCPjyOzWAbBre0sfnKzsaE1fPh9L+BBR76
+	 x7/PAtpBYfhbfRFA5kLqxE2XDtikW/EFNdLp6PZzGuhNX7oHx8spXbw4o2Dpg9eUwSHWN
+	 0Q3LwdyxIOv8rZxYIM0p24CF//6Qrsx4DvtMwPGvVtRArunlWeZRaCIM35VsFxSMtJxuM
+	 BRbk32jtQfn9SB/FGmU+0OH7A4XzvYLl7zQJBzGiRVQQF4fDTq/xhLyZTq5Rv6iu4eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795808369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795808505;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=MM2MNnyxl9D846ZGaHkuqg5jtRzhYh+OqM1NyeJs/HE=;
-	b=VwnR9xQ9SHyn3PZFg0PYzo3wFaudOX9z1KBDzsXT6AOVsOpTlbO1CJYVdhCbXQHc3Smv
-	 0D6kndV3Sy9ncRsG+s9cq+mu8rXDBdSV49Rnzdobv1oBvEC5XUK9VhLTsx0kwdm9eI0lM
-	 DtKE4ad6XcF4KtrUShXZpX99BptDVfhjTjDOfy5mQUzgOdFL1Sh4gL4Dqa6woatQAN+Zl
-	 XI1BEJ9i+UOhDmV8AF1NL4vUpmlTNXWzvOBLcWb37YYxspkx6OxdPHnmSyjqw5/UyoRik
-	 hUeBKd+OnPAmeDquig1lCGptNJF+BGwdbnJkgngKGREuX4uUPFRHLyGG88qa5t7Z7Fg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Subject:
+	 From:To:Cc:Date:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding:User-Agent:MIME-Version;
+	bh=6NlbtvLkK0tgXcaycQQR/bKkLqj97Yphah1S3Bta7cY=;
+	b=EZSIeUSa6kJMpmE+t7ImidlRXCXFQj6XzZ2fhgoWyblJISTC0nzzgxSZ2DXR34DwijmY
+	 Ae4GmWZHHW+3uKeY57684kf/FQ8I/tlCHxYSBTjl7k7kiw102Wr8fRiTIo45DCiEFtpMW
+	 DSJsaWtSfi9VaGGMO3H9VbIC/AYrNsozbwPpZ+kBKJT6JzWP7jQOHLleOgAq/wvjFq2Mu
+	 gL4fbZY7tjq9eT4gptcojM3jurNGJsiOwm/7fk/zu2FdsXypWpgRq2t8e+j8T3JG6ySzG
+	 GB2XrcosIbOBejmucowEdbipS5PDvYFClm3QWI0we4Fi67Su9+4N4cJcOoJ/RwbjK+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZvtpJV7e;
-	arc=none smtp.remote-ip=209.85.128.51
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wfHy3Lfl;
+	arc=none smtp.remote-ip=209.85.221.50
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1842606A321
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:39:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1842606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691E9606A31F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:41:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 691E9606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZvtpJV7e
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4bb72b44a97so72764325e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 11:39:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wfHy3Lfl
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-492f0a1b685so6050528f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 11:41:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795808367; x=1796413167; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=MM2MNnyxl9D846ZGaHkuqg5jtRzhYh+OqM1NyeJs/HE=;
-        b=ZvtpJV7etqnAH20rw+OZPvd4z5DONSuermyoP8bI/7U6Zi8mlNC/kf8ULUi12gbYm6
-         Ya7hRbSqyZg2m8mXuZfh8/LoIQ/Fu/zc0mv91ytR+KjkHuj9c842Wc5WOrq5HguvGLc2
-         sLJ6WJeONjHOzOb6x2QA2DydCgTuf0ZYXV4qJ5EHCgcQe6VnRx3e4g1V4oZzWoTcws/I
-         iMf4d4Q4em3qGuejIgof7kZTNcco7P63hEfC9/8zcFDpKu3F3Xp6YoNGeNJPNMZPLRL0
-         xWFoBmf4XbeDXMEAKELyN9fAQ6EThCooAPMdxhSK53WRSJ3ERjUyKxaWnzgKMSDf3bYo
-         NRAg==
+        d=linaro.org; s=google; t=1795808504; x=1796413304; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=6NlbtvLkK0tgXcaycQQR/bKkLqj97Yphah1S3Bta7cY=;
+        b=wfHy3LflWfbA+3j2hUr129CB0u9fsmKnDLoZzLHNfgtIRF1krJlD4PHNKQEFxMYcFa
+         Qa2iQFkAdxt5vCIUcRqzGaz1HyeO3/X42fELHv6ev4JdQ1hAQ+4oKFdQdECTpsnL3YlU
+         SVKX+/To8oytAaE0sXGVG/aH7p2XIINJjkYoEloBi6KbKIS/EjgYyigFMo+p/T5/zpcg
+         yYKt+0aQG5LZRFlGg5sQ5xj7BEzflFQKGeCc7zLN7YtVLNvRO4wY/AZ+xPbrJ2ikG7o/
+         zGOJ0JuG4F+z8ucXFSIOW3wL9QaDasr2yJEq7V8zvYvekKdjb3d2fx/aWgkVnvyTBzsS
+         1/1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795808367; x=1796413167;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+        d=1e100.net; s=20260707; t=1795808504; x=1796413304;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=MM2MNnyxl9D846ZGaHkuqg5jtRzhYh+OqM1NyeJs/HE=;
-        b=xh+ItIDZdv6vYSqHKltk28Us6OvjLDwM/5QIrEtc7FFXANgdFL5UucJfBlZQKbzQCK
-         MrH1yOEMeGvqujY/wj5MjuM+X1Zp9wIqXHT+/XeS8yYfVAKy9a46d0dBcpczBNYwpyAF
-         DWGQUW3OOgra6Pom9OwCDDjCdmzGqyR804YpsocaAyzY/v8dfcwp5FfD0MKh/I5FTzS5
-         wZkw+ngICsiJb544lx4HXUssF8A9ASEDGJCPkcOXFBYNR9EFOJDx/x1Q61MUr7rKfobT
-         hRRhgc0g51Xr7yQAJz6pr+DkKjlj2N6EmM/GCVzatFGKU0V807WLkhrSgWDI9BbRh9iY
-         Ls2w==
-X-Forwarded-Encrypted: i=1; AL+hErGgK7hXGlUSnfm3qLL3CiozPXu1rhspmJL17L4sjItd5iKxXmK8dQdjzzee0pwParHmssJN2peEHdpEHsysduo=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9Amj4yBGRcV+ipv89QenL5jAT2e+kaXy20aNed6ZUrVtPhr6BB
-	QSB4viZY5JWfneazGPURhkqxA4ze3Rmir6IpxowzyH1rjwMpQ9gUtAqF
-X-Gm-Gg: AZFdTZfXDE7ItLWwj5YeRXoDOURn5kB04pIvLkyrNBRn4fsMJFrwUyGlqTfWmZVRHHH
-	eUOCsfEH3Q+xLjn3YVzMjIMoDDp2TsYDyPvswIhRJm/l8wv7F+ZUTgC3rgzEJ32YQ3XBPXND3yo
-	+ZV+8cxjtisxEX9XI0gFMqVvO0Dn5PfVSxOHYExxF+/h3kLj8e4AdxoDBvJSNTFAcUhSY7R7kp5
-	fHmO6kFh6OcDwJx+7WVZ+O4eE+tH67V1fWX9eo8zd2EpsTF5S4rfrosUI/qqxn1I8sraPp9Kj4P
-	SyNNeeR6USVyk8T0UqCeTRxumwWFhMbd72aRcYT6/9tklFgFRLtASBj4SEaE9TDMqSBLo9DuOJl
-	POftxtz6qKbA/a/oGI19HygMBvMR2kasm4HG0Rc21B/jLoKuft0QdKtQzsvwRPc2kyyl88MFVI1
-	4LrNK0XOGKmDhsyw+vXuGLaPRHWQ+KdLP6SsF6m9JGfU2jaiNabm7TV9esoEOybBzWW/nj5TMf5
-	Fyvw18J2w90Ob3S93GRklAkA4Gel+FKFpeZub+M36IDfB2Lt+pWCJDzHu0j9BY8E8Dr1D+kaCtF
-	KbrqlHhjX2xI1Ino5V5el/ga84aM6wlXgzF4rex6nAo26OpycbMhCLm1hxT9KIfznXdIo16vR86
-	Gy2fJAL4=
-X-Received: by 2002:a05:600c:820d:b0:4bb:5de1:e923 with SMTP id 5b1f17b1804b1-4bb887c33f7mr491159125e9.4.1795808366926;
-        Fri, 27 Nov 2026 11:39:26 -0800 (PST)
-Received: from localhost (bl20-90-91.dsl.telepac.pt. [2.81.90.91])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb853a9846sm839858545e9.11.2026.11.27.11.39.26
+        bh=6NlbtvLkK0tgXcaycQQR/bKkLqj97Yphah1S3Bta7cY=;
+        b=2TNBeNkyx0ZdKIU1AE3NUym7tNQJNx3c1fsca9+kIzber+B86jazAE9bHrIeAMPHBk
+         sLXJDFsXeom5IxeBcu5QR8E/ed2Ed6VZ4XA1mHr0o8Tp+MWdle8YbNxkfPTZXJ5l5Ung
+         7gbuKDpKJlFIklx2PVe/C5VXDZR8LJiGZjk30kgRw/00v68OgvXV8fUWicXCIXd3TmPg
+         t7W1KK4bswb9Xhafus8wNnbdNS57kDXul9TnnLtPQmNVevbIEljA/VfUPoiSbEh+xpkW
+         jtpmujtO/JaIKbdXCEw28qsNpF1dIInq8y/z5W12opV2Nsn++NYhCLznCAXB7rK2hGzQ
+         iUow==
+X-Gm-Message-State: APuU4Z8zLD50ONS2JVnmqdJrauZOQ/wlhtAGMEaqeJQKb4WkAf2sNo30
+	wkd8VmtjED2Hd/bBmnBbm5tG8xoh8LcdoNlgtn7j8XQkwohZU/TYFBGhQo+eEnsuibT8zs9UKmj
+	/todJXwrIlw==
+X-Gm-Gg: AZFdTZcajDBdC9sepf8bu8bxd+UPnCwE38BEZWW9ebznC7E0ihZLeCU9C+y3xyLF08j
+	cWkQKC0ob/xV0bmlr+Eh4U5zJLOKwEtnostgcSdXuLXJY7pCvwm4um1ZS9FoAPmNU+A802Z2MNh
+	Ufi8Un8PinjF6LgssepR+riEUkDKbWMU52oFkrRrCW+mNehZORCU9+cLjI0/JKeWu0SkMyzdEIb
+	kDpdDhHIUHmydcv9cJbTLZ94dt3vtpY3NEFBfcgfZySUAKxaIItkfsIlxCQ0K1UBXsBVWlf2BI6
+	MK9CnC5pb4lfvyg7yRTQApAbvt+f8temWH/zi9jTpfuowdkt5TwlKZ6owzKEIstdefi4GL2+oCD
+	fD1t3fGgCFvMW7ak1gFfo0kPoZhuCzfRV9bKI37Vr+HAOIO60X81joCaT55RjqzUs+/JUOh8h7u
+	ZWw0zKHqI1cF1Eo1k5VRJrsf5Bqc3pGbI0wkVafOc6lbhnF/DmGWRZDYlne/4B9DTUUT72eV+Mr
+	CGASpfPIC4WXql/isbuq2v+VWyXsf0R2XeF2ZGe+4GnU+BpWqwinF0tIuNDL88P0W9vG0kZLRIf
+	Y8XRwyP7NfmsU/KO3jdsKH64bArIA18geA==
+X-Received: by 2002:a05:600c:1d8c:b0:4a1:c5eb:b445 with SMTP id 5b1f17b1804b1-4bb88820436mr532823045e9.35.1795808503757;
+        Fri, 27 Nov 2026 11:41:43 -0800 (PST)
+Received: from draszik.lan ([109.255.181.4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bbb39dd4e7sm77524985e9.0.2026.11.27.11.41.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 11:39:26 -0800 (PST)
-From: =?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
-To: linux-serial@vger.kernel.org
-Cc: gregkh@linuxfoundation.org,
-	jirislaby@kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	=?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
-Subject: [PATCH RFC v2] serial: esp32: Add support for the ESP32-P4 UART
-Date: Fri, 27 Nov 2026 19:39:14 +0000
-Message-ID: <20261127193914.176120-1-vitorhg20080@gmail.com>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261125233020.1380594-12-vitorhg20080@gmail.com>
-References: <20261125233020.1380594-12-vitorhg20080@gmail.com>
+        Fri, 27 Nov 2026 11:41:43 -0800 (PST)
+Message-ID: <d92561fd6eaea337c6bc3502bcd3df0bc30d0e60.camel@linaro.org>
+Subject: Re: [PATCH 6/6] power: supply: max77759: follow the supplier from DT
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: mfd@lists.linux.dev, lee@kernel.org
+Date: Fri, 27 Nov 2026 19:42:00 +0000
+In-Reply-To: <sashiko-outbox-238159@kernel.org>
+References: <20261127-max77759-charger-fixes-v1-0-b364a0862d72@linaro.org>
+	 <20261127-max77759-charger-fixes-v1-6-b364a0862d72@linaro.org>
+	 <sashiko-outbox-238159@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-9+build1 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,367 +101,74 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-Enable the ESP32 UART driver on ESP32-P4 and describe the SoC's
-register layout in the variant data. Synchronize configuration
-writes to the UART clock domain and keep baud rate requests within
-the limits of the ESP32-P4 divider.
+Hi,
 
-Propagate IRQ lookup errors, including deferred probe. Serialize UART
-port registration and removal, and clear the port table entry when
-registration fails or the port is removed.
+On Fri, 2026-11-27 at 19:30 +0000, sashiko-bot@kernel.org wrote:
+>=20
+>=20
+>=20
+> [Severity: Medium]
+> Does calling max77759_charger_external_power_changed() directly from
+> probe and from power_supply_external_power_changed() trigger a lockdep
+> warning between chg->sync_lock and &psy->epc_sem?
+>=20
 
-Tested on a Waveshare ESP32-P4-Module-DEV-KIT with the transmit
-interrupt fix applied. Verified UART receive interrupts and serial
-console operation.
+[...]
 
-AI assisted with driver development.
+> CPU0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPU1
+> ----=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ----
+> lock(&chg->sync_lock)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 down_read(&psy->epc_sem=
+)
+> down_read(&psy->epc_sem)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 lock(&chg->sync_lock)
+>=20
+> =C2=A0*** DEADLOCK ***
+>=20
+> CPU0: max77759_charger_probe() ->
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 max77759_charger_external_power_changed() =
+->
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 power_supply_get_property_from_supplier() =
+->
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 power_supply_get_property()
+> CPU1: power_supply_changed_work() ->
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 power_supply_external_power_changed() ->
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 max77759_charger_external_power_changed()
+>=20
+> In addition, even without the unlocked call in probe, calling
+> power_supply_get_property() on the supplier inside
+> .external_power_changed nests down_read(&supplier_psy->epc_sem) inside
+> down_read(&chg->psy->epc_sem), which lockdep rejects as recursive
+> same-class locking because down_read() is not annotated with
+> down_read_nested().
 
-Signed-off-by: Vítor Hugo Silva <vitorhg20080@gmail.com>
----
-Changes in v2:
-- Remove the console setup sentence from the commit message. Patch 10/19
-  already keeps the console setup callback in regular text.
+Both lockdep warnings are caused by the shared &psy->epc_sem lockdep
+class in the unpatched base tree, not by a real deadlock: the two
+semaphores belong to different power_supply instances (the charger
+consumer and its supplier), so the actual lock order is acyclic:
 
-This replaces patch 11/19 and applies after patch 10/19 of the RFC.
-v1: https://lore.kernel.org/linux-serial/20261125233020.1380594-12-vitorhg20080@gmail.com/
+  [chg->psy->epc_sem] -> chg->sync_lock -> supplier_psy->epc_sem
 
- drivers/tty/serial/Kconfig      |   6 +-
- drivers/tty/serial/esp32_uart.c | 167 ++++++++++++++++++++++++++++----
- 2 files changed, 151 insertions(+), 22 deletions(-)
+As noted in the cover letter, this patch depends on:
 
-diff --git a/drivers/tty/serial/Kconfig b/drivers/tty/serial/Kconfig
-index 83a37922fb07..6d3d3a342101 100644
---- a/drivers/tty/serial/Kconfig
-+++ b/drivers/tty/serial/Kconfig
-@@ -99,12 +99,14 @@ config SERIAL_EARLYCON_RISCV_SBI
- 
- config SERIAL_ESP32
- 	tristate "Espressif ESP32 UART support"
--	depends on COMPILE_TEST && OF && HAS_IOMEM
-+	depends on OF && HAS_IOMEM
-+	depends on RISCV_ESP32P4_CLIC || COMPILE_TEST
- 	select SERIAL_CORE
- 	select SERIAL_CORE_CONSOLE
- 	select SERIAL_EARLYCON
- 	help
--	  Driver for the UART controllers of the Espressif ESP32xx SoCs.
-+	  Driver for the UART controllers of the Espressif ESP32xx SoCs,
-+	  including the ESP32-P4.
- 	  When earlycon option is enabled the following kernel command line
- 	  snippets may be used:
- 	    earlycon=esp32s3uart,mmio32,0x60000000,115200n8,40000000
-diff --git a/drivers/tty/serial/esp32_uart.c b/drivers/tty/serial/esp32_uart.c
-index 8f257cf0d290..304e1345518b 100644
---- a/drivers/tty/serial/esp32_uart.c
-+++ b/drivers/tty/serial/esp32_uart.c
-@@ -6,10 +6,13 @@
- #include <linux/console.h>
- #include <linux/delay.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/irq.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/printk.h>
- #include <linux/property.h>
- #include <linux/serial_core.h>
- #include <linux/slab.h>
-@@ -89,6 +92,22 @@
- 	 ESP32S3_UART_SCLK_EN | \
- 	 FIELD_PREP(ESP32S3_UART_SCLK_SEL, XTAL_CLK))
- 
-+#define ESP32P4_UART_CLKDIV			GENMASK(11, 0)
-+#define ESP32P4_UART_RXFIFO_CNT			GENMASK(7, 0)
-+#define ESP32P4_UART_TXFIFO_CNT			GENMASK(23, 16)
-+#define ESP32P4_UART_TXFIFO_EMPTY_THRHD_SHIFT	8
-+
-+/* ESP32-P4 uses a dedicated register for RX flow control. */
-+#define ESP32P4_UART_HWFC_CONF_REG		0x2c
-+#define ESP32P4_UART_RX_FLOW_EN			BIT(8)
-+#define ESP32P4_UART_REG_UPDATE_REG		0x98
-+#define ESP32P4_UART_REG_UPDATE			BIT(0)
-+#define ESP32P4_UART_LOOPBACK			BIT(12)
-+#define ESP32P4_UART_SW_RTS			BIT(21)
-+#define ESP32P4_UART_SW_DTR			BIT(20)
-+#define ESP32P4_UART_RTS_INV			BIT(18)
-+#define ESP32P4_UART_DTR_INV			BIT(19)
-+
- struct esp32_port {
- 	struct uart_port port;
- 	struct clk *clk;
-@@ -99,9 +118,16 @@ struct esp32_uart_variant {
- 	u32 rxfifo_cnt_mask;
- 	u32 txfifo_cnt_mask;
- 	u32 txfifo_empty_thrhd_shift;
-+	u32 rx_flow_reg;
- 	u32 rx_flow_en;
-+	u32 loopback_mask;
-+	u32 sw_rts_mask;
-+	u32 sw_dtr_reg;
-+	u32 sw_dtr_mask;
-+	u32 mctrl_inv_mask;
- 	const char *type;
- 	bool has_clkconf;
-+	bool needs_reg_update;
- };
- 
- static const struct esp32_uart_variant esp32_variant = {
-@@ -109,8 +135,14 @@ static const struct esp32_uart_variant esp32_variant = {
- 	.rxfifo_cnt_mask = ESP32_UART_RXFIFO_CNT,
- 	.txfifo_cnt_mask = ESP32_UART_TXFIFO_CNT,
- 	.txfifo_empty_thrhd_shift = ESP32_UART_TXFIFO_EMPTY_THRHD_SHIFT,
-+	.rx_flow_reg = UART_CONF1_REG,
- 	.rx_flow_en = ESP32_UART_RX_FLOW_EN,
- 	.type = "ESP32 UART",
-+	.loopback_mask = UART_LOOPBACK,
-+	.sw_rts_mask = UART_SW_RTS,
-+	.sw_dtr_reg = UART_CONF0_REG,
-+	.sw_dtr_mask = UART_SW_DTR,
-+	.mctrl_inv_mask = UART_RTS_INV | UART_DTR_INV,
- };
- 
- static const struct esp32_uart_variant esp32s3_variant = {
-@@ -118,9 +150,31 @@ static const struct esp32_uart_variant esp32s3_variant = {
- 	.rxfifo_cnt_mask = ESP32S3_UART_RXFIFO_CNT,
- 	.txfifo_cnt_mask = ESP32S3_UART_TXFIFO_CNT,
- 	.txfifo_empty_thrhd_shift = ESP32S3_UART_TXFIFO_EMPTY_THRHD_SHIFT,
-+	.rx_flow_reg = UART_CONF1_REG,
- 	.rx_flow_en = ESP32S3_UART_RX_FLOW_EN,
- 	.type = "ESP32S3 UART",
- 	.has_clkconf = true,
-+	.loopback_mask = UART_LOOPBACK,
-+	.sw_rts_mask = UART_SW_RTS,
-+	.sw_dtr_reg = UART_CONF0_REG,
-+	.sw_dtr_mask = UART_SW_DTR,
-+	.mctrl_inv_mask = UART_RTS_INV | UART_DTR_INV,
-+};
-+
-+static const struct esp32_uart_variant esp32p4_variant = {
-+	.clkdiv_mask = ESP32P4_UART_CLKDIV,
-+	.rxfifo_cnt_mask = ESP32P4_UART_RXFIFO_CNT,
-+	.txfifo_cnt_mask = ESP32P4_UART_TXFIFO_CNT,
-+	.txfifo_empty_thrhd_shift = ESP32P4_UART_TXFIFO_EMPTY_THRHD_SHIFT,
-+	.rx_flow_reg = ESP32P4_UART_HWFC_CONF_REG,
-+	.rx_flow_en = ESP32P4_UART_RX_FLOW_EN,
-+	.type = "ESP32-P4 UART",
-+	.needs_reg_update = true,
-+	.loopback_mask = ESP32P4_UART_LOOPBACK,
-+	.sw_rts_mask = ESP32P4_UART_SW_RTS,
-+	.sw_dtr_reg = UART_CONF1_REG,
-+	.sw_dtr_mask = ESP32P4_UART_SW_DTR,
-+	.mctrl_inv_mask = ESP32P4_UART_RTS_INV | ESP32P4_UART_DTR_INV,
- };
- 
- static const struct of_device_id esp32_uart_dt_ids[] = {
-@@ -130,10 +184,14 @@ static const struct of_device_id esp32_uart_dt_ids[] = {
- 	}, {
- 		.compatible = "esp,esp32s3-uart",
- 		.data = &esp32s3_variant,
-+	}, {
-+		.compatible = "esp,esp32p4-uart",
-+		.data = &esp32p4_variant,
- 	}, { /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, esp32_uart_dt_ids);
- 
-+static DEFINE_MUTEX(esp32_uart_ports_lock);
- static struct esp32_port *esp32_uart_ports[UART_NR];
- 
- static const struct esp32_uart_variant *port_variant(struct uart_port *port)
-@@ -143,7 +201,24 @@ static const struct esp32_uart_variant *port_variant(struct uart_port *port)
- 
- static void esp32_uart_write(struct uart_port *port, unsigned long reg, u32 v)
- {
-+	void __iomem *update = port->membase + ESP32P4_UART_REG_UPDATE_REG;
-+	u32 status;
-+
- 	writel(v, port->membase + reg);
-+
-+	if (reg != UART_CLKDIV_REG && reg != UART_CONF0_REG &&
-+	    reg != ESP32P4_UART_HWFC_CONF_REG)
-+		return;
-+
-+	if (!port_variant(port)->needs_reg_update)
-+		return;
-+
-+	/* Commit configuration to UART core clock domain. */
-+	writel(ESP32P4_UART_REG_UPDATE, update);
-+	if (readl_poll_timeout_atomic(update, status,
-+				      !(status & ESP32P4_UART_REG_UPDATE),
-+				      1, 100))
-+		printk_deferred_once(DRIVER_NAME ": UART register update timed out\n");
- }
- 
- static u32 esp32_uart_read(struct uart_port *port, unsigned long reg)
-@@ -173,18 +248,29 @@ static unsigned int esp32_uart_tx_empty(struct uart_port *port)
- 
- static void esp32_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
- {
--	u32 conf0 = esp32_uart_read(port, UART_CONF0_REG);
-+	const struct esp32_uart_variant *variant = port_variant(port);
-+	bool dtr_in_conf0 = variant->sw_dtr_reg == UART_CONF0_REG;
-+	u32 conf0, dtr_conf;
- 
--	conf0 &= ~(UART_LOOPBACK |
--		   UART_SW_RTS | UART_RTS_INV |
--		   UART_SW_DTR | UART_DTR_INV);
-+	conf0 = esp32_uart_read(port, UART_CONF0_REG);
-+	conf0 &= ~(variant->loopback_mask | variant->sw_rts_mask);
- 
- 	if (mctrl & TIOCM_RTS)
--		conf0 |= UART_SW_RTS;
--	if (mctrl & TIOCM_DTR)
--		conf0 |= UART_SW_DTR;
-+		conf0 |= variant->sw_rts_mask;
- 	if (mctrl & TIOCM_LOOP)
--		conf0 |= UART_LOOPBACK;
-+		conf0 |= variant->loopback_mask;
-+
-+	/* Software DTR and RTS/DTR inversion share a register. */
-+	dtr_conf = dtr_in_conf0 ? conf0 : esp32_uart_read(port, variant->sw_dtr_reg);
-+	dtr_conf &= ~(variant->sw_dtr_mask | variant->mctrl_inv_mask);
-+
-+	if (mctrl & TIOCM_DTR)
-+		dtr_conf |= variant->sw_dtr_mask;
-+
-+	if (dtr_in_conf0)
-+		conf0 = dtr_conf;
-+	else
-+		esp32_uart_write(port, variant->sw_dtr_reg, dtr_conf);
- 
- 	esp32_uart_write(port, UART_CONF0_REG, conf0);
- }
-@@ -387,13 +473,37 @@ static bool esp32_uart_set_baud(struct uart_port *port, u32 baud)
- 	return false;
- }
- 
-+static void esp32p4_uart_limit_baud_rate(struct ktermios *termios,
-+					 const struct ktermios *old,
-+					 u32 min_baud, u32 max_baud)
-+{
-+	u32 baud = tty_termios_baud_rate(termios);
-+
-+	if (!baud || (baud >= min_baud && baud <= max_baud))
-+		return;
-+
-+	if (old) {
-+		u32 old_baud = tty_termios_baud_rate(old);
-+
-+		if (old_baud && old_baud >= min_baud && old_baud <= max_baud)
-+			baud = old_baud;
-+	}
-+
-+	baud = clamp(baud, min_baud, max_baud);
-+	/* Keep the fallback exact near a standard rate outside the range. */
-+	termios->c_cflag &= ~(CBAUD | (CBAUD << IBSHIFT));
-+	termios->c_cflag |= BOTHER;
-+	tty_termios_encode_baud_rate(termios, baud, baud);
-+}
-+
- static void esp32_uart_set_termios(struct uart_port *port,
- 				   struct ktermios *termios,
- 				   const struct ktermios *old)
- {
- 	unsigned long flags;
--	u32 conf0, conf1;
--	u32 baud;
-+	u32 conf0, flow;
-+	u32 baud, min_baud, max_baud;
-+	const u32 rx_flow_reg = port_variant(port)->rx_flow_reg;
- 	const u32 rx_flow_en = port_variant(port)->rx_flow_en;
- 	u32 max_div = port_variant(port)->clkdiv_mask;
- 
-@@ -402,17 +512,19 @@ static void esp32_uart_set_termios(struct uart_port *port,
- 	if (port_variant(port)->has_clkconf)
- 		max_div *= FIELD_MAX(ESP32S3_UART_SCLK_DIV_NUM);
- 
--	baud = uart_get_baud_rate(port, termios, old,
--				  port->uartclk / max_div,
--				  port->uartclk / 16);
-+	min_baud = port->uartclk / max_div;
-+	max_baud = port->uartclk / 16;
-+	if (port_variant(port) == &esp32p4_variant)
-+		esp32p4_uart_limit_baud_rate(termios, old, min_baud, max_baud);
-+	baud = uart_get_baud_rate(port, termios, old, min_baud, max_baud);
- 
- 	spin_lock_irqsave(&port->lock, flags);
- 
- 	conf0 = esp32_uart_read(port, UART_CONF0_REG);
- 	conf0 &= ~(UART_PARITY_EN | UART_PARITY | UART_BIT_NUM | UART_STOP_BIT_NUM);
- 
--	conf1 = esp32_uart_read(port, UART_CONF1_REG);
--	conf1 &= ~rx_flow_en;
-+	flow = esp32_uart_read(port, rx_flow_reg);
-+	flow &= ~rx_flow_en;
- 
- 	if (termios->c_cflag & PARENB) {
- 		conf0 |= UART_PARITY_EN;
-@@ -441,10 +553,10 @@ static void esp32_uart_set_termios(struct uart_port *port,
- 		conf0 |= FIELD_PREP(UART_STOP_BIT_NUM, UART_STOP_BIT_NUM_1);
- 
- 	if (termios->c_cflag & CRTSCTS)
--		conf1 |= rx_flow_en;
-+		flow |= rx_flow_en;
- 
- 	esp32_uart_write(port, UART_CONF0_REG, conf0);
--	esp32_uart_write(port, UART_CONF1_REG, conf1);
-+	esp32_uart_write(port, rx_flow_reg, flow);
- 
- 	if (baud) {
- 		esp32_uart_set_baud(port, baud);
-@@ -715,29 +827,44 @@ static int esp32_uart_probe(struct platform_device *pdev)
- 	if (IS_ERR(sport->clk))
- 		return PTR_ERR(sport->clk);
- 
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
-+		return ret;
-+
- 	port->uartclk = clk_get_rate(sport->clk);
- 	port->dev = &pdev->dev;
- 	port->type = PORT_GENERIC;
- 	port->iotype = UPIO_MEM;
--	port->irq = platform_get_irq(pdev, 0);
-+	port->irq = ret;
- 	port->ops = &esp32_uart_pops;
- 	port->flags = UPF_BOOT_AUTOCONF;
- 	port->has_sysrq = 1;
- 	port->fifosize = ESP32_UART_TX_FIFO_SIZE;
- 	port->private_data = (void *)device_get_match_data(&pdev->dev);
- 
-+	guard(mutex)(&esp32_uart_ports_lock);
-+	if (esp32_uart_ports[port->line])
-+		return -EBUSY;
-+
-+	/* Console setup can look up the port during registration. */
- 	esp32_uart_ports[port->line] = sport;
-+	ret = uart_add_one_port(&esp32_uart_reg, port);
-+	if (ret) {
-+		esp32_uart_ports[port->line] = NULL;
-+		return ret;
-+	}
- 
- 	platform_set_drvdata(pdev, port);
--
--	return uart_add_one_port(&esp32_uart_reg, port);
-+	return 0;
- }
- 
- static void esp32_uart_remove(struct platform_device *pdev)
- {
- 	struct uart_port *port = platform_get_drvdata(pdev);
- 
-+	guard(mutex)(&esp32_uart_ports_lock);
- 	uart_remove_one_port(&esp32_uart_reg, port);
-+	esp32_uart_ports[port->line] = NULL;
- }
- 
- 
--- 
-2.56.1
+  power: supply: core: give each supply's epc_sem its own lockdep class
+  https://lore.kernel.org/r/20261125-power-supply-epc-lockdep-key-v1-1-c8a4=
+1b8a4470@gmail.com
 
+With that prerequisite applied, consumer and supplier supplies have
+separate lockdep classes for epc_sem and neither the AB-BA nor the
+recursive-locking warning triggers (verified on Pixel 6 with
+CONFIG_PROVE_LOCKING=3Dy across boot, supplier unload/reload, and
+charger module reload).
+
+Cheers,
+Andre'
