@@ -1,49 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.100
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795745477;
-	b=b/l8fwKhi0nWFx8+864u+dItuTLzqmDRxKBU4ReLTIDpZh7pdVpVKNen/ABKivUJ66lK
-	 IJAw7entD6aBsUOPr01QzftITN2lPXkSxCw/1r3g+HunnWYd06wWXfF4IKvp/cUj7pAvv
-	 Sx7vlEnhlwgbHzFnK9wtE9IMx+GPbqwAO7y4S0rRyKSWTjBqS/XeHHB1e+c+007dnkz4r
-	 jVJJZAxY+zoum74QrbTyxvcrt/5d3ljDPFfbmPZO/LR8F9XuwiQkX/KCrjS4DnhQxiYlX
-	 myFJ5Nfe6NQ4FTyDz0a8vDJJ51rbDPWBOXdBYNLnv2y7Vay7d9YSHjtNIu+btVRjNZA==
+	t=1795749972;
+	b=HeJgoHjwVDWRxHLr8k+TsA8NCyQ2tjsN4+zGej8jhylMZQc5xS6SG7ao0NAZqHPeJ9Yn
+	 xjUifTzOePJ2JA/AspEBMD9H4t269YgvtV2rV2oz4+I0IXPDUJ7p3G3b7nckAJz12yYLq
+	 aWn9rCU5z0XEB8rf/G1rwis/JDqlccUbzQlKNPDdhRg+JYWDUOP6sNbE7wNnvbAFD9eZi
+	 z/O9e69xvS76EiggCA0ZaBIyJQo1Fq0koeFOAYXFCfrYGIzCMH9ys1BN+g/PO6RDgQd3J
+	 28hK5BJ8AwArh3Cc2Lg6oTCgZvYyMZeBrS4EsuvEAG84kssK3uMa1HApBJtGCogx6PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795745477;
-	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=v17ApoUxmw4oIX3ib06cnHIG0pCYFw3usTIw/BBMT1Y=;
-	b=3LhTSNzITywLHVsbpENH/Pk1ZsWxNX+lrQaD2VjosUgD/fpXdRge5bln6gajfJjRvblB
-	 qoBG+0JB3GiEH40XP27agE9KcfvCFLXbSj/APwayA++tNzxZROE3WI9/k18QX78Rl2+yk
-	 Kcl+YpIhVV+Cc27dU+IpLg3NXyFI91xcvg+yXymi2kXvsWHMzDvvBNWrZ/Lp3PVuD3g5C
-	 nXMmwDbdoEQ0IdGHitekR2oXT+xqvbaReaJkMuyzR5JY08elJ90cM2XDRlXaq5T+VFB7W
-	 nM/4q9TpJIJfvfAZUuVz5DYV+U4SHC1Fn0258hGScw3dHivk23Mgg6R6M1ow5yC7GdA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795749972;
+	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
+	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=psyl4qUMnHJ7E35cGuROJkuzGX0++eVKi2SRi2Q22TA=;
+	b=hj8dFSPmB9nMufQiaslxM6o9xwL6Iz6Tfgqw7bFJKhrhh/HmqKBM97DeEtsKuOnw6ojk
+	 OiM6s7zTMgvin2xaq95LhlSSCWR1ZaKoZctDPQnqLltVPtijSnwQQATouI0jJXvMoEbbQ
+	 k8465xihFdHdfACWX6z6mXZbcIzwq7lv+JoTHJPX22XYSm7NMEtWXUUDRPl/Sf7IwV/Hb
+	 mMrWiU9X12LBNay9LG2BBxQf2Kdanbw7mMPMAjHlksIb7G9R83AaEkSw2UoikpMoMZ3cD
+	 FbjedkZ/CWJpqYOVTqJ81QEEi7jAWlGdRGSo+kTwBeqHqA03TZDn5MPAypy5h+uItKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.alibaba.com;
-	spf=pass smtp.mailfrom=linux.alibaba.com;
-	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=gsFzv1Ve;
-	arc=none smtp.remote-ip=115.124.30.100
-Received: from out30-100.freemail.mail.aliyun.com (out30-100.freemail.mail.aliyun.com [115.124.30.100])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jdb1wEHo;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13CF606A329;
-	Fri, 27 Nov 2026 02:11:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B13CF606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF56A606A31C;
+	Fri, 27 Nov 2026 03:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=gsFzv1Ve
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1795745468; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=v17ApoUxmw4oIX3ib06cnHIG0pCYFw3usTIw/BBMT1Y=;
-	b=gsFzv1VeXpO4jUifX7Tl6BexXZZMKUv2MyMakYlVlKr8fFfZgUdr45xCsqasyZsLql+Qquds/onBgxl3tRERgorVlC6+QMzqJhXIoR3hvdfkJcqYyC9vl9b4lU7vrF/YHiPyuddYezFbNOQjFF3okTEHt5FTCBvPznDCFLXlBvI=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R101e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045098064;MF=joseph.qi@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0XFWG7vK_1795745466;
-Received: from 30.222.32.233(mailfrom:joseph.qi@linux.alibaba.com fp:SMTPD_---0XFWG7vK_1795745466 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Fri, 27 Nov 2026 10:11:07 +0800
-Message-ID: <843bc832-5731-4f06-835c-9594c53a4cd1@linux.alibaba.com>
-Date: Fri, 27 Nov 2026 10:11:05 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jdb1wEHo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1EC1F00897;
+	Fri, 27 Nov 2026 03:26:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795749971;
+	bh=psyl4qUMnHJ7E35cGuROJkuzGX0++eVKi2SRi2Q22TA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=jdb1wEHokSHuV/K1LOOpiVjOzkop5mEw2GY8bpu18UnMcITWvYLFCCsHIOuBawM1a
+	 SWCm4lvP8k/emGCkVdntDDh9IJmYWOFG98EdlBfg8dGIYUxFbfcrBQJU4ewu5m4IfO
+	 ICD5NoTYMNhcDhBqQfMOVnC0oSvDushuT5W46TxBQJJrbQOel/1I2sXp9gXRh46oRF
+	 +AOuCnIVmZindlW09xqzparmGE1OcD9gloGm5kPnjlvYwh/B3qjAjSkZNLtAIaWX0y
+	 I1cLVFeiBA2QCMFdH54WXowt49QCZASFG27TLPvFQo0mQkpsn3RuvPw6vmCKN2rno3
+	 15fmA36vV3ceQ==
+From: Mark Brown <broonie@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>, Chen-Yu Tsai <wens@kernel.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, 
+ Romain TISSERAND <romain.tisserand@gmail.com>
+Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ linux-sound@vger.kernel.org, linux-sunxi@lists.linux.dev, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ sashiko-reviews@lists.linux.dev
+In-Reply-To: <20261127020029.1618525-1-romain.tisserand@gmail.com>
+References: <20261127020029.1618525-1-romain.tisserand@gmail.com>
+Subject: Re: [PATCH v2] ASoC: sun8i-codec-analog: Add the headphone
+ inversion switches
+Message-Id: <179574555051.838304.11873761399543336374.b4-ty@b4>
+Date: Fri, 27 Nov 2026 02:12:30 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,62 +64,46 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v12 3/3] ocfs2: switch dio write path from buffer_head
- to iomap
-To: Heming Zhao <heming.zhao@suse.com>, sashiko-reviews@lists.linux.dev
-Cc: Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>,
- "ocfs2-devel@lists.linux.dev" <ocfs2-devel@lists.linux.dev>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Christoph Hellwig <hch@lst.de>
-References: <20261125154626.22335-1-heming.zhao@suse.com>
- <20261125154626.22335-4-heming.zhao@suse.com>
- <sashiko-outbox-233793@kernel.org>
- <a9224bf6-9d1b-4fdd-9980-a70c39b11b57@suse.com>
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
-In-Reply-To: <a9224bf6-9d1b-4fdd-9980-a70c39b11b57@suse.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1146; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=DfCMJDOEfs4h5g4ABy5IcNQl+5IEVbmoqQzSi38+0hI=;
+ b=owGbwMvMwCWm/754w+YLFp2Mp9WSGLI5fviv2f0sdFlGws1n5/+f6jmSatkiHqIlfrD0tXz5Y
+ YMpU7pYOkpZGMS4GGTFFFnisrhf1pe8XsN3cGEbzBxWJpAhDFycAjCRyXwM/yurYt1tOC0mH8vW
+ erxn3l7TLRxVPxaIRyip5vztzsu1z2NkeN9uOfE+p8Zrj+muRc+FA4uVPzb4LlrBIfzFJtGvtoG
+ FFwA=
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
 
+On Fri, 27 Nov 2026 03:00:29 +0100, Romain TISSERAND wrote:
+> ASoC: sun8i-codec-analog: Add the headphone inversion switches
 
+Applied to
 
-On 11/26/26 11:07 PM, Heming Zhao wrote:
-> On 11/26/26 01:05, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 11 potential
->> issues to consider:
->> - [High] ocfs2: missing fsync tid and i_blocks update in
->>    ocfs2_dio_end_io_write()
->> - [High] ocfs2: buffered and mmap writes do not wait in
->>    ocfs2_unwritten_check()
->> - [High] ocfs2: ocfs2_dio_cleanup_range() fails on zeroed folios past
->>    i_size
->> - [High] ocfs2: missing IOMAP_F_DIRTY in ocfs2_iomap_begin() for
->>    uncommitted metadata
->> - [High] ocfs2: orphan entry and block leak on failed or short DIO write
->> - [Medium] ocfs2: overestimated metadata reservation in
->>    ocfs2_write_begin_nolock() for DIO
->> - [Medium] ocfs2: per-cluster multi-MB allocation thrashing on ENOSPC in
->>    ocfs2_dio_wr_map_blocks()
->> - [Medium] ocfs2: per-cluster w_desc kvcalloc, ip_lock scans, and
->>    duplicate lookups in DIO
->> - [Medium] ocfs2: preallocated extents truncated in
->>    ocfs2_dio_clear_orphan_locked()
->> - [Medium] ocfs2: stale inode state after lock drop in
->>    ocfs2_dio_upgrade_rw_lock()
->> - [Medium] ocfs2: ocfs2_should_use_dio() forces buffered I/O for
->>    sub-page DIO overwrites
->> -- 
->>
-> 
-> It feels like the more code I modified, the more issues I introduced.
-> Furthermore, Sashko has started reporting performance issues.
->  
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.5
 
-I'll take a look this weekend.
-And then we discuss and come to an agreement which could be left in this
-series.
+Thanks!
+
+[1/1] ASoC: sun8i-codec-analog: Add the headphone inversion switches
+      https://git.kernel.org/broonie/sound/c/f8c89079cd90
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-Joseph
- 
+Mark
 
