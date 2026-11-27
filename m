@@ -1,157 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.97
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795806805;
-	b=iUAGMnP4UXm65iO0g6F07A71sLH8PZvXhxFeUvaN40cs1P3q3oZKCJ6R2J+E2XSRR8yP
-	 uHvUxIpm5YhPJhZk2ZiNT/cdNRBsnZOHxMbm66YC7m2R97Q4MljbIWAAMkxFyjuoj95R0
-	 L6NiY/BZw1zb7FlEgqPhQUac2ege4xPyf3f/bkDS27XTfsAcmqBrklC/mePbjiKptfZzB
-	 uCpGcdGGxqGaFABQU+JS3O/xzgWm2v9LW8avCqCy0dVabFumC9Vu1zOa6xHq20hFlysNa
-	 EP1joTq2TsSUPNJzFTkmUZ0gbdRxVtw2W2Pt5VbmY6GT2TUDvBpHAeEPua4zzsuMPaQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795806805;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 msip_labels:x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=bI98mXTvhZ2VxOpRD3MePaxrqF+Y5JKcxRA4yg5o5ZE=;
-	b=HK8VM6bMsUIYzOd/e11Ttt5B/8MC7MyHR/aV0jWM0rLu98r5SfKFJCengHFDxNyVwvl2
-	 JpkJnpl0aSwax3FaRHTJZJ5KvXOvMgrSV9qLdEo5r5XdUCL5NOr1RVzBpCYka+HeixkLB
-	 K49fNHmMa/wSq0Jc9E/h4dXUxdHQV/JlYXQFK2uBoYuPBLf2pw1jDXcC0uqBYmMaGdOhU
-	 lV37j01lppSvsyqi3kOYf77aJu93dGCGKK5iE1UdXrIltDLH2ZZzx2RrssX+vjKCnYryh
-	 N2ENmRae1L6wjfyC8sOcxL4OExH0qoc4ye39T0zNPD7LtIv56PcthAW0rzqWqmquh1A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=vt.edu;
-	spf=pass smtp.mailfrom=vt.edu;
-	dkim=pass header.d=VirginiaTech.onmicrosoft.com header.i=@VirginiaTech.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-VirginiaTech-onmicrosoft-com header.b=xAB9WiKe;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.97
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11022097.outbound.protection.outlook.com [52.101.53.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795807530;
+	b=BcTEhF3DlkTQjfChIxdFVi6dROYkeYGykAbxNd1SxdxmYH+h2c4xvEUIXyyouayqefJz
+	 wUAVfiqXEPiToC0AIEttPw3iRoSurP5fCEv+uSRfdPKG9pRfwxyHz0vKhAsW/PlKa9yAD
+	 /q/PUD9a0Q64Kdb5wTrFVaIhlmZJVGmQ+udcAF6cXRLSl6kxZgO3JbfR/XIlqRbF5tde+
+	 kRXz12pxBILua6AdLPeFDpG6u/h8mT8HIZlp20y/yt05P2XNC/qDpWQ6WrEn2dn4046RK
+	 o/qc5HurY4caD0++r9jprc6wXq9KeJpBEsP2AN8DDiypA24gLgJM6K8Cm4WtVS9yQYA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795807530;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=X+Y8inuTsfkFjk3koINUb0aKmLGPzBSOedDj4A9k4LA=;
+	b=lleyxZWsPtXld42W5a7LqQNMODeFAGHNqFGzIPoG1dLYVaYMZlPFnhBKKcZmf0uUfZSj
+	 tMZP/3ISyOqO9uVZF7PK/q/RDl0ZyugyYR4RpdWV3jhexpU8DMxi0yrxc2H/qsRHbQ/Aa
+	 1OZOtHL8SuRpqK7T+v2npNjy5q0+3KgStVl8jUByPQsJfiaoG3byGngUQKNG2UHYitx73
+	 59d0uinf6nHACnx1yqeWHXrvyl/oaP+RLCba1KxBpwYS8TxDhGyXgO30wjLjyBRLiad5i
+	 DVSJLPk06TA9CPvwrAxSIpG1XUcza27NvV/ZzOgjKfJY/Gsal+vSiUdpJ1uRB/6Fm5w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kVSn6qP7;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC20B606A323
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:13:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC20B606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=vt.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vt.edu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6633E606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:25:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6633E606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=VirginiaTech.onmicrosoft.com header.i=@VirginiaTech.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-VirginiaTech-onmicrosoft-com header.b=xAB9WiKe
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dI6qUo8Ccdb2o3GXTRcm1rMdLv7KQ5feFllrd65yjkWvS3jTtT8GGQmMM8qmN/nPUEeMfxERmKrMSStauHuUucOlOnFHaexBiHDVkNC4W+lxMOztdGp3zARXvOLsMs4CKlsQNecvfjuDmNhF/XD9v8VzlpavHcdEimM6SAfNrK5gtp4fHBbt5jLL8p56PZws6Qas1X3LMqMy+RXRpkOo5L2DpeSprj3fkxiHUKddq18xK1VcEQ0b5XsC6U2WB3WTezCQjpEdOcXOzD0TdDqG+fnQ8vNs3DeD0tp0arFCYpGAK5tp5XW+JjHizA/sEuppXf2CJflS/9Qa1uPvaGgjJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=bI98mXTvhZ2VxOpRD3MePaxrqF+Y5JKcxRA4yg5o5ZE=;
- b=ejCCbNd2TvKJKoGPw4ttlL/rwr0Euzv8aE7HW8LU3vvjDMJ3tr2Pl34zZ8LCqMNBY7GR7pJrVxgLkEEMagbcdG/TBgkFlLXvzE6r3FM7BA9Ut/UTx720riLha56xx602vLOv6bhO3rt3R1R+5Ci0FxvzLY9Ole1PEGnk/UeBo9IaYgDkGNmaip5t0Vjl0FbhQ+gozrS+rHb1YV7dr2WKngMB1ZTu4K4Zgl4Ac4QUoRtWE+6ZyfnO1P6NJkBXY3Z4AyoyMf+eoLCJyw6X63IUTQOLyqqIcScdEGf0fsW+Ed83rrdiCb1gQFq2FQUDI0xGmT53yUqCjBP9Y3gm9B2SQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vt.edu; dmarc=pass action=none header.from=vt.edu; dkim=pass
- header.d=vt.edu; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kVSn6qP7
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4bb606491faso44702845e9.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 11:25:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=VirginiaTech.onmicrosoft.com; s=selector1-VirginiaTech-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bI98mXTvhZ2VxOpRD3MePaxrqF+Y5JKcxRA4yg5o5ZE=;
- b=xAB9WiKeaWQzO0tERYqHxPN7Bv2as6XSPkUzX4tSUQwyn4Xk8uQVaBS6JY+Yr6CWnFyvOc574tAEDlZcQXyPnm0s+qgq36WBdt/opv2TjEYvO/OxjBqlW1hjyNVcebDJ6EZz7UlaEKPso+bZCMhCtYZrO1pPs6VZpqhmqYHqMvM=
-Received: from DM6PR05MB4137.namprd05.prod.outlook.com (2603:10b6:5:81::28) by
- PH0PR05MB8919.namprd05.prod.outlook.com (2603:10b6:510:d8::17) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.662.10; Fri, 27 Nov 2026 19:13:20 +0000
-Received: from DM6PR05MB4137.namprd05.prod.outlook.com
- ([fe80::a6db:3b91:d780:cd9b]) by DM6PR05MB4137.namprd05.prod.outlook.com
- ([fe80::a6db:3b91:d780:cd9b%5]) with mapi id 15.21.0662.004; Fri, 27 Nov 2026
- 19:13:20 +0000
-From: "Ravindran, Binoy" <binoy@vt.edu>
-To: Petr Mladek <pmladek@suse.com>, Yafang Shao <laoar.shao@gmail.com>
-CC: "Paul E. McKenney" <paulmck@kernel.org>, Frederic Weisbecker
-	<frederic@kernel.org>, Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, Joel
- Fernandes <joelagnelf@nvidia.com>, Josh Triplett <josh@joshtriplett.org>,
-	Boqun Feng <boqun@kernel.org>, Uladzislau Rezki <urezki@gmail.com>, Steven
- Rostedt <rostedt@goodmis.org>, Mathieu Desnoyers
-	<mathieu.desnoyers@efficios.com>, Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang@linux.dev>, Josh Poimboeuf <jpoimboe@kernel.org>,
-	Miroslav Benes <mbenes@suse.cz>, Joe Lawrence <joe.lawrence@redhat.com>, Song
- Liu <song@kernel.org>, Ingo Molnar <mingo@kernel.org>, Jiri Kosina
-	<jikos@kernel.org>, "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>, "live-patching@vger.kernel.org"
-	<live-patching@vger.kernel.org>, "Shastri, Jaidev" <jaidevshastri@vt.edu>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"rcu@vger.kernel.org" <rcu@vger.kernel.org>
-Subject: Re: [PATCH v3 2/3] livepatch: Include exiting tasks in the transition
-Thread-Topic: [PATCH v3 2/3] livepatch: Include exiting tasks in the
- transition
-Thread-Index:
- AQHdfTJuiyumefKm6UKWCWT4PZeyLrc/cFoAgAAFQiqAADftgIACUjiAgAAIpgCAAEK+eQ==
-Date: Fri, 27 Nov 2026 19:13:20 +0000
-Message-ID:
- <DM6PR05MB413770978C88C4345C856FC4D1412@DM6PR05MB4137.namprd05.prod.outlook.com>
-References: <20261125-klp-series-v3-v3-0-b1e0f79af331@vt.edu>
- <20261125-klp-series-v3-v3-2-b1e0f79af331@vt.edu>
- <sashiko-outbox-234405@kernel.org>
- <DM6PR05MB4137C0B5BB4D88A9D5847EBAD1432@DM6PR05MB4137.namprd05.prod.outlook.com>
- <CALOAHbAQuYG__4b054bRobVRyT+v143wBcVAN26T_PtiO-oqmA@mail.gmail.com>
- <awmWExtIJGM805__@pathway.suse.cz> <awmdVLfnwgrS9VfS@pathway.suse.cz>
-In-Reply-To: <awmdVLfnwgrS9VfS@pathway.suse.cz>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vt.edu;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR05MB4137:EE_|PH0PR05MB8919:EE_
-x-ms-office365-filtering-correlation-id: c4295acc-376b-488f-a4f0-08df4cba7fdc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|7416014|23010399003|376014|366016|10070799003|786006|1800799024|38070700021|10067099003|56012099006|11063799006|261026140227099003|261021121427099003|261022105027099003|261022075727099003|261009223027099003|261028144727099003|261026121527099003|261102123227099003|22082099003|18002099003|4143699003;
-x-microsoft-antispam-message-info:
- Bzn0sT2Q+M5POeFp53rTH+CCPOfMSsB1hWUe4/JTMVjiiXHiBbOpxKrp2Atyorg2BDWZjI412a6cPBRuP58V7Yow6ph+f2ObsbTQ33xk86UJn2haMPyK+Jzg9exmW4wk6mk6UnZS3xBsG0aHjoXpZiSRKTyYChzRllcB8cE+nVWtE6Iqj6boL/us8Ou11xnanxSCmYCv1G3NhJe4WXkMymN0gpciYaVS36APNyQZxt8emfzAcHrheaCXLxUpuL0Gc/Omm6i1EZJj29aG7zyZBp7+0a/iUIg5Haf2V2jsFQcNMZB+z1eDM207OmNGfI55qt+mWmIeFrTt6MUSrdmOYZ6B6to4h0DdvKlAVhsFdl705/yjJTVbo5Nhu2oG0T0QpQFF73WSoFt+NhsK6fMpPXFOBM8EOm7m4hBMjEhaxMCHTfkvcXh1Z6CgU2HGbjvF5vGTIF8Q9VFtdpZitxl8IuD00giDM/JCqfAKQnDCu7TGbeZqgxDJj5apmV0rKxmlAk4GLbczxxahPSaKid5N5CiFZUoCT6F6ngJkavGChd2G5JOJqxsEtbwjpnXnwsaJ6mgB2xZx+ZJVfJqi2kbmFmgryBqCcRSFuXgLkt9mzdgprN7M+T+AY0ac5JdQ+3+ObGSagkJq4bWwHoivfjh6Cz9BqGntSINewnE+zsXWqe0W8KA4nJmmOreDoIGdo095DklD0TbMqX1vg30K4/IUMQ==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR05MB4137.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(23010399003)(376014)(366016)(10070799003)(786006)(1800799024)(38070700021)(10067099003)(56012099006)(11063799006)(261026140227099003)(261021121427099003)(261022105027099003)(261022075727099003)(261009223027099003)(261028144727099003)(261026121527099003)(261102123227099003)(22082099003)(18002099003)(4143699003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?z8HydYWR6ewyXRc6dQ7j/768wxC2AEceUT8b8Er3uNYDAXqHARTNTXJ4XL?=
- =?iso-8859-1?Q?cFZJ2ASaXZMzU7OoecGaNhHgZiLKEOJiUt6K17Zho4Uf6hxIjzpqExcnWT?=
- =?iso-8859-1?Q?ce60mqKEIVPdRFKztQN8lJkOyZ0qnSkcvVkVJBjUcaA3Z6HOwqJXciUZW+?=
- =?iso-8859-1?Q?9061BaIAdLkehRuOMPkwAD7P5gN0sMcAgD/Cu2ZIDJNkLc7Upq2iBNOpfP?=
- =?iso-8859-1?Q?dpn5DywtTmzzRpD7Qj9LV95b9B1dwfwYvMUL3imbLtL0uieDdM8FFTnfTJ?=
- =?iso-8859-1?Q?m8XpW1YIQ92XIB1rxKrF5BI+kKtTR+FNhR/I7oYbaudkRHqej2XqOb+gHA?=
- =?iso-8859-1?Q?CX2ynbGNbumHiDdOOKnrz2IQ+hWhNkdOEhISN9ShgaJHaiMTHTXCdIMd5y?=
- =?iso-8859-1?Q?ewFJw2zV+bzBIQcpeGXl5LUGWa74q3yTPcmwxnGKqGfvl1FZlEHQMZ77Ov?=
- =?iso-8859-1?Q?oWtptBG18BXcsV1juOybB65ToBWvHnXvP/vKPg38GS7JNLEQ0Dhqzv+s3C?=
- =?iso-8859-1?Q?mI5YakbH4WotJaoRD64z8zmxDmbkNOb1QE9m4ahT0Fm9PA4Dps7xJ6ttTy?=
- =?iso-8859-1?Q?dzLvY26knb5NoMDcuwbkuqSt+Rl3HxUEEX+iJmLSshLNHvcDyEfNhFCrU1?=
- =?iso-8859-1?Q?C9e4pueYJkVwKsO5Wl+X9Zq+hGm+MlzB+3fw9JTw5cTrRPhqKjCBEUPGCf?=
- =?iso-8859-1?Q?xp49Y589S/Q95H4z9AuINJLgCsWTrFgVVAhXFpAQ5JyB5kwtC3P3SrvhQ4?=
- =?iso-8859-1?Q?5b/nSoLdbImuavesvhpUjmyKO8h4tLRN+IHjg4bwU+0FtNahVOyjy/SPOA?=
- =?iso-8859-1?Q?Na5s3X0XJnL7+4dQSoYrfPwW0oiTQpk7xPD60MV37KYZBXOhyGI+/pZsjh?=
- =?iso-8859-1?Q?GMJbs+cBGTRBoVov2J2Z1Bu0iocvEDakpzQujjNLhUr38kXuFmb4QUS1OZ?=
- =?iso-8859-1?Q?H5tO948F2ln4vzvJnmltQQXu4hXx5Er06VVbA+p3G6QHhmd4xqlBul12Jc?=
- =?iso-8859-1?Q?BUf9iGVaRyv3SvJMsi4bYc/HwUqJghUkIJhxLw6RIWBENuF42vADSwa7gd?=
- =?iso-8859-1?Q?MkOK82aakNC5l6eazxspj42y68IlEpn1MtaXImLiKwoswvbOBhUC4rWME2?=
- =?iso-8859-1?Q?wdNuRnMZbU7dqWZWcKtJz8F/rJp5sUoTzs9GIpoghCAWz5hZcsnESVw9Zt?=
- =?iso-8859-1?Q?96r29LwA4zFI5sr32C00K3Lm6aXxd9BD9HWvdVZUPxWvMKXulrxbU7Ar4F?=
- =?iso-8859-1?Q?UTD81tvOd4IYCOkVQ9bYOhSTh0aAJV6dtDcpGZs7qSq2tH3Ql2O91EFzSF?=
- =?iso-8859-1?Q?O1p4/DXekULLA0ljF3tgLnyLd2JvR28+gQUIRWbph08ThQ7fzKcG4U325p?=
- =?iso-8859-1?Q?1+RCS50lWzgP2ihMQ4BMWdn6c4q4V2798Xquk52Ttm4I4C0gYoJnavIORV?=
- =?iso-8859-1?Q?xqDB9pEXx667BINylbAJrCkTaF5qLw9UDJtbAfkrjnr24jSbgqpAc0H/jh?=
- =?iso-8859-1?Q?2WG6ztoLI/8JW3hrMNHPnGrPao7qtZvH7iskLoqfYLX/IgsZXz3vsNKNX1?=
- =?iso-8859-1?Q?i1c1O8yVFtnry2mKPajfJareTYtAN7tyTKBbYL23QPVikwPSXjQzZp3fSO?=
- =?iso-8859-1?Q?V6AqttL1toZbcyPR98LBB2Knprhmi2HoMva/YC4Ltfd2xzZoCtkLVFvTlu?=
- =?iso-8859-1?Q?LD8GEmw/19MwIshimXiE0vzzlRWkNnTjhljfyR/H0qp1LLsme0pC2XIbm9?=
- =?iso-8859-1?Q?SJo9ksbA+ESUl/Afqgede52lQbAOCu9Ii9F1g8x6DImbwh?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20260707; t=1795807529; x=1796412329; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=X+Y8inuTsfkFjk3koINUb0aKmLGPzBSOedDj4A9k4LA=;
+        b=kVSn6qP7lQJsf8kg/z6LabGu8C84zTa0i7DGEM+nrDwfn3MrHaJGtri1zApKfwtmeP
+         DPHAjG1jz6WOkYhhfLk/HIobiKtK2xep8g0NJJeGv5WrXwg0mi6lN+3oOMF0KC3QNMPt
+         yRvrqdo5Z06YZVqQm6dfWKF/lnTikANodsW+pLORhrdIqud2uCs7fhwFuAV2m1LH5EpG
+         bzQ7kHB8CsG1Izlowg9wG3l8gdTMZG20CEAM+75rE2rRz+1QJX0x7uzRW9uUgsD2Ya2M
+         37R37NL0XCjARtVGRdvtAydmzVJSLHvS609wSv8E6ldfVKJHVKX3nVm3Mx4jF3bhqRCU
+         gcYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795807529; x=1796412329;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=X+Y8inuTsfkFjk3koINUb0aKmLGPzBSOedDj4A9k4LA=;
+        b=pKghP66Gxsf0NNFfHq1N9aVM71WWgDA8BcGsrHglwjW9Ca15jw5udmC4hvCas0Ys9I
+         uqnKqctivkHu75Csoeq6zhaoonyShxJGfEkNJS9fCHQW7emDZRS4L/SUhd6JbB2u6rbC
+         AoMqpyouGThw8c8W+3j1GzA5Ts+7VW0ImOgUqCcqT5pGlt6px1SC8YjgmFZEtCvqAVtA
+         WoVJH3yzvzTtesVfiikIwmAl42Ea/VHszALfSF8QtpN70epjACIw1lK5bqLi1VaNI216
+         9KIj7vzmtYK6ZE30b+EcggtGCfQDy82gAtIgXMUEl9MLuSvk78wAVOkcvKtbGDWCL7Z/
+         I0Ow==
+X-Forwarded-Encrypted: i=1; AL+hErHCivVbgf58YbstM/K+q1QiCz9LHty9QrS2vnnEtHWPcSPZXblfhI1T6qthbjp2I423i7YHunqWqMQwHOfrcps=@lists.linux.dev
+X-Gm-Message-State: APuU4Z802xxEKz3kRFNvI4xpboXoz2nsz8GEUe02Rsno1s+PuERfsWnv
+	wrgHi/H6mDQOx4ZevBA2Fb/gap4oJPeH4EWl8idn8eTf3zfHtuISvXfc
+X-Gm-Gg: AZFdTZdf5c6NyuHUoVNjyCuLz9+HZHVy6oFuAcMCa4OwdUd31I+1R6zLN8KLU1w6Bw5
+	VbZxMNorva4WvJWbbDILNeV+iTrW3OaI10NhdOcxWrRuK9WsOg6yaTGPWqPSnJULuwHqzXQvZnH
+	2mTldTfGHkqzjxxKWqDDEUf3a+NCu9RGS9X6/8FZipDqssbcYYpWxts3kJzbXySbCRXpkQzepcK
+	PuxISxapzVrXqELJxG3NPdga64uOBCukabIoFu0cW/nCR/r8p/Q/HkjHGF/upnZneyNCre6S4Tm
+	sHf5bHpXKroX/zDuW8eRhU2Nrd04cJga69PJ49cBhS9XShjoWY89ejjGhR9Bm04mtHqnEzoRQp1
+	CFHVIlTPnJV4QBmEUoZnd5mtNMmIL9au0ELRoK6PUICavCzkvBtfm7M5ADZ52OTG1ALXqprGq37
+	ScqcIrNsV7FqhWUyybrsJVdP+RvnRYpQ/7S1Gt5riw7sxjKyq48etl1JFHvU+SXR8CYLbCI9tg2
+	iINb0+/6cVCgLQy2Hx7eoI926i+54ouv/y4KFuLq6RmMyl9hJlmxV+LaA4Pxrg2k/Dbgt4hs5pt
+	KjFXWD6F4pvrabXqaJQQM7cWgq8QKV0bH5nY3zc/zY1FJPPw2/ZGzb+x8Q710kMNw30Nm2rkNjX
+	j1SDoQ5Y=
+X-Received: by 2002:a05:600c:4515:b0:4bb:659c:b8db with SMTP id 5b1f17b1804b1-4bb88813b27mr543971595e9.12.1795807528540;
+        Fri, 27 Nov 2026 11:25:28 -0800 (PST)
+Received: from localhost (bl20-90-91.dsl.telepac.pt. [2.81.90.91])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb9067a0e6sm358570565e9.4.2026.11.27.11.25.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 11:25:28 -0800 (PST)
+From: =?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+To: linux-serial@vger.kernel.org
+Cc: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	linux-riscv@lists.infradead.org,
+	sashiko-reviews@lists.linux.dev,
+	=?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+Subject: [PATCH RFC 1/2] serial: esp32: Enable hardware RTS/CTS flow control
+Date: Fri, 27 Nov 2026 19:25:10 +0000
+Message-ID: <20261127192514.174468-1-vitorhg20080@gmail.com>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261125233020.1380594-11-vitorhg20080@gmail.com>
+References: <20261125233020.1380594-11-vitorhg20080@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -161,55 +102,241 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-OriginatorOrg: vt.edu
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR05MB4137.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c4295acc-376b-488f-a4f0-08df4cba7fdc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Nov 2026 19:13:20.2504
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 60956884-10ad-40fa-863d-4f32c1e3a37a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: skjt/0b6m9W9ZswqDeZGjkLXJCZLnraEN4hDBeyzgXSQOAuRaRSGju85SXwM3Qmi
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR05MB8919
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-=0A=
-Hi Petr,=0A=
-=0A=
-> By other words, the task is removed from the rcu_tasks_exit_list=0A=
-> in the later 2nd RCU period. So, if synchronize_rcu() is going=0A=
-> to wait for this 2nd period then it might end prematurely because=0A=
-> the quiescent state is reported by rcu_note_context_switch()=0A=
-> early in __schedule().=0A=
-=0A=
-Yes, that matches my reading.=0A=
-=0A=
-> But I might miss something. I am not sure which period=0A=
-> synchronize_rcu() is waiting for.=0A=
-=0A=
-synchronize_rcu() waits for RCU readers that started before it. Of the=0A=
-two sections that the comment above rcu_tasks_postscan() describes,=0A=
-only the second is an RCU reader: the stretch from the final=0A=
-preempt_disable() in do_exit() to the final schedule().=0A=
-=0A=
-rcu_note_context_switch() notes the quiescent state early in=0A=
-__schedule(), before switch_to(). With an expedited grace period in=0A=
-progress, it also reports it right there, through rcu_report_exp_rdp()=0A=
-(kernel/rcu/tree_plugin.h). The grace period can then end while the=0A=
-task still runs traceable code in the rest of __schedule(). RCU does=0A=
-not need to cover that code, but livepatch does.=0A=
-=0A=
-klp_synchronize_transition() covers it, because the work item can run=0A=
-on that CPU only after the task has switched out. It was also cheaper=0A=
-in my tests. With synchronize_rcu() (v3), the median transition time=0A=
-went from 8 to 12 ms in the default mode and from 8 ms to 0.8 s with=0A=
-preempt=3Dfull. With klp_synchronize_transition() (v4), the medians were=0A=
-7 ms and 11 ms.=0A=
-=0A=
-So v5 keeps klp_synchronize_transition(), with the comment reworded as=0A=
-you suggested.=0A=
-=0A=
-Thanks,=0A=
-Binoy=0A=
-=0A=
-=0A=
+CRTSCTS currently enables receive flow control without programming an
+RX FIFO threshold or enabling CTS gating on transmit.
+
+Set a 64-byte RX FIFO threshold using the register layout of each
+variant. Enable hardware CTS gating and tell serial core that the
+UART handles CTS. Let the FIFO control RTS while RTS is asserted,
+and use software control to keep RTS deasserted when requested.
+
+On the Waveshare ESP32-P4-Module-DEV-KIT, UART1 internal loopback
+verified that deasserting RTS with CRTSCTS enabled stopped transmission
+and reasserting RTS delivered the queued bytes intact. With CRTSCTS
+disabled, transmission completed with RTS deasserted.
+
+AI assisted with driver development and the loopback test.
+Signed-off-by: Vítor Hugo Silva <vitorhg20080@gmail.com>
+---
+Applies on top of the ESP32-P4 UART RFC through patch 13/19 with the
+four UART fixes for patch 10/19 and v2 of patch 12/19 applied.
+RFC: https://lore.kernel.org/linux-serial/20261125233020.1380594-1-vitorhg20080@gmail.com/
+UART fixes: https://lore.kernel.org/linux-serial/20261127165552.133713-1-vitorhg20080@gmail.com/
+TX IRQ v2: https://lore.kernel.org/linux-serial/20261127155623.129706-1-vitorhg20080@gmail.com/
+
+ drivers/tty/serial/esp32_uart.c | 82 +++++++++++++++++++++++++++------
+ 1 file changed, 68 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/tty/serial/esp32_uart.c b/drivers/tty/serial/esp32_uart.c
+index 75f243f..7d58a41 100644
+--- a/drivers/tty/serial/esp32_uart.c
++++ b/drivers/tty/serial/esp32_uart.c
+@@ -26,6 +26,7 @@
+ 
+ #define ESP32_UART_TX_FIFO_SIZE	127
+ #define ESP32_UART_RX_FIFO_SIZE	127
++#define ESP32_UART_RTS_THRESHOLD	64
+ #define ESP32_UART_TX_POLLS		1000000
+ 
+ #define UART_FIFO_REG			0x00
+@@ -71,8 +72,11 @@
+ #define UART_RXFIFO_FULL_THRHD_SHIFT		0
+ #define ESP32_UART_TXFIFO_EMPTY_THRHD_SHIFT	8
+ #define ESP32S3_UART_TXFIFO_EMPTY_THRHD_SHIFT	10
++#define ESP32_UART_RX_FLOW_THRHD		GENMASK(22, 16)
+ #define ESP32_UART_RX_FLOW_EN			BIT(23)
+ #define ESP32S3_UART_RX_FLOW_EN			BIT(22)
++#define ESP32S3_UART_MEM_CONF_REG	0x60
++#define ESP32S3_UART_RX_FLOW_THRHD		GENMASK(16, 7)
+ #define ESP32S3_UART_CLK_CONF_REG	0x78
+ #define ESP32S3_UART_SCLK_DIV_B			GENMASK(5, 0)
+ #define ESP32S3_UART_SCLK_DIV_A			GENMASK(11, 6)
+@@ -101,10 +105,12 @@
+ 
+ /* ESP32-P4 uses a dedicated register for RX flow control. */
+ #define ESP32P4_UART_HWFC_CONF_REG		0x2c
++#define ESP32P4_UART_RX_FLOW_THRHD		GENMASK(7, 0)
+ #define ESP32P4_UART_RX_FLOW_EN			BIT(8)
+ #define ESP32P4_UART_REG_UPDATE_REG		0x98
+ #define ESP32P4_UART_REG_UPDATE			BIT(0)
+ #define ESP32P4_UART_LOOPBACK			BIT(12)
++#define ESP32P4_UART_TX_FLOW_EN			BIT(13)
+ #define ESP32P4_UART_SW_RTS			BIT(21)
+ #define ESP32P4_UART_SW_DTR			BIT(20)
+ #define ESP32P4_UART_RTS_INV			BIT(18)
+@@ -121,8 +127,11 @@ struct esp32_uart_variant {
+ 	u32 rxfifo_cnt_mask;
+ 	u32 txfifo_cnt_mask;
+ 	u32 txfifo_empty_thrhd_shift;
++	u32 tx_flow_en;
+ 	u32 rx_flow_reg;
+ 	u32 rx_flow_en;
++	u32 rx_flow_thresh_reg;
++	u32 rx_flow_thresh_mask;
+ 	u32 loopback_mask;
+ 	u32 sw_rts_mask;
+ 	u32 sw_dtr_reg;
+@@ -138,8 +147,11 @@ static const struct esp32_uart_variant esp32_variant = {
+ 	.rxfifo_cnt_mask = ESP32_UART_RXFIFO_CNT,
+ 	.txfifo_cnt_mask = ESP32_UART_TXFIFO_CNT,
+ 	.txfifo_empty_thrhd_shift = ESP32_UART_TXFIFO_EMPTY_THRHD_SHIFT,
++	.tx_flow_en = UART_TX_FLOW_EN,
+ 	.rx_flow_reg = UART_CONF1_REG,
+ 	.rx_flow_en = ESP32_UART_RX_FLOW_EN,
++	.rx_flow_thresh_reg = UART_CONF1_REG,
++	.rx_flow_thresh_mask = ESP32_UART_RX_FLOW_THRHD,
+ 	.type = "ESP32 UART",
+ 	.loopback_mask = UART_LOOPBACK,
+ 	.sw_rts_mask = UART_SW_RTS,
+@@ -153,8 +165,11 @@ static const struct esp32_uart_variant esp32s3_variant = {
+ 	.rxfifo_cnt_mask = ESP32S3_UART_RXFIFO_CNT,
+ 	.txfifo_cnt_mask = ESP32S3_UART_TXFIFO_CNT,
+ 	.txfifo_empty_thrhd_shift = ESP32S3_UART_TXFIFO_EMPTY_THRHD_SHIFT,
++	.tx_flow_en = UART_TX_FLOW_EN,
+ 	.rx_flow_reg = UART_CONF1_REG,
+ 	.rx_flow_en = ESP32S3_UART_RX_FLOW_EN,
++	.rx_flow_thresh_reg = ESP32S3_UART_MEM_CONF_REG,
++	.rx_flow_thresh_mask = ESP32S3_UART_RX_FLOW_THRHD,
+ 	.type = "ESP32S3 UART",
+ 	.has_clkconf = true,
+ 	.loopback_mask = UART_LOOPBACK,
+@@ -169,8 +184,11 @@ static const struct esp32_uart_variant esp32p4_variant = {
+ 	.rxfifo_cnt_mask = ESP32P4_UART_RXFIFO_CNT,
+ 	.txfifo_cnt_mask = ESP32P4_UART_TXFIFO_CNT,
+ 	.txfifo_empty_thrhd_shift = ESP32P4_UART_TXFIFO_EMPTY_THRHD_SHIFT,
++	.tx_flow_en = ESP32P4_UART_TX_FLOW_EN,
+ 	.rx_flow_reg = ESP32P4_UART_HWFC_CONF_REG,
+ 	.rx_flow_en = ESP32P4_UART_RX_FLOW_EN,
++	.rx_flow_thresh_reg = ESP32P4_UART_HWFC_CONF_REG,
++	.rx_flow_thresh_mask = ESP32P4_UART_RX_FLOW_THRHD,
+ 	.type = "ESP32-P4 UART",
+ 	.needs_reg_update = true,
+ 	.loopback_mask = ESP32P4_UART_LOOPBACK,
+@@ -249,16 +267,43 @@ static unsigned int esp32_uart_tx_empty(struct uart_port *port)
+ 	return esp32_uart_tx_fifo_cnt(port) ? 0 : TIOCSER_TEMT;
+ }
+ 
++static void esp32_uart_set_rx_flow(struct uart_port *port, bool enable)
++{
++	const struct esp32_uart_variant *variant = port_variant(port);
++	u32 flow = esp32_uart_read(port, variant->rx_flow_reg);
++
++	if (enable) {
++		u32 mask = variant->rx_flow_thresh_mask;
++		u32 threshold = field_prep(mask, ESP32_UART_RTS_THRESHOLD);
++		u32 reg = variant->rx_flow_thresh_reg;
++
++		if (reg == variant->rx_flow_reg) {
++			flow = (flow & ~mask) | threshold;
++		} else {
++			u32 val = esp32_uart_read(port, reg);
++
++			esp32_uart_write(port, reg, (val & ~mask) | threshold);
++		}
++		flow |= variant->rx_flow_en;
++	} else {
++		flow &= ~variant->rx_flow_en;
++	}
++
++	esp32_uart_write(port, variant->rx_flow_reg, flow);
++}
++
+ static void esp32_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ {
+ 	const struct esp32_uart_variant *variant = port_variant(port);
+ 	bool dtr_in_conf0 = variant->sw_dtr_reg == UART_CONF0_REG;
++	bool hw_flow = port->status & UPSTAT_AUTOCTS;
++	bool rts = mctrl & TIOCM_RTS;
+ 	u32 conf0, dtr_conf;
+ 
+ 	conf0 = esp32_uart_read(port, UART_CONF0_REG);
+ 	conf0 &= ~(variant->loopback_mask | variant->sw_rts_mask);
+ 
+-	if (mctrl & TIOCM_RTS)
++	if (rts)
+ 		conf0 |= variant->sw_rts_mask;
+ 	if (mctrl & TIOCM_LOOP)
+ 		conf0 |= variant->loopback_mask;
+@@ -275,7 +320,14 @@ static void esp32_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ 	else
+ 		esp32_uart_write(port, variant->sw_dtr_reg, dtr_conf);
+ 
++	/* Keep RTS deasserted until the FIFO can control it again. */
++	if (hw_flow && rts)
++		esp32_uart_set_rx_flow(port, true);
++
+ 	esp32_uart_write(port, UART_CONF0_REG, conf0);
++
++	if (hw_flow && !rts)
++		esp32_uart_set_rx_flow(port, false);
+ }
+ 
+ static unsigned int esp32_uart_get_mctrl(struct uart_port *port)
+@@ -515,16 +567,16 @@ static void esp32_uart_set_termios(struct uart_port *port,
+ 				   struct ktermios *termios,
+ 				   const struct ktermios *old)
+ {
++	const struct esp32_uart_variant *variant = port_variant(port);
++	bool hw_flow = termios->c_cflag & CRTSCTS;
+ 	unsigned long flags;
+-	u32 conf0, flow;
++	u32 conf0;
+ 	u32 baud, min_baud, max_baud;
+-	const u32 rx_flow_reg = port_variant(port)->rx_flow_reg;
+-	const u32 rx_flow_en = port_variant(port)->rx_flow_en;
+-	u32 max_div = port_variant(port)->clkdiv_mask;
++	u32 max_div = variant->clkdiv_mask;
+ 
+ 	termios->c_cflag &= ~CMSPAR;
+ 
+-	if (port_variant(port)->has_clkconf) {
++	if (variant->has_clkconf) {
+ 		max_div *= FIELD_MAX(ESP32S3_UART_SCLK_DIV_NUM) + 1;
+ 		min_baud = DIV_ROUND_UP(port->uartclk, max_div);
+ 	} else {
+@@ -532,17 +584,15 @@ static void esp32_uart_set_termios(struct uart_port *port,
+ 	}
+ 
+ 	max_baud = port->uartclk / 16;
+-	if (port_variant(port) == &esp32p4_variant)
++	if (variant == &esp32p4_variant)
+ 		esp32p4_uart_limit_baud_rate(termios, old, min_baud, max_baud);
+ 	baud = uart_get_baud_rate(port, termios, old, min_baud, max_baud);
+ 
+ 	spin_lock_irqsave(&port->lock, flags);
+ 
+ 	conf0 = esp32_uart_read(port, UART_CONF0_REG);
+-	conf0 &= ~(UART_PARITY_EN | UART_PARITY | UART_BIT_NUM | UART_STOP_BIT_NUM);
+-
+-	flow = esp32_uart_read(port, rx_flow_reg);
+-	flow &= ~rx_flow_en;
++	conf0 &= ~(UART_PARITY_EN | UART_PARITY | UART_BIT_NUM | UART_STOP_BIT_NUM |
++		   variant->tx_flow_en);
+ 
+ 	if (termios->c_cflag & PARENB) {
+ 		conf0 |= UART_PARITY_EN;
+@@ -570,11 +620,15 @@ static void esp32_uart_set_termios(struct uart_port *port,
+ 	else
+ 		conf0 |= FIELD_PREP(UART_STOP_BIT_NUM, UART_STOP_BIT_NUM_1);
+ 
+-	if (termios->c_cflag & CRTSCTS)
+-		flow |= rx_flow_en;
++	if (hw_flow) {
++		conf0 |= variant->tx_flow_en;
++		port->status |= UPSTAT_AUTOCTS;
++	} else {
++		port->status &= ~UPSTAT_AUTOCTS;
++	}
+ 
+ 	esp32_uart_write(port, UART_CONF0_REG, conf0);
+-	esp32_uart_write(port, rx_flow_reg, flow);
++	esp32_uart_set_rx_flow(port, hw_flow && (port->mctrl & TIOCM_RTS));
+ 
+ 	if (baud) {
+ 		esp32_uart_set_baud(port, baud);
+-- 
+2.56.1
+
