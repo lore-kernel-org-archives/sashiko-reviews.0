@@ -1,55 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795772761;
-	b=KNEh22ce7zn5NvWIAPT82Ih75zIouSn0PZhz1FjZhPxyoklF3pBfF5H56loNRcD6/+lA
-	 1nBHYUCN0PNVLh2QFzUwtP8YjQDpedNs3YN3ktbx6JiqU6hGe85XXNtxMp8RINzhkAErx
-	 wY46FqyN4cd0pvjQsBMH9OqtZCnMtbkDRlA+Z8bqbmnwpsCcweqIP1RRji05fowiTZ1jJ
-	 etyb7NHHzBscQFc/hAfyBBi/bu432sBx4AXS7V/eCC/tAGZGlYP+z/y8jOgUdUqZTfmq2
-	 rFlR+zTvOjAxkG4uHtnxFATFHp6GnYzr5Pesx/BDA3YCcnkDggK+OwKG72H1PbFQJ/g==
+	t=1795774494;
+	b=X7Pi+Nv5elj+RDBimkpIIArgbgOLeE47KDwiKbTWMNYhdBfyhYkGFArGMcO9+DNc94xA
+	 bNl0UeZpSToZCAnpi+9G0d7HrYJAVl2YOCrRBeLHtDqO6V66VlTWCWCrkgq31XeZ4RCTb
+	 kxes5C2kr3TzHDAnmTc2BfNyIGrq5GxoYmpk7Mt1+oF7Y+tDrNMb781MpoKGjtQoFt14G
+	 wG8JXsUb0FbEGQKh0QUMaTPxzwVr8I/w01XFwVhfO0Rxnz2HxQmFeNeDxKxSfQSQRtK7P
+	 YSJPY8xcH4n2u1SI7K4VMALcS6hQOs8DAGqywe1dL/7pUEPjnoBjpAERpCdMtp/dCug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795772761;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=QC0QzxkgWrukfqa+ChUmXMw54bTxFKinhEDwptFUhRg=;
-	b=B6tOfx+Kxx8zCM/Nuj3n8R3gOOjSPuBM5T/vQkE9I06DXAc4BEX1G0NiBhL7oUbx9No8
-	 GZsxOQWh8YI+u7uichafbBwN7wasM5fL44L3ued1s5dh3GAQwa2VpOD9Xjgso983tsDt5
-	 7OHrKrn9620nsk+Uq2lLltyyCr3eP34P0LLdvKr1Yz+f8gMQTB2hNmk79cv+WxQE3Fh9c
-	 116kJ6MjQEO6taZCK2xoOwksCUCyrmahfAkTyu156fvDRifoH/7Aed9dCYpRauT+3U+42
-	 K+em7hCdOGSINaQn2wFusI70EtcT3lPMmk9twvRrKEcAxPHsVn4MMRM18cJqAkYjU6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795774494;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
+	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
+	 X-Spam-Score;
+	bh=xijV4TT34H1HE2E7K9j73ByrP6P42ezlU93ERe98y0I=;
+	b=US0Hr3R/JYquxo8eIwJdLQ8R7ZQVlRJgnyl34E93irXbGmb84r6Me9UYnVYsZVUw5RdC
+	 bVa2XBRKcBNiOEZMaLIsSUsFwapCvAKY1Pe+uDpjub9jrj2sM72/bKTzZKAawlJGAM7UK
+	 BzxXioTov9/JrBp5rIGXEnRNRfSX+DJvASPiazN7EiqoJlwpvqfGz1yPUaNuM55n0nbFz
+	 4B1db03x0ajYNV1A6yzcmy3QgO1PJXrpSBdepY6U6xDHCRe4h0f76Frt9EGlEmmsRoVPT
+	 YArdtJ8Llkx0fXH1xq8g4XK+1wNbR88bnooi3viGb7INts/pQXuip3CvoNV+/UhN4dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Qm7y7PGi;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ExYum4nB;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=8RH8dXHS;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ExYum4nB;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=8RH8dXHS;
+	arc=none smtp.remote-ip=195.135.223.131
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D237E606A31C;
-	Fri, 27 Nov 2026 09:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2663B60A3803
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 10:14:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2663B60A3803
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Qm7y7PGi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35B01F00898;
-	Fri, 27 Nov 2026 09:46:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795772761;
-	bh=QC0QzxkgWrukfqa+ChUmXMw54bTxFKinhEDwptFUhRg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Qm7y7PGiF5oxu9SYlr3A02ZrS3CS5WUY+eI4lxbaXRlKHuFf4QGCfSJumK/Z2d8/Z
-	 zEkAVHt7TGsiUzkuSqaLdqor2rHa9vaLyZ644Qbn6Shr9tPvW9HsV/scNEAccix2z0
-	 JN5ga3Uv/DkxFzvSjga4uv+IaeJerI77cGz0Qrgzfh/rUur2k3Za9gaL7Vck+PKDyA
-	 kDE0FYRf9zsWiJM10F1VEj9FFK6XfvBUmjkDj/eCez2KpOD+x3m/iNxXOqg1NijYhV
-	 qCyE/0EwlUmuVcDsO9SCCGPHfOETo62r+ycSJBvHQInepc9ojcoqXMQoOUnKeg0HpA
-	 nXCc+Wgq/YM+g==
-Date: Fri, 27 Nov 2026 09:45:58 +0000
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jie Gu <jie.gu@leica-geosystems.com>, linux-leds@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] leds: tps6131x: Cancel torch refresh on flash
- mode switch
-Message-ID: <20261127094558.GQ38590@joneslee-macbookpro.roam.internal>
-References: <20261120075859.731257-1-jie.gu@leica-geosystems.com>
- <20261120075859.731257-2-jie.gu@leica-geosystems.com>
- <sashiko-outbox-224685@kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ExYum4nB;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=8RH8dXHS;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ExYum4nB;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=8RH8dXHS
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 33CF51F813;
+	Fri, 27 Nov 2026 10:14:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795774491; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xijV4TT34H1HE2E7K9j73ByrP6P42ezlU93ERe98y0I=;
+	b=ExYum4nBCF2yhW9z+pRPSTxQ2qDUkoh1MaukTrHQ79PfTB60spE3nkBvc1DVKRH29sJEFo
+	2IU/I2S6S+S+IwylgbZ4JRlfjocmvMRz9hfB0mu46FEWFW+TBZ7vukOUoFXiRtB+CV7676
+	v088bGVtXuzk1CkLZNxy648roigV5dg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795774491;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xijV4TT34H1HE2E7K9j73ByrP6P42ezlU93ERe98y0I=;
+	b=8RH8dXHSVVOWyJYEqGUXTahEWOFIlYxfxW+L4Wis6UvTz/JddZIaln4cT2Z/GzLw7ef7oK
+	rE8UhG1vXVeum6BA==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ExYum4nB;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8RH8dXHS
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1795774491; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xijV4TT34H1HE2E7K9j73ByrP6P42ezlU93ERe98y0I=;
+	b=ExYum4nBCF2yhW9z+pRPSTxQ2qDUkoh1MaukTrHQ79PfTB60spE3nkBvc1DVKRH29sJEFo
+	2IU/I2S6S+S+IwylgbZ4JRlfjocmvMRz9hfB0mu46FEWFW+TBZ7vukOUoFXiRtB+CV7676
+	v088bGVtXuzk1CkLZNxy648roigV5dg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1795774491;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xijV4TT34H1HE2E7K9j73ByrP6P42ezlU93ERe98y0I=;
+	b=8RH8dXHSVVOWyJYEqGUXTahEWOFIlYxfxW+L4Wis6UvTz/JddZIaln4cT2Z/GzLw7ef7oK
+	rE8UhG1vXVeum6BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7836713432;
+	Fri, 27 Nov 2026 10:14:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id KAyoABpYCWtBSgAAD6G6ig
+	(envelope-from <hare@suse.de>); Fri, 27 Nov 2026 10:14:50 +0000
+Message-ID: <4fa5e563-463c-4a45-bccc-00d2b2c947ce@suse.de>
+Date: Fri, 27 Nov 2026 11:14:49 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,87 +108,235 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 12/14] nvme-fabrics: allow to pass in keyring by name
+To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>,
+ Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+ Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
+ Chaitanya Kulkarni <kch@nvidia.com>, Eric Biggers <ebiggers@kernel.org>,
+ David Howells <dhowells@redhat.com>, Jarkko Sakkinen <jarkko@kernel.org>,
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+ Randy Dunlap <rdunlap@infradead.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: linux-nvme@lists.infradead.org, keyrings@vger.kernel.org
+References: <20261126-dhchap-keyring-v4-v7-0-ee438ffea527@kernel.org>
+ <20261126-dhchap-keyring-v4-v7-12-ee438ffea527@kernel.org>
+ <sashiko-outbox-235711@kernel.org>
+Content-Language: en-US
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <sashiko-outbox-235711@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-224685@kernel.org>
+X-Rspamd-Queue-Id: 33CF51F813
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-13.50 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	MX_GOOD(-0.01)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Score: -13.50
 
-On Fri, 20 Nov 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] leds: tps6131x: torch_refresh_work race with
->   tps6131x_brightness_set()
-
-Please review, explain or fix the Sashiko review(s).
-
-If this is a set, this request includes the other patches too.
-
+On 11/26/26 3:31 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 8 potential
+> issues to consider:
+> - [High] nvme-fabrics: NULL dereference and key leak in
+>    nvmf_parse_options()
+> - [High] nvme-fabrics: missing keyring link and key leak in
+>    tls_keyring_store()
+> - [High] nvme-fabrics: vmlinux link failure when CONFIG_NVME_KEYRING=m
+> - [High] nvme-keyring: broken header stubs when CONFIG_NVME_KEYRING=n
+> - [Medium] nvme-fabrics: unstripped newline in tls_keyring_store()
+>    breaks lookup
+> - [Medium] nvme-fabrics: missing key type and state checks in keyring ID
+>    fallback
+> - [Medium] nvme-fabrics: unsynchronized opts->keyring access in
+>    tls_keyring_store()
+> - [Low] nvme-fabrics: unreachable !keyring path in
+>    nvme_tls_attrs_are_visible()
 > --
 > 
-> commit 7abce202322d69429cb0363b0f5444e8321b3409
-> Author: Jie Gu <jie.gu@leica-geosystems.com.cn>
+> commit cea520ca62b4a11b68d9d8f8ca9eeea627f871dd
+> Author: Hannes Reinecke <hare@kernel.org>
 > 
-> leds: tps6131x: Cancel torch refresh on flash mode switch
+> nvme-fabrics: allow to pass in keyring by name
 > 
-> This commit cancels pending torch_refresh_work before switching the
-> TPS6131X mode in tps6131x_strobe_set() and
-> tps6131x_flash_external_strobe_set().
+> This commit allows specifying the fabrics keyring option by name in
+> addition to serial number, enables the keyring option for all fabrics
+> transports, and makes the tls_keyring sysfs attribute writable.
 > 
-> > diff --git a/drivers/leds/flash/leds-tps6131x.c b/drivers/leds/flash/leds-tps6131x.c
-> > index 7f2c3895e6e98..704c3e7dfcda0 100644
-> > --- a/drivers/leds/flash/leds-tps6131x.c
-> > +++ b/drivers/leds/flash/leds-tps6131x.c
-> > @@ -378,6 +378,7 @@ static int tps6131x_strobe_set(struct led_classdev_flash *fled_cdev, bool state)
-> >  	struct tps6131x *tps6131x = fled_cdev_to_tps6131x(fled_cdev);
-> >  	int ret;
-> >  
-> > +	cancel_delayed_work_sync(&tps6131x->torch_refresh_work);
-> >  	guard(mutex)(&tps6131x->lock);
-> >  
-> >  	ret = tps6131x_set_mode(tps6131x, state ? TPS6131X_MODE_FLASH : TPS6131X_MODE_SHUTDOWN,
-> > @@ -697,6 +698,7 @@ static int tps6131x_flash_external_strobe_set(struct v4l2_flash *v4l2_flash, boo
-> >  	struct led_classdev_flash *fled_cdev = v4l2_flash->fled_cdev;
-> >  	struct tps6131x *tps6131x = fled_cdev_to_tps6131x(fled_cdev);
-> >  
-> > +	cancel_delayed_work_sync(&tps6131x->torch_refresh_work);
-> >  	guard(mutex)(&tps6131x->lock);
-> >  
-> >  	return tps6131x_set_mode(tps6131x, enable ? TPS6131X_MODE_FLASH : TPS6131X_MODE_SHUTDOWN,
+>> diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+>> index bba6a4848f227..12a30ed16f9ef 100644
+>> --- a/drivers/nvme/host/fabrics.c
+>> +++ b/drivers/nvme/host/fabrics.c
+>> @@ -663,8 +663,8 @@ static struct key *nvmf_parse_key(int key_id)
+>>   {
+>>   	struct key *key;
+>>   
+>> -	if (!IS_ENABLED(CONFIG_NVME_TCP_TLS)) {
+>> -		pr_err("TLS is not supported\n");
+>> +	if (!IS_ENABLED(CONFIG_NVME_KEYRING)) {
+>> +		pr_err("nvme keyring is not supported\n");
+>>   		return ERR_PTR(-EINVAL);
+>>   	}
+> 
+> [Severity: High]
+> Can this fail to link vmlinux when CONFIG_NVME_KEYRING=m?
+> 
+> IS_ENABLED(CONFIG_NVME_KEYRING) is true when NVME_KEYRING is a module,
+> while NVME_FABRICS in drivers/nvme/host/Kconfig only selects NVME_KEYRING
+> if NVME_TCP_TLS is enabled.  If CONFIG_NVME_FABRICS=y (with
+> CONFIG_NVME_TCP_TLS=n and CONFIG_NVME_HOST_AUTH=n) and
+> CONFIG_NVME_KEYRING=m (for example via CONFIG_NVME_TARGET=m), built-in
+> fabrics.o references nvme_tls_key_lookup() and nvme_keyring_link() in
+> nvme-keyring.ko.  Similarly, when CONFIG_NVME_CORE=y, CONFIG_NVME_TCP=m,
+> and CONFIG_NVME_TCP_TLS=y, NVME_FABRICS=m selects CONFIG_NVME_KEYRING=m,
+> so built-in drivers/nvme/host/sysfs.o fails to link against
+> nvme_keyring_name() and nvme_keyring_unlink().
+> 
+Modified Kconfig selection to include NVME_AUTH when selecting NVME_KEYRING
+
+> [ ... ]
+> 
+>> @@ -993,14 +995,24 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+>>   			opts->tos = token;
+>>   			break;
+>>   		case NVMF_OPT_KEYRING:
+>> -			if (match_int(args, &key_id) || key_id <= 0) {
+>> -				ret = -EINVAL;
+>> +#if IS_ENABLED(CONFIG_NVME_KEYRING)
+>> +			p = match_strdup(args);
+>> +			if (!p) {
+>> +				ret = -ENOMEM;
+>>   				goto out;
+>>   			}
+>> -			key = nvmf_parse_key(key_id);
+>> +			key = request_key(&key_type_keyring, p, NULL);
+>> +			kfree(p);
+>>   			if (IS_ERR(key)) {
+>> -				ret = PTR_ERR(key);
+>> -				goto out;
+>> +				if (match_int(args, &key_id) || key_id <= 0) {
+>> +					ret = -EINVAL;
+>> +					goto out;
+>> +				}
+>> +				key = nvmf_parse_key(key_id);
+>> +				if (IS_ERR(key)) {
+>> +					ret = PTR_ERR(key);
+>> +					goto out;
+>> +				}
+>>   			}
+>>   			ret = nvme_keyring_link(opts->keyring);
+>>   			if (ret) {
+>> @@ -1008,6 +1020,7 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+>>   				goto out;
+>>   			}
+>>   			opts->keyring = key;
+>> +#endif
+>>   			break;
+> 
+> [Severity: High]
+> Does nvme_keyring_link(opts->keyring) pass NULL instead of the newly
+> looked-up key?
+> 
+> On the first keyring= option, opts->keyring is NULL, so
+> nvme_keyring_link(NULL) calls key_link(nvme_keyring, NULL) ->
+> __key_link_lock(), triggering a NULL pointer dereference on
+> index_key->type with nvme_keyring->sem held write-locked.  If keyring= is
+> specified more than once in the option string, the previous opts->keyring
+> is also overwritten without being unlinked or released with key_put().
+> 
+Fixed with the next version.
+
+> [Severity: High]
+> Does guarding this block with #if IS_ENABLED(CONFIG_NVME_KEYRING) expose
+> broken stubs in include/linux/nvme-keyring.h when CONFIG_NVME_KEYRING=n?
+> 
+Fixed by modifying Kconfig selection in the next patch.
+
+> include/linux/nvme-keyring.h {
+>      ...
+> static const char *nvme_keyring_name(void)
+> {
+> 	return NULL;
+> }
+> static int nvme_keyring_link(struct key *keyring)
+> {
+> 	return 0;
+> }
+> int nvme_keyring_unlink(struct key *keyring)
+> {
+> 	return 0;
+> }
+>      ...
+> }
+> 
+> When CONFIG_NVME_KEYRING is disabled, nvme_keyring_unlink() is defined as
+> a non-static function in the header, causing multiple-definition linker
+> errors across fabrics.o, sysfs.o, and tcp.o, while the non-inline static
+> nvme_keyring_link() stub becomes unused in fabrics.c and triggers
+> -Wunused-function.
+> 
+Fixed with the next version.
+
+>> diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
+>> index 4ebc03a8ddcae..0ffea12fcfb6b 100644
+>> --- a/drivers/nvme/host/sysfs.c
+>> +++ b/drivers/nvme/host/sysfs.c
+>> @@ -1212,7 +1212,38 @@ static ssize_t tls_keyring_show(struct device *dev,
+>>   		return sysfs_emit(buf, "%s\n", nvme_keyring_name());
+>>   	return sysfs_emit(buf, "%s\n", keyring->description);
+>>   }
+>> -static DEVICE_ATTR_RO(tls_keyring);
+>> +
+>> +static ssize_t tls_keyring_store(struct device *dev,
+>> +		struct device_attribute *attr, const char *buf, size_t count)
+>> +{
+>> +	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+>> +	struct key *keyring = ctrl->opts->keyring;
+>> +	int ret;
+>> +
+>> +	keyring = request_key(&key_type_keyring, buf, NULL);
 > 
 > [Severity: Medium]
-> Can an in-flight tps6131x_brightness_set() still re-arm
-> torch_refresh_work after cancel_delayed_work_sync() returns in
-> tps6131x_strobe_set() or tps6131x_flash_external_strobe_set()?
+> Does passing buf directly to request_key() without stripping a trailing
+> newline break keyring lookup by name from sysfs?
 > 
-> tps6131x_brightness_set() runs asynchronously on leds_wq via
-> led_cdev->set_brightness_work without holding led_cdev->led_access, and
-> neither flash_strobe_store() nor v4l2_flash_open() flushes
-> set_brightness_work:
+> Writes such as "echo my_keyring > tls_keyring" pass "my_keyring\n" to
+> request_key(), which fails with -ENOKEY and falls through to kstrtoul(),
+> returning -EINVAL.  Other sysfs handlers in this file (such as
+> dhchap_secret_store()) strip the trailing newline with strcspn(buf, "\n").
 > 
-> kworker (leds_wq)                 CPU1
-> set_brightness_delayed()
->   tps6131x_brightness_set()
->     cancel_delayed_work_sync(...)
->     guard(mutex)(&tps6131x->lock)
->     regmap_update_bits(...)
->                                   tps6131x_strobe_set()
->                                     cancel_delayed_work_sync(...)
->                                     guard(mutex)(&tps6131x->lock)
->     schedule_delayed_work(...)
->     /* unlock tps6131x->lock */
->                                     tps6131x_set_mode(...,
->                                       TPS6131X_MODE_FLASH, ...)
->                                     /* unlock tps6131x->lock */
-> tps6131x_torch_refresh_handler()
->   tps6131x_set_mode(...,
->     TPS6131X_MODE_TORCH, true)  <-- forces device back into torch mode
-> 
-> When torch_refresh_work fires later, tps6131x_torch_refresh_handler()
-> unconditionally writes TPS6131X_MODE_TORCH and re-arms itself.
-> 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20261120075859.731257-1-jie.gu@leica-geosystems.com?part=1
+Dropped this hunk from the next version, so all reviews to this function
+no longer apply.
 
+Cheers,
+
+Hannes
 -- 
-Lee Jones
+Dr. Hannes Reinecke                  Kernel Storage Architect
+hare@suse.de                                +49 911 74053 688
+SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
