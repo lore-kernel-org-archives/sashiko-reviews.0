@@ -1,81 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795794926;
-	b=Iwp3tnH6/2rZZqkJYjdxelJwHmY2zlpaJXA8Jti3MPsLFUNyJP1VBf32O0V2nvmi0KdL
-	 3B9J6rrcY5eZ7ko+uR1I6Q5EwJEyNUvhGeax1ocOJ/4GwsZDEAqsPgqC0vw1e/uY0izUv
-	 thN4qbctWq5zpEkMjmMcpj4CHCkb5PLnCIcTNdd3ODb043G74Jy+5uizNRiaxxHhan6tF
-	 aL5kQlB7rsV70dWIk1jaYdIaCaP/5HhZrDgN0ptfRAvnm2TNOMOC5mcLA4UrxFTMSULIO
-	 ybTLK+oEVv4kvw6FjWZIYL5aMMnawla0kaStaeinmpsOhtLU35Nq8QjaPcxGNcBheLg==
+	t=1795794992;
+	b=w2yb//kkBODHCYADqzXa4yUYECTc2oPB/rbs1rodQn1qVI+pqtRzNe8tF0SxvDcFVVRN
+	 f/bWhOHwCeu1vaQYrF5mrbA4czzx6DcJ6CDwemU6T5SOLgFK75uaprwwYskJSUehsIuXl
+	 af+Wgz1CHK9hwLoiZh4bpHUjLcYKZtnfYhJBHhx5hJVlPsdcxQXWIYYtWmJo9Hlm3hqIO
+	 nyoHAHBDZlO6rAeFHDUCiIh5j5RgdxpQY2NCvFQujGBzT4gfHmOKCKKRP0VhHkh/Im9ZY
+	 fdWH5KPkvRLJfCvu4zAsbZaP54HVYWvEx84/PAjtONyJAJwfrMOWdJsmUpY/aR4fWWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795794926;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
-	 In-Reply-To:Organization:References:Date:Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=kJ2PJgS8N322QwD+LtPbUgj0SP36qg5Nd8n5kxSGkCA=;
-	b=FoKmRHTdJSNYLgytHCc+ejEJ1Hoq3q6CwEnAEXS3CaAIUkoHWhr5Xno9jz8o1B9WnZAy
-	 aXASlh/SvmhS7nGecrXRSmes9sgpiErZ5XfP5+OMnx4+Hh9mq93B4dcYDInmbGnSSvyTJ
-	 2a/p050r3PZLtqDMCk2l4iDlbavF66MYPLWimbyfTpU+0+IFBlzsJ0hbsMvVxhs8FhLde
-	 NGLcMLF62fudYk+chq3S0fbdV7ZqNJycCvNI5SIO2pTA0uzE5mTS4vAar08XJyfhQs2Vy
-	 gKNg2l3cqEtDrJ9aXbZn/++1tD7h0B34E/M7oagz/h7ePB29PEvNqZCVuX4fjHD1hjg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795794992;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Va7mmJMRyV8C2mf4qXe8YFNGI85O0e3HsmDcruX7rYs=;
+	b=X48FyAMe2u0XIf9miJcu82j5/qbrQKpJmGqXs5GgKQHzLwvFee2m5wH1r59YRDPwzdsk
+	 5zDpeDPGJiudBAkZjke/A0aHuluT9HIvEZyds1C0vjck48fTmD+M1+d4LYNEFfgYeE0jH
+	 MKU7VmfydzZL2npYuYWbT3P1QcUk0e0ZUdUfduqLpR5JG5eiO1IicrVqNgVyYX90lSuTn
+	 Hq5G6I14j1xGAb1adtDwJpA2Ar+UkEfgAzBaCOcJIkcnCTS6Tjrk/b6vA5NEoV7n1umQU
+	 atM3T1Ny2k+dIygIiJMZ56gyN4RQw/ERaXdcIB8XhBJ8523Y+T+Zsg9cWZw/0c/LnbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WWue3Yvh;
-	arc=none smtp.remote-ip=198.175.65.11
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IDqJXZ1Y;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61953606A31E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 15:55:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 61953606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F7F606A32E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 15:56:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29F7F606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WWue3Yvh
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795794926; x=1827330926;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version:content-transfer-encoding;
-  bh=x/nBAYYlqHg1Y+E5T3yXCdXotBzPEciD8XHisBmdYLI=;
-  b=WWue3YvhelBkZziYCT/APjwHS9g/UrEeBPjwu5i2CSegj3gcBm+6ysUO
-   Yt6AkayywzH/AMY26y4oxhMJIic//7tiJuR4ltwYzyyOtiE2kaBmevYIT
-   BPdMToFCyL6nk2C141wrUGou38hkMezm+C4oPitKvmpHNpgKqjIdy7mQb
-   kAbbbp4pITBCRoyAPaGScvggaWQpGCoOuszXAeSVZTx0TYs3Y2W3ZTNDu
-   TnDdClf7PRutB6ZkHdtYLmtMKXfc88hyVReiXqW8go6IO9MlfjLsCHYFE
-   Dca94zSnPtz7jNP0Trjy6f5GDYStAqL21P8Cy2cthsN0XNGztl6F4YnoL
-   w==;
-X-CSE-ConnectionGUID: xkYP7PL8SquYhiVotMrC6A==
-X-CSE-MsgGUID: 4UgHigpBQjq0k3KlSLX64g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11979"; a="4601906"
-X-IronPort-AV: E=Sophos;i="6.27,237,1787036400"; 
-   d="scan'208";a="4601906"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2026 07:55:25 -0800
-X-CSE-ConnectionGUID: 1irKUW0fSEe2yHzlQ5NAcg==
-X-CSE-MsgGUID: LDvnlgoYT1KijHedTyR+hA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,237,1787036400"; 
-   d="scan'208";a="12416015"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.90])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2026 07:55:23 -0800
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
- sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH 1/2] drm/edid: Introduce
- drm_edid_get_displayid_product_id()
-In-Reply-To: <awYXhjvZvrw3gWea@intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
- 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
-References: <20261124224621.6506-1-ville.syrjala@linux.intel.com>
- <20261124224621.6506-2-ville.syrjala@linux.intel.com>
- <sashiko-outbox-232161@kernel.org> <awYXhjvZvrw3gWea@intel.com>
-Date: Fri, 27 Nov 2026 17:55:20 +0200
-Message-ID: <b7f3b3e4a8eb866368cedf88c383bf14834077fc@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IDqJXZ1Y
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-491846221ffso7288189f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 07:56:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795794989; x=1796399789; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Va7mmJMRyV8C2mf4qXe8YFNGI85O0e3HsmDcruX7rYs=;
+        b=IDqJXZ1Y/zDlzxZHwGXSOZlvWQK50QUvD0/8NXY7iT0CFe4hS6gd9TZZXCcNqPcnFz
+         b5vc/DeNuPxVPIZ1xs3mhNrOu/EerxA0lnIbAYds55G68i2Tca+YxPiOMJR9kOOSN384
+         IctAy1zADGmIPgHU0bPuRL/kQqw5FcWRXSWRwQ2YhNR3PJInloTPcIlDj1/vdH0lZW+0
+         OOJbiv8CXPAkl9eZldmOThAh2X3IJqjpGWSxeowQ/IBjcDJidN+/lZ8StIUN4Gs7cQEl
+         duA/Tp4tfyW1eBnRLPRz2r5QqT8HR2NHWWlGVzGDTEwOPJnbk/9Rtt54cnGtnh9MfiSD
+         ycEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795794989; x=1796399789;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Va7mmJMRyV8C2mf4qXe8YFNGI85O0e3HsmDcruX7rYs=;
+        b=kidXlqmaUZ6lNknjLG7Pf0Sm62qKUqmvu5Et2heaGT+6OY+j8y4aTOB6CUF/Bvzk3f
+         g/KoVDG8VLZArxqSCgJBJdqh05i7ys1R84c+ho+eHSEdnq4tZR554v+wOAnRLMz66TL5
+         8DoU+jBph0kr7rCS6eS8q6Ved0ZN9n2+AiaSvKH8HxHzcxqXXKcLaYD+zfowM5JIjhrK
+         RVHUFvWiQ8jMTuveHW7b8uSUeNNO7yIsJlGFuribN8jRntIZPAbmB2Ksprvbteprzwlr
+         hTJ5XS98cXqzbdooBzPr8wx3Dtd6Y213R8SB9jrdiNSx/MtAuy6KngIR0CZoqavH3g9x
+         1Ofw==
+X-Forwarded-Encrypted: i=1; AL+hErGHwyIFu/PLx/3gE6PDwaUqQ51qJ5uHFKyDx3TfkT0Ft9qDMeNLSD009CbQ0Dd/3E2xurcBevr6kn3axtIY7DU=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/vc9r7qD72PFRnk9ShqZdNy1syiJAwwBW0l9/OU/5eiDzbhjgI
+	813pIINfldzMZyUjg3rpUDsLg3VSU2tZ5PFOSZIBAA3AfDgLdG68ogAt
+X-Gm-Gg: AZFdTZcQwncZufWgXN69JhrCXRfeL9kGbTIjhAnYBEv3AtNARpyMjdu2t/ObXpQr5Qp
+	PkenATu50zYMwldduvGsuVsFDQP3hQWHfhY0km8reKVxp4q4X2T7MYWVVupnqpAcWvvBRENqx9d
+	+l8/S/PCxuTBOd7Z7tKjMTm7O2FLyO1pRxfzmDPd3hpXWjdKdrXAWsJFQuSPwMR0CBvCwe4eqXf
+	6DR+OVc+VwSSV/O1svnPW1VDhSoe+CoQcedWqRDiYuZl9lJ+oNmH9W6gZZunzLyrKYQsVtmqAEo
+	KomNW5HgTrQbyqI+J1+0kbWd4inVh3RUgqqygptgnn1xn2tJv+QW4MyVjOYmkHwpvFKuYvlO3aN
+	GKEQfwhz+YtSaFD+jEtJLqRUr5Gej6oUb8tNiFGiOCSQhqP7Hdn7Q/6tgxHtFnjx+YoP1VKMuEV
+	UEJ6KE4VK312TSHcjBf94DU2zLvrOK8qFwboOOMvqHcpjtQB9+uPMurXodQl8D0yoooBuPjhDqj
+	anE1aTk0CbHNzORhrJLVMl9BvK8SEa+hZx5uBaCAME/mPxqOcqHAZ4z9ijmxcdVzGevnK8LrV2V
+	doLygmxngpeUKojopsEe4ixDv2z1ZjTvTotL2JlkoH3WHm44yAYSXaoZX6FfqX9EQ6DUaW4bOhM
+	I07pLaVM=
+X-Received: by 2002:a5d:64e5:0:b0:4a4:f208:6a37 with SMTP id ffacd0b85a97d-4abb4e642fdmr49567529f8f.42.1795794989438;
+        Fri, 27 Nov 2026 07:56:29 -0800 (PST)
+Received: from localhost (bl20-90-91.dsl.telepac.pt. [2.81.90.91])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b110ba3sm39382661f8f.35.2026.11.27.07.56.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 07:56:29 -0800 (PST)
+From: =?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+To: linux-serial@vger.kernel.org
+Cc: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	linux-riscv@lists.infradead.org,
+	sashiko-reviews@lists.linux.dev,
+	=?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+Subject: [PATCH RFC v2] serial: esp32: Rearm TX interrupts when the FIFO is full
+Date: Fri, 27 Nov 2026 15:56:23 +0000
+Message-ID: <20261127155623.129706-1-vitorhg20080@gmail.com>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261125233020.1380594-13-vitorhg20080@gmail.com>
+References: <20261125233020.1380594-13-vitorhg20080@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,85 +102,83 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, 25 Nov 2026, Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com=
-> wrote:
-> On Tue, Nov 24, 2026 at 10:51:24PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential
->> issue to consider:
->> - [Low] drm/edid: commit subject mismatches
->>   drm_displayid_get_product_id()
->> --
->>=20
->> commit 4452aea3cbb2a5afd7ef8a119931282a44feb4c3
->> Author: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
->>=20
->> drm/edid: Introduce drm_edid_get_displayid_product_id()
->>=20
->> This commit adds drm_displayid_get_product_id() to extract vendor and
->> product identification from a DisplayID Product ID block.
->>=20
->> > diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
->> > index a2617aa34edfc..b44c26d422171 100644
->> > --- a/include/drm/drm_edid.h
->> > +++ b/include/drm/drm_edid.h
->>=20
->> [ ... ]
->>=20
->> > @@ -484,6 +492,8 @@ int drm_edid_connector_add_modes(struct drm_connec=
-tor *connector);
->> >  bool drm_edid_is_digital(const struct drm_edid *drm_edid);
->> >  void drm_edid_get_product_id(const struct drm_edid *drm_edid,
->> >  			     struct drm_edid_product_id *id);
->> > +void drm_displayid_get_product_id(const struct drm_edid *drm_edid,
->> > +				  struct drm_displayid_product_id *id);
->>=20
->> [Severity: Low]
->> The commit subject names this function drm_edid_get_displayid_product_id=
-(),
->> while the commit message body and code define drm_displayid_get_product_=
-id().
->> Also, this declaration is placed in the "Interface based on struct drm_e=
-did"
->> section of include/drm/drm_edid.h, where all other functions taking a
->> const struct drm_edid * use the drm_edid_ prefix.  Should the commit sub=
-ject
->> and exported function name be aligned?
->
-> I was going back and forth with the name and being dissatisfied
-> with all of them. If anyone has an opinion how we should name
-> these things I'm all ears.
+When transmission starts with a full FIFO, queued data can be left
+waiting with the TX interrupt disabled. Keep the TX FIFO empty
+interrupt enabled while a high-priority character is pending or while
+transmission can progress on queued data.
 
-Not really sure either.
+Use UART_TX_NOSTOP so the driver controls TX interrupt masking. If a
+deferred x_char is sent while normal transmission is stopped, mask the
+TX interrupt and leave the queued data for the next start_tx() call.
+This prevents repeated TX interrupts while the queue is stopped.
 
-Maybe I'm ever so slightly leaning towards drm_edid_ prefixed naming,
-and only because in my mind we'll be able to use struct drm_edid as the
-abstract type for all these cases:
+Hold the port lock in the TX interrupt handler as required by the
+serial core TX helpers.
 
-- plain old EDID with no DisplayID blocks
-- EDID with DisplayID blocks in EDID extensions
-- native DisplayID only
-- combined native DisplayID *and* EDID with/without DisplayID blocks
+A mocked FIFO test verified the deferred x_char case, IRQ masking and
+TX restart. Normal serial console operation was tested on the
+Waveshare ESP32-P4-Module-DEV-KIT.
 
-I.e. it's "struct drm_edid" even when it's native DisplayID inside,
-i.e. just use drm_edid naming for it all.
+AI assisted with driver development.
 
-In that context, drm_edid_get_displayid_product_id() makes sense. Get
-the displayid product id from this opaque blob.
+Signed-off-by: Vítor Hugo Silva <vitorhg20080@gmail.com>
+---
+Changes in v2:
+- Keep TX IRQ masking in the driver and mask the IRQ after sending a
+  deferred x_char while TX is stopped.
+- Verify the stopped-TX sequence with a mocked FIFO and run a serial
+  console regression test on the ESP32-P4.
 
-Digressing a bit, native DisplayID will still be a PITA to implement,
-but I'm hoping mostly due to the userland ABI promises and having to
-break the VESA spec about reading *both* EDID and native DisplayID DDC
-addresses, even if native DisplayID is there. But I think the opaque
-struct drm_edid and the hidden-from-drivers drm_displayid abstractions
-can handle it.
+This replaces patch 12/19 and applies after patches 10 and 11 from v1.
+v1: https://lore.kernel.org/linux-serial/20261125233020.1380594-13-vitorhg20080@gmail.com/
 
+ drivers/tty/serial/esp32_uart.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-BR,
-Jani.
-
-
---=20
-Jani Nikula, Intel
+diff --git a/drivers/tty/serial/esp32_uart.c b/drivers/tty/serial/esp32_uart.c
+index 304e134..2058bd6 100644
+--- a/drivers/tty/serial/esp32_uart.c
++++ b/drivers/tty/serial/esp32_uart.c
+@@ -354,25 +354,31 @@ static void esp32_uart_transmit_buffer(struct uart_port *port)
+ 	unsigned int pending;
+ 	u8 ch;
+ 
+-	if (tx_fifo_used >= ESP32_UART_TX_FIFO_SIZE)
+-		return;
+-
+-	pending = uart_port_tx_limited(port, ch,
+-				       ESP32_UART_TX_FIFO_SIZE - tx_fifo_used,
+-				       true, esp32_uart_put_char(port, ch),
+-				       ({}));
+-	if (pending) {
++	tx_fifo_used = min_t(u32, tx_fifo_used, ESP32_UART_TX_FIFO_SIZE);
++	pending = uart_port_tx_limited_flags(port, ch, UART_TX_NOSTOP,
++					    ESP32_UART_TX_FIFO_SIZE - tx_fifo_used,
++					    true, esp32_uart_put_char(port, ch),
++					    ({}));
++
++	/* Keep TX IRQs enabled while there is sendable data. */
++	if (port->x_char || (pending && !uart_tx_stopped(port))) {
+ 		u32 int_ena;
+ 
+ 		int_ena = esp32_uart_read(port, UART_INT_ENA_REG);
+ 		int_ena |= UART_TXFIFO_EMPTY_INT;
+ 		esp32_uart_write(port, UART_INT_ENA_REG, int_ena);
++	} else {
++		esp32_uart_stop_tx(port);
+ 	}
+ }
+ 
+ static void esp32_uart_txint(struct uart_port *port)
+ {
++	unsigned long flags;
++
++	uart_port_lock_irqsave(port, &flags);
+ 	esp32_uart_transmit_buffer(port);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static irqreturn_t esp32_uart_int(int irq, void *dev_id)
