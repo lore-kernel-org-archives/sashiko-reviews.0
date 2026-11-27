@@ -1,128 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.9
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1795804888;
-	b=s7olFmWTYS3mgPbLfa11FdOEmMXLTU4pEf7xSojeAJlxzZJm7kFxZkIMfx0x58Xe/jTm
-	 JZxKD8Myxf+42Ml5MyJDszJqwsRtKEkz34hts5wZlvq+VGa3kLCYE07j0yjQv+ZaMUJig
-	 VKJjJhnnDtpmoiINxrS2c499IPDtLXmAiSc24UyX1XmREtMdN2LFGKOwSDxOOGhjPSvKX
-	 VPRXnEJf0cOKQPnm/FZOGuvgDc5uYyviNQbDbxq8XOdVD/akF06xS6eF1Pi4sXPSRwiY4
-	 g5LXtT1xDFO2tTPpmiap2ZeSToSD0jluSk+c9RgEvCYLbIFY9Y4dPvsslmsX75fECzg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795804888;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=WTlXPAZ3kky/iaG2DiMkbTbKaIge0gNoK+dW10e/c/4=;
-	b=vbbwLTbGpXIsU+RIMYefLcB5xIbfb+vtUaVCTACXxuTgI4n9JPC2bywWAYx30c7sgyLO
-	 F/rcGgzlTJ5Oaz0LhQfu4GcPqciFomo86p8i/+dkaupCbmAl1507Q1UmrPHo4756pd6U0
-	 K52fe4RvQ/BNgE4d86bj6+CKtqeiRDf3QXX/DgjwHliPB5urRHa5youjYL2enD/ToS8si
-	 3kPwBbkuJfe3f2bwK6RBi7/2KUaMe6RsH5u04dZoyvbkTqYQVc+BPViazqkAKdgdvwnAo
-	 us/kX53w1hvKvnJ98vbLvBZ0OVSNJ1fPPU2GZ7BMLvIqeMIeXrv/xEVmZEX8kcz+dcQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=HG1WLzBZ;
-	arc=fail smtp.remote-ip=192.198.163.9
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795806491;
+	b=WDJBRLMuo/yPYm2It0GfuCd9bF6lYwTqYnqzZZaiJCXfQM9bGmzLu/cHxNh8efaYJJVK
+	 4FYlZEd7HN64YPkjJAb59hOhYr25UJEt3eOAGZQ5hUmwsJrc2HUjUMCLQUy8JWlvJqcsZ
+	 Ikq6OtxJXtjbEjjb16YAF1O0hGJtsM6Lf77RctL7PogolJNokDiK0o8mcUjFObE5mXB4d
+	 nlcF9OyJ39+SoizW7Vsv1w11UaBNGHo07iTBuhrMj8ysE4w/DDQ81AJ7Qp7ilC/R6ZIYe
+	 hiUfmIdBH//rNoCX9wSDm/Xr8KVLtbn9Fa1xzI6P+ZN4YQ1FpAOCGeRU/9QmEycWvuw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795806491;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:Date:
+	 Message-Id:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-TM-AS-GCONF:X-Authority-Analysis:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=TX7Nii9x5yTysf9/AmcLYyyr6SmHK8dLBkxO2v0O1E0=;
+	b=OvHokzVN8o9ULHp9yTZqTvUyaHvzwIMzSBS+6MmbVrrkB5ce01uZExWc2/2L+N83E9eV
+	 VdHmRuojzH3gihiPyzGXE4+mCB32tAgUflFnHm7Vo4mqaZW7xV39tU7tUCxWc3icOw4zj
+	 Fh7EM1UNbjIRoTrqzknPBNCbLOSiSXmNNVTqK44IUoTTbjvbBlRnmAWSIie6iv8feuCnO
+	 2xyr0FlGZxCD/rmKHUGPIe03uWr/5+HhKTBAXVG3u9qZTDRkIE57LQyearZEScZA9SWvO
+	 wNmTVdOYk8Xlw/D1959+nmZRrdcO3/r+Cim0nqmL9icTjLatC5dZE9VUTvCESAsoqag==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OEdgPjOK;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC58606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 18:41:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDC58606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3FB606A31E;
+	Fri, 27 Nov 2026 19:08:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B3FB606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=HG1WLzBZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795804888; x=1827340888;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=Ed4veqq8JGPo38e0zn/TVKlIXUidjkeHc8+2avNHoGw=;
-  b=HG1WLzBZ8zL6hIgC/iMutxZ9i4lIiTcsN3/6O8QP9t+Z/I8guDutXhtl
-   /DZ2U5wRwDQ2zI/2R873w9it5bPYdlLy4WCJRVuRyDlYSZ38gZcu1PQXN
-   O/+Igb7r3lOYVXWl67c8LTE35hT0L73OOEWGT/VHdq4IX8OXScIAMv+2O
-   ixPVdSOJxna/UaYivovJZqU+F6INZJe1FT3A/PSQVw7dHPovo4y5mSMIN
-   +J0LiQeblzyuxZHB1EwN7U1VCq6cm1sQmx3ygaYD/PkhXyBPxq8wpkuXu
-   B+bxLQIkgGcHQNSh1y5lJaocL/YkZP9bzDiAAJn0gxqK4kr1N1aW2dqs+
-   g==;
-X-CSE-ConnectionGUID: DZDXP9OkQVaAWkN4UhC7kQ==
-X-CSE-MsgGUID: B5ESv41RQzucIcAJgOcEbw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11979"; a="4573677"
-X-IronPort-AV: E=Sophos;i="6.27,237,1787036400"; 
-   d="scan'208";a="4573677"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2026 10:41:28 -0800
-X-CSE-ConnectionGUID: j579AVAVTieJqPZy7PS5Qw==
-X-CSE-MsgGUID: g7ONQ5iLSKCMPNGx0wxSLg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,237,1787036400"; 
-   d="scan'208";a="12234043"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2026 10:41:27 -0800
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.57; Fri, 27 Nov 2026 10:41:26 -0800
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.57 via Frontend Transport; Fri, 27 Nov 2026 10:41:26 -0800
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.40)
- by edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.57; Fri, 27 Nov 2026 10:41:26 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K13yStv3fv86q4REjPA0Y2UvN73yU0W5obLWSvpsvyMPoywMF3R5h6ZtGaRpMutZW9GtfXPgaQwBBihrx+W/g8jY3AqRX4iRzZMKuXlZjfXKwt1k571fIHh4beswcxxgNVL6kRd9oJxLP9p+tjy+qC3pPbnbbEKoSY7WYAtfZ+Vs+CB74ReMB9XlKSBzIwLUbA2wkUJ6hSkiIQVXy2iD8uuMoUxav7cxlyzP1hsPy/qmTmj7XlmkJDZc9dxGlY4n1pJjo7VyteeFYbL+PHVxYYh7tXrPD5/ITt1Phma6dtQZfkteifMMoO0SxSszWFDJMlxvlD8YFl/OrJwe29v3xA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uHfdh9CU6xtHwtJhGZ1EyeJmASE2HXc+sZpJl3XAMgk=;
- b=ypnPLHZFCOWnqQIwKMjGXLWH9WKhjSGtRBTyMjZf62fJiqRJLgrUDHRM+qLOU3ucWmOUrf5zikiELTLcagjoF+yH7zp4o5+UCeo9POrxL7zNlNWCrn0bCEvsoBGp3Dhu4qqOxD9bXE7iRv7+U5eEOlXbcWqo6Vp/ABJyFYfjh4lyDzlXows5aSovC1Fi/ohJx5LtBJtv7KtALKCHxkaI0k72uH6L5t8RXGlFQ/yD+K0Wm6plFQ1Guz/0HrQAh0HCqxfTBolWWaZHGOQRW/9rI4bugfbsk+fnCXAHLad8ww2Ckx2M70xjf7wAhXcrcEkojW3mRVpb5Fa1tOd2DmDmdw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS7PR11MB5990.namprd11.prod.outlook.com (2603:10b6:8:71::5) by
- LV8PR11MB8747.namprd11.prod.outlook.com (2603:10b6:408:206::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.662.9; Fri, 27 Nov 2026 18:41:22 +0000
-Received: from DS7PR11MB5990.namprd11.prod.outlook.com
- ([fe80::133c:5eed:3aec:b899]) by DS7PR11MB5990.namprd11.prod.outlook.com
- ([fe80::133c:5eed:3aec:b899%3]) with mapi id 15.21.0639.011; Fri, 27 Nov 2026
- 18:41:21 +0000
-Date: Fri, 27 Nov 2026 13:41:18 -0500
-From: Rodrigo Vivi <rodrigo.vivi@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <dri-devel@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH v6 1/3] drm/ras: Check the node type in node lookups
-Message-ID: <awnOzncCb2GwQ178@intel.com>
-References: <20261127181750.806528-5-rodrigo.vivi@intel.com>
- <20261127181750.806528-6-rodrigo.vivi@intel.com>
- <sashiko-outbox-238067@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-238067@kernel.org>
-X-ClientProxiedBy: BY5PR13CA0013.namprd13.prod.outlook.com
- (2603:10b6:a03:180::33) To DS7PR11MB5990.namprd11.prod.outlook.com
- (2603:10b6:8:71::5)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OEdgPjOK
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ARG4crI1892019;
+	Fri, 27 Nov 2026 19:08:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=pp1; bh=TX7Nii9x5yTysf9/AmcLYyyr6SmHK8dLBkxO2v0O1
+	E0=; b=OEdgPjOKVf/Wbme7BPD4ixAeYF5fjtGl4UQ51e2V8ZZSGFcEs0L1bhT7Y
+	C4200sqrh1tZb2hU1vkNpsLdqQgqSumEH4ogYFuf54tftp67irAxMTc2IikleWhj
+	5+iwuBdQe/uIWwXqydca1eU22HwTUAGEMAJUgdnQoOQxjt+YBHoBVKrZ+4cERNug
+	kQke6jcOptSp22shFT/MRbkT1XrdF7+JVpH+gcNaR2cuz0Szm6ExUOgMoZo0sxd+
+	QoIShj0BGpQZSNGwqjTW/VkEP0h5HmYGGRFUQQbrL0OUCa3juYl7KC/AK5bNnRer
+	JZevdYTAdjMzIFidRkvfdCS9FWZug==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34g3qa0m-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 27 Nov 2026 19:08:08 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6ARFnIj51295747;
+	Fri, 27 Nov 2026 19:08:07 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j6rhcmfr6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Nov 2026 19:08:07 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6ARJ83hh28902026
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 27 Nov 2026 19:08:03 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 48F6D2004B;
+	Fri, 27 Nov 2026 19:08:03 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6D9962004E;
+	Fri, 27 Nov 2026 19:08:01 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.39.16.103])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 27 Nov 2026 19:08:01 +0000 (GMT)
+From: M Nikhil <nikh1092@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Cc: niharp@linux.ibm.com, pasic@linux.ibm.com, bblock@linux.ibm.com
+Subject: [PATCH v15 0/2] zfcp: Use DMA streaming API to map I/O
+Date: Sat, 28 Nov 2026 00:37:52 +0530
+Message-Id: <20261127190754.6442-1-nikh1092@linux.ibm.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -132,99 +90,85 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR11MB5990:EE_|LV8PR11MB8747:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1669660e-eac7-4f0e-c23b-08df4cb60808
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|4143699003|11063799006|261009223027099003|18002099003|22082099003|10067099003|56012099006|261026140227099003|261028144727099003|261026121527099003|261022105027099003;
-X-Microsoft-Antispam-Message-Info: zNljPtgxmVhQfvtI11A0RtpOINH3S+vajP8k8eqBZaqsd6AiV5h16780LFpgrCQ2G5MLiM+Se+25TueaB0IQlKnY5NgBS93I5YDmMrEVs+cgBLx4op7iF6G3aXk1ITzL2zQfUqxdr9wJEXKAvUBl0vokxdlV8MdegOo8nw+cjkgai4sABcbuwaCl0gE0z8+UBE75b+GqbosBU78IretdG7w9cnX7JoGgrEaBlmBBtU2d/Tjx3uQJBw05SLFrhN7shpO6ssra7iKI2x5gigjJIaqUOn984cLomjxaUs+rHgFaDJzwrRYZ6narhFw3RxhviqJixUKzXuWGgFEDann2tuZBHo/qs/bs8p9gfpDFita6G9YDkKwNGkQ2kCg0jkxKJja4f4J0ZDBUUJ5TBrzvHxoOAVYT6r2nPA4uSLsI3/RvV6sD9xhFbAfEATuAmrsuiGi691kRWm58Ix32cVnCdG8b5I4gx9NUEJ4XpP8hlxFA+HuMVlAKlP5LqipyYiPHTvkRDYxIdJKApR2HpvPG1BP9fiaFQx9fhjYz85rZscBUpfF+W+O8L8WXPM9qdXvQmz85vx4gOoio941bCeNVJaFazwL+iM4MyDLwnbazHUE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR11MB5990.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(4143699003)(11063799006)(261009223027099003)(18002099003)(22082099003)(10067099003)(56012099006)(261026140227099003)(261028144727099003)(261026121527099003)(261022105027099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?R/H4fQ4DHZl25rqRQlGFZDXxDDipq1pBIYX4fGjzYxmgRDT5E0dQbCZlHM?=
- =?iso-8859-1?Q?ZZRGPBdML0Aj1e7HY6yD/VW8Ch28QJUqejpF7dWHIOJ8AEUA1YgBoWpZyL?=
- =?iso-8859-1?Q?5Gr9g0gjyuGyaryeYG0oRAUJw8/yjXHzA7Z+vm6jmM0yJsEytyIlvqF44B?=
- =?iso-8859-1?Q?kcsmocBE+H/j8VuchF7jtNm74X1q0/3acDwAYT0KLr6Tqrna22tkSGo8OR?=
- =?iso-8859-1?Q?1MzKxr2oIo2wyumrfU3NPfAZwU49j+0BH86jwqao6V6bQ2nB3RO9MIIZNk?=
- =?iso-8859-1?Q?HuJC4nK8vXEaza+453rhSOegR8P5PClGQAVvH9wZn11LMnST5wtjLpIo89?=
- =?iso-8859-1?Q?R0RwZ3e3txhN64Pg6u3hCIjV0ueFoDN4BmYuxNgSfZMCgU3DZT/vGJISYc?=
- =?iso-8859-1?Q?HY0weWxhVzwtT5yQinr98SGD0WDLS5JHxQpUOMde7D1XwArJ0jDWkxB0Cm?=
- =?iso-8859-1?Q?68w76uAwpbjGB66zpfoWKZ659kRNON8e9Qzzj+RrgpgAFLQf+fHPGiT9yy?=
- =?iso-8859-1?Q?HsnKHTeikETW+3Tiw+6Ak/zggNFkHLariuBeeZX/idMPsx60mzGzEsHtU6?=
- =?iso-8859-1?Q?FG+4Pw94Zro65B0/slS2Xda3AavOrRKfc1tQDzIMrrIteD7lboDzNZXY/P?=
- =?iso-8859-1?Q?OyN61hiTIH8DkWNZ+mru/PSoGJWycJqY1jEHHFMkay1kmilO7MMZ8hzuhN?=
- =?iso-8859-1?Q?8dOXI7kwjkHBdnGJd6catM7HciqnNjCr3ODOemvDZ/iJNwfuoEJazQSCmp?=
- =?iso-8859-1?Q?tfjoUZSxg3cTsgs3HfVZjIDSN4wo42Haenj+y/DiE8q4h5oR4HknQAF+wb?=
- =?iso-8859-1?Q?usDHanFVkwnTPOvP989xyNWFnIVlov+NKylHANkcKKdh26L9J6tiruGEHr?=
- =?iso-8859-1?Q?oXIEVIu2ekZc5LrRz77lfls8qjEdTfLTDv1ba1ysTthrPzF2g0smamibex?=
- =?iso-8859-1?Q?B6EoXGB9MQrLMMcisgRccdO76IjkgJULWyjawOGCYkv6Vi3TDhpr7AuwPn?=
- =?iso-8859-1?Q?VgHiTj8VUBLjB1otRYol0SjDw7rqJUN4B9iby6Mmj56/DwB6s3fDF32kAi?=
- =?iso-8859-1?Q?p9ITwY0rROI29w245Stp5iieNZFB3YSxxKe/0TSu3k1Y0EHbnS/zqJZZDz?=
- =?iso-8859-1?Q?qUwFai4caoEQeRvHpqVfYWvnGmX6NX4zLFLxkmJjfQhKoifancd9krdobd?=
- =?iso-8859-1?Q?oYD1A5jcgLulkntA5gAPzyFZatcw0T/AEVKxvsfym4V8UoeYyhJBpc+TZa?=
- =?iso-8859-1?Q?KHJuTymSKnF73Hz8OPfMxvWfhmOebUtho1Ksjq6SRn/o/gjZ+fsoPlVe3O?=
- =?iso-8859-1?Q?Ls3SqheeuAg6dYaVLNp2GqQBtXRjJQ2GyTLQZdPMEl+b1PvRo8GxzqGnOy?=
- =?iso-8859-1?Q?bLGEkIgrGskprPzY+XmIhpH/95WIGjJrDw/K4k34KvDtjry2Fg9VX2xJ0G?=
- =?iso-8859-1?Q?Op1OdZ4gO5rIIx4g7gxhPfrP9HgTGQv8OD29lJTq+1zm8YN6J/T/Vn4+id?=
- =?iso-8859-1?Q?OcRSOn2Yfk+4od2JQkmyfxKcBfsf8jKun8XtM154evdkxLeyu4jbFieb7E?=
- =?iso-8859-1?Q?Yvwj7m/ageDlwgSpx8M48U+9y76O08FtQZRJO+CHXwZXyOfIqZK7Bacskc?=
- =?iso-8859-1?Q?7h9TVaq5INy4HdaHxZUIM1NUQ24F/Bu9LbkTDosHoiZS0XcwQLXguAElvm?=
- =?iso-8859-1?Q?6lelKRJr+6INNsx6VFM+epC2BuWUigY7IO80XwX/Li4dpeySyhiRdyM39m?=
- =?iso-8859-1?Q?h0orT4dEd4DISxApYG1SK4J3xD8Z8FYNBYYHFgzDxuIc1VNJcfH4GCzAhJ?=
- =?iso-8859-1?Q?p+pgO1Mwng=3D=3D?=
-X-Exchange-RoutingPolicyChecked: jLsM7K/kD6kt9Z5LGY4wNI5xeoRMwI2OKPzw23qm+nDZ2QL31D9u+xqK46xqa2HvXEP/2ZyYCOnXUw/L4gHz3SAFdrznyLravayooU6gtrNNlmCMzS4kjCriVYbUSnr5vsuvFSZFixybeBoZ87F9xKRAcpJIQ6B95lvZqdf4NGe9RBbLf+Fdc50EukBCjBR4SiEaLaA1BecQtvXDw4B9Hudif1oIXM5JWVc1Ts0tQ8GlkfRHCUoxLLPeQ+WEVlOcvnIHUNNdqKM2P4nQrJVjBx9Ukf64oLAaxv4aYvCgy/hFr07u1kubdv39kfwib6jRJgwvWWaAkl6wW3i+sKeoLA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1669660e-eac7-4f0e-c23b-08df4cb60808
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR11MB5990.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2026 18:41:21.4052
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zHwOUFbz8AaAGB+9PMvhs412SCvUBq0037v8FfGCm0aL6hqTi3ZiD+zP1Jt0xoZBBfIEIrgm8rycAIulNoRRWA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR11MB8747
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=SoQFe/O0 c=1 sm=1 tr=0 ts=6b09d518 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=Wd4ccqAm3J3WqkYLFQkA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA3NiBTYWx0ZWRfX9bCexmgiGvu2
+ HRWDBOeyMa/ojnOUEjnFBH3pw4NNloNGg0DpqXNcFp3KFuS/+DG29X+qmtM16TKf5tEw9gTQlFc
+ EWqMY9aOyzxqWfD770hyRTB7U+/BM4M=
+X-Proofpoint-ORIG-GUID: UsJiBDUSw35I8AnhOyH77GeQGgkDxhqG
+X-Proofpoint-GUID: UsJiBDUSw35I8AnhOyH77GeQGgkDxhqG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA3NiBTYWx0ZWRfX/7Hpo5P8HicU
+ LN8Mtnfu80bpv5QmXYxf5L9Emk0p1J9t3wLsmjELjDq3E7LHOnS6aYS+xb7vv3N5rbnIMR+tyS+
+ 0WRQQZF0ae6vaxgCt3rlbmRul8A4TYZ+zG1giAVP8rueEVO9dVvaGG7R9JK5X35jBxNtVp+yt5k
+ AgehalE9aLScAev54qGfKa1XkjJj8eeij0xQHAEziAaq28k3cI7aOFRgSpOe0uzE5jhoinpr1I9
+ zcyhyOux/dVMe90po+sjmlkDOwulv8ILs7sq1UXXfwPfYO3OECtjl25fdyaT9qnK4ZhLJG0z8ju
+ w/xoHEjvlNgoQ2mEj0XY+ZUfax9rO/UNRlX6hoQgP6NTfL9gSuebDCy/kyBXWLjbkhh/7dkN4NI
+ 5fi5m8tguVJGDeqwrgsZVXyI8EDGXcQGmfaO6mUU8lLN0FmDq+axoX8AbfsSVMuqILqL5PoDK4c
+ P/bv+qSSw7mLpKqlkqA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-27_03,2026-11-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 spamscore=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611270076
 
-On Fri, Nov 27, 2026 at 06:24:46PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] drm/ras: missing Fixes trailer for node type check in
->   drm_ras_node_get()
+In the existing zFCP driver, virtual addresses are translated directly
+into bus (physical addresses) for DMA operations on all I/O buffers
+passing from zFCP driver to the device.
 
-addressed.
+Need for using DMA-API in zFCP driver:
 
-> --
-> 
-> commit 9258f81bad25ef1d7e2f5db2a77f4c65a38c081f
-> Author: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> 
-> > drm/ras: Check the node type in node lookups
-> >
-> > drm_ras_node_get() returns a node of any type. The telemetry handlers
-> > check the type themselves, but the error-counter ones do not, so an
-> > error-counter operation on a telemetry node fails with -EOPNOTSUPP or
-> > walks its empty counter range, instead of reporting -ENOENT.
-> >
-> > Pass the expected type to drm_ras_node_get(), so a node of another
-> > type is not found, and drop the type checks of the telemetry handlers.
-> >
-> > Suggested-by: Riana Tauro <riana.tauro@intel.com>
-> > Acked-by: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
-> > Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> 
-> [Severity: Low]
-> Since commit c95c93b6e26c ("drm/drm_ras: Extend DRM RAS interface to
-> include telemetry nodes") allowed telemetry nodes in drm_ras_xa without
-> checking node->type in the error-counter handlers, should this include a
-> Fixes tag?
-> 
->   Fixes: c95c93b6e26c ("drm/drm_ras: Extend DRM RAS interface to include telemetry nodes")
+In a Secure Execution environment, the host must ensure that device DMA
+accesses are restricted to non-guest-private, page-sized memory blocks.
+This prevents I/O failures that can occur when a device attempts to
+access guest-private memory. Therefore, guest memory pages must be
+prepared by the hypervisor before they become accessible to an I/O
+device.
 
-b4-shazam shall pick this directly, but anyway already added to my copy of the
-patches if I resend/respin is needed:
+To support this requirement, the host Linux kernel must be reliably
+informed whenever a memory region becomes eligible for device DMA access
+and when that access must be revoked. This information must be
+maintained correctly at least at page size granularity. To satisfy these
+requirements, all I/O buffers used by the zFCP driver should be mapped
+through the DMA API.
 
-https://github.com/rodrigovivi/linux/commits/xe-ras-retired-pages-v6
+DMA API Integration in zFCP:
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261127181750.806528-5-rodrigo.vivi@intel.com?part=1
+The zFCP driver is updated to use the DMA streaming API's to map all the
+I/O buffers which will be passed to the device.
+All zFCP I/O buffers (QTCB, SRB, CT/ELS and SCSI I/O) are represented as
+scatter-gather lists and mapped through DMA API using dma_map_sgtable().
+Once the DMA transfer is complete, the corresponding mappings are
+released using dma_unmap_sgtable().
+
+By routing all device-visible memory through the DMA mapping layer, the
+driver ensures that:
+1. DMA access is properly authorized before use.
+2. DMA is revoked after use.
+3. Secure Execution memory restrictions are honored.
+
+M Nikhil (2):
+  zfcp: Replace sg-list with sg_table in zfcp_fsf_ct_els structure
+  zfcp: Use DMA streaming API to map I/O
+
+ drivers/s390/scsi/zfcp_aux.c  |  15 ++
+ drivers/s390/scsi/zfcp_dbf.c  |  16 +-
+ drivers/s390/scsi/zfcp_def.h  |  17 ++
+ drivers/s390/scsi/zfcp_ext.h  |  14 +-
+ drivers/s390/scsi/zfcp_fc.c   |  46 +++--
+ drivers/s390/scsi/zfcp_fsf.c  | 338 +++++++++++++++++++++++++++++-----
+ drivers/s390/scsi/zfcp_fsf.h  |   9 +-
+ drivers/s390/scsi/zfcp_qdio.c |  45 +++--
+ drivers/s390/scsi/zfcp_qdio.h |  27 +--
+ drivers/s390/scsi/zfcp_scsi.c | 146 +++++++++++++--
+ 10 files changed, 561 insertions(+), 112 deletions(-)
+
+-- 
+2.39.5 (Apple Git-154)
+
