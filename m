@@ -1,95 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.125
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795807646;
-	b=25FKozomK0A8U+zd7dtrNLGOUwek+h81bgjvXUNjVHXOo2quVeF8qyZeaZdJkzGlW7M5
-	 TPKeJG/73Vlp6Z2dmlS6x7Mu/vVa4/X/bcBlZ6nEJ97ULFs2Vw06cxPRTXImLJeqnpsZb
-	 u9e2K8NTLc6FdSplUuzbTnv/OSLsos2gQm0RHJgRZQpgxkI0hIzImh1iPr4w4m4GcLpJN
-	 CiZ/P7HlD4YdjbBA71+S9LDqRuX1wqD6xWrL892XFaX/Uyn+g9spqfzLhguvJRdQzEYlH
-	 8G4kFPozJRKExJq9pwzJ4yG57rsUZ8dDO15jNPviEbGAjKaXNHCC9A1sbC9xoO9wsBA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795807646;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=uUJ872aGb9W/Gr73OddDdFkGiYcOSklaX+SEQXaAUIA=;
-	b=wSAsYUZqzEE6lrJxeoV618WZqQEsocbq3EjBO78uaxpaGTLuh6mYdkzyYpXCJOWV74L6
-	 FSsVeGI2lFm2FmnE1b17JJZkpGNnzoc2tmJ1FcbqPn6zld6OF6420V9X4gj9jPWcnz+HW
-	 GnLGclja/SgvMt4PdGIZp2SfWvTToo78twuAOEsfOlvUEgfG2TkQSHXzsf3baye1k8X27
-	 kITv4IxpzM2bPblTeoUGQ0I5vS5IgBhX6G85arVAl6dzdfnMK1YtQfRe/kcT5SOyvcrOG
-	 CiPazrvX6hn5R42cen0r/ETgKDUfLRsjXhCG8WR6tSx8bNKjxbVOll7mTPIRiRM6Szw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=efficios.com;
-	spf=pass smtp.mailfrom=efficios.com;
-	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=qwuXiVOj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.125
-Received: from YQZPR01CU011.outbound.protection.outlook.com (mail-canadaeastazon11020125.outbound.protection.outlook.com [52.101.191.125])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795808369;
+	b=rNUu018BtP9WLtcWzX08JMrRQ8XZndKr+1vpi+kN4E5i4/fBFQ2xWJmqA8SJdVXmxJhj
+	 8ocF5vG6okDhS6yA7l99mgmaiuAhvO7A+CwN/hNDozoT4JhFlKWVKn9RylBXh6QsYVb4Q
+	 yTpjR0aXHh7Nxjz7D4EsK49wm1FxnnkhJp/K7v0u1Zk6YgN+OKt+bLsFMUzcOwSikA7V4
+	 ySNKA2QLnZbLPsu+V+k2eOu1Tx6p/n/lGovhooUnVPsVLX3xn4Jq5uInMAkMkranWQEFO
+	 wwquyB6Y4IRVHURU9R4nGIi6UlZrRUZs7xyukFrX/eNrwDx+4zVGsWTzlkjf9MS9SAw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795808369;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=MM2MNnyxl9D846ZGaHkuqg5jtRzhYh+OqM1NyeJs/HE=;
+	b=VwnR9xQ9SHyn3PZFg0PYzo3wFaudOX9z1KBDzsXT6AOVsOpTlbO1CJYVdhCbXQHc3Smv
+	 0D6kndV3Sy9ncRsG+s9cq+mu8rXDBdSV49Rnzdobv1oBvEC5XUK9VhLTsx0kwdm9eI0lM
+	 DtKE4ad6XcF4KtrUShXZpX99BptDVfhjTjDOfy5mQUzgOdFL1Sh4gL4Dqa6woatQAN+Zl
+	 XI1BEJ9i+UOhDmV8AF1NL4vUpmlTNXWzvOBLcWb37YYxspkx6OxdPHnmSyjqw5/UyoRik
+	 hUeBKd+OnPAmeDquig1lCGptNJF+BGwdbnJkgngKGREuX4uUPFRHLyGG88qa5t7Z7Fg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZvtpJV7e;
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055AF606A335
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:27:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 055AF606A335
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1842606A321
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 19:39:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1842606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=selector1 header.b=qwuXiVOj
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ME+3iYcX1TJtO7O2PLqqMbXSuyzjRSPksKxjeoheS6ZraeEL6fTc8+lJypYmtyZzQA/dt00Fp2IB2eHecNmkzsVKeBSU5PYc84aVWCaMrDRwS1gM9skER6Pm+vCAP6cLcOua2mGhbcXyaM4esUA3buMEmnbTcPXwh6v7hTtXfQQL2bYa8UWjfkX11AKHMvwhJQLtjmLnGI0Aa71b7ZZlPwq0tQRnse+9i3Unuhp2qDgY0f4UBCnKVQ3l1DEr/3mCC8xOJVIbg/wEsmetibMw3pvRdzHL0i2j/PX8fvY+xCLvAZmyZ3ZPZVAO4T5rkbagsNlMw+KOdQ2bNFcYAsSp7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uUJ872aGb9W/Gr73OddDdFkGiYcOSklaX+SEQXaAUIA=;
- b=Ghsg3s9dZCD0GxU8yLs6I64EGAk/542BQQlA2PLNRnPAOQQtFEc1aSa9zKbkwK5iZMSq5fpNP5c6AZLMoE40Ap9zeB5XSQrh1Bwd6Yutsysxk+CC1RM96HATENQBkkdJTu67j6x0tsDiDLuk6OCHT0JUhxuhUAVX+/HnNMcOUYAVKw2xpvdVmKjE5ZDJ2fAXZsFLgvQQ9M1NMG5DkwuHm9x4j0944yu8OhuuG2ONz0qLB2syRGwZH4YemziAUzb3ebonv/+a4xp8OK8v015x6SVBj/cO/zSjaedTAcqqznp3hhxXwMBCtvHDQVWVLdxKDxXq47UI/1YBqk39oRHj9Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
- dkim=pass header.d=efficios.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uUJ872aGb9W/Gr73OddDdFkGiYcOSklaX+SEQXaAUIA=;
- b=qwuXiVOjp5hhrhhnZJP6IKQBH+p/CU6ORcFXYtwKm7DdwU9SdEDqiUqEeRS5yFdgzqfN6xETBk8wexLiLb5q5ekFoSDnp55YM0A3Reo9ckUNXM0yhF9jOjqf8QnqaAe40CGR+VUv+oArLgyI+f+748YVaJZHV9Yn4MKONEyTEXgEE7UeWk9/lqG8Dn0yiAAz5Mu4VVP+30ls4kCehnX09l+Xppj7sm9ODxsNGNTCAaalKcwmQweCI7OE7mb4u9wIJp9rXPbDrqh2isgaBUvQdVFrz88NG8tgQfcmX/359uZ8hIAK6lG3CKBYWg/15ZnZVX54cFmTwYs6vBf5omiSzw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=efficios.com;
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10) by YT4PR01MB9767.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:e7::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.10; Fri, 27 Nov
- 2026 19:27:18 +0000
-Received: from YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc]) by YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::6b9e:a901:67c5:7ddc%6]) with mapi id 15.21.0662.007; Fri, 27 Nov 2026
- 19:27:18 +0000
-Message-ID: <51c3bb03-c712-4982-9d02-e21206c7ece9@efficios.com>
-Date: Fri, 27 Nov 2026 14:27:17 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/16] selftests/membarrier: Check the memory barriers
- of each thread
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org
-References: <20261127185822.158216-1-mathieu.desnoyers@efficios.com>
- <20261127185822.158216-16-mathieu.desnoyers@efficios.com>
- <sashiko-outbox-238151@kernel.org>
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-238151@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YT4PR01CA0170.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:110::10) To YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:1d0::10)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZvtpJV7e
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4bb72b44a97so72764325e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 11:39:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795808367; x=1796413167; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=MM2MNnyxl9D846ZGaHkuqg5jtRzhYh+OqM1NyeJs/HE=;
+        b=ZvtpJV7etqnAH20rw+OZPvd4z5DONSuermyoP8bI/7U6Zi8mlNC/kf8ULUi12gbYm6
+         Ya7hRbSqyZg2m8mXuZfh8/LoIQ/Fu/zc0mv91ytR+KjkHuj9c842Wc5WOrq5HguvGLc2
+         sLJ6WJeONjHOzOb6x2QA2DydCgTuf0ZYXV4qJ5EHCgcQe6VnRx3e4g1V4oZzWoTcws/I
+         iMf4d4Q4em3qGuejIgof7kZTNcco7P63hEfC9/8zcFDpKu3F3Xp6YoNGeNJPNMZPLRL0
+         xWFoBmf4XbeDXMEAKELyN9fAQ6EThCooAPMdxhSK53WRSJ3ERjUyKxaWnzgKMSDf3bYo
+         NRAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795808367; x=1796413167;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MM2MNnyxl9D846ZGaHkuqg5jtRzhYh+OqM1NyeJs/HE=;
+        b=xh+ItIDZdv6vYSqHKltk28Us6OvjLDwM/5QIrEtc7FFXANgdFL5UucJfBlZQKbzQCK
+         MrH1yOEMeGvqujY/wj5MjuM+X1Zp9wIqXHT+/XeS8yYfVAKy9a46d0dBcpczBNYwpyAF
+         DWGQUW3OOgra6Pom9OwCDDjCdmzGqyR804YpsocaAyzY/v8dfcwp5FfD0MKh/I5FTzS5
+         wZkw+ngICsiJb544lx4HXUssF8A9ASEDGJCPkcOXFBYNR9EFOJDx/x1Q61MUr7rKfobT
+         hRRhgc0g51Xr7yQAJz6pr+DkKjlj2N6EmM/GCVzatFGKU0V807WLkhrSgWDI9BbRh9iY
+         Ls2w==
+X-Forwarded-Encrypted: i=1; AL+hErGgK7hXGlUSnfm3qLL3CiozPXu1rhspmJL17L4sjItd5iKxXmK8dQdjzzee0pwParHmssJN2peEHdpEHsysduo=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9Amj4yBGRcV+ipv89QenL5jAT2e+kaXy20aNed6ZUrVtPhr6BB
+	QSB4viZY5JWfneazGPURhkqxA4ze3Rmir6IpxowzyH1rjwMpQ9gUtAqF
+X-Gm-Gg: AZFdTZfXDE7ItLWwj5YeRXoDOURn5kB04pIvLkyrNBRn4fsMJFrwUyGlqTfWmZVRHHH
+	eUOCsfEH3Q+xLjn3YVzMjIMoDDp2TsYDyPvswIhRJm/l8wv7F+ZUTgC3rgzEJ32YQ3XBPXND3yo
+	+ZV+8cxjtisxEX9XI0gFMqVvO0Dn5PfVSxOHYExxF+/h3kLj8e4AdxoDBvJSNTFAcUhSY7R7kp5
+	fHmO6kFh6OcDwJx+7WVZ+O4eE+tH67V1fWX9eo8zd2EpsTF5S4rfrosUI/qqxn1I8sraPp9Kj4P
+	SyNNeeR6USVyk8T0UqCeTRxumwWFhMbd72aRcYT6/9tklFgFRLtASBj4SEaE9TDMqSBLo9DuOJl
+	POftxtz6qKbA/a/oGI19HygMBvMR2kasm4HG0Rc21B/jLoKuft0QdKtQzsvwRPc2kyyl88MFVI1
+	4LrNK0XOGKmDhsyw+vXuGLaPRHWQ+KdLP6SsF6m9JGfU2jaiNabm7TV9esoEOybBzWW/nj5TMf5
+	Fyvw18J2w90Ob3S93GRklAkA4Gel+FKFpeZub+M36IDfB2Lt+pWCJDzHu0j9BY8E8Dr1D+kaCtF
+	KbrqlHhjX2xI1Ino5V5el/ga84aM6wlXgzF4rex6nAo26OpycbMhCLm1hxT9KIfznXdIo16vR86
+	Gy2fJAL4=
+X-Received: by 2002:a05:600c:820d:b0:4bb:5de1:e923 with SMTP id 5b1f17b1804b1-4bb887c33f7mr491159125e9.4.1795808366926;
+        Fri, 27 Nov 2026 11:39:26 -0800 (PST)
+Received: from localhost (bl20-90-91.dsl.telepac.pt. [2.81.90.91])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb853a9846sm839858545e9.11.2026.11.27.11.39.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 11:39:26 -0800 (PST)
+From: =?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+To: linux-serial@vger.kernel.org
+Cc: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	=?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+Subject: [PATCH RFC v2] serial: esp32: Add support for the ESP32-P4 UART
+Date: Fri, 27 Nov 2026 19:39:14 +0000
+Message-ID: <20261127193914.176120-1-vitorhg20080@gmail.com>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261125233020.1380594-12-vitorhg20080@gmail.com>
+References: <20261125233020.1380594-12-vitorhg20080@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,114 +103,367 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT6PR01MB491026:EE_|YT4PR01MB9767:EE_
-X-MS-Office365-Filtering-Correlation-Id: 37742cdc-b54a-44b1-e865-08df4cbc735d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|22082099003|18002099003|6133799003|261009223027099003|10067099003|261026140227099003|261026121527099003|261021121427099003|261102123227099003|261028144727099003|261022105027099003|261022075727099003|4143699003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	QBu6VlewcrsxVkS7uoRdisetqPhXAFaWS1mWG3eS1NCJizHKh9y+8yZ2jb4c0M+1SL5jeYuyfh4q0+uRG7jFHmhn4vD9cQK4pMlMpHHg/vzs6FuRGs3NW/qkj5qf3HpRTCuhG15J0ha8ErIGJ9G0w47uRDrvdwheeXrgKtpCNuLm6ZWVReOqV/x0KtKAYsdcwntwrzHDrGzbpjZtlkuP3Li3NumHOkViWjQdkTOxNJbECCSf0NuAt85U50S3hcdvN6h2BEoZwI0duCm+yErZzH8iW6aHH916E1XTZgpm/1JDN64UmiMsRykQQeVLACVGWeMrS5uD8uOtG3zx1gL9EWTXzVnUgqn2hlM7eHypJcbrFCsdVbwBJjcNUyry4pJRnX2186W6az0afLjUZJo5D2iO6/magFpZLVWlLlOJ9xKGLBPwhIKEX99U5HeNFLHHtnOPSBDhFpiCcfYkpELZF2fDle76iaF5m+TmzqUi20ZCkNZ/nCM3K+CfOriJ1TEw/a4sstMMxBvLNW4ZZyka+u+r7EEzSXxIO1CI3p26ViuqEf0UFMSqYUAVis4DKraJ3oj325eoCqdm7bcF6sO/u8UcXNuzeQW4Dfox15SJ4cs=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(22082099003)(18002099003)(6133799003)(261009223027099003)(10067099003)(261026140227099003)(261026121527099003)(261021121427099003)(261102123227099003)(261028144727099003)(261022105027099003)(261022075727099003)(4143699003)(56012099006);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cjFxYnliakpUTmQrWEt6dDVucjIwZEM1WTJtbWZvbFNTWXdJS2xQb2pJaDlR?=
- =?utf-8?B?OWJjMno5dVJjMzlGdmRteTlUK3hKL3BQVjZITklVUk9wcnZTUVM1T3dlWXR0?=
- =?utf-8?B?Z3NqblYwYnM4aVNSbDFHUERhZUFuclN5VEdqQnB5S2k0N2l3R3lYQkpjRm5t?=
- =?utf-8?B?Yk9IRG5VbWdSWEZwdDN1ditlUkdMTkFOL0JjTXFxYjNEVFhZcUxTcnN5YVk5?=
- =?utf-8?B?c1lVVnk1bEpaUE9hSE5Fb1RqdERreUUxY2tSQUIvNmxzWll0dXp4VUlmRHAr?=
- =?utf-8?B?OXo5VUtwRnYyMnFnZ05EQi9VUHZFalVJTkpUaGYvMWZvOFJlb0x0eGJwOU8w?=
- =?utf-8?B?VE9mbXZEMjZtbnpuL3MvWCtVbmxTWmRQNWFDTHJOK3J1QStkTmtWUjloYlNJ?=
- =?utf-8?B?R3hvZ3JrM2JqOG9tL3dtYnd0Z2FHdFVrZGVKdWI4akQ0Tk1hNjZ5Wm85OEd0?=
- =?utf-8?B?T1k1a0NhYlplTkNmc1VwOU5kTC96TDZQSWx3RkJrS2Q1d1FZeTVyQ3BxN0dy?=
- =?utf-8?B?QW83dFkrYzh6VUR2djNhYWp4Y0tPSTYyTEtiaXpKeG9iREVqTFJrYVlKMWF1?=
- =?utf-8?B?VWJoeEQyekhRbWs1ODBpSUduT0xHU1BvUEI5RHl3dE5jNnlheVJaTjhldGJy?=
- =?utf-8?B?SWlkd2gwQUtjNU0vSDhjVVJpa21MOXBGUk1nNjFFaDJPajlrMW5mcWNhdU1M?=
- =?utf-8?B?aHhVcFJtM20vYmpGNUhJUFZmV1ExdGtSWXpoOXNDMjJJTnY4cEwxcFNsL1VN?=
- =?utf-8?B?T1E0TFczbGtxYmp0TVBweHUrcUplSEgxSGdrVi9ZTExILytxZyt0V1dtei9S?=
- =?utf-8?B?ei91cFNkT05vV1lvaHR6SnVOaHpJWllDNTltZGVsWityMVp3YjNCMksrb2xH?=
- =?utf-8?B?c0ZLMTFkcWxkSmRsRGR6cjJiM0xTKytJNlQySy9NQ2ZwdzZZZjFsdGY3Yzll?=
- =?utf-8?B?endHdCsvbEt6THhsTmR6QnhsYUxiMTN2bENMbCswbUFZOXhYTDcrZG92VE9R?=
- =?utf-8?B?WjBseS9BQ3hJVVRnVitKZWNIUHNxK29GQzZxY01HVDY4bng4R3BxMGxBSUl2?=
- =?utf-8?B?cVhPQWhFZlRVVEQzcmFCc2p6c3pLYU5GOFF3dTc5UFd4REJSRFVwRmpkOCtZ?=
- =?utf-8?B?M3NPOE5MR0ZEV1hEaE1HdFh0NG9IUTlBeTFDc3k3aE1XcEhmcTFFZlJheVlp?=
- =?utf-8?B?ZkRNTEJaeGZBUU1YYXlJN3lJRGt1TGYrMjA0SndJR25JVEg0SUtvTnBrajdp?=
- =?utf-8?B?alJwaTVRSFVUVWMxOHYvSVNmNzJta014MkFYMXI4dTZwaDZvYkp3VW14cDdy?=
- =?utf-8?B?SXMzNUc1c3NKREsyM09aZ2lmQm1SdFNHQ2VHL3NpK2J1enZKaWYra1pmQ0sz?=
- =?utf-8?B?dzFuYzg1cTJSaG1CRVo0U1lrK1puTjROc0tEL2FhZ3FYdDdCYXBIZkN3VmhQ?=
- =?utf-8?B?M05aOUxmYU8ya2UrK3FLR0lzVzRIaXFrTXEwelo5SWRZVGVqOVk2c0tpazhM?=
- =?utf-8?B?NFYvMjlaVzgzd0drY0hJY2FobFMwR1BweWhMUVpFclgvOHppTVUySHBCY0pq?=
- =?utf-8?B?cElPWTN5TUxXTXZma0pkZVMvd3B3cllzTDNiakdGMGRqSkdDRFZSYkJnYlpB?=
- =?utf-8?B?ajU0L1NRTytodDIycDJJNUViZmxxV3JmRHhHYWVvUTk4Wm9aZ2VMK1BzU1Zo?=
- =?utf-8?B?bzRNd1F2NkNMY0ZnaUNPbDk1d3RKMjlESkN4WDh2Y3ZDOHhKT2ZVK09ac1FR?=
- =?utf-8?B?Zi9qNEZ1OFFTaXFUNzhZaE9ESGhNanFhZWFEeUNobXBlT2FuYzJNY3MrN3hQ?=
- =?utf-8?B?VmN0N0kySnJYTm1xU0VkOS9ldmVmaVdGTVJnU2F1R1RBWUtoSXlIQ3Q4dzZU?=
- =?utf-8?B?b3g4Zmc0RWo0VHZiQUlCb3c3MmRvOWNwS3JHWjl3R21GQ1B1Z0VYR0laQ0Rq?=
- =?utf-8?B?VGpENmVpck5jbndsaUlacnVBMTJIZWw2T2ZnV0FVNFpnK2tVWDlQSkZ3ZlNP?=
- =?utf-8?B?WmloVEttWEZoS2FuUWJMK2FkUUJHWFBTQlU5REUwWUk0RkNzQVFZbUR0WGxs?=
- =?utf-8?B?a0xuMzRUWGlycEJOSTU5THl0ZGUwR3JLd3NJSmNuMEVqb05zeTlsOFpNWXpO?=
- =?utf-8?B?a0VjMTlaWk5wNjM3OTFqQjlTV0dpbHpUQWxNMEhaRlR2c01wRVRyR3JEeVVZ?=
- =?utf-8?B?d3gyS0VWNHhGNVNYb25GdlllQlRNazM3ZnhoVlpnNVV6aFZGQmhlOUFtVWh3?=
- =?utf-8?B?UzMwQ2VjV3FLL0tLVU10QmtqQ0p1L0ZSZ0xjaEtXZUNoTmh4SHVYSzlTOWNY?=
- =?utf-8?B?VnRwOUtZc3JBMFNuSnpXbHpNb0xyemRvMmhMbXlsWmZtaXQ0VGFqeTVlTmw4?=
- =?utf-8?Q?9ftLBtopxufQB3xcXTrThy1tYToyXL0mM66UY?=
-X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37742cdc-b54a-44b1-e865-08df4cbc735d
-X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB491026.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2026 19:27:18.3838
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bP64CbyxdxPCeLzSYOdBKAEkeI7sb8qtHqTfRAcW/YvMvHiqyAK76kbHhHEdHZ8vz+tplSOZ2Dt+wBs43dOmXPf7mgIER2tkE2Hr7WjNuRo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT4PR01MB9767
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> [Severity: Medium]
-> Can run_target() read MBT_SCHED_IN_MISSED before the target thread has
-> scheduled out to flush state->owed?
+Enable the ESP32 UART driver on ESP32-P4 and describe the SoC's
+register layout in the variant data. Synchronize configuration
+writes to the UART clock domain and keep baud rate requests within
+the limits of the ESP32-P4 divider.
 
-[...]
+Propagate IRQ lookup errors, including deferred probe. Serialize UART
+port registration and removal, and clear the port table entry when
+registration fails or the port is removed.
 
-> If the child is not preempted during that round, the schedule-out on
-> cpus[1] only happens at _exit(0) after run_target() has already recorded
-> stats->sched_in_missed, so a missing scheduler barrier on that switch-in
-> will go undetected.
+Tested on a Waveshare ESP32-P4-Module-DEV-KIT with the transmit
+interrupt fix applied. Verified UART receive interrupts and serial
+console operation.
 
-Yes. The BPF program counts a missed barrier only when the CPU leaves
-the thread. So the last switch-in of a target is never checked. This
-holds for every test case, not only for the lazy TLB one.
+AI assisted with driver development.
 
-I checked it with a variant of the test which does not probe the
-barriers of a switch-in. Each switch-in then counts as a missed
-barrier. global_expedited_lazy_tlb ran about 47 rounds. Before the fix,
-it counted 48 missed barriers. After the fix, it counted 95, so one more
-per round.
+Signed-off-by: Vítor Hugo Silva <vitorhg20080@gmail.com>
+---
+Changes in v2:
+- Remove the console setup sentence from the commit message. Patch 10/19
+  already keeps the console setup callback in regular text.
 
-Planned fix for the next round: run_target() waits until the CPU leaves
-the target before it reads MBT_SCHED_IN_MISSED. It sleeps until the BPF
-program has counted a schedule-out.
+This replaces patch 11/19 and applies after patch 10/19 of the RFC.
+v1: https://lore.kernel.org/linux-serial/20261125233020.1380594-12-vitorhg20080@gmail.com/
 
-> Also, sampling first_sched_in after pin_to_cpu(target->cpu) subtracts out
-> the MBT_SCHED_IN increment from that initial migration onto target->cpu
-> when computing stats->sched_in.  Should first_sched_in be read before
-> pin_to_cpu(), and should run_target() force a schedule-out (e.g. via
-> sched_yield() or migrating off target->cpu) before reading
-> MBT_SCHED_IN_MISSED?
+ drivers/tty/serial/Kconfig      |   6 +-
+ drivers/tty/serial/esp32_uart.c | 167 ++++++++++++++++++++++++++++----
+ 2 files changed, 151 insertions(+), 22 deletions(-)
 
-No change planned for first_sched_in. Only EXPECT_NO_IPI uses
-stats->sched_in. It allows one IPI for each switch-in, and run_target()
-starts counting both at the same point. The switch-in onto target->cpu
-happens before the caller starts, so no IPI can follow it.
-
-Thanks,
-
-Mathieu
-
-
+diff --git a/drivers/tty/serial/Kconfig b/drivers/tty/serial/Kconfig
+index 83a37922fb07..6d3d3a342101 100644
+--- a/drivers/tty/serial/Kconfig
++++ b/drivers/tty/serial/Kconfig
+@@ -99,12 +99,14 @@ config SERIAL_EARLYCON_RISCV_SBI
+ 
+ config SERIAL_ESP32
+ 	tristate "Espressif ESP32 UART support"
+-	depends on COMPILE_TEST && OF && HAS_IOMEM
++	depends on OF && HAS_IOMEM
++	depends on RISCV_ESP32P4_CLIC || COMPILE_TEST
+ 	select SERIAL_CORE
+ 	select SERIAL_CORE_CONSOLE
+ 	select SERIAL_EARLYCON
+ 	help
+-	  Driver for the UART controllers of the Espressif ESP32xx SoCs.
++	  Driver for the UART controllers of the Espressif ESP32xx SoCs,
++	  including the ESP32-P4.
+ 	  When earlycon option is enabled the following kernel command line
+ 	  snippets may be used:
+ 	    earlycon=esp32s3uart,mmio32,0x60000000,115200n8,40000000
+diff --git a/drivers/tty/serial/esp32_uart.c b/drivers/tty/serial/esp32_uart.c
+index 8f257cf0d290..304e1345518b 100644
+--- a/drivers/tty/serial/esp32_uart.c
++++ b/drivers/tty/serial/esp32_uart.c
+@@ -6,10 +6,13 @@
+ #include <linux/console.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/irq.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/printk.h>
+ #include <linux/property.h>
+ #include <linux/serial_core.h>
+ #include <linux/slab.h>
+@@ -89,6 +92,22 @@
+ 	 ESP32S3_UART_SCLK_EN | \
+ 	 FIELD_PREP(ESP32S3_UART_SCLK_SEL, XTAL_CLK))
+ 
++#define ESP32P4_UART_CLKDIV			GENMASK(11, 0)
++#define ESP32P4_UART_RXFIFO_CNT			GENMASK(7, 0)
++#define ESP32P4_UART_TXFIFO_CNT			GENMASK(23, 16)
++#define ESP32P4_UART_TXFIFO_EMPTY_THRHD_SHIFT	8
++
++/* ESP32-P4 uses a dedicated register for RX flow control. */
++#define ESP32P4_UART_HWFC_CONF_REG		0x2c
++#define ESP32P4_UART_RX_FLOW_EN			BIT(8)
++#define ESP32P4_UART_REG_UPDATE_REG		0x98
++#define ESP32P4_UART_REG_UPDATE			BIT(0)
++#define ESP32P4_UART_LOOPBACK			BIT(12)
++#define ESP32P4_UART_SW_RTS			BIT(21)
++#define ESP32P4_UART_SW_DTR			BIT(20)
++#define ESP32P4_UART_RTS_INV			BIT(18)
++#define ESP32P4_UART_DTR_INV			BIT(19)
++
+ struct esp32_port {
+ 	struct uart_port port;
+ 	struct clk *clk;
+@@ -99,9 +118,16 @@ struct esp32_uart_variant {
+ 	u32 rxfifo_cnt_mask;
+ 	u32 txfifo_cnt_mask;
+ 	u32 txfifo_empty_thrhd_shift;
++	u32 rx_flow_reg;
+ 	u32 rx_flow_en;
++	u32 loopback_mask;
++	u32 sw_rts_mask;
++	u32 sw_dtr_reg;
++	u32 sw_dtr_mask;
++	u32 mctrl_inv_mask;
+ 	const char *type;
+ 	bool has_clkconf;
++	bool needs_reg_update;
+ };
+ 
+ static const struct esp32_uart_variant esp32_variant = {
+@@ -109,8 +135,14 @@ static const struct esp32_uart_variant esp32_variant = {
+ 	.rxfifo_cnt_mask = ESP32_UART_RXFIFO_CNT,
+ 	.txfifo_cnt_mask = ESP32_UART_TXFIFO_CNT,
+ 	.txfifo_empty_thrhd_shift = ESP32_UART_TXFIFO_EMPTY_THRHD_SHIFT,
++	.rx_flow_reg = UART_CONF1_REG,
+ 	.rx_flow_en = ESP32_UART_RX_FLOW_EN,
+ 	.type = "ESP32 UART",
++	.loopback_mask = UART_LOOPBACK,
++	.sw_rts_mask = UART_SW_RTS,
++	.sw_dtr_reg = UART_CONF0_REG,
++	.sw_dtr_mask = UART_SW_DTR,
++	.mctrl_inv_mask = UART_RTS_INV | UART_DTR_INV,
+ };
+ 
+ static const struct esp32_uart_variant esp32s3_variant = {
+@@ -118,9 +150,31 @@ static const struct esp32_uart_variant esp32s3_variant = {
+ 	.rxfifo_cnt_mask = ESP32S3_UART_RXFIFO_CNT,
+ 	.txfifo_cnt_mask = ESP32S3_UART_TXFIFO_CNT,
+ 	.txfifo_empty_thrhd_shift = ESP32S3_UART_TXFIFO_EMPTY_THRHD_SHIFT,
++	.rx_flow_reg = UART_CONF1_REG,
+ 	.rx_flow_en = ESP32S3_UART_RX_FLOW_EN,
+ 	.type = "ESP32S3 UART",
+ 	.has_clkconf = true,
++	.loopback_mask = UART_LOOPBACK,
++	.sw_rts_mask = UART_SW_RTS,
++	.sw_dtr_reg = UART_CONF0_REG,
++	.sw_dtr_mask = UART_SW_DTR,
++	.mctrl_inv_mask = UART_RTS_INV | UART_DTR_INV,
++};
++
++static const struct esp32_uart_variant esp32p4_variant = {
++	.clkdiv_mask = ESP32P4_UART_CLKDIV,
++	.rxfifo_cnt_mask = ESP32P4_UART_RXFIFO_CNT,
++	.txfifo_cnt_mask = ESP32P4_UART_TXFIFO_CNT,
++	.txfifo_empty_thrhd_shift = ESP32P4_UART_TXFIFO_EMPTY_THRHD_SHIFT,
++	.rx_flow_reg = ESP32P4_UART_HWFC_CONF_REG,
++	.rx_flow_en = ESP32P4_UART_RX_FLOW_EN,
++	.type = "ESP32-P4 UART",
++	.needs_reg_update = true,
++	.loopback_mask = ESP32P4_UART_LOOPBACK,
++	.sw_rts_mask = ESP32P4_UART_SW_RTS,
++	.sw_dtr_reg = UART_CONF1_REG,
++	.sw_dtr_mask = ESP32P4_UART_SW_DTR,
++	.mctrl_inv_mask = ESP32P4_UART_RTS_INV | ESP32P4_UART_DTR_INV,
+ };
+ 
+ static const struct of_device_id esp32_uart_dt_ids[] = {
+@@ -130,10 +184,14 @@ static const struct of_device_id esp32_uart_dt_ids[] = {
+ 	}, {
+ 		.compatible = "esp,esp32s3-uart",
+ 		.data = &esp32s3_variant,
++	}, {
++		.compatible = "esp,esp32p4-uart",
++		.data = &esp32p4_variant,
+ 	}, { /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, esp32_uart_dt_ids);
+ 
++static DEFINE_MUTEX(esp32_uart_ports_lock);
+ static struct esp32_port *esp32_uart_ports[UART_NR];
+ 
+ static const struct esp32_uart_variant *port_variant(struct uart_port *port)
+@@ -143,7 +201,24 @@ static const struct esp32_uart_variant *port_variant(struct uart_port *port)
+ 
+ static void esp32_uart_write(struct uart_port *port, unsigned long reg, u32 v)
+ {
++	void __iomem *update = port->membase + ESP32P4_UART_REG_UPDATE_REG;
++	u32 status;
++
+ 	writel(v, port->membase + reg);
++
++	if (reg != UART_CLKDIV_REG && reg != UART_CONF0_REG &&
++	    reg != ESP32P4_UART_HWFC_CONF_REG)
++		return;
++
++	if (!port_variant(port)->needs_reg_update)
++		return;
++
++	/* Commit configuration to UART core clock domain. */
++	writel(ESP32P4_UART_REG_UPDATE, update);
++	if (readl_poll_timeout_atomic(update, status,
++				      !(status & ESP32P4_UART_REG_UPDATE),
++				      1, 100))
++		printk_deferred_once(DRIVER_NAME ": UART register update timed out\n");
+ }
+ 
+ static u32 esp32_uart_read(struct uart_port *port, unsigned long reg)
+@@ -173,18 +248,29 @@ static unsigned int esp32_uart_tx_empty(struct uart_port *port)
+ 
+ static void esp32_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ {
+-	u32 conf0 = esp32_uart_read(port, UART_CONF0_REG);
++	const struct esp32_uart_variant *variant = port_variant(port);
++	bool dtr_in_conf0 = variant->sw_dtr_reg == UART_CONF0_REG;
++	u32 conf0, dtr_conf;
+ 
+-	conf0 &= ~(UART_LOOPBACK |
+-		   UART_SW_RTS | UART_RTS_INV |
+-		   UART_SW_DTR | UART_DTR_INV);
++	conf0 = esp32_uart_read(port, UART_CONF0_REG);
++	conf0 &= ~(variant->loopback_mask | variant->sw_rts_mask);
+ 
+ 	if (mctrl & TIOCM_RTS)
+-		conf0 |= UART_SW_RTS;
+-	if (mctrl & TIOCM_DTR)
+-		conf0 |= UART_SW_DTR;
++		conf0 |= variant->sw_rts_mask;
+ 	if (mctrl & TIOCM_LOOP)
+-		conf0 |= UART_LOOPBACK;
++		conf0 |= variant->loopback_mask;
++
++	/* Software DTR and RTS/DTR inversion share a register. */
++	dtr_conf = dtr_in_conf0 ? conf0 : esp32_uart_read(port, variant->sw_dtr_reg);
++	dtr_conf &= ~(variant->sw_dtr_mask | variant->mctrl_inv_mask);
++
++	if (mctrl & TIOCM_DTR)
++		dtr_conf |= variant->sw_dtr_mask;
++
++	if (dtr_in_conf0)
++		conf0 = dtr_conf;
++	else
++		esp32_uart_write(port, variant->sw_dtr_reg, dtr_conf);
+ 
+ 	esp32_uart_write(port, UART_CONF0_REG, conf0);
+ }
+@@ -387,13 +473,37 @@ static bool esp32_uart_set_baud(struct uart_port *port, u32 baud)
+ 	return false;
+ }
+ 
++static void esp32p4_uart_limit_baud_rate(struct ktermios *termios,
++					 const struct ktermios *old,
++					 u32 min_baud, u32 max_baud)
++{
++	u32 baud = tty_termios_baud_rate(termios);
++
++	if (!baud || (baud >= min_baud && baud <= max_baud))
++		return;
++
++	if (old) {
++		u32 old_baud = tty_termios_baud_rate(old);
++
++		if (old_baud && old_baud >= min_baud && old_baud <= max_baud)
++			baud = old_baud;
++	}
++
++	baud = clamp(baud, min_baud, max_baud);
++	/* Keep the fallback exact near a standard rate outside the range. */
++	termios->c_cflag &= ~(CBAUD | (CBAUD << IBSHIFT));
++	termios->c_cflag |= BOTHER;
++	tty_termios_encode_baud_rate(termios, baud, baud);
++}
++
+ static void esp32_uart_set_termios(struct uart_port *port,
+ 				   struct ktermios *termios,
+ 				   const struct ktermios *old)
+ {
+ 	unsigned long flags;
+-	u32 conf0, conf1;
+-	u32 baud;
++	u32 conf0, flow;
++	u32 baud, min_baud, max_baud;
++	const u32 rx_flow_reg = port_variant(port)->rx_flow_reg;
+ 	const u32 rx_flow_en = port_variant(port)->rx_flow_en;
+ 	u32 max_div = port_variant(port)->clkdiv_mask;
+ 
+@@ -402,17 +512,19 @@ static void esp32_uart_set_termios(struct uart_port *port,
+ 	if (port_variant(port)->has_clkconf)
+ 		max_div *= FIELD_MAX(ESP32S3_UART_SCLK_DIV_NUM);
+ 
+-	baud = uart_get_baud_rate(port, termios, old,
+-				  port->uartclk / max_div,
+-				  port->uartclk / 16);
++	min_baud = port->uartclk / max_div;
++	max_baud = port->uartclk / 16;
++	if (port_variant(port) == &esp32p4_variant)
++		esp32p4_uart_limit_baud_rate(termios, old, min_baud, max_baud);
++	baud = uart_get_baud_rate(port, termios, old, min_baud, max_baud);
+ 
+ 	spin_lock_irqsave(&port->lock, flags);
+ 
+ 	conf0 = esp32_uart_read(port, UART_CONF0_REG);
+ 	conf0 &= ~(UART_PARITY_EN | UART_PARITY | UART_BIT_NUM | UART_STOP_BIT_NUM);
+ 
+-	conf1 = esp32_uart_read(port, UART_CONF1_REG);
+-	conf1 &= ~rx_flow_en;
++	flow = esp32_uart_read(port, rx_flow_reg);
++	flow &= ~rx_flow_en;
+ 
+ 	if (termios->c_cflag & PARENB) {
+ 		conf0 |= UART_PARITY_EN;
+@@ -441,10 +553,10 @@ static void esp32_uart_set_termios(struct uart_port *port,
+ 		conf0 |= FIELD_PREP(UART_STOP_BIT_NUM, UART_STOP_BIT_NUM_1);
+ 
+ 	if (termios->c_cflag & CRTSCTS)
+-		conf1 |= rx_flow_en;
++		flow |= rx_flow_en;
+ 
+ 	esp32_uart_write(port, UART_CONF0_REG, conf0);
+-	esp32_uart_write(port, UART_CONF1_REG, conf1);
++	esp32_uart_write(port, rx_flow_reg, flow);
+ 
+ 	if (baud) {
+ 		esp32_uart_set_baud(port, baud);
+@@ -715,29 +827,44 @@ static int esp32_uart_probe(struct platform_device *pdev)
+ 	if (IS_ERR(sport->clk))
+ 		return PTR_ERR(sport->clk);
+ 
++	ret = platform_get_irq(pdev, 0);
++	if (ret < 0)
++		return ret;
++
+ 	port->uartclk = clk_get_rate(sport->clk);
+ 	port->dev = &pdev->dev;
+ 	port->type = PORT_GENERIC;
+ 	port->iotype = UPIO_MEM;
+-	port->irq = platform_get_irq(pdev, 0);
++	port->irq = ret;
+ 	port->ops = &esp32_uart_pops;
+ 	port->flags = UPF_BOOT_AUTOCONF;
+ 	port->has_sysrq = 1;
+ 	port->fifosize = ESP32_UART_TX_FIFO_SIZE;
+ 	port->private_data = (void *)device_get_match_data(&pdev->dev);
+ 
++	guard(mutex)(&esp32_uart_ports_lock);
++	if (esp32_uart_ports[port->line])
++		return -EBUSY;
++
++	/* Console setup can look up the port during registration. */
+ 	esp32_uart_ports[port->line] = sport;
++	ret = uart_add_one_port(&esp32_uart_reg, port);
++	if (ret) {
++		esp32_uart_ports[port->line] = NULL;
++		return ret;
++	}
+ 
+ 	platform_set_drvdata(pdev, port);
+-
+-	return uart_add_one_port(&esp32_uart_reg, port);
++	return 0;
+ }
+ 
+ static void esp32_uart_remove(struct platform_device *pdev)
+ {
+ 	struct uart_port *port = platform_get_drvdata(pdev);
+ 
++	guard(mutex)(&esp32_uart_ports_lock);
+ 	uart_remove_one_port(&esp32_uart_reg, port);
++	esp32_uart_ports[port->line] = NULL;
+ }
+ 
+ 
 -- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+2.56.1
+
