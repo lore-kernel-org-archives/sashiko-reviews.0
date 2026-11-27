@@ -1,104 +1,102 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795764732;
-	b=HS7Qm1eMVMZYzpN4T0bIPeAoMz7MkPFAclC7PLnJmi+dTJeNgYOET2jDmNxjI8fIh6x0
-	 /BD31ed64q7ejrWgz4ny3Ni59KwS4geJuAC5HKbPdgPQv+dKqV5hrEY/8kLSrc9PMRsRO
-	 /7G23y/jYohlQc2XnXYKbTTZASU2SM/EA8kVHiSOswOd+jQ+03wcm5Qb+Pq55QqRlshri
-	 NSPHDvrOIp7sJWpeJI2N9+NteTaYCYIs7rr8y6cupN3ga9nAwGES5sQ34KS/5lpOTUj1y
-	 wryNXmUIuPbzRQJkO+c/19rqt1qQRVpZUleJ2HOOZjfiYXwC8YznPGr61hxHYV29L4A==
+	t=1795764900;
+	b=J1sfZR9CcHEuSbt+vvzCPofrYi22EVFYf91r52yt65ZzDfE/QhelmJ+dTNFpalwDTYRK
+	 dbNeCjxkB3oXXuGOxnUuiXwsby/wV5rNtQZnMw/0LwIQ5IpMHl4EZCbAWGz0p7hgw8F4K
+	 N3B6iniGiW9y1oFKWH2KFA4TssuFfcgQvxyrtVXUMTt4GX3BwQF/we2PR11SsbOcuDxdO
+	 x0Z6ejMZkdWNtlVLAeW31WS6Q9+LFohlqC+9YjGTNU9EpmeZsjubcYW8kr/7gc2+wByr1
+	 Y5zCUHey3kHPlsZ8HxEacTYrikV8e77HafL2xC3E1A2oDp2RJen7l/GZi5zHkGdYkuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795764732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795764900;
 	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
 	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Spam-Level:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spamd-Result:
-	 X-Spam-Score;
-	bh=VEdUNR8UjEwRDkCy98TOoPExuCvETfLC6ZCVC0yV6hU=;
-	b=HQOPbqelC0pObo8gbz9NmB/tTS1e+x+uv6i5pxv7eFlnaZjEHeopbf/TJ4SW8RnT537q
-	 X1m4ElRed7QsTtUorLVlBPgjWwGNahMUEN0N7rIBF0bSAfVacV9olVxx20ueaCTxqXt7s
-	 QmEg+d5q8d8e5YSf1b/owlaZeH1W5p8OErzVlKZWFTWcmr9QPZ5TjuEnc2IPV71kmw31U
-	 niS2Lq7z1fEEBh4UwdJ9QvJoSxCdJgeWrDnpTtfhL++oQE5CN9Bek5Rt+sIzYtpak20gL
-	 M0WXUfoaGid3YWlj7zTfQNgJc5bG5m0hQ8J+XE0g4WNh56pmB/qCB7zUzoU7sOe6nNg==
+	 Content-Type:Content-Transfer-Encoding:X-Spamd-Result:X-Spam-Score:
+	 X-Spam-Level:X-Spam-Flag;
+	bh=n96sOU/5/jnhCO42S+4rsCREmChCaTIsZkg6ljCCD2I=;
+	b=W03lbMF88e7/nfMjJZKccdms3cbuy++LU5erg+XOVW/neJW9QAufoXeRmu0rjeDJ5e6V
+	 RzJ9KtVTNhc9FVBE83A3wSe0Dw6CC7bClQKoLAmBoO70fbJEE/CToRYNqa0SG8Jzrw1nO
+	 GT8wyKaTnJC5P6VPQwKnj5jav+GLDiSiUtzpHP+xqlMOsxhs7YWBISju+AFhKWSgTdSYn
+	 nYSkoKGH71wEM/sIT915r8PQ+cD8mh2Fc/dUhn19gLlVmoBw4IaxWTP06uf1qRmMS8Mhv
+	 uHghp6snIelEZGUMXoCO/Pzj+uslClBEPZM6fZMf+zYu/LUKsYfCd/YF+iSQQm4R06A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=mSUIgo8M;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=UtzO0A3S;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=oOwNCcGt;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b="6S9h/1yG";
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ZTYuFEyp;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=UL4k7IZT;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ZTYuFEyp;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=UL4k7IZT;
 	arc=none smtp.remote-ip=195.135.223.130
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE77D606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 07:32:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE77D606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4605E606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 07:34:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4605E606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=mSUIgo8M;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=UtzO0A3S;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=oOwNCcGt;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=6S9h/1yG
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ZTYuFEyp;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=UL4k7IZT;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ZTYuFEyp;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=UL4k7IZT
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id DEF0C22850;
-	Fri, 27 Nov 2026 07:32:09 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 8724422847;
+	Fri, 27 Nov 2026 07:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795764730; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1795764897; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VEdUNR8UjEwRDkCy98TOoPExuCvETfLC6ZCVC0yV6hU=;
-	b=mSUIgo8MsPEM4aMBu4aDSWcVjtWnwnz7nymYLbLzuFVy+vaL87V+ZhkwdKY7nu+G3G0Tog
-	JbjzaeAiY6QjpTWj5lwWMw9+NWulxAjXKV6f8kcTjtEBaNz79gkvDRR0A+3bwv4KxT4f8Y
-	kt84565pyJ/Vagsah1+tQMvO3oEVpOQ=
+	bh=n96sOU/5/jnhCO42S+4rsCREmChCaTIsZkg6ljCCD2I=;
+	b=ZTYuFEyp0O6eFBgB/uufgy9Hde4Cuq2M6nFh22BRBoac89MK/Ggn/3f1YXQi9BB21xSw7g
+	myZ5gJR96Ei6d1O1AZQJ+P9G4qzHNnwJqEA9sknfJl0DcSIN6NWaBnsAJ7jwe30byGE2DS
+	aHl3kVCvUZEcY9liXuOhJyCy5K7cFoA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795764730;
+	s=susede2_ed25519; t=1795764897;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VEdUNR8UjEwRDkCy98TOoPExuCvETfLC6ZCVC0yV6hU=;
-	b=UtzO0A3S/Cxhmzvqws3d0nIn66nT6UBE0Y9FLqt14M2LA6iQ25S1Ai6yNe+BpIHzusGQXH
-	e6FPYHKtau19KcAQ==
+	bh=n96sOU/5/jnhCO42S+4rsCREmChCaTIsZkg6ljCCD2I=;
+	b=UL4k7IZTozHVaUV85Gta+JabDHiwk5FwpfCbUOER0vDlU9eI+UKmxibIocQGEVb7zWvef8
+	FxomVih/Ul5WgWAw==
 Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=oOwNCcGt;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="6S9h/1yG"
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1795764729; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1795764897; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VEdUNR8UjEwRDkCy98TOoPExuCvETfLC6ZCVC0yV6hU=;
-	b=oOwNCcGtFQyIAbCGfZLa8KtdeBkumlvr/8dQkYjsXXxATylacnz/bQo2l06xWrW7C1StyJ
-	Djd5mahIitQzqRtYlXUljMjaRdpXkBM9i9v/12h+VcmKW22/ss/yST2IBKLiohC6NhgmzB
-	QU0BTqlaPY42jdTptaAWRi8thAnewy0=
+	bh=n96sOU/5/jnhCO42S+4rsCREmChCaTIsZkg6ljCCD2I=;
+	b=ZTYuFEyp0O6eFBgB/uufgy9Hde4Cuq2M6nFh22BRBoac89MK/Ggn/3f1YXQi9BB21xSw7g
+	myZ5gJR96Ei6d1O1AZQJ+P9G4qzHNnwJqEA9sknfJl0DcSIN6NWaBnsAJ7jwe30byGE2DS
+	aHl3kVCvUZEcY9liXuOhJyCy5K7cFoA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1795764729;
+	s=susede2_ed25519; t=1795764897;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VEdUNR8UjEwRDkCy98TOoPExuCvETfLC6ZCVC0yV6hU=;
-	b=6S9h/1yGrVN1KCUuuJsH6kJbXnPEwD9BIgVTjVETMoukf8Tku0CFc3fLlxWiJc+9yt8iyv
-	CBFVCTBCBPp7dbBA==
+	bh=n96sOU/5/jnhCO42S+4rsCREmChCaTIsZkg6ljCCD2I=;
+	b=UL4k7IZTozHVaUV85Gta+JabDHiwk5FwpfCbUOER0vDlU9eI+UKmxibIocQGEVb7zWvef8
+	FxomVih/Ul5WgWAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 481B513432;
-	Fri, 27 Nov 2026 07:32:09 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E117913432;
+	Fri, 27 Nov 2026 07:34:56 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 8AYuBvkxCWsvJQAAD6G6ig
-	(envelope-from <hare@suse.de>); Fri, 27 Nov 2026 07:32:09 +0000
-Message-ID: <898747c1-a11e-4f81-be71-34454816eecc@suse.de>
-Date: Fri, 27 Nov 2026 08:32:08 +0100
+	id Y7UfKKAyCWsgKAAAD6G6ig
+	(envelope-from <hare@suse.de>); Fri, 27 Nov 2026 07:34:56 +0000
+Message-ID: <14ae3e78-ac9b-4bb8-99f1-a29a28d5984d@suse.de>
+Date: Fri, 27 Nov 2026 08:34:56 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -109,7 +107,8 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 07/14] nvme: parse dhchap keys during option parsing
+Subject: Re: [PATCH v7 08/14] nvmet-auth: parse dhchap key from configfs
+ attribute
 To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>,
  Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
  Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
@@ -120,130 +119,168 @@ To: sashiko-reviews@lists.linux.dev, Hannes Reinecke <hare@kernel.org>,
  "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Cc: linux-nvme@lists.infradead.org, keyrings@vger.kernel.org
 References: <20261126-dhchap-keyring-v4-v7-0-ee438ffea527@kernel.org>
- <20261126-dhchap-keyring-v4-v7-7-ee438ffea527@kernel.org>
- <sashiko-outbox-235706@kernel.org>
+ <20261126-dhchap-keyring-v4-v7-8-ee438ffea527@kernel.org>
+ <sashiko-outbox-235707@kernel.org>
 Content-Language: en-US
 From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <sashiko-outbox-235706@kernel.org>
+In-Reply-To: <sashiko-outbox-235707@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: DEF0C22850
-X-Spam-Level: 
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-13.50 / 50.00];
+X-Spamd-Result: default: False [-13.29 / 50.00];
 	SUSE_INTERNAL_BYPASS(-9.00)[];
 	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_LONG(-1.00)[-0.999];
 	NEURAL_HAM_SHORT(-0.20)[-1.000];
 	MIME_GOOD(-0.10)[text/plain];
 	XM_UA_NO_VERSION(0.01)[];
-	MX_GOOD(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
 	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Score: -13.50
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -13.29
+X-Spam-Level: 
+X-Spam-Flag: NO
 
-On 11/26/26 3:29 PM, sashiko-bot@kernel.org wrote:
+On 11/26/26 3:30 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [High] nvme-auth: ERR_PTR dereference on key_lookup() in
->    nvme_auth_init_ctrl()
+> - [High] nvmet-auth: ERR_PTR dereference in key_lookup() callers
 > --
 > 
-> commit 0df67db2f376340a8318c48ba959e7e18c9db8b6
+> commit b41d5ff16da6a60366fa816c551dfd75334950eb
 > Author: Hannes Reinecke <hare@kernel.org>
 > 
-> nvme: parse dhchap keys during option parsing
+> nvmet-auth: parse dhchap key from configfs attribute
 > 
-> This commit creates DH-HMAC-CHAP keys during fabrics option parsing,
-> stores their key serials in struct nvmf_ctrl_options, and adds
-> dhchap_key and dhchap_ctrl_key sysfs attributes.
+> This commit converts the nvmet DH-HMAC-CHAP configfs attributes to store
+> key serial numbers in struct nvmet_host and look up the keys via
+> key_lookup() when needed.
 > 
->> diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
->> index d6abdb4f1e21c..285aa1c71f102 100644
->> --- a/drivers/nvme/host/auth.c
->> +++ b/drivers/nvme/host/auth.c
+>> diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+>> index e1d92f5455219..ff0e8569d7067 100644
+>> --- a/drivers/nvme/target/auth.c
+>> +++ b/drivers/nvme/target/auth.c
+> 
 > [ ... ]
->> @@ -1028,38 +1023,100 @@ static void nvme_ctrl_auth_work(struct work_struct *work)
-> [ ... ]
->>   int nvme_auth_init_ctrl(struct nvme_ctrl *ctrl)
->>   {
->>   	struct nvme_dhchap_queue_context *chap;
->> +	struct key *host_key, *ctrl_key = NULL;
->>   	int i, ret;
->>   
->>   	mutex_init(&ctrl->dhchap_auth_mutex);
->>   	INIT_WORK(&ctrl->dhchap_auth_work, nvme_ctrl_auth_work);
->>   	if (!ctrl->opts)
->>   		return 0;
->> -	ctrl->host_key = nvme_auth_extract_key(ctrl->opts->dhchap_secret,
->> -				strlen(ctrl->opts->dhchap_secret));
->> -	if (IS_ERR(ctrl->host_key)) {
->> -		ret = PTR_ERR(ctrl->host_key);
->> -		ctrl->host_key = NULL;
->> -		return ret;
->> +	if (!ctrl->opts->dhchap_key) {
->> +		nvme_auth_clear_host_key(ctrl);
->> +		nvme_auth_clear_ctrl_key(ctrl);
->> +		return 0;
+> 
+>> @@ -186,22 +212,45 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq, bool reset)
+>>   		goto out_unlock;
 >>   	}
 >>   
->> -	ctrl->ctrl_key = nvme_auth_extract_key(ctrl->opts->dhchap_ctrl_secret,
->> -				strlen(ctrl->opts->dhchap_ctrl_secret));
->> -	if (IS_ERR(ctrl->ctrl_key)) {
->> -		ret = PTR_ERR(ctrl->ctrl_key);
->> -		ctrl->ctrl_key = NULL;
->> -		goto err_free_dhchap_secret;
->> +	host_key = key_lookup(ctrl->opts->dhchap_key);
+>> -	if (!host->dhchap_secret) {
+>> +	if (!host->dhchap_key) {
+>>   		pr_debug("No authentication provided\n");
+>>   		goto out_unlock;
+>>   	}
+>>   
+>> -	host_key = nvme_auth_extract_key(host->dhchap_secret,
+>> -					 strlen(host->dhchap_secret));
+>> -	if (IS_ERR(host_key)) {
+>> +	host_key = key_lookup(host->dhchap_key);
 >> +	if (!host_key) {
->> +		pr_warn("dhchap host key %08x not present\n",
->> +			ctrl->opts->dhchap_key);
->> +		return -ENOKEY;
->> +	}
+>> +		pr_warn("%s: host key %08x not found\n",
+>> +			__func__, host->dhchap_key);
+>>   		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
+>>   		goto out_unlock;
+>>   	}
+>> -	if (host->dhchap_ctrl_secret) {
+>> -		ctrl_key = nvme_auth_extract_key(host->dhchap_ctrl_secret,
+>> -						 strlen(host->dhchap_ctrl_secret));
+>> -		if (IS_ERR(ctrl_key)) {
 >> +	down_read(&host_key->sem);
 >> +	ret = key_validate(host_key);
 >> +	up_read(&host_key->sem);
 >> +	if (ret) {
->> +		pr_warn("dhchap host key %08x invalidated\n",
->> +			key_serial(host_key));
+>> +		pr_warn("host key %08x invalidated\n",
+>> +			host->dhchap_key);
 >> +		key_put(host_key);
->> +		return -ENOKEY;
->>   	}
->>   
->> -	if (!ctrl->opts->dhchap_secret && !ctrl->opts->dhchap_ctrl_secret)
->> -		return 0;
->> +	if (ctrl->opts->dhchap_ctrl_key) {
->> +		ctrl_key = key_lookup(ctrl->opts->dhchap_ctrl_key);
+>> +		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
+>> +		goto out_unlock;
+>> +	}
+>> +	if (host->dhchap_ctrl_key) {
+>> +		ctrl_key = key_lookup(host->dhchap_ctrl_key);
 >> +		if (!ctrl_key) {
->> +			pr_warn("dhchap ctrl key %08x not present\n",
->> +				ctrl->opts->dhchap_ctrl_key);
+>> +			pr_warn("%s: ctrl key %08x not found\n",
+>> +				__func__, host->dhchap_ctrl_key);
 >> +			key_put(host_key);
->> +			return -ENOKEY;
+>> +			ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
+>> +			goto out_unlock;
 >> +		}
 >> +		down_read(&ctrl_key->sem);
+>>   
+>> diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+>> index ff3a8d74de599..f6bfda757f076 100644
+>> --- a/drivers/nvme/target/configfs.c
+>> +++ b/drivers/nvme/target/configfs.c
+> 
+> [ ... ]
+> 
+>> @@ -2234,15 +2235,29 @@ static struct config_group nvmet_ports_group;
+>>   static ssize_t nvmet_host_dhchap_key_show(struct config_item *item,
+>>   		char *page)
+>>   {
+>> -	char *dhchap_secret;
+>> +	struct nvmet_host *host = to_host(item);
+>> +	struct key *key;
+>>   	ssize_t ret;
+>>   
+>>   	down_read(&nvmet_config_sem);
+>> -	dhchap_secret = to_host(item)->dhchap_secret;
+>> -	if (!dhchap_secret)
+>> -		ret = sprintf(page, "\n");
+>> -	else
+>> -		ret = sprintf(page, "%s\n", dhchap_secret);
+>> +	key = key_lookup(host->dhchap_key);
+>> +	if (!key) {
+>> +		page[0] = '\0';
+>> +		ret = 0;
+>> +	} else {
+>> +		down_read(&key->sem);
+> 
+> [ ... ]
+> 
+>> @@ -2267,15 +2292,29 @@ CONFIGFS_ATTR(nvmet_host_, dhchap_key);
+>>   static ssize_t nvmet_host_dhchap_ctrl_key_show(struct config_item *item,
+>>   		char *page)
+>>   {
+>> -	char *dhchap_secret = to_host(item)->dhchap_ctrl_secret;
+>> +	struct nvmet_host *host = to_host(item);
+>> +	struct key *key;
+>>   	ssize_t ret;
+>>   
+>>   	down_read(&nvmet_config_sem);
+>> -	dhchap_secret = to_host(item)->dhchap_ctrl_secret;
+>> -	if (!dhchap_secret)
+>> -		ret = sprintf(page, "\n");
+>> -	else
+>> -		ret = sprintf(page, "%s\n", dhchap_secret);
+>> +	key = key_lookup(host->dhchap_ctrl_key);
+>> +	if (!key) {
+>> +		page[0] = '\0';
+>> +		ret = 0;
+>> +	} else {
+>> +		down_read(&key->sem);
 > 
 > [Severity: High]
-> Should host_key and ctrl_key be checked with IS_ERR() rather than for
-> NULL after key_lookup()?  key_lookup() returns ERR_PTR(-ENOKEY) when a
-> key serial is not found, so if either key is removed before
-> nvme_auth_init_ctrl() runs, down_read() will dereference an error
-> pointer.
+> Should the key_lookup() checks in nvmet_setup_auth(),
+> nvmet_host_dhchap_key_show(), and nvmet_host_dhchap_ctrl_key_show() use
+> IS_ERR() instead of testing for NULL?
+> 
+> key_lookup() returns ERR_PTR(-ENOKEY) when a key serial is not found
+> (including when dhchap_key or dhchap_ctrl_key is 0 because no key is
+> configured).  Checking !key lets ERR_PTR(-ENOKEY) through and crashes at
+> down_read(&key->sem) when reading the configfs attributes on a host
+> without a key configured or when a key is not found during
+> authentication setup.
 > 
 
 Fixed with the next version.
