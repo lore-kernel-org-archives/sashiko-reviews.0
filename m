@@ -1,48 +1,48 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=220.197.31.7
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.6
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795767014;
-	b=4cI47Y5UTr9wFq+45HXHq5eOx/p1GnABO67jMUFi9eCd64XkDWav8+7P06mjhMSblrfB
-	 tiSiE0LaV6J2weyk9JFv6FVdAXHXcMKFLyYJghfPssXzWxmfZD3eUHgtfLlwlfQravrki
-	 Xy6OIRlG02lB6Go6fdYGB1c+veiiCVYdf3oGdCNeAIHbXAtobYWQh/T+Luiu8A50gryrZ
-	 lKaKRNXHKrpQAY0J8rGrhiPJwsYfri2wMAuLeeiQX5G4VUybIPRnPVEdCMEX7XVYQmwh9
-	 yMWgT+jVRI5b+ZTOGfC9CPkgH+H1fANOBl6fatlWdqNqJO7uM3UIV5n/O8J4MU9vKNg==
+	t=1795768117;
+	b=jz1hVcCxMYF+1DdCGQwwsF72D1+Qjib8bKyfCKWOymE1E+kkwSvFyzX5dAZY+SCAl9so
+	 7Fbh6up7iAmC1rsdw/bzN6GzTCO2JeEgLW8oBuFE1njdmp4qqt1iCj3j9xVm15XDiFIXq
+	 ZW5tk1kmZpQFiDlxa9qGsfBpQ2cRkqJTbNTIQzWIMAu8FSbfwHErxc7BlLaP0WK1q0RFf
+	 zPR6HUpmO4I8MlhZRpCeBdjQT7B2ZlM4m9lHwfpKY+PCY7bmS6uApKB+M5mMroESzY48W
+	 qwgEM5WEpCE1F1dV8wRBqwqAaYEZ3O64OzTO4W4Ow8LtwOhbI8Z9vn0lnvibEIahrMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795767014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795768117;
 	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-CM-TRANSID:X-Coremail-Antispam:Sender:
 	 X-CM-SenderInfo;
-	bh=z2WPS4JyLBQjVa8az6zNUmfoJeGYnzi48maeQui2YGk=;
-	b=aKnxSt6H3g1YQxA655JwZoCEUbqJdSb1GDBNb6xiYE4V96loDJWT4WWKLE21gsgKGUkk
-	 8CayfMm9B70r+vW7NZ7ZvVJUzWsDPbz5EvifwOTsOngFnl/32UEIE4P+VwTTZ7UTWwOKX
-	 NL5Jm0pQWy6PvACCF+oG6UB68r4cjFJD1KB65rCL1emHieRKuqvY4p6abTxXwv8n8hUsN
-	 UjLnFzi91AMs4jMs/NimAOC4LFH92kfMFZc3L/tQmhGYMzJdnt7V0NK7It0S4aN+YROKs
-	 5rFHbpIf1uVvTRAXeRVjzgOcObvoa9fK9HRLIhMKW3w9835pYw5ItCBjH+fVEv5pu0w==
+	bh=1sIJUe4O4CsWbtMbQNi4aeXjMyQYal1HiWg977wjesI=;
+	b=vvzYz90i0ytA7Wdei44oXGOBSuAKCprmAtouG1G2YBbSuy12N7Y9IAXbeL4hMX0ivGq1
+	 2lXc5DT43tz4HCAHrENB5weOj4DLOSktPvtjwJVajOu4S96oyzwy8dEddav4Kbv6Gm1oR
+	 xODZ+heGq5PlHO/hjTZ9yNDYYq38jwYemr9zL7nVd0GLVBWJQ0Sn2g2nAdQFiZLXmeaQD
+	 IIIJsfZEfc43RAsWNVs6ilHCz7a+JBaIEPKTAuSd4JaIaUY2rZtpqhIsgDvHfiHByc0+a
+	 kbFNn80Va8qJVWOgXdRuawtaWYVxlf+zHX8QedTVcy2ydhTsARCnb47ASDxdQqXYPVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=fail header.from=xiaomi.com;
 	spf=pass smtp.mailfrom=126.com;
-	dkim=pass header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=V4DWH0yz;
-	arc=none smtp.remote-ip=220.197.31.7
-Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.7])
+	dkim=pass header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=AHFaJuEh;
+	arc=none smtp.remote-ip=117.135.210.6
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.6])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F8D606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:10:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04F8D606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D940D606A31E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:28:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D940D606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=xiaomi.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=V4DWH0yz
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=AHFaJuEh
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=z2
-	WPS4JyLBQjVa8az6zNUmfoJeGYnzi48maeQui2YGk=; b=V4DWH0yz4Hxc2E44OV
-	3qnKP624PPmfYc2UKZj/j4RHu4IvoUIlpmO4VdqRjF/UWsiC6ipP9NCGzYEstCXs
-	HCFGgJBFVTQQZc0ZdJmp4U6pUC/wM8d+QVCuYrTD8zDZT+VZwOIZN47swrwxwiTp
-	PQuOVlTqiJeXWHPT0Ss5MOh1Y=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=1s
+	IJUe4O4CsWbtMbQNi4aeXjMyQYal1HiWg977wjesI=; b=AHFaJuEh0EIkAkyo2c
+	ZVBqUZ9yupduHxWzUtjdjRTae0SDHFnaZIZf1Cj8HuqZGfghrCYnrxiuplKwyjLP
+	kJJ9i4K8NXTV3yo5ESq/c2u3G1GsZ1QOUjIoY6Wfh1KN2jHQ0jDCNjFtfWmRwUw5
+	dOeKubTHbfksoYyH1iOaTPaQo=
 Received: from nzzhao-ThinkCentre-M760t.mioffice.cn (unknown [])
-	by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wD3Pwd_OglrliZsEA--.60259S2;
-	Fri, 27 Nov 2026 16:08:33 +0800 (CST)
+	by gzsmtp3 (Coremail) with SMTP id PikvCgDnz+_cPglrqen2EA--.50878S2;
+	Fri, 27 Nov 2026 16:27:09 +0800 (CST)
 From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
 To: sashiko-bot@kernel.org
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -71,12 +71,12 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Barry Song <baohua@kernel.org>,
 	Bo Zhang <zhangbo56@xiaomi.com>,
 	sashiko-reviews@lists.linux.dev
-Subject: Re: [RFC PATCH v4 1/4] mm: zsmalloc: support objects compressed based on multiple pages
-Date: Fri, 27 Nov 2026 16:08:22 +0800
-Message-ID: <20261127080831.3599864-1-zhaonanzhe@xiaomi.com>
+Subject: Re: [RFC PATCH v4 2/4] zram: support compression at the granularity of multi-pages
+Date: Fri, 27 Nov 2026 16:27:06 +0800
+Message-ID: <20261127082707.3624358-1-zhaonanzhe@xiaomi.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-216088@kernel.org>
-References: <20261115024455.1465726-1-zhaonanzhe@xiaomi.com> <20261115024455.1465726-2-zhaonanzhe@xiaomi.com> <sashiko-outbox-216088@kernel.org>
+In-Reply-To: <sashiko-outbox-216089@kernel.org>
+References: <20261115024455.1465726-1-zhaonanzhe@xiaomi.com> <20261115024455.1465726-3-zhaonanzhe@xiaomi.com> <sashiko-outbox-216089@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -87,176 +87,67 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3Pwd_OglrliZsEA--.60259S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxuFykWr4rXFyxtrykWr47CFg_yoWxXFWDp3
-	WxCanrAr4rXFy8J3y7Ar4kAanIywsxKF48KayrurWfuFWrJ3s2gFy7Kry3XF48ArsrA3yx
-	Xws2yw43Aa1rCw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U9XocUUUUU=
+X-CM-TRANSID:PikvCgDnz+_cPglrqen2EA--.50878S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxJF1DAFWrCryxWry5KryUKFg_yoW5Xr4UpF
+	y7Ga42yr4kJF1IqFsrCFZ7u3s2yr4S9ay8Gry8tr47Wa4rX34qqFWqgwnYka1UCrWfW39I
+	gws5ArZ5J3WUZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UvksDUUUUU=
 Sender: nzzhao@126.com
-X-CM-SenderInfo: xq22xtbr6rjloofrz/xtbBowHLm2sJOoG5ZwAA31
+X-CM-SenderInfo: xq22xtbr6rjloofrz/xtbBsR3js2sJPt1GbgAA3V
 
 > [Severity: High]
-> Does this break compilation at this commit?
+> Does passing bio as parent to zram_read_page_size() cause a use-after-free
+> of page when ZRAM_WB is set?
 >
-> obj_allocated() only takes two arguments (zpdesc and obj) and returns the
-> handle pointer, so passing &handle fails to build until commit "zram: support
-> compression at the granularity of multi-pages" reverts this line back to the
-> two-argument call.
+> When test_slot_flag(zram, index, ZRAM_WB) is true, zram_read_page_size()
+> calls read_from_bdev(zram, page, index, blk_idx, parent) with a non-NULL
+> parent bio:
+> ...
+> read_from_bdev_async() submits an asynchronous child bio referencing page
+> (inheriting REQ_OP_WRITE from the write bio) and returns 0 immediately,
+> after which zram_bvec_write_multi_pages_partial() frees page via
+> __free_pages() while the backing-device I/O and completion work are still
+> using it.
 
-Yes, patch 1 breaks compilation on its own. I will fold the mm/zsmalloc.c
-change from patch 2 into patch 1 to keep bisectability intact:
-
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -1698,2 +1698,3 @@ static struct zs_handle *find_alloced_obj(struct size_class *class,
--		if (obj_allocated(zpdesc, addr + offset, &handle))
-+		handle = obj_allocated(zpdesc, addr + offset);
-+		if (handle)
- 			break;
+Both writeback and recompression currently assume that each slot holds a
+single PAGE_SIZE object, which conflicts with multi-page slots, so I plan
+to temporarily make CONFIG_ZRAM_MULTI_PAGES mutually exclusive with
+CONFIG_ZRAM_WRITEBACK and CONFIG_ZRAM_MULTI_COMP via Kconfig.
 
 > [Severity: High]
-> Does calling memcpy_to_page() here trigger VM_BUG_ON(offset + len > PAGE_SIZE)
-> when writing a multi-page object that spans two zpdescs?
+> Can post-processing a multi-page slot overflow ctl->pp_buckets[] and
+> req->page?
 >
-> For a multi-page class, page_size is larger than PAGE_SIZE, so off + sizes[0]
-> equals page_size and exceeds PAGE_SIZE in the first memcpy_to_page() call
-> (and sizes[1] can also exceed PAGE_SIZE in the second call).
+> Neither scan_slots_for_writeback() nor scan_slots_for_recompress() skips
+> ZRAM_COMP_MULTI_PAGES slots, where get_slot_size() can be up to
+> ZCOMP_MULTI_PAGES_SIZE.  In place_pp_slot(), NUM_PP_BUCKETS is sized for
+> PAGE_SIZE:
+> ...
+> When a multi-page slot's compressed size exceeds PAGE_SIZE, bid exceeds
+> NUM_PP_BUCKETS and corrupts memory past struct zram_pp_ctl.  In
+> zram_writeback_slots(), req->page is a single PAGE_SIZE page, so
+> read_from_zspool_raw() also overflows req->page and wraps PAGE_SIZE - size
+> in memzero_page(), while uncompressed writeback and recompress_slot() pass
+> PAGE_SIZE for a multi-page object.
 
-Agreed. I will replace it with kmap_local_zpdesc() and memcpy():
+Same here. With writeback and recompression disabled under
+CONFIG_ZRAM_MULTI_PAGES, scan_slots_for_writeback(),
+scan_slots_for_recompress(), and place_pp_slot() will not be built or
+called on multi-page slots.
 
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -1270,16 +1270,18 @@ static void obj_write(struct size_class *class, struct zspage *zspage,
- 	} else {
- 		/* this object spans two pages */
- 		size_t sizes[2];
-+		void *dst;
- 
- 		sizes[0] = page_size - off;
- 		sizes[1] = size - sizes[0];
- 
--		memcpy_to_page(zpdesc_page(zpdesc), off, src, sizes[0]);
-+		dst = kmap_local_zpdesc(zpdesc);
-+		memcpy(dst + off, src, sizes[0]);
-+		kunmap_local(dst);
- 		zpdesc = get_next_zpdesc(zpdesc);
--		memcpy_to_page(zpdesc_page(zpdesc), 0, src + sizes[0], sizes[1]);
-+		dst = kmap_local_zpdesc(zpdesc);
-+		memcpy(dst, src + sizes[0], sizes[1]);
-+		kunmap_local(dst);
- 	}
-
-> [Severity: Medium]
-> Should these helpers use zone_stat_add_folio() and zone_stat_sub_folio()
-> instead of the double-underscore variants?
->
-> __zone_stat_add_folio() and __zone_stat_sub_folio() require preemption or
-> interrupts to be disabled, whereas alloc_zspage(), zs_free() ->
-> __free_zspage_lockless(), and zs_page_migrate() call these helpers in
-> preemptible context with no locks held, triggering preemption-disabled
-> assertions and racy per-CPU vmstat updates.
-
-Agreed. I will switch to the non-preemption-disabled variants:
-
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -345,4 +345,4 @@ static inline void zpdesc_inc_zone_page_state(struct zpdesc *zpdesc)
- {
--	__zone_stat_add_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
-+	zone_stat_add_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
- }
-
- static inline void zpdesc_dec_zone_page_state(struct zpdesc *zpdesc)
- {
--	__zone_stat_sub_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
-+	zone_stat_sub_folio(zpdesc_folio(zpdesc), NR_ZSPAGES);
- }
-
-> [Severity: Medium]
-> Can ZSMALLOC_MULTI_PAGES_ORDER=9 overflow the 24-bit first_obj_offset field
-> on 64 KiB page systems?
->
-> With 64 KiB pages, order 9 gives a 32 MiB zpdesc, while
-> set_first_obj_offset() masks offsets with FIRST_OBJ_PAGE_TYPE_MASK (16 MiB)
-> and only checks BUILD_BUG_ON(PAGE_SIZE > SZ_16M):
-
-Agreed. I will check ZS_MAX_ALLOC_SIZE instead of PAGE_SIZE:
-
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -551,3 +551,3 @@ static void set_first_obj_offset(struct zpdesc *zpdesc, unsigned int offset)
- {
- 	/* With 24 bits available, we can support offsets into 16 MiB pages. */
--	BUILD_BUG_ON(PAGE_SIZE > SZ_16M);
-+	BUILD_BUG_ON(ZS_MAX_ALLOC_SIZE > SZ_16M);
+Also regarding the related zs_rebind_handle() issue from the patch 1 review:
 
 > [Severity: High]
-> Can the last base-page size class exceed PAGE_SIZE when
-> CONFIG_ZSMALLOC_MULTI_PAGES is enabled?
+> Does zs_rebind_handle() also need to mask the object offset with
+> page_size - 1 instead of offset_in_page()?
 >
-> Previously, ZS_MAX_ALLOC_SIZE was PAGE_SIZE, which clamped class
-> ZS_PAGE_SIZE_CLASSES - 1 to PAGE_SIZE when PAGE_SIZE - ZS_MIN_ALLOC_SIZE was
-> not a multiple of ZS_SIZE_CLASS_DELTA (such as on 16 KiB and 64 KiB page
-> kernels). With ZS_MAX_ALLOC_SIZE raised to ZSMALLOC_MULTI_PAGES_SIZE, class
-> ZS_PAGE_SIZE_CLASSES - 1 gets size == PAGE_SIZE + 32 on 16 KiB and 64 KiB
-> page systems...
->
-> Should sizes for i < ZS_PAGE_SIZE_CLASSES be clamped to PAGE_SIZE, and should
-> the multi-page classes start at i - ZS_PAGE_SIZE_CLASSES + 1?
+> When a non-huge multi-page object sits at an offset >= PAGE_SIZE within its
+> zpdesc, zs_rebind_handle() overwrites 8 bytes in the first subpage and leaves
+> the object's own header pointing to the old src handle, so later compaction
+> updates src instead of dst.
 
-Yes. I will clamp base size classes to PAGE_SIZE, start multi-page classes
-at i - ZS_PAGE_SIZE_CLASSES + 1, and adjust get_size_class_index() accordingly:
-
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -211,4 +211,4 @@
- #define ZS_MULTI_PAGES_SIZE_CLASS_DELTA	(ZSMALLOC_MULTI_PAGES_SIZE >> (CLASS_BITS - 1))
- #define ZS_MULTI_PAGES_SIZE_CLASSES	(DIV_ROUND_UP(ZS_MAX_ALLOC_SIZE - PAGE_SIZE, \
--					      ZS_MULTI_PAGES_SIZE_CLASS_DELTA) + 1)
-+					      ZS_MULTI_PAGES_SIZE_CLASS_DELTA))
- #define ZS_SIZE_CLASSES		(ZS_PAGE_SIZE_CLASSES + ZS_MULTI_PAGES_SIZE_CLASSES)
-
-@@ -586,5 +586,5 @@ static int get_size_class_index(int size)
- 		idx = ZS_PAGE_SIZE_CLASSES;
--		idx += DIV_ROUND_UP(size - PAGE_SIZE,
--				    ZS_MULTI_PAGES_SIZE_CLASS_DELTA);
-+		idx += DIV_ROUND_UP(size - PAGE_SIZE,
-+				    ZS_MULTI_PAGES_SIZE_CLASS_DELTA) - 1;
- 		return min_t(int, ZS_SIZE_CLASSES - 1, idx);
- 	}
-
-@@ -2305,4 +2305,4 @@ struct zs_pool *zs_create_pool(const char *name)
- 		if (i < ZS_PAGE_SIZE_CLASSES)
--			size = ZS_MIN_ALLOC_SIZE + i * ZS_SIZE_CLASS_DELTA;
-+			size = min_t(int, ZS_MIN_ALLOC_SIZE + i * ZS_SIZE_CLASS_DELTA, PAGE_SIZE);
- #ifdef CONFIG_ZSMALLOC_MULTI_PAGES
- 		if (i >= ZS_PAGE_SIZE_CLASSES)
--			size = PAGE_SIZE + (i - ZS_PAGE_SIZE_CLASSES) *
-+			size = PAGE_SIZE + (i - ZS_PAGE_SIZE_CLASSES + 1) *
- 			       ZS_MULTI_PAGES_SIZE_CLASS_DELTA;
-
-> [Severity: Low]
-> Does the format string need a trailing space after the third "%5u" to match
-> the header and Total lines? Without it, all subsequent columns in each
-> class row are shifted left by one character.
-
-Agreed. I will add the trailing space:
-
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -670,2 +670,2 @@ static int zs_stats_size_show(struct seq_file *s, void *v)
--		seq_printf(s, " %5u %5u %5u", i, class->size,
-+		seq_printf(s, " %5u %5u %5u ", i, class->size,
-
-> [Severity: Low]
-> The kernel-doc comment above zs_huge_class_size() is missing an @type entry
-> for the new parameter.
-
-Agreed. I will document @type:
-
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -1292,2 +1292,3 @@
-  * @pool: zsmalloc pool to use
-+ * @type: zsmalloc type (base page or multi-page)
+This is tied to the same recompression issue: zs_rebind_handle() is only
+called by zram's recompress_slot(). With CONFIG_ZRAM_MULTI_COMP and
+CONFIG_ZRAM_MULTI_PAGES mutually exclusive via Kconfig, multi-page objects
+will never reach zs_rebind_handle().
 
