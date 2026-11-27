@@ -1,137 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.55
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795775161;
-	b=1HWj/7jRpOY6S8zZxKJvoqs4wjzYQlROk2lscqQcaQP0kSKJNSvNBT3VcoLi8FOstlGa
-	 gmJp0TRfQ8mfiZHMfAF/3n7qmSx2iLOAG3iKyUXMe4NguWm+6//tuneDA7r1ACfn3dy5/
-	 QICL+lj1/TEgl1lMX49xYWte1LHudahB0YqZhLoyw4kYzhvKabWLZ7FnBfHzMV/IYQzpA
-	 XB/vfQJpkC9UNGehI7lCU8EVJLVI9KcnImJfjU1joCAj7OgoJ5Eq2Jd0Mxk2rjepm0CC7
-	 /hhKc34VI+AKjMv7ZaEkseoA5RbCqVtUnfB/SG/H4hhazWudPUSUSRTQgleOBcKkhpQ==
+	t=1795775948;
+	b=Bx6n60Qz/a7EMBVVj6RE2/b+NMNdfOZKPmytFQFtsxpa0Qkz0mGUV3EN6HN3Qvh+KfBm
+	 8uu3WBsax9yUqmONJz4KYKQ6G9RJ4IxrjdoHQVdH2gjT1LK3qbtZstV+bSVxyaW6j4Sp0
+	 9ZRQNYe9o/P3SPiwoEorN/9xryOtiy997gvMTJtA9uXysazpmWA1AZ4+Kk/H7FKSvB7rA
+	 wkusBNd81phphAExbKSB5qlqwcp/A1cEXp7Fmrpcr97NuTD/MsyZqCINk7ao2FC3QJCza
+	 h67rKE3eDe6XY6Y9eXi4sy7gbu0O8FywXFs598o4i/UCOeVYR/I8gG5ulVDVVePXjQQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795775161;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:
-	 Subject:To:References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795775948;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
 	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
 	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
 	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=HIHlmX7OfhvjmufFE2SnMbm5npWJkeDWNaYJdBGVFEY=;
-	b=D9QIYxLRQJKNexkrXOJr1z64InMU2uly5agNW6IslKLelXoGYLiiEWHYHhc6SqbzukAQ
-	 RChpl2eVSnR0G5rwD5RTNMFtEgFST48jRvSr+kbNUB4gayT5i2WPAO3YD1lx3+j7HxUu4
-	 w5A/VNweTpa72IVbhITBiKLmnV9YvqeA/s8SJHkqq9Z9ZMzfRUasSuHEYJx/Ocv+DJDUm
-	 WAtGgtp0jaPl08GITuSnjV+hVTyp4CVvOD/oG4MNmifPc46W4g4VZqFtA09aQDg8Nw+h9
-	 XvL6afjM8SWJwoaMmgeUZNfmfIHpHPbiHdGvDABCVm9NJeJ2aQZzT2HOKLnfuULrJEQ==
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=yuxgGyK7sH0AQv9TUPJLc1CfQ6Q/Ro/OlhcRBAzCvfI=;
+	b=1rDyFid6Z/w2zxdDmivxjTzp6As0lnNhS6mlRsiiR2Sr60qC1uLqlvxYzPXAeD7fGzLf
+	 AGyx22fpgiB/3b7oBSzL+3uyBCETQT0UDgIlS1UZeIgmlIQRCtuNYSodeQU/vb4Q0AU+e
+	 u5S8y6i7d5GA8Xqi+ue4Fjk0tffbgX/lBhvvAHKTVwZYfdBC5MO5JOCwB7gU85WcCuTIx
+	 4hOMVk7vJvBNcNE/5gm3anRMwBCE9flBN/gtMRMPl5+yXj7l/HtMxEe1frdxWmRmJYtJ6
+	 4qUtMVKF9HarwPiXgLOqEBSNMwQVw/o8fUQ5u1zCsEwEl7CfE2RXreBzNvCp7eop6Tw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Jm9EO6Wg;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=X0Yr3jXr;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.17
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=zDS3eyAU;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.55
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010055.outbound.protection.outlook.com [40.93.198.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6935606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 10:26:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6935606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB00606A31E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 10:39:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9FB00606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Jm9EO6Wg;
-	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=X0Yr3jXr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795775160; x=1827311160;
-  h=message-id:date:subject:to:references:from:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=4CjKmOGHQt+vKxnA8y6p3Tfb1TtcLqQ4Ra3nOwL7OnE=;
-  b=Jm9EO6Wg7E93aDEz5r+jvlQxihb+5odDBgFF/lviX2T8yL2fFPWA+S7m
-   W5zBcsQO1lZnwIc+ADOcIpZ8ZZx6KTUWKlAkdd41Edxr965osVnxApvJz
-   8d/vyq0Dv9uZZ24A0JkSZXXX3nTDwNtLShXeSZ8Ajk6X1f89NH63s7fYX
-   8tvJgALs4BiAUv02E8gyKDjgOuaQtBG0S/hSzC7eLL7hUMceGHSw30IJD
-   NWzwEDmyRpeNa3fmeFJ6U0NPpSRmyeUtRbjfgiAs55UI88zpgBRMLYeS0
-   XU6catyrjCDTH7oy8FBKXLZON2CCEOsXAM0cYc1vl62jW1EuhoR6Pgmrf
-   g==;
-X-CSE-ConnectionGUID: KPlw9d7RQqOWLeVIFQ0LSg==
-X-CSE-MsgGUID: qZhNhSn8S0mODLoKOEiWMw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11978"; a="4684424"
-X-IronPort-AV: E=Sophos;i="6.27,236,1787036400"; 
-   d="scan'208";a="4684424"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2026 02:25:59 -0800
-X-CSE-ConnectionGUID: EpIb9zROTgiOqNnkjszBnw==
-X-CSE-MsgGUID: bKnNDyZFRkuZXEKbUms6og==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,236,1787036400"; 
-   d="scan'208";a="12238901"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2026 02:26:00 -0800
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.57; Fri, 27 Nov 2026 02:25:58 -0800
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.57 via Frontend Transport; Fri, 27 Nov 2026 02:25:58 -0800
-Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.65) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.57; Fri, 27 Nov 2026 02:25:58 -0800
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=zDS3eyAU
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V5riFT/pZHZ9QlyDRH5HgmqGtueek37B3yC/o/6ZUaz2JiWbneRUnR8fF5sWOyOiKZ8MBv1SldeM9WXAjI/HX4TOanDCxkDLYF0PlPiWJIpc9EiQ+Yo4yNSyr04DV8fliVmxyv7qgs6ZUC8E52ijGRfwr7hilel/wmugtdvw5Ni29klPgn85oFyTQgoNbQtd3R1PlFD+CQ5FODgtIjLiWli1qFClwoOReOJAUenln2ljR1RFOgSQ1FZODS94LBUrxbYEgox4hTFb/PaM9GLm1XE5szvk7Oa+BUAz6ClgAzEbFmzamwy0/UC9+NpbchY8joz2hKYqXLN2Sy8Lprwt+g==
+ b=Eb944RSaLPePVZ+ah6wbxMcEUE1vgdRHMvE5xGp5p3TG2bRj9ijhfAPkxH9yW0PJV9/YyiYhtVer2MkwetALC3eRxlNKFx+nDnBI3qxf/+hPx8wl2C+/dkQ/ef1+ZXR4UXMnnvdOKy1Pdgsjja477vRwFwbQtbs3vj2NR/Da2Y4BpBG/KCOxmxQf0shT319mZpjuY56PdVGB83bMW+Vp0hmpzXJW5zpY++2vJPVGJZm6lDYZFD7PNvjNR9fAvwKoFQFMDRj9JZkffL/ANY69tzuRfcTkwHItb9a6wL+V9/7QVcFs0u4quzFsLydJeQJV/p6nI+GlG7rsjghTn5tlYw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HIHlmX7OfhvjmufFE2SnMbm5npWJkeDWNaYJdBGVFEY=;
- b=Tr4wSp0vmpGqdfCQG7+zHrgkXcjJfF1KxgR0cWNXRn0v0TlcerOKrnS5B/JDltlEvnD6mIX6/6BymoD0VH1TSLTA3GcMhsTNvZWX6/rHmKcEAMQJI+J0wWB/RK9e5MzqTyV803TOCHRMgnOE/iphr9YjItBOS/x+MwWd8wfyTF8BJ0+wL90fKK5ILONZ4FPgVVlbwWcydjYyHFeM4eGtifZnkARA/7CPwtQN2ZR63kzcyurm9TD5UZ01KC9QPrVrI48avUQM4Mr0R/BZiEijpwwCaAjkxbynJ8+O6dMPXgsx37+VMGPwnbPyryhJSXf2BVabKKyGMf3w+biBvWSRfA==
+ bh=yuxgGyK7sH0AQv9TUPJLc1CfQ6Q/Ro/OlhcRBAzCvfI=;
+ b=HzMnmel3EyZkP/vEwi2H6JVMMYOOHT1nhMZF35OCgD39Dj6AnoFesV+rweSkLfDADEkk9D4OW6jPf9jQIqTVBjuqKH4b11f7EQnNBIC3rBMwjeviGccgPv4z07K8orkrHSoJHHNcUgD16e8MYDAq3UVgy3E7g3xMMBBTHB/K/4VCvZRxkWvKAZvEpPrh/JLeTivCQ2wBMcVp6U6w1UISHm/tjpwNhVA/sukyJTXQYmwJmpOSiBJNEAIw9rxDog+PEpExITrkPSZPIDB4wLYntV0ZEs5AFLMQyf1R0+7kIWBx76WU1nfB2Vk81N2NqW5Ob+DNpIdDVC/ve3PBVdxNTA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
- s=selector1;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HIHlmX7OfhvjmufFE2SnMbm5npWJkeDWNaYJdBGVFEY=;
- b=X0Yr3jXr38QzUHCpBhH8CHyVQcHCNNMg55jVqg7GgJxWwOl619ygBc+Y42cp7FJRm1afHcaJg885/Zp8xYXmuvFCTXSwD04LsNK/iOZvv/4Iv6fNquhcV/07RAkRAYtDsY8mfPECgoosO95XWBV23BVnUMd2GdwTWmv/7IcJV40=
+ bh=yuxgGyK7sH0AQv9TUPJLc1CfQ6Q/Ro/OlhcRBAzCvfI=;
+ b=zDS3eyAUcpzuzC9AWdBFTY5SC34CMImiY4Ddyrp2A0B5UWDL9hSQffFJ+I4c5T6nUBEWl4TJXQOL0Z/zCEFFOIaNF7glMfyZj4OlajhQQ53RcaJiZAVnlAb8RrjM5Q0YgbBHb9qUlJI0gygERHWzo9Rb9Qq6nlTY5sCn/9Z6xBg=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from IA0PR11MB7862.namprd11.prod.outlook.com (2603:10b6:208:3dc::8)
- by PH0PR11MB9726.namprd11.prod.outlook.com (2603:10b6:510:396::18) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB8466.namprd12.prod.outlook.com (2603:10b6:208:44b::7)
+ by SJ2PR12MB7893.namprd12.prod.outlook.com (2603:10b6:a03:4cc::6) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.9; Fri, 27 Nov
- 2026 10:25:57 +0000
-Received: from IA0PR11MB7862.namprd11.prod.outlook.com
- ([fe80::3b4e:43a6:6e22:22f]) by IA0PR11MB7862.namprd11.prod.outlook.com
- ([fe80::3b4e:43a6:6e22:22f%5]) with mapi id 15.21.0662.004; Fri, 27 Nov 2026
- 10:25:56 +0000
-Message-ID: <8e98504b-665d-40af-89ba-7fb8fca40e4f@intel.com>
-Date: Fri, 27 Nov 2026 15:55:49 +0530
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.10; Fri, 27 Nov
+ 2026 10:38:58 +0000
+Received: from IA1PR12MB8466.namprd12.prod.outlook.com
+ ([fe80::150d:6209:9689:944b]) by IA1PR12MB8466.namprd12.prod.outlook.com
+ ([fe80::150d:6209:9689:944b%6]) with mapi id 15.21.0662.004; Fri, 27 Nov 2026
+ 10:38:57 +0000
+Message-ID: <f377995a-f433-4ba3-b6ce-2789d8d00989@amd.com>
+Date: Fri, 27 Nov 2026 16:08:51 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/6] drm/xe/cper: Handle CPER allocations in atomic
- context
-To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
-References: <20261127092914.2176025-8-mallesh.koujalagi@intel.com>
- <20261127092914.2176025-12-mallesh.koujalagi@intel.com>
- <sashiko-outbox-236990@kernel.org>
+Subject: Re: [PATCH 2/2] ASoC: SOF: amd: acp7x: reload firmware from disk on
+ S4 resume
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sound@vger.kernel.org, broonie@kernel.org
+References: <20261125053843.1611378-1-sravisar@amd.com>
+ <20261125053843.1611378-3-sravisar@amd.com>
+ <sashiko-outbox-232637@kernel.org>
 Content-Language: en-US
-From: "Mallesh, Koujalagi" <mallesh.koujalagi@intel.com>
-In-Reply-To: <sashiko-outbox-236990@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5P287CA0157.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1ba::15) To IA0PR11MB7862.namprd11.prod.outlook.com
- (2603:10b6:208:3dc::8)
+From: "Ravi Saravanan, Siva Subramanian" <sravisar@amd.com>
+In-Reply-To: <sashiko-outbox-232637@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5PR01CA0023.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:177::15) To IA1PR12MB8466.namprd12.prod.outlook.com
+ (2603:10b6:208:44b::7)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -142,146 +99,170 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR11MB7862:EE_|PH0PR11MB9726:EE_
-X-MS-Office365-Filtering-Correlation-Id: d4664ffb-0f2d-4c24-13e3-08df4c70d2ad
+X-MS-TrafficTypeDiagnostic: IA1PR12MB8466:EE_|SJ2PR12MB7893:EE_
+X-MS-Office365-Filtering-Correlation-Id: 268a2de0-17a7-4915-aa7a-08df4c72a3ea
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|10067099003|56012099006|11063799006|261021121427099003|261022105027099003|261026140227099003|261026121527099003|261022075727099003|261028144727099003|261102123227099003|261009223027099003|22082099003|18002099003|4143699003|6133799003;
-X-Microsoft-Antispam-Message-Info: MKbfO1Iw8hI8OFkNSIOdRI88Z+/5fcVIV+wsWMTuDZQGc6Oh5CuWYTdBFaMHOcq7g7CM8gxvw/ymnN293XsTc/RYe0Gs9/ZjD77d5xS26Dhuzf9GgW55MiLQZ8yytJu/XYEYvhfsg5rRY190xc7xx2ZjEiY/QU3iQLJFcn8rgkPL3fiTFft6SJnkQ1t4225Nynqe8y3af+6mrVWFerfzHObC1dyx2d8eTD9McxvXSqvx+3zewlLohyDCX/7qptBrkpPX3KaWFZoU0VDDMGhrnpHYjVUbE4Byp2x5oWl2gRb8r8Tx7d7ssrw2Viluvgk0mqCPrv8PP4vLN+bKZdbI2Fw5VZvv7cDaqDBO5RJWoHg4XyT8DYVqlUKfJJDH/lIsiN6NbWbRkQP1RZ9iv9o052V4LG0j3VuaN6RpyK6TFrQnAVTzRXD8dDY9RBmcaY/OuaY14IwzdeENX6AroToOCC804I46QTSFlpIx/8IkLwRznRT963NToCpWvY/+D2y7+4ONM41T1SipfaDsLda8d94tJMYoj9TizpJQPOaeVUZ3SuKsg+SWiP9Dgbv8NO6Q42wvtvjBEscRaejMuJhLSXcSr0p5K5s8I7ra7NX1YqXHnMluZyaTUi8uGgKy7LW8dqE7CAjKhtTY/FkH2DZGTuc4mPHr1GPtww2AJFDUiSs=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR11MB7862.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(11063799006)(261021121427099003)(261022105027099003)(261026140227099003)(261026121527099003)(261022075727099003)(261028144727099003)(261102123227099003)(261009223027099003)(22082099003)(18002099003)(4143699003)(6133799003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|4143699003|11063799006|261009223027099003|18002099003|22082099003|10067099003|56012099006|261022115727099003|261102123227099003|261028144727099003|261026140227099003|261026121527099003|261021121427099003|261022075727099003|261022105027099003;
+X-Microsoft-Antispam-Message-Info:
+	3rkME5uHFCTPvrYeWl+JqebuqsWr2thHMQ/gFqAOPd7C2oMAYTbZqXfNCS8caAalUsc57V5GmtYmfmXfrR2HA+0lCtmZKS2Uhulh203zCzQ3a5K+0PW/p9PZmDUEw3BF8WnecgKtSmJEMnEZrsMjlybwyzU4t808yFj2RBk3W7cGgeR/74G+OwZqUZpw+nnXCTZzGVlYl0tKuPG4KR4MqXm28LqxtFC2a51gmchBOb73yddkhg1fFF1EyQq1+tShf8KSUDureHzRd7cigWyIOHh12xVGNjkgQvPqVz3Rl5St34yDFOC1hnArgv6yO8dNZ5yF1yWKpyvov0P/h4VZgCVWiltGraOw83o7dNYsnXw6APjUiIpqNDtlj/eorT9//ZcKrQxycgfdaePZ6WJScOLV1K4a9ZO/XRKRFG+hB138zhD5wAQSRzAVe74kw63SeaceqZn0RPd0N04RSBqoQrZu/TtlVeewCSNCYl1fQceB9oqEygM1FRjm4wqhZz4WXKCx+QtQoT10UV0Eu6RVwFcfCzW7sONVLlBnC2eVaCTFC0tqLQPxEnhulxE/Z+LVLgfdk+eghQZ+VHaqW3/rYc/C7V4PfcyCMNi4aA/KfLc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB8466.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(4143699003)(11063799006)(261009223027099003)(18002099003)(22082099003)(10067099003)(56012099006)(261022115727099003)(261102123227099003)(261028144727099003)(261026140227099003)(261026121527099003)(261021121427099003)(261022075727099003)(261022105027099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bXUrZTJYVWtSU3J5NTd2WkRmaURpeUlUbSt2V09URTRQcVZ2TldpTXdZaGRN?=
- =?utf-8?B?ZlBnSWxJTUoxb0NYK1JJMjJ4bXdXbWRKUXA1bDE0OGVzM253T0twMzA2Tmlp?=
- =?utf-8?B?Ujk0Q0Vid0xuY0RtZUJPSVBVSnRzMGlaS0NsdC8rSFM4VkdzRDlRclM2aHdj?=
- =?utf-8?B?dU5Mdm9PZklVZWtZYXhpRVNsaGNPME9keGZpdlpKay9qSU5hcHJWWGNsN2dh?=
- =?utf-8?B?ODVkYk1DSWNUNUMySmZ5QTMwdTBDbnd0eFA5bnk1Ny9XYXhjaTBYQmdIYWhP?=
- =?utf-8?B?Mi96NzJZQitLc2o0Mm5td3RwTGl3MmFrOXQ2a2lJUHFQWXdDVWFhRFFEcDEy?=
- =?utf-8?B?ZnBpY1pSZ21xQkRucHRsd2ZMYkFJZWdlRkFOYXo2MFVkdTFmRzNLY2dSTnZ6?=
- =?utf-8?B?ZDZMZnFDd3VocDludW1iQVZuK3UvWWdVNEczSjB3L0dHZVVEUUxMa2pmWEov?=
- =?utf-8?B?NjlJWFIrcGVlMTVGdVFiRWZqL0w3Q2pNTy9xdlovSWVQT0Iwcm4zdXRxdFo4?=
- =?utf-8?B?ZjE5Nk5DekhtdzE0RVVHWmx4QVJ0S05tZ3NITTliUGZ4TDdOdnQyREZ3RmVV?=
- =?utf-8?B?UUdIUXJQYnJlcWw1WlZjUkhsNlI0S0hCWUFBWG1rWVk1UFVNS2xQOWw2Zkg2?=
- =?utf-8?B?TkRvRFNCRUJJTTB1RXVTY0VSUE9nNjgyQXlaSVJ6N3pDZ0RCeGwrMW9tNDN6?=
- =?utf-8?B?WklSZiszMHFmZDlSV1J1RXU2aHZkQVBKWjVnSXVLelR0ams0c1JoMjZ6eFVD?=
- =?utf-8?B?SlBwQ2NSR0pOUWJDdDR2ZVpKdTM0T3Y4OFBZaHV4bGwvY0VhR0tEekw2dkc0?=
- =?utf-8?B?NG1mZXVuc0JDY3lwQ3Rlc0h5T1VPNUZtclZBSStMSFpEQUM4bUFjTjRiU0po?=
- =?utf-8?B?c1hCWW9KNld0YTZXd2VqLy9ZWWlKYnFwQk42VDB3NVcyaTlscTQ4dnNWallx?=
- =?utf-8?B?RlJkQ1J2SzRwcGNDdXpjY0hnRGNHU283bC8xd1JsYnErSm5oa256MFVtRG9o?=
- =?utf-8?B?TGtvOHBUOTAxZFU5RWV2MFZoT1MxUXZhajhxQ3JtSGRjWHE4SXp0VGxkVmlk?=
- =?utf-8?B?Z3VvaXdZekYwN3BYS0ZsT0p1ei9tQ2I1cDg4TEhHVGNmMTJQZnpFRjM5bXBK?=
- =?utf-8?B?MnV2cUJNVlVIaCt5NWZOWWx1RUczekNsY0crRTZqcTIxSm9hRXYyU1lVWWlj?=
- =?utf-8?B?ekxYc2YxT0xHU2Jub3pJM29BQUFrQlUralpZWXk4TGJUYjdobEFVMWdYak0r?=
- =?utf-8?B?SWlnTG9hd1hWOUVKRlpNMWNVa0hNd3lEM0hkUXJiaHNwMjRwa1dNekVHZ050?=
- =?utf-8?B?Y0dUK2llNWJwOXA1UVlsRHE3OUs5NmdZZXRtR0UrYU5uZlB5KzJXdytPU2xH?=
- =?utf-8?B?bS8xZng3czdKTkpOVkZZSnlYOUMrUUlLNExUUDIrNmlUanFpSmVyTVVoZDlO?=
- =?utf-8?B?dVAxc2xpdHJJczBySlo3TG96aGZ5bEZ5MjRGZFBUby9QYU96ZVZVMThWaDFl?=
- =?utf-8?B?N3hZMURyU2w2Q0oxU25UUkZ1WENjUWQ0eDBGWlRZdy81ekV5TTJzci9mU3Nu?=
- =?utf-8?B?VTBRekVTSi9NTlM4cS9NRkxOa0ZCWnpxNU9Va2FJRnllNm5yK3BpUk80K3dl?=
- =?utf-8?B?NFpuYkRMaWpCcm9oa1I5cXZyclNRM1Z4VWpkYzJrVUtxRlN5dDV5aHFjM00w?=
- =?utf-8?B?U2Y0THhUbXljQjhIMEJoSmJXUk9JUkxOMjJ5cG4ycTFSUmpGcFlkZW5TbG9v?=
- =?utf-8?B?OFR6Z1E4bUVHVXpSYU5rYWRjcmU2bExaZlNDV1d2RWJvcnJQZFZCd1RJdkgx?=
- =?utf-8?B?dlZuMHVOQVFTUURMVVFncDBGSU1aMjU1alBBQWFYdzFtdGsyOHhsYlJkMEdF?=
- =?utf-8?B?UzVMcWdGSUxscVgzYVBmR01YbGNJTXBZT0V1SmJKdTBBWlI2YWV4YXBuOGdI?=
- =?utf-8?B?MHRXUmlZL3laWVdvUzJkNDBLSEEwSy9DdytrNWRXUmJVanRLZDNWdmhlOHRM?=
- =?utf-8?B?RnA1eUwvd010ak5wN2tSejh1QTFJbjRxOUNjb3ZTdE9mUWhBN0JyU3JZMjZl?=
- =?utf-8?B?K29SVUlBVFdtMHlrRWZTeEJydmo3TDVRRkJXMHZnaDFrdHdjSGt5dVJtMjNN?=
- =?utf-8?B?YW5uWGpsRlJqVFNsbmM0cm0xWkNpcVk5UXVMeHdGWXA2WXdVZEI0TXJ3aGVE?=
- =?utf-8?B?bmpYbEJ4alA3NWNuckJrTnhvSUg2V3hNdWQyaHlJZlpWZGN1Q1NZazh0dllT?=
- =?utf-8?B?NVFnRFNtUHlBOVU3czYzOHRQZ3ZrYktPSXVORWlnUVNGaFZzRjFhUGIwYjE4?=
- =?utf-8?B?VkNYQ3J1ZHJnU09icGpuVm1vQXlObFR1Qk5KMVhJTHdpZkJTTStUZW91OXYz?=
- =?utf-8?Q?uWkLmAHLShDNFh5A=3D?=
-X-Exchange-RoutingPolicyChecked: MusXDxfIG4wQBCRVaUgO71CL+8RJV4Jp+j0uhBet9OB4S+5BQIHhx2ZxUq/iXXQiWwttqErnW+82jbfHMzfLuth/lsYk7cx2X1bTrFXecX+t1sb8vFKu/D+is26UrwDjrqTfsK5iQetinPr8AlUQvhv/f5s7moaIlFTl/BQCPZ1CuxQGj3q1ydTbqc2xvnOWXWhA8VKlEYH2Uf0Wj07AX8feWMRjeKRbdrYtdJJLDNBUEUUmd0Gn1MB6PkW3EBXJuig0FXeWSwSI3lAsiQLV1N0lwheqyzM8bYQovTGIbP4DRIf76Nm6lQXkLKPV9XmDc6VAdWw9mbUNp4MTBMJ+3A==
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4664ffb-0f2d-4c24-13e3-08df4c70d2ad
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7862.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?OXRGTE5NUDhjejFkcEtxQVdNMTBRb040TWZ4S1dZRDlCQzFBRmltZEcrVFBu?=
+ =?utf-8?B?ditnZGtoK0JibExaTHRDbnNmK2ZxNGdLcUpTODV5U0ppZ3RHdHpZWVU5emUx?=
+ =?utf-8?B?UU55dEVMVXZxUWEzMlU2cjRCZ2lXSkRsUnRSK2RhNlZ1Tm5UeFJaVkxhNFpV?=
+ =?utf-8?B?Q1pJN09Ha0JxTE5nS0RsTjFOdlBLcmZGK0VlcndVTHQ0cjZUZUVIWUhIcnV2?=
+ =?utf-8?B?MmRNbEFUZzZFNFZtSG1CMTdjc2hhQWIyNkYrSW5KbEd5QmFNa2FRMGwzZFUw?=
+ =?utf-8?B?VUg3T1hiNG1DT2NpRVFGeGx5TExkSUZ3NzhpRFpLRGlQUTVDRFpNeEMxMkpC?=
+ =?utf-8?B?OGJEd09Mc0w5ajA1WU4xckpmdGNocGZyb25lcXhQdVFTODZGZGtqN2VHdVlw?=
+ =?utf-8?B?RGtGZlUvNjZFdWxnVnRabmptdFB4eWFTU0VPd1R5clhLV1VkbVE5K29lbGdI?=
+ =?utf-8?B?VXRRZGVXQVQ1UnowekNpTFBUS3lkZC9WZUpBU1VPQnV3dFlJclFaalpPK2lk?=
+ =?utf-8?B?cE5tbVpKRjhqYjlhL3dsOVE2SWFKQTY5Ylc5WENPa3BHOUFzUzVIcmVjbUdZ?=
+ =?utf-8?B?UzFoYUtpeTByWkpOMXVHcjZxcDljZC9aeHVnc3JJcmY0TnRwSXVyZUJyMFdY?=
+ =?utf-8?B?MWRBN2d2elAzUjNwN01KcWlHclM0TVBBd3ZTRW9SV0prQmppemlMVlhxVGhm?=
+ =?utf-8?B?V1JkL0VFNHFaenRRaUpYaXlSb3pZVmVtRExtMGE4ZmJjVlhzeWVyRVRkeE9k?=
+ =?utf-8?B?dCttdXFVcVJ2eU1MOFQvdmU0djhnN2hXbndoZ05IelMzK0JlQkJNdyt1dHMy?=
+ =?utf-8?B?dmkxUnhQajRSM0Y4eEJrS0FQSDZGUzAyeFkvQkR6K3RYejdpdlJZaFAxWjNC?=
+ =?utf-8?B?Nk9yOXJRNThhZXBuYk1xV0lVRHhIUmxubmVNMGwrN3Jxd1JqTEVSUlFwYjg4?=
+ =?utf-8?B?Yno1NXM4Y3VPb2NKdkl6RkVISk16YjlwMjNPcWNabDcvL3IxQSt3VWtwVjNV?=
+ =?utf-8?B?Qm9zY3grWmVzbmgrelZzMnhBMkhhTHdSeEpHWmRhMkdjLys3MW9nN1VRYkJB?=
+ =?utf-8?B?c3Ezd2gvSVpLaHNicFRDaVBNTStjNmQxSjZpNG9vUWdKN1BuMDhvOC90TnYv?=
+ =?utf-8?B?c2VyNHNtWlNOajNsQ205OW1yMG1zbmgweEFuZFQ4cVhIeFptK2hwMDl5cVNp?=
+ =?utf-8?B?bmUxYm0zcXdWZ3JZc1UrQUIzWGUwTkFkcnp2b2g2WmE3S2pFOEF4UWVIV01R?=
+ =?utf-8?B?YjRZYU05SE5BRU5xRkMvUGJPR3Y1cDhEb3BDSlNoSFNjSjliSm4rVnRRNDVv?=
+ =?utf-8?B?SXoxYXRnTVltb0dkS2pQSHdXMFNQVkdjSjM0czY0aE0vVXIyWHZpYnJodklh?=
+ =?utf-8?B?YXU0QmNBT0JTU3pnZm15eVV4eE4wTTdnaUZMUG1GMGFLblZSRWVUUXh2bmNy?=
+ =?utf-8?B?dG4rc3Y0WC9Va3czTHhtWjFRNDFuVWlNOXZIbWQzZUtoOTdLUFVqOWk5ek1U?=
+ =?utf-8?B?ZEtLeFhQMnZ0amR6c2tqeDZySW0zS2dmS1VIaXlVNko2QTRZZ1BDYzhUeUZY?=
+ =?utf-8?B?UGZqa1hHUGVFcnNtZGxQWWx6NzJpVFBnM0NodlJCbmFiSWt5ek0vUExjVHZJ?=
+ =?utf-8?B?VkROY3NVdHhhMEVpT3pvOFlMMkEzejQvNDRHNWk2Z0NGMUpIUGYvbEtpUlkv?=
+ =?utf-8?B?cU5aMDAwM2x2V0VEMFYyOXpBcUdHRHVud2ppMk0wbThIbDZBeTZhMTlGbHlp?=
+ =?utf-8?B?bGM5STZ2U2FTUnlYS2FUT29wRVhMNlREdTdKR0ZRbHZ0bkxKb2ZHVHlhOHBB?=
+ =?utf-8?B?WDllRHh6UDJqaW55S1M5ZWhMU2xtWnU5MkxCTUo1V0NzTGt0RUNZU0FPbFNU?=
+ =?utf-8?B?dzFhTGZRRW9kTEpmZ3FDdC9CMUoxNmNuK09CcEhZQXNRT1I3SnpJRlU1c0s2?=
+ =?utf-8?B?aVJGMExJeEM0dmVLME5tZkV1bTBtdnNkMVRGb1FiZ0V5TjljZ1UzREVwdUpD?=
+ =?utf-8?B?TGlITnFmSmVCWkE4bXZGcmdxU0p4dk9adlErdkZZMFoxWFBCZFZFWVR3d3Fn?=
+ =?utf-8?B?amRTV0JEb0gvMUJzYzk3UDJsMi93UkEvOWl0NDJSazg2UElZdUViZlNBNkJW?=
+ =?utf-8?B?c0xvWVlVZFlxMEdoTGgyZTMzUDJoT0ZFaUhNbTZ0V2Y2YlpJcmtGRWZScVE4?=
+ =?utf-8?B?Uy9iVGZxZ0kydkdZR2p1NHRjV0NISlRxWnlZVjA3a2MvRnZvV01XRE90elZC?=
+ =?utf-8?B?L3dlbUFXMGROa3pWYkRqNVkvdzE2VWk1Z0pFWUxXdEl0aGdURDl5VEVzR29U?=
+ =?utf-8?B?MEF2YlpkbWRKb2R2YTZZSTlyUmJGMGdJS0R5U21iTnN5Z3pPZCtJQT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 268a2de0-17a7-4915-aa7a-08df4c72a3ea
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8466.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2026 10:25:56.8194
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2026 10:38:57.2389
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0F7NW5nI4k2o+gLy7k+SCVHk+2GVjCnjMfiAgtym6QZHK9CmsHb+uHIF9OJWsj5Ze6Wwzgqhr/oVYVt0x4mfXoxbTBFqxW37neglpqVHJlw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB9726
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: d1VgntlhZ9VLqPpwFM2iQJT2RwDjh31cJN2lRAf1qZ8+8/PrWGB6r0LkfgFbKo2mf/qYdDwhAVzFt2IIm0ogPA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7893
 
 
-On 27-11-2026 03:07 pm, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] drm/xe/cper: commit message contradicts GFP_NOWAIT use in
->    cper_emit_sw_err()
+On 11/25/2026 11:32 AM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>
+> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
+>
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] ASoC: SOF: amd: S4 carveout reset bypassed in
+>   amd_sof_acp7x_resume()
+> - [Medium] ASoC: SOF: amd: missed carveout clear in
+>   amd_sof_acp7x_resume() after FW crash
 > --
 >
-> commit fa3585155a74f119f9e4b51f2fac71fc5b12420d
-> Author: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+> commit b8704d96ab1f4418fdf040e05ffe9e060f0a776b
+> Author: Siva Subramanian Ravi Saravanan <sravisar@amd.com>
 >
-> drm/xe/cper: Handle CPER allocations in atomic context
+> ASoC: SOF: amd: acp7x: reload firmware from disk on S4 resume
 >
-> This commit adds a gfp_t parameter to cper_record_emit() and updates
-> cper_emit_sw_err() to allocate software CPER messages and records with
-> GFP_NOWAIT instead of GFP_KERNEL.
+> This commit clears fw_code_carveout_addr on S4 resume in
+> amd_sof_acp7x_resume() so acp7x_load_firmware_carveout() reloads and
+> re-validates the firmware into the ASP carveout after hibernation.
 >
->> diff --git a/drivers/gpu/drm/xe/xe_cper.c b/drivers/gpu/drm/xe/xe_cper.c
->> index 9161f2b52e9ba..10a4085d47f0a 100644
->> --- a/drivers/gpu/drm/xe/xe_cper.c
->> +++ b/drivers/gpu/drm/xe/xe_cper.c
->> @@ -183,7 +183,7 @@ static void cper_init_section_desc(struct xe_device *xe, u8 severity,
->>   static void cper_record_emit(struct xe_device *xe, u8 severity,
->>   			     const guid_t *notification_type,
->>   			     const struct xe_cper_intel_hdr *ihdr,
->> -			     const void *einfo, u32 einfo_len)
->> +			     const void *einfo, u32 einfo_len, gfp_t gfp)
->>   {
->>   	struct cper_section_descriptor *sdesc;
->>   	struct xe_cper_nonstd_record *rec;
->> @@ -191,7 +191,7 @@ static void cper_record_emit(struct xe_device *xe, u8 severity,
->>   	u32 total_len;
->>   
->>   	total_len = sizeof(struct xe_cper_nonstd_record) + einfo_len;
->> -	rec = kzalloc(total_len, GFP_KERNEL);
->> +	rec = kzalloc(total_len, gfp);
->>   	if (!rec)
->>   		return;
->>   
->> @@ -477,7 +477,7 @@ void xe_cper_emit_counter(struct xe_device *xe, int cper_sev, enum xe_sigid sigi
->>   				    entries[i].einfo_size, &ihdr);
->>   
->>   		cper_record_emit(xe, cper_sev, &INTEL_CPER_NOTIFY_GPU_ERROR, &ihdr,
->> -				 entries[i].einfo, entries[i].einfo_size);
->> +				 entries[i].einfo, entries[i].einfo_size, GFP_KERNEL);
->>   	}
->>   
->>   	free_info_arr(info_arr, num_entries);
->> @@ -511,7 +511,8 @@ static void cper_emit_sw_err(struct xe_device *xe, int cper_sev, enum xe_sigid s
->>   	char *msg;
->>   	size_t msg_len;
->>   
->> -	msg = kvasprintf(GFP_KERNEL, vaf->fmt, *vaf->va);
->> +	/* TODO: Handle xe_log_* helper function for atomic context */
->> +	msg = kvasprintf(GFP_NOWAIT, vaf->fmt, *vaf->va);
->>   	if (!msg)
->>   		xe_warn(xe, "Failed to allocate CPER message\n");
->>   
->> @@ -525,7 +526,8 @@ static void cper_emit_sw_err(struct xe_device *xe, int cper_sev, enum xe_sigid s
->>   	timestamp = ktime_get_real_ns();
->>   
->>   	cper_init_intel_hdr(xe, &error_class, timestamp, sigid, 1, msg_len, &ihdr);
->> -	cper_record_emit(xe, cper_sev, &INTEL_CPER_NOTIFY_DRV_ERROR, &ihdr, msg, msg_len);
->> +	cper_record_emit(xe, cper_sev, &INTEL_CPER_NOTIFY_DRV_ERROR, &ihdr, msg, msg_len,
->> +			 GFP_NOWAIT);
->>   	kfree(msg);
->>   }
+>> diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+>> index 0d208df621e29..4ad54e5b4f660 100644
+>> --- a/sound/soc/sof/amd/acp.c
+>> +++ b/sound/soc/sof/amd/acp.c
+>> @@ -1672,6 +1672,15 @@ int amd_sof_acp7x_resume(struct snd_sof_dev *sdev)
+>>               return ret;
+>>       }
+>>
+>> +     /*
+>> +      * S4 powers down the carveout, invalidating its cached firmware. Clear
+>> +      * fw_code_carveout_addr to force a full reload via VALIDATE_IMAGE on
+>> +      * resume instead of a SHA-DMA from the stale carveout.
+>> +      */
+>> +     if (acp_data->asp_carveout_base &&
+>> +         sdev->system_suspend_target == SOF_SUSPEND_S4)
+>> +             acp_data->fw_code_carveout_addr = 0;
+> [Severity: High]
+> Does placing this check at the end of amd_sof_acp7x_resume() leave
+> acp_data->fw_code_carveout_addr set when acp_data->sdw_en_stat is true?
+Agreed. We will move the clearing of acp_data->fw_code_carveout_addr
+to the start of resume, before the SoundWire and acp_init()/acp_memory_init() 
+early returns, and uses > SOF_SUSPEND_S3 so S5 is covered too.
+We will respin in v2.
+> When SoundWire managers suspend in clock-stop mode,
+> amd_sof_acp7x_suspend() sets acp_data->sdw_en_stat via
+> check_acp_sdw_enable_status(), causing amd_sof_acp7x_resume() to return
+> early:
+>
+> sound/soc/sof/amd/acp.c:amd_sof_acp7x_resume() {
+>         ...
+>         if (acp_data->sdw_en_stat) {
+>                 snd_sof_dsp_write(sdev, ACP_DSP_BAR, ACP7X_ZSC_DSP_CTRL, 0);
+>                 snd_sof_dsp_write(sdev, ACP_DSP_BAR, ACP7X_PME_EN, 1);
+>                 return acp_dsp_reset(sdev);
+>         }
+>         ...
+> }
+>
+> sof_resume() still calls snd_sof_boot_dsp_firmware() afterwards, so on S4
+> resume acp7x_load_firmware_carveout() will skip VALIDATE_IMAGE and
+> SHA-DMA from the unpopulated carveout.  Similarly, if acp_init() or
+> acp_memory_init() fails before reaching this check, snd_sof_complete()
+> resets sdev->system_suspend_target to SOF_SUSPEND_NONE without clearing
+> fw_code_carveout_addr.
+>
 > [Severity: Medium]
-> Does the commit message match the changes in this patch?
+> Can acp_data->fw_code_carveout_addr also remain set on S4 resume if the
+> system hibernates while sdev->fw_state is SOF_FW_CRASHED or
+> SOF_FW_BOOT_FAILED?
+Yes. We will clear acp_data->fw_code_carveout_addr in 
+amd_sof_acp7x_suspend() when fw_state is SOF_FW_CRASHED or 
+SOF_FW_BOOT_FAILED, so the next boot reloads from disk.
+We will respin in v2.
 >
-> The commit message says it adds a GFP argument to xe_cper_emit() and
-> introduces xe_log_*_atomic() helpers so callers can use GFP_KERNEL or
-> GFP_ATOMIC "without relying on a single GFP_NOWAIT allocation policy".
-> The code instead adds the gfp_t parameter to cper_record_emit(), uses a
-> single GFP_NOWAIT policy in cper_emit_sw_err(), and leaves atomic
-> xe_log_*() helpers as a TODO comment.
-
-Added long-term solution to handle proper gfp flag in atomic or 
-sleepable context so please ignore
-
-Sashiko warning.
-
+> In snd_sof_prepare(), sdev->system_suspend_target is initialized to
+> SOF_SUSPEND_S3 and the function returns early before querying
+> acpi_target_system_state() when sdev->fw_state is SOF_FW_CRASHED or
+> SOF_FW_BOOT_FAILED:
+>
+> sound/soc/sof/pm.c:snd_sof_prepare() {
+>         ...
+>         /* default to S3 in case the followingaske fails */
+>         sdev->system_suspend_target = SOF_SUSPEND_S3;
+>
+>         if (sdev->fw_state == SOF_FW_CRASHED ||
+>             sdev->fw_state == SOF_FW_BOOT_FAILED)
+>                 return 0;
+>         ...
+> }
+>
+> sof_suspend() then resets sdev->fw_state to SOF_FW_BOOT_NOT_STARTED
+> after snd_sof_dsp_suspend() returns, so on S4 resume
+> sdev->system_suspend_target is still SOF_SUSPEND_S3 and
+> acp7x_load_firmware_carveout() will SHA-DMA from the powered-down
+> carveout.  Clearing fw_code_carveout_addr in amd_sof_acp7x_suspend()
+> when sdev->system_suspend_target > SOF_SUSPEND_S3 or sdev->fw_state is
+> SOF_FW_CRASHED or SOF_FW_BOOT_FAILED would avoid both issues.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261125053843.1611378-1-sravisar@amd.com?part=2
