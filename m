@@ -1,52 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.6
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795768126;
-	b=rZsCRu0a1Rqnmor+I7YFjUPpI1NFU4d4PqwO6jy+6L8jB2S6nC0o9ePm0cq66FKT2myS
-	 LxbnKYTJWgSXu5UxJ8kuXmgcB8ORXocxyg0JtnaupkL9oVSo2oKpTgAilCLed5otDDLXs
-	 drgin6Q/b0su4l5g2NtO1nVcEePK2a6ScnJIoOPRvRcg9t27+0Wh3ck8Nc247ovwW4y63
-	 mjcy6so3l4qPfDsiqgzJv+m1xO1xwqMRk1SaTBcY91JL8Iqzbe5MMnIP4Crgm+nvAeshG
-	 kqTYfg1ZFtfliwEUpzCfqRoUT4VVXVNszVJzBuXfbhHiEO8+UduyAqbCSSpRJS4elDw==
+	t=1795768139;
+	b=AeH/bBpwWH6DUontaQ4k+CSh9BLTT5sN7Qa2GVmpKlecdPNshHWwTOa92TZuDyv3ysie
+	 vkhEzJl7btKQaz9Qn4GUiQUjnAiaIO2ymUy/sbkarYsQ26bd+yULE/JUFL2fcA6MXht/u
+	 aTkwQllNpKRjGLrokbVo4+vakMut2XoELuIiMNBBB8kr7f1r+tAR87u00cscgFn4IxllD
+	 JzcIcVX6b5qcDJ00DfrUEqDDbesifZWKMOPFEy9DnUuiALtEqQ7jcbBTvkWMLGxEo6rMI
+	 EJGfLacwOseidQc4H7HsrLTGV6z/Z2iSK+ovEwep5u6tP28a3qVN+2y2PHOIdqL9BVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795768126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795768139;
 	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-CM-TRANSID:X-Coremail-Antispam:Sender:
 	 X-CM-SenderInfo;
-	bh=mc1AjUFz08l5NWa5nSsq48XQe3osLZopmAouGxSLMYs=;
-	b=4GtSgu/17+uVNBhfCYUt5zjMsvGDz0UfbzQCPi1jRFJppTugT5MtzrtfGO8lSnu8N4Z+
-	 lQ0oLOAuagLkAVTTI3KrvBrrKhxvCgwzQTCsBZx7IesUrq8z6f7Rg3qfmXdxg6UFFpcFV
-	 UumSuk+A9qPC710t7YHdNnrDUxxYh9PgsODLJ1Mdi5UZ5UyQ+JNF4UoJpHBAwp7sXgLXN
-	 3CM4MPq+h5D6y45do55C5KRuvDV9qXmXrHXy3WI6RWN6FuC7XvuVuM6qIPfwhHcGungBl
-	 46jfb4ZiLwZUSP2f4cXzn8ai0x/rbC/D1xfA7lmkbEcCi1DakAgx9ql+l/AIVAWmaMQ==
+	bh=FelsLGm3OIsJMRghgdPAN/WSMG0jTZ6UF/BA+N/J5Dw=;
+	b=w3VxEXFS9ADXMbZdPQi7jiHyov7iyY0NoicWK51DIF3JQY+KGGT0jU87xUBQsmt84aaT
+	 jiKn+NhOHk8Wkz9X4qExLMbI7C8xpwktYH6h/dG3jEjxx3YYVsErp4fo1DXsDeHbw0DsA
+	 9wqArSj12h+W6dMjXTqihA0ZMXAxQQpYrwvePTA+tzso8uUFw97CMeTbSXM1SnwmGWs17
+	 8UwgQ8XoA77xzQTNrIwVuj8r2VgD+7WFF7lD5otBXZX3zdb7QJlo15nHCDi2801Vm4e5X
+	 HDT9w44TwKu2Vp9WbB+k5M+5hxMm/IyrSO/N/qVWS4/7gS8EeEfL0GDUOS8H8CUl78Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=fail header.from=xiaomi.com;
 	spf=pass smtp.mailfrom=126.com;
-	dkim=pass header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=L1aw4Yxh;
-	arc=none smtp.remote-ip=117.135.210.6
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.6])
+	dkim=pass header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=MH3wMfsr;
+	arc=none smtp.remote-ip=117.135.210.9
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.9])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F36606A31E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:28:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37F36606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40553606A32D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 08:28:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40553606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=xiaomi.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=L1aw4Yxh
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=MH3wMfsr
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=mc
-	1AjUFz08l5NWa5nSsq48XQe3osLZopmAouGxSLMYs=; b=L1aw4Yxh705ARFxiJM
-	L3FHnFN2FHrn27dS0jGDazV8PaUiFx5OtOhnnG5BB2E+/TzSRwcRMhVkhBAtAbjD
-	4ENm/cSy7u4dmNR/MaXDoUIvTj0jaobtFbxcbYGdGA2CRDeJnHMlMQjtHmLj+QhQ
-	rB9k+5nzhmPsp7nNTmOwCYb5M=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=Fe
+	lsLGm3OIsJMRghgdPAN/WSMG0jTZ6UF/BA+N/J5Dw=; b=MH3wMfsr+91tP98ioa
+	WxBSin2xEDbztiQxdRz/prROR1Dw4i8vM7x1NWXqssBG+jWcgbtAp5MFkkBGw5Nx
+	KCRFeSdcA9i3apbeBtoofVHU+OH/i9JcmQwWWL4hNrpKyEvRBDM0XvGUnag2c6TP
+	R8WSLPQjsndIKo3PDLI3JcyW4=
 Received: from nzzhao-ThinkCentre-M760t.mioffice.cn (unknown [])
-	by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id _____wD3n8ToPglrpDfcDA--.16205S2;
-	Fri, 27 Nov 2026 16:27:21 +0800 (CST)
+	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wD3V+v5Pglr3S9kEA--.12822S2;
+	Fri, 27 Nov 2026 16:27:38 +0800 (CST)
 From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
 To: sashiko-bot@kernel.org
 Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Tangquan Zheng <zhengtangquan@oppo.com>,
 	linux-mm@kvack.org,
 	linux-block@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -69,14 +68,15 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Bala Seshasayee <bala.seshasayee@linux.intel.com>,
 	Nick Terrell <terrelln@fb.com>,
 	Barry Song <baohua@kernel.org>,
+	Tangquan Zheng <zhengtangquan@oppo.com>,
 	Bo Zhang <zhangbo56@xiaomi.com>,
 	sashiko-reviews@lists.linux.dev
-Subject: Re: [RFC PATCH v4 2/4] zram: support compression at the granularity of multi-pages
-Date: Fri, 27 Nov 2026 16:27:17 +0800
-Message-ID: <20261127082719.3624596-1-zhaonanzhe@xiaomi.com>
+Subject: Re: [RFC PATCH v4 4/4] mm: swap: allow direct reclaim for synchronous multi-page swapin
+Date: Fri, 27 Nov 2026 16:27:36 +0800
+Message-ID: <20261127082737.3625032-1-zhaonanzhe@xiaomi.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-216089@kernel.org>
-References: <20261115024455.1465726-1-zhaonanzhe@xiaomi.com> <20261115024455.1465726-3-zhaonanzhe@xiaomi.com> <sashiko-outbox-216089@kernel.org>
+In-Reply-To: <sashiko-outbox-216091@kernel.org>
+References: <20261115024455.1465726-1-zhaonanzhe@xiaomi.com> <20261115024455.1465726-5-zhaonanzhe@xiaomi.com> <sashiko-outbox-216091@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -87,61 +87,41 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3n8ToPglrpDfcDA--.16205S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Kr1ftry3tr43Wr4DZw18Zrb_yoW8KF4xpF
-	WrKayFyFykJry5urn2va18Zryjk3yxGay7ZryrtryxWF1rJFy2qFy2ya1rZa4UArs7ZrZI
-	qa1Fy3y8A3yqv3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UkGYLUUUUU=
+X-CM-TRANSID:_____wD3V+v5Pglr3S9kEA--.12822S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7CrW5WF48Aw4DtFy7trW5Jrb_yoW8GF4rpF
+	yxWFW3KFs5Xr10yFZ7ua1kGFZ8Ca93XayfGry3Wry8u345Za48ZFZ0kr1Uu3WDCwn3tanY
+	qrsIkFW7X3WqvaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UkfHUUUUUU=
 Sender: nzzhao@126.com
-X-CM-SenderInfo: xq22xtbr6rjloofrz/xtbBsQnmtmsJPulG7gAA31
+X-CM-SenderInfo: xq22xtbr6rjloofrz/xtbBoxvqumsJPvvtvwAA3d
 
 > [Severity: High]
-> Can concurrent zram_slot_free_notify() calls on sibling sub-slots leak the
-> multi-page object?
+> Can setting __GFP_RECLAIM without __GFP_NORETRY or __GFP_RETRY_MAYFAIL
+> trigger premature OOM kills on order-2 swapin faults instead of falling
+> back to order 0?
+
+Agreed.
+
+> [Severity: Medium]
+> Should __swap_cache_alloc() unconditionally override the GFP mask for
+> order 2 here?
 >
-> __test_multi_pages_comp() counts ZRAM_COMP_MULTI_PAGES across the group
-> while only holding slot_trylock(zram, index) on the current sub-slot:
-> ...
-> In addition, when comp_count == 1, clearing ZRAM_COMP_MULTI_PAGES and
-> unlocking index before slot_trylock(zram, head) means that if
-> slot_trylock(zram, head) fails, the last ZRAM_COMP_MULTI_PAGES flag has
-> already been cleared, and another CPU can also reallocate and write to
-> head in the unlocked window before slot_trylock(zram, head) runs.
+> __swap_cache_alloc() is shared by all swap devices even when zram or
+> CONFIG_ZRAM_MULTI_PAGES is not used, and when multi-page compression is
+> enabled its order is configured via CONFIG_ZSMALLOC_MULTI_PAGES_ORDER
+> (1..9) rather than hardcoded to 2.  Or'ing __GFP_RECLAIM after
+> thp_shmem_limit_gfp_mask(vma_thp_gfp_mask(vma), gfp) also overrides
+> defrag=never/defer and caller GFP restrictions, and placing it only in the
+> else branch leaves out the mpol path while causing shmem_fault() swapins
+> to behave differently between CONFIG_NUMA=y (where
+> shmem_get_pgoff_policy() returns a non-NULL policy) and CONFIG_NUMA=n
+> (where it returns NULL).
 
-These are valid issues. The locking and lifecycle model for compound slots in
-v4 had inconsistent semantics between slot_free() and slot_free_notify(), and
-lacked a unified locking boundary across sub-slots. I will redesign the
-concurrency model for multi-page slots in the next RFC version.
+This patch was an RFC-stage exploration specifically targeting synchronous
+in-memory swap devices (zram) at order 2 (16 KiB mTHP, the primary
+compression granularity), to evaluate whether allowing direct reclaim could
+avoid the partial read caused by order-0 fallback.
 
-> [Severity: High]
-> Does setting ZRAM_COMP_MULTI_PAGES on index + 1 .. index + nr_pages - 1
-> without locking or freeing those tail slots corrupt the slot bit-lock and
-> leak existing objects?
->
-> zram_write_page(), write_same_filled_page(), and
-> write_incompressible_page() only lock and call slot_free() on the head
-> slot index:
->
-> 1. Because table[index + i].attr.flags aliases table[index + i].__lock,
->    the unlocked non-atomic |= in set_slot_flag(zram, index + i, ...) races
->    with concurrent slot_lock() / slot_unlock() on tail slots and can
->    corrupt ZRAM_ENTRY_LOCK_BIT, hanging waiters in wait_on_bit_lock().
-> 2. Any single-page zsmalloc handles already stored in the tail slots are
->    never freed before ZRAM_COMP_MULTI_PAGES is set on them, leaking those
->    objects.
-
-Same here.
-
-> [Severity: High]
-> Can two concurrent partial writes to different sub-slots in the same
-> multi-page group overwrite each other?
->
-> zram_read_page_size() unlocks slot_lock(zram, index) after reading the
-> multi-page into the temporary page, and zram_write_page() only re-acquires
-> slot_lock(zram, index) after compressing the updated buffer.  If two CPUs
-> concurrently perform partial writes to different offsets of the same head
-> index, both read the old multi-page before either writes back, so the
-> second writer overwrites the first writer's sub-page with stale data.
-
-Same here.
+I wanted to raise this point for discussion first in the RFC, and will explore
+more generic approaches going forward.
 
