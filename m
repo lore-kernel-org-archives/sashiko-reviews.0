@@ -1,108 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795809827;
-	b=M0TgLtkRKForciRmIz7bikis7+1VMWXxg++o9GsbTfKml5+8m4ZFTCWlGeiM6NwSyuu2
-	 NvbngzBDtw86snClfi9hztXGgOAdLREqb5VwOfdwVPRVNH1NVze+E+8dU/LcsNSkGVh5P
-	 ybiVkcqc3WWhGawRCnsMQRKKJU0sqA7drB8Z9TlQnzFQpmpYzay1OT96VTfkYZtXi4cxo
-	 hA1fklt3QBMu4dzArVrI06D34HFTOn0RRFVM634czwl2s/8w258Hr/aUh+9GXD47s3uWh
-	 jUK1atvZqgsIF6191rJUbeBuaxL2E3iHWAM8HWzkm8Msuktogy5Kshu88w2NT+b4DQA==
+	t=1795817757;
+	b=EiWjcfuOm91T4mlpUHtuNemigtyUPKPzqkByvPU9KB04KXQq0J/7gAcwTTzpLjulP0nh
+	 5Fszq0CesZIaypPMO4WGlKXF1ktQ09iYE9fUWuASENZZneS4rSTQCKPJSSvvim80pr97t
+	 4xk7AiYqe1KJQqqeoY5WJwBB1FEwoEnOOYjNnGKqejdqrESVqwkif+fq5JRRxECi0iR1d
+	 SVkLHH9v43jYeJCtPJKkSFZ0ZeOTbRmi2qDutmx4OzXIHcdyyWvPXvh9mB196Ty/qiS1W
+	 R0KpA7cX4G87CBnEBTYLk80uK0cK4d3KWmXl3DMGFjRpDBGhQpHe5YO2litEkowCWXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795809827;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Spamd-Result:X-Spam-Score:X-Spam-Level:X-Spam-Flag;
-	bh=gvZJXkmOW+tv79uf7dO5s2nHqtahsAeoQ64d4cbHpIY=;
-	b=CTZyXp8qPdeq+0FLK438hhyBO8UWB7FdXx2cwE6v3USzDIOdkqYl4ZHtsDpZ4qQOEzO2
-	 Jje0r1uPZdurO1vH8rFsywsdrQgJ8oj4soS2d1oUel5SVIpSOmbRpetVErIuHlGuoif0V
-	 7yB4m90T1NRUjWIuQGbfTzDhLRaKfW6yYYnFWCYaZ5eN1bmpVlSyPinUA7N+oUXDG6PJr
-	 8HaF5l9ctDVXeEBMDC8/5l7U+dyJqSmuhr7n8KPKETckWMqFhlFXAAQuo5elwG36g4KmV
-	 SzsPks+cBQmPw+/HK9eFbOSHE9aOE8PErI1w5Bdcm86ZByT6Xf9eDl1dL2DfgTg1DAA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795817757;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=OerVEdIvJXdeIvWP8SxxgV/sDV2JyFJEP6u72p5i/Oo=;
+	b=jayO6A/qbaD3UipXQbObCFs36jnEIwipivELQVB6UaBQ5o8C1ZEl3FAEaq3IK0WqkeKy
+	 FiWC+GcQHZ9n5acNpmQld/MUmJxDZdTbjMPVc+nMeE7deFF4WS16uIarFUhj3is1yJzUE
+	 kuYgV9soI/W9sUlW6utyWPvqZJ06GedUoDPInXDjyldAGt/GblD2WE58Q2PA13VunOU0x
+	 4wC233SMuBI8WPbyit9ov3QUI7Nea5Ldgb0saTuW1lb8F+WgsKrCK2gFWLsATNjrUhu0Y
+	 DP4eG8i1t8y/zBxpKExweOmEV3Iu7yThnkHndvMgTtZDkEXXauQ5ozlG3ZhpgbdRLHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=suse.cz;
-	spf=pass smtp.mailfrom=suse.cz;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=T6IUlNeu;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=CnR14YGq;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=T6IUlNeu;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=CnR14YGq;
-	arc=none smtp.remote-ip=195.135.223.131
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GPZYL19E;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BC1606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 20:03:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21BC1606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6B4606A31F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 22:15:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC6B4606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=T6IUlNeu;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=CnR14YGq;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=T6IUlNeu;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=CnR14YGq
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id D7CED1F836;
-	Fri, 27 Nov 2026 20:03:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1795809824; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gvZJXkmOW+tv79uf7dO5s2nHqtahsAeoQ64d4cbHpIY=;
-	b=T6IUlNeutJW8Ij42lojNMkDB8E7fpE8A0kydtEHKYIsrCcSzd8XtWsB652I3q4eATcaa3Y
-	i9faGFih/l29IhKO9rwuv2tVYR2XHuIiPpiM4rIus0zxzN1VQnXeAR0/OLho0bYTxmKmIN
-	LElkhSJ4/pzmZCs+tBV4Pw031ywXPOQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1795809824;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gvZJXkmOW+tv79uf7dO5s2nHqtahsAeoQ64d4cbHpIY=;
-	b=CnR14YGqQf/1rpJv7xuvPKF5ExyjWIzHCeWUXXSzkioChWRdaSJQyMCkNuMGWmaVv/sM5a
-	Tp1wM2e3Ll5YRjBQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1795809824; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gvZJXkmOW+tv79uf7dO5s2nHqtahsAeoQ64d4cbHpIY=;
-	b=T6IUlNeutJW8Ij42lojNMkDB8E7fpE8A0kydtEHKYIsrCcSzd8XtWsB652I3q4eATcaa3Y
-	i9faGFih/l29IhKO9rwuv2tVYR2XHuIiPpiM4rIus0zxzN1VQnXeAR0/OLho0bYTxmKmIN
-	LElkhSJ4/pzmZCs+tBV4Pw031ywXPOQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1795809824;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gvZJXkmOW+tv79uf7dO5s2nHqtahsAeoQ64d4cbHpIY=;
-	b=CnR14YGqQf/1rpJv7xuvPKF5ExyjWIzHCeWUXXSzkioChWRdaSJQyMCkNuMGWmaVv/sM5a
-	Tp1wM2e3Ll5YRjBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B4111134E8;
-	Fri, 27 Nov 2026 20:03:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id tR5NJSDiCWu/KAAAD6G6ig
-	(envelope-from <jack@suse.cz>); Fri, 27 Nov 2026 20:03:44 +0000
-Received: by quack.suse.cz (Postfix, from userid 1000)
-	id 43F755110C; Fri, 27 Nov 2026 21:03:44 +0100 (CET)
-Date: Fri, 27 Nov 2026 21:03:44 +0100
-From: Jan Kara <jack@suse.cz>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
-	Christoph Hellwig <hch@infradead.org>, linux-mm@kvack.org, Mikhail Rudenko <xyzzy@yandex-team.ru>, 
-	Andreas Gruenbacher <agruenba@redhat.com>
-Subject: Re: [PATCH v2 7/8] fs: Protect deferred inode reclaim from freezing
-Message-ID: <q4yof5quxzttmn3pjqq3tm3lhupwsmxdwfn2zjrlm57qjdmip3@mukbj3ii55h7>
-References: <20261124113450.3451-1-jack@suse.cz>
- <20261124115850.3512-15-jack@suse.cz>
- <sashiko-outbox-233316@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GPZYL19E
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4bb702a7548so78786255e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 14:15:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795817755; x=1796422555; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=OerVEdIvJXdeIvWP8SxxgV/sDV2JyFJEP6u72p5i/Oo=;
+        b=GPZYL19EfWrx7K4oamMCc02cVgoJPCYJPQTmBnlsGqHy53C+qcjUczP3IimSCI67hV
+         ha9QRx0hw7Wiu6Fpo7/atvm4eIsphUftnP2jY+YzKb8Whdq7ew9sdrtOSL4rvVeW63OE
+         lOn4dwqPZPuiTyRaxGtbjJlo/8ZOMvL/bQYelE510w1gaNSy+noIXli1F5ijb5Jy2elb
+         +bs6cJdHoPXfKMbUBB1aJDLiSwFO48mb5sTMun4wddZVP6jAfoRyOYjuX7vlzUOmWMtg
+         Da1o9dfIXUFq6X8Wdt/tnw7U/ZWQPtJFJXmmA3ROjTIq65pQWgA0NsJQB4jJQAG6H8bi
+         Ie2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795817755; x=1796422555;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OerVEdIvJXdeIvWP8SxxgV/sDV2JyFJEP6u72p5i/Oo=;
+        b=Xcn7k4ITezjoEmut2d+YxVKEIbVsmTt4FF1HPFK0dVd0/4WOm4sV4ugm/Vh2leRrC+
+         Ts2CeUuEaSuV43MduZuj1gUbJiV4zPzmtRRUbt3R20pG4f+txHl14PCnEktlPj9qlavG
+         +r9W6fu9XTPHgZr3m2nsKIXFGqucIk6deJ6Ugk8kYMAZ0QVK/8o0LlKLDwZHjhxoVjxs
+         4J/qJ+pppPUd6v/+d99yhomFBv8f9a1zyuywYuf06kfzAKvJvMVrQPcWKXGZ/sD5VG6m
+         qzMfQuGMC6MRlNjS4yQJOtzUp+Sg+v9JUG1YHmGmwYzLZ5ytaT3M8dQYO8qYtr62HoPS
+         Kt+A==
+X-Forwarded-Encrypted: i=1; AL+hErE3s3qjzl2f8QJXqegYnMc34XkoyK4UAtkcam4YahtH37SM1exPaTkESsIix2tmRMbxLLFZZJOoZwnzvFvXVXQ=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9BDlpIwi5U5CJs9xCIkHmYqzXlG6NJApB0htX3sEUqnsR7zY4J
+	xSSNUFf9nccTv8fwxz5QGFac/dQa+eyEhp7Yrm+72HYypFSPUi6aOcYO
+X-Gm-Gg: AZFdTZdITBarBJncyhYNce6nymjCM50NX6Nq+n3nD1e6JaNCJ1k1AAfdK+aeeOn1Y+1
+	JFPgGMJ7ZO4XEJjCzJkyNATRDMqhY0wGLQYJE3Yn0Kc129uXhLEYA0SfuFN7ztUo9o87U7nuzrT
+	moSn5vw2IUGotb5XNcMu+YO96C9b0F9jfFl0A9y9Ofn8Uu/u2VweOksoeuo7DGJrxkxRNB276B4
+	hGJjm/ChYwcXhnadtOBXe+srINRdEBdBLOqKwnYJ9bK4+gABL8BrWTbN+xW5ghR2lJWeAr8t1Uy
+	307W2PGm8r1JKd/dtLIijccMqE/6QNlmT03t1Qa9pZpJ0i0/dDq25luvj2jIJ1B7mfSb4m1KOKt
+	cwEKQ5hfw4YMJACOoPD8wZnrto1hrADfjVER6IT3+ddqtEneerkS3AzvGan3sbbx5DTzV0BYzzW
+	0frahfVGUTMMRiphUrRbImPLIOo7MpdohBf6+IXrzn/L9x/bGYckOL5MPh9xKaXG03yhMU+s9kf
+	pID8guJhW4L363GxnLfjafKHRcFhmZ5ZN8Ox2wn4H+ReEEVJa4+UBZlsRzW/jTpZT95OucHNLYc
+	z9oVVnfsOWbC9oMFvBrvZ4gmRo82OEwHyiFoX1NZEfvC+rybHsijFVmAjoZWKcGIY7GAj+dS6Hp
+	G2Pt8uwo=
+X-Received: by 2002:a05:600c:a085:b0:4a5:26b8:4507 with SMTP id 5b1f17b1804b1-4bb8881e6c6mr508013085e9.21.1795817754689;
+        Fri, 27 Nov 2026 14:15:54 -0800 (PST)
+Received: from localhost (bl20-90-91.dsl.telepac.pt. [2.81.90.91])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4b70c05b9desm25203563f8f.54.2026.11.27.14.15.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 14:15:54 -0800 (PST)
+From: =?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+To: linux-riscv@lists.infradead.org
+Cc: linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	jack@suse.cz,
+	kees@kernel.org,
+	david@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	=?UTF-8?q?V=C3=ADtor=20Hugo=20Silva?= <vitorhg20080@gmail.com>
+Subject: [PATCH RFC v2] riscv: Synchronize instructions written to ESP32-P4 PSRAM
+Date: Fri, 27 Nov 2026 22:13:45 +0000
+Message-ID: <20261127221346.197911-1-vitorhg20080@gmail.com>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261125233020.1380594-15-vitorhg20080@gmail.com>
+References: <20261125233020.1380594-15-vitorhg20080@gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -112,250 +111,516 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-233316@kernel.org>
-X-Spamd-Result: default: False [-12.80 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_RHS_NOT_FQDN(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email]
-X-Spam-Score: -12.80
-X-Spam-Level: 
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed 25-11-26 12:00:07, sashiko-bot@kernel.org wrote:
-> > +static void queue_deferred_reclaim(struct super_block *sb, int count,
-> > +				   struct list_head *list)
-> > +{
-> > +	int id = get_deferred_sb_id(sb);
-> > +	struct deferred_reclaim_queue *queue =
-> > +					&deferred_reclaim.queues[id];
-> > +
-> > +	spin_lock(&queue->lock);
-> > +	list_splice_tail(list, &queue->list);
-> > +	atomic_add(count, &sb->s_deferred_reclaim_count);
-> > +	/*
-> > +	 * Make sure queued inodes are visible before we check whether deferred
-> > +	 * reclaim is blocked. Pairs with the barrier in thaw_super_locked().
-> > +	 */
-> > +	smp_mb__after_atomic();
-> > +	spin_unlock(&queue->lock);
-> > +
-> > +	/*
-> > +	 * Skip waking up workers for frozen filesystem. They'd skip the inodes
-> > +	 * anyway.
-> > +	 */
-> > +	if (atomic_read(&sb->s_deferred_reclaim_running) < 0)
-> > +		return;
-> > +
-> > +	wake_deferred_reclaim_workers(sb, count);
-> > +}
-> 
-> [Severity: Low]
-> Does this still wake workers unnecessarily during the earlier stages of
-> freeze_super()?
-> 
-> freeze_super() sets sb->s_writers.frozen to SB_FREEZE_WRITE and
-> SB_FREEZE_PAGEFAULT before sb_wait_write() and sync_filesystem(), while
-> s_deferred_reclaim_running is only set to -1 after sync_filesystem()
-> completes.  During that window, queue_deferred_reclaim() wakes workers
-> even though __get_inode_reclaim_batch() will immediately skip all inodes
-> from sb because s_writers.frozen != SB_UNFROZEN.
+On ESP32-P4, loads can observe updated instruction bytes in the data
+cache while instruction fetch still sees stale bytes. During boot,
+runtime constant patching can then use an invalid address.
 
-Yes, not really harmful but it makes sense to make
-__get_inode_reclaim_batch() also check s_deferred_reclaim_running which
-avoids these pointless wakeups.
+Write back L1D and L2 for the affected PSRAM range, invalidate L1I
+and issue fence.i. Use 32 KiB chunks so interrupts can run between
+chunks. Bound polling per command and stop issuing commands after a
+timeout. Treat failure to synchronize patched kernel text as fatal
+and exclude the synchronization helpers from kprobes.
 
-> > @@ -1108,18 +1126,24 @@ static void __get_inode_reclaim_batch(int *start, int end,
-> >  	for (i = *start; i < end; i++) {
-> >  		struct deferred_reclaim_queue *queue =
-> >  						&deferred_reclaim.queues[i];
-> > -		struct list_head *entry, tmp;
-> > +		struct inode *inode, *next;
-> >  
-> >  		if (list_empty_careful(&queue->list))
-> >  			continue;
-> >  		spin_lock(&queue->lock);
-> > -		list_for_each(entry, &queue->list) {
-> > -			if (*count >= INODE_RECLAIM_BATCH_SIZE)
-> > +		list_for_each_entry_safe(inode, next, &queue->list, i_lru) {
-> > +			/*
-> > +			 * Skip inodes on frozen fs as we'd likely block. We
-> > +			 * always accept inodes from read-only fs as there
-> > +			 * eviction cannot require writing.
-> > +			 */
-> > +			if (!sb_rdonly(inode->i_sb) &&
-> > +			    inode->i_sb->s_writers.frozen != SB_UNFROZEN)
-> > +				continue;
-> 
-> [Severity: High]
-> Can skipping queued inodes here deadlock freeze_super() and stall inode
-> lookups?
-> 
-> Inodes queued for deferred reclaim via prune_icache_sb() or iput_final()
-> already have I_FREEING set, but remain hashed in inode_hashtable (and
-> filesystem lookup tables such as XFS per-AG radix trees) until evict()
-> runs in inode_reclaim_deferred().  Any lookup of such an inode blocks in
-> __wait_on_freeing_inode() waiting for evict() to finish.
-> 
-> CPU0 (freeze_super)       CPU1 (in-flight writer)   CPU2 (reclaim worker)
-> -------------------       -----------------------   ---------------------
-> s_writers.frozen =
->   SB_FREEZE_WRITE
->                           sb_start_write() held
->                           iget_locked(ino)
->                             __wait_on_freeing_inode()
->                                                     __get_inode_reclaim_batch()
->                                                       s_writers.frozen !=
->                                                         SB_UNFROZEN
->                                                       -> skips inode
-> sb_wait_write(
->   SB_FREEZE_WRITE)
->   <-- deadlocks
-> 
-> Also, while the filesystem is frozen, super_cache_scan() ->
-> prune_icache_sb() continues isolating inodes with I_DEFER_RECLAIM or
-> I_METADATA_WRITEBACK, setting I_FREEING and queuing them where they will
-> not be evicted until thaw, causing any reader looking up those inodes to
-> hang uninterruptibly in __wait_on_freeing_inode().
+Use checked synchronization for executable loading, signal return
+trampolines, the first executable NOMMU mapping of a region and
+growth of the NOMMU program break. A failed mmap synchronization
+discards the new mapping. A failed brk synchronization returns the
+current break.
 
-Hum, right. This is actually not a new thing - previously prune_icache_sb()
-accumulated inodes with I_FREEING set on its list and evict() could block
-on frozen fs when evicting some particular inode and following lookups
-would stall the same way. But now we're more paranoid with the freeze
-protection so we'll block on frozen filesystem even if evict() actually
-would not block (but we don't know). I'll put some more thought to this if
-we can improve.
+On ESP32-P4, honor nonempty intervals in riscv_flush_icache(). Check
+that the requested interval is covered by the calling process's
+mappings under mmap_lock. Return -EINVAL for reversed intervals and
+-EFAULT for gaps. Propagate cache synchronization errors. Keep the
+existing whole-cache flush for empty intervals.
 
-> > +			list_move_tail(&inode->i_lru, list);
-> > +			if (++(*count) >= INODE_RECLAIM_BATCH_SIZE)
-> >  				break;
-> > -			(*count)++;
-> >  		}
-> > -		list_cut_before(&tmp, &queue->list, entry);
-> > -		list_splice_tail(&tmp, list);
-> >  		spin_unlock(&queue->lock);
-> 
-> [Severity: Medium]
-> Does leaving skipped inodes from a frozen superblock at the head of
-> queue->list cause O(N) rescans under queue->lock?
-> 
-> Because deferred_reclaim.queues are shared across superblocks and
-> queue_deferred_reclaim() appends new batches at the tail, every batch
-> dequeued for an unfrozen superblock on the same queue must walk past all
-> frozen inodes at the front under queue->lock.  Moreover, when any other
-> worker collects fewer than INODE_RECLAIM_BATCH_SIZE inodes from its own
-> queue, get_inode_reclaim_batch() wraps around across all queues, seeing
-> !list_empty_careful(&queue->list) and locking and scanning all N frozen
-> inodes on that queue only to skip them.
-> 
+An earlier board test reproduced stale instructions after fence.i
+alone. On the Waveshare ESP32-P4-Module-DEV-KIT, a userspace probe
+received SIGILL at the first instruction written to an executable
+mapping with the published v1 patch. With v2, the same probe executes
+modified instructions after riscv_flush_icache() with flags 0 and
+LOCAL. It also checks return values for unmapped, reversed and empty
+ranges and invalid flags. The board boots to a shell, runs bFLT
+programs and delivers SIGUSR1 to the shell.
 
-Yes, this is variation of the above... Easy to solve this particular one
-but the solution depends on what I'll decide to do with the problem above.
+The syscall also builds with ESP32-P4 support disabled in an RV32
+NOMMU configuration.
 
-> > @@ -1210,6 +1260,13 @@ static void inode_reclaim_deferred(struct work_struct *work)
-> >  				sb = inode->i_sb;
-> >  				count = 0;
-> >  				start = ktime_get_ns();
-> > +				/* Protect us from filesystem freezing */
-> > +				if (!sb_deferred_reclaim_get(sb)) {
-> > +					inode_reclaim_skip_inodes(&inode_batch,
-> > +								  sb);
-> > +					sb = NULL;
-> > +					continue;
-> > +				}
-> >  			}
-> >  			count++;
-> >  			list_del_init(&inode->i_lru);
-> 
-> [Severity: Medium]
-> Can evicting a stacked filesystem inode (such as overlayfs or ecryptfs) in
-> inode_reclaim_deferred() still block the worker on a frozen lower
-> filesystem?
-> 
-> When iput_final() drops the last reference to an unlinked stacked inode
-> under PF_MEMALLOC, it queues the stacked inode to deferred_reclaim:
-> 
-> fs/inode.c:iput_final() {
->     ...
-> 	if (current->flags & PF_MEMALLOC && !inode->i_nlink) {
-> 		LIST_HEAD(defer);
-> 
-> 		list_add(&inode->i_lru, &defer);
-> 		queue_deferred_reclaim(sb, 1, &defer);
-> 		return;
-> 	}
-> 	evict(inode);
-> }
-> 
-> __get_inode_reclaim_batch() and sb_deferred_reclaim_get() only check the
-> stacked superblock (inode->i_sb), which is unfrozen.  When the worker runs
-> evict(inode), current->flags does not have PF_MEMALLOC set, so dropping
-> the underlying unlinked dentry/inode in ovl_destroy_inode() or
-> ecryptfs_evict_inode() enters iput_final() -> evict() synchronously on the
-> frozen lower writable filesystem and blocks on sb_start_intwrite().
+AI assisted with the cache paths and the test preparation.
 
-This looks a bit artificial. Two layers of stacked filesystems, the lowest
-filesystem is frozen and that can block deferred reclaim worker in evict().
-If this causes practical problems, we could mark reclaim workers
-PF_MEMALLOC but I'm not convinced it's worth it at this point.
+Link: https://docs.espressif.com/projects/esp-idf/en/stable/esp32p4/api-reference/system/mm_sync.html
+Signed-off-by: Vítor Hugo Silva <vitorhg20080@gmail.com>
+---
+Changes in v2:
+- Synchronize after filling kernel text and exclude cache helpers from
+  kprobes.
+- Propagate synchronization errors in NOMMU mmap and brk.
+- Validate and synchronize the userspace range in riscv_flush_icache
+  on ESP32-P4.
 
-> > diff --git a/fs/super.c b/fs/super.c
-> > index fa345d5027bff..77e6ab6383b8b 100644
-> > --- a/fs/super.c
-> > +++ b/fs/super.c
-> 
-> [ ... ]
-> 
-> > @@ -2648,6 +2678,7 @@ static int thaw_super_locked(struct super_block *sb, enum freeze_holder who,
-> >  	sb->s_writers.frozen = SB_UNFROZEN;
-> >  	sb->s_writers.freeze_owner = NULL;
-> >  	sb_freeze_wake(sb);
-> >  	sb_freeze_unlock(sb, SB_FREEZE_FS);
-> > +	sb_unblock_deferred_reclaim(sb);
-> >  out_deactivate:
-> >  	deactivate_locked_super(sb);
-> >  	return 0;
-> 
-> [Severity: Medium]
-> Can setting sb->s_writers.frozen = SB_UNFROZEN before
-> sb_unblock_deferred_reclaim(sb) cause inode_reclaim_deferred() to spin in
-> a tight loop without calling cond_resched()?
-> 
-> In both thaw_super_locked() and the freeze_fs() error path of
-> freeze_super(), s_writers.frozen becomes SB_UNFROZEN before
-> s_deferred_reclaim_running is reset from -1 to 0 in
-> sb_unblock_deferred_reclaim().  During that window,
-> __get_inode_reclaim_batch() only checks s_writers.frozen != SB_UNFROZEN
-> and moves the inodes to inode_batch, after which
-> sb_deferred_reclaim_get(sb) fails, inode_reclaim_skip_inodes() splices
-> them back onto queue->list, and inode_reclaim_deferred() continues
-> without reaching cond_resched(), immediately re-dequeuing the same inodes
-> on the next iteration.  Calling sb_unblock_deferred_reclaim(sb) before
-> setting s_writers.frozen = SB_UNFROZEN (or also checking
-> s_deferred_reclaim_running in __get_inode_reclaim_batch()) would avoid
-> this window.
+This replaces patch 14/19 and applies after patch 13/19 of the RFC.
+v1: https://lore.kernel.org/all/20261125233020.1380594-15-vitorhg20080@gmail.com/
 
-Mostly harmless but easy to improve by making __get_inode_reclaim_batch()
-check s_deferred_reclaim_running. I'll do that.
+ arch/riscv/include/asm/cacheflush.h |   6 ++
+ arch/riscv/kernel/patch.c           | 146 +++++++++++++++++++++++++++-
+ arch/riscv/kernel/signal.c          |   6 +-
+ arch/riscv/kernel/sys_riscv.c       |  41 +++++++-
+ fs/binfmt_flat.c                    |   6 +-
+ fs/exec.c                           |  10 +-
+ include/linux/cacheflush.h          |   7 ++
+ mm/nommu.c                          |  31 +++---
+ 8 files changed, 228 insertions(+), 25 deletions(-)
 
-								Honza
+diff --git a/arch/riscv/include/asm/cacheflush.h b/arch/riscv/include/asm/cacheflush.h
+index c2b0a29..a5c20d7 100644
+--- a/arch/riscv/include/asm/cacheflush.h
++++ b/arch/riscv/include/asm/cacheflush.h
+@@ -85,6 +85,12 @@ static inline void flush_icache_range(unsigned long start, unsigned long end)
+ 	flush_icache_all();
+ }
+ 
++#ifdef CONFIG_RISCV_ESP32P4_CLIC
++int esp32p4_sync_user_text(unsigned long start, unsigned long end);
++
++#define flush_icache_user_range_checked esp32p4_sync_user_text
++#endif
++
+ extern unsigned int riscv_cbom_block_size;
+ extern unsigned int riscv_cboz_block_size;
+ extern unsigned int riscv_cbop_block_size;
+diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
+index 2b5adf0..7ef5565 100644
+--- a/arch/riscv/kernel/patch.c
++++ b/arch/riscv/kernel/patch.c
+@@ -3,6 +3,13 @@
+  * Copyright (C) 2020 SiFive
+  */
+ 
++#ifdef CONFIG_RISCV_ESP32P4_CLIC
++#include <linux/align.h>
++#include <linux/io.h>
++#include <linux/irqflags.h>
++#include <linux/panic.h>
++#include <linux/sizes.h>
++#endif
+ #include <linux/spinlock.h>
+ #include <linux/mm.h>
+ #include <linux/memory.h>
+@@ -173,9 +180,136 @@ static int __patch_insn_set(void *addr, u8 c, size_t len)
+ }
+ NOKPROBE_SYMBOL(__patch_insn_set);
+ 
++#ifdef CONFIG_RISCV_ESP32P4_CLIC
++#define ESP32P4_CACHE_BASE		0x3ff10000
++#define ESP32P4_CACHE_SYNC_CTRL		0x98
++#define ESP32P4_CACHE_SYNC_MAP		0x9c
++#define ESP32P4_CACHE_SYNC_ADDR		0xa0
++#define ESP32P4_CACHE_SYNC_SIZE		0xa4
++
++#define ESP32P4_CACHE_INVALIDATE	BIT(0)
++#define ESP32P4_CACHE_WRITEBACK		BIT(2)
++#define ESP32P4_CACHE_SYNC_DONE		BIT(4)
++#define ESP32P4_CACHE_SYNC_MAX_POLLS	1000000
++
++#define ESP32P4_CACHE_L1_I0		BIT(0)
++#define ESP32P4_CACHE_L1_D		BIT(4)
++#define ESP32P4_CACHE_L2		BIT(5)
++
++#define ESP32P4_PSRAM_START		0x48000000UL
++#define ESP32P4_PSRAM_END		0x4c000000UL
++#define ESP32P4_CACHE_MAX_LINE		128
++
++static int esp32p4_cache_sync(u32 map, u32 start, u32 size, u32 op,
++			       unsigned int count)
++{
++	/* The caller holds local IRQs disabled on the single supported hart. */
++	static bool sync_failed;
++	void __iomem *base = (void __iomem *)ESP32P4_CACHE_BASE;
++	unsigned int polls;
++
++	if (sync_failed)
++		return -EIO;
++
++	writel(map, base + ESP32P4_CACHE_SYNC_MAP);
++	writel(start, base + ESP32P4_CACHE_SYNC_ADDR);
++	writel(size, base + ESP32P4_CACHE_SYNC_SIZE);
++
++	while (count--) {
++		writel(op, base + ESP32P4_CACHE_SYNC_CTRL);
++		/* Order the sync command before reading its completion status. */
++		mb();
++		for (polls = 0; polls < ESP32P4_CACHE_SYNC_MAX_POLLS; polls++) {
++			if (readl(base + ESP32P4_CACHE_SYNC_CTRL) & ESP32P4_CACHE_SYNC_DONE)
++				break;
++			cpu_relax();
++		}
++		if (polls == ESP32P4_CACHE_SYNC_MAX_POLLS) {
++			sync_failed = true;
++			return -ETIMEDOUT;
++		}
++	}
++
++	return 0;
++}
++NOKPROBE_SYMBOL(esp32p4_cache_sync);
++
++static int esp32p4_cache_writeback(u32 start, u32 size)
++{
++	int ret;
++
++	/* Repeat writeback to avoid losing a sync with conflicting writes. */
++	ret = esp32p4_cache_sync(ESP32P4_CACHE_L1_D, start, size, ESP32P4_CACHE_WRITEBACK, 2);
++	if (ret)
++		return ret;
++
++	return esp32p4_cache_sync(ESP32P4_CACHE_L2, start, size, ESP32P4_CACHE_WRITEBACK, 2);
++}
++NOKPROBE_SYMBOL(esp32p4_cache_writeback);
++
++static int esp32p4_sync_text(void *addr, size_t len, bool fatal)
++{
++	unsigned long start = (unsigned long)addr;
++	unsigned long first, end, flags;
++
++	if (start < ESP32P4_PSRAM_START || start >= ESP32P4_PSRAM_END ||
++	    !len || len > ESP32P4_PSRAM_END - start)
++		return 0;
++
++	first = ALIGN_DOWN(start, ESP32P4_CACHE_MAX_LINE);
++	end = ALIGN(start + len, ESP32P4_CACHE_MAX_LINE);
++
++	/* Allow interrupts between chunks if they were enabled on entry. */
++	while (first < end) {
++		u32 size = min_t(u32, end - first, SZ_32K);
++		int ret;
++
++		local_irq_save(flags);
++		ret = esp32p4_cache_writeback(first, size);
++		if (!ret)
++			ret = esp32p4_cache_sync(ESP32P4_CACHE_L1_I0, first, size,
++						 ESP32P4_CACHE_INVALIDATE, 1);
++		if (ret) {
++			if (fatal)
++				panic("ESP32-P4 text cache sync failed: %d\n", ret);
++			local_irq_restore(flags);
++			return ret;
++		}
++
++		local_flush_icache_all();
++		local_irq_restore(flags);
++		first += size;
++	}
++
++	return 0;
++}
++NOKPROBE_SYMBOL(esp32p4_sync_text);
++
++int esp32p4_sync_user_text(unsigned long start, unsigned long end)
++{
++	int ret;
++
++	if (end > start) {
++		ret = esp32p4_sync_text((void *)start, end - start, false);
++		if (ret)
++			return ret;
++	}
++
++	flush_icache_range(start, end);
++	return 0;
++}
++NOKPROBE_SYMBOL(esp32p4_sync_user_text);
++#endif
++
+ static int __patch_insn_write(void *addr, const void *insn, size_t len)
+ {
+-	return copy_to_kernel_nofault(addr, insn, len);
++	int ret = copy_to_kernel_nofault(addr, insn, len);
++
++#ifdef CONFIG_RISCV_ESP32P4_CLIC
++	if (!ret)
++		esp32p4_sync_text(addr, len, true);
++#endif
++	return ret;
+ }
+ NOKPROBE_SYMBOL(__patch_insn_write);
+ #endif /* CONFIG_MMU */
+@@ -208,10 +342,14 @@ int patch_text_set_nosync(void *addr, u8 c, size_t len)
+ 	int ret;
+ 
+ 	ret = patch_insn_set(addr, c, len);
+-	if (!ret)
+-		flush_icache_range((uintptr_t)addr, (uintptr_t)addr + len);
++	if (ret)
++		return ret;
+ 
+-	return ret;
++#ifdef CONFIG_RISCV_ESP32P4_CLIC
++	esp32p4_sync_text(addr, len, true);
++#endif
++	flush_icache_range((uintptr_t)addr, (uintptr_t)addr + len);
++	return 0;
+ }
+ NOKPROBE_SYMBOL(patch_text_set_nosync);
+ 
+diff --git a/arch/riscv/kernel/signal.c b/arch/riscv/kernel/signal.c
+index 59784dc..05266d7 100644
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/compat.h>
++#include <linux/cacheflush.h>
+ #include <linux/signal.h>
+ #include <linux/uaccess.h>
+ #include <linux/syscalls.h>
+@@ -21,7 +22,6 @@
+ #include <asm/switch_to.h>
+ #include <asm/vector.h>
+ #include <asm/csr.h>
+-#include <asm/cacheflush.h>
+ #include <asm/usercfi.h>
+ 
+ unsigned long signal_minsigstksz __ro_after_init;
+@@ -453,7 +453,9 @@ static int setup_rt_frame(struct ksignal *ksig, sigset_t *set,
+ 
+ 	addr = (unsigned long)&frame->sigreturn_code;
+ 	/* Make sure the two instructions are pushed to icache. */
+-	flush_icache_range(addr, addr + sizeof(frame->sigreturn_code));
++	err = flush_icache_user_range_checked(addr, addr + sizeof(frame->sigreturn_code));
++	if (err)
++		return err;
+ 
+ 	regs->ra = addr;
+ #endif /* CONFIG_MMU */
+diff --git a/arch/riscv/kernel/sys_riscv.c b/arch/riscv/kernel/sys_riscv.c
+index 22fc9b3..04c6883 100644
+--- a/arch/riscv/kernel/sys_riscv.c
++++ b/arch/riscv/kernel/sys_riscv.c
+@@ -5,8 +5,9 @@
+  * Copyright (C) 2017 SiFive
+  */
+ 
++#include <linux/cacheflush.h>
++#include <linux/mm.h>
+ #include <linux/syscalls.h>
+-#include <asm/cacheflush.h>
+ #include <asm-generic/mman-common.h>
+ 
+ static long riscv_sys_mmap(unsigned long addr, unsigned long len,
+@@ -52,6 +53,33 @@ SYSCALL_DEFINE6(mmap2, unsigned long, addr, unsigned long, len,
+ }
+ #endif
+ 
++#ifdef CONFIG_RISCV_ESP32P4_CLIC
++static int esp32p4_flush_icache_mapped_range(unsigned long start,
++					   unsigned long end)
++{
++	struct mm_struct *mm = current->mm;
++	struct vm_area_struct *vma;
++	unsigned long covered = start;
++	int ret = -EFAULT;
++
++	VMA_ITERATOR(vmi, mm, start);
++
++	mmap_read_lock(mm);
++	for_each_vma_range(vmi, vma, end) {
++		if (vma->vm_start > covered)
++			break;
++		covered = vma->vm_end;
++		if (covered >= end) {
++			ret = flush_icache_user_range_checked(start, end);
++			break;
++		}
++	}
++	mmap_read_unlock(mm);
++
++	return ret;
++}
++#endif
++
+ /*
+  * Allows the instruction cache to be flushed from userspace.  Despite RISC-V
+  * having a direct 'fence.i' instruction available to userspace (which we
+@@ -63,8 +91,8 @@ SYSCALL_DEFINE6(mmap2, unsigned long, addr, unsigned long, len,
+  *
+  * sys_riscv_flush_icache() is defined to flush the instruction cache over an
+  * address range, with the flush applying to either all threads or just the
+- * caller.  We don't currently do anything with the address range, that's just
+- * in there for forwards compatibility.
++ * caller. The generic implementation uses a whole-cache flush. ESP32-P4
++ * also synchronizes mapped PSRAM in the requested range.
+  */
+ SYSCALL_DEFINE3(riscv_flush_icache, uintptr_t, start, uintptr_t, end,
+ 	uintptr_t, flags)
+@@ -73,6 +101,13 @@ SYSCALL_DEFINE3(riscv_flush_icache, uintptr_t, start, uintptr_t, end,
+ 	if (unlikely(flags & ~SYS_RISCV_FLUSH_ICACHE_ALL))
+ 		return -EINVAL;
+ 
++#ifdef CONFIG_RISCV_ESP32P4_CLIC
++	if (end < start)
++		return -EINVAL;
++	if (end > start)
++		return esp32p4_flush_icache_mapped_range(start, end);
++#endif
++
+ 	flush_icache_mm(current->mm, flags & SYS_RISCV_FLUSH_ICACHE_LOCAL);
+ 
+ 	return 0;
+diff --git a/fs/binfmt_flat.c b/fs/binfmt_flat.c
+index b5b5ca1..890a81d 100644
+--- a/fs/binfmt_flat.c
++++ b/fs/binfmt_flat.c
+@@ -32,6 +32,7 @@
+ #include <linux/user.h>
+ #include <linux/slab.h>
+ #include <linux/binfmts.h>
++#include <linux/cacheflush.h>
+ #include <linux/personality.h>
+ #include <linux/init.h>
+ #include <linux/flat.h>
+@@ -40,7 +41,6 @@
+ 
+ #include <asm/byteorder.h>
+ #include <linux/unaligned.h>
+-#include <asm/cacheflush.h>
+ #include <asm/page.h>
+ #include <asm/flat.h>
+ 
+@@ -830,7 +830,9 @@ static int load_flat_file(struct linux_binprm *bprm,
+ #endif /* CONFIG_BINFMT_FLAT_OLD */
+ 	}
+ 
+-	flush_icache_user_range(start_code, end_code);
++	ret = flush_icache_user_range_checked(start_code, end_code);
++	if (ret)
++		return ret;
+ 
+ 	/* zero the BSS,  BRK and stack areas */
+ 	if (clear_user((void __user *)(datapos + data_len), bss_len +
+diff --git a/fs/exec.c b/fs/exec.c
+index 8d2b14e..9066d2b 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -23,6 +23,7 @@
+  * formats.
+  */
+ 
++#include <linux/cacheflush.h>
+ #include <linux/kernel_read_file.h>
+ #include <linux/slab.h>
+ #include <linux/file.h>
+@@ -827,8 +828,13 @@ EXPORT_SYMBOL(open_exec);
+ ssize_t read_code(struct file *file, unsigned long addr, loff_t pos, size_t len)
+ {
+ 	ssize_t res = vfs_read(file, (void __user *)addr, len, &pos);
+-	if (res > 0)
+-		flush_icache_user_range(addr, addr + len);
++
++	if (res > 0) {
++		int ret = flush_icache_user_range_checked(addr, addr + len);
++
++		if (ret)
++			return ret;
++	}
+ 	return res;
+ }
+ EXPORT_SYMBOL(read_code);
+diff --git a/include/linux/cacheflush.h b/include/linux/cacheflush.h
+index 55f297b..6a7d6f4 100644
+--- a/include/linux/cacheflush.h
++++ b/include/linux/cacheflush.h
+@@ -26,4 +26,11 @@ static inline void flush_icache_pages(struct vm_area_struct *vma,
+ 
+ #define flush_icache_page(vma, page)	flush_icache_pages(vma, page, 1)
+ 
++#ifndef flush_icache_user_range_checked
++#define flush_icache_user_range_checked(start, end) ({	\
++	flush_icache_user_range((start), (end));		\
++	0;						\
++})
++#endif
++
+ #endif /* _LINUX_CACHEFLUSH_H */
+diff --git a/mm/nommu.c b/mm/nommu.c
+index 6c6f953..f310d1e 100644
+--- a/mm/nommu.c
++++ b/mm/nommu.c
+@@ -16,6 +16,7 @@
+ 
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include <linux/cacheflush.h>
+ #include <linux/export.h>
+ #include <linux/mm.h>
+ #include <linux/sched/mm.h>
+@@ -395,10 +396,9 @@ SYSCALL_DEFINE1(brk, unsigned long, brk)
+ 		return brk;
+ 	}
+ 
+-	/*
+-	 * Ok, looks good - let it rip.
+-	 */
+-	flush_icache_user_range(mm->brk, brk);
++	if (flush_icache_user_range_checked(mm->brk, brk))
++		return mm->brk;
++
+ 	return mm->brk = brk;
+ }
+ 
+@@ -1193,7 +1193,7 @@ unsigned long do_mmap(struct file *file,
+ 	/* okay... we have a mapping; now we have to register it */
+ 	result = vma->vm_start;
+ 
+-	current->mm->total_vm += len >> PAGE_SHIFT;
++
+ 
+ share:
+ 	BUG_ON(!vma->vm_region);
+@@ -1201,6 +1201,19 @@ share:
+ 	if (vma_iter_prealloc(&vmi, vma))
+ 		goto error_vma_iter_prealloc;
+ 
++	/* Flush the region before publishing its first executable mapping. */
++	if (vma->vm_flags & VM_EXEC && !region->vm_icache_flushed) {
++		ret = flush_icache_user_range_checked(region->vm_start,
++						      region->vm_end);
++		if (ret)
++			goto error_free_mapped;
++
++		region->vm_icache_flushed = true;
++	}
++
++	if (region->vm_usage == 1)
++		current->mm->total_vm += len >> PAGE_SHIFT;
++
+ 	add_nommu_region(region);
+ 
+ 	setup_vma_to_mm(vma, current->mm);
+@@ -1208,13 +1221,6 @@ share:
+ 	/* add the VMA to the tree */
+ 	vma_iter_store_new(&vmi, vma);
+ 
+-	/* we flush the region from the icache only when the first executable
+-	 * mapping of it is made  */
+-	if (vma->vm_flags & VM_EXEC && !region->vm_icache_flushed) {
+-		flush_icache_user_range(region->vm_start, region->vm_end);
+-		region->vm_icache_flushed = true;
+-	}
+-
+ 	up_write(&nommu_region_sem);
+ 
+ 	return result;
+@@ -1250,6 +1256,7 @@ error_vma_iter_prealloc:
+ 	show_mem();
+ 	ret = -ENOMEM;
+ 
++error_free_mapped:
+ 	/* in case that the region is allocated via do_mmap_private() */
+ 	if ((region->vm_usage == 1) && (region->vm_flags & VM_MAPPED_COPY))
+ 		free_page_series(region->vm_start, region->vm_top);
 -- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+2.56.1
+
