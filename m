@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.231.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.231.128
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795832186;
-	b=AUb11h6yNX+PG/UZK6/fOlOK+OfIRhET8EC2XWxP2jMsfdjE61+hHjNzqT1QGx+D4JOh
-	 Q5po0lmXNWJjwmU4ygDp1ZOA39vvhCh8pQ1prQXYNhmije23errcr9pkCeib7yk+tj22E
-	 zFGkEDfq42FqNtTdeG5nQIUsgx5+Tg3zzN6plT0SdHVg/BIrA0wi9V9Xbm7HEklnzpbRm
-	 uYTGkb9ri56wUJuk1fs1PDUxq8mmy5NDnBTSomg2lHK549ZdIgRnXOoEMaOyjIYgfZUoC
-	 J4f9Yeq6p3kvBnmhm02jSjWv2cvJ/ZKlbE4ZokUG5/U9yZp3td+Kmd5nNFrttn8gAHg==
+	t=1795832208;
+	b=m7YUapB/MLC7cl4hgKQlz2JjqhztJs4IE4iALD1FbKQlTRS0XyBwBhRkMK58OaU6AoZw
+	 D4mOG9+EUCZw9sFDvm127ugacjyyegckdthbH/SjF2jqvt/Z3QRp15GsKhgEl02k70KMD
+	 hHTwqZzoBhB87rcR77fG49XZjhQ35FCofK0/eYOMnkbKfEfNNPzXqbl2e476iCzHVI6G/
+	 O/AsRc7ycablJefuvKIH19h+aY+gWT51FeJqUlF8jRqyGPeSK0SPqmKaaFxEoEMGmVnB8
+	 ekT1i2mAvmE5K77v5jUnlFHsWq6CYiQ3yGTyG8yakV47wQYOq5hkOd117dv8mdWq7Sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795832186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795832208;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
 	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:From:
 	 To:X-Mailer:References:In-Reply-To;
-	bh=v+AxhUWo7ZwVXmdndnrjQUEctBiASldH/hTh0wDhZIU=;
-	b=1K/ibJJ215c9OFYTMV3fcmqQ2V+yvrvwkJf1WUGmZw9XuIpiPj26220R36t5m30zeQul
-	 6Nw+rT/Fx/fzS/UsTEVuxluGJIooZlxwUOTseOloNknBHoWYzUy0DyZvGM5wuURwLakmL
-	 g3BAHYRBnwZCLxsuoNr5QEhSP30cQwePh6Hf2f2ONDoRniR67D4J4qAex+0M6KlqfQWP6
-	 eXBHeNK3rI3BFvdMpn6v2jcn0H+t0LLgZnnZ9Gf/mRcUauel1s5L+i/6sP+yU+ou4g9Zl
-	 0uChvlmhJYEzeOEiEGn41vWobXMMQY8nXkwfoP808idCyslg1gz9BWjwuO3d3E3MjPA==
+	bh=yiliGXm3f+G64tFZg1ZTzyN0pIV3IaS5Gv94kJDg6uc=;
+	b=H77MZI+LDLu+0CQiuI67dqKJcpxjDyHh7vfMRb8L+g/k4G1+n072Df01hZkwLK5IH8y9
+	 bfRcXmbgGGRq71sqgIk+KBHOAYyoYl8cqVbZdfBnnlSGTKXKbSrzEdkumTAsvOlk6b/6a
+	 ukLdW0PGs34M+zyf6ydJP1WrR5bl8BAysN0SQA3IyXrq9ZhmvMlntYmTwmSZn+8Uu9CuR
+	 c6uBkr5Xpov5rSW5g1HDdWoPCBJqvgcIEkS5Er88YUsRSRzFqEUBFY4nRII2J5Ijd60Yb
+	 CTKL2aTssKgJNHg24wUatUwmdIv8X+CokvOKjJc7mQMZFSaNt3yUYGS7RXDQvkxH69A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ouVderiH;
-	arc=none smtp.remote-ip=74.125.231.72
-Received: from mail-oa2-f8.google.com (mail-oa2-f8.google.com [74.125.231.72])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MKCybWSe;
+	arc=none smtp.remote-ip=74.125.231.128
+Received: from mail-oo2-f0.google.com (mail-oo2-f0.google.com [74.125.231.128])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D40606A6A1
-	for <sashiko-reviews@lists.linux.dev>; Sat, 28 Nov 2026 02:16:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9D40606A6A1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D53B606A68D
+	for <sashiko-reviews@lists.linux.dev>; Sat, 28 Nov 2026 02:16:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D53B606A68D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ouVderiH
-Received: by mail-oa2-f8.google.com with SMTP id 586e51a60fabf-48f1c6a7779so5735587fac.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 18:16:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MKCybWSe
+Received: by mail-oo2-f0.google.com with SMTP id 006d021491bc7-71b2566b798so794705eaf.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 18:16:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795832185; x=1796436985; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795832206; x=1796437006; darn=lists.linux.dev;
         h=in-reply-to:references:to:from:subject:message-id:date:content-type
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=v+AxhUWo7ZwVXmdndnrjQUEctBiASldH/hTh0wDhZIU=;
-        b=ouVderiHSK/7G7RWBXRIws2B6YzIIm/F08FegoOYHLLdOjc8Ryt6Ta/Z0fdWlVJCli
-         fufCYYG7dbeAtuxEEw4XXbAwNOqckNxGRQpzPubIELMx4CiKHj9eS9MtSFlnNML2BnId
-         1uSaxCN44EMgtbSPL7vFysWiHkaqTZhEKFusKl51wTq0BuTXrMIoXYxxaG078IMPQcNB
-         DgmN/HKnq4yQWokrY5GDS7qB90oXHEKobIaHi/lfscbaOpFa8W14BcqnplUAOS7Vc0W4
-         As2ROJlVIOOVepkeCamDfiuRw3cmrG9kV0Z03j8R3NblR+nvW2ga1roIuQWnsaWGOw3z
-         n8XA==
+        bh=yiliGXm3f+G64tFZg1ZTzyN0pIV3IaS5Gv94kJDg6uc=;
+        b=MKCybWSetVRkbK0xxTlT33zddckXsiMEji8JErzSlJPJdrAFgVIxHRLHv/GHJE0IfT
+         5WudFrv1Ijic7ztNSj694V7wxRupw/caUpKQWHpAzTWeB34ZOOfbmMQMTJahJDQQD43S
+         dg6mob3ieA8JBO6w/unPFOxU0Kx/RAw7UcGK4y9B8i0++J6Pjid4/Nztp/a4VNpX40v3
+         MRAvBncoB4PlVQiFoqewcDJv9rbFU3tuPHv2ph4zBKv2NJfYipsSch8giPc1uFMyFDuC
+         ZADOL/7WzHgmSDpSDvzmc/zGRSTEYDuCENCT2bMCx+2PxyNN4E2oYMMCEl1DuA/jQxNO
+         dwDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795832185; x=1796436985;
+        d=1e100.net; s=20260707; t=1795832206; x=1796437006;
         h=in-reply-to:references:to:from:subject:message-id:date:content-type
          :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=v+AxhUWo7ZwVXmdndnrjQUEctBiASldH/hTh0wDhZIU=;
-        b=YRnzeEgBFzWs18Erz9Ss6+iP5jePvfWOU9ciGq6lXcxQqOISycAsziX0OH6xt6EpMg
-         fvwllaqgSfR6RJk6eEhE/drjN9p0TSyWM9COyGHPOdwWr0F4AnLAo3H/yu8JZOs5CglG
-         OVUTNmOXamHxjn3r+fmgGp9Lj8L9L2xLW3AqQTRLC3OXYk3N9h5a3Vr6AFWTguBO5KYl
-         JAih3XlEa2qkfESCZqOo1/JCdEkcJLa/u1lleiWxZI9vVpd57Da5EpT6aS9lA1zFb90l
-         w91tNqiOdkA7me8m2MUrByTcmTsE7gLCSV5A9Ymfs09MNGYp9pCVMU9FAwnTU3BnNlyr
-         soJQ==
-X-Gm-Message-State: APuU4Z8IdOFHmMDImgjIbw+wJ74pUz+d2Jsz4jq89dRsjuax3fi0m0t6
-	alLrMwknuNMvqiNV3AyF0CQUj9cxqsYFeOzXHLRmkqpmKUdtTNUUpVdMEixFk4oCIto=
-X-Gm-Gg: AZFdTZdQ22u8PYLgf+9+TXjg1WUkWZIvLJo3+ICegFdPE58HNdCWYpX9TRMmoHUpM0b
-	U0iBn8br0YVCbIlXxRoOONRx3g/QBarqURtVQcdALu+sKYwienVW+pI8nIWLw7Skk7ym70m4noR
-	gwkrTLVYamoq3rintNHfixTLon9xthT2IyKFzyY4t5sN6Ii7hMIGVl7a7Sb3degU+ZLqs1NDUwc
-	loC6ibH2xc7yaSzWClMbm92qExzgZVg0wqaBt8At75Aw/QGxhKux72hvKpOQMJyNulX0HYBAGKe
-	UD/onoGxpfFzYGdNiRCmRIrBxv6ECLYzAnuts9RhrIjnCdAIPIx2l0rJ8dk+wvaoAxBBf8BeV40
-	YH1hXwOuKLkIIJICXX57tvGAxsRII2fIDKurpweJb5G6QKWGYfy6QfZilgWS9YE9voDeIrgNhoB
-	yWTqoLJujZEmZ1jawkz4ti5PDW8zWjumDHYtUwuKNSNG76GjQ6DiwCoIhXMRJTgMmZKUIja4C50
-	Ojb1hjcEOoLummx2v34n8TL+SO859OhS9QlOsuwGcUkPg6QN9Wk8PLt18NmsxpEKSeq1nKsvF7P
-	omU8TlP/E1kZ7kvDwe5/S5d3yh8dbOW7NYFcz94U5dc4YZfoUFd1DEFCdygtMV9BKpy27NNikDS
-	MijyW9fUGAk3TG/vrpVmsZw70Y6mYMiypWkmD
-X-Received: by 2002:a05:6870:41d4:b0:4ad:852b:333 with SMTP id 586e51a60fabf-4bc8307d56fmr25048990fac.50.1795832184572;
-        Fri, 27 Nov 2026 18:16:24 -0800 (PST)
-Received: from localhost ([2a03:2880:10ff:5a::])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bc61081159sm22936697fac.15.2026.11.27.18.16.22
+        bh=yiliGXm3f+G64tFZg1ZTzyN0pIV3IaS5Gv94kJDg6uc=;
+        b=Fi/D7l7ODG07wxKNRSGUXATE3AXZpQ2TMjMczvnHeHkpmm6p4zuhRuTsXQxrfRKg/i
+         U3BBEcXYU6rqt4fqcs1djF11SQRMxRPADKEc5/Mp7jdouCdPI+Xzo+gjHZF7O4Jwl4gL
+         avrudXsGYRGuoeyTL7Ctr8sVT2B9sVVCDAKbo6Brcco/X23X9KAuvjTe/PTTO0o7lj9E
+         7SBYSpmfVWXE9gRIxkUI2FY/D7lM7xV6blfrpqfXDCV5yAmz7q3NitQR/OyZK5lP4C8y
+         byysFNuG28nzSehXibHsTCp4zftx+PrmoEIQ/lkDiQEfROlooZdW6lmmlTTlXty0cxJp
+         WBPg==
+X-Gm-Message-State: APuU4Z/TAIRaBmKxAIIBGi7GdqPj0oTu4ayHoXXM5PPS6uFPSYcrQT/I
+	HQ0WjoPb6kOZMkFK03r3RilHsAMZplGMEo/lOdQZvsEIXHtqztzL0hwvAhrDBw0119o=
+X-Gm-Gg: AZFdTZd2UAwliQESbAaaS0k72tqvSmdU9Kpion41iDWCTemWrZTdD253iPSp/mUWbdA
+	rdIZ7hkgcSeS+0NdJCX8NHm8UJF0lUzu9lCmX9AAo0EmzLl7QdUCkapgFGcp6ARVk1qzhVGQS5Y
+	+yjvbKrhDZFgjLbNn2JEmiDLCdQzp3KuUe86mA3xXeYyGcGlLkZSTLmccD1NlGSFNHt8h7ENrrM
+	68VGeXmxsygEaeOkNRoccYdU49YQmS1bWs72KnHIx9V8HqGpr3tue8x4ld3NEum5bYGINVPDqp7
+	QwdCeNjWpXbIL3/PNYexUi+dI8jIyx7M4ES+yeql3HvkCp68nzrMOX31jO9CQ9v2uU7d4KQ3jH2
+	3RKRDl17IcMUia+NoQxH8/BPJPwDWmDXJqJ/EQ6bCHfJ67cizrPq9zpyoQP1fCF47NdPT2DdG4W
+	dcoD/pI5YxHXBzKqkdvuN8Sibo4QmfXhSKPAnh4HUU+ISqwQD0ZGwtc+icVp9H8BzCCPEX48cMJ
+	Q486ccrREzeKoKbCeCj8McufMbpOHB8iraY0hfTAow8zWRppdTRXtywpAFjN9QUyFVH7+rIbmdI
+	8i2SebkJC7xLYgWiaHh0x9mKrlne2PV6oDyKWcGonI97OKMbs26Tor83uXWTgQpHr7Z+A4YaBTr
+	uJoZ8wJv5w2orrIAbQGIhegzY29E4TrRYzA/1+g==
+X-Received: by 2002:a05:6820:c5c6:20b0:71a:fb34:af74 with SMTP id 006d021491bc7-71b39438914mr13911055eaf.27.1795832206071;
+        Fri, 27 Nov 2026 18:16:46 -0800 (PST)
+Received: from localhost ([2a03:2880:10ff:5b::])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bc60891cf6sm24863163fac.13.2026.11.27.18.16.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Nov 2026 18:16:23 -0800 (PST)
+        Fri, 27 Nov 2026 18:16:44 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,63 +89,77 @@ Precedence: list
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 28 Nov 2026 03:16:21 +0100
-Message-Id: <DN6HDN2N87GO.C2NVM588C2DP@gmail.com>
-Subject: Re: [PATCH bpf-next v2 1/3] x86/mm: Resolve BPF exception fixups
- for user address faults under SMAP
+Date: Sat, 28 Nov 2026 03:16:43 +0100
+Message-Id: <DN6HDX0GXICR.JK53Y1GEJOTT@gmail.com>
+Subject: Re: [PATCH bpf-next v2 2/3] bpf, x86: Skip the PROBE_MEM address
+ range check under SMAP
 From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
 To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
 X-Mailer: aerc 0.22.0
 References: <cover.1795829324.git.memxor@gmail.com>
- <0a30eeab6bea7ddfc0202d1970ab1b7f3a4d580c.1795829324.git.memxor@gmail.com>
- <sashiko-outbox-238412@kernel.org>
-In-Reply-To: <sashiko-outbox-238412@kernel.org>
+ <f2beca95aa1eb81f00c6baf408c681063e13ce83.1795829324.git.memxor@gmail.com>
+ <sashiko-outbox-238410@kernel.org>
+In-Reply-To: <sashiko-outbox-238410@kernel.org>
 
-On Sat Nov 28, 2026 at 2:46 AM CET, sashiko-bot wrote:
+On Sat Nov 28, 2026 at 2:41 AM CET, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] x86/mm: SMAP does not fault on supervisor mappings below
->   TASK_SIZE_MAX
+> - [Medium] bpf, x86: skipping PROBE_MEM range check breaks
+>   flex_array_far_join() test
 > --
 >
-> commit 9b387754d627ac256ae9705ce7d6a4e7a2935051
+> commit 519a06c0e9f33f01690a25837946e3048111ee57
 > Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 >
-> x86/mm: Resolve BPF exception fixups for user address faults under SMAP
+> bpf, x86: Skip the PROBE_MEM address range check under SMAP
 >
-> This commit resolves EX_TYPE_BPF exception table entries on kernel-mode r=
-ead
-> faults in do_user_addr_fault() under SMAP, allowing the x86 BPF JIT to om=
-it
-> its software range check before PROBE_MEM loads.
+> This commit omits the x86-64 JIT runtime address range check before
+> BPF_PROBE_MEM and BPF_PROBE_MEMSX loads when SMAP is enabled and the
+> program was loaded with CAP_BPF, relying on SMAP and the page fault
+> handler's exception table lookup instead.
 >
->> diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
->> index aa88370ce7394..9fe8705eff043 100644
->> --- a/arch/x86/mm/fault.c
->> +++ b/arch/x86/mm/fault.c
->> @@ -1263,7 +1263,16 @@ void do_user_addr_fault(struct pt_regs *regs,
->>  		     !(error_code & X86_PF_USER) &&
->>  		     !(regs->flags & X86_EFLAGS_AC))) {
->>  		/*
->> -		 * No extable entry here.  This was a kernel access to an
->> +		 * The CPU refused the access. If the BPF JIT marked this load
->> +		 * as one that may fault, skip it and zero the destination.
->> +		 */
->> +		if (!user_mode(regs) && !(error_code & X86_PF_WRITE) &&
->> +		    ex_get_fixup_type(regs->ip) =3D=3D EX_TYPE_BPF &&
->> +		    fixup_exception(regs, X86_TRAP_PF, error_code, address))
->> +			return;
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index d51ae52fef719..019e5da72136d 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
+> [ ... ]
+>> @@ -4862,6 +4870,15 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_v=
+erifier_env *env, struct bpf_pr
+>>  		addrs[i] =3D proglen;
+>>  	}
+>>  	ctx.cleanup_addr =3D proglen;
+>> +	/*
+>> +	 * With SMAP enabled, a PROBE_MEM load of a user address faults (#PF, =
+or
+>> +	 * #GP with LASS) and the fault handler resolves the exception table
+>> +	 * entry of the program, as for an unmapped kernel address. That looku=
+p
+>> +	 * only finds programs in the BPF ksym tree, so programs loaded withou=
+t
+>> +	 * CAP_BPF keep the address range check, as do kernels without SMAP.
+>> +	 */
+>> +	ctx.probe_mem_check =3D !cpu_feature_enabled(X86_FEATURE_SMAP) ||
+>> +			      !bpf_prog_kallsyms_allowed(prog);
+>>  skip_init_addrs:
 >
 > [Severity: Medium]
-> Can relying on SMAP to refuse PROBE_MEM loads below TASK_SIZE_MAX allow r=
-eads
-> from supervisor mappings in the low address range when a temporary mm suc=
-h as
-> efi_mm is active in CR3?
+> Does skipping the range check break the flex_array_far_join() BPF selftes=
+t
+> on x86-64 systems with SMAP enabled?
 >
+> tools/testing/selftests/bpf/progs/verifier_btf_array_access.c:flex_array_=
+far_join() {
+> 	SEC("tp_btf/exit_mmap")
+> 	__success __arch_x86_64
+> 	__jited("	leaq	0xa00000(%rbx), %r11")
+> 	__naked void flex_array_far_join(void)
+> }
+>
+> That test is loaded with CAP_BPF and matches the "leaq 0xa00000(%rbx), %r=
+11"
+> instruction from the PROBE_MEM range check to verify that the load was
+> converted to BPF_PROBE_MEM, so its __jited() check fails when
+> ctx.probe_mem_check is false.
 
-Which is fine, the read just goes through in that case. Bot is confused abo=
-ut
-the semantics of the feature.
-
-> [...]
+Yes, this was an oversight on my part. Will fix in v3 respin (after some ti=
+me).
