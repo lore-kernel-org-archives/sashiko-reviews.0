@@ -1,83 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.231.128
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795832208;
-	b=m7YUapB/MLC7cl4hgKQlz2JjqhztJs4IE4iALD1FbKQlTRS0XyBwBhRkMK58OaU6AoZw
-	 D4mOG9+EUCZw9sFDvm127ugacjyyegckdthbH/SjF2jqvt/Z3QRp15GsKhgEl02k70KMD
-	 hHTwqZzoBhB87rcR77fG49XZjhQ35FCofK0/eYOMnkbKfEfNNPzXqbl2e476iCzHVI6G/
-	 O/AsRc7ycablJefuvKIH19h+aY+gWT51FeJqUlF8jRqyGPeSK0SPqmKaaFxEoEMGmVnB8
-	 ekT1i2mAvmE5K77v5jUnlFHsWq6CYiQ3yGTyG8yakV47wQYOq5hkOd117dv8mdWq7Sg==
+	t=1795832527;
+	b=Erlm0UMegZ7a5Ogi0sa7L31LYJUqQMvtKILFSJF19ZO2PcrRimb2+0RW6IbdWkq3WMlb
+	 iiOQAQzgsk+YCdLxT9Vt72Px3nsRm5+n1EgI2WxKCnqqBUbIWcRFwy4jE7JNuMtM38eZX
+	 UbkRA/wPnbpEbuBvbBcG6C9Br7i4QTu3r6BqhCCS9iA2nxNivHaZAuYU2ghMY6MxkudvQ
+	 oiFqyApuci25kHdAt6KcYboGtNWYqcvSwXifaaQiETSw1ymOvazpZ3OQxJEaTO2DQT3Zt
+	 +GQ8HLhg8avL8OYKq6BgjnLeSlHDBS9jWdLc3ZLh/XtLIJV0CgxKLRrUNbZ7zCEe97w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795832208;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:From:
-	 To:X-Mailer:References:In-Reply-To;
-	bh=yiliGXm3f+G64tFZg1ZTzyN0pIV3IaS5Gv94kJDg6uc=;
-	b=H77MZI+LDLu+0CQiuI67dqKJcpxjDyHh7vfMRb8L+g/k4G1+n072Df01hZkwLK5IH8y9
-	 bfRcXmbgGGRq71sqgIk+KBHOAYyoYl8cqVbZdfBnnlSGTKXKbSrzEdkumTAsvOlk6b/6a
-	 ukLdW0PGs34M+zyf6ydJP1WrR5bl8BAysN0SQA3IyXrq9ZhmvMlntYmTwmSZn+8Uu9CuR
-	 c6uBkr5Xpov5rSW5g1HDdWoPCBJqvgcIEkS5Er88YUsRSRzFqEUBFY4nRII2J5Ijd60Yb
-	 CTKL2aTssKgJNHg24wUatUwmdIv8X+CokvOKjJc7mQMZFSaNt3yUYGS7RXDQvkxH69A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795832527;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=bA0QuwLrAhavKCx5CEuNn3dlERhJ7ym0sruZEZcGMlc=;
+	b=hC1hotEdzTIZoeJFOLXI4chAFEWxd4H/htwhF62Qc75HFBPni0S/WVapFb8VNsAuV7Hy
+	 V4ULL4QyDErm0U6xnqKaW3jIJgQhf3guBp5viAf6xjHUTtzy6DktWTph4FSPQ69nR8yCz
+	 6lXGQGahjSlsPMdP1SBUNiwJXEjneN9oGpHCTJkjRiAnssLQYNDWqhQlzhhxMTQnvXTIP
+	 5iABGX+YtruYh64TqmPYRNxKWoFiZo5ovvtadBm3WTyiGPJvze8nvZSwGLdm02tCYU+pn
+	 OMzTCE8bXy8ZW1HH2euw+VnimCTsyIlvACA96UEzSyGazWdA5b3tK+FQPt6coglgt7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MKCybWSe;
-	arc=none smtp.remote-ip=74.125.231.128
-Received: from mail-oo2-f0.google.com (mail-oo2-f0.google.com [74.125.231.128])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aenTreZL;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D53B606A68D
-	for <sashiko-reviews@lists.linux.dev>; Sat, 28 Nov 2026 02:16:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D53B606A68D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F4D606A336;
+	Sat, 28 Nov 2026 02:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MKCybWSe
-Received: by mail-oo2-f0.google.com with SMTP id 006d021491bc7-71b2566b798so794705eaf.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 27 Nov 2026 18:16:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795832206; x=1796437006; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yiliGXm3f+G64tFZg1ZTzyN0pIV3IaS5Gv94kJDg6uc=;
-        b=MKCybWSetVRkbK0xxTlT33zddckXsiMEji8JErzSlJPJdrAFgVIxHRLHv/GHJE0IfT
-         5WudFrv1Ijic7ztNSj694V7wxRupw/caUpKQWHpAzTWeB34ZOOfbmMQMTJahJDQQD43S
-         dg6mob3ieA8JBO6w/unPFOxU0Kx/RAw7UcGK4y9B8i0++J6Pjid4/Nztp/a4VNpX40v3
-         MRAvBncoB4PlVQiFoqewcDJv9rbFU3tuPHv2ph4zBKv2NJfYipsSch8giPc1uFMyFDuC
-         ZADOL/7WzHgmSDpSDvzmc/zGRSTEYDuCENCT2bMCx+2PxyNN4E2oYMMCEl1DuA/jQxNO
-         dwDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795832206; x=1796437006;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yiliGXm3f+G64tFZg1ZTzyN0pIV3IaS5Gv94kJDg6uc=;
-        b=Fi/D7l7ODG07wxKNRSGUXATE3AXZpQ2TMjMczvnHeHkpmm6p4zuhRuTsXQxrfRKg/i
-         U3BBEcXYU6rqt4fqcs1djF11SQRMxRPADKEc5/Mp7jdouCdPI+Xzo+gjHZF7O4Jwl4gL
-         avrudXsGYRGuoeyTL7Ctr8sVT2B9sVVCDAKbo6Brcco/X23X9KAuvjTe/PTTO0o7lj9E
-         7SBYSpmfVWXE9gRIxkUI2FY/D7lM7xV6blfrpqfXDCV5yAmz7q3NitQR/OyZK5lP4C8y
-         byysFNuG28nzSehXibHsTCp4zftx+PrmoEIQ/lkDiQEfROlooZdW6lmmlTTlXty0cxJp
-         WBPg==
-X-Gm-Message-State: APuU4Z/TAIRaBmKxAIIBGi7GdqPj0oTu4ayHoXXM5PPS6uFPSYcrQT/I
-	HQ0WjoPb6kOZMkFK03r3RilHsAMZplGMEo/lOdQZvsEIXHtqztzL0hwvAhrDBw0119o=
-X-Gm-Gg: AZFdTZd2UAwliQESbAaaS0k72tqvSmdU9Kpion41iDWCTemWrZTdD253iPSp/mUWbdA
-	rdIZ7hkgcSeS+0NdJCX8NHm8UJF0lUzu9lCmX9AAo0EmzLl7QdUCkapgFGcp6ARVk1qzhVGQS5Y
-	+yjvbKrhDZFgjLbNn2JEmiDLCdQzp3KuUe86mA3xXeYyGcGlLkZSTLmccD1NlGSFNHt8h7ENrrM
-	68VGeXmxsygEaeOkNRoccYdU49YQmS1bWs72KnHIx9V8HqGpr3tue8x4ld3NEum5bYGINVPDqp7
-	QwdCeNjWpXbIL3/PNYexUi+dI8jIyx7M4ES+yeql3HvkCp68nzrMOX31jO9CQ9v2uU7d4KQ3jH2
-	3RKRDl17IcMUia+NoQxH8/BPJPwDWmDXJqJ/EQ6bCHfJ67cizrPq9zpyoQP1fCF47NdPT2DdG4W
-	dcoD/pI5YxHXBzKqkdvuN8Sibo4QmfXhSKPAnh4HUU+ISqwQD0ZGwtc+icVp9H8BzCCPEX48cMJ
-	Q486ccrREzeKoKbCeCj8McufMbpOHB8iraY0hfTAow8zWRppdTRXtywpAFjN9QUyFVH7+rIbmdI
-	8i2SebkJC7xLYgWiaHh0x9mKrlne2PV6oDyKWcGonI97OKMbs26Tor83uXWTgQpHr7Z+A4YaBTr
-	uJoZ8wJv5w2orrIAbQGIhegzY29E4TrRYzA/1+g==
-X-Received: by 2002:a05:6820:c5c6:20b0:71a:fb34:af74 with SMTP id 006d021491bc7-71b39438914mr13911055eaf.27.1795832206071;
-        Fri, 27 Nov 2026 18:16:46 -0800 (PST)
-Received: from localhost ([2a03:2880:10ff:5b::])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bc60891cf6sm24863163fac.13.2026.11.27.18.16.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Nov 2026 18:16:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aenTreZL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696B71F00893;
+	Sat, 28 Nov 2026 02:22:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795832527;
+	bh=bA0QuwLrAhavKCx5CEuNn3dlERhJ7ym0sruZEZcGMlc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=aenTreZLm58F62041X4uLrCM7vBWP4Ae7fB50/6drkuNxp10epAbu795uEv7Yhmjh
+	 okLGDc9UgvJgaWIWmJLc9bWcDAY28mN0hzKNjIjL+SzykVuBjBeMv7TgT72HigmMc9
+	 a0z26ioUYcNgruAzqLtMLLgzTsaElxecs2Rkl2Ip9p2cqoc0Q/Mx3jPfC0Y2h4O7xe
+	 CKD+6Kqyx9jxhiSaj8MY5AeW840R/cQKFshlx20eihnHSCjpwDSECwvHlBJErHsOJz
+	 U6vg3QbNJJcixE+PfSmNtdt/nsNVjn7EUErCUkbE+Oq7wnHWlNBMPqcZ/MlnSv5A/7
+	 ql4J6DNqXbbCw==
+Date: Sat, 28 Nov 2026 02:21:57 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Romain TISSERAND <romain.tisserand@gmail.com>
+Cc: David Lechner <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?=
+ <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-iio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-sunxi@lists.linux.dev,
+ linux-kernel@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 2/4] iio: adc: Add the Miyoo A30 analog stick MCU
+Message-ID: <20261128022157.7984a33d@jic23-hlaptop>
+In-Reply-To: <20261127012612.1589039-3-romain.tisserand@gmail.com>
+References: <20261127012612.1589039-1-romain.tisserand@gmail.com>
+	<20261127012612.1589039-3-romain.tisserand@gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -86,80 +63,169 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 28 Nov 2026 03:16:43 +0100
-Message-Id: <DN6HDX0GXICR.JK53Y1GEJOTT@gmail.com>
-Subject: Re: [PATCH bpf-next v2 2/3] bpf, x86: Skip the PROBE_MEM address
- range check under SMAP
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
-X-Mailer: aerc 0.22.0
-References: <cover.1795829324.git.memxor@gmail.com>
- <f2beca95aa1eb81f00c6baf408c681063e13ce83.1795829324.git.memxor@gmail.com>
- <sashiko-outbox-238410@kernel.org>
-In-Reply-To: <sashiko-outbox-238410@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sat Nov 28, 2026 at 2:41 AM CET, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] bpf, x86: skipping PROBE_MEM range check breaks
->   flex_array_far_join() test
-> --
->
-> commit 519a06c0e9f33f01690a25837946e3048111ee57
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
->
-> bpf, x86: Skip the PROBE_MEM address range check under SMAP
->
-> This commit omits the x86-64 JIT runtime address range check before
-> BPF_PROBE_MEM and BPF_PROBE_MEMSX loads when SMAP is enabled and the
-> program was loaded with CAP_BPF, relying on SMAP and the page fault
-> handler's exception table lookup instead.
->
->> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
->> index d51ae52fef719..019e5da72136d 100644
->> --- a/arch/x86/net/bpf_jit_comp.c
->> +++ b/arch/x86/net/bpf_jit_comp.c
-> [ ... ]
->> @@ -4862,6 +4870,15 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_v=
-erifier_env *env, struct bpf_pr
->>  		addrs[i] =3D proglen;
->>  	}
->>  	ctx.cleanup_addr =3D proglen;
->> +	/*
->> +	 * With SMAP enabled, a PROBE_MEM load of a user address faults (#PF, =
-or
->> +	 * #GP with LASS) and the fault handler resolves the exception table
->> +	 * entry of the program, as for an unmapped kernel address. That looku=
-p
->> +	 * only finds programs in the BPF ksym tree, so programs loaded withou=
-t
->> +	 * CAP_BPF keep the address range check, as do kernels without SMAP.
->> +	 */
->> +	ctx.probe_mem_check =3D !cpu_feature_enabled(X86_FEATURE_SMAP) ||
->> +			      !bpf_prog_kallsyms_allowed(prog);
->>  skip_init_addrs:
->
-> [Severity: Medium]
-> Does skipping the range check break the flex_array_far_join() BPF selftes=
-t
-> on x86-64 systems with SMAP enabled?
->
-> tools/testing/selftests/bpf/progs/verifier_btf_array_access.c:flex_array_=
-far_join() {
-> 	SEC("tp_btf/exit_mmap")
-> 	__success __arch_x86_64
-> 	__jited("	leaq	0xa00000(%rbx), %r11")
-> 	__naked void flex_array_far_join(void)
-> }
->
-> That test is loaded with CAP_BPF and matches the "leaq 0xa00000(%rbx), %r=
-11"
-> instruction from the PROBE_MEM range check to verify that the load was
-> converted to BPF_PROBE_MEM, so its __jited() check fails when
-> ctx.probe_mem_check is false.
+On Fri, 27 Nov 2026 02:26:10 +0100
+Romain TISSERAND <romain.tisserand@gmail.com> wrote:
 
-Yes, this was an oversight on my part. Will fix in v3 respin (after some ti=
-me).
+> The Miyoo A30 handheld (Allwinner A33) reads its analog stick through a
+> microcontroller on uart0. From power-up it streams frames at 9600 baud,
+> about 67 per second:
+> 
+>   0xff <b0> <b1> <b2> <b3> 0xfe
+> 
+> b2 and b3 are the raw 8-bit readings of the X and Y potentiometers, the
+> ones the stock firmware uses. b0 and b1 also move with the stick, but
+> their meaning is unknown, so they are not exposed.
+> 
+> Add a serdev driver that exposes X and Y as two raw IIO channels. As
+> the MCU pushes its readings, each complete frame also goes to a software
+> IIO buffer (kfifo) with a timestamp: adc-joystick then takes the stick
+> from the buffer, without polling, both axes from the same frame. Direct
+> reads return the last complete frame, -EAGAIN before the first one.
+> 
+> Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
+Take a look at what Sashiko noted
+https://sashiko.dev/#/patchset/20261127012612.1589039-1-romain.tisserand%40gmail.com
+as well as what I have below.
+
+> diff --git a/drivers/iio/adc/miyoo-a30-stick.c b/drivers/iio/adc/miyoo-a30-stick.c
+> new file mode 100644
+> index 000000000000..d83761558ee7
+> --- /dev/null
+> +++ b/drivers/iio/adc/miyoo-a30-stick.c
+> @@ -0,0 +1,204 @@
+
+> +
+> +static size_t a30_stick_receive(struct serdev_device *serdev, const u8 *data,
+> +				size_t count)
+> +{
+> +	struct a30_stick *st = serdev_device_get_drvdata(serdev);
+> +	size_t i;
+> +
+> +	for (i = 0; i < count; i++) {
+
+	for (size_t i = 0; ...
+
+> +		/* resynchronise on the start byte */
+> +		if (!st->len && data[i] != A30_STICK_START)
+> +			continue;
+> +
+> +		st->frame[st->len++] = data[i];
+> +		if (st->len < A30_STICK_FRAME_LEN)
+> +			continue;
+> +
+> +		st->len = 0;
+> +		if (st->frame[A30_STICK_FRAME_LEN - 1] != A30_STICK_END)
+> +			continue;
+> +
+> +		scoped_guard(spinlock, &st->lock) {
+> +			st->val[0] = st->frame[3];
+> +			st->val[1] = st->frame[4];
+> +			st->valid = true;
+> +		}
+> +
+> +		if (iio_buffer_enabled(st->indio_dev)) {
+
+I'm not sure if the fix sashiko has for racing with the demux is
+correct... Please look into whether that works.
+
+> +			IIO_DECLARE_BUFFER_WITH_TS(u8, scan, 2) = { };
+> +
+> +			scan[0] = st->frame[3];
+> +			scan[1] = st->frame[4];
+> +			iio_push_to_buffers_with_ts(st->indio_dev, scan,
+> +						    sizeof(scan),
+> +						    iio_get_time_ns(st->indio_dev));
+> +		}
+> +	}
+> +
+> +	return count;
+> +}
+
+> +
+> +static int a30_stick_read_raw(struct iio_dev *indio_dev,
+> +			      struct iio_chan_spec const *chan, int *val,
+> +			      int *val2, long mask)
+> +{
+> +	struct a30_stick *st = iio_priv(indio_dev);
+> +
+> +	if (mask != IIO_CHAN_INFO_RAW)
+> +		return -EINVAL;
+> +
+> +	guard(spinlock)(&st->lock);
+> +	if (!st->valid)
+> +		return -EAGAIN;
+> +
+> +	*val = st->val[chan->channel];
+
+blank line here.
+
+> +	return IIO_VAL_INT;
+> +}
+
+> +static int a30_stick_probe(struct serdev_device *serdev)
+> +{
+> +	struct device *dev = &serdev->dev;
+> +	struct iio_dev *indio_dev;
+> +	struct a30_stick *st;
+> +	unsigned int baud;
+> +	int ret;
+> +
+> +	indio_dev = devm_iio_device_alloc(dev, sizeof(*st));
+> +	if (!indio_dev)
+> +		return -ENOMEM;
+> +
+> +	st = iio_priv(indio_dev);
+> +	st->indio_dev = indio_dev;
+> +	spin_lock_init(&st->lock);
+> +
+> +	indio_dev->name = "miyoo-a30-stick";
+> +	indio_dev->info = &a30_stick_info;
+> +	indio_dev->modes = INDIO_DIRECT_MODE;
+> +	indio_dev->channels = a30_stick_channels;
+> +	indio_dev->num_channels = ARRAY_SIZE(a30_stick_channels);
+> +	indio_dev->available_scan_masks = a30_stick_scan_masks;
+> +
+> +	ret = devm_iio_kfifo_buffer_setup(dev, indio_dev, NULL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = devm_iio_device_register(dev, indio_dev);
+
+At this point interfaces are all exposed (both to usespace and in kernel).
+We normally expect everything to be pretty much fully functioning at that
+stage. So not to have to do all the stuff that follows.
+
+
+> +	if (ret)
+> +		return ret;
+> +
+> +	/*
+> +	 * Open the UART last, so that it is closed first on removal: no frame
+> +	 * is pushed to the buffer once the IIO device is going away. Reads
+> +	 * return -EAGAIN until the first frame.
+> +	 */
+> +	serdev_device_set_drvdata(serdev, st);
+> +	serdev_device_set_client_ops(serdev, &a30_stick_serdev_ops);
+> +
+> +	ret = devm_serdev_device_open(dev, serdev);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "cannot open the UART\n");
+> +
+> +	baud = serdev_device_set_baudrate(serdev, A30_STICK_BAUD);
+> +	if (baud != A30_STICK_BAUD)
+> +		return dev_err_probe(dev, -EINVAL, "cannot set %u baud (got %u)\n",
+> +				     A30_STICK_BAUD, baud);
+> +
+> +	serdev_device_set_flow_control(serdev, false);
+> +	ret = serdev_device_set_parity(serdev, SERDEV_PARITY_NONE);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "cannot set the parity\n");
+> +
+> +	return 0;
+> +}
+
+
